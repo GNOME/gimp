@@ -257,6 +257,8 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
       const gchar       *mime_type = NULL;
       GError            *error     = NULL;
 
+      g_object_ref (imagefile);
+
       gimage = file_open_image (imagefile->gimp, context, progress,
                                 thumbnail->image_uri,
                                 thumbnail->image_uri,
@@ -285,12 +287,63 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
                                                  &error);
         }
 
+      g_object_unref (imagefile);
+
       if (!success)
         {
           g_message (error->message);
           g_error_free (error);
         }
     }
+}
+
+/*  The weak version doesn't ref the imagefile but deals gracefully
+ *  with an imagefile that is destroyed while the thumbnail is
+ *  created. Thia allows to use this function w/o the need to block
+ *  the user interface (making it insensitive).
+ */
+void
+gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
+                                      GimpContext   *context,
+                                      GimpProgress  *progress,
+                                      gint           size)
+{
+  GimpImagefile *local;
+  const gchar   *uri;
+
+  g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
+
+  if (! imagefile->gimp->config->layer_previews)
+    return;
+
+  if (size < 1)
+    return;
+
+  uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+  if (!uri)
+    return;
+
+  local = gimp_imagefile_new (imagefile->gimp, uri);
+
+  g_object_add_weak_pointer (G_OBJECT (imagefile), (gpointer) &imagefile);
+
+  gimp_imagefile_create_thumbnail (local, context, progress, size);
+
+  if (imagefile)
+    {
+      uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+
+      if (uri &&
+          strcmp (uri, gimp_object_get_name (GIMP_OBJECT (local))) == 0)
+        {
+          gimp_imagefile_update (imagefile);
+        }
+
+      g_object_remove_weak_pointer (G_OBJECT (imagefile),
+                                    (gpointer) &imagefile);
+    }
+
+  g_object_unref (local);
 }
 
 gboolean

@@ -60,18 +60,22 @@ struct _GimpImagefileClass
 };
 
 
-GType           gimp_imagefile_get_type         (void) G_GNUC_CONST;
+GType           gimp_imagefile_get_type              (void) G_GNUC_CONST;
 
-GimpImagefile * gimp_imagefile_new              (Gimp          *gimp,
-                                                 const gchar   *uri);
-void            gimp_imagefile_update           (GimpImagefile *imagefile);
-void            gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
-                                                 GimpContext   *context,
-                                                 GimpProgress  *progress,
-                                                 gint           thumb_size);
-gboolean        gimp_imagefile_save_thumbnail   (GimpImagefile *imagefile,
-                                                 GimpImage     *gimage);
-const gchar   * gimp_imagefile_get_desc_string  (GimpImagefile *imagefile);
+GimpImagefile * gimp_imagefile_new                   (Gimp          *gimp,
+                                                      const gchar   *uri);
+void            gimp_imagefile_update                (GimpImagefile *imagefile);
+void            gimp_imagefile_create_thumbnail      (GimpImagefile *imagefile,
+                                                      GimpContext   *context,
+                                                      GimpProgress  *progress,
+                                                      gint           thumb_size);
+void            gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
+                                                      GimpContext   *context,
+                                                      GimpProgress  *progress,
+                                                      gint           size);
+gboolean        gimp_imagefile_save_thumbnail        (GimpImagefile *imagefile,
+                                                      GimpImage     *gimage);
+const gchar   * gimp_imagefile_get_desc_string       (GimpImagefile *imagefile);
 
 
 #endif /* __GIMP_IMAGEFILE_H__ */

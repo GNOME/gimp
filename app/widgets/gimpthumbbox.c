@@ -701,18 +701,6 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
       if (thumb->image_filesize < gimp->config->thumbnail_filesize_limit &&
           file_utils_find_proc_by_extension (gimp->load_procs, uri))
         {
-          /*  This is tricky because gimp_imagefile_create_thumbnail()
-           *  may call a plug-in and the progress callback runs the
-           *  mainloop. Thus the dialog may change below our feet. For
-           *  that reason we use a separate GimpImagefile to create the
-           *  thumbnail.
-           */
-          GimpImagefile *imagefile = box->imagefile;
-          GimpImagefile *local     = gimp_imagefile_new (gimp, uri);
-
-          g_object_add_weak_pointer (G_OBJECT (imagefile),
-                                     (gpointer) &imagefile);
-
           if (thumb->image_filesize > 0)
             {
               gchar *size;
@@ -733,26 +721,10 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
                                   _("Creating Preview ..."));
             }
 
-          gimp_imagefile_create_thumbnail (local,
-                                           gimp_get_user_context (gimp),
-                                           GIMP_PROGRESS (box),
-                                           gimp->config->thumbnail_size);
-
-          if (imagefile)
-            {
-              uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
-
-              if (uri &&
-                  strcmp (uri, gimp_object_get_name (GIMP_OBJECT (local))) == 0)
-                {
-                  gimp_imagefile_update (imagefile);
-                }
-
-              g_object_remove_weak_pointer (G_OBJECT (imagefile),
-                                            (gpointer) &imagefile);
-            }
-
-          g_object_unref (local);
+          gimp_imagefile_create_thumbnail_weak (box->imagefile,
+                                                gimp_get_user_context (gimp),
+                                                GIMP_PROGRESS (box),
+                                                gimp->config->thumbnail_size);
         }
       break;
 
