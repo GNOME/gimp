@@ -1,4 +1,11 @@
-2003-11-16  Michael Natterer  <mitch@gimp.org>
+2003-11-15  Daniel Rogers  <daniel@phasevelocity.org>
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimprectselectool.c
+	* app/tools/gimprectselect.h: Includes changes from Sven.
+        Fixes a bug with alt-draging ellipse and rect selections
+        on small pixel areas.
+					
+2002-11-16  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpunit.c: doc fixes.
 

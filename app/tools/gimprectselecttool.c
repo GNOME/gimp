@@ -156,15 +156,13 @@ gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass)
 static void
 gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (rect_select);
+  GimpTool *tool = GIMP_TOOL (rect_select);
 
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_RECT_SELECT_TOOL_CURSOR);
 
-  rect_select->x = rect_select->y = 0;
-  rect_select->w = rect_select->h = 0;
+  rect_select->x = rect_select->y = 0.0;
+  rect_select->w = rect_select->h = 0.0;
 }
 
 static void
@@ -184,10 +182,10 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
   sel_tool = GIMP_SELECTION_TOOL (tool);
   options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  rect_sel->x      = RINT (coords->x);
-  rect_sel->y      = RINT (coords->y);
-  rect_sel->w      = 0;
-  rect_sel->h      = 0;
+  rect_sel->x      = coords->x;
+  rect_sel->y      = coords->y;
+  rect_sel->w      = 0.0;
+  rect_sel->h      = 0.0;
   rect_sel->center = FALSE;
 
   rect_sel->last_coords = *coords;
@@ -267,9 +265,9 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
 {
   GimpRectSelectTool *rect_sel;
   GimpSelectionTool  *sel_tool;
-  gint                x1, y1;
-  gint                x2, y2;
-  gint                w, h;
+  gdouble                x1, y1;
+  gdouble                x2, y2;
+  gdouble                w, h;
 
   rect_sel = GIMP_RECT_SELECT_TOOL (tool);
   sel_tool = GIMP_SELECTION_TOOL (tool);
@@ -307,7 +305,7 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
       y2 = y1 + h;
 
       gimp_rect_select_tool_rect_select (rect_sel,
-                                         x1, y1, (x2 - x1), (y2 - y1));
+                                         RINT(x1), RINT(y1), RINT(w), RINT(h));
 
       /*  show selection on all views  */
       gimp_image_flush (gdisp->gimage);
@@ -323,9 +321,9 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
 {
   GimpRectSelectTool *rect_sel;
   GimpSelectionTool  *sel_tool;
-  gint                ox, oy;
-  gint                w, h, s;
-  gint                tw, th;
+  gdouble             ox, oy;
+  gdouble             w, h;
+  gdouble             tw, th;
   gdouble             ratio;
 
   rect_sel = GIMP_RECT_SELECT_TOOL (tool);
@@ -344,8 +342,8 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
     {
       /*  Just move the selection rectangle around  */
 
-      rect_sel->x += RINT (coords->x - rect_sel->last_coords.x);
-      rect_sel->y += RINT (coords->y - rect_sel->last_coords.y);
+      rect_sel->x += coords->x - rect_sel->last_coords.x;
+      rect_sel->y += coords->y - rect_sel->last_coords.y;
     }
   else
     {
@@ -355,8 +353,8 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
 
       if (rect_sel->center)
         {
-          ox = rect_sel->x + rect_sel->w / 2;
-          oy = rect_sel->y + rect_sel->h / 2;
+          ox = rect_sel->x + rect_sel->w / 2.0;
+          oy = rect_sel->y + rect_sel->h / 2.0;
         }
       else
         {
@@ -367,18 +365,18 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
       switch (rect_sel->fixed_mode)
         {
         case GIMP_RECT_SELECT_MODE_FIXED_SIZE:
-          w = (RINT (coords->x) - ox > 0 ?
+          w = ((coords->x - ox) > 0 ?
                rect_sel->fixed_width  : -rect_sel->fixed_width);
 
-          h = (RINT (coords->y) - oy > 0 ?
+          h = ((coords->y - oy) > 0 ?
                rect_sel->fixed_height : -rect_sel->fixed_height);
           break;
 
         case GIMP_RECT_SELECT_MODE_FIXED_RATIO:
           ratio = ((gdouble) rect_sel->fixed_height /
                    (gdouble) rect_sel->fixed_width);
-          tw = RINT (coords->x) - ox;
-          th = RINT (coords->y) - oy;
+          tw = (coords->x - ox);
+          th = (coords->y - oy);
 
           /* This is probably an inefficient way to do it, but it gives
            * nicer, more predictable results than the original agorithm
@@ -387,7 +385,7 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
               (abs (tw) > (abs (th) / ratio)))
             {
               w = tw;
-              h = (gint) (tw * ratio);
+              h = (tw * ratio);
               /* h should have the sign of th */
               if ((th < 0 && h > 0) || (th > 0 && h < 0))
                 h = -h;
@@ -395,7 +393,7 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
           else
             {
               h = th;
-              w = (gint) (th / ratio);
+              w = (th / ratio);
               /* w should have the sign of tw */
               if ((tw < 0 && w > 0) || (tw > 0 && w < 0))
                 w = -w;
@@ -403,8 +401,8 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
           break;
 
         default:
-          w = (RINT (coords->x) - ox);
-          h = (RINT (coords->y) - oy);
+          w = (coords->x - ox);
+          h = (coords->y - oy);
           break;
         }
 
@@ -414,7 +412,7 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
       if ((state & GDK_SHIFT_MASK) &&
           rect_sel->fixed_mode == GIMP_RECT_SELECT_MODE_FREE)
         {
-          s = MAX (abs (w), abs (h));
+          gint s = MAX (abs (w), abs (h));
 
           if (w < 0)
             w = -s;
@@ -436,8 +434,8 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
           switch (rect_sel->fixed_mode)
             {
             case GIMP_RECT_SELECT_MODE_FIXED_SIZE:
-              rect_sel->x = ox - w / 2;
-              rect_sel->y = oy - h / 2;
+              rect_sel->x = ox - w / 2.0;
+              rect_sel->y = oy - h / 2.0;
               rect_sel->w = w;
               rect_sel->h = h;
               break;
@@ -445,8 +443,8 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
             case GIMP_RECT_SELECT_MODE_FIXED_RATIO:
               rect_sel->x = ox - w;
               rect_sel->y = oy - h;
-              rect_sel->w = w * 2;
-              rect_sel->h = h * 2;
+              rect_sel->w = w * 2.0;
+              rect_sel->h = h * 2.0;
               break;
 
             default:
@@ -455,8 +453,8 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
 
               rect_sel->x = ox - w;
               rect_sel->y = oy - h;
-              rect_sel->w = 2 * w + 1;
-              rect_sel->h = 2 * h + 1;
+              rect_sel->w = 2.0 * w;
+              rect_sel->h = 2.0 * h;
               break;
             }
         }
@@ -479,9 +477,9 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
 
   gimp_tool_push_status_coords (tool,
                                 _("Selection: "),
-                                abs (rect_sel->w),
+                                abs (RINT (rect_sel->w)),
                                 " x ",
-                                abs (rect_sel->h));
+                                abs (RINT (rect_sel->h)));
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -489,16 +487,14 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
 static void
 gimp_rect_select_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpRectSelectTool *rect_sel;
-
-  rect_sel = GIMP_RECT_SELECT_TOOL (draw_tool);
+  GimpRectSelectTool *rect_sel = GIMP_RECT_SELECT_TOOL (draw_tool);
 
   gimp_draw_tool_draw_rectangle (draw_tool,
                                  FALSE,
-                                 rect_sel->x,
-                                 rect_sel->y,
-                                 rect_sel->w,
-                                 rect_sel->h,
+                                 RINT (rect_sel->x),
+                                 RINT (rect_sel->y),
+                                 RINT (rect_sel->w),
+                                 RINT (rect_sel->h),
                                  FALSE);
 }
 
@@ -601,8 +597,8 @@ gimp_rect_select_tool_update_options (GimpRectSelectTool *rect_sel,
 
   if (GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot)
     {
-      width  = abs (rect_sel->w);
-      height = abs (rect_sel->h);
+      width  = fabs (rect_sel->w);
+      height = fabs (rect_sel->h);
       unit   = GIMP_UNIT_PIXEL;
     }
   else
@@ -611,9 +607,9 @@ gimp_rect_select_tool_update_options (GimpRectSelectTool *rect_sel,
 
       unit   = gimage->unit;
 
-      width  = ((gdouble) abs (rect_sel->w) *
+      width  = (fabs (rect_sel->w) *
                 gimp_image_unit_get_factor (gimage) / gimage->xresolution);
-      height = ((gdouble) abs (rect_sel->h) *
+      height = (fabs (rect_sel->h) *
                 gimp_image_unit_get_factor (gimage) / gimage->yresolution);
     }
 

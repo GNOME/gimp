@@ -38,9 +38,9 @@ struct _GimpRectSelectTool
 {
   GimpSelectionTool  parent_instance;
 
-  gint               x, y;        /*  upper left hand coordinate  */
-  gint               w, h;        /*  width and height  */
-  gint               center;      /*  is the selection being created from the
+  gdouble            x, y;        /*  upper left hand coordinate  */
+  gdouble            w, h;        /*  width and height  */
+  gboolean           center;      /*  is the selection being created from the
                                    *  center out?  */
 
   GimpCoords         last_coords; /*  last button_press/motion coords  */
@@ -48,7 +48,6 @@ struct _GimpRectSelectTool
   GimpRectSelectMode fixed_mode;
   gdouble            fixed_width;
   gdouble            fixed_height;
-  
 };
 
 struct _GimpRectSelectToolClass
