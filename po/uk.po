@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.19\n"
-"POT-Creation-Date: 2000-10-04 16:01-0700\n"
+"POT-Creation-Date: 2000-10-13 11:24+0300\n"
 "PO-Revision-Date: 2000-01-11 12:44+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -83,7 +83,7 @@ msgstr "Пензл╕"
 #. initialize the list of gimp brushes
 #: app/app_procs.c:555 app/internal_procs.c:140 app/preferences_dialog.c:2520
 msgid "Patterns"
-msgstr "Шаблони"
+msgstr "В╕зерунки"
 
 #. initialize the list of gimp patterns
 #: app/app_procs.c:557 app/preferences_dialog.c:2524
@@ -419,7 +419,7 @@ msgstr "Заповнення кольором тла"
 
 #: app/bucket_fill.c:165
 msgid "Pattern Fill"
-msgstr "Заповнення шаблоном"
+msgstr "Заповнення в╕зерунком"
 
 #: app/bucket_fill.c:244
 msgid "Bucket Fill operation failed."
@@ -427,7 +427,7 @@ msgstr "Операц╕я заповнення не вдалась."
 
 #: app/bucket_fill.c:368
 msgid "No available patterns for this operation."
-msgstr "Нема╓ доступних шаблон╕в для ц╕╓╖ операц╕╖."
+msgstr "Нема╓ доступних в╕зерунк╕в для ц╕╓╖ операц╕╖."
 
 #. The shell and main vbox
 #: app/by_color_select.c:716
@@ -444,20 +444,20 @@ msgstr "Режим вид╕лення"
 
 #: app/by_color_select.c:785 app/paint_funcs.c:101
 msgid "Replace"
-msgstr "Зам╕нити"
+msgstr "Зам╕на"
 
 #: app/by_color_select.c:787 app/colormap_dialog.i.c:130
 #: app/gdisplay_color_ui.c:120
 msgid "Add"
-msgstr "Додати"
+msgstr "Додавання"
 
 #: app/by_color_select.c:788 app/layers_dialog.c:380 app/tool_options.c:926
 msgid "Subtract"
-msgstr "В╕дняти"
+msgstr "В╕дн╕мання"
 
 #: app/by_color_select.c:789
 msgid "Intersect"
-msgstr "Перетнути"
+msgstr "Перетин"
 
 #: app/by_color_select.c:800
 msgid "Fuzziness Threshold"
@@ -606,7 +606,7 @@ msgstr "Джерело зображення"
 
 #: app/clone.c:139
 msgid "Pattern Source"
-msgstr "Джерело шаблону"
+msgstr "Джерело в╕зерунку"
 
 #: app/clone.c:147
 msgid "Alignment"
@@ -626,7 +626,7 @@ msgstr "З ре╓страц╕╓ю"
 
 #: app/clone.c:268
 msgid "No patterns available for this operation."
-msgstr "Нема╓ доступних шаблон╕в для ц╕╓╖ операц╕╖."
+msgstr "Нема╓ доступних в╕зерунк╕в для ц╕╓╖ операц╕╖."
 
 #. The shell and main vbox
 #: app/color_balance.c:167 app/color_balance.c:271 app/tools.c:1021
@@ -1574,11 +1574,8 @@ msgid "Brush pipes should have at least one brush."
 msgstr "Пензуль-перех╕д мусить мати хоча б один пензель."
 
 #: app/gimpbrushpipe.c:416 app/gimpbrushpipe.c:424
-#, fuzzy
 msgid "Failed to load one of the brushes in the brush pipe."
-msgstr ""
-"Не вдалось завантижата однин з\n"
-"пензл╕в у пензл╕-переход╕."
+msgstr "Не вдалось завантижата однин з пензл╕в у пензл╕-переход╕."
 
 #: app/gimpbrushpipe.c:484 app/gimpbrushpipe.c:492
 msgid "Failed to load pixmap brush."
@@ -2340,7 +2337,7 @@ msgid ""
 "The active pattern.\n"
 "Click to open the Patterns Dialog."
 msgstr ""
-"Активний шаблон.\n"
+"Активний в╕зерунок.\n"
 "Клацн╕ть щоб в╕дкрити д╕алог шаблон╕в."
 
 #: app/indicator_area.c:175
@@ -2580,7 +2577,7 @@ msgstr "Контури"
 
 #: app/internal_procs.c:137
 msgid "Pattern UI"
-msgstr "UI Шаблону"
+msgstr "UI В╕зерунку"
 
 #: app/internal_procs.c:143
 msgid "Plug-in"
@@ -2908,7 +2905,7 @@ msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
 msgstr ""
-"  -d, --no-data            Не завантажувати шаблон╕в, град╕╓нт╕в, пал╕тр, "
+"  -d, --no-data            Не завантажувати в╕зерунк╕в, град╕╓нт╕в, пал╕тр, "
 "пензл╕в.\n"
 
 #: app/main.c:310
@@ -3039,7 +3036,7 @@ msgstr "/Файл/Д╕алоги/Пензл╕..."
 
 #: app/menus.c:126
 msgid "/File/Dialogs/Patterns..."
-msgstr "/Файл/Д╕алоги/Шаблони..."
+msgstr "/Файл/Д╕алоги/В╕зерунки..."
 
 #: app/menus.c:128
 msgid "/File/Dialogs/Gradients..."
@@ -3458,7 +3455,7 @@ msgstr "/Д╕алоги/Пензл╕..."
 
 #: app/menus.c:486
 msgid "/Dialogs/Patterns..."
-msgstr "/Д╕алоги/Шаблони..."
+msgstr "/Д╕алоги/В╕зерунки..."
 
 #: app/menus.c:488
 msgid "/Dialogs/Gradients..."
@@ -4157,31 +4154,31 @@ msgstr "Зберегти контур"
 #. The shell
 #: app/pattern_select.c:163
 msgid "Pattern Selection"
-msgstr "Виб╕р шаблону"
+msgstr "Виб╕р в╕зерунки"
 
 #: app/pattern_select.c:227
 msgid "No Patterns available"
-msgstr "Нема╓ доступних шаблон╕в"
+msgstr "Нема╓ доступних в╕зерунк╕в"
 
 #: app/patterns.c:187
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-msgstr "Нев╕дома верс╕я GIMP -- #%d, в \"%s\"\n"
+msgstr "Нев╕дома верс╕я в╕зерунки GIMP #%d, в \"%s\"\n"
 
 #: app/patterns.c:204
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\""
-msgstr "Помилка у файл╕ шаблону GIMP...переривання."
+msgstr "Помилка у файл╕ в╕зерунку GIMP \"%s\""
 
 #: app/patterns.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file \"%s\" appears to be truncated."
-msgstr "Файл шаблону GIMP напевно об╕рваний."
+msgstr "Файл в╕зеринку GIMP \"%s\" напевно об╕рваний."
 
 #: app/patterns.c:278
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading pattern \"%s\""
-msgstr "Помилка в╕дкриття файлу: %s\n"
+msgstr "Помилка завантаження в╕зерунку \"%s\""
 
 #: app/perspective_tool.c:59
 msgid "Perspective Transform Information"
@@ -4474,7 +4471,7 @@ msgstr "Панель ╕нструмент╕в"
 
 #: app/preferences_dialog.c:1856
 msgid "Display Brush, Pattern and Gradient Indicators"
-msgstr "Показувати ╕ндикатори пензля, шаблону та град╕╓нту"
+msgstr "Показувати ╕ндикатори пензля, в╕зерунку ╕ град╕╓нту"
 
 #: app/preferences_dialog.c:1865
 msgid "Dialog Behaviour"
@@ -4783,11 +4780,11 @@ msgstr "Вибер╕ть каталог згенерованих пензл╕в"
 
 #: app/preferences_dialog.c:2520
 msgid "Patterns Directories"
-msgstr "Каталог шаблон╕в"
+msgstr "Каталог в╕зерунк╕в"
 
 #: app/preferences_dialog.c:2522
 msgid "Select Patterns Dir"
-msgstr "Вибер╕ть каталог шаблон╕в"
+msgstr "Вибер╕ть каталог в╕зерунк╕в"
 
 #: app/preferences_dialog.c:2524
 msgid "Palettes Directories"
@@ -5363,7 +5360,7 @@ msgstr "/╤нструменти/Малювання/Заповнення"
 
 #: app/tools.c:602
 msgid "Fill with a color or pattern"
-msgstr "Заповнення кольором чи шаблоном"
+msgstr "Заповнення кольором чи в╕зерунком"
 
 #: app/tools.c:624
 msgid "Blend"
@@ -5419,7 +5416,7 @@ msgstr "/╤нструменти/Малювання/Клонування"
 
 #: app/tools.c:770
 msgid "Paint using patterns or image regions"
-msgstr "Малювання шаблоном чи д╕лянкою зображення"
+msgstr "Малювання в╕зерунками чи д╕лянкою зображення"
 
 #: app/tools.c:792
 msgid "Convolve"
@@ -5852,7 +5849,7 @@ msgid ""
 msgstr ""
 "gimprc використову╓ться для збер╕гання особистих установок\n"
 "таких як типова повед╕ка GIMP.\n"
-"Шляхи пошуку пензл╕в, пал╕тр, град╕╓нт╕в, шаблон╕в, доповнень\n"
+"Шляхи пошуку пензл╕в, пал╕тр, град╕╓нт╕в, в╕зерунк╕в, доповнень\n"
 "та модул╕в також вказуються тут."
 
 #: app/user_install.c:160
@@ -5986,7 +5983,7 @@ msgid ""
 "patterns."
 msgstr ""
 "Це п╕дкаталог, котрий може бути використано для\n"
-"збереження створених користувачем шаблон╕в.  Типово\n"
+"збереження створених користувачем взерунк╕в. Типово\n"
 "у файл╕ gimprc вказано перев╕рку цього п╕дкаталогу,\n"
 "на додаток до системного при пошуку шаблон╕в."
 
@@ -6407,8 +6404,7 @@ msgstr "Трикутник"
 
 #: modules/colorsel_water.c:76
 msgid "Watercolor style color selector as a pluggable module"
-msgstr ""
-"Перемикач кольору у акварельному стил╕ як зовн╕шн╕й перемикач кольор╕в."
+msgstr "Перемикач кольору у акварельному стил╕ як зовн╕шн╕й перемикач кольор╕в."
 
 #: modules/colorsel_water.c:97 modules/colorsel_water.c:100
 msgid "Watercolor"
@@ -6417,6 +6413,3 @@ msgstr "Акварель"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "╤стор╕я кольор╕в"
-
-#~ msgid "Pattern load failed"
-#~ msgstr "Завантаження шаблону не вдалось"

@@ -8147,47 +8147,47 @@ msgstr "<Image>/В╕део/Зм╕нити кадри..."
 #. Layer select modes
 #: plug-ins/gap/gap_mod_layer.c:82 plug-ins/gap/gap_range_ops.c:573
 msgid "Pattern is equal to LayerName"
-msgstr "В╕зерунок сп╕впада╓ з назвою шару"
+msgstr "Шаблон сп╕впада╓ з назвою шару"
 
 #: plug-ins/gap/gap_mod_layer.c:83 plug-ins/gap/gap_range_ops.c:574
 msgid "Pattern is Start of LayerName"
-msgstr "В╕зерунок сп╕впада╓ з початком назви шару"
+msgstr "Шаблон сп╕впада╓ з початком назви шару"
 
 #: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:575
 msgid "Pattern is End of Layername"
-msgstr "В╕зерунок сп╕впада╓ з зак╕нченням назви шару"
+msgstr "Шаблон сп╕впада╓ з зак╕нченням назви шару"
 
 #: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:576
 msgid "Pattern is a Part of LayerName"
-msgstr "В╕зерунок сп╕впада╓ з частиною назви шару"
+msgstr "Шаблон сп╕впада╓ з частиною назви шару"
 
 #: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:577
 msgid "Pattern is LayerstackNumber List"
-msgstr ""
+msgstr "Шаблон в списку номер╕в стосу шар╕в"
 
 #: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:578
 msgid "Pattern is REVERSE-stack List"
-msgstr ""
+msgstr "Шаблон в списку оберненого стосу"
 
 #: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:579
 msgid "All Visible (ignore Pattern)"
-msgstr ""
+msgstr "Вс╕ видим╕ (╕╜норувати шаблон)"
 
 #: plug-ins/gap/gap_mod_layer.c:90
 msgid "Select all Layers where Layername is equal to Pattern"
-msgstr ""
+msgstr "Вибрати вс╕ шари назва яких сп╕впада╓ з шаблоном"
 
 #: plug-ins/gap/gap_mod_layer.c:91
 msgid "Select all Layers where Layername starts with Pattern"
-msgstr ""
+msgstr "Вибрати вс╕ шари початок назви яких сп╕впада╓ з шаблоном"
 
 #: plug-ins/gap/gap_mod_layer.c:92
 msgid "Select all Layers where Layername ends up with Pattern"
-msgstr ""
+msgstr "Вибрати вс╕ шари зак╕нчення назви яких сп╕впада╓ з шаблоном"
 
 #: plug-ins/gap/gap_mod_layer.c:93
 msgid "Select all Layers where Layername contains Pattern"
-msgstr ""
+msgstr "Вибрати вс╕ шари назва яких м╕стить шаблон"
 
 #: plug-ins/gap/gap_mod_layer.c:94
 msgid ""
@@ -8291,7 +8291,7 @@ msgstr "Шари:"
 
 #: plug-ins/gap/gap_mod_layer.c:181 plug-ins/gap/gap_range_ops.c:658
 msgid "Select Pattern:"
-msgstr "В╕зерунок:"
+msgstr "Шаблон:"
 
 #. pixel
 #: plug-ins/gap/gap_mod_layer.c:183 plug-ins/gap/gap_range_ops.c:660
@@ -9104,7 +9104,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:330
 msgid "Pattern:"
-msgstr "В╕зерунок:"
+msgstr "Шаблон:"
 
 #. pixel
 #: plug-ins/gap/gap_mpege.c:332
@@ -9547,19 +9547,19 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:581
 msgid "select all Layers where Layername is equal to Pattern"
-msgstr ""
+msgstr "вибрати вс╕ шари назва яких сп╕впада╓ з шаблоном"
 
 #: plug-ins/gap/gap_range_ops.c:582
 msgid "select all Layers where Layername starts with Pattern"
-msgstr ""
+msgstr "вибрати вс╕ шари початок назви яких сп╕впада╓ з шаблоном"
 
 #: plug-ins/gap/gap_range_ops.c:583
 msgid "select all Layers where Layername ends up with Pattern"
-msgstr ""
+msgstr "вибрати вс╕ шари зак╕нчення назви яких сп╕впада╓ з шаблоном"
 
 #: plug-ins/gap/gap_range_ops.c:584
 msgid "select all Layers where Layername contains Pattern"
-msgstr ""
+msgstr "вибрати вс╕ шари назва яких м╕стить шаблон"
 
 #: plug-ins/gap/gap_range_ops.c:585
 msgid ""
@@ -9577,17 +9577,19 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:587
 msgid "select all visible Layers"
-msgstr ""
+msgstr "вибрати вс╕ видим╕ шари"
 
 #: plug-ins/gap/gap_range_ops.c:616
 msgid "Layer Basename:"
-msgstr ""
+msgstr "Базова назва шар╕в:"
 
 #: plug-ins/gap/gap_range_ops.c:617
 msgid ""
 "Basename for all Layers    \n"
 "[####] is replaced by frame number"
 msgstr ""
+"Базова назва для вс╕х шар╕в\n"
+"[####] буде зам╕нено номером кадру"
 
 #: plug-ins/gap/gap_range_ops.c:635
 msgid "Layer Mergemode:"

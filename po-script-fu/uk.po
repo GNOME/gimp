@@ -94,7 +94,7 @@ msgstr "Виб╕р файлу Скрипт-Фу"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1358
 msgid "Script-fu Pattern Selection"
-msgstr "Виб╕р шаблону Скрипт-Фу"
+msgstr "Виб╕р в╕зерунку Скрипт-Фу"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1365
 msgid "Script-Fu Gradient Selection"
@@ -560,19 +560,19 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
-msgstr "<Toolbox>/Розш./Скрипт-Фу/Шаблони/Камуфляж..."
+msgstr "<Toolbox>/Розш./Скрипт-Фу/В╕зерунки/Камуфляж..."
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
-msgstr "<Toolbox>/Розш./Скрипт-Фу/Шаблони/Р╕внина..."
+msgstr "<Toolbox>/Розш./Скрипт-Фу/В╕зерунки/Р╕внина..."
 
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-msgstr "<Toolbox>/Розш./Скрипт-Фу/Шаблони/Земля..."
+msgstr "<Toolbox>/Розш./Скрипт-Фу/В╕зерунки/Земля..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr "<Toolbox>/Розш./Скрипт-Фу/Шаблони/В╕зуал╕зац╕я мапи..."
+msgstr "<Toolbox>/Розш./Скрипт-Фу/В╕зерунки/В╕зуал╕зац╕я мапи..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
@@ -584,7 +584,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr "<Toolbox>/Розш./Скрипт-Фу/Шаблони/Трохо╕да..."
+msgstr "<Toolbox>/Розш./Скрипт-Фу/В╕зерунки/Трохо╕да..."
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
@@ -620,24 +620,23 @@ msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Чуже сяйво/Горизонтальна л╕н╕йка..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий шаблон/Стр╕лка..."
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий в╕зерунок/Стр╕лка..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий шаблон/Маркер..."
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий в╕зерунок/Маркер..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий шаблон/Кнопка..."
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий в╕зерунок/Кнопка..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий шаблон/Заголовок..."
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий в╕зерунок/Заголовок..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr ""
-"<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий шаблон/Горизонтальна л╕н╕йка..."
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий в╕зерунок/Горизонтальна л╕н╕йка..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
@@ -1236,7 +1235,7 @@ msgstr "Кут заповнення"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Fill BG with Pattern"
-msgstr "Заповнити тло шаблоном"
+msgstr "Заповнити тло в╕зерунком"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Fill with BG Color"
@@ -1709,15 +1708,15 @@ msgstr "Заповнення"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Outline)"
-msgstr "Шаблон (контур)"
+msgstr "В╕зерунок (контур)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Overlay)"
-msgstr "Шаблон (перекривання)"
+msgstr "В╕зерунок (перекривання)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Text)"
-msgstr "Шаблон (текст)"
+msgstr "В╕зерунок (текст)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -1728,7 +1727,7 @@ msgstr "Шаблон (текст)"
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Pattern"
-msgstr "Шаблон"
+msgstr "В╕зерунок"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
@@ -2000,7 +1999,7 @@ msgstr "Кол╕р тексту"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Text Pattern"
-msgstr "Текстовий шаблон"
+msgstr "Текстовий в╕зерунок"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
@@ -2110,15 +2109,15 @@ msgstr "Використовувати зростаюче вид╕лення"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern Overlay"
-msgstr "Використовувати перекривання шаблон╕в"
+msgstr "Використовувати перекривання в╕зерунк╕в"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr "Використовувати для контуру шаблон зам╕сть град╕╓нту"
+msgstr "Використовувати для контуру в╕зерунок зам╕сть град╕╓нту"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Text instead of Gradient"
-msgstr "Використовувати для тексту шаблон зам╕сть град╕╓нту"
+msgstr "Використовувати для тексту в╕зерунок зам╕сть град╕╓нту"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Use Selection Bounds Instead of Belows"
