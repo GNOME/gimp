@@ -27,7 +27,7 @@
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gradient.h"
-#include "gimage.h"
+#include "gimpimage.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
 #include "gimpui.h"
@@ -340,7 +340,7 @@ airbrush_motion (PaintCore	      *paint_core,
     }
   else
     {
-      gimage_get_foreground (gimage, drawable, col);
+      gimp_image_get_foreground (gimage, drawable, col);
       col[area->bytes - 1] = OPAQUE_OPACITY;
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height, area->bytes);

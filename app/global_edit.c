@@ -340,7 +340,7 @@ edit_paste (GImage       *gimage,
        *  it seems like the correct behavior.
        */
       if (! gimage_mask_is_empty (gimage) && !paste_into)
-	channel_clear (gimage_get_mask (gimage));
+	channel_clear (gimp_image_get_mask (gimage));
 
       /*  if there's a drawable, add a new floating selection  */
       if (drawable != NULL)
@@ -350,7 +350,7 @@ edit_paste (GImage       *gimage,
       else
 	{
 	  gimp_drawable_set_gimage (GIMP_DRAWABLE (layer), gimage);
-	  gimage_add_layer (gimage, layer, 0);
+	  gimp_image_add_layer (gimage, layer, 0);
 	}
       
      /*  end the group undo  */
@@ -375,7 +375,7 @@ edit_paste_as_new (GImage      *invoke,
 
   /*  create a new image  (always of type RGB)  */
   gimage = gimage_new (paste->width, paste->height, RGB);
-  gimage_disable_undo (gimage);
+  gimp_image_undo_disable (gimage);
   gimp_image_set_resolution (gimage, invoke->xresolution, invoke->yresolution);
   gimp_image_set_unit (gimage, invoke->unit);
   
@@ -389,9 +389,9 @@ edit_paste_as_new (GImage      *invoke,
     {
       /*  add the new layer to the image  */
       gimp_drawable_set_gimage (GIMP_DRAWABLE (layer), gimage);
-      gimage_add_layer (gimage, layer, 0);
+      gimp_image_add_layer (gimage, layer, 0);
 
-      gimage_enable_undo (gimage);
+      gimp_image_undo_enable (gimage);
 
       gdisp = gdisplay_new (gimage, 0x0101);
       gimp_context_set_display (gimp_context_get_user (), gdisp);
@@ -414,7 +414,7 @@ edit_clear (GImage       *gimage,
   if (!gimage || drawable == NULL)
     return FALSE;
 
-  gimage_get_background (gimage, drawable, col);
+  gimp_image_get_background (gimage, drawable, col);
   if (drawable_has_alpha (drawable))
     col [drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
 
@@ -428,8 +428,8 @@ edit_clear (GImage       *gimage,
   color_region (&bufPR, col);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &bufPR, 1, OPAQUE_OPACITY,
-		      ERASE_MODE, NULL, x1, y1);
+  gimp_image_apply_image (gimage, drawable, &bufPR, 1, OPAQUE_OPACITY,
+			  ERASE_MODE, NULL, x1, y1);
 
   /*  update the image  */
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
@@ -459,11 +459,11 @@ edit_fill (GImage       *gimage,
   switch (fill_type)
     {
     case FOREGROUND_FILL:
-      gimage_get_foreground (gimage, drawable, col);
+      gimp_image_get_foreground (gimage, drawable, col);
       break;
 
     case BACKGROUND_FILL:
-      gimage_get_background (gimage, drawable, col);
+      gimp_image_get_background (gimage, drawable, col);
       break;
 
     case WHITE_FILL:
@@ -485,7 +485,7 @@ edit_fill (GImage       *gimage,
 
     default:
       g_warning ("unknown fill type");
-      gimage_get_background (gimage, drawable, col);
+      gimp_image_get_background (gimage, drawable, col);
       break;
     }
 
@@ -499,8 +499,8 @@ edit_fill (GImage       *gimage,
   color_region (&bufPR, col);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &bufPR, 1, OPAQUE_OPACITY,
-		      NORMAL_MODE, NULL, x1, y1);
+  gimp_image_apply_image (gimage, drawable, &bufPR, 1, OPAQUE_OPACITY,
+			  NORMAL_MODE, NULL, x1, y1);
 
   /*  update the image  */
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
@@ -517,7 +517,7 @@ global_edit_cut (GDisplay *gdisp)
   /*  stop any active tool  */
   active_tool_control (HALT, gdisp);
 
-  if (!edit_cut (gdisp->gimage, gimage_active_drawable (gdisp->gimage)))
+  if (!edit_cut (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage)))
     return FALSE;
 
   /*  flush the display  */
@@ -529,7 +529,7 @@ global_edit_cut (GDisplay *gdisp)
 gboolean
 global_edit_copy (GDisplay *gdisp)
 {
-  if (!edit_copy (gdisp->gimage, gimage_active_drawable (gdisp->gimage)))
+  if (!edit_copy (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage)))
     return FALSE;
 
   return TRUE;
@@ -542,7 +542,7 @@ global_edit_paste (GDisplay *gdisp,
   /*  stop any active tool  */
   active_tool_control (HALT, gdisp);
 
-  if (!edit_paste (gdisp->gimage, gimage_active_drawable (gdisp->gimage), 
+  if (!edit_paste (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage), 
 		   global_buf, paste_into))
     return FALSE;
 
@@ -613,13 +613,13 @@ named_buffer_paste_foreach (GtkWidget *widget,
 	{
 	case PASTE:
 	  edit_paste (pn_dlg->gdisp->gimage,
-		      gimage_active_drawable (pn_dlg->gdisp->gimage),
+		      gimp_image_active_drawable (pn_dlg->gdisp->gimage),
 		      nb->buf, FALSE);
 	  break;
 
 	case PASTE_INTO:
 	  edit_paste (pn_dlg->gdisp->gimage,
-		      gimage_active_drawable (pn_dlg->gdisp->gimage),
+		      gimp_image_active_drawable (pn_dlg->gdisp->gimage),
 		      nb->buf, TRUE);
 	  break;
 
@@ -856,7 +856,8 @@ cut_named_buffer_callback (GtkWidget *widget,
 
   gdisp = (GDisplay *) data;
   
-  new_tiles = edit_cut (gdisp->gimage, gimage_active_drawable (gdisp->gimage));
+  new_tiles = edit_cut (gdisp->gimage,
+			gimp_image_active_drawable (gdisp->gimage));
   if (new_tiles) 
     new_named_buffer (new_tiles, name);
   gdisplays_flush ();
@@ -892,7 +893,8 @@ copy_named_buffer_callback (GtkWidget *widget,
 
   gdisp = (GDisplay *) data;
   
-  new_tiles = edit_copy (gdisp->gimage, gimage_active_drawable (gdisp->gimage));
+  new_tiles = edit_copy (gdisp->gimage,
+			 gimp_image_active_drawable (gdisp->gimage));
   if (new_tiles) 
     new_named_buffer (new_tiles, name);
 }

@@ -25,7 +25,7 @@
 #include "appenv.h"
 #include "drawable.h"
 #include "desaturate.h"
-#include "gimage.h"
+#include "gimpimage.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"
 
@@ -37,7 +37,7 @@ image_desaturate (GimpImage *gimage)
 {
   GimpDrawable *drawable;
 
-  drawable = gimage_active_drawable (gimage);
+  drawable = gimp_image_active_drawable (gimage);
 
   if (! drawable_color (drawable))
     {

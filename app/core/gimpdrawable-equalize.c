@@ -24,7 +24,7 @@
 
 #include "drawable.h"
 #include "equalize.h"
-#include "gimage.h"
+#include "gimpimage.h"
 #include "gimplut.h"
 #include "lut_funcs.h"
 #include "gimphistogram.h"
@@ -39,7 +39,7 @@ image_equalize (GimpImage *gimage)
 {
   GimpDrawable *drawable;
 
-  drawable = gimage_active_drawable (gimage);
+  drawable = gimp_image_active_drawable (gimage);
 
   if (gimp_drawable_is_indexed (drawable))
     {

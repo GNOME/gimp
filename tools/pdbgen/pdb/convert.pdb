@@ -27,7 +27,7 @@ sub simple_invoke {
     my $type = shift;
     %invoke = (
 	code => <<CODE
-if ((success = (gimage_base_type (gimage) != $type)))
+if ((success = (gimp_image_base_type (gimage) != $type)))
   convert_image ((void *) gimage, $type, 0, 0, 0, 1, 0);
 CODE
     );
@@ -100,7 +100,7 @@ HELP
 	headers => [ qw(<string.h> "palette.h") ],
 	code => <<'CODE'
 {
-  if ((success = (gimage_base_type (gimage) != INDEXED)))
+  if ((success = (gimp_image_base_type (gimage) != INDEXED)))
     {
       PaletteEntries *entries;
       PaletteEntries *the_palette = NULL;
@@ -164,7 +164,7 @@ CODE
     );
 }
 
-@headers = qw("gimage.h" "palette_entries.h" "convert.h");
+@headers = qw("gimpimage.h" "palette_entries.h" "convert.h");
 
 @procs = qw(convert_rgb convert_grayscale convert_indexed);
 %exports = (app => [@procs], lib => [@procs]);

@@ -31,7 +31,6 @@
 #include "desaturate.h"
 #include "drawable.h"
 #include "equalize.h"
-#include "gimage.h"
 #include "gimpdrawable.h"
 #include "gimphistogram.h"
 #include "gimpimage.h"
@@ -960,7 +959,7 @@ histogram_invoker (Argument *args)
 			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
     
 	  /*  Configure the mask from the gimage's selection mask */
-	  mask = gimage_get_mask (drawable_gimage (GIMP_DRAWABLE (drawable)));
+	  mask = gimp_image_get_mask (drawable_gimage (GIMP_DRAWABLE (drawable)));
 	  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE(mask)),
 			     x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
     

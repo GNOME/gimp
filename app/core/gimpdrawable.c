@@ -31,8 +31,8 @@
 #include "layer.h"
 #include "gimppreviewcache.h"
 #include "gimpsignal.h"
-#include "gimage.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
 #include "gimpparasite.h"
 #include "paint_funcs.h"
 #include "parasitelist.h"
@@ -153,8 +153,8 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   pixel_region_init (&shadowPR, gimage->shadow, x1, y1,
 		     (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &shadowPR, undo, OPAQUE_OPACITY,
-		      REPLACE_MODE, NULL, x1, y1);
+  gimp_image_apply_image (gimage, drawable, &shadowPR, undo, OPAQUE_OPACITY,
+			  REPLACE_MODE, NULL, x1, y1);
 }
 
 void
@@ -196,7 +196,7 @@ gimp_drawable_fill (GimpDrawable *drawable,
       c[RED_PIX]   = r;
       c[GREEN_PIX] = g;
       c[BLUE_PIX]  = b;
-      gimage_transform_color (gimage, drawable, c, &i, RGB);
+      gimp_image_transform_color (gimage, drawable, c, &i, RGB);
       c[INDEXED_PIX] = i;
       if (gimp_drawable_type (drawable) == INDEXEDA_GIMAGE)
 	  c[ALPHA_I_PIX] = a;
@@ -660,8 +660,8 @@ gimp_drawable_shadow (GimpDrawable *drawable)
   if (! (gimage = gimp_drawable_gimage (drawable)))
     return NULL;
 
-  return gimage_shadow (gimage, drawable->width, drawable->height, 
-			drawable->bytes);
+  return gimp_image_shadow (gimage, drawable->width, drawable->height, 
+			    drawable->bytes);
 }
 
 int

@@ -438,7 +438,7 @@ file_save_callback (GtkWidget *widget,
   if (! gdisplay)
     return;
 
-  if (! gimage_active_drawable (gdisplay->gimage))
+  if (! gimp_image_active_drawable (gdisplay->gimage))
     return;
 
   /*  Only save if the gimage has been modified  */
@@ -454,7 +454,7 @@ file_save_callback (GtkWidget *widget,
 	  gchar *raw_filename;
 	  gint   status;
 
-	  filename     = g_strdup (gimage_filename (gdisplay->gimage));
+	  filename     = g_strdup (gimp_image_filename (gdisplay->gimage));
 	  raw_filename = g_basename (filename);
 	  
 	  status = file_save (gdisplay->gimage,
@@ -483,7 +483,7 @@ file_save_as_callback (GtkWidget *widget,
   if (! gdisplay)
     return;
 
-  if (! gimage_active_drawable (gdisplay->gimage))
+  if (! gimp_image_active_drawable (gdisplay->gimage))
     return;
 
   the_gimage = gdisplay->gimage;
@@ -527,7 +527,7 @@ file_save_as_callback (GtkWidget *widget,
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave),
                                    gdisplay->gimage->has_filename
-                                   ? gimage_filename(gdisplay->gimage)
+                                   ? gimp_image_filename (gdisplay->gimage)
                                    : "." G_DIR_SEPARATOR_S);
   if (!save_options)
     {
@@ -566,7 +566,7 @@ file_save_as_callback (GtkWidget *widget,
 			save_options, FALSE, FALSE, 0);
     }
 
-  switch (gimp_drawable_type (gimage_active_drawable (gdisplay->gimage)))
+  switch (gimp_drawable_type (gimp_image_active_drawable (gdisplay->gimage)))
     {
     case RGB_GIMAGE:
       file_update_menus (save_procs, PLUG_IN_RGB_IMAGE);
@@ -626,8 +626,8 @@ file_revert_callback (GtkWidget *widget,
 				"%s\n\n"
 				"(You will loose all your changes\n"
 				"including all undo information)"),
-			      g_basename (gimage_filename (gimage)),
-			      gimage_filename (gimage));
+			      g_basename (gimp_image_filename (gimage)),
+			      gimp_image_filename (gimage));
 
       query_box = gimp_query_boolean_box (_("Revert Image?"),
 					  gimp_standard_help_func,
@@ -721,12 +721,12 @@ file_open_image (const gchar *filename,
 		 gint        *status)
 {
   PlugInProcDef *file_proc;
-  ProcRecord *proc;
-  Argument   *args;
-  Argument   *return_vals;
-  gint gimage_id;
-  gint i;
-  struct stat statbuf;
+  ProcRecord    *proc;
+  Argument      *args;
+  Argument      *return_vals;
+  gint           gimage_id;
+  gint           i;
+  struct stat    statbuf;
 
   *status = PDB_CANCEL;  /* inhibits error messages by caller */
 
@@ -806,7 +806,7 @@ file_open_image (const gchar *filename,
 
   if (*status == PDB_SUCCESS && gimage_id != -1)
     {
-      GimpImage *gimage = gimage_get_ID (gimage_id);
+      GimpImage *gimage = pdb_id_to_image (gimage_id);
 
       if (gimage)
 	{
@@ -836,10 +836,10 @@ file_open (gchar *filename,
 				 &status)) != NULL)
     {
       /* enable & clear all undo steps */
-      gimage_enable_undo (gimage);
+      gimp_image_undo_enable (gimage);
 
       /* set the image to clean  */
-      gimage_clean_all (gimage);
+      gimp_image_clean_all (gimage);
 
       /* display the image */
       gdisplay = gdisplay_new (gimage, 0x0101);
@@ -1132,10 +1132,10 @@ file_save (GimpImage   *gimage,
   gint i;
   struct stat statbuf;
 
-  if (gimage_active_drawable (gimage) == NULL)
+  if (gimp_image_active_drawable (gimage) == NULL)
     return PDB_EXECUTION_ERROR;
 
-  file_proc = gimage_get_save_proc (gimage);
+  file_proc = gimp_image_get_save_proc (gimage);
 
   if (!file_proc)
     file_proc = file_proc_find (save_procs, raw_filename);
@@ -1196,7 +1196,7 @@ file_save (GimpImage   *gimage,
 
   args[0].value.pdb_int     = run_mode;
   args[1].value.pdb_int     = pdb_image_to_id (gimage);
-  args[2].value.pdb_int     = drawable_ID (gimage_active_drawable (gimage));
+  args[2].value.pdb_int     = drawable_ID (gimp_image_active_drawable (gimage));
   args[3].value.pdb_pointer = filename;
   args[4].value.pdb_pointer = raw_filename;
 
@@ -1207,7 +1207,7 @@ file_save (GimpImage   *gimage,
   if (status == PDB_SUCCESS)
     {
       /*  set this image to clean  */
-      gimage_clean_all (gimage);
+      gimp_image_clean_all (gimage);
 
       /* these calls must come before the call to gimage_set_filename */
       document_index_add (filename);
@@ -1557,7 +1557,7 @@ file_open_genbutton_callback (GtkWidget *widget,
 		if (thumbnail_mode)
 		  {
 		    file_save_thumbnail (gimage_to_be_thumbed,
-						 full_filename, tempbuf);
+					 full_filename, tempbuf);
 		  }
 		set_preview (full_filename, RGBbuf, RGBbuf_w, RGBbuf_h);
 
@@ -1749,7 +1749,7 @@ file_save_with_proc (GImage *gimage,
 
     if (gimage != NULL)
       {
-	gimage_set_save_proc (gimage, save_proc);
+	gimp_image_set_save_proc (gimage, save_proc);
 	status = file_save (gimage,
 			    full_filename,
 			    raw_filename,
@@ -1955,7 +1955,7 @@ file_revert_confirm_callback (GtkWidget *widget,
       const gchar *filename;
       gint         status;
 
-      filename = gimage_filename (old_gimage);
+      filename = gimp_image_filename (old_gimage);
 
       new_gimage = file_open_image (filename, filename, _("Revert"),
 				    RUN_INTERACTIVE, &status);

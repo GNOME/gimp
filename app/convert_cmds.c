@@ -28,7 +28,7 @@
 #include "procedural_db.h"
 
 #include "convert.h"
-#include "gimage.h"
+#include "gimpimage.h"
 #include "palette.h"
 #include "palette_entries.h"
 
@@ -55,7 +55,7 @@ convert_rgb_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    if ((success = (gimage_base_type (gimage) != RGB)))
+    if ((success = (gimp_image_base_type (gimage) != RGB)))
       convert_image ((void *) gimage, RGB, 0, 0, 0, 1, 0);
 
   return procedural_db_return_args (&convert_rgb_proc, success);
@@ -97,7 +97,7 @@ convert_grayscale_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    if ((success = (gimage_base_type (gimage) != GRAY)))
+    if ((success = (gimp_image_base_type (gimage) != GRAY)))
       convert_image ((void *) gimage, GRAY, 0, 0, 0, 1, 0);
 
   return procedural_db_return_args (&convert_grayscale_proc, success);
@@ -162,7 +162,7 @@ convert_indexed_invoker (Argument *args)
 
   if (success)
     {
-      if ((success = (gimage_base_type (gimage) != INDEXED)))
+      if ((success = (gimp_image_base_type (gimage) != INDEXED)))
 	{
 	  PaletteEntries *entries;
 	  PaletteEntries *the_palette = NULL;

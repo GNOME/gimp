@@ -409,7 +409,7 @@ xcf_save_invoker (Argument *args)
 
   success = FALSE;
 
-  gimage = gimage_get_ID (args[1].value.pdb_int);
+  gimage = pdb_id_to_image (args[1].value.pdb_int);
   filename = args[3].value.pdb_pointer;
 
   info.fp = fopen (filename, "wb");

@@ -27,7 +27,7 @@
 #include "cursorutil.h"
 #include "fileops.h"
 #include "gdisplay_ops.h"
-#include "gimage.h"
+#include "gimpimage.h"
 #include "gimpui.h"
 #include "gximage.h"
 #include "menus.h"
@@ -135,7 +135,7 @@ gdisplay_close_window (GDisplay *gdisp,
       confirm_on_close)
     {
       gdisplay_close_warning_dialog
-	(g_basename (gimage_filename (gdisp->gimage)), gdisp);
+	(g_basename (gimp_image_filename (gdisp->gimage)), gdisp);
     }
   else
     {

@@ -32,7 +32,7 @@
 #include "dialog_handler.h"
 #include "disp_callbacks.h"
 #include "gdisplay.h"
-#include "gimage.h"
+#include "gimpimage.h"
 #include "gimpcontext.h"
 #include "drawable.h"
 #include "gimprc.h"
@@ -260,7 +260,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 						NULL);
 
 	  if (active_tool && ((active_tool->type == MOVE) ||
-			      !gimage_is_empty (gdisp->gimage)))
+			      !gimp_image_is_empty (gdisp->gimage)))
 	    {
 	      if (active_tool->auto_snap_to)
 		{
@@ -275,7 +275,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		   ! active_tool->drawable ||
 
 		   /* or a drawable different from the current one */
-		   (gimage_active_drawable (gdisp->gimage) !=
+		   (gimp_image_active_drawable (gdisp->gimage) !=
 		    active_tool->drawable)) &&
 
 		  /* and doesn't want to be preserved across drawable changes */
@@ -287,7 +287,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	      /* otherwise set it's drawable if it has none */
 	      else if (! active_tool->drawable)
 		{
-		  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
+		  active_tool->drawable =
+		    gimp_image_active_drawable (gdisp->gimage);
 		}
 
 	      (* active_tool->button_press_func) (active_tool, bevent, gdisp);
@@ -381,7 +382,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  gtk_grab_remove (canvas);
 	  gdk_pointer_ungrab (bevent->time);  /* fixes pointer grab bug */
 	  if (active_tool && ((active_tool->type == MOVE) ||
-			      !gimage_is_empty (gdisp->gimage)))
+			      !gimp_image_is_empty (gdisp->gimage)))
 	    {
 	      if (active_tool->state == ACTIVE)
 		{
@@ -467,7 +468,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	}
 
       if (active_tool && ((active_tool->type == MOVE) ||
-			  !gimage_is_empty (gdisp->gimage)) &&
+			  !gimp_image_is_empty (gdisp->gimage)) &&
 	  (mevent->state & GDK_BUTTON1_MASK))
 	{
 	  if (active_tool->state == ACTIVE)
@@ -527,17 +528,18 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	{
 	case GDK_Left: case GDK_Right:
 	case GDK_Up: case GDK_Down:
-	  if (active_tool && !gimage_is_empty (gdisp->gimage))
+	  if (active_tool && !gimp_image_is_empty (gdisp->gimage))
 	    (* active_tool->arrow_keys_func) (active_tool, kevent, gdisp);
 	  return_val = TRUE;
 	  break;
 
 	case GDK_Tab:
-	  if (kevent->state & GDK_MOD1_MASK && !gimage_is_empty (gdisp->gimage))
+	  if (kevent->state & GDK_MOD1_MASK &&
+	      !gimp_image_is_empty (gdisp->gimage))
 	    layer_select_init (gdisp->gimage, 1, kevent->time);
 
 	  if (kevent->state & GDK_CONTROL_MASK &&
-	      !gimage_is_empty (gdisp->gimage))
+	      !gimp_image_is_empty (gdisp->gimage))
 	    layer_select_init (gdisp->gimage, -1, kevent->time);
 
 	  /* Hide or show all dialogs */
@@ -553,7 +555,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	case GDK_Control_L: case GDK_Control_R:
 	  state |= key_to_state (kevent->keyval);
 	  /* For all modifier keys: call the tools modifier_key_func */
-	  if (active_tool && !gimage_is_empty (gdisp->gimage))
+	  if (active_tool && !gimp_image_is_empty (gdisp->gimage))
 	    {
 	      gdk_input_window_get_pointer (canvas->window, current_device,
 #ifdef GTK_HAVE_SIX_VALUATORS 
@@ -584,7 +586,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	case GDK_Control_L: case GDK_Control_R:
 	  state &= ~key_to_state (kevent->keyval);
 	  /* For all modifier keys: call the tools modifier_key_func */
-	  if (active_tool && !gimage_is_empty (gdisp->gimage))
+	  if (active_tool && !gimp_image_is_empty (gdisp->gimage))
 	    {
 	      gdk_input_window_get_pointer (canvas->window, current_device,
 #ifdef GTK_HAVE_SIX_VALUATORS
@@ -617,7 +619,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
  
   if (no_cursor_updating == 0)
     {
-      if (active_tool && !gimage_is_empty (gdisp->gimage) &&
+      if (active_tool && !gimp_image_is_empty (gdisp->gimage) &&
 	  !(state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
 	{
 	  GdkEventMotion me;
@@ -625,7 +627,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  me.state = state;
 	  (* active_tool->cursor_update_func) (active_tool, &me, gdisp);
 	}
-      else if (gimage_is_empty (gdisp->gimage))
+      else if (gimp_image_is_empty (gdisp->gimage))
 	{
 	  gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR,
 					TOOL_TYPE_NONE,
@@ -820,7 +822,7 @@ gdisplay_drag_drop (GtkWidget      *widget,
 	      break;
 	    }
 
-	  gimage_get_background (src_gimage, drawable, bg);
+	  gimp_image_get_background (src_gimage, drawable, bg);
 
 	  tiles = tile_manager_new (src_width, src_height, bytes);
 
@@ -865,7 +867,7 @@ gdisplay_drag_drop (GtkWidget      *widget,
 
 	      layer_translate (new_layer, off_x, off_y);
 
-	      gimage_add_layer (dest_gimage, new_layer, -1);
+	      gimp_image_add_layer (dest_gimage, new_layer, -1);
 
 	      undo_push_group_end (dest_gimage);
 
@@ -908,7 +910,7 @@ gdisplay_bucket_fill (GtkWidget      *widget,
     return;
 
   gimage = ((GDisplay *) data)->gimage;
-  drawable = gimage_active_drawable (gimage);
+  drawable = gimp_image_active_drawable (gimage);
   if (!drawable)
     return;
 
@@ -946,8 +948,8 @@ gdisplay_bucket_fill (GtkWidget      *widget,
           size = orig_pat_buf->width * orig_pat_buf->height;
           while (size--)
             {
-              gimage_transform_color (gimage, drawable, d1, d2,
-				      (orig_pat_buf->bytes == 3) ? RGB : GRAY);
+              gimp_image_transform_color (gimage, drawable, d1, d2,
+					  (orig_pat_buf->bytes == 3) ? RGB : GRAY);
               d1 += orig_pat_buf->bytes;
               d2 += pat_buf->bytes;
             }
@@ -972,10 +974,10 @@ gdisplay_bucket_fill (GtkWidget      *widget,
 
   /*  Apply it to the image  */
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &bufPR, TRUE,
-		      gimp_context_get_opacity (context) * 255,
-		      gimp_context_get_paint_mode (context),
-		      NULL, x1, y1);
+  gimp_image_apply_image (gimage, drawable, &bufPR, TRUE,
+			  gimp_context_get_opacity (context) * 255,
+			  gimp_context_get_paint_mode (context),
+			  NULL, x1, y1);
   tile_manager_destroy (buf_tiles);
 
   /*  Update the displays  */

@@ -33,7 +33,6 @@
 #include "draw_core.h"
 #include "drawable.h"
 #include "floating_sel.h"
-#include "gimage.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpdrawable.h"
@@ -1329,10 +1328,10 @@ paths_dialog_advanced_to_path_callback (GtkWidget *widget,
   args[1].arg_type = PDB_IMAGE;
   args[1].value.pdb_int = (gint32) pdb_image_to_id (gimage);
   args[2].arg_type = PDB_DRAWABLE;
-  args[2].value.pdb_int = (gint32) (gimage_active_drawable (gimage))->ID;
+  args[2].value.pdb_int = (gint32) (gimp_image_active_drawable (gimage))->ID;
 
   plug_in_run (proc_rec, args, 3, FALSE, TRUE,
-	       (gimage_active_drawable (gimage))->ID);
+	       (gimp_image_active_drawable (gimage))->ID);
 
   g_free (args);
 
@@ -1370,7 +1369,7 @@ paths_dialog_sel_to_path_callback (GtkWidget *widget,
   args[1].arg_type = PDB_IMAGE;
   args[1].value.pdb_int = (gint32) pdb_image_to_id (gimage);
   args[2].arg_type = PDB_DRAWABLE;
-  args[2].value.pdb_int = (gint32) (gimage_active_drawable (gimage))->ID;
+  args[2].value.pdb_int = (gint32) (gimp_image_active_drawable (gimage))->ID;
 
   /* get the display by asking the current context */
   gdisp = gimp_context_get_display (gimp_context_get_user ());

@@ -25,8 +25,8 @@
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimage.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
 #include "image_map.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"
@@ -84,8 +84,8 @@ image_map_do (gpointer data)
 
   /*  apply the results  */
   pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
-  gimage_apply_image (gimage, _image_map->drawable, &shadowPR,
-		      FALSE, OPAQUE_OPACITY, REPLACE_MODE, NULL, x, y);
+  gimp_image_apply_image (gimage, _image_map->drawable, &shadowPR,
+			  FALSE, OPAQUE_OPACITY, REPLACE_MODE, NULL, x, y);
 
   /*  display the results  */
   if (_image_map->gdisp)

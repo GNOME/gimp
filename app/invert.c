@@ -25,7 +25,7 @@
 #include "appenv.h"
 #include "drawable.h"
 #include "invert.h"
-#include "gimage.h"
+#include "gimpimage.h"
 #include "gimplut.h"
 #include "lut_funcs.h"
 #include "pixel_processor.h"
@@ -42,7 +42,7 @@ image_invert (GimpImage *gimage)
   Argument *return_vals;
   gint nreturn_vals;
 
-  drawable = gimage_active_drawable (gimage);
+  drawable = gimp_image_active_drawable (gimage);
 
   if (gimp_drawable_is_indexed (drawable))
     {

@@ -90,12 +90,6 @@ gimage_new (gint              width,
   return gimage;
 }
 
-GImage *
-gimage_get_ID (gint ID)
-{
-  return pdb_id_to_image (ID);
-}
-
 
 /* Ack, GImages have their own ref counts! This is going to cause
    trouble.. It should be pretty easy to convert to proper GtkObject
@@ -144,11 +138,12 @@ gimage_dirty_handler (GimpImage *gimage)
 }
 
 static void
-gimlist_cb (gpointer im, 
+gimlist_cb (gpointer image, 
 	    gpointer data)
 {
-  GSList** l=(GSList**)data;
-  *l=g_slist_prepend(*l, im);
+  GSList **list = (GSList **) data;
+
+  *list = g_slist_prepend (*list, image);
 }
 
 gint
@@ -162,7 +157,7 @@ gimage_image_count (void)
 
   g_slist_free (list);
 
-  return (num_images);
+  return num_images;
 }
 
 static void
@@ -174,12 +169,11 @@ gimage_destroy_handler (GimpImage *gimage)
   undo_free (gimage);
 
   /*  free all guides  */
-  list = gimage->guides;
-  while (list)
+  for (list = gimage->guides; list; list = g_list_next (list))
     {
       g_free ((Guide*) list->data);
-      list = g_list_next (list);
     }
+
   g_list_free (gimage->guides);
 
   if (gimage_image_count () == 1)  /*  This is the last image  */
@@ -223,7 +217,7 @@ gimage_resize_handler (GimpImage *gimage)
 }
 
 static void
-gimage_restructure_handler (GimpImage* gimage)
+gimage_restructure_handler (GimpImage *gimage)
 {
   gdisplays_update_title (gimage);
 }
@@ -277,7 +271,7 @@ void
 gimage_set_layer_mask_show (GImage    *gimage, 
 			    GimpLayer *layer)
 {
-  int off_x, off_y;
+  gint off_x, off_y;
 
   g_return_if_fail (gimage);
   g_return_if_fail (layer);

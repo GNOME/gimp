@@ -28,8 +28,8 @@
 #include "layer.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "gimage.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
@@ -56,11 +56,11 @@ floating_sel_attach (Layer        *layer,
   if (gimage->floating_sel != NULL)
     {
       floating_sel = gimage->floating_sel;
-      floating_sel_anchor (gimage_floating_sel (gimage));
+      floating_sel_anchor (gimp_image_floating_sel (gimage));
 
       /*  if we were pasting to the old floating selection, paste now to the drawable  */
       if (drawable == GIMP_DRAWABLE (floating_sel))
-	drawable = gimage_active_drawable (gimage);
+	drawable = gimp_image_active_drawable (gimage);
     }
 
   /*  set the drawable and allocate a backing store  */
@@ -78,7 +78,7 @@ floating_sel_attach (Layer        *layer,
   gimage->floating_sel = layer;
 
   /*  add the layer to the gimage  */
-  gimage_add_layer (gimage, layer, 0);
+  gimp_image_add_layer (gimage, layer, 0);
 
   /*  store the affected area from the drawable in the backing store  */
   floating_sel_rigor (layer, TRUE);
@@ -102,7 +102,7 @@ floating_sel_remove (Layer *layer)
   gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer), TRUE);
 
   /*  remove the layer from the gimage  */
-  gimage_remove_layer (gimage, layer);
+  gimp_image_remove_layer (gimage, layer);
 }
 
 void
@@ -136,7 +136,7 @@ floating_sel_anchor (Layer *layer)
 			  GIMP_DRAWABLE (layer)->height, TRUE);
 
   /*  remove the floating selection  */
-  gimage_remove_layer (gimage, layer);
+  gimp_image_remove_layer (gimage, layer);
 
   /*  end the group undo  */
   undo_push_group_end (gimage);
@@ -155,13 +155,13 @@ floating_sel_reset (Layer *layer)
 
   /*  set the underlying drawable to active  */
   if (GIMP_IS_LAYER (layer->fs.drawable))
-    gimage_set_active_layer (gimage, GIMP_LAYER (layer->fs.drawable));
+    gimp_image_set_active_layer (gimage, GIMP_LAYER (layer->fs.drawable));
   else if (GIMP_IS_LAYER_MASK (layer->fs.drawable))
-    gimage_set_active_layer (gimage,
+    gimp_image_set_active_layer (gimage,
 			     GIMP_LAYER_MASK (layer->fs.drawable)->layer);
   else if (GIMP_IS_CHANNEL (layer->fs.drawable))
     {
-      gimage_set_active_channel (gimage, GIMP_CHANNEL (layer->fs.drawable));
+      gimp_image_set_active_channel (gimage, GIMP_CHANNEL (layer->fs.drawable));
       if (gimage->layers)
 	gimage->active_layer = (((Layer *) gimage->layer_stack->data));
       else
@@ -465,10 +465,10 @@ floating_sel_composite (Layer *layer,
 	  /*  apply the fs with the undo specified by the value
 	   *  passed to this function
 	   */
-	  gimage_apply_image (gimage, layer->fs.drawable, &fsPR,
-			      undo, layer->opacity, layer->mode,
-			      NULL,
-			      (x1 - offx), (y1 - offy));
+	  gimp_image_apply_image (gimage, layer->fs.drawable, &fsPR,
+				  undo, layer->opacity, layer->mode,
+				  NULL,
+				  (x1 - offx), (y1 - offy));
 
 	  /*  restore preserve transparency  */
 	  if (preserve_trans)

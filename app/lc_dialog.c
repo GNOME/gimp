@@ -576,7 +576,7 @@ lc_dialog_create_image_menu_callback (gpointer im,
       *data->default_index = data->num_items;
     }
 
-  image_name = g_basename (gimage_filename (gimage));
+  image_name = g_basename (gimp_image_filename (gimage));
   menu_item_label =
     g_strdup_printf ("%s-%d", image_name, pdb_image_to_id (gimage));
   menu_item = gtk_menu_item_new();

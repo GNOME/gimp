@@ -107,7 +107,7 @@ HELP
     }
 
     %invoke = (
-	code => "success = gimage_${op}_$type$extra (gimage, $type) != NULL;"
+	code => "success = gimp_image_${op}_$type$extra (gimage, $type) != NULL;"
     );
 }
 
@@ -131,7 +131,7 @@ sub image_get_prop_proc {
 	  desc => "The $desc", no_declare => 1 }
     );
 
-    my $alias = $func ? "gimage_get_$prop (gimage)" : "gimage->$prop";
+    my $alias = $func ? "gimp_image_get_$prop (gimage)" : "gimage->$prop";
     $alias = "g_strdup ($alias)" if $type eq 'string';
     $outargs[0]->{alias} .= "$alias";
 
@@ -172,7 +172,7 @@ sub image_set_prop_proc {
 	$inargs[1]->{desc} .= ' (%%desc%%)';
     }
 
-    $invoke{code} = $func ? "gimage_set_$prop (gimage, $prop);"
+    $invoke{code} = $func ? "gimp_image_set_$prop (gimage, $prop);"
 			  : "gimage->$prop = $prop;";
 
     if ($type eq 'color') {
@@ -298,7 +298,7 @@ HELP
 	code => <<'CODE'
 {
   gimp_add_busy_cursors_until_idle ();
-  gimage_resize (gimage, new_width, new_height, offx, offy);
+  gimp_image_resize (gimage, new_width, new_height, offx, offy);
 }
 CODE
     );
@@ -326,7 +326,7 @@ HELP
 	code => <<'CODE'
 {
   gimp_add_busy_cursors_until_idle ();
-  gimage_scale (gimage, new_width, new_height);
+  gimp_image_scale (gimage, new_width, new_height);
 }
 CODE
     );
@@ -363,7 +363,7 @@ HELP
 
     @inargs = ( &std_image_arg );
 
-    %invoke = ( code => 'gimage_free_shadow (gimage);' );
+    %invoke = ( code => 'gimp_image_free_shadow (gimage);' );
 }
 
 sub image_get_layers {
@@ -394,7 +394,7 @@ HELP
 
     @inargs = ( &std_image_arg );
 
-    %invoke = ( code => 'gimage_unset_active_channel (gimage);' );
+    %invoke = ( code => 'gimp_image_unset_active_channel (gimage);' );
 }
 
 sub image_pick_correlate_layer {
@@ -421,7 +421,7 @@ HELP
     );
 
     %invoke = (
-	code => 'layer = gimage_pick_correlate_layer (gimage, x, y);'
+	code => 'layer = gimp_image_pick_correlate_layer (gimage, x, y);'
     );
 }
 
@@ -477,7 +477,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  layer = gimage_merge_visible_layers (gimage, merge_type);
+  layer = gimp_image_merge_visible_layers (gimage, merge_type);
   success = layer != NULL;
 }
 CODE
@@ -543,7 +543,7 @@ HELP
     );
 
     %invoke = (
-	code => 'success = (layer = gimage_flatten (gimage)) != NULL;'
+	code => 'success = (layer = gimp_image_flatten (gimage)) != NULL;'
     );
 }
 
@@ -571,7 +571,7 @@ HELP
 	my $base = $_ eq 'color' ? 'RGB' : uc($_);
 	$invoke{code} .= ' ' x 6 if $once++;
 	$invoke{code} .= <<CODE
-(drawable_$_ (GIMP_DRAWABLE (layer)) && gimage_base_type (gimage) != $base) ||
+(drawable_$_ (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != $base) ||
 CODE
     }
     $invoke{code} =~ s/ \|\|\n$/)\n/s;
@@ -579,7 +579,7 @@ CODE
     $invoke{code} .= <<'CODE';
     success = FALSE;
   else
-    success = gimage_add_layer (gimage, layer, MAX (position, -1)) != NULL;
+    success = gimp_image_add_layer (gimage, layer, MAX (position, -1)) != NULL;
 }
 CODE
 }
@@ -601,7 +601,7 @@ HELP
 	&layer_arg
     );
 
-    %invoke = ( code => 'gimage_remove_layer (gimage, layer);' );
+    %invoke = ( code => 'gimp_image_remove_layer (gimage, layer);' );
 }
 
 sub image_add_layer_mask {
@@ -627,7 +627,7 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-success = gimage_add_layer_mask (gimage, layer, mask) != NULL;
+success = gimp_image_add_layer_mask (gimage, layer, mask) != NULL;
 CODE
     );
 }
@@ -650,7 +650,7 @@ HELP
     );
     $inargs[1]->{desc} .= ' from which to remove mask';
 
-    %invoke = ( code => 'gimage_remove_layer_mask (gimage, layer, mode);' );
+    %invoke = ( code => 'gimp_image_remove_layer_mask (gimage, layer, mode);' );
 }
 
 sub image_raise_channel {
@@ -683,7 +683,7 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-success = gimage_add_channel (gimage, channel, MAX (position, -1)) != NULL;
+success = gimp_image_add_channel (gimage, channel, MAX (position, -1)) != NULL;
 CODE
     );
 }
@@ -703,7 +703,7 @@ HELP
 	&channel_arg
     );
 
-    %invoke = ( code => 'gimage_remove_channel (gimage, channel);' );
+    %invoke = ( code => 'gimp_image_remove_channel (gimage, channel);' );
 }
 
 sub image_active_drawable {
@@ -728,7 +728,7 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-success = (drawable = gimage_active_drawable (gimage)) != NULL;
+success = (drawable = gimp_image_active_drawable (gimage)) != NULL;
 CODE
     );
 }
@@ -750,7 +750,7 @@ HELP
 	  desc => "The image's base type: { %%desc%% }" }
     );
 
-    %invoke = ( code => 'base_type = gimage_base_type (gimage);' );
+    %invoke = ( code => 'base_type = gimp_image_base_type (gimage);' );
 }
 
 sub image_get_cmap {
@@ -780,7 +780,7 @@ HELP
 {
   num_bytes = gimage->num_cols * 3;
   cmap = g_new (guint8, num_bytes);
-  memcpy (cmap, gimage_cmap (gimage), num_bytes);
+  memcpy (cmap, gimp_image_cmap (gimage), num_bytes);
 }
 CODE
     );
@@ -872,7 +872,7 @@ HELP
 	  alias => 'success ? TRUE : FALSE', no_declare => 1 }
     );
 
-    %invoke = ( code => 'success = gimage_enable_undo (gimage);' );
+    %invoke = ( code => 'success = gimp_image_undo_enable (gimage);' );
 }
 
 sub image_undo_disable {
@@ -895,7 +895,7 @@ HELP
 	  alias => 'success ? TRUE : FALSE', no_declare => 1 }
     );
 
-    %invoke = ( code => 'success = gimage_disable_undo (gimage);' );
+    %invoke = ( code => 'success = gimp_image_undo_disable (gimage);' );
 }
 
 sub image_undo_thaw {
@@ -924,7 +924,7 @@ HELP
 	  alias => 'success ? TRUE : FALSE', no_declare => 1 }
     );
 
-    %invoke = ( code => 'success = gimage_thaw_undo (gimage);' );
+    %invoke = ( code => 'success = gimp_image_undo_thaw (gimage);' );
 }
 
 sub image_undo_freeze {
@@ -953,7 +953,7 @@ HELP
 	  alias => 'success ? TRUE : FALSE', no_declare => 1 }
     );
 
-    %invoke = ( code => 'success = gimage_freeze_undo (gimage);' );
+    %invoke = ( code => 'success = gimp_image_undo_freeze (gimage);' );
 }
 
 sub image_clean_all {
@@ -970,7 +970,7 @@ HELP
 
     @inargs = ( &std_image_arg );
 
-    %invoke = ( code => 'gimage_clean_all (gimage);' );
+    %invoke = ( code => 'gimp_image_clean_all (gimage);' );
 }
 
 sub image_floating_selection {
@@ -991,7 +991,7 @@ HELP
 	  return_fail => -1 }
     );
 
-    %invoke = ( code => 'floating_sel = gimage_floating_sel (gimage);' );
+    %invoke = ( code => 'floating_sel = gimp_image_floating_sel (gimage);' );
 }
 
 sub image_floating_sel_attached_to {
@@ -1017,7 +1017,7 @@ HELP
 	vars => [ 'Layer *floating_sel' ],
 	code => <<'CODE'
 {
-  floating_sel = gimage_floating_sel (gimage);
+  floating_sel = gimp_image_floating_sel (gimage);
 
   if (floating_sel)
     drawable = GIMP_DRAWABLE (GIMP_LAYER (floating_sel)->fs.drawable);
@@ -1094,7 +1094,7 @@ CODE2
 
 &image_accessors('selection', 'selection', 'selection', 1,
 		 [ <<'CODE', undef ]);
-    $invoke{code} = "success = (selection = gimage_get_mask (gimage)) != NULL;";
+    $invoke{code} = "success = (selection = gimp_image_get_mask (gimage)) != NULL;";
     delete @{$outargs[0]}{qw(alias no_declare)};
     $outargs[0]->{desc} .= ' channel';
     $outargs[0]->{init} = 1;
@@ -1114,11 +1114,11 @@ my $comp_arg = <<'CODE';
     $invoke{code} = <<'SUCCESS';
 {
   if (component == GRAY_CHANNEL)
-    success = gimage_base_type (gimage) == GRAY;
+    success = gimp_image_base_type (gimage) == GRAY;
   else if (component == INDEXED_CHANNEL)
-    success = gimage_base_type (gimage) == INDEXED;
+    success = gimp_image_base_type (gimage) == INDEXED;
   else
-    success = gimage_base_type (gimage) == RGB;
+    success = gimp_image_base_type (gimage) == RGB;
 }
 SUCCESS
 CODE

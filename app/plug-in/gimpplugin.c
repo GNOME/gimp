@@ -87,7 +87,7 @@
 #include "errors.h"
 #include "gdisplay.h"
 #include "general.h"
-#include "gimage.h"
+#include "gimpimage.h"
 #include "gimpprogress.h"
 #include "gimprc.h"
 #include "gradient_select.h"
@@ -1362,7 +1362,7 @@ plug_in_repeat (gboolean with_interface)
       /* initialize the first three plug-in arguments  */
       args[0].value.pdb_int = (with_interface ? RUN_INTERACTIVE : RUN_WITH_LAST_VALS);
       args[1].value.pdb_int = pdb_image_to_id (gdisplay->gimage);
-      args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
+      args[2].value.pdb_int = drawable_ID (gimp_image_active_drawable (gdisplay->gimage));
 
       /* run the plug-in procedure */
       plug_in_run (last_plug_in, args, 3, FALSE, TRUE, gdisplay->ID);
@@ -2624,7 +2624,7 @@ plug_in_callback (GtkWidget *widget,
 	  /* initialize the first 3 plug-in arguments  */
 	  args[0].value.pdb_int = RUN_INTERACTIVE;
 	  args[1].value.pdb_int = pdb_image_to_id (gdisplay->gimage);
-	  args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
+	  args[2].value.pdb_int = drawable_ID (gimp_image_active_drawable (gdisplay->gimage));
 	  argc = 3;
 	}
       else
@@ -2647,7 +2647,7 @@ plug_in_callback (GtkWidget *widget,
 	      gdisp_ID = gdisplay->ID;
 
 	      args[1].value.pdb_int = pdb_image_to_id (gdisplay->gimage);
-	      args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
+	      args[2].value.pdb_int = drawable_ID (gimp_image_active_drawable (gdisplay->gimage));
 	      argc = 3;
 	    }
 	  else

@@ -1,3 +1,33 @@
+2000-12-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimage.[ch]: removed all the
+	"typedef gimage_function gimp_image_function" stuff so we can clearly
+	see what is really a GImage function.
+	Removed gimage_get_ID(). Use pdb_id_to_image() instead.
+
+	* app/airbrush.c
+	* app/desaturate.c
+	* app/disp_callbacks.c
+	* app/equalize.c
+	* app/fileops.c
+	* app/floating_sel.c
+	* app/gdisplay_ops.c
+	* app/gimpdrawable.c
+	* app/global_edit.c
+	* app/image_map.c
+	* app/invert.c
+	* app/lc_dialog.c
+	* app/paths_dialog.c
+	* app/plug_in.c
+	* app/xcf.c
+
+	* app/color_cmds.c
+	* app/convert_cmds.c
+	* app/image_cmds.c
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/convert.pdb
+	* tools/pdbgen/pdb/image.pdb: changed accordingly.
+
 2000-12-29  Sven Neumann  <sven@gimp.org>
 
 	* TODO.xml: more things to do
