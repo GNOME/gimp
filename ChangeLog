@@ -1,3 +1,33 @@
+2004-10-23  Michael Natterer  <mitch@gimp.org>
+
+	When there are variants of actions with and without dialog, let
+	the dialog-less actions try to use the values from the last dialog
+	invocation:
+
+	* app/actions/channels-actions.c
+	* app/actions/channels-commands.[ch]
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.[ch]
+	* app/actions/vectors-actions.c
+	* app/actions/vectors-commands.[ch]: renamed the foo-new-defaults
+	actions to foo-new-last-values and use the last values entered in
+	the dialogs.
+
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpvectorstreeview.c: changed accordingly. Show
+	the dialog on clicking "New" and call the last-values action on
+	<shift>+click.
+
+	* app/actions/select-actions.c
+	* app/actions/vectors-commands.c: renamed the foo-stroke-last-vals
+	to -last-values.
+
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimpvectorstreeview.c: stroke with last values on
+	<shift> clicking the stroke buttons.
+
 2004-10-23  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_save): save to a

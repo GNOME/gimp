@@ -141,7 +141,7 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   item_view_class->activate_action     = "vectors-path-tool";
   item_view_class->edit_action         = "vectors-edit-attributes";
   item_view_class->new_action          = "vectors-new";
-  item_view_class->new_default_action  = "vectors-new-default";
+  item_view_class->new_default_action  = "vectors-new-last-values";
   item_view_class->raise_action        = "vectors-raise";
   item_view_class->raise_top_action    = "vectors-raise-to-top";
   item_view_class->lower_action        = "vectors-lower";
@@ -210,7 +210,10 @@ gimp_vectors_tree_view_constructor (GType                  type,
 
   view->stroke_button =
     gimp_editor_add_action_button (editor, "vectors",
-                                   "vectors-stroke", NULL);
+                                   "vectors-stroke",
+                                   "vectors-stroke-last-values",
+                                   GDK_SHIFT_MASK,
+                                   NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
 				  GTK_BUTTON (view->stroke_button),
 				  GIMP_TYPE_VECTORS);

@@ -72,14 +72,14 @@ static GimpActionEntry layers_actions[] =
 
   { "layers-new", GTK_STOCK_NEW,
     N_("_New Layer..."), "",
-    N_("New layer dialog"),
+    N_("New layer..."),
     G_CALLBACK (layers_new_cmd_callback),
     GIMP_HELP_LAYER_NEW },
 
-  { "layers-new-default", GTK_STOCK_NEW,
+  { "layers-new-last-values", GTK_STOCK_NEW,
     N_("_New Layer"), "",
-    N_("New layer"),
-    G_CALLBACK (layers_new_default_cmd_callback),
+    N_("New layer with last values"),
+    G_CALLBACK (layers_new_last_vals_cmd_callback),
     GIMP_HELP_LAYER_NEW },
 
   { "layers-duplicate", GIMP_STOCK_DUPLICATE,
@@ -440,10 +440,10 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-tool",       text_layer && !ac);
   SET_SENSITIVE ("layers-edit-attributes", layer && !fs && !ac);
 
-  SET_SENSITIVE ("layers-new",          gimage);
-  SET_SENSITIVE ("layers-new-default",  gimage);
-  SET_SENSITIVE ("layers-duplicate",    layer && !fs && !ac);
-  SET_SENSITIVE ("layers-delete",       layer && !ac);
+  SET_SENSITIVE ("layers-new",             gimage);
+  SET_SENSITIVE ("layers-new-last-values", gimage);
+  SET_SENSITIVE ("layers-duplicate",       layer && !fs && !ac);
+  SET_SENSITIVE ("layers-delete",          layer && !ac);
 
   SET_SENSITIVE ("layers-select-top",      layer && !fs && !ac && prev);
   SET_SENSITIVE ("layers-select-bottom",   layer && !fs && !ac && next);

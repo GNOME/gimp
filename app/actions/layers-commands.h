@@ -26,7 +26,7 @@ void   layers_edit_attributes_cmd_callback    (GtkAction   *action,
                                                gpointer     data);
 void   layers_new_cmd_callback                (GtkAction   *action,
                                                gpointer     data);
-void   layers_new_default_cmd_callback        (GtkAction   *action,
+void   layers_new_last_vals_cmd_callback      (GtkAction   *action,
                                                gpointer     data);
 
 void   layers_select_cmd_callback             (GtkAction   *action,

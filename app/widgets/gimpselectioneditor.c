@@ -187,7 +187,10 @@ gimp_selection_editor_constructor (GType                  type,
 
   editor->stroke_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor), "select",
-                                   "select-stroke", NULL);
+                                   "select-stroke",
+                                   "select-stroke-last-values",
+                                   GDK_SHIFT_MASK,
+                                   NULL);
 
   return object;
 }

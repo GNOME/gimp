@@ -57,14 +57,14 @@ static GimpActionEntry vectors_actions[] =
 
   { "vectors-new", GTK_STOCK_NEW,
     N_("_New Path..."), "",
-    N_("New path dialog"),
+    N_("New path..."),
     G_CALLBACK (vectors_new_cmd_callback),
     GIMP_HELP_PATH_NEW },
 
-  { "vectors-new-default", GTK_STOCK_NEW,
+  { "vectors-new-last-values", GTK_STOCK_NEW,
     N_("_New Path"), "",
-    N_("New path"),
-    G_CALLBACK (vectors_new_default_cmd_callback),
+    N_("New path with last values"),
+    G_CALLBACK (vectors_new_last_vals_cmd_callback),
     GIMP_HELP_PATH_NEW },
 
   { "vectors-duplicate", GIMP_STOCK_DUPLICATE,
@@ -110,12 +110,13 @@ static GimpActionEntry vectors_actions[] =
 
   { "vectors-stroke", GIMP_STOCK_PATH_STROKE,
     N_("Stro_ke Path..."), NULL,
-    N_("Stroke path"),
+    N_("Stroke path..."),
     G_CALLBACK (vectors_stroke_cmd_callback),
     GIMP_HELP_PATH_STROKE },
 
-  { "vectors-stroke-last-vals", GIMP_STOCK_PATH_STROKE,
-    "Stroke Path with last Values", NULL, NULL,
+  { "vectors-stroke-last-values", GIMP_STOCK_PATH_STROKE,
+    N_("Stro_ke Path"), NULL,
+    N_("Stroke path with last values"),
     G_CALLBACK (vectors_stroke_last_vals_cmd_callback),
     GIMP_HELP_PATH_STROKE },
 
@@ -278,11 +279,11 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-path-tool",       vectors);
   SET_SENSITIVE ("vectors-edit-attributes", vectors);
 
-  SET_SENSITIVE ("vectors-new",           gimage);
-  SET_SENSITIVE ("vectors-new-default",   gimage);
-  SET_SENSITIVE ("vectors-duplicate",     vectors);
-  SET_SENSITIVE ("vectors-delete",        vectors);
-  SET_SENSITIVE ("vectors-merge-visible", n_vectors > 1);
+  SET_SENSITIVE ("vectors-new",             gimage);
+  SET_SENSITIVE ("vectors-new-last-values", gimage);
+  SET_SENSITIVE ("vectors-duplicate",       vectors);
+  SET_SENSITIVE ("vectors-delete",          vectors);
+  SET_SENSITIVE ("vectors-merge-visible",   n_vectors > 1);
 
   SET_SENSITIVE ("vectors-raise",           vectors && prev);
   SET_SENSITIVE ("vectors-raise-to-top",    vectors && prev);
@@ -304,7 +305,7 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-selection-to-vectors-short",    gimage && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-advanced", gimage && !mask_empty);
   SET_SENSITIVE ("vectors-stroke",                        vectors);
-  SET_SENSITIVE ("vectors-stroke-last-vals",              vectors);
+  SET_SENSITIVE ("vectors-stroke-last-values",            vectors);
 
   SET_SENSITIVE ("vectors-selection-replace",      vectors);
   SET_SENSITIVE ("vectors-selection-from-vectors", vectors);

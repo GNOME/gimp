@@ -24,7 +24,7 @@ void   channels_edit_attributes_cmd_callback (GtkAction   *action,
                                               gpointer     data);
 void   channels_new_cmd_callback             (GtkAction   *action,
                                               gpointer     data);
-void   channels_new_default_cmd_callback     (GtkAction   *action,
+void   channels_new_last_vals_cmd_callback   (GtkAction   *action,
                                               gpointer     data);
 
 void   channels_raise_cmd_callback           (GtkAction   *action,

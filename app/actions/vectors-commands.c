@@ -174,14 +174,15 @@ vectors_new_cmd_callback (GtkAction *action,
 }
 
 void
-vectors_new_default_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+vectors_new_last_vals_cmd_callback (GtkAction *action,
+                                    gpointer   data)
 {
   GimpImage   *gimage;
   GimpVectors *new_vectors;
   return_if_no_image (gimage, data);
 
-  new_vectors = gimp_vectors_new (gimage, _("Empty Path"));
+  new_vectors = gimp_vectors_new (gimage,
+                                  vectors_name ? vectors_name : _("New Path"));
 
   gimp_image_add_vectors (gimage, new_vectors, -1);
 

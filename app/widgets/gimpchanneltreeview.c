@@ -127,7 +127,7 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   item_view_class->activate_action     = "channels-edit-attributes";
   item_view_class->edit_action         = "channels-edit-attributes";
   item_view_class->new_action          = "channels-new";
-  item_view_class->new_default_action  = "channels-new-default";
+  item_view_class->new_default_action  = "channels-new-last-values";
   item_view_class->raise_action        = "channels-raise";
   item_view_class->raise_top_action    = "channels-raise-to-top";
   item_view_class->lower_action        = "channels-lower";

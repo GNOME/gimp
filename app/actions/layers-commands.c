@@ -256,8 +256,8 @@ layers_new_cmd_callback (GtkAction *action,
 }
 
 void
-layers_new_default_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+layers_new_last_vals_cmd_callback (GtkAction *action,
+                                   gpointer   data)
 {
   GimpImage            *gimage;
   GimpLayer            *floating_sel;
@@ -303,11 +303,12 @@ layers_new_default_cmd_callback (GtkAction *action,
 
   new_layer = gimp_layer_new (gimage, width, height,
                               gimp_image_base_type_with_alpha (gimage),
-                              _("Empty Layer"), opacity, mode);
+                              layer_name ? layer_name : _("New Layer"),
+                              opacity, mode);
 
   gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_layer),
                               action_data_get_context (data),
-                              GIMP_TRANSPARENT_FILL);
+                              fill_type);
   gimp_item_translate (GIMP_ITEM (new_layer), off_x, off_y, FALSE);
 
   gimp_image_add_layer (gimage, new_layer, -1);

@@ -26,7 +26,7 @@ void   vectors_edit_attributes_cmd_callback      (GtkAction   *action,
                                                   gpointer     data);
 void   vectors_new_cmd_callback                  (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_new_default_cmd_callback          (GtkAction   *action,
+void   vectors_new_last_vals_cmd_callback        (GtkAction   *action,
                                                   gpointer     data);
 
 void   vectors_raise_cmd_callback                (GtkAction   *action,

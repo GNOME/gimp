@@ -52,14 +52,14 @@ static GimpActionEntry channels_actions[] =
 
   { "channels-new", GTK_STOCK_NEW,
     N_("_New Channel..."), "",
-    N_("New channel dialog"),
+    N_("New channel..."),
     G_CALLBACK (channels_new_cmd_callback),
     GIMP_HELP_CHANNEL_NEW },
 
-  { "channels-new-default", GTK_STOCK_NEW,
+  { "channels-new-last-values", GTK_STOCK_NEW,
     N_("_New Channel"), "",
-    N_("New channel"),
-    G_CALLBACK (channels_new_default_cmd_callback),
+    N_("New channel with last values"),
+    G_CALLBACK (channels_new_last_vals_cmd_callback),
     GIMP_HELP_CHANNEL_NEW },
 
   { "channels-duplicate", GIMP_STOCK_DUPLICATE,
@@ -185,7 +185,7 @@ channels_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("channels-edit-attributes", !fs && channel);
 
   SET_SENSITIVE ("channels-new",             !fs && gimage);
-  SET_SENSITIVE ("channels-new-default",     !fs && gimage);
+  SET_SENSITIVE ("channels-new-last-values", !fs && gimage);
   SET_SENSITIVE ("channels-duplicate",       !fs && (channel || component));
   SET_SENSITIVE ("channels-delete",          !fs && channel);
 

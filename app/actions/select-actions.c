@@ -102,12 +102,13 @@ static GimpActionEntry select_actions[] =
 
   { "select-stroke", GIMP_STOCK_SELECTION_STROKE,
     N_("_Stroke Selection..."), NULL,
-    N_("Stroke selection"),
+    N_("Stroke selection..."),
     G_CALLBACK (select_stroke_cmd_callback),
     GIMP_HELP_SELECTION_STROKE },
 
-  { "select-stroke-last-vals", GIMP_STOCK_SELECTION_STROKE,
-    "Stroke Selection with last Values", NULL, NULL,
+  { "select-stroke-last-values", GIMP_STOCK_SELECTION_STROKE,
+    N_("_Stroke Selection"), NULL,
+    N_("Stroke selection with last values"),
     G_CALLBACK (select_stroke_last_vals_cmd_callback),
     GIMP_HELP_SELECTION_STROKE }
 };
@@ -152,9 +153,9 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-grow",    drawable && sel);
   SET_SENSITIVE ("select-border",  drawable && sel);
 
-  SET_SENSITIVE ("select-save",             drawable && !fs);
-  SET_SENSITIVE ("select-stroke",           drawable && sel);
-  SET_SENSITIVE ("select-stroke-last-vals", drawable && sel);
+  SET_SENSITIVE ("select-save",               drawable && !fs);
+  SET_SENSITIVE ("select-stroke",             drawable && sel);
+  SET_SENSITIVE ("select-stroke-last-values", drawable && sel);
 
 #undef SET_SENSITIVE
 }

@@ -240,7 +240,7 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->activate_action     = "layers-text-tool";
   item_view_class->edit_action         = "layers-edit-attributes";
   item_view_class->new_action          = "layers-new";
-  item_view_class->new_default_action  = "layers-new-default";
+  item_view_class->new_default_action  = "layers-new-last-values";
   item_view_class->raise_action        = "layers-raise";
   item_view_class->raise_top_action    = "layers-raise-to-top";
   item_view_class->lower_action        = "layers-lower";

@@ -130,8 +130,8 @@ channels_new_cmd_callback (GtkAction *action,
 }
 
 void
-channels_new_default_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+channels_new_last_vals_cmd_callback (GtkAction *action,
+                                     gpointer   data)
 {
   GimpImage   *gimage;
   GimpChannel *new_channel;
@@ -151,14 +151,15 @@ channels_new_default_cmd_callback (GtkAction *action,
     {
       width  = gimp_image_get_width (gimage);
       height = gimp_image_get_height (gimage);
-      gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.5);
+      color  = channel_color;
     }
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
                                _("New Channel"));
 
   new_channel = gimp_channel_new (gimage, width, height,
-                                  _("Empty Channel"), &color);
+                                  channel_name ? channel_name :
+                                  _("New Channel"), &color);
 
   gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
                               action_data_get_context (data),

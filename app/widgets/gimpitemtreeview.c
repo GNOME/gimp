@@ -418,8 +418,8 @@ gimp_item_tree_view_constructor (GType                  type,
 
   item_view->new_button =
     gimp_editor_add_action_button (editor, item_view_class->action_group,
-                                   item_view_class->new_default_action,
                                    item_view_class->new_action,
+                                   item_view_class->new_default_action,
                                    GDK_SHIFT_MASK,
                                    NULL);
   /*  connect "drop to new" manually as it makes a difference whether
