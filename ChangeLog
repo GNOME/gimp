@@ -1,3 +1,8 @@
+2003-06-06  Maurits Rijk <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/script-fu/scripts/addborder.scm: fix for #114495 (Script-Fu:
+	Add Border can't be (complete) undone.)
+
 2003-06-06  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gfig/gfig.c (gfig_save_callbk): fixed broken usage of

@@ -26,10 +26,8 @@
 
 (define (deltacolour col delta)
   (let* ((newcol (+ col delta)))
-;    (print "Old colour -") (print col)
     (if (< newcol 0) (set! newcol 0))
     (if (> newcol 255) (set! newcol 255))
-;    (print "New colour") (print newcol)
     newcol)
   )
 
@@ -107,7 +105,7 @@
 	 (height (+ oheight (* 2 ysize)))
 	 (layer (car (gimp-layer-new img width height RGBA_IMAGE "Border-Layer" 100 NORMAL))))
 ;Add this for debugging    (verbose 4)
-    (gimp-image-undo-disable img)
+    (gimp-undo-push-group-start img)
     (gimp-drawable-fill layer TRANS-IMAGE-FILL)
     (gimp-image-resize img
 		       width
@@ -154,12 +152,11 @@
     (gimp-edit-fill layer BG-IMAGE-FILL)
     (gimp-selection-none img)
     (gimp-image-add-layer img layer 0)
-    (gimp-image-undo-enable img)
+    (gimp-undo-push-group-end img)
     (gimp-palette-set-background old-bg)
     (gimp-displays-flush)
     )
 )
-
 
 (script-fu-register "script-fu-addborder"
 		    _"<Image>/Script-Fu/Decor/Add Border..."
