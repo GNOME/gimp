@@ -30,6 +30,7 @@ typedef struct _BrushEditGeneratedWindow
   GtkWidget *preview;
   GtkWidget *scale_label;
   GtkWidget *options_box;
+  GtkWidget *name;
   GtkAdjustment *radius_data;
   GtkAdjustment *hardness_data;
   GtkAdjustment *angle_data;

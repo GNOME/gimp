@@ -90,6 +90,7 @@ static char *     old_swap_path;
 static char *     old_plug_in_path;
 static char *     old_module_path;
 static char *     old_brush_path;
+static char *     old_brush_vbr_path;
 static char *     old_pattern_path;
 static char *     old_palette_path;
 static char *     old_gradient_path;
@@ -115,6 +116,7 @@ static char *     edit_swap_path = NULL;
 static char *     edit_plug_in_path = NULL;
 static char *     edit_module_path = NULL;
 static char *     edit_brush_path = NULL;
+static char *     edit_brush_vbr_path = NULL;
 static char *     edit_pattern_path = NULL;
 static char *     edit_palette_path = NULL;
 static char *     edit_gradient_path = NULL;
@@ -300,6 +302,7 @@ file_prefs_save_callback (GtkWidget *widget,
   gchar *save_plug_in_path;
   gchar *save_module_path;
   gchar *save_brush_path;
+  gchar *save_brush_vbr_path;
   gchar *save_pattern_path;
   gchar *save_palette_path;
   gchar *save_gradient_path;
@@ -320,6 +323,7 @@ file_prefs_save_callback (GtkWidget *widget,
   save_plug_in_path = plug_in_path;
   save_module_path = module_path;
   save_brush_path = brush_path;
+  save_brush_vbr_path = brush_vbr_path;
   save_pattern_path = pattern_path;
   save_palette_path = palette_path;
   save_gradient_path = gradient_path;
@@ -474,6 +478,12 @@ file_prefs_save_callback (GtkWidget *widget,
       brush_path = edit_brush_path;
       restart_notification = TRUE;
     }
+  if (file_prefs_strcmp (brush_vbr_path, edit_brush_vbr_path))
+    {
+      update = g_list_append (update, "brush-vbr-path");
+      brush_vbr_path = edit_brush_vbr_path;
+      restart_notification = TRUE;
+    }
   if (file_prefs_strcmp (pattern_path, edit_pattern_path))
     {
       update = g_list_append (update, "pattern-path");
@@ -528,6 +538,7 @@ file_prefs_save_callback (GtkWidget *widget,
   plug_in_path = save_plug_in_path;
   module_path = save_module_path;
   brush_path = save_brush_path;
+  brush_vbr_path = save_brush_vbr_path;
   pattern_path = save_pattern_path;
   palette_path = save_palette_path;
   gradient_path = save_gradient_path;
@@ -605,6 +616,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   file_prefs_strset (&edit_plug_in_path, old_plug_in_path);
   file_prefs_strset (&edit_module_path, old_module_path);
   file_prefs_strset (&edit_brush_path, old_brush_path);
+  file_prefs_strset (&edit_brush_vbr_path, old_brush_vbr_path);
   file_prefs_strset (&edit_pattern_path, old_pattern_path);
   file_prefs_strset (&edit_palette_path, old_palette_path);
   file_prefs_strset (&edit_gradient_path, old_gradient_path);
@@ -1406,6 +1418,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       edit_temp_path = file_prefs_strdup (temp_path);	
       edit_swap_path = file_prefs_strdup (swap_path);
       edit_brush_path = file_prefs_strdup (brush_path);
+      edit_brush_vbr_path = file_prefs_strdup (brush_vbr_path);
       edit_pattern_path = file_prefs_strdup (pattern_path);
       edit_palette_path = file_prefs_strdup (palette_path);
       edit_plug_in_path = file_prefs_strdup (plug_in_path);
@@ -1456,6 +1469,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   file_prefs_strset (&old_plug_in_path, edit_plug_in_path);
   file_prefs_strset (&old_module_path, edit_module_path);
   file_prefs_strset (&old_brush_path, edit_brush_path);
+  file_prefs_strset (&old_brush_vbr_path, edit_brush_vbr_path);
   file_prefs_strset (&old_pattern_path, edit_pattern_path);
   file_prefs_strset (&old_palette_path, edit_palette_path);
   file_prefs_strset (&old_gradient_path, edit_gradient_path);
@@ -2398,6 +2412,8 @@ file_pref_cmd_callback (GtkWidget *widget,
     } paths[] = {
       { N_("Brushes"),   N_("Brushes Directories"),   N_("Select Brushes Dir"),
 	&edit_brush_path },
+      { N_("Generated Brushes"),   N_("Generated Brushes Directories"),   N_("Select Generated Brushes Dir"),
+	&edit_brush_vbr_path },
       { N_("Patterns"),  N_("Patterns Directories"),  N_("Select Patterns Dir"),
 	&edit_pattern_path },
       { N_("Palettes"),  N_("Palettes Directories"),  N_("Select Palettes Dir"),

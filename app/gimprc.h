@@ -27,6 +27,7 @@ extern char *    plug_in_path;
 extern char *    temp_path;
 extern char *    swap_path;
 extern char *    brush_path;
+extern char *    brush_vbr_path;
 extern char *    default_brush;
 extern char *    pattern_path;
 extern char *    default_pattern;

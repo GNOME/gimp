@@ -50,6 +50,7 @@
 #include "gimplistP.h"
 #include "gimpbrushlistP.h"
 #include "dialog_handler.h"
+#include "general.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -201,11 +202,71 @@ brush_compare_func (gconstpointer first, gconstpointer second)
 void
 brushes_free ()
 {
-  
+  printf("freeing brushes\n");
   if (brush_list)
   {
     while (GIMP_LIST(brush_list)->list)
-      gimp_brush_list_remove(brush_list, GIMP_LIST(brush_list)->list->data);
+    {
+      GimpBrush * b = GIMP_BRUSH (GIMP_LIST(brush_list)->list->data);
+      char * filename = b->filename;
+	if (GIMP_IS_BRUSH_GENERATED (b))
+	{
+	  if (!filename)
+	  {
+	      char *home;
+	      char *local_path;
+	      char *first_token;
+	      char *token;
+	      char *path;
+
+	      if (brush_vbr_path)
+		{
+		  printf("posibly saving %s\n", b->name);
+		  /*  Get the first path specified in the brush vbr path variable */
+		  home = getenv("HOME");
+		  local_path = g_strdup (brush_vbr_path);
+		  first_token = local_path;
+		  token = xstrsep(&first_token, ":");
+
+		  if (token)
+		    {
+		      if (*token == '~')
+			{
+			  path = g_malloc(strlen(home) + strlen(token) + 1);
+			  sprintf(path, "%s%s", home, token + 1);
+			}
+		      else
+			{
+			  path = g_malloc(strlen(token) + 1);
+			  strcpy(path, token);
+			}
+									 
+		      filename = g_malloc (strlen (path) + strlen (b->name) + 2 + 4);
+		      sprintf (filename, "%s/%s.vbr", path, b->name);
+
+		      g_free (path);
+		    }
+		  g_free (local_path);
+		}
+	      else
+		filename = NULL;
+	  }
+	  else
+	  {
+	   if (strcmp(&filename[strlen(filename) - 4], ".vbr"))
+		filename = NULL;
+	  }
+
+	  /* okay we are ready to try to save the generated file*/
+	  if (filename)
+	    {
+	      printf("saving %s\n", filename);
+	      gimp_brush_generated_save ( GIMP_BRUSH_GENERATED(b), filename);
+	    }
+	}
+
+      gimp_brush_list_remove(brush_list, b);
+    }
   }
 
   have_default_brush = 0;

@@ -101,6 +101,7 @@ char *    plug_in_path = NULL;
 char *    temp_path = NULL;
 char *    swap_path = NULL;
 char *    brush_path = NULL;
+char *    brush_vbr_path = NULL;
 char *    default_brush = NULL;
 char *    pattern_path = NULL;
 char *    default_pattern = NULL;
@@ -227,6 +228,7 @@ static ParseFunc funcs[] =
   { "temp-path",                 TT_PATH,       &temp_path, NULL },
   { "swap-path",                 TT_PATH,       &swap_path, NULL },
   { "brush-path",                TT_PATH,       &brush_path, NULL },
+  { "brush-vbr-path",            TT_PATH,       &brush_vbr_path, NULL },
   { "pattern-path",              TT_PATH,       &pattern_path, NULL },
   { "plug-in-path",              TT_PATH,       &plug_in_path, NULL },
   { "palette-path",              TT_PATH,       &palette_path, NULL },

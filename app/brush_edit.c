@@ -101,7 +101,7 @@ brush_edit_brush_dirty_callback(GimpBrush *brush,
   gchar *src, *buf;
 
   brush_edit_clear_preview (begw);
-  if (brush == NULL)
+  if (brush == NULL || brush->mask == NULL)
     return TRUE;
   scale = MAX(ceil(brush->mask->width/(float)begw->preview->requisition.width),
 	      ceil(brush->mask->height/(float)begw->preview->requisition.height));
@@ -138,6 +138,12 @@ brush_edit_brush_dirty_callback(GimpBrush *brush,
   return TRUE;
 }
 
+void brush_renamed_callback(GtkWidget *widget, BrushEditGeneratedWindow *begw)
+{
+  gtk_entry_set_text(GTK_ENTRY(begw->name),
+		     gimp_brush_get_name(GIMP_BRUSH(begw->brush)));
+}
+
 void
 brush_edit_generated_set_brush(BrushEditGeneratedWindow *begw,
 			       GimpBrush *gbrush)
@@ -145,7 +151,7 @@ brush_edit_generated_set_brush(BrushEditGeneratedWindow *begw,
   GimpBrushGenerated *brush = 0;
   if (begw->brush == (GimpBrushGenerated*)gbrush)
     return;
-  if (begw->brush)
+  if (begw && begw->brush)
   {
     gtk_signal_disconnect_by_data(GTK_OBJECT(begw->brush), begw);
     gtk_object_unref(GTK_OBJECT(begw->brush));
@@ -164,6 +170,9 @@ brush_edit_generated_set_brush(BrushEditGeneratedWindow *begw,
     gtk_signal_connect(GTK_OBJECT (brush), "dirty",
 		       GTK_SIGNAL_FUNC(brush_edit_brush_dirty_callback),
 		       begw);
+    gtk_signal_connect(GTK_OBJECT (brush), "rename",
+		       GTK_SIGNAL_FUNC(brush_renamed_callback),
+		       begw);
     begw->brush = NULL;
     gtk_adjustment_set_value(GTK_ADJUSTMENT(begw->radius_data),
 			     gimp_brush_generated_get_radius (brush));
@@ -173,10 +182,23 @@ brush_edit_generated_set_brush(BrushEditGeneratedWindow *begw,
 			     gimp_brush_generated_get_angle (brush));
     gtk_adjustment_set_value(GTK_ADJUSTMENT(begw->aspect_ratio_data),
 			     gimp_brush_generated_get_aspect_ratio(brush));
+    gtk_entry_set_text(GTK_ENTRY(begw->name), gimp_brush_get_name(gbrush));
     begw->brush = brush;
     gtk_object_ref(GTK_OBJECT(begw->brush));
     brush_edit_brush_dirty_callback(GIMP_BRUSH(brush), begw);
   }
+}
+
+void name_changed_func(GtkWidget *widget, BrushEditGeneratedWindow *begw)
+{
+  gchar *entry_text;
+  entry_text = gtk_entry_get_text(GTK_ENTRY(widget));
+  gimp_brush_set_name(GIMP_BRUSH(begw->brush), entry_text);
+}
+
+void focus_out_func(GtkWidget *wid1, GtkWidget *wid2, BrushEditGeneratedWindow *begw)
+{
+  name_changed_func(wid1, begw);
 }
 
 BrushEditGeneratedWindow *
@@ -211,7 +233,23 @@ brush_edit_generated_new ()
 
 /*  Populate the window with some widgets */
 
-  /* brush's preview widget w/frame  */
+ /* table for brush controlls */
+  table = gtk_table_new(5, 4, FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
+
+ /* Brush's name */
+  begw->name = gtk_entry_new();
+  gtk_box_pack_start (GTK_BOX (vbox), begw->name, TRUE, TRUE, 0);
+  
+  gtk_signal_connect (GTK_OBJECT (begw->name), "activate",
+		      (GtkSignalFunc) name_changed_func,
+		      begw);
+  gtk_signal_connect (GTK_OBJECT (begw->name), "focus_out_event",
+		      (GtkSignalFunc) focus_out_func,
+		      begw);
+  gtk_widget_show(begw->name);
+
+ /* brush's preview widget w/frame  */
   begw->frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (begw->frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), begw->frame, TRUE, TRUE, 0);

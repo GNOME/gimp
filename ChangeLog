@@ -1,3 +1,15 @@
+Mon Aug 30 03:37:28 1999  Jay Cox  (jaycox@earthlink.net)
+
+	* app/brush_edit.[ch]: Allow the user to change a brush's name.
+
+	* app/gimpbrushlist.[ch] * app/gimprc.[ch]: ported Calvin
+	Williamson's brush saving code from the hollywood branch.
+
+	* app/preferences_dialog.c:  add the brush_vbr_path
+
+	* data/brushes/round1.vbr: removed.  You should remove this file
+	from your system if you have installed previous versions.
+
 Sub Aug 29 23:00:50 1999  vidar@prosalg.no  (Vidar Madsen)
 
 	* plug-ins/gimpresionist/*.[ch]: Big rewrite of many internals
