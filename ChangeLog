@@ -1,3 +1,12 @@
+2004-04-30  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/tools/gimprectselecttool.c: Cleanups.
+	(gimp_rect_select_tool_coords_to_integer): Undo my bogus fix for
+	bug #138103, which led to bug #140649.
+
+	* app/pdb/procedural_db.c (procedural_db_init_procs): Add missing
+	compat procs: gimp_channel_ops_duplicate, gimp_channel_ops_offset.
+
 2004-04-30  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/tool-options-menu.c: added casts to please the compiler.

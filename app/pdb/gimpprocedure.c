@@ -154,7 +154,9 @@ procedural_db_init_procs (Gimp               *gimp,
     { "gimp_patterns_list",            "gimp_patterns_get_list"         },
     { "gimp_temp_PDB_name",            "gimp_procedural_db_temp_name"   },
     { "gimp_undo_push_group_start",    "gimp_image_undo_group_start"    },
-    { "gimp_undo_push_group_end",      "gimp_image_undo_group_end"      }
+    { "gimp_undo_push_group_end",      "gimp_image_undo_group_end"      },
+    { "gimp_channel_ops_duplicate",    "gimp_image_duplicate"           },
+    { "gimp_channel_ops_offset",       "gimp_drawable_offset"           }
   };
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));

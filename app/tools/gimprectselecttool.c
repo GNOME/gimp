@@ -113,18 +113,18 @@ gimp_rect_select_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpRectSelectToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_rect_select_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpRectSelectTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_rect_select_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_rect_select_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpRectSelectTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_rect_select_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
-					  "GimpRectSelectTool",
+                                          "GimpRectSelectTool",
                                           &tool_info, 0);
     }
 
@@ -203,16 +203,16 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
       break;
     case GIMP_UNIT_PERCENT:
       rect_sel->fixed_width =
-	gdisp->gimage->width * rect_sel->fixed_width / 100;
+        gdisp->gimage->width * rect_sel->fixed_width / 100;
       rect_sel->fixed_height =
-	gdisp->gimage->height * rect_sel->fixed_height / 100;
+        gdisp->gimage->height * rect_sel->fixed_height / 100;
       break;
     default:
       unit_factor = _gimp_unit_get_factor (tool->tool_info->gimp, unit);
       rect_sel->fixed_width =
-	 rect_sel->fixed_width * gdisp->gimage->xresolution / unit_factor;
+        rect_sel->fixed_width * gdisp->gimage->xresolution / unit_factor;
       rect_sel->fixed_height =
-	rect_sel->fixed_height * gdisp->gimage->yresolution / unit_factor;
+        rect_sel->fixed_height * gdisp->gimage->yresolution / unit_factor;
       break;
     }
 
@@ -287,8 +287,8 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
       x = (rect_sel->w < 0) ? rect_sel->x + rect_sel->w : rect_sel->x;
       y = (rect_sel->h < 0) ? rect_sel->y + rect_sel->h : rect_sel->y;
 
-      w = (rect_sel->w < 0) ? -rect_sel->w : rect_sel->w;
-      h = (rect_sel->h < 0) ? -rect_sel->h : rect_sel->h;
+      w = ABS (rect_sel->w);
+      h = ABS (rect_sel->h);
 
       gimp_rect_select_tool_coords_to_integer (gdisp,
                                                x, y, w, h,
@@ -389,7 +389,7 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
           th = (coords->y - oy);
 
           /* This is probably an inefficient way to do it, but it gives
-           * nicer, more predictable results than the original agorithm
+           * nicer, more predictable results than the original algorithm
            */
           if ((abs (th) < (ratio * abs (tw))) &&
               (abs (tw) > (abs (th) / ratio)))
@@ -658,16 +658,12 @@ gimp_rect_select_tool_coords_to_integer (GimpDisplay *gdisp,
                                          gint        *iw,
                                          gint        *ih)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-  gdouble           scrpixw = 1.0 / SCALEFACTOR_X (shell);
-  gdouble           scrpixh = 1.0 / SCALEFACTOR_Y (shell);
-
   x = MIN (x, x + w);
   y = MIN (y, y + h);
   w = ABS (w);
   h = ABS (h);
   *ix = RINT (x);
   *iy = RINT (y);
-  *iw = RINT (w + (x - *ix) + scrpixw);
-  *ih = RINT (h + (y - *iy) + scrpixh);
+  *iw = RINT (w + (x - *ix));
+  *ih = RINT (h + (y - *iy));
 }
