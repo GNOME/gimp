@@ -1,3 +1,8 @@
+2000-12-16  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
+	* docs/Wilber_Construction_Kit.xcf.gz: ooops, got the name wrong
+	
 2000-12-17  Sven Neumann  <sven@gimp.org>
 
 	* app/curves.c: preview the curve settings in the image window when
