@@ -45,6 +45,15 @@ Miscellaneous utility functions for libgimpconfig.
 @config: 
 
 
+<!-- ##### FUNCTION gimp_config_reset_property ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+
+
 <!-- ##### FUNCTION gimp_config_string_append_escaped ##### -->
 <para>
 

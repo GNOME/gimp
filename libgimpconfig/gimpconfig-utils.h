@@ -32,6 +32,8 @@ gboolean   gimp_config_sync                  (GimpConfig   *src,
                                               GParamFlags   flags);
 
 void       gimp_config_reset_properties      (GimpConfig   *config);
+void       gimp_config_reset_property        (GimpConfig   *config,
+                                              const gchar  *property_name);
 
 void       gimp_config_string_append_escaped (GString      *string,
                                               const gchar  *val);

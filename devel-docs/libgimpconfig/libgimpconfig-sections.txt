@@ -90,6 +90,7 @@ gimp_config_serialize_value
 gimp_config_diff
 gimp_config_sync
 gimp_config_reset_properties
+gimp_config_reset_property
 gimp_config_string_append_escaped
 </SECTION>
 

@@ -36,11 +36,6 @@
 #include "gimp-intl.h"
 
 
-const gchar *gimp_base_config_default_swap_path = "${gimp_dir}";
-const gchar *gimp_base_config_default_temp_path =
-  "${gimp_dir}" G_DIR_SEPARATOR_S "tmp";
-
-
 static void  gimp_base_config_class_init   (GimpBaseConfigClass *klass);
 static void  gimp_base_config_finalize     (GObject             *object);
 static void  gimp_base_config_set_property (GObject             *object,
@@ -110,12 +105,12 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_TEMP_PATH,
                                  "temp-path", TEMP_PATH_BLURB,
 				 GIMP_CONFIG_PATH_DIR,
-                                 gimp_base_config_default_temp_path,
+                                 "${gimp_dir}" G_DIR_SEPARATOR_S "tmp",
                                  GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_SWAP_PATH,
                                  "swap-path", SWAP_PATH_BLURB,
 				 GIMP_CONFIG_PATH_DIR,
-                                 gimp_base_config_default_swap_path,
+                                 "${gimp_dir}",
                                  GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
                                     "stingy-memory-use",

@@ -1,5 +1,16 @@
 2005-04-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimpconfig/gimpconfig-utils.[ch]: added new function to reset
+	a single property to its default value.
+
+	* libgimpconfig/gimpconfig.def: updated.
+
+	* app/config/gimpbaseconfig.[ch]: reverted last change.
+
+	* app/base/base.c: use gimp_config_reset_property() instead.
+
+2005-04-06  Sven Neumann  <sven@gimp.org>
+
 	* app/Makefile.am: don't use -mwindows when linking gimp-console.
 
 2005-04-06  Sven Neumann  <sven@gimp.org>

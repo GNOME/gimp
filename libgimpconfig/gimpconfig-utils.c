@@ -240,7 +240,7 @@ gimp_config_sync (GimpConfig  *src,
 
 /**
  * gimp_config_reset_properties:
- * @config: a #GimpConfig
+ * @config: a #GimpConfig object
  *
  * Resets all writable properties of @object to the default values as
  * defined in their #GParamSpec. Properties marked as "construct-only"
@@ -311,6 +311,69 @@ gimp_config_reset_properties (GimpConfig *config)
   g_free (property_specs);
 
   g_object_thaw_notify (object);
+}
+
+
+/**
+ * gimp_config_reset_property:
+ * @config: a #GimpConfig object
+ * @property_name: name of the property to reset
+ *
+ * Resets the property named @property_name to its default value.
+ * Nothing happens if the property is not writable or marked as
+ * "construct-only".
+ *
+ * Since: GIMP 2.4
+ **/
+void
+gimp_config_reset_property (GimpConfig  *config,
+                            const gchar *property_name)
+{
+  GObjectClass  *klass;
+  GParamSpec    *prop_spec;
+
+  g_return_if_fail (GIMP_IS_CONFIG (config));
+  g_return_if_fail (property_name != NULL);
+
+  klass = G_OBJECT_GET_CLASS (config);
+
+  prop_spec = g_object_class_find_property (klass, property_name);
+
+  if (!prop_spec)
+    return;
+
+  if ((prop_spec->flags & G_PARAM_WRITABLE) &&
+      ! (prop_spec->flags & G_PARAM_CONSTRUCT_ONLY))
+    {
+      GObject *object = G_OBJECT (config);
+      GValue   value  = { 0, };
+
+      if (G_IS_PARAM_SPEC_OBJECT (prop_spec))
+        {
+          if ((prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE) &&
+              (prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE) &&
+              g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
+                                     GIMP_TYPE_CONFIG))
+            {
+              g_value_init (&value, prop_spec->value_type);
+
+              g_object_get_property (object, prop_spec->name, &value);
+
+              gimp_config_reset (GIMP_CONFIG (g_value_get_object (&value)));
+
+              g_value_unset (&value);
+            }
+        }
+      else
+        {
+          g_value_init (&value, prop_spec->value_type);
+          g_param_value_set_default (prop_spec, &value);
+
+          g_object_set_property (object, prop_spec->name, &value);
+
+          g_value_unset (&value);
+        }
+    }
 }
 
 

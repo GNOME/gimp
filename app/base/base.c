@@ -55,13 +55,14 @@
 GimpBaseConfig *base_config = NULL;
 
 
-static void   base_toast_old_temp_files   (GimpBaseConfig *config);
-static void   base_tile_cache_size_notify (GObject        *config,
-                                           GParamSpec     *param_spec,
-                                           gpointer        data);
-static void   base_num_processors_notify  (GObject        *config,
-                                           GParamSpec     *param_spec,
-                                           gpointer        data);
+static void   base_toast_old_swap_files   (const gchar *swap_path);
+
+static void   base_tile_cache_size_notify (GObject     *config,
+                                           GParamSpec  *param_spec,
+                                           gpointer     data);
+static void   base_num_processors_notify  (GObject     *config,
+                                           GParamSpec  *param_spec,
+                                           gpointer     data);
 
 
 /*  public functions  */
@@ -84,23 +85,18 @@ base_init (GimpBaseConfig *config,
                     G_CALLBACK (base_tile_cache_size_notify),
                     NULL);
 
-  base_toast_old_temp_files (config);
+  if (! config->swap_path || ! *config->swap_path)
+    gimp_config_reset_property (GIMP_CONFIG (config), "swap-path");
 
-  /* Add the swap file */
-  if (! config->swap_path)
-    g_object_set (config,
-                  "swap-path", gimp_base_config_default_swap_path,
-                  NULL);
+  base_toast_old_swap_files (config->swap_path);
 
   tile_swap_init (config->swap_path);
 
   swap_is_ok = tile_swap_test ();
 
   /*  create the temp directory if it doesn't exist  */
-  if (! config->temp_path)
-    g_object_set (config,
-                  "temp-path", gimp_base_config_default_temp_path,
-                  NULL);
+  if (! config->temp_path || ! *config->temp_path)
+    gimp_config_reset_property (GIMP_CONFIG (config), "temp-path");
 
   temp_dir = gimp_config_path_expand (config->temp_path, TRUE, NULL);
 
@@ -147,16 +143,16 @@ base_exit (void)
 /*  private functions  */
 
 static void
-base_toast_old_temp_files (GimpBaseConfig *config)
+base_toast_old_swap_files (const gchar *swap_path)
 {
   GDir       *dir = NULL;
   gchar      *dirname;
   const char *entry;
 
-  if (!config->swap_path)
+  if (! swap_path)
     return;
 
-  dirname = gimp_config_path_expand (config->swap_path, TRUE, NULL);
+  dirname = gimp_config_path_expand (swap_path, TRUE, NULL);
   if (!dirname)
     return;
 
