@@ -535,7 +535,7 @@ load_image (char *filename, GRunModeType runmode)
   /* if we had any comments then make a parasite for them */
   if(local_image_comments) {
     char *string=local_image_comments->str;
-    g_string_free(local_image_comments,FALSE);
+    g_string_free(local_image_comments,FALSE); local_image_comments = NULL;
     comment_parasite = parasite_new("gimp-comment", PARASITE_PERSISTENT,
 				    strlen(string)+1,string);
   } else {
