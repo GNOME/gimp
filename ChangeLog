@@ -1,8 +1,25 @@
+2000-02-05  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpcolorspace.[ch]: use g* types and name the
+	parameters in the header.
+
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/blur.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/pixelize.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/unsharp.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/sinus/sinus.c
+	* plug-ins/struc/struc.c: soem more consistency stuff.
+
 2000-02-05  Asbjorn Pettersen  <asbjornP@dualog.no>
 
 	* plug-ins/FractalExplorer/FractalExplorer.c (fractalexplorer_load): 
-	* plug-ins/FractalExplorer/Dialogs.c (explorer_load): Use "rt","wt" with fopen() for
-	OS/2, Win portability.
+	* plug-ins/FractalExplorer/Dialogs.c (explorer_load): Use
+	"rt", "wt" with fopen() for OS/2, Win portability.
 
 Sat Feb  5 17:49:43 CET 2000  Sven Neumann <sven@gimp.org>
 

@@ -26,50 +26,36 @@
  *********************************/
 
 void
-gimp_rgb_to_hsv (int *r,
-		 int *g,
-		 int *b)
+gimp_rgb_to_hsv (gint *r,
+		 gint *g,
+		 gint *b)
 {
-  int red, green, blue;
-  float h, s, v;
-  int min, max;
-  int delta;
+  gint    red, green, blue;
+  gdouble h, s, v;
+  gint    min, max;
+  gint    delta;
 
   h = 0.0;
 
-  red = *r;
+  red   = *r;
   green = *g;
-  blue = *b;
+  blue  = *b;
 
   if (red > green)
     {
-      if (red > blue)
-	max = red;
-      else
-	max = blue;
-
-      if (green < blue)
-	min = green;
-      else
-	min = blue;
+      max = MAX (red,   blue);
+      min = MIN (green, blue);
     }
   else
     {
-      if (green > blue)
-	max = green;
-      else
-	max = blue;
-
-      if (red < blue)
-	min = red;
-      else
-	min = blue;
+      max = MAX (green, blue);
+      min = MIN (red,   blue);
     }
 
   v = max;
 
   if (max != 0)
-    s = ((max - min) * 255) / (float) max;
+    s = ((max - min) * 255) / (gdouble) max;
   else
     s = 0;
 
@@ -79,11 +65,11 @@ gimp_rgb_to_hsv (int *r,
     {
       delta = max - min;
       if (red == max)
-	h = (green - blue) / (float) delta;
+	h = (green - blue) / (gdouble) delta;
       else if (green == max)
-	h = 2 + (blue - red) / (float) delta;
+	h = 2 + (blue - red) / (gdouble) delta;
       else if (blue == max)
-	h = 4 + (red - green) / (float) delta;
+	h = 4 + (red - green) / (gdouble) delta;
       h *= 42.5;
 
       if (h < 0)
@@ -98,12 +84,12 @@ gimp_rgb_to_hsv (int *r,
 }
 
 void
-gimp_hsv_to_rgb (int *h,
-		 int *s,
-		 int *v)
+gimp_hsv_to_rgb (gint *h,
+		 gint *s,
+		 gint *v)
 {
-  float hue, saturation, value;
-  float f, p, q, t;
+  gdouble hue, saturation, value;
+  gdouble f, p, q, t;
 
   if (*s == 0)
     {
@@ -126,75 +112,66 @@ gimp_hsv_to_rgb (int *h,
 	{
 	case 0:
 	  *h = value * 255;
-	  *s = t * 255;
-	  *v = p * 255;
+	  *s = t     * 255;
+	  *v = p     * 255;
 	  break;
+
 	case 1:
-	  *h = q * 255;
+	  *h = q     * 255;
 	  *s = value * 255;
-	  *v = p * 255;
+	  *v = p     * 255;
 	  break;
+
 	case 2:
-	  *h = p * 255;
+	  *h = p     * 255;
 	  *s = value * 255;
-	  *v = t * 255;
+	  *v = t     * 255;
 	  break;
+
 	case 3:
-	  *h = p * 255;
-	  *s = q * 255;
+	  *h = p     * 255;
+	  *s = q     * 255;
 	  *v = value * 255;
 	  break;
+
 	case 4:
-	  *h = t * 255;
-	  *s = p * 255;
+	  *h = t     * 255;
+	  *s = p     * 255;
 	  *v = value * 255;
 	  break;
+
 	case 5:
 	  *h = value * 255;
-	  *s = p * 255;
-	  *v = q * 255;
+	  *s = p     * 255;
+	  *v = q     * 255;
 	  break;
 	}
     }
 }
 
 void
-gimp_rgb_to_hls (int *r,
-		 int *g,
-		 int *b)
+gimp_rgb_to_hls (gint *r,
+		 gint *g,
+		 gint *b)
 {
-  int red, green, blue;
-  float h, l, s;
-  int min, max;
-  int delta;
+  gint    red, green, blue;
+  gdouble h, l, s;
+  gint    min, max;
+  gint    delta;
 
-  red = *r;
+  red   = *r;
   green = *g;
-  blue = *b;
+  blue  = *b;
 
   if (red > green)
     {
-      if (red > blue)
-	max = red;
-      else
-	max = blue;
-
-      if (green < blue)
-	min = green;
-      else
-	min = blue;
+      max = MAX (red,   blue);
+      min = MIN (green, blue);
     }
   else
     {
-      if (green > blue)
-	max = green;
-      else
-	max = blue;
-
-      if (red < blue)
-	min = red;
-      else
-	min = blue;
+      max = MAX (green, blue);
+      min = MIN (red,   blue);
     }
 
   l = (max + min) / 2.0;
@@ -209,16 +186,16 @@ gimp_rgb_to_hls (int *r,
       delta = (max - min);
 
       if (l < 128)
-	s = 255 * (float) delta / (float) (max + min);
+	s = 255 * (gdouble) delta / (gdouble) (max + min);
       else
-	s = 255 * (float) delta / (float) (511 - max - min);
+	s = 255 * (gdouble) delta / (gdouble) (511 - max - min);
 
       if (red == max)
-	h = (green - blue) / (float) delta;
+	h = (green - blue) / (gdouble) delta;
       else if (green == max)
-	h = 2 + (blue - red) / (float) delta;
+	h = 2 + (blue - red) / (gdouble) delta;
       else
-	h = 4 + (red - green) / (float) delta;
+	h = 4 + (red - green) / (gdouble) delta;
 
       h = h * 42.5;
 
@@ -233,47 +210,33 @@ gimp_rgb_to_hls (int *r,
   *b = s;
 }
 
-int
-gimp_rgb_to_l (int red,
-	       int green,
-	       int blue)
+gint
+gimp_rgb_to_l (gint red,
+	       gint green,
+	       gint blue)
 {
-  int min, max;
+  gint min, max;
 
   if (red > green)
     {
-      if (red > blue)
-	max = red;
-      else
-	max = blue;
-
-      if (green < blue)
-	min = green;
-      else
-	min = blue;
+      max = MAX (red,   blue);
+      min = MIN (green, blue);
     }
   else
     {
-      if (green > blue)
-	max = green;
-      else
-	max = blue;
-
-      if (red < blue)
-	min = red;
-      else
-	min = blue;
+      max = MAX (green, blue);
+      min = MIN (red,   blue);
     }
 
   return (max + min) / 2.0;
 }
 
-int
-gimp_hls_value (float n1,
-		float n2,
-		float hue)
+static gint
+gimp_hls_value (gdouble n1,
+		gdouble n2,
+		gdouble hue)
 {
-  float value;
+  gdouble value;
 
   if (hue > 255)
     hue -= 255;
@@ -288,19 +251,19 @@ gimp_hls_value (float n1,
   else
     value = n1;
 
-  return (int) (value * 255);
+  return (gint) (value * 255);
 }
 
 void
-gimp_hls_to_rgb (int *h,
-		 int *l,
-		 int *s)
+gimp_hls_to_rgb (gint *h,
+		 gint *l,
+		 gint *s)
 {
-  float hue, lightness, saturation;
-  float m1, m2;
+  gdouble hue, lightness, saturation;
+  gdouble m1, m2;
 
-  hue = *h;
-  lightness = *l;
+  hue        = *h;
+  lightness  = *l;
   saturation = *s;
 
   if (saturation == 0)
@@ -327,14 +290,14 @@ gimp_hls_to_rgb (int *h,
 }
 
 void
-gimp_rgb_to_hsv_double (double *r,
-			double *g,
-			double *b)
+gimp_rgb_to_hsv_double (gdouble *r,
+			gdouble *g,
+			gdouble *b)
 {
-  double red, green, blue;
-  double h, s, v;
-  double min, max;
-  double delta;
+  gdouble red, green, blue;
+  gdouble h, s, v;
+  gdouble min, max;
+  gdouble delta;
 
   red   = *r;
   green = *g;
@@ -344,27 +307,13 @@ gimp_rgb_to_hsv_double (double *r,
 
   if (red > green)
     {
-      if (red > blue)
-	max = red;
-      else
-	max = blue;
-
-      if (green < blue)
-	min = green;
-      else
-	min = blue;
+      max = MAX (red,   blue);
+      min = MIN (green, blue);
     }
   else
     {
-      if (green > blue)
-	max = green;
-      else
-	max = blue;
-
-      if (red < blue)
-	min = red;
-      else
-	min = blue;
+      max = MAX (green, blue);
+      min = MIN (red,   blue);
     }
 
   v = max;
@@ -403,12 +352,12 @@ gimp_rgb_to_hsv_double (double *r,
 }
 
 void
-gimp_hsv_to_rgb_double (double *h,
-			double *s,
-			double *v)
+gimp_hsv_to_rgb_double (gdouble *h,
+			gdouble *s,
+			gdouble *v)
 {
-  double hue, saturation, value;
-  double f, p, q, t;
+  gdouble hue, saturation, value;
+  gdouble f, p, q, t;
 
   if (*s == 0.0)
     {
@@ -425,12 +374,12 @@ gimp_hsv_to_rgb_double (double *h,
       if (hue == 6.0)
 	hue = 0.0;
 
-      f = hue - (int) hue;
+      f = hue - (gint) hue;
       p = value * (1.0 - saturation);
       q = value * (1.0 - saturation * f);
       t = value * (1.0 - saturation * (1.0 - f));
 
-      switch ((int) hue)
+      switch ((gint) hue)
 	{
 	case 0:
 	  *h = value;
@@ -472,15 +421,15 @@ gimp_hsv_to_rgb_double (double *h,
 }
 
 void
-gimp_rgb_to_hsv4 (guchar *rgb, 
-		  double *hue, 
-		  double *sat, 
-		  double *val)
+gimp_rgb_to_hsv4 (guchar  *rgb, 
+		  gdouble *hue, 
+		  gdouble *sat, 
+		  gdouble *val)
 {
-  double red, green, blue;
-  double h, s, v;
-  double min, max;
-  double delta;
+  gdouble red, green, blue;
+  gdouble h, s, v;
+  gdouble min, max;
+  gdouble delta;
 
   red   = rgb[0] / 255.0;
   green = rgb[1] / 255.0;
@@ -547,13 +496,13 @@ gimp_rgb_to_hsv4 (guchar *rgb,
 }
 
 void
-gimp_hsv_to_rgb4 (guchar *rgb, 
-		  double  h, 
-		  double  s, 
-		  double  v)
+gimp_hsv_to_rgb4 (guchar  *rgb, 
+		  gdouble  h, 
+		  gdouble  s, 
+		  gdouble  v)
 {
-  double hue, saturation, value;
-  double f, p, q, t;
+  gdouble hue, saturation, value;
+  gdouble f, p, q, t;
 
   if (s == 0.0)
     {

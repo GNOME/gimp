@@ -153,10 +153,10 @@ static inline void compute_block_1 (guchar *dest_row, guint rowstride,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 MAIN ()
@@ -184,10 +184,7 @@ query (void)
     { PARAM_INT32,    "blend", "0= linear, 1= bilinear, 2= sinusoidal" },
     { PARAM_FLOAT,    "blend_power", "Power used to strech the blend" }
   };
-
-  static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
 
   INIT_I18N ();
 
@@ -200,8 +197,8 @@ query (void)
 			  N_("<Image>/Filters/Render/Sinus..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void 
@@ -247,8 +244,10 @@ run (gchar   *name,
     case RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 16)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  svals.scalex       = param[3].data.d_float;
 	  svals.scaley       = param[4].data.d_float;
@@ -287,7 +286,7 @@ run (gchar   *name,
       (gimp_drawable_is_rgb (drawable->id) ||
        gimp_drawable_is_gray (drawable->id)))
     {
-      gimp_progress_init ("Calculating picture...");
+      gimp_progress_init (_("Sinus: rendering..."));
       gimp_tile_cache_ntiles (1);
       sinus ();
 
@@ -1212,4 +1211,3 @@ mw_preview_new (GtkWidget        *parent,
 
   return preview;
 }
-

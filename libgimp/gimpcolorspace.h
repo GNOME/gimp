@@ -22,15 +22,38 @@
 
 /*  Color conversion routines  */
 
-void	gimp_rgb_to_hsv		(int *, int *, int *);
-void	gimp_hsv_to_rgb		(int *, int *, int *);
-void	gimp_rgb_to_hls		(int *, int *, int *);
-int	gimp_rgb_to_l		(int, int, int);
-void	gimp_hls_to_rgb		(int *, int *, int *);
-void	gimp_rgb_to_hsv_double	(double *, double *, double *);
-void	gimp_hsv_to_rgb_double	(double *, double *, double *);
-void	gimp_rgb_to_hsv4        (guchar *, double *, double *, double *);
-void	gimp_hsv_to_rgb4        (guchar *, double, double, double);
+void    gimp_rgb_to_hsv		(gint    *red         /* returns hue        */,
+				 gint    *green       /* returns saturation */,
+				 gint    *blue        /* returns value      */);
+void    gimp_hsv_to_rgb		(gint    *hue         /* returns red        */,
+				 gint    *saturation  /* returns green      */,
+				 gint    *value       /* returns blue       */);
+
+void    gimp_rgb_to_hls		(gint    *red         /* returns hue        */,
+				 gint    *green       /* returns lightness  */,
+				 gint    *blue        /* returns saturation */);
+gint    gimp_rgb_to_l		(gint     red,
+				 gint     green,
+				 gint     blue);
+void    gimp_hls_to_rgb		(gint    *hue         /* returns red        */,
+				 gint    *lightness   /* returns green      */,
+				 gint    *saturation  /* returns blue       */);
+
+void    gimp_rgb_to_hsv_double	(gdouble *red         /* returns hue        */,
+				 gdouble *green       /* returns saturation */,
+				 gdouble *blue        /* returns value      */);
+void    gimp_hsv_to_rgb_double	(gdouble *hue         /* returns red        */,
+				 gdouble *saturation, /* returns green      */
+				 gdouble *value       /* returns blue       */);
+
+void    gimp_rgb_to_hsv4        (guchar  *hsv,
+				 gdouble *red,
+				 gdouble *green,
+				 gdouble *blue);
+void    gimp_hsv_to_rgb4        (guchar  *rgb,
+				 gdouble  hue,
+				 gdouble  saturation,
+				 gdouble  value);
 
 
 /*  Map RGB to intensity  */
@@ -41,4 +64,5 @@ void	gimp_hsv_to_rgb4        (guchar *, double, double, double);
 #define INTENSITY(r,g,b) ((r) * INTENSITY_RED   + \
 			  (g) * INTENSITY_GREEN + \
 			  (b) * INTENSITY_BLUE  + 0.001)
-#endif
+
+#endif  /* __GIMPCOLORSPACE_H__ */

@@ -420,7 +420,7 @@ typedef struct
 
 #define	RANDOM_SENSITIVES_NUM 5
 
-CML_sensitive_widget_table random_sensitives[RANDOM_SENSITIVES_NUM] =
+static CML_sensitive_widget_table random_sensitives[RANDOM_SENSITIVES_NUM] =
 {
   { NULL, 0 },
   { NULL, 0 },

@@ -338,29 +338,29 @@ run (gchar   *name,
 	    {
 	      status = STATUS_CALLING_ERROR;
 	    }
-	  if (status == STATUS_SUCCESS)
+	  else
 	    {
 	      pivals.rndm_pct = (gdouble) param[3].data.d_float;
 	      pivals.rndm_rcount = (gdouble) param[4].data.d_float;
 	      pivals.seed_type = (gint) param[5].data.d_int32;
 	      pivals.rndm_seed = (gint) param[6].data.d_int32;
-	    }
-	  if (status == STATUS_SUCCESS &&
-	      ((rndm_type != RNDM_PICK &&
-		rndm_type != RNDM_SLUR &&
-		rndm_type != RNDM_HURL) ||
-	       (pivals.rndm_pct < 1.0 || pivals.rndm_pct > 100.0) ||
-	       (pivals.rndm_rcount < 1.0 || pivals.rndm_rcount > 100.0)))
-	    {
-	      status = STATUS_CALLING_ERROR;
+
+	      if ((rndm_type != RNDM_PICK &&
+		   rndm_type != RNDM_SLUR &&
+		   rndm_type != RNDM_HURL) ||
+		  (pivals.rndm_pct < 1.0 || pivals.rndm_pct > 100.0) ||
+		  (pivals.rndm_rcount < 1.0 || pivals.rndm_rcount > 100.0))
+		{
+		  status = STATUS_CALLING_ERROR;
+		}
 	    }
 	  break;
 	  /*
 	   *  If we're running with the last set of values, get those values.
 	   */
 	case RUN_WITH_LAST_VALS:
-	  INIT_I18N();
-	  gimp_get_data(PLUG_IN_NAME[rndm_type - 1], &pivals);
+	  INIT_I18N ();
+	  gimp_get_data (PLUG_IN_NAME[rndm_type - 1], &pivals);
 	  break;
 	  /*
 	   *  Hopefully we never get here!
@@ -751,7 +751,7 @@ randomize_dialog (void)
    *  Randomization percentage label & scale (1 to 100)
    */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Randomization %:"), SCALE_WIDTH, 0,
+			      _("Randomization (%):"), SCALE_WIDTH, 0,
 			      pivals.rndm_pct, 1.0, 100.0, 1.0, 10.0, 0,
 			      TRUE, 0, 0,
 			      _("Percentage of pixels to be filtered"), NULL);

@@ -398,7 +398,7 @@ nova_dialog (GDrawable *drawable)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Radius:"), SCALE_WIDTH, 0,
 			      pvals.radius, 1, 100, 1, 10, 0,
-			      TRUE, 0, 0,
+			      FALSE, 1, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),

@@ -327,8 +327,8 @@ plasma_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Turbulence:"), SCALE_WIDTH, 0,
 			      pvals.turbulence,
-			      TRUE, 0, 0,
 			      0.1, 7.0, 0.1, 1.0, 1,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),

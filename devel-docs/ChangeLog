@@ -1,3 +1,13 @@
+2000-02-05  Michael Natterer  <mitch@gimp.org>
+
+	* devel-docs/libgimp/Makefile.am: correctly quote shell commands.
+
+	* libgimp/libgimp-docs.sgml: added two new chapters:
+	"GIMP Constants and Limits" and "GIMP Module Headers".
+
+	* libgimp/libgimp-decl.txt
+	* libgimp/tmpl/gimpcolorspace.sgml: updated from the c-source.
+
 Sat Feb  5 17:48:41 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/libgimp-decl.txt

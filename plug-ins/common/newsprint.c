@@ -1267,21 +1267,23 @@ newsprint_dialog (GDrawable *drawable)
   }
 #endif
 
-  st.input_spi = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				       _("Input SPI:"), SCALE_WIDTH, 0,
-				       pvals_ui.input_spi,
-				       1.0, 1200.0, 1.0, 10.0, 0,
-				       TRUE, 0, 0,
-				       NULL, NULL);
+  st.input_spi =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			  _("Input SPI:"), SCALE_WIDTH, 0,
+			  pvals_ui.input_spi,
+			  1.0, 1200.0, 1.0, 10.0, 0,
+			  FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
+			  NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (st.input_spi), "value_changed",
 		      GTK_SIGNAL_FUNC (spi_callback),
 		      &st);
 
-  st.output_lpi = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-					_("Output LPI:"), SCALE_WIDTH, 0,
-					pvals_ui.output_lpi,
-					1.0, 1200.0, 1.0, 10.0, 1,
-					TRUE, 0, 0,
+  st.output_lpi =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			  _("Output LPI:"), SCALE_WIDTH, 0,
+			  pvals_ui.output_lpi,
+			  1.0, 1200.0, 1.0, 10.0, 1,
+			  FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
 					NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (st.output_lpi), "value_changed",
 		      GTK_SIGNAL_FUNC (lpi_callback),
@@ -1291,7 +1293,7 @@ newsprint_dialog (GDrawable *drawable)
 				      _("Cell Size:"), SCALE_WIDTH, 0,
 				      pvals.cell_width,
 				      3.0, 100.0, 1.0, 5.0, 0,
-				      TRUE, 0, 0,
+				      FALSE, 3.0, GIMP_MAX_IMAGE_SIZE,
 				      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (st.cellsize), "value_changed",
 		      GTK_SIGNAL_FUNC (cellsize_callback),

@@ -78,7 +78,8 @@ sgml/libgimp-doc.bottom: $(tmpl_sources)
 
 scan:
 	-(cd $(srcdir) \
-	&& env CFLAGS="$(CFLAGS) libgimp-include.c" LDFLAGS=$(LDFLAGS) \
+	&& env CFLAGS="$(CFLAGS) libgimp-include.c" CPPFLAGS="$(CPPFLAGS)" \
+		LDFLAGS="$(LDFLAGS)" \
 		gtkdoc-scanobj --module=$(DOC_MODULE) \
 	&& gtkdoc-scan --module=$(DOC_MODULE) --source-dir=$(DOC_SOURCE_DIR) \
 		--ignore-headers="gimpintl.h libgimp-intl.h stdplugins-intl.h" )

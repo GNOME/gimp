@@ -117,15 +117,15 @@ static void preview_exit            (void);
 static void preview_update          (void);
 
 static GtkWidget* preview;
-static int        preview_width;    /* Width of preview widget */
-static int        preview_height;   /* Height of preview widget */
-static int        preview_x1;       /* Upper-left X of preview */
-static int        preview_y1;       /* Upper-left Y of preview */
-static int        preview_x2;       /* Lower-right X of preview */
-static int        preview_y2;       /* Lower-right Y of preview */
+static gint       preview_width;    /* Width of preview widget */
+static gint       preview_height;   /* Height of preview widget */
+static gint       preview_x1;       /* Upper-left X of preview */
+static gint       preview_y1;       /* Upper-left Y of preview */
+static gint       preview_x2;       /* Lower-right X of preview */
+static gint       preview_y2;       /* Lower-right Y of preview */
 
-static int        sel_width;    /* Selection width */
-static int        sel_height;   /* Selection height */
+static gint       sel_width;    /* Selection width */
+static gint       sel_height;   /* Selection height */
 		
 static GtkObject *hscroll_data;    /* Horizontal scrollbar data */
 static GtkObject *vscroll_data;    /* Vertical scrollbar data */
@@ -167,7 +167,7 @@ query (void)
     { PARAM_FLOAT, "amount", "Strength of effect" },
     { PARAM_FLOAT, "threshold", "Threshold" }
   };
-  static gint nargs = sizeof(args) / sizeof(args[0]);
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 	
   INIT_I18N();
 

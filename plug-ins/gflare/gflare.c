@@ -3601,28 +3601,29 @@ ed_make_page_general (GFlareEditor *ed,
 {
   GFlare    *gflare = ed->gflare;
   GtkWidget *vbox;
+  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *option_menu;
-  GtkWidget *sep;
   GtkObject *adj;
-  gint       row;
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 
-  /*
-   *	Scales
-   */
+  /*  Glow  */
 
-  table = gtk_table_new (8, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  frame = gtk_frame_new (_("Glow Paint Options"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
-  row = 0;
-
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Glow Opacity (%):"), SCALE_WIDTH, 0,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Opacity:"), SCALE_WIDTH, 0,
 			      gflare->glow_opacity, 0.0, 100.0, 1.0, 10.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3634,17 +3635,25 @@ ed_make_page_general (GFlareEditor *ed,
 		      NULL);
 
   option_menu = ed_mode_menu_new (&gflare->glow_mode);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-			     _("Glow Mode:"), 1.0, 0.5,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Paint Mode:"), 1.0, 0.5,
 			     option_menu, 1, TRUE);
 
-  sep = gtk_hseparator_new ();
-  gtk_table_attach_defaults (GTK_TABLE (table), sep, 0, 4, row, row + 1);
-  gtk_widget_show (sep);
-  row++;
+  /*  Rays  */
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Rays Opacity (%):"), SCALE_WIDTH, 0,
+  frame = gtk_frame_new (_("Rays Paint Options"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Opacity:"), SCALE_WIDTH, 0,
 			      gflare->rays_opacity, 0.0, 100.0, 1.0, 10.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3656,17 +3665,25 @@ ed_make_page_general (GFlareEditor *ed,
 		      NULL);
 
   option_menu = ed_mode_menu_new (&gflare->rays_mode);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-			     _("Rays Mode:"), 1.0, 0.5,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Paint Mode:"), 1.0, 0.5,
 			     option_menu, 1, TRUE);
 
-  sep = gtk_hseparator_new ();
-  gtk_table_attach_defaults (GTK_TABLE (table), sep, 0, 4, row, row + 1);
-  gtk_widget_show (sep);
-  row++;
+  /*  Rays  */
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Second Flares Opacity (%):"), SCALE_WIDTH, 0,
+  frame = gtk_frame_new (_("Second Flares Paint Options"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Opacity:"), SCALE_WIDTH, 0,
 			      gflare->sflare_opacity, 0.0, 100.0, 1.0, 10.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3678,11 +3695,9 @@ ed_make_page_general (GFlareEditor *ed,
 		      NULL);
 
   option_menu = ed_mode_menu_new (&gflare->sflare_mode);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-			     _("Second Flares Mode:"), 1.0, 0.5,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Paint Mode:"), 1.0, 0.5,
 			     option_menu, 1, TRUE);
-
-  gtk_widget_show (table);
 
   /*
    *	Create Page

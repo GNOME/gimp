@@ -19,6 +19,10 @@ gimpcolorspace
 
 </para>
 
+@red: 
+@green: 
+@blue: 
+<!-- # Unused Parameters # -->
 @Param1: 
 @Param2: 
 @Param3: 
@@ -29,6 +33,10 @@ gimpcolorspace
 
 </para>
 
+@hue: 
+@saturation: 
+@value: 
+<!-- # Unused Parameters # -->
 @Param1: 
 @Param2: 
 @Param3: 
@@ -39,6 +47,10 @@ gimpcolorspace
 
 </para>
 
+@red: 
+@green: 
+@blue: 
+<!-- # Unused Parameters # -->
 @Param1: 
 @Param2: 
 @Param3: 
@@ -49,10 +61,14 @@ gimpcolorspace
 
 </para>
 
-@Varargs: 
-@Varargs: 
-@Varargs: 
+@red: 
+@green: 
+@blue: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@Varargs: 
+@Varargs: 
+@Varargs: 
 
 
 <!-- ##### FUNCTION gimp_hls_to_rgb ##### -->
@@ -60,6 +76,10 @@ gimpcolorspace
 
 </para>
 
+@hue: 
+@lightness: 
+@saturation: 
+<!-- # Unused Parameters # -->
 @Param1: 
 @Param2: 
 @Param3: 
@@ -70,6 +90,10 @@ gimpcolorspace
 
 </para>
 
+@red: 
+@green: 
+@blue: 
+<!-- # Unused Parameters # -->
 @Param1: 
 @Param2: 
 @Param3: 
@@ -80,6 +104,10 @@ gimpcolorspace
 
 </para>
 
+@hue: 
+@saturation: 
+@value: 
+<!-- # Unused Parameters # -->
 @Param1: 
 @Param2: 
 @Param3: 
@@ -90,6 +118,11 @@ gimpcolorspace
 
 </para>
 
+@hsv: 
+@red: 
+@green: 
+@blue: 
+<!-- # Unused Parameters # -->
 @Param1: 
 @Param2: 
 @Param3: 
@@ -101,6 +134,11 @@ gimpcolorspace
 
 </para>
 
+@rgb: 
+@hue: 
+@saturation: 
+@value: 
+<!-- # Unused Parameters # -->
 @Param1: 
 @Param2: 
 @Param3: 

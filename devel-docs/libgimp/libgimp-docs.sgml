@@ -36,28 +36,28 @@
     <title>GIMP Library Reference Manual</title>
   </bookinfo>
 
+  <chapter id="gimpdefinitions">
+    <title>GIMP Constants and Limits</title>
+    &libgimp-gimpenums;
+    &libgimp-gimpfeatures;
+    &libgimp-gimplimits;
+    &libgimp-gimpmath;
+  </chapter>
+
   <chapter id="libgimp">
     <title>GIMP Library</title>
     &libgimp-gimp;
     &libgimp-gimpprotocol;
     &libgimp-gimpcolorspace;
-    &libgimp-gimpenums;
     &libgimp-gimpwire;
     &libgimp-gimpmatrix;
     &libgimp-parasite;
     &libgimp-parasiteF;
     &libgimp-parasiteP;
     &libgimp-gserialize;
-    &libgimp-color-selector;
-    &libgimp-gimpmodule;
-    &libgimp-gimpmath;
-    &libgimp-color-display;
     &libgimp-gimpenv;
-    &libgimp-gimplimits;
-    &libgimp-gimpexport;
     &libgimp-parasiteio;
     &libgimp-gimpcompat;
-    &libgimp-gimpfeatures;
   </chapter>
 
   <chapter id="libgimpui">
@@ -69,10 +69,18 @@
     &GimpSizeEntry;
     &GimpUnitMenu;
     &libgimp-gimpdialog;
+    &libgimp-gimpexport;
     &libgimp-gimphelpui;
     &libgimp-gimpmenu;
     &libgimp-gimpunit;
     &libgimp-gimpwidgets;
+  </chapter>
+
+  <chapter id="gimpmodule">
+    <title>GIMP Module Header Files</title>
+    &libgimp-gimpmodule;
+    &libgimp-color-display;
+    &libgimp-color-selector;
   </chapter>
 </book>
 

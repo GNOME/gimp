@@ -88,14 +88,16 @@ GPlugInInfo PLUG_IN_INFO =
   query, /* query_proc */
   run,   /* run_proc   */
 };
+
 static StrucValues svals =
 {
-  0,     /* direction*/
-  4      /* depth */
+  0,     /* direction */
+  4      /* depth     */
 };
+
 static StructInterface s_int =
 {
-  FALSE     /* run */
+  FALSE  /* run */
 };
 
 
@@ -114,9 +116,7 @@ query (void)
     { PARAM_INT32, "direction", "Light direction (0 - 3)" },
     { PARAM_INT32, "depth", "Texture depth (1 - 50)" },
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0; 
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
 
@@ -129,8 +129,8 @@ query (void)
 			  N_("<Image>/Filters/Artistic/Apply Canvas..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -182,16 +182,19 @@ run (gchar   *name,
     case RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  svals.direction = (gint) param[3].data.d_int32;
-	  svals.depth = (gint) param[4].data.d_int32;
+	  svals.depth     = (gint) param[4].data.d_int32;
+
+	  if (svals.direction < 0 || svals.direction > 4) 
+	    status = STATUS_CALLING_ERROR;
+	  if (svals.depth < 1 || svals.depth > 50) 
+	    status = STATUS_CALLING_ERROR;
 	}
-      if(svals.direction<0 || svals.direction>4) 
-	status = STATUS_CALLING_ERROR;
-      if(svals.depth<1 || svals.depth>50) 
-	status = STATUS_CALLING_ERROR;
       break;
       
     case RUN_WITH_LAST_VALS:
@@ -206,9 +209,10 @@ run (gchar   *name,
   if (status == STATUS_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->id) ||
+	  gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init ("struc");
+	  gimp_progress_init (_("Applying Canvas..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 	  
 	  strucpi (drawable);
@@ -352,40 +356,40 @@ strucpi (GDrawable *drawable)
   bytes = drawable->bpp;
   
   /*  allocate row buffers  */
-  cur_row  = (guchar *) malloc ((x2 - x1) * bytes);
-  dest = (guchar *) malloc ((x2 - x1) * bytes);
+  cur_row  = g_new (guchar, (x2 - x1) * bytes);
+  dest     = g_new (guchar, (x2 - x1) * bytes);
 
   /*  initialize the pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
-  mult=(gfloat)svals.depth*0.25;
+  mult = (gfloat) svals.depth * 0.25;
   switch(svals.direction) 
     {
     case 0:
-      xm=1;
-      ym=128;
-      offs=0;
+      xm = 1;
+      ym = 128;
+      offs = 0;
       break;
     case 1:
-      xm=-1;
-      ym=128;
-      offs=127;
+      xm = -1;
+      ym = 128;
+      offs = 127;
       break;
     case 2:
-      xm=128;
-      ym=1;
-      offs=0;
+      xm = 128;
+      ym = 1;
+      offs = 0;
       break;
     case 3:
-      xm=128;
-      ym=-1;
-      offs=128;
+      xm = 128;
+      ym = -1;
+      offs = 128;
       break;
     default:
-      xm=1;
-      ym=128;
-      offs=0;
+      xm = 1;
+      ym = 128;
+      offs = 0;
       break;
     }
 
@@ -416,18 +420,18 @@ strucpi (GDrawable *drawable)
 	case 4:  /* RGB alpha */
 	  for (col = 0; col < (x2 - x1) * bytes; col+=bytes)
 	    {
-	      varde = cur_row[col] + mult*sdata[rcol*xm+rrow*ym+offs];
+	      varde = cur_row[col] + mult * sdata[rcol*xm+rrow*ym+offs];
 	      if (varde > 255 ) varde = 255;
 	      if (varde < 0) varde = 0;
-	      *d++ = (guchar)varde;
-	      varde = cur_row[col+1] + mult*sdata[rcol*xm+rrow*ym+offs];
+	      *d++ = (guchar) varde;
+	      varde = cur_row[col+1] + mult * sdata[rcol*xm+rrow*ym+offs];
 	      if (varde > 255 ) varde = 255;
 	      if (varde < 0) varde = 0;
-	      *d++ = (guchar)varde;
-	      varde = cur_row[col+2] + mult*sdata[rcol*xm+rrow*ym+offs];
+	      *d++ = (guchar) varde;
+	      varde = cur_row[col+2] + mult * sdata[rcol*xm+rrow*ym+offs];
 	      if (varde > 255 ) varde = 255;
 	      if (varde < 0) varde = 0;
-	      *d++ = (guchar)varde;
+	      *d++ = (guchar) varde;
 	      if (bytes == 4)
 		*d++ = cur_row[col+3];
 	      rcol++;
@@ -442,7 +446,7 @@ strucpi (GDrawable *drawable)
       if (rrow == 128) rrow = 0;
 
       if ((row % 5) == 0)
-	gimp_progress_update ((double) row / (double) (y2 - y1));
+	gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
     }
 
   /*  update the textured region  */

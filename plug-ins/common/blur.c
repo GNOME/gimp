@@ -134,10 +134,10 @@ static void run   (gchar   *name,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static void blur (GDrawable *drawable);
@@ -187,9 +187,6 @@ query (void)
   };
   static gint nargs = sizeof(args) / sizeof (args[0]);
 
-  static GParamDef *return_vals = NULL;
-  static gint nreturn_vals = 0;
-
   const gchar *blurb = "Apply a 3x3 blurring convolution kernel to the specified drawable.";
   const gchar *help = "This plug-in randomly blurs the specified drawable, using a 3x3 blur.  You control the percentage of the pixels that are blurred and the number of times blurring is applied.  Indexed images are not supported.";
   const gchar *author = "Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/";
@@ -207,8 +204,8 @@ query (void)
 			  N_("<Image>/Filters/Blur/Blur..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  (gchar *) blurb,
@@ -219,8 +216,8 @@ query (void)
 			  NULL,
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs_ni, nreturn_vals,
-			  args_ni, return_vals);
+			  nargs_ni, 0,
+			  args_ni, NULL);
 }
 
 /*********************************
@@ -294,7 +291,6 @@ run (gchar   *name,
 	      pivals.seed_type   = (gint) MIN (SEED_USER, param[5].data.d_int32);
 	      pivals.seed_type   = (gint) MAX (SEED_TIME, param[5].data.d_int32);
 	      pivals.blur_seed   = (gint) param[6].data.d_int32;
-	      status = STATUS_SUCCESS;
 	    }
 	  else if ((strcmp (name, PLUG_IN_NAME) == 0) &&
 		   (nparams == 3))
@@ -303,7 +299,6 @@ run (gchar   *name,
 	      pivals.blur_rcount = (gdouble) 1.0;
 	      pivals.seed_type   = SEED_TIME;
 	      pivals.blur_seed   = 0;
-	      status = STATUS_SUCCESS;
 	    }
 	  else
 	    {
@@ -324,6 +319,7 @@ run (gchar   *name,
 	default:
 	  break;
         }
+
       if (status == STATUS_SUCCESS)
 	{
 	  /*
@@ -457,16 +453,16 @@ blur (GDrawable *drawable)
    *  allocate row buffers
    */
   prev_row = g_new (guchar, (x2 - x1 + 2) * bytes);
-  cur_row = g_new (guchar, (x2 - x1 + 2) * bytes);
+  cur_row  = g_new (guchar, (x2 - x1 + 2) * bytes);
   next_row = g_new (guchar, (x2 - x1 + 2) * bytes);
-  dest = g_new (guchar, (x2 - x1) * bytes);
+  dest     = g_new (guchar, (x2 - x1) * bytes);
 
   /*
    *  initialize the pixel regions
    */
-  gimp_pixel_rgn_init(&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init(&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
-  gimp_pixel_rgn_init(&destPR2, drawable, 0, 0, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&destPR2, drawable, 0, 0, width, height, TRUE, TRUE);
   sp = &srcPR;
   dp = &destPR;
   tp = NULL;
