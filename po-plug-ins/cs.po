@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.3\n"
-"POT-Creation-Date: 2001-11-16 13:27+0100\n"
-"PO-Revision-Date: 2001-11-16 15:20+0100\n"
+"POT-Creation-Date: 2002-01-20 00:14+0100\n"
+"PO-Revision-Date: 2002-01-20 00:25+0100\n"
 "Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -79,7 +79,7 @@ msgstr "O programu"
 #: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:426
 #: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
 #: plug-ins/common/wind.c:1012 plug-ins/common/wmf.c:931
-#: plug-ins/common/xbm.c:1150 plug-ins/common/xpm.c:800
+#: plug-ins/common/xbm.c:1147 plug-ins/common/xpm.c:822
 #: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:634
 #: plug-ins/flame/flame.c:923 plug-ins/fp/fp_gtk.c:904
 #: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1010
@@ -160,8 +160,8 @@ msgstr "OK"
 #: plug-ins/common/video.c:2157 plug-ins/common/vpropagate.c:937
 #: plug-ins/common/warp.c:428 plug-ins/common/waves.c:351
 #: plug-ins/common/whirlpinch.c:810 plug-ins/common/wind.c:1014
-#: plug-ins/common/wmf.c:933 plug-ins/common/xbm.c:1152
-#: plug-ins/common/xpm.c:802 plug-ins/fits/fits.c:989
+#: plug-ins/common/wmf.c:933 plug-ins/common/xbm.c:1149
+#: plug-ins/common/xpm.c:824 plug-ins/fits/fits.c:989
 #: plug-ins/flame/flame.c:636 plug-ins/flame/flame.c:925
 #: plug-ins/fp/fp_gtk.c:908 plug-ins/gap/gap_arr_dialog.c:1012
 #: plug-ins/gap/gap_dbbrowser_utils.c:215
@@ -415,7 +415,7 @@ msgstr "Sierpinski"
 
 #: plug-ins/FractalExplorer/Dialogs.c:621 plug-ins/common/sinus.c:1859
 #: plug-ins/common/sinus.c:1877 plug-ins/common/sinus.c:1963
-#: plug-ins/imagemap/imap_preferences.c:543
+#: plug-ins/imagemap/imap_preferences.c:545
 msgid "Colors"
 msgstr "Barvy"
 
@@ -927,7 +927,7 @@ msgstr "Poloha X svìtelného zdroje v prostoru XYZ"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:804
 #: plug-ins/common/nova.c:628 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1243 plug-ins/flame/flame.c:1205
+#: plug-ins/common/xbm.c:1240 plug-ins/flame/flame.c:1205
 #: plug-ins/gap/gap_mov_dialog.c:1855 plug-ins/gflare/gflare.c:2880
 #: plug-ins/ifscompose/ifscompose.c:549
 msgid "Y:"
@@ -1037,7 +1037,8 @@ msgstr "Lineární"
 msgid "Logarithmic"
 msgstr "Logaritmický"
 
-#: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:725
+#: plug-ins/Lighting/lighting_ui.c:944 plug-ins/common/sinus.c:1990
+#: plug-ins/flame/flame.c:725
 msgid "Sinusoidal"
 msgstr "Sinusoidní"
 
@@ -1349,8 +1350,8 @@ msgstr "Ukázat/skrýt náhledový drátový model"
 #: plug-ins/common/png.c:426 plug-ins/common/png.c:428
 #: plug-ins/common/pnm.c:411 plug-ins/common/psd.c:1731
 #: plug-ins/common/sunras.c:442 plug-ins/common/tga.c:429
-#: plug-ins/common/tiff.c:454 plug-ins/common/xbm.c:734
-#: plug-ins/common/xpm.c:334 plug-ins/common/xwd.c:439
+#: plug-ins/common/tiff.c:454 plug-ins/common/xbm.c:731
+#: plug-ins/common/xpm.c:342 plug-ins/common/xwd.c:439
 #: plug-ins/faxg3/faxg3.c:196 plug-ins/gfli/gfli.c:459 plug-ins/sgi/sgi.c:330
 #: plug-ins/sgi/sgi.c:332 plug-ins/xjt/xjt.c:3246
 #, c-format
@@ -1396,7 +1397,7 @@ msgstr "%s: ¹patná barevná mapa"
 #: plug-ins/common/smooth_palette.c:241 plug-ins/common/sunras.c:932
 #: plug-ins/common/tga.c:915 plug-ins/common/tiff.c:680
 #: plug-ins/common/tile.c:280 plug-ins/common/winclipboard.c:557
-#: plug-ins/common/wmf.c:2350 plug-ins/common/xbm.c:872
+#: plug-ins/common/wmf.c:2350 plug-ins/common/xbm.c:869
 #: plug-ins/faxg3/faxg3.c:448 plug-ins/fits/fits.c:521
 #: plug-ins/gfig/gfig.c:2832 plug-ins/gfig/gfig.c:3185 plug-ins/sgi/sgi.c:378
 #: plug-ins/twain/twain.c:722 plug-ins/winsnap/winsnap.c:1235
@@ -1422,7 +1423,7 @@ msgstr "Nelze otevøít %s"
 #: plug-ins/common/png.c:779 plug-ins/common/pnm.c:783
 #: plug-ins/common/ps.c:1003 plug-ins/common/sunras.c:525
 #: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1337
-#: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:653
+#: plug-ins/common/xbm.c:979 plug-ins/common/xpm.c:675
 #: plug-ins/common/xwd.c:543 plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679
 #: plug-ins/sgi/sgi.c:548 plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
 #, c-format
@@ -2173,7 +2174,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/unsharp.c:798 plug-ins/common/video.c:2167
 #: plug-ins/common/vpropagate.c:977 plug-ins/common/waves.c:399
 #: plug-ins/common/whirlpinch.c:847 plug-ins/common/wind.c:1048
-#: plug-ins/common/xpm.c:812 plug-ins/maze/maze_face.c:204
+#: plug-ins/common/xpm.c:834 plug-ins/maze/maze_face.c:204
 #: plug-ins/mosaic/mosaic.c:643 plug-ins/xjt/xjt.c:805
 msgid "Parameter Settings"
 msgstr "Nastavení parametrù"
@@ -2577,7 +2578,7 @@ msgid "Colorify"
 msgstr "Kolorování"
 
 #: plug-ins/common/colorify.c:338 plug-ins/common/colortoalpha.c:418
-#: plug-ins/common/ps.c:2707 plug-ins/common/xpm.c:439
+#: plug-ins/common/ps.c:2707 plug-ins/common/xpm.c:461
 #: plug-ins/gap/gap_mov_dialog.c:274 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:328
 #: plug-ins/print/gimp_main_window.c:758
@@ -2831,7 +2832,7 @@ msgid "Prefixed Name:"
 msgstr "Jméno s pøedponou:"
 
 #: plug-ins/common/csource.c:689 plug-ins/common/mail.c:529
-#: plug-ins/common/tiff.c:1621 plug-ins/common/xbm.c:1202
+#: plug-ins/common/tiff.c:1621 plug-ins/common/xbm.c:1199
 msgid "Comment:"
 msgstr "Komentáø:"
 
@@ -4181,7 +4182,7 @@ msgstr "Gilotina..."
 msgid "gz: no sensible extension, saving as gzip'd xcf\n"
 msgstr "gz: chybí rozli¹ující pøípona, zapisuje se jako gzipovaný xcf\n"
 
-#: plug-ins/common/gz.c:446
+#: plug-ins/common/gz.c:448
 msgid "gz: no sensible extension, attempting to load with file magic\n"
 msgstr ""
 "gz: chybí rozli¹ující pøípona, pokus o ètení za pomocí souborù magických "
@@ -5872,10 +5873,6 @@ msgstr "Druhá barva:"
 msgid "Blend Settings"
 msgstr "Nastavení mísení"
 
-#: plug-ins/common/sinus.c:1990
-msgid "Sinusodial"
-msgstr "Sinusoidní"
-
 #: plug-ins/common/sinus.c:2002
 msgid "Exponent:"
 msgstr "Exponent:"
@@ -6982,30 +6979,30 @@ msgstr "Pøená¹í se stránka"
 msgid "Created with The GIMP"
 msgstr "Vytvoøeno v programu GIMP"
 
-#: plug-ins/common/xbm.c:730
+#: plug-ins/common/xbm.c:727
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
 msgstr "XBM: nelze otevøít \"%s\"\n"
 
-#: plug-ins/common/xbm.c:813
+#: plug-ins/common/xbm.c:810
 #, c-format
 msgid "XBM: cannot read header (ftell == %ld)\n"
 msgstr "XBM: nelze èíst hlavièku (ftell == %ld)\n"
 
-#: plug-ins/common/xbm.c:819
+#: plug-ins/common/xbm.c:816
 msgid "XBM: no image width specified\n"
 msgstr "XBM: nebyla zadána ¹íøka obrázku\n"
 
-#: plug-ins/common/xbm.c:825
+#: plug-ins/common/xbm.c:822
 msgid "XBM: no image height specified\n"
 msgstr "XBM: nebyla zadána vý¹ka obrázku\n"
 
-#: plug-ins/common/xbm.c:831
+#: plug-ins/common/xbm.c:828
 msgid "XBM: no image data type specified\n"
 msgstr "XBM: nebyla zadán typ dat obrázku\n"
 
 #. The image is not black-and-white.
-#: plug-ins/common/xbm.c:964
+#: plug-ins/common/xbm.c:961
 msgid ""
 "The image which you are trying to save as\n"
 "an XBM contains more than two colors.\n"
@@ -7019,7 +7016,7 @@ msgstr ""
 "Pøeveïte jej nejdøíve do èernobílého (1bitového)\n"
 "indexovaného obrázku a zkuste znovu."
 
-#: plug-ins/common/xbm.c:975
+#: plug-ins/common/xbm.c:972
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
@@ -7027,56 +7024,56 @@ msgstr ""
 "Nelze zapsat masku kurzoru pro obrázek,\n"
 "který nemá alfa kanál."
 
-#: plug-ins/common/xbm.c:1004
+#: plug-ins/common/xbm.c:1001
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
 msgstr "XBM: nelze vytvoøit \"%s\"\n"
 
-#: plug-ins/common/xbm.c:1145
+#: plug-ins/common/xbm.c:1142
 msgid "Save as XBM"
 msgstr "Zapsat jako XBM"
 
 #. parameter settings
-#: plug-ins/common/xbm.c:1162
+#: plug-ins/common/xbm.c:1159
 msgid "XBM Options"
 msgstr "Volby XBM"
 
 #. X10 format
-#: plug-ins/common/xbm.c:1173
+#: plug-ins/common/xbm.c:1170
 msgid "X10 Format Bitmap"
 msgstr "Bitová mapa formátu X10"
 
-#: plug-ins/common/xbm.c:1191
+#: plug-ins/common/xbm.c:1188
 msgid "Identifier Prefix:"
 msgstr "Pøedpona identifikátoru:"
 
 #. hotspot toggle
-#: plug-ins/common/xbm.c:1209
+#: plug-ins/common/xbm.c:1206
 msgid "Write Hot Spot Values"
 msgstr "Zapsat hodnoty øídícího bodu"
 
-#: plug-ins/common/xbm.c:1233
+#: plug-ins/common/xbm.c:1230
 msgid "Hot Spot X:"
 msgstr "Øídíci bod X:"
 
 #. mask file
-#: plug-ins/common/xbm.c:1247
+#: plug-ins/common/xbm.c:1244
 msgid "Mask File"
 msgstr "Soubor masky"
 
-#: plug-ins/common/xbm.c:1258
+#: plug-ins/common/xbm.c:1255
 msgid "Write Extra Mask File"
 msgstr "Zapsat zvlá¹» soubor masky"
 
-#: plug-ins/common/xbm.c:1269
+#: plug-ins/common/xbm.c:1266
 msgid "Mask File Extension:"
 msgstr "Pøípona souboru masky:"
 
-#: plug-ins/common/xpm.c:795
+#: plug-ins/common/xpm.c:817
 msgid "Save as XPM"
 msgstr "Zapsat jako XPM"
 
-#: plug-ins/common/xpm.c:825
+#: plug-ins/common/xpm.c:847
 msgid "Alpha Threshold:"
 msgstr "Práh alfy:"
 
@@ -7695,7 +7692,7 @@ msgstr "Video:"
 msgid ""
 "Name of a videofile to READ by xanim.\n"
 "Frames are extracted from the videofile\n"
-"and written to seprate diskfiles.\n"
+"and written to separate diskfiles.\n"
 "xanim exporting edition is required."
 msgstr ""
 "Jméno videosouboru ke ÈTENÍ programem xanim.\n"
@@ -10957,7 +10954,7 @@ msgstr "Volby kreslení druhé záøe"
 
 #: plug-ins/gflare/gflare.c:3684 plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
-#: plug-ins/imagemap/imap_preferences.c:468
+#: plug-ins/imagemap/imap_preferences.c:470
 msgid "General"
 msgstr "V¹eobecné"
 
@@ -12395,63 +12392,63 @@ msgstr "Výstup"
 msgid "Guides..."
 msgstr "Vodítka..."
 
-#: plug-ins/imagemap/imap_preferences.c:205
+#: plug-ins/imagemap/imap_preferences.c:207
 msgid "Couldn't save resource file:"
 msgstr "Nelze zapsat soubor zdrojù:"
 
-#: plug-ins/imagemap/imap_preferences.c:357
+#: plug-ins/imagemap/imap_preferences.c:359
 msgid "Select Color"
 msgstr "Výbìr barvy"
 
-#: plug-ins/imagemap/imap_preferences.c:435
+#: plug-ins/imagemap/imap_preferences.c:437
 msgid "Default Map Type"
 msgstr "Implicitní druh mapy"
 
-#: plug-ins/imagemap/imap_preferences.c:454
+#: plug-ins/imagemap/imap_preferences.c:456
 msgid "Prompt for area info"
 msgstr "Výzva k informaci o oblasti"
 
-#: plug-ins/imagemap/imap_preferences.c:456
+#: plug-ins/imagemap/imap_preferences.c:458
 msgid "Require default URL"
 msgstr "Vy¾aduje implicitní URL"
 
-#: plug-ins/imagemap/imap_preferences.c:458
+#: plug-ins/imagemap/imap_preferences.c:460
 msgid "Show area handles"
 msgstr "Zobrazit obsluhu oblastí"
 
-#: plug-ins/imagemap/imap_preferences.c:460
+#: plug-ins/imagemap/imap_preferences.c:462
 msgid "Keep NCSA circles true"
 msgstr "Zachovat nastavené NCSA kru¾nice"
 
-#: plug-ins/imagemap/imap_preferences.c:462
+#: plug-ins/imagemap/imap_preferences.c:464
 msgid "Show area URL tip"
 msgstr "Zobrazit tip URL oblasti"
 
-#: plug-ins/imagemap/imap_preferences.c:465
+#: plug-ins/imagemap/imap_preferences.c:467
 msgid "Use double-sized grab handles"
 msgstr "Pou¾ít dvojitou velikost obsluhy nabírání"
 
-#: plug-ins/imagemap/imap_preferences.c:489
+#: plug-ins/imagemap/imap_preferences.c:491
 msgid "Number of Undo levels (1 - 99):"
 msgstr "Poèet úrovní vracení (1-99):"
 
-#: plug-ins/imagemap/imap_preferences.c:492
+#: plug-ins/imagemap/imap_preferences.c:494
 msgid "Number of MRU entries (1 - 16):"
 msgstr "Poèet polo¾ek MRU (1-16):"
 
-#: plug-ins/imagemap/imap_preferences.c:495
+#: plug-ins/imagemap/imap_preferences.c:497
 msgid "Menu"
 msgstr "Menu"
 
-#: plug-ins/imagemap/imap_preferences.c:531
+#: plug-ins/imagemap/imap_preferences.c:533
 msgid "Normal:"
 msgstr "Normální:"
 
-#: plug-ins/imagemap/imap_preferences.c:537
+#: plug-ins/imagemap/imap_preferences.c:539
 msgid "Selected:"
 msgstr "Vybrané:"
 
-#: plug-ins/imagemap/imap_preferences.c:565
+#: plug-ins/imagemap/imap_preferences.c:567
 msgid "General Preferences"
 msgstr "Obecné pøedvolby"
 
