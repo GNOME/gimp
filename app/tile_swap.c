@@ -155,6 +155,14 @@ tile_swap_exit1 (gpointer key,
 	  tile_swap_print_gaps (def_swap_file);
 	}
 
+#ifdef __EMX__
+      /* should close before unlink */
+      if (swap_file->fd > 0)
+	{
+	  close (swap_file->fd);
+	  swap_file->fd = -1;
+	}
+#endif
       unlink (swap_file->filename);
     }
 }
