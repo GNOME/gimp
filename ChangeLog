@@ -1,5 +1,21 @@
 2002-11-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimpconfig-params.h: added GIMP_PARAM_RESTART and
+	GIMP_PARAM_CONFIRM flags and changed all param spec macros
+	to have a "flags" parameter.
+
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpdisplayconfig.c
+	* app/config/gimpguiconfig.c: tag the values which need restart or
+	confirmation with the resp. flags. Changed all macro calls
+	accordingly.
+
+	* app/core/gimpcontext.c
+	* app/widgets/gimpdeviceinfo.c: changed macro calls accordingly.
+
+2002-11-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpconfig.h:
 	s/gimp_config_equal/gimp_config_is_equal_to/ to match the
 	implementation.

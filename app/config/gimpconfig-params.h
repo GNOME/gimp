@@ -24,6 +24,9 @@
 
 
 #define GIMP_PARAM_SERIALIZE    (1 << (0 + G_PARAM_USER_SHIFT))
+#define GIMP_PARAM_RESTART      (1 << (1 + G_PARAM_USER_SHIFT))
+#define GIMP_PARAM_CONFIRM      (1 << (2 + G_PARAM_USER_SHIFT))
+
 
 #define GIMP_CONFIG_PARAM_FLAGS (G_PARAM_READWRITE | \
                                  G_PARAM_CONSTRUCT | \
@@ -83,61 +86,61 @@ GParamSpec * gimp_param_spec_unit         (const gchar    *name,
 
 /* some convenience macros to install object properties */
 
-#define GIMP_CONFIG_INSTALL_PROP_BOOLEAN(class, id, name, default)\
+#define GIMP_CONFIG_INSTALL_PROP_BOOLEAN(class, id, name, default, flags)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_boolean (name, NULL, NULL,\
                                    default,\
-                                   GIMP_CONFIG_PARAM_FLAGS))
-#define GIMP_CONFIG_INSTALL_PROP_COLOR(class, id, name, default)\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
+#define GIMP_CONFIG_INSTALL_PROP_COLOR(class, id, name, default, flags)\
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_color (name, NULL, NULL,\
                                    default,\
-                                   GIMP_CONFIG_PARAM_FLAGS))
-#define GIMP_CONFIG_INSTALL_PROP_DOUBLE(class, id, name, min, max, default)\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
+#define GIMP_CONFIG_INSTALL_PROP_DOUBLE(class, id, name, min, max, default, flags)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_double (name, NULL, NULL,\
                                    min, max, default,\
-                                   GIMP_CONFIG_PARAM_FLAGS))
-#define GIMP_CONFIG_INSTALL_PROP_ENUM(class, id, name, enum_type, default)\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
+#define GIMP_CONFIG_INSTALL_PROP_ENUM(class, id, name, enum_type, default, flags)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_enum (name, NULL, NULL,\
                                    enum_type, default,\
-                                   GIMP_CONFIG_PARAM_FLAGS))
-#define GIMP_CONFIG_INSTALL_PROP_INT(class, id, name, min, max, default)\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
+#define GIMP_CONFIG_INSTALL_PROP_INT(class, id, name, min, max, default, flags)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_int (name, NULL, NULL,\
                                    min, max, default,\
-                                   GIMP_CONFIG_PARAM_FLAGS))
-#define GIMP_CONFIG_INSTALL_PROP_MEMSIZE(class, id, name, min, max, default)\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
+#define GIMP_CONFIG_INSTALL_PROP_MEMSIZE(class, id, name, min, max, default, flags)\
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_memsize (name, NULL, NULL,\
                                    min, max, default,\
-                                   GIMP_CONFIG_PARAM_FLAGS))
-#define GIMP_CONFIG_INSTALL_PROP_OBJECT(class, id, name, object_type)\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
+#define GIMP_CONFIG_INSTALL_PROP_OBJECT(class, id, name, object_type, flags)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_object (name, NULL, NULL,\
                                    object_type,\
-                                   GIMP_CONFIG_PARAM_FLAGS))
-#define GIMP_CONFIG_INSTALL_PROP_PATH(class, id, name, default)\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
+#define GIMP_CONFIG_INSTALL_PROP_PATH(class, id, name, default, flags)\
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_path (name, NULL, NULL,\
                                    default,\
-                                   GIMP_CONFIG_PARAM_FLAGS))
-#define GIMP_CONFIG_INSTALL_PROP_STRING(class, id, name, default)\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
+#define GIMP_CONFIG_INSTALL_PROP_STRING(class, id, name, default, flags)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_string (name, NULL, NULL,\
                                    default,\
-                                   GIMP_CONFIG_PARAM_FLAGS))
-#define GIMP_CONFIG_INSTALL_PROP_UINT(class, id, name, min, max, default)\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
+#define GIMP_CONFIG_INSTALL_PROP_UINT(class, id, name, min, max, default, flags)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_uint (name, NULL, NULL,\
                                    min, max, default,\
-                                   GIMP_CONFIG_PARAM_FLAGS))
-#define GIMP_CONFIG_INSTALL_PROP_UNIT(class, id, name, default)\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
+#define GIMP_CONFIG_INSTALL_PROP_UNIT(class, id, name, default, flags)\
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_unit (name, NULL, NULL,\
                                    FALSE, default,\
-                                   GIMP_CONFIG_PARAM_FLAGS))
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
 
 
 #endif /* __GIMP_CONFIG_PARAMS_H__ */

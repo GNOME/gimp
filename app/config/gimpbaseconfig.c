@@ -102,19 +102,24 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_TEMP_PATH,
                                  "temp-path", 
                                  g_build_filename (gimp_directory (), 
-                                                   "tmp", NULL));
+                                                   "tmp", NULL),
+                                 GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_SWAP_PATH,
                                  "swap-path", 
-                                 g_strdup (gimp_directory ()));
+                                 g_strdup (gimp_directory ()),
+                                 GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
                                     "stingy-memory-use",
-                                    FALSE);
+                                    FALSE,
+                                    GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_UINT (object_class, PROP_NUM_PROCESSORS,
                                  "num-processors",
-                                 1, 30, 1);
+                                 1, 30, 1,
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
                                     "tile-cache-size",
-                                    0, G_MAXULONG, 1 << 25);
+                                    0, G_MAXULONG, 1 << 25,
+                                    GIMP_PARAM_CONFIRM);
 }
 
 static void

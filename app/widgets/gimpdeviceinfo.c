@@ -130,7 +130,8 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MODE, "mode",
                                  GDK_TYPE_INPUT_MODE,
-                                 GDK_MODE_DISABLED);
+                                 GDK_MODE_DISABLED,
+                                 0);
 
   array_spec = g_param_spec_value_array ("axes",
                                          NULL, NULL,

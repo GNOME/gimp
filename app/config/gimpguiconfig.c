@@ -114,59 +114,77 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_LAST_OPENED_SIZE,
                                 "last-opened-size",
-                                0, G_MAXINT, 4);
+                                0, G_MAXINT, 4,
+                                GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSPARENCY_SIZE,
                                  "transparency-size",
-                                 GIMP_TYPE_CHECK_SIZE, GIMP_MEDIUM_CHECKS);
+                                 GIMP_TYPE_CHECK_SIZE, GIMP_MEDIUM_CHECKS,
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSPARENCY_TYPE,
                                  "transparency-type",
-                                 GIMP_TYPE_CHECK_TYPE, GIMP_GRAY_CHECKS);
+                                 GIMP_TYPE_CHECK_TYPE, GIMP_GRAY_CHECKS,
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DEFAULT_THRESHOLD,
                                 "default-threshold",
-                                0, 255, 15);
+                                0, 255, 15,
+                                0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_NAV_PREVIEW_SIZE,
                                  "navigation-preview-size",
-                                 GIMP_TYPE_PREVIEW_SIZE, GIMP_PREVIEW_SIZE_HUGE);
+                                 GIMP_TYPE_PREVIEW_SIZE, GIMP_PREVIEW_SIZE_HUGE,
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
                                     "info-window-per-display",
-                                    FALSE);
+                                    FALSE,
+                                    GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRUST_DIRTY_FLAG,
                                     "trust-dirty-flag",
-                                    FALSE);
+                                    FALSE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_DEVICE_STATUS,
                                     "save-device-status",
-                                    FALSE);
+                                    FALSE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_SESSION_INFO,
                                     "save-session-info",
-                                    TRUE);
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESTORE_SESSION,
                                     "restore-session",
-                                    TRUE);
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TIPS,
                                     "show-tips",
-                                    TRUE);
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOL_TIPS,
                                     "show-tool-tips",
-                                    TRUE);
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TEAROFF_MENUS,
                                     "tearoff-menus",
-                                    TRUE);
+                                    TRUE,
+                                    GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_MAX_NEW_IMAGE_SIZE,
                                    "max-new-image-size",
-                                   0, G_MAXULONG, 1 << 25);
+                                   0, G_MAXULONG, 1 << 25,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_THEME_PATH,
                                  "theme-path",
-                                 gimp_config_build_data_path ("themes"));
+                                 gimp_config_build_data_path ("themes"),
+                                 GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_THEME,
                                    "theme",
-                                   NULL);
+                                   NULL,
+                                   0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_HELP,
                                     "use-help",
-                                    TRUE);
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_HELP_BROWSER,
                                  "help-browser",
                                  GIMP_TYPE_HELP_BROWSER_TYPE,
-                                 GIMP_HELP_BROWSER_GIMP);
+                                 GIMP_HELP_BROWSER_GIMP,
+                                 0);
 }
 
 static void

@@ -116,52 +116,69 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_MARCHING_ANTS_SPEED,
                                 "marching-ants-speed",
-                                50, G_MAXINT, 300);
+                                50, G_MAXINT, 300,
+                                GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_COLORMAP_CYCLING,
                                     "colormap-cycling",
-                                    FALSE);
+                                    FALSE,
+                                    GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_ZOOM,
                                     "resize-windows-on-zoom",
-                                    FALSE);
+                                    FALSE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_RESIZE,
                                     "resize-windows-on-resize",
-                                    FALSE);
+                                    FALSE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_DOT_FOR_DOT,
                                     "default-dot-for-dot",
-                                    TRUE);
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PERFECT_MOUSE,
                                     "perfect-mouse",
-                                    FALSE);
+                                    FALSE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CURSOR_MODE,
                                  "cursor-mode",
-                                 GIMP_TYPE_CURSOR_MODE, GIMP_CURSOR_MODE_TOOL_ICON);
+                                 GIMP_TYPE_CURSOR_MODE,
+                                 GIMP_CURSOR_MODE_TOOL_ICON,
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CURSOR_UPDATING,
                                     "cursor-updating",
-                                    TRUE);
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_TITLE_FORMAT,
                                    "image-title-format",
-                                   DEFAULT_IMAGE_TITLE_FORMAT);
+                                   DEFAULT_IMAGE_TITLE_FORMAT,
+                                   0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_STATUS_FORMAT,
                                    "image-status-format",
-                                   DEFAULT_IMAGE_STATUS_FORMAT);
+                                   DEFAULT_IMAGE_STATUS_FORMAT,
+                                   0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
                                     "show-rulers",
-                                    TRUE);
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
                                     "show-statusbar",
-                                    TRUE);
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONFIRM_ON_CLOSE,
                                     "confirm-on-close",
-                                    TRUE);
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MONITOR_XRESOLUTION,
                                    "monitor-xresolution",
-                                   GIMP_MIN_RESOLUTION, G_MAXDOUBLE, 72.0);
+                                   GIMP_MIN_RESOLUTION, G_MAXDOUBLE, 72.0,
+                                   0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MONITOR_YRESOLUTION,
                                    "monitor-yresolution",
-                                   GIMP_MIN_RESOLUTION, G_MAXDOUBLE, 72.0);
+                                   GIMP_MIN_RESOLUTION, G_MAXDOUBLE, 72.0,
+                                   0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MONITOR_RES_FROM_GDK,
                                     "monitor-resolution-from-windowing-system",
-                                    TRUE);
+                                    TRUE,
+                                    0);
 }
 
 static void
