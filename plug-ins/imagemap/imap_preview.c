@@ -172,15 +172,15 @@ render_indexed_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
 	 colour = cmap + 3 * (int)(*src);
 
 	 if (gray) {
-	    guchar avg = (299 * *colour++ + 587 * *colour++ +
-			  114 * *colour++) / 1000;
+	    guchar avg = (299 * colour[0] + 587 * colour[1] +
+			  114 * colour[2]) / 1000;
 	    *dest++ = avg;
 	    *dest++ = avg;
 	    *dest++ = avg;
 	 } else {
-	    *dest++ = *colour++;
-	    *dest++ = *colour++;
-	    *dest++ = *colour++;
+	    *dest++ = colour[0];
+	    *dest++ = colour[1];
+	    *dest++ = colour[2];
 	 }
       }
       gtk_preview_draw_row(GTK_PREVIEW(preview), dest_row, 0, row, pwidth);

@@ -126,7 +126,7 @@ void      Update_Current_FP  (gint,
 void      fp_Create_Nudge    (gint*        );
 
 gint      fp_dialog          (void);
-gint      fp_advanced_dialog (void);
+void      fp_advanced_dialog (void);
 
 void      fp_advanced_call   (void);
 

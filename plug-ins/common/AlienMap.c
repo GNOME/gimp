@@ -1203,6 +1203,7 @@ alienmap_dialog (void)
 			      wvals.redstretch, 0, 128, 1, 8, 2,
 			      TRUE, 0, 0,
 			      _("Change intensity of the red channel"), NULL);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.redstretch);

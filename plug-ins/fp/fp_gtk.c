@@ -49,13 +49,13 @@ gint         HueSatVal[] = { BY_HUE, BY_SAT, BY_VAL };
 
 gint nudgeArray[256];
 
-GtkWidget *origPreview, *curPreview;
-GtkWidget *rPreview, *gPreview, *bPreview;
-GtkWidget *cPreview, *yPreview, *mPreview;
-GtkWidget *centerPreview;
-GtkWidget *darkerPreview, *lighterPreview, *middlePreview;
-GtkWidget *allOrSell, *dlg;
-GtkWidget *plusSatPreview, *SatPreview, *minusSatPreview;
+static GtkWidget *origPreview, *curPreview;
+static GtkWidget *rPreview, *gPreview, *bPreview;
+static GtkWidget *cPreview, *yPreview, *mPreview;
+static GtkWidget *centerPreview;
+static GtkWidget *darkerPreview, *lighterPreview, *middlePreview;
+static GtkWidget *allOrSell, *dlg;
+static GtkWidget *plusSatPreview, *SatPreview, *minusSatPreview;
 
 struct
 {
@@ -258,15 +258,15 @@ fp_create_range (void)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);  
   gtk_widget_show (vbox);
 
-  group = Button_In_A_Box (vbox, group, _("Shadows"), 
+  group = Button_In_A_Box (vbox, group, _("Sha_dows"), 
 			   GTK_SIGNAL_FUNC (fp_change_current_range),
 			   ShMidHi + SHADOWS,
 			   Current.Range == SHADOWS);
-  group = Button_In_A_Box (vbox, group, _("Midtones"), 
+  group = Button_In_A_Box (vbox, group, _("_Midtones"), 
 			   GTK_SIGNAL_FUNC (fp_change_current_range),
 			   ShMidHi + MIDTONES,
 			   Current.Range == MIDTONES);
-  group = Button_In_A_Box (vbox, group, _("Highlights"), 
+  group = Button_In_A_Box (vbox, group, _("H_ighlights"), 
 			   GTK_SIGNAL_FUNC (fp_change_current_range),
 			   ShMidHi + HIGHLIGHTS,
 			   Current.Range == HIGHLIGHTS);
@@ -289,19 +289,19 @@ fp_create_control (void)
   gtk_container_set_border_width (GTK_CONTAINER (box), 4);  
   gtk_widget_show (box);
 
-  Frames_Check_Button_In_A_Box (box, _("Hue"),
+  Frames_Check_Button_In_A_Box (box, _("_Hue"),
 				GTK_SIGNAL_FUNC (fp_show_hide_frame),
 				fpFrames.palette,
 				Current.VisibleFrames & HUE);
-  Frames_Check_Button_In_A_Box (box, _("Saturation"),
+  Frames_Check_Button_In_A_Box (box, _("_Saturation"),
 				GTK_SIGNAL_FUNC (fp_show_hide_frame),
 				fpFrames.satur,
 				Current.VisibleFrames & SATURATION);
-  Frames_Check_Button_In_A_Box (box, _("Value"),
+  Frames_Check_Button_In_A_Box (box, _("_Value"),
 				GTK_SIGNAL_FUNC (fp_show_hide_frame),
 				fpFrames.lnd,
 				Current.VisibleFrames & VALUE);
-  Frames_Check_Button_In_A_Box (box, _("Advanced"),
+  Frames_Check_Button_In_A_Box (box, _("A_dvanced"),
 				GTK_SIGNAL_FUNC (fp_show_hide_frame),
 				AW.window,
 				FALSE); 
@@ -423,15 +423,15 @@ fp_create_pixels_select_by (void)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);  
   gtk_widget_show (vbox);
 
-  group = Button_In_A_Box (vbox, group, _("Hue"), 
+  group = Button_In_A_Box (vbox, group, _("H_ue"), 
 			   GTK_SIGNAL_FUNC (fp_change_current_pixels_by),
 			   HueSatVal + 0,
 			   Current.ValueBy == BY_HUE);
-  group = Button_In_A_Box (vbox,group, _("Saturation"), 
+  group = Button_In_A_Box (vbox,group, _("Satu_ration"), 
 			   GTK_SIGNAL_FUNC (fp_change_current_pixels_by),
 			   HueSatVal + 1,
 			   Current.ValueBy == BY_SAT);
-  group = Button_In_A_Box (vbox,group, _("Value"), 
+  group = Button_In_A_Box (vbox,group, _("V_alue"), 
 			   GTK_SIGNAL_FUNC (fp_change_current_pixels_by),
 			   HueSatVal + 2,
 			   Current.ValueBy == BY_VAL);
@@ -452,17 +452,17 @@ fp_create_show (void)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);  
   gtk_widget_show (vbox);
 
-  group = Button_In_A_Box (vbox, group, _("Entire Image"),
+  group = Button_In_A_Box (vbox, group, _("_Entire Image"),
 			   GTK_SIGNAL_FUNC (fp_entire_image),
 			   &Current.SlctnOnly,
 			   FALSE);
 
-  group = Button_In_A_Box (vbox, group, _("Selection Only"),
+  group = Button_In_A_Box (vbox, group, _("Se_lection Only"),
 			   GTK_SIGNAL_FUNC (fp_selection_only),
 			   &Current.SlctnOnly,
 			   TRUE);
 
-  group = Button_In_A_Box (vbox, group, _("Selection In Context"), 
+  group = Button_In_A_Box (vbox, group, _("Selec_tion In Context"), 
 			   GTK_SIGNAL_FUNC (fp_selection_in_context),
 			   &Current.SlctnOnly,
 			   FALSE);
@@ -525,7 +525,7 @@ Button_In_A_Box (GtkWidget     *vbox,
 {
   GtkWidget *button;
 
-  button = gtk_radio_button_new_with_label (group, label);
+  button = gtk_radio_button_new_with_mnemonic (group, label);
   gtk_widget_show (button);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
@@ -548,7 +548,7 @@ Check_Button_In_A_Box (GtkWidget     *vbox,
 {
   GtkWidget *button;
 
-  button = gtk_check_button_new_with_label (label);
+  button = gtk_check_button_new_with_mnemonic (label);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -568,7 +568,7 @@ Frames_Check_Button_In_A_Box (GtkWidget     *vbox,
 {
   GtkWidget *button;
 
-  button = gtk_check_button_new_with_label (label);
+  button = gtk_check_button_new_with_mnemonic (label);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   g_object_set_data (G_OBJECT (frame), "ctrlButton", (gpointer) button);
   gtk_widget_show (button);
@@ -576,7 +576,7 @@ Frames_Check_Button_In_A_Box (GtkWidget     *vbox,
   g_signal_connect (button, "clicked",
                     G_CALLBACK (function),
                     frame);
-#
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), clicked);
 }
 
@@ -1020,8 +1020,6 @@ As_You_Drag (GtkWidget *button)
       gtk_range_set_update_policy (GTK_RANGE (Current.previewSizeScale),
 				   GTK_UPDATE_DELAYED);
     }
-
-  return;
 }
 
 void
@@ -1032,7 +1030,7 @@ preview_size_scale_update (GtkAdjustment *adjustment,
   fp_redraw_all_windows();
 }
 
-gint
+void
 fp_advanced_dialog (void)
 {
   gchar     *rangeNames[] = { N_("Shadows:"),
@@ -1187,6 +1185,4 @@ fp_advanced_dialog (void)
                     &Current.PreviewSize);        
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-
-  return 1;
 }

@@ -416,7 +416,7 @@ exchange_dialog (void)
 	
       /*  Red  */
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				  _("Red:"), SCALE_WIDTH, 0,
+				  _("_Red:"), SCALE_WIDTH, 0,
 				  framenumber ? xargs.to.r : xargs.from.r,
 				  0.0, 1.0, 0.01, 0.1, 3,
 				  TRUE, 0, 0,
@@ -438,7 +438,7 @@ exchange_dialog (void)
       if (! framenumber)
 	{
 	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				      _("Red Threshold:"), SCALE_WIDTH, 0,
+				      _("R_ed Threshold:"), SCALE_WIDTH, 0,
 				      xargs.threshold.r,
 				      0.0, 1.0, 0.01, 0.1, 3,
 				      TRUE, 0, 0,
@@ -460,7 +460,7 @@ exchange_dialog (void)
 
       /*  Green  */
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-				  _("Green:"), SCALE_WIDTH, 0,
+				  _("_Green:"), SCALE_WIDTH, 0,
 				  framenumber ? xargs.to.g : xargs.from.g,
 				  0.0, 1.0, 0.01, 0.1, 3,
 				  TRUE, 0, 0,
@@ -479,10 +479,10 @@ exchange_dialog (void)
       scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
 
-      if (! framenumber)
+      if (!framenumber)
 	{
 	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-				      _("Green Threshold:"), SCALE_WIDTH, 0,
+				      _("G_reen Threshold:"), SCALE_WIDTH, 0,
 				      xargs.threshold.g,
 				      0.0, 1.0, 0.01, 0.1, 3,
 				      TRUE, 0, 0,
@@ -504,7 +504,7 @@ exchange_dialog (void)
 
       /*  Blue  */
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-				  _("Blue:"), SCALE_WIDTH, 0,
+				  _("_Blue:"), SCALE_WIDTH, 0,
 				  framenumber ? xargs.to.b : xargs.from.b,
 				  0.0, 1.0, 0.01, 0.1, 3,
 				  TRUE, 0, 0,
@@ -526,7 +526,7 @@ exchange_dialog (void)
       if (! framenumber)
 	{
 	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
-				      _("Blue Threshold:"), SCALE_WIDTH, 0,
+				      _("B_lue Threshold:"), SCALE_WIDTH, 0,
 				      xargs.threshold.b,
 				      0.0, 1.0, 0.01, 0.1, 3,
 				      TRUE, 0, 0,
@@ -546,11 +546,11 @@ exchange_dialog (void)
 	  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
 	}
 
-      if (! framenumber)
+      if (!framenumber)
 	{
 	  GtkWidget *button;
 
-	  button = gtk_check_button_new_with_label (_("Lock Thresholds"));
+	  button = gtk_check_button_new_with_mnemonic (_("Lock _Thresholds"));
 	  gtk_table_attach (GTK_TABLE (table), button, 1, 3, 7, 8,
 			    GTK_FILL, 0, 0, 0);
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
