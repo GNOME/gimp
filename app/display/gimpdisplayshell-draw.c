@@ -360,6 +360,7 @@ create_display_shell (GDisplay *gdisp,
 
   /*  the canvas  */
   gdisp->canvas = gtk_drawing_area_new ();
+  gtk_widget_set_name (gdisp->canvas, "gimp-canvas");
   gtk_drawing_area_size (GTK_DRAWING_AREA (gdisp->canvas), n_width, n_height);
   gtk_widget_set_events (gdisp->canvas, CANVAS_EVENT_MASK);
   gtk_widget_set_extension_events (gdisp->canvas, GDK_EXTENSION_EVENTS_ALL);

@@ -547,7 +547,7 @@ file_save_thumbnail (GimpImage   *gimage,
     }
 
   pathname = g_dirname (full_source_filename);
-  filename = g_basename (full_source_filename); /* Don't free! */
+  filename = g_path_get_basename (full_source_filename);
 
   xvpathname = g_strconcat (pathname, G_DIR_SEPARATOR_S, ".xvpics",
 			    NULL);
@@ -566,6 +566,7 @@ file_save_thumbnail (GimpImage   *gimage,
 
   fp = fopen (thumbnailname, "wb");
   g_free (pathname);
+  g_free (filename);
   g_free (xvpathname);
   g_free (thumbnailname);
 

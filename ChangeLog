@@ -1,5 +1,24 @@
 2001-07-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/errorconsole.c
+	* app/user_install.c: use GtkTextView.
+
+	* app/gui/preferences-dialog.c: use GtkTextView correctly :)
+
+	* app/interface.c: a quick hack which enables setting the
+	canvas padding color via gtkrc.
+
+	* app/file-utils.c
+	* app/plug_in.c
+	* app/pdb/fileops_cmds.c
+	* tools/pdbgen/pdb/fileops.pdb: s/g_basename/g_path_get_basename/
+
+	* app/tools/gimpinktool.c
+	* app/tools/gimppainttool.c: stupid /me disabled all paint tools
+	by setting pressure to 0.0 instead of 1.0, fixed now.
+
+2001-07-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/indicator-area.c: create/raise the new dialogs, not the
 	old ones when clicking on the previews.
 

@@ -233,11 +233,12 @@ file_load_thumbnail_invoker (Gimp     *gimp,
   if (success)
     {
       pname = g_dirname (filename);
-      fname = g_basename (filename);
+      fname = g_path_get_basename (filename);
       tname = g_strconcat (pname, G_DIR_SEPARATOR_S, ".xvpics", G_DIR_SEPARATOR_S,
 			   fname,
 			   NULL);
       g_free (pname);
+      g_free (fname);
       raw_thumb = readXVThumb (tname, &width, &height, &imginfo);
       g_free (tname);
     

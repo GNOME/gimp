@@ -350,11 +350,13 @@ gimp_paint_tool_button_press (GimpTool       *tool,
 
   draw_line = FALSE;
 
-#warning FIXME tilt, pressure
+#ifdef __GNUC__
+#warning FIXME: tilt, pressure
+#endif
 
-  paint_tool->curpressure = 0; /* bevent->pressure; */
-  paint_tool->curxtilt    = 0; /* bevent->xtilt; */
-  paint_tool->curytilt    = 0; /* bevent->ytilt; */
+  paint_tool->curpressure = 1.0; /* bevent->pressure; */
+  paint_tool->curxtilt    = 0.5; /* bevent->xtilt; */
+  paint_tool->curytilt    = 0.5; /* bevent->ytilt; */
   paint_tool->state       = bevent->state;
 
   if (gdisp != tool->gdisp ||
@@ -549,11 +551,13 @@ gimp_paint_tool_motion (GimpTool       *tool,
       return;
     }
 
+#ifdef __GNUC__
 #warning FIXME: tilt, pressure
+#endif
 
-  paint_tool->curpressure = 0; /* mevent->pressure; */
-  paint_tool->curxtilt    = 0; /* mevent->xtilt; */
-  paint_tool->curytilt    = 0; /* mevent->ytilt; */
+  paint_tool->curpressure = 1.0; /* mevent->pressure; */
+  paint_tool->curxtilt    = 0.5; /* mevent->xtilt; */
+  paint_tool->curytilt    = 0.5; /* mevent->ytilt; */
   paint_tool->state       = mevent->state;
 
   gimp_paint_tool_interpolate (paint_tool,

@@ -1063,21 +1063,10 @@ prefs_text_callback (GtkTextBuffer *buffer,
 
   val = (gchar **) data;
 
-  gtk_text_buffer_get_start_iter (buffer, &start_iter);
-  gtk_text_buffer_get_end_iter (buffer, &end_iter);
+  gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
+  gtk_text_iter_backward_char (&end_iter);
 
   text = gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
-
-#ifdef __GNUC__
-#warning FIXME: remove GtkTextBuffer hack once it is fixed
-#endif
-
-  /* START hack */
-
-  if (text && text[strlen (text)] == '\n')
-    text[strlen (text)] = '\0';
-
-  /* END hack */
 
   if (strlen (text) > MAX_COMMENT_LENGTH)
     {
@@ -1419,6 +1408,7 @@ preferences_dialog_create (void)
   GtkWidget     *sizeentry2;
   GtkWidget     *separator;
   GtkWidget     *calibrate_button;
+  GtkWidget     *scrolled_window;
   GtkWidget     *text_view;
   GtkTextBuffer *text_buffer;
   GSList        *group;
@@ -1751,17 +1741,21 @@ preferences_dialog_create (void)
   frame = gtk_frame_new (_("Comment Used for New Images"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
- 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+				  GTK_POLICY_AUTOMATIC,
+				  GTK_POLICY_AUTOMATIC);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
+  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
+  gtk_widget_show (scrolled_window);
 
   text_buffer = gtk_text_buffer_new (NULL);
   gtk_text_buffer_set_text (text_buffer, the_gimp->config->default_comment, -1);
 
   text_view = gtk_text_view_new_with_buffer (text_buffer);
-  gtk_container_add (GTK_CONTAINER (hbox), text_view);
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
 
   g_object_unref (G_OBJECT (text_buffer));

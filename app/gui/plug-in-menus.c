@@ -739,10 +739,11 @@ plug_in_def_add (PlugInDef *plug_in_def)
 {
   PlugInDef     *tplug_in_def;
   PlugInProcDef *proc_def;
-  GSList *tmp;
-  gchar  *t1, *t2;
+  GSList        *tmp;
+  gchar         *basename1;
+  gchar         *basename2;
 
-  t1 = g_basename (plug_in_def->prog);
+  basename1 = g_path_get_basename (plug_in_def->prog);
 
   /*  If this is a file load or save plugin, make sure we have
    *  something for one of the extensions, prefixes, or magic number.
@@ -768,9 +769,9 @@ plug_in_def_add (PlugInDef *plug_in_def)
     {
       tplug_in_def = tmp->data;
 
-      t2 = g_basename (tplug_in_def->prog);
+      basename2 = g_path_get_basename (tplug_in_def->prog);
 
-      if (strcmp (t1, t2) == 0)
+      if (strcmp (basename1, basename2) == 0)
 	{
 	  if ((g_strcasecmp (plug_in_def->prog, tplug_in_def->prog) == 0) &&
 	      (plug_in_def->mtime == tplug_in_def->mtime))
@@ -783,10 +784,16 @@ plug_in_def_add (PlugInDef *plug_in_def)
 	    {
 	      plug_in_def_free (plug_in_def, TRUE);    
 	    }
-	  
+
+	  g_free (basename2);
+
 	  return;
 	}
+
+      g_free (basename2);
     }
+
+  g_free (basename1);
 
   write_pluginrc = TRUE;
   g_print ("\"%s\" executable not found\n", plug_in_def->prog);

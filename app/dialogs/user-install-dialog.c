@@ -985,48 +985,34 @@ user_install_run (void)
       }
 #endif
 
-      /* urk - should really use something better than popen(), since
-       * we can't tell if the installation script failed --austin */
+      /*  urk - should really use something better than popen(), since
+       *  we can't tell if the installation script failed --austin
+       */
       if ((pfp = popen (buffer, "r")) != NULL)
 	{
-	  GtkWidget *table;
-	  GtkWidget *log_text;
-	  GtkWidget *vsb;
-	  GtkAdjustment *vadj;
+	  GtkWidget     *scrolled_window;
+	  GtkWidget     *log_view;
+	  GtkTextBuffer *log_buffer;
 
-	  table = gtk_table_new (1, 2, FALSE);
-	  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
-	  gtk_box_pack_start (GTK_BOX (log_page), table, TRUE, TRUE, 0);
+	  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+	  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+					  GTK_POLICY_AUTOMATIC,
+					  GTK_POLICY_AUTOMATIC);
+	  gtk_box_pack_start (GTK_BOX (log_page), scrolled_window,
+			      TRUE, TRUE, 0);
+	  gtk_widget_show (scrolled_window);
 
-	  vadj = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
-	  vsb  = gtk_vscrollbar_new (vadj);
-#if 0
-	  log_text = gtk_text_new (NULL, vadj);
-#endif
+	  log_buffer = gtk_text_buffer_new (NULL);
+	  log_view = gtk_text_view_new_with_buffer (log_buffer);
 
-	  gtk_table_attach (GTK_TABLE (table), vsb, 1, 2, 0, 1,
-			    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-#if 0
-	  gtk_table_attach (GTK_TABLE (table), log_text, 0, 1, 0, 1,
-			    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-			    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-			    0, 0);
-#endif
+	  g_object_unref (G_OBJECT (log_buffer));
 
-	  gtk_widget_show (vsb);
-#if 0
-	  gtk_widget_show (log_text);
-#endif
-	  gtk_widget_show (table);
+	  gtk_container_add (GTK_CONTAINER (scrolled_window), log_view);
+	  gtk_widget_show (log_view);
 
 	  while (fgets (buffer, sizeof (buffer), pfp))
 	    {
-#ifdef __GNUC__
-#warning FIXME: replace GtkText
-#endif
-#if 0
-	      gtk_text_insert (GTK_TEXT (log_text), NULL, NULL, NULL, buffer, -1);
-#endif
+	      gtk_text_buffer_insert_at_cursor (log_buffer, buffer, -1);
 	    }
 	  pclose (pfp);
 

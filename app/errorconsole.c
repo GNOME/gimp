@@ -58,11 +58,16 @@
 #include "libgimp/gimpintl.h"
 
 
-#define ERRORS_ALL       0
-#define ERRORS_SELECTION 1
+enum
+{
+  ERRORS_ALL,
+  ERRORS_SELECTION
+};
 
-static GtkWidget * error_console = NULL;
-static GtkWidget * text;
+
+static GtkWidget     *error_console = NULL;
+static GtkWidget     *text_view     = NULL;
+static GtkTextBuffer *text_buffer   = NULL;
 
 
 static void
@@ -79,10 +84,16 @@ static void
 error_console_clear_callback (GtkWidget	*widget,
 			      gpointer	 data)
 {
-#if 0
-  gtk_editable_delete_text
-    (GTK_EDITABLE (text), 0, gtk_text_get_length (GTK_TEXT (text)));
-#endif
+  GtkTextBuffer *buffer;
+  GtkTextIter    start_iter;
+  GtkTextIter    end_iter;
+
+  buffer = (GtkTextBuffer *) data;
+
+  gtk_text_buffer_get_start_iter (buffer, &start_iter);
+  gtk_text_buffer_get_end_iter (buffer, &end_iter);
+
+  gtk_text_buffer_delete (buffer, &start_iter, &end_iter);
 }
 
 void
@@ -99,14 +110,12 @@ static gboolean
 error_console_write_file (const gchar *path,
 			  gint         textscope)
 {
-#if 0
-  gint fd;
-  gint text_length;
-  gint bytes_written;
-  gchar	*text_contents;
-  GtkText *gtext;
-
-  gtext = GTK_TEXT (text);
+  GtkTextIter  start_iter;
+  GtkTextIter  end_iter;
+  gint         fd;
+  gint         text_length;
+  gint         bytes_written;
+  gchar	      *text_contents;
 
   fd = open (path, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
   
@@ -115,28 +124,15 @@ error_console_write_file (const gchar *path,
 
   if (textscope == ERRORS_ALL)
     {
-      text_contents =
-        gtk_editable_get_chars (GTK_EDITABLE (text), 0,
-				gtk_text_get_length (GTK_TEXT (text)));
+      gtk_text_buffer_get_bounds (text_buffer, &start_iter, &end_iter);
     }
   else
     {
-      gint selection_start, selection_end, temp;
-      
-      selection_start = GTK_TEXT (text)->editable.selection_start_pos;
-      selection_end = GTK_TEXT (text)->editable.selection_end_pos;
-
-      if (selection_start > selection_end)
-        {
-	  temp = selection_start;
-	  selection_start = selection_end;
-	  selection_end = temp;
-	}
-
-      text_contents = gtk_editable_get_chars (GTK_EDITABLE (text),
-					      selection_start,
-					      selection_end);
+      gtk_text_buffer_get_selection_bounds (text_buffer, &start_iter, &end_iter);
     }
+
+  text_contents = gtk_text_buffer_get_text (text_buffer,
+					    &start_iter, &end_iter, TRUE);
 
   text_length = strlen (text_contents);
 
@@ -154,7 +150,7 @@ error_console_write_file (const gchar *path,
     }
 
   close (fd);
-#endif
+
   return TRUE;
 }
 
@@ -166,38 +162,41 @@ error_console_file_ok_callback (GtkWidget *widget,
   const gchar *filename;
   gint	       textscope;
 
-  filesel = (GtkWidget *) data;
+  filesel  = (GtkWidget *) data;
   filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (filesel));
-  
-  textscope = (gint) gtk_object_get_user_data (GTK_OBJECT (filesel));
 
-  if (!error_console_write_file (filename, textscope))
+  textscope = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (filesel),
+						  "text-scope"));
+
+  if (! error_console_write_file (filename, textscope))
     {
-      GString	*string;
+      gchar *message;
 
-      string = g_string_new ("");
-      g_string_sprintf (string, _("Error opening file %s: %s"),
-			filename, g_strerror (errno));
-      g_message (string->str);
-      g_string_free (string, TRUE);
+      message = g_strdup_printf (_("Error opening file %s: %s"),
+				 filename, g_strerror (errno));
+
+      g_message (message);
+
+      g_free (message);
     }
   else
-    gtk_widget_destroy (filesel);
+    {
+      gtk_widget_destroy (filesel);
+    }
 }
 
 static void
 error_console_menu_callback (gint textscope)
 {
-#if 0
   GtkWidget *filesel;
 
-  if (!(GTK_TEXT (text)->editable.has_selection) &&
-      (textscope == ERRORS_SELECTION))
+  if (! gtk_text_buffer_get_selection_bounds (text_buffer, NULL, NULL) &&
+      textscope == ERRORS_SELECTION)
     {
       g_message (_("Can't save, nothing selected!"));
       return;
     }
-  
+
   filesel = gtk_file_selection_new (_("Save error log to file..."));
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
   gtk_window_set_wmclass (GTK_WINDOW (filesel), "save_errors", "Gimp");
@@ -205,18 +204,22 @@ error_console_menu_callback (gint textscope)
   gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
   gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (filesel)->button_area), 2);
 
-  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
-			     "clicked", (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (filesel));
+  g_signal_connect_swapped (G_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
+			    "clicked",
+			    G_CALLBACK (gtk_widget_destroy),
+			    filesel);
 
-  gtk_object_set_user_data (GTK_OBJECT (filesel), (gpointer) textscope);
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
-  		      "clicked", (GtkSignalFunc) error_console_file_ok_callback,
-		      filesel);
+  g_object_set_data (G_OBJECT (filesel), "text-scope",
+		     GINT_TO_POINTER (textscope));
+  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
+		    "clicked",
+		    G_CALLBACK (error_console_file_ok_callback),
+		    filesel);
 
-  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
-			     "delete_event", (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (filesel));
+  g_signal_connect_swapped (G_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
+			    "delete_event",
+			    G_CALLBACK (gtk_widget_destroy),
+			    filesel);
 
   /*  Connect the "F1" help key  */
   gimp_help_connect_help_accel (filesel,
@@ -224,35 +227,34 @@ error_console_menu_callback (gint textscope)
 				"dialogs/error_console.html");
 
   gtk_widget_show (filesel);
-#endif
 }
 
 static gboolean
 text_clicked_callback (GtkWidget      *widget,
-		       GdkEventButton *event, 
+		       GdkEventButton *event,
 		       gpointer	       data)
 {
-#if 0
   GtkMenu *menu = (GtkMenu *) data;
-  GtkText *gtext;
   
-  gtext = GTK_TEXT (text);
+  menu  = (GtkMenu *) data;
 
   switch (event->button)
     {
     case 1:
     case 2:
+      return FALSE;
       break;
 
     case 3:
-      gtk_signal_emit_stop_by_name (GTK_OBJECT (text), "button_press_event");
+      g_signal_stop_emission_by_name (G_OBJECT (text_view),
+				      "button_press_event");
       gtk_menu_popup (menu, NULL, NULL, NULL, NULL, event->button, event->time);
 
       /*  wheelmouse support  */
     case 4:
       {
-	GtkAdjustment *adj = gtext->vadj;
-	gfloat new_value = adj->value - adj->page_increment / 2;
+	GtkAdjustment *adj = GTK_TEXT_VIEW (text_view)->vadjustment;
+	gdouble new_value = adj->value - adj->page_increment / 2;
 	new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
 	gtk_adjustment_set_value (adj, new_value);
       }
@@ -260,8 +262,8 @@ text_clicked_callback (GtkWidget      *widget,
 
     case 5:
       {
-	GtkAdjustment *adj = gtext->vadj;
-	gfloat new_value = adj->value + adj->page_increment / 2;
+	GtkAdjustment *adj = GTK_TEXT_VIEW (text_view)->vadjustment;
+	gdouble new_value = adj->value + adj->page_increment / 2;
 	new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
 	gtk_adjustment_set_value (adj, new_value);
       }
@@ -270,20 +272,21 @@ text_clicked_callback (GtkWidget      *widget,
     default:
       break;
     }
-#endif
-  return TRUE; 
+
+  return TRUE;
 }
 
 GtkWidget *
 error_console_create (void)
 {
-  GtkWidget *table;
-  GtkWidget *vscrollbar;
+  GtkWidget *scrolled_window;
   GtkWidget *menu;
   GtkWidget *menuitem;
 
   if (error_console)
     return error_console;
+
+  text_buffer = gtk_text_buffer_new  (NULL);
 
   error_console = gimp_dialog_new (_("GIMP Error Console"), "error_console",
 				   gimp_standard_help_func,
@@ -292,61 +295,52 @@ error_console_create (void)
 				   TRUE, TRUE, FALSE,
 
 				   _("Clear"), error_console_clear_callback,
-				   NULL, NULL, NULL, FALSE, FALSE,
+				   text_buffer, NULL, NULL, FALSE, FALSE,
 				   _("Close"), error_console_close_callback,
-				   text, NULL, NULL, TRUE, TRUE,
+				   text_buffer, NULL, NULL, TRUE, TRUE,
 
 				   NULL);
 
   /* The next line should disappear when setting the size works in SM */
   gtk_widget_set_usize (error_console, 250, 300);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (error_console)->vbox), table);
-  gtk_widget_show (table);
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+				  GTK_POLICY_AUTOMATIC,
+				  GTK_POLICY_AUTOMATIC);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (error_console)->vbox),
+		     scrolled_window);
+  gtk_widget_show (scrolled_window);
 
   menu = gtk_menu_new ();
 
   menuitem = gtk_menu_item_new_with_label (_("Write all errors to file..."));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  gtk_signal_connect_object (GTK_OBJECT(menuitem), "activate",
-			     (GtkSignalFunc) error_console_menu_callback,
-			     (gpointer) ERRORS_ALL);
+  g_signal_connect_swapped (G_OBJECT (menuitem), "activate",
+			    G_CALLBACK (error_console_menu_callback),
+			    GINT_TO_POINTER (ERRORS_ALL));
   gtk_widget_show (menuitem);
   
   menuitem = gtk_menu_item_new_with_label (_("Write selection to file..."));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  gtk_signal_connect_object (GTK_OBJECT(menuitem), "activate",
-			     (GtkSignalFunc) error_console_menu_callback,
-			     (gpointer) ERRORS_SELECTION);
+  g_signal_connect_swapped (G_OBJECT (menuitem), "activate",
+			   G_CALLBACK (error_console_menu_callback),
+			   GINT_TO_POINTER (ERRORS_SELECTION));
   gtk_widget_show (menuitem);
 
-#ifdef __GNUC__
-#warning FIXME: replace GtkText
-#endif
-#if 0
   /*  The output text widget  */
-  text = gtk_text_new (NULL, NULL);
-  gtk_text_set_editable (GTK_TEXT (text), FALSE);
-  gtk_text_set_word_wrap (GTK_TEXT (text), TRUE);
-  gtk_table_attach (GTK_TABLE (table), text, 0, 1, 0, 1,
-                    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-                    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+  text_view = gtk_text_view_new_with_buffer (text_buffer);
+  g_object_unref (G_OBJECT (text_buffer));
 
-  gtk_widget_set_events (text, GDK_BUTTON_PRESS_MASK);
-  gtk_signal_connect (GTK_OBJECT (text), "button_press_event",
-		      GTK_SIGNAL_FUNC (text_clicked_callback), GTK_MENU (menu));
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
+  gtk_widget_show (text_view);
 
-  gtk_widget_show (text);
-
-  vscrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
-  gtk_table_attach (GTK_TABLE (table), vscrollbar, 1, 2, 0, 1,
-                    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (vscrollbar);
-#endif
+  g_signal_connect (G_OBJECT (text_view), "button_press_event",
+		    G_CALLBACK (text_clicked_callback),
+		    GTK_MENU (menu));
 
   gtk_widget_show (error_console);
 
@@ -359,7 +353,7 @@ error_console_create (void)
 void
 error_console_add (const gchar *errormsg)
 {
-  if (!error_console)
+  if (! error_console)
     {
       error_console_create ();
     }
@@ -375,12 +369,15 @@ error_console_add (const gchar *errormsg)
       else 
 	gdk_window_raise (error_console->window);
     }
-    
+
   if (errormsg)
     {
-#if 0
-      gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL, errormsg, -1);
-      gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL, "\n", -1);
-#endif
+      GtkTextIter end;
+
+      gtk_text_buffer_get_end_iter (text_buffer, &end);
+      gtk_text_buffer_place_cursor (text_buffer, &end);
+
+      gtk_text_buffer_insert_at_cursor (text_buffer, errormsg, -1);
+      gtk_text_buffer_insert_at_cursor (text_buffer, "\n", -1);
     }
 }
