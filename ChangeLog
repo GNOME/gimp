@@ -1,3 +1,8 @@
+2004-05-06  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/about-dialog.c: center the about dialog on the monitor,
+	not on the screen. Fix for xinerama setups merged from HEAD branch.
+
 2004-05-04  Michael Natterer  <mitch@gimp.org>
 
 	Fix bug #141719 (merged from HEAD):

@@ -116,7 +116,8 @@ static void      about_dialog_destroy     (GtkObject         *object,
                                            gpointer           data);
 static void      about_dialog_unmap       (GtkWidget         *widget,
                                            gpointer           data);
-static gint      about_dialog_logo_expose (GtkWidget         *widget,
+static void      about_dialog_center      (GtkWindow         *window);
+static gboolean  about_dialog_logo_expose (GtkWidget         *widget,
                                            GdkEventExpose    *event,
                                            gpointer           data);
 static gint      about_dialog_button      (GtkWidget         *widget,
@@ -129,10 +130,10 @@ static void      reshuffle_array          (void);
 static gboolean  about_dialog_timer       (gpointer           data);
 
 
-static PangoFontDescription *font_desc = NULL;
-static gchar      **scroll_text      = authors;
-static gint         nscroll_texts    = G_N_ELEMENTS (authors);
-static gint         shuffle_array[G_N_ELEMENTS (authors)];
+static PangoFontDescription  *font_desc     = NULL;
+static gchar                **scroll_text   = authors;
+static gint                   nscroll_texts = G_N_ELEMENTS (authors);
+static gint                   shuffle_array[G_N_ELEMENTS (authors)];
 
 
 GtkWidget *
@@ -141,7 +142,6 @@ about_dialog_create (void)
   if (! about_info.about_dialog)
     {
       GtkWidget   *widget;
-      GdkScreen   *screen;
       GdkGCValues  shape_gcv;
 
       about_info.visible = FALSE;
@@ -181,13 +181,7 @@ about_dialog_create (void)
 	  return NULL;
 	}
 
-      /*  move the window to the middle of the screen  */
-      screen = gtk_widget_get_screen (widget);
-      gtk_window_move (GTK_WINDOW (widget),
-                       (gdk_screen_get_width (screen) -
-                        about_info.pixmaparea.width)  / 2,
-                       (gdk_screen_get_height (screen) -
-                        about_info.pixmaparea.height) / 2);
+      about_dialog_center (GTK_WINDOW (widget));
 
       /* place the scrolltext at the bottom of the image */
       about_info.textarea.width = about_info.pixmaparea.width;
@@ -306,7 +300,27 @@ about_dialog_unmap (GtkWidget *widget,
     }
 }
 
-static gint
+static void
+about_dialog_center (GtkWindow *window)
+{
+  GdkDisplay   *display = gtk_widget_get_display (GTK_WIDGET (window));
+  GdkScreen    *screen;
+  GdkRectangle  rect;
+  gint          monitor;
+  gint          x, y;
+
+  gdk_display_get_pointer (display, &screen, &x, &y, NULL);
+
+  monitor = gdk_screen_get_monitor_at_point (screen, x, y);
+  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+
+  gtk_window_set_screen (window, screen);
+  gtk_window_move (window,
+                   (rect.width  - about_info.pixmaparea.width)  / 2,
+                   (rect.height - about_info.pixmaparea.height) / 2);
+}
+
+static gboolean
 about_dialog_logo_expose (GtkWidget      *widget,
 			  GdkEventExpose *event,
 			  gpointer        data)
