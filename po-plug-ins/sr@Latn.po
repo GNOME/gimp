@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 21:59+0200\n"
-"PO-Revision-Date: 2004-02-20 06:29+0100\n"
+"POT-Creation-Date: 2004-08-08 14:06+0200\n"
+"PO-Revision-Date: 2004-08-08 14:19+0200\n"
 "Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
 "MIME-Version: 1.0\n"
@@ -378,8 +378,7 @@ msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
-"Koristi linearno mapiranje umesto trigonometrijskih funkcija za kanal ove "
-"boje"
+"Koristi linearno mapiranje umesto trigonometrijskih funkcija za kanal ove boje"
 
 #
 #: plug-ins/FractalExplorer/Dialogs.c:1018
@@ -395,8 +394,7 @@ msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
-"Ako uključite ovu opciju, veće vrednosti boja će biti zamenjene manjim i "
-"obratno"
+"Ako uključite ovu opciju, veće vrednosti boja će biti zamenjene manjim i obratno"
 
 #. Greenmode radio frame
 #. Greenmode toggle box
@@ -530,7 +528,7 @@ msgstr "„%s“ je oštećena. Linija %d u sekciji Opcije je pogrešna"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:261
 msgid "<Image>/Filters/Render/_Fractal Explorer..."
-msgstr "<Slika>/Filteri/Iscrtavanje/Istraživač fraktala..."
+msgstr "<Image>/Filteri/Iscrtavanje/Istraživač fraktala..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:389
 msgid "Rendering Fractal..."
@@ -608,7 +606,7 @@ msgstr "Svetlosni efekti..."
 #
 #: plug-ins/Lighting/lighting_main.c:167
 msgid "<Image>/Filters/Light Effects/_Lighting Effects..."
-msgstr "<Slika>/Filteri/Svetlosni efekti/Svetlosni efekti..."
+msgstr "<Image>/Filteri/Svetlosni efekti/Svetlosni efekti..."
 
 #
 #. General options
@@ -983,64 +981,61 @@ msgid "Preview Options"
 msgstr "Opcije pregleda"
 
 #: plug-ins/MapObject/mapobject_apply.c:273
-#, fuzzy
 msgid "Map to Plane..."
-msgstr "Laplace..."
+msgstr "Projektuj na ravan..."
 
 #: plug-ins/MapObject/mapobject_apply.c:276
 msgid "Map to Sphere..."
-msgstr ""
+msgstr "Projektuj na sferu..."
 
 #
 #: plug-ins/MapObject/mapobject_apply.c:279
-#, fuzzy
 msgid "Map to Box..."
-msgstr "Maks. RGB..."
+msgstr "Projektuj na kvadar..."
 
 #
 #: plug-ins/MapObject/mapobject_apply.c:282
-#, fuzzy
 msgid "Map to Cylinder..."
-msgstr "Cilindar"
+msgstr "Projektuj na valjak..."
 
 #
 #: plug-ins/MapObject/mapobject_main.c:200
 msgid "<Image>/Filters/Map/Map _Object..."
-msgstr "<Slika>/Filteri/Mapa/Mapiraj Objekt..."
+msgstr "<Image>/Filteri/Mapa/Mapiraj Objekt..."
 
 #: plug-ins/MapObject/mapobject_ui.c:263
 #: plug-ins/MapObject/mapobject_ui.c:1348
 msgid "_Box"
-msgstr "Kutija"
+msgstr "_Kvadar"
 
 #
 #: plug-ins/MapObject/mapobject_ui.c:281
 #: plug-ins/MapObject/mapobject_ui.c:1354
 msgid "C_ylinder"
-msgstr "Cilindar"
+msgstr "_Valjak"
 
 #: plug-ins/MapObject/mapobject_ui.c:545
 msgid "Map to:"
-msgstr "Mapiraj u:"
+msgstr "Projektuj na:"
 
 #
 #: plug-ins/MapObject/mapobject_ui.c:554
 msgid "Plane"
-msgstr "Površina"
+msgstr "Ravan"
 
 #
 #: plug-ins/MapObject/mapobject_ui.c:555
 msgid "Sphere"
-msgstr "Kugla"
+msgstr "Loptu"
 
 #: plug-ins/MapObject/mapobject_ui.c:556
 msgid "Box"
-msgstr "Kutija"
+msgstr "Kvadar"
 
 #
 #: plug-ins/MapObject/mapobject_ui.c:557
 msgid "Cylinder"
-msgstr "Cilindar"
+msgstr "Valjak"
 
 #
 #: plug-ins/MapObject/mapobject_ui.c:563
@@ -1335,7 +1330,7 @@ msgstr "Greška kod čitanja BMP zaglavlja iz „%s“"
 
 #: plug-ins/bmp/bmpread.c:435
 msgid "Unrecognized or invalid BMP compression format."
-msgstr ""
+msgstr "Neprepoznat ili neispravan oblik kompresije BMP-a."
 
 #.
 #. * Create the "background" layer to hold the image...
@@ -1406,7 +1401,7 @@ msgstr "RLE kodirano"
 #
 #: plug-ins/common/AlienMap.c:946
 msgid "<Image>/Filters/Colors/Map/_Alien Map..."
-msgstr "<Slika>/Filteri/Boje/Mapa/Vanzemaljska mapa..."
+msgstr "<Image>/Filteri/Boje/Mapa/Vanzemaljska mapa..."
 
 #
 #: plug-ins/common/AlienMap.c:1076
@@ -1477,8 +1472,7 @@ msgstr "Koristi kosinus funkciju za crvenu"
 
 #: plug-ins/common/AlienMap.c:1233
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Crveni kanal:koristim linearno mapiranje bez trigonometrijskih funkcija"
+msgstr "Crveni kanal:koristim linearno mapiranje bez trigonometrijskih funkcija"
 
 #
 #: plug-ins/common/AlienMap.c:1252
@@ -1518,7 +1512,7 @@ msgstr "O Alien Map"
 #
 #: plug-ins/common/AlienMap2.c:954
 msgid "<Image>/Filters/Colors/Map/Alien Map _2..."
-msgstr "<Slika>/Filteri/Boje/Mapa/Vanzemaljska Mapa 2..."
+msgstr "<Image>/Filteri/Boje/Mapa/Vanzemaljska Mapa 2..."
 
 #
 #: plug-ins/common/AlienMap2.c:1079
@@ -1853,7 +1847,7 @@ msgstr "Vrednost"
 #
 #: plug-ins/common/CML_explorer.c:461
 msgid "<Image>/Filters/Render/Pattern/CML _Explorer..."
-msgstr "<Slika>/Filteri/Iscrtavanje/Mustra/CML Istraživač..."
+msgstr "<Image>/Filteri/Iscrtavanje/Mustra/CML Istraživač..."
 
 #: plug-ins/common/CML_explorer.c:749
 msgid "CML_explorer: evoluting..."
@@ -2131,7 +2125,7 @@ msgstr "Formatiranje podataka"
 
 #: plug-ins/common/align_layers.c:140
 msgid "<Image>/Layer/Align _Visible Layers..."
-msgstr "<Slika>/Filteri/Stopi vidljive slojeve..."
+msgstr "<Image>/Filteri/Stopi vidljive slojeve..."
 
 #: plug-ins/common/align_layers.c:176
 msgid "There are not enough layers to align."
@@ -2281,7 +2275,7 @@ msgstr "Veličina Mreže:"
 #
 #: plug-ins/common/animationplay.c:243
 msgid "<Image>/Filters/Animation/_Playback..."
-msgstr "<Slika>/Filteri/Animacija/Pogledaj Animaciju..."
+msgstr "<Image>/Filteri/Animacija/Pogledaj Animaciju..."
 
 #: plug-ins/common/animationplay.c:479
 msgid "Animation Playback: "
@@ -2310,24 +2304,24 @@ msgstr "Okvir %d od %d"
 
 #: plug-ins/common/animoptimize.c:196
 msgid "<Image>/Filters/Animation/Optimize (for _GIF)"
-msgstr "<Slika>/Filteri/Animacija/Optimizacija (za _GIF)"
+msgstr "<Image>/Filteri/Animacija/Optimizacija (za _GIF)"
 
 #: plug-ins/common/animoptimize.c:214
 msgid "<Image>/Filters/Animation/_Optimize (Difference)"
-msgstr "<Slika>/Filteri/Animacija/_Optimizacija (razlika)"
+msgstr "<Image>/Filteri/Animacija/_Optimizacija (razlika)"
 
 #: plug-ins/common/animoptimize.c:231
 msgid "<Image>/Filters/Animation/_UnOptimize"
-msgstr "<Slika>/Filteri/Animacija/_De-optimizacija"
+msgstr "<Image>/Filteri/Animacija/_De-optimizacija"
 
 #: plug-ins/common/animoptimize.c:247
 msgid "<Image>/Filters/Animation/_Remove Backdrop"
-msgstr "<Slika>/Filteri/Animacija/Ukloni pozadinu"
+msgstr "<Image>/Filteri/Animacija/Ukloni pozadinu"
 
 #
 #: plug-ins/common/animoptimize.c:263
 msgid "<Image>/Filters/Animation/_Find Backdrop"
-msgstr "<Slika>/Filteri/Animacija/Nađi pozadinu..."
+msgstr "<Image>/Filteri/Animacija/Nađi pozadinu..."
 
 #: plug-ins/common/animoptimize.c:473
 msgid "UnOptimizing Animation..."
@@ -2347,7 +2341,7 @@ msgstr "Optimiziram Animaciju..."
 
 #: plug-ins/common/apply_lens.c:122
 msgid "<Image>/Filters/Glass Effects/Apply _Lens..."
-msgstr "<Slika>/Filteri/Efekti Čaše/Prihvati sočiva..."
+msgstr "<Image>/Filteri/Efekti Čaše/Prihvati sočiva..."
 
 #: plug-ins/common/apply_lens.c:186
 msgid "Applying lens..."
@@ -2379,7 +2373,7 @@ msgstr "Indeks preloma zraka sočiva:"
 
 #: plug-ins/common/autocrop.c:75
 msgid "<Image>/Image/Transform/_Autocrop"
-msgstr "<Slika>/Slika/Transformacije/Auto odsečak"
+msgstr "<Image>/Slika/Transformacije/Auto odsečak"
 
 #: plug-ins/common/autocrop.c:120
 msgid "Cropping..."
@@ -2387,7 +2381,7 @@ msgstr "Odsijecam..."
 
 #: plug-ins/common/autostretch_hsv.c:92
 msgid "<Image>/Layer/Colors/Auto/Stretch _HSV"
-msgstr "<Slika>/Sloj/Boje/Auto/Razvuci _HSV"
+msgstr "<Image>/Sloj/Boje/Auto/Razvuci _HSV"
 
 #: plug-ins/common/autostretch_hsv.c:124
 msgid "Auto-Stretching HSV..."
@@ -2395,7 +2389,7 @@ msgstr "Samorazvlačenje HSV..."
 
 #: plug-ins/common/blinds.c:167
 msgid "<Image>/Filters/Distorts/_Blinds..."
-msgstr "<Slika>/Filteri/Distorzije/Povezi..."
+msgstr "<Image>/Filteri/Distorzije/Povezi..."
 
 #: plug-ins/common/blinds.c:233
 msgid "Adding Blinds..."
@@ -2436,7 +2430,7 @@ msgstr "Broj delova:"
 
 #: plug-ins/common/blur.c:188
 msgid "<Image>/Filters/Blur/_Blur..."
-msgstr "<Slika>/Filteri/Zamućenje/Zamućenje..."
+msgstr "<Image>/Filteri/Zamućenje/Zamućenje..."
 
 #
 #.
@@ -2474,7 +2468,7 @@ msgstr "Broj pokušaja za prihvaćanje filtera"
 
 #: plug-ins/common/borderaverage.c:99
 msgid "<Image>/Filters/Colors/_Border Average..."
-msgstr "<Slika>/Filteri/Boje/Prosečna ivica..."
+msgstr "<Image>/Filteri/Boje/Prosečna ivica..."
 
 #: plug-ins/common/borderaverage.c:162
 msgid "Border Average..."
@@ -2506,7 +2500,7 @@ msgstr "256 (besmisleno?)"
 
 #: plug-ins/common/bumpmap.c:372
 msgid "<Image>/Filters/Map/_Bump Map..."
-msgstr "<Slika>/Filteri/Mapa/Bump Map..."
+msgstr "<Image>/Filteri/Mapa/Bump Map..."
 
 #: plug-ins/common/bumpmap.c:524
 msgid "Bump-mapping..."
@@ -2530,7 +2524,6 @@ msgid "_Spherical Map"
 msgstr "Sferična mapa"
 
 #: plug-ins/common/bumpmap.c:966
-#, fuzzy
 msgid "S_inusoidal Map"
 msgstr "Sinusoidalna mapa"
 
@@ -2595,7 +2588,7 @@ msgstr "Samorazvlačenje kontrasta..."
 
 #: plug-ins/common/ccanalyze.c:191
 msgid "<Image>/Filters/Colors/Colorcube A_nalysis..."
-msgstr "<Slika>/Filteri/Boje/Analiza obojene kocke..."
+msgstr "<Image>/Filteri/Boje/Analiza obojene kocke..."
 
 #: plug-ins/common/ccanalyze.c:278
 msgid "Colorcube Analysis..."
@@ -2655,7 +2648,7 @@ msgstr "Odnos kompresije (približno): %d prema 1"
 # bug: ".." -> "..."
 #: plug-ins/common/channel_mixer.c:224
 msgid "<Image>/Filters/Colors/Channel Mi_xer.."
-msgstr "<Slika>/Filteri/Boje/_Mešanje kanala..."
+msgstr "<Image>/Filteri/Boje/_Mešanje kanala..."
 
 #: plug-ins/common/channel_mixer.c:528
 msgid "Channel Mixer"
@@ -2690,7 +2683,7 @@ msgid "Save Channel Mixer Settings"
 msgstr "Sačuvaj podešavanja mešanja kanala"
 
 #: plug-ins/common/channel_mixer.c:1223
-#, fuzzy, c-format
+#, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "Parametri su sačuvani u „%s“"
 
@@ -2701,7 +2694,7 @@ msgstr "Upozorenje operacije datoteke za mešanje kanala"
 
 #: plug-ins/common/checkerboard.c:94
 msgid "<Image>/Filters/Render/Pattern/_Checkerboard..."
-msgstr "<Slika>/Filteri/Iscrtavanje/Mustra/Šahovska tabla..."
+msgstr "<Image>/Filteri/Iscrtavanje/Mustra/Šahovska tabla..."
 
 #: plug-ins/common/checkerboard.c:158
 msgid "Adding Checkerboard..."
@@ -2730,7 +2723,7 @@ msgstr "Pojačanje boje..."
 
 #: plug-ins/common/colorify.c:121
 msgid "<Image>/Filters/Colors/_Colorify..."
-msgstr "<Slika>/Filteri/Boje/Oboji..."
+msgstr "<Image>/Filteri/Boje/Oboji..."
 
 #: plug-ins/common/colorify.c:179
 msgid "Colorifying..."
@@ -2757,7 +2750,7 @@ msgstr "Oboji posebnom bojom"
 
 #: plug-ins/common/colortoalpha.c:99
 msgid "<Image>/Filters/Colors/Color to _Alpha..."
-msgstr "<Slika>/Filteri/Boje/Boja u Alfu..."
+msgstr "<Image>/Filteri/Boje/Boja u Alfu..."
 
 #: plug-ins/common/colortoalpha.c:173
 msgid "Removing color..."
@@ -2893,7 +2886,7 @@ msgstr "Crvenilo_cr709f:"
 #
 #: plug-ins/common/compose.c:297
 msgid "<Image>/Filters/Colors/C_ompose..."
-msgstr "<Slika>/Filteri/Boje/Sastavi..."
+msgstr "<Image>/Filteri/Boje/Sastavi..."
 
 #: plug-ins/common/compose.c:360
 #, c-format
@@ -2979,7 +2972,7 @@ msgstr "Odsečak"
 #
 #: plug-ins/common/convmatrix.c:194
 msgid "<Image>/Filters/Generic/_Convolution Matrix..."
-msgstr "<Slika>/Filteri/Generički/Matrica savijanja..."
+msgstr "<Image>/Filteri/Generički/Matrica savijanja..."
 
 #: plug-ins/common/convmatrix.c:226
 msgid "Convolution Matrix does not work on layers smaller than 3 pixels."
@@ -3078,7 +3071,7 @@ msgstr "Neprovidnost:"
 #
 #: plug-ins/common/cubism.c:145
 msgid "<Image>/Filters/Artistic/_Cubism..."
-msgstr "<Slika>/Filteri/Umjetnički/Kubizam..."
+msgstr "<Image>/Filteri/Umjetnički/Kubizam..."
 
 #: plug-ins/common/cubism.c:253
 msgid "Cubism"
@@ -3105,16 +3098,15 @@ msgstr "Kubistička transformacija"
 #
 #: plug-ins/common/curve_bend.c:577
 msgid "<Image>/Filters/Distorts/_Curve Bend..."
-msgstr "<Slika>/Filteri/Zamućenje/Savijanje krive..."
+msgstr "<Image>/Filteri/Zamućenje/Savijanje krive..."
 
 #: plug-ins/common/curve_bend.c:709
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Može da radi samo na slojevima (a pokušali ste na maski ili kanalu)."
 
 #: plug-ins/common/curve_bend.c:727
-#, fuzzy
 msgid "Cannot operate on layers with masks."
-msgstr "Ne mogu raditi s indeksiranim slikama"
+msgstr "Ne mogu raditi na slojevima sa maskom."
 
 #: plug-ins/common/curve_bend.c:742
 msgid "Cannot operate on empty selections."
@@ -3396,7 +3388,7 @@ msgstr "crvenilo_cr709f"
 #
 #: plug-ins/common/decompose.c:242
 msgid "<Image>/Filters/Colors/_Decompose..."
-msgstr "<Slika>/Filteri/Boje/Dekompnuj..."
+msgstr "<Image>/Filteri/Boje/Dekompnuj..."
 
 #: plug-ins/common/decompose.c:325
 msgid "Decomposing..."
@@ -3419,7 +3411,7 @@ msgstr "Rastavi na slojeve"
 #
 #: plug-ins/common/deinterlace.c:91
 msgid "<Image>/Filters/Enhance/_Deinterlace..."
-msgstr "<Slika>/Filteri/Poboljšaj/_Raspleti..."
+msgstr "<Image>/Filteri/Poboljšaj/_Raspleti..."
 
 #
 #: plug-ins/common/deinterlace.c:146
@@ -3442,7 +3434,7 @@ msgstr "Zadrži neparna polja"
 #
 #: plug-ins/common/depthmerge.c:199
 msgid "<Image>/Filters/Combine/_Depth Merge..."
-msgstr "<Slika>/Filteri/Kombinuj/_Stopi dubinu..."
+msgstr "<Image>/Filteri/Kombinuj/_Stopi dubinu..."
 
 #: plug-ins/common/depthmerge.c:389
 msgid "Depth-merging..."
@@ -3491,7 +3483,7 @@ msgstr "Lestvica 2:"
 #
 #: plug-ins/common/despeckle.c:183
 msgid "<Image>/Filters/Enhance/Des_peckle..."
-msgstr "<Slika>/Filteri/Poboljšaj/Des_peckle..."
+msgstr "<Image>/Filteri/Poboljšaj/Des_peckle..."
 
 #
 #. Source image region
@@ -3566,7 +3558,7 @@ msgstr "Vrednost bele:"
 #
 #: plug-ins/common/destripe.c:155
 msgid "<Image>/Filters/Enhance/Des_tripe..."
-msgstr "<Slika>/Filteri/Poboljšaj/Des_tripe..."
+msgstr "<Image>/Filteri/Poboljšaj/Des_tripe..."
 
 #: plug-ins/common/destripe.c:355
 msgid "Destriping..."
@@ -3597,7 +3589,7 @@ msgstr "%s: nije valjana DICOM datoteka"
 #
 #: plug-ins/common/diffraction.c:184
 msgid "<Image>/Filters/Render/Pattern/_Diffraction Patterns..."
-msgstr "<Slika>/Filteri/Iscrtavanje/Mustra/Difrakcija mustri..."
+msgstr "<Image>/Filteri/Iscrtavanje/Mustra/Difrakcija mustri..."
 
 #: plug-ins/common/diffraction.c:336
 msgid "Creating diffraction pattern..."
@@ -3634,9 +3626,8 @@ msgstr "Raspršivanje:"
 
 #
 #: plug-ins/common/diffraction.c:637
-#, fuzzy
 msgid "Po_larization:"
-msgstr "Polarizacija:"
+msgstr "Po_larizacija:"
 
 #
 #: plug-ins/common/diffraction.c:645
@@ -3646,7 +3637,7 @@ msgstr "Druge opcije"
 #
 #: plug-ins/common/displace.c:155
 msgid "<Image>/Filters/Map/_Displace..."
-msgstr "<Slika>/Filteri/Mapa/Izmesti..."
+msgstr "<Image>/Filteri/Mapa/Izmesti..."
 
 #
 #: plug-ins/common/displace.c:227
@@ -3697,7 +3688,7 @@ msgstr "Crna"
 #
 #: plug-ins/common/edge.c:152
 msgid "<Image>/Filters/Edge-Detect/_Edge..."
-msgstr "<Slika>/Filteri/Detektor ruba/Ivica... "
+msgstr "<Image>/Filteri/Detektor ruba/Ivica... "
 
 #
 #: plug-ins/common/edge.c:222
@@ -3749,7 +3740,7 @@ msgstr "Vrednost:"
 #
 #: plug-ins/common/emboss.c:154
 msgid "<Image>/Filters/Distorts/_Emboss..."
-msgstr "<Slika>/Filteri/Distorzije/Ispupči..."
+msgstr "<Image>/Filteri/Distorzije/Ispupči..."
 
 #: plug-ins/common/emboss.c:397 plug-ins/common/emboss.c:490
 msgid "Emboss"
@@ -3781,7 +3772,7 @@ msgstr "Daj pregled"
 #
 #: plug-ins/common/engrave.c:106
 msgid "<Image>/Filters/Distorts/En_grave..."
-msgstr "<Slika>/Filteri/Distorzije/Izrezbari..."
+msgstr "<Image>/Filteri/Distorzije/Izrezbari..."
 
 #
 #: plug-ins/common/engrave.c:177
@@ -3808,7 +3799,7 @@ msgstr "Visina:"
 #
 #: plug-ins/common/exchange.c:138
 msgid "<Image>/Filters/Colors/Map/_Color Exchange..."
-msgstr "<Slika>/Filteri/Boje/Mapa/Razmena Boja..."
+msgstr "<Image>/Filteri/Boje/Mapa/Razmena Boja..."
 
 #
 #: plug-ins/common/exchange.c:240
@@ -3866,7 +3857,7 @@ msgstr "Zaključaj pragove"
 #
 #: plug-ins/common/film.c:247
 msgid "<Image>/Filters/Combine/_Film..."
-msgstr "<Slika>/Filteri/Kombinuj/Film..."
+msgstr "<Image>/Filteri/Kombinuj/Film..."
 
 #: plug-ins/common/film.c:333
 msgid "Composing Images..."
@@ -3958,9 +3949,8 @@ msgid "Image Selection"
 msgstr "Odabir Slike"
 
 #: plug-ins/common/film.c:1352
-#, fuzzy
 msgid "All Values are Fractions of the Film Height"
-msgstr "Sve vrednosti su frakcije visine filma"
+msgstr "Sve vrednosti su razlomci visine filma"
 
 #: plug-ins/common/film.c:1355
 msgid "Ad_vanced"
@@ -4006,7 +3996,7 @@ msgstr "Broj visine:"
 #. * it is keyword for the gtk toolkit
 #: plug-ins/common/flarefx.c:191
 msgid "<Image>/Filters/Light Effects/_FlareFX..."
-msgstr "<Slika>/Filteri/Svetlosni efekti/Odsjaj..."
+msgstr "<Image>/Filteri/Svetlosni efekti/Odsjaj..."
 
 #
 #: plug-ins/common/flarefx.c:263
@@ -4032,7 +4022,7 @@ msgstr "Prikaži kursor"
 #
 #: plug-ins/common/fractaltrace.c:131
 msgid "<Image>/Filters/Map/_Fractal Trace..."
-msgstr "<Slika>/Filteri/Mapa/Fraktalno praćenje..."
+msgstr "<Image>/Filteri/Mapa/Fraktalno praćenje..."
 
 #
 #: plug-ins/common/fractaltrace.c:469 plug-ins/common/fractaltrace.c:741
@@ -4078,7 +4068,7 @@ msgstr "Y_2:"
 #
 #: plug-ins/common/gauss_iir.c:164
 msgid "<Image>/Filters/Blur/Gaussian Blur (_IIR)..."
-msgstr "<Slika>/Filteri/Zamućenje/Gausian zamućenje (_IIR)..."
+msgstr "<Image>/Filteri/Zamućenje/Gausian zamućenje (_IIR)..."
 
 #: plug-ins/common/gauss_iir.c:236 plug-ins/common/gauss_rle.c:229
 msgid "You must specify either horizontal or vertical (or both)"
@@ -4130,7 +4120,7 @@ msgstr "Vertikalno:"
 #
 #: plug-ins/common/gauss_rle.c:158
 msgid "<Image>/Filters/Blur/Gaussian Blur (_RLE)..."
-msgstr "<Slika>/Filteri/Zamućenje/Gausian Zamućenje (_RLE)..."
+msgstr "<Image>/Filteri/Zamućenje/Gausian Zamućenje (_RLE)..."
 
 #: plug-ins/common/gauss_rle.c:279 plug-ins/common/gauss_rle.c:337
 #: plug-ins/common/gauss_rle.c:417
@@ -4180,7 +4170,7 @@ msgstr "Opis:"
 #
 #: plug-ins/common/gee.c:97
 msgid "<Image>/Filters/Toys/Gee-_Slime"
-msgstr "<Slika>/Filteri/Igračke/Gee-_Slime..."
+msgstr "<Image>/Filteri/Igračke/Gee-_Slime..."
 
 #: plug-ins/common/gee.c:166
 msgid "GEE-SLIME"
@@ -4201,7 +4191,7 @@ msgstr ""
 #
 #: plug-ins/common/gee_zoom.c:135
 msgid "<Image>/Filters/Toys/Gee-_Zoom"
-msgstr "<Slika>/Filteri/Igračke/Gee-_Zoom..."
+msgstr "<Image>/Filteri/Igračke/Gee-_Zoom..."
 
 #: plug-ins/common/gee_zoom.c:198
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
@@ -4461,7 +4451,7 @@ msgstr "Odabir:"
 #
 #: plug-ins/common/glasstile.c:115
 msgid "<Image>/Filters/Glass Effects/_Glass Tile..."
-msgstr "<Slika>/Filteri/Stakleni efekti/Delići stakla..."
+msgstr "<Image>/Filteri/Stakleni efekti/Delići stakla..."
 
 #: plug-ins/common/glasstile.c:191
 msgid "Glass Tile..."
@@ -4485,7 +4475,7 @@ msgstr "Visina delića:"
 #
 #: plug-ins/common/gqbist.c:439
 msgid "<Image>/Filters/Render/Pattern/_Qbist..."
-msgstr "<Slika>/Filteri/Iscrtavanje/Mustra/Kubist..."
+msgstr "<Image>/Filteri/Iscrtavanje/Mustra/Kubist..."
 
 #
 #: plug-ins/common/gqbist.c:536
@@ -4507,7 +4497,7 @@ msgstr "G-Kubist"
 #
 #: plug-ins/common/gradmap.c:121
 msgid "<Image>/Filters/Colors/Map/_Gradient Map"
-msgstr "<Slika>/Filteri/Boje/Mapa/Mapa preliva..."
+msgstr "<Image>/Filteri/Boje/Mapa/Mapa preliva..."
 
 #
 #: plug-ins/common/gradmap.c:156
@@ -4517,7 +4507,7 @@ msgstr "Mapa preliva..."
 #
 #: plug-ins/common/grid.c:152
 msgid "<Image>/Filters/Render/Pattern/_Grid..."
-msgstr "<Slika>/Filteri/Iscrtavanje/Mustra/Mreža..."
+msgstr "<Image>/Filteri/Iscrtavanje/Mustra/Mreža..."
 
 #: plug-ins/common/grid.c:239
 msgid "Drawing Grid..."
@@ -4703,7 +4693,7 @@ msgstr "Giljotina..."
 #
 #: plug-ins/common/hot.c:217
 msgid "<Image>/Filters/Colors/_Hot..."
-msgstr "<Slika>/Filteri/Boje/Vruće..."
+msgstr "<Image>/Filteri/Boje/Vruće..."
 
 #: plug-ins/common/hot.c:377
 msgid "Hot..."
@@ -4753,7 +4743,7 @@ msgstr "Slika mora biti RGB ili siva"
 #
 #: plug-ins/common/illusion.c:105
 msgid "<Image>/Filters/Map/_Illusion..."
-msgstr "<Slika>/Filteri/Mapa/Iluzija..."
+msgstr "<Image>/Filteri/Mapa/Iluzija..."
 
 #
 #: plug-ins/common/illusion.c:176
@@ -4782,7 +4772,7 @@ msgstr "Režim _2"
 #
 #: plug-ins/common/iwarp.c:260
 msgid "<Image>/Filters/Distorts/_IWarp..."
-msgstr "<Slika>/Filteri/Distorzije/_IUvrtanje..."
+msgstr "<Image>/Filteri/Distorzije/_IUvrtanje..."
 
 #
 #: plug-ins/common/iwarp.c:692
@@ -4894,7 +4884,7 @@ msgstr "IWarp"
 #
 #: plug-ins/common/jigsaw.c:408
 msgid "<Image>/Filters/Render/Pattern/_Jigsaw..."
-msgstr "<Slika>/Filteri/Iscrtavanje/Mustra/_Slagalica..."
+msgstr "<Image>/Filteri/Iscrtavanje/Mustra/_Slagalica..."
 
 #: plug-ins/common/jigsaw.c:462
 msgid "Assembling Jigsaw..."
@@ -4971,7 +4961,7 @@ msgstr "Izvezi Pregled"
 
 #: plug-ins/common/jpeg.c:758
 msgid "EXIF data will be ignored."
-msgstr ""
+msgstr "EXIF podaci će biti zanemareni."
 
 #
 #: plug-ins/common/jpeg.c:972
@@ -4999,9 +4989,8 @@ msgid "Image Preview"
 msgstr "Pregled Slike"
 
 #: plug-ins/common/jpeg.c:1758
-#, fuzzy
 msgid "Preview in image window"
-msgstr "Uhvati jedan prozor"
+msgstr "Pregled u prozoru slike"
 
 #
 #: plug-ins/common/jpeg.c:1791 plug-ins/xjt/xjt.c:888
@@ -5071,7 +5060,7 @@ msgstr "Komentar slike"
 #
 #: plug-ins/common/laplace.c:95
 msgid "<Image>/Filters/Edge-Detect/_Laplace"
-msgstr "<Slika>/Filteri/Oseti-ivicu/_Laplace"
+msgstr "<Image>/Filteri/Oseti-ivicu/_Laplace"
 
 #: plug-ins/common/laplace.c:225
 msgid "Laplace..."
@@ -5159,7 +5148,7 @@ msgstr "Maksim. vrednost:"
 #
 #: plug-ins/common/lic.c:811
 msgid "<Image>/Filters/Map/_Van Gogh (LIC)..."
-msgstr "<Slika>/Filteri/Mapa/Van Gog (LIC)..."
+msgstr "<Image>/Filteri/Mapa/Van Gog (LIC)..."
 
 #
 #: plug-ins/common/mail.c:214
@@ -5235,12 +5224,12 @@ msgstr "Drugi Odredišni Kanal"
 #
 #: plug-ins/common/mapcolor.c:335
 msgid "<Image>/Filters/Colors/Map/Adjust _FG-BG"
-msgstr "<Slika>/Filteri/Boje/Mapa/Podesi _FG-BG"
+msgstr "<Image>/Filteri/Boje/Mapa/Podesi _FG-BG"
 
 #
 #: plug-ins/common/mapcolor.c:350
 msgid "<Image>/Filters/Colors/Map/Color Range _Mapping..."
-msgstr "<Slika>/Filteri/Boje/Mapa/Mapiranje raspona boja..."
+msgstr "<Image>/Filteri/Boje/Mapa/Mapiranje raspona boja..."
 
 #: plug-ins/common/mapcolor.c:397 plug-ins/common/mapcolor.c:712
 msgid "Cannot operate on gray or indexed color images."
@@ -5279,7 +5268,7 @@ msgstr "Do:"
 #
 #: plug-ins/common/max_rgb.c:112
 msgid "<Image>/Filters/Colors/_Max RGB..."
-msgstr "<Slika>/Filteri/Boje/Maks. RGB..."
+msgstr "<Image>/Filteri/Boje/Maks. RGB..."
 
 #
 #: plug-ins/common/max_rgb.c:148
@@ -5309,7 +5298,7 @@ msgstr "Zadrži minimum kanala"
 #
 #: plug-ins/common/mblur.c:153
 msgid "<Image>/Filters/Blur/_Motion Blur..."
-msgstr "<Slika>/Filteri/Zamućenje/Zamućenje pokreta..."
+msgstr "<Image>/Filteri/Zamućenje/Zamućenje pokreta..."
 
 #: plug-ins/common/mblur.c:676
 msgid "Motion Blurring..."
@@ -5461,7 +5450,7 @@ msgstr "Milisekundi"
 #
 #: plug-ins/common/mosaic.c:309
 msgid "<Image>/Filters/Distorts/_Mosaic..."
-msgstr "<Slika>/Filteri/Distorzije/Mozaik..."
+msgstr "<Image>/Filteri/Distorzije/Mozaik..."
 
 #. progress bar for gradient finding
 #: plug-ins/common/mosaic.c:433
@@ -5584,7 +5573,7 @@ msgstr "Intenzitet"
 #
 #: plug-ins/common/newsprint.c:539
 msgid "<Image>/Filters/Distorts/Newsprin_t..."
-msgstr "<Slika>/Filteri/Distorzije/Novinski tekst..."
+msgstr "<Image>/Filteri/Distorzije/Novinski tekst..."
 
 #: plug-ins/common/newsprint.c:638
 msgid "Newsprint..."
@@ -5670,7 +5659,7 @@ msgstr "Preklapanje:"
 #
 #: plug-ins/common/nlfilt.c:128
 msgid "<Image>/Filters/Enhance/_NL Filter..."
-msgstr "<Slika>/Filteri/Poboljšaj/_NL Filter... "
+msgstr "<Image>/Filteri/Poboljšaj/_NL Filter... "
 
 #
 #: plug-ins/common/nlfilt.c:246
@@ -5713,7 +5702,7 @@ msgstr "Daj Pregled"
 #
 #: plug-ins/common/noisify.c:129
 msgid "<Image>/Filters/Noise/_Noisify..."
-msgstr "<Slika>/Filteri/Šum/Šum..."
+msgstr "<Image>/Filteri/Šum/Šum..."
 
 #
 #: plug-ins/common/noisify.c:203
@@ -5756,7 +5745,7 @@ msgstr "Normaliziram..."
 #. don't translate '<Image>'
 #: plug-ins/common/nova.c:196
 msgid "<Image>/Filters/Light Effects/Su_perNova..."
-msgstr "<Slika>/Filteri/Svetlosni Efekti/SuperNova..."
+msgstr "<Image>/Filteri/Svetlosni Efekti/SuperNova..."
 
 #
 #: plug-ins/common/nova.c:277
@@ -5796,7 +5785,7 @@ msgstr "Prikaži Kursor"
 #
 #: plug-ins/common/oilify.c:106
 msgid "<Image>/Filters/Artistic/Oili_fy..."
-msgstr "<Slika>/Filteri/Umjetnički/Slikanje Uljem..."
+msgstr "<Image>/Filteri/Umjetnički/Slikanje Uljem..."
 
 #: plug-ins/common/oilify.c:181
 msgid "Oil Painting..."
@@ -5909,7 +5898,7 @@ msgstr "Rujan 31,1999"
 #
 #: plug-ins/common/papertile.c:824
 msgid "<Image>/Filters/Map/_Paper Tile..."
-msgstr "<Slika>/Filteri/Mapa/Delići papira..."
+msgstr "<Image>/Filteri/Mapa/Delići papira..."
 
 #: plug-ins/common/pat.c:338
 #, c-format
@@ -5938,7 +5927,7 @@ msgstr "Neuobičajena PCX vrsta, odustajem"
 #
 #: plug-ins/common/pixelize.c:170
 msgid "<Image>/Filters/Blur/_Pixelize..."
-msgstr "<Slika>/Filteri/Zamućenje/Pikselizacija..."
+msgstr "<Image>/Filteri/Zamućenje/Pikselizacija..."
 
 #
 #: plug-ins/common/pixelize.c:268
@@ -5969,7 +5958,7 @@ msgstr "Visina piksela:"
 #
 #: plug-ins/common/plasma.c:184
 msgid "<Image>/Filters/Render/Clouds/_Plasma..."
-msgstr "<Slika>/Filteri/Iscrtavanje/Oblaci/Plazma..."
+msgstr "<Image>/Filteri/Iscrtavanje/Oblaci/Plazma..."
 
 #: plug-ins/common/plasma.c:266
 msgid "Plasma..."
@@ -6008,7 +5997,7 @@ msgstr "Privremena Procedura"
 #
 #: plug-ins/common/plugindetails.c:153
 msgid "<Toolbox>/Xtns/_Plugin Details"
-msgstr "<Alati>/Xtns/Detalji dodataka..."
+msgstr "<Toolbox>/Xtns/Detalji dodataka..."
 
 #
 #: plug-ins/common/plugindetails.c:225
@@ -6241,7 +6230,7 @@ msgstr "Ascii"
 
 #: plug-ins/common/polar.c:175
 msgid "<Image>/Filters/Distorts/P_olar Coords..."
-msgstr "<Slika>/Filteri/Distorzije/Polarne koordinate..."
+msgstr "<Image>/Filteri/Distorzije/Polarne koordinate..."
 
 #: plug-ins/common/polar.c:358
 msgid "Polarizing..."
@@ -6312,9 +6301,8 @@ msgstr "Greška pri pokretanju ghostscript-a (%s)"
 #: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
 #: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
 #: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
-#, fuzzy
 msgid "Write error occurred"
-msgstr "Greška pri zapisivanju"
+msgstr "Greška pri upisu"
 
 #: plug-ins/common/postscript.c:2733
 msgid "Load PostScript"
@@ -6490,17 +6478,17 @@ msgstr "Nasumična Slur 1.7"
 #
 #: plug-ins/common/randomize.c:236
 msgid "<Image>/Filters/Noise/_Hurl..."
-msgstr "<Slika>/Filteri/Šum/_Hurl..."
+msgstr "<Image>/Filteri/Šum/_Hurl..."
 
 #
 #: plug-ins/common/randomize.c:248
 msgid "<Image>/Filters/Noise/_Pick..."
-msgstr "<Slika>/Filteri/Šum/Pokupi..."
+msgstr "<Image>/Filteri/Šum/Pokupi..."
 
 #
 #: plug-ins/common/randomize.c:260
 msgid "<Image>/Filters/Noise/_Slur..."
-msgstr "<Slika>/Filteri/Šum/_Slur..."
+msgstr "<Image>/Filteri/Šum/_Slur..."
 
 #
 #: plug-ins/common/randomize.c:749
@@ -6510,7 +6498,7 @@ msgstr "Slučajnost %:"
 #
 #: plug-ins/common/ripple.c:137
 msgid "<Image>/Filters/Distorts/_Ripple..."
-msgstr "<Slika>/Filteri/Distorzije/Mreškanje... "
+msgstr "<Image>/Filteri/Distorzije/Mreškanje... "
 
 #
 #: plug-ins/common/ripple.c:215
@@ -6574,7 +6562,7 @@ msgstr "Rotiram..."
 #
 #: plug-ins/common/sample_colorize.c:309
 msgid "<Image>/Filters/Colors/Map/_Sample Colorize..."
-msgstr "<Slika>/Filteri/Boje/Mapa/Primer bojenja..."
+msgstr "<Image>/Filteri/Boje/Mapa/Primer bojenja..."
 
 #: plug-ins/common/sample_colorize.c:1361
 msgid "Sample Colorize"
@@ -6668,7 +6656,7 @@ msgstr "Remapiranje Obojanog..."
 #
 #: plug-ins/common/scatter_hsv.c:138
 msgid "<Image>/Filters/Noise/S_catter HSV..."
-msgstr "<Slika>/Filteri/Šum/Rasipanje HSV..."
+msgstr "<Image>/Filteri/Šum/Rasipanje HSV..."
 
 #: plug-ins/common/scatter_hsv.c:233
 msgid "Scattering HSV..."
@@ -6755,7 +6743,7 @@ msgstr "Uhvati kasnije"
 #
 #: plug-ins/common/sel_gauss.c:114
 msgid "<Image>/Filters/Blur/_Selective Gaussian Blur..."
-msgstr "<Slika>/Filteri/Zamućenje/Selektivno Gausian zamućenje..."
+msgstr "<Image>/Filteri/Zamućenje/Selektivno Gausian zamućenje..."
 
 #
 #: plug-ins/common/sel_gauss.c:191
@@ -6780,7 +6768,7 @@ msgstr "Maks. Delta:"
 #
 #: plug-ins/common/semiflatten.c:79
 msgid "<Image>/Filters/Colors/_Semi-Flatten"
-msgstr "<Slika>/Filteri/Boje/Polu-Ravno"
+msgstr "<Image>/Filteri/Boje/Polu-Ravno"
 
 #: plug-ins/common/semiflatten.c:118
 msgid "Semi-Flattening..."
@@ -6789,7 +6777,7 @@ msgstr "Polu-Ravno..."
 #
 #: plug-ins/common/sharpen.c:148
 msgid "<Image>/Filters/Enhance/_Sharpen..."
-msgstr "<Slika>/Filteri/Enhance/Izoštravanje... "
+msgstr "<Image>/Filteri/Poboljšaj/Izoštravanje... "
 
 #
 #.
@@ -6810,7 +6798,7 @@ msgstr "Oštrina:"
 #
 #: plug-ins/common/shift.c:107
 msgid "<Image>/Filters/Distorts/_Shift..."
-msgstr "<Slika>/Filteri/Distorzije/Pomak..."
+msgstr "<Image>/Filteri/Distorzije/Pomak..."
 
 #
 #: plug-ins/common/shift.c:183
@@ -6840,7 +6828,7 @@ msgstr "Vrednost Pomaka:"
 #
 #: plug-ins/common/sinus.c:196
 msgid "<Image>/Filters/Render/Pattern/_Sinus..."
-msgstr "<Slika>/Filteri/Iscrtavanje/Mustra/Sinus..."
+msgstr "<Image>/Filteri/Iscrtavanje/Mustra/Sinus..."
 
 #: plug-ins/common/sinus.c:287
 msgid "Sinus: rendering..."
@@ -6981,7 +6969,7 @@ msgstr "Mešanje"
 #
 #: plug-ins/common/smooth_palette.c:88
 msgid "<Image>/Filters/Colors/Smoo_th Palette..."
-msgstr "<Slika>/Filteri/Boje/Uglađena paleta..."
+msgstr "<Image>/Filteri/Boje/Uglađena paleta..."
 
 #: plug-ins/common/smooth_palette.c:177
 msgid "Deriving Smooth Palette..."
@@ -7000,7 +6988,7 @@ msgstr "Dubina traženja:"
 #
 #: plug-ins/common/snoise.c:173
 msgid "<Image>/Filters/Render/Clouds/_Solid Noise..."
-msgstr "<Slika>/Filteri/Iscrtavanje/Oblaci/Jaki Šum..."
+msgstr "<Image>/Filteri/Iscrtavanje/Oblaci/Jaki Šum..."
 
 #: plug-ins/common/snoise.c:305
 msgid "Solid Noise..."
@@ -7041,7 +7029,7 @@ msgstr "Y Veličina:"
 #
 #: plug-ins/common/sobel.c:128
 msgid "<Image>/Filters/Edge-Detect/_Sobel..."
-msgstr "<Slika>/Filteri/Detektor ruba/_Sobel... "
+msgstr "<Image>/Filteri/Detektor ruba/_Sobel... "
 
 #
 #: plug-ins/common/sobel.c:232
@@ -7068,7 +7056,7 @@ msgstr "Sobel detekcija ruba..."
 
 #: plug-ins/common/sparkle.c:184
 msgid "<Image>/Filters/Light Effects/_Sparkle..."
-msgstr "<Slika>/Filteri/Svetlosni efekti/_Blistanje..."
+msgstr "<Image>/Filteri/Svetlosni efekti/_Blistanje..."
 
 #: plug-ins/common/sparkle.c:287
 msgid "Sparkling..."
@@ -7115,9 +7103,8 @@ msgid "Spi_ke Angle (-1: Random):"
 msgstr "Ugao šiljaka (-1: Nasumično):"
 
 #: plug-ins/common/sparkle.c:411
-#, fuzzy
 msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
-msgstr "Podesi kut Šiljaka (za -1 odabran je nasumičan kut)"
+msgstr "Podesi ugao šiljaka (za -1 bira se nasumičan ugao)"
 
 #: plug-ins/common/sparkle.c:419
 msgid "Spik_e Density:"
@@ -7345,11 +7332,11 @@ msgstr "Iscrtavam loptu.."
 
 #: plug-ins/common/spheredesigner.c:3123
 msgid "<Image>/Filters/Render/Sphere _Designer..."
-msgstr "<Slika>/Filteri/Iscrtavanje/Dizajner lopte..."
+msgstr "<Image>/Filteri/Iscrtavanje/Dizajner lopte..."
 
 #: plug-ins/common/spread.c:110
 msgid "<Image>/Filters/Noise/Sp_read..."
-msgstr "<Slika>/Filteri/Šum/Rastegni..."
+msgstr "<Image>/Filteri/Šum/Rastegni..."
 
 #: plug-ins/common/spread.c:188
 msgid "Spreading..."
@@ -7366,7 +7353,7 @@ msgstr "Vrednost rastezanja"
 
 #: plug-ins/common/struc.c:1142
 msgid "<Image>/Filters/Artistic/_Apply Canvas..."
-msgstr "<Slika>/Filteri/Umetnički/Primeni platno..."
+msgstr "<Image>/Filteri/Umetnički/Primeni platno..."
 
 #: plug-ins/common/struc.c:1221
 msgid "Applying Canvas..."
@@ -7506,8 +7493,7 @@ msgstr "Uvezi putanje"
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
-"Uvezi elemente putanje za SVG, kako bi bili korišćeni u Gimp alatki za "
-"putanje"
+"Uvezi elemente putanje za SVG, kako bi bili korišćeni u Gimp alatki za putanje"
 
 #: plug-ins/common/svg.c:865
 msgid "Merge Imported Paths"
@@ -7544,7 +7530,7 @@ msgstr "Početak na dnu-levo"
 
 #: plug-ins/common/threshold_alpha.c:97
 msgid "<Image>/Layer/Transparency/_Threshold Alpha..."
-msgstr "<Slika>/Sloj/Providnost/Prag Alfe..."
+msgstr "<Image>/Sloj/Providnost/Prag Alfe..."
 
 #: plug-ins/common/threshold_alpha.c:132
 msgid "The layer preserves transparency."
@@ -7580,8 +7566,7 @@ msgid ""
 msgstr ""
 "Upozorenje:\n"
 "Slika koju učitavate ima 16 bita po kanalu. Gimp može raditi samo sa 8 bita, "
-"tako da će ovo prevesti. Informacije će biti izgubljene zbogovakvog "
-"prevođenja."
+"tako da će ovo prevesti. Informacije će biti izgubljene zbogovakvog prevođenja."
 
 #: plug-ins/common/tiff.c:1945
 msgid ""
@@ -7627,7 +7612,7 @@ msgstr "Komentar:"
 
 #: plug-ins/common/tile.c:112
 msgid "<Image>/Filters/Map/_Tile..."
-msgstr "<Slika>/Filteri/Mapa/Delići..."
+msgstr "<Image>/Filteri/Mapa/Delići..."
 
 #: plug-ins/common/tile.c:190 plug-ins/common/tileit.c:323
 msgid "Tiling..."
@@ -7649,7 +7634,7 @@ msgstr "Napravi novu sliku"
 
 #: plug-ins/common/tileit.c:228
 msgid "<Image>/Filters/Map/_Small Tiles..."
-msgstr "<Slika>/Filteri/Mapa/Mali delići..."
+msgstr "<Image>/Filteri/Mapa/Mali delići..."
 
 #. Get the preview image
 #: plug-ins/common/tileit.c:371
@@ -7697,7 +7682,7 @@ msgstr "Podešavanje Segmenata"
 
 #: plug-ins/common/tiler.c:65
 msgid "<Image>/Filters/Map/_Make Seamless"
-msgstr "<Slika>/Filteri/Mapa/Uklopi"
+msgstr "<Image>/Filteri/Mapa/Uklopi"
 
 #: plug-ins/common/tiler.c:319
 msgid "Tiler..."
@@ -7713,8 +7698,8 @@ msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
 msgstr ""
-"Definicija Mjere će biti sačuvana samo ako je označeno ovo polje "
-"prijeizlaska iz GIMP-a."
+"Definicija Mjere će biti sačuvana samo ako je označeno ovo polje prijeizlaska "
+"iz GIMP-a."
 
 #: plug-ins/common/uniteditor.c:85
 msgid "ID"
@@ -7838,13 +7823,12 @@ msgid "Create a new unit from scratch."
 msgstr "Napravi potpuno novu jedinicu"
 
 #: plug-ins/common/uniteditor.c:563
-#, fuzzy
 msgid "Create a new unit with the currently selected unit as template."
-msgstr "Napravi novu mjeru sa trenutnim primjerom (template)"
+msgstr "Napravi novu jedinicu sa trenutno izabranom jedinicom kao osnovom."
 
 #: plug-ins/common/unsharp.c:149
 msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
-msgstr "<Slika>/Filteri/Enhance/Skini oštrinu maske... "
+msgstr "<Image>/Filteri/Poboljšaj/Skini oštrinu maske... "
 
 #: plug-ins/common/unsharp.c:361
 msgid "Merging..."
@@ -7892,7 +7876,7 @@ msgstr "Tačaka"
 
 #: plug-ins/common/video.c:1828
 msgid "<Image>/Filters/Distorts/Vi_deo..."
-msgstr "<Slika>/Filteri/Distorzije/Video..."
+msgstr "<Image>/Filteri/Distorzije/Video..."
 
 #: plug-ins/common/video.c:1898
 msgid "Video/RGB..."
@@ -7917,7 +7901,7 @@ msgstr "Rotirano"
 
 #: plug-ins/common/vinvert.c:85
 msgid "<Image>/Filters/Colors/_Value Invert"
-msgstr "<Slika>/Filteri/Boje/Obrnuta vrednost..."
+msgstr "<Image>/Filteri/Boje/Obrnuta vrednost..."
 
 #: plug-ins/common/vinvert.c:124
 msgid "Value Invert..."
@@ -7957,16 +7941,16 @@ msgstr "Više providnosti"
 
 #: plug-ins/common/vpropagate.c:243
 msgid "<Image>/Filters/Distorts/_Value Propagate..."
-msgstr "<Slika>/Filteri/Distorzije/_Širenje vrednosti..."
+msgstr "<Image>/Filteri/Distorzije/_Širenje vrednosti..."
 
 #
 #: plug-ins/common/vpropagate.c:255
 msgid "<Image>/Filters/Generic/E_rode"
-msgstr "<Slika>/Filteri/Opšti/Erozija"
+msgstr "<Image>/Filteri/Opšti/Erozija"
 
 #: plug-ins/common/vpropagate.c:267
 msgid "<Image>/Filters/Generic/_Dilate"
-msgstr "<Slika>/Filteri/Opšti/_Proširenje"
+msgstr "<Image>/Filteri/Opšti/_Proširenje"
 
 #: plug-ins/common/vpropagate.c:455
 msgid "Value Propagating..."
@@ -8019,7 +8003,7 @@ msgstr "Propagating Value Channel"
 
 #: plug-ins/common/warp.c:255
 msgid "<Image>/Filters/Map/_Warp..."
-msgstr "<Slika>/Filteri/Mapa/Izobličeno..."
+msgstr "<Image>/Filteri/Mapa/Izobličeno..."
 
 #: plug-ins/common/warp.c:402
 msgid "Warp"
@@ -8071,7 +8055,7 @@ msgstr "Veličina dither:"
 
 #: plug-ins/common/warp.c:561
 msgid "Rotation Angle:"
-msgstr "Kut rotacije:"
+msgstr "Ugao rotacije:"
 
 #: plug-ins/common/warp.c:570
 msgid "Substeps:"
@@ -8140,7 +8124,7 @@ msgstr "Plutajući korak %d..."
 
 #: plug-ins/common/waves.c:125
 msgid "<Image>/Filters/Distorts/_Waves..."
-msgstr "<Slika>/Filteri/Distorzije/Talasi..."
+msgstr "<Image>/Filteri/Distorzije/Talasi..."
 
 #: plug-ins/common/waves.c:294
 msgid "Waves"
@@ -8194,7 +8178,7 @@ msgstr ""
 
 #: plug-ins/common/whirlpinch.c:185
 msgid "<Image>/Filters/Distorts/W_hirl and Pinch..."
-msgstr "<Slika>/Filteri/Distorzije/W_hirl and Pinch..."
+msgstr "<Image>/Filteri/Distorzije/W_hirl and Pinch..."
 
 #: plug-ins/common/whirlpinch.c:388
 msgid "Whirling and Pinching..."
@@ -8218,7 +8202,7 @@ msgstr "<Image>/Uredi/Umnoži u klipbord"
 
 #: plug-ins/common/winclipboard.c:121
 msgid "<Image>/Edit/Paste from Clipboard"
-msgstr "<Slika>/Uredi/Prenesi iz klipborda"
+msgstr "<Image>/Uredi/Prenesi iz klipborda"
 
 #: plug-ins/common/winclipboard.c:133
 msgid "<Toolbox>/File/Acquire/From Clipboard"
@@ -8248,7 +8232,7 @@ msgstr "Ubacujem..."
 
 #: plug-ins/common/wind.c:190
 msgid "<Image>/Filters/Distorts/Wi_nd..."
-msgstr "<Slika>/Filteri/Distorzije/Vetar..."
+msgstr "<Image>/Filteri/Distorzije/Vetar..."
 
 #: plug-ins/common/wind.c:322
 msgid "Rendering Blast..."
@@ -8561,7 +8545,7 @@ msgstr "Greška tokom zapisivanja rgb slike"
 
 #: plug-ins/common/zealouscrop.c:69
 msgid "<Image>/Layer/Transform/_Zealous Crop"
-msgstr "<Slika>/Slika/Transformacije/_Zealous odsečak"
+msgstr "<Image>/Slika/Transformacije/_Zealous odsečak"
 
 #: plug-ins/common/zealouscrop.c:115
 msgid "ZealousCropping(tm)..."
@@ -8683,7 +8667,7 @@ msgstr "Komponiranje Slike"
 
 #: plug-ins/flame/flame.c:141
 msgid "<Image>/Filters/Render/Nature/_Flame..."
-msgstr "<Slika>/Filteri/Iscrtavanje/Priroda/Plamen..."
+msgstr "<Image>/Filteri/Iscrtavanje/Priroda/Plamen..."
 
 #: plug-ins/flame/flame.c:228
 msgid "Drawing Flame..."
@@ -8801,7 +8785,7 @@ msgstr "Uvećanje:"
 
 #: plug-ins/fp/fp.c:92
 msgid "<Image>/Filters/Colors/_Filter Pack..."
-msgstr "<Slika>/Slika/Boje/Paketni Filter..."
+msgstr "<Image>/Slika/Boje/Paketni Filter..."
 
 #: plug-ins/fp/fp.c:127
 msgid "Convert the image to RGB first!"
@@ -8970,7 +8954,7 @@ msgstr "Veličina pregleda"
 
 #: plug-ins/gfig/gfig.c:347
 msgid "<Image>/Filters/Render/_Gfig..."
-msgstr "<Slika>/Filteri/Iscrtavanje/_Gfig..."
+msgstr "<Image>/Filteri/Iscrtavanje/_Gfig..."
 
 #: plug-ins/gfig/gfig.c:623
 msgid "First Gfig"
@@ -9283,7 +9267,7 @@ msgstr "Učitavam sliku"
 #: plug-ins/gfig/gfig.c:2556 plug-ins/imagemap/imap_menu.c:366
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
 msgid "Rectangle"
-msgstr "Pravokutnik"
+msgstr "Pravougaonik"
 
 #: plug-ins/gfig/gfig.c:2558
 msgid "Isometric"
@@ -9515,7 +9499,7 @@ msgstr "(Ne)"
 #: plug-ins/gfig/gfig-preview.c:581 plug-ins/gfig/gfig-preview.c:612
 #, c-format
 msgid "<NONE>"
-msgstr "<NONE>"
+msgstr "<NIŠTA>"
 
 #. Position labels
 #: plug-ins/gfig/gfig-preview.c:647
@@ -9523,13 +9507,12 @@ msgid "XY Position:"
 msgstr "XY Pozicija:"
 
 #: plug-ins/gfig/gfig-spiral.c:57
-#, fuzzy
 msgid "Spiral Number of Turns"
-msgstr "Broj Spiralnih tačaka"
+msgstr "Broj okreta spirale"
 
 #: plug-ins/gfig/gfig-star.c:56
 msgid "Star Number of Points"
-msgstr "Broj Zvezdanih tačaka"
+msgstr "Broj tačaka zvezde"
 
 #: plug-ins/gflare/gflare.c:566
 msgid "Addition"
@@ -9541,7 +9524,7 @@ msgstr "Prekrivanje"
 
 #: plug-ins/gflare/gflare.c:831
 msgid "<Image>/Filters/Light Effects/_GFlare..."
-msgstr "<Slika>/Filteri/Svetlosni efekti/_GFlare..."
+msgstr "<Image>/Filteri/Svetlosni efekti/_GFlare..."
 
 #
 #: plug-ins/gflare/gflare.c:967
@@ -9996,7 +9979,6 @@ msgid "How much to blur the drop shadow"
 msgstr "Koliko zamutiti kapljicu senke"
 
 #: plug-ins/gimpressionist/general.c:210
-#, fuzzy
 msgid "Deviation threshold:"
 msgstr "Prag devijacije:"
 
@@ -10007,7 +9989,7 @@ msgstr "Kritična vresnost za adaptivne selekcije"
 #
 #: plug-ins/gimpressionist/gimp.c:108
 msgid "<Image>/Filters/Artistic/_GIMPressionist..."
-msgstr "<Slika>/Filteri/Umetnički/GIMPresionista..."
+msgstr "<Image>/Filteri/Umetnički/GIMPresionista..."
 
 #: plug-ins/gimpressionist/gimp.c:294
 msgid "Painting..."
@@ -10051,21 +10033,19 @@ msgstr "Broj smjerova (npr kistovi) za korištenje"
 
 #: plug-ins/gimpressionist/orientation.c:74
 msgid "Start angle:"
-msgstr "Početni kut:"
+msgstr "Početni ugao:"
 
 #: plug-ins/gimpressionist/orientation.c:78
-#, fuzzy
 msgid "The starting angle of the first brush to create"
-msgstr "Ugao prve napravljene četke"
+msgstr "Početni ugao prve napravljene četke"
 
 #: plug-ins/gimpressionist/orientation.c:86
 msgid "Angle span:"
 msgstr "Luk ugla:"
 
 #: plug-ins/gimpressionist/orientation.c:90
-#, fuzzy
 msgid "The angle span of the first brush to create"
-msgstr "Ugao prve napravljene četke"
+msgstr "Opseg ugla prve napravljene četke"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid ""
@@ -10146,8 +10126,8 @@ msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
-"Vektorsko polje. Levi klik pomera izabrani vektor, desni klik da okreće "
-"prema mišu, srednji klik dodaje novi vektor."
+"Vektorsko polje. Levi klik pomera izabrani vektor, desni klik da okreće prema "
+"mišu, srednji klik dodaje novi vektor."
 
 #: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/sizemap.c:456
@@ -10489,7 +10469,7 @@ msgstr "Datoteke pomoći Gimpa nisu instalirane."
 
 #: plug-ins/help/domain.c:163
 msgid "There is a problem with the GIMP help files."
-msgstr ""
+msgstr "Postoji problem sa datotekama pomoći za Gimp."
 
 #: plug-ins/help/domain.c:168
 msgid "Please check your installation."
@@ -10506,6 +10486,8 @@ msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr ""
+"Greška pri raščlanjivanju u „%s“:\n"
+"%s"
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
@@ -10539,7 +10521,7 @@ msgstr ""
 #
 #: plug-ins/ifscompose/ifscompose.c:372
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
-msgstr "<Slika>/Filteri/Iscrtavanje/Priroda/Ifs_Sastavljanje..."
+msgstr "<Image>/Filteri/Iscrtavanje/Priroda/Ifs_Sastavljanje..."
 
 #
 #. Asym
@@ -10655,52 +10637,43 @@ msgid "Relative Probability:"
 msgstr "Relativna mogućnost:"
 
 #: plug-ins/ifscompose/ifscompose.c:1192
-#, fuzzy
 msgid "/Move"
-msgstr "Pomakni"
+msgstr "/Pomeri"
 
 #
 #: plug-ins/ifscompose/ifscompose.c:1194
-#, fuzzy
 msgid "/Rotate\\/Scale"
-msgstr "Rotiraj/Skalu"
+msgstr "/Rotiraj\\/Skaliraj"
 
 #
 #: plug-ins/ifscompose/ifscompose.c:1196
-#, fuzzy
 msgid "/Stretch"
-msgstr "Razvlačenje"
+msgstr "/Razvuci"
 
 #: plug-ins/ifscompose/ifscompose.c:1199
-#, fuzzy
 msgid "/New"
-msgstr "Novi"
+msgstr "/Novi"
 
 #: plug-ins/ifscompose/ifscompose.c:1201
-#, fuzzy
 msgid "/Delete"
-msgstr "Izbriši"
+msgstr "/Izbriši"
 
 #: plug-ins/ifscompose/ifscompose.c:1203
-#, fuzzy
 msgid "/Undo"
-msgstr "Unatrag"
+msgstr "/Vrati"
 
 #: plug-ins/ifscompose/ifscompose.c:1205
-#, fuzzy
 msgid "/Redo"
-msgstr "Naprijed"
+msgstr "/Ponovi"
 
 #: plug-ins/ifscompose/ifscompose.c:1207
-#, fuzzy
 msgid "/Select All"
-msgstr "Odaberi sve"
+msgstr "/Odaberi sve"
 
 #
 #: plug-ins/ifscompose/ifscompose.c:1209
-#, fuzzy
 msgid "/Recompute Center"
-msgstr "Preračunaj Centar"
+msgstr "/Preračunaj centar"
 
 #
 #: plug-ins/ifscompose/ifscompose.c:1260
@@ -10879,7 +10852,7 @@ msgid ""
 "allows you to rapidly create the most common image map type -\n"
 "image collection of \"thumbnails\", suitable for navigation bars."
 msgstr ""
-"Vodilje su predefinirani pravokutnici koji pokrivaju sliku.\n"
+"Vodilje su predefinisani pravougaonici koji pokrivaju sliku.\n"
 "Određujete ih po širini,visini i razmaku između njih.Ovo vam.\n"
 "daje mogućnost brzog kreiranja slika ili sličica prikladnih.\n"
 "za navigacijske trake."
@@ -11142,7 +11115,7 @@ msgstr "piksela od vrha"
 #
 #: plug-ins/imagemap/imap_main.c:128
 msgid "<Image>/Filters/Web/_ImageMap..."
-msgstr "<Slika>/Filteri/Veb/Mapa slike..."
+msgstr "<Image>/Filteri/Veb/Mapa slike..."
 
 #: plug-ins/imagemap/imap_main.c:738
 msgid "Some data has been changed!"
@@ -11278,13 +11251,12 @@ msgid "About ImageMap..."
 msgstr "O Mapi slike..."
 
 #: plug-ins/imagemap/imap_object_popup.c:105
-#, fuzzy
 msgid "Delete Area"
-msgstr "Izbriši GFlare"
+msgstr "Obriši oblast"
 
 #: plug-ins/imagemap/imap_polygon.c:71
 msgid "_Polygon"
-msgstr "Poligon"
+msgstr "_Poligon"
 
 #: plug-ins/imagemap/imap_polygon.c:474
 msgid "x (pixels)"
@@ -11516,7 +11488,7 @@ msgstr "Odaberi nastavljajuća područja"
 
 #: plug-ins/imagemap/imap_tools.c:155
 msgid "Define Rectangle area"
-msgstr "Definiraj Pravokutno područje"
+msgstr "Definiraj Pravougaono područje"
 
 #: plug-ins/imagemap/imap_tools.c:159
 msgid "Define Circle/Oval area"
@@ -11557,7 +11529,7 @@ msgstr "Crta lavirint."
 
 #: plug-ins/maze/maze.c:168
 msgid "<Image>/Filters/Render/Pattern/_Maze..."
-msgstr "<Slika>/Filteri/Iscrtavanje/Mustra/Lavirint..."
+msgstr "<Image>/Filteri/Iscrtavanje/Mustra/Lavirint..."
 
 #: plug-ins/maze/maze.c:454
 msgid "Drawing Maze..."
@@ -11565,9 +11537,8 @@ msgstr "Crtam Lavirint..."
 
 #. $Id$
 #: plug-ins/maze/maze.h:2
-#, fuzzy
 msgid "Maze"
-msgstr "Čarobno"
+msgstr "Lavirint"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:217
@@ -11582,13 +11553,14 @@ msgstr "Komadići:"
 msgid "Height (Pixels):"
 msgstr "Visina (piksela)"
 
+# ovaj broj deli?
 #: plug-ins/maze/maze_face.c:257
 msgid "Multiple (57):"
-msgstr "Multiplicirano (57):"
+msgstr "Delilac (57):"
 
 #: plug-ins/maze/maze_face.c:270
 msgid "Offset (1):"
-msgstr "Ofset (1):"
+msgstr "Pomeraj (1):"
 
 #: plug-ins/maze/maze_face.c:301
 msgid "Depth First"
@@ -11624,7 +11596,7 @@ msgstr "Vidi %s"
 
 #: plug-ins/pagecurl/pagecurl.c:212
 msgid "<Image>/Filters/Distorts/_Pagecurl..."
-msgstr "<Slika>/Filteri/Distorzije/Magareće uši..."
+msgstr "<Image>/Filteri/Distorzije/Magareće uši..."
 
 #: plug-ins/pagecurl/pagecurl.c:490
 msgid "Pagecurl Effect"
@@ -11733,9 +11705,9 @@ msgid ""
 "ink bleeds through the paper or smears; increase the density if black "
 "regions are not solid."
 msgstr ""
-"Podešavanje gustine (količine mastila) za štampu. Smanjite gustinu ako "
-"mastilo curi kroz papir ili se mrlja; povećajte gustinu ako crna područja "
-"nisu potpuno crna."
+"Podešavanje gustine (količine mastila) za štampu. Smanjite gustinu ako mastilo "
+"curi kroz papir ili se mrlja; povećajte gustinu ako crna područja nisu "
+"potpuno crna."
 
 #: plug-ins/print/gimp_color_window.c:410
 msgid ""
@@ -11945,8 +11917,8 @@ msgid ""
 "remove the `-l' or `-oraw' from the command string, or printing will "
 "probably fail!"
 msgstr ""
-"Unesite odgovarajuću naredbu za štampanje. Primedba: Molim vas da ne "
-"uklanjate „-l“ ili „-oraw“ iz naredbe ili štampanje nećeuspeti!"
+"Unesite odgovarajuću naredbu za štampanje. Primedba: Molim vas da ne uklanjate "
+"„-l“ ili „-oraw“ iz naredbe ili štampanje nećeuspeti!"
 
 #.
 #. * Output file selection dialog.
@@ -12127,9 +12099,8 @@ msgid "Set the scale (size) of the image"
 msgstr "Odredite razmeru (veličinu) slike"
 
 #: plug-ins/print/gimp_main_window.c:1170
-#, fuzzy
 msgid "Scale by:"
-msgstr "vrednost Z:"
+msgstr "Uvećaj za:"
 
 #: plug-ins/print/gimp_main_window.c:1175
 msgid ""
@@ -12141,7 +12112,7 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:1180
 msgid "Percent"
-msgstr "Postotak"
+msgstr "Odsto"
 
 #: plug-ins/print/gimp_main_window.c:1187
 msgid "Scale the print to the size of the page"
@@ -12282,7 +12253,7 @@ msgstr "Podesi ravnotežu boja, svetlo, kontrast, zasićenje i algoritam mešanj
 
 #: plug-ins/print/print.c:164
 msgid "<Image>/File/_Print..."
-msgstr "<Slika>/Datoteka/Štampaj..."
+msgstr "<Image>/Datoteka/Štampaj..."
 
 #: plug-ins/print/print.c:690 plug-ins/print/print.c:691
 #: plug-ins/print/print.c:781 plug-ins/print/print.c:1120
@@ -12291,7 +12262,7 @@ msgstr "Datoteka"
 
 #: plug-ins/rcm/rcm.c:106
 msgid "<Image>/Filters/Colors/Map/Colormap _Rotation..."
-msgstr "<Slika>/Slika/Boje/Rotacija Mape Boja..."
+msgstr "<Image>/Slika/Boje/Rotacija Mape Boja..."
 
 #: plug-ins/rcm/rcm.c:267
 msgid "Rotating the colormap..."
@@ -12515,8 +12486,7 @@ msgid "Error: XJT property file '%s' is empty."
 msgstr "Greška: XJT datoteka %s je prazna"
 
 #~ msgid "Preview (in image window, will modify image's undo history!)"
-#~ msgstr ""
-#~ "Pregled (u prozoru za slike, izmeniće istorijat poništavanja slike!)"
+#~ msgstr "Pregled (u prozoru za slike, izmeniće istorijat poništavanja slike!)"
 
 #~ msgid "write error occured"
 #~ msgstr "pogreška pri zapisivanju"
