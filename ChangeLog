@@ -1,3 +1,15 @@
+2003-08-31  Michael Natterer  <mitch@gimp.org>
+
+	Removed libgck from the public libgimp API:
+
+	* plug-ins/libgck/gck/Makefile.am: don't build and install a
+	shared library and any header files. Instead, build a
+	noinst_LIBRARY.
+
+	* plug-ins/Lighting/Makefile.am
+	* plug-ins/MapObject/Makefile.am: link against the uninstalled
+	libgck.a convenience lib.
+
 2003-08-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptool.c: made "tool-info" a G_PARAM_CONSTRUCT_ONLY
