@@ -1,3 +1,10 @@
+2005-01-18  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	Merged from HEAD branch:
+
+	* plug-ins/common/bumpmap.c: make sure bumpmap_init_params()
+	is called when necessary, fixes bug #162285.
+	
 2005-01-18  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD branch:
