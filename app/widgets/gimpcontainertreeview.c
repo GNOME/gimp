@@ -772,8 +772,16 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
             {
               /*  don't select item if a toggle was clicked */
               if (! toggled_cell)
-                gimp_container_view_item_selected (container_view,
-                                                   renderer->viewable);
+                {
+                  gimp_container_view_item_selected (container_view,
+                                                     renderer->viewable);
+
+                  /*  another row may have been set by selecting  */
+                  gtk_tree_view_column_cell_set_cell_data (column,
+                                                           tree_view->model,
+                                                           &iter,
+                                                           FALSE, FALSE);
+                }
 
               /*  a callback invoked by selecting the item may have
                *  destroyed us, so check if the container is still there

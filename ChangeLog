@@ -1,6 +1,13 @@
 2003-03-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_button_press): need to call
+	gtk_tree_view_column_cell_set_cell_data() again after fiddling
+	with the GtkTreeView (fixes bug #109121).
+
+2003-03-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
 	(gimp_container_tree_view_button_press): ignore double clicks on
 	toggle cells (fixes bug #109114).
 
