@@ -1,3 +1,10 @@
+2004-03-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpthumbbox.c (gimp_thumb_box_new): set a fixed
+	width on the "filename" and "info" labels so they clip their texts
+	rather than expand the thumb_box when the text is too wide
+	(spotted by Jonathan Blandford).
+
 2004-03-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-enums.[ch] (enum GimpUndoType): replaced

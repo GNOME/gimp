@@ -144,7 +144,8 @@ gimp_thumb_box_new (Gimp *gimp)
   GtkWidget      *label;
   GtkStyle       *style;
   gchar          *str;
-  GtkRequisition  requisition;
+  GtkRequisition  info_requisition;
+  GtkRequisition  progress_requisition;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -251,11 +252,14 @@ gimp_thumb_box_new (Gimp *gimp)
   /* don't gtk_widget_show (box->progress); */
 
   /* eek */
-  gtk_widget_size_request (box->info, &requisition);
-  gtk_widget_set_size_request (box->info, -1, requisition.height);
+  gtk_widget_size_request (box->info,     &info_requisition);
+  gtk_widget_size_request (box->progress, &progress_requisition);
 
-  gtk_widget_size_request (box->progress, &requisition);
-  gtk_widget_set_size_request (box->filename, requisition.width, -1);
+  gtk_widget_set_size_request (box->info,
+                               progress_requisition.width,
+                               info_requisition.height);
+  gtk_widget_set_size_request (box->filename,
+                               progress_requisition.width, -1);
 
   return GTK_WIDGET (box);
 }
