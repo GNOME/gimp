@@ -180,7 +180,7 @@ quit_dialog_container_changed (GimpContainer  *images,
     {
       gtk_widget_show (label);
       g_object_set (button,
-                    "label",     "_Discard Changes",
+                    "label",     _("_Discard Changes"),
                     "use-stock", FALSE,
                     NULL);
       gtk_window_set_default (GTK_WINDOW (dialog), NULL);
