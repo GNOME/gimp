@@ -1,3 +1,17 @@
+2002-06-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/session.c: parse sessionrc using GScanner.
+
+	* app/config/gimpscanner.[ch]: added utility function
+	gimp_scanner_parse_string_list(). Fixed the color parser's parse
+	error detection.
+
+	* app/gimprc.c: removed the sessionrc parsing stuff.
+
+	* app/config/gimpconfig-params.c (gimp_param_spec_color): no need
+	to set the param_spec's value_type, it already gets set by it's
+	base class' instance_init() function.
+
 2002-06-02  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/imagemap/imap_about.c: bumped version number to 2.0
@@ -88,6 +102,7 @@
 	  more distiguishable from the transform tools
 	* themes/Default/images/stock-plugin-16.png: Xtns>plugin-details
 	  icon
+
 2002-06-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpclone.[ch]: removed all global variables, factored

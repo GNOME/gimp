@@ -42,13 +42,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcoreconfig.h"
-#include "core/gimptoolinfo.h"
 
-#include "widgets/gimpdialogfactory.h"
-
-/*#include "tools/gimptool.h"*/
-
-#include "gui/color-notebook.h"
 #include "gui/menus.h"
 
 #include "app_procs.h"
@@ -82,8 +76,6 @@ typedef enum
   TT_INTERP,
   TT_XPREVSIZE,
   TT_XUNIT,
-  TT_XSESSIONINFO,
-  TT_XCOLORHISTORY,
   TT_XNAVPREVSIZE,
   TT_XTHUMBSIZE,
   TT_XHELPBROWSER,
@@ -129,12 +121,9 @@ static gint           parse_preview_size        (gpointer val1p, gpointer val2p)
 static gint           parse_nav_preview_size    (gpointer val1p, gpointer val2p);
 static gint           parse_thumbnail_size      (gpointer val1p, gpointer val2p);
 static gint           parse_units               (gpointer val1p, gpointer val2p);
-static gint           parse_session_info        (gpointer val1p, gpointer val2p);
 static gint           parse_help_browser        (gpointer val1p, gpointer val2p);
 static gint           parse_cursor_mode         (gpointer val1p, gpointer val2p);
-static gint           parse_color_history       (gpointer val1p, gpointer val2p);
 
-static gint           parse_color               (GimpRGB        *color);
 static gint           parse_unknown             (gchar          *token_sym);
 
 static inline gchar * string_to_str             (gpointer val1p, gpointer val2p);
@@ -252,7 +241,6 @@ static ParseFunc funcs[] =
   { "always-restore-session",        TT_BOOLEAN,       &gimprc.always_restore_session , NULL   },
   { "show-tips",                     TT_BOOLEAN,       &gimprc.show_tips, NULL                 },
   { "dont-show-tips",                TT_BOOLEAN,       NULL, &gimprc.show_tips                 },
-  { "last-tip-shown",                TT_INT,           &gimprc.last_tip, NULL                  },
   { "show-tool-tips",                TT_BOOLEAN,       &gimprc.show_tool_tips, NULL            },
   { "dont-show-tool-tips",           TT_BOOLEAN,       NULL, &gimprc.show_tool_tips            },
   { "default-dot-for-dot",           TT_BOOLEAN,       &gimprc.default_dot_for_dot, NULL       },
@@ -271,10 +259,7 @@ static ParseFunc funcs[] =
   { "cursor-mode",                   TT_XCURSORMODE,   &gimprc.cursor_mode, NULL               },
   { "disable-tearoff-menus",         TT_BOOLEAN,       &gimprc.disable_tearoff_menus, NULL     },
   { "theme-path",                    TT_PATH,          &gimprc.theme_path, NULL                },
-  { "theme",                         TT_STRING,        &gimprc.theme, NULL                     },
-
-  { "session-info",                  TT_XSESSIONINFO,  NULL, NULL },
-  { "color-history",                 TT_XCOLORHISTORY, NULL, NULL }
+  { "theme",                         TT_STRING,        &gimprc.theme, NULL                     }
 };
 
 
@@ -889,10 +874,6 @@ parse_statement (void)
 	  return parse_thumbnail_size (func->val1p, func->val2p);
 	case TT_XUNIT:
 	  return parse_units (func->val1p, func->val2p);
-	case TT_XSESSIONINFO:
-	  return parse_session_info (func->val1p, func->val2p);
-	case TT_XCOLORHISTORY:
-	  return parse_color_history (func->val1p, func->val2p);
 	case TT_XHELPBROWSER:
 	  return parse_help_browser (func->val1p, func->val2p);
 	case TT_XCURSORMODE:
@@ -1394,85 +1375,6 @@ parse_units (gpointer val1p,
   return OK;
 }
 
-static gint
-parse_color (GimpRGB *color)
-{
-  gdouble  col[4] = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
-  gint     token;
-  gint     i;
-  gint     n_channels;
-  gboolean is_hsv;
-
-  g_return_val_if_fail (color != NULL, ERROR);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_LEFT_PAREN))
-    return ERROR;
-  token = get_next_token ();
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_SYMBOL))
-    return ERROR;
-  token = get_next_token ();
-
-  if (! strcmp ("color-rgb", token_sym))
-    {
-      is_hsv     = FALSE;
-      n_channels = 3;
-    }
-  else if (! strcmp ("color-rgba", token_sym))
-    {
-      is_hsv     = FALSE;
-      n_channels = 4;
-    }
-  else if (! strcmp ("color-hsv", token_sym))
-    {
-      is_hsv     = TRUE;
-      n_channels = 3;
-    }
-  else if (! strcmp ("color-hsva", token_sym))
-    {
-      is_hsv     = TRUE;
-      n_channels = 4;
-    }
-  else
-    {
-      return ERROR;
-    }
-
-  for (i = 0; i < n_channels; i++)
-    {
-      token = peek_next_token ();
-      if (!token || (token != TOKEN_NUMBER))
-	return ERROR;
-      token = get_next_token ();
-
-      col[i] = token_num;
-    }
-
-  if (is_hsv)
-    {
-      GimpHSV hsv;
-
-      gimp_hsva_set (&hsv, col[0], col[1], col[2], col[3]);
-      gimp_hsv_clamp (&hsv);
-
-      gimp_hsv_to_rgb (&hsv, color);
-    }
-  else
-    {
-      gimp_rgba_set (color, col[0], col[1], col[2], col[3]);
-      gimp_rgb_clamp (color);
-    }
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_RIGHT_PAREN))
-    return ERROR;
-  token = get_next_token ();
-
-  return OK;
-}
-
 static gchar *
 transform_path (gchar    *path,
 		gboolean  destroy)
@@ -1639,198 +1541,6 @@ transform_path (gchar    *path,
 }
 
 static gint
-parse_session_info (gpointer val1p, 
-		    gpointer val2p)
-{
-  gint               token;
-  GimpDialogFactory *factory;
-  GimpSessionInfo   *info = NULL;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  factory = gimp_dialog_factory_from_name (token_str);
-
-  if (! factory)
-    goto error;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  info = g_new0 (GimpSessionInfo, 1);
-
-  if (strcmp (token_str, "dock"))
-    {
-      info->toplevel_entry = gimp_dialog_factory_find_entry (factory, token_str);
-
-      if (! info->toplevel_entry)
-	goto error;
-    }
-
-  /* Parse options for session info */
-
-  while (peek_next_token () == TOKEN_LEFT_PAREN)
-    {
-      token = get_next_token ();
-
-      token = peek_next_token ();
-      if (!token || (token != TOKEN_SYMBOL))
-	goto error;
-      token = get_next_token ();
-
-      if (!strcmp ("position", token_sym))
-	{
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_NUMBER))
-	    goto error;
-	  token = get_next_token ();
-	  info->x = token_int;
-
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_NUMBER))
-	    goto error;
-	  token = get_next_token ();
-	  info->y = token_int;
-	}
-      else if (!strcmp ("size", token_sym))
-	{
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_NUMBER))
-	    goto error;
-	  token = get_next_token ();
-	  info->width = token_int;
-
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_NUMBER))
-	    goto error;
-	  token = get_next_token ();
-	  info->height = token_int;
-	}
-      else if (!strcmp ("open-on-exit", token_sym))
-	{
-	  info->open = TRUE;
-	}
-      else if (!strcmp ("aux-info", token_sym))
-	{
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_LEFT_PAREN))
-	    goto error;
-	  token = get_next_token ();
-
-	  while (peek_next_token () == TOKEN_STRING)
-	    {
-	      token = get_next_token ();
-
-	      info->aux_info = g_list_append (info->aux_info,
-					      g_strdup (token_str));
-	    }
-
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_RIGHT_PAREN))
-	    goto error;
-	  token = get_next_token ();
-	}
-      else if (!strcmp ("dock", token_sym))
-	{
-	  if (info->toplevel_entry)
-	    goto error;
-
-	  while (peek_next_token () == TOKEN_LEFT_PAREN)
-	    {
-	      token = get_next_token ();
-
-	      info->sub_dialogs = g_list_prepend (info->sub_dialogs, NULL);
-
-	      while (peek_next_token () == TOKEN_STRING)
-		{
-		  token = get_next_token ();
-
-		  info->sub_dialogs->data =
-		    g_list_append (info->sub_dialogs->data,
-				   g_strdup (token_str));
-		}
-
-	      token = peek_next_token ();
-	      if (!token || (token != TOKEN_RIGHT_PAREN))
-		goto error;
-	      token = get_next_token ();
-
-	      if (! g_list_length (info->sub_dialogs->data))
-		{
-		  info->sub_dialogs = g_list_remove (info->sub_dialogs,
-						     info->sub_dialogs->data);
-		}
-	    }
-
-	  info->sub_dialogs = g_list_reverse (info->sub_dialogs);
-	}
-      else
-	{
-	  goto error;
-	}
-
-      token = peek_next_token ();
-      if (!token || (token != TOKEN_RIGHT_PAREN))
-	goto error;
-      token = get_next_token ();
-    }
-
-  if (!token || (token != TOKEN_RIGHT_PAREN))
-    goto error;
-  token = get_next_token ();
-
-  factory->session_infos = g_list_append (factory->session_infos, info);
-
-  return OK;
-
- error:
-  if (info)
-    {
-      GList *list;
-
-      for (list = info->sub_dialogs; list; list = g_list_next (list))
-	{
-	  g_list_foreach (list->data, (GFunc) g_free, NULL);
-	  g_list_free (list->data);
-	}
-
-      g_list_free (info->sub_dialogs);
-      g_free (info);
-    }
-
-  return ERROR;
-}
-
-static gint
-parse_color_history (gpointer val1p, 
-		     gpointer val2p)
-{
-  gint     token = 0;
-  GimpRGB  color;
-
-  /* Parse one color per line: (color r g b a) */
-
-  while (peek_next_token () == TOKEN_LEFT_PAREN)
-    {
-      if (parse_color (&color) == ERROR)
-	return ERROR;
-
-      color_history_add_color_from_rc (&color);
-    }
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_RIGHT_PAREN))
-    return ERROR;
-  token = get_next_token ();
-
-  return OK;
-}
-
-static gint
 parse_help_browser (gpointer val1p,
 		    gpointer val2p)
 {
@@ -1978,9 +1688,6 @@ gimprc_value_to_str (const gchar *name)
 	  return cursor_mode_to_str (func->val1p, func->val2p);
 	case TT_XCOMMENT:
 	  return comment_to_str (func->val1p, func->val2p);
-	case TT_XSESSIONINFO:
-	case TT_XCOLORHISTORY:
-	  return NULL;
 	}
     }
 

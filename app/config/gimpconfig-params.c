@@ -173,8 +173,6 @@ gimp_param_spec_color (const gchar   *name,
 
   cspec->default_value = *default_value;
 
-  G_PARAM_SPEC (cspec)->value_type = GIMP_TYPE_COLOR;
-
   return G_PARAM_SPEC (cspec);
 }
 
