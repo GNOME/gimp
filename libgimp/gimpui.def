@@ -16,5 +16,4 @@ EXPORTS
 	gimp_pattern_select_widget_close
 	gimp_pattern_select_widget_new
 	gimp_pattern_select_widget_set
-	gimp_plug_in_get_path
 	gimp_ui_init

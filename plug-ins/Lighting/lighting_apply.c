@@ -14,41 +14,11 @@
 #include "lighting_image.h"
 #include "lighting_shade.h"
 
-#include "config.h"
 #include "libgimp/stdplugins-intl.h"
 
 /*************/
 /* Main loop */
 /*************/
-
-get_ray_func ray_func;
-
-void
-init_compute (void)
-{
-}
-
-/*
-static void
-render (gdouble  x,
-	gdouble  y,
-	GimpRGB  *col)
-{
-  GimpVector3 pos;
-
-  pos=int_to_pos(x,y);
-
-  *col=(*ray_func)(&pos);
-}
-
-static void
-show_progress (gint min,
-	       gint max,
-	       gint curr)
-{
-  gimp_progress_update ((gdouble)curr / (gdouble)max);
-}
-*/
 
 void
 compute_image (void)
@@ -62,11 +32,11 @@ compute_image (void)
   gint32       index;
   guchar      *row = NULL;
   guchar       obpp;
+  gboolean     has_alpha;
+  get_ray_func ray_func;
 
-  gint has_alpha;
 
-  init_compute ();
-  
+
   if (mapvals.create_new_image == TRUE ||
       (mapvals.transparent_background == TRUE &&
        ! gimp_drawable_has_alpha (input_drawable->drawable_id)))
@@ -163,11 +133,6 @@ compute_image (void)
 
       gimp_pixel_rgn_set_row (&dest_region, row, 0, ycount, width);
     }
-
-/*    }
-  else
-    gck_adaptive_supersample_area(0,0,width-1,height-1,(gint)mapvals.max_depth,
-      mapvals.pixel_treshold,render,poke,show_progress); */
 
   g_free (row);
 
