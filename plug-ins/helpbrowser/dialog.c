@@ -62,8 +62,6 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void       close_callback         (GtkWidget        *widget,
-                                          gpointer          data);
 static void       button_callback        (GtkWidget        *widget,
                                           gpointer          data);
 static void       update_toolbar         (void);
@@ -152,7 +150,7 @@ browser_dialog_open (void)
   gtk_window_set_role (GTK_WINDOW (window), "helpbrowser");
 
   g_signal_connect (window, "destroy",
-                    G_CALLBACK (close_callback),
+                    G_CALLBACK (gtk_main_quit),
                     NULL);
 
   gimp_help_connect (window, gimp_standard_help_func,
@@ -171,6 +169,7 @@ browser_dialog_open (void)
   button = gtk_button_new_from_stock (GTK_STOCK_HOME);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
+
   g_signal_connect (button, "clicked",
                     G_CALLBACK (button_callback),
                     GINT_TO_POINTER (BUTTON_HOME));
@@ -178,6 +177,7 @@ browser_dialog_open (void)
   button = gtk_button_new_from_stock (GTK_STOCK_INDEX);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
+
   g_signal_connect (button, "clicked",
                     G_CALLBACK (button_callback),
                     GINT_TO_POINTER (BUTTON_INDEX));
@@ -185,6 +185,7 @@ browser_dialog_open (void)
   back_button = button = gtk_button_new_from_stock (GTK_STOCK_GO_BACK);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_set_sensitive (GTK_WIDGET (button), FALSE);
+
   g_signal_connect (button, "clicked",
                     G_CALLBACK (button_callback),
                     GINT_TO_POINTER (BUTTON_BACK));
@@ -193,6 +194,7 @@ browser_dialog_open (void)
   forward_button = button = gtk_button_new_from_stock (GTK_STOCK_GO_FORWARD);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_set_sensitive (GTK_WIDGET (button), FALSE);
+
   g_signal_connect (button, "clicked",
                     G_CALLBACK (button_callback),
                     GINT_TO_POINTER (BUTTON_FORWARD));
@@ -212,6 +214,7 @@ browser_dialog_open (void)
                        help_dnd_target_table,
                        G_N_ELEMENTS (help_dnd_target_table),
                        GDK_ACTION_MOVE | GDK_ACTION_COPY);
+
   g_signal_connect (drag_source, "drag_begin",
                     G_CALLBACK (drag_begin),
                     NULL);
@@ -309,7 +312,7 @@ browser_dialog_load (const gchar *ref,
 
   if (strcmp (current_ref, abs))
     {
-      if (!has_case_prefix (abs, "file:/"))
+      if (! has_case_prefix (abs, "file:/"))
         {
           load_remote_page (ref);
           return;
@@ -337,13 +340,6 @@ browser_dialog_load (const gchar *ref,
 
 
 /*  private functions  */
-
-static void
-close_callback (GtkWidget *widget,
-		gpointer   data)
-{
-  gtk_main_quit ();
-}
 
 static void
 button_callback (GtkWidget *widget,
@@ -424,9 +420,7 @@ entry_changed_callback (GtkWidget *widget,
 	}
 
       if (item->count)
-        {
-          g_free (compare_text);
-        }
+        g_free (compare_text);
     }
 }
 
@@ -632,35 +626,33 @@ history_add (const gchar *ref,
 	     const gchar *title)
 {
   GList       *list;
-  GList       *found = NULL;
   HistoryItem *item;
-  GList       *combo_list = NULL;
+  GList       *combo_list        = NULL;
   gint         title_found_count = 0;
 
-  for (list = history; list && !found; list = list->next)
+  for (list = history; list; list = g_list_next (list))
     {
       item = (HistoryItem *) list->data;
 
-      if (strcmp (item->title, title) == 0)
+      if (! strcmp (item->title, title))
 	{
-	  if (strcmp (item->ref, ref) != 0)
-	    {
-	      title_found_count++;
-	      continue;
-	    }
+	  if (! strcmp (item->ref, ref))
+            break;
 
-	  found = list;
+          title_found_count++;
         }
     }
 
-  if (found)
+  if (list)
     {
-      item = (HistoryItem *) found->data;
-      history = g_list_remove_link (history, found);
+      item = (HistoryItem *) list->data;
+
+      history = g_list_remove_link (history, list);
     }
   else
     {
       item = g_new (HistoryItem, 1);
+
       item->ref   = g_strdup (ref);
       item->title = g_strdup (title);
       item->count = title_found_count;
@@ -668,16 +660,14 @@ history_add (const gchar *ref,
 
   history = g_list_prepend (history, item);
 
-  for (list = history; list; list = list->next)
+  for (list = history; list; list = g_list_next (list))
     {
-      gchar* combo_title;
+      gchar *combo_title;
 
       item = (HistoryItem *) list->data;
 
       if (item->count)
-	combo_title = g_strdup_printf ("%s <%i>",
-				       item->title,
-				       item->count + 1);
+	combo_title = g_strdup_printf ("%s <%i>", item->title, item->count + 1);
       else
 	combo_title = g_strdup (item->title);
 

@@ -1,5 +1,11 @@
 2003-12-04  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/helpbrowser/dialog.c
+	* plug-ins/helpbrowser/domain.[ch]
+	* plug-ins/helpbrowser/uri.[ch]: cleanup & whitespace removal.
+
+2003-12-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.h: removed unused "gint proj_level" from the
 	GimpImage struct.
 

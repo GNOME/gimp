@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * The GIMP Help Browser
- * Copyright (C) 1999-2002 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 1999-2003 Sven Neumann <sven@gimp.org>
  *                         Michael Natterer <mitch@gimp.org>
  *
  * domain.c
@@ -24,6 +24,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -241,8 +242,8 @@ domain_parse (HelpDomain  *domain,
   if (! fp)
     {
       g_set_error (error, 0, 0,
-                   "Could not open gimp-help.xml mapping file from '%s'",
-                   domain->help_uri);
+                   "Could not open gimp-help.xml mapping file from '%s': %s",
+                   domain->help_uri, g_strerror (errno));
       g_free (filename);
       return FALSE;
     }
@@ -326,7 +327,7 @@ domain_parser_end_element (GMarkupParseContext *context,
   switch (parser->state)
     {
     case DOMAIN_START:
-      g_warning ("tips_parser: This shouldn't happen.\n");
+      g_warning ("tips_parser: This shouldn't happen.");
       break;
 
     case DOMAIN_IN_HELP:

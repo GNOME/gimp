@@ -19,5 +19,5 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-gchar * uri_to_abs (const gchar *uri, 
+gchar * uri_to_abs (const gchar *uri,
                     const gchar *base_uri);

@@ -49,7 +49,7 @@ uri_get_type (const gchar *uri)
   gchar        c;
   const gchar *cptr;
   UriType      type = URI_UNKNOWN;
-  
+
   if (!uri)
     return type;
 
@@ -59,12 +59,12 @@ uri_get_type (const gchar *uri)
   if (g_ascii_isalpha (c))
     {
       type = URI_RELPATH;  /* assume relative path */
-      
+
       while ((c = *cptr++))
         {
           if (g_ascii_isalnum (c) || c == '+' || c == '-' || c == '.')
             continue;
-          
+
           if (c == ':')
             {
               /* it was a scheme */
@@ -132,16 +132,16 @@ uri_to_abs (const gchar *uri,
   gchar       *retval    = NULL;
   UriType      uri_type  = URI_UNKNOWN;
   UriType      base_type = URI_UNKNOWN;
-  
+
   gint base_cnt    =  0;  /* no of chars to be copied from base URI  */
   gint uri_cnt     =  0;  /* no of chars to be copied from URI       */
   gint sep_cnt     =  0;  /* no of chars to be inserted between them */
   gint path_offset = -1;
-  
+
   const gchar *sep_str = ""; /* string to insert between base and uri */
   const gchar *part;
   const gchar *last_segment = NULL;
-  
+
 #ifdef URI_DEBUG
   g_print ("uri_to_abs (\"%s\", \"%s\")\n", uri, base_uri);
 #endif
@@ -152,14 +152,14 @@ uri_to_abs (const gchar *uri,
    * After that it locates the missing parts in the base URI and then
    * concats everything into a newly allocated string.
    */
-  
+
   /* determine the kind of the URIs */
   uri_type = uri_get_type (uri);
-  
+
   if (uri_type != URI_ABSURI)
     {
       base_type = uri_get_type (base_uri);
-    
+
       if (base_type != URI_ABSURI)
         {
           g_warning ("base uri is not absolute: '%s'\n", base_uri);
@@ -185,7 +185,7 @@ uri_to_abs (const gchar *uri,
       /* skip scheme */
       while ((c = *cptr++) && c != ':')
         ; /* nada */
-      
+
       base_cnt = cptr - base_uri; /* incl : */
 
       if (*cptr != '/')
@@ -196,7 +196,7 @@ uri_to_abs (const gchar *uri,
 
       if (uri_type == URI_NETPATH)
         break;
-      
+
       /* skip authority */
       if (cptr[0] == '/' && cptr[1] == '/')
         {
@@ -210,11 +210,11 @@ uri_to_abs (const gchar *uri,
           base_cnt += cptr - part;
         }
 
-      path_offset = base_cnt; 
+      path_offset = base_cnt;
 
       if (uri_type == URI_ABSPATH)
         break;
-      
+
       /* skip path */
       if (*cptr != '/')
         {
@@ -224,25 +224,25 @@ uri_to_abs (const gchar *uri,
         }
 
       part = cptr;
-      
+
       g_assert (*cptr == '/');
-      
+
       while ((c = *cptr++) && c != '?' && c != '#')
         {
           if (c == '/')
             last_segment = cptr - 1;
         };
-      
+
       g_assert (last_segment);
-      
+
       cptr = last_segment;
-      
+
       while ((c = *uri) && c == '.' && cptr > part)
         {
           gint shift_segment = 0;
 
           c = uri[1];
-          
+
           if (c == '.' )
             {
               c = uri[2];
@@ -252,18 +252,18 @@ uri_to_abs (const gchar *uri,
           if (c == '/')
             {
               uri += 2;
-            } 
+            }
           else if (c == 0 || c == '?' || c == '#')
             {
               uri += 1;
-            } 
-          else 
+            }
+          else
             {
               break;
             }
 
           g_assert (*cptr == '/');
-          
+
           if (shift_segment)
             {
               uri += 1;
@@ -271,10 +271,10 @@ uri_to_abs (const gchar *uri,
                 ; /* nada */
             }
         }
-      
+
       base_cnt += cptr - part + 1;
       break;
-      
+
     case URI_EMPTY:
     case URI_FRAGMENT:
       /* use whole base uri */
@@ -285,17 +285,17 @@ uri_to_abs (const gchar *uri,
     case URI_INVALID:
       return NULL;
     }
-  
+
   /* do not include fragment part from the URI reference */
   for (cptr = uri; (c = *cptr) && c != '#'; cptr++)
     ; /* nada */
 
   uri_cnt = cptr - uri;
-  
+
   /* allocate string and copy characters */
-  
+
   retval = g_new (gchar, base_cnt + sep_cnt + uri_cnt + 1);
-  
+
   if (base_cnt)
     strncpy (retval, base_uri, base_cnt);
 
