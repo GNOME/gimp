@@ -238,9 +238,9 @@ void updatesliders(void)
 			   vector[selectedvector].str);
   for(i = 0; i < NUMVECTYPES; i++) {
     if(i == vector[selectedvector].type)
-      gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(vectypes[i]), TRUE);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(vectypes[i]), TRUE);
     else
-      gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(vectypes[i]), FALSE);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(vectypes[i]), FALSE);
   }
   adjignore = 0;
 }
@@ -425,7 +425,7 @@ void update_orientmap_dialog(void)
 
   gtk_adjustment_set_value(GTK_ADJUSTMENT(strexpadjust), pcvals.orientstrexp);
   gtk_adjustment_set_value(GTK_ADJUSTMENT(angoffadjust), pcvals.orientangoff);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(orientvoronoi), pcvals.orientvoronoi);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(orientvoronoi), pcvals.orientvoronoi);
 
   updatevectorprev();
   updateompreviewprev();
@@ -438,7 +438,7 @@ void create_orientmap_dialog(void)
   GtkWidget *table2;
   GtkWidget *hbox;
 
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (orientradio[7]), TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (orientradio[7]), TRUE);
 
   initvectors();
 
@@ -460,14 +460,14 @@ void create_orientmap_dialog(void)
 
   gtk_window_set_title(GTK_WINDOW(omwindow), _("Orientation Map Editor"));
 
-  gtk_container_border_width (GTK_CONTAINER(omwindow), 5);
+  gtk_container_set_border_width (GTK_CONTAINER(omwindow), 5);
 
   tmpw = table1 = gtk_table_new(2,5,FALSE);
   gtk_widget_show(tmpw);
   gtk_container_add(GTK_CONTAINER(omwindow), tmpw);
 
   tmpw2 = tmpw = gtk_frame_new( _("Vectors"));
-  gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_table_attach(GTK_TABLE(table1), tmpw, 0,1,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
   gtk_widget_show(tmpw);
 
@@ -500,7 +500,7 @@ void create_orientmap_dialog(void)
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Adjust the preview's brightness"), NULL);
 
   tmpw2 = tmpw = gtk_frame_new( _("Preview"));
-  gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_table_attach(GTK_TABLE(table1), tmpw, 1,2,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
   gtk_widget_show(tmpw);
 
@@ -510,7 +510,7 @@ void create_orientmap_dialog(void)
   gtk_widget_show(tmpw);
 
   hbox = tmpw = gtk_hbox_new(TRUE,0);
-  gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_table_attach_defaults(GTK_TABLE(table1), tmpw, 0,1,1,2);
   gtk_widget_show(tmpw);
 
@@ -584,7 +584,7 @@ void create_orientmap_dialog(void)
 
   tmpw = hbox = gtk_hbox_new(TRUE,0);
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 1,2,2,3);
-  gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_widget_show(tmpw);
 
   vectypes[0] = tmpw = gtk_radio_button_new_with_label(NULL, _("Normal"));
@@ -602,7 +602,7 @@ void create_orientmap_dialog(void)
 
   tmpw = hbox = gtk_hbox_new(TRUE,0);
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 1,2,3,4);
-  gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_widget_show(tmpw);
  
   vectypes[2] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(vectypes[0])), _("Vortex2"));
@@ -620,7 +620,7 @@ void create_orientmap_dialog(void)
 
   tmpw = hbox = gtk_hbox_new(TRUE,0);
   gtk_table_attach_defaults(GTK_TABLE(table1), tmpw, 1,2,1,2);
-  gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_widget_show(tmpw);
 
   tmpw = gtk_button_new_with_label( _("OK"));
@@ -680,10 +680,10 @@ void create_orientmap_dialog(void)
 
   orientvoronoi = tmpw = gtk_check_button_new_with_label( _("Voronoi"));
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,2,3);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), FALSE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
   if(pcvals.orientvoronoi)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), TRUE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)angoffadjmove, NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Voronoi-mode makes only the vector closest to the given point have any influence"), NULL);

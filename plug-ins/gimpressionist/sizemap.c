@@ -325,7 +325,7 @@ void update_sizemap_dialog(void)
   initsmvectors();
 
   gtk_adjustment_set_value(GTK_ADJUSTMENT(smstrexpadjust), pcvals.sizestrexp);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(sizevoronoi), pcvals.sizevoronoi);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(sizevoronoi), pcvals.sizevoronoi);
 
   updatesmvectorprev();
   updatesmpreviewprev();
@@ -338,7 +338,7 @@ void create_sizemap_dialog(void)
   GtkWidget *table2;
   GtkWidget *hbox;
 
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (sizeradio[7]), TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sizeradio[7]), TRUE);
 
   initsmvectors();
 
@@ -360,14 +360,14 @@ void create_sizemap_dialog(void)
 
   gtk_window_set_title(GTK_WINDOW(smwindow), _("Size Map Editor"));
 
-  gtk_container_border_width (GTK_CONTAINER(smwindow), 5);
+  gtk_container_set_border_width (GTK_CONTAINER(smwindow), 5);
 
   tmpw = table1 = gtk_table_new(2,5,FALSE);
   gtk_widget_show(tmpw);
   gtk_container_add(GTK_CONTAINER(smwindow), tmpw);
 
   tmpw2 = tmpw = gtk_frame_new( _("Smvectors"));
-  gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_table_attach(GTK_TABLE(table1), tmpw, 0,1,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
   gtk_widget_show(tmpw);
 
@@ -400,7 +400,7 @@ void create_sizemap_dialog(void)
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Adjust the preview's brightness"), NULL);
 
   tmpw2 = tmpw = gtk_frame_new( _("Preview"));
-  gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_table_attach(GTK_TABLE(table1), tmpw, 1,2,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
   gtk_widget_show(tmpw);
 
@@ -410,7 +410,7 @@ void create_sizemap_dialog(void)
   gtk_widget_show(tmpw);
 
   hbox = tmpw = gtk_hbox_new(TRUE,0);
-  gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_table_attach_defaults(GTK_TABLE(table1), tmpw, 0,1,1,2);
   gtk_widget_show(tmpw);
 
@@ -479,7 +479,7 @@ void create_sizemap_dialog(void)
 
   tmpw = hbox = gtk_hbox_new(TRUE,0);
   gtk_table_attach_defaults(GTK_TABLE(table1), tmpw, 1,2,1,2);
-  gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_widget_show(tmpw);
 
   tmpw = gtk_button_new_with_label( _("OK"));
@@ -526,10 +526,10 @@ void create_sizemap_dialog(void)
 
   sizevoronoi = tmpw = gtk_check_button_new_with_label( _("Voronoi"));
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,2,3);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), FALSE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
   if(pcvals.sizevoronoi)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), TRUE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)smstrexpsmadjmove, NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Voronoi-mode makes only the smvector closest to the given point have any influence"), NULL);

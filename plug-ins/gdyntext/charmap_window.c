@@ -89,7 +89,7 @@ static void charmap_window_init(CharMapWindow *cmw)
 
   cmw->scrolledwindow = gtk_scrolled_window_new(NULL, NULL);
   gtk_box_pack_start(GTK_BOX(vbox), cmw->scrolledwindow, TRUE, TRUE, 0);
-  gtk_container_border_width(GTK_CONTAINER(cmw->scrolledwindow), 2);
+  gtk_container_set_border_width(GTK_CONTAINER(cmw->scrolledwindow), 2);
   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(cmw->scrolledwindow), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_widget_show(cmw->scrolledwindow);
 
@@ -150,7 +150,7 @@ GtkWidget* charmap_window_new(const gchar *title)
 
 	cmw = gtk_type_new(charmap_window_get_type());
 	gtk_window_set_title(GTK_WINDOW(cmw), title);
-	gtk_container_border_width(GTK_CONTAINER(cmw), 4);
+	gtk_container_set_border_width(GTK_CONTAINER(cmw), 4);
 	gtk_window_set_policy(GTK_WINDOW(cmw), TRUE, TRUE, FALSE);
 
 	return GTK_WIDGET(cmw);
@@ -165,7 +165,7 @@ void on_charmap_char_selected(GtkWidget *widget, gpointer data)
 	cmw = (CharMapWindow *)data;
 	lab[0] = CHARMAP(cmw->charmap)->current_char;
 	lab[1] = 0;
-	gtk_label_set(GTK_LABEL(cmw->label), lab);
+	gtk_label_set_text(GTK_LABEL(cmw->label), lab);
 }
 
 /* vim: set ts=2 sw=2 tw=79 ai nowrap: */

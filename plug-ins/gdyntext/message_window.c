@@ -127,7 +127,7 @@ message_window_new (const gchar *title)
   mw = gtk_type_new (message_window_get_type());
   gtk_window_set_title (GTK_WINDOW(mw), title);
   gimp_dialog_set_icon (GTK_WINDOW (mw));
-  gtk_container_border_width (GTK_CONTAINER(mw), 4);
+  gtk_container_set_border_width (GTK_CONTAINER(mw), 4);
   gtk_window_set_policy (GTK_WINDOW(mw), TRUE, TRUE, FALSE);
   
   return GTK_WIDGET(mw);

@@ -35,9 +35,9 @@ void placechange(GtkWidget *wg, void *d, int num)
     n = num;
     for(i = 0; i < NUMPLACERADIO; i++)
       if(i != n)
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(placeradio[i]), FALSE);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(placeradio[i]), FALSE);
       else
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(placeradio[n]), TRUE);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(placeradio[n]), TRUE);
   }
 }
 
@@ -59,7 +59,7 @@ void create_placementpage(GtkNotebook *notebook)
   gtk_widget_show_all(menubox);
 
   thispage = gtk_vbox_new(FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (thispage), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
   gtk_widget_show(thispage);
 
   box0 = gtk_vbox_new (FALSE, 0);
@@ -86,23 +86,23 @@ void create_placementpage(GtkNotebook *notebook)
 
   placeradio[0] = tmpw = gtk_radio_button_new_with_label(NULL, _("Randomly"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)placechange, (void *)0);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Place strokes randomly around the image"), NULL);
   if(i == 0)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
   placeradio[1] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Evenly distributed"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)placechange, (void *)1);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The strokes are evenly distributed across the image"), NULL);
   if(i == 1)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
 
   box1 = gtk_hbox_new (FALSE, 0);
@@ -124,11 +124,11 @@ void create_placementpage(GtkNotebook *notebook)
 
   placecenter = tmpw = gtk_check_button_new_with_label( _("Centerize"));
   gtk_box_pack_start(GTK_BOX(box0), tmpw, FALSE, FALSE, 0);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), FALSE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Focus the brush strokes around the center of the image"), NULL);
   if(pcvals.placecenter)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), TRUE);
 
     
   gtk_notebook_append_page_menu (notebook, thispage, labelbox, menubox);

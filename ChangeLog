@@ -1,3 +1,20 @@
+Wed Aug 30 01:19:03 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/gap/resize.c
+	* plug-ins/gdyntext/charmap.c
+	* plug-ins/gdyntext/charmap_window.c
+	* plug-ins/gdyntext/message_window.c
+	* plug-ins/gimpressionist/color.c
+	* plug-ins/gimpressionist/general.c
+	* plug-ins/gimpressionist/orientation.c
+	* plug-ins/gimpressionist/orientmap.c
+	* plug-ins/gimpressionist/paper.c
+	* plug-ins/gimpressionist/placement.c
+	* plug-ins/gimpressionist/presets.c
+	* plug-ins/gimpressionist/preview.c
+	* plug-ins/gimpressionist/size.c
+	* plug-ins/gimpressionist/sizemap.c: more COMPAT_CRUFT removal
+
 2000-08-29  Piers Cornwell  <piers.cornwell@bigfoot.com>
 
 	* plug-ins/Lighting/lighting_ui.c

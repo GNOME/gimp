@@ -101,7 +101,7 @@ GtkWidget* create_preview()
   GtkWidget *box1, *box2, *tmpw;
 
   box1 = gtk_vbox_new(FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (box1), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (box1), 5);
 
   tmpw = gtk_label_new( _("Preview"));
   gtk_box_pack_start(GTK_BOX(box1), tmpw, FALSE, FALSE, 0);

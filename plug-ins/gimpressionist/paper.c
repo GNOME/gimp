@@ -96,7 +96,7 @@ void create_paperpage(GtkNotebook *notebook)
   gtk_widget_show_all(menubox);
 
   thispage = gtk_vbox_new(FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (thispage), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
   gtk_widget_show(thispage);
 
   box1 = gtk_hbox_new (FALSE, 0);
@@ -125,7 +125,7 @@ void create_paperpage(GtkNotebook *notebook)
   box2 = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,0);
   gtk_widget_show (box2);
-  gtk_container_border_width (GTK_CONTAINER (box2), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
 
   tmpw = gtk_label_new( _("Paper Preview:"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
@@ -140,22 +140,22 @@ void create_paperpage(GtkNotebook *notebook)
 
   paperinvert = tmpw = gtk_check_button_new_with_label( _("Invert"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), FALSE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
                       GTK_SIGNAL_FUNC(selectpaper),
                       list);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Inverts the Papers texture"), NULL);
   if(pcvals.paperinvert)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), TRUE);
 
   paperoverlay = tmpw = gtk_check_button_new_with_label( _("Overlay"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), FALSE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Applies the paper as it is (without embossing it)"), NULL);
   if(pcvals.paperoverlay)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), TRUE);
 
 
   box1 = gtk_hbox_new (FALSE, 0);

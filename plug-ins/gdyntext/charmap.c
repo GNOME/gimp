@@ -111,7 +111,7 @@ static void charmap_init(CharMap *cm)
 		  button = cm->buttons[x + y * cm->width] = gtk_toggle_button_new_with_label(clabel);
 			gtk_button_set_relief(&GTK_TOGGLE_BUTTON(button)->button, GTK_RELIEF_HALF);
 			if (i == 32)
-				gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
+				gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 		  gtk_table_attach(GTK_TABLE(table), button, x, x + 1, y, y + 1,
 				(GtkAttachOptions)GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 				(GtkAttachOptions)GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
@@ -143,9 +143,9 @@ void on_charmap_char_toggled(GtkWidget *widget, gpointer data)
 		cm = (CharMap *)data;
 		for (i = 0; i < 256; i++)
 			if (cm->buttons[i] != widget && GTK_TOGGLE_BUTTON(cm->buttons[i])->active)
-				gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(cm->buttons[i]), FALSE);
+				gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cm->buttons[i]), FALSE);
 		if (!GTK_TOGGLE_BUTTON(widget)->active)
-			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(widget), TRUE);
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), TRUE);
 		cm->current_char = GTK_LABEL(GTK_BUTTON(widget)->child)->label[0];
 		gtk_signal_emit(GTK_OBJECT(data), charmap_signals[CHAR_SELECTED]);
 		in = FALSE;

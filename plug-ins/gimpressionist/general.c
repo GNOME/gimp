@@ -48,8 +48,8 @@ void generalbgchange(GtkWidget *wg, void *d, int num)
       n = 1;
     for(i = 0; i < NUMGENERALBGRADIO; i++)
       if(i != n)
-        gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(generalbgradio[i]), FALSE);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(generalbgradio[n]), TRUE);
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(generalbgradio[i]), FALSE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(generalbgradio[n]), TRUE);
   }
 }
 
@@ -94,7 +94,7 @@ void selectcolor(void)
     return;
   }
 
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(generalbgradio[0]), TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(generalbgradio[0]), TRUE);
 
   window = gtk_color_selection_dialog_new( _("Color Selection Dialog"));
   gtk_signal_connect (GTK_OBJECT (window), "destroy",
@@ -142,7 +142,7 @@ void create_generalpage(GtkNotebook *notebook)
 
 
   thispage = gtk_vbox_new(FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (thispage), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
   gtk_widget_show(thispage);
 
   box1 = gtk_hbox_new (FALSE, 0);
@@ -187,23 +187,23 @@ void create_generalpage(GtkNotebook *notebook)
 
   generalbgradio[1] = tmpw = gtk_radio_button_new_with_label(NULL, _("Keep original"));
   gtk_widget_show(tmpw);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)generalbgchange, (void *)1);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Preserve the original image as a background"), NULL);
   if(pcvals.generalbgtype == 1)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
   generalbgradio[2] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("From paper"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)generalbgchange, (void *)2);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Copy the texture of the selected paper as a background"), NULL);
   if(pcvals.generalbgtype == 2)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
   box3 = gtk_vbox_new(FALSE,0);
   gtk_box_pack_start(GTK_BOX(box2), box3,FALSE,FALSE, 10);
@@ -217,12 +217,12 @@ void create_generalpage(GtkNotebook *notebook)
   generalbgradio[0] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Solid"));
   gtk_box_pack_start(GTK_BOX(box4), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)generalbgchange, (void *)0);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Solid colored background"), NULL);
   if(pcvals.generalbgtype == 0)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
   colbutton = tmpw = gtk_button_new();
   gtk_box_pack_start(GTK_BOX(box4), tmpw, FALSE, FALSE, 10);
@@ -240,14 +240,14 @@ void create_generalpage(GtkNotebook *notebook)
   generalbgradio[3] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(generalbgradio[0])), _("Transparent"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)generalbgchange, (void *)3);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Use a transparent background; Only the strokes painted will be visible"), NULL);
   if(!img_has_alpha)
     gtk_widget_set_sensitive (tmpw, FALSE);
   if(pcvals.generalbgtype == 3)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
 
   box1 = gtk_vbox_new (FALSE, 0);
@@ -260,19 +260,19 @@ void create_generalpage(GtkNotebook *notebook)
 
   generalpaintedges = tmpw = gtk_check_button_new_with_label( _("Paint edges"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), FALSE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Selects if to place strokes all the way out to the edges of the image", NULL);
   if(pcvals.generalpaintedges)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), TRUE);
 
   generaltileable = tmpw = gtk_check_button_new_with_label( _("Tileable"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), FALSE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Selects if the resulting image should be seamlessly tileable"), NULL);
   if(pcvals.generaltileable)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), TRUE);
 
   box2 = gtk_hbox_new (TRUE, 0);
   gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,0);
@@ -280,11 +280,11 @@ void create_generalpage(GtkNotebook *notebook)
 
   generaldropshadow = tmpw = gtk_check_button_new_with_label( _("Drop Shadow"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), FALSE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Adds a shadow effect to each brush stroke"), NULL);
   if(pcvals.generaldropshadow)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), TRUE);
 
   generalshadowadjust = gtk_adjustment_new(pcvals.generalshadowdarkness, 0.0, 100.0, 0.1, 0.1, 1.0);
   tmpw = gtk_hscale_new(GTK_ADJUSTMENT(generalshadowadjust));

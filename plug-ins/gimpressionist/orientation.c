@@ -36,8 +36,8 @@ void orientchange(GtkWidget *wg, void *d, int num)
     n = num;
     for(i = 0; i < NUMORIENTRADIO; i++)
       if(i != n)
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(orientradio[i]), FALSE);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(orientradio[n]), TRUE);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(orientradio[i]), FALSE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(orientradio[n]), TRUE);
   }
 }
 
@@ -59,7 +59,7 @@ void create_orientationpage(GtkNotebook *notebook)
   gtk_widget_show_all(menubox);
 
   thispage = gtk_vbox_new(FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (thispage), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
   gtk_widget_show(thispage);
 
   box1 = gtk_hbox_new (FALSE, 0);
@@ -130,43 +130,43 @@ void create_orientationpage(GtkNotebook *notebook)
 
   orientradio[0] = tmpw = gtk_radio_button_new_with_label(NULL, _("Value"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)orientchange, (void *)0);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Let the value (brightness) of the region determine the direction of the stroke"), NULL);
   if(i == 0)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
   orientradio[1] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Radius"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)orientchange, (void *)1);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The distance from the center of the image determines the direction of the stroke"), NULL);
   if(i == 1)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), TRUE);
     
   orientradio[2] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Random"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)orientchange, (void *)2);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Selects a random direction of each stroke"), NULL);
   if(i == 2)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
   orientradio[3] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Radial"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)orientchange, (void *)3);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Let the direction from the center determine the direction of the stroke"), NULL);
   if(i == 3)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
   box3 = gtk_vbox_new(FALSE,0);
   gtk_box_pack_start(GTK_BOX(box2), box3,FALSE,FALSE, 10);
@@ -176,34 +176,34 @@ void create_orientationpage(GtkNotebook *notebook)
   orientradio[4] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Flowing"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)orientchange, (void *)4);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The strokes follow a \"flowing\" pattern"), NULL);
   if(i == 4)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
 
 
   orientradio[5] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Hue"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)orientchange, (void *)5);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The hue of the region determines the direction of the stroke"), NULL);
   if(i == 5)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
   orientradio[6] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Adaptive"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)orientchange, (void *)6);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The direction that matches the original image the closest is selected"), NULL);
   if(i == 6)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
 
   box4 = gtk_hbox_new(FALSE, 0);
@@ -213,12 +213,12 @@ void create_orientationpage(GtkNotebook *notebook)
   orientradio[7] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Manual"));
   gtk_box_pack_start(GTK_BOX(box4), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)orientchange, (void *)7);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Manually specify the stroke orientation"), NULL);
   if(i == 7)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
   tmpw = gtk_button_new_with_label( _("Edit..."));
   gtk_box_pack_start(GTK_BOX(box4), tmpw, FALSE, FALSE, 0);

@@ -366,7 +366,7 @@ void create_savepreset(void)
 			    GTK_SIGNAL_FUNC (gtk_widget_destroy),
 			    GTK_OBJECT(window));
 
-  gtk_container_border_width (GTK_CONTAINER (window), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (window), 5);
 
   box = gtk_vbox_new(FALSE,5);
 
@@ -581,7 +581,7 @@ void create_presetpage(GtkNotebook *notebook)
   presetlist = list = gtk_list_new ();
 
   thispage = gtk_vbox_new(FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (thispage), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
   gtk_widget_show(thispage);
 
   box1 = gtk_hbox_new (FALSE, 0);
@@ -635,7 +635,7 @@ void create_presetpage(GtkNotebook *notebook)
   box2 = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,5);
   gtk_widget_show (box2);
-  /* gtk_container_border_width (GTK_CONTAINER (box2), 5); */
+  /* gtk_container_set_border_width (GTK_CONTAINER (box2), 5); */
 
   tmpw = gtk_button_new_with_label( _("Apply"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
