@@ -677,6 +677,9 @@ merge_button_callback (GtkWidget *widget,
   /* Get the list and which item is selected */
   /* Only allow single selections */
 
+  /* apparently this function (call) is all broken at the moment */
+  g_return_if_fail (list != NULL);
+
   sellist = GTK_LIST (list)->selection;
 
   sel_obj = (GFigObj *) g_object_get_data (G_OBJECT (sellist->data),

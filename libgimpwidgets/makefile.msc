@@ -32,10 +32,13 @@ install : all
 
 OBJECTS = \
 	gimpbutton.obj \
+	gimpcellrenderercolor.obj \
+	gimpcellrenderertoggle.obj \
 	gimpchainbutton.obj \
 	gimpcolorarea.obj \
 	gimpcolorbutton.obj \
 	gimpcolordisplay.obj \
+	gimpcolorhexentry.obj \
 	gimpcolornotebook.obj \
 	gimpcolorscale.obj \
 	gimpcolorscales.obj \
@@ -56,6 +59,7 @@ OBJECTS = \
 	gimppatheditor.obj \
 	gimppickbutton.obj \
 	gimppixmap.obj \
+	gimppreviewarea.obj \
 	gimpquerybox.obj \
 	gimpsizeentry.obj \
 	gimpstock.obj \

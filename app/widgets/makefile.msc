@@ -29,11 +29,12 @@ OBJECTS = \
 	gimpaction.obj \
 	gimpactionfactory.obj \
 	gimpactiongroup.obj \
+	gimpactionview.obj \
 	gimpbrusheditor.obj \
 	gimpbrushfactoryview.obj \
 	gimpbrushselect.obj \
 	gimpbufferview.obj \
-	gimpcellrenderertoggle.obj \
+	gimpcellrendereraccel.obj \
 	gimpcellrendererviewable.obj \
 	gimpchanneltreeview.obj \
 	gimpclipboard.obj \
@@ -82,6 +83,7 @@ OBJECTS = \
 	gimperrorconsole.obj \
 	gimpfgbgeditor.obj \
 	gimpfiledialog.obj \
+	gimpfileprocview.obj \
 	gimpfontview.obj \
 	gimpfontselect.obj \
 	gimpgradienteditor.obj \
@@ -146,7 +148,7 @@ OBJECTS = \
 	gtkhwrapbox.obj \
 	gtkvwrapbox.obj \
 	gtkwrapbox.obj \
-	widgets-enums.obj \
+#	widgets-enums.obj \
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \
@@ -175,7 +177,7 @@ RESOURCE = $(PACKAGE).res
 $(PACKAGE).lib : $(OBJECTS)
 	lib /out:$(PACKAGE).lib $(OBJECTS)
 
-$(PACKAGE)-$(PKG_VER).dll : $(OBJECTS) $(PACKAGE).def
+$(PACKAGE)-$(PKG_VER).dll : $(OBJECTS) widgets-enums.obj $(PACKAGE).def
 	$(CC) $(CFLAGS) -LD -Fe$(PACKAGE)-$(PKG_VER).dll $(OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:$(PACKAGE).def
 
 $(PACKAGE).exe : $(OBJECTS) $(PACKAGE).def $(PACKAGE).res

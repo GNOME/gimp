@@ -3,6 +3,9 @@
 
 STOCK_VARIABLES = \
 	stock_anchor_16		stock-anchor-16.png	\
+	stock_brush_generated_circle_16	stock-brush-generated-circle-16.png \
+	stock_brush_generated_diamond_16	stock-brush-generated-diamond-16.png \
+	stock_brush_generated_square_16	stock-brush-generated-square-16.png \
 	stock_cap_butt_16	stock-cap-butt-16.png \
 	stock_cap_round_16	stock-cap-round-16.png \
 	stock_cap_square_16	stock-cap-square-16.png \

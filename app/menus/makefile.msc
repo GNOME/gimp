@@ -24,10 +24,7 @@ all : \
 !ENDIF
 
 OBJECTS = \
-	file-dialog-menu.obj \
 	file-menu.obj \
-	file-open-menu.obj \
-	file-save-menu.obj \
 	image-menu.obj \
 	menus.obj \
 	plug-in-menus.obj \

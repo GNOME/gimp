@@ -254,7 +254,7 @@ run (const gchar      *name,
 
   values[0].data.d_status = status;
 
-  gimp_drawable_detach (drawable);
+  /* gimp_drawable_detach (drawable) already done above, don't do it twice */
 }
 
 /*

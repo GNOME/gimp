@@ -26,13 +26,13 @@ PKG_LINK = \
 OBJECTS = \
 	gimpcanvas.obj \
 	gimpdisplay.obj \
-	gimpdisplay-area.obj \
 	gimpdisplay-foreach.obj \
 	gimpdisplay-handlers.obj \
-	gimpdisplayoptions.obj \
+#	gimpdisplayoptions.obj \
 	gimpdisplayshell.obj \
 	gimpdisplayshell-appearance.obj \
 	gimpdisplayshell-callbacks.obj \
+	gimpdisplayshell-close.obj \
 	gimpdisplayshell-cursor.obj \
 	gimpdisplayshell-dnd.obj \
 	gimpdisplayshell-draw.obj \
@@ -51,7 +51,7 @@ OBJECTS = \
 	gimpprogress.obj \
 	gimpscalecombobox.obj \
 	gimpstatusbar.obj \
-	display-enums.obj \
+#	display-enums.obj \
 
 all : \
 	$(PRJ_TOP)\config.h \
@@ -68,7 +68,7 @@ RESOURCE = $(PACKAGE).res
 $(PACKAGE).lib : $(OBJECTS)
 	lib /out:$(PACKAGE).lib $(OBJECTS)
 
-$(PACKAGE)-$(PKG_VER).dll : $(OBJECTS) $(PACKAGE).def
+$(PACKAGE)-$(PKG_VER).dll : $(OBJECTS) display-enums.obj $(PACKAGE).def
 	$(CC) $(CFLAGS) -LD -Fe$(PACKAGE)-$(PKG_VER).dll $(OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:$(PACKAGE).def
 
 $(PACKAGE).exe : $(OBJECTS) $(PACKAGE).def $(PACKAGE).res

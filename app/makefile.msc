@@ -28,26 +28,33 @@ sub-one:
 
 LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)
 
-PKG_LINK = \
-	actions/appactions.lib \
-	config/appconfig.lib \
+
+GIMP_CORE_OBJECTS = \
+	widgets/widgets-enums.obj \
+	display/display-enums.obj \
+	display/gimpdisplayoptions.obj \
+	\
+	base/appbase.lib \
 	composite/appcomposite.lib \
-	menus/appmenus.lib \
+	config/appconfig.lib \
+	core/appcore.lib \
+	file/appfile.lib \
 	paint/apppaint.lib \
 	paint-funcs/apppaint-funcs.lib \
-	plug-in/appplug-in.lib \
 	pdb/apppdb.lib \
-	tools/apptools.lib \
+	plug-in/appplug-in.lib \
 	text/apptext.lib \
-	gui/appgui.lib \
-	widgets/appwidgets.lib \
-	core/appcore.lib \
-	base/appbase.lib \
-	file/appfile.lib \
-	display/appdisplay.lib \
-	xcf/xcf.lib \
 	vectors/appvectors.lib \
 	plug-in/appplug-in.lib \
+	xcf/xcf.lib \
+
+PKG_LINK = \
+	actions/appactions.lib \
+	menus/appmenus.lib \
+	tools/apptools.lib \
+	gui/appgui.lib \
+	widgets/appwidgets.lib \
+	display/appdisplay.lib \
 	$(PRJ_TOP)/regexrepl/regexrepl.lib \
 	\
 	$(top_builddir)/libgimpbase/gimpbase-$(LT_RELEASE).lib \
@@ -84,20 +91,15 @@ INCLUDES = \
 !ENDIF
 	-I$(includedir)
 
-regex_sources = \
-	regexrepl.c regexrepl.h
-
-mmx_sources = \
-	
-
 OBJECTS = \
-	app_procs.obj \
 	main.obj \
 	batch.obj \
 	errors.obj \
 	sanity.obj \
 	units.obj \
 
+app_procs_console.obj : app_procs.c
+	$(CC) $(CFLAGS) -DGIMP_CONSOLE_COMPILATION -GD -c $(PKG_CFLAGS) -Foapp_procs_console.obj app_procs.c
 
 EXTRA_DIST = \
 	makefile.mingw \
@@ -118,7 +120,9 @@ scriptdata = \
 all : \
 	$(PRJ_TOP)\config.h \
 	sub-all \
-	$(PACKAGE).exe
+	gimp-core-$(PKG_VER).dll \
+	$(PACKAGE).exe \
+	gimp-console.exe
 
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32
@@ -129,12 +133,21 @@ RESOURCE = $(PACKAGE).res
 $(PACKAGE).lib : $(OBJECTS)
 	lib /out:$(PACKAGE).lib $(OBJECTS)
 
+gimp-core-$(PKG_VER).dll : $(GIMP_CORE_OBJECTS) gimpcore.def
+	$(CC) $(CFLAGS) -LD -Fegimp-core-$(PKG_VER).dll $(GIMP_CORE_OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:gimpcore.def
+
 $(PACKAGE)-$(PKG_VER).dll : $(PKG_LINK) $(OBJECTS) $(PACKAGE).def
 	$(CC) $(CFLAGS) -LD -Fe$(PACKAGE)-$(PKG_VER).dll $(OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:$(PACKAGE).def
 
-$(PACKAGE).exe : $(OBJECTS) $(PACKAGE).def $(PACKAGE).res $(PKG_LINK)
-	$(CC) $(CFLAGS) -Fe$(PACKAGE).exe $(PACKAGE).res $(OBJECTS) $(PKG_LINK) \
+gimp-console.exe : $(OBJECTS) app_procs_console.obj $(PACKAGE).def $(PACKAGE).res $(PKG_LINK)
+	$(CC) $(CFLAGS) -Fegimp-console.exe $(PACKAGE).res app_procs_console.obj $(OBJECTS) $(PKG_LINK) \
+	gimp-core-$(PKG_VER).lib \
 	user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS) /def:$(PACKAGE).def
+
+$(PACKAGE).exe : $(OBJECTS) app_procs.obj $(PACKAGE).def $(PACKAGE).res $(PKG_LINK)
+	$(CC) $(CFLAGS) -Fe$(PACKAGE).exe $(PACKAGE).res app_procs.obj $(OBJECTS) \
+	gimp-core-$(PKG_VER).lib \
+	$(PKG_LINK) user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS) /def:$(PACKAGE).def
 
 .c.obj :
 	$(CC) $(CFLAGS) -GD -c $(PKG_CFLAGS) $<

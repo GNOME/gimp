@@ -99,6 +99,7 @@ gimp_OBJECTS = \
 #	gimphelp.obj \
 	gimpimage.obj \
 	gimplayer.obj \
+	gimppaletteselect.obj \
 	gimppatternselect.obj \
 	gimppixelfetcher.obj \
 	gimppixelrgn.obj \
@@ -132,6 +133,7 @@ gimpui_OBJECTS = \
 	gimpmenu.obj \
 	gimpimagecombobox.obj \
 	gimppatternmenu.obj \
+	gimppalettemenu.obj \
 	gimppixbuf.obj \
 	gimpexport.obj \
 #	gimppatheditor.obj \

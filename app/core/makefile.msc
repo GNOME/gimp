@@ -36,7 +36,9 @@ OBJECTS = \
 	cpercep.obj \
 	gimp.obj \
 	gimp-edit.obj \
+	gimp-gui.obj \
 	gimp-units.obj \
+	gimparea.obj \
 	gimpbrush.obj \
 	gimpbrushgenerated.obj \
 	gimpbrushpipe.obj \
@@ -66,6 +68,8 @@ OBJECTS = \
 	gimpdrawable-transform.obj \
 	gimpenvirontable.obj \
 	gimpgradient.obj \
+	gimpgradient-load.obj \
+	gimpgradient-save.obj \
 	gimpgrid.obj \
 	gimp-gradients.obj \
 	gimpimage.obj \
@@ -83,7 +87,6 @@ OBJECTS = \
 	gimpimage-new.obj \
 	gimpimage-pick-color.obj \
 	gimpimage-preview.obj \
-	gimpimage-projection.obj \
 	gimpimage-qmask.obj \
 	gimpimage-resize.obj \
 	gimpimage-rotate.obj \
@@ -100,6 +103,8 @@ OBJECTS = \
 	gimplayer-floating-sel.obj \
 	gimplayermask.obj \
 	gimplist.obj \
+	gimpprojection.obj \
+	gimpprojection-construct.obj \
 	gimpmarshal.obj \
 	gimp-modules.obj \
 	gimpobject.obj \
@@ -109,6 +114,7 @@ OBJECTS = \
 	gimp-parasites.obj \
 	gimpparasitelist.obj \
 	gimppattern.obj \
+	gimppickable.obj \
 	gimppreviewcache.obj \
 	gimpscanconvert.obj \
 	gimpselection.obj \

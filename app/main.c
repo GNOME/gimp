@@ -409,16 +409,6 @@ main (int    argc,
 	}
     }
 
-#ifdef G_OS_WIN32
-  /* Common windoze apps don't have a console at all. So does Gimp
-   * - if appropiate. This allows to compile as console application
-   * with all it's benefits (like inheriting the console) but hide
-   * it, if the user doesn't want it.
-   */
-  if (!show_help && !be_verbose && !console_messages)
-    FreeConsole ();
-#endif
-
   if (show_help)
     {
       gimp_show_help (full_prog_name);

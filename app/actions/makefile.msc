@@ -51,10 +51,6 @@ OBJECTS = \
 	error-console-commands.obj \
 	file-actions.obj \
 	file-commands.obj \
-	file-dialog-actions.obj \
-	file-dialog-commands.obj \
-	file-open-actions.obj \
-	file-save-actions.obj \
 	fonts-actions.obj \
 	fonts-commands.obj \
 	gradient-editor-actions.obj \

@@ -56,6 +56,8 @@ EXTRA_DIST = \
 	$(CURSOR_IMAGES)			\
 	gimp-tool-cursors.xcf			\
 	\
+	makefile.msc			\
+	\
 	xbm/cursor-none.xbm			\
 	xbm/cursor-mouse.xbm			\
 	xbm/cursor-mouse-mask.xbm		\

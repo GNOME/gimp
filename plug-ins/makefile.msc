@@ -34,7 +34,7 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 # The COMMON* ones are in the common subdirectory
 COMMON1 = AlienMap2 ccanalyze CEL channel_mixer CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard color_enhance colorify colortoalpha compose convmatrix csource cubism curve_bend
 COMMON2 = decompose deinterlace depthmerge despeckle destripe dicom diffraction displace edge emboss engrave exchange film flarefx fractaltrace
-COMMON3 = gauss gbr gee gee_zoom gif gifload gih glasstile gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
+COMMON3 = gauss gbr gee gee_zoom gif gifload gih glasstile gqbist gradmap grid gtm guillotine gz header hot illusion iwarp jigsaw jpeg laplace lic
 COMMON4 = mapcolor max_rgb mblur mosaic newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar postscript psd psd_save psp randomize ripple rotate
 COMMON5 = sample_colorize scatter_hsv screenshot sel_gauss semiflatten sharpen shift sinus smooth_palette snoise sobel sparkle spheredesigner spread struc sunras svg tga threshold_alpha tiff tile tileit tiler uniteditor unsharp video vinvert vpropagate 
 COMMON6 = warp waves webbrowser whirlpinch winclipboard wind winprint wiredebug xbm xwd zealouscrop
@@ -172,12 +172,42 @@ OBJECTS = \
 !ENDIF
 
 !IFDEF EXTRA_Lighting
+STOCK_VARS = \
+	stock_intensity_ambient_high images/stock-intensity-ambient-high.png	\
+	stock_intensity_ambient_low images/stock-intensity-ambient-low.png		\
+	stock_intensity_diffuse_high images/stock-intensity-diffuse-high.png	\
+	stock_intensity_diffuse_low images/stock-intensity-diffuse-low.png		\
+	stock_reflectivity_diffuse_high images/stock-reflectivity-diffuse-high.png	\
+	stock_reflectivity_diffuse_low images/stock-reflectivity-diffuse-low.png	\
+	stock_reflectivity_specular_high images/stock-reflectivity-specular-high.png	\
+	stock_reflectivity_specular_low images/stock-reflectivity-specular-low.png	\
+	stock_reflectivity_highlight_high images/stock-reflectivity-highlight-high.png	\
+	stock_reflectivity_highlight_low images/stock-reflectivity-highlight-low.png
+
+STOCK_IMAGES = \
+	images/stock-intensity-ambient-high.png	\
+	images/stock-intensity-ambient-low.png		\
+	images/stock-intensity-diffuse-high.png	\
+	images/stock-intensity-diffuse-low.png		\
+	images/stock-reflectivity-diffuse-high.png	\
+	images/stock-reflectivity-diffuse-low.png	\
+	images/stock-reflectivity-specular-high.png	\
+	images/stock-reflectivity-specular-low.png	\
+	images/stock-reflectivity-highlight-high.png	\
+	images/stock-reflectivity-highlight-low.png
+
+images/stock-pixbufs.h: $(STOCK_IMAGES)
+	gdk-pixbuf-csource --rle --build-list $(STOCK_VARS) > images/stock-pixbufs.h
+
+EXTRA_DEPS = images/stock-pixbufs.h
+
 OBJECTS = \
 	lighting_apply.obj \
 	lighting_image.obj \
 	lighting_main.obj \
 	lighting_preview.obj \
 	lighting_shade.obj \
+	lighting_stock.obj \
 	lighting_ui.obj
 !ENDIF
 
@@ -480,6 +510,7 @@ OBJECTS = \
 	general.obj \
 	gimp.obj \
 	gimpressionist.obj \
+	globals.obj \
 	orientation.obj \
 	orientmap.obj \
 	paper.obj \
@@ -490,8 +521,8 @@ OBJECTS = \
 	preview.obj \
 	repaint.obj \
 	size.obj \
-	sizemap.obj
-
+	sizemap.obj \
+	utils.obj
 !ENDIF
 
 !IFDEF EXTRA_helpbrowser
@@ -545,6 +576,7 @@ OBJECTS = \
 !IFDEF DEBUG
 	tw_dump.obj \
 !ENDIF
+	tw_win.obj \
 	twain.obj
 EXTRALIBS = user32.lib
 !ENDIF

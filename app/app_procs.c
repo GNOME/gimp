@@ -248,6 +248,16 @@ app_run (const gchar         *full_prog_name,
 #endif
     }
 
+#if defined G_OS_WIN32 && !defined GIMP_CONSOLE_COMPILATION
+  /* Common windoze apps don't have a console at all. So does Gimp
+   * - if appropiate. This allows to compile as console application
+   * with all it's benefits (like inheriting the console) but hide
+   * it, if the user doesn't want it.
+   */
+  if (!no_interface && !be_verbose && !console_messages)
+    FreeConsole ();
+#endif
+
   gimp_load_config (gimp, alternate_system_gimprc, alternate_gimprc);
 
   /*  initialize lowlevel stuff  */
