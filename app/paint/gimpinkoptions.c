@@ -104,7 +104,7 @@ gimp_ink_options_class_init (GimpInkOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SIZE,
                                    "size", NULL,
-                                   0.0, 20.0, 4.4,
+                                   0.0, 200.0, 16.0,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_TILT_ANGLE,
                                    "tilt-angle", NULL,

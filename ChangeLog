@@ -1,3 +1,8 @@
+2004-06-14  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimpinkoptions.c: replaced some arbitrary values with
+	larger but still arbitrary values (default and limit for ink size).
+
 2004-06-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintcore.[ch]: removed PRETRACE_PAINT and
