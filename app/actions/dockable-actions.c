@@ -239,7 +239,7 @@ dockable_actions_update (GimpActionGroup *group,
   view = gimp_container_view_get_by_dockable (dockable);
 
   if (view)
-    preview_size = view->preview_size;
+    preview_size = gimp_container_view_get_preview_size (view, NULL);
 
   tab_style = dockable->tab_style;
 

@@ -178,14 +178,17 @@ static void
 gimp_channel_tree_view_set_image (GimpItemTreeView *item_view,
 				  GimpImage        *gimage)
 {
-  GimpChannelTreeView *channel_view;
-
-  channel_view = GIMP_CHANNEL_TREE_VIEW (item_view);
+  GimpChannelTreeView *channel_view = GIMP_CHANNEL_TREE_VIEW (item_view);
 
   if (! channel_view->component_editor)
     {
+      GimpContainerView *view = GIMP_CONTAINER_VIEW (item_view);
+      gint               preview_size;
+
+      preview_size = gimp_container_view_get_preview_size (view, NULL);
+
       channel_view->component_editor =
-        gimp_component_editor_new (GIMP_CONTAINER_VIEW (item_view)->preview_size,
+        gimp_component_editor_new (preview_size,
                                    GIMP_EDITOR (item_view)->menu_factory);
       gtk_box_pack_start (GTK_BOX (item_view), channel_view->component_editor,
                           FALSE, FALSE, 0);
@@ -241,15 +244,16 @@ gimp_channel_tree_view_select_item (GimpContainerView *view,
 static void
 gimp_channel_tree_view_set_preview_size (GimpContainerView *view)
 {
-  GimpChannelTreeView *channel_view;
+  GimpChannelTreeView *channel_view = GIMP_CHANNEL_TREE_VIEW (view);
+  gint                 preview_size;
 
-  channel_view = GIMP_CHANNEL_TREE_VIEW (view);
+  preview_size = gimp_container_view_get_preview_size (view, NULL);
 
   GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_preview_size (view);
 
   if (channel_view->component_editor)
     gimp_component_editor_set_preview_size (GIMP_COMPONENT_EDITOR (channel_view->component_editor),
-                                            view->preview_size);
+                                            preview_size);
 }
 
 static void

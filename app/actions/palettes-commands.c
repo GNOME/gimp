@@ -55,8 +55,11 @@ palettes_import_palette_cmd_callback (GtkAction *action,
 				      gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContext         *context;
 
-  palette_import_dialog_show (editor->view->context->gimp);
+  context = gimp_container_view_get_context (editor->view);
+
+  palette_import_dialog_show (context->gimp);
 }
 
 void

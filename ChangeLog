@@ -1,3 +1,49 @@
+2004-05-10  Michael Natterer  <mitch@gimp.org>
+
+	More GimpContainerView chopping:
+
+	* app/widgets/gimpcontainerview.[ch]: added
+	GimpContainerViewPrivate struct (which is currently puclic :-) and
+	removed all members from the GimpContainerView struct. Added
+	accessors for "context", "container" and "preview_size /
+	preview_border_width". Added macro to get the private struct
+	(*not* via G_TYPE_INSTANCE_GET_PRIVATE because that's unavailable
+	for interfaces).
+
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpcontainerbox.c
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimpcontainertreeview-dnd.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimpfontview.c
+	* app/widgets/gimpimageview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpsessioninfo.c
+	* app/widgets/gimptemplateview.c
+	* app/widgets/gimptoolview.c
+	* app/actions/brushes-actions.c
+	* app/actions/buffers-actions.c
+	* app/actions/dockable-actions.c
+	* app/actions/dockable-commands.c
+	* app/actions/documents-actions.c
+	* app/actions/fonts-actions.c
+	* app/actions/gradients-actions.c
+	* app/actions/gradients-commands.c
+	* app/actions/images-actions.c
+	* app/actions/palettes-actions.c
+	* app/actions/palettes-commands.c
+	* app/actions/patterns-actions.c
+	* app/actions/templates-actions.c
+	* app/actions/tools-actions.c
+	* app/actions/tools-commands.c: changed accordingly.
+
 2004-05-10  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpmagnifyoptions.[ch]

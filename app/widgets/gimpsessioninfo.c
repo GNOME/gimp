@@ -307,8 +307,9 @@ gimp_session_info_save (GimpSessionInfo  *info,
 
                   view = gimp_container_view_get_by_dockable (dockable);
 
-                  if (view && view->preview_size >= GIMP_PREVIEW_SIZE_TINY)
-                    preview_size = view->preview_size;
+                  if (view)
+                    preview_size = gimp_container_view_get_preview_size (view,
+                                                                         NULL);
 
                   if (preview_size > 0 &&
                       preview_size != entry->preview_size)

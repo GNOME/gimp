@@ -95,12 +95,14 @@ palettes_actions_update (GimpActionGroup *group,
                          gpointer         user_data)
 {
   GimpContainerEditor *editor;
+  GimpContext         *context;
   GimpPalette         *palette;
   GimpData            *data = NULL;
 
-  editor = GIMP_CONTAINER_EDITOR (user_data);
+  editor  = GIMP_CONTAINER_EDITOR (user_data);
+  context = gimp_container_view_get_context (editor->view);
 
-  palette = gimp_context_get_palette (editor->view->context);
+  palette = gimp_context_get_palette (context);
 
   if (palette)
     data = GIMP_DATA (palette);

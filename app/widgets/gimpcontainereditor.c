@@ -259,8 +259,9 @@ static void
 gimp_container_editor_real_context_item (GimpContainerEditor *editor,
 					 GimpViewable        *viewable)
 {
-  if (viewable && gimp_container_have (editor->view->container,
-				       GIMP_OBJECT (viewable)))
+  GimpContainer *container = gimp_container_view_get_container (editor->view);
+
+  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
     {
       GimpEditor *gimp_editor = GIMP_EDITOR (editor->view);
 

@@ -83,11 +83,13 @@ templates_actions_update (GimpActionGroup *group,
                           gpointer         data)
 {
   GimpContainerEditor *editor;
+  GimpContext         *context;
   GimpTemplate        *template;
 
-  editor = GIMP_CONTAINER_EDITOR (data);
+  editor  = GIMP_CONTAINER_EDITOR (data);
+  context = gimp_container_view_get_context (editor->view);
 
-  template = gimp_context_get_template (editor->view->context);
+  template = gimp_context_get_template (context);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)

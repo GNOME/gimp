@@ -129,13 +129,16 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
 static void
 gimp_brush_factory_view_destroy (GtkObject *object)
 {
-  GimpBrushFactoryView *view;
-
-  view = GIMP_BRUSH_FACTORY_VIEW (object);
+  GimpBrushFactoryView *view   = GIMP_BRUSH_FACTORY_VIEW (object);
+  GimpContainerEditor  *editor = GIMP_CONTAINER_EDITOR (object);
 
   if (view->spacing_changed_handler_id)
     {
-      gimp_container_remove_handler (GIMP_CONTAINER_EDITOR (view)->view->container,
+      GimpContainer *container;
+
+      container = gimp_container_view_get_container (editor->view);
+
+      gimp_container_remove_handler (container,
                                      view->spacing_changed_handler_id);
 
       view->spacing_changed_handler_id = 0;
@@ -189,7 +192,7 @@ gimp_brush_factory_view_new (GimpViewType      view_type,
                     FALSE, FALSE, 0);
 
   factory_view->spacing_changed_handler_id =
-    gimp_container_add_handler (editor->view->container, "spacing_changed",
+    gimp_container_add_handler (factory->container, "spacing_changed",
                                 G_CALLBACK (gimp_brush_factory_view_spacing_changed),
                                 factory_view);
 
@@ -200,17 +203,16 @@ static void
 gimp_brush_factory_view_select_item (GimpContainerEditor *editor,
 				     GimpViewable        *viewable)
 {
-  GimpBrushFactoryView *view;
+  GimpBrushFactoryView *view = GIMP_BRUSH_FACTORY_VIEW (editor);
+  GimpContainer        *container;
   gboolean              spacing_sensitive = FALSE;
 
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
 
-  view = GIMP_BRUSH_FACTORY_VIEW (editor);
+  container = gimp_container_view_get_container (editor->view);
 
-  if (viewable &&
-      gimp_container_have (GIMP_CONTAINER_EDITOR (view)->view->container,
-			   GIMP_OBJECT (viewable)))
+  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
     {
       GimpBrush *brush = GIMP_BRUSH (viewable);
 
@@ -235,7 +237,12 @@ static void
 gimp_brush_factory_view_spacing_changed (GimpBrush            *brush,
 					 GimpBrushFactoryView *view)
 {
-  if (brush == GIMP_CONTAINER_EDITOR (view)->view->context->brush)
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
+  GimpContext         *context;
+
+  context = gimp_container_view_get_context (editor->view);
+
+  if (brush == gimp_context_get_brush (context))
     {
       g_signal_handlers_block_by_func (view->spacing_adjustment,
 				       gimp_brush_factory_view_spacing_update,
@@ -254,7 +261,13 @@ static void
 gimp_brush_factory_view_spacing_update (GtkAdjustment        *adjustment,
 					GimpBrushFactoryView *view)
 {
-  GimpBrush *brush = GIMP_CONTAINER_EDITOR (view)->view->context->brush;
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
+  GimpContext         *context;
+  GimpBrush           *brush;
+
+  context = gimp_container_view_get_context (editor->view);
+
+  brush = gimp_context_get_brush (context);
 
   if (brush && view->change_brush_spacing)
     {

@@ -244,19 +244,20 @@ static void
 gimp_template_view_create_clicked (GtkWidget        *widget,
                                    GimpTemplateView *view)
 {
-  GimpContainerEditor *editor;
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
+  GimpContainer       *container;
+  GimpContext         *context;
   GimpTemplate        *template;
 
-  editor = GIMP_CONTAINER_EDITOR (view);
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
 
-  template = gimp_context_get_template (editor->view->context);
+  template = gimp_context_get_template (context);
 
-  if (template && gimp_container_have (editor->view->container,
-                                        GIMP_OBJECT (template)))
+  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
     {
       if (view->create_image_func)
-        view->create_image_func (editor->view->context->gimp, template,
-                                 GTK_WIDGET (view));
+        view->create_image_func (context->gimp, template, GTK_WIDGET (view));
     }
 }
 
@@ -264,51 +265,53 @@ static void
 gimp_template_view_new_clicked (GtkWidget        *widget,
                                 GimpTemplateView *view)
 {
-  GimpContainerEditor *editor;
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
+  GimpContainer       *container;
+  GimpContext         *context;
   GimpTemplate        *template;
 
-  editor = GIMP_CONTAINER_EDITOR (view);
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
 
-  template = gimp_context_get_template (editor->view->context);
+  template = gimp_context_get_template (context);
 
-  if (template && gimp_container_have (editor->view->container,
-                                        GIMP_OBJECT (template)))
+  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
     {
     }
 
   if (view->new_template_func)
-    view->new_template_func (editor->view->context->gimp, NULL,
-                             GTK_WIDGET (view));
+    view->new_template_func (context->gimp, NULL, GTK_WIDGET (view));
 }
 
 static void
 gimp_template_view_duplicate_clicked (GtkWidget        *widget,
                                       GimpTemplateView *view)
 {
-  GimpContainerEditor *editor;
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
+  GimpContainer       *container;
+  GimpContext         *context;
   GimpTemplate        *template;
 
-  editor = GIMP_CONTAINER_EDITOR (view);
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
 
-  template = gimp_context_get_template (editor->view->context);
+  template = gimp_context_get_template (context);
 
-  if (template && gimp_container_have (editor->view->container,
-                                        GIMP_OBJECT (template)))
+  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
     {
       GimpTemplate *new_template;
 
       new_template = gimp_config_duplicate (GIMP_CONFIG (template));
 
-      gimp_list_uniquefy_name (GIMP_LIST (editor->view->container),
+      gimp_list_uniquefy_name (GIMP_LIST (container),
                                GIMP_OBJECT (new_template), TRUE);
-      gimp_container_add (editor->view->container, GIMP_OBJECT (new_template));
+      gimp_container_add (container, GIMP_OBJECT (new_template));
 
-      gimp_context_set_by_type (editor->view->context,
-                                editor->view->container->children_type,
+      gimp_context_set_by_type (context, container->children_type,
                                 GIMP_OBJECT (new_template));
 
       if (view->edit_template_func)
-        view->edit_template_func (editor->view->context->gimp, new_template,
+        view->edit_template_func (context->gimp, new_template,
                                   GTK_WIDGET (view));
 
       g_object_unref (new_template);
@@ -319,19 +322,20 @@ static void
 gimp_template_view_edit_clicked (GtkWidget        *widget,
                                  GimpTemplateView *view)
 {
-  GimpContainerEditor *editor;
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
+  GimpContainer       *container;
+  GimpContext         *context;
   GimpTemplate        *template;
 
-  editor = GIMP_CONTAINER_EDITOR (view);
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
 
-  template = gimp_context_get_template (editor->view->context);
+  template = gimp_context_get_template (context);
 
-  if (template && gimp_container_have (editor->view->container,
-                                        GIMP_OBJECT (template)))
+  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
     {
       if (view->edit_template_func)
-        view->edit_template_func (editor->view->context->gimp, template,
-                                  GTK_WIDGET (view));
+        view->edit_template_func (context->gimp, template, GTK_WIDGET (view));
     }
 }
 
@@ -367,15 +371,17 @@ static void
 gimp_template_view_delete_clicked (GtkWidget        *widget,
                                    GimpTemplateView *view)
 {
-  GimpContainerEditor *editor;
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
+  GimpContainer       *container;
+  GimpContext         *context;
   GimpTemplate        *template;
 
-  editor = GIMP_CONTAINER_EDITOR (view);
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
 
-  template = gimp_context_get_template (editor->view->context);
+  template = gimp_context_get_template (context);
 
-  if (template && gimp_container_have (editor->view->container,
-                                        GIMP_OBJECT (template)))
+  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
     {
       GimpTemplateDeleteData *delete_data;
       GtkWidget              *dialog;
@@ -383,7 +389,7 @@ gimp_template_view_delete_clicked (GtkWidget        *widget,
 
       delete_data = g_new0 (GimpTemplateDeleteData, 1);
 
-      delete_data->container = editor->view->container;
+      delete_data->container = container;
       delete_data->template  = template;
 
       str = g_strdup_printf (_("Are you sure you want to delete template '%s' "
@@ -413,16 +419,16 @@ static void
 gimp_template_view_select_item (GimpContainerEditor *editor,
                                 GimpViewable        *viewable)
 {
-  GimpTemplateView *view;
+  GimpTemplateView *view = GIMP_TEMPLATE_VIEW (editor);
+  GimpContainer    *container;
   gboolean          sensitive = FALSE;
 
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
 
-  view = GIMP_TEMPLATE_VIEW (editor);
+  container = gimp_container_view_get_container (editor->view);
 
-  if (viewable && gimp_container_have (editor->view->container,
-                                       GIMP_OBJECT (viewable)))
+  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
     {
       sensitive = TRUE;
     }
@@ -437,19 +443,20 @@ static void
 gimp_template_view_activate_item (GimpContainerEditor *editor,
                                   GimpViewable        *viewable)
 {
-  GimpTemplateView *view;
+  GimpTemplateView *view = GIMP_TEMPLATE_VIEW (editor);
+  GimpContainer    *container;
+  GimpContext      *context;
 
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);
 
-  view = GIMP_TEMPLATE_VIEW (editor);
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
 
-  if (viewable && gimp_container_have (editor->view->container,
-                                       GIMP_OBJECT (viewable)))
+  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
     {
       if (view->create_image_func)
-        view->create_image_func (editor->view->context->gimp,
-                                 GIMP_TEMPLATE (viewable),
+        view->create_image_func (context->gimp, GIMP_TEMPLATE (viewable),
                                  GTK_WIDGET (editor));
     }
 }
@@ -473,8 +480,11 @@ gimp_template_view_tree_name_edited (GtkCellRendererText *cell,
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
+      GimpContainer       *container;
       GimpPreviewRenderer *renderer;
       GimpObject          *object;
+
+      container = gimp_container_view_get_container (container_view);
 
       gtk_tree_model_get (tree_view->model, &iter,
                           tree_view->model_column_renderer, &renderer,
@@ -483,8 +493,7 @@ gimp_template_view_tree_name_edited (GtkCellRendererText *cell,
       object = GIMP_OBJECT (renderer->viewable);
 
       gimp_object_set_name (object, new_name);
-      gimp_list_uniquefy_name (GIMP_LIST (container_view->context->gimp->templates),
-                               object, TRUE);
+      gimp_list_uniquefy_name (GIMP_LIST (container), object, TRUE);
 
       g_object_unref (renderer);
     }

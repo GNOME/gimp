@@ -183,12 +183,16 @@ gimp_image_view_raise_clicked (GtkWidget     *widget,
                                GimpImageView *view)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
+  GimpContainer       *container;
+  GimpContext         *context;
   GimpImage           *image;
 
-  image = gimp_context_get_image (editor->view->context);
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
 
-  if (image && gimp_container_have (editor->view->container,
-                                    GIMP_OBJECT (image)))
+  image = gimp_context_get_image (context);
+
+  if (image && gimp_container_have (container, GIMP_OBJECT (image)))
     {
       if (view->raise_displays_func)
         view->raise_displays_func (image);
@@ -200,12 +204,16 @@ gimp_image_view_new_clicked (GtkWidget     *widget,
                              GimpImageView *view)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
+  GimpContainer       *container;
+  GimpContext         *context;
   GimpImage           *image;
 
-  image = gimp_context_get_image (editor->view->context);
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
 
-  if (image && gimp_container_have (editor->view->container,
-                                    GIMP_OBJECT (image)))
+  image = gimp_context_get_image (context);
+
+  if (image && gimp_container_have (container, GIMP_OBJECT (image)))
     {
       gimp_create_display (image->gimp, image, 1.0);
     }
@@ -216,12 +224,16 @@ gimp_image_view_delete_clicked (GtkWidget     *widget,
                                 GimpImageView *view)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
+  GimpContainer       *container;
+  GimpContext         *context;
   GimpImage           *image;
 
-  image = gimp_context_get_image (editor->view->context);
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
 
-  if (image && gimp_container_have (editor->view->container,
-                                    GIMP_OBJECT (image)))
+  image = gimp_context_get_image (context);
+
+  if (image && gimp_container_have (container, GIMP_OBJECT (image)))
     {
       if (image->disp_count == 0)
         g_object_unref (image);
@@ -233,6 +245,7 @@ gimp_image_view_select_item (GimpContainerEditor *editor,
                              GimpViewable        *viewable)
 {
   GimpImageView *view = GIMP_IMAGE_VIEW (editor);
+  GimpContainer *container;
 
   gboolean  raise_sensitive  = FALSE;
   gboolean  new_sensitive    = FALSE;
@@ -241,8 +254,9 @@ gimp_image_view_select_item (GimpContainerEditor *editor,
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
 
-  if (viewable && gimp_container_have (editor->view->container,
-                                       GIMP_OBJECT (viewable)))
+  container = gimp_container_view_get_container (editor->view);
+
+  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
     {
       raise_sensitive = TRUE;
       new_sensitive   = TRUE;
@@ -260,15 +274,15 @@ static void
 gimp_image_view_activate_item (GimpContainerEditor *editor,
                                GimpViewable        *viewable)
 {
-  GimpImageView *view;
+  GimpImageView *view = GIMP_IMAGE_VIEW (editor);
+  GimpContainer *container;
 
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);
 
-  view = GIMP_IMAGE_VIEW (editor);
+  container = gimp_container_view_get_container (editor->view);
 
-  if (viewable && gimp_container_have (editor->view->container,
-                                       GIMP_OBJECT (viewable)))
+  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
     {
       gtk_button_clicked (GTK_BUTTON (view->raise_button));
     }

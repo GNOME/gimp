@@ -105,11 +105,14 @@ tools_toggle_visibility_cmd_callback (GtkAction *action,
 {
   if (GIMP_IS_CONTAINER_EDITOR (data))
     {
-      GimpToolInfo *tool_info;
-      gboolean      active;
+      GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+      GimpContext         *context;
+      GimpToolInfo        *tool_info;
+      gboolean             active;
 
-      tool_info =
-        gimp_context_get_tool (GIMP_CONTAINER_EDITOR (data)->view->context);
+      context = gimp_container_view_get_context (editor->view);
+
+      tool_info = gimp_context_get_tool (context);
 
       active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 

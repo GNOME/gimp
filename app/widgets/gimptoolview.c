@@ -146,22 +146,24 @@ gimp_tool_view_reset_clicked (GtkWidget    *widget,
                               GimpToolView *view)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *tool_infos;
+  GimpContainer       *container;
+  GimpContext         *context;
   GList               *list;
   gint                 i = 0;
 
-  tool_infos = editor->view->context->gimp->tool_info_list;
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
 
-  for (list = gimp_tools_get_default_order (editor->view->context->gimp);
+  for (list = gimp_tools_get_default_order (context->gimp);
        list;
        list = g_list_next (list))
     {
-      GimpObject *object = gimp_container_get_child_by_name (tool_infos,
+      GimpObject *object = gimp_container_get_child_by_name (container,
                                                              list->data);
 
       if (object)
         {
-          gimp_container_reorder (tool_infos, object, i);
+          gimp_container_reorder (container, object, i);
 
           g_object_set (object, "visible",
                         ! g_type_is_a (GIMP_TOOL_INFO (object)->tool_type,

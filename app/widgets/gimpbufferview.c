@@ -206,14 +206,18 @@ gimp_buffer_view_paste (GimpBufferView *view,
                         gboolean        paste_into)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
+  GimpContainer       *container;
+  GimpContext         *context;
   GimpBuffer          *buffer;
 
-  buffer = gimp_context_get_buffer (editor->view->context);
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
 
-  if (buffer && gimp_container_have (editor->view->container,
-				     GIMP_OBJECT (buffer)))
+  buffer = gimp_context_get_buffer (context);
+
+  if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
     {
-      GimpDisplay *gdisp  = gimp_context_get_display (editor->view->context);
+      GimpDisplay *gdisp  = gimp_context_get_display (context);
       GimpImage   *gimage = NULL;
       gint         x      = -1;
       gint         y      = -1;
@@ -231,7 +235,7 @@ gimp_buffer_view_paste (GimpBufferView *view,
         }
       else
         {
-          gimage = gimp_context_get_image (editor->view->context);
+          gimage = gimp_context_get_image (context);
         }
 
       if (gimage)
@@ -263,14 +267,18 @@ gimp_buffer_view_paste_as_new_clicked (GtkWidget      *widget,
 				       GimpBufferView *view)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
+  GimpContainer       *container;
+  GimpContext         *context;
   GimpBuffer          *buffer;
 
-  buffer = gimp_context_get_buffer (editor->view->context);
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
 
-  if (buffer && gimp_container_have (editor->view->container,
-				     GIMP_OBJECT (buffer)))
+  buffer = gimp_context_get_buffer (context);
+
+  if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
     {
-      GimpImage *gimage = gimp_context_get_image (editor->view->context);
+      GimpImage *gimage = gimp_context_get_image (context);
 
       if (gimage)
         gimp_edit_paste_as_new (gimage->gimp, gimage, buffer);
@@ -282,14 +290,18 @@ gimp_buffer_view_delete_clicked (GtkWidget      *widget,
 				 GimpBufferView *view)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
+  GimpContainer       *container;
+  GimpContext         *context;
   GimpBuffer          *buffer;
 
-  buffer = gimp_context_get_buffer (editor->view->context);
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
 
-  if (buffer && gimp_container_have (editor->view->container,
-				     GIMP_OBJECT (buffer)))
+  buffer = gimp_context_get_buffer (context);
+
+  if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
     {
-      gimp_container_remove (editor->view->container, GIMP_OBJECT (buffer));
+      gimp_container_remove (container, GIMP_OBJECT (buffer));
     }
 }
 
@@ -298,6 +310,7 @@ gimp_buffer_view_select_item (GimpContainerEditor *editor,
 			      GimpViewable        *viewable)
 {
   GimpBufferView *view                   = GIMP_BUFFER_VIEW (editor);
+  GimpContainer  *container;
   gboolean        paste_sensitive        = FALSE;
   gboolean        paste_into_sensitive   = FALSE;
   gboolean        paste_as_new_sensitive = FALSE;
@@ -306,8 +319,9 @@ gimp_buffer_view_select_item (GimpContainerEditor *editor,
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
 
-  if (viewable && gimp_container_have (editor->view->container,
-                                       GIMP_OBJECT (viewable)))
+  container = gimp_container_view_get_container (editor->view);
+
+  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
     {
       paste_sensitive        = TRUE;
       paste_into_sensitive   = TRUE;
@@ -326,12 +340,14 @@ gimp_buffer_view_activate_item (GimpContainerEditor *editor,
 				GimpViewable        *viewable)
 {
   GimpBufferView *view = GIMP_BUFFER_VIEW (editor);
+  GimpContainer  *container;
 
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);
 
-  if (viewable && gimp_container_have (editor->view->container,
-                                       GIMP_OBJECT (viewable)))
+  container = gimp_container_view_get_container (editor->view);
+
+  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
     {
       gimp_buffer_view_paste_clicked (NULL, view);
     }

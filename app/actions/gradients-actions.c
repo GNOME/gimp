@@ -91,12 +91,14 @@ gradients_actions_update (GimpActionGroup *group,
                           gpointer         user_data)
 {
   GimpContainerEditor *editor;
+  GimpContext         *context;
   GimpGradient        *gradient;
   GimpData            *data = NULL;
 
-  editor = GIMP_CONTAINER_EDITOR (user_data);
+  editor  = GIMP_CONTAINER_EDITOR (user_data);
+  context = gimp_container_view_get_context (editor->view);
 
-  gradient = gimp_context_get_gradient (editor->view->context);
+  gradient = gimp_context_get_gradient (context);
 
   if (gradient)
     data = GIMP_DATA (gradient);

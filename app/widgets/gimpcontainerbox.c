@@ -102,7 +102,10 @@ gimp_container_box_class_init (GimpContainerBoxClass *klass)
 static void
 gimp_container_box_init (GimpContainerBox *box)
 {
-  GimpContainerView *view = GIMP_CONTAINER_VIEW (box);
+  GimpContainerView        *view = GIMP_CONTAINER_VIEW (box);
+  GimpContainerViewPrivate *private;
+
+  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
   box->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_box_pack_start (GTK_BOX (box), box->scrolled_win, TRUE, TRUE, 0);
@@ -111,7 +114,7 @@ gimp_container_box_init (GimpContainerBox *box)
   GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (box->scrolled_win)->vscrollbar,
                           GTK_CAN_FOCUS);
 
-  view->dnd_widget = box->scrolled_win;
+  private->dnd_widget = box->scrolled_win;
 }
 
 static void
@@ -129,6 +132,7 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
   GimpContainerView      *view;
   GtkScrolledWindowClass *sw_class;
   GtkRequisition          req;
+  gint                    preview_size;
   gint                    scrollbar_width;
   gint                    border_x;
   gint                    border_y;
@@ -137,8 +141,10 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
 
   view = GIMP_CONTAINER_VIEW (box);
 
-  g_return_if_fail (width  <= 0 || width  >= view->preview_size);
-  g_return_if_fail (height <= 0 || height >= view->preview_size);
+  preview_size = gimp_container_view_get_preview_size (view, NULL);
+
+  g_return_if_fail (width  <= 0 || width  >= preview_size);
+  g_return_if_fail (height <= 0 || height >= preview_size);
 
   sw_class = GTK_SCROLLED_WINDOW_GET_CLASS (box->scrolled_win);
 
@@ -176,6 +182,7 @@ gimp_container_box_get_preview (GimpDocked   *docked,
 {
   GimpContainerBox  *box  = GIMP_CONTAINER_BOX (docked);
   GimpContainerView *view = GIMP_CONTAINER_VIEW (docked);
+  GimpContainer     *container;
   GtkWidget         *preview;
   GdkScreen         *screen;
   gint               width;
@@ -183,13 +190,15 @@ gimp_container_box_get_preview (GimpDocked   *docked,
   gint               border_width = 1;
   const gchar       *prop_name;
 
-  g_return_val_if_fail (view->container != NULL, NULL);
+  container = gimp_container_view_get_container (view);
+
+  g_return_val_if_fail (container != NULL, NULL);
 
   screen = gtk_widget_get_screen (GTK_WIDGET (box));
   gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
                                      size, &width, &height);
 
-  prop_name = gimp_context_type_to_prop_name (view->container->children_type);
+  prop_name = gimp_context_type_to_prop_name (container->children_type);
 
   if (! strcmp (prop_name, "tool") ||
       ! strcmp (prop_name, "template"))

@@ -286,10 +286,13 @@ static void
 gimp_data_factory_view_edit_clicked (GtkWidget           *widget,
 				     GimpDataFactoryView *view)
 {
-  GimpData *data;
+  GimpContext *context;
+  GimpData    *data;
+
+  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
 
   data = (GimpData *)
-    gimp_context_get_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
+    gimp_context_get_by_type (context,
 			      view->factory->container->children_type);
 
   if (view->data_edit_func && data &&
@@ -306,13 +309,17 @@ gimp_data_factory_view_new_clicked (GtkWidget           *widget,
 {
   if (view->factory->data_new_func)
     {
-      GimpData *data;
+      GimpContext *context;
+      GimpData    *data;
+
+      context =
+        gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
 
       data = gimp_data_factory_data_new (view->factory, _("Untitled"));
 
       if (data)
 	{
-	  gimp_context_set_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
+	  gimp_context_set_by_type (context,
 				    view->factory->container->children_type,
 				    GIMP_OBJECT (data));
 
@@ -325,10 +332,13 @@ static void
 gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
 					  GimpDataFactoryView *view)
 {
-  GimpData *data;
+  GimpContext *context;
+  GimpData    *data;
+
+  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
 
   data = (GimpData *)
-    gimp_context_get_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
+    gimp_context_get_by_type (context,
 			      view->factory->container->children_type);
 
   if (data && gimp_container_have (view->factory->container,
@@ -340,7 +350,7 @@ gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
 
       if (new_data)
 	{
-	  gimp_context_set_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
+	  gimp_context_set_by_type (context,
 				    view->factory->container->children_type,
 				    GIMP_OBJECT (new_data));
 
@@ -391,10 +401,13 @@ static void
 gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
 				       GimpDataFactoryView *view)
 {
-  GimpData *data;
+  GimpContext *context;
+  GimpData    *data;
+
+  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
 
   data = (GimpData *)
-    gimp_context_get_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
+    gimp_context_get_by_type (context,
 			      view->factory->container->children_type);
 
   if (data && data->deletable && gimp_container_have (view->factory->container,

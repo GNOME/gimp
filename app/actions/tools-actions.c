@@ -165,8 +165,14 @@ tools_actions_update (GimpActionGroup *group,
   GimpToolInfo *tool_info = NULL;
 
   if (GIMP_IS_CONTAINER_EDITOR (data))
-    tool_info =
-      gimp_context_get_tool (GIMP_CONTAINER_EDITOR (data)->view->context);
+    {
+      GimpContainerEditor *editor  = GIMP_CONTAINER_EDITOR (data);
+      GimpContext         *context;
+
+      context = gimp_container_view_get_context (editor->view);
+
+      tool_info = gimp_context_get_tool (context);
+    }
 
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)

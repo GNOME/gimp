@@ -61,11 +61,14 @@ gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
 static void
 gradients_save_as_pov_query (GimpContainerEditor *editor)
 {
+  GimpContext    *context;
   GimpGradient   *gradient;
   GtkFileChooser *chooser;
   gchar          *title;
 
-  gradient = gimp_context_get_gradient (editor->view->context);
+  context = gimp_container_view_get_context (editor->view);
+
+  gradient = gimp_context_get_gradient (context);
 
   if (! gradient)
     return;

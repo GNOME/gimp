@@ -168,7 +168,8 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
               old_view = gimp_container_view_get_by_dockable (dockable);
 
               if (old_view)
-                preview_size = old_view->preview_size;
+                preview_size = gimp_container_view_get_preview_size (old_view,
+                                                                     NULL);
 
               new_dockable =
                 gimp_dialog_factory_dockable_new (dockbook->dock->dialog_factory,
@@ -216,13 +217,20 @@ dockable_preview_size_cmd_callback (GtkAction *action,
 
   if (dockable)
     {
-      GimpContainerView *view;
+      GimpContainerView *view = gimp_container_view_get_by_dockable (dockable);
 
-      view = gimp_container_view_get_by_dockable (dockable);
+      if (view)
+        {
+          gint old_size;
+          gint border_width;
 
-      if (view && view->preview_size != preview_size)
-        gimp_container_view_set_preview_size (view, preview_size,
-                                              view->preview_border_width);
+          old_size = gimp_container_view_get_preview_size (view,
+                                                           &border_width);
+
+          if (old_size != preview_size)
+            gimp_container_view_set_preview_size (view, preview_size,
+                                                  border_width);
+        }
     }
 }
 

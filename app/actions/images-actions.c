@@ -73,11 +73,13 @@ images_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
   GimpContainerEditor *editor;
+  GimpContext         *context;
   GimpImage           *image;
 
-  editor = GIMP_CONTAINER_EDITOR (data);
+  editor  = GIMP_CONTAINER_EDITOR (data);
+  context = gimp_container_view_get_context (editor->view);
 
-  image = gimp_context_get_image (editor->view->context);
+  image = gimp_context_get_image (context);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)

@@ -151,7 +151,7 @@ gimp_font_view_refresh_clicked (GtkWidget    *widget,
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
 
-  gimp_fonts_load (editor->view->context->gimp);
+  gimp_fonts_load (gimp_container_view_get_context (editor->view)->gimp);
 }
 
 static void

@@ -531,10 +531,12 @@ static void
 gimp_container_popup_smaller_clicked (GtkWidget          *button,
                                       GimpContainerPopup *popup)
 {
-  gint preview_size;
+  GimpContainerViewPrivate *private;
+  gint                      preview_size;
 
-  preview_size = MAX (GIMP_PREVIEW_SIZE_TINY,
-                      popup->editor->view->preview_size * 0.8);
+  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (popup->editor->view);
+
+  preview_size = MAX (GIMP_PREVIEW_SIZE_TINY, private->preview_size * 0.8);
 
   if (preview_size != popup->preview_size)
     {
@@ -550,10 +552,12 @@ static void
 gimp_container_popup_larger_clicked (GtkWidget          *button,
                                      GimpContainerPopup *popup)
 {
-  gint preview_size;
+  GimpContainerViewPrivate *private;
+  gint                      preview_size;
 
-  preview_size = MIN (GIMP_PREVIEW_SIZE_HUGE,
-                      popup->editor->view->preview_size * 1.2);
+  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (popup->editor->view);
+
+  preview_size = MIN (GIMP_PREVIEW_SIZE_HUGE, private->preview_size * 1.2);
 
   if (preview_size != popup->preview_size)
     {

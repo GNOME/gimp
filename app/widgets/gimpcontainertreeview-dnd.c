@@ -45,11 +45,14 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
                                       GimpViewable            **return_dest,
                                       GtkTreeViewDropPosition  *return_pos)
 {
-  GtkWidget    *src_widget;
-  GimpViewable *src_viewable;
-  GtkTreePath  *path;
+  GimpContainerViewPrivate *private;
+  GtkWidget                *src_widget;
+  GimpViewable             *src_viewable;
+  GtkTreePath              *path;
 
-  if (! GIMP_CONTAINER_VIEW (tree_view)->reorderable)
+  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (tree_view);
+
+  if (! private->reorderable)
     return FALSE;
 
   src_widget = gtk_drag_get_source_widget (context);
@@ -278,13 +281,12 @@ gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
                                              GtkTreeViewDropPosition  drop_pos,
                                              GdkDragAction           *drag_action)
 {
-  GimpContainerView *container_view;
+  GimpContainerView *view      = GIMP_CONTAINER_VIEW (tree_view);
+  GimpContainer     *container = gimp_container_view_get_container (view);
   GimpObject        *src_object;
   GimpObject        *dest_object;
   gint               src_index;
   gint               dest_index;
-
-  container_view = GIMP_CONTAINER_VIEW (tree_view);
 
   if (src_viewable == dest_viewable)
     return FALSE;
@@ -292,10 +294,8 @@ gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
   src_object  = GIMP_OBJECT (src_viewable);
   dest_object = GIMP_OBJECT (dest_viewable);
 
-  src_index  = gimp_container_get_child_index (container_view->container,
-                                               src_object);
-  dest_index = gimp_container_get_child_index (container_view->container,
-                                               dest_object);
+  src_index  = gimp_container_get_child_index (container, src_object);
+  dest_index = gimp_container_get_child_index (container, dest_object);
 
   if (src_index == -1 || dest_index == -1)
     return FALSE;
@@ -323,21 +323,18 @@ gimp_container_tree_view_real_drop (GimpContainerTreeView   *tree_view,
                                     GimpViewable            *dest_viewable,
                                     GtkTreeViewDropPosition  drop_pos)
 {
-  GimpContainerView *container_view;
+  GimpContainerView *view      = GIMP_CONTAINER_VIEW (tree_view);
+  GimpContainer     *container = gimp_container_view_get_container (view);
   GimpObject        *src_object;
   GimpObject        *dest_object;
   gint               src_index;
   gint               dest_index;
 
-  container_view = GIMP_CONTAINER_VIEW (tree_view);
-
   src_object  = GIMP_OBJECT (src_viewable);
   dest_object = GIMP_OBJECT (dest_viewable);
 
-  src_index  = gimp_container_get_child_index (container_view->container,
-                                               src_object);
-  dest_index = gimp_container_get_child_index (container_view->container,
-                                               dest_object);
+  src_index  = gimp_container_get_child_index (container, src_object);
+  dest_index = gimp_container_get_child_index (container, dest_object);
 
   if (drop_pos == GTK_TREE_VIEW_DROP_AFTER && src_index > dest_index)
     {
@@ -348,5 +345,5 @@ gimp_container_tree_view_real_drop (GimpContainerTreeView   *tree_view,
       dest_index--;
     }
 
-  gimp_container_reorder (container_view->container, src_object, dest_index);
+  gimp_container_reorder (container, src_object, dest_index);
 }

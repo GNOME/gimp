@@ -33,13 +33,19 @@
 #define GIMP_IS_CONTAINER_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_VIEW))
 #define GIMP_CONTAINER_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER_VIEW, GimpContainerViewClass))
 
+#define GIMP_CONTAINER_VIEW_GET_PRIVATE(obj) (gimp_container_view_get_private ((GimpContainerView *) obj));
 
-typedef struct _GimpContainerViewClass  GimpContainerViewClass;
+
+typedef struct _GimpContainerViewClass   GimpContainerViewClass;
+typedef struct _GimpContainerViewPrivate GimpContainerViewPrivate;
 
 struct _GimpContainerView
 {
   GimpEditor     parent_instance;
+};
 
+struct _GimpContainerViewPrivate
+{
   GimpContainer *container;
   GimpContext   *context;
 
@@ -96,6 +102,9 @@ struct _GimpContainerViewClass
 
 GType     gimp_container_view_get_type         (void) G_GNUC_CONST;
 
+GimpContainerViewPrivate *
+          gimp_container_view_get_private      (GimpContainerView   *view);
+
 void      gimp_container_view_construct        (GimpContainerView   *view,
                                                 GimpContainer       *container,
                                                 GimpContext         *context,
@@ -103,13 +112,19 @@ void      gimp_container_view_construct        (GimpContainerView   *view,
                                                 gint                 preview_border_width,
                                                 gboolean             reorderable);
 
-void      gimp_container_view_set_container    (GimpContainerView   *view,
-						GimpContainer       *container);
-void      gimp_container_view_set_context      (GimpContainerView   *view,
-						GimpContext         *context);
-void      gimp_container_view_set_preview_size (GimpContainerView   *view,
-						gint                 preview_size,
-                                                gint                 preview_border_width);
+GimpContainer * gimp_container_view_get_container (GimpContainerView *view);
+void            gimp_container_view_set_container (GimpContainerView *view,
+                                                   GimpContainer     *container);
+
+GimpContext   * gimp_container_view_get_context  (GimpContainerView  *view);
+void            gimp_container_view_set_context  (GimpContainerView  *view,
+                                                  GimpContext        *context);
+
+gint        gimp_container_view_get_preview_size (GimpContainerView  *view,
+                                                  gint               *preview_border_width);
+void        gimp_container_view_set_preview_size (GimpContainerView  *view,
+                                                  gint                preview_size,
+                                                  gint                preview_border_width);
 
 void      gimp_container_view_enable_dnd       (GimpContainerView   *editor,
 						GtkButton           *button,
