@@ -241,6 +241,8 @@ static gint     dialog_constrain           (gint32         image_id,
                                             gpointer       data);
 static void     dialog_bumpmap_callback    (GtkWidget     *widget,
                                             GimpPreview   *preview);
+static void     dialog_maptype_callback    (GtkWidget     *widget,
+                                            GimpPreview   *preview);
 
 
 /***** Variables *****/
@@ -898,11 +900,8 @@ bumpmap_dialog (void)
                                   _("Sinusoidal"), SINUSOIDAL,
                                   NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), bmvals.type,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &bmvals.type);
-  g_signal_connect_swapped (combo, "changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
+                              G_CALLBACK (dialog_maptype_callback),
+                              preview);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
                              _("_Map type:"), 0.0, 0.5, combo, 2, FALSE);
@@ -1257,11 +1256,11 @@ dialog_update_preview (GimpPreview *preview)
   for (y = 0; y < height + 2; y++)
     bmint.bm_rows[y] = g_new (guchar, bmint.bm_width * bmint.bm_bpp);
 
+  bumpmap_init_params (&bmint.params);
+
   dialog_fill_bumpmap_rows (0, height, bmvals.yofs + y1);
 
   dest_row = g_new (guchar, width * height * 4);
-
-  bumpmap_init_params (&bmint.params);
 
   /* Bumpmap */
 
@@ -1488,6 +1487,22 @@ dialog_bumpmap_callback (GtkWidget   *widget,
     {
       bmvals.bumpmap_id = drawable_id;
       dialog_new_bumpmap (TRUE);
+      gimp_preview_invalidate (preview);
+    }
+}
+
+static void
+dialog_maptype_callback (GtkWidget   *widget,
+                         GimpPreview *preview)
+{
+  gint32  maptype;
+
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &maptype);
+
+  if (bmvals.type != maptype)
+    {
+      bmvals.type = maptype;
+      bumpmap_init_params (&bmint.params);
       gimp_preview_invalidate (preview);
     }
 }

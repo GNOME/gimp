@@ -1,3 +1,8 @@
+2005-01-18  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/bumpmap.c: make sure bumpmap_init_params()
+	is called when necessary, fixes bug #162285.
+	
 2005-01-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpparasitelist.c (parasite_serialize): use
