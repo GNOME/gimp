@@ -1,3 +1,10 @@
+2004-10-12  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/*/*.c: all plug-ins except script-fu: removed the
+	translation marks from the menu paths passed to
+	gimp_plugin_menu_register(). All default menu branches used by
+	included plug-ins are created and translated by the core now.
+
 2004-10-12  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage.[ch]: renamed struct member "unit" to

@@ -209,7 +209,8 @@ query (void)
 			  "pipe files to uuencode then mail them",
 			  "You need to have uuencode and mail installed",
 			  "Adrian Likins, Reagan Blundell",
-			  "Adrian Likins, Reagan Blundell, Daniel Risacher, Spencer Kimball and Peter Mattis",
+			  "Adrian Likins, Reagan Blundell, Daniel Risacher, "
+                          "Spencer Kimball and Peter Mattis",
 			  "1995-1997",
 			  N_("_Mail Image..."),
 			  "RGB*, GRAY*, INDEXED*",
@@ -217,8 +218,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_mail_image",
-                             N_("<Image>/File/Send"));
+  gimp_plugin_menu_register ("plug_in_mail_image",  "<Image>/File/Send");
 }
 
 static void

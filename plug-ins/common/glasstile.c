@@ -120,7 +120,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register ("plug_in_glasstile",
-                             N_("<Image>/Filters/Glass Effects"));
+                             "<Image>/Filters/Glass Effects");
 }
 
 static void

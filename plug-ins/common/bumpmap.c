@@ -344,8 +344,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_bump_map",
-                             N_("<Image>/Filters/Map"));
+  gimp_plugin_menu_register ("plug_in_bump_map", "<Image>/Filters/Map");
 
   gimp_install_procedure ("plug_in_bump_map_tiled",
                           "Create an embossing effect using a tiled image "

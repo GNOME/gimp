@@ -97,8 +97,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_the_slimy_egg",
-                             N_("<Image>/Filters/Toys"));
+  gimp_plugin_menu_register ("plug_in_the_slimy_egg", "<Image>/Filters/Toys");
 }
 
 static void

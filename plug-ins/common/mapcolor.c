@@ -158,7 +158,7 @@ query (void)
                           adjust_args, NULL);
 
   gimp_plugin_menu_register ("plug_in_color_adjust",
-                             N_("<Image>/Filters/Colors/Map"));
+                             "<Image>/Filters/Colors/Map");
 
   gimp_install_procedure ("plug_in_color_map",
                           "Map color range specified by two colors"
@@ -176,7 +176,7 @@ query (void)
                           map_args, NULL);
 
   gimp_plugin_menu_register ("plug_in_color_map",
-                             N_("<Image>/Filters/Colors/Map"));
+                             "<Image>/Filters/Colors/Map");
 }
 
 

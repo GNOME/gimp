@@ -172,7 +172,7 @@ query ()
 			  args, NULL);
 
   gimp_plugin_menu_register ("plug_in_maze",
-                             N_("<Image>/Filters/Render/Pattern"));
+                             "<Image>/Filters/Render/Pattern");
 
   g_free (help);
 }

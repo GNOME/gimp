@@ -196,8 +196,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_alienmap2",
-                             N_("<Image>/Filters/Colors/Map"));
+  gimp_plugin_menu_register ("plug_in_alienmap2", "<Image>/Filters/Colors/Map");
 }
 
 static void

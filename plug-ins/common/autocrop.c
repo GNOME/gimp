@@ -88,8 +88,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_autocrop",
-                             N_("<Image>/Image/Crop"));
+  gimp_plugin_menu_register ("plug_in_autocrop", "<Image>/Image/Crop");
 
   gimp_install_procedure ("plug_in_autocrop_layer",
                           "Automagically crops a layer.",
@@ -103,9 +102,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_autocrop_layer",
-                             N_("<Image>/Layer/Crop"));
-
+  gimp_plugin_menu_register ("plug_in_autocrop_layer", "<Image>/Layer/Crop");
 }
 
 static void

@@ -370,7 +370,7 @@ query (void)
                           args, return_vals);
 
   gimp_plugin_menu_register ("plug_in_ifs_compose",
-                             N_("<Image>/Filters/Render/Nature"));
+                             "<Image>/Filters/Render/Nature");
 }
 
 static void

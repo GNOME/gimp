@@ -81,9 +81,9 @@ query (void)
 			  args, NULL);
 
   gimp_plugin_menu_register ("plug_in_semiflatten",
-                             N_("<Image>/Filters/Colors"));
+                             "<Image>/Filters/Colors");
   gimp_plugin_menu_register ("plug_in_semiflatten",
-                             N_("<Image>/Layer/Transparency/Modify"));
+                             "<Image>/Layer/Transparency/Modify");
 }
 
 

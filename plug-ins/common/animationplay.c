@@ -185,7 +185,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register ("plug_in_animationplay",
-                             N_("<Image>/Filters/Animation"));
+                             "<Image>/Filters/Animation");
 }
 
 static void

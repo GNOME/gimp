@@ -247,10 +247,8 @@ query (void)
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_register ("plug_in_decompose",
-                             N_("<Image>/Filters/Colors"));
-  gimp_plugin_menu_register ("plug_in_decompose",
-                             N_("<Image>/Image/Mode"));
+  gimp_plugin_menu_register ("plug_in_decompose", "<Image>/Filters/Colors");
+  gimp_plugin_menu_register ("plug_in_decompose", "<Image>/Image/Mode");
 }
 
 static void

@@ -87,8 +87,7 @@ query ()
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_vinvert",
-                             N_("<Image>/Filters/Colors"));
+  gimp_plugin_menu_register ("plug_in_vinvert", "<Image>/Filters/Colors");
 }
 
 static void

@@ -2987,7 +2987,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register ("plug_in_spheredesigner",
-                             N_("<Image>/Filters/Render"));
+                             "<Image>/Filters/Render");
 }
 
 static gboolean

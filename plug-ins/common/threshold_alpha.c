@@ -99,7 +99,7 @@ query (void)
 			  args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_NAME,
-                             N_("<Image>/Layer/Transparency/Modify"));
+                             "<Image>/Layer/Transparency/Modify");
 }
 
 static void

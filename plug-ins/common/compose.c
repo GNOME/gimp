@@ -298,10 +298,8 @@ query (void)
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_register ("plug_in_compose",
-                             N_("<Image>/Filters/Colors"));
-  gimp_plugin_menu_register ("plug_in_compose",
-                             N_("<Image>/Image/Mode"));
+  gimp_plugin_menu_register ("plug_in_compose", "<Image>/Filters/Colors");
+  gimp_plugin_menu_register ("plug_in_compose", "<Image>/Image/Mode");
 
   gimp_install_procedure ("plug_in_drawable_compose",
 			  "Compose an image from multiple drawables of gray images",

@@ -84,7 +84,7 @@ query (void)
 			  args, NULL);
 
   gimp_plugin_menu_register ("plug_in_autostretch_hsv",
-                             N_("<Image>/Layer/Colors/Auto"));
+                             "<Image>/Layer/Colors/Auto");
 }
 
 static void

@@ -239,10 +239,8 @@ query (void)
 			  G_N_ELEMENTS (pagesetup_args), 0,
 			  pagesetup_args, NULL);
 
-  gimp_plugin_menu_register (NAME_PRINT,
-                             N_("<Image>/File/Send"));
-  gimp_plugin_menu_register (NAME_PAGE_SETUP,
-                             N_("<Image>/File/Send"));
+  gimp_plugin_menu_register (NAME_PRINT,      "<Image>/File/Send");
+  gimp_plugin_menu_register (NAME_PAGE_SETUP, "<Image>/File/Send");
 }
 
 /*

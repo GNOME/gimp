@@ -152,8 +152,7 @@ void query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_grid",
-                             N_("<Image>/Filters/Render/Pattern"));
+  gimp_plugin_menu_register ("plug_in_grid", "<Image>/Filters/Render/Pattern");
 }
 
 static void

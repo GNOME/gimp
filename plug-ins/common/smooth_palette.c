@@ -92,7 +92,7 @@ query (void)
                           args, return_vals);
 
   gimp_plugin_menu_register ("plug_in_smooth_palette",
-                             N_("<Image>/Filters/Colors"));
+                             "<Image>/Filters/Colors");
 }
 
 static struct

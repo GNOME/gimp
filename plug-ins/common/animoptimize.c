@@ -180,11 +180,11 @@ query (void)
                           args, return_args);
 
   gimp_plugin_menu_register ("plug_in_animationoptimize",
-                             N_("<Image>/Filters/Animation"));
+                             "<Image>/Filters/Animation");
   gimp_plugin_menu_register ("plug_in_animationoptimize_diff",
-                             N_("<Image>/Filters/Animation"));
+                             "<Image>/Filters/Animation");
   gimp_plugin_menu_register ("plug_in_animationunoptimize",
-                             N_("<Image>/Filters/Animation"));
+                             "<Image>/Filters/Animation");
 
 #ifdef EXPERIMENTAL_BACKDROP_CODE
   gimp_install_procedure ("plug_in_animation_remove_backdrop",
@@ -219,9 +219,9 @@ query (void)
                           args, return_args);
 
   gimp_plugin_menu_register ("plug_in_animation_remove_backdrop",
-                             N_("<Image>/Filters/Animation"));
+                             "<Image>/Filters/Animation");
   gimp_plugin_menu_register ("plug_in_animation_find_backdrop",
-                             N_("<Image>/Filters/Animation"));
+                             "<Image>/Filters/Animation");
 #endif
 }
 

@@ -110,7 +110,7 @@ query (void)
 			  args, NULL);
 
   gimp_plugin_menu_register ("plug_in_rotate_colormap",
-                             N_("<Image>/Filters/Colors/Map"));
+                             "<Image>/Filters/Colors/Map");
 }
 
 

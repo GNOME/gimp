@@ -127,8 +127,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_the_old_egg",
-                             N_("<Image>/Filters/Toys"));
+  gimp_plugin_menu_register ("plug_in_the_old_egg", "<Image>/Filters/Toys");
 }
 
 static void

@@ -154,8 +154,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_displace",
-                             N_("<Image>/Filters/Map"));
+  gimp_plugin_menu_register ("plug_in_displace", "<Image>/Filters/Map");
 }
 
 static void

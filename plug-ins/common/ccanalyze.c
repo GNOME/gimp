@@ -113,10 +113,8 @@ query (void)
                           G_N_ELEMENTS (args), G_N_ELEMENTS (return_vals),
                           args, return_vals);
 
-  gimp_plugin_menu_register ("plug_in_ccanalyze",
-                             N_("<Image>/Filters/Colors"));
-  gimp_plugin_menu_register ("plug_in_ccanalyze",
-                             N_("<Image>/Layer/Colors/Info"));
+  gimp_plugin_menu_register ("plug_in_ccanalyze", "<Image>/Filters/Colors");
+  gimp_plugin_menu_register ("plug_in_ccanalyze", "<Image>/Layer/Colors/Info");
 }
 
 /* main function */

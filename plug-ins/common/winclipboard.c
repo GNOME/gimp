@@ -137,11 +137,11 @@ query ()
                           copy_args, NULL);
 
   gimp_plugin_menu_register ("plug_in_clipboard_copy",
-                             N_("<Image>/Edit"));
+                             "<Image>/Edit");
   gimp_plugin_menu_register ("plug_in_clipboard_paste",
-                             N_("<Image>/Edit"));
+                             "<Image>/Edit");
   gimp_plugin_menu_register ("plug_in_clipboard_paste_as_new",
-                             N_("<Toolbox>/File/Acquire"));
+                             "<Toolbox>/File/Acquire");
 }
 
 static void

@@ -1078,8 +1078,8 @@ query(void)
                           args,
                           return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, N_("<Toolbox>/File/Acquire"));
-  /* gimp_plugin_menu_register (PLUG_IN_NAME, N_("<Image>/File/Acquire")); */
+  gimp_plugin_menu_register (PLUG_IN_NAME, "<Toolbox>/File/Acquire");
+  /* gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/File/Acquire"); */
 }
 
 /* Return values storage */

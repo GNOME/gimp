@@ -91,8 +91,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_normalize",
-                             N_("<Image>/Layer/Colors/Auto"));
+  gimp_plugin_menu_register ("plug_in_normalize", "<Image>/Layer/Colors/Auto");
 }
 
 static void

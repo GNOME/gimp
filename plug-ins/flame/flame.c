@@ -145,7 +145,7 @@ query (void)
 			  args, NULL);
 
   gimp_plugin_menu_register ("plug_in_flame",
-                             N_("<Image>/Filters/Render/Nature"));
+                             "<Image>/Filters/Render/Nature");
 }
 
 static void

@@ -110,8 +110,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_sel_gauss",
-                             N_("<Image>/Filters/Blur"));
+  gimp_plugin_menu_register ("plug_in_sel_gauss", "<Image>/Filters/Blur");
 }
 
 static void

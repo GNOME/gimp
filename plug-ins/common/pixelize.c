@@ -176,8 +176,7 @@ query (void)
 			  G_N_ELEMENTS (pixelize_args), 0,
 			  pixelize_args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_pixelize",
-                             N_("<Image>/Filters/Blur"));
+  gimp_plugin_menu_register ("plug_in_pixelize", "<Image>/Filters/Blur");
 
   gimp_install_procedure ("plug_in_pixelize2",
 			  "Pixelize the contents of the specified drawable",

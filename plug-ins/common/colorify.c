@@ -110,8 +110,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME,
-                             N_("<Image>/Filters/Colors"));
+  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Colors");
 }
 
 static void

@@ -99,7 +99,7 @@ query (void)
 			  args, NULL);
 
   gimp_plugin_menu_register ("plug_in_laplace",
-                             N_("<Image>/Filters/Edge-Detect"));
+                             "<Image>/Filters/Edge-Detect");
 }
 
 static void

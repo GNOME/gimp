@@ -186,8 +186,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_wind",
-                             N_("<Image>/Filters/Distorts"));
+  gimp_plugin_menu_register ("plug_in_wind", "<Image>/Filters/Distorts");
 }
 
 static void

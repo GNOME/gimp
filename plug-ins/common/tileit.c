@@ -226,8 +226,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_small_tiles",
-                             N_("<Image>/Filters/Map"));
+  gimp_plugin_menu_register ("plug_in_small_tiles", "<Image>/Filters/Map");
 }
 
 static void

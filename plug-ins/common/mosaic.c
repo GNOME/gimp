@@ -312,8 +312,7 @@ query (void)
 			  G_N_ELEMENTS (args), nreturn_vals,
 			  args, return_vals);
 
-  gimp_plugin_menu_register ("plug_in_mosaic",
-                             N_("<Image>/Filters/Distorts"));
+  gimp_plugin_menu_register ("plug_in_mosaic", "<Image>/Filters/Distorts");
 }
 
 static void

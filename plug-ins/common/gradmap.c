@@ -89,8 +89,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_gradmap",
-                             N_("<Image>/Filters/Colors/Map"));
+  gimp_plugin_menu_register ("plug_in_gradmap", "<Image>/Filters/Colors/Map");
 }
 
 static void

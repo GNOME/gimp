@@ -97,7 +97,7 @@ query (void)
 			  args, NULL);
 
   gimp_plugin_menu_register ("plug_in_checkerboard",
-                             N_("<Image>/Filters/Render/Pattern"));
+                             "<Image>/Filters/Render/Pattern");
 }
 
 static void

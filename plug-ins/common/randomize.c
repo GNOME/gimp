@@ -271,9 +271,9 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME[0], N_("<Image>/Filters/Noise"));
-  gimp_plugin_menu_register (PLUG_IN_NAME[1], N_("<Image>/Filters/Noise"));
-  gimp_plugin_menu_register (PLUG_IN_NAME[2], N_("<Image>/Filters/Noise"));
+  gimp_plugin_menu_register (PLUG_IN_NAME[0], "<Image>/Filters/Noise");
+  gimp_plugin_menu_register (PLUG_IN_NAME[1], "<Image>/Filters/Noise");
+  gimp_plugin_menu_register (PLUG_IN_NAME[2], "<Image>/Filters/Noise");
 }
 
 /*********************************

@@ -92,8 +92,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_db_browser",
-                             N_("<Toolbox>/Xtns/Extensions"));
+  gimp_plugin_menu_register ("plug_in_db_browser", "<Toolbox>/Xtns/Extensions");
 }
 
 static void

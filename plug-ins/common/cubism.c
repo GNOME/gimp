@@ -149,8 +149,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_cubism",
-                             N_("<Image>/Filters/Artistic"));
+  gimp_plugin_menu_register ("plug_in_cubism", "<Image>/Filters/Artistic");
 }
 
 static void

@@ -150,8 +150,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_blur",
-                             N_("<Image>/Filters/Blur"));
+  gimp_plugin_menu_register ("plug_in_blur", "<Image>/Filters/Blur");
 }
 
 

@@ -151,7 +151,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register ("plug_in_unsharp_mask",
-                             N_("<Image>/Filters/Enhance"));
+                             "<Image>/Filters/Enhance");
 }
 
 static void

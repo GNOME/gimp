@@ -806,8 +806,10 @@ plugin_query (void)
   };
 
   gimp_install_procedure (PLUGIN_PROCEDURE_NAME,
-			  "Cuts an image into paper tiles, and slides each paper tile.",
-			  "This plug-in cuts an image into paper tiles and slides each paper tile.",
+			  "Cuts an image into paper tiles, and slides each "
+                          "paper tile.",
+			  "This plug-in cuts an image into paper tiles and "
+                          "slides each paper tile.",
 			  "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
 			  "Copyright (c)1997-1999 Hirotsuna Mizuno",
 			  _("September 31, 1999"),
@@ -817,8 +819,7 @@ plugin_query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register (PLUGIN_PROCEDURE_NAME,
-                             N_("<Image>/Filters/Map"));
+  gimp_plugin_menu_register (PLUGIN_PROCEDURE_NAME, "<Image>/Filters/Map");
 }
 
 static void

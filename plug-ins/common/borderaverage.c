@@ -104,8 +104,7 @@ query (void)
                           G_N_ELEMENTS (return_vals),
                           args, return_vals);
 
-  gimp_plugin_menu_register ("plug_in_borderaverage",
-                             N_("<Image>/Filters/Colors"));
+  gimp_plugin_menu_register ("plug_in_borderaverage", "<Image>/Filters/Colors");
 }
 
 static void

@@ -300,7 +300,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_NAME,
-                             N_("<Image>/Filters/Colors/Map"));
+                             "<Image>/Filters/Colors/Map");
 }
 
 static void

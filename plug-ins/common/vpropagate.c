@@ -269,12 +269,9 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (DEFAULT_PLUG_IN_NAME,
-                             N_("<Image>/Filters/Distorts"));
-  gimp_plugin_menu_register (ERODE_PLUG_IN_NAME,
-                             N_("<Image>/Filters/Generic"));
-  gimp_plugin_menu_register (DILATE_PLUG_IN_NAME,
-                             N_("<Image>/Filters/Generic"));
+  gimp_plugin_menu_register (DEFAULT_PLUG_IN_NAME, "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (ERODE_PLUG_IN_NAME,   "<Image>/Filters/Generic");
+  gimp_plugin_menu_register (DILATE_PLUG_IN_NAME,  "<Image>/Filters/Generic");
 }
 
 static void

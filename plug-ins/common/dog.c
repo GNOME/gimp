@@ -141,8 +141,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_dog",
-                             N_("<Image>/Filters/Edge-Detect"));
+  gimp_plugin_menu_register ("plug_in_dog", "<Image>/Filters/Edge-Detect");
 }
 
 static void

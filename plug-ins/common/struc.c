@@ -1149,7 +1149,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register ("plug_in_apply_canvas",
-                             N_("<Image>/Filters/Artistic"));
+                             "<Image>/Filters/Artistic");
 }
 
 static void

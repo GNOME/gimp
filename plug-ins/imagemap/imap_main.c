@@ -131,8 +131,7 @@ static void query()
 			  G_N_ELEMENTS (args), nreturn_vals,
 			  args, return_vals);
 
-   gimp_plugin_menu_register ("plug_in_imagemap",
-                              N_("<Image>/Filters/Web"));
+   gimp_plugin_menu_register ("plug_in_imagemap", "<Image>/Filters/Web");
 }
 
 static void

@@ -136,8 +136,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_exchange",
-                             N_("<Image>/Filters/Colors/Map"));
+  gimp_plugin_menu_register ("plug_in_exchange", "<Image>/Filters/Colors/Map");
 }
 
 /* main function */

@@ -194,8 +194,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_sinus",
-                             N_("<Image>/Filters/Render/Pattern"));
+  gimp_plugin_menu_register ("plug_in_sinus", "<Image>/Filters/Render/Pattern");
 }
 
 static void

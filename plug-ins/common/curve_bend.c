@@ -550,19 +550,22 @@ query (void)
   gimp_install_procedure (PLUG_IN_NAME,
                           PLUG_IN_DESCRIPTION,
                           "This plug-in does bend the active layer "
-                          "If there is a current selection it is copied to floating selection "
-                          "and the curve_bend distortion is done on the floating selection. "
-                          "If work_on_copy parameter is TRUE, the curve_bend distortion is done "
-                          "on a copy of the active layer (or floating selection). "
-                          "The upper and lower edges are bent in shape of 2 spline curves. "
-                          "both (upper and lower) curves are determined by upto 17 points "
-                          "or by 256 Y-Values if curve_type == 1 (freehand mode) "
-                          "If rotation is not 0, the layer is rotated before "
-                          "and rotated back after the bend operation. This enables "
-                          "bending in other directions than vertical."
-                          "bending usually changes the size of the handled layer."
-                          "this plugin sets the offsets of the handled layer to keep its center at the same position"
-                          ,
+                          "If there is a current selection it is copied to "
+                          "floating selection and the curve_bend distortion "
+                          "is done on the floating selection. If "
+                          "work_on_copy parameter is TRUE, the curve_bend "
+                          "distortion is done on a copy of the active layer "
+                          "(or floating selection). The upper and lower edges "
+                          "are bent in shape of 2 spline curves. both (upper "
+                          "and lower) curves are determined by upto 17 points "
+                          "or by 256 Y-Values if curve_type == 1 (freehand "
+                          "mode) If rotation is not 0, the layer is rotated "
+                          "before and rotated back after the bend operation. "
+                          "This enables bending in other directions than "
+                          "vertical. bending usually changes the size of "
+                          "the handled layer. this plugin sets the offsets "
+                          "of the handled layer to keep its center at the "
+                          "same position",
                           PLUG_IN_AUTHOR,
                           PLUG_IN_COPYRIGHT,
                           PLUG_IN_VERSION,
@@ -574,12 +577,13 @@ query (void)
                           args,
                           return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME,
-                             N_("<Image>/Filters/Distorts"));
+  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Distorts");
 
    /* the installation of the Iterator procedure for the bend plugin */
   gimp_install_procedure (PLUG_IN_ITER_NAME,
-                          "This procedure calculates the modified values for one iterationstep for the call of plug_in_curve_bend",
+                          "This procedure calculates the modified values "
+                          "for one iterationstep for the call of "
+                          "plug_in_curve_bend",
                           "",
                           PLUG_IN_AUTHOR,
                           PLUG_IN_COPYRIGHT,

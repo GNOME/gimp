@@ -167,8 +167,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("file_print_gimp",
-                             N_("<Image>/File/Send"));
+  gimp_plugin_menu_register ("file_print_gimp", "<Image>/File/Send");
   gimp_plugin_icon_register ("file_print_gimp",
                              GIMP_ICON_TYPE_STOCK_ID, GTK_STOCK_PRINT);
 }

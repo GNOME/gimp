@@ -189,7 +189,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register ("plug_in_plasma",
-                             N_("<Image>/Filters/Render/Clouds"));
+                             "<Image>/Filters/Render/Clouds");
 }
 
 static void

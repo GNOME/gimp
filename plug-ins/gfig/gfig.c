@@ -136,8 +136,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_gfig",
-                             N_("<Image>/Filters/Render"));
+  gimp_plugin_menu_register ("plug_in_gfig", "<Image>/Filters/Render");
 }
 
 static void

@@ -244,8 +244,7 @@ query (void)
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_register ("plug_in_film",
-                             N_("<Image>/Filters/Combine"));
+  gimp_plugin_menu_register ("plug_in_film", "<Image>/Filters/Combine");
 }
 
 static void

@@ -190,7 +190,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register ("plug_in_solid_noise",
-                             N_("<Image>/Filters/Render/Clouds"));
+                             "<Image>/Filters/Render/Clouds");
 }
 
 

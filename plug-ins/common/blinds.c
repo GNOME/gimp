@@ -127,8 +127,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_blinds",
-                             N_("<Image>/Filters/Distorts"));
+  gimp_plugin_menu_register ("plug_in_blinds", "<Image>/Filters/Distorts");
 }
 
 static void

@@ -127,8 +127,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME,
-                             N_("<Image>/Filters/Enhance"));
+  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Enhance");
 }
 
 static void

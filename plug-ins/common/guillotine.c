@@ -75,8 +75,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_guillotine",
-                             N_("<Image>/Image/Transform"));
+  gimp_plugin_menu_register ("plug_in_guillotine", "<Image>/Image/Transform");
 }
 
 static void
