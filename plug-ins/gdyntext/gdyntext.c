@@ -229,7 +229,6 @@ static void gdt_run(char *name, int nparams, GParam *param, int *nreturn_vals,
 			break;
 	}
 	gdt_render_text(&gdtvals);
-	gdt_set_values(&gdtvals);
 	if (run_mode == RUN_INTERACTIVE)
 		gimp_set_data("plug_in_gdyntext", &gdtvals, sizeof(GdtVals));
 	values[1].data.d_int32 = gdtvals.layer_id; 
@@ -655,6 +654,8 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 		gimp_destroy_params(ret_vals, nret_vals);
 		gimp_image_remove_channel(data->image_id, selection_channel);
 	}
+
+	gdt_set_values(&gdtvals);
 
 	gimp_undo_push_group_end (data->image_id);
 	gimp_displays_flush();
