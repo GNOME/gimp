@@ -1,3 +1,7 @@
+2005-02-06  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: plug-ins/common/url.c moved to plug-ins/uri/uri.c.
+
 2005-01-28  Jordi Mallach  <jordi@sindominio.net>
 
 	* ca.po: Updated Catalan translation by

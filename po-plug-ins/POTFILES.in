@@ -136,7 +136,6 @@ plug-ins/common/tileit.c
 plug-ins/common/tiler.c
 plug-ins/common/uniteditor.c
 plug-ins/common/unsharp.c
-plug-ins/common/url.c
 plug-ins/common/video.c
 plug-ins/common/vinvert.c
 plug-ins/common/vpropagate.c
@@ -256,6 +255,7 @@ plug-ins/sel2path/pxl-outline.c
 plug-ins/sel2path/sel2path.c
 plug-ins/sgi/sgi.c
 plug-ins/twain/twain.c
+plug-ins/uri/uri.c
 plug-ins/winicon/icodialog.c
 plug-ins/winicon/icoload.c
 plug-ins/winicon/icosave.c
