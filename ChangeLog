@@ -1,3 +1,10 @@
+Sat Apr  3 21:34:22 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* Made 1.0.4 release
+
+	* illusion/illusion.c
+	* whirlpinch/whirlpinch.c: added missing #includes
+
 Wed Mar 31 01:17:38 EST 1999  Matt Wilson  <msw@gimp.org>
 
 	* app/colormaps.c: fix for 8 bit displays

@@ -1,3 +1,5 @@
+Makefile
+Makefile.in
 *.dvi
 *.log
 *.aux
