@@ -1,2 +1,3 @@
 PACKAGE = gimp-script-fu
+INSTALLSUBDIR = gimp
 include ../../gtk+/po/makefile.cygwin
