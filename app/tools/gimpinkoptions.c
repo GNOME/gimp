@@ -255,7 +255,6 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
 
   /* adjust sliders */
   frame = gtk_frame_new (_("Adjustment"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -281,7 +280,6 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
 
   /* sens sliders */
   frame = gtk_frame_new (_("Sensitivity"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 

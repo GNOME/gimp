@@ -1,3 +1,11 @@
+2003-12-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpblendoptions.c (gimp_blend_options_gui)
+	* app/tools/gimpcoloroptions.c (gimp_color_options_gui)
+	* app/tools/gimpinkoptions.c (gimp_ink_options_gui): removed calls
+	to gtk_frame_set_shadow_type (frame, GTK_SHADOW_ETCHED_IN) because
+	that's the default anyway.
+
 2003-12-12  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/dialogs.c: remember the size of the color picker dialog.

@@ -177,7 +177,6 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
 
   /*  the sample average options  */
   frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
