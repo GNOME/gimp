@@ -25,6 +25,16 @@ void   tools_select_cmd_callback            (GtkAction   *action,
                                              gpointer     data);
 void   tools_toggle_visibility_cmd_callback (GtkAction   *action,
                                              gpointer     data);
+
+void   tools_raise_cmd_callback             (GtkAction   *action,
+                                             gpointer     data);
+void   tools_raise_to_top_cmd_callback      (GtkAction   *action,
+                                             gpointer     data);
+void   tools_lower_cmd_callback             (GtkAction   *action,
+                                             gpointer     data);
+void   tools_lower_to_bottom_cmd_callback   (GtkAction   *action,
+                                             gpointer     data);
+
 void   tools_reset_cmd_callback             (GtkAction   *action,
                                              gpointer     data);
 

@@ -25,14 +25,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
-
-#include "widgets/gimpcontainereditor.h"
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimptoolview.h"
-
-#include "display/gimpdisplay.h"
 
 #include "tools/gimp-tools.h"
 #include "tools/gimpimagemaptool.h"
@@ -81,29 +74,127 @@ tools_toggle_visibility_cmd_callback (GtkAction *action,
 {
   GimpContext  *context;
   GimpToolInfo *tool_info;
-  gboolean      active;
   return_if_no_context (context, data);
 
   tool_info = gimp_context_get_tool (context);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (tool_info)
+    {
+      gboolean active =
+        gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  if (active != tool_info->visible)
-    g_object_set (tool_info, "visible", active, NULL);
+      if (active != tool_info->visible)
+        g_object_set (tool_info, "visible", active, NULL);
+    }
+}
+
+void
+tools_raise_cmd_callback (GtkAction *action,
+                          gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info)
+    {
+      GimpContainer *container;
+      gint           index;
+
+      container = context->gimp->tool_info_list;
+      index     = gimp_container_get_child_index (container,
+                                                  GIMP_OBJECT (tool_info));
+
+      if (index > 0)
+        gimp_container_reorder (container, GIMP_OBJECT (tool_info), index - 1);
+    }
+}
+
+void
+tools_raise_to_top_cmd_callback (GtkAction *action,
+                                 gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info)
+    {
+      GimpContainer *container;
+      gint           index;
+
+      container = context->gimp->tool_info_list;
+      index     = gimp_container_get_child_index (container,
+                                                  GIMP_OBJECT (tool_info));
+
+      if (index > 0)
+        gimp_container_reorder (container, GIMP_OBJECT (tool_info), 0);
+    }
+}
+
+void
+tools_lower_cmd_callback (GtkAction *action,
+                          gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info)
+    {
+      GimpContainer *container;
+      gint           index;
+
+      container = context->gimp->tool_info_list;
+      index     = gimp_container_get_child_index (container,
+                                                  GIMP_OBJECT (tool_info));
+
+      if (index + 1 < gimp_container_num_children (container))
+        gimp_container_reorder (container, GIMP_OBJECT (tool_info), index + 1);
+    }
+}
+
+void
+tools_lower_to_bottom_cmd_callback (GtkAction *action,
+                                    gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info)
+    {
+      GimpContainer *container;
+      gint           index;
+
+      container = context->gimp->tool_info_list;
+      index     = gimp_container_num_children (container) - 1;
+
+      index = index >= 0 ? index : 0;
+
+      gimp_container_reorder (container, GIMP_OBJECT (tool_info), index);
+    }
 }
 
 void
 tools_reset_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GList               *list;
-  gint                 i = 0;
+  GimpContext   *context;
+  GimpContainer *container;
+  GList         *list;
+  gint           i = 0;
+  return_if_no_context (context, data);
 
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
+  container = context->gimp->tool_info_list;
 
   for (list = gimp_tools_get_default_order (context->gimp);
        list;

@@ -116,6 +116,8 @@ static void
 gimp_tool_view_init (GimpToolView *view)
 {
   view->visible_handler_id = 0;
+  view->raise_button       = NULL;
+  view->lower_button       = NULL;
   view->reset_button       = NULL;
 }
 
@@ -162,6 +164,18 @@ gimp_tool_view_new (GimpViewType     view_type,
     }
 
   editor = GIMP_CONTAINER_EDITOR (tool_view);
+
+  tool_view->raise_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "tools",
+                                   "tools-raise",
+                                   "tools-raise-to-top", GDK_SHIFT_MASK,
+                                   NULL);
+
+  tool_view->lower_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "tools",
+                                   "tools-lower",
+                                   "tools-lower-to-bottom", GDK_SHIFT_MASK,
+                                    NULL);
 
   tool_view->reset_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "tools",

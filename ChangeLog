@@ -1,3 +1,12 @@
+2004-12-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/tools-actions.c
+	* app/actions/tools-commands.[ch]
+	* app/widgets/gimptoolview.[ch]: applied a (modified) patch from
+	Joao S. O. Bueno which adds "raise" and "lower" actions and
+	their buttons in the tool dialog. Fixes bug #158666.
+	Cleaned up the tool action callbacks.
+
 2004-12-31  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_preview.c (render_rgb_image): use the proper

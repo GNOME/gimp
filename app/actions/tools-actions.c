@@ -53,6 +53,30 @@ static GimpActionEntry tools_actions[] =
   { "tools-transform-menu", NULL, N_("_Transform Tools") },
   { "tools-color-menu",     NULL, N_("_Color Tools")     },
 
+  { "tools-raise", GTK_STOCK_GO_UP,
+    N_("R_aise Tool"), NULL,
+    N_("Raise tool"),
+    G_CALLBACK (tools_raise_cmd_callback),
+    NULL },
+
+  { "tools-raise-to-top", GTK_STOCK_GOTO_TOP,
+    N_("Ra_ise to Top"), NULL,
+    N_("Raise tool to top"),
+    G_CALLBACK (tools_raise_to_top_cmd_callback),
+    NULL },
+
+  { "tools-lower", GTK_STOCK_GO_DOWN,
+    N_("L_ower Tool"), NULL,
+    N_("Lower tool"),
+    G_CALLBACK (tools_lower_cmd_callback),
+    NULL },
+
+  { "tools-lower-to-bottom", GTK_STOCK_GOTO_BOTTOM,
+    N_("Lo_wer to Bottom"), NULL,
+    N_("Lower tool to bottom"),
+    G_CALLBACK (tools_lower_to_bottom_cmd_callback),
+    NULL },
+
   { "tools-reset", GIMP_STOCK_RESET,
     N_("_Reset Order & Visibility"), NULL,
     N_("Reset tool order and visibility"),
@@ -165,8 +189,11 @@ void
 tools_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpContext  *context   = gimp_get_user_context (group->gimp);
-  GimpToolInfo *tool_info = gimp_context_get_tool (context);
+  GimpContext   *context   = gimp_get_user_context (group->gimp);
+  GimpToolInfo  *tool_info = gimp_context_get_tool (context);
+  GimpContainer *container = context->gimp->tool_info_list;
+  gboolean       raise     = FALSE;
+  gboolean       lower     = FALSE;
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
@@ -176,7 +203,24 @@ tools_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("tools-visibility", tool_info);
 
   if (tool_info)
-    SET_ACTIVE ("tools-visibility", tool_info->visible);
+    {
+      gint last_index;
+      gint index;
+
+      SET_ACTIVE ("tools-visibility", tool_info->visible);
+
+      last_index = gimp_container_num_children (container) -1;
+      index      = gimp_container_get_child_index   (container,
+                                                     GIMP_OBJECT (tool_info));
+
+      raise = index != 0;
+      lower = index != last_index;
+    }
+
+  SET_SENSITIVE ("tools-raise",           raise);
+  SET_SENSITIVE ("tools-raise-to-top",    raise);
+  SET_SENSITIVE ("tools-lower",           lower);
+  SET_SENSITIVE ("tools-lower-to-bottom", lower);
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE

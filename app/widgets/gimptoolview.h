@@ -42,6 +42,8 @@ struct _GimpToolView
 
   GQuark               visible_handler_id;
 
+  GtkWidget           *raise_button;
+  GtkWidget           *lower_button;
   GtkWidget           *reset_button;
 };
 
