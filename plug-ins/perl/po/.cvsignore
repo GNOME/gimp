@@ -1,3 +1,5 @@
+Makefile
+pm_to_blib
 *.gmo
 *.mo
 gimp-perl.pot
