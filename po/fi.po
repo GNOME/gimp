@@ -1,9 +1,9 @@
+# translation of fi.po to Finnish
 # Finnish translation of GIMP 1.2
-# Copyright (C) 1999-2002 Free Software Foundation, Inc.
+# Copyright (C) 1999-2002, 2004 Free Software Foundation, Inc.
 # Ville Hautamäki <villeh@cs.joensuu.fi>.
 # Tor Lillqvist <tml@iki.fi>.
 # Sami Gerdt <sgerdt@cs.joensuu.fi>.
-# Jarkko Ranta <jjranta@cc.joensuu.fi>, 2001-2002.
 #
 # 	Convolve = konvoluution (Signaalin käsittelyssä käytetty käännös)
 # 	drawable = kuva?, eikös sillä ole gimp:ssä ihan specifi merkitys?
@@ -12,18 +12,22 @@
 # 	1678 yhtevevyyden vuoksi "tiedosto" -sanaa käytettäessä.. -SG
 # 	ilm. olen korjannut jotain.. -paree katsoa.. -SG(3.6)
 # 	3058 dump-items||vähän aikaisemmin tyhjä myös..
+#           Onko console GIMP:n konsoli vai pääteikkuna? -T
+# Jarkko Ranta <jjranta@cc.joensuu.fi>, 2001-2002.
+# Tapio Lehtonen <tale@debian.org>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.2\n"
+"Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 02:48+0100\n"
-"PO-Revision-Date: 2002-01-29 00:50+0200\n"
-"Last-Translator: Jarkko Ranta <jjranta@cc.joensuu.fi>\n"
-"Language-Team: fi <fi@li.org>\n"
+"POT-Creation-Date: 2004-02-08 07:33+0200\n"
+"PO-Revision-Date: 2004-01-26 20:49+0200\n"
+"Last-Translator: Tapio Lehtonen <tale@debian.org>\n"
+"Language-Team: Finnish <debian-l10n-finnish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0.2\n"
 
 #: app/app_procs.c:183
 msgid ""
@@ -31,17 +35,23 @@ msgid ""
 "User installation was skipped because the '--no-interface' flag was used.\n"
 "To perform user installation, run the GIMP without the '--no-interface' flag."
 msgstr ""
+"GIMP:n asennusta ei ole tehty kunnolla tälle käyttäjälle.\n"
+"Käyttäjäkohtainen asennus ohitettiin '--no-interface' -valitsimen takia.\n"
+"Käyttäjäkohtainen asennus tehdään kun GIMP käynnistetään ilman '--no-"
+"interface' -valitsinta. "
 
 #: app/app_procs.c:267
-#, fuzzy, c-format
+#, c-format
 msgid "Opening '%s' failed: %s"
-msgstr "Tiedoston '%s' avaaminen epäonnistui."
+msgstr "Tiedoston \"%s\" avaaminen epäonnistui: %s"
 
 #: app/main.c:217
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
+"GIMP ei voinut käynnistää graafista käyttöliittymää.\n"
+"Varmistu, että kunnolliset asetukset on tehty näytölle."
 
 #: app/main.c:224 app/gui/splash.c:111 app/widgets/gimptoolbox.c:439
 #: data/misc/gimp.desktop.in.in.h:2
@@ -58,7 +68,7 @@ msgid ""
 "Invalid option \"%s\"\n"
 msgstr ""
 "\n"
-"Epäkelpo vipu \"%s\"\n"
+"Epäkelpo valitsin \"%s\"\n"
 
 #: app/main.c:498
 msgid "GIMP version"
@@ -72,12 +82,12 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Käyttö: %s [vipu ...] [tiedostot ...]\n"
+"Käyttö: %s [valitsin ...] [tiedosto ...]\n"
 "\n"
 
 #: app/main.c:508
 msgid "Options:\n"
-msgstr "Vivut:\n"
+msgstr "Valitsimet:\n"
 
 #: app/main.c:509
 msgid "  -h, --help               Output this help.\n"
@@ -100,9 +110,9 @@ msgstr ""
 "liitännäisten kesken.\n"
 
 #: app/main.c:513
-#, fuzzy
 msgid "  --no-cpu-accel           Do not use special CPU accelerations.\n"
-msgstr "  --no-xshm               Älä käytä X:n Shared Memory -piirrettä.\n"
+msgstr ""
+"  --no-cpu-accel           Älä käytä suorittimen kiihdytysominaisuuksia.\n"
 
 #: app/main.c:514
 msgid ""
@@ -113,17 +123,16 @@ msgstr ""
 "siveltimiä.\n"
 
 #: app/main.c:515
-#, fuzzy
 msgid "  -f, --no-fonts           Do not load any fonts.\n"
-msgstr "  -s, --no-splash          Älä näytä alkuikkunaa.\n"
+msgstr "  -f, --no-fonts          Älä lataa mitään kirjasinlajeja.\n"
 
 #: app/main.c:516
 msgid "  -i, --no-interface       Run without a user interface.\n"
-msgstr "  -i, --no-interface       Aja ilman käyttöliittymää.\n"
+msgstr "  -i, --no-interface       Suorita ohjelma ilman käyttöliittymää.\n"
 
 #: app/main.c:517
 msgid "  --display <display>      Use the designated X display.\n"
-msgstr "  --display <näyttö>       Käytä toista X-näyttöä.\n"
+msgstr "  --display <näyttö>       Käytä annettua X näyttöä.\n"
 
 #: app/main.c:518
 msgid "  -s, --no-splash          Do not show the startup window.\n"
@@ -134,9 +143,8 @@ msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 msgstr "  -S, --no-splash-image    Älä lisää kuvaa alkuikkunaan.\n"
 
 #: app/main.c:520
-#, fuzzy
 msgid "  --session <name>         Use an alternate sessionrc file.\n"
-msgstr "  -g, --gimprc <gimprc>    Käytä toista gimprc-tiedostoa.\n"
+msgstr "  --session <tiedosto>         Käytä annettua sessionrc-tiedostoa.\n"
 
 #: app/main.c:521
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
@@ -144,52 +152,52 @@ msgstr "  -g, --gimprc <gimprc>    Käytä toista gimprc-tiedostoa.\n"
 
 #: app/main.c:522
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr ""
-"  --system-gimprc <gimprc> Käytä vaihtoehtoista yleistä gimprc-tiedostoa.\n"
+msgstr "  --system-gimprc <gimprc> Käytä järjestelmän gimprc-tiedostoa.\n"
 
 #: app/main.c:523
 msgid ""
 "  --dump-gimprc            Output a gimprc file with default settings.\n"
 msgstr ""
+"  --dump-gimprc            Tulosta gimprc-tiedosto jossa on oletusarvot.\n"
 
 #: app/main.c:524
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
 msgstr ""
-"  -c, --console-messages   Tulosta varoitukset pääteikkunaan erillisten "
-"ikkunoiden sijaan.\n"
+"  -c, --console-messages   Näytä varoitukset pääteikkunassa eikä "
+"valintaikkunassa.\n"
 
 #: app/main.c:525
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
-"  --debug-handlers         Mahdollista vähemmän vakavien virheitten "
-"tutkinta.\n"
+"  --debug-handlers         Käytä ei-vakavien signaalien käsittelijöiden "
+"virheenjäljitystä.\n"
 
 #: app/main.c:526
-#, fuzzy
 msgid ""
 "  --stack-trace-mode <never | query | always>\n"
 "                           Debugging mode for fatal signals.\n"
 msgstr ""
-"                           Tutkintatila vakaville signaaleille.\n"
-"\n"
+"  --stack-trace-mode <never | query | always>\n"
+"                           Virheenjäljitystila vakaville signaaleille.\n"
 
 #: app/main.c:528
 msgid ""
 "  --pdb-compat-mode <off | on | warn>\n"
 "                           Procedural Database compatibility mode.\n"
 msgstr ""
+"  --pdb-compat-mode <off | on | warn>\n"
+"                           Procedural Database yhteensopivuustila.\n"
 
 #: app/main.c:530
-#, fuzzy
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
-msgstr "  -b, --batch <komennot>   Aja eräajona.\n"
+msgstr "  -b, --batch <komennot>   Suorita komennot eräajona.\n"
 
 #: app/main.c:550
 msgid "(This console window will close in ten seconds)\n"
-msgstr "(Tämä konsoli-ikkuna sulkeutuu kymmenessä sekunnissa)\n"
+msgstr "(Tämä pääteikkuna sulkeutuu kymmenen sekunnin kuluttua)\n"
 
 #: app/base/base-enums.c:13 app/core/core-enums.c:433
 msgid "Small"
@@ -204,14 +212,17 @@ msgid "Large"
 msgstr "Iso"
 
 #: app/base/base-enums.c:33
+#, fuzzy
 msgid "Light Checks"
 msgstr "Vaalea ruudutus"
 
 #: app/base/base-enums.c:34
+#, fuzzy
 msgid "Mid-Tone Checks"
 msgstr "Keskitumma ruudutus"
 
 #: app/base/base-enums.c:35
+#, fuzzy
 msgid "Dark Checks"
 msgstr "Tumma ruudutus"
 
@@ -234,7 +245,7 @@ msgstr "Pehmeä"
 #: app/base/base-enums.c:57
 #, fuzzy
 msgid "Freehand"
-msgstr "Vapaa"
+msgstr "Vapaalla kädellä"
 
 #: app/base/base-enums.c:75 app/widgets/gimpwidgets-constructors.c:71
 #: app/widgets/gimpwidgets-constructors.c:104
@@ -257,12 +268,13 @@ msgid "Blue"
 msgstr "Sininen"
 
 #: app/base/base-enums.c:79 app/core/core-enums.c:103
+#, fuzzy
 msgid "Alpha"
 msgstr "Peitto"
 
 #: app/base/base-enums.c:97
 msgid "None (Fastest)"
-msgstr ""
+msgstr "Ei mitään (Nopein)"
 
 #: app/base/base-enums.c:98 app/core/core-enums.c:211
 #: app/widgets/widgets-enums.c:73
@@ -283,6 +295,7 @@ msgid "Midtones"
 msgstr "Keskisävyt"
 
 #: app/base/base-enums.c:159
+#, fuzzy
 msgid "Highlights"
 msgstr "Kirkkaat kohdat"
 
@@ -299,31 +312,33 @@ msgstr "vakava jäsennysvirhe"
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
+"odotettiin \"yes\" tai \"no\" arvoksi totuusarvoiselle päätesymbolille %s, "
+"tuli \"%s\""
 
 #: app/config/gimpconfig-deserialize.c:535
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr ""
+msgstr "kelvoton arvo \"%s\" päätesymbolille %s"
 
 #: app/config/gimpconfig-deserialize.c:550
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr ""
+msgstr "kelvoton arvo \"%ld\" päätesymbolille %s"
 
 #: app/config/gimpconfig-deserialize.c:616
-#, fuzzy, c-format
+#, c-format
 msgid "while parsing token '%s': %s"
-msgstr "Virhe tiedoston avauksessa: %s\n"
+msgstr "jäsennettäesssä päätesymbolia \"%s\": %s"
 
 #: app/config/gimpconfig-deserialize.c:767
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr ""
+msgstr "päätesymbolin %s arvo ei ole kelvollinen UTF-8 -merkkijono"
 
 #: app/config/gimpconfig-path.c:154
 #, fuzzy, c-format
 msgid "Cannot expand ${%s}"
-msgstr "Toiminnon '%s' kumoaminen ei onnistu"
+msgstr "Ei voi laventaa ${%s}"
 
 #: app/config/gimpconfig-utils.c:478 app/config/gimpscanner.c:92
 #: app/core/gimpbrush.c:398 app/core/gimpbrushgenerated.c:379
@@ -331,29 +346,29 @@ msgstr "Toiminnon '%s' kumoaminen ei onnistu"
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
 #: app/tools/gimpcurvestool.c:1325 app/tools/gimplevelstool.c:1499
 #: app/widgets/gimptexteditor.c:373 app/xcf/xcf.c:273
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Tiedoston '%s' avaaminen epäonnistui"
+msgstr "Tiedoston \"%s\" avaaminen luettavaksi epäonnistui: %s"
 
 #: app/config/gimpconfig-utils.c:487 app/config/gimpconfigwriter.c:120
 #: app/core/gimpbrushgenerated.c:130 app/core/gimpgradient.c:498
 #: app/core/gimpgradient.c:584 app/core/gimppalette.c:567 app/gui/themes.c:238
 #: app/tools/gimpcurvestool.c:1324 app/tools/gimplevelstool.c:1498
 #: app/vectors/gimpvectors-export.c:83 app/xcf/xcf.c:330
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Tiedoston '%s' avaaminen epäonnistui"
+msgstr "Tiedoston \"%s\" avaaminen kirjoitettavaksi epäonnistui: %s"
 
 #: app/config/gimpconfig-utils.c:498 app/config/gimpconfig-utils.c:521
 #: app/vectors/gimpvectors-export.c:96
-#, fuzzy, c-format
+#, c-format
 msgid "Error while writing '%s': %s"
-msgstr "Virhe tiedoston avauksessa: %s\n"
+msgstr "Virhe kirjoitettaessa \"%s\": %s"
 
 #: app/config/gimpconfig-utils.c:509
-#, fuzzy, c-format
+#, c-format
 msgid "Error while reading '%s': %s"
-msgstr "Virhe tiedoston avauksessa: %s\n"
+msgstr "Virhe luettaessa \"%s\": %s"
 
 #: app/config/gimpconfig-utils.c:546
 #, c-format
@@ -361,35 +376,41 @@ msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr ""
+"Tapahtui virhe jäsennettäessä tiedostoa \"%s\". Käytetään oletusarvoja. "
+"Varmuuskopio asetuksista on luotu tiedostoon \"%s\"."
 
 #: app/config/gimpconfigwriter.c:107
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create temporary file for '%s': %s"
-msgstr "Virhe palettitiedoston '%s' avaamisessa: %s"
+msgstr "Tilapäistiedostoa \"%s\" ei voitu luoda: %s"
 
 #: app/config/gimpconfigwriter.c:568
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
-msgstr "Virhe tiedoston avauksessa: %s\n"
+msgstr ""
+"Virhe kirjoitettaessa tilapäistiedostoon \"%s\": %s\n"
+"Alkuperäistä tiedostoa ei ole muutettu."
 
 #: app/config/gimpconfigwriter.c:576
 #, fuzzy, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
-msgstr "Virhe tiedoston avauksessa: %s\n"
+msgstr ""
+"Virhe kirjoitettaessa tilapäistiedostoon \"%s\": %s\n"
+"Tiedostoa ei ole luotu."
 
 #: app/config/gimpconfigwriter.c:587
 #, fuzzy, c-format
 msgid "Error writing to '%s': %s"
-msgstr "virhe tiedostoa \"%s\" jäsennettäessä\n"
+msgstr "Virhe kirjoitettaessa tiedostoon \"%s\": %s\n"
 
 #: app/config/gimpconfigwriter.c:605
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create '%s': %s"
-msgstr "Tiedoston '%s' avaaminen epäonnistui"
+msgstr "Tiedostoa \"%s\" ei voinut luoada: %s"
 
 #: app/config/gimprc.c:341 app/config/gimprc.c:354
 #, c-format
@@ -397,9 +418,9 @@ msgid "Parsing '%s'\n"
 msgstr "Jäsennetään tiedostoa '%s'\n"
 
 #: app/config/gimprc.c:601
-#, fuzzy, c-format
+#, c-format
 msgid "Saving '%s'\n"
-msgstr "Jäsennetään tiedostoa '%s'\n"
+msgstr "Talletetaan \"%s\"\n"
 
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
@@ -411,36 +432,43 @@ msgid ""
 "receives the focus. This is useful for window managers using \"click to focus"
 "\"."
 msgstr ""
+"Kun käytössä, kuvasta tulee aktiivinen kohdistettaessa sen kuvaikkunaan. "
+"Tämä on hyödyllinen ikkunointiohjelman käyttäessä \"click to focus\"-"
+"toimintoa."
 
 #: app/config/gimprc-blurbs.h:23
 msgid "Specifies how the area around the image should be drawn."
-msgstr ""
+msgstr "Määrittää miten kuvan ympärillä oleva alue piirretään."
 
 #: app/config/gimprc-blurbs.h:26
 msgid ""
 "Sets the canvas padding color used if the padding mode is set to custom "
 "color."
-msgstr ""
+msgstr "Asettaa kankaan täyttövärin jos täyttötavan asetus on mukautettu väri."
 
 #: app/config/gimprc-blurbs.h:30
 msgid "Ask for confirmation before closing an image without saving."
-msgstr ""
+msgstr "Kysy vahvistusta ennen kuin kuva suljetaan tallettamatta."
 
 #: app/config/gimprc-blurbs.h:33
 msgid "Sets the mode of cursor the GIMP will use."
-msgstr ""
+msgstr "Asettaa GIMP:n käyttämän kohdistimen tilan."
 
 #: app/config/gimprc-blurbs.h:36
 msgid ""
 "Context-dependent cursors are cool.  They are enabled by default. However, "
 "they require overhead that you may want to do without."
 msgstr ""
+"Yhteysriippuvat kohdistimet ovat viileitä. Ne ovat oletusarvoisesti "
+"käytössä. Niistä aiheutuu kuitenkin yleisrasitetta jota ehkä haluat välttää."
 
 #: app/config/gimprc-blurbs.h:44
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
 msgstr ""
+"Kun käytössä, kuvautuu jokainen kuvan kuvapiste varmasti ruudun "
+"kuvapisteeseen."
 
 #: app/config/gimprc-blurbs.h:70
 msgid ""
@@ -450,77 +478,104 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
+"Sumean valinnan ja kaatotäytön kaltaiset työkalut löytävät alueita "
+"algoritmilla nimeltä siementäyttö. Siementäyttö alkaa valitusta "
+"kuvapisteestä ja etenee kaikkiin suuntiin kunnes kuvapisteen väri eroaa "
+"siitä kynnysarvoa enemmän. Tämä on kynnyksen oletusarvo."
 
 #: app/config/gimprc-blurbs.h:83
+#, fuzzy
 msgid ""
 "The window type hint that is set on dock windows. This may affect the way "
 "your window manager decorates and handles dock windows."
 msgstr ""
+"Ikkunatyypin vihje joka asetetaan telakoiduille ikkunoille. Tämä saattaa "
+"vaikuttaa ikkunointiohjelman tapaa kuorruttaa ja käsitellä telakoituja "
+"ikkunoita."
 
 #: app/config/gimprc-blurbs.h:124
 msgid "Sets the browser used by the help system."
-msgstr ""
+msgstr "Asettaa ohjejärjestelmän käyttämän selaimen."
 
 #: app/config/gimprc-blurbs.h:127
 msgid "Sets the text to appear in image window status bars."
-msgstr ""
+msgstr "Asettaa tekstin joka näkyy kuvaikkunan tilapalkissa."
 
 #: app/config/gimprc-blurbs.h:130
 msgid "Sets the text to appear in image window titles."
-msgstr ""
+msgstr "Asettaa tekstin joka näkyy kuvaikkunan otsikossa."
 
 #: app/config/gimprc-blurbs.h:133
 msgid "When enabled, the GIMP will use a different info window per image view."
-msgstr ""
+msgstr "Kun käytössä, GIMP käyttää eri tietoikkunaa jokaiselle kuvanäkymälle."
 
 #: app/config/gimprc-blurbs.h:136
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
+"Kun käytössä, varmistetaan koko kuvan olevan näkyvissä kun tiedosto on "
+"avattu, muuten se näytetään mittakaavalla 1:1."
 
 #: app/config/gimprc-blurbs.h:140
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
 msgstr ""
+"Asenna yksityinen värikartta; saattaa olla hyödyllinen pseudoväriä "
+"käyttävissä näyttötiloissa. "
 
 #: app/config/gimprc-blurbs.h:143
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
+"Asettaa mittakaavan muutoksissa ja muissa muunnoksissa käytettävän "
+"interpolaation määrän."
 
 #: app/config/gimprc-blurbs.h:147
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr ""
+"Kuinka monta hiljattain avatun kuvan tiedostonimeä pidetään "
+"tiedostovalikossa."
 
 #: app/config/gimprc-blurbs.h:150
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
 msgstr ""
+"Valinnan ääriviivassa marssivien muurahaisten nopeus. Arvo on "
+"millisekunneissa (pienempi aika tarkoittaa nopeampaa marssimista)."
 
 #: app/config/gimprc-blurbs.h:154
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
+"GIMP varkoittaa käyttäjää mikäli yritetään luoda kuva joka veisi enemmän "
+"muistia kuin tässä määritelty koko."
 
 #: app/config/gimprc-blurbs.h:158
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
 msgstr ""
+"Määrittää GIMP:n käyttöön varattujen järjestelmän värien vähimmäismäärän. "
+"Tämä on yleensä merkityksellinen vain 8-bittisillä näytöillä."
 
 #: app/config/gimprc-blurbs.h:179
+#, fuzzy
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
 msgstr ""
+"Asettaa kulkureitin esikatselunäkymän koon kuvaikkunan oikeassa alakulmassa."
 
 #: app/config/gimprc-blurbs.h:183
 msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
 msgstr ""
+"Jos GIMP on käännetty valitsimella --enable-mp tämä asetus määrittää kuinka "
+"montaa prosessoria GIMP:n pitäisi käyttää samanaikaisesti "
+"moniprosessorikoneissa."
 
 #: app/config/gimprc-blurbs.h:197
 msgid ""
@@ -530,6 +585,11 @@ msgid ""
 "Perversely, on some X servers enabling this option results in faster "
 "painting."
 msgstr ""
+"Kun käytössä, X-palvelimelta kysytään hiiren sijaintia jokaisen "
+"liiketapahtuman kohdalla, muuten luotetaan sijaintivihjeeseen. Tämä "
+"tarkoittaa, että isoilla siveltimillä maalaamisen pitäisi olla tarkempaa, "
+"mutta se voi olla hitaampaa. Omituista kyllä, joillakin X-palvelimilla tämän "
+"valitsimen käyttö johtaa nopeampaan maalaamiseen."
 
 #: app/config/gimprc-blurbs.h:210
 msgid ""
@@ -537,53 +597,70 @@ msgid ""
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
 msgstr ""
+"Määrää milloin GIMP:n pitäisi luoda tasojen ja kanavien esikatselunäkymiä. "
+"Esikatselunäkymät tasojen ja kanavien valintaikkunassa ovat mukavia mutta ne "
+"saattavat hidastaa käsiteltäessä isoja kuvia."
 
 #: app/config/gimprc-blurbs.h:215
 msgid "Sets the default preview size for layers and channels."
-msgstr ""
+msgstr "Asettaa tasojen ja kanavien esikatselunäkymän oletuskoon."
 
 #: app/config/gimprc-blurbs.h:218
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
 msgstr ""
+"Kun käytössä, kuvaikkuna muuttaa itsestään kokoaan aina kun kuvan todellinen "
+"koko muuttuu."
 
 #: app/config/gimprc-blurbs.h:222
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
 msgstr ""
+"Kun käytössä, kuvaikkuna muuttaa itsestään kokoaan aina kun zoomataan sisään "
+"tai ulos kuvasta."
 
 #: app/config/gimprc-blurbs.h:226
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
+"GIMP yrittää palauttaa viimeisimmän talletetun istunnon jokaisella "
+"käynnistyskerralla."
 
 #: app/config/gimprc-blurbs.h:229
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
+"Muista käytetty työkalu, kuvio, väri ja sivellin GIMP-istuntojen välillä. "
 
 #: app/config/gimprc-blurbs.h:233
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
 msgstr ""
+"Tallenna tärkeimpien valintaikkunoiden sijainnit ja koot kun GIMP lopettaa."
 
 #: app/config/gimprc-blurbs.h:239
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
+"Kun käytössä, kaikki maalaustyökalut näyttävät esikatselussa nykysiveltimen "
+"ääriviivat."
 
 #: app/config/gimprc-blurbs.h:243
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
+"Kun käytössä, valikkopalkki on oletusarvona näkyvissä. Tilan voi vaihtaa "
+"myös \"Näkymä->Näytä valikkopalkki\"-toiminnolla."
 
 #: app/config/gimprc-blurbs.h:247
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
+"Kun käytössä, viivaimet ovat oletusarvona näkyvissä. Tilan voi vaihtaa myös "
+"\"Näkymä->Näytä viivaimet\"-toiminnolla."
 
 #: app/config/gimprc-blurbs.h:251
 msgid ""
@@ -1690,7 +1767,7 @@ msgstr "Uusi kanava"
 msgid "Set Channel Opacity"
 msgstr "Uuden kanavan asetukset"
 
-#: app/core/gimpchannel-select.c:55 app/tools/gimprectselecttool.c:97
+#: app/core/gimpchannel-select.c:55 app/tools/gimprectselecttool.c:98
 msgid "Rect Select"
 msgstr "Suorakulmiovalinta"
 
@@ -1717,7 +1794,7 @@ msgstr "Epäterävä valinta"
 msgid "Select by Color"
 msgstr "Valitse värin mukaan"
 
-#: app/core/gimpdata.c:238
+#: app/core/gimpdata.c:239
 #, fuzzy, c-format
 msgid "Could not delete '%s': %s"
 msgstr "Tiedoston '%s' avaaminen epäonnistui"
@@ -2533,50 +2610,50 @@ msgid "Custom Color"
 msgstr "/Työkalut/Oletusvärit"
 
 #. create the contents of the right_vbox  ********************************
-#: app/display/gimpdisplayshell.c:788
+#: app/display/gimpdisplayshell.c:787
 #, fuzzy
 msgid "Set Canvas Padding Color"
 msgstr "Aseta kankaan koko"
 
-#: app/display/gimpdisplayshell.c:797
+#: app/display/gimpdisplayshell.c:796
 msgid "Set canvas padding color"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:810
+#: app/display/gimpdisplayshell.c:809
 #, fuzzy
 msgid "/From _Theme"
 msgstr "Teemat"
 
-#: app/display/gimpdisplayshell.c:813
+#: app/display/gimpdisplayshell.c:812
 #, fuzzy
 msgid "/_Light Check Color"
 msgstr "Vaalea ruudutus"
 
-#: app/display/gimpdisplayshell.c:816
+#: app/display/gimpdisplayshell.c:815
 #, fuzzy
 msgid "/_Dark Check Color"
 msgstr "Tumma ruudutus"
 
-#: app/display/gimpdisplayshell.c:822
+#: app/display/gimpdisplayshell.c:821
 #, fuzzy
 msgid "/Select _Custom Color..."
 msgstr "Valitse värin mukaan"
 
-#: app/display/gimpdisplayshell.c:826
+#: app/display/gimpdisplayshell.c:825
 #, fuzzy
 msgid "/As in _Preferences"
 msgstr "Asetukset"
 
-#: app/display/gimpdisplayshell.c:855
+#: app/display/gimpdisplayshell.c:854
 msgid "Toggle QuickMask"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:1736
+#: app/display/gimpdisplayshell.c:1377
 #, fuzzy, c-format
 msgid "Close %s?"
 msgstr "Sulje"
 
-#: app/display/gimpdisplayshell.c:1738
+#: app/display/gimpdisplayshell.c:1379
 #, fuzzy, c-format
 msgid "Changes were made to '%s'. Close anyway?"
 msgstr ""
@@ -8284,7 +8361,7 @@ msgstr "Istunto"
 msgid "Edit"
 msgstr "Muokkaa"
 
-#: app/tools/tools-enums.c:95 app/tools/gimpmovetool.c:109
+#: app/tools/tools-enums.c:95 app/tools/gimpmovetool.c:110
 #, fuzzy
 msgid "Move"
 msgstr "Siirrä: "
@@ -9156,11 +9233,11 @@ msgstr "/Pino/Nosta taso päällimmäiseksi"
 msgid "Move the Current Path"
 msgstr "Vain nykyinen taso"
 
-#: app/tools/gimpmovetool.c:110
+#: app/tools/gimpmovetool.c:111
 msgid "Move layers & selections"
 msgstr "Siirrä tasoja ja valintoja"
 
-#: app/tools/gimpmovetool.c:111
+#: app/tools/gimpmovetool.c:112
 #, fuzzy
 msgid "/Tools/Transform Tools/_Move"
 msgstr "/Työkalut/Muuntotyökalut/Siirto"
@@ -9308,32 +9385,32 @@ msgstr "Posterisaatio ei toimi indeksoiduilla kuvilla."
 msgid "Posterize _Levels:"
 msgstr "Posterisaatiotasoja:"
 
-#: app/tools/gimprectselecttool.c:98
+#: app/tools/gimprectselecttool.c:99
 msgid "Select rectangular regions"
 msgstr "Valitse suorakulmioita"
 
-#: app/tools/gimprectselecttool.c:99
+#: app/tools/gimprectselecttool.c:100
 #, fuzzy
 msgid "/Tools/Selection Tools/_Rect Select"
 msgstr "/Työkalut/Valintatyökalut/Suorakulmiovalinta"
 
-#: app/tools/gimprectselecttool.c:241
+#: app/tools/gimprectselecttool.c:242
 msgid "Selection: ADD"
 msgstr "Valinta: LISÄÄ"
 
-#: app/tools/gimprectselecttool.c:244
+#: app/tools/gimprectselecttool.c:245
 msgid "Selection: SUBTRACT"
 msgstr "Valinta: POISTA"
 
-#: app/tools/gimprectselecttool.c:247
+#: app/tools/gimprectselecttool.c:248
 msgid "Selection: INTERSECT"
 msgstr "Valinta: LEIKKAUS"
 
-#: app/tools/gimprectselecttool.c:250
+#: app/tools/gimprectselecttool.c:251
 msgid "Selection: REPLACE"
 msgstr "VALINTA: KORVAA"
 
-#: app/tools/gimprectselecttool.c:475
+#: app/tools/gimprectselecttool.c:476
 msgid "Selection: "
 msgstr "Valinta: "
 
