@@ -476,6 +476,18 @@ selection_tool_update_op_state (RectSelect *rect_sel,
 }
 
 void
+rect_select_oper_update  (Tool           *tool,
+			  GdkEventMotion *mevent,
+			  gpointer        gdisp_ptr)
+{
+  RectSelect *rect_sel;
+
+  rect_sel = (RectSelect*)tool->private;
+  selection_tool_update_op_state (rect_sel, mevent->x, mevent->y,
+				  mevent->state, gdisp_ptr);
+}
+
+void
 rect_select_cursor_update (Tool           *tool,
 			   GdkEventMotion *mevent,
 			   gpointer        gdisp_ptr)
@@ -486,9 +498,6 @@ rect_select_cursor_update (Tool           *tool,
   gdisp = (GDisplay *)gdisp_ptr;
   active = (active_tool->state == ACTIVE);
   rect_sel = (RectSelect*)tool->private;
-
-  selection_tool_update_op_state (rect_sel, mevent->x, mevent->y,
-				  mevent->state, gdisp_ptr);
 
   switch (rect_sel->op)
   {
@@ -574,6 +583,7 @@ tools_new_rect_select ()
   tool->button_release_func = rect_select_button_release;
   tool->motion_func         = rect_select_motion;
   tool->cursor_update_func  = rect_select_cursor_update;
+  tool->oper_update_func    = rect_select_oper_update;
   tool->control_func        = rect_select_control;
 
   return tool;

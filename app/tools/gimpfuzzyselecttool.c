@@ -685,6 +685,7 @@ tools_new_fuzzy_select ()
   tool->button_release_func = fuzzy_select_button_release;
   tool->motion_func         = fuzzy_select_motion;
   tool->cursor_update_func  = rect_select_cursor_update;
+  tool->oper_update_func    = rect_select_oper_update;
   tool->control_func        = fuzzy_select_control;
 
   return tool;

@@ -895,6 +895,12 @@ standard_cursor_update_func (Tool           *tool,
 }
 
 static void
+standard_operator_update_func (Tool           *tool,
+			       GdkEventMotion *mevent,
+			       gpointer        gdisp_ptr)
+{
+}
+static void
 standard_control_func (Tool       *tool,
 		       ToolAction  action,
 		       gpointer    gdisp_ptr)
@@ -933,6 +939,7 @@ tools_new_tool (ToolType tool_type)
   tool->arrow_keys_func     = standard_arrow_keys_func;
   tool->modifier_key_func   = standard_modifier_key_func;
   tool->cursor_update_func  = standard_cursor_update_func;
+  tool->oper_update_func    = standard_operator_update_func;
   tool->control_func        = standard_control_func;
 
   return tool;

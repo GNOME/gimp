@@ -1,3 +1,26 @@
+2000-01-19  Garry R. Osgood <gosgood@idt.net>
+        * gimp/app/disp_callbacks.c
+        * gimp/app/ellipse_select.c
+        * gimp/app/free_select.c
+        * gimp/app/fuzzy_select.c
+        * gimp/app/rect_select.c
+        * gimp/app/rect_select.h
+        * gimp/app/rect_selectP.h
+        * gimp/app/tools.c
+        * gimp/app/tools.h
+        * gimp/app/toolsF.h
+
+        Boolean selection operations, (adding to,
+        subtracting from, or intersecting with
+        pre-existing selections) now occur regardless
+        of the setting of "Disable Cursor Update"
+        toggle button in Interface/Image Window
+        category. Introduced a new tool action type,
+        OperUpdateFunc, To provide a distinct context
+        for such activity. see
+        http://idt.net/~gosgood/gimp-patch/patch05.html
+        for full details. Closes #2568.
+
 Wed Jan 19 12:50:55 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* plug-ins/gflare/gflare.c: Typo fix and typo update.

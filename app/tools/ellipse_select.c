@@ -136,6 +136,7 @@ tools_new_ellipse_select  (void)
   tool->button_release_func = rect_select_button_release;
   tool->motion_func         = rect_select_motion;
   tool->cursor_update_func  = rect_select_cursor_update;
+  tool->oper_update_func    = rect_select_oper_update;
   tool->control_func        = rect_select_control;
 
   return tool;

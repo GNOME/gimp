@@ -22,6 +22,7 @@
 #include "gdisplayF.h"
 #include "gimpcontext.h"
 #include "tool_options.h"
+#include "channel.h"
 
 #include "toolsF.h"
 
@@ -34,6 +35,20 @@ typedef enum
   ACTIVE,
   PAUSED
 } ToolState;
+
+/* Selection Boolean operations that rect, */
+/* ellipse, freehand, and fuzzy tools may  */
+/* perform.                                */
+
+typedef enum
+{
+  SELECTION_ADD       = ADD,
+  SELECTION_SUB       = SUB,
+  SELECTION_REPLACE   = REPLACE,
+  SELECTION_INTERSECT = INTERSECT,
+  SELECTION_MOVE_MASK,
+  SELECTION_MOVE
+} SelectOps;
 
 /*  The possibilities for where the cursor lies  */
 #define  ACTIVE_LAYER      (1 << 0)
@@ -65,6 +80,7 @@ struct _Tool
   ArrowKeysFunc      arrow_keys_func;
   ModifierKeyFunc    modifier_key_func;
   CursorUpdateFunc   cursor_update_func;
+  OperUpdateFunc     oper_update_func;
   ToolCtlFunc        control_func;
 };
 

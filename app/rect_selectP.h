@@ -9,7 +9,7 @@ struct _RectSelect
 {
   DrawCore *      core;       /*  Core select object                      */
 
-  int             op;         /*  selection operation (SELECTION_ADD etc.) */
+  SelectOps       op;         /*  selection operation (SELECTION_ADD etc.) */
 
   int             x, y;       /*  upper left hand coordinate              */
   int             w, h;       /*  width and height                        */

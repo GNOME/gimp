@@ -456,6 +456,22 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	{
 	  grab_and_scroll (gdisp, mevent);
 	}
+
+      /* Operator update support: Bug #XXXX */
+
+      if (
+            /* Should we have a tool...      */
+            active_tool && 
+            /* and this event is NOT driving */
+            /* button press handlers ...     */
+           !(state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK))
+         )
+        {
+          /* ...then preconditions to modify a tool */ 
+          /* operator state have been met.          */
+          (* active_tool->oper_update_func) (active_tool, mevent, gdisp);
+        }
+
       break;
 
     case GDK_KEY_PRESS:
@@ -537,6 +553,11 @@ gdisplay_canvas_events (GtkWidget *canvas,
       break;
     }
 
+  /* Cursor update support                               */
+  /* no_cursor_updating is TRUE (=1) when                */
+  /* <Toolbox>/File/Preferences.../Interface/...         */
+  /* Image Windows/Disable Cursor Updating is TOGGLED ON */
+ 
   if (no_cursor_updating == 0)
     {
       if (active_tool && !gimage_is_empty (gdisp->gimage) &&

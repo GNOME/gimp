@@ -92,6 +92,7 @@ typedef void   (* MotionFunc)         (Tool *, GdkEventMotion *, gpointer);
 typedef void   (* ArrowKeysFunc)      (Tool *, GdkEventKey *,    gpointer);
 typedef void   (* ModifierKeyFunc)    (Tool *, GdkEventKey *,    gpointer);
 typedef void   (* CursorUpdateFunc)   (Tool *, GdkEventMotion *, gpointer);
+typedef void   (* OperUpdateFunc)     (Tool *, GdkEventMotion *, gpointer);
 typedef void   (* ToolCtlFunc)        (Tool *, ToolAction,       gpointer);
 
 /*  ToolInfo function declarations  */
