@@ -1,3 +1,8 @@
+2002-11-02  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpprogress.c (gimp_progress_update): force an update
+	of the progress bar (#97459, reported by Akkana).
+
 2002-11-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/file-open-dialog.[ch]: added "gimage" and "uri"

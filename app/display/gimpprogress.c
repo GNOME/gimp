@@ -253,6 +253,10 @@ gimp_progress_update (GimpProgress *progress,
     }
 
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), percentage);
+
+  /* force updates so there's feedback even when the main loop is busy */
+  if (GTK_WIDGET_DRAWABLE (bar))
+    gdk_window_process_updates (bar->window, TRUE);
 }
 
 
