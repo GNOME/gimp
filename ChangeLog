@@ -1,3 +1,10 @@
+Thu Nov 18 18:52:38 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/blend.c: implemented another way to restrict the angle
+	to multiples of 15 degrees (bound to <Ctrl>). This commit is 
+	done only so that you can give feedback, which way you prefer.
+	Please read my mail to the gimp-developers list.
+
 Thu Nov 18 12:31:08 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpimage.c: use PARAM_IMAGE instead of PARAM_DRAWABLE in

@@ -588,10 +588,10 @@ blend_motion (Tool           *tool,
 
 
   /* Restrict to multiples of 15 degrees if shift is pressed */
-  if (mevent->state & GDK_SHIFT_MASK) 
+  if (mevent->state & GDK_SHIFT_MASK)
     {
-      int tangens[6] = { 34, 106, 196, 334, 618, 1944 };
-      int cosinus[7] = { 256, 247, 222, 181, 128, 66, 0 };
+      int tangens2[6] = {  34, 106, 196, 334, 618, 1944 };
+      int cosinus[7]  = { 256, 247, 222, 181, 128, 66, 0 };
       int dx, dy, i, radius, frac;
 
       dx = blend_tool->endx - blend_tool->startx;
@@ -603,7 +603,7 @@ blend_motion (Tool           *tool,
 	  frac = abs ((dx << 8) / dy);
 	  for (i = 0; i < 6; i++)
 	    {
-	      if (frac < tangens[i])
+	      if (frac < tangens2[i])
 		break;  
 	    }
 	  dx = dx > 0 ? (cosinus[6-i] * radius) >> 8 : - ((cosinus[6-i] * radius) >> 8);
@@ -612,27 +612,58 @@ blend_motion (Tool           *tool,
       blend_tool->endx = blend_tool->startx + dx;
       blend_tool->endy = blend_tool->starty + dy;
     }
-  
-  /* restrict to horizontal/vertical blend, if modifiers are pressed */
-  if (mevent->state & GDK_MOD1_MASK)
-    {
-      if (mevent->state & GDK_CONTROL_MASK)
-	{
-	  int dx, dy;
-	  
-	  dx = blend_tool->endx - blend_tool->startx;
-	  dy = blend_tool->endy - blend_tool->starty;
-	  
-	  blend_tool->endx = blend_tool->startx +
-	    (dx > 0 ? MAX (abs (dx), abs (dy)) : - MAX (abs (dx), abs (dy)));
-	  blend_tool->endy = blend_tool->starty + 
-	    (dy > 0  ? MAX (abs (dx), abs (dy)) : - MAX (abs (dx), abs (dy)));
-	}
-      else
-	blend_tool->endx = blend_tool->startx;
-    }
+  /* Use another way to restrict to multiples of 15 degrees if ctrl is pressed */
   else if (mevent->state & GDK_CONTROL_MASK)
-    blend_tool->endy = blend_tool->starty;
+    {
+      int tangens[5]  = { 69, 148, 256, 443, 955 };
+      int tangens2[6] = { 34, 106, 196, 334, 618, 1944 };
+      int dx, dy, i, frac;
+
+      dx = blend_tool->endx - blend_tool->startx;
+      dy = blend_tool->endy - blend_tool->starty;
+
+      if (dy)
+	{
+	  frac = abs ((dx << 8) / dy);
+	  for (i = 0; i < 6; i++)
+	    {
+	      if (frac < tangens2[i])
+		break;  
+	    }
+	  switch (i)
+	    {
+	    case (0):
+	      dx = 0;
+	      break;
+	    case (1):
+	    case (2):
+	      dx = dx * dy > 0 ? 
+		(tangens[i-1] * dy) / 256 : - ((tangens[i-1] * dy) / 256);
+	      break;
+	    case (3):
+	      if (abs (dx) < abs (dy))
+		dx = dx * dy > 0 ? 
+		  (tangens[i-1] * dy) / 256 : - ((tangens[i-1] * dy) / 256);
+	      else
+		dy = dx * dy > 0 ? 
+		  (tangens[5-i] * dx) / 256 : - ((tangens[5-i] * dx) / 256);
+	      break;
+	    case (4):
+	    case (5):
+	      dy = dx * dy > 0 ? 
+		  (tangens[5-i] * dx) / 256 : - ((tangens[5-i] * dx) / 256);
+	      break;
+	    case (6):
+	      dy = 0;
+	      break;
+	    default:
+	      g_warning ("blend_motion: should never be reached!");
+	      break;
+	    }
+	}
+      blend_tool->endx = blend_tool->startx + dx;
+      blend_tool->endy = blend_tool->starty + dy;
+    }
 
   gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id);
   if (gdisp->dot_for_dot)
