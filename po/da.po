@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
 "POT-Creation-Date: 2000-05-01 10:46-0700\n"
-"PO-Revision-Date: 2000-05-02 03:31+02:00\n"
+"PO-Revision-Date: 2000-05-02 04:31+02:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -98,7 +98,7 @@ msgstr "Farveovergange"
 
 #: app/app_procs.c:752
 msgid "Really Quit?"
-msgstr "Vil du afslutte?"
+msgstr "Vil du virkelig afslutte?"
 
 #: app/app_procs.c:756
 msgid ""
