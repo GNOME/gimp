@@ -1,3 +1,11 @@
+Mon Jun  8 17:16:22 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/color_select.[ch]: added a hex triplet to the color
+	selector. It updates on focus_leave for now, so I bet there
+	are some interface nits...
+
+	* app/fileops.c: add an #include to quell a warning
+
 Mon Jun  8 16:18:00 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/menus.c: fix stupid <Separator> menu bug

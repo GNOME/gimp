@@ -35,6 +35,7 @@ struct _ColorSelect {
   GtkWidget *orig_color;
   GtkWidget *toggles[6];
   GtkWidget *entries[6];
+  GtkWidget *hex_entry;
   GtkAdjustment *slider_data[6];
   int pos[3];
   int values[6];

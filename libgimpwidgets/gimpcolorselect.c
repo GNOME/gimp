@@ -24,10 +24,10 @@
 #include "errors.h"
 #include "gimprc.h"
 
-#define XY_DEF_WIDTH       192
-#define XY_DEF_HEIGHT      192
+#define XY_DEF_WIDTH       240
+#define XY_DEF_HEIGHT      240
 #define Z_DEF_WIDTH        15
-#define Z_DEF_HEIGHT       192
+#define Z_DEF_HEIGHT       240
 #define COLOR_AREA_WIDTH   74
 #define COLOR_AREA_HEIGHT  20
 
@@ -93,6 +93,7 @@ static gint color_select_color_events (GtkWidget *, GdkEvent *);
 static void color_select_slider_update (GtkAdjustment *, gpointer);
 static void color_select_entry_update (GtkWidget *, gpointer);
 static void color_select_toggle_update (GtkWidget *, gpointer);
+static gint color_select_hex_entry_leave (GtkWidget *, GdkEvent *, gpointer);
 
 static void color_select_image_fill (GtkWidget *, ColorSelectFillType, int *);
 
@@ -157,6 +158,8 @@ color_select_new (int                  r,
   GtkWidget *right_vbox;
   GtkWidget *table;
   GtkWidget *slider;
+  GtkWidget *hex_hbox;
+  GtkWidget *label;
   GSList *group;
   char buffer[16];
   int i;
@@ -312,6 +315,25 @@ color_select_new (int                  r,
 			  csp);
       gtk_widget_show (csp->entries[i]);
     }
+
+  /* The hex triplet entry */
+  hex_hbox = gtk_hbox_new (FALSE, 3);
+  gtk_box_pack_start (GTK_BOX (right_vbox), hex_hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hex_hbox);
+
+  csp->hex_entry = gtk_entry_new ();
+  sprintf(buffer, "#%.2x%.2x%.2x", r, g, b);
+  gtk_entry_set_text (GTK_ENTRY (csp->hex_entry), buffer);
+  gtk_widget_set_usize (GTK_WIDGET (csp->hex_entry), 55, 0);
+  gtk_box_pack_end (GTK_BOX (hex_hbox), csp->hex_entry, FALSE, FALSE, 2);
+  gtk_signal_connect (GTK_OBJECT (csp->hex_entry), "focus_out_event",
+		      (GtkSignalFunc) color_select_hex_entry_leave,
+		      csp);
+  gtk_widget_show (csp->hex_entry);
+
+  label = gtk_label_new ("Hex Triplet:");
+  gtk_box_pack_end (GTK_BOX (hex_hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   /*  The action area  */
   action_items[0].user_data = csp;
@@ -719,6 +741,12 @@ color_select_update_entries (ColorSelectP csp,
 	    gtk_entry_set_text (GTK_ENTRY (csp->entries[i]), buffer);
 	    gtk_signal_handler_unblock_by_data (GTK_OBJECT (csp->entries[i]), csp);
 	  }
+
+      sprintf(buffer, "#%.2x%.2x%.2x",
+	      csp->values[RED],
+	      csp->values[GREEN],
+	      csp->values[BLUE]);
+      gtk_entry_set_text (GTK_ENTRY (csp->hex_entry), buffer);
     }
 }
 
@@ -1226,6 +1254,45 @@ color_select_toggle_update (GtkWidget *w,
       color_select_update (csp, UPDATE_POS);
       color_select_update (csp, UPDATE_Z_COLOR | UPDATE_XY_COLOR);
     }
+}
+
+static gint
+color_select_hex_entry_leave (GtkWidget *w,
+			      GdkEvent  *event,
+			      gpointer   data)
+{
+  ColorSelectP csp;
+  gchar buffer[8];
+  gchar *hex_color;
+  guint hex_rgb;
+
+  csp = (ColorSelectP) data;
+
+  if (csp)
+    {
+      hex_color = g_strdup (gtk_entry_get_text (GTK_ENTRY (csp->hex_entry)));
+
+      sprintf(buffer, "#%.2x%.2x%.2x",
+	      csp->values[RED],
+	      csp->values[GREEN],
+	      csp->values[BLUE]);
+
+      if ((strlen (hex_color) == 7) &&
+	  (g_strcasecmp (buffer, hex_color) != 0))
+	{
+	  if ((sscanf (hex_color, "#%x", &hex_rgb) == 1) &&
+	      (hex_rgb < (1 << 24)))
+	    color_select_set_color (csp,
+				    (hex_rgb & 0xff0000) >> 16,
+				    (hex_rgb & 0x00ff00) >> 8,
+				    hex_rgb & 0x0000ff,
+				    TRUE);
+	}
+
+      g_free (hex_color);
+    }
+
+  return FALSE;
 }
 
 static void
