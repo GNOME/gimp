@@ -19,7 +19,7 @@ use Gimp ('croak','__');
 
 require DynaLoader;
 
-$VERSION = $Gimp::VERSION;
+$VERSION = 1.14;
 
 bootstrap Gimp::Net $VERSION;
 

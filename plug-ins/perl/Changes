@@ -1,10 +1,13 @@
 Revision history for Gimp-Perl extension.
 
+	- set the version of all modules explicitly (for the benefit of CPAN).
 	- added examples/avi (avi load/save plug-in, uncompressed 24 bit).
 	- possible fix for another installation horror problem.
         - fixed a longstanding bug (?): not every class had a DESTROY, so
           the AUTOLOAD tried to resolve DESTROY after gimp_close had been
           called.
+        - did the DESTROY catch differently...
+        - fixed the testsuite.
         - started to revamp the extra argument handling.
         - updated PDB Explorer a bit, still broken.
         - almost full i18n of gimp-perl. A de translation is available.

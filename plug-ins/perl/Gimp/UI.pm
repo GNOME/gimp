@@ -4,7 +4,7 @@ use Gimp ('__');
 use Gimp::Fu;
 use Gtk;
 
-$VERSION = $Gimp::VERSION;
+$VERSION = 1.14;
 
 =head1 NAME
 

@@ -6,7 +6,7 @@ use base qw(DynaLoader);
 
 require DynaLoader;
 
-$VERSION = $Gimp::VERSION;
+$VERSION = 1.14;
 
 use subs qw(
 	gimp_call_procedure		gimp_main	gimp_init

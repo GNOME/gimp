@@ -435,7 +435,7 @@ for(qw(_gimp_procedure_available gimp_call_procedure set_trace initialized)) {
 *lock  = \&{"$interface_pkg\::lock" };
 *unlock= \&{"$interface_pkg\::unlock" };
 
-my %ignore_function = ();
+my %ignore_function = (DESTROY => 1);
 
 @PREFIXES=("gimp_", "");
 
@@ -503,14 +503,10 @@ sub AUTOLOAD {
    croak __"function/macro \"$name\" not found in $class";
 }
 
-# better have a destroy method here, than fall into nirvana later
-sub DESTROY { }
-
 sub _pseudoclass {
   my ($class, @prefixes)= @_;
   unshift(@prefixes,"");
   *{"Gimp::$class\::AUTOLOAD"} = \&AUTOLOAD;
-  *{"Gimp::$class\::DESTROY"}  = sub { };
   push(@{"$class\::ISA"}		, "Gimp::$class");
   push(@{"Gimp::$class\::PREFIXES"}	, @prefixes); @prefixes=@{"Gimp::$class\::PREFIXES"};
   push(@{"$class\::PREFIXES"}		, @prefixes); @prefixes=@{"$class\::PREFIXES"};

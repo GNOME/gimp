@@ -51,7 +51,7 @@ require      Exporter;
 
 use Gimp;
 
-$VERSION=$Gimp::VERSION;
+$VERSION=1.14;
 
 ##############################################################################
 =pod

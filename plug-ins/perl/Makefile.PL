@@ -218,6 +218,11 @@ msgmerge:
         msgmerge -w 83 po/gimp-perl.pot - >gimp-perl.pot~ && \\
         mv gimp-perl.pot~ po/gimp-perl.pot
 	for po in po/*.po; do msgmerge -w 83 \$\$po po/gimp-perl.pot >\$\$po~ && mv \$\$po~ \$\$po; done
+
+# set \$VERSION in all modules
+setver:
+	\$(PERL) -pi -e 's/^(\\s*\\\$\$VERSION\\s*=\\s*).*\$\$/\$\${1}\$(VERSION);/' *.pm Gimp/*.pm
+
 ";
 
    $postamble;
@@ -262,7 +267,7 @@ print "ok\n";
 
 WriteMakefile(
     'dist'	=> {
-	            PREOP	=> 'chmod -R u=rwX,go=rX . ;',
+	            PREOP	=> 'make setver && chmod -R u=rwX,go=rX . ;',
 	            COMPRESS	=> 'gzip -9v',
 	            SUFFIX	=> '.gz',
 	           },

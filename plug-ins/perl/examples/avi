@@ -64,7 +64,7 @@ register "file_avi_save",
                             $us_frame,
                             $framesize*1_000_000/$us_frame,
                             0,
-                            0,
+                            0x00000810,  # only a god may know why...
                             scalar@layers,
                             0,
                             1,
