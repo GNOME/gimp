@@ -1,3 +1,11 @@
+2000-05-08  Sven Neumann  <sven@gimp.org>
+
+        * libgimp/gimpbrushmenu.c
+        * libgimp/gimpgradientmenu.c
+	* libgimp/gimpmenu.h
+        * libgimp/gimppatternmenu.c: added gtk_grab_[add|remove] calls
+	on popup [open|close] and reformatted the code. Fixes bug #10494.
+
 2000-05-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/fileops.c

@@ -28,11 +28,11 @@ extern "C" {
 
 
 
-typedef gint (*GimpConstraintFunc) (gint32   image_id,
-				    gint32   drawable_id,
-				    gpointer data);
-typedef void (*GimpMenuCallback)   (gint32   id,
-				    gpointer data);
+typedef gint (*GimpConstraintFunc) (gint32    image_id,
+				    gint32    drawable_id,
+				    gpointer  data);
+typedef void (*GimpMenuCallback)   (gint32    id,
+				    gpointer  data);
 
 /* Popup the brush dialog interactively */
 typedef void (* GRunBrushCallback) (gchar    *name,
@@ -78,93 +78,93 @@ GtkWidget* gimp_drawable_menu_new (GimpConstraintFunc constraint,
 				   gpointer           data,
 				   gint32             active_drawable);
 
-void * gimp_interactive_selection_brush (gchar *dialogname,
-				       gchar *brush_name,
-				       gdouble opacity,
-				       gint spacing,
-				       gint paint_mode,
-				       GRunBrushCallback callback,
-				       gpointer udata);
+void * gimp_interactive_selection_brush (gchar             *dialogname,
+					 gchar             *brush_name,
+					 gdouble            opacity,
+					 gint               spacing,
+					 gint               paint_mode,
+					 GRunBrushCallback  callback,
+					 gpointer           data);
+  
+GtkWidget * gimp_brush_select_widget    (gchar             *dname,
+					 gchar             *ibrush, 
+					 gdouble            opacity,
+					 gint               spacing,
+					 gint               paint_mode,
+					 GRunBrushCallback  cback,
+					 gpointer           data);
 
-GtkWidget * gimp_brush_select_widget(gchar * dname,
-				     gchar * ibrush, 
-				     gdouble opacity,
-				     gint spacing,
-				     gint paint_mode,
-				     GRunBrushCallback cback,
-				     gpointer);
-
-gint gimp_brush_select_widget_close_popup(GtkWidget *w);
-
-gint gimp_brush_select_widget_set_popup(GtkWidget *w,
-					gchar *pname,
-					gdouble opacity,
-					gint spacing,
-					gint paint_mode);
-
-gchar *gimp_brushes_get_brush_data (gchar *pname,
+gboolean  gimp_brush_select_widget_close_popup (GtkWidget  *widget);
+gboolean  gimp_brush_select_widget_set_popup   (GtkWidget  *widget,
+						gchar      *pname,
+						gdouble     opacity,
+						gint        spacing,
+						gint        paint_mode);
+  
+gchar *gimp_brushes_get_brush_data (gchar   *pname,
 				    gdouble *opacity,
-				    gint *spacing,
-				    gint *paint_mode,
-				    gint  *width,
-				    gint  *height,
+				    gint    *spacing,
+				    gint    *paint_mode,
+				    gint    *width,
+				    gint    *height,
 				    gchar  **mask_data);
 
-gint gimp_brush_set_popup(void * popup_pnt, 
-			  gchar * pname,
-			  gdouble opacity,
-			  gint spacing,
-			  gint paint_mode);
+gint gimp_brush_set_popup   (gpointer  popup_pnt, 
+			     gchar    *pname,
+			     gdouble   opacity,
+			     gint      spacing,
+			     gint      paint_mode);
+gint gimp_brush_close_popup (gpointer  popup_pnt);
 
-gint gimp_brush_close_popup(void * popup_pnt);
+void * gimp_interactive_selection_pattern (gchar               *dialogtitle,
+					   gchar               *pattern_name,
+					   GRunPatternCallback  callback,
+					   gpointer             data);
 
-void * gimp_interactive_selection_pattern (gchar *dialogtitle,
-					 gchar *pattern_name,
-					 GRunPatternCallback callback,
-					 gpointer udata);
+GtkWidget * gimp_pattern_select_widget (gchar               *dname,
+					gchar               *ipattern, 
+					GRunPatternCallback  cback,
+					gpointer             data);
 
-GtkWidget * gimp_pattern_select_widget(gchar * dname,
-				       gchar * ipattern, 
-				       GRunPatternCallback cback,
-				       gpointer);
+gboolean   gimp_pattern_select_widget_close_popup (GtkWidget *widget);
+gboolean   gimp_pattern_select_widget_set_popup   (GtkWidget *widget,
+						   gchar     *pname);
 
-gint gimp_pattern_select_widget_close_popup(GtkWidget *w);
+gchar *gimp_pattern_get_pattern_data (gchar  *pname,
+				      gint   *width,
+				      gint   *height,
+				      gint   *bytes,
+				      gchar **mask_data);
+  
+gint gimp_pattern_set_popup   (gpointer   popup_pnt, 
+			       gchar     *pname);
 
-gint gimp_pattern_select_widget_set_popup(GtkWidget *w,gchar *pname);
+gint gimp_pattern_close_popup (gpointer  popup_pnt);
 
-gchar *gimp_pattern_get_pattern_data (gchar *pname,
-			       gint  *width,
-			       gint  *height,
-			       gint  *bytes,
-			       gchar  **mask_data);
-
-gint gimp_pattern_set_popup(void * popup_pnt, gchar * pname);
-
-gint gimp_pattern_close_popup(void * popup_pnt);
-
-void * gimp_interactive_selection_gradient (gchar *dialogtitle,
-					    gchar *gradient_name,
-					    gint sample_sz,
-					    GRunGradientCallback callback,
+void * gimp_interactive_selection_gradient (gchar                *dialogtitle,
+					    gchar                *gradient_name,
+					    gint                  sample_sz,
+					    GRunGradientCallback  callback,
 					    gpointer udata);
 
-GtkWidget * gimp_gradient_select_widget(gchar * gname,
-					gchar * igradient, 
-					GRunGradientCallback cback,
-					gpointer);
+GtkWidget * gimp_gradient_select_widget (gchar                *gname,
+					 gchar                *igradient, 
+					 GRunGradientCallback  cback,
+					 gpointer              data);
+  
+gint gimp_gradient_select_widget_close_popup (GtkWidget *widget);
 
-gint gimp_gradient_select_widget_close_popup(GtkWidget *w);
+gint gimp_gradient_select_widget_set_popup   (GtkWidget *widget,
+					      gchar     *pname);
 
-gint gimp_gradient_select_widget_set_popup(GtkWidget *w,gchar *pname);
-
-gchar *gimp_gradient_get_gradient_data (gchar *pname,
-					gint  *width,
-					gint sample_sz,
+gchar *gimp_gradient_get_gradient_data (gchar    *pname,
+					gint     *width,
+					gint      sample_sz,
 					gdouble **mask_data);
 
-gint gimp_gradient_set_popup(void * popup_pnt, gchar * pname);
-
-gint gimp_gradient_close_popup(void * popup_pnt);
+gint gimp_gradient_set_popup   (gpointer  popup_pnt, 
+				gchar    *pname);
+gint gimp_gradient_close_popup (gpointer  popup_pnt);
 
 #ifdef __cplusplus
 }

@@ -1,23 +1,23 @@
-/* LIBGIMP - The GIMP Library                                                   
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  * Copyright (C) 1998 Andy Thomas                
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.             
- *                                                                              
- * This library is distributed in the hope that it will be useful,              
- * but WITHOUT ANY WARRANTY; without even the implied warranty of               
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- */                                                                             
-#include <stdio.h>
+ */
+
 #include <string.h>
 
 #include "gimp.h"
@@ -36,43 +36,48 @@
  */
 
 
-#define BSEL_DATA_KEY "__bsel_data"
-#define CELL_SIZE 20
-#define BRUSH_EVENT_MASK  GDK_EXPOSURE_MASK | \
-                          GDK_BUTTON_PRESS_MASK | \
+#define BSEL_DATA_KEY     "__bsel_data"
+#define CELL_SIZE         20
+#define BRUSH_EVENT_MASK  GDK_EXPOSURE_MASK       | \
+                          GDK_BUTTON_PRESS_MASK   | \
 			  GDK_BUTTON_RELEASE_MASK | \
                           GDK_BUTTON1_MOTION_MASK 
 
-struct __brushes_sel {
-  gchar * dname;
-  GRunBrushCallback cback;
-  GtkWidget *brush_preview;
-  GtkWidget *device_brushpopup; 
-  GtkWidget *device_brushpreview;
-  GtkWidget *button;
-  GtkWidget *top_hbox;
-  gchar *brush_name; /* Local copy */
-  gdouble opacity;
-  gint spacing;
-  gint paint_mode;
-  gint width;
-  gint height;
-  gchar *mask_data; /* local copy */
-  void *brush_popup_pnt; /* POinter use to control the popup */
-  gpointer udata;
+struct __brushes_sel 
+{
+  gchar             *dname;
+  GRunBrushCallback  cback;
+  GtkWidget         *brush_preview;
+  GtkWidget         *device_brushpopup; 
+  GtkWidget         *device_brushpreview;
+  GtkWidget         *button;
+  GtkWidget         *top_hbox;
+  gchar             *brush_name;       /* Local copy */
+  gdouble            opacity;
+  gint               spacing;
+  gint               paint_mode;
+  gint               width;
+  gint               height;
+  gchar             *mask_data;        /* local copy */
+  void              *brush_popup_pnt;  /* Pointer use to control the popup */
+  gpointer           data;
 };
 
-typedef struct __brushes_sel BSelect, * BSelectP;
+typedef struct __brushes_sel BSelect;
 
 static void
-brush_popup_open (int          x,
-		    int          y,
-		    BSelectP   bsel)
+brush_popup_open (gint      x,
+		  gint      y,
+		  BSelect  *bsel)
 {
-  gint x_org, y_org;
-  gint scr_w, scr_h;
-  gchar *src, *buf;
-  unsigned char *b,*s;
+  gint    x_org;
+  gint    y_org;
+  gint    scr_w;
+  gint    scr_h;
+  gchar  *src;
+  gchar  *buf;
+  guchar *b;
+  guchar *s;
 
   /* make sure the popup exists and is not visible */
   if (bsel->device_brushpopup == NULL)
@@ -80,8 +85,6 @@ brush_popup_open (int          x,
       GtkWidget *frame;
 
       bsel->device_brushpopup = gtk_window_new (GTK_WINDOW_POPUP);
-      gtk_window_set_policy (GTK_WINDOW (bsel->device_brushpopup), FALSE, FALSE, TRUE);
-
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
       gtk_container_add (GTK_CONTAINER (bsel->device_brushpopup), frame);
@@ -112,10 +115,7 @@ brush_popup_open (int          x,
   /*  Draw the brush  */
   buf = g_new (gchar, bsel->width);
   
-  memset(buf, 255, sizeof(bsel->width));
-  
-/*   for (i = 0; i < CELL_SIZE; i++) */
-/*     gtk_preview_draw_row (GTK_PREVIEW(bsel->device_brushpreview), (guchar *)buf, 0, i, CELL_SIZE); */
+  memset (buf, 255, sizeof(bsel->width));
   
   src = bsel->mask_data;
   
@@ -127,7 +127,8 @@ brush_popup_open (int          x,
       for (j = 0; j < bsel->width ; j++)
 	*b++ = 255 - *s++;
 
-      gtk_preview_draw_row (GTK_PREVIEW (bsel->device_brushpreview), (guchar *)buf, 0, y, bsel->width);
+      gtk_preview_draw_row (GTK_PREVIEW (bsel->device_brushpreview), 
+			    (guchar *)buf, 0, y, bsel->width);
       src += bsel->width;
     }
   g_free(buf);
@@ -137,7 +138,7 @@ brush_popup_open (int          x,
 }
 
 static void
-brush_popup_close (BSelectP   bsel)
+brush_popup_close (BSelect *bsel)
 {
   if (bsel->device_brushpopup != NULL)
     gtk_widget_hide (bsel->device_brushpopup);
@@ -145,13 +146,13 @@ brush_popup_close (BSelectP   bsel)
 
 static gint
 brush_preview_events (GtkWidget    *widget,
-			GdkEvent     *event,
-			gpointer     udata)
+		      GdkEvent     *event,
+		      gpointer      data)
 {
   GdkEventButton *bevent;
-  BSelectP bsel = (BSelectP)udata;
+  BSelect        *bsel = (BSelect*)data;
 
-  if(bsel->mask_data)
+  if (bsel->mask_data)
     {
       switch (event->type)
 	{
@@ -163,6 +164,7 @@ brush_preview_events (GtkWidget    *widget,
 	  
 	  if (bevent->button == 1)
 	    {
+	      gtk_grab_add (widget);
 	      brush_popup_open (bevent->x, bevent->y, bsel);
 	    }
 	  break;
@@ -172,10 +174,7 @@ brush_preview_events (GtkWidget    *widget,
 	  
 	  if (bevent->button == 1)
 	    {
-	      /*  Ungrab the pointer  */
-	      gdk_pointer_ungrab (bevent->time);
-	      
-	      /*  Close the device preview popup window  */
+	      gtk_grab_remove (widget);
 	      brush_popup_close (bsel);
 	    }
 	  break;
@@ -192,17 +191,22 @@ brush_preview_events (GtkWidget    *widget,
 
 static void
 brush_pre_update(GtkWidget *brush_preview,
-		   gint brush_width,
-		   gint brush_height,
-		   gchar *mask_data)
+		 gint       brush_width,
+		 gint       brush_height,
+		 gchar     *mask_data)
 {
-  gint y,i;
-  gchar *src, *buf;
-  unsigned char *b,*s;
-  int offset_x, offset_y;
-  int yend;
-  int ystart;
-  gint width,height;
+  gint    y;
+  gint    i;
+  gchar  *src;
+  gchar  *buf;
+  guchar *b;
+  guchar *s;
+  gint    offset_x;
+  gint    offset_y;
+  gint    yend;
+  gint    ystart;
+  gint    width,height;
+
   /*  Draw the brush  */
   buf = g_new (gchar, CELL_SIZE); 
 
@@ -211,7 +215,7 @@ brush_pre_update(GtkWidget *brush_preview,
   height = (brush_height > CELL_SIZE) ? CELL_SIZE: brush_height;
 
   /* Set buffer to white */  
-  memset(buf, 255, CELL_SIZE);
+  memset (buf, 255, CELL_SIZE);
   for (i = 0; i < CELL_SIZE; i++)
     gtk_preview_draw_row (GTK_PREVIEW(brush_preview), (guchar *)buf, 0, i, CELL_SIZE);
   
@@ -231,96 +235,109 @@ brush_pre_update(GtkWidget *brush_preview,
       for (j = 0; j < width ; j++)
 	*b++ = 255 - *s++;
 
-      gtk_preview_draw_row (GTK_PREVIEW (brush_preview), (guchar *)buf, offset_x, y, width);
+      gtk_preview_draw_row (GTK_PREVIEW (brush_preview), 
+			    (guchar *)buf, offset_x, y, width);
       src += brush_width;
     }
-  g_free(buf);
+  g_free (buf);
 
   /*  Draw the brush preview  */
   gtk_widget_draw (brush_preview, NULL);
 }
 
 static void
-brush_select_invoker(gchar    *name,
-		     gdouble  opacity,
-		     gint     spacing,
-		     gint     paint_mode,
-		     gint     width,
-		     gint     height,
-		     gchar *  mask_data,
-		     gint     closing,
-		     gpointer udata)
+brush_select_invoker (gchar   *name,
+		      gdouble  opacity,
+		      gint     spacing,
+		      gint     paint_mode,
+		      gint     width,
+		      gint     height,
+		      gchar   *mask_data,
+		      gint     closing,
+		      gpointer data)
 {
-  gint mask_d_sz;
-  BSelectP bsel = (BSelectP)udata;
+  gint     mask_d_sz;
+  BSelect *bsel = (BSelect*)data;
+
   if(bsel->mask_data != NULL)
     g_free(bsel->mask_data);
-  bsel->width = width;
+
+  bsel->width  = width;
   bsel->height = height;
-  mask_d_sz = width*height;
-  bsel->mask_data = g_malloc(mask_d_sz);
-  g_memmove(bsel->mask_data,mask_data,mask_d_sz); 
-  brush_pre_update(bsel->brush_preview,bsel->width,bsel->height,bsel->mask_data);
+  mask_d_sz    = width * height;
+  bsel->mask_data = g_malloc (mask_d_sz);
+  g_memmove(bsel->mask_data, mask_data, mask_d_sz); 
+
+  brush_pre_update (bsel->brush_preview, bsel->width, bsel->height, bsel->mask_data);
   bsel->opacity = opacity;
   bsel->spacing = spacing;
   bsel->paint_mode = paint_mode;
+
   if(bsel->cback != NULL)
-    (bsel->cback)(name,opacity,spacing,paint_mode,width,height,mask_data,closing,bsel->udata);
+    (bsel->cback)(name, opacity, spacing, paint_mode, 
+		  width, height, mask_data, closing, bsel->data);
+
   if(closing)
     {
-      gtk_widget_set_sensitive(bsel->button,TRUE);
+      gtk_widget_set_sensitive (bsel->button, TRUE);
       bsel->brush_popup_pnt = NULL;
     }
 }
-
 
 static void
 brush_select_callback (GtkWidget *widget,
 		       gpointer   data)
 {
-  BSelectP bsel = (BSelectP)data;
-  gtk_widget_set_sensitive(bsel->button,FALSE);
+  BSelect *bsel = (BSelect*)data;
+
+  gtk_widget_set_sensitive (bsel->button,FALSE);
+
   bsel->brush_popup_pnt = 
-    gimp_interactive_selection_brush((bsel->dname)?bsel->dname:"Brush Plugin Selection",
-				       bsel->brush_name,
-				       bsel->opacity,
-				       bsel->spacing,
-				       bsel->paint_mode,
-				       brush_select_invoker,bsel);
+    gimp_interactive_selection_brush ((bsel->dname) ? bsel->dname 
+				                    : "Brush Plugin Selection",
+				      bsel->brush_name,
+				      bsel->opacity,
+				      bsel->spacing,
+				      bsel->paint_mode,
+				      brush_select_invoker,
+				      bsel);
 }
 
 GtkWidget * 
-gimp_brush_select_widget(gchar *dname,
-			 gchar *ibrush, 
-			 gdouble opacity,
-			 gint spacing,
-			 gint paint_mode,
-			 GRunBrushCallback cback,
-			 gpointer udata)
+gimp_brush_select_widget (gchar             *dname,
+			  gchar             *ibrush, 
+			  gdouble            opacity,
+			  gint               spacing,
+			  gint               paint_mode,
+			  GRunBrushCallback  cback,
+			  gpointer           data)
 {
-  GtkWidget * frame;
-  GtkWidget * hbox;
-  GtkWidget * brush;
-  GtkWidget * button;
-  gint width,height;
-  gint init_spacing,init_paint_mode;
-  gdouble init_opacity;
-  gchar *mask_data;
-  gchar *brush_name;
+  GtkWidget *frame;
+  GtkWidget *hbox;
+  GtkWidget *brush;
+  GtkWidget *button;
+  gint       width;
+  gint       height;
+  gint       init_spacing;
+  gint       init_paint_mode;
+  gdouble    init_opacity;
+  gchar     *mask_data;
+  gchar     *brush_name;
+  BSelect   *bsel;
 
-  BSelectP bsel = g_new(BSelect, sizeof(BSelect));
+  bsel = g_new (BSelect, 1);
 
   hbox = gtk_hbox_new (FALSE, 3);
-  gtk_widget_show(hbox);
+  gtk_widget_show (hbox);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_OUT);
-  gtk_widget_show(frame);
+  gtk_widget_show (frame);
 
   brush = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
   gtk_preview_size (GTK_PREVIEW (brush), CELL_SIZE, CELL_SIZE); 
-  gtk_widget_show(brush);
-  gtk_container_add (GTK_CONTAINER (frame),brush); 
+  gtk_widget_show (brush);
+  gtk_container_add (GTK_CONTAINER (frame), brush); 
 
   gtk_widget_set_events (brush, BRUSH_EVENT_MASK);
 
@@ -328,30 +345,30 @@ gimp_brush_select_widget(gchar *dname,
 		      (GtkSignalFunc) brush_preview_events,
 		      (gpointer)bsel);
 
-  bsel->cback = cback;
-  bsel->udata = udata;
-  bsel->mask_data = NULL;
+  bsel->cback             = cback;
+  bsel->data              = data;
+  bsel->mask_data         = NULL;
   bsel->device_brushpopup = bsel->device_brushpreview = NULL;
-  bsel->brush_preview = brush;
-  bsel->brush_name = ibrush;
-  bsel->dname = dname;
-  bsel->brush_popup_pnt = NULL;
+  bsel->brush_preview     = brush;
+  bsel->brush_name        = ibrush;
+  bsel->dname             = dname;
+  bsel->brush_popup_pnt   = NULL;
 
   /* Do initial brush setup */
-  brush_name = gimp_brushes_get_brush_data(ibrush,
-					   &init_opacity,
-					   &init_spacing,
-					   &init_paint_mode,
-					   &width,
-					   &height,
-					   &mask_data);
-  if(brush_name)
+  brush_name = gimp_brushes_get_brush_data (ibrush,
+					    &init_opacity,
+					    &init_spacing,
+					    &init_paint_mode,
+					    &width,
+					    &height,
+					    &mask_data);
+  if (brush_name)
     {
-      brush_pre_update(bsel->brush_preview,width,height,mask_data);
-      bsel->mask_data = mask_data;
+      brush_pre_update (bsel->brush_preview, width, height, mask_data);
+      bsel->mask_data  = mask_data;
       bsel->brush_name = brush_name;
-      bsel->width = width;
-      bsel->height = height;
+      bsel->width      = width;
+      bsel->height     = height;
       if(opacity != -1)
 	bsel->opacity = opacity;
       else
@@ -383,44 +400,51 @@ gimp_brush_select_widget(gchar *dname,
 }
 
 
-gint
-gimp_brush_select_widget_close_popup(GtkWidget *w)
+gboolean
+gimp_brush_select_widget_close_popup (GtkWidget *widget)
 {
-  gint ret_val = FALSE;
+  gboolean  ret_val = FALSE;
+  BSelect  *bsel;
+  
+  bsel = (BSelect*) gtk_object_get_data (GTK_OBJECT (widget), BSEL_DATA_KEY);
 
-  BSelectP bsel = (BSelectP)gtk_object_get_data(GTK_OBJECT(w),BSEL_DATA_KEY);
-  if(bsel && bsel->brush_popup_pnt)
+  if (bsel && bsel->brush_popup_pnt)
     {
-      ret_val = gimp_brush_close_popup(bsel->brush_popup_pnt);
+      ret_val = gimp_brush_close_popup (bsel->brush_popup_pnt);
       bsel->brush_popup_pnt = NULL;
     }
 
   return ret_val;
 }
 
-gint 
-gimp_brush_select_widget_set_popup(GtkWidget *w,
-				   gchar *bname,
-				   gdouble opacity,
-				   gint spacing,
-				   gint paint_mode)
+gboolean
+gimp_brush_select_widget_set_popup (GtkWidget *widget,
+				    gchar     *bname,
+				    gdouble    opacity,
+				    gint       spacing,
+				    gint       paint_mode)
 {
-  gint ret_val = FALSE;
-  gint width,height;
-  gint init_spacing,init_paint_mode;
-  gdouble init_opacity;
-  gchar *mask_data;
-  gchar *brush_name;
+  gboolean ret_val = FALSE;
+  gint     width;
+  gint     height;
+  gint     init_spacing;
+  gint     init_paint_mode;
+  gdouble  init_opacity;
+  gchar   *mask_data;
+  gchar   *brush_name;
+  BSelect *bsel;
+  
+  bsel = (BSelect*) gtk_object_get_data (GTK_OBJECT (widget), BSEL_DATA_KEY);
 
-  BSelectP bsel = (BSelectP)gtk_object_get_data(GTK_OBJECT(w),BSEL_DATA_KEY);
-
-  if(bsel)
+  if (bsel)
     {
-      brush_name = gimp_brushes_get_brush_data(bname,
-					       &init_opacity,
-					       &init_spacing,
-					       &init_paint_mode,
-					       &width,&height,&mask_data);
+      brush_name = gimp_brushes_get_brush_data (bname,
+						&init_opacity,
+						&init_spacing,
+						&init_paint_mode,
+						&width,
+						&height,
+						&mask_data);
 
       if(opacity == -1.0)
 	opacity = init_opacity;
@@ -431,15 +455,14 @@ gimp_brush_select_widget_set_popup(GtkWidget *w,
       if(paint_mode == -1)
 	paint_mode = init_paint_mode;
   
-      brush_select_invoker(bname,opacity,spacing,paint_mode,width,height,mask_data,0,bsel);
+      brush_select_invoker (bname, opacity, spacing, paint_mode,
+			    width, height, mask_data, 0, bsel);
 
-      if(bsel->brush_popup_pnt)
-	{
-	  if(gimp_brush_set_popup(bsel->brush_popup_pnt,bname,opacity,spacing,paint_mode))
-	    {
-	      ret_val = TRUE;
-	    }
-	}
+      if (bsel->brush_popup_pnt &&
+	  gimp_brush_set_popup (bsel->brush_popup_pnt, 
+				bname, opacity, spacing, paint_mode))
+	ret_val = TRUE;
     }
+
   return ret_val;
 }
