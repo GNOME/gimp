@@ -53,6 +53,11 @@ void  gimp_help_set_help_data      (GtkWidget    *widget,
 void  gimp_context_help            (GtkWidget    *widget);
 
 
+#define GIMP_HELP_ID (gimp_help_id_quark ())
+
+GQuark gimp_help_id_quark (void) G_GNUC_CONST;
+
+
 G_END_DECLS
 
 #endif /* __GIMP_HELP_UI_H__ */

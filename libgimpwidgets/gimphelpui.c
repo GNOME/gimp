@@ -210,7 +210,7 @@ gimp_help_set_help_data (GtkWidget   *widget,
   if (tooltip)
     gtk_tooltips_set_tip (tool_tips, widget, tooltip, help_id);
   else
-    g_object_set_data (G_OBJECT (widget), "gimp-help-id", (gpointer) help_id);
+    g_object_set_qdata (G_OBJECT (widget), GIMP_HELP_ID, (gpointer) help_id);
 }
 
 /**
@@ -236,6 +236,25 @@ gimp_context_help (GtkWidget *widget)
   gimp_help_callback (widget, GTK_WIDGET_HELP_WHATS_THIS, NULL);
 }
 
+/**
+ * gimp_help_id_quark:
+ *
+ * This function returns the #GQuark which should be used as key when
+ * attachind help IDs to widgets and objects.
+ *
+ * Return value: The #GQuark.
+ **/
+GQuark
+gimp_help_id_quark (void)
+{
+  static GQuark quark = 0;
+
+  if (! quark)
+    quark = g_quark_from_static_string ("gimp-help-id");
+
+  return quark;
+}
+
 
 /*  private functions  */
 
@@ -255,7 +274,7 @@ gimp_help_get_help_data (GtkWidget  *widget,
       if (tooltips_data && tooltips_data->tip_private)
         help_id = tooltips_data->tip_private;
       else
-        help_id = g_object_get_data (G_OBJECT (widget), "gimp-help-id");
+        help_id = g_object_get_qdata (G_OBJECT (widget), GIMP_HELP_ID);
 
       help_data = g_object_get_data (G_OBJECT (widget), "gimp-help-data");
 

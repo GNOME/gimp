@@ -1,3 +1,15 @@
+2004-05-03  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimphelpui.[ch]: added gimp_help_id_quark()
+	which is G_GNUC_CONST and a new macro GIMP_HELP_ID as shortcut.
+
+	* app/widgets/gimpactiongroup.c (gimp_action_group_add_*_actions):
+	attach the help ID to the action using the new quark key. Call
+	gtk_action_group_add_action() instead of the _with_accel() variant
+	if the accel is the empty string (== if we explicitely want no
+	accel even if the stock item specifies one). Fixes warning flood
+	with GTK+ 2.4.1.
+
 2004-05-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpframe.c: if the label_widget is a button, set
