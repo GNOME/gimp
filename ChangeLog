@@ -1,3 +1,14 @@
+2001-02-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimppreview.[ch]
+	* app/gimpbrushpreview.c
+	* app/gimpcontainergridview.c
+	* app/gimpcontainerlistview.c
+	* app/gimpimagepreview.c
+	* app/gimppatternpreview.c: added an "is_popup" parameter to the
+	preview constructor so the subclasses can decide if to do special
+	stuff like pipe animation.
+
 2001-02-07  Daniel Egger  <egger@suse.de>
 
 	* configure.in: Changed link order in gtkxmhtml check
@@ -19,11 +30,11 @@
 	* app/gimpbrushpreview.c
 	* app/gimppatternpreview.c
 	* app/gimppreview.[ch]: added a virtual "needs_popup" method which
-	returns a boolen indicating if the viewable is already fully
+	returns a boolean indicating if the viewable is already fully
 	visible.
 
 	* app/gimage.[ch]: removed gimage_foreach() and some other
-	functions which can easily be done be gimp_container_foreach().
+	functions which can easily be done by gimp_container_foreach().
 	Removed gimage_delete().
 
 	* app/fileops.c

@@ -211,6 +211,7 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
   gtk_widget_show (hbox);
 
   preview = gimp_preview_new (viewable,
+			      FALSE,
 			      view->preview_width,
 			      view->preview_height,
 			      FALSE,

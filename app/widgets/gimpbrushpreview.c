@@ -120,6 +120,9 @@ gimp_brush_preview_create_preview (GimpPreview *preview)
   temp_buf = gimp_viewable_get_new_preview (preview->viewable,
 					    width, height);
 
+  if (preview->is_popup)
+    return temp_buf;
+
   buf = temp_buf_data (temp_buf);
 
   if (width < brush_width || height < brush_height)
@@ -223,6 +226,7 @@ gimp_brush_preview_create_popup (GimpPreview *preview)
   popup_height = GIMP_BRUSH (preview->viewable)->mask->height;
 
   return gimp_preview_new (preview->viewable,
+			   TRUE,
 			   popup_width,
 			   popup_height,
 			   FALSE, FALSE);
@@ -244,7 +248,9 @@ gimp_brush_preview_needs_popup (GimpPreview *preview)
   width  = GTK_WIDGET (preview)->requisition.width;
   height = GTK_WIDGET (preview)->requisition.height;
 
-  if (brush_width > width || brush_height > height)
+  if (GIMP_IS_BRUSH_PIPE (brush) ||
+      brush_width  > width       ||
+      brush_height > height)
     return TRUE;
 
   return FALSE;

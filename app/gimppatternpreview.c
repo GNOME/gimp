@@ -95,6 +95,7 @@ gimp_pattern_preview_create_popup (GimpPreview *preview)
   popup_height = GIMP_PATTERN (preview->viewable)->mask->height;
 
   return gimp_preview_new (preview->viewable,
+			   TRUE,
 			   popup_width,
 			   popup_height,
 			   FALSE, FALSE);

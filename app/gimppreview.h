@@ -45,6 +45,7 @@ struct _GimpPreview
   GtkPreview    parent_instance;
 
   GimpViewable *viewable;
+  gboolean      is_popup;
 
   gboolean      clickable;
   gboolean      show_popup;
@@ -69,6 +70,7 @@ struct _GimpPreviewClass
 
 GtkType      gimp_preview_get_type (void);
 GtkWidget *  gimp_preview_new      (GimpViewable  *viewable,
+				    gboolean       is_popup,
 				    gint           width,
 				    gint           height,
 				    gboolean       clickable,

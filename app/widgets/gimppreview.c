@@ -189,6 +189,8 @@ static void
 gimp_preview_init (GimpPreview *preview)
 {
   preview->viewable   = NULL;
+  preview->is_popup   = FALSE;
+
   preview->clickable  = FALSE;
   preview->show_popup = FALSE;
 
@@ -225,6 +227,7 @@ gimp_preview_destroy (GtkObject *object)
 
 GtkWidget *
 gimp_preview_new (GimpViewable *viewable,
+		  gboolean      is_popup,
 		  gint          width,
 		  gint          height,
 		  gboolean      clickable,
@@ -259,6 +262,8 @@ gimp_preview_new (GimpViewable *viewable,
     }
 
   preview->viewable   = viewable;
+  preview->is_popup   = is_popup;
+
   preview->clickable  = clickable;
   preview->show_popup = show_popup;
 
@@ -415,14 +420,16 @@ gimp_preview_create_popup (GimpPreview *preview)
 static GtkWidget *
 gimp_preview_real_create_popup (GimpPreview *preview)
 {
-  gint         popup_width;
-  gint         popup_height;
+  gint popup_width;
+  gint popup_height;
 
   popup_width  = MIN (GTK_WIDGET (preview)->allocation.width  * 2, 256);
   popup_height = MIN (GTK_WIDGET (preview)->allocation.height * 2, 256);
 
   return gimp_preview_new (preview->viewable,
-			   popup_width, popup_height,
+			   TRUE,
+			   popup_width,
+			   popup_height,
 			   FALSE, FALSE);
 }
 

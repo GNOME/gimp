@@ -195,6 +195,7 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
   grid_view = GIMP_CONTAINER_GRID_VIEW (view);
 
   preview = gimp_preview_new (viewable,
+			      FALSE,
 			      view->preview_width,
 			      view->preview_height,
 			      TRUE, TRUE);
