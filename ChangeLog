@@ -1,3 +1,8 @@
+2004-09-25  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimptemplateeditor.[ch]: added resolution and image
+	type information which is usually hidden in the Advanced Options.
+
 2004-09-25  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/oilify.c: Added a preview and made some small

@@ -199,8 +199,8 @@ gimp_template_editor_constructor (GType                  type,
   GtkWidget          *scrolled_window;
   GtkWidget          *text_view;
   GtkTextBuffer      *text_buffer;
-  gchar              *text;
   GList              *focus_chain = NULL;
+  gchar              *text;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -282,6 +282,10 @@ gimp_template_editor_constructor (GType                  type,
   gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 3, 2, 3);
   gtk_widget_show (hbox);
 
+  vbox = gtk_vbox_new (0, FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
   aspect_box = gimp_enum_stock_box_new (GIMP_TYPE_ASPECT_TYPE,
                                         "gimp", GTK_ICON_SIZE_MENU,
                                         G_CALLBACK (gimp_template_editor_aspect_callback),
@@ -289,7 +293,7 @@ gimp_template_editor_constructor (GType                  type,
                                         &editor->aspect_button);
   gtk_widget_hide (editor->aspect_button); /* hide "square" */
 
-  gtk_box_pack_start (GTK_BOX (hbox), aspect_box, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), aspect_box, FALSE, FALSE, 0);
   gtk_widget_show (aspect_box);
 
   vbox = gtk_vbox_new (2, FALSE);
@@ -303,6 +307,14 @@ gimp_template_editor_constructor (GType                  type,
   gtk_misc_set_alignment (GTK_MISC (editor->pixel_label), 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), editor->pixel_label, FALSE, FALSE, 0);
   gtk_widget_show (editor->pixel_label);
+
+  editor->more_label = gtk_label_new (NULL);
+  gimp_label_set_attributes (GTK_LABEL (editor->more_label),
+                             PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
+                             -1);
+  gtk_misc_set_alignment (GTK_MISC (editor->more_label), 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), editor->more_label, FALSE, FALSE, 0);
+  gtk_widget_show (editor->more_label);
 
   editor->memsize_label = gtk_label_new (NULL);
   gimp_label_set_attributes (GTK_LABEL (editor->memsize_label),
@@ -436,7 +448,7 @@ gimp_template_editor_constructor (GType                  type,
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_AUTOMATIC);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-                             _("Co_mment:"), 0.0, 0.0,
+                             _("Comme_nt:"), 0.0, 0.0,
                              scrolled_window, 1, FALSE);
 
   text_buffer = gimp_prop_text_buffer_new (G_OBJECT (editor->template),
@@ -629,6 +641,7 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
                                       GimpTemplateEditor *editor)
 {
   GimpAspectType  aspect;
+  const gchar    *name;
   gchar          *text;
 
   if (param_spec)
@@ -650,13 +663,13 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
   g_free (text);
 
   text = g_strdup_printf (_("%d x %d pixels"),
-                          editor->template->width, editor->template->height);
+                          template->width, template->height);
   gtk_label_set_text (GTK_LABEL (editor->pixel_label), text);
   g_free (text);
 
-  if (editor->template->width > editor->template->height)
+  if (template->width > template->height)
     aspect = GIMP_ASPECT_LANDSCAPE;
-  else if (editor->template->height > editor->template->width)
+  else if (template->height > template->width)
     aspect = GIMP_ASPECT_PORTRAIT;
   else
     aspect = GIMP_ASPECT_SQUARE;
@@ -666,12 +679,26 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
                                    aspect);
   editor->block_aspect = FALSE;
 
+  gimp_enum_get_value (GIMP_TYPE_IMAGE_BASE_TYPE, template->image_type,
+                       NULL, &name);
+
+  if ((gint) template->xresolution != (gint) template->yresolution)
+    text = g_strdup_printf (_("%d x %d dpi, %s"),
+                            (gint) template->xresolution,
+                            (gint) template->yresolution, name);
+  else
+    text = g_strdup_printf (_("%d dpi, %s"),
+                            (gint) template->yresolution, name);
+
+  gtk_label_set_text (GTK_LABEL (editor->more_label), text);
+  g_free (text);
+
   if (editor->stock_id_container)
     {
       GimpObject  *object;
       const gchar *stock_id;
 
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (editor->template));
+      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (template));
 
       object = gimp_container_get_child_by_name (editor->stock_id_container,
                                                  stock_id);
