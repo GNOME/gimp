@@ -36,19 +36,20 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static void      borderaverage (GimpDrawable *drawable,
-                                GimpRGB      *result);
 
-static gboolean  borderaverage_dialog (gint32 	    image_ID,
-				       GimpDrawable *drawable);
+static void      borderaverage        (GimpDrawable *drawable,
+                                       GimpRGB      *result);
 
-static void      add_new_color (gint          bytes,
-                                const guchar *buffer,
-                                gint   	     *cube,
-                                gint          bucket_expo);
+static gboolean  borderaverage_dialog (gint32        image_ID,
+                                       GimpDrawable *drawable);
 
-static void      thickness_callback (GtkWidget    *widget,
-				     gpointer       data);
+static void      add_new_color        (gint          bytes,
+                                       const guchar *buffer,
+                                       gint         *cube,
+                                       gint          bucket_expo);
+
+static void      thickness_callback   (GtkWidget    *widget,
+                                       gpointer      data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -204,10 +205,10 @@ typedef struct {
 
 static void
 borderaverage_func (gint x,
-		    gint y,
-		    const guchar *src,
-		    gint bpp,
-		    gpointer data)
+                    gint y,
+                    const guchar *src,
+                    gint bpp,
+                    gpointer data)
 {
   BorderAverageParam_t *param = (BorderAverageParam_t*) data;
 
@@ -308,9 +309,9 @@ borderaverage (GimpDrawable *drawable,
 }
 
 static void
-add_new_color (gint    	     bytes,
+add_new_color (gint          bytes,
                const guchar *buffer,
-               gint   	    *cube,
+               gint         *cube,
                gint          bucket_expo)
 {
   guchar r, g, b;
@@ -324,12 +325,12 @@ add_new_color (gint    	     bytes,
 }
 
 static gboolean
-borderaverage_dialog (gint32 	    image_ID,
-		      GimpDrawable *drawable)
+borderaverage_dialog (gint32        image_ID,
+                      GimpDrawable *drawable)
 {
-  GtkWidget    *dlg;
+  GtkWidget    *dialog;
   GtkWidget    *frame;
-  GtkWidget    *vbox;
+  GtkWidget    *main_vbox;
   GtkWidget    *hbox;
   GtkWidget    *label;
   GtkWidget    *size_entry;
@@ -337,29 +338,29 @@ borderaverage_dialog (gint32 	    image_ID,
   GtkWidget    *combo;
   GtkSizeGroup *group;
   gboolean      run;
-  gdouble    	xres, yres;
+  gdouble       xres, yres;
 
   const gchar *labels[] =
     { "1", "2", "4", "8", "16", "32", "64", "128", "256" };
 
   gimp_ui_init ("borderaverage", FALSE);
 
-  dlg = gimp_dialog_new (_("Borderaverage"), "borderaverage",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-borderaverage",
+  dialog = gimp_dialog_new (_("Borderaverage"), "borderaverage",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-borderaverage",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
   frame = gimp_frame_new (_("Border Size"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   hbox = gtk_hbox_new (FALSE, 6);
@@ -387,8 +388,8 @@ borderaverage_dialog (gint32 	    image_ID,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0, 
-			    drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0,
+                            drawable->width);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0,
                                          1.0, 256.0);
@@ -402,7 +403,7 @@ borderaverage_dialog (gint32 	    image_ID,
   gtk_widget_show (size_entry);
 
   frame = gimp_frame_new (_("Number of Colors"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   hbox = gtk_hbox_new (FALSE, 6);
@@ -428,19 +429,19 @@ borderaverage_dialog (gint32 	    image_ID,
   gtk_widget_show (combo);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
 
 static void
 thickness_callback (GtkWidget *widget,
-		    gpointer   data)
+                    gpointer   data)
 {
-  borderaverage_thickness = 
+  borderaverage_thickness =
     gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
 }
