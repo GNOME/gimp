@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "gimphelp.h"
+
 #include "libgimp/gimpfeatures.h"
 
 #include "config.h"
@@ -189,6 +191,9 @@ about_dialog_create (gint timeout)
       gtk_window_set_policy (GTK_WINDOW (about_dialog), FALSE, FALSE, FALSE);
       gtk_window_set_position (GTK_WINDOW (about_dialog), GTK_WIN_POS_CENTER);
 
+      gimp_help_connect_help_accel (about_dialog, gimp_standard_help_func,
+				    "dialogs/about.html");
+
       gtk_signal_connect (GTK_OBJECT (about_dialog), "destroy",
 			  GTK_SIGNAL_FUNC (about_dialog_destroy),
 			  NULL);
@@ -317,7 +322,7 @@ about_dialog_create (gint timeout)
     }
   else 
     {
-      gdk_window_raise(about_dialog->window);
+      gdk_window_raise (about_dialog->window);
     }
 }
 
@@ -394,8 +399,10 @@ about_dialog_load_logo (GtkWidget *window)
 
   fclose (fp);
 
-  dissolve_width = (logo_width / ANIMATION_SIZE)+(logo_width % ANIMATION_SIZE ==0 ?0 : 1);
-  dissolve_height = (logo_height / ANIMATION_SIZE)+(logo_height % ANIMATION_SIZE ==0 ?0 : 1);
+  dissolve_width =
+    (logo_width / ANIMATION_SIZE) + (logo_width % ANIMATION_SIZE == 0 ? 0 : 1);
+  dissolve_height =
+    (logo_height / ANIMATION_SIZE) + (logo_height % ANIMATION_SIZE == 0 ? 0 : 1);
 
   dissolve_map = g_new (guchar, dissolve_width * dissolve_height);
 
@@ -490,7 +497,8 @@ about_dialog_timer (gpointer data)
 		  gdk_draw_pixmap (logo_area->window,
 				   logo_area->style->black_gc,
 				   logo_pixmap,
-				   j * ANIMATION_SIZE, i * ANIMATION_SIZE, j * ANIMATION_SIZE, i * ANIMATION_SIZE,
+				   j * ANIMATION_SIZE, i * ANIMATION_SIZE,
+				   j * ANIMATION_SIZE, i * ANIMATION_SIZE,
 				   ANIMATION_SIZE, ANIMATION_SIZE);
 		}
 
@@ -532,7 +540,8 @@ about_dialog_timer (gpointer data)
 	  break;
 	}
 
-      if (offset > (scroll_text_widths[cur_scroll_text] + scroll_area->allocation.width))
+      if (offset > (scroll_text_widths[cur_scroll_text] +
+		    scroll_area->allocation.width))
 	{
 	  scroll_state = 0;
 	  cur_scroll_index += 1;
@@ -564,10 +573,12 @@ about_dialog_timer (gpointer data)
       offset += 15;
       if (scroll_state == 0)
 	{
-	  if (offset > ((scroll_area->allocation.width + scroll_text_widths[cur_scroll_text]) / 2))
+	  if (offset > ((scroll_area->allocation.width +
+			 scroll_text_widths[cur_scroll_text]) / 2))
 	    {
 	      scroll_state = 1;
-	      offset = (scroll_area->allocation.width + scroll_text_widths[cur_scroll_text]) / 2;
+	      offset = (scroll_area->allocation.width +
+			scroll_text_widths[cur_scroll_text]) / 2;
 	    }
 	}
     }
