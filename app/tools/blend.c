@@ -277,9 +277,9 @@ blend_options_new ()
 
   static MenuItem blend_option_items[] =
   {
-    { N_("FG to BG RGB"), 0, 0, blend_mode_callback,
+    { N_("FG to BG (RGB)"), 0, 0, blend_mode_callback,
       (gpointer) FG_BG_RGB_MODE, NULL, NULL },
-    { N_("FG to BG HSV"), 0, 0, blend_mode_callback,
+    { N_("FG to BG (HSV)"), 0, 0, blend_mode_callback,
       (gpointer) FG_BG_HSV_MODE, NULL, NULL },
     { N_("FG to Transparent"), 0, 0, blend_mode_callback,
       (gpointer) FG_TRANS_MODE, NULL, NULL },
@@ -472,6 +472,17 @@ blend_options_new ()
   /*  show the table  */
   gtk_widget_show (table);
 
+  /*  frame for supersampling options  */
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  /* vbox for the supersampling stuff */
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
   /*  supersampling toggle  */
   options->supersample_w =
     gtk_check_button_new_with_label (_("Adaptive supersampling"));
@@ -483,23 +494,17 @@ blend_options_new ()
   gtk_box_pack_start (GTK_BOX (vbox), options->supersample_w, FALSE, FALSE, 0);
   gtk_widget_show (options->supersample_w);
 
-  /*  frame for supersampling options  */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  /*  automatically set the sensitive state of the frame  */
-  gtk_widget_set_sensitive (frame, options->supersample_d);
-  gtk_object_set_data (GTK_OBJECT (options->supersample_w), "set_sensitive",
-		       frame);
-
   /*  table for supersampling options  */
   table = gtk_table_new (2, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+
+  /*  automatically set the sensitive state of the table  */
+  gtk_widget_set_sensitive (table, options->supersample_d);
+  gtk_object_set_data (GTK_OBJECT (options->supersample_w), "set_sensitive",
+		       table);
 
   /*  max depth scale  */
   label = gtk_label_new (_("Max depth:"));

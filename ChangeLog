@@ -1,3 +1,9 @@
+Tue Apr 20 21:18:10 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* app/blend.c: moved the "Adaptive supersampling" option into
+	the frame
+	* app/transform_tool.c: sensitive setting for the "Grid density"
+
 Tue Apr 20 10:05:07 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/tools_cmds.c: doh, I'm dumb. s/rotate_invoker/rotate/g

@@ -290,6 +290,10 @@ transform_options_new (void)
 		      &options->grid_size);
   gtk_box_pack_start (GTK_BOX (hbox), grid_density, FALSE, FALSE, 0);
   gtk_widget_show (grid_density);
+  gtk_widget_set_sensitive (label, options->show_grid_d);
+  gtk_widget_set_sensitive (grid_density, options->show_grid_d);
+  gtk_object_set_data (GTK_OBJECT (options->show_grid_w), "set_sensitive", grid_density);
+  gtk_object_set_data (GTK_OBJECT (grid_density), "set_sensitive", label);  
 
   /*  the clip resulting image toggle button  */
   options->clip_w = gtk_check_button_new_with_label (_("Clip result"));
