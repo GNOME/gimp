@@ -1,3 +1,7 @@
+2003-02-08  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimputils.c (gimp_utf8_strtrim): fixed stupid bug.
+
 2003-02-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpselectioneditor.c: changed include to follow

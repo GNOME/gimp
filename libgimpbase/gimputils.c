@@ -56,7 +56,7 @@ gimp_utf8_strtrim (const gchar *str,
       gint         chars   = 0;
       gunichar     unichar;
 
-      for (p= str; p; p = g_utf8_next_char (p))
+      for (p = str; *p; p = g_utf8_next_char (p))
         {
           if (++chars > max_chars)
             break;
