@@ -915,31 +915,15 @@ AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 # avoid destruction, but no data modification is performed.
 ############################################################
 
-exif_msg="no - EXIF support will not be built into the JPEG plug-in. 
-libexif is available from http://www.sourceforge.net/projects/libexif"
-
 AC_ARG_WITH(libexif,  [  --without-libexif       build without EXIF support])
 if test x$with_libexif != xno && test -z "$LIBEXIF"; then
-  AC_PATH_PROG(PKG_CONFIG, pkg-config)
-
-  if test -n "${PKG_CONFIG}"; then
-    AC_MSG_CHECKING([for libexif])
-
-    if ${PKG_CONFIG} --exists libexif > /dev/null 2>&1; then
-      EXIF_CFLAGS=`$PKG_CONFIG --cflags libexif`
-      EXIF_LIBS=`$PKG_CONFIG --libs libexif`
-      exif_msg="yes"
-      AC_DEFINE(HAVE_EXIF, 1, \
-      "Defined if EXIF support is to be added to the JPEG plug-in")
-    fi
-
-    AC_MSG_RESULT($exif_msg)
-  fi
-
+  PKG_CHECK_MODULES(EXIF, libexif, 
+    AC_DEFINE(HAVE_EXIF, 1, "Define to 1 if libexif is available"),
+    AC_MSG_WARN([libexif not found!
+EXIF support will not be built into the JPEG plug-in. 
+libexif is available from http://www.sourceforge.net/projects/libexif]))
 fi
 
-AC_SUBST(EXIF_CFLAGS)
-AC_SUBST(EXIF_LIBS)
 
 ###########################################################
 # Some plug-ins don't build on Win32, others are Win32-only

@@ -56,6 +56,7 @@ all other GIMP Library headers.
 </para>
 
 
+
 <!-- ##### MACRO gimp_get_data_size ##### -->
 <para>
 
@@ -68,6 +69,7 @@ all other GIMP Library headers.
 <para>
 
 </para>
+
 
 
 <!-- ##### USER_FUNCTION GimpInitProc ##### -->

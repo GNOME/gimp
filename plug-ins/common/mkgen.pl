@@ -54,8 +54,9 @@ EXTRA_DIST = \\
 
 INCLUDES = \\
 	-I\$(top_srcdir)		\\
-	\$(GTK_CFLAGS)		\\
-	\$(X_CFLAGS)		\\
+	\@GTK_CFLAGS\@		\\
+	\@X_CFLAGS\@		\\
+	\@EXIF_CFLAGS\@		\\
 	-I\$(includedir)
 
 libexec_PROGRAMS = \\
@@ -101,6 +102,14 @@ foreach (sort keys %plugins) {
 	$optlib = "\n\t\$(LIB\U$name\E)\t\t\t\t\t\t\t\\";
     }
 
+    my $deplib = "\@INTLLIBS\@";
+    if (exists $plugins{$_}->{libdep}) {
+	my @lib = split(/:/, $plugins{$_}->{libdep});
+	foreach $lib (@lib) {
+	    $deplib = "\@\U$lib\E_LIBS\@\t\t\t\t\t\t\t\\\n\t$deplib";
+	}
+    }
+
     if (exists $plugins{$_}->{libsupp}) {
 	my @lib = split(/:/, $plugins{$_}->{libsupp});
 	foreach $lib (@lib) {
@@ -115,8 +124,7 @@ ${_}_SOURCES = \\
 
 ${_}_LDADD = \\
 	$libgimp	\\$optlib
-	\$(\U$plugins{$_}->{libdep}\E_LIBS)							\\
-	\$(INTLLIBS)
+	$deplib
 EOT
 
     print IGNORE "$_\n";

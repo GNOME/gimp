@@ -1,8 +1,19 @@
+2003-06-23  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: simplified exif check by using PKG_CHECK_MODULES().
+
+	* plug-ins/common/mkgen.pl: allow for multiple library dependencies.
+
+	* plug-ins/common/plugin-defs.pl: added exif dependency to the
+	jpeg plug-in.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
 2003-06-22  Dave Neary  <bolsh@gimp.org>
 
 	* configure.in
 	* plug-ins/common/Makefile.am
-	* plug-ins/common/jpeg.c: Add support for the keeping of EXIF
+	* plug-ins/common/jpeg.c: Added support for the keeping of EXIF
 	information in jpeg files. This is step 1 in the overall plan to
 	an all-singing, all-dancing metadata editor. Next step is to do
 	the same thing for TIFFs, then to do both properly as a number of
@@ -16,8 +27,8 @@
 
 2003-06-22  Dave Neary  <bolsh@gimp.org>
 
-	* app/config/gimpbaseconfig.c: Increased default tile
-	cache to 64 MB.
+	* app/config/gimpbaseconfig.c: Increased default tile cache size
+	to 64 MB.
 
 2003-06-22  Sven Neumann  <sven@gimp.org>
 
@@ -49,8 +60,8 @@
 
 2003-06-20  Dave Neary  <bolsh@gimp.org>
 
-	* app/config/gimpdisplayconfig.c: Enable menus on 
-	image windows by default.
+	* app/config/gimpdisplayconfig.c: Enable menus on image windows by
+	default.
 
 2003-06-20  Michael Natterer  <mitch@gimp.org>
 
