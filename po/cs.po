@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-01-28 09:58+0100\n"
-"PO-Revision-Date: 2000-01-28 16:34+01:00\n"
+"POT-Creation-Date: 2000-01-29 18:56+0100\n"
+"PO-Revision-Date: 2000-01-29 22:52+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -82,7 +82,7 @@ msgstr "Konec"
 
 #: app/app_procs.c:748 app/brightness_contrast.c:217 app/channel_ops.c:90
 #: app/channels_dialog.c:2431 app/channels_dialog.c:2605
-#: app/color_balance.c:274 app/color_notebook.c:115 app/convert.c:500
+#: app/color_balance.c:274 app/color_notebook.c:115 app/convert.c:508
 #: app/curves.c:583 app/file_new_dialog.c:198 app/file_new_dialog.c:369
 #: app/gdisplay_color_ui.c:128 app/gdisplay_ops.c:369 app/gimpprogress.c:114
 #: app/gimpui.c:79 app/global_edit.c:738 app/gradient.c:1789
@@ -255,7 +255,7 @@ msgstr "Jas-kontrast"
 
 #: app/brightness_contrast.c:213 app/channel_ops.c:88
 #: app/channels_dialog.c:2429 app/channels_dialog.c:2603
-#: app/color_balance.c:270 app/color_notebook.c:112 app/convert.c:498
+#: app/color_balance.c:270 app/color_notebook.c:112 app/convert.c:506
 #: app/curves.c:579 app/file_new_dialog.c:196 app/file_new_dialog.c:365
 #: app/gdisplay_color_ui.c:126 app/gimpui.c:77 app/gimpui.c:457
 #: app/hue_saturation.c:372 app/layers_dialog.c:3323 app/layers_dialog.c:3514
@@ -303,7 +303,7 @@ msgstr "Editor stop"
 #: app/gradient.c:800 app/gradient_select.c:152 app/histogram_tool.c:292
 #: app/info_window.c:308 app/lc_dialog.c:196 app/measure.c:273
 #: app/nav_window.c:1366 app/palette.c:2117 app/palette.c:2133
-#: app/palette.c:3179 app/palette_select.c:62 app/pattern_select.c:171
+#: app/palette.c:3179 app/palette_select.c:63 app/pattern_select.c:171
 #: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:993
 #: app/undo_history.c:761
 msgid "Close"
@@ -355,7 +355,7 @@ msgstr "Nový"
 
 #: app/brush_select.c:473 app/colormap_dialog.i.c:149
 #: app/gradient_select.c:150 app/palette.c:1198 app/palette.c:2131
-#: app/palette_select.c:60
+#: app/palette_select.c:61
 msgid "Edit"
 msgstr "Úpravy"
 
@@ -775,71 +775,71 @@ msgstr "Chyba rozmìrù plátna: Jak ¹íøka tak vý¹ka musí být vìt¹í ne¾ nula."
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Chyba velikosti: Jak ¹íøka tak vý¹ka musí být vìt¹í ne¾ nula."
 
-#: app/convert.c:492
+#: app/convert.c:500
 msgid "Indexed Color Conversion"
 msgstr "Pøevod indexované barvy"
 
-#: app/convert.c:511
+#: app/convert.c:519
 msgid "General Palette Options"
 msgstr "Obecné volby palety"
 
-#: app/convert.c:524
+#: app/convert.c:532
 msgid "Generate optimal palette:"
 msgstr "Generovat optimální paletu:"
 
-#: app/convert.c:557
+#: app/convert.c:565
 msgid "# of colors:"
 msgstr "poèet barev:"
 
-#: app/convert.c:575
+#: app/convert.c:581
 msgid "Use custom palette"
 msgstr "Pou¾ít vlastní palety"
 
-#: app/convert.c:609
+#: app/convert.c:613
 msgid "Use WWW-optimised palette"
 msgstr "Pou¾ít WWW-optimalizované palety"
 
-#: app/convert.c:625
+#: app/convert.c:629
 msgid "Use black/white (1-bit) palette"
 msgstr "Pou¾ít èernobílé (1bitové) palety"
 
-#: app/convert.c:636
+#: app/convert.c:640
 msgid "Dither Options"
 msgstr "Volby rozptylu"
 
-#: app/convert.c:649
+#: app/convert.c:653
 msgid "No colour dithering"
 msgstr "®ádný barevný rozptyl"
 
-#: app/convert.c:663
+#: app/convert.c:667
 msgid "Positioned colour dithering"
 msgstr "Pozièní barevný rozptyl"
 
-#: app/convert.c:677
+#: app/convert.c:681
 msgid "Floyd-Steinberg colour dithering (reduced colour bleeding)"
 msgstr "Floyd-Steinbergùv barevný rozptyl (sní¾ené rozpou¹tìní barev)"
 
-#: app/convert.c:690
+#: app/convert.c:694
 msgid "Floyd-Steinberg colour dithering (normal)"
 msgstr "Floyd-Steinbergùv rozptyl (bì¾ný)"
 
-#: app/convert.c:704
+#: app/convert.c:708
 msgid "Enable dithering of transparency"
 msgstr "Povolit rozptyl prùhlednosti"
 
-#: app/convert.c:714
+#: app/convert.c:718
 msgid "Custom Palette Options"
 msgstr "Volby vlastní palety"
 
-#: app/convert.c:740
+#: app/convert.c:744
 msgid "Remove unused colours from final palette"
 msgstr "Odstranit nepou¾ité barvy z koneèné palety"
 
-#: app/convert.c:765
+#: app/convert.c:769
 msgid "[ Warning ]"
 msgstr "[ Varování ]"
 
-#: app/convert.c:775
+#: app/convert.c:779
 msgid ""
 "You are attempting to convert an image with alpha/layers from RGB/GRAY to "
 "INDEXED.\n"
@@ -850,6 +850,10 @@ msgstr ""
 "INDEXOVANÉHO.\n"
 "Není vhodné vytváøet paletu z více ne¾ 255 barev, zamý¹líte-li z tohoto "
 "obrázku vytvoøit prùhledný nebo animovaný GIF."
+
+#: app/convert.c:978
+msgid "Select Custom Palette"
+msgstr "Zvolte vlastní paletu"
 
 #: app/convolve.c:171
 msgid "Convolve Type"
@@ -1718,7 +1722,7 @@ msgid "Gradient"
 msgstr "Pøechod"
 
 #: app/gradient.c:824 app/gradient_select.c:207 app/palette.c:2274
-#: app/palette_select.c:82
+#: app/palette_select.c:83
 msgid "Name"
 msgstr "Jméno"
 
@@ -2626,9 +2630,9 @@ msgid ""
 "\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
 "\t\tThe default gimprc file checks this subdirectory\n"
 "\t\tin addition to the system-wide GIMP module directory\n"
-"\t\twhen searching for modules to load when initialising.\n"
+"\t\twhen searching for modules to load when initializing.\n"
 msgstr ""
-"\t\tTento adresáø mù¾e být pou¾it k uchování u¾ivatelem vytvoøených,\n"
+"\t\tTento podadresáø mù¾e být pou¾it k uchování u¾ivatelem vytvoøených,\n"
 "\t\tpomocných nebo jiných v systému neobsa¾ených DLL modulù.\n"
 "\t\tDle implicitního gimprc souboru se pøi hledání\n"
 "\t\tmodulù kontroluje tento podadresáø spolu se systémovou\n"
@@ -2672,6 +2676,14 @@ msgstr "Instalovat"
 msgid "Ignore"
 msgstr "Ignorovat"
 
+#: app/install.c:294 app/install.c:440
+msgid "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
+
+#: app/install.c:296
+msgid "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
+
 #: app/install.c:411
 msgid "Installation Log"
 msgstr "Protokol o instalaci"
@@ -2679,6 +2691,10 @@ msgstr "Protokol o instalaci"
 #: app/install.c:416
 msgid "Continue"
 msgstr "Pokraèovat"
+
+#: app/install.c:441
+msgid "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
 
 #: app/install.c:447
 msgid ""
@@ -2822,7 +2838,7 @@ msgid "Miscellaneous"
 msgstr "Rùzné"
 
 #: app/internal_procs.c:131 app/palette.c:2260 app/palette.c:2272
-#: app/palette_select.c:80
+#: app/palette_select.c:81
 msgid "Palette"
 msgstr "Paleta"
 
@@ -3125,62 +3141,62 @@ msgstr "Volby lupy"
 msgid "Allow Window Resizing"
 msgstr "Povolit zmìny velikosti okna"
 
-#: app/main.c:301
+#: app/main.c:281
 msgid "GIMP version"
 msgstr "GIMP verze"
 
-#: app/main.c:305
+#: app/main.c:285
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "U¾ití: %s [volba ...] [soubory ...]\n"
 
-#: app/main.c:306
+#: app/main.c:286
 msgid "Valid options are:\n"
 msgstr "Platné pøepínaèe jsou:\n"
 
-#: app/main.c:307
+#: app/main.c:287
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                Vypí¹e tuto nápovìdu.\n"
 
-#: app/main.c:308
+#: app/main.c:288
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             Vypí¹e informace o verzi.\n"
 
-#: app/main.c:309
+#: app/main.c:289
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <pøíkazy>     Spustí se v dávkovém re¾imu.\n"
 
-#: app/main.c:310
+#: app/main.c:290
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     Pou¾ije alternativní gimprc soubor.\n"
 
-#: app/main.c:311
+#: app/main.c:291
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface        Spustí se bez u¾ivatelského rozhraní.\n"
 
-#: app/main.c:312
+#: app/main.c:292
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr "  -r --restore-session     Pokusí se obnovit zapsané sezení.\n"
 
-#: app/main.c:313
+#: app/main.c:293
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
 msgstr "  --no-data                Neète vzorky, pøechody, palety, ¹tìtce.\n"
 
-#: app/main.c:314
+#: app/main.c:294
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Zobrazí zprávy o spou¹tìní.\n"
 
-#: app/main.c:315
+#: app/main.c:295
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              Neuká¾e okno spou¹tìní.\n"
 
-#: app/main.c:316
+#: app/main.c:296
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr "  --no-splash-image        Neuká¾e obrázek v oknì spou¹tìní.\n"
 
-#: app/main.c:317
+#: app/main.c:297
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
@@ -3188,11 +3204,11 @@ msgstr ""
 "  --no-shm                 Nepou¾ije sdílenou pamì» mezi programem GIMP a "
 "zásuvnými moduly.\n"
 
-#: app/main.c:318
+#: app/main.c:298
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                Nepou¾ije X roz¹íøení sdílené pamìti.\n"
 
-#: app/main.c:319
+#: app/main.c:299
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
@@ -3200,11 +3216,11 @@ msgstr ""
 "  --console-messages       Zobrazí varování na konzoli namísto dialogového "
 "okna.\n"
 
-#: app/main.c:320
+#: app/main.c:300
 msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr "  --debug-handlers         Povolí ladìní obsluhy signálù.\n"
 
-#: app/main.c:321
+#: app/main.c:301
 msgid ""
 "  --display <display>      Use the designated X display.\n"
 "\n"
@@ -3212,12 +3228,12 @@ msgstr ""
 "  --display <displej>      Pou¾ije zvolený X displej.\n"
 "\n"
 
-#: app/main.c:322
+#: app/main.c:302
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 "  --system-gimprc <gimprc> Pou¾ije alternativní systémový gimprc soubor.\n"
 
-#: app/main.c:339
+#: app/main.c:319
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Toto konzolové okno se zavøe bìhem deseti sekund)\n"
 
@@ -4413,7 +4429,7 @@ msgstr "Barevná paleta"
 msgid "Select"
 msgstr "Výbìr"
 
-#: app/palette.c:2273 app/palette_select.c:81
+#: app/palette.c:2273 app/palette_select.c:82
 msgid "Ncols"
 msgstr "Barev"
 
@@ -4463,7 +4479,7 @@ msgid "Interval:"
 msgstr "Interval:"
 
 #. The shell and main vbox
-#: app/palette_select.c:53
+#: app/palette_select.c:54
 msgid "Palette Selection"
 msgstr "Výbìr palety"
 

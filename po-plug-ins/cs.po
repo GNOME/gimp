@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.15\n"
-"POT-Creation-Date: 2000-01-28 19:10+0100\n"
-"PO-Revision-Date: 2000-01-28 18:48+01:00\n"
+"POT-Creation-Date: 2000-01-29 19:24+0100\n"
+"PO-Revision-Date: 2000-01-29 23:10+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -54,48 +54,48 @@ msgstr "O programu"
 #: plug-ins/FractalExplorer/FractalExplorer.c:822
 #: plug-ins/FractalExplorer/FractalExplorer.c:2088 plug-ins/bmp/bmpwrite.c:507
 #: plug-ins/borderaverage/borderaverage.c:401
-#: plug-ins/common/CML_explorer.c:1675 plug-ins/common/CML_explorer.c:2522
-#: plug-ins/common/aa.c:363 plug-ins/common/align_layers.c:478
-#: plug-ins/common/apply_lens.c:404 plug-ins/common/blinds.c:342
-#: plug-ins/common/blur.c:626 plug-ins/common/bumpmap.c:804
-#: plug-ins/common/checkerboard.c:359 plug-ins/common/colorify.c:333
-#: plug-ins/common/colortoalpha.c:418 plug-ins/common/compose.c:807
-#: plug-ins/common/convmatrix.c:810 plug-ins/common/csource.c:670
-#: plug-ins/common/cubism.c:316 plug-ins/common/curve_bend.c:1339
-#: plug-ins/common/decompose.c:984 plug-ins/common/deinterlace.c:279
-#: plug-ins/common/depthmerge.c:663 plug-ins/common/despeckle.c:948
-#: plug-ins/common/destripe.c:573 plug-ins/common/diffraction.c:565
-#: plug-ins/common/displace.c:306 plug-ins/common/edge.c:657
-#: plug-ins/common/emboss.c:535 plug-ins/common/engrave.c:236
-#: plug-ins/common/exchange.c:302 plug-ins/common/film.c:1225
-#: plug-ins/common/flarefx.c:338 plug-ins/common/fractaltrace.c:740
-#: plug-ins/common/gauss_iir.c:355 plug-ins/common/gauss_iir.c:448
-#: plug-ins/common/gauss_rle.c:350 plug-ins/common/gauss_rle.c:443
-#: plug-ins/common/gbr.c:473 plug-ins/common/gicon.c:455
-#: plug-ins/common/gif.c:1155 plug-ins/common/gif.c:1226
-#: plug-ins/common/glasstile.c:237 plug-ins/common/gpb.c:286
-#: plug-ins/common/gqbist.c:661 plug-ins/common/grid.c:475
-#: plug-ins/common/gtm.c:381 plug-ins/common/hot.c:595
-#: plug-ins/common/illusion.c:318 plug-ins/common/iwarp.c:1080
-#: plug-ins/common/jigsaw.c:2316 plug-ins/common/jpeg.c:1611
-#: plug-ins/common/lic.c:1014 plug-ins/common/mail.c:504
-#: plug-ins/common/mapcolor.c:333 plug-ins/common/max_rgb.c:264
-#: plug-ins/common/mblur.c:784 plug-ins/common/newsprint.c:1232
-#: plug-ins/common/nlfilt.c:359 plug-ins/common/noisify.c:327
-#: plug-ins/common/nova.c:364 plug-ins/common/oilify.c:460
-#: plug-ins/common/papertile.c:248 plug-ins/common/pat.c:428
-#: plug-ins/common/pixelize.c:289 plug-ins/common/plasma.c:298
-#: plug-ins/common/png.c:934 plug-ins/common/pnm.c:943
-#: plug-ins/common/polar.c:947 plug-ins/common/ps.c:2273
-#: plug-ins/common/ps.c:2454 plug-ins/common/psp.c:443
-#: plug-ins/common/randomize.c:716 plug-ins/common/ripple.c:557
-#: plug-ins/common/scatter_hsv.c:387 plug-ins/common/sel_gauss.c:246
-#: plug-ins/common/sharpen.c:708 plug-ins/common/shift.c:382
-#: plug-ins/common/smooth_palette.c:404 plug-ins/common/snoise.c:527
-#: plug-ins/common/sobel.c:262 plug-ins/common/sparkle.c:367
-#: plug-ins/common/spheredesigner.c:2236 plug-ins/common/spread.c:382
-#: plug-ins/common/sunras.c:1599 plug-ins/common/tga.c:1463
-#: plug-ins/common/threshold_alpha.c:296 plug-ins/common/threshold_alpha.c:345
+#: plug-ins/common/CML_explorer.c:1190 plug-ins/common/CML_explorer.c:1934
+#: plug-ins/common/CML_explorer.c:2254 plug-ins/common/aa.c:363
+#: plug-ins/common/align_layers.c:420 plug-ins/common/apply_lens.c:404
+#: plug-ins/common/blinds.c:342 plug-ins/common/blur.c:626
+#: plug-ins/common/bumpmap.c:804 plug-ins/common/checkerboard.c:359
+#: plug-ins/common/colorify.c:333 plug-ins/common/colortoalpha.c:418
+#: plug-ins/common/compose.c:807 plug-ins/common/convmatrix.c:810
+#: plug-ins/common/csource.c:670 plug-ins/common/cubism.c:316
+#: plug-ins/common/curve_bend.c:1338 plug-ins/common/decompose.c:984
+#: plug-ins/common/deinterlace.c:278 plug-ins/common/depthmerge.c:663
+#: plug-ins/common/despeckle.c:640 plug-ins/common/destripe.c:573
+#: plug-ins/common/diffraction.c:565 plug-ins/common/displace.c:306
+#: plug-ins/common/edge.c:657 plug-ins/common/emboss.c:535
+#: plug-ins/common/engrave.c:236 plug-ins/common/exchange.c:302
+#: plug-ins/common/film.c:1225 plug-ins/common/flarefx.c:338
+#: plug-ins/common/fractaltrace.c:740 plug-ins/common/gauss_iir.c:355
+#: plug-ins/common/gauss_iir.c:448 plug-ins/common/gauss_rle.c:350
+#: plug-ins/common/gauss_rle.c:443 plug-ins/common/gbr.c:473
+#: plug-ins/common/gicon.c:455 plug-ins/common/gif.c:1155
+#: plug-ins/common/gif.c:1226 plug-ins/common/glasstile.c:237
+#: plug-ins/common/gpb.c:286 plug-ins/common/gqbist.c:661
+#: plug-ins/common/grid.c:475 plug-ins/common/gtm.c:381
+#: plug-ins/common/hot.c:595 plug-ins/common/illusion.c:318
+#: plug-ins/common/iwarp.c:1080 plug-ins/common/jigsaw.c:2316
+#: plug-ins/common/jpeg.c:1611 plug-ins/common/lic.c:1014
+#: plug-ins/common/mail.c:504 plug-ins/common/mapcolor.c:333
+#: plug-ins/common/max_rgb.c:264 plug-ins/common/mblur.c:784
+#: plug-ins/common/newsprint.c:1232 plug-ins/common/nlfilt.c:359
+#: plug-ins/common/noisify.c:327 plug-ins/common/nova.c:364
+#: plug-ins/common/oilify.c:460 plug-ins/common/papertile.c:248
+#: plug-ins/common/pat.c:428 plug-ins/common/pixelize.c:289
+#: plug-ins/common/plasma.c:297 plug-ins/common/png.c:934
+#: plug-ins/common/pnm.c:943 plug-ins/common/polar.c:947
+#: plug-ins/common/ps.c:2273 plug-ins/common/ps.c:2454
+#: plug-ins/common/psp.c:443 plug-ins/common/randomize.c:714
+#: plug-ins/common/ripple.c:557 plug-ins/common/scatter_hsv.c:392
+#: plug-ins/common/sel_gauss.c:246 plug-ins/common/sharpen.c:541
+#: plug-ins/common/shift.c:382 plug-ins/common/smooth_palette.c:404
+#: plug-ins/common/snoise.c:527 plug-ins/common/sobel.c:262
+#: plug-ins/common/sparkle.c:367 plug-ins/common/spheredesigner.c:2236
+#: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1599
+#: plug-ins/common/tga.c:1463 plug-ins/common/threshold_alpha.c:268
 #: plug-ins/common/tiff.c:1447 plug-ins/common/tile.c:394
 #: plug-ins/common/tileit.c:402 plug-ins/common/unsharp.c:798
 #: plug-ins/common/video.c:2175 plug-ins/common/vpropagate.c:942
@@ -118,7 +118,7 @@ msgstr "O programu"
 #: plug-ins/ifscompose/ifscompose.c:798
 #: plug-ins/imagemap/imap_default_dialog.c:101 plug-ins/maze/maze_face.c:203
 #: plug-ins/mosaic/mosaic.c:548 plug-ins/pagecurl/pagecurl.c:586
-#: plug-ins/print/print.c:1527 plug-ins/rcm/rcm_dialog.c:746
+#: plug-ins/print/print.c:1497 plug-ins/rcm/rcm_dialog.c:746
 #: plug-ins/script-fu/script-fu-scripts.c:1468
 #: plug-ins/script-fu/script-fu-server.c:559 plug-ins/sel2path/sel2path.c:347
 #: plug-ins/sgi/sgi.c:655 plug-ins/sinus/sinus.c:754
@@ -135,58 +135,58 @@ msgstr "OK"
 #: plug-ins/FractalExplorer/FractalExplorer.c:2122
 #: plug-ins/Lighting/lighting_ui.c:1071 plug-ins/bmp/bmpwrite.c:516
 #: plug-ins/borderaverage/borderaverage.c:403
-#: plug-ins/common/CML_explorer.c:2524 plug-ins/common/aa.c:365
-#: plug-ins/common/align_layers.c:480 plug-ins/common/apply_lens.c:406
-#: plug-ins/common/blinds.c:344 plug-ins/common/blur.c:628
-#: plug-ins/common/bumpmap.c:806 plug-ins/common/checkerboard.c:361
-#: plug-ins/common/colorify.c:335 plug-ins/common/colortoalpha.c:420
-#: plug-ins/common/compose.c:809 plug-ins/common/convmatrix.c:814
-#: plug-ins/common/csource.c:672 plug-ins/common/cubism.c:318
-#: plug-ins/common/curve_bend.c:1341 plug-ins/common/decompose.c:986
-#: plug-ins/common/deinterlace.c:281 plug-ins/common/depthmerge.c:665
-#: plug-ins/common/despeckle.c:950 plug-ins/common/destripe.c:575
-#: plug-ins/common/diffraction.c:567 plug-ins/common/displace.c:308
-#: plug-ins/common/edge.c:659 plug-ins/common/emboss.c:537
-#: plug-ins/common/engrave.c:238 plug-ins/common/exchange.c:304
-#: plug-ins/common/film.c:1227 plug-ins/common/flarefx.c:340
-#: plug-ins/common/fractaltrace.c:742 plug-ins/common/gauss_iir.c:357
-#: plug-ins/common/gauss_iir.c:450 plug-ins/common/gauss_rle.c:352
-#: plug-ins/common/gauss_rle.c:445 plug-ins/common/gbr.c:475
-#: plug-ins/common/gicon.c:457 plug-ins/common/gif.c:1157
-#: plug-ins/common/gif.c:1228 plug-ins/common/glasstile.c:239
-#: plug-ins/common/gpb.c:288 plug-ins/common/gqbist.c:663
-#: plug-ins/common/grid.c:477 plug-ins/common/gtm.c:383
-#: plug-ins/common/hot.c:597 plug-ins/common/illusion.c:320
-#: plug-ins/common/iwarp.c:1082 plug-ins/common/jigsaw.c:2318
-#: plug-ins/common/jpeg.c:1613 plug-ins/common/lic.c:1016
-#: plug-ins/common/mail.c:506 plug-ins/common/mapcolor.c:335
-#: plug-ins/common/max_rgb.c:266 plug-ins/common/mblur.c:786
-#: plug-ins/common/newsprint.c:1234 plug-ins/common/nlfilt.c:361
-#: plug-ins/common/noisify.c:329 plug-ins/common/nova.c:366
-#: plug-ins/common/oilify.c:462 plug-ins/common/papertile.c:250
-#: plug-ins/common/pat.c:430 plug-ins/common/pixelize.c:291
-#: plug-ins/common/plasma.c:300 plug-ins/common/png.c:936
-#: plug-ins/common/pnm.c:945 plug-ins/common/polar.c:949
-#: plug-ins/common/ps.c:2275 plug-ins/common/ps.c:2456
-#: plug-ins/common/psp.c:445 plug-ins/common/randomize.c:718
-#: plug-ins/common/ripple.c:559 plug-ins/common/scatter_hsv.c:389
-#: plug-ins/common/screenshot.c:400 plug-ins/common/sel_gauss.c:248
-#: plug-ins/common/sharpen.c:710 plug-ins/common/shift.c:384
-#: plug-ins/common/smooth_palette.c:406 plug-ins/common/snoise.c:529
-#: plug-ins/common/sobel.c:264 plug-ins/common/sparkle.c:369
-#: plug-ins/common/spheredesigner.c:2240 plug-ins/common/spread.c:384
-#: plug-ins/common/sunras.c:1601 plug-ins/common/tga.c:1465
-#: plug-ins/common/threshold_alpha.c:298 plug-ins/common/tiff.c:1449
-#: plug-ins/common/tile.c:396 plug-ins/common/tileit.c:404
-#: plug-ins/common/unsharp.c:800 plug-ins/common/video.c:2177
-#: plug-ins/common/vpropagate.c:944 plug-ins/common/warp.c:445
-#: plug-ins/common/waves.c:359 plug-ins/common/whirlpinch.c:832
-#: plug-ins/common/wind.c:763 plug-ins/common/wmf.c:940
-#: plug-ins/common/xbm.c:725 plug-ins/common/xbm.c:975
-#: plug-ins/common/xpm.c:801 plug-ins/fits/fits.c:1005
-#: plug-ins/flame/flame.c:590 plug-ins/flame/flame.c:903
-#: plug-ins/fp/fp_gtk.c:886 plug-ins/gap/gap_arr_dialog.c:1191
-#: plug-ins/gap/gap_dbbrowser_utils.c:211
+#: plug-ins/common/CML_explorer.c:1192 plug-ins/common/CML_explorer.c:2256
+#: plug-ins/common/aa.c:365 plug-ins/common/align_layers.c:422
+#: plug-ins/common/apply_lens.c:406 plug-ins/common/blinds.c:344
+#: plug-ins/common/blur.c:628 plug-ins/common/bumpmap.c:806
+#: plug-ins/common/checkerboard.c:361 plug-ins/common/colorify.c:335
+#: plug-ins/common/colortoalpha.c:420 plug-ins/common/compose.c:809
+#: plug-ins/common/convmatrix.c:814 plug-ins/common/csource.c:672
+#: plug-ins/common/cubism.c:318 plug-ins/common/curve_bend.c:1340
+#: plug-ins/common/decompose.c:986 plug-ins/common/deinterlace.c:280
+#: plug-ins/common/depthmerge.c:665 plug-ins/common/despeckle.c:642
+#: plug-ins/common/destripe.c:575 plug-ins/common/diffraction.c:567
+#: plug-ins/common/displace.c:308 plug-ins/common/edge.c:659
+#: plug-ins/common/emboss.c:537 plug-ins/common/engrave.c:238
+#: plug-ins/common/exchange.c:304 plug-ins/common/film.c:1227
+#: plug-ins/common/flarefx.c:340 plug-ins/common/fractaltrace.c:742
+#: plug-ins/common/gauss_iir.c:357 plug-ins/common/gauss_iir.c:450
+#: plug-ins/common/gauss_rle.c:352 plug-ins/common/gauss_rle.c:445
+#: plug-ins/common/gbr.c:475 plug-ins/common/gicon.c:457
+#: plug-ins/common/gif.c:1157 plug-ins/common/gif.c:1228
+#: plug-ins/common/glasstile.c:239 plug-ins/common/gpb.c:288
+#: plug-ins/common/gqbist.c:663 plug-ins/common/grid.c:477
+#: plug-ins/common/gtm.c:383 plug-ins/common/hot.c:597
+#: plug-ins/common/illusion.c:320 plug-ins/common/iwarp.c:1082
+#: plug-ins/common/jigsaw.c:2318 plug-ins/common/jpeg.c:1613
+#: plug-ins/common/lic.c:1016 plug-ins/common/mail.c:506
+#: plug-ins/common/mapcolor.c:335 plug-ins/common/max_rgb.c:266
+#: plug-ins/common/mblur.c:786 plug-ins/common/newsprint.c:1234
+#: plug-ins/common/nlfilt.c:361 plug-ins/common/noisify.c:329
+#: plug-ins/common/nova.c:366 plug-ins/common/oilify.c:462
+#: plug-ins/common/papertile.c:250 plug-ins/common/pat.c:430
+#: plug-ins/common/pixelize.c:291 plug-ins/common/plasma.c:299
+#: plug-ins/common/png.c:936 plug-ins/common/pnm.c:945
+#: plug-ins/common/polar.c:949 plug-ins/common/ps.c:2275
+#: plug-ins/common/ps.c:2456 plug-ins/common/psp.c:445
+#: plug-ins/common/randomize.c:716 plug-ins/common/ripple.c:559
+#: plug-ins/common/scatter_hsv.c:394 plug-ins/common/screenshot.c:400
+#: plug-ins/common/sel_gauss.c:248 plug-ins/common/sharpen.c:543
+#: plug-ins/common/shift.c:384 plug-ins/common/smooth_palette.c:406
+#: plug-ins/common/snoise.c:529 plug-ins/common/sobel.c:264
+#: plug-ins/common/sparkle.c:369 plug-ins/common/spheredesigner.c:2240
+#: plug-ins/common/spread.c:384 plug-ins/common/sunras.c:1601
+#: plug-ins/common/tga.c:1465 plug-ins/common/threshold_alpha.c:270
+#: plug-ins/common/tiff.c:1449 plug-ins/common/tile.c:396
+#: plug-ins/common/tileit.c:404 plug-ins/common/unsharp.c:800
+#: plug-ins/common/video.c:2177 plug-ins/common/vpropagate.c:944
+#: plug-ins/common/warp.c:445 plug-ins/common/waves.c:359
+#: plug-ins/common/whirlpinch.c:832 plug-ins/common/wind.c:763
+#: plug-ins/common/wmf.c:940 plug-ins/common/xbm.c:725
+#: plug-ins/common/xbm.c:975 plug-ins/common/xpm.c:801
+#: plug-ins/fits/fits.c:1005 plug-ins/flame/flame.c:590
+#: plug-ins/flame/flame.c:903 plug-ins/fp/fp_gtk.c:886
+#: plug-ins/gap/gap_arr_dialog.c:1191 plug-ins/gap/gap_dbbrowser_utils.c:211
 #: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:147
 #: plug-ins/gap/gap_mod_layer.c:261 plug-ins/gap/gap_mov_dialog.c:470
 #: plug-ins/gap/gap_mpege.c:189 plug-ins/gap/gap_mpege.c:241
@@ -200,7 +200,7 @@ msgstr "OK"
 #: plug-ins/ifscompose/ifscompose.c:806
 #: plug-ins/imagemap/imap_default_dialog.c:116 plug-ins/maze/maze_face.c:207
 #: plug-ins/mosaic/mosaic.c:550 plug-ins/pagecurl/pagecurl.c:588
-#: plug-ins/print/print.c:1425 plug-ins/print/print.c:1535
+#: plug-ins/print/print.c:1395 plug-ins/print/print.c:1505
 #: plug-ins/rcm/rcm_dialog.c:748 plug-ins/script-fu/script-fu-scripts.c:1477
 #: plug-ins/script-fu/script-fu-server.c:568 plug-ins/sel2path/sel2path.c:356
 #: plug-ins/sgi/sgi.c:657 plug-ins/sinus/sinus.c:756
@@ -217,7 +217,7 @@ msgstr "Zru¹it"
 #: plug-ins/common/diffraction.c:667 plug-ins/common/diffraction.c:703
 #: plug-ins/common/exchange.c:377 plug-ins/common/noisify.c:390
 #: plug-ins/common/noisify.c:417 plug-ins/fp/fp_gtk.c:149
-#: plug-ins/print/print.c:1193
+#: plug-ins/print/print.c:1163
 msgid "Red:"
 msgstr "Èervená:"
 
@@ -233,7 +233,7 @@ msgstr "Zmìna intenzity èerveného kanálu"
 #: plug-ins/common/diffraction.c:675 plug-ins/common/diffraction.c:711
 #: plug-ins/common/exchange.c:399 plug-ins/common/noisify.c:398
 #: plug-ins/common/noisify.c:425 plug-ins/fp/fp_gtk.c:150
-#: plug-ins/print/print.c:1228
+#: plug-ins/print/print.c:1198
 msgid "Green:"
 msgstr "Zelená:"
 
@@ -249,7 +249,7 @@ msgstr "Zmìna intenzity zeleného kanálu"
 #: plug-ins/common/diffraction.c:683 plug-ins/common/diffraction.c:719
 #: plug-ins/common/exchange.c:421 plug-ins/common/noisify.c:406
 #: plug-ins/common/noisify.c:433 plug-ins/fp/fp_gtk.c:151
-#: plug-ins/print/print.c:1263
+#: plug-ins/print/print.c:1233
 msgid "Blue:"
 msgstr "Modrá:"
 
@@ -281,8 +281,8 @@ msgstr "Kosinus"
 #: plug-ins/AlienMap/AlienMap.c:705 plug-ins/AlienMap/AlienMap.c:728
 #: plug-ins/AlienMap/AlienMap.c:751 plug-ins/FractalExplorer/Dialogs.c:585
 #: plug-ins/FractalExplorer/Dialogs.c:638
-#: plug-ins/FractalExplorer/Dialogs.c:690 plug-ins/common/CML_explorer.c:244
-#: plug-ins/common/align_layers.c:120 plug-ins/common/align_layers.c:144
+#: plug-ins/FractalExplorer/Dialogs.c:690 plug-ins/common/CML_explorer.c:167
+#: plug-ins/common/align_layers.c:447 plug-ins/common/align_layers.c:480
 #: plug-ins/common/ps.c:2380 plug-ins/common/ps.c:2393
 #: plug-ins/common/psp.c:460 plug-ins/common/tiff.c:1468
 #: plug-ins/fits/fits.c:1048 plug-ins/gap/gap_mov_dialog.c:286
@@ -417,7 +417,7 @@ msgid "Change angle of the blue/luminance channel"
 msgstr "Zmìna úhlu kanálu modrá/jas"
 
 #. * Gray: Operation-Mode *
-#: plug-ins/AlienMap2/AlienMap2.c:723 plug-ins/common/deinterlace.c:296
+#: plug-ins/AlienMap2/AlienMap2.c:723 plug-ins/common/deinterlace.c:295
 #: plug-ins/common/hot.c:623 plug-ins/common/waves.c:430
 #: plug-ins/rcm/rcm_dialog.c:471
 msgid "Mode"
@@ -507,7 +507,7 @@ msgstr ""
 "Mandelbrotova a Sierpinského)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:208 plug-ins/common/convmatrix.c:812
-#: plug-ins/common/curve_bend.c:1331 plug-ins/common/iwarp.c:967
+#: plug-ins/common/curve_bend.c:1330 plug-ins/common/iwarp.c:967
 #: plug-ins/common/spheredesigner.c:2238 plug-ins/common/tileit.c:483
 #: plug-ins/fp/fp_gtk.c:884 plug-ins/gimpressionist/preview.c:124
 #: plug-ins/ifscompose/ifscompose.c:804
@@ -518,7 +518,7 @@ msgstr "Obnovit"
 msgid "Reset parameters to default values"
 msgstr "Nastaví parametry na implicitní hodnody"
 
-#: plug-ins/FractalExplorer/Dialogs.c:219 plug-ins/common/CML_explorer.c:1266
+#: plug-ins/FractalExplorer/Dialogs.c:219 plug-ins/common/CML_explorer.c:1243
 #: plug-ins/common/gqbist.c:707 plug-ins/common/spheredesigner.c:2333
 msgid "Load"
 msgstr "Naèíst"
@@ -527,9 +527,9 @@ msgstr "Naèíst"
 msgid "Load a fractal from file"
 msgstr "Naèíst fraktál ze souboru"
 
-#: plug-ins/FractalExplorer/Dialogs.c:233 plug-ins/common/CML_explorer.c:1269
+#: plug-ins/FractalExplorer/Dialogs.c:233 plug-ins/common/CML_explorer.c:1236
 #: plug-ins/common/gqbist.c:715 plug-ins/common/spheredesigner.c:2340
-#: plug-ins/gfig/gfig.c:4886 plug-ins/gfig/gfig.c:6509
+#: plug-ins/gfig/gfig.c:4886 plug-ins/gfig/gfig.c:6508
 #: plug-ins/imagemap/imap_menu.c:217 plug-ins/imagemap/imap_toolbar.c:110
 msgid "Save"
 msgstr "Zapsat"
@@ -1024,7 +1024,7 @@ msgstr "Povolení/zákaz odstraòování zubatých hran (vyhlazování)"
 msgid "Depth:"
 msgstr "Hloubka:"
 
-#: plug-ins/Lighting/lighting_ui.c:633 plug-ins/common/threshold_alpha.c:309
+#: plug-ins/Lighting/lighting_ui.c:633 plug-ins/common/threshold_alpha.c:291
 #: plug-ins/common/unsharp.c:839 plug-ins/common/wind.c:860
 #: plug-ins/gflare/gflare.c:2917
 msgid "Threshold:"
@@ -1440,201 +1440,195 @@ msgstr ""
 "CEL nelze zapsat obrázek do\n"
 "%s"
 
-#: plug-ins/common/CML_explorer.c:214
+#: plug-ins/common/CML_explorer.c:131
 msgid "Keep image's values"
 msgstr "Zachovat hodnoty z obrázku"
 
-#: plug-ins/common/CML_explorer.c:216
+#: plug-ins/common/CML_explorer.c:132
 msgid "Keep the first value"
 msgstr "Zachovat první hodnotu"
 
-#: plug-ins/common/CML_explorer.c:218
+#: plug-ins/common/CML_explorer.c:133
 msgid "Fill with parameter k"
 msgstr "Vyplòování s parametrem k"
 
-#: plug-ins/common/CML_explorer.c:220
+#: plug-ins/common/CML_explorer.c:134
 msgid "k{x(1-x)}^p"
 msgstr "k{x(1-x)}^p"
 
-#: plug-ins/common/CML_explorer.c:222
+#: plug-ins/common/CML_explorer.c:135
 msgid "k{x(1-x)}^p stepped"
 msgstr "k{x(1-x)}^p po krocích"
 
-#: plug-ins/common/CML_explorer.c:224
+#: plug-ins/common/CML_explorer.c:136
 msgid "kx^p"
 msgstr "kx^p"
 
-#: plug-ins/common/CML_explorer.c:226
+#: plug-ins/common/CML_explorer.c:137
 msgid "kx^p stepped"
 msgstr "kx^p po krocích"
 
-#: plug-ins/common/CML_explorer.c:228
-msgid "k(1 - x^p)"
-msgstr "k(1 - x^p)"
+#: plug-ins/common/CML_explorer.c:138
+msgid "k(1-x^p)"
+msgstr "k(1-x^p)"
 
-#: plug-ins/common/CML_explorer.c:230
-msgid "k(1 - x^p) stepped"
-msgstr "k(1 - x^p) po krocích"
+#: plug-ins/common/CML_explorer.c:139
+msgid "k(1-x^p) stepped"
+msgstr "k(1-x^p) po krocích"
 
-#: plug-ins/common/CML_explorer.c:232
+#: plug-ins/common/CML_explorer.c:140
 msgid "Delta function"
 msgstr "Delta funkce"
 
-#: plug-ins/common/CML_explorer.c:234
+#: plug-ins/common/CML_explorer.c:141
 msgid "Delta function stepped"
 msgstr "Delta funkce po krocích"
 
-#: plug-ins/common/CML_explorer.c:236
+#: plug-ins/common/CML_explorer.c:142
 msgid "sin^p-based function"
 msgstr "Funkce zalo¾ená na sin^p"
 
-#: plug-ins/common/CML_explorer.c:238
+#: plug-ins/common/CML_explorer.c:143
 msgid "sin^p, stepped"
 msgstr "sin^p po krocích"
 
-#: plug-ins/common/CML_explorer.c:246
+#: plug-ins/common/CML_explorer.c:168
 msgid "Max (x, -)"
 msgstr "Max (x, -)"
 
-#: plug-ins/common/CML_explorer.c:248
+#: plug-ins/common/CML_explorer.c:169
 msgid "Max (x+d, -)"
 msgstr "Max (x+d, -)"
 
-#: plug-ins/common/CML_explorer.c:250
+#: plug-ins/common/CML_explorer.c:170
 msgid "Max (x-d, -)"
 msgstr "Max (x-d, -)"
 
-#: plug-ins/common/CML_explorer.c:252
+#: plug-ins/common/CML_explorer.c:171
 msgid "Min (x, -)"
 msgstr "Min (x, -)"
 
-#: plug-ins/common/CML_explorer.c:254
+#: plug-ins/common/CML_explorer.c:172
 msgid "Min (x+d, -)"
 msgstr "Min (x+d, -)"
 
-#: plug-ins/common/CML_explorer.c:256
+#: plug-ins/common/CML_explorer.c:173
 msgid "Min (x-d, -)"
 msgstr "Min (x-d, -)"
 
-#: plug-ins/common/CML_explorer.c:258
+#: plug-ins/common/CML_explorer.c:174
 msgid "Max (x+d, -), (x < 0.5)"
 msgstr "Max (x+d, -), (x < 0.5)"
 
-#: plug-ins/common/CML_explorer.c:260
+#: plug-ins/common/CML_explorer.c:175
 msgid "Max (x+d, -), (0.5 < x)"
 msgstr "Max (x+d, -), (0.5 < x)"
 
-#: plug-ins/common/CML_explorer.c:262
+#: plug-ins/common/CML_explorer.c:176
 msgid "Max (x-d, -), (x < 0.5)"
 msgstr "Max (x-d, -), (x < 0.5)"
 
-#: plug-ins/common/CML_explorer.c:264
+#: plug-ins/common/CML_explorer.c:177
 msgid "Max (x-d, -), (0.5 < x)"
 msgstr "Max (x-d, -), (0.5 < x)"
 
-#: plug-ins/common/CML_explorer.c:266
+#: plug-ins/common/CML_explorer.c:178
 msgid "Min (x+d, -), (x < 0.5)"
 msgstr "Min (x+d, -), (x < 0.5)"
 
-#: plug-ins/common/CML_explorer.c:268
+#: plug-ins/common/CML_explorer.c:179
 msgid "Min (x+d, -), (0.5 < x)"
 msgstr "Min (x+d, -), (0.5 < x)"
 
-#: plug-ins/common/CML_explorer.c:270
+#: plug-ins/common/CML_explorer.c:180
 msgid "Min (x-d, -), (x < 0.5)"
 msgstr "Min (x-d, -), (x < 0.5)"
 
-#: plug-ins/common/CML_explorer.c:272
+#: plug-ins/common/CML_explorer.c:181
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
-#: plug-ins/common/CML_explorer.c:278 plug-ins/common/sunras.c:1616
+#: plug-ins/common/CML_explorer.c:200 plug-ins/common/sunras.c:1616
 msgid "Standard"
 msgstr "Standardní"
 
-#: plug-ins/common/CML_explorer.c:280
+#: plug-ins/common/CML_explorer.c:201
 msgid "Use average value"
 msgstr "Pou¾ít prùmìrných hodnot"
 
-#: plug-ins/common/CML_explorer.c:282
+#: plug-ins/common/CML_explorer.c:202
 msgid "Use reverse value"
 msgstr "Pou¾ít obrácených hodnot"
 
-#: plug-ins/common/CML_explorer.c:284
+#: plug-ins/common/CML_explorer.c:203
 msgid "With random power (0,10)"
 msgstr "S náhodnou mocninou (0,10)"
 
-#: plug-ins/common/CML_explorer.c:286
+#: plug-ins/common/CML_explorer.c:204
 msgid "With random power (0,1)"
 msgstr "S náhodnou mocninou (0,1)"
 
-#: plug-ins/common/CML_explorer.c:288
+#: plug-ins/common/CML_explorer.c:205
 msgid "With gradient power (0,1)"
 msgstr "S mocninou gradientu (0,1)"
 
-#: plug-ins/common/CML_explorer.c:290
+#: plug-ins/common/CML_explorer.c:206
 msgid "Multiply rand. value (0,1)"
 msgstr "Násobení náhodnou hodnotou (0,1)"
 
-#: plug-ins/common/CML_explorer.c:292
+#: plug-ins/common/CML_explorer.c:207
 msgid "Multiply rand. value (0,2)"
 msgstr "Násobení náhodnou hodnotou (0,2)"
 
-#: plug-ins/common/CML_explorer.c:294
+#: plug-ins/common/CML_explorer.c:208
 msgid "Multiply gradient (0,1)"
 msgstr "Násobení gradientem (0,1)"
 
-#: plug-ins/common/CML_explorer.c:296
+#: plug-ins/common/CML_explorer.c:209
 msgid "With p and random (0,1)"
 msgstr "S p a náhodným (0,1)"
 
-#: plug-ins/common/CML_explorer.c:301
+#: plug-ins/common/CML_explorer.c:222
 msgid "All black"
 msgstr "V¹e èerné"
 
-#. 0
-#: plug-ins/common/CML_explorer.c:302
+#: plug-ins/common/CML_explorer.c:223
 msgid "All gray"
 msgstr "V¹e ¹edé"
 
-#. 1
-#: plug-ins/common/CML_explorer.c:303
+#: plug-ins/common/CML_explorer.c:224
 msgid "All white"
 msgstr "V¹e bílé"
 
-#. 2
-#: plug-ins/common/CML_explorer.c:304
+#: plug-ins/common/CML_explorer.c:225
 msgid "The first row of the image"
 msgstr "První øada obrázku"
 
-#. 3
-#: plug-ins/common/CML_explorer.c:305
+#: plug-ins/common/CML_explorer.c:226
 msgid "Continuous gradient"
 msgstr "Plynulý pøechod"
 
-#. 4
-#: plug-ins/common/CML_explorer.c:306
+#: plug-ins/common/CML_explorer.c:227
 msgid "Continuous grad. w/o gap"
 msgstr "Plynulý pøechod bez dìr"
 
-#: plug-ins/common/CML_explorer.c:308
+#: plug-ins/common/CML_explorer.c:228
 msgid "Random, ch. independent"
 msgstr "Náhodná, zm. nezávislá"
 
-#: plug-ins/common/CML_explorer.c:310
+#: plug-ins/common/CML_explorer.c:229
 msgid "Random shared"
 msgstr "Náhodná sdílená"
 
-#: plug-ins/common/CML_explorer.c:312
+#: plug-ins/common/CML_explorer.c:230
 msgid "Randoms from seed"
 msgstr "Náhodná èísla z hnízda"
 
-#: plug-ins/common/CML_explorer.c:314
+#: plug-ins/common/CML_explorer.c:231
 msgid "Randoms from seed (shared)"
 msgstr "Náhodná èísla z hnízda (sdílená)"
 
-#: plug-ins/common/CML_explorer.c:368 plug-ins/common/CML_explorer.c:376
-#: plug-ins/common/CML_explorer.c:1288 plug-ins/common/CML_explorer.c:1612
+#: plug-ins/common/CML_explorer.c:299 plug-ins/common/CML_explorer.c:1296
 #: plug-ins/common/decompose.c:137 plug-ins/common/lic.c:1051
 #: plug-ins/fp/fp_gtk.c:262 plug-ins/fp/fp_gtk.c:394
 #: plug-ins/gap/gap_mov_dialog.c:259 plug-ins/gimpressionist/orientation.c:188
@@ -1642,16 +1636,14 @@ msgstr "Náhodná èísla z hnízda (sdílená)"
 msgid "Hue"
 msgstr "Odstín"
 
-#: plug-ins/common/CML_explorer.c:369 plug-ins/common/CML_explorer.c:377
-#: plug-ins/common/CML_explorer.c:1292 plug-ins/common/CML_explorer.c:1612
+#: plug-ins/common/CML_explorer.c:300 plug-ins/common/CML_explorer.c:1301
 #: plug-ins/common/decompose.c:138 plug-ins/common/lic.c:1052
 #: plug-ins/fp/fp_gtk.c:266 plug-ins/fp/fp_gtk.c:398 plug-ins/fp/fp_gtk.c:462
 #: plug-ins/gap/gap_mov_dialog.c:260 plug-ins/rcm/rcm_dialog.c:509
 msgid "Saturation"
 msgstr "Sytost"
 
-#: plug-ins/common/CML_explorer.c:370 plug-ins/common/CML_explorer.c:378
-#: plug-ins/common/CML_explorer.c:1296 plug-ins/common/CML_explorer.c:1612
+#: plug-ins/common/CML_explorer.c:301 plug-ins/common/CML_explorer.c:1306
 #: plug-ins/common/decompose.c:139 plug-ins/fp/fp_gtk.c:270
 #: plug-ins/fp/fp_gtk.c:402 plug-ins/gap/gap_mov_dialog.c:262
 #: plug-ins/gimpressionist/orientation.c:131
@@ -1659,15 +1651,11 @@ msgstr "Sytost"
 msgid "Value"
 msgstr "Jas"
 
-#: plug-ins/common/CML_explorer.c:375
-msgid "NULL"
-msgstr "NULL"
-
-#: plug-ins/common/CML_explorer.c:483
+#: plug-ins/common/CML_explorer.c:464
 msgid "Make an image of Coupled-Map Lattice"
 msgstr "Vytvoøit obrázek z párované mapy møí¾e"
 
-#: plug-ins/common/CML_explorer.c:484
+#: plug-ins/common/CML_explorer.c:465
 msgid ""
 "Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellula "
 "Automata on continuous (value) domain. In RUN_NONINTERACTIVE, the name of a "
@@ -1678,21 +1666,21 @@ msgstr ""
 "na spojité (hodnotové) doménì. Pøi RUN_NONINTERACTIVE je jméno prametru "
 "ètvrtým argumentem. CML badatele mù¾ete øídit pomocí parametrického souboru."
 
-#: plug-ins/common/CML_explorer.c:489
+#: plug-ins/common/CML_explorer.c:470
 msgid "<Image>/Filters/Render/Pattern/CML Explorer..."
 msgstr "<Image>/Filtry/Vyobrazení/Vzorky/CML badatel..."
 
-#: plug-ins/common/CML_explorer.c:791
+#: plug-ins/common/CML_explorer.c:762
 msgid "CML_explorer: evoluting..."
 msgstr "CML badatel: provádí se vývoj..."
 
-#: plug-ins/common/CML_explorer.c:1184
+#: plug-ins/common/CML_explorer.c:1185
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "Badatel párované mapy møí¾e"
 
 #. Preview
-#: plug-ins/common/CML_explorer.c:1201 plug-ins/common/blinds.c:362
-#: plug-ins/common/bumpmap.c:826 plug-ins/common/curve_bend.c:1467
+#: plug-ins/common/CML_explorer.c:1216 plug-ins/common/blinds.c:362
+#: plug-ins/common/bumpmap.c:826 plug-ins/common/curve_bend.c:1466
 #: plug-ins/common/emboss.c:759 plug-ins/common/exchange.c:319
 #: plug-ins/common/fractaltrace.c:761 plug-ins/common/nlfilt.c:584
 #: plug-ins/common/polar.c:968 plug-ins/common/ps.c:2592
@@ -1708,72 +1696,73 @@ msgstr "Badatel párované mapy møí¾e"
 msgid "Preview"
 msgstr "Náhled"
 
-#: plug-ins/common/CML_explorer.c:1242
-msgid "New seed"
-msgstr "Nové hnízdo"
+#: plug-ins/common/CML_explorer.c:1254
+msgid "Random Seed"
+msgstr "Náhodné hnízdo"
 
-#: plug-ins/common/CML_explorer.c:1248
-msgid "Fix seed"
+#: plug-ins/common/CML_explorer.c:1264
+msgid "Fix Seed"
 msgstr "Upravit hnízdo"
 
-#: plug-ins/common/CML_explorer.c:1254
-msgid "Random seed"
-msgstr "Hnízdo náhodných èísel"
+#: plug-ins/common/CML_explorer.c:1274
+msgid "New Seed"
+msgstr "Nové hnízdo"
 
-#: plug-ins/common/CML_explorer.c:1286
-msgid "Hue settings"
+#: plug-ins/common/CML_explorer.c:1293
+msgid "Hue Settings"
 msgstr "Nastavení odstínu"
 
-#: plug-ins/common/CML_explorer.c:1290
-msgid "Saturation settings"
-msgstr "Volby sytosti"
+#: plug-ins/common/CML_explorer.c:1298
+msgid "Saturation Settings"
+msgstr "Nastavení sytosti"
 
-#: plug-ins/common/CML_explorer.c:1294
-msgid "Value (grayimage) settings"
+#: plug-ins/common/CML_explorer.c:1303
+msgid "Value (Gray Image) Settings"
 msgstr "Nastavení hodnoty (obrázek v ¹edích)"
 
-#: plug-ins/common/CML_explorer.c:1298
-msgid "Advanced settings"
-msgstr "Roz¹íøené nastavení"
+#: plug-ins/common/CML_explorer.c:1308
+msgid "Advanced Settings"
+msgstr "Roz¹íøená nastavení"
 
-#: plug-ins/common/CML_explorer.c:1300 plug-ins/fp/fp_gtk.c:274
+#: plug-ins/common/CML_explorer.c:1310 plug-ins/fp/fp_gtk.c:274
 #: plug-ins/maze/maze_face.c:452
 msgid "Advanced"
 msgstr "Roz¹íøené"
 
-#: plug-ins/common/CML_explorer.c:1312
-msgid "Other parameter settings"
+#: plug-ins/common/CML_explorer.c:1320
+msgid "Other Parameter Settings"
 msgstr "Nastavení jiných parametrù"
 
-#: plug-ins/common/CML_explorer.c:1316
-msgid "Channel independed parameters"
+#: plug-ins/common/CML_explorer.c:1329
+msgid "Channel Independed Parameters"
 msgstr "Parametry nezávislé na kanálu"
 
-#: plug-ins/common/CML_explorer.c:1320
-msgid "Initial value"
-msgstr "Výchozí hodnota"
+#: plug-ins/common/CML_explorer.c:1380
+msgid "Initial Value:"
+msgstr "Výchozí hodnota:"
 
-#: plug-ins/common/CML_explorer.c:1326
-msgid "Zoom scale"
-msgstr "Míra zvìt¹ení"
+#: plug-ins/common/CML_explorer.c:1384
+msgid "Zoom Scale:"
+msgstr "Míra zvìt¹ení:"
 
-#: plug-ins/common/CML_explorer.c:1331
-msgid "Start offset"
-msgstr "Poèáteèní posun"
+#: plug-ins/common/CML_explorer.c:1391
+msgid "Start Offset:"
+msgstr "Poèáteèní posun:"
 
-#: plug-ins/common/CML_explorer.c:1351
-msgid "Seed of random (only for \"from seed\" modes)"
+#: plug-ins/common/CML_explorer.c:1398
+msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "Hnízdo náhodných èísel (pouze pro re¾imy \"z hnízda\")"
 
-#: plug-ins/common/CML_explorer.c:1355
-msgid "Seed"
-msgstr "Hnízdo"
+#. Seed input box
+#: plug-ins/common/CML_explorer.c:1410 plug-ins/maze/maze_face.c:387
+msgid "Seed:"
+msgstr "Hnízdo:"
 
-#: plug-ins/common/CML_explorer.c:1365
-msgid "Switch to \"from seed\" with the last seed"
+#: plug-ins/common/CML_explorer.c:1421
+msgid "Switch to \"From Seed\" with the last Seed"
 msgstr "Pøepnutí do re¾imu \"z hnízda\" s posledním hnízdem"
 
-#: plug-ins/common/CML_explorer.c:1372
+#: plug-ins/common/CML_explorer.c:1432
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -1785,175 +1774,175 @@ msgstr ""
 "(to je dùvod, proè jsou obrázky v obrazovce odli¹né od náhledu) a (2) "
 "v¹echny míry mutace se rovnají nule."
 
-#: plug-ins/common/CML_explorer.c:1389
+#: plug-ins/common/CML_explorer.c:1440
 msgid "Others"
 msgstr "Jiné"
 
-#: plug-ins/common/CML_explorer.c:1396
-msgid "Misc operations"
+#: plug-ins/common/CML_explorer.c:1449
+msgid "Misc Operations"
 msgstr "Rùzné práce"
 
-#: plug-ins/common/CML_explorer.c:1401
-msgid "Copy settings"
+#: plug-ins/common/CML_explorer.c:1458
+msgid "Copy Settings"
 msgstr "Kopírovat nastavení"
 
-#: plug-ins/common/CML_explorer.c:1405
-msgid "Source ch."
-msgstr "Zdroj zm."
+#: plug-ins/common/CML_explorer.c:1481
+msgid "Source Channel:"
+msgstr "Zdrojový kanál:"
 
-#: plug-ins/common/CML_explorer.c:1411 plug-ins/common/CML_explorer.c:1445
-msgid "Destination ch."
-msgstr "Cíl zm."
+#: plug-ins/common/CML_explorer.c:1497 plug-ins/common/CML_explorer.c:1552
+msgid "Destination Channel:"
+msgstr "Cílový kanál:"
 
-#: plug-ins/common/CML_explorer.c:1417
-msgid "Do copy parameters"
-msgstr "Provést kopírování parametrù"
-
-#: plug-ins/common/CML_explorer.c:1435
-msgid "Selective load settings"
-msgstr "Výbìrové ètení nastavení"
-
-#: plug-ins/common/CML_explorer.c:1439
-msgid "Source ch. in file"
-msgstr "Zdroj zm. v souboru"
-
-#: plug-ins/common/CML_explorer.c:1465
-msgid "Misc ops."
-msgstr "Rùzné operace"
-
-#: plug-ins/common/CML_explorer.c:1501
-msgid "Function type"
-msgstr "Typ funkce"
+#: plug-ins/common/CML_explorer.c:1500
+msgid "Copy Parameters"
+msgstr "Kopírovat parametry"
 
 #: plug-ins/common/CML_explorer.c:1508
-msgid "Composition"
-msgstr "Kompozice"
+msgid "Selective Load Settings"
+msgstr "Výbìrové ètení nastavení"
 
-#: plug-ins/common/CML_explorer.c:1515
-msgid "Misc arrange"
-msgstr "Rùzné uspoøádání"
-
-#: plug-ins/common/CML_explorer.c:1522
-msgid "Use cyclic range"
-msgstr "Pou¾ít cyklického rozsahu"
-
-#: plug-ins/common/CML_explorer.c:1527
-msgid "Mod. rate"
-msgstr "Mod. pøebìhu"
+#: plug-ins/common/CML_explorer.c:1523 plug-ins/common/CML_explorer.c:1541
+msgid "NULL"
+msgstr "NULL"
 
 #: plug-ins/common/CML_explorer.c:1534
-msgid "Env. sensitivity"
-msgstr "Prostø. citlivost"
+msgid "Source Channel in File:"
+msgstr "Zdrojový kanál v souboru:"
 
-#: plug-ins/common/CML_explorer.c:1541
-msgid "Diffusion dist."
-msgstr "Vzdálenost difúze"
+#: plug-ins/common/CML_explorer.c:1556
+msgid "Misc Ops."
+msgstr "Rùzné operace"
 
-#: plug-ins/common/CML_explorer.c:1548
-msgid "# of subranges"
-msgstr "Poèet podrozsahù"
+#: plug-ins/common/CML_explorer.c:1650
+msgid "Function Type:"
+msgstr "Typ funkce:"
 
-#: plug-ins/common/CML_explorer.c:1555
-msgid "P(ower factor)"
-msgstr "Mocnina"
+#: plug-ins/common/CML_explorer.c:1707
+msgid "Composition:"
+msgstr "Kompozice:"
 
-#: plug-ins/common/CML_explorer.c:1562
-msgid "Parameter k"
-msgstr "Parametr k"
+#: plug-ins/common/CML_explorer.c:1749
+msgid "Misc Arrange:"
+msgstr "Rùzné uspoøádání:"
 
-#: plug-ins/common/CML_explorer.c:1569
-msgid "Range low"
-msgstr "Dolní rozsah"
+#: plug-ins/common/CML_explorer.c:1753
+msgid "Use Cyclic Range"
+msgstr "Pou¾ít cyklického rozsahu"
 
-#: plug-ins/common/CML_explorer.c:1576
-msgid "Range high"
-msgstr "Horní rozsah"
+#: plug-ins/common/CML_explorer.c:1763
+msgid "Mod. Rate:"
+msgstr "Mod. pøebìhu:"
 
-#: plug-ins/common/CML_explorer.c:1595
-msgid "Plot the graph of the settings"
+#: plug-ins/common/CML_explorer.c:1771
+msgid "Env. Sensitivity:"
+msgstr "Prostø. citlivost:"
+
+#: plug-ins/common/CML_explorer.c:1779
+msgid "Diffusion Dist.:"
+msgstr "Vzdálenost difúze:"
+
+#: plug-ins/common/CML_explorer.c:1787
+msgid "# of Subranges:"
+msgstr "Poèet podrozsahù:"
+
+#: plug-ins/common/CML_explorer.c:1795
+msgid "P(ower Factor):"
+msgstr "P (Faktor mocniny)"
+
+#: plug-ins/common/CML_explorer.c:1803
+msgid "Parameter k:"
+msgstr "Parametr k:"
+
+#: plug-ins/common/CML_explorer.c:1811
+msgid "Range Low:"
+msgstr "Dolní rozsah:"
+
+#: plug-ins/common/CML_explorer.c:1819
+msgid "Range High:"
+msgstr "Horní rozsah:"
+
+#: plug-ins/common/CML_explorer.c:1830
+msgid "Plot the Graph of the Settings"
 msgstr "Rýsuje graf nastavení"
 
-#: plug-ins/common/CML_explorer.c:1629
-msgid "Ch. sensitivity"
-msgstr "Zm. citlivosti"
+#: plug-ins/common/CML_explorer.c:1883
+msgid "Ch. Sensitivity:"
+msgstr "Zm. citlivosti:"
 
-#: plug-ins/common/CML_explorer.c:1636
-msgid "Mutation rate"
-msgstr "Míra mutace"
+#: plug-ins/common/CML_explorer.c:1892
+msgid "Mutation Rate:"
+msgstr "Míra mutace:"
 
-#: plug-ins/common/CML_explorer.c:1643
-msgid "Mutation dist."
-msgstr "Vzdálenost mutace"
+#: plug-ins/common/CML_explorer.c:1901
+msgid "Mutation Dist.:"
+msgstr "Vzdálenost mutace:"
 
-#: plug-ins/common/CML_explorer.c:1670
+#: plug-ins/common/CML_explorer.c:1929
 msgid "Graph of the current settings"
 msgstr "Graf aktuálního nastavení"
 
-#: plug-ins/common/CML_explorer.c:1684
+#: plug-ins/common/CML_explorer.c:1943
 msgid "The Graph"
 msgstr "Graf"
 
-#: plug-ins/common/CML_explorer.c:1776
+#: plug-ins/common/CML_explorer.c:2049
 msgid "Warning: the source and the destination are the same channel."
 msgstr "Varování: zdroj i cíl je tentý¾ kanál."
 
-#: plug-ins/common/CML_explorer.c:1862
-msgid "Execute"
-msgstr "Vykonat"
-
-#: plug-ins/common/CML_explorer.c:1864
-msgid "Execute and Exit"
-msgstr "Vykonat a skonèit"
-
-#: plug-ins/common/CML_explorer.c:1866
-msgid "Exit"
-msgstr "Konec"
-
-#: plug-ins/common/CML_explorer.c:1884
-msgid "Save parameters to"
+#: plug-ins/common/CML_explorer.c:2117
+msgid "Save Parameters to"
 msgstr "Zapsat parametry do"
 
-#: plug-ins/common/CML_explorer.c:1950 plug-ins/common/CML_explorer.c:2150
+#: plug-ins/common/CML_explorer.c:2189 plug-ins/common/CML_explorer.c:2391
 #, c-format
 msgid "Error: could not open \"%s\""
 msgstr "Chyba: nelze otevøít \"%s\""
 
-#: plug-ins/common/CML_explorer.c:1996
+#: plug-ins/common/CML_explorer.c:2230
 #, c-format
-msgid "Parameters were saved to \"%s\""
-msgstr "Parametry byly zapsány do \"%s\""
+msgid ""
+"Parameters were Saved to\n"
+"\"%s\""
+msgstr ""
+"Parametry byly zapsány do\n"
+"\"%s\""
 
-#: plug-ins/common/CML_explorer.c:2018
-msgid "CML file operation warning"
-msgstr "CML varování: práce se souborem"
+#: plug-ins/common/CML_explorer.c:2249
+msgid "CML File Operation Warning"
+msgstr "CML varování práce se souborem"
 
-#: plug-ins/common/CML_explorer.c:2025
+#: plug-ins/common/CML_explorer.c:2269
 #, c-format
-msgid "%s exists, overwrite?"
-msgstr "%s existuje, pøepsat?"
+msgid ""
+"%s\n"
+"exists, Overwrite?"
+msgstr ""
+"%s\n"
+"existuje, pøepsat?"
 
-#: plug-ins/common/CML_explorer.c:2069
-msgid "Load parameters from"
+#: plug-ins/common/CML_explorer.c:2306
+msgid "Load Parameters from"
 msgstr "Naèíst parametry z"
 
-#: plug-ins/common/CML_explorer.c:2071
-msgid "Selective load from"
+#: plug-ins/common/CML_explorer.c:2308
+msgid "Selective Load from"
 msgstr "Výbìrové ètení z"
 
-#: plug-ins/common/CML_explorer.c:2174
+#: plug-ins/common/CML_explorer.c:2412
 msgid "Error: it's not CML parameter file."
 msgstr "Chyba: nejedná se o CML soubor s parametry."
 
-#: plug-ins/common/CML_explorer.c:2181
+#: plug-ins/common/CML_explorer.c:2419
 msgid "Warning: it's an old format file."
 msgstr "Varování: toto je starý formát souboru."
 
-#: plug-ins/common/CML_explorer.c:2183
+#: plug-ins/common/CML_explorer.c:2421
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
 msgstr ""
 "Varování: Hm, toto je soubor parametrù pro novìj¹í CML badatel, ne¾ je tento."
 
-#: plug-ins/common/CML_explorer.c:2244
+#: plug-ins/common/CML_explorer.c:2482
 msgid "Error: failed to load parameters"
 msgstr "Chyba: ètení parametrù selhalo"
 
@@ -1972,64 +1961,19 @@ msgstr "Zapsat jako text"
 msgid "Data Formatting"
 msgstr "Formátování dat"
 
-#: plug-ins/common/align_layers.c:122 plug-ins/common/align_layers.c:146
-msgid "Collect"
-msgstr "Shrnout"
-
-#: plug-ins/common/align_layers.c:124
-msgid "Fill (left to right)"
-msgstr "Vyplnit (zleva doprava)"
-
-#: plug-ins/common/align_layers.c:126
-msgid "Fill (right to left)"
-msgstr "Vyplnit (zprava doleva)"
-
-#: plug-ins/common/align_layers.c:128 plug-ins/common/align_layers.c:152
-msgid "Snap to grid"
-msgstr "Chytat na møí¾"
-
-#: plug-ins/common/align_layers.c:134
-msgid "Left edge"
-msgstr "Levá hrana"
-
-#: plug-ins/common/align_layers.c:136 plug-ins/common/align_layers.c:160
-#: plug-ins/gap/gap_mov_dialog.c:273
-msgid "Center"
-msgstr "Støed"
-
-#: plug-ins/common/align_layers.c:138
-msgid "Right edge"
-msgstr "Pravá hrana"
-
-#: plug-ins/common/align_layers.c:148
-msgid "Fill (top to bottom)"
-msgstr "Vyplnit (shora dolù)"
-
-#: plug-ins/common/align_layers.c:150
-msgid "Fill (bottom to top)"
-msgstr "Vyplnit (sdola nahoru)"
-
-#: plug-ins/common/align_layers.c:158
-msgid "Top edge"
-msgstr "Vrchní hrana"
-
-#: plug-ins/common/align_layers.c:162
-msgid "Bottom edge"
-msgstr "Spodní hrana"
-
-#: plug-ins/common/align_layers.c:208 plug-ins/common/align_layers.c:209
+#: plug-ins/common/align_layers.c:149 plug-ins/common/align_layers.c:150
 msgid "Align visible layers"
 msgstr "Zarovnat viditelné vrstvy"
 
-#: plug-ins/common/align_layers.c:213
+#: plug-ins/common/align_layers.c:154
 msgid "<Image>/Layers/Align Visible Layers..."
 msgstr "<Image>/Vrstvy/Zarovnat viditelné vrstvy..."
 
-#: plug-ins/common/align_layers.c:248
+#: plug-ins/common/align_layers.c:189
 msgid "Align Visible Layers: there are too few layers."
 msgstr "Zarovnání viditelných vrstev: je zde pøíli¹ málo vrstev."
 
-#: plug-ins/common/align_layers.c:473
+#: plug-ins/common/align_layers.c:415
 msgid "Align Visible Layers"
 msgstr "Zarovnání viditelných vrstev"
 
@@ -2038,7 +1982,7 @@ msgstr "Zarovnání viditelných vrstev"
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
-#: plug-ins/common/align_layers.c:489 plug-ins/common/apply_lens.c:415
+#: plug-ins/common/align_layers.c:431 plug-ins/common/apply_lens.c:415
 #: plug-ins/common/blinds.c:424 plug-ins/common/blur.c:644
 #: plug-ins/common/checkerboard.c:371 plug-ins/common/cubism.c:328
 #: plug-ins/common/edge.c:669 plug-ins/common/engrave.c:248
@@ -2047,13 +1991,13 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/jpeg.c:1656 plug-ins/common/max_rgb.c:275
 #: plug-ins/common/mblur.c:795 plug-ins/common/noisify.c:339
 #: plug-ins/common/nova.c:376 plug-ins/common/oilify.c:472
-#: plug-ins/common/pixelize.c:301 plug-ins/common/plasma.c:312
+#: plug-ins/common/pixelize.c:301 plug-ins/common/plasma.c:311
 #: plug-ins/common/png.c:945 plug-ins/common/polar.c:988
-#: plug-ins/common/randomize.c:734 plug-ins/common/ripple.c:653
-#: plug-ins/common/scatter_hsv.c:440 plug-ins/common/sel_gauss.c:258
+#: plug-ins/common/randomize.c:732 plug-ins/common/ripple.c:653
+#: plug-ins/common/scatter_hsv.c:445 plug-ins/common/sel_gauss.c:258
 #: plug-ins/common/shift.c:395 plug-ins/common/smooth_palette.c:415
 #: plug-ins/common/snoise.c:540 plug-ins/common/sobel.c:274
-#: plug-ins/common/sparkle.c:381 plug-ins/common/threshold_alpha.c:307
+#: plug-ins/common/sparkle.c:381 plug-ins/common/threshold_alpha.c:279
 #: plug-ins/common/unsharp.c:809 plug-ins/common/video.c:2187
 #: plug-ins/common/vpropagate.c:984 plug-ins/common/whirlpinch.c:869
 #: plug-ins/common/wind.c:775 plug-ins/common/xpm.c:811
@@ -2062,31 +2006,72 @@ msgstr "Zarovnání viditelných vrstev"
 msgid "Parameter Settings"
 msgstr "Nastavení parametrù"
 
-#: plug-ins/common/align_layers.c:491
+#: plug-ins/common/align_layers.c:449 plug-ins/common/align_layers.c:482
+msgid "Collect"
+msgstr "Shrnout"
+
+#: plug-ins/common/align_layers.c:451
+msgid "Fill (left to right)"
+msgstr "Vyplnit (zleva doprava)"
+
+#: plug-ins/common/align_layers.c:453
+msgid "Fill (right to left)"
+msgstr "Vyplnit (zprava doleva)"
+
+#: plug-ins/common/align_layers.c:455 plug-ins/common/align_layers.c:488
+msgid "Snap to Grid"
+msgstr "Chytat na møí¾"
+
+#: plug-ins/common/align_layers.c:460
 msgid "Horizontal Style:"
 msgstr "Vodorovný styl:"
 
-#: plug-ins/common/align_layers.c:496
+#: plug-ins/common/align_layers.c:467
+msgid "Left Edge"
+msgstr "Levá hrana"
+
+#: plug-ins/common/align_layers.c:468 plug-ins/common/align_layers.c:501
+#: plug-ins/gap/gap_mov_dialog.c:273
+msgid "Center"
+msgstr "Støed"
+
+#: plug-ins/common/align_layers.c:469
+msgid "Right Edge"
+msgstr "Pravá hrana"
+
+#: plug-ins/common/align_layers.c:473 plug-ins/common/align_layers.c:506
 msgid "Horizontal Base:"
 msgstr "Vodorovná základna:"
 
-#: plug-ins/common/align_layers.c:501
+#: plug-ins/common/align_layers.c:484
+msgid "Fill (top to bottom)"
+msgstr "Vyplnit (shora dolù)"
+
+#: plug-ins/common/align_layers.c:486
+msgid "Fill (bottom to top)"
+msgstr "Vyplnit (sdola nahoru)"
+
+#: plug-ins/common/align_layers.c:493
 msgid "Vertical Style:"
 msgstr "Svislý styl:"
 
-#: plug-ins/common/align_layers.c:506
-msgid "Vertical Base:"
-msgstr "Svislá základna:"
+#: plug-ins/common/align_layers.c:500
+msgid "Top Edge"
+msgstr "Vrchní hrana"
 
-#: plug-ins/common/align_layers.c:512
+#: plug-ins/common/align_layers.c:502
+msgid "Bottom Edge"
+msgstr "Spodní hrana"
+
+#: plug-ins/common/align_layers.c:511
 msgid "Ignore the Bottom Layer even if Visible"
 msgstr "Ignorovat spodní vrstvu, dokonce je-li viditelná"
 
-#: plug-ins/common/align_layers.c:517
+#: plug-ins/common/align_layers.c:521
 msgid "Use the (Invisible) Bottom Layer as the Base"
 msgstr "Pou¾ije (neviditelné) spodní vrstvy jako základny"
 
-#: plug-ins/common/align_layers.c:523
+#: plug-ins/common/align_layers.c:531
 msgid "Grid Size:"
 msgstr "Velikost møí¾e:"
 
@@ -2333,25 +2318,25 @@ msgstr ""
 msgid "<Image>/Filters/Blur/Blur..."
 msgstr "<Image>/Filtry/Rozostøení/Rozostøení..."
 
-#: plug-ins/common/blur.c:660 plug-ins/common/plasma.c:326
-#: plug-ins/common/randomize.c:750 plug-ins/common/snoise.c:556
+#: plug-ins/common/blur.c:660 plug-ins/common/plasma.c:325
+#: plug-ins/common/randomize.c:748 plug-ins/common/snoise.c:556
 #: plug-ins/sinus/sinus.c:860
 msgid "Random Seed:"
 msgstr "Hnízdo náhodných èísel:"
 
-#: plug-ins/common/blur.c:667 plug-ins/common/randomize.c:757
+#: plug-ins/common/blur.c:667 plug-ins/common/randomize.c:755
 msgid "Randomization %:"
 msgstr "Náhodnost %:"
 
-#: plug-ins/common/blur.c:669 plug-ins/common/randomize.c:759
+#: plug-ins/common/blur.c:669 plug-ins/common/randomize.c:757
 msgid "Percentage of pixels to be filtered"
 msgstr "Procento filtrovaných pixelù"
 
-#: plug-ins/common/blur.c:678 plug-ins/common/randomize.c:768
+#: plug-ins/common/blur.c:678 plug-ins/common/randomize.c:766
 msgid "Repeat:"
 msgstr "Opakování:"
 
-#: plug-ins/common/blur.c:680 plug-ins/common/randomize.c:770
+#: plug-ins/common/blur.c:680 plug-ins/common/randomize.c:768
 msgid "Number of times to apply filter"
 msgstr "Poèet pou¾ití filtru"
 
@@ -2532,7 +2517,7 @@ msgstr "Kolorování"
 #: plug-ins/common/ps.c:2365 plug-ins/common/xpm.c:431
 #: plug-ins/gap/gap_mov_dialog.c:261 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:324
-#: plug-ins/print/print.c:984
+#: plug-ins/print/print.c:954
 msgid "Color"
 msgstr "Barva"
 
@@ -2553,6 +2538,8 @@ msgid ""
 "This replaces as much of a given color as possible in each pixel with a "
 "corresponding amount of alpha, then readjusts the color accordingly."
 msgstr ""
+"Tento nahrazuje takové mno¾ství dané barvy, jaké je mo¾né, odpovídající "
+"mírou alfy, a poté pøíslu¹nì doupraví barvu."
 
 #: plug-ins/common/colortoalpha.c:122
 msgid "7th Aug 1999"
@@ -2606,7 +2593,7 @@ msgid "HSV"
 msgstr "HSV"
 
 #. Gray: Circle: Spinbutton 1
-#: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:461
+#: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:466
 #: plug-ins/rcm/rcm_dialog.c:428
 msgid "Hue:"
 msgstr "Odstín:"
@@ -2614,12 +2601,12 @@ msgstr "Odstín:"
 #.
 #. * Saturation slider...
 #.
-#: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:469
-#: plug-ins/print/print.c:1298 plug-ins/rcm/rcm_dialog.c:453
+#: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:474
+#: plug-ins/print/print.c:1268 plug-ins/rcm/rcm_dialog.c:453
 msgid "Saturation:"
 msgstr "Sytost:"
 
-#: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:477
+#: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:482
 msgid "Value:"
 msgstr "Jas:"
 
@@ -2899,79 +2886,79 @@ msgid "<Image>/Filters/Distorts/CurveBend..."
 msgstr "<Image>/Filtry/Zkreslení/Zkøivit..."
 
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1326
+#: plug-ins/common/curve_bend.c:1325
 msgid "Curve Bend"
 msgstr "Zkøivení"
 
-#: plug-ins/common/curve_bend.c:1333 plug-ins/gfig/gfig.c:6536
+#: plug-ins/common/curve_bend.c:1332 plug-ins/gfig/gfig.c:6535
 #: plug-ins/imagemap/imap_cmd_copy.c:49
 #: plug-ins/imagemap/imap_cmd_copy_object.c:50
 #: plug-ins/imagemap/imap_menu.c:286 plug-ins/imagemap/imap_toolbar.c:131
 msgid "Copy"
 msgstr "Kopírovat"
 
-#: plug-ins/common/curve_bend.c:1335
+#: plug-ins/common/curve_bend.c:1334
 msgid "CopyInv"
 msgstr "InvKopírovat"
 
-#: plug-ins/common/curve_bend.c:1337
+#: plug-ins/common/curve_bend.c:1336
 msgid "Swap"
 msgstr "Prohodit"
 
 #. The Load button
-#: plug-ins/common/curve_bend.c:1356
+#: plug-ins/common/curve_bend.c:1355
 msgid "LoadCurve"
 msgstr "Naèíst køivku"
 
 #. The Save button
-#: plug-ins/common/curve_bend.c:1364
+#: plug-ins/common/curve_bend.c:1363
 msgid "SaveCurve"
 msgstr "Zapsat køivku"
 
-#: plug-ins/common/curve_bend.c:1371
+#: plug-ins/common/curve_bend.c:1370
 msgid "Rotate: "
 msgstr "Rotace: "
 
-#: plug-ins/common/curve_bend.c:1384
+#: plug-ins/common/curve_bend.c:1383
 msgid "Curve for Border: "
 msgstr "Køivka hranic: "
 
 #. The option menu for selecting the drawing method
-#: plug-ins/common/curve_bend.c:1397
+#: plug-ins/common/curve_bend.c:1396
 msgid "Curve Type: "
 msgstr "Typ køivky: "
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1458
+#: plug-ins/common/curve_bend.c:1457
 msgid "PreviewOnce"
 msgstr "Náhled jednou"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1477
+#: plug-ins/common/curve_bend.c:1476
 msgid "Smoothing"
 msgstr "Plynulost"
 
 #. The antialias toggle
-#: plug-ins/common/curve_bend.c:1487
+#: plug-ins/common/curve_bend.c:1486
 msgid "Antialias"
 msgstr "Vyhladit"
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1497
+#: plug-ins/common/curve_bend.c:1496
 msgid "Work on Copy"
 msgstr "Pracovat na kopii"
 
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2142
+#: plug-ins/common/curve_bend.c:2141
 msgid "Load Curve Points from file"
 msgstr "Ètení bodù køivky ze souboru"
 
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2172
+#: plug-ins/common/curve_bend.c:2171
 msgid "Save Curve Points to file"
 msgstr "Zápis bodù køivky do souboru"
 
-#: plug-ins/common/curve_bend.c:3261
+#: plug-ins/common/curve_bend.c:3260
 msgid "Curve Bend ..."
 msgstr "Zkøivení..."
 
@@ -3084,7 +3071,7 @@ msgstr "Dekompozice"
 msgid "Extract Channels:"
 msgstr "Získat kanály:"
 
-#: plug-ins/common/deinterlace.c:86 plug-ins/common/deinterlace.c:274
+#: plug-ins/common/deinterlace.c:86 plug-ins/common/deinterlace.c:273
 msgid "Deinterlace"
 msgstr "Odstranìní prokladu"
 
@@ -3106,11 +3093,11 @@ msgstr "<Image>/Filtry/Vylep¹ení/Odstranit proklad..."
 msgid "Deinterlace..."
 msgstr "Odstraòování prokladu..."
 
-#: plug-ins/common/deinterlace.c:300
+#: plug-ins/common/deinterlace.c:299
 msgid "Keep Odd Fields"
 msgstr "Zachovat lichá pole"
 
-#: plug-ins/common/deinterlace.c:301
+#: plug-ins/common/deinterlace.c:300
 msgid "Keep Even Fields"
 msgstr "Zachovat sudá pole"
 
@@ -3165,11 +3152,11 @@ msgstr "Velikost 1:"
 msgid "Scale 2:"
 msgstr "Velikost 2:"
 
-#: plug-ins/common/despeckle.c:485
+#: plug-ins/common/despeckle.c:177
 msgid "Despeckle filter, typically used to 'despeckle' a photographic image."
 msgstr "Filtr vyèi¹tìní je pou¾íván typicky k 'vyèi¹tìní' fotografií."
 
-#: plug-ins/common/despeckle.c:486
+#: plug-ins/common/despeckle.c:178
 msgid ""
 "This plug-in selectively performs a median or adaptive box filter on an "
 "image."
@@ -3177,7 +3164,7 @@ msgstr ""
 "Tento modul provádí na obrázek selektivní medián nebo adaptivní plo¹kový "
 "filtr."
 
-#: plug-ins/common/despeckle.c:490
+#: plug-ins/common/despeckle.c:182
 msgid "<Image>/Filters/Enhance/Despeckle..."
 msgstr "<Image>/Filtry/Vylep¹ení/Vyèistit..."
 
@@ -3207,42 +3194,42 @@ msgstr "<Image>/Filtry/Vylep¹ení/Vyèistit..."
 #.
 #. * Let the user know what we're doing...
 #.
-#: plug-ins/common/despeckle.c:714
+#: plug-ins/common/despeckle.c:406
 msgid "Despeckling..."
 msgstr "Vyèi¹»uje se..."
 
-#: plug-ins/common/despeckle.c:941
+#: plug-ins/common/despeckle.c:633
 msgid "Despeckle "
 msgstr "Vyèi¹tìní "
 
 #.
 #. * Filter type controls...
 #.
-#: plug-ins/common/despeckle.c:1030
+#: plug-ins/common/despeckle.c:722
 msgid "Type"
 msgstr "Typ"
 
-#: plug-ins/common/despeckle.c:1039 plug-ins/gimpressionist/orientation.c:198
+#: plug-ins/common/despeckle.c:731 plug-ins/gimpressionist/orientation.c:198
 #: plug-ins/gimpressionist/size.c:196
 msgid "Adaptive"
 msgstr "Adaptivní"
 
-#: plug-ins/common/despeckle.c:1048
+#: plug-ins/common/despeckle.c:740
 msgid "Recursive"
 msgstr "Rekurzivní"
 
-#: plug-ins/common/despeckle.c:1068 plug-ins/common/nlfilt.c:420
+#: plug-ins/common/despeckle.c:760 plug-ins/common/nlfilt.c:420
 #: plug-ins/common/nova.c:399 plug-ins/common/unsharp.c:823
 #: plug-ins/common/whirlpinch.c:897 plug-ins/gflare/gflare.c:2856
 #: plug-ins/imagemap/imap_circle.c:272
 msgid "Radius:"
 msgstr "Prùmìr:"
 
-#: plug-ins/common/despeckle.c:1080
+#: plug-ins/common/despeckle.c:772
 msgid "Black Level:"
 msgstr "Úroveò èerné:"
 
-#: plug-ins/common/despeckle.c:1092
+#: plug-ins/common/despeckle.c:784
 msgid "White Level:"
 msgstr "Úroveò bílé:"
 
@@ -3319,7 +3306,7 @@ msgstr "Ostré hrany"
 #.
 #. * Brightness slider...
 #.
-#: plug-ins/common/diffraction.c:739 plug-ins/print/print.c:1081
+#: plug-ins/common/diffraction.c:739 plug-ins/print/print.c:1051
 msgid "Brightness:"
 msgstr "Jas:"
 
@@ -4251,6 +4238,8 @@ msgid ""
 "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
 msgstr ""
+"Zda bude GTM vytváøet plný HTML dokument s visaèkami <HTML>, <BODY>, atd. "
+"namísto pouhé html tabulky."
 
 #. HTML Table Creation Options
 #: plug-ins/common/gtm.c:427
@@ -5423,11 +5412,11 @@ msgstr "<Image>/Filtry/Vyobrazení/Mraky/Plazma..."
 msgid "Plasma..."
 msgstr "Plazma..."
 
-#: plug-ins/common/plasma.c:293
+#: plug-ins/common/plasma.c:292
 msgid "Plasma"
 msgstr "Plazma"
 
-#: plug-ins/common/plasma.c:330 plug-ins/common/spheredesigner.c:2429
+#: plug-ins/common/plasma.c:329 plug-ins/common/spheredesigner.c:2429
 msgid "Turbulence:"
 msgstr "Turbulence:"
 
@@ -5625,7 +5614,7 @@ msgstr "Convertuje obrázek do polárních souøadnic a z polárních souøadnic"
 msgid ""
 "Remaps and image from rectangular coordinates to polar coordinats or vice "
 "versa"
-msgstr ""
+msgstr "Pøemapuje obrázek z kartézských souøadníc do polárních a naopak"
 
 #: plug-ins/common/polar.c:218
 msgid "<Image>/Filters/Distorts/Polar Coords..."
@@ -5734,7 +5723,7 @@ msgstr "Vyobrazení"
 #.
 #. * Resolution option menu...
 #.
-#: plug-ins/common/ps.c:2313 plug-ins/print/print.c:949
+#: plug-ins/common/ps.c:2313 plug-ins/print/print.c:919
 msgid "Resolution:"
 msgstr "Rozli¹ení:"
 
@@ -5820,7 +5809,7 @@ msgstr "Rotace"
 msgid "Output"
 msgstr "Výstup"
 
-#: plug-ins/common/ps.c:2576 plug-ins/print/print.c:219
+#: plug-ins/common/ps.c:2576 plug-ins/print/print.c:189
 msgid "PostScript Level 2"
 msgstr "PostScript úroveò (level) 2"
 
@@ -5876,20 +5865,20 @@ msgstr "Náhodné posuny 1.7"
 msgid "Random Slur 1.7"
 msgstr "Náhodné roztøepení 1.7"
 
-#: plug-ins/common/randomize.c:220
+#: plug-ins/common/randomize.c:218
 msgid "Add a random factor to the image by hurling random data at it."
 msgstr "Pøidává do obrázku náhodný èinitel posypáním náhodnými daty."
 
-#: plug-ins/common/randomize.c:222
+#: plug-ins/common/randomize.c:220
 msgid "Add a random factor to the image by picking a random adjacent pixel."
 msgstr ""
 "Pøidává do obrázku náhodný èinitel výbìrem z náhodného pøilehlého pixelu."
 
-#: plug-ins/common/randomize.c:224
+#: plug-ins/common/randomize.c:222
 msgid "Add a random factor to the image by slurring (similar to melting)."
 msgstr "Pøidává do obrázku náhodný èinitel posunem stranou (podobné tání)."
 
-#: plug-ins/common/randomize.c:227
+#: plug-ins/common/randomize.c:225
 msgid ""
 "This plug-in ``hurls'' randomly-valued pixels onto the selection or image.  "
 "You may select the percentage of pixels to modify and the number of times to "
@@ -5898,7 +5887,7 @@ msgstr ""
 "Tento modul ,,posype'' obrázek náhodnì vybranými pixely. Lze zvolit procento "
 "zmìnìných pixelù a poèet opakování procesu."
 
-#: plug-ins/common/randomize.c:229
+#: plug-ins/common/randomize.c:227
 msgid ""
 "This plug-in replaces a pixel with a random adjacent pixel.  You may select "
 "the percentage of pixels to modify and the number of times to repeat the "
@@ -5907,7 +5896,7 @@ msgstr ""
 "Tento modul zamìní pixel za náhodný pøilehlý pixelem. Lze zvolit procento "
 "zmìnìných pixelù a poèet opakování procesu."
 
-#: plug-ins/common/randomize.c:231
+#: plug-ins/common/randomize.c:229
 msgid ""
 "This plug-in slurs (melts like a bunch of icicles) an image.  You may select "
 "the percentage of pixels to modify and the number of times to repeat the "
@@ -5916,15 +5905,15 @@ msgstr ""
 "Tento modul roztøepává obrázek (rozpou¹tí do chomáèù èi rampouchù). Lze "
 "zvolit procento zmìnìných pixelù a poèet opakování procesu."
 
-#: plug-ins/common/randomize.c:245
+#: plug-ins/common/randomize.c:243
 msgid "<Image>/Filters/Noise/Hurl..."
 msgstr "<Image>/Filtry/©um/Výpadky..."
 
-#: plug-ins/common/randomize.c:257
+#: plug-ins/common/randomize.c:255
 msgid "<Image>/Filters/Noise/Pick..."
 msgstr "<Image>/Filtry/©um/Posuny..."
 
-#: plug-ins/common/randomize.c:269
+#: plug-ins/common/randomize.c:267
 msgid "<Image>/Filters/Noise/Slur..."
 msgstr "<Image>/Filtry/©um/Roztøepení..."
 
@@ -6054,15 +6043,15 @@ msgstr "Rotuje se..."
 #: plug-ins/common/sample_colorize.c:301
 msgid ""
 "Colorize the contents of the specified drawable similar to sample drawable"
-msgstr ""
+msgstr "Obarví obsah zadané obrazovky podobnì vzorové obrazovce"
 
 #: plug-ins/common/sample_colorize.c:306
 msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
-msgstr "<Image>/Filtry/Barvy/Mapování/Vzorek vybarvení..."
+msgstr "<Image>/Filtry/Barvy/Mapování/Vzor vybarvení..."
 
 #: plug-ins/common/sample_colorize.c:1291
 msgid "Sample Colorize"
-msgstr "Vzorek vybarvení"
+msgstr "Vzor vybarvení"
 
 #: plug-ins/common/sample_colorize.c:1298
 msgid "Get Sample Colors"
@@ -6076,7 +6065,7 @@ msgstr "Cíl:"
 #. layer optionmenu (Sample)
 #: plug-ins/common/sample_colorize.c:1344
 msgid "Sample:"
-msgstr "Vzorek:"
+msgstr "Vzor:"
 
 #. Add extra menu items for Gradient
 #: plug-ins/common/sample_colorize.c:1363
@@ -6144,19 +6133,19 @@ msgstr "Roztøepení hodnot pixelù v prostoru HSV"
 msgid "<Image>/Filters/Noise/Scatter HSV..."
 msgstr "<Image>/Filtry/©um/Roztøepení HSV..."
 
-#: plug-ins/common/scatter_hsv.c:227
-msgid "scatter_hsv: scattering..."
-msgstr "roztøepení_hsv: roztøepuje se..."
+#: plug-ins/common/scatter_hsv.c:229
+msgid "Scatter HSV: Scattering..."
+msgstr "Roztøepení HSV: Roztøepuje se..."
 
-#: plug-ins/common/scatter_hsv.c:382
+#: plug-ins/common/scatter_hsv.c:387
 msgid "Scatter HSV"
 msgstr "Roztøepení HSV"
 
-#: plug-ins/common/scatter_hsv.c:402
+#: plug-ins/common/scatter_hsv.c:407
 msgid "Preview (1:4) - Right Click to Jump"
 msgstr "Náhled (1:4) - skok pravým klepnutím"
 
-#: plug-ins/common/scatter_hsv.c:453
+#: plug-ins/common/scatter_hsv.c:458
 msgid "Holdness:"
 msgstr "Zadrzení:"
 
@@ -6261,31 +6250,31 @@ msgstr "<Image>/Filtry/Barvy/Èásteèné zplo¹tìní..."
 msgid "Semi-Flatten..."
 msgstr "Èásteèné zplo¹tìní..."
 
-#: plug-ins/common/sharpen.c:332
+#: plug-ins/common/sharpen.c:165
 msgid "Sharpen filter, typically used to 'sharpen' a photographic image."
 msgstr "Filtr doostøení je pou¾íván typicky k 'doostøení' fotografií."
 
-#: plug-ins/common/sharpen.c:333
+#: plug-ins/common/sharpen.c:166
 msgid "This plug-in selectively performs a convolution filter on an image."
 msgstr "Tento modul selektivnì provádí na obrázku konvoluèní filtr."
 
-#: plug-ins/common/sharpen.c:337
+#: plug-ins/common/sharpen.c:170
 msgid "<Image>/Filters/Enhance/Sharpen..."
 msgstr "<Image>/Filtry/Vylep¹ení/Doostøit..."
 
 #.
 #. * Let the user know what we're doing...
 #.
-#: plug-ins/common/sharpen.c:518
+#: plug-ins/common/sharpen.c:351
 msgid "Sharpening..."
 msgstr "Doostøuje se..."
 
-#: plug-ins/common/sharpen.c:702
+#: plug-ins/common/sharpen.c:535
 #, c-format
 msgid "Sharpen - %s"
 msgstr "Doostøení - %s"
 
-#: plug-ins/common/sharpen.c:788
+#: plug-ins/common/sharpen.c:621
 msgid "Sharpness:"
 msgstr "Ostrost:"
 
@@ -6837,23 +6826,23 @@ msgstr "Volby Targa"
 msgid "RLE compression"
 msgstr "Komprese RLE"
 
-#: plug-ins/common/threshold_alpha.c:137
+#: plug-ins/common/threshold_alpha.c:103
 msgid "<Image>/Image/Alpha/Threshold Alpha..."
 msgstr "<Image>/Obrázek/Alfa/Práh alfy..."
 
-#: plug-ins/common/threshold_alpha.c:180
+#: plug-ins/common/threshold_alpha.c:146
 msgid "The layer preserves transparency."
 msgstr "Vrstva zachovává krytí."
 
-#: plug-ins/common/threshold_alpha.c:186
+#: plug-ins/common/threshold_alpha.c:152
 msgid "RGBA/GRAYA drawable is not selected."
 msgstr "Nebyla zvolena obrazovka RGBA/©EDIA."
 
-#: plug-ins/common/threshold_alpha.c:244
-msgid "threshold_alpha (0.13):coloring transparency..."
-msgstr "práh_alfy (0.13): barvení prùhlednosti..."
+#: plug-ins/common/threshold_alpha.c:213
+msgid "Threshold Alpha: Coloring Transparency..."
+msgstr "Práh alfy: Barvení prùhlednosti..."
 
-#: plug-ins/common/threshold_alpha.c:291 plug-ins/common/threshold_alpha.c:340
+#: plug-ins/common/threshold_alpha.c:263
 msgid "Threshold Alpha"
 msgstr "Práh alfy"
 
@@ -7185,7 +7174,7 @@ msgstr "Roz¹íøení v kanálu hodnot"
 
 #: plug-ins/common/warp.c:272
 msgid "Twist or smear an image. (only first six arguments are required)"
-msgstr ""
+msgstr "Pokøiví a u¹piní obrázek. (pouze prvních ¹est argumentù je povinných)"
 
 #: plug-ins/common/warp.c:273
 msgid ""
@@ -7488,7 +7477,7 @@ msgstr "Vy¹¹í hodnota znamená zesiluje efekt"
 
 #: plug-ins/common/winprint.c:185
 msgid "This plug-in prints images from the GIMP."
-msgstr ""
+msgstr "Tento modul tiskne obrázky z programu GIMP."
 
 #: plug-ins/common/winprint.c:186
 msgid "Prints images to any printer recognized by Windows."
@@ -7523,7 +7512,7 @@ msgstr "Tiskárna nepodporuje bitové mapy"
 msgid "StartPage failed"
 msgstr "StartStrany selhalo"
 
-#: plug-ins/common/winprint.c:397 plug-ins/print/print.c:3280
+#: plug-ins/common/winprint.c:397 plug-ins/print/print.c:3251
 msgid "Printing..."
 msgstr "Tiskne se..."
 
@@ -7829,6 +7818,8 @@ msgstr "ète soubory ve formátu FITS"
 #: plug-ins/fits/fits.c:172
 msgid "load file of the FITS file format (Flexible Image Transport System)"
 msgstr ""
+"ète soubory ve formátu FITS (systém pru¾ného pøenosu obrázkù - Flexible "
+"Image Transport System)"
 
 #: plug-ins/fits/fits.c:183
 msgid "save file in the FITS file format"
@@ -8265,7 +8256,7 @@ msgstr "soubor ji¾ existuje:"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:434
 msgid "Decoding MPEG movie..."
-msgstr ""
+msgstr "Dekóduje se MPEG animace..."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:638
 msgid ""
@@ -8279,11 +8270,11 @@ msgstr ""
 #: plug-ins/gap/gap_decode_mpeg_main.c:647 plug-ins/rcm/rcm_dialog.c:285
 #: plug-ins/rcm/rcm_dialog.c:356
 msgid "From"
-msgstr ""
+msgstr "Z"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:648
 msgid "Framenumber of 1.st frame to extract"
-msgstr ""
+msgstr "Èíslo prvního získávaného políèka"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:655 plug-ins/rcm/rcm_dialog.c:357
 msgid "To"
@@ -8291,7 +8282,7 @@ msgstr "Do"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:656
 msgid "Framenumber of last frame to extract"
-msgstr ""
+msgstr "Èíslo posledního získávaného políèka"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:663
 msgid "Framenames"
@@ -8310,7 +8301,7 @@ msgstr "Otevøít"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:672
 msgid "Open the 1.st one of the extracted frames"
-msgstr ""
+msgstr "Otevøít první ze získávaných políèek"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:676
 msgid ""
@@ -8513,11 +8504,11 @@ msgstr "Posun sekvence políèek (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2265
 msgid "Affected Range starts at this framenumber"
-msgstr ""
+msgstr "Dotèený rozsah zaèíná na tomto políèku"
 
 #: plug-ins/gap/gap_lib.c:2273
 msgid "Affected Range ends at this framenumber"
-msgstr ""
+msgstr "Dotèený rozsah konèí na tomto políèku"
 
 #: plug-ins/gap/gap_lib.c:2276
 msgid "N-Shift :"
@@ -10039,7 +10030,7 @@ msgstr "Vlo¾it"
 msgid "Insert the selected char at the cursor position"
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext.c:148 plug-ins/gdyntext/gdyntext.c:427
+#: plug-ins/gdyntext/gdyntext.c:148 plug-ins/gdyntext/gdyntext.c:429
 msgid "GIMP Dynamic Text"
 msgstr "GIMP dynamický text"
 
@@ -10066,7 +10057,7 @@ msgid ""
 msgstr ""
 
 #. remove old layer name
-#: plug-ins/gdyntext/gdyntext.c:392 plug-ins/gdyntext/gdyntext.c:529
+#: plug-ins/gdyntext/gdyntext.c:392 plug-ins/gdyntext/gdyntext.c:531
 msgid "GDynText Layer "
 msgstr "Vrstva GDynText "
 
@@ -10245,24 +10236,25 @@ msgstr ""
 msgid "Internal error - list item has null object!"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:6478
+#. Create new entry with name + copy at end & copy object into it
+#: plug-ins/gfig/gfig.c:6477
 #, c-format
 msgid "%s copy"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:6523
+#: plug-ins/gfig/gfig.c:6522
 msgid "Save as..."
 msgstr "Zapsat jako..."
 
-#: plug-ins/gfig/gfig.c:6549 plug-ins/imagemap/imap_menu.c:276
+#: plug-ins/gfig/gfig.c:6548 plug-ins/imagemap/imap_menu.c:276
 msgid "Edit"
 msgstr "Úpravy"
 
-#: plug-ins/gfig/gfig.c:7505
+#: plug-ins/gfig/gfig.c:7504
 msgid "Error reading file"
 msgstr "Chyba pøi ètení souboru"
 
-#: plug-ins/gfig/gfig.c:7853
+#: plug-ins/gfig/gfig.c:7852
 msgid "Hey where has the object gone ?"
 msgstr ""
 
@@ -10582,7 +10574,7 @@ msgstr "Náhled stopy:"
 #.
 #. * Gamma slider...
 #.
-#: plug-ins/gimpressionist/brush.c:401 plug-ins/print/print.c:1116
+#: plug-ins/gimpressionist/brush.c:401 plug-ins/print/print.c:1086
 msgid "Gamma:"
 msgstr "Gama:"
 
@@ -10808,7 +10800,7 @@ msgstr "Jak velký rozsah úhlù bude pou¾it (360 = plný kruh)"
 #.
 #. * Orientation option menu...
 #.
-#: plug-ins/gimpressionist/orientation.c:121 plug-ins/print/print.c:919
+#: plug-ins/gimpressionist/orientation.c:121 plug-ins/print/print.c:889
 msgid "Orientation:"
 msgstr "Orientace:"
 
@@ -11365,7 +11357,7 @@ msgstr "Rozta¾ení"
 msgid "Render Options"
 msgstr "Volby vyobrazení"
 
-#: plug-ins/ifscompose/ifscompose.c:920 plug-ins/print/print.c:790
+#: plug-ins/ifscompose/ifscompose.c:920 plug-ins/print/print.c:760
 msgid "Auto"
 msgstr "Automaticky"
 
@@ -11595,7 +11587,7 @@ msgid "Other"
 msgstr "Jiné"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:200
-#: plug-ins/imagemap/imap_menu.c:210 plug-ins/print/print.c:3155
+#: plug-ins/imagemap/imap_menu.c:210 plug-ins/print/print.c:3124
 msgid "File"
 msgstr "Soubor"
 
@@ -11995,11 +11987,6 @@ msgstr "Násobení (57):"
 msgid "Offset (1):"
 msgstr "Posun (1):"
 
-#. Seed input box
-#: plug-ins/maze/maze_face.c:387
-msgid "Seed:"
-msgstr "Hnízdo:"
-
 #: plug-ins/maze/maze_face.c:407
 msgid "Time"
 msgstr "Èas"
@@ -12166,139 +12153,135 @@ msgstr "Rozèeøení vrstvy"
 msgid "Page Curl..."
 msgstr "Rozèeøení stránky..."
 
-#: plug-ins/print/print.c:217
+#: plug-ins/print/print.c:187
 msgid "PostScript Level 1"
 msgstr "PostScript úroveò (level) 1"
 
-#: plug-ins/print/print.c:221
+#: plug-ins/print/print.c:191
 msgid "HP DeskJet 500, 520"
 msgstr "HP DeskJet 500, 520"
 
-#: plug-ins/print/print.c:223
+#: plug-ins/print/print.c:193
 msgid "HP DeskJet 500C, 540C"
 msgstr "HP DeskJet 500C, 540C"
 
-#: plug-ins/print/print.c:225
+#: plug-ins/print/print.c:195
 msgid "HP DeskJet 550C, 560C"
 msgstr "HP DeskJet 550C, 560C"
 
-#: plug-ins/print/print.c:227
+#: plug-ins/print/print.c:197
 msgid "HP DeskJet 600 series"
 msgstr "HP DeskJet øada 600"
 
-#: plug-ins/print/print.c:229
+#: plug-ins/print/print.c:199
 msgid "HP DeskJet 800 series"
 msgstr "HP DeskJet øada 800"
 
-#: plug-ins/print/print.c:231
+#: plug-ins/print/print.c:201
 msgid "HP DeskJet 1100C, 1120C"
 msgstr "HP DeskJet 1100C, 1120C"
 
-#: plug-ins/print/print.c:233
+#: plug-ins/print/print.c:203
 msgid "HP DeskJet 1200C, 1600C"
 msgstr "HP DeskJet 1200C, 1600C"
 
-#: plug-ins/print/print.c:235
+#: plug-ins/print/print.c:205
 msgid "HP LaserJet II series"
 msgstr "HP LaserJet øada II"
 
-#: plug-ins/print/print.c:237
+#: plug-ins/print/print.c:207
 msgid "HP LaserJet III series"
 msgstr "HP LaserJet øada III"
 
-#: plug-ins/print/print.c:239
+#: plug-ins/print/print.c:209
 msgid "HP LaserJet 4 series"
 msgstr "HP LaserJet øada 4"
 
-#: plug-ins/print/print.c:241
+#: plug-ins/print/print.c:211
 msgid "HP LaserJet 4V, 4Si"
 msgstr "HP LaserJet 4V, 4Si"
 
-#: plug-ins/print/print.c:243
+#: plug-ins/print/print.c:213
 msgid "HP LaserJet 5 series"
 msgstr "HP LaserJet øada 5"
 
-#: plug-ins/print/print.c:245
+#: plug-ins/print/print.c:215
 msgid "HP LaserJet 5Si"
 msgstr "HP LaserJet 5Si"
 
-#: plug-ins/print/print.c:247
+#: plug-ins/print/print.c:217
 msgid "HP LaserJet 6 series"
 msgstr "HP LaserJet øada 6"
 
-#: plug-ins/print/print.c:249
+#: plug-ins/print/print.c:219
 msgid "EPSON Stylus Color"
 msgstr "EPSON Stylus Color"
 
-#: plug-ins/print/print.c:251
+#: plug-ins/print/print.c:221
 msgid "EPSON Stylus Color Pro"
 msgstr "EPSON Stylus Color Pro"
 
-#: plug-ins/print/print.c:253
+#: plug-ins/print/print.c:223
 msgid "EPSON Stylus Color Pro XL"
 msgstr "EPSON Stylus Color Pro XL"
 
-#: plug-ins/print/print.c:255
+#: plug-ins/print/print.c:225
 msgid "EPSON Stylus Color 1500"
 msgstr "EPSON Stylus Color 1500"
 
-#: plug-ins/print/print.c:257
+#: plug-ins/print/print.c:227
 msgid "EPSON Stylus Color 400"
 msgstr "EPSON Stylus Color 400"
 
-#: plug-ins/print/print.c:259
+#: plug-ins/print/print.c:229
 msgid "EPSON Stylus Color 500"
 msgstr "EPSON Stylus Color 500"
 
-#: plug-ins/print/print.c:261
+#: plug-ins/print/print.c:231
 msgid "EPSON Stylus Color 600"
 msgstr "EPSON Stylus Color 600"
 
-#: plug-ins/print/print.c:263
+#: plug-ins/print/print.c:233
 msgid "EPSON Stylus Color 800"
 msgstr "EPSON Stylus Color 800"
 
-#: plug-ins/print/print.c:265
+#: plug-ins/print/print.c:235
 msgid "EPSON Stylus Color 1520"
 msgstr "EPSON Stylus Color 1520"
 
-#: plug-ins/print/print.c:267
+#: plug-ins/print/print.c:237
 msgid "EPSON Stylus Color 3000"
 msgstr "EPSON Stylus Color 3000"
 
-#: plug-ins/print/print.c:269
+#: plug-ins/print/print.c:239
 msgid "EPSON Stylus Photo 700"
 msgstr "EPSON Stylus Photo 700"
 
-#: plug-ins/print/print.c:271
+#: plug-ins/print/print.c:241 plug-ins/print/print.c:243
 msgid "EPSON Stylus Photo EX"
 msgstr "EPSON Stylus Photo EX"
 
-#: plug-ins/print/print.c:273
-msgid "EPSON Stylus Photo"
-msgstr "EPSON Stylus Photo"
-
-#: plug-ins/print/print.c:412
+#: plug-ins/print/print.c:382
 msgid "This plug-in prints images from The GIMP."
 msgstr "Tento pøípojný modul tiskne obrázky z programu GIMP."
 
-#: plug-ins/print/print.c:413
+#: plug-ins/print/print.c:383
 msgid "Prints images to PostScript, PCL, or ESC/P2 printers."
 msgstr "Tiskne obrázky na tiskárnách typu PostScript, PCL nebo ESC/P2."
 
-#: plug-ins/print/print.c:417
+#: plug-ins/print/print.c:387
 msgid "<Image>/File/Print..."
 msgstr "<Image>/Soubor/Tisk..."
 
-#: plug-ins/print/print.c:791
+#: plug-ins/print/print.c:761
 msgid "Portrait"
 msgstr "Nastojato"
 
-#: plug-ins/print/print.c:792
+#: plug-ins/print/print.c:762
 msgid "Landscape"
 msgstr "Nale¾ato"
 
-#: plug-ins/print/print.c:820
+#: plug-ins/print/print.c:790
 #, c-format
 msgid "Print v%s"
 msgstr "Tisk v%s"
@@ -12306,120 +12289,120 @@ msgstr "Tisk v%s"
 #.
 #. * Media size option menu...
 #.
-#: plug-ins/print/print.c:871
+#: plug-ins/print/print.c:841
 msgid "Media Size:"
 msgstr "Rozmìry média:"
 
 #.
 #. * Media type option menu...
 #.
-#: plug-ins/print/print.c:887
+#: plug-ins/print/print.c:857
 msgid "Media Type:"
 msgstr "Druh média:"
 
 #.
 #. * Media source option menu...
 #.
-#: plug-ins/print/print.c:903
+#: plug-ins/print/print.c:873
 msgid "Media Source:"
 msgstr "Zdroj média:"
 
 #.
 #. * Output type toggles...
 #.
-#: plug-ins/print/print.c:965
+#: plug-ins/print/print.c:935
 msgid "Output Type:"
 msgstr "Typ výstupu:"
 
-#: plug-ins/print/print.c:974
+#: plug-ins/print/print.c:944
 msgid "B&W"
 msgstr "ÈB"
 
 #.
 #. * Density slider...
 #.
-#: plug-ins/print/print.c:993 plug-ins/print/print.c:1333
+#: plug-ins/print/print.c:963 plug-ins/print/print.c:1303
 msgid "Density:"
 msgstr "Hustota:"
 
-#: plug-ins/print/print.c:1002
+#: plug-ins/print/print.c:972
 msgid "Normal scale"
 msgstr "Normální velikost"
 
-#: plug-ins/print/print.c:1012
+#: plug-ins/print/print.c:982
 msgid "Experimental linear scale"
 msgstr ""
 
 #.
 #. * Scaling...
 #.
-#: plug-ins/print/print.c:1025
+#: plug-ins/print/print.c:995
 msgid "Scaling:"
 msgstr "Zmìna velikosti:"
 
-#: plug-ins/print/print.c:1060
+#: plug-ins/print/print.c:1030
 msgid "Percent"
 msgstr "procent"
 
-#: plug-ins/print/print.c:1069
+#: plug-ins/print/print.c:1039
 msgid "PPI"
 msgstr "PPI"
 
-#: plug-ins/print/print.c:1159
+#: plug-ins/print/print.c:1129
 msgid "Contrast:"
 msgstr "Kontrast:"
 
 #.
 #. * Printer option menu...
 #.
-#: plug-ins/print/print.c:1369
+#: plug-ins/print/print.c:1339
 msgid "Printer:"
 msgstr "Tiskárna:"
 
-#: plug-ins/print/print.c:1403 plug-ins/print/print.c:1437
+#: plug-ins/print/print.c:1373 plug-ins/print/print.c:1407
 msgid "Setup"
 msgstr "Nastavení"
 
-#: plug-ins/print/print.c:1416
+#: plug-ins/print/print.c:1386
 msgid "Print"
 msgstr "Tisknout"
 
 #.
 #. * Printer driver option menu...
 #.
-#: plug-ins/print/print.c:1459
+#: plug-ins/print/print.c:1429
 msgid "Driver:"
 msgstr "Ovladaè:"
 
 #.
 #. * PPD file...
 #.
-#: plug-ins/print/print.c:1484
+#: plug-ins/print/print.c:1454
 msgid "PPD File:"
 msgstr "PPD soubor:"
 
-#: plug-ins/print/print.c:1497
+#: plug-ins/print/print.c:1467
 msgid "Browse"
 msgstr "Procházet"
 
 #.
 #. * Print command...
 #.
-#: plug-ins/print/print.c:1507
+#: plug-ins/print/print.c:1477
 msgid "Command:"
 msgstr "Pøíkaz:"
 
 #.
 #. * Output file selection dialog...
 #.
-#: plug-ins/print/print.c:1547
+#: plug-ins/print/print.c:1517
 msgid "Print To File?"
 msgstr "Tisk so souboru?"
 
 #.
 #. * PPD file selection dialog...
 #.
-#: plug-ins/print/print.c:1557
+#: plug-ins/print/print.c:1527
 msgid "PPD File?"
 msgstr "PPD soubor?"
 
@@ -12641,10 +12624,6 @@ msgstr "®urnálový soubor serveru: "
 msgid "A scheme interpreter for scripting GIMP operations"
 msgstr "Interpreter schémat pro skriptování operací GIMPu"
 
-#: plug-ins/script-fu/script-fu.c:144
-msgid "More help here later"
-msgstr "Více nápovìdy zde bude pozdìji"
-
 #: plug-ins/script-fu/script-fu.c:155
 msgid "Provides a console mode for script-fu development"
 msgstr "Nabízí konzolový re¾im pro vývoj skript-fu"
@@ -12673,6 +12652,14 @@ msgstr ""
 msgid ""
 "Evaluate the code under the scheme interpeter (primarily for batch mode)"
 msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:1001 plug-ins/script-fu/script-fu.c:1002
+msgid "Re-read all available scripts"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:1006
+msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
+msgstr "<Toolbox>/Roz¹./Skript-fu/Zaktualizovat"
 
 #: plug-ins/sel2path/sel2path.c:122 plug-ins/sel2path/sel2path.c:123
 msgid "Converts a selection to a path (with advanced user menu)"
