@@ -1,11 +1,11 @@
-# Copyright (C) 1999 Free Software Foundation, Inc.
-# Valek Filippov <frob@df.ru>, 1999.
+# Copyright (C) 1999-2001 Free Software Foundation, Inc.
+# Valek Filippov <frob@df.ru>, 1999-2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gimp-plugin-1.1.14\n"
-"POT-Creation-Date: 2001-11-11 22:48+0100\n"
-"PO-Revision-Date: 2000-06-28 21:04+00:00\n"
+"Project-Id-Version: Gimp-plugin-1.3\n"
+"POT-Creation-Date: 2001-11-18 22:45+0300\n"
+"PO-Revision-Date: 2001-11-18 22:47+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,9 +21,8 @@ msgid "Merge Visible Layers"
 msgstr "Объединить видимые слои"
 
 #: libgimp/gimpexport.c:179
-#, fuzzy
 msgid "can't handle layer offsets, size or opacity"
-msgstr "невозможно обработать слои"
+msgstr "невозможно обработать смещение, размер или непрозрачность слоя"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "can only handle layers as animation frames"
@@ -97,11 +96,11 @@ msgstr "Добавить альфа-канал"
 #. the dialog
 #: libgimp/gimpexport.c:356
 msgid "Confirm Save"
-msgstr ""
+msgstr "Подтвердить сохранение"
 
 #: libgimp/gimpexport.c:360
 msgid "Confirm"
-msgstr ""
+msgstr "Подтвердить"
 
 #: libgimp/gimpexport.c:362
 msgid "Cancel"
@@ -113,6 +112,8 @@ msgid ""
 "You are about to save %s as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Вы собираетесь сохранить %s как %s.\n"
+"Видимые слои не будут сохранены."
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -146,11 +147,11 @@ msgstr "Экспортное преобразование не изменит ваше исходное изображение."
 
 #: libgimp/gimpexport.c:571
 msgid "a layer mask"
-msgstr ""
+msgstr "маска слоя"
 
 #: libgimp/gimpexport.c:573
 msgid "a channel (saved selection)"
-msgstr ""
+msgstr "канал (сохранённое выделение)"
 
 #. pseudo unit
 #: libgimp/gimpunit.c:52
@@ -199,13 +200,21 @@ msgstr "пики"
 msgid "percent"
 msgstr "процент"
 
-#: libgimpwidgets/gimpcolorbutton.c:78
-msgid "/Use Foreground Color"
-msgstr "/Использовать цвет переднего плана"
+#: libgimpwidgets/gimpcolorbutton.c:82
+msgid "/Foreground Color"
+msgstr "/Цвет переднего плана"
 
-#: libgimpwidgets/gimpcolorbutton.c:79
-msgid "/Use Background Color"
-msgstr "/Использовать цвет фона"
+#: libgimpwidgets/gimpcolorbutton.c:84
+msgid "/Background Color"
+msgstr "/Цвет фона"
+
+#: libgimpwidgets/gimpcolorbutton.c:87
+msgid "/Black"
+msgstr "/Чёрный"
+
+#: libgimpwidgets/gimpcolorbutton.c:89
+msgid "/White"
+msgstr "/Белый"
 
 #: libgimpwidgets/gimpfileselection.c:362
 msgid "Select File"
@@ -259,6 +268,3 @@ msgstr "Килобайты"
 #: libgimpwidgets/gimpwidgets.c:1054
 msgid "MegaBytes"
 msgstr "Мегабайты"
-
-#~ msgid "OK"
-#~ msgstr "OK"

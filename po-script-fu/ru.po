@@ -1,11 +1,11 @@
-# Copyright (C) 2000 Free Software Foundation, Inc.
-# Valek Filippov <frob@df.ru>, 2000.
+# Copyright (C) 2000-2001 Free Software Foundation, Inc.
+# Valek Filippov <frob@df.ru>, 2000-2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.2/1.3\n"
-"POT-Creation-Date: 2001-11-12 23:06+0100\n"
-"PO-Revision-Date: 2001-01-23 17:45+03:00\n"
+"Project-Id-Version: po-script-fu-1.3\n"
+"POT-Creation-Date: 2001-11-18 22:55+0300\n"
+"PO-Revision-Date: 2001-11-18 22:59+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,6 @@ msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Не удалось открыть поток в канал вывода SIOD"
 
 #: plug-ins/script-fu/script-fu-console.c:596
-#, fuzzy
 msgid "Unable to open the SIOD output pipe"
 msgstr "Не удалось открыть канал вывода SIOD"
 
@@ -172,14 +171,13 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Обновить..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:142
 #: plug-ins/dbbrowser/dbbrowser_utils.c:161
-#, fuzzy
 msgid "DB Browser (init...)"
-msgstr "Просмотр..."
+msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:147
 #: plug-ins/dbbrowser/dbbrowser_utils.c:166
 msgid "Search by Name"
-msgstr ""
+msgstr "Поиск по названию"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
 #: plug-ins/dbbrowser/dbbrowser_utils.c:168
@@ -188,29 +186,27 @@ msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:220
 msgid "Search:"
-msgstr ""
+msgstr "Поиск:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:351
-#, fuzzy
 msgid "Name:"
-msgstr "Дата:"
+msgstr "Название:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
-#, fuzzy
 msgid "Blurb:"
-msgstr "Размывание по Y"
+msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:372
 msgid "In:"
-msgstr ""
+msgstr "В:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:419
 msgid "Out:"
-msgstr ""
+msgstr "Из:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:473
 msgid "Help:"
-msgstr ""
+msgstr "Справка:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:594
 msgid "DB Browser (by name - please wait)"
@@ -225,9 +221,8 @@ msgid "DB Browser (please wait)"
 msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:694
-#, fuzzy
 msgid "DB Browser"
-msgstr "Просмотр..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid ""
@@ -808,7 +803,7 @@ msgstr "Добавить падающую тень"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Add Glowing"
-msgstr ""
+msgstr "Добавить свечение"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Add Shadow"
@@ -816,7 +811,7 @@ msgstr "Добавить тень"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "After Glow"
-msgstr ""
+msgstr "Послесвечение"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
@@ -911,7 +906,6 @@ msgid "Base Color"
 msgstr "Основной цвет"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
-#, fuzzy
 msgid "Base Radius (pixels)"
 msgstr "Основной радиус (точек)"
 
@@ -1098,9 +1092,8 @@ msgid "Columns"
 msgstr "Столбцы"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
-#, fuzzy
 msgid "Corona Width"
-msgstr "Ширина ленты"
+msgstr "Ширина короны"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Create New Image"
@@ -1306,13 +1299,12 @@ msgid "Fade To   %"
 msgstr "Затухание к %"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
-#, fuzzy
 msgid "Fadeout Width"
-msgstr "Ширина края"
+msgstr "Ширина затухания"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Fadeout"
-msgstr ""
+msgstr "Затухание"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "Feathering"
@@ -1518,7 +1510,7 @@ msgstr "Высота"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Hexagons"
-msgstr ""
+msgstr "Шестиугольники"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1725,7 +1717,7 @@ msgstr "Число"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Octagons"
-msgstr ""
+msgstr "Восьмиугольники"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
@@ -1850,7 +1842,7 @@ msgstr "Пикселизовать"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Prepare for GIF"
-msgstr ""
+msgstr "Подготовить для GIF"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
@@ -1947,9 +1939,8 @@ msgid "Scale Y"
 msgstr "Масштаб Y"
 
 #: plug-ins/script-fu/scripts/land.scm:0
-#, fuzzy
 msgid "Sea Depth"
-msgstr "Глубина тени"
+msgstr "Морская глубина"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"
@@ -2046,7 +2037,7 @@ msgstr "Интервал"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Speed (pixels/frame)"
-msgstr ""
+msgstr "Скорость (точек/кадр)"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Sphere Color"
@@ -2282,12 +2273,3 @@ msgstr "Ширина"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Работать с копией"
-
-#~ msgid "Close"
-#~ msgstr "Закрыть"
-
-#~ msgid "OK"
-#~ msgstr "Да"
-
-#~ msgid "Cancel"
-#~ msgstr "Отмена"
