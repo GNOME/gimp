@@ -3,23 +3,26 @@
 # Sven Neumann <sven@gimp.org>
 # Felix Natter <fnatter@gmx.net>
 # Roman Joost <roman@bromeco.de>
-#
+# Hendrik Brandt <eru@gmx.li>
+# Sven Neumann <sven@gimp.org>, 2004.
+# 
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:05+0200\n"
-"PO-Revision-Date: 2004-10-12 23:48+0200\n"
-"Last-Translator: Sven Neumann <sven@gimp.org>\n"
+"POT-Creation-Date: 2004-10-25 16:22+0200\n"
+"PO-Revision-Date: 2004-10-25 16:25+0200\n"
+"Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: plug-ins/script-fu/script-fu-console.c:129
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "Der Skript-Fu Konsole-Modus kann nur interaktiv gestartet werden"
+msgstr "Der Skript-Fu Konsolenmodus kann nur interaktiv gestartet werden"
 
 #: plug-ins/script-fu/script-fu-console.c:156
 msgid "Script-Fu Console"
@@ -158,10 +161,6 @@ msgstr "<Toolbox>/Xtns/Skript-Fu"
 #: plug-ins/script-fu/script-fu.c:152
 msgid "_Start Server..."
 msgstr "_Server starten..."
-
-#: plug-ins/script-fu/script-fu.c:278 plug-ins/script-fu/script-fu.c:279
-msgid "Re-read all available scripts"
-msgstr "Alle Skripte neu einlesen"
 
 #: plug-ins/script-fu/script-fu.c:283
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
@@ -1593,46 +1592,43 @@ msgstr "Y Teiler"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
 msgid "<Image>/Image/Guides/New Guides from _Selection"
-msgstr ""
+msgstr "<Image>/Bild/Hilfslinien/Neue Hilfslinien aus _Auswahl"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "Creates four Guides around the bounding box of the current selection."
-msgstr ""
+msgstr "Erzeugt vier Hilfslinien um das einschließende Rechteck der aktuellen Auswahl."
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "<Image>/Image/Guides/New Guide (by _Percent)..."
-msgstr ""
+msgstr "<Image>/Bild/Hilfslinien/Neue Hilfslinien (in _Prozent)..."
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: plug-ins/script-fu/scripts/guides-new.scm.h:2
-#, fuzzy
 msgid "Direction"
-msgstr "Richtung umkehren"
+msgstr "Richtung"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
 #: plug-ins/script-fu/scripts/guides-new.scm.h:3
-#, fuzzy
 msgid "Horizontal"
-msgstr "Horizontal weichzeichnen"
+msgstr "Horizontal"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:5
 #, no-c-format
 msgid "Position (in %)"
-msgstr ""
+msgstr "Position (in %)"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
 #: plug-ins/script-fu/scripts/guides-new.scm.h:4
-#, fuzzy
 msgid "Vertical"
-msgstr "Vertikal weichzeichnen"
+msgstr "Vertikal"
 
 #: plug-ins/script-fu/scripts/guides-new.scm.h:1
 msgid "<Image>/Image/Guides/New _Guide..."
-msgstr ""
+msgstr "<Image>/Bild/Hilfslinien/Neue _Hilfslinien..."
 
 #: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "<Image>/Image/Guides/_Remove all Guides"
-msgstr ""
+msgstr "<Image>/Bild/Hilfslinien/Alle Hilfslinien _entfernen"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
@@ -2469,3 +2465,4 @@ msgstr "Glanzlicht Y-Versatz"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Glanzlicht Deckkraft"
+

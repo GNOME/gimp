@@ -1,22 +1,23 @@
 # This is the German catalog for the libgimp.
 # Copyright (C) 1999 - 2004 Free Software Foundation, Inc.
-#
 # Daniel Egger <Daniel.Egger@suse.de>
 # Sven Neumann <sven@gimp.org>
 # Christian Neumair <christian-neumair@web.de>
 # Michael Natterer <mitch@gimp.org>
-#
+# Sven Neumann <sven@gimp.org>, 2004.
+# 
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:04+0200\n"
-"PO-Revision-Date: 2004-09-05 01:20+0200\n"
-"Last-Translator: Sven Neumann <sven@gimp.org>\n"
+"POT-Creation-Date: 2004-10-25 16:19+0200\n"
+"PO-Revision-Date: 2004-10-25 16:21+0200\n"
+"Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: libgimp/gimpbrushmenu.c:129
 msgid "Brush Selection"
@@ -365,6 +366,11 @@ msgstr "Nicht geladen"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Fehler beim Anlegen des Verzeichnis für Vorschaubilder '%s'."
 
+#: libgimpthumb/gimpthumbnail.c:917
+#, c-format
+msgid "Could not create thumbnail for %s: %s"
+msgstr "Das Vorschaubild für %s köonnte nicht erstellt werden: %s"
+
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
 msgstr "/_Vordergrundfarbe"
@@ -538,6 +544,10 @@ msgstr "_Rücksetzen"
 #: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "Sichtbar"
+
+#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+msgid "_Stroke"
+msgstr "_Strich"
 
 #: libgimpwidgets/gimpstock.c:169
 msgid "L_etter Spacing"
@@ -760,3 +770,4 @@ msgstr "Wasserfarbe"
 #: modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Druck"
+

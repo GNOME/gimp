@@ -1,3 +1,7 @@
+2004-10-25  Hendrik Brandt  <hebra@cvs.gnome.org>
+
+	* de.po: Updated German translation.
+
 2004-10-25  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: added added app/actions/error-console-commands.c
