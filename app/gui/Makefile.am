@@ -37,6 +37,8 @@ dialogs_sources = \
 	palette-import-dialog.h		\
 	preferences-dialog.c		\
 	preferences-dialog.h		\
+	quit-dialog.c			\
+	quit-dialog.h			\
 	resize-dialog.c			\
 	resize-dialog.h			\
 	resolution-calibrate-dialog.c	\

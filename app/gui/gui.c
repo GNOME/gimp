@@ -44,7 +44,6 @@
 
 #include "tools/gimp-tools.h"
 
-#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimpcontrollers.h"
 #include "widgets/gimpdevices.h"
@@ -67,6 +66,7 @@
 #include "dialogs.h"
 #include "gui.h"
 #include "gui-vtable.h"
+#include "quit-dialog.h"
 #include "session.h"
 #include "splash.h"
 #include "themes.h"
@@ -93,9 +93,6 @@ static gboolean   gui_exit_callback             (Gimp               *gimp,
                                                  gboolean            force);
 static gboolean   gui_exit_after_callback       (Gimp               *gimp,
                                                  gboolean            force);
-static void       gui_really_quit_callback      (GtkWidget          *button,
-                                                 gboolean            quit,
-                                                 gpointer            data);
 
 static void       gui_show_tooltips_notify      (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
@@ -386,28 +383,7 @@ gui_exit_callback (Gimp     *gimp,
 
   if (! force && gimp_displays_dirty (gimp))
     {
-      GtkWidget *dialog;
-      GList     *list;
-
-      for (list = gimp_action_groups_from_name ("file");
-           list;
-           list = g_list_next (list))
-        {
-          gimp_action_group_set_action_sensitive (list->data, "file-quit",
-                                                  FALSE);
-        }
-
-      dialog = gimp_query_boolean_box (_("Quit The GIMP?"),
-                                       NULL,
-                                       gimp_standard_help_func,
-                                       GIMP_HELP_FILE_QUIT_CONFIRM,
-                                       GIMP_STOCK_WILBER_EEK,
-                                       _("Some images have unsaved changes.\n\n"
-                                         "Really quit The GIMP?"),
-                                       GTK_STOCK_QUIT, GTK_STOCK_CANCEL,
-                                       NULL, NULL,
-                                       gui_really_quit_callback,
-                                       gimp);
+      GtkWidget *dialog = quit_dialog_new (gimp);
 
       gtk_widget_show (dialog);
 
@@ -469,31 +445,6 @@ gui_exit_after_callback (Gimp     *gimp,
   g_type_class_unref (g_type_class_peek (GIMP_TYPE_COLOR_SELECT));
 
   return FALSE; /* continue exiting */
-}
-
-static void
-gui_really_quit_callback (GtkWidget *button,
-			  gboolean   quit,
-			  gpointer   data)
-{
-  Gimp *gimp = GIMP (data);
-
-  if (quit)
-    {
-      gimp_exit (gimp, TRUE);
-    }
-  else
-    {
-      GList     *list;
-
-      for (list = gimp_action_groups_from_name ("file");
-           list;
-           list = g_list_next (list))
-        {
-          gimp_action_group_set_action_sensitive (list->data, "file-quit",
-                                                  TRUE);
-        }
-    }
 }
 
 static void

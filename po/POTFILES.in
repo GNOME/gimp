@@ -9,6 +9,7 @@ app/actions/buffers-actions.c
 app/actions/channels-actions.c
 app/actions/channels-commands.c
 app/actions/colormap-editor-actions.c
+app/actions/context-actions.c
 app/actions/data-commands.c
 app/actions/debug-actions.c
 app/actions/dialogs-actions.c
@@ -52,6 +53,7 @@ app/actions/tools-actions.c
 app/actions/vectors-actions.c
 app/actions/vectors-commands.c
 app/actions/view-actions.c
+app/actions/view-commands.c
 
 app/base/base-enums.c
 app/base/tile-swap.c
@@ -134,8 +136,6 @@ app/file/file-save.c
 app/file/file-utils.c
 
 app/gui/about-dialog.c
-app/gui/brush-select.c
-app/gui/clipboard.c
 app/gui/color-notebook.c
 app/gui/convert-dialog.c
 app/gui/dialogs-constructors.c
@@ -143,8 +143,6 @@ app/gui/file-new-dialog.c
 app/gui/file-open-dialog.c
 app/gui/file-open-location-dialog.c
 app/gui/file-save-dialog.c
-app/gui/font-select.c
-app/gui/gradient-select.c
 app/gui/grid-dialog.c
 app/gui/gui.c
 app/gui/info-dialog.c
@@ -152,9 +150,8 @@ app/gui/info-window.c
 app/gui/module-browser.c
 app/gui/offset-dialog.c
 app/gui/palette-import-dialog.c
-app/gui/palette-select.c
-app/gui/pattern-select.c
 app/gui/preferences-dialog.c
+app/gui/quit-dialog.c
 app/gui/resize-dialog.c
 app/gui/resolution-calibrate-dialog.c
 app/gui/session.c
@@ -272,13 +269,17 @@ app/vectors/gimpvectors-import.c
 app/widgets/gimpactiongroup.c
 app/widgets/gimpbrusheditor.c
 app/widgets/gimpbrushfactoryview.c
+app/widgets/gimpbrushselect.c
 app/widgets/gimpchanneltreeview.c
+app/widgets/gimpclipboard.c
 app/widgets/gimpcolordisplayeditor.c
 app/widgets/gimpcoloreditor.c
 app/widgets/gimpcolorframe.c
 app/widgets/gimpcolormapeditor.c
 app/widgets/gimpcontainergridview.c
 app/widgets/gimpcontainerpopup.c
+app/widgets/gimpcontrollerkeyboard.c
+app/widgets/gimpcontrollerwheel.c
 app/widgets/gimpdataeditor.c
 app/widgets/gimpdevicestatus.c
 app/widgets/gimpdnd.c
@@ -297,7 +298,9 @@ app/widgets/gimpitemfactory.c
 app/widgets/gimpitemtreeview.c
 app/widgets/gimplayertreeview.c
 app/widgets/gimppaletteeditor.c
+app/widgets/gimppdbdialog.c
 app/widgets/gimppropwidgets.c
+app/widgets/gimpselectiondata.c
 app/widgets/gimpselectioneditor.c
 app/widgets/gimpstrokeeditor.c
 app/widgets/gimptemplateeditor.c

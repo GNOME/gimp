@@ -1,3 +1,7 @@
+2004-07-09  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: updated.
+
 2004-07-06  Marco Ciampa  <ciampix@libero.it>
 
 	* it.po: updated italian translation.
@@ -15,10 +19,10 @@
 	* hu.po: Updated Hungarian translation.
 
 2004-06-07  Pablo G. del Campo <pablodc@bigfoot.com>
-                                                                                                                   
-        * es.po: Updated Spanish translation by
-        Francisco Vila <francisco.vila@hispalinux.es>.
-                                                                                                                   
+
+	* es.po: Updated Spanish translation by Francisco Vila
+	<francisco.vila@hispalinux.es>.
+
 2004-06-10  Gustavo Noronha Silva  <kov@debian.org>
 
 	* pt_BR.po: translation update by

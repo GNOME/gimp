@@ -1,3 +1,11 @@
+2004-07-09  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gui.c: removed the quit dialog code here.
+
+	* app/gui/Makefile.am
+	* app/gui/quit-dialog.[ch]: added new files that hold the old code
+	for now.
+
 2004-07-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/procedural_db.c: #include <glib-object.h> instead of
