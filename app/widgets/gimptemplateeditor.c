@@ -222,24 +222,6 @@ gimp_template_editor_constructor (GType                  type,
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  /*  the image size labels  */
-  label = gtk_label_new (_("Width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (_("Height:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  /*  create the sizeentry which keeps it all together  */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
-  gtk_widget_show (hbox);
-
   width = gimp_spin_button_new (&adjustment,
                                 1, 1, 1, 1, 10, 0,
                                 1, 2);
@@ -249,6 +231,26 @@ gimp_template_editor_constructor (GType                  type,
                                  1, 1, 1, 1, 10, 0,
                                  1, 2);
   gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
+
+  /*  the image size labels  */
+  label = gtk_label_new_with_mnemonic (_("_Width:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), width);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  label = gtk_label_new_with_mnemonic (_("H_eight:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), height);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  /*  create the sizeentry which keeps it all together  */
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
+  gtk_widget_show (hbox);
 
   editor->size_se = gimp_size_entry_new (0, editor->template->unit,_("%p"),
                                          TRUE, FALSE, FALSE, SB_WIDTH,
@@ -345,24 +347,6 @@ gimp_template_editor_constructor (GType                  type,
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  /*  the resolution labels  */
-  label = gtk_label_new (_("X resolution:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (_("Y resolution:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  /*  the resolution sizeentry  */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
-  gtk_widget_show (hbox);
-
   xres = gimp_spin_button_new (&adjustment,
                                1, 1, 1, 1, 10, 0,
                                1, 2);
@@ -372,6 +356,26 @@ gimp_template_editor_constructor (GType                  type,
                                1, 1, 1, 1, 10, 0,
                                1, 2);
   gtk_entry_set_width_chars (GTK_ENTRY (yres), SB_WIDTH);
+
+  /*  the resolution labels  */
+  label = gtk_label_new_with_mnemonic (_("_X resolution:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), xres);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  label = gtk_label_new_with_mnemonic (_("_Y resolution:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), yres);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  /*  the resolution sizeentry  */
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
+  gtk_widget_show (hbox);
 
   editor->resolution_se =
     gimp_size_entry_new (0, editor->template->resolution_unit, _("pixels/%a"),

@@ -1,3 +1,8 @@
+2004-10-12  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimptemplateeditor.c: added mnemonics for the size
+	entries.
+
 2004-10-12  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.c (gimp_table_attach_aligned):
