@@ -34,6 +34,7 @@ pdb_sources = \
 	pdb/patterns.pdb	\
 	pdb/plug_in.pdb		\
 	pdb/procedural_db.pdb	\
+	pdb/progress.pdb	\
 	pdb/selection.pdb	\
 	pdb/selection_tools.pdb	\
 	pdb/text_tool.pdb	\

@@ -1,0 +1,93 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+# The defs
+
+sub progress_init {
+    $blurb = 'Initializes the progress bar for the current plug-in.';
+
+    $help = <<'HELP';
+Initializes the progress bar for the current plug-in. It is only valid to call
+this procedure from a plug-in.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'message', type => 'string', null_ok => 1,
+	  desc => 'Message to use in the progress dialog' },
+	{ name => 'gdisplay', type => 'int32',
+	  desc => 'GimpDisplay to update progressbar in, or -1 for a seperate
+		   window',
+	  implicit_fill => 'gimp_default_display ()', no_id_lookup => 1 }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->current_plug_in && gimp->current_plug_in->open)
+    {
+      if (! gimp->no_interface)
+	plug_in_progress_start (gimp->current_plug_in, message, gdisplay);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub progress_update {
+    $blurb = 'Updates the progress bar for the current plug-in.';
+
+    $help = <<'HELP';
+Updates the progress bar for the current plug-in. It is only valid to call this
+procedure from a plug-in.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'percentage', type => 'float',
+	  desc => 'Percentage of progress completed which must be between 0.0 and 1.0' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->current_plug_in && gimp->current_plug_in->open)
+    {
+      if (! gimp->no_interface)
+	plug_in_progress_update (gimp->current_plug_in, percentage);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+@headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-in-progress.h");
+
+@procs = qw(progress_init progress_update);
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Progress';
+
+1;

@@ -32,6 +32,7 @@
     patterns
     plug_in
     procedural_db
+    progress
     selection
     selection_tools
     text_tool

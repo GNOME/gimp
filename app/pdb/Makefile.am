@@ -41,6 +41,7 @@ libapppdb_a_SOURCES = \
 	pdb-types.h		\
 	plug_in_cmds.c		\
 	procedural_db_cmds.c	\
+	progress_cmds.c		\
 	selection_cmds.c	\
 	selection_tools_cmds.c	\
 	text_tool_cmds.c	\

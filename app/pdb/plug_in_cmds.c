@@ -35,7 +35,6 @@
 #include "plug-in/plug-in-def.h"
 #include "plug-in/plug-in-params.h"
 #include "plug-in/plug-in-proc.h"
-#include "plug-in/plug-in-progress.h"
 #include "plug-in/plug-in.h"
 #include "plug-in/plug-ins.h"
 
@@ -45,8 +44,6 @@
 #include "regexrepl/regex.h"
 #endif
 
-static ProcRecord progress_init_proc;
-static ProcRecord progress_update_proc;
 static ProcRecord plugins_query_proc;
 static ProcRecord plugin_domain_register_proc;
 static ProcRecord plugin_help_register_proc;
@@ -56,8 +53,6 @@ static ProcRecord plugin_icon_register_proc;
 void
 register_plug_in_procs (Gimp *gimp)
 {
-  procedural_db_register (gimp, &progress_init_proc);
-  procedural_db_register (gimp, &progress_update_proc);
   procedural_db_register (gimp, &plugins_query_proc);
   procedural_db_register (gimp, &plugin_domain_register_proc);
   procedural_db_register (gimp, &plugin_help_register_proc);
@@ -71,113 +66,6 @@ match_strings (regex_t *preg,
 {
   return regexec (preg, a, 0, NULL, 0);
 }
-
-static Argument *
-progress_init_invoker (Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
-{
-  gboolean success = TRUE;
-  gchar *message;
-  gint32 gdisplay;
-
-  message = (gchar *) args[0].value.pdb_pointer;
-  if (message && !g_utf8_validate (message, -1, NULL))
-    success = FALSE;
-
-  gdisplay = args[1].value.pdb_int;
-
-  if (success)
-    {
-      if (gimp->current_plug_in && gimp->current_plug_in->open)
-        {
-          if (! gimp->no_interface)
-            plug_in_progress_start (gimp->current_plug_in, message, gdisplay);
-        }
-      else
-        success = FALSE;
-    }
-
-  return procedural_db_return_args (&progress_init_proc, success);
-}
-
-static ProcArg progress_init_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "message",
-    "Message to use in the progress dialog"
-  },
-  {
-    GIMP_PDB_INT32,
-    "gdisplay",
-    "GimpDisplay to update progressbar in, or -1 for a seperate window"
-  }
-};
-
-static ProcRecord progress_init_proc =
-{
-  "gimp_progress_init",
-  "Initializes the progress bar for the current plug-in.",
-  "Initializes the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  2,
-  progress_init_inargs,
-  0,
-  NULL,
-  { { progress_init_invoker } }
-};
-
-static Argument *
-progress_update_invoker (Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
-{
-  gboolean success = TRUE;
-  gdouble percentage;
-
-  percentage = args[0].value.pdb_float;
-
-  if (gimp->current_plug_in && gimp->current_plug_in->open)
-    {
-      if (! gimp->no_interface)
-        plug_in_progress_update (gimp->current_plug_in, percentage);
-    }
-  else
-    success = FALSE;
-
-  return procedural_db_return_args (&progress_update_proc, success);
-}
-
-static ProcArg progress_update_inargs[] =
-{
-  {
-    GIMP_PDB_FLOAT,
-    "percentage",
-    "Percentage of progress completed which must be between 0.0 and 1.0"
-  }
-};
-
-static ProcRecord progress_update_proc =
-{
-  "gimp_progress_update",
-  "Updates the progress bar for the current plug-in.",
-  "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  progress_update_inargs,
-  0,
-  NULL,
-  { { progress_update_invoker } }
-};
 
 static Argument *
 plugins_query_invoker (Gimp         *gimp,

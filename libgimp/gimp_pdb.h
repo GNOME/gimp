@@ -56,6 +56,7 @@
 #include <libgimp/gimppatternselect_pdb.h>
 #include <libgimp/gimpplugin_pdb.h>
 #include <libgimp/gimpproceduraldb_pdb.h>
+#include <libgimp/gimpprogress_pdb.h>
 #include <libgimp/gimpselection_pdb.h>
 #include <libgimp/gimpselectiontools_pdb.h>
 #include <libgimp/gimptexttool_pdb.h>

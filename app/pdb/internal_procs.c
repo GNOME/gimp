@@ -62,6 +62,7 @@ void register_pattern_select_procs  (Gimp *gimp);
 void register_patterns_procs        (Gimp *gimp);
 void register_plug_in_procs         (Gimp *gimp);
 void register_procedural_db_procs   (Gimp *gimp);
+void register_progress_procs        (Gimp *gimp);
 void register_selection_procs       (Gimp *gimp);
 void register_selection_tools_procs (Gimp *gimp);
 void register_text_tool_procs       (Gimp *gimp);
@@ -171,8 +172,11 @@ internal_procs_init (Gimp               *gimp,
   (* status_callback) (NULL, _("Plug-in"), 0.82);
   register_plug_in_procs (gimp);
 
-  (* status_callback) (NULL, _("Procedural database"), 0.838);
+  (* status_callback) (NULL, _("Procedural database"), 0.833);
   register_procedural_db_procs (gimp);
+
+  (* status_callback) (NULL, _("Progress"), 0.857);
+  register_progress_procs (gimp);
 
   (* status_callback) (NULL, _("Image mask"), 0.862);
   register_selection_procs (gimp);

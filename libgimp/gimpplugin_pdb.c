@@ -26,68 +26,6 @@
 #include "gimp.h"
 
 /**
- * gimp_progress_init:
- * @message: Message to use in the progress dialog.
-
- *
- * Initializes the progress bar for the current plug-in.
- *
- * Initializes the progress bar for the current plug-in. It is only
- * valid to call this procedure from a plug-in.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_progress_init (const gchar *message)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_progress_init",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, message,
-				    GIMP_PDB_INT32, gimp_default_display (),
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_progress_update:
- * @percentage: Percentage of progress completed which must be between 0.0 and 1.0.
- *
- * Updates the progress bar for the current plug-in.
- *
- * Updates the progress bar for the current plug-in. It is only valid
- * to call this procedure from a plug-in.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_progress_update (gdouble percentage)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_progress_update",
-				    &nreturn_vals,
-				    GIMP_PDB_FLOAT, percentage,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_plugin_domain_register:
  * @domain_name: The name of the textdomain (must be unique).
  * @domain_path: The absolute path to the compiled message catalog (may be NULL).

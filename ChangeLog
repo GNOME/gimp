@@ -1,5 +1,27 @@
 2004-08-27  Michael Natterer  <mitch@gimp.org>
 
+	Moved the gimp_progress_init() and gimp_progress_update() PDB
+	functions to their own group because they don't belong to the
+	"Plug-In" namespace and will soon get more functions.
+
+	* tools/pdbgen/pdb/plug_in.pdb: removed the progress stuff...
+
+	* tools/pdbgen/pdb/progress.pdb: ...and added it here.
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/groups.pl
+	* app/pdb/Makefile.am
+	* libgimp/Makefile.am: changed accordingly.
+
+	* libgimp/gimpprogress_pdb.[ch]: new generated files.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/plug_in_cmds.c
+	* libgimp/gimp_pdb.h
+	* libgimp/gimpplugin_pdb.[ch]: regenerated.
+
+2004-08-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainereditor.c
 	(gimp_container_editor_construct): call
 	gimp_container_editor_select_item() manually at construction time
