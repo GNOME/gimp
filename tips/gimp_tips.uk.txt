@@ -1,0 +1,156 @@
+# This is a list of tips for the GIMP.  Every time the GIMP is
+# started, one tip will be selected from this file and will be
+# displayed in the "Tip of the day" dialog.
+#
+# - Lines starting with '#' are comments.
+# - Blank lines or comments separate two tips (they are not ignored).
+#   Multiple blank lines are treated as one.  If you want to have a
+#   blank line in a tip, put a space or tab in it.
+# - Text will appear in the dialog as it is in this file.  This is
+#   done on purpose in order to have more freedom in the layout of the
+#   tips than with automatic word-wrapping, but this also means that
+#   you have to avoid excessively long lines in this file.
+# - Tips should be concise: 3 lines or less.
+#
+# Tips in this file have been contributed by Zachary Beane, Mo Oishi,
+# Raphael Quinet, Sven Neumann and other people on the gimp mailing 
+# lists.
+# --------------------------------------------------------------------
+
+# The first tip should be a welcome message, because this is the
+# first thing that a new user will see.
+#
+
+# FIXME: re-write this welcome message:
+
+                            Ласкаво просимо в GIMP!
+
+Майже вс╕ операц╕╖ над зображенням виконуються за допомогою натиснення на
+праву клав╕шу миш╕ на зображенн╕. ╤ не хвилюйтесь, ви зможете в╕дм╕нити
+б╕льш╕сть помилкових д╕й...	    
+
+# Tips for beginners start here
+#
+
+The GIMP uses layers to let you organize your image.  Think of them 
+as a stack of slides or filters, such that looking through them you 
+see a composite of their contents.
+
+You can perform many layer operations by right-clicking on the text
+label of a layer in the Layers dialog (Dialogs->Layers & Channels).
+
+When trying to save files as GIF, XPM, or any other indexed 
+color format, you need to convert the image to indexed using 
+the Image menu.
+
+You can get the Tool Options menu to open by double-clicking 
+any button in the toolbar.
+
+You can change the name of a layer by double-clicking 
+on its name in the Layers dialog box.
+
+The layer named "Background" is special.  You can't add 
+transparency or a layer mask to it.  To add transparency, you 
+must first "add alpha" to the layer by right-clicking in the 
+layers dialog and selecting "Add Alpha Channel". 
+
+When using a drawing tool (Paintbrush, Airbrush, or Pencil), 
+Shift-click will draw a straight line from your last drawing 
+point to your current cursor position.
+
+Most plug-ins work on the current layer of the current image.  In 
+some cases, you will have to merge all layers (Layers->Flatten Image) 
+if you want the plug-in to work on the whole image.
+
+Most file-formats can't handle layers and for that reason only 
+the active layer is saved.  Use XCF, the GIMP's native file format 
+to keep layers, channels and guides when saving.
+
+Not all effects can be applied to all kinds of images.  This 
+is indicated by a grayed-out menu-entry.  You may need to 
+change the image to RGB, add an alpha-channel or flatten it.
+
+# Tips for intermediate users start here
+#
+
+The file selection dialog box has command-line completion with 
+Tab, just like the shell.  Type part of a filename, hit tab, and voila!
+It's completed.
+
+You can reassign shortcut keys on any menu by bringing up the menu,
+selecting a menu item, and pressing the new shortcut key combination.
+This is dynamic and is saved when you exit GIMP.
+
+All the old channel operations have been replaced with the more
+powerful and flexible Layer and Layer Mode operations.  They may 
+take getting used to, but they are simply a better way to operate.
+
+You can use the middle mouse button to pan around 
+the image, if it's larger than its display window.
+
+Click and drag on a ruler to place a Guide on an image.  All 
+dragged selections will snap to the guides.  You can remove 
+guides by dragging them off the image with the Move tool.
+
+The GIMP supports gzip compression on the fly.  Just add 
+'.gz' (or '.bz2', if you have bzip2 installed) to the filename 
+and your image will be saved compressed.  Of course loading 
+compressed images works too.
+
+Pressing and holding the Shift key before making a selection allows
+you to add to the current selection instead of replacing it.  Using
+Ctrl before making a selection subtracts from the current one.
+
+You can press or release the Shift and Ctrl keys while you are
+making a selection in order to constrain it to a perfect square 
+or circle, or to have it centered on its starting point.
+
+# Tips for advanced users start here
+#
+
+You can adjust the selection range for fuzzy select 
+by clicking and dragging left and right.
+
+Shift-click on the eye icon in the Layers dialog to hide all 
+layers but that one.  Shift-click again to show all layers.
+
+Ctrl-click on the layer mask's preview in the Layers dialog 
+toggles the effect of the layer mask.
+
+Alt-click on the layer mask's preview in the Layers dialog 
+toggles viewing the mask directly.
+
+You can use Alt-Tab to cycle through all layers in an image 
+(if your window manager doesn't trap those keys...).
+
+Shift-click with the Bucket Fill tool to have it use 
+the background color instead of the foreground color.
+
+Control-drag with the Transform tool in rotation mode 
+will constrain the rotation to 15 degree angles.
+
+You can adjust and re-place a selection by using Alt-drag.
+
+If your fonts turn out blocky, that's because they're not scalable
+fonts.  Most X servers support scalable Type 1 Postscript fonts.
+Download and install them.
+
+# FIXME: The next tip should disappear once we have solved the
+#        problems of stale pluginrc files and plug-in directories.
+#        All other files in ~/.gimp can be kept after an upgrade.
+#        In particular, we should try to preserve gimprc.  --Raphael
+
+When installing a new version, be sure to 
+delete your ~/.gimp directory first.
+
+Using Edit->Stroke allows you to draw simple squares or circles by
+painting the edge of your current selection with the active brush.
+More complex shapes can be drawn with Filters->Render->Gfig.
+
+To create a perfect circle, hold Shift while doing an ellipse select. To 
+place a circle precisely, drag horizontal and vertical guides tangent to 
+the circle you want to select, place your cursor at the intersection
+of the guides, and the resulting selection will just touch the guides.
+
+# (end of tips)
+
