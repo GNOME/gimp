@@ -1,3 +1,25 @@
+Mon Jul 26 12:04:14 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* INSTALL: say we need GTK+ 1.2.x
+
+	* acinclude.m4
+	* config.guess
+	* config.sub
+	* config.h.in
+	* ltconfig
+	* ltmain.sh: libtool 1.3.3
+
+	* app/channel.c: make sure the coord variables are set properly in
+	the mask empty case in channel_bounds (patch from spencer)
+
+	* app/drawable.c: check to see if there actually is a shadow in 
+	drawable_merge_shadow
+
+	* app/autocrop.c: sync with 1.1 tree
+
+	* app/xwd.c: hackaround for buggy window managers (like
+	WindowMaker) that store a bogus XWDColor flag field.
+
 Mon May 17 00:15:35 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/displace/displace.c (run): Fixed a dumb typo reported

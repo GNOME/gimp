@@ -668,8 +668,12 @@ read_xwd_cols (FILE *ifp,
    colormap[j].l_flags = read_card8 (ifp, &err);
    colormap[j].l_pad   = read_card8 (ifp, &err);
 
-   if (colormap[j].l_flags > 7)
-     flag_is_bad++;
+   /* WindowMaker at 24bpp seems to insert a bogus value here.. we don't
+    * use flags, so just ignore it
+    */
+
+   /* if (colormap[j].l_flags > 7)
+     flag_is_bad++; */
 
    if (indexed && (colormap[j].l_pixel > 255))
      index_is_bad++;
@@ -698,8 +702,8 @@ read_xwd_cols (FILE *ifp,
    colormap[j].l_flags = read_card8 (ifp, &err);
    colormap[j].l_pad   = read_card8 (ifp, &err);
 
-   if ((colormap[j].l_flags == 0) || (colormap[j].l_flags > 7))
-     flag_is_bad++;
+   /* if ((colormap[j].l_flags == 0) || (colormap[j].l_flags > 7))
+     flag_is_bad++; */
 
    if (indexed && (colormap[j].l_pixel > 255))
      index_is_bad++;
@@ -728,8 +732,8 @@ read_xwd_cols (FILE *ifp,
    colormap[j].l_flags = read_card8 (ifp, &err);
    colormap[j].l_pad   = read_card8 (ifp, &err);
 
-   if ((colormap[j].l_flags == 0) || (colormap[j].l_flags > 7))
-     flag_is_bad++;
+   /* if ((colormap[j].l_flags == 0) || (colormap[j].l_flags > 7))
+     flag_is_bad++; */
 
    if (indexed && (colormap[j].l_pixel > 255))
      index_is_bad++;
@@ -763,8 +767,8 @@ read_xwd_cols (FILE *ifp,
    read_card16 (ifp, &err);
    read_card32 (ifp, &err);
 
-   if ((colormap[j].l_flags == 0) || (colormap[j].l_flags > 7))
-     flag_is_bad++;
+   /* if ((colormap[j].l_flags == 0) || (colormap[j].l_flags > 7))
+     flag_is_bad++; */
 
    if (indexed && (colormap[j].l_pixel > 255))
      index_is_bad++;

@@ -624,6 +624,8 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
       mask->x1 = 0; mask->y1 = 0;
       mask->x2 = GIMP_DRAWABLE(mask)->width;
       mask->y2 = GIMP_DRAWABLE(mask)->height;
+      *x1 = mask->x1; *y1 = mask->y1;
+      *x2 = mask->x2; *y2 = mask->y2;
     }
   else
     {

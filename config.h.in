@@ -82,7 +82,3 @@
 
 /* Define if you have the <sys/ndir.h> header file.  */
 #undef HAVE_SYS_NDIR_H
-
-/* define if compiled symbols have a leading underscore */
-#undef WITH_SYMBOL_UNDERSCORE
-
