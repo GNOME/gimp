@@ -1,3 +1,14 @@
+2003-10-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppaletteeditor.c: added "realize" and
+	"size_allocate" callbacks and cleaned up calling of
+	palette_editor_redraw(). Fixes bug #110356 without a complete
+	re-write.
+
+	Added GimpDockedInterface::set_aux_info() and get_aux_info()
+	implementations and rememeber the zoom_factor in sessionrc (mainly
+	for testing yesterday's fix for interface upchaining).
+
 2003-10-16  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpcoreconfig.c: increased default undo-size to 4 MB.
