@@ -1,3 +1,9 @@
+2004-07-13  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/preview.c
+	* plug-ins/gimpressionist/sizemap.c:
+	eliminated two compile-time warnings.
+
 2004-07-13  Michael Natterer  <mitch@gimp.org>
 
 	Added a GimpProjection object which maintains the idle projection

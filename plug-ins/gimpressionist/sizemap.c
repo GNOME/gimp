@@ -13,6 +13,7 @@
 #include "gimpressionist.h"
 #include "ppmtool.h"
 #include "size.h"
+#include "infile.h"
 
 #include "preview.h"
 

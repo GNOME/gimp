@@ -69,13 +69,14 @@ void
 updatepreview (GtkWidget *wg, gpointer d)
 {
   gint   i;
-  guchar buf[PREVIEWSIZE*3];
 
   /* This portion is remmed out because of the remming out of the
    * code below.
    *            -- Shlomi Fish
    * */
 #if 0
+  guchar buf[PREVIEWSIZE*3];
+
   if(!infile.col && d)
     grabarea();
 #endif
