@@ -41,9 +41,6 @@
 #define GIMP_HELP_EXT_NAME        "extension_gimp_help"
 #define GIMP_HELP_TEMP_EXT_NAME   "extension_gimp_help_temp"
 
-#define GIMP_HELP_PREFIX          "help"
-#define GIMP_HELP_ENV_URI         "GIMP2_HELP_URI"
-
 
 typedef struct
 {

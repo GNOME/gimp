@@ -1,3 +1,14 @@
+2004-08-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help/help.[ch]: moved some defines to the header file.
+
+	* plug-ins/help/domain.c: trivial change to remove the libgimpbase
+	dependency.
+
+	* plug-ins/help/Makefile.am
+	* plug-ins/help/gimp-help-lookup.c: added a very simple
+	command-line tool that allows to lookup a help-id.
+
 2004-08-13  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/edge.c: update the preview when the user choose a

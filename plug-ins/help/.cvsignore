@@ -3,4 +3,5 @@ Makefile
 .deps
 _libs
 .libs
+gimp-help-lookup
 help

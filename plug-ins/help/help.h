@@ -29,6 +29,10 @@
 #define GIMP_HELP_DEFAULT_ID      "gimp-main"
 #define GIMP_HELP_DEFAULT_LOCALE  "en"
 
+#define GIMP_HELP_PREFIX          "help"
+#define GIMP_HELP_ENV_URI         "GIMP2_HELP_URI"
+
+
 /*  #define GIMP_HELP_DEBUG  */
 
 

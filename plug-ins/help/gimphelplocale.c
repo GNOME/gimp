@@ -21,18 +21,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+/*  This code is written so that it can also be compiled standalone.
+ *  It shouldn't depend on libgimp.
+ */
+
 #include "config.h"
 
 #include <string.h>
 
-#include <glib-object.h>
-
-#include "libgimpbase/gimpbase.h"
+#include <glib.h>
 
 #include "domain.h"
 #include "help.h"
 
+#ifdef DISABLE_NLS
+#define _(String)  (String)
+#else
 #include "libgimp/stdplugins-intl.h"
+#endif
 
 
 struct _HelpDomain
@@ -53,21 +59,26 @@ struct _HelpLocale
 
 /*  local function prototypes  */
 
-static HelpDomain  * domain_new           (const gchar  *domain_name,
-                                           const gchar  *domain_uri);
-static void          domain_free          (HelpDomain   *domain);
+static HelpDomain  * domain_new               (const gchar  *domain_name,
+                                               const gchar  *domain_uri);
+static void          domain_free              (HelpDomain   *domain);
 
-static HelpLocale  * domain_locale_new    (const gchar  *locale_id);
-static void          domain_locale_free   (HelpLocale   *locale);
+static HelpLocale  * domain_locale_new        (const gchar  *locale_id);
+static void          domain_locale_free       (HelpLocale   *locale);
 
-static HelpLocale  * domain_locale_lookup (HelpDomain   *domain,
-                                           const gchar  *locale_id);
-static const gchar * domain_locale_map    (HelpLocale   *locale,
-                                           const gchar  *help_id);
+static HelpLocale  * domain_locale_lookup     (HelpDomain   *domain,
+                                               const gchar  *locale_id);
+static const gchar * domain_locale_map        (HelpLocale   *locale,
+                                               const gchar  *help_id);
 
-static gboolean      domain_locale_parse  (HelpDomain   *domain,
-                                           HelpLocale   *locale,
-                                           GError      **error);
+static gboolean      domain_locale_parse      (HelpDomain   *domain,
+                                               HelpLocale   *locale,
+                                               GError      **error);
+
+static void          domain_error_set_message (GError      **error,
+                                               const gchar  *format,
+                                               const gchar  *filename);
+
 
 /*  private variables  */
 
@@ -343,7 +354,7 @@ domain_locale_parse (HelpDomain  *domain,
 {
   GMarkupParseContext *context;
   DomainParser        *parser;
-  gchar               *base_dir;
+  gchar               *basedir;
   gchar               *filename;
   gboolean             success;
   GIOChannel          *io;
@@ -363,12 +374,20 @@ domain_locale_parse (HelpDomain  *domain,
       locale->help_missing = NULL;
     }
 
-  base_dir = g_filename_from_uri (domain->help_uri, NULL, NULL);
-  filename = g_build_filename (base_dir,
+  basedir = g_filename_from_uri (domain->help_uri, NULL, NULL);
+  if (! basedir)
+    {
+      g_set_error (error, 0, 0,
+                   "Cannot determine location of gimp-help.xml from '%s'",
+                   domain->help_uri);
+      return FALSE;
+    }
+
+  filename = g_build_filename (basedir,
                                locale->locale_id,
                                "gimp-help.xml",
                                NULL);
-  g_free (base_dir);
+  g_free (basedir);
 
 #ifdef GIMP_HELP_DEBUG
           g_printerr ("help (%s): parsing '%s' for domain \"%s\"\n",
@@ -380,17 +399,9 @@ domain_locale_parse (HelpDomain  *domain,
   io = g_io_channel_new_file (filename, "r", error);
   if (! io)
     {
-      if (error)
-        {
-          gchar *msg;
-
-          msg = g_strdup_printf (_("Could not open '%s' for reading: %s"),
-                                 gimp_filename_to_utf8 (filename),
-                                 (*error)->message);
-          g_free ((*error)->message);
-          (*error)->message = msg;
-        }
-
+      domain_error_set_message (error,
+                                _("Could not open '%s' for reading: %s"),
+                                filename);
       g_free (filename);
       return FALSE;
     }
@@ -415,16 +426,7 @@ domain_locale_parse (HelpDomain  *domain,
   g_free (parser);
 
   if (! success)
-    {
-      if (error)
-        {
-          gchar *msg = g_strdup_printf (_("Parse error in '%s':\n%s"),
-                                        gimp_filename_to_utf8 (filename),
-                                        (*error)->message);
-          g_free ((*error)->message);
-          (*error)->message = msg;
-        }
-    }
+    domain_error_set_message (error, _("Parse error in '%s':\n%s"), filename);
 
   g_free (filename);
 
@@ -651,5 +653,22 @@ domain_parser_parse_missing (DomainParser  *parser,
       g_printerr ("help (%s): added fallback for missing help -> \"%s\"\n",
                   parser->locale->locale_id, ref);
 #endif
+    }
+}
+
+static void
+domain_error_set_message (GError      **error,
+                          const gchar  *format,
+                          const gchar  *filename)
+{
+  if (error && *error)
+    {
+      gchar *name = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+      gchar *msg  = g_strdup_printf (format, name, (*error)->message);
+
+      g_free (name);
+
+      g_free ((*error)->message);
+      (*error)->message = msg;
     }
 }

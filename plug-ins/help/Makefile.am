@@ -7,6 +7,8 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
+AM_CPPFLAGS = -DDATADIR=\""$(gimpdatadir)"\"
+
 AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
@@ -32,3 +34,14 @@ LDADD = \
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
+
+
+noinst_PROGRAMS = gimp-help-lookup
+
+gimp_help_lookup_SOURCES = \
+	domain.c	\
+	domain.h	\
+	locales.c	\
+	locales.h	\
+	help.h		\
+	gimp-help-lookup.c
