@@ -1542,6 +1542,40 @@ gimp_unit_menu_update (GtkWidget *widget,
  *  Helper Functions
  */
 
+static GtkWidget *
+find_mnemonic_widget (GtkWidget *widget,
+                      gint       level)
+{
+  GtkWidget *mnemonic_widget = NULL;
+
+  if (GTK_WIDGET_GET_CLASS (widget)->activate_signal ||
+      GTK_WIDGET_CAN_FOCUS (widget)                  ||
+      GTK_WIDGET_GET_CLASS (widget)->mnemonic_activate !=
+      GTK_WIDGET_CLASS (g_type_class_peek (GTK_TYPE_WIDGET))->mnemonic_activate)
+    {
+      mnemonic_widget = widget;
+    }
+  else if (GTK_IS_CONTAINER (widget))
+    {
+      GList *children;
+      GList *list;
+
+      children = gtk_container_get_children (GTK_CONTAINER (widget));
+
+      for (list = children; list; list = g_list_next (list))
+        {
+          mnemonic_widget = find_mnemonic_widget (list->data, level + 1);
+
+          if (mnemonic_widget)
+            break;
+        }
+
+      g_list_free (children);
+    }
+
+  return mnemonic_widget;
+}
+
 /**
  * gimp_table_attach_aligned:
  * @table:      The #GtkTable the widgets will be attached to.
@@ -1575,6 +1609,8 @@ gimp_table_attach_aligned (GtkTable    *table,
 
   if (label_text)
     {
+      GtkWidget *mnemonic_widget;
+
       label = gtk_label_new_with_mnemonic (label_text);
       gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
       gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
@@ -1583,7 +1619,11 @@ gimp_table_attach_aligned (GtkTable    *table,
 			row, row + 1,
 			GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
-      gtk_label_set_mnemonic_widget (GTK_LABEL (label), widget);
+
+      mnemonic_widget = find_mnemonic_widget (widget, 0);
+
+      if (mnemonic_widget)
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), mnemonic_widget);
     }
 
   if (left_align)

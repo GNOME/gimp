@@ -1,5 +1,14 @@
 2004-10-12  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.c (gimp_table_attach_aligned):
+	instead of simply using the passed widget as mnemonic_widget for
+	the GtkLabel, call the new utility function find_mnemonic_widget()
+	which recursively searches the passed widget until it finds one
+	that actually can be mnemonic-activated. Fixes lots of mnemonics
+	where the attached widget is e.g. a GtkEventBox or GtkComboBox.
+
+2004-10-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptooloptions-gui.[ch]: removed the recently added
 	utility functions again.
 
