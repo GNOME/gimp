@@ -268,8 +268,8 @@ hsv_only_row_float (
     {
       r1 = src1[0]; g1 = src1[1]; b1 = src1[2];
       r2 = src2[0]; g2 = src2[1]; b2 = src2[2];
-//    rgb_to_hsv (&r1, &g1, &b1);
-//    rgb_to_hsv (&r2, &g2, &b2);
+/*    rgb_to_hsv (&r1, &g1, &b1); */
+/*    rgb_to_hsv (&r2, &g2, &b2); */
 
       switch (mode)
 	{
@@ -285,7 +285,7 @@ hsv_only_row_float (
 	}
 
       /*  set the destination  */
-//    hsv_to_rgb (&r1, &g1, &b1);
+/*    hsv_to_rgb (&r1, &g1, &b1); */
 
       dest[0] = r1; dest[1] = g1; dest[2] = b1;
 
@@ -327,15 +327,15 @@ color_only_row_float (
     {
       r1 = src1[0]; g1 = src1[1]; b1 = src1[2];
       r2 = src2[0]; g2 = src2[1]; b2 = src2[2];
-//    rgb_to_hls (&r1, &g1, &b1);
-//    rgb_to_hls (&r2, &g2, &b2);
+/*    rgb_to_hls (&r1, &g1, &b1); */
+/*    rgb_to_hls (&r2, &g2, &b2); */
 
       /*  transfer hue and saturation to the source pixel  */
       r1 = r2;
       b1 = b2;
 
       /*  set the destination  */
-//    hls_to_rgb (&r1, &g1, &b1);
+/*    hls_to_rgb (&r1, &g1, &b1); */
 
       dest[0] = r1; dest[1] = g1; dest[2] = b1;
 
