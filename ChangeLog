@@ -1,3 +1,8 @@
+2005-04-05  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: select localedir according to the format of the
+	gettext message catalogs. Closes bug #169274 again.
+
 2005-04-05  Michael Natterer  <mitch@gimp.org>
 
 	More unfinished replacement for the info window:

@@ -1475,12 +1475,20 @@ gimpdatadir="$datadir/$PACKAGE/gimp_data_version"
 gimpplugindir="$libdir/$PACKAGE/gimp_plugin_version"
 gimpsysconfdir="$sysconfdir/$PACKAGE/gimp_sysconf_version"
 
-localedir="$datadir/locale"
-
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)
 AC_SUBST(gimpplugindir)
 AC_SUBST(gimpsysconfdir)
+
+
+# GNU format message catalogs go into $datadir/locale,
+# standard location is $libdir/locale. DATADIRNAME set accordingly.
+
+localedir="$datadir/locale"
+if test "$DATADIRNAME" = "lib"; then
+   localedir="$libdir/locale"
+fi
+
 AC_SUBST(localedir)
 
 
