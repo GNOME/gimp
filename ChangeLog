@@ -6,6 +6,12 @@
 
 2003-10-23  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppropwidgets.[ch] (gimp_prop_size_entry_new): take
+	the boundaries from the GParamSpec instead of hardcoding them.
+	Added a utility function to reduce code duplication.
+
+2003-10-23  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpimagedock.c (gimp_image_dock_init): set a
 	tooltip on the "Auto" button since it isn't obvious what it does.
 

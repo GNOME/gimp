@@ -49,23 +49,30 @@
 
 /*  utility function prototypes  */
 
-static void         set_param_spec   (GObject     *object,
-                                      GtkWidget   *widget,
-                                      GParamSpec  *param_spec);
-static GParamSpec * get_param_spec   (GObject     *object);
+static void         set_param_spec     (GObject     *object,
+                                        GtkWidget   *widget,
+                                        GParamSpec  *param_spec);
+static GParamSpec * get_param_spec     (GObject     *object);
 
-static GParamSpec * find_param_spec  (GObject     *object,
-                                      const gchar *property_name,
-                                      const gchar *strloc);
-static GParamSpec * check_param_spec (GObject     *object,
-                                      const gchar *property_name,
-                                      GType        type,
-                                      const gchar *strloc);
+static GParamSpec * find_param_spec    (GObject     *object,
+                                        const gchar *property_name,
+                                        const gchar *strloc);
+static GParamSpec * check_param_spec   (GObject     *object,
+                                        const gchar *property_name,
+                                        GType         type,
+                                        const gchar *strloc);
 
-static void         connect_notify   (GObject     *config,
-                                      const gchar *property_name,
-                                      GCallback    callback,
-                                      gpointer     callback_data);
+static gboolean     get_numeric_values (GObject     *object,
+                                        GParamSpec  *param_spec,
+                                        gdouble     *value,
+                                        gdouble     *lower,
+                                        gdouble     *upper,
+                                        const gchar *strloc);
+
+static void         connect_notify     (GObject     *config,
+                                        const gchar *property_name,
+                                        GCallback    callback,
+                                        gpointer     callback_data);
 
 
 /******************/
@@ -666,66 +673,25 @@ gimp_prop_spin_button_new (GObject     *config,
   GParamSpec *param_spec;
   GtkWidget  *spinbutton;
   GtkObject  *adjustment;
+  gdouble     value;
+  gdouble     lower;
+  gdouble     upper;
 
   param_spec = find_param_spec (config, property_name, G_STRLOC);
   if (! param_spec)
     return NULL;
 
-  if (G_IS_PARAM_SPEC_INT (param_spec))
-    {
-      GParamSpecInt *int_spec;
-      gint           value;
+  if (! get_numeric_values (config,
+                            param_spec, &value, &lower, &upper, G_STRLOC))
+    return NULL;
 
-      int_spec = G_PARAM_SPEC_INT (param_spec);
+  if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
+    digits = 0;
 
-      g_object_get (config, property_name, &value, NULL);
-
-      spinbutton = gimp_spin_button_new (&adjustment, value,
-                                         int_spec->minimum,
-                                         int_spec->maximum,
-                                         step_increment,
-                                         page_increment,
-                                         0.0, 1.0, 0);
-    }
-  else if (G_IS_PARAM_SPEC_UINT (param_spec))
-    {
-      GParamSpecUInt *uint_spec;
-      guint           value;
-
-      uint_spec = G_PARAM_SPEC_UINT (param_spec);
-
-      g_object_get (config, property_name, &value, NULL);
-
-      spinbutton = gimp_spin_button_new (&adjustment, value,
-                                         uint_spec->minimum,
-                                         uint_spec->maximum,
-                                         step_increment,
-                                         page_increment,
-                                         0.0, 1.0, 0);
-    }
-  else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
-    {
-      GParamSpecDouble *double_spec;
-      gdouble           value;
-
-      double_spec = G_PARAM_SPEC_DOUBLE (param_spec);
-
-      g_object_get (config, property_name, &value, NULL);
-
-      spinbutton = gimp_spin_button_new (&adjustment, value,
-                                         double_spec->minimum,
-                                         double_spec->maximum,
-                                         step_increment,
-                                         page_increment,
-                                         0.0, 1.0, digits);
-    }
-  else
-    {
-      g_warning ("%s: property '%s' of %s is not numeric",
-                 G_STRLOC, property_name,
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)));
-      return NULL;
-    }
+  spinbutton = gimp_spin_button_new (&adjustment,
+                                     value, lower, upper,
+                                     step_increment, page_increment,
+                                     0.0, 1.0, digits);
 
   set_param_spec (G_OBJECT (adjustment), spinbutton, param_spec);
 
@@ -765,50 +731,9 @@ gimp_prop_scale_entry_new (GObject     *config,
   if (! param_spec)
     return NULL;
 
-  if (G_IS_PARAM_SPEC_INT (param_spec))
-    {
-      GParamSpecInt *int_spec;
-      gint           int_value;
-
-      int_spec = G_PARAM_SPEC_INT (param_spec);
-
-      g_object_get (config, property_name, &int_value, NULL);
-
-      value = int_value;
-      lower = int_spec->minimum;
-      upper = int_spec->maximum;
-    }
-  else if (G_IS_PARAM_SPEC_UINT (param_spec))
-    {
-      GParamSpecUInt *uint_spec;
-      guint           uint_value;
-
-      uint_spec = G_PARAM_SPEC_UINT (param_spec);
-
-      g_object_get (config, property_name, &uint_value, NULL);
-
-      value = uint_value;
-      lower = uint_spec->minimum;
-      upper = uint_spec->maximum;
-    }
-  else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
-    {
-      GParamSpecDouble *double_spec;
-
-      double_spec = G_PARAM_SPEC_DOUBLE (param_spec);
-
-      g_object_get (config, property_name, &value, NULL);
-
-      lower = double_spec->minimum;
-      upper = double_spec->maximum;
-    }
-  else
-    {
-      g_warning ("%s: property '%s' of %s is not numeric",
-                 G_STRLOC, property_name,
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)));
-      return NULL;
-    }
+  if (! get_numeric_values (config,
+                            param_spec, &value, &lower, &upper, G_STRLOC))
+    return NULL;
 
   tooltip = gettext (g_param_spec_get_blurb (param_spec));
 
@@ -859,9 +784,9 @@ gimp_prop_opacity_entry_new (GObject     *config,
   GParamSpec  *param_spec;
   GtkObject   *adjustment;
   const gchar *tooltip;
+  gdouble      value;
   gdouble      lower;
   gdouble      upper;
-  gdouble      value;
 
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_DOUBLE, G_STRLOC);
@@ -1649,10 +1574,16 @@ gimp_prop_size_entry_new (GObject                   *config,
   GParamSpec *unit_param_spec;
   gboolean    show_pixels;
   gdouble     value;
+  gdouble     lower;
+  gdouble     upper;
   GimpUnit    unit_value;
 
   param_spec = find_param_spec (config, property_name, G_STRLOC);
   if (! param_spec)
+    return NULL;
+
+  if (! get_numeric_values (config,
+                            param_spec, &value, &lower, &upper, G_STRLOC))
     return NULL;
 
   if (unit_property_name)
@@ -1681,31 +1612,6 @@ gimp_prop_size_entry_new (GObject                   *config,
       show_pixels     = FALSE;
     }
 
-  if (G_IS_PARAM_SPEC_INT (param_spec))
-    {
-      gint int_value;
-
-      g_object_get (config,
-                    property_name, &int_value,
-                    NULL);
-
-      value = int_value;
-    }
-  else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
-    {
-      g_object_get (config,
-                    property_name, &value,
-                    NULL);
-    }
-  else
-    {
-      g_warning ("%s: property '%s' of %s is not int nor double",
-                 G_STRLOC,
-                 property_name,
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)));
-      return NULL;
-    }
-
   sizeentry = gimp_size_entry_new (1, unit_value, unit_format,
                                    TRUE, FALSE, FALSE, 10,
                                    update_policy);
@@ -1720,25 +1626,12 @@ gimp_prop_size_entry_new (GObject                   *config,
     set_param_spec (NULL,
                     GIMP_SIZE_ENTRY (sizeentry)->unitmenu, unit_param_spec);
 
-  switch (GIMP_SIZE_ENTRY (sizeentry)->update_policy)
-    {
-    case GIMP_SIZE_ENTRY_UPDATE_SIZE:
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
-                                      resolution, FALSE);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
-                                             GIMP_MIN_IMAGE_SIZE,
-                                             GIMP_MAX_IMAGE_SIZE);
-      break;
+  if (update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE)
+    gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
+                                    resolution, FALSE);
 
-    case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
-                                             GIMP_MIN_RESOLUTION,
-                                             GIMP_MAX_RESOLUTION);
-      break;
-
-    default:
-      break;
-    }
+  gimp_size_entry_set_value_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
+                                        lower, upper);
 
   gimp_size_entry_set_unit  (GIMP_SIZE_ENTRY (sizeentry), unit_value);
   gimp_size_entry_set_value (GIMP_SIZE_ENTRY (sizeentry), 0, value);
@@ -2879,6 +2772,57 @@ check_param_spec (GObject     *object,
     }
 
   return param_spec;
+}
+
+static gboolean
+get_numeric_values (GObject     *object,
+                    GParamSpec  *param_spec,
+                    gdouble     *value,
+                    gdouble     *lower,
+                    gdouble     *upper,
+                    const gchar *strloc)
+{
+  if (G_IS_PARAM_SPEC_INT (param_spec))
+    {
+      GParamSpecInt *int_spec = G_PARAM_SPEC_INT (param_spec);
+      gint           int_value;
+
+      g_object_get (object, param_spec->name, &int_value, NULL);
+
+      *value = int_value;
+      *lower = int_spec->minimum;
+      *upper = int_spec->maximum;
+    }
+  else if (G_IS_PARAM_SPEC_UINT (param_spec))
+    {
+      GParamSpecUInt *uint_spec = G_PARAM_SPEC_UINT (param_spec);
+      guint           uint_value;
+
+      g_object_get (object, param_spec->name, &uint_value, NULL);
+
+      *value = uint_value;
+      *lower = uint_spec->minimum;
+      *upper = uint_spec->maximum;
+    }
+  else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
+    {
+      GParamSpecDouble *double_spec = G_PARAM_SPEC_DOUBLE (param_spec);
+
+      g_object_get (object, param_spec->name, value, NULL);
+
+      *lower = double_spec->minimum;
+      *upper = double_spec->maximum;
+    }
+  else
+    {
+      g_warning ("%s: property '%s' of %s is not numeric",
+                 strloc,
+                 param_spec->name,
+                 g_type_name (G_TYPE_FROM_INSTANCE (object)));
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 static void

@@ -128,7 +128,7 @@ GtkWidget     * gimp_prop_path_editor_new         (GObject     *config,
                                                    const gchar *filesel_title);
 
 
-/*  GParamInt, GParamDouble   unit: GimpParamUnit  */
+/*  GParamInt, GParamUInt, GParamDouble   unit: GimpParamUnit  */
 
 GtkWidget     * gimp_prop_size_entry_new          (GObject     *config,
                                                    const gchar *property_name,
