@@ -874,7 +874,6 @@ msgid "Crop & Resize"
 msgstr "Rajaa ja muokkaa kokoa"
 
 #: app/crop.c:189
-#, fuzzy
 msgid "Current Layer only"
 msgstr "Vain nykyinen taso"
 

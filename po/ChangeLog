@@ -1,3 +1,7 @@
+2000-03-08  Tor Lillqvist  <tml@iki.fi>
+
+	* fi.po: Remove a bogus fuzzy indicator.
+
 2000-03-09  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* ja.po: updated Japanese translation.
