@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-libgimp 1.3.x\n"
-"POT-Creation-Date: 2002-07-15 12:39+0200\n"
-"PO-Revision-Date: 2002-07-13 22:43+0700\n"
+"POT-Creation-Date: 2002-09-16 16:42+0200\n"
+"PO-Revision-Date: 2002-09-15 15:27+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@linuxmail.org>\n"
 "Language-Team: Gnome-Vi Team <Gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -216,19 +216,27 @@ msgstr "Đặt _lại"
 msgid "Visible"
 msgstr "Nhìn được"
 
-#: libgimpwidgets/gimpstock.c:163
-msgid "Transform"
-msgstr "Chuyển dạng"
+#: libgimpwidgets/gimpstock.c:127
+msgid "Resize"
+msgstr "Đặt lại kích thước"
 
-#: libgimpwidgets/gimpstock.c:166
-msgid "Rotate"
-msgstr "Xoay"
-
-#: libgimpwidgets/gimpstock.c:167
+#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:171
 msgid "Scale"
 msgstr "Cân chỉnh"
 
-#: libgimpwidgets/gimpstock.c:168
+#: libgimpwidgets/gimpstock.c:149
+msgid "Crop"
+msgstr "Xén"
+
+#: libgimpwidgets/gimpstock.c:167
+msgid "Transform"
+msgstr "Chuyển dạng"
+
+#: libgimpwidgets/gimpstock.c:170
+msgid "Rotate"
+msgstr "Xoay"
+
+#: libgimpwidgets/gimpstock.c:172
 msgid "Shear"
 msgstr "Kéo cắt"
 
@@ -248,7 +256,7 @@ msgstr "Đơn Vị"
 msgid "Factor"
 msgstr "Tác nhân"
 
-#: libgimpwidgets/gimpwidgets.c:845
+#: libgimpwidgets/gimpwidgets.c:849
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -257,11 +265,11 @@ msgstr ""
 "hạt ngẫu nhiên - Điều này cho phép nhắc lại hoạt động \"ngẫu nhiên\" được "
 "nhận"
 
-#: libgimpwidgets/gimpwidgets.c:850
+#: libgimpwidgets/gimpwidgets.c:854
 msgid "_Time"
 msgstr "_Thời gian"
 
-#: libgimpwidgets/gimpwidgets.c:859
+#: libgimpwidgets/gimpwidgets.c:863
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -269,18 +277,18 @@ msgstr ""
 "Trình sinh số lượng hạt ngẫu nhiên từ thời gian hiện thời - điều này đảm bảo "
 "cho sự ngẫu nhiên hoá"
 
-#: libgimpwidgets/gimpwidgets.c:1175
+#: libgimpwidgets/gimpwidgets.c:1189
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimpwidgets/gimpwidgets.c:1176
+#: libgimpwidgets/gimpwidgets.c:1190
 msgid "KiloBytes"
 msgstr "KiloByte"
 
-#: libgimpwidgets/gimpwidgets.c:1177
+#: libgimpwidgets/gimpwidgets.c:1191
 msgid "MegaBytes"
 msgstr "MegaByte"
 
-#: libgimpwidgets/gimpwidgets.c:1178
+#: libgimpwidgets/gimpwidgets.c:1192
 msgid "GigaBytes"
 msgstr "GigaByte"
