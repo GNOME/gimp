@@ -84,7 +84,6 @@ libexec_PROGRAMS = \
 	mapcolor \
 	max_rgb \
 	mblur \
-	$(MPEG) \
 	newsprint \
 	nlfilt \
 	noisify \
@@ -149,7 +148,6 @@ libexec_PROGRAMS = \
 EXTRA_PROGRAMS = \
 	aa \
 	jpeg \
-	mpeg \
 	png \
 	psp \
 	tiff \
@@ -974,17 +972,6 @@ mblur_LDADD = \
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(GTK_LIBS)							\
-	$(INTLLIBS)
-
-mpeg_SOURCES = \
-	mpeg.c
-
-mpeg_LDADD = \
-	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(LIBMPEG)							\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 

@@ -1,3 +1,12 @@
+2003-01-27  Sven Neumann  <sven@gimp.org>
+
+	* configure.in
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/mpeg.c: removed the MPEG plug-in. It has been
+	broken, unmaintained and caused nothing but trouble (#51400,
+	#104522).
+
 2003-01-26  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimptool/gimptool.def
