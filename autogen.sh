@@ -31,7 +31,6 @@ function check_version ()
 {
     if expr $1 \>= $2 > /dev/null; then
 	echo "yes (version $1)"
-	DIE=0
     else
 	echo "Too old (found version $1)!"
 	DIE=1
