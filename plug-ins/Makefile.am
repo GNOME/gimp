@@ -6,16 +6,16 @@ SUBDIRS = 			\
 	gpc			\
 	dbbrowser		\
 	script-fu		\
-	@AA@			\
-	@JPEG@			\
-	@MPEG@			\
-	@GIMP_PERL@		\
-	@PNG@			\
-	@TIFF@			\
-	@WEBBROWSER@		\
-	@XD@			\
-	@XJT@			\
-	@XPM@			\
+	$(AA)			\
+	$(JPEG)			\
+	$(MPEG)			\
+	$(GIMP_PERL)		\
+	$(PNG)			\
+	$(TIFF)			\
+	$(WEBBROWSER)		\
+	$(XD)			\
+	$(XJT)			\
+	$(XPM)			\
 	AlienMap		\
 	CEL			\
 	CML_explorer		\

@@ -385,6 +385,8 @@ EXTRA_DIST = \
 	wilber.ico
 
 
+gimp_LDFLAGS = -export-symbols $(srcdir)/gimp.sym
+
 AM_CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DLOCALEDIR=\""$(localedir)"\"	\
@@ -397,7 +399,7 @@ INCLUDES = \
 	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
-LDADD = \
+gimp_LDADD = \
 	libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\

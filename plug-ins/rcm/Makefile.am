@@ -6,10 +6,15 @@ pluginlib_PROGRAMS = rcm
 
 rcm_SOURCES = \
 	rcm.c		\
-	rcm_dialog.c	\
+	rcm.h		\
 	rcm_callback.c	\
+	rcm_callback.h	\
+	rcm_dialog.c	\
+	rcm_dialog.h	\
 	rcm_gdk.c	\
-	rcm_misc.c
+	rcm_gdk.h	\
+	rcm_misc.c	\
+	rcm_misc.h
 
 INCLUDES = \
 	-I$(top_srcdir)			\

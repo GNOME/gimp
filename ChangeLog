@@ -1,3 +1,20 @@
+Tue May  4 15:51:16 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* configure.in: use the sinclude bit again, since it works in
+	automake 1.4. Generate the Makefile in the embed dir too
+
+	* app/gimp.sym: new file, list the symbols we want export to 
+	modules here
+
+	* app/Makefile.am: add -export-symbols to LDFLAGS
+
+	* plug-ins/Makefile.am: use make variable expansion instead of
+	direct substitution for optional plug-in dirs. E.g., now one can
+	do "make GIMP_PERL=" to skip the perl plug-in dir during build
+	without rerunning configure
+
+	* plug-ins/rcm/Makefile.am: add header files to SOURCES
+
 Tue May  4 15:16:47 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/text_tool.c: s@gdkprivate@gdk/gdkprivate@

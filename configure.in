@@ -555,46 +555,17 @@ if test "x$enable_perl" != xno; then
       GIMPTOOL="../../gimptool"
       IN_GIMP=1
       EXTENSIVE_TESTS=0
+
       dnl include the autoconf fragment from there
-      dnl This doesn't work with automake 1.3 due to a bug, so for now we'll
-      dnl include it by hand
-      dnl sinclude(plug-ins/perl/etc/configure.frag)
-
-      AC_CHECK_FUNCS(vsnprintf,AC_DEFINE(HAVE_VSNPRINTF),[
-         AC_MSG_WARN(vsnprintf not found.. I hope you are using gcc...)
-      ])
-
-      dnl disable some warnings I don't want to see
-      if test "x$GCC" = xyes; then
-         nowarn="-Wno-parentheses -Wno-unused -Wno-uninitialized"
-         GIMP_CFLAGS="$GIMP_CFLAGS $nowarn"
-         GIMP_CFLAGS_NOUI="$GIMP_CFLAGS"
-      fi
-
-      AC_SUBST(EXTENSIVE_TESTS)dnl from Makefile.PL
-
-      AC_SUBST(CPPFLAGS)
-      AC_SUBST(CFLAGS)
-      AC_SUBST(LDFLAGS)
-      AC_SUBST(prefix)
-
-      AC_SUBST(IN_GIMP)
-
-      AC_SUBST(GIMP_CFLAGS)
-      AC_SUBST(GIMP_CFLAGS_NOUI)
-      AC_SUBST(GIMP_LIBS)
-      AC_SUBST(GIMP_LIBS_NOUI)
-      AC_SUBST(PERL)
-      AC_SUBST(GIMP)
-      AC_SUBST(GIMPTOOL)
-      AC_SUBST(GIMP_CFLAGS)
-      AC_SUBST(GIMP_LIBS)
-      AC_CHECK_FUNCS(_exit)
+      sinclude(plug-ins/perl/etc/configure.frag)
 
       dnl we ignore prefix
       cat >plug-ins/perl/config.status <<EOF
       echo invoking perl for configuration...
-      $PERL Makefile.PL --writemakefile
+      for i in ". embed"; do
+         cd $i
+         $PERL Makefile.PL --writemakefile
+      done
 EOF
       GIMP_PERL=perl
    else
