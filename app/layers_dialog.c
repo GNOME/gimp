@@ -1936,46 +1936,58 @@ layers_dialog_drag_new_layer_callback (GtkWidget      *widget,
 					     "gimp_layer");
 
       if (layer &&
-	  layer == layersD->active_layer)
-	{
-	  Layer     *new_layer;
-	  GimpImage *gimage;
-	  gint       width, height;
-	  gint       off_x, off_y;
+          layer == layersD->active_layer)
+        {
+          /*  If there is a floating selection, the new command transforms
+           *  the current fs into a new layer
+           */
+          if (layer_is_floating_sel (layer))
+            {
+              floating_sel_to_layer (layer);
 
-	  gimage = layersD->gimage;
+              gdisplays_flush ();
+            }
+          else
+            {
+              Layer     *new_layer;
+              GimpImage *gimage;
+              gint       width, height;
+              gint       off_x, off_y;
 
-	  width  = gimp_drawable_width  (GIMP_DRAWABLE (layer));
-	  height = gimp_drawable_height (GIMP_DRAWABLE (layer));
-	  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+              gimage = layersD->gimage;
 
-	  /*  Start a group undo  */
-	  undo_push_group_start (gimage, EDIT_PASTE_UNDO);
+              width  = gimp_drawable_width  (GIMP_DRAWABLE (layer));
+              height = gimp_drawable_height (GIMP_DRAWABLE (layer));
+              gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+              
+              /*  Start a group undo  */
+              undo_push_group_start (gimage, EDIT_PASTE_UNDO);
+              
+              new_layer = layer_new (gimage, width, height,
+                                     gimp_image_base_type_with_alpha (gimage),
+                                     _("Empty Layer Copy"),
+                                     layer->opacity,
+                                     layer->mode);
+              if (new_layer)
+                {
+                  drawable_fill (GIMP_DRAWABLE (new_layer), TRANSPARENT_FILL);
+                  layer_translate (new_layer, off_x, off_y);
+                  gimp_image_add_layer (gimage, new_layer, -1);
+                  
+                  /*  End the group undo  */
+                  undo_push_group_end (gimage);
+                  
+                  gdisplays_flush ();
+                } 
+              else
+                {
+                  g_message ("layers_dialog_drop_new_layer_callback():\n"
+                             "could not allocate new layer");
+                }
+            }
 
-	  new_layer = layer_new (gimage, width, height,
-				 gimp_image_base_type_with_alpha (gimage),
-				 _("Empty Layer Copy"),
-				 layer->opacity,
-				 layer->mode);
-	  if (new_layer)
-	    {
-	      drawable_fill (GIMP_DRAWABLE (new_layer), TRANSPARENT_FILL);
-	      layer_translate (new_layer, off_x, off_y);
-	      gimp_image_add_layer (gimage, new_layer, -1);
-
-	      /*  End the group undo  */
-	      undo_push_group_end (gimage);
-	  
-	      gdisplays_flush ();
-	    } 
-	  else
-	    {
-	      g_message ("layers_dialog_drop_new_layer_callback():\n"
-			   "could not allocate new layer");
-	    }
-
-	  return_val = TRUE;
-	}
+          return_val = TRUE;
+        }
     }
 
   gtk_drag_finish (context, return_val, FALSE, time);

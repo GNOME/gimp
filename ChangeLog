@@ -1,3 +1,10 @@
+2003-05-12  Sven Neumann  <sven@gimp.org>
+
+	* app/layers_dialog.c (layers_dialog_drag_new_layer_callback):
+	special case floating selections being dragged to the New
+	button. Handle them as if the user had clicked the New button.
+	Fixes bug #112832.
+
 2003-05-11  Manish Singh  <yosh@gimp.org>
 
 	* app/levels.c: reset conn_id to 0 in levels_free, possibly fixes
