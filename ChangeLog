@@ -1,3 +1,8 @@
+Thu Feb 24 00:42:12 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/text_tool.c: don't crash if a font couldn't be loaded.
+	Fixes bug #6526.
+
 Thu Feb 24 00:10:29 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/plug_in.c: don't bind to the default textdomain twice if

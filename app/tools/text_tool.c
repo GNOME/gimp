@@ -598,6 +598,11 @@ text_render (GimpImage    *gimage,
   gdk_error_code = 0;
 #ifndef GDK_WINDOWING_WIN32
   font = gdk_font_load (fontname);
+  if (!font)
+    {
+      g_message (_("Font '%s' not found."));
+      return NULL;
+    }
   xfs = GDK_FONT_XFONT(font);
   if (xfs->min_byte1 != 0 || xfs->max_byte1 != 0) {
     gdk_font_unref(font);
