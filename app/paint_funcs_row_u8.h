@@ -20,6 +20,7 @@
 
 struct _PixelRow;
 
+#if 0
 #define ROW_FUNC_a_a(name) \
 void \
 name##_row_u8 ( \
@@ -33,7 +34,28 @@ ROW_FUNC_a_a (x_min)
 ROW_FUNC_a_a (invert)
 
 #undef ROW_FUNC_a_a
+#endif
 
+void
+x_add_row_u8 (
+		struct _PixelRow *, 
+		struct _PixelRow *
+		);
+void
+x_sub_row_u8 (
+		struct _PixelRow *, 
+		struct _PixelRow *
+		);
+void
+x_min_row_u8 (
+		struct _PixelRow *, 
+		struct _PixelRow *
+		);
+void
+invert_row_u8 (
+		struct _PixelRow *, 
+		struct _PixelRow *
+		);
 void
 absdiff_row_u8 (
                 struct _PixelRow *,

@@ -259,9 +259,7 @@ check_precision (
   return 0;
 }
   
-
-
-
+#if 0
 /* ---------------------------------------------------------
 
        area functions with func (Area*, Area*) signature
@@ -316,15 +314,194 @@ name##_area ( \
     } \
 }
 
-
-
 AREA_FUNC_a_a (x_add)
 AREA_FUNC_a_a (x_sub)
 AREA_FUNC_a_a (x_min)
 AREA_FUNC_a_a (invert)
 
 #undef AREA_FUNC_a_a
+#endif
 
+typedef void (*x_addFunc) (PixelRow*, PixelRow*);
+static x_addFunc x_add_area_funcs (Tag);
+static x_addFunc
+x_add_area_funcs (
+                   Tag tag
+                   )
+{
+  switch (tag_precision (tag))
+    {
+    case PRECISION_U8:
+      return x_add_row_u8;
+    case PRECISION_U16:
+      return x_add_row_u16;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+    default:
+      g_warning ("x_add: bad precision");
+    }
+  return NULL;
+}
+
+void
+x_add_area (
+             PixelArea * src_area,
+             PixelArea * dest_area 
+             )
+{
+  x_addFunc x_add_row = x_add_area_funcs (pixelarea_tag (src_area));
+  void * pag;
+  for (pag = pixelarea_register (2, src_area, dest_area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      PixelRow r1;
+      PixelRow r2;
+      gint h = pixelarea_height (src_area);
+      while (h--)
+        {
+          pixelarea_getdata (src_area, &r1, h);
+          pixelarea_getdata (dest_area, &r2, h);
+          (*x_add_row) (&r1, &r2);
+        }
+    }
+}
+
+typedef void (*x_subFunc) (PixelRow*, PixelRow*);
+static x_subFunc x_sub_area_funcs (Tag);
+static x_subFunc
+x_sub_area_funcs (
+                   Tag tag
+                   )
+{
+  switch (tag_precision (tag))
+    {
+    case PRECISION_U8:
+      return x_sub_row_u8;
+    case PRECISION_U16:
+      return x_sub_row_u16;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+    default:
+      g_warning ("x_sub: bad precision");
+    }
+  return NULL;
+}
+
+void
+x_sub_area (
+             PixelArea * src_area,
+             PixelArea * dest_area 
+             )
+{
+  x_subFunc x_sub_row = x_sub_area_funcs (pixelarea_tag (src_area));
+  void * pag;
+  for (pag = pixelarea_register (2, src_area, dest_area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      PixelRow r1;
+      PixelRow r2;
+      gint h = pixelarea_height (src_area);
+      while (h--)
+        {
+          pixelarea_getdata (src_area, &r1, h);
+          pixelarea_getdata (dest_area, &r2, h);
+          (*x_sub_row) (&r1, &r2);
+        }
+    }
+}
+
+typedef void (*x_minFunc) (PixelRow*, PixelRow*);
+static x_minFunc x_min_area_funcs (Tag);
+static x_minFunc
+x_min_area_funcs (
+                   Tag tag
+                   )
+{
+  switch (tag_precision (tag))
+    {
+    case PRECISION_U8:
+      return x_min_row_u8;
+    case PRECISION_U16:
+      return x_min_row_u16;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+    default:
+      g_warning ("x_min: bad precision");
+    }
+  return NULL;
+}
+
+void
+x_min_area (
+             PixelArea * src_area,
+             PixelArea * dest_area 
+             )
+{
+  x_minFunc x_min_row = x_min_area_funcs (pixelarea_tag (src_area));
+  void * pag;
+  for (pag = pixelarea_register (2, src_area, dest_area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      PixelRow r1;
+      PixelRow r2;
+      gint h = pixelarea_height (src_area);
+      while (h--)
+        {
+          pixelarea_getdata (src_area, &r1, h);
+          pixelarea_getdata (dest_area, &r2, h);
+          (*x_min_row) (&r1, &r2);
+        }
+    }
+}
+
+typedef void (*invertFunc) (PixelRow*, PixelRow*);
+static invertFunc invert_area_funcs (Tag);
+
+static invertFunc
+invert_area_funcs (
+                   Tag tag
+                   )
+{
+  switch (tag_precision (tag))
+    {
+    case PRECISION_U8:
+      return invert_row_u8;
+    case PRECISION_U16:
+      return invert_row_u16;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+    default:
+      g_warning ("invert: bad precision");
+    }
+  return NULL;
+}
+
+void
+invert_area (
+             PixelArea * src_area,
+             PixelArea * dest_area 
+             )
+{
+  invertFunc invert_row = invert_area_funcs (pixelarea_tag (src_area));
+  void * pag;
+  for (pag = pixelarea_register (2, src_area, dest_area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      PixelRow r1;
+      PixelRow r2;
+      gint h = pixelarea_height (src_area);
+      while (h--)
+        {
+          pixelarea_getdata (src_area, &r1, h);
+          pixelarea_getdata (dest_area, &r2, h);
+          (*invert_row) (&r1, &r2);
+        }
+    }
+}
 
 /* ---------------------------------------------------------*/
 
@@ -2881,12 +3058,11 @@ thin_area  (
   memset (cur_row_data, 0, (width + 2) * bytes_per_pixel);
   
   /* set the PixelRow buffers, inset one pixel */ 
-  pixelrow_init (&prev_row, src_tag, prev_row_data+1, width);
-  pixelrow_init (&cur_row, src_tag, cur_row_data+1, width);
-  pixelrow_init (&next_row, src_tag, next_row_data+1, width);
-  
+  pixelrow_init (&prev_row, src_tag, prev_row_data + bytes_per_pixel, width);
+  pixelrow_init (&cur_row, src_tag, cur_row_data + bytes_per_pixel, width);
+  pixelrow_init (&next_row, src_tag, next_row_data + bytes_per_pixel, width);
+ 
   /* load the first row of src_area into cur_row */
-/*pixel_region_get_row (src, src->x, src->y, src->w, cur_row, 1); */
   pixelarea_copy_row (src_area, &cur_row, src_x, src_y, width, 1);      
   
   found_one = FALSE;
@@ -2898,6 +3074,7 @@ thin_area  (
       else
         memset (pixelrow_data (&next_row), 0, width  * bytes_per_pixel);
       
+
       found_one = (*thin_row) (&cur_row, &next_row, &prev_row, &dest_row, type);
 
       pixelarea_write_row (src_area, &dest_row, src_x, src_y + i, width);

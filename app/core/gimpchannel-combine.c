@@ -447,8 +447,6 @@ channel_preview (Channel *channel, int w, int h)
                       0, 0,
                       TRUE);
 
-#define FIXME
-      /* scale_area (&srcPR, &destPR); */
       copy_area (&srcPR, &destPR);
 
       if (GIMP_DRAWABLE(channel)->preview)
@@ -668,26 +666,65 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
       ex = pixelarea_x (&maskPR) + pixelarea_width (&maskPR);
       ey = pixelarea_y (&maskPR) + pixelarea_height (&maskPR);
 
-      for (y = pixelarea_y (&maskPR); y < ey; y++)
+      switch (tag_precision ( pixelarea_tag (&maskPR)))
+      {
+      case PRECISION_U8:
 	{
-	  found = FALSE;
-	  for (x = pixelarea_x (&maskPR); x < ex; x++, data++)
-	    if (*data)
-	      {
-		if (x < *x1)
-		  *x1 = x;
-		if (x > *x2)
-		  *x2 = x;
-		found = TRUE;
-	      }
-	  if (found)
+	  guint8 * d = (guint8*)data;
+	  for (y = pixelarea_y (&maskPR); y < ey; y++)
 	    {
-	      if (y < *y1)
-		*y1 = y;
-	      if (y > *y2)
-		*y2 = y;
+	      found = FALSE;
+	      for (x = pixelarea_x (&maskPR); x < ex; x++, d++)
+		if (*d)
+		  {
+		    if (x < *x1)
+		      *x1 = x;
+		    if (x > *x2)
+		      *x2 = x;
+		    found = TRUE;
+		  }
+	      if (found)
+		{
+		  if (y < *y1)
+		    *y1 = y;
+		  if (y > *y2)
+		    *y2 = y;
+		}
 	    }
 	}
+	break;
+      case PRECISION_U16:
+	{
+	  guint16 * d = (guint16*)data;
+	  for (y = pixelarea_y (&maskPR); y < ey; y++)
+	    {
+	      found = FALSE;
+	      for (x = pixelarea_x (&maskPR); x < ex; x++, d++)
+		if (*d)
+		  {
+		    if (x < *x1)
+		      *x1 = x;
+		    if (x > *x2)
+		      *x2 = x;
+		    found = TRUE;
+		  }
+	      if (found)
+		{
+		  if (y < *y1)
+		    *y1 = y;
+		  if (y > *y2)
+		    *y2 = y;
+		}
+	    }
+	}
+	break;
+      case PRECISION_FLOAT:
+        g_warning ("channel_bounds: bad precision");
+	break;
+      default:
+        g_warning ("channel_bounds: bad precision");
+	break;
+      } 
     }
 
   *x2 = BOUNDS (*x2 + 1, 0, drawable_width (GIMP_DRAWABLE(mask)));
@@ -737,13 +774,40 @@ channel_is_empty (Channel *mask)
     {
       /*  check if any pixel in the mask is non-zero  */
       data = pixelarea_data (&maskPR);
-      for (y = 0; y < pixelarea_height (&maskPR); y++)
-	for (x = 0; x < pixelarea_width (&maskPR); x++)
-	  if (*data++)
-	    {
-	      pixelarea_process_stop (pr);
-	      return FALSE;
-	    }
+      
+      switch (tag_precision ( pixelarea_tag (&maskPR)))
+      {
+      case PRECISION_U8:
+	{
+	  guint8* d = (guint8*) data;
+	  for (y = 0; y < pixelarea_height (&maskPR); y++)
+	    for (x = 0; x < pixelarea_width (&maskPR); x++)
+	      if (*d++)
+	        {
+		  pixelarea_process_stop (pr);
+		  return FALSE;
+	        }
+	}
+	break;
+      case PRECISION_U16:
+	{
+	  guint16* d = (guint16*) data;
+	  for (y = 0; y < pixelarea_height (&maskPR); y++)
+	    for (x = 0; x < pixelarea_width (&maskPR); x++)
+	      if (*d++)
+	        {
+		  pixelarea_process_stop (pr);
+		  return FALSE;
+	        }
+	}
+	break;
+      case PRECISION_FLOAT:
+	g_warning ("channel_is_empty: bad precision");
+	break;
+      default:
+	g_warning ("channel_is_empty: bad precision");
+	break;
+      } 
     }
 
   /*  The mask is empty, meaning we can set the bounds as known  */
@@ -839,8 +903,8 @@ channel_add_segment (Channel *mask, int x, int y, int width, gfloat value)
       break;
 
     case PRECISION_FLOAT:
-    case PRECISION_NONE:
-      g_warning ("bad precision");
+    default:
+      g_warning ("channel_add_segment: bad precision");
       break;
     }
 }
@@ -918,7 +982,7 @@ channel_sub_segment (Channel *mask, int x, int y, int width, gfloat value)
 
     case PRECISION_FLOAT:
     case PRECISION_NONE:
-      g_warning ("bad precision");
+      g_warning ("channel_sub_segment: bad precision");
       break;
     }
 }
@@ -992,7 +1056,7 @@ channel_inter_segment (Channel *mask, int x, int y, int width, gfloat value)
 
     case PRECISION_FLOAT:
     case PRECISION_NONE:
-      g_warning ("bad precision");
+      g_warning ("channel_inter_segment: bad precision");
       break;
     }
 }
@@ -1126,7 +1190,7 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 		  if (dist < -0.5)
 		    val = 255;
 		  else if (dist < 0.5)
-		    val = (int) (255 * (1 - (dist + 0.5)));
+		    val = (int)(255*(1 - (dist + 0.5)));
 		  else
 		    val = 0;
 
@@ -1376,12 +1440,11 @@ channel_invert (Channel *mask)
                   TRUE);
 
   invert_area (&maskPR, NULL);
-  
+ 
   mask->bounds_known = FALSE;
 }
 
 
-#define FIXME /* precision wrappers */
 void
 channel_sharpen (Channel *mask)
 {
@@ -1405,12 +1468,38 @@ channel_sharpen (Channel *mask)
       /*  if a pixel in the mask has a non-zero value, make it 255  */
       data = pixelarea_data (&maskPR);
       size = pixelarea_width (&maskPR) * pixelarea_height (&maskPR);
-      while (size--)
+      switch (tag_precision (pixelarea_tag (&maskPR)))
 	{
-	  if (*data > 127)
-	    *data++ = 255;
-	  else
-	    *data++ = 0;
+	case PRECISION_U8:
+	  {
+	    guint8 *d = (guint8*)data;
+	    while (size--)
+	      {
+		if (*d > 127)
+		  *d++ = 255;
+		else
+		  *d++ = 0;
+	      }
+	  }
+	  break;
+	  
+	case PRECISION_U16:
+	  {
+	    guint16 *d = (guint16*)data;
+	    while (size--)
+	      {
+		if (*d > 32767 )
+		  *d++ = 65535;
+		else
+		  *d++ = 0;
+	      }
+	  }
+	  break;
+
+	case PRECISION_FLOAT:
+	case PRECISION_NONE:
+	  g_warning ("bad precision");
+	  break;
 	}
     }
 

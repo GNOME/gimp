@@ -25,6 +25,7 @@
 
 /* half intensity for mask */
 #define HALF_WAY 127
+#define HALF_WAY_16BIT 32767 
 
 /* BoundSeg array growth parameter */
 #define MAX_SEGS_INC  2048
@@ -49,8 +50,14 @@ static int        max_empty_segs = 0;
 /* global state variables--improve parameter efficiency */
 static PixelArea * cur_PR;
 
+typedef void (*FindEmptySegsLineFunc) (PixelArea *, gint, gint, gint *, gint *, gint, gint, gint);
+static FindEmptySegsLineFunc find_empty_segs_line_func (Tag);
+static void find_empty_segs_line_u8 (PixelArea *, gint, gint, gint *, gint *, gint, gint, gint);
+static void find_empty_segs_line_u16 (PixelArea *, gint, gint, gint *, gint *, gint, gint, gint);
+static void find_empty_segs_line_float (PixelArea *, gint, gint, gint *, gint *, gint, gint, gint);
 
 /*  local function prototypes  */
+static void print_boundary (BoundSeg * b, int num_segs);
 static void find_empty_segs (PixelArea *, int, int *, int, int *,
 			     BoundaryType, int, int, int, int);
 static void make_seg (int, int, int, int, int);
@@ -60,8 +67,37 @@ static void process_horiz_seg (int, int, int, int, int);
 static void make_horiz_segs (int, int, int, int *, int, int);
 static void generate_boundary (BoundaryType, int, int, int, int);
 
+void print_boundary (BoundSeg * b, int num_segs)
+{
+	int i;
+	printf (" num_segs is %d\n", num_segs);
+	for (i= 0; i < num_segs; i++)
+	{
+		printf (" %d %d   %d %d \n", b[i].x1, b[i].y1, b[i].x2, b[i].y2);
+	}
+} 
+
+
+
+
+static
+FindEmptySegsLineFunc 
+find_empty_segs_line_func (Tag t)
+{
+  switch (tag_precision (t))
+  {
+  case PRECISION_U8:
+    return find_empty_segs_line_u8; 
+  case PRECISION_U16:
+    return find_empty_segs_line_u16; 
+  case PRECISION_FLOAT:
+    return find_empty_segs_line_float; 
+  default:
+    return NULL;
+  } 
+}
+
 /*  Function definitions  */
-#define FIXME /* precision wrappers */
 static void
 find_empty_segs (PixelArea  *maskPR,
 		 int           scanline,
@@ -74,18 +110,12 @@ find_empty_segs (PixelArea  *maskPR,
 		 int           x2,
 		 int           y2)
 {
-  guchar *data;
-  guint8 *d;
-  int x;
   int start, end;
-  int val, last;
-  gint width;
-  gint chan;
   gint mask_x, mask_y, mask_w, mask_h;
   PixelArea area;
   Tag tag = pixelarea_tag (maskPR);
-  gint num_channels = tag_num_channels (tag);
   void *pag;
+  FindEmptySegsLineFunc find_empty_segs_line = find_empty_segs_line_func (tag);
  
   /* These are the values before being portion-ized? */
   mask_x = pixelarea_x (maskPR);
@@ -127,7 +157,30 @@ find_empty_segs (PixelArea  *maskPR,
 
   /*get pixelarea for scanline from start to end */
   pixelarea_init (&area, maskPR->canvas, start, scanline, end-start, 1, FALSE);  
+  (*find_empty_segs_line) (&area, start, end, num_empty, empty_segs, type, x1, x2);
+}
 
+void find_empty_segs_line_u8( 
+			 PixelArea *area,
+			  int start,
+			  int end,
+			  int *num_empty,
+			  int *empty_segs,
+			  int type,
+			  int x1,
+			  int x2
+			)
+{
+  guchar *data;
+  guint8 *d;
+  int x;
+  int val, last;
+  gint width;
+  gint chan;
+  Tag tag = pixelarea_tag (area);
+  gint num_channels = tag_num_channels (tag);
+  void *pag;
+  
   empty_segs[(*num_empty)++] = 0;
   last = -1;
   x = start; 
@@ -136,14 +189,14 @@ find_empty_segs (PixelArea  *maskPR,
     else its just the gray channel*/
    
   chan = num_channels - 1;
-  
-  for (pag = pixelarea_register (1, &area);
+	
+  for (pag = pixelarea_register (1, area);
        pag != NULL;
        pag = pixelarea_process (pag))
     {
-      data = pixelarea_data (&area);
+      data = pixelarea_data (area);
       d = (guint8*)data;
-      width = pixelarea_width (&area);
+      width = pixelarea_width (area);
       while( width --)
       {
 	empty_segs[*num_empty] = x;
@@ -162,11 +215,134 @@ find_empty_segs (PixelArea  *maskPR,
         x++;
       } 	  
     }
-  
+
   if (last > 0)
     empty_segs[(*num_empty)++] = x;
 
   empty_segs[(*num_empty)++] = G_MAXINT;
+}
+
+void find_empty_segs_line_u16( 
+			 PixelArea *area,
+			  int start,
+			  int end,
+			  int *num_empty,
+			  int *empty_segs,
+			  int type,
+			  int x1,
+			  int x2
+			)
+{
+  guchar *data;
+  guint16 *d;
+  int x;
+  int val, last;
+  gint width;
+  gint chan;
+  Tag tag = pixelarea_tag (area);
+  gint num_channels = tag_num_channels (tag);
+  void *pag;
+  empty_segs[(*num_empty)++] = 0;
+  last = -1;
+  x = start; 
+
+  /*If format has an alpha, chan is set to that, 
+    else its just the gray channel*/
+   
+  chan = num_channels - 1;
+	
+  for (pag = pixelarea_register (1, area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      data = pixelarea_data (area);
+      d = (guint16*)data;
+      width = pixelarea_width (area);
+      while( width --)
+      {
+	empty_segs[*num_empty] = x;
+	val = (d[chan] > HALF_WAY_16BIT)? 1: -1;  	
+
+	/*  The IgnoreBounds case  */
+	if (val == 1 && type == IgnoreBounds)
+	  if (x >= x1 && x < x2)
+	    val = -1;
+
+	if (last * val < 0)
+	  (*num_empty)++;
+	last = val;
+
+	d += num_channels;
+        x++;
+      } 	  
+    }
+
+  if (last > 0)
+    empty_segs[(*num_empty)++] = x;
+
+  empty_segs[(*num_empty)++] = G_MAXINT;
+}
+
+void find_empty_segs_line_float( 
+			 PixelArea *area,
+			  int start,
+			  int end,
+			  int *num_empty,
+			  int *empty_segs,
+			  int type,
+			  int x1,
+			  int x2
+			)
+{
+  guchar *data;
+  gfloat *d;
+  int x;
+  int val, last;
+  gint width;
+  gint chan;
+  Tag tag = pixelarea_tag (area);
+  gint num_channels = tag_num_channels (tag);
+  void *pag;
+  empty_segs[(*num_empty)++] = 0;
+  last = -1;
+  x = start; 
+
+  /*If format has an alpha, chan is set to that, 
+    else its just the gray channel*/
+   
+  chan = num_channels - 1;
+	
+  for (pag = pixelarea_register (1, area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      data = pixelarea_data (area);
+      d = (gfloat*)data;
+      width = pixelarea_width (area);
+      while( width --)
+      {
+	empty_segs[*num_empty] = x;
+	val = (d[chan] > .5)? 1: -1;  	
+
+	/*  The IgnoreBounds case  */
+	if (val == 1 && type == IgnoreBounds)
+	  if (x >= x1 && x < x2)
+	    val = -1;
+
+	if (last * val < 0)
+	  (*num_empty)++;
+	last = val;
+
+	d += num_channels;
+        x++;
+      } 	  
+    }
+
+  if (last > 0)
+    empty_segs[(*num_empty)++] = x;
+
+  empty_segs[(*num_empty)++] = G_MAXINT;
+
 }
 
 static void
@@ -354,7 +530,6 @@ generate_boundary (BoundaryType type,
     }
 }
 
-#define FIXME /* precision wrappers */
 BoundSeg *
 find_mask_boundary (PixelArea  *maskPR,
 		    int          *num_elems,
@@ -385,6 +560,7 @@ find_mask_boundary (PixelArea  *maskPR,
       memcpy (new_segs, tmp_segs, (sizeof (BoundSeg) * num_segs));
     }
 
+	/*print_boundary (new_segs, num_segs);*/
   /*  Return the new boundary  */
   return new_segs;
 }
