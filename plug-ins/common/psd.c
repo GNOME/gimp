@@ -402,7 +402,8 @@ query ()
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
-  gimp_register_load_handler ("file_psd_load", "psd", "");
+  gimp_register_magic_load_handler ("file_psd_load", "psd", "",
+				    "0,string,8BPS");
 }
 
 

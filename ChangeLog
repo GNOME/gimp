@@ -1,3 +1,40 @@
+Fri Mar 10 18:10:56 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/pdbbrowse.py
+	* plug-ins/pygimp/plug-ins/sphere.py: applied patch from Simon Budig
+	makes the scripts use env instead of hardcoded path to python
+
+	* plug-ins/common/ps.c: applied gimp-kirchgessner-000217-0
+	fixes problem with toggle PostScript Level 2
+	fixes problem with reading EPS-files that have no showpage command
+	adds runlength encoding to PostScript Level 2 files
+
+	* plug-ins/common/jpeg.c: applied gimp-cosmin-20000212
+	guards parasite code with #ifdef GIMP_HAVE_PARASITES
+	do not save comment if comment string is empty
+
+	* app/fileops.c
+	* plug-ins/common/CEL.c
+	* plug-ins/common/bz2.c
+	* plug-ins/common/gicon.c
+	* plug-ins/common/mpeg.c
+	* plug-ins/common/psd.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/tga.c
+	* plug-ins/common/xpm.c
+	* plug-ins/common/xwd.c: applied gimp-mattias-000227-0
+	Changes the file format auto-detection algorithm to do the following:
+	1. See if the file name matches extensions of formats that do NOT have
+	   any magic registered
+	2. Check all file formats with registered magic
+	3. Check all extensions
+	Adds, removes or fixes existing magic in tga, cel, bz2, gicon, mpeg, 
+	psd, psp, xpm, xwd
+
+	Please test this heavily (especially the file magic). If this patch
+	turns out to be bogus, we'll revert it. If the changes are correct,
+	it's an important fix.
+
 Fri Mar 10 12:29:57 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/sel2path/*.c: do not include malloc.h but use the

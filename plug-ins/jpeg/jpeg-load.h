@@ -1043,7 +1043,8 @@ load_image (gchar        *filename,
 
   /* pw - Last of all, attach the parasites (couldn't do it earlier -
      there was no image. */
-  
+
+#ifdef GIMP_HAVE_PARASITES
   if (!preview) 
     {
       if (comment_parasite)
@@ -1057,6 +1058,7 @@ load_image (gchar        *filename,
 	  parasite_free (vals_parasite);
 	}   
     }
+#endif /* GIMP_HAVE_PARASITES */
 
   return image_ID;
 }
@@ -1382,7 +1384,7 @@ save_image (char   *filename,
   jpeg_start_compress (&cinfo, TRUE);
 
   /* Step 4.1: Write the comment out - pw */
-  if (image_comment) 
+  if (image_comment && *image_comment)
     {
       jpeg_write_marker (&cinfo,
 			 JPEG_COM,

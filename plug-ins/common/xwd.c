@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * XWD reading and writing code Copyright (C) 1996 Peter Kirchgessner
- * (email: pkirchg@aol.com, WWW: http://members.aol.com/pkirchg)
+ * (email: peter@kirchgessner.net, WWW: http://www.kirchgessner.net)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@
  *          2       |    1,...,24  |      32
  */
 /* Event history:
+ * PK = Peter Kirchgessner, ME = Mattias Engdegård
  * V 1.00, PK, xx-Aug-96: First try
  * V 1.01, PK, 03-Sep-96: Check for bitmap_bit_order
  * V 1.90, PK, 17-Mar-97: Upgrade to work with GIMP V0.99
@@ -43,8 +44,10 @@
  * V 1.91, PK, 05-Apr-97: Return all arguments, even in case of an error
  * V 1.92, PK, 12-Oct-97: No progress bars for non-interactive mode
  * V 1.93, PK, 11-Apr-98: Fix problem with overwriting memory
+ * V 1.94, ME, 27-Feb-00: Remove superfluous little-endian support (format is
+                          specified as big-endian). Trim magic header
  */
-static char ident[] = "@(#) GIMP XWD file-plugin v1.93  11-Apr-98";
+static char ident[] = "@(#) GIMP XWD file-plugin v1.94  27-Feb-2000";
 
 #include "config.h"
 
@@ -183,8 +186,6 @@ static gint save_index       (FILE *, gint32, gint32, int);
 static gint save_rgb         (FILE *, gint32, gint32);
 
 
-static int read_msb_first = 1;
-
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -260,7 +261,7 @@ those with alpha channels.",
   gimp_register_magic_load_handler ("file_xwd_load",
 				    "xwd",
 				    "",
-                                    "4,long,0x00000007,4,long,0x07000000");
+                                    "4,long,0x00000007");
   gimp_register_save_handler       ("file_xwd_save",
 				    "xwd",
 				    "");
@@ -399,22 +400,12 @@ load_image (gchar *filename)
       return (-1);
     }
 
-  read_msb_first = 1;   /* Start reading with most significant byte first */
-
   read_xwd_header (ifp, &xwdhdr);
   if (xwdhdr.l_file_version != 7)
     {
-      read_msb_first = 0; /* Try reading with least significant byte first */
-
-      fseek (ifp, 0, SEEK_SET);
-
-      read_xwd_header (ifp, &xwdhdr);
-      if (xwdhdr.l_file_version != 7)
-	{
-	  g_message(_("can't open file as XWD file"));
-	  fclose (ifp);
-	  return (-1);
-	}
+      g_message(_("can't open file as XWD file"));
+      fclose (ifp);
+      return (-1);
     }
 
   /* Position to start of XWDColor structures */
@@ -585,20 +576,10 @@ read_card32 (FILE *ifp,
 {
   L_CARD32 c;
 
-  if (read_msb_first)
-    {
-      c = (((L_CARD32)(getc (ifp))) << 24);
-      c |= (((L_CARD32)(getc (ifp))) << 16);
-     c |= (((L_CARD32)(getc (ifp))) << 8);
-     c |= ((L_CARD32)(*err = getc (ifp)));
-    }
-  else
-    {
-      c = ((L_CARD32)(getc (ifp)));
-      c |= (((L_CARD32)(getc (ifp))) << 8);
-      c |= (((L_CARD32)(getc (ifp))) << 16);
-      c |= (((L_CARD32)(*err = getc (ifp))) << 24);
-    }
+  c = (((L_CARD32)(getc (ifp))) << 24);
+  c |= (((L_CARD32)(getc (ifp))) << 16);
+  c |= (((L_CARD32)(getc (ifp))) << 8);
+  c |= ((L_CARD32)(*err = getc (ifp)));
   
   *err = (*err < 0);
   return (c);
@@ -612,16 +593,8 @@ read_card16 (FILE *ifp,
 {
   L_CARD16 c;
   
-  if (read_msb_first)
-    {
-      c = (((L_CARD16)(getc (ifp))) << 8);
-      c |= ((L_CARD16)(*err = getc (ifp)));
-    }
-  else
-    {
-      c = ((L_CARD16)(getc (ifp)));
-      c |= (((L_CARD16)(*err = getc (ifp))) << 8);
-    }
+  c = (((L_CARD16)(getc (ifp))) << 8);
+  c |= ((L_CARD16)(*err = getc (ifp)));
   
   *err = (*err < 0);
   return (c);

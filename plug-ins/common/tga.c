@@ -252,10 +252,10 @@ query (void)
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_tga_load",
-				    "tga",
-				    "",
-				    "0&,byte,10,2&,byte,1,3&,byte,>0,3,byte,<9");
+  gimp_register_load_handler ("file_tga_load",
+			      "tga",
+			      "");
+		
   gimp_register_save_handler       ("file_tga_save",
 				    "tga",
 				    "");

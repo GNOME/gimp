@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 #   Gimp-Python - allows the writing of Gimp plugins in Python.
 #   Copyright (C) 1997  James Henstridge <james@daa.com.au>

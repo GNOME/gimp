@@ -1754,16 +1754,63 @@ file_overwrite_no_callback (GtkWidget *widget,
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
 }
 
+static PlugInProcDef *
+file_proc_find_by_name(GSList *procs,
+		       gchar *filename,
+		       gboolean skip_magic)
+{
+  GSList *p;
+  gchar *ext = strrchr(filename, '.');
+  if (ext)
+    ext++;
+
+  for (p = procs; p; p = p->next)
+    {
+      PlugInProcDef *proc = p->data;
+      GSList *prefixes;
+
+      if (skip_magic && proc->magics_list)
+	continue;
+      for (prefixes = proc->prefixes_list; prefixes; prefixes = prefixes->next)
+	{
+	  if (strncmp(filename, prefixes->data, strlen(prefixes->data)) == 0)
+	    return proc;
+	}
+     }
+
+  for (p = procs; p; p = p->next)
+    {
+      PlugInProcDef *proc = p->data;
+      GSList *extensions;
+
+      for (extensions = proc->extensions_list; ext && extensions; extensions = extensions->next)
+	{
+	  gchar *p1 = ext;
+	  gchar *p2 = (gchar *)extensions->data;
+
+          if (skip_magic && proc->magics_list)
+	    continue;
+	  while (*p1 && *p2)
+	    {
+	      if (tolower (*p1) != tolower (*p2))
+		break;
+	      p1++;
+	      p2++;
+	    }
+	  if (!(*p1) && !(*p2))
+	    return proc;
+	}
+    }
+
+  return NULL;
+}
+
 PlugInProcDef *
 file_proc_find (GSList *procs,
 		gchar  *filename)
 {
   PlugInProcDef *file_proc, *size_matched_proc;
   GSList *all_procs = procs;
-  GSList *extensions;
-  GSList *prefixes;
-  gchar *extension;
-  gchar *p1, *p2;
   FILE *ifp = NULL;
   gint head_size = -2, size_match_count = 0;
   gint match_val;
@@ -1771,11 +1818,11 @@ file_proc_find (GSList *procs,
 
   size_matched_proc = NULL;
 
-  extension = strrchr (filename, '.');
-  if (extension)
-    extension += 1;
+  /* First, check magicless prefixes/suffixes */
+  if ( (file_proc = file_proc_find_by_name(all_procs, filename, TRUE)) != NULL)
+    return file_proc;
 
-  /* At first look for magics */
+  /* Then look for magics */
   while (procs)
     {
       file_proc = procs->data;
@@ -1810,46 +1857,8 @@ file_proc_find (GSList *procs,
   if (size_match_count == 1)
     return (size_matched_proc);
 
-  procs = all_procs;
-  while (procs)
-    {
-      file_proc = procs->data;
-      procs = procs->next;
-
-      for (prefixes = file_proc->prefixes_list; prefixes; prefixes = prefixes->next)
-	{
-	  p1 = filename;
-	  p2 = (gchar *) prefixes->data;
-
-	  if (strncmp (filename, prefixes->data, strlen (prefixes->data)) == 0)
-	    return file_proc;
-	}
-     }
-
-  procs = all_procs;
-  while (procs)
-    {
-      file_proc = procs->data;
-      procs = procs->next;
-
-      for (extensions = file_proc->extensions_list; extension && extensions; extensions = extensions->next)
-	{
-	  p1 = extension;
-	  p2 = (gchar *) extensions->data;
-
-	  while (*p1 && *p2)
-	    {
-	      if (tolower (*p1) != tolower (*p2))
-		break;
-	      p1 += 1;
-	      p2 += 1;
-	    }
-	  if (!(*p1) && !(*p2))
-	    return file_proc;
-	}
-    }
-
-  return NULL;
+  /* As a last ditch, try matching by name */
+  return file_proc_find_by_name(all_procs, filename, FALSE);
 }
 
 static void

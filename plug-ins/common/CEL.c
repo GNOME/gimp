@@ -132,7 +132,7 @@ query (void)
   gimp_register_magic_load_handler ("file_cel_load",
 				    "cel",
 				    "",
-				    "0,string,KiSS\040");
+				    "0,string,KiSS\\040");
   gimp_register_save_handler       ("file_cel_save",
 				    "cel",
 				    "");

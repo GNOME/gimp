@@ -132,9 +132,10 @@ query (void)
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_load_handler ("file_bz2_load",
-			      "xcf.bz2,bz2,xcfbz2",
-			      "");
+  gimp_register_magic_load_handler ("file_bz2_load",
+				    "xcf.bz2,bz2,xcfbz2",
+				    "",
+				    "0,string,BZh");
   gimp_register_save_handler ("file_bz2_save",
 			      "xcf.bz2,bz2,xcfbz2",
 			      "");

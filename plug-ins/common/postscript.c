@@ -45,10 +45,13 @@
  *                        Ghostview may hang when displaying the files.
  * V 1.07, PK, 14-Sep-99: Add resolution to image
  * V 1.08, PK, 16-Jan-2000: Add PostScript-Level 2 by Austin Donnelly
+ * V 1.09, PK, 15-Feb-2000: Force showpage on EPS-files
+ *                          Add "RunLength" compression
+ *                          Fix problem with "Level 2" toggle
  */
-#define VERSIO 1.08
-static char dversio[] = "v1.08  16-Jan-2000";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.08  16-Jan-2000";
+#define VERSIO 1.09
+static char dversio[] = "v1.09  15-Feb-2000";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.09  15-Feb-2000";
 
 #include "config.h"
 
@@ -196,8 +199,9 @@ static FILE  *ps_open       (gchar            *filename,
 			     const PSLoadVals *loadopt,
 			     gint             *llx,
 			     gint             *lly,
-			     int              *urx,
-			     gint             *ury);
+			     gint             *urx,
+			     gint             *ury,
+			     gint             *is_epsf);
 
 static void   ps_close      (FILE *ifp);
 
@@ -249,7 +253,6 @@ static void   save_ok_callback         (GtkWidget *widget,
 static void   save_unit_toggle_update  (GtkWidget *widget,
                                         gpointer   data);
 
-
 GPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -261,6 +264,11 @@ GPlugInInfo PLUG_IN_INFO =
 
 /* The run mode */
 static GRunModeType l_run_mode;
+
+static void compress_packbits (int nin,
+                               unsigned char *src,
+                               int *nout,
+                               unsigned char *dst);
 
 
 static guint32 ascii85_buf;
@@ -322,6 +330,16 @@ ascii85_out (unsigned char byte, FILE *ofp)
 }
 
 static void
+ascii85_nout (int n, unsigned char *uptr, FILE *ofp)
+{
+ while (n-- > 0)
+ {
+   ascii85_out (*uptr, ofp);
+   uptr++;
+ }
+}
+
+static void
 ascii85_done (FILE *ofp)
 {
   if (ascii85_len)
@@ -336,6 +354,88 @@ ascii85_done (FILE *ofp)
   putc ('\n', ofp);
 }
 
+
+static void
+compress_packbits (int nin,
+                   unsigned char *src,
+                   int *nout,
+                   unsigned char *dst)
+
+{register unsigned char c;
+ int nrepeat, nliteral;
+ unsigned char *run_start;
+ unsigned char *start_dst = dst;
+ unsigned char *last_literal = NULL;
+
+ for (;;)
+ {
+   if (nin <= 0) break;
+
+   run_start = src;
+   c = *run_start;
+
+   /* Search repeat bytes */
+   if ((nin > 1) && (c == src[1]))
+   {
+     nrepeat = 1;
+     nin -= 2;
+     src += 2;
+     while ((nin > 0) && (c == *src))
+     {
+       nrepeat++;
+       src++;
+       nin--;
+       if (nrepeat == 127) break; /* Maximum repeat */
+     }
+
+     /* Add two-byte repeat to last literal run ? */
+     if (   (nrepeat == 1)
+         && (last_literal != NULL) && (((*last_literal)+1)+2 <= 128))
+     {
+       *last_literal += 2;
+       *(dst++) = c;
+       *(dst++) = c;
+       continue;
+     }
+
+     /* Add repeat run */
+     *(dst++) = (unsigned char)((-nrepeat) & 0xff);
+     *(dst++) = c;
+     last_literal = NULL;
+     continue;
+   }
+   /* Search literal bytes */
+   nliteral = 1;
+   nin--;
+   src++;
+
+   for (;;)
+   {
+     if (nin <= 0) break;
+
+     if ((nin >= 2) && (src[0] == src[1])) /* A two byte repeat ? */
+       break;
+
+     nliteral++;
+     nin--;
+     src++;
+     if (nliteral == 128) break; /* Maximum literal run */
+   }
+
+   /* Could be added to last literal run ? */
+   if ((last_literal != NULL) && (((*last_literal)+1)+nliteral <= 128))
+   {
+     *last_literal += nliteral;
+   }
+   else
+   {
+     last_literal = dst;
+     *(dst++) = (unsigned char)(nliteral-1);
+   }
+   while (nliteral-- > 0) *(dst++) = *(run_start++);
+ }
+ *nout = dst - start_dst;
+}
 
 
 MAIN ()
@@ -421,7 +521,7 @@ query (void)
   gimp_install_procedure ("file_ps_save",
                           "save file in PostScript file format",
                           "PostScript saving handles all image types except those with alpha channels.",
-                          "Peter Kirchgessner <pkirchg@aol.com>",
+                          "Peter Kirchgessner <peter@kirchgessner.net>",
                           "Peter Kirchgessner",
                           dversio,
                           "<Save>/PostScript",
@@ -562,13 +662,13 @@ run (gchar   *name,
       image_ID = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /* eventually export the image */ 
+      /* eventually export the image */
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
 	  init_gtk ();
-	  export = gimp_export_image (&image_ID, &drawable_ID, "PS", 
+	  export = gimp_export_image (&image_ID, &drawable_ID, "PS",
 				      (CAN_HANDLE_RGB |
 				       CAN_HANDLE_GRAY |
 				       CAN_HANDLE_INDEXED));
@@ -697,6 +797,7 @@ load_image (gchar *filename)
   char *temp;
   int  llx, lly, urx, ury;
   int  k, n_images, max_images, max_pagenum;
+  int  is_epsf;
 
 #ifdef PS_DEBUG
   g_print ("load_image:\n resolution = %d\n", plvals.resolution);
@@ -723,7 +824,7 @@ load_image (gchar *filename)
       g_free (temp);
     }
 
-  ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury);
+  ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury, &is_epsf);
   if (!ifp)
     {
       g_message (_("PS: can't interprete file"));
@@ -735,6 +836,7 @@ load_image (gchar *filename)
   max_images = 10;
 
   max_pagenum = 9999;  /* Try to get the maximum pagenumber to read */
+  if (is_epsf) max_pagenum = 1;
   if (!page_in_list (plvals.pages, max_pagenum)) /* Is there a limit in list ? */
     {
       max_pagenum = -1;
@@ -757,7 +859,7 @@ load_image (gchar *filename)
 	  image_ID = load_ps (filename, page_count, ifp, llx, lly, urx, ury);
 	  if (image_ID == -1) break;
 #ifdef GIMP_HAVE_RESOLUTION_INFO
-	  gimp_image_set_resolution (image_ID, 
+	  gimp_image_set_resolution (image_ID,
 				     (double) plvals.resolution,
 				     (double) plvals.resolution);
 #endif
@@ -1059,7 +1161,8 @@ ps_open (gchar            *filename,
          gint             *llx,
          gint             *lly,
          gint             *urx,
-         gint             *ury)
+         gint             *ury,
+         gint             *is_epsf)
 {
   char *cmd, *gs, *gs_opts, *driver;
   FILE *fd_popen;
@@ -1077,6 +1180,8 @@ ps_open (gchar            *filename,
 
   /* Check if the file is a PDF. For PDF, we cant set geometry */
   is_pdf = 0;
+  /* Check if it is a EPS-file */
+  *is_epsf = 0;
 #ifndef __EMX__
   fd_popen = fopen (filename, "r");
 #else
@@ -1084,10 +1189,22 @@ ps_open (gchar            *filename,
 #endif
   if (fd_popen != NULL)
     {
-      char hdr[4];
+      char hdr[512];
 
-      fread (hdr, 1, 4, fd_popen);
+      fread (hdr, 1, sizeof(hdr), fd_popen);
       is_pdf = (strncmp (hdr, "%PDF", 4) == 0);
+
+      if (!is_pdf)  /* Check for EPSF */
+      {char *adobe, *epsf;
+       int ds = 0;
+
+        hdr[sizeof(hdr)-1] = '\0';
+        adobe = strstr (hdr, "PS-Adobe-");
+        epsf = strstr (hdr, "EPSF-");
+        if ((adobe != NULL) && (epsf != NULL))
+          ds = epsf - adobe;
+        *is_epsf = ((ds >= 11) && (ds <= 15));
+      }
       fclose (fd_popen);
     }
 
@@ -1153,10 +1270,11 @@ ps_open (gchar            *filename,
     sprintf (geometry,"-g%dx%d ", width, height);
 
   cmd = g_strdup_printf ("%s -sDEVICE=%s -r%d %s%s%s-q -dNOPAUSE %s \
--sOutputFile=%s %s -c quit",
+-sOutputFile=%s %s %s-c quit",
 			 gs, driver, resolution, geometry,
 			 TextAlphaBits, GraphicsAlphaBits,
-			 gs_opts, pnmfile, filename);
+			 gs_opts, pnmfile, filename,
+                         *is_epsf ? "-c showpage " : "");
 #ifdef PS_DEBUG
   g_print ("Going to start ghostscript with:\n%s\n", cmd);
 #endif
@@ -1579,7 +1697,7 @@ save_ps_setup (FILE   *ofp,
 
   fprintf (ofp, "%%%%BeginProlog\n");
   fprintf (ofp, "%% Use own dictionary to avoid conflicts\n");
-  fprintf (ofp, "5 dict begin\n");
+  fprintf (ofp, "10 dict begin\n");
   fprintf (ofp, "%%%%EndProlog\n");
   fprintf (ofp, "%%%%Page: 1 1\n");
   fprintf (ofp, "%% Translate for offset\n");
@@ -1843,6 +1961,7 @@ save_gray  (FILE   *ofp,
   int height, width, i, j;
   int tile_height;
   unsigned char *data, *src;
+  unsigned char *packb = NULL;
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
   GDrawableType drawable_type;
@@ -1869,8 +1988,10 @@ save_gray  (FILE   *ofp,
   }
   else
   {
-    fprintf (ofp, "currentfile /ASCII85Decode filter\n");
+    fprintf (ofp,"currentfile /ASCII85Decode filter /RunLengthDecode filter\n");
     ascii85_init ();
+    /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
+    packb = (guchar *)g_malloc ((width * 105)/100+2);
   }
   fprintf (ofp, "image\n");
 
@@ -1894,16 +2015,23 @@ save_gray  (FILE   *ofp,
 	  putc ('\n', ofp);
 	}
       else
-	{
-	  for (j = 0; j < width; j++)
-	    ascii85_out (*(src++), ofp);
+	{int nout;
+
+          compress_packbits (width, src, &nout, packb);
+          ascii85_nout (nout, packb, ofp);
+          src += width;
 	}
       if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
 	gimp_progress_update ((double) i / (double) height);
     }
-  if (level2) ascii85_done (ofp);
+  if (level2)
+  {
+    ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
+    ascii85_done (ofp);
+  }
   fprintf (ofp, "showpage\n");
   g_free (data);
+  if (packb) g_free (packb);
 
   gimp_drawable_detach (drawable);
 
@@ -1927,6 +2055,7 @@ save_bw (FILE   *ofp,
   int tile_height;
   guchar *cmap, *ct;
   guchar *data, *src;
+  guchar *packb = NULL;
   guchar *scanline, *dst, mask;
   guchar *hex_scanline;
   GPixelRgn pixel_rgn;
@@ -1960,8 +2089,10 @@ save_bw (FILE   *ofp,
   }
   else
   {
-    fprintf (ofp, "currentfile /ASCII85Decode filter\n");
+    fprintf (ofp,"currentfile /ASCII85Decode filter /RunLengthDecode filter\n");
     ascii85_init ();
+    /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
+    packb = (guchar *)g_malloc (((nbsl+1) * 105)/100+2);
   }
   fprintf (ofp, "image\n");
 
@@ -2006,20 +2137,25 @@ save_bw (FILE   *ofp,
 	    }
 	}
       else
-	{
-	  dst = scanline;
-	  for (j = 0; j < nbsl; j++)
-	    ascii85_out (*(dst++), ofp);
+	{int nout;
+
+          compress_packbits (nbsl, scanline, &nout, packb);
+          ascii85_nout (nout, packb, ofp);
 	}
       if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
 	gimp_progress_update ((double) i / (double) height);
     }
-  if (level2) ascii85_done (ofp);
+  if (level2)
+  {
+    ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
+    ascii85_done (ofp);
+  }
   fprintf (ofp, "showpage\n");
 
   g_free (hex_scanline);
   g_free (scanline);
   g_free (data);
+  if (packb != NULL) g_free (packb);
 
   gimp_drawable_detach (drawable);
 
@@ -2041,8 +2177,9 @@ save_index (FILE   *ofp,
   int height, width, i, j;
   int ncols, bw;
   int tile_height;
-  unsigned char *cmap, *cmap_start;
-  unsigned char *data, *src;
+  guchar *cmap, *cmap_start;
+  guchar *data, *src;
+  guchar *packb = NULL, *plane = NULL;
   char coltab[256*6], *ct;
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
@@ -2096,8 +2233,24 @@ save_index (FILE   *ofp,
   }
   else
   {
-    fprintf (ofp, "currentfile /ASCII85Decode filter false 3\n");
-    ascii85_init ();
+    fprintf (ofp, "%% Strings to hold RGB-samples per scanline\n");
+    fprintf (ofp, "/rstr %d string def\n", width);
+    fprintf (ofp, "/gstr %d string def\n", width);
+    fprintf (ofp, "/bstr %d string def\n", width);
+    fprintf (ofp,
+            "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
+ rstr readstring pop}\n");
+    fprintf (ofp,
+            "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
+ gstr readstring pop}\n");
+    fprintf (ofp,
+            "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
+ bstr readstring pop}\n");
+    fprintf (ofp, "true 3\n");
+
+    /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
+    packb = (guchar *)g_malloc ((width * 105)/100+2);
+    plane = (guchar *)g_malloc (width);
   }
   fprintf (ofp, "colorimage\n");
 
@@ -2120,22 +2273,31 @@ save_index (FILE   *ofp,
 	  putc ('\n', ofp);
 	}
       else
-	{
-	  for (j = 0; j < width; j++)
-	    {
-	      cmap = cmap_start + 3 * (*(src++));
-	      ascii85_out (*(cmap++), ofp);
-	      ascii85_out (*(cmap++), ofp);
-	      ascii85_out (*(cmap++), ofp);
-	    }
-	}
+        {guchar *plane_ptr, *src_ptr;
+         int rgb, nout;
+
+          for (rgb = 0; rgb < 3; rgb++)
+          {
+            src_ptr = src;
+            plane_ptr = plane;
+            for (j = 0; j < width; j++)
+              *(plane_ptr++) = cmap_start[3 * *(src_ptr++) + rgb];
+            compress_packbits (width, plane, &nout, packb);
+            ascii85_init ();
+            ascii85_nout (nout, packb, ofp);
+            ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
+            ascii85_done (ofp);
+          }
+          src += width;
+        }
       if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
 	gimp_progress_update ((double) i / (double) height);
     }
-  if (level2) ascii85_done (ofp);
   fprintf (ofp, "showpage\n");
 
   g_free (data);
+  if (packb != NULL) g_free (packb);
+  if (plane != NULL) g_free (plane);
 
   gimp_drawable_detach (drawable);
 
@@ -2157,6 +2319,7 @@ save_rgb (FILE   *ofp,
   int height, width, tile_height;
   int i, j;
   guchar *data, *src;
+  guchar *packb = NULL, *plane = NULL;
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
   GDrawableType drawable_type;
@@ -2183,8 +2346,24 @@ save_rgb (FILE   *ofp,
   }
   else
   {
-    fprintf (ofp, "currentfile /ASCII85Decode filter false 3\n");
-    ascii85_init ();
+    fprintf (ofp, "%% Strings to hold RGB-samples per scanline\n");
+    fprintf (ofp, "/rstr %d string def\n", width);
+    fprintf (ofp, "/gstr %d string def\n", width);
+    fprintf (ofp, "/bstr %d string def\n", width);
+    fprintf (ofp,
+            "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
+ rstr readstring pop}\n");
+    fprintf (ofp,
+            "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
+ gstr readstring pop}\n");
+    fprintf (ofp,
+            "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
+ bstr readstring pop}\n");
+    fprintf (ofp, "true 3\n");
+
+    /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
+    packb = (guchar *)g_malloc ((width * 105)/100+2);
+    plane = (guchar *)g_malloc (width);
   }
   fprintf (ofp, "colorimage\n");
 
@@ -2212,20 +2391,33 @@ save_rgb (FILE   *ofp,
 	  putc ('\n', ofp);
 	}
       else
-	{
-	  for (j = 0; j < width; j++)
+	{guchar *plane_ptr, *src_ptr;
+         int rgb, nout;
+
+          for (rgb = 0; rgb < 3; rgb++)
+          {
+            src_ptr = src + rgb;
+            plane_ptr = plane;
+            for (j = 0; j < width; j++)
 	    {
-	      ascii85_out (*(src++), ofp);
-	      ascii85_out (*(src++), ofp);
-	      ascii85_out (*(src++), ofp);
-	    }
+              *(plane_ptr++) = *src_ptr;
+              src_ptr += 3;
+            }
+            compress_packbits (width, plane, &nout, packb);
+            ascii85_init ();
+	    ascii85_nout (nout, packb, ofp);
+            ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
+            ascii85_done (ofp);
+          }
+          src += 3*width;
 	}
       if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
 	gimp_progress_update ((double) i / (double) height);
     }
-  if (level2) ascii85_done (ofp);
   fprintf (ofp, "showpage\n");
   g_free (data);
+  if (packb != NULL) g_free (packb);
+  if (plane != NULL) g_free (plane);
 
   gimp_drawable_detach (drawable);
 
@@ -2238,7 +2430,7 @@ save_rgb (FILE   *ofp,
 #undef GET_RGB_TILE
 }
 
-static void 
+static void
 init_gtk (void)
 {
   gchar **argv;
@@ -2633,7 +2825,7 @@ save_dialog (void)
   gtk_main ();
   gdk_flush ();
 
-  psvals.level = (vals->level < 1);
+  psvals.level = (vals->level) ? 2 : 1;
 
   g_free (vals);
 

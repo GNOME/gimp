@@ -398,7 +398,7 @@ query (void)
   gimp_register_magic_load_handler ("file_psp_load",
 				    "psp,tub",
 				    "",
-				    "0,string,Paint Shop Pro Image File\n\032");
+				    "0,string,Paint\\040Shop\\040Pro\\040Image\\040File\n\032");
 /* Removed until Saving is implemented -- njl195@zepler.org
   gimp_register_save_handler       ("file_psp_save",
                                     "psp,tub",

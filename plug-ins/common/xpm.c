@@ -180,7 +180,7 @@ query (void)
   gimp_register_magic_load_handler ("file_xpm_load",
 				    "xpm",
 				    "<Load>/Xpm",
-				    "0, string, /* XPM */");
+				    "0, string,/*\\040XPM\\040*/");
   gimp_register_save_handler       ("file_xpm_save",
 				    "xpm",
 				    "<Save>/Xpm");
