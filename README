@@ -36,7 +36,7 @@ discussion.  There is more info at
 
 	https://lists.xcf.berkeley.edu/mailman/listinfo/<listname>
 
-substituting <listname> for "gimp-announce", "gimp-user", "gimp-win-user", 
+substituting <listname> for "gimp-announce", "gimp-user", "gimp-win-users" 
 or "gimp-developer" (without the quotes, of course) depending on the list 
 you want to subscribe to.  Links to the mailing list archives can be found 
 at the same addresses as given above.
@@ -48,18 +48,14 @@ oriented to GIMP core and plug-in developers.  Most people will only want
 to be subscribed to gimp-user. If you want to help develop The GIMP, the
 gimp-developer mailing list is a good starting point.
 
-There are two mailing lists dedicated to the Win32 port, "gimpwin-users" 
-and "gimpwin-dev". Especially the latter also carries traffic about the 
-GTk+ port to Win32 in general. To subscribe, send an empty message to
+There is also a mailing list dedicated to users of the Win32 port
+"gimpwin-users".  To subscribe, send an empty message to
 
 	gimpwin-users-subscribe@egroups.com
-or
-	gimpwin-dev-subscribe@egroups.com
 
-respectively. You can also use the web interface at
-http://www.egroups.com/group/gimpwin-users/ and
-http://www.egroups.com/group/gimpwin-dev/ . Note that as these mailing
-lists are hosted on egroups.com, the messages from the list contain
+You can also use the web interface at
+http://www.egroups.com/group/gimpwin-users/. Note that as this mailing
+list is hosted on egroups.com; the messages from the list contain
 relatively unintrusive and easily ignored advertisements at the
 end. But if you are absolutely allergic to ads, don't subscribe.
 
