@@ -36,6 +36,7 @@
 
 #include "gdisplay.h"
 #include "layer-select.h"
+#include "resolution-calibrate-dialog.h"
 #include "session.h"
 
 #include "colormaps.h"
@@ -44,7 +45,6 @@
 #include "gimphelp.h"
 #include "gimprc.h"
 #include "image_render.h"
-#include "resolution_calibrate.h"
 
 #include "libgimp/gimpintl.h"
 

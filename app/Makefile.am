@@ -45,8 +45,6 @@ gimp_SOURCES = \
 	ops_buttons.h		\
 	qmask.c			\
 	qmask.h			\
-	resolution_calibrate.c	\
-	resolution_calibrate.h	\
 	undo_history.c		\
 	undo_history.h		\
 ##

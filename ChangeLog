@@ -1,3 +1,17 @@
+2001-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/resolution_calibrate.[ch]: removed
+
+	* app/gui/Makefile.am
+	* app/gui/resolution-calibrate-dialog.[ch]: added
+
+	* app/user_install.c
+	* app/gui/preferences-dialog.c
+	* po/POTFILES.in: changed accordingly.
+
+	* app/core/gimplayer.c: irrelevant doc reformating.
+
 2001-05-22  Sven Neumann  <sven@gimp.org>
 
 	* app/module_db.c: ported bugfix for #55050 from stable branch.

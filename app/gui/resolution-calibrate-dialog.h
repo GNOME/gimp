@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __RESOLUTION_CALIBRATE_H__
-#define __RESOLUTION_CALIBRATE_H__
+#ifndef __RESOLUTION_CALIBRATE_DIALOG_H__
+#define __RESOLUTION_CALIBRATE_DIALOG_H__
 
 
 void  resolution_calibrate_dialog (GtkWidget     *resolution_entry,
@@ -26,4 +26,4 @@ void  resolution_calibrate_dialog (GtkWidget     *resolution_entry,
 				   GtkSignalFunc  expose_callback);
 
 
-#endif /* __RESOLUTION_CALIBRATE_H__ */
+#endif /* __RESOLUTION_CALIBRATE_DIALOG_H__ */

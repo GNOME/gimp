@@ -936,14 +936,14 @@ gimp_layer_scale_lowlevel (GimpLayer *layer,
 /**
  * gimp_layer_check_scaling:
  * @layer:      Layer to check
- * @new_width:  proposed width of layer, in pixels
- * @new_height: proposed height of layer, in pixels
+ * @new_width:  proposed width of layer's image, in pixels
+ * @new_height: proposed height of layer's image, in pixels
  *
  * Scales layer dimensions, then snaps them to pixel centers
  *
- * Returns FALSE if any dimension reduces to zero as a result 
- *         of this; otherwise, returns TRUE.
- */
+ * Returns: #FALSE if any dimension reduces to zero as a result 
+ *          of this; otherwise, returns #TRUE.
+ **/
 gboolean
 gimp_layer_check_scaling (GimpLayer *layer,
 			  gint       new_width,
@@ -968,13 +968,13 @@ gimp_layer_check_scaling (GimpLayer *layer,
 
 /**
  * gimp_layer_scale_by_factors:
- * @layer: Layer to be transformed by explicit width and height factors.
+ * @layer:    Layer to be transformed by explicit width and height factors.
  * @w_factor: scale factor to apply to width and horizontal offset
  * @h_factor: scale factor to apply to height and vertical offset
  * 
  * Scales layer dimensions and offsets by uniform width and
  * height factors.
- * 
+ *
  * Use gimp_layer_scale_by_factors() in circumstances when the
  * same width and height scaling factors are to be uniformly
  * applied to a set of layers. In this context, the layer's
@@ -983,7 +983,7 @@ gimp_layer_check_scaling (GimpLayer *layer,
  * the fixed point of the transform is the upper left hand
  * corner of the image. Returns gboolean FALSE if a requested
  * scale factor is zero or if a scaling zero's out a layer
- * dimension; returns TRUE otherwise.
+ * dimension; returns #TRUE otherwise.
  *
  * Use gimp_layer_scale() in circumstances where new layer width
  * and height dimensions are predetermined instead.
@@ -991,9 +991,9 @@ gimp_layer_check_scaling (GimpLayer *layer,
  * Side effects: Undo set created for layer. Old layer imagery 
  *               scaled & painted to new layer tiles. 
  *
- * Returns: TRUE, if the scaled layer has positive dimensions
- *          FALSE if the scaled layer has at least one zero dimension
- */
+ * Returns: #TRUE, if the scaled layer has positive dimensions
+ *          #FALSE if the scaled layer has at least one zero dimension
+ **/
 gboolean
 gimp_layer_scale_by_factors (GimpLayer *layer,
 			     gdouble    w_factor,
@@ -1050,7 +1050,7 @@ gimp_layer_scale_by_factors (GimpLayer *layer,
  * Side effects: undo set created for layer.
  *               Old layer imagery scaled 
  *               & painted to new layer tiles 
- */
+ **/
 void
 gimp_layer_scale (GimpLayer *layer,
 		  gint       new_width,

@@ -24,23 +24,20 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
-
-#include "gdisplay_ops.h"
-#include "gimprc.h"
-#include "resolution_calibrate.h"
-#include "unitrc.h"
+#include "resolution-calibrate-dialog.h"
 
 #include "libgimp/gimpintl.h"
 
 
 #define SET_STYLE(widget, style)  if (style) gtk_widget_set_style (widget, style)
 
+
 static GtkWidget *calibrate_entry = NULL;
 static gdouble    calibrate_xres  = 1.0;
 static gdouble    calibrate_yres  = 1.0;
 static gint       ruler_width     = 1;
 static gint       ruler_height    = 1;
+
 
 static void
 resolution_calibrate_ok (GtkWidget *button,
@@ -71,17 +68,20 @@ resolution_calibrate_ok (GtkWidget *button,
 
 /**
  * resolution_calibrate_dialog:
- * @resolution_entry: a GimpSizeEntry to connect the dialog to
- * @dialog_style: a GtkStyle for the main dialog (used by the user_installation_dialog)
- * @ruler_style: a GtkStyle for the rulers and the entry area (used by the 
- *               user_installation_dialog)
- * @expose_callback: an "expose_event" handler used by the user_installation_dialog
- * 
- * Displays a dialog that allows the user to interactively determine her monitor
- * resolution. This dialog runs it's own GTK main loop and is connected to a 
- * GimpSizeEntry handling the resolution to be set. The style and callback parameters
- * are supposed to be only used by the user_installation_dialog.
- */
+ * @resolution_entry: a #GimpSizeEntry to connect the dialog to
+ * @dialog_style:     a #GtkStyle for the main dialog (used by the
+ *                    user_installation_dialog)
+ * @ruler_style:      a #GtkStyle for the rulers and the entry area
+ *                    (used by the user_installation_dialog)
+ * @expose_callback:  an "expose_event" handler used by the
+ *                    user_installation_dialog
+ *
+ * Displays a dialog that allows the user to interactively determine
+ * her monitor resolution. This dialog runs it's own GTK main loop and
+ * is connected to a #GimpSizeEntry handling the resolution to be
+ * set. The style and callback parameters are supposed to be only used
+ * by the user_installation_dialog.
+ **/
 void
 resolution_calibrate_dialog (GtkWidget     *resolution_entry,
 			     GtkStyle      *dialog_style,
@@ -129,7 +129,6 @@ resolution_calibrate_dialog (GtkWidget     *resolution_entry,
 					 GTK_OBJECT (dialog));
 
   SET_STYLE (dialog, dialog_style);
-  gimp_dialog_set_icon (GTK_WINDOW (dialog));
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 8);
 
   ruler_width  = gdk_screen_width ();
@@ -259,14 +258,14 @@ resolution_calibrate_dialog (GtkWidget     *resolution_entry,
 	   list = g_list_next (list))
 	{
 	  GtkTableChild *child = (GtkTableChild *) list->data;
-	  
+
 	  if (child && GTK_IS_LABEL (child->widget))
 	    SET_STYLE (GTK_WIDGET (child->widget), ruler_style);
 	}
     }
   gtk_box_pack_end (GTK_BOX (hbox), calibrate_entry, FALSE, FALSE, 0);
   gtk_widget_show (calibrate_entry);
-  
+
   gtk_widget_show (dialog);
 
   gtk_main ();
