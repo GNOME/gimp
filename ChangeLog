@@ -1,3 +1,10 @@
+2004-07-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/file-commands.h: reordered to match the .c file.
+
+	* app/core/gimpitem.c
+	* app/vectors/gimpvectors-import.c: fixed API docs.
+
 2004-07-14  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* plug-ins/common/png.c:

@@ -155,11 +155,12 @@ static GList    * parse_path_data     (const gchar  *data);
 
 /**
  * gimp_vectors_import_file:
- * @image: the #GimpImage to add the paths to
+ * @image:    the #GimpImage to add the paths to
  * @filename: name of a SVG file
- * @merge: should multiple paths be merged into a single #GimpVectors object
- * @scale: should the SVG be scaled to fit the image dimensions
- * @error: location to store possible errors
+ * @merge:    should multiple paths be merged into a single #GimpVectors object
+ * @scale:    should the SVG be scaled to fit the image dimensions
+ * @position: position in the image's vectors stack where to add the vectors
+ * @error:    location to store possible errors
  *
  * Imports one or more paths from a SVG file.
  *

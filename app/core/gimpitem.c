@@ -437,13 +437,13 @@ gimp_item_is_removed (const GimpItem *item)
 
 /**
  * gimp_item_configure:
- * @item: The #GimpItem to configure.
- * @gimage: The #GimpImage to which the item belongs.
+ * @item:     The #GimpItem to configure.
+ * @gimage:   The #GimpImage to which the item belongs.
  * @offset_x: The X offset to assign the item.
  * @offset_y: The Y offset to assign the item.
- * @width: The width to assign the item.
- * @height: The height to assign the item.
- * @name: The name to assign the item.
+ * @width:    The width to assign the item.
+ * @height:   The height to assign the item.
+ * @name:     The name to assign the item.
  *
  * This function is used to configure a new item.  First, if the item
  * does not already have an ID, it is assigned the next available
@@ -497,8 +497,8 @@ gimp_item_is_attached (GimpItem *item)
 
 /**
  * gimp_item_duplicate:
- * @item: The #GimpItem to duplicate.
- * @new_type: The type to make the new item.
+ * @item:      The #GimpItem to duplicate.
+ * @new_type:  The type to make the new item.
  * @add_alpha: #TRUE if an alpha channel should be added to the new item.
  *
  * Returns: the newly created item.
@@ -517,10 +517,10 @@ gimp_item_duplicate (GimpItem *item,
 
 /**
  * gimp_item_convert:
- * @item: The @GimpItem to convert.
+ * @item:       The #GimpItem to convert.
  * @dest_image: The #GimpImage in which to place the converted item.
- * @new_type: The type to convert the item to.
- * @add_alpha: #TRUE if an alpha channel should be added to the converted item.
+ * @new_type:   The type to convert the item to.
+ * @add_alpha:  #TRUE if an alpha channel should be added to the converted item.
  *
  * Returns: the new item that results from the conversion.
  */
@@ -548,7 +548,7 @@ gimp_item_convert (GimpItem  *item,
 
 /**
  * gimp_item_rename:
- * @item: The #GimpItem to rename.
+ * @item:     The #GimpItem to rename.
  * @new_name: The new name to give the item.
  *
  * This function assigns a new name to the item, if the desired name is
@@ -608,28 +608,28 @@ gimp_item_height (const GimpItem *item)
 
 /**
  * gimp_item_offsets:
- * @item: The #GimpItem to check.
- * @off_x: Return location for the item's X offset.
- * @off_y: Return location for the item's Y offset.
+ * @item:     The #GimpItem to check.
+ * @offset_x: Return location for the item's X offset.
+ * @offset_y: Return location for the item's Y offset.
  *
  * Reveals the X and Y offsets of the item.
  */
 void
 gimp_item_offsets (const GimpItem *item,
-                   gint           *off_x,
-                   gint           *off_y)
+                   gint           *offset_x,
+                   gint           *offset_y)
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  if (off_x) *off_x = item->offset_x;
-  if (off_y) *off_y = item->offset_y;
+  if (offset_x) *offset_x = item->offset_x;
+  if (offset_y) *offset_y = item->offset_y;
 }
 
 /**
  * gimp_item_translate:
- * @item: The #GimpItem to move.
- * @off_x: Increment to the X offset of the item.
- * @off_y: Increment to the Y offset of the item.
+ * @item:      The #GimpItem to move.
+ * @offset_x:  Increment to the X offset of the item.
+ * @offset_y:  Increment to the Y offset of the item.
  * @push_undo: If #TRUE, create an entry in the image's undo stack
  *             for this action.
  *
@@ -637,8 +637,8 @@ gimp_item_offsets (const GimpItem *item,
  */
 void
 gimp_item_translate (GimpItem *item,
-                     gint      off_x,
-                     gint      off_y,
+                     gint      offset_x,
+                     gint      offset_y,
                      gboolean  push_undo)
 {
   GimpItemClass *item_class;
@@ -653,7 +653,7 @@ gimp_item_translate (GimpItem *item,
     gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                  item_class->translate_desc);
 
-  item_class->translate (item, off_x, off_y, push_undo);
+  item_class->translate (item, offset_x, offset_y, push_undo);
 
   if (push_undo)
     gimp_image_undo_group_end (gimage);
