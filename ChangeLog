@@ -1,5 +1,11 @@
 2003-08-31  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gfig/gfig.c: applied an old patch from Carl Adams that
+	was updated for 1.3 by Tino Schwarze. The patch fixes the isometric
+	grid so that its mathematical properties can be exploited.
+
+2003-08-31  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/gz.c: applied a patch from Raphael Quinet that
 	adds '-n' to the gzip command-line (bug #72791). Did some minor
 	code cleanup and fixed a problem introduced by the latest change

@@ -44,6 +44,9 @@
  * 
  * 1.3  Portability fixes and fixed bug reports 257 and 258 from and 81 & 101 & 133
  *      http://www.wilberworks.com/bugs.cgi
+ *
+ * 1.4  Fixed isometric grid so that its mathematical properties can be
+ *      exploited. Close wasn't good enough.
  */
 
 #include "config.h"
@@ -95,6 +98,13 @@
 #define SMALL_PREVIEW_SZ 48
 #define BRUSH_PREVIEW_SZ 32
 #define GFIG_HEADER      "GFIG Version 0.1\n"
+
+/* For the isometric grid */
+#define SQRT3 1.73205080756887729353   /* Square root of 3 */
+#define SIN_1o6PI_RAD 0.5              /* Sine    1/6 Pi Radians */
+#define COS_1o6PI_RAD SQRT3 / 2        /* Cosine  1/6 Pi Radians */
+#define TAN_1o6PI_RAD 1 / SQRT3        /* Tangent 1/6 Pi Radians == SIN / COS */
+#define RECIP_TAN_1o6PI_RAD SQRT3      /* Reciprocal of Tangent 1/6 Pi Radians */
 
 #define PREVIEW_MASK  (GDK_EXPOSURE_MASK       | \
 		       GDK_POINTER_MOTION_MASK | \
@@ -197,10 +207,6 @@ static void      find_grid_pos             (GdkPoint  *p,
 					    GdkPoint  *gp,
 					    guint      state);
 
-static gint      calculate_point_to_line_distance (GdkPoint *p,
-						   GdkPoint *A,
-						   GdkPoint *B,
-						   GdkPoint *I);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -5430,130 +5436,117 @@ find_grid_pos (GdkPoint *p,
 	  cons_center = FALSE;
 	}
     }
-   else if (selvals.opts.gridtype == ISO_GRID)
-     {
-	if (is_butt3)
-	  {
-	     static GdkPoint b_pnt;
-	     static GdkPoint i_pnt;
-	     static GdkPoint ii_pnt;
-	     gint d;
-	     gint dd;
+  else if (selvals.opts.gridtype == ISO_GRID)
+    {
+      /*
+       * This really needs a picture to show the math...
+       *
+       * Consider an isometric grid with one of the sets of lines parallel to the 
+       * y axis (vertical alignment). Further define that the origin of a Cartesian 
+       * grid is at a isometric vertex.  For simplicity consider the first quadrant only.
+       * 
+       *  - Let one line segment between vertices be r
+       *  - Define the value of r as the grid spacing
+       *  - Assign an integer n identifier to each vertical grid line along the x axis.
+       *    with n=0 being the y axis. n can be any integer
+       *  - Let m to be any integer
+       *  - Let h be the spacing between vertical grid lines measured along the x axis.
+       *    It follows from the isometric grid that h has a value of r * COS(1/6 Pi Rad)
+       * 
+       *  Consider a Vertex V at the Cartesian location [Xv, Yv]
+       *
+       *   It follows that vertices belong to the set...
+       *   V[Xv, Yv] = [ [ n * h ] ,
+       *                 [ m * r + ( 0.5 * r (n % 2) ) ] ]
+       *   for all integers n and m
+       *
+       * Who cares? Me. It's useful in solving this problem:
+       * Consider an arbitrary point P[Xp,Yp], find the closest vertex in the set V.
+       *
+       * Restated this problem is "find values for m and n that are drive V closest to P"
+       * 
+       * A Solution method (there may be a better one?):
+       * 
+       * Step 1) bound n to the two closest values for Xp
+       *         n_lo = (int) (Xp / h) 
+       *         n_hi = n_lo + 1
+       * 
+       * Step 2) Consider the two closes vertices for each n_lo and n_hi. The further of
+       *         the vertices in each pair can readily be discarded.
+       *         m_lo_n_lo = (int) ( (Yp / r) - 0.5 (n_lo % 2) )
+       *         m_hi_n_lo = m_lo_n_lo + 1
+       *
+       *         m_lo_n_hi = (int) ( (Yp / r) - 0.5 (n_hi % 2) )
+       *         m_hi_n_hi = m_hi_n_hi
+       * 
+       * Step 3) compute the distance from P to V1 and V2. Snap to the closer point.
+       */
+      gint n_lo;
+      gint n_hi;
+      gint m_lo_n_lo;
+      gint m_hi_n_lo;
+      gint m_lo_n_hi;
+      gint m_hi_n_hi;
+      gint m_n_lo;
+      gint m_n_hi;
+      gdouble r;
+      gdouble h;
+      gint x1;
+      gint x2;
+      gint y1;
+      gint y2;
+      
+      r = selvals.opts.gridspacing;
+      h = COS_1o6PI_RAD * r;
+      
+      n_lo = (gint) x / h;
+      n_hi = n_lo + 1;
+      
+      /* evaluate m candidates for n_lo */
+      m_lo_n_lo = (gint) ( (y / r) - 0.5 * (n_lo % 2) );
+      m_hi_n_lo = m_lo_n_lo + 1;
+      /* figure out which is the better candidate */
+      if (abs((m_lo_n_lo * r + (0.5 * r * (n_lo % 2))) - y) <
+	  abs((m_hi_n_lo * r + (0.5 * r * (n_lo % 2))) - y)) {
+	m_n_lo = m_lo_n_lo;
+      }
+      else {
+	m_n_lo = m_hi_n_lo;
+      }
+      
+      /* evaluate m candidates for n_hi */
+      m_lo_n_hi = (gint) ( (y / r) - 0.5 * (n_hi % 2) );
+      m_hi_n_hi = m_lo_n_hi + 1;
+      /* figure out which is the better candidate */
+      if (abs((m_lo_n_hi * r + (0.5 * r * (n_hi % 2))) - y) <
+	  abs((m_hi_n_hi * r + (0.5 * r * (n_hi % 2))) - y)) {
+	m_n_hi = m_lo_n_hi;
+      }
+      else {
+	m_n_hi = m_hi_n_hi;
+      }
+      
+      /* Now, which is closer to [x,y]? we can use a somewhat abbreviated form of the 
+       * distance formula since we only care about relative values. */
 
-	     b_pnt.x = cons_pnt.x;
-	     b_pnt.y = cons_pnt.y + preview_width;
-	     d = calculate_point_to_line_distance (p, &cons_pnt, &b_pnt, &i_pnt);
-
-	     b_pnt.x = cons_pnt.x;
-	     b_pnt.y = cons_pnt.y - preview_width;
-	     dd = calculate_point_to_line_distance (p, &cons_pnt, &b_pnt, &ii_pnt);
-	     if (dd < d)
-	     {
-		i_pnt.x = ii_pnt.x;
-		i_pnt.y = ii_pnt.y;
-		d = dd;
-	     }
-
-	     b_pnt.x = cons_pnt.x + preview_width;
-	     b_pnt.y = cons_pnt.y + preview_width/2;
-	     dd = calculate_point_to_line_distance (p, &cons_pnt, &b_pnt, &ii_pnt);
-	     if (dd < d)
-	     {
-		i_pnt.x = ii_pnt.x;
-		i_pnt.y = ii_pnt.y;
-		d = dd;
-	     }
-
-	     b_pnt.x = cons_pnt.x + preview_width;
-	     b_pnt.y = cons_pnt.y - preview_width/2;
-	     dd = calculate_point_to_line_distance (p, &cons_pnt, &b_pnt, &ii_pnt);
-	     if (dd < d)
-	     {
-		i_pnt.x = ii_pnt.x;
-		i_pnt.y = ii_pnt.y;
-		d = dd;
-	     }
-
-	     b_pnt.x = cons_pnt.x - preview_width;
-	     b_pnt.y = cons_pnt.y + preview_width/2;
-	     dd = calculate_point_to_line_distance (p, &cons_pnt, &b_pnt, &ii_pnt);
-	     if (dd < d)
-	     {
-		i_pnt.x = ii_pnt.x;
-		i_pnt.y = ii_pnt.y;
-		d = dd;
-	     }
-
-	     b_pnt.x = cons_pnt.x - preview_width;
-	     b_pnt.y = cons_pnt.y - preview_width/2;
-	     dd = calculate_point_to_line_distance (p, &cons_pnt, &b_pnt, &ii_pnt);
-	     if (dd < d)
-	     {
-		i_pnt.x = ii_pnt.x;
-		i_pnt.y = ii_pnt.y;
-		d = dd;
-	     }
-
-	     x = i_pnt.x;
-	     y = i_pnt.y;
-	  }
-
-	if (x % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
-	  x += selvals.opts.gridspacing;
-
-	gp->x = (x/selvals.opts.gridspacing)*selvals.opts.gridspacing;
-
-	if (((gp->x/selvals.opts.gridspacing) % 2) != 0)
-	  {
-	     y -= selvals.opts.gridspacing/2;
-
-	     if (y % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
-	       y += selvals.opts.gridspacing;
-	
-	     gp->y = (selvals.opts.gridspacing/2) + ((y/selvals.opts.gridspacing)*selvals.opts.gridspacing);
-	  }
-	else
-	  {
-	     if (y % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
-	       y += selvals.opts.gridspacing;
-	
-	     gp->y = (y/selvals.opts.gridspacing)*selvals.opts.gridspacing;
-	  }
-
-	if (!is_butt3)
-	  {
-	     /* Store the point since it might be used later */
-	     cons_pnt = *gp; /* Structure copy */
-	  }
-     }
+      x1 = (gint) (n_lo * h);
+      y1 = (gint) (m_n_lo * r + (0.5 * r * (n_lo % 2)));
+      x2 = (gint) (n_hi * h);
+      y2 = (gint) (m_n_hi * r + (0.5 * r * (n_hi % 2)));
+      
+      if (((x - x1) * (x - x1) + (y - y1) * (y - y1)) < 
+	  ((x - x2) * (x - x2) + (y - y2) * (y - y2))) {
+	gp->x =  x1;
+	gp->y =  y1;
+      }
+      else {
+	gp->x =  x2;
+	gp->y =  y2;
+      }
+      
+    }
 }
 
-/* Calculate distance from a point to a line
- * Taken from the newsgroup comp.graphics.algorithms FAQ. */
-static gint
-calculate_point_to_line_distance (GdkPoint *p,
-				  GdkPoint *A,
-				  GdkPoint *B,
-				  GdkPoint *I)
-{
-   gint L2;
-   gint L;
-
-   L2 = ((B->x - A->x)*(B->x - A->x)) + ((B->y - A->y)*(B->y - A->y));
-   L = (gint) sqrt (L2);
-
-   /* gint r; */
-   /* gint s; */
-   /* r = ((A->y - p->y)*(A->y - B->y) - (A->x - p->x)*(B->x - A->x))/L2; */
-   /* s = ((A->y - p->y)*(B->x - A->x) - (A->x - p->x)*(B->y - A->y))/L2; */
-
-   /* Let I be the point of perpendicular projection of C onto AB. */
-
-   I->x = A->x + (((A->y - p->y)*(A->y - B->y) - (A->x - p->x)*(B->x - A->x))*(B->x - A->x))/L2;
-   I->y = A->y + (((A->y - p->y)*(A->y - B->y) - (A->x - p->x)*(B->x - A->x))*(B->y - A->y))/L2;
-
-   return abs ((((A->y - p->y)*(B->x - A->x)) - ((A->x - p->x)*(B->y - A->y)))*L);
-}
 
 /* Given a point x, y draw a circle */
 static void
@@ -5756,54 +5749,56 @@ draw_grid_sq (GdkGC *drawgc)
 static void
 draw_grid_iso (GdkGC *drawgc)
 {
-   gint step;
-   gint loop;
-
-   gint diagonal_start;
-   gint diagonal_end;
-   gint diagonal_width;
-   gint diagonal_height;
-   
-   step = selvals.opts.gridspacing;
-   
-   /* Draw the vertical lines */
-   for (loop = 0 ; loop < preview_width ; loop += step)
-     {
-       gdk_draw_line (gfig_preview->window,
-		      drawgc,
-		      loop,
-		      0,
-		      loop,
-		      preview_height);
-     }
-
-   diagonal_start = preview_width/2;
-   diagonal_start = diagonal_start - (diagonal_start % step);
-   diagonal_start = -diagonal_start;
-   
-   diagonal_end = preview_height + (preview_width/2);
-   diagonal_end = diagonal_end - (diagonal_end % step);
-   
-   diagonal_width = preview_width;
-   diagonal_height = diagonal_width/2;
-   
-   /* Draw diagonal lines */
-   for (loop = diagonal_start ; loop < diagonal_end ; loop += step)
-     {
-       gdk_draw_line (gfig_preview->window,
-		      drawgc,
-		      0,
-		      loop,
-		      diagonal_width,
-		      loop + diagonal_height);
-
-       gdk_draw_line (gfig_preview->window,
-		      drawgc,
-		      0,
-		      loop,
-		      diagonal_width,
-		      loop - diagonal_height);
-     }
+  /* vstep is an int since it's defined from grid size */
+  gint vstep; 
+  gdouble loop;
+  gdouble hstep;
+  
+  gdouble diagonal_start;
+  gdouble diagonal_end;
+  gdouble diagonal_width;
+  gdouble diagonal_height;
+  
+  vstep = selvals.opts.gridspacing;
+  hstep = selvals.opts.gridspacing * COS_1o6PI_RAD;
+  
+  /* Draw the vertical lines - These are easy */
+  for (loop = 0 ; loop < preview_width ; loop += hstep){
+    gdk_draw_line (gfig_preview->window,
+		   drawgc,
+		   (gint)loop,
+		   (gint)0,
+		   (gint)loop,
+		   (gint)preview_height);
+  }
+  
+  /* draw diag lines at a Theta of +/- 1/6 Pi Rad */
+  
+  diagonal_start = -(((int)preview_width * TAN_1o6PI_RAD) - (((int)(preview_width * TAN_1o6PI_RAD)) % vstep));
+  
+  diagonal_end = preview_height + (preview_width * TAN_1o6PI_RAD);
+  diagonal_end -= ((int)diagonal_end) % vstep;
+  
+  diagonal_width = preview_width;
+  diagonal_height = preview_width * TAN_1o6PI_RAD;
+  
+  /* Draw diag lines */
+  for (loop = diagonal_start ; loop < diagonal_end ; loop += vstep)
+    {
+      gdk_draw_line (gfig_preview->window,
+  		      drawgc,
+		     (gint)0,
+		     (gint)loop,
+		     (gint)diagonal_width,
+		     (gint)loop + diagonal_height);
+      
+      gdk_draw_line (gfig_preview->window,
+		     drawgc,
+		     (gint)0,
+		     (gint)loop,
+		     (gint)diagonal_width,
+		     (gint)loop - diagonal_height);
+    }
 }
 
 static GdkGC *
