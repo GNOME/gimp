@@ -9,7 +9,7 @@ $|=1;
    qw(windy.pl prep4gif.pl webify.pl PDB alpha2color.pl tex-to-float ditherize.pl
       border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl parasite-editor
       scratches.pl blowinout.pl terral_text xachvision.pl gimpmagick perlcc
-      sethspin.pl animate_cells image_tile yinyang stamps
+      sethspin.pl animate_cells image_tile yinyang stamps font_map
    );
 @shebang = (map("examples/$_",@examples),
    qw(Perl-Server examples/example-net.pl examples/homepage-logo.pl
@@ -65,13 +65,13 @@ eval "use Parse::RecDescent;"; $PRD = $@ eq "";
 
 $] >= 5.005 or print <<EOF;
 
-WARNING: you are using a version of perl older than 5.005. While this
-	 extension should run on older versions (and I try to keep source
-	 compatibility), some people get spurious errors that go away
-	 after upgrading to 5.005 (or to gimp-1.1). Therefore, some
-	 features of Gimp DO NOT WORK WITH 5.004 or gimp-1.0. Since 5.005
-	 is much better and has many many bugs fixed, an upgrade would
-	 come in handy...
+NOTICE:  you are using a version of perl older than 5.005. While this
+         extension should run on older versions (and I try to keep source
+         compatibility), some people get spurious errors that go away
+         after upgrading to 5.005 (or to gimp-1.1). Also, some features of
+         Gimp DO NOT WORK WITH 5.004 or gimp-1.0 and are disabled. Since
+         5.005 is much better and has many many bugs fixed, an upgrade
+         would come in handy...
 
 EOF
 
@@ -99,7 +99,7 @@ EOF
 !$PDL or $PDL::Version::VERSION > 1.99 or print <<EOF;
 
 WARNING: PDL version $PDL::Version::VERSION is installed. Gimp::PDL was only
-	 tested with 1.99 and higher.  In case of problems its advisable to
+	 tested with 2.0 and higher.  In case of problems its advisable to
 	 upgrade PDL to at least version 2.
 
 EOF
@@ -209,6 +209,8 @@ maintainer-clean :: realclean
 distclean :: realclean
 check :: test
 
+MY_FIXIN = \$(PERL) -I\$(PERL_ARCHLIB) -I\$(PERL_LIB) -MExtUtils::MakeMaker -e 'MY->fixin(\@ARGV)'
+
 clean ::
 	test -f Makefile || mv -f Makefile.old Makefile
 	\$(RM_RF) inst-temp
@@ -220,7 +222,7 @@ install-plugins ::
 	\$(UMASK_NULL) ; \\
 	\$(CP) ".join(' ',map("'../examples/$_'",@examples))." ../Perl-Server . ; \\
 	\$(CHMOD) 755 * ; \\
-	\$(FIXIN) * ; \\
+	\$(MY_FIXIN) * ; \\
 	for plugin in * ; do \\
 	   $GT --install-admin-bin \"\$\$plugin\" ; \\
 	done
@@ -230,13 +232,15 @@ install-plugins ::
 
 WriteMakefile(
     'dist'	=> {
-	            'PREOP'     => 'chmod -R u=rwX,go=rX . ;',
-	            'COMPRESS'	=> 'gzip -9v',
-	            'SUFFIX'	=> '.gz',
+	            PREOP	=> 'chmod -R u=rwX,go=rX . ;',
+	            COMPRESS	=> 'gzip -9v',
+	            SUFFIX	=> '.gz',
 	           },
     'PREREQ_PM'	=> {
-    		    "Gtk"		=> 0.3,
-    		    "Data::Dumper"	=> 2,
+    		    Gtk			=> 0.3,
+                    PDL			=> 1.99,
+    		    Data::Dumper	=> 2,
+                    Parse::RecDescent	=> 1.6,
 		   },
     'DIR'	=> ['Gimp'],
     'NAME'	=> 'Gimp',

@@ -151,7 +151,7 @@ $_PROT_VERSION	= "2";			# protocol version
 # we really abuse the import facility..
 sub import($;@) {
    my $pkg = shift;
-   my $up = caller();
+   my $up = caller;
    my @export;
 
    # make a quick but dirty guess ;)
@@ -338,18 +338,19 @@ sub call_callback {
 
 sub callback {
    my $type = shift;
-   confess unless initialized();
-   _initialized_callback;
    return () if $caller eq "Gimp";
    if ($type eq "-run") {
       local $function = shift;
       local $in_run = 1;
+      _initialized_callback;
       call_callback 1,$function,@_;
    } elsif ($type eq "-net") {
       local $in_net = 1;
+      _initialized_callback;
       call_callback 1,"net";
    } elsif ($type eq "-query") {
       local $in_query = 1;
+      _initialized_callback;
       call_callback 1,"query";
    } elsif ($type eq "-quit") {
       local $in_quit = 1;
@@ -529,9 +530,8 @@ package Gimp::Parasite;
 
 sub is_type($$)		{ $_[0]->[0] eq $_[1] }
 sub is_persistant($)	{ $_[0]->[1] & PARASITE_PERSISTANT }
-sub is_error($)		{ !defined $_[0] }
+sub is_error($)		{ !defined $_[0]->[0] }
 sub has_flag($$)	{ $_[0]->[1] & $_[1] }
-sub error($)		{ undef }
 sub copy($)		{ [@{$_[0]}] }
 sub name($)		{ $_[0]->[0] }
 sub flags($)		{ $_[0]->[1] }

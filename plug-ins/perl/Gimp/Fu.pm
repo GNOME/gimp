@@ -1,25 +1,10 @@
 package Gimp::Fu;
 
-use strict 'vars';
 use Carp;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK @EXPORT_FAIL %EXPORT_TAGS
-            @scripts @_params $run_mode %pf_type2string @image_params);
 use Gimp qw();
 use Gimp::Data;
-use base qw(Exporter);
 
 require Exporter;
-
-eval {
-   require Data::Dumper;
-   import Data::Dumper 'Dumper';
-};
-if ($@) {
-   *Dumper = sub {
-      "()";
-   };
-}
-
 
 =cut
 
@@ -128,14 +113,20 @@ sub Gimp::RUN_FULLINTERACTIVE (){ Gimp::RUN_INTERACTIVE+100 };	# you don't want 
             PF_CHANNEL PF_BOOL PF_SLIDER PF_INT PF_SPINNER PF_ADJUSTMENT
             PF_BRUSH PF_PATTERN PF_GRADIENT PF_RADIO PF_CUSTOM PF_FILE);
 
-@EXPORT = (qw(register main),@_params);
-@EXPORT_OK = qw(interact $run_mode save_image);
-%EXPORT_TAGS = (params => [@_params]);
+#@EXPORT_OK = qw(interact $run_mode save_image);
 
 sub import {
    local $^W=0;
-   shift @_ if $_[0] =~ /::/;
-   Gimp::Fu->export_to_level(1,@_);
+   my $up = caller;
+   shift;
+   @_ = (qw(register main),@_params) unless @_;
+   for (@_) {
+      if ($_ eq ":params") {
+         push (@_, @_params);
+      } else {
+         *{"${up}::$_"} = \&$_;
+      }
+   }
 }
 
 # the old value of the trace flag
@@ -965,7 +956,8 @@ sub register($$$$$$$$$;@) {
       $input_image = $_[0]   if ref $_[0]   eq "Gimp::Image";
       $input_image = $pre[0] if ref $pre[0] eq "Gimp::Image";
       
-      $Gimp::Data{"$function/_fu_data"}=Dumper([@_]);
+      eval { require Data::Dumper };
+      $Gimp::Data{"$function/_fu_data"}=Data::Dumper::Dumper([@_]) unless $@;
       
       print $function,"(",join(",",(@pre,@_)),")\n" if $Gimp::verbose;
       

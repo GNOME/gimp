@@ -22,7 +22,6 @@ $trace_res = *STDERR;
 $trace_level = 0;
 
 my $initialized = 0;
-my $new_handle = "HANDLE0000";
 
 sub initialized { $initialized }
 
@@ -49,10 +48,12 @@ sub net2args($) {
 sub args2net {
    my($res,$v);
    for $v (@_) {
-      if(ref($v) eq "ARRAY" or ref($v) eq "Gimp::Color" or ref($v) eq "Gimp::Parasite") {
-         $res.="[".join(",",map { "qq[".quotemeta($_)."]" } @$v)."],";
-      } elsif(ref($v)) {
-         $res.="b(".$$v.",".ref($v)."),";
+      if(ref($v)) {
+         if(ref($v) eq "ARRAY" or ref($v) eq Gimp::Color or ref($v) eq Gimp::Parasite) {
+           $res.="[".join(",",map { "qq[".quotemeta($_)."]" } @$v)."],";
+         } else {
+           $res.="b(".$$v.",".ref($v)."),";
+         }
       } elsif(defined $v) {
          $res.="qq[".quotemeta($v)."],";
       } else {
@@ -138,7 +139,7 @@ sub set_trace {
 
 sub start_server {
    print "trying to start gimp\n" if $Gimp::verbose;
-   $server_fh=*{$new_handle++};
+   $server_fh=local *FH;
    socketpair $server_fh,GIMP_FH,PF_UNIX,SOCK_STREAM,AF_UNIX
       or croak "unable to create socketpair for gimp communications: $!";
    $gimp_pid = fork;
@@ -174,7 +175,7 @@ sub try_connect {
       if (s{^spawn/}{}) {
          return start_server;
       } elsif (s{^unix/}{/}) {
-         my $server_fh=*{$new_handle++};
+         my $server_fh=local *FH;
          return socket($server_fh,PF_UNIX,SOCK_STREAM,AF_UNIX)
                 && connect($server_fh,sockaddr_un $_)
                 ? $server_fh : ();
@@ -182,7 +183,7 @@ sub try_connect {
          s{^tcp/}{};
          my($host,$port)=split /:/,$_;
          $port=$default_tcp_port unless $port;
-         my $server_fh=*{$new_handle++};
+         my $server_fh=local *FH;
          return socket($server_fh,PF_INET,SOCK_STREAM,scalar getprotobyname('tcp') || 6)
                 && connect($server_fh,sockaddr_in $port,inet_aton $host)
                 ? $server_fh : ();

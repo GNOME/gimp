@@ -33,6 +33,7 @@ my %description = (
    'gtkxmhtml'  => 'the Gtk::XmHTML module',
    'dumper'     => 'the Data::Dumper module',
    'never'      => '(for testing, will never be present)',
+   'unix'	=> 'a unix-like operating system',
 );
 
 sub import {
@@ -50,6 +51,7 @@ sub missing {
    my ($msg,$function)=@_;
    require Gimp;
    Gimp::logger(message => "$_[0] is required but not found", function => $function);
+   Gimp::initialized() ? die "BE QUIET ABOUT THIS DIE\n" : exit Gimp::quiet_main();
 }
 
 sub need {
@@ -93,6 +95,13 @@ sub present {
       eval { require Gtk::XmHTML }; $@ eq "";
    } elsif ($_ eq "dumper") {
       eval { require Data::Dumper }; $@ eq "";
+   } elsif ($_ eq "unix") {
+      !{
+         MacOS		=> 1,
+         MSWin32	=> 1,
+         os2		=> 1,
+         VMS		=> 1,
+       }->{$^O};
    } elsif ($_ eq "never") {
       0;
    } else {

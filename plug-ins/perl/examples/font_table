@@ -1,0 +1,303 @@
+#!/usr/bin/perl
+#
+# Font Table plugin for The Gimp
+#
+# Written because I suddenly had 4000+ TTF fonts loaded on my system
+# and no idea which ones I wanted to use.
+#
+# Written by Aaron Sherman, (c) 1998
+
+use Gimp::Feature 'unix';
+use Gimp qw(:auto);
+use Gimp::Fu;
+
+sub font_table {
+  my $foundery = shift;
+  my $family = shift;
+  my $weight = shift;
+  my $slant = shift;
+  my $size = shift;
+  my $fg = shift;
+  my $bg = shift;
+  my $labelfont = shift;
+  my $test_text = shift;
+  my $padding = shift;
+  my $pageheight = shift;
+  my $lastimg = undef;
+
+  $foundery = '.' if $foundery eq '*';
+  $family = '.' if $family eq '*';
+  $weight = '.' if $weight eq '*';
+  $slant = '.' if $slant eq '*';
+
+  if ($size ne '*' && $size <= 0) {
+    die("Font Table: Size parameter ($size) is invalid");
+  }
+
+  # XXX - Here, I use xlsfonts. This is non-portable, but I could not find
+  #       the equivilant in Gtk or PDB. Someone want to clue me in? I should
+  #       look at the Gimp source to find how they get their font lists.
+  local *P;
+  local $_;
+  open(P,"xlsfonts 2>/dev/null |") || die("Font Table: Cannot fork: $!");
+  while(<P>) {
+    next unless /^-/;
+    my @f = split /-/, $_;
+    if ($f[1] =~ /$foundery/i && $f[2] =~ /$family/i && $f[3] =~ /$weight/i &&
+	$f[4] =~ /$slant/i && ($f[7] == 0 || $size eq '*' || $f[7] == $size)) {
+      $fonts{$_}++;
+    }
+  }
+  close P;
+  die("Font Table: Problem running xlsfonts") if $?;
+
+  my $col1_width = 0;
+  my $col2_width = 0;
+  my $row_height = 0;
+  my $total_height = $padding;
+  my @rows;
+  my $firstfont = 0;
+
+  @fonts = sort keys %fonts;
+  undef %fonts;
+
+  for(my $i = 0;$i < @fonts;$i++) {
+    my $font = $fonts[$i];
+    my @f = split /-/, $font;
+    if ($f[7] == 0) {
+      $f[7] = $size;
+    }
+    my $fslant = $f[4] eq 'r'? '' : ' italic';
+    my $label = "$f[1] $f[2] ($f[3]$fslant $f[7])";
+    my($cwidth,$cheight,$ascent,$descent) =
+      gimp_text_get_extents_fontname($label, $size, 1, $labelfont);
+    my($twidth,$theight,$ascent,$descent) =
+      gimp_text_get_extents($test_text, $f[7], 1, $f[1], $f[2], $f[3],
+			    $f[4], '*', '*');
+
+    $row_height = $cheight > $theight ? $cheight : $theight;
+
+    if ($total_height + $row_height + $padding > $pageheight) {
+      $lastimg = display_fonts(
+		    $size, $fg, $bg, $labelfont, $padding, $total_height,
+		    \@rows, $col1_width, $col2_width, $test_text,
+		    \@fonts, $firstfont, $i-1);
+      $col1_width = 0;
+      $col2_width = 0;
+      $total_height = $padding;
+      $firstfont = $i;
+      @rows = ();
+    }
+
+    $col1_width = $cwidth if $col1_width < $cwidth;
+    $col2_width = $twidth if $col2_width < $twidth;
+    push(@rows,$row_height);
+    $total_height += $row_height+$padding;
+    $row_height = 0;
+
+    if ($i+1 == @fonts) {
+      $lastimg = display_fonts(
+		    $size, $fg, $bg, $labelfont, $padding, $total_height,
+		    \@rows, $col1_width, $col2_width, $test_text,
+		    \@fonts, $firstfont, $i);
+    }
+    
+  }
+
+  return undef; # This may generate a warning, but it's better than
+                # getting a duplicate image, which is what I get if I
+                # return $lastimg
+  # return $lastimg;
+}
+
+sub display_fonts {
+  my $size = shift;
+  my $fg = shift;
+  my $bg = shift;
+  my $labelfont = shift;
+  my $padding = shift;
+  my $total_height = shift;
+  my $rows = shift;
+  my $col1_width = shift;
+  my $col2_width = shift;
+  my $test_text = shift;
+  my $fonts = shift;
+  my $min = shift;
+  my $max = shift;
+
+  # Create new image
+  my $width = $col1_width + $col2_width + $padding*3;
+  my $height = $total_height;
+  my $img = gimp_image_new($width,$height,0);
+  my $layer = gimp_layer_new($img,$width,$height,1,"Font Table",100,0);
+  gimp_image_add_layer($img,$layer,0);
+  gimp_image_set_active_layer($img,$layer);
+  my $draw = gimp_image_active_drawable($img);
+  my $oldfg = gimp_palette_get_foreground();
+  gimp_palette_set_foreground($bg);
+  gimp_selection_all($img);
+  gimp_bucket_fill($draw,0,0,100,0,0,0,0);
+  gimp_selection_none($img);
+  gimp_palette_set_foreground($fg);
+
+  my $y = $padding;
+
+  for(my $i = $min;$i <= $max; $i++) {
+    my $font = $fonts->[$i];
+    my @f = split /-/, $font;
+    if ($f[7] == 0) {
+      $f[7] = $size;
+    }
+    my $fslant = $f[4] eq 'r'? '' : ' italic';
+    my $label = "$f[1] $f[2] ($f[3]$fslant $f[7])";
+
+    my $l = gimp_text_fontname($draw,$padding, $y, $label, 0, 1, $size, 1,
+		$labelfont);
+    gimp_floating_sel_anchor($l);
+    $l = gimp_text($draw,$padding*2+$col1_width, $y, $test_text, 0, 1,
+		   $f[7], 1, $f[1], $f[2], $f[3], $f[4], '*', '*');
+    gimp_floating_sel_anchor($l);
+
+    my $row = shift @$rows;
+    $y += $row + $padding;
+  }
+
+  # Finish up
+  gimp_palette_set_foreground($oldfg);
+  gimp_selection_none($img);
+  gimp_display_new($img);
+  gimp_displays_flush();
+  return $img;
+}
+
+# Gimp::Fu registration routine for placing this function into gimp's PDB
+register
+  "font_table",
+  "Create a tabular index of fonts",
+  "Create a tabular index of fonts",
+  "Aaron Sherman", "Aaron Sherman (c)", "1999-03-16",
+  "<Toolbox>/Xtns/Render/Font Table",
+  "*",
+  [
+   [PF_STRING, "Foundery (perl regex or \"*\")", "Foundery", "*"],
+   [PF_STRING, "Family (perl regex or \"*\")", "Family", "*"],
+   [PF_STRING, "Weight (perl regex or \"*\")", "Weight", "*"],
+   [PF_STRING, "Slant (perl regex or \"*\")", "Slant", "*"],
+   [PF_INT32, "Point Size", "Size", 18],
+   [PF_COLOR, "Text Color", "FG", 'black'],
+   [PF_COLOR, "Background Color", "BG", 'white'],
+   [PF_FONT, "Label Font", "Font", '-*-courier-medium-r-normal--18-*-*-*-*-*-*-*'],
+   [PF_STRING, "Test String", "String", 'FOUR (4) SCORE and seven (7) years @%$*&'],
+   [PF_INT32, "Text Padding", "Padding", 10],
+   [PF_INT32, "Maximum page height", "Height", 1000]
+  ],
+  \&font_table;
+
+exit main;
+
+__END__
+
+
+=head1 NAME
+
+font_table - Create images with sample renderings of the requested fonts.
+
+=head1 SYNOPSIS
+
+  <Toolbox>/Xtns/Script-Fu/Utils/Font Table
+
+=head1 DESCRIPTION
+
+This plug-in will create one or more images with sample renderings of
+the fonts that you request. It is designed to be a replacement for the
+Font Map plug-in which has a much more limited user interface.
+
+=head1 PARAMETERS
+
+=over 5
+
+The I<Foundary>, I<Family>, I<Weight> and I<Slant> parameters are either
+set to "*" to indicate that all should be matched or a perl regular
+expression (e.g.  "C<^ttf>" or "C<(demi)?bold>").
+
+=item Foundery
+
+A perl regular expression or "*".
+
+The font foundery (e.g. "I<adobe>", "I<bitstream>" or "I<ttf>") that
+you wish to select (default: "*").
+
+=item Family
+
+A perl regular expression or "*".
+
+The font family (e.g. "I<courier>" or "I<helvetica>") that you wish to
+select (default: "*").
+
+=item Weight
+
+A perl regular expression or "*".
+
+The weights (e.g. "I<bold>" or "I<medium>") to be matched. Remember that since
+this is a regular expression, "bold" will match "bold" and "demibold" (default:
+"*").
+
+=item Slant
+
+A perl regular expression or "*".
+
+The slant (e.g. "I<i>" for itallic, "I<o>" for oblique and "I<r>" for
+regular) (default: "*").
+
+=item Point Size
+
+This parameter is the point size for the fonts to be matched. Note that
+this is *not* pixel size.
+
+=item Text Color
+
+The color that the text should be rendered in (default: black).
+
+=item Background Color
+
+The color of the image background (default: white).
+
+=item Label Font
+
+The single font to use for labeling each font (don't use a font which might
+not be able to render some of the characters in the font names). Usually
+the default, "courier", is a good choice.
+
+=item Test String
+
+This is the string that will be rendered once in each font selected.
+
+=item Text Padding
+
+The amount of space between each text row. Default is 10.
+
+=item Page Height
+
+Once the rendered image has reached this height, a new image will be started.
+This is in pixels, and is intended to allow ease of viewing and printing.
+
+=back
+
+=head1 AUTHOR
+
+Written in 1998 (c) by Aaron Sherman E<lt>ajs@ajs.comE<gt>
+
+=head1 BUGS
+
+This plug-in relies on running xlsfonts. If your platform does not have
+xlsfonts, or it's not in your path, or its output looks different from
+what this plug-in expects, it won't work. At the time this plug-in was
+written (late 1998) gtk+ had no facility to get a list of available font
+names. This may have changed, and an update to this plug-in will be
+distributed if so.
+
+=head1 SEE ALSO
+
+L<gimp>, L<perl>, L<Gimp>: the Gimp module for perl.
+
+=cut

@@ -627,16 +627,18 @@ push_gimp_sv (GParam *arg, int array_as_ref)
 
 #if GIMP_PARASITE
       case PARAM_PARASITE:
-        if (arg->data.d_parasite.name)
-          {
-            AV *av = newAV ();
-            av_push (av, neuSVpv (arg->data.d_parasite.name ? arg->data.d_parasite.name : ""));
-            av_push (av, newSViv (arg->data.d_parasite.flags));
-            av_push (av, newSVpv (arg->data.d_parasite.data, arg->data.d_parasite.size));
-            sv = (SV *)av; /* no newRV_inc, since we're getting autoblessed! */
-          }
-        else
-          sv = newSVsv (&PL_sv_undef);
+        {
+          AV *av = newAV ();
+
+          if (arg->data.d_parasite.name)
+            {
+              av_push (av, neuSVpv (arg->data.d_parasite.name));
+              av_push (av, newSViv (arg->data.d_parasite.flags));
+              av_push (av, newSVpv (arg->data.d_parasite.data, arg->data.d_parasite.size));
+            }
+
+          sv = (SV *)av;
+        }
 
 	break;
 #endif

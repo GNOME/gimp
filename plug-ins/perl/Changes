@@ -6,6 +6,10 @@ Revision history for Gimp-Perl extension.
         - implemented PF_FILE, for selecting filesystem objects.
         - improved and fixed parasite support.
         - Gimp::Data now uses parasites when available.
+        - changed FIXIN, i.e. all scripts now are patched with the correct
+          bangpath.
+        - added font_map. re-added xachshadow.pl, which was mysteriously
+          missing.
 
 1.07  Mon Mar 15 01:27:05 CET 1999
 	- added examples/yinyang, examples/image_tile, examples/stamps.
