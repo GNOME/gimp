@@ -155,9 +155,8 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
 
   tool = GIMP_TOOL (rect_select);
 
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_RECT_SELECT_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control,
+                                     GIMP_RECT_SELECT_TOOL_CURSOR);
 
   rect_select->x = rect_select->y = 0;
   rect_select->w = rect_select->h = 0;

@@ -1,3 +1,8 @@
+2002-06-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimprectselecttool.c: fixed #84157: allow the tool to
+	scroll the display. Also preserve it on drawable changes.
+
 2002-06-04  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/tools/stock-tool-blend-22.png: was too
