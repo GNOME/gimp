@@ -133,6 +133,7 @@ brush_select_new ()
 
   bsp = g_malloc (sizeof (_BrushSelect));
   bsp->redraw = TRUE;
+  bsp->scroll_offset = 0;
   bsp->brush_popup = NULL;
 
   /*  The shell and main vbox  */
@@ -269,7 +270,11 @@ brush_select_new ()
   gtk_widget_show (bsp->shell);
 
   /* calculate the scrollbar */
+  if(no_data)
+    brushes_init(FALSE);
+  /* This is done by size_allocate anyway, which is much better */
   preview_calc_scrollbar (bsp);
+
 
   /*  render the brushes into the newly created image structure  */
   display_brushes (bsp);
@@ -597,16 +602,28 @@ preview_calc_scrollbar (BrushSelectP bsp)
   int num_rows;
   int page_size;
   int max;
+  int offs;
+  int rowy;
 
-  bsp->scroll_offset = 0;
+  offs = bsp->scroll_offset;
   num_rows = (num_brushes + NUM_BRUSH_COLUMNS - 1) / NUM_BRUSH_COLUMNS;
   max = num_rows * bsp->cell_width;
   if (!num_rows) num_rows = 1;
   page_size = bsp->preview->allocation.height;
+  page_size = ((page_size < max) ? page_size : max);
+  /*
+  rowy = (get_active_brush()->index / NUM_BRUSH_COLUMNS) * bsp->cell_width
+	 + bsp->cell_width/2;
+  if((rowy < offs) || (rowy > (offs + page_size)))
+    offs = rowy - page_size/2;
+  offs = MIN(MAX(offs, 0), max - page_size);
+  */
 
+  bsp->scroll_offset = offs;
   bsp->sbar_data->value = bsp->scroll_offset;
   bsp->sbar_data->upper = max;
-  bsp->sbar_data->page_size = (page_size < max) ? page_size : max;
+  /* bsp->sbar_data->page_size = page_size; */
+  bsp->sbar_data->page_size = ((page_size < max) ? page_size : max);
   bsp->sbar_data->page_increment = (page_size >> 1);
   bsp->sbar_data->step_increment = bsp->cell_width;
 
@@ -764,7 +781,12 @@ brush_select_refresh_callback (GtkWidget *w,
   bsp = (BrushSelectP) client_data;
 
   /*  re-init the brush list  */
-  brushes_init ();
+  brushes_init(FALSE);
+
+  /*  update the active selection  */
+  active = get_active_brush ();
+  if (active)
+    brush_select_select (bsp, active->index);
 
   /*  recalculate scrollbar extents  */
   preview_calc_scrollbar (bsp);
@@ -772,10 +794,7 @@ brush_select_refresh_callback (GtkWidget *w,
   /*  render the brushes into the newly created image structure  */
   display_brushes (bsp);
 
-  /*  update the active selection  */
-  active = get_active_brush ();
-  if (active)
-    brush_select_select (bsp, active->index);
+ 
 
   /*  update the display  */
   if (bsp->redraw)

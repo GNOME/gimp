@@ -29,7 +29,7 @@
 
 /***** Functions *****/
 
-void gradients_init(void);
+void gradients_init(int no_data);
 void gradients_free(void);
 
 void grad_get_color_at(double pos, double *r, double *g, double *b, double *a);

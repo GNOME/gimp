@@ -1,3 +1,13 @@
+Thu Mar 26 13:03:18 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* app/app_procs.c app/brush_select.c app/brushes.c 
+	app/brushes.h app/convert.c app/gradient.c app/gradient.h
+	app/palette.c app/palette.h app/pattern_select.c app/patterns.c
+	app/patterns.h:   Fixed up --no-data so that the various *_init() 
+	routines always get called, and so that when in interactive mode
+	the data can be loaded by the user even when started with --no-data.
+	Fixes the blend bug too... 
+
 Thu Mar 26 18:38:54 MET 1998 Sven Neumann <sven@gimp.org>
 
 	app/gradient.c: fixed another --no-data problem; also the 

@@ -463,17 +463,17 @@ app_init ()
   file_ops_pre_init ();    /*  pre-initialize the file types  */
   RESET_BAR();
   xcf_init ();             /*  initialize the xcf file format routines */
-  if (no_data == FALSE)
-    {
-      RESET_BAR();
-      brushes_init ();         /*  initialize the list of gimp brushes  */
-      RESET_BAR();
-      patterns_init ();        /*  initialize the list of gimp patterns  */
-      RESET_BAR();
-      palettes_init ();        /*  initialize the list of gimp palettes  */
-      RESET_BAR();
-      gradients_init ();       /*  initialize the list of gimp gradients  */
-    }
+
+  RESET_BAR();
+  brushes_init (no_data);         /*  initialize the list of gimp brushes  */
+  RESET_BAR();
+  patterns_init (no_data);        /*  initialize the list of gimp patterns  */
+  RESET_BAR();
+  palettes_init (no_data);        /*  initialize the list of gimp palettes  */
+  RESET_BAR();
+  gradients_init (no_data);       /*  initialize the list of gimp gradients  */
+  
+
   RESET_BAR();
   plug_in_init ();         /*  initialize the plug in structures  */
   RESET_BAR();

@@ -62,7 +62,7 @@ static gint         brush_compare_func     (gpointer, gpointer);
 
 /*  function declarations  */
 void
-brushes_init ()
+brushes_init (int no_data)
 {
   GSList * list;
   GBrushP gb_start = NULL;
@@ -76,7 +76,7 @@ brushes_init ()
 
   if (!brush_path)
     create_default_brush ();
-  else
+  if(!no_data)
     datafiles_read_directories (brush_path, load_brush, 0);
 
   /*  assign indexes to the loaded brushes  */
@@ -469,7 +469,7 @@ brushes_refresh_brush_invoker (Argument *args)
    */
 
   success = TRUE ;
-  brushes_init();
+  brushes_init(TRUE);
   return procedural_db_return_args (&brushes_refresh_brush_proc, success);
 }
 

@@ -469,7 +469,7 @@ build_palette_menu(int *default_palette){
 
   if(!palette_entries_list) {
     /* fprintf(stderr, "no palette_entries_list, building...\n");*/
-     palette_init_palettes();
+     palette_init_palettes(FALSE);
   }
 
   list = palette_entries_list;
@@ -3068,7 +3068,7 @@ convert_indexed_palette_invoker (Argument *args)
 		  case CUSTOM_PALETTE:
           palette_name = args[4].value.pdb_pointer;
  /*         fprintf(stderr, "looking for palette `%s'\n", palette_name); */
-          if (!palette_entries_list) palette_init_palettes();
+          if (!palette_entries_list) palette_init_palettes(FALSE);
 		    for(list = palette_entries_list;
               list;
               list = g_slist_next(list)) {

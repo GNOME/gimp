@@ -40,7 +40,7 @@ extern int          num_brushes;
 
 
 /*  function declarations  */
-void                brushes_init             (void);
+void                brushes_init             (int no_data);
 void                brushes_free             (void);
 void                brush_select_dialog_free (void);
 void                select_brush             (GBrushP);

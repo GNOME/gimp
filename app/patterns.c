@@ -58,7 +58,7 @@ static gint         pattern_compare_func     (gpointer, gpointer);
 
 /*  function declarations  */
 void
-patterns_init ()
+patterns_init (int no_data)
 {
   GSList *list;
 
@@ -70,8 +70,8 @@ patterns_init ()
 
   if (!pattern_path)
     return;
-
-  datafiles_read_directories (pattern_path, load_pattern, 0);
+  if(!no_data)
+    datafiles_read_directories (pattern_path, load_pattern, 0);
 
   /*  assign indexes to the loaded patterns  */
 

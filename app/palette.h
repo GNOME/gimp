@@ -29,7 +29,7 @@
 #define COLOR_UPDATE_NEW  1
 #define COLOR_UPDATE      2
 
-void palettes_init (void);
+void palettes_init (int no_data);
 void palettes_free (void);
 void palette_create (void);
 void palette_free (void);
@@ -58,7 +58,7 @@ struct _PaletteEntry {
 typedef struct _PaletteEntry _PaletteEntry, *PaletteEntryP;
 
 extern GSList * palette_entries_list;
-void palette_init_palettes (void);
+void palette_init_palettes (int no_data);
 void palette_free_palettes (void);
 
 /*  Procedure definition and marshalling function  */

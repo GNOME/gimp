@@ -130,9 +130,9 @@ static MenuItem palette_ops[] =
 };
 
 void
-palettes_init ()
+palettes_init (int no_data)
 {
-  palette_init_palettes ();
+  palette_init_palettes (no_data);
 }
 
 void
@@ -255,6 +255,9 @@ palette_create ()
       gtk_widget_show (sbar);
       gtk_widget_show (frame);
       gtk_widget_show (hbox);
+
+      if(no_data)
+	 palettes_init(FALSE);
 
       /*  The action area  */
       action_items[0].user_data = palette;
@@ -380,9 +383,11 @@ palette_swap_colors (void)
 }
 
 void
-palette_init_palettes (void)
+palette_init_palettes (int no_data)
 {
-  datafiles_read_directories (palette_path, palette_entries_load, 0);
+  if(!no_data)
+    datafiles_read_directories (palette_path, palette_entries_load, 0);
+
 }
 
 
@@ -856,7 +861,7 @@ palette_refresh_callback (GtkWidget *w,
   if(palette)
     {
       palette_free_palettes (); 
-      palette_init_palettes();
+      palette_init_palettes(FALSE);
       palette_create_palette_menu (palette, default_palette_entries);
       palette_calc_scrollbar (palette);
       palette_draw_entries (palette);
@@ -865,7 +870,7 @@ palette_refresh_callback (GtkWidget *w,
   else
     {
       palette_free_palettes (); 
-      palette_init_palettes();
+      palette_init_palettes(FALSE);
     }
   
 }
@@ -1040,7 +1045,7 @@ palette_delete_entries_callback (GtkWidget *w,
       palette->entries = NULL;
 
       palette_free_palettes ();   /*  free palettes, don't save any modified versions  */
-      palette_init_palettes ();   /*  load in brand new palettes  */
+      palette_init_palettes (FALSE);   /*  load in brand new palettes  */
 
       palette_create_palette_menu (palette, default_palette_entries);
     }
@@ -1475,7 +1480,7 @@ palette_refresh_invoker (Argument *args)
   
   int success = TRUE ;
   palette_free_palettes();
-  palette_init_palettes();
+  palette_init_palettes(FALSE);
 
   return procedural_db_return_args (&palette_refresh_proc, success);
 }

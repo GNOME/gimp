@@ -169,9 +169,12 @@ pattern_select_new ()
   gtk_widget_show (vbox);
   gtk_widget_show (psp->shell);
 
+  if(no_data)   /* if patterns are already loaded, dont do it now... */
+    patterns_init(FALSE);
   preview_calc_scrollbar (psp);
   display_patterns (psp);
 
+  
   /*  update the active selection  */
   active = get_active_pattern ();
   if (active)
@@ -676,7 +679,7 @@ pattern_select_refresh_callback (GtkWidget *w,
   psp = (PatternSelectP) client_data;
 
   /*  re-init the pattern list  */
-  patterns_init ();
+  patterns_init (FALSE);
 
   /*  recalculate scrollbar extents  */
   preview_calc_scrollbar (psp);

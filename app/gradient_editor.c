@@ -591,15 +591,17 @@ static char *coloring_types[] = {
 /*****/
 
 void
-gradients_init(void)
+gradients_init(int no_data)
 {
-	datafiles_read_directories(gradient_path, grad_load_gradient, 0);
+  if(!no_data)
+    datafiles_read_directories(gradient_path, grad_load_gradient, 0);
 
-	if (grad_default_gradient != NULL)
-		curr_gradient = grad_default_gradient;
-	else if (gradients_list != NULL)
-		curr_gradient = (gradient_t *) gradients_list->data;
-	else {
+
+  if (grad_default_gradient != NULL)
+    curr_gradient = grad_default_gradient;
+  else if (gradients_list != NULL)
+    curr_gradient = (gradient_t *) gradients_list->data;
+  else {
 		curr_gradient = grad_create_default_gradient();
 		curr_gradient->name     = g_strdup("Default");
 		curr_gradient->filename = build_user_filename(curr_gradient->name, gradient_path);
@@ -774,6 +776,8 @@ grad_create_gradient_editor(void)
 
 	/* Create editor */
 
+	if(no_data)
+	  gradients_init(FALSE);
 	g_editor = g_malloc(sizeof(gradient_editor_t));
 
 	/* Shell and main vbox */
@@ -1592,7 +1596,7 @@ ed_refresh_callback(GtkWidget *widget, gpointer client_data)
 
 	grad_free_gradients();
 
-	gradients_init();
+	gradients_init(FALSE);
 
 	ed_set_list_of_gradients();
 

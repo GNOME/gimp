@@ -33,7 +33,7 @@ struct _GPattern
 };
 
 /*  function declarations  */
-void                patterns_init              (void);
+void                patterns_init              (int no_data);
 void                patterns_free              (void);
 void                pattern_select_dialog_free (void);
 void                select_pattern             (GPatternP);
