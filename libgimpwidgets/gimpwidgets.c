@@ -1511,13 +1511,12 @@ gimp_table_attach_aligned (GtkTable    *table,
 
   if (left_align)
     {
-      GtkWidget *alignment;
+      GtkWidget *hbox = gtk_hbox_new (FALSE, 0);
 
-      alignment = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-      gtk_container_add (GTK_CONTAINER (alignment), widget);
+      gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
       gtk_widget_show (widget);
 
-      widget = alignment;
+      widget = hbox;
     }
 
   gtk_table_attach (table, widget,

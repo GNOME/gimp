@@ -1,3 +1,8 @@
+2003-09-24  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.c (gimp_table_attach_aligned): use a
+	hbox instead of an alignment.
+
 2003-09-23  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/resize-dialog.c
