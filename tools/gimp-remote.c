@@ -63,6 +63,8 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 #include <unistd.h>
 
@@ -195,7 +197,9 @@ start_new_gimp (GString *file_list)
   execvp ("gimp", argv);
 	  
   /*  if execvp returns, there was an arror  */
-  g_printerr ("Couldn't start gimp for the following reason: %s\n", g_strerror (errno));
+  g_printerr ("Couldn't start gimp for the following reason: %s\n", 
+              g_strerror (errno));
+
   exit (-1);
 }
 

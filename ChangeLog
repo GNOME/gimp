@@ -1,8 +1,46 @@
+2001-10-26  Sven Neumann  <sven@gimp.org>
+
+	* app/temp_buf.c (temp_buf_to_gray): rewrote so gcc-3.0 doesn't 
+	complain.
+	
+	* tools/pdbgen/lib.pl: add #include <string.h> if the generated code
+	uses memcpy().
+
+	* libgimp/gimpbrushes_pdb.c
+	* libgimp/gimpdrawable_pdb.c
+	* libgimp/gimpgradients_pdb.c
+	* libgimp/gimpgradientselect_pdb.c
+	* libgimp/gimpimage_pdb.c
+	* libgimp/gimppaths_pdb.c
+	* libgimp/gimppatterns_pdb.c
+	* libgimp/gimpproceduraldb_pdb.c: regenerated.
+
+	* libgimp/gimpmatrix.c
+	* libgimp/gimpproceduraldb.c
+	* libgimp/gimpwidgets.c
+	* plug-ins/flame/libifs.c
+	* plug-ins/gap/gap_dbbrowser_utils.c
+	* plug-ins/gap/gap_filter_foreach.c: 
+	* plug-ins/ifscompose/ifscompose_storage.c
+	* plug-ins/imagemap/imap_circle.c
+	* plug-ins/imagemap/imap_grid.c
+	* plug-ins/imagemap/imap_rectangle.c
+	* plug-ins/common/mpeg.c
+	* plug-ins/common/plasma.c
+	* tools/gimp-remote.c: added missing includes wanted by gcc-3.0.
+
 2001-08-01  Nick Lamb  <njl195@zepler.org.uk>
 
-	* app/by_color_select.c by_color_select.c curves.c gimpui.c
-	global_edit.c image_new.c layers_dialog.c measure.c palette_select.c
-	shear_tool.c user_install.c: Include std C headers to reduce warnings.
+	* app/by_color_select.c
+	* app/curves.c 
+	* app/gimpui.c
+	* app/global_edit.c 
+	* app/image_new.c 
+	* app/layers_dialog.c 
+	* app/measure.c 
+	* app/palette_select.c
+	* app/shear_tool.c 
+	* app/user_install.c: Include std C headers to reduce warnings.
 
 2001-10-24  Sven Neumann  <sven@gimp.org>
 

@@ -256,6 +256,7 @@ int p_foreach_multilayer(GimpRunModeType run_mode, gint32 image_id,
   l_rc = 0;
   l_plugin_data_len = 0;
   l_nlayers = 0;
+  l_top_layer = 0;
   l_visible_tab = NULL;
   l_step_backup_file[0] = '\0';
   

@@ -35,8 +35,13 @@
 */
 
 #include "config.h"
+
+#include <string.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 #include "gap_dbbrowser_utils.h"
+
 
 extern int gap_debug;
 

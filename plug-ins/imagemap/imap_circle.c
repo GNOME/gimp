@@ -21,9 +21,11 @@
  *
  */
 
+#include "config.h"
+
+#include <stdlib.h>
 #include <math.h>
 
-#include "config.h"
 #include "imap_circle.h"
 #include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"

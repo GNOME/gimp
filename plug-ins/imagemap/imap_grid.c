@@ -22,14 +22,18 @@
  */
 
 #include "config.h"
+
+#include <stdlib.h>
+
 #include "imap_grid.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_menu.h"
 #include "imap_popup.h"
 #include "imap_preview.h"
 #include "imap_table.h"
 #include "imap_toolbar.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 typedef enum {GRID_HIDDEN, GRID_LINES, GRID_CROSSES} GridType_t;
 

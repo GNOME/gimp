@@ -22,12 +22,16 @@
  */
 
 #include "config.h"
-#include "libgimp/stdplugins-intl.h"
+
+#include <stdlib.h>
+
 #include "imap_main.h"
 #include "imap_misc.h"
 #include "imap_object_popup.h"
 #include "imap_rectangle.h"
 #include "imap_table.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 #include "rectangle.xpm"
 

@@ -59,6 +59,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <time.h>  /* For random seeding */
 
 #include <gtk/gtk.h>
