@@ -1,3 +1,9 @@
+2004-08-10  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/AlienMap2.c: Ported to GimpPreviewArea, use an enum
+	for the color model instead of some defines and use gboolean instead
+	of gint where appropriate.
+
 2004-08-10  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpbrushgenerated.c (gimp_brush_generated_load):

@@ -30,11 +30,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -42,29 +37,30 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "gimpoldpreview.h"
-
 #define SCALE_WIDTH  200
 #define ENTRY_WIDTH    6
 
 /***** Color model *****/
 
-#define RGB_MODEL 0
-#define HSL_MODEL 1
+typedef enum
+{
+  RGB_MODEL = 0,
+  HSL_MODEL = 1
+} ColorModel;
 
 /***** Types *****/
 typedef struct
 {
-  gdouble redfrequency;
-  gdouble redangle;
-  gdouble greenfrequency;
-  gdouble greenangle;
-  gdouble bluefrequency;
-  gdouble blueangle;
-  gint    colormodel;
-  gint    redmode;
-  gint    greenmode;
-  gint    bluemode;
+  gdouble    redfrequency;
+  gdouble    redangle;
+  gdouble    greenfrequency;
+  gdouble    greenangle;
+  gdouble    bluefrequency;
+  gdouble    blueangle;
+  ColorModel colormodel;
+  gboolean   redmode;
+  gboolean   greenmode;
+  gboolean   bluemode;
 } alienmap2_vals_t;
 
 typedef struct
@@ -105,14 +101,18 @@ static void      alienmap2_get_label_size (void);
 /***** Variables *****/
 
 static GimpRunMode     run_mode;
-static GimpOldPreview *preview;
+
+#define PREVIEW_SIZE 128
+static GtkWidget *preview;
+static gint       preview_width, preview_height, preview_bpp;
+static guchar    *preview_cache;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
   query, /* query_proc */
-  run,   /* run_proc   */
+  run    /* run_proc   */
 };
 
 static alienmap2_interface_t wint =
@@ -131,7 +131,7 @@ static alienmap2_vals_t wvals =
   RGB_MODEL,
   TRUE,
   TRUE,
-  TRUE,
+  TRUE
 };
 
 static GimpDrawable *drawable         = NULL;
@@ -220,31 +220,34 @@ transform (guchar *r,
            guchar *g,
            guchar *b)
 {
-  if (wvals.colormodel == HSL_MODEL)
+  switch (wvals.colormodel)
     {
-      GimpHSL hsl;
-      GimpRGB rgb;
+    case HSL_MODEL:
+      {
+        GimpHSL hsl;
+        GimpRGB rgb;
 
-      gimp_rgb_set_uchar (&rgb, *r, *g, *b);
-      gimp_rgb_to_hsl (&rgb, &hsl);
+        gimp_rgb_set_uchar (&rgb, *r, *g, *b);
+        gimp_rgb_to_hsl (&rgb, &hsl);
 
-      if (wvals.redmode)
-        hsl.h = 0.5 * (1.0 + sin (((2 * hsl.h - 1.0) * wvals.redfrequency +
-                                   wvals.redangle / 180.0) * G_PI));
+        if (wvals.redmode)
+          hsl.h = 0.5 * (1.0 + sin (((2 * hsl.h - 1.0) * wvals.redfrequency +
+                                     wvals.redangle / 180.0) * G_PI));
 
-      if (wvals.greenmode)
-        hsl.s = 0.5 * (1.0 + sin (((2 * hsl.s - 1.0) * wvals.greenfrequency +
-                                   wvals.greenangle / 180.0) * G_PI));
+        if (wvals.greenmode)
+          hsl.s = 0.5 * (1.0 + sin (((2 * hsl.s - 1.0) * wvals.greenfrequency +
+                                     wvals.greenangle / 180.0) * G_PI));
 
-      if (wvals.bluemode)
-        hsl.l = 0.5 * (1.0 + sin (((2 * hsl.l - 1.0) * wvals.bluefrequency +
-                                   wvals.blueangle / 180.0) * G_PI));
+        if (wvals.bluemode)
+          hsl.l = 0.5 * (1.0 + sin (((2 * hsl.l - 1.0) * wvals.bluefrequency +
+                                     wvals.blueangle / 180.0) * G_PI));
 
-      gimp_hsl_to_rgb (&hsl, &rgb);
-      gimp_rgb_get_uchar (&rgb, r, g, b);
-    }
-  else if (wvals.colormodel == RGB_MODEL)
-    {
+        gimp_hsl_to_rgb (&hsl, &rgb);
+        gimp_rgb_get_uchar (&rgb, r, g, b);
+      }
+      break;
+
+    case RGB_MODEL:
       if (wvals.redmode)
         *r = ROUND (127.5 * (1.0 +
                              sin (((*r / 127.5 - 1.0) * wvals.redfrequency +
@@ -259,6 +262,7 @@ transform (guchar *r,
         *b = ROUND (127.5 * (1.0 +
                              sin (((*b / 127.5 - 1.0) * wvals.bluefrequency +
                                    wvals.blueangle / 180.0) * G_PI)));
+      break;
     }
 }
 
@@ -330,7 +334,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      /*  Make sure that the drawable is indexed or RGB_MODEL color  */
+      /*  Make sure that the drawable is RGB or RGBA  */
       if (gimp_drawable_is_rgb (drawable->drawable_id))
         {
           gimp_progress_init (_("AlienMap2: Transforming..."));
@@ -434,10 +438,15 @@ alienmap2_dialog (void)
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (align);
 
-  preview = gimp_old_preview_new (NULL);
-  gimp_old_preview_fill_scaled (preview, drawable);
-  gtk_container_add (GTK_CONTAINER (align), preview->frame);
-  gtk_widget_show (preview->frame);
+  preview = gimp_preview_area_new ();
+  preview_width = preview_height = PREVIEW_SIZE;
+  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                                    &preview_width,
+                                                    &preview_height,
+                                                    &preview_bpp);
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
+  gtk_container_add (GTK_CONTAINER (align), preview);
+  gtk_widget_show (preview);
 
   /* Controls */
   table = gtk_table_new (6, 3, FALSE);
@@ -581,7 +590,21 @@ alienmap2_dialog (void)
 static void
 dialog_update_preview (void)
 {
-  gimp_old_preview_update (preview, alienmap2_func, NULL);
+  guchar *dest;
+  gint    i;
+
+  dest = g_new (guchar, preview_width * preview_height * preview_bpp);
+
+  for (i = 0 ; i < preview_width * preview_height ; i++)
+    alienmap2_func (preview_cache + i * preview_bpp,
+                    dest + i * preview_bpp,
+                    preview_bpp, NULL);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, preview_width, preview_height,
+                          gimp_drawable_type (drawable->drawable_id),
+                          dest,
+                          preview_width * preview_bpp);
+  g_free (dest);
 }
 
 static void
@@ -647,24 +670,25 @@ alienmap2_set_sensitive (void)
 static void
 alienmap2_set_labels (void)
 {
-  gint i = (wvals.colormodel == RGB_MODEL) ? 0 : 1;
-
-  gtk_button_set_label (GTK_BUTTON (toggle_modify_rh), gettext (ctext[0][i]));
-  gtk_button_set_label (GTK_BUTTON (toggle_modify_gs), gettext (ctext[1][i]));
-  gtk_button_set_label (GTK_BUTTON (toggle_modify_bl), gettext (ctext[2][i]));
+  gtk_button_set_label (GTK_BUTTON (toggle_modify_rh),
+                        gettext (ctext[0][wvals.colormodel]));
+  gtk_button_set_label (GTK_BUTTON (toggle_modify_gs),
+                        gettext (ctext[1][wvals.colormodel]));
+  gtk_button_set_label (GTK_BUTTON (toggle_modify_bl),
+                        gettext (ctext[2][wvals.colormodel]));
 
   gtk_label_set_text_with_mnemonic (GTK_LABEL (label_freq_rh),
-                                    gettext (etext[0][i]));
+                                    gettext (etext[0][wvals.colormodel]));
   gtk_label_set_text_with_mnemonic (GTK_LABEL (label_freq_gs),
-                                    gettext (etext[1][i]));
+                                    gettext (etext[1][wvals.colormodel]));
   gtk_label_set_text_with_mnemonic (GTK_LABEL (label_freq_bl),
-                                    gettext (etext[2][i]));
+                                    gettext (etext[2][wvals.colormodel]));
   gtk_label_set_text_with_mnemonic (GTK_LABEL (label_phase_rh),
-                                    gettext (etext[3][i]));
+                                    gettext (etext[3][wvals.colormodel]));
   gtk_label_set_text_with_mnemonic (GTK_LABEL (label_phase_gs),
-                                    gettext (etext[4][i]));
+                                    gettext (etext[4][wvals.colormodel]));
   gtk_label_set_text_with_mnemonic (GTK_LABEL (label_phase_bl),
-                                    gettext (etext[5][i]));
+                                    gettext (etext[5][wvals.colormodel]));
 
   gtk_widget_set_size_request (label_freq_rh, elabel_maxwidth, -1);
 }
