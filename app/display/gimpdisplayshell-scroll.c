@@ -42,8 +42,8 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
                            gint              x_offset,
                            gint              y_offset)
 {
-  gint      old_x, old_y;
-  GdkEvent *event;
+  gint old_x;
+  gint old_y;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -61,9 +61,11 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
 
   if (x_offset || y_offset)
     {
-      /* FIXME: I'm sure this is useless if all other places are correct --mitch
-       */
-      gimp_display_shell_scale_setup (shell);
+      /* The call to gimp_display_shell_scale_setup() shouldn't be needed
+         here if all other places are correct.
+
+         gimp_display_shell_scale_setup (shell);
+      */
 
       /*  reset the old values so that the tool can accurately redraw  */
       shell->offset_x = old_x;
@@ -81,24 +83,7 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
                                    shell->gdisp);
 
-      /* Make sure graphics expose events are processed before scrolling
-       * again
-       */
-      while ((event = gdk_event_get_graphics_expose (shell->canvas->window)))
-	{
-          gdk_window_invalidate_rect (shell->canvas->window,
-                                      &event->expose.area,
-                                      FALSE);
-
-          if (event->expose.count == 0)
-            {
-              gdk_event_free (event);
-              break;
-            }
-
-	  gdk_event_free (event);
-	}
-
+      /*  Make sure expose events are processed before scrolling again  */
       gdk_window_process_updates (shell->canvas->window, FALSE);
 
       gimp_display_shell_scrolled (shell);

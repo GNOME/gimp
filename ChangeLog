@@ -1,5 +1,11 @@
 2003-02-21  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-scroll.c (gimp_display_shell_scroll):
+	don't wait for graphics expose events. Commented out the call to
+	gimp_display_shell_scale_setup() since it should not be needed.
+
+2003-02-21  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c (render_image_rgb):
 	replaced a for-loop with a call to memcpy().
 
