@@ -451,6 +451,8 @@ gimp_image_init (GimpImage *gimage)
 
   gimage->active_layer          = NULL;
   gimage->active_channel        = NULL;
+  gimage->active_vectors        = NULL;
+
   gimage->floating_sel          = NULL;
   gimage->selection_mask        = NULL;
 

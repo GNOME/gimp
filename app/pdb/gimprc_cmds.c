@@ -63,7 +63,10 @@ gimprc_query_invoker (Gimp     *gimp,
 
   if (success)
     {
-      success = (value = gimp_rc_query (GIMP_RC (gimp->config), token)) != NULL;
+      /*  use edit_config so we get the values back we have set using
+       *  gimprc_set() before
+       */
+      success = (value = gimp_rc_query (GIMP_RC (gimp->edit_config), token)) != NULL;
     }
 
   return_args = procedural_db_return_args (&gimprc_query_proc, success);
@@ -126,7 +129,10 @@ gimprc_set_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimp_config_add_unknown_token (G_OBJECT (gimp->config), token, value);
+      /*  set the value in edit_config so we don't accidentially set
+       *  GIMP_PARAM_RESTART values via the PDB
+       */
+      gimp_config_add_unknown_token (G_OBJECT (gimp->edit_config), token, value);
       success = TRUE;
     }
 

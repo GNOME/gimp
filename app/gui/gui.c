@@ -87,7 +87,7 @@ static void         gui_display_changed             (GimpContext *context,
                                                      GimpDisplay *display,
                                                      Gimp        *gimp);
 static void         gui_image_disconnect            (GimpImage   *gimage,
-                                                     gpointer     data);
+                                                     Gimp        *gimp);
 
 
 /*  private variables  */
@@ -330,7 +330,6 @@ gui_exit (Gimp *gimp)
                                         gimp);
 
   gimp_container_remove_handler (gimp->images, image_disconnect_handler_id);
-
   image_disconnect_handler_id = 0;
 
   if (themes_hash)
@@ -625,14 +624,11 @@ gui_display_changed (GimpContext *context,
 
 static void
 gui_image_disconnect (GimpImage *gimage,
-		      gpointer   data)
+		      Gimp      *gimp)
 {
-  Gimp *gimp;
-
-  gimp = (Gimp *) data;
-
-  /*  check if this is the last image  */
-  if (gimp_container_num_children (gimp->images) == 1)
+  /*  check if this is the last image and if it had a display  */
+  if (gimp_container_num_children (gimp->images) == 1 &&
+      gimage->instance_count                      > 0)
     {
       dialogs_show_toolbox ();
     }

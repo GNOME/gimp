@@ -26,6 +26,8 @@
 
 #include "core-types.h"
 
+#include "config/gimpconfig.h"
+#include "config/gimpconfig-params.h"
 #include "config/gimprc.h"
 
 #include "pdb/procedural_db.h"
@@ -62,13 +64,20 @@
 #include "libgimp/gimpintl.h"
 
 
-static void    gimp_class_init  (GimpClass  *klass);
-static void    gimp_init        (Gimp       *gimp);
+static void    gimp_class_init           (GimpClass  *klass);
+static void    gimp_init                 (Gimp       *gimp);
 
-static void    gimp_dispose     (GObject    *object);
-static void    gimp_finalize    (GObject    *object);
+static void    gimp_dispose              (GObject    *object);
+static void    gimp_finalize             (GObject    *object);
 
-static gsize   gimp_get_memsize (GimpObject *object);
+static gsize   gimp_get_memsize          (GimpObject *object);
+
+static void    gimp_global_config_notify (GObject    *global_config,
+                                          GParamSpec *param_spec,
+                                          GObject    *edit_config);
+static void    gimp_edit_config_notify   (GObject    *edit_config,
+                                          GParamSpec *param_spec,
+                                          GObject    *global_config);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -345,8 +354,14 @@ gimp_finalize (GObject *object)
 
   if (gimp->parasites)
     {
-      g_object_unref (G_OBJECT (gimp->parasites));
+      g_object_unref (gimp->parasites);
       gimp->parasites = NULL;
+    }
+
+  if (gimp->edit_config)
+    {
+      g_object_unref (gimp->edit_config);
+      gimp->edit_config = NULL;
     }
 
   if (gimp->user_units)
@@ -425,6 +440,104 @@ gimp_new (gboolean           be_verbose,
   return gimp;
 }
 
+static void
+gimp_global_config_notify (GObject    *global_config,
+                           GParamSpec *param_spec,
+                           GObject    *edit_config)
+{
+  GValue global_value = { 0, };
+  GValue edit_value   = { 0, };
+
+  g_value_init (&global_value, param_spec->value_type);
+  g_value_init (&edit_value,   param_spec->value_type);
+
+  g_object_get_property (global_config, param_spec->name, &global_value);
+  g_object_get_property (edit_config,   param_spec->name, &edit_value);
+
+  if (g_param_values_cmp (param_spec, &global_value, &edit_value))
+    {
+      g_signal_handlers_block_by_func (edit_config,
+                                       gimp_edit_config_notify,
+                                       global_config);
+
+      g_object_set_property (edit_config, param_spec->name, &global_value);
+
+      g_signal_handlers_unblock_by_func (edit_config,
+                                         gimp_edit_config_notify,
+                                         global_config);
+    }
+
+  g_value_unset (&global_value);
+  g_value_unset (&edit_value);
+}
+
+static void
+gimp_edit_config_notify (GObject    *edit_config,
+                         GParamSpec *param_spec,
+                         GObject    *global_config)
+{
+  GValue edit_value   = { 0, };
+  GValue global_value = { 0, };
+
+  g_value_init (&edit_value,   param_spec->value_type);
+  g_value_init (&global_value, param_spec->value_type);
+
+  g_object_get_property (edit_config,   param_spec->name, &edit_value);
+  g_object_get_property (global_config, param_spec->name, &global_value);
+
+  if (g_param_values_cmp (param_spec, &edit_value, &global_value))
+    {
+      if (param_spec->flags & GIMP_PARAM_RESTART)
+        {
+          g_print ("NOT Applying edit_config change of '%s' to global_config "
+                   "because it needs restart\n",
+                   param_spec->name);
+        }
+      else
+        {
+          g_print ("Applying edit_config change of '%s' to global_config\n",
+                   param_spec->name);
+
+          g_signal_handlers_block_by_func (global_config,
+                                           gimp_global_config_notify,
+                                           edit_config);
+
+          g_object_set_property (global_config, param_spec->name, &edit_value);
+
+          g_signal_handlers_unblock_by_func (global_config,
+                                             gimp_global_config_notify,
+                                             edit_config);
+        }
+    }
+
+  g_value_unset (&edit_value);
+  g_value_unset (&global_value);
+}
+
+void
+gimp_set_config (Gimp           *gimp,
+                 GimpCoreConfig *core_config)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_CORE_CONFIG (core_config));
+  g_return_if_fail (gimp->config == NULL);
+  g_return_if_fail (gimp->edit_config == NULL);
+
+  gimp->config = g_object_ref (core_config);
+
+  gimp->edit_config =
+    GIMP_CORE_CONFIG (gimp_config_duplicate (G_OBJECT (gimp->config)));
+
+  gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
+
+  g_signal_connect_object (gimp->config, "notify",
+                           G_CALLBACK (gimp_global_config_notify),
+                           gimp->edit_config, 0);
+  g_signal_connect_object (gimp->edit_config, "notify",
+                           G_CALLBACK (gimp_edit_config_notify),
+                           gimp->config, 0);
+}
+
 void
 gimp_initialize (Gimp               *gimp,
                  GimpInitStatusFunc  status_callback)
@@ -458,6 +571,7 @@ gimp_initialize (Gimp               *gimp,
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (status_callback != NULL);
+  g_return_if_fail (GIMP_IS_CORE_CONFIG (gimp->config));
 
   gimp->brush_factory =
     gimp_data_factory_new (GIMP_TYPE_BRUSH,

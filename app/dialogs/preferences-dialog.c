@@ -95,42 +95,12 @@ preferences_dialog_create (Gimp *gimp)
   if (prefs_dialog)
     return prefs_dialog;
 
-  config       = G_OBJECT (gimp->config);
+  /*  turn of autosaving while the prefs dialog is open  */
+  gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), FALSE);
+
+  config       = G_OBJECT (gimp->edit_config);
   config_copy  = gimp_config_duplicate (config);
   config_orig  = gimp_config_duplicate (config);
-
-  /*  read the saved gimprc to get GIMP_PARAM_RESTART values  */
-  {
-    GimpRc  *gimprc;
-    GObject *config_saved;
-    GList   *diff;
-    GList   *list;
-
-    gimprc = gimp_rc_new (GIMP_RC (config)->system_gimprc,
-                          GIMP_RC (config)->user_gimprc,
-                          GIMP_RC (config)->verbose);
-    config_saved = G_OBJECT (gimprc);
-
-    diff = gimp_config_diff (config_saved, config_copy, GIMP_PARAM_RESTART);
-
-    for (list = diff; list; list = g_list_next (list))
-      {
-        GParamSpec *param_spec;
-        GValue      value = { 0, };
-
-        param_spec = (GParamSpec *) list->data;
-
-        g_value_init (&value, param_spec->value_type);
-
-        g_object_get_property (config_saved, param_spec->name, &value);
-        g_object_set_property (config_copy,  param_spec->name, &value);
-
-        g_value_unset (&value);
-      }
-
-    g_list_free (diff);
-    g_object_unref (gimprc);
-  }
 
   g_signal_connect_object (config, "notify",
                            G_CALLBACK (prefs_config_notify),
@@ -208,13 +178,7 @@ prefs_config_copy_notify (GObject    *config_copy,
 
   if (g_param_values_cmp (param_spec, &copy_value, &global_value))
     {
-      if (param_spec->flags & GIMP_PARAM_RESTART)
-        {
-          g_print ("NOT Applying prefs change of '%s' to global config "
-                   "because it needs restart\n",
-                   param_spec->name);
-        }
-      else if (param_spec->flags & GIMP_PARAM_CONFIRM)
+      if (param_spec->flags & GIMP_PARAM_CONFIRM)
         {
           g_print ("NOT Applying prefs change of '%s' to global config "
                    "because it needs confirmation\n",
@@ -257,10 +221,10 @@ prefs_cancel_callback (GtkWidget *widget,
 
   gtk_widget_destroy (dialog);  /*  destroys config_copy  */
 
-  diff = gimp_config_diff (G_OBJECT (gimp->config), config_orig,
+  diff = gimp_config_diff (G_OBJECT (gimp->edit_config), config_orig,
                            GIMP_PARAM_SERIALIZE);
 
-  g_object_freeze_notify (G_OBJECT (gimp->config));
+  g_object_freeze_notify (G_OBJECT (gimp->edit_config));
 
   for (list = diff; list; list = g_list_next (list))
     {
@@ -274,18 +238,20 @@ prefs_cancel_callback (GtkWidget *widget,
       g_object_get_property (config_orig,
                              param_spec->name,
                              &value);
-      g_object_set_property (G_OBJECT (gimp->config),
+      g_object_set_property (G_OBJECT (gimp->edit_config),
                              param_spec->name,
                              &value);
 
       g_value_unset (&value);
     }
 
-  g_object_thaw_notify (G_OBJECT (gimp->config));
+  g_object_thaw_notify (G_OBJECT (gimp->edit_config));
 
   g_list_free (diff);
-
   g_object_unref (config_orig);
+
+  /*  enable autosaving again  */
+  gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
 }
 
 static void
@@ -303,14 +269,12 @@ prefs_ok_callback (GtkWidget *widget,
 
   g_object_ref (config_copy);
 
-  gtk_widget_destroy (dialog);
+  gtk_widget_destroy (dialog);  /*  destroys config_orig  */
 
-  restart_diff = gimp_config_diff (G_OBJECT (gimp->config), config_copy,
-                                   GIMP_PARAM_RESTART);
-  confirm_diff = gimp_config_diff (G_OBJECT (gimp->config), config_copy,
+  confirm_diff = gimp_config_diff (G_OBJECT (gimp->edit_config), config_copy,
                                    GIMP_PARAM_CONFIRM);
 
-  g_object_freeze_notify (G_OBJECT (gimp->config));
+  g_object_freeze_notify (G_OBJECT (gimp->edit_config));
 
   for (list = confirm_diff; list; list = g_list_next (list))
     {
@@ -324,14 +288,29 @@ prefs_ok_callback (GtkWidget *widget,
       g_object_get_property (config_copy,
                              param_spec->name,
                              &value);
-      g_object_set_property (G_OBJECT (gimp->config),
+      g_object_set_property (G_OBJECT (gimp->edit_config),
                              param_spec->name,
                              &value);
 
       g_value_unset (&value);
     }
 
-  g_object_thaw_notify (G_OBJECT (gimp->config));
+  g_object_thaw_notify (G_OBJECT (gimp->edit_config));
+
+  g_list_free (confirm_diff);
+  g_object_unref (config_copy);
+
+  gimp_rc_save (GIMP_RC (gimp->edit_config));
+
+  /*  enable autosaving again  */
+  gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
+
+  /*  spit out a solely informational warning about changed values
+   *  which need restart
+   */
+  restart_diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
+                                   G_OBJECT (gimp->config),
+                                   GIMP_PARAM_RESTART);
 
   if (restart_diff)
     {
@@ -355,12 +334,7 @@ prefs_ok_callback (GtkWidget *widget,
       g_string_free (string, TRUE);
     }
 
-  g_list_free (confirm_diff);
   g_list_free (restart_diff);
-
-  gimp_rc_save (GIMP_RC (config_copy));
-
-  g_object_unref (config_copy);  
 }
 
 static void

@@ -1,3 +1,31 @@
+2002-11-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.[ch]: added gimp->edit_config which is a copy of
+	gimp->config except for GIMP_PARAM_RESTRT options. Create it in
+	gimp_set_config() which must be called before anything else after
+	gimp_new(). Install "notify" handlers between the both to keep
+	them up-to-date. Enable auto saving for the edit_config.
+
+	* app/app_procs.c: call gimp_set_config().
+
+	* tools/pdbgen/pdb/gimprc.pdb: use gimp->edit_config here so we
+	don't accidentially change GIMP_PARAM_RESTART values from the PDB.
+
+	* app/pdb/gimprc_cmds.c: regenerated.
+
+	* app/gui/preferences-dialog.c: use gimp->edit_config as the base
+	for all prefs operations. Disable auto saving while the prefs
+	dialog is open. No need any more to parse the saved gimprc to get
+	GIMP_PARAM_RESTART values. Removed GIMP_PARAM_RESTART special
+	hacks because edit_config handles them transparently for us.
+
+	Unrelated:
+
+	* app/core/gimpimage.c (gimp_image_init): initialize active_vectors.
+
+	* app/gui/gui.c (gui_image_disconect): when the last image
+	disappears, show the toolbox only if the image had a display.
+
 2002-11-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdnd.c: more useful debugging output.
@@ -5,7 +33,7 @@
 2002-11-29  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.c (gimp_pixmap_button_new):
-	use gtk_label_new_with_mnemonic():
+	use gtk_label_new_with_mnemonic().
 
 	* plug-ins/common/uniteditor.c: Treeviewized and undeprecated.
 	Removed all static variables. Cleanup.

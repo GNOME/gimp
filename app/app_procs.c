@@ -89,6 +89,7 @@ app_init (gint    gimp_argc,
 	  gchar **gimp_argv)
 {
   const gchar *gimp_dir;
+  GimpRc      *gimprc;
 
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
@@ -129,17 +130,22 @@ app_init (gint    gimp_argc,
    */
   gimp_unitrc_load (the_gimp);
 
-  the_gimp->config = GIMP_CORE_CONFIG (gimp_rc_new (alternate_system_gimprc,
-                                                    alternate_gimprc,
-                                                    be_verbose));
+  gimprc = gimp_rc_new (alternate_system_gimprc,
+                        alternate_gimprc,
+                        be_verbose);
 
   /* solely for debugging */
-  g_signal_connect (G_OBJECT (the_gimp->config), "notify",
+  g_signal_connect (G_OBJECT (gimprc), "notify",
                     G_CALLBACK (gimprc_notify_callback),
                     NULL);
 
   /*  initialize lowlevel stuff  */
-  base_init (GIMP_BASE_CONFIG (the_gimp->config));
+  base_init (GIMP_BASE_CONFIG (gimprc));
+
+  gimp_set_config (the_gimp, GIMP_CORE_CONFIG (gimprc));
+
+  g_object_unref (gimprc);
+  gimprc = NULL;
 
   if (! no_interface)
     {

@@ -47,6 +47,9 @@ struct _Gimp
   GimpObject             parent_instance;
 
   GimpCoreConfig        *config;
+  GimpCoreConfig        *edit_config; /* don't use this one, it's just
+                                       * for the preferences dialog
+                                       */
 
   gboolean               be_verbose;
   gboolean               no_data;
@@ -141,6 +144,9 @@ Gimp        * gimp_new                  (gboolean            be_verbose,
                                          gboolean            no_data,
                                          gboolean            no_interface,
                                          GimpStackTraceMode  stack_trace_mode);
+
+void          gimp_set_config           (Gimp               *gimp,
+                                         GimpCoreConfig     *core_config);
 
 void          gimp_initialize           (Gimp               *gimp,
                                          GimpInitStatusFunc  status_callback);
