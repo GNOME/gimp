@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:31+0200\n"
-"PO-Revision-Date: 2004-07-05 12:07+0200\n"
+"POT-Creation-Date: 2004-07-20 14:50+0200\n"
+"PO-Revision-Date: 2004-07-20 17:34+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -66,7 +66,7 @@ msgstr "O aplikaci"
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
 #: plug-ins/common/iwarp.c:1225 plug-ins/common/mapcolor.c:551
-#: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:604
+#: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:609
 #: plug-ins/common/sharpen.c:523 plug-ins/common/sinus.c:1040
 #: plug-ins/common/spheredesigner.c:2508 plug-ins/common/tileit.c:390
 #: plug-ins/common/waves.c:438 plug-ins/common/whirlpinch.c:676
@@ -2026,7 +2026,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/mosaic.c:602 plug-ins/common/nlfilt.c:361
 #: plug-ins/common/noisify.c:331 plug-ins/common/nova.c:328
 #: plug-ins/common/oilify.c:452 plug-ins/common/pixelize.c:319
-#: plug-ins/common/plasma.c:328 plug-ins/common/polar.c:623
+#: plug-ins/common/plasma.c:328 plug-ins/common/polar.c:628
 #: plug-ins/common/randomize.c:725 plug-ins/common/ripple.c:516
 #: plug-ins/common/scatter_hsv.c:388 plug-ins/common/sel_gauss.c:238
 #: plug-ins/common/sharpen.c:582 plug-ins/common/shift.c:327
@@ -4589,7 +4589,7 @@ msgstr "Náhled exportu"
 
 #: plug-ins/common/jpeg.c:758
 msgid "EXIF data will be ignored."
-msgstr ""
+msgstr "Data EXIF budou ignorována."
 
 #: plug-ins/common/jpeg.c:972
 msgid "JPEG preview"
@@ -5707,37 +5707,37 @@ msgstr "ASCII"
 msgid "<Image>/Filters/Distorts/P_olar Coords..."
 msgstr "<Image>/Filtry/Zkreslení/_Polární souřadnice..."
 
-#: plug-ins/common/polar.c:353
+#: plug-ins/common/polar.c:358
 msgid "Polarizing..."
 msgstr "Polarizuji..."
 
-#: plug-ins/common/polar.c:588
+#: plug-ins/common/polar.c:593
 msgid "Polarize"
 msgstr "Polarizace"
 
-#: plug-ins/common/polar.c:639
+#: plug-ins/common/polar.c:644
 msgid "Circle _Depth in Percent:"
 msgstr "Hloubka _kružnice v procentech:"
 
-#: plug-ins/common/polar.c:648
+#: plug-ins/common/polar.c:653
 msgid "Offset _Angle:"
 msgstr "Úhel p_osunu:"
 
-#: plug-ins/common/polar.c:660
+#: plug-ins/common/polar.c:665
 msgid "_Map Backwards"
 msgstr "Zpětné _mapování"
 
-#: plug-ins/common/polar.c:666
+#: plug-ins/common/polar.c:671
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr "Při zaškrtnutí začne mapování napravo straně namísto nalevo."
 
-#: plug-ins/common/polar.c:674
+#: plug-ins/common/polar.c:679
 msgid "Map from _Top"
 msgstr "Mapování _shora"
 
-#: plug-ins/common/polar.c:680
+#: plug-ins/common/polar.c:685
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
@@ -5745,11 +5745,11 @@ msgstr ""
 "Bez zaškrtnutí začne pokládat dolní řadu doprostřed a horní řadu ven. Při "
 "zaškrtnutí to bude naopak."
 
-#: plug-ins/common/polar.c:689
+#: plug-ins/common/polar.c:694
 msgid "To _Polar"
 msgstr "Do _polárních"
 
-#: plug-ins/common/polar.c:695
+#: plug-ins/common/polar.c:700
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
