@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 0\n"
-"POT-Creation-Date: 2004-03-20 14:48+0100\n"
-"PO-Revision-Date: 2004-03-20 14:48+CET\n"
+"POT-Creation-Date: 2004-03-20 23:13+0100\n"
+"PO-Revision-Date: 2004-03-20 23:13+CET\n"
 "Last-Translator: auto\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "MIME-Version: 1.0\n"
@@ -1221,20 +1221,20 @@ msgid "Linked Item"
 msgstr "Povezane jedinice"
 
 #: app/core/core-enums.c:599 app/core/gimplayer.c:253 app/core/gimplayer.c:646
-#: app/gui/layers-commands.c:1139 app/gui/resize-dialog.c:204
+#: app/gui/layers-commands.c:1187 app/gui/resize-dialog.c:204
 #: app/pdb/layer_cmds.c:453
 msgid "Scale Layer"
 msgstr "Srazmjer Sloja"
 
 #: app/core/core-enums.c:600 app/core/gimpimage-crop.c:117
 #: app/core/gimplayer.c:254 app/core/gimplayer.c:676
-#: app/gui/layers-commands.c:1238 app/pdb/layer_cmds.c:548
+#: app/gui/layers-commands.c:1286 app/pdb/layer_cmds.c:548
 msgid "Resize Layer"
 msgstr "Promjeni veličinu sloja"
 
 #: app/core/core-enums.c:601 app/core/core-enums.c:630
-#: app/core/gimplayer.c:1023 app/gui/layers-commands.c:1007
-#: app/gui/layers-commands.c:1046
+#: app/core/gimplayer.c:1023 app/gui/layers-commands.c:1055
+#: app/gui/layers-commands.c:1094
 msgid "Add Layer Mask"
 msgstr "Dodaj Masku Sloja..."
 
@@ -1264,7 +1264,7 @@ msgid "Cut"
 msgstr "Izreži"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:636
-#: app/tools/gimptexttool.c:114 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:127 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Tekst"
 
@@ -1328,7 +1328,7 @@ msgid "Set Item Linked"
 msgstr "Postavi povezane jedinice"
 
 #: app/core/core-enums.c:628 app/gui/layers-commands.c:717
-#: app/gui/layers-commands.c:748 app/gui/layers-commands.c:782
+#: app/gui/layers-commands.c:745 app/gui/layers-commands.c:779
 #: app/widgets/gimpdrawabletreeview.c:219
 msgid "New Layer"
 msgstr "Novi Sloj"
@@ -1885,15 +1885,15 @@ msgstr "Stopi Vidljive Staze"
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr "Nema dovoljno slojeva za stapanje. Mora ih biti najmanje dva."
 
-#: app/core/gimpimage-qmask.c:66
+#: app/core/gimpimage-qmask.c:67
 msgid "Enable QuickMask"
 msgstr "Omogući brzu masku"
 
-#: app/core/gimpimage-qmask.c:114
+#: app/core/gimpimage-qmask.c:117
 msgid "Disable QuickMask"
 msgstr "Onemogući brzu masku"
 
-#: app/core/gimpimage-undo-push.c:2915
+#: app/core/gimpimage-undo-push.c:2974
 #, c-format
 msgid "Can't undo %s"
 msgstr "Ne mogu unatrag %s"
@@ -2228,7 +2228,7 @@ msgstr "Greška u GIMP uzorku \"%s\""
 msgid "Move Selection"
 msgstr "Premjesti označeno"
 
-#: app/core/gimpselection.c:197 app/gui/select-commands.c:156
+#: app/core/gimpselection.c:197 app/gui/select-commands.c:177
 msgid "Feather Selection"
 msgstr "Istovrsni Odabir"
 
@@ -2248,15 +2248,15 @@ msgstr "Odaberi sve"
 msgid "Invert Selection"
 msgstr "Inverzni odabir"
 
-#: app/core/gimpselection.c:202 app/gui/select-commands.c:249
+#: app/core/gimpselection.c:202 app/gui/select-commands.c:270
 msgid "Border Selection"
 msgstr "Odabir Rubova"
 
-#: app/core/gimpselection.c:203 app/gui/select-commands.c:226
+#: app/core/gimpselection.c:203 app/gui/select-commands.c:247
 msgid "Grow Selection"
 msgstr "Odabir uvećavanja"
 
-#: app/core/gimpselection.c:204 app/gui/select-commands.c:192
+#: app/core/gimpselection.c:204 app/gui/select-commands.c:213
 msgid "Shrink Selection"
 msgstr "Odabir Skupljanja"
 
@@ -2282,7 +2282,7 @@ msgstr "Ne mogu isjeći ili kopirati jer su odabrana područja prazna."
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Ne mogu napraviti plutajući odabir jer je odabrano područje prazno."
 
-#: app/core/gimpselection.c:843 app/gui/layers-commands.c:965
+#: app/core/gimpselection.c:843 app/gui/layers-commands.c:995
 msgid "Floating Selection"
 msgstr "Odabir Plutajućeg"
 
@@ -2375,53 +2375,53 @@ msgid "Custom Color"
 msgstr "Proizvoljna boja"
 
 #. create the contents of the right_vbox  ********************************
-#: app/display/gimpdisplayshell.c:788
+#: app/display/gimpdisplayshell.c:796
 msgid "Set Canvas Padding Color"
 msgstr "Odredi boju za nadopunjavanje platna"
 
-#: app/display/gimpdisplayshell.c:797
+#: app/display/gimpdisplayshell.c:805
 msgid "Set canvas padding color"
 msgstr "Namjesti ispunjavanje površine bojom"
 
-#: app/display/gimpdisplayshell.c:810
+#: app/display/gimpdisplayshell.c:818
 msgid "/From _Theme"
 msgstr "/iz _Teme"
 
-#: app/display/gimpdisplayshell.c:813
+#: app/display/gimpdisplayshell.c:821
 msgid "/_Light Check Color"
 msgstr "/Kontrola svjetlosti boja"
 
-#: app/display/gimpdisplayshell.c:816
+#: app/display/gimpdisplayshell.c:824
 msgid "/_Dark Check Color"
 msgstr " /_Tamna provjera boje"
 
-#: app/display/gimpdisplayshell.c:822
+#: app/display/gimpdisplayshell.c:830
 msgid "/Select _Custom Color..."
 msgstr "/Odabir prilagođene boje..."
 
-#: app/display/gimpdisplayshell.c:826
+#: app/display/gimpdisplayshell.c:834
 msgid "/As in _Preferences"
 msgstr "/Kao u mogućnostima "
 
-#: app/display/gimpdisplayshell.c:855
+#: app/display/gimpdisplayshell.c:863
 msgid "Toggle QuickMask"
 msgstr "Izmjeni Brzu masku"
 
-#: app/display/gimpdisplayshell.c:1395
+#: app/display/gimpdisplayshell.c:1403
 #, , c-format
 msgid "Close %s?"
 msgstr "Zatvoriti %s?"
 
-#: app/display/gimpdisplayshell.c:1405
+#: app/display/gimpdisplayshell.c:1413
 msgid "_Discard changes"
 msgstr "_Odbaci promjene"
 
-#: app/display/gimpdisplayshell.c:1445
+#: app/display/gimpdisplayshell.c:1453
 #, , c-format
 msgid "Changes were made to '%s'."
 msgstr "Izvršene promjene na \"%s\"."
 
-#: app/display/gimpdisplayshell.c:1459
+#: app/display/gimpdisplayshell.c:1467
 msgid "Unsaved changes will be lost."
 msgstr "Nespremljene promjene biti će izgubljene."
 
@@ -2701,7 +2701,7 @@ msgstr "/Oduzmi iz Odabira"
 msgid "/_Intersect with Selection"
 msgstr "/Presijeci Odabirom"
 
-#: app/gui/color-notebook.c:185
+#: app/gui/color-notebook.c:184
 msgid "Add the current color to the color history"
 msgstr "Dodaj trenutnu boju u povijest boja"
 
@@ -3636,7 +3636,7 @@ msgstr "Okrećem..."
 msgid "Rotating..."
 msgstr "Rotiranje..."
 
-#: app/gui/image-commands.c:269 app/gui/layers-commands.c:371
+#: app/gui/image-commands.c:269 app/gui/layers-commands.c:373
 msgid "Cannot crop because the current selection is empty."
 msgstr "Ne mogu izrezati jer je odabrano područje prazno."
 
@@ -3710,7 +3710,7 @@ msgstr ""
 msgid "Layer Too Small"
 msgstr "Sloje je Premali"
 
-#: app/gui/image-commands.c:633 app/gui/layers-commands.c:1133
+#: app/gui/image-commands.c:633 app/gui/layers-commands.c:1181
 #: app/tools/gimpscaletool.c:162
 msgid "Scaling..."
 msgstr "Skaliram..."
@@ -3871,741 +3871,745 @@ msgid "/Select/_Invert"
 msgstr "/Odaberi/Obratno"
 
 #: app/gui/image-menu.c:292
+msgid "/Select/Fr_om Path"
+msgstr "/Odaberi/_Iz putanje"
+
+#: app/gui/image-menu.c:297
 msgid "/Select/_Float"
 msgstr "/Odaberi/Plutajući"
 
-#: app/gui/image-menu.c:297
+#: app/gui/image-menu.c:302
 msgid "/Select/_By Color"
 msgstr "/Odabir/Po boji..."
 
-#: app/gui/image-menu.c:305
+#: app/gui/image-menu.c:310
 msgid "/Select/Fea_ther..."
 msgstr "/Odaberi/Pero..."
 
-#: app/gui/image-menu.c:309
+#: app/gui/image-menu.c:314
 msgid "/Select/_Sharpen"
 msgstr "/Odaberi/Izoštravanje"
 
-#: app/gui/image-menu.c:313
+#: app/gui/image-menu.c:318
 msgid "/Select/S_hrink..."
 msgstr "/Odaberi/Skupljanje..."
 
-#: app/gui/image-menu.c:318
+#: app/gui/image-menu.c:323
 msgid "/Select/_Grow..."
 msgstr "/Odaberi/Rast..."
 
-#: app/gui/image-menu.c:323
+#: app/gui/image-menu.c:328
 msgid "/Select/Bo_rder..."
 msgstr "/Odaberi/Rub..."
 
-#: app/gui/image-menu.c:331
+#: app/gui/image-menu.c:336
 msgid "/Select/Toggle _QuickMask"
 msgstr "/Odabir Maske"
 
-#: app/gui/image-menu.c:336
+#: app/gui/image-menu.c:341
 msgid "/Select/Save to _Channel"
 msgstr "/Odaberi/Spremi u Kanal"
 
-#: app/gui/image-menu.c:341
+#: app/gui/image-menu.c:346
 msgid "/Select/To _Path"
 msgstr "/Izaberi u Stazu"
 
 #. <Image>/View
-#: app/gui/image-menu.c:349
+#: app/gui/image-menu.c:354
 msgid "/_View"
 msgstr "/_Datoteka"
 
-#: app/gui/image-menu.c:351
+#: app/gui/image-menu.c:356
 msgid "/View/_New View"
 msgstr "/Prikaz/Novi Prikaz"
 
-#: app/gui/image-menu.c:356
+#: app/gui/image-menu.c:361
 msgid "/View/_Dot for Dot"
 msgstr "/Prikaz/Točka za Točku"
 
 #. <Image>/View/Zoom
-#: app/gui/image-menu.c:363
+#: app/gui/image-menu.c:368
 msgid "/View/_Zoom"
 msgstr "/Prikaz/Povećalo"
 
-#: app/gui/image-menu.c:365
+#: app/gui/image-menu.c:370
 msgid "/View/Zoom/Zoom _Out"
 msgstr "/Prikaz/Zoom/Umanjenje -"
 
-#: app/gui/image-menu.c:370
+#: app/gui/image-menu.c:375
 msgid "/View/Zoom/Zoom _In"
 msgstr "/Prikaz/Zoom/Uvećanje +"
 
-#: app/gui/image-menu.c:375
+#: app/gui/image-menu.c:380
 msgid "/View/Zoom/Zoom to _Fit Window"
 msgstr "/Prikaz/Zoom/Uvećanje +"
 
-#: app/gui/image-menu.c:383
+#: app/gui/image-menu.c:388
 msgid "/View/Zoom/16:1  (1600%)"
 msgstr "/Prikaz/Povećanje/16:1 (1600%)"
 
-#: app/gui/image-menu.c:387
+#: app/gui/image-menu.c:392
 msgid "/View/Zoom/8:1  (800%)"
 msgstr "/Prikaz/Povećanje/8:1 (800%)"
 
-#: app/gui/image-menu.c:391
+#: app/gui/image-menu.c:396
 msgid "/View/Zoom/4:1  (400%)"
 msgstr "/Prikaz/Povećanje/4:1 (400%)"
 
-#: app/gui/image-menu.c:395
+#: app/gui/image-menu.c:400
 msgid "/View/Zoom/2:1  (200%)"
 msgstr "/Prikaz/Povećanje/2:1 (200%)"
 
-#: app/gui/image-menu.c:399
+#: app/gui/image-menu.c:404
 msgid "/View/Zoom/1:1  (100%)"
 msgstr "/Prikaz/Povećanje/1:1 (100%)"
 
-#: app/gui/image-menu.c:403
+#: app/gui/image-menu.c:408
 msgid "/View/Zoom/1:2  (50%)"
 msgstr "/Prikaz/Povećanje/1:2 (50%)"
 
-#: app/gui/image-menu.c:407
+#: app/gui/image-menu.c:412
 msgid "/View/Zoom/1:4  (25%)"
 msgstr "/Prikaz/Povećanje/1:4 (25%)"
 
-#: app/gui/image-menu.c:411
+#: app/gui/image-menu.c:416
 msgid "/View/Zoom/1:8  (12.5%)"
 msgstr "/Prikaz/Povećanje/1:8 (12.5%)"
 
-#: app/gui/image-menu.c:415
+#: app/gui/image-menu.c:420
 msgid "/View/Zoom/1:16  (6.25%)"
 msgstr "/Prikaz/Povećanje/1:16 (6.25%)"
 
-#: app/gui/image-menu.c:429
+#: app/gui/image-menu.c:434
 msgid "/View/_Info Window"
 msgstr "/Prikaz/Info Prozor..."
 
-#: app/gui/image-menu.c:434
+#: app/gui/image-menu.c:439
 msgid "/View/Na_vigation Window"
 msgstr "/Prikaz/Navig. Prozor..."
 
-#: app/gui/image-menu.c:439
+#: app/gui/image-menu.c:444
 msgid "/View/Display _Filters..."
 msgstr "/Dijalozi/Filteri Zaslona..."
 
-#: app/gui/image-menu.c:447
+#: app/gui/image-menu.c:452
 msgid "/View/Show _Selection"
 msgstr "/Prikaz/Pokaži Odabir "
 
-#: app/gui/image-menu.c:451
+#: app/gui/image-menu.c:456
 msgid "/View/Show _Layer Boundary"
 msgstr "/Prikaz/Pokaži granice sloja"
 
-#: app/gui/image-menu.c:455
+#: app/gui/image-menu.c:460
 msgid "/View/Show _Guides"
 msgstr "/Prikaz/Prikaži vodič"
 
-#: app/gui/image-menu.c:459
+#: app/gui/image-menu.c:464
 msgid "/View/Sn_ap to Guides"
 msgstr "/Prikaz/Spoji na vodič"
 
-#: app/gui/image-menu.c:463
+#: app/gui/image-menu.c:468
 msgid "/View/S_how Grid"
 msgstr "/Prikaz/Zaključaj Vodilje"
 
-#: app/gui/image-menu.c:467
+#: app/gui/image-menu.c:472
 msgid "/View/Sna_p to Grid"
 msgstr "/Prikaz/Spoji u mrežu"
 
-#: app/gui/image-menu.c:474
+#: app/gui/image-menu.c:479
 msgid "/View/Show _Menubar"
 msgstr "/Prikaz/Pokaži traku izbornika"
 
-#: app/gui/image-menu.c:478
+#: app/gui/image-menu.c:483
 msgid "/View/Show R_ulers"
 msgstr "/Prikaz/Pokaži Ravnala"
 
-#: app/gui/image-menu.c:482
+#: app/gui/image-menu.c:487
 msgid "/View/Show Scroll_bars"
 msgstr "/Prikaz/Pokaži Ravnala"
 
-#: app/gui/image-menu.c:486
+#: app/gui/image-menu.c:491
 msgid "/View/Show S_tatusbar"
 msgstr "/Prikaz/Pokaži Statusnu Traku"
 
-#: app/gui/image-menu.c:493
+#: app/gui/image-menu.c:498
 msgid "/View/Shrink _Wrap"
 msgstr "/Prikaz/Smanjenjo omatanje"
 
-#: app/gui/image-menu.c:498
+#: app/gui/image-menu.c:503
 msgid "/View/Fullscr_een"
 msgstr "/Prikaz/Cijeli zaslon"
 
-#: app/gui/image-menu.c:503
+#: app/gui/image-menu.c:508
 msgid "/View/Move to Screen..."
 msgstr "/Pregled/Prebaci na zaslon..."
 
 #. <Image>/Image
-#: app/gui/image-menu.c:511
+#: app/gui/image-menu.c:516
 msgid "/_Image"
 msgstr "/Slika"
 
 #. <Image>/Image/Mode
-#: app/gui/image-menu.c:515
+#: app/gui/image-menu.c:520
 msgid "/Image/_Mode"
 msgstr "/Slika/Mod"
 
-#: app/gui/image-menu.c:517
+#: app/gui/image-menu.c:522
 msgid "/Image/Mode/_RGB"
 msgstr "/Slika/Mod/RGB"
 
-#: app/gui/image-menu.c:522
+#: app/gui/image-menu.c:527
 msgid "/Image/Mode/_Grayscale"
 msgstr "/Slika/Mod/Siva Skala"
 
-#: app/gui/image-menu.c:527
+#: app/gui/image-menu.c:532
 msgid "/Image/Mode/_Indexed..."
 msgstr "/Slika/Mod/Indeksirano..."
 
 #. <Image>/Image/Transform
-#: app/gui/image-menu.c:535
+#: app/gui/image-menu.c:540
 msgid "/Image/_Transform"
 msgstr "/Slika/Transformacija"
 
-#: app/gui/image-menu.c:537
+#: app/gui/image-menu.c:542
 msgid "/Image/Transform/Flip _Horizontally"
 msgstr "/Slika/Transformacije/Preokreni Vodoravno"
 
-#: app/gui/image-menu.c:542
+#: app/gui/image-menu.c:547
 msgid "/Image/Transform/Flip _Vertically"
 msgstr "/Slika/Transformacije/Preokreni Okomito"
 
 #. please use the degree symbol in the translation
-#: app/gui/image-menu.c:551
+#: app/gui/image-menu.c:556
 msgid "/Image/Transform/Rotate 90 degrees _CW"
 msgstr "/Slika/Transformacije/Rotacija 90 stupnjeva u desno"
 
-#: app/gui/image-menu.c:556
+#: app/gui/image-menu.c:561
 msgid "/Image/Transform/Rotate 90 degrees CC_W"
 msgstr "/Slika/Transformacije/Rotacija 90 stupnjeva u lijevo"
 
-#: app/gui/image-menu.c:561
+#: app/gui/image-menu.c:566
 msgid "/Image/Transform/Rotate _180 degrees"
 msgstr "/Slika/Transformacije/Rotacija za 180 stupnjeva"
 
-#: app/gui/image-menu.c:571
+#: app/gui/image-menu.c:576
 msgid "/Image/Can_vas Size..."
 msgstr "/Slika/Veličina Platna..."
 
-#: app/gui/image-menu.c:576
+#: app/gui/image-menu.c:581
 msgid "/Image/_Scale Image..."
 msgstr "/Slika/Promjeni Veličinu Slike..."
 
-#: app/gui/image-menu.c:581
+#: app/gui/image-menu.c:586
 msgid "/Image/_Crop Image"
 msgstr "/Slika/Obrezivanje Slike"
 
-#: app/gui/image-menu.c:586
+#: app/gui/image-menu.c:591
 msgid "/Image/_Duplicate"
 msgstr "/Slika/Dupliciranje"
 
-#: app/gui/image-menu.c:594
+#: app/gui/image-menu.c:599
 msgid "/Image/Merge Visible _Layers..."
 msgstr "/Slojevi/Stopi Vidljive Slojeve..."
 
-#: app/gui/image-menu.c:598
+#: app/gui/image-menu.c:603
 msgid "/Image/_Flatten Image"
 msgstr "/Slika/Stopi sliku"
 
-#: app/gui/image-menu.c:605
+#: app/gui/image-menu.c:610
 msgid "/Image/Configure G_rid..."
 msgstr "/Slika/Podesi Mrežu..."
 
 #. <Image>/Layer
-#: app/gui/image-menu.c:613
+#: app/gui/image-menu.c:618
 msgid "/_Layer"
 msgstr "/Sloj"
 
-#: app/gui/image-menu.c:615
+#: app/gui/image-menu.c:620
 msgid "/Layer/_New Layer..."
 msgstr "/Sloj/Novi Sloj..."
 
-#: app/gui/image-menu.c:620
+#: app/gui/image-menu.c:625
 msgid "/Layer/Du_plicate Layer"
 msgstr "/Sloj/Du_pliciraj Sloj"
 
-#: app/gui/image-menu.c:625
+#: app/gui/image-menu.c:630
 msgid "/Layer/Anchor _Layer"
 msgstr "/Sloji/Usidreni Sloj"
 
-#: app/gui/image-menu.c:630
+#: app/gui/image-menu.c:635
 msgid "/Layer/Me_rge Down"
 msgstr "/Stopi Prema Dolje"
 
-#: app/gui/image-menu.c:635
+#: app/gui/image-menu.c:640
 msgid "/Layer/_Delete Layer"
 msgstr "/Sloj/_Izbriši Sloj"
 
-#: app/gui/image-menu.c:640
+#: app/gui/image-menu.c:645
 msgid "/Layer/Discard _Text Information"
 msgstr "/Sloj/Odbaci informacije o _tekstu"
 
 #. <Image>/Layer/Stack
-#: app/gui/image-menu.c:650
+#: app/gui/image-menu.c:655
 msgid "/Layer/Stac_k"
 msgstr "/Sloj/Stog"
 
-#: app/gui/image-menu.c:652
+#: app/gui/image-menu.c:657
 msgid "/Layer/Stack/Select _Previous Layer"
 msgstr "/Sloj/Stog/Odaberi _Prethodni Sloj"
 
-#: app/gui/image-menu.c:656
+#: app/gui/image-menu.c:661
 msgid "/Layer/Stack/Select _Next Layer"
 msgstr "/Sloji/Stog/Odaberi Sljedeći Sloj"
 
-#: app/gui/image-menu.c:660
+#: app/gui/image-menu.c:665
 msgid "/Layer/Stack/Select _Top Layer"
 msgstr "/Sloj/Stog/Odaberi Najgornji Sloj"
 
-#: app/gui/image-menu.c:664
+#: app/gui/image-menu.c:669
 msgid "/Layer/Stack/Select _Bottom Layer"
 msgstr "/Sloj/Stog/Oda_beri Donji Sloj"
 
-#: app/gui/image-menu.c:671
+#: app/gui/image-menu.c:676
 msgid "/Layer/Stack/_Raise Layer"
 msgstr "/Sloj/Stog/Podigni Sloj"
 
-#: app/gui/image-menu.c:676
+#: app/gui/image-menu.c:681
 msgid "/Layer/Stack/_Lower Layer"
 msgstr "/Sloj/Stog/Spusti S_loj"
 
-#: app/gui/image-menu.c:681
+#: app/gui/image-menu.c:686
 msgid "/Layer/Stack/Layer to T_op"
 msgstr "/Sloji/Stog/Sl_oj na Vrh"
 
-#: app/gui/image-menu.c:686
+#: app/gui/image-menu.c:691
 msgid "/Layer/Stack/Layer to Botto_m"
 msgstr "/Slojevi/Stog/Sloj na Dno"
 
 #. <Image>/Layer/Colors
-#: app/gui/image-menu.c:694
+#: app/gui/image-menu.c:699
 msgid "/Layer/_Colors"
 msgstr "/Sloj/_Boje"
 
-#: app/gui/image-menu.c:696
+#: app/gui/image-menu.c:701
 msgid "/Layer/Colors/Color _Balance..."
 msgstr "/Sloj/Boje/Balans Boja..."
 
-#: app/gui/image-menu.c:701
+#: app/gui/image-menu.c:706
 msgid "/Layer/Colors/Hue-_Saturation..."
 msgstr "/Sloj/Boje/Nijansa-Zasićenje..."
 
-#: app/gui/image-menu.c:706
+#: app/gui/image-menu.c:711
 msgid "/Layer/Colors/Colori_ze..."
 msgstr "/Sloj/Boje/Oboji..."
 
-#: app/gui/image-menu.c:711
+#: app/gui/image-menu.c:716
 msgid "/Layer/Colors/B_rightness-Contrast..."
 msgstr "/Sloj/Boje/Svjetlo-Kontrast..."
 
-#: app/gui/image-menu.c:716
+#: app/gui/image-menu.c:721
 msgid "/Layer/Colors/_Threshold..."
 msgstr "/Sloj/Boje/Prag..."
 
-#: app/gui/image-menu.c:721
+#: app/gui/image-menu.c:726
 msgid "/Layer/Colors/_Levels..."
 msgstr "/Sloj/Boje/Razine..."
 
-#: app/gui/image-menu.c:726
+#: app/gui/image-menu.c:731
 msgid "/Layer/Colors/_Curves..."
 msgstr "/Sloj/Boje/Krivulje..."
 
-#: app/gui/image-menu.c:731
+#: app/gui/image-menu.c:736
 msgid "/Layer/Colors/_Posterize..."
 msgstr "/Sloj/Boje/Posteriziraj.."
 
-#: app/gui/image-menu.c:739
+#: app/gui/image-menu.c:744
 msgid "/Layer/Colors/_Desaturate"
 msgstr "/Sloj/Boje/Umanji Zasićenje"
 
-#: app/gui/image-menu.c:744
+#: app/gui/image-menu.c:749
 msgid "/Layer/Colors/In_vert"
 msgstr "/Sloj/Boje/Obratno"
 
 #. <Image>/Layer/Colors/Auto
-#: app/gui/image-menu.c:752
+#: app/gui/image-menu.c:757
 msgid "/Layer/Colors/_Auto"
 msgstr "/Sloj/Boje/Auto"
 
-#: app/gui/image-menu.c:754
+#: app/gui/image-menu.c:759
 msgid "/Layer/Colors/Auto/_Equalize"
 msgstr "/Sloj/Boje/Auto/Ujednači"
 
-#: app/gui/image-menu.c:761
+#: app/gui/image-menu.c:766
 msgid "/Layer/Colors/_Histogram"
 msgstr "/Sloj/Boje/Histogram"
 
 #. <Image>/Layer/Mask
-#: app/gui/image-menu.c:769
+#: app/gui/image-menu.c:774
 msgid "/Layer/_Mask"
 msgstr "/Sloj/_Maska"
 
-#: app/gui/image-menu.c:771
+#: app/gui/image-menu.c:776
 msgid "/Layer/Mask/_Add Layer Mask..."
 msgstr "/Sloj/Maska/Dodaj Masku Sloja..."
 
-#: app/gui/image-menu.c:776
+#: app/gui/image-menu.c:781
 msgid "/Layer/Mask/A_pply Layer Mask"
 msgstr "/Sloj/Maska/Prihv_ati Masku Sloja"
 
-#: app/gui/image-menu.c:780
+#: app/gui/image-menu.c:785
 msgid "/Layer/Mask/_Delete Layer Mask"
 msgstr "/Sloj/Maska/Izb_riši Masku Sloja"
 
-#: app/gui/image-menu.c:788
+#: app/gui/image-menu.c:793
 msgid "/Layer/Mask/_Mask to Selection"
 msgstr "/Slojevi/Maska u Odabir"
 
-#: app/gui/image-menu.c:793
+#: app/gui/image-menu.c:798
 msgid "/Layer/Mask/_Add to Selection"
 msgstr "/Sloj/Maska/Mask_a u Odabir"
 
-#: app/gui/image-menu.c:798
+#: app/gui/image-menu.c:803
 msgid "/Layer/Mask/_Subtract from Selection"
 msgstr "/Oduzmi iz Odabira"
 
-#: app/gui/image-menu.c:803
+#: app/gui/image-menu.c:808
 msgid "/Layer/Mask/_Intersect with Selection"
 msgstr "/Sloj/Maska/Presijec_i Odabirom"
 
 #. <Image>/Layer/Transparency
-#: app/gui/image-menu.c:811
+#: app/gui/image-menu.c:816
 msgid "/Layer/Tr_ansparency"
 msgstr "/Sloj/Transparentnost"
 
-#: app/gui/image-menu.c:813
+#: app/gui/image-menu.c:818
 msgid "/Layer/Transparency/_Add Alpha Channel"
 msgstr "/Slojevi/Dodaj Alfa Kanal"
 
-#: app/gui/image-menu.c:821
+#: app/gui/image-menu.c:826
 msgid "/Layer/Transparency/Al_pha to Selection"
 msgstr "/Sloj/Prozirnost/Alfa u odabir"
 
-#: app/gui/image-menu.c:826
+#: app/gui/image-menu.c:831
 msgid "/Layer/Transparency/A_dd to Selection"
 msgstr """/Slojevi/Prozirnost/Alfa u Izboru"
 ""
 
-#: app/gui/image-menu.c:831
+#: app/gui/image-menu.c:836
 msgid "/Layer/Transparency/_Subtract from Selection"
 msgstr "/Slojevi/Prozirnost/Alfa u Izboru"
 
-#: app/gui/image-menu.c:836
+#: app/gui/image-menu.c:841
 msgid "/Layer/Transparency/_Intersect with Selection"
 msgstr "/Slojevi/Prozirnost/Alfa u Izboru"
 
 #. <Image>/Layer/Transform
-#: app/gui/image-menu.c:846
+#: app/gui/image-menu.c:851
 msgid "/Layer/_Transform"
 msgstr "/Sloj/Transformacija"
 
-#: app/gui/image-menu.c:848
+#: app/gui/image-menu.c:853
 msgid "/Layer/Transform/Flip _Horizontally"
 msgstr "/Sloj/Transformacije/Okreni Vodoravno"
 
-#: app/gui/image-menu.c:853
+#: app/gui/image-menu.c:858
 msgid "/Layer/Transform/Flip _Vertically"
 msgstr "/Slika/Transformacije/Okreni Okomito"
 
-#: app/gui/image-menu.c:861
+#: app/gui/image-menu.c:866
 msgid "/Layer/Transform/Rotate 90 degrees _CW"
 msgstr "/Sloj/Transformacije/Rotacija za 90 stupnjeva _CW"
 
-#: app/gui/image-menu.c:866
+#: app/gui/image-menu.c:871
 msgid "/Layer/Transform/Rotate 90 degrees CC_W"
 msgstr "/Sloj/Transformacije/Rotacija za 90 stupnjeva CC_W"
 
-#: app/gui/image-menu.c:871
+#: app/gui/image-menu.c:876
 msgid "/Layer/Transform/Rotate _180 degrees"
 msgstr "/Sloj/Transformacije/Rotacija za _180 stupnjeva"
 
-#: app/gui/image-menu.c:876
+#: app/gui/image-menu.c:881
 msgid "/Layer/Transform/_Arbitrary Rotation..."
 msgstr "/Sloj/Transformacije/Proizvoljn_a Rotacija..."
 
-#: app/gui/image-menu.c:884
+#: app/gui/image-menu.c:889
 msgid "/Layer/Transform/_Offset..."
 msgstr "/Sloj/Transformacije/_Ofset..."
 
-#: app/gui/image-menu.c:891
+#: app/gui/image-menu.c:896
 msgid "/Layer/Layer _Boundary Size..."
 msgstr "/Sloj/Veličina _Graničnika Sloja..."
 
-#: app/gui/image-menu.c:896
+#: app/gui/image-menu.c:901
 msgid "/Layer/Layer to _Image Size"
 msgstr "/Sloj/Sloj u Velič_inu Slike"
 
-#: app/gui/image-menu.c:901
+#: app/gui/image-menu.c:906
 msgid "/Layer/_Scale Layer..."
 msgstr "/Sloj/Skaliranost Sloja..."
 
-#: app/gui/image-menu.c:906
+#: app/gui/image-menu.c:911
 msgid "/Layer/Cr_op Layer"
 msgstr "/Sloj/Usidri Sl_oj"
 
 #. <Image>/Tools
-#: app/gui/image-menu.c:916
+#: app/gui/image-menu.c:921
 msgid "/_Tools"
 msgstr "Kutija s Alatima"
 
-#: app/gui/image-menu.c:918
+#: app/gui/image-menu.c:923
 msgid "/Tools/Tool_box"
 msgstr "/Alati/Kutija s Alatima"
 
-#: app/gui/image-menu.c:922
+#: app/gui/image-menu.c:927
 msgid "/Tools/_Default Colors"
 msgstr "/Alati/Standardne Boje"
 
-#: app/gui/image-menu.c:927
+#: app/gui/image-menu.c:932
 msgid "/Tools/S_wap Colors"
 msgstr "/Alati/Zamjenske Boje"
 
-#: app/gui/image-menu.c:935
+#: app/gui/image-menu.c:940
 msgid "/Tools/_Selection Tools"
 msgstr "/Alati/Odabir Alata/Četverokutni"
 
-#: app/gui/image-menu.c:936
+#: app/gui/image-menu.c:941
 msgid "/Tools/_Paint Tools"
 msgstr "/Alati/Slikarski Alati/Tinta"
 
-#: app/gui/image-menu.c:937
+#: app/gui/image-menu.c:942
 msgid "/Tools/_Transform Tools"
 msgstr "/Alati/Transformacija"
 
-#: app/gui/image-menu.c:938
+#: app/gui/image-menu.c:943
 msgid "/Tools/_Color Tools"
 msgstr "/Alati/Kutija s Alatima"
 
 #. <Image>/Dialogs
-#: app/gui/image-menu.c:942
+#: app/gui/image-menu.c:947
 msgid "/_Dialogs"
 msgstr "/Dijalozi"
 
-#: app/gui/image-menu.c:944
+#: app/gui/image-menu.c:949
 msgid "/Dialogs/Create New Doc_k"
 msgstr "/Dijalozi/Kreiraj Novi Doc_k "
 
-#: app/gui/image-menu.c:946
+#: app/gui/image-menu.c:951
 msgid "/Dialogs/Create New Dock/_Layers, Channels & Paths"
 msgstr "/Dijalozi/Kreiraj Novi Dok/S_lojevi, Kanali & Staze... "
 
-#: app/gui/image-menu.c:950
+#: app/gui/image-menu.c:955
 msgid "/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
 msgstr "/Dijalozi/Kreiraj Novi Dok/Kitovi, Uzorci i gradijenti "
 
-#: app/gui/image-menu.c:954
+#: app/gui/image-menu.c:959
 msgid "/Dialogs/Create New Dock/_Misc. Stuff"
 msgstr "/Dijalozi/Kreiraj Novi Dok/Različite Stvari "
 
-#: app/gui/image-menu.c:959
+#: app/gui/image-menu.c:964
 msgid "/Dialogs/Tool _Options"
 msgstr "/Dijalozi/Opcije Alata..."
 
-#: app/gui/image-menu.c:964
+#: app/gui/image-menu.c:969
 msgid "/Dialogs/_Device Status"
 msgstr "/Dijalozi/Status Uređaja"
 
-#: app/gui/image-menu.c:972
+#: app/gui/image-menu.c:977
 msgid "/Dialogs/_Layers"
 msgstr "/Dijalozi/Slojevi"
 
-#: app/gui/image-menu.c:977
+#: app/gui/image-menu.c:982
 msgid "/Dialogs/_Channels"
 msgstr "/Dijalozi/Kanali"
 
-#: app/gui/image-menu.c:982
+#: app/gui/image-menu.c:987
 msgid "/Dialogs/_Paths"
 msgstr "/Dijalozi/Staze"
 
-#: app/gui/image-menu.c:987
+#: app/gui/image-menu.c:992
 msgid "/Dialogs/Inde_xed Palette"
 msgstr "/Dijalozi/Indeksi_rana paleta"
 
-#: app/gui/image-menu.c:992
+#: app/gui/image-menu.c:997
 msgid "/Dialogs/Histogra_m"
 msgstr "/Dijalozi/Povijes_t"
 
-#: app/gui/image-menu.c:997
+#: app/gui/image-menu.c:1002
 msgid "/Dialogs/_Selection Editor"
 msgstr "/Dijalozi/Uređivač Odabira"
 
-#: app/gui/image-menu.c:1002
+#: app/gui/image-menu.c:1007
 msgid "/Dialogs/Na_vigation"
 msgstr "/Dijalozi/Na_vigacija "
 
-#: app/gui/image-menu.c:1007
+#: app/gui/image-menu.c:1012
 msgid "/Dialogs/_Undo History"
 msgstr "/Dijalozi/Povijest koraka unatrag"
 
-#: app/gui/image-menu.c:1015
+#: app/gui/image-menu.c:1020
 msgid "/Dialogs/Colo_rs"
 msgstr "/Dijalozi/Boje "
 
-#: app/gui/image-menu.c:1020
+#: app/gui/image-menu.c:1025
 msgid "/Dialogs/Brus_hes"
 msgstr "/Dijalozi/Kistovi..."
 
-#: app/gui/image-menu.c:1025
+#: app/gui/image-menu.c:1030
 msgid "/Dialogs/P_atterns"
 msgstr "/Dijalozi/Uzorci..."
 
-#: app/gui/image-menu.c:1030
+#: app/gui/image-menu.c:1035
 msgid "/Dialogs/_Gradients"
 msgstr "/Dijalozi/Gradijenti"
 
-#: app/gui/image-menu.c:1035
+#: app/gui/image-menu.c:1040
 msgid "/Dialogs/Pal_ettes"
 msgstr "/Dijalozi/Pal_ete... "
 
-#: app/gui/image-menu.c:1040
+#: app/gui/image-menu.c:1045
 msgid "/Dialogs/_Fonts"
 msgstr "/Dijalozi/Pisma"
 
-#: app/gui/image-menu.c:1045
+#: app/gui/image-menu.c:1050
 msgid "/Dialogs/_Buffers"
 msgstr "/Dijalozi/Međuspremnici"
 
-#: app/gui/image-menu.c:1053
+#: app/gui/image-menu.c:1058
 msgid "/Dialogs/_Images"
 msgstr "/Dijalozi/_Slike"
 
-#: app/gui/image-menu.c:1058
+#: app/gui/image-menu.c:1063
 msgid "/Dialogs/Document Histor_y"
 msgstr "/Dijalozi/Povijest Dokumenta "
 
-#: app/gui/image-menu.c:1063
+#: app/gui/image-menu.c:1068
 msgid "/Dialogs/_Templates"
 msgstr "/Dijalozi/Predlošci"
 
-#: app/gui/image-menu.c:1068
+#: app/gui/image-menu.c:1073
 msgid "/Dialogs/T_ools"
 msgstr "/Dijalozi/A_lati"
 
-#: app/gui/image-menu.c:1073
+#: app/gui/image-menu.c:1078
 msgid "/Dialogs/Error Co_nsole"
 msgstr "/Dijalozi/Konzola za Greške..."
 
-#: app/gui/image-menu.c:1083
+#: app/gui/image-menu.c:1088
 msgid "/Filte_rs"
 msgstr "/Filteri"
 
-#: app/gui/image-menu.c:1085
+#: app/gui/image-menu.c:1090
 msgid "/Filters/Repeat Last"
 msgstr "/Filteri/Ponovi Zadnji"
 
-#: app/gui/image-menu.c:1090
+#: app/gui/image-menu.c:1095
 msgid "/Filters/Re-Show Last"
 msgstr "/Filteri/Opet Ponovi Zadnji"
 
-#: app/gui/image-menu.c:1098
+#: app/gui/image-menu.c:1103
 msgid "/Filters/_Blur"
 msgstr "/Filteri/Zamućenje"
 
-#: app/gui/image-menu.c:1099
+#: app/gui/image-menu.c:1104
 msgid "/Filters/_Colors"
 msgstr "/Filteri/Boje"
 
-#: app/gui/image-menu.c:1100
+#: app/gui/image-menu.c:1105
 msgid "/Filters/Colors/Ma_p"
 msgstr "/Filteri/Boje/Mapa"
 
-#: app/gui/image-menu.c:1101
+#: app/gui/image-menu.c:1106
 msgid "/Filters/_Noise"
 msgstr "/Filteri/Šum"
 
-#: app/gui/image-menu.c:1102
+#: app/gui/image-menu.c:1107
 msgid "/Filters/Edge-De_tect"
 msgstr "/Filteri/Otkrivanje Rubova"
 
-#: app/gui/image-menu.c:1103
+#: app/gui/image-menu.c:1108
 msgid "/Filters/En_hance"
 msgstr "/Filteri/Pojačaj"
 
-#: app/gui/image-menu.c:1104
+#: app/gui/image-menu.c:1109
 msgid "/Filters/_Generic"
 msgstr "/Filteri/Generički"
 
-#: app/gui/image-menu.c:1108
+#: app/gui/image-menu.c:1113
 msgid "/Filters/Gla_ss Effects"
 msgstr "/Filteri/Efekti čaše"
 
-#: app/gui/image-menu.c:1109
+#: app/gui/image-menu.c:1114
 msgid "/Filters/_Light Effects"
 msgstr "/Filteri/Svjetlosni efekti"
 
-#: app/gui/image-menu.c:1110
+#: app/gui/image-menu.c:1115
 msgid "/Filters/_Distorts"
 msgstr "/Filteri/Distorzije"
 
-#: app/gui/image-menu.c:1111
+#: app/gui/image-menu.c:1116
 msgid "/Filters/_Artistic"
 msgstr "/Filteri/Umjetnički"
 
-#: app/gui/image-menu.c:1112
+#: app/gui/image-menu.c:1117
 msgid "/Filters/_Map"
 msgstr "/Filteri/Mape"
 
-#: app/gui/image-menu.c:1113
+#: app/gui/image-menu.c:1118
 msgid "/Filters/_Render"
 msgstr "/Filteri/Renderiranje"
 
-#: app/gui/image-menu.c:1114
+#: app/gui/image-menu.c:1119
 msgid "/Filters/Render/_Clouds"
 msgstr "/Filteri/Renderiranje/Oblaci"
 
-#: app/gui/image-menu.c:1115
+#: app/gui/image-menu.c:1120
 msgid "/Filters/Render/_Nature"
 msgstr "/Filteri/Renderiranje/Priroda"
 
-#: app/gui/image-menu.c:1116
+#: app/gui/image-menu.c:1121
 msgid "/Filters/Render/_Pattern"
 msgstr "/Filteri/Renderiranje/Uzorci"
 
-#: app/gui/image-menu.c:1117
+#: app/gui/image-menu.c:1122
 msgid "/Filters/_Web"
 msgstr "/Filteri/Web"
 
-#: app/gui/image-menu.c:1121
+#: app/gui/image-menu.c:1126
 msgid "/Filters/An_imation"
 msgstr "/Filteri/Animacija"
 
-#: app/gui/image-menu.c:1122
+#: app/gui/image-menu.c:1127
 msgid "/Filters/C_ombine"
 msgstr "/Filteri/Kombiniraj"
 
-#: app/gui/image-menu.c:1126
+#: app/gui/image-menu.c:1131
 msgid "/Filters/To_ys"
 msgstr "/Filteri/Igračke"
 
-#: app/gui/image-menu.c:1466
+#: app/gui/image-menu.c:1471
 #, , c-format
 msgid "_Undo %s"
 msgstr "_Vrati %s"
 
-#: app/gui/image-menu.c:1471
+#: app/gui/image-menu.c:1476
 #, , c-format
 msgid "_Redo %s"
 msgstr "_Ponovi %s"
 
-#: app/gui/image-menu.c:1475
+#: app/gui/image-menu.c:1480
 msgid "_Undo"
 msgstr "_Vrati"
 
-#: app/gui/image-menu.c:1476
+#: app/gui/image-menu.c:1481
 msgid "_Redo"
 msgstr "_Ponovi"
 
-#: app/gui/image-menu.c:1744
+#: app/gui/image-menu.c:1750
 #, , c-format
 msgid "Other (%s) ..."
 msgstr "Drugi (%s) ..."
 
-#: app/gui/image-menu.c:1753
+#: app/gui/image-menu.c:1759
 #, , c-format
 msgid "_Zoom (%s)"
 msgstr "_Povećanje (%s)"
@@ -4754,11 +4758,11 @@ msgstr "Indeksirana Boja"
 msgid "colors"
 msgstr "boje"
 
-#: app/gui/layers-commands.c:381
+#: app/gui/layers-commands.c:383
 msgid "Crop Layer"
 msgstr "Učitaj sloj"
 
-#: app/gui/layers-commands.c:459
+#: app/gui/layers-commands.c:461
 msgid "Layer Mask to Selection"
 msgstr "Maska slojeva u odabir"
 
@@ -4766,20 +4770,20 @@ msgstr "Maska slojeva u odabir"
 msgid "Empty Layer"
 msgstr "Isprazni sloj"
 
-#: app/gui/layers-commands.c:750
+#: app/gui/layers-commands.c:747
 msgid "Create a New Layer"
 msgstr "Stvorite Novi Sloj"
 
-#: app/gui/layers-commands.c:784
+#: app/gui/layers-commands.c:781
 msgid "Layer _Name:"
 msgstr "Naziv Sloja:"
 
 #. The size labels
-#: app/gui/layers-commands.c:788
+#: app/gui/layers-commands.c:785
 msgid "Layer Width:"
 msgstr "Širina Sloja:"
 
-#: app/gui/layers-commands.c:794 app/gui/resize-dialog.c:299
+#: app/gui/layers-commands.c:791 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
 #: app/tools/gimpcroptool.c:1002 app/tools/gimpscaletool.c:174
 #: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
@@ -4787,35 +4791,39 @@ msgstr "Širina Sloja:"
 msgid "Height:"
 msgstr "Visina:"
 
-#: app/gui/layers-commands.c:853
+#: app/gui/layers-commands.c:850
 msgid "Layer Fill Type"
 msgstr "Vrsta Ispune Sloja"
 
-#: app/gui/layers-commands.c:930
+#: app/gui/layers-commands.c:959
 msgid "Layer Attributes"
 msgstr "Uredi svojstva Sloja"
 
-#: app/gui/layers-commands.c:932 app/widgets/gimplayertreeview.c:205
+#: app/gui/layers-commands.c:961 app/widgets/gimplayertreeview.c:205
 msgid "Edit Layer Attributes"
 msgstr "Uredi Osobitosti Sloja"
 
-#: app/gui/layers-commands.c:968
+#: app/gui/layers-commands.c:998
 msgid "Layer _Name"
 msgstr "Naziv Sloja:"
 
-#: app/gui/layers-commands.c:1048
+#: app/gui/layers-commands.c:1009
+msgid "Set Name from _Text"
+msgstr "Postavi ime iz _teksta"
+
+#: app/gui/layers-commands.c:1096
 msgid "Add a Mask to the Layer"
 msgstr "Dodaj tekst u sliku"
 
-#: app/gui/layers-commands.c:1067
+#: app/gui/layers-commands.c:1115
 msgid "Initialize Layer Mask to:"
 msgstr "Pokreni Masku Sloja u:"
 
-#: app/gui/layers-commands.c:1084
+#: app/gui/layers-commands.c:1132
 msgid "In_vert Mask"
 msgstr "Inverzna maska"
 
-#: app/gui/layers-commands.c:1167 app/gui/layers-commands.c:1263
+#: app/gui/layers-commands.c:1215 app/gui/layers-commands.c:1311
 msgid "Invalid width or height. Both must be positive."
 msgstr "Nepravilna širina ili visina. Obje moraju biti pozitivne."
 
@@ -6068,23 +6076,29 @@ msgstr "Horizontalno:"
 msgid "_Vertical:"
 msgstr "Vertikalno:"
 
-#: app/gui/select-commands.c:160
+#: app/gui/select-commands.c:149 app/gui/vectors-commands.c:181
+#: app/pdb/paths_cmds.c:1135 app/tools/gimpvectortool.c:1818
+#: app/widgets/gimpvectorstreeview.c:289
+msgid "Path to Selection"
+msgstr "Staza u Odabir"
+
+#: app/gui/select-commands.c:181
 msgid "Feather selection by"
 msgstr "Istovrsni Odabir na:"
 
-#: app/gui/select-commands.c:196
+#: app/gui/select-commands.c:217
 msgid "Shrink selection by"
 msgstr "Odabir skupljanja "
 
-#: app/gui/select-commands.c:205
+#: app/gui/select-commands.c:226
 msgid "Shrink from image border"
 msgstr "Skupljanje od ruba slike"
 
-#: app/gui/select-commands.c:230
+#: app/gui/select-commands.c:251
 msgid "Grow selection by"
 msgstr "Odabir Uvećanja na:"
 
-#: app/gui/select-commands.c:253
+#: app/gui/select-commands.c:274
 msgid "Border selection by"
 msgstr "Odabir Rubova od:"
 
@@ -6785,11 +6799,6 @@ msgstr ""
 msgid "Calibrate"
 msgstr "Kalibracija"
 
-#: app/gui/vectors-commands.c:181 app/pdb/paths_cmds.c:1135
-#: app/tools/gimpvectortool.c:1818 app/widgets/gimpvectorstreeview.c:289
-msgid "Path to Selection"
-msgstr "Staza u Odabir"
-
 #: app/gui/vectors-commands.c:444
 msgid "Empty Path"
 msgstr "Isprazni stazu"
@@ -7241,7 +7250,7 @@ msgstr ""
 "Napuni moju kutiju sa\n"
 "pet tuceta vrčeva za piće."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:506
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:634
 msgid "Add Text Layer"
 msgstr "Dodaj Sloj Teksta"
 
@@ -7249,19 +7258,19 @@ msgstr "Dodaj Sloj Teksta"
 msgid "(invalid UTF-8 string)"
 msgstr "(neispravan UTF-8 string)"
 
-#: app/text/gimptextlayer.c:157
+#: app/text/gimptextlayer.c:175
 msgid "Text Layer"
 msgstr "Sloj za tekst"
 
-#: app/text/gimptextlayer.c:436
+#: app/text/gimptextlayer.c:531
 msgid "Discard Text Information"
 msgstr "Odbaci tekstualne Informacije"
 
-#: app/text/gimptextlayer.c:477
+#: app/text/gimptextlayer.c:581
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Zbog nedostatka nekih pisama, funkcionalnost teksta nije dostupna."
 
-#: app/text/gimptextlayer.c:498
+#: app/text/gimptextlayer.c:607
 msgid "Empty Text Layer"
 msgstr "Isprazni sloj za teksta"
 
@@ -7273,7 +7282,7 @@ msgstr "Okreni Sloj za tekst"
 msgid "Rotate Text Layer"
 msgstr "Rotiraj sloj za tekst"
 
-#: app/text/gimptextlayer-xcf.c:65
+#: app/text/gimptextlayer-xcf.c:73
 #, c-format
 msgid ""
 "Problems parsing the text parasite for layer '%s':\n"
@@ -8445,17 +8454,33 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Stvori putanju iz teksta"
 
-#: app/tools/gimptexttool.c:115
+#: app/tools/gimptexttool.c:128
 msgid "Add text to the image"
 msgstr "Dodaj tekst u sliku"
 
-#: app/tools/gimptexttool.c:116
+#: app/tools/gimptexttool.c:129
 msgid "/Tools/Te_xt"
 msgstr "/Alati/Tekst"
 
-#: app/tools/gimptexttool.c:539
+#: app/tools/gimptexttool.c:667
 msgid "GIMP Text Editor"
 msgstr "GIMP uređivač teksta"
+
+#: app/tools/gimptexttool.c:757 app/tools/gimptexttool.c:760
+msgid "Confirm Text Editing"
+msgstr "Potvrdi uređivanje teksta"
+
+#: app/tools/gimptexttool.c:781
+msgid ""
+"The layer you selected is a text layer but it has been modified using other "
+"tools. Editing the layer with the text tool will discard these "
+"modifications.\n"
+"\n"
+"You can edit the layer or create a new text layer from its text attributes."
+msgstr ""
+"Sloj koji ste označili je sloj teksta, ali je bio promijenjen primjenom drugih alata. Uređivanje sloja s alatom za tekst će odbaciti ove promjene.\n"
+"\n"
+"Možete uređivati sloj ili stvoriti novi sloj teksta iz njegovih tekstualnih svojstva."
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"
@@ -9294,7 +9319,7 @@ msgstr "Izbriši Kanal"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpitemtreeview.c:359
+#: app/widgets/gimpitemtreeview.c:362
 #, , c-format
 msgid ""
 "%s\n"
@@ -9303,7 +9328,7 @@ msgstr ""
 "%s\n"
 "%s Na vrh"
 
-#: app/widgets/gimpitemtreeview.c:373
+#: app/widgets/gimpitemtreeview.c:376
 #, , c-format
 msgid ""
 "%s\n"
@@ -9312,11 +9337,11 @@ msgstr ""
 "%s\n"
 "%s Na dno"
 
-#: app/widgets/gimpitemtreeview.c:1385
+#: app/widgets/gimpitemtreeview.c:1394
 msgid "Set Item Exclusive Visible"
 msgstr "Namjesti Stavku Isključivo Vidljivo"
 
-#: app/widgets/gimpitemtreeview.c:1391
+#: app/widgets/gimpitemtreeview.c:1402
 msgid "Set Item Exclusive Linked"
 msgstr "Namjesti stavku isključivo povezanu"
 
@@ -9806,7 +9831,7 @@ msgstr "Normalni prozor"
 msgid "Utility Window"
 msgstr "Prozor s pomoćnim alatima"
 
-#: app/xcf/xcf-load.c:295
+#: app/xcf/xcf-load.c:297
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
