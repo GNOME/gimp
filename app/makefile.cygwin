@@ -30,8 +30,6 @@ INTL = ../../intl
 
 CFLAGS = $(OPTIMIZE) -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)/gdk -I$(GTK) -I$(INTL)
 
-# GCG = ../tools/gcg/gcg -I. -I../tools/gcg/gh
-
 all : \
 	../config.h	\
 	libgimpim.a	\
@@ -251,11 +249,6 @@ gimp_OBJECTS = \
 	user_install.o		\
 	xcf.o
 
-# .SUFFIXES: .gc
-
-# .gc.c:
-#	$(GCG) -o $@ $<
-
 gimpres.o : gimp.rc wilber.ico
 	windres gimp.rc gimpres.o
 
@@ -265,11 +258,11 @@ gimp.def: gimp.sym
 
 gimp.exe : ../config.h $(gimp_OBJECTS) libgimpim.a gimp.def gimpres.o
 # This is sickening.
-	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L  ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -lgmodule-$(GLIB_VER) gimpres.o -lgdi32 -luser32 -lshell32
+	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L  ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -L $(GMODULE) -lgmodule-$(GLIB_VER) gimpres.o -lgdi32 -luser32 -lshell32
 	$(DLLTOOL) --base-file gimp.base --input-def gimp.def --output-exp gimp.exp
-	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base,gimp.exp -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -lgmodule-$(GLIB_VER) gimpres.o -lgdi32 -luser32 -lshell32
+	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base,gimp.exp -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -L $(GMODULE) -lgmodule-$(GLIB_VER) gimpres.o -lgdi32 -luser32 -lshell32
 	$(DLLTOOL) --base-file gimp.base --input-def gimp.def --output-exp gimp.exp
-	$(CC) $(CFLAGS) -Wl,gimp.exp -o gimp.exe $(gimp_OBJECTS) -L. -lgimpim -L ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -lgmodule-$(GLIB_VER) gimpres.o -lgdi32 -luser32 -lshell32
+	$(CC) $(CFLAGS) -Wl,gimp.exp -o gimp.exe $(gimp_OBJECTS) -L. -lgimpim -L ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -L $(GMODULE) -lgmodule-$(GLIB_VER) gimpres.o -lgdi32 -luser32 -lshell32
 	$(DLLTOOL) --dllname gimp.exe gimp.def --output-lib libgimp.a $(gimp_OBJECTS)
 	
 .SUFFIXES: .c .o .i

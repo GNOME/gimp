@@ -81,76 +81,35 @@ gimpi.lib : $(gimpi_OBJECTS)
 
 gimp_OBJECTS = \
 	gimp.obj \
-	gimpchannel.obj \
+	gimpchannel_pdb.obj \
 	gimpcolorspace.obj \
-	gimpdisplay.obj \
-	gimpdrawable.obj \
+	gimpdisplay_pdb.obj \
+	gimpdrawable_pdb.obj \
 	gimpenv.obj \
-	gimpgradient.obj \
-	gimphelp.obj \
-	gimpimage.obj \
-	gimplayer.obj \
+	gimpgradient_pdb.obj \
+	gimphelp_pdb.obj \
+	gimpimage_pdb.obj \
+	gimplayer_pdb.obj \
 	gimpmatrix.obj \
-	gimppalette.obj \
+	gimppalette_pdb.obj \
 	gimpparasite.obj \
+	gimpparasite_pdb.obj \
+	gimpparasiteio.obj \
 	gimppixelrgn.obj \
 	gimpprotocol.obj \
-	gimpselection.obj \
+	gimpselection_pdb.obj \
 	gimptile.obj \
-	gimpunit.obj \
+	gimpunit_pdb.obj \
 	gimpvector.obj \
-	gimpwire.obj \
-	gserialize.obj \
-	parasite.obj \
-	parasiteio.obj
+	gimpwire.obj
 
 gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
 	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) user32.lib /def:gimp.def
 
-# Pass -DLIBGIMP_COMPILATION when compiling gimp_OBJECTS
+# Pass -DLIBGIMP_COMPILATION when compiling gimp.c
 
 gimp.obj : gimp.c
 	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimp.c
-gimpchannel.obj : gimpchannel.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpchannel.c
-gimpdisplay.obj : gimpdisplay.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpdisplay.c
-gimpdrawable.obj : gimpdrawable.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpdrawable.c
-gimpenv.obj : gimpenv.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpenv.c
-gimpgradient.obj : gimpgradient.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpgradient.c
-gimphelp.obj : gimphelp.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimphelp.c
-gimpimage.obj : gimpimage.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpimage.c
-gimplayer.obj : gimplayer.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimplayer.c
-gimpmatrix.obj : gimpmatrix.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpmatrix.c
-gimppalette.obj : gimppalette.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimppalette.c
-gimpparasite.obj : gimpparasite.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpparasite.c
-gimppixelrgn.obj : gimppixelrgn.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimppixelrgn.c
-gimpprotocol.obj : gimpprotocol.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpprotocol.c
-gimpselection.obj : gimpselection.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpselection.c
-gimptile.obj : gimptile.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimptile.c
-gimpunit.obj : gimpunit.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpunit.c
-gimpvector.obj : gimpvector.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpvector.c
-gimpwire.obj : gimpwire.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpwire.c
-gserialize.obj : gserialize.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gserialize.c
-parasite.obj : parasite.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION parasite.c
 
 gimpui_OBJECTS = \
 	gimpmenu.obj \

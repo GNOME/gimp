@@ -91,4 +91,5 @@ EXPORTS
 	gimp_toggle_button_sensitive_update
 	gimp_toggle_button_update
 	gimp_ui_init
+	gimp_uint_adjustment_update
 	gimp_unit_menu_update

@@ -1,3 +1,31 @@
+2000-05-29  Tor Lillqvist  <tml@iki.fi>
+
+	* gimprc.win32: Update to match Unix version.
+
+	* app/gimp.sym: Add dialog_{,un}register.
+
+	* app/dialog_handler.c: Include <gmodule.h>, mark above functions
+	with G_MODULE_EXPORT.
+
+	* app/makefile.{msc,cygwin}: Update to match current GLib 1.3.
+
+	* libgimp/gimp.def
+	* libgimp/gimpui.def: Update according to function name changes etc.
+	
+	* libgimp/makefile.{msc,cygwin}: Update for changed file
+	names.
+
+	* libgimp/makefile.cygwin
+	* modules/makefile.cygwin: Simplify, use the
+	../build/win32/make.mingw file.
+	
+	* plug-ins/common/gz.c (save_image): Somewhat more informative
+	error message on Win32 when gzip.exe isn't found (most probable
+	cause of error).
+
+	* tips/gimp_tips.txt: Clarify location of personal GIMP directory
+	on Unix and Windows.
+
 2000-05-29  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* plug-ins/gdyntext/gdyntext.c (gdt_get_values): We dont need to say 

@@ -440,7 +440,7 @@ save_image (gchar  *filename,
 		      TRUE, NORMAL_PRIORITY_CLASS, NULL, NULL,
 		      &startupinfo, &processinfo))
     {
-      g_message ("gz: CreateProcess failed\n");
+      g_message ("gz: CreateProcess failed. Do you have gzip.exe in your PATH?\n");
       g_free (tmpname);
       _exit (127);
     }

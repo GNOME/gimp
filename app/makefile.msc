@@ -37,8 +37,6 @@ INTL = ..\..\intl
 
 CFLAGS = -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk -I$(GTK)\gdk -I$(GTK) -I$(INTL)
 
-# GCG = ..\tools\gcg\gcg -I. -I ..\tools\gcg\gh
-
 all : \
 	..\config.h	\
 	gimpim.lib	\
@@ -257,11 +255,6 @@ gimp_OBJECTS = \
 	unit_cmds.obj		\
 	user_install.obj	\
 	xcf.obj
-
-# .SUFFIXES: .gc
-
-# .gc.c:
-# 	$(GCG) -o $@ $<
 
 gimp.res : gimp.rc wilber.ico
 	rc -r -fo gimp.res gimp.rc

@@ -139,8 +139,10 @@ Download and install them.
 #        All other files in ~/.gimp can be kept after an upgrade.
 #        In particular, we should try to preserve gimprc.  --Raphael
 
-When installing a new version, be sure to 
-delete your ~/.gimp directory first.
+When installing a new version, be sure to delete your personal GIMP
+settings directory first (on Unix: ~/.gimp-1.1, on Windows: _gimp1.1
+in your home directory, or _gimp1.1.<username> in the GIMP
+installation directory).
 
 Using Edit->Stroke allows you to draw simple squares or circles by
 painting the edge of your current selection with the active brush.

@@ -18,6 +18,8 @@
  */
 #include <gtk/gtk.h>
 
+#include <gmodule.h>
+
 #include "cursorutil.h"
 #include "dialog_handler.h"
 
@@ -192,6 +194,7 @@ dialog_unidle_all (void)
 
 /*  Register a dialog that we can handle  */
 
+G_MODULE_EXPORT
 void
 dialog_register (GtkWidget *dialog)
 {
@@ -225,6 +228,7 @@ dialog_register_fileload (GtkWidget *dialog)
 
 /*  unregister dialog  */
 
+G_MODULE_EXPORT
 void
 dialog_unregister (GtkWidget *dialog)
 {

@@ -1,39 +1,22 @@
 ## Makefile for building the GIMP DLLs and LIBs with gcc -mno-cygwin.
 ## Use: make -f makefile.cygwin
 
-# Change this to wherever you want to install the DLLs. This directory
-# should be in your PATH. As these DLLs are for the GIMP and its plug-ins
-# only, it probably is best to keep them in the GIMP's bin directory.
-BIN = /install/gimp/bin
-
 # The name of the directory in your %HOME% where the GIMP's personal settings
 # and stuff is saved.
 GIMPDIR = _gimp$(GIMP_VER)
 
-OPTIMIZE = -O
+TOP = ../..
+
+include $(TOP)/build/win32/make.mingw
 
 ################################################################
 
 # Nothing much configurable below
 
-CC = gcc -mno-cygwin -mpentium -fnative-struct
-
-CP = cp
-LD = ld
-DLLTOOL = dlltool
-INSTALL = install
-
-GTK_VER = 1.3
-GLIB_VER = 1.3
 GIMP_VER = 1.1
 
-GTK = ../../gtk+
-GLIB = ../../glib
-INTL = ../../intl
-
-GIMP_VER = 1.1
-
-CFLAGS = $(OPTIMIZE) -I.. -I$(GLIB) -I$(GTK)/gdk -I$(GTK) -I$(INTL) -DGIMPDIR=\"$(GIMPDIR)\"
+INCLUDES =  -I .. $(GLIB_CFLAGS) $(GTK_CFLAGS) $(INTL_CFLAGS)
+DEFINES = -DGIMPDIR=\"$(GIMPDIR)\"
 
 all : \
 	../config.h	\
@@ -42,141 +25,88 @@ all : \
 	gimpui-$(GIMP_VER).dll
 
 ../config.h : ../config.h.win32
-	cp ../config.h.win32 ../config.h
-
-install : all
-	$(INSTALL) gimp-$(GIMP_VER).dll $(BIN)
-	$(INSTALL) gimpui-$(GIMP_VER).dll $(BIN)
+	cp $@ $<
 
 gimpi_OBJECTS = \
-	gimpenv.o	\
+	gimpenv.o \
 	gimpchainbutton.o \
 	gimpcolorbutton.o \
 	gimpcolorspace.o \
-	gimpdialog.o	\
-	gimpfileselection.o\
-	gimphelpui.o	\
-	gimpmatrix.o	\
-	gimppatheditor.o\
-	gimppixmap.o	\
-	gimpprotocol.o	\
-	gimpquerybox.o	\
-	gimpsizeentry.o	\
-	gimpunitmenu.o	\
-	gimpvector.o	\
-	gimpwidgets.o	\
-	gimpwire.o	\
-	gserialize.o	\
-	parasite.o	\
-	parasiteio.o
+	gimpdialog.o \
+	gimpfileselection.o \
+	gimphelpui.o \
+	gimpmatrix.o \
+	gimpparasite.o \
+	gimpparasiteio.o \
+	gimppatheditor.o \
+	gimppixmap.o \
+	gimpprotocol.o \
+	gimpquerybox.o \
+	gimpsizeentry.o \
+	gimpunitmenu.o \
+	gimpvector.o \
+	gimpwidgets.o \
+	gimpwire.o
 
 libgimpi.a : $(gimpi_OBJECTS)
 	ar cr libgimpi.a $(gimpi_OBJECTS)
 
 gimp_OBJECTS = \
-	gimp.o		\
-	gimpchannel.o	\
+	gimp.o \
+	gimpchannel_pdb.o \
 	gimpcolorspace.o \
-	gimpdisplay.o	\
-	gimpdrawable.o	\
-	gimpenv.o	\
-	gimpgradient.o	\
-	gimphelp.o	\
-	gimpimage.o	\
-	gimplayer.o	\
-	gimpmatrix.o	\
-	gimppalette.o	\
-	gimpparasite.o	\
-	gimppixelrgn.o	\
-	gimpprotocol.o	\
-	gimpselection.o	\
-	gimptile.o	\
-	gimpunit.o	\
-	gimpvector.o	\
-	gimpwire.o	\
-	gserialize.o	\
-	parasite.o	\
-	parasiteio.o
+	gimpdisplay_pdb.o \
+	gimpdrawable_pdb.o \
+	gimpenv.o \
+	gimpgradient_pdb.o \
+	gimphelp_pdb.o \
+	gimpimage_pdb.o \
+	gimplayer_pdb.o \
+	gimpmatrix.o \
+	gimppalette_pdb.o \
+	gimpparasite.o \
+	gimpparasite_pdb.o \
+	gimpparasiteio.o \
+	gimppixelrgn.o \
+	gimpprotocol.o \
+	gimpselection_pdb.o \
+	gimptile.o \
+	gimpunit_pdb.o \
+	gimpvector.o \
+	gimpwire.o
 
 gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
-	$(GLIB)/build-dll gimp $(GIMP_VER) gimp.def -s $(gimp_OBJECTS) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -luser32
+	$(GLIB)/build-dll gimp $(GIMP_VER) gimp.def -s $(gimp_OBJECTS) $(INTL_LIBS) $(GLIB_LIBS) -luser32
 
-# Pass -DLIBGIMP_COMPILATION when compiling gimp_OBJECTS
+# Pass -DLIBGIMP_COMPILATION when compiling gimp.c which
+# defines the exported variables.
 
 gimp.o : gimp.c
 	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimp.c
-gimpchannel.o : gimpchannel.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpchannel.c
-gimpdisplay.o : gimpdisplay.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpdisplay.c
-gimpdrawable.o : gimpdrawable.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpdrawable.c
-gimpenv.o : gimpenv.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpenv.c
-gimpgradient.o : gimpgradient.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpgradient.c
-gimphelp.o : gimphelp.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimphelp.c
-gimpimage.o : gimpimage.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpimage.c
-gimplayer.o : gimplayer.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimplayer.c
-gimpmatrix.o : gimpmatrix.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpmatrix.c
-gimppalette.o : gimppalette.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimppalette.c
-gimpparasite.o : gimpparasite.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpparasite.c
-gimppixelrgn.o : gimppixelrgn.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimppixelrgn.c
-gimpprotocol.o : gimpprotocol.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpprotocol.c
-gimpselection.o : gimpselection.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpselection.c
-gimptile.o : gimptile.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimptile.c
-gimpunit.o : gimpunit.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpunit.c
-gimpvector.o : gimpvector.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpvector.c
-gimpwire.o : gimpwire.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpwire.c
-gserialize.o : gserialize.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gserialize.c
-parasite.o : parasite.c
-	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION parasite.c
 
 gimpui_OBJECTS = \
-	gimpmenu.o	\
+	gimpmenu.o \
 	gimpbrushmenu.o	\
 	gimpchainbutton.o \
 	gimpcolorbutton.o \
-	gimpdialog.o	\
+	gimpdialog.o \
 	gimpexport.o \
 	gimpfileselection.o \
-	gimphelpui.o	\
+	gimphelpui.o \
 	gimpgradientmenu.o \
 	gimppatheditor.o \
 	gimppatternmenu.o \
-	gimppixmap.o	\
+	gimppixmap.o \
 	gimpquerybox.o	\
 	gimpsizeentry.o \
 	gimpui.o \
-	gimpunitmenu.o	\
+	gimpunitmenu.o \
 	gimpwidgets.o
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
-	$(GLIB)/build-dll gimpui $(GIMP_VER) gimpui.def -s $(gimpui_OBJECTS) -L . -lgimp-$(GIMP_VER) -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER)
-
-.SUFFIXES: .c .o .i
+	$(GLIB)/build-dll gimpui $(GIMP_VER) gimpui.def -s $(gimpui_OBJECTS) -L . -lgimp-$(GIMP_VER) $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS)
 
 # General rule for compiling, used by the objects that don't go into
 # gimp-$(GIMP_VER).dll. 
 .c.o:
 	$(CC) $(CFLAGS) -c $<
-
-.c.i:
-	$(CC) $(CFLAGS) -E $< >$@
-
-clean:
-	-rm *.o *.exe *.dll *.a *.base *.exp 

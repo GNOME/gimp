@@ -21,24 +21,29 @@
 (gimp_plugin_dir "${gimp_install_dir}")
 
 # Set the temporary storage directory...files will appear here
-# during the course of running the gimp.  Most files will disappear
-# when the gimp exits, but some files are likely to remain,
-# such as working palette files, so it is best if this directory
-# not be one that is shared by other users.
+#  during the course of running the gimp.  Most files will disappear
+#  when the gimp exits, but some files are likely to remain,
+#  such as working palette files, so it is best if this directory
+#  not be one that is shared by other users or is cleared on machine
+#  reboot such as /tmp.
 (temp-path "${TEMP}")
 
 # Set the swap file location. The gimp uses a tile based memory
-# allocation scheme. The swap file is used to quickly and easily
-# swap files out to disk and back in. Be aware that the swap file
-# can easily get very large if the gimp is used with large images.
-# Also, things can get horribly slow if the swap file is created on 
-# a directory that is shared over a network.  For these reasons, it may 
-# be desirable to put your swap file in your %TEMP% directory.
+#  allocation scheme. The swap file is used to quickly and easily
+#  swap files out to disk and back in. Be aware that the swap file
+#  can easily get very large if the gimp is used with large images.
+#  Also, things can get horribly slow if the swap file is created on 
+#  a directory that is mounted over NFS.  For these reasons, it may 
+#  be desirable to put your swap file in "/tmp".
 (swap-path "${TEMP}")
 
 # Set the brush search path...this path will be searched for valid
 #  brushes at startup.
 (brush-path "${gimp_dir}\\brushes;${gimp_data_dir}\\brushes")
+
+# Set the generated brush search path...this path will be searched for valid
+#  generated brushes at startup.
+(brush-vbr-path "${gimp_dir}\\generated_brushes")
 
 # Specify a default brush. If none is specified it defaults to the
 #  "1circle.gbr" brush which is just a single pixel sized brush.
@@ -55,7 +60,7 @@
 
 # Set the palette search path...this path will be searched for valid
 #  palettes at startup.
-(palette-path "${gimp_dir}\\palettes;${gimp_data_dir}\\palettes")
+(palette-path "${gimp_dir}\\palettes")
 
 # Specify a default palette.
 #  The pattern is searched for in the specified pattern paths.
@@ -71,7 +76,7 @@
 
 # Set the plug-in search path...this path will be searched for
 #  plug-ins when the plug-in is run.
-(plug-in-path "${gimp_dir}\\plug-ins;${gimp_dir}\\plug-ins\\script-fu;${gimp_plugin_dir}\\plug-ins")
+(plug-in-path "${gimp_dir}\\plug-ins;${gimp_plugin_dir}\\plug-ins")
 
 # Set the path for the script-fu plug-in.  This value is ignored by
 #  the GIMP if the script-fu plug-in is never run.
@@ -81,17 +86,17 @@
 (module-path "${gimp_dir}\\modules;${gimp_plugin_dir}\\modules")
 
 # The tile cache is used to make sure the gimp doesn't thrash
-# tiles between memory and disk. Setting this value higher will
-# cause the gimp to use less swap space, but will also cause
-# the gimp to use more memory. Conversely, a smaller cache size
-# causes the gimp to use more swap space and less memory.
-# Note: the gimp will still run even if `tile-cache-size' is
-# set to 0. The actual size can contain a suffix of 'm', 'M',
-# 'k', 'K', 'b' or 'B', which makes the gimp interpret the
-# size as being specified in megabytes, kilobytes and bytes
-# respectively. If no suffix is specified the size defaults to
-# being specified in kilobytes.
-(tile-cache-size 10m)
+#  tiles between memory and disk. Setting this value higher will
+#  cause the gimp to use less swap space, but will also cause
+#  the gimp to use more memory. Conversely, a smaller cache size
+#  causes the gimp to use more swap space and less memory.
+#  Note: the gimp will still run even if `tile-cache-size' is
+#  set to 0. The actual size can contain a suffix of 'm', 'M',
+#  'k', 'K', 'b' or 'B', which makes the gimp interpret the
+#  size as being specified in megabytes, kilobytes and bytes
+#  respectively. If no suffix is specified the size defaults to
+#  being specified in kilobytes.
+(tile-cache-size 32m)
 
 # Speed of marching ants in the selection outline
 #  this value is in milliseconds
@@ -101,17 +106,22 @@
 # Set the number of operations kept on the undo stack
 (undo-levels 5)
 
-# Set the color-cube resource for dithering on 8-bit displays
-#  The 4 values stand for Shades of red, green, blue and grays
+# Set the minimal number of colors for dithering on 8-bit displays.
+#  If the GIMP cannot allocate at least this number of colors, a
+#  private colormap will be allocated, resulting in colormap "flashing".
+#  The default value of 144 corresponds to a "color cube" of 6*6*4 colors
+#  where the 3 values stand for shades of red, green and blue.
 #  Multiplying the # of shades of each primary color yields
-#  the total number of colors that will be allocated from the
-#  gimp colormap.  This number should not exceed 256.  Most of the
-#  colors remaining after the allocation of the colorcube
-#  will be left to the system palette in an effort to reduce
-#  colormap "flashing".
+#  the total number of colors that will be allocated for the
+#  GIMP colormap.
+#  This number must not exceed 256.  Most of the colors remaining after
+#  the allocation of the colorcube will be left to the system palette
+#  in an effort to reduce colormap "flashing".
+#  Note that setting this value to something higher than 216 (6*6*6)
+#  will not work with Gtk versions lower than 1.2.8.
 (min-colors 144)
 
-# Install a GIMP colormap by default -- only for 8-bit displays
+# Install a private GIMP colormap by default -- only for 8-bit displays
 # (install-colormap)
 
 # Specify that marching ants for selected regions will be drawn
@@ -140,23 +150,43 @@
 #  Uncomment this line to disable them.
 # (no-cursor-updating)
 
-# Layer preview sizes:
+# Layer preview sizes (also used for the Undo History):
 #  none:    no previews in layers dialog/layer selector
+#  tiny:    24x24
 #  small:   32x32
-#  medium:  64x64
-#  large:   128x128
-#  #:       #x#
+#  medium:  48x48
+#  large:   64x64
+#  huge:   128x128
+#  #:        #x#
 (preview-size small)
+
+# Navigation window preview sizes:
+#  small:   48x48
+#  medium:  80x80
+#  large:  112x112
+#  #:        #x#
+(nav-preview-size large)
+
 
 # Tooltips
 #  Comment this out to disable the tooltips in the toolbox
 # (dont-show-tool-tips)
+
+# Help System
+#  Comment this out to disable context-sensitive help with F1 key
+# (dont-use-help)
 
 # Controlling ruler visibility
 #  The default behavior is for rulers to be ON.
 #  This can also be toggled with the View->Toggle Rulers command
 #  or shift+control+r
 # (dont-show-rulers)
+
+# Controlling statusbar visibility
+#  The default behavior is to show the statusbar.
+#  This can also be toggled with the View->Toggle Statusbar command
+#  or shift+control+s
+# (dont-show-statusbar)
 
 # Default units
 #  This is the default unit of a new image. It will appear in the
@@ -180,12 +210,6 @@
 (default-xresolution 72.0)
 (default-yresolution 72.0)
 
-# Controlling statusbar visibility
-#  The default behavior is to show the statusbar.
-#  This can also be toggled with the View->Toggle Statusbar command
-#  or shift+control+s
-# (dont-show-statusbar)
-
 # Disable auto saving
 #  Auto saving is not yet implemented! Nothing will be auto-saved, no matter
 #  how you set this here.  
@@ -201,13 +225,15 @@
 #  use the GIMP. To disable this behaviour, uncomment the line below...
 # (dont-save-session-info)
 
-# To let GIMP try to restore your last saved session, 
-#  uncomment the line below...
-# (always-restore-session)
+# Session managment 
+#  To let GIMP try to restore your last saved session, 
+#  just uncomment the line below...
+(always-restore-session)
 
 # Setting the level of interpolation
 #  Uncommenting this line will enable cubic interpolation.
-#  By default, GIMP uses linear interpolation, which is faster, but has poorer quality
+#  By default, GIMP uses linear interpolation, which is faster, but 
+#  has poorer quality
 # (cubic-interpolation)
 
 # Set the gamma correction values for the display
@@ -224,7 +250,7 @@
 #  by removing this line, or setting the values to 1.0.
 #  gamma-correction 1.0
 #  gamma-correction 2.0
-#                 ___
+#
 (gamma-correction 1.0)
 
 # Set the manner in which transparency is displayed in images
@@ -242,13 +268,10 @@
 (transparency-type 1)
 (transparency-size 2)
 
-# gfig pattern directory
-(gfig-path "${gimp_dir}\\gfig;${gimp_data_dir}\\gfig")
-
 # This string sets how image window titles are formatted.
 # The following percent expansions are performed:
 #   %%  literal percent sign
-#   %f  bare filename, or "Untiltled"
+#   %f  bare filename, or "Untitled"
 #   %F  full path to file
 #   %p  PDB image id
 #   %i  view instance number
@@ -256,7 +279,9 @@
 #   %z  zoom factor as a percentage
 #   %s  source scale factor
 #   %d  destination scale factor
-(image-title-format "%f-%p.%i (%t) %z%%")
+#   %Dx expands to x if the image is dirty
+# See gimprc(5) for further details.
+(image-title-format "%D*%f-%p.%i (%t) %z%%")
 
 # Global paint options
 #  By default options for the paint tools are local, e.g. all paint tools
@@ -294,17 +319,21 @@
 #  the help pages using your default web browser.
 (help-browser netscape)
 
-# Gfig search path
-#  This path will be searched for Gfig figures when you use the Gfig plug-in.
-(gfig-path "${gimp_dir}\\gfig;${gimp_data_dir}\\gfig")
-
 # Fractalexplorer path
 #  This path will be searched for fractals when you use the Fractalexplorer  
 #  plug-in.
 (fractalexplorer-path "${gimp_dir}\\fractalexplorer;${gimp_data_dir}\\fractalexplorer")
 
+# Gfig search path
+#  This path will be searched for Gfig figures when you use the Gfig plug-in.
+(gfig-path "${gimp_dir}\\gfig;${gimp_data_dir}\\gfig")
+
 # GFlare path
 #  This path will be searched for gflares when you use the GFlare plug-in.
 (gflare-path "${gimp_dir}\\gflare;${gimp_data_dir}\\gflare")
+
+# Gimpressionist path
+#  This path will be searched for data when you use the Gimpressionist plug-in.
+(gimpressionist-path "${gimp_dir}\\gimpressionist;${gimp_data_dir}\\gimpressionist")
 
 # [end of file]
