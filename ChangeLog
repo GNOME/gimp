@@ -1,5 +1,10 @@
 2003-09-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimppaletteeditor.c: removed inclusion of
+	"gimptoolbox-color-area.h".
+
+2003-09-26  Michael Natterer  <mitch@gimp.org>
+
 	Cleaned up all places which pick colors to work consistently: the
 	concept of an "active color" has disappeared, instead <ctrl> picks
 	the BG color all over the place (fixes bug #122931).
