@@ -1,6 +1,7 @@
 2001-01-17  Sven Neumann  <sven@gimp.org>
 
-	* INSTALL
+	* INSTALL: updated and changed .gimp to .gimp-1.2
+	
 	* configure.in: changed .gimp to .gimp-1.2
 
 Mon Jan 15 17:17:33 PST 2001 Manish Singh <yosh@gimp.org>
