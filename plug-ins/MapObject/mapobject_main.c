@@ -78,7 +78,7 @@ void set_default_settings(void)
   mapvals.material.highlight = 27.0;
 }
 
-MAIN();
+MAIN()
 
 static void query(void)
 {
