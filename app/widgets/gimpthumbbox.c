@@ -676,34 +676,40 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
                                  GimpThumbnailSize  size,
                                  gboolean           force)
 {
-  gchar *filename = file_utils_filename_from_uri (uri);
+  gchar         *filename = file_utils_filename_from_uri (uri);
+  GimpThumbnail *thumb;
+  gchar         *basename;
 
-  if (filename && g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+  if (filename)
     {
-      GimpThumbnail *thumb = box->imagefile->thumbnail;
-      gchar         *basename;
+      gboolean regular = g_file_test (filename, G_FILE_TEST_IS_REGULAR);
 
-      basename = file_utils_uri_to_utf8_basename (uri);
-      gtk_label_set_text (GTK_LABEL (box->filename), basename);
-      g_free (basename);
+      g_free (filename);
 
-      gimp_object_set_name (GIMP_OBJECT (box->imagefile), uri);
-
-      if (force ||
-          (gimp_thumbnail_peek_thumb (thumb, size) < GIMP_THUMB_STATE_FAILED &&
-           ! gimp_thumbnail_has_failed (thumb)))
-        {
-          Gimp *gimp = box->imagefile->gimp;
-
-          gimp_imagefile_create_thumbnail (box->imagefile,
-                                           gimp_get_user_context (gimp),
-                                           GIMP_PROGRESS (box),
-                                           size,
-                                           !force);
-        }
+      if (! regular)
+        return;
     }
 
-  g_free (filename);
+  thumb = box->imagefile->thumbnail;
+
+  basename = file_utils_uri_to_utf8_basename (uri);
+  gtk_label_set_text (GTK_LABEL (box->filename), basename);
+  g_free (basename);
+
+  gimp_object_set_name (GIMP_OBJECT (box->imagefile), uri);
+
+  if (force ||
+      (gimp_thumbnail_peek_thumb (thumb, size) < GIMP_THUMB_STATE_FAILED &&
+       ! gimp_thumbnail_has_failed (thumb)))
+    {
+      Gimp *gimp = box->imagefile->gimp;
+
+      gimp_imagefile_create_thumbnail (box->imagefile,
+                                       gimp_get_user_context (gimp),
+                                       GIMP_PROGRESS (box),
+                                       size,
+                                       !force);
+    }
 }
 
 static gboolean

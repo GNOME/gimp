@@ -243,7 +243,8 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
                                  gint           size,
                                  gboolean       replace)
 {
-  GimpThumbnail *thumbnail;
+  GimpThumbnail  *thumbnail;
+  GimpThumbState  image_state;
 
   g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
@@ -260,7 +261,10 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
   gimp_thumbnail_set_uri (thumbnail,
                           gimp_object_get_name (GIMP_OBJECT (imagefile)));
 
-  if (gimp_thumbnail_peek_image (thumbnail) >= GIMP_THUMB_STATE_EXISTS)
+  image_state = gimp_thumbnail_peek_image (thumbnail);
+
+  if (image_state == GIMP_THUMB_STATE_REMOTE ||
+      image_state >= GIMP_THUMB_STATE_EXISTS)
     {
       GimpImage    *image;
       gboolean      success;
@@ -279,7 +283,6 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
         {
           gimp_thumbnail_set_info (imagefile->thumbnail,
                                    mime_type, width, height);
-
         }
       else
         {
@@ -564,11 +567,6 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
       imagefile->static_desc = TRUE;
       break;
 
-    case GIMP_THUMB_STATE_REMOTE:
-      imagefile->description = _("Remote File");
-      imagefile->static_desc = TRUE;
-      break;
-
     case GIMP_THUMB_STATE_FOLDER:
       imagefile->description = _("Folder");
       imagefile->static_desc = TRUE;
@@ -588,6 +586,12 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
     default:
       {
         GString *str = g_string_new (NULL);
+
+        if (thumbnail->image_state == GIMP_THUMB_STATE_REMOTE)
+          {
+            g_string_append (str, _("Remote File"));
+            g_string_append_c (str, '\n');
+          }
 
         if (thumbnail->image_filesize > 0)
           {
@@ -619,6 +623,12 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
 
           case GIMP_THUMB_STATE_OK:
             {
+              if (thumbnail->image_state == GIMP_THUMB_STATE_REMOTE)
+                {
+                  g_string_append (str, _("(Preview may be out of date)"));
+                  g_string_append_c (str, '\n');
+                }
+
               if (thumbnail->image_width > 0 && thumbnail->image_height > 0)
                 {
                   g_string_append_printf (str, _("%d x %d pixels"),
