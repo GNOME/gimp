@@ -424,7 +424,7 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/View/Zoom/---"),
 
-  { { "/View/Zoom/O_ther...", NULL,
+  { { N_("/View/Zoom/O_ther..."), NULL,
       view_zoom_other_cmd_callback, 0, VIEW_ZOOM_16_1 },
     NULL,
     GIMP_HELP_VIEW_ZOOM_OTHER, NULL },

@@ -1,5 +1,10 @@
 2004-09-22  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/image-menu.c (image_menu_entries): mark menu label as
+	translatable (bug #153456).
+
+2004-09-22  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayout.c (gimp_text_get_pango_context):
 	workaround Pango bug #143542 (PangoFT2Fontmap leak, see also bug
 	#148997). Based on a patch by Robert Ögren.
