@@ -1,3 +1,8 @@
+1999-09-04  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/script-fu/interp_sliba.c (lreadstring): Fix own braino:
+	Use max three octal digits, not four.
+
 Thu Sep  2 23:26:36 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* libgimp/Makefile.am: install parasiteio.h

@@ -698,7 +698,7 @@ lreadstring (struct gen_readio * f)
 	    case '7':
 	      n = c - '0';
 	      ndigits = 1;
-	      while (ndigits <= 3)
+	      while (ndigits < 3)
 		{
 		  c = GETC_FCN (f);
 		  if (c == EOF)
