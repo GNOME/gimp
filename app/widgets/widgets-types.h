@@ -168,16 +168,16 @@ typedef struct _GimpView                     GimpView;
 typedef struct _GimpNavigationPreview        GimpNavigationPreview;
 
 
-/*  preview renderers  */
+/*  view renderers  */
 
 typedef struct _GimpViewRenderer             GimpViewRenderer;
-typedef struct _GimpPreviewRendererBrush     GimpPreviewRendererBrush;
-typedef struct _GimpPreviewRendererDrawable  GimpPreviewRendererDrawable;
-typedef struct _GimpPreviewRendererGradient  GimpPreviewRendererGradient;
-typedef struct _GimpPreviewRendererLayer     GimpPreviewRendererLayer;
-typedef struct _GimpPreviewRendererImage     GimpPreviewRendererImage;
-typedef struct _GimpPreviewRendererImagefile GimpPreviewRendererImagefile;
-typedef struct _GimpPreviewRendererVectors   GimpPreviewRendererVectors;
+typedef struct _GimpViewRendererBrush        GimpViewRendererBrush;
+typedef struct _GimpViewRendererDrawable     GimpViewRendererDrawable;
+typedef struct _GimpViewRendererGradient     GimpViewRendererGradient;
+typedef struct _GimpViewRendererLayer        GimpViewRendererLayer;
+typedef struct _GimpViewRendererImage        GimpViewRendererImage;
+typedef struct _GimpViewRendererImagefile    GimpViewRendererImagefile;
+typedef struct _GimpViewRendererVectors      GimpViewRendererVectors;
 
 
 /*  cell renderers  */

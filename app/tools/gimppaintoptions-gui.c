@@ -36,7 +36,7 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpview.h"
-#include "widgets/gimppreviewrenderergradient.h"
+#include "widgets/gimpviewrenderergradient.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gtkhwrapbox.h"
 #include "widgets/gimpviewablebutton.h"
@@ -131,7 +131,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_set_sensitive (mode_label, FALSE);
     }
 
-  /*  the brush preview  */
+  /*  the brush view  */
   if (tool_type != GIMP_TYPE_BUCKET_FILL_TOOL &&
       tool_type != GIMP_TYPE_BLEND_TOOL       &&
       tool_type != GIMP_TYPE_INK_TOOL)
@@ -149,7 +149,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                  button, 2, TRUE);
     }
 
-  /*  the pattern preview  */
+  /*  the pattern view  */
   if (tool_type == GIMP_TYPE_BUCKET_FILL_TOOL ||
       tool_type == GIMP_TYPE_CLONE_TOOL)
     {
@@ -166,7 +166,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                  button, 2, TRUE);
     }
 
-  /*  the gradient preview  */
+  /*  the gradient view  */
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
       tool_options->tool_info->tool_type == GIMP_TYPE_BLEND_TOOL)
     {
@@ -495,10 +495,10 @@ gradient_options_reverse_notify (GimpPaintOptions *paint_options,
                                  GParamSpec       *pspec,
                                  GimpView         *view)
 {
-  GimpPreviewRendererGradient *rendergrad;
+  GimpViewRendererGradient *rendergrad;
 
-  rendergrad = GIMP_PREVIEW_RENDERER_GRADIENT (view->renderer);
+  rendergrad = GIMP_VIEW_RENDERER_GRADIENT (view->renderer);
 
-  gimp_preview_renderer_gradient_set_reverse (rendergrad,
-                                              paint_options->gradient_options->gradient_reverse);
+  gimp_view_renderer_gradient_set_reverse (rendergrad,
+                                           paint_options->gradient_options->gradient_reverse);
 }

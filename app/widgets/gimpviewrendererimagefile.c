@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppreviewrendererimagefile.c
+ * gimpviewrendererimagefile.c
  * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -34,7 +34,7 @@
 
 #include "core/gimpimagefile.h"
 
-#include "gimppreviewrendererimagefile.h"
+#include "gimpviewrendererimagefile.h"
 
 #ifdef ENABLE_FILE_SYSTEM_ICONS
 #define GTK_FILE_SYSTEM_ENABLE_UNSUPPORTED
@@ -42,18 +42,18 @@
 #endif
 
 
-static void   gimp_preview_renderer_imagefile_class_init (GimpPreviewRendererImagefileClass *klass);
-static void   gimp_preview_renderer_imagefile_init       (GimpPreviewRendererImagefile      *renderer);
+static void   gimp_view_renderer_imagefile_class_init (GimpViewRendererImagefileClass *klass);
+static void   gimp_view_renderer_imagefile_init       (GimpViewRendererImagefile      *renderer);
 
-static void   gimp_preview_renderer_imagefile_render     (GimpViewRenderer *renderer,
-                                                          GtkWidget        *widget);
+static void   gimp_view_renderer_imagefile_render     (GimpViewRenderer *renderer,
+                                                       GtkWidget        *widget);
 
 
 static GimpViewRendererClass *parent_class = NULL;
 
 
 GType
-gimp_preview_renderer_imagefile_get_type (void)
+gimp_view_renderer_imagefile_get_type (void)
 {
   static GType renderer_type = 0;
 
@@ -61,19 +61,19 @@ gimp_preview_renderer_imagefile_get_type (void)
     {
       static const GTypeInfo renderer_info =
       {
-        sizeof (GimpPreviewRendererImagefileClass),
+        sizeof (GimpViewRendererImagefileClass),
         NULL,           /* base_init */
         NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_preview_renderer_imagefile_class_init,
+        (GClassInitFunc) gimp_view_renderer_imagefile_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data */
-        sizeof (GimpPreviewRendererImagefile),
+        sizeof (GimpViewRendererImagefile),
         0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_preview_renderer_imagefile_init,
+        (GInstanceInitFunc) gimp_view_renderer_imagefile_init,
       };
 
       renderer_type = g_type_register_static (GIMP_TYPE_VIEW_RENDERER,
-                                              "GimpPreviewRendererImagefile",
+                                              "GimpViewRendererImagefile",
                                               &renderer_info, 0);
     }
 
@@ -81,7 +81,7 @@ gimp_preview_renderer_imagefile_get_type (void)
 }
 
 static void
-gimp_preview_renderer_imagefile_class_init (GimpPreviewRendererImagefileClass *klass)
+gimp_view_renderer_imagefile_class_init (GimpViewRendererImagefileClass *klass)
 {
   GimpViewRendererClass *renderer_class;
 
@@ -89,11 +89,11 @@ gimp_preview_renderer_imagefile_class_init (GimpPreviewRendererImagefileClass *k
 
   parent_class = g_type_class_peek_parent (klass);
 
-  renderer_class->render = gimp_preview_renderer_imagefile_render;
+  renderer_class->render = gimp_view_renderer_imagefile_render;
 }
 
 static void
-gimp_preview_renderer_imagefile_init (GimpPreviewRendererImagefile *renderer)
+gimp_view_renderer_imagefile_init (GimpViewRendererImagefile *renderer)
 {
 #ifdef ENABLE_FILE_SYSTEM_ICONS
   renderer->file_system = NULL;
@@ -101,8 +101,8 @@ gimp_preview_renderer_imagefile_init (GimpPreviewRendererImagefile *renderer)
 }
 
 static void
-gimp_preview_renderer_imagefile_render (GimpViewRenderer *renderer,
-                                        GtkWidget        *widget)
+gimp_view_renderer_imagefile_render (GimpViewRenderer *renderer,
+                                     GtkWidget        *widget)
 {
   TempBuf *temp_buf = gimp_viewable_get_preview (renderer->viewable,
                                                  renderer->width,
@@ -117,12 +117,12 @@ gimp_preview_renderer_imagefile_render (GimpViewRenderer *renderer,
       GdkPixbuf *pixbuf = NULL;
 
 #ifdef ENABLE_FILE_SYSTEM_ICONS
-      if (GIMP_PREVIEW_RENDERER_IMAGEFILE (renderer)->file_system)
+      if (GIMP_VIEW_RENDERER_IMAGEFILE (renderer)->file_system)
         {
           GtkFileSystem *file_system;
           const gchar   *uri;
 
-          file_system = GIMP_PREVIEW_RENDERER_IMAGEFILE (renderer)->file_system;
+          file_system = GIMP_VIEW_RENDERER_IMAGEFILE (renderer)->file_system;
 
           uri = gimp_object_get_name (GIMP_OBJECT (renderer->viewable));
 

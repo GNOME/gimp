@@ -188,22 +188,6 @@ libappwidgets_a_sources = \
 	gimppdbdialog.h			\
 	gimppluginaction.c		\
 	gimppluginaction.h		\
-	gimppreviewrenderer-utils.c	\
-	gimppreviewrenderer-utils.h	\
-	gimppreviewrendererbrush.c	\
-	gimppreviewrendererbrush.h	\
-	gimppreviewrendererdrawable.c	\
-	gimppreviewrendererdrawable.h	\
-	gimppreviewrenderergradient.c	\
-	gimppreviewrenderergradient.h	\
-	gimppreviewrendererimage.c	\
-	gimppreviewrendererimage.h	\
-	gimppreviewrendererimagefile.c	\
-	gimppreviewrendererimagefile.h	\
-	gimppreviewrendererlayer.c	\
-	gimppreviewrendererlayer.h	\
-	gimppreviewrenderervectors.c	\
-	gimppreviewrenderervectors.h	\
 	gimpprogressbox.c		\
 	gimpprogressbox.h		\
 	gimpprogressdialog.c		\
@@ -264,6 +248,22 @@ libappwidgets_a_sources = \
 	gimpviewabledialog.h		\
 	gimpviewrenderer.c		\
 	gimpviewrenderer.h		\
+	gimpviewrenderer-utils.c	\
+	gimpviewrenderer-utils.h	\
+	gimpviewrendererbrush.c		\
+	gimpviewrendererbrush.h		\
+	gimpviewrendererdrawable.c	\
+	gimpviewrendererdrawable.h	\
+	gimpviewrenderergradient.c	\
+	gimpviewrenderergradient.h	\
+	gimpviewrendererimage.c 	\
+	gimpviewrendererimage.h 	\
+	gimpviewrendererimagefile.c	\
+	gimpviewrendererimagefile.h	\
+	gimpviewrendererlayer.c		\
+	gimpviewrendererlayer.h		\
+	gimpviewrenderervectors.c	\
+	gimpviewrenderervectors.h	\
 	gimpwidgets-constructors.c	\
 	gimpwidgets-constructors.h	\
 	gimpwidgets-utils.c		\

@@ -44,7 +44,7 @@
 #include "gimpfileprocview.h"
 #include "gimphelp-ids.h"
 #include "gimpview.h"
-#include "gimppreviewrendererimagefile.h"
+#include "gimpviewrendererimagefile.h"
 #include "gimpthumbbox.h"
 #include "gimpwidgets-utils.h"
 
@@ -470,7 +470,7 @@ gimp_file_dialog_add_preview (GimpFileDialog *dialog,
   gtk_widget_show (dialog->thumb_box);
 
 #ifdef ENABLE_FILE_SYSTEM_ICONS
-  GIMP_PREVIEW_RENDERER_IMAGEFILE (GIMP_VIEW (GIMP_THUMB_BOX (dialog->thumb_box)->preview)->renderer)->file_system = _gtk_file_chooser_get_file_system (GTK_FILE_CHOOSER (dialog));
+  GIMP_VIEW_RENDERER_IMAGEFILE (GIMP_VIEW (GIMP_THUMB_BOX (dialog->thumb_box)->preview)->renderer)->file_system = _gtk_file_chooser_get_file_system (GTK_FILE_CHOOSER (dialog));
 #endif
 }
 

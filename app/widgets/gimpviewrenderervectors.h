@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppreviewrenderervectors.h
+ * gimpviewrenderervectors.h
  * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *                    Simon Budig <simon@gimp.org>
  *
@@ -20,33 +20,33 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_PREVIEW_RENDERER_VECTORS_H__
-#define __GIMP_PREVIEW_RENDERER_VECTORS_H__
+#ifndef __GIMP_VIEW_RENDERER_VECTORS_H__
+#define __GIMP_VIEW_RENDERER_VECTORS_H__
 
-#include "gimppreviewrendererdrawable.h"
+#include "gimpviewrendererdrawable.h"
 
-#define GIMP_TYPE_PREVIEW_RENDERER_VECTORS            (gimp_preview_renderer_vectors_get_type ())
-#define GIMP_PREVIEW_RENDERER_VECTORS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREVIEW_RENDERER_VECTORS, GimpPreviewRendererVectors))
-#define GIMP_PREVIEW_RENDERER_VECTORS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PREVIEW_RENDERER_VECTORS, GimpPreviewRendererVectorsClass))
-#define GIMP_IS_PREVIEW_RENDERER_VECTORS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_PREVIEW_RENDERER_VECTORS))
-#define GIMP_IS_PREVIEW_RENDERER_VECTORS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PREVIEW_RENDERER_VECTORS))
-#define GIMP_PREVIEW_RENDERER_VECTORS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PREVIEW_RENDERER_VECTORS, GimpPreviewRendererVectorsClass))
+#define GIMP_TYPE_VIEW_RENDERER_VECTORS            (gimp_view_renderer_vectors_get_type ())
+#define GIMP_VIEW_RENDERER_VECTORS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER_VECTORS, GimpViewRendererVectors))
+#define GIMP_VIEW_RENDERER_VECTORS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEW_RENDERER_VECTORS, GimpViewRendererVectorsClass))
+#define GIMP_IS_VIEW_RENDERER_VECTORS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_VIEW_RENDERER_VECTORS))
+#define GIMP_IS_VIEW_RENDERER_VECTORS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEW_RENDERER_VECTORS))
+#define GIMP_VIEW_RENDERER_VECTORS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEW_RENDERER_VECTORS, GimpViewRendererVectorsClass))
 
 
-typedef struct _GimpPreviewRendererVectorsClass  GimpPreviewRendererVectorsClass;
+typedef struct _GimpViewRendererVectorsClass  GimpViewRendererVectorsClass;
 
-struct _GimpPreviewRendererVectors
+struct _GimpViewRendererVectors
 {
-  GimpPreviewRendererDrawable  parent_instance;
+  GimpViewRendererDrawable  parent_instance;
 };
 
-struct _GimpPreviewRendererVectorsClass
+struct _GimpViewRendererVectorsClass
 {
-  GimpPreviewRendererDrawableClass  parent_class;
+  GimpViewRendererDrawableClass  parent_class;
 };
 
 
-GType   gimp_preview_renderer_vectors_get_type (void) G_GNUC_CONST;
+GType   gimp_view_renderer_vectors_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_PREVIEW_RENDERER_VECTORS_H__ */
+#endif /* __GIMP_VIEW_RENDERER_VECTORS_H__ */

@@ -45,7 +45,7 @@
 #include "display/gimpdisplayshell-render.h"
 
 #include "gimpviewrenderer.h"
-#include "gimppreviewrenderer-utils.h"
+#include "gimpviewrenderer-utils.h"
 #include "gimpwidgets-utils.h"
 
 
@@ -222,7 +222,7 @@ gimp_view_renderer_new_internal (GType     viewable_type,
 {
   GimpViewRenderer *renderer;
 
-  renderer = g_object_new (gimp_preview_renderer_type_from_viewable_type (viewable_type),
+  renderer = g_object_new (gimp_view_renderer_type_from_viewable_type (viewable_type),
                            NULL);
 
   renderer->viewable_type = viewable_type;

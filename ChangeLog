@@ -1,3 +1,51 @@
+2004-08-26  DindinX  <david@dindinx.org>
+
+	* app/widgets/gimppreviewrenderer-utils.c
+	* app/widgets/gimppreviewrenderer-utils.h
+	* app/widgets/gimppreviewrendererbrush.c
+	* app/widgets/gimppreviewrendererbrush.h
+	* app/widgets/gimppreviewrendererdrawable.c
+	* app/widgets/gimppreviewrendererdrawable.h
+	* app/widgets/gimppreviewrenderergradient.c
+	* app/widgets/gimppreviewrenderergradient.h
+	* app/widgets/gimppreviewrendererimage.c
+	* app/widgets/gimppreviewrendererimage.h
+	* app/widgets/gimppreviewrendererimagefile.c
+	* app/widgets/gimppreviewrendererimagefile.h
+	* app/widgets/gimppreviewrendererlayer.c
+	* app/widgets/gimppreviewrendererlayer.h
+	* app/widgets/gimppreviewrenderervectors.c
+	* app/widgets/gimppreviewrenderervectors.h: Renamed all these files...
+
+	* app/widgets/gimpviewrenderer-utils.c
+	* app/widgets/gimpviewrenderer-utils.h
+	* app/widgets/gimpviewrendererbrush.c
+	* app/widgets/gimpviewrendererbrush.h
+	* app/widgets/gimpviewrendererdrawable.c
+	* app/widgets/gimpviewrendererdrawable.h
+	* app/widgets/gimpviewrenderergradient.c
+	* app/widgets/gimpviewrenderergradient.h
+	* app/widgets/gimpviewrendererimage.c
+	* app/widgets/gimpviewrendererimage.h
+	* app/widgets/gimpviewrendererimagefile.c
+	* app/widgets/gimpviewrendererimagefile.h
+	* app/widgets/gimpviewrendererlayer.c
+	* app/widgets/gimpviewrendererlayer.h
+	* app/widgets/gimpviewrenderervectors.c
+	* app/widgets/gimpviewrenderervectors.h: ... to these names. And also
+	changed all the GimpPreviewRenderer* types to GimpViewRenderer* ones.
+
+	* app/tools/gimppaintoptions-gui.c
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpview.c
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpviewrenderer.c
+	* app/widgets/gimpviewrenderer.h: modified accordingly.
+
 2004-08-26  Sven Neumann  <sven@gimp.org>
 
 	* app/sanity.c (sanity_check_filename_encoding): try to convert

@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppreviewrendererbrush.c
+ * gimpviewrendererbrush.c
  * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -30,24 +30,24 @@
 #include "core/gimpbrush.h"
 #include "core/gimpbrushpipe.h"
 
-#include "gimppreviewrendererbrush.h"
+#include "gimpviewrendererbrush.h"
 
 
-static void   gimp_preview_renderer_brush_class_init (GimpPreviewRendererBrushClass *klass);
-static void   gimp_preview_renderer_brush_init       (GimpPreviewRendererBrush      *renderer);
+static void   gimp_view_renderer_brush_class_init (GimpViewRendererBrushClass *klass);
+static void   gimp_view_renderer_brush_init       (GimpViewRendererBrush      *renderer);
 
-static void   gimp_preview_renderer_brush_finalize (GObject          *object);
-static void   gimp_preview_renderer_brush_render   (GimpViewRenderer *renderer,
+static void   gimp_view_renderer_brush_finalize (GObject          *object);
+static void   gimp_view_renderer_brush_render   (GimpViewRenderer *renderer,
                                                     GtkWidget        *widget);
 
-static gboolean gimp_preview_renderer_brush_render_timeout (gpointer  data);
+static gboolean gimp_view_renderer_brush_render_timeout (gpointer  data);
 
 
 static GimpViewRendererClass *parent_class = NULL;
 
 
 GType
-gimp_preview_renderer_brush_get_type (void)
+gimp_view_renderer_brush_get_type (void)
 {
   static GType renderer_type = 0;
 
@@ -55,19 +55,19 @@ gimp_preview_renderer_brush_get_type (void)
     {
       static const GTypeInfo renderer_info =
       {
-        sizeof (GimpPreviewRendererBrushClass),
+        sizeof (GimpViewRendererBrushClass),
         NULL,           /* base_init */
         NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_preview_renderer_brush_class_init,
+        (GClassInitFunc) gimp_view_renderer_brush_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data */
-        sizeof (GimpPreviewRendererBrush),
+        sizeof (GimpViewRendererBrush),
         0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_preview_renderer_brush_init,
+        (GInstanceInitFunc) gimp_view_renderer_brush_init,
       };
 
       renderer_type = g_type_register_static (GIMP_TYPE_VIEW_RENDERER,
-                                              "GimpPreviewRendererBrush",
+                                              "GimpViewRendererBrush",
                                               &renderer_info, 0);
     }
 
@@ -75,7 +75,7 @@ gimp_preview_renderer_brush_get_type (void)
 }
 
 static void
-gimp_preview_renderer_brush_class_init (GimpPreviewRendererBrushClass *klass)
+gimp_view_renderer_brush_class_init (GimpViewRendererBrushClass *klass)
 {
   GObjectClass          *object_class;
   GimpViewRendererClass *renderer_class;
@@ -85,22 +85,22 @@ gimp_preview_renderer_brush_class_init (GimpPreviewRendererBrushClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_preview_renderer_brush_finalize;
+  object_class->finalize = gimp_view_renderer_brush_finalize;
 
-  renderer_class->render = gimp_preview_renderer_brush_render;
+  renderer_class->render = gimp_view_renderer_brush_render;
 }
 
 static void
-gimp_preview_renderer_brush_init (GimpPreviewRendererBrush *renderer)
+gimp_view_renderer_brush_init (GimpViewRendererBrush *renderer)
 {
   renderer->pipe_timeout_id      = 0;
   renderer->pipe_animation_index = 0;
 }
 
 static void
-gimp_preview_renderer_brush_finalize (GObject *object)
+gimp_view_renderer_brush_finalize (GObject *object)
 {
-  GimpPreviewRendererBrush *renderer = GIMP_PREVIEW_RENDERER_BRUSH (object);
+  GimpViewRendererBrush *renderer = GIMP_VIEW_RENDERER_BRUSH (object);
 
   if (renderer->pipe_timeout_id)
     {
@@ -112,16 +112,16 @@ gimp_preview_renderer_brush_finalize (GObject *object)
 }
 
 static void
-gimp_preview_renderer_brush_render (GimpViewRenderer *renderer,
-                                    GtkWidget        *widget)
+gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
+                                 GtkWidget        *widget)
 {
-  GimpPreviewRendererBrush *renderbrush;
-  GimpBrush                *brush;
-  TempBuf                  *temp_buf;
-  gint                      brush_width;
-  gint                      brush_height;
+  GimpViewRendererBrush *renderbrush;
+  GimpBrush             *brush;
+  TempBuf               *temp_buf;
+  gint                   brush_width;
+  gint                   brush_height;
 
-  renderbrush = GIMP_PREVIEW_RENDERER_BRUSH (renderer);
+  renderbrush = GIMP_VIEW_RENDERER_BRUSH (renderer);
 
   if (renderbrush->pipe_timeout_id)
     {
@@ -155,7 +155,7 @@ gimp_preview_renderer_brush_render (GimpViewRenderer *renderer,
         {
           renderbrush->pipe_animation_index = 0;
           renderbrush->pipe_timeout_id =
-            g_timeout_add (300, gimp_preview_renderer_brush_render_timeout,
+            g_timeout_add (300, gimp_view_renderer_brush_render_timeout,
                            renderbrush);
         }
 
@@ -279,15 +279,15 @@ gimp_preview_renderer_brush_render (GimpViewRenderer *renderer,
 }
 
 static gboolean
-gimp_preview_renderer_brush_render_timeout (gpointer data)
+gimp_view_renderer_brush_render_timeout (gpointer data)
 {
-  GimpPreviewRendererBrush *renderbrush;
-  GimpViewRenderer         *renderer;
-  GimpBrushPipe            *brush_pipe;
-  GimpBrush                *brush;
-  TempBuf                  *temp_buf;
+  GimpViewRendererBrush *renderbrush;
+  GimpViewRenderer      *renderer;
+  GimpBrushPipe         *brush_pipe;
+  GimpBrush             *brush;
+  TempBuf               *temp_buf;
 
-  renderbrush = GIMP_PREVIEW_RENDERER_BRUSH (data);
+  renderbrush = GIMP_VIEW_RENDERER_BRUSH (data);
   renderer    = GIMP_VIEW_RENDERER (data);
 
   if (! renderer->viewable)

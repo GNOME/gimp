@@ -39,7 +39,7 @@
 #include "gimpview.h"
 #include "gimpview-popup.h"
 #include "gimpviewrenderer.h"
-#include "gimppreviewrenderer-utils.h"
+#include "gimpviewrenderer-utils.h"
 
 
 #define VIEW_EVENT_MASK (GDK_BUTTON_PRESS_MASK   | \

@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppreviewrenderergradient.c
+ * gimpviewrenderergradient.c
  * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -39,23 +39,23 @@
 
 #include "display/gimpdisplayshell-render.h"
 
-#include "gimppreviewrenderergradient.h"
+#include "gimpviewrenderergradient.h"
 
 
-static void   gimp_preview_renderer_gradient_class_init (GimpPreviewRendererGradientClass *klass);
-static void   gimp_preview_renderer_gradient_init       (GimpPreviewRendererGradient      *renderer);
+static void   gimp_view_renderer_gradient_class_init (GimpViewRendererGradientClass *klass);
+static void   gimp_view_renderer_gradient_init       (GimpViewRendererGradient      *renderer);
 
-static void   gimp_preview_renderer_gradient_finalize   (GObject             *object);
+static void   gimp_view_renderer_gradient_finalize   (GObject             *object);
 
-static void   gimp_preview_renderer_gradient_render     (GimpViewRenderer    *renderer,
-                                                         GtkWidget           *widget);
+static void   gimp_view_renderer_gradient_render     (GimpViewRenderer    *renderer,
+                                                      GtkWidget           *widget);
 
 
 static GimpViewRendererClass *parent_class = NULL;
 
 
 GType
-gimp_preview_renderer_gradient_get_type (void)
+gimp_view_renderer_gradient_get_type (void)
 {
   static GType renderer_type = 0;
 
@@ -63,19 +63,19 @@ gimp_preview_renderer_gradient_get_type (void)
     {
       static const GTypeInfo renderer_info =
       {
-        sizeof (GimpPreviewRendererGradientClass),
+        sizeof (GimpViewRendererGradientClass),
         NULL,           /* base_init */
         NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_preview_renderer_gradient_class_init,
+        (GClassInitFunc) gimp_view_renderer_gradient_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data */
-        sizeof (GimpPreviewRendererGradient),
+        sizeof (GimpViewRendererGradient),
         0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_preview_renderer_gradient_init,
+        (GInstanceInitFunc) gimp_view_renderer_gradient_init,
       };
 
       renderer_type = g_type_register_static (GIMP_TYPE_VIEW_RENDERER,
-                                              "GimpPreviewRendererGradient",
+                                              "GimpViewRendererGradient",
                                               &renderer_info, 0);
     }
 
@@ -83,7 +83,7 @@ gimp_preview_renderer_gradient_get_type (void)
 }
 
 static void
-gimp_preview_renderer_gradient_class_init (GimpPreviewRendererGradientClass *klass)
+gimp_view_renderer_gradient_class_init (GimpViewRendererGradientClass *klass)
 {
   GObjectClass          *object_class;
   GimpViewRendererClass *renderer_class;
@@ -93,13 +93,13 @@ gimp_preview_renderer_gradient_class_init (GimpPreviewRendererGradientClass *kla
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_preview_renderer_gradient_finalize;
+  object_class->finalize = gimp_view_renderer_gradient_finalize;
 
-  renderer_class->render = gimp_preview_renderer_gradient_render;
+  renderer_class->render = gimp_view_renderer_gradient_render;
 }
 
 static void
-gimp_preview_renderer_gradient_init (GimpPreviewRendererGradient *renderer)
+gimp_view_renderer_gradient_init (GimpViewRendererGradient *renderer)
 {
   renderer->even    = NULL;
   renderer->odd     = NULL;
@@ -110,11 +110,11 @@ gimp_preview_renderer_gradient_init (GimpPreviewRendererGradient *renderer)
 }
 
 static void
-gimp_preview_renderer_gradient_finalize (GObject *object)
+gimp_view_renderer_gradient_finalize (GObject *object)
 {
-  GimpPreviewRendererGradient *renderer;
+  GimpViewRendererGradient *renderer;
 
-  renderer = GIMP_PREVIEW_RENDERER_GRADIENT (object);
+  renderer = GIMP_VIEW_RENDERER_GRADIENT (object);
 
   if (renderer->even)
     {
@@ -132,10 +132,10 @@ gimp_preview_renderer_gradient_finalize (GObject *object)
 }
 
 static void
-gimp_preview_renderer_gradient_render (GimpViewRenderer *renderer,
-                                       GtkWidget        *widget)
+gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
+                                    GtkWidget        *widget)
 {
-  GimpPreviewRendererGradient *rendergrad;
+  GimpViewRendererGradient *rendergrad;
   GimpGradient *gradient;
   guchar       *even;
   guchar       *odd;
@@ -146,7 +146,7 @@ gimp_preview_renderer_gradient_render (GimpViewRenderer *renderer,
   gdouble       dx, cur_x;
   GimpRGB       color;
 
-  rendergrad = GIMP_PREVIEW_RENDERER_GRADIENT (renderer);
+  rendergrad = GIMP_VIEW_RENDERER_GRADIENT (renderer);
 
   gradient = GIMP_GRADIENT (renderer->viewable);
 
@@ -222,12 +222,12 @@ gimp_preview_renderer_gradient_render (GimpViewRenderer *renderer,
 }
 
 void
-gimp_preview_renderer_gradient_set_offsets (GimpPreviewRendererGradient *renderer,
-                                            gdouble                      left,
-                                            gdouble                      right,
-                                            gboolean                     instant_update)
+gimp_view_renderer_gradient_set_offsets (GimpViewRendererGradient *renderer,
+                                         gdouble                   left,
+                                         gdouble                   right,
+                                         gboolean                  instant_update)
 {
-  g_return_if_fail (GIMP_IS_PREVIEW_RENDERER_GRADIENT (renderer));
+  g_return_if_fail (GIMP_IS_VIEW_RENDERER_GRADIENT (renderer));
 
   left  = CLAMP (left, 0.0, 1.0);
   right = CLAMP (right, left, 1.0);
@@ -245,10 +245,10 @@ gimp_preview_renderer_gradient_set_offsets (GimpPreviewRendererGradient *rendere
 }
 
 void
-gimp_preview_renderer_gradient_set_reverse (GimpPreviewRendererGradient *renderer,
-                                            gboolean                     reverse)
+gimp_view_renderer_gradient_set_reverse (GimpViewRendererGradient *renderer,
+                                         gboolean                     reverse)
 {
-  g_return_if_fail (GIMP_IS_PREVIEW_RENDERER_GRADIENT (renderer));
+  g_return_if_fail (GIMP_IS_VIEW_RENDERER_GRADIENT (renderer));
 
   if (reverse != renderer->reverse)
     {

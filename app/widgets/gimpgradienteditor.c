@@ -70,7 +70,7 @@
 #include "gimpgradienteditor.h"
 #include "gimphelp-ids.h"
 #include "gimpview.h"
-#include "gimppreviewrenderergradient.h"
+#include "gimpviewrenderergradient.h"
 #include "gimpwidgets-utils.h"
 
 #include "gui/color-notebook.h"
@@ -83,19 +83,19 @@
 #define GRAD_SCROLLBAR_STEP_SIZE 0.05
 #define GRAD_SCROLLBAR_PAGE_SIZE 0.75
 
-#define GRAD_PREVIEW_WIDTH  128
-#define GRAD_PREVIEW_HEIGHT  96
+#define GRAD_VIEW_WIDTH  128
+#define GRAD_VIEW_HEIGHT  96
 #define GRAD_CONTROL_HEIGHT  10
 
 #define GRAD_MOVE_TIME 150 /* ms between mouse click and detection of movement in gradient control */
 
 
-#define GRAD_PREVIEW_EVENT_MASK (GDK_EXPOSURE_MASK            | \
-                                 GDK_LEAVE_NOTIFY_MASK        | \
-                                 GDK_POINTER_MOTION_MASK      | \
-                                 GDK_POINTER_MOTION_HINT_MASK | \
-                                 GDK_BUTTON_PRESS_MASK        | \
-                                 GDK_BUTTON_RELEASE_MASK)
+#define GRAD_VIEW_EVENT_MASK (GDK_EXPOSURE_MASK            | \
+                              GDK_LEAVE_NOTIFY_MASK        | \
+                              GDK_POINTER_MOTION_MASK      | \
+                              GDK_POINTER_MOTION_HINT_MASK | \
+                              GDK_BUTTON_PRESS_MASK        | \
+                              GDK_BUTTON_RELEASE_MASK)
 
 #define GRAD_CONTROL_EVENT_MASK (GDK_EXPOSURE_MASK            | \
                                  GDK_LEAVE_NOTIFY_MASK        | \
@@ -137,17 +137,17 @@ static void   gradient_editor_set_hint              (GimpGradientEditor *editor,
                                                      const gchar        *str4);
 
 
-/* Gradient preview functions */
+/* Gradient view functions */
 
-static gint      preview_events                   (GtkWidget          *widget,
+static gint      view_events                      (GtkWidget          *widget,
                                                    GdkEvent           *event,
                                                    GimpGradientEditor *editor);
-static void      preview_set_hint                 (GimpGradientEditor *editor,
+static void      view_set_hint                    (GimpGradientEditor *editor,
                                                    gint                x);
 
-static void      preview_set_foreground           (GimpGradientEditor *editor,
+static void      view_set_foreground              (GimpGradientEditor *editor,
                                                    gint                x);
-static void      preview_set_background           (GimpGradientEditor *editor,
+static void      view_set_background              (GimpGradientEditor *editor,
                                                    gint                x);
 
 /* Gradient control functions */
@@ -277,7 +277,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   GtkWidget *hbox;
   GtkWidget *button;
 
-  /* Frame for gradient preview and gradient control */
+  /* Frame for gradient view and gradient control */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
@@ -293,18 +293,18 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
 
   editor->preview = gimp_view_new_full_by_types (GIMP_TYPE_VIEW,
                                                  GIMP_TYPE_GRADIENT,
-                                                 GRAD_PREVIEW_WIDTH,
-                                                 GRAD_PREVIEW_HEIGHT, 0,
+                                                 GRAD_VIEW_WIDTH,
+                                                 GRAD_VIEW_HEIGHT, 0,
                                                  FALSE, FALSE, FALSE);
   gtk_widget_set_size_request (editor->preview,
-                               GRAD_PREVIEW_WIDTH, GRAD_PREVIEW_HEIGHT);
-  gtk_widget_set_events (editor->preview, GRAD_PREVIEW_EVENT_MASK);
+                               GRAD_VIEW_WIDTH, GRAD_VIEW_HEIGHT);
+  gtk_widget_set_events (editor->preview, GRAD_VIEW_EVENT_MASK);
   gimp_view_set_expand (GIMP_VIEW (editor->preview), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), editor->preview, TRUE, TRUE, 0);
   gtk_widget_show (editor->preview);
 
   g_signal_connect (editor->preview, "event",
-                    G_CALLBACK (preview_events),
+                    G_CALLBACK (view_events),
                     editor);
 
   gimp_dnd_viewable_dest_add (GTK_WIDGET (editor->preview),
@@ -326,7 +326,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
 
   editor->control = gtk_drawing_area_new ();
   gtk_widget_set_size_request (editor->control,
-                               GRAD_PREVIEW_WIDTH, GRAD_CONTROL_HEIGHT);
+                               GRAD_VIEW_WIDTH, GRAD_CONTROL_HEIGHT);
   gtk_widget_set_events (editor->control, GRAD_CONTROL_EVENT_MASK);
   gtk_box_pack_start (GTK_BOX (vbox), editor->control, FALSE, FALSE, 0);
   gtk_widget_show (editor->control);
@@ -556,9 +556,9 @@ static void
 gradient_editor_scrollbar_update (GtkAdjustment      *adjustment,
                                   GimpGradientEditor *editor)
 {
-  GimpPreviewRendererGradient *renderer;
-  gchar                       *str1;
-  gchar                       *str2;
+  GimpViewRendererGradient *renderer;
+  gchar                    *str1;
+  gchar                    *str2;
 
   str1 = g_strdup_printf (_("Zoom factor: %d:1"),
                           editor->zoom_factor);
@@ -572,13 +572,13 @@ gradient_editor_scrollbar_update (GtkAdjustment      *adjustment,
   g_free (str1);
   g_free (str2);
 
-  renderer = GIMP_PREVIEW_RENDERER_GRADIENT (GIMP_VIEW (editor->preview)->renderer);
+  renderer = GIMP_VIEW_RENDERER_GRADIENT (GIMP_VIEW (editor->preview)->renderer);
 
-  gimp_preview_renderer_gradient_set_offsets (renderer,
-                                              adjustment->value,
-                                              adjustment->value +
-                                              adjustment->page_size,
-                                              editor->instant_update);
+  gimp_view_renderer_gradient_set_offsets (renderer,
+                                           adjustment->value,
+                                           adjustment->value +
+                                           adjustment->page_size,
+                                           editor->instant_update);
   gimp_gradient_editor_update (editor);
 }
 
@@ -695,12 +695,12 @@ gradient_editor_set_hint (GimpGradientEditor *editor,
 }
 
 
-/***** Gradient preview functions *****/
+/***** Gradient view functions *****/
 
 static gboolean
-preview_events (GtkWidget          *widget,
-                GdkEvent           *event,
-                GimpGradientEditor *editor)
+view_events (GtkWidget          *widget,
+             GdkEvent           *event,
+             GimpGradientEditor *editor)
 {
   gint            x, y;
   GdkEventButton *bevent;
@@ -728,13 +728,13 @@ preview_events (GtkWidget          *widget,
           if (editor->preview_button_down)
             {
               if (mevent->state & GDK_CONTROL_MASK)
-                preview_set_background (editor, x);
+                view_set_background (editor, x);
               else
-                preview_set_foreground (editor, x);
+                view_set_foreground (editor, x);
             }
           else
             {
-              preview_set_hint (editor, x);
+              view_set_hint (editor, x);
             }
         }
       break;
@@ -750,9 +750,9 @@ preview_events (GtkWidget          *widget,
           editor->preview_last_x = x;
           editor->preview_button_down = TRUE;
           if (bevent->state & GDK_CONTROL_MASK)
-            preview_set_background (editor, x);
+            view_set_background (editor, x);
           else
-            preview_set_foreground (editor, x);
+            view_set_foreground (editor, x);
           break;
 
         case 3:
@@ -799,9 +799,9 @@ preview_events (GtkWidget          *widget,
           editor->preview_last_x = x;
           editor->preview_button_down = FALSE;
           if (bevent->state & GDK_CONTROL_MASK)
-            preview_set_background (editor, x);
+            view_set_background (editor, x);
           else
-            preview_set_foreground (editor, x);
+            view_set_foreground (editor, x);
           break;
         }
       break;
@@ -814,8 +814,8 @@ preview_events (GtkWidget          *widget,
 }
 
 static void
-preview_set_hint (GimpGradientEditor *editor,
-                  gint                x)
+view_set_hint (GimpGradientEditor *editor,
+               gint                x)
 {
   GimpDataEditor *data_editor;
   gdouble         xpos;
@@ -855,8 +855,8 @@ preview_set_hint (GimpGradientEditor *editor,
 }
 
 static void
-preview_set_foreground (GimpGradientEditor *editor,
-                        gint                x)
+view_set_foreground (GimpGradientEditor *editor,
+                     gint                x)
 {
   GimpGradient *gradient;
   GimpContext  *user_context;
@@ -890,8 +890,8 @@ preview_set_foreground (GimpGradientEditor *editor,
 }
 
 static void
-preview_set_background (GimpGradientEditor *editor,
-                        gint                x)
+view_set_background (GimpGradientEditor *editor,
+                     gint                x)
 {
   GimpGradient *gradient;
   GimpContext  *user_context;
@@ -1585,7 +1585,7 @@ control_update (GimpGradientEditor *editor,
     return;
 
   /*  See whether we have to re-create the control pixmap
-   *  depending on the preview's width
+   *  depending on the view's width
    */
   cwidth  = editor->preview->allocation.width;
   cheight = GRAD_CONTROL_HEIGHT;
@@ -1763,7 +1763,7 @@ control_calc_p_pos (GimpGradientEditor *editor,
 
   /* Calculate the position (in widget's coordinates) of the
    * requested point from the gradient.  Rounding is done to
-   * minimize mismatches between the rendered gradient preview
+   * minimize mismatches between the rendered gradient view
    * and the gradient control's handles.
    */
 

@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppreviewrendererlayer.c
+ * gimpviewrendererlayer.c
  * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -29,20 +29,20 @@
 
 #include "text/gimptextlayer.h"
 
-#include "gimppreviewrendererlayer.h"
+#include "gimpviewrendererlayer.h"
 
 
-static void   gimp_preview_renderer_layer_class_init (GimpPreviewRendererLayerClass *klass);
+static void   gimp_view_renderer_layer_class_init (GimpViewRendererLayerClass *klass);
 
-static void   gimp_preview_renderer_layer_render (GimpViewRenderer *renderer,
-                                                  GtkWidget        *widget);
+static void   gimp_view_renderer_layer_render (GimpViewRenderer *renderer,
+                                               GtkWidget        *widget);
 
 
-static GimpPreviewRendererDrawableClass *parent_class = NULL;
+static GimpViewRendererDrawableClass *parent_class = NULL;
 
 
 GType
-gimp_preview_renderer_layer_get_type (void)
+gimp_view_renderer_layer_get_type (void)
 {
   static GType renderer_type = 0;
 
@@ -50,19 +50,19 @@ gimp_preview_renderer_layer_get_type (void)
     {
       static const GTypeInfo renderer_info =
       {
-        sizeof (GimpPreviewRendererLayerClass),
+        sizeof (GimpViewRendererLayerClass),
         NULL,           /* base_init */
         NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_preview_renderer_layer_class_init,
+        (GClassInitFunc) gimp_view_renderer_layer_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data */
-        sizeof (GimpPreviewRendererLayer),
+        sizeof (GimpViewRendererLayer),
         0,              /* n_preallocs */
         NULL,           /* instance_init */
       };
 
-      renderer_type = g_type_register_static (GIMP_TYPE_PREVIEW_RENDERER_DRAWABLE,
-                                              "GimpPreviewRendererLayer",
+      renderer_type = g_type_register_static (GIMP_TYPE_VIEW_RENDERER_DRAWABLE,
+                                              "GimpViewRendererLayer",
                                               &renderer_info, 0);
     }
 
@@ -70,7 +70,7 @@ gimp_preview_renderer_layer_get_type (void)
 }
 
 static void
-gimp_preview_renderer_layer_class_init (GimpPreviewRendererLayerClass *klass)
+gimp_view_renderer_layer_class_init (GimpViewRendererLayerClass *klass)
 {
   GimpViewRendererClass *renderer_class;
 
@@ -78,12 +78,12 @@ gimp_preview_renderer_layer_class_init (GimpPreviewRendererLayerClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  renderer_class->render = gimp_preview_renderer_layer_render;
+  renderer_class->render = gimp_view_renderer_layer_render;
 }
 
 static void
-gimp_preview_renderer_layer_render (GimpViewRenderer *renderer,
-                                    GtkWidget        *widget)
+gimp_view_renderer_layer_render (GimpViewRenderer *renderer,
+                                 GtkWidget        *widget)
 {
   const gchar *stock_id = NULL;
 

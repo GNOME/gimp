@@ -33,7 +33,7 @@
 #include "gimpcellrendererviewable.h"
 #include "gimpcomponenteditor.h"
 #include "gimpmenufactory.h"
-#include "gimppreviewrendererimage.h"
+#include "gimpviewrendererimage.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -268,13 +268,13 @@ gimp_component_editor_set_image (GimpImageEditor *editor,
 }
 
 GtkWidget *
-gimp_component_editor_new (gint             preview_size,
+gimp_component_editor_new (gint             view_size,
                            GimpMenuFactory *menu_factory)
 {
   GimpComponentEditor *editor;
 
-  g_return_val_if_fail (preview_size > 0 &&
-                        preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+  g_return_val_if_fail (view_size > 0 &&
+                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   editor = g_object_new (GIMP_TYPE_COMPONENT_EDITOR,
@@ -283,14 +283,14 @@ gimp_component_editor_new (gint             preview_size,
                          "ui-path",         "/channels-popup",
                          NULL);
 
-  gimp_component_editor_set_preview_size (editor, preview_size);
+  gimp_component_editor_set_preview_size (editor, view_size);
 
   return GTK_WIDGET (editor);
 }
 
 void
 gimp_component_editor_set_preview_size (GimpComponentEditor *editor,
-                                        gint                 preview_size)
+                                        gint                 view_size)
 {
   GtkWidget   *tree_widget;
   GtkIconSize  icon_size;
@@ -298,17 +298,17 @@ gimp_component_editor_set_preview_size (GimpComponentEditor *editor,
   gboolean     iter_valid;
 
   g_return_if_fail (GIMP_IS_COMPONENT_EDITOR (editor));
-  g_return_if_fail (preview_size >  0 &&
-                    preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
+  g_return_if_fail (view_size >  0 &&
+                    view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
 
   tree_widget = GTK_WIDGET (editor->view);
 
   icon_size = gimp_get_icon_size (tree_widget,
                                   GIMP_STOCK_VISIBLE,
                                   GTK_ICON_SIZE_BUTTON,
-                                  preview_size -
+                                  view_size -
                                   2 * tree_widget->style->xthickness,
-                                  preview_size -
+                                  view_size -
                                   2 * tree_widget->style->ythickness);
 
   g_object_set (editor->eye_cell,
@@ -325,11 +325,11 @@ gimp_component_editor_set_preview_size (GimpComponentEditor *editor,
                           COLUMN_RENDERER, &renderer,
                           -1);
 
-      gimp_view_renderer_set_size (renderer, preview_size, 1);
+      gimp_view_renderer_set_size (renderer, view_size, 1);
       g_object_unref (renderer);
     }
 
-  editor->preview_size = preview_size;
+  editor->preview_size = view_size;
 
   gtk_tree_view_columns_autosize (editor->view);
 }
@@ -384,7 +384,7 @@ gimp_component_editor_create_components (GimpComponentEditor *editor)
       gimp_view_renderer_set_viewable (renderer, GIMP_VIEWABLE (gimage));
       gimp_view_renderer_remove_idle (renderer);
 
-      GIMP_PREVIEW_RENDERER_IMAGE (renderer)->channel = components[i];
+      GIMP_VIEW_RENDERER_IMAGE (renderer)->channel = components[i];
 
       g_signal_connect (renderer, "update",
                         G_CALLBACK (gimp_component_editor_renderer_update),
@@ -553,7 +553,7 @@ gimp_component_editor_renderer_update (GimpViewRenderer    *renderer,
   gint        index;
 
   index = gimp_image_get_component_index (GIMP_IMAGE (renderer->viewable),
-                                          GIMP_PREVIEW_RENDERER_IMAGE (renderer)->channel);
+                                          GIMP_VIEW_RENDERER_IMAGE (renderer)->channel);
 
   if (gtk_tree_model_iter_nth_child (editor->model, &iter, NULL, index))
     {

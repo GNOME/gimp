@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppreviewrenderervectors.c
+ * gimpviewrenderervectors.c
  * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *                    Simon Budig <simon@gimp.org>
  *
@@ -34,23 +34,23 @@
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
 
-#include "gimppreviewrenderervectors.h"
+#include "gimpviewrenderervectors.h"
 
 
-static void   gimp_preview_renderer_vectors_class_init (GimpPreviewRendererVectorsClass *klass);
+static void   gimp_view_renderer_vectors_class_init (GimpViewRendererVectorsClass *klass);
 
-static void   gimp_preview_renderer_vectors_draw (GimpViewRenderer   *renderer,
-                                                  GdkWindow          *window,
-                                                  GtkWidget          *widget,
-                                                  const GdkRectangle *draw_area,
-                                                  const GdkRectangle *expose_area);
+static void   gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
+                                               GdkWindow          *window,
+                                               GtkWidget          *widget,
+                                               const GdkRectangle *draw_area,
+                                               const GdkRectangle *expose_area);
 
 
 static GimpViewRendererClass *parent_class = NULL;
 
 
 GType
-gimp_preview_renderer_vectors_get_type (void)
+gimp_view_renderer_vectors_get_type (void)
 {
   static GType renderer_type = 0;
 
@@ -58,19 +58,19 @@ gimp_preview_renderer_vectors_get_type (void)
     {
       static const GTypeInfo renderer_info =
       {
-        sizeof (GimpPreviewRendererVectorsClass),
+        sizeof (GimpViewRendererVectorsClass),
         NULL,           /* base_init */
         NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_preview_renderer_vectors_class_init,
+        (GClassInitFunc) gimp_view_renderer_vectors_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data */
-        sizeof (GimpPreviewRendererVectors),
+        sizeof (GimpViewRendererVectors),
         0,              /* n_preallocs */
         NULL,           /* instance_init */
       };
 
       renderer_type = g_type_register_static (GIMP_TYPE_VIEW_RENDERER,
-                                              "GimpPreviewRendererVectors",
+                                              "GimpViewRendererVectors",
                                               &renderer_info, 0);
     }
 
@@ -78,7 +78,7 @@ gimp_preview_renderer_vectors_get_type (void)
 }
 
 static void
-gimp_preview_renderer_vectors_class_init (GimpPreviewRendererVectorsClass *klass)
+gimp_view_renderer_vectors_class_init (GimpViewRendererVectorsClass *klass)
 {
   GimpViewRendererClass *renderer_class;
 
@@ -86,15 +86,15 @@ gimp_preview_renderer_vectors_class_init (GimpPreviewRendererVectorsClass *klass
 
   parent_class = g_type_class_peek_parent (klass);
 
-  renderer_class->draw = gimp_preview_renderer_vectors_draw;
+  renderer_class->draw = gimp_view_renderer_vectors_draw;
 }
 
 static void
-gimp_preview_renderer_vectors_draw (GimpViewRenderer   *renderer,
-                                    GdkWindow          *window,
-                                    GtkWidget          *widget,
-                                    const GdkRectangle *draw_area,
-                                    const GdkRectangle *expose_area)
+gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
+                                 GdkWindow          *window,
+                                 GtkWidget          *widget,
+                                 const GdkRectangle *draw_area,
+                                 const GdkRectangle *expose_area)
 {
   GimpVectors  *vectors;
   GimpStroke   *stroke;

@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppreviewrendererdrawable.c
+ * gimpviewrendererdrawable.c
  * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -32,21 +32,21 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "gimppreviewrendererdrawable.h"
+#include "gimpviewrendererdrawable.h"
 
 
-static void   gimp_preview_renderer_drawable_class_init (GimpPreviewRendererDrawableClass *klass);
-static void   gimp_preview_renderer_drawable_init       (GimpPreviewRendererDrawable      *renderer);
+static void   gimp_view_renderer_drawable_class_init (GimpViewRendererDrawableClass *klass);
+static void   gimp_view_renderer_drawable_init       (GimpViewRendererDrawable      *renderer);
 
-static void   gimp_preview_renderer_drawable_render     (GimpViewRenderer *renderer,
-                                                         GtkWidget        *widget);
+static void   gimp_view_renderer_drawable_render     (GimpViewRenderer *renderer,
+                                                      GtkWidget        *widget);
 
 
 static GimpViewRendererClass *parent_class = NULL;
 
 
 GType
-gimp_preview_renderer_drawable_get_type (void)
+gimp_view_renderer_drawable_get_type (void)
 {
   static GType renderer_type = 0;
 
@@ -54,19 +54,19 @@ gimp_preview_renderer_drawable_get_type (void)
     {
       static const GTypeInfo renderer_info =
       {
-        sizeof (GimpPreviewRendererDrawableClass),
+        sizeof (GimpViewRendererDrawableClass),
         NULL,           /* base_init */
         NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_preview_renderer_drawable_class_init,
+        (GClassInitFunc) gimp_view_renderer_drawable_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data */
-        sizeof (GimpPreviewRendererDrawable),
+        sizeof (GimpViewRendererDrawable),
         0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_preview_renderer_drawable_init,
+        (GInstanceInitFunc) gimp_view_renderer_drawable_init,
       };
 
       renderer_type = g_type_register_static (GIMP_TYPE_VIEW_RENDERER,
-                                              "GimpPreviewRendererDrawable",
+                                              "GimpViewRendererDrawable",
                                               &renderer_info, 0);
     }
 
@@ -74,7 +74,7 @@ gimp_preview_renderer_drawable_get_type (void)
 }
 
 static void
-gimp_preview_renderer_drawable_class_init (GimpPreviewRendererDrawableClass *klass)
+gimp_view_renderer_drawable_class_init (GimpViewRendererDrawableClass *klass)
 {
   GimpViewRendererClass *renderer_class;
 
@@ -82,25 +82,25 @@ gimp_preview_renderer_drawable_class_init (GimpPreviewRendererDrawableClass *kla
 
   parent_class = g_type_class_peek_parent (klass);
 
-  renderer_class->render = gimp_preview_renderer_drawable_render;
+  renderer_class->render = gimp_view_renderer_drawable_render;
 }
 
 static void
-gimp_preview_renderer_drawable_init (GimpPreviewRendererDrawable *renderer)
+gimp_view_renderer_drawable_init (GimpViewRendererDrawable *renderer)
 {
 }
 
 static void
-gimp_preview_renderer_drawable_render (GimpViewRenderer *renderer,
-                                       GtkWidget        *widget)
+gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
+                                    GtkWidget        *widget)
 {
   GimpDrawable *drawable;
   GimpItem     *item;
   GimpImage    *gimage;
   gint          width;
   gint          height;
-  gint          preview_width;
-  gint          preview_height;
+  gint          view_width;
+  gint          view_height;
   gboolean      scaling_up;
   TempBuf      *render_buf = NULL;
 
@@ -125,8 +125,8 @@ gimp_preview_renderer_drawable_render (GimpViewRenderer *renderer,
                                        renderer->dot_for_dot,
                                        gimage->xresolution,
                                        gimage->yresolution,
-                                       &preview_width,
-                                       &preview_height,
+                                       &view_width,
+                                       &view_height,
                                        &scaling_up);
     }
   else
@@ -138,8 +138,8 @@ gimp_preview_renderer_drawable_render (GimpViewRenderer *renderer,
                                        renderer->dot_for_dot,
                                        gimage ? gimage->xresolution : 1.0,
                                        gimage ? gimage->yresolution : 1.0,
-                                       &preview_width,
-                                       &preview_height,
+                                       &view_width,
+                                       &view_height,
                                        &scaling_up);
     }
 
@@ -153,7 +153,7 @@ gimp_preview_renderer_drawable_render (GimpViewRenderer *renderer,
 
       if (temp_buf)
         {
-          render_buf = temp_buf_scale (temp_buf, preview_width, preview_height);
+          render_buf = temp_buf_scale (temp_buf, view_width, view_height);
 
           temp_buf_free (temp_buf);
         }
@@ -161,8 +161,8 @@ gimp_preview_renderer_drawable_render (GimpViewRenderer *renderer,
   else
     {
       render_buf = gimp_viewable_get_new_preview (renderer->viewable,
-                                                  preview_width,
-                                                  preview_height);
+                                                  view_width,
+                                                  view_height);
     }
 
   if (render_buf)
@@ -181,11 +181,11 @@ gimp_preview_renderer_drawable_render (GimpViewRenderer *renderer,
         }
       else
         {
-          if (preview_width < width)
-            render_buf->x = (width - preview_width) / 2;
+          if (view_width < width)
+            render_buf->x = (width - view_width) / 2;
 
-          if (preview_height < height)
-            render_buf->y = (height - preview_height) / 2;
+          if (view_height < height)
+            render_buf->y = (height - view_height) / 2;
         }
 
       gimp_view_renderer_render_buffer (renderer, render_buf, -1,

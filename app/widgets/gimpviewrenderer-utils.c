@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppreviewrenderer-utils.c
+ * gimpviewrenderer-utils.c
  * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -33,16 +33,16 @@
 #include "core/gimpimagefile.h"
 #include "vectors/gimpvectors.h"
 
-#include "gimppreviewrendererbrush.h"
-#include "gimppreviewrendererlayer.h"
-#include "gimppreviewrenderergradient.h"
-#include "gimppreviewrendererimage.h"
-#include "gimppreviewrendererimagefile.h"
-#include "gimppreviewrenderervectors.h"
+#include "gimpviewrendererbrush.h"
+#include "gimpviewrendererlayer.h"
+#include "gimpviewrenderergradient.h"
+#include "gimpviewrendererimage.h"
+#include "gimpviewrendererimagefile.h"
+#include "gimpviewrenderervectors.h"
 
 
 GType
-gimp_preview_renderer_type_from_viewable_type (GType viewable_type)
+gimp_view_renderer_type_from_viewable_type (GType viewable_type)
 {
   GType type = GIMP_TYPE_VIEW_RENDERER;
 
@@ -51,31 +51,31 @@ gimp_preview_renderer_type_from_viewable_type (GType viewable_type)
 
   if (g_type_is_a (viewable_type, GIMP_TYPE_BRUSH))
     {
-      type = GIMP_TYPE_PREVIEW_RENDERER_BRUSH;
+      type = GIMP_TYPE_VIEW_RENDERER_BRUSH;
     }
   else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGE))
     {
-      type = GIMP_TYPE_PREVIEW_RENDERER_IMAGE;
+      type = GIMP_TYPE_VIEW_RENDERER_IMAGE;
     }
   else if (g_type_is_a (viewable_type, GIMP_TYPE_LAYER))
     {
-      type = GIMP_TYPE_PREVIEW_RENDERER_LAYER;
+      type = GIMP_TYPE_VIEW_RENDERER_LAYER;
     }
   else if (g_type_is_a (viewable_type, GIMP_TYPE_DRAWABLE))
     {
-      type = GIMP_TYPE_PREVIEW_RENDERER_DRAWABLE;
+      type = GIMP_TYPE_VIEW_RENDERER_DRAWABLE;
     }
   else if (g_type_is_a (viewable_type, GIMP_TYPE_GRADIENT))
     {
-      type = GIMP_TYPE_PREVIEW_RENDERER_GRADIENT;
+      type = GIMP_TYPE_VIEW_RENDERER_GRADIENT;
     }
   else if (g_type_is_a (viewable_type, GIMP_TYPE_VECTORS))
     {
-      type = GIMP_TYPE_PREVIEW_RENDERER_VECTORS;
+      type = GIMP_TYPE_VIEW_RENDERER_VECTORS;
     }
   else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGEFILE))
     {
-      type = GIMP_TYPE_PREVIEW_RENDERER_IMAGEFILE;
+      type = GIMP_TYPE_VIEW_RENDERER_IMAGEFILE;
     }
 
   return type;
