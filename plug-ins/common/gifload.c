@@ -801,7 +801,6 @@ ReadImage (FILE *fd,
   gint v;
   gint i, j;
   gchar *framename;
-  gchar *framenamedisp = NULL;
   gboolean alpha_frame = FALSE;
   int nreturn_vals;
   static int previous_disposal;
@@ -896,31 +895,29 @@ ReadImage (FILE *fd,
       switch (previous_disposal)
 	{
 	case 0x00: break; /* 'don't care' */
-	case 0x01: framenamedisp = g_strconcat (framename, _(" (combine)"), NULL); break;
-	case 0x02: framenamedisp = g_strconcat (framename, _(" (replace)"), NULL); break;
-	case 0x03: framenamedisp = g_strconcat (framename, _(" (combine)"), NULL); break;
+	case 0x01: framename = g_strconcat (framename, _(" (combine)"), NULL); break;
+	case 0x02: framename = g_strconcat (framename, _(" (replace)"), NULL); break;
+	case 0x03: framename = g_strconcat (framename, _(" (combine)"), NULL); break;
 	case 0x04:
 	case 0x05:
 	case 0x06:
 	case 0x07:
-	  framenamedisp = g_strconcat (framename, _(" (unknown disposal)"), NULL);
+	  framename = g_strconcat (framename, _(" (unknown disposal)"), NULL);
 	  g_message ("GIF: Hmm... please forward this GIF to the "
 		     "GIF plugin author!\n  (adam@foxbox.org)\n");
 	  break;
 	default: 
 	  g_message ("GIF: Something got corrupted.\n");
-	  framenamedisp = g_strdup (framename);
 	  break;
 	}
       previous_disposal = Gif89.disposal;
-      g_free (framename);
 
-      layer_ID = gimp_layer_new (image_ID, framenamedisp,
+      layer_ID = gimp_layer_new (image_ID, framename,
 				 len, height,
 				 promote_to_rgb ? RGBA_IMAGE : INDEXEDA_IMAGE,
 				 100, NORMAL_MODE);
       alpha_frame = TRUE;
-      g_free (framenamedisp);
+      g_free (framename);
     }
 
   frame_number++;
