@@ -194,10 +194,6 @@ cpu_accel (void)
   return accel;
 
 #else /* !ARCH_X86 && !ARCH_PPC/ENABLE_ALTIVEC */
-#ifdef HAVE_MLIB
-  return CPU_ACCEL_MLIB;
-#else
   return 0;
 #endif
-#endif /* !ARCH_X86 && !ARCH_PPC/ENABLE_ALTIVEC */
 }

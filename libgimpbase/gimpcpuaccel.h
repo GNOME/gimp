@@ -27,9 +27,6 @@
 #define __CPU_ACCEL_H__
 
 
-/* generic accelerations */
-#define CPU_ACCEL_MLIB           0x00000001
-
 /* x86 accelerations */
 #define CPU_ACCEL_X86_MMX        0x80000000
 #define CPU_ACCEL_X86_3DNOW      0x40000000
