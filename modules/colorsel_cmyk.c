@@ -125,9 +125,7 @@ colorsel_cmyk_get_type (GTypeModule *module)
 static void
 colorsel_cmyk_class_init (ColorselCmykClass *klass)
 {
-  GimpColorSelectorClass *selector_class;
-
-  selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
+  GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
   selector_class->name      = _("CMYK");
   selector_class->help_id   = "gimp-colorselector-cmyk";
@@ -168,7 +166,7 @@ colorsel_cmyk_init (ColorselCmyk *module)
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 0);
   gtk_table_set_row_spacing (GTK_TABLE (table), 3, 4);
 
-  gtk_box_pack_start (GTK_BOX (module), table, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (module), table, TRUE, TRUE, 0);
 
   for (i = 0; i < 4; i++)
     {
@@ -222,9 +220,7 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
 			 const GimpRGB     *rgb,
 			 const GimpHSV     *hsv)
 {
-  ColorselCmyk *module;
-
-  module = COLORSEL_CMYK (selector);
+  ColorselCmyk *module = COLORSEL_CMYK (selector);
 
   gimp_rgb_to_cmyk (rgb, module->pullout, &module->cmyk);
 
@@ -238,7 +234,7 @@ static void
 colorsel_cmyk_adj_update (GtkAdjustment *adj,
 			  ColorselCmyk  *module)
 {
-  GimpColorSelector *selector;
+  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (module);
   gint               i;
 
   for (i = 0; i < 4; i++)
@@ -262,8 +258,6 @@ colorsel_cmyk_adj_update (GtkAdjustment *adj,
     default:
       return;
     }
-
-  selector = GIMP_COLOR_SELECTOR (module);
 
   gimp_cmyk_to_rgb (&module->cmyk, &selector->rgb);
   gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);

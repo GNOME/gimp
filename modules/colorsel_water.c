@@ -32,11 +32,6 @@
 #include "libgimp/libgimp-intl.h"
 
 
-/* definitions and variables */
-
-#define IMAGE_SIZE   GIMP_COLOR_SELECTOR_SIZE
-
-
 #define COLORSEL_TYPE_WATER            (colorsel_water_type)
 #define COLORSEL_WATER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), COLORSEL_TYPE_WATER, ColorselWater))
 #define COLORSEL_WATER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), COLORSEL_TYPE_WATER, ColorselWaterClass))
@@ -53,7 +48,6 @@ struct _ColorselWater
 
   gdouble            last_x;
   gdouble            last_y;
-  gdouble            last_pressure;
 
   gfloat             pressure_adjust;
   guint32            motion_time;
@@ -165,27 +159,22 @@ colorsel_water_class_init (ColorselWaterClass *klass)
 static void
 colorsel_water_init (ColorselWater *water)
 {
+  GtkWidget *hbox;
   GtkWidget *area;
   GtkWidget *frame;
-  GtkWidget *hbox;
-  GtkWidget *hbox2;
   GtkObject *adj;
   GtkWidget *scale;
 
   water->pressure_adjust = 1.0;
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (water), hbox, TRUE, FALSE, 0);
-
-  hbox2 = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (hbox), hbox2, TRUE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (water), hbox, TRUE, TRUE, 0);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox2), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
 
   area = gtk_drawing_area_new ();
-  gtk_widget_set_size_request (area, IMAGE_SIZE, IMAGE_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), area);
   g_signal_connect (area, "expose_event",
                     G_CALLBACK (select_area_expose),
@@ -224,11 +213,12 @@ colorsel_water_init (ColorselWater *water)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (pressure_adjust_update),
                     water);
+
   scale = gtk_vscale_new (GTK_ADJUSTMENT (adj));
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gimp_help_set_help_data (scale, _("Pressure"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox2), scale, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), scale, FALSE, FALSE, 0);
 
   gtk_widget_show_all (hbox);
 }
@@ -238,65 +228,64 @@ calc (gdouble x,
       gdouble y,
       gdouble angle)
 {
-  gdouble s, c;
+  gdouble s = 2.0 * sin (angle * G_PI / 180.0) * 256.0;
+  gdouble c = 2.0 * cos (angle * G_PI / 180.0) * 256.0;
 
-  s = 1.6 * sin (angle * G_PI / 180) * 256.0 / IMAGE_SIZE;
-  c = 1.6 * cos (angle * G_PI / 180) * 256.0 / IMAGE_SIZE;
-
-  return 128 + (x - (IMAGE_SIZE >> 1)) * c - (y - (IMAGE_SIZE >> 1)) * s;
+  return 128 + (x - 0.5) * c - (y - 0.5) * s;
 }
 
-/* Initialize the preview */
 static void
 select_area_expose (GtkWidget      *widget,
                     GdkEventExpose *event)
 {
-  gint    width  = event->area.width;
-  gint    height = event->area.height;
-  guchar *buf    = g_alloca (3 * width * height);
-  gint    x, y;
-  gint    i, j;
+  gdouble  width  = widget->allocation.width;
+  gdouble  height = widget->allocation.height;
+  gdouble  dx     = 1.0 / width;
+  gdouble  dy     = 1.0 / height;
+  guchar  *buf    = g_alloca (3 * event->area.width * event->area.height);
+  guchar  *dest   = buf;
+  gdouble  y;
+  gint     i, j;
 
-  for (j = 0, y = event->area.y; j < height; j++, y++)
+  for (j = 0, y = event->area.y / height; j < event->area.height; j++, y += dy)
     {
-      gdouble r, g, b;
-      gdouble dr, dg, db;
+      guchar  *d  = dest;
 
-      r = calc (0, y, 0);
-      g = calc (0, y, 120);
-      b = calc (0, y, 240);
+      gdouble  r  = calc (0, y, 0);
+      gdouble  g  = calc (0, y, 120);
+      gdouble  b  = calc (0, y, 240);
 
-      dr = calc (1, y, 0)   - r;
-      dg = calc (1, y, 120) - g;
-      db = calc (1, y, 240) - b;
+      gdouble  dr = calc (dx, y, 0)   - r;
+      gdouble  dg = calc (dx, y, 120) - g;
+      gdouble  db = calc (dx, y, 240) - b;
 
-      x = event->area.x;
+      r += event->area.x * dr;
+      g += event->area.x * dg;
+      b += event->area.x * db;
 
-      r += x * dr;
-      g += x * dg;
-      b += x * db;
-
-      for (i = 0; i < width; i++)
+      for (i = 0; i < event->area.width; i++)
         {
-          buf[(i + width * j) * 3]     = CLAMP ((gint) r, 0, 255);
-          buf[(i + width * j) * 3 + 1] = CLAMP ((gint) g, 0, 255);
-          buf[(i + width * j) * 3 + 2] = CLAMP ((gint) b, 0, 255);
+          d[0] = CLAMP ((gint) r, 0, 255);
+          d[1] = CLAMP ((gint) g, 0, 255);
+          d[2] = CLAMP ((gint) b, 0, 255);
 
           r += dr;
           g += dg;
           b += db;
-        }
-    }
 
-  x = event->area.x;
-  y = event->area.y;
+          d += 3;
+        }
+
+      dest += event->area.width * 3;
+    }
 
   gdk_draw_rgb_image_dithalign (widget->window,
                                 widget->style->fg_gc[widget->state],
-                                x, y, width, height,
+                                event->area.x, event->area.y,
+                                event->area.width, event->area.height,
                                 GDK_RGB_DITHER_MAX,
-                                buf, 3 * width,
-                                -x, -y);
+                                buf, 3 * event->area.width,
+                                -event->area.x, -event->area.y);
 }
 
 static void
@@ -307,34 +296,27 @@ add_pigment (ColorselWater *water,
              gdouble        much)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (water);
-  gdouble            r, g, b;
 
   much *= (gdouble) water->pressure_adjust;
 
   if (erase)
     {
-      selector->rgb.r = 1 - (1 - selector->rgb.r) * (1 - much);
-      selector->rgb.g = 1 - (1 - selector->rgb.g) * (1 - much);
-      selector->rgb.b = 1 - (1 - selector->rgb.b) * (1 - much);
+      selector->rgb.r = 1.0 - (1.0 - selector->rgb.r) * (1.0 - much);
+      selector->rgb.g = 1.0 - (1.0 - selector->rgb.g) * (1.0 - much);
+      selector->rgb.b = 1.0 - (1.0 - selector->rgb.b) * (1.0 - much);
     }
   else
     {
-      r = calc (x, y, 0) / 255.0;
-      if (r < 0) r = 0;
-      if (r > 1) r = 1;
+      gdouble r = calc (x, y, 0)   / 256.0;
+      gdouble g = calc (x, y, 120) / 256.0;
+      gdouble b = calc (x, y, 240) / 256.0;
 
-      g = calc (x, y, 120) / 255.0;
-      if (g < 0) g = 0;
-      if (g > 1) g = 1;
-
-      b = calc (x, y, 240) / 255.0;
-      if (b < 0) b = 0;
-      if (b > 1) b = 1;
-
-      selector->rgb.r *= (1 - (1 - r) * much);
-      selector->rgb.g *= (1 - (1 - g) * much);
-      selector->rgb.b *= (1 - (1 - b) * much);
+      selector->rgb.r *= (1.0 - (1.0 - r) * much);
+      selector->rgb.g *= (1.0 - (1.0 - g) * much);
+      selector->rgb.b *= (1.0 - (1.0 - b) * much);
     }
+
+  gimp_rgb_clamp (&selector->rgb);
 
   gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
 
@@ -349,24 +331,12 @@ draw_brush (ColorselWater *water,
             gdouble        y,
             gdouble        pressure)
 {
-  gdouble much; /* how much pigment to mix in */
+  gdouble much = sqrt (SQR (x - water->last_x) + SQR (y - water->last_y));
 
-  if (pressure < water->last_pressure)
-    water->last_pressure = pressure;
+  add_pigment (water, erase, x, y, much * pressure);
 
-  much = sqrt ((x - water->last_x) * (x - water->last_x) +
-               (y - water->last_y) * (y - water->last_y) +
-               1000 *
-               (pressure - water->last_pressure) *
-               (pressure - water->last_pressure));
-
-  much *= pressure * 0.05;
-
-  add_pigment (water, erase, x, y, much);
-
-  water->last_x        = x;
-  water->last_y        = y;
-  water->last_pressure = pressure;
+  water->last_x = x;
+  water->last_y = y;
 }
 
 static gboolean
@@ -374,21 +344,18 @@ button_press_event (GtkWidget      *widget,
                     GdkEventButton *event,
                     ColorselWater  *water)
 {
-  gboolean erase = FALSE;
+  gboolean erase;
 
-  water->last_x        = event->x;
-  water->last_y        = event->y;
-  water->last_pressure = 0.5;
-
-  gdk_event_get_axis ((GdkEvent *) event, GDK_AXIS_PRESSURE,
-                      &water->last_pressure);
+  water->last_x = event->x / widget->allocation.width;
+  water->last_y = event->y / widget->allocation.height;
 
   water->button_state |= 1 << event->button;
 
-  erase = (event->button != 1) || FALSE;
+  erase = (event->button != 1);
   /* FIXME: (event->source == GDK_SOURCE_ERASER) */
 
-  add_pigment (water, erase, event->x, event->y, 0.05);
+  add_pigment (water, erase, water->last_x, water->last_y, 0.05);
+
   water->motion_time = event->time;
 
   return FALSE;
@@ -450,7 +417,9 @@ motion_notify_event (GtkWidget      *widget,
               gdk_device_get_axis (event->device, coords[i]->axes,
                                    GDK_AXIS_PRESSURE, &pressure);
 
-              draw_brush (water, widget, erase, x, y, pressure);
+              draw_brush (water, widget, erase,
+                          x / widget->allocation.width,
+                          y / widget->allocation.height, pressure);
             }
 
           g_free (coords);
@@ -461,7 +430,9 @@ motion_notify_event (GtkWidget      *widget,
 
           gdk_event_get_axis ((GdkEvent *) event, GDK_AXIS_PRESSURE, &pressure);
 
-          draw_brush (water, widget, erase, event->x, event->y, pressure);
+          draw_brush (water, widget, erase,
+                      event->x / widget->allocation.width,
+                      event->y / widget->allocation.height, pressure);
         }
     }
 

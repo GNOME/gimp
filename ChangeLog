@@ -1,5 +1,12 @@
 2004-08-17  Sven Neumann  <sven@gimp.org>
 
+	* modules/colorsel_cmyk.c: minor cleanups.
+
+	* modules/colorsel_water.c: let the widget take the available
+	space, don't set a minimum size.
+
+2004-08-17  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/plug-in-progress.c
 	* app/plug-in/plug-in-run.c
 	* app/plug-in/plug-in.c: don't keep a strong reference to the
