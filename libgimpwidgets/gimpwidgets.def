@@ -188,6 +188,7 @@ EXPORTS
 	gimp_scale_entry_set_logarithmic
 	gimp_scale_entry_set_sensitive
 	gimp_scrolled_preview_get_type
+	gimp_scrolled_preview_set_position
 	gimp_size_entry_add_field
 	gimp_size_entry_attach_label
 	gimp_size_entry_get_help_widget

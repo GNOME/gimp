@@ -1,3 +1,8 @@
+2005-01-06  Michael Schumacher <schumaml@cvs.gnome.org>
+
+	* libgimpwidgets/gimpwidgets.def: added
+	gimp_scrolled_preview_set_position 
+
 2005-01-06  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/sparkle.c: applied patch from Shlomi Fish that
