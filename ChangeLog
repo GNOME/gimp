@@ -1,5 +1,11 @@
 Sun Mar 15 03:54:58 1998  Tim Janik  <timj@gimp.org>
 
+	* plug-ins/flame/flame.c (edit_callback): hide the dialog on delete.
+	(make_file_dlg): hide the dialog on delete.
+
+	* plug-ins/ifscompose/ifscompose.c (ifs_options_dialog): hide the dialog
+	on delete.
+
 	* app/interface.c (toolbox_delete): handle WM delete of toolbox
 	correctly.
 	(gdisplay_delete): don't close image window without confirmation.

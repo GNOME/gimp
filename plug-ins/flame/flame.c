@@ -386,9 +386,15 @@ static void file_cancel_callback(GtkWidget * widget, gpointer data) {
   gtk_widget_hide (file_dlg);
 }
 
-static void make_file_dlg() {
+static void
+make_file_dlg() {
   file_dlg = gtk_file_selection_new ("Load/Store Flame");
   gtk_window_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
+  gtk_signal_connect(GTK_OBJECT (file_dlg),
+		     "delete_event",
+		     (GtkSignalFunc) gtk_widget_hide_on_delete,
+		     NULL);
+  gtk_quit_add (1, gtk_widget_destroy, file_dlg);
   gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
 		     "clicked", (GtkSignalFunc) file_cancel_callback, file_dlg);
   gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
@@ -504,7 +510,8 @@ static void preview_clicked(GtkWidget * widget, gpointer data) {
 }
 
 
-static void edit_callback(GtkWidget * widget, gpointer data) {
+static void
+edit_callback(GtkWidget * widget, gpointer data) {
   edit_cp = config.cp;
   if (0 == edit_dlg) {
     GtkWidget *table;
@@ -518,6 +525,9 @@ static void edit_callback(GtkWidget * widget, gpointer data) {
     gtk_window_position(GTK_WINDOW(edit_dlg), GTK_WIN_POS_MOUSE);
     gtk_signal_connect(GTK_OBJECT(edit_dlg), "destroy",
 		       (GtkSignalFunc) edit_close_callback, NULL);
+    gtk_quit_add (1, gtk_widget_destroy, edit_dlg);
+    gtk_signal_connect(GTK_OBJECT(edit_dlg), "delete_event",
+		       (GtkSignalFunc) gtk_widget_hide_on_delete, NULL);
 
     button = gtk_button_new_with_label("Ok");
     GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);

@@ -1207,6 +1207,10 @@ ifs_options_dialog()
       ifsOptD->dialog = gtk_dialog_new();
       gtk_window_set_title(GTK_WINDOW(ifsOptD->dialog),"IfsCompose Options");
       gtk_window_position(GTK_WINDOW(ifsOptD->dialog), GTK_WIN_POS_MOUSE);
+      gtk_signal_connect (GTK_OBJECT(ifsOptD->dialog),
+			   "delete_event",
+			   GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
+			   &ifsOptD->dialog);
       gtk_signal_connect(GTK_OBJECT(ifsOptD->dialog), "destroy",
 			 (GtkSignalFunc) ifs_options_close_callback,
 			 NULL);
