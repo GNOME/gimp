@@ -68,10 +68,14 @@ struct _GimpVectorTool
   GdkModifierType       saved_state;    /* modifier state at button_press    */
   gdouble               last_x;         /* last x coordinate                 */
   gdouble               last_y;         /* last y coordinate                 */
+  gboolean              have_undo;      /* did we push an undo at            */
+                                        /* ..._button_press?                 */
 
   GimpAnchor           *cur_anchor;     /* the current Anchor                */
   GimpStroke           *cur_stroke;     /* the current Stroke                */
   gdouble               cur_position;   /* the current Position on a segment */
+  GimpVectors          *cur_vectors;    /* the vectors the tool is hovering  */
+                                        /* over (if different from ->vectors */
   GimpVectors          *vectors;        /* the current Vector data           */
 
   gint                  sel_count;      /* number of selected anchors        */

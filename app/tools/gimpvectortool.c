@@ -37,6 +37,8 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimpundo.h"
+#include "core/gimpundostack.h"
 
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpvectors.h"
@@ -112,6 +114,8 @@ static void   gimp_vector_tool_vectors_thaw    (GimpVectors     *vectors,
                                                 GimpVectorTool  *vector_tool);
 
 static void   gimp_vector_tool_verify_state    (GimpVectorTool  *vector_tool);
+static void   gimp_vector_tool_undo_push       (GimpVectorTool  *vector_tool,
+                                                const gchar     *desc);
 
 static GimpDrawToolClass *parent_class = NULL;
 
@@ -200,10 +204,12 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   vector_tool->modifier_lock  = FALSE;
   vector_tool->last_x         = 0.0;
   vector_tool->last_y         = 0.0;
+  vector_tool->have_undo      = FALSE;
 
   vector_tool->cur_anchor     = NULL;
   vector_tool->cur_stroke     = NULL;
   vector_tool->cur_position   = 0.0;
+  vector_tool->cur_vectors    = NULL;
   vector_tool->vectors        = NULL;
 
   vector_tool->sel_count      = 0;
@@ -271,23 +277,11 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   gimp_draw_tool_pause (draw_tool);
 
-#if 0
-  if (vector_tool->function == VECTORS_SELECT_VECTOR)
-    {
-      gimp_vector_tool_set_vectors (vector_tool, NULL);
-    }
-#endif
-
   if (gimp_draw_tool_is_active (draw_tool) && draw_tool->gdisp != gdisp)
     {
       g_print ("calling  draw_tool_stop\n");
       gimp_draw_tool_stop (draw_tool);
     }
-
-  if (vector_tool->vectors)
-    gimp_image_undo_push_vectors_mod (GIMP_ITEM (vector_tool->vectors)->gimage,
-                                      "Vectors operation",
-                                      vector_tool->vectors);
 
   gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
@@ -311,12 +305,16 @@ gimp_vector_tool_button_press (GimpTool        *tool,
     {
       vectors = gimp_vectors_new (gdisp->gimage, _("Unnamed"));
 
+      /* Undo step gets added implicitely */
+      vector_tool->have_undo = TRUE;
+
       gimp_image_add_vectors (gdisp->gimage, vectors, -1);
       gimp_image_flush (gdisp->gimage);
 
       gimp_vector_tool_set_vectors (vector_tool, vectors);
 
       vector_tool->function = VECTORS_CREATE_STROKE;
+
     }
 
   gimp_vectors_freeze (vector_tool->vectors);
@@ -326,6 +324,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   if (vector_tool->function == VECTORS_CREATE_STROKE)
     {
       g_return_if_fail (vector_tool->vectors != NULL);
+
+      gimp_vector_tool_undo_push (vector_tool, _("Add Stroke"));
 
       vector_tool->cur_stroke = gimp_bezier_stroke_new ();
       gimp_vectors_stroke_add (vector_tool->vectors, vector_tool->cur_stroke);
@@ -341,6 +341,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   if (vector_tool->function == VECTORS_ADD_ANCHOR)
     {
+      gimp_vector_tool_undo_push (vector_tool, _("Add Anchor"));
+
       vector_tool->cur_anchor =
                      gimp_bezier_stroke_extend (vector_tool->sel_stroke, coords,
                                                 vector_tool->sel_anchor,
@@ -360,6 +362,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   if (vector_tool->function == VECTORS_INSERT_ANCHOR)
     {
+      gimp_vector_tool_undo_push (vector_tool, _("Insert Anchor"));
+
       vector_tool->cur_anchor =
                          gimp_stroke_anchor_insert (vector_tool->cur_stroke,
                                                     vector_tool->cur_anchor,
@@ -385,6 +389,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   if (vector_tool->function == VECTORS_MOVE_HANDLE)
     {
+      gimp_vector_tool_undo_push (vector_tool, _("Drag Handle"));
+
       if (vector_tool->cur_anchor->type == GIMP_ANCHOR_ANCHOR)
         {
           gimp_vectors_anchor_select (vector_tool->vectors,
@@ -404,6 +410,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   if (vector_tool->function == VECTORS_MOVE_ANCHOR)
     {
+      gimp_vector_tool_undo_push (vector_tool, _("Drag Anchor"));
+
       gimp_vectors_anchor_select (vector_tool->vectors,
                                   vector_tool->cur_stroke,
                                   vector_tool->cur_anchor, TRUE);
@@ -414,6 +422,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   if (vector_tool->function == VECTORS_CONNECT_STROKES)
     {
+      gimp_vector_tool_undo_push (vector_tool, _("Connect Strokes"));
+
       gimp_stroke_connect_stroke (vector_tool->sel_stroke,
                                   vector_tool->sel_anchor,
                                   vector_tool->cur_stroke,
@@ -439,6 +449,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   if (vector_tool->function == VECTORS_MOVE_CURVE)
     {
+      gimp_vector_tool_undo_push (vector_tool, _("Drag Curve"));
+
       gimp_vectors_anchor_select (vector_tool->vectors,
                                   vector_tool->cur_stroke,
                                   vector_tool->cur_anchor, TRUE);
@@ -460,6 +472,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   if (vector_tool->function == VECTORS_CONVERT_EDGE)
     {
+      gimp_vector_tool_undo_push (vector_tool, _("Convert Edge"));
+
       gimp_stroke_anchor_convert (vector_tool->cur_stroke,
                                   vector_tool->cur_anchor,
                                   GIMP_ANCHOR_FEATURE_EDGE);
@@ -487,6 +501,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   if (vector_tool->function == VECTORS_DELETE_ANCHOR)
     {
+      gimp_vector_tool_undo_push (vector_tool, _("Delete Anchor"));
+
       gimp_stroke_anchor_delete (vector_tool->cur_stroke,
                                  vector_tool->cur_anchor);
 
@@ -505,6 +521,9 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   if (vector_tool->function == VECTORS_DELETE_SEGMENT)
     {
       GimpStroke *new_stroke;
+
+      gimp_vector_tool_undo_push (vector_tool, _("Delete Segment"));
+
       new_stroke = gimp_stroke_open (vector_tool->cur_stroke,
                                      vector_tool->cur_anchor);
       if (new_stroke)
@@ -534,7 +553,29 @@ gimp_vector_tool_button_release (GimpTool        *tool,
 
   vector_tool->function = VECTORS_FINISHED;
 
+  if (state & GDK_BUTTON3_MASK &&
+      vector_tool->have_undo)
+    {
+      GimpUndo            *undo;
+      GimpUndoAccumulator  accum = { 0, };
+
+      /* Ok, Apparently this is not the right thing to do, but it
+       * is pretty close...
+       * For some reason the Undo step e.g. does not disappear
+       * from the Undo History */
+
+      undo = gimp_undo_stack_pop_undo (gdisp->gimage->undo_stack,
+                                       GIMP_UNDO_MODE_UNDO, &accum);
+      
+      gimp_image_undo_event (gdisp->gimage, GIMP_UNDO_EVENT_UNDO, undo);
+
+      gimp_undo_free (undo, GIMP_UNDO_MODE_UNDO);
+    }
+
+  vector_tool->have_undo = FALSE;
+
   gimp_tool_control_halt (tool->control);
+  gimp_image_flush (gdisp->gimage);
 }
 
 static void
@@ -672,6 +713,7 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
   gdouble            position       = -1;
   gboolean           on_handle      = FALSE;
   gboolean           on_curve       = FALSE;
+  gboolean           on_vectors     = FALSE;
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
   options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
@@ -701,6 +743,18 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
                                                     &position, &anchor, &stroke);
     }
 
+  if (on_handle || on_curve)
+    {
+      vector_tool->cur_vectors = NULL;
+    }
+  else
+    {
+      on_vectors = gimp_draw_tool_on_vectors (draw_tool, gdisp, coords,
+                                              TARGET, TARGET,
+                                              NULL, NULL, NULL, NULL,
+                                              &(vector_tool->cur_vectors));
+    }
+
   vector_tool->cur_position   = position;
   vector_tool->cur_anchor     = anchor;
   vector_tool->cur_stroke     = stroke;
@@ -710,7 +764,7 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
     case GIMP_VECTOR_MODE_CREATE:
       if (! vector_tool->vectors || GIMP_DRAW_TOOL (tool)->gdisp != gdisp)
         {
-          if (GIMP_CONTAINER (gdisp->gimage->vectors)->num_children > 0)
+          if (on_vectors)
             {
               vector_tool->function = VECTORS_SELECT_VECTOR;
             }
@@ -770,7 +824,7 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
     case GIMP_VECTOR_MODE_ADJUST:
       if (! vector_tool->vectors || GIMP_DRAW_TOOL (tool)->gdisp != gdisp)
         {
-          if (GIMP_CONTAINER (gdisp->gimage->vectors)->num_children > 0)
+          if (on_vectors)
             {
               vector_tool->function = VECTORS_SELECT_VECTOR;
             }
@@ -830,7 +884,7 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
     case GIMP_VECTOR_MODE_MOVE:
       if (! vector_tool->vectors || GIMP_DRAW_TOOL (tool)->gdisp != gdisp)
         {
-          if (GIMP_CONTAINER (gdisp->gimage->vectors)->num_children > 0)
+          if (on_vectors)
             {
               vector_tool->function = VECTORS_SELECT_VECTOR;
             }
@@ -852,13 +906,13 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
         }
       else
         {
-          if (GIMP_CONTAINER (gdisp->gimage->vectors)->num_children > 0)
+          if (on_vectors)
             {
               vector_tool->function = VECTORS_SELECT_VECTOR;
             }
           else
             {
-              vector_tool->function = VECTORS_FINISHED;
+              vector_tool->function = VECTORS_MOVE_VECTORS;
             }
         }
       break;
@@ -1305,3 +1359,16 @@ gimp_vector_tool_verify_state (GimpVectorTool *vector_tool)
 
 }
 
+static void
+gimp_vector_tool_undo_push (GimpVectorTool *vector_tool, const gchar *desc)
+{
+  g_return_if_fail (vector_tool->vectors != NULL);
+
+  /* don't push two undos */
+  if (vector_tool->have_undo)
+    return;
+
+  gimp_image_undo_push_vectors_mod (GIMP_ITEM (vector_tool->vectors)->gimage,
+                                    desc, vector_tool->vectors);
+  vector_tool->have_undo = TRUE;
+}

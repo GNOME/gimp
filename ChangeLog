@@ -1,3 +1,17 @@
+2003-09-17  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.[ch]: Restored Mitchs favourite
+	feature :-)  (now the cursor indicates if you hover over
+	a vectors object when no other one is active...). Also added
+	more descriptive Undo names and RMB-Cancel for the Vectors tool.
+
+	Please note, that the RMB-Cancel is implemented using the Undo
+	System. I do not really have a clue on that and so right now
+	there is an oddity - the undo-object popped from the undo
+	stack does not get removed from e.g. the Undo History Dialog.
+
+	Someone with a clue please have a look at that...  :-)
+
 2003-09-16  Dave Neary  <bolsh@gimp.org>
 
 	* app/config/gimpconfig-path.c: Fixed a seg fault in an earlier
