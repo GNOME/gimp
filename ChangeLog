@@ -271,12 +271,6 @@
 
 2003-09-03  Sven Neumann  <sven@gimp.org>
 
-	* HACKING	
-	* autogen.sh: require libtool version 1.5.0 or newer when building
-	on Win32. Completely untested but it should fix bug #120953.
-
-2003-09-03  Sven Neumann  <sven@gimp.org>
-
 	* devel-docs/gbr.txt
 	* plug-ins/common/gbr.c: applied a patch from Guillermo S. Romero
 	that fixes loading of v1 brushes and documents the difference
