@@ -6,30 +6,30 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.24\n"
-"POT-Creation-Date: 2000-08-19 09:13-0700\n"
-"PO-Revision-Date: 2000-08-12 20:41+00:00\n"
-"Last-Translator: Daniel Egger <egger@suse.de>\n"
+"Project-Id-Version: GIMP 1.1.25\n"
+"POT-Creation-Date: 2000-08-25 19:20+0200\n"
+"PO-Revision-Date: 2000-08-25 19:30+02:00\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/about_dialog.c:120
+#: app/about_dialog.c:135
 msgid "About the GIMP"
 msgstr "Über GIMP"
 
 #. this is a font, provide only one single font definition
-#: app/about_dialog.c:179
+#: app/about_dialog.c:197
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:189
+#: app/about_dialog.c:207
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Version %s wurde Euch gebracht von"
 
-#: app/about_dialog.c:234
+#: app/about_dialog.c:257
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Mehr Informationen finden Sie auf http://www.gimp.org/"
 
@@ -120,13 +120,13 @@ msgstr "Beenden"
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
 #: app/color_balance.c:275 app/color_notebook.c:126 app/convert.c:506
 #: app/curves.c:562 app/file_new_dialog.c:207 app/file_new_dialog.c:357
-#: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimpprogress.c:112
-#: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
-#: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1039
-#: app/layers_dialog.c:3484 app/layers_dialog.c:3666 app/layers_dialog.c:3761
-#: app/layers_dialog.c:4021 app/levels.c:341 app/palette.c:1818
-#: app/posterize.c:202 app/preferences_dialog.c:1465 app/qmask.c:278
-#: app/resize.c:194 app/resize.c:1324 app/threshold.c:275
+#: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimphelp.c:188
+#: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
+#: app/gradient.c:4840 app/gradient.c:5401 app/hue_saturation.c:374
+#: app/interface.c:1039 app/layers_dialog.c:3484 app/layers_dialog.c:3666
+#: app/layers_dialog.c:3761 app/layers_dialog.c:4021 app/levels.c:341
+#: app/palette.c:1818 app/posterize.c:202 app/preferences_dialog.c:1465
+#: app/qmask.c:278 app/resize.c:194 app/resize.c:1324 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1191 modules/cdisplay_gamma.c:332
 #: modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
@@ -329,7 +329,7 @@ msgstr "Pinseleditor"
 #: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2051
 #: app/palette.c:2067 app/palette.c:3098 app/palette_select.c:66
 #: app/pattern_select.c:172 app/preferences_dialog.c:367 app/tips_dialog.c:160
-#: app/tools.c:1544 app/undo_history.c:752
+#: app/tools.c:1544 app/undo_history.c:759
 msgid "Close"
 msgstr "Schließen"
 
@@ -1383,20 +1383,20 @@ msgstr ""
 "Öffnen fehlgeschlagen.\n"
 "%s"
 
-#: app/fileops.c:1800
+#: app/fileops.c:1802
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s existiert, überschreiben?"
 
-#: app/fileops.c:1802
+#: app/fileops.c:1804
 msgid "File Exists!"
 msgstr "Datei Existiert!"
 
-#: app/fileops.c:1807
+#: app/fileops.c:1809
 msgid "Yes"
 msgstr "Ja"
 
-#: app/fileops.c:1807
+#: app/fileops.c:1809
 msgid "No"
 msgstr "Nein"
 
@@ -1610,7 +1610,11 @@ msgstr "Unbenannt"
 msgid "Layer type %d not supported."
 msgstr "Ebenentyp %d nicht unterstützt."
 
-#: app/gimphelp.c:169
+#: app/gimphelp.c:182
+msgid "Could not find GIMP Help Browser"
+msgstr "Konnte GIMP Hilfe-Browser nicht finden"
+
+#: app/gimphelp.c:184
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1620,39 +1624,35 @@ msgstr ""
 "Eventuell ist er nicht kompiliert worden,\n"
 "weil GtkXmHTML nicht installiert ist."
 
-#: app/gimpimage.c:1183
-msgid "attach parasite to image"
-msgstr "Parasit dem Bild hinzufügen"
+#: app/gimphelp.c:187
+msgid "Use Netscape instead"
+msgstr "Benutze stattdessen Netscape"
 
-#: app/gimpimage.c:1208
-msgid "detach parasite from image"
-msgstr "Parasit vom Bild lösen"
-
-#: app/gimpimage.c:2312
+#: app/gimpimage.c:2322
 msgid "Layer cannot be raised any further"
 msgstr "Ebene kann nicht weiter angehoben werden"
 
-#: app/gimpimage.c:2340
+#: app/gimpimage.c:2350
 msgid "Layer cannot be lowered any further"
 msgstr "Ebene kann nicht weiter abgesenkt werden"
 
-#: app/gimpimage.c:2366
+#: app/gimpimage.c:2376
 msgid "Layer is already on top"
 msgstr "Ebene ist schon ganz oben"
 
-#: app/gimpimage.c:2372
+#: app/gimpimage.c:2382
 msgid "Can't raise Layer without alpha"
 msgstr "Kann Ebene ohne Alphakanal nicht anheben"
 
-#: app/gimpimage.c:2400
+#: app/gimpimage.c:2410
 msgid "Layer is already on bottom"
 msgstr "Ebene ist schon ganz unten"
 
-#: app/gimpimage.c:2455
+#: app/gimpimage.c:2465
 msgid "BG has no alpha, layer was placed above"
 msgstr "HG hat keinen Alphakanal, Ebene ist darüber plaziert worden"
 
-#: app/gimpimage.c:2526
+#: app/gimpimage.c:2536
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1661,13 +1661,13 @@ msgstr ""
 "den Vorgang \"Sichtbare Ebenen vereinen\" auszuführen.\n"
 "Es müssen mindestens zwei sein."
 
-#: app/gimpimage.c:2610
+#: app/gimpimage.c:2620
 msgid "There are not enough visible layers for a merge down."
 msgstr ""
 "Es sind nicht genügend Ebenen unter dieser Ebene als \"Sichtbar\"\n"
 "markiert, um den Vorgang \"Nach unten vereinen\" auszuführen."
 
-#: app/gimpimage.c:3027
+#: app/gimpimage.c:3037
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1675,7 +1675,7 @@ msgstr ""
 "Kann keine Ebenenenmaske hinzufügen, da\n"
 "diese Ebene bereits eine Maske hat."
 
-#: app/gimpimage.c:3033
+#: app/gimpimage.c:3043
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1683,7 +1683,7 @@ msgstr ""
 "Kann keine Maske zu einer Ebene in\n"
 "einem indizierten Bild hinzufügen."
 
-#: app/gimpimage.c:3039
+#: app/gimpimage.c:3049
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1691,20 +1691,20 @@ msgstr ""
 "Kann keine Maske zu einer Ebene\n"
 "ohne Alphakanal hinzufügen."
 
-#: app/gimpimage.c:3048
+#: app/gimpimage.c:3058
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kann keine Ebenenmaske mit anderen Abmessungen als die Ebene hinzufügen."
 
-#: app/gimpimage.c:3155
+#: app/gimpimage.c:3165
 msgid "Channel cannot be raised any further"
 msgstr "Kanal kann nicht weiter angehoben werden"
 
-#: app/gimpimage.c:3206
+#: app/gimpimage.c:3216
 msgid "Channel cannot be lowered any further"
 msgstr "Kanal kann nicht weiter abgesenkt werden"
 
-#: app/gimpimage.c:3426 app/palette.c:352 app/palette.c:929 app/palette.c:1065
+#: app/gimpimage.c:3436 app/palette.c:352 app/palette.c:929 app/palette.c:1065
 #: app/palette.c:2007 app/palette.c:2729 app/palette.c:2861
 msgid "Untitled"
 msgstr "Unbenannt"
@@ -2605,7 +2605,7 @@ msgstr "Text-Prozeduren"
 msgid "Tool procedures"
 msgstr "Werkzeug Prozeduren"
 
-#: app/internal_procs.c:158 app/undo_history.c:836
+#: app/internal_procs.c:158 app/undo_history.c:847
 msgid "Undo"
 msgstr "Rückgängig"
 
@@ -2869,106 +2869,108 @@ msgstr "Hineinzoomen"
 msgid "Zoom out"
 msgstr "Herauszoomen"
 
-#: app/main.c:296
+#: app/main.c:285
+msgid ""
+"\n"
+"Invalid option.\n"
+msgstr "\nUngültige Option.\n"
+
+#: app/main.c:301
 msgid "GIMP version"
 msgstr "GIMP Version"
 
-#: app/main.c:300
-#, c-format
-msgid "Usage: %s [option ...] [files ...]\n"
-msgstr "Benutzung: %s [Option ...] [Datei ...]\n"
-
-#: app/main.c:301
-msgid "Valid options are:\n"
-msgstr "Gültige Möglichkeiten sind:\n"
-
-#: app/main.c:302
-msgid "  -h --help                Output this help.\n"
-msgstr "  -h --help                Gibt diese Hilfe aus.\n"
-
-#: app/main.c:303
-msgid "  -v --version             Output version info.\n"
-msgstr "  -v --version             Gibt Versionsinformationen aus.\n"
-
-#: app/main.c:304
-msgid "  -b --batch <commands>    Run in batch mode.\n"
-msgstr "  -b --batch <Befehle>     Startet im Stapelmodus.\n"
-
 #: app/main.c:305
-msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
-msgstr "  -g --gimprc <gimprc>     Benutzt ein alternatives Profil.\n"
+#, c-format
+msgid ""
+"\n"
+"Usage: %s [option ... ] [file ... ]\n"
+"\n"
+msgstr "\nBenutzung: %s [Option ...] [Datei ...]\n\n"
 
 #: app/main.c:306
-msgid "  -n --no-interface        Run without a user interface.\n"
-msgstr "  -n --no-interface        Startet ohne Oberfläche.\n"
+msgid "Options:\n"
+msgstr "Optionen:\n"
 
 #: app/main.c:307
-msgid "  -r --restore-session     Try to restore saved session.\n"
-msgstr ""
-"  -r --restore-session     Versucht eine abgelegte Sitzung "
-"wiederherzustellen.\n"
+msgid "  -b, --batch <commands>   Run in batch mode.\n"
+msgstr "  -b, --batch <Befehle>    Startet im Stapelmodus.\n"
 
 #: app/main.c:308
 msgid ""
-"  --no-data                Do not load patterns, gradients, palettes, "
-"brushes.\n"
-msgstr ""
-"  --no-data                Lädt keine Muster, Farbverläufe, Farbpaletten und "
-"Pinsel.\n"
+"  -c, --console-messages   Display warnings to console instead of a dialog "
+"box.\n"
+msgstr "  -c, --console-messages   Warnungen in einer Konsole statt in einem Dialog.\n"
 
 #: app/main.c:309
+msgid ""
+"  -d, --no-data            Do not load brushes, gradients, palettes, "
+"patterns.\n"
+msgstr "  -d, --no-data            Lädt keine Muster, Farbverläufe, Farbpaletten und Pinsel.\n"
+
+#: app/main.c:310
+msgid "  -i, --no-interface       Run without a user interface.\n"
+msgstr "  -i, --no-interface       Startet ohne Oberfläche.\n"
+
+#: app/main.c:311
+msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
+msgstr "  -g, --gimprc <gimprc>    Benutzt ein alternatives Profil.\n"
+
+#: app/main.c:312
+msgid "  -h, --help               Output this help.\n"
+msgstr "  -h, --help               Gibt diese Hilfe aus.\n"
+
+#: app/main.c:313
+msgid "  -r, --restore-session    Try to restore saved session.\n"
+msgstr "  -r, --restore-session    Versucht eine abgelegte Sitzung wiederherzustellen.\n"
+
+#: app/main.c:314
+msgid "  -s, --no-splash          Do not show the startup window.\n"
+msgstr "  -s, --no-splash          Zeigt kein Startfenster.\n"
+
+#: app/main.c:315
+msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
+msgstr "  -S, --no-splash-image    Lädt kein Bild ins Startfenster.\n"
+
+#: app/main.c:316
+msgid "  -v, --version            Output version information.\n"
+msgstr "  -v, --version            Gibt Versionsinformationen aus.\n"
+
+#: app/main.c:317
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Zeigt Startmeldungen.\n"
 
-#: app/main.c:310
-msgid "  --no-splash              Do not show the startup window.\n"
-msgstr "  --no-splash              Verbirgt Startfenster.\n"
-
-#: app/main.c:311
-msgid "  --no-splash-image        Do not add an image to the startup window.\n"
-msgstr "  --no-splash-image        Lädt kein Bild ins Startfenster.\n"
-
-#: app/main.c:312
+#: app/main.c:318
 msgid ""
-"  --no-shm                 Do not use shared memory between GIMP and its "
+"  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
-msgstr ""
-"  --no-shm                 Keiner geteilter Speicher zwischen GIMP und "
-"Plug-ins.\n"
+msgstr "  --no-shm                 Keine geteilter Speicher zwischen GIMP und Plugins.\n"
 
-#: app/main.c:313
+#: app/main.c:319
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                Benutzt die Xshm Erweiterung nicht.\n"
 
-#: app/main.c:314
+#: app/main.c:320
 msgid ""
-"  --console-messages       Display warnings to console instead of a dialog "
-"box.\n"
-msgstr ""
-"  --console-messages       Warnungen in einer Konsole statt in einem "
-"Dialog.\n"
-
-#: app/main.c:315
-msgid ""
-"  --debug-handlers         Enable debugging signal handlers for non-fatal "
-"signals.\n"
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Aktiviert Fehlersuchroutinen für nicht-fatale "
 "Signale.\n"
 
-#: app/main.c:317
-msgid "                           Debugging mode for fatal signals.\n"
-msgstr "                           Fehlersuche bei fatalen Signalen.\n"
-
-#: app/main.c:318
+#: app/main.c:321
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <Anzeige>      Benutzt die angegebene X Anzeige.\n"
 
-#: app/main.c:319
+#: app/main.c:322
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Benutzt alternatives Systemprofil.\n"
 
-#: app/main.c:336
+#: app/main.c:324
+msgid ""
+"                           Debugging mode for fatal signals.\n"
+"\n"
+msgstr "                           Fehlersuche bei fatalen Signalen.\n\n"
+
+#: app/main.c:341
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dieses Konsolenfenster wird in 10 Sekunden geschlossen)\n"
 
@@ -5780,7 +5782,7 @@ msgstr "Bildgröße ändern"
 msgid "misc"
 msgstr "Verschiedenes"
 
-#: app/undo_history.c:427 app/undo_history.c:744
+#: app/undo_history.c:427 app/undo_history.c:751
 #, c-format
 msgid "Undo History: %s"
 msgstr "Journal: %s"
@@ -5789,7 +5791,7 @@ msgstr "Journal: %s"
 msgid "[ base image ]"
 msgstr "[ Basisbild ]"
 
-#: app/undo_history.c:843
+#: app/undo_history.c:854
 msgid "Redo"
 msgstr "Wiederholen"
 

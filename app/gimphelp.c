@@ -31,6 +31,7 @@
 
 #include "gimphelp.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "plug_in.h"
 #include "procedural_db.h"
 
@@ -52,13 +53,13 @@ struct _GimpIdleHelp
 };
 
 /*  local function prototypes  */
-static gint   gimp_idle_help     (gpointer  data);
-static void   gimp_help_internal (gchar    *help_path,
-				  gchar    *current_locale,
-				  gchar    *help_data);
-static void   gimp_help_netscape (gchar    *help_path,
-				  gchar    *current_locale,
-				  gchar    *help_data);
+static gint      gimp_idle_help     (gpointer  data);
+static gboolean  gimp_help_internal (gchar    *help_path,
+				     gchar    *current_locale,
+				     gchar    *help_data);
+static void      gimp_help_netscape (gchar    *help_path,
+				     gchar    *current_locale,
+				     gchar    *help_data);
 
 /**********************/
 /*  public functions  */
@@ -124,10 +125,10 @@ gimp_idle_help (gpointer data)
   switch (help_browser)
     {
     case HELP_BROWSER_GIMP:
-      gimp_help_internal (idle_help->help_path,
-			  current_locale,
-			  idle_help->help_data);
-      break;
+      if (gimp_help_internal (idle_help->help_path,
+			      current_locale,
+			      idle_help->help_data))
+	break;
 
     case HELP_BROWSER_NETSCAPE:
       gimp_help_netscape (idle_help->help_path,
@@ -149,6 +150,25 @@ gimp_idle_help (gpointer data)
 }
 
 static void
+gimp_help_internal_not_found_callback (GtkWidget *widget,
+				       gboolean   use_netscape,
+				       gpointer   data)
+{
+  GList *update = NULL;
+  GList *remove = NULL;
+
+  if (use_netscape)
+    {
+      help_browser = HELP_BROWSER_NETSCAPE;
+
+      update = g_list_append (update, "help-browser");
+      save_gimprc (&update, &remove);
+    }
+  
+  gtk_main_quit ();
+}
+
+static gboolean
 gimp_help_internal (gchar *help_path,
 		    gchar *current_locale,
 		    gchar *help_data)
@@ -166,10 +186,21 @@ gimp_help_internal (gchar *help_path,
 
       if (proc_rec == NULL)
 	{
-	  g_message (_("Could not find the GIMP Help Browser procedure.\n"
-		       "It probably was not compiled because\n"
-		       "you don't have GtkXmHTML installed."));
-	  return;
+	  GtkWidget *not_found =
+	    gimp_query_boolean_box (_("Could not find GIMP Help Browser"),
+				    NULL, NULL, FALSE,
+				    _("Could not find the GIMP Help Browser procedure.\n"
+				      "It probably was not compiled because\n"
+				      "you don't have GtkXmHTML installed."),
+				    _("Use Netscape instead"),
+				    _("Cancel"), 
+				    NULL, NULL,
+				    gimp_help_internal_not_found_callback,
+				    NULL);
+	  gtk_widget_show (not_found);
+	  gtk_main ();
+	  
+	  return (help_browser != HELP_BROWSER_NETSCAPE);
 	}
 
       args = g_new (Argument, 4);
@@ -201,6 +232,8 @@ gimp_help_internal (gchar *help_path,
 
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }
+
+  return TRUE;
 }
 
 static void
