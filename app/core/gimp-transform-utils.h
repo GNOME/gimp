@@ -16,52 +16,52 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DRAWABLE_TRANSFORM_UTILS_H__
-#define __GIMP_DRAWABLE_TRANSFORM_UTILS_H__
+#ifndef __GIMP_TRANSFORM_UTILS_H__
+#define __GIMP_TRANSFORM_UTILS_H__
 
 
-void   gimp_drawable_transform_matrix_flip          (GimpOrientationType  flip_type,
-                                                     gdouble      axis,
-                                                     GimpMatrix3 *result);
-void   gimp_drawable_transform_matrix_rotate        (gint         x1,
-                                                     gint         y1,
-                                                     gint         x2,
-                                                     gint         y2,
-                                                     gdouble      angle,
-                                                     GimpMatrix3 *result);
-void   gimp_drawable_transform_matrix_rotate_center (gdouble      cx,
-                                                     gdouble      cy,
-                                                     gdouble      angle,
-                                                     GimpMatrix3 *result);
-void   gimp_drawable_transform_matrix_scale         (gint         x1,
-                                                     gint         y1,
-                                                     gint         x2,
-                                                     gint         y2,
-                                                     gdouble      tx1,
-                                                     gdouble      ty1,
-                                                     gdouble      tx2,
-                                                     gdouble      ty2,
-                                                     GimpMatrix3 *result);
-void   gimp_drawable_transform_matrix_shear         (gint         x1,
-                                                     gint         y1,
-                                                     gint         x2,
-                                                     gint         y2,
-                                                     GimpOrientationType  orientation,
-                                                     gdouble      amount,
-                                                     GimpMatrix3 *result);
-void   gimp_drawable_transform_matrix_perspective   (gint         x1,
-                                                     gint         y1,
-                                                     gint         x2,
-                                                     gint         y2,
-                                                     gdouble      tx1,
-                                                     gdouble      ty1,
-                                                     gdouble      tx2,
-                                                     gdouble      ty2,
-                                                     gdouble      tx3,
-                                                     gdouble      ty3,
-                                                     gdouble      tx4,
-                                                     gdouble      ty5,
-                                                     GimpMatrix3 *result);
+void   gimp_transform_matrix_flip          (GimpOrientationType  flip_type,
+                                            gdouble      axis,
+                                            GimpMatrix3 *result);
+void   gimp_transform_matrix_rotate        (gint         x1,
+                                            gint         y1,
+                                            gint         x2,
+                                            gint         y2,
+                                            gdouble      angle,
+                                            GimpMatrix3 *result);
+void   gimp_transform_matrix_rotate_center (gdouble      cx,
+                                            gdouble      cy,
+                                            gdouble      angle,
+                                            GimpMatrix3 *result);
+void   gimp_transform_matrix_scale         (gint         x1,
+                                            gint         y1,
+                                            gint         x2,
+                                            gint         y2,
+                                            gdouble      tx1,
+                                            gdouble      ty1,
+                                            gdouble      tx2,
+                                            gdouble      ty2,
+                                            GimpMatrix3 *result);
+void   gimp_transform_matrix_shear         (gint         x1,
+                                            gint         y1,
+                                            gint         x2,
+                                            gint         y2,
+                                            GimpOrientationType  orientation,
+                                            gdouble      amount,
+                                            GimpMatrix3 *result);
+void   gimp_transform_matrix_perspective   (gint         x1,
+                                            gint         y1,
+                                            gint         x2,
+                                            gint         y2,
+                                            gdouble      tx1,
+                                            gdouble      ty1,
+                                            gdouble      tx2,
+                                            gdouble      ty2,
+                                            gdouble      tx3,
+                                            gdouble      ty3,
+                                            gdouble      tx4,
+                                            gdouble      ty5,
+                                            GimpMatrix3 *result);
 
 
-#endif  /*  __GIMP_DRAWABLE_TRANSFORM_SHEAR_H__  */
+#endif  /*  __GIMP_TRANSFORM_UTILS_H__  */

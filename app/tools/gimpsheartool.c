@@ -27,9 +27,9 @@
 
 #include "tools-types.h"
 
+#include "core/gimp-transform-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpdrawable-transform.h"
-#include "core/gimpdrawable-transform-utils.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -281,13 +281,13 @@ gimp_shear_tool_recalc (GimpTransformTool *tr_tool,
   else
     amount = tr_tool->trans_info[YSHEAR];
 
-  gimp_drawable_transform_matrix_shear (tr_tool->x1,
-                                        tr_tool->y1,
-                                        tr_tool->x2,
-                                        tr_tool->y2,
-                                        tr_tool->trans_info[HORZ_OR_VERT],
-                                        amount,
-                                        &tr_tool->transform);
+  gimp_transform_matrix_shear (tr_tool->x1,
+                               tr_tool->y1,
+                               tr_tool->x2,
+                               tr_tool->y2,
+                               tr_tool->trans_info[HORZ_OR_VERT],
+                               amount,
+                               &tr_tool->transform);
 
   /*  transform the bounding box  */
   gimp_transform_tool_transform_bounding_box (tr_tool);

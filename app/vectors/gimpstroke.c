@@ -27,8 +27,6 @@
 
 #include "vectors-types.h"
 
-#include "core/gimpdrawable-transform-utils.h"
-
 #include "gimpanchor.h"
 #include "gimpstroke.h"
 
@@ -275,7 +273,7 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   g_object_class_install_property (object_class,
                                    PROP_CONTROL_POINTS,
                                    control_points_param_spec);
-  
+
   g_object_class_install_property (object_class,
                                    PROP_CLOSED,
                                    close_param_spec);

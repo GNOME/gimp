@@ -25,9 +25,9 @@
 
 #include "tools-types.h"
 
+#include "core/gimp-transform-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpdrawable-transform.h"
-#include "core/gimpdrawable-transform-utils.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -219,19 +219,19 @@ static void
 gimp_perspective_tool_recalc (GimpTransformTool *tr_tool,
                               GimpDisplay       *gdisp)
 {
-  gimp_drawable_transform_matrix_perspective (tr_tool->x1,
-                                              tr_tool->y1,
-                                              tr_tool->x2,
-                                              tr_tool->y2,
-                                              tr_tool->trans_info[X0],
-                                              tr_tool->trans_info[Y0],
-                                              tr_tool->trans_info[X1],
-                                              tr_tool->trans_info[Y1],
-                                              tr_tool->trans_info[X2],
-                                              tr_tool->trans_info[Y2],
-                                              tr_tool->trans_info[X3],
-                                              tr_tool->trans_info[Y3],
-                                              &tr_tool->transform);
+  gimp_transform_matrix_perspective (tr_tool->x1,
+                                     tr_tool->y1,
+                                     tr_tool->x2,
+                                     tr_tool->y2,
+                                     tr_tool->trans_info[X0],
+                                     tr_tool->trans_info[Y0],
+                                     tr_tool->trans_info[X1],
+                                     tr_tool->trans_info[Y1],
+                                     tr_tool->trans_info[X2],
+                                     tr_tool->trans_info[Y2],
+                                     tr_tool->trans_info[X3],
+                                     tr_tool->trans_info[Y3],
+                                     &tr_tool->transform);
 
   /*  transform the bounding box  */
   gimp_transform_tool_transform_bounding_box (tr_tool);

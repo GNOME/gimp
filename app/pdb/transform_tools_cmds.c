@@ -29,8 +29,8 @@
 #include "procedural_db.h"
 
 #include "config/gimpcoreconfig.h"
+#include "core/gimp-transform-utils.h"
 #include "core/gimp.h"
-#include "core/gimpdrawable-transform-utils.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpdrawable.h"
 
@@ -163,16 +163,16 @@ perspective_invoker (Gimp     *gimp,
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
     
       /* Assemble the transformation matrix */
-      gimp_drawable_transform_matrix_perspective (x1, y1, x2, y2,
-						  trans_info[X0],
-						  trans_info[Y0],
-						  trans_info[X1],
-						  trans_info[Y1],
-						  trans_info[X2],
-						  trans_info[Y2],
-						  trans_info[X3],
-						  trans_info[Y3],
-						  &matrix);
+      gimp_transform_matrix_perspective (x1, y1, x2, y2,
+					 trans_info[X0],
+					 trans_info[Y0],
+					 trans_info[X1],
+					 trans_info[Y1],
+					 trans_info[X2],
+					 trans_info[Y2],
+					 trans_info[X3],
+					 trans_info[Y3],
+					 &matrix);
     
       if (interpolation)
 	interpolation_type = gimp->config->interpolation_type;
@@ -299,9 +299,7 @@ rotate_invoker (Gimp     *gimp,
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
     
       /* Assemble the transformation matrix */
-      gimp_drawable_transform_matrix_rotate (x1, y1, x2, y2,
-					     angle,
-					     &matrix);
+      gimp_transform_matrix_rotate (x1, y1, x2, y2, angle, &matrix);
     
       if (interpolation)
 	interpolation_type = gimp->config->interpolation_type;
@@ -401,12 +399,12 @@ scale_invoker (Gimp     *gimp,
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
     
 	  /* Assemble the transformation matrix */
-	  gimp_drawable_transform_matrix_scale (x1, y1, x2, y2,
-						trans_info[X0],
-						trans_info[Y0],
-						trans_info[X1],
-						trans_info[Y1],
-						&matrix);
+	  gimp_transform_matrix_scale (x1, y1, x2, y2,
+				       trans_info[X0],
+				       trans_info[Y0],
+				       trans_info[X1],
+				       trans_info[Y1],
+				       &matrix);
     
 	  if (interpolation)
 	    interpolation_type = gimp->config->interpolation_type;
@@ -522,10 +520,10 @@ shear_invoker (Gimp     *gimp,
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
     
       /* Assemble the transformation matrix */
-      gimp_drawable_transform_matrix_shear (x1, y1, x2, y2,
-					    shear_type,
-					    magnitude,
-					    &matrix);
+      gimp_transform_matrix_shear (x1, y1, x2, y2,
+					 shear_type,
+				   magnitude,
+				   &matrix);
     
       if (interpolation)
 	interpolation_type = gimp->config->interpolation_type;

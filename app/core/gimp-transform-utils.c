@@ -24,13 +24,13 @@
 
 #include "core-types.h"
 
-#include "gimpdrawable-transform-utils.h"
+#include "gimp-transform-utils.h"
 
 
 void
-gimp_drawable_transform_matrix_flip (GimpOrientationType  flip_type,
-                                     gdouble              axis,
-                                     GimpMatrix3         *result)
+gimp_transform_matrix_flip (GimpOrientationType  flip_type,
+                            gdouble              axis,
+                            GimpMatrix3         *result)
 {
   gimp_matrix3_identity (result);
 
@@ -54,12 +54,12 @@ gimp_drawable_transform_matrix_flip (GimpOrientationType  flip_type,
 }
 
 void
-gimp_drawable_transform_matrix_rotate (gint         x1,
-                                       gint         y1,
-                                       gint         x2,
-                                       gint         y2,
-                                       gdouble      angle,
-                                       GimpMatrix3 *result)
+gimp_transform_matrix_rotate (gint         x1,
+                              gint         y1,
+                              gint         x2,
+                              gint         y2,
+                              gdouble      angle,
+                              GimpMatrix3 *result)
 {
   gdouble cx;
   gdouble cy;
@@ -74,10 +74,10 @@ gimp_drawable_transform_matrix_rotate (gint         x1,
 }
 
 void
-gimp_drawable_transform_matrix_rotate_center (gdouble      cx,
-                                              gdouble      cy,
-                                              gdouble      angle,
-                                              GimpMatrix3 *result)
+gimp_transform_matrix_rotate_center (gdouble      cx,
+                                     gdouble      cy,
+                                     gdouble      angle,
+                                     GimpMatrix3 *result)
 {
   gimp_matrix3_identity  (result);
   gimp_matrix3_translate (result, -cx, -cy);
@@ -86,15 +86,15 @@ gimp_drawable_transform_matrix_rotate_center (gdouble      cx,
 }
 
 void
-gimp_drawable_transform_matrix_scale (gint         x1,
-                                      gint         y1,
-                                      gint         x2,
-                                      gint         y2,
-                                      gdouble      tx1,
-                                      gdouble      ty1,
-                                      gdouble      tx2,
-                                      gdouble      ty2,
-                                      GimpMatrix3 *result)
+gimp_transform_matrix_scale (gint         x1,
+                             gint         y1,
+                             gint         x2,
+                             gint         y2,
+                             gdouble      tx1,
+                             gdouble      ty1,
+                             gdouble      tx2,
+                             gdouble      ty2,
+                             GimpMatrix3 *result)
 {
   gdouble scalex;
   gdouble scaley;
@@ -114,13 +114,13 @@ gimp_drawable_transform_matrix_scale (gint         x1,
 }
 
 void
-gimp_drawable_transform_matrix_shear (gint                 x1,
-                                      gint                 y1,
-                                      gint                 x2,
-                                      gint                 y2,
-                                      GimpOrientationType  orientation,
-                                      gdouble              amount,
-                                      GimpMatrix3         *result)
+gimp_transform_matrix_shear (gint                 x1,
+                             gint                 y1,
+                             gint                 x2,
+                             gint                 y2,
+                             GimpOrientationType  orientation,
+                             gdouble              amount,
+                             GimpMatrix3         *result)
 {
   gint    width;
   gint    height;
@@ -150,19 +150,19 @@ gimp_drawable_transform_matrix_shear (gint                 x1,
 }
 
 void
-gimp_drawable_transform_matrix_perspective (gint         x1,
-                                            gint         y1,
-                                            gint         x2,
-                                            gint         y2,
-                                            gdouble      tx1,
-                                            gdouble      ty1,
-                                            gdouble      tx2,
-                                            gdouble      ty2,
-                                            gdouble      tx3,
-                                            gdouble      ty3,
-                                            gdouble      tx4,
-                                            gdouble      ty4,
-                                            GimpMatrix3 *result)
+gimp_transform_matrix_perspective (gint         x1,
+                                   gint         y1,
+                                   gint         x2,
+                                   gint         y2,
+                                   gdouble      tx1,
+                                   gdouble      ty1,
+                                   gdouble      tx2,
+                                   gdouble      ty2,
+                                   gdouble      tx3,
+                                   gdouble      ty3,
+                                   gdouble      tx4,
+                                   gdouble      ty4,
+                                   GimpMatrix3 *result)
 {
   GimpMatrix3 matrix;
   gdouble     scalex;

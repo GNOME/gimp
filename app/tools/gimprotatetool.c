@@ -25,9 +25,9 @@
 
 #include "tools-types.h"
 
+#include "core/gimp-transform-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpdrawable-transform.h"
-#include "core/gimpdrawable-transform-utils.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -340,10 +340,10 @@ gimp_rotate_tool_recalc (GimpTransformTool *tr_tool,
   tr_tool->cx = cx;
   tr_tool->cy = cy;
 
-  gimp_drawable_transform_matrix_rotate_center (tr_tool->cx,
-                                                tr_tool->cy,
-                                                tr_tool->trans_info[ANGLE],
-                                                &tr_tool->transform);
+  gimp_transform_matrix_rotate_center (tr_tool->cx,
+                                       tr_tool->cy,
+                                       tr_tool->trans_info[ANGLE],
+                                       &tr_tool->transform);
 
   /*  transform the bounding box  */
   gimp_transform_tool_transform_bounding_box (tr_tool);

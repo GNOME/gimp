@@ -1,3 +1,21 @@
+2003-09-15  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-transform-utils.[ch]: removed...
+
+	* app/core/gimp-transform-utils.[ch]: ...and added under new names
+	because these functions are not at all related to GimpDrawable.
+	Changed the function names accordingly.
+
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* app/vectors/gimpstroke.c
+	* app/vectors/gimpvectors.c
+	* tools/pdbgen/pdb/transform_tools.pdb: changed accordingly.
+
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
 2003-09-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpedit.[ch]

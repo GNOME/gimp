@@ -128,16 +128,16 @@ HELP
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   /* Assemble the transformation matrix */
-  gimp_drawable_transform_matrix_perspective (x1, y1, x2, y2,
-                                              trans_info[X0],
-                                              trans_info[Y0],
-                                              trans_info[X1],
-                                              trans_info[Y1],
-                                              trans_info[X2],
-                                              trans_info[Y2],
-                                              trans_info[X3],
-                                              trans_info[Y3],
-                                              &matrix);
+  gimp_transform_matrix_perspective (x1, y1, x2, y2,
+                                     trans_info[X0],
+                                     trans_info[Y0],
+                                     trans_info[X1],
+                                     trans_info[Y1],
+                                     trans_info[X2],
+                                     trans_info[Y2],
+                                     trans_info[X3],
+                                     trans_info[Y3],
+                                     &matrix);
 
   if (interpolation)
     interpolation_type = gimp->config->interpolation_type;
@@ -189,9 +189,7 @@ HELP
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   /* Assemble the transformation matrix */
-  gimp_drawable_transform_matrix_rotate (x1, y1, x2, y2,
-                                         angle,
-                                         &matrix);
+  gimp_transform_matrix_rotate (x1, y1, x2, y2, angle, &matrix);
 
   if (interpolation)
     interpolation_type = gimp->config->interpolation_type;
@@ -255,12 +253,12 @@ HELP
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
       /* Assemble the transformation matrix */
-      gimp_drawable_transform_matrix_scale (x1, y1, x2, y2,
-                                            trans_info[X0],
-                                            trans_info[Y0],
-                                            trans_info[X1],
-                                            trans_info[Y1],
-                                            &matrix);
+      gimp_transform_matrix_scale (x1, y1, x2, y2,
+                                   trans_info[X0],
+                                   trans_info[Y0],
+                                   trans_info[X1],
+                                   trans_info[Y1],
+                                   &matrix);
 
       if (interpolation)
         interpolation_type = gimp->config->interpolation_type;
@@ -322,10 +320,10 @@ HELP
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   /* Assemble the transformation matrix */
-  gimp_drawable_transform_matrix_shear (x1, y1, x2, y2,
-                                        shear_type,
-                                        magnitude,
-                                        &matrix);
+  gimp_transform_matrix_shear (x1, y1, x2, y2,
+      	                       shear_type,
+                               magnitude,
+                               &matrix);
 
   if (interpolation)
     interpolation_type = gimp->config->interpolation_type;
@@ -411,8 +409,8 @@ CODE
 }
 
 @headers = qw("libgimpmath/gimpmath.h" "config/gimpcoreconfig.h"
-              "core/gimp.h" "core/gimpdrawable-transform.h"
-              "core/gimpdrawable-transform-utils.h" "core/gimpdrawable.h");
+              "core/gimp.h" "core/gimp-transform-utils.h"
+              "core/gimpdrawable.h" "core/gimpdrawable-transform.h");
 
 @procs = qw(flip perspective rotate scale shear transform_2d);
 

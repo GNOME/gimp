@@ -34,6 +34,8 @@ libappcore_a_sources = \
 	gimp-parasites.h		\
 	gimp-templates.c		\
 	gimp-templates.h		\
+	gimp-transform-utils.c		\
+	gimp-transform-utils.h		\
 	gimp-units.c			\
 	gimp-units.h			\
 	gimp-utils.c			\
@@ -85,8 +87,6 @@ libappcore_a_sources = \
 	gimpdrawable-preview.h		\
 	gimpdrawable-transform.c	\
 	gimpdrawable-transform.h	\
-	gimpdrawable-transform-utils.c	\
-	gimpdrawable-transform-utils.h	\
 	gimpenvirontable.h		\
 	gimpenvirontable.c		\
 	gimpgradient.c			\

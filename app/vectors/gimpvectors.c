@@ -27,7 +27,7 @@
 
 #include "vectors-types.h"
 
-#include "core/gimpdrawable-transform-utils.h"
+#include "core/gimp-transform-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpmarshal.h"
@@ -431,7 +431,7 @@ gimp_vectors_flip (GimpItem            *item,
   GList       *list;
   GimpMatrix3  matrix;
 
-  gimp_drawable_transform_matrix_flip (flip_type, axis, &matrix);
+  gimp_transform_matrix_flip (flip_type, axis, &matrix);
 
   vectors = GIMP_VECTORS (item);
 
@@ -476,8 +476,7 @@ gimp_vectors_rotate (GimpItem         *item,
       break;
     }
 
-  gimp_drawable_transform_matrix_rotate_center (center_x, center_y, angle,
-                                                &matrix);
+  gimp_transform_matrix_rotate_center (center_x, center_y, angle, &matrix);
 
   vectors = GIMP_VECTORS (item);
 
