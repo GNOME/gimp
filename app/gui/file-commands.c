@@ -217,8 +217,7 @@ file_save_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  if (! gimp_image_active_drawable (gdisp->gimage))
-    return;
+  g_return_if_fail (gimp_image_active_drawable (gdisp->gimage));
 
   /*  Only save if the gimage has been modified  */
   if (gdisp->gimage->dirty ||

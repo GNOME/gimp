@@ -1,5 +1,11 @@
 2003-07-08  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/file-commands.c (file_save_cmd_callback): warn if the
+	image has no active drawable instead of silently returning. Not
+	sure if this is correct, but it could help to resolve #116936.
+
+2003-07-08  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcolorpickertool.c: show the alpha value in percent
 	as well (as suggested in bug #116384).
 
