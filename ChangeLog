@@ -1,5 +1,9 @@
 2005-02-03  Sven Neumann  <sven@gimp.org>
 
+	* tools/gimp-remote.c: ported to GOption command-line parser.
+
+2005-02-03  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimagemap.c (gimp_image_map_do): fixed handling of
 	pixel region that broke with my latest change. Fixes bug #166126.
 
