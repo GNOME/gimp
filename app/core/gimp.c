@@ -548,15 +548,18 @@ gimp_edit_config_notify (GObject    *edit_config,
     {
       if (param_spec->flags & GIMP_PARAM_RESTART)
         {
+#ifdef GIMP_CONFIG_DEBUG
           g_print ("NOT Applying edit_config change of '%s' to global_config "
                    "because it needs restart\n",
                    param_spec->name);
+#endif
         }
       else
         {
+#ifdef GIMP_CONFIG_DEBUG
           g_print ("Applying edit_config change of '%s' to global_config\n",
                    param_spec->name);
-
+#endif
           g_signal_handlers_block_by_func (global_config,
                                            gimp_global_config_notify,
                                            edit_config);

@@ -1,5 +1,13 @@
 2003-02-03  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-deserialize.c
+	(gimp_config_deserialize_fundamental): handle negative integers.
+
+	* app/core/gimp.c (gimp_edit_config_notify): commented out
+	debugging output.
+
+2003-02-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/ifscompose/ifscompose.c: applied another patch from
 	David Necas <yeti@physics.muni.cz> that fixes #82470. Added some
 	stock icons and mnemonics.
@@ -98,8 +106,8 @@
 
 2003-02-01  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
-	* libgimp/gimpmiscui.[ch]: factored out more preview stuff from several
-	plug-ins.
+	* libgimp/gimpmiscui.[ch]: factored out more preview stuff from
+	several plug-ins.
 
 	* plug-ins/common/waves.c
 	* plug-ins/common/sharpen.c

@@ -343,8 +343,12 @@ gimp_config_deserialize_fundamental (GValue     *value,
                                      GScanner   *scanner)
 {
   GTokenType token;
+  GType      value_type;
+  gboolean   negate = FALSE;
 
-  switch (G_TYPE_FUNDAMENTAL (prop_spec->value_type))
+  value_type = G_TYPE_FUNDAMENTAL (prop_spec->value_type);
+
+  switch (value_type)
     {
     case G_TYPE_STRING:
       token = G_TOKEN_STRING;
@@ -355,8 +359,14 @@ gimp_config_deserialize_fundamental (GValue     *value,
       break;
       
     case G_TYPE_INT:
-    case G_TYPE_UINT:
     case G_TYPE_LONG:
+      if (g_scanner_peek_next_token (scanner) == '-')
+        {
+          negate = TRUE;
+          g_scanner_get_next_token (scanner);
+        }
+      /*  fallthrough  */
+    case G_TYPE_UINT:
     case G_TYPE_ULONG:
       token = G_TOKEN_INT;
       break;
@@ -373,11 +383,13 @@ gimp_config_deserialize_fundamental (GValue     *value,
     }
 
   if (g_scanner_peek_next_token (scanner) != token)
-    return token;
+    {
+      return token;
+    }
 
   g_scanner_get_next_token (scanner);
 
-  switch (G_TYPE_FUNDAMENTAL (prop_spec->value_type))
+  switch (value_type)
     {
     case G_TYPE_STRING:
       if (scanner_string_utf8_valid (scanner, prop_spec->name))
@@ -405,16 +417,18 @@ gimp_config_deserialize_fundamental (GValue     *value,
       break;
 
     case G_TYPE_INT:
-      g_value_set_int (value, scanner->value.v_int);
+      g_value_set_int (value, (negate ?
+                               - scanner->value.v_int : scanner->value.v_int));
       break;
     case G_TYPE_UINT:
       g_value_set_uint (value, scanner->value.v_int);
       break;
     case G_TYPE_LONG:
-      g_value_set_int (value, scanner->value.v_int);
+      g_value_set_long (value, (negate ?
+                                - scanner->value.v_int : scanner->value.v_int));
       break;
     case G_TYPE_ULONG:
-      g_value_set_uint (value, scanner->value.v_int);
+      g_value_set_ulong (value, scanner->value.v_int);
       break;
     case G_TYPE_FLOAT:
       g_value_set_float (value, scanner->value.v_float);
