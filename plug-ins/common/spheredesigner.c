@@ -985,7 +985,7 @@ void imagepixel(vector *q, vector *col, texture *t)
 
 double frand(double v)
 {
-  return (RAND_FUNC() / (double)RAND_MAX - 0.5) * v;
+  return (RAND_FUNC() / (double) G_MAXRAND - 0.5) * v;
 }
 
 int traceray(ray *r, vector *col, int level, double imp);

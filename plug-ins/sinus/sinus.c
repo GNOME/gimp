@@ -36,24 +36,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 #include <libgimp/gimpmath.h>
 
-#include <plug-ins/megawidget/megawidget.h>
-
 #include "libgimp/stdplugins-intl.h"
 
 #ifdef USE_LOGO
 #include "sinus_logo.h"
 #endif
-
-#ifndef RAND_MAX
-#define RAND_MAX 2147483647
-#endif /* RAND_MAX */
 
 /*
  * This structure is used for persistent data.
@@ -113,6 +106,25 @@ typedef struct
 static gint              drawable_is_grayscale = FALSE;
 static struct mwPreview *thePreview;
 static GDrawable        *drawable;
+
+/*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
+
+struct mwPreview
+{
+  gint     width;
+  gint     height;
+  gint     bpp;
+  gdouble  scale;
+  guchar  *bits;
+};
+
+#define PREVIEW_SIZE 100
+
+static gint do_preview = TRUE;
+
+static GtkWidget        * mw_preview_new          (GtkWidget        *parent,
+						   struct mwPreview *mwp);
+static struct mwPreview * mw_preview_build_virgin (GDrawable        *drw);
 
 /* Declare functions */
 
@@ -326,26 +338,26 @@ prepare_coef (params *p)
   if (svals.perturbation==IDEAL)
     {
       p->c11= 0*rand();
-      p->c12= (2.0*rand()/(RAND_MAX+1.0)-1)*scaley; /*rand+rand is used to keep */
-      p->c13= (2*G_PI*rand())/RAND_MAX;
+      p->c12= (2.0*rand()/(G_MAXRAND+1.0)-1)*scaley; /*rand+rand is used to keep */
+      p->c13= (2*G_PI*rand())/G_MAXRAND;
       p->c21= 0*rand();
-      p->c22= (2.0*rand()/(RAND_MAX+1.0)-1)*scaley; /*correspondance beetween Ideal*/
-      p->c23= (2*G_PI*rand())/RAND_MAX;
-      p->c31= (2.0*rand()/(RAND_MAX+1.0)-1)*scalex; /*and perturbed coefs (I hope...)*/
+      p->c22= (2.0*rand()/(G_MAXRAND+1.0)-1)*scaley; /*correspondance beetween Ideal*/
+      p->c23= (2*G_PI*rand())/G_MAXRAND;
+      p->c31= (2.0*rand()/(G_MAXRAND+1.0)-1)*scalex; /*and perturbed coefs (I hope...)*/
       p->c32= 0*rand();
-      p->c33= (2*G_PI*rand())/RAND_MAX;
+      p->c33= (2*G_PI*rand())/G_MAXRAND;
     }
   else
     {
-      p->c11= (2.0*rand()/(RAND_MAX+1.0)-1)*scalex;
-      p->c12= (2.0*rand()/(RAND_MAX+1.0)-1)*scaley;
-      p->c13= (2*G_PI*rand())/RAND_MAX;
-      p->c21= (2.0*rand()/(RAND_MAX+1.0)-1)*scalex;
-      p->c22= (2.0*rand()/(RAND_MAX+1.0)-1)*scaley;
-      p->c23= (2*G_PI*rand())/RAND_MAX;
-      p->c31= (2.0*rand()/(RAND_MAX+1.0)-1)*scalex;
-      p->c32= (2.0*rand()/(RAND_MAX+1.0)-1)*scaley;
-      p->c33= (2*G_PI*rand())/RAND_MAX;
+      p->c11= (2.0*rand()/(G_MAXRAND+1.0)-1)*scalex;
+      p->c12= (2.0*rand()/(G_MAXRAND+1.0)-1)*scaley;
+      p->c13= (2*G_PI*rand())/G_MAXRAND;
+      p->c21= (2.0*rand()/(G_MAXRAND+1.0)-1)*scalex;
+      p->c22= (2.0*rand()/(G_MAXRAND+1.0)-1)*scaley;
+      p->c23= (2*G_PI*rand())/G_MAXRAND;
+      p->c31= (2.0*rand()/(G_MAXRAND+1.0)-1)*scalex;
+      p->c32= (2.0*rand()/(G_MAXRAND+1.0)-1)*scaley;
+      p->c33= (2*G_PI*rand())/G_MAXRAND;
     }
 
   if (svals.tiling)
@@ -763,7 +775,7 @@ sinus_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  preview = mw_preview_new (vbox, thePreview, &sinus_do_preview);
+  preview = mw_preview_new (vbox, thePreview);
   sinus_do_preview (preview);
 
 #ifdef USE_LOGO
@@ -1108,3 +1120,91 @@ sinus_do_preview (GtkWidget *widget)
       fprintf (stderr,"Not enough mem for sinus Preview...\n");
     }
 }
+
+static void
+mw_preview_toggle_callback (GtkWidget *widget,
+                            gpointer   data)
+{
+  gimp_toggle_button_update (widget, data);
+
+  if (do_preview)
+    sinus_do_preview (NULL);
+}
+
+static struct mwPreview *
+mw_preview_build_virgin (GDrawable *drw)
+{
+  struct mwPreview *mwp;
+
+  mwp = g_new (struct mwPreview, 1);
+
+  if (drw->width > drw->height)
+    {
+      mwp->scale  = (gdouble) drw->width / (gdouble) PREVIEW_SIZE;
+      mwp->width  = PREVIEW_SIZE;
+      mwp->height = drw->height / mwp->scale;
+    }
+  else
+    {
+      mwp->scale  = (gdouble) drw->height / (gdouble) PREVIEW_SIZE;
+      mwp->height = PREVIEW_SIZE;
+      mwp->width  = drw->width / mwp->scale;
+    }
+
+  mwp->bpp  = 3;
+  mwp->bits = NULL;
+
+  return mwp;
+}
+
+static GtkWidget *
+mw_preview_new (GtkWidget        *parent,
+                struct mwPreview *mwp)
+{
+  GtkWidget *preview;
+  GtkWidget *frame;
+  GtkWidget *pframe;
+  GtkWidget *vbox;
+  GtkWidget *button;
+  guchar *color_cube;
+   
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+                              color_cube[2], color_cube[3]);
+
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+
+  frame = gtk_frame_new (_("Preview"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  pframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME(pframe), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), pframe, FALSE, FALSE, 0);
+  gtk_widget_show (pframe);
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), mwp->width, mwp->height);
+  gtk_container_add (GTK_CONTAINER (pframe), preview);
+  gtk_widget_show (preview);
+
+  button = gtk_check_button_new_with_label (_("Do Preview"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                      GTK_SIGNAL_FUNC (mw_preview_toggle_callback),
+                      &do_preview);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  return preview;
+}
+

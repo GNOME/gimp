@@ -83,13 +83,10 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
 #include <libgimp/gimpcolorspace.h>
 
 #include "libgimp/stdplugins-intl.h"
-
-#ifndef RAND_MAX
-#define RAND_MAX 2147483647
-#endif /* RAND_MAX */
 
 #define PARAM_FILE_FORMAT_VERSION	1.0
 #define	PLUG_IN_NAME	"plug_in_CML_explorer"
@@ -111,6 +108,7 @@
 #define	GTKW_BORDER_WIDTH	3
 #define GTKW_FLOAT_MIN_ERROR	0.000001
 #define GTKW_ENTRY_BUFFER_SIZE	32
+
 /* gtkW type */
 typedef struct
 {
@@ -124,13 +122,14 @@ typedef struct
   gchar *name;
   gpointer data;
 } gtkW_menu_item;
+
 /* gtkW global variables */
-gint	gtkW_border_width = GTKW_BORDER_WIDTH;
-gint	gtkW_border_height = 0;
-gint	gtkW_homogeneous_layout	= FALSE;
-gint	gtkW_frame_shadow_type = GTK_SHADOW_ETCHED_IN;
-gint	gtkW_align_x = GTK_FILL|GTK_EXPAND;
-gint	gtkW_align_y = GTK_FILL;
+static gint gtkW_border_width = GTKW_BORDER_WIDTH;
+static gint gtkW_border_height = 0;
+static gint gtkW_homogeneous_layout = FALSE;
+static gint gtkW_frame_shadow_type = GTK_SHADOW_ETCHED_IN;
+static gint gtkW_align_x = GTK_FILL|GTK_EXPAND;
+static gint gtkW_align_y = GTK_FILL;
 
 /* gtkW callback */
 static void	gtkW_toggle_update (GtkWidget *widget, gpointer data);
@@ -206,7 +205,7 @@ static GtkWidget	*gtkW_vbox_add_button (GtkWidget	*vbox,
 static GtkWidget	*gtkW_vbox_new (GtkWidget *parent);
 /* end of GtkW */
 
-#define	RANDOM	((gdouble) ((double) rand ()/((double) RAND_MAX)))
+#define	RANDOM	((gdouble) ((double) rand ()/((double) G_MAXRAND)))
 #define CANNONIZE(p, x)	(255*(((p).range_h - (p).range_l)*(x) + (p).range_l))
 #define HCANNONIZE(p, x)	(254*(((p).range_h - (p).range_l)*(x) + (p).range_l))
 #define POS_IN_TORUS(i,size)	((i < 0) ? size + i : ((size <= i) ? i - size : i))

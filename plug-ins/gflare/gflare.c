@@ -38,7 +38,6 @@
   martweb@gmx.net
  */
 
-
 #ifdef RCSID
 static char rcsid[] = "$Id$";
 #endif
@@ -50,16 +49,20 @@ static char rcsid[] = "$Id$";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include <ctype.h>
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
-#include "libgimp/gimpcolorspace.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpmath.h>
+#include <libgimp/gimplimits.h>
+#include <libgimp/gimpcolorspace.h>
+
 #include "asupsample.h"
 #include "gtkmultioptionmenu.h"
 
@@ -103,9 +106,6 @@ static char rcsid[] = "$Id$";
 
 #define ENTRY_WIDTH 40
 
-#define CHECK_SIZE 4
-#define LIGHTCHECK 192
-#define DARKCHECK  128
 #ifndef OPAQUE
 #define OPAQUE	   255
 #endif
@@ -1942,7 +1942,7 @@ calc_place_sflare ()
   for (n = 0; n < SFLARE_NUM; n++)
     {
       sflare = g_new (CalcSFlare, 1);
-      rnd = (double) rand () / RAND_MAX;
+      rnd = (double) rand () / G_MAXRAND;
       for (i = 0; i < GRADIENT_RESOLUTION; i++)
 	if (prob[i] >= rnd)
 	  break;
@@ -4400,11 +4400,11 @@ preview_rgba_to_rgb (guchar *dest, gint x, gint y, guchar *src)
     }
   else
     {
-      if ((x % (CHECK_SIZE*2) < CHECK_SIZE) ^
-	  (y % (CHECK_SIZE*2) < CHECK_SIZE))
-	check = LIGHTCHECK;
+      if ((x % (GIMP_CHECK_SIZE) < GIMP_CHECK_SIZE_SM) ^
+	  (y % (GIMP_CHECK_SIZE) < GIMP_CHECK_SIZE_SM))
+	check = GIMP_CHECK_LIGHT * 255;
       else
-	check = DARKCHECK;
+	check = GIMP_CHECK_DARK * 255;
 
       if (src_a == 0)	/* full transparent */
 	{
@@ -4695,7 +4695,7 @@ gm_preview_draw (GtkWidget *preview, gchar *gradient_name)
 
   gradient_get_values (gradient_name, (guchar *)values, nvalues);
 
-  for( row = 0; row < GM_PREVIEW_HEIGHT; row += CHECK_SIZE )
+  for( row = 0; row < GM_PREVIEW_HEIGHT; row += GIMP_CHECK_SIZE_SM )
     {
       for( col = 0; col < GM_PREVIEW_WIDTH; col++ )
 	{
@@ -4711,11 +4711,11 @@ gm_preview_draw (GtkWidget *preview, gchar *gradient_name)
 	  else
 	    {
 	      /* more or less transparent */
-	      if( ( col % (CHECK_SIZE*2) < CHECK_SIZE ) ^
-		  ( row % (CHECK_SIZE*2) < CHECK_SIZE ) )
-		check = LIGHTCHECK;
+	      if( ( col % (GIMP_CHECK_SIZE) < GIMP_CHECK_SIZE_SM ) ^
+		  ( row % (GIMP_CHECK_SIZE) < GIMP_CHECK_SIZE_SM ) )
+		check = GIMP_CHECK_LIGHT * 255;
 	      else
-		check = DARKCHECK;
+		check = GIMP_CHECK_DARK * 255;
 
 	      if ( src[alpha] == 0 )
 		{
@@ -4731,7 +4731,7 @@ gm_preview_draw (GtkWidget *preview, gchar *gradient_name)
 		}
 	    }
 	}
-      for( irow = 0; irow < CHECK_SIZE && row + irow < GM_PREVIEW_HEIGHT; irow++ )
+      for( irow = 0; irow < GIMP_CHECK_SIZE_SM && row + irow < GM_PREVIEW_HEIGHT; irow++ )
 	{
 	  gtk_preview_draw_row( GTK_PREVIEW (preview), (guchar*) dest_row,
 				0, row + irow, GM_PREVIEW_WIDTH );

@@ -902,9 +902,12 @@ static gint
 polarize_dialog (void)
 {
   GtkWidget *dialog;
-  GtkWidget *top_table;
+  GtkWidget *main_vbox;
+  GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *table;
+  GtkWidget *abox;
+  GtkWidget *pframe;
   GtkWidget *toggle;
   GtkWidget *hbox;
   GtkObject *adj;
@@ -953,33 +956,49 @@ polarize_dialog (void)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  top_table = gtk_table_new (3, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (top_table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (top_table), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dialog)->vbox), top_table,
-		      FALSE, FALSE, 0);
-  gtk_widget_show (top_table);
-
   /* Initialize Tooltips */
   gimp_help_init ();
 	
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dialog)->vbox), main_vbox,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (main_vbox);
+
   /* Preview */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1, 0, 0, 0, 0);
+  frame = gtk_frame_new (_("Preview"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_widget_show (abox);
+
+  pframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (pframe), 4);
+  gtk_container_add (GTK_CONTAINER (abox), pframe);
+  gtk_widget_show (pframe);
 
   pcint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (pcint.preview), preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (frame), pcint.preview);
+  gtk_container_add (GTK_CONTAINER (pframe), pcint.preview);
   gtk_widget_show (pcint.preview);
 
   /* Controls */
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_attach (GTK_TABLE (top_table), table, 0, 3, 1, 2,
-		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -1000,8 +1019,7 @@ polarize_dialog (void)
 
   /* togglebuttons for backwards, top, polar->rectangular */
   hbox = gtk_hbox_new (TRUE, 4);
-  gtk_table_attach (GTK_TABLE (top_table), hbox, 0, 3, 2, 3, 
-		    GTK_FILL, 0 , 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   toggle = gtk_check_button_new_with_label (_("Map Backwards"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pcvals.backwards);

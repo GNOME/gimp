@@ -61,14 +61,13 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
 /* Declare local data types
  */
-
 
 typedef struct
 {
@@ -79,29 +78,25 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query       (void);
-static void   run         (char    *name,
-			   int      nparams,
+static void   run         (gchar   *name,
+			   gint     nparams,
 			   GParam  *param,
-			   int     *nreturn_vals,
+			   gint    *nreturn_vals,
 			   GParam **return_vals);
-static gint32 load_image  (char   *filename);
-static gint   save_image  (char   *filename,
-			   gint32  image_ID,
-			   gint32  drawable_ID);
+static gint32 load_image  (gchar   *filename);
+static gint   save_image  (gchar   *filename,
+			   gint32   image_ID,
+			   gint32   drawable_ID);
 
-static void   init_gtk    (void);
-static gint   save_dialog (void);
-
-static void   save_ok_callback         (GtkWidget *widget,
-					gpointer   data);
+static void   init_gtk         (void);
 /*
-static void   save_toggle_update       (GtkWidget *widget,
-					gpointer   data);
+static gint   save_dialog      (void);
+static void   save_ok_callback (GtkWidget *widget,
+				gpointer   data);
 */
 
-
 #define hrzscanner_eof(s) ((s)->eof)
-#define hrzscanner_fp(s) ((s)->fp)
+#define hrzscanner_fp(s)  ((s)->fp)
 
 /* Checks for a fatal error */
 #define CHECK_FOR_ERROR(predicate, jmpbuf, errmsg) \
@@ -110,22 +105,24 @@ static void   save_toggle_update       (GtkWidget *widget,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
+/*
 static HRZSaveInterface psint =
 {
-  FALSE     /* run */
+  FALSE     / * run * /
 };
+*/
 
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef load_args[] =
   {
@@ -137,8 +134,9 @@ query ()
   {
     { PARAM_IMAGE, "image", "Output image" },
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
   static GParamDef save_args[] =
   {
@@ -148,7 +146,7 @@ query ()
     { PARAM_STRING, "filename", "The name of the file to save the image in" },
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" }
   };
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   INIT_I18N();
 
@@ -176,30 +174,35 @@ query ()
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_hrz_load", "hrz", "", "0,size,184320");
-  gimp_register_save_handler ("file_hrz_save", "hrz", "");
+  gimp_register_magic_load_handler ("file_hrz_load",
+				    "hrz",
+				    "",
+				    "0,size,184320");
+  gimp_register_save_handler       ("file_hrz_save",
+				    "hrz",
+				    "");
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
-  gint32 image_ID;
-  gint32 drawable_ID;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
+  gint32        drawable_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "file_hrz_load") == 0)
     {
@@ -209,13 +212,12 @@ run (char    *name,
       if (image_ID != -1)
 	{
 	  *nreturn_vals = 2;
-	  values[0].data.d_status = STATUS_SUCCESS;
-	  values[1].type = PARAM_IMAGE;
+	  values[1].type         = PARAM_IMAGE;
 	  values[1].data.d_image = image_ID;
 	}
       else
 	{
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  status = STATUS_EXECUTION_ERROR;
 	}
     }
   else if (strcmp (name, "file_hrz_save") == 0)
@@ -231,10 +233,11 @@ run (char    *name,
 	  INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "HRZ", 
-				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY));
+				      (CAN_HANDLE_RGB |
+				       CAN_HANDLE_GRAY));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      values[0].data.d_status = STATUS_CANCEL;
 	      return;
 	    }
 	  break;
@@ -246,16 +249,18 @@ run (char    *name,
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
-
 	  /*  First acquire information with a dialog  */
+	  /*  Save dialog has no options (yet???)
 	  if (! save_dialog ())
-	    return;
+	    status = STATUS_CANCEL;
+	  */
 	  break;
 
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 4)
 	    status = STATUS_CALLING_ERROR;
+	  break;
 
 	case RUN_WITH_LAST_VALS:
 	  break;
@@ -264,17 +269,23 @@ run (char    *name,
 	  break;
 	}
 
-      *nreturn_vals = 1;
-      if (save_image (param[3].data.d_string, image_ID, drawable_ID))
+      if (status == STATUS_SUCCESS)
 	{
-	  values[0].data.d_status = STATUS_SUCCESS;
+	  if (! save_image (param[3].data.d_string, image_ID, drawable_ID))
+	    {
+	      status = STATUS_EXECUTION_ERROR;
+	    }
 	}
-      else
-	values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
       if (export == EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
+  else
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
 /************ load HRZ image row *********************/
@@ -283,8 +294,8 @@ do_hrz_load (void      *mapped,
 	     GPixelRgn *pixel_rgn)
 {
   guchar *data, *d;
-  int     x, y;
-  int     start, end, scanlines;
+  gint    x, y;
+  gint    start, end, scanlines;
 
   data = g_malloc (gimp_tile_height () * 256 * 3);
 
@@ -296,10 +307,14 @@ do_hrz_load (void      *mapped,
       scanlines = end - start;
       d = data;
 
-      memcpy(d, ((unsigned char *) mapped)+256*3*y, 256*3*scanlines); /* this is gross */
+      memcpy (d, ((guchar *) mapped) + 256 * 3 * y,
+	      256 * 3 * scanlines); /* this is gross */
+
       /* scale 0..63 into 0..255 properly */
-      for (x=0; x<256*3*scanlines; x++)  d[x] = (d[x]>>4) | (d[x]<<2);
-      d += 256*3*y;
+      for (x = 0; x < 256 * 3 * scanlines; x++)
+	d[x] = (d[x]>>4) | (d[x]<<2);
+
+      d += 256 * 3 * y;
 
       gimp_progress_update ((double) y / 240.0);
       gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, y, 256, scanlines);
@@ -311,14 +326,14 @@ do_hrz_load (void      *mapped,
 
 /********************* Load HRZ image **********************/
 static gint32
-load_image (char *filename)
+load_image (gchar *filename)
 {
   GPixelRgn pixel_rgn;
   gint32 image_ID;
   gint32 layer_ID;
   GDrawable *drawable;
-  int filedes;
-  char *temp;
+  gint filedes;
+  gchar *temp;
   void *mapped;  /* memory mapped file data */
   struct stat statbuf;  /* must check file size */
 
@@ -327,7 +342,7 @@ load_image (char *filename)
   g_free (temp);
 
   /* open the file */
-  filedes = open(filename, O_RDONLY | _O_BINARY);
+  filedes = open (filename, O_RDONLY | _O_BINARY);
 
   if (filedes == -1)
     {
@@ -336,24 +351,24 @@ load_image (char *filename)
       return -1;
     }
   /* stat the file to see if it is the right size */
-  fstat(filedes, &statbuf);
-  if(statbuf.st_size != 256*240*3)
+  fstat (filedes, &statbuf);
+  if (statbuf.st_size != 256*240*3)
     {
-      fprintf(stderr, "hrz filter: file is not HRZ type\n");
+      g_message ("hrz: file is not HRZ type");
       return -1;
     }
 #ifdef HAVE_MMAP
   mapped = mmap(NULL, 256*240*3, PROT_READ, MAP_PRIVATE, filedes, 0);
-  if(mapped == (void *)(-1))
+  if (mapped == (void *)(-1))
     {
-      fprintf(stderr, "hrz filter: could not map file\n");
+      g_message ("hrz: could not map file");
       return -1;
     }
 #else
   mapped = g_malloc(256*240*3);
-  if (read(filedes, mapped, 256*240*3) != 256*240*3)
+  if (read (filedes, mapped, 256*240*3) != 256*240*3)
     {
-      fprintf(stderr, "hrz filter: file read error\n");
+      g_message ("hrz: file read error");
       return -1;
     }
 #endif
@@ -369,16 +384,16 @@ load_image (char *filename)
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
   drawable = gimp_drawable_get (layer_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, TRUE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable,
+		       0, 0, drawable->width, drawable->height, TRUE, FALSE);
 
-
-  do_hrz_load(mapped, &pixel_rgn);
+  do_hrz_load (mapped, &pixel_rgn);
 
   /* close the file */
 #ifdef HAVE_MMAP
-  munmap(mapped, 256*240*3);
+  munmap (mapped, 256*240*3);
 #else
-  g_free(mapped);
+  g_free (mapped);
 #endif
 
   /* Tell the GIMP to display the image.
@@ -388,37 +403,37 @@ load_image (char *filename)
   return image_ID;
 }
 
-
 /************** Writes out RGB raw rows ************/
 static void
-saverow (FILE *fp, unsigned char *data)
+saverow (FILE   *fp,
+	 guchar *data)
 {
-  int loop = 256*3;
-  unsigned char *walk = data;
-  while(loop--)
+  gint loop = 256*3;
+  guchar *walk = data;
+  while (loop--)
     {
       *walk = (*walk >> 2);
       walk++;
     }
-  fwrite(data, 1, 256*3, fp);
+  fwrite (data, 1, 256 * 3, fp);
 }
 
 /********************* save image *********************/
 static gint
-save_image (char   *filename,
+save_image (gchar  *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID)
 {
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
   GDrawableType drawable_type;
-  unsigned char *data;
-  unsigned char *d;                       /* FIX */
-  unsigned char *rowbuf;
-  char *temp;
-  int np = 3;
-  int xres, yres;
-  int ypos, yend;
+  guchar *data;
+  guchar *d;          /* FIX */
+  guchar *rowbuf;
+  gchar *temp;
+  gint np = 3;
+  gint xres, yres;
+  gint ypos, yend;
   FILE *fp;
 
   /* initialize */
@@ -427,7 +442,8 @@ save_image (char   *filename,
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable,
+		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
@@ -437,11 +453,11 @@ save_image (char   *filename,
     }
 
   /* open the file */
-  fp = fopen(filename, "wb");
+  fp = fopen (filename, "wb");
   if (fp == NULL)
     {
       /* Ought to pass errno back... */
-      fprintf (stderr, "hrz: can't open \"%s\"\n", filename);
+      g_message ("hrz: can't open \"%s\"\n", filename);
       return FALSE;
     }
 
@@ -450,12 +466,12 @@ save_image (char   *filename,
 
   if ((xres != 256) || (yres != 240))
     {
-      fprintf (stderr, "hrz: Image must be 256x240 for HRZ format.\n");
+      g_message ("hrz: Image must be 256x240 for HRZ format.");
       return FALSE;
     }
   if (drawable_type == INDEXED_IMAGE)
     {
-      fprintf (stderr, "hrz: Image must be RGB for HRZ format.\n");
+      g_message ("hrz: Image must be RGB or GRAY for HRZ format.");
       return FALSE;
     }
 
@@ -463,11 +479,11 @@ save_image (char   *filename,
   gimp_progress_init (temp);
   g_free (temp);
 
-
   /* allocate a buffer for retrieving information from the pixel region  */
-  data = (unsigned char *) g_malloc (gimp_tile_height () * drawable->width * drawable->bpp);
+  data = (guchar *) g_malloc (gimp_tile_height () * drawable->width *
+			      drawable->bpp);
 
-  rowbuf = g_malloc(256*3);
+  rowbuf = g_malloc (256 * 3);
 
   /* Write the body out */
   for (ypos = 0; ypos < yres; ypos++)
@@ -476,22 +492,23 @@ save_image (char   *filename,
 	{
 	  yend = ypos + gimp_tile_height ();
 	  yend = MIN (yend, yres);
-	  gimp_pixel_rgn_get_rect (&pixel_rgn, data, 0, ypos, xres, (yend - ypos));
+	  gimp_pixel_rgn_get_rect (&pixel_rgn, data,
+				   0, ypos, xres, (yend - ypos));
 	  d = data;
 	}
 
-      saverow(fp, d);
-      d += xres*np;
+      saverow (fp, d);
+      d += xres * np;
 
       if (!(ypos & 0x0f))
-	gimp_progress_update( (double)ypos / 240.0 );
+	gimp_progress_update ((double)ypos / 240.0 );
     }
 
   /* close the file */
   fclose (fp);
 
-  g_free(rowbuf);
-  g_free(data);
+  g_free (rowbuf);
+  g_free (data);
 
   gimp_drawable_detach (drawable);
 
@@ -502,17 +519,18 @@ static void
 init_gtk (void)
 {
   gchar **argv;
-  gint argc;
+  gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("hrz");
-  
+
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 }
 
 /*********** Save dialog ************/
+/*
 static gint
 save_dialog (void)
 {
@@ -540,9 +558,6 @@ save_dialog (void)
   return psint.run;
 }
 
-
-/**********  Save interface functions  **********/
-
 static void
 save_ok_callback (GtkWidget *widget,
 		  gpointer   data)
@@ -550,20 +565,5 @@ save_ok_callback (GtkWidget *widget,
   psint.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-/*
-static void
-save_toggle_update (GtkWidget *widget,
-		    gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
 }
 */

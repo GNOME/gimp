@@ -451,7 +451,7 @@ gint p_gimp_rotate(gint32 image_id, gint32 drawable_id, gint32 interpolation, gd
 #endif
 
    l_rc = -1;
-   l_angle_rad = (angle_deg * 3.14159) / 180.0;
+   l_angle_rad = (angle_deg * G_PI) / 180.0;
 
    l_nparams = p_pdb_procedure_available(l_rotate_proc);
    if (l_nparams >= 0)

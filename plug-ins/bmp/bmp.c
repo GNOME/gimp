@@ -46,20 +46,25 @@
  */
 
 #include "config.h"
-#include <string.h>
-#include <libgimp/gimp.h>
-#include <gtk/gtk.h>
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "bmp.h"
-#include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
+FILE  *errorfile;
+gchar *prog_name = "bmp";
+gchar *filename;
+gint   interactive_bmp;
 
-FILE *errorfile;
-char *prog_name="bmp";
-char *filename;
-int interactive_bmp;
 struct Bitmap_File_Head_Struct Bitmap_File_Head;
 struct Bitmap_Head_Struct Bitmap_Head;
 struct Bitmap_OS2_Head_Struct Bitmap_OS2_Head;
@@ -67,26 +72,25 @@ struct Bitmap_OS2_Head_Struct Bitmap_OS2_Head;
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
+static void   run        (gchar   *name,
+                          gint     nparams,
                           GParam  *param,
-                          int     *nreturn_vals,
+                          gint    *nreturn_vals,
                           GParam **return_vals);
 static void   init_gtk   (void);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
-
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef load_args[] =
   {
@@ -98,8 +102,9 @@ query ()
   {
     { PARAM_IMAGE, "image", "Output image" },
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
   static GParamDef save_args[] =
   {
@@ -109,7 +114,7 @@ query ()
     { PARAM_STRING,   "filename",     "The name of the file to save the image in" },
     { PARAM_STRING,   "raw_filename", "The name entered" },
   };
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
   
   INIT_I18N();
 
@@ -137,30 +142,35 @@ query ()
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_bmp_load", "bmp", "", "0,string,BM");
-  gimp_register_save_handler       ("file_bmp_save", "bmp", "");
+  gimp_register_magic_load_handler ("file_bmp_load",
+				    "bmp",
+				    "",
+				    "0,string,BM");
+  gimp_register_save_handler       ("file_bmp_save",
+				    "bmp",
+				    "");
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  GStatusType status = STATUS_SUCCESS;
-  GRunModeType run_mode;
-  gint32 image_ID;
-  gint32 drawable_ID;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
+  gint32        drawable_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
   
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "file_bmp_load") == 0)
     {
@@ -183,19 +193,21 @@ run (char    *name,
           break;
         }
 
-      image_ID = ReadBMP (param[1].data.d_string);
+       if (status == STATUS_SUCCESS)
+	 {
+	   image_ID = ReadBMP (param[1].data.d_string);
 
-      if (image_ID != -1)
-        {
-          *nreturn_vals = 2;
-          values[0].data.d_status = STATUS_SUCCESS;
-          values[1].type = PARAM_IMAGE;
-          values[1].data.d_image = image_ID;
-        }
-      else
-        {
-          values[0].data.d_status = STATUS_EXECUTION_ERROR;
-        }
+	   if (image_ID != -1)
+	     {
+	       *nreturn_vals = 2;
+	       values[1].type         = PARAM_IMAGE;
+	       values[1].data.d_image = image_ID;
+	     }
+	   else
+	     {
+	       status = STATUS_EXECUTION_ERROR;
+	     }
+	 }
     }
   else if (strcmp (name, "file_bmp_save") == 0)
     {
@@ -211,11 +223,12 @@ run (char    *name,
 	case RUN_WITH_LAST_VALS:
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "BMP", 
-				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED));
+				      (CAN_HANDLE_RGB |
+				       CAN_HANDLE_GRAY |
+				       CAN_HANDLE_INDEXED));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      *nreturn_vals = 1;
-	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      values[0].data.d_status = STATUS_CANCEL;
 	      return;
 	    }
 	  break;
@@ -244,17 +257,23 @@ run (char    *name,
           break;
         }
 
-      *nreturn_vals = 1;
-      if (WriteBMP (param[3].data.d_string, image_ID, drawable_ID))
-        {
-	  values[0].data.d_status = STATUS_SUCCESS;
-        }
-      else
-        values[0].data.d_status = STATUS_EXECUTION_ERROR;
+      if (status == STATUS_SUCCESS)
+	{
+	  if (! WriteBMP (param[3].data.d_string, image_ID, drawable_ID))
+	    {
+	      status = STATUS_EXECUTION_ERROR;
+	    }
+	}
 
       if (export == EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
+  else
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
 gint32 
@@ -291,10 +310,10 @@ static void
 init_gtk (void)
 {
   gchar **argv;
-  gint argc;
+  gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("bmp");
   
   gtk_init (&argc, &argv);

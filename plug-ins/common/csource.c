@@ -18,14 +18,22 @@
  * This plugin is heavily based on the header plugin by Spencer Kimball and
  * Peter Mattis.
  */
+
+#include "config.h"
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "config.h"
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+
 #include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
+
+
+#define DEFAULT_COMMENT "Created with The GIMP"
 
 typedef struct
 {
@@ -43,25 +51,39 @@ typedef struct
 
 /* --- prototypes --- */
 static void	query		(void);
-static void	run		(gchar		*name,
-				 gint		 nparams,
-				 GParam		*param,
-				 gint		*nreturn_vals,
-				 GParam	       **return_vals);
+static void	run		(gchar   *name,
+				 gint     nparams,
+				 GParam  *param,
+				 gint    *nreturn_vals,
+				 GParam	**return_vals);
 
-static gint	save_image	(Config		*config,
-				 gint32		 image_ID,
-				 gint32		 drawable_ID);
-static gboolean	run_save_dialog	(Config         *config);
+static gint	save_image	(Config  *config,
+				 gint32   image_ID,
+				 gint32   drawable_ID);
+static void     init_gtk        (void);
+static gboolean	run_save_dialog	(Config  *config);
 
 
 /* --- variables --- */
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,  /* init  */
-  NULL,  /* quit  */
-  query, /* query */
-  run,   /* run   */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
+};
+
+Config config = 
+{
+  NULL,         /* file_name */
+  "gimp_image", /* prefixed_name */
+  NULL,         /* comment */
+  FALSE,        /* use_comment */
+  TRUE,         /* glib_types */
+  FALSE,        /* alpha */
+  FALSE,        /* use_macros */
+  FALSE,        /* use_rle */
+  100.0,        /* opacity */
 };
 
 /* --- implement main (), provided by libgimp --- */
@@ -79,7 +101,7 @@ query (void)
     { PARAM_STRING, "filename", "The name of the file to save the image in" },
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
   };
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   INIT_I18N();
   
@@ -95,7 +117,9 @@ query (void)
                           nsave_args, 0,
                           save_args, NULL);
   
-  gimp_register_save_handler ("file_csource_save", "c", "");
+  gimp_register_save_handler ("file_csource_save",
+			      "c",
+			      "");
 }
 
 static void
@@ -106,36 +130,29 @@ run (gchar   *name,
      GParam **return_vals)
 {
   static GParam values[2];
-  GRunModeType run_mode;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
   GimpExportReturnType export = EXPORT_CANCEL;
   
   run_mode = param[0].data.d_int32;
   
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (run_mode == RUN_INTERACTIVE &&
       strcmp (name, "file_csource_save") == 0)
     {
-      gint32 image_ID = param[1].data.d_int32;
+      gint32 image_ID    = param[1].data.d_int32;
       gint32 drawable_ID = param[2].data.d_int32;
       Parasite *parasite;
       gchar *x;
       GDrawableType drawable_type = gimp_drawable_type (drawable_ID);
-      Config config = 
-      {
-	NULL,			/* file_name */
-	"gimp_image",		/* prefixed_name */
-	NULL,			/* comment */
-	FALSE,			/* use_comment */
-	TRUE,			/* glib_types */
-	FALSE,			/* alpha */
-	FALSE,			/* use_macros */
-	FALSE,			/* use_rle */
-	100.0,			/* opacity */
-      };
+
+      gimp_get_data ("file_csource_save", &config);
+      config.prefixed_name = "gimp_image";
+      config.comment       = NULL;
 
       config.file_name = param[3].data.d_string;
       config.alpha = (drawable_type == RGBA_IMAGE ||
@@ -151,7 +168,20 @@ run (gchar   *name,
 	  parasite_free (parasite);
 	}
       x = config.comment;
-      
+
+      if (!config.comment)
+	config.comment = g_strdup (DEFAULT_COMMENT);     
+
+      init_gtk ();
+      export = gimp_export_image (&image_ID, &drawable_ID, "C Source", 
+				  (CAN_HANDLE_RGB |
+				   CAN_HANDLE_ALPHA));
+      if (export == EXPORT_CANCEL)
+	{
+	  values[0].data.d_status = STATUS_CANCEL;
+	  return;
+	}
+
       if (run_save_dialog (&config))
 	{
 	  if (x != config.comment &&
@@ -170,26 +200,29 @@ run (gchar   *name,
 		}
 	    }
 
-	  *nreturn_vals = 1;
-
-	  export = gimp_export_image (&image_ID, &drawable_ID, "C Source", 
-				      (CAN_HANDLE_RGB | CAN_HANDLE_ALPHA));
-
-	  if (export == EXPORT_CANCEL)
+	  if (! save_image (&config, image_ID, drawable_ID))
 	    {
-	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
-	      return;
+	      status = STATUS_EXECUTION_ERROR;
 	    }
-
-	  if (save_image (&config, image_ID, drawable_ID))
-	    values[0].data.d_status = STATUS_SUCCESS;
 	  else
-	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
-
-	  if (export == EXPORT_EXPORT)
-	    gimp_image_delete (image_ID);
+	    {
+	      gimp_set_data ("file_csource_save", &config, sizeof (config));
+	    }
 	}
+      else
+	{
+	  status = STATUS_CANCEL;
+	}
+
+      if (export == EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
     }
+  else
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
 static gboolean
@@ -204,7 +237,7 @@ diff2_rgba (guint8 *ip)
   return ip[0] != ip[4] || ip[1] != ip[5] || ip[2] != ip[6] || ip[3] != ip[7];
 }
 
-static guint8*
+static guint8 *
 rl_encode_rgbx (guint8 *bp,
 		guint8 *ip,
 		guint8 *limit,
@@ -347,7 +380,7 @@ save_image (Config *config,
 	    gint32  image_ID,
 	    gint32  drawable_ID)
 {
-  GDrawable *drawable = gimp_drawable_get (drawable_ID);
+  GDrawable *drawable         = gimp_drawable_get (drawable_ID);
   GDrawableType drawable_type = gimp_drawable_type (drawable_ID);
   GPixelRgn pixel_rgn;
   gchar *s_uint_8, *s_uint_32, *s_uint, *s_char, *s_null;
@@ -355,12 +388,13 @@ save_image (Config *config,
   guint c;
   gchar *macro_name;
   guint8 *img_buffer, *img_buffer_end;
-  
+
   fp = fopen (config->file_name, "w");
   if (!fp)
     return FALSE;
-  
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
+
+  gimp_pixel_rgn_init (&pixel_rgn, drawable,
+		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
   if (1)
     {
@@ -404,7 +438,8 @@ save_image (Config *config,
       img_buffer = data + pad;
       if (config->use_rle)
 	{
-	  img_buffer_end = rl_encode_rgbx (data, img_buffer, img_buffer + n_bytes, bpp);
+	  img_buffer_end = rl_encode_rgbx (data, img_buffer,
+					   img_buffer + n_bytes, bpp);
 	  img_buffer = data;
 	}
       else
@@ -587,29 +622,26 @@ save_image (Config *config,
   return TRUE;
 }
 
+static GtkWidget *prefixed_name;
+static GtkWidget *centry;
+static gboolean   do_save = FALSE;
+
 static void
-cb_set_true (gboolean *bool_p)
+save_dialog_ok_callback (GtkWidget *widget,
+			 gpointer   data)
 {
-  *bool_p = TRUE;
+  do_save = TRUE;
+
+  config.prefixed_name =
+    g_strdup (gtk_entry_get_text (GTK_ENTRY (prefixed_name)));
+  config.comment = g_strdup (gtk_entry_get_text (GTK_ENTRY (centry)));
+
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-static gboolean
-run_save_dialog	(Config *config)
+static void
+init_gtk (void)
 {
-  GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *button;
-  GtkWidget *prefixed_name;
-  GtkWidget *centry;
-  GtkWidget *alpha;
-  GtkWidget *use_macros;
-  GtkWidget *use_rle;
-  GtkWidget *gtype;
-  GtkWidget *use_comment;
-  GtkWidget *any;
-  GtkObject *opacity;
-  gboolean do_save = FALSE;
   gchar **argv;
   gint    argc;
 
@@ -619,14 +651,24 @@ run_save_dialog	(Config *config)
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
+}
+
+static gboolean
+run_save_dialog	(Config *config)
+{
+  GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *table;
+  GtkWidget *toggle;
+  GtkObject *adj;
   
-  dialog = gimp_dialog_new ( _("Save as C-Source"), "csource",
+  dialog = gimp_dialog_new (_("Save as C-Source"), "csource",
 			    gimp_plugin_help_func, "filters/csource.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    _("OK"), cb_set_true,
-			    NULL, &do_save, &button, TRUE, FALSE,
+			    _("OK"), save_dialog_ok_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
 			    _("Cancel"), gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
@@ -636,172 +678,111 @@ run_save_dialog	(Config *config)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			     GTK_OBJECT (dialog));
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
   gtk_widget_show (vbox);
 
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
   /* Prefixed Name
    */
-  hbox = gtk_widget_new (GTK_TYPE_HBOX,
-			 "visible", TRUE,
-			 "parent", vbox,
-			 NULL);
-  gtk_widget_new (GTK_TYPE_LABEL,
-		  "label", _("Prefixed Name: "),
-		  "xalign", 0.0,
-		  "visible", TRUE,
-		  "parent", hbox,
-		  NULL);
-  prefixed_name = gtk_widget_new (GTK_TYPE_ENTRY,
-				  "visible", TRUE,
-				  "parent", hbox,
-				  NULL);
+  prefixed_name = gtk_entry_new ();
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Prefixed Name:"), 1.0, 0.5,
+			     prefixed_name, FALSE);
   gtk_entry_set_text (GTK_ENTRY (prefixed_name),
 		      config->prefixed_name ? config->prefixed_name : "");
-  gtk_widget_ref (prefixed_name);
   
   /* Comment Entry
    */
-  hbox = gtk_widget_new (GTK_TYPE_HBOX,
-			 "visible", TRUE,
-			 "parent", vbox,
-			 NULL);
-  gtk_widget_new (GTK_TYPE_LABEL,
-		  "label", _("Comment: "),
-		  "xalign", 0.0,
-		  "visible", TRUE,
-		  "parent", hbox,
-		  NULL);
-  centry = gtk_widget_new (GTK_TYPE_ENTRY,
-			   "visible", TRUE,
-			   "parent", hbox,
-			   NULL);
+  centry = gtk_entry_new ();
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("Comment:"), 1.0, 0.5,
+			     centry, FALSE);
   gtk_entry_set_text (GTK_ENTRY (centry),
 		      config->comment ? config->comment : "");
-  gtk_widget_ref (centry);
 
   /* Use Comment
    */
-  hbox = gtk_widget_new (GTK_TYPE_HBOX,
-			 "visible", TRUE,
-			 "parent", vbox,
-			 NULL);
-  use_comment = gtk_widget_new (GTK_TYPE_CHECK_BUTTON,
-				"label", _("Save comment to file?"),
-				"visible", TRUE,
-				"parent", hbox,
-				NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (use_comment), config->use_comment);
-  gtk_widget_ref (use_comment);
+  toggle = gtk_check_button_new_with_label (_("Save Comment to File"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				config->use_comment);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &config->use_comment);
+  gtk_widget_show (toggle);
 
   /* GLib types
    */
-  hbox = gtk_widget_new (GTK_TYPE_HBOX,
-			 "visible", TRUE,
-			 "parent", vbox,
-			 NULL);
-  gtype = gtk_widget_new (GTK_TYPE_CHECK_BUTTON,
-			  "label", _("Use GLib types (guint8*)"),
-			  "visible", TRUE,
-			  "parent", hbox,
-			  NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gtype), config->glib_types);
-  gtk_widget_ref (gtype);
+  toggle = gtk_check_button_new_with_label (_("Use GLib Types (guint8*)"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				config->glib_types);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &config->glib_types);
+  gtk_widget_show (toggle);
 
   /* Use Macros
    */
-  hbox = gtk_widget_new (GTK_TYPE_HBOX,
-			 "visible", TRUE,
-			 "parent", vbox,
-			 NULL);
-  use_macros = gtk_widget_new (GTK_TYPE_CHECK_BUTTON,
-			       "label", _("Use macros instead of struct"),
-			       "visible", TRUE,
-			       "parent", hbox,
-			       NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (use_macros), config->use_macros);
-  gtk_widget_ref (use_macros);
+  toggle = gtk_check_button_new_with_label (_("Use Macros instead of Struct"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				config->use_macros);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &config->use_macros);
+  gtk_widget_show (toggle);
 
   /* Use RLE
    */
-  hbox = gtk_widget_new (GTK_TYPE_HBOX,
-			 "visible", TRUE,
-			 "parent", vbox,
-			 NULL);
-  use_rle = gtk_widget_new (GTK_TYPE_CHECK_BUTTON,
-			    "label", _("Use 1 Byte Run-Length-Encoding"),
-			    "visible", TRUE,
-			    "parent", hbox,
-			    NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (use_rle), config->use_rle);
-  gtk_widget_ref (use_rle);
+  toggle = gtk_check_button_new_with_label (_("Use 1 Byte Run-Length-Encoding"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				config->use_rle);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &config->use_rle);
+  gtk_widget_show (toggle);
 
   /* Alpha
    */
-  hbox = gtk_widget_new (GTK_TYPE_HBOX,
-			 "visible", TRUE,
-			 "parent", vbox,
-			 NULL);
-  alpha = gtk_widget_new (GTK_TYPE_CHECK_BUTTON,
-			  "label", _("Save Alpha channel (RGBA/RGB)"),
-			  "visible", TRUE,
-			  "parent", hbox,
-			  NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (alpha), config->alpha);
-  gtk_widget_ref (alpha);
-  
+  toggle = gtk_check_button_new_with_label (_("Save Alpha Channel (RGBA/RGB)"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				config->alpha);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &config->alpha);
+  gtk_widget_show (toggle);
+
   /* Max Alpha Value
    */
-  hbox = gtk_widget_new (GTK_TYPE_HBOX,
-			 "visible", TRUE,
-			 "parent", vbox,
-			 NULL);
-  gtk_widget_new (GTK_TYPE_LABEL,
-		  "label", _("Opacity: "),
-		  "xalign", 0.0,
-		  "visible", TRUE,
-		  "parent", hbox,
-		  NULL);
-  opacity = gtk_adjustment_new (config->opacity,
-				0,
-				100,
-				0.1,
-				5.0,
-				0);
-  any = gtk_spin_button_new (GTK_ADJUSTMENT (opacity), 0, 1);
-  gtk_widget_set (any,
-		  "visible", TRUE,
-		  "parent", hbox,
-		  NULL);
-  gtk_object_ref (opacity);
-  
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Opacity:"), 100, 0,
+			      config->opacity, 0, 100, 1, 10, 1,
+			      FALSE, FALSE);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &config->opacity);
+
   gtk_widget_show (dialog);
   
   gtk_main ();
+  gdk_flush ();
   
-  config->prefixed_name = g_strdup (gtk_entry_get_text (GTK_ENTRY (prefixed_name)));
-  config->use_macros = GTK_TOGGLE_BUTTON (use_macros)->active;
-  config->use_rle = GTK_TOGGLE_BUTTON (use_rle)->active;
-  config->alpha = GTK_TOGGLE_BUTTON (alpha)->active;
-  config->glib_types = GTK_TOGGLE_BUTTON (gtype)->active;
-  config->comment = g_strdup (gtk_entry_get_text (GTK_ENTRY (centry)));
-  config->use_comment = GTK_TOGGLE_BUTTON (use_comment)->active;
-  config->opacity = GTK_ADJUSTMENT (opacity)->value;
-  
-  gtk_widget_unref (gtype);
-  gtk_widget_unref (centry);
-  gtk_widget_unref (alpha);
-  gtk_widget_unref (use_macros);
-  gtk_widget_unref (use_rle);
-  gtk_widget_unref (use_comment);
-  gtk_widget_unref (prefixed_name);
-  gtk_object_unref (opacity);
-
   if (!config->prefixed_name || !config->prefixed_name[0])
     config->prefixed_name = "tmp";
   if (config->comment && !config->comment[0])

@@ -22,14 +22,17 @@
  * Version: 1.0.0
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "config.h"
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -527,7 +530,7 @@ render_wind_row (guchar *sb,
 	    }
 
 	  bleed_variation = 1
-	    + (gint) (bleed_length_max * rand() / (RAND_MAX + 1.0));
+	    + (gint) (bleed_length_max * rand() / (G_MAXRAND + 1.0));
 
 	  lbi = sbi + bleed_variation * bytes;
 	  if (lbi > lpi)
@@ -770,52 +773,15 @@ dialog_box (void)
   /* init tooltips */
   gimp_help_init ();
 
-  main_vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), main_vbox);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_widget_show (main_vbox);
-
-  /****************************************************
-   frame for sliders
-   ****************************************************/
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX(main_vbox), frame, FALSE, FALSE, 0);
-
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER(table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
- 
-  /*****************************************************
-    slider and entry for threshold
-    ***************************************************/
-
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Threshold:"), SCALE_WIDTH, 0,
-			      config.threshold,
-			      MIN_THRESHOLD, MAX_THRESHOLD, 1.0, 10, 0,
-			      _("Higher values restrict the effect to fewer areas of the image"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &config.threshold);
-
-  /*****************************************************
-    slider and entry for strength of wind
-    ****************************************************/
-
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Strength:"), SCALE_WIDTH, 0,
-			      config.strength,
-			      MIN_STRENGTH, MAX_STRENGTH, 1.0, 10.0, 0,
-			      _("Higher values increase the magnitude of the effect"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &config.strength);
-
-  gtk_widget_show (table);
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), frame);
   gtk_widget_show (frame);
+
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_add (GTK_CONTAINER (frame), main_vbox);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
+  gtk_widget_show (main_vbox);
 
   /*****************************************************
     outer frame and table
@@ -878,6 +844,43 @@ dialog_box (void)
   gtk_widget_show (frame);
 
   gtk_widget_show (table);
+
+  /****************************************************
+   table for sliders
+   ****************************************************/
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+ 
+  /*****************************************************
+    slider and entry for threshold
+    ***************************************************/
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Threshold:"), SCALE_WIDTH, 0,
+			      config.threshold,
+			      MIN_THRESHOLD, MAX_THRESHOLD, 1.0, 10, 0,
+			      _("Higher values restrict the effect to fewer areas of the image"), NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &config.threshold);
+
+  /*****************************************************
+    slider and entry for strength of wind
+    ****************************************************/
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Strength:"), SCALE_WIDTH, 0,
+			      config.strength,
+			      MIN_STRENGTH, MAX_STRENGTH, 1.0, 10.0, 0,
+			      _("Higher values increase the magnitude of the effect"), NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &config.strength);
+
+  gtk_widget_show (table);
+
   gtk_widget_show (dlg);
 
   gtk_main ();

@@ -30,7 +30,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -766,10 +765,10 @@ sparkle (GDrawable *drawable,
 		  {
 		    /* major spikes */
 		    if (svals.spike_angle == -1)
-		   	spike_angle = 360.0 * rand () / RAND_MAX;
+		   	spike_angle = 360.0 * rand () / G_MAXRAND;
 		    else
 			spike_angle = svals.spike_angle;
-		    if (rand() <= RAND_MAX * svals.density)
+		    if (rand() <= G_MAXRAND * svals.density)
 		      {
 			fspike (&src_rgn, &dest_rgn, gray, x1, y1, x2, y2,
 			    x + src_rgn.x, y + src_rgn.y,
@@ -948,21 +947,22 @@ fspike (GPixelRgn *src_rgn,
         }
       if (svals.random_hue > 0.0 || svals.random_saturation > 0.0)
         {
-	       r = 255 - color[0];
-	       g = 255 - color[1];
-	       b = 255 - color[2];             
-	       gimp_rgb_to_hsv(&r, &g, &b);  
-	       r+= (svals.random_hue * ((gdouble) rand() / (gdouble) RAND_MAX - 0.5))*255;
-	       if (r >= 255)
-		 r -= 255;
-	       else if (r < 0) 
-		 r += 255;
-	       b+= (svals.random_saturation * (2.0 * (gdouble) rand() /
-(gdouble) RAND_MAX - 1.0))*255;                if (b > 255) b = 255;
-	       gimp_hsv_to_rgb(&r, &g, &b);
-	       color[0] = 255 - r;
-	       color[1] = 255 - g;
-	       color[2] = 255 - b;
+	  r = 255 - color[0];
+	  g = 255 - color[1];
+	  b = 255 - color[2];             
+	  gimp_rgb_to_hsv (&r, &g, &b);  
+	  r+= (svals.random_hue * ((gdouble) rand() / (gdouble) RAND_MAX - 0.5))*255;
+	  if (r >= 255)
+	    r -= 255;
+	  else if (r < 0) 
+	    r += 255;
+	  b+= (svals.random_saturation * (2.0 * (gdouble) rand() /
+					  (gdouble) RAND_MAX - 1.0))*255;
+	  if (b > 255) b = 255;
+	  gimp_hsv_to_rgb (&r, &g, &b);
+	  color[0] = 255 - r;
+	  color[1] = 255 - g;
+	  color[2] = 255 - b;
 	}
 
       dx = 0.2 * cos (theta * G_PI / 180.0);

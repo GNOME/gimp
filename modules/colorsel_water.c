@@ -22,16 +22,16 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
+
 #include <gtk/gtk.h>
+
 #include <libgimp/color_selector.h>
 #include <libgimp/gimpmodule.h>
-#include <libgimp/gimpintl.h>
+#include <libgimp/gimpmath.h>
+
 #include "modregister.h"
 
-#ifndef M_PI
-#define M_PI  3.14159265358979323846
-#endif /* M_PI */
+#include <libgimp/gimpintl.h>
 
 /* prototypes */
 static GtkWidget * colorsel_water_new         (int, int, int,
@@ -164,8 +164,8 @@ calc (gdouble x, gdouble y, gdouble angle)
 {
   gdouble s, c;
 
-  s = 1.6 * sin (angle * M_PI / 180) * 256.0 / IMAGE_SIZE;
-  c = 1.6 * cos (angle * M_PI / 180) * 256.0 / IMAGE_SIZE;
+  s = 1.6 * sin (angle * G_PI / 180) * 256.0 / IMAGE_SIZE;
+  c = 1.6 * cos (angle * G_PI / 180) * 256.0 / IMAGE_SIZE;
   return 128 + (x - (IMAGE_SIZE >> 1)) * c - (y - (IMAGE_SIZE >> 1)) * s;
 }
 

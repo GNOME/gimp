@@ -49,8 +49,8 @@
  * version 1.00.00; 1998/10/29  hof: 1.st (pre) release
  */
 
+#include "config.h"
 
-/* System UNIX includes */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -59,11 +59,10 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-/* GIMP includes */
-#include "config.h"
+#include <gtk/gtk.h>
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
 
 /* XJT includes */
@@ -76,12 +75,12 @@
 #define MAX_LINE_LEN  10000
 
 
-int xjt_debug = FALSE;
-pid_t   g_pid;
-char   *global_parasite_prop_lines = NULL;
-gint    global_parasite_id = 0;
-char **global_all_parasite_names = NULL;
-gint32 global_num_parasites = 0;
+static gint     xjt_debug = FALSE;
+static pid_t    g_pid;
+static gchar   *global_parasite_prop_lines = NULL;
+static gint     global_parasite_id = 0;
+static gchar  **global_all_parasite_names = NULL;
+static gint32   global_num_parasites = 0;
 
 typedef struct
 {
@@ -198,7 +197,8 @@ typedef struct
   char    *string_val;
 }  t_param_prop;
 
-typedef struct {
+typedef struct
+{
   t_parasitetype  parasite_type;   
   gint32          parasite_id;
   gint32          flags;
@@ -259,20 +259,21 @@ typedef struct
 }  t_guide_props;
 
 
-typedef struct {
-  char   *version;
-  GImageType image_type;
-  gint   image_width;
-  gint   image_height;
-  float  xresolution;
-  float  yresolution;
-  gint32   tattoo;
-  gint   n_layers;
-  gint   n_channels;
-  t_layer_props   *layer_props;
-  t_channel_props *channel_props;
-  t_channel_props *mask_props;
-  t_guide_props   *guide_props;
+typedef struct
+{
+  gchar            *version;
+  GImageType        image_type;
+  gint              image_width;
+  gint              image_height;
+  gfloat            xresolution;
+  gfloat            yresolution;
+  gint32            tattoo;
+  gint              n_layers;
+  gint              n_channels;
+  t_layer_props    *layer_props;
+  t_channel_props  *channel_props;
+  t_channel_props  *mask_props;
+  t_guide_props    *guide_props;
   t_parasite_props *parasite_props;
 } t_image_props;
 
@@ -316,36 +317,27 @@ t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {
 /* Declare local functions.
  */
 static void   query      (void);
-static void   run        (char    *name,
-			  int      nparams,
+static void   run        (gchar   *name,
+			  gint     nparams,
 			  GParam  *param,
-			  int     *nreturn_vals,
+			  gint    *nreturn_vals,
 			  GParam **return_vals);
-static gint32 load_xjt_image (char   *filename);
-static gint   save_xjt_image (char   *filename,
-			  gint32  image_ID,
-			  gint32  drawable_ID);
 
-static gint   save_dialog ();
+static gint32 load_xjt_image (gchar  *filename);
+static gint   save_xjt_image (gchar  *filename,
+			      gint32  image_ID,
+			      gint32  drawable_ID);
 
-static void   save_close_callback  (GtkWidget *widget,
-				    gpointer   data);
-static void   save_ok_callback     (GtkWidget *widget,
-				    gpointer   data);
-static void   save_scale_update    (GtkAdjustment *adjustment,
-				    double        *scale_val);
-static void   save_optimize_update (GtkWidget *widget,
-				    gpointer   data);
-static void   save_clr_transparent_update (GtkWidget *widget,
-				    gpointer   data);
-
+static gint   save_dialog      (void);
+static void   save_ok_callback (GtkWidget *widget,
+				gpointer   data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static t_JpegSaveVals jsvals =
@@ -389,7 +381,7 @@ int p_system(char *cmd)
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef load_args[] =
   {
@@ -401,8 +393,9 @@ query ()
   {
     { PARAM_IMAGE, "image", "Output image" },
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
   static GParamDef save_args[] =
   {
@@ -416,7 +409,7 @@ query ()
     { PARAM_INT32, "optimize", "Optimization of entropy encoding parameters" },
     { PARAM_INT32, "clr_transparent", "set all full-transparent pixels to 0" },
   };
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   INIT_I18N ();
 
@@ -444,67 +437,70 @@ query ()
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_xjt_load", "xjt,xjtgz,xjtbz2", "", "");
-  gimp_register_save_handler ("file_xjt_save", "xjt,xjtgz,xjtbz2", "");
+  gimp_register_magic_load_handler ("file_xjt_load",
+				    "xjt,xjtgz,xjtbz2",
+				    "",
+				    "");
+  gimp_register_save_handler       ("file_xjt_save",
+				    "xjt,xjtgz,xjtbz2",
+				    "");
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
-  gint32 image_ID;
-  char       *l_env;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
+  gchar        *l_env;
 
-  g_pid = getpid();
+  g_pid = getpid ();
   xjt_debug = FALSE;
   
   l_env = getenv("XJT_DEBUG");
   if(l_env != NULL)
-  {
-    if((*l_env != 'n') && (*l_env != 'N')) xjt_debug = TRUE;
-  }
+    {
+      if((*l_env != 'n') && (*l_env != 'N')) xjt_debug = TRUE;
+    }
   
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (run_mode == RUN_NONINTERACTIVE)
-  {
-    INIT_I18N();
-  }
+    {
+      INIT_I18N();
+    }
   else
-  {
-    INIT_I18N_UI();
-  }
-
+    {
+      INIT_I18N_UI();
+    }
 
   if (strcmp (name, "file_xjt_load") == 0)
-  {
+    {
       image_ID = load_xjt_image (param[1].data.d_string);
 
       if (image_ID != -1)
-      {
+	{
 	  *nreturn_vals = 2;
-	  values[0].data.d_status = STATUS_SUCCESS;
-	  values[1].type = PARAM_IMAGE;
+	  values[1].type         = PARAM_IMAGE;
 	  values[1].data.d_image = image_ID;
-      }
+	}
       else
-      {
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
-      }
-  }
+	{
+	  status = STATUS_EXECUTION_ERROR;
+	}
+    }
   else if (strcmp (name, "file_xjt_save") == 0)
-  {
+    {
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
@@ -513,32 +509,34 @@ run (char    *name,
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
-	  {
-	    return;
-	  }
+	    {
+	      status = STATUS_CANCEL;
+	    }
 	  break;
 
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 8)
-	    status = STATUS_CALLING_ERROR;
-	  if (status == STATUS_SUCCESS)
-	  {
-	      jsvals.quality = param[5].data.d_float;
-	      jsvals.smoothing = param[6].data.d_float;
-	      jsvals.optimize = param[7].data.d_int32;
+	    {
+	      status = STATUS_CALLING_ERROR;
+	    }
+	  else
+	    {
+	      jsvals.quality         = param[5].data.d_float;
+	      jsvals.smoothing       = param[6].data.d_float;
+	      jsvals.optimize        = param[7].data.d_int32;
 	      jsvals.clr_transparent = param[8].data.d_int32;
-	  }
-	  if (status == STATUS_SUCCESS
-	  &&    (jsvals.quality < 0.0 || jsvals.quality > 1.0))
-	  {
-	    status = STATUS_CALLING_ERROR;
-	  }
-	  if (status == STATUS_SUCCESS
-	  && (jsvals.smoothing < 0.0 || jsvals.smoothing > 1.0))
-	  {
-	    status = STATUS_CALLING_ERROR;
-	  }
+
+	      if (jsvals.quality < 0.0 || jsvals.quality > 1.0)
+		{
+		  status = STATUS_CALLING_ERROR;
+		}
+	      else if (jsvals.smoothing < 0.0 || jsvals.smoothing > 1.0)
+		{
+		  status = STATUS_CALLING_ERROR;
+		}
+	    }
+	  break;
 
 	case RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
@@ -549,20 +547,28 @@ run (char    *name,
 	  break;
 	}
 
-      *nreturn_vals = 1;
-      if (save_xjt_image (param[3].data.d_string, param[1].data.d_int32, param[2].data.d_int32) <0)
-      {
-         values[0].data.d_status = STATUS_EXECUTION_ERROR;
-      }
-      else
-      {
-         /*  Store mvals data  */
-	 gimp_set_data ("file_xjt_save", &jsvals, sizeof (t_JpegSaveVals));
+      if (status == STATUS_SUCCESS)
+	{
+	  if (save_xjt_image (param[3].data.d_string,
+			      param[1].data.d_int32,
+			      param[2].data.d_int32) <0)
+	    {
+	      status = STATUS_EXECUTION_ERROR;
+	    }
+	  else
+	    {
+	      /*  Store mvals data  */
+	      gimp_set_data ("file_xjt_save", &jsvals, sizeof (t_JpegSaveVals));
+	    }
+	}
+    }
+  else
+    {
+      status = STATUS_CALLING_ERROR;
+    }
 
-	 values[0].data.d_status = STATUS_SUCCESS;
-      }
-  }
-}	/* end run */
+  values[0].data.d_status = status;
+}
 
 /* -- type transformer routines XJT -- GIMP internal enums ----------------- */
 
@@ -618,116 +624,89 @@ p_to_XJTLayerModeEffects(GimpLayerModeEffects intype)
 /* ---------------------- SAVE DIALOG procedures  -------------------------- */
 
 static gint
-save_dialog ()
+save_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *label;
-  GtkWidget *hbbox;
-  GtkWidget *button;
-  GtkWidget *scale;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *toggle;
   GtkObject *scale_data;
   gchar **argv;
-  gint argc;
+  gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("xjt save");
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("xjt");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Save xjt"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("Save as XJT"), "xjt",
+			 gimp_plugin_help_func, "filters/xjt.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), save_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) save_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) save_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+
+  table = gtk_table_new (4, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new (_("Quality"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
-  scale_data = gtk_adjustment_new (jsvals.quality, 0.0, 1.0, 0.01, 0.01, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  toggle = gtk_check_button_new_with_label (_("Optimize"));
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1,
+		    GTK_FILL, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &jsvals.optimize);
+  gtk_widget_show (toggle);
+
+  toggle = gtk_check_button_new_with_label (_("Clear Transparent"));
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+			       jsvals.clr_transparent);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 1, 2,
+		    GTK_FILL, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &jsvals.clr_transparent);
+  gtk_widget_show (toggle);
+
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+				     _("Quality:"), SCALE_WIDTH, 0,
+				     jsvals.quality, 0.0, 1.0, 0.01, 0.11, 2,
+				     NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) save_scale_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &jsvals.quality);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
 
-  label = gtk_label_new (_("Smoothing"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
-  scale_data = gtk_adjustment_new (jsvals.smoothing, 0.0, 1.0, 0.01, 0.01, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+				     _("Smoothing:"), SCALE_WIDTH, 0,
+				     jsvals.smoothing, 0.0, 1.0, 0.01, 0.1, 2,
+				     NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) save_scale_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &jsvals.smoothing);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-
-  toggle = gtk_check_button_new_with_label(_("Optimize"));
-  gtk_table_attach(GTK_TABLE(table), toggle, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-                     (GtkSignalFunc)save_optimize_update, NULL);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), jsvals.optimize);
-  gtk_widget_show(toggle);
-
-  toggle = gtk_check_button_new_with_label(_("Clear_Transparent"));
-  gtk_table_attach(GTK_TABLE(table), toggle, 1, 2, 2, 3, GTK_FILL, 0, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-                     (GtkSignalFunc)save_clr_transparent_update, NULL);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), jsvals.clr_transparent);
-  gtk_widget_show(toggle);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
+
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -736,45 +715,14 @@ save_dialog ()
   return jsint.run;
 }
 
-
-/*  Save interface functions  */
-
-static void
-save_close_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  gtk_main_quit ();
-}
-
 static void
 save_ok_callback (GtkWidget *widget,
 		  gpointer   data)
 {
   jsint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
-
-static void
-save_scale_update (GtkAdjustment *adjustment,
-		   double        *scale_val)
-{
-  *scale_val = adjustment->value;
-}
-
-static void
-save_optimize_update(GtkWidget *widget,
-		     gpointer  data)
-{
-  jsvals.optimize = GTK_TOGGLE_BUTTON(widget)->active;
-}
-
-static void
-save_clr_transparent_update(GtkWidget *widget,
-		     gpointer  data)
-{
-  jsvals.clr_transparent = GTK_TOGGLE_BUTTON(widget)->active;
-}
-
 
 /* ---------------------- SAVE WORKER procedures  -------------------------- */
 

@@ -19,90 +19,89 @@
 /*
  * This filter tiles an image to arbitrary width and height
  */
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "config.h"
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
-#define ENTRY_WIDTH     60
-#define ENTRY_HEIGHT    25
-
-typedef struct {
+typedef struct
+{
   gint new_width;
   gint new_height;
   gint constrain;
   gint new_image;
 } TileVals;
 
-typedef struct {
-  GtkWidget *width_entry;
-  GtkWidget *height_entry;
-  gint orig_width;
-  gint orig_height;
-  gint new_image;
-  gint run;
+typedef struct
+{
+  GtkObject *width_adj;
+  GtkObject *height_adj;
+  gint       orig_width;
+  gint       orig_height;
+  gint       run;
 } TileInterface;
 
 /* Declare a local function.
  */
 static void      query  (void);
-static void      run    (char      *name,
-			 int        nparams,
+static void      run    (gchar     *name,
+			 gint       nparams,
 			 GParam    *param,
-			 int       *nreturn_vals,
+			 gint      *nreturn_vals,
 			 GParam   **return_vals);
+
 static gint32    tile   (gint32     image_id,
 			 gint32     drawable_id,
 			 gint32    *layer_id);
 
-static gint      tile_dialog          (gint       width,
-				       gint       height);
+static gint      tile_dialog               (gint          width,
+					    gint          height);
 
-static void      tile_ok_callback     (GtkWidget *widget,
-				       gpointer   data);
-static void      tile_toggle_update   (GtkWidget *widget,
-				       gpointer   data);
-static void      tile_entry_update    (GtkWidget *widget,
-				       gpointer   data);
-
+static void      tile_ok_callback         (GtkWidget     *widget,
+					   gpointer       data);
+static void      tile_chain_button_update (GtkWidget     *widget,
+					   gpointer       data);
+static void      tile_adjustment_update   (GtkAdjustment *adjustment,
+					   gpointer       data);
 
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static TileVals tvals =
 {
-  1,        /*  new_width  */
-  1,        /*  new_height  */
-  TRUE,     /*  constrain  */
-  TRUE      /*  new_image  */
+  1,     /* new_width  */
+  1,     /* new_height */
+  TRUE,  /* constrain  */
+  TRUE   /* new_image  */
 };
 
 static TileInterface tint =
 {
-  NULL,     /*  width_entry  */
-  NULL,     /*  height_entry  */
-  0,        /*  orig_width  */
-  0,        /*  orig_height  */
-  TRUE,     /*  new_image  */
-  FALSE     /*  run  */
+  NULL,  /* width_adj    */
+  NULL,  /* height_adj   */
+  0,     /* orig_width   */
+  0,     /* orig_height  */
+  FALSE  /* run          */
 };
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -118,8 +117,8 @@ query ()
     { PARAM_IMAGE, "new_image", "Output image (N/A if new_image == FALSE)" },
     { PARAM_LAYER, "new_layer", "Output layer (N/A if new_image == FALSE)" },
   };
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
+  static gint nargs = sizeof (args) / sizeof (args[0]);
+  static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
   INIT_I18N();
 
@@ -137,17 +136,17 @@ query ()
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[3];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
-  gint32 new_layer;
-  gint width, height;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        new_layer;
+  gint          width, height;
 
   run_mode = param[0].data.d_int32;
 
@@ -225,9 +224,9 @@ run (char    *name,
 }
 
 static gint32
-tile (gint32     image_id,
-      gint32     drawable_id,
-      gint32    *layer_id)
+tile (gint32  image_id,
+      gint32  drawable_id,
+      gint32 *layer_id)
 {
   GPixelRgn src_rgn, dest_rgn;
   GDrawable *drawable, *new_layer;
@@ -264,7 +263,8 @@ tile (gint32     image_id,
 	  break;
 	}
 
-      new_image_id = gimp_image_new (tvals.new_width, tvals.new_height, image_type);
+      new_image_id = gimp_image_new (tvals.new_width, tvals.new_height,
+				     image_type);
       *layer_id = gimp_layer_new (new_image_id, _("Background"),
 				  tvals.new_width, tvals.new_height,
 				  gimp_drawable_type (drawable_id),
@@ -277,9 +277,7 @@ tile (gint32     image_id,
     }
   else
     {
-      gimp_run_procedure ("gimp_undo_push_group_start", &nreturn_vals,
-			  PARAM_IMAGE, image_id,
-			  PARAM_END);
+      gimp_undo_push_group_start (image_id);
 
       gimp_run_procedure ("gimp_image_resize", &nreturn_vals,
 			  PARAM_IMAGE, image_id,
@@ -368,11 +366,11 @@ static gint
 tile_dialog (gint width, gint height)
 {
   GtkWidget *dlg;
-  GtkWidget *label;
-  GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *table;
-  gchar   buffer[12];
+  GtkWidget *spinbutton;
+  GtkWidget *chain;
+  GtkWidget *toggle;
   gchar **argv;
   gint    argc;
 
@@ -383,9 +381,9 @@ tile_dialog (gint width, gint height)
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  tint.orig_width = width;
+  tint.orig_width  = width;
   tint.orig_height = height;
-  tvals.new_width = width;
+  tvals.new_width  = width;
   tvals.new_height = height;
 
   dlg = gimp_dialog_new ( _("Tile"), "tile",
@@ -405,65 +403,49 @@ tile_dialog (gint width, gint height)
 		      NULL);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ( _("Tile to New Size"));
+  frame = gtk_frame_new (_("Tile to New Size"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new (4, 2, FALSE);
+  table = gtk_table_new (3, 3, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
 
-  label = gtk_label_new ( _("Width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  tint.width_entry = gtk_entry_new ();
-  gtk_widget_set_usize (tint.width_entry, ENTRY_WIDTH, ENTRY_HEIGHT);
-  g_snprintf (buffer, sizeof (buffer), "%d", width);
-  gtk_entry_set_text (GTK_ENTRY (tint.width_entry), buffer);
-  gtk_table_attach (GTK_TABLE (table), tint.width_entry,
-		    1, 2, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (tint.width_entry), "changed",
-		      (GtkSignalFunc) tile_entry_update,
+  spinbutton = gimp_spin_button_new (&tint.width_adj, width,
+				     1, width, 1, 10, 0, 1, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Width:"), 1.0, 0.5,
+			     spinbutton, FALSE);
+  gtk_signal_connect (GTK_OBJECT (tint.width_adj), "value_changed",
+		      GTK_SIGNAL_FUNC (tile_adjustment_update),
 		      &tvals.new_width);
-  gtk_widget_show (tint.width_entry);
 
-  label = gtk_label_new ( _("Height:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  tint.height_entry = gtk_entry_new ();
-  gtk_widget_set_usize (tint.height_entry, ENTRY_WIDTH, ENTRY_HEIGHT);
-  g_snprintf (buffer, sizeof (buffer), "%d", height);
-  gtk_entry_set_text (GTK_ENTRY (tint.height_entry), buffer);
-  gtk_table_attach (GTK_TABLE (table), tint.height_entry,
-		    1, 2, 1, 2, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (tint.height_entry), "changed",
-		      (GtkSignalFunc) tile_entry_update,
+  spinbutton = gimp_spin_button_new (&tint.height_adj, height,
+				     1, height, 1, 10, 0, 1, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("Height:"), 1.0, 0.5,
+			     spinbutton, FALSE);
+  gtk_signal_connect (GTK_OBJECT (tint.height_adj), "value_changed",
+		      GTK_SIGNAL_FUNC (tile_adjustment_update),
 		      &tvals.new_height);
-  gtk_widget_show (tint.height_entry);
 
-  toggle = gtk_check_button_new_with_label ( _("Constrain Ratio"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 2, 3,
+  chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+  gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), tvals.constrain);
+  gtk_table_attach (GTK_TABLE (table), chain, 2, 3, 0, 2,
+		    GTK_SHRINK, GTK_FILL | GTK_EXPAND, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (GIMP_CHAIN_BUTTON (chain)->button), "clicked",
+		      GTK_SIGNAL_FUNC (tile_chain_button_update),
+		      chain);
+  gtk_widget_show (chain);
+
+  toggle = gtk_check_button_new_with_label (_("New Image"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) tile_toggle_update,
-		      &tvals.constrain);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tvals.constrain);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_check_button_new_with_label ( _("New Image"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 3, 4,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) tile_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &tvals.new_image);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tvals.new_image);
   gtk_widget_show (toggle);
@@ -486,55 +468,63 @@ tile_ok_callback (GtkWidget *widget,
 		  gpointer   data)
 {
   tint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static void
-tile_toggle_update (GtkWidget *widget,
-		    gpointer   data)
+tile_chain_button_update (GtkWidget *widget,
+			  gpointer   data)
 {
-  gint *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
+  tvals.constrain = gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (data));
 }
 
-
 static void
-tile_entry_update (GtkWidget *widget,
-		   gpointer   data)
+tile_adjustment_update (GtkAdjustment *adjustment,
+			gpointer       data)
 {
-  static gchar buf[32];
   gint val;
 
-  val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
+  val = (gint) adjustment->value;
 
   if (tvals.constrain)
     {
       if ((tint.orig_width != 0) && (tint.orig_height != 0))
 	{
-	  if (widget == tint.width_entry && tvals.new_width != val)
+	  if ((GtkObject *) adjustment == tint.width_adj &&
+	      tvals.new_width != val)
 	    {
 	      tvals.new_width = val;
 
-	      tvals.new_height = (int) ((tvals.new_width * tint.orig_height) / tint.orig_width);
-	      sprintf (buf, "%d", tvals.new_height);
-	      gtk_entry_set_text (GTK_ENTRY (tint.height_entry), buf);
+	      tvals.new_height = (int) ((tvals.new_width * tint.orig_height) /
+					tint.orig_width);
+
+	      gtk_signal_handler_block_by_data (GTK_OBJECT (tint.height_adj),
+						&tvals.new_height);
+	      gtk_adjustment_set_value (GTK_ADJUSTMENT (tint.height_adj),
+					tvals.new_height);
+	      gtk_signal_handler_unblock_by_data (GTK_OBJECT (tint.height_adj),
+						  &tvals.new_height);
 	    }
-	  else if (widget == tint.height_entry && tvals.new_height != val)
+	  else if ((GtkObject *) adjustment == tint.height_adj &&
+		   tvals.new_height != val)
 	    {
 	      tvals.new_height = val;
 
-	      tvals.new_width = (int) ((tvals.new_height * tint.orig_width) / tint.orig_height);
-	      sprintf (buf, "%d", tvals.new_width);
-	      gtk_entry_set_text (GTK_ENTRY (tint.width_entry), buf);
+	      tvals.new_width = (int) ((tvals.new_height * tint.orig_width) /
+				       tint.orig_height);
+
+	      gtk_signal_handler_block_by_data (GTK_OBJECT (tint.width_adj),
+						&tvals.new_width);
+	      gtk_adjustment_set_value (GTK_ADJUSTMENT (tint.width_adj),
+					tvals.new_width);
+	      gtk_signal_handler_unblock_by_data (GTK_OBJECT (tint.width_adj),
+						  &tvals.new_width);
 	    }
 	}
     }
   else
-    *((int *) data) = val;
+    {
+      *((int *) data) = val;
+    }
 }

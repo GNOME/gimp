@@ -384,8 +384,9 @@ static gint
 colortoalpha_dialog (GDrawable *drawable)
 {
   GtkWidget *dlg;
-  GtkWidget *button;
+  GtkWidget *frame;
   GtkWidget *table;
+  GtkWidget *button;
   GtkWidget *label;
 
   guchar  *color_cube;
@@ -425,10 +426,15 @@ colortoalpha_dialog (GDrawable *drawable)
                       GTK_SIGNAL_FUNC (gtk_main_quit),
                       NULL);
 
+  frame = gtk_frame_new (_("Color"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
    
   label = gtk_label_new (_("From:"));
@@ -440,7 +446,7 @@ colortoalpha_dialog (GDrawable *drawable)
 				  PRV_WIDTH, PRV_HEIGHT,
 				  pvals.color, 3);
   gtk_table_attach (GTK_TABLE (table), button, 1, 2, 0, 1, 
-		    GTK_FILL, GTK_SHRINK, 4, 4) ; 
+		    GTK_FILL, GTK_SHRINK, 0, 0) ; 
   gtk_widget_show (button);
   ppreview.color_button = button;
 

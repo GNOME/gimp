@@ -1,39 +1,61 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "config.h"
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
+static void   run        (gchar   *name,
+                          gint     nparams,
                           GParam  *param,
-                          int     *nreturn_vals,
+                          gint    *nreturn_vals,
                           GParam **return_vals);
 static void   init_gtk   (void);
-static int    save_image (char   *filename,
-			  gint32  image_ID,
-			  gint32  drawable_ID);
+static gint   save_image (gchar   *filename,
+			  gint32   image_ID,
+			  gint32   drawable_ID);
 
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc  */
-  NULL,    /* quit_proc  */
-  query,   /* query_proc */
-  run,     /* run_proc   */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef save_args[] =
   {
@@ -43,7 +65,7 @@ query ()
     { PARAM_STRING, "filename", "The name of the file to save the image in" },
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
   };
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   INIT_I18N();
 
@@ -59,32 +81,34 @@ query ()
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_save_handler ("file_header_save", "h", "");
+  gimp_register_save_handler ("file_header_save",
+			      "h",
+			      "");
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  GRunModeType run_mode;
-  gint32 image_ID;
-  gint32 drawable_ID;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
+  gint32        drawable_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "file_header_save") == 0)
     {
-      *nreturn_vals = 1;
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
@@ -93,13 +117,14 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-      INIT_I18N_UI();
+	  INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "Header", 
-				      (CAN_HANDLE_RGB | CAN_HANDLE_INDEXED));
+				      (CAN_HANDLE_RGB |
+				       CAN_HANDLE_INDEXED));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      values[0].data.d_status = STATUS_CANCEL;
 	      return;
 	    }
 	  break;
@@ -107,32 +132,38 @@ run (char    *name,
 	  break;
 	}
 
-      if (save_image (param[3].data.d_string, image_ID, drawable_ID))
-	values[0].data.d_status = STATUS_SUCCESS;
-      else
-	values[0].data.d_status = STATUS_EXECUTION_ERROR;
+      if (! save_image (param[3].data.d_string, image_ID, drawable_ID))
+	{
+	  status = STATUS_EXECUTION_ERROR;
+	}
 
       if (export == EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
+  else
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
 static void 
-init_gtk ()
+init_gtk (void)
 {
   gchar **argv;
-  gint argc;
+  gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("header");
-  
+
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 }
 
 static int
-save_image (char   *filename,
+save_image (gchar  *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID)
 {
@@ -140,22 +171,23 @@ save_image (char   *filename,
   GDrawable *drawable;
   GDrawableType drawable_type;
   FILE *fp;
-  int x, y, b, c;
+  gint x, y, b, c;
   gchar *backslash = "\\\\";
   gchar *quote = "\\\"";
   gchar *newline = "\"\n\t\"";
   gchar buf[4];
   guchar *d = NULL;
   guchar *data;
-  unsigned char *cmap;
-  int colors;
+  guchar *cmap;
+  gint colors;
 
   if ((fp = fopen (filename, "w")) == NULL)
     return FALSE;
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable,
+		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
   fprintf (fp, "/*  GIMP header image file format (%s): %s  */\n\n",
 	   RGB_IMAGE == drawable_type ? "RGB" : "INDEXED", filename);

@@ -22,19 +22,20 @@
 
 /* #define DEBUG */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "config.h"
 
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
-typedef guchar BYTE;
+typedef guchar  BYTE;
 typedef guint16 WORD;
 typedef guint32 DWORD;
 
@@ -48,87 +49,87 @@ typedef gint32 LONG;
 
 typedef struct _WindowsMetaHeader
 {
-    WORD  FileType;       /* Type of metafile (0=memory, 1=disk) */
-    WORD  HeaderSize;     /* Size of header in WORDS (always 9) */
-    WORD  Version;        /* Version of Microsoft Windows used */
-    DWORD FileSize;       /* Total size of the metafile in WORDs */
-    WORD  NumOfObjects;   /* Number of objects in the file */
-    DWORD MaxRecordSize;  /* The size of largest record in WORDs */
-    WORD  NumOfParams;    /* Not Used (always 0) */
+  WORD  FileType;       /* Type of metafile (0=memory, 1=disk) */
+  WORD  HeaderSize;     /* Size of header in WORDS (always 9) */
+  WORD  Version;        /* Version of Microsoft Windows used */
+  DWORD FileSize;       /* Total size of the metafile in WORDs */
+  WORD  NumOfObjects;   /* Number of objects in the file */
+  DWORD MaxRecordSize;  /* The size of largest record in WORDs */
+  WORD  NumOfParams;    /* Not Used (always 0) */
 } WMFHEAD;
 
 #define SIZE_WMFHEAD 18
 
 typedef struct _PlaceableMetaHeader
 {
-    DWORD Key;           /* Magic number (always 9AC6CDD7h) */
-    WORD  Handle;        /* Metafile HANDLE number (always 0) */
-    SHORT Left;          /* Left coordinate in metafile units */
-    SHORT Top;           /* Top coordinate in metafile units */
-    SHORT Right;         /* Right coordinate in metafile units */
-    SHORT Bottom;        /* Bottom coordinate in metafile units */
-    WORD  Inch;          /* Number of metafile units per inch */
-    DWORD Reserved;      /* Reserved (always 0) */
-    WORD  Checksum;      /* Checksum value for previous 10 WORDs */
+  DWORD Key;           /* Magic number (always 9AC6CDD7h) */
+  WORD  Handle;        /* Metafile HANDLE number (always 0) */
+  SHORT Left;          /* Left coordinate in metafile units */
+  SHORT Top;           /* Top coordinate in metafile units */
+  SHORT Right;         /* Right coordinate in metafile units */
+  SHORT Bottom;        /* Bottom coordinate in metafile units */
+  WORD  Inch;          /* Number of metafile units per inch */
+  DWORD Reserved;      /* Reserved (always 0) */
+  WORD  Checksum;      /* Checksum value for previous 10 WORDs */
 } PLACEABLEMETAHEADER;
 
 #define SIZE_PLACEABLEMETAHEADER 22
 
 typedef struct _Clipboard16MetaHeader
 {
-    SHORT MappingMode; /* Units used to playback metafile */
-    SHORT Width;       /* Width of the metafile */
-    SHORT Height;      /* Height of the metafile */
-    WORD  Handle;      /* Handle to the metafile in memory */
+  SHORT MappingMode; /* Units used to playback metafile */
+  SHORT Width;       /* Width of the metafile */
+  SHORT Height;      /* Height of the metafile */
+  WORD  Handle;      /* Handle to the metafile in memory */
 } CLIPBOARD16METAHEADER;
 
 #define SIZE_CLIPBOARD16METAHEADER 8
 
 typedef struct _Clipboard32MetaHeader
 {
-    LONG  MappingMode; /* Units used to playback metafile */
-    LONG  Width;       /* Width of the metafile */
-    LONG  Height;      /* Height of the metafile */
-    DWORD Handle;      /* Handle to the metafile in memory */
+  LONG  MappingMode; /* Units used to playback metafile */
+  LONG  Width;       /* Width of the metafile */
+  LONG  Height;      /* Height of the metafile */
+  DWORD Handle;      /* Handle to the metafile in memory */
 } CLIPBOARD32METAHEADER;
 
 #define SIZE_CLIPBOARD32METAHEADER 16
 
 typedef struct _EnhancedMetaHeader
 {
-    DWORD RecordType;       /* Record type */
-    DWORD RecordSize;       /* Size of the record in bytes */
-    LONG  BoundsLeft;       /* Left inclusive bounds */
-    LONG  BoundsRight;      /* Right inclusive bounds */
-    LONG  BoundsTop;        /* Top inclusive bounds */
-    LONG  BoundsBottom;     /* Bottom inclusive bounds */
-    LONG  FrameLeft;        /* Left side of inclusive picture frame */
-    LONG  FrameRight;       /* Right side of inclusive picture frame */
-    LONG  FrameTop;         /* Top side of inclusive picture frame */
-    LONG  FrameBottom;      /* Bottom side of inclusive picture frame */
-    DWORD Signature;        /* Signature ID (always 0x464D4520) */
-    DWORD Version;          /* Version of the metafile */
-    DWORD Size;             /* Size of the metafile in bytes */
-    DWORD NumOfRecords;     /* Number of records in the metafile */
-    WORD  NumOfHandles;     /* Number of handles in the handle table */
-    WORD  Reserved;         /* Not used (always 0) */
-    DWORD SizeOfDescrip;    /* Size of description string in WORDs */
-    DWORD OffsOfDescrip;    /* Offset of description string in metafile */
-    DWORD NumPalEntries;    /* Number of color palette entries */
-    LONG  WidthDevPixels;   /* Width of reference device in pixels */
-    LONG  HeightDevPixels;  /* Height of reference device in pixels */
-    LONG  WidthDevMM;       /* Width of reference device in millimeters */
-    LONG  HeightDevMM;      /* Height of reference device in millimeters */
+  DWORD RecordType;       /* Record type */
+  DWORD RecordSize;       /* Size of the record in bytes */
+  LONG  BoundsLeft;       /* Left inclusive bounds */
+  LONG  BoundsRight;      /* Right inclusive bounds */
+  LONG  BoundsTop;        /* Top inclusive bounds */
+  LONG  BoundsBottom;     /* Bottom inclusive bounds */
+  LONG  FrameLeft;        /* Left side of inclusive picture frame */
+  LONG  FrameRight;       /* Right side of inclusive picture frame */
+  LONG  FrameTop;         /* Top side of inclusive picture frame */
+  LONG  FrameBottom;      /* Bottom side of inclusive picture frame */
+  DWORD Signature;        /* Signature ID (always 0x464D4520) */
+  DWORD Version;          /* Version of the metafile */
+  DWORD Size;             /* Size of the metafile in bytes */
+  DWORD NumOfRecords;     /* Number of records in the metafile */
+  WORD  NumOfHandles;     /* Number of handles in the handle table */
+  WORD  Reserved;         /* Not used (always 0) */
+  DWORD SizeOfDescrip;    /* Size of description string in WORDs */
+  DWORD OffsOfDescrip;    /* Offset of description string in metafile */
+  DWORD NumPalEntries;    /* Number of color palette entries */
+  LONG  WidthDevPixels;   /* Width of reference device in pixels */
+  LONG  HeightDevPixels;  /* Height of reference device in pixels */
+  LONG  WidthDevMM;       /* Width of reference device in millimeters */
+  LONG  HeightDevMM;      /* Height of reference device in millimeters */
 } ENHANCEDMETAHEADER;
 
 #define SIZE_ENHANCEDMETAHEADER 88
 
 typedef struct _StandardMetaRecord
 {
-    DWORD Size;          /* Total size of the record in WORDs */
-    WORD  Function;      /* Function number (defined in WINDOWS.H) */
+  DWORD Size;          /* Total size of the record in WORDs */
+  WORD  Function;      /* Function number (defined in WINDOWS.H) */
 #if DOCUMENTATION_ONLY_ILLEGAL_C
-    WORD  Parameters[]; /* Parameter values passed to function */
+  WORD  Parameters[]; /* Parameter values passed to function */
 #endif
 } WMFRECORD;
 
@@ -219,75 +220,75 @@ typedef struct _StandardMetaRecord
 
 typedef struct _RGBTriple
 {
-    BYTE Red;
-    BYTE Green;
-    BYTE Blue;
+  BYTE Red;
+  BYTE Green;
+  BYTE Blue;
 } RGBTRIPLE;
 
 typedef struct _BitBltRecord
 {
-    DWORD     Size;             /* Total size of the record in WORDs */
-    WORD      Function;         /* Function number (0x0922) */
-    WORD      RasterOp;         /* High-order word for the raster operation */
-    WORD      YSrcOrigin;       /* Y-coordinate of the source origin */
-    WORD      XSrcOrigin;       /* X-coordinate of the source origin */
-    WORD      YDest;            /* Destination width */
-    WORD      XDest;            /* Destination height */
-    WORD      YDestOrigin;      /* Y-coordinate of the destination origin */
-    WORD      XDestOrigin;      /* X-coordinate of the destination origin */
-    /* DDB Bitmap */
-    DWORD     Width;            /* Width of bitmap in pixels */
-    DWORD     Height;           /* Height of bitmap in scan lines */
-    DWORD     BytesPerLine;     /* Number of bytes in each scan line */
-    WORD      NumColorPlanes;   /* Number of color planes in the bitmap */
-    WORD      BitsPerPixel;     /* Number of bits in each pixel */
+  DWORD     Size;             /* Total size of the record in WORDs */
+  WORD      Function;         /* Function number (0x0922) */
+  WORD      RasterOp;         /* High-order word for the raster operation */
+  WORD      YSrcOrigin;       /* Y-coordinate of the source origin */
+  WORD      XSrcOrigin;       /* X-coordinate of the source origin */
+  WORD      YDest;            /* Destination width */
+  WORD      XDest;            /* Destination height */
+  WORD      YDestOrigin;      /* Y-coordinate of the destination origin */
+  WORD      XDestOrigin;      /* X-coordinate of the destination origin */
+  /* DDB Bitmap */
+  DWORD     Width;            /* Width of bitmap in pixels */
+  DWORD     Height;           /* Height of bitmap in scan lines */
+  DWORD     BytesPerLine;     /* Number of bytes in each scan line */
+  WORD      NumColorPlanes;   /* Number of color planes in the bitmap */
+  WORD      BitsPerPixel;     /* Number of bits in each pixel */
 #if DOCUMENTATION_ONLY_ILLEGAL_C
-    RGBTRIPLE Bitmap[];         /* Bitmap data */
+  RGBTRIPLE Bitmap[];         /* Bitmap data */
 #endif
 } BITBLTRECORD;
 
 typedef struct _RGBQuad
 {
-    BYTE Red;
-    BYTE Green;
-    BYTE Blue;
-    BYTE Reserved;
+  BYTE Red;
+  BYTE Green;
+  BYTE Blue;
+  BYTE Reserved;
 } RGBQUAD;
 
 typedef struct _DibBitBltRecord
 {
-    DWORD   Size;             /* Total size of the record in WORDs */
-    WORD    Function;         /* Function number (0x0940) */
-    WORD    RasterOp;         /* High-order word for the raster operation */
-    WORD    YSrcOrigin;       /* Y-coordinate of the source origin */
-    WORD    XSrcOrigin;       /* X-coordinate of the source origin */
-    WORD    YDest;            /* Destination width */
-    WORD    XDest;            /* Destination height */
-    WORD    YDestOrigin;      /* Y-coordinate of the destination origin */
-    WORD    XDestOrigin;      /* X-coordinate of the destination origin */
-    /* DIB Bitmap */
-    DWORD   Width;            /* Width of bitmap in pixels */
-    DWORD   Height;           /* Height of bitmap in scan lines */
-    DWORD   BytesPerLine;     /* Number of bytes in each scan line */
-    WORD    NumColorPlanes;   /* Number of color planes in the bitmap */
-    WORD    BitsPerPixel;     /* Number of bits in each pixel */
-    DWORD   Compression;      /* Compression type */
-    DWORD   SizeImage;        /* Size of bitmap in bytes */
-    LONG    XPelsPerMeter;    /* Width of image in pixels per meter */
-    LONG    YPelsPerMeter;    /* Height of image in pixels per meter */
-    DWORD   ClrUsed;          /* Number of colors used */
-    DWORD   ClrImportant;     /* Number of important colors */
+  DWORD   Size;             /* Total size of the record in WORDs */
+  WORD    Function;         /* Function number (0x0940) */
+  WORD    RasterOp;         /* High-order word for the raster operation */
+  WORD    YSrcOrigin;       /* Y-coordinate of the source origin */
+  WORD    XSrcOrigin;       /* X-coordinate of the source origin */
+  WORD    YDest;            /* Destination width */
+  WORD    XDest;            /* Destination height */
+  WORD    YDestOrigin;      /* Y-coordinate of the destination origin */
+  WORD    XDestOrigin;      /* X-coordinate of the destination origin */
+  /* DIB Bitmap */
+  DWORD   Width;            /* Width of bitmap in pixels */
+  DWORD   Height;           /* Height of bitmap in scan lines */
+  DWORD   BytesPerLine;     /* Number of bytes in each scan line */
+  WORD    NumColorPlanes;   /* Number of color planes in the bitmap */
+  WORD    BitsPerPixel;     /* Number of bits in each pixel */
+  DWORD   Compression;      /* Compression type */
+  DWORD   SizeImage;        /* Size of bitmap in bytes */
+  LONG    XPelsPerMeter;    /* Width of image in pixels per meter */
+  LONG    YPelsPerMeter;    /* Height of image in pixels per meter */
+  DWORD   ClrUsed;          /* Number of colors used */
+  DWORD   ClrImportant;     /* Number of important colors */
 #if DOCUMENTATION_ONLY_ILLEGAL_C
-    RGBQUAD Bitmap[];         /* Bitmap data */
+  RGBQUAD Bitmap[];         /* Bitmap data */
 #endif
 } DIBBITBLTRECORD;
 
 typedef struct _EnhancedMetaRecord
 {
-    DWORD Function;      /* Function number (defined in WINGDI.H) */
-    DWORD Size;          /* Total size of the record in WORDs */
+  DWORD Function;      /* Function number (defined in WINGDI.H) */
+  DWORD Size;          /* Total size of the record in WORDs */
 #if DOCUMENTATION_ONLY_ILLEGAL_C
-    DWORD Parameters[];   /* Parameter values passed to GDI function */
+  DWORD Parameters[];   /* Parameter values passed to GDI function */
 #endif
 } EMFRECORD;
 
@@ -394,80 +395,80 @@ typedef struct _EnhancedMetaRecord
 
 typedef struct _PaletteEntry
 {
-    BYTE Red;       /* Red component value */
-    BYTE Green;     /* Green component value */
-    BYTE Blue;      /* Blue component value */
-    BYTE Flags;     /* Flag values */
+  BYTE Red;       /* Red component value */
+  BYTE Green;     /* Green component value */
+  BYTE Blue;      /* Blue component value */
+  BYTE Flags;     /* Flag values */
 } PALENT;
 
 typedef struct _EndOfRecord
 {
-    DWORD  Function;        /* End Of Record ID (14) */
-    DWORD  Size;            /* Total size of the record in WORDs */
-    DWORD  NumPalEntries;   /* Number of color palette entries */
-    DWORD  OffPalEntries;   /* Offset of color palette entries */
+  DWORD  Function;        /* End Of Record ID (14) */
+  DWORD  Size;            /* Total size of the record in WORDs */
+  DWORD  NumPalEntries;   /* Number of color palette entries */
+  DWORD  OffPalEntries;   /* Offset of color palette entries */
 #if DOCUMENTATION_ONLY_ILLEGAL_C
-    PALENT Palette[];       /* The color palette data */
-    DWORD  OffToEOF;        /* Offset to beginning of this record */
+  PALENT Palette[];       /* The color palette data */
+  DWORD  OffToEOF;        /* Offset to beginning of this record */
 #endif
 } ENDOFRECORD;
 
 typedef struct _GdiCommentRecord
 {
-    DWORD   Function;      /* GDI Comment ID (70) */
-    DWORD   Size;          /* Total size of the record in WORDs */
-    DWORD   SizeOfData;    /* Size of comment data in bytes */
+  DWORD   Function;      /* GDI Comment ID (70) */
+  DWORD   Size;          /* Total size of the record in WORDs */
+  DWORD   SizeOfData;    /* Size of comment data in bytes */
 #if DOCUMENTATION_ONLY_ILLEGAL_C
-    BYTE    Data[];        /* Comment data */        
+  BYTE    Data[];        /* Comment data */        
 #endif
 } GDICOMMENTRECORD;
 
 typedef struct _GdiCommentMetafile
 {
-    DWORD Identifier;       /* Comment ID (0x43494447) */
-    DWORD Comment;          /* Metafile ID (0x80000001) */
-    DWORD Version;          /* Version of the metafile */
-    DWORD Checksum;         /* Checksum value of the metafile */
-    DWORD Flags;            /* Flags (always 0) */
-    DWORD Size;             /* Size of the metafile data in bytes */
+  DWORD Identifier;       /* Comment ID (0x43494447) */
+  DWORD Comment;          /* Metafile ID (0x80000001) */
+  DWORD Version;          /* Version of the metafile */
+  DWORD Checksum;         /* Checksum value of the metafile */
+  DWORD Flags;            /* Flags (always 0) */
+  DWORD Size;             /* Size of the metafile data in bytes */
 } GDICOMMENTMETAFILE;
 
 typedef struct _GdiCommentBeginGroup
 {
-    DWORD Identifier;       /* Comment ID (0x43494447) */
-    DWORD Comment;          /* BeginGroup ID (0x00000002) */
-    LONG  BoundsLeft;       /* Left side of bounding rectangle */
-    LONG  BoundsRight;      /* Right side of bounding rectangle */
-    LONG  BoundsTop;        /* Top side of bounding rectangle */
-    LONG  BoundsBottom;     /* Bottom side of bounding rectangle */
-    DWORD SizeOfDescrip;    /* Number of characters in the description */     
+  DWORD Identifier;       /* Comment ID (0x43494447) */
+  DWORD Comment;          /* BeginGroup ID (0x00000002) */
+  LONG  BoundsLeft;       /* Left side of bounding rectangle */
+  LONG  BoundsRight;      /* Right side of bounding rectangle */
+  LONG  BoundsTop;        /* Top side of bounding rectangle */
+  LONG  BoundsBottom;     /* Bottom side of bounding rectangle */
+  DWORD SizeOfDescrip;    /* Number of characters in the description */     
 } GDICOMMENTBEGINGROUP;
 
 typedef struct _GdiCommentEndGroup
 {
-    DWORD Identifier;       /* Comment ID (0x43494447) */
-    DWORD Comment;          /* EndGroup ID (0x00000003) */
+  DWORD Identifier;       /* Comment ID (0x43494447) */
+  DWORD Comment;          /* EndGroup ID (0x00000003) */
 } GDICOMMENTENDGROUP;
 
 typedef struct _EmrFormat
 {
-    DWORD Signature;    /* Format signature */
-    DWORD Version;      /* Format version number */
-    DWORD Data;         /* Size of data in bytes */
-    DWORD OffsetToData; /* Offset to data */
+  DWORD Signature;    /* Format signature */
+  DWORD Version;      /* Format version number */
+  DWORD Data;         /* Size of data in bytes */
+  DWORD OffsetToData; /* Offset to data */
 } EMRFORMAT;
 
 typedef struct _GdiCommentMultiFormats
 {
-    DWORD Identifier;       /* Comment ID (0x43494447) */
-    DWORD Comment;          /* Multiformats ID (0x40000004) */
-    LONG  BoundsLeft;       /* Left side of bounding rectangle */
-    LONG  BoundsRight;      /* Right side of bounding rectangle */
-    LONG  BoundsTop;        /* Top side of bounding rectangle */
-    LONG  BoundsBottom;     /* Bottom side of bounding rectangle */
-    DWORD NumFormats;       /* Number of formats in comment */
+  DWORD Identifier;       /* Comment ID (0x43494447) */
+  DWORD Comment;          /* Multiformats ID (0x40000004) */
+  LONG  BoundsLeft;       /* Left side of bounding rectangle */
+  LONG  BoundsRight;      /* Right side of bounding rectangle */
+  LONG  BoundsTop;        /* Top side of bounding rectangle */
+  LONG  BoundsBottom;     /* Bottom side of bounding rectangle */
+  DWORD NumFormats;       /* Number of formats in comment */
 #if DOCUMENTATION_ONLY_ILLEGAL_C
-    EMRFORMAT Data[];       /* Array of comment data */
+  EMRFORMAT Data[];       /* Array of comment data */
 #endif
 } GDICOMMENTMULTIFORMATS;
 
@@ -865,28 +866,28 @@ typedef struct
 } OrgAndExt;
 
 static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
+static void   run        (gchar   *name,
+                          gint     nparams,
                           GParam  *param,
-                          int     *nreturn_vals,
+                          gint    *nreturn_vals,
                           GParam **return_vals);
-static gint32 load_image (char   *filename);
+static gint32 load_image (gchar   *filename);
 
-static gint readparams (DWORD size,
-			guint nparams,
-			FILE *fd,
-			WORD *params);
+static gint readparams (DWORD  size,
+			guint  nparams,
+			FILE  *fd,
+			WORD  *params);
 
-static void sync_record (DWORD size,
-			 guint nparams,
-			 FILE *fd);
+static void sync_record (DWORD  size,
+			 guint  nparams,
+			 FILE  *fd);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static GRunModeType l_run_mode;
@@ -908,7 +909,7 @@ load_ok_callback (GtkWidget *widget,
 }
 
 static gint
-load_dialog (char *file_name)
+load_dialog (gchar *file_name)
 {
   LoadDialogVals *vals;
   GtkWidget *frame;
@@ -1003,7 +1004,7 @@ check_load_vals (void)
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef load_args[] =
   {
@@ -1011,17 +1012,20 @@ query ()
     { PARAM_STRING, "filename", "The name of the file to load" },
     { PARAM_STRING, "raw_filename", "The name entered" },
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static GParamDef load_return_vals[] =
   {
     { PARAM_IMAGE, "image", "Output image" },
   };
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
+
   static GParamDef load_setargs_args[] =
   {
     { PARAM_FLOAT, "scale", "Scale in which to load image" }
   };
-  static int nload_setargs_args = sizeof (load_setargs_args) / sizeof (load_setargs_args[0]);
+  static gint nload_setargs_args = (sizeof (load_setargs_args) /
+				    sizeof (load_setargs_args[0]));
 
   INIT_I18N();
 
@@ -1049,67 +1053,78 @@ query ()
 			  nload_setargs_args, 0,
 			  load_setargs_args, NULL);
   
-  gimp_register_magic_load_handler ("file_wmf_load", "wmf,apm", "", "0,string,\\327\\315\\306\\232");
+  gimp_register_magic_load_handler ("file_wmf_load",
+				    "wmf,apm",
+				    "",
+				    "0,string,\\327\\315\\306\\232");
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  gint32 image_ID;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
 
   l_run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "file_wmf_load") == 0)
     {
       switch (l_run_mode)
 	{
 	case RUN_INTERACTIVE:
-      INIT_I18N_UI();
+	  INIT_I18N_UI();
 	  gimp_get_data ("file_wmf_load", &load_vals);
 
 	  if (!load_dialog (param[1].data.d_string))
-	    return;
+	    status = STATUS_CANCEL;
 	  break;
 	  
 	case RUN_NONINTERACTIVE:
-      INIT_I18N();
+	  INIT_I18N();
 	  gimp_get_data ("file_wmf_load", &load_vals);
 	  break;
 
 	case RUN_WITH_LAST_VALS:
-      INIT_I18N();
+	  INIT_I18N();
 	  gimp_get_data ("file_wmf_load", &load_vals);
 
+	default:
+	  break;
 	}
 
       check_load_vals ();
       
       image_ID = load_image (param[1].data.d_string);
-      
-      values[0].data.d_status = (image_ID != -1) ? STATUS_SUCCESS : STATUS_EXECUTION_ERROR;
-      
-      if (values[0].data.d_status == STATUS_SUCCESS)
+
+      if (image_ID != -1)
 	{
 	  gimp_set_data ("file_wmf_load", &load_vals, sizeof (load_vals));
+
 	  *nreturn_vals = 2;
-	  values[1].type = PARAM_IMAGE;
+	  values[1].type         = PARAM_IMAGE;
 	  values[1].data.d_image = image_ID;
 	}
       else
 	{
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  status = STATUS_EXECUTION_ERROR;
 	}
     }
+  else
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
 static Object *

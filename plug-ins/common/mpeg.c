@@ -83,27 +83,27 @@
 
 
 static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
+static void   run        (gchar   *name,
+                          gint     nparams,
                           GParam  *param,
-                          int     *nreturn_vals,
+                          gint    *nreturn_vals,
                           GParam **return_vals);
 static gint32 load_image (char   *filename);
 
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef load_args[] =
   {
@@ -115,8 +115,9 @@ query ()
   {
     { PARAM_IMAGE, "image", "Output image" },
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
   INIT_I18N();
 
@@ -131,52 +132,59 @@ query ()
                           PROC_PLUG_IN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
-  gimp_register_load_handler ("file_mpeg_load", "mpg,mpeg", "");
+
+  gimp_register_load_handler ("file_mpeg_load",
+			      "mpg,mpeg",
+			      "");
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  GRunModeType run_mode;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
   gint32 image_ID;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   INIT_I18N();
 
   if (strcmp (name, "file_mpeg_load") == 0)
     {
       image_ID = load_image (param[1].data.d_string);
+
       if (image_ID != -1)
 	{
 	  *nreturn_vals = 2;
-	  values[0].data.d_status = STATUS_SUCCESS;
-	  values[1].type = PARAM_IMAGE;
+	  values[1].type         = PARAM_IMAGE;
 	  values[1].data.d_image = image_ID;
 	}
       else
 	{
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  status = STATUS_EXECUTION_ERROR;
 	}
     }
   else
-    g_assert (FALSE);
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
 
 static gint
-MPEG_frame_period_ms(gint mpeg_rate_code)
+MPEG_frame_period_ms (gint mpeg_rate_code)
 {
   switch(mpeg_rate_code)
     {
@@ -197,7 +205,7 @@ MPEG_frame_period_ms(gint mpeg_rate_code)
 
 
 static gint32
-load_image (char *filename)
+load_image (gchar *filename)
 {
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
@@ -215,12 +223,9 @@ load_image (char *filename)
 
   gchar *layername;  /* FIXME? */
 
-
   temp = g_malloc (strlen (filename) + 16);
   if (!temp) gimp_quit ();
   g_free (temp);
-
-
   
   gimp_progress_init ( _("Loading MPEG movie..."));
 
@@ -262,14 +267,11 @@ load_image (char *filename)
       exit(3);
     }
 
-
   wwidth = img.Width;
   wheight = img.Height;
-
   
   image_ID = gimp_image_new (wwidth, wheight, RGB);
   gimp_image_set_filename (image_ID, filename);
-
 
   moreframes = TRUE;
   framenumber = 1;
@@ -324,7 +326,6 @@ load_image (char *filename)
           data[i*4+3] = 255;
 	}
 
-
       gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
 			   drawable->width, drawable->height, TRUE, FALSE);
       gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, 0,
@@ -344,5 +345,4 @@ load_image (char *filename)
   g_free (data);
 
   return image_ID;
-
 }

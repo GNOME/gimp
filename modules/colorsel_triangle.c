@@ -23,18 +23,17 @@
 #include "config.h"
 
 #include <stdio.h>
+
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 
 #include <libgimp/color_selector.h>
-#include <libgimp/gimpintl.h>
 #include <libgimp/gimpmodule.h>
-#include <math.h>
+#include <libgimp/gimpmath.h>
+
 #include "modregister.h"
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
+#include <libgimp/gimpintl.h>
 
 /* prototypes */
 static GtkWidget * colorsel_triangle_new         (int, int, int,
@@ -478,16 +477,16 @@ update_previews (ColorSelectP  coldata,
   gfloat hue, sat, val, s, v;
   gint hx,hy, sx,sy, vx,vy;
 
-  hue = (float) coldata->values[HUE] * M_PI / 180;
+  hue = (float) coldata->values[HUE] * G_PI / 180;
 
   hx = sin(hue) * COLORTRIANGLERADIUS;
   hy = cos(hue) * COLORTRIANGLERADIUS;
 
-  sx = sin(hue - 2*M_PI/3) * COLORTRIANGLERADIUS;
-  sy = cos(hue - 2*M_PI/3) * COLORTRIANGLERADIUS;
+  sx = sin(hue - 2*G_PI/3) * COLORTRIANGLERADIUS;
+  sy = cos(hue - 2*G_PI/3) * COLORTRIANGLERADIUS;
 
-  vx = sin(hue + 2*M_PI/3) * COLORTRIANGLERADIUS;
-  vy = cos(hue + 2*M_PI/3) * COLORTRIANGLERADIUS;
+  vx = sin(hue + 2*G_PI/3) * COLORTRIANGLERADIUS;
+  vy = cos(hue + 2*G_PI/3) * COLORTRIANGLERADIUS;
 
   hue = (float) coldata->values[HUE];
   preview = coldata->preview;
@@ -500,7 +499,7 @@ update_previews (ColorSelectP  coldata,
         r2 = (x*x)+(y*y);
         if ( r2 <= COLORWHEELRADIUS * COLORWHEELRADIUS) {
           if (r2 > COLORTRIANGLERADIUS * COLORTRIANGLERADIUS) { 
-            color_hsv_to_rgb (atan2 (x,y) / M_PI * 180, 1, 1, &buf[k], &buf[k+1], &buf[k+2]);
+            color_hsv_to_rgb (atan2 (x,y) / G_PI * 180, 1, 1, &buf[k], &buf[k+1], &buf[k+2]);
           } else {
             val = (float) ((x-sx)*(hy-vy)-(y-sy)*(hx-vx)) / (float) ((vx-sx)*(hy-vy)-(vy-sy)*(hx-vx));
             if (val>0 && val<=1) {   /* eigentlich val>=0, aber dann Grafikfehler... */
@@ -518,9 +517,9 @@ update_previews (ColorSelectP  coldata,
   
     /* Marker im aeusseren Ring */
   
-    x0 = (gint) (sin(hue*M_PI/180) * ((float) (COLORWHEELRADIUS - COLORTRIANGLERADIUS + 1)/2 + COLORTRIANGLERADIUS) + 0.5);
-    y0 = (gint) (cos(hue*M_PI/180) * ((float) (COLORWHEELRADIUS - COLORTRIANGLERADIUS + 1)/2 + COLORTRIANGLERADIUS) + 0.5);
-    color_hsv_to_rgb (atan2 (x0,y0) / M_PI * 180, 1, 1, &buf[0], &buf[1], &buf[2]);
+    x0 = (gint) (sin(hue*G_PI/180) * ((float) (COLORWHEELRADIUS - COLORTRIANGLERADIUS + 1)/2 + COLORTRIANGLERADIUS) + 0.5);
+    y0 = (gint) (cos(hue*G_PI/180) * ((float) (COLORWHEELRADIUS - COLORTRIANGLERADIUS + 1)/2 + COLORTRIANGLERADIUS) + 0.5);
+    color_hsv_to_rgb (atan2 (x0,y0) / G_PI * 180, 1, 1, &buf[0], &buf[1], &buf[2]);
     col = INTENSITY(buf[0], buf[1], buf[2]) > 127 ? 0 : 255 ;
   
     for (y = y0 - 4 ; y <= y0 + 4 ; y++) {
@@ -529,7 +528,7 @@ update_previews (ColorSelectP  coldata,
         if (r2 <= 20 && r2 >= 6)
           buf[k]=buf[k+1]=buf[k+2]=col;
         else
-          color_hsv_to_rgb (atan2 (x,y) / M_PI * 180, 1, 1, &buf[k], &buf[k+1], &buf[k+2]);
+          color_hsv_to_rgb (atan2 (x,y) / G_PI * 180, 1, 1, &buf[k], &buf[k+1], &buf[k+2]);
         k += 3;
       }
       gtk_preview_draw_row (GTK_PREVIEW (preview), buf, COLORWHEELRADIUS + x0-4, COLORWHEELRADIUS - 1 - y, 9);
@@ -548,7 +547,7 @@ update_previews (ColorSelectP  coldata,
         buf[k]=buf[k+1]=buf[k+2]=BGCOLOR;
         r2 = (x-x0)*(x-x0)+(y-y0)*(y-y0);
         if (x*x+y*y > COLORTRIANGLERADIUS * COLORTRIANGLERADIUS) { 
-          color_hsv_to_rgb (atan2 (x,y) / M_PI * 180, 1, 1, &buf[k], &buf[k+1], &buf[k+2]);
+          color_hsv_to_rgb (atan2 (x,y) / G_PI * 180, 1, 1, &buf[k], &buf[k+1], &buf[k+2]);
         } else {
           val = (float) ((x-sx)*(hy-vy)-(y-sy)*(hx-vx)) / (float) ((vx-sx)*(hy-vy)-(vy-sy)*(hx-vx));
           if (val>0 && val<=1) {   /* eigentlich val>=0, aber dann Grafikfehler... */
@@ -585,7 +584,7 @@ update_previews (ColorSelectP  coldata,
         buf[k]=buf[k+1]=buf[k+2]=col;
       else {
         if (x*x+y*y > COLORTRIANGLERADIUS * COLORTRIANGLERADIUS) { 
-          color_hsv_to_rgb (atan2 (x,y) / M_PI * 180, 1, 1, &buf[k], &buf[k+1], &buf[k+2]);
+          color_hsv_to_rgb (atan2 (x,y) / G_PI * 180, 1, 1, &buf[k], &buf[k+1], &buf[k+2]);
         } else {
           val = (float) ((x-sx)*(hy-vy)-(y-sy)*(hx-vx)) / (float) ((vx-sx)*(hy-vy)-(vy-sy)*(hx-vx));
           if (val>0 && val<=1) {   /* eigentlich val>=0, aber dann Grafikfehler... */
@@ -663,18 +662,18 @@ color_selection_callback (GtkWidget *widget,
      return FALSE;
 
   if (coldata->mode == 1) {
-    coldata->values[HUE] = ( (int) (atan2 (x, y) / M_PI * 180) + 360 ) %360;
+    coldata->values[HUE] = ( (int) (atan2 (x, y) / G_PI * 180) + 360 ) %360;
     color_select_update_rgb_values(coldata);
     update_previews (coldata, TRUE);
   }
   if (coldata->mode == 2) {
-    hue = (float) coldata->values[HUE] * M_PI / 180;
+    hue = (float) coldata->values[HUE] * G_PI / 180;
     hx = sin(hue) * COLORTRIANGLERADIUS;
     hy = cos(hue) * COLORTRIANGLERADIUS;
-    sx = sin(hue - 2*M_PI/3) * COLORTRIANGLERADIUS;
-    sy = cos(hue - 2*M_PI/3) * COLORTRIANGLERADIUS;
-    vx = sin(hue + 2*M_PI/3) * COLORTRIANGLERADIUS;
-    vy = cos(hue + 2*M_PI/3) * COLORTRIANGLERADIUS;
+    sx = sin(hue - 2*G_PI/3) * COLORTRIANGLERADIUS;
+    sy = cos(hue - 2*G_PI/3) * COLORTRIANGLERADIUS;
+    vx = sin(hue + 2*G_PI/3) * COLORTRIANGLERADIUS;
+    vy = cos(hue + 2*G_PI/3) * COLORTRIANGLERADIUS;
     hue = (float) coldata->values[HUE];
     if ((x-sx)*vx+(y-sy)*vy < 0) {
       sat = 1;

@@ -5,19 +5,18 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = sinus
 
 sinus_SOURCES = \
-	sinus.c						\
+	sinus.c			\
 	sinus_logo.h
 
 INCLUDES = \
-	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
-	$(top_builddir)/libgimp/libgimpui.la			\
-	$(top_builddir)/libgimp/libgimp.la			\
-	$(GTK_LIBS)						\
+	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
 .PHONY: files

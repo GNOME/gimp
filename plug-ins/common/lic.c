@@ -33,6 +33,7 @@
 /* Some of the code is based on code by Steinar Haugen (thanks!), the Perlin     */
 /* noise function is practically ripped as is :)                                 */
 /*********************************************************************************/
+
 #include "config.h"
 
 #include <stdio.h>
@@ -82,25 +83,32 @@ rgbpixel background;
 
 gdouble G[numx][numy][2];
 
-typedef struct {
-  glong filtlen,noisemag,intsteps,minv,maxv;
+typedef struct
+{
+  gdouble  filtlen;
+  gdouble  noisemag;
+  gdouble  intsteps;
+  gdouble  minv;
+  gdouble  maxv;
   gboolean create_new_image;
-  guchar effect_channel;
-  guchar effect_operator;
-  guchar effect_convolve;
-  gint32 effect_image_id;
+  gint     effect_channel;
+  gint     effect_operator;
+  gint     effect_convolve;
+  gint32   effect_image_id;
 } LicValues;
 
 LicValues licvals;
 
 gdouble l=10.0,dx=2.0,dy=2.0,minv=-2.5,maxv=2.5,isteps=20.0;
 
-GDrawable *input_drawable,*output_drawable;
-GPixelRgn source_region,dest_region;
+GDrawable *input_drawable;
+GDrawable *output_drawable;
+GPixelRgn  source_region;
+GPixelRgn  dest_region;
 
-gint imgtype,width,height,in_channels,out_channels;
-gint border_x1,border_y1,border_x2,border_y2;
-glong maxcounter;
+gint    imgtype,width,height,in_channels,out_channels;
+gint    border_x1,border_y1,border_x2,border_y2;
+glong   maxcounter;
 guchar *scalarfield;
 
 GtkWidget  *dialog;
@@ -109,21 +117,26 @@ GtkWidget  *dialog;
 /* Convenience routines */
 /************************/
 
-void rgb_add(rgbpixel *a,rgbpixel *b)
+static void
+rgb_add (rgbpixel *a,
+	 rgbpixel *b)
 {
   a->r=a->r+b->r;
   a->g=a->g+b->g;
   a->b=a->b+b->b;
 }
 
-void rgb_mul(rgbpixel *a,gdouble b)
+static void
+rgb_mul (rgbpixel *a,
+	 gdouble   b)
 {
   a->r=a->r*b;
   a->g=a->g*b;
   a->b=a->b*b;
 }
 
-void rgb_clamp(rgbpixel *a)
+static void
+rgb_clamp (rgbpixel *a)
 {
   if (a->r>1.0)
     a->r=1.0;
@@ -144,25 +157,9 @@ void rgb_clamp(rgbpixel *a)
     a->b=0.0;
 }
 
-void set_color(rgbpixel *a,gdouble r,gdouble g,gdouble b)
-{
-  a->r=r; a->g=g; a->b=b;
-}
-
-glong xy_to_index(gint x,gint y)
-{
-  return((glong)in_channels*((glong)x+(glong)y*(glong)width));
-}
-
-gboolean checkbounds(gint x,gint y)
-{
-  if (x<0 || y<0 || x>width-1 || y>height-1)
-    return(FALSE);
-  
-  return(TRUE);
-}
-
-rgbpixel peek(gint x,gint y)
+static rgbpixel
+peek (gint x,
+      gint y)
 {
   static guchar data[4];
   rgbpixel color;
@@ -186,7 +183,10 @@ rgbpixel peek(gint x,gint y)
   return(color);
 }
 
-void poke(gint x,gint y,rgbpixel *color)
+static void
+poke (gint      x,
+      gint      y,
+      rgbpixel *color)
 {
   static guchar data[4];
   
@@ -198,17 +198,13 @@ void poke(gint x,gint y,rgbpixel *color)
   gimp_pixel_rgn_set_pixel(&dest_region,data,x,y);
 }
 
-void pos_to_int(gdouble x,gdouble y,gint *scr_x,gint *scr_y)
-{
-  *scr_x=(gint)((x*(gdouble)width));
-  *scr_y=(gint)((y*(gdouble)height));
-}
-
 /****************************************/
 /* Allocate memory for temporary images */
 /****************************************/
 
-gint image_setup(GDrawable *drawable,gint interactive)
+static gint
+image_setup (GDrawable *drawable,
+	     gint       interactive)
 {
   /* Get some useful info on the input drawable */
   /* ========================================== */
@@ -241,7 +237,10 @@ gint image_setup(GDrawable *drawable,gint interactive)
   return(TRUE);
 }
 
-guchar peekmap(guchar *image,gint x,gint y)
+static guchar
+peekmap (guchar *image,
+	 gint    x,
+	 gint    y)
 {
   glong index;
 
@@ -263,7 +262,10 @@ guchar peekmap(guchar *image,gint x,gint y)
 /* (It's a varation of the Sobel kernels, really)  */
 /***************************************************/
 
-gint gradx(guchar *image,gint x,gint y)
+static gint
+gradx (guchar *image,
+       gint    x,
+       gint    y)
 {
   gint val=0;
 
@@ -285,7 +287,10 @@ gint gradx(guchar *image,gint x,gint y)
   return(val);
 }
 
-gint grady(guchar *image,gint x,gint y)
+static gint
+grady (guchar *image,
+       gint    x,
+       gint    y)
 {
   gint val=0;
 
@@ -310,7 +315,8 @@ gint grady(guchar *image,gint x,gint y)
 /* A nice 2nd order cubic spline :) */
 /************************************/
 
-gdouble cubic(gdouble t)
+static gdouble
+cubic (gdouble t)
 {
   gdouble at=fabs(t);
   
@@ -320,7 +326,11 @@ gdouble cubic(gdouble t)
   return(0.0);
 }
 
-gdouble omega(gdouble u,gdouble v,gint i,gint j)
+static gdouble
+omega (gdouble u,
+       gdouble v,
+       gint    i,
+       gint    j)
 {
   while (i<0)
     i+=numx;
@@ -338,7 +348,9 @@ gdouble omega(gdouble u,gdouble v,gint i,gint j)
 /* The noise function (2D variant of Perlins noise function) */
 /*************************************************************/
 
-gdouble noise(gdouble x,gdouble y)
+static gdouble
+noise (gdouble x,
+       gdouble y)
 {
   gint i,sti=(gint)floor(x/dx);
   gint j,stj=(gint)floor(y/dy);
@@ -361,7 +373,8 @@ gdouble noise(gdouble x,gdouble y)
 /* Generates pseudo-random vectors with length 1 */
 /*************************************************/
 
-void generatevectors(void)
+static void
+generatevectors (void)
 {
   gdouble alpha;
   gint i,j;
@@ -380,7 +393,8 @@ void generatevectors(void)
 /* A simple triangle filter */
 /* ======================== */
 
-gdouble filter(gdouble u)
+static gdouble
+filter (gdouble u)
 {
   gdouble f=1.0-fabs(u)/l;
   
@@ -394,7 +408,11 @@ gdouble filter(gdouble u)
 /* Compute the Line Integral Convolution (LIC) at x,y */
 /******************************************************/
 
-gdouble lic_noise(gint x,gint y,gdouble vx,gdouble vy)
+static gdouble
+lic_noise (gint    x,
+	   gint    y,
+	   gdouble vx,
+	   gdouble vy)
 {
   gdouble i=0.0;
   gdouble f1=0.0,f2=0.0;
@@ -433,7 +451,10 @@ gdouble lic_noise(gint x,gint y,gdouble vx,gdouble vy)
   return(i);
 }
 
-static rgbpixel bilinear(gdouble x, gdouble y, rgbpixel *p)
+static rgbpixel
+bilinear (gdouble   x,
+	  gdouble   y,
+	  rgbpixel *p)
 {
   gdouble   m0, m1;
   gdouble   ix, iy;
@@ -478,7 +499,10 @@ static rgbpixel bilinear(gdouble x, gdouble y, rgbpixel *p)
   return(v);
 } /* bilinear */
 
-void getpixel(rgbpixel *p,gdouble u,gdouble v)
+static void
+getpixel (rgbpixel *p,
+	  gdouble   u,
+	  gdouble   v)
 {
   register gint x1, y1, x2, y2;
   static rgbpixel pp[4];
@@ -507,7 +531,12 @@ void getpixel(rgbpixel *p,gdouble u,gdouble v)
   *p=bilinear(u,v,pp);
 }
 
-void lic_image(gint x,gint y,gdouble vx,gdouble vy,rgbpixel *color)
+static void
+lic_image (gint      x,
+	   gint      y,
+	   gdouble   vx,
+	   gdouble   vy,
+	   rgbpixel *color)
 {
   gdouble u,step=2.0*l/isteps;
   gdouble xx=(gdouble)x,yy=(gdouble)y;
@@ -546,7 +575,10 @@ void lic_image(gint x,gint y,gdouble vx,gdouble vy,rgbpixel *color)
   *color=col;
 }
 
-gdouble maximum(gdouble a,gdouble b,gdouble c)
+static gdouble
+maximum (gdouble a,
+	 gdouble b,
+	 gdouble c)
 {
   gdouble max=a;
   
@@ -558,7 +590,10 @@ gdouble maximum(gdouble a,gdouble b,gdouble c)
   return(max);
 }
 
-gdouble minimum(gdouble a,gdouble b,gdouble c)
+static gdouble
+minimum (gdouble a,
+	 gdouble b,
+	 gdouble c)
 { 
   gdouble min=a;
   
@@ -570,7 +605,9 @@ gdouble minimum(gdouble a,gdouble b,gdouble c)
   return(min);
 }
 
-void get_hue(rgbpixel *col,gdouble *hue)
+static void
+get_hue (rgbpixel *col,
+	 gdouble  *hue)
 {
   gdouble max,min,delta;
 
@@ -594,7 +631,9 @@ void get_hue(rgbpixel *col,gdouble *hue)
     }
 }
 
-void get_saturation(rgbpixel *col,gdouble *sat)
+static void
+get_saturation (rgbpixel *col,
+		gdouble  *sat)
 {
   gdouble max,min,l;
 
@@ -613,7 +652,9 @@ void get_saturation(rgbpixel *col,gdouble *sat)
     }
 }
 
-void get_brightness(rgbpixel *col,gdouble *bri)
+static void
+get_brightness (rgbpixel *col,
+		gdouble  *bri)
 {
   gdouble max,min;
 
@@ -623,7 +664,9 @@ void get_brightness(rgbpixel *col,gdouble *bri)
   *bri=(max+min)/2.0;
 }
 
-void rgb_to_hue(GDrawable *image,guchar **map)
+static void
+rgb_to_hue (GDrawable  *image,
+	    guchar    **map)
 {
   guchar *themap,data[4];
   gint w,h,x,y;
@@ -661,7 +704,9 @@ void rgb_to_hue(GDrawable *image,guchar **map)
   *map=themap;
 }
 
-void rgb_to_saturation(GDrawable *image,guchar **map)
+static void
+rgb_to_saturation (GDrawable  *image,
+		   guchar    **map)
 {
   guchar *themap,data[4];
   gint w,h,x,y;
@@ -699,7 +744,9 @@ void rgb_to_saturation(GDrawable *image,guchar **map)
   *map=themap;
 }
 
-void rgb_to_brightness(GDrawable *image,guchar **map)
+static void
+rgb_to_brightness (GDrawable  *image,
+		   guchar    **map)
 {
   guchar *themap,data[4];
   gint w,h,x,y;
@@ -737,7 +784,8 @@ void rgb_to_brightness(GDrawable *image,guchar **map)
   *map=themap;
 }
 
-void compute_lic_derivative(void)
+static void
+compute_lic_derivative (void)
 {
   gint xcount,ycount;
   glong counter=0;
@@ -783,7 +831,8 @@ void compute_lic_derivative(void)
     }
 }
 
-void compute_lic_gradient(void)
+static void
+compute_lic_gradient (void)
 {
   gint xcount,ycount;
   glong counter=0;
@@ -831,7 +880,8 @@ void compute_lic_gradient(void)
     }
 }
 
-void compute_image(void)
+static void
+compute_image (void)
 {
   gint32 new_image_id=-1,new_layer_id=-1;
   GDrawable *effect;
@@ -913,68 +963,47 @@ void compute_image(void)
 /* Below is only UI stuff */
 /**************************/
 
-void ok_button_clicked(GtkWidget *widget, gpointer client_data)
+static void
+ok_button_clicked (GtkWidget *widget,
+		   gpointer   data)
 {
-  gtk_widget_hide((GtkWidget *)client_data);
-  gdk_flush();
-  compute_image();
-  gtk_main_quit();
+  gtk_widget_hide (GTK_WIDGET (data));
+  gdk_flush ();
+  compute_image ();
+  gtk_main_quit ();
 }
 
-void effect_channel_callback(GtkWidget *widget,gpointer client_data)
-{
-  if (GTK_TOGGLE_BUTTON(widget)->active)
-    {
-      licvals.effect_channel=(guchar)((glong)client_data);
-    }
-}
-
-void effect_operator_callback(GtkWidget *widget,gpointer client_data)
-{
-  if (GTK_TOGGLE_BUTTON(widget)->active)
-    {
-      licvals.effect_operator=(guchar)((glong)client_data);
-    }
-}
-
-void effect_convolve_callback(GtkWidget *widget,gpointer client_data)
-{
-  if (GTK_TOGGLE_BUTTON(widget)->active)
-    licvals.effect_convolve=(guchar)((glong)client_data);
-}
-
-gint effect_image_constrain(gint32 image_id, gint32 drawable_id, gpointer data)
+static gint
+effect_image_constrain (gint32    image_id,
+			gint32   drawable_id,
+			gpointer data)
 {
   if (drawable_id == -1)
     return(TRUE);
 
-  return(gimp_drawable_is_rgb(drawable_id));
+  return gimp_drawable_is_rgb (drawable_id);
 }
 
-void effect_image_callback(gint32 id, gpointer data)
+static void
+effect_image_callback (gint32   id,
+		       gpointer data)
 {
-  licvals.effect_image_id=id;
+  licvals.effect_image_id = id;
 }
 
-void effect_parameter_update(GtkAdjustment *adjustment, gpointer client_data)
+static void
+create_main_dialog (void)
 {
-  *((glong *)client_data)=(gdouble)adjustment->value;
-}
- 
-void create_main_dialog(void)
-{
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *vbox2;
   GtkWidget *frame;
-  GtkWidget *vbox,*hbox,*vbox2,*hbox2;
-  GtkWidget *label;
+  GtkWidget *table;
   GtkWidget *option_menu;
   GtkWidget *menu;
   GtkWidget *button;
-  GtkWidget *scale;
   GtkObject *scale_data;
-  GSList *group=NULL;
   
-  /* Dialog */
-
   dialog = gimp_dialog_new (_("Van Gogh (LIC)"), "lic",
 			    gimp_plugin_help_func, "filters/lic.html",
 			    GTK_WIN_POS_MOUSE,
@@ -987,271 +1016,148 @@ void create_main_dialog(void)
 
 			    NULL);
 
-  hbox = gtk_hbox_new(FALSE,5);
-  gtk_container_border_width(GTK_CONTAINER(hbox),5);
-  gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox),hbox);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+  gtk_widget_show (vbox);
 
-  vbox=gtk_vbox_new(FALSE,0);
-  gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 5);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  frame = gtk_frame_new( _("Options"));
-  gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_ETCHED_IN);
-  gtk_container_add(GTK_CONTAINER(vbox),frame);
+  frame = gtk_frame_new (_("Options"));
+  gtk_container_add (GTK_CONTAINER (hbox), frame);
+  gtk_widget_show (frame);
 
-  hbox2=gtk_hbox_new(FALSE,5);
-  gtk_container_add(GTK_CONTAINER(frame),hbox2);
+  vbox2 = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
   
-  button = gtk_check_button_new_with_label( _("Create new image"));
-  if (licvals.create_new_image==TRUE)
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button),TRUE);
-  gtk_container_add(GTK_CONTAINER(hbox2),button);
+  button = gtk_check_button_new_with_label( _("Create\nNew Image"));
+  gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child), GTK_JUSTIFY_LEFT);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				licvals.create_new_image == TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show(button);
 
-  gtk_widget_show(hbox2);
-  gtk_widget_show(frame);
-  
-  frame = gtk_frame_new( _("Effect channel"));
-  gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_ETCHED_IN);
-  gtk_container_add(GTK_CONTAINER(vbox),frame);
+  frame = gimp_radio_group_new2 (TRUE, _("Effect Channel"),
+				 gimp_radio_button_update,
+				 &licvals.effect_channel,
+				 (gpointer) licvals.effect_channel,
 
-  vbox2=gtk_vbox_new(FALSE,0);
-  gtk_container_add(GTK_CONTAINER(frame),vbox2);
+				 _("Hue"),        (gpointer) 0, NULL,
+				 _("Saturation"), (gpointer) 1, NULL,
+				 _("Brightness"), (gpointer) 2, NULL,
 
-  button = gtk_radio_button_new_with_label(NULL, _("Hue"));
-  group  = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
-  if (licvals.effect_channel==0)
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
+				 NULL);
+  gtk_container_add (GTK_CONTAINER (hbox), frame);
+  gtk_widget_show (frame);
 
-  gtk_signal_connect(GTK_OBJECT(button), "toggled",
-    (GtkSignalFunc)effect_channel_callback,
-    (gpointer)0);
+  frame = gimp_radio_group_new2 (TRUE, _("Effect Operator"),
+				 gimp_radio_button_update,
+				 &licvals.effect_operator,
+				 (gpointer) licvals.effect_operator,
 
-  gtk_box_pack_start(GTK_BOX(vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show(button);
+				 _("Derivative"), (gpointer) 0, NULL,
+				 _("Gradient"),   (gpointer) 1, NULL,
 
-  button = gtk_radio_button_new_with_label(group, _("Saturation"));
-  if (licvals.effect_channel==1)
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
+				 NULL);
+  gtk_container_add (GTK_CONTAINER (hbox), frame);
+  gtk_widget_show (frame);
 
-  gtk_signal_connect(GTK_OBJECT(button), "toggled",
-    (GtkSignalFunc)effect_channel_callback,
-    (gpointer)1);
+  frame = gimp_radio_group_new2 (TRUE, _("Convolve"),
+				 gimp_radio_button_update,
+				 &licvals.effect_convolve,
+				 (gpointer) licvals.effect_convolve,
 
-  gtk_box_pack_start(GTK_BOX(vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show(button);
+				 _("With White Noise"),  (gpointer) 0, NULL,
+				 _("With Source Image"), (gpointer) 1, NULL,
 
-  button = gtk_radio_button_new_with_label(group, _("Brightness"));
-  if (licvals.effect_channel==2)
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
+				 NULL);
+  gtk_container_add (GTK_CONTAINER (hbox), frame);
+  gtk_widget_show (frame);
 
-  gtk_signal_connect(GTK_OBJECT(button), "toggled",
-    (GtkSignalFunc)effect_channel_callback,
-    (gpointer)2);
+  frame = gtk_frame_new (_("Parameters"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  gtk_box_pack_start(GTK_BOX(vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show(button);
-
-  gtk_widget_show(vbox2);
-  gtk_widget_show(frame);
-  
-  frame = gtk_frame_new( _("Effect operator"));
-  gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_ETCHED_IN);
-  gtk_container_add(GTK_CONTAINER(vbox),frame);
-  
-  vbox2=gtk_vbox_new(FALSE,0);
-  gtk_container_add(GTK_CONTAINER(frame),vbox2);
-
-  button = gtk_radio_button_new_with_label(NULL, _("Derivative"));
-  group  = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
-  if (licvals.effect_operator==0)
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
-
-  gtk_signal_connect(GTK_OBJECT(button), "toggled",
-    (GtkSignalFunc)effect_operator_callback,
-    (gpointer)0);
-
-  gtk_box_pack_start(GTK_BOX(vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show(button);
-
-  button = gtk_radio_button_new_with_label(group, _("Gradient"));
-  if (licvals.effect_operator==1)
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
-
-  gtk_signal_connect(GTK_OBJECT(button), "toggled",
-    (GtkSignalFunc)effect_operator_callback,
-    (gpointer)1);
-
-  gtk_box_pack_start(GTK_BOX(vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show(button);
-  
-  gtk_widget_show(vbox2);
-  gtk_widget_show(frame);
-
-  frame = gtk_frame_new( _("Convolve"));
-  gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_ETCHED_IN);
-  gtk_container_add(GTK_CONTAINER(vbox),frame);
-
-  vbox2=gtk_vbox_new(FALSE,0);
-  gtk_container_add(GTK_CONTAINER(frame),vbox2);
-
-  button = gtk_radio_button_new_with_label(NULL, _("With white noise"));
-  group  = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
-  if (licvals.effect_convolve==0)
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
-
-  gtk_signal_connect(GTK_OBJECT(button), "toggled",
-    (GtkSignalFunc)effect_convolve_callback,
-    (gpointer)0);
-
-  gtk_box_pack_start(GTK_BOX(vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show(button);
-
-  button = gtk_radio_button_new_with_label(group, _("With source image"));
-  if (licvals.effect_convolve==1)
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
-
-  gtk_signal_connect(GTK_OBJECT(button), "toggled",
-    (GtkSignalFunc)effect_convolve_callback,
-    (gpointer)1);
-
-  gtk_box_pack_start(GTK_BOX(vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show(button);
-  
-  gtk_widget_show(vbox2);
-  gtk_widget_show(frame);
-
-  gtk_widget_show(vbox);
-
-  vbox=gtk_vbox_new(FALSE,0);
-  gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 5);
-
-  frame = gtk_frame_new( _("Parameters"));
-  gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_ETCHED_IN);
-  gtk_container_add(GTK_CONTAINER(vbox),frame);
+  table = gtk_table_new (6, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   /* Effect image menu */
-
-  vbox2=gtk_vbox_new(FALSE,0);
-  gtk_container_add(GTK_CONTAINER(frame),vbox2);
-
-  hbox2=gtk_hbox_new(FALSE,0);
-  gtk_container_add(GTK_CONTAINER(vbox2),hbox2);
-
-  label = gtk_label_new( _("Effect image:"));
-  gtk_container_add(GTK_CONTAINER(hbox2),label);
-  gtk_widget_show(label);
-
-  option_menu = gtk_option_menu_new();
-    
+  option_menu = gtk_option_menu_new ();
   menu = gimp_drawable_menu_new(effect_image_constrain,
                                 effect_image_callback,
 				NULL,
                                 licvals.effect_image_id);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Effect Image:"), 1.0, 0.5,
+			     option_menu, TRUE);
 
-  gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+				     _("Filter Length"), 0, 0,
+				     licvals.filtlen, 0, 64, 1.0, 8.0, 1,
+				     NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT(scale_data), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &licvals.filtlen);				    
 
-  gtk_container_add(GTK_CONTAINER(hbox2),option_menu);
-  gtk_widget_show(option_menu);
-    
-  gtk_widget_show(hbox2);
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+				     _("Noise Magnitude:"), 0, 0,
+				     licvals.noisemag, 1, 5, 0.1, 1.0, 1,
+				     NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT(scale_data), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &licvals.noisemag);				    
 
-  label = gtk_label_new( _("Filter length:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.5, 1.0);
-  gtk_container_add(GTK_CONTAINER(vbox2),label);
-  gtk_widget_show(label);
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+				     _("Integration Steps:"), 0, 0,
+				     licvals.intsteps, 1, 40, 1.0, 5.0, 1,
+				     NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT(scale_data), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &licvals.intsteps);				    
 
-  scale_data = gtk_adjustment_new(licvals.filtlen, 0, 64, 1.0, 1.0, 0.0);
-  gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-    (GtkSignalFunc)effect_parameter_update,
-    (gpointer)&licvals.filtlen);				    
-  scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-  gtk_container_add(GTK_CONTAINER(vbox2),scale);
-  gtk_widget_show(scale);
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+				     _("Minimum Value:"), 0, 0,
+				     licvals.minv, -100, 0, 1, 10, 1,
+				     NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT(scale_data), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &licvals.minv);				    
 
-  label = gtk_label_new( _("Noise magnitude:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.5, 1.0);
-  gtk_container_add(GTK_CONTAINER(vbox2),label);
-  gtk_widget_show(label);
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
+				     _("Maximum Value:"), 0, 0,
+				     licvals.maxv, 0, 100, 1, 10, 1,
+				     NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT(scale_data), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &licvals.maxv);				    
 
-  scale_data = gtk_adjustment_new(licvals.noisemag, 1, 5, 1.0, 1.0, 0.0);
-  gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-    (GtkSignalFunc)effect_parameter_update,
-    (gpointer)&licvals.noisemag);
- 
-  scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-  gtk_container_add(GTK_CONTAINER(vbox2),scale);
-  gtk_widget_show(scale);
-
-  label = gtk_label_new( _("Integration steps:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.5, 1.0);
-  gtk_container_add(GTK_CONTAINER(vbox2),label);
-  gtk_widget_show(label);
-
-  scale_data = gtk_adjustment_new(licvals.intsteps, 1, 40, 1.0, 1.0, 0.0);
-  gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-    (GtkSignalFunc)effect_parameter_update,
-    (gpointer)&licvals.intsteps);
- 
-  scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-  gtk_container_add(GTK_CONTAINER(vbox2),scale);
-  gtk_widget_show(scale);
-
-  label = gtk_label_new( _("Minimum value:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.5, 1.0);
-  gtk_container_add(GTK_CONTAINER(vbox2),label);
-  gtk_widget_show(label);
-
-  scale_data = gtk_adjustment_new(licvals.minv, -100, 0, 1.0, 1.0, 0.0);
-  gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-    (GtkSignalFunc)effect_parameter_update,
-    (gpointer)&licvals.minv);
- 
-  scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-  gtk_container_add(GTK_CONTAINER(vbox2),scale);
-  gtk_widget_show(scale);
-
-  label = gtk_label_new( _("Maximum value:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.5, 1.0);
-  gtk_container_add(GTK_CONTAINER(vbox2),label);
-  gtk_widget_show(label);
-
-  scale_data = gtk_adjustment_new(licvals.maxv, 0, 100, 1.0, 1.0, 0.0);
-  gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-    (GtkSignalFunc)effect_parameter_update,
-    (gpointer)&licvals.maxv);
- 
-  scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-  gtk_container_add(GTK_CONTAINER(vbox2),scale);
-  gtk_widget_show(scale);
-
-  gtk_widget_show(vbox2);
-  gtk_widget_show(frame);
-
-  gtk_widget_show(vbox);
-  gtk_widget_show(hbox);
-
-  /* Done */
-    
-  gtk_widget_show(dialog);
+  gtk_widget_show (dialog);
 }
 
 /******************/
 /* Implementation */
 /******************/
 
-void lic_interactive    (GDrawable *drawable);
-void lic_noninteractive (GDrawable *drawable);
+static void lic_interactive    (GDrawable *drawable);
+/*
+static void lic_noninteractive (GDrawable *drawable);
+*/
 
 /*************************************/
 /* Set parameters to standard values */
 /*************************************/
 
-void set_default_settings(void)
+static void
+set_default_settings (void)
 {
   licvals.filtlen=5;
   licvals.noisemag=2;
@@ -1265,14 +1171,15 @@ void set_default_settings(void)
   licvals.effect_image_id=0;
 }
 
-static void query(void)
+static void
+query (void)
 {
   static GParamDef args[] =
-    {
-      { PARAM_INT32, "run_mode", "Interactive" },
-      { PARAM_IMAGE, "image", "Input image" },
-      { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    };
+  {
+    { PARAM_INT32, "run_mode", "Interactive" },
+    { PARAM_IMAGE, "image", "Input image" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+  };
 
   static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
@@ -1293,11 +1200,12 @@ static void query(void)
 			  args, return_vals);
 }
 
-static void run(gchar   *name,
-                gint     nparams,
-                GParam  *param,
-                gint    *nreturn_vals,
-                GParam **return_vals)
+static void
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam values[1];
   GDrawable *drawable;
@@ -1369,13 +1277,14 @@ static void run(gchar   *name,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
-void lic_interactive(GDrawable *drawable)
+static void
+lic_interactive (GDrawable *drawable)
 {
   gchar **argv;
   gint argc;
@@ -1387,29 +1296,31 @@ void lic_interactive(GDrawable *drawable)
   gtk_init (&argc, &argv);
   gtk_rc_parse(gimp_gtkrc());
 
-  gdk_set_use_xshm(gimp_use_xshm());
+  gdk_set_use_xshm (gimp_use_xshm());
 
   /* Create application window */
   /* ========================= */
 
-  create_main_dialog();
+  create_main_dialog ();
 
   /* Prepare images */
   /* ============== */
 
-  image_setup(drawable,TRUE);
+  image_setup (drawable, TRUE);
   
   /* Gtk main event loop */
   /* =================== */
   
-  gtk_main();
-  gdk_flush();
+  gtk_main ();
+  gdk_flush ();
 }
 
-void lic_noninteractive(GDrawable *drawable)
+/*
+static void
+lic_noninteractive (GDrawable *drawable)
 {
-  printf("Noninteractive not yet implemented! Sorry.\n");
+  g_message ("Noninteractive not yet implemented! Sorry.\n");
 }
+*/
 
 MAIN()
-

@@ -652,7 +652,7 @@ static GtkItemFactory *image_factory = NULL;
 
 static GimpItemFactoryEntry load_entries[] =
 {
-  { { N_("/Automatic"), NULL, file_load_by_extension_callback, 0 },
+  { { N_("/Automatic"), NULL, file_open_by_extension_callback, 0 },
     "open_by_extension.html", NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>" },
@@ -666,7 +666,7 @@ static GtkItemFactory *load_factory = NULL;
 
 static GimpItemFactoryEntry save_entries[] =
 {
-  { { N_("/By extension"), NULL, file_save_by_extension_callback, 0 },
+  { { N_("/By Extension"), NULL, file_save_by_extension_callback, 0 },
     "save_by_extension.html", NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>" },
@@ -1293,16 +1293,23 @@ menus_last_opened_cmd_callback (GtkWidget *widget,
 {
   gchar *filename, *raw_filename;
   guint num_entries;
+  gint  status;
 
   num_entries = g_slist_length (last_opened_raw_filenames); 
   if (num >= num_entries)
     return;
 
-  raw_filename = ((GString *) g_slist_nth_data (last_opened_raw_filenames, num))->str;
+  raw_filename =
+    ((GString *) g_slist_nth_data (last_opened_raw_filenames, num))->str;
   filename = g_basename (raw_filename);
 
-  if (!file_open (raw_filename, raw_filename))
-    g_message (_("Error opening file: %s\n"), raw_filename);
+  status = file_open (raw_filename, raw_filename);
+
+  if (status != PDB_SUCCESS &&
+      status != PDB_CANCEL)
+    {
+      g_message (_("Error opening file: %s\n"), raw_filename);
+    }
 }
 
 static void

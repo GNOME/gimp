@@ -167,10 +167,10 @@ static void run   (gchar   *name,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static void randomize (GDrawable *drawable);
@@ -181,10 +181,11 @@ static inline void randomize_prepare_row (GPixelRgn *pixel_rgn,
 					  int y,
 					  int w);
 
-static gint randomize_dialog        (void);
-
-static void randomize_ok_callback   (GtkWidget     *widget,
-				     gpointer       data);
+static gint randomize_dialog             (void);
+static void randomize_ok_callback        (GtkWidget     *widget,
+					  gpointer       data);
+static void randomize_time_toggle_update (GtkWidget *widget,
+					  gpointer   data);
 
 /************************************ Guts ***********************************/
 
@@ -390,11 +391,11 @@ run (gchar   *name,
 	   *  Initialize the rand() function seed
 	   */
 	  if (pivals.seed_type == SEED_TIME)
-	    srand(time(NULL));
-	  else
-	    srand(pivals.rndm_seed);
+	    pivals.rndm_seed = time(NULL);
 
-	  randomize(drawable);
+	  srand (pivals.rndm_seed);
+
+	  randomize (drawable);
 	  /*
 	   *  If we ran interactively (even repeating) update the display.
 	   */
@@ -694,22 +695,12 @@ randomize_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
-  GtkWidget *seed_hbox;
-  GtkWidget *seed_vbox;
   GtkWidget *table;
-  GtkWidget *label;
+  GtkWidget *seed_hbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
-  GtkWidget *radio_button;
-  GSList *group = NULL;
   gchar **argv;
   gint    argc;
-
-  /*
-   *  various initializations
-   */
-  gint do_time = (pivals.seed_type == SEED_TIME);
-  gint do_user = (pivals.seed_type == SEED_USER);
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -734,6 +725,8 @@ randomize_dialog (void)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
+  gimp_help_init ();
+
   /*
    *  Parameter settings
    *
@@ -744,88 +737,24 @@ randomize_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new (4, 3, FALSE);
+  table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show(table);
 
-  gimp_help_init ();
-
-  /*
-   *  Randomization seed initialization controls
-   */
-  label = gtk_label_new (_("Randomization Seed:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
-  gtk_widget_show (label);
-
-  /*
-   *  Box to hold seed initialization radio buttons
-   */
-  seed_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_table_attach (GTK_TABLE (table), seed_vbox, 1, 2, 1, 2,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
-  gtk_widget_show (seed_vbox);
-
-  /*
-   *  Time button
-   */
-  radio_button = gtk_radio_button_new_with_label (NULL, _("Current Time"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-  gtk_box_pack_start (GTK_BOX (seed_vbox), radio_button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &do_time);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), do_time);
-  gtk_widget_show (radio_button);
-  gimp_help_set_help_data (radio_button,
-			   _("Seed random number generator from the current "
-			     "time - this guarantees a reasonable "
-			     "randomization"), NULL);
-  /*
-   *  Box to hold seed user initialization controls
-   */
-  seed_hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (seed_vbox), seed_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (seed_hbox);
-
-  /*
-   *  User button
-   */
-  radio_button = gtk_radio_button_new_with_label (group, _("Other Value"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-  gtk_box_pack_start (GTK_BOX (seed_hbox), radio_button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &do_user);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), do_user);
-  gtk_widget_show (radio_button);
-  gimp_help_set_help_data (radio_button,
-			   _("Enable user-entered value for random number "
-			     "generator seed - this allows you to repeat a "
-			     "given \"random\" operation"), NULL);
-
-  /*
-   *  Randomization seed number (text)
-   */
-  spinbutton = gimp_spin_button_new (&adj, pivals.rndm_seed,
-				     G_MININT, G_MAXINT, 1, 10, 0, 1, 0);
-  gtk_box_pack_start (GTK_BOX (seed_hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &pivals.rndm_seed);
-  gtk_widget_show (spinbutton);
-  gimp_help_set_help_data (spinbutton,
-			   _("Value for seeding the random number generator"),
-			   NULL);
-  gtk_widget_show (seed_hbox);
+  /*  Random Seed  */
+  seed_hbox = gimp_random_seed_new (&pivals.rndm_seed, &pivals.seed_type,
+				    SEED_TIME, SEED_USER);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+                             _("Random Seed:"), 1.0, 0.5,
+                             seed_hbox, TRUE);
 
   /*
    *  Randomization percentage label & scale (1 to 100)
    */
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Randomization %:"), SCALE_WIDTH, 0,
 			      pivals.rndm_pct, 1.0, 100.0, 1.0, 10.0, 0,
 			      _("Percentage of pixels to be filtered"), NULL);
@@ -836,7 +765,7 @@ randomize_dialog (void)
   /*
    *  Repeat count label & scale (1 to 100)
    */
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Repeat:"), SCALE_WIDTH, 0,
 			      pivals.rndm_rcount, 1.0, 100.0, 1.0, 10.0, 0,
 			      _("Number of times to apply filter"), NULL);
@@ -852,18 +781,6 @@ randomize_dialog (void)
   gimp_help_free ();
   gdk_flush ();
 
-  /*
-   *  Figure out which type of seed initialization to apply.
-   */
-  if (do_time)
-    {
-      pivals.seed_type = SEED_TIME;
-    }
-  else
-    {
-      pivals.seed_type = SEED_USER;
-    }
-
   return rndm_int.run;
 }
 
@@ -874,4 +791,18 @@ randomize_ok_callback (GtkWidget *widget,
   rndm_int.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
+}
+
+static void
+randomize_time_toggle_update (GtkWidget *widget,
+			      gpointer   data)
+{
+  gint *toggle_val;
+
+  toggle_val = (gint *) data;
+
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+    *toggle_val = SEED_TIME;
+  else
+    *toggle_val = SEED_USER;
 }

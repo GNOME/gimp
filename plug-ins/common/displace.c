@@ -75,11 +75,6 @@ typedef struct
 
 typedef struct
 {
-  GtkWidget *amount_x;
-  GtkWidget *amount_y;
-  GtkWidget *menu_x;
-  GtkWidget *menu_y;
-
   gint run;
 } DisplaceInterface;
 
@@ -122,14 +117,6 @@ static void      displace_map_y_callback   (gint32     id,
 					    gpointer   data);
 static void      displace_ok_callback      (GtkWidget *widget,
 					    gpointer   data);
-static void      displace_toggle_update    (GtkWidget *widget,
-					    gpointer   data);
-static void      displace_x_toggle_update  (GtkWidget *widget,
-					    gpointer   data);
-static void      displace_y_toggle_update  (GtkWidget *widget,
-					    gpointer   data);
-static void      displace_entry_callback   (GtkWidget *widget,
-					    gpointer   data);
 static gdouble   displace_map_give_value   (guchar* ptr,
 					    gint    alpha,
 					    gint    bytes);
@@ -137,10 +124,10 @@ static gdouble   displace_map_give_value   (guchar* ptr,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static DisplaceVals dvals =
@@ -156,10 +143,6 @@ static DisplaceVals dvals =
 
 static DisplaceInterface dint =
 {
-  NULL,   /*  amount_x  */
-  NULL,   /*  amount_y  */
-  NULL,   /*  menu_x  */
-  NULL,   /*  menu_y  */
   FALSE   /*  run  */
 };
 
@@ -219,9 +202,8 @@ run (gchar  *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   *nreturn_vals = 1;
-  *return_vals = values;
-
-  values[0].type = PARAM_STATUS;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
@@ -240,16 +222,18 @@ run (gchar  *name,
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 10)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
 	{
-	  dvals.amount_x = param[3].data.d_float;
-	  dvals.amount_y = param[4].data.d_float;
-	  dvals.do_x = param[5].data.d_int32;
-	  dvals.do_y = param[6].data.d_int32;
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
+	{
+	  dvals.amount_x       = param[3].data.d_float;
+	  dvals.amount_y       = param[4].data.d_float;
+	  dvals.do_x           = param[5].data.d_int32;
+	  dvals.do_y           = param[6].data.d_int32;
 	  dvals.displace_map_x = param[7].data.d_int32;
 	  dvals.displace_map_y = param[8].data.d_int32;
-	  dvals.displace_type = param[9].data.d_int32;
+	  dvals.displace_type  = param[9].data.d_int32;
 	}
       break;
 
@@ -294,17 +278,14 @@ displace_dialog (GDrawable *drawable)
   GtkWidget *toggle_hbox;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *entry;
+  GtkWidget *spinbutton;
+  GtkObject *adj;
   GtkWidget *option_menu;
   GtkWidget *menu;
+  GtkWidget *sep;
   GSList  *group = NULL;
   gchar  **argv;
-  gchar    buffer[32];
   gint     argc;
-
-  gint use_wrap  = (dvals.displace_type == WRAP);
-  gint use_smear = (dvals.displace_type == SMEAR);
-  gint use_black = (dvals.displace_type == BLACK);
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -340,110 +321,126 @@ displace_dialog (GDrawable *drawable)
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new (3, 3, FALSE);
+  table = gtk_table_new (4, 3, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-
-  /*  on_x, on_y  */
+  /*  X options  */
   toggle = gtk_check_button_new_with_label (_("X Displacement:"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) displace_x_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &dvals.do_x);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_x);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label (_("Y Displacement:"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 1, 2,
+  spinbutton = gimp_spin_button_new (&adj, dvals.amount_x,
+				     (gint) drawable->width * -2,
+				     drawable->width * 2,
+				     1, 10, 0, 1, 2);
+  gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) displace_y_toggle_update,
-		      &dvals.do_y);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_y);
-  gtk_widget_show (toggle);
-
-  /*  amount_x, amount_y  */
-  dint.amount_x = entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%f", dvals.amount_x);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) displace_entry_callback,
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &dvals.amount_x);
-  
-  gtk_widget_set_sensitive (dint.amount_x, dvals.do_x);
-  gtk_widget_show (entry);
 
-  dint.amount_y = entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%f", dvals.amount_y);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) displace_entry_callback,
-		      &dvals.amount_y);
-  gtk_widget_set_sensitive (dint.amount_y, dvals.do_y);
-  gtk_widget_show (entry);
+  gtk_widget_set_sensitive (spinbutton, dvals.do_x);
+  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", spinbutton);
+  gtk_widget_show (spinbutton);
 
-  /*  menu_x, menu_y  */
-  dint.menu_x = option_menu = gtk_option_menu_new ();
+  option_menu = gtk_option_menu_new ();
   gtk_table_attach (GTK_TABLE (table), option_menu, 2, 3, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   menu = gimp_drawable_menu_new (displace_map_constrain, displace_map_x_callback,
 				 drawable, dvals.displace_map_x);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
-  gtk_widget_set_sensitive (dint.menu_x, dvals.do_x);
+
+  gtk_widget_set_sensitive (option_menu, dvals.do_x);
+  gtk_object_set_data (GTK_OBJECT (spinbutton), "set_sensitive", option_menu);
   gtk_widget_show (option_menu);
 
-  dint.menu_y = option_menu = gtk_option_menu_new ();
+  /*  Y Options  */
+  toggle = gtk_check_button_new_with_label (_("Y Displacement:"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &dvals.do_y);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_y);
+  gtk_widget_show (toggle);
+
+  spinbutton = gimp_spin_button_new (&adj, dvals.amount_y,
+				     (gint) drawable->height * -2,
+				     drawable->height * 2,
+				     1, 10, 0, 1, 2);
+  gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &dvals.amount_y);
+
+  gtk_widget_set_sensitive (spinbutton, dvals.do_y);
+  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", spinbutton);
+  gtk_widget_show (spinbutton);
+
+  option_menu = gtk_option_menu_new ();
   gtk_table_attach (GTK_TABLE (table), option_menu, 2, 3, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   menu = gimp_drawable_menu_new (displace_map_constrain, displace_map_y_callback,
 				 drawable, dvals.displace_map_y);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
-  gtk_widget_set_sensitive (dint.menu_y, dvals.do_y);
+
+  gtk_widget_set_sensitive (option_menu, dvals.do_y);
+  gtk_object_set_data (GTK_OBJECT (spinbutton), "set_sensitive", option_menu);
   gtk_widget_show (option_menu);
 
   /*  Displacement Type  */
+  sep = gtk_hseparator_new ();
+  gtk_table_attach_defaults (GTK_TABLE (table), sep, 0, 3, 2, 3);
+  gtk_widget_show (sep);
+
   toggle_hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_border_width (GTK_CONTAINER (toggle_hbox), 5);
-  gtk_table_attach (GTK_TABLE (table), toggle_hbox, 0, 3, 2, 3,
+  gtk_table_attach (GTK_TABLE (table), toggle_hbox, 0, 3, 3, 4,
 		    GTK_FILL, GTK_FILL, 0, 0);
 
-  label = gtk_label_new ( _("On Edges: "));
+  label = gtk_label_new ( _("On Edges:"));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   toggle = gtk_radio_button_new_with_label (group, _("Wrap"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
+  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) WRAP);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) displace_toggle_update,
-		      &use_wrap);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_wrap);
+		      GTK_SIGNAL_FUNC (gimp_radio_button_update),
+		      &dvals.displace_type);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				dvals.displace_type == WRAP);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, _("Smear"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
+  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) SMEAR);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) displace_toggle_update,
-		      &use_smear);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_smear);
+		      GTK_SIGNAL_FUNC (gimp_radio_button_update),
+		      &dvals.displace_type);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				dvals.displace_type == SMEAR);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, _("Black"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
+  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) BLACK);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) displace_toggle_update,
-		      &use_black);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_black);
+		      GTK_SIGNAL_FUNC (gimp_radio_button_update),
+		      &dvals.displace_type);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				dvals.displace_type == BLACK);
   gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_hbox);
@@ -453,14 +450,6 @@ displace_dialog (GDrawable *drawable)
 
   gtk_main ();
   gdk_flush ();
-
-  /*  determine displace type  */
-  if (use_wrap)
-    dvals.displace_type = WRAP;
-  else if (use_smear)
-    dvals.displace_type = SMEAR;
-  else if (use_black)
-    dvals.displace_type = BLACK;
 
   return dint.run;
 }
@@ -530,7 +519,8 @@ displace (GDrawable *drawable)
   if (dvals.displace_map_x != -1 && dvals.do_x)
     {
       map_x = gimp_drawable_get (dvals.displace_map_x);
-      gimp_pixel_rgn_init (&map_x_rgn, map_x, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+      gimp_pixel_rgn_init (&map_x_rgn, map_x,
+			   x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
       if (gimp_drawable_has_alpha(map_x->id))
 	xm_alpha = 1;
       xm_bytes = gimp_drawable_bpp(map_x->id);
@@ -541,7 +531,8 @@ displace (GDrawable *drawable)
   if (dvals.displace_map_y != -1 && dvals.do_y)
     {
       map_y = gimp_drawable_get (dvals.displace_map_y);
-      gimp_pixel_rgn_init (&map_y_rgn, map_y, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+      gimp_pixel_rgn_init (&map_y_rgn, map_y,
+			   x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
       if (gimp_drawable_has_alpha(map_y->id))
 	ym_alpha = 1;
       ym_bytes = gimp_drawable_bpp(map_y->id);
@@ -549,7 +540,8 @@ displace (GDrawable *drawable)
   else
     map_y = NULL;
 
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
   /*  Register the pixel regions  */
   if (dvals.do_x && dvals.do_y)
@@ -683,19 +675,19 @@ displace_map_give_value (guchar *pt,
 
 
 static GTile *
-displace_pixel (GDrawable * drawable,
-		GTile *     tile,
-		gint        width,
-		gint        height,
-		gint        x1,
-		gint        y1,
-		gint        x2,
-		gint        y2,
-		gint        x,
-		gint        y,
-		gint *      row,
-		gint *      col,
-		guchar *    pixel)
+displace_pixel (GDrawable *drawable,
+		GTile     *tile,
+		gint       width,
+		gint       height,
+		gint       x1,
+		gint       y1,
+		gint       x2,
+		gint       y2,
+		gint       x,
+		gint       y,
+		gint      *row,
+		gint      *col,
+		guchar    *pixel)
 {
   static guchar empty_pixel[4] = {0, 0, 0, 0};
   guchar *data;
@@ -776,9 +768,9 @@ bilinear (gdouble x,
 /*  Displace interface functions  */
 
 static gint
-displace_map_constrain (gint32     image_id,
-			gint32     drawable_id,
-			gpointer   data)
+displace_map_constrain (gint32   image_id,
+			gint32   drawable_id,
+			gpointer data)
 {
   GDrawable *drawable;
 
@@ -795,15 +787,15 @@ displace_map_constrain (gint32     image_id,
 }
 
 static void
-displace_map_x_callback (gint32     id,
-			 gpointer   data)
+displace_map_x_callback (gint32   id,
+			 gpointer data)
 {
   dvals.displace_map_x = id;
 }
 
 static void
-displace_map_y_callback (gint32     id,
-			 gpointer   data)
+displace_map_y_callback (gint32   id,
+			 gpointer data)
 {
   dvals.displace_map_y = id;
 }
@@ -814,67 +806,4 @@ displace_ok_callback (GtkWidget *widget,
 {
   dint.run = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-displace_toggle_update (GtkWidget *widget,
-			gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-displace_x_toggle_update (GtkWidget *widget,
-			  gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-
-  if (dint.amount_x)
-    gtk_widget_set_sensitive (dint.amount_x, *toggle_val);
-  if (dint.menu_x)
-    gtk_widget_set_sensitive (dint.menu_x, *toggle_val);
-}
-
-static void
-displace_y_toggle_update (GtkWidget *widget,
-			  gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-
-  if (dint.amount_y)
-    gtk_widget_set_sensitive (dint.amount_y, *toggle_val);
-  if (dint.menu_y)
-    gtk_widget_set_sensitive (dint.menu_y, *toggle_val);
-}
-
-static void
-displace_entry_callback (GtkWidget *widget,
-			 gpointer   data)
-{
-  double *text_val;
-
-  text_val = (double *) data;
-
-  *text_val = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
 }

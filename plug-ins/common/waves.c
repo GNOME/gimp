@@ -34,9 +34,8 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include "libgimp/stdplugins-intl.h"
 
-#include <plug-ins/megawidget/megawidget.h>
+#include "libgimp/stdplugins-intl.h"
 
 enum
 {
@@ -68,7 +67,27 @@ struct piArgs
   gint32  reflective;
 };
 
-struct mwPreview *mwp;
+/*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
+
+struct mwPreview
+{
+  gint     width;
+  gint     height;
+  gint     bpp;
+  gdouble  scale;
+  guchar  *bits;
+};
+
+#define PREVIEW_SIZE 100
+
+static gint do_preview = TRUE;
+
+static GtkWidget        * mw_preview_new   (GtkWidget        *parent,
+                                            struct mwPreview *mwp);
+static struct mwPreview * mw_preview_build (GDrawable        *drawable);
+
+static struct mwPreview *mwp;
+
 
 static void query (void);
 static void run   (gchar   *name,
@@ -77,10 +96,12 @@ static void run   (gchar   *name,
 		   gint    *nretvals,
 		   GParam **retvals);
 
-int pluginCore   (struct piArgs *argp, gint32 drawable);
-int pluginCoreIA (struct piArgs *argp, gint32 drawable);
+static gint pluginCore       (struct piArgs *argp,
+			      gint32         drawable);
+static gint pluginCoreIA     (struct piArgs *argp,
+			      gint32         drawable);
 
-static mw_preview_t waves_do_preview;
+static void waves_do_preview (GtkWidget     *preview);
 
 static void wave (guchar  *src,
 		  guchar  *dest,
@@ -166,7 +187,7 @@ run (gchar   *name,
   rvals[0].data.d_status = STATUS_SUCCESS;
   switch (param[0].data.d_int32)
     {
-      GDrawable *drw;
+      GDrawable *drawable;
 
     case RUN_INTERACTIVE:
       INIT_I18N_UI();
@@ -180,8 +201,8 @@ run (gchar   *name,
 	  args.reflective = 0;
 	}
 
-      drw = gimp_drawable_get (param[2].data.d_drawable);
-      mwp = mw_preview_build (drw);
+      drawable = gimp_drawable_get (param[2].data.d_drawable);
+      mwp = mw_preview_build (drawable);
 
       if (pluginCoreIA(&args, param[2].data.d_drawable) == -1)
 	{
@@ -226,7 +247,7 @@ run (gchar   *name,
     }
 }
 
-gint
+static gint
 pluginCore (struct piArgs *argp,
 	    gint32         drawable)
 {
@@ -305,7 +326,7 @@ waves_double_adjustment_update (GtkAdjustment *adjustment,
     waves_do_preview (NULL);
 }
 
-gint
+static gint
 pluginCoreIA (struct piArgs *argp,
 	      gint32         drawable)
 {
@@ -353,7 +374,7 @@ pluginCoreIA (struct piArgs *argp,
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  preview = mw_preview_new (vbox, mwp, &waves_do_preview);
+  preview = mw_preview_new (vbox, mwp);
   gtk_object_set_data (GTK_OBJECT (preview), "piArgs", argp);
   waves_do_preview (preview);
 
@@ -444,29 +465,29 @@ pluginCoreIA (struct piArgs *argp,
 }
 
 static void
-waves_do_preview (GtkWidget *w)
+waves_do_preview (GtkWidget *widget)
 {
   static GtkWidget *theWidget = NULL;
   struct piArgs *argp;
   guchar *dst;
   gint y;
 
-  if (theWidget==NULL)
+  if (theWidget == NULL)
     {
-      theWidget=w;
+      theWidget = widget;
     }
 
-  argp = gtk_object_get_data(GTK_OBJECT(theWidget), "piArgs");
+  argp = gtk_object_get_data (GTK_OBJECT (theWidget), "piArgs");
   dst = g_new (guchar, mwp->width * mwp->height * mwp->bpp);
 
-  wave (mwp->bits, dst, mwp->width, mwp->height,
-	mwp->bpp, (argp->amplitude/mwp->scale), (argp->wavelength/mwp->scale),
-	argp->phase, argp->type==0, argp->reflective, 0);
+  wave (mwp->bits, dst, mwp->width, mwp->height, mwp->bpp,
+	(argp->amplitude / mwp->scale), (argp->wavelength / mwp->scale),
+	argp->phase, argp->type == 0, argp->reflective, 0);
 
   for (y = 0; y < mwp->height; y++)
     {
       gtk_preview_draw_row (GTK_PREVIEW (theWidget),
-			    dst+(y*mwp->width*mwp->bpp), 0, y,
+			    dst + (y * mwp->width * mwp->bpp), 0, y,
 			    mwp->width);
     }
 
@@ -474,6 +495,129 @@ waves_do_preview (GtkWidget *w)
   gdk_flush ();
   g_free (dst);
 }
+
+static void
+mw_preview_toggle_callback (GtkWidget *widget,
+                            gpointer   data)
+{
+  gimp_toggle_button_update (widget, data);
+
+  if (do_preview)
+    waves_do_preview (NULL);
+}
+
+static struct mwPreview *
+mw_preview_build_virgin (GDrawable *drawable)
+{
+  struct mwPreview *mwp;
+
+  mwp = g_new (struct mwPreview, 1);
+
+  if (drawable->width > drawable->height)
+    {
+      mwp->scale  = (gdouble) drawable->width / (gdouble) PREVIEW_SIZE;
+      mwp->width  = PREVIEW_SIZE;
+      mwp->height = drawable->height / mwp->scale;
+    }
+  else
+    {
+      mwp->scale  = (gdouble) drawable->height / (gdouble) PREVIEW_SIZE;
+      mwp->height = PREVIEW_SIZE;
+      mwp->width  = drawable->width / mwp->scale;
+    }
+
+  mwp->bpp  = 3;
+  mwp->bits = NULL;
+
+  return mwp;
+}
+
+static struct mwPreview *
+mw_preview_build (GDrawable *drawable)
+{
+  struct mwPreview *mwp;
+  gint x, y, b;
+  guchar *bc;
+  guchar *drawableBits;
+  GPixelRgn pr;
+
+  mwp = mw_preview_build_virgin (drawable);
+
+  gimp_pixel_rgn_init (&pr, drawable,
+		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
+  drawableBits = g_new (guchar, drawable->width * drawable->bpp);
+
+  bc = mwp->bits = g_new (guchar, mwp->width * mwp->height * mwp->bpp);
+  for (y = 0; y < mwp->height; y++)
+    {
+      gimp_pixel_rgn_get_row (&pr, drawableBits,
+			      0, (gint) (y * mwp->scale), drawable->width);
+
+      for (x = 0; x < mwp->width; x++)
+        {
+          for (b = 0; b < mwp->bpp; b++)
+            *bc++ = *(drawableBits +
+                      ((gint) (x * mwp->scale) * drawable->bpp) +
+		      b % drawable->bpp);
+        }
+    }
+  g_free (drawableBits);
+
+  return mwp;
+}
+
+static GtkWidget *
+mw_preview_new (GtkWidget        *parent,
+                struct mwPreview *mwp)
+{
+  GtkWidget *preview;
+  GtkWidget *frame;
+  GtkWidget *pframe;
+  GtkWidget *vbox;
+  GtkWidget *button;
+  guchar *color_cube;
+   
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+                              color_cube[2], color_cube[3]);
+
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+
+  frame = gtk_frame_new (_("Preview"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  pframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME(pframe), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), pframe, FALSE, FALSE, 0);
+  gtk_widget_show (pframe);
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), mwp->width, mwp->height);
+  gtk_container_add (GTK_CONTAINER (pframe), preview);
+  gtk_widget_show (preview);
+
+  button = gtk_check_button_new_with_label (_("Do Preview"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                      GTK_SIGNAL_FUNC (mw_preview_toggle_callback),
+                      &do_preview);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  return preview;
+}
+
+
 
 
 static void
@@ -489,7 +633,7 @@ wave (guchar  *src,
       gint     reflective,
       gint     verbose)
 {
-  long   rowsiz;
+  glong   rowsiz;
   guchar *p;
   guchar *dest;
   gint    x1, y1, x2, y2;
@@ -512,12 +656,12 @@ wave (guchar  *src,
 
   gint k;
 
-  phase = phase*G_PI/180;
+  phase = phase * G_PI / 180;
   rowsiz   = width * bypp;
 
   if (verbose)
     {
-      gimp_progress_init ( _("Waving..."));
+      gimp_progress_init (_("Waving..."));
       prog_interval=height/10;
     }
 
@@ -568,14 +712,14 @@ wave (guchar  *src,
       yscale = 1.0;
     }
 
-  radius  = MAX(xhsiz, yhsiz);
+  radius  = MAX (xhsiz, yhsiz);
   radius2 = radius * radius;
 
   /* Wave the image! */
 
   dst += y1 * rowsiz + x1 * bypp;
 
-  wavelength = (wavelength * 2);
+  wavelength *= 2;
 
   for (y = y1; y < y2; y++)
     {
@@ -605,16 +749,16 @@ wave (guchar  *src,
 
 	  if (reflective)
 	    {
-	      amnt = amplitude * fabs (sin (((d / wavelength)
-					     * (2.0 * G_PI) + phase)));
+	      amnt = amplitude * fabs (sin (((d / wavelength) * (2.0 * G_PI) +
+					     phase)));
 
 	      needx = (amnt * dx) / xscale + cen_x;
 	      needy = (amnt * dy) / yscale + cen_y;
 	    }
 	  else
 	    {
-	      amnt = amplitude * sin (((d / wavelength)
-				       * (2.0 * G_PI) + phase));
+	      amnt = amplitude * sin (((d / wavelength) * (2.0 * G_PI) +
+				       phase));
 
 	      needx = (amnt + dx) / xscale + cen_x;
 	      needy = (amnt + dy) / yscale + cen_y;

@@ -101,6 +101,8 @@
 #define ENCAPSULATION_UUENCODE 0
 #define ENCAPSULATION_MIME     1
 
+#define BUFFER_SIZE            256
+
 #include "config.h"
 
 #include <stdlib.h>
@@ -131,27 +133,29 @@ static void   run   (gchar   *name,
 		     gint    *nreturn_vals,
 		     GParam **return_vals);
 
-static gint   save_image (gchar  *filename,
-			  gint32  image_ID,
-			  gint32  drawable_ID,
-			  gint32  run_mode);
+static GStatusType save_image (gchar  *filename,
+			       gint32  image_ID,
+			       gint32  drawable_ID,
+			       gint32  run_mode);
 
-static gint   save_dialog        (void);
-static void   ok_callback        (GtkWidget *widget, gpointer data);
-static void   encap_callback     (GtkWidget *widget, gpointer data);
-static void   receipt_callback   (GtkWidget *widget, gpointer data);
-static void   from_callback      (GtkWidget *widget, gpointer data);
-static void   subject_callback   (GtkWidget *widget, gpointer data);
-static void   comment_callback   (GtkWidget *widget, gpointer data);
-static void   filename_callback  (GtkWidget *widget, gpointer data);
-static void   mesg_body_callback (GtkWidget *widget, gpointer data);
+static gint   save_dialog          (void);
+static void   ok_callback          (GtkWidget *widget,
+				    gpointer   data);
+static void   mail_entry_callback  (GtkWidget *widget,
+				    gpointer   data);
+static void   mesg_body_callback   (GtkWidget *widget,
+				    gpointer   data);
 
 static gint   valid_file     (gchar *filename);
-static void   create_headers (FILE * mailpipe);
+static void   create_headers (FILE  *mailpipe);
 static char * find_extension (gchar *filename);
-static gint   to64           (FILE *infile, FILE *outfile);
-static void   output64chunk  (gint c1, gint c2, gint c3, gint pads,
-			      FILE *outfile);
+static gint   to64           (FILE  *infile,
+			      FILE  *outfile);
+static void   output64chunk  (gint   c1,
+			      gint   c2,
+			      gint   c3,
+			      gint   pads,
+			      FILE  *outfile);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -163,11 +167,11 @@ GPlugInInfo PLUG_IN_INFO =
 
 typedef struct
 {
-  gchar receipt[256];
-  gchar subject[256];
-  gchar comment[256];
-  gchar from[256];
-  gchar filename[256];
+  gchar receipt[BUFFER_SIZE];
+  gchar subject[BUFFER_SIZE];
+  gchar comment[BUFFER_SIZE];
+  gchar from[BUFFER_SIZE];
+  gchar filename[BUFFER_SIZE];
   gint  encapsulation;
 }
 m_info;
@@ -231,21 +235,21 @@ run (gchar   *name,
      GParam **return_vals)
 {
   static GParam values[2];
-  GRunModeType run_mode;
-  gint32 drawable_ID;
-  GStatusType status = STATUS_SUCCESS;
-  gint32 image_ID;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
+  gint32        drawable_ID;
 
   INIT_I18N_UI();
 
-  run_mode = param[0].data.d_int32;
+  run_mode    = param[0].data.d_int32;
+  image_ID    = param[1].data.d_image;
   drawable_ID = param[2].data.d_drawable;
-  image_ID = param[1].data.d_image;
-  *nreturn_vals = 1;
-  *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *nreturn_vals = 1;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "plug_in_mail_image") == 0)
     {
@@ -254,23 +258,27 @@ run (gchar   *name,
 	case RUN_INTERACTIVE:
 	  gimp_get_data ("plug_in_mail_image", &mail_info);
 	  if (!save_dialog ())
-	    return;
+	    status = STATUS_CANCEL;
 	  break;
+
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 9)
-	    status = STATUS_CALLING_ERROR;
-	  if(status == STATUS_SUCCESS)
+	    {
+	      status = STATUS_CALLING_ERROR;
+	    }
+	  else
 	    {
 	      /* this hasnt been tested yet */
-	      strncpy (mail_info.filename, param[3].data.d_string,256);
-	      strncpy (mail_info.receipt, param[4].data.d_string,256);
-	      strncpy (mail_info.receipt, param[5].data.d_string,256);
-	      strncpy (mail_info.subject, param[6].data.d_string,256);
-	      strncpy (mail_info.comment, param[7].data.d_string,256);
+	      strncpy (mail_info.filename, param[3].data.d_string, BUFFER_SIZE);
+	      strncpy (mail_info.receipt, param[4].data.d_string, BUFFER_SIZE);
+	      strncpy (mail_info.receipt, param[5].data.d_string, BUFFER_SIZE);
+	      strncpy (mail_info.subject, param[6].data.d_string, BUFFER_SIZE);
+	      strncpy (mail_info.comment, param[7].data.d_string, BUFFER_SIZE);
 	      mail_info.encapsulation = param[8].data.d_int32;
 	    }
 	  break;
+
 	case RUN_WITH_LAST_VALS:
 	  gimp_get_data ("plug_in_mail_image", &mail_info);
 	  break;
@@ -279,48 +287,53 @@ run (gchar   *name,
 	  break;
 	}
 
-      if (run_mode == RUN_INTERACTIVE)
-	gimp_set_data ("plug_in_mail_image", &mail_info, sizeof(m_info));
-
-      *nreturn_vals = 1;
-      if (save_image (mail_info.filename,
-		      image_ID,
-		      drawable_ID,
-		      run_mode))
+      if (status == STATUS_SUCCESS)
 	{
-	  values[0].data.d_status = STATUS_SUCCESS;
+	  status = save_image (mail_info.filename,
+			       image_ID,
+			       drawable_ID,
+			       run_mode);
+
+	  if (status == STATUS_SUCCESS)
+	    {
+	      gimp_set_data ("plug_in_mail_image", &mail_info, sizeof(m_info));
+	    }
 	}
-      else
-	values[0].data.d_status = STATUS_EXECUTION_ERROR;
     }
   else
-    g_assert (FALSE);
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
-static gint
+static GStatusType
 save_image (gchar  *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID,
 	    gint32  run_mode)
 {
   GParam *params;
-  gint retvals;
-  char *ext;
-  char *tmpname;
-  char mailcmdline[512];
-  int pid;
-  int status;
-  FILE *mailpipe;
-  FILE *infile;
+  gint    retvals;
+  gchar  *ext;
+  gchar  *tmpname;
+  gchar   mailcmdline[512];
+  gint    pid;
+  gint    status;
+  gint    process_status;
+  FILE   *mailpipe;
+  FILE   *infile;
 
   if (NULL == (ext = find_extension (filename)))
-    return -1;
+    return STATUS_CALLING_ERROR;
 
   /* get a temp name with the right extension and save into it. */
   params = gimp_run_procedure ("gimp_temp_name",
 			       &retvals,
 			       PARAM_STRING, ext + 1,
 			       PARAM_END);
+
   tmpname = g_strdup (params[1].data.d_string);
   gimp_destroy_params (params, retvals);
 
@@ -348,45 +361,48 @@ save_image (gchar  *filename,
 			       PARAM_STRING, tmpname,
 			       PARAM_STRING, tmpname,
 			       PARAM_END);
-
   
 
-  /* need to figure a way to make sure the user is trying to save in an approriate format */
-  /* but this can wait....                                                                */
+  /*  need to figure a way to make sure the user is trying to save
+   *  in an approriate format but this can wait....
+   */
 
-  if (params[0].data.d_status == FALSE || !valid_file (tmpname))
+  status = params[0].data.d_status;
+
+  if (! valid_file (tmpname) ||
+      status != STATUS_SUCCESS)
     {
       unlink (tmpname);
       g_free (tmpname);
-      return -1;
+      return status;
     }
 
-  if( mail_info.encapsulation == ENCAPSULATION_UUENCODE ) {
+  if (mail_info.encapsulation == ENCAPSULATION_UUENCODE)
+    {
 #ifndef __EMX__
       /* fork off a uuencode process */
       if ((pid = fork ()) < 0)
-	  {
-	      g_message ("mail: fork failed: %s\n", g_strerror (errno));
-	      g_free (tmpname);
-	      return -1;
-	  }
+	{
+	  g_message ("mail: fork failed: %s\n", g_strerror (errno));
+	  g_free (tmpname);
+	  return STATUS_EXECUTION_ERROR;
+	}
       else if (pid == 0)
-	  {
-	      if (-1 == dup2 (fileno (mailpipe), fileno (stdout)))
-		  {
-		      g_message ("mail: dup2 failed: %s\n", g_strerror (errno));
-		  }
-	      
-	      execlp (UUENCODE, UUENCODE, tmpname, filename, NULL);
-	      /* What are we doing here? exec must have failed */
-	      g_message ("mail: exec failed: uuencode: %s\n", g_strerror (errno));
-	      
-	      
-	      /* close the pipe now */
-	      pclose (mailpipe);
-	      g_free (tmpname);
-	      _exit (127);
-	  }
+	{
+	  if (-1 == dup2 (fileno (mailpipe), fileno (stdout)))
+	    {
+	      g_message ("mail: dup2 failed: %s\n", g_strerror (errno));
+	    }
+
+	  execlp (UUENCODE, UUENCODE, tmpname, filename, NULL);
+	  /* What are we doing here? exec must have failed */
+	  g_message ("mail: exec failed: uuencode: %s\n", g_strerror (errno));
+
+	  /* close the pipe now */
+	  pclose (mailpipe);
+	  g_free (tmpname);
+	  _exit (127);
+	}
       else
 #else /* __EMX__ */
       int tfd;
@@ -395,75 +411,73 @@ save_image (gchar  *filename,
       if (dup2 (fileno (mailpipe), fileno (stdout)) == -1)
 	{
 	  g_message ("mail: dup2 failed: %s\n", g_strerror (errno));
-	  close(tfd);
+	  close (tfd);
 	  g_free (tmpname);
-	  return -1;
+	  return STATUS_EXECUTION_ERROR;
 	}
-      fcntl(tfd, F_SETFD, FD_CLOEXEC);
+      fcntl (tfd, F_SETFD, FD_CLOEXEC);
       pid = spawnlp (P_NOWAIT, UUENCODE, UUENCODE, tmpname, filename, NULL);
       /* restore fileno(stdout) */
       dup2 (tfd, fileno (stdout));
-      close(tfd);
+      close (tfd);
       if (pid == -1)
 	{
 	  g_message ("mail: spawn failed: %s\n", g_strerror (errno));
 	  g_free (tmpname);
-	  return -1;
+	  return STATUS_EXECUTION_ERROR;
 	}
 #endif
-	  {
-	      waitpid (pid, &status, 0);
-	      
-	      if (!WIFEXITED (status) ||
-		  WEXITSTATUS (status) != 0)
-		  {
-		      g_message ("mail: mail didnt work or something on file %s\n", tmpname);
-		      g_free (tmpname);
-		      return 0;
-		  }
-	  }
-  }
-  else {  /* This must be MIME stuff. Base64 away... */
+        {
+	  waitpid (pid, &process_status, 0);
+
+	  if (!WIFEXITED (process_status) ||
+	      WEXITSTATUS (process_status) != 0)
+	    {
+	      g_message ("mail: mail didnt work or something on file %s\n", tmpname);
+	      g_free (tmpname);
+	      return STATUS_EXECUTION_ERROR;
+	    }
+	}
+    }
+  else
+    {  /* This must be MIME stuff. Base64 away... */
       infile = fopen(tmpname,"r");
       to64(infile,mailpipe);
       /* close off mime */
-      if( mail_info.encapsulation == ENCAPSULATION_MIME ) {
-	  fprintf(mailpipe, "\n--GUMP-MIME-boundary--\n");
-      }
-  }
+      if( mail_info.encapsulation == ENCAPSULATION_MIME )
+	{
+	  fprintf (mailpipe, "\n--GUMP-MIME-boundary--\n");
+	}
+    }
+
   /* delete the tmpfile that was generated */
   unlink (tmpname);
   g_free (tmpname);
 
-  return TRUE;
+  return STATUS_SUCCESS;
 }
 
 
 static gint
 save_dialog (void)
 {
-  /* argh, guess this all needs to be struct that i can pass to the ok_callback
-     so i can get the text from it then.  Seems a bit ugly, but maybe its better.
-     I dunno.  */
   GtkWidget *dlg;
   GtkWidget *entry;
   GtkWidget *table;
   GtkWidget *table2;
   GtkWidget *label;
-  GtkWidget *button1;
-  GtkWidget *button2;
+  GtkWidget *vbox;
   GtkWidget *text;
   GtkWidget *vscrollbar;
-  GSList *group;
 
   gint    argc;
   gchar **argv;
-  gchar   buffer[32];
+  gchar   buffer[BUFFER_SIZE];
   gint    nreturn_vals;
   GParam *return_vals;
   
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("mail");
 
   gtk_init (&argc, &argv);
@@ -478,7 +492,7 @@ save_dialog (void)
   /* check to see if we actually got a value */
   if (return_vals[0].data.d_status == STATUS_SUCCESS &&
       return_vals[1].data.d_string != NULL)
-    strncpy (mail_info.from, return_vals[1].data.d_string , 256);
+    strncpy (mail_info.from, return_vals[1].data.d_string ,  BUFFER_SIZE);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
@@ -507,137 +521,71 @@ save_dialog (void)
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
 
-  /*  To:  Label */
-  label = gtk_label_new ("To:");
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label,
-		    0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL,
-		    GTK_SHRINK | GTK_FILL,
-		    0, 0);
-  gtk_widget_show (label);
-
   /* to: dialog */
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry,
-		    1, 2, 0, 1, 
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_SHRINK | GTK_FILL,
-		    0, 0);
   gtk_widget_set_usize (entry, 200, 0);
-  sprintf (buffer, "%s", mail_info.receipt);
+  g_snprintf (buffer, sizeof (buffer), "%s", mail_info.receipt);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("To:"), 1.0, 0.5,
+			     entry, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) receipt_callback, &mail_info.receipt);
-  gtk_widget_show (entry);
-
-
-  /*  From Label */
-  label = gtk_label_new ("From:");
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label,
-		    0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL,
-		    GTK_SHRINK | GTK_FILL,
-		    0, 0);
-  gtk_widget_show (label);
+		      GTK_SIGNAL_FUNC (mail_entry_callback),
+		      &mail_info.receipt);
 
   /* From entry */
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry,
-		    1, 2, 1, 2, 
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_SHRINK | GTK_FILL,
-		    0, 0);
   gtk_widget_set_usize (entry, 200, 0);
-  
-  sprintf (buffer, "%s", mail_info.from);
+  g_snprintf (buffer, sizeof (buffer), "%s", mail_info.from);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("From:"), 1.0, 0.5,
+			     entry, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) from_callback, &mail_info.from);
-  gtk_widget_show (entry);
-
-
-  /* Subject Label */
-  label = gtk_label_new ("Subject:");
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label,
-		    0, 1, 2, 3,
-		    GTK_SHRINK | GTK_FILL,
-		    GTK_SHRINK | GTK_FILL,
-		    0, 0);
-  gtk_widget_show (label);
+		      GTK_SIGNAL_FUNC (mail_entry_callback),
+		      &mail_info.from);
 
   /* Subject entry */
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry,
-		    1, 2, 2, 3,
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_SHRINK | GTK_FILL,
-		    0, 0);
   gtk_widget_set_usize (entry, 200, 0);
-  sprintf (buffer, "%s", mail_info.subject);
+  g_snprintf (buffer, sizeof (buffer), "%s", mail_info.subject);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+			     _("Subject:"), 1.0, 0.5,
+			     entry, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) subject_callback, &mail_info.subject);
-  gtk_widget_show (entry);
-
-
-  /* Comment label  */
-  label = gtk_label_new ("Comment:");
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 
-		    0, 1, 3, 4, 
-		    GTK_SHRINK | GTK_FILL,
-		    GTK_SHRINK | GTK_FILL,
-		    0, 0);
-  gtk_widget_show (label);
+		      GTK_SIGNAL_FUNC (mail_entry_callback),
+		      &mail_info.subject);
 
   /* Comment entry */
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 
-		    1, 2, 3, 4,
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_SHRINK | GTK_FILL,
-		    0, 0);
   gtk_widget_set_usize (entry, 200, 0);
-  sprintf (buffer, "%s", mail_info.comment);
+  g_snprintf (buffer, sizeof (buffer), "%s", mail_info.comment);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gimp_table_attach_aligned (GTK_TABLE (table), 3,
+			     _("Comment:"), 1.0, 0.5,
+			     entry, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) comment_callback, &mail_info.comment);
-  gtk_widget_show (entry);
-
-
-  /* Filename label  */
-  label = gtk_label_new (_("Filename:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 
-		    0, 1, 4, 5, 
-		    GTK_SHRINK | GTK_FILL,
-		    GTK_SHRINK | GTK_FILL,
-		    0, 0);
-  gtk_widget_show (label);
+		      GTK_SIGNAL_FUNC (mail_entry_callback),
+		      &mail_info.comment);
 
   /* Filename entry */
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 
-		    1, 2, 4, 5,
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_SHRINK | GTK_FILL,
-		    0, 0);
   gtk_widget_set_usize (entry, 200, 0);
-  sprintf (buffer, "%s", mail_info.filename);
+  g_snprintf (buffer, sizeof (buffer), "%s", mail_info.filename);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gimp_table_attach_aligned (GTK_TABLE (table), 4,
+			     _("Filename:"), 1.0, 0.5,
+			     entry, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) filename_callback, &mail_info.filename);
-  gtk_widget_show (entry);
+		      GTK_SIGNAL_FUNC (mail_entry_callback),
+		      &mail_info.filename);
 
   /* comment  */
   table2 = gtk_table_new (2, 2, FALSE);
   gtk_table_set_row_spacing (GTK_TABLE (table2), 0, 2);
   gtk_table_set_col_spacing (GTK_TABLE (table2), 0, 2);
-  /*   gtk_box_pack_start (GTK_BOX (box2), table2, TRUE, TRUE, 0);
-       gtk_widget_show (table2); */
+
   gtk_table_attach (GTK_TABLE (table), table2, 
 		    0, 2, 5, 6,
 		    GTK_EXPAND | GTK_FILL,
@@ -654,14 +602,14 @@ save_dialog (void)
   gtk_widget_set_usize (text, 200, 100);
   gtk_widget_show (text);
   gtk_signal_connect (GTK_OBJECT (text), "changed",
-		      (GtkSignalFunc) mesg_body_callback, mesg_body);
+		      GTK_SIGNAL_FUNC (mesg_body_callback),
+		      mesg_body);
   gtk_widget_show (table2);
 
   vscrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
   gtk_table_attach (GTK_TABLE (table2), vscrollbar, 1, 2, 0, 1,
 		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (vscrollbar);
-  
 
   /* Encapsulation label */
   label = gtk_label_new (_("Encapsulation:"));
@@ -670,32 +618,21 @@ save_dialog (void)
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  /* Encapsulation radiobutton */
-  button1 = gtk_radio_button_new_with_label( NULL, _("Uuencode"));
-  group = gtk_radio_button_group( GTK_RADIO_BUTTON( button1 ) );
-  button2 = gtk_radio_button_new_with_label( group, _("MIME" ));
-  if (mail_info.encapsulation == ENCAPSULATION_UUENCODE)
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button1), TRUE);
-    }
-  else
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button2), TRUE);
-    }
-  gtk_signal_connect (GTK_OBJECT (button1), "toggled",
-		      (GtkSignalFunc) encap_callback,
-		      (gpointer) "uuencode" );
-  gtk_signal_connect (GTK_OBJECT (button2), "toggled",
-		      (GtkSignalFunc) encap_callback,
-		      (gpointer) "mime" );
+  /* Encapsulation radiobuttons */
+  vbox = gimp_radio_group_new2 (FALSE, NULL,
+				gimp_radio_button_update,
+				&mail_info.encapsulation,
+				(gpointer) mail_info.encapsulation,
 
-  gtk_table_attach (GTK_TABLE (table), button1, 1, 2, 6, 7,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show  (button1);
+				_("Uuencode"),
+				(gpointer) ENCAPSULATION_UUENCODE, NULL,
+				_("MIME"),
+				(gpointer) ENCAPSULATION_MIME, NULL,
 
-  gtk_table_attach (GTK_TABLE (table), button2, 1, 2, 7, 8,
+				NULL);
+  gtk_table_attach (GTK_TABLE (table), vbox, 1, 2, 6, 8,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (button2);
+  gtk_widget_show (vbox);
 
   gtk_widget_show (dlg);
 
@@ -719,7 +656,7 @@ valid_file (gchar *filename)
     return 0;
 }
 
-gchar *
+static gchar *
 find_content_type (gchar *filename)
 {
   /* This function returns a MIME Content-type: value based on the
@@ -817,54 +754,10 @@ ok_callback (GtkWidget *widget,
 }
 
 static void
-encap_callback (GtkWidget *widget,
-		gpointer   data)
+mail_entry_callback (GtkWidget *widget,
+		     gpointer   data)
 {
-  /* Ignore the toggle-off signal, we are only interested in
-     what is being set */
-  if (! GTK_TOGGLE_BUTTON (widget)->active)
-    {
-      return;
-    }
-  if (strcmp (data, "uuencode") == 0)
-    mail_info.encapsulation = ENCAPSULATION_UUENCODE;
-  if (strcmp (data, "mime") == 0)
-    mail_info.encapsulation = ENCAPSULATION_MIME;
-}
-
-static void
-receipt_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  strncpy (mail_info.receipt, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
-}
-
-static void
-from_callback (GtkWidget *widget,
-	       gpointer   data)
-{
-  strncpy (mail_info.from, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
-}
-
-static void
-subject_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  strncpy (mail_info.subject, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
-}
-
-static void
-comment_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  strncpy (mail_info.comment, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
-}
-
-static void
-filename_callback (GtkWidget *widget,
-		   gpointer   data)
-{
-  strncpy (mail_info.filename, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
+  strncpy ((gchar *) data, gtk_entry_get_text (GTK_ENTRY (widget)), BUFFER_SIZE);
 }
 
 static void 
@@ -967,7 +860,7 @@ static gint
 to64 (FILE *infile,
       FILE *outfile) 
 {
-  int c1, c2, c3, ct=0, written=0;
+  gint c1, c2, c3, ct = 0, written = 0;
 
   while ((c1 = getc (infile)) != EOF)
     {
@@ -1014,6 +907,7 @@ output64chunk (gint  c1,
 {
   putc (basis_64[c1>>2], outfile);
   putc (basis_64[((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4)], outfile);
+
   if (pads == 2)
     {
       putc ('=', outfile);

@@ -75,21 +75,17 @@
 
 /*---- Defines ----*/
 
-#ifndef RAND_MAX
-#define RAND_MAX 2147483647
-#endif /* RAND_MAX */
-
 #define TABLE_SIZE 64
 #define WEIGHT(T) ((2.0*fabs(T)-3.0)*(T)*(T)+1.0)
 
-#define ENTRY_WIDTH 40
 #define SCALE_WIDTH 128
-#define SCALE_MAX 16.0
+#define SCALE_MAX    16.0
 
 
 /*---- Typedefs ----*/
 
-typedef struct {
+typedef struct
+{
   gint    tilable;
   gint    turbulent;
   gint    seed;
@@ -100,68 +96,75 @@ typedef struct {
   gint    timeseed;
 } SolidNoiseValues;
 
-typedef struct {
+typedef struct
+{
   gint run;
 } SolidNoiseInterface;
 
-typedef struct {
-  double x, y;
+typedef struct
+{
+  gdouble x, y;
 } Vector2d;
 
 
 /*---- Prototypes ----*/
 
 static void query (void);
-static void run (char *name, int nparams, GParam  *param,
-                 int *nreturn_vals, GParam **return_vals);
+static void run   (gchar   *name,
+		   gint     nparams,
+		   GParam  *param,
+		   gint    *nreturn_vals,
+		   GParam **return_vals);
 
-static void solid_noise (GDrawable *drawable);
-static void solid_noise_init (void);
-static double plain_noise (double x, double y, unsigned int s);
-static double noise (double x, double y);
+static void    solid_noise      (GDrawable *drawable);
+static void    solid_noise_init (void);
+static gdouble plain_noise      (gdouble    x,
+				 gdouble    y,
+				 guint      s);
+static gdouble noise            (gdouble    x,
+				 gdouble    y);
 
-static gint solid_noise_dialog (void);
-static void dialog_toggle_update (GtkWidget *widget, gpointer data);
-static void dialog_entry_callback (GtkWidget *widget, gpointer data);
-static void dialog_scale_callback (GtkAdjustment *adjustment, gdouble *value);
-static void dialog_ok_callback (GtkWidget *widget, gpointer data);
+static gint    solid_noise_dialog    (void);
+static void    dialog_ok_callback    (GtkWidget *widget,
+				      gpointer   data);
 
 
 /*---- Variables ----*/
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,  /* init_proc */
-  NULL,  /* quit_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
   query, /* query_proc */
-  run,   /* run_proc */
+  run,   /* run_proc   */
 };
 
-static SolidNoiseValues snvals = {
-  0,   /* tilable */
-  0,   /* turbulent */
-  1,   /* seed */
-  1,   /* detail */
-  4.0, /* xsize */
-  4.0, /* ysize */
+static SolidNoiseValues snvals =
+{
+  0,   /* tilable       */
+  0,   /* turbulent     */
+  1,   /* seed          */
+  1,   /* detail        */
+  4.0, /* xsize         */
+  4.0, /* ysize         */
   0    /* use time seed */ 
 };
 
-static SolidNoiseInterface snint = {
+static SolidNoiseInterface snint =
+{
   FALSE /* run */
 };
 
-static int xclip, yclip;
-static double offset, factor;
-static double xsize, ysize;
-static int perm_tab[TABLE_SIZE];
+static gint     xclip, yclip;
+static gdouble  offset, factor;
+static gdouble  xsize, ysize;
+static gint     perm_tab[TABLE_SIZE];
 static Vector2d grad_tab[TABLE_SIZE];
 
 
 /*---- Functions ----*/
 
 MAIN()
-
 
 static void
 query (void)
@@ -201,7 +204,10 @@ query (void)
 
 
 static void
-run (char *name, int nparams, GParam *param, int *nreturn_vals,
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -223,46 +229,47 @@ run (char *name, int nparams, GParam *param, int *nreturn_vals,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  See how we will run  */
-  switch (run_mode) {
-  case RUN_INTERACTIVE:
-    INIT_I18N_UI();
-    /*  Possibly retrieve data  */
-    gimp_get_data("plug_in_solid_noise", &snvals);
+  switch (run_mode)
+    {
+    case RUN_INTERACTIVE:
+      INIT_I18N_UI();
+      /*  Possibly retrieve data  */
+      gimp_get_data("plug_in_solid_noise", &snvals);
 
-    /*  Get information from the dialog  */
-    if (!solid_noise_dialog ())
-      return;
+      /*  Get information from the dialog  */
+      if (!solid_noise_dialog ())
+	return;
+      break;
 
-    break;
+    case RUN_NONINTERACTIVE:
+      INIT_I18N();
+      /*  Test number of arguments  */
+      if (nparams == 9)
+	{
+	  snvals.tilable   = param[3].data.d_int32;
+	  snvals.turbulent = param[4].data.d_int32;
+	  snvals.seed      = param[5].data.d_int32;
+	  snvals.detail    = param[6].data.d_int32;
+	  snvals.xsize     = param[7].data.d_float;
+	  snvals.ysize     = param[8].data.d_float;
+	}
+      else
+	status = STATUS_CALLING_ERROR;
+      break;
 
-  case RUN_NONINTERACTIVE:
-    INIT_I18N();
-    /*  Test number of arguments  */
-    if (nparams == 9) {
-      snvals.tilable = param[3].data.d_int32;
-      snvals.turbulent = param[4].data.d_int32;
-      snvals.seed = param[5].data.d_int32;
-      snvals.detail = param[6].data.d_int32;
-      snvals.xsize = param[7].data.d_float;
-      snvals.ysize = param[8].data.d_float;
+    case RUN_WITH_LAST_VALS:
+      INIT_I18N();
+      /*  Possibly retrieve data  */
+      gimp_get_data("plug_in_solid_noise", &snvals);
+      break;
+
+    default:
+      break;
     }
-    else
-      status = STATUS_CALLING_ERROR;
-    break;
-
-  case RUN_WITH_LAST_VALS:
-    INIT_I18N();
-    /*  Possibly retrieve data  */
-    gimp_get_data("plug_in_solid_noise", &snvals);
-    break;
-    
-  default:
-    break;
-  }
   
   /*  Create texture  */
   if ((status == STATUS_SUCCESS) && (gimp_drawable_is_rgb (drawable->id) ||
-      gimp_drawable_is_gray (drawable->id)))
+				     gimp_drawable_is_gray (drawable->id)))
     {
       /*  Set the tile cache size  */
       gimp_tile_cache_ntiles((drawable->width + gimp_tile_width() - 1) / gimp_tile_width());
@@ -276,18 +283,18 @@ run (char *name, int nparams, GParam *param, int *nreturn_vals,
 
       /*  Store data  */
       if (run_mode==RUN_INTERACTIVE || run_mode==RUN_WITH_LAST_VALS)
-        gimp_set_data("plug_in_solid_noise", &snvals,
-                      sizeof(SolidNoiseValues));
+        gimp_set_data ("plug_in_solid_noise", &snvals,
+		       sizeof (SolidNoiseValues));
     }
   else
     {
       /* gimp_message ("solid noise: cannot operate on indexed color images"); */
       status = STATUS_EXECUTION_ERROR;
     }  
-  
+
   values[0].data.d_status = status;
   
-  gimp_drawable_detach(drawable);
+  gimp_drawable_detach (drawable);
 }
 
 
@@ -315,10 +322,11 @@ solid_noise (GDrawable *drawable)
   max_progress = sel_width * sel_height;
   chns = gimp_drawable_bpp (drawable->id);
   has_alpha = 0;
-  if (gimp_drawable_has_alpha (drawable->id)) {
-    chns--;
-    has_alpha = 1;
-  }
+  if (gimp_drawable_has_alpha (drawable->id))
+    {
+      chns--;
+      has_alpha = 1;
+    }
   gimp_pixel_rgn_init (&dest_rgn, drawable, sel_x1, sel_y1, sel_width,
                        sel_height, TRUE, TRUE);
 
@@ -359,8 +367,8 @@ solid_noise (GDrawable *drawable)
 static void
 solid_noise_init (void)
 {
-  int i, j, k, t;
-  double m;
+  gint i, j, k, t;
+  gdouble m;
 
   /*  Force sane parameters  */
   if (snvals.detail < 0)
@@ -376,58 +384,71 @@ solid_noise_init (void)
   srand (snvals.seed);
 
   /*  Set scaling factors  */
-  if (snvals.tilable) {
-    xsize = ceil (snvals.xsize);
-    ysize = ceil (snvals.ysize);
-    xclip = (int) xsize;
-    yclip = (int) ysize;
-  }
-  else {
-    xsize = snvals.xsize;
-    ysize = snvals.ysize;
-  }
+  if (snvals.tilable)
+    {
+      xsize = ceil (snvals.xsize);
+      ysize = ceil (snvals.ysize);
+      xclip = (int) xsize;
+      yclip = (int) ysize;
+    }
+  else
+    {
+      xsize = snvals.xsize;
+      ysize = snvals.ysize;
+    }
 
   /*  Set totally empiric normalization values  */
-  if (snvals.turbulent) {
-    offset=0.0;
-    factor=1.0;
-  }
-  else {
-    offset=0.94;
-    factor=0.526;
-  }
+  if (snvals.turbulent)
+    {
+      offset=0.0;
+      factor=1.0;
+    }
+  else
+    {
+      offset=0.94;
+      factor=0.526;
+    }
   
   /*  Initialize the permutation table  */
   for (i = 0; i < TABLE_SIZE; i++)
     perm_tab[i] = i;
-  for (i = 0; i < (TABLE_SIZE >> 1); i++) {
-    j = rand () % TABLE_SIZE;
-    k = rand () % TABLE_SIZE;
-    t = perm_tab[j];
-    perm_tab[j] = perm_tab[k];
-    perm_tab[k] = t;
-  }
+  for (i = 0; i < (TABLE_SIZE >> 1); i++)
+    {
+      j = rand () % TABLE_SIZE;
+      k = rand () % TABLE_SIZE;
+      t = perm_tab[j];
+      perm_tab[j] = perm_tab[k];
+      perm_tab[k] = t;
+    }
   
   /*  Initialize the gradient table  */
-  for (i = 0; i < TABLE_SIZE; i++) {
-    do {
-      grad_tab[i].x = (double)(rand () - (RAND_MAX >> 1)) / (RAND_MAX >> 1);
-      grad_tab[i].y = (double)(rand () - (RAND_MAX >> 1)) / (RAND_MAX >> 1);
-      m = grad_tab[i].x * grad_tab[i].x + grad_tab[i].y * grad_tab[i].y;
-    } while (m == 0.0 || m > 1.0);
-    m = 1.0 / sqrt(m);
-    grad_tab[i].x *= m;
-    grad_tab[i].y *= m;
-  }
+  for (i = 0; i < TABLE_SIZE; i++)
+    {
+      do
+	{
+	  grad_tab[i].x =
+	    (double)(rand () - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1);
+	  grad_tab[i].y =
+	    (double)(rand () - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1);
+	  m = grad_tab[i].x * grad_tab[i].x + grad_tab[i].y * grad_tab[i].y;
+	}
+      while (m == 0.0 || m > 1.0);
+
+      m = 1.0 / sqrt(m);
+      grad_tab[i].x *= m;
+      grad_tab[i].y *= m;
+    }
 }
 
 
-static double
-plain_noise (double x, double y, unsigned int s)
+static gdouble
+plain_noise (gdouble x,
+	     gdouble y,
+	     guint   s)
 {
   Vector2d v;
-  int a, b, i, j, n;
-  double sum;
+  gint a, b, i, j, n;
+  gdouble sum;
 
   sum = 0.0;
   x *= s;
@@ -436,40 +457,43 @@ plain_noise (double x, double y, unsigned int s)
   b = (int) floor (y);
 
   for (i = 0; i < 2; i++)
-    for (j = 0; j < 2; j++) {
-      if (snvals.tilable) 
-        n = perm_tab[(((a + i) % (xclip * s)) + perm_tab[((b + j) % (yclip * s)) % TABLE_SIZE]) % TABLE_SIZE];
-      else
-        n = perm_tab[(a + i + perm_tab[(b + j) % TABLE_SIZE]) % TABLE_SIZE];
-      v.x = x - a - i;
-      v.y = y - b - j;
-      sum += WEIGHT(v.x) * WEIGHT(v.y) * (grad_tab[n].x * v.x + grad_tab[n].y * v.y);
-    }
-  
+    for (j = 0; j < 2; j++)
+      {
+	if (snvals.tilable) 
+	  n = perm_tab[(((a + i) % (xclip * s)) + perm_tab[((b + j) % (yclip * s)) % TABLE_SIZE]) % TABLE_SIZE];
+	else
+	  n = perm_tab[(a + i + perm_tab[(b + j) % TABLE_SIZE]) % TABLE_SIZE];
+	v.x = x - a - i;
+	v.y = y - b - j;
+	sum += WEIGHT(v.x) * WEIGHT(v.y) * (grad_tab[n].x * v.x + grad_tab[n].y * v.y);
+      }
+
   return sum / s;
 }
 
 
-static double
-noise (double x, double y)
+static gdouble
+noise (gdouble x,
+       gdouble y)
 {
-  int i;
-  unsigned int s;
-  double sum;
+  gint i;
+  guint s;
+  gdouble sum;
 
   s = 1;
   sum = 0.0;
   x *= xsize;
   y *= ysize;
   
-  for (i = 0; i <= snvals.detail; i++) {
-    if (snvals.turbulent)
-      sum += fabs (plain_noise (x, y, s));
-    else
-      sum += plain_noise (x, y, s);
-    s <<= 1;
-  }
-  
+  for (i = 0; i <= snvals.detail; i++)
+    {
+      if (snvals.turbulent)
+	sum += fabs (plain_noise (x, y, s));
+      else
+	sum += plain_noise (x, y, s);
+      s <<= 1;
+    }
+
   return (sum+offset)*factor;
 }
 
@@ -478,17 +502,14 @@ static gint
 solid_noise_dialog (void)
 {
   GtkWidget *dlg;
+  GtkWidget *frame;
   GtkWidget *toggle;
   GtkWidget *table;
-  GtkWidget *label;
-  GtkWidget *entry;
   GtkWidget *seed_hbox;
-  GtkWidget *time_button;
-  GtkWidget *scale;
-  GtkObject *scale_data;
+  GtkWidget *spinbutton;
+  GtkObject *adj;
   gchar **argv;
   gint    argc;
-  gchar   buffer[32];
 
   /*  Set args  */
   argc    = 1;
@@ -515,162 +536,83 @@ solid_noise_dialog (void)
                       GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
+  gimp_help_init ();
+
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   /*  Table  */
   table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
-  /*  Entry #1  */
-  label = gtk_label_new ( _("Seed:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    GTK_FILL, GTK_FILL, 1, 0);
-  gtk_widget_show (label);
+  /*  Random Seed  */
+  seed_hbox = gimp_random_seed_new (&snvals.seed, &snvals.timeseed,
+				    TRUE, FALSE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Random Seed:"), 1.0, 0.5,
+			     seed_hbox, TRUE);
 
-  seed_hbox = gtk_hbox_new (FALSE, 4);
-  gtk_table_attach (GTK_TABLE (table), seed_hbox, 1, 2, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-
-  entry = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (seed_hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%d", snvals.seed);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      (GtkSignalFunc) dialog_entry_callback,
-		      &snvals.seed);
-  gtk_widget_show (entry);
-
-  time_button = gtk_toggle_button_new_with_label ( _("Time"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(time_button), snvals.timeseed);
-  gtk_signal_connect (GTK_OBJECT (time_button), "toggled",
-		      (GtkSignalFunc) dialog_toggle_update,
-		      &snvals.timeseed);
-  gtk_box_pack_end (GTK_BOX (seed_hbox), time_button, FALSE, FALSE, 0);
-  gtk_widget_show (time_button);
-  gtk_widget_show (seed_hbox);
-
-  /*  Entry #2  */
-  label = gtk_label_new (_("Detail:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                    GTK_FILL, GTK_FILL, 1, 0);
-  gtk_widget_show (label);
-  
-  entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf(buffer, "%d", snvals.detail);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      (GtkSignalFunc) dialog_entry_callback,
+  /*  Detail  */
+  spinbutton = gimp_spin_button_new (&adj, snvals.detail,
+				     1, 15, 1, 3, 0, 1, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("Detail:"), 1.0, 0.5,
+			     spinbutton, TRUE);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &snvals.detail);
-  gtk_widget_show (entry);
 
-  /*  Check button #1  */
+  /*  Turbulent  */
   toggle = gtk_check_button_new_with_label ( _("Turbulent"));
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 1, 0);
+                    GTK_SHRINK | GTK_FILL, GTK_FILL, 1, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.turbulent);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      (GtkSignalFunc) dialog_toggle_update,
+                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &snvals.turbulent);
   gtk_widget_show (toggle);
 
-  /*  Check button #2  */
+  /*  Tilable  */
   toggle = gtk_check_button_new_with_label ( _("Tilable"));
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 1, 0);
+                    GTK_SHRINK | GTK_FILL, GTK_FILL, 1, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.tilable);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      (GtkSignalFunc) dialog_toggle_update,
+                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &snvals.tilable);
   gtk_widget_show (toggle);
 
-  /*  Scale #1  */
-  label = gtk_label_new ( _("X Size:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-                    GTK_FILL, GTK_FILL, 1, 0);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (snvals.xsize, 0.1, SCALE_MAX,
-                                   0.1, 0.1, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 3, 2, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 1);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) dialog_scale_callback,
+  /*  X Size  */
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			      _("X Size:"), SCALE_WIDTH, 0,
+			      snvals.xsize, 0.1, SCALE_MAX, 0.1, 1.0, 1,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &snvals.xsize);
-  gtk_widget_show (scale);
 
-  /*  Scale #2  */
-  label = gtk_label_new ( _("Y Size:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-                    GTK_FILL, GTK_FILL, 1, 0);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (snvals.ysize, 0.1, SCALE_MAX,
-                                   0.1, 0.1, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 3, 3, 4,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 1);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) dialog_scale_callback,
+  /*  Y Size  */
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+			      _("Y Size:"), SCALE_WIDTH, 0,
+			      snvals.ysize, 0.1, SCALE_MAX, 0.1, 1.0, 1,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &snvals.ysize);
-  gtk_widget_show (scale);
 
   gtk_widget_show (table);
   gtk_widget_show (dlg);
 
   gtk_main ();
+  gimp_help_free ();
   gdk_flush ();
 
   return snint.run;
-}
-
-static void
-dialog_toggle_update (GtkWidget *widget,
-		      gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-dialog_entry_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  gint *text_val;
-
-  text_val = (gint *) data;
-
-  *text_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-}
-
-static void
-dialog_scale_callback (GtkAdjustment *adjustment,
-		       gdouble       *value)
-{
-  *value = adjustment->value;
 }
 
 static void

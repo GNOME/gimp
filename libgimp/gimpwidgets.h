@@ -99,6 +99,11 @@ GtkObject * gimp_scale_entry_new   (GtkTable           *table,
 				    gchar              *tooltip,
 				    gchar              *private_tip);
 
+GtkWidget * gimp_random_seed_new   (gint               *seed,
+				    gint               *use_time,
+				    gint                time_true,
+				    gint                time_false);
+
 /*
  *  Standard Callbacks
  */

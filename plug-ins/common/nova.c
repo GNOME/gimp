@@ -77,10 +77,6 @@ static char rcsid[] = "$Id$";
 
 /* Some useful macros */
 
-#ifndef RAND_MAX
-#define RAND_MAX 2147483647
-#endif /* RAND_MAX */
-
 #if 0
 #define DEBUG1 printf
 #else
@@ -881,14 +877,16 @@ nova_center_preview_events (GtkWidget *widget,
   ################################################################
 */
 
-static double 
+static gdouble
 gauss (void)
 {
-  double sum=0;
-  int i;
-  for(i=0; i<6; i++)
-    sum+=(double)rand()/RAND_MAX;
-  return sum/6;
+  gdouble sum = 0;
+  gint i;
+
+  for (i = 0; i < 6; i++)
+    sum += (gdouble) rand () / G_MAXRAND;
+
+  return sum / 6;
 }
 
 static void
@@ -934,7 +932,7 @@ nova (GDrawable *drawable)
      {
        spoke[i] = gauss();
        h += ((gdouble) pvals.randomhue / 360.0 *
-	     ((gdouble) rand() / (gdouble) RAND_MAX - 0.5));
+	     ((gdouble) rand() / (gdouble) G_MAXRAND - 0.5));
        if (h < 0)
 	 h += 1.0;
        else if (h >= 1.0)

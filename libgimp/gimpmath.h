@@ -17,7 +17,6 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-
 #ifndef __GIMPMATH_H__
 #define __GIMPMATH_H__
 
@@ -44,6 +43,12 @@ extern "C" {
 #endif
 #ifndef G_SQRT2			/* As will G_SQRT2 */
 #define G_SQRT2 1.4142135623730951
+#endif
+
+#ifndef RAND_MAX
+#define G_MAXRAND G_MAXINT
+#else
+#define G_MAXRAND RAND_MAX
 #endif
 
 /* Use RINT() instead of rint() */

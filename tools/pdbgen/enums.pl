@@ -383,11 +383,12 @@ package Gimp::CodeGen::enums;
 	{ contig => 1,
 	  header => 'procedural_db.h',
 	  symbols => [ qw(PDB_EXECUTION_ERROR PDB_CALLING_ERROR
-			  PDB_PASS_THROUGH PDB_SUCCESS) ],
+			  PDB_PASS_THROUGH PDB_SUCCESS PDB_CANCEL) ],
 	  mapping => { PDB_EXECUTION_ERROR => '0',
 		       PDB_CALLING_ERROR => '1',
 		       PDB_PASS_THROUGH => '2',
-		       PDB_SUCCESS => '3' }
+		       PDB_SUCCESS => '3',
+		       PDB_CANCEL => '4' }
 	},
     PDBProcType =>
 	{ contig => 1,

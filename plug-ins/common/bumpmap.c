@@ -757,8 +757,12 @@ static gint
 bumpmap_dialog (void)
 {
   GtkWidget *dialog;
-  GtkWidget *top_table;
+  GtkWidget *top_vbox;
+  GtkWidget *hbox;
   GtkWidget *frame;
+  GtkWidget *sep;
+  GtkWidget *abox;
+  GtkWidget *pframe;
   GtkWidget *table;
   GtkWidget *right_vbox;
   GtkWidget *label;
@@ -809,19 +813,30 @@ bumpmap_dialog (void)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  top_table = gtk_table_new (2, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (top_table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (top_table), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), top_table,
+  top_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (top_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), top_vbox,
 		      FALSE, FALSE, 0);
-  gtk_widget_show (top_table);
+  gtk_widget_show (top_vbox);
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (top_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   /* Preview */
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (top_table), frame, 0, 1, 0, 1, 0, 0, 0, 0);
+  frame = gtk_frame_new (_("Preview"));
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_widget_show (abox);
+
+  pframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (pframe), 4);
+  gtk_container_add (GTK_CONTAINER (abox), pframe);
+  gtk_widget_show (pframe);
 
   bmint.preview_width  = MIN (sel_width, PREVIEW_SIZE);
   bmint.preview_height = MIN (sel_height, PREVIEW_SIZE);
@@ -829,7 +844,7 @@ bumpmap_dialog (void)
   bmint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (bmint.preview),
 		    bmint.preview_width, bmint.preview_height);
-  gtk_container_add (GTK_CONTAINER (frame), bmint.preview);
+  gtk_container_add (GTK_CONTAINER (pframe), bmint.preview);
   gtk_widget_show (bmint.preview);
 
   gtk_widget_set_events (bmint.preview, 
@@ -843,17 +858,30 @@ bumpmap_dialog (void)
 
   dialog_init_preview ();
 
-  /* vbox for upper-right controls */
+  /* Type of map */
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Map Type"),
+			   dialog_map_type_callback,
+			   &bmvals.type, (gpointer) bmvals.type,
 
-  right_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_table_attach (GTK_TABLE (top_table), right_vbox, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (right_vbox);
+			   _("Linear Map"),     (gpointer) LINEAR, NULL,
+			   _("Spherical Map"),  (gpointer) SPHERICAL, NULL,
+			   _("Sinuosidal Map"), (gpointer) SINUOSIDAL, NULL,
+
+			   NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  right_vbox = GTK_BIN (frame)->child;
+
+  sep = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (right_vbox), sep, FALSE, FALSE, 1);
+  gtk_widget_show (sep);
 
   /* Compensate darkening */
 
   button = gtk_check_button_new_with_label (_("Compensate for Darkening"));
-  gtk_box_pack_start (GTK_BOX (right_vbox), button, FALSE, FALSE, 0);;
+  gtk_box_pack_start (GTK_BOX (right_vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(button),
 				bmvals.compensate ? TRUE : FALSE);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
@@ -872,29 +900,12 @@ bumpmap_dialog (void)
 		      NULL);
   gtk_widget_show (button);
 
-  /* Type of map */
-
-  frame =
-    gimp_radio_group_new2 (TRUE, NULL,
-			   dialog_map_type_callback,
-			   &bmvals.type, (gpointer) bmvals.type,
-
-			   _("Linear Map"),     (gpointer) LINEAR, NULL,
-			   _("Spherical Map"),  (gpointer) SPHERICAL, NULL,
-			   _("Sinuosidal Map"), (gpointer) SINUOSIDAL, NULL,
-
-			   NULL);
-
-  gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   /* Table for bottom controls */
 
   table = gtk_table_new (8, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_attach (GTK_TABLE (top_table), table, 0, 2, 1, 2,
-		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (top_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /* Bump map menu */

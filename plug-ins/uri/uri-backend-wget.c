@@ -32,25 +32,26 @@
 /* Author: Josh MacDonald. */
 
 static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
-                          GParam  *param,
-                          int     *nreturn_vals,
-                          GParam **return_vals);
-static gint32 load_image (char   *filename);
+static void   run        (gchar       *name,
+                          gint         nparams,
+                          GParam      *param,
+                          gint        *nreturn_vals,
+                          GParam     **return_vals);
+static gint32 load_image (gchar       *filename,
+			  GStatusType *status /* return value */);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef load_args[] =
   {
@@ -58,14 +59,13 @@ query ()
     { PARAM_STRING, "filename", "The name of the file to load" },
     { PARAM_STRING, "raw_filename", "The name entered" },
   };
-
   static GParamDef load_return_vals[] =
   {
     { PARAM_IMAGE, "image", "Output image" },
   };
-
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
   INIT_I18N();
 
@@ -81,60 +81,65 @@ query ()
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
-  gimp_register_load_handler ("file_url_load", "", "http:,ftp:");
+  gimp_register_load_handler ("file_url_load",
+			      "",
+			      "http:,ftp:");
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  GRunModeType run_mode;
-  gint32 image_ID;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "file_url_load") == 0)
     {
-      image_ID = load_image (param[2].data.d_string);
-      if (image_ID != -1)
+      image_ID = load_image (param[2].data.d_string, &status);
+
+      if (image_ID != -1 &&
+	  status == STATUS_SUCCESS)
 	{
 	  *nreturn_vals = 2;
-	  values[0].data.d_status = STATUS_SUCCESS;
-	  values[1].type = PARAM_IMAGE;
+	  values[1].type         = PARAM_IMAGE;
 	  values[1].data.d_image = image_ID;
-	}
-      else
-	{
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 	}
     }
   else
-    g_assert (FALSE);
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
 static gint32
-load_image (char *filename)
+load_image (gchar       *filename,
+	    GStatusType *status)
 {
   GParam* params;
   gint retvals;
-  char* ext = strrchr (filename, '.');
-  char* tmpname;
-  int pid;
-  int status;
+  gchar *ext = strrchr (filename, '.');
+  gchar *tmpname;
+  gint pid;
+  gint process_status;
 
   if (!ext || ext[1] == 0 || strchr(ext, '/'))
     {
       g_message ("url: can't open URL without an extension\n");
+      *status = STATUS_CALLING_ERROR;
       return -1;
     }
 
@@ -151,6 +156,7 @@ load_image (char *filename)
     {
       g_message ("url: fork failed: %s\n", g_strerror(errno));
       g_free (tmpname);
+      *status = STATUS_EXECUTION_ERROR;
       return -1;
     }
   else if (pid == 0)
@@ -167,17 +173,19 @@ load_image (char *filename)
     {
       g_message ("url: spawn failed: %s\n", g_strerror(errno));
       g_free (tmpname);
+      *status = STATUS_EXECUTION_ERROR;
       return -1;
     }
 #endif
     {
-      waitpid (pid, &status, 0);
+      waitpid (pid, &process_status, 0);
 
-      if (!WIFEXITED(status) ||
-	  WEXITSTATUS(status) != 0)
+      if (!WIFEXITED (process_status) ||
+	  WEXITSTATUS (process_status) != 0)
 	{
 	  g_message ("url: wget exited abnormally on URL %s\n", filename);
 	  g_free (tmpname);
+	  *status = STATUS_EXECUTION_ERROR;
 	  return -1;
 	}
     }
@@ -192,8 +200,12 @@ load_image (char *filename)
   unlink (tmpname);
   g_free (tmpname);
 
-  if (params[0].data.d_status == FALSE)
-    return -1;
+  *status = params[0].data.d_status;
+
+  if (params[0].data.d_status != STATUS_SUCCESS)
+    {
+      return -1;
+    }
   else
     {
       gimp_image_set_filename (params[1].data.d_int32, filename);

@@ -31,7 +31,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -73,7 +72,7 @@ static void	    prepare_row                (GPixelRgn     *pixel_rgn,
 
 static void         vpropagate_ok_callback     (GtkWidget     *widget,
 						gpointer       data);
-static GtkWidget *  gtkW_table_add_toggle      (GtkWidget     *table,
+static GtkWidget *  gtk_table_add_toggle       (GtkWidget     *table,
 						gchar	      *name,
 						gint	       x1,
 						gint	       x2,
@@ -105,7 +104,6 @@ GPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-#define ENTRY_WIDTH	   100
 #define UPDATE_STEP	    20
 #define SCALE_WIDTH	   100
 #define PROPAGATING_VALUE  1<<0
@@ -196,7 +194,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args [] =
+  static GParamDef args[] =
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive"},
     { PARAM_IMAGE, "image", "Input image (not used)"},
@@ -208,9 +206,7 @@ query (void)
     { PARAM_INT32, "lower-limit", "0 <= lower-limit <= 255"},
     { PARAM_INT32, "upper-limit", "0 <= upper-limit <= 255"},
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
   
@@ -220,11 +216,11 @@ query (void)
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1996-1997",
-              N_("<Image>/Filters/Distorts/Value Propagate..."),
+			  N_("<Image>/Filters/Distorts/Value Propagate..."),
 			  "RGB*,GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -1023,18 +1019,18 @@ vpropagate_dialog (GImageType image_type)
   gtk_table_attach (GTK_TABLE (table), sep, 0, 3, 3, 4, GTK_FILL, 0, 0, 0);
   gtk_widget_show (sep);
 
-  gtkW_table_add_toggle (table, _("To Left"), 0, 1, 5,
-			 (GtkSignalFunc) gimp_toggle_button_update,
-			 &direction_mask_vec[Right2Left]);
-  gtkW_table_add_toggle (table, _("To Right"), 2, 3, 5,
-			 (GtkSignalFunc) gimp_toggle_button_update,
-			 &direction_mask_vec[Left2Right]);
-  gtkW_table_add_toggle (table, _("To Top"), 1, 2, 4,
-			 (GtkSignalFunc) gimp_toggle_button_update,
-			 &direction_mask_vec[Bottom2Top]);
-  gtkW_table_add_toggle (table, _("To Bottom"), 1, 2, 6,
-			 (GtkSignalFunc) gimp_toggle_button_update,
-			 &direction_mask_vec[Top2Bottom]);
+  gtk_table_add_toggle (table, _("To Left"), 0, 1, 5,
+			(GtkSignalFunc) gimp_toggle_button_update,
+			&direction_mask_vec[Right2Left]);
+  gtk_table_add_toggle (table, _("To Right"), 2, 3, 5,
+			(GtkSignalFunc) gimp_toggle_button_update,
+			&direction_mask_vec[Left2Right]);
+  gtk_table_add_toggle (table, _("To Top"), 1, 2, 4,
+			(GtkSignalFunc) gimp_toggle_button_update,
+			&direction_mask_vec[Bottom2Top]);
+  gtk_table_add_toggle (table, _("To Bottom"), 1, 2, 6,
+			(GtkSignalFunc) gimp_toggle_button_update,
+			&direction_mask_vec[Top2Bottom]);
   if ((image_type == RGBA_IMAGE) | (image_type == GRAYA_IMAGE))
     {
       sep = gtk_hseparator_new ();
@@ -1045,19 +1041,19 @@ vpropagate_dialog (GImageType image_type)
 	GtkWidget *toggle;
 	
 	toggle =
-	  gtkW_table_add_toggle (table, _("Propagating Alpha Channel"),
-				 0, 3, 8,
-				 (GtkSignalFunc) gimp_toggle_button_update,
-				 &propagate_alpha);
+	  gtk_table_add_toggle (table, _("Propagating Alpha Channel"),
+				0, 3, 8,
+				(GtkSignalFunc) gimp_toggle_button_update,
+				&propagate_alpha);
 	if (gimp_layer_get_preserve_transparency (drawable_id))
 	  {
 	    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), 0);
 	    gtk_widget_set_sensitive (toggle, FALSE);
 	  }
       }
-      gtkW_table_add_toggle (table, _("Propagating Value Channel"), 0, 3, 9,
-			     (GtkSignalFunc) gimp_toggle_button_update,
-			     &propagate_value);
+      gtk_table_add_toggle (table, _("Propagating Value Channel"), 0, 3, 9,
+			    (GtkSignalFunc) gimp_toggle_button_update,
+			    &propagate_value);
     }
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -1089,13 +1085,13 @@ vpropagate_ok_callback (GtkWidget *widget,
 }
 
 static GtkWidget *
-gtkW_table_add_toggle (GtkWidget     *table,
-		       gchar	     *name,
-		       gint	      x1,
-		       gint	      x2,
-		       gint	      y,
-		       GtkSignalFunc  update,
-		       gint	     *value)
+gtk_table_add_toggle (GtkWidget     *table,
+		      gchar	    *name,
+		      gint	     x1,
+		      gint	     x2,
+		      gint	     y,
+		      GtkSignalFunc  update,
+		      gint	    *value)
 {
   GtkWidget *toggle;
   
@@ -1107,5 +1103,6 @@ gtkW_table_add_toggle (GtkWidget     *table,
 		      value);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
   gtk_widget_show (toggle);
+
   return toggle;
 }

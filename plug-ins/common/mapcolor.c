@@ -301,7 +301,7 @@ static gint
 dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *hbox;
+  GtkWidget *frame;
   GtkWidget *table;
   guchar  *color_cube;
   gchar  **argv;
@@ -341,17 +341,18 @@ dialog (void)
                       GTK_SIGNAL_FUNC (gtk_main_quit),
                       NULL);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+  frame = gtk_frame_new (_("Colors"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   /* The table keeps the color selections */
   table = gtk_table_new (2, 4, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
-  gtk_box_pack_start (GTK_BOX (hbox), table, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   add_color_button (0, 0, 0, table);

@@ -814,7 +814,9 @@ dialog_update_preview (void)
 			    dint.preview_row, 0, y, PREVIEW_WIDTH);
 
       gtk_progress_bar_update (GTK_PROGRESS_BAR (dint.progress),
-			       (double) y / (PREVIEW_HEIGHT - 1));
+			       (double) y / (double) (PREVIEW_HEIGHT - 1));
+      gtk_widget_draw (dint.progress, NULL);
+      gdk_flush ();
 
       py += dy;
     }

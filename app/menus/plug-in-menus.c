@@ -1602,7 +1602,7 @@ plug_in_handle_proc_run (GPProcRun *proc_run)
        *  dummy "executiuon error" return value --Michael
        */
       return_vals = g_new (Argument, 1);
-      return_vals[0].arg_type = PDB_INT32;
+      return_vals[0].arg_type = PDB_STATUS;
       return_vals[0].value.pdb_int = PDB_EXECUTION_ERROR;
     }
 

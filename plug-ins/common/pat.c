@@ -20,8 +20,10 @@
 #include <math.h>
 
 #include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #ifdef G_OS_WIN32
@@ -42,28 +44,30 @@ gboolean run_flag = FALSE;
 
 /* Declare some local functions.
  */
-static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
-                          GParam  *param,
-                          int     *nreturn_vals,
-                          GParam **return_vals);
-static gint32 load_image (gchar  *filename);
-static gint   save_image (gchar  *filename,
-                          gint32  image_ID,
-                          gint32  drawable_ID);
+static void   query        (void);
+static void   run          (gchar     *name,
+                            gint       nparams,
+                            GParam    *param,
+                            gint      *nreturn_vals,
+                            GParam   **return_vals);
+static gint32 load_image   (gchar     *filename);
+static gint   save_image   (gchar     *filename,
+                            gint32     image_ID,
+                            gint32     drawable_ID);
 
 static void init_gtk       (void);
 static gint save_dialog    (void);
-static void ok_callback    (GtkWidget * widget, gpointer data);
-static void entry_callback (GtkWidget * widget, gpointer data);
+static void ok_callback    (GtkWidget *widget,
+			    gpointer   data);
+static void entry_callback (GtkWidget *widget,
+			    gpointer   data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
@@ -82,8 +86,9 @@ query (void)
   {
     { PARAM_IMAGE, "image", "Output image" },
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
   static GParamDef save_args[] =
   {
@@ -94,7 +99,7 @@ query (void)
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
     { PARAM_STRING, "description", "Short description of the pattern" },
   };
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   INIT_I18N();
 
@@ -122,47 +127,51 @@ query (void)
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_pat_load", "pat", "", "20,string,GPAT");
-  gimp_register_save_handler ("file_pat_save", "pat", "");
+  gimp_register_magic_load_handler ("file_pat_load",
+				    "pat",
+				    "",
+				    "20,string,GPAT");
+  gimp_register_save_handler       ("file_pat_save",
+				    "pat",
+				    "");
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  GRunModeType run_mode;
-  gint32 image_ID;
-  gint32 drawable_ID;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
+  gint32        drawable_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
-  GStatusType status = STATUS_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
-  values[1].type = PARAM_IMAGE;
-  values[1].data.d_image = -1;
+  *nreturn_vals = 1;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "file_pat_load") == 0) 
     {
       INIT_I18N();
       image_ID = load_image (param[1].data.d_string);
-      
+
       if (image_ID != -1) 
 	{
-	  values[0].data.d_status = STATUS_SUCCESS;
+	  *nreturn_vals = 2;
+	  values[1].type         = PARAM_IMAGE;
 	  values[1].data.d_image = image_ID;
 	} 
-      else 
+      else
 	{
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  status = STATUS_EXECUTION_ERROR;
 	}
-      *nreturn_vals = 2;
     }
   else if (strcmp (name, "file_pat_save") == 0) 
     {
@@ -174,18 +183,20 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-      INIT_I18N_UI();
+	  INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PAT", 
-				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_ALPHA));
+				      (CAN_HANDLE_RGB |
+				       CAN_HANDLE_GRAY |
+				       CAN_HANDLE_ALPHA));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      values[0].data.d_status = STATUS_CANCEL;
 	      return;
 	    }
 	  break;
 	default:
-      INIT_I18N();
+	  INIT_I18N();
 	  break;
 	}
 
@@ -193,33 +204,48 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
-	  gimp_get_data("file_pat_save", description);
-	  if (!save_dialog())
-	    return;
+	  gimp_get_data ("file_pat_save", description);
+	  if (!save_dialog ())
+	    status = STATUS_CANCEL;
 	  break;
+
 	case RUN_NONINTERACTIVE:
 	  if (nparams != 6)
-	    status = STATUS_CALLING_ERROR;
+	    {
+	      status = STATUS_CALLING_ERROR;
+	    }
 	  else
-	    strcpy(description, param[5].data.d_string);
+	    {
+	      strcpy (description, param[5].data.d_string);
+	    }
+	  break;
+
 	case RUN_WITH_LAST_VALS:
 	  gimp_get_data ("file_pat_save", description);
 	  break;
 	}
-      
-      if (save_image (param[3].data.d_string, image_ID, drawable_ID))
+
+      if (status == STATUS_SUCCESS)
 	{
-	  gimp_set_data ("file_pat_save", description, 256);
-	  values[0].data.d_status = STATUS_SUCCESS;
-	} 
-      else
-	values[0].data.d_status = STATUS_EXECUTION_ERROR;
- 
-      *nreturn_vals = 1;
+	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
+	    {
+	      gimp_set_data ("file_pat_save", description, 256);
+	    } 
+	  else
+	    {
+	      status = STATUS_EXECUTION_ERROR;
+	    }
+	}
 
       if (export == EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
+  else
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
 static gint32 
@@ -391,9 +417,8 @@ static gint
 save_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *label;
-  GtkWidget *entry;
   GtkWidget *table;
+  GtkWidget *entry;
 
   dlg = gimp_dialog_new (_("Save as Pattern"), "pat",
 			 gimp_plugin_help_func, "filters/pat.html",
@@ -413,30 +438,18 @@ save_dialog (void)
 
   /* The main table */
   table = gtk_table_new (1, 2, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_container_border_width (GTK_CONTAINER (table), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
   
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  
-  /**********************
-   * label
-   **********************/
-  label = gtk_label_new (_("Description:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-  
-  /************************
-   * The entry
-   ************************/
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, 200, 0);
   gtk_entry_set_text (GTK_ENTRY (entry), description);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Description:"), 1.0, 0.5,
+			     entry, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      GTK_SIGNAL_FUNC (entry_callback),
 		      description);

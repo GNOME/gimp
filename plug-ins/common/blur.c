@@ -96,8 +96,8 @@ typedef struct
 {
   gdouble blur_pct;     /* likelihood of randomization (as %age) */
   gdouble blur_rcount;  /* repeat count */
-  gint seed_type;       /* seed init. type - current time or user value */
-  gint blur_seed;       /* seed value for rand() function */
+  gint    seed_type;    /* seed init. type - current time or user value */
+  gint    blur_seed;    /* seed value for rand() function */
 } BlurVals;
 
 static BlurVals pivals =
@@ -143,15 +143,14 @@ GPlugInInfo PLUG_IN_INFO =
 static void blur (GDrawable *drawable);
 
 static inline void blur_prepare_row (GPixelRgn *pixel_rgn,
-				     guchar *data,
-				     int x,
-				     int y,
-				     int w);
+				     guchar    *data,
+				     gint       x,
+				     gint       y,
+				     gint       w);
 
-static gint blur_dialog        (void);
-
-static void blur_ok_callback   (GtkWidget     *widget,
-				gpointer       data);
+static gint blur_dialog      (void);
+static void blur_ok_callback (GtkWidget *widget,
+			      gpointer   data);
 
 /************************************ Guts ***********************************/
 
@@ -174,7 +173,7 @@ query (void)
     { PARAM_IMAGE, "image", "Input image (unused)" },
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
   };
-  static int nargs_ni = sizeof(args_ni) / sizeof (args_ni[0]);
+  static gint nargs_ni = sizeof(args_ni) / sizeof (args_ni[0]);
 
   static GParamDef args[] =
   {
@@ -186,25 +185,25 @@ query (void)
     { PARAM_INT32, "seed_type", "Seed type (10 = current time, 11 = seed value)" },
     { PARAM_INT32, "blur_seed", "Seed value (used only if seed type is 11)" },
   };
-  static int nargs = sizeof(args) / sizeof (args[0]);
+  static gint nargs = sizeof(args) / sizeof (args[0]);
 
   static GParamDef *return_vals = NULL;
-  static int nreturn_vals = 0;
+  static gint nreturn_vals = 0;
 
-  const char *blurb = _("Apply a 3x3 blurring convolution kernel to the specified drawable.");
-  const char *help = _("This plug-in randomly blurs the specified drawable, using a 3x3 blur.  You control the percentage of the pixels that are blurred and the number of times blurring is applied.  Indexed images are not supported.");
-  const char *author = "Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/";
-  const char *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
-  const char *copyright_date = "1995-1998";
+  const gchar *blurb = _("Apply a 3x3 blurring convolution kernel to the specified drawable.");
+  const gchar *help = _("This plug-in randomly blurs the specified drawable, using a 3x3 blur.  You control the percentage of the pixels that are blurred and the number of times blurring is applied.  Indexed images are not supported.");
+  const gchar *author = "Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/";
+  const gchar *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
+  const gchar *copyright_date = "1995-1998";
 
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_blur_randomize",
-			  (char *) blurb,
-			  (char *) help,
-			  (char *) author,
-			  (char *) copyrights,
-			  (char *) copyright_date,
+			  (gchar *) blurb,
+			  (gchar *) help,
+			  (gchar *) author,
+			  (gchar *) copyrights,
+			  (gchar *) copyright_date,
 			  N_("<Image>/Filters/Blur/Blur..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
@@ -212,11 +211,11 @@ query (void)
 			  args, return_vals);
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  (char *) blurb,
-			  (char *) help,
-			  (char *) author,
-			  (char *) copyrights,
-			  (char *) copyright_date,
+			  (gchar *) blurb,
+			  (gchar *) help,
+			  (gchar *) author,
+			  (gchar *) copyrights,
+			  (gchar *) copyright_date,
 			  NULL,
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
@@ -243,7 +242,7 @@ run (gchar   *name,
   GDrawable *drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;        /* assume the best! */
-  char prog_label[32];
+  gchar prog_label[32];
   static GParam values[1];
 
   INIT_I18N_UI();
@@ -282,22 +281,22 @@ run (gchar   *name,
 	   *  parameters have legitimate values.
 	   */
 	case RUN_NONINTERACTIVE:
-	  if ((strcmp(name, "plug_in_blur_randomize") == 0) &&
+	  if ((strcmp (name, "plug_in_blur_randomize") == 0) &&
 	      (nparams == 7))
 	    {
-	      pivals.blur_pct    = (gdouble)param[3].data.d_float;
-	      pivals.blur_pct    = (gdouble)MIN(100.0, pivals.blur_pct);
-	      pivals.blur_pct    = (gdouble)MAX(1.0, pivals.blur_pct);
-	      pivals.blur_rcount = (gdouble)param[4].data.d_float;
-	      pivals.blur_rcount = (gdouble)MIN(100.0,pivals.blur_rcount);
-	      pivals.blur_rcount = (gdouble)MAX(1.0, pivals.blur_rcount);
+	      pivals.blur_pct    = (gdouble) param[3].data.d_float;
+	      pivals.blur_pct    = (gdouble) MIN (100.0, pivals.blur_pct);
+	      pivals.blur_pct    = (gdouble) MAX (1.0, pivals.blur_pct);
+	      pivals.blur_rcount = (gdouble) param[4].data.d_float;
+	      pivals.blur_rcount = (gdouble) MIN (100.0,pivals.blur_rcount);
+	      pivals.blur_rcount = (gdouble) MAX (1.0, pivals.blur_rcount);
 	      pivals.seed_type   = (gint) param[5].data.d_int32;
-	      pivals.seed_type   = (gint) MIN(SEED_USER, param[5].data.d_int32);
-	      pivals.seed_type   = (gint) MAX(SEED_TIME, param[5].data.d_int32);
+	      pivals.seed_type   = (gint) MIN (SEED_USER, param[5].data.d_int32);
+	      pivals.seed_type   = (gint) MAX (SEED_TIME, param[5].data.d_int32);
 	      pivals.blur_seed   = (gint) param[6].data.d_int32;
 	      status = STATUS_SUCCESS;
 	    }
-	  else if ((strcmp(name, PLUG_IN_NAME) == 0) &&
+	  else if ((strcmp (name, PLUG_IN_NAME) == 0) &&
 		   (nparams == 3))
 	    {
 	      pivals.blur_pct    = (gdouble) 100.0;
@@ -316,7 +315,7 @@ run (gchar   *name,
 	   *  If we're running with the last set of values, get those values.
 	   */
 	case RUN_WITH_LAST_VALS:
-	  gimp_get_data(PLUG_IN_NAME, &pivals);
+	  gimp_get_data (PLUG_IN_NAME, &pivals);
 	  break;
 
 	  /*
@@ -330,31 +329,31 @@ run (gchar   *name,
 	  /*
 	   *  JUST DO IT!
 	   */
-	  strcpy(prog_label, BLUR_VERSION);
-	  gimp_progress_init(prog_label);
-	  gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
+	  strcpy (prog_label, BLUR_VERSION);
+	  gimp_progress_init (prog_label);
+	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
 	  /*
 	   *  Initialize the rand() function seed
 	   */
 	  if (pivals.seed_type == SEED_TIME)
-	    srand (time (NULL));
-	  else
-	    srand (pivals.blur_seed);
+	    pivals.blur_seed = time (NULL);
 
-	  blur(drawable);
+	  srand (pivals.blur_seed);
+
+	  blur (drawable);
 	  /*
 	   *  If we ran interactively (even repeating) update the display.
 	   */
 	  if (run_mode != RUN_NONINTERACTIVE)
 	    {
-	      gimp_displays_flush();
+	      gimp_displays_flush ();
             }
 	  /*
 	   *  If we use the dialog popup, set the data for future use.
 	   */
 	  if (run_mode == RUN_INTERACTIVE)
 	    {
-	      gimp_set_data(PLUG_IN_NAME, &pivals, sizeof(BlurVals));
+	      gimp_set_data (PLUG_IN_NAME, &pivals, sizeof (BlurVals));
             }
         }
     }
@@ -371,7 +370,7 @@ run (gchar   *name,
    *  of the drawable.
    */
   values[0].data.d_status = status;
-  gimp_drawable_detach(drawable);
+  gimp_drawable_detach (drawable);
 }
 
 /*********************************
@@ -581,7 +580,7 @@ blur (GDrawable *drawable)
             }
         }
     }
-  gimp_progress_update((double) 100);
+  gimp_progress_update ((double) 100);
   /*
    *  update the blurred region
    */
@@ -605,20 +604,12 @@ static gint
 blur_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *label;
   GtkWidget *frame;
-  GtkWidget *seed_hbox;
-  GtkWidget *seed_vbox;
   GtkWidget *table;
-  GtkWidget *spinbutton;
+  GtkWidget *seed_hbox;
   GtkObject *adj;
-  GtkWidget *radio_button;
-  GSList  *group = NULL;
-  gchar  **argv;
-  gint     argc;
-
-  gint do_time = (pivals.seed_type == SEED_TIME);
-  gint do_user = (pivals.seed_type == SEED_USER);
+  gchar **argv;
+  gint    argc;
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -642,6 +633,9 @@ blur_dialog (void)
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
+
+  gimp_help_init ();
+
   /*
    *  Parameter settings
    *
@@ -652,82 +646,24 @@ blur_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER(frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new (4, 3, FALSE);
+  table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  gimp_help_init ();
-
-  label = gtk_label_new (_("Randomization Seed:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
-  gtk_widget_show (label);
-
-  /*
-   *  Box to hold seed initialization radio buttons
-   */
-  seed_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_table_attach (GTK_TABLE (table), seed_vbox, 1, 2, 1, 2,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_widget_show (seed_vbox);
-  /*
-   *  Time button
-   */
-  radio_button = gtk_radio_button_new_with_label (NULL, _("Current Time"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-  gtk_box_pack_start (GTK_BOX (seed_vbox), radio_button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                      &do_time);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), do_time);
-  gtk_widget_show (radio_button);
-  gimp_help_set_help_data (radio_button,
-                           _("Seed random number generator from the current "
-                             "time - this guarantees a reasonable "
-                             "randomization"), NULL);
-  /*
-   *  Box to hold seed user initialization controls
-   */
-  seed_hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (seed_vbox), seed_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (seed_hbox);
-  /*
-   *  User button
-   */
-  radio_button = gtk_radio_button_new_with_label (group, _("Other Value"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-  gtk_box_pack_start (GTK_BOX (seed_hbox), radio_button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                      &do_user);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), do_user);
-  gtk_widget_show (radio_button);
-  gimp_help_set_help_data (radio_button,
-                           _("Enable user-entered value for random number "
-                             "generator seed - this allows you to repeat a "
-                             "given \"random\" operation"), NULL);
-  /*
-   *  Randomization seed number (text)
-   */
-  spinbutton = gimp_spin_button_new (&adj, pivals.blur_seed,
-				     G_MININT, G_MAXINT, 1, 10, 0, 1, 0);
-  gtk_box_pack_start(GTK_BOX (seed_hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &pivals.blur_seed);
-  gtk_widget_show (spinbutton);
-  gimp_help_set_help_data (spinbutton,
-			   _("Value for seeding the random number generator"),
-			   NULL);
-  gtk_widget_show (seed_hbox);
+  /*  Random Seed  */
+  seed_hbox = gimp_random_seed_new (&pivals.blur_seed, &pivals.seed_type,
+				    SEED_TIME, SEED_USER);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+                             _("Random Seed:"), 1.0, 0.5,
+                             seed_hbox, TRUE);
 
   /*
    *  Randomization percentage label & scale (1 to 100)
    */
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Randomization %:"), SCALE_WIDTH, 0,
 			      pivals.blur_pct, 1.0, 100.0, 1.0, 10.0, 0,
 			      _("Percentage of pixels to be filtered"), NULL);
@@ -738,7 +674,7 @@ blur_dialog (void)
   /*
    *  Repeat count label & scale (1 to 100)
    */
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Repeat:"), SCALE_WIDTH, 0,
 			      pivals.blur_rcount, 1.0, 100.0, 1.0, 10.0, 0,
 			      _("Number of times to apply filter"), NULL);
@@ -753,18 +689,6 @@ blur_dialog (void)
   gtk_main ();
   gimp_help_free ();
   gdk_flush ();
-
-  /*
-   *  Figure out which type of seed initialization to apply.
-   */
-  if (do_time)
-    {
-      pivals.seed_type = SEED_TIME;
-    }
-  else
-    {
-      pivals.seed_type = SEED_USER;
-    }
 
   return blur_int.run;
 }

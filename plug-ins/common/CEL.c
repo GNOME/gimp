@@ -53,7 +53,7 @@ static gint   save_image     (gchar  *file,
 			      gchar  *brief,
 			      gint32  image,
 			      gint32  layer);
-static gint   palette_dialog (gchar  *title);
+static void   palette_dialog (gchar  *title);
 
 /* Globals... */
 
@@ -65,7 +65,7 @@ GPlugInInfo	PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-static char   *palette_file = NULL;
+static gchar  *palette_file = NULL;
 static size_t  data_length  = 0;
 
 /* Let GIMP library handle initialisation (and inquisitive users) */
@@ -84,13 +84,14 @@ query (void)
     { PARAM_STRING, "raw_filename", "Name entered" },
     { PARAM_STRING, "palette_filename", "Filename to load palette from" },
   };
-
   static GParamDef load_return_vals[] =
   {
     { PARAM_IMAGE, "image", "Output image" },
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static gint nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
+
   static GParamDef save_args[] =
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
@@ -116,9 +117,6 @@ query (void)
 			  nload_args, nload_return_vals,
 			  load_args, load_return_vals);
 
-  gimp_register_magic_load_handler ("file_cel_load", "cel",
-				    "", "0,string,KiSS\040");
-
   gimp_install_procedure ("file_cel_save",
 			  _("Saves files in KISS CEL file format"),
 			  _("This plug-in saves individual KISS cell files."),
@@ -131,7 +129,13 @@ query (void)
 			  nsave_args, 0,
 			  save_args, NULL);
 
-  gimp_register_save_handler ("file_cel_save", "cel", "");
+  gimp_register_magic_load_handler ("file_cel_load",
+				    "cel",
+				    "",
+				    "0,string,KiSS\040");
+  gimp_register_save_handler       ("file_cel_save",
+				    "cel",
+				    "");
 }
 
 static void
@@ -141,19 +145,19 @@ run (gchar   *name,
      gint    *nreturn_vals,
      GParam **return_vals)
 {
-  gint32 image;	/* image ID after load */
-  gint status; /* status after save */
   static GParam	values[2]; /* Return values */
-  GRunModeType run_mode;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image;
 
   run_mode = param[0].data.d_int32;
 
   /* Set up default return values */
 
   *nreturn_vals = 1;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_SUCCESS;
   *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (run_mode == RUN_INTERACTIVE)
     {
@@ -204,16 +208,15 @@ run (gchar   *name,
 	}
       else
 	{
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  status = STATUS_EXECUTION_ERROR;
 	}
     }
   else if (strcmp (name, "file_cel_save") == 0)
     {
-      status = save_image (param[3].data.d_string, param[4].data.d_string,
-			   param[1].data.d_int32, param[2].data.d_int32);
-      if (status != TRUE)
+      if (! save_image (param[3].data.d_string, param[4].data.d_string,
+			param[1].data.d_int32, param[2].data.d_int32))
 	{
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  status = STATUS_EXECUTION_ERROR;
 	}
       else
 	{
@@ -223,8 +226,10 @@ run (gchar   *name,
     }
   else
     {
-      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+      status = STATUS_CALLING_ERROR;
     }
+
+  values[0].data.d_status = status;
 }
 
 /* Load CEL image into The GIMP */
@@ -233,31 +238,31 @@ static gint32
 load_image (gchar *file,
 	    gchar *brief)
 {
-  FILE*		fp;		/* Read file pointer */
-  char		*progress;	/* Title for progress display */
-  guchar	header[32];	/* File header */
-  int		height, width,	/* Dimensions of image */
-  		offx, offy,	/* Layer offets */
-  		colours;	/* Number of colours */
+  FILE      *fp;            /* Read file pointer */
+  gchar     *progress;      /* Title for progress display */
+  guchar     header[32];    /* File header */
+  gint       height, width, /* Dimensions of image */
+             offx, offy,    /* Layer offets */
+             colours;       /* Number of colours */
 
-  gint32	image,		/* Image */
-		layer;		/* Layer */
-  guchar	*palette,	/* 24 bit palette */
-		*buffer,	/* Temporary buffer */
-  		*line;		/* Pixel data */
-  GDrawable	*drawable;	/* Drawable for layer */
-  GPixelRgn	pixel_rgn;	/* Pixel region for layer */
+  gint32     image,         /* Image */
+             layer;         /* Layer */
+  guchar    *palette,       /* 24 bit palette */
+            *buffer,        /* Temporary buffer */
+            *line;          /* Pixel data */
+  GDrawable *drawable;      /* Drawable for layer */
+  GPixelRgn  pixel_rgn;     /* Pixel region for layer */
 
-  int		i, j, k;	/* Counters */
+  gint       i, j, k;       /* Counters */
 
 
   /* Open the file for reading */
-  fp = fopen(file, "r");
+  fp = fopen (file, "r");
 
   if (fp == NULL)
     {
       g_message (_("%s\nis not present or is unreadable"), file);
-      gimp_quit ();
+      return -1;
     }
 
   progress = g_strdup_printf (_("Loading %s:"), brief);
@@ -291,7 +296,7 @@ load_image (gchar *file,
   if (image == -1)
     {
       g_message (_("CEL Can't create a new image"));
-      gimp_quit ();
+      return -1;
     }
 
   gimp_image_set_filename (image, file);
@@ -365,7 +370,7 @@ load_image (gchar *file,
 
 	default:
 	  g_message (_("Unsupported number of colours (%d)"), colours);
-	  gimp_quit ();
+	  return -1;
 	}
     
       gimp_pixel_rgn_set_rect (&pixel_rgn, line, 0, i, drawable->width, 1);
@@ -384,7 +389,7 @@ load_image (gchar *file,
   /* Open the file for reading if user picked one */
   if (palette_file == NULL)
     {
-      fp= NULL;
+      fp = NULL;
     }
   else
     {
@@ -394,12 +399,13 @@ load_image (gchar *file,
   if (fp != NULL)
     {
       colours = load_palette (fp, palette);
+      fclose (fp);
     }
   else
     {
       for (i= 0; i < colours; ++i)
 	{
-	  palette[i*3]= palette[i*3+1]= palette[i*3+2]= i * 256 / colours;
+	  palette[i*3] = palette[i*3+1] = palette[i*3+2]= i * 256 / colours;
 	}
     }
 
@@ -407,7 +413,6 @@ load_image (gchar *file,
 
   /* Close palette file, give back allocated memory */
 
-  fclose (fp);
   g_free (palette);
 
   /* Now get everything redrawn and hand back the finished image */
@@ -487,7 +492,7 @@ save_image (gchar  *file,
   if (type != INDEXEDA_IMAGE)
     {
       g_message (_("Only an indexed-alpha image can be saved in CEL format"));
-      gimp_quit ();
+      return FALSE;
     }
 
   /* Find out how offset this layer was */
@@ -501,10 +506,10 @@ save_image (gchar  *file,
   if (fp == NULL)
     {
       g_message (_("CEL Couldn't write image to\n%s"), file);
-      gimp_quit ();
+      return FALSE;
     }
 
-  progress = g_strdup_printf (_("Loading %s:"), brief);
+  progress = g_strdup_printf (_("Saving %s:"), brief);
   gimp_progress_init (progress);
   g_free (progress);
 
@@ -517,11 +522,11 @@ save_image (gchar  *file,
   gimp_image_get_cmap (image, &colours);
   if (colours > 15)
     {
-      header[5]= 8;
+      header[5] = 8;
     }
   else
     {
-      header[5]= 4;
+      header[5] = 4;
     }
 
   /* Fill in the blanks ... */
@@ -594,10 +599,11 @@ palette_ok (GtkWidget  *widget,
   palette_file =
     g_strdup (gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs)));
   data_length = strlen (palette_file) + 1;
+
   gtk_widget_destroy (GTK_WIDGET (fs));
 }
 
-static gint
+static void
 palette_dialog (gchar *title)
 {
   gchar **argv;
@@ -634,6 +640,4 @@ palette_dialog (gchar *title)
 
   gtk_main ();
   gdk_flush ();
-
-  return 0;
 }

@@ -23,6 +23,16 @@
 #include "gimphelpui.h"
 #include "gimpunitmenu.h"
 #include "gimpwidgets.h"
+#include "gimpmath.h"
+
+#include "gimpintl.h"
+
+/*
+ *  Forward declarations
+ */
+
+static void gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button);
+
 
 /*
  *  Widget Constructors...
@@ -65,7 +75,11 @@ gimp_option_menu_new (GtkSignalFunc   menu_item_callback,
       user_data  = va_arg (args, gpointer);
       widget_ptr = va_arg (args, gpointer);
 
-      menuitem = gtk_menu_item_new_with_label (label);
+      if (label != (gpointer) 1)
+	menuitem = gtk_menu_item_new_with_label (label);
+      else
+	menuitem = gtk_menu_item_new ();
+
       gtk_menu_append (GTK_MENU (menu), menuitem);
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  menu_item_callback,
@@ -149,7 +163,11 @@ gimp_radio_group_new (gboolean            in_frame,
       widget_ptr = va_arg (args, gpointer);
       active     = va_arg (args, gboolean);
 
-      button = gtk_radio_button_new_with_label (group, label);
+      if (label != (gpointer) 1)
+	button = gtk_radio_button_new_with_label (group, label);
+      else
+	button = gtk_radio_button_new (group);
+
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
@@ -225,7 +243,11 @@ gimp_radio_group_new2 (gboolean        in_frame,
       user_data  = va_arg (args, gpointer);
       widget_ptr = va_arg (args, gpointer);
 
-      button = gtk_radio_button_new_with_label (group, label);
+      if (label != (gpointer) 1)
+	button = gtk_radio_button_new_with_label (group, label);
+      else
+	button = gtk_radio_button_new (group);
+
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
@@ -338,41 +360,123 @@ gimp_scale_entry_new (GtkTable *table,
   return adjustment;
 }
 
+static void
+gimp_random_seed_toggle_update (GtkWidget *widget,
+				gpointer   data)
+{
+  gint *toggle_val;
+
+  toggle_val = (gint *) data;
+
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+    *toggle_val = (gint) gtk_object_get_data (GTK_OBJECT (widget),
+					      "time_true");
+  else
+    *toggle_val = (gint) gtk_object_get_data (GTK_OBJECT (widget),
+					      "time_false");
+
+  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
+}
+
+GtkWidget *
+gimp_random_seed_new (gint *seed,
+		      gint *use_time,
+		      gint  time_true,
+		      gint  time_false)
+{
+  GtkWidget *hbox;
+  GtkWidget *spinbutton;
+  GtkObject *adj;
+  GtkWidget *time_button;
+
+  hbox = gtk_hbox_new (FALSE, 4);
+
+  spinbutton = gimp_spin_button_new (&adj, *seed,
+                                     0, G_MAXRAND, 1, 10, 0, 1, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+                      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+                      seed);
+  gtk_widget_show (spinbutton);
+
+  gimp_help_set_help_data (spinbutton,
+                           _("If the \"Time\" button is not pressed, "
+                             "use this value for random number generator "
+                             "seed - this allows you to repeat a "
+                             "given \"random\" operation"), NULL);
+
+  time_button = gtk_toggle_button_new_with_label (_("Time"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (time_button)->child), 2, 0);
+  gtk_signal_connect (GTK_OBJECT (time_button), "toggled",
+                      GTK_SIGNAL_FUNC (gimp_random_seed_toggle_update),
+                      use_time);
+  gtk_box_pack_end (GTK_BOX (hbox), time_button, FALSE, FALSE, 0);
+  gtk_widget_show (time_button);
+
+  gimp_help_set_help_data (time_button,
+                           _("Seed random number generator from the current "
+                             "time - this guarantees a reasonable "
+                             "randomization"), NULL);
+
+  gtk_object_set_data (GTK_OBJECT (time_button), "time_true",
+		       (gpointer) time_true);
+  gtk_object_set_data (GTK_OBJECT (time_button), "time_false",
+		       (gpointer) time_false);
+
+  gtk_object_set_data (GTK_OBJECT (time_button), "inverse_sensitive",
+		       spinbutton);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (time_button),
+                                *use_time == time_true);
+
+  return hbox;
+}
+
 /*
  *  Standard Callbacks...
  */
 
-void
-gimp_toggle_button_update (GtkWidget *widget,
-			   gpointer   data)
+static void
+gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button)
 {
   GtkWidget *set_sensitive;
-  gint      *toggle_val;
+  gboolean   active;
 
-  toggle_val = (gint *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
+  active = gtk_toggle_button_get_active (toggle_button);
 
   set_sensitive =
-    gtk_object_get_data (GTK_OBJECT (widget), "set_sensitive");
+    gtk_object_get_data (GTK_OBJECT (toggle_button), "set_sensitive");
   while (set_sensitive)
     {
-      gtk_widget_set_sensitive (GTK_WIDGET (set_sensitive), *toggle_val);
+      gtk_widget_set_sensitive (GTK_WIDGET (set_sensitive), active);
       set_sensitive =
         gtk_object_get_data (GTK_OBJECT (set_sensitive), "set_sensitive");
     }
 
   set_sensitive =
-    gtk_object_get_data (GTK_OBJECT (widget), "inverse_sensitive");
+    gtk_object_get_data (GTK_OBJECT (toggle_button), "inverse_sensitive");
   while (set_sensitive)
     {
-      gtk_widget_set_sensitive (GTK_WIDGET (set_sensitive), ! *toggle_val);
+      gtk_widget_set_sensitive (GTK_WIDGET (set_sensitive), ! active);
       set_sensitive =
         gtk_object_get_data (GTK_OBJECT (set_sensitive), "inverse_sensitive");
     }
+}
+
+void
+gimp_toggle_button_update (GtkWidget *widget,
+			   gpointer   data)
+{
+  gint *toggle_val;
+
+  toggle_val = (gint *) data;
+
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+    *toggle_val = TRUE;
+  else
+    *toggle_val = FALSE;
+
+  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
 }
 
 void
@@ -392,12 +496,14 @@ gimp_radio_button_update (GtkWidget *widget,
 {
   gint *toggle_val;
 
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       toggle_val = (gint *) data;
 
       *toggle_val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
     }
+
+  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
 }
 
 void
@@ -485,7 +591,8 @@ gimp_table_attach_aligned (GtkTable  *table,
       GtkWidget *alignment;
 
       alignment = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-      gtk_table_attach_defaults (table, alignment, 1, 2, row, row + 1);
+      gtk_table_attach (table, alignment, 1, 2, row, row + 1,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (alignment);
       gtk_container_add (GTK_CONTAINER (alignment), widget);
     }

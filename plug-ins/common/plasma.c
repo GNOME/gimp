@@ -52,30 +52,32 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 #include <time.h>  /* For random seeding */
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
 
 /* Some useful macros */
 
-#define ENTRY_WIDTH 75
-#define SCALE_WIDTH 128
-#define TILE_CACHE_SIZE 32
+#define ENTRY_WIDTH      75
+#define SCALE_WIDTH     128
+#define TILE_CACHE_SIZE  32
 
-typedef struct {
-  gint seed;
-  gdouble turbulence;
+typedef struct
+{
+  gint     seed;
+  gdouble  turbulence;
   /* Interface only */
   gboolean timeseed;
 } PlasmaValues;
 
-typedef struct {
+typedef struct
+{
   gint run;
 } PlasmaInterface;
 
@@ -90,40 +92,50 @@ static void	run	(gchar   *name,
 			 gint    *nreturn_vals,
 			 GParam  **return_vals);
 
-static gint	plasma_dialog (void);
-static void     plasma_ok_callback     (GtkWidget *widget,
-					gpointer   data);
-static void     plasma_entry_callback  (GtkWidget *widget,
-					gpointer   data);
-static void     plasma_scale_update    (GtkAdjustment *adjustment,
-					gpointer   data);
-static void     toggle_callback (GtkWidget *widget, gboolean *data);
-static void	plasma	(GDrawable *drawable);
-static void     random_rgb (guchar *d);
-static void     add_random (guchar *d, gint amnt);
-static void     init_plasma (GDrawable *drawable);
-static void     provide_tile (GDrawable *drawable, gint col, gint row);
-static void     end_plasma (GDrawable *drawable);
-static void     get_pixel (GDrawable *drawable, gint x, gint y, guchar *pixel);
-static void     put_pixel (GDrawable *drawable, gint x, gint y, guchar *pixel);
-static gint     do_plasma (GDrawable *drawable, gint x1, gint y1,
-			   gint x2, gint y2, gint depth, gint scale_depth);
+static gint	plasma_dialog      (void);
+static void     plasma_ok_callback (GtkWidget *widget,
+				    gpointer   data);
+
+static void	plasma	     (GDrawable *drawable);
+static void     random_rgb   (guchar    *d);
+static void     add_random   (guchar    *d,
+			      gint       amnt);
+static void     init_plasma  (GDrawable *drawable);
+static void     provide_tile (GDrawable *drawable,
+			      gint       col,
+			      gint       row);
+static void     end_plasma   (GDrawable *drawable);
+static void     get_pixel    (GDrawable *drawable,
+			      gint       x,
+			      gint       y,
+			      guchar    *pixel);
+static void     put_pixel    (GDrawable *drawable,
+			      gint       x,
+			      gint       y,
+			      guchar    *pixel);
+static gint     do_plasma    (GDrawable *drawable,
+			      gint       x1,
+			      gint       y1,
+			      gint       x2,
+			      gint       y2,
+			      gint       depth,
+			      gint       scale_depth);
 
 /***** Local vars *****/
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static PlasmaValues pvals =
 {
-    0,     /* seed */
-    1.0,   /* turbulence */
-    TRUE   /* Time seed? */
+  0,     /* seed       */
+  1.0,   /* turbulence */
+  TRUE   /* Time seed? */
 };
 
 static PlasmaInterface pint =
@@ -139,13 +151,13 @@ static void
 query (void)
 {
   static GParamDef args[]=
-    {
-      { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-      { PARAM_IMAGE, "image", "Input image (unused)" },
-      { PARAM_DRAWABLE, "drawable", "Input drawable" },
-      { PARAM_INT32, "seed", "Random seed" },
-      { PARAM_FLOAT, "turbulence", "Turbulence of plasma" }
-   };
+  {
+    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE, "image", "Input image (unused)" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_INT32, "seed", "Random seed" },
+    { PARAM_FLOAT, "turbulence", "Turbulence of plasma" }
+  };
   static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
@@ -207,15 +219,17 @@ run (gchar   *name,
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  pvals.seed = (gint) param[3].data.d_int32;
 	  pvals.turbulence = (gdouble) param[4].data.d_float;
+
+	  if (pvals.turbulence <= 0)
+	    status = STATUS_CALLING_ERROR;
 	}
-      if ((status == STATUS_SUCCESS) &&
-	  pvals.turbulence <= 0)
-	status = STATUS_CALLING_ERROR;
       break;
 
     case RUN_WITH_LAST_VALS:
@@ -264,15 +278,11 @@ plasma_dialog (void)
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *label;
-  GtkWidget *entry;
+  GtkWidget *spinbutton;
   GtkWidget *seed_hbox;
-  GtkWidget *time_button;
-  GtkWidget *scale;
-  GtkObject *scale_data;
+  GtkObject *adj;
   gchar **argv;
   gint    argc;
-  gchar   buffer[32];
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -297,77 +307,45 @@ plasma_dialog (void)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
+  gimp_help_init ();
+
   /*  parameter settings  */
-  frame = gtk_frame_new (_("Plasma Options"));
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new (2, 2, FALSE);
+  table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new (_("Seed:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  seed_hbox = gimp_random_seed_new (&pvals.seed, &pvals.timeseed,
+				    TRUE, FALSE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Random Seed:"), 1.0, 0.5,
+			     seed_hbox, TRUE);
 
-  seed_hbox = gtk_hbox_new (FALSE, 2);
-  gtk_table_attach (GTK_TABLE (table), seed_hbox, 1, 2, 0, 1, 
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (seed_hbox);
-
-  entry = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (seed_hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%d", pvals.seed);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (plasma_entry_callback),
-		      &pvals.seed);
-  gtk_widget_show (entry);
-
-  time_button = gtk_toggle_button_new_with_label (_("Time"));
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(time_button),pvals.timeseed);
-  gtk_signal_connect (GTK_OBJECT (time_button), "clicked",
-		      (GtkSignalFunc) toggle_callback,
-		      &pvals.timeseed);
-  gtk_box_pack_end (GTK_BOX (seed_hbox), time_button, FALSE, FALSE, 0);
-  gtk_widget_show (time_button);
-  gtk_widget_show (seed_hbox);
-
-  label = gtk_label_new (_("Turbulence:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (pvals.turbulence, 0.1, 7.0, 0.1, 0.1, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 1);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) plasma_scale_update,
-			  &pvals.turbulence);
-  gtk_widget_show (scale);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Turbulence:"), SCALE_WIDTH, 0,
+			      pvals.turbulence,
+			      0.1, 7.0, 0.1, 1.0, 1,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &pvals.turbulence);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
   gtk_widget_show (dlg);
 
   gtk_main ();
+  gimp_help_free ();
   gdk_flush ();
 
   return pint.run;
 }
-
-
-/*  Plasma interface functions  */
 
 static void
 plasma_ok_callback (GtkWidget *widget,
@@ -376,33 +354,6 @@ plasma_ok_callback (GtkWidget *widget,
   pint.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-plasma_entry_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  gint *text_val;
-
-  text_val = (gint *) data;
-
-  *text_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-}
-
-
-static void
-plasma_scale_update (GtkAdjustment *adjustment,
-		     gpointer       data)
-{
-  gdouble *dptr = (gdouble*) data;
-  *dptr = adjustment->value;
-}
-
-static void 
-toggle_callback (GtkWidget *widget,
-		 gboolean  *data)
-{
-  *data = GTK_TOGGLE_BUTTON (widget)->active;
 }
 
 #define AVE(n, v1, v2) n[0] = ((gint)v1[0] + (gint)v2[0]) / 2;\

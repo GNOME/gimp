@@ -31,13 +31,15 @@
 ** other special, indirect and consequential damages.
 */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <string.h>
 #include <tiffio.h>
 
-#include "config.h"
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 typedef struct
@@ -51,72 +53,102 @@ typedef struct
   gint  run;
 } TiffSaveInterface;
 
-typedef struct {
-  gint32 ID;
+typedef struct
+{
+  gint32     ID;
   GDrawable *drawable;
-  GPixelRgn pixel_rgn;
-  guchar *pixels;
-  guchar *pixel;
+  GPixelRgn  pixel_rgn;
+  guchar    *pixels;
+  guchar    *pixel;
 } channel_data;
 
 /* Declare some local functions.
  */
-static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
-                          GParam  *param,
-                          int     *nreturn_vals,
-                          GParam **return_vals);
-static gint32 load_image (char   *filename);
+static void   query   (void);
+static void   run     (gchar   *name,
+		       gint     nparams,
+		       GParam  *param,
+		       gint    *nreturn_vals,
+		       GParam **return_vals);
 
-static void   load_rgba  (TIFF *tif, channel_data *channel);
-static void   load_lines (TIFF *tif, channel_data *channel,
-                         unsigned short bps, unsigned short photomet,
-                         int alpha, int extra);
-static void   load_tiles (TIFF *tif, channel_data *channel,
-                         unsigned short bps, unsigned short photomet,
-                         int alpha, int extra);
+static gint32 load_image    (gchar        *filename);
 
-static void   read_separate (guchar *source, channel_data *channel,
-                             unsigned short bps, unsigned short photomet,
-                             int startcol, int startrow, int rows, int cols,
-                             int alpha, int extra, int sample);
-static void   read_16bit (guchar *source, channel_data *channel,
-                          unsigned short photomet,
-                          int startcol, int startrow, int rows, int cols,
-                          int alpha, int extra);
-static void   read_8bit (guchar *source, channel_data *channel,
-                         unsigned short photomet,
-                         int startcol, int startrow, int rows, int cols,
-                         int alpha, int extra);
-static void   read_default (guchar *source, channel_data *channel,
-                            unsigned short bps, unsigned short photomet,
-                            int startcol, int startrow, int rows, int cols,
-                            int alpha, int extra);
+static void   load_rgba     (TIFF         *tif,
+			     channel_data *channel);
+static void   load_lines    (TIFF         *tif,
+			     channel_data *channel,
+			     gushort       bps,
+			     gushort       photomet,
+			     gint          alpha,
+			     gint          extra);
+static void   load_tiles    (TIFF         *tif,
+			     channel_data *channel,
+			     gushort       bps,
+			     gushort       photomet,
+			     gint          alpha,
+			     gint          extra);
 
-static gint   save_image (char   *filename,
-			  gint32  image,
-			  gint32  drawable,
-			  gint32  orig_image);
+static void   read_separate (guchar       *source,
+			     channel_data *channel,
+                             gushort       bps,
+			     gushort       photomet,
+                             gint          startcol,
+			     gint          startrow,
+			     gint          rows,
+			     gint          cols,
+                             gint          alpha,
+			     gint          extra,
+			     gint          sample);
+static void   read_16bit    (guchar       *source,
+			     channel_data *channel,
+			     gushort       photomet,
+			     gint          startcol,
+			     gint          startrow,
+			     gint          rows,
+			     gint          cols,
+			     gint          alpha,
+			     gint          extra);
+static void   read_8bit     (guchar       *source,
+			     channel_data *channel,
+			     gushort       photomet,
+			     gint          startcol,
+			     gint          startrow,
+			     gint          rows,
+			     gint          cols,
+			     gint          alpha,
+			     gint          extra);
+static void   read_default  (guchar       *source,
+			     channel_data *channel,
+			     gushort       bps,
+			     gushort       photomet,
+			     gint          startcol,
+			     gint          startrow,
+			     gint          rows,
+			     gint          cols,
+			     gint          alpha,
+			     gint          extra);
 
-static void   init_gtk ();
-static gint   save_dialog ();
+static gint   save_image             (gchar     *filename,
+				      gint32     image,
+				      gint32     drawable,
+				      gint32     orig_image);
 
-static void   save_ok_callback     (GtkWidget *widget,
-				    gpointer   data);
-static void   save_toggle_update   (GtkWidget *widget,
-				    gpointer   data);
-static void   comment_entry_callback  (GtkWidget *widget,
-				       gpointer   data);
+static void   init_gtk               (void);
+static gint   save_dialog            (void);
+
+static void   save_ok_callback       (GtkWidget *widget,
+				      gpointer   data);
+static void   comment_entry_callback (GtkWidget *widget,
+				      gpointer   data);
 
 #define DEFAULT_COMMENT "Created with The GIMP"
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static TiffSaveVals tsvals =
@@ -126,7 +158,7 @@ static TiffSaveVals tsvals =
 
 static TiffSaveInterface tsint =
 {
-  FALSE                /*  run  */
+  FALSE               /*  run  */
 };
 
 static char *image_comment= NULL;
@@ -134,7 +166,7 @@ static char *image_comment= NULL;
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef load_args[] =
   {
@@ -146,8 +178,9 @@ query ()
   {
     { PARAM_IMAGE, "image", "Output image" },
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
   static GParamDef save_args[] =
   {
@@ -158,7 +191,7 @@ query ()
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
     { PARAM_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2)" },
   };
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   INIT_I18N();
 
@@ -186,38 +219,39 @@ query ()
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_tiff_load", "tif,tiff", "",
-             "0,string,II*\\0,0,string,MM\\0*");
-  gimp_register_save_handler ("file_tiff_save", "tif,tiff", "");
+  gimp_register_magic_load_handler ("file_tiff_load",
+				    "tif,tiff",
+				    "",
+				    "0,string,II*\\0,0,string,MM\\0*");
+  gimp_register_save_handler       ("file_tiff_save",
+				    "tif,tiff",
+				    "");
 }
 
-
-
-
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
 #ifdef GIMP_HAVE_PARASITES
-  Parasite *parasite;
+  Parasite     *parasite;
 #endif /* GIMP_HAVE_PARASITES */
-  gint32 image;
-  gint32 drawable;
-  gint32 orig_image;
+  gint32        image;
+  gint32        drawable;
+  gint32        orig_image;
   GimpExportReturnType export = EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "file_tiff_load") == 0)
     {
@@ -227,13 +261,12 @@ run (char    *name,
       if (image != -1)
 	{
 	  *nreturn_vals = 2;
-	  values[0].data.d_status = STATUS_SUCCESS;
-	  values[1].type = PARAM_IMAGE;
+	  values[1].type         = PARAM_IMAGE;
 	  values[1].data.d_image = image;
 	}
       else
 	{
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  status = STATUS_EXECUTION_ERROR;
 	}
     }
   else if (strcmp (name, "file_tiff_save") == 0)
@@ -241,23 +274,24 @@ run (char    *name,
       image = orig_image = param[1].data.d_int32;
       drawable = param[2].data.d_int32;
 
-/* Do this right this time, if POSSIBLE query for parasites, otherwise
-   or if there isn't one, choose the DEFAULT_COMMENT */
+      /* Do this right this time, if POSSIBLE query for parasites, otherwise
+	 or if there isn't one, choose the DEFAULT_COMMENT */
 
       /*  eventually export the image */ 
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-      INIT_I18N_UI();
+	  INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image, &drawable, "TIFF", 
-				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED | 
+				      (CAN_HANDLE_RGB |
+				       CAN_HANDLE_GRAY |
+				       CAN_HANDLE_INDEXED | 
 				       CAN_HANDLE_ALPHA));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      *nreturn_vals = 1;
-	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      values[0].data.d_status = STATUS_CANCEL;
 	      return;
 	    }
 	  break;
@@ -266,42 +300,44 @@ run (char    *name,
 	}
 
 #ifdef GIMP_HAVE_PARASITES
-
       parasite = gimp_image_parasite_find (orig_image, "gimp-comment");
       if (parasite)
         image_comment = g_strdup (parasite->data);
-      parasite_free(parasite);
+      parasite_free (parasite);
 #endif /* GIMP_HAVE_PARASITES */
 
-      if (!image_comment) image_comment = g_strdup (DEFAULT_COMMENT);	  
+      if (!image_comment)
+	image_comment = g_strdup (DEFAULT_COMMENT);	  
 
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
-	{
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_tiff_save", &tsvals);
+
 #ifdef GIMP_HAVE_PARASITES
 	  parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
 	  if (parasite)
 	    {
-	      tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
+	      tsvals.compression =
+		((TiffSaveVals *) parasite->data)->compression;
 	    }
-	  parasite_free(parasite);
+	  parasite_free (parasite);
 #endif /* GIMP_HAVE_PARASITES */
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
-	    return;
-	} 
-	break;
+	    status = STATUS_CANCEL;
+	  break;
 
 	case RUN_NONINTERACTIVE:
-      INIT_I18N();
+	  INIT_I18N();
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 6)
-	    status = STATUS_CALLING_ERROR;
-	  if (status == STATUS_SUCCESS)
+	    {
+	      status = STATUS_CALLING_ERROR;
+	    }
+	  else
 	    {
 	      switch (param[5].data.d_int32)
 		{
@@ -314,41 +350,49 @@ run (char    *name,
 
 	case RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
-	{
 	  gimp_get_data ("file_tiff_save", &tsvals);
+
 #ifdef GIMP_HAVE_PARASITES
 	  parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
 	  if (parasite)
 	    {
-	      tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
+	      tsvals.compression =
+		((TiffSaveVals *) parasite->data)->compression;
 	    }
 	  parasite_free (parasite);
 #endif /* GIMP_HAVE_PARASITES */
-	}
 	  break;
 
 	default:
 	  break;
 	}
 
-      *nreturn_vals = 1;
-      if (save_image (param[3].data.d_string, image, drawable, orig_image))
+      if (status == STATUS_SUCCESS)
 	{
-	  /*  Store mvals data  */
-	  gimp_set_data ("file_tiff_save", &tsvals, sizeof (TiffSaveVals));
-
-	  values[0].data.d_status = STATUS_SUCCESS;
+	  if (save_image (param[3].data.d_string, image, drawable, orig_image))
+	    {
+	      /*  Store mvals data  */
+	      gimp_set_data ("file_tiff_save", &tsvals, sizeof (TiffSaveVals));
+	    }
+	  else
+	    {
+	      status = STATUS_EXECUTION_ERROR;
+	    }
 	}
-      else
-	values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
       if (export == EXPORT_EXPORT)
 	gimp_image_delete (image);
     }
+  else
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
-static gint32 
-load_image (char *filename) 
+static gint32
+load_image (gchar *filename) 
 {
   TIFF *tif;
   unsigned short bps, spp, photomet;
@@ -497,8 +541,8 @@ load_image (char *filename)
   /* any resolution info in the file? */
 #ifdef GIMP_HAVE_RESOLUTION_INFO
   {
-    float xres = 72.0, yres = 72.0;
-    unsigned short read_unit;
+    gfloat xres = 72.0, yres = 72.0;
+    gushort read_unit;
     GUnit unit = UNIT_PIXEL; /* invalid unit */
 
     if (TIFFGetField (tif, TIFFTAG_XRESOLUTION, &xres)) {
@@ -526,6 +570,7 @@ load_image (char *filename)
 	      default:
 		g_message ("TIFF file error: unknown resolution unit type %d, "
 			   "assuming dpi\n", read_unit);
+		break;
 	      }
 	  } 
 	else 
@@ -534,7 +579,7 @@ load_image (char *filename)
 	    g_message ("TIFF warning: resolution specified without\n"
 		       "any units tag, assuming dpi\n");
 	  }
-      } 
+      }
       else 
 	{ /* xres but no yres */
 	  g_message("TIFF warning: no y resolution info, assuming same as x\n");
@@ -1374,12 +1419,12 @@ static void
 init_gtk (void)
 {
   gchar **argv;
-  gint argc;
+  gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("tiff");
-  
+
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 }
@@ -1388,17 +1433,11 @@ static gint
 save_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *toggle;
+  GtkWidget *vbox;
   GtkWidget *frame;
-  GtkWidget *toggle_vbox;
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *entry;
-  GSList *group;
-
-  gint use_none     = (tsvals.compression == COMPRESSION_NONE);
-  gint use_lzw      = (tsvals.compression == COMPRESSION_LZW);
-  gint use_packbits = (tsvals.compression == COMPRESSION_PACKBITS);
 
   dlg = gimp_dialog_new ( _("Save as TIFF"), "tiff",
 			 gimp_plugin_help_func, "filters/tiff.html",
@@ -1416,61 +1455,27 @@ save_dialog (void)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  /* hbox for compression and fillorder settings */
-  hbox = gtk_hbox_new (FALSE, 6);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, FALSE, TRUE, 0);
 
   /*  compression  */
-  frame = gtk_frame_new ( _("Compression"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Compression"),
+			   gimp_radio_button_update,
+			   &tsvals.compression, (gpointer) tsvals.compression,
 
-  toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
+			   _("None"),      (gpointer) COMPRESSION_NONE, NULL,
+			   _("LZW"),       (gpointer) COMPRESSION_LZW, NULL,
+			   _("Pack Bits"), (gpointer) COMPRESSION_PACKBITS, NULL,
 
-  group = NULL;
-  toggle = gtk_radio_button_new_with_label (group, _("None"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) save_toggle_update,
-		      &use_none);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_none);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (group, _("LZW"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) save_toggle_update,
-		      &use_lzw);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_lzw);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (group, _("Pack Bits"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) save_toggle_update,
-		      &use_packbits);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_packbits);
-  gtk_widget_show (toggle);
-
-  gtk_widget_show (toggle_vbox);
+			   NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, TRUE, 0);
-  gtk_widget_show (hbox);
-
   /* comment entry */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_NONE);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, TRUE, 0);
-
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   label = gtk_label_new ( _("Comment:"));
@@ -1482,28 +1487,19 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_entry_set_text (GTK_ENTRY (entry), image_comment);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      (GtkSignalFunc) comment_entry_callback,
+                      GTK_SIGNAL_FUNC (comment_entry_callback),
                       NULL);
 
   gtk_widget_show (frame);
 
+  gtk_widget_show (vbox);
   gtk_widget_show (dlg);
 
   gtk_main ();
   gdk_flush ();
 
-  if (use_none)
-    tsvals.compression = COMPRESSION_NONE;
-  else if (use_lzw)
-    tsvals.compression = COMPRESSION_LZW;
-  else if (use_packbits)
-    tsvals.compression = COMPRESSION_PACKBITS;
-
   return tsint.run;
 }
-
-
-/*  Save interface functions  */
 
 static void
 save_ok_callback (GtkWidget *widget,
@@ -1514,28 +1510,14 @@ save_ok_callback (GtkWidget *widget,
 }
 
 static void
-save_toggle_update (GtkWidget *widget,
-		    gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
 comment_entry_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  int len;
-  char *text;
+  gint len;
+  gchar *text;
 
   text = gtk_entry_get_text (GTK_ENTRY (widget));
-  len = strlen(text);
+  len = strlen (text);
 
   /* Temporary kludge for overlength strings - just return */
   if (len > 240)

@@ -46,13 +46,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include <time.h>
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -70,11 +70,12 @@
 
 typedef gfloat vreg[3];
 
-typedef struct _info {
-	int transformSequence	[MAX_TRANSFORMS];
-	int source		[MAX_TRANSFORMS];
-	int control		[MAX_TRANSFORMS];
-	int dest		[MAX_TRANSFORMS];
+typedef struct _info
+{
+  gint transformSequence	[MAX_TRANSFORMS];
+  gint source		[MAX_TRANSFORMS];
+  gint control		[MAX_TRANSFORMS];
+  gint dest		[MAX_TRANSFORMS];
 } s_info;
 
 #define PROJECTION	0
@@ -89,20 +90,26 @@ typedef struct _info {
 
 /** prototypes **************************************************************/
 
-void query (void);
-void run (char *name, int nparams, GParam *param, int *nreturn_vals, GParam **return_vals);
+static void query (void);
+static void run   (gchar   *name,
+		   gint     nparams,
+		   GParam  *param,
+		   gint    *nreturn_vals,
+		   GParam **return_vals);
 
-void dialog_cancel ();
-void dialog_new_variations (GtkWidget *widget, gpointer data);
-void dialog_update_previews (GtkWidget *widget, gpointer data);
-void dialog_select_preview  (GtkWidget *widget, s_info *n_info);
-int dialog_create ();
+static gint dialog_create          (void);
+static void dialog_new_variations  (GtkWidget *widget,
+				    gpointer   data);
+static void dialog_update_previews (GtkWidget *widget,
+				    gpointer   data);
+static void dialog_select_preview  (GtkWidget *widget,
+				    s_info    *n_info);
 
-s_info qbist_info;
+static s_info qbist_info;
 
 /** qbist functions *********************************************************/
 
-void
+static void
 create_info (s_info *info)
 {
   int k;
@@ -116,7 +123,7 @@ create_info (s_info *info)
   info->dest[rand() % MAX_TRANSFORMS]=0;
 }
 
-void
+static void
 modify_info (s_info *o_info,
 	     s_info *n_info)
 {
@@ -138,10 +145,10 @@ modify_info (s_info *o_info,
 /*
  * Optimizer
  */
-int used_trans_flag[MAX_TRANSFORMS];
-int used_reg_flag[NUM_REGISTERS];
+static gint used_trans_flag[MAX_TRANSFORMS];
+static gint used_reg_flag[NUM_REGISTERS];
 
-void
+static void
 check_last_modified (s_info info,
 		     int    p,
 		     int    n)
@@ -158,7 +165,7 @@ check_last_modified (s_info info,
     }
 }
 
-void
+static void
 optimize (s_info info)
 {
   int i;
@@ -182,14 +189,15 @@ optimize (s_info info)
   check_last_modified(info, MAX_TRANSFORMS, 0);
 }
 
-void qbist (s_info  info,
-	    gchar  *buffer,
-	    int     xp,
-	    int     yp,
-	    int     num,
-	    int     width,
-	    int     height,
-	    int     bpp)
+static void
+qbist (s_info  info,
+       gchar  *buffer,
+       int     xp,
+       int     yp,
+       int     num,
+       int     width,
+       int     height,
+       int     bpp)
 {
   gushort gx;
   vreg reg [NUM_REGISTERS];
@@ -302,55 +310,48 @@ void qbist (s_info  info,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,	/* init_proc */
-  NULL,	/* quit_proc */
-  query,	/* query_proc */
-  run	/* run_proc */
+  NULL,	 /* init_proc  */
+  NULL,	 /* quit_proc  */
+  query, /* query_proc */
+  run	 /* run_proc   */
 };
-
-/* Definition of parameters */
-GParamDef args[] =
-{
-  { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-  { PARAM_IMAGE, "image", "Input image (unused)" },
-  { PARAM_DRAWABLE, "drawable", "Input drawable" }
-};
-
-GParamDef *return_vals  = NULL;
-int        nargs        = sizeof(args) / sizeof(args[0]);
-int        nreturn_vals = 0;
 
 MAIN()
 
-void
+static void
 query (void)
 {
+  GParamDef args[] =
+  {
+    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE, "image", "Input image (unused)" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" }
+  };
+  gint nargs = sizeof (args) / sizeof (args[0]);
+
   INIT_I18N();
 
-  gimp_install_procedure (PLUG_IN_NAME, 
-			  _("Create images based on a random genetic formula"), 
-			  _("This Plug-in is based on an article by Jörn Loviscach (appeared in c't 10/95, page 326). It generates modern art pictures from a random genetic formula."), 
-			  "Jörn Loviscach, Jens Ch. Restemeier", 
-			  "Jörn Loviscach, Jens Ch. Restemeier", 
-			  PLUG_IN_VERSION, 
-			  N_("<Image>/Filters/Render/Pattern/Qbist..."), 
-			  "RGB*", 
-			  PROC_PLUG_IN, 
-			  nargs, 
-			  nreturn_vals, 
-			  args, 
-			  return_vals);
+  gimp_install_procedure (PLUG_IN_NAME,
+			  _("Create images based on a random genetic formula"),
+			  _("This Plug-in is based on an article by Jörn Loviscach (appeared in c't 10/95, page 326). It generates modern art pictures from a random genetic formula."),
+			  "Jörn Loviscach, Jens Ch. Restemeier",
+			  "Jörn Loviscach, Jens Ch. Restemeier",
+			  PLUG_IN_VERSION,
+			  N_("<Image>/Filters/Render/Pattern/Qbist..."),
+			  "RGB*",
+			  PROC_PLUG_IN,
+			  nargs, 0,
+			  args, NULL);
 }
 
-/* Return values */
-GParam values[1];
-
-void run (char    *name,
-	  int      nparams,
-	  GParam  *param,
-	  int     *nreturn_vals,
-	  GParam **return_vals)
+static void
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
+  static GParam values[1];
   gint sel_x1, sel_y1, sel_x2, sel_y2;
   gint img_height, img_width, img_bpp, img_has_alpha;
 
@@ -458,26 +459,20 @@ void run (char    *name,
 
 /** User interface ***********************************************************/
 
-GtkWidget *preview[9];
-s_info info[9];
-gint result;
+static GtkWidget *preview[9];
+static s_info     info[9];
+static gint       result = FALSE;
 
-void
-dialog_cancel (GtkWidget *widget,
-	       gpointer   data)
-{
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-void dialog_ok (GtkWidget *widget,
-		gpointer   data)
+static void
+dialog_ok (GtkWidget *widget,
+	   gpointer   data)
 {
   result = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-void
+static void
 dialog_new_variations (GtkWidget *widget,
 		       gpointer data)
 {
@@ -487,7 +482,7 @@ dialog_new_variations (GtkWidget *widget,
     modify_info (&(info[0]), &(info[i]));
 }
 
-void
+static void
 dialog_update_previews (GtkWidget *widget,
 			gpointer   data)
 {
@@ -508,7 +503,7 @@ dialog_update_previews (GtkWidget *widget,
     }
 }
 
-void
+static void
 dialog_select_preview (GtkWidget *widget,
 		       s_info    *n_info)
 {
@@ -525,8 +520,8 @@ dialog_select_preview (GtkWidget *widget,
 #define GETMACUSHORT(f) ((fgetc(f)<<8)+(fgetc(f)))
 #define PUTMACUSHORT(u, f) fprintf(f, "%c%c", HIBITE(u), LOBITE(u));
 
-int
-load_data (char *name)
+static gint
+load_data (gchar *name)
 {
   int i;
   FILE *f;
@@ -544,8 +539,8 @@ load_data (char *name)
   return 1;
 }
 
-void
-save_data (char *name)
+static void
+save_data (gchar *name)
 {
   int i=0;
   FILE *f;
@@ -560,7 +555,7 @@ save_data (char *name)
   fclose (f);
 }
 
-void
+static void
 file_selection_save (GtkWidget *widget,
 		     GtkWidget *file_select)
 {
@@ -568,7 +563,7 @@ file_selection_save (GtkWidget *widget,
   gtk_widget_destroy (file_select);
 }
 
-void
+static void
 file_selection_load (GtkWidget *widget,
 		     GtkWidget *file_select)
 {
@@ -578,16 +573,9 @@ file_selection_load (GtkWidget *widget,
   dialog_update_previews (widget, NULL);
 }
 
-void
-file_selection_cancel (GtkWidget *widget,
-		       GtkWidget *file_select)
-{
-  gtk_widget_destroy (file_select);
-}
-
-void
+static void
 dialog_load (GtkWidget *widget,
-	     gpointer   d)
+	     gpointer   data)
 {
   GtkWidget *file_select;
 
@@ -597,18 +585,20 @@ dialog_load (GtkWidget *widget,
 				"filters/gqbist.html");
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button), 
-		      "clicked", (GtkSignalFunc) file_selection_load, 
-		      (gpointer)file_select);
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->cancel_button), 
-		      "clicked", (GtkSignalFunc) file_selection_cancel, 
-		      (gpointer)file_select);
+		      "clicked",
+		      GTK_SIGNAL_FUNC (file_selection_load),
+		      (gpointer) file_select);
+  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->cancel_button),
+			     "clicked",
+			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
+			     GTK_OBJECT (file_select));
 
   gtk_widget_show (file_select);
 }
 
-void
+static void
 dialog_save (GtkWidget *widget,
-	     gpointer   d)
+	     gpointer   data)
 {
   GtkWidget *file_select;
 
@@ -618,20 +608,24 @@ dialog_save (GtkWidget *widget,
   gimp_help_connect_help_accel (file_select, gimp_plugin_help_func,
 				"filters/gqbist.html");
 
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button), 
-		      "clicked", (GtkSignalFunc) file_selection_save, 
+  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button),
+		      "clicked",
+		      GTK_SIGNAL_FUNC (file_selection_save),
 		      (gpointer)file_select);
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->cancel_button), 
-		      "clicked", (GtkSignalFunc) file_selection_cancel, 
-		      (gpointer)file_select);
+  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->cancel_button), 
+			     "clicked",
+			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
+			     GTK_OBJECT (file_select));
 
   gtk_widget_show (file_select);
 }
 
-int
+static gint
 dialog_create (void)
 {
   GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *bbox;
   GtkWidget *button;
   GtkWidget *table;
 
@@ -667,12 +661,8 @@ dialog_create (void)
 
 			    _("OK"), dialog_ok,
 			    NULL, NULL, NULL, TRUE, FALSE,
-			    _("Load"), dialog_load,
-			    NULL, NULL, NULL, FALSE, FALSE,
-			    _("Save"), dialog_save,
-			    NULL, NULL, NULL, FALSE, FALSE,
-			    _("Cancel"), dialog_cancel,
-			    NULL, NULL, NULL, FALSE, TRUE,
+			    _("Cancel"), gtk_widget_destroy,
+			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);
 
@@ -680,12 +670,16 @@ dialog_create (void)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 5);
   gtk_table_set_col_spacings (GTK_TABLE (table), 5);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 5);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table,
-		      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   memcpy ((char *) &(info[0]), (char *) &qbist_info, sizeof (s_info));
@@ -693,12 +687,12 @@ dialog_create (void)
 
   for (i = 0; i < 9; i++)
     {
-      button = gtk_button_new();
+      button = gtk_button_new ();
       gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-			  (GtkSignalFunc) dialog_select_preview,
+			  GTK_SIGNAL_FUNC (dialog_select_preview),
 			  (gpointer) &(info[(i+5)%9]));
       gtk_table_attach (GTK_TABLE (table), button, i%3, (i%3)+1, i/3, (i/3)+1, 
-			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0); 		
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (button);
 
       preview[i] = gtk_preview_new (GTK_PREVIEW_COLOR);
@@ -707,10 +701,28 @@ dialog_create (void)
       gtk_widget_show (preview[i]);
     }
 
+  bbox = gtk_hbutton_box_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
+  gtk_widget_show (bbox);
+
+  button = gtk_button_new_with_label (_("Load"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (dialog_load),
+		      NULL);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label (_("Save"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (dialog_save),
+		      NULL);
+  gtk_widget_show (button);
+
   dialog_update_previews (NULL, NULL);
   gtk_widget_show (dialog);
-
-  result = FALSE;
 
   gtk_main ();
   gdk_flush ();

@@ -45,12 +45,12 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <png.h>		/* PNG library definitions */
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
+#include <png.h>		/* PNG library definitions */
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -58,10 +58,10 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION		"1.1.10 - 8 Nov 1999"
-#define SCALE_WIDTH		125
+#define PLUG_IN_VERSION  "1.1.10 - 8 Nov 1999"
+#define SCALE_WIDTH      125
 
-#define DEFAULT_GAMMA		2.20
+#define DEFAULT_GAMMA    2.20
 
 /*
  * Structures...
@@ -96,32 +96,28 @@ static void     init_gtk                  (void);
 static gint	save_dialog               (void);
 static void	save_ok_callback          (GtkWidget     *widget,
 					   gpointer       data);
-static void	save_compression_update   (GtkAdjustment *adjustment,
-					   gpointer       data);
-static void	save_interlace_update     (GtkWidget     *widget,
-					   gpointer       data);
 
 
 /*
  * Globals...
  */
 
-GPlugInInfo	PLUG_IN_INFO =
+GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
-PngSaveVals	pngvals = 
+PngSaveVals pngvals = 
 {
   FALSE,
   FALSE,
   6
 };
 
-int		runme = FALSE;
+static gboolean runme = FALSE;
 
 
 /*
@@ -143,12 +139,14 @@ query (void)
     { PARAM_STRING,     "filename",     "The name of the file to load" },
     { PARAM_STRING,     "raw_filename", "The name of the file to load" },
   };
-  static GParamDef	load_return_vals[] =
+  static GParamDef load_return_vals[] =
   {
     { PARAM_IMAGE,      "image",        "Output image" },
   };
-  static int		nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int		nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
+
   static GParamDef	save_args[] =
   {
     { PARAM_INT32,	"run_mode",	"Interactive, non-interactive" },
@@ -160,7 +158,7 @@ query (void)
     { PARAM_INT32,	"noextras",	"Skip ancillary chunks?" },
     { PARAM_INT32,	"compression",	"Deflate Compression factor (0--9)" }
   };
-  static int		nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   INIT_I18N ();
 
@@ -188,9 +186,13 @@ query (void)
 			   nsave_args, 0,
 			   save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_png_load", "png", "",
+  gimp_register_magic_load_handler ("file_png_load",
+				    "png",
+				    "",
 				    "0,string,\211PNG\r\n\032\n");
-  gimp_register_save_handler       ("file_png_save", "png", "");
+  gimp_register_save_handler       ("file_png_save",
+				    "png",
+				    "");
 }
 
 
@@ -199,49 +201,40 @@ query (void)
  */
 
 static void
-run (gchar   *name,		/* I - Name of filter program. */
-     gint     nparams,		/* I - Number of parameters passed in */
-     GParam  *param,		/* I - Parameter values */
-     gint    *nreturn_vals,	/* O - Number of return values */
-     GParam **return_vals)	/* O - Return values */
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
-  gint32	 image_ID;
-  gint32         drawable_ID;
-  gint32         orig_image_ID;
-  GRunModeType   run_mode;
-  GParam	*values;	/* Return values */
+  static GParam values[2];
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
+  gint32        drawable_ID;
+  gint32        orig_image_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
 
- /*
-  * Initialize parameter data...
-  */
-
-  values = g_new (GParam, 2);
-
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_SUCCESS;
-
+  *nreturn_vals = 1;
   *return_vals  = values;
-
- /*
-  * Load or save an image...
-  */
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "file_png_load") == 0)
     {
       INIT_I18N ();
-
-      *nreturn_vals = 2;
-
       image_ID = load_image (param[1].data.d_string);
 
       if (image_ID != -1)
 	{
+	  *nreturn_vals = 2;
 	  values[1].type         = PARAM_IMAGE;
 	  values[1].data.d_image = image_ID;
 	}
       else
-	values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	{
+	  status = STATUS_EXECUTION_ERROR;
+	}
     }
   else if (strcmp (name, "file_png_save") == 0)
     {
@@ -250,7 +243,6 @@ run (gchar   *name,		/* I - Name of filter program. */
       run_mode = param[0].data.d_int32;
       image_ID = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
-      *nreturn_vals = 1;
     
       /*  eventually export the image */ 
       switch (run_mode)
@@ -266,7 +258,7 @@ run (gchar   *name,		/* I - Name of filter program. */
 	  if (export == EXPORT_CANCEL)
 	    {
 	      *nreturn_vals = 1;
-	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      values[0].data.d_status = STATUS_CANCEL;
 	      return;
 	    }
 	  break;
@@ -286,7 +278,7 @@ run (gchar   *name,		/* I - Name of filter program. */
 	   * Then acquire information with a dialog...
 	   */
           if (!save_dialog())
-            goto finish;
+            status = STATUS_CANCEL;
           break;
 
 	case RUN_NONINTERACTIVE:
@@ -294,7 +286,9 @@ run (gchar   *name,		/* I - Name of filter program. */
 	   * Make sure all the arguments are there!
 	   */
           if (nparams != 8)
-            values[0].data.d_status = STATUS_CALLING_ERROR;
+	    {
+	      status = STATUS_CALLING_ERROR;
+	    }
           else
 	    {
 	      pngvals.interlaced        = param[5].data.d_int32;
@@ -303,11 +297,11 @@ run (gchar   *name,		/* I - Name of filter program. */
 
 	      if (pngvals.compression_level < 0 ||
 		  pngvals.compression_level > 9)
-		values[0].data.d_status = STATUS_CALLING_ERROR;
+		status = STATUS_CALLING_ERROR;
 	    };
           break;
 
-	case RUN_WITH_LAST_VALS :
+	case RUN_WITH_LAST_VALS:
 	  /*
 	   * Possibly retrieve data...
 	   */
@@ -318,22 +312,28 @@ run (gchar   *name,		/* I - Name of filter program. */
           break;
 	};
 
-      if (values[0].data.d_status == STATUS_SUCCESS)
+      if (status == STATUS_SUCCESS)
 	{
 	  if (save_image (param[3].data.d_string,
 			  image_ID, drawable_ID, orig_image_ID))
-	    gimp_set_data ("file_png_save", &pngvals, sizeof (pngvals));
+	    {
+	      gimp_set_data ("file_png_save", &pngvals, sizeof (pngvals));
+	    }
 	  else
-	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
-	};
-
-    finish:
+	    {
+	      status = STATUS_EXECUTION_ERROR;
+	    }
+	}
 
       if (export == EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
   else
-    values[0].data.d_status = STATUS_EXECUTION_ERROR;
+    {
+      status = STATUS_EXECUTION_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
 
@@ -902,32 +902,11 @@ save_ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-static void
-save_compression_update (GtkAdjustment *adjustment,
-                         gpointer      data)
-{
-  pngvals.compression_level = (gint32) adjustment->value;
-}
-
-static void
-save_interlace_update (GtkWidget *widget,
-		       gpointer  data)
-{
-  pngvals.interlaced = GTK_TOGGLE_BUTTON (widget)->active;
-}
-
-static void
-save_noextras_update (GtkWidget *widget,
-		      gpointer   data)
-{
-  pngvals.noextras = GTK_TOGGLE_BUTTON (widget)->active;
-}
-
 static void 
 init_gtk (void)
 {
   gchar **argv;
-  gint argc;
+  gint    argc;
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -944,7 +923,6 @@ save_dialog (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *toggle;
-  GtkWidget *label;
   GtkWidget *scale;
   GtkObject *scale_data;
 
@@ -981,8 +959,8 @@ save_dialog (void)
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1,
 		    GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (save_interlace_update),
-		      NULL);
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &pngvals.interlaced);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.interlaced);
   gtk_widget_show (toggle);
 
@@ -990,29 +968,24 @@ save_dialog (void)
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 1, 2,
 		    GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (save_noextras_update),
-		      NULL);
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &pngvals.noextras);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.noextras);
   gtk_widget_show (toggle);
-
-  label = gtk_label_new (_("Compression Level:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
 
   scale_data = gtk_adjustment_new (pngvals.compression_level,
 				   1.0, 9.0, 1.0, 1.0, 0.0);
   scale      = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 2, 3,
-		    GTK_FILL, 0, 0, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+			     _("Compression Level:"), 1.0, 1.0,
+			     scale, FALSE);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (save_compression_update),
-		      NULL);
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &pngvals.compression_level);
   gtk_widget_show (scale);
 
   gtk_widget_show (dlg);
@@ -1022,7 +995,3 @@ save_dialog (void)
 
   return runme;
 }
-
-/*
- * End of "$Id$".
- */

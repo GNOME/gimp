@@ -304,6 +304,8 @@ blinds_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
+  GtkWidget *hbox;
+  GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *toggle_vbox;
   GtkWidget *xframe;
@@ -354,19 +356,23 @@ blinds_dialog (void)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   frame = gtk_frame_new (_("Preview"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (5, 5, FALSE); 
+  table = gtk_table_new (1, 1, FALSE); 
   gtk_container_set_border_width (GTK_CONTAINER (table), 4); 
   gtk_container_add (GTK_CONTAINER (frame), table); 
   gtk_widget_show (table); 
 
   xframe = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (table), xframe, 0, 1, 0, 2,
+  gtk_table_attach (GTK_TABLE (table), xframe, 0, 1, 0, 1,
 		    GTK_EXPAND, GTK_EXPAND, 0, 0);
   gtk_widget_show (xframe);
 
@@ -374,6 +380,10 @@ blinds_dialog (void)
   gtk_preview_size (GTK_PREVIEW (bint.preview), preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (xframe), bint.preview);
   gtk_widget_show(bint.preview);
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   frame =
     gimp_radio_group_new2 (TRUE, _("Orientation"),
@@ -384,15 +394,11 @@ blinds_dialog (void)
 			   _("Vertical"),   (gpointer) VERTICAL, NULL,
 
 			   NULL);
-
-  gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
-  
+
   frame = gtk_frame_new (_("Background"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
   toggle_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 2);
@@ -460,6 +466,7 @@ blinds_ok_callback (GtkWidget *widget,
 		    gpointer   data)
 {
   bint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 

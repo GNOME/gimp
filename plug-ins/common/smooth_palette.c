@@ -384,6 +384,7 @@ static gint
 dialog (void)
 {
   GtkWidget *dlg;
+  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
@@ -413,13 +414,18 @@ dialog (void)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
+  table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
 
   spinbutton = gimp_spin_button_new (&adj, config.width,
 				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);

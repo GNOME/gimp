@@ -164,21 +164,21 @@
 #define DEFAULT_COMMENT     "Created with The GIMP"
 
 /* sg - these should not be global... */
-gint32 volatile image_ID_global = -1, orig_image_ID_global, drawable_ID_global = -1, layer_ID_global = -1;
-GtkWidget *preview_size = NULL;
-GDrawable *drawable_global = NULL;
+static gint32 volatile  image_ID_global = -1, orig_image_ID_global, drawable_ID_global = -1, layer_ID_global = -1;
+static GtkWidget       *preview_size = NULL;
+static GDrawable       *drawable_global = NULL;
 
 typedef struct
 {
   gdouble quality;
   gdouble smoothing;
-  gint optimize;
-  gint progressive;
-  gint baseline;
-  gint subsmp;
-  gint restart;
-  gint dct;
-  gint preview;
+  gint    optimize;
+  gint    progressive;
+  gint    baseline;
+  gint    subsmp;
+  gint    restart;
+  gint    dct;
+  gint    preview;
 } JpegSaveVals;
 
 typedef struct
@@ -189,24 +189,20 @@ typedef struct
 typedef struct 
 {
   struct jpeg_compress_struct cinfo;
-  gint tile_height;
-  FILE *outfile;
-  gint has_alpha;
-  gint rowstride;
-  guchar *temp;
-  guchar *data;
-  guchar *src;
+  gint       tile_height;
+  FILE      *outfile;
+  gint       has_alpha;
+  gint       rowstride;
+  guchar    *temp;
+  guchar    *data;
+  guchar    *src;
   GDrawable *drawable;
-  GPixelRgn pixel_rgn;
-  char *file_name;
-
-  gint abort_me;
+  GPixelRgn  pixel_rgn;
+  gchar     *file_name;
+  gint       abort_me;
 } preview_persistent;
 
 gint *abort_me = NULL;
-
-typedef void (*MenuItemCallback) (GtkWidget *widget,
-                                  gpointer   user_data);
 
 /* Declare local functions.
  */
@@ -228,7 +224,7 @@ static gint   save_image                (gchar         *filename,
 static void   add_menu_item             (GtkWidget *menu,
 					 char *label,
 					 guint op_no,
-					 MenuItemCallback callback);
+					 GtkSignalFunc callback);
 
 static void   init_gtk                   (void);
 static gint   save_dialog                (void);
@@ -263,10 +259,10 @@ static void   dct_callback               (GtkWidget *widget,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static JpegSaveVals jsvals =
@@ -295,7 +291,7 @@ static GtkWidget *restart_markers_label = NULL;
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef load_args[] =
   {
@@ -307,8 +303,9 @@ query ()
   {
     { PARAM_IMAGE,   "image",         "Output image" },
   };
-  static int nload_args        = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_args        = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
   static GParamDef save_args[] =
   {
@@ -327,7 +324,7 @@ query ()
     { PARAM_INT32,    "restart",      "Frequency of restart markers (in rows, 0 = no restart markers)" },
     { PARAM_INT32,    "dct",          "DCT algorithm to use (speed/quality tradeoff)" }
   };
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   INIT_I18N();
 
@@ -355,41 +352,41 @@ query ()
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_jpeg_load", "jpg,jpeg", "", "6,string,JFIF");
-  gimp_register_save_handler       ("file_jpeg_save", "jpg,jpeg", "");
+  gimp_register_magic_load_handler ("file_jpeg_load",
+				    "jpg,jpeg",
+				    "",
+				    "6,string,JFIF");
+  gimp_register_save_handler       ("file_jpeg_save",
+				    "jpg,jpeg",
+				    "");
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
-  gint32 image_ID;
-  gint32 drawable_ID;
-  gint32 orig_image_ID;
-  gint32 display_ID = -1;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
+  gint32        drawable_ID;
+  gint32        orig_image_ID;
+  gint32        display_ID = -1;
 #ifdef GIMP_HAVE_PARASITES
-  Parasite *parasite;
+  Parasite     *parasite;
 #endif /* GIMP_HAVE_PARASITES */
-  int err;
+  gint          err;
   GimpExportReturnType export = EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
-
-#if 0
-      printf ("JPEG: Waiting (pid %d)...\n", getpid());
-      kill (getpid(), SIGSTOP);
-#endif
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "file_jpeg_load") == 0)
     {
@@ -400,13 +397,12 @@ run (char    *name,
       if (image_ID != -1)
 	{
 	  *nreturn_vals = 2;
-	  values[0].data.d_status = STATUS_SUCCESS;
-	  values[1].type = PARAM_IMAGE;
+	  values[1].type         = PARAM_IMAGE;
 	  values[1].data.d_image = image_ID;
 	}
       else
 	{
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  status = STATUS_EXECUTION_ERROR;
 	}
     }
   else if (strcmp (name, "file_jpeg_save") == 0)
@@ -423,7 +419,8 @@ run (char    *name,
 	case RUN_WITH_LAST_VALS:
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "JPEG", 
-				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY));
+				      (CAN_HANDLE_RGB |
+				       CAN_HANDLE_GRAY));
 	  switch (export)
 	    {
 	    case EXPORT_EXPORT: 
@@ -434,8 +431,7 @@ run (char    *name,
 	    case EXPORT_IGNORE:
 	      break;
 	    case EXPORT_CANCEL:
-	      *nreturn_vals = 1;
-	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      values[0].data.d_status = STATUS_CANCEL;
 	      return;
 	      break;
 	    }
@@ -443,7 +439,7 @@ run (char    *name,
 	default:
 	  break;
 	}
-      
+
       if (image_comment) 
 	{
 	  g_free (image_comment);
@@ -460,16 +456,16 @@ run (char    *name,
       if (!image_comment) 
 	image_comment = g_strdup (DEFAULT_COMMENT);
 
-      jsvals.quality = DEFAULT_QUALITY;
-      jsvals.smoothing = DEFAULT_SMOOTHING;
-      jsvals.optimize = DEFAULT_OPTIMIZE;
+      jsvals.quality     = DEFAULT_QUALITY;
+      jsvals.smoothing   = DEFAULT_SMOOTHING;
+      jsvals.optimize    = DEFAULT_OPTIMIZE;
       jsvals.progressive = DEFAULT_PROGRESSIVE;
-      jsvals.baseline = DEFAULT_BASELINE;
-      jsvals.subsmp = DEFAULT_SUBSMP;
-      jsvals.restart = DEFAULT_RESTART;
-      jsvals.dct = DEFAULT_DCT;
-      jsvals.preview = DEFAULT_PREVIEW;
-      
+      jsvals.baseline    = DEFAULT_BASELINE;
+      jsvals.subsmp      = DEFAULT_SUBSMP;
+      jsvals.restart     = DEFAULT_RESTART;
+      jsvals.dct         = DEFAULT_DCT;
+      jsvals.preview     = DEFAULT_PREVIEW;
+
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
@@ -478,7 +474,8 @@ run (char    *name,
 
 #ifdef GIMP_HAVE_PARASITES
 	  /* load up the previously used values */
-	  parasite = gimp_image_parasite_find (orig_image_ID, "jpeg-save-options");
+	  parasite = gimp_image_parasite_find (orig_image_ID,
+					       "jpeg-save-options");
 	  if (parasite)
 	    {
 	      jsvals.quality     = ((JpegSaveVals *)parasite->data)->quality;
@@ -493,7 +490,7 @@ run (char    *name,
 	      parasite_free(parasite);
 	    }
 #endif /* GIMP_HAVE_PARASITES */
-	  
+
 	  /* we start an undo_group and immediately freeze undo saving
 	     so that we can avoid sucking up tile cache with our unneeded
 	     preview steps. */
@@ -513,7 +510,7 @@ run (char    *name,
 	  gimp_undo_push_group_end (image_ID); 
 
           if (!err)
-	    return;
+	    status = STATUS_CANCEL;
 	  break;
 
 	case RUN_NONINTERACTIVE:
@@ -521,8 +518,10 @@ run (char    *name,
 	  /*  pw - added two more progressive and comment */
 	  /*  sg - added subsampling, preview, baseline, restarts and DCT */
 	  if (nparams != 14)
-	    status = STATUS_CALLING_ERROR;
-	  if (status == STATUS_SUCCESS)
+	    {
+	      status = STATUS_CALLING_ERROR;
+	    }
+	  else
 	    {
 	      jsvals.quality     = param[5].data.d_float;
 	      jsvals.smoothing   = param[6].data.d_float;
@@ -540,26 +539,24 @@ run (char    *name,
 	      if (image_comment) 
 		g_free (image_comment);
 	      image_comment = g_strdup (param[9].data.d_string);
+
+	      if (jsvals.quality < 0.0 || jsvals.quality > 1.0)
+		status = STATUS_CALLING_ERROR;
+	      else if (jsvals.smoothing < 0.0 || jsvals.smoothing > 1.0)
+		status = STATUS_CALLING_ERROR;
+	      else if (jsvals.subsmp < 0 || jsvals.subsmp > 2)
+		status = STATUS_CALLING_ERROR;
+	      else if (jsvals.dct < 0 || jsvals.dct > 2)
+		status = STATUS_CALLING_ERROR;
 	    }
-	  if (status == STATUS_SUCCESS &&
-	      (jsvals.quality < 0.0 || jsvals.quality > 1.0))
-	    status = STATUS_CALLING_ERROR;
-	  if (status == STATUS_SUCCESS &&
-	      (jsvals.smoothing < 0.0 || jsvals.smoothing > 1.0))
-	    status = STATUS_CALLING_ERROR;
-	  if (status == STATUS_SUCCESS &&
-            (jsvals.subsmp < 0 || jsvals.subsmp > 2))
-	    status = STATUS_CALLING_ERROR;
-	  if (status == STATUS_SUCCESS &&
-	    (jsvals.dct < 0 || jsvals.dct > 2))
-	    status = STATUS_CALLING_ERROR;
 	  break;
 
 	case RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_jpeg_save", &jsvals);
 #ifdef GIMP_HAVE_PARASITES
-	  parasite = gimp_image_parasite_find (orig_image_ID, "jpeg-save-options");
+	  parasite = gimp_image_parasite_find (orig_image_ID,
+					       "jpeg-save-options");
 	  if (parasite)
 	    {
 	      jsvals.quality     = ((JpegSaveVals *)parasite->data)->quality;
@@ -580,26 +577,28 @@ run (char    *name,
 	  break;
 	}
 
-      *nreturn_vals = 1;
-      if (save_image (param[3].data.d_string,
-		      image_ID,
-		      drawable_ID,
-		      orig_image_ID,
-		      FALSE))
+      if (status == STATUS_SUCCESS)
 	{
-	  /*  Store mvals data  */
-	  gimp_set_data ("file_jpeg_save", &jsvals, sizeof (JpegSaveVals));
-
-	  values[0].data.d_status = STATUS_SUCCESS;
+	  if (save_image (param[3].data.d_string,
+			  image_ID,
+			  drawable_ID,
+			  orig_image_ID,
+			  FALSE))
+	    {
+	      /*  Store mvals data  */
+	      gimp_set_data ("file_jpeg_save", &jsvals, sizeof (JpegSaveVals));
+	    }
+	  else
+	    {
+	      status = STATUS_EXECUTION_ERROR;
+	    }
 	}
-      else
-	values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
       if (export == EXPORT_EXPORT)
 	{
 	  /* If the image was exported, delete the new display. */
 	  /* This also deletes the image.                       */
-	  
+
 	  if (display_ID > -1)
 	    gimp_display_delete (display_ID);
 	  else
@@ -607,7 +606,6 @@ run (char    *name,
 	}
 
 #ifdef GIMP_HAVE_PARASITES
-
       /* pw - now we need to change the defaults to be whatever
        * was used to save this image.  Dump the old parasites
        * and add new ones. */
@@ -627,14 +625,18 @@ run (char    *name,
       parasite = parasite_new ("jpeg-save-options", 0, sizeof (jsvals), &jsvals);
       gimp_image_parasite_attach (orig_image_ID, parasite);
       parasite_free (parasite);
-
 #endif /* Have Parasites */  
     }
+  else
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
-
 /* Read next byte */
-static unsigned int
+static guint
 jpeg_getc (j_decompress_ptr cinfo)
 {
   struct jpeg_source_mgr * datasrc = cinfo->src;
@@ -889,7 +891,8 @@ load_image (char         *filename,
     } 
   else 
     {
-      image_ID = gimp_image_new (cinfo.output_width, cinfo.output_height, image_type);
+      image_ID = gimp_image_new (cinfo.output_width, cinfo.output_height,
+				 image_type);
       gimp_image_set_filename (image_ID, filename);
     }
 
@@ -899,7 +902,7 @@ load_image (char         *filename,
 						   cinfo.output_width,
 						   cinfo.output_height,
 						   layer_type, 100, NORMAL_MODE);
-    } 
+    }
   else 
     {
       layer_ID = gimp_layer_new (image_ID, _("Background"),
@@ -909,46 +912,48 @@ load_image (char         *filename,
     }
 
   drawable_global = drawable = gimp_drawable_get (layer_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, TRUE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
+		       drawable->width, drawable->height, TRUE, FALSE);
 
-  /* Step 5.1: if the file had resolution information, set it on the
-   * image */
 #ifdef GIMP_HAVE_RESOLUTION_INFO
+  /* Step 5.1: if the file had resolution information, set it on the image */
   if (!preview && cinfo.saw_JFIF_marker)
-  {
-    float xresolution;
-    float yresolution;
-    float asymmetry;
+    {
+      gdouble xresolution;
+      gdouble yresolution;
+      gdouble asymmetry;
 
-    xresolution = cinfo.X_density;
-    yresolution = cinfo.Y_density;
+      xresolution = cinfo.X_density;
+      yresolution = cinfo.Y_density;
 
-    switch (cinfo.density_unit)
-      {
-      case 0: /* unknown */
-	asymmetry = xresolution / yresolution;
-	xresolution = 72 * asymmetry;
-	yresolution = 72;
-	break;
-      
-      case 1: /* dots per inch */
-	break;
+      switch (cinfo.density_unit)
+	{
+	case 0: /* unknown -> set the aspect ratio but use the default
+		*  image resolution
+		*/
+	  asymmetry = xresolution / yresolution;
+	  gimp_image_get_resolution (image_ID, &xresolution, &yresolution);
+	  xresolution *= asymmetry;
+	  break;
 
-      case 2: /* dots per cm */
-	xresolution *= 2.54;
-	yresolution *= 2.54;
-	break;
+	case 1: /* dots per inch */
+	  break;
 
-      default:
-	g_message ("unknown density unit %d\nassuming dots per inch",
-		   cinfo.density_unit);
-	break;
-      }
+	case 2: /* dots per cm */
+	  xresolution *= 2.54;
+	  yresolution *= 2.54;
+	  gimp_image_set_unit (image_ID, UNIT_MM);
+	  break;
 
-    gimp_image_set_resolution (image_ID, xresolution, yresolution);
-  }
+	default:
+	  g_message ("unknown density unit %d\nassuming dots per inch",
+		     cinfo.density_unit);
+	  break;
+	}
+
+      gimp_image_set_resolution (image_ID, xresolution, yresolution);
+    }
 #endif /* GIMP_HAVE_RESOLUTION_INFO */
-
 
   /* Step 6: while (scan lines remain to be read) */
   /*           jpeg_read_scanlines(...); */
@@ -1345,20 +1350,36 @@ save_image (char   *filename,
 
 #ifdef GIMP_HAVE_RESOLUTION_INFO
   {
-    double xresolution;
-    double yresolution;
+    gdouble xresolution;
+    gdouble yresolution;
 
     gimp_image_get_resolution (orig_image_ID, &xresolution, &yresolution);
 
     if (xresolution > 1e-5 && yresolution > 1e-5)
       {
-	cinfo.density_unit = 1;  /* dots per inch */
+	gdouble factor;
+
+	factor = gimp_unit_get_factor (gimp_image_get_unit (orig_image_ID));
+
+	if (factor == 2.54 /* cm */ ||
+	    factor == 25.4 /* mm */)
+	  {
+	    cinfo.density_unit = 2;  /* dots per cm */
+
+	    xresolution /= 2.54;
+	    yresolution /= 2.54;
+	  }
+	else
+	  {
+	    cinfo.density_unit = 1;  /* dots per inch */
+	  }
+
 	cinfo.X_density = xresolution;
 	cinfo.Y_density = yresolution;
       }
   }
 #endif /* GIMP_HAVE_RESOLUTION_INFO */
-  
+
   /* Step 4: Start compressor */
 
   /* TRUE ensures that we will write a complete interchange-JPEG file.
@@ -1526,7 +1547,7 @@ static void
 add_menu_item (GtkWidget        *menu, 
 	       char             *label, 
 	       guint             op_no, 
-	       MenuItemCallback  callback)
+	       GtkSignalFunc     callback)
 {
   GtkWidget *menu_item = gtk_menu_item_new_with_label (label);
   gtk_container_add (GTK_CONTAINER (menu), menu_item);

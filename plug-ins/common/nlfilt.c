@@ -44,10 +44,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include <plug-ins/megawidget/megawidget.h>
-
-static mw_preview_t nlfilt_do_preview;
-
 struct Grgb
 {
   guint8 red;
@@ -79,9 +75,26 @@ typedef enum
   filter_edge_enhance
 } FilterType;
 
-/* other structure declarations */
+/*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
 
+struct mwPreview
+{
+  gint     width;
+  gint     height;
+  gint     bpp;
+  gdouble  scale;
+  guchar  *bits;
+};
+
+#define PREVIEW_SIZE 100
+
+static gint   do_preview = TRUE;
 static struct mwPreview *thePreview;
+
+static GtkWidget        * mw_preview_new   (GtkWidget        *parent,
+                                            struct mwPreview *mwp);
+static struct mwPreview * mw_preview_build (GDrawable        *drw);
+
 
 /* function protos */
 
@@ -92,8 +105,10 @@ static void run   (gchar   *name,
 		   gint    *nretvals,
 		   GParam **retvals);
 
-static gint pluginCore   (struct piArgs *argp);
-static gint pluginCoreIA (struct piArgs *argp);
+static gint pluginCore        (struct piArgs *argp);
+static gint pluginCoreIA      (struct piArgs *argp);
+
+static void nlfilt_do_preview (GtkWidget  *preview);
 
 static inline gint nlfiltInit (gdouble     alpha,
 			       gdouble     radius,
@@ -106,10 +121,10 @@ static inline void nlfiltRow  (guchar     *src,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,  /* init  */
-  NULL,  /* quit  */
-  query, /* query */
-  run,   /* run   */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 MAIN ()
@@ -362,7 +377,7 @@ pluginCoreIA (struct piArgs *argp)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  preview = mw_preview_new (hbox, thePreview, &nlfilt_do_preview);
+  preview = mw_preview_new (hbox, thePreview);
   gtk_object_set_data (GTK_OBJECT (preview), "piArgs", argp);
   nlfilt_do_preview (preview);
 
@@ -409,9 +424,9 @@ pluginCoreIA (struct piArgs *argp)
 		      GTK_SIGNAL_FUNC (nlfilt_double_adjustment_update),
 		      &argp->radius);
 
-  gtk_widget_show(table);
+  gtk_widget_show (table);
 
-  gtk_widget_show(dlg);
+  gtk_widget_show (dlg);
 
   gtk_main ();
   gdk_flush ();
@@ -477,6 +492,124 @@ nlfilt_do_preview (GtkWidget *w)
   gtk_widget_draw (theWidget, NULL);
   gdk_flush ();
   g_free (dst);
+}
+
+static void
+mw_preview_toggle_callback (GtkWidget *widget,
+                            gpointer   data)
+{
+  gimp_toggle_button_update (widget, data);
+
+  if (do_preview)
+    nlfilt_do_preview (NULL);
+}
+
+static struct mwPreview *
+mw_preview_build_virgin (GDrawable *drw)
+{
+  struct mwPreview *mwp;
+
+  mwp = g_new (struct mwPreview, 1);
+
+  if (drw->width > drw->height)
+    {
+      mwp->scale  = (gdouble) drw->width / (gdouble) PREVIEW_SIZE;
+      mwp->width  = PREVIEW_SIZE;
+      mwp->height = drw->height / mwp->scale;
+    }
+  else
+    {
+      mwp->scale  = (gdouble) drw->height / (gdouble) PREVIEW_SIZE;
+      mwp->height = PREVIEW_SIZE;
+      mwp->width  = drw->width / mwp->scale;
+    }
+
+  mwp->bpp  = 3;
+  mwp->bits = NULL;
+
+  return mwp;
+}
+
+static struct mwPreview *
+mw_preview_build (GDrawable *drw)
+{
+  struct mwPreview *mwp;
+  gint x, y, b;
+  guchar *bc;
+  guchar *drwBits;
+  GPixelRgn pr;
+
+  mwp = mw_preview_build_virgin (drw);
+
+  gimp_pixel_rgn_init (&pr, drw, 0, 0, drw->width, drw->height, FALSE, FALSE);
+  drwBits = g_new (guchar, drw->width * drw->bpp);
+
+  bc = mwp->bits = g_new (guchar, mwp->width * mwp->height * mwp->bpp);
+  for (y = 0; y < mwp->height; y++)
+    {
+      gimp_pixel_rgn_get_row (&pr, drwBits, 0, (int)(y*mwp->scale), drw->width);
+
+      for (x = 0; x < mwp->width; x++)
+        {
+          for (b = 0; b < mwp->bpp; b++)
+            *bc++ = *(drwBits +
+                      ((gint) (x * mwp->scale) * drw->bpp) + b % drw->bpp);
+        }
+    }
+  g_free (drwBits);
+
+  return mwp;
+}
+
+static GtkWidget *
+mw_preview_new (GtkWidget        *parent,
+                struct mwPreview *mwp)
+{
+  GtkWidget *preview;
+  GtkWidget *frame;
+  GtkWidget *pframe;
+  GtkWidget *vbox;
+  GtkWidget *button;
+  guchar *color_cube;
+   
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+                              color_cube[2], color_cube[3]);
+
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+
+  frame = gtk_frame_new (_("Preview"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  pframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME(pframe), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), pframe, FALSE, FALSE, 0);
+  gtk_widget_show (pframe);
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), mwp->width, mwp->height);
+  gtk_container_add (GTK_CONTAINER (pframe), preview);
+  gtk_widget_show (preview);
+
+  button = gtk_check_button_new_with_label (_("Do Preview"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                      GTK_SIGNAL_FUNC (mw_preview_toggle_callback),
+                      &do_preview);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  return preview;
 }
 
 /* pnmnlfilt.c - 4 in 1 (2 non-linear) filter

@@ -85,6 +85,7 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Round up a division to the nearest integer. */
@@ -102,7 +103,7 @@ static TgaSaveVals tsvals =
 
 typedef struct _TgaSaveInterface
 {
-  unsigned char run;
+  gint run;
 } TgaSaveInterface;
 
 static TgaSaveInterface tsint =
@@ -166,14 +167,14 @@ static struct
 /* Declare some local functions.
  */
 static void   query               (void);
-static void   run                 (char    *name,
-				   int      nparams,
+static void   run                 (gchar   *name,
+				   gint     nparams,
 				   GParam  *param,
-				   int     *nreturn_vals,
+				   gint    *nreturn_vals,
 				   GParam **return_vals);
 
-static gint32 load_image           (char   *filename);
-static gint   save_image           (char   *filename,
+static gint32 load_image           (gchar  *filename);
+static gint   save_image           (gchar  *filename,
 				    gint32  image_ID,
 				    gint32  drawable_ID);
 
@@ -181,15 +182,13 @@ static void   init_gtk             (void);
 static gint   save_dialog          (void);
 static void   save_ok_callback     (GtkWidget *widget,
 				    gpointer   data);
-static void   save_toggle_update   (GtkWidget *widget,
-				    gpointer   data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
@@ -200,7 +199,7 @@ static int verbose = VERBOSE;
 #endif
 
 static void
-query ()
+query (void)
 {
   static GParamDef load_args[] =
   {
@@ -212,9 +211,9 @@ query ()
   {
     { PARAM_IMAGE, "image", "Output image" },
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
-
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
   static GParamDef save_args[] =
   {
@@ -225,7 +224,7 @@ query ()
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
     { PARAM_INT32, "rle", "Enable RLE compression" },
   } ;
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   INIT_I18N();
 
@@ -241,7 +240,6 @@ query ()
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
-
   gimp_install_procedure ("file_tga_save",
                           _("saves files in the Targa file format"),
                           "FIXME: write help for tga_save",
@@ -254,24 +252,27 @@ query ()
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_tga_load", "tga", "",
+  gimp_register_magic_load_handler ("file_tga_load",
+				    "tga",
+				    "",
 				    "0&,byte,10,2&,byte,1,3&,byte,>0,3,byte,<9");
-  gimp_register_save_handler ("file_tga_save", "tga", "");
-
+  gimp_register_save_handler       ("file_tga_save",
+				    "tga",
+				    "");
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  GStatusType status = STATUS_SUCCESS;
-  GRunModeType run_mode;
-  gint32 image_ID;
-  gint32 drawable_ID;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
+  gint32        drawable_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
 
 #ifdef PROFILE
@@ -281,9 +282,9 @@ run (char    *name,
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
 #ifdef VERBOSE
   if (verbose)
@@ -293,43 +294,45 @@ run (char    *name,
   if (strcmp (name, "file_tga_load") == 0)
     {
       INIT_I18N();
+
 #ifdef PROFILE
       times (&tbuf1);
 #endif
+
       image_ID = load_image (param[1].data.d_string);
 
       if (image_ID != -1)
         {
           *nreturn_vals = 2;
-          values[0].data.d_status = STATUS_SUCCESS;
-          values[1].type = PARAM_IMAGE;
+          values[1].type         = PARAM_IMAGE;
           values[1].data.d_image = image_ID;
         }
       else
         {
-          values[0].data.d_status = STATUS_EXECUTION_ERROR;
+          status = STATUS_EXECUTION_ERROR;
         }
     }
   else if (strcmp (name, "file_tga_save") == 0)
     {
       INIT_I18N_UI();
       init_gtk ();
-      
+
       image_ID     = param[1].data.d_int32;
       drawable_ID  = param[2].data.d_int32;
-      
+
       /*  eventually export the image */ 
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
 	  export = gimp_export_image (&image_ID, &drawable_ID, "TGA", 
-				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED | 
+				      (CAN_HANDLE_RGB |
+				       CAN_HANDLE_GRAY |
+				       CAN_HANDLE_INDEXED | 
 				       CAN_HANDLE_ALPHA));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      *nreturn_vals = 1;
-	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      values[0].data.d_status = STATUS_CANCEL;
 	      return;
 	    }
 	  break;
@@ -345,15 +348,16 @@ run (char    *name,
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
-	    return;
-
+	    status = STATUS_CANCEL;
 	  break;
 
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 6)
-	    status = STATUS_CALLING_ERROR;
-	  if (status == STATUS_SUCCESS)
+	    {
+	      status = STATUS_CALLING_ERROR;
+	    }
+	  else
 	    {
 	      tsvals.rle = (param[5].data.d_int32) ? TRUE : FALSE;
 	    }
@@ -371,20 +375,29 @@ run (char    *name,
 #ifdef PROFILE
       times (&tbuf1);
 #endif
-      *nreturn_vals = 1;
-      if (save_image (param[3].data.d_string, image_ID, drawable_ID))
-	{
-	  /*  Store psvals data  */
-	  gimp_set_data ("file_tga_save", &tsvals, sizeof (tsvals));
 
-	  values[0].data.d_status = STATUS_SUCCESS;
+      if (status == STATUS_SUCCESS)
+	{
+	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
+	    {
+	      /*  Store psvals data  */
+	      gimp_set_data ("file_tga_save", &tsvals, sizeof (tsvals));
+	    }
+	  else
+	    {
+	      status = STATUS_EXECUTION_ERROR;
+	    }
 	}
-      else
-	values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
       if (export == EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
+  else
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 
 #ifdef PROFILE
   times (&tbuf2);
@@ -394,10 +407,12 @@ run (char    *name,
 #endif
 }
 
-static gint32 ReadImage (FILE *fp, struct tga_header *hdr, char *filename);
+static gint32 ReadImage (FILE              *fp,
+			 struct tga_header *hdr,
+			 gchar             *filename);
 
 static gint32
-load_image (char *filename)
+load_image (gchar *filename)
 {
   FILE *fp;
   char * name_buf;
@@ -406,8 +421,9 @@ load_image (char *filename)
   gint32 image_ID = -1;
 
   fp = fopen (filename, "rb");
-  if (!fp) {
-      printf ("TGA: can't open \"%s\"\n", filename);
+  if (!fp)
+    {
+      g_message ("TGA: can't open \"%s\"\n", filename);
       return -1;
     }
 
@@ -419,7 +435,7 @@ load_image (char *filename)
   if (fseek (fp, 0L - (sizeof (tga_footer)), SEEK_END)
       || fread (&tga_footer, sizeof (tga_footer), 1, fp) != 1)
     {
-      printf ("TGA: Cannot read footer from \"%s\"\n", filename);
+      g_message ("TGA: Cannot read footer from \"%s\"\n", filename);
       return -1;
     }
 
@@ -436,15 +452,16 @@ load_image (char *filename)
 #endif
 
   if (fseek (fp, 0, SEEK_SET) ||
-      fread (&hdr, sizeof (hdr), 1, fp) != 1) {
-    printf("TGA: Cannot read header from \"%s\"\n", filename);
-    return -1;
-  }
+      fread (&hdr, sizeof (hdr), 1, fp) != 1)
+    {
+      g_message ("TGA: Cannot read header from \"%s\"\n", filename);
+      return -1;
+    }
 
   /* Skip the image ID field. */
   if (hdr.idLength && fseek (fp, hdr.idLength, SEEK_CUR))
     {
-      printf ("TGA: Cannot skip ID field in \"%s\"\n", filename);
+      g_message ("TGA: Cannot skip ID field in \"%s\"\n", filename);
       return -1;
     }
 
@@ -1153,7 +1170,7 @@ ReadImage (FILE              *fp,
 
 
 static gint
-save_image (char   *filename,
+save_image (gchar  *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID)
 {
@@ -1230,10 +1247,11 @@ save_image (char   *filename,
   hdr.heightLo = (height & 0xff);
   hdr.heightHi = (height >> 8);
 
-  if((fp = fopen(filename, "wb")) == NULL) {
-    printf("TGA: can't create \"%s\"\n", filename);
-    return FALSE;
-  }
+  if((fp = fopen(filename, "wb")) == NULL)
+    {
+      g_message ("TGA: can't create \"%s\"\n", filename);
+      return FALSE;
+    }
 
   /* Mark our save ID. */
   hdr.idLength = strlen (SAVE_ID_STRING);
@@ -1250,7 +1268,7 @@ save_image (char   *filename,
       cmap = gimp_image_get_cmap (image_ID, &colors);
       if (colors > 256)
 	{
-	  printf ("TGA: cannot handle colormap with more than 256 colors (got %d)\n", colors);
+	  g_message ("TGA: cannot handle colormap with more than 256 colors (got %d)\n", colors);
 	  return FALSE;
 	}
 
@@ -1408,21 +1426,21 @@ save_image (char   *filename,
       gimp_progress_update ((double) (i + tileheight) / (double) height);
     }
 
-  gimp_drawable_detach(drawable);
+  gimp_drawable_detach (drawable);
   g_free (data);
 
-  fclose(fp);
+  fclose (fp);
   return status;
 }
 
 static void 
-init_gtk ()
+init_gtk (void)
 {
   gchar **argv;
-  gint argc;
+  gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("tga");
   
   gtk_init (&argc, &argv);
@@ -1454,19 +1472,20 @@ save_dialog (void)
 		      NULL);
 
   /* regular tga parameter settings */
-  frame = gtk_frame_new ( _("Targa Options"));
+  frame = gtk_frame_new (_("Targa Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /*  rle  */
-  toggle = gtk_check_button_new_with_label ( _("RLE compression"));
+  toggle = gtk_check_button_new_with_label (_("RLE compression"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) save_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &tsvals.rle);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tsvals.rle);
   gtk_widget_show (toggle);
@@ -1482,26 +1501,11 @@ save_dialog (void)
   return tsint.run;
 }
 
-/*  Save interface functions  */
-
 static void
 save_ok_callback (GtkWidget *widget,
 		  gpointer   data)
 {
   tsint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-save_toggle_update (GtkWidget *widget,
-		    gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
 }

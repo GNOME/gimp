@@ -48,7 +48,7 @@ static void   type_dialog_ok_callback     (GtkWidget *widget,
 static void   type_dialog_toggle_update   (GtkWidget *widget, 
 					   gpointer   data);
 static void   type_dialog_cancel_callback (GtkWidget *widget, 
-					   gpointer data);
+					   gpointer   data);
 
 /* 
  * Some global variables.
@@ -56,10 +56,10 @@ static void   type_dialog_cancel_callback (GtkWidget *widget,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,  /* init_proc */
-  NULL,  /* quit_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
   query, /* query_proc */
-  run,   /* run_proc */
+  run,   /* run_proc   */
 };
 
 /**
@@ -82,7 +82,7 @@ query (void)
     {PARAM_STRING,   "raw_filename", "The name entered"},
     {PARAM_STRING,   "file_type",    "File type to use"}
   };
-  static int nsave_args = sizeof(save_args) / sizeof(save_args[0]);
+  static gint nsave_args = sizeof(save_args) / sizeof(save_args[0]);
 
   INIT_I18N();
 
@@ -98,7 +98,9 @@ query (void)
 			  nsave_args, 0,
 			  save_args, NULL);
 
-  gimp_register_save_handler ("file_aa_save", "ansi,txt,text,html", "");
+  gimp_register_save_handler ("file_aa_save",
+			      "ansi,txt,text,html",
+			      "");
 }
 
 /**
@@ -107,11 +109,11 @@ query (void)
  * -1 means it wasn't found.
  */
 static int 
-get_type_from_string (char *string)
+get_type_from_string (gchar *string)
 {
-  int type = 0;
+  gint type = 0;
   aa_format **p = aa_formats;
-  
+
   while (*p && strcmp ((*p)->formatname, string))
     {
       p++;
@@ -132,19 +134,19 @@ run (gchar   *name,
      GParam **return_vals)
 {
   static GParam values[2];
-  GStatusType status = STATUS_SUCCESS;
-  GRunModeType run_mode;
-  gint output_type = 0;
-  static int last_type = 0;
-  gint32 image_ID;
-  gint32 drawable_ID;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint          output_type = 0;
+  static int    last_type = 0;
+  gint32        image_ID;
+  gint32        drawable_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
 
   /* Set us up to return a status. */
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   run_mode    = param[0].data.d_int32;
   image_ID    = param[1].data.d_int32;
@@ -158,10 +160,11 @@ run (gchar   *name,
       INIT_I18N_UI();
       init_gtk ();
       export = gimp_export_image (&image_ID, &drawable_ID, "AA", 
-				  (CAN_HANDLE_GRAY | CAN_HANDLE_ALPHA));
+				  (CAN_HANDLE_GRAY |
+				   CAN_HANDLE_ALPHA));
       if (export == EXPORT_CANCEL)
 	{
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  values[0].data.d_status = STATUS_CANCEL;
 	  return;
 	}
       break;
@@ -172,53 +175,61 @@ run (gchar   *name,
 
   if (!aa_savable (drawable_ID)) 
     {
-      values[0].data.d_status = STATUS_CALLING_ERROR;
-      goto finish;
-    }
-
-  switch (run_mode) 
-    {
-    case RUN_INTERACTIVE:
-      gimp_get_data ("file_aa_save", &last_type);
-      output_type = type_dialog (last_type);
-      break;
-
-    case RUN_NONINTERACTIVE:
-      /*  Make sure all the arguments are there!  */
-      if (nparams != 6)
-	status = STATUS_CALLING_ERROR;
-      else
-	output_type = get_type_from_string (param[5].data.d_string);
-      break;
-
-    case RUN_WITH_LAST_VALS:
-      gimp_get_data ("file_aa_save", &last_type);
-      output_type = last_type;
-      break;
-
-    default:
-      break;
-    }
-
-  if (output_type < 0) 
-    {
       status = STATUS_CALLING_ERROR;
-      goto finish;
     }
 
-  if (save_aa (output_type, param[3].data.d_string, image_ID, drawable_ID))
+  if (status == STATUS_SUCCESS)
     {
-      values[0].data.d_status = STATUS_EXECUTION_ERROR;
-      last_type = output_type;
-      gimp_set_data ("file_aa_save", &last_type, sizeof(last_type));
-    }    
-  else
-    values[0].data.d_status = STATUS_SUCCESS;
+      switch (run_mode) 
+	{
+	case RUN_INTERACTIVE:
+	  gimp_get_data ("file_aa_save", &last_type);
+	  output_type = type_dialog (last_type);
+	  if (output_type < 0)
+	    status = STATUS_CANCEL;
+	  break;
 
- finish:
+	case RUN_NONINTERACTIVE:
+	  /*  Make sure all the arguments are there!  */
+	  if (nparams != 6)
+	    {
+	      status = STATUS_CALLING_ERROR;
+	    }
+	  else
+	    {
+	      output_type = get_type_from_string (param[5].data.d_string);
+	      if (output_type < 0)
+		status = STATUS_CALLING_ERROR;
+	    }
+	  break;
+
+	case RUN_WITH_LAST_VALS:
+	  gimp_get_data ("file_aa_save", &last_type);
+	  output_type = last_type;
+	  break;
+
+	default:
+	  break;
+	}
+    }
+
+  if (status == STATUS_SUCCESS)
+    {
+      if (save_aa (output_type, param[3].data.d_string, image_ID, drawable_ID))
+	{
+	  status = STATUS_EXECUTION_ERROR;
+	}
+      else
+	{
+	  last_type = output_type;
+	  gimp_set_data ("file_aa_save", &last_type, sizeof (last_type));
+	}
+    }
 
   if (export == EXPORT_EXPORT)
     gimp_image_delete (image_ID);  
+
+  values[0].data.d_status = status;
 }
 
 /**
@@ -419,5 +430,5 @@ static void
 type_dialog_toggle_update (GtkWidget *widget, 
 			   gpointer   data) 
 {
-  selected_type = get_type_from_string ((char *)data);
+  selected_type = get_type_from_string ((char *) data);
 }

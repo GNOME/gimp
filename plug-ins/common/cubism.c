@@ -28,12 +28,9 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
-
-#ifndef RAND_MAX
-#define RAND_MAX 2147483647
-#endif /* RAND_MAX */
 
 #define SCALE_WIDTH    125
 #define BLACK            0
@@ -745,7 +742,7 @@ fp_rand (gdouble val)
 {
   gdouble rand_val;
 
-  rand_val = (gdouble) rand () / (gdouble) (RAND_MAX - 1);
+  rand_val = (gdouble) rand () / (gdouble) (G_MAXRAND - 1);
   return rand_val * val;
 }
 

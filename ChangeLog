@@ -1,3 +1,63 @@
+2000-01-25  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in
+	* po-plug-ins/POTFILES.in
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/megawidget/*: removed. (There were only 3 functions
+	left which were used by ~5 plugins, so I moved the resp. functions
+	to the plugins). More preview stuff to come...
+
+	* app/airbrush_blob.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: use G_PI instead of M_PI.
+
+	* app/procedural_db.h
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: new PDB return value STATUS_CANCEL which
+	indicates that "Cancel" was pressed in a plugin dialog. (Useful
+	only for file load/save plugins).
+
+	* app/fileops.[ch]
+	* app/menus.c: changes to handle STATUS_CANCEL correctly. Did some
+	code cleanup in fileops.[ch]. Pop up a warning if File->Save
+	failed.
+
+	* app/plug_in.c: return_val[0] is of type PDB_STATUS, not
+	PDB_INT32.
+
+	* libgimp/gimpmath.h: new constant G_MAXRAND which equals to
+	RAND_MAX if it exists or to G_MAXINT otherwise.
+
+	* libgimp/gimpwidgets.[ch]: new function gimp_random_seed_new()
+	which creates a spinbutton and a "Time" toggle.
+	Call the function which does the "set_sensitive" magic from the
+	radio button callback.
+
+	* plug-ins/[75 plugins]:
+
+	- Return STATUS_CANCEL in all file load/save dialogs if "Cancel"
+	  was pressed.
+	- Standardized the file plugins' "run" functions.
+	- Use G_PI and G_MAXRAND everywhere.
+	- Added tons of scales and spinbuttons instead of text entries.
+	- Applied uniform packing/spacings all over the place.
+	- Reorganized some UIs (stuff like moving the preview to the top
+	  left corner of the dialog).
+	- Removed many ui helper functions and callbacks and use the stuff
+	  from libgimp instead.
+	- I tried not to restrict the range of possible values when I
+	  replaced entries with spinbuttons/scales but may have failed,
+	  though in some cases. Please test ;-)
+	- #include <libgimp/gimpmath.h> where appropriate and use it's
+	  constants.
+	- Indentation, s/int/gint/ et.al., code cleanup.
+
+	RFC: The plugins are definitely not useable with GIMP 1.0 any
+	     more, so shouldn't we remove all the remaining compatibility
+	     stuff ??? (like "#ifdef GIMP_HAVE_PARASITES")
+
 Tue Jan 25 15:10:14 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* plug-ins/common/color_enhance.c: On request of
@@ -5,7 +65,7 @@ Tue Jan 25 15:10:14 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 	gdouble, gint).
 
 Mon Jan 24 22:28:00 CET 2000  Seth Burgess <sjburges@gimp.org>
-	
+
 	* app/gdisplay_ops.c: Added a minimum width for shrink wrap;
         without it, it would map improperly and create a mess for small
 	images.  Its not a very shrunk wrap since the statusbar is so

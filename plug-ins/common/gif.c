@@ -270,8 +270,8 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -286,13 +286,19 @@
 /* PS: I know that technically facehuggers aren't parasites,
    the pupal-forms are.  But facehuggers are ky00te. */
 
+enum
+{
+  DISPOSE_UNSPECIFIED,
+  DISPOSE_COMBINE,
+  DISPOSE_REPLACE
+};
 
 typedef struct
 {
-  int interlace;
-  int loop;
-  int default_delay;
-  int default_dispose;
+  gint interlace;
+  gint loop;
+  gint default_delay;
+  gint default_dispose;
 } GIFSaveVals;
 
 typedef struct
@@ -305,12 +311,12 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query                    (void);
-static void   run                      (char    *name,
-					int      nparams,
+static void   run                      (gchar   *name,
+					gint     nparams,
 					GParam  *param,
-					int     *nreturn_vals,
+					gint    *nreturn_vals,
 					GParam **return_vals);
-static gint   save_image               (char    *filename,
+static gint   save_image               (gchar   *filename,
 					gint32   image_ID,
 					gint32   drawable_ID,
 					gint32   orig_image_ID);
@@ -320,40 +326,31 @@ static gboolean boundscheck            (gint32 image_ID);
 static gboolean badbounds_dialog       (void);
 
 static void   cropok_callback          (GtkWidget *widget, gpointer   data);
-static void   cropcancel_callback      (GtkWidget *widget, gpointer   data);
 
 static gint   save_dialog              (gint32 image_ID);
 
 static void   save_ok_callback         (GtkWidget *widget, gpointer   data);
-static void   save_cancel_callback     (GtkWidget *widget, gpointer   data);
-static void   disposal_select_callback (GtkWidget *widget, gpointer   data);
-static void   save_toggle_update       (GtkWidget *widget, gpointer   data);
-static void   save_entry_callback      (GtkWidget *widget, gpointer   data);
 static void   comment_entry_callback   (GtkWidget *widget, gpointer   data);
 
 
-
-static gint     radio_pressed[3];
-
 static gboolean comment_was_edited = FALSE;
 
-static gboolean can_crop;
+static gboolean can_crop = FALSE;
 static GRunModeType run_mode;
 #ifdef FACEHUGGERS
 Parasite*      comment_parasite = NULL;
 #endif
 
 /* For compression code */
-static int Interlace;
-
+static gint Interlace;
 
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static GIFSaveVals gsvals =
@@ -370,11 +367,10 @@ static GIFSaveInterface gsint =
 };
 
 
-
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef save_args[] =
   {
@@ -388,7 +384,7 @@ query ()
     { PARAM_INT32,    "default_delay",   "(animated gif) Default delay between framese in milliseconds" },
     { PARAM_INT32,    "default_dispose", "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)" }
   };
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   INIT_I18N();
   gimp_install_procedure ("file_gif_save",
@@ -403,38 +399,39 @@ query ()
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_save_handler ("file_gif_save", "gif", "");
+  gimp_register_save_handler ("file_gif_save",
+			      "gif",
+			      "");
 }
 
-
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  GStatusType status = STATUS_SUCCESS;
-  gint32 image_ID;
-  gint32 drawable_ID;
-  gint32 orig_image_ID;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
+  gint32        drawable_ID;
+  gint32        orig_image_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
-  *nreturn_vals = 2;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *nreturn_vals = 1;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "file_gif_save") == 0)
     {
       INIT_I18N_UI();
       init_gtk ();
 
-      image_ID = orig_image_ID = param[1].data.d_int32;
-      drawable_ID  = param[2].data.d_int32;
+      image_ID    = orig_image_ID = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
 
       /*  eventually export the image */ 
       switch (run_mode)
@@ -442,12 +439,13 @@ run (char    *name,
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GIF", 
-				      (CAN_HANDLE_INDEXED | CAN_HANDLE_GRAY | 
-				       CAN_HANDLE_ALPHA | CAN_HANDLE_LAYERS_AS_ANIMATION));
+				      (CAN_HANDLE_INDEXED |
+				       CAN_HANDLE_GRAY | 
+				       CAN_HANDLE_ALPHA |
+				       CAN_HANDLE_LAYERS_AS_ANIMATION));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      *nreturn_vals = 1;
-	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      values[0].data.d_status = STATUS_CANCEL;
 	      return;
 	    }
 	  break;
@@ -462,42 +460,25 @@ run (char    *name,
 	  switch (run_mode)
 	    {
 	    case RUN_INTERACTIVE:
-	      {
-		/*  Possibly retrieve data  */
-		gimp_get_data ("file_gif_save", &gsvals);
+	      /*  Possibly retrieve data  */
+	      gimp_get_data ("file_gif_save", &gsvals);
 		
-		/*  First acquire information with a dialog  */
-		radio_pressed[0] =
-		  radio_pressed[1] =
-		  radio_pressed[2] = FALSE;
-		
-		radio_pressed[gsvals.default_dispose] = TRUE;
-		
-		if (! save_dialog (image_ID))
-		  {
-		    *nreturn_vals = 1;
-		    values[0].data.d_status = STATUS_EXECUTION_ERROR;
-		    fflush(stdout);
-		    return;
-		  }
-
-		if (radio_pressed[0]) gsvals.default_dispose = 0x00;
-		else
-		  if (radio_pressed[1]) gsvals.default_dispose = 0x01;
-		  else
-		    if (radio_pressed[2]) gsvals.default_dispose = 0x02;
-	      }
+	      /*  First acquire information with a dialog  */
+	      if (! save_dialog (image_ID))
+		status = STATUS_CANCEL;
 	      break;
 	      
 	    case RUN_NONINTERACTIVE:
 	      /*  Make sure all the arguments are there!  */
 	      if (nparams != 9)
-		status = STATUS_CALLING_ERROR;
-	      if (status == STATUS_SUCCESS)
+		{
+		  status = STATUS_CALLING_ERROR;
+		}
+	      else
 		{
 		  gsvals.interlace = (param[5].data.d_int32) ? TRUE : FALSE;
-		  gsvals.loop = (param[6].data.d_int32) ? TRUE : FALSE;
-		  gsvals.default_delay = param[7].data.d_int32;
+		  gsvals.loop      = (param[6].data.d_int32) ? TRUE : FALSE;
+		  gsvals.default_delay   = param[7].data.d_int32;
 		  gsvals.default_dispose = param[8].data.d_int32;
 		}
 	      break;
@@ -511,32 +492,34 @@ run (char    *name,
 	      break;
 	    }
 
-	  *nreturn_vals = 1;
-	  if (save_image (param[3].data.d_string,
-			  image_ID,
-			  drawable_ID,
-			  orig_image_ID))
+	  if (status == STATUS_SUCCESS)
 	    {
-	      /*  Store psvals data  */
-	      gimp_set_data ("file_gif_save", &gsvals, sizeof (GIFSaveVals));
-	      
-	      values[0].data.d_status = STATUS_SUCCESS;
+	      if (save_image (param[3].data.d_string,
+			      image_ID,
+			      drawable_ID,
+			      orig_image_ID))
+		{
+		  /*  Store psvals data  */
+		  gimp_set_data ("file_gif_save", &gsvals, sizeof (GIFSaveVals));
+		}
+	      else
+		{
+		  status = STATUS_EXECUTION_ERROR;
+		}
 	    }
-	  else
-	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
 	}
       else /* Some layers were out of bounds and the user wishes
 	      to abort.  */
 	{
-	  *nreturn_vals = 1;
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  status = STATUS_CANCEL;
 	}
 
       if (export == EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
-}
 
+  values[0].data.d_status = status;
+}
 
 #define MAXCOLORMAPSIZE  256
 
@@ -546,12 +529,12 @@ run (char    *name,
 #define GRAYSCALE        1
 #define COLOR            2
 
-typedef unsigned char CMap[3][MAXCOLORMAPSIZE];
+typedef guchar CMap[3][MAXCOLORMAPSIZE];
 
 
-int verbose = FALSE;
-char *globalcomment = NULL;
-gint globalusecomment = TRUE;
+gint   verbose = FALSE;
+gchar *globalcomment = NULL;
+gint   globalusecomment = TRUE;
 
 
 
@@ -848,7 +831,7 @@ boundscheck (gint32 image_ID)
 
 
 static gint
-save_image (char   *filename,
+save_image (gchar  *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID,
 	    gint32  orig_image_ID)
@@ -1143,13 +1126,13 @@ save_image (char   *filename,
 }
 
 static void 
-init_gtk ()
+init_gtk (void)
 {
   gchar **argv;
-  gint argc;
+  gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("gif");
   
   gtk_init (&argc, &argv);
@@ -1157,14 +1140,12 @@ init_gtk ()
 }
 
 static gboolean
-badbounds_dialog ( void )
+badbounds_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *label;
   GtkWidget *frame;
   GtkWidget *vbox;
-
-  can_crop = FALSE;
 
   dlg = gimp_dialog_new (_("GIF Warning"), "gif_warning",
 			 gimp_plugin_help_func, "filters/gif.html#warning",
@@ -1173,8 +1154,8 @@ badbounds_dialog ( void )
 
 			 _("OK"), cropok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 _("Cancel"), cropcancel_callback,
-			 NULL, NULL, NULL, FALSE, TRUE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);
 
@@ -1185,12 +1166,12 @@ badbounds_dialog ( void )
   /*  the warning message  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
 
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
   
   label= gtk_label_new (_("The image which you are trying to save as a GIF\n"
 			  "contains layers which extend beyond the actual\n"
@@ -1199,17 +1180,14 @@ badbounds_dialog ( void )
 			  "You may choose whether to crop all of the layers to\n"
 			  "the image borders, or cancel this save."));
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
-  gtk_widget_show(label);
+  gtk_widget_show (label);
 
-  gtk_widget_show(vbox);
-  gtk_widget_show(frame);
+  gtk_widget_show (vbox);
+  gtk_widget_show (frame);
 
-  gtk_widget_show(dlg);
+  gtk_widget_show (dlg);
 
   gtk_main ();
-
-  gtk_widget_destroy (GTK_WIDGET (dlg));
-
   gdk_flush ();
 
   return can_crop;
@@ -1220,14 +1198,15 @@ static gint
 save_dialog (gint32 image_ID)
 {
   GtkWidget *dlg;
+  GtkWidget *main_vbox;
   GtkWidget *toggle;
   GtkWidget *label;
-  GtkWidget *entry;
+  GtkWidget *spinbutton;
+  GtkObject *adj;
   GtkWidget *text;
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *menu;
   GtkWidget *disposal_option_menu;
   GtkWidget *com_table;
   GtkWidget *vscrollbar;
@@ -1235,7 +1214,6 @@ save_dialog (gint32 image_ID)
   Parasite* GIF2_CMNT;
 #endif
 
-  gchar  buffer[10];
   gint32 nlayers;
 
   gimp_image_get_layers (image_ID, &nlayers);
@@ -1247,8 +1225,8 @@ save_dialog (gint32 image_ID)
 
 			 _("OK"), save_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 _("Cancel"), save_cancel_callback,
-			 NULL, NULL, NULL, FALSE, TRUE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);
 
@@ -1256,37 +1234,40 @@ save_dialog (gint32 image_ID)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
+
   /*  regular gif parameter settings  */
   frame = gtk_frame_new (_("GIF Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 5);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   toggle = gtk_check_button_new_with_label (_("Interlace"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) save_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &gsvals.interlace);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.interlace);
   gtk_widget_show (toggle);
 
-  hbox = gtk_hbox_new(FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 0);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
 
-  toggle = gtk_check_button_new_with_label (_("GIF Comment: "));
+  toggle = gtk_check_button_new_with_label (_("GIF Comment:"));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) save_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &globalusecomment);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), 1);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
   gtk_widget_show (toggle);
 
   com_table = gtk_table_new (1, 1, FALSE);
-  /*  gtk_container_border_width (GTK_CONTAINER (com_table), 10);*/
   gtk_box_pack_start (GTK_BOX (hbox), com_table, TRUE, TRUE, 0);
 
   text = gtk_text_new (NULL, NULL);
@@ -1296,129 +1277,108 @@ save_dialog (gint32 image_ID)
                     GTK_EXPAND | GTK_SHRINK | GTK_FILL,
                     GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
   
-  if (globalcomment!=NULL)
+  if (globalcomment != NULL)
     {
-      g_free(globalcomment);
+      g_free (globalcomment);
     }
 #ifdef FACEHUGGERS
   GIF2_CMNT = gimp_image_parasite_find (image_ID, "gimp-comment");
-    if (GIF2_CMNT)
-      {
-	globalcomment = g_malloc(GIF2_CMNT->size);
-	strcpy(globalcomment, GIF2_CMNT->data);
-      }
-    else
-      {
+  if (GIF2_CMNT)
+    {
+      globalcomment = g_malloc (GIF2_CMNT->size);
+      strcpy (globalcomment, GIF2_CMNT->data);
+    }
+  else
+    {
 #endif
-	/*	globalcomment = g_malloc(1+strlen(_("Made with GIMP")));
+      /*	globalcomment = g_malloc(1+strlen(_("Made with GIMP")));
 		strcpy(globalcomment, _("Made with GIMP")); */
-	globalcomment = NULL;
+      globalcomment = NULL;
 #ifdef FACEHUGGERS
-      }
-    parasite_free (GIF2_CMNT);
+    }
+  parasite_free (GIF2_CMNT);
 #endif
 
-    if (globalcomment)
-      gtk_text_insert(GTK_TEXT(text),NULL,NULL,NULL,globalcomment,-1);
-    gtk_signal_connect (GTK_OBJECT (text), "changed",
-			(GtkSignalFunc) comment_entry_callback,
-			NULL);
+  if (globalcomment)
+    gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL, globalcomment, -1);
+  gtk_signal_connect (GTK_OBJECT (text), "changed",
+		      GTK_SIGNAL_FUNC (comment_entry_callback),
+		      NULL);
 
-    vscrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
-    gtk_table_attach (GTK_TABLE (com_table), vscrollbar, 1, 2, 0, 1,
-		      GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-    gtk_widget_show (vscrollbar);
-    gtk_widget_show (text);
-    gtk_widget_show (com_table);
-    
-    gtk_widget_show (hbox);
-    
-    gtk_widget_show (vbox);
-    gtk_widget_show (frame);
+  vscrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
+  gtk_table_attach (GTK_TABLE (com_table), vscrollbar, 1, 2, 0, 1,
+		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (vscrollbar);
+  gtk_widget_show (text);
+  gtk_widget_show (com_table);
 
+  gtk_widget_show (hbox);
+
+  gtk_widget_show (vbox);
+  gtk_widget_show (frame);
 
   /*  additional animated gif parameter settings  */
   frame = gtk_frame_new (_("Animated GIF Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 8);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+
   vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   toggle = gtk_check_button_new_with_label (_("Loop forever"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) save_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &gsvals.loop);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.loop);
   gtk_widget_show (toggle);
 
-
   /* default_delay entry field */
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Delay between frames where unspecified: "));
+  label = gtk_label_new (_("Delay between Frames where Unspecified:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  entry = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-  gtk_widget_set_usize (entry, 80, 0);
-  g_snprintf (buffer, sizeof (buffer), "%d", gsvals.default_delay);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      (GtkSignalFunc) save_entry_callback,
-                      NULL);
-  gtk_widget_show (entry);
+  spinbutton = gimp_spin_button_new (&adj, gsvals.default_delay,
+				     0, 65000, 10, 100, 0, 1, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+                      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+                      &gsvals.default_delay);
+  gtk_widget_show (spinbutton);
 
-  label = gtk_label_new (_(" milliseconds"));
+  label = gtk_label_new (_("Milliseconds"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   gtk_widget_show (hbox);
 
-
   /* Disposal selector */
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Frame disposal where unspecified: "));
+  label = gtk_label_new (_("Frame Disposal where Unspecified: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  disposal_option_menu = gtk_option_menu_new();
-  {
-    GtkWidget *menu_item;
+  disposal_option_menu =
+    gimp_option_menu_new (gimp_menu_item_update,
+			  &gsvals.default_dispose,
+			  (gpointer) gsvals.default_dispose,
 
-    menu = gtk_menu_new();
-    {
-      menu_item = gtk_menu_item_new_with_label (_("I don't care"));
-      gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
-			  (GtkSignalFunc) disposal_select_callback,
-			  &radio_pressed[0]);
-      gtk_container_add(GTK_CONTAINER(menu), menu_item);
-      gtk_widget_show(menu_item);
-      menu_item = gtk_menu_item_new_with_label (_("Cumulative layers (combine)"));
-      gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
-			  (GtkSignalFunc) disposal_select_callback,
-			  &radio_pressed[1]);
-      gtk_container_add(GTK_CONTAINER(menu), menu_item);
-      gtk_widget_show(menu_item);
-      menu_item = gtk_menu_item_new_with_label (_("One frame per layer (replace)"));
-      gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
-			  (GtkSignalFunc) disposal_select_callback,
-			  &radio_pressed[2]);
-      gtk_container_add(GTK_CONTAINER(menu), menu_item);
-      gtk_widget_show(menu_item);
-    }
-  }
-  gtk_option_menu_set_menu (GTK_OPTION_MENU(disposal_option_menu), menu);
-  gtk_option_menu_set_history(GTK_OPTION_MENU(disposal_option_menu),
-			      gsvals.default_dispose);
-  gtk_widget_show(disposal_option_menu);
-  gtk_box_pack_start(GTK_BOX(hbox), disposal_option_menu, TRUE, TRUE, 2);
+			  _("I don't Care"),
+			  (gpointer) DISPOSE_UNSPECIFIED, NULL,
+			  _("Cumulative Layers (Combine)"),
+			  (gpointer) DISPOSE_COMBINE, NULL,
+			  _("One Frame per Layer (Replace)"),
+			  (gpointer) DISPOSE_REPLACE, NULL,
+
+			  NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), disposal_option_menu, FALSE, FALSE, 0);
+  gtk_widget_show (disposal_option_menu);
 
   gtk_widget_show (hbox);
   gtk_widget_show (vbox);
@@ -1429,8 +1389,6 @@ save_dialog (gint32 image_ID)
   if (nlayers == 1) gtk_widget_set_sensitive (frame, FALSE);
 
   gtk_widget_show (frame);
-
-
 
   gtk_widget_show (dlg);
 
@@ -1508,16 +1466,16 @@ GetPixel (int x,
  *
  *****************************************************************************/
 
-static int Width, Height;
-static int curx, cury;
-static long CountDown;
-static int Pass = 0;
+static gint  Width, Height;
+static gint  curx, cury;
+static glong CountDown;
+static gint  Pass = 0;
 
 /*
  * Bump the 'curx' and 'cury' to point to the next pixel
  */
 static void
-BumpPixel ()
+BumpPixel (void)
 {
   /*
    * Bump the current X position
@@ -2444,7 +2402,7 @@ char_out (int c)
  * Flush the packet to disk, and reset the accumulator
  */
 static void
-flush_char ()
+flush_char (void)
 {
   if (a_count > 0)
     {
@@ -2462,17 +2420,9 @@ cropok_callback (GtkWidget *widget,
 		 gpointer   data)
 {
   can_crop = TRUE;
-  gtk_main_quit ();
-}
 
-static void
-cropcancel_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  can_crop = FALSE;
-  gtk_main_quit ();
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
-
 
 /*  Save interface functions  */
 
@@ -2481,54 +2431,8 @@ save_ok_callback (GtkWidget *widget,
 		  gpointer   data)
 {
   gsint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-save_cancel_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  gsint.run = FALSE;
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-disposal_select_callback (GtkWidget *widget,
-			  gpointer   data)
-{
-  int* valptr;
-
-  valptr = (int*) data;
-
-  radio_pressed[0] = radio_pressed[1] = radio_pressed[2] = 0;
-  *valptr = 1;
-}
-
-static void
-save_toggle_update (GtkWidget *widget,
-		       gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-save_entry_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  gsvals.default_delay = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (gsvals.default_delay < 0)
-    gsvals.default_delay = 0;
-
-  if (gsvals.default_delay > 65000)
-    gsvals.default_delay = 65000;
 }
 
 static void
@@ -2538,27 +2442,25 @@ comment_entry_callback (GtkWidget *widget,
   gint ssize;
   gchar* str;
 
-  str = gtk_editable_get_chars(GTK_EDITABLE (widget),0,-1);
-  ssize = strlen(str);
+  str = gtk_editable_get_chars (GTK_EDITABLE (widget), 0, -1);
+  ssize = strlen (str);
 
   /* Temporary kludge for overlength strings - just return */
-  if (ssize>240)
+  if (ssize > 240)
     {
       g_message (_("GIF save: Your comment string is too long.\n"));
-      g_free(str);
+      g_free (str);
       return;
     }
 
-  if (globalcomment!=NULL) g_free(globalcomment);
-  globalcomment = g_malloc(ssize+1);
+  if (globalcomment != NULL) g_free (globalcomment);
+  globalcomment = g_malloc (ssize + 1);
 
   /*strcpy(globalcomment, gtk_entry_get_text (GTK_ENTRY (widget)));*/
-  strcpy(globalcomment, str);
-  g_free(str);
+  strcpy (globalcomment, str);
+  g_free (str);
 
   comment_was_edited = TRUE;
 
   /*g_print ("COMMENT: %s\n",globalcomment);*/
 }
-
-/* The End */

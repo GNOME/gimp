@@ -436,7 +436,6 @@ emboss_SOURCES = \
 	emboss.c
 
 emboss_LDADD = \
-	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
@@ -759,7 +758,6 @@ nlfilt_SOURCES = \
 	nlfilt.c
 
 nlfilt_LDADD = \
-	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
@@ -1179,7 +1177,6 @@ waves_SOURCES = \
 	waves.c
 
 waves_LDADD = \
-	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\

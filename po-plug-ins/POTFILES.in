@@ -226,7 +226,6 @@ plug-ins/imagemap/imap_toolbar.c
 plug-ins/maze/algorithms.c
 plug-ins/maze/maze.c
 plug-ins/maze/maze_face.c
-plug-ins/megawidget/megawidget.c
 plug-ins/mosaic/mosaic.c
 plug-ins/pagecurl/pagecurl.c
 plug-ins/print/print-escp2.c

@@ -4,18 +4,23 @@
 #define HAVE_DIRENT_H
 #define HAVE_UNISTD_H
 #endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <math.h>
 #include <time.h>
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpmath.h>
+
 #include "gimpressionist.h"
 #include "ppmtool.h"
-#include <gtk/gtk.h>
-#include <libgimp/gimp.h>
+
 #include <libgimp/stdplugins-intl.h>
 
 gimpressionist_vals_t runningvals;
@@ -628,7 +633,7 @@ void repaint(struct ppm *p, struct ppm *a)
       ty = ypos[i-1];
     }
     if(runningvals.placecenter) {
-      double z = RAND_FUNC() * 0.75 / RAND_MAX;
+      double z = RAND_FUNC() * 0.75 / G_MAXRAND;
       tx = tx * (1.0-z) + tmp.width/2 * z;
       ty = ty * (1.0-z) + tmp.height/2 * z;
     }
@@ -746,9 +751,9 @@ void repaint(struct ppm *p, struct ppm *a)
     }
     if(runningvals.colornoise > 0.0) {
       double v = runningvals.colornoise;
-      r = r + RAND_FUNC() / (float)RAND_MAX * v - v/2;
-      g = g + RAND_FUNC() / (float)RAND_MAX * v - v/2;
-      b = b + RAND_FUNC() / (float)RAND_MAX * v - v/2;
+      r = r + RAND_FUNC() / (float)G_MAXRAND * v - v/2;
+      g = g + RAND_FUNC() / (float)G_MAXRAND * v - v/2;
+      b = b + RAND_FUNC() / (float)G_MAXRAND * v - v/2;
       if(r < 0) r = 0; else if(r > 255) r = 255;
       if(g < 0) g = 0; else if(g > 255) g = 255;
       if(b < 0) b = 0; else if(b > 255) b = 255;

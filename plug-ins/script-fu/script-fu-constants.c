@@ -204,6 +204,7 @@ init_generated_constants (void)
   setvar (cintern ("PDB-CALLING-ERROR"), flocons (1), NIL);
   setvar (cintern ("PDB-PASS-THROUGH"), flocons (2), NIL);
   setvar (cintern ("PDB-SUCCESS"), flocons (3), NIL);
+  setvar (cintern ("PDB-CANCEL"), flocons (4), NIL);
 
   setvar (cintern ("CONTINUOUS"), flocons (0), NIL);
   setvar (cintern ("INCREMENTAL"), flocons (1), NIL);

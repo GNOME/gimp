@@ -61,14 +61,17 @@
 /* |   provided "as is" without express or implied warranty.           | */
 /* +-------------------------------------------------------------------+ */
 
-
 #include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -85,19 +88,15 @@
    the pupal-forms are.  But facehuggers are ky00te. */
 
 
-
-
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
+static void   run        (gchar   *name,
+                          gint     nparams,
                           GParam  *param,
-                          int     *nreturn_vals,
+                          gint    *nreturn_vals,
                           GParam **return_vals);
-static gint32 load_image (char   *filename);
-
-
+static gint32 load_image (gchar   *filename);
 
 
 static guchar   used_cmap[3][256];
@@ -110,22 +109,19 @@ Parasite*      comment_parasite = NULL;
 #endif
 
 
-
-
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
-
 
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef load_args[] =
   {
@@ -137,8 +133,9 @@ query ()
   {
     { PARAM_IMAGE, "image", "Output image" },
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
   INIT_I18N();
 
@@ -154,26 +151,30 @@ query ()
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
-  gimp_register_magic_load_handler ("file_gif_load", "gif", "", "0,string,GIF8");
+  gimp_register_magic_load_handler ("file_gif_load",
+				    "gif",
+				    "",
+				    "0,string,GIF8");
 }
 
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  gint32 image_ID;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
 
   run_mode = param[0].data.d_int32;
 
-  *nreturn_vals = 2;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *nreturn_vals = 1;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "file_gif_load") == 0)
     {
@@ -201,15 +202,21 @@ run (char    *name,
 
       if (image_ID != -1)
         {
-          values[0].data.d_status = STATUS_SUCCESS;
-          values[1].type = PARAM_IMAGE;
+	  *nreturn_vals = 1;
+          values[1].type         = PARAM_IMAGE;
           values[1].data.d_image = image_ID;
         }
       else
         {
-          values[0].data.d_status = STATUS_EXECUTION_ERROR;
+          status = STATUS_EXECUTION_ERROR;
         }
     }
+  else
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
 
@@ -271,7 +278,7 @@ static gint32 ReadImage (FILE *, char *, int, int, CMap, int, int, int, int,
 
 
 static gint32
-load_image (char *filename)
+load_image (gchar *filename)
 {
   FILE *fd;
   char * name_buf;

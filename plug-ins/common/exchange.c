@@ -263,6 +263,8 @@ doDialog (void)
   GtkWidget *dialog;
   GtkWidget *mainbox;
   GtkWidget *frame;
+  GtkWidget *abox;
+  GtkWidget *pframe;
   GtkWidget *table;
   GtkWidget *colorbutton;
   GtkObject *adj;
@@ -319,9 +321,19 @@ doDialog (void)
   gtk_box_pack_start (GTK_BOX (mainbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_widget_show (abox);
+
+  pframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (pframe), 4);
+  gtk_container_add (GTK_CONTAINER (abox), pframe);
+  gtk_widget_show (pframe);
+
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), prev_width, prev_height);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
+  gtk_container_add (GTK_CONTAINER (pframe), preview);
   update_preview ();
   gtk_widget_show (preview); 
 

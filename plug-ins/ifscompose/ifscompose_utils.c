@@ -19,17 +19,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <gdk/gdk.h>
-#include "libgimp/gimp.h"
-#include "ifscompose.h"
 
-#ifndef RAND_MAX
-#define RAND_MAX 2147483647
-#endif /* RAND_MAX */
+#include <gdk/gdk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpmath.h>
+
+#include "ifscompose.h"
 
 typedef struct {
   GdkPoint point;
@@ -795,10 +794,10 @@ ifs_render(AffElement **elements, gint num_elements,
   psum = 0;
   for (i=0;i<num_elements;i++)
     {
-      psum += RAND_MAX * (fprob[i]/pt);
+      psum += G_MAXRAND * (fprob[i]/pt);
       prob[i] = psum;
     }
-  prob[i-1] = RAND_MAX;		/* make sure we don't get bitten
+  prob[i-1] = G_MAXRAND;	/* make sure we don't get bitten
 				   by roundoff*/
   /* create the brush */
   if (!preview)

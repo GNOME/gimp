@@ -286,13 +286,13 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
+static void   run        (gchar   *name,
+                          gint     nparams,
                           GParam  *param,
-                          int     *nreturn_vals,
+                          gint    *nreturn_vals,
                           GParam **return_vals);
-static gint32 load_image (char   *filename);
-static gint   save_image (char   *filename,
+static gint32 load_image (gchar  *filename);
+static gint   save_image (gchar  *filename,
 			  gint32  image_ID,
 			  gint32  drawable_ID);
 
@@ -300,10 +300,10 @@ static gint   save_image (char   *filename,
  */
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 /* Save info  */
@@ -324,7 +324,7 @@ static PSPSaveVals psvals =
 
 static PSPSaveInterface psint =
 {
-  FALSE				/* run */
+  FALSE   /* run */
 };
 
 static guint16 major, minor;
@@ -333,7 +333,7 @@ static guint tile_height;
 MAIN()
 
 static void
-query ()
+query (void)
 {
   static GParamDef load_args[] =
   {
@@ -345,8 +345,9 @@ query ()
   {
     { PARAM_IMAGE, "image", "Output image" },
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
 /*    static GParamDef save_args[] = */
 /*    { */
@@ -358,7 +359,7 @@ query ()
 /*      { PARAM_INT32, "compression", "Specify 0 for no compression, " */
 /*        "1 for RLE, and 2 for LZ77" } */
 /*    }; */
-/*    static int nsave_args = sizeof (save_args) / sizeof (save_args[0]); */
+/*    static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]); */
 
   INIT_I18N();
 
@@ -394,25 +395,15 @@ query ()
                           save_args, NULL);
 */
 
-  gimp_register_magic_load_handler ("file_psp_load", "psp,tub", "",
+  gimp_register_magic_load_handler ("file_psp_load",
+				    "psp,tub",
+				    "",
 				    "0,string,Paint Shop Pro Image File\n\032");
 /* Removed until Saving is implemented -- njl195@zepler.org
-  gimp_register_save_handler ("file_psp_save", "psp,tub", "");
+  gimp_register_save_handler       ("file_psp_save",
+                                    "psp,tub",
+                                    "");
 */
-}
-
-static void
-save_toggle_update (GtkWidget *widget,
-		    gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
 }
 
 static void
@@ -428,10 +419,10 @@ static void
 init_gtk (void)
 {
   gchar **argv;
-  gint argc;
+  gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("psp");
   
   gtk_init (&argc, &argv);
@@ -442,13 +433,7 @@ static gint
 save_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *toggle;
   GtkWidget *frame;
-  GtkWidget *toggle_vbox;
-  GSList *group;
-  gint use_none = (psvals.compression == PSP_COMP_NONE);
-  gint use_rle = (psvals.compression == PSP_COMP_RLE);
-  gint use_lz77 = (psvals.compression == PSP_COMP_LZ77);
 
   dlg = gimp_dialog_new (_("Save as PSP"), "psp",
 			 gimp_plugin_help_func, "filters/psp.html",
@@ -467,43 +452,18 @@ save_dialog (void)
 		      NULL);
 
   /*  file save type  */
-  frame = gtk_frame_new (_("Data Compression"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  frame = gimp_radio_group_new2 (TRUE, _("Data Compression"),
+				 gimp_radio_button_update,
+				 &psvals.compression,
+				 (gpointer) psvals.compression,
+
+				 _("None"), (gpointer) PSP_COMP_NONE, NULL,
+				 _("RLE"),  (gpointer) PSP_COMP_RLE, NULL,
+				 _("LZ77"), (gpointer) PSP_COMP_LZ77, NULL,
+
+				 NULL);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, TRUE, 0);
-  toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-
-  group = NULL;
-  toggle = gtk_radio_button_new_with_label (group, _("None"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) save_toggle_update,
-		      &use_none);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_none);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (group, _("RLE"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) save_toggle_update,
-		      &use_rle);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_rle);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (group, _("LZ77"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) save_toggle_update,
-		      &use_lz77);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_lz77);
-  gtk_widget_show (toggle);
-
-  gtk_widget_show (toggle_vbox);
   gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
@@ -511,21 +471,13 @@ save_dialog (void)
   gtk_main ();
   gdk_flush ();
 
-  if (use_none)
-    psvals.compression = PSP_COMP_NONE;
-  else if (use_rle)
-    psvals.compression = PSP_COMP_RLE;
-  else
-    psvals.compression = PSP_COMP_LZ77;
-
   return psint.run;
 }
 
-
-static char *
-block_name (int id)
+static gchar *
+block_name (gint id)
 {
-  static char *block_names[] =
+  static gchar *block_names[] =
   {
     "IMAGE",
     "CREATOR",
@@ -551,8 +503,8 @@ block_name (int id)
   return err_name;
 }
 
-static int
-read_block_header (FILE *f,
+static gint
+read_block_header (FILE    *f,
 		   guint32 *init_len,
 		   guint32 *total_len)
 {
@@ -602,13 +554,13 @@ read_block_header (FILE *f,
   return id;
 }
 
-static int
-read_general_image_attribute_block (FILE *f,
-				    guint init_len,
-				    guint total_len,
+static gint
+read_general_image_attribute_block (FILE     *f,
+				    guint     init_len,
+				    guint     total_len,
 				    PSPimage *ia)
 {
-  char buf[6];
+  gchar buf[6];
 #ifdef G_HAVE_GINT64
   gint64 res[1];
 #else
@@ -692,8 +644,10 @@ read_general_image_attribute_block (FILE *f,
   return 0;
 }
 
-static int
-try_fseek (FILE *f, long pos, int whence)
+static gint
+try_fseek (FILE  *f,
+	   glong  pos,
+	   gint   whence)
 {
   if (fseek (f, pos, whence) < 0)
     {
@@ -704,10 +658,10 @@ try_fseek (FILE *f, long pos, int whence)
   return 0;
 }
 
-static int
-read_creator_block (FILE *f,
-		    gint image_ID,
-		    guint total_len,
+static gint
+read_creator_block (FILE     *f,
+		    gint      image_ID,
+		    guint     total_len,
 		    PSPimage *ia)
 {
   long data_start;
@@ -892,10 +846,10 @@ gimp_layer_mode_from_psp_blend_mode (PSPLayerBlendModes mode)
   return -1;
 }
 
-static char *
+static gchar *
 blend_mode_name (PSPLayerBlendModes mode)
 {
-  static char *blend_mode_names[] =
+  static gchar *blend_mode_names[] =
   {
     "NORMAL",
     "DARKEN",
@@ -926,10 +880,10 @@ blend_mode_name (PSPLayerBlendModes mode)
   return err_name;
 }
 
-static char *
-bitmap_type_name (int type)
+static gchar *
+bitmap_type_name (gint type)
 {
-  static char *bitmap_type_names[] =
+  static gchar *bitmap_type_names[] =
   {
     "IMAGE",
     "TRANS_MASK",
@@ -949,8 +903,8 @@ bitmap_type_name (int type)
   return err_name;
 }
 
-static char *
-channel_type_name (int type)
+static gchar *
+channel_type_name (gint type)
 {
   static char *channel_type_names[] =
   {
@@ -971,25 +925,28 @@ channel_type_name (int type)
 }
 
 static void *
-psp_zalloc (void *opaque, guint items, guint size)
+psp_zalloc (void  *opaque,
+	    guint  items,
+	    guint  size)
 {
   return g_malloc (items*size);
 }
 
 static void
-psp_zfree (void *opaque, void *ptr)
+psp_zfree (void *opaque,
+	   void *ptr)
 {
   g_free (ptr);
 }
 
 static int
-read_channel_data (FILE *f,
-		   PSPimage *ia,
-		   guchar **pixels,
-		   guint bytespp,
-		   guint offset,
-		   GDrawable *drawable,
-		   guint32 compressed_len)
+read_channel_data (FILE       *f,
+		   PSPimage   *ia,
+		   guchar    **pixels,
+		   guint       bytespp,
+		   guint       offset,
+		   GDrawable  *drawable,
+		   guint32     compressed_len)
 {
   gint i, y, width = drawable->width, height = drawable->height;
   gint npixels = width * height;
@@ -1117,15 +1074,15 @@ read_channel_data (FILE *f,
   return 0;
 }
 
-static int
-read_layer_block (FILE *f,
-		  gint image_ID,
-		  guint total_len,
+static gint
+read_layer_block (FILE     *f,
+		  gint      image_ID,
+		  guint     total_len,
 		  PSPimage *ia)
 {
-  int i;
+  gint i;
   long block_start, sub_block_start, channel_start;
-  int sub_id;
+  gint sub_id;
   guint32 sub_init_len, sub_total_len;
   guchar *name;
   guint16 namelen;
@@ -1452,10 +1409,10 @@ read_layer_block (FILE *f,
   return layer_ID;
 }
 
-static int
-read_tube_block (FILE *f,
-		 gint image_ID,
-		 guint total_len,
+static gint
+read_tube_block (FILE     *f,
+		 gint      image_ID,
+		 guint     total_len,
 		 PSPimage *ia)
 {
   guint16 version;
@@ -1528,8 +1485,8 @@ read_tube_block (FILE *f,
   return 0;
 }
 
-static char *
-compression_name (int compression)
+static gchar *
+compression_name (gint compression)
 {
   switch (compression)
     {
@@ -1546,7 +1503,7 @@ compression_name (int compression)
 }
 
 static gint32
-load_image (char *filename)
+load_image (gchar *filename)
 {
   FILE *f;
   struct stat st;
@@ -1727,37 +1684,37 @@ load_image (char *filename)
 }
 
 static gint
-save_image (char   *filename,
+save_image (gchar  *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID)
 {
   g_message ("PSP: Saving not implemented yet");
 
-  return 0;
+  return FALSE;
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
+  gint32        drawable_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
-  gint32 image_ID;
-  gint32 drawable_ID;
 
   tile_height = gimp_tile_height ();
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "file_psp_load") == 0)
     {
@@ -1766,13 +1723,12 @@ run (char    *name,
       if (image_ID != -1)
 	{
 	  *nreturn_vals = 2;
-	  values[0].data.d_status = STATUS_SUCCESS;
-	  values[1].type = PARAM_IMAGE;
+	  values[1].type         = PARAM_IMAGE;
 	  values[1].data.d_image = image_ID;
 	}
       else
 	{
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  status = STATUS_EXECUTION_ERROR;
 	}
     }
   else if (strcmp (name, "file_psp_save") == 0)
@@ -1788,18 +1744,21 @@ run (char    *name,
 	  INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PSP", 
-				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED | CAN_HANDLE_ALPHA | CAN_HANDLE_LAYERS));
+				      (CAN_HANDLE_RGB |
+				       CAN_HANDLE_GRAY |
+				       CAN_HANDLE_INDEXED |
+				       CAN_HANDLE_ALPHA |
+				       CAN_HANDLE_LAYERS));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      *nreturn_vals = 1;
-	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      values[0].data.d_status = STATUS_CANCEL;
 	      return;
 	    }
 	  break;
 	default:
 	  break;
 	}
-      
+
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
@@ -1809,18 +1768,22 @@ run (char    *name,
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
-	    return;
+	    status = STATUS_CANCEL;
 	  break;
 
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 6
-	      || param[5].data.d_int32 < 0
-	      || param[5].data.d_int32 > PSP_COMP_LZ77)
-	    status = STATUS_CALLING_ERROR;
-	  if (status == STATUS_SUCCESS)
+	  if (nparams != 6)
+	    {
+	      status = STATUS_CALLING_ERROR;
+	    }
+	  else
 	    {
 	      psvals.compression = (param[5].data.d_int32) ? TRUE : FALSE;
+
+	      if (param[5].data.d_int32 < 0 ||
+		  param[5].data.d_int32 > PSP_COMP_LZ77)
+		status = STATUS_CALLING_ERROR;
 	    }
 
 	case RUN_WITH_LAST_VALS:
@@ -1836,16 +1799,20 @@ run (char    *name,
 	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
 	      gimp_set_data ("file_psp_save", &psvals, sizeof (PSPSaveVals));
-
-	      status = STATUS_SUCCESS;
 	    }
 	  else
-	    status = STATUS_EXECUTION_ERROR;
+	    {
+	      status = STATUS_EXECUTION_ERROR;
+	    }
 	}
-
-      values[0].data.d_status = status;
 
       if (export == EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
+  else
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }

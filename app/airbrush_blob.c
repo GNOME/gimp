@@ -21,24 +21,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 */
 
-#include "airbrush_blob.h"
 #include <glib.h>
 
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include <libgimp/gimpmath.h>
+
+#include "airbrush_blob.h"
+
 
 #define ROUND(A) floor((A)+0.5)
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
-
-#ifndef M_PI_H
-#define M_PI_H 3.14159265358979323846/2
-#endif
 
 #define SUBSAMPLE 8.0
 #define SU 8.0
@@ -529,7 +523,7 @@ airbrush_blob_ellipse (double xc, double yc, double xt, double yt, double xr, do
         ma_ang1 = atan(yt/xr);
         x1 = cos(ma_ang1) * xl;
         y1 = sin(ma_ang1) * yt;
-        ma_ang2 = M_PI/2 - ma_ang1;
+        ma_ang2 = G_PI_2 - ma_ang1;
         x2 = cos(ma_ang2) * xr;
         y2 = sin(ma_ang2) * yb;
         xtotma = x1 + x2;
@@ -554,7 +548,7 @@ airbrush_blob_ellipse (double xc, double yc, double xt, double yt, double xr, do
         ma_ang1 = atan(yt/xl);
         x1 = cos(ma_ang1) * xr;
         y1 = sin(ma_ang1) * yt;
-        ma_ang2 = M_PI/2 - ma_ang1;
+        ma_ang2 = G_PI_2 - ma_ang1;
         x2 = cos(ma_ang2) * xl;
         y2 = sin(ma_ang2) * yb;
         xtotma = x1 + x2;
@@ -579,7 +573,7 @@ airbrush_blob_ellipse (double xc, double yc, double xt, double yt, double xr, do
         ma_ang1 = atan(yb/xl);
         x1 = cos(ma_ang1) * xl;
         y1 = sin(ma_ang1) * yt;
-        ma_ang2 = M_PI/2 - ma_ang1;
+        ma_ang2 = G_PI_2 - ma_ang1;
         x2 = cos(ma_ang2) * xr;
         y2 = sin(ma_ang2) * yb;
         xtotma = x1 + x2;
@@ -605,7 +599,7 @@ airbrush_blob_ellipse (double xc, double yc, double xt, double yt, double xr, do
         ma_ang1 = atan(yb/xr);
         x1 = cos(ma_ang1) * xr;
         y1 = sin(ma_ang1) * yt;
-        ma_ang2 = M_PI/2 - ma_ang1;
+        ma_ang2 = G_PI_2 - ma_ang1;
         x2 = cos(ma_ang2) * xl;
         y2 = sin(ma_ang2) * yb;
         xtotma = x1 + x2;
@@ -636,7 +630,7 @@ airbrush_blob_ellipse (double xc, double yc, double xt, double yt, double xr, do
     {
       trig_initialized = 1;
       for (i=0; i<256; i++)
-	trig_table[i] = 0.5 + sin(i * (M_PI / 128.)) * (1 << TABLE_SHIFT);
+	trig_table[i] = 0.5 + sin(i * (G_PI / 128.0)) * (1 << TABLE_SHIFT);
     }
 
  
@@ -977,7 +971,7 @@ create_air_blob (double xc,
  	air_blob->minorcross_line.size = yt * 2;
 	air_blob->minorcross_line.dist = 0.0;
 
-	air_blob->direction = M_PI_H;
+	air_blob->direction = G_PI_2;
 
 	}
   else if (xr == xl)
@@ -1105,7 +1099,7 @@ create_air_blob (double xc,
         ma_ang1 = atan(yt/xr);
         x1 = cos(ma_ang1) * xl;
         y1 = sin(ma_ang1) * yt;
-        ma_ang2 = M_PI/2 - ma_ang1;
+        ma_ang2 = G_PI_2 - ma_ang1;
         x2 = cos(ma_ang2) * xr;
         y2 = sin(ma_ang2) * yb;
         xtotma = x1 + x2;
@@ -1144,7 +1138,7 @@ create_air_blob (double xc,
         ma_ang1 = atan(yt/xl);
         x1 = cos(ma_ang1) * xr;
         y1 = sin(ma_ang1) * yt;
-        ma_ang2 = M_PI/2 - ma_ang1;
+        ma_ang2 = G_PI_2 - ma_ang1;
         x2 = cos(ma_ang2) * xl;
         y2 = sin(ma_ang2) * yb;
         xtotma = x1 + x2;
@@ -1178,7 +1172,7 @@ create_air_blob (double xc,
         ma_ang1 = atan(yb/xl);
         x1 = cos(ma_ang1) * xl;
         y1 = sin(ma_ang1) * yt;
-        ma_ang2 = M_PI/2 - ma_ang1;
+        ma_ang2 = G_PI_2 - ma_ang1;
         x2 = cos(ma_ang2) * xr;
         y2 = sin(ma_ang2) * yb;
         xtotma = x1 + x2;
@@ -1216,7 +1210,7 @@ create_air_blob (double xc,
         ma_ang1 = atan(yb/xr);
         x1 = cos(ma_ang1) * xr;
         y1 = sin(ma_ang1) * yt;
-        ma_ang2 = M_PI/2 - ma_ang1;
+        ma_ang2 = G_PI_2 - ma_ang1;
         x2 = cos(ma_ang2) * xl;
         y2 = sin(ma_ang2) * yb;
         xtotma = x1 + x2;
@@ -1292,12 +1286,12 @@ create_air_line(AirBlob *airblob)
     printf("Mi.size: %f\n",airblob->minor_line.size);
   */
 
-  if (direction == M_PI_H || direction == M_PI)
+  if (direction == G_PI_2 || direction == G_PI)
     {
     direction = direction - 0.001;
     }
 
-  if (direction == -M_PI_H || direction == -M_PI)
+  if (direction == -G_PI_2 || direction == -G_PI)
     {
       direction = direction + 0.001;
     }
@@ -1326,7 +1320,7 @@ create_air_line(AirBlob *airblob)
 
       }	
 		
-  else if(direction == M_PI_H)
+  else if(direction == G_PI_2)
 
       {
 
@@ -1346,12 +1340,12 @@ create_air_line(AirBlob *airblob)
 	airline->line[5].y = (ycenter + airblob->minorcross_line.size/2)/SUBSAMPLE;
 
 	airline->nlines = 6;
-	printf("Hmm bummer M_PI_H\n");
+	printf("Hmm bummer G_PI_2\n");
 
       }
 
 
-  else if(direction == M_PI)
+  else if(direction == G_PI)
 
     {
         airline->line[0].x = (xcenter - airblob->maincross_line.dist)/SUBSAMPLE;
@@ -1371,12 +1365,12 @@ create_air_line(AirBlob *airblob)
 
 	airline->nlines = 6;
 
-	printf("Hmm bummer M_PI\n");
+	printf("Hmm bummer G_PI\n");
 
 
     }
 
-  else if(direction == -M_PI_H)
+  else if(direction == -G_PI_2)
 
     {
         airline->line[0].x = (xcenter - airblob->maincross_line.dist)/SUBSAMPLE;
@@ -1396,14 +1390,14 @@ create_air_line(AirBlob *airblob)
 
 	airline->nlines = 6;
 
-	printf("Hmm bummer -M_PI_H\n");
+	printf("Hmm bummer -G_PI_2\n");
 
 
 
     }
 
 
-  else if(direction == -M_PI)
+  else if(direction == -G_PI)
     
     {
         airline->line[0].x = (xcenter - airblob->maincross_line.dist)/SUBSAMPLE;
@@ -1423,13 +1417,13 @@ create_air_line(AirBlob *airblob)
 
 	airline->nlines = 6;
 
-	printf("Hmm bummer -M_PI\n");
+	printf("Hmm bummer -G_PI\n");
 
        
     }
 
 
-  else if ((direction < M_PI) && (direction > M_PI_H))
+  else if ((direction < G_PI) && (direction > G_PI_2))
 
     {
 
@@ -1440,7 +1434,7 @@ create_air_line(AirBlob *airblob)
 	ma_angsupport = atan(airblob->maincross_line.size/2/airblob->maincross_line.dist);
 	mi_angsupport = atan(airblob->minorcross_line.size/2/airblob->minorcross_line.dist);
 	
-	iang = airblob->direction_abs - M_PI_H;
+	iang = airblob->direction_abs - G_PI_2;
 
         airline->line[0].x = (xcenter - sin(iang + ma_angsupport) * masupport)/SUBSAMPLE;
 	airline->line[0].y = (ycenter - cos(iang + ma_angsupport) * masupport)/SUBSAMPLE;
@@ -1477,7 +1471,7 @@ create_air_line(AirBlob *airblob)
 
     }
 
-  else if ((direction < M_PI_H) && (direction > 0.0))
+  else if ((direction < G_PI_2) && (direction > 0.0))
 
     {
 
@@ -1535,7 +1529,7 @@ create_air_line(AirBlob *airblob)
     }
 
 
-  else if ((direction < 0.0) && (direction > -M_PI_H))
+  else if ((direction < 0.0) && (direction > -G_PI_2))
 
     {
 
@@ -1568,7 +1562,7 @@ create_air_line(AirBlob *airblob)
     }
 
 
-  else if ((direction < -M_PI_H) && (direction > -M_PI))
+  else if ((direction < -G_PI_2) && (direction > -G_PI))
 
     {
 
@@ -1579,7 +1573,7 @@ create_air_line(AirBlob *airblob)
 	ma_angsupport = atan(airblob->maincross_line.size/2/airblob->maincross_line.dist);
 	mi_angsupport = atan(airblob->minorcross_line.size/2/airblob->minorcross_line.dist);
 	
-	iang = fabs(airblob->direction_abs) - M_PI_H;
+	iang = fabs(airblob->direction_abs) - G_PI_2;
 
         airline->line[0].x = (xcenter - sin(iang + ma_angsupport) * masupport)/SUBSAMPLE;
 	airline->line[0].y = (ycenter + cos(iang + ma_angsupport) * masupport)/SUBSAMPLE;
@@ -1675,13 +1669,13 @@ trans_air_blob(AirBlob *airblob_last, AirBlob *airblob_present, double dist, int
 
   trans_airblob = airblob_new(1);
 
-  direction_last_abs = airblob_last->direction_abs + M_PI;
-  direction_present_abs = airblob_present->direction_abs + M_PI;
+  direction_last_abs = airblob_last->direction_abs + G_PI;
+  direction_present_abs = airblob_present->direction_abs + G_PI;
 
   idirection_abs = direction_present_abs - direction_last_abs;
 
-  direction_last = airblob_last->direction + M_PI_H;
-  direction_present = airblob_present->direction + M_PI_H;
+  direction_last = airblob_last->direction + G_PI_2;
+  direction_present = airblob_present->direction + G_PI_2;
 
   idirection = direction_present - direction_last;
 
@@ -1709,7 +1703,7 @@ trans_air_blob(AirBlob *airblob_last, AirBlob *airblob_present, double dist, int
      Well we can't know if the users is painting
      up/down or if she is painting a circle at high speed.
      As you may notice it be so that the last airblob has 
-     a direction more or less M_PI rad differernt from the
+     a direction more or less G_PI rad differernt from the
      present airblob. But we can't know if she tured the 
      airbrush quickly (so that there was no mouse capture 
      during the turn) or if she paints just up and down the
@@ -1721,40 +1715,40 @@ trans_air_blob(AirBlob *airblob_last, AirBlob *airblob_present, double dist, int
 
   */
 
-  if ((fabs(idirection_abs) > (M_PI - 0.1571)) && (fabs(idirection_abs) < (M_PI + 0.1571)))
+  if ((fabs(idirection_abs) > (G_PI - 0.1571)) && (fabs(idirection_abs) < (G_PI + 0.1571)))
     {
       /* We asume that the artist meant to paint in a "strait line" by just tilting the airbrush*/
       
-      idirection_abs = idirection_abs - M_PI;
+      idirection_abs = idirection_abs - G_PI;
      
       if ((idirection_abs * dist) > (idirection_abs/2))
 	{
-	  if ((direction_present_abs - idirection_abs * dist) > 2 * M_PI)
+	  if ((direction_present_abs - idirection_abs * dist) > 2 * G_PI)
 	    {
-	    trans_airblob->direction_abs = direction_present_abs - idirection_abs * dist - 2 * M_PI - M_PI;
+	    trans_airblob->direction_abs = direction_present_abs - idirection_abs * dist - 2 * G_PI - G_PI;
 	    }
 	  else if ((direction_present_abs - idirection_abs * dist) < 0.0)
 	    {
-	      trans_airblob->direction_abs = direction_present_abs - idirection_abs * dist + 2 * M_PI - M_PI;
+	      trans_airblob->direction_abs = direction_present_abs - idirection_abs * dist + 2 * G_PI - G_PI;
 	    }
 	  else 
 	    {
-	      trans_airblob->direction_abs = direction_present_abs - idirection_abs * dist - M_PI;
+	      trans_airblob->direction_abs = direction_present_abs - idirection_abs * dist - G_PI;
 	    }
 	}
       else 
 	{
-	  if ((direction_present_abs + idirection_abs * dist) > 2 * M_PI)
+	  if ((direction_present_abs + idirection_abs * dist) > 2 * G_PI)
 	    {
-	    trans_airblob->direction_abs = direction_present_abs + idirection_abs * dist - 2 * M_PI - M_PI;
+	    trans_airblob->direction_abs = direction_present_abs + idirection_abs * dist - 2 * G_PI - G_PI;
 	    }
 	  else if ((direction_present_abs + idirection_abs * dist) < 0.0)
 	    {
-	      trans_airblob->direction_abs = direction_present_abs + idirection_abs * dist + 2 * M_PI - M_PI;
+	      trans_airblob->direction_abs = direction_present_abs + idirection_abs * dist + 2 * G_PI - G_PI;
 	    }
 	  else 
 	    {
-	      trans_airblob->direction_abs = direction_present_abs + idirection_abs * dist - M_PI;
+	      trans_airblob->direction_abs = direction_present_abs + idirection_abs * dist - G_PI;
 	    }
 	}
 
@@ -1769,19 +1763,19 @@ trans_air_blob(AirBlob *airblob_last, AirBlob *airblob_present, double dist, int
 
     }
   
-  else if (fabs(idirection_abs) < (M_PI - 0.1571))
+  else if (fabs(idirection_abs) < (G_PI - 0.1571))
     {
-      if ((direction_last_abs + idirection_abs * dist) > 2*M_PI)
+      if ((direction_last_abs + idirection_abs * dist) > 2*G_PI)
 	{
-	  trans_airblob->direction_abs = direction_last_abs + idirection_abs * dist - 2 * M_PI - M_PI;
+	  trans_airblob->direction_abs = direction_last_abs + idirection_abs * dist - 2 * G_PI - G_PI;
 	}
       else if((direction_last_abs + idirection_abs * dist) < 0.0)
 	{
-	 trans_airblob->direction_abs = direction_last_abs + idirection_abs * dist + 2 * M_PI - M_PI;
+	 trans_airblob->direction_abs = direction_last_abs + idirection_abs * dist + 2 * G_PI - G_PI;
 	} 
       else 
 	{
-	  trans_airblob->direction_abs = direction_last_abs + idirection_abs * dist - M_PI;
+	  trans_airblob->direction_abs = direction_last_abs + idirection_abs * dist - G_PI;
 	}
 
       trans_airblob->main_line.size = main_line_last + ((main_line_present - main_line_last) * dist); 
@@ -1798,19 +1792,19 @@ trans_air_blob(AirBlob *airblob_last, AirBlob *airblob_present, double dist, int
 
       /* We asume that the artist always travels the shortest way around the "clock" */
       
-      idirection_abs = idirection_abs - M_PI;
+      idirection_abs = idirection_abs - G_PI;
 
-      if ((direction_last_abs + idirection_abs * dist) > 2*M_PI)
+      if ((direction_last_abs + idirection_abs * dist) > 2*G_PI)
 	{
-	  trans_airblob->direction_abs = direction_last_abs + idirection_abs * dist - 2 * M_PI - M_PI;
+	  trans_airblob->direction_abs = direction_last_abs + idirection_abs * dist - 2 * G_PI - G_PI;
 	}
       else if((direction_last_abs + idirection_abs * dist) < 0.0)
 	{
-	 trans_airblob->direction_abs = direction_last_abs + idirection_abs * dist + 2 * M_PI - M_PI;
+	 trans_airblob->direction_abs = direction_last_abs + idirection_abs * dist + 2 * G_PI - G_PI;
 	} 
       else 
 	{
-	  trans_airblob->direction_abs = direction_last_abs + idirection_abs * dist - M_PI;
+	  trans_airblob->direction_abs = direction_last_abs + idirection_abs * dist - G_PI;
 	}
 
       trans_airblob->main_line.size = main_line_last + ((main_line_present - main_line_last) * dist); 

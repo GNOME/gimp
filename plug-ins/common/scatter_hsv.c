@@ -22,7 +22,6 @@
 
 #include "config.h"
 
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -32,13 +31,10 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
 #include <libgimp/gimpcolorspace.h>
 
 #include "libgimp/stdplugins-intl.h"
-
-#ifndef RAND_MAX
-#define RAND_MAX 2147483647
-#endif /* RAND_MAX */
 
 #define	PLUG_IN_NAME	"plug_in_scatter_hsv"
 #define SHORT_NAME	"scatter_hsv"
@@ -288,15 +284,15 @@ static int randomize_value (int	now,
   double rand_val;
   
   steps = max - min + 1;
-  rand_val = ((double) rand()/(double)RAND_MAX);
+  rand_val = ((double) rand() / (double) G_MAXRAND);
   for (index = 1; index < VALS.holdness; index++)
     {
-      double tmp = ((double) rand()/(double)RAND_MAX);
+      double tmp = ((double) rand()/(double)G_MAXRAND);
       if (tmp < rand_val)
 	rand_val = tmp;
     }
   
-  flag = ((RAND_MAX / 2) < rand()) ? 1 : -1;
+  flag = ((G_MAXRAND / 2) < rand()) ? 1 : -1;
   new = now + flag * ((int) (rand_max * rand_val) % steps);
   
   if (new < min)
@@ -360,10 +356,13 @@ DIALOG (void)
   GtkWidget *dlg;
   GtkWidget *vbox;
   GtkWidget *frame;
+  GtkWidget *pframe;
+  GtkWidget *abox;
   GtkWidget *table;
   GtkObject *adj;
-  gchar	**argv;
-  gint	  argc;
+  guchar  *color_cube;
+  gchar	 **argv;
+  gint	   argc;
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -372,6 +371,16 @@ DIALOG (void)
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
   
+  gdk_set_use_xshm (gimp_use_xshm ());
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+			      color_cube[2], color_cube[3]);
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+
   dlg = gimp_dialog_new (_("Scatter HSV"), "scatter_hsv",
 			 gimp_plugin_help_func, "filters/scatter_hsv.html",
 			 GTK_WIN_POS_MOUSE,
@@ -391,6 +400,44 @@ DIALOG (void)
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), vbox);
+
+  frame = gtk_frame_new (_("Preview (1:4) - Right Click to Jump"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_widget_show (abox);
+
+  pframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (pframe), 4);
+  gtk_container_add (GTK_CONTAINER (abox), pframe);
+  gtk_widget_show (pframe);
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  {
+    gint width = gimp_drawable_width (drawable_id);
+    gint height = gimp_drawable_height (drawable_id);
+
+    preview_width = (PREVIEW_WIDTH < width) ? PREVIEW_WIDTH : width;
+    preview_height = (PREVIEW_HEIGHT < height) ? PREVIEW_HEIGHT : height;
+  }
+  gtk_preview_size (GTK_PREVIEW (preview), preview_width * 2, preview_height);
+  scatter_hsv_preview_update ();
+  gtk_container_add (GTK_CONTAINER (pframe), preview);
+  gtk_widget_set_events (preview, 
+			 GDK_BUTTON_PRESS_MASK |
+			 GDK_BUTTON_RELEASE_MASK | 
+			 GDK_BUTTON_MOTION_MASK |
+			 GDK_POINTER_MOTION_HINT_MASK);
+  gtk_signal_connect (GTK_OBJECT (preview), "event",
+		      (GtkSignalFunc) preview_event_handler,
+		      NULL);
+  gtk_widget_show (preview);
+
+  gtk_widget_show (frame);
 
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
@@ -437,47 +484,6 @@ DIALOG (void)
 		      &VALS.value_distance);
 
   gtk_widget_show (table);
-  gtk_widget_show (frame);
-
-  frame = gtk_frame_new (_("Preview (1:4) - Right Click to Jump"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  /* preparation for preview */	
-  gdk_set_use_xshm (gimp_use_xshm ());
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  {
-    guchar *color_cube;
-    color_cube = gimp_color_cube ();
-    gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-				color_cube[2], color_cube[3]);
-  }
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  {
-    gint width = gimp_drawable_width (drawable_id);
-    gint height = gimp_drawable_height (drawable_id);
-
-    preview_width = (PREVIEW_WIDTH < width) ? PREVIEW_WIDTH : width;
-    preview_height = (PREVIEW_HEIGHT < height) ? PREVIEW_HEIGHT : height;
-  }
-  gtk_preview_size (GTK_PREVIEW (preview), preview_width * 2, preview_height);
-  scatter_hsv_preview_update ();
-  gtk_container_add (GTK_CONTAINER (frame), preview);
-  gtk_widget_set_events (preview, 
-			 GDK_BUTTON_PRESS_MASK |
-			 GDK_BUTTON_RELEASE_MASK | 
-			 GDK_BUTTON_MOTION_MASK |
-			 GDK_POINTER_MOTION_HINT_MASK);
-  gtk_signal_connect (GTK_OBJECT (preview), "event",
-		      (GtkSignalFunc) preview_event_handler,
-		      NULL);
-  gtk_widget_show (preview);
-
   gtk_widget_show (frame);
 
   gtk_widget_show (vbox);

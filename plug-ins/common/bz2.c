@@ -32,6 +32,8 @@
  * filename.foo.bz2 where foo is some already-recognized extension
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>
@@ -45,40 +47,42 @@
 #include <fcntl.h>
 #include <process.h>
 #endif
-#include "libgimp/gimp.h"
 
-#include "config.h"
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 
-static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
-                          GParam  *param,
-                          int     *nreturn_vals,
-                          GParam **return_vals);
-static gint32 load_image (char *filename, gint32 run_mode);
+static void          query       (void);
+static void          run         (gchar       *name,
+				  gint         nparams,
+				  GParam      *param,
+				  gint        *nreturn_vals,
+				  GParam     **return_vals);
 
-static gint save_image (char   *filename,
-			gint32  image_ID,
-			gint32  drawable_ID,
-			gint32 run_mode);
+static gint32        load_image  (gchar       *filename,
+				  gint32       run_mode,
+				  GStatusType *status /* return value */);
+static GStatusType   save_image  (gchar       *filename,
+				  gint32       image_ID,
+				  gint32       drawable_ID,
+				  gint32       run_mode);
 
-static int valid_file (char* filename) ;
-static char* find_extension (char* filename) ;
+static gboolean   valid_file     (gchar       *filename);
+static gchar    * find_extension (gchar       *filename);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef load_args[] =
   {
@@ -86,14 +90,13 @@ query ()
     { PARAM_STRING, "filename", "The name of the file to load" },
     { PARAM_STRING, "raw_filename", "The name entered" },
   };
-
   static GParamDef load_return_vals[] =
   {
     { PARAM_IMAGE, "image", "Output image" },
   };
-
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
   static GParamDef save_args[] =
   {
@@ -103,7 +106,7 @@ query ()
     { PARAM_STRING, "filename", "The name of the file to save the image in" },
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" }
   };
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_bz2_load",
                           "loads files compressed with bzip2",
@@ -129,48 +132,47 @@ query ()
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_load_handler ("file_bz2_load", "xcf.bz2,bz2,xcfbz2", "");
-  gimp_register_save_handler ("file_bz2_save", "xcf.bz2,bz2,xcfbz2", "");
-
+  gimp_register_load_handler ("file_bz2_load",
+			      "xcf.bz2,bz2,xcfbz2",
+			      "");
+  gimp_register_save_handler ("file_bz2_save",
+			      "xcf.bz2,bz2,xcfbz2",
+			      "");
 }
 
-
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
-  gint32 image_ID;
-
-  INIT_I18N();
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
 
   run_mode = param[0].data.d_int32;
 
-  *nreturn_vals = 1;
-  *return_vals = values;
+  INIT_I18N();
 
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  *nreturn_vals = 1;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "file_bz2_load") == 0)
     {
       image_ID = load_image (param[1].data.d_string,
-			     param[0].data.d_int32);
-      if (image_ID != -1)
+			     param[0].data.d_int32,
+			     &status);
+
+      if (image_ID != -1 &&
+	  status == STATUS_SUCCESS)
 	{
 	  *nreturn_vals = 2;
-	  values[0].data.d_status = STATUS_SUCCESS;
-	  values[1].type = PARAM_IMAGE;
+	  values[1].type         = PARAM_IMAGE;
 	  values[1].data.d_image = image_ID;
-	}
-      else
-	{
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 	}
     }
   else if (strcmp (name, "file_bz2_save") == 0)
@@ -183,7 +185,7 @@ run (char    *name,
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 4)
 	    status = STATUS_CALLING_ERROR;
-
+	  break;
 	case RUN_WITH_LAST_VALS:
 	  break;
 
@@ -191,71 +193,82 @@ run (char    *name,
 	  break;
 	}
 
-      *nreturn_vals = 1;
-      if (save_image (param[3].data.d_string,
-		      param[1].data.d_int32,
-		      param[2].data.d_int32,
-		      param[0].data.d_int32 ))
+      if (status == STATUS_SUCCESS)
 	{
-	  values[0].data.d_status = STATUS_SUCCESS;
+	  status = save_image (param[3].data.d_string,
+			       param[1].data.d_int32,
+			       param[2].data.d_int32,
+			       param[0].data.d_int32);
 	}
-      else
-	values[0].data.d_status = STATUS_EXECUTION_ERROR;
     }
   else
-    g_assert (FALSE);
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
 #ifdef __EMX__
-static int spawn_bz(char *filename, char* tmpname, char *parms, int *pid)
+static gint
+spawn_bz (gchar *filename,
+	  gchar *tmpname,
+	  gchar *parms,
+	  gint  *pid)
 {
   FILE *f;
-  int tfd;
+  gint tfd;
   
-  if (!(f = fopen(filename,"wb"))){
-    g_message("bz: fopen failed: %s\n", g_strerror(errno));
-    return -1;
-  }
-
-  /* save fileno(stdout) */
-  tfd = dup(fileno(stdout));
-  /* make stdout for this process be the output file */
-  if (dup2(fileno(f),fileno(stdout)) == -1)
+  if (!(f = fopen(filename,"wb")))
     {
-      g_message ("bz: dup2 failed: %s\n", g_strerror(errno));
-      close(tfd);
+      g_message ("bz: fopen failed: %s\n", g_strerror (errno));
       return -1;
     }
-  fcntl(tfd, F_SETFD, FD_CLOEXEC);
+
+  /* save fileno(stdout) */
+  tfd = dup (fileno (stdout));
+  /* make stdout for this process be the output file */
+  if (dup2 (fileno (f), fileno (stdout)) == -1)
+    {
+      g_message ("bz: dup2 failed: %s\n", g_strerror (errno));
+      close (tfd);
+      return -1;
+    }
+  fcntl (tfd, F_SETFD, FD_CLOEXEC);
   *pid = spawnlp (P_NOWAIT, "bzip2", "bzip2", parms, tmpname, NULL);
-  fclose(f);
+  fclose (f);
   /* restore fileno(stdout) */
-  dup2(tfd,fileno(stdout));
-  close(tfd);
+  dup2 (tfd, fileno (stdout));
+  close (tfd);
   if (*pid == -1)
     {
-      g_message ("bz: spawn failed: %s\n", g_strerror(errno));
+      g_message ("bz: spawn failed: %s\n", g_strerror (errno));
       return -1;
     }
   return 0;  
 }
 #endif
 
-static gint
-save_image (char   *filename,
+static GStatusType
+save_image (gchar  *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID,
 	    gint32  run_mode)
 {
-  FILE* f;
-  GParam* params;
+  FILE *f;
+  GParam *params;
   gint retvals;
-  char* ext;
-  char* tmpname;
-  int pid;
-  int status;
+  gchar *ext;
+  gchar *tmpname;
+  gint pid;
+  gint status;
 
-  if (NULL == (ext = find_extension(filename))) return -1;
+  if (NULL == (ext = find_extension (filename)))
+    {
+      g_message (_("bz2: can't open bzip2ed file without a "
+		   "sensible extension\n"));
+      return STATUS_CALLING_ERROR;
+    }
 
   /* get a temp name with the right extension and save into it. */
 
@@ -276,11 +289,13 @@ save_image (char   *filename,
 			       PARAM_STRING, tmpname,
 			       PARAM_END);
 
-  if (params[0].data.d_status == FALSE || !valid_file(tmpname)) {
-    unlink (tmpname);
-    g_free (tmpname);
-    return -1;
-  }
+  if (!valid_file (tmpname) ||
+      params[0].data.d_status != STATUS_SUCCESS)
+    {
+      unlink (tmpname);
+      g_free (tmpname);
+      return params[0].data.d_status;
+    }
 
 /*   if (! file_save(image_ID, tmpname, tmpname)) { */
 /*     unlink (tmpname); */
@@ -289,37 +304,37 @@ save_image (char   *filename,
 
 #ifndef __EMX__
   /* fork off a bzip2 process */
-  if ((pid = fork()) < 0)
+  if ((pid = fork ()) < 0)
     {
-      g_message ("bz2: fork failed: %s\n", g_strerror(errno));
+      g_message ("bz2: fork failed: %s\n", g_strerror (errno));
       g_free (tmpname);
-      return -1;
+      return STATUS_EXECUTION_ERROR;
     }
   else if (pid == 0)
     {
-
-      if (!(f = fopen(filename,"w"))){
-	      g_message("bz2: fopen failed: %s\n", g_strerror(errno));
-	      g_free (tmpname);
-	      _exit(127);
-      }
+      if (!(f = fopen (filename, "w")))
+	{
+	  g_message ("bz2: fopen failed: %s\n", g_strerror (errno));
+	  g_free (tmpname);
+	  _exit(127);
+	}
 
       /* make stdout for this process be the output file */
-      if (-1 == dup2(fileno(f),fileno(stdout)))
-	g_message ("bz2: dup2 failed: %s\n", g_strerror(errno));
+      if (-1 == dup2 (fileno (f), fileno (stdout)))
+	g_message ("bz2: dup2 failed: %s\n", g_strerror (errno));
 
       /* and bzip2 into it */
       execlp ("bzip2", "bzip2", "-cf", tmpname, NULL);
-      g_message ("bz2: exec failed: bzip2: %s\n", g_strerror(errno));
+      g_message ("bz2: exec failed: bzip2: %s\n", g_strerror (errno));
       g_free (tmpname);
-      _exit(127);
+      _exit (127);
     }
   else
 #else /* __EMX__ */
-  if (spawn_bz(filename, tmpname, "-cf", &pid) == -1)
+  if (spawn_bz (filename, tmpname, "-cf", &pid) == -1)
     {
       g_free (tmpname);
-      return -1;
+      return STATUS_EXECUTION_ERROR;
     }
 #endif
     {
@@ -330,27 +345,35 @@ save_image (char   *filename,
 	{
 	  g_message ("bz2: bzip2 exited abnormally on file %s\n", tmpname);
 	  g_free (tmpname);
-	  return 0;
+	  return STATUS_EXECUTION_ERROR;
 	}
     }
 
   unlink (tmpname);
   g_free (tmpname);
 
-  return TRUE;
+  return STATUS_SUCCESS;
 }
 
 static gint32
-load_image (char *filename, gint32 run_mode)
+load_image (gchar       *filename,
+	    gint32       run_mode,
+	    GStatusType *status /* return value */)
 {
-  GParam* params;
+  GParam *params;
   gint retvals;
-  char* ext;
-  char* tmpname;
-  int pid;
-  int status;
+  gchar *ext;
+  gchar *tmpname;
+  gint pid;
+  gint process_status;
 
-  if (NULL == (ext = find_extension(filename))) return -1;
+  if (NULL == (ext = find_extension (filename)))
+    {
+      g_message (_("bz2: can't open bzip2ed file without a "
+		   "sensible extension\n"));
+      *status = STATUS_CALLING_ERROR;
+      return -1;
+    }
 
   /* find a temp name */
   params = gimp_run_procedure ("gimp_temp_name",
@@ -363,47 +386,51 @@ load_image (char *filename, gint32 run_mode)
 
 #ifndef __EMX__
   /* fork off a g(un)zip and wait for it */
-  if ((pid = fork()) < 0)
+  if ((pid = fork ()) < 0)
     {
-      g_message ("bz2: fork failed: %s\n", g_strerror(errno));
+      g_message ("bz2: fork failed: %s\n", g_strerror (errno));
       g_free (tmpname);
+      *status = STATUS_EXECUTION_ERROR;
       return -1;
     }
   else if (pid == 0)  /* child process */
     {
-      FILE* f;
-       if (!(f = fopen(tmpname,"w"))){
-	 g_message("bz2: fopen failed: %s\n", g_strerror(errno));
-	 g_free (tmpname);
-	 _exit(127);
-      }
+      FILE *f;
+       if (!(f = fopen (tmpname,"w")))
+	 {
+	   g_message ("bz2: fopen failed: %s\n", g_strerror (errno));
+	   g_free (tmpname);
+	   _exit (127);
+	 }
 
       /* make stdout for this child process be the temp file */
-      if (-1 == dup2(fileno(f),fileno(stdout)))
-	g_message ("bz2: dup2 failed: %s\n", g_strerror(errno));
+      if (-1 == dup2 (fileno (f), fileno (stdout)))
+	g_message ("bz2: dup2 failed: %s\n", g_strerror (errno));
 
       /* and unzip into it */
       execlp ("bzip2", "bzip2", "-cfd", filename, NULL);
-      g_message ("bz2: exec failed: bunzip2: %s\n", g_strerror(errno));
+      g_message ("bz2: exec failed: bunzip2: %s\n", g_strerror (errno));
       g_free (tmpname);
-      _exit(127);
+      _exit (127);
     }
   else  /* parent process */
 #else /* __EMX__ */
-  if (spawn_bz(filename, tmpname, "-cfd", &pid) == -1) 
+  if (spawn_bz (filename, tmpname, "-cfd", &pid) == -1) 
     {
-      g_free (tmpname);  
+      g_free (tmpname);
+      *status = STATUS_EXECUTION_ERROR;
       return -1;
     }
 #endif
     {
-      waitpid (pid, &status, 0);
+      waitpid (pid, &process_status, 0);
 
-      if (!WIFEXITED(status) ||
-	  WEXITSTATUS(status) != 0)
+      if (!WIFEXITED (process_status) ||
+	  WEXITSTATUS (process_status) != 0)
 	{
 	  g_message ("bz2: bzip2 exited abnormally on file %s\n", filename);
 	  g_free (tmpname);
+	  *status = STATUS_EXECUTION_ERROR;
 	  return -1;
 	}
     }
@@ -420,8 +447,12 @@ load_image (char *filename, gint32 run_mode)
   unlink (tmpname);
   g_free (tmpname);
 
-  if (params[0].data.d_status == FALSE)
-    return -1;
+  *status = params[0].data.d_status;
+
+  if (params[0].data.d_status != STATUS_SUCCESS)
+    {
+      return -1;
+    }
   else
     {
       gimp_image_set_filename (params[1].data.d_int32, filename);
@@ -429,47 +460,52 @@ load_image (char *filename, gint32 run_mode)
     }
 }
 
-
-static int valid_file (char* filename)
+static gboolean
+valid_file (gchar* filename)
 {
-  int stat_res;
+  gint stat_res;
   struct stat buf;
 
-  stat_res = stat(filename, &buf);
+  stat_res = stat (filename, &buf);
 
   if ((0 == stat_res) && (buf.st_size > 0))
-    return 1;
+    return TRUE;
   else
-    return 0;
+    return FALSE;
 }
 
-static char* find_extension (char* filename)
+static gchar *
+find_extension (gchar* filename)
 {
-  char* filename_copy;
-  char* ext;
+  gchar *filename_copy;
+  gchar *ext;
 
   /* we never free this copy - aren't we evil! */
-  filename_copy = malloc(strlen(filename)+1);
-  strcpy(filename_copy, filename);
+  filename_copy = g_malloc (strlen (filename) + 1);
+  strcpy (filename_copy, filename);
 
   /* find the extension, boy! */
   ext = strrchr (filename_copy, '.');
 
-  while (1) {
-    if (!ext || ext[1] == 0 || strchr(ext, '/'))
-      {
-	g_message (_("bz2: can't open bzip2ed file without a sensible extension\n"));
-	return NULL;
-      }
-    if (0 == strcmp(ext, ".xcfbz2")) {
-      return ".xcf";  /* we've found it */
+  while (1)
+    {
+      if (!ext || ext[1] == 0 || strchr (ext, '/'))
+	{
+	  return NULL;
+	}
+      if (0 == strcmp (ext, ".xcfbz2"))
+	{
+	  return ".xcf";  /* we've found it */
+	}
+      if (0 != strcmp (ext, ".bz2"))
+	{
+	  return ext;
+	}
+      else
+	{
+	  /* we found ".bz2" so strip it, loop back, and look again */
+	  *ext = 0;
+	  ext = strrchr (filename_copy, '.');
+	}
     }
-    if (0 != strcmp(ext,".bz2")) {
-      return ext;
-    } else {
-      /* we found ".bz2" so strip it, loop back, and look again */
-      *ext = 0;
-      ext = strrchr (filename_copy, '.');
-    }
-  }
 }

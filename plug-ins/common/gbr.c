@@ -37,19 +37,21 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
+#include "app/brush_header.h"
 
 #include "libgimp/stdplugins-intl.h"
-#include "app/brush_header.h"
 
 
 /* Declare local data types
  */
 
-typedef struct {
-  char description[256];
-  unsigned int spacing;
+typedef struct
+{
+  gchar description[256];
+  gint  spacing;
 } t_info;
 
 t_info info = 
@@ -58,19 +60,19 @@ t_info info =
   10
 };
 
-int run_flag = 0;
+gint run_flag = FALSE;
 
 /* Declare some local functions.
  */
 static void   query          (void);
-static void   run            (char    *name,
-			      int      nparams,
+static void   run            (gchar   *name,
+			      gint     nparams,
 			      GParam  *param,
-			      int     *nreturn_vals,
+			      gint    *nreturn_vals,
 			      GParam **return_vals);
 
-static gint32 load_image     (char   *filename);
-static gint   save_image     (char   *filename,
+static gint32 load_image     (gchar  *filename);
+static gint   save_image     (gchar  *filename,
 			      gint32  image_ID,
 			      gint32  drawable_ID);
 
@@ -83,17 +85,17 @@ static void   entry_callback (GtkWidget *widget,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef load_args[] =
   {
@@ -101,13 +103,13 @@ query ()
     { PARAM_STRING, "filename",       "The name of the file to load" },
     { PARAM_STRING, "raw_filename",   "The name of the file to load" },
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-
   static GParamDef load_return_vals[] =
   {
     { PARAM_IMAGE,  "image",          "Output image" },
   };
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
   static GParamDef save_args[] =
   {
@@ -119,7 +121,7 @@ query ()
     { PARAM_INT32,    "spacing",      "Spacing of the brush" },
     { PARAM_STRING,   "description",  "Short description of the brush" },
   };
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   INIT_I18N();
 
@@ -147,31 +149,35 @@ query ()
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_gbr_load", "gbr", "", "20,string,GIMP");
-  gimp_register_save_handler ("file_gbr_save", "gbr", "");
+  gimp_register_magic_load_handler ("file_gbr_load",
+				    "gbr",
+				    "",
+				    "20,string,GIMP");
+  gimp_register_save_handler       ("file_gbr_save",
+				    "gbr",
+				    "");
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
-  GRunModeType run_mode;
-  gint32 image_ID;
-  gint32 drawable_ID;
-  GStatusType status = STATUS_SUCCESS;
+  GRunModeType  run_mode;
+  GStatusType   status = STATUS_SUCCESS;
+  gint32        image_ID;
+  gint32        drawable_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
-  
+
   run_mode = param[0].data.d_int32;
 
+  *nreturn_vals = 1;
   *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
-  values[1].type = PARAM_IMAGE;
-  values[1].data.d_image = -1;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
   if (strcmp (name, "file_gbr_load") == 0) 
     {
@@ -179,12 +185,14 @@ run (char    *name,
       
       if (image_ID != -1) 
 	{
-	  values[0].data.d_status = STATUS_SUCCESS;
+	  *nreturn_vals = 2;
+	  values[1].type         = PARAM_IMAGE;
 	  values[1].data.d_image = image_ID;
-	} else {
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
-		}
-      *nreturn_vals = 2;
+	}
+      else
+	{
+	  status = STATUS_EXECUTION_ERROR;
+	}
     }
   else if (strcmp (name, "file_gbr_save") == 0) 
     {
@@ -196,59 +204,72 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-      INIT_I18N_UI();
+	  INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GBR", 
 				      CAN_HANDLE_GRAY);
 	  if (export == EXPORT_CANCEL)
 	    {
-	      *nreturn_vals = 1;
-	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      values[0].data.d_status = STATUS_CANCEL;
 	      return;
 	    }
 	  break;
 	default:
-      INIT_I18N();
+	  INIT_I18N();
 	  break;
 	}
 
       switch (run_mode) 
 	{
 	case RUN_INTERACTIVE:
-				/*  Possibly retrieve data  */
-	  gimp_get_data("file_gbr_save", &info);
-	  if (!save_dialog())
-	    return;
+	  /*  Possibly retrieve data  */
+	  gimp_get_data ("file_gbr_save", &info);
+	  if (! save_dialog ())
+	    status = STATUS_CANCEL;
 	  break;
+
 	case RUN_NONINTERACTIVE:  /* FIXME - need a real RUN_NONINTERACTIVE */
 	  if (nparams != 7)
-	    status = STATUS_CALLING_ERROR;
-	  if (status == STATUS_SUCCESS)
+	    {
+	      status = STATUS_CALLING_ERROR;
+	    }
+	  else
 	    {
 	      info.spacing = (param[5].data.d_int32);
 	      strncpy (info.description, param[6].data.d_string, 256);	
 	    }
 	  break;
+
 	case RUN_WITH_LAST_VALS:
 	  gimp_get_data ("file_gbr_save", &info);
 	  break;
 	}
-      
-      *nreturn_vals = 1;
-      if (save_image (param[3].data.d_string, image_ID, drawable_ID)) 
+
+      if (status == STATUS_SUCCESS)
 	{
-	  gimp_set_data ("file_gbr_save", &info, sizeof(info));
-	  values[0].data.d_status = STATUS_SUCCESS;
-	} else
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  if (save_image (param[3].data.d_string, image_ID, drawable_ID)) 
+	    {
+	      gimp_set_data ("file_gbr_save", &info, sizeof(info));
+	    }
+	  else
+	    {
+	      status = STATUS_EXECUTION_ERROR;
+	    }
+	}
 
       if (export == EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
+  else
+    {
+      status = STATUS_CALLING_ERROR;
+    }
+
+  values[0].data.d_status = status;
 }
 
 static gint32 
-load_image (char *filename) 
+load_image (gchar *filename) 
 {
   char *temp;
   int fd;
@@ -323,7 +344,8 @@ load_image (char *filename)
   gimp_image_set_filename (image_ID, filename);
   
   layer_ID = gimp_layer_new (image_ID, _("Background"), ph.width, ph.height,
-			     (ph.bytes >= 3) ? RGB_IMAGE : GRAY_IMAGE, 100, NORMAL_MODE);
+			     (ph.bytes >= 3) ? RGB_IMAGE : GRAY_IMAGE, 100,
+			     NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
   drawable = gimp_drawable_get (layer_ID);
@@ -378,7 +400,7 @@ save_image (char   *filename,
   if (fd == -1) 
     {
       g_message( _("Unable to open %s"), filename);
-      return 0;
+      return FALSE;
     }
 
   ph.header_size = g_htonl(sizeof(ph) + strlen(info.description) + 1);
@@ -392,14 +414,14 @@ save_image (char   *filename,
   if (write(fd, &ph, sizeof(ph)) != sizeof(ph)) 
     {
       close(fd);
-      return 0;
+      return FALSE;
     }
   
   if (write(fd, info.description, strlen(info.description) + 1) !=
       strlen(info.description) + 1) 
     {
       close(fd);
-      return 0;
+      return FALSE;
     }
   
   buffer = g_malloc(drawable->width * drawable->bpp);
@@ -409,7 +431,7 @@ save_image (char   *filename,
       if (write(fd, buffer, drawable->width * drawable->bpp) !=
 	  drawable->width * drawable->bpp) {
 	close(fd);
-	return 0;
+	return FALSE;
       }
       gimp_progress_update((double) line / (double) drawable->height);
     }
@@ -417,11 +439,11 @@ save_image (char   *filename,
   
   close(fd);
   
-  return 1;
+  return TRUE;
 }
 
 static void 
-init_gtk ()
+init_gtk (void)
 {
   gchar **argv;
   gint argc;
@@ -438,10 +460,10 @@ static gint
 save_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *label;
-  GtkWidget *entry;
   GtkWidget *table;
-  gchar buffer[12];
+  GtkWidget *entry;
+  GtkWidget *spinbutton;
+  GtkObject *adj;
 
   dlg = gimp_dialog_new (_("Save as Brush"), "gbr",
 			 gimp_plugin_help_func, "filters/gbr.html",
@@ -461,57 +483,30 @@ save_dialog (void)
 
   /* The main table */
   table = gtk_table_new (2, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-
-  /**********************
-   * label
-   **********************/
-  label = gtk_label_new (_("Spacing:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  /************************
-   * The entry
-   ************************/
-  entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_set_usize (entry, 200, 0);
-  g_snprintf (buffer, sizeof (buffer), "%i", info.spacing);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (entry_callback),
+  spinbutton = gimp_spin_button_new (&adj,
+				     info.spacing, 1, 1000, 1, 10, 0, 1, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Spacing:"), 1.0, 0.5,
+			     spinbutton, TRUE);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &info.spacing);
-  gtk_widget_show (entry);
 
-  /**********************
-   * label
-   **********************/
-  label = gtk_label_new (_("Description:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  /************************
-   * The entry
-   ************************/
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, 200, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("Description:"), 1.0, 0.5,
+			     entry, FALSE);
   gtk_entry_set_text (GTK_ENTRY (entry), info.description);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      GTK_SIGNAL_FUNC (entry_callback),
 		      info.description);
-  gtk_widget_show (entry);
   
   gtk_widget_show (dlg);
   
@@ -533,8 +528,5 @@ static void
 entry_callback (GtkWidget *widget, 
 		gpointer   data)
 {
-  if (data == info.description)
-    strncpy (info.description, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
-  else if (data == &info.spacing)
-    info.spacing = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
+  strncpy (info.description, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
 }
