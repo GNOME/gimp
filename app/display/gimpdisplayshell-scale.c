@@ -132,6 +132,8 @@ gimp_display_shell_scale_zoom_step (GimpZoomType zoom_type,
     }
 
   return CLAMP (new_scale, 1.0/256.0, 256.0);
+
+#undef ZOOM_MIN_STEP
 }
 
 void
@@ -281,10 +283,10 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
       shell->disp_xoffset = 0;
 
       hruler->lower += img2real (shell, TRUE,
-				 FUNSCALEX (shell,
+                                 FUNSCALEX (shell,
                                             (gdouble) shell->offset_x));
       hruler->upper += img2real (shell, TRUE,
-				 FUNSCALEX (shell,
+                                 FUNSCALEX (shell,
                                             (gdouble) shell->offset_x));
     }
 
@@ -293,10 +295,10 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
       shell->disp_yoffset = (shell->disp_height - sy) / 2;
 
       vruler->lower -= img2real (shell, FALSE,
-				 FUNSCALEY (shell,
+                                 FUNSCALEY (shell,
                                             (gdouble) shell->disp_yoffset));
       vruler->upper -= img2real (shell, FALSE,
-				 FUNSCALEY (shell,
+                                 FUNSCALEY (shell,
                                             (gdouble) shell->disp_yoffset));
     }
   else
@@ -304,10 +306,10 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
       shell->disp_yoffset = 0;
 
       vruler->lower += img2real (shell, FALSE,
-				 FUNSCALEY (shell,
+                                 FUNSCALEY (shell,
                                             (gdouble) shell->offset_y));
       vruler->upper += img2real (shell, FALSE,
-				 FUNSCALEY (shell,
+                                 FUNSCALEY (shell,
                                             (gdouble) shell->offset_y));
     }
 
@@ -343,8 +345,8 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
       shell->dot_for_dot = dot_for_dot;
 
       gimp_display_shell_scale_resize (shell,
-				       GIMP_DISPLAY_CONFIG (gimp->config)->resize_windows_on_zoom,
-				       TRUE);
+                                       GIMP_DISPLAY_CONFIG (gimp->config)->resize_windows_on_zoom,
+                                       TRUE);
 
       /* re-enable the active tool */
       gimp_display_shell_resume (shell);
@@ -704,8 +706,8 @@ update_zoom_values (GtkAdjustment   *adj,
  */
 static gdouble
 img2real (GimpDisplayShell *shell,
-	  gboolean          xdir,
-	  gdouble           len)
+          gboolean          xdir,
+          gdouble           len)
 {
   GimpImage *image = shell->gdisp->gimage;
   gdouble    res;

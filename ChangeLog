@@ -1,3 +1,10 @@
+2004-10-07  Simon Budig  <simon@gimp.org>
+
+	* app/actions/view-commands.c: fill in the formula...  :-)
+	untabbified.
+
+	* app/display/gimpdisplayshell-scale.c: Micro-Cleanup, untabbified.
+
 2004-10-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/view-actions.c: changed zoom actions to be

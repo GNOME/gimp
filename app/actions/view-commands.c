@@ -82,7 +82,7 @@ static void   view_change_screen_destroy_callback (GtkWidget            *query_b
 
 void
 view_new_view_cmd_callback (GtkAction *action,
-			    gpointer   data)
+                            gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
@@ -172,18 +172,15 @@ view_zoom_cmd_callback (GtkAction *action,
       break;
 
     default:
-      scale = (scale >= 1) ? (scale + 256.0) : (scale * 256.0);
-
       scale = action_select_value ((GimpActionSelectType) value,
                                    scale,
-                                   1.0, 512.0,
+                                   0.0, 512.0,
                                    1.0, 16.0,
                                    FALSE);
 
-      if (scale > 256.0)
-        scale -= 256.0;
-      else
-        scale /= 256.0;
+      /* min = 1.0 / 256,  max = 256.0                */
+      /* scale = min *  (max / min)**(i/n), i = 0..n  */
+      scale = pow (65536.0, scale / 512.0) / 256.0;
 
       gimp_display_shell_scale (shell, GIMP_ZOOM_TO, scale);
       break;
@@ -233,7 +230,7 @@ view_zoom_other_cmd_callback (GtkAction *action,
 
 void
 view_dot_for_dot_cmd_callback (GtkAction *action,
-			       gpointer   data)
+                               gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
@@ -305,7 +302,7 @@ view_scroll_vertical_cmd_callback (GtkAction *action,
 
 void
 view_info_window_cmd_callback (GtkAction *action,
-			       gpointer   data)
+                               gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
@@ -316,7 +313,7 @@ view_info_window_cmd_callback (GtkAction *action,
   if (GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->info_window_per_display)
     {
       if (! shell->info_dialog)
-	shell->info_dialog = info_window_create (gdisp);
+        shell->info_dialog = info_window_create (gdisp);
 
       /* To update the fields of the info window for the first time. *
        * It's no use updating it in info_window_create() because the *
@@ -370,7 +367,7 @@ view_display_filters_cmd_callback (GtkAction *action,
 
 void
 view_toggle_selection_cmd_callback (GtkAction *action,
-				    gpointer   data)
+                                    gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
@@ -418,7 +415,7 @@ view_toggle_menubar_cmd_callback (GtkAction *action,
 
 void
 view_toggle_rulers_cmd_callback (GtkAction *action,
-				 gpointer   data)
+                                 gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
@@ -450,7 +447,7 @@ view_toggle_scrollbars_cmd_callback (GtkAction *action,
 
 void
 view_toggle_statusbar_cmd_callback (GtkAction *action,
-				    gpointer   data)
+                                    gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
@@ -466,7 +463,7 @@ view_toggle_statusbar_cmd_callback (GtkAction *action,
 
 void
 view_toggle_guides_cmd_callback (GtkAction *action,
-				 gpointer   data)
+                                 gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
@@ -482,7 +479,7 @@ view_toggle_guides_cmd_callback (GtkAction *action,
 
 void
 view_snap_to_guides_cmd_callback (GtkAction *action,
-				  gpointer   data)
+                                  gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
@@ -619,7 +616,7 @@ view_padding_color_cmd_callback (GtkAction *action,
 
 void
 view_shrink_wrap_cmd_callback (GtkAction *action,
-			       gpointer   data)
+                               gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
@@ -629,7 +626,7 @@ view_shrink_wrap_cmd_callback (GtkAction *action,
 
 void
 view_fullscreen_cmd_callback (GtkAction *action,
-			      gpointer   data)
+                              gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
