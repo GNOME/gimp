@@ -1,3 +1,8 @@
+2004-12-30  Manish Singh  <yosh@gimp.org>
+
+	* tools/Makefile.am
+	* app/Makefile.am: build binaries with 2.3 versions.
+
 2004-12-30  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimpsizebox.c: give correct arguments to
