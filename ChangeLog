@@ -1,3 +1,29 @@
+2003-05-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpchannel.c (gimp_channel_rotate): don't default to
+	clip_result == TRUE (unlike the other transform functions).
+
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_tiles_rotate): fixed offset calculation.
+
+	* app/core/gimpimage-rotate.c: change the image size *after* all items
+	are rotated. Adjust all items' offsets after rotation. Rotate the
+	resolutions too. Seems to work now and fixes bug #6101.
+
+	* app/core/gimpimage.c (gimp_image_size_changed): emit
+	"size_changed" on all vectors.
+
+	* app/core/gimpitem-linked.[ch]: added gimp_item_linked_rotate().
+
+	* app/gui/drawable-commands.c: flip and rotate linked items too.
+
+	* app/vectors/gimpvectors.c (gimp_vectors_rotate): fixed rotation
+	angles.
+
+	Unrelated:
+
+	* app/core/gimpimage-merge.c: don't #include "path.h".
+
 2003-05-20  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-transform.c

@@ -46,8 +46,6 @@
 #include "gimpparasitelist.h"
 #include "gimpundostack.h"
 
-#include "path.h"
-
 #include "gimp-intl.h"
 
 

@@ -442,8 +442,7 @@ gimp_channel_rotate (GimpItem         *item,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                _("Rotate Channel"));
 
-  if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
-    clip_result = TRUE;
+  /*  don't default to clip_result == TRUE here  */
 
   GIMP_ITEM_CLASS (parent_class)->rotate (item,
                                           rotate_type, center_x, center_y,

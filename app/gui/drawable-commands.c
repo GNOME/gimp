@@ -33,6 +33,8 @@
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-invert.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
+#include "core/gimpitem-linked.h"
 
 #include "widgets/gimpitemtreeview.h"
 
@@ -150,7 +152,18 @@ drawable_flip_cmd_callback (GtkWidget *widget,
       break;
     }
 
-  gimp_item_flip (item, (GimpOrientationType) action, axis, TRUE);
+  if (gimp_item_get_linked (item))
+    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+                                 _("Flip Layer"));
+
+  gimp_item_flip (item, (GimpOrientationType) action, axis, FALSE);
+
+  if (gimp_item_get_linked (item))
+    {
+      gimp_item_linked_flip (item, (GimpOrientationType) action, axis, FALSE);
+      gimp_image_undo_group_end (gimage);
+    }
+
   gimp_image_flush (gimage);
 }
 
@@ -173,7 +186,19 @@ drawable_rotate_cmd_callback (GtkWidget *widget,
   center_x = ((gdouble) off_x + (gdouble) gimp_item_width  (item) / 2.0);
   center_y = ((gdouble) off_y + (gdouble) gimp_item_height (item) / 2.0);
 
-  gimp_item_rotate (item, (GimpRotationType) action, center_x, center_y, TRUE);
+  if (gimp_item_get_linked (item))
+    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+                                 _("Rotate Layer"));
+
+  gimp_item_rotate (item, (GimpRotationType) action, center_x, center_y, FALSE);
+
+  if (gimp_item_get_linked (item))
+    {
+      gimp_item_linked_rotate (item, (GimpRotationType) action,
+                               center_x, center_y, FALSE);
+      gimp_image_undo_group_end (gimage);
+    }
+
   gimp_image_flush (gimage);
 }
 

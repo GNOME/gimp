@@ -688,6 +688,9 @@ gimp_image_size_changed (GimpViewable *viewable)
   gimp_container_foreach (gimage->channels,
 			  (GFunc) gimp_viewable_size_changed,
 			  NULL);
+  gimp_container_foreach (gimage->vectors,
+			  (GFunc) gimp_viewable_size_changed,
+			  NULL);
 
   for (list = GIMP_LIST (gimage->layers)->list; list; list = g_list_next (list))
     {

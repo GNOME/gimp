@@ -452,13 +452,13 @@ gimp_vectors_rotate (GimpItem         *item,
   switch (rotate_type)
     {
     case GIMP_ROTATE_90:
-      angle = - G_PI_2;
+      angle = G_PI_2;
       break;
     case GIMP_ROTATE_180:
       angle = G_PI;
       break;
     case GIMP_ROTATE_270:
-      angle = G_PI_2;
+      angle = - G_PI_2;
       break;
     }
 

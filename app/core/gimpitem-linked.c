@@ -89,6 +89,33 @@ gimp_item_linked_flip (GimpItem            *item,
 }
 
 void
+gimp_item_linked_rotate (GimpItem         *item,
+                         GimpRotationType  rotate_type,
+                         gdouble           center_x,
+                         gdouble           center_y,
+                         gboolean          clip_result)
+{
+  GimpImage *gimage;
+  GList     *linked_list;
+  GList     *list;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_get_linked (item) == TRUE);
+
+  gimage = gimp_item_get_image (item);
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  linked_list = gimp_item_linked_get_list (gimage, item);
+
+  for (list = linked_list; list; list = g_list_next (list))
+    gimp_item_rotate (GIMP_ITEM (list->data),
+                      rotate_type, center_x, center_y, clip_result);
+
+  g_list_free (linked_list);
+}
+
+void
 gimp_item_linked_transform (GimpItem               *item,
                             GimpMatrix3             matrix,
                             GimpTransformDirection  direction,

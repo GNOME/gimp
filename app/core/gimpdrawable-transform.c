@@ -585,22 +585,28 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
   switch (rotate_type)
     {
     case GIMP_ROTATE_90:
-      new_x      = ROUND (center_x + (gdouble) orig_y - center_y);
-      new_y      = ROUND (center_y + (gdouble) orig_x - center_x);
+      new_x      = ROUND (center_x -
+                          (gdouble) (orig_y + orig_height) + center_y);
+      new_y      = ROUND (center_y +
+                          (gdouble) orig_x - center_x);
       new_width  = orig_height;
       new_height = orig_width;
       break;
 
     case GIMP_ROTATE_180:
-      new_x      = ROUND ((gdouble) orig_x - 2.0 * center_x) + orig_width  - 1;
-      new_y      = ROUND ((gdouble) orig_y - 2.0 * center_y) + orig_height - 1;
+      new_x      = ROUND (center_x -
+                          ((gdouble) (orig_x + orig_width)  - center_x));
+      new_y      = ROUND (center_y -
+                          ((gdouble) (orig_y + orig_height) - center_y));
       new_width  = orig_width;
       new_height = orig_height;
       break;
 
     case GIMP_ROTATE_270:
-      new_x      = ROUND (center_x - (gdouble) orig_y - center_y);
-      new_y      = ROUND (center_y - (gdouble) orig_x - center_x);
+      new_x      = ROUND (center_x +
+                          (gdouble) orig_y - center_y);
+      new_y      = ROUND (center_y -
+                          (gdouble) (orig_x + orig_width) + center_x);
       new_width  = orig_height;
       new_height = orig_width;
       break;

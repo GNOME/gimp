@@ -50,11 +50,12 @@ gimp_image_rotate (GimpImage        *gimage,
   GList     *list;
   gdouble    center_x;
   gdouble    center_y;
-  gint       tmp;
   gint       num_channels;
   gint       num_layers;
   gint       num_vectors;
   gint       progress_current = 1;
+  gint       new_image_width;
+  gint       new_image_height;
   gboolean   size_changed     = FALSE;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
@@ -82,17 +83,16 @@ gimp_image_rotate (GimpImage        *gimage,
     {
     case GIMP_ROTATE_90:
     case GIMP_ROTATE_270:
-      gimp_image_undo_push_image_size (gimage, NULL);
-
-      tmp = gimage->width;
-      gimage->width  = gimage->height;
-      gimage->height = tmp;
-
-      size_changed = TRUE;
+      new_image_width  = gimage->height;
+      new_image_height = gimage->width;
+      size_changed     = TRUE;
       break;
 
     case GIMP_ROTATE_180:
-      break;
+      new_image_width  = gimage->width;
+      new_image_height = gimage->height;
+      size_changed     = FALSE;
+     break;
     }
 
   /*  Rotate all channels  */
@@ -102,7 +102,13 @@ gimp_image_rotate (GimpImage        *gimage,
     {
       item = (GimpItem *) list->data;
 
-      gimp_item_rotate (item, rotate_type, center_x, center_y, TRUE);
+      gimp_item_rotate (item, rotate_type, center_x, center_y, FALSE);
+
+      if (size_changed)
+        {
+          item->offset_x = 0;
+          item->offset_y = 0;
+        }
 
       if (progress_func)
         (* progress_func) (0, num_vectors + num_channels + num_layers,
@@ -119,6 +125,19 @@ gimp_image_rotate (GimpImage        *gimage,
 
       gimp_item_rotate (item, rotate_type, center_x, center_y, FALSE);
 
+      if (size_changed)
+        {
+          item->offset_x = 0;
+          item->offset_y = 0;
+          item->width    = new_image_width;
+          item->height   = new_image_height;
+
+          gimp_item_translate (item,
+                               ROUND (center_y - center_x),
+                               ROUND (center_x - center_y),
+                               FALSE);
+        }
+
       if (progress_func)
         (* progress_func) (0, num_vectors + num_channels + num_layers,
                            progress_current++,
@@ -127,17 +146,32 @@ gimp_image_rotate (GimpImage        *gimage,
 
   /*  Don't forget the selection mask!  */
   gimp_item_rotate (GIMP_ITEM (gimage->selection_mask),
-                    rotate_type, center_x, center_y, TRUE);
+                    rotate_type, center_x, center_y, FALSE);
+  GIMP_ITEM (gimage->selection_mask)->offset_x = 0;
+  GIMP_ITEM (gimage->selection_mask)->offset_y = 0;
   gimp_image_mask_invalidate (gimage);
 
   /*  Rotate all layers  */
-  for (list = GIMP_LIST (gimage->layers)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->layers)->list;
+       list;
        list = g_list_next (list))
     {
+      gint off_x, off_y;
+      gint width, height;
+
       item = (GimpItem *) list->data;
 
+      gimp_item_offsets (item, &off_x, &off_y);
+      width  = gimp_item_width (item);
+      height = gimp_item_height (item);
+
       gimp_item_rotate (item, rotate_type, center_x, center_y, FALSE);
+
+      if (size_changed)
+        gimp_item_translate (item,
+                             ROUND (center_y - center_x),
+                             ROUND (center_x - center_y),
+                             FALSE);
 
       if (progress_func)
         (* progress_func) (0, num_vectors + num_channels + num_layers,
@@ -147,6 +181,26 @@ gimp_image_rotate (GimpImage        *gimage,
 
   /*  Rotate all Guides  */
   gimp_image_rotate_guides (gimage, rotate_type);
+
+  /*  Resize the image (if needed)  */
+  if (size_changed)
+    {
+      gimp_image_undo_push_image_size (gimage, NULL);
+
+      gimage->width  = new_image_width;
+      gimage->height = new_image_height;
+
+      if (gimage->xresolution != gimage->yresolution)
+        {
+          gdouble tmp;
+
+          gimp_image_undo_push_image_resolution (gimage, NULL);
+
+          tmp                 = gimage->xresolution;
+          gimage->yresolution = gimage->xresolution;
+          gimage->xresolution = tmp;
+        }
+    }
 
   /*  Make sure the projection matches the gimage size  */
   gimp_image_projection_allocate (gimage);
@@ -184,7 +238,7 @@ gimp_image_rotate_guides (GimpImage        *gimage,
             case GIMP_ORIENTATION_HORIZONTAL:
               gimp_image_undo_push_image_guide (gimage, NULL, guide);
               guide->orientation = GIMP_ORIENTATION_VERTICAL;
-              guide->position    = gimage->width - guide->position;
+              guide->position    = gimage->height - guide->position;
               break;
               
             case GIMP_ORIENTATION_VERTICAL:
@@ -226,7 +280,7 @@ gimp_image_rotate_guides (GimpImage        *gimage,
             case GIMP_ORIENTATION_VERTICAL:
               gimp_image_undo_push_image_guide (gimage, NULL, guide);
               guide->orientation = GIMP_ORIENTATION_HORIZONTAL;
-              guide->position    = gimage->height - guide->position;
+              guide->position    = gimage->width - guide->position;
               break;
               
             default:
