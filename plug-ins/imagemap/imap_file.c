@@ -54,12 +54,11 @@ do_file_open_dialog(void)
    static GtkWidget *dialog;
    if (!dialog) {
       dialog = gtk_file_selection_new(_("Load Imagemap"));
-      g_signal_connect_swapped(
-	 G_OBJECT(GTK_FILE_SELECTION(dialog)->cancel_button),
-	 "clicked", G_CALLBACK(gtk_widget_hide), dialog);
-      g_signal_connect(G_OBJECT(GTK_FILE_SELECTION(dialog)->ok_button),
+      g_signal_connect_swapped(GTK_FILE_SELECTION(dialog)->cancel_button,
+                               "clicked", G_CALLBACK(gtk_widget_hide), dialog);
+      g_signal_connect(GTK_FILE_SELECTION(dialog)->ok_button,
                        "clicked", G_CALLBACK(open_cb), dialog);
-      g_signal_connect(G_OBJECT(dialog), "delete_event",
+      g_signal_connect(dialog, "delete_event",
 		       G_CALLBACK(gtk_widget_hide), NULL);
    }
    gtk_widget_show(dialog);
@@ -109,12 +108,11 @@ do_file_save_as_dialog(void)
    static GtkWidget *dialog;
    if (!dialog) {
       dialog = gtk_file_selection_new(_("Save Imagemap"));
-      g_signal_connect_swapped(
-	 G_OBJECT(GTK_FILE_SELECTION(dialog)->cancel_button),
-	 "clicked", G_CALLBACK(gtk_widget_hide), dialog);
-      g_signal_connect(G_OBJECT(GTK_FILE_SELECTION(dialog)->ok_button),
+      g_signal_connect_swapped(GTK_FILE_SELECTION(dialog)->cancel_button,
+                               "clicked", G_CALLBACK(gtk_widget_hide), dialog);
+      g_signal_connect(GTK_FILE_SELECTION(dialog)->ok_button,
                        "clicked", G_CALLBACK(save_cb), dialog);
-      g_signal_connect(G_OBJECT(dialog), "delete_event",
+      g_signal_connect(dialog, "delete_event",
 		       G_CALLBACK(gtk_widget_hide), NULL);
    }
    gtk_widget_show(dialog);

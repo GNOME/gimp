@@ -564,7 +564,7 @@ dialog (gint32 drawable_ID)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -657,10 +657,10 @@ add_color_button (gint       csel_index,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "color_changed", 
+  g_signal_connect (button, "color_changed", 
                     G_CALLBACK (gimp_color_button_get_color), 
                     &plvals.colors[csel_index]);
-  g_signal_connect (G_OBJECT (button), "color_changed",
+  g_signal_connect (button, "color_changed",
                     G_CALLBACK (update_img_preview),
                     NULL);
 }

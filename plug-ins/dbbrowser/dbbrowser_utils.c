@@ -156,7 +156,7 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
 			 NULL);
     }
 
-  g_signal_connect (G_OBJECT (dbbrowser->dialog), "destroy",
+  g_signal_connect (dbbrowser->dialog, "destroy",
                     G_CALLBACK (dialog_close_callback), dbbrowser);
   
   /* hpaned : left=list ; right=description */
@@ -196,7 +196,7 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
   gtk_widget_show (dbbrowser->tv);
 
   dbbrowser->sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (dbbrowser->tv));
-  g_signal_connect (G_OBJECT (dbbrowser->sel), "changed",
+  g_signal_connect (dbbrowser->sel, "changed",
 		    G_CALLBACK (procedure_select_callback), dbbrowser);
 
   /* search entry */
@@ -642,7 +642,7 @@ dialog_search_callback (GtkWidget   *widget,
       dbbrowser->store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
       gtk_tree_view_set_model (GTK_TREE_VIEW (dbbrowser->tv),
                                GTK_TREE_MODEL (dbbrowser->store));
-      g_object_unref (G_OBJECT (dbbrowser->store));
+      g_object_unref (dbbrowser->store);
     }
 
   for (i = 0; i < num_procs; i++)

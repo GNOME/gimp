@@ -374,7 +374,7 @@ shoot_dialog (void)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -402,7 +402,7 @@ shoot_dialog (void)
   g_object_set_data (G_OBJECT (button), "gimp-item-data",
                      GINT_TO_POINTER (FALSE));
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &shootvals.root);
 
@@ -418,7 +418,7 @@ shoot_dialog (void)
 
   g_object_set_data (G_OBJECT (button), "set_sensitive", decor_button);
 
-  g_signal_connect (G_OBJECT (decor_button), "toggled",
+  g_signal_connect (decor_button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &shootvals.decor);
 
@@ -437,7 +437,7 @@ shoot_dialog (void)
   g_object_set_data (G_OBJECT (button), "gimp-item-data",
                      GINT_TO_POINTER (TRUE));
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &shootvals.root);
 
@@ -457,7 +457,7 @@ shoot_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), spinner, FALSE, FALSE, 0);
   gtk_widget_show (spinner);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update), 
                     &shootvals.delay);
 

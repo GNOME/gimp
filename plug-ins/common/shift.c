@@ -337,7 +337,7 @@ shift_dialog (gint32 image_ID)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -384,7 +384,7 @@ shift_dialog (gint32 image_ID)
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry), 
 				_("Shift _Amount:"), 1, 0, 0.0);
 
-  g_signal_connect (G_OBJECT (size_entry), "value_changed",
+  g_signal_connect (size_entry, "value_changed",
                     G_CALLBACK (shift_amount_update_callback),
                     &shvals.shift_amount);
   gtk_box_pack_start (GTK_BOX (radio_vbox), size_entry, FALSE, FALSE, 0);

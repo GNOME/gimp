@@ -326,7 +326,7 @@ colortoalpha_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -355,7 +355,7 @@ colortoalpha_dialog (GimpDrawable *drawable)
 		    GTK_FILL, GTK_SHRINK, 0, 0) ; 
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "color_changed",
+  g_signal_connect (button, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &pvals.color);
 

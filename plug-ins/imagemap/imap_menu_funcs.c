@@ -58,7 +58,7 @@ static GtkWidget*
 append_active_item(GtkWidget *parent, GtkWidget *item, MenuCallback activate,
 		   gpointer data)
 {
-   g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(activate), data);
+   g_signal_connect(item, "activate", G_CALLBACK(activate), data);
    return append_item(parent, item);
 }
 
@@ -88,7 +88,7 @@ prepend_item_with_label(GtkWidget *parent, gchar *label,
 {
    GtkWidget *item = gtk_menu_item_new_with_mnemonic(label);
    gtk_menu_shell_prepend(GTK_MENU_SHELL(parent), item);
-   g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(activate), data);
+   g_signal_connect(item, "activate", G_CALLBACK(activate), data);
    gtk_widget_show(item);
 
    return item;
@@ -100,7 +100,7 @@ insert_item_with_label(GtkWidget *parent, gint position, gchar *label,
 {
    GtkWidget *item = gtk_image_menu_item_new_with_mnemonic(label);
    gtk_menu_shell_insert(GTK_MENU_SHELL(parent), item, position);
-   g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(activate), data);
+   g_signal_connect(item, "activate", G_CALLBACK(activate), data);
    gtk_widget_show(item);
 
    return item;

@@ -570,7 +570,7 @@ save_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT(dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -588,7 +588,7 @@ save_dialog (void)
 			     _("Spacing:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &info.spacing);
 
@@ -599,7 +599,7 @@ save_dialog (void)
 			     _("Description:"), 1.0, 0.5,
 			     entry, 1, FALSE);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (entry_callback),
                     info.description);
   

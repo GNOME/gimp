@@ -199,7 +199,14 @@ typedef enum
   XJT_SATURATION_MODE = 12,
   XJT_COLOR_MODE = 13,
   XJT_VALUE_MODE = 14,
-  XJT_DIVIDE_MODE = 15
+  XJT_DIVIDE_MODE = 15,
+  XJT_DODGE_MODE = 16,
+  XJT_BURN_MODE = 17,
+  XJT_HARDLIGHT_MODE = 18,
+  XJT_SOFTLIGHT_MODE = 19,
+  XJT_GRAIN_EXTRACT_MODE = 20,
+  XJT_GRAIN_MERGE_MODE = 21,
+  XJT_COLOR_ERASE_MODE = 22,
 } XJTLayerModeEffects;
 
 typedef struct
@@ -657,6 +664,13 @@ p_to_GimpLayerModeEffects(XJTLayerModeEffects intype)
     case XJT_COLOR_MODE:          return(GIMP_COLOR_MODE);
     case XJT_VALUE_MODE:          return(GIMP_VALUE_MODE);
     case XJT_DIVIDE_MODE:         return(GIMP_DIVIDE_MODE);
+    case XJT_DODGE_MODE:          return(GIMP_DODGE_MODE);
+    case XJT_BURN_MODE:           return(GIMP_BURN_MODE);
+    case XJT_HARDLIGHT_MODE:      return(GIMP_HARDLIGHT_MODE);
+    case XJT_SOFTLIGHT_MODE:      return(GIMP_SOFTLIGHT_MODE);
+    case XJT_GRAIN_EXTRACT_MODE:  return(GIMP_GRAIN_EXTRACT_MODE);
+    case XJT_GRAIN_MERGE_MODE:    return(GIMP_GRAIN_MERGE_MODE);
+    case XJT_COLOR_ERASE_MODE:    return(GIMP_COLOR_ERASE_MODE);
   }
   printf (_("XJT file contains unknown layermode %d"), (int)intype);
   if((gint32)intype > (gint32)XJT_DIVIDE_MODE)
@@ -687,6 +701,13 @@ p_to_XJTLayerModeEffects(GimpLayerModeEffects intype)
     case GIMP_COLOR_MODE:          return(XJT_COLOR_MODE);
     case GIMP_VALUE_MODE:          return(XJT_VALUE_MODE);
     case GIMP_DIVIDE_MODE:         return(XJT_DIVIDE_MODE);
+    case GIMP_DODGE_MODE:          return(XJT_DODGE_MODE);
+    case GIMP_BURN_MODE:           return(XJT_BURN_MODE);
+    case GIMP_HARDLIGHT_MODE:      return(XJT_HARDLIGHT_MODE);
+    case GIMP_SOFTLIGHT_MODE:      return(XJT_SOFTLIGHT_MODE);
+    case GIMP_GRAIN_EXTRACT_MODE:  return(XJT_GRAIN_EXTRACT_MODE);
+    case GIMP_GRAIN_MERGE_MODE:    return(XJT_GRAIN_MERGE_MODE);
+    case GIMP_COLOR_ERASE_MODE:    return(XJT_COLOR_ERASE_MODE);
   }
   printf (_("Warning: unsupported layermode %d saved to XJT"), (int)intype);
   if((gint32)intype > (gint32)XJT_DIVIDE_MODE)
@@ -794,7 +815,7 @@ save_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -816,7 +837,7 @@ save_dialog (void)
 		    GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.optimize);
 
@@ -827,7 +848,7 @@ save_dialog (void)
 		    GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.clr_transparent);
 
@@ -836,7 +857,7 @@ save_dialog (void)
 				     jsvals.quality, 0.0, 1.0, 0.01, 0.11, 2,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &jsvals.quality);
 
@@ -845,7 +866,7 @@ save_dialog (void)
 				     jsvals.smoothing, 0.0, 1.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &jsvals.smoothing);
 
@@ -1500,7 +1521,7 @@ p_write_image_prp(gchar *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
  
    fprintf(fp, "%s", GIMP_XJ_IMAGE);
     
-   l_param.string_val = "1.1.18a";
+   l_param.string_val = "1.3.11";
    p_write_prop (fp, PROP_VERSION, &l_param, wr_all_prp);
 
    l_param.int_val1 = GIMP_MAJOR_VERSION;

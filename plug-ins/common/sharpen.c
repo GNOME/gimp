@@ -537,7 +537,7 @@ sharpen_dialog (void)
 
   g_free (title);
 
-  g_signal_connect (G_OBJECT(dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -585,7 +585,7 @@ sharpen_dialog (void)
 				     MIN (preview_width, sel_width),
 				     MIN (preview_width, sel_width));
 
-  g_signal_connect (G_OBJECT (hscroll_data), "value_changed",
+  g_signal_connect (hscroll_data, "value_changed",
                     G_CALLBACK (preview_scroll_callback),
                     NULL);
 
@@ -599,7 +599,7 @@ sharpen_dialog (void)
 				     MIN (preview_height, sel_height),
 				     MIN (preview_height, sel_height));
 
-  g_signal_connect (G_OBJECT (vscroll_data), "value_changed",
+  g_signal_connect (vscroll_data, "value_changed",
                     G_CALLBACK (preview_scroll_callback),
                     NULL);
 
@@ -630,7 +630,7 @@ sharpen_dialog (void)
 			      sharpen_percent, 1, 99, 1, 10, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_iscale_update),
                     &sharpen_percent);
 

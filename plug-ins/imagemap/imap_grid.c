@@ -203,7 +203,7 @@ create_grid_settings_dialog()
    main_table = default_dialog_add_table(dialog, 4, 2);
 
    data->snap = gtk_check_button_new_with_mnemonic(_("_Snap-To Grid Enabled"));
-   g_signal_connect(G_OBJECT(data->snap), "toggled", 
+   g_signal_connect(data->snap, "toggled", 
                     G_CALLBACK (snap_toggled_cb), data);
    gtk_table_attach_defaults(GTK_TABLE(main_table), data->snap, 0, 1, 0, 1);
    gtk_widget_show(data->snap);
@@ -217,7 +217,7 @@ create_grid_settings_dialog()
 
    button = gtk_radio_button_new_with_mnemonic_from_widget(NULL, _("_Hidden"));
    data->hidden = button;
-   g_signal_connect(G_OBJECT(button), "toggled", 
+   g_signal_connect(button, "toggled", 
                     G_CALLBACK (type_toggled_cb), (gpointer) GRID_HIDDEN);
    gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 10);
    gtk_widget_show(button);
@@ -225,7 +225,7 @@ create_grid_settings_dialog()
    button = gtk_radio_button_new_with_mnemonic_from_widget(
       GTK_RADIO_BUTTON(button), _("_Lines"));
    data->lines = button;
-   g_signal_connect(G_OBJECT(button), "toggled", 
+   g_signal_connect(button, "toggled", 
                     G_CALLBACK (type_toggled_cb), (gpointer) GRID_LINES);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
    gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 10);
@@ -234,7 +234,7 @@ create_grid_settings_dialog()
    button = gtk_radio_button_new_with_mnemonic_from_widget(
       GTK_RADIO_BUTTON(button), _("C_rosses"));
    data->crosses = button;
-   g_signal_connect(G_OBJECT(button), "toggled", 
+   g_signal_connect(button, "toggled", 
                     G_CALLBACK (type_toggled_cb), 
                     (gpointer) GRID_CROSSES);
    gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 10);
@@ -250,13 +250,13 @@ create_grid_settings_dialog()
 
    label = create_label_in_table(table, 0, 0, _("_Width"));
    data->width = create_spin_button_in_table(table, label, 0, 1, 15, 1, 100);
-   g_signal_connect(G_OBJECT(data->width), "value_changed", 
+   g_signal_connect(data->width, "value_changed", 
                     G_CALLBACK (width_changed_cb), (gpointer) data);
    create_label_in_table(table, 0, 3, _("pixels"));
 
    label = create_label_in_table(table, 1, 0, _("_Height"));
    data->height = create_spin_button_in_table(table, label, 1, 1, 15, 1, 100);
-   g_signal_connect(G_OBJECT(data->height), "value_changed", 
+   g_signal_connect(data->height, "value_changed", 
                     G_CALLBACK (height_changed_cb), (gpointer) data);
    create_label_in_table(table, 1, 3, _("pixels"));
 
@@ -278,12 +278,12 @@ create_grid_settings_dialog()
 
    label = create_label_in_table(table, 0, 2, _("pixels from l_eft"));
    data->left = create_spin_button_in_table(table, label, 0, 0, 0, 0, 100);
-   g_signal_connect(G_OBJECT(data->left), "value_changed", 
+   g_signal_connect(data->left, "value_changed", 
                     G_CALLBACK (left_changed_cb), (gpointer) data);
 
    label = create_label_in_table(table, 1, 2, _("pixels from _top"));
    data->top = create_spin_button_in_table(table, label, 1, 0, 0, 0, 100);
-   g_signal_connect(G_OBJECT(data->top), "value_changed", 
+   g_signal_connect(data->top, "value_changed", 
                     G_CALLBACK (top_changed_cb), (gpointer) data);
 
    chain_button = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
@@ -293,7 +293,7 @@ create_grid_settings_dialog()
 
    data->preview = create_check_button_in_table(main_table, 3, 0, 
 						_("_Preview"));
-   g_signal_connect(G_OBJECT(data->preview), "toggled", 
+   g_signal_connect(data->preview, "toggled", 
                     G_CALLBACK (toggle_preview_cb), (gpointer) data);
    gtk_widget_show(data->preview);
 

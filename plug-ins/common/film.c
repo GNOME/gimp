@@ -1143,7 +1143,7 @@ add_image_list (gint       add_box_flag,
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     add_box_flag ?
                     G_CALLBACK (add_list_item_callback) :
                     G_CALLBACK (del_list_item_callback),
@@ -1187,7 +1187,7 @@ film_dialog (gint32 image_ID)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -1221,7 +1221,7 @@ film_dialog (gint32 image_ID)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &filmvals.keep_height);
 
@@ -1238,7 +1238,7 @@ film_dialog (gint32 image_ID)
 			     _("Height:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &filmvals.film_height);
 
@@ -1259,7 +1259,7 @@ film_dialog (gint32 image_ID)
 			     _("Color:"), 1.0, 0.5,
 			     button, 1, TRUE);
 
-  g_signal_connect (G_OBJECT (button), "color_changed",
+  g_signal_connect (button, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &filmvals.film_color);
 
@@ -1288,7 +1288,7 @@ film_dialog (gint32 image_ID)
 			     _("Start Index:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &filmvals.number_start);
 
@@ -1309,7 +1309,7 @@ film_dialog (gint32 image_ID)
 			     _("Color:"), 1.0, 0.5,
 			     button, 1, TRUE);
 
-  g_signal_connect (G_OBJECT (button), "color_changed",
+  g_signal_connect (button, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &filmvals.number_color);
 
@@ -1322,7 +1322,7 @@ film_dialog (gint32 image_ID)
 				    filmvals.number_pos[j]);
       gtk_widget_show (toggle);
 
-      g_signal_connect (G_OBJECT (toggle), "toggled",
+      g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &(filmvals.number_pos[j]));
     }
@@ -1373,7 +1373,7 @@ film_dialog (gint32 image_ID)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.picture_height);
 
@@ -1387,7 +1387,7 @@ film_dialog (gint32 image_ID)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.picture_space);
 
@@ -1408,7 +1408,7 @@ film_dialog (gint32 image_ID)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_offset);
 
@@ -1422,7 +1422,7 @@ film_dialog (gint32 image_ID)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_width);
 
@@ -1436,7 +1436,7 @@ film_dialog (gint32 image_ID)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_height);
 
@@ -1450,7 +1450,7 @@ film_dialog (gint32 image_ID)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_space);
 
@@ -1471,7 +1471,7 @@ film_dialog (gint32 image_ID)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.number_height);
 
@@ -1492,7 +1492,7 @@ film_dialog (gint32 image_ID)
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (film_reset_callback),
                     NULL);
 

@@ -403,7 +403,7 @@ dialog (GimpDrawable *mangle)
 			 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -438,10 +438,10 @@ dialog (GimpDrawable *mangle)
 			     _("_Division:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &parameters.division);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (filter_preview),
                     NULL);
 
@@ -451,10 +451,10 @@ dialog (GimpDrawable *mangle)
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (radio);
 
-  g_signal_connect (G_OBJECT (radio), "toggled",
+  g_signal_connect (radio, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &parameters.type1);
-  g_signal_connect (G_OBJECT (radio), "toggled",
+  g_signal_connect (radio, "toggled",
                     G_CALLBACK (filter_preview),
                     NULL);
 
@@ -466,10 +466,10 @@ dialog (GimpDrawable *mangle)
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (radio);
 
-  g_signal_connect (G_OBJECT (radio), "toggled",
+  g_signal_connect (radio, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &parameters.type2);
-  g_signal_connect (G_OBJECT (radio), "toggled",
+  g_signal_connect (radio, "toggled",
                     G_CALLBACK (filter_preview),
                     NULL);
 

@@ -744,7 +744,7 @@ save_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -767,7 +767,7 @@ save_dialog (void)
 				     TRUE, 0, 0,
 				     NULL, NULL);
 
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xpmvals.threshold);
 

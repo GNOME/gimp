@@ -1407,7 +1407,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), cd->pv_widget);
   gtk_widget_show (cd->pv_widget);
 
-  g_signal_connect (G_OBJECT (cd->pv_widget), "event",
+  g_signal_connect (cd->pv_widget, "event",
                     G_CALLBACK (bender_pv_widget_events),
                     cd);
 
@@ -1420,7 +1420,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (bender_preview_update_once),
                     cd);
 
@@ -1430,7 +1430,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (bender_preview_update),
                     cd);
 
@@ -1463,9 +1463,9 @@ bender_new_dialog (GimpDrawable *drawable)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
-  g_signal_connect (G_OBJECT (cd->rotate_data), "value_changed",
-                      G_CALLBACK (bender_rotate_adj_callback),
-                      cd);
+  g_signal_connect (cd->rotate_data, "value_changed",
+                    G_CALLBACK (bender_rotate_adj_callback),
+                    cd);
 
   /*  The smoothing toggle  */
   toggle = gtk_check_button_new_with_mnemonic (_("Sm_oothing"));
@@ -1473,7 +1473,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (bender_smoothing_callback),
                     cd);
 
@@ -1483,7 +1483,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (bender_antialias_callback),
                     cd);
 
@@ -1493,7 +1493,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (bender_work_on_copy_callback),
                     cd);
 
@@ -1520,7 +1520,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (abox), cd->graph);
   gtk_widget_show (cd->graph);
 
-  g_signal_connect (G_OBJECT (cd->graph), "event",
+  g_signal_connect (cd->graph, "event",
                     G_CALLBACK (bender_graph_events),
                     cd);
 
@@ -1559,7 +1559,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gimp_help_set_help_data (button,
                            _("Copy the active curve to the other border"), NULL);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (bender_copy_callback),
                     cd);
 
@@ -1571,7 +1571,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gimp_help_set_help_data (button,
                            _("Mirror the active curve to the other border"), NULL);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (bender_copy_inv_callback),
                     cd);
 
@@ -1583,7 +1583,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gimp_help_set_help_data (button,
                            _("Swap the two curves"), NULL);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (bender_swap_callback),
                     cd);
 
@@ -1595,7 +1595,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gimp_help_set_help_data (button,
                            _("Reset the active curve"), NULL);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (bender_reset_callback),
                     cd);
 
@@ -1612,7 +1612,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gimp_help_set_help_data (button,
                            _("Load the curves from a file"), NULL);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (bender_load_callback),
                     cd);
 
@@ -1624,7 +1624,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gimp_help_set_help_data (button,
                            _("Save the curves to a file"), NULL);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (bender_save_callback),
                     cd);
 
@@ -2257,15 +2257,15 @@ bender_load_callback (GtkWidget *w,
   cd->filesel = filesel;
   
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
-  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
+  g_signal_connect (GTK_FILE_SELECTION (filesel)->ok_button,
                     "clicked",
                     G_CALLBACK (p_points_load_from_file),
                     cd);
-  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
+  g_signal_connect (GTK_FILE_SELECTION (filesel)->cancel_button,
                     "clicked",
                     G_CALLBACK (p_filesel_close_cb),
                     cd);
-  g_signal_connect (G_OBJECT (filesel), "destroy",
+  g_signal_connect (filesel, "destroy",
                     G_CALLBACK (p_filesel_close_cb),
                     cd);
 
@@ -2290,16 +2290,16 @@ bender_save_callback (GtkWidget *w,
   cd->filesel = filesel;
   
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
-  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
+  g_signal_connect (GTK_FILE_SELECTION (filesel)->ok_button,
                     "clicked",
                     G_CALLBACK (p_points_save_to_file),
                     cd);
-  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
+  g_signal_connect (GTK_FILE_SELECTION (filesel)->cancel_button,
                     "clicked",
                     G_CALLBACK (p_filesel_close_cb),
                     cd);
-  g_signal_connect (G_OBJECT (filesel), "destroy",
-		      G_CALLBACK (p_filesel_close_cb),
+  g_signal_connect (filesel, "destroy",
+		    G_CALLBACK (p_filesel_close_cb),
                     cd);
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
@@ -2597,7 +2597,7 @@ p_buildmenu (MenuItem *items)
       gtk_container_add (GTK_CONTAINER (menu), menu_item);
 
       if (items->callback)
-	g_signal_connect (G_OBJECT (menu_item), "activate",
+	g_signal_connect (menu_item, "activate",
                           G_CALLBACK (items->callback),
                           items->user_data);
 

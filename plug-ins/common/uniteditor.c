@@ -546,7 +546,7 @@ unit_editor_dialog (void)
 
                      NULL);
 
-  g_signal_connect (G_OBJECT (main_dialog), "destroy",
+  g_signal_connect (main_dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -584,7 +584,7 @@ unit_editor_dialog (void)
 
   gimp_help_set_help_data (col->button, gettext (help_strings[SAVE]), NULL);
 
-  g_signal_connect (G_OBJECT (rend), "toggled",
+  g_signal_connect (rend, "toggled",
                     G_CALLBACK (saved_toggled_callback),
                     list_store);
 
@@ -655,7 +655,7 @@ unit_editor_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (new_callback),
                     tv);
 
@@ -665,7 +665,7 @@ unit_editor_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (duplicate_callback),
                     tv);
 

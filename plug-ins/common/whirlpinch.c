@@ -670,7 +670,7 @@ whirl_pinch_dialog (void)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -719,7 +719,7 @@ whirl_pinch_dialog (void)
 			      wpvals.whirl, -360.0, 360.0, 1.0, 15.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wpvals.whirl);
 
@@ -728,7 +728,7 @@ whirl_pinch_dialog (void)
 			      wpvals.pinch, -1.0, 1.0, 0.01, 0.1, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wpvals.pinch);
 
@@ -737,7 +737,7 @@ whirl_pinch_dialog (void)
 			      wpvals.radius, 0.0, 2.0, 0.01, 0.1, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wpvals.radius);
 

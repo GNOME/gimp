@@ -276,9 +276,9 @@ set_entry_value (GtkWidget *entry,
 
   if (block)
     {
-      g_signal_handlers_block_by_func (G_OBJECT (entry), 
+      g_signal_handlers_block_by_func (entry, 
                                        gimp_position_callback, NULL);
-      g_signal_handlers_block_by_func (G_OBJECT (entry), 
+      g_signal_handlers_block_by_func (entry, 
                                        gimp_media_size_callback, NULL);
     }
 
@@ -286,9 +286,9 @@ set_entry_value (GtkWidget *entry,
 
   if (block)
     {
-      g_signal_handlers_unblock_by_func (G_OBJECT (entry),
+      g_signal_handlers_unblock_by_func (entry,
                                          gimp_position_callback, NULL);
-      g_signal_handlers_unblock_by_func (G_OBJECT (entry), 
+      g_signal_handlers_unblock_by_func (entry, 
                                          gimp_media_size_callback, NULL);
     }
 }
@@ -374,7 +374,7 @@ create_top_level_structure(void)
 
   g_free (plug_in_name);
 
-  g_signal_connect (G_OBJECT (print_dialog), "destroy",
+  g_signal_connect (print_dialog, "destroy",
                     G_CALLBACK (gtk_main_quit), NULL);
 
   /*
@@ -418,13 +418,13 @@ create_preview (void)
   gtk_container_add (GTK_CONTAINER (frame), event_box);
   gtk_widget_show (event_box);
 
-  g_signal_connect (G_OBJECT (preview), "expose_event",
+  g_signal_connect (preview, "expose_event",
                     G_CALLBACK (gimp_preview_expose), NULL);
-  g_signal_connect (G_OBJECT (preview), "button_press_event",
+  g_signal_connect (preview, "button_press_event",
                     G_CALLBACK (gimp_preview_button_callback), NULL);
-  g_signal_connect (G_OBJECT (preview), "button_release_event",
+  g_signal_connect (preview, "button_release_event",
                     G_CALLBACK (gimp_preview_button_callback), NULL);
-  g_signal_connect (G_OBJECT (preview), "motion_notify_event",
+  g_signal_connect (preview, "motion_notify_event",
                     G_CALLBACK (gimp_preview_motion_callback), NULL);
   gtk_widget_show (GTK_WIDGET (preview));
 
@@ -512,7 +512,7 @@ create_positioning_frame (void)
   gimp_help_set_help_data (left_entry,
                            _("Distance from the left of the paper to the image"),
                            NULL);
-  g_signal_connect (G_OBJECT (left_entry), "activate",
+  g_signal_connect (left_entry, "activate",
                     G_CALLBACK (gimp_position_callback),
                     NULL);
 
@@ -525,7 +525,7 @@ create_positioning_frame (void)
   gimp_help_set_help_data (top_entry,
                            _("Distance from the top of the paper to the image"),
                            NULL);
-  g_signal_connect (G_OBJECT (top_entry), "activate",
+  g_signal_connect (top_entry, "activate",
                     G_CALLBACK (gimp_position_callback),
                     NULL);
 
@@ -539,7 +539,7 @@ create_positioning_frame (void)
                            _("Distance from the left of the paper to "
                              "the right of the image"),
                            NULL);
-  g_signal_connect (G_OBJECT (right_entry), "activate",
+  g_signal_connect (right_entry, "activate",
                     G_CALLBACK (gimp_position_callback),
                     NULL);
 
@@ -553,7 +553,7 @@ create_positioning_frame (void)
                            _("Distance from the right of the paper to "
                              "the image"),
                            NULL);
-  g_signal_connect (G_OBJECT (right_border_entry), "activate",
+  g_signal_connect (right_border_entry, "activate",
                     G_CALLBACK (gimp_position_callback),
                     NULL);
 
@@ -567,7 +567,7 @@ create_positioning_frame (void)
                            _("Distance from the top of the paper to "
                              "the bottom of the image"),
                            NULL);
-  g_signal_connect (G_OBJECT (bottom_entry), "activate",
+  g_signal_connect (bottom_entry, "activate",
                     G_CALLBACK (gimp_position_callback),
                     NULL);
 
@@ -581,7 +581,7 @@ create_positioning_frame (void)
                            _("Distance from the bottom of the paper to "
                              "the image"),
                            NULL);
-  g_signal_connect (G_OBJECT (bottom_border_entry), "activate",
+  g_signal_connect (bottom_border_entry, "activate",
                     G_CALLBACK (gimp_position_callback),
                     NULL);
 
@@ -606,7 +606,7 @@ create_positioning_frame (void)
   gimp_help_set_help_data (recenter_vertical_button,
                            _("Center the image vertically on the paper"),
                            NULL);
-  g_signal_connect (G_OBJECT (recenter_vertical_button), "clicked",
+  g_signal_connect (recenter_vertical_button, "clicked",
                     G_CALLBACK (gimp_position_callback),
                     NULL);
 
@@ -617,7 +617,7 @@ create_positioning_frame (void)
   gimp_help_set_help_data (recenter_button,
                            _("Center the image on the paper"),
                            NULL);
-  g_signal_connect (G_OBJECT (recenter_button), "clicked",
+  g_signal_connect (recenter_button, "clicked",
                     G_CALLBACK (gimp_position_callback),
                     NULL);
 
@@ -629,7 +629,7 @@ create_positioning_frame (void)
   gimp_help_set_help_data (recenter_horizontal_button,
                            _("Center the image horizontally on the paper"),
                            NULL);
-  g_signal_connect (G_OBJECT (recenter_horizontal_button), "clicked",
+  g_signal_connect (recenter_horizontal_button, "clicked",
                     G_CALLBACK (gimp_position_callback),
                     NULL);
 }
@@ -700,7 +700,7 @@ create_printer_dialog (void)
   gtk_container_add (GTK_CONTAINER (printer_crawler), printer_driver);
   gtk_widget_show (printer_driver);
 
-  g_signal_connect (G_OBJECT (printer_driver), "select_row",
+  g_signal_connect (printer_driver, "select_row",
                     G_CALLBACK (gimp_print_driver_callback),
                     NULL);
 
@@ -749,7 +749,7 @@ create_printer_dialog (void)
   gimp_help_set_help_data (ppd_button,
                            _("Choose the correct PPD filename for your printer"),
                            NULL);
-  g_signal_connect (G_OBJECT (ppd_button), "clicked",
+  g_signal_connect (ppd_button, "clicked",
                     G_CALLBACK (gimp_ppd_browse_callback),
                     NULL);
 
@@ -781,14 +781,12 @@ create_printer_dialog (void)
 
   file_browser = gtk_file_selection_new (_("Print To File?"));
 
-  g_signal_connect 
-    (G_OBJECT (GTK_FILE_SELECTION (file_browser)->ok_button), "clicked",
-     G_CALLBACK (gimp_file_ok_callback),
-     NULL);
-  g_signal_connect 
-    (G_OBJECT (GTK_FILE_SELECTION (file_browser)->cancel_button), "clicked",
-     G_CALLBACK (gimp_file_cancel_callback),
-     NULL);
+  g_signal_connect (GTK_FILE_SELECTION (file_browser)->ok_button, "clicked",
+		    G_CALLBACK (gimp_file_ok_callback),
+		    NULL);
+  g_signal_connect (GTK_FILE_SELECTION (file_browser)->cancel_button, "clicked",
+		    G_CALLBACK (gimp_file_cancel_callback),
+		    NULL);
 
   /*
    * PPD file selection dialog.
@@ -797,14 +795,13 @@ create_printer_dialog (void)
   ppd_browser = gtk_file_selection_new (_("PPD File?"));
   gtk_file_selection_hide_fileop_buttons (GTK_FILE_SELECTION (ppd_browser));
 
-  g_signal_connect
-    (G_OBJECT (GTK_FILE_SELECTION (ppd_browser)->ok_button), "clicked",
-     G_CALLBACK (gimp_ppd_ok_callback),
-     NULL);
-  g_signal_connect_swapped
-    (G_OBJECT (GTK_FILE_SELECTION (ppd_browser)->cancel_button), "clicked",
-     G_CALLBACK (gtk_widget_hide),
-     ppd_browser);
+  g_signal_connect (GTK_FILE_SELECTION (ppd_browser)->ok_button, "clicked",
+		    G_CALLBACK (gimp_ppd_ok_callback),
+		    NULL);
+  g_signal_connect_swapped (GTK_FILE_SELECTION (ppd_browser)->cancel_button,
+			    "clicked",
+			    G_CALLBACK (gtk_widget_hide),
+			    ppd_browser);
 }
 
 static void
@@ -841,7 +838,7 @@ create_new_printer_dialog (void)
   gimp_help_set_help_data (new_printer_entry,
                            _("Enter the name you wish to give this logical printer"),
                            NULL);
-  g_signal_connect (G_OBJECT (new_printer_entry), "activate",
+  g_signal_connect (new_printer_entry, "activate",
                     G_CALLBACK (gimp_new_printer_ok_callback),
                     NULL);
 }
@@ -951,7 +948,7 @@ create_printer_settings_frame (void)
   gtk_box_pack_start (GTK_BOX (printer_hbox), button, FALSE, TRUE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_setup_open_callback),
                     NULL);
 
@@ -968,7 +965,7 @@ create_printer_settings_frame (void)
   gtk_box_pack_start (GTK_BOX (printer_hbox), button, FALSE, TRUE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_new_printer_open_callback),
                     NULL);
 
@@ -1010,7 +1007,7 @@ create_printer_settings_frame (void)
   gimp_help_set_help_data (custom_size_width,
                            _("Width of the paper that you wish to print to"),
                            NULL);
-  g_signal_connect (G_OBJECT (custom_size_width), "activate",
+  g_signal_connect (custom_size_width, "activate",
                     G_CALLBACK (gimp_media_size_callback),
                     NULL);
 
@@ -1027,7 +1024,7 @@ create_printer_settings_frame (void)
   gimp_help_set_help_data (custom_size_height,
                            _("Height of the paper that you wish to print to"),
                            NULL);
-  g_signal_connect (G_OBJECT (custom_size_height), "activate",
+  g_signal_connect (custom_size_height, "activate",
                     G_CALLBACK (gimp_media_size_callback),
                     NULL);
 
@@ -1136,7 +1133,7 @@ create_scaling_frame (void)
   set_adjustment_tooltip (scaling_adjustment,
                           _("Set the scale (size) of the image"),
                           NULL);
-  g_signal_connect (G_OBJECT (scaling_adjustment), "value_changed",
+  g_signal_connect (scaling_adjustment, "value_changed",
                     G_CALLBACK (gimp_scaling_update),
                     NULL);
 
@@ -1181,7 +1178,7 @@ create_scaling_frame (void)
   gimp_help_set_help_data (scaling_percent,
                            _("Scale the print to the size of the page"),
                            NULL);
-  g_signal_connect (G_OBJECT (scaling_percent), "toggled",
+  g_signal_connect (scaling_percent, "toggled",
                     G_CALLBACK (gimp_scaling_callback),
                     NULL);
 
@@ -1193,7 +1190,7 @@ create_scaling_frame (void)
   gimp_help_set_help_data (scaling_ppi,
                            _("Scale the print to the number of dots per inch"),
                            NULL);
-  g_signal_connect (G_OBJECT (scaling_ppi), "toggled",
+  g_signal_connect (scaling_ppi, "toggled",
                     G_CALLBACK (gimp_scaling_callback),
                     NULL);
 
@@ -1219,7 +1216,7 @@ create_scaling_frame (void)
   gimp_help_set_help_data (width_entry,
                            _("Set the width of the print"),
                            NULL);
-  g_signal_connect (G_OBJECT (width_entry), "activate",
+  g_signal_connect (width_entry, "activate",
                     G_CALLBACK (gimp_position_callback),
                     NULL);
 
@@ -1232,7 +1229,7 @@ create_scaling_frame (void)
   gimp_help_set_help_data (height_entry,
                            _("Set the height of the print"),
                            NULL);
-  g_signal_connect (G_OBJECT (height_entry), "activate",
+  g_signal_connect (height_entry, "activate",
                     G_CALLBACK (gimp_position_callback),
                     NULL);
 
@@ -1267,7 +1264,7 @@ create_scaling_frame (void)
   gimp_help_set_help_data (unit_inch,
                            _("Set the base unit of measurement to inches"),
                            NULL);
-  g_signal_connect (G_OBJECT (unit_inch), "toggled",
+  g_signal_connect (unit_inch, "toggled",
                     G_CALLBACK (gimp_unit_callback),
                     (gpointer) 0);
 
@@ -1279,7 +1276,7 @@ create_scaling_frame (void)
   gimp_help_set_help_data (unit_cm,
                            _("Set the base unit of measurement to centimetres"),
                            NULL);
-  g_signal_connect (G_OBJECT (unit_cm), "toggled",
+  g_signal_connect (unit_cm, "toggled",
                     G_CALLBACK (gimp_unit_callback),
                     (gpointer) 1);
 
@@ -1295,7 +1292,7 @@ create_scaling_frame (void)
   gimp_help_set_help_data (scaling_image,
                            _("Set the print size to the size of the image"),
                            NULL);
-  g_signal_connect (G_OBJECT (scaling_image), "clicked",
+  g_signal_connect (scaling_image, "clicked",
                     G_CALLBACK (gimp_scaling_callback),
                     NULL);
 }
@@ -1348,7 +1345,7 @@ create_image_settings_frame (void)
                            _("Fastest and brightest color for text and "
                              "line art"),
                            NULL);
-  g_signal_connect (G_OBJECT (image_line_art), "toggled",
+  g_signal_connect (image_line_art, "toggled",
                     G_CALLBACK (gimp_image_type_callback),
                     (gpointer) IMAGE_LINE_ART);
 
@@ -1362,7 +1359,7 @@ create_image_settings_frame (void)
                            _("Best for images dominated by regions of "
                              "solid color"),
                            NULL);
-  g_signal_connect (G_OBJECT (image_solid_tone), "toggled",
+  g_signal_connect (image_solid_tone, "toggled",
                     G_CALLBACK (gimp_image_type_callback),
                     (gpointer) IMAGE_SOLID_TONE);
 
@@ -1378,7 +1375,7 @@ create_image_settings_frame (void)
                            _("Slowest, but most accurate and smoothest color "
                              "for continuous tone images and photographs"),
                            NULL);
-  g_signal_connect (G_OBJECT (image_continuous_tone), "toggled",
+  g_signal_connect (image_continuous_tone, "toggled",
                     G_CALLBACK (gimp_image_type_callback),
                     (gpointer) IMAGE_CONTINUOUS);
 
@@ -1416,7 +1413,7 @@ create_image_settings_frame (void)
                              output_color, 1, FALSE);
 
   gimp_help_set_help_data (output_color, _("Color output"), NULL);
-  g_signal_connect (G_OBJECT (output_color), "toggled",
+  g_signal_connect (output_color, "toggled",
                     G_CALLBACK (gimp_output_type_callback),
                     (gpointer) OUTPUT_COLOR);
 
@@ -1429,7 +1426,7 @@ create_image_settings_frame (void)
   gimp_help_set_help_data (output_gray,
                            _("Print in shades of gray using black ink"),
                            NULL);
-  g_signal_connect (G_OBJECT (output_gray), "toggled",
+  g_signal_connect (output_gray, "toggled",
                     G_CALLBACK (gimp_output_type_callback),
                     (gpointer) OUTPUT_GRAY);
 
@@ -1444,7 +1441,7 @@ create_image_settings_frame (void)
                            _("Print in black and white (no color, and no shades "
                              "of gray)"),
                            NULL);
-  g_signal_connect (G_OBJECT (output_monochrome), "toggled",
+  g_signal_connect (output_monochrome, "toggled",
                     G_CALLBACK (gimp_output_type_callback),
                     (gpointer) OUTPUT_MONOCHROME);
 
@@ -1462,7 +1459,7 @@ create_image_settings_frame (void)
                            _("Adjust color balance, brightness, contrast, "
                              "saturation, and dither algorithm"),
                            NULL);
-  g_signal_connect_swapped (G_OBJECT (adjust_color_button), "clicked",
+  g_signal_connect_swapped (adjust_color_button, "clicked",
                             G_CALLBACK (gtk_widget_show),
                             gimp_color_adjust_dialog);
 }
@@ -1632,7 +1629,7 @@ gimp_plist_build_combo (GtkWidget      *combo,       /* I - Combo widget */
   GtkEntry *entry = GTK_ENTRY (GTK_COMBO (combo)->entry);
 
   if (*callback_id != -1)
-    g_signal_handler_disconnect (G_OBJECT (entry), *callback_id);
+    g_signal_handler_disconnect (entry, *callback_id);
 
   gtk_entry_set_editable (entry, FALSE);
 
@@ -1653,7 +1650,7 @@ gimp_plist_build_combo (GtkWidget      *combo,       /* I - Combo widget */
 
   gtk_combo_set_popdown_strings (GTK_COMBO (combo), list);
 
-  *callback_id = g_signal_connect (G_OBJECT (entry), "changed",
+  *callback_id = g_signal_connect (entry, "changed",
                                    callback,
                                    NULL);
 

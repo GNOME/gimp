@@ -227,7 +227,7 @@ engrave_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -248,7 +248,7 @@ engrave_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pvals.limit);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &pvals.limit);
 
@@ -257,7 +257,7 @@ engrave_dialog (void)
 			      pvals.height, 2.0, 16.0, 1.0, 4.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.height);
 

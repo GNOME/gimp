@@ -1,12 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML
 ><HEAD
 ><TITLE
 >Gimp Python Documentation</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
-"></HEAD
+CONTENT="Modular DocBook HTML Stylesheet Version 1.77+"></HEAD
 ><BODY
 CLASS="ARTICLE"
 BGCOLOR="#FFFFFF"
@@ -21,25 +20,42 @@ CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2">Gimp Python Documentation</H1
+NAME="AEN2"
+></A
+>Gimp Python Documentation</H1
+><H3
+CLASS="AUTHOR"
+><A
+NAME="AEN4"
+>James Henstridge</A
+></H3
 ><DIV
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="50%"
-CELLSPACING="0"
-CELLPADDING="0"
-ALIGN="CENTER"
-><TR
-><TD
-VALIGN="TOP"
-><B
->Abstract</B
-></TD
-></TR
-><TR
-><TD
-VALIGN="TOP"
+CLASS="AFFILIATION"
+><DIV
+CLASS="ADDRESS"
+><P
+CLASS="ADDRESS"
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<TT
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:james@daa.com.au"
+>james@daa.com.au</A
+>&#62;</TT
+><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</P
+></DIV
+></DIV
+><P
+CLASS="PUBDATE"
+>v0.4, 5 July 1999<BR></P
+><DIV
+><DIV
+CLASS="ABSTRACT"
+><A
+NAME="AEN11"
+></A
+><P
+></P
 ><P
 >This document outlines the interfaces to Gimp-Python,
       which is a set of Python modules that act as a wrapper to
@@ -50,15 +66,11 @@ CLASS="FILENAME"
       plug-ins for Gimp.  In this way, Gimp-Python is similar to
       Script-Fu, except that you can use the full set of Python
       extension modules from the plug-in.</P
-></TD
-></TR
-></TABLE
+><P
+></P
 ></DIV
-><HR
-WIDTH="75%"
-ALIGN="CENTER"
-COLOR="#000000"
-SIZE="1"></DIV
+></DIV
+><HR></DIV
 ><DIV
 CLASS="TOC"
 ><DL
@@ -67,37 +79,280 @@ CLASS="TOC"
 >Table of Contents</B
 ></DT
 ><DT
-><A
+>1. <A
 HREF="#INTRODUCTION"
 >Introduction</A
 ></DT
+><DD
+><DL
 ><DT
-><A
+>1.1. <A
+HREF="#WHAT-IS-IT"
+>What is it?</A
+></DT
+><DT
+>1.2. <A
+HREF="#INSTALLATION"
+>Installation</A
+></DT
+></DL
+></DD
+><DT
+>2. <A
 HREF="#STRUCTURE-OF-PLUGIN"
 >The Structure Of A Plugin</A
 ></DT
+><DD
+><DL
 ><DT
-><A
+>2.1. <A
+HREF="#EXAMPLE-PLUGIN"
+>An Example Plugin</A
+></DT
+><DT
+>2.2. <A
+HREF="#IMPORTANT-MODULES"
+>Import Modules</A
+></DT
+><DT
+>2.3. <A
+HREF="#PLUGIN-FRAMEWORK"
+>Plugin Framework</A
+></DT
+></DL
+></DD
+><DT
+>3. <A
 HREF="#PROCEDURAL-DATABASE"
 >The Procedural Database</A
 ></DT
+><DD
+><DL
 ><DT
-><A
+>3.1. <A
+HREF="#GIMP-PYTHON-MODEL"
+>The Gimp-Python Model</A
+></DT
+><DT
+>3.2. <A
+HREF="#PDB-PROCEDURES"
+>Procedural Database Procedures</A
+></DT
+><DT
+>3.3. <A
+HREF="#MORE-INFORMATION"
+>More Information</A
+></DT
+></DL
+></DD
+><DT
+>4. <A
 HREF="#GIMP-MODULE-PROCEDURES"
 >Gimp Module Procedures</A
 ></DT
+><DD
+><DL
 ><DT
-><A
+>4.1. <A
+HREF="#CONSTRUCTORS-AND-DESTRUCTORS"
+>Constructors and Object Deletion</A
+></DT
+><DT
+>4.2. <A
+HREF="#CONFIGURATION-INFORMATION"
+>Configuration Information</A
+></DT
+><DT
+>4.3. <A
+HREF="#PALETTE-OPERATIONS"
+>Palette Operations</A
+></DT
+><DT
+>4.4. <A
+HREF="#GRADIENT-OPERATIONS"
+>Gradient Operations</A
+></DT
+><DT
+>4.5. <A
+HREF="#PDB-REGISTRATION-FUNCTIONS"
+>PDB Registration Functions</A
+></DT
+><DT
+>4.6. <A
+HREF="#OTHER-FUNCTIONS"
+>Other Functions</A
+></DT
+><DT
+>4.7. <A
+HREF="#PARASITES"
+>Parasites</A
+></DT
+></DL
+></DD
+><DT
+>5. <A
 HREF="#GIMP-OBJECTS"
 >Gimp Objects</A
 ></DT
+><DD
+><DL
 ><DT
-><A
+>5.1. <A
+HREF="#IMAGE-OBJECT"
+>Image Object</A
+></DT
+><DD
+><DL
+><DT
+>5.1.1. <A
+HREF="#IMAGE-OBJECT-MEMBERS"
+>Image Members</A
+></DT
+><DT
+>5.1.2. <A
+HREF="#IMAGE-OBJECT-METHODS"
+>Image Methods</A
+></DT
+></DL
+></DD
+><DT
+>5.2. <A
+HREF="#CHANNEL-OBJECT"
+>Channel Objects</A
+></DT
+><DD
+><DL
+><DT
+>5.2.1. <A
+HREF="#CHANNEL-OBJECT-MEMBERS"
+>Channel Members</A
+></DT
+><DT
+>5.2.2. <A
+HREF="#CHANNEL-OBJECT-METHODS"
+>Channel Methods</A
+></DT
+></DL
+></DD
+><DT
+>5.3. <A
+HREF="#LAYER-OBJECT"
+>Layer Objects</A
+></DT
+><DD
+><DL
+><DT
+>5.3.1. <A
+HREF="#LAYER-OBJECT-MEMBERS"
+>Layer Members</A
+></DT
+><DT
+>5.3.2. <A
+HREF="#LAYER-OBJECT-METHODS"
+>Layer Methods</A
+></DT
+></DL
+></DD
+><DT
+>5.4. <A
+HREF="#DRAWABLE-OBJECT"
+>Drawable Objects</A
+></DT
+><DD
+><DL
+><DT
+>5.4.1. <A
+HREF="#DRAWABLE-OBJECT-MEMBERS"
+>Drawable Members</A
+></DT
+><DT
+>5.4.2. <A
+HREF="#DRAWABLE-OBJECT-METHODS"
+>Drawable Methods</A
+></DT
+></DL
+></DD
+><DT
+>5.5. <A
+HREF="#TILE-OBJECT"
+>Tile Objects</A
+></DT
+><DD
+><DL
+><DT
+>5.5.1. <A
+HREF="#TILE-OBJECT-MEMBERS"
+>Tile Members</A
+></DT
+><DT
+>5.5.2. <A
+HREF="#TILE-OBJECT-METHODS"
+>Tile Methods</A
+></DT
+><DT
+>5.5.3. <A
+HREF="#TILE-OBJECT-MAPPING"
+>Tile Mapping Behaviour</A
+></DT
+></DL
+></DD
+><DT
+>5.6. <A
+HREF="#PREGION-OBJECT"
+>Pixel Regions</A
+></DT
+><DD
+><DL
+><DT
+>5.6.1. <A
+HREF="#PREGION-OBJECT-MEMBERS"
+>Pixel Region Members</A
+></DT
+><DT
+>5.6.2. <A
+HREF="#PREGION-OBJECT-METHODS"
+>Pixel Region Methods</A
+></DT
+><DT
+>5.6.3. <A
+HREF="#PREGION-OBJECT-MAPPING"
+>Pixel Region Mapping Behaviour</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>6. <A
 HREF="#SUPPORT-MODULES"
 >Support Modules</A
 ></DT
+><DD
+><DL
 ><DT
-><A
+>6.1. <A
+HREF="#GIMPENUMS-MODULE"
+>The gimpenums Module</A
+></DT
+><DT
+>6.2. <A
+HREF="#AEN1468"
+>The gimpfu Module</A
+></DT
+><DT
+>6.3. <A
+HREF="#GIMPPLUGIN-MODULE"
+>The gimpplugin Module</A
+></DT
+><DT
+>6.4. <A
+HREF="#GIMPSHELF-MODULE"
+>The gimpshelf Module</A
+></DT
+></DL
+></DD
+><DT
+>7. <A
 HREF="#END-NOTE"
 >End Note</A
 ></DT
@@ -108,13 +363,17 @@ CLASS="SECT1"
 ><H2
 CLASS="SECT1"
 ><A
-NAME="INTRODUCTION">Introduction</H2
+NAME="INTRODUCTION"
+></A
+>1. Introduction</H2
 ><DIV
 CLASS="SECT2"
 ><H3
 CLASS="SECT2"
 ><A
-NAME="WHAT-IS-IT">What is it?</H3
+NAME="WHAT-IS-IT"
+></A
+>1.1. What is it?</H3
 ><P
 >Gimp-Python is a scripting extension for Gimp, similar to
       Script-Fu.  The main difference is in what is called first.  In
@@ -124,7 +383,7 @@ NAME="WHAT-IS-IT">What is it?</H3
 >In fact, you will find that the Gimp-Python scripts start
       with the line <TT
 CLASS="LITERAL"
->#!/usr/bin/python</TT
+>&num;!/usr/bin/python</TT
 >.  The
       gimp extension is loaded with the familiar
       <TT
@@ -152,25 +411,18 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="INSTALLATION">Installation</H3
+NAME="INSTALLATION"
+></A
+>1.2. Installation</H3
 ><P
 >Gimp-python consists of a Python module written in C and
       some native python support modules.  You can build pygimp with
       the commands:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 >./configure
 make
 make install</PRE
-></TD
-></TR
-></TABLE
 ><P
 >This will build and install gimpmodule and its supporting
       modules, and install the sample plugins in gimp's plugin
@@ -182,7 +434,9 @@ CLASS="SECT1"
 ><HR><H2
 CLASS="SECT1"
 ><A
-NAME="STRUCTURE-OF-PLUGIN">The Structure Of A Plugin</H2
+NAME="STRUCTURE-OF-PLUGIN"
+></A
+>2. The Structure Of A Plugin</H2
 ><P
 >The majority of code in this package resides in
     <TT
@@ -215,7 +469,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="EXAMPLE-PLUGIN">An Example Plugin</H3
+NAME="EXAMPLE-PLUGIN"
+></A
+>2.1. An Example Plugin</H3
 ><P
 >As in a lot of manuals, the first thing you examine is an
       example, so here is an example.  I have included it before
@@ -225,16 +481,12 @@ NAME="EXAMPLE-PLUGIN">An Example Plugin</H3
 ><DIV
 CLASS="EXAMPLE"
 ><A
-NAME="AEN41"><P
+NAME="AEN41"
+></A
+><P
 ><B
 >Example 1. A sample python plugin</B
 ></P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 >#!/usr/bin/python
@@ -293,9 +545,6 @@ register(
 	python_clothify)
 
 main()</PRE
-></TD
-></TR
-></TABLE
 ></DIV
 ></DIV
 ><DIV
@@ -303,7 +552,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="IMPORTANT-MODULES">Import Modules</H3
+NAME="IMPORTANT-MODULES"
+></A
+>2.2. Import Modules</H3
 ><P
 >In this plugin, a number of modules are imported.  The
       important ones are:</P
@@ -353,7 +604,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="PLUGIN-FRAMEWORK">Plugin Framework</H3
+NAME="PLUGIN-FRAMEWORK"
+></A
+>2.3. Plugin Framework</H3
 ><P
 >With pygimp-0.4, the gimpfu module was introduced.  It
       simplifies writing plugins a lot.  It handles the run mode
@@ -625,7 +878,9 @@ CLASS="SECT1"
 ><HR><H2
 CLASS="SECT1"
 ><A
-NAME="PROCEDURAL-DATABASE">The Procedural Database</H2
+NAME="PROCEDURAL-DATABASE"
+></A
+>3. The Procedural Database</H2
 ><P
 >The procedural database is a registry of things gimp and its
     plugins can do.  When you install a procedure for your plugin, you
@@ -639,7 +894,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="GIMP-PYTHON-MODEL">The Gimp-Python Model</H3
+NAME="GIMP-PYTHON-MODEL"
+></A
+>3.1. The Gimp-Python Model</H3
 ><P
 >In Gimp-Python, the procedural database is represented by
       the object <TT
@@ -672,18 +929,9 @@ CLASS="FUNCTION"
 >query</TT
 >.  Its
       specification is:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="SCREEN"
 >pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])</PRE
-></TD
-></TR
-></TABLE
 ><P
 >Each parameter is a regular expression that is checked
       against the corresponding field in the procedural database.  The
@@ -699,7 +947,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="PDB-PROCEDURES">Procedural Database Procedures</H3
+NAME="PDB-PROCEDURES"
+></A
+>3.2. Procedural Database Procedures</H3
 ><P
 >Procedures can be accessed as procedures, or by treating
       <TT
@@ -842,7 +1092,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="MORE-INFORMATION">More Information</H3
+NAME="MORE-INFORMATION"
+></A
+>3.3. More Information</H3
 ><P
 >For more information on invoking PDB procedures, please
       see the example plugins.  For information on individual
@@ -856,7 +1108,9 @@ CLASS="SECT1"
 ><HR><H2
 CLASS="SECT1"
 ><A
-NAME="GIMP-MODULE-PROCEDURES">Gimp Module Procedures</H2
+NAME="GIMP-MODULE-PROCEDURES"
+></A
+>4. Gimp Module Procedures</H2
 ><P
 >The <TT
 CLASS="FILENAME"
@@ -870,7 +1124,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="CONSTRUCTORS-AND-DESTRUCTORS">Constructors and Object Deletion</H3
+NAME="CONSTRUCTORS-AND-DESTRUCTORS"
+></A
+>4.1. Constructors and Object Deletion</H3
 ><P
 >There are a number of functions in the
       <TT
@@ -1118,7 +1374,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="CONFIGURATION-INFORMATION">Configuration Information</H3
+NAME="CONFIGURATION-INFORMATION"
+></A
+>4.2. Configuration Information</H3
 ><P
 >There are a number of functions that can be used to gather
       information about the environment the plugin is running in:</P
@@ -1187,7 +1445,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="PALETTE-OPERATIONS">Palette Operations</H3
+NAME="PALETTE-OPERATIONS"
+></A
+>4.3. Palette Operations</H3
 ><P
 >These functions alter the currently selected foreground
       and background.</P
@@ -1284,7 +1544,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="GRADIENT-OPERATIONS">Gradient Operations</H3
+NAME="GRADIENT-OPERATIONS"
+></A
+>4.4. Gradient Operations</H3
 ><P
 >These functions perform operations on gradients:</P
 ><P
@@ -1381,7 +1643,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="PDB-REGISTRATION-FUNCTIONS">PDB Registration Functions</H3
+NAME="PDB-REGISTRATION-FUNCTIONS"
+></A
+>4.5. PDB Registration Functions</H3
 ><P
 >These functions either install procedures into the PDB or
       alert gimp to their special use (eg as file handlers).</P
@@ -1718,7 +1982,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="OTHER-FUNCTIONS">Other Functions</H3
+NAME="OTHER-FUNCTIONS"
+></A
+>4.6. Other Functions</H3
 ><P
 >These are the other functions in the
       <TT
@@ -1765,9 +2031,7 @@ CLASS="PARAMETER"
             directly but rather subclass the plugin class, defined in
             the <A
 HREF="#GIMPPLUGIN-MODULE"
->the Section called <I
->The gimpplugin Module</I
-></A
+>Section 6.3</A
 >.</P
 ></DD
 ><DT
@@ -1916,9 +2180,7 @@ CLASS="PARAMETER"
 >.  The data will be a string.
             This function should probably be used through the <A
 HREF="#GIMPSHELF-MODULE"
->the Section called <I
->The gimpshelf Module</I
-></A
+>Section 6.4</A
 >.</P
 ></DD
 ><DT
@@ -1955,9 +2217,7 @@ CLASS="PARAMETER"
             whole gimp session.  Rather than directly accessing this
             function, it is better to go through the <A
 HREF="#GIMPSHELF-MODULE"
->the Section called <I
->The gimpshelf Module</I
-></A
+>Section 6.4</A
 >.</P
 ></DD
 ><DT
@@ -1998,7 +2258,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="PARASITES">Parasites</H3
+NAME="PARASITES"
+></A
+>4.7. Parasites</H3
 ><P
 >In gimp &#62;= 1.1, it is possible to attach arbitrary data to
       an image through the use of parasites.  Parasites are simply
@@ -2142,7 +2404,9 @@ CLASS="SECT1"
 ><HR><H2
 CLASS="SECT1"
 ><A
-NAME="GIMP-OBJECTS">Gimp Objects</H2
+NAME="GIMP-OBJECTS"
+></A
+>5. Gimp Objects</H2
 ><P
 >Gimp-Python implements a number of special object types that
     represent the different types of parameters you can pass to a PDB
@@ -2158,7 +2422,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="IMAGE-OBJECT">Image Object</H3
+NAME="IMAGE-OBJECT"
+></A
+>5.1. Image Object</H3
 ><P
 >This is the object that represents an open image.  In this
       section, <TT
@@ -2173,7 +2439,9 @@ CLASS="SECT3"
 ><HR><H4
 CLASS="SECT3"
 ><A
-NAME="IMAGE-OBJECT-MEMBERS">Image Members</H4
+NAME="IMAGE-OBJECT-MEMBERS"
+></A
+>5.1.1. Image Members</H4
 ><P
 ></P
 ><P
@@ -2393,7 +2661,9 @@ CLASS="SECT3"
 ><HR><H4
 CLASS="SECT3"
 ><A
-NAME="IMAGE-OBJECT-METHODS">Image Methods</H4
+NAME="IMAGE-OBJECT-METHODS"
+></A
+>5.1.2. Image Methods</H4
 ><P
 ></P
 ><P
@@ -3022,7 +3292,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="CHANNEL-OBJECT">Channel Objects</H3
+NAME="CHANNEL-OBJECT"
+></A
+>5.2. Channel Objects</H3
 ><P
 >These objects represent a Gimp Image's colour channels.
       In this section, <TT
@@ -3037,7 +3309,9 @@ CLASS="SECT3"
 ><HR><H4
 CLASS="SECT3"
 ><A
-NAME="CHANNEL-OBJECT-MEMBERS">Channel Members</H4
+NAME="CHANNEL-OBJECT-MEMBERS"
+></A
+>5.2.1. Channel Members</H4
 ><P
 ></P
 ><P
@@ -3238,7 +3512,9 @@ CLASS="SECT3"
 ><HR><H4
 CLASS="SECT3"
 ><A
-NAME="CHANNEL-OBJECT-METHODS">Channel Methods</H4
+NAME="CHANNEL-OBJECT-METHODS"
+></A
+>5.2.2. Channel Methods</H4
 ><P
 ></P
 ><P
@@ -3269,7 +3545,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="LAYER-OBJECT">Layer Objects</H3
+NAME="LAYER-OBJECT"
+></A
+>5.3. Layer Objects</H3
 ><P
 >Layer objects represent the layers of a Gimp image.  In
       this section I will refer to a generic layer called
@@ -3284,7 +3562,9 @@ CLASS="SECT3"
 ><HR><H4
 CLASS="SECT3"
 ><A
-NAME="LAYER-OBJECT-MEMBERS">Layer Members</H4
+NAME="LAYER-OBJECT-MEMBERS"
+></A
+>5.3.1. Layer Members</H4
 ><P
 ></P
 ><P
@@ -3493,7 +3773,9 @@ CLASS="SECT3"
 ><HR><H4
 CLASS="SECT3"
 ><A
-NAME="LAYER-OBJECT-METHODS">Layer Methods</H4
+NAME="LAYER-OBJECT-METHODS"
+></A
+>5.3.2. Layer Methods</H4
 ><P
 ></P
 ><P
@@ -3717,7 +3999,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="DRAWABLE-OBJECT">Drawable Objects</H3
+NAME="DRAWABLE-OBJECT"
+></A
+>5.4. Drawable Objects</H3
 ><P
 >Both layers and channels are drawables.  Hence there are a
       number of operations that can be performed on both objects.
@@ -3734,7 +4018,9 @@ CLASS="SECT3"
 ><HR><H4
 CLASS="SECT3"
 ><A
-NAME="DRAWABLE-OBJECT-MEMBERS">Drawable Members</H4
+NAME="DRAWABLE-OBJECT-MEMBERS"
+></A
+>5.4.1. Drawable Members</H4
 ><P
 ></P
 ><P
@@ -3996,7 +4282,9 @@ CLASS="SECT3"
 ><HR><H4
 CLASS="SECT3"
 ><A
-NAME="DRAWABLE-OBJECT-METHODS">Drawable Methods</H4
+NAME="DRAWABLE-OBJECT-METHODS"
+></A
+>5.4.2. Drawable Methods</H4
 ><P
 ></P
 ><P
@@ -4272,7 +4560,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="TILE-OBJECT">Tile Objects</H3
+NAME="TILE-OBJECT"
+></A
+>5.5. Tile Objects</H3
 ><P
 >Tile objects represent the way Gimp stores information.  A
       tile is basically just a 64x64 pixel region of the drawable.
@@ -4317,7 +4607,9 @@ CLASS="SECT3"
 ><HR><H4
 CLASS="SECT3"
 ><A
-NAME="TILE-OBJECT-MEMBERS">Tile Members</H4
+NAME="TILE-OBJECT-MEMBERS"
+></A
+>5.5.1. Tile Members</H4
 ><P
 >All tile members are read only.</P
 ><P
@@ -4449,7 +4741,9 @@ CLASS="SECT3"
 ><HR><H4
 CLASS="SECT3"
 ><A
-NAME="TILE-OBJECT-METHODS">Tile Methods</H4
+NAME="TILE-OBJECT-METHODS"
+></A
+>5.5.2. Tile Methods</H4
 ><P
 ></P
 ><P
@@ -4481,7 +4775,9 @@ CLASS="SECT3"
 ><HR><H4
 CLASS="SECT3"
 ><A
-NAME="TILE-OBJECT-MAPPING">Tile Mapping Behaviour</H4
+NAME="TILE-OBJECT-MAPPING"
+></A
+>5.5.3. Tile Mapping Behaviour</H4
 ><P
 >Tile objects also act as a mapping, or sequence.  You
 	can access the pixels in the tile in one of two ways.  You can
@@ -4533,7 +4829,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="PREGION-OBJECT">Pixel Regions</H3
+NAME="PREGION-OBJECT"
+></A
+>5.6. Pixel Regions</H3
 ><P
 >Pixel region objects give an interface for low level
       operations to act on large regions of an image, instead of on
@@ -4554,7 +4852,9 @@ CLASS="SECT3"
 ><HR><H4
 CLASS="SECT3"
 ><A
-NAME="PREGION-OBJECT-MEMBERS">Pixel Region Members</H4
+NAME="PREGION-OBJECT-MEMBERS"
+></A
+>5.6.1. Pixel Region Members</H4
 ><P
 ></P
 ><P
@@ -4716,7 +5016,9 @@ CLASS="SECT3"
 ><HR><H4
 CLASS="SECT3"
 ><A
-NAME="PREGION-OBJECT-METHODS">Pixel Region Methods</H4
+NAME="PREGION-OBJECT-METHODS"
+></A
+>5.6.2. Pixel Region Methods</H4
 ><P
 ></P
 ><P
@@ -4780,7 +5082,9 @@ CLASS="SECT3"
 ><HR><H4
 CLASS="SECT3"
 ><A
-NAME="PREGION-OBJECT-MAPPING">Pixel Region Mapping Behaviour</H4
+NAME="PREGION-OBJECT-MAPPING"
+></A
+>5.6.3. Pixel Region Mapping Behaviour</H4
 ><P
 >The pixel region acts as a mapping.  The index is a
 	2-tuple with components that are either integers or slices.
@@ -4958,7 +5262,9 @@ CLASS="SECT1"
 ><HR><H2
 CLASS="SECT1"
 ><A
-NAME="SUPPORT-MODULES">Support Modules</H2
+NAME="SUPPORT-MODULES"
+></A
+>6. Support Modules</H2
 ><P
 >This section describes the modules that help make using the
     <TT
@@ -4971,7 +5277,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="GIMPENUMS-MODULE">The gimpenums Module</H3
+NAME="GIMPENUMS-MODULE"
+></A
+>6.1. The gimpenums Module</H3
 ><P
 >This module contains all the constants found in the header
       <TT
@@ -4985,7 +5293,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="AEN1468">The gimpfu Module</H3
+NAME="AEN1468"
+></A
+>6.2. The gimpfu Module</H3
 ><P
 >This module was fully described in an earlier section.  It
       provides an easy interface for writing plugins, where you do not
@@ -4997,7 +5307,9 @@ CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="GIMPPLUGIN-MODULE">The gimpplugin Module</H3
+NAME="GIMPPLUGIN-MODULE"
+></A
+>6.3. The gimpplugin Module</H3
 ><P
 >This module provides the framework for writing Gimp
       plugins in Python.  It gives more flexibility for writing
@@ -5009,12 +5321,6 @@ NAME="GIMPPLUGIN-MODULE">The gimpplugin Module</H3
 CLASS="FUNCTION"
 >gimpplugin.plugin</TT
 > like so:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 >import gimpplugin
@@ -5032,16 +5338,15 @@ class myplugin(gimpplugin.plugin):
 	# gimp.install_procedure
 	def procname(self, arg1, ...):
 		# do what ever this plugin should do</PRE
-></TD
-></TR
-></TABLE
 ></DIV
 ><DIV
 CLASS="SECT2"
 ><HR><H3
 CLASS="SECT2"
 ><A
-NAME="GIMPSHELF-MODULE">The gimpshelf Module</H3
+NAME="GIMPSHELF-MODULE"
+></A
+>6.4. The gimpshelf Module</H3
 ><P
 >This module gives a nicer interface to the persistent
       storage interface for Gimp plugins.  Due to the complicated
@@ -5052,12 +5357,6 @@ NAME="GIMPSHELF-MODULE">The gimpshelf Module</H3
       allow persistentstorage of any python object.</P
 ><P
 >Here is some examples of using this module:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="SCREEN"
 >&#62;&#62;&#62; from gimpshelf import shelf
@@ -5066,9 +5365,6 @@ CLASS="SCREEN"
 1
 &#62;&#62;&#62; shelf['james']
 ['forty-two', (42, 42L, 42.0)]</PRE
-></TD
-></TR
-></TABLE
 ><P
 >Anything you store with
       <TT
@@ -5088,7 +5384,9 @@ CLASS="SECT1"
 ><HR><H2
 CLASS="SECT1"
 ><A
-NAME="END-NOTE">End Note</H2
+NAME="END-NOTE"
+></A
+>7. End Note</H2
 ><P
 >This package is not yet complete, but it has enough in it to
     be useful for writing plugins for Gimp.  If you write any plugins

@@ -352,7 +352,7 @@ scatter_hsv_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -393,7 +393,7 @@ scatter_hsv_dialog (void)
 			 GDK_POINTER_MOTION_HINT_MASK);
   gtk_widget_show (preview);
 
-  g_signal_connect (G_OBJECT (preview), "event",
+  g_signal_connect (preview, "event",
                     G_CALLBACK (preview_event_handler),
                     NULL);
 
@@ -416,7 +416,7 @@ scatter_hsv_dialog (void)
 			      VALS.holdness, 1, 8, 1, 2, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (scatter_hsv_iscale_update),
                     &VALS.holdness);
 
@@ -425,7 +425,7 @@ scatter_hsv_dialog (void)
 			      VALS.hue_distance, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (scatter_hsv_iscale_update),
                     &VALS.hue_distance);
 
@@ -434,7 +434,7 @@ scatter_hsv_dialog (void)
 			      VALS.saturation_distance, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (scatter_hsv_iscale_update),
                     &VALS.saturation_distance);
 
@@ -443,7 +443,7 @@ scatter_hsv_dialog (void)
 			      VALS.value_distance, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (scatter_hsv_iscale_update),
                     &VALS.value_distance);
 

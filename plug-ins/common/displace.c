@@ -283,7 +283,7 @@ displace_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -306,7 +306,7 @@ displace_dialog (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_x);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &dvals.do_x);
 
@@ -317,7 +317,7 @@ displace_dialog (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.amount_x);
 
@@ -343,7 +343,7 @@ displace_dialog (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_y);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &dvals.do_y);
 
@@ -354,7 +354,7 @@ displace_dialog (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.amount_y);
 
@@ -394,7 +394,7 @@ displace_dialog (GimpDrawable *drawable)
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (PIXEL_WRAP));
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &dvals.displace_type);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -408,7 +408,7 @@ displace_dialog (GimpDrawable *drawable)
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (PIXEL_SMEAR));
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &dvals.displace_type);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -422,7 +422,7 @@ displace_dialog (GimpDrawable *drawable)
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (PIXEL_BLACK));
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &dvals.displace_type);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),

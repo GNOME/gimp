@@ -286,7 +286,7 @@ open_url_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -306,7 +306,7 @@ open_url_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("URL:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (url_callback),
                     &url_info.url);
   gtk_widget_show (entry);
@@ -324,7 +324,7 @@ open_url_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (new_window_callback),
                     (gpointer) OPEN_URL_NEW_WINDOW);
 
@@ -335,7 +335,7 @@ open_url_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (new_window_callback),
                     (gpointer) OPEN_URL_CURRENT_WINDOW);
 

@@ -362,7 +362,7 @@ pluginCoreIA (piArgs *argp)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -412,7 +412,7 @@ pluginCoreIA (piArgs *argp)
 			      argp->alpha, 0.0, 1.0, 0.05, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (nlfilt_double_adjustment_update),
                     &argp->alpha);
 
@@ -421,7 +421,7 @@ pluginCoreIA (piArgs *argp)
 			      argp->radius, 1.0 / 3.0, 1.0, 0.05, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (nlfilt_double_adjustment_update),
                     &argp->radius);
 
@@ -581,7 +581,7 @@ mw_preview_new (GtkWidget        *parent,
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (mw_preview_toggle_callback),
                     &do_preview);
 

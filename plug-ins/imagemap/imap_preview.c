@@ -305,28 +305,28 @@ preview_expose(GtkWidget *widget, GdkEventExpose *event)
 void
 add_preview_motion_event(Preview_t *preview, GCallback func)
 {
-   g_signal_connect(G_OBJECT(preview->preview), "motion_notify_event", 
+   g_signal_connect(preview->preview, "motion_notify_event", 
 		    func, NULL);
 }
 
 void
 add_enter_notify_event(Preview_t *preview, GCallback func)
 {
-   g_signal_connect(G_OBJECT(preview->preview), "enter_notify_event", 
+   g_signal_connect(preview->preview, "enter_notify_event", 
 		    func, NULL);
 }
 
 void
 add_leave_notify_event(Preview_t *preview, GCallback func)
 {
-   g_signal_connect(G_OBJECT(preview->preview), "leave_notify_event", 
+   g_signal_connect(preview->preview, "leave_notify_event", 
 		    func, NULL);
 }
 
 void
 add_preview_button_press_event(Preview_t *preview, GCallback func)
 {
-   g_signal_connect(G_OBJECT(preview->preview), "button_press_event", 
+   g_signal_connect(preview->preview, "button_press_event", 
 		    func, NULL);
 }
 
@@ -403,13 +403,13 @@ make_preview(GimpDrawable *drawable)
 
    gtk_object_set_user_data(GTK_OBJECT(preview), data);
    gtk_widget_set_events(GTK_WIDGET(preview), PREVIEW_MASK);
-   g_signal_connect_after(G_OBJECT(preview), "expose_event",
+   g_signal_connect_after(preview, "expose_event",
 			  G_CALLBACK(preview_expose), data);
 
    /* Handle drop of links in preview widget */
    gtk_drag_dest_set(preview, GTK_DEST_DEFAULT_ALL, target_table,
 		     2, GDK_ACTION_COPY);
-   g_signal_connect(G_OBJECT(preview), "drag_data_received",
+   g_signal_connect(preview, "drag_data_received",
 		    G_CALLBACK(handle_drop), NULL);
 
    data->width  = gimp_drawable_width(drawable->drawable_id);
@@ -441,7 +441,7 @@ make_preview(GimpDrawable *drawable)
 		    0, 0);
    gtk_widget_set_events(button,
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-   g_signal_connect(G_OBJECT(button), "button_press_event",
+   g_signal_connect(button, "button_press_event",
 		    G_CALLBACK(arrow_cb), NULL);
    gtk_widget_show(button);
 
@@ -452,9 +452,9 @@ make_preview(GimpDrawable *drawable)
    /* Create horizontal ruler */
    data->hruler = ruler = gtk_hruler_new();
    gtk_ruler_set_range(GTK_RULER(ruler), 0, data->width, 0, PREVIEW_SIZE);
-   g_signal_connect_swapped(G_OBJECT(preview), "motion_notify_event",
+   g_signal_connect_swapped(preview, "motion_notify_event",
 			    G_CALLBACK(GTK_WIDGET_GET_CLASS(ruler)->motion_notify_event),
-			    G_OBJECT(ruler));
+			    ruler);
 
    gtk_table_attach(GTK_TABLE(table), ruler, 1, 2, 0, 1, GTK_FILL, GTK_FILL,
 		    0, 0);
@@ -463,9 +463,9 @@ make_preview(GimpDrawable *drawable)
    /* Create vertical ruler */
    data->vruler = ruler = gtk_vruler_new();
    gtk_ruler_set_range(GTK_RULER(ruler), 0, data->height, 0, PREVIEW_SIZE);
-   g_signal_connect_swapped(G_OBJECT(preview), "motion_notify_event",
+   g_signal_connect_swapped(preview, "motion_notify_event",
 			    G_CALLBACK(GTK_WIDGET_GET_CLASS(ruler)->motion_notify_event),
-			    G_OBJECT(ruler));
+			    ruler);
    gtk_table_attach(GTK_TABLE(table), ruler, 0, 1, 1, 2, GTK_FILL, GTK_FILL,
 		    0, 0);
    gtk_widget_show(ruler);

@@ -118,9 +118,9 @@ make_default_dialog(const gchar *title)
 			     NULL);
    data->dialog = dialog;
 
-   g_signal_connect (G_OBJECT(dialog), "destroy",
+   g_signal_connect (dialog, "destroy",
 		     G_CALLBACK(gtk_widget_destroyed), &data->dialog);
-   g_signal_connect(G_OBJECT(dialog), "delete_event",
+   g_signal_connect(dialog, "delete_event",
                     G_CALLBACK(dialog_destroy), (gpointer) data);
  
    return data;

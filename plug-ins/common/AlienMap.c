@@ -1269,7 +1269,7 @@ alienmap_dialog (void)
 
 		     NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -1307,7 +1307,7 @@ alienmap_dialog (void)
 			      wvals.redstretch, 0, 128, 1, 8, 2,
 			      TRUE, 0, 0,
 			      _("Change intensity of the red channel"), NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.redstretch);
 			      
@@ -1316,7 +1316,7 @@ alienmap_dialog (void)
 			      wvals.greenstretch, 0, 128, 1, 8, 2,
 			      TRUE, 0, 0,
 			      _("Change intensity of the green channel"), NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.greenstretch);
 			      
@@ -1325,7 +1325,7 @@ alienmap_dialog (void)
 			      wvals.bluestretch, 0, 128, 1, 8, 2,
 			      TRUE, 0, 0,
 			      _("Change intensity of the blue channel"), NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.bluestretch);
 
@@ -1526,7 +1526,7 @@ alienmap_logo_dialog (void)
 
 				 NULL);
 
-      g_signal_connect (G_OBJECT (logodlg), "destroy",
+      g_signal_connect (logodlg, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &logodlg);
       gtk_quit_add_destroy (1, GTK_OBJECT (logodlg));

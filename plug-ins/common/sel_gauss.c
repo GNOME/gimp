@@ -247,7 +247,7 @@ sel_gauss_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -270,7 +270,7 @@ sel_gauss_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("_Blur Radius:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &bvals.radius);
 
@@ -279,7 +279,7 @@ sel_gauss_dialog (void)
 			      bvals.maxdelta, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      FALSE, FALSE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bvals.maxdelta);
 

@@ -99,7 +99,7 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,
 };
 
-static GtkWidget *custum_color_button = NULL;
+static GtkWidget *custom_color_button = NULL;
 
 static gint lum_red_lookup[256];
 static gint lum_green_lookup[256];
@@ -264,7 +264,7 @@ colorify_dialog (GimpRGB *color)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -287,17 +287,17 @@ colorify_dialog (GimpRGB *color)
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  custum_color_button = gimp_color_button_new (_("Colorify Custom Color"),
+  custom_color_button = gimp_color_button_new (_("Colorify Custom Color"),
 					       COLOR_SIZE, COLOR_SIZE,
 					       color,
 					       GIMP_COLOR_AREA_FLAT);
-  g_signal_connect (G_OBJECT (custum_color_button), "color_changed",
+  g_signal_connect (custom_color_button, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     color);
   
-  gtk_table_attach (GTK_TABLE (table), custum_color_button, 6, 7, 0, 1,
+  gtk_table_attach (GTK_TABLE (table), custom_color_button, 6, 7, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (custum_color_button);
+  gtk_widget_show (custom_color_button);
 
   for (i = 0; i < 7; i++)
     {
@@ -308,7 +308,7 @@ colorify_dialog (GimpRGB *color)
       gtk_widget_set_size_request (GTK_WIDGET (color_area),
 				   COLOR_SIZE, COLOR_SIZE);
       gtk_container_add (GTK_CONTAINER (button), color_area);
-      g_signal_connect (G_OBJECT (button), "clicked",
+      g_signal_connect (button, "clicked",
 			G_CALLBACK (predefined_color_callback),
                         &button_color[i]);
       gtk_widget_show (color_area);
@@ -339,6 +339,6 @@ static void
 predefined_color_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (custum_color_button), 
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (custom_color_button), 
 			       (GimpRGB*) data);
 }

@@ -386,9 +386,9 @@ void create_sizemap_dialog(void)
 
 		     NULL);
 
-  g_signal_connect (G_OBJECT(smwindow), "destroy",
+  g_signal_connect (smwindow, "destroy",
 		    G_CALLBACK(gtk_widget_destroyed), &smwindow);
-  g_signal_connect (G_OBJECT(smwindow), "delete_event",
+  g_signal_connect (smwindow, "delete_event",
 		    G_CALLBACK(gtk_widget_hide_on_delete), &smwindow);
 
   table1 = gtk_table_new(2, 5, FALSE);
@@ -415,7 +415,7 @@ void create_sizemap_dialog(void)
   gtk_container_add(GTK_CONTAINER(tmpw2), tmpw);
   gtk_widget_show(tmpw);
   gtk_widget_add_events (tmpw2, GDK_BUTTON_PRESS_MASK);
-  g_signal_connect(G_OBJECT(tmpw2), "button_press_event",
+  g_signal_connect(tmpw2, "button_press_event",
                    G_CALLBACK (smmapclick), NULL);
   gtk_widget_show(tmpw2);
 
@@ -454,7 +454,7 @@ void create_sizemap_dialog(void)
   next_button = tmpw = gtk_button_new_with_mnemonic("_>>");
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
-  g_signal_connect (G_OBJECT(tmpw), "clicked",
+  g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK(smnextclick), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Select next smvector"), NULL);
@@ -462,7 +462,7 @@ void create_sizemap_dialog(void)
   add_button = tmpw = gtk_button_new_with_mnemonic( _("A_dd"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
-  g_signal_connect (G_OBJECT(tmpw), "clicked",
+  g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK(smaddclick), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Add new smvector"), NULL);
@@ -470,7 +470,7 @@ void create_sizemap_dialog(void)
   kill_button = tmpw = gtk_button_new_with_mnemonic( _("_Kill"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
-  g_signal_connect (G_OBJECT(tmpw), "clicked", 
+  g_signal_connect (tmpw, "clicked", 
 		    G_CALLBACK(smdeleteclick), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Delete selected smvector"), NULL);
@@ -518,7 +518,7 @@ void create_sizemap_dialog(void)
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.sizevoronoi);
-  g_signal_connect(G_OBJECT(tmpw), "clicked",
+  g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK(smstrexpsmadjmove), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Voronoi-mode makes only the smvector closest to the given point have any influence"), NULL);
   

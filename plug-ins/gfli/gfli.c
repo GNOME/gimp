@@ -824,7 +824,7 @@ load_dialog (gchar *name)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -845,7 +845,7 @@ load_dialog (gchar *name)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("From:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &from_frame);
 
@@ -854,7 +854,7 @@ load_dialog (gchar *name)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("To:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &to_frame);
 
@@ -894,7 +894,7 @@ save_dialog (gint32 image_id)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -915,7 +915,7 @@ save_dialog (gint32 image_id)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("From:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &from_frame);
 
@@ -924,7 +924,7 @@ save_dialog (gint32 image_id)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("To:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &to_frame);
 

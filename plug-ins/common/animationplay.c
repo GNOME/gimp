@@ -561,7 +561,7 @@ build_dialog (GimpImageBaseType  basetype,
 
   g_free (windowname);
 
-  g_signal_connect (G_OBJECT (dlg), "delete_event",
+  g_signal_connect (dlg, "delete_event",
                     G_CALLBACK (window_delete_callback),
                     NULL);
   
@@ -602,19 +602,19 @@ build_dialog (GimpImageBaseType  basetype,
 	  
 	  {
 	    psbutton = gtk_toggle_button_new_with_label ( _("Play/Stop"));
-	    g_signal_connect (G_OBJECT (psbutton), "toggled",
+	    g_signal_connect (psbutton, "toggled",
                               G_CALLBACK (playstop_callback), NULL);
 	    gtk_box_pack_start (GTK_BOX (hbox2), psbutton, TRUE, TRUE, 0);
 	    gtk_widget_show (psbutton);
 	    
 	    button = gtk_button_new_with_label ( _("Rewind"));
-	    g_signal_connect (G_OBJECT (button), "clicked",
+	    g_signal_connect (button, "clicked",
                               G_CALLBACK (rewind_callback), NULL);
 	    gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
 	    gtk_widget_show (button);
 	    
 	    button = gtk_button_new_with_label ( _("Step"));
-	    g_signal_connect (G_OBJECT (button), "clicked",
+	    g_signal_connect (button, "clicked",
                               G_CALLBACK (step_callback), NULL);
 	    gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
 	    gtk_widget_show (button);
@@ -694,11 +694,11 @@ build_dialog (GimpImageBaseType  basetype,
     gdk_window_set_cursor(shape_window->window, cursor);
     gdk_cursor_unref (cursor);
 
-    g_signal_connect (G_OBJECT (shape_window), "button_press_event",
+    g_signal_connect (shape_window, "button_press_event",
                       G_CALLBACK (shape_pressed),NULL);
-    g_signal_connect (G_OBJECT (shape_window), "button_release_event",
+    g_signal_connect (shape_window, "button_release_event",
                       G_CALLBACK (shape_released),NULL);
-    g_signal_connect (G_OBJECT (shape_window), "motion_notify_event",
+    g_signal_connect (shape_window, "motion_notify_event",
                       G_CALLBACK (shape_motion),NULL);
 
     icon_pos = g_new (CursorOffset, 1);
@@ -706,13 +706,13 @@ build_dialog (GimpImageBaseType  basetype,
   }
   /*  gtk_widget_show (shape_window);*/
 
-  g_signal_connect (G_OBJECT (eventbox), "button_press_event",
+  g_signal_connect (eventbox, "button_press_event",
                     G_CALLBACK (preview_pressed), NULL);
 
-  g_signal_connect (G_OBJECT (drawing_area), "expose_event",
+  g_signal_connect (drawing_area, "expose_event",
                     G_CALLBACK (repaint_da), drawing_area);
 
-  g_signal_connect (G_OBJECT (shape_drawing_area), "expose_event",
+  g_signal_connect (shape_drawing_area, "expose_event",
                     G_CALLBACK (maybeblocked_expose), shape_drawing_area);
 
   root_win = gdk_get_default_root_window ();

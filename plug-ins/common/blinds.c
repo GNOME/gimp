@@ -330,7 +330,7 @@ blinds_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -393,7 +393,7 @@ blinds_dialog (void)
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (blinds_button_update),
                     &bvals.bg_trans);
 
@@ -422,7 +422,7 @@ blinds_dialog (void)
 				    bvals.angledsp, 1, 90, 1, 15, 0,
 				    TRUE, 0, 0,
 				    NULL, NULL);
-  g_signal_connect (G_OBJECT (size_data), "value_changed",
+  g_signal_connect (size_data, "value_changed",
                     G_CALLBACK (blinds_scale_update),
                     &bvals.angledsp);
 
@@ -431,9 +431,9 @@ blinds_dialog (void)
 				    bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
 				    TRUE, 0, 0,
 				    NULL, NULL);
-  g_signal_connect (G_OBJECT (size_data), "value_changed",
-		      G_CALLBACK (blinds_scale_update),
-		      &bvals.numsegs);
+  g_signal_connect (size_data, "value_changed",
+		    G_CALLBACK (blinds_scale_update),
+		    &bvals.numsegs);
 
   gtk_widget_show (dlg);
 

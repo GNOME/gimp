@@ -515,7 +515,7 @@ do_dialog (void)
 
 			    NULL);
 
-   g_signal_connect (G_OBJECT (dialog), "destroy",
+   g_signal_connect (dialog, "destroy",
                      G_CALLBACK (gtk_main_quit),
                      NULL);
 
@@ -573,7 +573,7 @@ do_dialog (void)
 			   GTK_SHRINK, GTK_SHRINK, 0, 0);
 	 gtk_widget_show (button);
 
-	 g_signal_connect (G_OBJECT (button), "toggled",
+	 g_signal_connect (button, "toggled",
                            G_CALLBACK (dialog_toggle_update),
                            GINT_TO_POINTER (i));
        }
@@ -612,7 +612,7 @@ do_dialog (void)
 	 gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 	 gtk_widget_show (button);
 
-	 g_signal_connect (G_OBJECT (button), "toggled",
+	 g_signal_connect (button, "toggled",
                            G_CALLBACK (dialog_toggle_update),
                            GINT_TO_POINTER (i + 5));
        }
@@ -627,7 +627,7 @@ do_dialog (void)
    gtk_box_pack_start (GTK_BOX (vbox), shade_button, FALSE, FALSE, 0);
    gtk_widget_show (shade_button);
 
-   g_signal_connect (G_OBJECT (shade_button), "toggled",
+   g_signal_connect (shade_button, "toggled",
                      G_CALLBACK (dialog_toggle_update),
                      GINT_TO_POINTER (8));
 
@@ -641,7 +641,7 @@ do_dialog (void)
    gtk_box_pack_start (GTK_BOX (vbox), gradient_button, FALSE, FALSE, 0);
    gtk_widget_show (gradient_button);
 
-   g_signal_connect (G_OBJECT (gradient_button), "toggled",
+   g_signal_connect (gradient_button, "toggled",
                      G_CALLBACK (dialog_toggle_update),
                      GINT_TO_POINTER (9));
 
@@ -656,7 +656,7 @@ do_dialog (void)
 
    adjustment = gtk_adjustment_new (curl.do_curl_opacity * 100, 0.0, 100.0,
 				    1.0, 1.0, 0.0);
-   g_signal_connect (G_OBJECT (adjustment), "value_changed",
+   g_signal_connect (adjustment, "value_changed",
                      G_CALLBACK (dialog_scale_update),
                      &(curl.do_curl_opacity));
 

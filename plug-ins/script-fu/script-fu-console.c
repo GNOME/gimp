@@ -177,10 +177,10 @@ script_fu_console_interface (void)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
 		    G_CALLBACK (script_fu_close_callback),
 		    NULL);
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
 		    G_CALLBACK (gtk_widget_destroyed),
 		    &dialog);
 
@@ -206,7 +206,7 @@ script_fu_console_interface (void)
 
   cint.console = gtk_text_buffer_new (NULL);
   cint.text_view = gtk_text_view_new_with_buffer (cint.console);
-  g_object_unref (G_OBJECT (cint.console));
+  g_object_unref (cint.console);
 
   gtk_text_view_set_editable (GTK_TEXT_VIEW (cint.text_view), FALSE);
   gtk_widget_set_size_request (cint.text_view, TEXT_WIDTH, TEXT_HEIGHT);
@@ -278,7 +278,7 @@ script_fu_console_interface (void)
   gtk_widget_grab_default (cint.cc);
   gtk_widget_show (cint.cc);
 
-  g_signal_connect (G_OBJECT (cint.cc), "key_press_event",
+  g_signal_connect (cint.cc, "key_press_event",
 		    G_CALLBACK (script_fu_cc_key_function),
 		    NULL);
 
@@ -287,7 +287,7 @@ script_fu_console_interface (void)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, TRUE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
 		    G_CALLBACK (script_fu_browse_callback),
 		    NULL);
 

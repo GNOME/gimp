@@ -294,7 +294,7 @@ explorer_dialog (void)
 
 		     NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -334,19 +334,19 @@ explorer_dialog (void)
   gtk_preview_size (GTK_PREVIEW (wint.preview), preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (pframe), wint.preview);
 
-  g_signal_connect (G_OBJECT (wint.preview), "button_press_event",
+  g_signal_connect (wint.preview, "button_press_event",
                     G_CALLBACK (preview_button_press_event),
                     NULL);
-  g_signal_connect (G_OBJECT (wint.preview), "button_release_event",
+  g_signal_connect (wint.preview, "button_release_event",
                     G_CALLBACK (preview_button_release_event),
-		      NULL);
-  g_signal_connect (G_OBJECT (wint.preview), "motion_notify_event",
+		    NULL);
+  g_signal_connect (wint.preview, "motion_notify_event",
                     G_CALLBACK (preview_motion_notify_event),
                     NULL);
-  g_signal_connect (G_OBJECT (wint.preview), "leave_notify_event",
+  g_signal_connect (wint.preview, "leave_notify_event",
                     G_CALLBACK (preview_leave_notify_event),
                     NULL);
-  g_signal_connect (G_OBJECT (wint.preview), "enter_notify_event",
+  g_signal_connect (wint.preview, "enter_notify_event",
                     G_CALLBACK (preview_enter_notify_event),
                     NULL);
 
@@ -359,7 +359,7 @@ explorer_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("Realtime Preview"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (explorer_toggle_update),
                     &wvals.alwayspreview);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.alwayspreview);
@@ -369,7 +369,7 @@ explorer_dialog (void)
 
   button = gtk_button_new_with_label (_("Redraw"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_redraw_callback),
                     dialog);
   gtk_widget_show (button);
@@ -392,7 +392,7 @@ explorer_dialog (void)
 
   gimp_help_set_help_data (button, _("Undo last zoom"), NULL);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_undo_zoom_callback),
                     dialog);
 
@@ -402,7 +402,7 @@ explorer_dialog (void)
 
   gimp_help_set_help_data (button, _("Redo last zoom"), NULL);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_redo_zoom_callback),
                     dialog);
 
@@ -410,7 +410,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_step_in_callback),
                     dialog);
 
@@ -418,7 +418,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_step_out_callback),
                     dialog);
 
@@ -454,7 +454,7 @@ explorer_dialog (void)
 			  TRUE, 0, 0,
 			  _("Change the first (minimal) x-coordinate "
 			    "delimitation"), NULL);
-  g_signal_connect (G_OBJECT (elements->xmin), "value_changed",
+  g_signal_connect (elements->xmin, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmin);
 
@@ -465,7 +465,7 @@ explorer_dialog (void)
 			  TRUE, 0, 0,
 			  _("Change the second (maximal) x-coordinate "
 			    "delimitation"), NULL);
-  g_signal_connect (G_OBJECT (elements->xmax), "value_changed",
+  g_signal_connect (elements->xmax, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmax);
 
@@ -476,7 +476,7 @@ explorer_dialog (void)
 			  TRUE, 0, 0,
 			  _("Change the first (minimal) y-coordinate "
 			    "delimitation"), NULL);
-  g_signal_connect (G_OBJECT (elements->ymin), "value_changed",
+  g_signal_connect (elements->ymin, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymin);
 
@@ -487,7 +487,7 @@ explorer_dialog (void)
 			  TRUE, 0, 0,
 			  _("Change the second (maximal) y-coordinate "
 			    "delimitation"), NULL);
-  g_signal_connect (G_OBJECT (elements->ymax), "value_changed",
+  g_signal_connect (elements->ymax, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymax);
 
@@ -499,7 +499,7 @@ explorer_dialog (void)
 			  _("Change the iteration value. The higher it "
 			    "is, the more details will be calculated, "
 			    "which will take more time"), NULL);
-  g_signal_connect (G_OBJECT (elements->iter), "value_changed",
+  g_signal_connect (elements->iter, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.iter);
 
@@ -511,7 +511,7 @@ explorer_dialog (void)
 			  _("Change the CX value (changes aspect of "
 			    "fractal, active with every fractal but "
 			    "Mandelbrot and Sierpinski)"), NULL);
-  g_signal_connect (G_OBJECT (elements->cx), "value_changed",
+  g_signal_connect (elements->cx, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cx);
 
@@ -523,7 +523,7 @@ explorer_dialog (void)
 			  _("Change the CY value (changes aspect of "
 			    "fractal, active with every fractal but "
 			    "Mandelbrot and Sierpinski)"), NULL);
-  g_signal_connect (G_OBJECT (elements->cy), "value_changed",
+  g_signal_connect (elements->cy, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cy);
 
@@ -533,7 +533,7 @@ explorer_dialog (void)
 
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
   gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (create_load_file_selection),
                     dialog);
   gtk_widget_show (button);
@@ -541,7 +541,7 @@ explorer_dialog (void)
 
   button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
   gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_reset_callback),
                     dialog);
   gtk_widget_show (button);
@@ -550,7 +550,7 @@ explorer_dialog (void)
 
   button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
   gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (create_file_selection),
                     dialog);
   gtk_widget_show (button);
@@ -594,7 +594,7 @@ explorer_dialog (void)
   toggle_vbox2 = gtk_vbox_new (FALSE, 1);
   for (i = TYPE_BARNSLEY_2; i <= TYPE_SPIDER; i++)
     {
-      g_object_ref (G_OBJECT (elements->type[i]));
+      g_object_ref (elements->type[i]);
 
       gtk_widget_hide (elements->type[i]);
       gtk_container_remove (GTK_CONTAINER (toggle_vbox), elements->type[i]);
@@ -602,13 +602,13 @@ explorer_dialog (void)
 			  FALSE, FALSE, 0);
       gtk_widget_show (elements->type[i]);
 
-      g_object_unref (G_OBJECT (elements->type[i]));
+      g_object_unref (elements->type[i]);
     }
 
   toggle_vbox3 = gtk_vbox_new (FALSE, 1);
   for (i = TYPE_MAN_O_WAR; i <= TYPE_SIERPINSKI; i++)
     {
-      g_object_ref (G_OBJECT (elements->type[i]));
+      g_object_ref (elements->type[i]);
 
       gtk_widget_hide (elements->type[i]);
       gtk_container_remove (GTK_CONTAINER (toggle_vbox), elements->type[i]);
@@ -616,7 +616,7 @@ explorer_dialog (void)
 			  FALSE, FALSE, 0);
       gtk_widget_show (elements->type[i]);
 
-      g_object_unref (G_OBJECT (elements->type[i]));
+      g_object_unref (elements->type[i]);
     }
 
   gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 0);
@@ -658,14 +658,14 @@ explorer_dialog (void)
 			  TRUE, 0, 0,
 			  _("Change the number of colors in the mapping"),
 			  NULL);
-  g_signal_connect (G_OBJECT (elements->ncol), "value_changed",
+  g_signal_connect (elements->ncol, "value_changed",
                     G_CALLBACK (explorer_number_of_colors_callback),
                     &wvals.ncolors);
 
   elements->useloglog = toggle =
     gtk_check_button_new_with_label (_("Use loglog Smoothing"));
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 3, 1, 2);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (explorer_toggle_update),
                     &wvals.useloglog);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.useloglog);
@@ -692,7 +692,7 @@ explorer_dialog (void)
 			  wvals.redstretch, 0, 1, 0.01, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("Change the intensity of the red channel"), NULL);
-  g_signal_connect (G_OBJECT (elements->red), "value_changed",
+  g_signal_connect (elements->red, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.redstretch);
 
@@ -702,7 +702,7 @@ explorer_dialog (void)
 			  wvals.greenstretch, 0, 1, 0.01, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("Change the intensity of the green channel"), NULL);
-  g_signal_connect (G_OBJECT (elements->green), "value_changed",
+  g_signal_connect (elements->green, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.greenstretch);
 
@@ -712,7 +712,7 @@ explorer_dialog (void)
 			  wvals.bluestretch, 0, 1, 0.01, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("Change the intensity of the blue channel"), NULL);
-  g_signal_connect (G_OBJECT (elements->blue), "value_changed",
+  g_signal_connect (elements->blue, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.bluestretch);
 
@@ -759,7 +759,7 @@ explorer_dialog (void)
     gtk_check_button_new_with_label (_("Inversion"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.redinvert);
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (explorer_toggle_update),
                     &wvals.redinvert);
   gtk_widget_show (toggle);
@@ -800,7 +800,7 @@ explorer_dialog (void)
     gtk_check_button_new_with_label (_("Inversion"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.greeninvert);
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (explorer_toggle_update),
                     &wvals.greeninvert);
   gtk_widget_show (toggle);
@@ -841,7 +841,7 @@ explorer_dialog (void)
     gtk_check_button_new_with_label (_("Inversion"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON( toggle), wvals.blueinvert);
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (explorer_toggle_update),
                     &wvals.blueinvert);
   gtk_widget_show (toggle);
@@ -867,7 +867,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (0));
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (explorer_radio_update),
                     &wvals.colormode);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -889,7 +889,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (1));
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (explorer_radio_update),
                     &wvals.colormode);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -1399,7 +1399,7 @@ explorer_logo_dialog (void)
 
 		     NULL);
 
-  g_signal_connect (G_OBJECT (xdlg), "destroy",
+  g_signal_connect (xdlg, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &logodlg);
 
@@ -1677,22 +1677,22 @@ create_load_file_selection (void)
       window = gtk_file_selection_new (_("Load Fractal Parameters"));
       gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_NONE);
 
-      g_signal_connect (G_OBJECT (window), "destroy",
+      g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);
 
-      g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (window)->ok_button),
+      g_signal_connect (GTK_FILE_SELECTION (window)->ok_button,
                         "clicked",
                         G_CALLBACK (load_file_selection_ok),
                         window);
-      gimp_help_set_help_data (GTK_FILE_SELECTION(window)->ok_button,
+      gimp_help_set_help_data (GTK_FILE_SELECTION (window)->ok_button,
 			       _("Click here to load your file"), NULL);
 
-      g_signal_connect_swapped (G_OBJECT (GTK_FILE_SELECTION (window)->cancel_button),
+      g_signal_connect_swapped (GTK_FILE_SELECTION (window)->cancel_button,
                                 "clicked",
                                 G_CALLBACK (gtk_widget_destroy),
                                 window);
-      gimp_help_set_help_data (GTK_FILE_SELECTION(window)->cancel_button,
+      gimp_help_set_help_data (GTK_FILE_SELECTION (window)->cancel_button,
 			       _("Click here to cancel load procedure"), NULL);
     }
 
@@ -1714,18 +1714,18 @@ create_file_selection (void)
       window = gtk_file_selection_new (_("Save Fractal Parameters"));
       gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_NONE);
 
-      g_signal_connect (G_OBJECT (window), "destroy",
+      g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);
 
-      g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (window)->ok_button),
+      g_signal_connect (GTK_FILE_SELECTION (window)->ok_button,
                         "clicked",
                         G_CALLBACK (file_selection_ok),
                         window);
-      gimp_help_set_help_data (GTK_FILE_SELECTION(window)->ok_button,
+      gimp_help_set_help_data (GTK_FILE_SELECTION (window)->ok_button,
 			       _("Click here to save your file"), NULL);
 
-      g_signal_connect_swapped (G_OBJECT (GTK_FILE_SELECTION(window)->cancel_button),
+      g_signal_connect_swapped (GTK_FILE_SELECTION(window)->cancel_button,
                                 "clicked",
                                 G_CALLBACK (gtk_widget_destroy),
                                 window);

@@ -118,7 +118,7 @@ void create_paperpage(GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
-  g_signal_connect_swapped (G_OBJECT(tmpw), "clicked", 
+  g_signal_connect_swapped (tmpw, "clicked", 
 			    G_CALLBACK(selectpaper), selection);
 
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 

@@ -339,7 +339,7 @@ nova_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -365,10 +365,10 @@ nova_dialog (GimpDrawable *drawable)
 			     _("Co_lor:"), 1.0, 0.5,
 			     button, 1, TRUE);
 
-  g_signal_connect (G_OBJECT (button), "color_changed", 
+  g_signal_connect (button, "color_changed", 
                     G_CALLBACK (gimp_color_button_get_color),
                     &pvals.color);
-  g_signal_connect_swapped (G_OBJECT (button), "color_changed",
+  g_signal_connect_swapped (button, "color_changed",
                             G_CALLBACK (nova),
                             drawable);
 
@@ -377,10 +377,10 @@ nova_dialog (GimpDrawable *drawable)
 			      pvals.radius, 1, 100, 1, 10, 0,
 			      FALSE, 1, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.radius);
-  g_signal_connect_swapped (G_OBJECT (adj), "value_changed",
+  g_signal_connect_swapped (adj, "value_changed",
                             G_CALLBACK (nova),
                             drawable);
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
@@ -388,10 +388,10 @@ nova_dialog (GimpDrawable *drawable)
 			      pvals.nspoke, 1, 1024, 1, 16, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.nspoke);
-  g_signal_connect_swapped (G_OBJECT (adj), "value_changed",
+  g_signal_connect_swapped (adj, "value_changed",
                             G_CALLBACK (nova),
                             drawable);
 
@@ -400,10 +400,10 @@ nova_dialog (GimpDrawable *drawable)
 			      pvals.randomhue, 0, 360, 1, 15, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.randomhue);
-  g_signal_connect_swapped (G_OBJECT (adj), "value_changed",
+  g_signal_connect_swapped (adj, "value_changed",
                             G_CALLBACK (nova),
                             drawable);
 
@@ -468,7 +468,7 @@ nova_center_create (GimpDrawable *drawable)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
 
-  g_signal_connect (G_OBJECT (frame), "destroy",
+  g_signal_connect (frame, "destroy",
                     G_CALLBACK (nova_center_destroy),
                     center);
 
@@ -496,7 +496,7 @@ nova_center_create (GimpDrawable *drawable)
 
   g_object_set_data (G_OBJECT (center->xadj), "center", center);
 
-  g_signal_connect (G_OBJECT (center->xadj), "value_changed",
+  g_signal_connect (center->xadj, "value_changed",
                     G_CALLBACK (nova_center_adjustment_update),
                     &pvals.xcenter);
 
@@ -517,7 +517,7 @@ nova_center_create (GimpDrawable *drawable)
 
   g_object_set_data (G_OBJECT (center->yadj), "center", center);
 
-  g_signal_connect (G_OBJECT (center->yadj), "value_changed",
+  g_signal_connect (center->yadj, "value_changed",
                     G_CALLBACK (nova_center_adjustment_update),
                     &pvals.ycenter);
 
@@ -533,10 +533,10 @@ nova_center_create (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
   gtk_widget_show (preview->widget);
 
-  g_signal_connect_after (G_OBJECT (preview->widget), "expose_event",
+  g_signal_connect_after (preview->widget, "expose_event",
                           G_CALLBACK (nova_center_preview_expose),
                           center);
-  g_signal_connect (G_OBJECT (preview->widget), "event",
+  g_signal_connect (preview->widget, "event",
                     G_CALLBACK (nova_center_preview_events),
                     center);
 
@@ -553,10 +553,10 @@ nova_center_create (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), show_cursor);
   gtk_widget_show (check);
 
-  g_signal_connect (G_OBJECT (check), "toggled",
+  g_signal_connect (check, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &show_cursor);
-  g_signal_connect_swapped (G_OBJECT (check), "toggled",
+  g_signal_connect_swapped (check, "toggled",
                             G_CALLBACK (nova),
                             drawable);
   

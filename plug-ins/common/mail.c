@@ -472,7 +472,7 @@ save_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -493,7 +493,7 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Recipient:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
                     &mail_info.receipt);
 
@@ -505,7 +505,7 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Sender:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
                     &mail_info.from);
 
@@ -517,7 +517,7 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Subject:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
                     &mail_info.subject);
 
@@ -529,7 +529,7 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Comment:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
                     &mail_info.comment);
 
@@ -541,7 +541,7 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
 			     _("Filename:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
                     &mail_info.filename);
 
@@ -565,9 +565,9 @@ save_dialog (void)
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
 
-  g_object_unref (G_OBJECT (text_buffer));
+  g_object_unref (text_buffer);
 
-  g_signal_connect (G_OBJECT (text_buffer), "changed",
+  g_signal_connect (text_buffer, "changed",
                     G_CALLBACK (mesg_body_callback),
 		    NULL);
 

@@ -1155,7 +1155,7 @@ badbounds_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -1227,7 +1227,7 @@ save_dialog (gint32 image_ID)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -1250,7 +1250,7 @@ save_dialog (gint32 image_ID)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.interlace);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &gsvals.interlace);
 
@@ -1266,7 +1266,7 @@ save_dialog (gint32 image_ID)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.save_comment);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &gsvals.save_comment);
 
@@ -1286,7 +1286,7 @@ save_dialog (gint32 image_ID)
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
 
-  g_object_unref (G_OBJECT (text_buffer));
+  g_object_unref (text_buffer);
 
   if (globalcomment != NULL)
     {
@@ -1312,7 +1312,7 @@ save_dialog (gint32 image_ID)
   if (globalcomment)
     gtk_text_buffer_set_text (text_buffer, globalcomment, -1);
 
-  g_signal_connect (G_OBJECT (text_buffer), "changed",
+  g_signal_connect (text_buffer, "changed",
                     G_CALLBACK (comment_entry_callback),
                     NULL);
 
@@ -1335,7 +1335,7 @@ save_dialog (gint32 image_ID)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.loop);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &gsvals.loop);
 
@@ -1352,7 +1352,7 @@ save_dialog (gint32 image_ID)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gsvals.default_delay);
 

@@ -1258,7 +1258,7 @@ alienmap2_dialog (void)
 
 		     NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -1298,7 +1298,7 @@ alienmap2_dialog (void)
 			      TRUE, 0, 0,
 			      _("Change frequency of the red/hue channel"),
 			      NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.redfrequency);
 
@@ -1308,7 +1308,7 @@ alienmap2_dialog (void)
 			      TRUE, 0, 0,
 			      _("Change angle of the red/hue channel"),
 			      NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.redangle);
 
@@ -1318,7 +1318,7 @@ alienmap2_dialog (void)
 			      TRUE, 0, 0,
 			      _("Change frequency of the green/saturation "
 				"channel"), NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.greenfrequency);
 
@@ -1328,7 +1328,7 @@ alienmap2_dialog (void)
 			      TRUE, 0, 0,
 			      _("Change angle of the green/saturation channel"),
 			      NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.greenangle);
 
@@ -1338,7 +1338,7 @@ alienmap2_dialog (void)
 			      TRUE, 0, 0,
 			      _("Change frequency of the blue/luminance "
 				"channel"), NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.bluefrequency);
 
@@ -1348,7 +1348,7 @@ alienmap2_dialog (void)
 			      TRUE, 0, 0,
 			      _("Change angle of the blue/luminance channel"),
 			      NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.blueangle);
 
@@ -1379,7 +1379,7 @@ alienmap2_dialog (void)
   gimp_help_set_help_data (toggle, _("Use function for red/hue component"),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (alienmap2_toggle_update),
                     &wvals.redmode);
 
@@ -1392,7 +1392,7 @@ alienmap2_dialog (void)
 			   _("Use function for green/saturation component"),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (alienmap2_toggle_update),
                     &wvals.greenmode);
 
@@ -1405,7 +1405,7 @@ alienmap2_dialog (void)
 			   _("Use function for blue/luminance component"),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (alienmap2_toggle_update),
                     &wvals.bluemode);
 
@@ -1543,9 +1543,9 @@ alienmap2_logo_dialog (void)
 
 				 NULL);
 
-      g_signal_connect (G_OBJECT (logodlg), "destroy",
-			 G_CALLBACK (gtk_widget_destroyed),
-			  &logodlg);
+      g_signal_connect (logodlg, "destroy",
+			G_CALLBACK (gtk_widget_destroyed),
+			&logodlg);
 
       gtk_quit_add_destroy (1, GTK_OBJECT (logodlg));
 

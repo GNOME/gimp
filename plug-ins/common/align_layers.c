@@ -420,7 +420,7 @@ align_layers_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -509,7 +509,7 @@ align_layers_dialog (void)
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 4, 5);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &VALS.ignore_bottom);
 
@@ -521,7 +521,7 @@ align_layers_dialog (void)
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 5, 6);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &VALS.base_is_bottom_layer);
 
@@ -530,7 +530,7 @@ align_layers_dialog (void)
 			      VALS.grid_size, 0, 200, 1, 10, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &VALS.grid_size);
 

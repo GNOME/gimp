@@ -183,7 +183,7 @@ build_dialog (void)
   gtk_window_set_title (GTK_WINDOW (dlg), _("GEE-SLIME"));
   gtk_window_set_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
 
-  g_signal_connect (G_OBJECT (dlg), "delete_event",
+  g_signal_connect (dlg, "delete_event",
                     G_CALLBACK (window_delete_callback),
                     NULL);
 
@@ -198,7 +198,7 @@ build_dialog (void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+  g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (window_close_callback),
                             dlg);
 
@@ -262,7 +262,7 @@ build_dialog (void)
                               NULL,
                               NULL);
   
-  g_signal_connect (G_OBJECT (eventbox), "button_release_event",
+  g_signal_connect (eventbox, "button_release_event",
                     G_CALLBACK (toggle_feedbacktype),
                     NULL);
 }

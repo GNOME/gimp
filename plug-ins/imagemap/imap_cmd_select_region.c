@@ -102,9 +102,9 @@ select_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
    gpointer id;
    gint count;
 
-   g_signal_handlers_disconnect_by_func(G_OBJECT(widget), 
+   g_signal_handlers_disconnect_by_func(widget, 
                                         select_motion, data);
-   g_signal_handlers_disconnect_by_func(G_OBJECT(widget), 
+   g_signal_handlers_disconnect_by_func(widget, 
                                         select_release, data);
 
    object_draw(obj, widget->window);
@@ -131,9 +131,9 @@ select_region_command_execute(Command_t *parent)
    SelectRegionCommand_t *command = (SelectRegionCommand_t*) parent;
 
    command->obj = create_rectangle(command->x, command->y, 0, 0);
-   g_signal_connect(G_OBJECT(command->widget), "button_release_event", 
+   g_signal_connect(command->widget, "button_release_event", 
                     G_CALLBACK (select_release), command);   
-   g_signal_connect(G_OBJECT(command->widget), "motion_notify_event", 
+   g_signal_connect(command->widget, "motion_notify_event", 
                     G_CALLBACK (select_motion), command);   
 
    gdk_gc_set_function(get_preferences()->normal_gc, GDK_XOR);

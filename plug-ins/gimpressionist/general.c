@@ -75,7 +75,7 @@ void create_generalpage(GtkNotebook *notebook)
   generalbgradio[1] = tmpw = gtk_radio_button_new_with_label(NULL, _("Keep original"));
   gtk_widget_show(tmpw);
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
-  g_signal_connect(G_OBJECT(tmpw), "clicked",
+  g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK (generalbgchange), (gpointer) 1);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Preserve the original image as a background"), NULL);
@@ -83,7 +83,7 @@ void create_generalpage(GtkNotebook *notebook)
   generalbgradio[2] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(tmpw)), _("From paper"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
-  g_signal_connect(G_OBJECT(tmpw), "clicked",
+  g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK (generalbgchange), (gpointer) 2);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Copy the texture of the selected paper as a background"), NULL);
@@ -99,7 +99,7 @@ void create_generalpage(GtkNotebook *notebook)
   generalbgradio[0] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(tmpw)), _("Solid"));
   gtk_box_pack_start(GTK_BOX(box4), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
-  g_signal_connect(G_OBJECT(tmpw), "clicked",
+  g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK (generalbgchange), (gpointer) 0);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Solid colored background"), NULL);
 
@@ -108,9 +108,9 @@ void create_generalpage(GtkNotebook *notebook)
 					    COLORBUTTONHEIGHT,
 					    &pcvals.color,
 					    GIMP_COLOR_AREA_FLAT);
-  g_signal_connect (G_OBJECT (generalcolbutton), "clicked",
+  g_signal_connect (generalcolbutton, "clicked",
 		    G_CALLBACK (selectcolor), NULL);
-  g_signal_connect (G_OBJECT (generalcolbutton), "color_changed",
+  g_signal_connect (generalcolbutton, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &pcvals.color);
   gtk_box_pack_start(GTK_BOX(box4), generalcolbutton, FALSE, FALSE, 10);
@@ -119,7 +119,7 @@ void create_generalpage(GtkNotebook *notebook)
   generalbgradio[3] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(generalbgradio[0])), _("Transparent"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
-  g_signal_connect(G_OBJECT(tmpw), "clicked",
+  g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK (generalbgchange), (gpointer) 3);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Use a transparent background; Only the strokes painted will be visible"), NULL);
   if(!img_has_alpha)

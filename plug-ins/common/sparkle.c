@@ -356,7 +356,7 @@ sparkle_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -386,7 +386,7 @@ sparkle_dialog (void)
 			  svals.lum_threshold, 0.0, 0.1, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  _("Adjust the Luminosity Threshold"), NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.lum_threshold);
 
@@ -396,7 +396,7 @@ sparkle_dialog (void)
 			  svals.flare_inten, 0.0, 1.0, 0.01, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("Adjust the Flare Intensity"), NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.flare_inten);
 
@@ -406,7 +406,7 @@ sparkle_dialog (void)
 			  svals.spike_len, 1, 100, 1, 10, 0,
 			  TRUE, 0, 0,
 			  _("Adjust the Spike Length"), NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.spike_len);
 
@@ -416,7 +416,7 @@ sparkle_dialog (void)
 			  svals.spike_pts, 0, 16, 1, 4, 0,
 			  TRUE, 0, 0,
 			  _("Adjust the Number of Spikes"), NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.spike_pts);
 
@@ -427,7 +427,7 @@ sparkle_dialog (void)
 			  TRUE, 0, 0,
 			  _("Adjust the Spike Angle "
 			    "(-1 means a Random Angle is choosen)"), NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.spike_angle);
 
@@ -437,7 +437,7 @@ sparkle_dialog (void)
 			  svals.density, 0.0, 1.0, 0.01, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("Adjust the Spike Density"), NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.density);
 
@@ -447,7 +447,7 @@ sparkle_dialog (void)
 			  svals.opacity, 0.0, 1.0, 0.01, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("Adjust the Opacity of the Spikes"), NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.opacity);
 
@@ -458,7 +458,7 @@ sparkle_dialog (void)
 			  TRUE, 0, 0,
 			  _("Adjust the Value how much the Hue should "
 			    "be changed randomly"), NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.random_hue);
 
@@ -469,7 +469,7 @@ sparkle_dialog (void)
 			  TRUE, 0, 0,
 			  _("Adjust the Value how much the Saturation should "
 			    "be changed randomly"), NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.random_saturation);
 
@@ -494,7 +494,7 @@ sparkle_dialog (void)
   gimp_help_set_help_data (toggle, _("Should the Luminosity be preserved?"),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &svals.preserve_luminosity);
 
@@ -505,7 +505,7 @@ sparkle_dialog (void)
 
   gimp_help_set_help_data (toggle, _("Should an Inverse Effect be done?"), NULL);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &svals.invers);
 
@@ -518,7 +518,7 @@ sparkle_dialog (void)
 			   _("Draw a Border of Spikes around the Image"),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &svals.border);
 

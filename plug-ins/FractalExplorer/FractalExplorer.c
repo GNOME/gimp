@@ -848,7 +848,7 @@ fractalexplorer_dialog_edit_list (GtkWidget          *lwidget,
   gtk_widget_show (hbox);
 
   button = gtk_button_new_from_stock (GTK_STOCK_OK);
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (fractalexplorer_list_ok_callback),
                     options);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
@@ -857,7 +857,7 @@ fractalexplorer_dialog_edit_list (GtkWidget          *lwidget,
   gtk_widget_show (button);
 
   button = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (fractalexplorer_list_cancel_callback),
                       options);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
@@ -1032,7 +1032,7 @@ fractalexplorer_list_add (fractalexplorerOBJ *obj)
   gtk_widget_show (list_item);
   gtk_list_select_item (GTK_LIST (fractalexplorer_gtk_list), pos);  
 
-  g_signal_connect (G_OBJECT (list_item), "button_press_event",
+  g_signal_connect (list_item, "button_press_event",
                     G_CALLBACK (list_button_press),
                     obj);
 
@@ -1080,7 +1080,7 @@ build_list_items (GtkWidget *list)
                          g);
       gtk_list_append_items (GTK_LIST (list), g_list_append(NULL,list_item));
 
-      g_signal_connect (G_OBJECT (list_item), "button_press_event",
+      g_signal_connect (list_item, "button_press_event",
                         G_CALLBACK (list_button_press),
                         g);
       gtk_widget_show (list_item);
@@ -1392,7 +1392,7 @@ add_objects_list (void)
   gimp_help_set_help_data (button,
 			   _("Select folder and rescan collection"), NULL); 
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (fractalexplorer_rescan_list),
                     NULL);
 
@@ -1404,7 +1404,7 @@ add_objects_list (void)
   gimp_help_set_help_data (button,
                            _("Delete currently selected fractal"), NULL); 
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (delete_fractal_callback),
                     list);
 
@@ -1471,7 +1471,7 @@ fractalexplorer_rescan_list (void)
 
                          NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &dlg);
 

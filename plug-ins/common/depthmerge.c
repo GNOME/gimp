@@ -652,7 +652,7 @@ DepthMerge_dialog (DepthMerge *dm)
 
 		     NULL);
 
-  g_signal_connect (G_OBJECT (dm->interface->dialog), "destroy",
+  g_signal_connect (dm->interface->dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -771,7 +771,7 @@ DepthMerge_dialog (DepthMerge *dm)
 			      dm->params.overlap, 0, 2, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.overlap));
   g_object_set_data (G_OBJECT (adj), "dm", dm);
@@ -781,7 +781,7 @@ DepthMerge_dialog (DepthMerge *dm)
 			      dm->params.offset, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.offset));
   g_object_set_data (G_OBJECT (adj), "dm", dm);
@@ -791,7 +791,7 @@ DepthMerge_dialog (DepthMerge *dm)
 			      dm->params.scale1, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.scale1));
   g_object_set_data (G_OBJECT (adj), "dm", dm);
@@ -801,7 +801,7 @@ DepthMerge_dialog (DepthMerge *dm)
 			      dm->params.scale2, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.scale2));
   g_object_set_data (G_OBJECT (adj), "dm", dm);

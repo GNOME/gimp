@@ -1161,7 +1161,7 @@ save_dialog (gint32 drawable_ID)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -1182,7 +1182,7 @@ save_dialog (gint32 drawable_ID)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), xsvals.x10_format);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &xsvals.x10_format);
 
@@ -1199,7 +1199,7 @@ save_dialog (gint32 drawable_ID)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Identifier Prefix:"), 1.0, 0.5,
 			     entry, 1, TRUE);
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (prefix_entry_callback),
                     NULL);
 
@@ -1213,7 +1213,7 @@ save_dialog (gint32 drawable_ID)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Comment:"), 1.0, 0.5,
 			     entry, 1, TRUE);
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (comment_entry_callback),
                     NULL);
 #endif
@@ -1224,7 +1224,7 @@ save_dialog (gint32 drawable_ID)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), xsvals.use_hot);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &xsvals.use_hot);
 
@@ -1243,7 +1243,7 @@ save_dialog (gint32 drawable_ID)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Hot Spot X:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xsvals.x_hot);
 
@@ -1253,7 +1253,7 @@ save_dialog (gint32 drawable_ID)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Y:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xsvals.y_hot);
 
@@ -1274,7 +1274,7 @@ save_dialog (gint32 drawable_ID)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), xsvals.write_mask);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &xsvals.write_mask);
 
@@ -1284,7 +1284,7 @@ save_dialog (gint32 drawable_ID)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Mask File Extension:"), 1.0, 0.5,
 			     entry, 1, TRUE);
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (mask_ext_entry_callback),
                     NULL);
 

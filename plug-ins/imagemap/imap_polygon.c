@@ -424,7 +424,7 @@ render_x(GtkTreeViewColumn *column, GtkCellRenderer *cell,
 
   gtk_tree_model_get(tree_model, iter, 0, &point, -1);
   sprintf(scratch, "%d", point->x);
-  g_object_set(G_OBJECT(cell), "text", scratch, "xalign", 1.0, NULL);
+  g_object_set(cell, "text", scratch, "xalign", 1.0, NULL);
 }
 
 static void
@@ -436,7 +436,7 @@ render_y(GtkTreeViewColumn *column, GtkCellRenderer *cell,
 
   gtk_tree_model_get(tree_model, iter, 0, &point, -1);
   sprintf(scratch, "%d", point->y);
-  g_object_set(G_OBJECT(cell), "text", scratch, "xalign", 1.0, NULL);
+  g_object_set(cell, "text", scratch, "xalign", 1.0, NULL);
 }
 
 static gpointer
@@ -467,7 +467,7 @@ polygon_create_info_widget(GtkWidget *frame)
    props->store = gtk_list_store_new (1, G_TYPE_POINTER);
    view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (props->store));
    gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(view), TRUE);
-   g_object_unref (G_OBJECT (props->store));
+   g_object_unref (props->store);
    gtk_widget_show (view);
 
    renderer = gtk_cell_renderer_text_new ();
@@ -500,7 +500,7 @@ polygon_create_info_widget(GtkWidget *frame)
    label = create_label_in_table(table, 0, 0, "_x:");
    props->x = create_spin_button_in_table(table, label, 0, 1, 1, 0, 
 					  max_width - 1);
-   g_signal_connect(G_OBJECT(props->x), "changed", 
+   g_signal_connect(props->x, "changed", 
 		    G_CALLBACK(x_changed_cb), (gpointer) props);
    gtk_widget_set_size_request(props->x, 64, -1);
    create_label_in_table(table, 0, 2, _("pixels"));
@@ -508,31 +508,31 @@ polygon_create_info_widget(GtkWidget *frame)
    label = create_label_in_table(table, 1, 0, "_y:");
    props->y = create_spin_button_in_table(table, label, 1, 1, 1, 0, 
 					  max_height - 1);
-   g_signal_connect(G_OBJECT(props->y), "changed", 
+   g_signal_connect(props->y, "changed", 
 		    G_CALLBACK(y_changed_cb), (gpointer) props);
    gtk_widget_set_size_request(props->y, 64, -1);
    create_label_in_table(table, 1, 2, _("pixels"));
 
    props->update = gtk_button_new_with_mnemonic(_("_Update"));
-   g_signal_connect(G_OBJECT(props->update), "clicked",
+   g_signal_connect(props->update, "clicked",
 		    G_CALLBACK(update_button_clicked), props);
    gtk_table_attach_defaults(GTK_TABLE(table), props->update, 1, 2, 2, 3);
    gtk_widget_show(props->update);
 
    props->insert = gtk_button_new_with_mnemonic(_("_Insert"));
-   g_signal_connect(G_OBJECT(props->insert), "clicked",
+   g_signal_connect(props->insert, "clicked",
 		    G_CALLBACK(insert_button_clicked), props);
    gtk_table_attach_defaults(GTK_TABLE(table), props->insert, 1, 2, 3, 4);
    gtk_widget_show(props->insert);
 
    props->append = gtk_button_new_with_mnemonic(_("A_ppend"));
-   g_signal_connect(G_OBJECT(props->append), "clicked",
+   g_signal_connect(props->append, "clicked",
 		    G_CALLBACK(append_button_clicked), props);
    gtk_table_attach_defaults(GTK_TABLE(table), props->append, 1, 2, 4, 5);
    gtk_widget_show(props->append);
 
    props->remove = gtk_button_new_with_mnemonic(_("_Remove"));
-   g_signal_connect(G_OBJECT(props->remove), "clicked",
+   g_signal_connect(props->remove, "clicked",
 		    G_CALLBACK(remove_button_clicked), props);
    gtk_table_attach_defaults(GTK_TABLE(table), props->remove, 1, 2, 5, 6);
    gtk_widget_show(props->remove);
@@ -541,7 +541,7 @@ polygon_create_info_widget(GtkWidget *frame)
 
    props->selection = gtk_tree_view_get_selection(GTK_TREE_VIEW (view));
    gtk_tree_selection_set_mode(props->selection, GTK_SELECTION_SINGLE);
-   g_signal_connect (G_OBJECT (props->selection), "changed",
+   g_signal_connect (props->selection, "changed",
 		     G_CALLBACK (select_row_cb), props);
 
    return props;

@@ -785,7 +785,7 @@ polarize_dialog (void)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -839,7 +839,7 @@ polarize_dialog (void)
 			      pcvals.circle, 0.0, 100.0, 1.0, 10.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &pcvals.circle);
 
@@ -848,7 +848,7 @@ polarize_dialog (void)
 			      pcvals.angle, 0.0, 359.0, 1.0, 15.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &pcvals.angle);
 
@@ -866,7 +866,7 @@ polarize_dialog (void)
 			     "side, as opposed to beginning at the left."),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled", 
+  g_signal_connect (toggle, "toggled", 
                     G_CALLBACK (polar_toggle_callback),
                     &pcvals.backwards);
 
@@ -881,7 +881,7 @@ polarize_dialog (void)
 			     "outside.  If checked it will be the opposite."),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled", 
+  g_signal_connect (toggle, "toggled", 
                     G_CALLBACK (polar_toggle_callback),
                     &pcvals.inverse);
 
@@ -896,7 +896,7 @@ polarize_dialog (void)
 			     "will be mapped onto a circle."),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled", 
+  g_signal_connect (toggle, "toggled", 
                     G_CALLBACK (polar_toggle_callback),
                     &pcvals.polrec);
 

@@ -317,10 +317,10 @@ history_add (const gchar *ref,
 
   combo_list = g_list_reverse (combo_list);
 
-  g_signal_handlers_block_by_func (G_OBJECT (GTK_COMBO (combo)->entry),
+  g_signal_handlers_block_by_func (GTK_COMBO (combo)->entry,
                                    entry_changed_callback, combo);
   gtk_combo_set_popdown_strings (GTK_COMBO (combo), combo_list);
-  g_signal_handlers_unblock_by_func (G_OBJECT (GTK_COMBO (combo)->entry),
+  g_signal_handlers_unblock_by_func (GTK_COMBO (combo)->entry,
                                      entry_changed_callback, combo);
 
   for (list = combo_list; list; list = list->next)
@@ -343,10 +343,10 @@ title_changed (HtmlDocument *doc,
 
   history_add (current_ref, title);
 
-  g_signal_handlers_block_by_func (G_OBJECT (GTK_COMBO (combo)->entry),
+  g_signal_handlers_block_by_func (GTK_COMBO (combo)->entry,
                                    entry_changed_callback, combo);
   gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (combo)->entry), title);
-  g_signal_handlers_unblock_by_func (G_OBJECT (GTK_COMBO (combo)->entry),
+  g_signal_handlers_unblock_by_func (GTK_COMBO (combo)->entry,
                                      entry_changed_callback, combo);
 
   g_free (title);
@@ -580,7 +580,7 @@ open_browser_dialog (const gchar *help_path,
 
   /*  the dialog window  */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  g_signal_connect (G_OBJECT (window), "destroy",
+  g_signal_connect (window, "destroy",
                     G_CALLBACK (close_callback),
                     NULL);
   gtk_window_set_wmclass (GTK_WINDOW (window), "helpbrowser", "Gimp");
@@ -601,21 +601,21 @@ open_browser_dialog (const gchar *help_path,
   button = gtk_button_new_from_stock (GTK_STOCK_HOME);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (button_callback),
                     GINT_TO_POINTER (BUTTON_HOME));
 
   button = gtk_button_new_from_stock (GTK_STOCK_INDEX);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (button_callback),
                     GINT_TO_POINTER (BUTTON_INDEX));
 
   back_button = button = gtk_button_new_from_stock (GTK_STOCK_GO_BACK);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_set_sensitive (GTK_WIDGET (button), FALSE);
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (button_callback),
                     GINT_TO_POINTER (BUTTON_BACK));
   gtk_widget_show (button);
@@ -623,7 +623,7 @@ open_browser_dialog (const gchar *help_path,
   forward_button = button = gtk_button_new_from_stock (GTK_STOCK_GO_FORWARD);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_set_sensitive (GTK_WIDGET (button), FALSE);
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (button_callback),
                     GINT_TO_POINTER (BUTTON_FORWARD));
   gtk_widget_show (button);
@@ -642,10 +642,10 @@ open_browser_dialog (const gchar *help_path,
                        help_dnd_target_table,
                        G_N_ELEMENTS (help_dnd_target_table), 
                        GDK_ACTION_MOVE | GDK_ACTION_COPY);
-  g_signal_connect (G_OBJECT (drag_source), "drag_begin",
+  g_signal_connect (drag_source, "drag_begin",
                     G_CALLBACK (drag_begin),
                     NULL);
-  g_signal_connect (G_OBJECT (drag_source), "drag_data_get",
+  g_signal_connect (drag_source, "drag_data_get",
                     G_CALLBACK (drag_data_get),
                     NULL);
   
@@ -657,11 +657,11 @@ open_browser_dialog (const gchar *help_path,
   combo = gtk_combo_new ();
   gtk_widget_set_size_request (GTK_WIDGET (combo), 360, -1);
   gtk_combo_set_use_arrows (GTK_COMBO (combo), TRUE);
-  g_object_set (G_OBJECT (GTK_COMBO (combo)->entry), "editable", FALSE, NULL); 
+  g_object_set (GTK_COMBO (combo)->entry, "editable", FALSE, NULL); 
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
-  g_signal_connect (G_OBJECT (GTK_COMBO (combo)->entry), "changed",
+  g_signal_connect (GTK_COMBO (combo)->entry, "changed",
                     G_CALLBACK (entry_changed_callback), 
                     combo);
 
@@ -686,13 +686,13 @@ open_browser_dialog (const gchar *help_path,
   
   html_view_set_document (HTML_VIEW (html), html_document_new ());
 
-  g_signal_connect (G_OBJECT (HTML_VIEW (html)->document), "title_changed",
+  g_signal_connect (HTML_VIEW (html)->document, "title_changed",
                     G_CALLBACK (title_changed),
                     NULL);
-  g_signal_connect (G_OBJECT (HTML_VIEW (html)->document), "link_clicked",
+  g_signal_connect (HTML_VIEW (html)->document, "link_clicked",
                     G_CALLBACK (link_clicked),
                     NULL);
-  g_signal_connect (G_OBJECT (HTML_VIEW (html)->document), "request_url",
+  g_signal_connect (HTML_VIEW (html)->document, "request_url",
                     G_CALLBACK (request_url),
                     NULL);
 

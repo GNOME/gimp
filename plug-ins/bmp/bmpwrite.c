@@ -328,7 +328,7 @@ WriteBMP (gchar  *filename,
   return GIMP_PDB_SUCCESS;
 }
 
-static void 
+void 
 WriteImage (FILE   *f, 
 	    guchar *src, 
 	    gint    width, 
@@ -566,7 +566,7 @@ save_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -584,7 +584,7 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), encoded);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &encoded);
 

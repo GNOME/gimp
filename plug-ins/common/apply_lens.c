@@ -396,7 +396,7 @@ lens_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -415,7 +415,7 @@ lens_dialog (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), lvals.keep_surr);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &lvals.keep_surr);
 
@@ -428,7 +428,7 @@ lens_dialog (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), lvals.use_bkgr);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &lvals.use_bkgr);
 
@@ -441,7 +441,7 @@ lens_dialog (GimpDrawable *drawable)
 				    lvals.set_transparent);
       gtk_widget_show (toggle);
 
-      g_signal_connect (G_OBJECT (toggle), "toggled",
+      g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &lvals.set_transparent);
   }
@@ -464,7 +464,7 @@ lens_dialog (GimpDrawable *drawable)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &lvals.refraction);
 

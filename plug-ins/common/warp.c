@@ -422,7 +422,7 @@ warp_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -450,7 +450,7 @@ warp_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Step Size:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.amount);
 
@@ -459,7 +459,7 @@ warp_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Iterations:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &dvals.iter);
 
@@ -498,7 +498,7 @@ warp_dialog (GimpDrawable *drawable)
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (WRAP));
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &dvals.wrap_type);
 
@@ -513,7 +513,7 @@ warp_dialog (GimpDrawable *drawable)
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (SMEAR));
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &dvals.wrap_type);
 
@@ -528,7 +528,7 @@ warp_dialog (GimpDrawable *drawable)
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (BLACK));
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &dvals.wrap_type);
 
@@ -543,7 +543,7 @@ warp_dialog (GimpDrawable *drawable)
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (COLOR));
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &dvals.wrap_type);
 
@@ -573,7 +573,7 @@ warp_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Dither Size:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.dither);
 
@@ -582,7 +582,7 @@ warp_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Rotation Angle:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.angle);
 
@@ -591,7 +591,7 @@ warp_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Substeps:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &dvals.substeps);
 
@@ -620,7 +620,7 @@ warp_dialog (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.mag_use);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &dvals.mag_use);
 
@@ -648,7 +648,7 @@ warp_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (otable), 0, 0,
 			     _("Gradient Scale:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.grad_scale);
 
@@ -673,7 +673,7 @@ warp_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (otable), 0, 1,
 			     _("Vector Mag:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.vector_scale);
 
@@ -684,7 +684,7 @@ warp_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (otable), 0, 2,
 			     _("Angle:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.vector_angle);
 

@@ -613,7 +613,7 @@ ifs_compose_trans_page (void)
   ifsD->flip_check_button = gtk_check_button_new_with_label (_("Flip"));
   gtk_table_attach (GTK_TABLE (table), ifsD->flip_check_button, 0, 6, 2, 3,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  g_signal_connect (G_OBJECT (ifsD->flip_check_button), "toggled",
+  g_signal_connect (ifsD->flip_check_button, "toggled",
 		    G_CALLBACK (flip_check_button_callback),
 		    NULL);
   gtk_widget_show (ifsD->flip_check_button);
@@ -645,7 +645,7 @@ ifs_compose_color_page (void)
   gtk_table_attach (GTK_TABLE (table), ifsD->simple_button, 0, 1, 0, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (ifsD->simple_button));
-  g_signal_connect (G_OBJECT (ifsD->simple_button), "toggled",
+  g_signal_connect (ifsD->simple_button, "toggled",
 		    G_CALLBACK (simple_color_toggled),
 		    NULL);
   gtk_widget_show (ifsD->simple_button);
@@ -802,7 +802,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   g_object_add_weak_pointer (G_OBJECT (dlg), (gpointer *) &dlg);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
 		    G_CALLBACK (gtk_main_quit),
 		    NULL);
 
@@ -864,7 +864,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 		      TRUE, TRUE, 0);
   gtk_widget_show (ifsD->move_button);
   ifsD->move_handler =
-    g_signal_connect (G_OBJECT (ifsD->move_button), "toggled",
+    g_signal_connect (ifsD->move_button, "toggled",
 		      G_CALLBACK (design_op_callback),
 		      GINT_TO_POINTER (OP_TRANSLATE));
 
@@ -873,7 +873,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 		      TRUE, TRUE, 0);
   gtk_widget_show (ifsD->rotate_button);
   ifsD->rotate_handler =
-    g_signal_connect (G_OBJECT (ifsD->rotate_button), "toggled",
+    g_signal_connect (ifsD->rotate_button, "toggled",
 		      G_CALLBACK (design_op_callback),
 		      GINT_TO_POINTER (OP_ROTATE));
 
@@ -882,7 +882,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 		      TRUE, TRUE, 0);
   gtk_widget_show (ifsD->stretch_button);
   ifsD->stretch_handler =
-    g_signal_connect (G_OBJECT (ifsD->stretch_button), "toggled",
+    g_signal_connect (ifsD->stretch_button, "toggled",
 		      G_CALLBACK (design_op_callback),
 		      GINT_TO_POINTER (OP_STRETCH));
 
@@ -898,14 +898,14 @@ ifs_compose_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (alignment), util_hbox);
 
   button = gtk_button_new_with_label (_("Render Options"));
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
 		    G_CALLBACK (ifs_options_dialog),
 		    NULL);
   gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label (_("Preview"));
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
 		    G_CALLBACK (ifs_compose_preview),
 		    NULL);
   gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
@@ -915,7 +915,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (util_hbox), check_button, TRUE, TRUE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
 				ifsD->auto_preview);
-  g_signal_connect (G_OBJECT (check_button), "toggled",
+  g_signal_connect (check_button, "toggled",
 		    G_CALLBACK (auto_preview_callback),
 		    NULL);
   gtk_widget_show (check_button);
@@ -1086,19 +1086,19 @@ design_area_create (GtkWidget *window,
   ifsDesign->area = gtk_drawing_area_new ();
   gtk_widget_set_size_request (ifsDesign->area, design_width, design_height);
 
-  g_signal_connect (G_OBJECT (ifsDesign->area), "expose_event",
+  g_signal_connect (ifsDesign->area, "expose_event",
 		    G_CALLBACK (design_area_expose),
 		    NULL);
-  g_signal_connect (G_OBJECT (ifsDesign->area), "button_press_event",
+  g_signal_connect (ifsDesign->area, "button_press_event",
 		    G_CALLBACK (design_area_button_press),
-		      NULL);
-  g_signal_connect (G_OBJECT (ifsDesign->area), "button_release_event",
+		    NULL);
+  g_signal_connect (ifsDesign->area, "button_release_event",
 		    G_CALLBACK (design_area_button_release),
 		    NULL);
-  g_signal_connect (G_OBJECT (ifsDesign->area), "motion_notify_event",
+  g_signal_connect (ifsDesign->area, "motion_notify_event",
 		    G_CALLBACK (design_area_motion),
 		    NULL);
-  g_signal_connect (G_OBJECT (ifsDesign->area), "configure_event",
+  g_signal_connect (ifsDesign->area, "configure_event",
 		    G_CALLBACK (design_area_configure),
 		    NULL);
   gtk_widget_set_events (ifsDesign->area,
@@ -1128,7 +1128,7 @@ design_op_menu_create (GtkWidget *window)
   menu_item = gtk_menu_item_new_with_label (_("Move"));
   gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show (menu_item);
-  g_signal_connect (G_OBJECT (menu_item),"activate",
+  g_signal_connect (menu_item,"activate",
 		    G_CALLBACK (design_op_update_callback),
 		    GINT_TO_POINTER (OP_TRANSLATE));
   gtk_widget_add_accelerator (menu_item,
@@ -1140,7 +1140,7 @@ design_op_menu_create (GtkWidget *window)
   menu_item = gtk_menu_item_new_with_label (_("Rotate/Scale"));
   gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show (menu_item);
-  g_signal_connect (G_OBJECT (menu_item), "activate",
+  g_signal_connect (menu_item, "activate",
 		    G_CALLBACK (design_op_update_callback),
 		    GINT_TO_POINTER (OP_ROTATE));
   gtk_widget_add_accelerator (menu_item,
@@ -1152,7 +1152,7 @@ design_op_menu_create (GtkWidget *window)
   menu_item = gtk_menu_item_new_with_label (_("Stretch"));
   gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show (menu_item);
-  g_signal_connect (G_OBJECT (menu_item), "activate",
+  g_signal_connect (menu_item, "activate",
 		    G_CALLBACK (design_op_update_callback),
 		    GINT_TO_POINTER (OP_STRETCH));
   gtk_widget_add_accelerator (menu_item,
@@ -1169,7 +1169,7 @@ design_op_menu_create (GtkWidget *window)
   menu_item = gtk_menu_item_new_with_label (_("Select All"));
   gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show (menu_item);
-  g_signal_connect (G_OBJECT (menu_item), "activate",
+  g_signal_connect (menu_item, "activate",
 		    G_CALLBACK (design_area_select_all_callback),
 		    NULL);
   gtk_widget_add_accelerator (menu_item,
@@ -1181,7 +1181,7 @@ design_op_menu_create (GtkWidget *window)
   menu_item = gtk_menu_item_new_with_label (_("Recompute Center"));
   gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show (menu_item);
-  g_signal_connect (G_OBJECT(menu_item), "activate",
+  g_signal_connect (menu_item, "activate",
 		    G_CALLBACK (recompute_center_cb),
 		    NULL);
   gtk_widget_add_accelerator(menu_item,
@@ -1193,7 +1193,7 @@ design_op_menu_create (GtkWidget *window)
   menu_item = gtk_menu_item_new_with_label (_("Undo"));
   gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show (menu_item);
-  g_signal_connect (G_OBJECT (menu_item), "activate",
+  g_signal_connect (menu_item, "activate",
 		    G_CALLBACK (undo),
 		    NULL);
   gtk_widget_add_accelerator (menu_item,
@@ -1205,7 +1205,7 @@ design_op_menu_create (GtkWidget *window)
   menu_item = gtk_menu_item_new_with_label(_("Redo"));
   gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show(menu_item);
-  g_signal_connect (G_OBJECT (menu_item), "activate",
+  g_signal_connect (menu_item, "activate",
 		    G_CALLBACK (redo),
 		    NULL);
   gtk_widget_add_accelerator(menu_item,
@@ -2033,11 +2033,11 @@ color_map_create (gchar    *name,
 		      FALSE, FALSE, 0);
   gtk_widget_show (color_map->button);
 
-  g_signal_connect (G_OBJECT (color_map->button), "color_changed",
+  g_signal_connect (color_map->button, "color_changed",
 		    G_CALLBACK (gimp_color_button_get_color),
 		    data);
 
-  g_signal_connect (G_OBJECT (color_map->button), "color_changed",
+  g_signal_connect (color_map->button, "color_changed",
 		    G_CALLBACK (color_map_color_changed_cb),
 		    color_map);
 
@@ -2129,7 +2129,7 @@ value_pair_create (gpointer      data,
   g_object_ref (value_pair->adjustment);
   gtk_object_sink (value_pair->adjustment);
 
-  g_signal_connect (G_OBJECT (value_pair->adjustment), "value_changed",
+  g_signal_connect (value_pair->adjustment, "value_changed",
 		    G_CALLBACK (value_pair_scale_callback),
 		    value_pair);
 
@@ -2158,10 +2158,10 @@ value_pair_create (gpointer      data,
   value_pair->entry = gtk_entry_new ();
   gtk_widget_set_size_request (value_pair->entry, ENTRY_WIDTH, -1);
   value_pair->entry_handler_id =
-    g_signal_connect (G_OBJECT (value_pair->entry), "changed",
+    g_signal_connect (value_pair->entry, "changed",
 		      G_CALLBACK (value_pair_entry_callback),
 		      value_pair);
-  g_signal_connect (G_OBJECT (value_pair->entry), "destroy",
+  g_signal_connect (value_pair->entry, "destroy",
 		    G_CALLBACK (value_pair_destroy_callback),
 		    value_pair);
 
@@ -2186,10 +2186,10 @@ value_pair_update (ValuePair *value_pair)
       sprintf (buffer, "%0.2f", *value_pair->data.d);
     }
 
-  g_signal_handler_block (G_OBJECT (value_pair->entry),
+  g_signal_handler_block (value_pair->entry,
 			  value_pair->entry_handler_id);
   gtk_entry_set_text (GTK_ENTRY (value_pair->entry), buffer);
-  g_signal_handler_unblock (G_OBJECT (value_pair->entry),
+  g_signal_handler_unblock (value_pair->entry,
 			    value_pair->entry_handler_id);
 }
 
@@ -2221,10 +2221,10 @@ value_pair_scale_callback (GtkAdjustment *adjustment,
 
   if (changed)
     {
-      g_signal_handler_block (G_OBJECT (value_pair->entry),
+      g_signal_handler_block (value_pair->entry,
 			      value_pair->entry_handler_id);
       gtk_entry_set_text (GTK_ENTRY (value_pair->entry), buffer);
-      g_signal_handler_unblock (G_OBJECT (value_pair->entry),
+      g_signal_handler_unblock (value_pair->entry,
 				value_pair->entry_handler_id);
 
       val_changed_update ();
@@ -2285,27 +2285,27 @@ design_op_callback (GtkWidget *widget,
       switch (ifsDesign->op)
 	{
 	case OP_TRANSLATE:
-	  g_signal_handler_block (G_OBJECT(ifsD->move_button),
+	  g_signal_handler_block (ifsD->move_button,
 				  ifsD->move_handler);
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ifsD->move_button),
 					FALSE);
-	  g_signal_handler_unblock (G_OBJECT (ifsD->move_button),
+	  g_signal_handler_unblock (ifsD->move_button,
 				    ifsD->move_handler);
 	  break;
 	case OP_ROTATE:
-	  g_signal_handler_block (G_OBJECT(ifsD->rotate_button),
+	  g_signal_handler_block (ifsD->rotate_button,
 				  ifsD->rotate_handler);
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ifsD->rotate_button),
 					FALSE);
-	  g_signal_handler_unblock (G_OBJECT (ifsD->rotate_button),
+	  g_signal_handler_unblock (ifsD->rotate_button,
 				    ifsD->rotate_handler);
 	  break;
 	case OP_STRETCH:
-	  g_signal_handler_block (G_OBJECT (ifsD->stretch_button),
+	  g_signal_handler_block (ifsD->stretch_button,
 				  ifsD->stretch_handler);
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(ifsD->stretch_button),
 					FALSE);
-	  g_signal_handler_unblock (G_OBJECT (ifsD->stretch_button),
+	  g_signal_handler_unblock (ifsD->stretch_button,
 				    ifsD->stretch_handler);
 	  break;
 	}

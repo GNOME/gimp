@@ -55,7 +55,7 @@ add_stock_icon(GtkIconFactory *factory, const gchar *stock_id,
    pixbuf = gdk_pixbuf_new_from_xpm_data(xpm_data);
    icon_set = gtk_icon_set_new_from_pixbuf(pixbuf);
    gtk_icon_factory_add(factory, stock_id, icon_set);
-   g_object_unref(G_OBJECT(pixbuf));
+   g_object_unref(pixbuf);
    gtk_icon_set_unref(icon_set);
 }
 

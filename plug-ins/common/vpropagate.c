@@ -1043,7 +1043,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -1071,7 +1071,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
       g_object_set_data (G_OBJECT (button), "gimp-item-data",
                          GINT_TO_POINTER (index));
 
-      g_signal_connect (G_OBJECT (button), "toggled",
+      g_signal_connect (button, "toggled",
                         G_CALLBACK (gimp_radio_button_update),
                         &vpvals.propagate_mode);
 
@@ -1097,7 +1097,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
 			      vpvals.lower_limit, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &vpvals.lower_limit);
 
@@ -1106,7 +1106,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
 			      vpvals.upper_limit, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &vpvals.upper_limit);
 
@@ -1115,7 +1115,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
 			      vpvals.propagating_rate, 0, 1, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &vpvals.propagating_rate);
 
@@ -1204,7 +1204,7 @@ gtk_table_add_toggle (GtkWidget *table,
 		    GTK_FILL|GTK_EXPAND, 0, 0, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (update),
                     value);
 

@@ -350,7 +350,7 @@ type_dialog (gint selected)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -376,7 +376,7 @@ type_dialog (gint selected)
 	gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
 	gtk_widget_show (toggle);
 
-	g_signal_connect (G_OBJECT (toggle), "toggled",
+	g_signal_connect (toggle, "toggled",
                           G_CALLBACK (type_dialog_toggle_update),
                           (gpointer) (*p)->formatname);
 

@@ -390,23 +390,23 @@ make_selection(ObjectList_t *object_list)
    /* Drop support */
    gtk_drag_dest_set(list, GTK_DEST_DEFAULT_ALL, target_table,
 		     2, GDK_ACTION_COPY);
-   g_signal_connect(G_OBJECT(list), "drag_data_received",
+   g_signal_connect(list, "drag_data_received",
 		    G_CALLBACK(handle_drop), NULL);
 
    /* Callbacks we are interested in */
-   g_signal_connect(G_OBJECT(list), "click_column",
+   g_signal_connect(list, "click_column",
 		    G_CALLBACK(toggle_order), data);
-   g_signal_connect(G_OBJECT(list), "select_row",
+   g_signal_connect(list, "select_row",
 		    G_CALLBACK(select_row_cb), data);
-   g_signal_connect(G_OBJECT(list), "unselect_row",
+   g_signal_connect(list, "unselect_row",
 		    G_CALLBACK(unselect_row_cb), data);
-   g_signal_connect(G_OBJECT(list), "row_move",
+   g_signal_connect(list, "row_move",
 		    G_CALLBACK(row_move_cb), data);
 
    /* For handling doubleclick */
-   g_signal_connect(G_OBJECT(list), "button_press_event",
+   g_signal_connect(list, "button_press_event",
 		    G_CALLBACK(button_press_cb), data);
-   g_signal_connect(G_OBJECT(list), "button_release_event",
+   g_signal_connect(list, "button_release_event",
 		    G_CALLBACK(button_release_cb), data);
 
    gtk_clist_set_selection_mode(GTK_CLIST(list), GTK_SELECTION_MULTIPLE);

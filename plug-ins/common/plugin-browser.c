@@ -417,7 +417,7 @@ procedure_general_select_callback (PDesc *pdesc,
       gtk_text_buffer_set_text (text_buffer, selected_proc_help, -1);
 
       text_view = gtk_text_view_new_with_buffer (text_buffer);
-      g_object_unref (G_OBJECT (text_buffer));
+      g_object_unref (text_buffer);
 
       gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
       gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
@@ -544,9 +544,9 @@ procedure_clist_select_callback (GtkWidget      *widget,
       gtk_widget_hide (pdesc->ctree); 
       gtk_widget_show (pdesc->ctree); 
 
-      gtk_signal_handler_block_by_func (GTK_OBJECT(pdesc->ctree),
-					GTK_SIGNAL_FUNC (procedure_ctree_select_callback),
-					pdesc);
+      g_signal_handlers_block_by_func (pdesc->ctree,
+				       G_CALLBACK (procedure_ctree_select_callback),
+				       pdesc);
 
       gtk_clist_select_row (GTK_CLIST (pdesc->ctree), sel_row, -1);  
       gtk_ctree_select (GTK_CTREE (pdesc->ctree), found_node);
@@ -556,9 +556,9 @@ procedure_clist_select_callback (GtkWidget      *widget,
 			0,
 			0.5, 0.5);
 
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (pdesc->ctree),
-					  GTK_SIGNAL_FUNC (procedure_ctree_select_callback),
-					  pdesc);
+      g_signal_handlers_unblock_by_func (pdesc->ctree,
+					 G_CALLBACK (procedure_ctree_select_callback),
+					 pdesc);
 
       pdesc->ctree_row = sel_row;
     }
@@ -642,9 +642,9 @@ procedure_ctree_select_callback (GtkWidget *widget,
   /* Must set clist to this one */
   /* Block signals */
 
-  gtk_signal_handler_block_by_func (GTK_OBJECT (pdesc->clist),
-				    GTK_SIGNAL_FUNC (procedure_clist_select_callback),
-				    pdesc);
+  g_signal_handlers_block_by_func (pdesc->clist,
+				   G_CALLBACK (procedure_clist_select_callback),
+				   pdesc);
 
   sel_row = gtk_clist_find_row_from_data (GTK_CLIST (pdesc->clist), pinfo);
   gtk_clist_select_row (GTK_CLIST (pdesc->clist), sel_row, -1);  
@@ -653,9 +653,9 @@ procedure_ctree_select_callback (GtkWidget *widget,
 		    0,
 		    0.5, 0.5);
 
-  gtk_signal_handler_unblock_by_func (GTK_OBJECT (pdesc->clist),
-				      GTK_SIGNAL_FUNC (procedure_clist_select_callback),
-				      pdesc);
+  g_signal_handlers_unblock_by_func (pdesc->clist,
+				     G_CALLBACK (procedure_clist_select_callback),
+				     pdesc);
 
   pdesc->clist_row = sel_row;
   
@@ -881,9 +881,9 @@ get_plugin_info (PDesc       *pdesc,
 	  row_count++;
 
 	  /* Now do the tree view.... */
-	  gtk_signal_handler_block_by_func (GTK_OBJECT(pdesc->ctree),
-					    GTK_SIGNAL_FUNC (procedure_ctree_select_callback),
-					    pdesc);
+	  g_signal_handlers_block_by_func (pdesc->ctree,
+					   G_CALLBACK (procedure_ctree_select_callback),
+					   pdesc);
 	  insert_into_ctree (pdesc,
 			     name,
 			     xtimestr,
@@ -891,9 +891,9 @@ get_plugin_info (PDesc       *pdesc,
 			     types_strs[loop],
 			     ghash,
 			     pinfo);
-	  gtk_signal_handler_unblock_by_func (GTK_OBJECT (pdesc->ctree),
-					      GTK_SIGNAL_FUNC (procedure_ctree_select_callback),
-					      pdesc);
+	  g_signal_handlers_unblock_by_func (pdesc->ctree,
+					     G_CALLBACK (procedure_ctree_select_callback),
+					     pdesc);
 	}
     }
 

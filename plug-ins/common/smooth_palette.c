@@ -428,7 +428,7 @@ dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -462,7 +462,7 @@ dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (sizeentry), 0, 2,
 			     _("_Search Depth:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.ntries);
 

@@ -1163,7 +1163,7 @@ key_press_cb(GtkWidget *widget, GdkEventKey *event)
       break;
    }
    if (handled)
-      g_signal_stop_emission_by_name(G_OBJECT(widget), "key_press_event");
+      g_signal_stop_emission_by_name(widget, "key_press_event");
 
    return handled;
 }
@@ -1415,11 +1415,11 @@ dialog(GimpDrawable *drawable)
    gimp_help_connect (dlg, gimp_standard_help_func, "filters/imagemap.html");
 
    gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
-   g_signal_connect(G_OBJECT(dlg), "delete_event", 
+   g_signal_connect(dlg, "delete_event", 
 		    G_CALLBACK(close_callback), NULL);
-   g_signal_connect(G_OBJECT(dlg), "key_press_event", 
+   g_signal_connect(dlg, "key_press_event", 
 		    G_CALLBACK(key_press_cb), NULL);
-   g_signal_connect(G_OBJECT(dlg), "key_release_event", 
+   g_signal_connect(dlg, "key_release_event", 
 		    G_CALLBACK(key_release_cb), NULL);
 
    main_vbox = gtk_vbox_new(FALSE, 1);

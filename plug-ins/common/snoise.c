@@ -512,7 +512,7 @@ solid_noise_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -544,7 +544,7 @@ solid_noise_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("_Detail:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &snvals.detail);
 
@@ -555,7 +555,7 @@ solid_noise_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.turbulent);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &snvals.turbulent);
 
@@ -566,7 +566,7 @@ solid_noise_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.tilable);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &snvals.tilable);
 
@@ -576,7 +576,7 @@ solid_noise_dialog (void)
 			      snvals.xsize, 0.1, SCALE_MAX, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &snvals.xsize);
 
@@ -586,7 +586,7 @@ solid_noise_dialog (void)
 			      snvals.ysize, 0.1, SCALE_MAX, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &snvals.ysize);
 

@@ -2474,7 +2474,7 @@ dialog_box (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -2517,10 +2517,10 @@ dialog_box (void)
 			      config.x, MIN_XTILES, MAX_XTILES, 1.0, 4.0, 0,
 			      TRUE, 0, 0,
 			      _("Number of pieces going across"), NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.x);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (jigsaw),
                     NULL);
 
@@ -2530,10 +2530,10 @@ dialog_box (void)
 			      config.y, MIN_YTILES, MAX_YTILES, 1.0, 4.0, 0,
 			      TRUE, 0, 0,
 			      _("Number of pieces going down"), NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.y);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (jigsaw),
                     NULL);
 
@@ -2557,10 +2557,10 @@ dialog_box (void)
 			      MIN_BLEND_LINES, MAX_BLEND_LINES, 1.0, 2.0, 0,
 			      TRUE, 0, 0,
 			      _("Degree of slope of each piece's edge"), NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.blend_lines);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (jigsaw),
                     NULL);
 
@@ -2572,10 +2572,10 @@ dialog_box (void)
 			      TRUE, 0, 0,
 			      _("The amount of highlighting on the edges "
 				"of each piece"), NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config.blend_amount);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (jigsaw),
                     NULL);
 
@@ -2617,7 +2617,7 @@ dialog_box (void)
 
   gimp_help_set_help_data (cbutton, _("Toggle Tooltips on/off"), NULL);
 
-  g_signal_connect (G_OBJECT (cbutton), "toggled",
+  g_signal_connect (cbutton, "toggled",
                     G_CALLBACK (check_button_callback),
                     NULL);
 

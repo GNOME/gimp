@@ -653,7 +653,7 @@ unsharp_mask_dialog (void)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (window), "destroy",
+  g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -675,7 +675,7 @@ unsharp_mask_dialog (void)
 			      unsharp_params.radius, 0.1, 120.0, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &unsharp_params.radius);
 
@@ -684,7 +684,7 @@ unsharp_mask_dialog (void)
 			      unsharp_params.amount, 0.0, 5.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &unsharp_params.amount);
 
@@ -693,7 +693,7 @@ unsharp_mask_dialog (void)
 			      unsharp_params.threshold, 0.0, 255.0, 1.0, 10.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &unsharp_params.threshold);
 

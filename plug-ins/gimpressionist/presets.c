@@ -364,9 +364,9 @@ static void create_savepreset(void)
 
 		     NULL);
 
-  g_signal_connect (G_OBJECT(window), "destroy",
+  g_signal_connect (window, "destroy",
 		    G_CALLBACK(gtk_widget_destroy), NULL);
-  g_signal_connect (G_OBJECT(window), "delete_event",
+  g_signal_connect (window, "delete_event",
 		    G_CALLBACK(gtk_widget_destroy), NULL);
 
   box = gtk_vbox_new(FALSE, 5);
@@ -386,7 +386,7 @@ static void create_savepreset(void)
   gtk_widget_show (swin);
 
   buffer = gtk_text_buffer_new (NULL);
-  g_signal_connect (G_OBJECT (buffer), "changed",
+  g_signal_connect (buffer, "changed",
 		    G_CALLBACK (presetdesccallback), NULL);
   gtk_text_buffer_set_text (buffer, presetdesc, -1);
   
@@ -597,8 +597,7 @@ void create_presetpage(GtkNotebook *notebook)
   presetsavebutton = tmpw = gtk_button_new_with_label( _("Save current..."));
   gtk_box_pack_start(GTK_BOX(box1), tmpw, FALSE, FALSE, 5);
   gtk_widget_show (tmpw);
-  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(create_savepreset),
-		    NULL);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK(create_savepreset), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Save the current settings to the specified file"), 
 		       NULL);
@@ -608,7 +607,7 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_widget_show (box1);
 
   presetlist = view = createonecolumnlist (box1, selectpreset);
-  store = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
+  store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   addfactorydefaults (store);
 
@@ -627,24 +626,21 @@ void create_presetpage(GtkNotebook *notebook)
   tmpw = gtk_button_new_from_stock (GTK_STOCK_APPLY);
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(applypreset),
-		    selection);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK(applypreset), selection);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Reads the selected Preset into memory"), NULL);
 
   tmpw = gtk_button_new_from_stock (GTK_STOCK_DELETE);
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
-  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(deletepreset), 
-		    selection);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK(deletepreset), selection);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw,
 		       _("Deletes the selected Preset"), NULL);
 
   tmpw = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
-  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(presetsrefresh), 
-		    NULL);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK(presetsrefresh), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Reread the folder of Presets"), NULL);
 

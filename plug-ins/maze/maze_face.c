@@ -199,7 +199,7 @@ maze_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -262,7 +262,7 @@ maze_dialog (void)
 			     _("Multiple (57):"), 1.0, 0.5,
 			     entry, 1, FALSE);
   trow++;
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (maze_entry_callback),
                     &mvals.multiple);
 
@@ -275,7 +275,7 @@ maze_dialog (void)
 			     _("Offset (1):"), 1.0, 0.5,
 			     entry, 1, FALSE);
   trow++;
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (maze_entry_callback),
                     &mvals.offset);
 #endif
@@ -287,7 +287,7 @@ maze_dialog (void)
 			     NULL, 1.0, 0.5,
 			     tilecheck, 1, FALSE);
   trow++;
-  g_signal_connect (G_OBJECT (tilecheck), "clicked",
+  g_signal_connect (tilecheck, "clicked",
                     G_CALLBACK (gimp_toggle_button_update), 
                     &mvals.tile);
 
@@ -404,13 +404,13 @@ divbox_new (guint      *max,
 
   gtk_widget_show_all (hbox);
 
-  g_signal_connect (GTK_OBJECT (buttonl), "clicked",
+  g_signal_connect (buttonl, "clicked",
                     G_CALLBACK (div_button_callback), 
                     *div_entry);
-  g_signal_connect (GTK_OBJECT (buttonr), "clicked",
+  g_signal_connect (buttonr, "clicked",
                     G_CALLBACK (div_button_callback), 
                     *div_entry);
-  g_signal_connect (GTK_OBJECT (*div_entry), "changed",
+  g_signal_connect (*div_entry, "changed",
                     G_CALLBACK (div_entry_callback),
                     friend);
 
@@ -563,13 +563,13 @@ height_width_callback (gint        width,
 
   data = g_object_get_data (G_OBJECT(*div_entry), "friend");
 
-  g_signal_handlers_block_by_func (G_OBJECT (*div_entry),
+  g_signal_handlers_block_by_func (*div_entry,
                                    entscale_int_entry_update,
                                    data);
 
   gtk_entry_set_text (GTK_ENTRY (*div_entry), buffer);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (*div_entry),
+  g_signal_handlers_unblock_by_func (*div_entry,
                                      entscale_int_entry_update,
                                      data);
 }
@@ -731,13 +731,13 @@ entscale_int_new (GtkWidget *table,
   g_object_set_data (G_OBJECT (entry), "userdata", userdata);
 
   /* now ready for signals */
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (entscale_int_entry_update),
                     intvar);
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+  g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (entscale_int_scale_update),
                     intvar);
-  g_signal_connect (G_OBJECT (entry), "destroy",
+  g_signal_connect (entry, "destroy",
                     G_CALLBACK (entscale_int_destroy_callback),
                     userdata );
 
@@ -790,13 +790,13 @@ entscale_int_scale_update (GtkAdjustment *adjustment,
   g_snprintf (buffer, BUFSIZE, "%d", (int) new_val);
   
   /* avoid infinite loop (scale, entry, scale, entry ...) */
-  g_signal_handlers_block_by_func (G_OBJECT (entry),
+  g_signal_handlers_block_by_func (entry,
                                    entscale_int_entry_update,
                                    data);
 
   gtk_entry_set_text (entry, buffer);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (entry),
+  g_signal_handlers_unblock_by_func (entry,
                                      entscale_int_entry_update,
                                      data);
 
@@ -830,13 +830,13 @@ entscale_int_entry_update (GtkWidget *widget,
 
   adjustment->value = constraint_val;
 
-  g_signal_handlers_block_by_func (G_OBJECT (adjustment),
+  g_signal_handlers_block_by_func (adjustment,
                                    entscale_int_scale_update,
                                    data);
 
   gtk_adjustment_value_changed (adjustment);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (adjustment),
+  g_signal_handlers_unblock_by_func (adjustment,
                                      entscale_int_scale_update,
                                      data);
   

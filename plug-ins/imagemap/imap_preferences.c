@@ -361,16 +361,16 @@ area_event(GtkWidget *widget, GdkEvent *event, PreferencesDialog_t *param,
       param->color_sel = GTK_COLOR_SELECTION_DIALOG(
 	 param->color_sel_dlg)->colorsel;
    
-      g_signal_connect(G_OBJECT(param->color_sel), "color_changed", 
-		       (GtkSignalFunc)color_changed, (gpointer) param);
+      g_signal_connect(param->color_sel, "color_changed", 
+		       G_CALLBACK(color_changed), (gpointer) param);
 
-      g_signal_connect(
-	 G_OBJECT(GTK_COLOR_SELECTION_DIALOG(dialog)->ok_button), 
-	 "clicked", GTK_SIGNAL_FUNC(select_color_ok), (gpointer) param);
+      g_signal_connect(GTK_COLOR_SELECTION_DIALOG(dialog)->ok_button,
+		       "clicked",
+		       G_CALLBACK(select_color_ok), (gpointer) param);
 
-      g_signal_connect(
-	 G_OBJECT(GTK_COLOR_SELECTION_DIALOG(dialog)->cancel_button), 
-	 "clicked", GTK_SIGNAL_FUNC(select_color_cancel), (gpointer) param);
+      g_signal_connect(GTK_COLOR_SELECTION_DIALOG(dialog)->cancel_button,
+		       "clicked",
+		       G_CALLBACK(select_color_cancel), (gpointer) param);
    }
 
    _color_changed_func = color_changed_func;
@@ -495,7 +495,7 @@ create_menu_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 
 static GtkWidget*
 create_color_field(PreferencesDialog_t *data, GtkWidget *table, gint row, 
-		   gint col, GtkSignalFunc func)
+		   gint col, GCallback func)
 {
    GtkWidget *area = gtk_drawing_area_new();
 
@@ -503,7 +503,7 @@ create_color_field(PreferencesDialog_t *data, GtkWidget *table, gint row,
    gtk_widget_set_events(area, GDK_BUTTON_PRESS_MASK);
    gtk_table_attach_defaults(GTK_TABLE(table), area, col, col + 1, row, 
 			     row + 1);
-   g_signal_connect(G_OBJECT(area), "event", func, (gpointer) data);
+   g_signal_connect(area, "event", func, (gpointer) data);
    gtk_widget_show(area);
 
    return area;
@@ -516,15 +516,15 @@ create_colors_tab(PreferencesDialog_t *data, GtkWidget *notebook)
  
    create_label_in_table(table, 0, 0, _("Normal:"));
    data->normal_fg = create_color_field(data, table, 0, 1, 
-					(GtkSignalFunc) edit_normal_fg);
+					G_CALLBACK(edit_normal_fg));
    data->normal_bg = create_color_field(data, table, 0, 2,
-					(GtkSignalFunc) edit_normal_bg);
+					G_CALLBACK(edit_normal_bg));
 
    create_label_in_table(table, 1, 0, _("Selected:"));
    data->selected_fg = create_color_field(data, table, 1, 1,
-					  (GtkSignalFunc) edit_selected_fg);
+					  G_CALLBACK(edit_selected_fg));
    data->selected_bg = create_color_field(data, table, 1, 2,
-					  (GtkSignalFunc) edit_selected_bg);
+					  G_CALLBACK(edit_selected_bg));
 }
 
 static void
@@ -562,8 +562,8 @@ create_preferences_dialog()
    
    data->notebook = notebook = gtk_notebook_new();
    gtk_container_set_border_width(GTK_CONTAINER(notebook), 10);
-   g_signal_connect_after(G_OBJECT(notebook), "switch_page", 
-			  GTK_SIGNAL_FUNC(switch_page), (gpointer) data);
+   g_signal_connect_after(notebook, "switch_page", 
+			  G_CALLBACK(switch_page), (gpointer) data);
 
    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), 
 		      notebook, TRUE, TRUE, 10);

@@ -322,7 +322,7 @@ cubism_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -344,7 +344,7 @@ cubism_dialog (void)
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &cvals.bg_color);
 
@@ -356,7 +356,7 @@ cubism_dialog (void)
 				     cvals.tile_size, 0.0, 100.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &cvals.tile_size);
 
@@ -366,7 +366,7 @@ cubism_dialog (void)
 			  cvals.tile_saturation, 0.0, 10.0, 0.1, 1, 1,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &cvals.tile_saturation);
 

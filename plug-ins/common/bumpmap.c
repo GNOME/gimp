@@ -865,7 +865,7 @@ bumpmap_dialog (void)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -931,13 +931,13 @@ bumpmap_dialog (void)
 			 GDK_BUTTON_MOTION_MASK |
 			 GDK_POINTER_MOTION_HINT_MASK);
 
-  g_signal_connect (G_OBJECT (bmint.preview), "event",
+  g_signal_connect (bmint.preview, "event",
                     G_CALLBACK (dialog_preview_events),
                     NULL);
-  g_signal_connect (G_OBJECT (bmint.preview_adj_x), "value_changed",
+  g_signal_connect (bmint.preview_adj_x, "value_changed",
                     G_CALLBACK (dialog_iscale_update_normal), 
                     &bmint.preview_xofs);
-  g_signal_connect (G_OBJECT (bmint.preview_adj_y), "value_changed",
+  g_signal_connect (bmint.preview_adj_y, "value_changed",
                     G_CALLBACK (dialog_iscale_update_normal), 
                     &bmint.preview_yofs);
 
@@ -970,7 +970,7 @@ bumpmap_dialog (void)
 				bmvals.compensate ? TRUE : FALSE);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (dialog_compensate_callback),
                     NULL);
 
@@ -981,7 +981,7 @@ bumpmap_dialog (void)
 				bmvals.invert ? TRUE : FALSE);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (dialog_invert_callback),
                     NULL);
 
@@ -992,7 +992,7 @@ bumpmap_dialog (void)
 				bmvals.tiled ? TRUE : FALSE);
   gtk_widget_show (button);  
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (dialog_tiled_callback),
                     NULL);
 
@@ -1041,7 +1041,7 @@ bumpmap_dialog (void)
 			      bmvals.azimuth, 0.0, 360.0, 1.0, 15.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_dscale_update),
                     &bmvals.azimuth);
 
@@ -1050,7 +1050,7 @@ bumpmap_dialog (void)
 			      bmvals.elevation, 0.5, 90.0, 1.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_dscale_update),
                     &bmvals.elevation);
 
@@ -1059,7 +1059,7 @@ bumpmap_dialog (void)
 			      bmvals.depth, 1.0, 65.0, 1.0, 5.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_iscale_update_normal),
                     &bmvals.depth);
   gtk_table_set_row_spacing (GTK_TABLE (table), row++, 8);
@@ -1070,7 +1070,7 @@ bumpmap_dialog (void)
 			  bmvals.xofs, -1000.0, 1001.0, 1.0, 10.0, 0,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_iscale_update_normal),
                     &bmvals.xofs);
 
@@ -1080,7 +1080,7 @@ bumpmap_dialog (void)
 			  bmvals.yofs, -1000.0, 1001.0, 1.0, 10.0, 0,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_iscale_update_normal),
                     &bmvals.yofs);
   gtk_table_set_row_spacing (GTK_TABLE (table), row++, 8);
@@ -1090,7 +1090,7 @@ bumpmap_dialog (void)
 			      bmvals.waterlevel, 0.0, 255.0, 1.0, 8.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_iscale_update_full),
                     &bmvals.waterlevel);
 
@@ -1099,7 +1099,7 @@ bumpmap_dialog (void)
 			      bmvals.ambient, 0.0, 255.0, 1.0, 8.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_iscale_update_normal),
                     &bmvals.ambient);
 

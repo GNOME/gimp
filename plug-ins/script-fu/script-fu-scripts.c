@@ -1211,7 +1211,7 @@ script_fu_interface (SFScript *script)
 
   sf_interface->dialog = dlg;
 
-  g_signal_connect_swapped (G_OBJECT (dlg), "destroy",
+  g_signal_connect_swapped (dlg, "destroy",
                             G_CALLBACK (script_fu_interface_quit),
                             script);
 
@@ -1232,7 +1232,7 @@ script_fu_interface (SFScript *script)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
 		    G_CALLBACK (script_fu_about_callback),
 		    script);
 
@@ -1312,7 +1312,7 @@ script_fu_interface (SFScript *script)
 				   &script->arg_values[i].sfa_color,
 				   GIMP_COLOR_AREA_FLAT);
 
-	  g_signal_connect (G_OBJECT (sf_interface->args_widgets[i]),
+	  g_signal_connect (sf_interface->args_widgets[i],
 			    "color_changed",
 			    G_CALLBACK (gimp_color_button_get_color),
 			    &script->arg_values[i].sfa_color);
@@ -1326,7 +1326,7 @@ script_fu_interface (SFScript *script)
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sf_interface->args_widgets[i]),
 				       script->arg_values[i].sfa_toggle);
 
-	  g_signal_connect (G_OBJECT (sf_interface->args_widgets[i]), 
+	  g_signal_connect (sf_interface->args_widgets[i], 
 			    "toggled",
 			    G_CALLBACK (gimp_toggle_button_update),
 			    &script->arg_values[i].sfa_toggle);
@@ -1400,7 +1400,7 @@ script_fu_interface (SFScript *script)
 	  script->arg_values[i].sfa_file.fileselection = 
 	    sf_interface->args_widgets[i];
 
-	  g_signal_connect (G_OBJECT (sf_interface->args_widgets[i]),
+	  g_signal_connect (sf_interface->args_widgets[i],
 			    "filename_changed",
 			    G_CALLBACK (script_fu_file_selection_callback),
 			    &script->arg_values[i].sfa_file);
@@ -1421,7 +1421,7 @@ script_fu_interface (SFScript *script)
 	  script_fu_font_preview (script->arg_values[i].sfa_font.preview,
 				  script->arg_values[i].sfa_font.fontname);
 
-	  g_signal_connect (G_OBJECT (sf_interface->args_widgets[i]), "clicked",
+	  g_signal_connect (sf_interface->args_widgets[i], "clicked",
 			    G_CALLBACK (script_fu_font_preview_callback),
 			    &script->arg_values[i].sfa_font);	  
 	  break;
@@ -1495,7 +1495,7 @@ script_fu_interface (SFScript *script)
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
 		    G_CALLBACK (script_fu_reset_callback),
 		    script);
 
@@ -1900,7 +1900,7 @@ script_fu_about_callback (GtkWidget *widget,
 
       sf_interface->about_dialog = dialog;
 
-      g_signal_connect (G_OBJECT (dialog), "destroy",
+      g_signal_connect (dialog, "destroy",
 			G_CALLBACK (gtk_widget_destroyed),
 			&sf_interface->about_dialog);
 
@@ -1937,7 +1937,7 @@ script_fu_about_callback (GtkWidget *widget,
 
       text_buffer = gtk_text_buffer_new (NULL);
       text_view = gtk_text_view_new_with_buffer (text_buffer);
-      g_object_unref (G_OBJECT (text_buffer));
+      g_object_unref (text_buffer);
 
       gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
       gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
@@ -2121,16 +2121,16 @@ script_fu_font_preview_callback (GtkWidget *widget,
 	gtk_font_selection_dialog_new (_("Script-Fu Font Selection"));
       fsd = GTK_FONT_SELECTION_DIALOG (font->dialog);
 
-      g_signal_connect (G_OBJECT (fsd->ok_button), "clicked",
+      g_signal_connect (fsd->ok_button, "clicked",
 			G_CALLBACK (script_fu_font_dialog_ok),
 			font);
-      g_signal_connect (G_OBJECT (fsd), "delete_event",
+      g_signal_connect (fsd, "delete_event",
 			G_CALLBACK (script_fu_font_dialog_delete),
 			font);
-      g_signal_connect (G_OBJECT (fsd), "destroy",
+      g_signal_connect (fsd, "destroy",
 			G_CALLBACK (gtk_widget_destroyed),
 			&font->dialog);
-      g_signal_connect (G_OBJECT (fsd->cancel_button), "clicked",
+      g_signal_connect (fsd->cancel_button, "clicked",
 			G_CALLBACK (script_fu_font_dialog_cancel),
 			font);
     }

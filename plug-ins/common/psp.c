@@ -431,7 +431,7 @@ save_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -551,11 +551,7 @@ read_general_image_attribute_block (FILE     *f,
 				    PSPimage *ia)
 {
   gchar buf[6];
-#ifdef G_HAVE_GINT64
-  gint64 res[1];
-#else
-  guchar res[8];
-#endif
+  guint64 res;
 
   if (init_len < 38 || total_len < 38)
     {
@@ -569,7 +565,7 @@ read_general_image_attribute_block (FILE     *f,
   
   if (fread (&ia->width, 4, 1, f) < 1
       || fread (&ia->height, 4, 1, f) < 1
-      || fread (res, 8, 1, f) < 1
+      || fread (&res, 8, 1, f) < 1
       || fread (&ia->metric, 1, 1, f) < 1
       || fread (&ia->compression, 2, 1, f) < 1
       || fread (&ia->depth, 2, 1, f) < 1
@@ -586,29 +582,8 @@ read_general_image_attribute_block (FILE     *f,
   ia->width = GUINT32_FROM_LE (ia->width);
   ia->height = GUINT32_FROM_LE (ia->height);
 
-#ifdef G_HAVE_GINT64
-  res[0] = GUINT64_FROM_LE (res[0]);
-#else
-#if G_BYTE_ORDER == G_BIG_ENDIAN
-  {
-    /* Swap bytes in the double */
-    guchar t;
-    t = res[0];
-    res[0] = res[7];
-    res[7] = t;
-    t = res[1];
-    res[1] = res[6];
-    res[6] = t;
-    t = res[2];
-    res[2] = res[5];
-    res[5] = t;
-    t = res[3];
-    res[3] = res[4];
-    res[4] = t;
-  }
-#endif
-#endif
-  memcpy (&ia->resolution, res, 8);
+  res = GUINT64_FROM_LE (res);
+  memcpy (&ia->resolution, &res, 8);
   if (ia->metric == PSP_METRIC_CM)
     ia->resolution /= 2.54;
 

@@ -170,7 +170,7 @@ rcm_create_pixmap_button (GtkWidget  **label,
 {
   /* create button */
   *xpm_button = gtk_button_new();
-  g_signal_connect (G_OBJECT (*xpm_button), "clicked",
+  g_signal_connect (*xpm_button, "clicked",
                     callback,
                     data);
   gtk_widget_show(*xpm_button);
@@ -248,19 +248,19 @@ rcm_create_one_circle (gint   height,
   /* set signals */
   gtk_widget_set_events(st->preview, RANGE_ADJUST_MASK);
 
-  g_signal_connect_after (G_OBJECT (st->preview), "expose_event",
+  g_signal_connect_after (st->preview, "expose_event",
                           G_CALLBACK (rcm_expose_event),
                           st);
   
-  g_signal_connect (G_OBJECT (st->preview), "button_press_event",
+  g_signal_connect (st->preview, "button_press_event",
                     G_CALLBACK (rcm_button_press_event),
                     st);
 
-  g_signal_connect (G_OBJECT (st->preview), "button_release_event",
+  g_signal_connect (st->preview, "button_release_event",
                     G_CALLBACK (rcm_release_event),
                     st);
   
-  g_signal_connect (G_OBJECT (st->preview), "motion_notify_event",
+  g_signal_connect (st->preview, "motion_notify_event",
                     G_CALLBACK (rcm_motion_notify_event),
                     st);
   
@@ -313,7 +313,7 @@ rcm_create_one_circle (gint   height,
 		   GTK_EXPAND|GTK_FILL, GTK_EXPAND, 2, 4);
   gtk_widget_show(entry);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (rcm_set_alpha),
                     st);
 
@@ -338,7 +338,7 @@ rcm_create_one_circle (gint   height,
 		   GTK_EXPAND|GTK_FILL, GTK_EXPAND, 2, 4);
   gtk_widget_show(entry);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (rcm_set_beta),
                     st);
 
@@ -430,19 +430,19 @@ rcm_create_gray (void)
 
   gtk_widget_set_events (preview, RANGE_ADJUST_MASK);
 
-  g_signal_connect_after (G_OBJECT (preview), "expose_event",
+  g_signal_connect_after (preview, "expose_event",
                           G_CALLBACK (rcm_gray_expose_event),
                           st);
 
-  g_signal_connect (G_OBJECT (preview), "button_press_event",
+  g_signal_connect (preview, "button_press_event",
                     G_CALLBACK (rcm_gray_button_press_event),
                     st);
 
-  g_signal_connect (G_OBJECT (preview), "button_release_event",
+  g_signal_connect (preview, "button_release_event",
                     G_CALLBACK (rcm_gray_release_event),
                     st);
 
-  g_signal_connect (G_OBJECT (preview), "motion_notify_event",
+  g_signal_connect (preview, "motion_notify_event",
                     G_CALLBACK (rcm_gray_motion_notify_event),
                     st);
 
@@ -467,7 +467,7 @@ rcm_create_gray (void)
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_widget_show (entry);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (rcm_set_hue),
                     st);
 
@@ -493,7 +493,7 @@ rcm_create_gray (void)
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 2);
   gtk_widget_show (entry);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (rcm_set_satur),
                     st);
 
@@ -515,7 +515,7 @@ rcm_create_gray (void)
   if (Current.Gray_to_from == GRAY_FROM)
     gtk_button_clicked (GTK_BUTTON (button));
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (rcm_switch_to_gray_from),
                     &(Current.Gray_to_from));
 
@@ -527,7 +527,7 @@ rcm_create_gray (void)
   if (Current.Gray_to_from == GRAY_TO)
     gtk_button_clicked (GTK_BUTTON (button));
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (rcm_switch_to_gray_to),
                     &(Current.Gray_to_from));
 
@@ -558,7 +558,7 @@ rcm_create_gray (void)
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_widget_show (entry);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (rcm_set_gray_sat),
                     st);
 
@@ -638,7 +638,7 @@ rcm_create_misc (void)
   if (Current.Units == RADIANS)
     gtk_button_clicked (GTK_BUTTON (button));
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (rcm_switch_to_radians),
                     NULL);
 
@@ -650,7 +650,7 @@ rcm_create_misc (void)
   if (Current.Units == RADIANS_OVER_PI)
     gtk_button_clicked (GTK_BUTTON (button));
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (rcm_switch_to_radians_over_PI),
                     NULL);
 
@@ -661,7 +661,7 @@ rcm_create_misc (void)
   if (Current.Units == DEGREES)
     gtk_button_clicked (GTK_BUTTON (button));
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (rcm_switch_to_degrees),
                     NULL);
 
@@ -681,7 +681,7 @@ rcm_create_misc (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), Current.RealTime);
   gtk_widget_show (button);
    
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (rcm_preview_as_you_drag),
                     &(Current.RealTime));
 
@@ -702,7 +702,7 @@ rcm_create_misc (void)
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   gtk_widget_show (item);
 
-  g_signal_connect (G_OBJECT (item), "activate",
+  g_signal_connect (item, "activate",
                     G_CALLBACK (rcm_entire_image),
                     NULL);
     
@@ -711,7 +711,7 @@ rcm_create_misc (void)
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   gtk_widget_show (item);
 
-  g_signal_connect (G_OBJECT (item), "activate",
+  g_signal_connect (item, "activate",
                     G_CALLBACK (rcm_selection),
                     NULL);
 
@@ -720,7 +720,7 @@ rcm_create_misc (void)
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   gtk_widget_show (item);
 
-  g_signal_connect (G_OBJECT (item), "activate",
+  g_signal_connect (item, "activate",
                     G_CALLBACK (rcm_selection_in_context),
                     NULL);
 
@@ -783,7 +783,7 @@ rcm_dialog (void)
 
   Current.Bna->dlg = dlg;
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 

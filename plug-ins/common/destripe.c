@@ -557,7 +557,7 @@ destripe_dialog (void)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -606,7 +606,7 @@ destripe_dialog (void)
 				     MIN (preview_width, sel_x2 - sel_x1),
 				     MIN (preview_width, sel_x2 - sel_x1));
 
-  g_signal_connect (G_OBJECT (hscroll_data), "value_changed",
+  g_signal_connect (hscroll_data, "value_changed",
                     G_CALLBACK (preview_scroll_callback),
                     NULL);
 
@@ -620,7 +620,7 @@ destripe_dialog (void)
 				     MIN (preview_height, sel_y2 - sel_y1),
 				     MIN (preview_height, sel_y2 - sel_y1));
 
-  g_signal_connect (G_OBJECT (vscroll_data), "value_changed",
+  g_signal_connect (vscroll_data, "value_changed",
                     G_CALLBACK (preview_scroll_callback),
                     NULL);
 
@@ -653,7 +653,7 @@ destripe_dialog (void)
 				histogram ? TRUE : FALSE);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (dialog_histogram_callback),
                     NULL);
 
@@ -661,7 +661,7 @@ destripe_dialog (void)
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 1, 2);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 (filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
 	            G_CALLBACK (dialog_recursive_callback),
 		    NULL);
   gtk_widget_show (button);*/
@@ -675,7 +675,7 @@ destripe_dialog (void)
 			      avg_width, 2, MAX_AVG, 1, 10, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_iscale_update),
                     &avg_width);
 

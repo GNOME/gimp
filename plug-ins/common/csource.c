@@ -660,7 +660,7 @@ run_save_dialog	(Config *config)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -702,7 +702,7 @@ run_save_dialog	(Config *config)
 				config->use_comment);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &config->use_comment);
 
@@ -714,7 +714,7 @@ run_save_dialog	(Config *config)
 				config->glib_types);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &config->glib_types);
 
@@ -726,7 +726,7 @@ run_save_dialog	(Config *config)
 				config->use_macros);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &config->use_macros);
 
@@ -738,7 +738,7 @@ run_save_dialog	(Config *config)
 				config->use_rle);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &config->use_rle);
 
@@ -750,7 +750,7 @@ run_save_dialog	(Config *config)
 				config->alpha);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &config->alpha);
 
@@ -766,7 +766,7 @@ run_save_dialog	(Config *config)
 			      config->opacity, 0, 100, 1, 10, 1,
 			      TRUE, 0, 0,
 			      FALSE, FALSE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config->opacity);
 

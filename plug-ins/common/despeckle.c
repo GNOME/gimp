@@ -632,7 +632,7 @@ despeckle_dialog (void)
 
   g_free (plugin_name);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -671,7 +671,7 @@ despeckle_dialog (void)
 				     MIN (preview_width, sel_width),
 				     MIN (preview_width, sel_width));
 
-  g_signal_connect (G_OBJECT (hscroll_data), "value_changed",
+  g_signal_connect (hscroll_data, "value_changed",
                     G_CALLBACK (preview_scroll_callback),
                     NULL);
 
@@ -684,7 +684,7 @@ despeckle_dialog (void)
 				     MIN (preview_height, sel_height),
 				     MIN (preview_height, sel_height));
 
-  g_signal_connect (G_OBJECT (vscroll_data), "value_changed",
+  g_signal_connect (vscroll_data, "value_changed",
                     G_CALLBACK (preview_scroll_callback),
                     NULL);
 
@@ -720,7 +720,7 @@ despeckle_dialog (void)
 				(filter_type & FILTER_ADAPTIVE) ? TRUE : FALSE);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (dialog_adaptive_callback),
                     NULL);
 
@@ -730,7 +730,7 @@ despeckle_dialog (void)
 				(filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (dialog_recursive_callback),
                     NULL);
 
@@ -754,7 +754,7 @@ despeckle_dialog (void)
 			      despeckle_radius, 1, MAX_RADIUS, 1, 5, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_iscale_update),
                     &despeckle_radius);
 
@@ -767,7 +767,7 @@ despeckle_dialog (void)
 			      black_level, -1, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_iscale_update),
                     &black_level);
 
@@ -780,7 +780,7 @@ despeckle_dialog (void)
 			      white_level, 0, 256, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_iscale_update),
                     &white_level);
 

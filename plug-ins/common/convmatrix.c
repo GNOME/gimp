@@ -869,7 +869,7 @@ dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -904,7 +904,7 @@ dialog (void)
 	gtk_entry_set_text (GTK_ENTRY (entry), buffer);
 	gtk_widget_show (entry);
 
-	g_signal_connect (G_OBJECT (entry), "changed",
+	g_signal_connect (entry, "changed",
                           G_CALLBACK (entry_callback),
                           &my_config.matrix[x][y]);
       }
@@ -929,7 +929,7 @@ dialog (void)
   gtk_widget_show (entry);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (entry_callback),
                     &my_config.divisor);
 
@@ -950,7 +950,7 @@ dialog (void)
   gtk_widget_show (entry);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (entry_callback),
                     &my_config.offset);
 
@@ -969,7 +969,7 @@ dialog (void)
   gtk_box_pack_start (GTK_BOX (box), button, TRUE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (my_toggle_callback),
                     &my_config.autoset);
 
@@ -980,7 +980,7 @@ dialog (void)
   gtk_box_pack_start (GTK_BOX (box), button, TRUE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (my_toggle_callback),
                     &my_config.alpha_alg);
 
@@ -1008,7 +1008,7 @@ dialog (void)
       gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
-      g_signal_connect (G_OBJECT (button), "toggled",
+      g_signal_connect (button, "toggled",
                         G_CALLBACK (my_bmode_callback),
                         GINT_TO_POINTER (i + 1));
     }
@@ -1035,7 +1035,7 @@ dialog (void)
       gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
-      g_signal_connect (G_OBJECT (button), "toggled",
+      g_signal_connect (button, "toggled",
                         G_CALLBACK (my_toggle_callback),
                         &my_config.channels[i]);
     }

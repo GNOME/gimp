@@ -119,7 +119,7 @@ GtkWidget* create_preview()
   box2 = gtk_hbox_new(TRUE, 0);
 
   previewbutton = tmpw = gtk_button_new_with_mnemonic( _("_Update"));
-  g_signal_connect (G_OBJECT (tmpw), "clicked",
+  g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK (updatepreviewprev), (gpointer) 1);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);
@@ -127,7 +127,7 @@ GtkWidget* create_preview()
 		       _("Refresh the Preview window"), NULL);
 
   tmpw = gtk_button_new_from_stock (GIMP_STOCK_RESET);
-  g_signal_connect(G_OBJECT(tmpw), "clicked",
+  g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK (updatepreviewprev), (gpointer) 2);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);

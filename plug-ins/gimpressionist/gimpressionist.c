@@ -342,7 +342,7 @@ GtkWidget *createonecolumnlist(GtkWidget *parent,
   view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
 
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
-  g_object_unref (G_OBJECT (store));
+  g_object_unref (store);
   gtk_widget_show (view);
 
   renderer = gtk_cell_renderer_text_new ();
@@ -355,7 +355,7 @@ GtkWidget *createonecolumnlist(GtkWidget *parent,
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
-  g_signal_connect (G_OBJECT (selection), "changed", G_CALLBACK (changed_cb), 
+  g_signal_connect (selection, "changed", G_CALLBACK (changed_cb), 
 		    NULL);
 
   return view;
@@ -377,17 +377,17 @@ static void showabout(void)
   window = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (window), _("The GIMPressionist!"));
   gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
-  g_signal_connect (G_OBJECT (window), "destroy",
+  g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &window);
   gtk_quit_add_destroy (1, GTK_OBJECT (window));
-  g_signal_connect (G_OBJECT (window), "delete_event",
+  g_signal_connect (window, "delete_event",
                     G_CALLBACK (gtk_widget_hide_on_delete),
                     &window);
 
   tmpw = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
   GTK_WIDGET_SET_FLAGS(tmpw, GTK_CAN_DEFAULT);
-  g_signal_connect_swapped (G_OBJECT(tmpw), "clicked",
+  g_signal_connect_swapped (tmpw, "clicked",
                             G_CALLBACK (gtk_widget_hide),
                             window);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG(window)->action_area),
@@ -481,7 +481,7 @@ static int create_dialog(void)
 			    
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (dialog_close_callback), NULL);
 
   gimp_help_init ();

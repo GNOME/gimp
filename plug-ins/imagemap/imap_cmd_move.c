@@ -135,9 +135,9 @@ button_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
    MoveCommand_t *command = (MoveCommand_t*) data;
 
-   g_signal_handlers_disconnect_by_func (G_OBJECT(widget), 
+   g_signal_handlers_disconnect_by_func (widget,
                                          button_motion, data);
-   g_signal_handlers_disconnect_by_func (G_OBJECT(widget), 
+   g_signal_handlers_disconnect_by_func (widget,
                                          button_release, data);
 
    if (!command->moved_first_time) {
@@ -162,9 +162,9 @@ move_command_execute(Command_t *parent)
    GtkWidget *widget = command->preview->preview;
 
    //   preview_freeze();
-   g_signal_connect(G_OBJECT(widget), "button_release_event", 
+   g_signal_connect(widget, "button_release_event", 
                     G_CALLBACK (button_release), command);   
-   g_signal_connect(G_OBJECT(widget), "motion_notify_event", 
+   g_signal_connect(widget, "motion_notify_event", 
                     G_CALLBACK (button_motion), command);   
    return CMD_DESTRUCT;
 }

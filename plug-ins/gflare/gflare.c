@@ -2532,7 +2532,7 @@ dlg_run (void)
 
 		     NULL);
 
-  g_signal_connect (G_OBJECT (shell), "destroy",
+  g_signal_connect (shell, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -2576,7 +2576,7 @@ dlg_run (void)
 			      dlg_preview_deinit_func, NULL);
   gtk_widget_set_events (GTK_WIDGET (dlg->preview->widget), DLG_PREVIEW_MASK);
   gtk_container_add (GTK_CONTAINER (frame), dlg->preview->widget);
-  g_signal_connect (G_OBJECT(dlg->preview->widget), "event",
+  g_signal_connect (dlg->preview->widget, "event",
                     G_CALLBACK (dlg_preview_handle_event),
                     NULL);
   dlg_preview_calc_window ();
@@ -2587,7 +2587,7 @@ dlg_run (void)
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (dlg_update_preview_callback),
                     &dlg->update_preview);
 
@@ -2964,10 +2964,10 @@ dlg_make_page_settings (GFlareDialog *dlg,
 
   gtk_container_set_border_width (GTK_CONTAINER (center), 4);
   gtk_container_add (GTK_CONTAINER (frame), center);
-  g_signal_connect (G_OBJECT (center), "value_changed",
+  g_signal_connect (center, "value_changed",
                     G_CALLBACK (dlg_position_entry_callback),
                     NULL);
-  g_signal_connect (G_OBJECT (center), "refval_changed",
+  g_signal_connect (center, "refval_changed",
                     G_CALLBACK (dlg_position_entry_callback),
                     NULL);
   gtk_widget_hide (chain);
@@ -2992,10 +2992,10 @@ dlg_make_page_settings (GFlareDialog *dlg,
 			      1.0, 10.0, 1,
 			      FALSE, 0.0, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.radius);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dlg_preview_update),
                     NULL);
 
@@ -3004,10 +3004,10 @@ dlg_make_page_settings (GFlareDialog *dlg,
 			      pvals.rotation, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.rotation);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dlg_preview_update),
                     NULL);
 
@@ -3016,10 +3016,10 @@ dlg_make_page_settings (GFlareDialog *dlg,
 			      pvals.hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.hue);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dlg_preview_update),
                     NULL);
 
@@ -3028,10 +3028,10 @@ dlg_make_page_settings (GFlareDialog *dlg,
 			      pvals.vangle, 0.0, 359.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.vangle);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dlg_preview_update),
                     NULL);
 
@@ -3040,10 +3040,10 @@ dlg_make_page_settings (GFlareDialog *dlg,
 			      pvals.vlength, 1, 1000, 1.0, 10.0, 1,
 			      FALSE, 1, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.vlength);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dlg_preview_update),
                     NULL);
 
@@ -3072,7 +3072,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
 
   gtk_widget_set_sensitive (asup_table, pvals.use_asupsample);
   g_object_set_data (G_OBJECT (button), "set_sensitive", asup_table);
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &pvals.use_asupsample);
 
@@ -3082,7 +3082,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
                               1.0, 10.0, 1.0, 1.0, 0,
                               TRUE, 0.0, 0.0,
                               NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.asupsample_max_depth);
 
@@ -3092,7 +3092,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
                               0.0, 4.0, 0.01, 0.01, 2,
                               TRUE, 0.0, 0.0,
                               NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.asupsample_threshold);
 
@@ -3101,7 +3101,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
    */
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), main_vbox,
 			    gtk_label_new_with_mnemonic (_("_Settings")));
-  g_signal_connect (G_OBJECT (table), "map",
+  g_signal_connect (table, "map",
                     G_CALLBACK (dlg_page_map_callback),
                     (gpointer) PAGE_SETTINGS);
   gtk_widget_show (main_vbox);
@@ -3203,7 +3203,7 @@ dlg_make_page_selector (GFlareDialog *dlg,
       gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
       gtk_widget_show (button);
 
-      g_signal_connect (G_OBJECT (button), "clicked",
+      g_signal_connect (button, "clicked",
                         buttons[i].callback,
                         button);
     }
@@ -3215,7 +3215,7 @@ dlg_make_page_selector (GFlareDialog *dlg,
    */
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 			    gtk_label_new_with_mnemonic (_("S_elector")));
-  g_signal_connect (G_OBJECT (vbox), "map",
+  g_signal_connect (vbox, "map",
                     G_CALLBACK (dlg_page_map_callback),
                     (gpointer) PAGE_SELECTOR);
   gtk_widget_show (vbox);
@@ -3269,7 +3269,7 @@ dlg_selector_insert (GFlare *gflare,
 
   list_item = gtk_list_item_new_with_label (gflare->name);
   /* gflare->list_item = list_item; */
-  g_signal_connect (G_OBJECT (list_item), "select",
+  g_signal_connect (list_item, "select",
                     G_CALLBACK (dlg_selector_list_item_callback),
                     (gpointer) gflare);
   gtk_widget_show (list_item);
@@ -3549,7 +3549,7 @@ ed_run (GtkWindow            *parent,
 
 		     NULL);
 
-  g_signal_connect (G_OBJECT (shell), "destroy",
+  g_signal_connect (shell, "destroy",
                     G_CALLBACK (ed_close_callback),
                     NULL);
 
@@ -3589,7 +3589,7 @@ ed_run (GtkWindow            *parent,
 			     ed_preview_deinit_func, NULL);
   gtk_widget_set_events (GTK_WIDGET (ed->preview->widget), DLG_PREVIEW_MASK);
   gtk_container_add (GTK_CONTAINER (frame), ed->preview->widget); 
-  g_signal_connect (G_OBJECT (ed->preview->widget), "event",
+  g_signal_connect (ed->preview->widget, "event",
                     G_CALLBACK (ed_preview_handle_event),
                     NULL);
   ed_preview_calc_window ();
@@ -3675,10 +3675,10 @@ ed_make_page_general (GFlareEditor *ed,
 			      gflare->glow_opacity, 0.0, 100.0, 1.0, 10.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->glow_opacity);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3705,10 +3705,10 @@ ed_make_page_general (GFlareEditor *ed,
 			      gflare->rays_opacity, 0.0, 100.0, 1.0, 10.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_opacity);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3735,10 +3735,10 @@ ed_make_page_general (GFlareEditor *ed,
 			      gflare->sflare_opacity, 0.0, 100.0, 1.0, 10.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->sflare_opacity);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3752,7 +3752,7 @@ ed_make_page_general (GFlareEditor *ed,
    */
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 			    gtk_label_new (_("General")));
-  g_signal_connect (G_OBJECT (vbox), "map",
+  g_signal_connect (vbox, "map",
                     G_CALLBACK (ed_page_map_callback),
                     (gpointer) PAGE_GENERAL);
   gtk_widget_show (vbox);
@@ -3822,10 +3822,10 @@ ed_make_page_glow (GFlareEditor *ed,
 			      gflare->glow_size, 0.0, 200.0, 1.0, 10.0, 1,
 			      FALSE, 0, G_MAXINT,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->glow_size);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3834,10 +3834,10 @@ ed_make_page_glow (GFlareEditor *ed,
 			      gflare->glow_rotation, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->glow_rotation);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3846,10 +3846,10 @@ ed_make_page_glow (GFlareEditor *ed,
 			      gflare->glow_hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->glow_hue);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3860,7 +3860,7 @@ ed_make_page_glow (GFlareEditor *ed,
    */
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 			    gtk_label_new (_("Glow")));
-  g_signal_connect (G_OBJECT (vbox), "map",
+  g_signal_connect (vbox, "map",
                     G_CALLBACK (ed_page_map_callback),
                     (gpointer) PAGE_GLOW);
   gtk_widget_show (vbox);
@@ -3932,10 +3932,10 @@ ed_make_page_rays (GFlareEditor *ed,
 			      gflare->rays_size, 0.0, 200.0, 1.0, 10.0, 1,
 			      FALSE, 0, G_MAXINT,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_size);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3945,10 +3945,10 @@ ed_make_page_rays (GFlareEditor *ed,
 			      -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_rotation);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3957,10 +3957,10 @@ ed_make_page_rays (GFlareEditor *ed,
 			      gflare->rays_hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_hue);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3969,10 +3969,10 @@ ed_make_page_rays (GFlareEditor *ed,
 			      gflare->rays_nspikes, 1, 300, 1.0, 10.0, 0,
 			      FALSE, 0, G_MAXINT,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gflare->rays_nspikes);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3981,10 +3981,10 @@ ed_make_page_rays (GFlareEditor *ed,
 			      gflare->rays_thickness, 1.0, 100.0, 1.0, 10.0, 1,
 			      FALSE, 0, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_thickness);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3995,7 +3995,7 @@ ed_make_page_rays (GFlareEditor *ed,
    */
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 			    gtk_label_new (_("Rays")));
-  g_signal_connect (G_OBJECT (vbox), "map",
+  g_signal_connect (vbox, "map",
                     G_CALLBACK (ed_page_map_callback),
                     (gpointer) PAGE_RAYS);
   gtk_widget_show (vbox);
@@ -4074,10 +4074,10 @@ ed_make_page_sflare (GFlareEditor *ed,
 			      gflare->sflare_size, 0.0, 200.0, 1.0, 10.0, 1,
 			      FALSE, 0, G_MAXINT,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->sflare_size);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -4087,10 +4087,10 @@ ed_make_page_sflare (GFlareEditor *ed,
 			      -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->sflare_rotation);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -4099,10 +4099,10 @@ ed_make_page_sflare (GFlareEditor *ed,
 			      gflare->sflare_hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->sflare_hue);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -4125,7 +4125,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   shape_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (GF_CIRCLE));
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (ed_shape_radio_callback),
                     &gflare->sflare_shape);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -4142,7 +4142,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   shape_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (GF_POLYGON));
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (ed_shape_radio_callback),
                     &gflare->sflare_shape);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -4154,9 +4154,9 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 4);
   g_snprintf (buf, sizeof (buf), "%d", gflare->sflare_nverts);
   gtk_entry_set_text (GTK_ENTRY (entry), buf);
-  g_signal_connect (G_OBJECT (entry), "changed",
-		      (GtkSignalFunc) ed_ientry_callback,
-		      &gflare->sflare_nverts);
+  g_signal_connect (entry, "changed",
+		    G_CALLBACK (ed_ientry_callback),
+		    &gflare->sflare_nverts);
   gtk_box_pack_start (GTK_BOX (polygon_hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
@@ -4183,7 +4183,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (seed_hbox), seed, FALSE, TRUE, 0);
   gtk_widget_show (seed);
 
-  g_signal_connect (G_OBJECT (GTK_SPIN_BUTTON (entry)->adjustment),
+  g_signal_connect (GTK_SPIN_BUTTON (entry)->adjustment,
                     "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
@@ -4193,7 +4193,7 @@ ed_make_page_sflare (GFlareEditor *ed,
    */
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 			    gtk_label_new (_("Second Flares")));
-  g_signal_connect (G_OBJECT (vbox), "map",
+  g_signal_connect (vbox, "map",
                     G_CALLBACK (ed_page_map_callback),
                     (gpointer) PAGE_SFLARE);
   gtk_widget_show (vbox);
@@ -4217,7 +4217,7 @@ ed_mode_menu_new (GFlareMode *mode_var)
 
       gtk_object_set_user_data (GTK_OBJECT (menuitem),
 				GINT_TO_POINTER (i));
-      g_signal_connect (G_OBJECT (menuitem), "activate",
+      g_signal_connect (menuitem, "activate",
                         G_CALLBACK (ed_mode_menu_callback),
                         mode_var);
       gtk_widget_show (menuitem);
@@ -4753,7 +4753,7 @@ gradient_menu_new (GradientMenuCallback callback,
   gtk_widget_show (gm->option_menu);
 
   gradient_menus = g_list_append (gradient_menus, gm);
-  g_signal_connect (G_OBJECT (gm->option_menu), "destroy",
+  g_signal_connect (gm->option_menu, "destroy",
                     G_CALLBACK (gm_option_menu_destroy_callback),
                     gm);
 
@@ -4870,7 +4870,7 @@ gm_menu_create_sub_menus (GradientMenu  *gm,
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
 
-      g_signal_connect (G_OBJECT (menuitem), "activate",
+      g_signal_connect (menuitem, "activate",
                         G_CALLBACK (gm_menu_item_callback),
                         name);
     }

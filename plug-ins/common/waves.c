@@ -338,7 +338,7 @@ pluginCoreIA (piArgs *argp,
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -378,7 +378,7 @@ pluginCoreIA (piArgs *argp,
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (waves_toggle_button_update),
                     &argp->reflective);
 
@@ -398,7 +398,7 @@ pluginCoreIA (piArgs *argp,
 			      argp->amplitude, 0.0, 101.0, 1.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (waves_double_adjustment_update),
                     &argp->amplitude);
 
@@ -407,7 +407,7 @@ pluginCoreIA (piArgs *argp,
 			      argp->phase, 0.0, 360.0, 2.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (waves_double_adjustment_update),
                     &argp->phase);
 
@@ -416,7 +416,7 @@ pluginCoreIA (piArgs *argp,
 			      argp->wavelength, 0.1, 50.0, 1.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (waves_double_adjustment_update),
                     &argp->wavelength);
 
@@ -567,7 +567,7 @@ mw_preview_new (GtkWidget *parent,
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (mw_preview_toggle_callback),
                     &do_preview);
 

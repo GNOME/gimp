@@ -856,7 +856,7 @@ gih_save_dialog (gint32 image_ID)
 			 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -877,7 +877,7 @@ gih_save_dialog (gint32 image_ID)
 			     _("Spacing (Percent):"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+  g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &info.spacing);
 
@@ -891,7 +891,7 @@ gih_save_dialog (gint32 image_ID)
 			     _("Description:"), 1.0, 0.5,
 			     entry, 1, FALSE);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (entry_callback),
                     info.description);
 
@@ -915,7 +915,7 @@ gih_save_dialog (gint32 image_ID)
   cellw_adjust.guides      = NULL;
   cellw_adjust.value       = &gihparams.cellwidth;
 
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+  g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (size_adjustment_callback),
                     &cellw_adjust);
 
@@ -937,7 +937,7 @@ gih_save_dialog (gint32 image_ID)
   cellh_adjust.guides      = NULL;
   cellh_adjust.value       = &gihparams.cellheight;
 
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+  g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (size_adjustment_callback),
                     &cellh_adjust);
 
@@ -961,7 +961,7 @@ gih_save_dialog (gint32 image_ID)
 			     _("Number of Cells:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+  g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gihparams.ncells);
 
@@ -1020,7 +1020,7 @@ gih_save_dialog (gint32 image_ID)
 			     _("Dimension:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+  g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gihparams.dim);
 
@@ -1042,7 +1042,7 @@ gih_save_dialog (gint32 image_ID)
       gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, TRUE, 0);
       gtk_widget_show (spinbutton);
 
-      g_signal_connect (G_OBJECT (adjustment), "value_changed",
+      g_signal_connect (adjustment, "value_changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &gihparams.rank[i]);
 
@@ -1086,7 +1086,7 @@ gih_save_dialog (gint32 image_ID)
       gtk_box_pack_start (GTK_BOX (box), cb, FALSE, TRUE, 0);
       gtk_widget_show (cb);
 
-      g_signal_connect (G_OBJECT (GTK_COMBO (cb)->entry), "changed",
+      g_signal_connect (GTK_COMBO (cb)->entry, "changed",
                         G_CALLBACK (cb_callback),
                         &gihparams.selection[i]);
     }

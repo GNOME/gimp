@@ -903,14 +903,14 @@ lpi_callback (GtkAdjustment *adjustment,
 
   gimp_double_adjustment_update (adjustment, &pvals_ui.output_lpi);
 
-  g_signal_handlers_block_by_func (G_OBJECT (st->cellsize),
+  g_signal_handlers_block_by_func (st->cellsize,
                                    cellsize_callback,
                                    data);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (st->cellsize),
 			    pvals_ui.input_spi / pvals_ui.output_lpi);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (st->cellsize),
+  g_signal_handlers_unblock_by_func (st->cellsize,
                                      cellsize_callback,
                                      data);
 }
@@ -923,14 +923,14 @@ spi_callback (GtkAdjustment *adjustment,
 
   gimp_double_adjustment_update (adjustment, &pvals_ui.input_spi);
 
-  g_signal_handlers_block_by_func (G_OBJECT (st->output_lpi),
+  g_signal_handlers_block_by_func (st->output_lpi,
                                    lpi_callback,
                                    data);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (st->output_lpi),
 			    pvals_ui.input_spi / pvals.cell_width);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (st->output_lpi),
+  g_signal_handlers_unblock_by_func (st->output_lpi,
                                      lpi_callback,
                                      data);
 }
@@ -943,14 +943,14 @@ cellsize_callback (GtkAdjustment *adjustment,
 
   gimp_int_adjustment_update (adjustment, &pvals.cell_width);
 
-  g_signal_handlers_block_by_func (G_OBJECT (st->output_lpi),
+  g_signal_handlers_block_by_func (st->output_lpi,
                                    lpi_callback,
                                    data);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (st->output_lpi),
 			    pvals_ui.input_spi / pvals.cell_width);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (st->output_lpi),
+  g_signal_handlers_unblock_by_func (st->output_lpi,
                                      lpi_callback,
                                      data);
 }
@@ -1039,7 +1039,7 @@ new_channel (const chan_tmpl *ct)
 					  NULL, NULL);
   g_object_set_data (G_OBJECT (chst->angle_adj), "angle", ct->angle);
 
-  g_signal_connect (G_OBJECT (chst->angle_adj), "value_changed",
+  g_signal_connect (chst->angle_adj, "value_changed",
                     G_CALLBACK (angle_callback),
                     chst);
 
@@ -1076,7 +1076,7 @@ new_channel (const chan_tmpl *ct)
                              GTK_WIDGET (chst->menuitem[i]));
       gtk_widget_show (chst->menuitem[i]);
 
-      g_signal_connect (G_OBJECT (chst->menuitem[i]), "activate",
+      g_signal_connect (chst->menuitem[i], "activate",
                         G_CALLBACK (newsprint_menu_callback),
                         chst);
 
@@ -1227,7 +1227,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (st.dlg), "destroy",
+  g_signal_connect (st.dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -1262,7 +1262,7 @@ newsprint_dialog (GimpDrawable *drawable)
 			  1.0, 1200.0, 1.0, 10.0, 0,
 			  FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
 			  NULL, NULL);
-  g_signal_connect (G_OBJECT (st.input_spi), "value_changed",
+  g_signal_connect (st.input_spi, "value_changed",
                     G_CALLBACK (spi_callback),
                     &st);
 
@@ -1273,7 +1273,7 @@ newsprint_dialog (GimpDrawable *drawable)
 			  1.0, 1200.0, 1.0, 10.0, 1,
 			  FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
                           NULL, NULL);
-  g_signal_connect (G_OBJECT (st.output_lpi), "value_changed",
+  g_signal_connect (st.output_lpi, "value_changed",
                     G_CALLBACK (lpi_callback),
                     &st);
 
@@ -1283,7 +1283,7 @@ newsprint_dialog (GimpDrawable *drawable)
 				      3.0, 100.0, 1.0, 5.0, 0,
 				      FALSE, 3.0, GIMP_MAX_IMAGE_SIZE,
 				      NULL, NULL);
-  g_signal_connect (G_OBJECT (st.cellsize), "value_changed",
+  g_signal_connect (st.cellsize, "value_changed",
                     G_CALLBACK (cellsize_callback),
                     &st);
 
@@ -1322,7 +1322,7 @@ newsprint_dialog (GimpDrawable *drawable)
       gtk_widget_set_sensitive (st.pull_table, (pvals.colourspace == CS_CMYK));
       gtk_widget_show (st.pull_table);
 
-      g_signal_connect (G_OBJECT (st.pull), "value_changed",
+      g_signal_connect (st.pull, "value_changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &pvals.k_pullout);
 
@@ -1350,7 +1350,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
       g_object_set_data (G_OBJECT (toggle), "dialog", &st);
 
-      g_signal_connect (G_OBJECT (toggle), "toggled",
+      g_signal_connect (toggle, "toggled",
                         G_CALLBACK (newsprint_cspace_update),
                         GINT_TO_POINTER (CS_RGB));
 
@@ -1363,7 +1363,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
       g_object_set_data (G_OBJECT (toggle), "dialog", &st);
 
-      g_signal_connect (G_OBJECT (toggle), "toggled",
+      g_signal_connect (toggle, "toggled",
                         G_CALLBACK (newsprint_cspace_update),
                         GINT_TO_POINTER (CS_CMYK));
 
@@ -1376,7 +1376,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
       g_object_set_data (G_OBJECT (toggle), "dialog", &st);
 
-      g_signal_connect (G_OBJECT (toggle), "toggled",
+      g_signal_connect (toggle, "toggled",
                         G_CALLBACK (newsprint_cspace_update),
                         GINT_TO_POINTER (CS_INTENSITY));
 
@@ -1394,15 +1394,15 @@ newsprint_dialog (GimpDrawable *drawable)
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
       gtk_widget_show (toggle);
 
-      g_signal_connect (G_OBJECT (toggle), "toggled",
-			  G_CALLBACK (gimp_toggle_button_update),
-			  &pvals_ui.lock_channels);
+      g_signal_connect (toggle, "toggled",
+			G_CALLBACK (gimp_toggle_button_update),
+			&pvals_ui.lock_channels);
 
       button = gtk_button_new_with_mnemonic (_("_Factory Defaults"));
       gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
-      g_signal_connect (G_OBJECT (button), "clicked",
+      g_signal_connect (button, "clicked",
                         G_CALLBACK (newsprint_defaults_callback),
                         &st);
     }
@@ -1436,7 +1436,7 @@ newsprint_dialog (GimpDrawable *drawable)
 			      1.0, 15.0, 1.0, 5.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.oversample);
 

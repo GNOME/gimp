@@ -733,7 +733,7 @@ dialog_show (void)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -800,7 +800,7 @@ dialog_show (void)
 			      parameters.x1, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.x1);
 
@@ -809,7 +809,7 @@ dialog_show (void)
 			      parameters.x2, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.x2);
 
@@ -818,7 +818,7 @@ dialog_show (void)
 			      parameters.y1, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.y1);
 
@@ -827,7 +827,7 @@ dialog_show (void)
 			      parameters.y2, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.y2);
 
@@ -836,7 +836,7 @@ dialog_show (void)
 			      parameters.depth, 1, 50, 1, 5, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_int_adjustment_update),
                     &parameters.depth);
 

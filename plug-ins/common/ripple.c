@@ -504,7 +504,7 @@ ripple_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -535,7 +535,7 @@ ripple_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), rvals.antialias);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &rvals.antialias);
 
@@ -544,7 +544,7 @@ ripple_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (rvals.tile));
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &rvals.tile);
 
@@ -615,7 +615,7 @@ ripple_dialog (void)
 				     rvals.period, 0, 200, 1, 10, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &rvals.period);
 
@@ -625,7 +625,7 @@ ripple_dialog (void)
 				     rvals.amplitude, 0, 200, 1, 10, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &rvals.amplitude);
 

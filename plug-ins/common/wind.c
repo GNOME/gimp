@@ -895,7 +895,7 @@ dialog_box (GimpDrawable *drawable)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -1029,11 +1029,11 @@ dialog_box (GimpDrawable *drawable)
 			      TRUE, 0, 0,
 			      _("Higher values restrict the effect to fewer areas of the image"), NULL);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.threshold);
 
-  g_signal_connect_swapped (G_OBJECT (adj), "value_changed",
+  g_signal_connect_swapped (adj, "value_changed",
                             G_CALLBACK (render_effect),
                             drawable);
 
@@ -1048,11 +1048,11 @@ dialog_box (GimpDrawable *drawable)
 			      TRUE, 0, 0,
 			      _("Higher values increase the magnitude of the effect"), NULL);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.strength);
 
-  g_signal_connect_swapped (G_OBJECT (adj), "value_changed",
+  g_signal_connect_swapped (adj, "value_changed",
                             G_CALLBACK (render_effect),
                             drawable);
 

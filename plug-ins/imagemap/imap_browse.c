@@ -60,11 +60,10 @@ browse_cb(GtkWidget *widget, gpointer data)
    if (!browse->file_selection) {
       GtkWidget *dialog;
       dialog = browse->file_selection = gtk_file_selection_new(browse->name);
-      g_signal_connect_swapped(
-	 G_OBJECT(GTK_FILE_SELECTION(dialog)->cancel_button),
-	 "clicked", G_CALLBACK(gtk_widget_hide), G_OBJECT(dialog));
-      g_signal_connect(G_OBJECT(GTK_FILE_SELECTION(dialog)->ok_button),
-			 "clicked", G_CALLBACK(select_cb), data);
+      g_signal_connect_swapped(GTK_FILE_SELECTION(dialog)->cancel_button,
+			       "clicked", G_CALLBACK(gtk_widget_hide), dialog);
+      g_signal_connect(GTK_FILE_SELECTION(dialog)->ok_button,
+		       "clicked", G_CALLBACK(select_cb), data);
    }
    gtk_widget_show(browse->file_selection);
 }
@@ -101,7 +100,7 @@ browse_widget_new(const gchar *name)
    gtk_box_pack_start(GTK_BOX(browse->hbox), browse->file, TRUE, TRUE, 0);
    gtk_drag_dest_set(browse->file, GTK_DEST_DEFAULT_ALL, target_table,
 		     2, GDK_ACTION_COPY);
-   g_signal_connect(G_OBJECT(browse->file), "drag_data_received",
+   g_signal_connect(browse->file, "drag_data_received",
 		    G_CALLBACK(handle_drop), NULL);
 
    gtk_widget_show(browse->file);
@@ -112,7 +111,7 @@ browse_widget_new(const gchar *name)
    gtk_widget_show(icon);
 
    gtk_box_pack_end(GTK_BOX(browse->hbox), button, FALSE, FALSE, 0);
-   g_signal_connect(G_OBJECT(button), "clicked", 
+   g_signal_connect(button, "clicked", 
 		    G_CALLBACK(browse_cb), (gpointer) browse);
    gtk_widget_show(button);
 

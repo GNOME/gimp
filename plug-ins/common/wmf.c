@@ -731,7 +731,7 @@ load_dialog (gchar *file_name)
 
 				  NULL);
 
-  g_signal_connect (G_OBJECT (vals->dialog), "destroy",
+  g_signal_connect (vals->dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 

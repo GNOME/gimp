@@ -320,7 +320,7 @@ flare_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -756,7 +756,7 @@ flare_center_create (GimpDrawable *drawable)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
 
-  g_signal_connect (G_OBJECT (frame), "destroy",
+  g_signal_connect (frame, "destroy",
                     G_CALLBACK (flare_center_destroy),
                     center);
 
@@ -784,7 +784,7 @@ flare_center_create (GimpDrawable *drawable)
 
   g_object_set_data (G_OBJECT (center->xadj), "center", center);
 
-  g_signal_connect (G_OBJECT (center->xadj), "value_changed",
+  g_signal_connect (center->xadj, "value_changed",
                     G_CALLBACK (flare_center_adjustment_update),
                     &fvals.posx);
 
@@ -805,7 +805,7 @@ flare_center_create (GimpDrawable *drawable)
 
   g_object_set_data (G_OBJECT (center->yadj), "center", center);
 
-  g_signal_connect (G_OBJECT (center->yadj), "value_changed",
+  g_signal_connect (center->yadj, "value_changed",
                     G_CALLBACK (flare_center_adjustment_update),
                     &fvals.posy);
 
@@ -822,10 +822,10 @@ flare_center_create (GimpDrawable *drawable)
 
   g_object_set_data (G_OBJECT (preview->widget), "center", center);
 
-  g_signal_connect_after (G_OBJECT (preview->widget), "expose_event",
+  g_signal_connect_after (preview->widget, "expose_event",
                           G_CALLBACK (flare_center_preview_expose),
                           center);
-  g_signal_connect (G_OBJECT (preview->widget), "event",
+  g_signal_connect (preview->widget, "event",
                     G_CALLBACK (flare_center_preview_events),
                     center);
 
@@ -841,10 +841,10 @@ flare_center_create (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), show_cursor);
   gtk_widget_show (check);
 
-  g_signal_connect (G_OBJECT (check), "toggled",
+  g_signal_connect (check, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &show_cursor);
-  g_signal_connect_swapped (G_OBJECT (check), "toggled",
+  g_signal_connect_swapped (check, "toggled",
                             G_CALLBACK (FlareFX),
                             drawable);
 

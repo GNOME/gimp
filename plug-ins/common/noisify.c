@@ -319,7 +319,7 @@ noisify_add_channel (GtkWidget *table, gint channel, gchar *name,
 
   g_object_set_data (G_OBJECT (adj), "drawable", drawable);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
 		    G_CALLBACK (noisify_double_adjustment_update),
 		    &nvals.noise[channel]);
 
@@ -350,7 +350,7 @@ noisify_dialog (GimpDrawable *drawable,
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -384,7 +384,7 @@ noisify_dialog (GimpDrawable *drawable,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), nvals.independent);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &nvals.independent);
 

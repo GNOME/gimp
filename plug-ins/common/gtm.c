@@ -377,7 +377,7 @@ save_dialog (image_ID)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -437,7 +437,7 @@ save_dialog (image_ID)
 			     "the table html."),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &gtmvals.fulldoc);
 
@@ -466,7 +466,7 @@ save_dialog (image_ID)
 			     "large cell with ROWSPAN and COLSPAN values."),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &gtmvals.spantags);
 
@@ -482,7 +482,7 @@ save_dialog (image_ID)
 			     "level positioning control."),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &gtmvals.tdcomp);
 
@@ -496,7 +496,7 @@ save_dialog (image_ID)
 			     "captioned."),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &gtmvals.caption);
 
@@ -509,7 +509,7 @@ save_dialog (image_ID)
 
   gimp_help_set_help_data (entry, _("The text for the table caption."), NULL);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (gtm_caption_callback),
                     NULL);
 
@@ -526,7 +526,7 @@ save_dialog (image_ID)
 
   gimp_help_set_help_data (entry, _("The text to go into each cell."), NULL);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (gtm_cellcontent_callback),
                     NULL);
 
@@ -554,7 +554,7 @@ save_dialog (image_ID)
 			   _("The number of pixels in the table border."),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gtmvals.border);
 
@@ -570,7 +570,7 @@ save_dialog (image_ID)
 			     "Can be a number or a percent."),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (gtm_clwidth_callback),
                     NULL);
 
@@ -586,7 +586,7 @@ save_dialog (image_ID)
 			     "Can be a number or a percent."),
 			   NULL);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (gtm_clheight_callback),
                     NULL);
 
@@ -599,7 +599,7 @@ save_dialog (image_ID)
   gimp_help_set_help_data (spinbutton,
 			   _("The amount of cellpadding."), NULL);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gtmvals.cellpadding);
 
@@ -612,7 +612,7 @@ save_dialog (image_ID)
   gimp_help_set_help_data (spinbutton,
 			   _("The amount of cellspacing."), NULL);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gtmvals.cellspacing);
 

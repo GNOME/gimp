@@ -643,7 +643,7 @@ mblur_dialog (void)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -687,7 +687,7 @@ mblur_dialog (void)
 				     mbvals.length, 0.0, 256.0, 1.0, 8.0, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+  g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &mbvals.length);
 
@@ -696,7 +696,7 @@ mblur_dialog (void)
 				     mbvals.angle, 0.0, 360.0, 1.0, 15.0, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+  g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &mbvals.angle);
 

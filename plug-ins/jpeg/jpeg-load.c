@@ -1585,7 +1585,7 @@ save_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (save_close_callback),
                     NULL);
 
@@ -1609,10 +1609,10 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
-  g_signal_connect (G_OBJECT (preview), "toggled",
+  g_signal_connect (preview, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.preview);
-  g_signal_connect (G_OBJECT (preview), "toggled",
+  g_signal_connect (preview, "toggled",
                     G_CALLBACK (make_preview),
                     NULL);
 
@@ -1654,10 +1654,10 @@ save_dialog (void)
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_widget_show (scale);
 
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &jsvals.quality);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (make_preview),
                     NULL);
 
@@ -1677,10 +1677,10 @@ save_dialog (void)
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_widget_show (scale);
 
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &jsvals.smoothing);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (make_preview),
                     NULL);
 
@@ -1694,7 +1694,7 @@ save_dialog (void)
 		    GTK_FILL, 0, 0, 0);
   gtk_widget_show (restart);
 
-  g_signal_connect (G_OBJECT (restart), "toggled",
+  g_signal_connect (restart, "toggled",
                     G_CALLBACK (save_restart_toggle_update),
                     scale_data);
 
@@ -1716,7 +1716,7 @@ save_dialog (void)
   gtk_range_set_update_policy (GTK_RANGE (restart_markers_scale),
 			       GTK_UPDATE_DELAYED);
 
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (save_restart_update),
                     restart);
 
@@ -1732,10 +1732,10 @@ save_dialog (void)
 		    GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.optimize);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (make_preview),
                     NULL);
 
@@ -1746,10 +1746,10 @@ save_dialog (void)
 		    GTK_FILL, 0, 0, 0);
   gtk_widget_show (progressive);
 
-  g_signal_connect (G_OBJECT (progressive), "toggled",
+  g_signal_connect (progressive, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.progressive);
-  g_signal_connect (G_OBJECT (progressive), "toggled",
+  g_signal_connect (progressive, "toggled",
                     G_CALLBACK (make_preview),
                     NULL);
 
@@ -1765,10 +1765,10 @@ save_dialog (void)
 		    GTK_FILL, 0, 0, 0);
   gtk_widget_show (baseline);
 
-  g_signal_connect (G_OBJECT (baseline), "toggled",
+  g_signal_connect (baseline, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.baseline);
-  g_signal_connect (G_OBJECT (baseline), "toggled",
+  g_signal_connect (baseline, "toggled",
                     G_CALLBACK (make_preview),
                     NULL);
 
@@ -1831,7 +1831,7 @@ save_dialog (void)
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
 
-  g_object_unref (G_OBJECT (text_buffer));
+  g_object_unref (text_buffer);
 
   /* pw - mild hack here.  I didn't like redoing the comment string
    * each time a character was typed, so I associated the text area

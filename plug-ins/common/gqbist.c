@@ -755,11 +755,11 @@ dialog_load (GtkWidget *widget,
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select),
                                    qbist_info.path);
 
-  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button),
+  g_signal_connect (GTK_FILE_SELECTION (file_select)->ok_button,
                     "clicked",
                     G_CALLBACK (file_selection_load),
                     file_select);
-  g_signal_connect_swapped (G_OBJECT (GTK_FILE_SELECTION (file_select)->cancel_button),
+  g_signal_connect_swapped (GTK_FILE_SELECTION (file_select)->cancel_button,
                             "clicked",
                             G_CALLBACK (gtk_widget_destroy),
                             file_select);
@@ -782,11 +782,11 @@ dialog_save (GtkWidget *widget,
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select), 
 				   qbist_info.path);
 
-  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button),
+  g_signal_connect (GTK_FILE_SELECTION (file_select)->ok_button,
                     "clicked",
                     G_CALLBACK (file_selection_save),
                     file_select);
-  g_signal_connect_swapped (G_OBJECT (GTK_FILE_SELECTION (file_select)->cancel_button),
+  g_signal_connect_swapped (GTK_FILE_SELECTION (file_select)->cancel_button,
                             "clicked",
                             G_CALLBACK (gtk_widget_destroy),
                             file_select);
@@ -826,7 +826,7 @@ dialog_create (void)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -853,7 +853,7 @@ dialog_create (void)
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (button);
 
-      g_signal_connect (G_OBJECT (button), "clicked",
+      g_signal_connect (button, "clicked",
                         G_CALLBACK (dialog_select_preview),
                         (gpointer) & (info[(i + 5) % 9]));
 
@@ -869,7 +869,7 @@ dialog_create (void)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (dialog_toggle_antialaising),
                     NULL);
 
@@ -882,7 +882,7 @@ dialog_create (void)
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_load),
                     NULL);
 
@@ -891,7 +891,7 @@ dialog_create (void)
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_save),
                     NULL);
 

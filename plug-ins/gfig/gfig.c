@@ -1882,7 +1882,7 @@ small_preview (GtkWidget *list)
 			    0, y, SMALL_PREVIEW_SZ);
     }
 
-  g_signal_connect_after (G_OBJECT (pic_preview), "expose_event",
+  g_signal_connect_after (pic_preview, "expose_event",
                           G_CALLBACK (pic_preview_expose),
                           NULL);
 
@@ -3814,7 +3814,7 @@ make_preview (void)
 
   ruler = gtk_vruler_new ();
   gtk_ruler_set_range (GTK_RULER (ruler), 0, preview_height, 0, PREVIEW_SIZE);
-  g_signal_connect_swapped (G_OBJECT (gfig_preview), "motion_notify_event",
+  g_signal_connect_swapped (gfig_preview, "motion_notify_event",
                             G_CALLBACK (GTK_WIDGET_CLASS (G_OBJECT_GET_CLASS (ruler))->motion_notify_event),
 			    ruler);
   gtk_table_attach (GTK_TABLE (table), ruler, 0, 1, 1, 2,
@@ -4613,7 +4613,7 @@ load_button_callback (GtkWidget *widget,
                     G_CALLBACK (gfig_load_file_selection_ok),
                     window);
 
-  g_signal_connect_swapped (G_OBJECT (GTK_FILE_SELECTION (window)->cancel_button),
+  g_signal_connect_swapped (GTK_FILE_SELECTION (window)->cancel_button,
                             "clicked",
                             G_CALLBACK (gtk_widget_destroy),
                             window);

@@ -1599,13 +1599,13 @@ static void
 alpha_scale_update (GtkWidget *color_button,
 		    gpointer   data)
 {
-  GtkObject *adj;
-  GimpRGB    color;
+  GtkAdjustment *adj;
+  GimpRGB        color;
 
-  adj = GTK_OBJECT (data);
+  adj = GTK_ADJUSTMENT (data);
 
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (color_button), &color);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (adj), color.a);
+  gtk_adjustment_set_value (adj, color.a);
 
   if (do_preview)
     sinus_do_preview (NULL);
@@ -1704,7 +1704,7 @@ sinus_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -1768,7 +1768,7 @@ sinus_dialog (void)
 			      svals.scalex, 0.0001, 100.0, 0.0001, 5, 4,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (sinus_double_adjustment_update),
                     &svals.scalex);
   
@@ -1777,7 +1777,7 @@ sinus_dialog (void)
 			      svals.scaley, 0.0001, 100.0, 0.0001, 5, 4,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (sinus_double_adjustment_update),
                     &svals.scaley);
   
@@ -1786,7 +1786,7 @@ sinus_dialog (void)
 			      svals.cmplx, 0.0, 15.0, 0.01, 5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (sinus_double_adjustment_update),
                     &svals.cmplx);
 
@@ -1812,16 +1812,16 @@ sinus_dialog (void)
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
 				 GIMP_RANDOM_SEED_SPINBUTTON (hbox));
 
-  g_signal_connect(G_OBJECT (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (hbox)),
-		   "value_changed", G_CALLBACK (sinus_random_update), NULL);
-  gtk_widget_show(table);
+  g_signal_connect (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (hbox),
+		    "value_changed", G_CALLBACK (sinus_random_update), NULL);
+  gtk_widget_show (table);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Force Tiling?"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), svals.tiling);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (sinus_toggle_button_update),
                     &svals.tiling);
 
@@ -1899,7 +1899,7 @@ sinus_dialog (void)
       gtk_box_pack_start (GTK_BOX (hbox), push_col1, FALSE, FALSE, 0);
       gtk_widget_show (push_col1);
 
-      g_signal_connect (G_OBJECT (push_col1), "color_changed", 
+      g_signal_connect (push_col1, "color_changed", 
                         G_CALLBACK (gimp_color_button_get_color),
                         &svals.col1);
 
@@ -1909,7 +1909,7 @@ sinus_dialog (void)
       gtk_box_pack_start (GTK_BOX (hbox), push_col2, FALSE, FALSE, 0);
       gtk_widget_show (push_col2);
 
-      g_signal_connect (G_OBJECT (push_col2), "color_changed", 
+      g_signal_connect (push_col2, "color_changed", 
                         G_CALLBACK (gimp_color_button_get_color),
                         &svals.col2);
 
@@ -1933,12 +1933,12 @@ sinus_dialog (void)
 			      TRUE, 0, 0,
 			      NULL, NULL);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (alpha_scale_cb),
                     push_col1);
 
   if (push_col1)
-    g_signal_connect (G_OBJECT (push_col1), "color_changed",
+    g_signal_connect (push_col1, "color_changed",
                       G_CALLBACK (alpha_scale_update),
                       adj);
 
@@ -1948,12 +1948,12 @@ sinus_dialog (void)
 			      TRUE, 0, 0,
 			      NULL, NULL);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (alpha_scale_cb),
                     push_col2);
 
   if (push_col2)
-    g_signal_connect (G_OBJECT (push_col2), "color_changed",
+    g_signal_connect (push_col2, "color_changed",
                       G_CALLBACK (alpha_scale_update),
                       adj);
 
@@ -2001,7 +2001,7 @@ sinus_dialog (void)
 			      svals.blend_power, -7.5, 7.5, 0.01, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (sinus_double_adjustment_update),
                     &svals.blend_power);
 
@@ -2137,7 +2137,7 @@ mw_preview_new (GtkWidget *parent,
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (mw_preview_toggle_callback),
                     &do_preview);
 

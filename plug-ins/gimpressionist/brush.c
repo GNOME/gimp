@@ -196,15 +196,15 @@ void savebrush(GtkWidget *wg, gpointer data)
   window = gtk_file_selection_new( _("Save brush"));
   gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
-  gtk_file_selection_set_filename(GTK_FILE_SELECTION(window), path);
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), path);
 
-  g_signal_connect (G_OBJECT(window), "destroy", G_CALLBACK (destroy_window),
-                    &window);
+  g_signal_connect (window, "destroy",
+                    G_CALLBACK (destroy_window), &window);
   
-  g_signal_connect (G_OBJECT(GTK_FILE_SELECTION(window)->ok_button),
-                    "clicked", G_CALLBACK (savebrush_ok), window);
+  g_signal_connect (GTK_FILE_SELECTION (window)->ok_button, "clicked",
+                    G_CALLBACK (savebrush_ok), window);
 
-  g_signal_connect_swapped (G_OBJECT(GTK_FILE_SELECTION(window)->cancel_button),
+  g_signal_connect_swapped (GTK_FILE_SELECTION (window)->cancel_button,
                             "clicked",
                             G_CALLBACK (gtk_widget_destroy),
 			    window);
@@ -392,8 +392,8 @@ void create_brushpage(GtkNotebook *notebook)
   gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  g_signal_connect_swapped (G_OBJECT(brushgammaadjust), "value_changed",
-		    G_CALLBACK(updatebrushprev), pcvals.selectedbrush);
+  g_signal_connect_swapped (brushgammaadjust, "value_changed",
+			    G_CALLBACK(updatebrushprev), pcvals.selectedbrush);
 
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Changes the gamma (brightness) of the selected brush"), NULL);
 
@@ -417,8 +417,8 @@ void create_brushpage(GtkNotebook *notebook)
     gtk_widget_show (tmpw);
 
     brushemptyitem = emptyitem = gtk_menu_item_new_with_label( _("(None)"));
-    g_signal_connect (G_OBJECT(emptyitem), "activate",
-                      G_CALLBACK(dummybrushdmenuselect),
+    g_signal_connect (emptyitem, "activate",
+                      G_CALLBACK (dummybrushdmenuselect),
                       NULL);
     gtk_widget_show(emptyitem);
 
@@ -431,7 +431,7 @@ void create_brushpage(GtkNotebook *notebook)
     gtk_option_menu_set_menu(GTK_OPTION_MENU(tmpw), dmenu);
     tmpw = gtk_button_new_from_stock (GTK_STOCK_SAVE_AS);
     gtk_box_pack_start(GTK_BOX(box3),tmpw, FALSE, FALSE, 0);
-    g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(savebrush), NULL);
+    g_signal_connect (tmpw, "clicked", G_CALLBACK(savebrush), NULL);
     gtk_widget_show(tmpw);
   }
 

@@ -446,7 +446,7 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
    if (obj) {
       if (event->button == 1) {
 	 if (!factory->finish || factory->finish(obj, x, y)) {
-	    g_signal_handlers_disconnect_by_func(G_OBJECT(widget), 
+	    g_signal_handlers_disconnect_by_func(widget, 
                                                  button_motion, 
                                                  factory);
 	    if (object_is_valid(obj)) {
@@ -465,7 +465,7 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
       } else if (event->button == 3) {
 	 object_draw(obj, widget->window);
 	 if (!factory->cancel || factory->cancel(event, obj)) {
-	    g_signal_handlers_disconnect_by_func(G_OBJECT(widget), 
+	    g_signal_handlers_disconnect_by_func(widget, 
                                                  button_motion, 
                                                  factory);
 	    object_unref(obj);
@@ -483,7 +483,7 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 	 
 	 gdk_gc_set_function(preferences->normal_gc, GDK_EQUIV);
 
-	 g_signal_connect(G_OBJECT(widget), "motion_notify_event",
+	 g_signal_connect(widget, "motion_notify_event",
                           G_CALLBACK(button_motion), factory);
       }
    }

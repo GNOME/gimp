@@ -510,7 +510,7 @@ pluginCoreIA (piArgs *argp)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -556,7 +556,7 @@ pluginCoreIA (piArgs *argp)
 			      argp->azimuth, 0.0, 360.0, 1.0, 10.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (emboss_float_adjustment_callback),
                     &argp->azimuth);
 
@@ -565,7 +565,7 @@ pluginCoreIA (piArgs *argp)
 			      argp->elevation, 0.0, 180.0, 1.0, 10.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (emboss_float_adjustment_callback),
                     &argp->elevation);
 
@@ -574,7 +574,7 @@ pluginCoreIA (piArgs *argp)
 			      argp->depth, 1.0, 100.0, 1.0, 5.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (emboss_int_adjustment_callback),
                     &argp->depth);
 
@@ -745,7 +745,7 @@ mw_preview_new (GtkWidget        *parent,
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (mw_preview_toggle_callback),
                     &do_preview);
 

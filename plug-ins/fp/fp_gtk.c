@@ -204,7 +204,7 @@ fp_create_circle_palette (void)
   gtk_window_set_title (GTK_WINDOW (win), _("Hue Variations"));
   gtk_container_add (GTK_CONTAINER (win), frame);
 
-  g_signal_connect (G_OBJECT (win), "delete_event",
+  g_signal_connect (win, "delete_event",
                     G_CALLBACK (sub_dialog_destroy),
                     NULL);
 
@@ -229,7 +229,7 @@ fp_create_rough (void)
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_widget_show (scale);
 
-  g_signal_connect (G_OBJECT (data), "value_changed",
+  g_signal_connect (data, "value_changed",
                     G_CALLBACK (fp_scale_update),
                     &Current.Rough);      
 
@@ -352,7 +352,7 @@ fp_create_lnd (void)
   gtk_window_set_title (GTK_WINDOW (win), _("Value Variations"));
   gtk_container_add (GTK_CONTAINER (win), frame);
 
-  g_signal_connect (G_OBJECT (win), "delete_event",
+  g_signal_connect (win, "delete_event",
                     G_CALLBACK (sub_dialog_destroy),
                     NULL);
  
@@ -401,7 +401,7 @@ fp_create_msnls (void)
   gtk_window_set_title (GTK_WINDOW (win), _("Saturation Variations"));
   gtk_container_add (GTK_CONTAINER (win), frame);
 
-  g_signal_connect (G_OBJECT (win), "delete_event",
+  g_signal_connect (win, "delete_event",
                     G_CALLBACK (sub_dialog_destroy),
                     NULL);
 
@@ -529,7 +529,7 @@ Button_In_A_Box (GtkWidget     *vbox,
   gtk_widget_show (button);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (function),
                     data);
 
@@ -552,7 +552,7 @@ Check_Button_In_A_Box (GtkWidget     *vbox,
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (function),
                     data);
 
@@ -573,7 +573,7 @@ Frames_Check_Button_In_A_Box (GtkWidget     *vbox,
   g_object_set_data (G_OBJECT (frame), "ctrlButton", (gpointer) button);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (function),
                     frame);
 #
@@ -614,7 +614,7 @@ Create_A_Table_Entry (GtkWidget   **box,
 
       gtk_container_add (GTK_CONTAINER (button), SmallerFrame);
 
-      g_signal_connect (G_OBJECT (button), "clicked",
+      g_signal_connect (button, "clicked",
                         G_CALLBACK (selectionMade),
                         (gchar *) description);
     }
@@ -928,7 +928,7 @@ fp_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -1051,7 +1051,7 @@ fp_advanced_dialog (void)
   gtk_window_set_title (GTK_WINDOW (AW.window),
 			_("Advanced Filter Pack Options"));
 
-  g_signal_connect (G_OBJECT (AW.window), "delete_event",
+  g_signal_connect (AW.window, "delete_event",
                     G_CALLBACK (sub_dialog_destroy),
                     NULL);
 
@@ -1125,7 +1125,7 @@ fp_advanced_dialog (void)
   gtk_widget_show (AW.aliasingGraph);
   gtk_widget_set_events (AW.aliasingGraph, RANGE_ADJUST_MASK);
 
-  g_signal_connect (G_OBJECT (AW.aliasingGraph),"event",
+  g_signal_connect (AW.aliasingGraph, "event",
                     G_CALLBACK (FP_Range_Change_Events),
                     &Current);
 
@@ -1143,7 +1143,7 @@ fp_advanced_dialog (void)
 		    0, 0, 0, 0);
   gtk_widget_show (scale);
 
-  g_signal_connect (G_OBJECT (smoothnessData), "value_changed",
+  g_signal_connect (smoothnessData, "value_changed",
                     G_CALLBACK (fp_scale_update),
                     &Current.Alias);
 
@@ -1180,7 +1180,7 @@ fp_advanced_dialog (void)
   gtk_range_set_update_policy (GTK_RANGE (scale), 0);
   gtk_widget_show (scale);
 
-  g_signal_connect (G_OBJECT (smoothnessData), "value_changed",
+  g_signal_connect (smoothnessData, "value_changed",
                     G_CALLBACK (preview_size_scale_update),
                     &Current.PreviewSize);        
 

@@ -456,7 +456,7 @@ save_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -476,7 +476,7 @@ save_dialog (void)
 			     entry, 1, FALSE);
   gtk_widget_show (entry);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (entry_callback),
                     description);
 

@@ -939,7 +939,7 @@ iwarp_animate_dialog (GtkWidget *dlg,
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &do_animate);
 
@@ -959,7 +959,7 @@ iwarp_animate_dialog (GtkWidget *dlg,
 				     2, MAX_NUM_FRAMES, 1, 10, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &animate_num_frames);
 
@@ -968,7 +968,7 @@ iwarp_animate_dialog (GtkWidget *dlg,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0); 
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_toggle_button_update),
                     &do_animate_reverse);
  
@@ -977,7 +977,7 @@ iwarp_animate_dialog (GtkWidget *dlg,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0); 
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_toggle_button_update),
                     &do_animate_ping_pong);
 
@@ -1018,7 +1018,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
 				     5.0, MAX_DEFORM_AREA_RADIUS, 1.0, 10.0, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &iwarp_vals.deform_area_radius);
  
@@ -1028,7 +1028,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
 				     0.0, 1.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &iwarp_vals.deform_amount);
 
@@ -1075,13 +1075,13 @@ iwarp_settings_dialog (GtkWidget *dlg,
 
   for (i = 0; i < 3; i++)
     {
-      g_object_ref (G_OBJECT (widget[i]));
+      g_object_ref (widget[i]);
       gtk_widget_hide (widget[i]);
       gtk_container_remove (GTK_CONTAINER (vbox2), widget[i]);
       gtk_box_pack_start (GTK_BOX (vbox3), widget[i],
                           FALSE, FALSE, 0);
       gtk_widget_show (widget[i]);
-      g_object_unref (G_OBJECT (widget[i]));
+      g_object_unref (widget[i]);
     }
 
   button = gtk_check_button_new_with_mnemonic (_("_Bilinear"));
@@ -1090,7 +1090,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &iwarp_vals.do_bilinear);
 
@@ -1104,7 +1104,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &iwarp_vals.do_supersample);
 
@@ -1124,7 +1124,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
 				     1.0, 5.0, 1.1, 1.0, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &iwarp_vals.max_supersample_depth);
 
@@ -1134,7 +1134,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
 				     1.0, 10.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &iwarp_vals.supersample_threshold);
 
@@ -1175,7 +1175,7 @@ iwarp_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -1212,7 +1212,7 @@ iwarp_dialog (void)
 			 GDK_BUTTON_RELEASE_MASK |
 			 GDK_BUTTON1_MOTION_MASK | 
 			 GDK_POINTER_MOTION_HINT_MASK);
-  g_signal_connect (G_OBJECT(preview), "event",
+  g_signal_connect (preview, "event",
                     G_CALLBACK (iwarp_motion_callback),
                     NULL);
 

@@ -247,7 +247,7 @@ glass_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -282,10 +282,10 @@ glass_dialog (GimpDrawable *drawable)
 			      TRUE, 0, 0,
 			      NULL, NULL);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gtvals.xblock);
-  g_signal_connect_swapped (G_OBJECT (adj), "value_changed",
+  g_signal_connect_swapped (adj, "value_changed",
                             G_CALLBACK (glasstile),
                             drawable);
 
@@ -298,10 +298,10 @@ glass_dialog (GimpDrawable *drawable)
 
   g_object_set_data (G_OBJECT (adj), "drawable", drawable);
 
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gtvals.yblock);
-  g_signal_connect_swapped (G_OBJECT (adj), "value_changed",
+  g_signal_connect_swapped (adj, "value_changed",
                             G_CALLBACK (glasstile),
                             drawable);
 

@@ -2162,7 +2162,7 @@ video_dialog (void)
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -2192,7 +2192,7 @@ video_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (video_toggle_update),
                     &vvals.additive);
 
@@ -2202,7 +2202,7 @@ video_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (video_toggle_update),
                     &vvals.rotated);
 
@@ -2238,7 +2238,7 @@ video_dialog (void)
       g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                          GINT_TO_POINTER (y));
 
-      g_signal_connect (G_OBJECT (toggle), "toggled",
+      g_signal_connect (toggle, "toggled",
                         G_CALLBACK (video_radio_update),
                         &vvals.pattern_number);
 

@@ -963,7 +963,7 @@ compose_dialog (gchar  *compose_type,
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -1043,7 +1043,7 @@ compose_dialog (gchar  *compose_type,
       composeint.compose_flag[j] = (j == compose_idx);
       gtk_widget_show (toggle);
 
-      g_signal_connect (G_OBJECT (toggle), "toggled",
+      g_signal_connect (toggle, "toggled",
                         GTK_SIGNAL_FUNC (compose_type_toggle_update),
                         &(composeint.compose_flag[j]));
 

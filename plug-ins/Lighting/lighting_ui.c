@@ -358,7 +358,7 @@ create_options_page (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.bump_mapped);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
 		    G_CALLBACK (togglebump_update),
 		    &mapvals.bump_mapped);
   gtk_widget_show (toggle);
@@ -371,7 +371,7 @@ create_options_page (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.env_mapped);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
 		    G_CALLBACK (toggleenvironment_update),
 		    &mapvals.env_mapped);
   gtk_widget_show (toggle);
@@ -384,7 +384,7 @@ create_options_page (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.transparent_background);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (toggle_update),
                     &mapvals.transparent_background);
   gtk_widget_show (toggle);
@@ -397,7 +397,7 @@ create_options_page (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.create_new_image);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.create_new_image);
   gtk_widget_show (toggle);
@@ -409,7 +409,7 @@ create_options_page (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.previewquality);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (toggle_update),
                     &mapvals.previewquality);
   gtk_widget_show (toggle);
@@ -429,7 +429,7 @@ create_options_page (void)
   gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.antialiasing);
 
@@ -449,7 +449,7 @@ create_options_page (void)
 			      1, TRUE, 0, 0,
 			      _("Antialiasing quality. Higher is better, "
 				"but slower"), NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.max_depth);
   
@@ -459,14 +459,14 @@ create_options_page (void)
 			      TRUE, 0, 0,
 			      _("Stop when pixel differences are smaller than "
 			        "this value"), NULL);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.pixel_treshold);
 
   /*
   spinbutton = gimp_spin_button_new (&adj, mapvals.pixel_treshold,
 				     0.001, 1000, 0.1, 1, 1, 0, 3);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
 		    G_CALLBACK (gimp_double_adjustment_update),
 		    &mapvals.pixel_treshold);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -535,12 +535,12 @@ create_light_page (void)
 				       64, 16,
 				       &mapvals.lightsource.color,
 				       GIMP_COLOR_AREA_FLAT);
-  g_signal_connect (G_OBJECT (colorbutton), "color_changed",
+  g_signal_connect (colorbutton, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color), 
                     &mapvals.lightsource.color);
-  g_signal_connect(G_OBJECT(colorbutton), "color_changed",
-		   G_CALLBACK (interactive_preview_callback),
-		   NULL);
+  g_signal_connect (colorbutton, "color_changed",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Lig_ht Color:"), 1.0, 0.5,
 			     colorbutton, 1, TRUE);
@@ -568,13 +568,13 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("_X:"), 1.0, 0.5,
 			     spin_pos_x, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.position.x);
 
-  g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (interactive_preview_callback),
-		   NULL);
+  g_signal_connect (adj, "value_changed",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
   gimp_help_set_help_data ( spin_pos_x,
 			   _("Light source X position in XYZ space"), NULL);
@@ -585,12 +585,12 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("_Y:"), 1.0, 0.5,
 			      spin_pos_y, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.position.y);
-  g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (interactive_preview_callback),
-		   NULL);
+  g_signal_connect (adj, "value_changed",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
 
   gimp_help_set_help_data ( spin_pos_y,
@@ -602,12 +602,12 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("_Z:"), 1.0, 0.5,
 			      spin_pos_z, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.position.z);
-  g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (interactive_preview_callback),
-		   NULL);
+  g_signal_connect (adj, "value_changed",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
   gimp_help_set_help_data (  spin_pos_z,
 			   _("Light source Z position in XYZ space"), NULL);
@@ -631,12 +631,12 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("X:"), 1.0, 0.5,
 			     spin_dir_x, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.direction.x);
-  g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (interactive_preview_callback),
-		   NULL);
+  g_signal_connect (adj, "value_changed",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
 
   gimp_help_set_help_data (spin_dir_x,
@@ -647,12 +647,12 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Y:"), 1.0, 0.5,
 			     spin_dir_y, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.direction.y);
-  g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (interactive_preview_callback),
-		   NULL);
+  g_signal_connect (adj, "value_changed",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
   gimp_help_set_help_data (spin_dir_y,
 			   _("Light source Y direction in XYZ space"), NULL);
@@ -662,12 +662,12 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Z:"), 1.0, 0.5,
 			     spin_dir_z, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.direction.z);
-  g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (interactive_preview_callback),
-		   NULL);
+  g_signal_connect (adj, "value_changed",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
   gimp_help_set_help_data (spin_dir_z,
 			   _("Light source Z direction in XYZ space"), NULL);
@@ -721,12 +721,12 @@ create_material_page (void)
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.ambient_int);
-  g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (interactive_preview_callback),
-		   NULL);
+  g_signal_connect (adj, "value_changed",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
   gtk_widget_show (spinbutton);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
@@ -751,12 +751,12 @@ create_material_page (void)
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.diffuse_int);
-  g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (interactive_preview_callback),
-		   NULL);
+  g_signal_connect (adj, "value_changed",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
   gtk_widget_show (spinbutton);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
@@ -795,12 +795,12 @@ create_material_page (void)
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.diffuse_ref);
-  g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (interactive_preview_callback),
-		   NULL);
+  g_signal_connect (adj, "value_changed",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
 
   gtk_widget_show (spinbutton);
@@ -826,12 +826,12 @@ create_material_page (void)
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.specular_ref);
-  g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (interactive_preview_callback),
-		   NULL);
+  g_signal_connect (adj, "value_changed",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
 
   gtk_widget_show (spinbutton);
@@ -857,12 +857,12 @@ create_material_page (void)
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.highlight);
-  g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK(interactive_preview_callback),
-		   NULL);
+  g_signal_connect (adj, "value_changed",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
   gtk_widget_show (spinbutton);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
@@ -908,7 +908,7 @@ create_bump_page (void)
   gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.bump_mapped);
 
@@ -952,7 +952,7 @@ create_bump_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Ma_ximum Height:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.bumpmax);
 
@@ -965,7 +965,7 @@ create_bump_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("M_inimum Height:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.bumpmin);
 
@@ -977,7 +977,7 @@ create_bump_page (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.bumpstretch);
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 4, 5);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.bumpstretch);
   gtk_widget_show (toggle);
@@ -1014,7 +1014,7 @@ create_environment_page (void)
   gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.env_mapped);
 
@@ -1174,7 +1174,7 @@ main_dialog (GimpDrawable *drawable)
 				       GDK_BUTTON1_MOTION_MASK |
 				       GDK_BUTTON_PRESS_MASK | 
 				       GDK_BUTTON_RELEASE_MASK));
-  g_signal_connect (G_OBJECT (previewarea), "event",
+  g_signal_connect (previewarea, "event",
                     G_CALLBACK (preview_events),
                     previewarea);
   gtk_container_add (GTK_CONTAINER (frame), previewarea);
@@ -1188,7 +1188,7 @@ main_dialog (GimpDrawable *drawable)
 
   button = gtk_button_new_with_mnemonic (_("_Update"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (preview_callback),
                     NULL);
   gtk_widget_show (button);
@@ -1199,12 +1199,12 @@ main_dialog (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.interactive_preview);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.interactive_preview);
-  g_signal_connect(G_OBJECT(toggle), "toggled",
-		   G_CALLBACK (interactive_preview_callback),
-		   NULL);
+  g_signal_connect (toggle, "toggled",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
 
   gtk_widget_show (toggle);

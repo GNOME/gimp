@@ -448,9 +448,9 @@ void create_orientmap_dialog(void)
 
 		     NULL);
 
-  g_signal_connect (G_OBJECT(omwindow), "destroy",
+  g_signal_connect (omwindow, "destroy",
 		    G_CALLBACK(gtk_widget_destroyed), &omwindow);
-  g_signal_connect (G_OBJECT(omwindow), "delete_event",
+  g_signal_connect (omwindow, "delete_event",
 		    G_CALLBACK(gtk_widget_hide_on_delete), &omwindow);
 
   table1 = gtk_table_new(2, 5, FALSE);
@@ -513,28 +513,28 @@ void create_orientmap_dialog(void)
   prev_button = tmpw = gtk_button_new_with_mnemonic("_<<");
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
-  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(prevclick), NULL);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK(prevclick), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Select previous vector"), NULL);
 
   next_button = tmpw = gtk_button_new_with_mnemonic("_>>");
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
-  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(nextclick), NULL);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK(nextclick), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Select next vector"), NULL);
 
   add_button = tmpw = gtk_button_new_with_mnemonic( _("A_dd"));
   gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, TRUE, 0);
   gtk_widget_show(tmpw);
-  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(addclick), NULL);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK(addclick), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Add new vector"), NULL);
 
   kill_button = tmpw = gtk_button_new_with_mnemonic( _("_Kill"));
   gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, TRUE, 0);
   gtk_widget_show(tmpw);
-  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(deleteclick), NULL);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK(deleteclick), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Delete selected vector"), NULL);
 
@@ -563,7 +563,7 @@ void create_orientmap_dialog(void)
   gtk_container_add(GTK_CONTAINER(vbox), tmpw);
   gtk_widget_show (tmpw);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.orientvoronoi);
-  g_signal_connect(G_OBJECT(tmpw), "clicked", G_CALLBACK(angoffadjmove), NULL);
+  g_signal_connect(tmpw, "clicked", G_CALLBACK(angoffadjmove), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Voronoi-mode makes only the vector closest to the given point have any influence"), NULL);
 
   table2 = gtk_table_new(4, 3, FALSE);

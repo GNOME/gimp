@@ -181,49 +181,49 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 
    dialog->web_site = create_radio_button_in_table(subtable, NULL, 0, 0, 
 						   _("_Web Site"));
-   g_signal_connect(G_OBJECT(dialog->web_site), "toggled", 
+   g_signal_connect(dialog->web_site, "toggled", 
                     G_CALLBACK (select_web_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->web_site));
 
    dialog->ftp_site = create_radio_button_in_table(subtable, group, 0, 1, 
 						   _("_Ftp Site"));
-   g_signal_connect(G_OBJECT(dialog->ftp_site), "toggled", 
+   g_signal_connect(dialog->ftp_site, "toggled", 
                     G_CALLBACK (select_ftp_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->ftp_site));
 
    dialog->gopher = create_radio_button_in_table(subtable, group, 0, 2, 
 						 _("_Gopher"));
-   g_signal_connect(G_OBJECT(dialog->gopher), "toggled", 
+   g_signal_connect(dialog->gopher, "toggled", 
                     G_CALLBACK (select_gopher_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->gopher));
 
    dialog->other = create_radio_button_in_table(subtable, group, 0, 3, 
 						_("Ot_her"));
-   g_signal_connect(G_OBJECT(dialog->other), "toggled", 
+   g_signal_connect(dialog->other, "toggled", 
                     G_CALLBACK (select_other_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->other));
 
    dialog->file = create_radio_button_in_table(subtable, group, 1, 0, 
 					       _("F_ile"));
-   g_signal_connect(G_OBJECT(dialog->file), "toggled", 
+   g_signal_connect(dialog->file, "toggled", 
                     G_CALLBACK (select_file_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->file));
 
    dialog->wais = create_radio_button_in_table(subtable, group, 1, 1, 
 					       _("WAI_S"));
-   g_signal_connect(G_OBJECT(dialog->wais), "toggled", 
+   g_signal_connect(dialog->wais, "toggled", 
                     G_CALLBACK (select_wais_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->wais));
 
    dialog->telnet = create_radio_button_in_table(subtable, group, 1, 2, 
 						 _("Tel_net"));
-   g_signal_connect(G_OBJECT(dialog->telnet), "toggled", 
+   g_signal_connect(dialog->telnet, "toggled", 
                     G_CALLBACK (select_telnet_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->telnet));
 
    dialog->email = create_radio_button_in_table(subtable, group, 1, 3, 
 						_("e-_mail"));
-   g_signal_connect(G_OBJECT(dialog->email), "toggled", 
+   g_signal_connect(dialog->email, "toggled", 
                     G_CALLBACK (select_email_cb), (gpointer) dialog);
 
    label = create_label_in_table(
@@ -234,7 +234,7 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    browse_widget_set_filter(browse, relative_filter, (gpointer) dialog);
    gtk_table_attach_defaults(GTK_TABLE(table), browse->hbox, 0, 1, 3, 4);
    dialog->url = browse->file;
-   g_signal_connect(G_OBJECT(dialog->url), "changed", G_CALLBACK(url_changed), 
+   g_signal_connect(dialog->url, "changed", G_CALLBACK(url_changed), 
 		    dialog);
    gtk_label_set_mnemonic_widget(GTK_LABEL(label), dialog->url);
 
@@ -291,7 +291,7 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    gtk_widget_show(frame);
 
    preview = gtk_check_button_new_with_mnemonic(_("Pre_view"));
-   g_signal_connect(G_OBJECT(preview), "toggled", 
+   g_signal_connect(preview, "toggled", 
                     G_CALLBACK (toggle_preview_cb), (gpointer) dialog);
    gtk_box_pack_start(GTK_BOX(vbox), preview, FALSE, FALSE, 0);
    gtk_widget_show(preview);
@@ -435,7 +435,7 @@ create_edit_area_info_dialog(Object_t *obj)
 
    data->notebook = notebook = gtk_notebook_new();
    gtk_container_set_border_width(GTK_CONTAINER(notebook), 10);
-   g_signal_connect_after(G_OBJECT(notebook), "switch_page", 
+   g_signal_connect_after(notebook, "switch_page", 
                           G_CALLBACK(switch_page), (gpointer) data);
 
    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(data->dialog->dialog)->vbox), 

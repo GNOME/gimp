@@ -1203,7 +1203,7 @@ save_dialog (void)
                          GTK_STOCK_OK, save_ok_callback,
                          NULL, NULL, NULL, TRUE, FALSE, NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit), NULL);
 
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -1225,7 +1225,7 @@ save_dialog (void)
                                 pngvals.interlaced);
   gtk_widget_show (toggle);
 #
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &pngvals.interlaced);
 
@@ -1234,7 +1234,7 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.bkgd);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.bkgd);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Save _gamma"));
@@ -1242,7 +1242,7 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.gama);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.gama);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Save _layer offset"));
@@ -1250,7 +1250,7 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.offs);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.offs);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Save _resolution"));
@@ -1258,7 +1258,7 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.phys);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.phys);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Save creation _time"));
@@ -1266,7 +1266,7 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.time);
   gtk_widget_show (toggle);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.time);
 
   scale_data = gtk_adjustment_new (pngvals.compression_level,
@@ -1281,7 +1281,7 @@ save_dialog (void)
                              scale, 1, FALSE);
   gtk_widget_show (scale);
 
-  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+  g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pngvals.compression_level);
 

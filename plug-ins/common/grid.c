@@ -647,7 +647,7 @@ dialog (gint32        image_ID,
 
 			 NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -699,7 +699,7 @@ dialog (gint32        image_ID,
 
   g_object_set_data (G_OBJECT (button), "drawable", drawable);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (update_preview_callback),
                     NULL);
 
@@ -775,7 +775,7 @@ dialog (gint32        image_ID,
   /* connect to the 'value_changed' signal because we have to take care 
    * of keeping the entries in sync when the chainbutton is active
    */
-  g_signal_connect (G_OBJECT (width), "value_changed", 
+  g_signal_connect (width, "value_changed", 
                     G_CALLBACK (entry_callback),
                     chain_button);
 
@@ -837,10 +837,10 @@ dialog (gint32        image_ID,
    * we have to take care of keeping the entries in sync when the
    * chainbutton is active
    */
-  g_signal_connect (G_OBJECT (space), "value_changed", 
+  g_signal_connect (space, "value_changed", 
                     G_CALLBACK (entry_callback),
                     chain_button);
-  g_signal_connect (G_OBJECT (space), "unit_changed", 
+  g_signal_connect (space, "unit_changed", 
                     G_CALLBACK (entry_callback),
                     chain_button);
 
@@ -908,10 +908,10 @@ dialog (gint32        image_ID,
    * we have to take care of keeping the entries in sync when the
    * chainbutton is active
    */
-  g_signal_connect (G_OBJECT (offset), "value_changed", 
+  g_signal_connect (offset, "value_changed", 
                     G_CALLBACK (entry_callback),
                     chain_button);
-  g_signal_connect (G_OBJECT (offset), "unit_changed",
+  g_signal_connect (offset, "unit_changed",
                     G_CALLBACK (entry_callback),
                     chain_button);
 
@@ -934,10 +934,10 @@ dialog (gint32        image_ID,
   gtk_container_add (GTK_CONTAINER (align),  hcolor_button);
   gtk_widget_show (hcolor_button);
 
-  g_signal_connect (G_OBJECT (hcolor_button), "color_changed", 
+  g_signal_connect (hcolor_button, "color_changed", 
                     G_CALLBACK (gimp_color_button_get_color), 
                     &grid_cfg.hcolor);
-  g_signal_connect (G_OBJECT (hcolor_button), "color_changed", 
+  g_signal_connect (hcolor_button, "color_changed", 
                     G_CALLBACK (color_callback), 
                     chain_button);
 
@@ -953,10 +953,10 @@ dialog (gint32        image_ID,
   gtk_container_add (GTK_CONTAINER (align), vcolor_button);
   gtk_widget_show (vcolor_button);
 
-  g_signal_connect (G_OBJECT (vcolor_button), "color_changed", 
+  g_signal_connect (vcolor_button, "color_changed", 
                     G_CALLBACK (gimp_color_button_get_color), 
                     &grid_cfg.vcolor);
-  g_signal_connect (G_OBJECT (vcolor_button), "color_changed", 
+  g_signal_connect (vcolor_button, "color_changed", 
                     G_CALLBACK (color_callback), 
                     chain_button);  
 
@@ -971,7 +971,7 @@ dialog (gint32        image_ID,
   gtk_container_add (GTK_CONTAINER (align), button);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "color_changed", 
+  g_signal_connect (button, "color_changed", 
                     G_CALLBACK (gimp_color_button_get_color), 
                     &grid_cfg.icolor);
 

@@ -254,7 +254,7 @@ open_dialog (void)
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
@@ -284,7 +284,7 @@ open_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("_X:"), 1.0, 0.5,
 			     button, 1, TRUE);
-  g_signal_connect (G_OBJECT (w.division_x_adj), "value_changed",
+  g_signal_connect (w.division_x_adj, "value_changed",
                     G_CALLBACK (division_x_adj_changed),
                     NULL);
 
@@ -293,7 +293,7 @@ open_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("_Y:"), 1.0, 0.5,
 			     button, 1, TRUE);
-  g_signal_connect (G_OBJECT (w.division_y_adj), "value_changed",
+  g_signal_connect (w.division_y_adj, "value_changed",
                     G_CALLBACK (division_y_adj_changed),
                     NULL);
 
@@ -304,7 +304,7 @@ open_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("_Size:"), 1.0, 0.5,
 			     button, 1, TRUE);
-  g_signal_connect (G_OBJECT (w.tile_size_adj), "value_changed",
+  g_signal_connect (w.tile_size_adj, "value_changed",
                     G_CALLBACK (tile_size_adj_changed),
                     NULL);
 
@@ -336,7 +336,7 @@ open_dialog (void)
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &p.params.centering);
 
@@ -361,7 +361,7 @@ open_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("_Max (%):"), 1.0, 0.5,
 			     button, 1, TRUE);
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+  g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &p.params.move_max_rate);
 
@@ -371,7 +371,7 @@ open_dialog (void)
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 2, 1, 2);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &p.params.wrap_around);
 
@@ -410,7 +410,7 @@ open_dialog (void)
 			    p.params.background_type == BACKGROUND_TYPE_COLOR);
   g_object_set_data (G_OBJECT (button), "set_sensitive", color_button);
 
-  g_signal_connect (G_OBJECT (color_button), "color_changed", 
+  g_signal_connect (color_button, "color_changed", 
                     G_CALLBACK (gimp_color_button_get_color), 
                     &p.params.background_color);
 

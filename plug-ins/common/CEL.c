@@ -610,15 +610,15 @@ palette_dialog (gchar *title)
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (dialog), palette_file);
 
   g_signal_connect
-    (G_OBJECT (GTK_FILE_SELECTION (dialog)->ok_button), "clicked",
+    (GTK_FILE_SELECTION (dialog)->ok_button, "clicked",
      G_CALLBACK (palette_ok),
      dialog);
   g_signal_connect_swapped
-    (G_OBJECT (GTK_FILE_SELECTION (dialog)->cancel_button), "clicked",
+    (GTK_FILE_SELECTION (dialog)->cancel_button, "clicked",
      G_CALLBACK (gtk_widget_destroy),
      dialog);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
