@@ -1,6 +1,5 @@
 package Gimp::UI;
 
-use Carp;
 use Gimp ();
 use Gtk;
 

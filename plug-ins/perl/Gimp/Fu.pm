@@ -1,7 +1,6 @@
 package Gimp::Fu;
 
-use Carp;
-use Gimp ();
+use Gimp 'croak';
 use Gimp::Data;
 use File::Basename;
 
@@ -131,6 +130,11 @@ sub import {
          *{"${up}::$_"} = \&$_;
       }
    }
+}
+
+sub carp {
+   require Carp;
+   goto &Carp::carp;
 }
 
 # expand all the pod directives in string (currently they are only removed)

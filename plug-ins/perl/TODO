@@ -8,18 +8,18 @@ gimp ~/pix/ka001.jpg -b "(extension-perl-server 0 0 0)"
 file:///usr/app/lib/perl5/site_perl/i686-linux/PDL/HtmlDocs/PDL/
 make test TEST_VERBOSE=1
 
-plug_in (1, ,gimp_file_load
-WHITE_MASK -> ADD
+<plug_in (1, ,gimp_file_load>
+<WHITE_MASK -> ADD>
 
 bugs
 
 [DONE]  * MJH: glib-config(!!!)
-  * replöace examples/pixemap pod by (.*) and watch it die!
-  * empty desfiption -> no display in PDB?`
-  * make uninstall is actually a concern: make it work
+[DONE]  * replöace examples/pixemap pod by (.*) and watch it die!
+[KILL]  * empty desfiption -> no display in PDB?`
+[DONE]  * make uninstall is actually a concern: make it work
   * podestions are not expanded in dialog help strings etc..
 {DONE] * Document spawn_options in Gimp::Net.
-  * Selection => To Brush.
+[KILL]  * Selection => To Brush.
   * Kommandozeilenmodus(!).
   * don't start gimp in cmdline mode and error.
   * KILL :auto from default(!)

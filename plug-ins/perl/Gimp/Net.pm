@@ -5,7 +5,6 @@
 package Gimp::Net;
 
 use strict 'vars';
-use Carp;
 use vars qw(
    $VERSION
    $default_tcp_port $default_unix_dir $default_unix_sock
@@ -15,6 +14,8 @@ use subs qw(gimp_call_procedure);
 use base qw(DynaLoader);
 
 use Socket; # IO::Socket is _really_ slow, so don't use it!
+
+use Gimp 'croak';
 
 require DynaLoader;
 

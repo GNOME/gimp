@@ -1,7 +1,6 @@
 package Gimp::Lib;
 
 use strict;
-use Carp;
 use vars qw($VERSION @ISA);
 use base qw(DynaLoader);
 
@@ -16,11 +15,11 @@ use subs qw(
 );
 
 sub gimp_init {
-   die "gimp_init not implemented for the Lib interface";
+   Gimp::croak "gimp_init not implemented for the Lib interface";
 }
 
 sub gimp_end {
-   die "gimp_end not implemented for in the Lib interface";
+   Gimp::croak "gimp_end not implemented for in the Lib interface";
 }
 
 sub lock {

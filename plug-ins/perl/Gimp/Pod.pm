@@ -1,6 +1,5 @@
 package Gimp::Pod;
 
-use Carp;
 use Config;
 
 $VERSION=$Gimp::VERSION;

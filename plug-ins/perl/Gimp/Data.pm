@@ -1,8 +1,5 @@
 package Gimp::Data;
 
-use Carp;
-use Gimp ();
-
 sub TIEHASH {
    my $pkg = shift;
    my $self;

@@ -45,7 +45,7 @@ package      Gimp::Compat;
 
 $VERSION=$Gimp::VERSION;
 
-use Gimp ();
+use Gimp 'croak';
 
 # as a failsafe check, lowest version NOT requiring this module
 @max_gimp_version = (1,1);

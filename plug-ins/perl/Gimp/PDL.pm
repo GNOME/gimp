@@ -1,6 +1,5 @@
 package Gimp::PDL;
 
-use Carp;
 use Gimp ();
 
 warn "use'ing Gimp::PDL is no longer necessary, please remove it\n";

@@ -1,7 +1,6 @@
 package Gimp;
 
 use strict 'vars';
-use Carp;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
             @_consts @_procs $interface_pkg $interface_type @_param @_al_consts
             @PREFIXES $_PROT_VERSION
@@ -101,6 +100,11 @@ sub _PS_FLAG_QUIET	{ 0000000001 };	# do not output messages
 sub _PS_FLAG_BATCH	{ 0000000002 }; # started via Gimp::Net, extra = filehandle
 
 $_PROT_VERSION = "3";			# protocol version
+
+sub croak {
+   require Carp;
+   goto &Carp::croak;
+}
 
 # we really abuse the import facility..
 sub import($;@) {
