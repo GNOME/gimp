@@ -56,4 +56,9 @@ Changes in GIMP 2.3
 - allow to drag brushes/patterns/gradients... to the selectors in Script-Fu
 - allow to save images by dragging them to a filemanager that supports the
   XDS protocol
+- optimizations in the Color Deficiency display filter
+- transfer the clipboard content to a clipboard manager on exit
+- moved cursor info out of the Info window into a dockable
+- moved remaining bits of the Info Window to a new Image Properties dialog
+- build and install gimp-console by default
 - lots of bug-fixes
