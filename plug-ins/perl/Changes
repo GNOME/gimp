@@ -1,5 +1,7 @@
 Revision history for Gimp-Perl extension.
 
+	- scripts will now be correctly installed when IN_GIMP.
+
 1.071 Tue Mar 23 13:47:10 CET 1999
 	- changed the definition of PF_RADIO, simplifying it (it ain't no C).
         - Gimp::Fu scripts try to run with default arguments if Gtk is not

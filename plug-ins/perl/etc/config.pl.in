@@ -1,30 +1,52 @@
 # this is ugly, but it makes Gimp installable from within CPAN
 
-$CPPFLAGS	= q[@CPPFLAGS@];
-$CFLAGS		= q[@CFLAGS@];
-$LDFLAGS	= q[@LDFLAGS@];
+%cfg = (
+   _CPPFLAGS		=> q[@CPPFLAGS@],
+   _CFLAGS		=> q[@CFLAGS@],
+   _LDFLAGS		=> q[@LDFLAGS@],
 
-$prefix		= q[@prefix@];
-$exec_prefix	= q[@exec_prefix@];
-$libdir		= q[@libdir@];
-$bindir		= q[@bindir@];
+   prefix		=> q[@prefix@],
+   exec_prefix		=> q[@exec_prefix@],
+   libdir		=> q[@libdir@],
+   bindir		=> q[@bindir@],
 
-$exec_prefix=~s/\${?prefix}?/$prefix/g;
-$libdir=~s/\${?exec_prefix}?/$exec_prefix/g;
-$bindir=~s/\${?exec_prefix}?/$exec_prefix/g;
+   IN_GIMP		=> q[@IN_GIMP@],
 
-$IN_GIMP	= q[@IN_GIMP@];
+   _PERL		=> q[@PERL@],
+   GIMP			=> q[@GIMP@],
 
-$PERL		= q[@PERL@];
-$GIMP		= $IN_GIMP ? q[@GIMP@] : "$bindir/gimp";
+   GIMPTOOL		=> q[@GIMPTOOL@],
+   _GIMP_INC		=> q[@GIMP_CFLAGS@],
+   _GIMP_INC_NOUI	=> q[@GIMP_CFLAGS_NOUI@],
+   _GIMP_LIBS		=> q[@GIMP_LIBS@],
+   _GIMP_LIBS_NOUI	=> q[@GIMP_LIBS_NOUI@],
 
-$GIMPTOOL	= q[@GIMPTOOL@];
-$GIMP_INC	= q[@GIMP_CFLAGS@];
-$GIMP_INC_NOUI	= q[@GIMP_CFLAGS_NOUI@];
-$GIMP_LIBS	= q[@GIMP_LIBS@];
-$GIMP_LIBS_NOUI	= q[@GIMP_LIBS_NOUI@];
+   INSTALL		=> q[@INSTALL@],
+   INSTALL_PROGRAM	=> q[@INSTALL_PROGRAM@],
+   gimpplugindir	=> q[@gimpplugindir@],
 
-$EXTENSIVE_TESTS= q[@EXTENSIVE_TESTS@];
+   _EXTENSIVE_TESTS	=> q[@EXTENSIVE_TESTS@],
+);
+
+sub expand {
+   my $cfg = shift;
+   while($cfg=~/\$\{/) {
+      while(($k,$v)=each %cfg) {
+         $cfg=~s/\$\{$k\}/$v/g;
+      }
+   }
+   $cfg;
+}
+
+while (($k,$v)=each(%cfg)) {
+   $k=~s/^_//;
+   $$k=$v;
+}
+
+$GIMP = $bindir."/gimp" if $IN_GIMP;
+
+$GIMP = expand($GIMP);
+$GIMPTOOL = expand($GIMPTOOL);
 
 if (defined $topdir) {
    $GIMP_INC		=~ s/\$topdir/$topdir/g;
@@ -34,10 +56,11 @@ if (defined $topdir) {
 }
 
 if ($IN_GIMP) {
-   $GIMP_PREFIX=$prefix;
+   $GIMP_PREFIX=expand($prefix);
 } else {
    $GIMP_PREFIX = `$GIMPTOOL --prefix`;
    chomp $GIMP_PREFIX;
 }
 
 $DEFS = ' -DGIMP_PREFIX=\"'.$GIMP_PREFIX.'\" -DGIMP_PATH=\"'.$GIMP.'\"';
+

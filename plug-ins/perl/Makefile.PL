@@ -54,7 +54,7 @@ Do you want me to run these tests [y]? ";
    $ENV{IN_GIMP}=0;
    exit system("./etc/configure",@ARGV)>>8;
 } else {
-   do './config.pl';
+   do './config.pl'; die $@ if $@;
 }
 
 require ExtUtils::MakeMaker;
@@ -203,7 +203,8 @@ install ::
 }
 
 sub MY::postamble {
-   my $GT = $IN_GIMP ? "../$GIMPTOOL" : $GIMPTOOL;
+   my $GT = $IN_GIMP ? '$(INSTALL_PROGRAM)' : "$GIMPTOOL --install-admin-bin";
+   my $GT2 = $IN_GIMP ? '$(gimpplugindir)/plug-ins/' : '';
    my $postamble="
 
 objclean :: clean
@@ -226,7 +227,7 @@ install-plugins ::
 	\$(CHMOD) 755 * ; \\
 	\$(MY_FIXIN) * ; \\
 	for plugin in * ; do \\
-	   $GT --install-admin-bin \"\$\$plugin\" ; \\
+	   $GT \"\$\$plugin\" $GT2 ; \\
 	done
 	\$(RM_RF) inst-temp
 ";
@@ -259,9 +260,10 @@ WriteMakefile(
     		    'Gimp/Feature.pm'	=> '$(INST_LIBDIR)/Gimp/Feature.pm',
     		   },
     'LIBS'	=> [''],
-    'INC'	=> "$CPPFLAGS $CFLAGS $GIMP_INC_NOUI $DEFS",
-    'DEFINE'	=> ($IN_GIMP ? " -DIN_GIMP " : ""),
+    'INC'	=> "$CPPFLAGS $CFLAGS $GIMP_INC_NOUI",
+    'DEFINE'	=> ($IN_GIMP ? " -DIN_GIMP " : "")." $DEFS",
     'EXE_FILES'	=> ['scm2perl','scm2scm'],
+    'macro'	=> \%cfg,
     'realclean'	=> { FILES => "config.status config.cache config.log config.pl config.h" },
     'clean'	=> { FILES => "Makefile.old stamp-h" },
 );
