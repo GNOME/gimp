@@ -1,3 +1,10 @@
+2000-06-05  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/xbm.c: allow saving of images with alpha.
+	If the image has alpha, offer the choice of ignoring it or
+	alternatively saving it as a separate XBM file which is the
+	mask of the X cursor we are saving.
+
 Sun Jun  4 20:17:25 2000 CET  Austin Donnelly  <austin@gimp.org>
 
 	* app/paths_dialog.c: run the sel2path plugin with a proper
