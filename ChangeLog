@@ -1,5 +1,10 @@
 2003-03-25  Sven Neumann  <sven@gimp.org>
 
+	* libgimptool/Makefile.am
+	* gimptoolenums.c: include libgimp-intl.h here.
+
+2003-03-25  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptext.c: include locale.h for setlocale().
 	
 	* app/base/Makefile.am

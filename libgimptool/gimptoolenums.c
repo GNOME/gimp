@@ -5,7 +5,7 @@
 #include <glib-object.h>
 #include "libgimpproxy/gimpproxytypes.h"
 #include "gimptoolenums.h"
-#include "libgimp/gimpintl.h"
+#include "libgimp/libgimp-intl.h"
 
 /* enumerations from "./gimptoolenums.h" */
 
