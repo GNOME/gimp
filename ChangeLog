@@ -1,3 +1,9 @@
+2003-12-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/text/gimptextlayout-render.c (gimp_text_layout_render):
+	multiply the layout's offsets with PANGO_SCALE, not -PANGO_SCALE.
+	Fixes bug #129405.
+
 2003-12-16  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite.c (gimp_composite_init): fixed
