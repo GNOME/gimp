@@ -201,9 +201,10 @@ gimp_config_serialize (GimpConfig *config)
   file = fopen (GIMP_OBJECT (config)->name, "w");
 
   if (file)
-    gimp_config_serialize_properties (config, file);
-
-  fclose (file);
+    {
+      gimp_config_serialize_properties (config, file);
+      fclose (file);
+    }
 }
 
 gboolean
