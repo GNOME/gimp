@@ -673,8 +673,15 @@ palette_editor_color_area_events (GtkWidget     *widget,
 
 	      palette_editor_draw_entries (palette_editor, row, col);
 	      /*  Update the active color name  */
+	      g_print ("color name before: >>%s<<\n",
+		       palette_editor->color->name);
+
 	      gtk_entry_set_text (GTK_ENTRY (palette_editor->color_name),
 				  palette_editor->color->name);
+
+	      g_print ("color name after: >>%s<<\n",
+		       palette_editor->color->name);
+
 	      gtk_widget_set_sensitive (palette_editor->color_name, TRUE);
 	      /* palette_update_current_entry (palette_editor); */
 

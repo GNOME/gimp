@@ -554,14 +554,29 @@ gimp_dockbook_tab_drag_end (GtkWidget      *widget,
   drag_widget = g_object_get_data (G_OBJECT (dockable),
 				   "gimp-dock-drag-widget");
 
+  /*  finding the drag_widget means the drop was not successful, so
+   *  pop up a new dock and move the dockable there
+   */
   if (drag_widget)
     {
       GtkWidget *dock;
       GtkWidget *dockbook;
+      gboolean   auto_follow_active;
+      gboolean   show_image_menu;
 
       g_object_set_data (G_OBJECT (dockable), "gimp-dock-drag-widget", NULL);
 
       dock = gimp_dialog_factory_dock_new (dockable->dockbook->dock->factory);
+
+      auto_follow_active =
+	GIMP_IMAGE_DOCK (dockable->dockbook->dock)->auto_follow_active;
+      show_image_menu =
+	GIMP_IMAGE_DOCK (dockable->dockbook->dock)->show_image_menu;
+
+      gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dock),
+					      auto_follow_active);
+      gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock),
+					   show_image_menu);
 
       gtk_window_set_position (GTK_WINDOW (dock), GTK_WIN_POS_MOUSE);
 

@@ -53,8 +53,9 @@
 #include "libgimp/gimpintl.h"
 
 
-/* gimprc will be parsed with a buffer size of 1024, 
-   so don't set this too large */
+/*  gimprc will be parsed with a buffer size of 1024, 
+ *  so don't set this too large
+ */
 #define MAX_COMMENT_LENGTH 512
 
 typedef enum
@@ -67,39 +68,39 @@ typedef enum
 
 /*  preferences local functions  */
 static PrefsState  prefs_check_settings          (void);
-static void        prefs_ok_callback             (GtkWidget *widget,
-						  GtkWidget *dlg);
-static void        prefs_save_callback           (GtkWidget *widget,
-						  GtkWidget *dlg);
-static void        prefs_cancel_callback         (GtkWidget *widget,
-						  GtkWidget *dlg);
+static void        prefs_ok_callback             (GtkWidget     *widget,
+						  GtkWidget     *dlg);
+static void        prefs_save_callback           (GtkWidget     *widget,
+						  GtkWidget     *dlg);
+static void        prefs_cancel_callback         (GtkWidget     *widget,
+						  GtkWidget     *dlg);
 
-static void  prefs_toggle_callback               (GtkWidget *widget,
-						  gpointer   data);
-static void  prefs_preview_size_callback         (GtkWidget *widget,
-						  gpointer   data);
-static void  prefs_nav_preview_size_callback     (GtkWidget *widget,
-						  gpointer   data);
-static void  prefs_string_callback               (GtkWidget *widget,
-						  gpointer   data);
-static void  prefs_text_callback                 (GtkWidget *widget,
-						  gpointer   data);
-static void  prefs_filename_callback             (GtkWidget *widget,
-						  gpointer   data);
-static void  prefs_path_callback                 (GtkWidget *widget,
-						  gpointer   data);
-static void  prefs_clear_session_info_callback   (GtkWidget *widget,
-						  gpointer   data);
-static void  prefs_default_size_callback         (GtkWidget *widget,
-						  gpointer   data);
-static void  prefs_default_resolution_callback   (GtkWidget *widget,
-						  gpointer   data);
-static void  prefs_res_source_callback           (GtkWidget *widget,
-						  gpointer   data);
-static void  prefs_monitor_resolution_callback   (GtkWidget *widget,
-						  gpointer   data);
-static void  prefs_resolution_calibrate_callback (GtkWidget *widget,
-						  gpointer   data);
+static void  prefs_toggle_callback               (GtkWidget     *widget,
+						  gpointer       data);
+static void  prefs_preview_size_callback         (GtkWidget     *widget,
+						  gpointer       data);
+static void  prefs_nav_preview_size_callback     (GtkWidget     *widget,
+						  gpointer       data);
+static void  prefs_string_callback               (GtkWidget     *widget,
+						  gpointer       data);
+static void  prefs_text_callback                 (GtkTextBuffer *widget,
+						  gpointer       data);
+static void  prefs_filename_callback             (GtkWidget     *widget,
+						  gpointer       data);
+static void  prefs_path_callback                 (GtkWidget     *widget,
+						  gpointer       data);
+static void  prefs_clear_session_info_callback   (GtkWidget     *widget,
+						  gpointer       data);
+static void  prefs_default_size_callback         (GtkWidget     *widget,
+						  gpointer       data);
+static void  prefs_default_resolution_callback   (GtkWidget     *widget,
+						  gpointer       data);
+static void  prefs_res_source_callback           (GtkWidget     *widget,
+						  gpointer       data);
+static void  prefs_monitor_resolution_callback   (GtkWidget     *widget,
+						  gpointer       data);
+static void  prefs_resolution_calibrate_callback (GtkWidget     *widget,
+						  gpointer       data);
 static void  prefs_restart_notification          (void);
 
 
@@ -987,14 +988,14 @@ prefs_toggle_callback (GtkWidget *widget,
 	   data == &gimprc.help_browser             ||
 	   data == &gimprc.cursor_mode)
     {
-      *val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
+      *val = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
     }
 
   /*  values which need some magic  */
   else if ((data == &gimprc.transparency_type) ||
 	   (data == &gimprc.transparency_size))
     {
-      *val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
+      *val = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
 
       render_setup (gimprc.transparency_type, gimprc.transparency_size);
       gimp_container_foreach (the_gimp->images,
@@ -1034,7 +1035,9 @@ static void
 prefs_nav_preview_size_callback (GtkWidget *widget,
 				 gpointer   data)
 {
-  gimprc.nav_preview_size = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));;
+  gimprc.nav_preview_size =
+    GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
+
   gdisplays_nav_preview_resized ();
 }
 
@@ -1044,29 +1047,57 @@ prefs_string_callback (GtkWidget *widget,
 {
   gchar **val;
 
-  val = data;
+  val = (gchar **) data;
+
   prefs_strset (val, gtk_entry_get_text (GTK_ENTRY (widget)));
 }
 
 static void
-prefs_text_callback (GtkWidget *widget,
-		     gpointer   data)
+prefs_text_callback (GtkTextBuffer *buffer,
+		     gpointer       data)
 {
-  gchar **val;
-  gchar *text;
-  
-  val = data;
+  GtkTextIter   start_iter;
+  GtkTextIter   end_iter;
+  gchar       **val;
+  gchar        *text;
 
-  text = gtk_editable_get_chars (GTK_EDITABLE (widget), 0, -1);
+  val = (gchar **) data;
+
+  gtk_text_buffer_get_start_iter (buffer, &start_iter);
+  gtk_text_buffer_get_end_iter (buffer, &end_iter);
+
+  text = gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
+
+#ifdef __GNUC__
+#warning FIXME: remove GtkTextBuffer hack once it is fixed
+#endif
+
+  /* START hack */
+
+  if (text && text[strlen (text)] == '\n')
+    text[strlen (text)] = '\0';
+
+  /* END hack */
+
   if (strlen (text) > MAX_COMMENT_LENGTH)
     {
       g_message (_("The default comment is limited to %d characters."), 
 		 MAX_COMMENT_LENGTH);
-      gtk_editable_delete_text (GTK_EDITABLE (widget), MAX_COMMENT_LENGTH, -1);
-      g_free (text);
+
+      gtk_text_buffer_get_iter_at_offset (buffer, &start_iter,
+					  MAX_COMMENT_LENGTH - 1);
+      gtk_text_buffer_get_end_iter (buffer, &end_iter);
+
+      /*  this calls us recursivaly, but in the else branch
+       */
+      gtk_text_buffer_delete (buffer, &start_iter, &end_iter);
     }
   else
-    prefs_strset (val, text);
+    {
+      prefs_strset (val, text);
+    }
+
+  g_free (text);
 }
 
 static void
@@ -1074,9 +1105,10 @@ prefs_filename_callback (GtkWidget *widget,
 			 gpointer   data)
 {
   gchar **val;
-  gchar *filename;
+  gchar  *filename;
 
-  val = data;
+  val = (gchar **) data;
+
   filename = gimp_file_selection_get_filename (GIMP_FILE_SELECTION (widget));
   prefs_strset (val, filename);
   g_free (filename);
@@ -1090,6 +1122,7 @@ prefs_path_callback (GtkWidget *widget,
   gchar  *path;
 
   val  = (gchar **) data;
+
   path = gimp_path_editor_get_path (GIMP_PATH_EDITOR (widget));
   prefs_strset (val, path);
   g_free (path);
@@ -1099,11 +1132,13 @@ static void
 prefs_clear_session_info_callback (GtkWidget *widget,
 				   gpointer   data)
 {
-  /* FIXME */
-  /*
+#ifdef __GNUC__
+#warning FIXME: g_list_free (session_info_updates);
+#endif
+#if 0
   g_list_free (session_info_updates);
   session_info_updates = NULL;
-  */
+#endif
 }
 
 static void
@@ -1364,28 +1399,29 @@ preferences_dialog_create (void)
   GtkCTreeNode *child_insert;
   gint          page_index;
 
-  GtkWidget *frame;
-  GtkWidget *notebook;
-  GtkWidget *vbox;
-  GtkWidget *vbox2;
-  GtkWidget *hbox;
-  GtkWidget *abox;
-  GtkWidget *button;
-  GtkWidget *fileselection;
-  GtkWidget *patheditor;
-  GtkWidget *spinbutton;
-  GtkWidget *combo;
-  GtkWidget *comboitem;
-  GtkWidget *optionmenu;
-  GtkWidget *table;
-  GtkWidget *label;
-  GtkObject *adjustment;
-  GtkWidget *sizeentry;
-  GtkWidget *sizeentry2;
-  GtkWidget *separator;
-  GtkWidget *calibrate_button;
-  GtkWidget *text;
-  GSList    *group;
+  GtkWidget     *frame;
+  GtkWidget     *notebook;
+  GtkWidget     *vbox;
+  GtkWidget     *vbox2;
+  GtkWidget     *hbox;
+  GtkWidget     *abox;
+  GtkWidget     *button;
+  GtkWidget     *fileselection;
+  GtkWidget     *patheditor;
+  GtkWidget     *spinbutton;
+  GtkWidget     *combo;
+  GtkWidget     *comboitem;
+  GtkWidget     *optionmenu;
+  GtkWidget     *table;
+  GtkWidget     *label;
+  GtkObject     *adjustment;
+  GtkWidget     *sizeentry;
+  GtkWidget     *sizeentry2;
+  GtkWidget     *separator;
+  GtkWidget     *calibrate_button;
+  GtkWidget     *text_view;
+  GtkTextBuffer *text_buffer;
+  GSList        *group;
 
   gint   i;
   gchar *pixels_per_unit;
@@ -1721,21 +1757,18 @@ preferences_dialog_create (void)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-#ifdef __GNUC__
-#warning FIXME: replace GtkText
-#endif
-#if 0
-  text = gtk_text_new (NULL, NULL);
-  gtk_text_set_editable (GTK_TEXT (text), TRUE);
-  gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL,
-		   the_gimp->config->default_comment, -1);
-  gtk_container_add (GTK_CONTAINER (hbox), text);
-  gtk_widget_show (text);
+  text_buffer = gtk_text_buffer_new (NULL);
+  gtk_text_buffer_set_text (text_buffer, the_gimp->config->default_comment, -1);
 
-  g_signal_connect (G_OBJECT (text), "changed",
+  text_view = gtk_text_view_new_with_buffer (text_buffer);
+  gtk_container_add (GTK_CONTAINER (hbox), text_view);
+  gtk_widget_show (text_view);
+
+  g_object_unref (G_OBJECT (text_buffer));
+
+  g_signal_connect (G_OBJECT (text_buffer), "changed",
 		    G_CALLBACK (prefs_text_callback),
 		    &the_gimp->config->default_comment);
-#endif
 
   /* Display page */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),

@@ -1,3 +1,18 @@
+2001-07-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/indicator-area.c: create/raise the new dialogs, not the
+	old ones when clicking on the previews.
+
+	* app/gui/palette-editor.c: some debugging g_print()s to track
+	down a funny GTK+ "lets trash const data" bug.
+
+	* app/gui/preferences-dialog.c: replaced deprecated GtkText with
+	GtkTextBuffer/GtkTextView.
+
+	* app/widgets/gimpdockbook.c: when creating a new dock from a DND
+	operation, set it's auto_follow_active and show_image_menu state
+	to the source dock's values.
+
 2001-07-26  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: check for X, respect X_LIBS when searching for libxpm.
