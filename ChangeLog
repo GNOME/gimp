@@ -1,3 +1,10 @@
+2004-04-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/Lighting/lighting_ui.c: applied the second patch
+	attached to bug #138788 by William Skaggs. Removes some user
+	interface elements that have no corresponding implementation and
+	fixes preview updates.
+
 2004-04-04  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am

@@ -402,7 +402,9 @@ create_options_page (void)
   gimp_help_set_help_data (toggle,
 			   _("Enable/disable high quality preview"), NULL);
 
+#if 0
   /* Antialiasing options */
+  /* commented out -- there is no code to implement this -- WES 4/02/04 */
 
   frame = gtk_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
@@ -438,7 +440,7 @@ create_options_page (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.max_depth);
 
- adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("T_hreshold:"), 0, 6,
 			      mapvals.pixel_treshold, 0.01, 1000.0, 1.0, 15.0, 2,
 			      TRUE, 0, 0,
@@ -448,7 +450,6 @@ create_options_page (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.pixel_treshold);
 
-  /*
   spinbutton = gimp_spin_button_new (&adj, mapvals.pixel_treshold,
 				     0.001, 1000, 0.1, 1, 1, 0, 3);
   g_signal_connect (adj, "value_changed",
@@ -461,7 +462,9 @@ create_options_page (void)
   gimp_help_set_help_data (spinbutton,
 			   _("Stop when pixel differences are smaller than "
 			     "this value"), NULL);
-  */
+
+#endif
+
   gtk_widget_show (page);
 
   return page;
@@ -893,6 +896,9 @@ create_bump_page (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.bump_mapped);
+  g_signal_connect (toggle, "toggled",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
   gimp_help_set_help_data (toggle,
 			   _("Enable/disable bump-mapping (image depth)"),
@@ -937,35 +943,12 @@ create_bump_page (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.bumpmax);
+  g_signal_connect (adj, "value_changed",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
   gimp_help_set_help_data (spinbutton,
 			   _("Maximum height for bumps"),
-			   NULL);
-
-  spinbutton = gimp_spin_button_new (&adj, mapvals.bumpmin,
-				     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("M_inimum Height:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &mapvals.bumpmin);
-
-   gimp_help_set_help_data (spinbutton,
-			   _("Minimum height for bumps"),
-			   NULL);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("Auto_stretch to Fit Value Range"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				mapvals.bumpstretch);
-  gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 4, 5);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mapvals.bumpstretch);
-  gtk_widget_show (toggle);
-
-  gimp_help_set_help_data (toggle,
-			   _("Fit into value range"),
 			   NULL);
 
   gtk_widget_show (page);
@@ -999,6 +982,9 @@ create_environment_page (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.env_mapped);
+  g_signal_connect (toggle, "toggled",
+		    G_CALLBACK (interactive_preview_callback),
+		    NULL);
 
   gimp_help_set_help_data (toggle,
 			   _("Enable/disable environment-mapping (reflection)"),
