@@ -65,6 +65,9 @@ gboolean gimp_image_undo_push_mask                  (GimpImage     *gimage,
 gboolean gimp_image_undo_push_item_rename           (GimpImage     *gimage, 
                                                      const gchar   *undo_desc,
                                                      GimpItem      *item);
+gboolean gimp_image_undo_push_item_displace         (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpItem      *item);
 
 
 /*  drawable undos  */
@@ -98,9 +101,6 @@ gboolean gimp_image_undo_push_layer_mask_remove     (GimpImage     *gimage,
                                                      GimpLayer     *layer,
                                                      GimpLayerMask *mask);
 gboolean gimp_image_undo_push_layer_reposition      (GimpImage     *gimage, 
-                                                     const gchar   *undo_desc,
-                                                     GimpLayer     *layer);
-gboolean gimp_image_undo_push_layer_displace        (GimpImage     *gimage,
                                                      const gchar   *undo_desc,
                                                      GimpLayer     *layer);
 gboolean gimp_image_undo_push_layer_mode            (GimpImage     *gimage,

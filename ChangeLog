@@ -1,5 +1,28 @@
 2003-05-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpitem.[ch]: added gimp_item_translate() and
+	virtual function GimpItem::translate().
+
+	* app/core/gimplayer.[ch]: removed public function
+	gimp_layer_translate() and implement GimpItem::translate()
+	instead.
+
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage-undo-push.[ch]: changed layer_displace undo
+	types and functions to be item_displace ones.
+
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-resize.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/gui/layers-commands.c
+	* app/tools/gimpeditselectiontool.c
+	* app/widgets/gimptoolbox.c
+	* tools/pdbgen/pdb/layer.pdb: changed accordingly.
+
+	* app/pdb/layer_cmds.c: regenerated.
+
+2003-05-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer.[ch]: removed the remaining layer scale API.
 
 	* app/core/gimpitem.[ch]: added the same functions here.

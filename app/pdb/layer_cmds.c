@@ -649,7 +649,7 @@ layer_translate_invoker (Gimp     *gimp,
 	      tmp_layer = (GimpLayer *) layer_list->data;
 	
 	      if ((tmp_layer == layer) || gimp_layer_get_linked (tmp_layer))
-		gimp_layer_translate (tmp_layer, offx, offy, TRUE);
+		gimp_item_translate (GIMP_ITEM (tmp_layer), offx, offy, TRUE);
 	    }
     
 	  if (floating_layer)
@@ -781,7 +781,7 @@ layer_set_offsets_invoker (Gimp     *gimp,
 	      tmp_layer = (GimpLayer *) layer_list->data;
 	
 	      if ((tmp_layer == layer) || gimp_layer_get_linked (tmp_layer))
-		gimp_layer_translate (tmp_layer,
+		gimp_item_translate (GIMP_ITEM (tmp_layer),
 				(offx - GIMP_ITEM (layer)->offset_x),
 				(offy - GIMP_ITEM (layer)->offset_y), TRUE);
 	    }

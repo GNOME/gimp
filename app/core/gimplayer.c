@@ -75,6 +75,9 @@ static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
 static void       gimp_layer_rename             (GimpItem           *item,
                                                  const gchar        *new_name,
                                                  const gchar        *undo_desc);
+static void       gimp_layer_translate          (GimpItem           *item,
+                                                 gint                offset_x,
+                                                 gint                offset_y);
 static void       gimp_layer_scale              (GimpItem           *item,
                                                  gint                new_width,
                                                  gint                new_height,
@@ -196,10 +199,12 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   item_class->duplicate              = gimp_layer_duplicate;
   item_class->rename                 = gimp_layer_rename;
+  item_class->translate              = gimp_layer_translate;
   item_class->scale                  = gimp_layer_scale;
   item_class->resize                 = gimp_layer_resize;
   item_class->default_name           = _("Layer");
   item_class->rename_desc            = _("Rename Layer");
+  item_class->translate_desc         = _("Move Layer");
 
   klass->opacity_changed             = NULL;
   klass->mode_changed                = NULL;
@@ -355,6 +360,36 @@ gimp_layer_rename (GimpItem    *item,
 
   if (gimage && floating_sel)
     gimp_image_undo_group_end (gimage);
+}
+
+static void
+gimp_layer_translate (GimpItem *item,
+		      gint      off_x,
+		      gint      off_y)
+{
+  GimpLayer *layer;
+
+  layer = GIMP_LAYER (item);
+
+  /*  update the old region  */
+  gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, item->width, item->height);
+
+  /*  invalidate the selection boundary because of a layer modification  */
+  gimp_layer_invalidate_boundary (layer);
+
+  GIMP_ITEM_CLASS (parent_class)->translate (item, off_x, off_y);
+
+  /*  update the new region  */
+  gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, item->width, item->height);
+
+  if (layer->mask) 
+    {
+      GIMP_ITEM (layer->mask)->offset_x = item->offset_x;
+      GIMP_ITEM (layer->mask)->offset_y = item->offset_y;
+
+      /*  invalidate the mask preview  */
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer->mask));
+    }
 }
 
 static void
@@ -1016,48 +1051,6 @@ gimp_layer_apply_mask (GimpLayer         *layer,
     }
 
   g_signal_emit (layer, layer_signals[MASK_CHANGED], 0);
-}
-
-void
-gimp_layer_translate (GimpLayer *layer,
-		      gint       off_x,
-		      gint       off_y,
-                      gboolean   push_undo)
-{
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-
-  if (push_undo)
-    gimp_image_undo_push_layer_displace (gimp_item_get_image (GIMP_ITEM (layer)),
-                                         _("Move Layer"),
-                                         layer);
-
-  /*  update the affected region  */
-  gimp_drawable_update (GIMP_DRAWABLE (layer),
-			0, 0, 
-			GIMP_ITEM (layer)->width, 
-			GIMP_ITEM (layer)->height);
-
-  /*  invalidate the selection boundary because of a layer modification  */
-  gimp_layer_invalidate_boundary (layer);
- 
-  /*  update the layer offsets  */
-  GIMP_ITEM (layer)->offset_x += off_x;
-  GIMP_ITEM (layer)->offset_y += off_y;
-
-  /*  update the affected region  */
-  gimp_drawable_update (GIMP_DRAWABLE (layer), 
-			0, 0, 
-			GIMP_ITEM (layer)->width, 
-			GIMP_ITEM (layer)->height);
-
-  if (layer->mask) 
-    {
-      GIMP_ITEM (layer->mask)->offset_x += off_x;
-      GIMP_ITEM (layer->mask)->offset_y += off_y;
-
-      /*  invalidate the mask preview  */
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer->mask));
-    }
 }
 
 void

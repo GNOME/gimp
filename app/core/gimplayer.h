@@ -99,10 +99,6 @@ GimpLayerMask * gimp_layer_add_mask            (GimpLayer            *layer,
 void            gimp_layer_apply_mask          (GimpLayer            *layer,
                                                 GimpMaskApplyMode     mode,
                                                 gboolean              push_undo);
-void            gimp_layer_translate           (GimpLayer            *layer,
-                                                gint                  off_x,
-                                                gint                  off_y,
-                                                gboolean              push_undo);
 void            gimp_layer_add_alpha           (GimpLayer            *layer);
 
 void            gimp_layer_resize_to_image     (GimpLayer            *layer);

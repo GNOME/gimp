@@ -62,6 +62,9 @@ struct _GimpItemClass
   void       (* rename)    (GimpItem              *item,
                             const gchar           *new_name,
                             const gchar           *undo_desc);
+  void       (* translate) (GimpItem              *item,
+                            gint                   offset_x,
+                            gint                   offset_y);
   void       (* scale)     (GimpItem              *item,
                             gint                   new_width,
                             gint                   new_height,
@@ -76,6 +79,7 @@ struct _GimpItemClass
 
   const gchar *default_name;
   const gchar *rename_desc;
+  const gchar *translate_desc;
   const gchar *scale_desc;
 };
 
@@ -103,6 +107,11 @@ gint            gimp_item_height           (const GimpItem *item);
 void            gimp_item_offsets          (const GimpItem *item,
                                             gint           *offset_x,
                                             gint           *offset_y);
+
+void            gimp_item_translate        (GimpItem       *item,
+                                            gint            offset_x,
+                                            gint            offset_y,
+                                            gboolean        push_undo);
 
 gboolean        gimp_item_check_scaling    (const GimpItem *layer,
                                             gint            new_width,

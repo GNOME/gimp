@@ -182,7 +182,7 @@ gimp_image_crop (GimpImage *gimage,
 
 	      next = g_list_next (list);
 
-	      gimp_layer_translate (layer, -x1, -y1, TRUE);
+	      gimp_item_translate (GIMP_ITEM (layer), -x1, -y1, TRUE);
 
 	      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 

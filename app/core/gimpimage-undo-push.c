@@ -1082,6 +1082,93 @@ undo_free_item_rename (GimpUndo     *undo,
 }
 
 
+/****************************/
+/*  Item displacement Undo  */
+/****************************/
+
+typedef struct _ItemDisplaceUndo ItemDisplaceUndo;
+
+struct _ItemDisplaceUndo
+{
+  gint old_offset_x;
+  gint old_offset_y;
+};
+
+static gboolean undo_pop_item_displace  (GimpUndo            *undo,
+                                         GimpUndoMode         undo_mode,
+                                         GimpUndoAccumulator *accum);
+static void     undo_free_item_displace (GimpUndo            *undo,
+                                         GimpUndoMode         undo_mode);
+
+gboolean
+gimp_image_undo_push_item_displace (GimpImage   *gimage,
+                                    const gchar *undo_desc,
+                                    GimpItem    *item)
+{
+  GimpUndo *new;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  if ((new = gimp_image_undo_push_item (gimage, item,
+                                        sizeof (ItemDisplaceUndo),
+                                        sizeof (ItemDisplaceUndo),
+                                        GIMP_UNDO_ITEM_DISPLACE, undo_desc,
+                                        TRUE,
+                                        undo_pop_item_displace,
+                                        undo_free_item_displace)))
+    {
+      ItemDisplaceUndo *idu;
+
+      idu = new->data;
+
+      gimp_item_offsets (item, &idu->old_offset_x, &idu->old_offset_y);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_item_displace (GimpUndo            *undo,
+                        GimpUndoMode         undo_mode,
+                        GimpUndoAccumulator *accum)
+{
+  ItemDisplaceUndo *idu;
+  GimpItem         *item;
+  gint              offset_x;
+  gint              offset_y;
+
+  idu = (ItemDisplaceUndo *) undo->data;
+
+  item = GIMP_ITEM_UNDO (undo)->item;
+
+  gimp_item_offsets (item, &offset_x, &offset_y);
+
+  gimp_item_translate (item,
+                       idu->old_offset_x - offset_x,
+                       idu->old_offset_y - offset_y,
+                        FALSE);
+
+  idu->old_offset_x = offset_x;
+  idu->old_offset_y = offset_y;
+
+  return TRUE;
+}
+
+static void
+undo_free_item_displace (GimpUndo     *undo,
+                         GimpUndoMode  undo_mode)
+{
+  ItemDisplaceUndo *idu;
+
+  idu = (ItemDisplaceUndo *) undo->data;
+
+  g_free (idu);
+}
+
+
 /******************************/
 /*  Drawable Visibility Undo  */
 /******************************/
@@ -1693,94 +1780,6 @@ undo_free_layer_reposition (GimpUndo     *undo,
                             GimpUndoMode  undo_mode)
 {
   g_free (undo->data);
-}
-
-
-/*****************************/
-/*  Layer displacement Undo  */
-/*****************************/
-
-typedef struct _LayerDisplaceUndo LayerDisplaceUndo;
-
-struct _LayerDisplaceUndo
-{
-  gint old_offset_x;
-  gint old_offset_y;
-};
-
-static gboolean undo_pop_layer_displace  (GimpUndo            *undo,
-                                          GimpUndoMode         undo_mode,
-                                          GimpUndoAccumulator *accum);
-static void     undo_free_layer_displace (GimpUndo            *undo,
-                                          GimpUndoMode         undo_mode);
-
-gboolean
-gimp_image_undo_push_layer_displace (GimpImage   *gimage,
-                                     const gchar *undo_desc,
-                                     GimpLayer   *layer)
-{
-  GimpUndo *new;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
-
-  if ((new = gimp_image_undo_push_item (gimage, GIMP_ITEM (layer),
-                                        sizeof (LayerDisplaceUndo),
-                                        sizeof (LayerDisplaceUndo),
-                                        GIMP_UNDO_LAYER_DISPLACE, undo_desc,
-                                        TRUE,
-                                        undo_pop_layer_displace,
-                                        undo_free_layer_displace)))
-    {
-      LayerDisplaceUndo *ldu;
-
-      ldu = new->data;
-
-      ldu->old_offset_x = GIMP_ITEM (layer)->offset_x;
-      ldu->old_offset_y = GIMP_ITEM (layer)->offset_y;
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static gboolean
-undo_pop_layer_displace (GimpUndo            *undo,
-                         GimpUndoMode         undo_mode,
-                         GimpUndoAccumulator *accum)
-{
-  LayerDisplaceUndo *ldu;
-  GimpItem          *item;
-  gint               offset_x;
-  gint               offset_y;
-
-  ldu = (LayerDisplaceUndo *) undo->data;
-
-  item = GIMP_ITEM_UNDO (undo)->item;
-
-  gimp_item_offsets (item, &offset_x, &offset_y);
-
-  gimp_layer_translate (GIMP_LAYER (item),
-                        ldu->old_offset_x - offset_x,
-                        ldu->old_offset_y - offset_y,
-                        FALSE);
-
-  ldu->old_offset_x = offset_x;
-  ldu->old_offset_y = offset_y;
-
-  return TRUE;
-}
-
-static void
-undo_free_layer_displace (GimpUndo     *undo,
-                          GimpUndoMode  undo_mode)
-{
-  LayerDisplaceUndo *ldu;
-
-  ldu = (LayerDisplaceUndo *) undo->data;
-
-  g_free (ldu);
 }
 
 

@@ -68,6 +68,9 @@ static GimpItem * gimp_item_real_duplicate (GimpItem      *item,
 static void       gimp_item_real_rename    (GimpItem      *item,
                                             const gchar   *new_name,
                                             const gchar   *undo_desc);
+static void       gimp_item_real_translate (GimpItem      *item,
+                                            gint           offset_x,
+                                            gint           offset_y);
 
 
 /*  private variables  */
@@ -133,6 +136,7 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->removed                  = NULL;
   klass->duplicate                = gimp_item_real_duplicate;
   klass->rename                   = gimp_item_real_rename;
+  klass->translate                = gimp_item_real_translate;
   klass->scale                    = NULL;
   klass->resize                   = NULL;
 }
@@ -273,6 +277,15 @@ gimp_item_real_rename (GimpItem    *item,
   gimp_object_set_name (GIMP_OBJECT (item), new_name);
 }
 
+static void
+gimp_item_real_translate (GimpItem *item,
+                          gint      offset_x,
+                          gint      offset_y)
+{
+  item->offset_x += offset_x;
+  item->offset_y += offset_y;
+}
+
 void
 gimp_item_removed (GimpItem *item)
 {
@@ -366,6 +379,26 @@ gimp_item_offsets (const GimpItem *item,
 
   if (off_x) *off_x = item->offset_x;
   if (off_y) *off_y = item->offset_y;
+}
+
+void
+gimp_item_translate (GimpItem *item,
+                     gint      off_x,
+                     gint      off_y,
+                     gboolean  push_undo)
+{
+  GimpItemClass *item_class;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  item_class = GIMP_ITEM_GET_CLASS (item);
+
+  if (push_undo)
+    gimp_image_undo_push_item_displace (gimp_item_get_image (item),
+                                        item_class->translate_desc,
+                                        item);
+
+  item_class->translate (item, off_x, off_y);
 }
 
 /**

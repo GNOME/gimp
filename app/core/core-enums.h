@@ -324,10 +324,10 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_IMAGE_GUIDE,        /*< desc="Guide"                       >*/
   GIMP_UNDO_GROUP_MASK,               /*< desc="Selection Mask"              >*/
   GIMP_UNDO_GROUP_ITEM_PROPERTIES,    /*< desc="Item Properties"             >*/
+  GIMP_UNDO_GROUP_ITEM_DISPLACE,      /*< desc="Move Item"                   >*/
   GIMP_UNDO_GROUP_DRAWABLE_VISIBILITY,/*< desc="Drawable Visibility"         >*/
   GIMP_UNDO_GROUP_LAYER_SCALE,        /*< desc="Scale Layer"                 >*/
   GIMP_UNDO_GROUP_LAYER_RESIZE,       /*< desc="Resize Layer"                >*/
-  GIMP_UNDO_GROUP_LAYER_DISPLACE,     /*< desc="Move Layer"                  >*/
   GIMP_UNDO_GROUP_LAYER_LINKED,       /*< desc="Linked Layer"                >*/
   GIMP_UNDO_GROUP_LAYER_APPLY_MASK,   /*< desc="Apply Layer Mask"            >*/
   GIMP_UNDO_GROUP_FS_TO_LAYER,        /*< desc="Floating Selection to Layer" >*/
@@ -357,6 +357,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_IMAGE_COLORMAP,           /*< desc="Change Indexed Palette"    >*/
   GIMP_UNDO_MASK,                     /*< desc="Selection Mask"            >*/
   GIMP_UNDO_ITEM_RENAME,              /*< desc="Rename Item"               >*/
+  GIMP_UNDO_ITEM_DISPLACE,            /*< desc="Move Item"                 >*/
   GIMP_UNDO_DRAWABLE_VISIBILITY,      /*< desc="Drawable Visibility"       >*/
   GIMP_UNDO_LAYER_ADD,                /*< desc="New Layer"                 >*/
   GIMP_UNDO_LAYER_REMOVE,             /*< desc="Delete Layer"              >*/
@@ -364,7 +365,6 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_LAYER_MASK_ADD,           /*< desc="Add Layer Mask"            >*/
   GIMP_UNDO_LAYER_MASK_REMOVE,        /*< desc="Delete Layer Mask"         >*/
   GIMP_UNDO_LAYER_REPOSITION,         /*< desc="Reposition Layer"          >*/
-  GIMP_UNDO_LAYER_DISPLACE,           /*< desc="Move Layer"                >*/
   GIMP_UNDO_LAYER_MODE,               /*< desc="Set Layer Mode"            >*/
   GIMP_UNDO_LAYER_OPACITY,            /*< desc="Set Layer Opacity"         >*/
   GIMP_UNDO_LAYER_PRESERVE_TRANS,     /*< desc="Set Preserve Trans"        >*/

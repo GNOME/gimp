@@ -126,7 +126,7 @@ gimp_image_resize (GimpImage *gimage,
     {
       GimpLayer *layer = list->data;
 
-      gimp_layer_translate (layer, offset_x, offset_y, TRUE);
+      gimp_item_translate (GIMP_ITEM (layer), offset_x, offset_y, TRUE);
     }
 
   /*  Make sure the projection matches the gimage size  */

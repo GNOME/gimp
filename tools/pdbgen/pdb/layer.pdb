@@ -409,7 +409,7 @@ HELP
       tmp_layer = (GimpLayer *) layer_list->data;
 
       if ((tmp_layer == layer) || gimp_layer_get_linked (tmp_layer))
-	gimp_layer_translate (tmp_layer, offx, offy, TRUE);
+	gimp_item_translate (GIMP_ITEM (tmp_layer), offx, offy, TRUE);
     }
 }
 CODE
