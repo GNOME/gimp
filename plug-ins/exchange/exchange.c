@@ -128,6 +128,10 @@ void	run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 	switch (runmode = param[0].data.d_int32)
 	{
 		case RUN_INTERACTIVE:
+
+
+
+
 				/* retrieve stored arguments (if any) */
 				gimp_get_data("plug_in_exchange", &xargs);
 				/* initialize using foreground color */
@@ -247,9 +251,9 @@ void	exchange(GDrawable *drawable)
 			maxblue = MIN((int) xargs.fromblue + xargs.threshold, 255);
 			
 			/* get current pixel values */
-			red = src_row[x * bpp];
-			green = src_row[x * bpp + 1];
-			blue = src_row[x * bpp + 2];
+			red = src_row[(x-x1) * bpp];
+			green = src_row[(x-x1) * bpp + 1];
+			blue = src_row[(x-x1) * bpp + 2];
 
 			/* 
 			 * check if we want this pixel (does it fall between
@@ -266,13 +270,13 @@ void	exchange(GDrawable *drawable)
 			}
 
 			/* exchange if needed */
-			dest_row[x * bpp] = wanted ? MAX(MIN(xargs.tored + redx, 255), 0) : src_row[x * bpp];
-			dest_row[x * bpp + 1] = wanted ? MAX(MIN(xargs.togreen + greenx, 255), 0) : src_row[x * bpp + 1];
-			dest_row[x * bpp + 2] = wanted ? MAX(MIN(xargs.toblue + bluex, 255), 0) : src_row[x * bpp + 2];
+			dest_row[(x-x1) * bpp] = wanted ? MAX(MIN(xargs.tored + redx, 255), 0) : src_row[(x-x1) * bpp];
+			dest_row[(x-x1) * bpp + 1] = wanted ? MAX(MIN(xargs.togreen + greenx, 255), 0) : src_row[(x-x1) * bpp + 1];
+			dest_row[(x-x1) * bpp + 2] = wanted ? MAX(MIN(xargs.toblue + bluex, 255), 0) : src_row[(x-x1) * bpp + 2];
 
 			/* copy rest (most likely alpha-channel) */
 			for (rest = 3; rest < bpp; rest++)
-				dest_row[x * bpp + rest] = src_row[x * bpp + rest];
+				dest_row[(x-x1) * bpp + rest] = src_row[(x-x1) * bpp + rest];
 		}
 		/* store the dest */
 		gimp_pixel_rgn_set_row(&destPR, dest_row, x1, y, (x2 - x1));

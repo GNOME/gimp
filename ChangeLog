@@ -1,3 +1,8 @@
+Sun May 31 08:03:54 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* plug-ins/exchange/exchange.c: fix from sjburges to stop
+	out of bounds indexing of array.
+
 Sun May 31 01:58:36 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* README
