@@ -211,7 +211,7 @@ gimp_progress_box_new (void)
   gtk_widget_show (box->label);
 
   box->progress = gtk_progress_bar_new ();
-  gtk_widget_set_size_request (box->progress, 150, 20);
+  gtk_widget_set_size_request (box->progress, 250, 20);
   gtk_box_pack_start (GTK_BOX (box), box->progress, FALSE, FALSE, 0);
   gtk_widget_show (box->progress);
 

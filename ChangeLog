@@ -1,3 +1,9 @@
+2004-08-11  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/file-open-location-dialog.c
+	* app/widgets/gimpprogressbox.c: increased horizontal size request
+	to reduce resizing.
+
 2004-08-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpthumbbox.c (gimp_thumb_box_create_thumbnails):
