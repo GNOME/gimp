@@ -347,13 +347,13 @@ gimp_palette_load (const gchar  *filename,
                    gboolean      stingy_memory_use,
                    GError      **error)
 {
-  GimpPalette *palette;
-  gchar        str[1024];
-  gchar       *tok;
-  FILE        *file;
-  gint         r, g, b;
-  GimpRGB      color;
-  gint         linenum;
+  GimpPalette      *palette;
+  GimpPaletteEntry *entry;
+  gchar             str[1024];
+  gchar            *tok;
+  FILE             *file;
+  gint              r, g, b;
+  gint              linenum;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
@@ -398,7 +398,7 @@ gimp_palette_load (const gchar  *filename,
 
   palette = g_object_new (GIMP_TYPE_PALETTE, NULL);
 
-  if (! fgets (str, 1024, file))
+  if (! fgets (str, sizeof (str), file))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in palette file '%s': "
@@ -423,7 +423,7 @@ gimp_palette_load (const gchar  *filename,
       gimp_object_set_name (GIMP_OBJECT (palette), utf8);
       g_free (utf8);
 
-      if (! fgets (str, 1024, file))
+      if (! fgets (str, sizeof (str), file))
 	{
 	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in palette file '%s': "
@@ -453,7 +453,7 @@ gimp_palette_load (const gchar  *filename,
 
 	  palette->n_columns = columns;
 
-	  if (! fgets (str, 1024, file))
+	  if (! fgets (str, sizeof (str), file))
 	    {
 	      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                            _("Fatal parse error in palette file '%s': "
@@ -520,16 +520,23 @@ gimp_palette_load (const gchar  *filename,
 			 "RGB value out of range in line %d."),
                        gimp_filename_to_utf8 (filename), linenum);
 
-	  gimp_rgba_set_uchar (&color,
+          /* don't call gimp_palette_add_entry here, it's rather inefficient */
+          entry = g_new0 (GimpPaletteEntry, 1);
+
+	  gimp_rgba_set_uchar (&entry->color,
 			       (guchar) r,
 			       (guchar) g,
 			       (guchar) b,
 			       255);
 
-	  gimp_palette_add_entry (palette, tok, &color);
+          entry->name     = g_strdup (tok ? tok : _("Untitled"));
+          entry->position = palette->n_colors;
+
+          palette->colors = g_list_prepend (palette->colors, entry);
+          palette->n_colors++;
 	}
 
-      if (! fgets (str, 1024, file))
+      if (! fgets (str, sizeof (str), file))
 	{
 	  if (feof (file))
 	    break;
@@ -547,6 +554,8 @@ gimp_palette_load (const gchar  *filename,
     }
 
   fclose (file);
+
+  palette->colors = g_list_reverse (palette->colors);
 
   return GIMP_DATA (palette);
 }

@@ -1,3 +1,8 @@
+2004-06-13  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimppalette.c (gimp_palette_load): don't use the rather
+	inefficient gimp_palette_add_entry() when loading a palette.
+
 2004-06-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdata.[ch]: added "gint freeze_count" and
