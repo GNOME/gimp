@@ -1,3 +1,9 @@
+2004-12-09  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpbrushpipe.c (gimp_brush_pipe_select_brush):
+	Don't initialize a new random number generator every time a brush
+	is selected from a pipe.  Fixes bug #148205).
+	
 2004-12-09  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/cartoon.c: marked the menu entry for translation
