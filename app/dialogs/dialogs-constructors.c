@@ -524,12 +524,11 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
   if (preview_size < 1)
     preview_size = context->gimp->config->layer_preview_size;
 
-  return
-    gimp_item_tree_view_new (GIMP_TYPE_LAYER_TREE_VIEW,
-                             preview_size, 2,
-                             gimp_context_get_image (context),
-                             factory->menu_factory, "<Layers>",
-                             "/layers-popup");
+  return gimp_item_tree_view_new (GIMP_TYPE_LAYER_TREE_VIEW,
+                                  preview_size, 2,
+                                  gimp_context_get_image (context),
+                                  factory->menu_factory, "<Layers>",
+                                  "/layers-popup");
 }
 
 GtkWidget *
@@ -540,12 +539,11 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
   if (preview_size < 1)
     preview_size = context->gimp->config->layer_preview_size;
 
-  return
-    gimp_item_tree_view_new (GIMP_TYPE_CHANNEL_TREE_VIEW,
-                             preview_size, 1,
-                             gimp_context_get_image (context),
-                             factory->menu_factory, "<Channels>",
-                             "/channels-popup");
+  return gimp_item_tree_view_new (GIMP_TYPE_CHANNEL_TREE_VIEW,
+                                  preview_size, 1,
+                                  gimp_context_get_image (context),
+                                  factory->menu_factory, "<Channels>",
+                                  "/channels-popup");
 }
 
 GtkWidget *
@@ -556,12 +554,11 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
   if (preview_size < 1)
     preview_size = context->gimp->config->layer_preview_size;
 
-  return
-    gimp_item_tree_view_new (GIMP_TYPE_VECTORS_TREE_VIEW,
-                             preview_size, 1,
-                             gimp_context_get_image (context),
-                             factory->menu_factory, "<Vectors>",
-                             "/vectors-popup");
+  return gimp_item_tree_view_new (GIMP_TYPE_VECTORS_TREE_VIEW,
+                                  preview_size, 1,
+                                  gimp_context_get_image (context),
+                                  factory->menu_factory, "<Vectors>",
+                                  "/vectors-popup");
 }
 
 GtkWidget *
