@@ -40,7 +40,7 @@ const gchar * gimp_progress_install   (GimpProgressStartCallback start_callback,
                                        GimpProgressTextCallback  text_callback,
                                        GimpProgressValueCallback value_callback,
                                        gpointer                  user_data);
-void          gimp_progress_uninstall (const gchar              *progress_callback);
+gpointer      gimp_progress_uninstall (const gchar              *progress_callback);
 
 
 G_END_DECLS

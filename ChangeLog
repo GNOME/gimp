@@ -1,3 +1,8 @@
+2004-08-30  Manish Singh  <yosh@gimp.org>
+
+	* libgimp/gimpprogress.[ch] (gimp_progress_uninstall): return the
+	user_data pointer on uninstall. Eases language binding work.
+
 2004-08-30  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpbrushmenu.c (gimp_brush_select_preview_draw): fixed

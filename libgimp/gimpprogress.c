@@ -123,26 +123,31 @@ gimp_progress_install (GimpProgressStartCallback start_callback,
   return NULL;
 }
 
-void
+gpointer
 gimp_progress_uninstall (const gchar *progress_callback)
 {
   GimpProgressData *progress_data;
+  gpointer          user_data;
 
-  g_return_if_fail (progress_callback != NULL);
-  g_return_if_fail (gimp_progress_ht != NULL);
+  g_return_val_if_fail (progress_callback != NULL, NULL);
+  g_return_val_if_fail (gimp_progress_ht != NULL, NULL);
 
   progress_data = g_hash_table_lookup (gimp_progress_ht, progress_callback);
 
   if (! progress_data)
     {
       g_warning ("Can't find internal progress data");
-      return;
+      return NULL;
     }
 
   _gimp_progress_uninstall (progress_callback);
   gimp_uninstall_temp_proc (progress_callback);
 
+  user_data = progress_data->data;
+
   g_hash_table_remove (gimp_progress_ht, progress_callback);
+
+  return user_data;
 }
 
 
