@@ -753,7 +753,8 @@ tool_manager_tool_changed (GimpContext  *user_context,
     }
 
   /*  disconnect the old tool's context  */
-  if (tool_manager->active_tool &&
+  if (tool_manager->active_tool            &&
+      tool_manager->active_tool->tool_info &&
       tool_manager->active_tool->tool_info->use_context)
     {
       GimpToolInfo *old_tool_info;
