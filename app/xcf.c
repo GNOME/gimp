@@ -1392,7 +1392,7 @@ xcf_save_layer (XcfInfo  *info,
       xcf_seek_end (info);
       offset = info->cp;
 
-      xcf_save_channel (info, gimage, GIMP_CHANNEL(layer->mask), fail); if (fail) return;
+      xcf_save_channel (info, gimage, GIMP_CHANNEL(layer->mask), fail); if (*fail) return;
     }
   else
     offset = 0;
