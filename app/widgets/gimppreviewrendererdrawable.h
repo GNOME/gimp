@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdrawablepreview.h
+ * gimppreviewrendererdrawable.h
  * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,34 +19,33 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DRAWABLE_PREVIEW_H__
-#define __GIMP_DRAWABLE_PREVIEW_H__
+#ifndef __GIMP_PREVIEW_RENDERER_DRAWABLE_H__
+#define __GIMP_PREVIEW_RENDERER_DRAWABLE_H__
 
-#include "gimppreview.h"
+#include "gimppreviewrenderer.h"
+
+#define GIMP_TYPE_PREVIEW_RENDERER_DRAWABLE            (gimp_preview_renderer_drawable_get_type ())
+#define GIMP_PREVIEW_RENDERER_DRAWABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREVIEW_RENDERER_DRAWABLE, GimpPreviewRendererDrawable))
+#define GIMP_PREVIEW_RENDERER_DRAWABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PREVIEW_RENDERER_DRAWABLE, GimpPreviewRendererDrawableClass))
+#define GIMP_IS_PREVIEW_RENDERER_DRAWABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_PREVIEW_RENDERER_DRAWABLE))
+#define GIMP_IS_PREVIEW_RENDERER_DRAWABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PREVIEW_RENDERER_DRAWABLE))
+#define GIMP_PREVIEW_RENDERER_DRAWABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PREVIEW_RENDERER_DRAWABLE, GimpPreviewRendererDrawableClass))
 
 
-#define GIMP_TYPE_DRAWABLE_PREVIEW            (gimp_drawable_preview_get_type ())
-#define GIMP_DRAWABLE_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DRAWABLE_PREVIEW, GimpDrawablePreview))
-#define GIMP_DRAWABLE_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE_PREVIEW, GimpDrawablePreviewClass))
-#define GIMP_IS_DRAWABLE_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_DRAWABLE_PREVIEW))
-#define GIMP_IS_DRAWABLE_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE_PREVIEW))
-#define GIMP_DRAWABLE_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE_PREVIEW, GimpDrawablePreviewClass))
+typedef struct _GimpPreviewRendererDrawableClass  GimpPreviewRendererDrawableClass;
 
-
-typedef struct _GimpDrawablePreviewClass  GimpDrawablePreviewClass;
-
-struct _GimpDrawablePreview
+struct _GimpPreviewRendererDrawable
 {
-  GimpPreview  parent_instance;
+  GimpPreviewRenderer  parent_instance;
 };
 
-struct _GimpDrawablePreviewClass
+struct _GimpPreviewRendererDrawableClass
 {
-  GimpPreviewClass  parent_class;
+  GimpPreviewRendererClass  parent_class;
 };
 
 
-GType   gimp_drawable_preview_get_type (void) G_GNUC_CONST;
+GType   gimp_preview_renderer_drawable_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_DRAWABLE_PREVIEW_H__ */
+#endif /* __GIMP_PREVIEW_RENDERER_DRAWABLE_H__ */

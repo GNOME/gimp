@@ -32,65 +32,67 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "gimpdrawablepreview.h"
+#include "gimppreviewrendererdrawable.h"
 
 
-static void   gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass);
-static void   gimp_drawable_preview_init       (GimpDrawablePreview      *preview);
+static void   gimp_preview_renderer_drawable_class_init (GimpPreviewRendererDrawableClass *klass);
+static void   gimp_preview_renderer_drawable_init       (GimpPreviewRendererDrawable      *preview);
 
-static void   gimp_drawable_preview_render     (GimpPreview *preview);
+static void   gimp_preview_renderer_drawable_render     (GimpPreviewRenderer *renderer,
+                                                         GtkWidget           *widget);
 
 
-static GimpPreviewClass *parent_class = NULL;
+static GimpPreviewRendererClass *parent_class = NULL;
 
 
 GType
-gimp_drawable_preview_get_type (void)
+gimp_preview_renderer_drawable_get_type (void)
 {
-  static GType preview_type = 0;
+  static GType renderer_type = 0;
 
-  if (! preview_type)
+  if (! renderer_type)
     {
-      static const GTypeInfo preview_info =
+      static const GTypeInfo renderer_info =
       {
-        sizeof (GimpDrawablePreviewClass),
+        sizeof (GimpPreviewRendererDrawableClass),
         NULL,           /* base_init */
         NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_drawable_preview_class_init,
+        (GClassInitFunc) gimp_preview_renderer_drawable_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data */
-        sizeof (GimpDrawablePreview),
+        sizeof (GimpPreviewRendererDrawable),
         0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_drawable_preview_init,
+        (GInstanceInitFunc) gimp_preview_renderer_drawable_init,
       };
 
-      preview_type = g_type_register_static (GIMP_TYPE_PREVIEW,
-                                             "GimpDrawablePreview",
-                                             &preview_info, 0);
+      renderer_type = g_type_register_static (GIMP_TYPE_PREVIEW_RENDERER,
+                                              "GimpPreviewRendererDrawable",
+                                              &renderer_info, 0);
     }
-  
-  return preview_type;
+
+  return renderer_type;
 }
 
 static void
-gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
+gimp_preview_renderer_drawable_class_init (GimpPreviewRendererDrawableClass *klass)
 {
-  GimpPreviewClass *preview_class;
+  GimpPreviewRendererClass *renderer_class;
 
-  preview_class = GIMP_PREVIEW_CLASS (klass);
+  renderer_class = GIMP_PREVIEW_RENDERER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  preview_class->render = gimp_drawable_preview_render;
+  renderer_class->render = gimp_preview_renderer_drawable_render;
 }
 
 static void
-gimp_drawable_preview_init (GimpDrawablePreview *preview)
+gimp_preview_renderer_drawable_init (GimpPreviewRendererDrawable *preview)
 {
 }
 
 static void
-gimp_drawable_preview_render (GimpPreview *preview)
+gimp_preview_renderer_drawable_render (GimpPreviewRenderer *renderer,
+                                       GtkWidget           *widget)
 {
   GimpDrawable *drawable;
   GimpImage    *gimage;
@@ -101,25 +103,25 @@ gimp_drawable_preview_render (GimpPreview *preview)
   gboolean      scaling_up;
   TempBuf      *render_buf;
 
-  drawable = GIMP_DRAWABLE (preview->viewable);
+  drawable = GIMP_DRAWABLE (renderer->viewable);
   gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  width  = preview->width;
-  height = preview->height;
+  width  = renderer->width;
+  height = renderer->height;
 
-  if (gimage && ! preview->is_popup)
+  if (gimage && ! renderer->is_popup)
     {
       width  = MAX (1, ROUND ((((gdouble) width / (gdouble) gimage->width) *
 			       (gdouble) drawable->width)));
       height = MAX (1, ROUND ((((gdouble) height / (gdouble) gimage->height) *
 			      (gdouble) drawable->height)));
 
-      gimp_viewable_calc_preview_size (preview->viewable,
+      gimp_viewable_calc_preview_size (renderer->viewable,
                                        drawable->width,
                                        drawable->height,
                                        width,
                                        height,
-                                       preview->dot_for_dot,
+                                       renderer->dot_for_dot,
                                        gimage->xresolution,
                                        gimage->yresolution,
                                        &preview_width,
@@ -128,12 +130,12 @@ gimp_drawable_preview_render (GimpPreview *preview)
     }
   else
     {
-      gimp_viewable_calc_preview_size (preview->viewable,
+      gimp_viewable_calc_preview_size (renderer->viewable,
                                        drawable->width,
                                        drawable->height,
                                        width,
                                        height,
-                                       preview->dot_for_dot,
+                                       renderer->dot_for_dot,
                                        gimage ? gimage->xresolution : 1.0,
                                        gimage ? gimage->yresolution : 1.0,
                                        &preview_width,
@@ -145,7 +147,7 @@ gimp_drawable_preview_render (GimpPreview *preview)
     {
       TempBuf *temp_buf;
 
-      temp_buf = gimp_viewable_get_new_preview (preview->viewable,
+      temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
 						drawable->width, 
 						drawable->height);
       render_buf = temp_buf_scale (temp_buf, preview_width, preview_height);
@@ -154,21 +156,21 @@ gimp_drawable_preview_render (GimpPreview *preview)
     }
   else
     {
-      render_buf = gimp_viewable_get_new_preview (preview->viewable,
+      render_buf = gimp_viewable_get_new_preview (renderer->viewable,
 						  preview_width,
 						  preview_height);
     }
 
-  if (gimage && ! preview->is_popup)
+  if (gimage && ! renderer->is_popup)
     {
       if (drawable->offset_x != 0)
 	render_buf->x =
-	  ROUND ((((gdouble) preview->width / (gdouble) gimage->width) *
+	  ROUND ((((gdouble) renderer->width / (gdouble) gimage->width) *
 		  (gdouble) drawable->offset_x));
 
       if (drawable->offset_y != 0)
 	render_buf->y =
-	  ROUND ((((gdouble) preview->height / (gdouble) gimage->height) *
+	  ROUND ((((gdouble) renderer->height / (gdouble) gimage->height) *
 		  (gdouble) drawable->offset_y));
     }
   else
@@ -180,11 +182,9 @@ gimp_drawable_preview_render (GimpPreview *preview)
 	render_buf->y = (height - preview_height) / 2;
     }
 
-  gimp_preview_render_preview (preview,
-                               render_buf,
-                               -1,
-                               GIMP_PREVIEW_BG_CHECKS,
-                               GIMP_PREVIEW_BG_CHECKS);
+  gimp_preview_renderer_render_preview (renderer, render_buf, -1,
+                                        GIMP_PREVIEW_BG_CHECKS,
+                                        GIMP_PREVIEW_BG_CHECKS);
 
   temp_buf_free (render_buf);
 }

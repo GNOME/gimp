@@ -1,5 +1,56 @@
 2003-03-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpbuffer.c: don't scale the preview up if the
+	buffer is too small.
+
+	* app/core/gimppattern.c: don't add a white border around the
+	preview if the pattern is too small.
+
+	* app/widgets/gimppreviewrenderer.[ch]: new object. A buffer
+	that updates itself on GimpViewable changes and can render
+	itself to any widget. Basically GimpPreview reduced to the
+	render and draw code.
+
+	* app/widgets/gimppreview.[ch]: removed all rendering and drawing
+	code and keep a GimpPreviewRenderer instance. Connect to its
+	"update" signal for queuing draws on the preview.
+
+	* app/widgets/gimpcellrendererviewable.[ch]
+	* app/widgets/gimpcontainertreeview.c: same here: removed
+	rendering and drawing code and keep GimpPreviewRenderers in the
+	list store.  Delays preview creation for GtkTreeViews until the
+	buffer is really needed for drawing and adds idle preview updating
+	on viewable changes.
+
+	* app/widgets/gimppreview-utils.[ch]
+	* app/widgets/gimpbrushpreview.[ch]
+	* app/widgets/gimpbufferpreview.[ch]
+	* app/widgets/gimpdrawablepreview.[ch]
+	* app/widgets/gimpimagepreview.[ch]: removed...
+
+	* app/widgets/gimppreviewrenderer-utils.[ch]
+	* app/widgets/gimppreviewrendererbrush.[ch]
+	* app/widgets/gimppreviewrendererdrawable.[ch]
+	* app/widgets/gimppreviewrendererimage.[ch]: ...and converted to
+	GimpPreviewRenderer subclasses.
+
+	* app/display/gimpnavigationview.c
+	* app/gui/palette-import-dialog.c
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-enums.h
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpcomponentlistitem.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainermenuimpl.c
+	* app/widgets/gimplayerlistitem.c
+	* app/widgets/gimplistitem.c
+	* app/widgets/gimpnavigationpreview.[ch]
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimpvectorslistview.c: changed accordingly.
+
+2003-03-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpblendtool.c: removed useless includes.
 
 2003-02-28  Sven Neumann  <sven@gimp.org>

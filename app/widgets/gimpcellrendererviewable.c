@@ -29,13 +29,13 @@
 
 #include "gimpcellrendererviewable.h"
 #include "gimppreview-popup.h"
+#include "gimppreviewrenderer.h"
 
 
 enum
 {
   PROP_0,
-  PROP_VIEWABLE,
-  PROP_PREVIEW_SIZE
+  PROP_RENDERER
 };
 
 
@@ -73,7 +73,7 @@ static gboolean gimp_cell_renderer_viewable_activate (GtkCellRenderer *cell,
                                                       GtkCellRendererState flags);
 
 
-GtkCellRendererPixbufClass *parent_class = NULL;
+GtkCellRendererClass *parent_class = NULL;
 
 
 GType
@@ -96,7 +96,7 @@ gimp_cell_renderer_viewable_get_type (void)
         (GInstanceInitFunc) gimp_cell_renderer_viewable_init,
       };
 
-      cell_type = g_type_register_static (GTK_TYPE_CELL_RENDERER_PIXBUF,
+      cell_type = g_type_register_static (GTK_TYPE_CELL_RENDERER,
                                           "GtkCellRendererViewable",
                                           &cell_info, 0);
     }
@@ -123,18 +123,11 @@ gimp_cell_renderer_viewable_class_init (GimpCellRendererViewableClass *klass)
   cell_class->activate       = gimp_cell_renderer_viewable_activate;
 
   g_object_class_install_property (object_class,
-                                   PROP_VIEWABLE,
-                                   g_param_spec_object ("viewable",
+                                   PROP_RENDERER,
+                                   g_param_spec_object ("renderer",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_VIEWABLE,
+                                                        GIMP_TYPE_PREVIEW_RENDERER,
                                                         G_PARAM_READWRITE));
-
-  g_object_class_install_property (object_class,
-                                   PROP_PREVIEW_SIZE,
-                                   g_param_spec_int ("preview-size",
-                                                     NULL, NULL,
-                                                     0, 1024, 16,
-                                                     G_PARAM_READWRITE));
 }
 
 static void
@@ -155,12 +148,8 @@ gimp_cell_renderer_viewable_get_property (GObject    *object,
 
   switch (param_id)
     {
-    case PROP_VIEWABLE:
-      g_value_set_object (value, cell->viewable);
-      break;
-
-    case PROP_PREVIEW_SIZE:
-      g_value_set_int (value, cell->preview_size);
+    case PROP_RENDERER:
+      g_value_set_object (value, cell->renderer);
       break;
 
     default:
@@ -176,25 +165,15 @@ gimp_cell_renderer_viewable_set_property (GObject      *object,
                                           GParamSpec   *pspec)
 {
   GimpCellRendererViewable *cell;
-  GimpViewable             *viewable;
   
   cell = GIMP_CELL_RENDERER_VIEWABLE (object);
 
   switch (param_id)
     {
-    case PROP_VIEWABLE:
-      viewable = (GimpViewable *) g_value_get_object (value);
-      if (cell->viewable)
-	g_object_remove_weak_pointer (G_OBJECT (cell->viewable),
-                                      (gpointer) &cell->viewable);
-      cell->viewable = viewable;
-      if (cell->viewable)
-        g_object_add_weak_pointer (G_OBJECT (cell->viewable),
-                                   (gpointer) &cell->viewable);
-      break;
-
-    case PROP_PREVIEW_SIZE:
-      cell->preview_size = g_value_get_int (value);
+    case PROP_RENDERER:
+      if (cell->renderer)
+	g_object_unref (cell->renderer);
+      cell->renderer = (GimpPreviewRenderer *) g_value_dup_object (value);
       break;
 
     default:
@@ -220,18 +199,12 @@ gimp_cell_renderer_viewable_get_size (GtkCellRenderer *cell,
 
   cellviewable = GIMP_CELL_RENDERER_VIEWABLE (cell);
 
-  if (cellviewable->viewable)
+  if (cellviewable->renderer)
     {
-      gimp_viewable_get_preview_size (cellviewable->viewable,
-                                      cellviewable->preview_size,
-                                      FALSE, TRUE,
-                                      &preview_width,
-                                      &preview_height);
-    }
-  else
-    {
-      preview_width  = cellviewable->preview_size;
-      preview_height = cellviewable->preview_size;
+      preview_width  = (cellviewable->renderer->width  +
+                        2 * cellviewable->renderer->border_width);
+      preview_height = (cellviewable->renderer->height +
+                        2 * cellviewable->renderer->border_width);
     }
   
   calc_width  = (gint) GTK_CELL_RENDERER (cell)->xpad * 2 + preview_width;
@@ -274,98 +247,12 @@ gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
                                     GtkCellRendererState  flags)
 {
   GimpCellRendererViewable *cellviewable;
-  GtkCellRendererPixbuf    *cellpixbuf;
 
   cellviewable = GIMP_CELL_RENDERER_VIEWABLE (cell);
-  cellpixbuf   = GTK_CELL_RENDERER_PIXBUF (cell);
 
-  if (! cellpixbuf->pixbuf && cellviewable->viewable)
-    {
-      GimpViewable *viewable;
-      GtkIconSet   *icon_set;
-      GtkIconSize  *sizes;
-      gint          n_sizes;
-      gint          i;
-      gint          width_diff  = 1024;
-      gint          height_diff = 1024;
-      GtkIconSize   icon_size = GTK_ICON_SIZE_MENU;
-      GdkPixbuf    *pixbuf;
-      const gchar  *stock_id;
-
-      viewable = cellviewable->viewable;
-
-      stock_id = gimp_viewable_get_stock_id (viewable);
-      icon_set = gtk_style_lookup_icon_set (widget->style, stock_id);
-
-      gtk_icon_set_get_sizes (icon_set, &sizes, &n_sizes);
-
-      for (i = 0; i < n_sizes; i++)
-        {
-          gint width;
-          gint height;
-
-          if (gtk_icon_size_lookup (sizes[i], &width, &height))
-            {
-              if (width  <= cell_area->width  &&
-                  height <= cell_area->height &&
-                  (ABS (width  - cell_area->width)  < width_diff ||
-                   ABS (height - cell_area->height) < height_diff))
-                {
-                  width_diff  = ABS (width  - cell_area->width);
-                  height_diff = ABS (height - cell_area->height);
-
-                  icon_size = sizes[i];
-                }
-            }
-        }
-
-      g_free (sizes);
-
-      pixbuf = gtk_icon_set_render_icon (icon_set,
-                                         widget->style,
-                                         gtk_widget_get_direction (widget),
-                                         widget->state,
-                                         GTK_ICON_SIZE_DIALOG,
-                                         widget, NULL);
-
-      if (pixbuf)
-        {
-          if (gdk_pixbuf_get_width (pixbuf)  > cell_area->width ||
-              gdk_pixbuf_get_height (pixbuf) > cell_area->height)
-            {
-              GdkPixbuf *scaled_pixbuf;
-              gint       pixbuf_width;
-              gint       pixbuf_height;
-
-              gimp_viewable_calc_preview_size (viewable,
-                                               gdk_pixbuf_get_width (pixbuf),
-                                               gdk_pixbuf_get_height (pixbuf),
-                                               cell_area->width,
-                                               cell_area->height,
-                                               TRUE, 1.0, 1.0,
-                                               &pixbuf_width,
-                                               &pixbuf_height,
-                                               NULL);
-
-              scaled_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
-                                                       pixbuf_width,
-                                                       pixbuf_height,
-                                                       GDK_INTERP_BILINEAR);
-
-              g_object_unref (pixbuf);
-              pixbuf = scaled_pixbuf;
-            }
-
-          g_object_set (cell, "pixbuf", pixbuf, NULL);
-          g_object_unref (pixbuf);
-        }
-    }
-
-  GTK_CELL_RENDERER_CLASS (parent_class)->render (cell, window, widget,
-                                                  background_area,
-                                                  cell_area,
-                                                  expose_area,
-                                                  flags);
+  if (cellviewable->renderer)
+    gimp_preview_renderer_draw (cellviewable->renderer, window, widget,
+                                cell_area, expose_area);
 }
 
 static gboolean
@@ -381,25 +268,18 @@ gimp_cell_renderer_viewable_activate (GtkCellRenderer      *cell,
 
   cellviewable = GIMP_CELL_RENDERER_VIEWABLE (cell);
 
-  if (cellviewable->viewable &&
-      ((GdkEventAny *) event)->type == GDK_BUTTON_PRESS &&
-      ((GdkEventButton *) event)->button == 1)
+  if (cellviewable->renderer && event)
     {
-      gint preview_width;
-      gint preview_height;
-
-      gimp_viewable_get_preview_size (cellviewable->viewable,
-                                      cellviewable->preview_size,
-                                      FALSE, TRUE,
-                                      &preview_width,
-                                      &preview_height);
-
-      return gimp_preview_popup_show (widget,
-                                      (GdkEventButton *) event,
-                                      cellviewable->viewable,
-                                      preview_width,
-                                      preview_height,
-                                      TRUE);
+      if (((GdkEventAny *) event)->type == GDK_BUTTON_PRESS &&
+          ((GdkEventButton *) event)->button == 1)
+        {
+          return gimp_preview_popup_show (widget,
+                                          (GdkEventButton *) event,
+                                          cellviewable->renderer->viewable,
+                                          cellviewable->renderer->width,
+                                          cellviewable->renderer->height,
+                                          TRUE);
+        }
     }
 
   return FALSE;

@@ -34,6 +34,7 @@
 
 #include "gimpcontainergridview.h"
 #include "gimppreview.h"
+#include "gimppreviewrenderer.h"
 #include "gtkhwrapbox.h"
 
 #include "libgimp/gimpintl.h"
@@ -229,8 +230,7 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
 				   view->preview_size,
 				   1,
 				   FALSE, TRUE, TRUE);
-
-  GIMP_PREVIEW (preview)->border_color = white_color;
+  gimp_preview_set_border_color (GIMP_PREVIEW (preview), &white_color);
 
   gtk_wrap_box_pack (GTK_WRAP_BOX (grid_view->wrap_box), preview,
 		     FALSE, FALSE, FALSE, FALSE);
@@ -335,7 +335,8 @@ gimp_container_grid_view_set_preview_size (GimpContainerView *view)
 
       preview = GIMP_PREVIEW (child->widget);
 
-      gimp_preview_set_size (preview, view->preview_size, preview->border_width);
+      gimp_preview_set_size (preview, view->preview_size,
+                             preview->renderer->border_width);
     }
 
   gtk_widget_queue_resize (grid_view->wrap_box);

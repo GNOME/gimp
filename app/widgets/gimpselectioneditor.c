@@ -48,6 +48,7 @@
 #include "gimpselectioneditor.h"
 #include "gimpdnd.h"
 #include "gimppreview.h"
+#include "gimppreviewrenderer.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -264,10 +265,10 @@ gimp_selection_editor_abox_resized (GtkWidget           *widget,
   if (! preview->viewable)
     return;
 
-  if (preview->width  > allocation->width  ||
-      preview->height > allocation->height ||
-      (preview->width  != allocation->width &&
-       preview->height != allocation->height))
+  if (preview->renderer->width  > allocation->width  ||
+      preview->renderer->height > allocation->height ||
+      (preview->renderer->width  != allocation->width &&
+       preview->renderer->height != allocation->height))
     {
       gint     width;
       gint     height;
@@ -280,7 +281,7 @@ gimp_selection_editor_abox_resized (GtkWidget           *widget,
                                             GIMP_PREVIEW_MAX_SIZE),
                                        MIN (allocation->height,
                                             GIMP_PREVIEW_MAX_SIZE),
-                                       preview->dot_for_dot,
+                                       preview->renderer->dot_for_dot,
                                        image_editor->gimage->xresolution,
                                        image_editor->gimage->yresolution,
                                        &width,
@@ -298,7 +299,8 @@ gimp_selection_editor_abox_resized (GtkWidget           *widget,
           height = height * allocation->height / height;
         }
 
-      gimp_preview_set_size_full (preview, width, height, preview->border_width);
+      gimp_preview_set_size_full (preview, width, height,
+                                  preview->renderer->border_width);
     }
 }
 

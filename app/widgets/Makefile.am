@@ -23,10 +23,6 @@ libappwidgets_a_sources = \
 	gimpbrusheditor.h		\
 	gimpbrushfactoryview.c		\
 	gimpbrushfactoryview.h		\
-	gimpbrushpreview.c		\
-	gimpbrushpreview.h		\
-	gimpbufferpreview.c		\
-	gimpbufferpreview.h		\
 	gimpbufferview.c		\
 	gimpbufferview.h		\
 	gimpcellrendererviewable.c	\
@@ -85,8 +81,6 @@ libappwidgets_a_sources = \
 	gimpdrawablelistitem.h		\
 	gimpdrawablelistview.c		\
 	gimpdrawablelistview.h		\
-	gimpdrawablepreview.c		\
-	gimpdrawablepreview.h		\
 	gimpeditor.c			\
 	gimpeditor.h			\
 	gimpenummenu.c			\
@@ -107,8 +101,6 @@ libappwidgets_a_sources = \
 	gimpimagedock.h			\
 	gimpimageeditor.c		\
 	gimpimageeditor.h		\
-	gimpimagepreview.c		\
-	gimpimagepreview.h		\
 	gimpimageview.c			\
 	gimpimageview.h			\
 	gimpitemfactory.c		\
@@ -135,8 +127,16 @@ libappwidgets_a_sources = \
 	gimppreview.h			\
 	gimppreview-popup.c		\
 	gimppreview-popup.h		\
-	gimppreview-utils.c		\
-	gimppreview-utils.h		\
+	gimppreviewrenderer.c		\
+	gimppreviewrenderer.h		\
+	gimppreviewrenderer-utils.c	\
+	gimppreviewrenderer-utils.h	\
+	gimppreviewrendererbrush.c	\
+	gimppreviewrendererbrush.h	\
+	gimppreviewrendererdrawable.c	\
+	gimppreviewrendererdrawable.h	\
+	gimppreviewrendererimage.c	\
+	gimppreviewrendererimage.h	\
 	gimppropwidgets.c		\
 	gimppropwidgets.h		\
 	gimpselectioneditor.c		\

@@ -1,8 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppreview-utils.c
- * Copyright (C) 2001-2002 Michael Natterer <mitch@gimp.org>
+ * gimppreviewrenderer-utils.c
+ * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,39 +26,33 @@
 #include "widgets-types.h"
 
 #include "core/gimpbrush.h"
-#include "core/gimpbuffer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "gimpbrushpreview.h"
-#include "gimpbufferpreview.h"
-#include "gimpdrawablepreview.h"
-#include "gimpimagepreview.h"
+#include "gimppreviewrendererbrush.h"
+#include "gimppreviewrendererdrawable.h"
+#include "gimppreviewrendererimage.h"
 
 
 GType
-gimp_preview_type_from_viewable_type (GType viewable_type)
+gimp_preview_renderer_type_from_viewable_type (GType viewable_type)
 {
-  GType type = GIMP_TYPE_PREVIEW;
+  GType type = GIMP_TYPE_PREVIEW_RENDERER;
 
   g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE),
                         G_TYPE_NONE);
 
   if (g_type_is_a (viewable_type, GIMP_TYPE_BRUSH))
     {
-      type = GIMP_TYPE_BRUSH_PREVIEW;
-    }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_DRAWABLE))
-    {
-      type = GIMP_TYPE_DRAWABLE_PREVIEW;
+      type = GIMP_TYPE_PREVIEW_RENDERER_BRUSH;
     }
   else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGE))
     {
-      type = GIMP_TYPE_IMAGE_PREVIEW;
+      type = GIMP_TYPE_PREVIEW_RENDERER_IMAGE;
     }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_BUFFER))
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_DRAWABLE))
     {
-      type = GIMP_TYPE_BUFFER_PREVIEW;
+      type = GIMP_TYPE_PREVIEW_RENDERER_DRAWABLE;
     }
 
   return type;

@@ -225,7 +225,6 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
   PixelRegion  srcPR;
   PixelRegion  destPR;
   gint         bytes;
-  gint         subsample;
 
   buffer        = GIMP_BUFFER (viewable);
   buffer_width  = tile_manager_width (buffer->tiles);
@@ -233,30 +232,48 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
 
   bytes = tile_manager_bpp (buffer->tiles);
 
-  /*  calculate 'acceptable' subsample  */
-  subsample = 1;
-
-  while ((width  * (subsample + 1) * 2 < buffer_width) &&
-	 (height * (subsample + 1) * 2 < buffer_height))
-    subsample += 1;
-
   pixel_region_init (&srcPR, buffer->tiles,
 		     0, 0,
 		     buffer_width,
 		     buffer_height,
 		     FALSE);
 
-  temp_buf = temp_buf_new (width, height, bytes, 0, 0, NULL);
+  if (buffer_height > height || buffer_width > width)
+    temp_buf = temp_buf_new (width, height, bytes, 0, 0, NULL);
+  else
+    temp_buf = temp_buf_new (buffer_width, buffer_height, bytes, 0, 0, NULL);
 
   destPR.bytes     = temp_buf->bytes;
   destPR.x         = 0;
   destPR.y         = 0;
-  destPR.w         = width;
-  destPR.h         = height;
-  destPR.rowstride = width * destPR.bytes;
+  destPR.w         = temp_buf->width;
+  destPR.h         = temp_buf->height;
+  destPR.rowstride = temp_buf->width * destPR.bytes;
   destPR.data      = temp_buf_data (temp_buf);
 
-  subsample_region (&srcPR, &destPR, subsample);
+  if (buffer_height > height || buffer_width > width)
+    {
+      gint subsample;
+
+      /*  calculate 'acceptable' subsample  */
+      subsample = 1;
+
+      while ((width  * (subsample + 1) * 2 < buffer_width) &&
+             (height * (subsample + 1) * 2 < buffer_height))
+        subsample += 1;
+
+      subsample_region (&srcPR, &destPR, subsample);
+    }
+  else
+    {
+      copy_region (&srcPR, &destPR);
+    }
+
+  if (buffer_width < width)
+    temp_buf->x = (width - buffer_width) / 2;
+
+  if (buffer_height < height)
+    temp_buf->y = (height - buffer_height) / 2;
 
   return temp_buf;
 }

@@ -65,6 +65,12 @@ typedef enum
 
 typedef enum  /*< skip >*/
 {
+  GIMP_PREVIEW_BG_CHECKS,
+  GIMP_PREVIEW_BG_WHITE
+} GimpPreviewBG;
+
+typedef enum  /*< skip >*/
+{
   GIMP_VIEW_TYPE_GRID,
   GIMP_VIEW_TYPE_LIST,
   GIMP_VIEW_TYPE_TREE

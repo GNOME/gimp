@@ -23,7 +23,7 @@
 #define __GIMP_CELL_RENDERER_PIXBUF_H__
 
 
-#include <gtk/gtkcellrendererpixbuf.h>
+#include <gtk/gtkcellrenderer.h>
 
 
 #define GIMP_TYPE_CELL_RENDERER_VIEWABLE            (gimp_cell_renderer_viewable_get_type ())
@@ -38,15 +38,14 @@ typedef struct _GimpCellRendererViewableClass GimpCellRendererViewableClass;
 
 struct _GimpCellRendererViewable
 {
-  GtkCellRendererPixbuf  parent_instance;
+  GtkCellRenderer      parent_instance;
 
-  GimpViewable          *viewable;
-  gint                   preview_size;
+  GimpPreviewRenderer *renderer;
 };
 
 struct _GimpCellRendererViewableClass
 {
-  GtkCellRendererPixbufClass  parent_class;
+  GtkCellRendererClass  parent_class;
 };
 
 

@@ -41,6 +41,7 @@
 #include "gimpdnd.h"
 #include "gimplayerlistitem.h"
 #include "gimppreview.h"
+#include "gimppreviewrenderer.h"
 
 
 static void   gimp_layer_list_item_class_init (GimpLayerListItemClass  *klass);
@@ -251,7 +252,8 @@ gimp_layer_list_item_set_preview_size (GimpListItem *list_item)
       preview = GIMP_PREVIEW (layer_item->mask_preview);
 
       gimp_preview_set_size (preview,
-			     list_item->preview_size, preview->border_width);
+			     list_item->preview_size,
+                             preview->renderer->border_width);
     }
 }
 

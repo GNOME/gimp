@@ -37,6 +37,7 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpnavigationpreview.h"
+#include "widgets/gimppreviewrenderer.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -322,10 +323,10 @@ gimp_navigation_view_popup (GimpDisplayShell *shell,
    * Warping the pointer would be another solution ... 
    */
   x = CLAMP (x, 0, (gdk_screen_width ()  -
-                    GIMP_PREVIEW (preview)->width  -
+                    GIMP_PREVIEW (preview)->renderer->width  -
                     4 * widget->style->xthickness));
   y = CLAMP (y, 0, (gdk_screen_height () -
-                    GIMP_PREVIEW (preview)->height -
+                    GIMP_PREVIEW (preview)->renderer->height -
                     4 * widget->style->ythickness));
 
   gtk_window_move (GTK_WINDOW (shell->nav_popup), x, y);
@@ -366,7 +367,7 @@ gimp_navigation_view_new_private (GimpDisplayShell *shell,
 
       gimp_preview_set_size (preview,
                              config->nav_preview_size * 3,
-                             preview->border_width);
+                             preview->renderer->border_width);
     }
   else
     {
@@ -478,10 +479,10 @@ gimp_navigation_view_abox_resized (GtkWidget          *widget,
   if (! preview->viewable)
     return;
 
-  if (preview->width  > allocation->width  ||
-      preview->height > allocation->height ||
-      (preview->width  != allocation->width &&
-       preview->height != allocation->height))
+  if (preview->renderer->width  > allocation->width  ||
+      preview->renderer->height > allocation->height ||
+      (preview->renderer->width  != allocation->width &&
+       preview->renderer->height != allocation->height))
     {
       GimpNavigationPreview *nav_preview;
       GimpImage             *gimage;
@@ -498,7 +499,7 @@ gimp_navigation_view_abox_resized (GtkWidget          *widget,
                                             GIMP_PREVIEW_MAX_SIZE),
                                        MIN (allocation->height,
                                             GIMP_PREVIEW_MAX_SIZE),
-                                       preview->dot_for_dot,
+                                       preview->renderer->dot_for_dot,
                                        gimage->xresolution,
                                        gimage->yresolution,
                                        &width,
@@ -516,8 +517,8 @@ gimp_navigation_view_abox_resized (GtkWidget          *widget,
           height = height * allocation->height / height;
         }
 
-      gimp_preview_set_size_full (preview,
-                                  width, height, preview->border_width);
+      gimp_preview_set_size_full (preview, width, height,
+                                  preview->renderer->border_width);
 
       /* FIXME: the GimpNavigationPreview should handle this stuff itself */
 
@@ -745,7 +746,8 @@ gimp_navigation_view_update_marker (GimpNavigationView *view)
   xratio = SCALEFACTOR_X (view->shell);
   yratio = SCALEFACTOR_Y (view->shell);
 
-  if (GIMP_PREVIEW (view->preview)->dot_for_dot != view->shell->dot_for_dot)
+  if (GIMP_PREVIEW (view->preview)->renderer->dot_for_dot !=
+      view->shell->dot_for_dot)
     gimp_preview_set_dot_for_dot (GIMP_PREVIEW (view->preview),
                                   view->shell->dot_for_dot);
 

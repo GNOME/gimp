@@ -29,19 +29,23 @@
 
 /*  non-widget objects  */
 
-typedef struct _GimpDeviceInfo           GimpDeviceInfo;
-typedef struct _GimpDialogFactory        GimpDialogFactory;
-typedef struct _GimpItemFactory          GimpItemFactory;
-typedef struct _GimpMenuFactory          GimpMenuFactory;
+typedef struct _GimpDeviceInfo              GimpDeviceInfo;
+typedef struct _GimpDialogFactory           GimpDialogFactory;
+typedef struct _GimpItemFactory             GimpItemFactory;
+typedef struct _GimpMenuFactory             GimpMenuFactory;
 
-typedef struct _GimpCellRendererViewable GimpCellRendererViewable;
+typedef struct _GimpCellRendererViewable    GimpCellRendererViewable;
+
+typedef struct _GimpPreviewRenderer         GimpPreviewRenderer;
+typedef struct _GimpPreviewRendererBrush    GimpPreviewRendererBrush;
+typedef struct _GimpPreviewRendererDrawable GimpPreviewRendererDrawable;
+typedef struct _GimpPreviewRendererImage    GimpPreviewRendererImage;
 
 
 /*  widgets  */
 
 typedef struct _GimpPreview             GimpPreview;
 typedef struct _GimpBrushPreview        GimpBrushPreview;
-typedef struct _GimpBufferPreview       GimpBufferPreview;
 typedef struct _GimpDrawablePreview     GimpDrawablePreview;
 typedef struct _GimpImagePreview        GimpImagePreview;
 typedef struct _GimpNavigationPreview   GimpNavigationPreview;

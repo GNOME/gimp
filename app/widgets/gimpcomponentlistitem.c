@@ -32,8 +32,8 @@
 
 #include "gimpcomponentlistitem.h"
 #include "gimpdnd.h"
-#include "gimpimagepreview.h"
 #include "gimppreview.h"
+#include "gimppreviewrendererimage.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -219,7 +219,7 @@ gimp_component_list_item_set_viewable (GimpListItem *list_item,
       g_assert_not_reached ();
     }
 
-  GIMP_IMAGE_PREVIEW (list_item->preview)->channel = pixel;
+  GIMP_PREVIEW_RENDERER_IMAGE (GIMP_PREVIEW (list_item->preview)->renderer)->channel = pixel;
 
   if (! visible)
     {

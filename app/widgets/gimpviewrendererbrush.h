@@ -1,8 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbrushpreview.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * gimppreviewrendererbrush.h
+ * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,37 +19,37 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_BRUSH_PREVIEW_H__
-#define __GIMP_BRUSH_PREVIEW_H__
+#ifndef __GIMP_PREVIEW_RENDERER_BRUSH_H__
+#define __GIMP_PREVIEW_RENDERER_BRUSH_H__
 
-#include "gimppreview.h"
+#include "gimppreviewrenderer.h"
+
+#define GIMP_TYPE_PREVIEW_RENDERER_BRUSH            (gimp_preview_renderer_brush_get_type ())
+#define GIMP_PREVIEW_RENDERER_BRUSH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREVIEW_RENDERER_BRUSH, GimpPreviewRendererBrush))
+#define GIMP_PREVIEW_RENDERER_BRUSH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PREVIEW_RENDERER_BRUSH, GimpPreviewRendererBrushClass))
+#define GIMP_IS_PREVIEW_RENDERER_BRUSH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_PREVIEW_RENDERER_BRUSH))
+#define GIMP_IS_PREVIEW_RENDERER_BRUSH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PREVIEW_RENDERER_BRUSH))
+#define GIMP_PREVIEW_RENDERER_BRUSH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PREVIEW_RENDERER_BRUSH, GimpPreviewRendererBrushClass))
 
 
-#define GIMP_TYPE_BRUSH_PREVIEW            (gimp_brush_preview_get_type ())
-#define GIMP_BRUSH_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH_PREVIEW, GimpBrushPreview))
-#define GIMP_BRUSH_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_PREVIEW, GimpBrushPreviewClass))
-#define GIMP_IS_BRUSH_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_BRUSH_PREVIEW))
-#define GIMP_IS_BRUSH_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_PREVIEW))
-#define GIMP_BRUSH_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRUSH_PREVIEW, GimpBrushPreviewClass))
+typedef struct _GimpPreviewRendererBrushClass  GimpPreviewRendererBrushClass;
 
-
-typedef struct _GimpBrushPreviewClass  GimpBrushPreviewClass;
-
-struct _GimpBrushPreview
+struct _GimpPreviewRendererBrush
 {
-  GimpPreview  parent_instance;
+  GimpPreviewRenderer parent_instance;
 
-  guint        pipe_timeout_id;
-  gint         pipe_animation_index;
+  guint               pipe_timeout_id;
+  gint                pipe_animation_index;
+  GtkWidget          *pipe_animation_widget;
 };
 
-struct _GimpBrushPreviewClass
+struct _GimpPreviewRendererBrushClass
 {
-  GimpPreviewClass  parent_class;
+  GimpPreviewRendererClass  parent_class;
 };
 
 
-GType   gimp_brush_preview_get_type (void) G_GNUC_CONST;
+GType   gimp_preview_renderer_brush_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_BRUSH_PREVIEW_H__ */
+#endif /* __GIMP_PREVIEW_RENDERER_BRUSH_H__ */

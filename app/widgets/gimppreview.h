@@ -42,34 +42,18 @@ typedef struct _GimpPreviewClass  GimpPreviewClass;
 
 struct _GimpPreview
 {
-  GtkDrawingArea  parent_instance;
+  GtkDrawingArea       parent_instance;
 
-  GimpViewable   *viewable;
+  GimpViewable        *viewable;
+  GimpPreviewRenderer *renderer;
 
-  gint            width;
-  gint            height;
-  gint            border_width;
-  gboolean        dot_for_dot;
-
-  GimpRGB         border_color;
-  GdkGC          *border_gc;
-
-  gboolean        is_popup;
-  gboolean        clickable;
-  gboolean        eat_button_events;
-  gboolean        show_popup;
+  gboolean             clickable;
+  gboolean             eat_button_events;
+  gboolean             show_popup;
 
   /*< private >*/
-  guchar         *buffer;
-  gint            rowstride;
-
-  GdkPixbuf      *no_preview_pixbuf;
-
-  gint            size;
-  gboolean        in_button;
-  guint           press_state;
-  guint           idle_id;
-  gboolean        needs_render;
+  gboolean             in_button;
+  guint                press_state;
 };
 
 struct _GimpPreviewClass
@@ -82,9 +66,6 @@ struct _GimpPreviewClass
   void        (* extended_clicked) (GimpPreview *preview,
 				    guint        modifier_state);
   void        (* context)          (GimpPreview *preview);
-
-  /*  virtual functions  */
-  void        (* render)           (GimpPreview *preview);
 };
 
 
@@ -103,6 +84,11 @@ GtkWidget *  gimp_preview_new_full         (GimpViewable  *viewable,
 					    gboolean       show_popup);
 
 GtkWidget *  gimp_preview_new_by_type      (GType          viewable_type,
+                                            gint           size,
+                                            gint           border_width,
+                                            gboolean       is_popup);
+GtkWidget *  gimp_preview_new_by_types     (GType          preview_type,
+                                            GType          viewable_type,
 					    gint           size,
 					    gint           border_width,
 					    gboolean       is_popup);
@@ -129,20 +115,6 @@ void         gimp_preview_update           (GimpPreview   *preview);
 
 /*  protected  */
 
-typedef enum
-{
-  GIMP_PREVIEW_BG_CHECKS,
-  GIMP_PREVIEW_BG_WHITE
-} GimpPreviewBG;
-
-void         gimp_preview_render_to_buffer (TempBuf       *temp_buf,
-                                            gint           channel,
-                                            GimpPreviewBG  inside_bg,
-                                            GimpPreviewBG  outside_bg,
-                                            guchar        *dest_buffer,
-                                            gint           dest_width,
-                                            gint           dest_height,
-                                            gint           dest_rowstride);
 void         gimp_preview_render_preview   (GimpPreview   *preview,
 					    TempBuf       *temp_buf,
 					    gint           channel,

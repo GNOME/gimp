@@ -31,12 +31,11 @@
 
 #include "widgets-types.h"
 
-#include "base/temp-buf.h"
-
 #include "core/gimpimage.h"
 #include "core/gimpmarshal.h"
 
 #include "gimpnavigationpreview.h"
+#include "gimppreviewrenderer.h"
 
 
 #define BORDER_PEN_WIDTH 3
@@ -74,7 +73,7 @@ static void  gimp_navigation_preview_draw_marker (GimpNavigationPreview      *na
 
 static guint preview_signals[LAST_SIGNAL] = { 0 };
 
-static GimpImagePreviewClass *parent_class = NULL;
+static GimpPreviewClass *parent_class = NULL;
 
 
 GType
@@ -97,7 +96,7 @@ gimp_navigation_preview_get_type (void)
         (GInstanceInitFunc) gimp_navigation_preview_init,
       };
 
-      preview_type = g_type_register_static (GIMP_TYPE_IMAGE_PREVIEW,
+      preview_type = g_type_register_static (GIMP_TYPE_PREVIEW,
                                              "GimpNavigationPreview",
                                              &preview_info, 0);
     }
@@ -248,17 +247,17 @@ gimp_navigation_preview_move_to (GimpNavigationPreview *nav_preview,
   if (! preview->viewable)
     return;
 
-  tx = CLAMP (tx, 0, preview->width);
-  ty = CLAMP (ty, 0, preview->height);
+  tx = CLAMP (tx, 0, preview->renderer->width);
+  ty = CLAMP (ty, 0, preview->renderer->height);
   
-  if ((tx + nav_preview->p_width) >= preview->width)
+  if ((tx + nav_preview->p_width) >= preview->renderer->width)
     {
-      tx = preview->width - nav_preview->p_width;
+      tx = preview->renderer->width - nav_preview->p_width;
     }
   
-  if ((ty + nav_preview->p_height) >= preview->height)
+  if ((ty + nav_preview->p_height) >= preview->renderer->height)
     {
-      ty = preview->height - nav_preview->p_height;
+      ty = preview->renderer->height - nav_preview->p_height;
     }
 
   if (nav_preview->p_x == tx && nav_preview->p_y == ty)
@@ -267,8 +266,8 @@ gimp_navigation_preview_move_to (GimpNavigationPreview *nav_preview,
   gimage = GIMP_IMAGE (preview->viewable);
 
   /*  transform to image coordinates  */
-  ratiox = ((gdouble) preview->width  / (gdouble) gimage->width);
-  ratioy = ((gdouble) preview->height / (gdouble) gimage->height);
+  ratiox = ((gdouble) preview->renderer->width  / (gdouble) gimage->width);
+  ratioy = ((gdouble) preview->renderer->height / (gdouble) gimage->height);
 
   x = RINT (tx / ratiox);
   y = RINT (ty / ratioy);
@@ -431,8 +430,8 @@ gimp_navigation_preview_motion_notify (GtkWidget      *widget,
 
       if (nav_preview->p_x == 0 &&
           nav_preview->p_y == 0 &&
-          nav_preview->p_width  == GIMP_PREVIEW (widget)->width &&
-          nav_preview->p_height == GIMP_PREVIEW (widget)->height)
+          nav_preview->p_width  == GIMP_PREVIEW (widget)->renderer->width &&
+          nav_preview->p_height == GIMP_PREVIEW (widget)->renderer->height)
         {
           gdk_window_set_cursor (widget->window, NULL);
           return FALSE;
@@ -549,26 +548,19 @@ GtkWidget *
 gimp_navigation_preview_new (GimpImage *gimage,
 			     gint       size)
 {
-  GimpPreview *preview;
+  GtkWidget *preview;
 
   g_return_val_if_fail (! gimage || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (size > 0 && size <= GIMP_PREVIEW_MAX_SIZE, NULL);
 
-  preview = g_object_new (GIMP_TYPE_NAVIGATION_PREVIEW, NULL);
-
-  preview->is_popup = TRUE;
+  preview = gimp_preview_new_by_types (GIMP_TYPE_NAVIGATION_PREVIEW,
+                                       GIMP_TYPE_IMAGE,
+                                       size, 0, TRUE);
 
   if (gimage)
-    {
-      gimp_preview_set_viewable (preview, GIMP_VIEWABLE (gimage));
-      gimp_preview_set_size (preview, size, 0);
-    }
-  else
-    {
-      preview->size = size;
-    }
+    gimp_preview_set_viewable (GIMP_PREVIEW (preview), GIMP_VIEWABLE (gimage));
 
-  return GTK_WIDGET (preview);
+  return preview;
 }
 
 void
@@ -607,8 +599,8 @@ gimp_navigation_preview_set_marker (GimpNavigationPreview *nav_preview,
   nav_preview->height = CLAMP (height, 1, gimage->height - nav_preview->y);
 
   /*  transform to preview coordinates  */
-  ratiox = ((gdouble) preview->width  / (gdouble) gimage->width);
-  ratioy = ((gdouble) preview->height / (gdouble) gimage->height);
+  ratiox = ((gdouble) preview->renderer->width  / (gdouble) gimage->width);
+  ratioy = ((gdouble) preview->renderer->height / (gdouble) gimage->height);
 
   nav_preview->p_x = RINT (nav_preview->x * ratiox);
   nav_preview->p_y = RINT (nav_preview->y * ratioy);

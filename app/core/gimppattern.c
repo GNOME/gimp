@@ -198,28 +198,26 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
 {
   GimpPattern *pattern;
   TempBuf     *temp_buf;
-  guchar       white[MAX_CHANNELS] = { 255, 255, 255, 255 };
   gint         copy_width;
   gint         copy_height;
-  gint         x, y;
 
   pattern = GIMP_PATTERN (viewable);
 
   copy_width  = MIN (width,  pattern->mask->width);
   copy_height = MIN (height, pattern->mask->height);
 
-  x = (copy_width  == width)  ? 0 : (width -  copy_width)  / 2;
-  y = (copy_height == height) ? 0 : (height - copy_height) / 2;
-
-  temp_buf = temp_buf_new (width, height,
+  temp_buf = temp_buf_new (copy_width, copy_height,
 			   pattern->mask->bytes,
-			   0, 0,
-			   white);
+			   0, 0, NULL);
 
   temp_buf_copy_area (pattern->mask, temp_buf,
-		      0, 0,
-		      copy_width, copy_height,
-		      x, y);
+		      0, 0, copy_width, copy_height, 0, 0);
+
+  if (width > copy_width)
+    temp_buf->x = (width - copy_width) / 2;
+
+  if (height > copy_height)
+    temp_buf->y = (height - copy_height) / 2;
 
   return temp_buf;
 }

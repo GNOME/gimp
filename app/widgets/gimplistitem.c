@@ -43,6 +43,7 @@
 #include "gimplayerlistitem.h"
 #include "gimplistitem.h"
 #include "gimppreview.h"
+#include "gimppreviewrenderer.h"
 
 
 static void           gimp_list_item_class_init    (GimpListItemClass *klass);
@@ -361,7 +362,8 @@ gimp_list_item_real_set_preview_size (GimpListItem *list_item)
   preview = GIMP_PREVIEW (list_item->preview);
 
   gimp_preview_set_size (preview,
-			 list_item->preview_size, preview->border_width);
+			 list_item->preview_size,
+                         preview->renderer->border_width);
 }
 
 void

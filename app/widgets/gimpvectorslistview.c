@@ -38,7 +38,6 @@
 #include "gimpvectorslistview.h"
 #include "gimpcomponentlistitem.h"
 #include "gimpdnd.h"
-#include "gimpimagepreview.h"
 #include "gimplistitem.h"
 #include "gimpwidgets-utils.h"
 

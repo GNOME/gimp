@@ -33,6 +33,7 @@
 #include "gimpcontainermenuimpl.h"
 #include "gimpmenuitem.h"
 #include "gimppreview.h"
+#include "gimppreviewrenderer.h"
 
 
 static void     gimp_container_menu_impl_class_init   (GimpContainerMenuImplClass *klass);
@@ -294,7 +295,7 @@ gimp_container_menu_impl_set_preview_size (GimpContainerMenu *menu)
 
           gimp_preview_set_size (GIMP_PREVIEW (menu_item->preview),
                                  menu->preview_size,
-                                 GIMP_PREVIEW (menu_item->preview)->border_width);
+                                 GIMP_PREVIEW (menu_item->preview)->renderer->border_width);
         }
     }
 }

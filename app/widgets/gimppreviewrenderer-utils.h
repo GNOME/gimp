@@ -1,8 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppreview.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * gimppreviewrenderer-utils.h
+ * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_PREVIEW_UTILS_H__
-#define __GIMP_PREVIEW_UTILS_H__
+#ifndef __GIMP_PREVIEW_RENDERER_UTILS_H__
+#define __GIMP_PREVIEW_RENDERER_UTILS_H__
 
 
-GType   gimp_preview_type_from_viewable_type (GType viewable_type);
+GType   gimp_preview_renderer_type_from_viewable_type (GType viewable_type);
 
 
-#endif /* __GIMP_PREVIEW_UTILS_H__ */
+#endif /* __GIMP_PREVIEW_RENDERER_UTILS_H__ */

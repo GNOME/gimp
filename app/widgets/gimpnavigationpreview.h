@@ -25,7 +25,7 @@
 #ifndef __GIMP_NAVIGATION_PREVIEW_H__
 #define __GIMP_NAVIGATION_PREVIEW_H__
 
-#include "gimpimagepreview.h"
+#include "gimppreview.h"
 
 
 #define GIMP_TYPE_NAVIGATION_PREVIEW            (gimp_navigation_preview_get_type ())
@@ -40,25 +40,25 @@ typedef struct _GimpNavigationPreviewClass  GimpNavigationPreviewClass;
 
 struct _GimpNavigationPreview
 {
-  GimpImagePreview  parent_instance;
+  GimpPreview  parent_instance;
 
   /*  values in image coordinates  */
-  gint      x;
-  gint      y;
-  gint      width;
-  gint      height;
+  gint         x;
+  gint         y;
+  gint         width;
+  gint         height;
 
   /*  values in preview coordinates  */
-  gint      p_x;
-  gint      p_y;
-  gint      p_width;
-  gint      p_height;
+  gint         p_x;
+  gint         p_y;
+  gint         p_width;
+  gint         p_height;
 
-  gint      motion_offset_x;
-  gint      motion_offset_y;
-  gboolean  has_grab;
+  gint         motion_offset_x;
+  gint         motion_offset_y;
+  gboolean     has_grab;
 
-  GdkGC    *gc;
+  GdkGC       *gc;
 };
 
 struct _GimpNavigationPreviewClass

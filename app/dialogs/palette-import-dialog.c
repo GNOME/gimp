@@ -40,6 +40,7 @@
 #include "widgets/gimpcontainermenuimpl.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
+#include "widgets/gimppreviewrenderer.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "gradient-select.h"
@@ -351,7 +352,7 @@ palette_import_dialog_new (Gimp *gimp)
   import_dialog->preview = gimp_preview_new_by_type (GIMP_TYPE_PALETTE,
                                                      64, 1,
                                                      TRUE);
-  GIMP_PREVIEW (import_dialog->preview)->size = -1;
+  GIMP_PREVIEW (import_dialog->preview)->renderer->size = -1;
   gimp_preview_set_size_full (GIMP_PREVIEW (import_dialog->preview),
                               192, 192, 1);
   gtk_container_add (GTK_CONTAINER (abox), import_dialog->preview);
