@@ -1,3 +1,7 @@
+Sun Jun 14 16:03:29 EDT 1998 Adrian Likins <adrian@gimp.org>
+	
+	* TODO: cleaned up and expanded the todo
+
 Sun Jun 14 00:50:25 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/gif/gif.c: don't pop up dialog for informational
