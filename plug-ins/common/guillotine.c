@@ -39,10 +39,10 @@
  */
 static void   query      (void);
 static void   run        (const gchar      *name,
-			  gint              nparams,
-			  const GimpParam  *param,
-			  gint             *nreturn_vals,
-			  GimpParam       **return_vals);
+                          gint              nparams,
+                          const GimpParam  *param,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
 
 static void   guillotine (gint32            image_ID);
 
@@ -69,18 +69,18 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_guillotine",
-			  "Slice up the image into subimages, cutting along "
-			  "the image's Guides.  Fooey to you and your "
-			  "broccoli, Pokey.",
-			  "This function takes an image and blah blah.  Hooray!",
-			  "Adam D. Moss (adam@foxbox.org)",
-			  "Adam D. Moss (adam@foxbox.org)",
-			  "1998",
-			  N_("<Image>/Image/Transform/_Guillotine"),
-			  "RGB*, INDEXED*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Slice up the image into subimages, cutting along "
+                          "the image's Guides.  Fooey to you and your "
+                          "broccoli, Pokey.",
+                          "This function takes an image and blah blah.  Hooray!",
+                          "Adam D. Moss (adam@foxbox.org)",
+                          "Adam D. Moss (adam@foxbox.org)",
+                          "1998",
+                          N_("<Image>/Image/Transform/_Guillotine"),
+                          "RGB*, INDEXED*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -126,44 +126,55 @@ guide_sort_func (gconstpointer a,
 static void
 guillotine (gint32 image_ID)
 {
-  gint  guide_num;
-  gboolean guides_found;
-  GList *hguides, *hg;
-  GList *vguides, *vg;
+  gint      guide;
+  gint      image_width;
+  gint      image_height;
+  gboolean  guides_found = FALSE;
+  GList    *hguides, *hg;
+  GList    *vguides, *vg;
 
-  hguides = g_list_append (NULL, GINT_TO_POINTER (0));
-  vguides = g_list_append (NULL, GINT_TO_POINTER (0));
+  image_width  = gimp_image_width (image_ID);
+  image_height = gimp_image_height (image_ID);
 
-  hguides = g_list_append (hguides, 
-			   GINT_TO_POINTER (gimp_image_height (image_ID)));
-  vguides = g_list_append (vguides, 
-			   GINT_TO_POINTER (gimp_image_width (image_ID)));
+  hguides = g_list_append (NULL,    GINT_TO_POINTER (0));
+  hguides = g_list_append (hguides, GINT_TO_POINTER (image_height));
 
-  guide_num = gimp_image_find_next_guide (image_ID, 0);
-  guides_found = (guide_num != 0);
+  vguides = g_list_append (NULL,    GINT_TO_POINTER (0));
+  vguides = g_list_append (vguides, GINT_TO_POINTER (image_width));
 
-  while (guide_num > 0)
+  for (guide = gimp_image_find_next_guide (image_ID, 0);
+       guide > 0;
+       guide = gimp_image_find_next_guide (image_ID, guide))
     {
-      gint position = gimp_image_get_guide_position (image_ID, guide_num);
+      gint position = gimp_image_get_guide_position (image_ID, guide);
 
-      switch (gimp_image_get_guide_orientation (image_ID, guide_num))
+      if (position == 0)
+        continue;
+
+      switch (gimp_image_get_guide_orientation (image_ID, guide))
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-	  hguides = g_list_insert_sorted (hguides, GINT_TO_POINTER (position),
-					  guide_sort_func);
+          if (position == image_height)
+            continue;
+
+          hguides = g_list_insert_sorted (hguides, GINT_TO_POINTER (position),
+                                          guide_sort_func);
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
-	  vguides = g_list_insert_sorted (vguides, GINT_TO_POINTER (position),
-					  guide_sort_func);
+          if (position == image_width)
+            continue;
+
+          vguides = g_list_insert_sorted (vguides, GINT_TO_POINTER (position),
+                                          guide_sort_func);
           break;
 
         case GIMP_ORIENTATION_UNKNOWN:
           g_assert_not_reached ();
           break;
-	}
+        }
 
-      guide_num = gimp_image_find_next_guide (image_ID, guide_num);
+      guides_found = TRUE;
     }
 
   if (guides_found)
@@ -175,44 +186,47 @@ guillotine (gint32 image_ID)
       if (!filename)
         filename = g_strdup (_("Untitled"));
 
-      /* Do the actual dup'ing and cropping... this isn't a too naive a
-	 way to do this since we got copy-on-write tiles, either. */
-
+      /*  Do the actual dup'ing and cropping... this isn't a too naive a
+       *  way to do this since we got copy-on-write tiles, either.
+       */
       for (y = 0, hg = hguides; hg && hg->next; y++, hg = hg->next)
-	{
-	  for (x = 0, vg = vguides; vg && vg->next; x++, vg = vg->next)
-	    {
-	      gint32 new_image = gimp_image_duplicate (image_ID);
-	      gchar *new_filename;
+        {
+          for (x = 0, vg = vguides; vg && vg->next; x++, vg = vg->next)
+            {
+              gint32  new_image = gimp_image_duplicate (image_ID);
+              gchar  *new_filename;
 
-	      if (new_image == -1)
-		{
-		  g_warning ("Couldn't create new image.");
-		  return;
-		}
+              if (new_image == -1)
+                {
+                  g_warning ("Couldn't create new image.");
+                  return;
+                }
 
-	      gimp_image_undo_disable (new_image);
+              gimp_image_undo_disable (new_image);
 
-	      gimp_image_crop (new_image, 
-			       GPOINTER_TO_INT (vg->next->data) - 
-			       GPOINTER_TO_INT (vg->data),
-			       GPOINTER_TO_INT (hg->next->data) - 
-			       GPOINTER_TO_INT (hg->data),
-			       GPOINTER_TO_INT (vg->data),
-			       GPOINTER_TO_INT (hg->data));
+              gimp_image_crop (new_image,
+                               GPOINTER_TO_INT (vg->next->data) -
+                               GPOINTER_TO_INT (vg->data),
+                               GPOINTER_TO_INT (hg->next->data) -
+                               GPOINTER_TO_INT (hg->data),
+                               GPOINTER_TO_INT (vg->data),
+                               GPOINTER_TO_INT (hg->data));
 
-	      /* show the rough coordinates of the image in the title */
-	      new_filename = g_strdup_printf ("%s-(%i,%i)",
-					      filename,
-					      x, y);
-	      gimp_image_set_filename (new_image, new_filename);
-	      g_free (new_filename);
+              /* show the rough coordinates of the image in the title */
+              new_filename = g_strdup_printf ("%s-(%i,%i)",
+                                              filename,
+                                              x, y);
+              gimp_image_set_filename (new_image, new_filename);
+              g_free (new_filename);
 
-	      gimp_image_undo_enable (new_image);
+              while ((guide = gimp_image_find_next_guide (new_image, 0)))
+                gimp_image_delete_guide (new_image, guide);
 
-	      gimp_display_new (new_image);
-	    }
-	}
+              gimp_image_undo_enable (new_image);
+
+              gimp_display_new (new_image);
+            }
+        }
 
       g_free (filename);
     }

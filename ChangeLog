@@ -1,3 +1,13 @@
+2004-03-28  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/guillotine.c (guillotine): applied a (modified)
+	patch from Joao S. O. Bueno which removes any guides from the
+	cropped images. Fixes bug #138314.
+
+	Skip guides which are at the image's edges because the algorithm
+	already assumes that there are always guides at these positions.
+	Fixes bug #138312.
+
 2004-03-27  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/help/Makefile.am (AM_LDFLAGS): Use -mwindows on Windows
