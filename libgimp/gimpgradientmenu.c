@@ -198,13 +198,14 @@ gimp_gradient_select_widget (gchar                   *dname,
   button = gtk_button_new ();
 
   gradient = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (gradient), CELL_SIZE_WIDTH, CELL_SIZE_HEIGHT); 
+  gtk_preview_size (GTK_PREVIEW (gradient), 
+                    CELL_SIZE_WIDTH, CELL_SIZE_HEIGHT); 
   gtk_widget_show (gradient);
   gtk_container_add (GTK_CONTAINER (button), gradient); 
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) gradient_preview_callback,
-		      (gpointer)gsel);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (gradient_preview_callback),
+                    gsel);
   
   gtk_widget_show(button);
 
@@ -219,7 +220,9 @@ gimp_gradient_select_widget (gchar                   *dname,
 
   /* Do initial gradient setup */
   gradient_name = 
-    gimp_gradients_get_gradient_data (igradient, &width, CELL_SIZE_WIDTH, &grad_data);
+    gimp_gradients_get_gradient_data (igradient, 
+                                      &width, CELL_SIZE_WIDTH, 
+                                      &grad_data);
 
   if (gradient_name)
     {
@@ -235,7 +238,7 @@ gimp_gradient_select_widget (gchar                   *dname,
 
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
-  gtk_object_set_data (GTK_OBJECT (hbox), GSEL_DATA_KEY, (gpointer)gsel);
+  g_object_set_data (G_OBJECT (hbox), GSEL_DATA_KEY, gsel);
 
   return hbox;
 }
@@ -246,7 +249,7 @@ gimp_gradient_select_widget_close_popup (GtkWidget *widget)
 {
   GSelect  *gsel;
   
-  gsel = (GSelect*) gtk_object_get_data (GTK_OBJECT (widget), GSEL_DATA_KEY);
+  gsel = (GSelect*) g_object_get_data (G_OBJECT (widget), GSEL_DATA_KEY);
 
   if (gsel && gsel->gradient_popup_pnt)
     {
@@ -264,12 +267,14 @@ gimp_gradient_select_widget_set_popup (GtkWidget *widget,
   gchar    *gradient_name;
   GSelect  *gsel;
   
-  gsel = (GSelect*) gtk_object_get_data (GTK_OBJECT (widget), GSEL_DATA_KEY);
+  gsel = (GSelect*) g_object_get_data (G_OBJECT (widget), GSEL_DATA_KEY);
 
   if (gsel)
     {
       gradient_name = 
-	gimp_gradients_get_gradient_data (gname, &width, gsel->sample_size, &grad_data);
+	gimp_gradients_get_gradient_data (gname, 
+                                          &width, gsel->sample_size, 
+                                          &grad_data);
   
       if (gradient_name)
 	{

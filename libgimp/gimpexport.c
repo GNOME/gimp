@@ -344,9 +344,9 @@ export_dialog (GSList      *actions,
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (export_cancel_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (export_cancel_callback),
+                    NULL);
 
   /* the headline */
   vbox = gtk_vbox_new (FALSE, 6);
@@ -380,19 +380,21 @@ export_dialog (GSList      *actions,
  
 	  button = gtk_radio_button_new_with_label (radio_group, 
 						    gettext (action->possibilities[0]));
-	  gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child), GTK_JUSTIFY_LEFT);
-	  radio_group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+	  gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child), 
+                                 GTK_JUSTIFY_LEFT);
+	  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
 	  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-	  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			      GTK_SIGNAL_FUNC (export_toggle_callback),
-			      &action->choice);
+	  g_signal_connect (G_OBJECT (button), "toggled",
+                            G_CALLBACK (export_toggle_callback),
+                            &action->choice);
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	  gtk_widget_show (button);
 
 	  button = gtk_radio_button_new_with_label (radio_group, 
 						    gettext (action->possibilities[1]));
-	  gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child), GTK_JUSTIFY_LEFT);
-	  radio_group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+	  gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child), 
+                                 GTK_JUSTIFY_LEFT);
+	  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
 	  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 	  gtk_widget_show (button);
 	} 

@@ -1,5 +1,13 @@
 2001-07-31  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpexport.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimpmenu.c
+	* libgimp/gimppatternmenu.c: GObject porting.
+
+2001-07-31  Sven Neumann  <sven@gimp.org>
+
 	* app/core/core-types.h: removed g_signal_handlers_disconnect_by_data
 	again. As Owen pointed out, it's generally a bad idea to use it since
 	you can't be absolutely sure that no one else has a pointer to the 

@@ -121,8 +121,8 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
   gint i, k;
 
   menu = gtk_menu_new ();
-  gtk_object_set_user_data (GTK_OBJECT (menu), (gpointer) callback);
-  gtk_object_set_data (GTK_OBJECT (menu), "gimp_callback_data", data);
+  g_object_set_data (G_OBJECT (menu), "gimp_callback", (gpointer) callback);
+  g_object_set_data (G_OBJECT (menu), "gimp_callback_data", data);
 
   images = gimp_image_list (&nimages);
   for (i = 0, k = 0; i < nimages; i++)
@@ -133,9 +133,9 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
 	g_free (filename);
 
 	menuitem = gtk_menu_item_new_with_label (label);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    (GtkSignalFunc) gimp_menu_callback,
-			    &images[i]);
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+                          G_CALLBACK (gimp_menu_callback),
+                          &images[i]);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_widget_show (menuitem);
 
@@ -185,8 +185,8 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
   gint i, j, k;
 
   menu = gtk_menu_new ();
-  gtk_object_set_user_data (GTK_OBJECT (menu), (gpointer) callback);
-  gtk_object_set_data (GTK_OBJECT (menu), "gimp_callback_data", data);
+  g_object_set_data (G_OBJECT (menu), "gimp_callback", callback);
+  g_object_set_data (G_OBJECT (menu), "gimp_callback_data", data);
 
   layer = -1;
 
@@ -212,9 +212,9 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 	      g_free (name);
 
 	      menuitem = gtk_menu_item_new();
-	      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-				  (GtkSignalFunc) gimp_menu_callback,
-				  &layers[j]);
+	      g_signal_connect (G_OBJECT (menuitem), "activate",
+                                G_CALLBACK (gimp_menu_callback),
+                                &layers[j]);
 
 	      hbox = gtk_hbox_new(FALSE, 0);
 	      gtk_container_add(GTK_CONTAINER(menuitem), hbox);
@@ -297,8 +297,8 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
   gint i, j, k;
 
   menu = gtk_menu_new ();
-  gtk_object_set_user_data (GTK_OBJECT (menu), (gpointer) callback);
-  gtk_object_set_data (GTK_OBJECT (menu), "gimp_callback_data", data);
+  g_object_set_data (G_OBJECT (menu), "gimp_callback", callback);
+  g_object_set_data (G_OBJECT (menu), "gimp_callback_data", data);
 
   channel = -1;
 
@@ -324,9 +324,9 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
 	      g_free (name);
 
 	      menuitem = gtk_menu_item_new ();
-	      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-				  GTK_SIGNAL_FUNC (gimp_menu_callback),
-				  &channels[j]);
+	      g_signal_connect (G_OBJECT (menuitem), "activate",
+                                G_CALLBACK (gimp_menu_callback),
+                                &channels[j]);
 	      
 	      hbox = gtk_hbox_new (FALSE, 0);
 	      gtk_container_add (GTK_CONTAINER (menuitem), hbox);
@@ -412,8 +412,8 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
   gint    i, j, k;
 
   menu = gtk_menu_new ();
-  gtk_object_set_user_data (GTK_OBJECT (menu), (gpointer) callback);
-  gtk_object_set_data (GTK_OBJECT (menu), "gimp_callback_data", data);
+  g_object_set_data (G_OBJECT (menu), "gimp_callback", callback);
+  g_object_set_data (G_OBJECT (menu), "gimp_callback_data", data);
 
   drawable = -1;
 
@@ -441,9 +441,9 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 	      g_free (name);
 
 	      menuitem = gtk_menu_item_new ();
-	      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-				  (GtkSignalFunc) gimp_menu_callback,
-				  &layers[j]);
+	      g_signal_connect (G_OBJECT (menuitem), "activate",
+                                G_CALLBACK (gimp_menu_callback),
+                                &layers[j]);
 
 	      hbox = gtk_hbox_new (FALSE, 0);
 	      gtk_container_add (GTK_CONTAINER(menuitem), hbox);
@@ -504,9 +504,9 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 	      g_free (name);
 
 	      menuitem = gtk_menu_item_new ();
-	      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-				  GTK_SIGNAL_FUNC (gimp_menu_callback),
-				  &channels[j]);
+	      g_signal_connect (G_OBJECT (menuitem), "activate",
+                                G_CALLBACK (gimp_menu_callback),
+                                &channels[j]);
 
 	      hbox = gtk_hbox_new (FALSE, 0);
 	      gtk_container_add (GTK_CONTAINER (menuitem), hbox);
@@ -579,10 +579,10 @@ gimp_menu_callback (GtkWidget *widget,
   GimpMenuCallback callback;
   gpointer         callback_data;
 
-  callback =
-    (GimpMenuCallback) gtk_object_get_user_data (GTK_OBJECT (widget->parent));
-  callback_data = gtk_object_get_data (GTK_OBJECT (widget->parent),
-				       "gimp_callback_data");
+  callback = (GimpMenuCallback) g_object_get_data (G_OBJECT (widget->parent),
+                                                   "gimp_callback");
+  callback_data = g_object_get_data (G_OBJECT (widget->parent),
+                                     "gimp_callback_data");
 
   (* callback) (*id, callback_data);
 }

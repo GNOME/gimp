@@ -348,9 +348,9 @@ gimp_brush_select_widget (gchar                *dname,
 
   gtk_widget_set_events (brush, BRUSH_EVENT_MASK);
 
-  gtk_signal_connect (GTK_OBJECT (brush), "event",
-		      (GtkSignalFunc) brush_preview_events,
-		      (gpointer)bsel);
+  g_signal_connect (G_OBJECT (brush), "event",
+                    G_CALLBACK (brush_preview_events),
+                    bsel);
 
   bsel->cback             = cback;
   bsel->data              = data;
@@ -398,11 +398,11 @@ gimp_brush_select_widget (gchar                *dname,
   gtk_widget_show(button);
 
   bsel->button = button;
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) brush_select_callback,
-                      (gpointer)bsel);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (brush_select_callback),
+                    bsel);
 
-  gtk_object_set_data (GTK_OBJECT (hbox), BSEL_DATA_KEY, (gpointer) bsel);
+  g_object_set_data (G_OBJECT (hbox), BSEL_DATA_KEY, bsel);
 
   return hbox;
 }
@@ -413,7 +413,7 @@ gimp_brush_select_widget_close_popup (GtkWidget *widget)
 {
   BSelect  *bsel;
 
-  bsel = (BSelect *) gtk_object_get_data (GTK_OBJECT (widget), BSEL_DATA_KEY);
+  bsel = (BSelect *) g_object_get_data (G_OBJECT (widget), BSEL_DATA_KEY);
 
   if (bsel && bsel->brush_popup_pnt)
     {
@@ -439,7 +439,7 @@ gimp_brush_select_widget_set_popup (GtkWidget *widget,
   gchar   *brush_name;
   BSelect *bsel;
   
-  bsel = (BSelect *) gtk_object_get_data (GTK_OBJECT (widget), BSEL_DATA_KEY);
+  bsel = (BSelect *) g_object_get_data (G_OBJECT (widget), BSEL_DATA_KEY);
 
   if (bsel)
     {

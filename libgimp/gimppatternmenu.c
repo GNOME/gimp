@@ -317,9 +317,9 @@ gimp_pattern_select_widget (gchar                  *dname,
 
   gtk_widget_set_events (pattern, PREVIEW_EVENT_MASK);
 
-  gtk_signal_connect (GTK_OBJECT (pattern), "event",
-		      (GtkSignalFunc) pattern_preview_events,
-		      (gpointer)psel);
+  g_signal_connect (G_OBJECT (pattern), "event",
+                    G_CALLBACK (pattern_preview_events),
+                    psel);
   
   psel->cback             = cback;
   psel->data              = data;
@@ -357,11 +357,11 @@ gimp_pattern_select_widget (gchar                  *dname,
   gtk_widget_show (button);
 
   psel->button = button;
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) patterns_select_callback,
-                      (gpointer)psel);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (patterns_select_callback),
+                    psel);
 
-  gtk_object_set_data (GTK_OBJECT(hbox), PSEL_DATA_KEY, (gpointer)psel);
+  g_object_set_data (G_OBJECT (hbox), PSEL_DATA_KEY, psel);
 
   return hbox;
 }
@@ -371,7 +371,7 @@ gimp_pattern_select_widget_close_popup (GtkWidget *widget)
 {
   PSelect  *psel;
 
-  psel = (PSelect *) gtk_object_get_data (GTK_OBJECT (widget), PSEL_DATA_KEY);
+  psel = (PSelect *) g_object_get_data (G_OBJECT (widget), PSEL_DATA_KEY);
 
   if (psel && psel->pattern_popup_pnt)
     {
@@ -392,7 +392,7 @@ gimp_pattern_select_widget_set_popup (GtkWidget *widget,
   gchar    *pattern_name;
   PSelect  *psel;
   
-  psel = (PSelect*) gtk_object_get_data (GTK_OBJECT (widget), PSEL_DATA_KEY);
+  psel = (PSelect*) g_object_get_data (G_OBJECT (widget), PSEL_DATA_KEY);
 
   if (psel)
     {
