@@ -1,4 +1,9 @@
-Mon Apr 13 00:27:45 EDP 1998 Matthew Wilson <msw@gimp.org>
+Mon Apr 13 00:41:50 EDT 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/command.c: Duh. We have a message_box.  Why not use it for
+	the prefs code.
+	
+Mon Apr 13 00:27:45 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/gdisplay.c: Set the current tool's gdisplay pointer to NULL
 	when destroying a gdisplay

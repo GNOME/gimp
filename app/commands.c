@@ -600,63 +600,6 @@ file_prefs_ok_callback (GtkWidget *widget,
     gtk_tooltips_disable (tool_tips);
 }
 
-static gint
-file_prefs_restart_delete_callback (GtkWidget *w,
-				    GdkEvent *e,
-				    gpointer   client_data)
-{
-  return FALSE;
-}
-
-static void
-file_prefs_restart_dialog_callback (GtkWidget *w,
-				    gpointer data)
-{
-  GtkWidget *dlg;
-  
-  dlg = (GtkWidget *) data;
-
-  gtk_widget_destroy(dlg);
-}
-
-void
-file_prefs_restart_create ()
-{
-  GtkWidget *shell, *vbox, *label;
-
-  ActionAreaItem action_items[1] =
-  {
-    { "OK", file_prefs_restart_dialog_callback, NULL, NULL }
-  };
-
-  /*  The shell and main vbox  */
-  shell = gtk_dialog_new ();
-
-  gtk_window_set_wmclass (GTK_WINDOW (shell), "restart_notification", "Notice");
-  gtk_window_set_title (GTK_WINDOW (shell), "Notice");
-  gtk_window_set_policy (GTK_WINDOW (shell), FALSE, TRUE, TRUE);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), vbox, TRUE, TRUE, 0);
-
-  label = gtk_label_new ("You will need to restart GIMP for these changes to take effect.");
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  /* handle the window manager trying to close the window */
-  gtk_signal_connect (GTK_OBJECT (shell), "delete_event",
-		      GTK_SIGNAL_FUNC (file_prefs_restart_delete_callback),
-		      shell);
-
-  action_items[0].user_data = shell;
-  build_action_area (GTK_DIALOG (shell), action_items, 1, 0);
-
-  gtk_widget_show (vbox);
-  gtk_widget_show (shell);
-}
-
-
 static void
 file_prefs_save_callback (GtkWidget *widget,
 			  GtkWidget *dlg)
@@ -809,7 +752,7 @@ file_prefs_save_callback (GtkWidget *widget,
   gradient_path = save_gradient_path;
 
   if (restart_notification)
-    file_prefs_restart_create();
+    message_box("You will need to restart GIMP for these changes to take effect.", NULL, NULL);
   
   g_list_free (update);
   g_list_free (remove);
