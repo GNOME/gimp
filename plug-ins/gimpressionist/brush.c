@@ -188,7 +188,7 @@ savebrush (GtkWidget *wg,
 {
   static GtkWidget *window   = NULL;
   GList            *thispath = parsepath ();
-  gchar             path[200];
+  gchar            *path;
 
   if(! brushppm.col)
     {
@@ -196,15 +196,17 @@ savebrush (GtkWidget *wg,
       return;
     }
 
-  sprintf (path, "%s/Brushes/", (char *)thispath->data);
-
   window = gtk_file_selection_new (_("Save Brush"));
 
   gtk_window_set_transient_for (GTK_WINDOW (window),
                                 GTK_WINDOW (gtk_widget_get_toplevel (wg)));
   gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
+  path = g_build_filename ((char *)thispath->data, "Brushes", "", NULL);
+
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), path);
+
+  g_free (path);
 
   g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
@@ -224,13 +226,14 @@ static gboolean validdrawable(gint32 imageid, gint32 drawableid, gpointer data)
 
 void reloadbrush(char *fn, ppm_t *p)
 {
-  static char lastfn[200] = "";
+  static char lastfn[256] = "";
   static ppm_t cache = {0,0,NULL};
 
-  if(strcmp(fn, lastfn)) {
-    strncpy(lastfn, fn, 199);
-    loadppm(fn, &cache);
-  }
+  if(strcmp(fn, lastfn))
+    {
+      g_strlcpy (lastfn, fn, sizeof (lastfn));
+      loadppm (fn, &cache);
+    }
   copyppm(&cache, p);
   pcvals.colorbrushes = colorfile(fn);
 }
@@ -301,16 +304,17 @@ static gboolean brushdontupdate = FALSE;
 
 static void selectbrush(GtkTreeSelection *selection, gpointer data)
 {
-  GtkTreeIter iter;
+  GtkTreeIter   iter;
   GtkTreeModel *model;
-  char fname[200];
 
-  if (brushdontupdate) return;
-
-  if (brushfile == 0) {
-    updatebrushprev(NULL);
+  if (brushdontupdate)
     return;
-  }
+
+  if (brushfile == 0)
+    {
+      updatebrushprev (NULL);
+      return;
+    }
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
@@ -323,12 +327,18 @@ static void selectbrush(GtkTreeSelection *selection, gpointer data)
       gtk_adjustment_set_value(GTK_ADJUSTMENT(brushaspectadjust), 0.0);
       brushdontupdate = FALSE;
 
-      sprintf(fname, "Brushes/%s", brush);
-      strcpy(pcvals.selectedbrush, fname);
+      if (brush)
+        {
+          gchar *fname = g_build_filename ("Brushes", brush, NULL);
 
-      updatebrushprev(fname);
+          g_strlcpy (pcvals.selectedbrush,
+                     fname, sizeof (pcvals.selectedbrush));
 
-      g_free (brush);
+          updatebrushprev (fname);
+
+          g_free (fname);
+          g_free (brush);
+        }
     }
 }
 

@@ -172,10 +172,9 @@ run (const gchar      *name,
     {
       gimpressionist_main();
       gimp_displays_flush ();
-      
+
       if (run_mode == GIMP_RUN_INTERACTIVE)
         gimp_set_data(PLUG_IN_NAME, &pcvals, sizeof(gimpressionist_vals_t));
-      
     }
   else if (status == GIMP_PDB_SUCCESS)
     {
@@ -185,7 +184,7 @@ run (const gchar      *name,
   g_rand_free (gr);
 
   values[0].data.d_status = status;
-  
+
   gimp_drawable_detach(drawable);
 }
 

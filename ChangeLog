@@ -1,3 +1,13 @@
+2004-01-27  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gimpressionist/brush.c
+	* plug-ins/gimpressionist/gimp.c
+	* plug-ins/gimpressionist/gimpressionist.[ch]
+	* plug-ins/gimpressionist/paper.c
+	* plug-ins/gimpressionist/presets.c: fixed a crash (bug #132027),
+	got rid of some possible buffer overflows and fixed platform issues
+	like hardcoding '/' as the path separator.
+
 2004-01-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/image-menu.c (image_menu_entries): use

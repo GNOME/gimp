@@ -3,78 +3,77 @@
 #define PLUG_IN_VERSION "v1.0, November 2003"
 #define HELP_ID         "plug-in-gimppressionist"
 
-#ifndef DEFAULTPATH
-#define DEFAULTPATH "~/.gimp/gimpressionist:/usr/local/share/gimp/gimpressionist"
-#endif
-
-#define PREVIEWSIZE 150
-#define MAXORIENTVECT 50
-#define MAXSIZEVECT 50
+#define PREVIEWSIZE     150
+#define MAXORIENTVECT   50
+#define MAXSIZEVECT     50
 
 /* Type declaration and definitions */
 
-typedef struct vector {
+typedef struct vector
+{
   double x, y;
   double dir;
   double dx, dy;
   double str;
-  int type;
+  int    type;
 } vector_t;
 
-typedef struct smvector {
+typedef struct smvector
+{
   double x, y;
   double siz;
   double str;
 } smvector_t;
 
-typedef struct {
-  int orientnum;
-  double orientfirst;
-  double orientlast;
-  int orienttype;
-  double brushrelief;
-  double brushscale;
-  double brushdensity;
-  double brushgamma;
-  int generalbgtype;
-  double generaldarkedge;
-  double paperrelief;
-  double paperscale;
-  int paperinvert;
-  int run;
-  char selectedbrush[100];
-  char selectedpaper[100];
-  GimpRGB color;
-  int generalpaintedges;
-  int placetype;
-  vector_t orientvector[MAXORIENTVECT];
-  int numorientvector;
-  int placecenter;
-  double brushaspect;
-  double orientangoff;
-  double orientstrexp;
-  int generaltileable;
-  int paperoverlay;
-  int orientvoronoi;
-  int colorbrushes;
-  int generaldropshadow;
-  double generalshadowdarkness;
-  int sizenum;
-  double sizefirst;
-  double sizelast;
-  int sizetype;
-  double devthresh;
+typedef struct
+{
+  int        orientnum;
+  double     orientfirst;
+  double     orientlast;
+  int        orienttype;
+  double     brushrelief;
+  double     brushscale;
+  double     brushdensity;
+  double     brushgamma;
+  int        generalbgtype;
+  double     generaldarkedge;
+  double     paperrelief;
+  double     paperscale;
+  int        paperinvert;
+  int        run;
+  char       selectedbrush[200];
+  char       selectedpaper[200];
+  GimpRGB    color;
+  int        generalpaintedges;
+  int        placetype;
+  vector_t   orientvector[MAXORIENTVECT];
+  int        numorientvector;
+  int        placecenter;
+  double     brushaspect;
+  double     orientangoff;
+  double     orientstrexp;
+  int        generaltileable;
+  int        paperoverlay;
+  int        orientvoronoi;
+  int        colorbrushes;
+  int        generaldropshadow;
+  double     generalshadowdarkness;
+  int        sizenum;
+  double     sizefirst;
+  double     sizelast;
+  int        sizetype;
+  double     devthresh;
 
   smvector_t sizevector[MAXSIZEVECT];
-  int numsizevector;
-  double sizestrexp;
-  int sizevoronoi;
+  int        numsizevector;
+  double     sizestrexp;
+  int        sizevoronoi;
 
-  int generalshadowdepth;
-  int generalshadowblur;
+  int        generalshadowdepth;
+  int        generalshadowblur;
 
-  int colortype;
-  double colornoise;
+  int        colortype;
+  double     colornoise;
 } gimpressionist_vals_t;
 
 /* Globals */
@@ -170,7 +169,7 @@ void placechange(int num);
 void colorchange(int num);
 void generalbgchange(GtkWidget *wg, void *d, int num);
 
-GtkWidget *createonecolumnlist(GtkWidget *parent, 
+GtkWidget *createonecolumnlist(GtkWidget *parent,
 			       void (*changed_cb)
 			       (GtkTreeSelection *selection, gpointer data));
 

@@ -61,9 +61,8 @@ static void updatepaperprev(char *fn)
 
 static void selectpaper(GtkTreeSelection *selection, gpointer data)
 {
-  GtkTreeIter iter;
+  GtkTreeIter   iter;
   GtkTreeModel *model;
-  char fname[200];
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
@@ -71,11 +70,18 @@ static void selectpaper(GtkTreeSelection *selection, gpointer data)
 
       gtk_tree_model_get (model, &iter, 0, &paper, -1);
 
-      sprintf(fname, "Paper/%s", paper);
-      strcpy(pcvals.selectedpaper, fname);
-      updatepaperprev(fname);
+      if (paper)
+        {
+          gchar *fname = g_build_filename ("Paper", paper, NULL);
 
-      g_free (paper);
+          g_strlcpy (pcvals.selectedpaper,
+                     fname, sizeof (pcvals.selectedpaper));
+
+          updatepaperprev (fname);
+
+          g_free (fname);
+          g_free (paper);
+        }
     }
 }
 

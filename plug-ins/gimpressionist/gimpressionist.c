@@ -83,6 +83,8 @@ findfile (const gchar *fn)
   GList        *thispath;
   gchar        *filename;
 
+  g_return_val_if_fail (fn != NULL, NULL);
+
   if (!rcpath)
     rcpath = parsepath ();
 

@@ -134,17 +134,19 @@ static void setsizevector(char *str)
 
 }
 
-static void parsedesc(char *str, char *d)
+static void parsedesc(char *str, char *d, gssize d_len)
 {
   gchar *dest = g_strcompress (str);
-  strcpy (d, dest);
+
+  g_strlcpy (d, dest, d_len);
+
   g_free (dest);
 }
 
 static void setval(char *key, char *val)
 {
   if(!strcmp(key, "desc"))
-    parsedesc(val, presetdesc);
+    parsedesc(val, presetdesc, sizeof (presetdesc));
   else if(!strcmp(key, "orientnum"))
     pcvals.orientnum = atoi(val);
   else if(!strcmp(key, "orientfirst"))
@@ -211,9 +213,9 @@ static void setval(char *key, char *val)
     pcvals.placecenter = atoi(val);
 
   else if(!strcmp(key, "selectedbrush"))
-    strncpy(pcvals.selectedbrush, val, 99);
+    g_strlcpy (pcvals.selectedbrush, val, sizeof (pcvals.selectedbrush));
   else if(!strcmp(key, "selectedpaper"))
-    strncpy(pcvals.selectedpaper, val, 99);
+    g_strlcpy (pcvals.selectedpaper, val, sizeof (pcvals.selectedpaper));
 
   else if(!strcmp(key, "color")){
     char *c = parsergbstring(val);
@@ -283,18 +285,25 @@ static void applypreset(GtkWidget *w, GtkTreeSelection *selection)
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
-      char fname[200];
       gchar *preset;
 
       gtk_tree_model_get (model, &iter, 0, &preset, -1);
 
-      if (strcmp(preset, factory_defaults))
+      if (strcmp (preset, factory_defaults))
 	{
-	  sprintf(fname, "Presets/%s", preset);
-	  strcpy(fname, findfile(fname));
-	  loadpreset(fname);
+          gchar *rel = g_build_filename ("Presets", preset, NULL);
+          gchar *abs = findfile (rel);
+
+          g_free (rel);
+
+          if (abs)
+            {
+              loadpreset (abs);
+              g_free (abs);
+            }
 	}
-      restorevals();
+
+      restorevals ();
 
       g_free (preset);
     }
@@ -307,18 +316,27 @@ static void deletepreset(GtkWidget *w, GtkTreeSelection *selection)
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
-      char fname[200];
       gchar *preset;
 
       gtk_tree_model_get (model, &iter, 0, &preset, -1);
 
-      sprintf(fname, "Presets/%s", preset);
-      strcpy(fname, findfile(fname));
+      if (preset)
+        {
+          gchar *rel = g_build_filename ("Presets", preset, NULL);
+          gchar *abs = findfile (rel);
 
-      unlink(fname);
-      presetsrefresh();
+          g_free (rel);
 
-      g_free (preset);
+          if (abs)
+            {
+              unlink (abs);
+              g_free (abs);
+            }
+
+          presetsrefresh ();
+
+          g_free (preset);
+        }
     }
 }
 
@@ -332,7 +350,7 @@ static void presetdesccallback(GtkTextBuffer *buffer, gpointer data)
   gtk_text_buffer_get_bounds (buffer, &start, &end);
   str = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
   dest = g_strescape (str, NULL);
-  strcpy (presetdesc, dest);
+  g_strlcpy (presetdesc, dest, sizeof (presetdesc));
   g_free (dest);
   g_free (str);
 }
@@ -411,30 +429,33 @@ create_savepreset (void)
 static void savepreset(void)
 {
   const gchar *l;
-  static char fname[200];
-  FILE *f;
+  gchar *fname;
+  FILE  *f;
   GList *thispath;
   gchar  buf[G_ASCII_DTOSTR_BUF_SIZE];
   gchar  vbuf[6][G_ASCII_DTOSTR_BUF_SIZE];
   guchar color[3];
-  int i;
+  gint   i;
 
-  l = gtk_entry_get_text(GTK_ENTRY(presetnameentry));
-  thispath = parsepath();
-  storevals();
+  l = gtk_entry_get_text (GTK_ENTRY (presetnameentry));
+  thispath = parsepath ();
+  storevals ();
 
-  if(!thispath) {
-    fprintf(stderr, "Internal error: (savepreset) thispath == NULL");
-    return;
-  }
+  if (!thispath)
+    {
+      g_printerr ("Internal error: (savepreset) thispath == NULL");
+      return;
+    }
 
-  sprintf(fname, "%s/Presets/%s", (char *)thispath->data, l);
+  fname = g_build_filename ((char *)thispath->data, "Presets", l, NULL);
 
-  f = fopen(fname, "wt");
-  if(!f) {
-    fprintf(stderr, "Error opening file \"%s\" for writing!%c\n", fname, 7);
-    return;
-  }
+  f = fopen (fname, "wt");
+  if (!f)
+    {
+      g_printerr ("Error opening file \"%s\" for writing!%c\n", fname, 7);
+      return;
+    }
+
   fprintf(f, "%s\n", PRESETMAGIC);
   fprintf(f, "desc=%s\n", presetdesc);
   fprintf(f, "orientnum=%d\n", pcvals.orientnum);
@@ -528,40 +549,51 @@ static void savepreset(void)
   fprintf(f, "colornoise=%s\n",
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.colornoise));
 
-  fclose(f);
-  presetsrefresh();
-  reselect(presetlist, fname);
+  fclose (f);
+  presetsrefresh ();
+  reselect (presetlist, fname);
+
+  g_free (fname);
 }
 
-static void readdesc(char *fn)
+static void readdesc(const char *fn)
 {
-  char *tmp, fname[200];
+  char *tmp;
+  char *fname;
   FILE *f;
 
-  sprintf(fname, "Presets/%s", fn);
-  tmp = findfile(fname);
-  if (!tmp) {
-    gtk_label_set_text(GTK_LABEL(presetdesclabel), "");
-    return;
-  }
-  strcpy(fname, tmp);
+  fname = g_build_filename ("Presets", fn, NULL);
+  tmp   = findfile (fname);
+  g_free (fname);
+
+  if (!tmp)
+    {
+      gtk_label_set_text (GTK_LABEL (presetdesclabel), "");
+      return;
+    }
+
+  fname = tmp;
 
   f = fopen(fname, "rt");
-  if(f) {
-    char line[4096];
-    char tmplabel[4096];
-    while(!feof(f)) {
-      fgets(line, 4095, f);
-      if(!strncmp(line, "desc=", 5)) {
-	parsedesc(line+5, tmplabel);
-	gtk_label_set_text(GTK_LABEL(presetdesclabel), tmplabel);
-	fclose(f);
-	return;
-      }
+  if (f)
+    {
+      char line[4096];
+      char tmplabel[4096];
+      while(!feof(f))
+        {
+          fgets(line, 4095, f);
+          if (!strncmp (line, "desc=", 5))
+            {
+              parsedesc (line + 5, tmplabel, sizeof (tmplabel));
+              gtk_label_set_text (GTK_LABEL (presetdesclabel), tmplabel);
+              fclose (f);
+              return;
+            }
+        }
+      fclose (f);
     }
-    fclose(f);
-  }
-  gtk_label_set_text(GTK_LABEL(presetdesclabel), "");
+
+  gtk_label_set_text (GTK_LABEL (presetdesclabel), "");
 }
 
 static void selectpreset(GtkTreeSelection *selection, gpointer data)
