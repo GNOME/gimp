@@ -25,10 +25,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "config.h"
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include "libgimp/stdplugins-intl.h"
 
 
 #define PLUG_IN_NAME "wind"
@@ -40,17 +42,6 @@
 #define MAX_THRESHOLD  50
 #define MIN_STRENGTH    1
 #define MAX_STRENGTH   50
-
-#define NEGATIVE_STRENGTH_TEXT "\n   Wind Strength must be greater than 0.   \n"
-#define THRESHOLD_TEXT "Higher values restrict the effect to fewer areas of the image"
-#define STRENGTH_TEXT "Higher values increase the magnitude of the effect"
-#define WIND_TEXT "A fine grained algorithm"
-#define BLAST_TEXT "A coarse grained algorithm"
-#define LEFT_TEXT "Makes the wind come from the left"
-#define RIGHT_TEXT "Makes the wind come from the right"
-#define LEADING_TEXT "The effect is applied at the leading edge of objects"
-#define TRAILING_TEXT "The effect is applied at the trailing edge of objects"
-#define BOTH_TEXT "The effect is applied at both edges of objects"
 
 typedef enum
 {
@@ -161,13 +152,15 @@ query (void)
   static int nargs = sizeof(args) / sizeof(args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_wind",
-			  "Renders a wind effect.",
-			  "Renders a wind effect.",
+			  _("Renders a wind effect."),
+			  _("Renders a wind effect."),
 			  "Nigel Wetten",
 			  "Nigel Wetten",
 			  "1998",
-			  "<Image>/Filters/Distorts/Wind...",
+			  N_("<Image>/Filters/Distorts/Wind..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -192,6 +185,7 @@ run (gchar   *name,
   switch (run_mode)
     {
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       if (nparams == 8)
 	{
 	  config.threshold = param[3].data.d_int32;
@@ -211,6 +205,7 @@ run (gchar   *name,
       break;
       
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       gimp_get_data("plug_in_wind", &config);
       dialog_box();
       if (dialog_result == -1)
@@ -228,6 +223,7 @@ run (gchar   *name,
       break;
       
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       gimp_get_data("plug_in_wind", &config);
       if (render_effect(drawable) == -1)
 	{
@@ -255,13 +251,13 @@ render_effect (GDrawable *drawable)
 {
   if (config.alg == RENDER_WIND)
     {
-      gimp_progress_init("Rendering Wind...");
+      gimp_progress_init( _("Rendering Wind..."));
       render_wind(drawable, config.threshold, config. strength,
 		  config.direction, config.edge);
     }
   else if (config.alg == RENDER_BLAST)
     {
-      gimp_progress_init("Rendering Blast...");
+      gimp_progress_init( _("Rendering Blast..."));
       render_blast(drawable, config.threshold, config.strength,
 		   config.direction, config.edge);
     }
@@ -674,12 +670,12 @@ modal_message_box (gchar *text)
   GtkWidget *message_box;
   GtkWidget *label;
 
-  message_box = gimp_dialog_new ("Wind", "wind",
+  message_box = gimp_dialog_new ( _("Wind"), "wind",
 				 gimp_plugin_help_func, "filters/wind.html",
 				 GTK_WIN_POS_MOUSE,
 				 FALSE, TRUE, FALSE,
 
-				 "OK", msg_ok_callback,
+				 _("OK"), msg_ok_callback,
 				 NULL, NULL, NULL, TRUE, TRUE,
 
 				 NULL);
@@ -702,7 +698,7 @@ ok_callback (GtkWidget *widget,
 
   if (config.strength < 1)
     {
-      modal_message_box (NEGATIVE_STRENGTH_TEXT);
+      modal_message_box ( _("\n   Wind Strength must be greater than 0.   \n"));
     }
   else
     {
@@ -729,14 +725,14 @@ dialog_box (void)
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  dlg = gimp_dialog_new ("Wind", "wind",
+  dlg = gimp_dialog_new ( _("Wind"), "wind",
 			 gimp_plugin_help_func, "filters/wind.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 "OK", ok_callback,
+			 _("OK"), ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 "Cancel", gtk_widget_destroy,
+			 _("Cancel"), gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);
@@ -771,10 +767,10 @@ dialog_box (void)
     ***************************************************/
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      "Threshold:", SCALE_WIDTH, 0,
+			      _("Threshold:"), SCALE_WIDTH, 0,
 			      config.threshold,
 			      MIN_THRESHOLD, MAX_THRESHOLD, 1.0, 10, 0,
-			      THRESHOLD_TEXT, NULL);
+			      _("Higher values restrict the effect to fewer areas of the image"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &config.threshold);
@@ -784,10 +780,10 @@ dialog_box (void)
     ****************************************************/
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      "Strength:", SCALE_WIDTH, 0,
+			      _("Strength:"), SCALE_WIDTH, 0,
 			      config.strength,
 			      MIN_STRENGTH, MAX_STRENGTH, 1.0, 10.0, 0,
-			      STRENGTH_TEXT, NULL);
+			      _("Higher values increase the magnitude of the effect"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &config.strength);
@@ -807,12 +803,12 @@ dialog_box (void)
     radio buttons for choosing wind rendering algorithm
     ******************************************************/
 
-  frame = gimp_radio_group_new2 (TRUE, "Style",
+  frame = gimp_radio_group_new2 (TRUE, _("Style"),
 				 gimp_radio_button_update,
 				 &config.alg, (gpointer) config.alg,
 
-				 "Wind",  (gpointer) RENDER_WIND, NULL,
-				 "Blast", (gpointer) RENDER_BLAST, NULL,
+				 _("Wind"),  (gpointer) RENDER_WIND, NULL,
+				 _("Blast"), (gpointer) RENDER_BLAST, NULL,
 
 				 NULL);
 
@@ -824,12 +820,12 @@ dialog_box (void)
     radio buttons for choosing LEFT or RIGHT
     **************************************************/
 
-  frame = gimp_radio_group_new2 (TRUE, "Direction",
+  frame = gimp_radio_group_new2 (TRUE, _("Direction"),
 				 gimp_radio_button_update,
 				 &config.direction, (gpointer) config.direction,
 
-				 "Left",  (gpointer) LEFT, NULL,
-				 "Right", (gpointer) RIGHT, NULL,
+				 _("Left"),  (gpointer) LEFT, NULL,
+				 _("Right"), (gpointer) RIGHT, NULL,
 
 				 NULL);
 
@@ -841,13 +837,13 @@ dialog_box (void)
     radio buttons for choosing BOTH, LEADING, TRAILING
     ***************************************************/
 
-  frame = gimp_radio_group_new2 (TRUE, "Edge Affected",
+  frame = gimp_radio_group_new2 (TRUE, _("Edge Affected"),
 				 gimp_radio_button_update,
 				 &config.edge, (gpointer) config.edge,
 
-				 "Leading",  (gpointer) LEADING, NULL,
-				 "Trailing", (gpointer) TRAILING, NULL,
-				 "Both",     (gpointer) BOTH, NULL,
+				 _("Leading"),  (gpointer) LEADING, NULL,
+				 _("Trailing"), (gpointer) TRAILING, NULL,
+				 _("Both"),     (gpointer) BOTH, NULL,
 
 				 NULL);
 

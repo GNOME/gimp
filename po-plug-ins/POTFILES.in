@@ -123,7 +123,11 @@ plug-ins/common/video.c
 plug-ins/common/vinvert.c
 plug-ins/common/vpropagate.c
 plug-ins/common/warp.c
+plug-ins/common/waves.c
+plug-ins/common/whirlpinch.c
+plug-ins/common/wind.c
 plug-ins/common/winprint.c
+plug-ins/common/wmf.c
 plug-ins/common/xbm.c
 plug-ins/common/xpm.c
 plug-ins/common/xwd.c
@@ -219,6 +223,7 @@ plug-ins/maze/maze.c
 plug-ins/maze/maze_face.c
 plug-ins/megawidget/megawidget.c
 plug-ins/mosaic/mosaic.c
+plug-ins/pagecurl/pagecurl.c
 plug-ins/print/print-escp2.c
 plug-ins/print/print-pcl.c
 plug-ins/print/print-ps.c

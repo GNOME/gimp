@@ -57,6 +57,7 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include "libgimp/stdplugins-intl.h"
 
 #include "curl0.xpm"
 #include "curl1.xpm"
@@ -220,13 +221,15 @@ query (void)
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Pagecurl effect",
-			  "This plug-in creates a pagecurl-effect.",
+			  _("Pagecurl effect"),
+			  _("This plug-in creates a pagecurl-effect."),
 			  "Federico Mena Quintero and Simon Budig",
 			  "Federico Mena Quintero and Simon Budig",
 			  PLUG_IN_VERSION,
-			  "<Image>/Filters/Distorts/Pagecurl...",
+              N_("<Image>/Filters/Distorts/Pagecurl..."),
 			  "RGBA, GRAYA",
 			  PROC_PLUG_IN,
 			  nargs,
@@ -272,12 +275,14 @@ run (gchar   *name,
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
+      INIT_I18N_UI();
 	  /*  First acquire information with a dialog  */
 	  if (!do_dialog ())
 	    return;
 	  break;
 
 	case RUN_NONINTERACTIVE:
+      INIT_I18N();
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 7)
 	    status = STATUS_CALLING_ERROR;
@@ -321,6 +326,7 @@ run (gchar   *name,
 	  break;
 
 	case RUN_WITH_LAST_VALS:
+      INIT_I18N();
 	  break;
 
 	default:
@@ -573,14 +579,14 @@ do_dialog (void)
   gtk_rc_parse (gimp_gtkrc ());
   gdk_set_use_xshm (gimp_use_xshm ());
 
-  dialog = gimp_dialog_new ("Pagecurl Effect", "pagecurl",
+  dialog = gimp_dialog_new ( _("Pagecurl Effect"), "pagecurl",
 			    gimp_plugin_help_func, "filters/pagecurl.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    "OK", dialog_ok_callback,
+			    _("OK"), dialog_ok_callback,
 			    NULL, NULL, NULL, TRUE, FALSE,
-			    "Cancel", gtk_widget_destroy,
+			    _("Cancel"), gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);
@@ -651,7 +657,7 @@ do_dialog (void)
 		       FALSE, FALSE, 0);
    gtk_widget_show (curl_pixmap_widget);
 
-   corner_frame = gtk_frame_new ("Curl Location");
+   corner_frame = gtk_frame_new ( _("Curl Location"));
    gtk_frame_set_shadow_type (GTK_FRAME (corner_frame), GTK_SHADOW_ETCHED_IN);
    gtk_box_pack_start (GTK_BOX (orhbox1), corner_frame, TRUE, TRUE, 0);
 
@@ -662,10 +668,10 @@ do_dialog (void)
    {
      gint i;
      gchar *name[] =
-     { "Upper Left",
-       "Upper Right",
-       "Lower Left",
-       "Lower Right"
+     { N_("Upper Left"),
+       N_("Upper Right"),
+       N_("Lower Left"),
+       N_("Lower Right")
      };
 
      button = NULL;
@@ -674,7 +680,7 @@ do_dialog (void)
 	 button = gtk_radio_button_new_with_label
 	   ((button == NULL) ?
 	    NULL : gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
-	    name[i]);
+	    gettext(name[i]));
 	 gtk_toggle_button_set_active
 	   (GTK_TOGGLE_BUTTON (button),
 	    (i == 0 ? curl.do_upper_left : i == 1 ? curl.do_upper_right :
@@ -693,7 +699,7 @@ do_dialog (void)
    gtk_widget_show (corner_frame);
    gtk_widget_show (orhbox1);
 
-   orient_frame = gtk_frame_new ("Curl Orientation");
+   orient_frame = gtk_frame_new ( _("Curl Orientation"));
    gtk_frame_set_shadow_type (GTK_FRAME (orient_frame), GTK_SHADOW_ETCHED_IN);
    gtk_box_pack_start (GTK_BOX (vbox), orient_frame, FALSE, FALSE, 0);
 
@@ -705,8 +711,8 @@ do_dialog (void)
      gint i;
      gchar *name[] =
      {
-       "Horizontal",
-       "Vertical"
+       N_("Horizontal"),
+       N_("Vertical")
      };
 
      button = NULL;
@@ -715,7 +721,7 @@ do_dialog (void)
 	 button = gtk_radio_button_new_with_label
 	   ((button == NULL) ?
 	    NULL : gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
-	    name[i]);
+	    gettext(name[i]));
 	 gtk_toggle_button_set_active
 	   (GTK_TOGGLE_BUTTON (button),
 	    (i == 0 ? curl.do_horizontal : curl.do_vertical));
@@ -732,7 +738,7 @@ do_dialog (void)
    gtk_widget_show (orhbox2);
    gtk_widget_show (orient_frame);
 
-   shade_button = gtk_check_button_new_with_label ("Shade under Curl");
+   shade_button = gtk_check_button_new_with_label ( _("Shade under Curl"));
    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shade_button),
 				 curl.do_shade_under ? TRUE : FALSE);
    gtk_signal_connect (GTK_OBJECT (shade_button), "toggled",
@@ -742,8 +748,7 @@ do_dialog (void)
    gtk_widget_show (shade_button);
 
    gradient_button =
-     gtk_check_button_new_with_label ("Use Current Gradient\n"
-				      "instead of FG/BG-Color");
+     gtk_check_button_new_with_label (_("Use Current Gradient\ninstead of FG/BG-Color"));
    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gradient_button),
 				 curl.do_curl_gradient ? TRUE : FALSE);
    gtk_signal_connect (GTK_OBJECT (gradient_button), "toggled",
@@ -752,7 +757,7 @@ do_dialog (void)
    gtk_box_pack_start (GTK_BOX (vbox), gradient_button, FALSE, FALSE, 0);
    gtk_widget_show (gradient_button);
 
-   label = gtk_label_new ("Curl Opacity");
+   label = gtk_label_new (_("Curl Opacity"));
    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
    gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
    gtk_widget_show (label);
@@ -874,7 +879,7 @@ do_curl_effect (void)
   color_image = gimp_drawable_is_rgb (drawable->id);
   curl_layer =
     gimp_drawable_get (gimp_layer_new (image_id,
-				       "Curl layer",
+				       _("Curl layer"),
 				       true_sel_width,
 				       true_sel_height,
 				       color_image ? RGBA_IMAGE : GRAYA_IMAGE,
@@ -1125,7 +1130,7 @@ page_curl (void)
 		      PARAM_IMAGE, image_id,
 		      PARAM_END);
 
-  gimp_progress_init ("Page Curl...");
+  gimp_progress_init ( _("Page Curl..."));
   init_calculation ();
   do_curl_effect ();
   clear_curled_region ();

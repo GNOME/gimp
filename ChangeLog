@@ -1,3 +1,13 @@
+2000-01-16  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/waves.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/common/wind.c
+	* plug-ins/common/wmf.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/pagecurl/Makefile.am
+	* po-plug-ins/POTFILES.in: added gettext support.
+
 2000-01-15 Garry R. Osgood <gosgood@idt.net>
 
 	* app/layers_dialog.c

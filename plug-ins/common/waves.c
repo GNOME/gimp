@@ -34,6 +34,7 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include "libgimp/stdplugins-intl.h"
 
 #include <plug-ins/megawidget/megawidget.h>
 
@@ -128,13 +129,15 @@ query (void)
   static GParamDef *rets = NULL;
   static int nrets = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_waves",
-			  "Distort the image with waves",
+			  _("Distort the image with waves"),
 			  "none yet",
 			  "Eric L. Hernes, Stephen Norris",
 			  "Stephen Norris",
 			  "1997",
-			  "<Image>/Filters/Distorts/Waves...",
+			  N_("<Image>/Filters/Distorts/Waves..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nrets,
@@ -166,6 +169,7 @@ run (gchar   *name,
       GDrawable *drw;
 
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /* XXX: add code here for interactive running */
       if (args.type == -1)
 	{
@@ -191,6 +195,7 @@ run (gchar   *name,
     break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /* XXX: add code here for non-interactive running */
       if (nparam != 8)
 	{
@@ -211,6 +216,7 @@ run (gchar   *name,
     break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       /* XXX: add code here for last-values running */
       if (pluginCore (&args, param[2].data.d_drawable) == -1)
 	{
@@ -322,14 +328,14 @@ pluginCoreIA (struct piArgs *argp,
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  dlg = gimp_dialog_new ("Waves", "waves",
+  dlg = gimp_dialog_new ( _("Waves"), "waves",
 			 gimp_plugin_help_func, "filters/waves.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 "OK", waves_ok_callback,
+			 _("OK"), waves_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 "Cancel", gtk_widget_destroy,
+			 _("Cancel"), gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);
@@ -351,7 +357,7 @@ pluginCoreIA (struct piArgs *argp,
   gtk_object_set_data (GTK_OBJECT (preview), "piArgs", argp);
   waves_do_preview (preview);
 
-  toggle = gtk_check_button_new_with_label ("Reflective");
+  toggle = gtk_check_button_new_with_label ( _("Reflective"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), argp->reflective);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -363,7 +369,7 @@ pluginCoreIA (struct piArgs *argp,
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  frame = gtk_frame_new ("Parameters");
+  frame = gtk_frame_new ( _("Parameters"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -375,7 +381,7 @@ pluginCoreIA (struct piArgs *argp,
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      "Amplitude:", 140, 0,
+			      _("Amplitude:"), 140, 0,
 			      argp->amplitude, 0.0, 101.0, 1.0, 5.0, 2,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -383,7 +389,7 @@ pluginCoreIA (struct piArgs *argp,
 		      &argp->amplitude);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      "Phase:", 140, 0,
+			      _("Phase:"), 140, 0,
 			      argp->phase, 0.0, 360.0, 2.0, 5.0, 2,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -391,7 +397,7 @@ pluginCoreIA (struct piArgs *argp,
 		      &argp->phase);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      "Wavelength:", 140, 0,
+			      _("Wavelength:"), 140, 0,
 			      argp->wavelength, 0.1, 50.0, 1.0, 5.0, 2,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -400,12 +406,12 @@ pluginCoreIA (struct piArgs *argp,
 
   gtk_widget_show (table);
 
-  frame = gimp_radio_group_new2 (TRUE, "Mode",
+  frame = gimp_radio_group_new2 (TRUE, _("Mode"),
 				 waves_radio_button_update,
 				 &argp->type, (gpointer) argp->type,
 
-				 "Smear",   (gpointer) MODE_SMEAR, NULL,
-				 "Blacken", (gpointer) MODE_BLACKEN, NULL,
+				 _("Smear"),   (gpointer) MODE_SMEAR, NULL,
+				 _("Blacken"), (gpointer) MODE_BLACKEN, NULL,
 
 				 NULL);
 
@@ -511,7 +517,7 @@ wave (guchar  *src,
 
   if (verbose)
     {
-      gimp_progress_init ("Waves");
+      gimp_progress_init ( _("Waving..."));
       prog_interval=height/10;
     }
 

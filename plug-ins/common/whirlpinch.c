@@ -59,6 +59,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 #include <libgimp/gimplimits.h>
+#include "libgimp/stdplugins-intl.h"
 
 #define PLUG_IN_NAME    "plug_in_whirl_pinch"
 #define PLUG_IN_VERSION "May 1997, 2.09"
@@ -192,17 +193,15 @@ query (void)
   static int        nargs        = sizeof(args) / sizeof(args[0]);
   static int        nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Distort an image by whirling and pinching",
-			  "Distorts the image by whirling and pinching, which are two common "
-			  "center-based, circular distortions.  Whirling is like projecting "
-			  "the image onto the surface of water in a toilet and flushing.  "
-			  "Pinching is similar to projecting the image onto an elastic surface "
-			  "and pressing or pulling on the center of the surface.",
+			  _("Distort an image by whirling and pinching"),
+			  _("Distorts the image by whirling and pinching, which are two common center-based, circular distortions.  Whirling is like projecting the image onto the surface of water in a toilet and flushing.  Pinching is similar to projecting the image onto an elastic surface and pressing or pulling on the center of the surface."),
 			  "Federico Mena Quintero and Scott Goehring",
 			  "Federico Mena Quintero and Scott Goehring",
 			  PLUG_IN_VERSION,
-			  "<Image>/Filters/Distorts/Whirl and Pinch...",
+			  N_("<Image>/Filters/Distorts/Whirl and Pinch..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs,
@@ -294,6 +293,7 @@ run (gchar   *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /* Possibly retrieve data */
       gimp_get_data (PLUG_IN_NAME, &wpvals);
 
@@ -304,6 +304,7 @@ run (gchar   *name,
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /* Make sure all the arguments are present */
       if (nparams != 6)
 	status = STATUS_CALLING_ERROR;
@@ -318,6 +319,7 @@ run (gchar   *name,
       break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       /* Possibly retrieve data */
       gimp_get_data (PLUG_IN_NAME, &wpvals);
       break;
@@ -402,7 +404,7 @@ whirl_pinch (void)
   progress     = 0;
   max_progress = sel_width * sel_height;
 
-  gimp_progress_init ("Whirling and pinching...");
+  gimp_progress_init ( _("Whirling and pinching..."));
 
   whirl   = wpvals.whirl * G_PI / 180;
   radius2 = radius * radius * wpvals.radius;
@@ -823,14 +825,14 @@ whirl_pinch_dialog (void)
 
   build_preview_source_image ();
 
-  dialog = gimp_dialog_new ("Whirl and Pinch", "whirlpinch",
+  dialog = gimp_dialog_new ( _("Whirl and Pinch"), "whirlpinch",
 			    gimp_plugin_help_func, "filters/whirlpinch.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    "OK", dialog_ok_callback,
+			    _("OK"), dialog_ok_callback,
 			    NULL, NULL, NULL, TRUE, FALSE,
-			    "Cancel", gtk_widget_destroy,
+			    _("Cancel"), gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);
@@ -868,7 +870,7 @@ whirl_pinch_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      "Whirl Angle:", SCALE_WIDTH, 0,
+			      _("Whirl Angle:"), SCALE_WIDTH, 0,
 			      wpvals.whirl, -360.0, 360.0, 1.0, 15.0, 2,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -876,7 +878,7 @@ whirl_pinch_dialog (void)
 		      &wpvals.whirl);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      "Pinch Amount:", SCALE_WIDTH, 0,
+			      _("Pinch Amount:"), SCALE_WIDTH, 0,
 			      wpvals.pinch, -1.0, 1.0, 0.01, 0.1, 3,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -884,7 +886,7 @@ whirl_pinch_dialog (void)
 		      &wpvals.pinch);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      "Radius:", SCALE_WIDTH, 0,
+			      _("Radius:"), SCALE_WIDTH, 0,
 			      wpvals.radius, 0.0, 2.0, 0.01, 0.1, 3,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",

@@ -15,6 +15,9 @@ pagecurl_SOURCES = \
 	curl6.xpm	\
 	curl7.xpm
 
+AM_CPPFLAGS = \
+	-DLOCALEDIR=\""$(localedir)"\"
+
 INCLUDES = \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\

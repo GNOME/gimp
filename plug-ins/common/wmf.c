@@ -26,10 +26,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "config.h"
+
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include "libgimp/stdplugins-intl.h"
 
 typedef guchar BYTE;
 typedef guint16 WORD;
@@ -926,14 +929,14 @@ load_dialog (char *file_name)
 
   vals = g_new (LoadDialogVals, 1);
 
-  vals->dialog = gimp_dialog_new ("Load Windows Metafile", "wmf",
+  vals->dialog = gimp_dialog_new ( _("Load Windows Metafile"), "wmf",
 				  gimp_plugin_help_func, "filters/wmf.html",
 				  GTK_WIN_POS_MOUSE,
 				  FALSE, TRUE, FALSE,
 
-				  "OK", load_ok_callback,
+				  _("OK"), load_ok_callback,
 				  vals, NULL, NULL, TRUE, FALSE,
-				  "Cancel", gtk_widget_destroy,
+				  _("Cancel"), gtk_widget_destroy,
 				  NULL, 1, NULL, FALSE, TRUE,
 
 				  NULL);
@@ -943,7 +946,7 @@ load_dialog (char *file_name)
                       NULL);
 
   /* Rendering */
-  frame = gtk_frame_new (g_strdup_printf ("Rendering %s", file_name));
+  frame = gtk_frame_new (g_strdup_printf ( _("Rendering %s"), file_name));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dialog)->vbox), frame,
@@ -960,7 +963,7 @@ load_dialog (char *file_name)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  label = gtk_label_new ("Scale (log 2):");
+  label = gtk_label_new ( _("Scale (log 2):"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -1020,8 +1023,10 @@ query ()
   };
   static int nload_setargs_args = sizeof (load_setargs_args) / sizeof (load_setargs_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_wmf_load",
-                          "loads files of the Windows(tm) metafile file format",
+                          _("loads files of the Windows(tm) metafile file format"),
                           "FIXME: write help for file_wmf_load",
                           "Tor Lillqvist <tml@iki.fi>",
                           "Tor Lillqvist",
@@ -1033,8 +1038,8 @@ query ()
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_wmf_load_setargs",
-			  "set additional parameters for the procedure file_wmf_load",
-			  "set additional parameters for the procedure file_wmf_load",
+			  _("set additional parameters for the procedure file_wmf_load"),
+			  _("set additional parameters for the procedure file_wmf_load"),
 			  "Tor Lillqvist <tml@iki.fi>",
                           "Tor Lillqvist",
                           "1998",
@@ -1069,6 +1074,7 @@ run (char    *name,
       switch (l_run_mode)
 	{
 	case RUN_INTERACTIVE:
+      INIT_I18N_UI();
 	  gimp_get_data ("file_wmf_load", &load_vals);
 
 	  if (!load_dialog (param[1].data.d_string))
@@ -1076,10 +1082,12 @@ run (char    *name,
 	  break;
 	  
 	case RUN_NONINTERACTIVE:
+      INIT_I18N();
 	  gimp_get_data ("file_wmf_load", &load_vals);
 	  break;
 
 	case RUN_WITH_LAST_VALS:
+      INIT_I18N();
 	  gimp_get_data ("file_wmf_load", &load_vals);
 
 	}
@@ -2327,15 +2335,14 @@ load_image (char *filename)
 	  
 	  if (canvas->height >= 100)
 	    {
-	      name_buf = g_malloc (strlen (filename) + 100);
-	      sprintf (name_buf, "Transferring image");
+	      g_strdup_printf (name_buf, _("Transferring image"));
 	      gimp_progress_init (name_buf);
 	      g_free (name_buf);
 	    }
 	  
 	  image_ID = gimp_image_new (canvas->width, canvas->height, RGB);
 	  gimp_image_set_filename (image_ID, filename);
-	  layer_ID = gimp_layer_new (image_ID, "Background",
+	  layer_ID = gimp_layer_new (image_ID, _("Background"),
 				     canvas->width, canvas->height, RGB_IMAGE,
 				     100, NORMAL_MODE);
 	  gimp_image_add_layer (image_ID, layer_ID, 0);
