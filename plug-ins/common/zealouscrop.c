@@ -24,16 +24,16 @@
 /* Declare local functions. */
 static void        query         (void);
 static void        run           (const gchar      *name,
-				  gint              nparams,
-				  const GimpParam  *param,
-				  gint             *nreturn_vals,
-				  GimpParam       **return_vals);
+                                  gint              nparams,
+                                  const GimpParam  *param,
+                                  gint             *nreturn_vals,
+                                  GimpParam       **return_vals);
 
 static inline gint colours_equal (const guchar     *col1,
-				  const guchar     *col2,
-				  gint              bytes);
+                                  const guchar     *col2,
+                                  gint              bytes);
 static void        do_zcrop      (GimpDrawable     *drawable,
-				  gint32            image_id);
+                                  gint32            image_id);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -60,20 +60,20 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_zealouscrop",
-			  "Automagically crops unused space from the edges "
-			  "and middle of a picture.",
-			  "",
-			  "Adam D. Moss",
-			  "Adam D. Moss",
-			  "1997",
-			  N_("_Zealous Crop"),
-			  "RGB*, GRAY*, INDEXED*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Automagically crops unused space from the edges "
+                          "and middle of a picture.",
+                          "",
+                          "Adam D. Moss",
+                          "Adam D. Moss",
+                          "1997",
+                          N_("_Zealous Crop"),
+                          "RGB*, GRAY*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_zealouscrop",
-                             N_("<Image>/Layer/Crop"));
+                             N_("<Image>/Image/Crop"));
 }
 
 static void
@@ -99,9 +99,9 @@ run (const gchar      *name,
   if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
       if (n_params != 3)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
     }
 
   if (status == GIMP_PDB_SUCCESS)
@@ -112,27 +112,27 @@ run (const gchar      *name,
 
       /*  Make sure that the drawable is gray or RGB or indexed  */
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-	  gimp_drawable_is_gray (drawable->drawable_id) ||
-	  gimp_drawable_is_indexed (drawable->drawable_id))
-	{
-	  gimp_progress_init (_("ZealousCropping(tm)..."));
+          gimp_drawable_is_gray (drawable->drawable_id) ||
+          gimp_drawable_is_indexed (drawable->drawable_id))
+        {
+          gimp_progress_init (_("ZealousCropping(tm)..."));
 
-	  gimp_tile_cache_ntiles (1 +
-				  2 * (drawable->width > drawable->height ?
-				       (drawable->width / gimp_tile_width()) :
-				       (drawable->height / gimp_tile_height())));
+          gimp_tile_cache_ntiles (1 +
+                                  2 * (drawable->width > drawable->height ?
+                                       (drawable->width / gimp_tile_width()) :
+                                       (drawable->height / gimp_tile_height())));
 
-	  do_zcrop(drawable, image_id);
+          do_zcrop(drawable, image_id);
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
 
-	  gimp_drawable_detach (drawable);
-	}
+          gimp_drawable_detach (drawable);
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   values[0].type          = GIMP_PDB_STATUS;
@@ -141,7 +141,7 @@ run (const gchar      *name,
 
 static void
 do_zcrop (GimpDrawable *drawable,
-	  gint32        image_id)
+          gint32        image_id)
 {
   GimpPixelRgn  srcPR, destPR;
   gint          width, height, x, y;
@@ -175,18 +175,18 @@ do_zcrop (GimpDrawable *drawable,
       killrows[y] = TRUE;
 
       for (x=0; x<width*bytes; x+=bytes)
-	{
-	  if (!colours_equal (buffer, &buffer[x], bytes))
-	    {
-	      livingrows++;
-	      killrows[y] = FALSE;
-	      break;
-	    }
-	}
+        {
+          if (!colours_equal (buffer, &buffer[x], bytes))
+            {
+              livingrows++;
+              killrows[y] = FALSE;
+              break;
+            }
+        }
 
       area += width;
       if (y % 20)
-	gimp_progress_update ((double) area / (double) total_area);
+        gimp_progress_update ((double) area / (double) total_area);
     }
 
 
@@ -198,18 +198,18 @@ do_zcrop (GimpDrawable *drawable,
       killcols[x] = TRUE;
 
       for (y=0; y<height*bytes; y+=bytes)
-	{
-	  if (!colours_equal(buffer, &buffer[y], bytes))
-	    {
-	      livingcols++;
-	      killcols[x] = FALSE;
-	      break;
-	    }
-	}
+        {
+          if (!colours_equal(buffer, &buffer[y], bytes))
+            {
+              livingcols++;
+              killcols[x] = FALSE;
+              break;
+            }
+        }
 
       area += height;
       if (x % 20)
-	gimp_progress_update ((double) area / (double) total_area);
+        gimp_progress_update ((double) area / (double) total_area);
     }
 
 
@@ -225,15 +225,15 @@ do_zcrop (GimpDrawable *drawable,
   for (y=0; y<height; y++)
     {
       if (!killrows[y])
-	{
-	  gimp_pixel_rgn_get_row (&srcPR, buffer, 0, y, width);
-	  gimp_pixel_rgn_set_row (&destPR, buffer, 0, destrow, width);
-	  destrow++;
-	}
+        {
+          gimp_pixel_rgn_get_row (&srcPR, buffer, 0, y, width);
+          gimp_pixel_rgn_set_row (&destPR, buffer, 0, destrow, width);
+          destrow++;
+        }
 
       area += width;
       if (y % 20)
-	gimp_progress_update ((double) area / (double) total_area);
+        gimp_progress_update ((double) area / (double) total_area);
     }
 
 
@@ -243,15 +243,15 @@ do_zcrop (GimpDrawable *drawable,
   for (x=0; x<width; x++)
     {
       if (!killcols[x])
-	{
-	  gimp_pixel_rgn_get_col (&srcPR, buffer, x, 0, height);
-	  gimp_pixel_rgn_set_col (&destPR, buffer, destcol, 0, height);
-	  destcol++;
-	}
+        {
+          gimp_pixel_rgn_get_col (&srcPR, buffer, x, 0, height);
+          gimp_pixel_rgn_set_col (&destPR, buffer, destcol, 0, height);
+          destcol++;
+        }
 
       area += height;
       if (x % 20)
-	gimp_progress_update ((double) area / (double) total_area);
+        gimp_progress_update ((double) area / (double) total_area);
     }
 
   g_free (buffer);
@@ -273,8 +273,8 @@ do_zcrop (GimpDrawable *drawable,
 
 static inline gint
 colours_equal (const guchar *col1,
-	       const guchar *col2,
-	       gint          bytes)
+               const guchar *col2,
+               gint          bytes)
 {
   gint b;
 
