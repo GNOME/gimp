@@ -34,7 +34,7 @@ struct _ColorDisplayDialog
   GtkWidget *src;
   GtkWidget *dest;
 
-  GtkWidget *target_menu;
+  /* GtkWidget *target_menu; */
 
   gint src_row;
   gint dest_row;
@@ -358,7 +358,7 @@ gdisplay_color_ui (GDisplay *gdisp)
 
   color_display_foreach (src_list_populate, cdd.src);
 
-  if (gdisp)
+  if (!gdisp)
     gdisp = &color_area_gdisp;
 
   cdd.old_nodes = gdisp->cd_list;
