@@ -1,3 +1,8 @@
+2003-06-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/user-install-dialog.c (user_install_dialog_create):
+	update copyright notice to "1995-2003". Fixes bug #116026.
+
 2003-06-26  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c: rewrote gimp_bezier_stroke_extend
