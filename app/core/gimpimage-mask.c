@@ -164,6 +164,9 @@ gimp_image_mask_invalidate (GimpImage *gimage)
 			  0, 0,
 			  GIMP_DRAWABLE (layer)->width,
 			  GIMP_DRAWABLE (layer)->height);
+
+  /*  invalidate the preview  */
+  GIMP_DRAWABLE (mask)->preview_valid = FALSE;
 }
 
 
@@ -417,9 +420,6 @@ gimp_image_mask_push_undo (GimpImage *gimage)
   undo_push_mask (gimage, mask);
 
   gimp_image_mask_invalidate (gimage);
-
-  /*  invalidate the preview  */
-  GIMP_DRAWABLE (mask)->preview_valid = FALSE;
 }
 
 void

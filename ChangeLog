@@ -1,5 +1,15 @@
 2002-08-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/undo.c: compress emissions of "mask_changed" and
+	"qmask_changed" across undo groups.
+
+	* app/core/gimpimage-mask.c: set GIMP_DRAWABLE(mask)->preview_valid
+	to FALSE in gimp_image_mask_invalidate(), not in
+	gimp_image_mask_push_undo(). Fixes selection preview rendering
+	after a mask undo.
+
+2002-08-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c: allocate all temporary
 	render bufs and check bufs large enough for GIMP_PREVIEW_MAX_SIZE
 	(which is 1024). Fixes crashes with too large navigation previews.

@@ -113,6 +113,8 @@ static gboolean mode_changed       = FALSE;
 static gboolean size_changed       = FALSE;
 static gboolean resolution_changed = FALSE;
 static gboolean unit_changed       = FALSE;
+static gboolean mask_changed       = FALSE;
+static gboolean qmask_changed      = FALSE;
 
 
 static void
@@ -386,6 +388,22 @@ pop_stack (GimpImage  *gimage,
 	      gimp_image_unit_changed (gimage);
 
 	      unit_changed = FALSE;
+	    }
+
+	  /*  If the mask_changed flag was set  */
+	  if (mask_changed)
+	    {
+	      gimp_image_mask_changed (gimage);
+
+	      mask_changed = FALSE;
+	    }
+
+	  /*  If the qmask_changed flag was set  */
+	  if (qmask_changed)
+	    {
+	      gimp_image_qmask_changed (gimage);
+
+	      qmask_changed = FALSE;
 	    }
 
 	  /* let others know that we just popped an action */
@@ -1195,7 +1213,7 @@ undo_pop_image_qmask (GimpImage *gimage,
   gimage->qmask_state = data->qmask;
   data->qmask         = tmp;
 
-  gimp_image_qmask_changed (gimage);
+  qmask_changed = TRUE;
 
   return TRUE;
 }
@@ -1427,6 +1445,7 @@ undo_pop_mask (GimpImage *gimage,
   else
     {
       mask_undo->channel->boundary_known = FALSE;
+      GIMP_DRAWABLE (mask_undo->channel)->preview_valid = FALSE;
     }
 
   if (mask_undo->tiles)
@@ -1456,7 +1475,7 @@ undo_pop_mask (GimpImage *gimage,
 
   if (mask_undo->channel == gimp_image_get_mask (gimage))
     {
-      gimp_image_mask_changed (gimage);
+      mask_changed = TRUE;
     }
   else
     {
