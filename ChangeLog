@@ -1,3 +1,7 @@
+2004-10-15  Sven Neumann  <sven@gimp.org>
+
+	* data/images/gimp-splash.png: new splash by Jimmac.
+
 2004-10-15  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/scatter_hsv.c: ported to GimpDrawablePreview, and
