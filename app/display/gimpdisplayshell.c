@@ -719,7 +719,7 @@ create_display_shell (GDisplay* gdisp,
   gdisp->cancelbutton = gtk_button_new_with_label("Cancel");
   gtk_box_pack_start (GTK_BOX (hbox), gdisp->cancelbutton, FALSE, TRUE, 0);
   gtk_widget_set_sensitive (gdisp->cancelbutton, FALSE);
-  
+
   /*  the popup menu  */
   gdisp->popup = image_popup_menu;
 

@@ -30,6 +30,7 @@ typedef struct _GimpBrushGenerated
   float hardness;     /* 0.0 - 1.0  */
   float angle;        /* in degrees */
   float aspect_ratio; /* y/x        */
+  int freeze;
   /*GSpline *profile_curve */ /* Some lazy day...  */
 } GimpBrushGenerated;
 
@@ -53,7 +54,8 @@ guint gimp_brush_generated_get_type (void);
 GimpBrushGenerated *gimp_brush_generated_new(float radius, float hardness,
 					     float angle, float aspect_ratio);
 
-void gimp_brush_generated_generate       (GimpBrushGenerated *brush);
+void gimp_brush_generated_freeze          (GimpBrushGenerated *brush);
+void gimp_brush_generated_thaw            (GimpBrushGenerated *brush);
 
 float gimp_brush_generated_set_radius     (GimpBrushGenerated* brush,
 					   float radius);

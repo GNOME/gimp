@@ -113,7 +113,7 @@ static MenuItem option_items[] =
 static ActionAreaItem action_items[] =
 {
   { "Close", brush_select_close_callback, NULL, NULL },
-  { "Refresh", brush_select_refresh_callback, NULL, NULL },
+  { "Refresh", brush_select_refresh_callback, NULL, NULL }
 };
 
 static double old_opacity;
@@ -323,6 +323,7 @@ brush_select_new ()
   /*  render the brushes into the newly created image structure  */
   display_brushes (bsp);
 
+  /*  add callbacks to keep the display area current  */
   gimp_list_foreach(GIMP_LIST(brush_list), (GFunc)connect_signals_to_brush,
 		    bsp);
   gtk_signal_connect (GTK_OBJECT (brush_list), "add",

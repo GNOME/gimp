@@ -1,3 +1,12 @@
+Wed Jul 15 04:55:30 PDT 1998 Jay Cox <jaycox@earthlink.net>
+
+	* app/gimpbrushgenerated.c
+	* app/gimpbrushgenerated.h
+	Added freeze/thaw methods
+	
+	* app/brush_edit.c
+	display a preview in the brush_edit window
+
 Tue Jul 14 19:22:46 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* acconfig.h

@@ -21,7 +21,18 @@
 #include "appenv.h"
 #include "gimpbrushgenerated.h"
 #include "brush_edit.h"
+#include "actionarea.h"
+#include "math.h"
 
+
+static void
+brush_edit_close_callback (GtkWidget *w, void *data);
+
+/*  the action area structure  */
+static ActionAreaItem action_items[] =
+{
+  { "Close", brush_edit_close_callback, NULL, NULL }
+};
 
 static void
 update_brush_callback (GtkAdjustment *adjustment,
@@ -37,6 +48,7 @@ update_brush_callback (GtkAdjustment *adjustment,
        || (begw->angle_data->value
 	   !=gimp_brush_generated_get_angle(begw->brush))))
   {
+    gimp_brush_generated_freeze (begw->brush);
     gimp_brush_generated_set_radius       (begw->brush,
 					   begw->radius_data->value);
     gimp_brush_generated_set_hardness     (begw->brush,
@@ -45,16 +57,75 @@ update_brush_callback (GtkAdjustment *adjustment,
 					   begw->aspect_ratio_data->value);
     gimp_brush_generated_set_angle        (begw->brush,
 					   begw->angle_data->value);
-    gimp_brush_generated_generate(begw->brush);
+    gimp_brush_generated_thaw (begw->brush);
   }
 }
 
-static int
+static gint
 brush_edit_delete_callback (GtkWidget *w,
 			    BrushEditGeneratedWindow *begw)
 {
   if (GTK_WIDGET_VISIBLE (w))
     gtk_widget_hide (w);
+  return TRUE;
+}
+
+static void
+brush_edit_clear_preview (BrushEditGeneratedWindow *begw)
+{
+  unsigned char * buf;
+  int i;
+
+  buf = (unsigned char *) g_malloc (sizeof (char) * begw->preview->requisition.width);
+
+  /*  Set the buffer to white  */
+  memset (buf, 255, begw->preview->requisition.width);
+
+  /*  Set the image buffer to white  */
+  for (i = 0; i < begw->preview->requisition.height; i++)
+    gtk_preview_draw_row (GTK_PREVIEW (begw->preview), buf, 0, i,
+			  begw->preview->requisition.width);
+
+  g_free (buf);
+}
+
+static gint 
+brush_edit_brush_dirty_callback(GimpBrush *brush,
+				BrushEditGeneratedWindow *begw)
+{
+  int x, y, width, yend, ystart, xo;
+  int scale;
+  gchar *src, *buf;
+
+  brush_edit_clear_preview (begw);
+
+  scale = MAX(ceil(brush->mask->width/(float)begw->preview->requisition.width),
+	      ceil(brush->mask->height/(float)begw->preview->requisition.height));
+
+  ystart = 0;
+  xo = begw->preview->requisition.width/2 - brush->mask->width/(2*scale);
+  ystart = begw->preview->requisition.height/2 - brush->mask->height/(2*scale);
+  yend = ystart + brush->mask->height/(scale);
+  width = BOUNDS (brush->mask->width/scale, 0, begw->preview->requisition.width);
+
+  buf = g_new (gchar, width);
+  src = (gchar *)temp_buf_data (brush->mask);
+
+  for (y = ystart; y < yend; y++)
+  {
+    /*  Invert the mask for display.  We're doing this because
+     *  a value of 255 in the  mask means it is full intensity.
+     *  However, it makes more sense for full intensity to show
+     *  up as black in this brush preview window...
+       */
+    for (x = 0; x < width; x++)
+      buf[x] = 255 - src[x*scale];
+    gtk_preview_draw_row (GTK_PREVIEW (begw->preview), (guchar *)buf, xo, y,
+			  width);
+    src += brush->mask->width*scale;
+  }
+  g_free(buf);
+  gtk_widget_draw(begw->preview, NULL);
   return TRUE;
 }
 
@@ -64,10 +135,19 @@ brush_edit_generated_set_brush(BrushEditGeneratedWindow *begw,
 {
   GimpBrushGenerated *brush = 0;
   if (!GIMP_IS_BRUSH_GENERATED(gbrush))
+  {
+    if (GTK_WIDGET_VISIBLE (begw->shell))
+      gtk_widget_hide (begw->shell);
     return;
+  }
   brush = GIMP_BRUSH_GENERATED(gbrush);
+  if (begw->brush)
+    gtk_signal_disconnect_by_data(GTK_OBJECT(begw->brush), begw);
   if (begw)
   {
+    gtk_signal_connect(GTK_OBJECT (brush), "dirty",
+		       GTK_SIGNAL_FUNC(brush_edit_brush_dirty_callback),
+		       begw);
     begw->brush = NULL;
     gtk_adjustment_set_value(GTK_ADJUSTMENT(begw->radius_data),
 			     gimp_brush_generated_get_radius (brush));
@@ -78,6 +158,7 @@ brush_edit_generated_set_brush(BrushEditGeneratedWindow *begw,
     gtk_adjustment_set_value(GTK_ADJUSTMENT(begw->aspect_ratio_data),
 			     gimp_brush_generated_get_aspect_ratio(brush));
     begw->brush = brush;
+    brush_edit_brush_dirty_callback(GIMP_BRUSH(brush), begw);
   }
 }
 
@@ -86,14 +167,14 @@ brush_edit_generated_new ()
 {
   BrushEditGeneratedWindow *begw ;
   GtkWidget *vbox;
-  GtkWidget *sbar;
   GtkWidget *label;
   GtkWidget *slider;
   GtkWidget *table;
 
-  GtkWidget *button1, *button2;
+
 
   begw = g_malloc (sizeof (BrushEditGeneratedWindow));
+  begw->brush = NULL;
   begw->redraw = TRUE;
 
   begw->shell = gtk_dialog_new ();
@@ -132,8 +213,9 @@ brush_edit_generated_new ()
 
   /* brush radius scale */
   label = gtk_label_new ("Radius:");
-  gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_RIGHT);
-  gtk_table_attach(GTK_TABLE (table), label, 0, 1, 0, 1, 0, 0, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
+/*  gtk_table_attach(GTK_TABLE (table), label, 0, 1, 0, 1, 0, 0, 0, 0); */
+  gtk_table_attach(GTK_TABLE (table), label, 0, 1, 0, 1, 3, 0, 0, 0);
   begw->radius_data = GTK_ADJUSTMENT (gtk_adjustment_new (10.0, 0.0, 100.0, 0.1, 1.0, 0.0));
   slider = gtk_hscale_new (begw->radius_data);
   gtk_table_attach_defaults(GTK_TABLE (table), slider, 1, 2, 0, 1);
@@ -148,7 +230,7 @@ brush_edit_generated_new ()
   /* brush hardness scale */
   
   label = gtk_label_new ("Hardness:");
-  gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_RIGHT);
+  gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE (table), label, 0, 1, 1, 2, 0, 0, 0, 0);
   begw->hardness_data = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 1.0, 0.01, 0.01, 0.0));
   slider = gtk_hscale_new (begw->hardness_data);
@@ -164,7 +246,7 @@ brush_edit_generated_new ()
   /* brush aspect ratio scale */
   
   label = gtk_label_new ("Aspect Ratio:");
-  gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE (table), label, 0, 1, 2, 3, 0, 0, 0, 0);
   begw->aspect_ratio_data = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 1.0, 20.0, 0.1, 1.0, 0.0));
   slider = gtk_hscale_new (begw->aspect_ratio_data);
@@ -180,7 +262,7 @@ brush_edit_generated_new ()
   /* brush angle scale */
 
   label = gtk_label_new ("Angle:");
-  gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE (table), label, 0, 1, 3, 4, 0, 0, 0, 0);
   begw->angle_data = GTK_ADJUSTMENT (gtk_adjustment_new (00.0, 0.0, 180.0, 0.1, 1.0, 0.0));
   slider = gtk_hscale_new (begw->angle_data);
@@ -197,9 +279,21 @@ brush_edit_generated_new ()
   gtk_table_set_col_spacing(GTK_TABLE (table), 0, 3);
   gtk_widget_show (table);
 
+  /*  The action area  */
+  action_items[0].user_data = begw;
+  build_action_area (GTK_DIALOG (begw->shell), action_items, 1, 0);
+
   gtk_widget_show (vbox);
   gtk_widget_show (begw->shell);
 
 
   return begw;
+}
+
+static void
+brush_edit_close_callback (GtkWidget *w, void *data)
+{
+  BrushEditGeneratedWindow *begw = (BrushEditGeneratedWindow *)data;
+  if (GTK_WIDGET_VISIBLE (begw->shell))
+    gtk_widget_hide (begw->shell);
 }

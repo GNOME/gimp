@@ -26,6 +26,9 @@
 
 #define OVERSAMPLING 5
 
+static void
+gimp_brush_generated_generate(GimpBrushGenerated *brush);
+
 static GimpObjectClass* parent_class;
 
 static void
@@ -53,6 +56,7 @@ gimp_brush_generated_init(GimpBrushGenerated *brush)
   brush->hardness      = 0.0;
   brush->angle         = 0.0;
   brush->aspect_ratio  = 1.0;
+  brush->freeze        = 0;
 }
 
 guint gimp_brush_generated_get_type(void)
@@ -101,6 +105,27 @@ GimpBrushGenerated *gimp_brush_generated_new(float radius, float hardness,
 }
 
 void
+gimp_brush_generated_freeze(GimpBrushGenerated *brush)
+{
+  g_return_if_fail (brush != NULL);
+  g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
+  
+  brush->freeze++;
+}
+
+void
+gimp_brush_generated_thaw(GimpBrushGenerated *brush)
+{
+  g_return_if_fail (brush != NULL);
+  g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
+  
+  if (brush->freeze > 0)
+    brush->freeze--;
+  if (brush->freeze == 0)
+    gimp_brush_generated_generate(brush);
+}
+
+void
 gimp_brush_generated_generate(GimpBrushGenerated *brush)
 {
   register GimpBrush *gbrush = NULL;
@@ -114,11 +139,11 @@ gimp_brush_generated_generate(GimpBrushGenerated *brush)
   double buffer[OVERSAMPLING];
   register double sum, c, s, tx, ty;
   int width, height;
-  if (!GIMP_IS_BRUSH_GENERATED(brush))
-  {
-    g_message("call to gimp_brush_generated_generate on non generated brush");
+  g_return_if_fail (brush != NULL);
+  g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
+  
+  if (brush->freeze) /* if we are frozen defer rerendering till later */
     return;
-  }
   gbrush = GIMP_BRUSH(brush);
   if (gbrush->mask)
   {
@@ -209,7 +234,11 @@ gimp_brush_generated_set_radius (GimpBrushGenerated* brush, float radius)
     radius = 0.0;
   else if(radius > 32767.0)
     radius = 32767.0;
+  if (radius == brush->radius)
+    return radius;
   brush->radius = radius;
+  if (!brush->freeze)
+    gimp_brush_generated_generate(brush);
   return brush->radius;
 }
 
@@ -221,7 +250,11 @@ gimp_brush_generated_set_hardness (GimpBrushGenerated* brush, float hardness)
     hardness = 0.0;
   else if(hardness > 1.0)
     hardness = 1.0;
+  if (brush->hardness == hardness)
+    return hardness;
   brush->hardness = hardness;
+  if (!brush->freeze)
+    gimp_brush_generated_generate(brush);
   return brush->hardness;
 }
 
@@ -233,7 +266,11 @@ gimp_brush_generated_set_angle (GimpBrushGenerated* brush, float angle)
     angle = -1.0 * fmod(angle, 180.0);
   else if(angle > 180.0)
     angle = fmod(angle, 180.0);
+  if (brush->angle == angle)
+    return angle;
   brush->angle = angle;
+  if (!brush->freeze)
+    gimp_brush_generated_generate(brush);
   return brush->angle;
 }
 
@@ -245,7 +282,11 @@ gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated* brush, float ratio)
     ratio = 1.0;
   else if(ratio > 1000)
     ratio = 1000;
+  if (brush->aspect_ratio == ratio)
+    return ratio;
   brush->aspect_ratio = ratio;
+  if (!brush->freeze)
+    gimp_brush_generated_generate(brush);
   return brush->aspect_ratio;
 }
 
