@@ -112,7 +112,7 @@ COMMENT    :
 -----------
 NAME       : blinds
 AUTHOR     : Andy Thomas
-MAINTAINER : 
+MAINTAINER : Andy Thomas alt@gimp.org
 SIZE       :  29.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -358,9 +358,9 @@ COMMENT    :
 -----------
 NAME       : gfig
 AUTHOR     : Andy Thomas
-MAINTAINER : 
+MAINTAINER : Andy Thomas alt@gimp.org
 SIZE       : 312.2 kB  in  1 file  (only C files counted)
-COMMENT    : 
+COMMENT    : Could do with a code splitting & UI tidyup.
 -----------
 NAME       : gflare
 AUTHOR     : Eiichi Takamori
@@ -664,7 +664,7 @@ COMMENT    :
 -----------
 NAME       : plugindetails
 AUTHOR     : Andy Thomas
-MAINTAINER : 
+MAINTAINER : Andy Thomas alt@gimp.org
 SIZE       :  30.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -766,7 +766,7 @@ COMMENT    :
 -----------
 NAME       : sel2path
 AUTHOR     : Andy Thomas
-MAINTAINER : 
+MAINTAINER : Andy Thomas alt@gimp.org
 SIZE       : 153.0 kB  in  9 files (only C files counted)
 COMMENT    : 
 -----------
@@ -880,7 +880,7 @@ COMMENT    :
 -----------
 NAME       : tileit
 AUTHOR     : Andy Thomas
-MAINTAINER : 
+MAINTAINER : Andy Thomas alt@gimp.org
 SIZE       :  34.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------

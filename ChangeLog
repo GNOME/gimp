@@ -1,3 +1,15 @@
+Wed Jan  5 21:35:14 GMT 2000 Andy Thomas <alt@gimp.org>
+
+	* PLUGIN_MAINTAINERS
+
+	Added my name to:-
+
+	gfig (yes I know its one large file & its UI needs work)
+	blinds
+	plugindetails
+	sel2path
+	tileit
+
 Wed Jan  5 21:41:26 CET 2000  Marc Lehmann <pcg@goof.com>
 
 	* README.i18n: fixed confusing "prototype" for N_.
