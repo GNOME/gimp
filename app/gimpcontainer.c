@@ -291,8 +291,8 @@ gimp_container_add (GimpContainer *container,
 
   if (gimp_container_have (container, object))
     {
-      g_warning ("%s(): container already contains object %p",
-		 G_GNUC_FUNCTION, object);
+      g_warning ("%s(): container %p already contains object %p",
+		 G_GNUC_FUNCTION, container, object);
       return FALSE;
     }
 
@@ -347,8 +347,8 @@ gimp_container_remove (GimpContainer *container,
 
   if (! gimp_container_have (container, object))
     {
-      g_warning ("%s(): container does not contains object %p",
-		 G_GNUC_FUNCTION, object);
+      g_warning ("%s(): container %p does not contain object %p",
+		 G_GNUC_FUNCTION, container, object);
       return FALSE;
     }
 
@@ -394,6 +394,36 @@ gimp_container_remove (GimpContainer *container,
 }
 
 gboolean
+gimp_container_insert (GimpContainer *container,
+		       GimpObject    *object,
+		       gint           index)
+{
+  g_return_val_if_fail (container != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (GTK_CHECK_TYPE (object, container->children_type),
+			FALSE);
+
+  g_return_val_if_fail (index >= -1 &&
+			index <= container->num_children, FALSE);
+
+  if (gimp_container_have (container, object))
+    {
+      g_warning ("%s(): container %p already contains object %p",
+		 G_GNUC_FUNCTION, container, object);
+      return FALSE;
+    }
+
+  if (gimp_container_add (container, object))
+    {
+      return gimp_container_reorder (container, object, index);
+    }
+
+  return FALSE;
+}
+
+gboolean
 gimp_container_reorder (GimpContainer *container,
 			GimpObject    *object,
 			gint           new_index)
@@ -410,8 +440,8 @@ gimp_container_reorder (GimpContainer *container,
 
   if (! gimp_container_have (container, object))
     {
-      g_warning ("%s(): container does not contains object %p",
-		 G_GNUC_FUNCTION, object);
+      g_warning ("%s(): container %p does not contain object %p",
+		 G_GNUC_FUNCTION, container, object);
       return FALSE;
     }
 

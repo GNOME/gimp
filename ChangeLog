@@ -1,5 +1,9 @@
 2001-02-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpcontainer.[ch] (gimp_container_insert): new function.
+
+2001-02-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/context_manager.c
 	* app/gimpdatafactory.c
 	* app/gimpdatalist.[ch]

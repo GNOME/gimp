@@ -90,6 +90,9 @@ gboolean     gimp_container_add                (GimpContainer       *container,
 						GimpObject          *object);
 gboolean     gimp_container_remove             (GimpContainer       *container,
 						GimpObject          *object);
+gboolean     gimp_container_insert             (GimpContainer       *container,
+						GimpObject          *object,
+						gint                 new_index);
 gboolean     gimp_container_reorder            (GimpContainer       *container,
 						GimpObject          *object,
 						gint                 new_index);
