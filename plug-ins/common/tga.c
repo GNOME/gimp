@@ -31,6 +31,11 @@
  */
 
 /*
+ * Modified August-November 2000, Nick Lamb <njl195@zepler.org.uk>
+ *   - Clean-up more code, avoid structure implementation dependency,
+ *   - Load more types of images reliably, reject others firmly
+ *   - This is not perfect, but I think it's much better. Test please!
+ *
  * Release 1.2, 1997-09-24, Gordon Matzigkeit <gord@gnu.ai.mit.edu>:
  *   - Bug fixes and source cleanups.
  *
@@ -51,9 +56,6 @@
  *
  *
  * TODO:
- *   - Handle loading images that aren't 8 bits per channel.
- *   - Maybe handle special features in developer and extension sections
- *     (the `save' dialogue would give access to them).
  *   - The GIMP stores the indexed alpha channel as a separate byte,
  *     one for each pixel.  The TGA file format spec requires that the
  *     alpha channel be stored as part of the colormap, not with each
@@ -62,11 +64,8 @@
  *     other than 0 and 255.  Find a workaround.
  */
 
-#define SAVE_ID_STRING "CREATOR: The GIMP's TGA Filter Version 1.2"
-
 /* Set these for debugging. */
 /* #define PROFILE 1 */
-/* #define VERBOSE 1 */
 
 #include "config.h"
 
@@ -112,57 +111,62 @@ static TgaSaveInterface tsint =
   FALSE                /*  run  */
 };
 
-struct tga_header
+
+ /* TRUEVISION-XFILE magic signature string */
+static guchar magic[18] = { 0x54, 0x52, 0x55, 0x45, 0x56, 0x49, 0x53,
+  0x49, 0x4f, 0x4e, 0x2d, 0x58, 0x46, 0x49, 0x4c, 0x45, 0x2e, 0x0 };
+
+typedef struct tga_info_struct
 {
   guint8 idLength;
   guint8 colorMapType;
 
-  /* The image type. */
+  guint8 imageType;
+  /* Known image types. */
 #define TGA_TYPE_MAPPED      1
 #define TGA_TYPE_COLOR       2
 #define TGA_TYPE_GRAY        3
-#define TGA_TYPE_MAPPED_RLE  9
-#define TGA_TYPE_COLOR_RLE  10
-#define TGA_TYPE_GRAY_RLE   11
-  guint8 imageType;
+
+  guint8 imageCompression;
+  /* Only known compression is RLE */
+#define TGA_COMP_NONE        0 
+#define TGA_COMP_RLE         1 
 
   /* Color Map Specification. */
   /* We need to separately specify high and low bytes to avoid endianness
      and alignment problems. */
-  guint8 colorMapIndexLo, colorMapIndexHi;
-  guint8 colorMapLengthLo, colorMapLengthHi;
+
+  guint16 colorMapIndex;
+  guint16 colorMapLength;
   guint8 colorMapSize;
 
   /* Image Specification. */
-  guint8 xOriginLo, xOriginHi;
-  guint8 yOriginLo, yOriginHi;
+  guint16 xOrigin;
+  guint16 yOrigin;
 
-  guint8 widthLo, widthHi;
-  guint8 heightLo, heightHi;
+  guint16 width;
+  guint16 height;
 
   guint8 bpp;
+  guint8 bytes;
 
-  /* Image descriptor.
-     3-0: attribute bpp
-     4:   left-to-right ordering
-     5:   top-to-bottom ordering
-     7-6: zero
-     */
-#define TGA_DESC_ABITS      0x0f
-#define TGA_DESC_HORIZONTAL 0x10
-#define TGA_DESC_VERTICAL   0x20
-  guint8 descriptor;
-};
+  guint8 alphaBits;
+  guint8 flipHoriz;
+  guint8 flipVert;
 
-static struct
-{
-  guint32 extensionAreaOffset;
-  guint32 developerDirectoryOffset;
-#define TGA_SIGNATURE "TRUEVISION-XFILE"
-  gchar signature[16];
-  gchar dot;
-  gchar null;
-} tga_footer;
+  /* Extensions (version 2) */
+
+/* Not all the structures described in the standard are transcribed here
+   only those which seem applicable to Gimp */
+
+  gchar authorName[41];
+  gchar comment[324];
+  guint month, day, year, hour, minute, second;
+  gchar jobName[41];
+  gchar softwareID[41];
+  guint pixelWidth, pixelHeight;  /* write dpi? */
+  gdouble gamma;
+} tga_info;
 
 
 /* Declare some local functions.
@@ -183,6 +187,9 @@ static gint   save_dialog          (void);
 static void   save_ok_callback     (GtkWidget *widget,
 				    gpointer   data);
 
+static gint32 ReadImage (FILE *fp, tga_info *info, gchar *filename);
+
+
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -193,10 +200,6 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 
 MAIN ()
-
-#ifdef VERBOSE
-static int verbose = VERBOSE;
-#endif
 
 static void
 query (void)
@@ -223,7 +226,8 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
     { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
     { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" },
-    { GIMP_PDB_INT32, "rle", "Enable RLE compression" }
+    { GIMP_PDB_INT32, "rle", "Use RLE compression" }
+
   } ;
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -251,13 +255,9 @@ query (void)
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_load_handler ("file_tga_load",
-			      "tga",
-			      "");
+  gimp_register_load_handler ("file_tga_load", "tga", "");
 		
-  gimp_register_save_handler       ("file_tga_save",
-				    "tga",
-				    "");
+  gimp_register_save_handler ("file_tga_save", "tga", "");
 }
 
 static void
@@ -284,11 +284,6 @@ run (gchar   *name,
   *return_vals  = values;
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-#ifdef VERBOSE
-  if (verbose)
-    printf ("TGA: RUN %s\n", name);
-#endif
 
   if (strcmp (name, "file_tga_load") == 0)
     {
@@ -406,23 +401,21 @@ run (gchar   *name,
 #endif
 }
 
-static gint32 ReadImage (FILE              *fp,
-			 struct tga_header *hdr,
-			 gchar             *filename);
-
 static gint32
 load_image (gchar *filename)
 {
   FILE *fp;
-  char * name_buf;
-  struct tga_header hdr;
+  gchar *name_buf;
+  tga_info info;
+  guchar header[18], footer[26], extension[495];
+  long offset;
 
   gint32 image_ID = -1;
 
   fp = fopen (filename, "rb");
   if (!fp)
     {
-      g_message ("TGA: can't open \"%s\"\n", filename);
+      g_message (_("TGA: can't open \"%s\"\n"), filename);
       return -1;
     }
 
@@ -431,590 +424,418 @@ load_image (gchar *filename)
   g_free (name_buf);
 
   /* Check the footer. */
-  if (fseek (fp, 0L - (sizeof (tga_footer)), SEEK_END)
-      || fread (&tga_footer, sizeof (tga_footer), 1, fp) != 1)
+  if (fseek (fp, -26L, SEEK_END)
+      || fread (footer, sizeof (footer), 1, fp) != 1)
     {
-      g_message ("TGA: Cannot read footer from \"%s\"\n", filename);
+      g_message (_("TGA: Cannot read footer from \"%s\"\n"), filename);
       return -1;
     }
 
   /* Check the signature. */
-#ifdef VERBOSE
-  if (memcmp (tga_footer.signature, TGA_SIGNATURE,
-	      sizeof (tga_footer.signature)) == 0)
+  if (memcmp (footer + 8, magic, sizeof(magic)) == 0)
     {
-      if (verbose)
-	printf ("TGA: found New TGA\n");
+      offset= footer[0] + (footer[1] * 256) + (footer[2] * 65536)
+                        + (footer[3] * 16777216);
+
+      if (fseek (fp, offset, SEEK_SET) ||
+         fread (extension, sizeof (extension), 1, fp) != 1)
+      {
+        g_message (_("TGA: Cannot read extension from \"%s\"\n"), filename);
+        return -1;
+      }
+
+      /* Eventually actually handle version 2 TGA here */
     }
-  else if (verbose)
-    printf ("TGA: found Original TGA\n");
-#endif
 
   if (fseek (fp, 0, SEEK_SET) ||
-      fread (&hdr, sizeof (hdr), 1, fp) != 1)
+      fread (header, sizeof (header), 1, fp) != 1)
     {
       g_message ("TGA: Cannot read header from \"%s\"\n", filename);
       return -1;
     }
 
-  /* Skip the image ID field. */
-  if (hdr.idLength && fseek (fp, hdr.idLength, SEEK_CUR))
+  switch (header[2]) {
+    case 1:
+      info.imageType= TGA_TYPE_MAPPED;
+      info.imageCompression= TGA_COMP_NONE;
+      break;
+    case 2:
+      info.imageType= TGA_TYPE_COLOR;
+      info.imageCompression= TGA_COMP_NONE;
+      break;
+    case 3:
+      info.imageType= TGA_TYPE_GRAY;
+      info.imageCompression= TGA_COMP_NONE;
+      break;
+
+    case 9:
+      info.imageType= TGA_TYPE_MAPPED;
+      info.imageCompression= TGA_COMP_RLE;
+      break;
+    case 10:
+      info.imageType= TGA_TYPE_COLOR;
+      info.imageCompression= TGA_COMP_RLE;
+      break;
+    case 11:
+      info.imageType= TGA_TYPE_GRAY;
+      info.imageCompression= TGA_COMP_RLE;
+      break;
+
+    default:
+      info.imageType= 0;
+  }
+
+  info.idLength= header[0];
+  info.colorMapType= header[1];
+
+  info.colorMapIndex= header[3] + header[4] * 256;
+  info.colorMapLength= header[5] + header[6] * 256;
+  info.colorMapSize= header[7];
+
+  info.xOrigin= header[8] + header[9] * 256;
+  info.yOrigin= header[10] + header[11] * 256;
+  info.width= header[12] + header[13] * 256;
+  info.height= header[14] + header[15] * 256;
+  
+  info.bpp= header[16];
+  info.bytes= (info.bpp + 7) / 8;
+  info.alphaBits= header[17] & 0x0f; /* Just the low 4 bits */
+  info.flipHoriz= (header[17] & 0x10) ? 1 : 0;
+  info.flipVert= (header[17] & 0x20) ? 0 : 1;
+
+  switch (info.imageType)
     {
-      g_message ("TGA: Cannot skip ID field in \"%s\"\n", filename);
+      case TGA_TYPE_MAPPED:
+        if (info.bpp != 8)
+          {
+            g_message ("TGA: Unhandled sub-format in \"%s\"\n", filename);
+            return -1;
+          }
+        break;
+      case TGA_TYPE_COLOR:
+        if (info.alphaBits == 0 && info.bpp == 32)
+          {
+            g_message ("TGA: Possibly incorrect alpha in \"%s\"\n", filename);
+            info.alphaBits = 8;
+          }
+        if (info.bpp != 16 && info.bpp != 24
+                     && (info.alphaBits != 8 || info.bpp != 32))
+          {
+            g_message ("TGA: Unhandled sub-format in \"%s\"\n", filename);
+            return -1;
+          }
+        break;
+      case TGA_TYPE_GRAY:
+        if (info.alphaBits == 0 && info.bpp == 16)
+          {
+            g_message ("TGA: Possibly incorrect alpha in \"%s\"\n", filename);
+            info.alphaBits = 8;
+          }
+        if (info.bpp != 8 && (info.alphaBits != 8 || info.bpp != 16))
+          {
+            g_message ("TGA: Unhandled sub-format in \"%s\"\n", filename);
+            return -1;
+          }
+        break;
+
+      default:
+        g_message ("TGA: Unknown image type for \"%s\"\n", filename);
+        return -1;
+    }
+
+  /* Plausible but unhandled formats */
+  if (info.bytes * 8 != info.bpp)
+    {
+      g_message ("TGA: No support yet for TGA with these parameters\n");
       return -1;
     }
 
-  image_ID = ReadImage (fp, &hdr, filename);
+  /* Check that we have a color map only when we need it. */
+  if (info.imageType == TGA_TYPE_MAPPED && info.colorMapType != 1)
+    {
+      g_message ("TGA: indexed image has invalid color map type %d\n",
+                  info.colorMapType);
+      return -1;
+    }
+  else if (info.imageType != TGA_TYPE_MAPPED && info.colorMapType != 0)
+    {
+      g_message ("TGA: non-indexed image has invalid color map type %d\n",
+                  info.colorMapType);
+      return -1;
+    }
+
+  /* Skip the image ID field. */
+  if (info.idLength && fseek (fp, info.idLength, SEEK_CUR))
+    {
+      g_message ("TGA: File is truncated or corrupted \"%s\"\n", filename);
+      return -1;
+    }
+
+  image_ID = ReadImage (fp, &info, filename);
   fclose (fp);
   return image_ID;
 }
 
-
-#ifdef VERBOSE
-static int totbytes = 0;
-#endif
-
-static int
-std_fread (guchar *buf, 
-	   int     datasize, 
-	   int     nelems, 
-	   FILE   *fp)
-{
-#ifdef VERBOSE
-  if (verbose > 1)
-    {
-      totbytes += nelems * datasize;
-      printf ("TGA: std_fread %d (total %d)\n",
-	      nelems * datasize, totbytes);
-    }
-#endif
-
-  return fread (buf, datasize, nelems, fp);
-}
-
-static int
-std_fwrite (guchar *buf, 
-	    int     datasize, 
-	    int     nelems, 
-	    FILE   *fp)
-{
-#ifdef VERBOSE
-  if (verbose > 1)
-    {
-      totbytes += nelems * datasize;
-      printf ("TGA: std_fwrite %d (total %d)\n",
-	      nelems * datasize, totbytes);
-    }
-#endif
-
-  return fwrite (buf, datasize, nelems, fp);
-}
-
-#define RLE_PACKETSIZE 0x80
-
-/* Decode a bufferful of file. */
-static int
-rle_fread (guchar *buf, 
-	   int     datasize, 
-	   int     nelems, 
-	   FILE   *fp)
-{
-  static guchar *statebuf = 0;
-  static int statelen = 0;
-  static int laststate = 0;
-
-  int j, k;
-  int buflen, count, bytes;
-  guchar *p;
-#ifdef VERBOSE
-  int curbytes = totbytes;
-#endif
-
-  /* Scale the buffer length. */
-  buflen = nelems * datasize;
-
-  j = 0;
-  while (j < buflen)
-    {
-      if (laststate < statelen)
-	{
-	  /* Copy bytes from our previously decoded buffer. */
-	  bytes = MIN (buflen - j, statelen - laststate);
-	  memcpy (buf + j, statebuf + laststate, bytes);
-	  j += bytes;
-	  laststate += bytes;
-
-	  /* If we used up all of our state bytes, then reset them. */
-	  if (laststate >= statelen)
-	    {
-	      laststate = 0;
-	      statelen = 0;
-	    }
-
-	  /* If we filled the buffer, then exit the loop. */
-	  if (j >= buflen)
-	    break;
-	}
-
-      /* Decode the next packet. */
-      count = fgetc (fp);
-      if (count == EOF)
-	{
-#ifdef VERBOSE
-	  if (verbose)
-	    printf ("TGA: hit EOF while looking for count\n");
-#endif
-	  return j / datasize;
-	}
-
-      /* Scale the byte length to the size of the data. */
-      bytes = ((count & ~RLE_PACKETSIZE) + 1) * datasize;
-
-      if (j + bytes <= buflen)
-	{
-	  /* We can copy directly into the image buffer. */
-	  p = buf + j;
-	}
-      else {
-#if defined(PROFILE) || defined(VERBOSE)
-	printf ("TGA: needed to use statebuf for %d bytes\n", buflen - j);
-#endif
-	/* Allocate the state buffer if we haven't already. */
-	if (!statebuf)
-	  statebuf = (guchar *) g_malloc (RLE_PACKETSIZE * datasize);
-	p = statebuf;
+static void rle_write(FILE *fp, guchar *buffer, guint width, guint bytes) {
+  int repeat= 0, direct= 0;
+  guchar *from= buffer;
+  int x;
+  
+  for (x= 1; x < width; ++x) {
+    if (memcmp(buffer, buffer + bytes, bytes)) {
+      /* next pixel is different */
+      if (repeat) {
+        putc(128 + repeat, fp);
+        fwrite(from, bytes, 1, fp);
+        from= buffer+ bytes; /* point to first different pixel */
+        repeat= 0; direct= 0;
+      } else {
+        direct+= 1;
       }
-
-      if (count & RLE_PACKETSIZE)
-	{
-	  /* Fill the buffer with the next value. */
-	  if (fread (p, datasize, 1, fp) != 1)
-	    {
-#ifdef VERBOSE
-	      if (verbose)
-		printf ("TGA: EOF while reading %d/%d element RLE packet\n",
-			bytes, datasize);
-#endif
-	      return j / datasize;
-	    }
-
-	  /* Optimized case for single-byte encoded data. */
-	  if (datasize == 1)
-	    memset (p + 1, *p, bytes - 1);
-	  else
-	    for (k = datasize; k < bytes; k += datasize)
-	      memcpy (p + k, p, datasize);
-	}
-      else
-	{
-	  /* Read in the buffer. */
-	  if (fread (p, bytes, 1, fp) != 1)
-	    {
-#ifdef VERBOSE
-	      if (verbose)
-		printf ("TGA: EOF while reading %d/%d element raw packet\n",
-			bytes, datasize);
-#endif
-	      return j / datasize;
-	    }
-	}
-
-#ifdef VERBOSE
-      if (verbose > 1)
-	{
-	  totbytes += bytes;
-	  if (verbose > 2)
-	    printf ("TGA: %s packet %d/%d\n",
-		    (count & RLE_PACKETSIZE) ? "RLE" : "raw",
-		    bytes, totbytes);
-	}
-#endif
-
-      /* We may need to copy bytes from the state buffer. */
-      if (p == statebuf)
-	statelen = bytes;
-      else
-	j += bytes;
+    } else {
+      /* next pixel is the same */
+      if (direct) {
+        putc(direct - 1, fp);
+        fwrite(from, bytes, direct, fp);
+        from= buffer; /* point to first identical pixel */
+        direct= 0; repeat= 1;
+      } else {
+        repeat+= 1;
+      }
     }
-
-#ifdef VERBOSE
-  if (verbose > 1)
-    {
-      printf ("TGA: rle_fread %d/%d (total %d)\n",
-	      nelems * datasize, totbytes - curbytes, totbytes);
+    if (repeat == 128) {
+        putc(255, fp);
+        fwrite(from, bytes, 1, fp);
+        from= buffer+ bytes;
+        direct= 0; repeat= 0;
+    } else if (direct == 128) {
+        putc(127, fp);
+        fwrite(from, bytes, direct, fp);
+        from= buffer+ bytes;
+        direct= 0; repeat= 0;
     }
-#endif
-  return nelems;
+    buffer+= bytes;
+  }
+
+  if (repeat > 0) {
+    putc(128 + repeat, fp);
+    fwrite(from, bytes, 1, fp);
+  } else {
+    putc(direct, fp);
+    fwrite(from, bytes, direct + 1, fp);
+  }
+
 }
 
+static int rle_read(FILE *fp, guchar *buffer, tga_info *info) {
 
-/* This function is stateless, which means that we always finish packets
-   on buffer boundaries.  As a beneficial side-effect, rle_fread
-   never has to allocate a state buffer when it loads our files, provided
-   it is called using the same buffer lengths!
+  static int repeat= 0, direct= 0;
+  static guchar sample[4];
+  int head;
+  int x, k;
 
-   So, we get better compression than line-by-line encoders, and better
-   loading performance than whole-stream images. */
-/* RunLength Encode a bufferful of file. */
-static int
-rle_fwrite (guchar *buf, 
-	    int     datasize, 
-	    int     nelems, 
-	    FILE   *fp)
-{
-  /* Now runlength-encode the whole buffer. */
-  int count, j, buflen;
-  guchar *begin;
+  for (x= 0; x < info->width; x++) {
 
-#ifdef VERBOSE
-  int curbytes = totbytes;
-#endif
-
-  /* Scale the buffer length. */
-  buflen = datasize * nelems;
-
-  begin = buf;
-  j = datasize;
-  while (j < buflen)
-    {
-      /* BUF[J] is our lookahead element, BEGIN is the beginning of this
-	 run, and COUNT is the number of elements in this run. */
-      if (memcmp (buf + j, begin, datasize) == 0)
-	{
-	  /* We have a run of identical characters. */
-	  count = 1;
-	  do
-	    {
-	      j += datasize;
-	      count ++;
-	    }
-	  while (j < buflen && count < RLE_PACKETSIZE &&
-		 memcmp (buf + j, begin, datasize) == 0);
-
-	  /* J now either points to the beginning of the next run,
-	     or close to the end of the buffer. */
-
-	  /* Write out the run. */
-	  if (fputc ((count - 1) | RLE_PACKETSIZE, fp) == EOF ||
-	      fwrite (begin, datasize, 1, fp) != 1)
-	    return 0;
-
-#ifdef VERBOSE
-	  if (verbose > 1)
-	    {
-	      totbytes += count * datasize;
-	      if (verbose > 2)
-		printf ("TGA: RLE packet %d/%d\n", count * datasize, totbytes);
-	    }
-#endif
-	}
-      else
-	{
-	  /* We have a run of raw characters. */
-	  count = 0;
-	  do
-	    {
-	      j += datasize;
-	      count ++;
-	    }
-	  while (j < buflen && count < RLE_PACKETSIZE &&
-		 memcmp (buf + j - datasize, buf + j, datasize) != 0);
-
-	  /* Back up to the previous character. */
-	  j -= datasize;
-
-	  /* J now either points to the beginning of the next run,
-	     or at the end of the buffer. */
-
-	  /* Write out the raw packet. */
-	  if (fputc (count - 1, fp) == EOF ||
-	      fwrite (begin, datasize, count, fp) != count)
-	    return 0;
-
-#ifdef VERBOSE
-	  if (verbose > 1)
-	    {
-	      totbytes += count * datasize;
-	      if (verbose > 2)
-		printf ("TGA: raw packet %d/%d\n", count * datasize, totbytes);
-	    }
-#endif
-	}
-
-      /* Set the beginning of the next run and the next lookahead. */
-      begin = buf + j;
-      j += datasize;
+    if (repeat == 0 && direct == 0) {
+      head= getc(fp);
+      if (head == EOF) {
+        return EOF;
+      } else if (head >= 128) {
+        repeat= head - 127;
+        if (fread(sample, info->bytes, 1, fp) < 1)
+          return EOF;
+      } else {
+        direct= head + 1;
+      }
     }
 
-  /* If we didn't encode all the elements, write one last packet. */
-  if (begin < buf + buflen)
-    {
-#ifdef VERBOSE
-      if (verbose > 1)
-	{
-	  totbytes += datasize;
-	  if (verbose > 2)
-	    printf ("TGA: FINAL raw packet %d/%d\n", datasize, totbytes);
-	}
-#endif
-      if (fputc (0, fp) == EOF ||
-	  fwrite (begin, datasize, 1, fp) != 1)
-	return 0;
+    if (repeat > 0) {
+      for (k = 0; k < info->bytes; ++k) {
+        buffer[k]= sample[k];
+      }
+      repeat--;
+    } else /* direct > 0 */ {
+      if (fread(buffer, info->bytes, 1, fp) < 1)
+        return EOF;
+      direct--;
     }
 
-#ifdef VERBOSE
-  if (verbose > 1)
-    {
-      printf ("TGA: rle_fwrite %d/%d (total %d)\n",
-	      totbytes - curbytes, nelems * datasize, totbytes);
-    }
-#endif
-  return nelems;
+    buffer+= info->bytes;
+  }
+
+  return 0;
 }
 
+static void flip_line(guchar *buffer, tga_info *info) {
+  guchar temp, *alt;
+  int x, s;
 
+  alt= buffer + (info->bytes * (info->width - 1));
+  for (x= 0; x * 2 <= info->width; x++) {
+    for (s= 0; s < info->bytes; ++s) {
+      temp= buffer[s];
+      buffer[s]= alt[s];
+      alt[s]= temp;
+    }
+      
+    buffer+= info->bytes;
+    alt-= info->bytes;
+  }
 
+}
+
+/* Some people write 16-bit RGB TGA files. The spec would probably
+   allow 27-bit RGB too, for what it's worth, but I won't fix that
+   unless someone actually provides an existence proof */
+
+static void upsample(guchar *dest, guchar *src, guint width, guint bytes) {
+  int x;
+  
+  for (x= 0; x < width; x++) {
+
+    dest[0]= ((src[1] << 1) & 0xf8);
+    dest[0]+= (dest[0] >> 5);
+
+    dest[1]= ((src[0] & 0xe0) >> 2) + ((src[1] & 0x03) << 6);
+    dest[1]+= (dest[1] >> 5);
+
+    dest[2]= ((src[0] << 3) & 0xf8);
+    dest[2]+= (dest[2] >> 5);
+
+    dest+= 3;
+    src+= bytes;
+  }
+}
+
+static void bgr2rgb(guchar *dest, guchar *src,
+                    guint width, guint bytes, guint alpha) {
+  guint x;
+
+  if (alpha) {
+    for (x= 0; x < width; x++) {
+      *(dest++)= src[2];
+      *(dest++)= src[1];
+      *(dest++)= src[0];
+      *(dest++)= src[3];
+
+      src+= bytes;
+    }
+  } else {
+    for (x= 0; x < width; x++) {
+      *(dest++)= src[2];
+      *(dest++)= src[1];
+      *(dest++)= src[0];
+
+      src+= bytes;
+    }
+  }
+}
+
+static void read_line(FILE *fp, guchar *row, guchar *buffer,
+                      tga_info *info, GimpDrawable *drawable) {
+
+  if (info->imageCompression == TGA_COMP_RLE) {
+    rle_read(fp, buffer, info);
+  } else {
+    fread(buffer, info->bytes, info->width, fp);
+  }
+
+  if (info->flipHoriz) {
+    flip_line(buffer, info);
+  }
+
+  if (info->imageType == TGA_TYPE_COLOR) {
+    if (info->bpp == 16) {
+      upsample(row, buffer, info->width, info->bytes);
+    } else {
+      bgr2rgb(row, buffer,info->width,info->bytes,info->alphaBits);
+    }
+  } else {
+    memcpy(row, buffer, info->width * drawable->bpp);
+  }
+}
 
 static gint32
-ReadImage (FILE              *fp, 
-	   struct tga_header *hdr, 
-	   char              *filename)
+ReadImage (FILE *fp, tga_info *info, char *filename)
 {
   static gint32 image_ID;
   gint32 layer_ID;
 
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
-  guchar *data, *buffer;
+  guchar *data, *buffer, *row;
   GimpImageType dtype;
   GimpImageBaseType itype;
-  guchar *alphas;
+  int i, y;
 
-  int width, height, bpp, abpp, pbpp, nalphas;
-  int i, j, k;
-  int pelbytes, tileheight, wbytes, bsize, npels, pels;
-  int rle, badread;
+  int max_tileheight, tileheight;
 
-  int (*myfread)(guchar *, int, int, FILE *);
+  guint cmap_bytes;
+  guchar tga_cmap[4 * 256], gimp_cmap[3 * 256];
 
-  /* Find out whether the image is horizontally or vertically reversed.
-     The GIMP likes things left-to-right, top-to-bottom. */
-  gchar horzrev = hdr->descriptor & TGA_DESC_HORIZONTAL;
-  gchar vertrev = !(hdr->descriptor & TGA_DESC_VERTICAL);
-
-  /* Reassemble the multi-byte values correctly, regardless of
-     host endianness. */
-  width = (hdr->widthHi << 8) | hdr->widthLo;
-  height = (hdr->heightHi << 8) | hdr->heightLo;
-
-  bpp = hdr->bpp;
-  abpp = hdr->descriptor & TGA_DESC_ABITS;
-
-  if (hdr->imageType == TGA_TYPE_COLOR ||
-      hdr->imageType == TGA_TYPE_COLOR_RLE)
-    pbpp = MIN (bpp / 3, 8) * 3;
-  else if (abpp < bpp)
-    pbpp = bpp - abpp;
-  else
-    pbpp = bpp;
-
-  if (abpp + pbpp > bpp)
+  switch (info->imageType)
     {
-      printf ("TGA: %d bit image, %d bit alpha is greater than %d total bits per pixel\n",
-	      pbpp, abpp, bpp);
-
-      /* Assume that alpha bits were set incorrectly. */
-      abpp = bpp - pbpp;
-      printf ("TGA: reducing to %d bit alpha\n", abpp);
-    }
-  else if (abpp + pbpp < bpp)
-    {
-      printf ("TGA: %d bit image, %d bit alpha is less than %d total bits per pixel\n",
-	      pbpp, abpp, bpp);
-
-      /* Again, assume that alpha bits were set incorrectly. */
-      abpp = bpp - pbpp;
-      printf ("TGA: increasing to %d bit alpha\n", abpp);
-    }
-
-  rle = 0;
-  switch (hdr->imageType)
-    {
-    case TGA_TYPE_MAPPED_RLE:
-      rle = 1;
     case TGA_TYPE_MAPPED:
       itype = GIMP_INDEXED;
 
-      /* Find the size of palette elements. */
-      pbpp = MIN (hdr->colorMapSize / 3, 8) * 3;
-      if (pbpp < hdr->colorMapSize)
-	abpp = hdr->colorMapSize - pbpp;
-      else
-	abpp = 0;
-
-#ifdef VERBOSE
-      if (verbose)
-	printf ("TGA: %d bit indexed image, %d bit alpha (%d bit indices)\n",
-		pbpp, abpp, bpp);
-#endif
-
-      if (bpp != 8)
-	{
-	  /* We can only cope with 8-bit indices. */
-	  printf ("TGA: index sizes other than 8 bits are unimplemented\n");
-	  return -1;
-	}
-
-      if (abpp)
+      if (info->alphaBits)
 	dtype = GIMP_INDEXEDA_IMAGE;
       else
 	dtype = GIMP_INDEXED_IMAGE;
       break;
 
-    case TGA_TYPE_GRAY_RLE:
-      rle = 1;
     case TGA_TYPE_GRAY:
       itype = GIMP_GRAY;
-#ifdef VERBOSE
-      if (verbose)
-	printf ("TGA: %d bit grayscale image, %d bit alpha\n",
-		pbpp, abpp);
-#endif
 
-      if (abpp)
+      if (info->alphaBits)
 	dtype = GIMP_GRAYA_IMAGE;
       else
 	dtype = GIMP_GRAY_IMAGE;
       break;
 
-    case TGA_TYPE_COLOR_RLE:
-      rle = 1;
     case TGA_TYPE_COLOR:
       itype = GIMP_RGB;
-#ifdef VERBOSE
-      if (verbose)
-	printf ("TGA: %d bit color image, %d bit alpha\n", pbpp, abpp);
-#endif
 
-      if (abpp)
+      if (info->alphaBits)
 	dtype = GIMP_RGBA_IMAGE;
       else
 	dtype = GIMP_RGB_IMAGE;
       break;
-
-    default:
-      printf ("TGA: unrecognized image type %d\n", hdr->imageType);
-      return -1;
     }
 
-  if ((abpp && abpp != 8) ||
-      ((itype == GIMP_RGB || itype == GIMP_INDEXED) && pbpp != 24) ||
-      (itype == GIMP_GRAY && pbpp != 8))
+  /* Handle colormap */
+
+  if (info->colorMapType == 1)
     {
-      /* FIXME: We haven't implemented bit-packed fields yet. */
-      printf ("TGA: channel sizes other than 8 bits are unimplemented\n");
-      return -1;
+      cmap_bytes= (info->colorMapSize + 7 ) / 8;
+      if (cmap_bytes <= 4 &&
+          fread (tga_cmap, info->colorMapLength * cmap_bytes, 1, fp) == 1)
+        {
+          if (info->colorMapSize == 32)
+            bgr2rgb(gimp_cmap, tga_cmap, info->colorMapLength, cmap_bytes, 1);
+          else if (info->colorMapSize == 24)
+            bgr2rgb(gimp_cmap, tga_cmap, info->colorMapLength, cmap_bytes, 0);
+          else if (info->colorMapSize == 16)
+            upsample(gimp_cmap, tga_cmap, info->colorMapLength, cmap_bytes);
+
+        }
+      else
+        {
+          g_message ("TGA: File is truncated or corrupted \"%s\"\n", filename);
+          return -1;
+        }
     }
 
-  /* Check that we have a color map only when we need it. */
-  if (itype == GIMP_INDEXED)
-    {
-      if (hdr->colorMapType != 1)
-	{
-	  printf ("TGA: indexed image has invalid color map type %d\n",
-		  hdr->colorMapType);
-	  return -1;
-	}
-    }
-  else if (hdr->colorMapType != 0)
-    {
-      printf ("TGA: non-indexed image has invalid color map type %d\n",
-	      hdr->colorMapType);
-      return -1;
-    }
-
-  image_ID = gimp_image_new (width, height, itype);
+  image_ID = gimp_image_new (info->width, info->height, itype);
   gimp_image_set_filename (image_ID, filename);
 
-  alphas = 0;
-  nalphas = 0;
-  if (hdr->colorMapType == 1)
-    {
-      /* We need to read in the colormap. */
-      int index, length, colors;
-      int tmp;
+  if (info->colorMapType == 1)
+    gimp_image_set_cmap(image_ID, gimp_cmap, info->colorMapLength);
 
-      guchar *cmap;
-
-      index = (hdr->colorMapIndexHi << 8) | hdr->colorMapIndexLo;
-      length = (hdr->colorMapLengthHi << 8) | hdr->colorMapLengthLo;
-
-#ifdef VERBOSE
-      if (verbose)
-	printf ("TGA: reading color map (%d + %d) * (%d bits)\n",
-		index, length, hdr->colorMapSize);
-#endif
-      if (length == 0)
-	{
-	  printf ("TGA: invalid color map length %d\n", length);
-	  gimp_image_delete (image_ID);
-	  return -1;
-	}
-
-      pelbytes = ROUNDUP_DIVIDE (hdr->colorMapSize, 8);
-      colors = length + index;
-      cmap = g_malloc (colors * pelbytes);
-
-      /* Zero the entries up to the beginning of the map. */
-      memset (cmap, 0, index * pelbytes);
-
-      /* Read in the rest of the colormap. */
-      if (fread (cmap + (index * pelbytes), pelbytes, length, fp) != length)
-	{
-	  printf ("TGA: error reading colormap (ftell == %ld)\n", ftell (fp));
-	  gimp_image_delete (image_ID);
-	  return -1;
-	}
-
-      /* If we have an alpha channel, then create a mapping to the alpha
-	 values. */
-      if (pelbytes > 3)
-	alphas = (guchar *) g_malloc (colors);
-
-      k = 0;
-      for (j = 0; j < colors * pelbytes; j += pelbytes)
-	{
-	  /* Swap from BGR to RGB. */
-	  tmp = cmap[j];
-	  cmap[k ++] = cmap[j + 2];
-	  cmap[k ++] = cmap[j + 1];
-	  cmap[k ++] = tmp;
-
-	  /* Take the alpha values out of the colormap. */
-	  if (alphas)
-	    alphas[nalphas ++] = cmap[j + 3];
-	}
-
-      /* If the last color was transparent, then omit it from the
-	 GIMP mapping. */
-      if (nalphas && alphas[nalphas - 1] == 0)
-	colors --;
-
-      /* Set the colormap. */
-      gimp_image_set_cmap (image_ID, cmap, colors);
-      g_free (cmap);
-
-      /* Now pretend as if we only have 8 bpp. */
-      abpp = 0;
-      pbpp = 8;
-    }
-
-  /* Continue initializing. */
   layer_ID = gimp_layer_new (image_ID,
 			     _("Background"),
-			     width, height,
-			     dtype,
-			     100,
+			     info->width, info->height,
+			     dtype, 100,
 			     GIMP_NORMAL_MODE);
 
   gimp_image_add_layer (image_ID, layer_ID, 0);
@@ -1022,144 +843,55 @@ ReadImage (FILE              *fp,
   drawable = gimp_drawable_get (layer_ID);
 
   /* Prepare the pixel region. */
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, TRUE, FALSE);
-
-  /* Calculate number of GIMP bytes per pixel. */
-  pelbytes = drawable->bpp;
-
-  /* Calculate TGA bytes per pixel. */
-  bpp = ROUNDUP_DIVIDE (pbpp + abpp, 8);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
+                        info->width, info->height, TRUE, FALSE);
 
   /* Allocate the data. */
-  tileheight = gimp_tile_height ();
-  data = (guchar *) g_malloc (width * tileheight * pelbytes);
+  max_tileheight = gimp_tile_height ();
+  data = (guchar *) g_malloc (info->width * max_tileheight * drawable->bpp);
+  buffer = (guchar *) g_malloc (info->width * info->bytes);
 
-  /* Maybe we need to reverse the data. */
-  buffer = 0;
-  if (horzrev || vertrev)
-    buffer = (guchar *) g_malloc (width * tileheight * pelbytes);
-
-  if (rle)
-    myfread = rle_fread;
-  else
-    myfread = std_fread;
-
-  wbytes = width * pelbytes;
-  badread = 0;
-  for (i = 0; i < height; i += tileheight)
+  if (info->flipVert)
     {
-      tileheight = MIN (tileheight, height - i);
+      for (i = 0; i < info->height; i += tileheight)
+        {
+          tileheight = i ? max_tileheight : (info->height % max_tileheight);
+          if (tileheight == 0) tileheight= max_tileheight;
 
-#ifdef VERBOSE
-      if (verbose > 1)
-	printf ("TGA: reading %dx(%d+%d)x%d pixel region\n", width,
-		(vertrev ? (height - (i + tileheight)) : i),
-		tileheight, pelbytes);
-#endif
+          for (y= 1; y <= tileheight; ++y)
+            {
+              row= data + (info->width * drawable->bpp * (tileheight - y));
+              read_line(fp, row, buffer, info, drawable);
+            }
 
-      npels = width * tileheight;
-      bsize = wbytes * tileheight;
-
-      /* Suck in the data one tileheight at a time. */
-      if (badread)
-	pels = 0;
-      else
-	pels = (*myfread) (data, bpp, npels, fp);
-
-      if (pels != npels)
-	{
-	  if (!badread)
-	    {
-	      /* Probably premature end of file. */
-	      printf ("TGA: error reading (ftell == %ld)\n", ftell (fp));
-	      badread = 1;
-	    }
-
-#if 0
-  verbose = 2;
-  printf ("TGA: debug %d\n", getpid ());
-  kill (getpid (), 19);
-#endif
-
-	  /* Fill the rest of this tile with zeros. */
-	  memset (data + (pels * bpp), 0, ((npels - pels) * bpp));
-	}
-
-      /* If we have indexed alphas, then set them. */
-      if (nalphas)
-	{
-	  /* Start at the end of the buffer, and work backwards. */
-	  k = (npels - 1) * bpp;
-	  for (j = bsize - pelbytes; j >= 0; j -= pelbytes)
-	    {
-	      /* Find the alpha for this index. */
-	      data[j + 1] = alphas[data[k]];
-	      data[j] = data[k --];
-	    }
-	}
-
-      if (pelbytes >= 3)
-	{
-	  /* Rearrange the colors from BGR to RGB. */
-	  int tmp;
-	  for (j = 0; j < bsize; j += pelbytes)
-	    {
-	      tmp = data[j];
-	      data[j] = data[j + 2];
-	      data[j + 2] = tmp;
-	    }
-	}
-
-
-      if (horzrev || vertrev)
-	{
-	  guchar *tmp;
-	  if (vertrev)
-	    {
-	      /* We need to mirror only vertically. */
-	      for (j = 0; j < bsize; j += wbytes)
-		memcpy (buffer + j,
-			data + bsize - (j + wbytes), wbytes);
-	    }
-	  else if (horzrev)
-	    {
-	      /* We need to mirror only horizontally. */
-	      for (j = 0; j < bsize; j += wbytes)
-		for (k = 0; k < wbytes; k += pelbytes)
-		  memcpy (buffer + k + j,
-			  data + (j + wbytes) - (k + pelbytes), pelbytes);
-	    }
-	  else
-	    {
-	      /* Completely reverse the pixels in the buffer. */
-	      for (j = 0; j < bsize; j += pelbytes)
-		memcpy (buffer + j,
-			data + bsize - (j + pelbytes), pelbytes);
-	    }
-
-	  /* Swap the buffers because we modified them. */
-	  tmp = buffer;
-	  buffer = data;
-	  data = tmp;
-	}
-
-      gimp_progress_update ((double) (i + tileheight) / (double) height);
-
-      /* If vertically reversed, put the data at the end. */
-      gimp_pixel_rgn_set_rect
-	(&pixel_rgn, data,
-	 0, (vertrev ? (height - (i + tileheight)) : i),
-	 width, tileheight);
+            gimp_progress_update((double) (i + tileheight)
+                               / (double) info->height);
+            gimp_pixel_rgn_set_rect(&pixel_rgn, data, 0, 
+                               info->height - i - tileheight,  
+                               info->width, tileheight);
+        }
     }
+  else
+    {
+      for (i = 0; i < info->height; i += max_tileheight)
+        {
+          tileheight = MIN (max_tileheight, info->height - i);
 
-  if (fgetc (fp) != EOF)
-    printf ("TGA: too much input data, ignoring extra...\n");
+          for (y= 0; y < tileheight; ++y)
+            {
+              row= data + (info->width * drawable->bpp * y);
+              read_line(fp, row, buffer, info, drawable);
+            }
+
+            gimp_progress_update((double) (i + tileheight)
+                               / (double) info->height);
+            gimp_pixel_rgn_set_rect(&pixel_rgn, data, 0, i, 
+                               info->width, tileheight);
+        }
+    }
 
   g_free (data);
   g_free (buffer);
-
-  if (alphas)
-    g_free (alphas);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_detach (drawable);
@@ -1169,24 +901,23 @@ ReadImage (FILE              *fp,
 
 
 static gint
-save_image (gchar  *filename,
-	    gint32  image_ID,
-	    gint32  drawable_ID)
+save_image (gchar *filename, gint32 image_ID, gint32 drawable_ID)
 {
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
   GimpImageType dtype;
   int width, height;
+
   FILE *fp;
   guchar *name_buf;
-  int i, j, k;
-  int npels, tileheight, pelbytes, bsize;
-  int transparent, status;
+  int tileheight, out_bpp, status= TRUE;
+  int i, row;
 
-  struct tga_header hdr;
+  guchar header[18], footer[26];
+  guchar *pixels, *data;
 
-  int (*myfwrite)(guchar *, int, int, FILE *);
-  guchar *data;
+  guint num_colors;
+  guchar *gimp_cmap;
 
   drawable = gimp_drawable_get(drawable_ID);
   dtype = gimp_drawable_type(drawable_ID);
@@ -1197,236 +928,119 @@ save_image (gchar  *filename,
   gimp_progress_init((char *)name_buf);
   g_free(name_buf);
 
-  memset (&hdr, 0, sizeof (hdr));
-  /* We like our images top-to-bottom, thank you! */
-  hdr.descriptor |= TGA_DESC_VERTICAL;
-
-  /* Choose the imageType based on our drawable and compression option. */
-  switch (dtype)
-    {
-    case GIMP_INDEXEDA_IMAGE:
-    case GIMP_INDEXED_IMAGE:
-      hdr.bpp = 8;
-      hdr.imageType = TGA_TYPE_MAPPED;
-      break;
-
-    case GIMP_GRAYA_IMAGE:
-      hdr.bpp = 8;
-      hdr.descriptor |= 8;
-    case GIMP_GRAY_IMAGE:
-      hdr.bpp += 8;
-      hdr.imageType = TGA_TYPE_GRAY;
-      break;
-
-    case GIMP_RGBA_IMAGE:
-      hdr.bpp = 8;
-      hdr.descriptor |= 8;
-    case GIMP_RGB_IMAGE:
-      hdr.bpp += 24;
-      hdr.imageType = TGA_TYPE_COLOR;
-      break;
-
-    default:
-      return FALSE;
-    }
-
-  if (tsvals.rle)
-    {
-      /* Here we take advantage of the fact that the RLE image type codes
-	 are exactly 8 greater than the non-RLE. */
-      hdr.imageType += 8;
-      myfwrite = rle_fwrite;
-    }
-  else
-    myfwrite = std_fwrite;
-
-  hdr.widthLo = (width & 0xff);
-  hdr.widthHi = (width >> 8);
-
-  hdr.heightLo = (height & 0xff);
-  hdr.heightHi = (height >> 8);
-
   if((fp = fopen(filename, "wb")) == NULL)
     {
       g_message ("TGA: can't create \"%s\"\n", filename);
       return FALSE;
     }
 
-  /* Mark our save ID. */
-  hdr.idLength = strlen (SAVE_ID_STRING);
+  header[0]= 0; /* No image identifier / description */
 
-  /* See if we have to write out the colour map. */
-  transparent = 0;
-  if (hdr.imageType == TGA_TYPE_MAPPED_RLE ||
-      hdr.imageType == TGA_TYPE_MAPPED)
-    {
-      guchar *cmap;
-      int colors;
-
-      hdr.colorMapType = 1;
-      cmap = gimp_image_get_cmap (image_ID, &colors);
-      if (colors > 256)
-	{
-	  g_message ("TGA: cannot handle colormap with more than 256 colors (got %d)\n", colors);
-	  return FALSE;
-	}
-
-      /* If we already have more than 256 colors, then ignore the
-	 alpha channel.  Otherwise, create an entry for any completely
-	 transparent pixels. */
-      if (dtype == GIMP_INDEXEDA_IMAGE && colors < 256)
-	{
-	  transparent = colors;
-	  hdr.colorMapSize = 32;
-	  hdr.colorMapLengthLo = ((colors + 1) & 0xff);
-	  hdr.colorMapLengthHi = ((colors + 1) >> 8);
-	}
-      else
-	{
-	  hdr.colorMapSize = 24;
-	  hdr.colorMapLengthLo = (colors & 0xff);
-	  hdr.colorMapLengthHi = (colors >> 8);
-	}
-
-      /* Write the header. */
-      if (fwrite(&hdr, sizeof (hdr), 1, fp) != 1)
-	return FALSE;
-      if (fwrite (SAVE_ID_STRING, hdr.idLength, 1, fp) != 1)
-	return FALSE;
-
-      pelbytes = ROUNDUP_DIVIDE (hdr.colorMapSize, 8);
-      if (transparent)
-	{
-	  guchar *newcmap;
-
-	  /* Reallocate our colormap to have an alpha channel and
-	     a fully transparent color. */
-	  newcmap = (guchar *) g_malloc ((colors + 1) * pelbytes);
-
-	  k = 0;
-	  for (j = 0; j < colors * 3; j += 3)
-	    {
-	      /* Rearrange from RGB to BGR. */
-	      newcmap[k ++] = cmap[j + 2];
-	      newcmap[k ++] = cmap[j + 1];
-	      newcmap[k ++] = cmap[j];
-
-	      /* Set to maximum opacity. */
-	      newcmap[k ++] = -1;
-	    }
-
-	  /* Add the transparent color. */
-	  memset (newcmap + k, 0, pelbytes);
-
-	  /* Write out the colormap. */
-	  if (fwrite (newcmap, pelbytes, colors + 1, fp) != colors + 1)
-	    return FALSE;
-	  g_free (newcmap);
-	}
-      else
-	{
-	  /* Rearrange the colors from RGB to BGR. */
-	  int tmp;
-	  for (j = 0; j < colors * pelbytes; j += pelbytes)
-	    {
-	      tmp = cmap[j];
-	      cmap[j] = cmap[j + 2];
-	      cmap[j + 2] = tmp;
-	    }
-
-	  /* Write out the colormap. */
-	  if (fwrite (cmap, pelbytes, colors, fp) != colors)
-	    return FALSE;
-	}
-
-      g_free (cmap);
+  if (dtype == GIMP_INDEXED_IMAGE || dtype == GIMP_INDEXEDA_IMAGE) {
+    gimp_cmap= gimp_image_get_cmap(image_ID, &num_colors);
+    header[1]= 1; /* cmap type */
+    header[2]= (tsvals.rle) ? 9 : 1;
+    header[3]= header[4]= 0; /* no offset */
+    header[5]= num_colors % 256;
+    header[6]= num_colors / 256; 
+    header[7]= 24; /* cmap size / bits */
+  } else {
+    header[1]= 0;
+    if (dtype == GIMP_RGB_IMAGE || dtype == GIMP_RGBA_IMAGE) {
+      header[2]= (tsvals.rle) ? 10 : 2;
+    } else {
+      header[2]= (tsvals.rle) ? 11 : 3;
     }
-  /* Just write the header. */
-  else
-    {
-      if (fwrite(&hdr, sizeof (hdr), 1, fp) != 1)
-	return FALSE;
-      if (fwrite (SAVE_ID_STRING, hdr.idLength, 1, fp) != 1)
-	return FALSE;
+
+    header[3]= header[4]= header[5]= header[6]= header[7]= 0;
+  }
+
+  header[8]= header[9]= 0; /* xorigin */
+  header[10]= header[11]= 0; /* yorigin */
+
+  header[12]= width % 256;
+  header[13]= width / 256;
+
+  header[14]= height % 256;
+  header[15]= height / 256;
+
+  switch (dtype) {
+  case GIMP_INDEXED_IMAGE:
+  case GIMP_GRAY_IMAGE:
+  case GIMP_INDEXEDA_IMAGE:
+    out_bpp= 1;
+    header[16]= 8; /* bpp */
+    header[17]= 0x20; /* alpha + orientation */
+    break;
+
+  case GIMP_GRAYA_IMAGE:
+    out_bpp= 2;
+    header[16]= 16; /* bpp */
+    header[17]= 0x28; /* alpha + orientation */
+    break;
+  case GIMP_RGB_IMAGE:
+    out_bpp= 3;
+    header[16]= 24; /* bpp */
+    header[17]= 0x20; /* alpha + orientation */
+    break;
+  case GIMP_RGBA_IMAGE:
+    out_bpp= 4;
+    header[16]= 32; /* bpp */
+    header[17]= 0x28; /* alpha + orientation */
+    break;
+  }
+
+  /* write header to front of file */
+  fwrite(header, sizeof(header), 1, fp);
+
+  if (dtype == GIMP_INDEXED_IMAGE || dtype == GIMP_INDEXEDA_IMAGE) {
+    /* write out palette */
+    for (i= 0; i < num_colors; ++i) {
+      fputc(gimp_cmap[(i * 3) + 2], fp);
+      fputc(gimp_cmap[(i * 3) + 1], fp);
+      fputc(gimp_cmap[(i * 3) + 0], fp);
     }
+  }
 
   /* Allocate a new set of pixels. */
   tileheight = gimp_tile_height ();
-  data = (guchar *) g_malloc(width * tileheight * drawable->bpp);
 
   gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
 
-  /* Write out the pixel data. */
-  pelbytes = ROUNDUP_DIVIDE (hdr.bpp, 8);
-  status = TRUE;
-  for (i = 0; i < height; i += tileheight)
+  pixels= g_new(guchar, width * drawable->bpp);
+  data= g_new(guchar, width * out_bpp);
+
+  for (row= 0; row < height; ++row)
     {
-      /* Get a horizontal slice of the image. */
-      tileheight = MIN(tileheight, height - i);
-      gimp_pixel_rgn_get_rect(&pixel_rgn, data, 0, i, width, tileheight);
+      gimp_pixel_rgn_get_rect(&pixel_rgn, pixels, 0, row, width, 1);
 
-#ifdef VERBOSE
-      if (verbose > 1)
-	printf ("TGA: writing %dx(%d+%d)x%d pixel region\n",
-		width, i, tileheight, pelbytes);
-#endif
+      if (dtype == GIMP_RGB_IMAGE) {
+        bgr2rgb(data, pixels, width, drawable->bpp, 0);
+      } else if (dtype == GIMP_RGBA_IMAGE) {
+        bgr2rgb(data, pixels, width, drawable->bpp, 1);
+      } else if (dtype == GIMP_INDEXEDA_IMAGE) {
+        for (i= 0; i < width; ++i) {
+          data[i]= pixels[i*2];
+        }
+      } else {
+        memcpy(data, pixels, width * drawable->bpp);
+      }
 
-      npels = width * tileheight;
-      bsize = npels * pelbytes;
-
-      /* If the GIMP's bpp does not match the TGA format, strip
-	 the excess bytes. */
-      if (drawable->bpp > pelbytes)
-	{
-	  int nbytes, difference, fullbsize;
-
-	  j = k = 0;
-	  fullbsize = npels * drawable->bpp;
-
-	  difference = drawable->bpp - pelbytes;
-	  while (j < fullbsize)
-	    {
-	      nbytes = 0;
-	      for (nbytes = 0; nbytes < pelbytes; nbytes ++)
-		/* Be careful to handle overlapping pixels. */
-		data[k ++] = data[j ++];
-
-	      /* If this is an indexed image, and data[j] (alpha
-		 channel) is zero, then we should write our transparent
-		 pixel's index. */
-	      if (dtype == GIMP_INDEXEDA_IMAGE && transparent && data[j] == 0)
-		data[k - 1] = transparent;
-
-	      /* Increment J to the next pixel. */
-	      j += difference;
-	    }
-	}
-
-      if (pelbytes >= 3)
-	{
-	  /* Rearrange the colors from RGB to BGR. */
-	  int tmp;
-	  for (j = 0; j < bsize; j += pelbytes)
-	    {
-	      tmp = data[j];
-	      data[j] = data[j + 2];
-	      data[j + 2] = tmp;
-	    }
-	}
-
-      if ((*myfwrite) (data, pelbytes, npels, fp) != npels)
-	{
-	  /* We have no choice but to break and truncate the file
-	     if we are writing with RLE. */
-	  status = FALSE;
-	  break;
-	}
-
-      gimp_progress_update ((double) (i + tileheight) / (double) height);
+      if (tsvals.rle) {
+        rle_write(fp, data, width, out_bpp);
+      } else {
+        fwrite(data, width * out_bpp, 1, fp);
+      }
+      gimp_progress_update ((double) row / (double) height);
     }
 
   gimp_drawable_detach (drawable);
   g_free (data);
+
+  /* footer must be the last thing written to file */
+  memset(footer, 0, 8); /* No extensions, no developer directory */
+  memcpy(footer + 8, magic, sizeof(magic)); /* magic signature */
+  fwrite(footer, sizeof(footer), 1, fp);
 
   fclose (fp);
   return status;

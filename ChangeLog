@@ -1,3 +1,7 @@
+2000-09-30  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/tga.c: Shiny new version. Report bugs to me.
+
 2000-11-02  Tor Lillqvist  <tml@iki.fi>
 
 	* user_install.bat: Don't copy gtkrc any longer, not used.
