@@ -1078,7 +1078,8 @@ msgstr ""
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
-msgstr "Muovi la voce selezionata in basso nell'indice<Shift> verso il basso"
+msgstr "Muovi la voce selezionata in basso nell'indice\n"
+"<Shift> verso il basso"
 
 #: app/docindex.c:126
 msgid "Remove the selected entry from the index"
@@ -4198,6 +4199,12 @@ msgid ""
 "You may want to save your images and restart GIMP\n"
 "to be on the safe side."
 msgstr ""
+"Plug-In bloccato: \"%s\"\n"
+"(%s)\n"
+"\n"
+"Il lancio del plugin potrebbe aver condizionato lo stato interno\n"
+"di GIMP. Dovreste salvare le immagini e riavviare il programma per"
+"maggior sicurezza."
 
 #: app/posterize.c:148
 msgid "Posterize does not operate on indexed drawables."
@@ -4384,7 +4391,7 @@ msgstr "Grande"
 
 #: app/preferences_dialog.c:1736
 msgid "Check Size:"
-msgstr "Dimensione scacco:"
+msgstr "Dimensione scacchiera:"
 
 #: app/preferences_dialog.c:1739
 msgid "8-Bit Displays"
@@ -4539,21 +4546,20 @@ msgid "Disable Cursor Updating"
 msgstr "Disabilita aggiornamento cursore"
 
 #: app/preferences_dialog.c:2081
-#, fuzzy
 msgid "Tool Icon"
-msgstr "Opzioni strumenti"
+msgstr "Icona strumenti"
 
 #: app/preferences_dialog.c:2083
 msgid "Tool Icon with Crosshair"
-msgstr ""
+msgstr "Icona strumenti con crosshair"
 
 #: app/preferences_dialog.c:2085
 msgid "Crosshair only"
-msgstr ""
+msgstr "Solo crosshair"
 
 #: app/preferences_dialog.c:2090
 msgid "Cursor Mode:"
-msgstr ""
+msgstr "Modalità cursore:"
 
 #: app/preferences_dialog.c:2096 app/preferences_dialog.c:2098
 #: app/tools.c:1492
@@ -4687,7 +4693,7 @@ msgstr "(Corrente %d x %d dpi"
 
 #: app/preferences_dialog.c:2409
 msgid "From windowing system"
-msgstr ""
+msgstr "Dal window system"
 
 #: app/preferences_dialog.c:2424
 msgid "Manually:"
@@ -5796,6 +5802,8 @@ msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
 msgstr ""
+"GIMP utilizza un file gtkrc aggiuntivo così è possibile\n"
+"dare un aspetto differente dalle altre applicazioni GTK."
 
 #: app/user_install.c:164
 msgid ""
@@ -6058,6 +6066,8 @@ msgid ""
 "Please wait while your personal\n"
 "GIMP directory is being created..."
 msgstr ""
+"Creazione della directory personale\n"
+"di GIMP. Si prega di attendere..."
 
 #: app/user_install.c:541
 msgid "GIMP User Installation"
