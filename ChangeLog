@@ -1,3 +1,10 @@
+Sun Jan 10 20:13:13 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/psd/psd.c: 
+        Greatly reduced memory requirements for layered image loading -
+        we now do just-in-time channel unpacking.  Some little
+        cleanups too.
+
 Sat Jan  9 21:24:20 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* autogen.sh: rework to do gcg by ourselves

@@ -1,5 +1,5 @@
 /*
- * PSD Plugin version 2.0.0
+ * PSD Plugin version 2.0.1
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
@@ -35,67 +35,68 @@
 /*
  * Revision history:
  *
- *  98.09.04 / v2.0.0 / Adam D. Moss
+ *  1999.01.10 / v2.0.1 / Adam D. Moss
+ *       Greatly reduced memory requirements for layered image loading -
+ *       we now do just-in-time channel unpacking.  Some little
+ *       cleanups too.
+ *
+ *  1998.09.04 / v2.0.0 / Adam D. Moss
  *       Now recognises and loads the new Guides extensions written
  *       by Photoshop 4 and 5.
  *
- *  98.07.31 / v1.9.9.9f / Adam D. Moss
+ *  1998.07.31 / v1.9.9.9f / Adam D. Moss
  *       Use OVERLAY_MODE if available.
  *
- *  98.07.31 / v1.9.9.9e / Adam D. Moss
+ *  1998.07.31 / v1.9.9.9e / Adam D. Moss
  *       Worked around some buggy PSD savers (suspect PS4 on Mac) - ugh.
  *       Fixed a bug when loading layer masks of certain dimensions.
  *
- *  98.05.04 / v1.9.9.9b / Adam D. Moss
+ *  1998.05.04 / v1.9.9.9b / Adam D. Moss
  *       Changed the Pascal-style string-reading stuff.  That fixed
  *       some file-padding problems.  Made all debugging output
  *       compile-time optional (please leave it enabled for now).
  *       Reduced memory requirements; still much room for improvement.
  *
- *  98.04.28 / v1.9.9.9 / Adam D. Moss
+ *  1998.04.28 / v1.9.9.9 / Adam D. Moss
  *       Fixed the correct channel interlacing of 'raw' flat images.
  *       Thanks to Christian Kirsch and Jay Cox for spotting this.
  *       Changed some of the I/O routines.
  *
- *  98.04.26 / v1.9.9.8 / Adam D. Moss
+ *  1998.04.26 / v1.9.9.8 / Adam D. Moss
  *       Implemented Aux-channels for layered files.  Got rid
  *       of <endian.h> nonsense.  Improved Layer Mask padding.
  *       Enforced num_layers/num_channels limit checks.
  *
- *  98.04.23 / v1.9.9.5 / Adam D. Moss
+ *  1998.04.23 / v1.9.9.5 / Adam D. Moss
  *       Got Layer Masks working, got Aux-channels working
  *       for unlayered files, fixed 'raw' channel loading, fixed
  *       some other mini-bugs, slightly better progress meters.
  *       Thanks to everyone who is helping with the testing!
  *
- *  98.04.21 / v1.9.9.1 / Adam D. Moss
+ *  1998.04.21 / v1.9.9.1 / Adam D. Moss
  *       A little cleanup.  Implemented Layer Masks but disabled
  *       them again - PS masks can be a different size to their
  *       owning layer, unlike those in GIMP.
  *
- *  98.04.19 / v1.9.9.0 / Adam D. Moss
+ *  1998.04.19 / v1.9.9.0 / Adam D. Moss
  *       Much happier now.
  *
- *  97.03.13 / v1.9.0 / Adam D. Moss
+ *  1997.03.13 / v1.9.0 / Adam D. Moss
  *       Layers, channels and masks, oh my.
  *       + Bugfixes & rearchitecturing.
  *
- *  97.01.30 / v1.0.12 / Torsten Martinsen
+ *  1997.01.30 / v1.0.12 / Torsten Martinsen
  *       Flat PSD image loading.
  */
 
 /*
  * TODO:
  *
- *      Crush 16bpp channels
+ *      Crush 16bpp channels (Wait until GIMP 2.0, probably)
  *	CMYK -> RGB
  *	Load BITMAP mode
  *
- *      File saving.  (I am unlikely to be able to do this for
- *         practical reasons.  Suggest someone works on it as a
- *         separate plugin - please let me know.)
- *
- *      Reduce memory requirements!
+ *      File saving
  */
 
 /*
@@ -106,7 +107,7 @@
 
 
 
-/* *** DEFINES *** */
+/* *** USER DEFINES *** */
 
 /* set to TRUE if you want debugging, FALSE otherwise */
 #define PSD_DEBUG TRUE
@@ -120,7 +121,7 @@
 /* the max number of guides that this plugin should let an image have */
 #define MAX_GUIDES 200
 
-/* *** END OF DEFINES *** */
+/* *** END OF USER DEFINES *** */
 
 
 
@@ -149,35 +150,6 @@ typedef enum
 } psd_imagetype;
 
 
-
-/* Declare some local functions.
- */
-static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
-                          GParam  *param,
-                          int     *nreturn_vals,
-                          GParam **return_vals);
-GDrawableType psd_type_to_gimp_type
-                         (psd_imagetype psdtype);
-GImageType psd_type_to_gimp_base_type
-                         (psd_imagetype psdtype);
-GLayerMode psd_lmode_to_gimp_lmode
-                         (gchar modekey[4]);
-static gint32 load_image (char   *filename);
-
-
-
-GPlugInInfo PLUG_IN_INFO =
-{
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
-};
-
-
-
 typedef struct PsdChannel
 {
   gchar *name;
@@ -185,9 +157,19 @@ typedef struct PsdChannel
   gint type;
 
   guint32 compressedsize;
+
+  fpos_t fpos; /* Remember where the data is in the file, so we can
+		  come back to it! */
+
+ /* We can't just assume that the channel's width and height are the
+  * same as those of the layer that owns the channel, since this
+  * channel may be a layer mask, which Photoshop allows to have a
+  * different size from the layer which it applies to.
+  */
+  guint32 width;
+  guint32 height;
   
 } PSDchannel;
-
 
 
 typedef struct PsdGuide
@@ -195,7 +177,6 @@ typedef struct PsdGuide
   gboolean horizontal; /* else vertical */
   gint position;
 } PSDguide;
-
 
 
 typedef struct PsdLayer
@@ -225,7 +206,6 @@ typedef struct PsdLayer
 } PSDlayer;
 
 
-
 typedef struct PsdImage
 {
   gint num_layers;
@@ -247,13 +227,40 @@ typedef struct PsdImage
   gchar *caption;
 
   guint active_layer_num;
-
 } PSDimage;
 
 
 
-static PSDimage psd_image;
+/* Declare some local functions.
+ */
+static void   query      (void);
+static void   run        (char    *name,
+                          int      nparams,
+                          GParam  *param,
+                          int     *nreturn_vals,
+                          GParam **return_vals);
+static GDrawableType psd_type_to_gimp_type
+                         (psd_imagetype psdtype);
+static GImageType psd_type_to_gimp_base_type
+                         (psd_imagetype psdtype);
+static GLayerMode psd_lmode_to_gimp_lmode
+                         (gchar modekey[4]);
+static gint32 load_image (char   *filename);
 
+
+
+/* Various local variables...
+ */
+GPlugInInfo PLUG_IN_INFO =
+{
+  NULL,    /* init_proc */
+  NULL,    /* quit_proc */
+  query,   /* query_proc */
+  run,     /* run_proc */
+};
+
+
+static PSDimage psd_image;
 
 
 static struct {
@@ -312,8 +319,9 @@ static void read_whole_file(FILE *fd);
 static void reshuffle_cmap(guchar *map256);
 static guchar* getpascalstring(FILE *fd, gchar *why);
 static gchar* getstring(size_t n, FILE * fd, gchar *why);
-void throwchunk(size_t n, FILE * fd, gchar *why);
-void dumpchunk(size_t n, FILE * fd, gchar *why);
+static void throwchunk(size_t n, FILE * fd, gchar *why);
+static void dumpchunk(size_t n, FILE * fd, gchar *why);
+static void seek_to_and_unpack_pixeldata(FILE* fd, gint layeri, gint channeli);
 
 
 MAIN()
@@ -390,7 +398,7 @@ run (char    *name,
 }
 
 
-GDrawableType
+static GDrawableType
 psd_type_to_gimp_type (psd_imagetype psdtype)
 {
   switch(psdtype)
@@ -407,7 +415,7 @@ psd_type_to_gimp_type (psd_imagetype psdtype)
 
 
 
-GLayerMode
+static GLayerMode
 psd_lmode_to_gimp_lmode (gchar modekey[4])
 {
   if (strncmp(modekey, "norm", 4)==0) return(NORMAL_MODE);
@@ -444,7 +452,7 @@ psd_lmode_to_gimp_lmode (gchar modekey[4])
 
 
 
-GImageType
+static GImageType
 psd_type_to_gimp_base_type (psd_imagetype psdtype)
 {
   switch(psdtype)
@@ -787,7 +795,10 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 	
       default:
 	IFDBG printf ("\t\t<Undocumented field.>\n");
-	dumpchunk(Size, fd, "dispatch_res");
+	IFDBG
+	  dumpchunk(Size, fd, "dispatch_res");
+	else
+	  throwchunk(Size, fd, "dispatch_res");
 	(*offset) += Size;
 	break;
       }
@@ -1013,9 +1024,7 @@ do_layer_struct(FILE *fd, guint32 *offset)
 static void
 do_layer_pixeldata(FILE *fd, guint32 *offset)
 {
-  guint16 compression;
   gint layeri, channeli;
-  guchar *tmpline;
 
   for (layeri=0; layeri<psd_image.num_layers; layeri++)
     {
@@ -1036,108 +1045,124 @@ do_layer_pixeldata(FILE *fd, guint32 *offset)
 	      height = psd_image.layer[layeri].height;
 	    }
 
-	  tmpline = xmalloc(width + 1);
+	  fgetpos(fd, &psd_image.layer[layeri].channel[channeli].fpos);
+	  psd_image.layer[layeri].channel[channeli].width = width;
+	  psd_image.layer[layeri].channel[channeli].height = height;
 
-	  compression = getgshort(fd, "layer channel compression type");
-	  (*offset)+=2;
-	      
-	  IFDBG
-	    {
-	      printf("\t\t\tLayer (%d) Channel (%d:%d) Compression: %d (%s)\n",
-		     layeri,
-		     channeli,
-		     psd_image.layer[layeri].channel[channeli].type,
-		     compression,
-		     compression==0?"raw":(compression==1?"RLE":"UNKNOWN!"));
-	      fflush(stdout);
-	    }
-	    
-	  IFDBG {printf("\t\t\t\tLoading channel data (%d bytes)...\n",
-			width*height);fflush(stdout);}
-	      
-	  psd_image.layer[layeri].channel[channeli].data =
-	    xmalloc (width * height);
-	      
-	  switch (compression)
-	    {
-	    case 0: /* raw data */
-	      {
-		gint linei;
-		    
-		for (linei=0;
-		     linei<height;
-		     linei++)
-		  {
-		    xfread(fd,
-			   (psd_image.layer[layeri].channel[channeli].data+
-			    linei * width),
-			   width,
-			   "raw channel line");
-		    (*offset) += width;
-		  }
-
-		/* Pad raw data to multiple of 2? */
-#if 0
-		if ((height *
-		     width) & 1)
-		  {
-		    getguchar(fd, "raw channel padding");
-		    (*offset)++;
-		  }
-#endif
-	      }
-	      break;
-	    case 1: /* RLE, one row at a time, padded to an even width */
-	      {
-		gint linei;
-		gint blockread;
-		    
-		/* we throw this away because in theory we can trust the
-		   data to unpack to the right length... hmm... */
-		throwchunk(height * 2,
-			   fd, "widthlist");
-		(*offset) += height * 2;
-
-		blockread = (*offset);
-		    
-		/*IFDBG {printf("\nHere comes the guitar solo...\n");
-		fflush(stdout);}*/
-
-		for (linei=0;
-		     linei<height;
-		     linei++)
-		  {
-		    /*printf(" %d ", *offset);*/
-		    unpack_pb_channel(fd, tmpline,
-				      width 
-				      /*+ (width&1)*/,
-				      offset);
-		    memcpy((psd_image.layer[layeri].channel[channeli].data+
-			    linei * width),
-			   tmpline,
-			   width);
-		  }
-		    
-		IFDBG {printf("\t\t\t\t\tActual compressed size was %d bytes\n"
-			      , (*offset)-blockread);fflush(stdout);}
-	      }
-	      break;
-	    default: /* *unknown* */
-	      IFDBG {printf("\nEEP!\n");fflush(stdout);}
-	      g_message ("*** Unknown compression type in channel.\n");
-	      gimp_quit();
-	      break;
-	    }
-	  
-	  if (tmpline)
-	    g_free(tmpline);
-	  else
-	    IFDBG {printf("\nTRIED TO FREE NULL!");fflush(stdout);}
+	  throwchunk(psd_image.layer[layeri].channel[channeli].compressedsize,
+		     fd, "channel data skip");
+	  (*offset) +=
+	    psd_image.layer[layeri].channel[channeli].compressedsize;
 	}
     }
+}
 
-  /*  printf("\n[[%ld]]\n", getglong(fd, "uhhhh"));
-  (*offset)+=4;*/
+
+static void
+seek_to_and_unpack_pixeldata(FILE* fd, gint layeri, gint channeli)
+{
+  int width, height;
+  guchar *tmpline;
+  gint compression;
+  guint32 offset = 0;
+
+  fsetpos(fd, &psd_image.layer[layeri].channel[channeli].fpos);
+
+  compression = getgshort(fd, "layer channel compression type");
+  offset+=2;
+
+  width = psd_image.layer[layeri].channel[channeli].width;
+  height = psd_image.layer[layeri].channel[channeli].height;
+
+  IFDBG
+    {
+      printf("\t\t\tLayer (%d) Channel (%d:%d) Compression: %d (%s)\n",
+	     layeri,
+	     channeli,
+	     psd_image.layer[layeri].channel[channeli].type,
+	     compression,
+	     compression==0?"raw":(compression==1?"RLE":"*UNKNOWN!*"));
+      
+      fflush(stdout);
+    }
+
+  psd_image.layer[layeri].channel[channeli].data =
+    xmalloc (width * height);
+
+  tmpline = xmalloc(width + 1);
+  
+  switch (compression)
+    {
+    case 0: /* raw data */
+      {
+	gint linei;
+	
+	for (linei=0; linei < height; linei++)
+	  {
+	    xfread(fd,
+		   (psd_image.layer[layeri].channel[channeli].data+
+		    linei * width),
+		   width,
+		   "raw channel line");
+	    offset += width;
+	  }
+
+#if 0
+	/* Pad raw data to multiple of 2? */
+	if ((height * width) & 1)
+	  {
+	    getguchar(fd, "raw channel padding");
+	    offset++;
+	  }
+#endif
+      }
+      break;
+    case 1: /* RLE, one row at a time, padded to an even width */
+      {
+	gint linei;
+	gint blockread;
+		    
+	/* we throw this away because in theory we can trust the
+	   data to unpack to the right length... hmm... */
+	throwchunk(height * 2,
+		   fd, "widthlist");
+	offset += height * 2;
+
+	blockread = offset;
+		    
+	/*IFDBG {printf("\nHere comes the guitar solo...\n");
+	  fflush(stdout);}*/
+
+	for (linei=0;
+	     linei<height;
+	     linei++)
+	  {
+	    /*printf(" %d ", *offset);*/
+	    unpack_pb_channel(fd, tmpline,
+			      width 
+			      /*+ (width&1)*/,
+			      &offset);
+	    memcpy((psd_image.layer[layeri].channel[channeli].data+
+		    linei * width),
+		   tmpline,
+		   width);
+	  }
+		    
+	IFDBG {printf("\t\t\t\t\tActual compressed size was %d bytes\n"
+		      , offset-blockread);fflush(stdout);}
+      }
+      break;
+    default: /* *unknown* */
+      IFDBG {printf("\nEEP!\n");fflush(stdout);}
+      g_message ("*** Unknown compression type in channel.\n");
+      gimp_quit();
+      break;
+    }
+	  
+  if (tmpline)
+    g_free(tmpline);
+  else
+    IFDBG {printf("\nTRIED TO FREE NULL!");fflush(stdout);}
 }
 
 
@@ -1156,7 +1181,6 @@ do_layers(FILE *fd, guint32 *offset)
 
   do_layer_pixeldata(fd, offset);
 }
-
 
 
 static void
@@ -1203,10 +1227,9 @@ do_layer_and_mask(FILE *fd)
     printf("PSD: Stern warning - no mask info.\n");
 
 
-  /* If 'offset' wasn't being buggily updated, we wouldn't need this. */
+  /* If 'offset' wasn't being buggily updated, we wouldn't need this. (!?) */
   fseek(fd, Size+offset_now, SEEK_SET);
 }
-
 
 
 static void
@@ -1574,6 +1597,7 @@ load_image(char *name)
   GDrawable *drawable = NULL;
   GPixelRgn pixel_rgn;
   gint32 iter;
+  fpos_t tmpfpos;
 
     
   IFDBG printf("------- %s ---------------------------------\n",name);
@@ -1615,6 +1639,8 @@ load_image(char *name)
 	gimp_image_new (PSDheader.columns, PSDheader.rows, gimagetype);
       gimp_image_set_filename (image_ID, name);
       
+      fgetpos (fd, &tmpfpos);
+
       for (lnum=0; lnum<psd_image.num_layers; lnum++)
 	{
 	  gint numc;
@@ -1633,6 +1659,7 @@ load_image(char *name)
 		  {
 		    merged_data = xmalloc(psd_image.layer[lnum].width *
 					  psd_image.layer[lnum].height);
+		    seek_to_and_unpack_pixeldata(fd, lnum, 0);
 		    memcpy(merged_data, psd_image.layer[lnum].channel[0].data,
 			   psd_image.layer[lnum].width *
 			   psd_image.layer[lnum].height);
@@ -1642,6 +1669,8 @@ load_image(char *name)
 		  }
 		else
 		  {
+		    seek_to_and_unpack_pixeldata(fd, lnum, 0);
+		    seek_to_and_unpack_pixeldata(fd, lnum, 1);
 		    merged_data =
 		      chans_to_GRAYA (psd_image.layer[lnum].channel[1].data,
 				      psd_image.layer[lnum].channel[0].data,
@@ -1668,6 +1697,9 @@ load_image(char *name)
 		IFDBG printf("It's RGB.\n");
 		if (!psd_layer_has_alpha(&psd_image.layer[lnum]))
 		  {
+		    seek_to_and_unpack_pixeldata(fd, lnum, 0);
+		    seek_to_and_unpack_pixeldata(fd, lnum, 1);
+		    seek_to_and_unpack_pixeldata(fd, lnum, 2);
 		    merged_data =
 		      chans_to_RGB (psd_image.layer[lnum].channel[0].data,
 				    psd_image.layer[lnum].channel[1].data,
@@ -1684,6 +1716,10 @@ load_image(char *name)
 		  }
 		else
 		  {
+		    seek_to_and_unpack_pixeldata(fd, lnum, 0);
+		    seek_to_and_unpack_pixeldata(fd, lnum, 1);
+		    seek_to_and_unpack_pixeldata(fd, lnum, 2);
+		    seek_to_and_unpack_pixeldata(fd, lnum, 3);
 		    merged_data =
 		      chans_to_RGBA (psd_image.layer[lnum].channel[1].data,
 				     psd_image.layer[lnum].channel[2].data,
@@ -1733,6 +1769,7 @@ load_image(char *name)
 		  lm_data = xmalloc(psd_image.layer[lnum].width *
 				    psd_image.layer[lnum].height);
 		  {
+		    seek_to_and_unpack_pixeldata(fd, lnum, iter);
 		    /* PS layer masks can be a different size to
 		       their owning layer, so we have to resize them. */
 		    resize_mask(psd_image.layer[lnum].channel[iter].data,
@@ -1804,8 +1841,9 @@ load_image(char *name)
 	  gimp_progress_update ((double)(lnum+1.0) /
 				(double)psd_image.num_layers);
 	}
-    }
 
+      fsetpos (fd, &tmpfpos);
+    }
 
 
   if ((psd_image.num_aux_channels > 0) &&
@@ -1821,7 +1859,7 @@ load_image(char *name)
 
 
 
-  if (want_aux || (psd_image.num_layers==0)) /* PS2-style - NO LAYERS. */
+  if (want_aux || (psd_image.num_layers==0)) /* Photoshop2-style: NO LAYERS. */
     {
       
       IFDBG printf("Image data %ld chars\n", PSDheader.imgdatalen);
@@ -1879,7 +1917,8 @@ load_image(char *name)
 
       if (PSDheader.bpp != 8)
 	{
-	  printf("%s: The GIMP only supports 8-bit deep PSD images\n",
+	  printf("%s: The GIMP only supports 8-bit deep PSD images "
+		 "at this time.\n",
 		 prog_name);
 	  return(-1);
 	}
@@ -1963,9 +2002,6 @@ load_image(char *name)
       dest = xmalloc( step * PSDheader.columns * PSDheader.rows );
 
       
-      gimp_progress_update ((double)0.0);
-
-
       if (PSDheader.compression == 1)
 	{
 	  nguchars = PSDheader.columns * PSDheader.rows;
@@ -1973,16 +2009,15 @@ load_image(char *name)
 	  xfread(fd, temp, PSDheader.imgdatalen, "image data");
 	  if (!cmyk)
 	    {
-	      gimp_progress_update ((double)0.25);
+	      gimp_progress_update ((double)1.00);
 	      decode(PSDheader.imgdatalen, nguchars, temp, dest, step);
 	    }
 	  else
 	    {
-	      gimp_progress_update ((double)0.25);
+	      gimp_progress_update ((double)1.00);
 	      cmykbuf = xmalloc(step * nguchars);
 	      decode(PSDheader.imgdatalen, nguchars, temp, cmykbuf, step);
 	      
-	      gimp_progress_update ((double)0.50);
 	      cmyk2rgb(cmykbuf, dest, PSDheader.columns, PSDheader.rows,
 		       step > 4);
 	      g_free(cmykbuf);
@@ -1993,18 +2028,17 @@ load_image(char *name)
 	{
 	  if (!cmyk)
 	    {
-	      gimp_progress_update ((double)0.50);
+	      gimp_progress_update ((double)1.00);
 	      xfread_interlaced(fd, dest, PSDheader.imgdatalen,
 				"raw image data", step);
 	    }
 	  else
 	    {	  
-	      gimp_progress_update ((double)0.25);
+	      gimp_progress_update ((double)1.00);
 	      cmykbuf = xmalloc(PSDheader.imgdatalen);
 	      xfread_interlaced(fd, cmykbuf, PSDheader.imgdatalen,
 				"raw cmyk image data", step);
 
-	      gimp_progress_update ((double)0.50);
 	      cmykp2rgb(cmykbuf, dest,
 			PSDheader.columns, PSDheader.rows, step > 4);
 	      g_free(cmykbuf);
@@ -2022,7 +2056,7 @@ load_image(char *name)
 	}
       else
 	{
-	  gimp_progress_update ((double)0.96);
+	  gimp_progress_update ((double)1.00);
 
 	  if (channels == step) /* gimp bpp == psd bpp */
 	    {
@@ -2100,18 +2134,27 @@ decode(long clen, long uclen, char * src, char * dst, int step)
 
     l = clen;
     for (i = 0; i < PSDheader.rows*PSDheader.channels; ++i)
+      {
 	l -= PSDheader.rowlength[i];
+      }
     if (l)
+      {
 	g_warning("decode: %ld should be zero\n", (long)l);
+      }
 
     w = PSDheader.rowlength;
     
     packbitsdecode(&clen, uclen, src, dst++, step);
-    for (j = 0; j < step-1; ++j) {
+
+    for (j = 0; j < step-1; ++j)
+      {
 	for (i = 0; i < PSDheader.rows; ++i)
+	  {
 	    src += *w++;
+	  }
 	packbitsdecode(&clen, uclen, src, dst++, step);
-    }
+      }
+
     IFDBG printf("clen %ld\n", clen);
 }
 
@@ -2308,7 +2351,7 @@ cmyk_to_rgb(gint *c, gint *m, gint *y, gint *k)
 }
 
 
-void
+static void
 dumpchunk(size_t n, FILE * fd, gchar *why)
 {
   guint32 i;
@@ -2324,9 +2367,10 @@ dumpchunk(size_t n, FILE * fd, gchar *why)
 }
 
 
-void
+static void
 throwchunk(size_t n, FILE * fd, gchar *why)
 {
+#if 0
   guchar *tmpchunk;
 
   if (n==0)
@@ -2337,6 +2381,19 @@ throwchunk(size_t n, FILE * fd, gchar *why)
   tmpchunk = xmalloc(n);
   xfread(fd, tmpchunk, n, why);
   g_free(tmpchunk);
+#else
+  if (n==0)
+    {
+      return;
+    }
+
+  if (fseek(fd, n, SEEK_CUR) != 0)
+    {
+      printf("%s: unable to seek forward while reading '%s' chunk\n",
+	     prog_name, why);
+      gimp_quit();
+    }    
+#endif
 }
 
 
