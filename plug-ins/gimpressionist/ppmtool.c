@@ -34,14 +34,14 @@ void fatal(char *s)
   exit(1);
 }
 
-void killppm(ppm_t *p)
+void ppm_kill(ppm_t *p)
 {
   g_free(p->col);
   p->col = NULL;
   p->height = p->width = 0;
 }
 
-void newppm(ppm_t *p, int xs, int ys)
+void ppm_new(ppm_t *p, int xs, int ys)
 {
   int x;
   guchar bgcol[3] = {0,0,0};
@@ -61,7 +61,7 @@ void newppm(ppm_t *p, int xs, int ys)
   }
 }
 
-void getrgb(ppm_t *s, float xo, float yo, guchar *d)
+void get_rgb(ppm_t *s, float xo, float yo, guchar *d)
 {
   float ix, iy;
   int x1, x2, y1, y2;
@@ -145,14 +145,14 @@ void resize(ppm_t *p, int nx, int ny)
   float ys = p->height/(float)ny;
   ppm_t tmp = {0,0,NULL};
 
-  newppm(&tmp, nx, ny);
+  ppm_new(&tmp, nx, ny);
   for(y = 0; y < ny; y++) {
     guchar *row = tmp.col + y * tmp.width * 3;
     for(x = 0; x < nx; x++) {
-      getrgb(p, x*xs, y*ys, &row[x*3]);
+      get_rgb(p, x*xs, y*ys, &row[x*3]);
     }
   }
-  killppm(p);
+  ppm_kill(p);
   p->width = tmp.width;
   p->height = tmp.height;
   p->col = tmp.col;
@@ -170,14 +170,14 @@ void resize_fast(ppm_t *p, int nx, int ny)
   float ys = p->height/(float)ny;
   ppm_t tmp = {0,0,NULL};
 
-  newppm(&tmp, nx, ny);
+  ppm_new(&tmp, nx, ny);
   for(y = 0; y < ny; y++) {
     for(x = 0; x < nx; x++) {
       int rx = x*xs, ry = y*ys;
       memcpy(&tmp.col[y*tmp.width*3+x*3], &p->col[ry*p->width*3+rx*3], 3);
     }
   }
-  killppm(p);
+  ppm_kill(p);
   p->width = tmp.width;
   p->height = tmp.height;
   p->col = tmp.col;
@@ -215,7 +215,7 @@ static FILE * fopen_from_search_path(const gchar * fn, const char * mode)
   return f;
 }
 
-void loadgbr(const gchar *fn, ppm_t *p)
+void load_gimp_brush(const gchar *fn, ppm_t *p)
 {
   FILE *f;
   struct _BrushHeader hdr;
@@ -223,11 +223,11 @@ void loadgbr(const gchar *fn, ppm_t *p)
   int x, y;
 
   f = fopen_from_search_path(fn, "rb");
-  if(p->col) killppm(p);
+  if(p->col) ppm_kill(p);
 
   if(!f) {
-    fprintf(stderr, "loadgbr: Unable to open file \"%s\"!\n", fn);
-    newppm(p, 10,10);
+    fprintf(stderr, "load_gimp_brush: Unable to open file \"%s\"!\n", fn);
+    ppm_new(p, 10,10);
     return;
   }
 
@@ -236,7 +236,7 @@ void loadgbr(const gchar *fn, ppm_t *p)
   for(x = 0; x < 7; x++)
     msb2lsb(&((unsigned int *)&hdr)[x]);
 
-  newppm(p, hdr.width, hdr.height);
+  ppm_new(p, hdr.width, hdr.height);
 
   ptr = g_malloc(hdr.width);
   fseek(f, hdr.header_size, SEEK_SET);
@@ -251,24 +251,24 @@ void loadgbr(const gchar *fn, ppm_t *p)
   free(ptr);
 }
 
-void loadppm(const char *fn, ppm_t *p)
+void ppm_load(const char *fn, ppm_t *p)
 {
   char line[200];
   int y, pgm = 0;
   FILE *f;
 
   if(!strcmp(&fn[strlen(fn)-4], ".gbr")) {
-    loadgbr(fn, p);
+    load_gimp_brush(fn, p);
     return;
   }
 
   f = fopen_from_search_path(fn, "rb");
 
-  if(p->col) killppm(p);
+  if(p->col) ppm_kill(p);
 
   if(!f) {
-    fprintf(stderr, "loadppm: Unable to open file \"%s\"!\n", fn);
-    newppm(p, 10,10);
+    fprintf(stderr, "ppm_load: Unable to open file \"%s\"!\n", fn);
+    ppm_new(p, 10,10);
     return;
 #if 0
     fatal("Aborting!");
@@ -279,8 +279,8 @@ void loadppm(const char *fn, ppm_t *p)
   if(strcmp(line, "P6")) {
     if(strcmp(line, "P5")) {
       fclose(f);
-      printf( "loadppm: File \"%s\" not PPM/PGM? (line=\"%s\")%c\n", fn, line, 7);
-      newppm(p, 10,10);
+      printf( "ppm_load: File \"%s\" not PPM/PGM? (line=\"%s\")%c\n", fn, line, 7);
+      ppm_new(p, 10,10);
       return;
 #if 0
       fatal("Aborting!");
@@ -293,8 +293,8 @@ void loadppm(const char *fn, ppm_t *p)
   p->height = atoi(strchr(line, ' ')+1);
   readline(f, line, 200);
   if(strcmp(line, "255")) {
-    printf ("loadppm: File \"%s\" not valid PPM/PGM? (line=\"%s\")%c\n", fn, line, 7);
-    newppm(p, 10,10);
+    printf ("ppm_load: File \"%s\" not valid PPM/PGM? (line=\"%s\")%c\n", fn, line, 7);
+    ppm_new(p, 10,10);
     return;
 #if 0
     fatal("Aborting!");
@@ -336,16 +336,16 @@ void fill(ppm_t *p, guchar *c)
   }
 }
 
-void copyppm(ppm_t *s, ppm_t *p)
+void ppm_copy(ppm_t *s, ppm_t *p)
 {
   if(p->col)
-    killppm(p);
+    ppm_kill(p);
   p->width = s->width;
   p->height = s->height;
   p->col = g_memdup(s->col, p->width * 3 * p->height);
 }
 
-void freerotate(ppm_t *p, double amount)
+void free_rotate(ppm_t *p, double amount)
 {
   int x, y;
   double nx, ny;
@@ -357,7 +357,7 @@ void freerotate(ppm_t *p, double amount)
   a = p->width/(float)p->height;
   R = p->width<p->height?p->width/2:p->height/2;
 
-  newppm(&tmp, p->width, p->height);
+  ppm_new(&tmp, p->width, p->height);
   for(y = 0; y < p->height; y++) {
     for(x = 0; x < p->width; x++) {
       double r, d;
@@ -369,10 +369,10 @@ void freerotate(ppm_t *p, double amount)
 
       nx = (p->width/2.0 + cos(d-f) * r);
       ny = (p->height/2.0 + sin(d-f) * r);
-      getrgb(p, nx, ny, tmp.col + y*rowstride+x*3);
+      get_rgb(p, nx, ny, tmp.col + y*rowstride+x*3);
     }
   }
-  killppm(p);
+  ppm_kill(p);
   p->width = tmp.width;
   p->height = tmp.height;
   p->col = tmp.col;
@@ -385,13 +385,13 @@ void crop(ppm_t *p, int lx, int ly, int hx, int hy)
   int srowstride = p->width * 3;
   int drowstride;
 
-  newppm(&tmp, hx-lx, hy-ly);
+  ppm_new(&tmp, hx-lx, hy-ly);
   drowstride = tmp.width * 3;
   for(y = ly; y < hy; y++)
     for(x = lx; x < hx; x++)
       memcpy(&tmp.col[(y-ly)*drowstride+(x-lx)*3],
 	     &p->col[y*srowstride+x*3], 3);
-  killppm(p);
+  ppm_kill(p);
   p->col = tmp.col;
   p->width = tmp.width;
   p->height = tmp.height;
@@ -468,13 +468,13 @@ void autocrop(ppm_t *p, int room)
   hx += room; if(hx>=p->width) hx = p->width-1;
   hy += room; if(hy>=p->height) hy = p->height-1;
 
-  newppm(&tmp, hx-lx, hy-ly);
+  ppm_new(&tmp, hx-lx, hy-ly);
   drowstride = tmp.width * 3;
   for(y = ly; y < hy; y++)
     for(x = lx; x < hx; x++)
       memcpy(&tmp.col[(y-ly)*drowstride+(x-lx)*3],
 	     &p->col[y*rowstride+x*3], 3);
-  killppm(p);
+  ppm_kill(p);
   p->col = tmp.col;
   p->width = tmp.width;
   p->height = tmp.height;
@@ -485,7 +485,7 @@ void ppm_pad(ppm_t *p, int left,int right, int top, int bottom, guchar *bg)
   int x, y;
   ppm_t tmp = {0,0,NULL};
 
-  newppm(&tmp, p->width+left+right, p->height+top+bottom);
+  ppm_new(&tmp, p->width+left+right, p->height+top+bottom);
   for(y = 0; y < tmp.height; y++) {
     guchar *row, *srcrow;
     row = tmp.col + y * tmp.width * 3;
@@ -518,13 +518,13 @@ void ppm_pad(ppm_t *p, int left,int right, int top, int bottom, guchar *bg)
       row[k+2] = bg[2];
     }
   }
-  killppm(p);
+  ppm_kill(p);
   p->width = tmp.width;
   p->height = tmp.height;
   p->col = tmp.col;
 }
 
-void saveppm(ppm_t *p, const char *fn)
+void ppm_save(ppm_t *p, const char *fn)
 {
   FILE *f = fopen (fn, "wb");
 
@@ -551,7 +551,7 @@ void edgepad(ppm_t *p, int left,int right, int top, int bottom)
   guchar testcol[3] = {0,255,0};
   int srowstride, drowstride;
 
-  newppm(&tmp, p->width+left+right, p->height+top+bottom);
+  ppm_new(&tmp, p->width+left+right, p->height+top+bottom);
   fill(&tmp, testcol);
 
   srowstride = p->width * 3;
@@ -580,13 +580,13 @@ void edgepad(ppm_t *p, int left,int right, int top, int bottom)
       memcpy(&tmprow[(x+tmp.width-right-1)*3], col, 3);
     }
   }
-  killppm(p);
+  ppm_kill(p);
   p->width = tmp.width;
   p->height = tmp.height;
   p->col = tmp.col;
 }
 
-void ppmgamma(ppm_t *p, float e, int r, int g, int b)
+void ppm_apply_gamma(ppm_t *p, float e, int r, int g, int b)
 {
   int x, l = p->width * 3 * p->height;
   guchar xlat[256], *pix;
@@ -602,7 +602,7 @@ void ppmgamma(ppm_t *p, float e, int r, int g, int b)
   if(b) for(x = 2; x < l; x += 3) pix[x] = xlat[pix[x]];
 }
 
-void ppmbrightness(ppm_t *p, float e, int r, int g, int b)
+void ppm_apply_brightness(ppm_t *p, float e, int r, int g, int b)
 {
   int x, l = p->width * 3 * p->height;
   guchar xlat[256], *pix;
@@ -625,7 +625,7 @@ void blur(ppm_t *p, int xrad, int yrad)
   int r, g, b, n;
   int rowstride = p->width * 3;
 
-  newppm(&tmp, p->width, p->height);
+  ppm_new(&tmp, p->width, p->height);
   for(y = 0; y < p->height; y++) {
     for(x = 0; x < p->width; x++) {
       r = g = b = n = 0;
@@ -648,13 +648,13 @@ void blur(ppm_t *p, int xrad, int yrad)
       tmp.col[k+2] = b / n;
     }
   }
-  killppm(p);
+  ppm_kill(p);
   p->width = tmp.width;
   p->height = tmp.height;
   p->col = tmp.col;
 }
 
-void putrgb_fast(ppm_t *s, float xo, float yo, guchar *d)
+void ppm_put_rgb_fast(ppm_t *s, float xo, float yo, guchar *d)
 {
   guchar *tp;
   tp = s->col + s->width * 3 * (int)(yo+0.5) + 3 * (int)(xo+0.5);
@@ -663,7 +663,7 @@ void putrgb_fast(ppm_t *s, float xo, float yo, guchar *d)
   tp[2] = d[2];
 }
 
-void putrgb(ppm_t *s, float xo, float yo, guchar *d)
+void ppm_put_rgb(ppm_t *s, float xo, float yo, guchar *d)
 {
   int x, y;
   float aa, ab, ba, bb;
@@ -714,7 +714,8 @@ void putrgb(ppm_t *s, float xo, float yo, guchar *d)
   s->col[k+rowstride+5] += bb * d[2];
 }
 
-void drawline(ppm_t *p, float fx, float fy, float tx, float ty, guchar *col)
+void ppm_drawline(ppm_t *p, float fx, float fy, float tx, float ty, 
+                  guchar *col)
 {
   float i;
   float d, x, y;
@@ -723,7 +724,7 @@ void drawline(ppm_t *p, float fx, float fy, float tx, float ty, guchar *col)
     d = (ty-fy)/(tx-fx);
     y = fy;
     for(x = fx; x <= tx; x+=1.0) {
-      putrgb(p, x, y, col);
+      ppm_put_rgb(p, x, y, col);
       y += d;
     }
   } else {
@@ -731,7 +732,7 @@ void drawline(ppm_t *p, float fx, float fy, float tx, float ty, guchar *col)
     d = (tx-fx)/(ty-fy);
     x = fx;
     for(y = fy; y <= ty; y+=1.0) {
-      putrgb(p, x, y, col);
+      ppm_put_rgb(p, x, y, col);
       x += d;
     }
   }

@@ -61,7 +61,7 @@ static void updatesmpreviewprev(void)
 
   if (!nsbuffer.col)
     {
-      newppm(&nsbuffer,OMWIDTH,OMHEIGHT);
+      ppm_new(&nsbuffer,OMWIDTH,OMHEIGHT);
     }
   fill(&nsbuffer, black);
 
@@ -71,10 +71,10 @@ static void updatesmpreviewprev(void)
          {
            gdouble siz = 5 * getsiz_from_gui(x/(double)OMWIDTH,
                                              y/(double)OMHEIGHT);
-           drawline (&nsbuffer, x-siz, y-siz, x+siz, y-siz, gray);
-           drawline (&nsbuffer, x+siz, y-siz, x+siz, y+siz, gray);
-           drawline (&nsbuffer, x+siz, y+siz, x-siz, y+siz, gray);
-           drawline (&nsbuffer, x-siz, y+siz, x-siz, y-siz, gray);
+           ppm_drawline (&nsbuffer, x-siz, y-siz, x+siz, y-siz, gray);
+           ppm_drawline (&nsbuffer, x+siz, y-siz, x+siz, y+siz, gray);
+           ppm_drawline (&nsbuffer, x+siz, y+siz, x-siz, y+siz, gray);
+           ppm_drawline (&nsbuffer, x-siz, y+siz, x-siz, y-siz, gray);
          }
     }
 
@@ -110,16 +110,16 @@ static void updatesmvectorprev(void)
 #if 0
       if(!infile.col)
          updatepreview (NULL, (void *)2); /* Force grabarea() */
-      copyppm(&infile, &backup);
+      ppm_copy(&infile, &backup);
 #else
       infile_copy_to_ppm (&backup);
 #endif
-      ppmbrightness(&backup, val, 1,1,1);
+      ppm_apply_brightness(&backup, val, 1,1,1);
       if (backup.width != OMWIDTH || backup.height != OMHEIGHT)
          resize_fast(&backup, OMWIDTH, OMHEIGHT);
       ok = 1;
   }
-  copyppm(&backup, &sbuffer);
+  ppm_copy(&backup, &sbuffer);
 
   for (i = 0; i < numsmvect; i++)
     {
@@ -127,15 +127,15 @@ static void updatesmvectorprev(void)
       y = smvector[i].y * OMHEIGHT;
       if (i == selectedsmvector)
       {
-         drawline (&sbuffer, x-5, y, x+5, y, red);
-         drawline (&sbuffer, x, y-5, x, y+5, red);
+         ppm_drawline (&sbuffer, x-5, y, x+5, y, red);
+         ppm_drawline (&sbuffer, x, y-5, x, y+5, red);
       }
       else
       {
-         drawline (&sbuffer, x-5, y, x+5, y, gray);
-         drawline (&sbuffer, x, y-5, x, y+5, gray);
+         ppm_drawline (&sbuffer, x-5, y, x+5, y, gray);
+         ppm_drawline (&sbuffer, x, y-5, x, y+5, gray);
       }
-      putrgb (&sbuffer, x, y, white);
+      ppm_put_rgb (&sbuffer, x, y, white);
   }
 
   for (y = 0; y < OMHEIGHT; y++)

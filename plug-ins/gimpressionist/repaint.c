@@ -324,7 +324,7 @@ void repaint(ppm_t *p, ppm_t *a)
   scale = runningvals.sizelast / MAX(brushes[0].width, brushes[0].height);
 
   if(bgamma != 1.0)
-    ppmgamma(&brushes[0], 1.0/bgamma, 1,1,1);
+    ppm_apply_gamma(&brushes[0], 1.0/bgamma, 1,1,1);
 
   resize(&brushes[0], brushes[0].width * scale, brushes[0].height * scale);
   i = 1 + sqrt(brushes[0].width * brushes[0].width +
@@ -334,7 +334,7 @@ void repaint(ppm_t *p, ppm_t *a)
 
   for(i = 1; i < numbrush; i++) {
     brushes[i].col = NULL;
-    copyppm(&brushes[0], &brushes[i]);
+    ppm_copy(&brushes[0], &brushes[i]);
   }
 
   for(i = 0; i < runningvals.sizenum; i++) {
@@ -344,7 +344,7 @@ void repaint(ppm_t *p, ppm_t *a)
     else sv = 1.0;
     for(j = 0; j < runningvals.orientnum; j++) {
       h = j + i * runningvals.orientnum;
-      freerotate(&brushes[h],
+      free_rotate(&brushes[h],
                  startangle + j * anglespan / runningvals.orientnum);
       rescale(&brushes[h], (sv * runningvals.sizefirst + (1.0-sv) * runningvals.sizelast) / runningvals.sizelast);
       autocrop(&brushes[h],1);
@@ -356,7 +356,7 @@ void repaint(ppm_t *p, ppm_t *a)
   for(i = 0; i < numbrush; i++) {
     char tmp[1000];
     g_snprintf (tmp, sizeof (tmp), "/tmp/_brush%03d.ppm", i);
-    saveppm(&brushes[i], tmp);
+    ppm_save(&brushes[i], tmp);
   }
 #endif
 
@@ -388,8 +388,8 @@ void repaint(ppm_t *p, ppm_t *a)
   if(dropshadow) {
     for(i = 0; i < numbrush; i++) {
       shadows[i].col = NULL;
-      copyppm(&brushes[i], &shadows[i]);
-      ppmgamma(&shadows[i], 0, 1,1,0);
+      ppm_copy(&brushes[i], &shadows[i]);
+      ppm_apply_gamma(&shadows[i], 0, 1,1,0);
       ppm_pad(&shadows[i], shadowblur*2, shadowblur*2,
           shadowblur*2, shadowblur*2, back);
       for(j = 0; j < shadowblur; j++)
@@ -406,8 +406,8 @@ void repaint(ppm_t *p, ppm_t *a)
 
   /* For extra annoying debugging :-) */
 #if 0
-  saveppm(brushes, "/tmp/__brush.ppm");
-  if(shadows) saveppm(shadows, "/tmp/__shadow.ppm");
+  ppm_save(brushes, "/tmp/__brush.ppm");
+  if(shadows) ppm_save(shadows, "/tmp/__shadow.ppm");
   system("xv /tmp/__brush.ppm & xv /tmp/__shadow.ppm & ");
 #endif
 
@@ -421,27 +421,27 @@ void repaint(ppm_t *p, ppm_t *a)
     /* Initially fully transparent */
     if(runningvals.generalbgtype == BG_TYPE_TRANSPARENT) {
       guchar tmpcol[3] = {255,255,255};
-      newppm(&atmp, a->width, a->height);
+      ppm_new(&atmp, a->width, a->height);
       fill(&atmp, tmpcol);
     } else {
-      copyppm(a, &atmp);
+      ppm_copy(a, &atmp);
     }
   }
 
   if(runningvals.generalbgtype == BG_TYPE_SOLID) {
     guchar tmpcol[3];
-    newppm(&tmp, p->width, p->height);
+    ppm_new(&tmp, p->width, p->height);
     gimp_rgb_get_uchar(&runningvals.color, &tmpcol[0], &tmpcol[1], &tmpcol[2]);
     fill(&tmp, tmpcol);
   } else if(runningvals.generalbgtype == BG_TYPE_KEEP_ORIGINAL) {
-    copyppm(p, &tmp);
+    ppm_copy(p, &tmp);
   } else {
     scale = runningvals.paperscale / 100.0;
-    newppm(&tmp, p->width, p->height);
-    loadppm(runningvals.selectedpaper, &paperppm);
+    ppm_new(&tmp, p->width, p->height);
+    ppm_load(runningvals.selectedpaper, &paperppm);
     resize(&paperppm, paperppm.width * scale, paperppm.height * scale);
     if(runningvals.paperinvert)
-      ppmgamma(&paperppm, -1.0, 1, 1, 1);
+      ppm_apply_gamma(&paperppm, -1.0, 1, 1, 1);
     for(x = 0; x < tmp.width; x++) {
       int rx = x % paperppm.width;
       for(y = 0; y < tmp.height; y++) {
@@ -458,7 +458,7 @@ void repaint(ppm_t *p, ppm_t *a)
   switch(runningvals.orienttype)
   {
     case ORIENTATION_VALUE:
-    newppm(&dirmap, p->width, p->height);
+    ppm_new(&dirmap, p->width, p->height);
     for(y = 0; y < dirmap.height; y++) {
       guchar *dstrow = &dirmap.col[y*dirmap.width*3];
       guchar *srcrow = &p->col[y*p->width*3];
@@ -468,7 +468,7 @@ void repaint(ppm_t *p, ppm_t *a)
     }
     break;
     case ORIENTATION_RADIUS:
-    newppm(&dirmap, p->width, p->height);
+    ppm_new(&dirmap, p->width, p->height);
     for(y = 0; y < dirmap.height; y++) {
       guchar *dstrow = &dirmap.col[y*dirmap.width*3];
       double ysqr = (cy-y)*(cy-y);
@@ -478,7 +478,7 @@ void repaint(ppm_t *p, ppm_t *a)
     }
     break;
     case ORIENTATION_RADIAL:
-    newppm(&dirmap, p->width, p->height);
+    ppm_new(&dirmap, p->width, p->height);
     for(y = 0; y < dirmap.height; y++) {
       guchar *dstrow = &dirmap.col[y*dirmap.width*3];
       for(x = 0; x < dirmap.width; x++) {
@@ -487,7 +487,7 @@ void repaint(ppm_t *p, ppm_t *a)
     }
     break;
     case ORIENTATION_FLOWING:
-    newppm(&dirmap, p->width / 6 + 5, p->height / 6 + 5);
+    ppm_new(&dirmap, p->width / 6 + 5, p->height / 6 + 5);
     mkgrayplasma(&dirmap, 15);
     blur(&dirmap, 2, 2);
     blur(&dirmap, 2, 2);
@@ -497,7 +497,7 @@ void repaint(ppm_t *p, ppm_t *a)
       edgepad(&dirmap, maxbrushwidth, maxbrushheight,maxbrushwidth, maxbrushheight);
     break;
     case ORIENTATION_HUE:
-    newppm(&dirmap, p->width, p->height);
+    ppm_new(&dirmap, p->width, p->height);
     for(y = 0; y < dirmap.height; y++) {
       guchar *dstrow = &dirmap.col[y*dirmap.width*3];
       guchar *srcrow = &p->col[y*p->width*3];
@@ -509,12 +509,12 @@ void repaint(ppm_t *p, ppm_t *a)
     case ORIENTATION_ADAPTIVE:
     {
         guchar tmpcol[3] = {0,0,0};
-        newppm(&dirmap, p->width, p->height);
+        ppm_new(&dirmap, p->width, p->height);
         fill(&dirmap, tmpcol);
     }
     break;
     case ORIENTATION_MANUAL:
-    newppm(&dirmap, p->width-maxbrushwidth*2, p->height-maxbrushheight*2);
+    ppm_new(&dirmap, p->width-maxbrushwidth*2, p->height-maxbrushheight*2);
     for(y = 0; y < dirmap.height; y++) {
       guchar *dstrow = &dirmap.col[y*dirmap.width*3];
       double tmpy = y / (double)dirmap.height;
@@ -528,7 +528,7 @@ void repaint(ppm_t *p, ppm_t *a)
 
   if(runningvals.sizetype == SIZE_TYPE_VALUE)
   {
-    newppm(&sizmap, p->width, p->height);
+    ppm_new(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
       guchar *dstrow = &sizmap.col[y*sizmap.width*3];
       guchar *srcrow = &p->col[y*p->width*3];
@@ -539,7 +539,7 @@ void repaint(ppm_t *p, ppm_t *a)
   }
   else if(runningvals.sizetype == SIZE_TYPE_RADIUS)
   {
-    newppm(&sizmap, p->width, p->height);
+    ppm_new(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
       guchar *dstrow = &sizmap.col[y*sizmap.width*3];
       double ysqr = (cy-y)*(cy-y);
@@ -550,7 +550,7 @@ void repaint(ppm_t *p, ppm_t *a)
   }
   else if(runningvals.sizetype == SIZE_TYPE_RADIAL)
   {
-    newppm(&sizmap, p->width, p->height);
+    ppm_new(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
       guchar *dstrow = &sizmap.col[y*sizmap.width*3];
       for(x = 0; x < sizmap.width; x++) {
@@ -560,7 +560,7 @@ void repaint(ppm_t *p, ppm_t *a)
   }
   else if(runningvals.sizetype == SIZE_TYPE_FLOWING)
   {
-    newppm(&sizmap, p->width / 6 + 5, p->height / 6 + 5);
+    ppm_new(&sizmap, p->width / 6 + 5, p->height / 6 + 5);
     mkgrayplasma(&sizmap, 15);
     blur(&sizmap, 2, 2);
     blur(&sizmap, 2, 2);
@@ -571,7 +571,7 @@ void repaint(ppm_t *p, ppm_t *a)
   }
   else if(runningvals.sizetype == SIZE_TYPE_HUE)
   {
-    newppm(&sizmap, p->width, p->height);
+    ppm_new(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
       guchar *dstrow = &sizmap.col[y*sizmap.width*3];
       guchar *srcrow = &p->col[y*p->width*3];
@@ -583,13 +583,13 @@ void repaint(ppm_t *p, ppm_t *a)
   else if(runningvals.sizetype == SIZE_TYPE_ADAPTIVE)
   {
     guchar tmpcol[3] = {0,0,0};
-    newppm(&sizmap, p->width, p->height);
+    ppm_new(&sizmap, p->width, p->height);
     fill(&sizmap, tmpcol);
 
   }
   else if(runningvals.sizetype == SIZE_TYPE_MANUAL)
   {
-    newppm(&sizmap, p->width-maxbrushwidth*2, p->height-maxbrushheight*2);
+    ppm_new(&sizmap, p->width-maxbrushwidth*2, p->height-maxbrushheight*2);
     for(y = 0; y < sizmap.height; y++) {
       guchar *dstrow = &sizmap.col[y*sizmap.width*3];
       double tmpy = y / (double)sizmap.height;
@@ -600,7 +600,7 @@ void repaint(ppm_t *p, ppm_t *a)
     edgepad(&sizmap, maxbrushwidth, maxbrushwidth, maxbrushheight, maxbrushheight);
   }
 #if 0
-  saveppm(&sizmap, "/tmp/_sizmap.ppm");
+  ppm_save(&sizmap, "/tmp/_sizmap.ppm");
 #endif
   if(runningvals.placetype == PLACEMENT_TYPE_RANDOM) {
     i = tmp.width * tmp.height / (maxbrushwidth * maxbrushheight);
@@ -827,7 +827,7 @@ void repaint(ppm_t *p, ppm_t *a)
     }
   }
   for(i = 0; i < numbrush; i++) {
-    killppm(&brushes[i]);
+    ppm_kill(&brushes[i]);
   }
   g_free(brushes);
   g_free(shadows);
@@ -842,13 +842,13 @@ void repaint(ppm_t *p, ppm_t *a)
       crop(&atmp, maxbrushwidth, maxbrushheight, atmp.width - maxbrushwidth, atmp.height - maxbrushheight);
   }
 
-  killppm(p);
+  ppm_kill(p);
   p->width = tmp.width;
   p->height = tmp.height;
   p->col = tmp.col;
 
   if(img_has_alpha) {
-    killppm(a);
+    ppm_kill(a);
     a->width = atmp.width;
     a->height = atmp.height;
     a->col = atmp.col;
@@ -863,10 +863,10 @@ void repaint(ppm_t *p, ppm_t *a)
       paperppm.col = NULL;
     } else {
       tmp.col = NULL;
-      loadppm(runningvals.selectedpaper, &tmp);
+      ppm_load(runningvals.selectedpaper, &tmp);
       resize(&tmp, tmp.width * scale, tmp.height * scale);
       if(runningvals.paperinvert)
-        ppmgamma(&tmp, -1.0, 1,1,1);
+        ppm_apply_gamma(&tmp, -1.0, 1,1,1);
     }
     for(x = 0; x < p->width; x++) {
       double h, v;
@@ -893,12 +893,12 @@ void repaint(ppm_t *p, ppm_t *a)
         }
       }
     }
-    killppm(&tmp);
+    ppm_kill(&tmp);
   }
 
-  if(paperppm.col) killppm(&paperppm);
-  if(dirmap.col) killppm(&dirmap);
-  if(sizmap.col) killppm(&sizmap);
+  if(paperppm.col) ppm_kill(&paperppm);
+  if(dirmap.col) ppm_kill(&dirmap);
+  if(sizmap.col) ppm_kill(&sizmap);
   if(runningvals.run) {
     gimp_progress_update(0.8);
   } else {

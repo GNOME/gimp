@@ -60,16 +60,16 @@ void brush_free(void)
 void brush_get_selected (ppm_t *p)
 {
   if(brush_from_file)
-    brush_reload(pcvals.selectedbrush, p);
+    brush_reload (pcvals.selectedbrush, p);
   else
-    copyppm(&brushppm, p);
+    ppm_copy (&brushppm, p);
 }
 
 static void  update_brush_preview (const char *fn);
 
 static gboolean file_is_color (const char *fn)
 {
-  return fn && strstr(fn, ".ppm");
+  return fn && strstr (fn, ".ppm");
 }
 
 void set_colorbrushes (const gchar *fn)
@@ -121,8 +121,8 @@ brushdmenuselect (GtkWidget *widget,
   alpha = (has_alpha) ? bpp - 1 : bpp;
 
   if(brushppm.col)
-    killppm(&brushppm);
-  newppm(&brushppm, x2-x1, y2-y1);
+    ppm_kill (&brushppm);
+  ppm_new (&brushppm, x2-x1, y2-y1);
   p = &brushppm;
 
   rowstride = p->width * 3;
@@ -170,10 +170,10 @@ brushdmenuselect (GtkWidget *widget,
 void dummybrushdmenuselect(GtkWidget *w, gpointer data)
 {
   if(brushppm.col)
-    killppm(&brushppm);
-  newppm(&brushppm, 10,10);
+    ppm_kill (&brushppm);
+  ppm_new (&brushppm, 10,10);
   brush_from_file = 0;
-  update_brush_preview(NULL);
+  update_brush_preview (NULL);
 }
 #endif
 
@@ -193,7 +193,7 @@ savebrush_response (GtkWidget *dialog,
     {
       gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      saveppm (&brushppm, name);
+      ppm_save (&brushppm, name);
       brushlistrefresh ();
 
       g_free (name);
@@ -264,7 +264,7 @@ brush_reload (const gchar *fn,
 
   if (fn == NULL)
     {
-      killppm(&cache);
+      ppm_kill (&cache);
       lastfn[0] = '\0';
       return;
     }
@@ -272,11 +272,11 @@ brush_reload (const gchar *fn,
   if (strcmp(fn, lastfn))
     {
       g_strlcpy (lastfn, fn, sizeof (lastfn));
-      killppm(&cache);
-      loadppm (fn, &cache);
+      ppm_kill (&cache);
+      ppm_load (fn, &cache);
     }
-  copyppm(&cache, p);
-  set_colorbrushes(fn);
+  ppm_copy (&cache, p);
+  set_colorbrushes (fn);
 }
 
 static void
@@ -313,9 +313,9 @@ update_brush_preview (const gchar *fn)
     int newheight;
 
     if (brush_from_file)
-      brush_reload(fn, &p);
+      brush_reload (fn, &p);
     else if (brushppm.col)
-      copyppm(&brushppm, &p);
+      ppm_copy (&brushppm, &p);
 
     set_colorbrushes (fn);
 
@@ -340,7 +340,7 @@ update_brush_preview (const gchar *fn)
 	  buf[j] = gammatable[p.col[k + j * 3]];
       gtk_preview_draw_row (GTK_PREVIEW (brush_preview), buf, 0, i, 100);
     }
-    killppm(&p);
+    ppm_kill(&p);
   }
   gtk_widget_queue_draw (brush_preview);
 }

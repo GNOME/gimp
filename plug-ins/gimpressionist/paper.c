@@ -34,7 +34,7 @@ static void updatepaperprev(void)
   gdouble sc;
   ppm_t   p = {0,0,NULL};
 
-  loadppm(pcvals.selectedpaper, &p);
+  ppm_load(pcvals.selectedpaper, &p);
   sc = p.width > p.height ? p.width : p.height;
   sc = 100.0 / sc;
   resize(&p, p.width*sc,p.height*sc);
@@ -50,7 +50,7 @@ static void updatepaperprev(void)
     }
     gtk_preview_draw_row (GTK_PREVIEW (paperprev), buf, 0, i, 100);
   }
-  killppm(&p);
+  ppm_kill(&p);
 
   gtk_widget_queue_draw (paperprev);
 }

@@ -1,3 +1,9 @@
+2004-07-15  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/: normalized the ppmtools.c and
+	ppmtool.h identifiers. Also fixed some (but not all) of the
+	syntax.
+
 2004-07-15  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* plug-ins/winicon/icoload.c:

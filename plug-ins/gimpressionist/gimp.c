@@ -45,12 +45,12 @@ void infile_copy_to_ppm(ppm_t * p)
 #if 0
     updatepreview (NULL, (void *)2); /* Force grabarea() */
 #endif
-  copyppm(&infile, p);
+  ppm_copy (&infile, p);
 }
 
 void infile_copy_alpha_to_ppm(ppm_t * p)
 {
-  copyppm(&inalpha, p);
+  ppm_copy (&inalpha, p);
 }
 
 MAIN()
@@ -224,10 +224,10 @@ void grabarea(void)
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   alpha = (has_alpha) ? bpp - 1 : bpp;
 
-  newppm(&infile, x2-x1, y2-y1);
+  ppm_new (&infile, x2-x1, y2-y1);
   p = &infile;
   if(has_alpha) {
-    newppm(&inalpha, x2-x1, y2-y1);
+    ppm_new (&inalpha, x2-x1, y2-y1);
   }
 
   rowstride = p->width * 3;

@@ -59,10 +59,10 @@ static ppm_t alpha_backup_ppm = {0,0,NULL};
 
 void preview_free_resources (void)
 {
-  killppm (&preview_ppm);
-  killppm (&alpha_ppm);
-  killppm (&backup_ppm);
-  killppm (&alpha_backup_ppm);
+  ppm_kill (&preview_ppm);
+  ppm_kill (&alpha_ppm);
+  ppm_kill (&backup_ppm);
+  ppm_kill (&alpha_backup_ppm);
 }
 
 void
@@ -112,9 +112,9 @@ updatepreview (GtkWidget *wg, gpointer d)
     }
     if(!preview_ppm.col)
     {
-      copyppm(&backup_ppm, &preview_ppm);
+      ppm_copy(&backup_ppm, &preview_ppm);
       if(img_has_alpha)
-        copyppm(&alpha_backup_ppm, &alpha_ppm);
+        ppm_copy(&alpha_backup_ppm, &alpha_ppm);
     }
     if(d)
     {
@@ -132,9 +132,9 @@ updatepreview (GtkWidget *wg, gpointer d)
                            (guchar*) &preview_ppm.col[i * PREVIEWSIZE * 3], 0, i,
                            PREVIEWSIZE);
     }
-    killppm(&preview_ppm);
+    ppm_kill(&preview_ppm);
     if(img_has_alpha)
-      killppm(&alpha_ppm);
+      ppm_kill(&alpha_ppm);
   }
 
   gtk_widget_queue_draw (preview);

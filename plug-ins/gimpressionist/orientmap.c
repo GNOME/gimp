@@ -133,17 +133,17 @@ static void updateompreviewprev(void)
   guchar white[3] = {255,255,255};
 
   if(!nbuffer.col) {
-    newppm(&nbuffer,OMWIDTH,OMHEIGHT);
+    ppm_new (&nbuffer,OMWIDTH,OMHEIGHT);
   }
-  fill(&nbuffer, black);
+  fill (&nbuffer, black);
 
   for(y = 6; y < OMHEIGHT-4; y += 10)
     for(x = 6; x < OMWIDTH-4; x += 10) {
       double dir = gimp_deg_to_rad(getdir(x/(double)OMWIDTH,y/(double)OMHEIGHT,0));
       double xo = sin(dir)*4.0;
       double yo = cos(dir)*4.0;
-      drawline(&nbuffer, x-xo, y-yo, x+xo, y+yo, gray);
-      putrgb(&nbuffer, x-xo, y-yo, white);
+      ppm_drawline (&nbuffer, x-xo, y-yo, x+xo, y+yo, gray);
+      ppm_put_rgb (&nbuffer, x-xo, y-yo, white);
     }
 
   for (y = 0; y < OMHEIGHT; y++)
@@ -174,17 +174,19 @@ static void updatevectorprev(void)
   guchar red[3] = {255,0,0};
   guchar white[3] = {255,255,255};
 
-  if(vectprevbrightadjust) val = 1.0 - GTK_ADJUSTMENT(vectprevbrightadjust)->value / 100.0;
-  else val = 0.5;
+  if (vectprevbrightadjust) 
+    val = 1.0 - GTK_ADJUSTMENT(vectprevbrightadjust)->value / 100.0;
+  else 
+    val = 0.5;
 
-  if(!ok || (val != lastval)) {
-    infile_copy_to_ppm(&backup);
-    ppmbrightness(&backup, val, 1,1,1);
-    if((backup.width != OMWIDTH) || (backup.height != OMHEIGHT))
-      resize_fast(&backup, OMWIDTH, OMHEIGHT);
+  if (!ok || (val != lastval)) {
+    infile_copy_to_ppm (&backup);
+    ppm_apply_brightness (&backup, val, 1,1,1);
+    if ((backup.width != OMWIDTH) || (backup.height != OMHEIGHT))
+      resize_fast (&backup, OMWIDTH, OMHEIGHT);
     ok = 1;
   }
-  copyppm(&backup, &buffer);
+  ppm_copy (&backup, &buffer);
 
   for(i = 0; i < numvect; i++) {
     double s;
@@ -195,10 +197,10 @@ static void updatevectorprev(void)
     xo = sin(dir)*(6.0+100*s);
     yo = cos(dir)*(6.0+100*s);
     if(i == selectedvector)
-      drawline(&buffer, x-xo, y-yo, x+xo, y+yo, red);
+      ppm_drawline (&buffer, x-xo, y-yo, x+xo, y+yo, red);
     else
-      drawline(&buffer, x-xo, y-yo, x+xo, y+yo, gray);
-    putrgb(&buffer, x-xo, y-yo, white);
+      ppm_drawline (&buffer, x-xo, y-yo, x+xo, y+yo, gray);
+    ppm_put_rgb(&buffer, x-xo, y-yo, white);
   }
 
   for (y = 0; y < OMHEIGHT; y++)
