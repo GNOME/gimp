@@ -400,7 +400,7 @@ action_select_object (GimpActionSelectType  select_type,
   n_children = gimp_container_num_children (container);
 
   if (n_children == 0)
-    return;
+    return NULL;
 
   switch (select_type)
     {
