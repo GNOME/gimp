@@ -1,3 +1,11 @@
+2003-11-21  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: added a check for little cms.
+
+	* modules/Makefile.am
+	* modules/cdisplay_proof.c: added a color proof display filter
+	module contributed by Banlu Kemiyatorn <id@project-ile.net>.
+
 2003-11-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptoolbox.c: added #defines for the data keys used

@@ -11,12 +11,16 @@ endif
 libdir = $(gimpplugindir)/modules
 
 INCLUDES = \
-        -I$(top_srcdir)		\
-        $(GTK_CFLAGS)		\
+        -I$(top_srcdir)	\
+        $(GTK_CFLAGS)	\
         -I$(includedir)
 
 EXTRA_DIST = \
 	makefile.msc
+
+if HAVE_LCMS
+cdisplay_proof_module = libcdisplay_proof.la
+endif
 
 lib_LTLIBRARIES = \
 	libcolorsel_cmyk.la		\
@@ -24,7 +28,9 @@ lib_LTLIBRARIES = \
 	libcolorsel_water.la		\
 	libcdisplay_colorblind.la	\
 	libcdisplay_gamma.la		\
-	libcdisplay_highcontrast.la
+	libcdisplay_highcontrast.la	\
+	$(cdisplay_proof_module)
+
 
 libcolorsel_cmyk_la_SOURCES = colorsel_cmyk.c
 libcolorsel_cmyk_la_LDFLAGS = -avoid-version -module $(no_undefined)
@@ -49,3 +55,7 @@ libcdisplay_gamma_la_LIBADD = $(libgimpbase) $(libgimpwidgets) $(GTK_LIBS)
 libcdisplay_highcontrast_la_SOURCES = cdisplay_highcontrast.c
 libcdisplay_highcontrast_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcdisplay_highcontrast_la_LIBADD = $(libgimpbase) $(libgimpwidgets) $(GTK_LIBS)
+
+libcdisplay_proof_la_SOURCES = cdisplay_proof.c
+libcdisplay_proof_la_LDFLAGS = -avoid-version -module $(no_undefined)
+libcdisplay_proof_la_LIBADD = $(libgimpbase) $(libgimpwidgets) $(GTK_LIBS) $(LCMS_LIBS)

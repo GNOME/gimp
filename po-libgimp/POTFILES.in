@@ -28,6 +28,7 @@ libgimpwidgets/gimpwidgets.c
 modules/cdisplay_colorblind.c
 modules/cdisplay_gamma.c
 modules/cdisplay_highcontrast.c
+modules/cdisplay_proof.c
 modules/colorsel_cmyk.c
 modules/colorsel_triangle.c
 modules/colorsel_water.c
