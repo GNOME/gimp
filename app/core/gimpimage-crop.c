@@ -34,9 +34,9 @@
 #include "gimpimage-mask.h"
 #include "gimpimage-projection.h"
 #include "gimplayer.h"
+#include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 
-#include "floating_sel.h"
 #include "undo.h"
 
 

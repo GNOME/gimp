@@ -29,16 +29,17 @@
 
 #include "tools-types.h"
 
-#include "paint-funcs/paint-funcs.h"
-
 #include "base/base-types.h"
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
+
+#include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpfontselection.h"
@@ -50,10 +51,8 @@
 #include "gimptexttool.h"
 #include "tool_options.h"
 
-#include "floating_sel.h"
-#include "undo.h"
-
 #include "gimprc.h"
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 

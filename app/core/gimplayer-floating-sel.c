@@ -18,11 +18,11 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
 
-#include "core/core-types.h"
+#include "core-types.h"
 
 #include "base/boundary.h"
 #include "base/pixel-region.h"
@@ -30,12 +30,12 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
-#include "core/gimplayer.h"
-#include "core/gimplayermask.h"
+#include "gimpimage.h"
+#include "gimpimage-mask.h"
+#include "gimplayer.h"
+#include "gimplayer-floating-sel.h"
+#include "gimplayermask.h"
 
-#include "floating_sel.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

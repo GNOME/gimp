@@ -116,6 +116,8 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpimagefile.h			\
 	gimplayer.c			\
 	gimplayer.h			\
+	gimplayer-floating-sel.c	\
+	gimplayer-floating-sel.h	\
 	gimplayermask.c			\
 	gimplayermask.h			\
 	gimplist.c			\

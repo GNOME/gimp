@@ -43,6 +43,7 @@
 #include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
+#include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
@@ -50,7 +51,6 @@
 #include "gimpparasitelist.h"
 #include "gimpundostack.h"
 
-#include "floating_sel.h"
 #include "path.h"
 #include "undo.h"
 

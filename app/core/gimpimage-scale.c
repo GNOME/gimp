@@ -29,9 +29,9 @@
 #include "gimpimage-projection.h"
 #include "gimpimage-scale.h"
 #include "gimplayer.h"
+#include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 
-#include "floating_sel.h"
 #include "undo.h"
 
 

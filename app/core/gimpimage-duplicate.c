@@ -39,10 +39,10 @@
 #include "gimpimage-guides.h"
 #include "gimpimage-new.h"
 #include "gimplayer.h"
+#include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 #include "gimpparasitelist.h"
 
-#include "floating_sel.h"
 #include "path.h"
 
 #include "libgimp/gimpintl.h"

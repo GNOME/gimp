@@ -141,9 +141,9 @@
 #include "gimpimage-projection.h"
 #include "gimplist.h"
 #include "gimplayer.h"
+#include "gimplayer-floating-sel.h"
 #include "gimppalette.h"
 
-#include "floating_sel.h"
 #include "undo.h"
 
 #include "cpercep.h"

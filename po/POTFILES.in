@@ -2,7 +2,6 @@
 # marked to allow runtime translation of messages
 
 app/app_procs.c
-app/floating_sel.c
 app/gimphelp.c
 app/gimpprogress.c
 app/gimprc.c
@@ -28,6 +27,7 @@ app/core/gimpimage-mask.c
 app/core/gimpimage-new.c
 app/core/gimpimage.c
 app/core/gimplayer.c
+app/core/gimplayer-floating-sel.c
 app/core/gimplayermask.c
 app/core/gimppalette-import.c
 app/core/gimppalette.c

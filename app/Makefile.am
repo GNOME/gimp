@@ -38,13 +38,6 @@ core_ui_sources = \
 	image_map.h
 
 ##
-## stuff for core/
-##
-core_sources = \
-	floating_sel.c		\
-	floating_sel.h
-
-##
 ## config stuff
 ##
 config_sources = \
@@ -91,7 +84,6 @@ stuff_sources = \
 gimp_1_3_SOURCES = @STRIP_BEGIN@ \
 	$(gui_sources)		\
 	$(core_ui_sources)	\
-	$(core_sources)		\
 	$(config_sources)	\
 	$(bye_sources)		\
 	$(stuff_sources)	\

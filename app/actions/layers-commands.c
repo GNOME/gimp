@@ -36,6 +36,7 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
 
@@ -50,7 +51,6 @@
 #include "offset-dialog.h"
 #include "resize-dialog.h"
 
-#include "floating_sel.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

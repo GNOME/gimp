@@ -43,6 +43,7 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-projection.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparasite.h"
 #include "core/gimpparasitelist.h"
@@ -56,7 +57,6 @@
 #include "tools/gimptransformtool.h"
 #include "tools/tool_manager.h"
 
-#include "floating_sel.h"
 #include "path_transform.h"
 #include "undo.h"
 

@@ -1,3 +1,7 @@
+2002-02-21  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: floating_sel.c -> core/gimplayer-floating-sel.c
+
 2002-01-31  Stanislav Visnovsky  <visnovsky@nenya.ms.mff.cuni.cz>
 
 	* sk.po: Updated Slovak translation from Zdenko Podobny <zdpo@mailbox.sk>.

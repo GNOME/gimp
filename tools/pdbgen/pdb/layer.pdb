@@ -41,7 +41,7 @@ sub layer_change_invoke {
     while ($code =~ /^\t* {8}/m) { $code =~ s/^(\t*) {8}/$1\t/mg }
 
     %invoke = (
-	headers => [ qw("undo.h" "floating_sel.h") ],
+	headers => [ qw("undo.h" "core/gimplayer-floating-sel.h") ],
 	vars => [ 'GimpImage *gimage', 'GimpLayer *floating_layer' ],
 	code => <<CODE
 {

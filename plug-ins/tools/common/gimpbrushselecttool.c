@@ -36,6 +36,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
+#include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
@@ -44,8 +45,6 @@
 #include "gimpeditselectiontool.h"
 #include "gimpbrushselecttool.h"
 #include "selection_options.h"
-
-#include "floating_sel.h"
 
 #include "libgimp/gimpintl.h"
 

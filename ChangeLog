@@ -1,5 +1,43 @@
 2002-02-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/floating_sel.[ch]: removed...
+
+	* app/core/Makefile.am
+	* app/core/gimplayer-floating-sel.[ch]: ...and added here.
+
+	* app/undo.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-projection.c
+	* app/core/gimpimage-qmask.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer.c
+	* app/gui/layers-commands.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* plug-ins/tools/common/gimpbrushselecttool.c
+	* tools/pdbgen/pdb/floating_sel.pdb
+	* tools/pdbgen/pdb/layer.pdb: changed includes accordingly.
+
+	* app/pdb/floating_sel_cmds.c
+	* app/pdb/layer_cmds.c: regenerated.
+
+2002-02-21  Michael Natterer  <mitch@gimp.org>
+
 	Made the paint tool PDB wrappers work again (a bit at least...)
 
 	* app/Makefile.am: changed linking order. libtool sucks.

@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __FLOATING_SEL_H__
-#define __FLOATING_SEL_H__
+#ifndef __GIMP_LAYER_FLOATING_SEL_H__
+#define __GIMP_LAYER_FLOATING_SEL_H__
 
 
 void       floating_sel_attach       (GimpLayer    *layer,
@@ -51,4 +51,4 @@ BoundSeg * floating_sel_boundary     (GimpLayer    *layer,
 void       floating_sel_invalidate   (GimpLayer    *layer);
 
 
-#endif /* __FLOATING_SEL_H__ */
+#endif /* __GIMP_LAYER_FLOATING_SEL_H__ */

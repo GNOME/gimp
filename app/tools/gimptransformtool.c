@@ -50,7 +50,6 @@
 #include "tool_manager.h"
 #include "transform_options.h"
 
-#include "floating_sel.h"
 #include "gimpprogress.h"
 #include "undo.h"
 #include "path_transform.h"

@@ -34,10 +34,9 @@
 #include "gimpimage.h"
 #include "gimpimage-projection.h"
 #include "gimplayer.h"
+#include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
 #include "gimplist.h"
-
-#include "floating_sel.h"
 
 
 /*  local function prototypes  */

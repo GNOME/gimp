@@ -40,8 +40,8 @@
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
 #include "gimplayer.h"
+#include "gimplayer-floating-sel.h"
 
-#include "floating_sel.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

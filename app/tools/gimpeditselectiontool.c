@@ -36,6 +36,7 @@
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-floating-sel.h"
 #include "core/gimplist.h"
 
 #include "display/gimpdisplay.h"
@@ -47,7 +48,6 @@
 #include "gimpdrawtool.h"
 #include "tool_manager.h"
 
-#include "floating_sel.h"
 #include "gimprc.h"
 #include "path_transform.h"
 #include "undo.h"
