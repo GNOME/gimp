@@ -1,3 +1,9 @@
+Mon Feb 21 19:41:49 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/pixmaps2.h: Tried to bring a little more shape into the
+	newer tool icons. Still not content with dodge and measure, but
+	IMO it's better than before especially for dark themes.
+
 2000-02-21  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimppixmap.c: fixed a gtk-doc comment.
