@@ -1,5 +1,13 @@
 2000-04-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/disp_callbacks.c: when dropping a drawable, do the
+	undo_push_group_start() before creating the new layer, otherwise
+	the undo system will show obscure misbehaviour (the undo group is
+	pushed correctly but no undo will be possible until an other undo
+	is pushed).
+
+2000-04-01  Michael Natterer  <mitch@gimp.org>
+
 	Backported the UI changes of the 3.1.x gimp-print plugin to the
 	stable 3.0.x version.
 	Put the printer definitions to a separate file and added the 3.1.x

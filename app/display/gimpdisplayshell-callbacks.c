@@ -805,16 +805,19 @@ gdisplay_drag_drop (GtkWidget      *widget,
 	  dest_width  = dest_gimage->width;
 	  dest_height = dest_gimage->height;
 
+	  undo_push_group_start (dest_gimage, EDIT_PASTE_UNDO);
+
 	  new_layer =
-	    layer_new_from_tiles (dest_gimage, gimp_image_base_type_with_alpha(dest_gimage), tiles, 
-				  _("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
+	    layer_new_from_tiles (dest_gimage,
+				  gimp_image_base_type_with_alpha (dest_gimage),
+				  tiles, 
+				  _("Pasted Layer"),
+				  OPAQUE_OPACITY, NORMAL_MODE);
 
 	  tile_manager_destroy (tiles);
 
 	  if (new_layer)
 	    {
-	      undo_push_group_start (dest_gimage, EDIT_PASTE_UNDO);
-
 	      gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), dest_gimage);
 
 	      off_x = (dest_gimage->width - src_width) / 2;
@@ -824,12 +827,11 @@ gdisplay_drag_drop (GtkWidget      *widget,
 
 	      gimage_add_layer (dest_gimage, new_layer, -1);
 
+	      undo_push_group_end (dest_gimage);
+
 	      gdisplays_flush ();
 
 	      return_val = TRUE;
-
-	      undo_push_group_end (dest_gimage);
-              gdisplay_update_title (gdisp);
 	    }
 	}
     }
