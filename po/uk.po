@@ -1234,7 +1234,7 @@ msgstr ""
 
 #: app/fileops.c:378
 msgid "No Selection."
-msgstr "Нема╓ вид╕лення."
+msgstr "Н╕чого не вибрано."
 
 #: app/fileops.c:421 app/fileops.c:1640 app/fileops.c:1747
 #, c-format
@@ -3464,7 +3464,7 @@ msgstr "/Ф╕льтри/╤грашки"
 
 #: app/menus.c:569
 msgid "/Automatic"
-msgstr "/Автоматично"
+msgstr "/Автоматичне"
 
 #: app/menus.c:583
 msgid "/By Extension"
@@ -4310,7 +4310,7 @@ msgstr "╤нсталювати карту кольор╕в"
 
 #: app/preferences_dialog.c:1727
 msgid "Colormap Cycling"
-msgstr ""
+msgstr "Повторення мапи кольор╕в"
 
 #: app/preferences_dialog.c:1776
 msgid "Tiny"
