@@ -1,10 +1,15 @@
+2003-07-09  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am
+	* app/composite/Makefile.am: some Makefile fixes, more to come.
+
 2003-07-08  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* Added app/composite for the new compositing mechanism.
 
 	* Modified configure.in to build app/composite/Makefile
 
 	* Added app/composite to app/Makefile.am
-
-	* Added app/composite for the new compositing mechanism.
 
 2003-07-08  Sven Neumann  <sven@gimp.org>
 
