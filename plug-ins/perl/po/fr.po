@@ -950,7 +950,7 @@ msgstr ""
 
 #: Gimp/Fu.pm:0
 msgid "function '$exe' not found in this script (must be one of "
-msgstr "fonction '$exe' non trouvé dans ce script (doit etre un de "
+msgstr "fonction '$exe' non trouvé dans ce script (doit être un de "
 
 #: Gimp/Fu.pm:0
 msgid "function name contains dashes instead of underscores"
@@ -1117,7 +1117,7 @@ msgstr ""
 
 #: Gimp/Util.pm:0
 msgid "text string is empty"
-msgstr "la chaine de texte est vide"
+msgstr "la chaîne de texte est vide"
 
 #: Gimp/Fu.pm:0
 msgid ""

@@ -5,7 +5,6 @@ app/app_procs.c
 app/devices.c
 app/disp_callbacks.c
 app/docindex.c
-app/errorconsole.c
 app/file-open.c
 app/file-save.c
 app/floating_sel.c
