@@ -48,8 +48,10 @@ PDB_WRAPPERS_O = \
 	gimpimage_pdb.o			\
 	gimplayer_pdb.o			\
 	gimpmessage_pdb.o		\
+	gimpmisc_pdb.o			\
 	gimppalette_pdb.o		\
 	gimpparasite_pdb.o		\
+	gimppaths_pdb.o			\
 	gimppatterns_pdb.o		\
 	gimppatternselect_pdb.o		\
 	gimpplugin_pdb.o		\
@@ -77,7 +79,7 @@ gimpi_OBJECTS = \
 	gimpquerybox.o \
 	gimpsizeentry.o \
 	gimpunitmenu.o \
-	gimputils.c \
+	gimputils.o \
 	gimpvector.o \
 	gimpwidgets.o \
 	gimpwire.o

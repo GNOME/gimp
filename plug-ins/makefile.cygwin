@@ -45,7 +45,7 @@ SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp dbbrowser f
 # ../unofficial-plug-ins directory, go there, and do "make -f
 # makefile.cygwin unofficial".
 
-UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace ccanalyze gimp_ace guash sel_gauss magiceye psd_save user_filter
+UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace ccanalyze gimp_ace guash kaleidoscope logconv sel_gauss magiceye mathmap psd_save user_filter
 
 # The main target
 
@@ -71,7 +71,7 @@ libs-clean :
 	$(MAKE) -f makefile.cygwin sub-libs TARGET=clean
 
 sub-libs:
-	cd libgck/gck; $(MAKE) -f ../../makefile.cygwin GIMPTOP=../.. TOP=../$(TOP) LIBRARY=gck OBJECTS="gckcolor.o" $(TARGET)
+	cd libgck/gck; $(MAKE) -f ../../makefile.cygwin GIMPTOP=../../.. TOP=../../$(TOP) LIBRARY=gck OBJECTS="gckcolor.o" $(TARGET)
 
 
 
@@ -82,7 +82,7 @@ common-plugins-install :
 	$(MAKE) -f makefile.cygwin sub-common-plugins TARGET=install
 
 common-plugins-clean :
-	cd common; $(MAKE) -f ../makefile.cygwin LIBRARY=PLUGIN=dummy clean
+	cd common; $(MAKE) -f ../makefile.cygwin GIMPTOP=../.. LIBRARY=PLUGIN=dummy clean
 
 
 
@@ -366,8 +366,8 @@ OBJECTS = \
 endif
 
 ifdef EXTRA_jpeg
-EXTRACFLAGS = -I$(JPEG)
-EXTRALIBS = -L $(JPEG) -ljpeg
+EXTRACFLAGS = $(JPEG_CFLAGS)
+EXTRALIBS = $(JPEG_LIBS)
 endif
 
 ifdef EXTRA_maze
@@ -384,8 +384,8 @@ EXTRALIBS = -L $(MPEG)/release -lmpeg
 endif
 
 ifdef EXTRA_png
-EXTRACFLAGS = -I$(PNG) -I$(ZLIB)
-EXTRALIBS = -L $(PNG) -lpng -L $(ZLIB) -lz
+EXTRACFLAGS = $(PNG_CFLAGS)
+EXTRALIBS = $(PNG_LIBS)
 endif
 
 ifdef EXTRA_print
@@ -398,8 +398,8 @@ OBJECTS = \
 endif
 
 ifdef EXTRA_psp
-EXTRACFLAGS = -I$(ZLIB)
-EXTRALIBS = -L $(ZLIB) -lz
+EXTRACFLAGS = $(ZLIB_CFLAGS)
+EXTRALIBS = $(ZLIB_LIBS)
 endif
 
 ifdef EXTRA_rcm
@@ -453,8 +453,8 @@ OBJECTS = \
 endif
 
 ifdef EXTRA_tiff
-EXTRACFLAGS = -I$(TIFF)
-EXTRALIBS = -L $(TIFF) -ltiff -L $(JPEG) -ljpeg -L $(ZLIB) -lz -luser32
+EXTRACFLAGS = $(TIFF_CFLAGS)
+EXTRALIBS = $(TIFF_LIBS)
 endif
 
 ifdef EXTRA_gimp_ace
@@ -550,8 +550,8 @@ OBJECTS = \
 endif
 
 ifdef EXTRA_pmosaic
-EXTRACFLAGS = -I$(JPEG)
-EXTRALIBS = -L $(JPEG) -ljpeg
+EXTRACFLAGS = $(JPEG_CFLAGS)
+EXTRALIBS = $(JPEG_LIBS)
 OBJECTS = \
 	pmosaic.o \
 	pmsc.o

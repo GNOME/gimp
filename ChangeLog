@@ -1,3 +1,23 @@
+2000-07-04  Tor Lillqvist  <tml@iki.fi>
+
+	* Makefile.am (SUBDIRS): Yes, there *is* a "build" directory. It's a
+	virtual module included in gimp, see CVSROOT/modules. With older
+	CVS clients you might need to do a recheckout to get it.
+
+	* plug-ins/script-fu/script-fu.c (marshall_proc_db_call): On
+	Windows, handle pending gtk events each time we come here,
+	otherwise we easily get resource starvation in a long-running
+	script. Thanks to Jean-Louis Hamel for this workaround. It's a
+	hack, I don't exactly know why it is needed, but it sure helps a
+	lot.
+
+	* plug-ins/makefile.cygwin: Add some new unofficial plug-ins. Use
+	macros from make.mingw.
+
+	* libgimp/makefile.cygwin: Update with new object files.
+
+	* libgimp/gimp.def: Add new entry points.
+
 Fri Jun 30 22:09:11 BST 2000 Andy Thomas <alt@gimp.org>
 
 	* plug-ins/common/iwarp.c

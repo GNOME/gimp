@@ -974,6 +974,13 @@ marshall_proc_db_call (LISP a)
   if (server_mode)
     script_fu_server_listen (10);
 #endif
+
+#ifdef GDK_WINDOWING_WIN32
+  /* This seems to help a lot on Windoze. */
+  while (gtk_events_pending ())
+    gtk_main_iteration ();
+#endif
+
   return return_val;
 }
 

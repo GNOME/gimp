@@ -1,4 +1,28 @@
 EXPORTS
+	_gimp_channel_new
+	_gimp_drawable_thumbnail
+	_gimp_gradients_get_gradient_data
+	_gimp_image_get_cmap
+	_gimp_image_set_cmap
+	_gimp_image_thumbnail
+	_gimp_layer_copy
+	_gimp_layer_new
+	_gimp_procedural_db_get_data
+	_gimp_procedural_db_proc_info
+	_gimp_procedural_db_set_data
+	_gimp_selection_float
+	_gimp_unit_get_abbreviation
+	_gimp_unit_get_deletion_flag
+	_gimp_unit_get_digits
+	_gimp_unit_get_factor
+	_gimp_unit_get_identifier
+	_gimp_unit_get_number_of_built_in_units
+	_gimp_unit_get_number_of_units
+	_gimp_unit_get_plural
+	_gimp_unit_get_singular
+	_gimp_unit_get_symbol
+	_gimp_unit_new
+	_gimp_unit_set_deletion_flag
 	gimp_attach_new_parasite
 	gimp_brushes_close_popup
 	gimp_brushes_get_brush_data
@@ -65,7 +89,11 @@ EXPORTS
 	gimp_extension_ack
 	gimp_extension_process
 	gimp_gamma
+	gimp_get_monitor_resolution
+	gimp_get_path_by_tattoo
 	gimp_get_progname
+	gimp_gimprc_query
+	gimp_gimprc_set
 	gimp_gradients_close_popup
 	gimp_gradients_get_active
 	gimp_gradients_get_gradient_data
@@ -209,9 +237,21 @@ EXPORTS
 	gimp_parasite_is_undoable
 	gimp_parasite_name
 	gimp_parasite_new
+	gimp_path_delete
 	gimp_path_free
+	gimp_path_get_current
+	gimp_path_get_locked
+	gimp_path_get_point_at_dist
+	gimp_path_get_points
+	gimp_path_get_tattoo
 	gimp_path_get_user_writable_dir
+	gimp_path_list
 	gimp_path_parse
+	gimp_path_set_current
+	gimp_path_set_locked
+	gimp_path_set_points
+	gimp_path_set_tattoo
+	gimp_path_stroke_current
 	gimp_path_to_str
 	gimp_patterns_close_popup
 	gimp_patterns_get_pattern_data
@@ -236,10 +276,10 @@ EXPORTS
 	gimp_plugin_domain_register
 	gimp_plugin_help_register
 	gimp_procedural_db_get_data
+	gimp_procedural_db_get_data_size
 	gimp_procedural_db_proc_info
 	gimp_procedural_db_query
 	gimp_procedural_db_set_data
-	gimp_procedural_db_get_data_size
 	gimp_progress_init
 	gimp_progress_update
 	gimp_quit
@@ -306,6 +346,7 @@ EXPORTS
 	gimp_vector3_sub
 	gimp_vector_2d_to_3d
 	gimp_vector_3d_to_2d
+	gimp_version
 	gp_config_write
 	gp_extension_ack_write
 	gp_init
