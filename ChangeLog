@@ -2,7 +2,8 @@ Sat Nov 27 04:08:32 MET 1999  Sven Neuman <sven@gimp.org>
 
 	* app/fileops.c: I might break it again, but loading a single
 	preview seemed to be broken after Adam fixed my last change.
-	IMHO it works as it should now...
+	IMHO it works as it should now... [and Adam sez: "I didn't
+        touch preview loading."]
 
 Sat Nov 27 03:51:41 MET 1999  Sven Neuman <sven@gimp.org>
 
