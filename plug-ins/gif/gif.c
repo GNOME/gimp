@@ -1,4 +1,4 @@
-/* GIF loading and saving file filter for The GIMP version 1.0
+/* GIF loading and saving file filter for The GIMP version 1.0/1.1
  *
  *    - Adam D. Moss
  *    - Peter Mattis
@@ -7,7 +7,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 2.1.0 - 98/10/09
+ * Version 2.1.1 - 99/01/23
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
@@ -22,6 +22,11 @@
 
 /*
  * REVISION HISTORY
+ *
+ * 99/01/23
+ * 2.01.01 - Use a text-box to permit multi-line comments.  Don't
+ *           try to write comment blocks which are longer than
+ *           permitted.
  *
  * 98/10/09
  * 2.01.00 - Added support for persistant GIF Comments through
@@ -211,8 +216,6 @@
 
 /*
  * TODO (more *'s means more important!)
- *
- * - Show GIF comments in a popup window?
  *
  * - PDB stuff for comments
  *
@@ -2053,11 +2056,14 @@ save_dialog ( gint32 image_ID )
   GtkWidget *toggle;
   GtkWidget *label;
   GtkWidget *entry;
+  GtkWidget *text;
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *menu;
   GtkWidget *disposal_option_menu;
+  GtkWidget *com_table;
+  GtkWidget *vscrollbar;
 #ifdef FACEHUGGERS
   Parasite* GIF2_CMNT;
 #endif
@@ -2133,15 +2139,23 @@ save_dialog ( gint32 image_ID )
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), 1);
   gtk_widget_show (toggle);
 
-  entry = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_set_usize (entry, 240, 0);
+  com_table = gtk_table_new (1, 1, FALSE);
+  /*  gtk_container_border_width (GTK_CONTAINER (com_table), 10);*/
+  gtk_box_pack_start (GTK_BOX (hbox), com_table, TRUE, TRUE, 0);
+
+  text = gtk_text_new (NULL, NULL);
+  gtk_text_set_editable (GTK_TEXT (text), TRUE);
+  gtk_widget_set_usize (text, 80,3);
+  gtk_table_attach (GTK_TABLE (com_table), text, 0, 1, 0, 1,
+                    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
+                    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+  
   if (globalcomment!=NULL)
     {
       g_free(globalcomment);
     }
 #ifdef FACEHUGGERS
-    GIF2_CMNT = gimp_image_find_parasite (image_ID, "gimp-comment");
+  GIF2_CMNT = gimp_image_find_parasite (image_ID, "gimp-comment");
     if (GIF2_CMNT)
       {
 	globalcomment = g_malloc(GIF2_CMNT->size);
@@ -2156,17 +2170,23 @@ save_dialog ( gint32 image_ID )
       }
     parasite_free (GIF2_CMNT);
 #endif
+    
+    gtk_text_insert(GTK_TEXT(text),NULL,NULL,NULL,globalcomment,-1);
+    gtk_signal_connect (GTK_OBJECT (text), "changed",
+			(GtkSignalFunc) comment_entry_callback,
+			NULL);
 
-  gtk_entry_set_text (GTK_ENTRY (entry), globalcomment);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      (GtkSignalFunc) comment_entry_callback,
-                      NULL);
-  gtk_widget_show (entry);
-
-  gtk_widget_show (hbox);
-
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
+    vscrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
+    gtk_table_attach (GTK_TABLE (com_table), vscrollbar, 1, 2, 0, 1,
+		      GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+    gtk_widget_show (vscrollbar);
+    gtk_widget_show (text);
+    gtk_widget_show (com_table);
+    
+    gtk_widget_show (hbox);
+    
+    gtk_widget_show (vbox);
+    gtk_widget_show (frame);
 
 
   /*  additional animated gif parameter settings  */
@@ -2833,6 +2853,12 @@ static void GIFEncodeCommentExt (FILE *fp, char *comment)
       return;
     }
 
+  if (strlen(comment)>240)
+    {
+      g_print ("GIF: warning: comment too large - comment block not written.\n");
+      return;
+    }
+
   fputc(0x21,fp);
   fputc(0xfe,fp);
   fputc(strlen(comment),fp);
@@ -3384,20 +3410,25 @@ comment_entry_callback (GtkWidget *widget,
 			gpointer   data)
 {
   gint ssize;
+  gchar* str;
 
-  ssize = strlen(gtk_entry_get_text (GTK_ENTRY (widget)));
+  str = gtk_editable_get_chars(GTK_EDITABLE (widget),0,-1);
+  ssize = strlen(str);
 
   /* Temporary kludge for overlength strings - just return */
   if (ssize>240)
     {
       g_message ("GIF save: Your comment string is too long.\n");
+      g_free(str);
       return;
     }
 
   if (globalcomment!=NULL) g_free(globalcomment);
   globalcomment = g_malloc(ssize+1);
 
-  strcpy(globalcomment, gtk_entry_get_text (GTK_ENTRY (widget)));
+  /*strcpy(globalcomment, gtk_entry_get_text (GTK_ENTRY (widget)));*/
+  strcpy(globalcomment, str);
+  g_free(str);
 
   /* g_print ("COMMENT: %s\n",globalcomment); */
 }

@@ -2000,32 +2000,34 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 	  /* HEAD */
 	  i =  (((int)m) & (sizeof(int)-1));
 	  if (i != 0)
-	    i = sizeof(int) - i;
-	  length -= i;
-	  while (i--)
 	    {
-	      /* GUTS */
-	      src2_alpha = INT_MULT(src2[alpha], *m, tmp);
-	      new_alpha = src1[alpha] +
-		INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
-		  
-	      alphify (src2_alpha, new_alpha);
-		  
-	      if (mode_affect)
+	      i = sizeof(int) - i;
+	      length -= i;
+	      while (i--)
 		{
-		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
-		}
-	      else
-		{
-		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
-		    (affect[alpha] ? new_alpha : src1[alpha]);      
-		}
+		  /* GUTS */
+		  src2_alpha = INT_MULT(src2[alpha], *m, tmp);
+		  new_alpha = src1[alpha] +
+		    INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
 		  
-	      m++;
-	      src1 += bytes;
-	      src2 += bytes;
-	      dest += bytes;	
-	      /* GUTS END */
+		  alphify (src2_alpha, new_alpha);
+		  
+		  if (mode_affect)
+		    {
+		      dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+		    }
+		  else
+		    {
+		      dest[alpha] = (src1[alpha]) ? src1[alpha] :
+			(affect[alpha] ? new_alpha : src1[alpha]);      
+		    }
+		  
+		  m++;
+		  src1 += bytes;
+		  src2 += bytes;
+		  dest += bytes;	
+		  /* GUTS END */
+		}
 	    }
 
 	  /* BODY */
@@ -2113,34 +2115,36 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 	  /* HEAD */
 	  i = (((int)m) & (sizeof(int)-1));
 	  if (i != 0)
-	    i = sizeof(int) - i;
-	  length -= i;
-	  while (i--)
 	    {
-	      /* GUTS */
-	      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
-	      new_alpha = src1[alpha] +
-		INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
-	      
-	      alphify (src2_alpha, new_alpha);
-	      
-	      if (mode_affect)
+	      i = sizeof(int) - i;
+	      length -= i;
+	      while (i--)
 		{
-		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+		  /* GUTS */
+		  src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+		  new_alpha = src1[alpha] +
+		    INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+		  
+		  alphify (src2_alpha, new_alpha);
+		  
+		  if (mode_affect)
+		    {
+		      dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+		    }
+		  else
+		    {
+		      dest[alpha] = (src1[alpha]) ? src1[alpha] :
+			(affect[alpha] ? new_alpha : src1[alpha]);
+		    }
+		  
+		  m++;
+		  src1 += bytes;
+		  src2 += bytes;
+		  dest += bytes;
+		  /* GUTS END */
 		}
-	      else
-		{
-		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
-		    (affect[alpha] ? new_alpha : src1[alpha]);
-		}
-	      
-	      m++;
-	      src1 += bytes;
-	      src2 += bytes;
-	      dest += bytes;
-	      /* GUTS END */
 	    }
-
+	  
 	  /* BODY */
 	  mask_ip = (int*)m;
 	  i = length / sizeof(int);
@@ -2157,9 +2161,9 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 		      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
 		      new_alpha = src1[alpha] +
 			INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
-			  
+		      
 		      alphify (src2_alpha, new_alpha);
-			  
+		      
 		      if (mode_affect)
 			{
 			  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];

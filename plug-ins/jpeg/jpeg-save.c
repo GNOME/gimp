@@ -45,7 +45,9 @@
  * progressive loads - gimp doesn't) loads the image it first gets a
  * low res version displayed and then the image is progressively
  * enhanced until you get the final version.  It doesn't add any size
- * to the image - the only draw back is some might find it annoying.
+ * to the image (actually it often results in smaller file size) - the
+ * only draw backs are that progressive jpegs are not supported by some
+ * older viewers/browsers, and some might find it annoying.
  */
 
 #include <setjmp.h>

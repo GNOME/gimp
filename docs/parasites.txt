@@ -5,13 +5,14 @@ PARASITE REGISTRY - 1998/10/09
 This document is designed for the convenience of GIMP developers.
 It does not need to concern users.
 
-If your plugin or script writes parasites, please amend this file.
+>>>> If your plugin or script writes parasites, please
+>>>> amend this file in CVS or submit patches to
+>>>> gimp-developer@scam.xcf.berkeley.edu
 
 
 ------------------------------------------------------------------
 *** PREFIXES:
 
-"gif2" : The standard GIMP GIF plugin
 "tiff" : The standard GIMP TIFF plugin
 "gimp" : For common and standard parasites
 

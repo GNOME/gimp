@@ -1363,7 +1363,7 @@ gdisplay_remove_override_cursor (GDisplay      *gdisp)
     }
   else
     {
-      g_warning ("Tried to remove override-cursor from un-overridden gdisp.");
+/*      g_warning ("Tried to remove override-cursor from un-overridden gdisp."); */
     }
 }
 
@@ -1913,14 +1913,15 @@ gdisplay_reconnect (GDisplay *gdisp, GimpImage *gimage)
 
   gimage_delete (gdisp->gimage);
 
-  gdisplay_format_title (gimage, title);
-
   instance = gimage->instance_count;
   gimage->instance_count++;
   gimage->ref_count++;
 
   gdisp->gimage = gimage;
   gdisp->instance = instance;
+
+  gdisplay_format_title (gimage, title);
+  gdisplays_update_title (gimage);
 
   gdisplay_expose_full (gdisp);
   gdisplay_flush (gdisp);

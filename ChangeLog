@@ -1,3 +1,19 @@
+Sat Jan 23 18:43:23 GMT 1999  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/gif/gif.c: Multi-line comments, a little more
+	sanity-checking.
+	
+	* app/convert.c: Cosmetic changes to the warning about having
+	too many colours for saving transparent/animated GIFs.
+
+	* app/gdisplay.c: Titlebar is correctly updated upon revert.
+
+	* app/paint_funcs.c: Minor improvement.
+	
+	* docs/parasites.txt: Minor amendments.
+
+	* plug-ins/jpeg/jpeg.c: Minor code comment amendments.
+
 1999-01-22  Jay Cox  <jaycox@earthlink.net>
 
 	* app/pixel_region.c, app/pixel_region.h: new function 
