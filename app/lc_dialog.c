@@ -77,8 +77,15 @@ lc_dialog_create (GimpImage* gimage)
 	  gdk_window_raise (lc_dialog->shell->window);
 	}
 
-      lc_dialog_update (gimage);
-      lc_dialog_update_image_list ();
+      if (gimage)
+	{
+	  lc_dialog_update (gimage);
+	  lc_dialog_update_image_list ();
+	}
+      else
+	{
+	  lc_dialog_update_image_list ();
+	}
 
       return;
     }

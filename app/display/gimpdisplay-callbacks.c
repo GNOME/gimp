@@ -116,11 +116,6 @@ gdisplay_shell_events (GtkWidget *w,
     case GDK_KEY_PRESS:
       /*  Setting the context's display automatically sets the image, too  */
       gimp_context_set_display (gimp_context_get_user (), gdisp);
-
-      /*  Always set the menu sensitivity to ensure the consitency of the
-       *  tear-off menus
-       */
-      gdisplay_set_menu_sensitivity (gdisp);
       break;
     default:
       break;
@@ -284,9 +279,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
 	case 3:
 	  state |= GDK_BUTTON3_MASK;
-	  popup_shell = gdisp->shell;
-	  gtk_menu_popup (GTK_MENU (gdisp->popup), NULL, NULL, NULL, NULL, 3, bevent->time);
-	  
+	  gtk_menu_popup (GTK_MENU (gdisp->popup),
+			  NULL, NULL, NULL, NULL, 3, bevent->time);
 	  break;
 
 	default:
@@ -543,7 +537,6 @@ gdisplay_origin_button_press (GtkWidget      *widget,
   if (event->button == 1)
     {
       gdisp = data;
-      popup_shell = gdisp->shell;
       gtk_menu_popup (GTK_MENU (gdisp->popup),
 		      NULL, NULL, NULL, NULL, 1, event->time);
     }

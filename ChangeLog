@@ -1,3 +1,40 @@
+1999-06-21  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/context_manager.c: connect to the user context's
+	"display_changed" and to the image context's "remove" signal to
+	avoid dangling references and to set the menu sensitivity on
+	display change.
+
+	* app/disp_callbacks.c
+	* app/file_new_dialog.c
+	* app/fileops.c
+	* app/gdisplay.c
+	* app/gdisplay_ops.c
+	* app/gimpcontext.c
+	* app/interface.[ch]: entirely moved the active display stuff to
+	the user context:
+
+	- The active display is set by any event in the display shell,
+	  by File/New and File/Open.
+	- gdisplay_delete() resets the active display to NULL if we
+	  deleted the active display.
+	- Reduced gdisplay_active() to a single statement returning the
+	  context's active display. Should replace it by a macro.
+	- gdisplay_flush_whenever() sets the menu sensitivity for the
+	  active display.
+	- Removed global variable popup_shell since it was only set all
+	  the time but never used. I guess it's original job is now done
+	  by the context anyway.
+	- gdisplay_set_menu_sensitivity() works with gdisp == NULL.
+	- There are mysterious Gdk-CRITICALs if both <Image> and one of
+	  it's sub-menus are teared-off. Probably a gtk+ bug.
+
+	To do all this stuff at a central place, there needs to be a
+	GimpSet of displays (and ideally, GDisplay should be a GtkObject).
+
+	* app/commands.c
+	* app/lc_dialog.c: fixed segfaults happening with teared-off menus.
+
 1999-06-21  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* pixmaps/delete.xpm: New icon for Delete (layer, path, channel etc..)

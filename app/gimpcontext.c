@@ -547,7 +547,8 @@ gimp_context_set_display (GimpContext *context,
   context->display = display;
 
   /*  set the image _before_ emitting the display_changed signal  */
-  gimp_context_set_image (orig, display ? display->gimage : NULL);
+  if (display)
+    gimp_context_set_image (orig, display);
 
   gtk_signal_emit (GTK_OBJECT (context),
 		   gimp_context_signals[DISPLAY_CHANGED],

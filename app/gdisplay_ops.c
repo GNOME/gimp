@@ -122,12 +122,12 @@ gdisplay_close_window (GDisplay *gdisp,
    */
   if (!kill_it && (gdisp->gimage->ref_count == 1) &&
       (gdisp->gimage->dirty > 0) && confirm_on_close )
-    gdisplay_close_warning_dialog (g_basename (gimage_filename (gdisp->gimage)), gdisp);
+    {
+      gdisplay_close_warning_dialog
+	(g_basename (gimage_filename (gdisp->gimage)), gdisp);
+    }
   else
     {
-      /* If POPUP_SHELL references this shell, then reset it. */
-      if (popup_shell == gdisp->shell)
-	popup_shell = NULL;
       gtk_widget_destroy (gdisp->shell);
     }
 }
@@ -306,10 +306,6 @@ gdisplay_close_warning_callback (GtkWidget *w,
   mbox = (GtkWidget *) client_data;
   gdisp = (GDisplay *) gtk_object_get_user_data (GTK_OBJECT (mbox));
 
-  /* If POPUP_SHELL references this shell, then reset it. */
-  if (popup_shell == gdisp->shell)
-    popup_shell = NULL;
-  
   gtk_widget_destroy (gdisp->shell);
   gtk_widget_destroy (mbox);
 }

@@ -18,6 +18,29 @@
 
 #include "context_manager.h"
 
+#include "appenv.h"
+#include "gdisplay.h"
+
+static void
+user_context_display_changed (GimpContext *context,
+			      GDisplay    *display,
+			      gpointer     data)
+{
+  gdisplay_set_menu_sensitivity (display);
+}
+
+/* FIXME: finally, install callbacks for all created contexts to prevent
+ *        the image from appearing without notifying us
+ */
+static void
+image_context_image_removed (GimpSet     *set,
+			     GimpImage   *gimage,
+			     GimpContext *user_context)
+{
+  if (gimp_context_get_image (user_context) == gimage)
+    gimp_context_set_image (user_context, NULL);
+}
+
 void
 context_manager_init (void)
 {
@@ -38,6 +61,13 @@ context_manager_init (void)
   context = gimp_context_new ("User", NULL, NULL);
   gimp_context_set_user (context);
   gimp_context_set_current (context);
+
+  gtk_signal_connect (GTK_OBJECT (context), "display_changed",
+		      GTK_SIGNAL_FUNC (user_context_display_changed),
+		      NULL);
+  gtk_signal_connect (GTK_OBJECT (image_context), "remove",
+		      GTK_SIGNAL_FUNC (image_context_image_removed),
+		      context);
 }
 
 void

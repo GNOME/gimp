@@ -95,18 +95,11 @@ extern int num_tools;
 /*  Widgets for each tool button--these are used from command.c to activate on
  *  tool selection via both menus and keyboard accelerators.
  */
-GtkWidget *tool_label;
-GtkTooltips *tool_tips;
+GtkWidget   * tool_label;
+GtkTooltips * tool_tips;
 
-/*  The popup shell is a pointer to the gdisplay shell that posted the latest
- *  popup menu.  When this is null, and a command is invoked, then the
- *  assumption is that the command was a result of a keyboard accelerator
- */
-GtkWidget *popup_shell = NULL;
-
-
-static GdkColor colors[12];
-static GtkWidget *toolbox_shell = NULL;
+static GdkColor    colors[12];
+static GtkWidget * toolbox_shell = NULL;
 
 static void
 tools_select_update (GtkWidget *w,
@@ -133,7 +126,9 @@ tools_button_press (GtkWidget      *w,
 }
 
 static gint
-toolbox_delete (GtkWidget *w, GdkEvent *e, gpointer data)
+toolbox_delete (GtkWidget *w,
+		GdkEvent  *e,
+		gpointer   data)
 {
   app_exit (0);
 
@@ -147,7 +142,9 @@ toolbox_destroy ()
 }
 
 static gint
-toolbox_check_device   (GtkWidget *w, GdkEvent *e, gpointer data)
+toolbox_check_device (GtkWidget *w,
+		      GdkEvent  *e,
+		      gpointer   data)
 {
   devices_check_change (e);
 
@@ -163,8 +160,8 @@ gdisplay_destroy (GtkWidget *w,
 
 static gint
 gdisplay_delete (GtkWidget *w,
-		 GdkEvent *e,
-		 GDisplay *gdisp)
+		 GdkEvent  *e,
+		 GDisplay  *gdisp)
 {
   gdisplay_close_window (gdisp, FALSE);
 
@@ -274,9 +271,9 @@ create_color_area (GtkWidget *parent)
   gtk_widget_show (frame);
 }
 
-
 GdkPixmap *
-create_tool_pixmap (GtkWidget *parent, ToolType type)
+create_tool_pixmap (GtkWidget *parent,
+		    ToolType   type)
 {
   /*
    * FIXME this really should be dones without using the #defined tool names
@@ -368,7 +365,6 @@ create_tools (GtkWidget *parent)
     }
   gtk_widget_show (table);
 }
-
 
 static GdkPixmap *
 create_pixmap (GdkWindow *parent, GdkBitmap **mask,
@@ -581,7 +577,6 @@ toolbox_raise_callback (GtkWidget *widget,
 {
   gdk_window_raise(toolbox_shell->window);
 }
-
 
 void
 create_display_shell (GDisplay* gdisp,
@@ -860,7 +855,7 @@ static void double_query_box_ok_callback (GtkWidget *, gpointer);
 static void size_query_box_ok_callback (GtkWidget *, gpointer);
 
 /*  create a generic query box without any entry widget  */
-QueryBox *
+static QueryBox *
 create_query_box (gchar       *title,
 		  gchar       *message,
 		  GtkObject   *object,

@@ -328,10 +328,6 @@ gdisplay_delete (GDisplay *gdisp)
   if (gdisp->window_info_dialog)
     info_window_free (gdisp->window_info_dialog);
 
-  /*  set popup_shell to NULL if appropriate */
-  if (popup_shell == gdisp->shell)
-    popup_shell= NULL;
-
   /*  set the active display to NULL  */
   context = gimp_context_get_user ();
   if (gimp_context_get_display (context) == gdisp)
@@ -603,8 +599,9 @@ gdisplay_flush_displays_only (GDisplay *gdisp)
 static void
 gdisplay_flush_whenever (GDisplay *gdisp, gboolean now)
 {
-  GSList *list;
-  GArea  *ga;
+  GSList      *list;
+  GArea       *ga;
+  GimpContext *context;
 
   /*  Flush the items in the displays and updates lists -
    *  but only if gdisplay has been mapped and exposed
@@ -645,6 +642,11 @@ gdisplay_flush_whenever (GDisplay *gdisp, gboolean now)
   if (gdisp->window_info_dialog)
     info_window_update (gdisp->window_info_dialog,
 			(void *) gdisp);
+
+  /*  ensure the consistency of the tear-off menus  */
+  context = gimp_context_get_user ();
+  if (gimp_context_get_display (context) == gdisp)
+    gdisplay_set_menu_sensitivity (gdisp);
 }
 
 void
@@ -1541,95 +1543,131 @@ gdisplay_remove_tool_cursor (GDisplay *gdisp)
 void
 gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 {
-  Layer *layer;
-  gint fs;
-  gint aux;
-  gint lm;
-  gint lp;
+  Layer *layer = NULL;
+  gint fs = FALSE;
+  gint aux = FALSE;
+  gint lm = FALSE;
+  gint lp = FALSE;
   gint alpha = FALSE;
-  GimpDrawable *drawable;
-  gint base_type;
-  gint type;
-  gint lind;
-  gint lnum;
+  GimpDrawable *drawable = NULL;
+  gint base_type = 0;
+  gint type = -1;
+  gint lind = -1;
+  gint lnum = -1;
 
-  fs = (gimage_floating_sel (gdisp->gimage) != NULL);
-  aux = (gimage_get_active_channel (gdisp->gimage) != NULL);
-  if ((layer = gimage_get_active_layer (gdisp->gimage)) != NULL)
-      lm = (layer->mask) ? TRUE : FALSE;
-  else
-    lm = FALSE;
-  base_type = gimage_base_type (gdisp->gimage);
-  lp = (gdisp->gimage->layers != NULL);
-  alpha = layer && layer_has_alpha (layer);
-
-  type = -1;
-  lind = -1;
-  lnum = -1;
-  if (lp)
+  if (gdisp)
     {
-      drawable = gimage_active_drawable (gdisp->gimage);
-      type = drawable_type (drawable);
-      lind = gimage_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
-      lnum = g_slist_length (gdisp->gimage->layers);
+      fs = (gimage_floating_sel (gdisp->gimage) != NULL);
+      aux = (gimage_get_active_channel (gdisp->gimage) != NULL);
+      if ((layer = gimage_get_active_layer (gdisp->gimage)) != NULL)
+	lm = (layer->mask) ? TRUE : FALSE;
+      base_type = gimage_base_type (gdisp->gimage);
+      lp = (gdisp->gimage->layers != NULL);
+      alpha = layer && layer_has_alpha (layer);
+
+      if (lp)
+	{
+	  drawable = gimage_active_drawable (gdisp->gimage);
+	  type = drawable_type (drawable);
+	  lind = gimage_get_layer_index (gdisp->gimage,
+					 gdisp->gimage->active_layer);
+	  lnum = g_slist_length (gdisp->gimage->layers);
+	}
     }
 
-  menus_set_sensitive_locale ("<Image>", N_("/Layers/Stack/Previous Layer"), !fs && !aux && lp && lind > 0);
-  menus_set_sensitive_locale ("<Image>", N_("/Layers/Stack/Next Layer"), !fs && !aux && lp && lind < (lnum - 1));
-  menus_set_sensitive_locale ("<Image>", N_("/Layers/Stack/Raise Layer"), !fs && !aux && lp && alpha && lind > 0);
-  menus_set_sensitive_locale ("<Image>", N_("/Layers/Stack/Lower Layer"), !fs && !aux && lp && alpha && lind < (lnum - 1));
-  menus_set_sensitive_locale ("<Image>", N_("/Layers/Stack/Layer to Top"), !fs && !aux && lp && alpha && lind > 0);
-  menus_set_sensitive_locale ("<Image>", N_("/Layers/Stack/Layer to Bottom"), !fs && !aux && lp && alpha && lind < (lnum - 1));
-  menus_set_sensitive_locale ("<Image>", N_("/Layers/Anchor Layer"), fs && !aux && lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Layers/Merge Visible Layers"), !fs && !aux && lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Layers/Flatten Image"), !fs && !aux && lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Layers/Alpha To Selection"), !aux && lp && alpha);
-  menus_set_sensitive_locale ("<Image>", N_("/Layers/Mask To Selection"), !aux && lm && lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Layers/Add Alpha Channel"), !fs && !aux && lp && !lm && !alpha);
+#define SET_SENSITIVE(menu,condition) \
+        menus_set_sensitive_locale ("<Image>", N_(menu), (condition))
+#define SET_STATE(menu,condition) \
+        menus_set_state_locale ("<Image>", N_(menu), (condition))
 
-  menus_set_sensitive_locale ("<Image>", N_("/Image/RGB"), (base_type != RGB));
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Grayscale"), (base_type != GRAY));
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Indexed"), (base_type != INDEXED));
+  SET_SENSITIVE ("/File/Save", gdisp);
+  SET_SENSITIVE ("/File/Save as", gdisp);
+  SET_SENSITIVE ("/File/Revert", gdisp);
+  SET_SENSITIVE ("/File/Close", gdisp);
 
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Threshold"), (base_type != INDEXED));
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Posterize") , (base_type != INDEXED));
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Equalize"), (base_type != INDEXED));
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Invert"), (base_type != INDEXED));
+  SET_SENSITIVE ("/Edit", gdisp && lp);
 
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Color Balance"), (base_type == RGB));
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Brightness-Contrast"), (base_type != INDEXED));
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Hue-Saturation"), (base_type == RGB));
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Curves"), (base_type != INDEXED));
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Levels"), (base_type != INDEXED));
+  SET_SENSITIVE ("/Select", gdisp && lp);
+  SET_SENSITIVE ("/Select/Save To Channel", !fs);
 
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Desaturate"), (base_type == RGB));
+  if (!gdisp)
+    {
+      SET_SENSITIVE ("/View", FALSE);
+    }
+  else
+    {
+      SET_SENSITIVE ("/View", TRUE);
+      SET_STATE ("/View/Toggle Rulers",
+		 GTK_WIDGET_VISIBLE (gdisp->origin) ? 1 : 0);
+      SET_STATE ("/View/Toggle Guides", gdisp->draw_guides);
+      SET_STATE ("/View/Snap To Guides", gdisp->snap_to_guides);
+      SET_STATE ("/View/Toggle Statusbar",
+		 GTK_WIDGET_VISIBLE (gdisp->statusarea) ? 1 : 0);
+      SET_STATE ("/View/Dot for dot", gdisp->dot_for_dot);
+    }
 
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Alpha/Add Alpha Channel"), !fs && !aux && lp && !lm && !alpha);
+  if (!gdisp)
+    {
+      SET_SENSITIVE ("/Image", FALSE);
+    }
+  else
+    {
+      SET_SENSITIVE ("/Image", TRUE);
+      SET_SENSITIVE ("/Image/RGB", (base_type != RGB));
+      SET_SENSITIVE ("/Image/Grayscale", (base_type != GRAY));
+      SET_SENSITIVE ("/Image/Indexed", (base_type != INDEXED));
+      SET_SENSITIVE ("/Image/Colors/Threshold", (base_type != INDEXED));
+      SET_SENSITIVE ("/Image/Colors/Posterize" , (base_type != INDEXED));
+      SET_SENSITIVE ("/Image/Colors/Equalize", (base_type != INDEXED));
+      SET_SENSITIVE ("/Image/Colors/Invert", (base_type != INDEXED));
+      SET_SENSITIVE ("/Image/Colors/Color Balance", (base_type == RGB));
+      SET_SENSITIVE ("/Image/Colors/Brightness-Contrast",
+		     (base_type != INDEXED));
+      SET_SENSITIVE ("/Image/Colors/Hue-Saturation", (base_type == RGB));
+      SET_SENSITIVE ("/Image/Colors/Curves", (base_type != INDEXED));
+      SET_SENSITIVE ("/Image/Colors/Levels", (base_type != INDEXED));
+      SET_SENSITIVE ("/Image/Colors/Desaturate", (base_type == RGB));
+      SET_SENSITIVE ("/Image/Alpha/Add Alpha Channel",
+		     !fs && !aux && lp && !lm && !alpha);
+      SET_SENSITIVE ("/Image/Colors", lp);
+      SET_SENSITIVE ("/Image/Channel Ops/Offset", lp);
+      SET_SENSITIVE ("/Image/Histogram", lp);
+    }
 
-  menus_set_sensitive_locale ("<Image>", N_("/Select"), lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Edit/Cut"), lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Edit/Copy"), lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Edit/Paste"), lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Edit/Paste Into"), lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Edit/Clear"), lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Edit/Fill"), lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Edit/Stroke"), lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Edit/Cut Named"), lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Edit/Copy Named"), lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Edit/Paste Named"), lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors"), lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Channel Ops/Offset"), lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Image/Histogram"), lp);
-  menus_set_sensitive_locale ("<Image>", N_("/Filters"), lp);
+  if (!gdisp)
+    {
+      SET_SENSITIVE ("/Layers/Stack", FALSE);
+    }
+  else
+    {
+      SET_SENSITIVE ("/Layers/Stack", TRUE);
+      SET_SENSITIVE ("/Layers/Stack/Previous Layer",
+		     !fs && !aux && lp && lind > 0);
+      SET_SENSITIVE ("/Layers/Stack/Next Layer",
+		     !fs && !aux && lp && lind < (lnum - 1));
+      SET_SENSITIVE ("/Layers/Stack/Raise Layer",
+		     !fs && !aux && lp && alpha && lind > 0);
+      SET_SENSITIVE ("/Layers/Stack/Lower Layer",
+		     !fs && !aux && lp && alpha && lind < (lnum - 1));
+      SET_SENSITIVE ("/Layers/Stack/Layer to Top",
+		     !fs && !aux && lp && alpha && lind > 0);
+      SET_SENSITIVE ("/Layers/Stack/Layer to Bottom",
+		     !fs && !aux && lp && alpha && lind < (lnum - 1));
+    }
 
-  /* save selection to channel */
-  menus_set_sensitive_locale ("<Image>", N_("/Select/Save To Channel"), !fs);
+  SET_SENSITIVE ("/Layers/Anchor Layer", gdisp && fs && !aux && lp);
+  SET_SENSITIVE ("/Layers/Merge Visible Layers", gdisp && !fs && !aux && lp);
+  SET_SENSITIVE ("/Layers/Flatten Image", gdisp && !fs && !aux && lp);
+  SET_SENSITIVE ("/Layers/Alpha To Selection", gdisp && !aux && lp && alpha);
+  SET_SENSITIVE ("/Layers/Mask To Selection", gdisp && !aux && lm && lp);
+  SET_SENSITIVE ("/Layers/Add Alpha Channel",
+		 gdisp && !fs && !aux && lp && !lm && !alpha);
 
-  menus_set_state_locale ("<Image>", N_("/View/Toggle Rulers"), GTK_WIDGET_VISIBLE (gdisp->origin) ? 1 : 0);
-  menus_set_state_locale ("<Image>", N_("/View/Toggle Guides"), gdisp->draw_guides);
-  menus_set_state_locale ("<Image>", N_("/View/Snap To Guides"), gdisp->snap_to_guides);
-  menus_set_state_locale ("<Image>", N_("/View/Toggle Statusbar"), GTK_WIDGET_VISIBLE (gdisp->statusarea) ? 1 : 0);
-  menus_set_state_locale ("<Image>", N_("/View/Dot for dot"), gdisp->dot_for_dot);
+  SET_SENSITIVE ("/Filters", gdisp && lp);
+  SET_SENSITIVE ("/Script-Fu", gdisp && lp);
+
+#undef SET_STATE
+#undef SET_SENSITIVE
 
   plug_in_set_menu_sensitivity (type);
 }
@@ -1682,59 +1720,7 @@ gdisplay_expose_full (GDisplay *gdisp)
 GDisplay *
 gdisplay_active ()
 {
-  /* FIXME: this function may become useless once the GimpContext, which also
-   *        has an active display, is properly tested
-   * TODO: ensure that gimp_context_get_display (gimp_context_get_user ())
-   *       _always_ return the correct display
-   *
-   * ideally, this function's body should be:
-   * {
-   *   return gimp_context_get_display (gimp_context_get_user ());
-   * }
-   */
-
-  GtkWidget *event_widget;
-  GtkWidget *toplevel_widget;
-  GdkEvent *event;
-  GDisplay *gdisp = NULL;
-
-  /*  If the popup shell is valid, then get the gdisplay associated
-   *  with that shell
-   */
-  event = gtk_get_current_event ();
-  event_widget = gtk_get_event_widget (event);
-  if (event != NULL)
-    gdk_event_free (event);
-
-  if (event_widget == NULL)
-    return NULL;
-
-  toplevel_widget = gtk_widget_get_toplevel (event_widget);
-
-  if (display_ht)
-    gdisp = g_hash_table_lookup (display_ht, toplevel_widget);
-
-  if (gdisp)
-    return gdisp;
-
-  /* The following is insane, since the checking if the display is valid
-   * should not be here - this will be corrected, if the active_image stuff
-   * moves to GimpContext. */
-
-  gdisp = gimp_context_get_display (gimp_context_get_user ());
- 
-  if (g_slist_index(display_list, gdisp) >= 0)
-    return gdisp;
-  
-  /* disabled, since tear-off menus may have pointers to gone displays...
-   * if (popup_shell)
-   *   {
-   *     gdisp = gtk_object_get_user_data (GTK_OBJECT (popup_shell));
-   *     return gdisp;
-   *   }
-   */
-
-  return NULL;
+  return gimp_context_get_display (gimp_context_get_user ());
 }
 
 
@@ -1770,7 +1756,8 @@ gdisplay_update_title (GDisplay *gdisp)
   gdk_window_set_title (gdisp->shell->window, title);
 
   /* update the statusbar */
-  context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "title");
+  context_id =
+    gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "title");
   gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), context_id);
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), context_id, title);
 }

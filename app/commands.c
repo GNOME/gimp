@@ -1027,6 +1027,8 @@ tools_select_cmd_callback (GtkWidget *widget,
 {
   GDisplay * gdisp;
 
+  gdisp = gdisplay_active ();
+
   if (!tool_info[callback_action].init_func)
     {
       /*  Activate the approriate widget  */
@@ -1035,16 +1037,14 @@ tools_select_cmd_callback (GtkWidget *widget,
   else 
     {
       /* if the tool_info has an init_func */
-      gdisp = gdisplay_active ();
-     
       gtk_widget_activate (tool_info[callback_action].tool_widget);
       
-      (* tool_info[callback_action].init_func) (gdisp);
+      if (gdisp)
+	(* tool_info[callback_action].init_func) (gdisp);
     }
-      
-  gdisp = gdisplay_active ();
 
-  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
+  if (gdisp)
+    active_tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 void

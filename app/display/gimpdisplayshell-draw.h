@@ -22,15 +22,14 @@
 #include "gdisplayF.h"
 #include "libgimp/gimpunit.h"
 
-/* typedefs */
+/*  typedefs  */
 typedef void (*QueryFunc) (GtkWidget *, gpointer, gpointer);
 
-/* externed variables  */
-extern GtkWidget *tool_widgets[];
-extern GtkWidget *popup_shell;
-extern GtkTooltips *tool_tips;
+/*  externed variables  */
+extern GtkWidget   * tool_widgets[];
+extern GtkTooltips * tool_tips;
 
-/* function declarations */
+/*  function declarations  */
 GtkWidget *  create_pixmap_widget   (GdkWindow   *parent,
 				     char       **data,
 				     int          width,
@@ -51,15 +50,9 @@ void         create_display_shell   (GDisplay    *gdisp,
 				     char        *title,
 				     int          type);
 
-/* commented out because these functions are not in interface.c
- * is this a bug or did I miss something?? -- michael
- * void         position_dialog        (GtkWidget *, gpointer, gpointer);
- * void         center_dialog          (GtkWidget *, gpointer, gpointer);
- */
-
-/* some simple query dialogs
- * if object != NULL then the query boxes will connect their cancel callback
- * to the provided signal of this object
+/*  some simple query dialogs
+ *  if object != NULL then the query boxes will connect their cancel callback
+ *  to the provided signal of this object
  */
 GtkWidget *  query_string_box       (gchar       *title,
 				     gchar       *message,
@@ -101,7 +94,7 @@ GtkWidget *  query_size_box         (gchar       *title,
 				     QueryFunc    callback,
 				     gpointer     data);
 
-/* a simple message box */
+/*  a simple message box  */
 GtkWidget *  message_box            (char        *message,
 				     GtkCallback  callback,
 				     gpointer     data);
@@ -109,4 +102,4 @@ GtkWidget *  message_box            (char        *message,
 void tools_push_label               (char *label);
 void tools_pop_label                (void);
 
-#endif /* INTERFACE_H */
+#endif /* __INTERFACE_H__ */

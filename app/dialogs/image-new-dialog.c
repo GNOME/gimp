@@ -146,12 +146,7 @@ file_new_create_image (NewImageValues *vals)
       
       gdisplay = gdisplay_new (gimage, 0x0101);
 
-      /*  Update L&C because the last automatic update at image creation
-       *  time happened when the new image had no layers at all
-       *
-       *  TODO: make L&C aware of the image's "repaint" signal
-       */
-      lc_dialog_flush ();
+      gimp_context_set_display (gimp_context_get_user (), gdisplay);
     }
 
   g_free (vals);

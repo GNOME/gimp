@@ -47,6 +47,7 @@
 #include "gdisplay.h"
 #include "general.h"
 #include "gimage.h"
+#include "gimpcontext.h"
 #include "fileops.h"
 #include "interface.h"
 #include "menus.h"
@@ -141,7 +142,9 @@ GSList *save_procs = NULL;
 static PlugInProcDef *load_file_proc = NULL;
 static PlugInProcDef *save_file_proc = NULL;
 
-static GimpImage* the_gimage = NULL;
+static GimpImage *the_gimage = NULL;
+
+extern GSList *display_list; /* from gdisplay.c */
 
 #define FILE_ERR_MESSAGE(str)				G_STMT_START{	\
   if (message_handler == MESSAGE_BOX)					\
@@ -215,7 +218,6 @@ file_open_callback (GtkWidget *w,
   GtkWidget *option_menu;
   GtkWidget *load_menu;
   GtkWidget *open_options_genbutton;
-  GDisplay *gdisplay;
 
   if (!fileload)
     {
@@ -250,8 +252,6 @@ file_open_callback (GtkWidget *w,
 				       "." G_DIR_SEPARATOR_S);
       gtk_window_set_title (GTK_WINDOW (fileload), _("Load Image"));
     }
-
-  gdisplay = gdisplay_active ();
 
   if (!open_options)
     {
@@ -411,18 +411,20 @@ file_save_callback (GtkWidget *w,
   GDisplay *gdisplay;
 
   gdisplay = gdisplay_active ();
+  if (!gdisplay) return;
 
   /*  Only save if the gimage has been modified  */
   if (gdisplay->gimage->dirty != 0)
     {
       if (gdisplay->gimage->has_filename == FALSE)
 	{
-	  popup_shell = gdisplay->shell;
 	  file_save_as_callback (w, client_data);
 	}
       else
-	file_save (gdisplay->gimage, gimage_filename (gdisplay->gimage),
-		   g_basename (gimage_filename(gdisplay->gimage)), 2);
+	{
+	  file_save (gdisplay->gimage, gimage_filename (gdisplay->gimage),
+		     g_basename (gimage_filename(gdisplay->gimage)), 2);
+	}
     }
 }
 
@@ -464,6 +466,7 @@ file_save_as_callback (GtkWidget *w,
     }
 
   gdisplay = gdisplay_active ();
+  if (!gdisplay) return;
   the_gimage = gdisplay->gimage;
 
   if (!save_options)
@@ -517,6 +520,7 @@ file_revert_callback (GtkWidget *w,
   char *filename, *raw_filename;
 
   gdisplay = gdisplay_active ();
+  if (!gdisplay) return;
 
   if (gdisplay->gimage->has_filename == FALSE)
     g_message (_("Can't revert. No filename associated with this image"));
@@ -649,6 +653,7 @@ int
 file_open (char *filename, char *raw_filename)
 {
   GimpImage *gimage;
+  GDisplay  *gdisplay;
 
   if ((gimage = file_open_image (filename, raw_filename, RUN_INTERACTIVE)) != NULL)
     {
@@ -659,7 +664,11 @@ file_open (char *filename, char *raw_filename)
       gimage_clean_all (gimage);
 
       /* display the image */
-      gdisplay_new (gimage, 0x0101);
+      gdisplay = gdisplay_new (gimage, 0x0101);
+
+      /* always activate the first display */
+      if (g_slist_length (display_list) == 1)
+	gimp_context_set_display (gimp_context_get_user (), gdisplay);
 
       idea_add (filename);
       menus_last_opened_add (filename);
@@ -1549,8 +1558,12 @@ file_dialog_hide (GtkWidget *filesel)
 
   menus_set_sensitive_locale ("<Toolbox>", N_("/File/Open"), TRUE);
   menus_set_sensitive_locale ("<Image>", N_("/File/Open"), TRUE);
-  menus_set_sensitive_locale ("<Image>", N_("/File/Save"), TRUE);
-  menus_set_sensitive_locale ("<Image>", N_("/File/Save as"), TRUE);
+
+  if (gdisplay_active())
+    {
+      menus_set_sensitive_locale ("<Image>", N_("/File/Save"), TRUE);
+      menus_set_sensitive_locale ("<Image>", N_("/File/Save as"), TRUE);
+    }
 
   return TRUE;
 }
