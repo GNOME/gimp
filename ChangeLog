@@ -1,3 +1,9 @@
+2004-07-24  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/gui/gradient-editor-menu.c (gradient_editor_menu_update):
+	Fix typo which caused warnings when Sinusoidal blending mode was
+	selected for a segment.
+
 2004-07-22  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD:

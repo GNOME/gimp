@@ -438,7 +438,7 @@ gradient_editor_menu_update (GtkItemFactory *factory,
           SET_ACTIVE ("/blendingfunction/Curved", TRUE);
           break;
         case GIMP_GRAD_SINE:
-          SET_ACTIVE ("/blendingfunction/Sinusodial", TRUE);
+          SET_ACTIVE ("/blendingfunction/Sinusoidal", TRUE);
           break;
         case GIMP_GRAD_SPHERE_INCREASING:
           SET_ACTIVE ("/blendingfunction/Spherical (increasing)", TRUE);
