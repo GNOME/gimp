@@ -135,13 +135,13 @@ msgid "<Image>/Filters/Render/Random Blends..."
 msgstr "<Image>/Filtreler/Hesapla/Raslantýsal Harmanlar..."
 
 msgid "Plug-In Path"
-msgstr "Eklenti Yolu"
+msgstr "Eklem Yolu"
 
 msgid "You can't run this script with an INDEXED image!!"
 msgstr "Bu programý DÝZÝNLÝ bir resimle çalýþtýramazsýnýz!!"
 
 msgid "<Image>/Guides/Guide Grid..."
-msgstr "<Image>/Kýlavuzlar/Elek Kýlavuzlar..."
+msgstr "<Image>/Kýlavuzlar/Izgara Kýlavuzlar..."
 
 msgid "accepted unix connection"
 msgstr "unix baðlantýsý kabul edildi"
@@ -423,7 +423,7 @@ msgid ""
 "the gtk perl module is required to run\n"
 "this plug-in in interactive mode\n"
 msgstr ""
-"bu eklentiyi etkileþimli olarak çalýþtýrmak için\n"
+"bu eklemi etkileþimli olarak çalýþtýrmak için\n"
 "gtk perl modülüne ihtiyaç duyuluyor\n"
 
 msgid "interface '$interface_type' unsupported."
@@ -571,7 +571,7 @@ msgid "<Image>/Filters/Distorts/MirrorSplit..."
 msgstr "<Image>/Filtreler/Boz/AynaAyrýmý..."
 
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
-msgstr "<Save> eklentisi 5 standart argüman olmadan çaðrýldý!\n"
+msgstr "<Save> eklemi 5 standart argüman olmadan çaðrýldý!\n"
 
 msgid "unable to create socketpair for gimp communications: $!"
 msgstr "gimp iletiþimi için soket çifti oluþturulamadý: $!"
@@ -769,7 +769,7 @@ msgid "Restore values to the previous ones"
 msgstr "Deðerleri bir önceki seçime çevir"
 
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
-msgstr "<Image> eklentisi resim ve çizilebilir argümanlarý olmadan çaðrýldý!\n"
+msgstr "<Image> eklemi resim ve çizilebilir argümanlarý olmadan çaðrýldý!\n"
 
 msgid ", authorization required"
 msgstr ", yetki gerekli"
@@ -808,7 +808,7 @@ msgid "<Image>/Filters/Web/Webify..."
 msgstr "<Image>/Filtreler/Að/Að'laþtýr..."
 
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr "<Load> eklentisi 3 standart argüman olmadan çaðrýldý!\n"
+msgstr "<Load> eklemi 3 standart argüman olmadan çaðrýldý!\n"
 
 msgid "Font Selection Dialog ($desc)"
 msgstr "Dosya Seçim Penceresi ($desc)"
@@ -883,7 +883,7 @@ msgid "You can't run this script without an ALPHA CHANNEL!!"
 msgstr "Bu programý ALFA KANALI olmadan çalýþtýramazsýnýz!"
 
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr "<Toolbox>/Xtns/Örnek Perl Eklenti"
+msgstr "<Toolbox>/Xtns/Örnek Perl Eklem"
 
 msgid "<Image>/Filters/Misc/Magick..."
 msgstr "<Image>/Filtreler/Çeþitli/Magick..."
@@ -922,7 +922,7 @@ msgid "This module was built without support for PDL."
 msgstr "Bu modül IVT desteði olmadan kurulmuþ."
 
 msgid "plug-in returned %d more values than expected"
-msgstr "eklenti beklenenden %d fazla deðer geri döndürdü"
+msgstr "eklem beklenenden %d fazla deðer geri döndürdü"
 
 msgid "<Toolbox>/Xtns/Homepage-Logo"
 msgstr "<Toolbox>/Xtns/Anasayfa-Logosu"
@@ -970,5 +970,4 @@ msgstr "geçersiz komut alýndý, baðlantý kesiliyor"
 
 msgid "(none)"
 msgstr "(yok)"
-
 
