@@ -58,6 +58,7 @@ typedef struct
   GQueue    *stack;
   GimpImage *image;
   gboolean   scale;
+  gint       svg_depth;
 } SvgParser;
 
 typedef struct _SvgHandler SvgHandler;
@@ -68,6 +69,8 @@ struct _SvgHandler
   void (* start) (SvgHandler   *handler,
                   const gchar **names,
                   const gchar **values,
+                  SvgParser    *parser);
+  void (* end)   (SvgHandler   *handler,
                   SvgParser    *parser);
 
   gdouble       width;
@@ -105,31 +108,32 @@ static const GMarkupParser markup_parser =
 };
 
 
-static void  svg_handler_svg   (SvgHandler   *handler,
-                                const gchar **names,
-                                const gchar **values,
-                                SvgParser    *parser);
-static void  svg_handler_group (SvgHandler   *handler,
-                                const gchar **names,
-                                const gchar **values,
-                                SvgParser    *parser);
-static void  svg_handler_path  (SvgHandler   *handler,
-                                const gchar **names,
-                                const gchar **values,
-                                SvgParser    *parser);
+static void  svg_handler_svg_start   (SvgHandler   *handler,
+                                      const gchar **names,
+                                      const gchar **values,
+                                      SvgParser    *parser);
+static void  svg_handler_svg_end     (SvgHandler   *handler,
+                                      SvgParser    *parser);
+static void  svg_handler_group_start (SvgHandler   *handler,
+                                      const gchar **names,
+                                      const gchar **values,
+                                      SvgParser    *parser);
+static void  svg_handler_path_start  (SvgHandler   *handler,
+                                      const gchar **names,
+                                      const gchar **values,
+                                      SvgParser    *parser);
 
 static const SvgHandler svg_handlers[] =
 {
-  { "svg", svg_handler_svg   },
-  { "g",   svg_handler_group },
-  { "path",svg_handler_path  }
+  { "svg", svg_handler_svg_start,   svg_handler_svg_end },
+  { "g",   svg_handler_group_start, NULL                },
+  { "path",svg_handler_path_start,  NULL                }
 };
 
 
 static gboolean   parse_svg_length    (const gchar  *value,
                                        gdouble       reference,
                                        gdouble       resolution,
-                                       gdouble      *scale,
                                        gdouble      *length);
 static gboolean   parse_svg_viewbox   (const gchar  *value,
                                        gdouble      *width,
@@ -169,9 +173,10 @@ gimp_vectors_import (GimpImage    *image,
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  parser.stack = g_queue_new ();
-  parser.image = image;
-  parser.scale = scale;
+  parser.stack     = g_queue_new ();
+  parser.image     = image;
+  parser.scale     = scale;
+  parser.svg_depth = 0;
 
   /*  the base of the stack, defines the size of the view-port  */
   base = g_new0 (SvgHandler, 1);
@@ -314,6 +319,9 @@ svg_parser_end_element (GMarkupParseContext  *context,
                     (handler->name == NULL ||
                      strcmp (handler->name, element_name) == 0));
 
+  if (handler->end)
+    handler->end (handler, parser);
+
   if (handler->paths)
     {
       if (handler->transform)
@@ -339,12 +347,11 @@ svg_parser_end_element (GMarkupParseContext  *context,
 }
 
 static void
-svg_handler_svg (SvgHandler   *handler,
-                 const gchar **names,
-                 const gchar **values,
-                 SvgParser    *parser)
+svg_handler_svg_start (SvgHandler   *handler,
+                       const gchar **names,
+                       const gchar **values,
+                       SvgParser    *parser)
 {
-  SvgHandler  *base;
   GimpMatrix3 *matrix;
   GimpMatrix3  box;
   const gchar *viewbox = NULL;
@@ -352,8 +359,6 @@ svg_handler_svg (SvgHandler   *handler,
   gdouble      y = 0;
   gdouble      w = handler->width;
   gdouble      h = handler->height;
-  gdouble      xscale = 1.0;
-  gdouble      yscale = 1.0;
 
   matrix = g_new (GimpMatrix3, 1);
   gimp_matrix3_identity (matrix);
@@ -363,26 +368,22 @@ svg_handler_svg (SvgHandler   *handler,
       if (strcmp (*names, "x") == 0)
         {
           parse_svg_length (*values,
-                            handler->width, parser->image->xresolution,
-                            NULL, &x);
+                            handler->width, parser->image->xresolution, &x);
         }
       else if (strcmp (*names, "y") == 0)
         {
           parse_svg_length (*values,
-                            handler->height, parser->image->yresolution,
-                            NULL, &y);
+                            handler->height, parser->image->yresolution, &y);
         }
       else if (strcmp (*names, "width") == 0)
         {
           parse_svg_length (*values,
-                            handler->width, parser->image->xresolution,
-                            &xscale, &w);
+                            handler->width, parser->image->xresolution, &w);
         }
       else if (strcmp (*names, "height") == 0)
         {
           parse_svg_length (*values,
-                            handler->height, parser->image->yresolution,
-                            &yscale, &h);
+                            handler->height, parser->image->yresolution, &h);
         }
       else if (strcmp (*names, "viewBox") == 0)
         {
@@ -393,19 +394,10 @@ svg_handler_svg (SvgHandler   *handler,
       values++;
     }
 
-#ifdef DEBUG_VECTORS_IMPORT
-  g_printerr ("%s; %g x %g (scale %g %g)\n", handler->id,
-              w, h, xscale, yscale);
-#endif
-
-  gimp_matrix3_scale (matrix, xscale, yscale);
-
-  base = g_queue_peek_head (parser->stack);
-
   if (x || y)
     {
       /* according to the spec offsets are meaningless on the outermost svg */
-      if (strcmp (base->name, "image"))
+      if (parser->svg_depth > 0)
         gimp_matrix3_translate (matrix, x, y);
     }
 
@@ -415,25 +407,34 @@ svg_handler_svg (SvgHandler   *handler,
     }
 
   /*  optionally scale the outermost svg to image size  */
-  if (parser->scale && strcmp (base->name, "image") == 0)
+  if (parser->scale && parser->svg_depth == 0)
     {
       if (w > 0.0 && h > 0.0)
-        gimp_matrix3_scale (matrix, base->width / w, base->height / h);
-
-      parser->scale = FALSE;
+        gimp_matrix3_scale (matrix,
+                            parser->image->width  / w,
+                            parser->image->height / h);
     }
 
   handler->width  = w;
   handler->height = h;
 
   handler->transform = matrix;
+
+  parser->svg_depth++;
 }
 
 static void
-svg_handler_group (SvgHandler   *handler,
-                   const gchar **names,
-                   const gchar **values,
-                   SvgParser    *parser)
+svg_handler_svg_end (SvgHandler   *handler,
+                     SvgParser    *parser)
+{
+  parser->svg_depth--;
+}
+
+static void
+svg_handler_group_start (SvgHandler   *handler,
+                         const gchar **names,
+                         const gchar **values,
+                         SvgParser    *parser)
 {
   while (*names)
     {
@@ -466,10 +467,10 @@ svg_handler_group (SvgHandler   *handler,
 }
 
 static void
-svg_handler_path (SvgHandler   *handler,
-                  const gchar **names,
-                  const gchar **values,
-                  SvgParser    *parser)
+svg_handler_path_start (SvgHandler   *handler,
+                        const gchar **names,
+                        const gchar **values,
+                        SvgParser    *parser)
 {
   SvgPath *path = g_new0 (SvgPath, 1);
 
@@ -502,7 +503,6 @@ static gboolean
 parse_svg_length (const gchar *value,
                   gdouble      reference,
                   gdouble      resolution,
-                  gdouble     *scale,
                   gdouble     *length)
 {
   GimpUnit  unit = GIMP_UNIT_PIXEL;
@@ -573,18 +573,16 @@ parse_svg_length (const gchar *value,
   switch (unit)
     {
     case GIMP_UNIT_PERCENT:
-      *scale  = len / 100.0;
       *length = len * reference / 100.0;
       break;
 
     case GIMP_UNIT_PIXEL:
-      *scale  = 1.0;
       *length = len;
       break;
 
     default:
-      *scale  = resolution / gimp_unit_get_factor (unit);
-      *length = len;
+      *length = len * resolution / gimp_unit_get_factor (unit);
+      break;
     }
 
   return TRUE;
@@ -638,6 +636,7 @@ parse_svg_viewbox (const gchar *value,
         }
       else  /* disable rendering of the element */
         {
+          g_printerr ("empty viewBox");
           *width = *height = 0.0;
         }
     }

@@ -162,9 +162,6 @@ gimp_xml_parser_parse_io_channel (GimpXmlParser  *parser,
 
   if (encoding)
     {
-      g_printerr ("Charset encoding conversion from '%s' to 'UTF-8'\n",
-                  encoding);
-
       if (!g_io_channel_set_encoding (io, encoding, error))
         return FALSE;
 

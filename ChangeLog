@@ -1,5 +1,19 @@
 2003-09-25  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpxmlparser.c (gimp_xml_parser_parse_io_channel):
+	removed debugging output.
+
+	* app/vectors/gimpvectors-import.c: simplified viewport handling
+	and make it adhere to the spec again (hopefully my interpretation
+	of the spec is right).
+
+2003-09-25  Sven Neumann  <sven@gimp.org>
+
+	* app/vectors/gimpvectors-import.c: more robust detection of svg
+	nesting level; made scale-to-image work for non-pixel dimensions.
+
+2003-09-25  Sven Neumann  <sven@gimp.org>
+
 	* app/vectors/gimpvectors-import.[ch]: optionally scale the
 	imported SVG to fit the image.
 
