@@ -1,3 +1,10 @@
+2004-07-20  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh: added some empty lines to improve readability of the
+	output in case of problems.
+
+	* configure.in: bumped version number to 2.1.3.
+
 2004-07-19  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-mmx.c

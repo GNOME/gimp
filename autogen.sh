@@ -67,6 +67,7 @@ else
     echo "  You must have libtool installed to compile $PROJECT."
     echo "  Install the appropriate package for your distribution,"
     echo "  or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
+    echo
     DIE=1;
 fi
 
@@ -80,6 +81,7 @@ else
     echo "  You must have autoconf installed to compile $PROJECT."
     echo "  Download the appropriate package for your distribution,"
     echo "  or get the source tarball at ftp://ftp.gnu.org/pub/gnu/autoconf/"
+    echo
     DIE=1;
 fi
 
@@ -99,6 +101,7 @@ else
     echo "  You must have automake 1.6 or newer installed to compile $PROJECT."
     echo "  Download the appropriate package for your distribution,"
     echo "  or get the source tarball at ftp://ftp.gnu.org/pub/gnu/automake/"
+    echo
     DIE=1
 fi
 
@@ -118,6 +121,7 @@ else
     echo "  You must have glib-gettextize installed to compile $PROJECT."
     echo "  glib-gettextize is part of glib-2.0, so you should already"
     echo "  have it. Make sure it is in your PATH."
+    echo
     DIE=1
 fi
 
@@ -131,6 +135,7 @@ else
     echo "  You must have intltool installed to compile $PROJECT."
     echo "  Get the latest version from"
     echo "  ftp://ftp.gnome.org/pub/GNOME/sources/intltool/"
+    echo
     DIE=1
 fi
 
@@ -153,6 +158,7 @@ if (intltoolize --version) < /dev/null > /dev/null 2>&1; then
             echo "  problems until a newer version of intltool is released."
 	    echo
 	    echo "  This problem is harmless, you may continue the build." 
+	    echo
         else
             echo "yes"
         fi
@@ -171,6 +177,7 @@ else
     echo "  You must have xsltproc installed to compile $PROJECT."
     echo "  Get the latest version from"
     echo "  ftp://ftp.gnome.org/pub/GNOME/sources/libxslt/"
+    echo
     DIE=1
 fi
 
