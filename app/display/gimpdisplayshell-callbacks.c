@@ -57,12 +57,12 @@
 #include "gui/layer-select.h"
 
 #include "gimpdisplay.h"
-#include "gimpdisplay-callbacks.h"
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplay-selection.h"
-#include "gimpdisplay-scale.h"
-#include "gimpdisplay-scroll.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-callbacks.h"
+#include "gimpdisplayshell-scale.h"
+#include "gimpdisplayshell-scroll.h"
 
 #include "devices.h"
 #include "gimprc.h"
@@ -72,11 +72,11 @@
 
 
 static void
-gdisplay_redraw (GimpDisplayShell *shell,
-		 gint              x,
-		 gint              y,
-		 gint              w,
-		 gint              h)
+gimp_display_shell_redraw (GimpDisplayShell *shell,
+                           gint              x,
+                           gint              y,
+                           gint              w,
+                           gint              h)
 {
   glong x1, y1, x2, y2;    /*  coordinate of rectangle corners  */
 
@@ -85,10 +85,10 @@ gdisplay_redraw (GimpDisplayShell *shell,
   x2 = (x + w);
   y2 = (y + h);
 
-  x1 = CLAMP (x1, 0, shell->gdisp->disp_width);
-  y1 = CLAMP (y1, 0, shell->gdisp->disp_height);
-  x2 = CLAMP (x2, 0, shell->gdisp->disp_width);
-  y2 = CLAMP (y2, 0, shell->gdisp->disp_height);
+  x1 = CLAMP (x1, 0, shell->disp_width);
+  y1 = CLAMP (y1, 0, shell->disp_height);
+  x2 = CLAMP (x2, 0, shell->disp_width);
+  y2 = CLAMP (y2, 0, shell->disp_height);
 
   if ((x2 - x1) && (y2 - y1))
     {
@@ -100,7 +100,7 @@ gdisplay_redraw (GimpDisplayShell *shell,
 }
 
 static void
-gdisplay_check_device_cursor (GimpDisplayShell *shell)
+gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 {
   GList *list;
 
@@ -119,7 +119,7 @@ gdisplay_check_device_cursor (GimpDisplayShell *shell)
     }
 }
 
-static int
+static gint
 key_to_state (gint key)
 {
   switch (key)
@@ -139,23 +139,23 @@ key_to_state (gint key)
 }
 
 static void
-gdisplay_vscrollbar_update (GtkAdjustment    *adjustment,
-			    GimpDisplayShell *shell)
+gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustment,
+                                      GimpDisplayShell *shell)
 {
-  gimp_display_shell_scroll (shell, 0, (adjustment->value - shell->gdisp->offset_y));
+  gimp_display_shell_scroll (shell, 0, (adjustment->value - shell->offset_y));
 }
 
 static void
-gdisplay_hscrollbar_update (GtkAdjustment    *adjustment,
-			    GimpDisplayShell *shell)
+gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
+                                      GimpDisplayShell *shell)
 {
-  gimp_display_shell_scroll (shell, (adjustment->value - shell->gdisp->offset_x), 0);
+  gimp_display_shell_scroll (shell, (adjustment->value - shell->offset_x), 0);
 }
 
 gboolean
-gdisplay_shell_events (GtkWidget        *widget,
-		       GdkEvent         *event,
-		       GimpDisplayShell *shell)
+gimp_display_shell_events (GtkWidget        *widget,
+                           GdkEvent         *event,
+                           GimpDisplayShell *shell)
 {
   switch (event->type)
     {
@@ -173,10 +173,44 @@ gdisplay_shell_events (GtkWidget        *widget,
   return FALSE;
 }
 
+void
+gimp_display_shell_canvas_realize (GtkWidget        *canvas,
+                                   GimpDisplayShell *shell)
+{
+  GimpDisplay *gdisp;
+
+  gdisp = shell->gdisp;
+
+  /*  create the selection object  */
+  gdisp->select = selection_create (canvas->window,
+                                    gdisp,
+                                    gdisp->gimage->height,
+                                    gdisp->gimage->width, 
+                                    gimprc.marching_speed);
+
+  shell->disp_width  = canvas->allocation.width;
+  shell->disp_height = canvas->allocation.height;
+
+  /*  create GC for scrolling  */
+  shell->scroll_gc = gdk_gc_new (shell->canvas->window);
+  gdk_gc_set_exposures (shell->scroll_gc, TRUE);
+
+  /*  set up the scrollbar observers  */
+  g_signal_connect (G_OBJECT (shell->hsbdata), "value_changed",
+                    G_CALLBACK (gimp_display_shell_hscrollbar_update),
+                    shell);
+  g_signal_connect (G_OBJECT (shell->vsbdata), "value_changed",
+                    G_CALLBACK (gimp_display_shell_vscrollbar_update),
+                    shell);
+
+  /*  setup scale properly  */
+  gimp_display_shell_scale_setup (shell);
+}
+
 gboolean
-gdisplay_canvas_events (GtkWidget        *canvas,
-			GdkEvent         *event,
-			GimpDisplayShell *shell)
+gimp_display_shell_canvas_events (GtkWidget        *canvas,
+                                  GdkEvent         *event,
+                                  GimpDisplayShell *shell)
 {
   GimpDisplay     *gdisp;
   GimpTool        *active_tool;
@@ -185,72 +219,53 @@ gdisplay_canvas_events (GtkWidget        *canvas,
   GdkEventButton  *bevent;
   GdkEventScroll  *sevent;
   GdkEventKey     *kevent;
-  gdouble          tx             = 0;
-  gdouble          ty             = 0;
-  guint            state          = 0;
-  gint             return_val     = FALSE;
+  gdouble          tx            = 0;
+  gdouble          ty            = 0;
+  guint            state         = 0;
+  gboolean         return_val    = FALSE;
+  gboolean         update_cursor = FALSE;
+
   static gboolean  scrolling      = FALSE;
   static gint      scroll_start_x = 0;
   static gint      scroll_start_y = 0;
   static guint     key_signal_id  = 0;
-  gboolean         update_cursor  = FALSE;
 
   if (! canvas->window)
-    return FALSE;
+    {
+      g_warning ("imp_display_shell_canvas_events(): called unrealized");
+      return FALSE;
+    }
 
   gdisp = shell->gdisp;
 
   active_tool = tool_manager_get_active (gdisp->gimage->gimp);
 
-  /*  If this is the first event...  */
+  /* FIXME */
   if (! gdisp->select)
     {
-      /*  create the selection object  */
-      gdisp->select = selection_create (shell->canvas->window,
-                                        gdisp,
-					gdisp->gimage->height,
-					gdisp->gimage->width, 
-					gimprc.marching_speed);
-
-      gdisp->disp_width  = shell->canvas->allocation.width;
-      gdisp->disp_height = shell->canvas->allocation.height;
-
-      /*  create GC for scrolling  */
-      shell->scroll_gc = gdk_gc_new (shell->canvas->window);
-      gdk_gc_set_exposures (shell->scroll_gc, TRUE);
-
-      /*  set up the scrollbar observers  */
-      g_signal_connect (G_OBJECT (shell->hsbdata), "value_changed",
-                        G_CALLBACK (gdisplay_hscrollbar_update),
-                        shell);
-      g_signal_connect (G_OBJECT (shell->vsbdata), "value_changed",
-                        G_CALLBACK (gdisplay_vscrollbar_update),
-                        shell);
-
-      /*  setup scale properly  */
-      gimp_display_shell_scale_setup (shell);
+      gimp_display_shell_canvas_realize (shell->canvas, shell);
     }
 
   /*  Find out what device the event occurred upon  */
   if (! gdisp->gimage->gimp->busy && devices_check_change (event))
-    gdisplay_check_device_cursor (shell);
+    gimp_display_shell_check_device_cursor (shell);
 
   switch (event->type)
     {
     case GDK_EXPOSE:
       eevent = (GdkEventExpose *) event;
 
-      gdisplay_redraw (shell,
-		       eevent->area.x, eevent->area.y,
-		       eevent->area.width, eevent->area.height);
+      gimp_display_shell_redraw (shell,
+                                 eevent->area.x, eevent->area.y,
+                                 eevent->area.width, eevent->area.height);
       break;
 
     case GDK_CONFIGURE:
-      if ((gdisp->disp_width  != shell->canvas->allocation.width) ||
-	  (gdisp->disp_height != shell->canvas->allocation.height))
+      if ((shell->disp_width  != shell->canvas->allocation.width) ||
+	  (shell->disp_height != shell->canvas->allocation.height))
 	{
-	  gdisp->disp_width  = shell->canvas->allocation.width;
-	  gdisp->disp_height = shell->canvas->allocation.height;
+	  shell->disp_width  = shell->canvas->allocation.width;
+	  shell->disp_height = shell->canvas->allocation.height;
 
 	  gimp_display_shell_scale_resize (shell, FALSE, FALSE);
 	}
@@ -285,6 +300,7 @@ gdisplay_canvas_events (GtkWidget        *canvas,
 	{
 	case 1:
 	  state |= GDK_BUTTON1_MASK;
+
 	  gtk_grab_add (canvas);
 
 	  /* This is a hack to prevent other stuff being run in the middle of
@@ -317,6 +333,7 @@ gdisplay_canvas_events (GtkWidget        *canvas,
 		}
 
 	      /* reset the current tool if ... */
+
 	      if ((/* it has no drawable */
 		   ! active_tool->drawable ||
 
@@ -351,15 +368,15 @@ gdisplay_canvas_events (GtkWidget        *canvas,
             state |= GDK_BUTTON2_MASK;
 
             scrolling      = TRUE;
-            scroll_start_x = bevent->x + gdisp->offset_x;
-            scroll_start_y = bevent->y + gdisp->offset_y;
+            scroll_start_x = bevent->x + shell->offset_x;
+            scroll_start_y = bevent->y + shell->offset_y;
 
             gtk_grab_add (canvas);
 
             cursor = gimp_cursor_new (GDK_FLEUR,
                                       GIMP_TOOL_CURSOR_NONE,
                                       GIMP_CURSOR_MODIFIER_NONE);
-            gdk_window_set_cursor (shell->canvas->window, cursor);
+            gdk_window_set_cursor (canvas->window, cursor);
             gdk_cursor_unref (cursor);
           }
 	  break;
@@ -387,7 +404,7 @@ gdisplay_canvas_events (GtkWidget        *canvas,
        *  ugly: fuzzy_select sets busy cursors while ACTIVE.
        */
       if (gdisp->gimage->gimp->busy &&
-	  ! (GIMP_IS_FUZZY_SELECT_TOOL (active_tool)  &&
+	  ! (GIMP_IS_FUZZY_SELECT_TOOL (active_tool) &&
 	     active_tool->state == ACTIVE))
 	return TRUE;
 
@@ -494,79 +511,80 @@ gdisplay_canvas_events (GtkWidget        *canvas,
       /* Ask for the pointer position, but ignore it except for cursor
        * handling, so motion events sync with the button press/release events 
        */
-      if (mevent->is_hint)
-	{
 #ifdef __GNUC__
 #warning FIXME: replace gdk_input_window_get_pointer()
 #endif
 #if 0
+      if (mevent->is_hint)
+	{
 	  gdk_input_window_get_pointer (canvas->window, current_device, &tx, &ty,
 					NULL, NULL, NULL, NULL);
-#endif
 	}
       else
 	{
+#endif
 	  tx = mevent->x;
 	  ty = mevent->y;
+#if 0
 	}
+#endif
       update_cursor = TRUE;
 
       if (! shell->proximity)
 	{
 	  shell->proximity = TRUE;
-	  gdisplay_check_device_cursor (shell);
+	  gimp_display_shell_check_device_cursor (shell);
 	}
 
-      if (active_tool && (GIMP_IS_MOVE_TOOL(active_tool) ||
-			  ! gimp_image_is_empty (gdisp->gimage)) &&
-	  (mevent->state & GDK_BUTTON1_MASK))
+      if ((mevent->state & GDK_BUTTON1_MASK) &&
+
+          active_tool && (GIMP_IS_MOVE_TOOL (active_tool) ||
+			  ! gimp_image_is_empty (gdisp->gimage)))
 	{
 	  if (active_tool->state == ACTIVE)
 	    {
 	      /*  if the first mouse button is down, check for automatic
 	       *  scrolling...
 	       */
-	      if ((mevent->state & GDK_BUTTON1_MASK) &&
-		  !active_tool->scroll_lock)
-		{
-		  if (mevent->x < 0                 ||
-                      mevent->y < 0                 ||
-		      mevent->x > gdisp->disp_width ||
-		      mevent->y > gdisp->disp_height)
+	      if ((mevent->x < 0                 ||
+                   mevent->y < 0                 ||
+                   mevent->x > shell->disp_width ||
+                   mevent->y > shell->disp_height) &&
+                  ! active_tool->scroll_lock)
+                {
+                  gint off_x, off_y;
+
+                  off_x = off_y = 0;
+
+                  /*  The cases for scrolling  */
+                  if (mevent->x < 0)
+                    off_x = mevent->x;
+                  else if (mevent->x > shell->disp_width)
+                    off_x = mevent->x - shell->disp_width;
+
+                  if (mevent->y < 0)
+                    off_y = mevent->y;
+                  else if (mevent->y > shell->disp_height)
+                    off_y = mevent->y - shell->disp_height;
+
+                  if (gimp_display_shell_scroll (shell, off_x, off_y))
                     {
-                      gdouble child_x, child_y;
-                      gint    off_x, off_y;
-
-                      off_x = off_y = 0;
-
-                      /*  The cases for scrolling  */
-                      if (mevent->x < 0)
-                        off_x = mevent->x;
-                      else if (mevent->x > gdisp->disp_width)
-                        off_x = mevent->x - gdisp->disp_width;
-
-                      if (mevent->y < 0)
-                        off_y = mevent->y;
-                      else if (mevent->y > gdisp->disp_height)
-                        off_y = mevent->y - gdisp->disp_height;
-
-                      if (gimp_display_shell_scroll (shell, off_x, off_y))
-                        {
 #ifdef __GNUC__
 #warning FIXME: replace gdk_input_window_get_pointer()
 #endif
 #if 0
-                          gdk_input_window_get_pointer (shell->canvas->window, mevent->deviceid,
-                                                        &child_x, &child_y, 
-                                                        NULL, NULL, NULL, NULL);
+                      gdouble child_x, child_y;
 
-                          if (child_x == mevent->x && child_y == mevent->y)
-                            /*  Put this event back on the queue -- so it keeps scrolling */
-                            gdk_event_put ((GdkEvent *) mevent);
+                      gdk_input_window_get_pointer (shell->canvas->window, mevent->deviceid,
+                                                    &child_x, &child_y, 
+                                                    NULL, NULL, NULL, NULL);
+
+                      if (child_x == mevent->x && child_y == mevent->y)
+                        /*  Put this event back on the queue -- so it keeps scrolling */
+                        gdk_event_put ((GdkEvent *) mevent);
 #endif
-                        }
                     }
-		}
+                }
 
 	      if (active_tool->auto_snap_to)
 		{
@@ -585,9 +603,9 @@ gdisplay_canvas_events (GtkWidget        *canvas,
 	{
           gimp_display_shell_scroll (shell,
                                      (scroll_start_x - mevent->x -
-                                      gdisp->offset_x),
+                                      shell->offset_x),
                                      (scroll_start_y - mevent->y -
-                                     gdisp->offset_y));
+                                     shell->offset_y));
 	}
 
       if (/* Should we have a tool... */
@@ -646,7 +664,7 @@ gdisplay_canvas_events (GtkWidget        *canvas,
 	case GDK_Control_L: case GDK_Control_R:
 	  state |= key_to_state (kevent->keyval);
 	  /* For all modifier keys: call the tools modifier_key_func */
-	  if (active_tool && !gimp_image_is_empty (gdisp->gimage))
+	  if (active_tool && ! gimp_image_is_empty (gdisp->gimage))
 	    {
 #if 0
 	      gdk_input_window_get_pointer (canvas->window, current_device,
@@ -674,7 +692,7 @@ gdisplay_canvas_events (GtkWidget        *canvas,
 	case GDK_Control_L: case GDK_Control_R:
 	  state &= ~key_to_state (kevent->keyval);
 	  /* For all modifier keys: call the tools modifier_key_func */
-	  if (active_tool && !gimp_image_is_empty (gdisp->gimage))
+	  if (active_tool && ! gimp_image_is_empty (gdisp->gimage))
 	    {
 #if 0
 	      gdk_input_window_get_pointer (canvas->window, current_device,
@@ -697,21 +715,21 @@ gdisplay_canvas_events (GtkWidget        *canvas,
   if (gdisp->gimage->gimp->busy)
     return TRUE;
 
-  /*  Cursor update support
-   *  no_cursor_updating is TRUE (=1) when
-   *  <Toolbox>/File/Preferences.../Interface/...
-   *  Image Windows/Disable Cursor Updating is TOGGLED ON
-   */
+  /*  cursor update support  */
+
   if (! gimprc.no_cursor_updating)
     {
       active_tool = tool_manager_get_active (gdisp->gimage->gimp);
 
-      if (active_tool && !gimp_image_is_empty (gdisp->gimage) &&
-	  !(state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
+      if (active_tool && ! gimp_image_is_empty (gdisp->gimage) &&
+	  ! (state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
 	{
 	  GdkEventMotion me;
-	  me.x = tx;  me.y = ty;
+
+	  me.x     = tx;
+          me.y     = ty;
 	  me.state = state;
+
 	  gimp_tool_cursor_update (active_tool, &me, gdisp);
 	}
       else if (gimp_image_is_empty (gdisp->gimage))
@@ -730,9 +748,9 @@ gdisplay_canvas_events (GtkWidget        *canvas,
 }
 
 gboolean
-gdisplay_hruler_button_press (GtkWidget        *widget,
-			      GdkEventButton   *event,
-			      GimpDisplayShell *shell)
+gimp_display_shell_hruler_button_press (GtkWidget        *widget,
+                                        GdkEventButton   *event,
+                                        GimpDisplayShell *shell)
 {
   GimpDisplay *gdisp;
 
@@ -768,9 +786,9 @@ gdisplay_hruler_button_press (GtkWidget        *widget,
 }
 
 gboolean
-gdisplay_vruler_button_press (GtkWidget        *widget,
-			      GdkEventButton   *event,
-			      GimpDisplayShell *shell)
+gimp_display_shell_vruler_button_press (GtkWidget        *widget,
+                                        GdkEventButton   *event,
+                                        GimpDisplayShell *shell)
 {
   GimpDisplay *gdisp;
 
@@ -806,10 +824,10 @@ gdisplay_vruler_button_press (GtkWidget        *widget,
 }
 
 static void
-gdisplay_origin_menu_position (GtkMenu  *menu,
-			       gint     *x,
-			       gint     *y,
-			       gpointer  data)
+gimp_display_shell_origin_menu_position (GtkMenu  *menu,
+                                         gint     *x,
+                                         gint     *y,
+                                         gpointer  data)
 {
   GtkWidget *origin;
   gint       origin_x;
@@ -830,9 +848,9 @@ gdisplay_origin_menu_position (GtkMenu  *menu,
 }
 
 gboolean
-gdisplay_origin_button_press (GtkWidget        *widget,
-			      GdkEventButton   *event,
-			      GimpDisplayShell *shell)
+gimp_display_shell_origin_button_press (GtkWidget        *widget,
+                                        GdkEventButton   *event,
+                                        GimpDisplayShell *shell)
 {
   GimpDisplay *gdisp;
 
@@ -842,8 +860,8 @@ gdisplay_origin_button_press (GtkWidget        *widget,
     {
       gint x, y;
 
-      gdisplay_origin_menu_position (GTK_MENU (shell->ifactory->widget),
-				     &x, &y, widget);
+      gimp_display_shell_origin_menu_position (GTK_MENU (shell->ifactory->widget),
+                                               &x, &y, widget);
 
       gtk_item_factory_popup_with_data (shell->ifactory,
 					gdisp->gimage, NULL,
@@ -858,9 +876,9 @@ gdisplay_origin_button_press (GtkWidget        *widget,
 }
 
 void
-gdisplay_drop_drawable (GtkWidget    *widget,
-			GimpViewable *viewable,
-			gpointer      data)
+gimp_display_shell_drop_drawable (GtkWidget    *widget,
+                                  GimpViewable *viewable,
+                                  gpointer      data)
 {
   GimpDrawable     *drawable;
   GimpDisplay      *gdisp;
@@ -966,10 +984,10 @@ gdisplay_drop_drawable (GtkWidget    *widget,
 }
 
 static void
-gdisplay_bucket_fill (GimpDisplay    *gdisp,
-		      BucketFillMode  fill_mode,
-		      guchar          orig_color[],
-		      TempBuf        *orig_pat_buf)
+gimp_display_shell_bucket_fill (GimpDisplay    *gdisp,
+                                BucketFillMode  fill_mode,
+                                guchar          orig_color[],
+                                TempBuf        *orig_pat_buf)
 {
   GimpImage    *gimage;
   GimpDrawable *drawable;
@@ -1081,9 +1099,9 @@ gdisplay_bucket_fill (GimpDisplay    *gdisp,
 }
 
 void
-gdisplay_drop_pattern (GtkWidget    *widget,
-		       GimpViewable *viewable,
-		       gpointer      data)
+gimp_display_shell_drop_pattern (GtkWidget    *widget,
+                                 GimpViewable *viewable,
+                                 gpointer      data)
 {
   GimpDisplay *gdisp;
 
@@ -1091,17 +1109,17 @@ gdisplay_drop_pattern (GtkWidget    *widget,
 
   if (GIMP_IS_PATTERN (viewable))
     {
-      gdisplay_bucket_fill (gdisp,
-			    PATTERN_BUCKET_FILL,
-			    NULL,
-			    GIMP_PATTERN (viewable)->mask);
+      gimp_display_shell_bucket_fill (gdisp,
+                                      PATTERN_BUCKET_FILL,
+                                      NULL,
+                                      GIMP_PATTERN (viewable)->mask);
     }
 }
 
 void
-gdisplay_drop_color (GtkWidget     *widget,
-		     const GimpRGB *drop_color,
-		     gpointer       data)
+gimp_display_shell_drop_color (GtkWidget     *widget,
+                               const GimpRGB *drop_color,
+                               gpointer       data)
 {
   GimpDisplay *gdisp;
   guchar       color[4];
@@ -1114,16 +1132,16 @@ gdisplay_drop_color (GtkWidget     *widget,
 		       &color[2],
 		       &color[3]);
 
-  gdisplay_bucket_fill (gdisp,
-			FG_BUCKET_FILL,
-			color,
-			NULL);
+  gimp_display_shell_bucket_fill (gdisp,
+                                  FG_BUCKET_FILL,
+                                  color,
+                                  NULL);
 }
 
 void
-gdisplay_drop_buffer (GtkWidget    *widget,
-		      GimpViewable *viewable,
-		      gpointer      data)
+gimp_display_shell_drop_buffer (GtkWidget    *widget,
+                                GimpViewable *viewable,
+                                gpointer      data)
 {
   GimpBuffer  *buffer;
   GimpDisplay *gdisp;

@@ -16,52 +16,55 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DISPLAY_CALLBACKS_H__
-#define __GIMP_DISPLAY_CALLBACKS_H__
+#ifndef __GIMP_DISPLAY_SHELL_CALLBACKS_H__
+#define __GIMP_DISPLAY_SHELL_CALLBACKS_H__
 
 
-#define CANVAS_EVENT_MASK (GDK_EXPOSURE_MASK            | \
-			   GDK_POINTER_MOTION_MASK      | \
-			   GDK_POINTER_MOTION_HINT_MASK | \
-			   GDK_BUTTON_PRESS_MASK        | \
-			   GDK_BUTTON_RELEASE_MASK      | \
-			   GDK_STRUCTURE_MASK           | \
-			   GDK_ENTER_NOTIFY_MASK        | \
-			   GDK_LEAVE_NOTIFY_MASK        | \
-			   GDK_KEY_PRESS_MASK           | \
-			   GDK_KEY_RELEASE_MASK         | \
-			   GDK_PROXIMITY_OUT_MASK)
+#define GIMP_DISPLAY_SHELL_CANVAS_EVENT_MASK (GDK_EXPOSURE_MASK            | \
+                                              GDK_POINTER_MOTION_MASK      | \
+                                              GDK_POINTER_MOTION_HINT_MASK | \
+                                              GDK_BUTTON_PRESS_MASK        | \
+                                              GDK_BUTTON_RELEASE_MASK      | \
+                                              GDK_STRUCTURE_MASK           | \
+                                              GDK_ENTER_NOTIFY_MASK        | \
+                                              GDK_LEAVE_NOTIFY_MASK        | \
+                                              GDK_KEY_PRESS_MASK           | \
+                                              GDK_KEY_RELEASE_MASK         | \
+                                              GDK_PROXIMITY_OUT_MASK)
 
 
-gboolean   gdisplay_shell_events        (GtkWidget        *widget,
-					 GdkEvent         *event,
-					 GimpDisplayShell *shell);
-gboolean   gdisplay_canvas_events       (GtkWidget        *widget,
-					 GdkEvent         *event,
-					 GimpDisplayShell *shell);
+gboolean   gimp_display_shell_events              (GtkWidget        *widget,
+                                                   GdkEvent         *event,
+                                                   GimpDisplayShell *shell);
 
-gboolean   gdisplay_hruler_button_press (GtkWidget        *widget,
-					 GdkEventButton   *bevent,
-					 GimpDisplayShell *shell);
-gboolean   gdisplay_vruler_button_press (GtkWidget        *widget,
-					 GdkEventButton   *bevent,
-					 GimpDisplayShell *shell);
-gboolean   gdisplay_origin_button_press (GtkWidget        *widget,
-					 GdkEventButton   *bevent,
-					 GimpDisplayShell *shell);
+void       gimp_display_shell_canvas_realize      (GtkWidget        *widget,
+                                                   GimpDisplayShell *shell);
+gboolean   gimp_display_shell_canvas_events       (GtkWidget        *widget,
+                                                   GdkEvent         *event,
+                                                   GimpDisplayShell *shell);
 
-void       gdisplay_drop_drawable       (GtkWidget        *widget,
-					 GimpViewable     *viewable,
-					 gpointer          data);
-void       gdisplay_drop_pattern        (GtkWidget        *widget,
-					 GimpViewable     *viewable,
-					 gpointer          data);
-void       gdisplay_drop_color          (GtkWidget        *widget,
-					 const GimpRGB    *color,
-					 gpointer          data);
-void       gdisplay_drop_buffer         (GtkWidget        *widget,
-					 GimpViewable     *viewable,
-					 gpointer          data);
+gboolean   gimp_display_shell_hruler_button_press (GtkWidget        *widget,
+                                                   GdkEventButton   *bevent,
+                                                   GimpDisplayShell *shell);
+gboolean   gimp_display_shell_vruler_button_press (GtkWidget        *widget,
+                                                   GdkEventButton   *bevent,
+                                                   GimpDisplayShell *shell);
+gboolean   gimp_display_shell_origin_button_press (GtkWidget        *widget,
+                                                   GdkEventButton   *bevent,
+                                                   GimpDisplayShell *shell);
+
+void       gimp_display_shell_drop_drawable       (GtkWidget        *widget,
+                                                   GimpViewable     *viewable,
+                                                   gpointer          data);
+void       gimp_display_shell_drop_pattern        (GtkWidget        *widget,
+                                                   GimpViewable     *viewable,
+                                                   gpointer          data);
+void       gimp_display_shell_drop_color          (GtkWidget        *widget,
+                                                   const GimpRGB    *color,
+                                                   gpointer          data);
+void       gimp_display_shell_drop_buffer         (GtkWidget        *widget,
+                                                   GimpViewable     *viewable,
+                                                   gpointer          data);
 
 
-#endif /* __GIMP_DISPLAY_CALLBACKS_H__ */
+#endif /* __GIMP_DISPLAY_SHELL_CALLBACKS_H__ */

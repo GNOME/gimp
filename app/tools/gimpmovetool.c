@@ -357,7 +357,7 @@ move_tool_button_release (GimpTool       *tool,
                                    &x1, &y1,
                                    FALSE, FALSE);
       gdisplay_untransform_coords (gdisp,
-                                   gdisp->disp_width, gdisp->disp_height,
+                                   shell->disp_width, shell->disp_height,
 				   &x2, &y2,
                                    FALSE, FALSE);
 

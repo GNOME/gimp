@@ -30,9 +30,9 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplay-scale.h"
 #include "display/gimpdisplay-selection.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-scale.h"
 
 #include "info-dialog.h"
 #include "info-window.h"
@@ -49,8 +49,8 @@
 
 
 void
-view_zoomin_cmd_callback (GtkWidget *widget,
-			  gpointer   data)
+view_zoom_in_cmd_callback (GtkWidget *widget,
+                           gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
@@ -59,13 +59,23 @@ view_zoomin_cmd_callback (GtkWidget *widget,
 }
 
 void
-view_zoomout_cmd_callback (GtkWidget *widget,
-			   gpointer   data)
+view_zoom_out_cmd_callback (GtkWidget *widget,
+                            gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
   gimp_display_shell_scale (GIMP_DISPLAY_SHELL (gdisp->shell), GIMP_ZOOM_OUT);
+}
+
+void
+view_zoom_fit_cmd_callback (GtkWidget *widget,
+                            gpointer   data)
+{
+  GimpDisplay *gdisp;
+  return_if_no_display (gdisp, data);
+
+  gimp_display_shell_scale_fit (GIMP_DISPLAY_SHELL (gdisp->shell));
 }
 
 void

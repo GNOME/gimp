@@ -38,9 +38,9 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplay-scroll.h"
-#include "display/gimpdisplay-scale.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-scroll.h"
+#include "display/gimpdisplayshell-scale.h"
 
 #include "widgets/gimpnavigationpreview.h"
 
@@ -175,8 +175,8 @@ nav_dialog_marker_changed (GimpNavigationPreview *nav_preview,
   xratio = SCALEFACTOR_X (nav_dialog->gdisp);
   yratio = SCALEFACTOR_Y (nav_dialog->gdisp);
 
-  xoffset = x * xratio - shell->gdisp->offset_x;
-  yoffset = y * yratio - shell->gdisp->offset_y;
+  xoffset = x * xratio - shell->offset_x;
+  yoffset = y * yratio - shell->offset_y;
 
   gimp_display_shell_scroll (shell, xoffset, yoffset);
 }
@@ -714,17 +714,17 @@ nav_dialog_disp_area (NavigationDialog *nav_dialog,
 
       gimp_navigation_preview_set_marker
 	(GIMP_NAVIGATION_PREVIEW (nav_dialog->new_preview),
-	 RINT (shell->gdisp->offset_x    / xratio),
-	 RINT (shell->gdisp->offset_y    / yratio),
-	 RINT (shell->gdisp->disp_width  / xratio),
-	 RINT (shell->gdisp->disp_height / yratio));
+	 RINT (shell->offset_x    / xratio),
+	 RINT (shell->offset_y    / yratio),
+	 RINT (shell->disp_width  / xratio),
+	 RINT (shell->disp_height / yratio));
     }
 
-  nav_dialog->dispx = shell->gdisp->offset_x * nav_dialog->ratio / xratio + 0.5;
-  nav_dialog->dispy = shell->gdisp->offset_y * nav_dialog->ratio/yratio + 0.5;
+  nav_dialog->dispx = shell->offset_x * nav_dialog->ratio / xratio + 0.5;
+  nav_dialog->dispy = shell->offset_y * nav_dialog->ratio/yratio + 0.5;
 
-  nav_dialog->dispwidth  = (shell->gdisp->disp_width  * nav_dialog->ratio) / xratio + 0.5;
-  nav_dialog->dispheight = (shell->gdisp->disp_height * nav_dialog->ratio) / yratio + 0.5;
+  nav_dialog->dispwidth  = (shell->disp_width  * nav_dialog->ratio) / xratio + 0.5;
+  nav_dialog->dispheight = (shell->disp_height * nav_dialog->ratio) / yratio + 0.5;
 
   newwidth  = gimage->width;
   newheight = gimage->height;
@@ -735,12 +735,12 @@ nav_dialog_disp_area (NavigationDialog *nav_dialog,
 	(newwidth * gdisp->gimage->yresolution) / gdisp->gimage->xresolution;
 
       nav_dialog->dispx =
-	((shell->gdisp->offset_x * 
+	((shell->offset_x * 
 	  gdisp->gimage->yresolution * nav_dialog->ratio) / 
 	 (gdisp->gimage->xresolution *  xratio)) + 0.5;     /*here*/
 
       nav_dialog->dispwidth =
-	((shell->gdisp->disp_width * 
+	((shell->disp_width * 
 	  gdisp->gimage->yresolution * nav_dialog->ratio) / 
 	 (gdisp->gimage->xresolution *  xratio)) + 0.5; /*here*/
     }
@@ -1222,8 +1222,8 @@ nav_dialog_update_real_view (NavigationDialog *nav_dialog,
              nav_dialog->gdisp->gimage->xresolution) /
             nav_dialog->gdisp->gimage->yresolution) + 0.5;
 
-  xoffset = xpnt - shell->gdisp->offset_x;
-  yoffset = ypnt - shell->gdisp->offset_y;
+  xoffset = xpnt - shell->offset_x;
+  yoffset = ypnt - shell->offset_y;
 
   gimp_display_shell_scroll (shell, xoffset, yoffset);
 }

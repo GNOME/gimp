@@ -31,9 +31,9 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
-#include "gimpdisplay-scale.h"
-#include "gimpdisplay-scroll.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-scale.h"
+#include "gimpdisplayshell-scroll.h"
 
 #include "gimprc.h"
 #include "nav_window.h"
@@ -51,17 +51,17 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  old_x = shell->gdisp->offset_x;
-  old_y = shell->gdisp->offset_y;
+  old_x = shell->offset_x;
+  old_y = shell->offset_y;
 
-  shell->gdisp->offset_x += x_offset;
-  shell->gdisp->offset_y += y_offset;
+  shell->offset_x += x_offset;
+  shell->offset_y += y_offset;
 
   gimp_display_shell_scroll_clamp_offsets (shell);
 
   /*  the actual changes in offset  */
-  x_offset = (shell->gdisp->offset_x - old_x);
-  y_offset = (shell->gdisp->offset_y - old_y);
+  x_offset = (shell->offset_x - old_x);
+  y_offset = (shell->offset_y - old_y);
 
   if (x_offset || y_offset)
     {
@@ -75,24 +75,24 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       dest_y = (y_offset < 0) ? -y_offset : 0;
 
       /*  reset the old values so that the tool can accurately redraw  */
-      shell->gdisp->offset_x = old_x;
-      shell->gdisp->offset_y = old_y;
+      shell->offset_x = old_x;
+      shell->offset_y = old_y;
 
       /*  freeze the active tool  */
       tool_manager_control_active (shell->gdisp->gimage->gimp, PAUSE,
                                    shell->gdisp);
 
       /*  set the offsets back to the new values  */
-      shell->gdisp->offset_x += x_offset;
-      shell->gdisp->offset_y += y_offset;
+      shell->offset_x += x_offset;
+      shell->offset_y += y_offset;
 
       gdk_draw_drawable (shell->canvas->window,
 			 shell->scroll_gc,
 			 shell->canvas->window,
 			 src_x, src_y,
 			 dest_x, dest_y,
-			 (shell->gdisp->disp_width  - abs (x_offset)),
-			 (shell->gdisp->disp_height - abs (y_offset)));
+			 (shell->disp_width  - abs (x_offset)),
+			 (shell->disp_height - abs (y_offset)));
 
       /*  re-enable the active tool  */
       tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
@@ -101,23 +101,23 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       /*  scale the image into the exposed regions  */
       if (x_offset)
 	{
-	  src_x = (x_offset < 0) ? 0 : shell->gdisp->disp_width - x_offset;
+	  src_x = (x_offset < 0) ? 0 : shell->disp_width - x_offset;
 	  src_y = 0;
 
 	  gimp_display_shell_add_expose_area (shell,
                                               src_x, src_y,
                                               abs (x_offset),
-                                              shell->gdisp->disp_height);
+                                              shell->disp_height);
 	}
 
       if (y_offset)
 	{
 	  src_x = 0;
-	  src_y = (y_offset < 0) ? 0 : shell->gdisp->disp_height - y_offset;
+	  src_y = (y_offset < 0) ? 0 : shell->disp_height - y_offset;
 
 	  gimp_display_shell_add_expose_area (shell,
                                               src_x, src_y,
-                                              shell->gdisp->disp_width,
+                                              shell->disp_width,
                                               abs (y_offset));
 	}
 
@@ -161,10 +161,10 @@ gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
   sx = SCALEX (shell->gdisp, shell->gdisp->gimage->width);
   sy = SCALEY (shell->gdisp, shell->gdisp->gimage->height);
 
-  shell->gdisp->offset_x = CLAMP (shell->gdisp->offset_x, 0,
-                                  MAX (sx - shell->gdisp->disp_width, 0));
+  shell->offset_x = CLAMP (shell->offset_x, 0,
+			   MAX (sx - shell->disp_width, 0));
 
-  shell->gdisp->offset_y = CLAMP (shell->gdisp->offset_y, 0,
-                                  MAX (sy - shell->gdisp->disp_height, 0));
+  shell->offset_y = CLAMP (shell->offset_y, 0,
+			   MAX (sy - shell->disp_height, 0));
 }
 

@@ -1,3 +1,7 @@
+2001-11-02  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: gimpdisplay-callbacks.c -> gimpdisplayshell-callbacks.
+
 2001-10-31  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: updated.

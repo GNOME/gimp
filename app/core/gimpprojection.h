@@ -100,15 +100,6 @@ struct _GimpDisplay
 
   gint        scale;            /*  scale factor from original raw image    */
   gboolean    dot_for_dot;      /*  is monitor resolution being ignored?    */
-
-  gint        offset_x;
-  gint        offset_y;
-
-  gint        disp_width;       /*  width of drawing area                   */
-  gint        disp_height;      /*  height of drawing area                  */
-  gint        disp_xoffset;
-  gint        disp_yoffset;
-
   gboolean    draw_guides;      /*  should the guides be drawn?             */
   gboolean    snap_to_guides;   /*  should the guides be snapped to?        */
 

@@ -26,8 +26,10 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-handlers.h"
-#include "gimpdisplay-scale.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-scale.h"
+
+#include "gimprc.h"
 
 
 /*  local function prototypes  */
@@ -230,7 +232,9 @@ gimp_display_size_changed_handler (GimpImage *gimage,
                             gdisp->gimage->height);
 
   gimp_display_shell_resize_cursor_label (GIMP_DISPLAY_SHELL (gdisp->shell));
-  gimp_display_shell_shrink_wrap (GIMP_DISPLAY_SHELL (gdisp->shell));
+
+  gimp_display_shell_scale_resize (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                   gimprc.allow_resize_windows, TRUE);
 }
 
 static void

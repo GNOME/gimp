@@ -20,9 +20,11 @@
 #define __VIEW_COMMANDS_H__
 
 
-void   view_zoomin_cmd_callback           (GtkWidget *widget,
+void   view_zoom_in_cmd_callback          (GtkWidget *widget,
 					   gpointer   data);
-void   view_zoomout_cmd_callback          (GtkWidget *widget,
+void   view_zoom_out_cmd_callback         (GtkWidget *widget,
+					   gpointer   data);
+void   view_zoom_fit_cmd_callback         (GtkWidget *widget,
 					   gpointer   data);
 void   view_zoom_cmd_callback             (GtkWidget *widget,
 					   gpointer   data,

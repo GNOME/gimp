@@ -122,15 +122,6 @@ gimp_display_init (GimpDisplay *gdisp)
 
   gdisp->scale                    = 0;
   gdisp->dot_for_dot              = gimprc.default_dot_for_dot;
-
-  gdisp->offset_x                 = 0;
-  gdisp->offset_y                 = 0;
-
-  gdisp->disp_width               = 0;
-  gdisp->disp_height              = 0;
-  gdisp->disp_xoffset             = 0;
-  gdisp->disp_yoffset             = 0;
-
   gdisp->draw_guides              = TRUE;
   gdisp->snap_to_guides           = TRUE;
 
@@ -281,10 +272,8 @@ gdisplay_reconnect (GimpDisplay *gdisp,
                             gdisp->gimage->width,
                             gdisp->gimage->height);
 
-  gimp_display_shell_update_title (GIMP_DISPLAY_SHELL (gdisp->shell));
   gimp_display_shell_resize_cursor_label (GIMP_DISPLAY_SHELL (gdisp->shell));
   gimp_display_shell_shrink_wrap (GIMP_DISPLAY_SHELL (gdisp->shell));
-  gimp_display_shell_expose_full (GIMP_DISPLAY_SHELL (gdisp->shell));
 }
 
 static gint
@@ -584,7 +573,7 @@ gimp_display_paint_area (GimpDisplay *gdisp,
                                &x1, &y1,
                                FALSE, FALSE);
   gdisplay_untransform_coords (gdisp,
-                               gdisp->disp_width, gdisp->disp_height,
+                               shell->disp_width, shell->disp_height,
 			       &x2, &y2,
                                FALSE, FALSE);
 
@@ -632,11 +621,11 @@ gdisplay_transform_coords (GimpDisplay *gdisp,
       offset_x = offset_y = 0;
     }
 
-  *nx = (gint) (scalex * (x + offset_x) - gdisp->offset_x);
-  *ny = (gint) (scaley * (y + offset_y) - gdisp->offset_y);
+  *nx = (gint) (scalex * (x + offset_x) - shell->offset_x);
+  *ny = (gint) (scaley * (y + offset_y) - shell->offset_y);
 
-  *nx += gdisp->disp_xoffset;
-  *ny += gdisp->disp_yoffset;
+  *nx += shell->disp_xoffset;
+  *ny += shell->disp_yoffset;
 }
 
 void
@@ -660,8 +649,8 @@ gdisplay_untransform_coords (GimpDisplay *gdisp,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  x -= gdisp->disp_xoffset;
-  y -= gdisp->disp_yoffset;
+  x -= shell->disp_xoffset;
+  y -= shell->disp_yoffset;
 
   /*  transform from screen coordinates to image coordinates  */
   scalex = SCALEFACTOR_X (gdisp);
@@ -679,13 +668,13 @@ gdisplay_untransform_coords (GimpDisplay *gdisp,
 
   if (round)
     {
-      *nx = ROUND ((x + gdisp->offset_x) / scalex - offset_x);
-      *ny = ROUND ((y + gdisp->offset_y) / scaley - offset_y);
+      *nx = ROUND ((x + shell->offset_x) / scalex - offset_x);
+      *ny = ROUND ((y + shell->offset_y) / scaley - offset_y);
     }
   else
     {
-      *nx = (int) ((x + gdisp->offset_x) / scalex - offset_x);
-      *ny = (int) ((y + gdisp->offset_y) / scaley - offset_y);
+      *nx = (int) ((x + shell->offset_x) / scalex - offset_x);
+      *ny = (int) ((y + shell->offset_y) / scaley - offset_y);
     }
 }
 
@@ -723,11 +712,11 @@ gdisplay_transform_coords_f (GimpDisplay *gdisp,
       offset_x = offset_y = 0;
     }
 
-  *nx = scalex * (x + offset_x) - gdisp->offset_x;
-  *ny = scaley * (y + offset_y) - gdisp->offset_y;
+  *nx = scalex * (x + offset_x) - shell->offset_x;
+  *ny = scaley * (y + offset_y) - shell->offset_y;
 
-  *nx += gdisp->disp_xoffset;
-  *ny += gdisp->disp_yoffset;
+  *nx += shell->disp_xoffset;
+  *ny += shell->disp_yoffset;
 }
 
 void
@@ -750,8 +739,8 @@ gdisplay_untransform_coords_f (GimpDisplay *gdisp,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  x -= gdisp->disp_xoffset;
-  y -= gdisp->disp_yoffset;
+  x -= shell->disp_xoffset;
+  y -= shell->disp_yoffset;
 
   /*  transform from screen coordinates to gimp coordinates  */
   scalex = SCALEFACTOR_X (gdisp);
@@ -767,8 +756,8 @@ gdisplay_untransform_coords_f (GimpDisplay *gdisp,
       offset_x = offset_y = 0;
     }
 
-  *nx = (x + gdisp->offset_x) / scalex - offset_x;
-  *ny = (y + gdisp->offset_y) / scaley - offset_y;
+  *nx = (x + shell->offset_x) / scalex - offset_x;
+  *ny = (y + shell->offset_y) / scaley - offset_y;
 }
 
 void

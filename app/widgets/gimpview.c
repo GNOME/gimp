@@ -44,7 +44,7 @@
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
-#include "display/gimpdisplay-render.h"
+#include "display/gimpdisplayshell-render.h"
 
 #include "gimpbrushpreview.h"
 #include "gimpbufferpreview.h"

@@ -234,7 +234,13 @@ tool_manager_select_tool (Gimp     *gimp,
   tool_manager = tool_manager_get (gimp);
 
   if (tool_manager->active_tool)
-    g_object_unref (G_OBJECT (tool_manager->active_tool));
+    {
+      tool_manager_control_active (gimp,
+                                   HALT,
+                                   tool_manager->active_tool->gdisp);
+
+      g_object_unref (G_OBJECT (tool_manager->active_tool));
+    }
 
   tool_manager->active_tool = tool;
 }

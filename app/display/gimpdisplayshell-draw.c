@@ -48,10 +48,10 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-area.h"
-#include "gimpdisplay-callbacks.h"
-#include "gimpdisplay-render.h"
 #include "gimpdisplay-selection.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-callbacks.h"
+#include "gimpdisplayshell-render.h"
 #include "gximage.h"
 
 #include "colormaps.h"
@@ -175,6 +175,14 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 {
   shell->gdisp                 = NULL;
   shell->ifactory              = NULL;
+
+  shell->offset_x              = 0;
+  shell->offset_y              = 0;
+
+  shell->disp_width            = 0;
+  shell->disp_height           = 0;
+  shell->disp_xoffset          = 0;
+  shell->disp_yoffset          = 0;
 
   shell->proximity             = FALSE;
 
@@ -406,10 +414,10 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 
   /*  active display callback  */
   g_signal_connect (G_OBJECT (shell), "button_press_event",
-		    G_CALLBACK (gdisplay_shell_events),
+		    G_CALLBACK (gimp_display_shell_events),
 		    shell);
   g_signal_connect (G_OBJECT (shell), "key_press_event",
-		    G_CALLBACK (gdisplay_shell_events),
+		    G_CALLBACK (gimp_display_shell_events),
 		    shell);
 
   /*  dnd stuff  */
@@ -420,22 +428,22 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 		     GDK_ACTION_COPY);
 
   gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_LAYER,
-			      gdisplay_drop_drawable,
+			      gimp_display_shell_drop_drawable,
                               shell);
   gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_LAYER_MASK,
-			      gdisplay_drop_drawable,
+			      gimp_display_shell_drop_drawable,
                               shell);
   gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_CHANNEL,
-			      gdisplay_drop_drawable,
+			      gimp_display_shell_drop_drawable,
                               shell);
   gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_PATTERN,
-			      gdisplay_drop_pattern,
+			      gimp_display_shell_drop_pattern,
                               shell);
   gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_BUFFER,
-			      gdisplay_drop_buffer,
+			      gimp_display_shell_drop_buffer,
                               shell);
   gimp_dnd_color_dest_set    (GTK_WIDGET (shell),
-			      gdisplay_drop_color,
+			      gimp_display_shell_drop_color,
                               shell);
 
   /*  connect the "F1" help key  */
@@ -546,7 +554,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
 
   g_signal_connect (G_OBJECT (shell->origin), "button_press_event",
-		    G_CALLBACK (gdisplay_origin_button_press),
+		    G_CALLBACK (gimp_display_shell_origin_button_press),
 		    shell);
 
   gimp_help_set_help_data (shell->origin, NULL, "#origin_button");
@@ -565,7 +573,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 			    G_CALLBACK (GTK_WIDGET_GET_CLASS (shell->hrule)->motion_notify_event),
 			    shell->hrule);
   g_signal_connect (G_OBJECT (shell->hrule), "button_press_event",
-		    G_CALLBACK (gdisplay_hruler_button_press),
+		    G_CALLBACK (gimp_display_shell_hruler_button_press),
 		    shell);
 
   gimp_help_set_help_data (shell->hrule, NULL, "#ruler");
@@ -579,7 +587,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 			    G_CALLBACK (GTK_WIDGET_GET_CLASS (shell->vrule)->motion_notify_event),
 			    shell->vrule);
   g_signal_connect (G_OBJECT (shell->vrule), "button_press_event",
-		    G_CALLBACK (gdisplay_vruler_button_press),
+		    G_CALLBACK (gimp_display_shell_vruler_button_press),
 		    shell);
 
   gimp_help_set_help_data (shell->vrule, NULL, "#ruler");
@@ -588,16 +596,26 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   shell->canvas = gtk_drawing_area_new ();
   gtk_widget_set_name (shell->canvas, "gimp-canvas");
   gtk_drawing_area_size (GTK_DRAWING_AREA (shell->canvas), n_width, n_height);
-  gtk_widget_set_events (shell->canvas, CANVAS_EVENT_MASK);
+  gtk_widget_set_events (shell->canvas, GIMP_DISPLAY_SHELL_CANVAS_EVENT_MASK);
   gtk_widget_set_extension_events (shell->canvas, GDK_EXTENSION_EVENTS_ALL);
   GTK_WIDGET_SET_FLAGS (shell->canvas, GTK_CAN_FOCUS);
 
+#if 0
+
+  FIXME
+
+  g_signal_connect (G_OBJECT (shell->canvas), "realize",
+                    G_CALLBACK (gimp_display_shell_canvas_events),
+                    shell);
+#endif
+
   /*  set the active display before doing any other canvas event processing  */
   g_signal_connect (G_OBJECT (shell->canvas), "event",
-		    G_CALLBACK (gdisplay_shell_events),
+		    G_CALLBACK (gimp_display_shell_events),
 		    shell);
+
   g_signal_connect (G_OBJECT (shell->canvas), "event",
-		    G_CALLBACK (gdisplay_canvas_events),
+		    G_CALLBACK (gimp_display_shell_canvas_events),
 		    shell);
 
   /*  create the contents of the lower_hbox  *********************************/
@@ -651,7 +669,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   /* EEK */ gdisp->shell  = GTK_WIDGET (shell);
 
   gtk_widget_realize (GTK_WIDGET (shell));
-  
+
   /*  create the pixmaps  ****************************************************/
   if (! qmasksel_pixmap)
     {
@@ -1194,10 +1212,10 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
   gdisplay_transform_coords (shell->gdisp, *x2, *y2, x2, y2, 0);
 
   /*  Make sure the extents are within bounds  */
-  *x1 = CLAMP (*x1, 0, shell->gdisp->disp_width);
-  *y1 = CLAMP (*y1, 0, shell->gdisp->disp_height);
-  *x2 = CLAMP (*x2, 0, shell->gdisp->disp_width);
-  *y2 = CLAMP (*y2, 0, shell->gdisp->disp_height);
+  *x1 = CLAMP (*x1, 0, shell->disp_width);
+  *y1 = CLAMP (*y1, 0, shell->disp_height);
+  *x2 = CLAMP (*x2, 0, shell->disp_width);
+  *y2 = CLAMP (*y2, 0, shell->disp_height);
 
   return TRUE;
 }
@@ -1215,10 +1233,10 @@ gimp_display_shell_add_expose_area (GimpDisplayShell *shell,
 
   area = g_new (GimpArea, 1);
 
-  area->x1 = CLAMP (x,     0, shell->gdisp->disp_width);
-  area->y1 = CLAMP (y,     0, shell->gdisp->disp_height);
-  area->x2 = CLAMP (x + w, 0, shell->gdisp->disp_width);
-  area->y2 = CLAMP (y + h, 0, shell->gdisp->disp_height);
+  area->x1 = CLAMP (x,     0, shell->disp_width);
+  area->y1 = CLAMP (y,     0, shell->disp_height);
+  area->x2 = CLAMP (x + w, 0, shell->disp_width);
+  area->y2 = CLAMP (y + h, 0, shell->disp_height);
 
   shell->display_areas = gimp_display_area_list_process (shell->display_areas,
                                                          area);
@@ -1246,11 +1264,11 @@ gimp_display_shell_expose_guide (GimpDisplayShell *shell,
   switch (guide->orientation)
     {
     case ORIENTATION_HORIZONTAL:
-      gimp_display_shell_add_expose_area (shell, 0, y, shell->gdisp->disp_width, 1);
+      gimp_display_shell_add_expose_area (shell, 0, y, shell->disp_width, 1);
       break;
 
     case ORIENTATION_VERTICAL:
-      gimp_display_shell_add_expose_area (shell, x, 0, 1, shell->gdisp->disp_height);
+      gimp_display_shell_add_expose_area (shell, x, 0, 1, shell->disp_height);
       break;
 
     default:
@@ -1265,8 +1283,8 @@ gimp_display_shell_expose_full (GimpDisplayShell *shell)
 
   gimp_display_shell_add_expose_area (shell,
                                       0, 0,
-                                      shell->gdisp->disp_width,
-                                      shell->gdisp->disp_height);
+                                      shell->disp_width,
+                                      shell->disp_height);
 }
 
 void
@@ -1431,7 +1449,8 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
                                   gint              y)
 {
   GimpImage *gimage;
-  gint       new_cursor;
+  gboolean   new_cursor;
+  gboolean   flush = FALSE;
   gchar      buffer[CURSOR_STR_LENGTH];
   gint       t_x;
   gint       t_y;
@@ -1455,8 +1474,17 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
       if (! new_cursor)
 	{
 	  shell->have_cursor = FALSE;
-	  gdisplay_flush (shell->gdisp);
+	  flush = TRUE;
 	}
+    }
+
+  shell->have_cursor = new_cursor;
+  shell->cursor_x    = x;
+  shell->cursor_y    = y;
+  
+  if (new_cursor || flush)
+    {
+      gdisplay_flush (shell->gdisp);
     }
 
   gdisplay_untransform_coords (shell->gdisp, x, y, &t_x, &t_y, FALSE, FALSE);
@@ -1473,29 +1501,23 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
     {
       if (shell->gdisp->dot_for_dot)
 	{
-	  g_snprintf (buffer, CURSOR_STR_LENGTH, 
-		      shell->cursor_format_str, "", t_x, ", ", t_y);
+	  g_snprintf (buffer, sizeof (buffer), shell->cursor_format_str,
+                      "", t_x, ", ", t_y);
 	}
       else /* show real world units */
 	{
 	  gdouble unit_factor = gimp_unit_get_factor (gimage->unit);
 	  
-	  g_snprintf (buffer, CURSOR_STR_LENGTH, shell->cursor_format_str,
+	  g_snprintf (buffer, sizeof (buffer), shell->cursor_format_str,
                       "",
                       (gdouble) t_x * unit_factor / gimage->xresolution,
                       ", ",
                       (gdouble) t_y * unit_factor / gimage->yresolution);
 	}
+
       gtk_label_set_text (GTK_LABEL (shell->cursor_label), buffer);
       info_window_update_extended (shell->gdisp, t_x, t_y);
     }
-
-  shell->have_cursor = new_cursor;
-  shell->cursor_x    = x;
-  shell->cursor_y    = y;
-  
-  if (new_cursor)
-    gdisplay_flush (shell->gdisp);
 }
 
 void
@@ -1735,8 +1757,8 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
   width  = SCALEX (shell->gdisp, shell->gdisp->gimage->width);
   height = SCALEY (shell->gdisp, shell->gdisp->gimage->height);
 
-  disp_width  = shell->gdisp->disp_width;
-  disp_height = shell->gdisp->disp_height;
+  disp_width  = shell->disp_width;
+  disp_height = shell->disp_height;
 
   shell_width  = GTK_WIDGET (shell)->allocation.width;
   shell_height = GTK_WIDGET (shell)->allocation.height;
@@ -1789,8 +1811,8 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
 	       border_x, border_y);
 #endif /* RESIZE_DEBUG */
 
-      shell->gdisp->disp_width  = width;
-      shell->gdisp->disp_height = height;
+      shell->disp_width  = width;
+      shell->disp_height = height;
 
       allocation.width  = width  + border_x;
       allocation.height = height + border_y;
@@ -1799,10 +1821,10 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
        *  changes because our caller has to do a full display update anyway
        */
       g_signal_handlers_block_by_func (G_OBJECT (shell->canvas),
-                                       gdisplay_shell_events,
+                                       gimp_display_shell_events,
                                        shell);
       g_signal_handlers_block_by_func (G_OBJECT (shell->canvas),
-                                       gdisplay_canvas_events,
+                                       gimp_display_shell_canvas_events,
                                        shell);
 
       gtk_widget_size_allocate (GTK_WIDGET (shell), &allocation);
@@ -1828,21 +1850,21 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
 	}
 
       g_signal_handlers_unblock_by_func (G_OBJECT (shell->canvas),
-                                         gdisplay_shell_events,
+                                         gimp_display_shell_events,
                                          shell);
       g_signal_handlers_unblock_by_func (G_OBJECT (shell->canvas),
-                                         gdisplay_canvas_events,
+                                         gimp_display_shell_canvas_events,
                                          shell);
     }
 
   /*  If the width or height of the display has changed, recalculate
    *  the display offsets...
    */
-  if (disp_width  != shell->gdisp->disp_width ||
-      disp_height != shell->gdisp->disp_height)
+  if (disp_width  != shell->disp_width ||
+      disp_height != shell->disp_height)
     {
-      shell->gdisp->offset_x += (disp_width  - shell->gdisp->disp_width) / 2;
-      shell->gdisp->offset_y += (disp_height - shell->gdisp->disp_height) / 2;
+      shell->offset_x += (disp_width  - shell->disp_width) / 2;
+      shell->offset_y += (disp_height - shell->disp_height) / 2;
     }
 }
 
@@ -1889,65 +1911,65 @@ gimp_display_shell_display_area (GimpDisplayShell *shell,
   sy = SCALEY (shell->gdisp, shell->gdisp->gimage->height);
 
   /*  Bounds check  */
-  x1 = CLAMP (x,     0, shell->gdisp->disp_width);
-  y1 = CLAMP (y,     0, shell->gdisp->disp_height);
-  x2 = CLAMP (x + w, 0, shell->gdisp->disp_width);
-  y2 = CLAMP (y + h, 0, shell->gdisp->disp_height);
+  x1 = CLAMP (x,     0, shell->disp_width);
+  y1 = CLAMP (y,     0, shell->disp_height);
+  x2 = CLAMP (x + w, 0, shell->disp_width);
+  y2 = CLAMP (y + h, 0, shell->disp_height);
 
-  if (y1 < shell->gdisp->disp_yoffset)
+  if (y1 < shell->disp_yoffset)
     {
       gdk_draw_rectangle (shell->canvas->window,
 			  shell->canvas->style->bg_gc[GTK_STATE_NORMAL],
                           TRUE,
 			  x, y,
-                          w, shell->gdisp->disp_yoffset - y);
+                          w, shell->disp_yoffset - y);
       /* X X X
          . # .
          . . . */
 
-      y1 = shell->gdisp->disp_yoffset;
+      y1 = shell->disp_yoffset;
     }
 
-  if (x1 < shell->gdisp->disp_xoffset)
+  if (x1 < shell->disp_xoffset)
     {
       gdk_draw_rectangle (shell->canvas->window,
 			  shell->canvas->style->bg_gc[GTK_STATE_NORMAL],
                           TRUE,
 			  x, y1,
-                          shell->gdisp->disp_xoffset - x, h);
+                          shell->disp_xoffset - x, h);
       /* . . .
          X # .
          X . . */
 
-      x1 = shell->gdisp->disp_xoffset;
+      x1 = shell->disp_xoffset;
     }
 
-  if (x2 > (shell->gdisp->disp_xoffset + sx))
+  if (x2 > (shell->disp_xoffset + sx))
     {
       gdk_draw_rectangle (shell->canvas->window,
 			  shell->canvas->style->bg_gc[GTK_STATE_NORMAL],
                           TRUE,
-			  shell->gdisp->disp_xoffset + sx, y1,
-			  x2 - (shell->gdisp->disp_xoffset + sx), h - (y1 - y));
+			  shell->disp_xoffset + sx, y1,
+			  x2 - (shell->disp_xoffset + sx), h - (y1 - y));
       /* . . .
          . # X
          . . X */
 
-      x2 = shell->gdisp->disp_xoffset + sx;
+      x2 = shell->disp_xoffset + sx;
     }
 
-  if (y2 > (shell->gdisp->disp_yoffset + sy))
+  if (y2 > (shell->disp_yoffset + sy))
     {
       gdk_draw_rectangle (shell->canvas->window,
 			  shell->canvas->style->bg_gc[GTK_STATE_NORMAL],
                           TRUE,
-			  x1, shell->gdisp->disp_yoffset + sy,
-			  x2 - x1, y2 - (shell->gdisp->disp_yoffset + sy));
+			  x1, shell->disp_yoffset + sy,
+			  x2 - x1, y2 - (shell->disp_yoffset + sy));
       /* . . .
          . # .
          . X . */
 
-      y2 = shell->gdisp->disp_yoffset + sy;
+      y2 = shell->disp_yoffset + sy;
     }
 
   /*  display the image in GXIMAGE_WIDTH x GXIMAGE_HEIGHT sized chunks */
@@ -1959,14 +1981,14 @@ gimp_display_shell_display_area (GimpDisplayShell *shell,
           dy = MIN (y2 - i, GXIMAGE_HEIGHT);
 
           render_image (shell->gdisp,
-                        j - shell->gdisp->disp_xoffset, i - shell->gdisp->disp_yoffset,
+                        j - shell->disp_xoffset, i - shell->disp_yoffset,
                         dx, dy);
 
 #if 0
           /* Invalidate the projection just after we render it! */
           gimp_image_invalidate_without_render (shell->gdisp->gimage,
-                                                j - shell->gdisp->disp_xoffset,
-                                                i - shell->gdisp->disp_yoffset,
+                                                j - shell->disp_xoffset,
+                                                i - shell->disp_yoffset,
                                                 dx, dy,
                                                 0, 0, 0, 0);
 #endif
@@ -1982,8 +2004,8 @@ gimp_display_shell_display_area (GimpDisplayShell *shell,
 
           gximage_put (shell->canvas->window,
                        j, i, dx, dy,
-                       shell->gdisp->offset_x,
-                       shell->gdisp->offset_y);
+                       shell->offset_x,
+                       shell->offset_y);
         }
     }
 }

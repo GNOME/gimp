@@ -35,8 +35,8 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplay-render.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-render.h"
 #include "display/gximage.h"
 
 #include "widgets/gimpdialogfactory.h"

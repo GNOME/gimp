@@ -391,13 +391,11 @@ pop_stack (GimpImage  *gimage,
 	   GSList    **unstack_ptr,
 	   UndoState   state)
 {
-  Undo        *object;
-  GSList      *stack;
-  GSList      *tmp;
-  gint         status = 0;
-  gint         in_group = 0;
-  gint         x, y;
-  GimpDisplay *gdisp;
+  Undo     *object;
+  GSList   *stack;
+  GSList   *tmp;
+  gboolean  status   = FALSE;
+  gboolean  in_group = FALSE;
 
   /*  Keep popping until we pop a valid object
    *  or get to the end of a group if we're in one
@@ -407,21 +405,26 @@ pop_stack (GimpImage  *gimage,
       stack = *stack_ptr;
 
       object = (Undo *) stack->data;
+
       if (object->group_boundary)
 	{
-	  in_group = (in_group) ? 0 : 1;
+	  in_group = ! in_group;
+
 	  if (in_group)
 	    gimage->undo_levels += (state == UNDO) ? -1 : 1;
 
-	  if (status && !in_group)
-	    status = 1;
+	  if (status && ! in_group)
+	    status = TRUE;
 	  else
-	    status = 0;
+	    status = FALSE;
 	}
       else
 	{
 	  TRC (("undo_pop: %s\n", undo_type_to_name (object->type)));
-	  status = (* object->pop_func) (gimage, state, object->type,
+
+	  status = (* object->pop_func) (gimage,
+                                         state,
+                                         object->type,
 					 object->data);
 
 	  if (object->dirties_image)
@@ -437,19 +440,26 @@ pop_stack (GimpImage  *gimage,
 		}
 	    }
 
-	  if (!in_group)
+	  if (! in_group)
 	    gimage->undo_levels += (state == UNDO) ? -1 : 1;
 	}
 
-      *unstack_ptr = g_slist_prepend (*unstack_ptr, (gpointer) object);
+      *unstack_ptr = g_slist_prepend (*unstack_ptr, object);
 
       tmp = stack;
       *stack_ptr = g_slist_next (*stack_ptr);
       tmp->next = NULL;
       g_slist_free (tmp);
 
-      if (status && !in_group)
+      if (status && ! in_group)
 	{
+#ifdef __GNUC__
+#warning FIXME: investigate why display update was done here
+#endif
+#if 0
+          GimpDisplay *gdisp;
+          gint         x, y;
+
 	  /*  Flush any image updates and displays  */
 	  gdisp = gimp_context_get_display (gimp_get_user_context (gimage->gimp));
 
@@ -488,8 +498,7 @@ pop_stack (GimpImage  *gimage,
 		    }
 		}
 	    }
-
-	  gdisplays_flush ();
+#endif
 
 	  /*  If the mode_changed flag was set  */
 	  if (mode_changed)
@@ -526,6 +535,8 @@ pop_stack (GimpImage  *gimage,
 	  /* let others know that we just popped an action */
 	  gimp_image_undo_event (gimage,
 				 (state == UNDO)? UNDO_POPPED : UNDO_REDO);
+
+	  gdisplays_flush ();
 
 	  return TRUE;
 	}

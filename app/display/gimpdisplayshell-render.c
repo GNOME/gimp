@@ -31,8 +31,8 @@
 #include "core/gimpimage.h"
 
 #include "gimpdisplay.h"
-#include "gimpdisplay-render.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-render.h"
 #include "gximage.h"
 
 #include "gimprc.h"
@@ -744,8 +744,8 @@ render_image_init_info (RenderInfo  *info,
 {
   info->gdisp      = gdisp;
   info->src_tiles  = gimp_image_projection (gdisp->gimage);
-  info->x          = x + gdisp->offset_x;
-  info->y          = y + gdisp->offset_y;
+  info->x          = x + GIMP_DISPLAY_SHELL (gdisp->shell)->offset_x;
+  info->y          = y + GIMP_DISPLAY_SHELL (gdisp->shell)->offset_y;
   info->w          = w;
   info->h          = h;
   info->scalex     = SCALEFACTOR_X (gdisp);

@@ -602,7 +602,7 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
   TransformUndo    *tu;
   PathUndo         *pundo;
   gboolean          new_layer;
-  gint              i, x, y;
+  gint              i;
 
   gimp_set_busy (gdisp->gimage->gimp);
 
@@ -683,11 +683,17 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
    */
   tool->preserve = FALSE;
 
+#ifdef __GNUC__
+#warning FIXME: investigate why display update was done here
+#endif
+#if 0
   /*  Flush the gdisplays  */
   if (gdisp->disp_xoffset || gdisp->disp_yoffset)
     {
-      x = shell->canvas->allocation.width;
-      y = shell->canvas->allocation.height;
+      gint x, y;
+
+      x = shell->disp_width;
+      y = shell->disp_height;
 
       if (gdisp->disp_yoffset)
 	{
@@ -710,6 +716,7 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
                                               gdisp->disp_width, gdisp->disp_height);
 	}
     }
+#endif
 
   gimp_unset_busy (gdisp->gimage->gimp);
 

@@ -34,9 +34,9 @@ app/core/gimppalette.c
 app/core/gimppattern.c
 app/core/gimpunit.c
 
-app/display/gimpdisplay-callbacks.c
 app/display/gimpdisplay.c
 app/display/gimpdisplayshell.c
+app/display/gimpdisplayshell-callbacks.c
 
 app/file/file-open.c
 app/file/file-save.c

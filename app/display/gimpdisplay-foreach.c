@@ -26,7 +26,6 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
-#include "gimpdisplay-scale.h"
 #include "gimpdisplayshell.h"
 
 #include "nav_window.h"
@@ -56,23 +55,6 @@ gdisplays_expose_guide (GimpImage *gimage,
       if (gdisp->gimage == gimage)
 	gimp_display_shell_expose_guide (GIMP_DISPLAY_SHELL (gdisp->shell),
                                          guide);
-    }
-}
-
-void
-gdisplays_shrink_wrap (GimpImage *gimage)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	gimp_display_shell_scale_shrink_wrap (GIMP_DISPLAY_SHELL (gdisp->shell));
     }
 }
 

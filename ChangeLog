@@ -1,3 +1,68 @@
+2001-11-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplay-callbacks.[ch]
+	* app/display/gimpdisplay-render.[ch]
+	* app/display/gimpdisplay-scale.[ch]
+	* app/display/gimpdisplay-scroll.[ch]: removed and added as
+	gimpdisplayshell-foo.[ch] because they are all methods of the
+	shell.
+
+	* app/display/gimpdisplay.[ch]
+	* app/display/gimpdisplayshell.[ch]: moved the "offset" and "size"
+	variables from GimpDisplay to GimpDisplayShell. GimpDisplay
+	should know nothing about screen coordinates.
+
+	The gdisplay_[un]transform_foo() methods are still part of
+	GimpDisplay but will be moved to GimpDisplayShell as soon as the
+	tools' vitrual functions speak in image coordinates instead of
+	GdkEvents.
+
+	* app/display/gimpdisplayshell-callbacks.[ch]: prefixed all
+	functions with gimp_display_shell_*. Moved some stuff to a
+	"realize" callback File still has to be renamed.
+
+	* app/display/gimpdisplay-foreach.[ch]: removed
+	gdisplays_shrink_wrap().
+
+	* app/gui/menus.c
+	* app/gui/view-commands.[ch]
+	* app/display/gimpdisplayshell-scale.[ch]: implemented "Zoom to
+	Fit Window" function (#57670).
+
+	* app/nav_window.c
+	* app/display/gimpdisplay-handlers.c
+	* app/display/gimpdisplayshell-render.[ch]
+	* app/display/gimpdisplayshell-scale.[ch]
+	* app/display/gimpdisplayshell-scroll.[ch]
+	* app/gui/colormap-dialog.c
+	* app/gui/gui.c
+	* app/gui/preferences-dialog.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmovetool.c
+	* app/widgets/gimppreview.c: changed according to variable
+	and filename changes.
+
+	* app/tools/tool_manager.c: tool_manager_select_tool(): send the
+	active tool a "HALT" command before selecting the new one. Fixes
+	stale tool dialogs which were there because some other hack was
+	removed (This is IMHO the right place to shut down the active
+	tool).
+
+	* app/tools/gimpcroptool.c: don't shrink wrap after cropping but
+	let gimprc.allow_resize_windows decide.
+
+	* app/tools/gimpselectiontool.c: gimage_mask_value() takes image,
+	not screen coordinates. A good example of how braindead it is to
+	pass GdkEvents to tools :-) Fixes incorrect cursor and oper
+	update of the selection tools.
+
+	* app/tools/gimptransformtool.c
+	* app/undo.c: removed (#if 0 for now) some strange code which did
+	manual exposing of GimpDisplayShell areas. This was definitely a
+	hack and should not be there given the image emits correct
+	"update" signals.
+
 2001-11-01 DindinX <odin@mandrakesoft.com>
 
 	* plug-ins/common/bz2.c: fix a little typo in a comment
@@ -13,7 +78,7 @@
 
 	GimpDisplayShell has all the widgets and handles painting and
 	exposing of the result. Nobody should actually be required to
-	update ot look at it as it should be a view on the GimpDisplay
+	update or look at it as it should be a view on the GimpDisplay
 	object.
 
 	Much stuff is still in the wrong place and the functions don't
@@ -27,7 +92,7 @@
 	functions.
 
 	* app/display/gimpdisplay-handlers.[ch]: new files: signal
-	handlers for GimpImage signals. Mostly from app/gui.c.
+	handlers for GimpImage signals. Mostly from gui/gui.c.
 
 	* app/display/gimpdisplay.[ch]: removed all widgets and other
 	GUI stuff. There is still much undecided here...

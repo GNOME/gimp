@@ -50,6 +50,14 @@ struct _GimpDisplayShell
 
   GtkItemFactory   *ifactory;
 
+  gint              offset_x;          /*  offset of display image into raw image  */
+  gint              offset_y;
+
+  gint              disp_width;        /*  width of drawing area   */
+  gint              disp_height;       /*  height of drawing area  */
+  gint              disp_xoffset;
+  gint              disp_yoffset;
+
   gboolean          proximity;         /* is a device in proximity           */
 
   GSList           *display_areas;     /*  display areas list  */

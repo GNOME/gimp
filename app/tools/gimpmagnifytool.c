@@ -28,8 +28,8 @@
 #include "tools-types.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-scale.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-scale.h"
 
 #include "gimpmagnifytool.h"
 #include "tool_options.h"
@@ -353,12 +353,13 @@ gimp_magnify_tool_button_release (GimpTool       *tool,
       y2 = y1 + h;
 
       /* these change the user zoom level, so should not be changed to
-       * the resolution-aware scale macros -- austin */
+       * the resolution-aware scale macros -- austin
+       */
       scalesrc  = SCALESRC (gdisp);
       scaledest = SCALEDEST (gdisp);
 
-      win_width  = gdisp->disp_width;
-      win_height = gdisp->disp_height;
+      win_width  = shell->disp_width;
+      win_height = shell->disp_height;
       width  = (win_width  * scalesrc) / scaledest;
       height = (win_height * scalesrc) / scaledest;
 
@@ -381,10 +382,10 @@ gimp_magnify_tool_button_release (GimpTool       *tool,
 
       gdisp->scale = (scaledest << 8) + scalesrc;
 
-      gdisp->offset_x = (scaledest * ((x1 + x2) / 2)) / scalesrc -
-	(win_width / 2);
-      gdisp->offset_y = (scaledest * ((y1 + y2) / 2)) / scalesrc -
-	(win_height / 2);
+      shell->offset_x = ((scaledest * ((x1 + x2) / 2)) / scalesrc -
+                         (win_width / 2));
+      shell->offset_y = ((scaledest * ((y1 + y2) / 2)) / scalesrc -
+                         (win_height / 2));
 
       /*  resize the image  */
       gimp_display_shell_scale_resize (shell, gimprc.allow_resize_windows, TRUE);

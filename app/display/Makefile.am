@@ -8,23 +8,23 @@ libappdisplay_a_SOURCES = @STRIP_BEGIN@ \
 	gimpdisplay.h			\
 	gimpdisplay-area.c		\
 	gimpdisplay-area.h		\
-	gimpdisplay-callbacks.c		\
-	gimpdisplay-callbacks.h		\
 	gimpdisplay-foreach.c		\
 	gimpdisplay-foreach.h		\
 	gimpdisplay-handlers.c		\
 	gimpdisplay-handlers.h		\
 	gimpdisplay-marching-ants.h	\
-	gimpdisplay-render.c		\
-	gimpdisplay-render.h		\
-	gimpdisplay-scale.c		\
-	gimpdisplay-scale.h		\
-	gimpdisplay-scroll.c		\
-	gimpdisplay-scroll.h		\
 	gimpdisplay-selection.c		\
 	gimpdisplay-selection.h		\
 	gimpdisplayshell.c		\
 	gimpdisplayshell.h		\
+	gimpdisplayshell-callbacks.c	\
+	gimpdisplayshell-callbacks.h	\
+	gimpdisplayshell-render.c	\
+	gimpdisplayshell-render.h	\
+	gimpdisplayshell-scale.c	\
+	gimpdisplayshell-scale.h	\
+	gimpdisplayshell-scroll.c	\
+	gimpdisplayshell-scroll.h	\
 	\
 	gximage.c			\
 	gximage.h			\

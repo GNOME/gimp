@@ -512,13 +512,18 @@ static GimpItemFactoryEntry image_entries[] =
   /*  <Image>/View  */
 
   { { N_("/View/Zoom In"), "equal",
-      view_zoomin_cmd_callback, 0,
+      view_zoom_in_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_IN },
     NULL,
     "view/zoom.html", NULL },
   { { N_("/View/Zoom Out"), "minus",
-      view_zoomout_cmd_callback, 0,
+      view_zoom_out_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_OUT },
+    NULL,
+    "view/zoom.html", NULL },
+  { { N_("/View/Zoom to Fit Window"), NULL,
+      view_zoom_fit_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_ZOOM_FIT },
     NULL,
     "view/zoom.html", NULL },
 

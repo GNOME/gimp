@@ -34,7 +34,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 
-#include "display/gimpdisplay-render.h"
+#include "display/gimpdisplayshell-render.h"
 
 #include "widgets/gimpdnd.h"
 

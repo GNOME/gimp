@@ -744,10 +744,10 @@ gimp_crop_tool_draw (GimpDrawTool *draw)
 
   gdk_draw_line (draw->win, draw->gc,
                  crop->x1, crop->y1, 
-                 tool->gdisp->disp_width, crop->y1);
+                 shell->disp_width, crop->y1);
   gdk_draw_line (draw->win, draw->gc,
 		 crop->x1, crop->y1,
-                 crop->x1, tool->gdisp->disp_height);
+                 crop->x1, shell->disp_height);
   gdk_draw_line (draw->win, draw->gc,
 		 crop->x2, crop->y2,
                  0, crop->y2);
@@ -793,10 +793,6 @@ crop_tool_crop_image (GimpImage *gimage,
 		   x1, y1, x2, y2,
 		   layer_only,
 		   crop_layers);
-
-  gdisplays_shrink_wrap (gimage);
-
-  gdisplays_flush ();
 }
 
 static void
