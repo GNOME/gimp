@@ -120,6 +120,9 @@ sub Gimp::RUN_FULLINTERACTIVE { &Gimp::RUN_INTERACTIVE+100 };	# you don't want t
 @EXPORT_OK = qw(interact $run_mode save_image);
 %EXPORT_TAGS = (params => [@_params]);
 
+# the old value of the trace flag
+my $old_trace;
+
 sub import {
    undef *{caller()."::main"};
    undef *{caller()."::gimp_main"};
@@ -755,7 +758,9 @@ sub register($$$$$$$$$;@) {
       
       print $function,"(",join(",",(@pre,@_)),")\n" if $Gimp::verbose;
       
+      Gimp::set_trace ($old_trace);
       my @imgs = &$code(@pre,@_);
+      $old_trace = Gimp::set_trace (0);
       
       if (@imgs) {
          for my $i (0..$#imgs) {
@@ -906,6 +911,7 @@ sub print_switches {
 EOF
       print_switches ($this);
    } else {
+      $old_trace = Gimp::set_trace (0);
       Gimp::main;
    }
 };

@@ -650,7 +650,6 @@ If anything goes wrong, you only get an execution failure. Switch on
 tracing to see which parameters are used to call pdb functions.
 
 This function is never exported, so you have to qualify it when calling.
-(not yet implemented for networked modules).
 
 tracemask is any number of the following flags or'ed together.
 
@@ -682,6 +681,8 @@ the parameter descriptions.
 all of the above.
 
 =back
+
+C<set_trace> returns the old tracemask.
 
 =item set_trace(\$tracevar)
 

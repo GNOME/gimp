@@ -24,12 +24,11 @@ important issues
   * zero-copy PDL support
   * gimp_init, gimp_deinit
   * duplicate HAVE_VPRINTF in gimp
-  * get rid of superflus image arguments
-  * put it into the cvs tree
+  * get rid of superfluous image arguments
+[DONE]  * put it into the cvs tree
   * weighted movement in drawing tools
   * -DMIN_PERL_DEFINE
   * PF_PALETTE (maybe not)
-[DONE]  * reset to defaults button
   * kill RUN_INTERACTIVE/run_mode-shit
   * --function localfunc to select one of the registered scripts
   * brush etc. buttons (maybe use gimp's interface, but
@@ -41,7 +40,6 @@ important issues
   * Untitled/0 Untitled/1 etc..
   * default parameters at end(!)
   * try to deduce default parameters
-[DONE]  * return values for run()
 
 long term issues and ideas
 

@@ -1,8 +1,11 @@
 use Test;
-use vars '$EXTENSIVE_TESTS';
+use vars qw($EXTENSIVE_TESTS $GIMPTOOL);
+
+# the most complicated thing is to set up a working gimp environment. its
+# difficult at best...
 
 BEGIN {
-  plan tests => 13;
+  plan tests => 17;
 }
 
 END {
@@ -20,8 +23,12 @@ $dir=cwd."/test-dir";
 do './config.pl';
 ok(1);
 
+ok (($plugins = `$GIMPTOOL -n --install-admin-bin /bin/sh`) =~ s{^.*\s(.*?)(?:/+bin/sh)\r?\n?$}{$1});
+ok(-d $plugins);
+ok(-x "$plugins/script-fu");
+
 $n=!$EXTENSIVE_TESTS;
-$n=1; # disable intensive testing for the moment
+#$n=1; # disable intensive testing for the moment
 
 use Gimp qw(:consts);
 $loaded = 1;
@@ -41,6 +48,7 @@ sub net {
 system("rm","-rf",$dir); #d#FIXME
 ok(sub {mkdir $dir,0700});
 ok(sub {symlink "../Perl-Server","$dir/Perl-Server"});
+ok(symlink "$plugins/script-fu","$dir/script-fu");
 
 ok (
   open RC,">$dir/gimprc" and

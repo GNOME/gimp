@@ -880,11 +880,13 @@ PROTOTYPES: ENABLE
 # set_trace (\$variable_to_trace_into);
 # set_trace (*STDOUT);
 #
-void
+I32
 set_trace (var)
 	CODE:
 	{
 		SV *sv = ST (0);
+		
+		RETVAL = trace;
 		
 		if (SvROK (sv) || SvTYPE (sv) == SVt_PVGV)
 		  {
@@ -905,6 +907,8 @@ set_trace (var)
 		else
 		  trace = SvIV (ST (0));
 	}
+	OUTPUT:
+	RETVAL
 
 SV *
 _autobless (sv,type)
@@ -1022,6 +1026,10 @@ gimp_call_procedure (proc_name, ...)
 		    &proc_copyright, &proc_date, &proc_type, &nparams, &nreturn_vals,
 		    &params, &return_vals) == TRUE)
 		  {
+		    int no_runmode = !nparams
+		                     || params[0].type != PARAM_INT32
+		                     || strcmp (params[0].name, "run_mode");
+		    
 		    g_free (proc_blurb);
 		    g_free (proc_help);
 		    g_free (proc_author);
@@ -1031,23 +1039,45 @@ gimp_call_procedure (proc_name, ...)
 		    if (nparams)
 		      args = (GParam *) g_new (GParam, nparams);
     		    
-    		    for (i = j = 0; i < nparams && j < items; i++)
+		    for(;items;)
 		      {
-		        args[i].type = params[i].type;
-		        if ((!SvROK (ST(j+1)) || i >= nparams-1 || !is_array (params[i+1].type))
-		            && convert_sv2gimp (croak_str, &args[i], ST(j+1)))
-		          j++;
+		        j = 0;
 		        
-		        if (croak_str [0])
-		          {
-		            if (trace & TRACE_CALL)
-		              {
-		                dump_params (i, args, params);
-		                trace_printf (" = [argument error]\n");
-		              }
-		            
-		            goto error;
-		          }
+		        if (no_runmode || !SvROK (ST(1)))
+    		          for (i = 0; i < nparams && j < items; i++)
+		            {
+		              args[i].type = params[i].type;
+		              if (!i && no_runmode == 2)
+		                args->data.d_int32 = RUN_NONINTERACTIVE;
+		              else if ((!SvROK (ST(j+1)) || i >= nparams-1 || !is_array (params[i+1].type))
+		                  && convert_sv2gimp (croak_str, &args[i], ST(j+1)))
+		                j++;
+		          
+		              if (croak_str [0])
+		                {
+		                  if (!no_runmode)
+		                    {
+		                      croak_str [0]=0;
+		                      break;
+		                    }
+		                  
+		                  if (trace & TRACE_CALL)
+		                    {
+		                      dump_params (i, args, params);
+		                      trace_printf (" = [argument error]\n");
+		                    }
+		              
+		                  goto error;
+		                }
+		            }
+		          
+		        if (no_runmode || j >= items-1)
+		          break;
+		        
+		        /* very costly, do better! */
+		        no_runmode = 2;
+		        destroy_params (args, nparams);
+		        args = (GParam *) g_new (GParam, nparams);
 		      }
 		    
 		    if (trace & TRACE_CALL)

@@ -1,6 +1,6 @@
 Revision history for Gimp-Perl extension.
 
-1.044
+1.044 Sat Oct 24 03:54:47 CEST 1998
 	- allow PF_PATTERN etc. to be usable as commandline arguments
 	- added parasite support -> untested so far
 	- Gimp::Fu wasn't calling Gtk->init anymore
@@ -10,6 +10,9 @@ Revision history for Gimp-Perl extension.
 	- many, many configuration changes and hacks
 	- this is now part of the gimp cvs tree
 	- changed LIBS by LDLOADLIBS... hacky, but works
+	- Gimp::Fu will no longer be traced
+	- a run_mode argument at the beginning can now generally be left out
+	- re-enabled the testsuite
 
 1.0431 Thu Oct  8 20:01:32 CEST 1998
 	- compile fix for gimp-1.0

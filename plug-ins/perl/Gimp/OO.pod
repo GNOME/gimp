@@ -63,6 +63,14 @@ confusing as well. In cases like this, Gimp allows you to write:
 
 And automatically infers the additional IMAGE-type argument.
 
+As the (currently) last goodie, if the first argument is of type INT32, its
+name is "run_mode" and there are no other ambiguties, you can omit it, i.e.
+these three calls are equivalent:
+
+ plug_in_gauss_rle (RUN_NONINTERACTIVE, $image, $layer, 8, 1, 1);
+ plug_in_gauss_rle ($image, $layer, 8, 1, 1);
+ plug_in_gauss_rle ($layer, 8, 1, 1);
+
 You can call all sorts of sensible and not-so-sensible functions,
 so this feature can be abused:
 
