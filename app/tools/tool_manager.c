@@ -41,6 +41,11 @@
 #include "tool_options.h"
 #include "tool_options_dialog.h"
 
+#include "gimppaintbrushtool.h"
+#include "gimpdodgeburntool.h"
+#include "gimperasertool.h"
+#include "gimppenciltool.h"
+
 #include "libgimp/gimpintl.h"
 
 
@@ -340,16 +345,52 @@ tool_manager_get_info_by_tool (GimpTool *tool)
 const gchar *
 tool_manager_active_get_PDB_string (void)
 {
-  const gchar *toolStr = "gimp_paintbrush_default";
+  GimpToolInfo *tool_info;
+  const gchar  *tool_str = "gimp_paintbrush_default";
 
   /*  Return the correct PDB function for the active tool
-   *  The default is paintbrush if the tool is not recognised
+   *  The default is paintbrush if the tool is not recognized
    */
 
   if (! active_tool)
-    return toolStr;
+    return tool_str;
 
-  return gimp_tool_get_PDB_string (active_tool);
+  tool_info = gimp_context_get_tool (gimp_context_get_user ());
+
+  if (tool_info->tool_type == GIMP_TYPE_PENCIL_TOOL)
+    {
+      tool_str = "gimp_pencil";
+    }
+  else if (tool_info->tool_type == GIMP_TYPE_PAINTBRUSH_TOOL)
+    {
+      tool_str = "gimp_paintbrush_default";
+    }
+  else if (tool_info->tool_type == GIMP_TYPE_ERASER_TOOL)
+    {
+      tool_str = "gimp_eraser_default";
+    }
+  else if (tool_info->tool_type == GIMP_TYPE_AIRBRUSH_TOOL)
+    {
+      tool_str = "gimp_airbrush_default";
+    }
+  else if (tool_info->tool_type == GIMP_TYPE_CLONE_TOOL)
+    {
+      tool_str = "gimp_clone_default";
+    }
+  else if (tool_info->tool_type == GIMP_TYPE_CONVOLVE_TOOL)
+    {
+      tool_str = "gimp_convolve_default";
+    }
+  else if (tool_info->tool_type == GIMP_TYPE_SMUDGE_TOOL)
+    {
+      tool_str = "gimp_smudge_default";
+    }
+  else if (tool_info->tool_type == GIMP_TYPE_DODGEBURN_TOOL)
+    {
+      tool_str = "gimp_dodgeburn_default";
+    }
+  
+  return tool_str;
 }
 
 const gchar *

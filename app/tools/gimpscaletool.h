@@ -20,7 +20,7 @@
 #define __GIMP_SCALE_TOOL_H__
 
 
-#include "tools/gimptransformtool.h"
+#include "gimptransformtool.h"
 
 
 #define GIMP_TYPE_SCALE_TOOL            (gimp_scale_tool_get_type ())
@@ -43,6 +43,9 @@ struct _GimpScaleToolClass
 };
 
 
+void          gimp_scale_tool_register (void);
+GtkType       gimp_scale_tool_get_type (void);
+
 TileManager * gimp_scale_tool_scale    (GimpImage    *gimage,
 					GimpDrawable *drawable,
 					GDisplay     *gdisp,
@@ -50,9 +53,6 @@ TileManager * gimp_scale_tool_scale    (GimpImage    *gimage,
 					TileManager  *float_tiles,
 					gboolean      interpolation,
 					GimpMatrix3   matrix);
-
-void          gimp_scale_tool_register (void);
-GtkType       gimp_scale_tool_get_type (void);
 
 
 #endif  /*  __GIMP_SCALE_TOOL_H__  */

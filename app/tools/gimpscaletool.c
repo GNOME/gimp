@@ -88,7 +88,7 @@ gimp_scale_tool_register (void)
                               "gimp:scale_tool",
                               _("Scale Tool"),
                               _("Scale the layer or selection"),
-                              N_("/Tools/Color Picker"), "<shift>T",
+                              N_("/Tools/Transform Tools/Transform"), "<shift>T",
                               NULL, "tools/transform.html",
                               (const gchar **) scale_bits);
 }

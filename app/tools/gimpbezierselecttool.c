@@ -272,11 +272,12 @@ static void bezier_start_new_segment (GimpBezierSelectTool *bezier_sel,
 void       
 gimp_bezier_select_tool_register (void)
 {
-  tool_manager_register_tool (GIMP_TYPE_BEZIER_SELECT_TOOL, FALSE,
+  tool_manager_register_tool (GIMP_TYPE_BEZIER_SELECT_TOOL,
+			      FALSE,
                               "gimp:bezier_select_tool",
                               _("Bezier Select"),
                               _("Select regions using Bezier curves"),
-                              _("/Tools/Selection Tools/Bezier Select"), "R",
+                              _("/Tools/Select Tools/Bezier Select"), "B",
                               NULL, "tools/bezier_select.html",
                               (const gchar **) bezier_bits);
 }
@@ -374,10 +375,10 @@ gimp_bezier_select_tool_init (GimpBezierSelectTool *bezier_select)
 
   tool->tool_cursor = GIMP_BEZIER_SELECT_TOOL_CURSOR;
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+
   bezier_select_reset (bezier_select);
 
   paths_new_bezier_select_tool ();
-
 }
 
 static void
@@ -387,21 +388,19 @@ gimp_bezier_select_tool_destroy (GtkObject *object)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
-
-
 static void
 gimp_bezier_select_tool_button_press (GimpTool       *tool,
-			    GdkEventButton *bevent,
-			    GDisplay       *gdisp)
+				      GdkEventButton *bevent,
+				      GDisplay       *gdisp)
 {
-  GimpBezierSelectTool *bezier_sel;
-  GimpBezierSelectPoint  *points;
-  GimpBezierSelectPoint  *start_pt;
-  GimpBezierSelectPoint  *curve_start;
-  gboolean      grab_pointer;
-  gint          op;
-  gint          x, y;
-  gint          halfwidth, dummy;
+  GimpBezierSelectTool  *bezier_sel;
+  GimpBezierSelectPoint *points;
+  GimpBezierSelectPoint *start_pt;
+  GimpBezierSelectPoint *curve_start;
+  gboolean               grab_pointer;
+  gint                   op;
+  gint                   x, y;
+  gint                   halfwidth, dummy;
 
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 

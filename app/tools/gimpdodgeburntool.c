@@ -76,16 +76,26 @@ struct _DodgeBurnOptions
 };
 
 
-static void     gimp_dodgeburn_tool_paint (GimpPaintTool     *paint_tool,
-				           GimpDrawable  *drawable,
-					   PaintState     state);
+static void     gimp_dodgeburn_tool_class_init (GimpDodgeBurnToolClass *klass);
+static void     gimp_dodgeburn_tool_init       (GimpDodgeBurnTool      *dodgeburn);
 
-static void     gimp_dodgeburn_tool_make_luts  (GimpPaintTool     *paint_tool,
-					       gdouble        db_exposure,
-					       DodgeBurnType  type,
-					       DodgeBurnMode  mode,
-					       GimpLut       *lut,
-					       GimpDrawable  *drawable);
+static void     gimp_dodgeburn_tool_make_luts     (GimpPaintTool  *paint_tool,
+						   gdouble         db_exposure,
+						   DodgeBurnType   type,
+						   DodgeBurnMode   mode,
+						   GimpLut        *lut,
+						   GimpDrawable   *drawable);
+
+static void     gimp_dodgeburn_tool_modifier_key  (GimpTool       *tool,
+						   GdkEventKey    *kevent,
+						   GDisplay       *gdisp);
+static void     gimp_dodgeburn_tool_cursor_update (GimpTool       *tool,
+						   GdkEventMotion *mevent,
+						   GDisplay       *gdisp);
+
+static void     gimp_dodgeburn_tool_paint         (GimpPaintTool  *paint_tool,
+						   GimpDrawable   *drawable,
+						   PaintState      state);
 
 static gfloat   gimp_dodgeburn_tool_highlights_lut_func (gpointer       user_data,
 					                 gint           nchannels,
@@ -100,18 +110,19 @@ static gfloat   gimp_dodgeburn_tool_shadows_lut_func    (gpointer       user_dat
 					                 gint           channel,
 					                 gfloat         value);
 
-static void     gimp_dodgeburn_tool_motion     (GimpPaintTool     *paint_tool,
-					       PaintPressureOptions *pressure_options,
-					       gdouble        dodgeburn_exposure,
-					       GimpLut       *lut,
-					       GimpDrawable  *drawable);
-static void 	gimp_dodgeburn_tool_init       (GimpDodgeBurnTool     *tool);
-static void     gimp_dodgeburn_tool_finish     (GimpPaintTool     *paint_tool,
-					        GimpDrawable      *drawable);
+static void     gimp_dodgeburn_tool_motion     (GimpPaintTool        *paint_tool,
+						PaintPressureOptions *pressure_options,
+						gdouble               dodgeburn_exposure,
+						GimpLut              *lut,
+						GimpDrawable         *drawable);
+static void 	gimp_dodgeburn_tool_init       (GimpDodgeBurnTool    *tool);
+static void     gimp_dodgeburn_tool_finish     (GimpPaintTool        *paint_tool,
+					        GimpDrawable         *drawable);
 
 
 /*  the dodgeburn tool options  */
 static DodgeBurnOptions * dodgeburn_options = NULL;
+
 static GimpPaintToolClass *parent_class = NULL;
 
 /* Non gui function */
@@ -122,6 +133,45 @@ static GimpPaintToolClass *parent_class = NULL;
  */
 
 /* functions  */
+
+void
+gimp_dodgeburn_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_DODGEBURN_TOOL,
+                              TRUE,
+			      "gimp:dodgeburn_tool",
+			      _("Dodge/Burn"),
+			      _("Dodge or Burn strokes"),
+			      N_("/Tools/Paint Tools/DodgeBurn"), "<shift>D",
+			      NULL, "tools/dodgeburn.html",
+			      (const gchar **) dodge_bits);
+}
+
+GtkType
+gimp_dodgeburn_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (!tool_type)
+    {
+      GtkTypeInfo tool_info =
+	{
+	  "GimpDodgeBurnTool",
+	  sizeof(GimpDodgeBurnTool),
+	  sizeof(GimpDodgeBurnToolClass),
+	  (GtkClassInitFunc) gimp_dodgeburn_tool_class_init,
+	  (GtkObjectInitFunc) gimp_dodgeburn_tool_init,
+	  /* reserved_1 */ NULL,
+	  /* reserved_2 */ NULL,
+	  NULL
+	};
+
+      tool_type = gtk_type_unique (GIMP_TYPE_PAINT_TOOL, &tool_info);
+      
+    }
+
+  return tool_type;
+}
 
 static void
 gimp_dodgeburn_tool_options_reset (void)
@@ -150,7 +200,7 @@ gimp_dodgeburn_tool_options_new (void)
   GtkWidget *frame;
 
   /*  the new dodgeburn tool options structure  */
-  options = g_new (DodgeBurnOptions, 1);
+  options = g_new0 (DodgeBurnOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      GIMP_TYPE_DODGEBURN_TOOL,
 		      gimp_dodgeburn_tool_options_reset);
@@ -229,15 +279,14 @@ gimp_dodgeburn_tool_paint (GimpPaintTool    *paint_tool,
   switch (state)
     {
     case INIT_PAINT:
- /*      gimp_dodgeburn_tool_init (paint_tool); */
-  	dodgeburn_options->lut = gimp_lut_new ();
-        gimp_dodgeburn_tool_make_luts (paint_tool,
-                                       dodgeburn_options->exposure,
-                                       dodgeburn_options->type,
-                                       dodgeburn_options->mode,
-                                       dodgeburn_options->lut,
-                                       drawable);
-	
+      /*      gimp_dodgeburn_tool_init (paint_tool); */
+      dodgeburn_options->lut = gimp_lut_new ();
+      gimp_dodgeburn_tool_make_luts (paint_tool,
+				     dodgeburn_options->exposure,
+				     dodgeburn_options->type,
+				     dodgeburn_options->mode,
+				     dodgeburn_options->lut,
+				     drawable);
       break;
 
     case MOTION_PAINT:
@@ -257,35 +306,36 @@ gimp_dodgeburn_tool_paint (GimpPaintTool    *paint_tool,
 }
 
 static void
-gimp_dodgeburn_tool_finish (GimpPaintTool    *paint_tool,
-		  GimpDrawable *drawable)
+gimp_dodgeburn_tool_finish (GimpPaintTool *paint_tool,
+			    GimpDrawable  *drawable)
 {
   /* Here we destroy the luts to do the painting with.*/
   if (dodgeburn_options->lut)
-  {
-    gimp_lut_free (dodgeburn_options->lut);
-    dodgeburn_options->lut = NULL;
-  }
+    {
+      gimp_lut_free (dodgeburn_options->lut);
+      dodgeburn_options->lut = NULL;
+    }
 }
 
 static void
 gimp_dodgeburn_tool_class_init (GimpDodgeBurnToolClass *klass)
 {
-  GimpToolClass	 	*tool_class;
-  GimpPaintToolClass	*paint_tool_class;
+  GimpToolClass	     *tool_class;
+  GimpPaintToolClass *paint_tool_class;
 
-  tool_class	   =(GimpToolClass *) klass;
-  paint_tool_class =(GimpPaintToolClass *) klass;
+  tool_class	   = (GimpToolClass *) klass;
+  paint_tool_class = (GimpPaintToolClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_PAINT_TOOL);
-  
-  paint_tool_class->paint = gimp_dodgeburn_tool_paint;
 
+  tool_class->modifier_key  = gimp_dodgeburn_tool_modifier_key;
+  tool_class->cursor_update = gimp_dodgeburn_tool_cursor_update;
+
+  paint_tool_class->paint   = gimp_dodgeburn_tool_paint;
 }
 
-
 static void
-gimp_dodgeburn_tool_init (GimpDodgeBurnTool    *dodgeburn)
+gimp_dodgeburn_tool_init (GimpDodgeBurnTool *dodgeburn)
 {
   GimpTool	*tool;
   GimpPaintTool *paint_tool;
@@ -295,10 +345,8 @@ gimp_dodgeburn_tool_init (GimpDodgeBurnTool    *dodgeburn)
   
   if (! dodgeburn_options)
     {
-      dodgeburn_options = gimp_dodgeburn_tool_options_new();
-      
-      GIMP_TYPE_DODGEBURN_TOOL;
-      
+      dodgeburn_options = gimp_dodgeburn_tool_options_new ();
+
       tool_manager_register_tool_options (GIMP_TYPE_DODGEBURN_TOOL, 
 	                                  (ToolOptions *) dodgeburn_options);
     }
@@ -314,9 +362,10 @@ gimp_dodgeburn_tool_init (GimpDodgeBurnTool    *dodgeburn)
 		        	 dodgeburn_options->lut,
 		         	 drawable);
    */
-  
-  tool->tool_cursor = GIMP_DODGE_TOOL_CURSOR;
-  
+
+  tool->tool_cursor   = GIMP_DODGE_TOOL_CURSOR;
+  tool->toggle_cursor = GIMP_BURN_TOOL_CURSOR;
+
   paint_tool->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 }
 
@@ -358,17 +407,18 @@ gimp_dodgeburn_tool_make_luts (GimpPaintTool *paint_tool,
 			lut_func, (gpointer) &exposure,
 			nchannels);
 }
-		     
+
 static void
-dodgeburn_modifier_key_func (GimpTool    *tool,
-			     GdkEventKey *kevent,
-			     GDisplay    *gdisp)
+gimp_dodgeburn_tool_modifier_key (GimpTool    *tool,
+				  GdkEventKey *kevent,
+				  GDisplay    *gdisp)
 {
   switch (kevent->keyval)
     {
     case GDK_Alt_L: 
     case GDK_Alt_R:
       break;
+
     case GDK_Shift_L: 
     case GDK_Shift_R:
       if (kevent->state & GDK_CONTROL_MASK)    /* reset tool toggle */
@@ -388,7 +438,8 @@ dodgeburn_modifier_key_func (GimpTool    *tool,
 	    }
 	}
       break;
-    case GDK_Control_L: 
+
+    case GDK_Control_L:
     case GDK_Control_R:
       if (! (kevent->state & GDK_SHIFT_MASK)) /* shift enables line draw mode */
 	{
@@ -413,19 +464,18 @@ dodgeburn_modifier_key_func (GimpTool    *tool,
 }
 
 static void
-dodgeburn_cursor_update_func (GimpTool       *tool,
-			      GdkEventMotion *mevent,
-			      GDisplay       *gdisp)
+gimp_dodgeburn_tool_cursor_update (GimpTool       *tool,
+				   GdkEventMotion *mevent,
+				   GDisplay       *gdisp)
 {
   tool->toggled = (dodgeburn_options->type == BURN);
 
-/* FIXME: come up with a way to change cursor */
-/*  gimp_paint_tool_cursor_update (tool, mevent, gdisp); */
-  
+  if (GIMP_TOOL_CLASS (parent_class)->cursor_update)
+    GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, mevent, gdisp);
 }
 
 static void
-gimp_dodgeburn_tool_motion (GimpPaintTool            *paint_tool,
+gimp_dodgeburn_tool_motion (GimpPaintTool        *paint_tool,
  		            PaintPressureOptions *pressure_options,
 		            double                dodgeburn_exposure,
 		            GimpLut              *lut,
@@ -456,9 +506,9 @@ gimp_dodgeburn_tool_motion (GimpPaintTool            *paint_tool,
   if (! (area = gimp_paint_tool_get_paint_area (paint_tool, drawable, scale)))
     return;
 
-  /* Constant painting --get a copy of the orig drawable (with
-     no paint from this stroke yet) */
-
+  /* Constant painting --get a copy of the orig drawable (with no
+   * paint from this stroke yet)
+   */
   {
     gint x1, y1, x2, y2;
 
@@ -528,16 +578,15 @@ gimp_dodgeburn_tool_motion (GimpPaintTool            *paint_tool,
 #if 0
 
 static gpointer
-  gimp_dodgeburn_tool_non_gui_paint (GimpPaintTool    *paint_tool,
+gimp_dodgeburn_tool_non_gui_paint (GimpPaintTool    *paint_tool,
             		           GimpDrawable     *drawable,
  			           PaintState        state)
-  {
-   gimp_dodgeburn_tool_motion (paint_tool, &non_gui_pressure_options,
+{
+  gimp_dodgeburn_tool_motion (paint_tool, &non_gui_pressure_options,
   		              non_gui_exposure, non_gui_lut, drawable);
-  
-   return NULL;
-  }
- 
+
+  return NULL;
+}
 
 gboolean
 gimp_dodgeburn_tool_non_gui_default (GimpDrawable *drawable,
@@ -629,15 +678,15 @@ gimp_dodgeburn_tool_highlights_lut_func (gpointer  user_data,
 			                 gint      channel, 
 			                 gfloat    value)
 {
-   gfloat *exposure_ptr = (gfloat *) user_data;
-   gfloat  exposure     = *exposure_ptr;
-   gfloat  factor       = 1.0 + exposure * (.333333);
+  gfloat *exposure_ptr = (gfloat *) user_data;
+  gfloat  exposure     = *exposure_ptr;
+  gfloat  factor       = 1.0 + exposure * (.333333);
 
   if ((nchannels == 2 && channel == 1) ||
       (nchannels == 4 && channel == 3))
     return value;
 
-   return factor * value;
+  return factor * value;
 }
 
 static gfloat 
@@ -646,20 +695,20 @@ gimp_dodgeburn_tool_midtones_lut_func (gpointer  user_data,
 			               gint      channel, 
 			               gfloat    value)
 {
-   gfloat *exposure_ptr = (gfloat *) user_data;
-   gfloat  exposure     = *exposure_ptr;
-   gfloat  factor;
+  gfloat *exposure_ptr = (gfloat *) user_data;
+  gfloat  exposure     = *exposure_ptr;
+  gfloat  factor;
 
   if ((nchannels == 2 && channel == 1) ||
       (nchannels == 4 && channel == 3))
     return value;
 
-   if (exposure < 0)
-     factor = 1.0 - exposure * (.333333);
-   else
-     factor = 1/(1.0 + exposure);
+  if (exposure < 0)
+    factor = 1.0 - exposure * (.333333);
+  else
+    factor = 1/(1.0 + exposure);
 
-   return pow (value, factor); 
+  return pow (value, factor); 
 }
 
 static gfloat 
@@ -673,8 +722,8 @@ gimp_dodgeburn_tool_shadows_lut_func (gpointer  user_data,
   gfloat  new_value;
   gfloat  factor;
 
-  if ( (nchannels == 2 && channel == 1) ||
-	(nchannels == 4 && channel == 3))
+  if ((nchannels == 2 && channel == 1) ||
+      (nchannels == 4 && channel == 3))
     return value;
 
   if (exposure >= 0)
@@ -694,65 +743,27 @@ gimp_dodgeburn_tool_shadows_lut_func (gpointer  user_data,
   return new_value; 
 }
 
-void
-gimp_dodgeburn_tool_register (void)
-{
-  tool_manager_register_tool (GIMP_TYPE_DODGEBURN_TOOL,
-                              TRUE,
-			      "gimp:dodgeburn_tool",
-			      _("Dodge/Burn"),
-			      _("Dodge or Burn strokes"),
-			      N_("/Tools/Paint Tools/DodgeBurn"),
-			      "<shift>O",
-			      NULL,
-			      "tools/dodgeburn.html",
-			      (const gchar **) dodge_bits);
-}
-
-GtkType
-gimp_dodgeburn_tool_get_type (void)
-{
-  static GtkType tool_type = 0;
-
-  if (!tool_type)
-    {
-      GtkTypeInfo tool_info =
-	{
-	  "GimpDodgeBurnTool",
-	  sizeof(GimpDodgeBurnTool),
-	  sizeof(GimpDodgeBurnToolClass),
-	  (GtkClassInitFunc) gimp_dodgeburn_tool_class_init,
-	  (GtkObjectInitFunc) gimp_dodgeburn_tool_init,
-	  /* reserved_1 */ NULL,
-	  /* reserved_2 */ NULL,
-	  NULL
-	};
-
-      tool_type = gtk_type_unique (GIMP_TYPE_PAINT_TOOL, &tool_info);
-      
-    }
-  return tool_type;
-}
-
 /* FIXME: do someting usefule here */
 
-gboolean dodgeburn_non_gui (GimpDrawable  *drawable,
-                            gdouble        exposure,
-		            DodgeBurnType  type, 
-		            DodgeBurnMode  mode, 
-	        	    gint           num_strokes, 
-			    gdouble       *stroke_array)
+gboolean
+dodgeburn_non_gui (GimpDrawable  *drawable,
+		   gdouble        exposure,
+		   DodgeBurnType  type, 
+		   DodgeBurnMode  mode, 
+		   gint           num_strokes, 
+		   gdouble       *stroke_array)
 {
-    g_message ("gimp_dodgeburn_tool_non_gui not implemented yet\n");
+  g_message ("gimp_dodgeburn_tool_non_gui not implemented yet\n");
 
-    return FALSE;
+  return FALSE;
 }
 
-gboolean dodgeburn_non_gui_default (GimpDrawable  *drawable,
-				    gint           num_strokes, 
-				    gdouble       *stroke_array)
+gboolean
+dodgeburn_non_gui_default (GimpDrawable  *drawable,
+			   gint           num_strokes, 
+			   gdouble       *stroke_array)
 {
-    g_message ("gimp_dodgeburn_tool_non_gui not implemented yet\n");
+  g_message ("gimp_dodgeburn_tool_non_gui not implemented yet\n");
 
-    return FALSE;
+  return FALSE;
 }

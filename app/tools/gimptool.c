@@ -501,21 +501,16 @@ STUB(threshold_dialog_hide)
 STUB(levels_dialog_hide)
 STUB(curves_dialog_hide)
 STUB(posterize_dialog_hide)
-STUB(move_tool_start_hguide)
-STUB(move_tool_start_vguide)
 STUB(by_color_select_initialize_by_image)
 STUB(undo_pop_paint)
 STUB(histogram_tool_histogram_range)
-STUB(transform_core_cut)
 STUB(flip_tool_flip)
-STUB(transform_core_paste)
 STUB(perspective_find_transform)
 STUB(perspective_tool_perspective)
 STUB(rotate_tool_rotate)
 STUB(shear_tool_shear)
 STUB(smudge_non_gui)
 STUB(smudge_non_gui_default)
-STUB(transform_core_do)
 STUB(airbrush_non_gui)
 STUB(airbrush_non_gui_default)
 STUB(by_color_select)
@@ -532,32 +527,25 @@ ToolInfo tool_info[] =
 {
   {
     NULL,
-    N_("Bezier Select"),
-    N_("/Tools/Select Tools/Bezier Select"),
-    "B",
-    (char **) bezier_bits,
+    N_("Transform"),
+    N_("/Tools/Transform Tools/Transform"),
+    "<shift>T",
+    (char **) scale_bits,
     NULL,
     NULL,
-    N_("Select regions using Bezier curves"),
-    "tools/bezier_select.html",
-    BEZIER_SELECT,
-    tools_new_bezier_select,
-    tools_free_bezier_select,
+    N_("Rotation, scaling, shearing, perspective."),
+    "tools/transform.html",
+    ROTATE,
+    tools_new_transform_tool,
+    tools_free_transform_tool,
     NULL,
     NULL,
     NULL,
     {
-      bezier_select_small_bits, bezier_select_small_mask_bits,
-      bezier_select_small_width, bezier_select_small_height,
+      rotate_small_bits, rotate_small_mask_bits,
+      rotate_small_width, rotate_small_height,
       0, 0, NULL, NULL, NULL
     },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
     {
       NULL, NULL,
       0, 0,
@@ -901,34 +889,6 @@ ToolInfo tool_info[] =
     }
   },
 
-  {
-    NULL,
-    N_("Dodge or Burn"),
-    N_("/Tools/Paint Tools/DodgeBurn"),
-    "<shift>D",
-    (char **) dodge_bits,
-    NULL,
-    NULL,
-    N_("Dodge or Burn"),
-    "tools/dodgeburn.html",
-    DODGEBURN,
-    tools_new_dodgeburn,
-    tools_free_dodgeburn,
-    NULL,
-    NULL,
-    NULL,
-    {
-      dodge_small_bits, dodge_small_mask_bits,
-      dodge_small_width, dodge_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      burn_small_bits, burn_small_mask_bits,
-      burn_small_width, burn_small_height,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
 /*
   {
     NULL,
@@ -958,34 +918,6 @@ ToolInfo tool_info[] =
     }
   },
 */
-
-  {
-    NULL,
-    N_("Measure"),
-    N_("/Tools/Measure"),
-    "",
-     (char **) measure_bits,
-    NULL,
-    NULL,
-    N_("Measure distances and angles"),
-    "tools/measure.html",
-    MEASURE,
-    tools_new_measure_tool,
-    tools_free_measure_tool,
-    NULL,
-    NULL,
-    NULL,
-    {
-      measure_small_bits, measure_small_mask_bits,
-      measure_small_width, measure_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
 
 /*
   {
@@ -1273,4 +1205,3 @@ ToolInfo tool_info[] =
 
 gint num_tools = sizeof (tool_info) / sizeof (tool_info[0]);
 #endif
-

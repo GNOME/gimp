@@ -74,8 +74,6 @@ libapptools_la_SOURCES = \
 	gimptexttool.h		\
 	gimptool.c		\
 	gimptool.h		\
-	gimptoolinfo.c		\
-	gimptoolinfo.h		\
 	gimptransformtool.c	\
 	gimptransformtool.h	\
 	\
@@ -88,6 +86,8 @@ libapptools_la_SOURCES = \
 	tool_options_dialog.c	\
 	tool_options_dialog.h	\
 	\
+	gimptoolinfo.c		\
+	gimptoolinfo.h		\
 	tool_manager.c		\
 	tool_manager.h		\
 	tools.c
@@ -107,11 +107,7 @@ libapptools_la_SOURCES = \
 ##	posterize.c		\
 ##	posterize.h		\
 ##	threshold.c		\
-##	threshold.h		\
-##	transform_core.c	\
-##	transform_core.h	\
-##	transform_tool.c	\
-##	transform_tool.h
+##	threshold.h
 
 
 AM_CPPFLAGS = \

@@ -1,5 +1,26 @@
 2001-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/bezier_select.[ch]
+	* app/tools/bezier_selectP.h
+	* app/tools/transform_core.[ch]
+	* app/tools/transform_tool.[ch]: removed.
+
+	* app/tools/Makefile.am
+	* po/POTFILES.in: changed accordingly.
+
+	* app/tools/gimpbezierselecttool.c: indentation fixes.
+
+	* app/tools/gimpdodgeburntool.[ch]: made cursor toggling work
+	again, cleanup.
+
+	* app/tools/gimpscaletool.[ch]
+	* app/tools/gimptool.c: minor cleanups like removing STUB()s.
+
+	* app/tools/tool_manager.c: applied patch from Dave Neary which
+	returns useful PDB strings for the paint tools again.
+
+2001-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/undo.c: re-enabled transform undo. Fixes the transform tool
 	crashes.
 
