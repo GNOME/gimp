@@ -1,0 +1,1054 @@
+#!/usr/bin/perl -w
+
+use Gtk;
+use Gtk::Atoms;
+use Gimp qw(:auto);
+
+use strict 'vars';
+
+# Gimp::set_trace(TRACE_ALL);
+
+###
+# Globals
+###
+my ($direction, $cancelFlag);
+my ($plugin) = "plug_in_AlphaFade";
+
+# XPM's that I removed the $ and the @'s from (they get intrepreted in 
+# strings, which makes for nasty problems).
+my @arr = (
+["24 24 66 1",
+" 	c None",
+".	c #A0A0A0",
+"+	c #A2A2A2",
+"X	c #787878",
+"#	c #7B7B7B",
+"Z	c #A8A8A8",
+"%	c #AAAAAA",
+"&	c #848484",
+"*	c #868686",
+"=	c #B0B0B0",
+"-	c #B2B2B2",
+";	c #8F8F8F",
+">	c #929292",
+",	c #B8B8B8",
+"'	c #BABABA",
+")	c #9B9B9B",
+"!	c #9E9E9E",
+"~	c #C0C0C0",
+"{	c #C2C2C2",
+"]	c #A7A7A7",
+"^	c #C7C7C7",
+"/	c #C9C9C9",
+"(	c #B3B3B3",
+"_	c #B5B5B5",
+":	c #A4A4A4",
+"<	c #7E7E7E",
+"[	c #ACACAC",
+"}	c #898989",
+"|	c #B4B4B4",
+"1	c #959595",
+"2	c #BCBCBC",
+"3	c #A1A1A1",
+"4	c #C3C3C3",
+"5	c #ADADAD",
+"6	c #CCCCCC",
+"7	c #CFCFCF",
+"8	c #D2D2D2",
+"9	c #D3D3D3",
+"0	c #BEBEBE",
+"a	c #C1C1C1",
+"b	c #C4C4C4",
+"c	c #D8D8D8",
+"d	c #D9D9D9",
+"e	c #DBDBDB",
+"f	c #CACACA",
+"g	c #CDCDCD",
+"h	c #D0D0D0",
+"i	c #DFDFDF",
+"j	c #E1E1E1",
+"k	c #E3E3E3",
+"l	c #D6D6D6",
+"m	c #DCDCDC",
+"n	c #E7E7E7",
+"o	c #E9E9E9",
+"p	c #EBEBEB",
+"q	c #E2E2E2",
+"r	c #E4E4E4",
+"s	c #EFEFEF",
+"t	c #F1F1F1",
+"u	c #F3F3F3",
+"v	c #EDEDED",
+"w	c #F0F0F0",
+"x	c #F7F7F7",
+"y	c #F9F9F9",
+"z	c #FBFBFB",
+"W      c #000000",
+"WWWWWWWWWWWWWWWWWWWWWWWW",
+"W:#<%[*}-|>1'2!3{4%5/6_W",
+"W#Z%&*=-;>,')!~{]%^/(_7W",
+"W<%[*}-|>1'2!3{4%5/6_,8W",
+"W%&*=-;>,')!~{]%^/(_780W",
+"W[*}-|>1'2!3{4%5/6_,89aW",
+"W*=-;>,')!~{]%^/(_780acW",
+"W}-|>1'2!3{4%5/6_,89abdW",
+"W-;>,')!~{]%^/(_780acdfW",
+"W|>1'2!3{4%5/6_,89abdegW",
+"W>,')!~{]%^/(_780acdfgiW",
+"W1'2!3{4%5/6_,89abdeghjW",
+"W')!~{]%^/(_780acdfgijlW",
+"W2!3{4%5/6_,89abdeghjkdW",
+"W!~{]%^/(_780acdfgijldnW",
+"W3{4%5/6_,89abdeghjkdmoW",
+"W{]%^/(_780acdfgijldnoqW",
+"W4%5/6_,89abdeghjkdmoprW",
+"W%^/(_780acdfgijldnoqrsW",
+"W5/6_,89abdeghjkdmoprntW",
+"W/(_780acdfgijldnoqrstvW",
+"W6_,89abdeghjkdmoprntuwW",
+"W_780acdfgijldnoqrstvwxW",
+"WWWWWWWWWWWWWWWWWWWWWWWW"
+],
+["24 24 47 1",
+" 	c None",
+".	c #A0A0A0",
+"+	c #A4A4A4",
+"X	c #7E7E7E",
+"#	c #848484",
+"Z	c #B0B0B0",
+"%	c #B4B4B4",
+"&	c #959595",
+"*	c #9B9B9B",
+"=	c #C0C0C0",
+"-	c #C3C3C3",
+";	c #ADADAD",
+">	c #B3B3B3",
+",	c #CFCFCF",
+"'	c #D3D3D3",
+")	c #C4C4C4",
+"!	c #CACACA",
+"~	c #DFDFDF",
+"{	c #E3E3E3",
+"]	c #DCDCDC",
+"^	c #E2E2E2",
+"/	c #EFEFEF",
+"(	c #F3F3F3",
+"_	c #F9F9F9",
+":	c #727272",
+"<	c #787878",
+"[	c #A8A8A8",
+"}	c #ACACAC",
+"|	c #898989",
+"1	c #8F8F8F",
+"2	c #B8B8B8",
+"3	c #BCBCBC",
+"4	c #A1A1A1",
+"5	c #A7A7A7",
+"6	c #C7C7C7",
+"7	c #CCCCCC",
+"8	c #BEBEBE",
+"9	c #D8D8D8",
+"0	c #DBDBDB",
+"a	c #D0D0D0",
+"b	c #D6D6D6",
+"c	c #E7E7E7",
+"d	c #EBEBEB",
+"e	c #EDEDED",
+"f	c #F7F7F7",
+"g	c #FBFBFB",
+"W      c #000000",
+"WWWWWWWWWWWWWWWWWWWWWWWW",
+"W+X#Z%&*=-;>,')!~{]^/((W",
+"W<[}|12345672890abcdcefW",
+"W<[}|12345672890abcdcefW",
+"W+X#Z%&*=-;>,')!~{]^/((W",
+"W+X#Z%&*=-;>,')!~{]^/((W",
+"W<[}|12345672890abcdcefW",
+"W<[}|12345672890abcdcefW",
+"W+X#Z%&*=-;>,')!~{]^/((W",
+"W+X#Z%&*=-;>,')!~{]^/((W",
+"W<[}|12345672890abcdcefW",
+"W<[}|12345672890abcdcefW",
+"W+X#Z%&*=-;>,')!~{]^/((W",
+"W+X#Z%&*=-;>,')!~{]^/((W",
+"W<[}|12345672890abcdcefW",
+"W<[}|12345672890abcdcefW",
+"W+X#Z%&*=-;>,')!~{]^/((W",
+"W+X#Z%&*=-;>,')!~{]^/((W",
+"W<[}|12345672890abcdcefW",
+"W<[}|12345672890abcdcefW",
+"W+X#Z%&*=-;>,')!~{]^/((W",
+"W+X#Z%&*=-;>,')!~{]^/((W",
+"W<[}|12345672890abcdcefW",
+"WWWWWWWWWWWWWWWWWWWWWWWW"
+],
+["24 24 65 1",
+" 	c None",
+".	c #CFCFCF",
+"+	c #D2D2D2",
+"X	c #BEBEBE",
+"#	c #C1C1C1",
+"Z	c #D8D8D8",
+"%	c #D9D9D9",
+"&	c #CACACA",
+"*	c #CDCDCD",
+"=	c #DFDFDF",
+"-	c #E1E1E1",
+";	c #D6D6D6",
+">	c #E7E7E7",
+",	c #E9E9E9",
+"'	c #E2E2E2",
+")	c #E4E4E4",
+"!	c #EFEFEF",
+"~	c #F1F1F1",
+"{	c #EDEDED",
+"]	c #F0F0F0",
+"^	c #F7F7F7",
+"/	c #F9F9F9",
+"(	c #FCFCFC",
+"_	c #BCBCBC",
+":	c #D5D5D5",
+"<	c #C7C7C7",
+"[	c #DDDDDD",
+"}	c #D3D3D3",
+"|	c #E5E5E5",
+"1	c #DEDEDE",
+"2	c #EBEBEB",
+"3	c #F5F5F5",
+"4	c #F6F6F6",
+"5	c #B3B3B3",
+"6	c #B5B5B5",
+"7	c #AFAFAF",
+"8	c #C9C9C9",
+"9	c #C6C6C6",
+"0	c #A7A7A7",
+"a	c #AAAAAA",
+"b	c #A4A4A4",
+"c	c #C0C0C0",
+"d	c #C2C2C2",
+"e	c #BDBDBD",
+"f	c #9B9B9B",
+"g	c #9E9E9E",
+"h	c #989898",
+"i	c #B8B8B8",
+"j	c #BABABA",
+"k	c #B6B6B6",
+"l	c #8F8F8F",
+"m	c #929292",
+"n	c #8D8D8D",
+"o	c #B0B0B0",
+"p	c #B2B2B2",
+"q	c #AEAEAE",
+"r	c #848484",
+"s	c #868686",
+"t	c #808080",
+"u	c #A8A8A8",
+"v	c #A6A6A6",
+"w	c #787878",
+"x	c #7B7B7B",
+"y	c #757575",
+"W      c #000000",
+"WWWWWWWWWWWWWWWWWWWWWWWW",
+"W._X:Z<&[=};|>1'{!2{3^4W",
+"W6.+X#Z%&*=-;%>,')!~{]^W",
+"W5*._X:Z<&[=};|>1'{!2{3W",
+"W856.+X#Z%&*=-;%>,')!~{W",
+"W<75*._X:Z<&[=};|>1'{!2W",
+"Wa<856.+X#Z%&*=-;%>,')!W",
+"W09<75*._X:Z<&[=};|>1'{W",
+"Wd0a<856.+X#Z%&*=-;%>,'W",
+"Wcb09<75*._X:Z<&[=};|>1W",
+"Wgcd0a<856.+X#Z%&*=-;%>W",
+"Wfecb09<75*._X:Z<&[=};|W",
+"Wjfgcd0a<856.+X#Z%&*=-;W",
+"Wihfecb09<75*._X:Z<&[=}W",
+"Wmijfgcd0a<856.+X#Z%&*=W",
+"Wlkihfecb09<75*._X:Z<&[W",
+"Wplmijfgcd0a<856.+X#Z%&W",
+"Wonlkihfecb09<75*._X:Z<W",
+"Wsoplmijfgcd0a<856.+X#ZW",
+"Wrqonlkihfecb09<75*._X:W",
+"Warsoplmijfgcd0a<856.+XW",
+"Wutrqonlkihfecb09<75*._W",
+"Wxuarsoplmijfgcd0a<856.W",
+"WWWWWWWWWWWWWWWWWWWWWWWW"
+],
+[ "24 24 47 1",
+" 	c None",
+".	c #A0A0A0",
+"+	c #727272",
+"X	c #A4A4A4",
+"#	c #787878",
+"Z	c #7E7E7E",
+"%	c #A8A8A8",
+"&	c #848484",
+"*	c #ACACAC",
+"=	c #B0B0B0",
+"-	c #898989",
+";	c #B4B4B4",
+">	c #8F8F8F",
+",	c #959595",
+"'	c #B8B8B8",
+")	c #9B9B9B",
+"!	c #BCBCBC",
+"~	c #C0C0C0",
+"{	c #A1A1A1",
+"]	c #C3C3C3",
+"^	c #A7A7A7",
+"/	c #ADADAD",
+"(	c #C7C7C7",
+"_	c #B3B3B3",
+":	c #CCCCCC",
+"<	c #CFCFCF",
+"[	c #D3D3D3",
+"}	c #BEBEBE",
+"|	c #C4C4C4",
+"1	c #D8D8D8",
+"2	c #CACACA",
+"3	c #DBDBDB",
+"4	c #DFDFDF",
+"5	c #D0D0D0",
+"6	c #E3E3E3",
+"7	c #D6D6D6",
+"8	c #DCDCDC",
+"9	c #E7E7E7",
+"0	c #E2E2E2",
+"a	c #EBEBEB",
+"b	c #EFEFEF",
+"c	c #F3F3F3",
+"d	c #EDEDED",
+"e	c #F7F7F7",
+"f	c #F9F9F9",
+"g	c #FBFBFB",
+"W      c #000000",
+"WWWWWWWWWWWWWWWWWWWWWWWW",
+"WX##XX##XX##XX##XX##XX#W",
+"WZ%%ZZ%%ZZ%%ZZ%%ZZ%%ZZ%W",
+"W&**&&**&&**&&**&&**&&*W",
+"W=--==--==--==--==--==-W",
+"W;>>;;>>;;>>;;>>;;>>;;>W",
+"W,'',,'',,'',,'',,'',,'W",
+"W)!!))!!))!!))!!))!!))!W",
+"W~{{~~{{~~{{~~{{~~{{~~{W",
+"W]^^]]^^]]^^]]^^]]^^]]^W",
+"W/((//((//((//((//((//(W",
+"W_::__::__::__::__::__:W",
+"W<''<<''<<''<<''<<''<<'W",
+"W[}}[[}}[[}}[[}}[[}}[[}W",
+"W|11||11||11||11||11||1W",
+"W2332233223322332233223W",
+"W4554455445544554455445W",
+"W6776677667766776677667W",
+"W8998899889988998899889W",
+"W0aa00aa00aa00aa00aa00aW",
+"Wb99bb99bb99bb99bb99bb9W",
+"WcddccddccddccddccddccdW",
+"WceecceecceecceecceecceW",
+"WWWWWWWWWWWWWWWWWWWWWWWW"
+],
+[
+"24 24 79 1",
+" 	c None",
+".	c #A0A0A0",
+"+	c #727272",
+"X	c #A2A2A2",
+"#	c #A4A4A4",
+"Z	c #7B7B7B",
+"%	c #7D7D7D",
+"&	c #A8A8A8",
+"*	c #A7A7A7",
+"=	c #797979",
+"-	c #A3A3A3",
+";	c #A6A6A6",
+">	c #808080",
+",	c #848484",
+"'	c #AEAEAE",
+")	c #AFAFAF",
+"!	c #898989",
+"~	c #ACACAC",
+"{	c #A9A9A9",
+"]	c #ADADAD",
+"^	c #8B8B8B",
+"/	c #8F8F8F",
+"(	c #B6B6B6",
+"_	c #B7B7B7",
+":	c #959595",
+"<	c #949494",
+"[	c #B4B4B4",
+"}	c #868686",
+"|	c #A5A5A5",
+"1	c #ABABAB",
+"2	c #909090",
+"3	c #B8B8B8",
+"4	c #BBBBBB",
+"5	c #9E9E9E",
+"6	c #C0C0C0",
+"7	c #BFBFBF",
+"8	c #9A9A9A",
+"9	c #828282",
+"0	c #B0B0B0",
+"a	c #939393",
+"b	c #C3C3C3",
+"c	c #C7C7C7",
+"d	c #8A8A8A",
+"e	c #BCBCBC",
+"f	c #C1C1C1",
+"g	c #AAAAAA",
+"h	c #CDCDCD",
+"i	c #CFCFCF",
+"j	c #CACACA",
+"k	c #BABABA",
+"l	c #D4D4D4",
+"m	c #D6D6D6",
+"n	c #C4C4C4",
+"o	c #D1D1D1",
+"p	c #D2D2D2",
+"q	c #D8D8D8",
+"r	c #CECECE",
+"s	c #DFDFDF",
+"t	c #DEDEDE",
+"u	c #CCCCCC",
+"v	c #B1B1B1",
+"w	c #757575",
+"x	c #DDDDDD",
+"y	c #DADADA",
+"z	c #E7E7E7",
+"A	c #E6E6E6",
+"B	c #E9E9E9",
+"C	c #EDEDED",
+"D	c #E4E4E4",
+"E	c #E2E2E2",
+"F	c #C5C5C5",
+"G	c #F4F4F4",
+"H	c #F3F3F3",
+"I	c #EEEEEE",
+"J	c #FFFFFF",
+"K	c #F7F7F7",
+"L	c #DCDCDC",
+"M	c #7E7E7E",
+"W      c #000000",
+"WWWWWWWWWWWWWWWWWWWWWWWW",
+"W.++..++X#Z%&*Z=X.++..+W",
+"W+..++-;>,')!!'~>Z-.++.W",
+"W+..+={]^/(_:<([^}{#++.W",
+"W.++|1!2345.67583[!9|.+W",
+"W.+=10a87b{~cc{|74ad1#+W",
+"W+-{!aefg0hi3_hjg-e(!>-W",
+"W+;]28fc[klmnblo[~f42};W",
+"WX>^37g[pqjrstjnpug.3v>W",
+"W#,/4b0kqxlyzAlhqo0|4[,W",
+"WZ'(5{hljlBCzDBEj7hF5a'W",
+"W%)_.~imryCGHICArbic.<)W",
+"W&!:6c3nszzHJKzLsq3]63!W",
+"W*!<7c_btADIKGDytm_~7_!W",
+"WZ'(5{hljlBCzDBEj7hF5a'W",
+"W=~[8|jonhEALyExnkjb8/~W",
+"WX>^37g[pqjrstjnpug.3v>W",
+"W.Z}[4-~uo7bqm7kuc-8[]ZW",
+"W+-{!aefg0hi3_hjg-e(!>-W",
+"W+.#9d(4.|Fc]~Fb.8(09=.W",
+"W.++|1!2345.67583[!9|.+W",
+"W.++.#>}v[a<3_a/v]>=..+W",
+"W+..++-;>,')!!'~>Z-.++.W",
+"WWWWWWWWWWWWWWWWWWWWWWWW"
+],
+["24 24 46 1",
+" 	c None",
+".	c #FFFFFF",
+"+	c #FBFBFB",
+"X	c #F9F9F9",
+"#	c #F3F3F3",
+"Z	c #F7F7F7",
+"%	c #EDEDED",
+"&	c #EFEFEF",
+"*	c #E7E7E7",
+"=	c #EBEBEB",
+"-	c #E2E2E2",
+";	c #DCDCDC",
+">	c #D6D6D6",
+",	c #E3E3E3",
+"'	c #DFDFDF",
+")	c #D0D0D0",
+"!	c #DBDBDB",
+"~	c #CACACA",
+"{	c #C4C4C4",
+"]	c #D8D8D8",
+"^	c #BEBEBE",
+"/	c #D3D3D3",
+"(	c #CFCFCF",
+"_	c #B8B8B8",
+":	c #CCCCCC",
+"<	c #B3B3B3",
+"[	c #ADADAD",
+"}	c #C7C7C7",
+"|	c #A7A7A7",
+"1	c #C3C3C3",
+"2	c #C0C0C0",
+"3	c #A1A1A1",
+"4	c #BCBCBC",
+"5	c #9B9B9B",
+"6	c #959595",
+"7	c #8F8F8F",
+"8	c #B4B4B4",
+"9	c #B0B0B0",
+"0	c #898989",
+"a	c #ACACAC",
+"b	c #848484",
+"c	c #7E7E7E",
+"d	c #A8A8A8",
+"e	c #787878",
+"f	c #A4A4A4",
+"W      c #000000",
+"WWWWWWWWWWWWWWWWWWWWWWWW",
+"W+XX++XX++XX++XX++XX++XW",
+"W#ZZ##ZZ##ZZ##ZZ##ZZ##ZW",
+"W%##%%##%%##%%##%%##%%#W",
+"W&**&&**&&**&&**&&**&&*W",
+"W=--==--==--==--==--==-W",
+"W;**;;**;;**;;**;;**;;*W",
+"W>,,>>,,>>,,>>,,>>,,>>,W",
+"W'))''))''))''))''))'')W",
+"W!~~!!~~!!~~!!~~!!~~!!~W",
+"W{]]{{]]{{]]{{]]{{]]{{]W",
+"W^//^^//^^//^^//^^//^^/W",
+"W(__((__((__((__((__((_W",
+"W:<<::<<::<<::<<::<<::<W",
+"W[}}[[}}[[}}[[}}[[}}[[}W",
+"W|11||11||11||11||11||1W",
+"W2332233223322332233223W",
+"W4554455445544554455445W",
+"W6__66__66__66__66__66_W",
+"W7887788778877887788778W",
+"W9009900990099009900990W",
+"WabbaabbaabbaabbaabbaabW",
+"WcddccddccddccddccddccdW",
+"WWWWWWWWWWWWWWWWWWWWWWWW"
+],
+[ "24 24 65 1",
+" 	c None",
+".	c #CFCFCF",
+"+	c #CDCDCD",
+"X	c #B3B3B3",
+"#	c #AFAFAF",
+"Z	c #C7C7C7",
+"%	c #C6C6C6",
+"&	c #A7A7A7",
+"*	c #A4A4A4",
+"=	c #C0C0C0",
+"-	c #BDBDBD",
+";	c #9B9B9B",
+">	c #989898",
+",	c #B8B8B8",
+"'	c #B6B6B6",
+")	c #8F8F8F",
+"!	c #8D8D8D",
+"~	c #B0B0B0",
+"{	c #AEAEAE",
+"]	c #848484",
+"^	c #808080",
+"/	c #A8A8A8",
+"(	c #A6A6A6",
+"_	c #787878",
+":	c #757575",
+"<	c #D2D2D2",
+"[	c #B5B5B5",
+"}	c #C9C9C9",
+"|	c #AAAAAA",
+"1	c #C2C2C2",
+"2	c #9E9E9E",
+"3	c #BABABA",
+"4	c #929292",
+"5	c #B2B2B2",
+"6	c #868686",
+"7	c #7B7B7B",
+"8	c #BEBEBE",
+"9	c #BCBCBC",
+"0	c #C1C1C1",
+"a	c #D8D8D8",
+"b	c #D5D5D5",
+"c	c #D9D9D9",
+"d	c #CACACA",
+"e	c #DFDFDF",
+"f	c #DDDDDD",
+"g	c #E1E1E1",
+"h	c #D6D6D6",
+"i	c #D3D3D3",
+"j	c #E7E7E7",
+"k	c #E5E5E5",
+"l	c #E9E9E9",
+"m	c #E2E2E2",
+"n	c #DEDEDE",
+"o	c #E4E4E4",
+"p	c #EFEFEF",
+"q	c #EDEDED",
+"r	c #F1F1F1",
+"s	c #EBEBEB",
+"t	c #F0F0F0",
+"u	c #F7F7F7",
+"v	c #F5F5F5",
+"w	c #F9F9F9",
+"x	c #F6F6F6",
+"y	c #FCFCFC",
+"W      c #000000",
+"WWWWWWWWWWWWWWWWWWWWWWWW",
+"W.[X}Z|&1=2;3,4)5~6]|/7W",
+"W9.+X#Z%&*=-;>,')!~{]^/W",
+"W8<.[X}Z|&1=2;3,4)5~6]|W",
+"Wb89.+X#Z%&*=-;>,')!~{]W",
+"Wa08<.[X}Z|&1=2;3,4)5~6W",
+"WZab89.+X#Z%&*=-;>,')!~W",
+"Wdca08<.[X}Z|&1=2;3,4)5W",
+"WfdZab89.+X#Z%&*=-;>,')W",
+"We+dca08<.[X}Z|&1=2;3,4W",
+"WiefdZab89.+X#Z%&*=-;>,W",
+"Whge+dca08<.[X}Z|&1=2;3W",
+"WkhiefdZab89.+X#Z%&*=-;W",
+"Wjchge+dca08<.[X}Z|&1=2W",
+"WnjkhiefdZab89.+X#Z%&*=W",
+"Wmljchge+dca08<.[X}Z|&1W",
+"WqmnjkhiefdZab89.+X#Z%&W",
+"Wpomljchge+dca08<.[X}Z|W",
+"WspqmnjkhiefdZab89.+X#ZW",
+"Wqrpomljchge+dca08<.[X}W",
+"WvqspqmnjkhiefdZab89.+XW",
+"Wutqrpomljchge+dca08<.[W",
+"WxuvqspqmnjkhiefdZab89.W",
+"WWWWWWWWWWWWWWWWWWWWWWWW"
+],
+[
+"24 24 46 1",
+" 	c None",
+".	c #FFFFFF",
+"+	c #FBFBFB",
+"X	c #F3F3F3",
+"#	c #EDEDED",
+"Z	c #EFEFEF",
+"%	c #EBEBEB",
+"&	c #DCDCDC",
+"*	c #D6D6D6",
+"=	c #DFDFDF",
+"-	c #DBDBDB",
+";	c #C4C4C4",
+">	c #BEBEBE",
+",	c #CFCFCF",
+"'	c #CCCCCC",
+")	c #ADADAD",
+"!	c #A7A7A7",
+"~	c #C0C0C0",
+"{	c #BCBCBC",
+"]	c #959595",
+"^	c #8F8F8F",
+"/	c #B0B0B0",
+"(	c #ACACAC",
+"_	c #7E7E7E",
+":	c #787878",
+"<	c #F9F9F9",
+"[	c #F7F7F7",
+"}	c #E7E7E7",
+"|	c #E2E2E2",
+"1	c #E3E3E3",
+"2	c #D0D0D0",
+"3	c #CACACA",
+"4	c #D8D8D8",
+"5	c #D3D3D3",
+"6	c #B8B8B8",
+"7	c #B3B3B3",
+"8	c #C7C7C7",
+"9	c #C3C3C3",
+"0	c #A1A1A1",
+"a	c #9B9B9B",
+"b	c #B4B4B4",
+"c	c #898989",
+"d	c #848484",
+"e	c #A8A8A8",
+"f	c #A4A4A4",
+"W      c #000000",
+"WWWWWWWWWWWWWWWWWWWWWWWW",
+"W+X#Z%&*=-;>,')!~{]^/(_W",
+"W<[X}|}1234567890a6bcdeW",
+"W<[X}|}1234567890a6bcdeW",
+"W+X#Z%&*=-;>,')!~{]^/(_W",
+"W+X#Z%&*=-;>,')!~{]^/(_W",
+"W<[X}|}1234567890a6bcdeW",
+"W<[X}|}1234567890a6bcdeW",
+"W+X#Z%&*=-;>,')!~{]^/(_W",
+"W+X#Z%&*=-;>,')!~{]^/(_W",
+"W<[X}|}1234567890a6bcdeW",
+"W<[X}|}1234567890a6bcdeW",
+"W+X#Z%&*=-;>,')!~{]^/(_W",
+"W+X#Z%&*=-;>,')!~{]^/(_W",
+"W<[X}|}1234567890a6bcdeW",
+"W<[X}|}1234567890a6bcdeW",
+"W+X#Z%&*=-;>,')!~{]^/(_W",
+"W+X#Z%&*=-;>,')!~{]^/(_W",
+"W<[X}|}1234567890a6bcdeW",
+"W<[X}|}1234567890a6bcdeW",
+"W+X#Z%&*=-;>,')!~{]^/(_W",
+"W+X#Z%&*=-;>,')!~{]^/(_W",
+"W<[X}|}1234567890a6bcdeW",
+"WWWWWWWWWWWWWWWWWWWWWWWW"
+],
+[
+"24 24 62 1",
+" 	c None",
+".	c #FFFFFF",
+"+	c #FDFDFD",
+"X	c #F9F9F9",
+"#	c #F6F6F6",
+"Z	c #F7F7F7",
+"%	c #F5F5F5",
+"&	c #EDEDED",
+"*	c #EBEBEB",
+"=	c #EFEFEF",
+"-	c #E2E2E2",
+";	c #DEDEDE",
+">	c #E7E7E7",
+",	c #E5E5E5",
+"'	c #D6D6D6",
+")	c #D3D3D3",
+"!	c #DFDFDF",
+"~	c #DDDDDD",
+"{	c #CACACA",
+"]	c #C7C7C7",
+"^	c #D8D8D8",
+"/	c #D5D5D5",
+"(	c #BEBEBE",
+"_	c #BCBCBC",
+":	c #FBFBFB",
+"<	c #F3F3F3",
+"[	c #DCDCDC",
+"}	c #E3E3E3",
+"|	c #D0D0D0",
+"1	c #DBDBDB",
+"2	c #C4C4C4",
+"3	c #B8B8B8",
+"4	c #CFCFCF",
+"5	c #CDCDCD",
+"6	c #CCCCCC",
+"7	c #B3B3B3",
+"8	c #AFAFAF",
+"9	c #ADADAD",
+"0	c #C6C6C6",
+"a	c #C3C3C3",
+"b	c #A7A7A7",
+"c	c #A4A4A4",
+"d	c #A1A1A1",
+"e	c #C0C0C0",
+"f	c #BDBDBD",
+"g	c #9B9B9B",
+"h	c #989898",
+"i	c #959595",
+"j	c #B6B6B6",
+"k	c #B4B4B4",
+"l	c #8F8F8F",
+"m	c #8D8D8D",
+"n	c #898989",
+"o	c #B0B0B0",
+"p	c #AEAEAE",
+"q	c #ACACAC",
+"r	c #848484",
+"s	c #808080",
+"t	c #7E7E7E",
+"u	c #A8A8A8",
+"v	c #A6A6A6",
+"W      c #000000",
+"WWWWWWWWWWWWWWWWWWWWWWWW",
+"W:#<%<*>&*;[,})|~1]2/)_W",
+"W#Z%&*=&-;>,')!~{]^/(_4W",
+"W<%<*>&*;[,})|~1]2/)_35W",
+"W%&*=&-;>,')!~{]^/(_457W",
+"W<*>&*;[,})|~1]2/)_3568W",
+"W*=&-;>,')!~{]^/(_4578]W",
+"W>&*;[,})|~1]2/)_356890W",
+"W&-;>,')!~{]^/(_4578]0bW",
+"W*;[,})|~1]2/)_356890acW",
+"W;>,')!~{]^/(_4578]0bceW",
+"W[,})|~1]2/)_356890acdfW",
+"W,')!~{]^/(_4578]0bcefgW",
+"W})|~1]2/)_356890acdf_hW",
+"W)!~{]^/(_4578]0bcefgh3W",
+"W|~1]2/)_356890acdf_hijW",
+"W~{]^/(_4578]0bcefgh3jlW",
+"W1]2/)_356890acdf_hijkmW",
+"W]^/(_4578]0bcefgh3jlmoW",
+"W2/)_356890acdf_hijkmnpW",
+"W/(_4578]0bcefgh3jlmoprW",
+"W)_356890acdf_hijkmnpqsW",
+"W_4578]0bcefgh3jlmoprsuW",
+"WWWWWWWWWWWWWWWWWWWWWWWW"
+]);
+
+###
+# Subroutines 
+###
+sub do_fade
+{
+  my ($image, $drawable) = @_;
+  my (@bounds, $mask, $prevBack, $prevFore);
+  
+  if (!$drawable->is_layer)
+    {
+      die "$plugin: Cannot operate on anything other than layers\n";
+    }
+    
+  $image->undo_push_group_start;
+  @bounds = $image->selection_bounds;
+ 
+  if (!$drawable->has_alpha)
+    {
+      $drawable->add_alpha;
+    }
+ 
+  if ($drawable->mask)
+    {
+      $mask = $drawable->mask;
+    }
+  else
+    {
+      $mask = $drawable->create_mask(ALPHA_MASK);
+      $image->add_layer_mask($drawable, $mask);
+    }
+    
+  $prevBack = Palette->get_background;
+  $prevFore = Palette->get_foreground;
+  Palette->set_background([0,0,0]);
+  Palette->set_foreground([255,255,255]);
+
+  # Direction Map
+  # 0 3 6
+  # 1 4 7
+  # 2 5 8
+
+  # Bounds Map
+  # (1,2) (3,2)
+  # (1,4) (3,4)
+  
+  if ($direction==0)
+    {
+      $mask->blend(FG_BG_RGB, DARKEN_ONLY_MODE, LINEAR, 100.0, 0.0, 
+                   REPEAT_NONE, 0, 1, 0.1, 
+		   $bounds[3], $bounds[4],
+		   $bounds[1], $bounds[2]);
+    }
+  elsif ($direction==1)
+    {
+      $mask->blend(FG_BG_RGB, DARKEN_ONLY_MODE, LINEAR, 100.0, 0.0, 
+                   REPEAT_NONE, 0, 1, 0.1, 
+		   $bounds[3], ($bounds[2]+$bounds[4])/2,
+		   $bounds[1], ($bounds[2]+$bounds[4])/2);
+    
+    }
+  elsif ($direction==2)
+    {
+      $mask->blend(FG_BG_RGB, DARKEN_ONLY_MODE, LINEAR, 100.0, 0.0, 
+                   REPEAT_NONE, 0, 1, 0.1, 
+		   $bounds[3], $bounds[2],
+		   $bounds[1], $bounds[4]);
+
+    }
+  elsif ($direction==3)
+    {
+      $mask->blend(FG_BG_RGB, DARKEN_ONLY_MODE, LINEAR, 100.0, 0.0, 
+                   REPEAT_NONE, 0, 1, 0.1,
+		   ($bounds[3]+$bounds[1])/2, $bounds[4],
+		   ($bounds[3]+$bounds[1])/2, $bounds[2]);
+    }
+  elsif ($direction==4)
+    {
+      $mask->blend(FG_BG_RGB, DARKEN_ONLY_MODE, RADIAL, 100.0, 0.0, 
+                   REPEAT_NONE, 0, 1, 0.1, 
+		   ($bounds[1]+$bounds[3])/2, 
+		   ($bounds[2]+$bounds[4])/2, 
+		   ($bounds[3]+$bounds[1])/2, $bounds[4]);
+
+    }
+  elsif ($direction==5)
+    {
+      $mask->blend(FG_BG_RGB, DARKEN_ONLY_MODE, LINEAR, 100.0, 0.0, 
+                   REPEAT_NONE, 0, 1, 0.1, 
+		   ($bounds[3]+$bounds[1])/2, $bounds[2],
+		   ($bounds[3]+$bounds[1])/2, $bounds[4]);
+    }
+  elsif ($direction==6)
+    {
+      $mask->blend(FG_BG_RGB, DARKEN_ONLY_MODE, LINEAR, 100.0, 0.0, 
+                   REPEAT_NONE, 0, 1, 0.1, 
+		   $bounds[1], $bounds[4],
+		   $bounds[3], $bounds[2]);
+    }
+  elsif ($direction==7)
+    {
+      $mask->blend(FG_BG_RGB, DARKEN_ONLY_MODE, LINEAR, 100.0, 0.0, 
+                   REPEAT_NONE, 0, 1, 0.1, 
+		   $bounds[1], ($bounds[2]+$bounds[4])/2,
+		   $bounds[3], ($bounds[2]+$bounds[4])/2);
+    }
+  elsif ($direction==8)
+    {
+      $mask->blend(FG_BG_RGB, DARKEN_ONLY_MODE, LINEAR, 100.0, 0.0, 
+                   REPEAT_NONE, 0, 1, 0.1, 
+		   $bounds[1], $bounds[2],
+		   $bounds[3], $bounds[4]);
+    }
+  if ($direction >=0 && $direction <9)
+    {
+      $image->remove_layer_mask($drawable, APPLY);
+    }
+  
+  Palette->set_background($prevBack);
+  Palette->set_foreground($prevFore);
+  $image->undo_push_group_end;
+}
+
+sub btn_pressed 
+{
+  my ($widget, $btnIndex) = @_;
+  $direction = $btnIndex;
+}
+
+sub add_pixmap
+{
+  my ($window, $but, $num) = @_;
+  my @tar = @{$arr[$num]};
+  my ($pixmap, $mask) = Gtk::Gdk::Pixmap->colormap_create_from_xpm_d(undef,
+                        $but->get_colormap,
+                        $but->style->bg('normal'), 
+			@{$arr[$num]});
+  my ($pixmapId) = new Gtk::Pixmap $pixmap, $mask;
+  
+  $pixmapId->show;
+  $but->add($pixmapId);
+}
+
+sub okCbk
+{
+  $cancelFlag = 0;
+  Gtk->main_quit;
+} 
+
+sub create_window
+{ 
+  my ($window, $frm, $box1, $hbox, $hsep, $btnTable, $i, $j, $btn);
+
+  $window = new Gtk::Window('toplevel');
+  $window->set_name("Alpha Fader");
+  $window->set_wmclass("Gimp", "AlphaFader");
+  
+  $window->signal_connect("destroy" => \&Gtk::main_quit);
+  $window->signal_connect("delete_event" => \&Gtk::false);
+
+  $box1 = new Gtk::VBox(0, 0);
+  $box1->set_spacing(2);
+  $window->add($box1);
+
+  $frm = new Gtk::Frame "Fade Type";
+  $frm->set_border_width(6);
+  $frm->show;
+
+  $box1->pack_start($frm, 0, 0, 0);
+  $btnTable = new Gtk::Table(3,3,1);
+  $btnTable->set_border_width(6);
+  $frm->add($btnTable);
+  
+  $btn = new Gtk::RadioButton;
+  for ($i=0;$i<3;$i++)
+    {
+      for ($j=0;$j<3;$j++)
+        {
+	   $btn = Gtk::RadioButton->new_from_widget($btn);
+	   $btn->set_mode(0);
+	   $btn->signal_connect("clicked", \&btn_pressed, $i*3+$j);
+	   $btn->show;
+	   $btnTable->attach_defaults($btn, $i, $i+1, $j, $j+1); 
+	   add_pixmap($window, $btn, $i*3+$j);
+	   if (Gimp->get_data($plugin)*1 == $i*3+$j)
+	     {
+	       $btn->clicked;
+	     }
+	}
+    }
+
+  $hsep = new Gtk::HSeparator;
+  $box1->pack_start($hsep, 0, 0, 0);
+  $hsep->show;
+ 
+  $hbox = new Gtk::HButtonBox;
+  $hbox->set_border_width(2);
+  $hbox->set_spacing(4);
+  $box1->pack_start($hbox, 0, 0, 0);
+  $hbox->show;
+ 
+  $btn = new Gtk::Button "OK";
+  $btn->can_default(1);
+  $btn->signal_connect("clicked" => \&okCbk);
+  $btn->show;
+  $hbox->pack_start($btn, 0, 0, 0);
+  $btn->grab_default;
+
+  $btn = new Gtk::Button "Cancel";
+  $btn->can_default(1);
+  $btn->signal_connect("clicked" => \&Gtk::main_quit);
+  $btn->show;
+  $hbox->pack_start($btn, 0, 0, 0);
+  
+  $btnTable->show;
+  $box1->show;
+  $window->show;
+}
+
+Gimp::on_run 
+{
+  my ($interactive, $img, $drw);
+  ($interactive, $img, $drw, $direction) = @_;
+
+  $cancelFlag = 1;
+  if ($interactive==1)
+    { 
+       $cancelFlag = 0;
+    }
+  elsif ($interactive==2)
+    {
+       $direction = Gimp->get_data($plugin); 
+       $cancelFlag = 0;
+    }
+  else
+    {
+      init Gtk;
+      create_window;
+      main Gtk;
+    }
+    
+  # Do the gimply stuff on it
+  if (!$cancelFlag)
+    {
+      do_fade($img, $drw);
+      Gimp->displays_flush;
+      Gimp->set_data($plugin, $direction);
+    }
+};
+
+Gimp::on_query {
+gimp_install_procedure(
+$plugin, 
+"Fade the alpha channel of a layer from one side to another", 
+"This was written as a slightly useful exercise to test 
+mostly to learn Gtk's excellent perl interface.  It was  
+inspired by a mailing list question that asked how to do 
+exactly what this does, which is fade the alpha from one 
+side to another.", 
+"Seth Burgess", 
+"Seth Burgess", 
+"2000", 
+"<Image>/Image/Alpha/Fade", 
+"*", 
+PLUGIN,  
+[
+ [PDB_INT32, "run_mode", "Interactive, [non-interactive"],  
+ [PDB_IMAGE, "image", "Input image (unused)"],
+ [PDB_DRAWABLE, "drawable", "Input drawable"],
+ [PDB_INT32, "direction", "Direction to fade(0-8)"]
+],
+[])
+};
+
+exit main;

@@ -31,7 +31,7 @@ if ($ARGV[0] ne "--writemakefile") {
 );
 @gtk_pins =
    qw(
-     dataurl colorhtml avi PDB parasite-editor
+     dataurl colorhtml avi PDB parasite-editor fade-alpha
    ); # miff should be in @pins(!) but detection of non-default arguments is broken
 @pins =
    qw(

@@ -18,6 +18,9 @@ Revision history for Gimp-Perl extension.
           mail from me) regarding return values for register'ed scripts.
         - fixed the make install-po problem that Sven fixed but dumb Marc
           accidently reverted...
+        - added examples/fade-alpha by Seth.
+        - re-apply patches to examples/xachshadow, xachlego after I nuked
+          them without knowing.
 
 1.201 Thu Aug 24 23:44:43 CEST 2000
 	** LAST VERSION THAT WORKS WITH 1.0 **

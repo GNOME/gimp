@@ -1891,5 +1891,6 @@ test "$no_create" = yes || ${CONFIG_SHELL-/bin/sh} $CONFIG_STATUS || exit 1
 
 
 echo "now invoking perl to complete the configuration..."
+set -x
 exec $PERL $MAKEFILE_PL --writemakefile PREFIX="$prefix"
 

@@ -131,6 +131,7 @@ examples/blended2
 examples/dust
 examples/clear_alpha
 examples/warp-sharp
+examples/fade-alpha
 pxgettext
 po/ChangeLog
 po/Makefile.PL
