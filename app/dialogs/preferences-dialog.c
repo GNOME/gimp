@@ -1797,11 +1797,11 @@ prefs_dialog_new (Gimp       *gimp,
 
   table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
 
-  prefs_enum_option_menu_add (object, "toolbox-window-type", 0, 0,
+  prefs_enum_option_menu_add (object, "toolbox-window-hint", 0, 0,
                               _("Window Type Hint for the _Toolbox:"),
                               GTK_TABLE (table), 0);
 
-  prefs_enum_option_menu_add (object, "dock-window-type", 0, 0,
+  prefs_enum_option_menu_add (object, "dock-window-hint", 0, 0,
                               _("Window Type Hint for the _Docks:"),
                               GTK_TABLE (table), 1);
 

@@ -2408,7 +2408,7 @@ gimp_image_add_layer (GimpImage *gimage,
 {
   GimpLayer *active_layer;
   GimpLayer *floating_sel;
-  gboolean   alpha_changed = FALSE;
+  gboolean   old_has_alpha;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
@@ -2440,6 +2440,8 @@ gimp_image_add_layer (GimpImage *gimage,
 
   active_layer = gimp_image_get_active_layer (gimage);
 
+  old_has_alpha = gimp_image_has_alpha (gimage);
+
   gimp_image_undo_push_layer_add (gimage, _("Add Layer"),
                                   layer, 0, active_layer);
 
@@ -2468,12 +2470,6 @@ gimp_image_add_layer (GimpImage *gimage,
   if (position == 0 && floating_sel)
     position = 1;
 
-  if (gimp_container_num_children (gimage->layers) == 1 &&
-      ! gimp_drawable_has_alpha (GIMP_LIST (gimage->layers)->list->data))
-    {
-      alpha_changed = TRUE;
-    }
-
   /*  Don't add at a non-existing index  */
   if (position > gimp_container_num_children (gimage->layers))
     position = gimp_container_num_children (gimage->layers);
@@ -2484,7 +2480,7 @@ gimp_image_add_layer (GimpImage *gimage,
   /*  notify the layers dialog of the currently active layer  */
   gimp_image_set_active_layer (gimage, layer);
 
-  if (alpha_changed)
+  if (old_has_alpha != gimp_image_has_alpha (gimage))
     gimp_image_alpha_changed (gimage);
 
   return TRUE;
@@ -2496,6 +2492,7 @@ gimp_image_remove_layer (GimpImage *gimage,
 {
   GimpLayer *active_layer;
   gint       index;
+  gboolean   old_has_alpha;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_LAYER (layer));
@@ -2506,6 +2503,8 @@ gimp_image_remove_layer (GimpImage *gimage,
 
   index = gimp_container_get_child_index (gimage->layers,
                                           GIMP_OBJECT (layer));
+
+  old_has_alpha = gimp_image_has_alpha (gimage);
 
   gimp_image_undo_push_layer_remove (gimage, _("Remove Layer"),
                                      layer, index, active_layer);
@@ -2557,11 +2556,8 @@ gimp_image_remove_layer (GimpImage *gimage,
 
   g_object_unref (layer);
 
-  if (gimp_container_num_children (gimage->layers) == 1 &&
-      ! gimp_drawable_has_alpha (GIMP_LIST (gimage->layers)->list->data))
-    {
-      gimp_image_alpha_changed (gimage);
-    }
+  if (old_has_alpha != gimp_image_has_alpha (gimage))
+    gimp_image_alpha_changed (gimage);
 }
 
 gboolean

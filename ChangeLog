@@ -1,5 +1,15 @@
 2004-01-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.c (gimp_image_add_layer,remove_layer): in the
+	spirit of the fix for bug #131721 below, don't try to figure
+	manually if "alpha_changed" needs to be emitted but simply compare
+	the old and new values of gimp_image_has_alpha().
+
+	* app/gui/preferences-dialog.c (prefs_dialog_new): follow
+	"foo-window-type" -> "foo-window-hint" change.
+
+2004-01-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.[ch] (gimp_image_get_color): also return the
 	color's alpha byte if it has alpha, not only the converted RGB
 	values.  Return OPAQUE_OPACITY for drawables without alpha.
