@@ -1,3 +1,7 @@
+2004-05-24  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: added "lt" (Lithuanian) to ALL_LINGUAS.
+
 2004-05-23  Sven Neumann  <sven@gimp.org>
 
 	More fixes for bug #142996, merged from HEAD branch:
