@@ -178,7 +178,7 @@ gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
                                 "move_cursor", 2,
                                 G_TYPE_ENUM, GTK_MOVEMENT_PAGES,
                                 G_TYPE_INT, 1);
- 
+
   gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, 1.0);
   gimp_rgba_set (&black_color, 0.0, 0.0, 0.0, 1.0);
 }
@@ -200,8 +200,6 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 
   grid_view->name_label = gtk_label_new (_("(None)"));
   gtk_misc_set_alignment (GTK_MISC (grid_view->name_label), 0.0, 0.5);
-  gtk_misc_set_padding (GTK_MISC (grid_view->name_label),
-			grid_view->name_label->style->xthickness, 0);
   gtk_box_pack_start (GTK_BOX (grid_view), grid_view->name_label,
 		      FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (grid_view), grid_view->name_label, 0);
@@ -490,7 +488,7 @@ gimp_container_grid_view_item_selected (GtkWidget      *widget,
     {
       if (GTK_WIDGET_CAN_FOCUS (data) && !GTK_WIDGET_HAS_FOCUS (data))
         gtk_widget_grab_focus (GTK_WIDGET (data));
-  
+
       gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data),
                                          GIMP_PREVIEW (widget)->viewable);
     }
@@ -629,7 +627,7 @@ gimp_container_grid_view_vieport_resized (GtkWidget             *widget,
                                            rows    * preview_requisition.height);
 
             }
-          
+
           grid_view->visible_rows = (allocation->height /
                                      preview_requisition.height);
         }
