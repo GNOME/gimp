@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-11-05 17:22+0100\n"
-"PO-Revision-Date: 2002-11-05 17:23+0100\n"
+"POT-Creation-Date: 2002-11-07 14:25+0100\n"
+"PO-Revision-Date: 2002-11-07 14:26+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -428,78 +428,78 @@ msgstr "Linjär"
 msgid "Cubic (Best)"
 msgstr "Kubisk (bäst)"
 
-#: app/base/base-enums.c:70 app/core/core-enums.c:194
+#: app/base/base-enums.c:73 app/core/core-enums.c:194
 #: app/gui/preferences-dialog.c:2080
 msgid "Small"
 msgstr "Liten"
 
-#: app/base/base-enums.c:71 app/core/core-enums.c:195
+#: app/base/base-enums.c:74 app/core/core-enums.c:195
 #: app/gui/preferences-dialog.c:2083
 msgid "Medium"
 msgstr "Mellan"
 
-#: app/base/base-enums.c:72 app/core/core-enums.c:196
+#: app/base/base-enums.c:75 app/core/core-enums.c:196
 #: app/gui/preferences-dialog.c:2086
 msgid "Large"
 msgstr "Stor"
 
-#: app/base/base-enums.c:90
+#: app/base/base-enums.c:93
 msgid "Light Checks"
 msgstr "Ljusa rutor"
 
-#: app/base/base-enums.c:91
+#: app/base/base-enums.c:94
 msgid "Mid-Tone Checks"
 msgstr "Mellanmörka rutor"
 
-#: app/base/base-enums.c:92
+#: app/base/base-enums.c:95
 msgid "Dark Checks"
 msgstr "Mörka rutor"
 
-#: app/base/base-enums.c:93
+#: app/base/base-enums.c:96
 msgid "White Only"
 msgstr "Endast vit"
 
-#: app/base/base-enums.c:94
+#: app/base/base-enums.c:97
 msgid "Gray Only"
 msgstr "Endast grå"
 
-#: app/base/base-enums.c:95
+#: app/base/base-enums.c:98
 msgid "Black Only"
 msgstr "Endast svart"
 
-#: app/base/base-enums.c:113 app/widgets/gimpwidgets-constructors.c:68
-#: app/widgets/gimpwidgets-constructors.c:98
+#: app/base/base-enums.c:116 app/widgets/gimpwidgets-constructors.c:71
+#: app/widgets/gimpwidgets-constructors.c:104
 msgid "Value"
 msgstr "Värde"
 
-#: app/base/base-enums.c:114 app/tools/gimpcolorbalancetool.c:306
+#: app/base/base-enums.c:117 app/tools/gimpcolorbalancetool.c:306
 #: app/widgets/gimpcomponentlistitem.c:481
 msgid "Red"
 msgstr "Röd"
 
-#: app/base/base-enums.c:115 app/tools/gimpcolorbalancetool.c:313
+#: app/base/base-enums.c:118 app/tools/gimpcolorbalancetool.c:313
 #: app/widgets/gimpcomponentlistitem.c:482
 msgid "Green"
 msgstr "Grön"
 
-#: app/base/base-enums.c:116 app/tools/gimpcolorbalancetool.c:320
+#: app/base/base-enums.c:119 app/tools/gimpcolorbalancetool.c:320
 #: app/widgets/gimpcomponentlistitem.c:483
 msgid "Blue"
 msgstr "Blå"
 
-#: app/base/base-enums.c:117 app/widgets/gimpcomponentlistitem.c:486
+#: app/base/base-enums.c:120 app/widgets/gimpcomponentlistitem.c:486
 msgid "Alpha"
 msgstr "Alfa"
 
-#: app/base/base-enums.c:135
+#: app/base/base-enums.c:138
 msgid "Shadows"
 msgstr "Skuggor"
 
-#: app/base/base-enums.c:136
+#: app/base/base-enums.c:139
 msgid "Midtones"
 msgstr "Mittentoner"
 
-#: app/base/base-enums.c:137
+#: app/base/base-enums.c:140
 msgid "Highlights"
 msgstr "Ljuspunkter"
 
@@ -1871,8 +1871,8 @@ msgid "Color Editor"
 msgstr "Färgredigerare"
 
 #: app/gui/dialogs-constructors.c:860 app/pdb/internal_procs.c:88
-#: app/tools/paint_options.c:394 app/widgets/gimpwidgets-constructors.c:67
-#: app/widgets/gimpwidgets-constructors.c:97
+#: app/tools/paint_options.c:394 app/widgets/gimpwidgets-constructors.c:70
+#: app/widgets/gimpwidgets-constructors.c:103
 msgid "Color"
 msgstr "Färg"
 
@@ -5369,12 +5369,12 @@ msgid "Registered"
 msgstr "Registrerad"
 
 #: app/paint/paint-enums.c:52 app/widgets/gimpwidgets-constructors.c:55
-#: app/widgets/gimpwidgets-constructors.c:85
+#: app/widgets/gimpwidgets-constructors.c:88
 msgid "Dodge"
 msgstr "Blek"
 
 #: app/paint/paint-enums.c:53 app/widgets/gimpwidgets-constructors.c:56
-#: app/widgets/gimpwidgets-constructors.c:86
+#: app/widgets/gimpwidgets-constructors.c:89
 msgid "Burn"
 msgstr "Bränn"
 
@@ -7341,12 +7341,12 @@ msgstr ""
 "<Skift><Ctrl> Snitt"
 
 #: app/widgets/gimpwidgets-constructors.c:45
-#: app/widgets/gimpwidgets-constructors.c:77
+#: app/widgets/gimpwidgets-constructors.c:80
 msgid "Normal"
 msgstr "Normal"
 
 #: app/widgets/gimpwidgets-constructors.c:46
-#: app/widgets/gimpwidgets-constructors.c:78
+#: app/widgets/gimpwidgets-constructors.c:81
 msgid "Dissolve"
 msgstr "Lös upp"
 
@@ -7359,62 +7359,77 @@ msgid "Color Erase"
 msgstr "Färgborttagning"
 
 #: app/widgets/gimpwidgets-constructors.c:50
-#: app/widgets/gimpwidgets-constructors.c:80
+#: app/widgets/gimpwidgets-constructors.c:83
 msgid "Multiply"
 msgstr "Multiplicera"
 
 #: app/widgets/gimpwidgets-constructors.c:51
-#: app/widgets/gimpwidgets-constructors.c:81
+#: app/widgets/gimpwidgets-constructors.c:84
 msgid "Divide"
 msgstr "Dividera"
 
 #: app/widgets/gimpwidgets-constructors.c:52
-#: app/widgets/gimpwidgets-constructors.c:82
+#: app/widgets/gimpwidgets-constructors.c:85
 msgid "Screen"
 msgstr "Mask"
 
 #: app/widgets/gimpwidgets-constructors.c:53
-#: app/widgets/gimpwidgets-constructors.c:83
+#: app/widgets/gimpwidgets-constructors.c:86
 msgid "Overlay"
 msgstr "Överlagring"
 
 #: app/widgets/gimpwidgets-constructors.c:57
-#: app/widgets/gimpwidgets-constructors.c:87
+#: app/widgets/gimpwidgets-constructors.c:90
 msgid "Hard Light"
 msgstr "Hårt ljus"
 
+#: app/widgets/gimpwidgets-constructors.c:58
+#: app/widgets/gimpwidgets-constructors.c:91
+msgid "Soft Light"
+msgstr "Mjukt ljus"
+
 #: app/widgets/gimpwidgets-constructors.c:59
-#: app/widgets/gimpwidgets-constructors.c:89
+#: app/widgets/gimpwidgets-constructors.c:92
+msgid "Grain Extract"
+msgstr "Grynextrahering"
+
+#: app/widgets/gimpwidgets-constructors.c:60
+#: app/widgets/gimpwidgets-constructors.c:93
+msgid "Grain Merge"
+msgstr "Grynsammanfogning"
+
+#: app/widgets/gimpwidgets-constructors.c:62
+#: app/widgets/gimpwidgets-constructors.c:95
 msgid "Difference"
 msgstr "Skillnad"
 
-#: app/widgets/gimpwidgets-constructors.c:60
-#: app/widgets/gimpwidgets-constructors.c:90
+#: app/widgets/gimpwidgets-constructors.c:63
+#: app/widgets/gimpwidgets-constructors.c:96
 msgid "Addition"
 msgstr "Addition"
 
-#: app/widgets/gimpwidgets-constructors.c:61
-#: app/widgets/gimpwidgets-constructors.c:91
+#: app/widgets/gimpwidgets-constructors.c:64
+#: app/widgets/gimpwidgets-constructors.c:97
 msgid "Subtract"
 msgstr "Subtraktion"
 
-#: app/widgets/gimpwidgets-constructors.c:62
-#: app/widgets/gimpwidgets-constructors.c:92
+#: app/widgets/gimpwidgets-constructors.c:65
+#: app/widgets/gimpwidgets-constructors.c:98
 msgid "Darken Only"
 msgstr "Gör endast mörkare"
 
-#: app/widgets/gimpwidgets-constructors.c:63
-#: app/widgets/gimpwidgets-constructors.c:93
+#: app/widgets/gimpwidgets-constructors.c:66
+#: app/widgets/gimpwidgets-constructors.c:99
 msgid "Lighten Only"
 msgstr "Gör endast ljusare"
 
-#: app/widgets/gimpwidgets-constructors.c:65
-#: app/widgets/gimpwidgets-constructors.c:95
+#: app/widgets/gimpwidgets-constructors.c:68
+#: app/widgets/gimpwidgets-constructors.c:101
 msgid "Hue"
 msgstr "Nyans"
 
-#: app/widgets/gimpwidgets-constructors.c:66
-#: app/widgets/gimpwidgets-constructors.c:96
+#: app/widgets/gimpwidgets-constructors.c:69
+#: app/widgets/gimpwidgets-constructors.c:102
 msgid "Saturation"
 msgstr "Mättnad"
 
@@ -7455,12 +7470,12 @@ msgstr ""
 msgid "(invalid UTF-8 string)"
 msgstr "(ogiltig UTF-8-sträng)"
 
-#: app/xcf/xcf.c:261
+#: app/xcf/xcf.c:262
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF-fel: XCF-filversion %d som inte stöds påträffad"
 
-#: app/xcf/xcf.c:320
+#: app/xcf/xcf.c:321
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "öppnande av %s misslyckades: %s\n"
@@ -8277,9 +8292,6 @@ msgstr "Ändra storlek"
 
 #~ msgid "Palette Ops"
 #~ msgstr "Palettåtgärder"
-
-#~ msgid "Merge"
-#~ msgstr "Sammanfoga"
 
 #~ msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 #~ msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
