@@ -1477,7 +1477,7 @@ msgstr ""
 
 #: app/gdisplay.c:235
 msgid "grayscale"
-msgstr "fekete-fehér"
+msgstr "szürkeárnyalatos"
 
 #: app/gdisplay.c:238
 msgid "indexed-empty"
@@ -2299,7 +2299,7 @@ msgstr ""
 #: app/image_new.c:69 app/info_window.c:71 app/info_window.c:540
 #: app/preferences_dialog.c:1654
 msgid "Grayscale"
-msgstr "fekete-fehér"
+msgstr "Szürkeárnyalatos"
 
 #: app/image_new.c:75 app/layers_dialog.c:3656
 msgid "Foreground"
@@ -6033,9 +6033,8 @@ msgid "crop"
 msgstr "másol"
 
 #: app/undo.c:2941
-#, fuzzy
 msgid "layer scale"
-msgstr "fekete-fehér"
+msgstr ""
 
 #: app/undo.c:2942
 msgid "layer resize"
