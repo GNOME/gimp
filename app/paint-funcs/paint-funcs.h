@@ -581,24 +581,26 @@ void  hls_to_rgb            (int *, int *, int *);
 #define OPAQUE_OPACITY             255
 
 /*  Layer Modes  */
-#define NORMAL_MODE        0
-#define DISSOLVE_MODE      1
-#define BEHIND_MODE        2
-#define MULTIPLY_MODE      3
-#define SCREEN_MODE        4
-#define OVERLAY_MODE       5
-#define DIFFERENCE_MODE    6
-#define ADDITION_MODE      7
-#define SUBTRACT_MODE      8
-#define DARKEN_ONLY_MODE   9
-#define LIGHTEN_ONLY_MODE  10
-#define HUE_MODE           11
-#define SATURATION_MODE    12
-#define COLOR_MODE         13
-#define VALUE_MODE         14
-#define DIVIDE_MODE        15
-#define ERASE_MODE         16
-#define REPLACE_MODE       17
+typedef enum {  /*< chop=_MODE >*/
+  NORMAL_MODE,
+  DISSOLVE_MODE,
+  BEHIND_MODE,
+  MULTIPLY_MODE,      /*< nick=MULTIPLY/BURN >*/
+  SCREEN_MODE,
+  OVERLAY_MODE,
+  DIFFERENCE_MODE,
+  ADDITION_MODE,
+  SUBTRACT_MODE,
+  DARKEN_ONLY_MODE,   /*< nick=DARKEN-ONLY >*/
+  LIGHTEN_ONLY_MODE,  /*< nick=LIGHTEN-ONLY >*/
+  HUE_MODE,
+  SATURATION_MODE,
+  COLOR_MODE,
+  VALUE_MODE,
+  DIVIDE_MODE,        /*< nick=DIVIDE/DODGE >*/
+  ERASE_MODE,
+  REPLACE_MODE,
+} LayerModeEffects;
 
 /*  Applying layer modes...  */
 

@@ -1,3 +1,32 @@
+Sat Apr  3 22:58:17 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* tools.h: #include <gtk/gtk.h>
+
+	* toolsF.h: #include <gdk/gdk.h>
+
+	* perspective_tool.c: #include <stdio.h>
+
+	* gimphistogram.c: #ifdefed a var for threads
+
+	* gimpimage.h: added chop hint to GimpImageType enum
+
+	* paint_funcs.h: made layer mode #defines an enum
+
+	* palette.c
+	* gimpunit.c: removed PDB stuff
+
+	* gimpunit_cmds.h: removed
+
+	* convert_cmds.c
+	* paths_cmds.c: pdbgen updates
+
+	* palette_cmds.c
+	* unit_cmds.c: new files
+
+	* app/internal_procs.c: use the pdbgen register_foo functions
+
+	* app/Makefile.am: changes for the above
+
 Sat Apr  3 20:42:48 1999  ape@spacetec.no  (Asbjorn Pettersen)
 
 	* app/paintbrush.c:  Skip //  comments.

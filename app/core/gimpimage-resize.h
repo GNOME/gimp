@@ -24,14 +24,14 @@
      
 
 /* the image types */
-typedef enum
+typedef enum  /*< chop=_GIMAGE >*/
 {
-        RGB_GIMAGE,
-        RGBA_GIMAGE,
-        GRAY_GIMAGE,
-        GRAYA_GIMAGE,  
-        INDEXED_GIMAGE,
-        INDEXEDA_GIMAGE
+  RGB_GIMAGE,
+  RGBA_GIMAGE,
+  GRAY_GIMAGE,
+  GRAYA_GIMAGE,
+  INDEXED_GIMAGE,
+  INDEXEDA_GIMAGE
 } GimpImageType;
 
 

@@ -207,11 +207,9 @@ convert_indexed_palette_invoker (Argument *args)
 
   num_cols = args[3].value.pdb_int;
 
-  if (success)
-    {
-      palette_name = (gchar *) args[4].value.pdb_pointer;
-      success = palette_name != NULL;
-    }
+  palette_name = (gchar *) args[4].value.pdb_pointer;
+  if (palette_name == NULL)
+    success = FALSE;
 
   if (success)
     {

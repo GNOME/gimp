@@ -23,6 +23,8 @@
 
 #include "toolsF.h"
 
+#include <gtk/gtk.h>
+
 /*  The possible states for tools  */
 #define  INACTIVE               0
 #define  ACTIVE                 1
@@ -42,8 +44,6 @@
 #define  ACTIVE_LAYER           (1 << 0)
 #define  SELECTION              (1 << 1)
 #define  NON_ACTIVE_LAYER       (1 << 2)
-
-#include "toolsF.h"
 
 /*  The types of tools...  */
 struct _tool

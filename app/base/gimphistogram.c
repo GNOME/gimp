@@ -234,7 +234,10 @@ void
 gimp_histogram_calculate (GimpHistogram *histogram, PixelRegion *region,
 			  PixelRegion *mask)
 {
-  int i, j, k;
+  int i, j;
+#ifdef ENABLE_MP
+  int k;
+#endif
 
   gimp_histogram_alloc(histogram, region->bytes);
 

@@ -46,7 +46,6 @@
 #include "gimage_cmds.h"
 #include "gimage_mask_cmds.h"
 #include "gimprc.h"
-#include "gimpunit_cmds.h"
 #include "gradient.h"
 #include "histogram_tool.h"
 #include "hue_saturation.h"
@@ -55,7 +54,6 @@
 #include "levels.h"
 #include "internal_procs.h"
 #include "paintbrush.h"
-#include "palette.h"
 #include "patterns.h"
 #include "pattern_select.h"
 #include "pencil.h"
@@ -78,6 +76,8 @@ void register_floating_sel_procs (void);
 void register_undo_procs         (void);
 void register_convert_procs      (void);
 void register_paths_procs        (void);
+void register_palette_procs         (void);
+void register_unit_procs            (void);
 
 void
 internal_procs_init ()
@@ -326,13 +326,8 @@ internal_procs_init ()
 			 pcount/total_pcount);
 
   /*  Palette  */
-  procedural_db_register (&palette_get_foreground_proc); pcount++;
-  procedural_db_register (&palette_get_background_proc); pcount++;
-  procedural_db_register (&palette_set_foreground_proc); pcount++;
-  procedural_db_register (&palette_set_background_proc); pcount++;
-  procedural_db_register (&palette_set_default_colors_proc); pcount++;
-  procedural_db_register (&palette_swap_colors_proc); pcount++; 
-  procedural_db_register (&palette_refresh_proc); pcount++;
+  register_palette_procs ();
+  pcount += 7;
 
   app_init_update_status(NULL, _("Interface procedures"),
 			 pcount/total_pcount);
@@ -420,17 +415,8 @@ internal_procs_init ()
 			 pcount/total_pcount);
 
   /*  Unit Procedures  */
-  procedural_db_register (&gimp_unit_get_number_of_units_proc); pcount++;
-  procedural_db_register (&gimp_unit_new_proc); pcount++;
-  procedural_db_register (&gimp_unit_get_deletion_flag_proc); pcount++;
-  procedural_db_register (&gimp_unit_set_deletion_flag_proc); pcount++;
-  procedural_db_register (&gimp_unit_get_identifier_proc); pcount++;
-  procedural_db_register (&gimp_unit_get_factor_proc); pcount++;
-  procedural_db_register (&gimp_unit_get_digits_proc); pcount++;
-  procedural_db_register (&gimp_unit_get_symbol_proc); pcount++;
-  procedural_db_register (&gimp_unit_get_abbreviation_proc); pcount++;
-  procedural_db_register (&gimp_unit_get_singular_proc); pcount++;
-  procedural_db_register (&gimp_unit_get_plural_proc); pcount++;
+  register_unit_procs ();
+  pcount += 11;
 
   /*  Procedural Database  */
   procedural_db_register (&procedural_db_dump_proc); pcount++;

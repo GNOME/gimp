@@ -1,6 +1,8 @@
 #ifndef __TOOLS_F_H__
 #define __TOOLS_F_H__
 
+#include <gdk/gdk.h>
+
 #include "gdisplayF.h"
 
 typedef enum

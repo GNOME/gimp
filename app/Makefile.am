@@ -198,7 +198,6 @@ gimp_SOURCES = \
 	gimphistogram.h		\
 	gimphistogramP.h	\
 	gimpunit.c		\
-	gimpunit_cmds.h		\
 	global_edit.c		\
 	global_edit.h		\
 	gradient.c		\
@@ -261,6 +260,7 @@ gimp_SOURCES = \
 	palette.c		\
 	palette_entries.h	\
 	palette.h		\
+	palette_cmds.c		\
 	palette_select.c	\
 	palette_select.h	\
 	paint_core.c		\
@@ -350,6 +350,7 @@ gimp_SOURCES = \
 	undo.h			\
 	undo_cmds.c		\
 	unitrc.h		\
+	unit_cmds.c		\
 	wilber.h		\
 	vector2d.c		\
 	vector2d.h		\

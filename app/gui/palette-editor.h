@@ -46,13 +46,4 @@ void palette_import_image_new(GimpImage * gimage);
 void palette_import_image_destroyed(GimpImage* gimage);
 void palette_import_image_renamed(GimpImage* gimage);
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord palette_get_foreground_proc;
-extern ProcRecord palette_get_background_proc;
-extern ProcRecord palette_set_foreground_proc;
-extern ProcRecord palette_set_background_proc;
-extern ProcRecord palette_set_default_colors_proc;
-extern ProcRecord palette_swap_colors_proc;
-extern ProcRecord palette_refresh_proc;
-
 #endif /* __PALETTE_H__ */

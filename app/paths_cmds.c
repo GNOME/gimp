@@ -142,11 +142,9 @@ path_get_points_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  if (success)
-    {
-      pname = (gchar *) args[1].value.pdb_pointer;
-      success = pname != NULL;
-    }
+  pname = (gchar *) args[1].value.pdb_pointer;
+  if (pname == NULL)
+    success = FALSE;
 
   if (success)
     {
@@ -343,11 +341,9 @@ path_set_current_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  if (success)
-    {
-      pname = (gchar *) args[1].value.pdb_pointer;
-      success = pname != NULL;
-    }
+  pname = (gchar *) args[1].value.pdb_pointer;
+  if (pname == NULL)
+    success = FALSE;
 
   if (success)
     success = paths_set_path (gimage, pname);
@@ -400,19 +396,15 @@ path_set_points_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  if (success)
-    {
-      pname = (gchar *) args[1].value.pdb_pointer;
-      success = pname != NULL;
-    }
+  pname = (gchar *) args[1].value.pdb_pointer;
+  if (pname == NULL)
+    success = FALSE;
 
   ptype = args[2].value.pdb_int;
 
-  if (success)
-    {
-      numpoints = args[3].value.pdb_int;
-      success = numpoints > 0;
-    }
+  numpoints = args[3].value.pdb_int;
+  if (numpoints <= 0)
+    success = FALSE;
 
   pnts = (gdouble *) args[4].value.pdb_pointer;
 
