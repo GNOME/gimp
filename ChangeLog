@@ -1,3 +1,11 @@
+2004-02-08  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb (image_rotate): fixed typo:
+	s/spacified/specified/. Spotted by Kevin Cozens.
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
 2004-02-08  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/tiff.c: applied a modified patch from Pablo

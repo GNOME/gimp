@@ -978,7 +978,7 @@ static ProcArg image_rotate_inargs[] =
 static ProcRecord image_rotate_proc =
 {
   "gimp_image_rotate",
-  "Rotates the image by the spacified degrees.",
+  "Rotates the image by the specified degrees.",
   "This procedure rotates the image.",
   "Michael Natterer",
   "Michael Natterer",

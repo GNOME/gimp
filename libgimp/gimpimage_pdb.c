@@ -467,7 +467,7 @@ gimp_image_flip (gint32              image_ID,
  * @image_ID: The image.
  * @rotate_type: Angle of rotation.
  *
- * Rotates the image by the spacified degrees.
+ * Rotates the image by the specified degrees.
  *
  * This procedure rotates the image.
  *

@@ -433,7 +433,7 @@ CODE
 }
 
 sub image_rotate {
-    $blurb = 'Rotates the image by the spacified degrees.';
+    $blurb = 'Rotates the image by the specified degrees.';
     $help = 'This procedure rotates the image.';
     $author = $copyright = 'Michael Natterer';
     $date = '2003';
