@@ -1,3 +1,8 @@
+2001-12-29  Sven Neumann  <sven@gimp.org>
+
+	* data/brushes/Makefile.am (brushdata_DATA): added missing brush
+	vine.gih.
+
 2001-12-29  Michael Natterer  <mitch@gimp.org>
 	    Sven Neumann  <sven@gimp.org>
 	    Simon Budig  <simon@gimp.org>
