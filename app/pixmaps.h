@@ -924,41 +924,39 @@ static char *swap_bits [] =
   "........eae..",
   ".........e..."
 };
-#define bezier_width 22
-#define bezier_height 22
+
 /*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: swap  */
+/*  Image name: ink  */
 
-
+#define ink_width 22
+#define ink_height 22
 static char *ink_bits [] =
 {
   "......................",
   "......................",
+  "...............aa.....",
+  "..............aaea....",
+  ".............aaeaaa...",
+  "............aaeaaaa...",
+  "...........aaeaaaae...",
+  "..........aaeaaaae....",
+  ".........aaeaaaae.....",
+  ".......aaaeaaaae......",
+  ".....aaaaaaaaae.......",
+  "....aaghhaaaae........",
+  "....ahaeagaae.........",
+  "...aahgaegaae.........",
+  "...ahhaeaeae..........",
+  "...ahaeggaae..........",
+  "..ahaegaaae...........",
+  "..aaeaaaee............",
+  ".aaaaeee..............",
+  ".aaee.................",
+  "..ee.................."
   "......................",
-  "...............a......",
-  "...............ae.....",
-  "..............aaae....",
-  ".............ahagae...",
-  ".............ahahae...",
-  ".............ahahae...",
-  "............ahgaggae..",
-  "............ahgaggae..",
-  "...........ahgaaaggae.",
-  "...........ahgeaeggae.",
-  "............agggggaee.",
-  ".............agggaee..",
-  ".............aaaaae...",
-  ".............aeaaae...",
-  ".............aeaaae...",
-  ".............aeaaae...",
-  ".............aeaaae...",
-  "..............eeeee...",
-  "......................"
 };
-#define ink_width 22
-#define ink_height 22
 
-/* FIXME dialog is basicaly a teporary pixmap so the device status
+/* FIXME dialog is basically a temporary pixmap so the device status
  * window doesn't have problems showing the dialog devices, it doesn't
  * really represent anything and really should be changed
  */

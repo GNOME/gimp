@@ -1,3 +1,8 @@
+Mon Jun 22 23:35:52 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/pixmaps.h: Made a new pixmap for the ink tool that fits
+	better to the others.
+
 Mon Jun 22 18:43:22 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/Makefile.am
