@@ -123,10 +123,10 @@ static BlurInterface blur_int =
  ********************************/
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -140,10 +140,10 @@ GimpPlugInInfo PLUG_IN_INFO =
 static void blur (GimpDrawable *drawable);
 
 static inline void blur_prepare_row (GimpPixelRgn *pixel_rgn,
-				     guchar    *data,
-				     gint       x,
-				     gint       y,
-				     gint       w);
+				     guchar       *data,
+				     gint          x,
+				     gint          y,
+				     gint          w);
 
 static gint blur_dialog      (void);
 static void blur_ok_callback (GtkWidget *widget,
@@ -222,16 +222,16 @@ query (void)
  ********************************/
 
 static void
-run (gchar   *name, 
-     gint     nparams, 
-     GimpParam  *param, 
-     gint    *nreturn_vals,
+run (gchar      *name,
+     gint        nparams,
+     GimpParam  *param,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;        /* assume the best! */
-  static GimpParam values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;        /* assume the best! */
+  static GimpParam   values[1];
 
   INIT_I18N ();
 
@@ -239,7 +239,7 @@ run (gchar   *name,
    *  Get the specified drawable, do standard initialization.
    */
   run_mode = param[0].data.d_int32;
-  drawable = gimp_drawable_get(param[2].data.d_drawable);
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
@@ -314,7 +314,8 @@ run (gchar   *name,
 	   *  JUST DO IT!
 	   */
 	  gimp_progress_init (_("Blurring..."));
-	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
+          gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width ()
+                                       + 1));
 	  /*
 	   *  Initialize the rand() function seed
 	   */
@@ -396,18 +397,19 @@ blur_prepare_row (GimpPixelRgn *pixel_rgn,
 static void
 blur (GimpDrawable *drawable)
 {
-  GimpPixelRgn srcPR, destPR, destPR2, *sp, *dp, *tp;
-  gint width, height;
-  gint bytes;
-  guchar *dest, *d;
-  guchar *prev_row, *pr;
-  guchar *cur_row, *cr;
-  guchar *next_row, *nr;
-  guchar *tmp;
-  gint row, col;
-  gint x1, y1, x2, y2;
-  gint cnt, ind;
-  gboolean has_alpha;
+  GimpPixelRgn  srcPR, destPR, destPR2, *sp, *dp, *tp;
+  gint          width, height;
+  gint          bytes;
+  guchar       *dest, *d;
+  guchar       *prev_row, *pr;
+  guchar       *cur_row, *cr;
+  guchar       *next_row, *nr;
+  guchar       *tmp;
+  gint          row, col;
+  gint          x1, y1, x2, y2;
+  gint          cnt, ind;
+  gint          repeat_count;
+  gboolean      has_alpha;
 
   /*
    *  Get the input area. This is the bounding box of the selection in
@@ -416,7 +418,7 @@ blur (GimpDrawable *drawable)
    *  need to be done for correct operation. (It simply makes it go
    *  faster, since fewer pixels need to be operated on).
    */
-  gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   /*
    *  Get the size of the input image. (This will/must be the same
    *  as the size of the output image.  Also get alpha info.
@@ -424,7 +426,7 @@ blur (GimpDrawable *drawable)
   width = drawable->width;
   height = drawable->height;
   bytes = drawable->bpp;
-  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   /*
    *  allocate row buffers
    */
@@ -447,20 +449,22 @@ blur (GimpDrawable *drawable)
   cr = cur_row + bytes;
   nr = next_row + bytes;
 
-  for (cnt = 1; cnt <= pivals.blur_rcount; cnt++)
+  repeat_count = (gint) pivals.blur_rcount;
+
+  for (cnt = 1; cnt <= repeat_count; cnt++)
     {
       /*
        *  prepare the first row and previous row
        */
-      blur_prepare_row(sp, pr, x1, y1 - 1, (x2 - x1));
-      blur_prepare_row(dp, cr, x1, y1, (x2 - x1));
+      blur_prepare_row (sp, pr, x1, y1 - 1, (x2 - x1));
+      blur_prepare_row (dp, cr, x1, y1, (x2 - x1));
       /*
        *  loop through the rows, applying the selected convolution
        */
       for (row = y1; row < y2; row++)
 	{
 	  /*  prepare the next row  */
-	  blur_prepare_row(sp, nr, x1, row + 1, (x2 - x1));
+	  blur_prepare_row (sp, nr, x1, row + 1, (x2 - x1));
 
 	  d = dest;
 	  ind = 0;
@@ -523,7 +527,7 @@ blur (GimpDrawable *drawable)
 	   *  Save the modified row, shuffle the row pointers, and every
 	   *  so often, update the progress meter.
 	   */
-	  gimp_pixel_rgn_set_row(dp, dest, x1, row, (x2 - x1));
+	  gimp_pixel_rgn_set_row (dp, dest, x1, row, (x2 - x1));
 
 	  tmp = pr;
 	  pr = cr;
@@ -531,12 +535,12 @@ blur (GimpDrawable *drawable)
 	  nr = tmp;
 
 	  if (PROG_UPDATE_TIME)
-	    gimp_progress_update((double) row / (double) (y2 - y1));
+	    gimp_progress_update ((double) row / (double) (y2 - y1));
         }
       /*
        *  if we have more cycles to perform, swap the src and dest Pixel Regions
        */
-      if (cnt < pivals.blur_rcount)
+      if (cnt < repeat_count)
 	{
 	  if (tp != NULL)
 	    {
@@ -556,9 +560,9 @@ blur (GimpDrawable *drawable)
   /*
    *  update the blurred region
    */
-  gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
-  gimp_drawable_update(drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
   /*
    *  clean up after ourselves.
    */
