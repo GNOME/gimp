@@ -244,26 +244,31 @@ paint_core_button_press (Tool           *tool,
       paint_core->startwheel = paint_core->lastwheel;
 #endif /* GTK_HAVE_SIX_VALUATORS */
 
-      /* restrict to horizontal/vertical lines, if modifiers are pressed */
-      if (bevent->state & GDK_MOD1_MASK)
+      /* Restrict to multiples of 15 degrees if ctrl is pressed */
+      if (bevent->state & GDK_CONTROL_MASK)
 	{
-	  if (bevent->state & GDK_CONTROL_MASK)
+	  int tangens2[6] = {  34, 106, 196, 334, 618, 1944 };
+	  int cosinus[7]  = { 256, 247, 222, 181, 128, 66, 0 };
+	  int dx, dy, i, radius, frac;
+	  
+	  dx = paint_core->curx - paint_core->lastx;
+	  dy = paint_core->cury - paint_core->lasty;
+	  
+	  if (dy)
 	    {
-	      double dx, dy;
-	
-	      dx = paint_core->curx - paint_core->lastx;
-	      dy = paint_core->cury - paint_core->lasty;
-
-	      paint_core->curx = paint_core->lastx + 
-		(dx > 0 ? MAX (fabs (dx), fabs (dy)) : - MAX (fabs (dx), fabs (dy)));
-	      paint_core->cury = paint_core->lasty + 
-		(dy > 0  ? MAX (fabs (dx), fabs (dy)) : - MAX (fabs (dx), fabs (dy)));
+	      radius = sqrt (SQR (dx) + SQR (dy));
+	      frac = abs ((dx << 8) / dy);
+	      for (i = 0; i < 6; i++)
+		{
+		  if (frac < tangens2[i])
+		    break;  
+		}
+	      dx = dx > 0 ? (cosinus[6-i] * radius) >> 8 : - ((cosinus[6-i] * radius) >> 8);
+	      dy = dy > 0 ? (cosinus[i] * radius) >> 8 : - ((cosinus[i] * radius) >> 8);
 	    }
-	  else
-	    paint_core->curx = paint_core->lastx;
+	  paint_core->curx = paint_core->lastx + dx;
+	  paint_core->cury = paint_core->lasty + dy;
 	}
-      else if (bevent->state & GDK_CONTROL_MASK)
-	paint_core->cury = paint_core->lasty;
     }
 
   tool->state = ACTIVE;
@@ -448,29 +453,33 @@ paint_core_cursor_update (Tool           *tool,
 	  dx = paint_core->curx - paint_core->lastx;
 	  dy = paint_core->cury - paint_core->lasty;
 		  
-	  /* restrict to horizontal/vertical lines, if modifiers are pressed */
-	  if (mevent->state & GDK_MOD1_MASK)
+	  /* Restrict to multiples of 15 degrees if ctrl is pressed */
+	  if (mevent->state & GDK_CONTROL_MASK)
 	    {
-	      if (mevent->state & GDK_CONTROL_MASK)
+	      int idx = dx;
+	      int idy = dy;
+	      int tangens2[6] = {  34, 106, 196, 334, 618, 1944 };
+	      int cosinus[7]  = { 256, 247, 222, 181, 128, 66, 0 };
+	      int i, radius, frac;
+      
+	      if (idy)
 		{
-		  dx = paint_core->curx - paint_core->lastx;
-		  dy = paint_core->cury - paint_core->lasty;
-
-		  paint_core->curx = paint_core->lastx + 
-		    (dx > 0 ? MAX (fabs (dx), fabs (dy)) : - MAX (fabs (dx), fabs (dy)));
-		  paint_core->cury = paint_core->lasty + 
-		    (dy > 0  ? MAX (fabs (dx), fabs (dy)) : - MAX (fabs (dx), fabs (dy)));
+		  radius = sqrt (SQR (idx) + SQR (idy));
+		  frac = abs ((idx << 8) / idy);
+		  for (i = 0; i < 6; i++)
+		    {
+		      if (frac < tangens2[i])
+			break;  
+		    }
+		  dx = idx > 0 ? (cosinus[6-i] * radius) >> 8 : - ((cosinus[6-i] * radius) >> 8);
+		  dy = idy > 0 ? (cosinus[i] * radius) >> 8 : - ((cosinus[i] * radius) >> 8);
 		}
-	      else
-		paint_core->curx = paint_core->lastx;
+
+	      paint_core->curx = paint_core->lastx + dx;
+	      paint_core->cury = paint_core->lasty + dy;
 	    }
-	  else if (mevent->state & GDK_CONTROL_MASK)
-	    paint_core->cury = paint_core->lasty;
 
 	  /*  show distance in statusbar  */
-	  dx = paint_core->curx - paint_core->lastx;
-	  dy = paint_core->cury - paint_core->lasty;
-
 	  if (gdisp->dot_for_dot)
 	    {
 	      d = sqrt (SQR (dx) + SQR (dy));

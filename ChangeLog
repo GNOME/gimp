@@ -1,3 +1,8 @@
+Thu Nov 25 02:56:01 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/blend.c
+	* app/paint_core.c: Ctrl now restrict to 15 degrees (on a circle)
+
 Wed Nov 24 17:38:45 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.12 release
