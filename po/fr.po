@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.15\n"
-"POT-Creation-Date: 2003-04-26 01:03+0200\n"
+"POT-Creation-Date: 2003-04-26 11:09+0200\n"
 "PO-Revision-Date: 2003-04-25 22:15+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -300,7 +300,7 @@ msgstr "Valeur « %ld » non valide pour l'expression %s"
 #: app/config/gimpconfig-deserialize.c:573
 #, c-format
 msgid "while parsing token %s: %s"
-msgstr "en interprétant l'expression %s : %s"
+msgstr "en interprétant l'expression %s : %s"
 
 #: app/config/gimpconfig-deserialize.c:710
 #, c-format
@@ -316,7 +316,7 @@ msgstr "ne peut étendre ${%s}"
 #: app/config/gimpconfigwriter.c:77
 #, c-format
 msgid "Failed to create temporary file for '%s': %s"
-msgstr "Impossible de créer le fichier temporaire pour « %s » : %s"
+msgstr "La création de fichier temporaire pour « %s » a échoué : %s"
 
 #: app/config/gimpconfigwriter.c:91
 #, c-format
@@ -350,7 +350,7 @@ msgstr "Erreur d'écriture vers « %s » : %s"
 #: app/config/gimpconfigwriter.c:393
 #, c-format
 msgid "Failed to create file '%s': %s"
-msgstr "Impossible de créer le fichier « %s » : %s"
+msgstr "La création du fichier « %s » a échoué : %s"
 
 #: app/config/gimprc.c:341 app/config/gimprc.c:353 app/gui/gui.c:192
 #: app/gui/gui.c:203
@@ -415,7 +415,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:128
 msgid "Sets the browser used by the help system."
-msgstr ""
+msgstr "Défini le navigateur utilisé par le système d'aide"
 
 #: app/config/gimprc-blurbs.h:131
 msgid "Sets the text to appear in image window status bars."
@@ -647,7 +647,7 @@ msgstr ""
 #: app/tools/gimplevelstool.c:1545
 #, c-format
 msgid "Failed to open file: '%s': %s"
-msgstr "Impossible d'ouvrir le fichier « %s » : %s"
+msgstr "L'ouverture du fichier « %s » a échoué : %s"
 
 #: app/config/gimpscanner.c:149
 msgid "invalid UTF-8 string"
@@ -659,7 +659,7 @@ msgid ""
 "Error while parsing '%s' in line %d:\n"
 "%s"
 msgstr ""
-"Erreur durant l'interprétation de «'%s» à la ligne %d:\n"
+"Erreur durant l'interprétation de « %s » à la ligne %d :\n"
 " %s"
 
 #: app/core/core-enums.c:13
@@ -1394,7 +1394,7 @@ msgid ""
 "Warning: Failed to save data:\n"
 "%s"
 msgstr ""
-"Avertissement : échec du chargement des données :\n"
+"Avertissement : l'enregistrement des données a échoué :\n"
 "%s"
 
 #: app/core/gimpdatafactory.c:380 app/core/gimpdatafactory.c:383
@@ -1423,7 +1423,7 @@ msgid ""
 "Warning: Failed to load data:\n"
 "%s"
 msgstr ""
-"Avertissement : échec du chargement des données :\n"
+"Avertissement : le chargement des données a échoué :\n"
 "%s"
 
 #: app/core/gimpdrawable-blend.c:235 app/tools/gimpblendtool.c:94
@@ -1707,12 +1707,11 @@ msgstr "Réduire la sélection"
 
 #: app/core/gimpimage-mask.c:739
 msgid "Paint operation failed."
-msgstr "Échec de l'opération de peinture."
+msgstr "L'opération de peinture a échoué."
 
 #: app/core/gimpimage-merge.c:89
-#, fuzzy
 msgid "Merge Visible Layers"
-msgstr "/Image/Fusionner les calques visibles..."
+msgstr "Fusionner les calques visibles"
 
 #: app/core/gimpimage-merge.c:105
 msgid ""
@@ -1723,28 +1722,24 @@ msgstr ""
 "fusion. Il en faut au moins deux."
 
 #: app/core/gimpimage-merge.c:138
-#, fuzzy
 msgid "Flatten Image"
-msgstr "/Image/Aplatir l'image"
+msgstr "Aplatir l'image"
 
 #: app/core/gimpimage-merge.c:187
-#, fuzzy
 msgid "Merge Down"
-msgstr "/Fusionner vers le bas"
+msgstr "Fusionner vers le bas"
 
 #: app/core/gimpimage-merge.c:196
 msgid "There are not enough visible layers for a merge down."
-msgstr "Il n'y a pas assez de calques visibles pour une fusion."
+msgstr "Il n'y a pas assez de calques visibles pour une fusion vers le bas."
 
 #: app/core/gimpimage-qmask.c:72
-#, fuzzy
 msgid "Enable QuickMask"
-msgstr "(Dés)activer le Masquage rapide"
+msgstr "Activer le masquage rapide"
 
 #: app/core/gimpimage-qmask.c:126
-#, fuzzy
 msgid "Disable QuickMask"
-msgstr "(Dés)activer le Masquage rapide"
+msgstr "Désactiver le masquage rapide"
 
 #: app/core/gimpimage-undo-push.c:3186
 #, c-format
@@ -1758,24 +1753,20 @@ msgid "Untitled"
 msgstr "SansTitre"
 
 #: app/core/gimpimage.c:987
-#, fuzzy
 msgid "Change Image Resolution"
-msgstr "Repositionnement du canal"
+msgstr "Modifier la résolution de l'image"
 
 #: app/core/gimpimage.c:1026
-#, fuzzy
 msgid "Change Image Unit"
-msgstr "Convertir l'image"
+msgstr "Modifier l'unité de l'image"
 
 #: app/core/gimpimage.c:1925
-#, fuzzy
 msgid "Attach Paraite to Image"
-msgstr "Attacher un parasite"
+msgstr "Attacher un parasite à l'image"
 
 #: app/core/gimpimage.c:1958
-#, fuzzy
 msgid "Remove Parasite from Image"
-msgstr "Enlever un parasite"
+msgstr "Enlever un parasite de l'image"
 
 #: app/core/gimpimage.c:2494
 msgid "Add Layer"
@@ -1882,12 +1873,12 @@ msgstr "Descendre le chemin"
 #, c-format
 msgid "Failed to write thumbnail for '%s' as '%s': %s"
 msgstr ""
-"Impossible d'écrire le fichier vignette pour « %s » en tant que « %s » : %s"
+"L'écriture du fichier vignette pour « %s » en tant que « %s » a échoué : %s"
 
 #: app/core/gimpimagefile.c:470 app/core/gimpimagefile.c:1060
 #, c-format
 msgid "Failed to set permissions of thumbnail '%s': %s"
-msgstr "Echec lors du réglage des permissions du fichier vignette « %s » : %s"
+msgstr "Le réglage des permissions du fichier vignette « %s » a échoué : %s"
 
 #: app/core/gimpimagefile.c:748
 msgid "Remote image"
@@ -1895,11 +1886,11 @@ msgstr "Image distante"
 
 #: app/core/gimpimagefile.c:753
 msgid "Failed to open"
-msgstr "Impossible d'ouvrir le fichier"
+msgstr "L'ouverture a échoué"
 
 #: app/core/gimpimagefile.c:778
 msgid "No preview available"
-msgstr "aucun aperçu disponible"
+msgstr "Aucun aperçu disponible"
 
 #: app/core/gimpimagefile.c:782
 msgid "Loading preview ..."
@@ -1930,22 +1921,20 @@ msgstr "%d Calques"
 #: app/core/gimpimagefile.c:899
 #, c-format
 msgid "Failed to open thumbnail file '%s': %s"
-msgstr "Impossible d'ouvrir le fichier vignette « %s » : %s"
+msgstr "L'ouverture du fichier vignette « %s » a échoué : %s"
 
 #: app/core/gimpimagefile.c:1148
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "Impossible de créer le répertoire de stockage des vignettes : « %s »."
+msgstr "La création du répertoire de vignettes a échoué : « %s »."
 
 #: app/core/gimpitem.c:413
-#, fuzzy
 msgid "Attach Parasite to Item"
-msgstr "Attacher un parasite"
+msgstr "Attacher un parasite à l'élément"
 
 #: app/core/gimpitem.c:452 app/core/gimpitem.c:459
-#, fuzzy
 msgid "Remove Parasite from Item"
-msgstr "Enlever un parasite"
+msgstr "Enlever un parasite de l'élément"
 
 #: app/core/gimplayer-floating-sel.c:124
 msgid ""
@@ -2476,9 +2465,9 @@ msgid "/Delete Buffer"
 msgstr "/Supprimer le tampon"
 
 #: app/gui/channels-commands.c:140
-#, fuzzy, c-format
+#, c-format
 msgid "%s Channel Copy"
-msgstr "Copie de canal vide"
+msgstr "Copie de canal %s"
 
 #: app/gui/channels-commands.c:203 app/widgets/gimpchanneltreeview.c:278
 msgid "Channel to Selection"
@@ -3045,7 +3034,7 @@ msgstr "Couper (nommé)"
 
 #: app/gui/edit-commands.c:195 app/gui/edit-commands.c:213
 msgid "Enter a name for this buffer"
-msgstr "Entrez un nom pour ce tampon"
+msgstr "Saisissez un nom pour ce tampon"
 
 #: app/gui/edit-commands.c:210
 msgid "Copy Named"
@@ -3085,33 +3074,34 @@ msgstr ""
 "%s"
 
 #: app/gui/file-commands.c:241 app/gui/file-save-dialog.c:413
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Saving '%s' failed:\n"
 "\n"
 "%s"
-msgstr "Échec de l'enregistrement de « %s »"
+msgstr ""
+"L'enregistrement de « %s » a échoué :\n"
+"\n"
+"%s"
 
 #: app/gui/file-commands.c:282
-#, fuzzy
 msgid "Create New Template"
-msgstr "Créer une nouvelle image"
+msgstr "Créer une nouveau modèle"
 
 #: app/gui/file-commands.c:285
-#, fuzzy
 msgid "Enter a name for this template"
-msgstr "Entrez un nom pour ce tampon"
+msgstr "Saisissez un nom pour ce modèle"
 
 #: app/gui/file-commands.c:308
 msgid ""
 "Revert failed.\n"
 "No file name associated with this image."
 msgstr ""
-"Retour impossible.\n"
-"Pas de fichier associé à cette image."
+"Le retour a échoué.\n"
+"Aucun nom de fichier associé à cette image."
 
 #: app/gui/file-commands.c:322
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Revert '%s' to\n"
 "'%s'?\n"
@@ -3119,28 +3109,28 @@ msgid ""
 "You will lose all your changes, including all undo information."
 msgstr ""
 "Retour de « %s » vers\n"
-"« %s »\n"
+"« %s » ?\n"
 "\n"
-"(Vous perdrez tous vos changements,\n"
-"y compris toutes les informations d'annulations)"
+"Vous perdrez tous vos modifications, y compris toutes les informations "
+"d'annulations)"
 
 #: app/gui/file-commands.c:330
 msgid "Revert Image"
 msgstr "Annuler l'image ?"
 
 #: app/gui/file-commands.c:396
-#, fuzzy
 msgid "(Unnamed Template)"
-msgstr "(Tampon sans nom)"
+msgstr "(Modèle sans nom)"
 
 #: app/gui/file-commands.c:452
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
 "\n"
 "%s"
 msgstr ""
-"Retour vers « %s » impossible:\n"
+"Le retour vers « %s » a échoué :\n"
+"\n"
 "%s"
 
 #: app/gui/file-dialog-utils.c:117
@@ -3157,9 +3147,8 @@ msgid "Create a New Image"
 msgstr "Créer une nouvelle image"
 
 #: app/gui/file-new-dialog.c:134
-#, fuzzy
 msgid "From _Template:"
-msgstr "Depuis le thème"
+msgstr "Depuis le _modèle :"
 
 #: app/gui/file-new-dialog.c:263
 #, c-format
@@ -3248,13 +3237,12 @@ msgid "/By Extension"
 msgstr "/Par extension"
 
 #: app/gui/font-select.c:230
-#, fuzzy
 msgid ""
 "Unable to run font callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
-"Impossible d'effectuer le rappel du dégradé.\n"
-"Le greffon correspondant a peut être échoué. "
+"Impossible d'effectuer le rappel de polices.\n"
+"Le greffon correspondant a peut être échoué."
 
 #: app/gui/gradient-editor-commands.c:83
 msgid "Left Endpoint Color"
@@ -4709,15 +4697,15 @@ msgstr "Éditer l'entrée de la palette de couleur"
 
 #: app/gui/palette-editor-menu.c:38
 msgid "/New Color"
-msgstr "/Nouvelle Couleur"
+msgstr "/Nouvelle couleur"
 
 #: app/gui/palette-editor-menu.c:48
 msgid "/Delete Color"
-msgstr "/Effacer la Couleur"
+msgstr "/Effacer la couleur"
 
 #: app/gui/palette-import-dialog.c:166
 msgid "Import Palette"
-msgstr "Importer Palette"
+msgstr "Importer une palette"
 
 #: app/gui/palette-import-dialog.c:168
 msgid "Import a New Palette"
@@ -4780,19 +4768,19 @@ msgstr ""
 
 #: app/gui/palettes-commands.c:81
 msgid "Merge Palette"
-msgstr "Fusionner la Palette"
+msgstr "Fusionner la palette"
 
 #: app/gui/palettes-commands.c:84
 msgid "Enter a name for merged palette"
-msgstr "Entrez un nom pour la palette fusionnée"
+msgstr "Saisissez un nom pour la palette fusionnée"
 
 #: app/gui/palettes-menu.c:45
 msgid "/New Palette"
-msgstr "/Nouvelle Palette"
+msgstr "/Nouvelle palette"
 
 #: app/gui/palettes-menu.c:50
 msgid "/Duplicate Palette"
-msgstr "/Dupliquer la Palette"
+msgstr "/Dupliquer la palette"
 
 #: app/gui/palettes-menu.c:55
 msgid "/Edit Palette..."
@@ -4800,7 +4788,7 @@ msgstr "/Éditer la palette..."
 
 #: app/gui/palettes-menu.c:60
 msgid "/Delete Palette..."
-msgstr "/Supprimer la Palette..."
+msgstr "/Supprimer la palette..."
 
 #: app/gui/palettes-menu.c:68
 msgid "/Refresh Palettes"
@@ -4808,11 +4796,11 @@ msgstr "/Rafraîchir les palettes"
 
 #: app/gui/palettes-menu.c:76
 msgid "/Import Palette..."
-msgstr "/Importer la Palette..."
+msgstr "/Importer la palette..."
 
 #: app/gui/palettes-menu.c:81
 msgid "/Merge Palettes..."
-msgstr "/Fusionner les Palettes..."
+msgstr "/Fusionner les palettes..."
 
 #: app/gui/paths-dialog.c:163
 msgid "/New Path"
@@ -4912,31 +4900,31 @@ msgstr "Édition des attributs du chemin"
 
 #: app/gui/paths-dialog.c:1068
 msgid "Enter a new name for the path"
-msgstr "Entrez un nouveau nom pour le chemin"
+msgstr "Saisissez un nouveau nom pour le chemin"
 
 #: app/gui/paths-dialog.c:1978
 #, c-format
 msgid "Failed to read from '%s'."
-msgstr "Échec de la lecture à partir de « %s »"
+msgstr "La lecture à partir de « %s » a échoué."
 
 #: app/gui/paths-dialog.c:1993
 #, c-format
 msgid "Failed to read path from '%s'."
-msgstr "Échec de la lecture du chemin à partir de « %s »"
+msgstr "La lecture du chemin à partir de « %s » a échoué."
 
 #: app/gui/paths-dialog.c:2000
 #, c-format
 msgid "No points specified in path file '%s'."
-msgstr "Aucun point spécifié dans le fichier de chemin « %s »"
+msgstr "Aucun point spécifié dans le fichier de chemin « %s »."
 
 #: app/gui/paths-dialog.c:2011
 #, c-format
 msgid "Failed to read path points from '%s'."
-msgstr "Échec de la lecture des points du chemin à partir de « %s »."
+msgstr "La lecture des points du chemin à partir de « %s » a échoué."
 
 #: app/gui/paths-dialog.c:2110
 msgid "Load and Save Bezier Curves"
-msgstr "Charger et Enregistrer des Courbes de Bézier"
+msgstr "Charger et enregistrer des courbes de Bézier"
 
 #: app/gui/paths-dialog.c:2148
 msgid "Load Path"
@@ -4944,7 +4932,7 @@ msgstr "Charger chemin"
 
 #: app/gui/paths-dialog.c:2170
 msgid "Save Path"
-msgstr "Enregistrer le Chemin"
+msgstr "Enregistrer le chemin"
 
 #: app/gui/pattern-select.c:248
 msgid ""
@@ -5060,12 +5048,11 @@ msgstr "Aperçus"
 
 #: app/gui/preferences-dialog.c:1137
 msgid "_Enable Layer & Channel Previews"
-msgstr ""
+msgstr "_Activer les aperçus de Calque & Canal"
 
 #: app/gui/preferences-dialog.c:1143
-#, fuzzy
 msgid "_Layer & Channel Preview Size:"
-msgstr "Taille de l'aperçu de _navigation :"
+msgstr "Taille de l'aperçu de _Calque & Canal :"
 
 #: app/gui/preferences-dialog.c:1146
 msgid "_Navigation Preview Size:"
@@ -5078,7 +5065,7 @@ msgstr "Comportement du dialogue"
 
 #: app/gui/preferences-dialog.c:1153
 msgid "_Info Window Per Display"
-msgstr "Fenêtre d'informations par Affichage"
+msgstr "Fenêtre d'_informations par Affichage"
 
 #. Menus
 #: app/gui/preferences-dialog.c:1157
@@ -5087,39 +5074,36 @@ msgstr "Menus"
 
 #: app/gui/preferences-dialog.c:1160
 msgid "Enable _Tearoff Menus"
-msgstr "Activer les menus détachables"
+msgstr "Activer les menus _détachables"
 
 #: app/gui/preferences-dialog.c:1166
-#, fuzzy
 msgid "Open _Recent Menu Size:"
-msgstr "Taille de la _liste des documents récents :"
+msgstr "Taille du menu des documents _récents :"
 
 #. Keyboard Shortcuts
 #: app/gui/preferences-dialog.c:1170
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Raccourcis clavier"
 
 #: app/gui/preferences-dialog.c:1173
 msgid "Dynamic _Keyboard Shortcuts"
-msgstr ""
+msgstr "Raccourcis clavier _dynamiques"
 
 #: app/gui/preferences-dialog.c:1176
 msgid "Save Keyboard Shortcuts on Exit"
-msgstr ""
+msgstr "Enregistrer à la sortie les raccourcis clavier"
 
 #: app/gui/preferences-dialog.c:1179
-#, fuzzy
 msgid "Restore Saved Keyboard Shortcuts on Start-up"
-msgstr "Retrouver au démarrage les positions sauvegardées des fenêtres"
+msgstr "Restaurer au démarrage les raccourcis clavier enregistrés"
 
 #: app/gui/preferences-dialog.c:1187
 msgid "Save Keyboard Shortcuts Now"
-msgstr ""
+msgstr "Enregistrer maintenant les raccourcis clavier"
 
 #: app/gui/preferences-dialog.c:1196
-#, fuzzy
 msgid "Clear Saved Keyboard Shortcuts Now"
-msgstr "Effacer maintenant l'emplacement des fenêtres enregistrées"
+msgstr "Effacer maintenant les raccourcis clavier enregistrés"
 
 #. Window Positions
 #: app/gui/preferences-dialog.c:1206
@@ -5128,20 +5112,19 @@ msgstr "Emplacements des fenêtres"
 
 #: app/gui/preferences-dialog.c:1209
 msgid "_Save Window Positions on Exit"
-msgstr "Enregistrer l'emplacement des fenêtres en quittant"
+msgstr "_Enregistrer à la sortie la position des fenêtres"
 
 #: app/gui/preferences-dialog.c:1212
 msgid "R_estore Saved Window Positions on Start-up"
-msgstr "Retrouver au démarrage les positions sauvegardées des fenêtres"
+msgstr "R_estaurer au démarrage la position des fenêtres enregistrée"
 
 #: app/gui/preferences-dialog.c:1220
-#, fuzzy
 msgid "Save Window Positions Now"
-msgstr "Effacer maintenant l'emplacement des fenêtres enregistrées"
+msgstr "Enregistrer maintenant la positions des fenêtres"
 
 #: app/gui/preferences-dialog.c:1229
 msgid "Clear Saved Window Positions Now"
-msgstr "Effacer maintenant l'emplacement des fenêtres enregistrées"
+msgstr "Effacer maintenant la position des fenêtres enregistrée"
 
 #: app/gui/preferences-dialog.c:1244 app/gui/preferences-dialog.c:1247
 msgid "Help System"
@@ -5153,7 +5136,7 @@ msgstr "Afficher les _bulles d'aide"
 
 #: app/gui/preferences-dialog.c:1260
 msgid "Context Sensitive _Help with \"F1\""
-msgstr "Aide contextuelle avec « F1 »"
+msgstr "_Aide contextuelle avec « F1 »"
 
 #: app/gui/preferences-dialog.c:1263
 msgid "Show Tips on _Startup"
@@ -5237,13 +5220,12 @@ msgid "Fit to Window"
 msgstr "Ajuster à la fenêtre"
 
 #: app/gui/preferences-dialog.c:1393
-#, fuzzy
 msgid "Inital Zoom Ratio:"
-msgstr "Facteur d'échelle :"
+msgstr "Facteur de Zoom initial :"
 
 #: app/gui/preferences-dialog.c:1396
 msgid "Marching _Ants Speed:"
-msgstr "Vitesse de défilement des « pointillés » :"
+msgstr "Vitesse de défilement des « _pointillés » :"
 
 #. Canvas Padding Color
 #: app/gui/preferences-dialog.c:1400
@@ -5264,17 +5246,16 @@ msgstr "Sélectionner une couleur personnalisée pour remplir le canevas"
 
 #. Zoom & Resize Behavior
 #: app/gui/preferences-dialog.c:1415
-#, fuzzy
 msgid "Zoom & Resize Behavior"
-msgstr "Comportement du Zoom et du Redimensionnement"
+msgstr "Comportement du Zoom & Redimensionnement"
 
 #: app/gui/preferences-dialog.c:1419
 msgid "Resize Window on _Zoom"
-msgstr "Redimensionner la fenêtre après un zoom"
+msgstr "Redimensionner la fenêtre après un _zoom"
 
 #: app/gui/preferences-dialog.c:1422
 msgid "Resize Window on Image _Size Change"
-msgstr "Redimensionner la fenêtre après un changement de taille d'image"
+msgstr "Redimensionner la fenêtre après un changement de _taille d'image"
 
 #. Pointer Movement Feedback
 #: app/gui/preferences-dialog.c:1426
@@ -5283,11 +5264,11 @@ msgstr "Suivi du mouvement du pointeur"
 
 #: app/gui/preferences-dialog.c:1430
 msgid "Perfect-but-Slow _Pointer Tracking"
-msgstr "Suivi du pointeur parfait mais lent"
+msgstr "Suivi du _pointeur parfait mais lent"
 
 #: app/gui/preferences-dialog.c:1433
 msgid "Enable Cursor _Updating"
-msgstr "Active la mise à jour du curseur"
+msgstr "Active la _mise à jour du curseur"
 
 #: app/gui/preferences-dialog.c:1439
 msgid "Cursor M_ode:"
@@ -5665,7 +5646,7 @@ msgstr "Calibrer la résolution du moniteur"
 
 #: app/gui/resolution-calibrate-dialog.c:236
 msgid "Measure the rulers and enter their lengths below."
-msgstr "Mesurez la règle et entrez sa longueur ci-dessous."
+msgstr "Mesurez la règle et saisissez sa longueur ci-dessous."
 
 #: app/gui/resolution-calibrate-dialog.c:258
 msgid "_Horizontal:"
@@ -5771,22 +5752,19 @@ msgstr ""
 #.
 #: app/gui/tips-parser.c:181
 msgid "tips-locale:C"
-msgstr "localisation des conseils : C"
+msgstr "tips-locale:fr"
 
 #: app/gui/tool-options-dialog.c:100
-#, fuzzy
 msgid "Save current settings as default values"
-msgstr "Enregistrer la configuration courante sur disque"
+msgstr "Enregistrer les réglages actuels comme valeurs par défaut"
 
 #: app/gui/tool-options-dialog.c:109
-#, fuzzy
 msgid "Restore saved default values"
-msgstr "Restaurer la configuration enregistrée"
+msgstr "Restaurer les valeurs par défaut enregistrées"
 
 #: app/gui/tool-options-dialog.c:118
-#, fuzzy
 msgid "Reset to factory defaults"
-msgstr "Utiliser « _Point pour point » par défaut"
+msgstr "Réinitialiser aux valeurs par défaut originales"
 
 #. <Toolbox>/File/Acquire
 #: app/gui/toolbox-menu.c:76
@@ -5973,7 +5951,7 @@ msgstr ""
 "puisse être reprise de session en session.  Vous pouvez\n"
 "éditer ce fichier à la main si vous le désirez, mais il\n"
 "est bien plus facile de définir les touches depuis GIMP.\n"
-"Effacer ce fichier restore les raccourcis clavier par\n"
+"Effacer ce fichier restaure les raccourcis clavier par\n"
 "défaut."
 
 #: app/gui/user-install-dialog.c:173
@@ -5982,7 +5960,7 @@ msgid ""
 "open the last time you quit The GIMP.  You can configure\n"
 "The GIMP to reopen these dialogs at the saved position."
 msgstr ""
-"Le fichier sessionrc est utilisé pour sauvegarder la\n"
+"Le fichier sessionrc est utilisé pour stocker la\n"
 "position des fenêtres de dialogue au moment de quitter\n"
 "GIMP.  Vous pouvez configurer GIMP pour qu'il rouvre\n"
 "au lancement ces dialogues à leur position enregistrée."
@@ -5992,6 +5970,8 @@ msgid ""
 "This file holds a collection of standard media sizes that\n"
 "serve as image templates."
 msgstr ""
+"Ce fichier contient un ensemble de taille de média\n"
+"standard qui servent de modèles d'images."
 
 #: app/gui/user-install-dialog.c:186
 msgid ""
@@ -6003,9 +5983,9 @@ msgid ""
 msgstr ""
 "Le fichier unitrc est utilisé pour stocker les unités de\n"
 "mesure personnelles.  Vous pouvez définir des unités\n"
-"supplémentaires et les utiliser comme les unités intégrées\n"
-"(pouces, millimètres, points, picas).  Ce fichier est\n"
-"réécrit chaque fois que vous quittez GIMP."
+"supplémentaires et les utiliser comme les unités\n"
+"intégrées (pouces, millimètres, points, picas).  Ce\n"
+"fichier est réécrit chaque fois que vous quittez GIMP."
 
 #: app/gui/user-install-dialog.c:195
 msgid ""
@@ -6014,10 +5994,10 @@ msgid ""
 "wide GIMP brushes installation when searching for\n"
 "brushes."
 msgstr ""
-"Il s'agit d'un répertoire utilisé pour stocker vos brosses \n"
-"personnelles. GIMP regarde dans ce répertoire en plus\n"
-"du répertoire global de brosses commun à tous les\n"
-"utilisateurs lorsqu'il recherche des brosses."
+"Il s'agit d'un répertoire utilisé pour stocker vos\n"
+"brosses personnelles.  GIMP regarde dans ce répertoire\n"
+"en plus du répertoire global de brosses commun à tous\n"
+"les utilisateurs lorsqu'il recherche des brosses."
 
 #: app/gui/user-install-dialog.c:203
 msgid ""
@@ -6026,9 +6006,9 @@ msgid ""
 "wide GIMP gradients installation when searching for\n"
 "gradients."
 msgstr ""
-"Il s'agit d'un répertoire utilisé pour stocker vos dégradés \n"
-"personnels. GIMP regarde dans ce répertoire en plus\n"
-"du répertoire global de dégradés commun à tous les\n"
+"Il s'agit d'un répertoire utilisé pour stocker vos\n"
+"dégradés personnels.  GIMP regarde dans ce répertoire en\n"
+"plus du répertoire global de dégradés commun à tous les\n"
 "utilisateurs lorsqu'il recherche des dégradés."
 
 #: app/gui/user-install-dialog.c:211
@@ -6038,10 +6018,10 @@ msgid ""
 "wide GIMP palettes installation when searching for\n"
 "palettes."
 msgstr ""
-"Il s'agit d'un répertoire utilisé pour stocker vos palettes \n"
-"personnelles. GIMP regarde dans ce répertoire en plus\n"
-"du répertoire global de palettes commun à tous les\n"
-"utilisateurs lorsqu'il recherche des palettes."
+"Il s'agit d'un répertoire utilisé pour stocker vos\n"
+"palettes personnelles.  GIMP regarde dans ce répertoire\n"
+"en plus du répertoire global de palettes commun à tous\n"
+"les utilisateurs lorsqu'il recherche des palettes."
 
 #: app/gui/user-install-dialog.c:219
 msgid ""
@@ -6050,9 +6030,9 @@ msgid ""
 "wide GIMP patterns installation when searching for\n"
 "patterns."
 msgstr ""
-"Il s'agit d'un répertoire utilisé pour stocker vos motifs \n"
-"personnels. GIMP regarde dans ce répertoire en plus\n"
-"du répertoire global de motifs commun à tous les\n"
+"Il s'agit d'un répertoire utilisé pour stocker vos\n"
+"motifs personnels.  GIMP regarde dans ce répertoire en\n"
+"plus du répertoire global de motifs commun à tous les\n"
 "utilisateurs lorsqu'il recherche des motifs."
 
 #: app/gui/user-install-dialog.c:227
@@ -6062,10 +6042,11 @@ msgid ""
 "checks this folder in addition to the system-wide\n"
 "GIMP plug-in folder when searching for plug-ins."
 msgstr ""
-"Il s'agit d'un répertoire utilisé pour stocker vos greffons\n"
-"temporaires ou pas supportés par le système. GIMP\n"
-"regarde dans ce répertoire en plus du répertoire global\n"
-"commun à tous les utilisateurs lorsqu'il recherche des greffons."
+"Il s'agit d'un répertoire utilisé pour stocker vos\n"
+"greffons temporaires ou non supportés par le système.\n"
+"GIMP regarde dans ce répertoire en plus du répertoire\n"
+"global commun à tous les utilisateurs lorsqu'il\n"
+"recherche des greffons."
 
 #: app/gui/user-install-dialog.c:235
 msgid ""
@@ -6075,11 +6056,11 @@ msgid ""
 "GIMP module folder when searching for modules to load\n"
 "during initialization."
 msgstr ""
-"Il s'agit d'un répertoire utilisé pour stocker vos modules DLL\n"
-"temporaires ou pas supportés par le système. GIMP\n"
-"regarde dans ce répertoire en plus du répertoire global\n"
-"commun à tous les utilisateurs lorsqu'il recherche des modules\n"
-"durant l'initialisation."
+"Il s'agit d'un répertoire utilisé pour stocker vos\n"
+"modules DLL temporaires ou non supportés par le système.\n"
+"GIMP regarde dans ce répertoire en plus du répertoire\n"
+"global commun à tous les utilisateurs lorsqu'il\n"
+"recherche des modules durant l'initialisation."
 
 #: app/gui/user-install-dialog.c:244
 msgid ""
@@ -6090,10 +6071,12 @@ msgid ""
 "when searching for plug-in environment modification\n"
 "files."
 msgstr ""
-"Ce répertoire est utilisé pour stocker vos greffons\n"
-"temporaires ou non-supportés par le système. GIMP\n"
-"regarde dans ce répertoire en plus du répertoire global\n"
-"commun à tous les utilisateurs lorsqu'il recherche des greffons."
+"Il s'agit d'un répertoire utilisé pour stocker vos\n"
+"additions temporaires ou non supportés par le système\n"
+"à l'environnement des greffons.  GIMP regarde dans ce\n"
+"répertoire en plus du répertoire global commun à tous\n"
+"les utilisateurs lorsqu'il recherche des modifications\n"
+"à l'environnement des greffons."
 
 #: app/gui/user-install-dialog.c:254
 msgid ""
@@ -6102,21 +6085,22 @@ msgid ""
 "the systemwide GIMP scripts folder when searching for\n"
 "scripts."
 msgstr ""
-"Il s'agit d'un répertoire utilisé pour stocker vos scripts-fu\n"
-"personnels. GIMP regarde dans ce répertoire en plus\n"
-"du répertoire global de scripts commun à tous les\n"
-"utilisateurs lorsqu'il recherche des scripts-fu."
+"Il s'agit d'un répertoire utilisé pour stocker vos\n"
+"scripts-fu personnels.  GIMP regarde dans ce répertoire\n"
+"en plus du répertoire global de scripts commun à tous\n"
+"les utilisateurs lorsqu'il recherche des scripts-fu."
 
 #: app/gui/user-install-dialog.c:262
-#, fuzzy
 msgid "This folder is searched for image templates."
 msgstr ""
-"Ce répertoire est recherché pour l'installation des thèmes utilisateurs."
+"Il s'agit d'un répertoire utilisé pour rechercher des\n"
+"modèles d'images."
 
 #: app/gui/user-install-dialog.c:267
 msgid "This folder is searched for user-installed themes."
 msgstr ""
-"Ce répertoire est recherché pour l'installation des thèmes utilisateurs."
+"Il s'agit d'un répertoire utilisé pour rechercher des\n"
+"thèmes installés par l'utilisateur."
 
 #: app/gui/user-install-dialog.c:272
 msgid ""
@@ -6126,36 +6110,36 @@ msgid ""
 "this folder.  These files are useless across GIMP\n"
 "sessions and can be destroyed with impunity."
 msgstr ""
-"Ce répertoire est utilisé par GIMP pour stocker\n"
-"temporairement des informations d'annulation, afin de réduire\n"
-"la place mémoire utilisée. Si GIMP est tué brutalement\n"
-"des fichiers de la forme : gimp<#>.<#> peuvent rester\n"
-"dans ce répertoire. Ces fichiers sont inutiles lors des\n"
-"utilisations ultérieures de GIMP et peuvent être détruits\n"
-"sans préjudice entre deux utilisations."
+"Il s'agit d'un répertoire utilisé pour stocker\n"
+"temporairement des informations d'annulation, afin de\n"
+"réduire la place mémoire utilisée.  Si GIMP est tué\n"
+"brutalement des fichiers de la forme : gimp<#>.<#>\n"
+"peuvent rester dans ce répertoire.  Ces fichiers sont\n"
+"inutiles lors des utilisations ultérieures de GIMP et\n"
+"peuvent être détruits sans préjudice entre deux\n"
+"utilisations."
 
 #: app/gui/user-install-dialog.c:281
-#, fuzzy
 msgid "This folder is used to store tool options."
 msgstr ""
-"Ce sous-répertoire est utilisé pour stocker des fichiers\n"
-"de paramètres pour l'outil Niveaux de couleur."
+"Il s'agit d'un répertoire utilisé pour stocker les\n"
+"options des outils."
 
 #: app/gui/user-install-dialog.c:286
 msgid ""
 "This folder is used to store parameter files for the\n"
 "Curves tool."
 msgstr ""
-"Ce sous-répertoire est utilisé pour stocker des fichiers\n"
-"de paramètres pour l'outil Courbes."
+"Il s'agit d'un répertoire utilisé pour stocker des\n"
+"fichiers de paramètres pour l'outil Courbes."
 
 #: app/gui/user-install-dialog.c:292
 msgid ""
 "This folder is used to store parameter files for the\n"
 "Levels tool."
 msgstr ""
-"Ce sous-répertoire est utilisé pour stocker des fichiers\n"
-"de paramètres pour l'outil Niveaux de couleur."
+"Il s'agit d'un répertoire utilisé pour stocker des\n"
+"fichiers de paramètres pour l'outil Niveaux."
 
 #: app/gui/user-install-dialog.c:380
 msgid ""
@@ -6175,7 +6159,7 @@ msgstr ""
 
 #: app/gui/user-install-dialog.c:578
 msgid "GIMP User Installation"
-msgstr "Installation de GIMP"
+msgstr "Installation personnelle de GIMP"
 
 #: app/gui/user-install-dialog.c:586
 msgid "Continue"
@@ -6187,7 +6171,7 @@ msgid ""
 "The GIMP User Installation"
 msgstr ""
 "Bienvenue dans\n"
-"GIMP"
+"l'installation personnelle de GIMP"
 
 #: app/gui/user-install-dialog.c:738
 msgid "Click \"Continue\" to enter the GIMP user installation."
@@ -6199,7 +6183,7 @@ msgid ""
 "Copyright (C) 1995-2002\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
-"The GIMP - GNU Image Manipulation Program\n"
+"Le GIMP - GNU Image Manipulation Program\n"
 "Copyright © 1995-2002\n"
 "Spencer Kimball, Peter Mattis et l'équipe de développement de GIMP."
 
@@ -6264,22 +6248,22 @@ msgid ""
 "Click on one of the files or folders in the tree\n"
 "to get more information about the selected item."
 msgstr ""
-"Ce sous-répertoire contiendra un certain nombre de fichier\n"
-"important. Cliquez sur un des fichiers ou sous-répertoire\n"
+"Ce répertoire contiendra un certain nombre de fichier\n"
+"important. Cliquez sur un des fichiers ou répertoires\n"
 "de l'arborescence pour obtenir plus d'information sur l'élément\n"
 "sélectionné."
 
 #: app/gui/user-install-dialog.c:906
 msgid "User Installation Log"
-msgstr "Historique de l'Installation"
+msgstr "Historique de l'installation personnelle"
 
 #: app/gui/user-install-dialog.c:907
 msgid ""
 "Please wait while your personal\n"
 "GIMP folder is being created..."
 msgstr ""
-"Attendez, SVP, jusqu'à ce que votre\n"
-"répertoire GIMP soit créé..."
+"Veuillez attendre que votre répertoire\n"
+"personnel GIMP soit créé..."
 
 #: app/gui/user-install-dialog.c:913
 msgid "GIMP Performance Tuning"
@@ -6373,10 +6357,10 @@ msgid ""
 "the amount of memory used by other running processes."
 msgstr ""
 "GIMP utilise une quantité de mémoire limitée pour stocker les données\n"
-"d'une image ; cette zone est nommée « Cache d'images ». Vous devrez\n"
-"ajuster cette taille pour correspondre avec votre quantité de mémoire.\n"
-"Considérez la quantité de mémoire utilisée par les autres processus\n"
-"en cours."
+"d'une image ; cette zone est nommée « Cache d'images ». Vous devriez\n"
+"ajuster cette taille pour correspondre avec votre quantité de mémoire\n"
+"libre.  Prenez en compte la quantité de mémoire utilisée par les autres\n"
+"processus en cours."
 
 #: app/gui/user-install-dialog.c:1184
 msgid ""
@@ -6386,7 +6370,7 @@ msgid ""
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
 "Toutes les images et données d'annulation qui ne rentrent pas dans le\n"
-"Cache Image seront écrites dans un fichier d'échange.\n"
+"Cache d'images seront écrites dans un fichier d'échange.\n"
 "Ce fichier doit être situé sur un système de fichier local avec\n"
 "suffisament d'espace libre (quelques centaine de Mo). Sur un système\n"
 "UNIX, vous pourrez par exemple utiliser le répertoire temporaire\n"
@@ -6948,7 +6932,7 @@ msgstr "Courbe non fermée !"
 
 #: app/tools/gimpbezierselecttool.c:3473
 msgid "Paintbrush operation failed."
-msgstr "Échec de l'opération pinceau."
+msgstr "L'opération pinceau a échoué."
 
 #: app/tools/gimpblendoptions.c:243
 msgid "Offset:"
@@ -7131,11 +7115,11 @@ msgstr "Jaune"
 
 #: app/tools/gimpcolorbalancetool.c:330
 msgid "R_eset Range"
-msgstr "Initialiser l'intervalle"
+msgstr "_Initialiser l'intervalle"
 
 #: app/tools/gimpcolorbalancetool.c:339
 msgid "Preserve _Luminosity"
-msgstr "Préserver la Luminosité"
+msgstr "Préserver la _luminosité"
 
 #: app/tools/gimpcolorpickeroptions.c:217
 msgid "Sample Average"
@@ -7295,7 +7279,7 @@ msgstr ""
 
 #: app/tools/gimpcurvestool.c:613 app/tools/gimplevelstool.c:489
 msgid "R_eset Channel"
-msgstr "Initialise le canal"
+msgstr "_Initialiser le canal"
 
 #: app/tools/gimpcurvestool.c:622
 msgid "Modify Curves for Channel:"
@@ -7366,7 +7350,7 @@ msgstr "Déplacer : 0, 0"
 
 #: app/tools/gimpeditselectiontool.c:621
 msgid "Move: "
-msgstr "Déplacement :"
+msgstr "Déplacement : "
 
 #: app/tools/gimpellipseselecttool.c:71
 msgid "Select elliptical regions"
@@ -8862,8 +8846,8 @@ msgid ""
 msgstr ""
 "Avertissement XCF : la version 0 du format de\n"
 "fichier XCF n'enregistrait pas correctement\n"
-"les palettes indexées. Une palette en valeurs de gris a été utilisée en "
-"remplacement."
+"les palettes indexées. Une palette en niveaux\n"
+"de gris a été utilisée en remplacement."
 
 #: app/xcf/xcf-read.c:115
 msgid "(invalid UTF-8 string)"
@@ -8873,12 +8857,12 @@ msgstr "(chaîne de caractères UTF-8 non valide)"
 #: app/xcf/xcf-save.c:165 app/xcf/xcf-save.c:179 app/xcf/xcf.c:318
 #, c-format
 msgid "Error saving XCF file: %s"
-msgstr "Erreur d'enregistrement du fichier XCF %s"
+msgstr "Erreur d'enregistrement du fichier XCF : %s"
 
 #: app/xcf/xcf-write.c:86
 #, c-format
 msgid "Error writing XCF: %s"
-msgstr "Erreur d'écriture XCF : %s"
+msgstr "Erreur d'écriture XCF : %s"
 
 #: app/xcf/xcf-seek.c:44 app/xcf/xcf-seek.c:61 app/xcf/xcf-seek.c:72
 #, c-format
@@ -8893,7 +8877,7 @@ msgstr "Erreur XCF : Version %d non supportée du format XCF rencontrée"
 #: app/xcf/xcf.c:325
 #, c-format
 msgid "open failed on %s: %s\n"
-msgstr "échec de l'ouverture de %s: %s\n"
+msgstr "L'ouverture de %s a échoué : %s\n"
 
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
@@ -9050,7 +9034,7 @@ msgstr "The GIMP (instable)"
 #~ msgstr "Inverser la sélection"
 
 #~ msgid "Inverse Grayscale Copy of Layer"
-#~ msgstr "Copie du calque en tons de gris inversés"
+#~ msgstr "Copie du calque en niveaux de gris inversés"
 
 #~ msgid "_Preview Size:"
 #~ msgstr "Taille de l'_aperçu :"
