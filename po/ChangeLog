@@ -1,6 +1,10 @@
+2001-04-15  Valek Filippov  <frob@df.ru>
+
+	* ru.po: Updated russian translation.
+
 2001-04-11  Simon Budig  <simon@gimp.org>
 
-	* POTFILES.in  fixed the entry for gimpdatafactoryview.c
+	* POTFILES.in:  fixed the entry for gimpdatafactoryview.c
 
 2001-03-23  Marius Andreiana  <mandreiana@yahoo.com>
 
