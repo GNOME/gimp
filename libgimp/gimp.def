@@ -247,6 +247,7 @@ EXPORTS
 	gimp_layer_new
 	gimp_layer_new_from_drawable
 	gimp_layer_resize
+	gimp_layer_resize_to_image_size
 	gimp_layer_scale
 	gimp_layer_set_apply_mask
 	gimp_layer_set_edit_mask
@@ -293,6 +294,7 @@ EXPORTS
 	gimp_path_get_point_at_dist
 	gimp_path_get_points
 	gimp_path_get_tattoo
+	gimp_path_import
 	gimp_path_list
 	gimp_path_set_current
 	gimp_path_set_locked

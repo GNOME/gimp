@@ -812,7 +812,7 @@ gimp_composite_sse2_init (void)
 #if defined(USE_SSE) && defined(ARCH_X86)
   guint32 cpu = cpu_accel ();
 
-  if (cpu & CPU_ACCEL_X86_SSE || cpu & CPU_ACCEL_X86_MMXEXT)
+  if (cpu & CPU_ACCEL_X86_SSE2)
     {
       return (TRUE);
     }

@@ -1,5 +1,12 @@
 2003-10-07  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/gimp-composite-sse2.c (gimp_composite_sse2_init):
+	really check for CPU_ACCEL_X86_SSE.
+
+	* libgimp/gimp.def: added new symbols.
+
+2003-10-07  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped version number to 1.3.22.
 
 	Moved images used from scripts as suggested by Carol:
