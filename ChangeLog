@@ -1,3 +1,11 @@
+2001-08-09  Sven Neumann  <sven@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpimagefile.[ch]: added first draft of a GimpImagefile
+	object that will handle image files on disk, in particular their 
+	thumbnails.
+
 2001-08-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/disp_callbacks.c: removed a gdk_pointer_ungrab(), it was

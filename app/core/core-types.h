@@ -102,6 +102,7 @@ typedef struct _GimpBuffer          GimpBuffer;
 
 typedef struct _GimpToolInfo        GimpToolInfo;
 
+typedef struct _GimpImagefile       GimpImagefile;
 
 /*  drawable objects  */
 

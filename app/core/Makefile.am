@@ -79,6 +79,8 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpimage-new.h			\
 	gimpimage-undo.c		\
 	gimpimage-undo.h		\
+	gimpimagefile.c			\
+	gimpimagefile.h			\
 	gimplayer.c			\
 	gimplayer.h			\
 	gimplayermask.c			\
