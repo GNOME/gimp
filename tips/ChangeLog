@@ -1,3 +1,7 @@
+2004-02-26  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (tips_POFILES): added ru.po (Russian).
+
 2004-02-26  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
 
 	* ru.po: Added Russian translation
