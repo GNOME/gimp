@@ -49,11 +49,11 @@ libappcomposite_a_built_sources =   \
 libappcomposite_a_SOURCES = $(libappcomposite_a_built_sources) $(libappcomposite_a_sources)
 
 regenerate: gimp-composite-generic.o gimp-composite-mmx.o gimp-composite-sse.o gimp-composite-altivec.o gimp-composite-vis.o
-	$(srcdir)/make-installer.py gimp-composite-generic.o
-	$(srcdir)/make-installer.py gimp-composite-mmx.o
-	$(srcdir)/make-installer.py gimp-composite-sse.o
-	$(srcdir)/make-installer.py gimp-composite-altivec.o
-	$(srcdir)/make-installer.py gimp-composite-vis.o
+	$(srcdir)/make-installer.py -t -f gimp-composite-generic.o
+	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_MMX) && defined(ARCH_X86)'  -f gimp-composite-mmx.o
+	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_MMX) && defined(ARCH_X86)'  -f gimp-composite-sse.o
+	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_MMX) && defined(ARCH_PPC)'  -f gimp-composite-altivec.o
+	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && (defined(sparc) || defined(__sparc__))' -f gimp-composite-vis.o
 
 EXTRA_DIST = \
 	make-installer.py	\

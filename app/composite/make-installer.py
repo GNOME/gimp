@@ -23,7 +23,7 @@ import string
 import os
 import ns
 import pprint
-import getopt
+import optparse
 import copy
 
 #
@@ -126,55 +126,43 @@ def filenameify(filename):
   f = string.replace(f, ".h", "")
   return (f)
 
-def print_function_table(fpout, name, function_table):
+def print_function_table(fpout, name, function_table, requirements=[]):
 
-  if len(function_table) > 1:
+  if len(function_table) < 1:
+    return;
  
-    function_table_declarations = dict()
+  print >>fpout, 'static struct install_table {'
+  print >>fpout, '  GimpCompositeOperation mode;'
+  print >>fpout, '  GimpPixelFormat A;'
+  print >>fpout, '  GimpPixelFormat B;'
+  print >>fpout, '  GimpPixelFormat D;'
+  print >>fpout, '  void (*function)(GimpCompositeContext *);'
+  #print >>fpout, '  char *name;'
+  print >>fpout, '} _%s[] = {' % (functionnameify(name))
 
-    function_table_keys = function_table.keys()
-    function_table_keys.sort()
-
-    if 0:
-      for key in function_table_keys:
-        if not function_table_declarations.has_key(function_table[key][0]):
-          print >>fpout, 'void %s(GimpCompositeContext *);' % (function_table[key][0])
-          function_table_declarations[function_table[key][0]] = function_table[key][0]
-          pass
-        pass
-      pass
-  
-    print >>fpout, ''
-    print >>fpout, 'static void (*%s[%s][%s][%s][%s])(GimpCompositeContext *) = {' % (functionnameify(name), "GIMP_COMPOSITE_N", "GIMP_PIXELFORMAT_N", "GIMP_PIXELFORMAT_N", "GIMP_PIXELFORMAT_N")
-    for mode in composite_modes:
-      print >>fpout, ' { /* %s */' % (mode)
-      for A in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-        print >>fpout, '  { /* A = %s */' % (pixel_depth_name(A))
-        for B in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-          print >>fpout, '   /* %-6s */ {' % (pixel_depth_name(B)),
-          for D in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-            key = "%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
-            if function_table.has_key(key):
-              print >>fpout, '%s, ' % (function_table[key][0]),
-            else:
-              print >>fpout, '%s, ' % ("NULL"),
-              pass
-            pass
-          print >>fpout, '},'
-          pass
-        print >>fpout, '  },'
-        pass
-      print >>fpout, ' },'
-      pass
-    
-    print >>fpout, '};\n'
-  else:
-    print >>fpout, '/*'
-    print >>fpout, '* No'
-    print >>fpout, '* static void (*%s[%s][%s][%s][%s])' % (functionnameify(name), "GIMP_COMPOSITE_N", "GIMP_PIXELFORMAT_N", "GIMP_PIXELFORMAT_N", "GIMP_PIXELFORMAT_N")
-    print >>fpout, '* table to define'
-    print >>fpout, '*/'
+  for r in requirements:
+    print >>fpout, '#if %s' % (r)
     pass
+  
+  for mode in composite_modes:
+    for A in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
+      for B in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
+        for D in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
+          key = "%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
+          if function_table.has_key(key):
+            print >>fpout, ' { %s, %s, %s, %s, %s }, ' % (mode, A, B, D, function_table[key][0])
+            pass
+          pass
+        pass
+      pass
+    pass
+
+  for r in requirements:
+    print >>fpout, '#endif'
+    pass
+
+  print >>fpout, ' { 0, 0, 0, 0, NULL }'
+  print >>fpout, '};'
   
   return
   
@@ -259,7 +247,7 @@ def merge_function_tables(tables):
   return (main_table)
 
 
-def gimp_composite_regression(fpout, name, function_tables):
+def gimp_composite_regression(fpout, name, function_tables, requirements=[]):
 
   # XXX move all this out to C code, instead of here.
   print >>fpout, '#include "config.h"'
@@ -415,11 +403,15 @@ def gimp_composite_regression(fpout, name, function_tables):
   return
 
 
-def gimp_composite_installer_install(fpout, name, function_table):
+def gimp_composite_installer_install(fpout, name, function_table, requirements=[]):
   print >>fpout, ''
   print >>fpout, 'void'
   print >>fpout, '%s_install (void)' % (functionnameify(name))
   print >>fpout, '{'
+
+  for r in requirements:
+    print >>fpout, '#if %s' % (r)
+    pass
 
   if len(function_table) > 1:
     print >>fpout, '  int mode, a, b, d;'
@@ -444,12 +436,36 @@ def gimp_composite_installer_install(fpout, name, function_table):
   
   print >>fpout, ''
   print >>fpout, '  %s_init();' % functionnameify(name)
+  for r in requirements:
+    print >>fpout, '#endif'
+    pass
+  print >>fpout, '}'
+  pass
+
+def gimp_composite_installer_install2(fpout, name, function_table, requirements=[]):
+  print >>fpout, ''
+  print >>fpout, 'void'
+  print >>fpout, '%s_install (void)' % (functionnameify(name))
+  print >>fpout, '{'
+
+  if len(function_table) > 1:
+    print >>fpout, '  static struct install_table *t = _%s;' % (functionnameify(name))
+    print >>fpout, ''
+    print >>fpout, '  for (t = &_%s[0]; t->function != NULL; t++) {' % (functionnameify(name))
+    print >>fpout, '    gimp_composite_function[t->mode][t->A][t->B][t->D] = t->function;'
+    print >>fpout, '  }'
+  else:
+    print >>fpout, '  /* nothing to do */'
+    pass
+  
+  print >>fpout, ''
+  print >>fpout, '  %s_init();' % functionnameify(name)
   print >>fpout, '}'
   pass
 
 def gimp_composite_hfile(fpout, name, function_table):
   print >>fpout, '/* THIS FILE IS AUTOMATICALLY GENERATED.  DO NOT EDIT */'
-  print >>fpout, '/* REGENERATE BY EXECUTING: make-installer.py %s */' % (name)
+  print >>fpout, '/* REGENERATE BY USING make-installer.py */'
   print >>fpout, ''
   print >>fpout, 'void %s_install (void);' % (functionnameify(name))
   print >>fpout, ''
@@ -457,9 +473,9 @@ def gimp_composite_hfile(fpout, name, function_table):
   
   return
 
-def gimp_composite_cfile(fpout, name, function_table):
+def gimp_composite_cfile(fpout, name, function_table, requirements=[]):
   print >>fpout, '/* THIS FILE IS AUTOMATICALLY GENERATED.  DO NOT EDIT */'
-  print >>fpout, '/* REGENERATE BY EXECUTING: make-installer.py %s */' % (name)
+  print >>fpout, '/* REGENERATE BY USING make-installer.py */'
   print >>fpout, '#include "config.h"'
   print >>fpout, '#include <glib-object.h>'
   print >>fpout, '#include <stdlib.h>'
@@ -470,29 +486,26 @@ def gimp_composite_cfile(fpout, name, function_table):
   print >>fpout, '#include "%s.h"' % (filenameify(name))
   print >>fpout, ''
 
-  print_function_table(fpout, name, function_table)
+  print_function_table(fpout, name, function_table, requirements)
 
-  #main_table = merge_function_tables(d)
-
-  #print_function_table(fpout, "gimp_composite_function", main_table)
-  #print_function_table_name(fpout, "gimp_composite_function", main_table)
-
-  gimp_composite_installer_install(fpout, name, function_table)
+  gimp_composite_installer_install2(fpout, name, function_table, requirements)
 
   return
 
 ###########################################
 
-if len(sys.argv) != 2:
-  print "Usage: %s <composite-file>.o" % (sys.argv[0])
-  sys.exit(1)
+op = optparse.OptionParser(version="$Revision$")
+op.add_option('-f', '--file', action='store',      type='string', dest='file',     default=None,  help='the input object file')
+op.add_option('-t', '--test', action='store_true',                dest='test',     default=False, help='generate regression testing code')
+op.add_option('-r', '--requires', action='append', type='string', dest='requires', default=[],    help='cpp #if conditionals')
+options, args = op.parse_args()
+
+table = load_function_table(options.file)
+
+gimp_composite_cfile(open(filenameify(options.file) + "-installer.c", "w"), options.file, table, options.requires)
+
+if options.test == True:
+  gimp_composite_regression(open(filenameify(options.file) + "-test.c", "w"), options.file, table, options.requires)
   pass
-
-function_file = sys.argv[1]
-
-table = load_function_table(function_file)
-
-gimp_composite_cfile(open(filenameify(function_file) + "-installer.c", "w"), function_file, table)
-gimp_composite_regression(open(filenameify(function_file) + "-test.c", "w"), function_file, table)
 
 sys.exit(0)

@@ -1,3 +1,24 @@
+2003-08-14  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/make-installer.py: generate smaller tables and
+	less code.  Now takes real command line options:
+	options:
+	  --version                        show program's version number and exit
+	  -h, --help                       show this help message and exit
+	  -f FILE, --file=FILE             the input object file
+	  -t, --test                       generate regression testing code
+	  -r REQUIRES, --requires=REQUIRES cpp #if conditionals
+
+	See Makefile.am for how I use these options to generate the code.
+
+	* app/composite/gimp-composite-altivec-{installer,test}.c:
+	* app/composite/gimp-composite-generic-{installer,test}.c:
+	* app/composite/gimp-composite-mmx-{installer,test}.c
+	* app/composite/gimp-composite-sse-{installer,test}.c:
+	* app/composite/gimp-composite-vis-{installer,test}.c: regenerated
+	with smaller tables and less ode.
+	
+
 2003-08-14  Tor Lillqvist  <tml@iki.fi>
 
 	* app/base/base.c (base_init): If a development version (odd
