@@ -1,5 +1,12 @@
 2005-02-07  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/preferences/Makefile.am
+	* themes/Default/images/preferences/color-management.png: added
+	icon for the yet to be added color management preferences page.
+	Icon kindly provided by Alastair M. Robinson (bug #78265).
+
+2005-02-07  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptooldialog.c (gimp_tool_dialog_new): unset the
 	"focus-on-map" property for tool dialogs. Fixes bug #154651 (on
 	window managers supporting this hint).
