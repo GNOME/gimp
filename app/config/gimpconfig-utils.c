@@ -30,6 +30,17 @@
 #include "gimpconfig-utils.h"
 
 
+/**
+ * gimp_config_diff:
+ * @a: a #GObject
+ * @b: another #GObject of the same type as @a
+ * @flags: a mask of GParamFlags
+ * 
+ * Compares all properties of @a and @b that have all @flags set. If
+ * @flags is 0, all properties are compared.
+ * 
+ * Return value: a GList of differing GParamSpecs.
+ **/
 GList *
 gimp_config_diff (GObject      *a,
                   GObject      *b,
@@ -74,6 +85,71 @@ gimp_config_diff (GObject      *a,
   return g_list_reverse (list);
 }
 
+
+static void
+gimp_config_connect_notify (GObject    *src,
+                            GParamSpec *param_spec,
+                            GObject    *dest)
+{
+  GValue value = { 0, };
+
+  g_value_init (&value, param_spec->value_type);
+
+  g_object_get_property (src,  param_spec->name, &value);
+  g_object_set_property (dest, param_spec->name, &value);
+
+  g_value_unset (&value);
+}
+
+/**
+ * gimp_config_connect:
+ * @src: a #GObject
+ * @dest: another #GObject of the same type as @src
+ * 
+ * Connects @dest with @src so that all property changes of @src are
+ * applied to @dest using a "notify" handler.
+ **/
+void
+gimp_config_connect (GObject *src,
+                     GObject *dest)
+{
+  g_return_if_fail (G_IS_OBJECT (src));
+  g_return_if_fail (G_IS_OBJECT (dest));
+  g_return_if_fail (G_TYPE_FROM_INSTANCE (src) == G_TYPE_FROM_INSTANCE (dest));
+
+  g_signal_connect_object (src, "notify",
+                           G_CALLBACK (gimp_config_connect_notify),
+                           dest, 0);
+}
+
+/**
+ * gimp_config_disconnect:
+ * @src: a #GObject
+ * @dest: another #GObject of the same type as @src
+ * 
+ * Removes a connection between @dest and @src that was previously set
+ * up using gimp_config_connect().
+ **/
+void
+gimp_config_disconnect (GObject *src,
+                        GObject *dest)
+{
+  g_return_if_fail (G_IS_OBJECT (src));
+  g_return_if_fail (G_IS_OBJECT (dest));
+
+  g_signal_handlers_disconnect_by_func (src,
+                                        G_CALLBACK (gimp_config_connect_notify),
+                                        dest);
+}
+
+/**
+ * gimp_config_copy_properties:
+ * @src: a #GObject
+ * @dest: another #GObject of the same type as @src
+ * 
+ * Retrieves all read and writeable property settings from @src and
+ * applies the values to @dest.
+ **/
 void
 gimp_config_copy_properties (GObject *src,
                              GObject *dest)
@@ -117,6 +193,13 @@ gimp_config_copy_properties (GObject *src,
   g_free (property_specs);
 }
 
+/**
+ * gimp_config_reset_properties:
+ * @object: a #GObject
+ * 
+ * Resets all writable properties of @object to the default values as
+ * defined in their #GParamSpec.
+ **/
 void
 gimp_config_reset_properties (GObject *object)
 {
@@ -157,6 +240,10 @@ gimp_config_reset_properties (GObject *object)
   g_free (property_specs);
 }
 
+
+/*
+ * GimpConfig path utilities
+ */
 
 gchar *
 gimp_config_build_data_path (const gchar *name)

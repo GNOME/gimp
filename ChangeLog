@@ -1,5 +1,14 @@
 2003-02-10  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-utils.[ch]: added new utility functions
+	gimp_config_connect() and gimp_config_disconnect() and documented
+	most functions.
+
+	* app/tools/gimptexttool.c (gimp_text_tool_connect): use the new
+	GimpConfig utility functions.
+
+2003-02-10  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimprc.c (gimp_rc_query): allow to query for gimp
 	paths (like "gimp_dir") as it used to work in 1.2.
 

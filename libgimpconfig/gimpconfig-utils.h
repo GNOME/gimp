@@ -26,6 +26,10 @@
 GList    * gimp_config_diff               (GObject      *a,
                                            GObject      *b,
                                            GParamFlags   flags);
+void       gimp_config_connect            (GObject      *src,
+                                           GObject      *dest);
+void       gimp_config_disconnect         (GObject      *src,
+                                           GObject      *dest);
 void       gimp_config_copy_properties    (GObject      *src,
                                            GObject      *dest);
 void       gimp_config_reset_properties   (GObject      *object);

@@ -296,21 +296,6 @@ text_tool_create_layer (GimpTextTool *text_tool)
 }
 
 static void
-gimp_text_tool_notify (GObject    *tool,
-		       GParamSpec *param_spec,
-		       GObject    *text)
-{
-  GValue value = { 0, };
-
-  g_value_init (&value, param_spec->value_type);
-
-  g_object_get_property (tool, param_spec->name, &value);
-  g_object_set_property (text, param_spec->name, &value);
-
-  g_value_unset (&value);
-}
-
-static void
 gimp_text_tool_connect (GimpTextTool *tool,
                         GimpText     *text)
 {
@@ -323,9 +308,8 @@ gimp_text_tool_connect (GimpTextTool *tool,
 
   if (tool->text)
     {
-      g_signal_handlers_disconnect_by_func (options->text,
-					    gimp_text_tool_notify,
-					    tool->text);
+      gimp_config_disconnect (G_OBJECT (options->text),
+                              G_OBJECT (tool->text));
 
       g_object_unref (tool->text);
       tool->text = NULL;
@@ -338,9 +322,8 @@ gimp_text_tool_connect (GimpTextTool *tool,
       gimp_config_copy_properties (G_OBJECT (tool->text),
 				   G_OBJECT (options->text));
 
-      g_signal_connect (options->text, "notify",
-			G_CALLBACK (gimp_text_tool_notify),
-			tool->text);
+      gimp_config_connect (G_OBJECT (options->text),
+                           G_OBJECT (tool->text));
     }
 }
 
