@@ -7,7 +7,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 1.0.1 - 99/11/11
+ * Version 1.0.2 - 99/11/20
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
@@ -22,6 +22,13 @@
 
 /*
  * REVISION HISTORY
+ *
+ * 99/11/20
+ * 1.00.02 - Fixed a couple of possible infinite loops where an
+ *     error condition was not being checked.  Also changed some g_message()s
+ *     back to g_warning()s as they should be (don't get carried away with
+ *     the user feedback fellahs, no-one wants to be told of every single
+ *     corrupt byte and block in its own little window.  :-( ).
  *
  * 99/11/11
  * 1.00.01 - Fixed an uninitialized variable which has been around
@@ -376,7 +383,7 @@ load_image (char *filename)
       if (c != ',')
 	{
 	  /* Not a valid start character */
-	  g_message (_("GIF: bogus character 0x%02x, ignoring\n"), (int) c);
+	  g_warning (_("GIF: bogus character 0x%02x, ignoring\n"), (int) c);
 	  continue;
 	}
 
@@ -494,7 +501,7 @@ DoExtension (FILE *fd,
       foreground = buf[10];
       background = buf[11];
 
-      while (GetDataBlock (fd, (unsigned char *) buf) != 0)
+      while (GetDataBlock (fd, (unsigned char *) buf) > 0)
 	{
 	  PPM_ASSIGN (image[ypos][xpos],
 		      cmap[CM_RED][v],
@@ -512,7 +519,7 @@ DoExtension (FILE *fd,
       break;
     case 0xfe:			/* Comment Extension */
       str = "Comment Extension";
-      while (GetDataBlock (fd, (unsigned char *) buf) != 0)
+      while (GetDataBlock (fd, (unsigned char *) buf) > 0)
 	{
 #ifdef FACEHUGGERS
 	  if (comment_parasite != NULL)
@@ -540,7 +547,7 @@ DoExtension (FILE *fd,
       else
 	Gif89.transparent = -1;
 
-      while (GetDataBlock (fd, (unsigned char *) buf) != 0)
+      while (GetDataBlock (fd, (unsigned char *) buf) > 0)
 	;
       return FALSE;
       break;
@@ -554,7 +561,7 @@ DoExtension (FILE *fd,
   g_print ("GIF: got a '%s'\n", str);
 #endif
 
-  while (GetDataBlock (fd, (unsigned char *) buf) != 0)
+  while (GetDataBlock (fd, (unsigned char *) buf) > 0)
     ;
 
   return FALSE;
@@ -619,7 +626,7 @@ GetCode (FILE *fd,
       buf[0] = buf[last_byte - 2];
       buf[1] = buf[last_byte - 1];
 
-      if ((count = GetDataBlock (fd, &buf[2])) == 0)
+      if ((count = GetDataBlock (fd, &buf[2])) <= 0)
 	done = TRUE;
 
       last_byte = 2 + count;
@@ -935,7 +942,7 @@ ReadImage (FILE *fd,
   if (!alpha_frame && promote_to_rgb)
     {
       g_message (_("GIF: Ouchie!  Can't handle non-alpha RGB frames.\n     Please mail the plugin author.  (adam@gimp.org)\n"));
-      exit(-1);
+      gimp_quit();
     }
 
   while ((v = LZWReadByte (fd, FALSE, c)) >= 0)

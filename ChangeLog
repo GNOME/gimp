@@ -1,3 +1,12 @@
+Sat Nov 20 19:33:01 GMT 1999  Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/common/gifload.c: Fixed a couple of possible infinite
+	loops where an error condition was not being checked.  Also
+	changed some g_message()s back to g_warning()s as they should be
+	(don't get carried away with the user feedback fellahs, no-one
+	wants to be told of every single corrupt byte and block in its own
+	little window.  :-( ).
+
 Sat Nov 20 19:52:30 CET 1999 Olof S Kylander <olof@gimp.org>
 
 	* plug-ins/AlienMap/AlienMap.c
