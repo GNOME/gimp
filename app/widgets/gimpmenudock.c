@@ -163,11 +163,18 @@ gimp_image_dock_new (GimpDialogFactory *factory,
 {
   GimpImageDock *image_dock;
   GimpDock      *dock;
+  gchar         *title;
+
+  static gint dock_counter = 1;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (image_container), NULL);
 
   image_dock = g_object_new (GIMP_TYPE_IMAGE_DOCK, NULL);
+
+  title = g_strdup_printf (_("Gimp Dock #%d"), dock_counter++);
+  gtk_window_set_title (GTK_WINDOW (image_dock), title);
+  g_free (title);
 
   dock = GIMP_DOCK (image_dock);
 

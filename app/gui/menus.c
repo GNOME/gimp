@@ -1788,7 +1788,7 @@ menus_init (Gimp *gimp)
           last_opened_entries[i].entry.accelerator =
             g_strdup_printf ("<control>%d", i + 1);
         else
-          last_opened_entries[i].entry.accelerator = NULL;
+          last_opened_entries[i].entry.accelerator = "";
 
         last_opened_entries[i].entry.callback        = file_last_opened_cmd_callback;
         last_opened_entries[i].entry.callback_action = i;

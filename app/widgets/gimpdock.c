@@ -137,7 +137,6 @@ gimp_dock_init (GimpDock *dock)
 
   dock->context = NULL;
 
-  gtk_window_set_title (GTK_WINDOW (dock), "Gimp");
   gtk_window_set_wmclass (GTK_WINDOW (dock), "dock", "Gimp");
   gtk_window_set_policy (GTK_WINDOW (dock), FALSE, TRUE, TRUE);
 

@@ -1,5 +1,16 @@
 2001-11-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/menus.c: set the accelerators for the "Open Recent"
+	items > 10 to "" instead of NULL so gtk+ doesn't use the stock
+	item's default accel.
+
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpimagedock.c: set the docks' titles to
+	"Gimp Dock #<n>" instead of just "Gimp" so they can be
+	distinguished in the WM's window list or dock or whatever.
+
+2001-11-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/menus.c: put the last_opened menu entries in a
 	submenu called "Open Recent", added items to create a dock
 	with some useful tabs in it ("Brushes, Patterns & Stuff..."),
@@ -224,7 +235,7 @@
 	items to the name of the last plug-in (Fixes #50986).
 
 	* app/display/gimpdisplayshell.[ch]: set the labels of "Undo" and
-	"Redo" to the resp. undo names. Much simplified the WM icon stuff
+	"Redo" to the resp. undo names. Much simplified the WM-icon stuff
 	by removing most code and using gimp_viewable_get_new_preview_pixbuf().
 
 	* app/widgets/gimpbrushfactoryview.c: forgot to assign the GQuark
