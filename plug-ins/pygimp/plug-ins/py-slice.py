@@ -214,7 +214,7 @@ register(
     "Manish Singh",
     "Manish Singh",
     "2003",
-    "<Image>/Filters/Web/Py-Slice...",
+    "<Image>/Filters/Web/_Py-Slice...",
     "*",
     [
         (PF_STRING, "save_path", "The path to export the HTML to", os.getcwd()),

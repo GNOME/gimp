@@ -1,3 +1,16 @@
+2005-03-17  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/layers-actions.c
+	* app/actions/plug-in-actions.c
+	* app/actions/view-actions.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/dog.c
+	* plug-ins/pygimp/plug-ins/py-slice.py
+	* plug-ins/script-fu/scripts/i26-gunya2.scm
+	* plug-ins/script-fu/scripts/news-text.scm
+	* plug-ins/script-fu/scripts/text-circle.scm: applied patch from
+	Michael Terry that adds missing mnemonics (bug #106991).
+
 2005-03-16  Sven Neumann  <sven@gimp.org>
 
 	* app/base/gimphistogram.c: fixed checks for uncalculated histogram.

@@ -134,7 +134,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-text-circle"
-		    _"Text Circle..."
+		    _"Text C_ircle..."
 		    "Render the specified text along the perimeter of a circle"
 		    "Shuji Narazaki <narazaki@gimp.org>"
 		    "Shuji Narazaki"

@@ -85,7 +85,7 @@ static GimpActionEntry view_actions[] =
     GIMP_HELP_VIEW_ZOOM_FIT_IN },
 
   { "view-zoom-fit-to", GTK_STOCK_ZOOM_FIT,
-    N_("Fit Image to Window"), NULL,
+    N_("Fit Image _to Window"), NULL,
     N_("Fit image to window"),
     G_CALLBACK (view_zoom_fit_to_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FIT_TO },
@@ -248,53 +248,53 @@ static GimpEnumActionEntry view_zoom_actions[] =
 static GimpRadioActionEntry view_zoom_explicit_actions[] =
 {
   { "view-zoom-16-1", NULL,
-    N_("16:1  (1600%)"), NULL, NULL,
+    N_("1_6:1  (1600%)"), NULL, NULL,
     160000,
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-8-1", NULL,
-    N_("8:1  (800%)"), NULL, NULL,
+    N_("_8:1  (800%)"), NULL, NULL,
     80000,
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-4-1", NULL,
-    N_("4:1  (400%)"), NULL, NULL,
+    N_("_4:1  (400%)"), NULL, NULL,
     40000,
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-2-1", NULL,
-    N_("2:1  (200%)"), NULL, NULL,
+    N_("_2:1  (200%)"), NULL, NULL,
     20000,
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-1-1", GTK_STOCK_ZOOM_100,
-    N_("1:1  (100%)"), "1",
+    N_("_1:1  (100%)"), "1",
     N_("Zoom 1:1"),
     10000,
     GIMP_HELP_VIEW_ZOOM_100 },
 
   { "view-zoom-1-2", NULL,
-    N_("1:2  (50%)"), NULL, NULL,
+    N_("1:_2  (50%)"), NULL, NULL,
     5000,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-1-4", NULL,
-    N_("1:4  (25%)"), NULL, NULL,
+    N_("1:_4  (25%)"), NULL, NULL,
     2500,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-1-8", NULL,
-    N_("1:8  (12.5%)"), NULL, NULL,
+    N_("1:_8  (12.5%)"), NULL, NULL,
     1250,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-1-16", NULL,
-    N_("1:16  (6.25%)"), NULL, NULL,
+    N_("1:1_6  (6.25%)"), NULL, NULL,
     625,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-other", NULL,
-    N_("O_ther..."), NULL, NULL,
+    N_("Othe_r..."), NULL, NULL,
     0,
     GIMP_HELP_VIEW_ZOOM_OTHER }
 };
@@ -610,7 +610,7 @@ view_actions_set_zoom (GimpActionGroup  *group,
     {
       action = "view-zoom-other";
 
-      label = g_strdup_printf (_("Other (%s) ..."), buf);
+      label = g_strdup_printf (_("Othe_r (%s) ..."), buf);
       gimp_action_group_set_action_label (group, action, label);
       g_free (label);
 

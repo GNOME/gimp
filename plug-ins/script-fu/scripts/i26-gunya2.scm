@@ -84,7 +84,7 @@
 
 
 (script-fu-register "script-fu-i26-gunya2"
-		    _"Imigre-26..."
+		    _"Imigre-_26..."
 		    "Two-colored text by hand"
 		    "Shuji Narazaki"
 		    "Shuji Narazaki"

@@ -343,7 +343,7 @@ query (void)
 			  "Bill Skaggs",
 			  "Bill Skaggs",
 			  "2004",
-			  N_("Recompose"),
+			  N_("R_ecompose"),
 			  "GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (recompose_args), 0,

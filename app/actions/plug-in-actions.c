@@ -82,7 +82,7 @@ static GimpActionEntry plug_in_actions[] =
   { "plug-in-toys-menu",           NULL, N_("To_ys")          },
 
   { "plug-in-reset-all", GIMP_STOCK_RESET,
-    N_("Reset all Filters..."), NULL, NULL,
+    N_("Reset all _Filters..."), NULL, NULL,
     G_CALLBACK (plug_in_reset_all_cmd_callback),
     GIMP_HELP_FILTER_RESET_ALL }
 };
@@ -90,12 +90,12 @@ static GimpActionEntry plug_in_actions[] =
 static GimpEnumActionEntry plug_in_repeat_actions[] =
 {
   { "plug-in-repeat", GTK_STOCK_EXECUTE,
-    N_("Repeat Last"), "<control>F", NULL,
+    N_("Re_peat Last"), "<control>F", NULL,
     FALSE, FALSE,
     GIMP_HELP_FILTER_REPEAT },
 
   { "plug-in-reshow", GIMP_STOCK_RESHOW_FILTER,
-    N_("Re-Show Last"), "<control><shift>F", NULL,
+    N_("R_e-Show Last"), "<control><shift>F", NULL,
     TRUE, FALSE,
     GIMP_HELP_FILTER_RESHOW }
 };

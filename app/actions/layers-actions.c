@@ -178,25 +178,25 @@ static GimpActionEntry layers_actions[] =
 static GimpToggleActionEntry layers_toggle_actions[] =
 {
   { "layers-preserve-transparency", GIMP_STOCK_TRANSPARENCY,
-    N_("Keep Transparency"), NULL, NULL,
+    N_("Kee_p Transparency"), NULL, NULL,
     G_CALLBACK (layers_preserve_trans_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_KEEP_TRANSPARENCY },
 
   { "layers-mask-edit", GIMP_STOCK_EDIT,
-    N_("Edit Layer Mask"), NULL, NULL,
+    N_("_Edit Layer Mask"), NULL, NULL,
     G_CALLBACK (layers_mask_edit_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_MASK_EDIT },
 
   { "layers-mask-show", GIMP_STOCK_VISIBLE,
-    N_("Show Layer Mask"), NULL, NULL,
+    N_("S_how Layer Mask"), NULL, NULL,
     G_CALLBACK (layers_mask_show_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_MASK_SHOW },
 
   { "layers-mask-disable", NULL,
-    N_("Disable Layer Mask"), NULL, NULL,
+    N_("_Disable Layer Mask"), NULL, NULL,
     G_CALLBACK (layers_mask_disable_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_MASK_DISABLE }
