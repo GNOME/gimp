@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: script-fu \n"
-"POT-Creation-Date: 2000-04-29 23:50+0200\n"
+"POT-Creation-Date: 2000-04-30 11:43-0700\n"
 "PO-Revision-Date: 2000-04-29 23:59+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -17,39 +17,39 @@ msgstr ""
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu konsollmodus tillater bare interaktiv kjøring"
 
-#: plug-ins/script-fu/script-fu-console.c:194
+#: plug-ins/script-fu/script-fu-console.c:187
 msgid "Script-Fu Console"
 msgstr "Script-Fu konsoll"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-console.c:207
-#: plug-ins/script-fu/script-fu-scripts.c:1922
+#: plug-ins/script-fu/script-fu-console.c:200
+#: plug-ins/script-fu/script-fu-scripts.c:1910
 msgid "Close"
 msgstr "Lukk"
 
 #. The info vbox
-#: plug-ins/script-fu/script-fu-console.c:215
+#: plug-ins/script-fu/script-fu-console.c:208
 msgid "SIOD Output"
 msgstr "SIOD utskrift"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:294
+#: plug-ins/script-fu/script-fu-console.c:287
 msgid "Current Command"
 msgstr "Aktiv kommando"
 
-#: plug-ins/script-fu/script-fu-console.c:315
+#: plug-ins/script-fu/script-fu-console.c:308
 msgid "Browse..."
 msgstr "Bla gjennom..."
 
-#: plug-ins/script-fu/script-fu-console.c:578
+#: plug-ins/script-fu/script-fu-console.c:571
 msgid "Unable to open SIOD output pipe"
 msgstr "Kunne ikke åpne SIOD rør for utskrift"
 
-#: plug-ins/script-fu/script-fu-console.c:582
+#: plug-ins/script-fu/script-fu-console.c:575
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Kunne ikke åpne en strøm på SIOD utskriftsrøret"
 
-#: plug-ins/script-fu/script-fu-console.c:629
+#: plug-ins/script-fu/script-fu-console.c:622
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu evalueringsmodus tillater bare ikke-interaktiv kjøring"
 
@@ -63,71 +63,71 @@ msgstr ""
 "%s"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1137
-#: plug-ins/script-fu/script-fu-scripts.c:1139
+#: plug-ins/script-fu/script-fu-scripts.c:1125
+#: plug-ins/script-fu/script-fu-scripts.c:1127
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1139
-#: plug-ins/script-fu/script-fu-scripts.c:1141
+#: plug-ins/script-fu/script-fu-scripts.c:1127
+#: plug-ins/script-fu/script-fu-scripts.c:1129
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1166
+#: plug-ins/script-fu/script-fu-scripts.c:1154
 msgid "Script Arguments"
 msgstr "Skriptargumenter"
 
 #. we add a colon after the label; some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1189
+#: plug-ins/script-fu/script-fu-scripts.c:1177
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1231
+#: plug-ins/script-fu/script-fu-scripts.c:1219
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu fargevalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1301
+#: plug-ins/script-fu/script-fu-scripts.c:1289
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu filvalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1333
+#: plug-ins/script-fu/script-fu-scripts.c:1321
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu mønstervalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1340
+#: plug-ins/script-fu/script-fu-scripts.c:1328
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu gradientvalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1348
+#: plug-ins/script-fu/script-fu-scripts.c:1336
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu børstevalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1391
+#: plug-ins/script-fu/script-fu-scripts.c:1379
 msgid "Reset to Defaults"
 msgstr "Sett tilbake til standardverdier"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1417
+#: plug-ins/script-fu/script-fu-scripts.c:1405
 msgid "About"
 msgstr "Om"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1431
-#: plug-ins/script-fu/script-fu-server.c:552
+#: plug-ins/script-fu/script-fu-scripts.c:1419
+#: plug-ins/script-fu/script-fu-server.c:544
 msgid "OK"
 msgstr "Ok"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1440
-#: plug-ins/script-fu/script-fu-server.c:554
+#: plug-ins/script-fu/script-fu-scripts.c:1428
+#: plug-ins/script-fu/script-fu-server.c:546
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1545
+#: plug-ins/script-fu/script-fu-scripts.c:1533
 msgid "NOT SET"
 msgstr "IKKE SATT"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1614
+#: plug-ins/script-fu/script-fu-scripts.c:1602
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -135,35 +135,35 @@ msgstr ""
 "Minst en skrifttype du har valgt er ugyldig.\n"
 "Vennligst sjekk dine instillinger.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1893
+#: plug-ins/script-fu/script-fu-scripts.c:1881
 msgid "Author:"
 msgstr "Forfatter:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1899
+#: plug-ins/script-fu/script-fu-scripts.c:1887
 msgid "Copyright:"
 msgstr "Kopirettigheter:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1905
+#: plug-ins/script-fu/script-fu-scripts.c:1893
 msgid "Date:"
 msgstr "Dato:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1913
+#: plug-ins/script-fu/script-fu-scripts.c:1901
 msgid "Image Types:"
 msgstr "Bildetyper:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2066
+#: plug-ins/script-fu/script-fu-scripts.c:2054
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu skrifttypevalg"
 
-#: plug-ins/script-fu/script-fu-server.c:547
+#: plug-ins/script-fu/script-fu-server.c:539
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu tjeneralternativer"
 
-#: plug-ins/script-fu/script-fu-server.c:574
+#: plug-ins/script-fu/script-fu-server.c:566
 msgid "Server Port:"
 msgstr "Tjenerport:"
 
-#: plug-ins/script-fu/script-fu-server.c:580
+#: plug-ins/script-fu/script-fu-server.c:572
 msgid "Server Logfile:"
 msgstr "Loggfil på tjener:"
 

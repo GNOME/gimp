@@ -19,7 +19,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.20\n"
-"POT-Creation-Date: 2000-04-18 14:21+0200\n"
+"POT-Creation-Date: 2000-04-30 11:43-0700\n"
 "PO-Revision-Date: 2000-04-23 13:05+02:00\n"
 "Last-Translator: Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -32,141 +32,150 @@ msgstr ""
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:194
+#: plug-ins/script-fu/script-fu-console.c:187
 msgid "Script-Fu Console"
 msgstr ""
 
 #. Action area
-#: plug-ins/script-fu/script-fu-console.c:207
-#: plug-ins/script-fu/script-fu-scripts.c:1867
+#: plug-ins/script-fu/script-fu-console.c:200
+#: plug-ins/script-fu/script-fu-scripts.c:1910
 msgid "Close"
 msgstr "Cerrar"
 
 #. The info vbox
-#: plug-ins/script-fu/script-fu-console.c:215
+#: plug-ins/script-fu/script-fu-console.c:208
 msgid "SIOD Output"
 msgstr ""
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:294
+#: plug-ins/script-fu/script-fu-console.c:287
 msgid "Current Command"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:315
+#: plug-ins/script-fu/script-fu-console.c:308
 msgid "Browse..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:578
+#: plug-ins/script-fu/script-fu-console.c:571
 msgid "Unable to open SIOD output pipe"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:582
+#: plug-ins/script-fu/script-fu-console.c:575
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:629
+#: plug-ins/script-fu/script-fu-console.c:622
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
+#: plug-ins/script-fu/script-fu-scripts.c:1075
+#, fuzzy, c-format
+msgid ""
+"Script-Fu Error\n"
+"%s"
+msgstr "/Script-Fu"
+
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1113
-#: plug-ins/script-fu/script-fu-scripts.c:1115
+#: plug-ins/script-fu/script-fu-scripts.c:1125
+#: plug-ins/script-fu/script-fu-scripts.c:1127
 #, fuzzy
 msgid "/Script-Fu/"
 msgstr "/Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1115
-#: plug-ins/script-fu/script-fu-scripts.c:1117
+#: plug-ins/script-fu/script-fu-scripts.c:1127
+#: plug-ins/script-fu/script-fu-scripts.c:1129
 #, fuzzy, c-format
 msgid "Script-Fu: %s"
 msgstr "/Script-Fu"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1142
+#: plug-ins/script-fu/script-fu-scripts.c:1154
 msgid "Script Arguments"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1206
+#. we add a colon after the label; some languages want an extra space here
+#: plug-ins/script-fu/script-fu-scripts.c:1177
+#, c-format
+msgid "%s:"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-scripts.c:1219
 msgid "Script-Fu Color Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1212
-msgid "Script Toggle"
-msgstr ""
-
-#: plug-ins/script-fu/script-fu-scripts.c:1274
+#: plug-ins/script-fu/script-fu-scripts.c:1289
 msgid "Script-Fu File Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1306
+#: plug-ins/script-fu/script-fu-scripts.c:1321
 msgid "Script-fu Pattern Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1313
+#: plug-ins/script-fu/script-fu-scripts.c:1328
 msgid "Script-Fu Gradient Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1321
+#: plug-ins/script-fu/script-fu-scripts.c:1336
 msgid "Script-Fu Brush Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1346
+#: plug-ins/script-fu/script-fu-scripts.c:1379
 msgid "Reset to Defaults"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1372
+#: plug-ins/script-fu/script-fu-scripts.c:1405
 msgid "About"
 msgstr "Acerca"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1386
-#: plug-ins/script-fu/script-fu-server.c:552
+#: plug-ins/script-fu/script-fu-scripts.c:1419
+#: plug-ins/script-fu/script-fu-server.c:544
 msgid "OK"
 msgstr "Aceptar"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1395
-#: plug-ins/script-fu/script-fu-server.c:554
+#: plug-ins/script-fu/script-fu-scripts.c:1428
+#: plug-ins/script-fu/script-fu-server.c:546
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1500
+#: plug-ins/script-fu/script-fu-scripts.c:1533
 msgid "NOT SET"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1571
+#: plug-ins/script-fu/script-fu-scripts.c:1602
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1838
+#: plug-ins/script-fu/script-fu-scripts.c:1881
 msgid "Author:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1844
+#: plug-ins/script-fu/script-fu-scripts.c:1887
 msgid "Copyright:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1850
+#: plug-ins/script-fu/script-fu-scripts.c:1893
 msgid "Date:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1858
+#: plug-ins/script-fu/script-fu-scripts.c:1901
 msgid "Image Types:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:2007
+#: plug-ins/script-fu/script-fu-scripts.c:2054
 msgid "Script-Fu Font Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-server.c:547
+#: plug-ins/script-fu/script-fu-server.c:539
 msgid "Script-Fu Server Options"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-server.c:574
+#: plug-ins/script-fu/script-fu-server.c:566
 msgid "Server Port:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-server.c:580
+#: plug-ins/script-fu/script-fu-server.c:572
 #, fuzzy
 msgid "Server Logfile:"
 msgstr "La marcha atrás falló."
@@ -179,11 +188,11 @@ msgstr ""
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:1007 plug-ins/script-fu/script-fu.c:1008
+#: plug-ins/script-fu/script-fu.c:1008 plug-ins/script-fu/script-fu.c:1009
 msgid "Re-read all available scripts"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:1012
+#: plug-ins/script-fu/script-fu.c:1013
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr ""
 
@@ -960,6 +969,10 @@ msgstr "Color"
 msgid "Color"
 msgstr "Color"
 
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Columns"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Create New Image"
 msgstr ""
@@ -1021,6 +1034,11 @@ msgstr "Cargar niveles"
 #, fuzzy
 msgid "Diameter"
 msgstr "milímetro"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+msgid "Down"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Blur Radius"
@@ -1099,6 +1117,11 @@ msgstr "Entorno"
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Erase before Draw"
 msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+#, fuzzy
+msgid "Even"
+msgstr "Extendido"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 #, fuzzy
@@ -1201,6 +1224,7 @@ msgid "Font Size (pixels)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 #: plug-ins/script-fu/scripts/asc2img.scm:0
@@ -1438,6 +1462,11 @@ msgstr "Selección Bèzier"
 msgid "Land Height"
 msgstr "Altura mín.:"
 
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+msgid "Left"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Lighting (degrees)"
 msgstr ""
@@ -1545,6 +1574,10 @@ msgstr ""
 msgid "Number"
 msgstr "Nombre"
 
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Odd"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 #, fuzzy
 msgid "Offset Radius"
@@ -1578,8 +1611,9 @@ msgid "Orientation"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "Outer Border (>= 0)"
-msgstr ""
+#, fuzzy
+msgid "Outer Border"
+msgstr "Borde:"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Outline Blur Radius"
@@ -1602,7 +1636,7 @@ msgstr "Pseudocolor"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 #, fuzzy
-msgid "Pad Opacity [0:100]"
+msgid "Pad Opacity"
 msgstr "Opacidad de Máscara:"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
@@ -1722,6 +1756,12 @@ msgstr "Espaciado:"
 msgid "Ribbon Width"
 msgstr ""
 
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+#, fuzzy
+msgid "Right"
+msgstr "Altura"
+
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "Rippling Strength"
 msgstr ""
@@ -1735,6 +1775,10 @@ msgstr ""
 #, fuzzy
 msgid "Round Ratio"
 msgstr "Rotación"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Rows"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows/Cols"
@@ -1823,7 +1867,7 @@ msgid "Sharpness (degrees)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "Shear Length (> 0)"
+msgid "Shear Length"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
@@ -2008,6 +2052,11 @@ msgstr ""
 msgid "Turn from Left to Right"
 msgstr ""
 
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+msgid "Up"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Upper Color (Active)"
 msgstr ""
@@ -2095,3 +2144,7 @@ msgstr "Anchura"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Pad Opacity [0:100]"
+#~ msgstr "Opacidad de Máscara:"

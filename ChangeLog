@@ -1,3 +1,7 @@
+Mon May  1 13:35:46 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.21 release (1.2pre)
+
 2000-05-01  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/[r-z]*.c: use gimp_ui_init(). Minor cleanups like
