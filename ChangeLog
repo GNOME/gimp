@@ -1,3 +1,9 @@
+2000-03-18  Seth Burgess <sjburges@gimp.org>
+	
+	* plug-ins/common/colortoalpha.c: Fixed handling of previously
+	existing alpha, so it can be run successively now (much more
+	useful)
+
 2000-03-18    <tigert@guadec1.enst.fr>
 
 	* pixmaps/linked.xpm: another icon for the L&C&P dialog.. to be 

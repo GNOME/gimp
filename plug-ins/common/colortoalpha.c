@@ -212,8 +212,10 @@ colortoalpha (float *a1,
 	      float c2,
 	      float c3)
 {
-  float alpha1, alpha2, alpha3;
-
+  float alpha1, alpha2, alpha3, alpha4;
+  
+  alpha4 = *a4;
+	  
   if ( *a1 > c1 )
     alpha1 = (*a1 - c1)/(255.0-c1);
   else if ( *a1 < c1 )
@@ -250,13 +252,16 @@ colortoalpha (float *a1,
       {
 	*a4 = alpha3;
       }
+  
   *a4 *= 255.0;
+  
   if ( *a4 < 1.0 )
     return;
   *a1 = 255.0 * (*a1-c1)/ *a4 + c1;
   *a2 = 255.0 * (*a2-c2)/ *a4 + c2;
   *a3 = 255.0 * (*a3-c3)/ *a4 + c3;
 
+  *a4 *= alpha4/255.0;
 }
 /*
 <clahey> so if a1 > c1, a2 > c2, and a3 > c2 and a1 - c1 > a2-c2, a3-c3, then a1 = b1 * alpha + c1 * (1-alpha) So, maximizing alpha without taking b1 above 1 gives a1 = alpha + c1(1-alpha) and therefore alpha = (a1-c1)/(1-c1).
