@@ -161,11 +161,14 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     {
       button = gimp_viewable_button_new (context->gimp->gradient_factory->container,
                                          context,
-                                         GIMP_PREVIEW_SIZE_SMALL * 2, 1,
+                                         GIMP_PREVIEW_SIZE_LARGE, 1,
                                          dialog_factory,
                                          "gimp-gradient-list",
                                          GIMP_STOCK_TOOL_BLEND,
                                          _("Open the gradient selection dialog"));
+
+      /*  use smaller previews for the popup  */
+      GIMP_VIEWABLE_BUTTON (button)->preview_size = GIMP_PREVIEW_SIZE_SMALL;
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                                  _("Gradient:"), 1.0, 0.5,
