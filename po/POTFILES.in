@@ -139,6 +139,7 @@ app/gui/session.c
 app/gui/splash.c
 app/gui/templates-commands.c
 app/gui/templates-menu.c
+app/gui/themes.c
 app/gui/tips-dialog.c
 app/gui/tips-parser.c
 app/gui/tool-options-dialog.c

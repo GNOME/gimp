@@ -1,3 +1,7 @@
+2003-09-26  Abel Cheung  <maddog@linux.org.hk>
+
+	* POTFILES.in: Removed plug-ins/webbrowser/webbrowser.c
+
 2003-09-23  Michael Natterer  <mitch@gimp.org>
 
 	* it.po: Fixed italian translation. Please check if your
