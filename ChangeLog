@@ -1,3 +1,11 @@
+2002-05-14  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/stock-wilber-eek-64.png: tweaked so the
+	shadow isn't cut off at the image border. We could still need a
+	better icon.
+
+	* themes/Default/images/stock-wilber-eek.png: removed.
+
 2002-05-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimpmath/gimpmath.h: removed FINITE() macro.
