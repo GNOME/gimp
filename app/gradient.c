@@ -5967,7 +5967,7 @@ build_user_filename(char *name, char *path_str)
 
 	/* Get the first path specified in the list */
 
-	home        = getenv("HOME");
+	home        = g_get_home_dir ();
 	local_path  = g_strdup(path_str);
 	first_token = local_path;
 	token       = xstrsep(&first_token, ":");

@@ -1,3 +1,33 @@
+Tue Feb  2 23:34:37 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* libgimp/gimp.c
+	* app/datafiles.c
+	* app/docindex.c
+	* app/gimprc.c
+	* app/gradient.c
+	* app/palette.c: use g_get_home_dir () instead of getenv ("HOME")
+
+	* app/fileops.c: #warning is a gccism
+
+	* app/invert.[ch]: minor cleanup
+
+	* app/menus.c: more cleanups
+
+	* app/blob.c: even more cleanups
+
+	* libgimp/parasite.c: YACU
+
+	* ltconfig
+	* ltmain.sh: CVS libtool 1.2e
+
+	* modules/Makefile.am: use -module and -avoid-version flags
+
+	* lic/Makefile.am
+	* mapcolor/Makefile.am
+	* xbm/Makefile.am: don't link with libjpeg here
+
+	* gimp1_1_splash.ppm: new Adrian splash
+
 1999-02-02  Owen Taylor  <otaylor@gtk.org>
 
 	* app/blob.[ch] app/ink.c: Let the user choose between
@@ -99,8 +129,8 @@ Wed Jan 27 21:52:43 GMT 1999  Austin Donnelly  <austin@gimp.org>
 
 Wed Jan 27 12:25:00 CST 1999 Seth Burgess <sbjurges@gimp.org>
 	
-	* plug-ins/script-fu/scripts/add-bevel.scm: fixed the SF-ADJUSTMENT so that
-        it shows up again.
+	* plug-ins/script-fu/scripts/add-bevel.scm: fixed the SF-ADJUSTMENT
+	so that it shows up again.
 
 Tue Jan 26 22:17:57 PST 1999 Manish Singh <yosh@gimp.org>
 

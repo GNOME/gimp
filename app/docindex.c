@@ -217,7 +217,7 @@ load_idea_manager( idea_manager *ideas )
 
   if ( ! idea_list )
     {
-      home_dir = getenv( "HOME" );
+      home_dir = g_get_home_dir();
       
       /* open persistant desktop file. */
       desktopfile = append2( home_dir, FALSE, IDEAPATH, FALSE );
@@ -292,7 +292,7 @@ save_idea_manager( idea_manager *ideas )
   gchar *desktopfile;
   gchar *home_dir;
     
-  home_dir = getenv( "HOME" );
+  home_dir = g_get_home_dir();
   
   /* open persistant desktop file. */
   desktopfile = append2( home_dir, FALSE, IDEAPATH, FALSE );
@@ -436,7 +436,7 @@ static void idea_add_in_position_with_select( gchar *title, gint position, gbool
 	  gchar *desktopfile;
 	  gchar *home_dir;
 	  
-	  home_dir = getenv( "HOME" );
+	  home_dir = g_get_home_dir();
 	  
 	  /* open persistant desktop file. */
 	  desktopfile = append2( home_dir, FALSE, IDEAPATH, FALSE );

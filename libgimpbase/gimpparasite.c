@@ -49,7 +49,7 @@ parasite_new (const char *name, guint32 flags,
 	      guint32 size, const void *data)
 {
   Parasite *p;
-  p = (Parasite *)g_malloc(sizeof(Parasite));
+  p = g_new (Parasite, 1);
   if (name)
     p->name = g_strdup(name);
   else

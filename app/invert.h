@@ -18,10 +18,11 @@
 #ifndef __INVERT_H__
 #define __INVERT_H__
 
+#include "gimage.h"
 #include "procedural_db.h"
 
 /*  invert functions  */
-void  image_invert (void *);
+void  image_invert (GImage *);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord invert_proc;

@@ -868,7 +868,9 @@ file_save (GimpImage* gimage,
 	 attention --Adam */
       /* gimage_set_save_proc(gimage, file_proc); */
 
+#ifdef __GNUC__
 #warning CRUFTY THUMBNAIL SAVING
+#endif
       /* If you have problems, blame Adam... not quite finished. */
       {
 	TempBuf* tempbuf;

@@ -63,7 +63,7 @@ datafiles_read_directories (char *path_str,
   /* Set local path to contain temp_path, where (supposedly)
    * there may be working files.
    */
-  home = getenv("HOME");
+  home = g_get_home_dir ();
   local_path = g_strdup (path_str);
 
   /* Search through all directories in the local path */

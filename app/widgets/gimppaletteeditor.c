@@ -1254,7 +1254,7 @@ palette_create_entries(gpointer   client_data,
       if (palette_path)
 	{
 	  /*  Get the first path specified in the palette path list  */
-	  home = getenv("HOME");
+	  home = g_get_home_dir ();
 	  local_path = g_strdup (palette_path);
 	  first_token = local_path;
 	  token = xstrsep(&first_token, ":");

@@ -15,8 +15,7 @@ INCLUDES = \
 LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(GTK_LIBS)				\
-	@LIBJPEG_LIB@
+	$(GTK_LIBS)
 
 DEPS = \
 	$(top_builddir)/libgimp/libgimpui.la	\

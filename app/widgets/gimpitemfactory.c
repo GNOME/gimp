@@ -39,7 +39,7 @@
 #define MRU_MENU_ENTRY_SIZE (strlen (_("/File/MRU00 ")) + 1)
 #define MRU_MENU_ACCEL_SIZE sizeof ("<control>0")
 
-static char* dummyMRU = N_("/File/MRU00 ");
+static G_GNUC_UNUSED char* dummyMRU = N_("/File/MRU00 ");
 
 static void menus_init (void);
 static GtkItemFactoryEntry * translate_entries (const GtkItemFactoryEntry *, gint);
@@ -66,7 +66,7 @@ static const GtkItemFactoryEntry toolbox_entries[] =
   { N_("/File/Dialogs/Document Index..."), NULL, raise_idea_callback, 0 },
   { N_("/File/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
   { N_("/File/Dialogs/Module Browser..."), NULL, dialogs_module_browser_cmd_callback, 0 },
-  { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
+  { N_("/File/---"), NULL, NULL, 0, "<Separator>" }
 };
 static guint n_toolbox_entries = sizeof (toolbox_entries) / sizeof (toolbox_entries[0]);
 static GtkItemFactory *toolbox_factory = NULL;

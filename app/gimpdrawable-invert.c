@@ -31,15 +31,12 @@ static Argument * invert_invoker (Argument *);
 
 
 void
-image_invert (gimage_ptr)
-     void *gimage_ptr;
+image_invert (GImage *gimage)
 {
-  GImage *gimage;
   GimpDrawable *drawable;
   Argument *return_vals;
   int nreturn_vals;
 
-  gimage = (GImage *) gimage_ptr;
   drawable = gimage_active_drawable (gimage);
 
   if (drawable_indexed (drawable))
@@ -63,8 +60,7 @@ image_invert (gimage_ptr)
 /*  Inverter  */
 
 static void
-invert (drawable)
-     GimpDrawable *drawable;
+invert (GimpDrawable *drawable)
 {
   PixelRegion srcPR, destPR;
   unsigned char *src, *s;

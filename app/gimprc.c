@@ -293,7 +293,7 @@ gimp_directory ()
     return gimp_dir;
 
   env_gimp_dir = getenv ("GIMP_DIRECTORY");
-  env_home_dir = getenv ("HOME");
+  env_home_dir = g_get_home_dir ();
   if (NULL != env_home_dir)
     len_env_home_dir = strlen (env_home_dir);
 
@@ -386,7 +386,7 @@ parse_gimprc_file (char *filename)
   if (filename[0] != '/')
     {
       if (!home_dir)
-	home_dir = g_strdup (getenv ("HOME"));
+	home_dir = g_strdup (g_get_home_dir ());
       g_snprintf (rfilename, MAXPATHLEN, "%s/%s", home_dir, filename);
       filename = rfilename;
     }
@@ -1457,7 +1457,7 @@ transform_path (char *path,
   int  is_env;
   UnknownToken *ut;
 
-  home = getenv ("HOME");
+  home = g_get_home_dir ();
   length = 0;
   substituted = FALSE;
   is_env = FALSE;

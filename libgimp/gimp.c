@@ -886,7 +886,7 @@ gimp_gtkrc ()
   static char filename[MAXPATHLEN];
   char *home_dir;
 
-  home_dir = getenv ("HOME");
+  home_dir = g_get_home_dir ();
   if (!home_dir)
     return NULL;
 
