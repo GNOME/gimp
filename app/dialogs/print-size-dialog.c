@@ -298,8 +298,8 @@ print_size_dialog_response (GtkWidget       *dialog,
     case GTK_RESPONSE_OK:
       private->callback (dialog,
                          private->image,
-                         gimp_size_entry_get_value (entry, 0),
-                         gimp_size_entry_get_value (entry, 1),
+                         gimp_size_entry_get_refval (entry, 0),
+                         gimp_size_entry_get_refval (entry, 1),
                          gimp_size_entry_get_unit (entry),
                          private->user_data);
       break;
