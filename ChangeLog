@@ -1,5 +1,15 @@
 2003-01-09  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimprc-blurbs.h: fixed typo.
+
+	* app/pdb/procedural_db.c (procedural_db_run_proc): always set the
+	number of returned values, even in case of an error.
+
+	* app/widgets/gimphelp.c: fix #65789 similar to how Tor did it in
+	the stable branch.
+
+2003-01-09  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gfig/images/Makefile.am
 	* plug-ins/gfig/images/stock-logo.png: new Gfig logo courtesy of
 	Owen <oc@webone.com.au>.

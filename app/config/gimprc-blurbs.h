@@ -87,7 +87,7 @@
 #endif
 
 #define GFIG_PATH_BLURB \
-"Where to search for GFig figures used by the GFig plug-in."
+"Where to search for Gfig figures used by the Gfig plug-in."
 
 #define GFLARE_PATH_BLURB \
 "Where to search for gflares used by the GFlare plug-in."

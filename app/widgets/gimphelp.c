@@ -116,9 +116,6 @@ gimp_idle_help (gpointer data)
 
   browser = GIMP_GUI_CONFIG (idle_help->gimp->config)->help_browser;
 
-  if (idle_help->help_data == NULL && browser != GIMP_HELP_BROWSER_GIMP)
-    idle_help->help_data = g_strdup ("introduction.html");
-
 #ifdef DEBUG_HELP
   if (idle_help->help_path)
     g_print ("Help Path: %s\n", idle_help->help_path);
@@ -258,11 +255,12 @@ gimp_help_netscape (Gimp        *gimp,
   gint      nreturn_vals;
   gchar    *url;
 
+  if (!help_data)
+    help_data = "introduction.html";
+
   if (help_data[0] == '/')  /* _not_ g_path_is_absolute() */
     {
-      url = g_strconcat ("file:",
-			 help_data,
-			 NULL);
+      url = g_strconcat ("file:", help_data, NULL);
     }
   else
     {

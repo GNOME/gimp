@@ -84,7 +84,9 @@ procedural_db_free (Gimp *gimp)
       PDBData *data;
       GList   *list;
 
-      for (list = gimp->procedural_db_data_list; list; list = g_list_next (list))
+      for (list = gimp->procedural_db_data_list;
+           list;
+           list = g_list_next (list))
         {
           data = (PDBData *) list->data;
 
@@ -269,9 +271,12 @@ procedural_db_run_proc (Gimp        *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (nreturn_vals != NULL, NULL);
 
   if ((proc = procedural_db_lookup (gimp, name)) == NULL)
     {
+      *nreturn_vals = 1;
+
       return_vals = g_new (Argument, 1);
       return_vals->arg_type      = GIMP_PDB_STATUS;
       return_vals->value.pdb_int = GIMP_PDB_CALLING_ERROR;
@@ -295,6 +300,8 @@ procedural_db_run_proc (Gimp        *gimp,
 		     pdb_type_name (proc->args[i].arg_type),
 		     pdb_type_name (params[i].arg_type));
 	  g_free (params);
+
+          *nreturn_vals = 0;
 	  return NULL;
 	}
 
