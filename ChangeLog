@@ -1,3 +1,10 @@
+1999-09-21  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
+
+	* data/brushes/Makefile.am (install-data-local): added an
+	install-data-local target to forcibly remove the round1.vbr from
+	the installed brushes directory if it's still there for some silly 
+	reason...
+
 Tue Sep 21 21:31:23 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gflare/gflare.c: gtk_timeout and gtk_idle are gunit, so

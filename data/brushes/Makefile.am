@@ -54,3 +54,7 @@ FILES = \
 	thegimp.gbr		\
 	vine.gih		\
 	xcf.gbr
+
+install-data-local:
+	rm -f $(brushdatadir)/round1.vbr
+
