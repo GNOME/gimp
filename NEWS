@@ -32,7 +32,7 @@ Overview of Changes in GIMP 2.1.3
 
 - Added GimpCellRendererColor and GimpCellRendererToggle to libgimpwidgets.
 
-- Renamed GimpColor boxed type to GimpRGB and moved it to libgimpwidgets.
+- Renamed GimpColor boxed type to GimpRGB and moved it to libgimpcolor.
 
 - Fixes to the BMP loader plug-in (bug #143682).
 
