@@ -421,7 +421,7 @@ gimp_composite_regression_dump_rgba8 (char *str, gimp_rgba8_t *rgba, u_long n_pi
 
 #define tv_to_secs(tv) ((double) ((tv).tv_sec) + (double) ((tv).tv_usec / 1000000.0))
 
-#define timer_report(name,t1,t2) printf("%-17s %17.7f %17.7f %17.7f%c\n", name, tv_to_secs(t1), tv_to_secs(t2), tv_to_secs(t1)/tv_to_secs(t2), tv_to_secs(t1)/tv_to_secs(t2) > 1.0 ? ' ' : '*');
+#define timer_report(name,t1,t2) printf("%-32s %10.4f %10.4f %10.4f%c\n", name, tv_to_secs(t1), tv_to_secs(t2), tv_to_secs(t1)/tv_to_secs(t2), tv_to_secs(t1)/tv_to_secs(t2) > 1.0 ? ' ' : '*');
 
 /**
  * gimp_composite_regression_timer_report:
@@ -434,7 +434,7 @@ gimp_composite_regression_dump_rgba8 (char *str, gimp_rgba8_t *rgba, u_long n_pi
 void
 gimp_composite_regression_timer_report (char *name, double t1, double t2)
 {
-  printf ("%-17s %17.7f %17.7f %17.7f%c\n", name, t1, t2, t1/t2, t1/t2 > 1.0 ? ' ' : '*');
+  printf ("%-32s %10.4f %10.4f %10.4f%c\n", name, t1, t2, t1/t2, t1/t2 > 1.0 ? ' ' : '*');
 }
 
 /**

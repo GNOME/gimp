@@ -1,3 +1,10 @@
+2004-09-01  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* Added gimp_composite_addition_va8_va8_va8_mmx():
+	* Regression tests now include printing the image type for each test.
+	* Regenerated
+
+
 2004-09-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/borderaverage.c

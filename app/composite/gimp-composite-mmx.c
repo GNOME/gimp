@@ -76,6 +76,10 @@ const guint32 va8_b255_64[2] =         { 0xFFFFFFFF, 0xFFFFFFFF };
 const guint32 va8_w1_64[2] =           { 0x00010001, 0x00010001 };
 const guint32 va8_w255_64[2] =         { 0x00FF00FF, 0x00FF00FF };
 
+/*const static guint32 v8_alpha_mask[2] = { 0xFF00FF00, 0xFF00FF00};
+  const static guint32 v8_mul_shift[2] = { 0x00800080, 0x00800080 };*/
+
+
 /*
  *
  */
@@ -1253,7 +1257,6 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 void
 gimp_composite_swap_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 {
-  uint64 *d = (uint64 *) _op->D;
   uint64 *a = (uint64 *) _op->A;
   uint64 *b = (uint64 *) _op->B;
   gulong n_pixels = _op->n_pixels;
@@ -1287,91 +1290,94 @@ gimp_composite_swap_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 
 
 
-#if 0
-static const guint32 v8_alpha_mask[2] = { 0xFF00FF00, 0xFF00FF00};
-static const guint32 v8_mul_shift[2] = { 0x00800080, 0x00800080 };
-
 void
 gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *_op)
 {
-  GimpCompositeContext op = *_op;
+  uint64 *d = (uint64 *) _op->D;
+  uint64 *a = (uint64 *) _op->A;
+  uint64 *b = (uint64 *) _op->B;
+  gulong n_pixels = _op->n_pixels;
 
-  asm("pushl %edi");
-  asm("pushl %ebx");
-  asm("movl 12(%esp), %edi");
-  asm("movq v8_alpha_mask, %mm0");
+  asm volatile ("movq    %0,%%mm0"
+                : 
+                : "m" (*va8_alpha_mask_64)
+                : "%mm0");
 
-  asm("subl $ 4, %ecx");
-  asm("jl .add_pixels_1a_1a_last3");
-  asm("movl $ 8, %ebx");
-  asm(".add_pixels_1a_1a_loop:");
+  for (; n_pixels >= 4; n_pixels -= 4)
+    {
+      asm volatile ("  movq       %1, %%mm2\n"
+                    "\tmovq       %2, %%mm3\n"
+                    "\tmovq    %%mm2, %%mm4\n"
+                    "\tpaddusb %%mm3, %%mm4\n"
+                    "\tmovq    %%mm0, %%mm1\n"
+                    "\tpandn   %%mm4, %%mm1\n"
+                    "\t" pminub(mm3, mm2, mm4) "\n"
+                    "\tpand    %%mm0, %%mm2\n"
+                    "\tpor     %%mm2, %%mm1\n"
+                    /*"\tmovq    %%mm1, %0\n"*/
+                    "\tmovntq  %%mm1, %0\n"
+                    : "=m" (*d)
+                    : "m" (*a), "m" (*b)
+                    : "%mm0", "%mm1", "%mm2", "%mm3", "%mm4");
+      a++;
+      b++;
+      d++;
+    }
 
-  asm("movq (%eax), %mm2");
-  asm("movq (%edx), %mm3");
+  uint32 *a32 = (uint32 *) a;
+  uint32 *b32 = (uint32 *) b;
+  uint32 *d32 = (uint32 *) d;
 
-  asm("movq %mm2, %mm4");
-  asm("paddusb %mm3, %mm4");
-  asm("movq %mm0, %mm1");
-  asm("pandn %mm4, %mm1");
-  asm("movq %mm2, %mm4");
-  asm("psubusb %mm3, %mm4");
-  asm("psubb %mm4, %mm2");
-  asm("pand %mm0, %mm2");
-  asm("por %mm2, %mm1");
-  asm("movq %mm1, (%edi)");
-  asm("addl %ebx, %eax");
-  asm("addl %ebx, %edx");
-  asm("addl %ebx, %edi");
-  asm("subl $ 4, %ecx");
-  asm("jge .add_pixels_1a_1a_loop");
+  for (; n_pixels >= 2; n_pixels -= 2)
+    {
+      asm volatile ("  movd    %1, %%mm2\n"
+                    "\tmovd    %2, %%mm3\n"
+                    "\tmovq    %%mm2, %%mm4\n"
+                    "\tpaddusb %%mm3, %%mm4\n"
+                    "\tmovq    %%mm0, %%mm1\n"
+                    "\tpandn   %%mm4, %%mm1\n"
+                    "\t" pminub(mm3, mm2, mm4) "\n"
+                    "\tpand    %%mm0, %%mm2\n"
+                    "\tpor     %%mm2, %%mm1\n"
+                    "\tmovd    %%mm1, %0\n"
+                    : "=m" (*d32)
+                    : "m" (*a32), "m" (*b32)
+                    : "%mm0", "%mm1", "%mm2", "%mm3", "%mm4");
+      a32++;
+      b32++;
+      d32++;
+    }
+  
+  uint16 *a16 = (uint16 *) a32;
+  uint16 *b16 = (uint16 *) b32;
+  uint16 *d16 = (uint16 *) d32;
 
-  asm(".add_pixels_1a_1a_last3:");
-  asm("test $ 2, %ecx");
-  asm("jz .add_pixels_1a_1a_last1");
-  asm("movd (%eax), %mm2");
-  asm("movd (%edx), %mm3");
+  for (; n_pixels >= 1; n_pixels -= 1)
+    {
+      asm volatile ("  movw    %1, %%ax ; movd    %%eax, %%mm2\n"
+                    "\tmovw    %2, %%ax ; movd    %%eax, %%mm3\n"
+                    "\tmovq    %%mm2, %%mm4\n"
+                    "\tpaddusb %%mm3, %%mm4\n"
+                    "\tmovq    %%mm0, %%mm1\n"
+                    "\tpandn   %%mm4, %%mm1\n"
+                    "\t" pminub(mm3, mm2, mm4) "\n"
+                    "\tpand    %%mm0, %%mm2\n"
+                    "\tpor     %%mm2, %%mm1\n"
+                    "\tmovd    %%mm1, %%eax\n"
+                    "\tmovw    %%ax, %0\n"
+                    : "=m" (*d16)
+                    : "m" (*a16), "m" (*b16)
+                    : "%eax", "%mm0", "%mm1", "%mm2", "%mm3", "%mm4");
 
-  asm("movq %mm2, %mm4");
-  asm("paddusb %mm3, %mm4");
-  asm("movq %mm0, %mm1");
-  asm("pandn %mm4, %mm1");
-  asm("movq %mm2, %mm4");
-  asm("psubusb %mm3, %mm4");
-  asm("psubb %mm4, %mm2");
-  asm("pand %mm0, %mm2");
-  asm("por %mm2, %mm1");
-  asm("addl $ 4, %eax");
-  asm("addl $ 4, %edx");
-  asm("addl $ 4, %edi");
-
-  asm(".add_pixels_1a_1a_last1:");
-  asm("test $ 1, %ecx");
-  asm("jz .add_pixels_1a_1a_end");
-
-  asm("movw (%eax), %bx");
-  asm("movd %ebx, %mm2");
-  asm("movw (%edx), %bx");
-  asm("movd %ebx, %mm3");
-
-  asm("movq %mm2, %mm4");
-  asm("paddusb %mm3, %mm4");
-  asm("movq %mm0, %mm1");
-  asm("pandn %mm4, %mm1");
-  asm("movq %mm2, %mm4");
-  asm("psubusb %mm3, %mm4");
-  asm("psubb %mm4, %mm2");
-  asm("pand %mm0, %mm2");
-  asm("por %mm2, %mm1");
-  asm("movd %mm1, %ebx");
-  asm("movw %bx, (%edi)");
-
-  asm(".add_pixels_1a_1a_end:");
-
+      a16++;
+      b16++;
+      d16++;
+    }
+  
   asm("emms");
-  asm("popl %ebx");
-  asm("popl %edi");
 }
 
+#if 0
 void
 gimp_composite_burn_va8_va8_va8_mmx (GimpCompositeContext *_op)
 {
