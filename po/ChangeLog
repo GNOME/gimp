@@ -1,3 +1,8 @@
+2005-04-01  Sven Neumann  <sven@gimp.org>
+
+	* sl.po: fixed two fatal errors (number of format specifications
+	in 'msgid' and 'msgstr' does not match).
+
 2005-04-01  Andraz Tori  <andraz.tori1@guest.arnes.si>
 
 	* sl.po: Added Slovenian translation by

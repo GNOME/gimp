@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp.merged\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-02-15 23:44+0000\n"
-"PO-Revision-Date: 2005-04-01 01:40+0200\n"
+"PO-Revision-Date: 2005-04-01 12:44+0200\n"
 "Last-Translator: Boštjan Špetič <igzebedze@cyberpipe.org>\n"
 "Language-Team: sl_SI <sl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -646,7 +646,7 @@ msgstr "Dodaj barvo iz ozadja"
 #: ../app/actions/colormap-editor-commands.c:70
 #, c-format
 msgid "Edit colormap entry #%d"
-msgstr "Uredi vnos barvne palete #$d"
+msgstr "Uredi vnos barvne palete #%d"
 
 #: ../app/actions/colormap-editor-commands.c:76
 msgid "Edit Colormap Entry"
@@ -9195,7 +9195,7 @@ msgstr ""
 "Pot v izbiro\n"
 "%s  Dodaj\n"
 "%s  Odštevj\n"
-"%s%s%s  Presek"
+"%s  Presek"
 
 #: ../app/tools/gimpvectoroptions.c:196
 msgid "Create selection from path"
