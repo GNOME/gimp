@@ -100,7 +100,7 @@ static void
 plug_in_progress_cancel (GtkWidget *widget,
 			 PlugIn    *plug_in)
 {
-  if (plug_in->recurse)
+  if (plug_in->recurse_main_loop || plug_in->temp_main_loops)
     {
       plug_in->return_vals   = g_new (Argument, 1);
       plug_in->n_return_vals = 1;

@@ -1,3 +1,17 @@
+2003-06-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in.[ch]: added separate GMainLoops for waiting
+	for extension_ack and for procedure_run's return value. The stack
+	of main loops is currently unused, it will be used for temp_proc
+	return values (which are currently disabled for no good reason).
+	Removed the boolean "recurse" and "starting_ext" states because
+	they are redundant now (we check for the presence of the dedicated
+	main loops instead).
+
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-run.c: changed accordingly.
+
 2003-06-23  Sven Neumann  <sven@gimp.org>
 
 	* data/misc/gimp.desktop.in.in: announce the fact that we

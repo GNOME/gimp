@@ -93,8 +93,6 @@ plug_in_run (Gimp       *gimp,
           goto done;
         }
 
-      plug_in->recurse = synchronous;
-
       config.version        = GP_VERSION;
       config.tile_width     = TILE_WIDTH;
       config.tile_height    = TILE_HEIGHT;
@@ -126,19 +124,29 @@ plug_in_run (Gimp       *gimp,
        */
       if (proc_rec->proc_type == GIMP_EXTENSION)
         {
-          plug_in->starting_ext = TRUE;
+          plug_in->ext_main_loop = g_main_loop_new (NULL, FALSE);
 
-          plug_in_main_loop (plug_in);
+          gimp_threads_leave (gimp);
+          g_main_loop_run (plug_in->ext_main_loop);
+          gimp_threads_enter (gimp);
 
-          plug_in->starting_ext = FALSE;
+          g_main_loop_unref (plug_in->ext_main_loop);
+          plug_in->ext_main_loop = NULL;
         }
 
       /* If this plug-in is requested to run synchronously,
        * wait for its return values
        */
-      if (plug_in->recurse)
+      if (synchronous)
         {
-          plug_in_main_loop (plug_in);
+          plug_in->recurse_main_loop = g_main_loop_new (NULL, FALSE);
+
+          gimp_threads_leave (gimp);
+          g_main_loop_run (plug_in->recurse_main_loop);
+          gimp_threads_enter (gimp);
+
+          g_main_loop_unref (plug_in->recurse_main_loop);
+          plug_in->recurse_main_loop = NULL;
 
           return_vals = plug_in_get_return_vals (plug_in, proc_rec);
         }
@@ -206,7 +214,6 @@ plug_in_temp_run (ProcRecord *proc_rec,
   if (plug_in)
     {
       GPProcRun proc_run;
-      gboolean  old_recurse;
 
       if (plug_in->current_temp_proc)
 	{
@@ -229,26 +236,19 @@ plug_in_temp_run (ProcRecord *proc_rec,
 
       plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
 
-      old_recurse = plug_in->recurse;
-      plug_in->recurse = TRUE;
-
-#ifdef ENABLE_TEMP_RETURN
       plug_in_ref (plug_in);
 
+#ifdef ENABLE_TEMP_RETURN
       plug_in_main_loop (plug_in);
 
-      return_vals = plug_in_get_return_vals (proc_rec);
+      return_vals = plug_in_get_return_vals (plug_in, proc_rec);
 #else
       return_vals = procedural_db_return_args (proc_rec, TRUE);
 #endif
 
-      plug_in->recurse = old_recurse;
-
       plug_in->current_temp_proc = NULL;
 
-#ifdef ENABLE_TEMP_RETURN
       plug_in_unref (plug_in);
-#endif
     }
 
  done:

@@ -265,8 +265,6 @@ plug_in_new (Gimp        *gimp,
   plug_in->query              = FALSE;
   plug_in->init               = FALSE;
   plug_in->synchronous        = FALSE;
-  plug_in->recurse            = FALSE;
-  plug_in->starting_ext       = FALSE;
   plug_in->pid                = 0;
 
   plug_in->name               = g_path_get_basename (prog);
@@ -283,7 +281,10 @@ plug_in_new (Gimp        *gimp,
   plug_in->temp_proc_defs     = NULL;
   plug_in->current_temp_proc  = NULL;
 
-  plug_in->main_loops         = NULL;
+  plug_in->ext_main_loop      = NULL;
+  plug_in->recurse_main_loop  = NULL;
+  plug_in->temp_main_loops    = NULL;
+
   plug_in->return_vals        = NULL;
   plug_in->n_return_vals      = 0;
 
@@ -396,10 +397,10 @@ plug_in_open (PlugIn *plug_in)
 
   /* Remember the file descriptors for the pipes.
    */
-  read_fd =
-    g_strdup_printf ("%d", g_io_channel_unix_get_fd (plug_in->his_read));
-  write_fd =
-    g_strdup_printf ("%d", g_io_channel_unix_get_fd (plug_in->his_write));
+  read_fd  = g_strdup_printf ("%d",
+                              g_io_channel_unix_get_fd (plug_in->his_read));
+  write_fd = g_strdup_printf ("%d",
+                              g_io_channel_unix_get_fd (plug_in->his_write));
 
   /* Set the rest of the command line arguments.
    * FIXME: this is ugly.  Pass in the mode as a separate argument?
@@ -607,15 +608,27 @@ plug_in_close (PlugIn   *plug_in,
   if (plug_in->progress)
     plug_in_progress_end (plug_in);
 
-  if (plug_in->recurse)
+  while (plug_in->temp_main_loops)
     {
-      while (plug_in->main_loops)
-        {
-          g_warning ("plug_in_close: quitting stale main loop\n");
-          plug_in_main_loop_quit (plug_in);
-        }
+      g_warning ("plug_in_close: plug-in aborted before sending its "
+                 "temporary procedure return values");
+      plug_in_main_loop_quit (plug_in);
+    }
 
-      plug_in->recurse = FALSE;
+  if (plug_in->recurse_main_loop &&
+      g_main_loop_is_running (plug_in->recurse_main_loop))
+    {
+      g_warning ("plug_in_close: plug-in aborted before sending its "
+                 "procedure return values");
+      g_main_loop_quit (plug_in->recurse_main_loop);
+    }
+
+  if (plug_in->ext_main_loop &&
+      g_main_loop_is_running (plug_in->ext_main_loop))
+    {
+      g_warning ("plug_in_close: extension aborted before sending its "
+                 "extension_ack message");
+      g_main_loop_quit (plug_in->ext_main_loop);
     }
 
   plug_in->synchronous = FALSE;
@@ -816,13 +829,9 @@ plug_in_pop (Gimp *gimp)
     }
 
   if (gimp->plug_in_stack)
-    {
-      gimp->current_plug_in = gimp->plug_in_stack->data;
-    }
+    gimp->current_plug_in = gimp->plug_in_stack->data;
   else
-    {
-      gimp->current_plug_in = NULL;
-    }
+    gimp->current_plug_in = NULL;
 }
 
 void
@@ -834,7 +843,8 @@ plug_in_main_loop (PlugIn *plug_in)
 
   main_loop = g_main_loop_new (NULL, FALSE);
 
-  plug_in->main_loops = g_list_prepend (plug_in->main_loops, main_loop);
+  plug_in->temp_main_loops = g_list_prepend (plug_in->temp_main_loops,
+                                             main_loop);
 
   gimp_threads_leave (plug_in->gimp);
   g_main_loop_run (main_loop);
@@ -846,18 +856,22 @@ plug_in_main_loop (PlugIn *plug_in)
 void
 plug_in_main_loop_quit (PlugIn *plug_in)
 {
+  GMainLoop *main_loop;
+
   g_return_if_fail (plug_in != NULL);
 
-  if (! plug_in->main_loops)
+  if (! plug_in->temp_main_loops)
     {
-      g_warning ("plug_in_main_loop_quit: called without a main loop running");
+      g_warning ("plug_in_main_loop_quit: called without a temp main loop running");
       return;
     }
 
-  g_main_loop_quit ((GMainLoop *) plug_in->main_loops->data);
+  main_loop = (GMainLoop *) plug_in->temp_main_loops->data;
 
-  plug_in->main_loops = g_list_remove (plug_in->main_loops,
-                                       plug_in->main_loops->data);
+  g_main_loop_quit (main_loop);
+
+  plug_in->temp_main_loops = g_list_remove (plug_in->temp_main_loops,
+                                            main_loop);
 }
 
 gchar *

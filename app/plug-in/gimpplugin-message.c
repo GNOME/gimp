@@ -398,7 +398,7 @@ static void
 plug_in_handle_proc_return_priv (PlugIn       *plug_in,
                                  GPProcReturn *proc_return)
 {
-  if (plug_in->recurse)
+  if (plug_in->recurse_main_loop || plug_in->temp_main_loops)
     {
       plug_in->return_vals = plug_in_params_to_args (proc_return->params,
                                                      proc_return->nparams,
@@ -442,8 +442,8 @@ plug_in_handle_proc_return (PlugIn       *plug_in,
 {
   plug_in_handle_proc_return_priv (plug_in, proc_return);
 
-  if (plug_in->recurse)
-    plug_in_main_loop_quit (plug_in);
+  if (plug_in->recurse_main_loop)
+    g_main_loop_quit (plug_in->recurse_main_loop);
 
   plug_in_close (plug_in, FALSE);
 }
@@ -453,7 +453,7 @@ static void
 plug_in_handle_temp_proc_return (PlugIn       *plug_in,
                                  GPProcReturn *proc_return)
 {
-  if (plug_in->in_temp_proc)
+  if (plug_in->temp_main_loops)
     {
       plug_in_handle_proc_return_priv (plug_in, proc_return);
 
@@ -780,9 +780,9 @@ plug_in_handle_proc_uninstall (PlugIn          *plug_in,
 static void
 plug_in_handle_extension_ack (PlugIn *plug_in)
 {
-  if (plug_in->starting_ext)
+  if (plug_in->ext_main_loop)
     {
-      plug_in_main_loop_quit (plug_in);
+      g_main_loop_quit (plug_in->ext_main_loop);
     }
   else
     {

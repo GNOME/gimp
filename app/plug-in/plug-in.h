@@ -38,8 +38,6 @@ struct _PlugIn
   guint         query : 1;        /*  Are we querying the plug-in?            */
   guint         init : 1;         /*  Are we initialing the plug-in?          */
   guint         synchronous : 1;  /*  Is the plug-in running synchronously?   */
-  guint         recurse : 1;      /*  Do we have an own GMainLoop?            */
-  guint         starting_ext : 1; /*  Does the plug-in wait for extension_ack?*/
   pid_t         pid;              /*  Plug-in's process id                    */
 
   gchar        *name;             /*  Plug-in's name                          */
@@ -58,7 +56,10 @@ struct _PlugIn
   GSList       *temp_proc_defs;   /*  Temporary procedures                    */
   ProcRecord   *current_temp_proc;/*  The temp proc the plug-in is busy with  */
 
-  GList        *main_loops;       /*  Stack of recursive main loops           */
+  GMainLoop    *ext_main_loop;    /*  for waiting for extension_ack           */
+  GMainLoop    *recurse_main_loop;/*  for waiting for proc_return             */
+  GList        *temp_main_loops;  /*  for waiting for temp_proc_returns       */
+
   Argument     *return_vals;      /*  The return value we wait for            */
   gint          n_return_vals;
 
@@ -93,7 +94,7 @@ void       plug_in_pop            (Gimp        *gimp);
 
 void       plug_in_main_loop      (PlugIn      *plug_in);
 void       plug_in_main_loop_quit (PlugIn      *plug_in);
-
+ 
 gchar    * plug_in_get_undo_desc  (PlugIn      *plug_in);
 
 
