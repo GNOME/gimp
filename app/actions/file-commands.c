@@ -39,6 +39,7 @@
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
@@ -46,8 +47,8 @@
 
 #include "menus/menus.h"
 
+#include "gui/dialogs.h"
 #include "gui/file-open-dialog.h"
-#include "gui/file-open-location-dialog.h"
 #include "gui/file-save-dialog.h"
 
 #include "actions.h"
@@ -99,12 +100,12 @@ void
 file_open_location_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
-  Gimp      *gimp;
   GtkWidget *widget;
-  return_if_no_gimp (gimp, data);
   return_if_no_widget (widget, data);
 
-  file_open_location_dialog_show (gimp, widget);
+  gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                  gtk_widget_get_screen (widget),
+                                  "gimp-file-open-location-dialog", -1, TRUE);
 }
 
 void

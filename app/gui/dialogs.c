@@ -43,8 +43,6 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   /*  foreign toplevels without constructor  */
   { "gimp-file-open-dialog",
     NULL, 0, TRUE,  TRUE,  TRUE,  FALSE },
-  { "gimp-file-open-location-dialog",
-    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
   { "gimp-file-save-dialog",
     NULL, 0, TRUE,  TRUE,  TRUE,  FALSE },
 
@@ -92,7 +90,9 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
     NULL, 0, FALSE, TRUE,  FALSE, FALSE },
 
   /*  ordinary toplevels  */
-  { "gimp-file-new-dialog",        dialogs_file_new_new,
+  { "gimp-file-new-dialog",           dialogs_file_new_new,
+    0, FALSE, TRUE,  FALSE, FALSE },
+  { "gimp-file-open-location-dialog", dialogs_file_open_location_new,
     0, FALSE, TRUE,  FALSE, FALSE },
 
   /*  singleton toplevels  */

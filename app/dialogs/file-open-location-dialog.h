@@ -20,8 +20,7 @@
 #define __FILE_OPEN_LOCATION_DIALOG_H__
 
 
-void   file_open_location_dialog_show (Gimp      *gimp,
-                                       GtkWidget *parent);
+GtkWidget * file_open_location_dialog_new (Gimp *gimp);
 
 
 #endif /* __FILE_OPEN_LOCATION_DIALOG_H__ */

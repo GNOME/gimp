@@ -1,5 +1,19 @@
 2004-09-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/file-open-location-dialog.[ch]: changed
+	file_open_location_dialog_show() to
+	file_open_location_dialog_new() and return the dialog.
+
+	* app/gui/dialogs.c
+	* app/gui/dialogs-constructors.[ch]: added a constructor for it
+	and let the dialog factory manage it entirely.
+
+	* app/actions/file-commands.c
+	(file_open_location_dialog_cmd_callback): use the dialog factory
+	to create it.
+
+2004-09-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdialogfactory.c
 	(gimp_dialog_factory_dialog_new_internal): renamed parameter
 	"gboolean raise_if_found" to "return_existing" and added

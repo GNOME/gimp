@@ -81,6 +81,7 @@
 #include "dialogs.h"
 #include "dialogs-constructors.h"
 #include "file-new-dialog.h"
+#include "file-open-location-dialog.h"
 #include "module-browser.h"
 #include "preferences-dialog.h"
 #include "tips-dialog.h"
@@ -111,6 +112,14 @@ dialogs_file_new_new (GimpDialogFactory *factory,
                       gint               preview_size)
 {
   return file_new_dialog_new (context->gimp);
+}
+
+GtkWidget *
+dialogs_file_open_location_new (GimpDialogFactory *factory,
+                                GimpContext       *context,
+                                gint               preview_size)
+{
+  return file_open_location_dialog_new (context->gimp);
 }
 
 GtkWidget *

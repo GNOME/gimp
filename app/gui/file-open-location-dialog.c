@@ -34,12 +34,10 @@
 #include "file/file-utils.h"
 
 #include "widgets/gimpcontainerentry.h"
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpprogressbox.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "dialogs.h"
 #include "file-open-location-dialog.h"
 
 #include "gimp-intl.h"
@@ -57,9 +55,8 @@ static gboolean  file_open_location_completion (GtkEntryCompletion *completion,
 
 /*  public functions  */
 
-void
-file_open_location_dialog_show (Gimp      *gimp,
-                                GtkWidget *parent)
+GtkWidget *
+file_open_location_dialog_new (Gimp *gimp)
 {
   GtkWidget          *dialog;
   GtkWidget          *hbox;
@@ -69,12 +66,11 @@ file_open_location_dialog_show (Gimp      *gimp,
   GtkWidget          *entry;
   GtkEntryCompletion *completion;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (parent == NULL || GTK_IS_WIDGET (parent));
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   dialog = gimp_dialog_new (_("Open Location"),
                             "gimp-file-open-location",
-                            parent, 0,
+                            NULL, 0,
                             gimp_standard_help_func,
                             GIMP_HELP_FILE_OPEN_LOCATION,
 
@@ -82,9 +78,6 @@ file_open_location_dialog_show (Gimp      *gimp,
                             GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
                             NULL);
-
-  gimp_dialog_factory_add_foreign (global_dialog_factory,
-                                   "gimp-file-open-location-dialog", dialog);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (file_open_location_response),
@@ -127,8 +120,11 @@ file_open_location_dialog_show (Gimp      *gimp,
 
   g_object_set_data (G_OBJECT (dialog), "location-entry", entry);
 
-  gtk_widget_show (dialog);
+  return dialog;
 }
+
+
+/*  private functions  */
 
 static void
 file_open_location_response (GtkDialog *dialog,
