@@ -21,6 +21,9 @@ EXTRA_DIST = \
 	NEWS		\
 	README		\
 	TODO		\
+	imap_cern.l  	\
+	imap_csim.l  	\
+	imap_ncsa.l	\
 	imap_cern.y  	\
 	imap_csim.y  	\
 	imap_ncsa.y
