@@ -12504,11 +12504,11 @@ msgstr ""
 
 #: plug-ins/sinus/sinus.c:197
 msgid "<Image>/Filters/Render/Sinus..."
-msgstr ""
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Синус..."
 
 #: plug-ins/sinus/sinus.c:289
 msgid "Sinus: rendering..."
-msgstr ""
+msgstr "Синус: визуал╕зац╕я..."
 
 #. Create Main window with a vbox
 #. ==============================
