@@ -971,8 +971,6 @@ file_save (GimpImage* gimage,
 
   if (return_val)
     {
-      TempBuf* tempbuf;
-
       /*  set this image to clean  */
       gimage_clean_all (gimage);
 
@@ -985,8 +983,18 @@ file_save (GimpImage* gimage,
 	 attention --Adam */
       /* gimage_set_save_proc(gimage, file_proc); */
 
-      tempbuf = make_thumb_tempbuf (gimage);
-      file_save_thumbnail (gimage, filename, tempbuf);
+      /* Write a thumbnail for the saved image, where appropriate */
+      switch (thumbnail_mode)
+	{
+	case 0:
+	  break;
+	default:
+	  {
+	    TempBuf* tempbuf;
+	    tempbuf = make_thumb_tempbuf (gimage);
+	    file_save_thumbnail (gimage, filename, tempbuf);
+	  }
+	}
       
       /*  set the image title  */
       gimp_image_set_filename (gimage, filename);
@@ -1186,8 +1194,20 @@ set_preview (const gchar* fullfname, guchar* RGB_source, gint RGB_w, gint RGB_h)
 	}
       else
 	{
-	  gtk_label_set_text (GTK_LABEL(open_options_label),
-			      "(could not write thumbnail file)");
+	  switch (thumbnail_mode)
+	    {
+	    case 0:
+	      gtk_label_set_text (GTK_LABEL(open_options_label),
+				  "(thumbnail saving is disabled)");
+	      break;
+	    case 1:
+	      gtk_label_set_text (GTK_LABEL(open_options_label),
+				  "(could not write thumbnail file)");
+	      break;
+	    default:
+	      gtk_label_set_text (GTK_LABEL(open_options_label),
+				  "(thumbnail file not written)");
+	    }
 	}
       gtk_widget_show (GTK_WIDGET(open_options_preview));
       gtk_widget_queue_draw (GTK_WIDGET(open_options_preview));
@@ -1259,7 +1279,13 @@ genbutton_callback (GtkWidget *w,
 
       tempbuf = make_thumb_tempbuf (gimage_to_be_thumbed);
       RGBbuf = make_RGBbuf_from_tempbuf (tempbuf, &RGBbuf_w, &RGBbuf_h);
-      file_save_thumbnail (gimage_to_be_thumbed, filename, tempbuf);
+      switch (thumbnail_mode)
+	{
+	case 0:
+	  break;
+	default:
+	  file_save_thumbnail (gimage_to_be_thumbed, filename, tempbuf);
+	}
       set_preview (filename, RGBbuf, RGBbuf_w, RGBbuf_h);
 
       gimage_delete (gimage_to_be_thumbed);

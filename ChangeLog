@@ -1,3 +1,8 @@
+Sun Jun  6 17:22:16 BST 1999 Adam D. Moss <adam@gimp.org>
+
+	* Preferences dialog now has an option for people who don't
+	like thumbnail files to ever be written.
+
 Sun Jun  6 15:41:22 BST 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/fileops.c: Extra quality thumbnails when the user manually

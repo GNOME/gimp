@@ -100,6 +100,7 @@ static int        old_num_processors;
 static char *     old_image_title_format;
 static int        old_global_paint_options;
 static int        old_max_new_image_size;
+static int        old_thumbnail_mode;
 
 /*  variables which can't be changed on the fly  */
 static int        edit_stingy_memory_use;
@@ -494,6 +495,8 @@ file_prefs_save_callback (GtkWidget *widget,
     }
   if (max_new_image_size != old_max_new_image_size)
     update = g_list_append (update, "max-new-image-size");
+  if (thumbnail_mode != old_thumbnail_mode)
+    update = g_list_append (update, "thumbnail-mode");
 
   save_gimprc (&update, &remove);
 
@@ -556,6 +559,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   using_xserver_resolution = old_using_xserver_resolution;
   num_processors = old_num_processors;
   max_new_image_size = old_max_new_image_size;
+  thumbnail_mode = old_thumbnail_mode;
 
   if (preview_size != old_preview_size)
     {
@@ -649,6 +653,18 @@ file_prefs_toggle_callback (GtkWidget *widget,
     }
   else if (data == &global_paint_options)
     paint_options_set_global (GTK_TOGGLE_BUTTON (widget)->active);
+  else if (data == &thumbnail_mode)
+    {
+      val = data;
+      *val = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
+    }
+  else
+    {
+      /* Are you a gimp-hacker who is getting this message?  You
+	 probably want to do the same as the &thumbnail_mode case
+	 above is doing. */
+      g_warning("Unknown file_prefs_toggle_callback() invoker - ignored.");
+    }
 }
 
 static void
@@ -1418,6 +1434,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_image_title_format = file_prefs_strdup (image_title_format);	
   old_global_paint_options = global_paint_options;
   old_max_new_image_size = max_new_image_size;
+  old_thumbnail_mode = thumbnail_mode;
 
   file_prefs_strset (&old_temp_path, edit_temp_path);
   file_prefs_strset (&old_swap_path, edit_swap_path);
@@ -2099,6 +2116,26 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      &edit_cycled_marching_ants);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  frame = gtk_frame_new (_("File Previews/Thumbnails")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+
+  optionmenu =
+    gimp_option_menu_new (file_prefs_toggle_callback,
+			  (gpointer) thumbnail_mode,
+			  "Always try to write a thumbnail file",
+			  &thumbnail_mode, (gpointer) 1,
+			  "Never try to write a thumbnail file",
+			  &thumbnail_mode, (gpointer) 0,
+			  NULL);
+  gtk_box_pack_start (GTK_BOX (vbox2), optionmenu, FALSE, FALSE, 0);
+  gtk_widget_show (optionmenu);
 
   /* Session Management */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
