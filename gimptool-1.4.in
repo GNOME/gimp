@@ -97,6 +97,14 @@ else
   gtk_libs=`$GTK_CONFIG --libs`
 fi
 
+if test x${GLIB_CONFIG+set} != xset ; then
+  glib_cflags='@GLIB_CFLAGS@'
+  glib_libs='@GLIB_LIBS@'
+else
+  glib_cflags=`$GLIB_CONFIG --cflags`
+  glib_libs=`$GLIB_CONFIG --libs`
+fi
+
 if test x${INSTALL+set} != xset ; then
   INSTALL='@INSTALL@'
   if test "$INSTALL" = "./install-sh -c"; then
@@ -177,7 +185,7 @@ while test $# -gt 0; do
         --cflags | --cflags-nogimpui)
           my_gtk_cflags=$gtk_cflags ;;
         --cflags-noui)
-          my_gtk_cflags=`echo $gtk_cflags | sed 's/^.*\(-I[^ ]*glib[^ ]*  *-I[^ ]*\).*$/\1/'` ;;
+          my_gtk_cflags=$glib_cflags ;;
       esac
       includes=-I@includedir@/gimp-@LT_RELEASE@
       echo $includes $my_gtk_cflags
@@ -202,23 +210,7 @@ while test $# -gt 0; do
       esac
       ;;
     --libs-noui)
-      glib_ldflags=`echo $gtk_libs | sed -e 's/^.*-lgdk[^ ]* *\(-L[^ ]*\).*$/\1/' -e 's/^.* -lgdk[^ ]* .*$//'`
-      if test -z "$glib_ldflags" ; then
-        glib_ldflags=`echo $gtk_libs | sed 's/^ *\(-L[^ ]*\) .*$/\1/'`
-      fi 
-      glib_libs="$glib_ldflags `echo $gtk_libs | sed 's/^.*\(-lglib[^ ]*\).*$/\1/'`"
-      my_glib_libs=
-      libdirs=-L@libdir@
-      for i in $glib_libs ; do
-        if test $i != -L@libdir@ ; then
-          if test -z "$my_glib_libs" ; then
-            my_glib_libs="$i"
-          else
-            my_glib_libs="$my_glib_libs $i"
-          fi
-        fi
-      done
-      echo -L@libdir@ -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ -lgimpbase-@LT_RELEASE@ $my_glib_libs
+      echo -L@libdir@ -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ -lgimpbase-@LT_RELEASE@ $glib_libs
       ;;
     --install-bin | --install-admin-bin \
     | --install-bin-strip | --install-admin-bin-strip \

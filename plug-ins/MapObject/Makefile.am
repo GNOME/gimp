@@ -37,6 +37,7 @@ AM_CPPFLAGS = @STRIP_BEGIN@ \
 
 INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
+	-I$(top_srcdir)/intl		\
 	-I$(top_srcdir)/plug-ins/libgck	\
 	$(GTK_CFLAGS)			\
 	-I$(includedir)			\

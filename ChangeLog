@@ -1,3 +1,9 @@
+2001-07-02  Sven Neumann  <sven@gimp.org>
+
+	* gimptool-1.4.in
+	* plug-ins/*/Makefile.am
+	* plug-ins/common/mkgen.pl: merged fixes from stable branch
+	
 2001-07-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/dialogs-commands.[ch]
