@@ -37,12 +37,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpprogress.h"
 
-#include "widgets/gimpdnd.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
-#include "widgets/gimpenummenu.h"
-#include "widgets/gimppreview.h"
-
 #include "gimpblendoptions.h"
 #include "gimpblendtool.h"
 

@@ -1,3 +1,7 @@
+2003-03-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpblendtool.c: removed useless includes.
+
 2003-02-28  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcontext.c (gimp_context_class_init): oops.
