@@ -1270,7 +1270,7 @@ save_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.time);
 
   scale_data = gtk_adjustment_new (pngvals.compression_level,
-                                   1.0, 9.0, 1.0, 1.0, 0.0);
+                                   0.0, 9.0, 1.0, 1.0, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
