@@ -1,3 +1,7 @@
+2003-01-30  Pablo Saratxaga  <pablo@mandrakesoft.com>
+
+	* configure.in: Added Vietnamese (vi) to ALL_LINGUAS
+
 2003-01-30  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/c_astretch.c
