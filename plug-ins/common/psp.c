@@ -1,4 +1,4 @@
-/* GIMP plug-in to load and save Paint Shop Pro files (.PSP)
+/* GIMP plug-in to load and save Paint Shop Pro files (.PSP and .TUB)
  *
  * Copyright (C) 1999 Tor Lillqvist
  *
@@ -20,6 +20,9 @@
 /*
  *
  * Work in progress! Doesn't do anything at all useful yet.
+ *
+ * For a copy of the PSP file format documentation, surf to
+ * http://www.jasc.com.
  *
  */
 
@@ -43,39 +46,46 @@
 
 #include <gtk/gtk.h>
 
+#include <zlib.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/stdplugins-intl.h>
 
 #define gimp_message_printf(x) \
-  do { \
+  G_STMT_START { \
     gchar *_t = g_strdup_printf x; \
     gimp_message (_t); \
     g_free (_t); \
-  } while (0)
+  } G_STMT_END
 
 /* The following was cut and pasted from the PSP file format
- * documentation version 3.0.
- * (Minor stylistic changes done.)
+ * documentation version 3.0.(Minor stylistic changes done.)
+ *
+ * Note that the upcoming PSP version 6 writes PSP file format version
+ * 4.0, but the documentation for that apparently isn't publicly
+ * available (yet). The format is designed to be downward compatible,
+ * however. The semantics of many of the additional fields and
+ * block types can be deduced by reverse engineering.
  */
 
 /*
  * To be on the safe side, here is the whole copyright notice from the
  * specification:
  *
- * The Paint Shop Pro File Format Specification (the
- * *Specification*) is copyright 1998 by Jasc Software,
- * Inc. Jasc grants you a nonexclusive license to use the
- * Specification for the sole purposes of developing software
- * products(s) incorporating the Specification. You are also granted
- * the right to identify your software product(s) as incorporating the
- * Paint Shop Pro Format (PSP) provided that your software in
- * incorporating the Specification complies with the terms,
- * definitions, constraints and specifications contained in the
- * Specification and subject to the following: DISCLAIMER OF
- * WARRANTIES. THE SPECIFICATION IS PROVIDED AS IS. JASC
- * DISCLAIMS ALL OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT
- * NOT LIMITED TO, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS
- * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * The Paint Shop Pro File Format Specification (the Specification) is
+ * copyright 1998 by Jasc Software, Inc. Jasc grants you a
+ * nonexclusive license to use the Specification for the sole purposes
+ * of developing software products(s) incorporating the
+ * Specification. You are also granted the right to identify your
+ * software product(s) as incorporating the Paint Shop Pro Format
+ * (PSP) provided that your software in incorporating the
+ * Specification complies with the terms, definitions, constraints and
+ * specifications contained in the Specification and subject to the
+ * following: DISCLAIMER OF WARRANTIES. THE SPECIFICATION IS PROVIDED
+ * AS IS. JASC DISCLAIMS ALL OTHER WARRANTIES, EXPRESS OR IMPLIED,
+ * INCLUDING, BUT NOT LIMITED TO, ANY IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT.
  *
  * You are solely responsible for the selection, use, efficiency and
  * suitability of the Specification for your software products.  OTHER
@@ -112,8 +122,7 @@
  *
  * Jasc reserves the right to amend, modify, change, revoke or
  * withdraw the Specification at any time and from time to time. Jasc
- * shall have no obligation to support or maintain the Specification.
- */
+ * shall have no obligation to support or maintain the Specification.  */
 
 /* Block identifiers.
  */
@@ -154,7 +163,7 @@ typedef enum {
 
 /* Possible metrics used to measure resolution.
  */
-typedef enum { 
+typedef enum {
   PSP_METRIC_UNDEFINED = 0,	/* Metric unknown */
   PSP_METRIC_INCH,		/* Resolution is in inches */
   PSP_METRIC_CM			/* Resolution is in centimeters */
@@ -167,7 +176,6 @@ typedef enum {
   PSP_COMP_NONE = 0,		/* No compression */
   PSP_COMP_RLE,			/* RLE compression */
   PSP_COMP_LZ77			/* LZ77 compression */
-
 } PSPCompression;
 
 /* Picture tube placement mode.
@@ -235,9 +243,35 @@ typedef gboolean PSP_BOOLEAN;
 
 /* End of cut&paste from psp spec */
 
-/* We store the various PSP data in own structures. Of course,
- * we cannot read struct directly from the file because of
- * struct alignment issues.
+/* The following have been reverse engineered.
+ * If a new version of the spec becomes available,
+ * change to use the type and constant names from it.
+ */
+typedef enum {
+  PSP_BLEND_NORMAL = 0,
+  PSP_BLEND_DARKEN,
+  PSP_BLEND_LIGHTEN,
+  PSP_BLEND_HUE,
+  PSP_BLEND_SATURATION,
+  PSP_BLEND_COLOR,
+  PSP_BLEND_LUMINANCE,
+  PSP_BLEND_MULTIPLY,
+  PSP_BLEND_SCREEN,
+  PSP_BLEND_DISSOLVE,
+  PSP_BLEND_OVERLAY,
+  PSP_BLEND_HARD_LIGHT,
+  PSP_BLEND_SOFT_LIGHT,
+  PSP_BLEND_DIFFERENCE,
+  PSP_BLEND_DODGE,
+  PSP_BLEND_BURN,
+  PSP_BLEND_EXCLUSION
+} PSPLayerBlendModes;
+
+/* End of reverse engineered types */
+
+/* We store the various PSP data in own structures.
+ * We cannot use structs intended to be direct copies of the file block
+ * headers because of struct alignment issues.
  */
 typedef struct
 {
@@ -283,18 +317,21 @@ typedef struct
 
 typedef struct
 {
-  gint  run;  /*  run  */
+  gint  run;
 } PSPSaveInterface;
 
 static PSPSaveVals psvals =
 {
-  TRUE     /* raw? or ascii */
+  PSP_COMP_LZ77
 };
 
 static PSPSaveInterface psint =
 {
-  FALSE     /* run */
+  FALSE				/* run */
 };
+
+static guint16 major, minor;
+
 
 MAIN()
 
@@ -344,7 +381,7 @@ query ()
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
-  gimp_install_procedure ("file_pso_save",
+  gimp_install_procedure ("file_psp_save",
                           "saves images in the Paint Shop Pro PSP file format",
                           "This filter loads and saves images in "
 			  "Paint Shop Pro's native PSP format. "
@@ -528,16 +565,20 @@ block_name (int id)
 
 static int
 read_block_header (FILE *f,
-		   guint32 *initial_length,
-		   guint32 *total_length)
+		   guint32 *init_len,
+		   guint32 *total_len)
 {
   guchar buf[4];
   guint16 id;
-  
+  long header_start;
+  guint32 len;
+
+  IFDBG(2) header_start = ftell (f);
+
   if (fread (buf, 4, 1, f) < 1
       || fread (&id, 2, 1, f) < 1
-      || fread (initial_length, 4, 1, f) < 1
-      || fread (total_length, 4, 1, f) < 1)
+      || fread (&len, 4, 1, f) < 1
+      || (major < 4 && fread (total_len, 4, 1, f) < 1))
     {
       gimp_message ("PSP: Error reading block header");
       fclose (f);
@@ -545,10 +586,27 @@ read_block_header (FILE *f,
     }
   if (memcmp (buf, "~BK\0", 4) != 0)
     {
-      gimp_message ("PSP: Invalid block header");
+      gimp_message_printf (("PSP: Invalid block header at %d", header_start));
       fclose (f);
       return -1;
     }
+
+  IFDBG(2) gimp_message_printf (("PSP: %s at %d", block_name (id),
+				 header_start));
+
+  if (major < 4)
+    {
+      *init_len = GUINT32_FROM_LE (len);
+      *total_len = GUINT32_FROM_LE (*total_len);
+    }
+  else
+    {
+      /* Version 4.0 seems to have dropped the initial data chunk length
+       * field.
+       */
+      *total_len = *init_len = GUINT32_FROM_LE (len);
+    }
+
   return id;
 }
 
@@ -575,6 +633,9 @@ read_general_image_attribute_block (FILE *f,
       return -1;
     }
 
+  if (major >= 4)
+    fseek (f, 4, SEEK_CUR);
+  
   if (fread (&ia->width, 4, 1, f) < 1
       || fread (&ia->height, 4, 1, f) < 1
       || fread (res, 8, 1, f) < 1
@@ -627,9 +688,20 @@ read_general_image_attribute_block (FILE *f,
 }
 
 static int
+try_fseek (FILE *f, long pos, int whence)
+{
+  if (fseek (f, pos, whence) < 0)
+    {
+      gimp_message ("PSP: Seek error");
+      fclose (f);
+      return -1;
+    }
+  return 0;
+}
+
+static int
 read_creator_block (FILE *f,
 		    gint image_ID,
-		    guint init_len,
 		    guint total_len,
 		    PSPimage *ia)
 {
@@ -719,17 +791,15 @@ read_creator_block (FILE *f,
 	    }
 	  break;
 	default:
-	  if (fseek (f, length, SEEK_CUR) < 0)
+	  if (try_fseek (f, length, SEEK_CUR) < 0)
 	    {
-	      gimp_message ("PSP: Seek error");
-	      fclose (f);
 	      gimp_image_delete (image_ID);
 	      return -1;
 	    }
 	  break;
 	}
     }
-  
+
   if (title)
     {
       g_string_append (comment, title);
@@ -761,39 +831,337 @@ read_creator_block (FILE *f,
   g_string_free (comment, FALSE);
 }
 
+static void inline
+swab_rect (guint32 *rect)
+{
+  rect[0] = GUINT32_FROM_LE (rect[0]);
+  rect[1] = GUINT32_FROM_LE (rect[1]);
+  rect[2] = GUINT32_FROM_LE (rect[2]);
+  rect[3] = GUINT32_FROM_LE (rect[3]);
+}
+
+static GLayerMode
+gimp_layer_mode_from_psp_blend_mode (PSPLayerBlendModes mode)
+{
+  switch (mode)
+    {
+    case PSP_BLEND_NORMAL:
+      return NORMAL_MODE;
+    case PSP_BLEND_DARKEN:
+      return DARKEN_ONLY_MODE;
+    case PSP_BLEND_HUE:
+      return HUE_MODE;
+    case PSP_BLEND_SATURATION:
+      return SATURATION_MODE;
+    case PSP_BLEND_COLOR:
+      return COLOR_MODE;
+    case PSP_BLEND_LUMINANCE:
+      return VALUE_MODE;	/* ??? */
+    case PSP_BLEND_MULTIPLY:
+      return MULTIPLY_MODE;
+    case PSP_BLEND_SCREEN:
+      return SCREEN_MODE;
+    case PSP_BLEND_DISSOLVE:
+      return DISSOLVE_MODE;
+    case PSP_BLEND_OVERLAY:
+      return OVERLAY_MODE;
+    case PSP_BLEND_HARD_LIGHT:
+    case PSP_BLEND_SOFT_LIGHT:
+      return -1;
+    case PSP_BLEND_DIFFERENCE:
+      return DIFFERENCE_MODE;
+    case PSP_BLEND_DODGE:
+    case PSP_BLEND_BURN:
+    case PSP_BLEND_EXCLUSION:
+      return -1;		/* ??? */
+    }
+  return -1;
+}
+
+static char *
+blend_mode_name (PSPLayerBlendModes mode)
+{
+  static char *blend_mode_names[] =
+  {
+    "NORMAL",
+    "DARKEN",
+    "LIGHTEN",
+    "HUE",
+    "SATURATION",
+    "COLOR",
+    "LUMINANCE",
+    "MULTIPLY",
+    "SCREEN",
+    "DISSOLVE",
+    "OVERLAY",
+    "HARD_LIGHT",
+    "SOFT_LIGHT",
+    "DIFFERENCE",
+    "DODGE",
+    "BURN",
+    "EXCLUSION"
+  };
+  static gchar *err_name = NULL;
+
+  if (mode >= 0 && mode <= PSP_BLEND_EXCLUSION)
+    return blend_mode_names[mode];
+
+  g_free (err_name);
+  err_name = g_strdup_printf ("%d", mode);
+
+  return err_name;
+}
+
 static int
 read_layer_block (FILE *f,
 		  gint image_ID,
-		  guint init_len,
 		  guint total_len,
 		  PSPimage *ia)
 {
-  long data_start;
+  long block_start, sub_block_start, channel_start;
   int sub_id;
   guint32 sub_init_len, sub_total_len;
-  guchar name[256];
+  guchar *name;
+  guint16 namelen;
+  guchar type, opacity, blend_mode, visibility, transparency_protected;
+  guchar link_group_id, mask_linked, mask_disabled;
+  guint32 image_rect[4], saved_image_rect[4], mask_rect[4], saved_mask_rect[4];
+  gboolean width_bumped = FALSE, height_bumped = FALSE;
+  guint16 bitmap_count, channel_count;
+  guint32 layer_ID;
+  GLayerMode layer_mode;
+  guint32 channel_init_len, channel_total_len;
+  guint32 compressed_len, uncompressed_len;
+  guint16 bitmap_type, channel_type;
 
-  data_start = ftell (f);
+  block_start = ftell (f);
 
-  while (ftell (f) < data_start + total_len)
+  while (ftell (f) < block_start + total_len)
     {
+      /* Read the layer sub-block header */
       sub_id = read_block_header (f, &sub_init_len, &sub_total_len);
       if (sub_id == -1)
 	{
 	  gimp_image_delete (image_ID);
 	  return -1;
 	}
-      else if (sub_id != PSP_LAYER_BLOCK)
+      if (sub_id != PSP_LAYER_BLOCK)
 	{
 	  gimp_message_printf (("PSP: Invalid layer sub-block %s, "
 				"should be LAYER",
 				block_name (sub_id)));
+	  fclose (f);
 	  gimp_image_delete (image_ID);
 	  return -1;
 	}
 
-      fseek (f, data_start + total_len, SEEK_SET);
+      sub_block_start = ftell (f);
+
+      /* Read layer information chunk */
+      if (major >= 4)
+	{
+	  if (fseek (f, 4, SEEK_CUR) < 0
+	      || fread (&namelen, 2, 1, f) < 1
+	      || ((namelen = GUINT16_FROM_LE (namelen)) && FALSE)
+	      || (name = g_malloc (namelen + 1)) == NULL
+	      || fread (name, namelen, 1, f) < 1
+	      || fread (&type, 1, 1, f) < 1
+	      || fread (&image_rect, 16, 1, f) < 1
+	      || fread (&saved_image_rect, 16, 1, f) < 1
+	      || fread (&opacity, 1, 1, f) < 1
+	      || fread (&blend_mode, 1, 1, f) < 1
+	      || fread (&visibility, 1, 1, f) < 1
+	      || fread (&transparency_protected, 1, 1, f) < 1
+	      || fread (&link_group_id, 1, 1, f) < 1
+	      || fread (&mask_rect, 16, 1, f) < 1
+	      || fread (&saved_mask_rect, 16, 1, f) < 1
+	      || fread (&mask_linked, 1, 1, f) < 1
+	      || fread (&mask_disabled, 1, 1, f) < 1
+	      || fseek (f, 43, SEEK_CUR) < 0
+	      || fread (&bitmap_count, 1, 1, f) < 1
+	      || fread (&channel_count, 1, 1, f) < 1)
+	    {
+	      gimp_message ("PSP: Error reading layer information chunk");
+	      fclose (f);
+	      gimp_image_delete (image_ID);
+	      return -1;
+	    }
+	  name[namelen] = 0;
+	  type = PSP_LAYER_NORMAL; /* ??? */
+	}
+      else
+	{
+	  name = g_malloc (257);
+	  name[256] = 0;
+	  if (fread (name, 256, 1, f) < 1
+	      || fread (&type, 1, 1, f) < 1
+	      || fread (&image_rect, 16, 1, f) < 1
+	      || fread (&saved_image_rect, 16, 1, f) < 1
+	      || fread (&opacity, 1, 1, f) < 1
+	      || fread (&blend_mode, 1, 1, f) < 1
+	      || fread (&visibility, 1, 1, f) < 1
+	      || fread (&transparency_protected, 1, 1, f) < 1
+	      || fread (&link_group_id, 1, 1, f) < 1
+	      || fread (&mask_rect, 16, 1, f) < 1
+	      || fread (&saved_mask_rect, 16, 1, f) < 1
+	      || fread (&mask_linked, 1, 1, f) < 1
+	      || fread (&mask_disabled, 1, 1, f) < 1
+	      || fseek (f, 43, SEEK_CUR) < 0
+	      || fread (&bitmap_count, 1, 1, f) < 1
+	      || fread (&channel_count, 1, 1, f) < 1)
+	    {
+	      gimp_message ("PSP: Error reading layer information chunk");
+	      fclose (f);
+	      gimp_image_delete (image_ID);
+	      return -1;
+	    }
+	}
+
+      if (type == PSP_LAYER_FLOATING_SELECTION)
+	gimp_message ("PSP: Floating selection restored as normal layer");
+
+      swab_rect (image_rect);
+      swab_rect (saved_image_rect);
+      swab_rect (mask_rect);
+      swab_rect (saved_mask_rect);
+
+      layer_mode = gimp_layer_mode_from_psp_blend_mode (blend_mode);
+      if ((int) layer_mode == -1)
+	{
+	  gimp_message_printf (("PSP: Unsupported PSP layer blend mode %s "
+				"for layer %s, setting layer invisible",
+				blend_mode_name (blend_mode), name));
+	  layer_mode = NORMAL_MODE;
+	  visibility = FALSE;
+	}
+
+      IFDBG(2) gimp_message_printf
+	(("PSP: layer: %s %dx%d (%dx%d) opacity %d blend_mode %d", name,
+	  image_rect[2] - image_rect[0],
+	  image_rect[3] - image_rect[1],
+	  saved_image_rect[2] - saved_image_rect[0],
+	  saved_image_rect[3] - saved_image_rect[1],
+	  opacity, blend_mode));
+
+      if (saved_image_rect[0] == saved_image_rect[2])
+	{
+	  saved_image_rect[2]++;
+	  width_bumped = TRUE;
+	}
+      if (saved_image_rect[1] == saved_image_rect[3])
+	{
+	  saved_image_rect[3]++;
+	  height_bumped = TRUE;
+	}
+
+      layer_ID = gimp_layer_new (image_ID, name,
+				 saved_image_rect[2] - saved_image_rect[0],
+				 saved_image_rect[3] - saved_image_rect[1],
+				 /* XXX */
+				 ia->greyscale ? GRAYA_IMAGE : RGBA_IMAGE,
+				 opacity / 255.0,
+				 /* XXX */
+				 layer_mode);
+      if (layer_ID == -1)
+	{
+	  gimp_message ("PSP: Error creating layer");
+	  fclose (f);
+	  gimp_image_delete (image_ID);
+	  return -1;
+	}
+
+      if (saved_image_rect[0] != 0 || saved_image_rect[1] != 0)
+	gimp_layer_set_offsets (layer_ID,
+				saved_image_rect[0], saved_image_rect[1]);
+
+      if (!visibility)
+	gimp_layer_set_visible (layer_ID, FALSE);
+      
+      gimp_layer_set_preserve_transparency (layer_ID, transparency_protected);
+
+      gimp_image_add_layer (image_ID, layer_ID, -1);
+
+      if (try_fseek (f, sub_block_start + sub_init_len, SEEK_SET) < 0)
+	{
+	  gimp_image_delete (image_ID);
+	  return -1;
+	}
+
+      /* Read the layer channel sub-blocks */
+      while (ftell (f) < sub_block_start + sub_total_len)
+	{
+	  sub_id = read_block_header (f, &channel_init_len,
+				      &channel_total_len);
+	  if (sub_id == -1)
+	    {
+	      gimp_image_delete (image_ID);
+	      return -1;
+	    }
+
+	  if (sub_id != PSP_CHANNEL_BLOCK)
+	    {
+	      gimp_message_printf (("PSP: Invalid layer sub-block %s, "
+				    "should be CHANNEL",
+				    block_name (sub_id)));
+	      fclose (f);
+	      gimp_image_delete (image_ID);
+	      return -1;
+	    }
+
+	  channel_start = ftell (f);
+
+	  if (fread (&compressed_len, 4, 1, f) < 1
+	      || fread (&uncompressed_len, 4, 1, f) < 1
+	      || fread (&bitmap_type, 2, 1, f) < 1
+	      || fread (&channel_type, 2, 1, f) < 1)
+	    {
+	      gimp_message ("PSP: Error reading channel information chunk");
+	      fclose (f);
+	      gimp_image_delete (image_ID);
+	      return -1;
+	    }
+
+	  if (GUINT16_FROM_LE (bitmap_type) > PSP_DIB_USER_MASK)
+	    {
+	      gimp_message ("PSP: Invalid bitmap type "
+			    "in channel information chunk");
+	      fclose (f);
+	      gimp_image_delete (image_ID);
+	      return -1;
+	    }
+
+	  if (GUINT16_FROM_LE (channel_type) > PSP_CHANNEL_BLUE)
+	    {
+	      gimp_message ("PSP: Invalid channel type "
+			    "in channel information chunk");
+	      fclose (f);
+	      gimp_image_delete (image_ID);
+	      return -1;
+	    }
+
+	  if (try_fseek (f, channel_start + channel_init_len, SEEK_SET) < 0)
+	    {
+	      gimp_image_delete (image_ID);
+	      return -1;
+	    }
+	  
+	  /* Read channel data */
+
+	  
+
+	  if (try_fseek (f, channel_start + channel_total_len, SEEK_SET) < 0)
+	    {
+	      gimp_image_delete (image_ID);
+	      return -1;
+	    }
+	}
     }
+  if (try_fseek (f, block_start + total_len, SEEK_SET) < 0)
+    {
+      gimp_image_delete (image_ID);
+      return -1;
+    }
+  return layer_ID;
 }
 
 static gint32
@@ -802,11 +1170,11 @@ load_image (char *filename)
   FILE *f;
   struct stat st;
   char buf[32];
-  guint16 major, minor;
   PSPimage ia;
-  guint32 initial_length, total_length;
+  guint32 block_init_len, block_total_len;
+  long block_start;
   PSPBlockID id;
-  gint block_number; 
+  gint block_number;
 
   GPixelRgn pixel_rgn;
   gint32 image_ID = -1;
@@ -835,33 +1203,46 @@ load_image (char *filename)
       fclose (f);
       return -1;
     }
-  if (GUINT16_FROM_LE (major) != 3
-      || GUINT16_FROM_LE (minor) != 0)
+
+  major = GUINT16_FROM_LE (major);
+  minor = GUINT16_FROM_LE (minor);
+  /* I only have the documentation for file format version 3.0,
+   * but PSP 6 writes version 4.0. Let's hope it's backwards compatible.
+   * Earlier versions probably don't have all the fields I expect
+   * so don't accept those.
+   */
+  if (major < 3)
     {
-      gimp_message_printf (("PSP: Unknown file format version %d.%d, only knows 3.0",
-			  GUINT16_FROM_LE (major), GUINT16_FROM_LE (minor)));
+      gimp_message_printf (("PSP: Unsupported PSP file format version "
+			    "%d.%d, only knows 3.0 (and later?)",
+			    major, minor));
+      fclose (f);
+      return -1;
+    }
+  else if (major == 3)
+    ; /* OK */
+  else if (major == 4 && minor == 0)
+    gimp_message ("PSP: Warning: PSP file format version "
+		  "4.0. Support for this format version "
+		  "is based on reverse engineering, "
+		  "as no documentation has been made available");
+  else
+    {
+      gimp_message_printf (("PSP: Unsupported PSP file format version %d.%d",
+			    major, minor));
       fclose (f);
       return -1;
     }
 
   /* Read all the blocks */
-
   block_number = 0;
 
   IFDBG(3) gimp_message_printf (("PSP: size = %d", st.st_size));
   while (ftell (f) != st.st_size
-	 && (id = read_block_header (f, &initial_length,
-				     &total_length)) != -1)
+	 && (id = read_block_header (f, &block_init_len,
+				     &block_total_len)) != -1)
     {
-      long data_start;
-      long handled_data_end;
-
-      data_start = ftell (f);
-
-      IFDBG(2) gimp_message_printf
-	(("PSP: %s, data_start = %d",
-	  block_name (id),
-	  data_start));
+      block_start = ftell (f);
 
       if (id == PSP_IMAGE_BLOCK)
 	{
@@ -871,20 +1252,20 @@ load_image (char *filename)
 	      fclose (f);
 	      return -1;
 	    }
-	  if (read_general_image_attribute_block (f, initial_length,
-						       total_length, &ia) == -1)
+	  if (read_general_image_attribute_block (f, block_init_len,
+						  block_total_len, &ia) == -1)
 	    return -1;
 
 	  IFDBG(2) gimp_message_printf (("PSP: resolution: %d dpi "
 					 "width: %d height %d",
 					 (int) ia.resolution,
 					 ia.width, ia.height));
-	  
+
 	  image_ID = gimp_image_new (ia.width, ia.height,
 				     ia.greyscale ? GRAY : RGB);
 	  if (image_ID == -1)
 	    return -1;
-	  
+
 	  gimp_image_set_filename (image_ID, filename);
 	  gimp_image_set_resolution (image_ID, (int) ia.resolution,
 				     (int) ia.resolution);
@@ -901,15 +1282,13 @@ load_image (char *filename)
 	  switch (id)
 	    {
 	    case PSP_CREATOR_BLOCK:
-	      if (read_creator_block (f, image_ID, initial_length,
-				      total_length, &ia) == -1)
+	      if (read_creator_block (f, image_ID, block_total_len, &ia) == -1)
 		return -1;
 	      break;
 	    case PSP_COLOR_BLOCK:
 	      break;		/* Not yet implemented */
 	    case PSP_LAYER_START_BLOCK:
-	      if (read_layer_block (f, image_ID, initial_length,
-				    total_length, &ia) == -1)
+	      if (read_layer_block (f, image_ID, block_total_len, &ia) == -1)
 		return -1;
 	      break;
 	    case PSP_SELECTION_BLOCK:
@@ -937,20 +1316,13 @@ load_image (char *filename)
 	    }
 	}
 
-      if (data_start + total_length >= st.st_size)
+      if (block_start + block_total_len >= st.st_size)
 	break;
-      handled_data_end = ftell (f);
-      if (handled_data_end != data_start + total_length)
+
+      if (try_fseek (f, block_start + block_total_len, SEEK_SET) < 0)
 	{
-	  IFDBG(3) gimp_message_printf (("PSP: Seeking to %d + %d",
-					 data_start, total_length));
-	  if (fseek (f, data_start + total_length, SEEK_SET) < 0)
-	    {
-	      gimp_message ("PSP: Seek failed");
-	      fclose (f);
-	      gimp_image_delete (image_ID);
-	      return -1;
-	    }
+	  gimp_image_delete (image_ID);
+	  return -1;
 	}
       block_number++;
     }
@@ -961,7 +1333,7 @@ load_image (char *filename)
       gimp_image_delete (image_ID);
       return -1;
     }
-      
+
   fclose (f);
 
   return image_ID;
