@@ -52,7 +52,8 @@ stamp-cat-id $(POFILES) $(GMOFILES) $(SOURCES) $(SXGETTEXT)
 
 POTFILES = \
 
-POTSCRIPTS = $(top_srcdir)/plug-ins/script-fu/scripts/*.scm
+POTSCRIPTS = $(top_srcdir)/plug-ins/script-fu/scripts/*.scm \
+	$(top_srcdir)/plug-ins/gap/sel-to-anim-img.scm
 
 CATALOGS = @CATALOGS@
 CATOBJEXT = @CATOBJEXT@

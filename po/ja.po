@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.19\n"
-"POT-Creation-Date: 2000-03-16 05:44+0900\n"
-"PO-Revision-Date: 2000-03-16 16:21+09:00\n"
+"POT-Creation-Date: 2000-03-21 07:51+0900\n"
+"PO-Revision-Date: 2000-03-21 08:06+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -2747,8 +2747,8 @@ msgid ""
 msgstr ""
 "あなたは, 本プログラムと一緒にGNU 一般公有使用許諾の写しを受け\n"
 "取っているはずです. そうでない場合は, Free Software Foundation,\n"
-"Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. * へ手紙\n"
-"を書いてください."
+"Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n"
+"へ手紙を書いてください."
 
 #: app/install.c:713
 msgid "Personal GIMP Directory"
@@ -2890,7 +2890,7 @@ msgstr "モニタ解像度測定"
 
 #: app/install.c:1267
 msgid "Measure the rulers and enter their lengths below."
-msgstr "目盛の長さを測って下の枠に入力して下さい."
+msgstr "画面に物差しをあててスケールの長さを実際に測り, その結果を下の枠に入力してください."
 
 #: app/install.c:1282
 msgid "Horizontal:"
@@ -4720,7 +4720,7 @@ msgstr "変更内容を有効にするには GIMP を再起動する必要があります."
 
 #: app/preferences_dialog.c:1002
 #, c-format
-msgid "The default comments is limited to %d characters."
+msgid "The default comment is limited to %d characters."
 msgstr "コメントの初期値は %d 文字に制限されています."
 
 #: app/preferences_dialog.c:1424

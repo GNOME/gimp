@@ -1,3 +1,7 @@
+2000-03-21  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* Makefile.in.in: added missing plug-ins/gap/sel-to-anim-img.scm
+
 2000-03-17  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* ja.po: updated Japanese translation.
