@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.2\n"
 "POT-Creation-Date: 2002-02-11 13:34-0800\n"
-"PO-Revision-Date: 2001-09-17 00:00+0100\n"
+"PO-Revision-Date: 2002-02-14 15:44+0100\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -11731,7 +11731,7 @@ msgstr ""
 "als een programmeerfout meldt.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:111
-#, c-format
+#, c-format, fuzzy
 msgid ""
 "<html><head><title>Directory not found</title></head><body bgcolor=\"#ffffff"
 "\"><center><p>%s<h3>Couldn't change to directory</h3><tt>%s</tt><h3>while "
@@ -11739,12 +11739,7 @@ msgid ""
 "the help for this topic has not been written yet or that something is wrong "
 "with your installation. Please check carefully before you report this as a "
 "bug.</small></body></html>"
-msgstr ""
-"<html><head><title>Map niet gevonden</title></head><body><center><p>%"
-"s<h3>Kon niet naar map schakelen</h3><tt>%s</tt></center><p><small>Dit "
-"betekent dat de hulppagina voor dit onderwerp nog niet is geschreven of dat "
-"er iets mis is met uw installatie. Controlleer dit a.u.b. zorgvuldig voordat "
-"u dit als een programmeerfout meldt.</small></body></html>"
+msgstr "<html><head><title>Map niet gevonden</title></head><body><center><p>%s<h3>Kon niet naar map schakelen</h3><tt>%s</tt></center><p><small>Dit betekent dat de hulppagina voor dit onderwerp nog niet is geschreven of dat er iets mis is met uw installatie. Controlleer dit a.u.b. zorgvuldig voordat u dit als een programmeerfout meldt.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:137
 msgid "Contents"

@@ -1,3 +1,8 @@
+2002-02-14  Sven Neumann  <sven@gimp.org>
+
+	* nn.po: corrected fatal error (nn.po:1145: number of format
+	specifications in `msgid' and `msgstr' does not match).
+
 2002-02-13  Sven Neumann  <sven@gimp.org>
 
 	* de.po: updated german translation.
@@ -16,7 +21,8 @@
 
 2002-01-31  Stanislav Visnovsky  <visnovsky@nenya.ms.mff.cuni.cz>
 
-	* sk.po: Update Slovak translation from Zdenko Podobny <zdpo@mailbox.sk>.
+	* sk.po: 
+	Update Slovak translation from Zdenko Podobny <zdpo@mailbox.sk>.
 
 2002-01-20  Stanislav Brabec  <utx@penguin.cz>
 

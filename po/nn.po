@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.2\n"
 "POT-Creation-Date: 2002-02-03 20:05-0800\n"
-"PO-Revision-Date: 2000-09-07 20:17+02:00\n"
+"PO-Revision-Date: 2002-02-14 15:41+0100\n"
 "Last-Translator: Karl Trygve Kalleberg <karltk@users.sourceforge.net>\n"
 "Language-Team: Norwegian (Nynorsk) <nn@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1143,7 +1143,7 @@ msgstr "Anti-slett"
 #: app/errorconsole.c:173
 #, c-format
 msgid "Error opening file %s: %s"
-msgstr "Feil ved opning av fila %s: %2"
+msgstr "Feil ved opning av fila %s: %s"
 
 #: app/errorconsole.c:190
 msgid "Can't save, nothing selected!"
