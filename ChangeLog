@@ -1,3 +1,9 @@
+2003-04-05  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-selection.c: applied a patch from
+	Pedro Gimeno that fixes incorrect drawing of the selection border
+	caused by overflowing 16bit X coordinates (bug #110014).
+
 2003-04-04  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am
