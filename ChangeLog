@@ -1,5 +1,12 @@
 2004-04-20  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/fileops.pdb (file_load_thumbnail): removed
+	color cast. Merged from stable branch.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
+2004-04-20  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/Makefile.am
 	* libgimpwidgets/gimpwidgets.h
 	* libgimpwidgets/gimpwidgetstypes.h
