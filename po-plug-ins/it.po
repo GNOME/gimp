@@ -191,19 +191,19 @@ msgstr "Gradiente continuo w/o gap"
 
 #: plug-ins/common/CML_explorer.c:320
 msgid "Random, ch. independent"
-msgstr ""
+msgstr "Casualità, ch. indipendente"
 
 #: plug-ins/common/CML_explorer.c:322
 msgid "Random shared"
-msgstr ""
+msgstr "Casualità condivisa"
 
 #: plug-ins/common/CML_explorer.c:324
 msgid "Randoms from seed"
-msgstr ""
+msgstr "Casualità dal seme"
 
 #: plug-ins/common/CML_explorer.c:326
 msgid "Randoms from seed (shared)"
-msgstr ""
+msgstr "Casualità dal seme (condivisa)"
 
 #: plug-ins/common/CML_explorer.c:380 plug-ins/common/CML_explorer.c:388
 #: plug-ins/common/CML_explorer.c:1431 plug-ins/common/CML_explorer.c:1755
@@ -229,7 +229,7 @@ msgstr "NULLO"
 
 #: plug-ins/common/CML_explorer.c:494
 msgid "Make an image of Coupled-Map Lattice"
-msgstr ""
+msgstr "Produce una immagind di Lattice Coupled-Map"
 
 #: plug-ins/common/CML_explorer.c:495
 msgid ""
@@ -239,41 +239,42 @@ msgid ""
 "parameter file."
 msgstr ""
 
+
 #: plug-ins/common/CML_explorer.c:1327
 msgid "Coupled-Map-Lattice Explorer"
-msgstr ""
+msgstr "Explorer Lattice Coupled-Map"
 
 #: plug-ins/common/CML_explorer.c:1344 plug-ins/common/ps.c:2448
 msgid "Preview"
-msgstr ""
+msgstr "Anteprima"
 
 #: plug-ins/common/CML_explorer.c:1385
 msgid "New seed"
-msgstr ""
+msgstr "Nuovo seme"
 
 #: plug-ins/common/CML_explorer.c:1391
 msgid "Fix seed"
-msgstr ""
+msgstr "Fissa seme"
 
 #: plug-ins/common/CML_explorer.c:1397
 msgid "Random seed"
-msgstr ""
+msgstr "Seme casuale"
 
 #: plug-ins/common/CML_explorer.c:1409
 msgid "Load"
-msgstr ""
+msgstr "Apri"
 
 #: plug-ins/common/CML_explorer.c:1412
 msgid "Save"
-msgstr ""
+msgstr "Salva"
 
 #: plug-ins/common/CML_explorer.c:1429
 msgid "Hue settings"
-msgstr ""
+msgstr "Configurazioni Hue"
 
 #: plug-ins/common/CML_explorer.c:1433
 msgid "Saturation settings"
-msgstr ""
+msgstr "Configurazioni della Saturazione"
 
 #: plug-ins/common/CML_explorer.c:1437
 msgid "Value (grayimage) settings"
@@ -281,43 +282,43 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1441
 msgid "Advanced settings"
-msgstr ""
+msgstr "Configurazioni Avanzate"
 
 #: plug-ins/common/CML_explorer.c:1443
 msgid "Advanced"
-msgstr ""
+msgstr "Avanzate"
 
 #: plug-ins/common/CML_explorer.c:1455
 msgid "Other parameter settings"
-msgstr ""
+msgstr "Configurazioni di altri parametri"
 
 #: plug-ins/common/CML_explorer.c:1459
 msgid "Channel independed parameters"
-msgstr ""
+msgstr "Parametri indipendenti del Canale"
 
 #: plug-ins/common/CML_explorer.c:1463
 msgid "Initial value"
-msgstr ""
+msgstr "Valore iniziale"
 
 #: plug-ins/common/CML_explorer.c:1469
 msgid "Zoom scale"
-msgstr ""
+msgstr "Valore Zoom"
 
 #: plug-ins/common/CML_explorer.c:1474
 msgid "Start offset"
-msgstr ""
+msgstr "Inizio spostamento"
 
 #: plug-ins/common/CML_explorer.c:1494
 msgid "Seed of random (only for \"from seed\" modes)"
-msgstr ""
+msgstr "Seme di casualità (solo per la modalità \"da seme\")"
 
 #: plug-ins/common/CML_explorer.c:1498
 msgid "Seed"
-msgstr ""
+msgstr "Seme"
 
 #: plug-ins/common/CML_explorer.c:1508
 msgid "Switch to \"from seed\" with the last seed"
-msgstr ""
+msgstr "Cambia a \"da seme\" con l'ultimo seme"
 
 #: plug-ins/common/CML_explorer.c:1515
 msgid ""
@@ -329,51 +330,51 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1532
 msgid "Others"
-msgstr ""
+msgstr "Altri"
 
 #: plug-ins/common/CML_explorer.c:1539
 msgid "Misc operations"
-msgstr ""
+msgstr "Varie operazioni"
 
 #: plug-ins/common/CML_explorer.c:1544
 msgid "Copy settings"
-msgstr ""
+msgstr "Settaggi di Copia"
 
 #: plug-ins/common/CML_explorer.c:1548
 msgid "Source ch."
-msgstr ""
+msgstr "Sorgente ch."
 
 #: plug-ins/common/CML_explorer.c:1554 plug-ins/common/CML_explorer.c:1588
 msgid "Destination ch."
-msgstr ""
+msgstr "Destinazione ch."
 
 #: plug-ins/common/CML_explorer.c:1560
 msgid "Do copy parameters"
-msgstr ""
+msgstr "Esegui copia dei parametri"
 
 #: plug-ins/common/CML_explorer.c:1578
 msgid "Selective load settings"
-msgstr ""
+msgstr "Settaggi di caricamente selettivo"
 
 #: plug-ins/common/CML_explorer.c:1582
 msgid "Source ch. in file"
-msgstr ""
+msgstr "Sorgente ch. nel file"
 
 #: plug-ins/common/CML_explorer.c:1608
 msgid "Misc ops."
-msgstr ""
+msgstr "Varie opzioni"
 
 #: plug-ins/common/CML_explorer.c:1644
 msgid "Function type"
-msgstr ""
+msgstr "Tipo di Funzione"
 
 #: plug-ins/common/CML_explorer.c:1651
 msgid "Composition"
-msgstr ""
+msgstr "Composizione"
 
 #: plug-ins/common/CML_explorer.c:1658
 msgid "Misc arrange"
-msgstr ""
+msgstr "Vari arrangiamenti"
 
 #: plug-ins/common/CML_explorer.c:1665
 msgid "Use cyclic range"
@@ -393,23 +394,23 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1691
 msgid "# of subranges"
-msgstr ""
+msgstr "# di sottocampi"
 
 #: plug-ins/common/CML_explorer.c:1698
 msgid "P(ower factor)"
-msgstr ""
+msgstr "P(proprio fattore)"
 
 #: plug-ins/common/CML_explorer.c:1705
 msgid "Parameter k"
-msgstr ""
+msgstr "Parametro k"
 
 #: plug-ins/common/CML_explorer.c:1712
 msgid "Range low"
-msgstr ""
+msgstr "Campo basso"
 
 #: plug-ins/common/CML_explorer.c:1719
 msgid "Range high"
-msgstr ""
+msgstr "Campo alto"
 
 #: plug-ins/common/CML_explorer.c:1738
 msgid "Plot the graph of the settings"
@@ -417,19 +418,19 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1772
 msgid "Ch. sensitivity"
-msgstr ""
+msgstr "Sensibilità Ch."
 
 #: plug-ins/common/CML_explorer.c:1779
 msgid "Mutation rate"
-msgstr ""
+msgstr "Tasso di Mutazione"
 
 #: plug-ins/common/CML_explorer.c:1786
 msgid "Mutation dist."
-msgstr ""
+msgstr "Distribuzione della Mutazione"
 
 #: plug-ins/common/CML_explorer.c:1815
 msgid "Graph of the current settings"
-msgstr ""
+msgstr "Grafico delle attuali configurazioni"
 
 #. Action Area
 #: plug-ins/bmp/bmpwrite.c:428 plug-ins/common/CML_explorer.c:1820
@@ -445,66 +446,66 @@ msgstr ""
 #: plug-ins/common/ps.c:2290 plug-ins/common/xbm.c:959
 #: plug-ins/common/xpm.c:763 plug-ins/print/print.c:1104
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: plug-ins/common/CML_explorer.c:1830
 msgid "The Graph"
-msgstr ""
+msgstr "Il Grafico"
 
 #: plug-ins/common/CML_explorer.c:1922
 msgid "Warning: the source and the destination are the same channel."
-msgstr ""
+msgstr "Attenzione: la sorgente e la destinazioe sono lo stesso canale."
 
 #. Action Area
 #: plug-ins/common/CML_explorer.c:2010
 msgid "Execute"
-msgstr ""
+msgstr "Esegui"
 
 #: plug-ins/common/CML_explorer.c:2019
 msgid "Execute and Exit"
-msgstr ""
+msgstr "Esegui ed Esci"
 
 #: plug-ins/common/CML_explorer.c:2027
 msgid "Exit"
-msgstr ""
+msgstr "Esci"
 
 #: plug-ins/common/CML_explorer.c:2045
 msgid "Save parameters to"
-msgstr ""
+msgstr "Salva i parametri in"
 
 #: plug-ins/common/CML_explorer.c:2108 plug-ins/common/CML_explorer.c:2301
 #, c-format
 msgid "Error: could not open \"%s\""
-msgstr ""
+msgstr "Errore: impossibie aprire \"%s\""
 
 #: plug-ins/common/CML_explorer.c:2173
 msgid "CML file operation warning"
-msgstr ""
+msgstr "Nota del file CML"
 
 #: plug-ins/common/CML_explorer.c:2180
 #, c-format
 msgid "%s exists, overwrite?"
-msgstr ""
+msgstr "%s esiste, sovrascrivere?"
 
 #: plug-ins/common/CML_explorer.c:2223
 msgid "Load parameters from"
-msgstr ""
+msgstr "Carica parametri da"
 
 #: plug-ins/common/CML_explorer.c:2225
 msgid "Selective load from"
-msgstr ""
+msgstr "Caricamento selettivo da"
 
 #: plug-ins/common/CML_explorer.c:2324
 msgid "Error: it's not CML parameter file."
-msgstr ""
+msgstr "Errore: non è un file dei parametri CML."
 
 #: plug-ins/common/CML_explorer.c:2331
 msgid "Warning: it's an old format file."
-msgstr ""
+msgstr "Attenzione: è un vecchio formato file."
 
 #: plug-ins/common/CML_explorer.c:2333
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
-msgstr ""
+msgstr "Attenzione: è un file di parametri per una versione aggiornata."
 
 #. cancel button
 #: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/bmp/bmpwrite.c:437
@@ -521,15 +522,15 @@ msgstr ""
 #: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
 #: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
 msgid "Cancel"
-msgstr ""
+msgstr "Cancella"
 
 #: plug-ins/Lighting/lighting_main.c:172
 msgid "Apply various lighting effects to an image"
-msgstr ""
+msgstr "Applica vari effetti luce ad una immagine"
 
 #: plug-ins/Lighting/lighting_main.c:173
 msgid "No help yet"
-msgstr ""
+msgstr "Aiuto non esistente ancora"
 
 #: plug-ins/Lighting/lighting_main.c:177
 msgid "<Image>/Filters/Light Effects/Lighting Effects"
@@ -569,7 +570,7 @@ msgstr "Logaritmica"
 
 #: plug-ins/Lighting/lighting_ui.c:52
 msgid "Sinusoidale"
-msgstr ""
+msgstr "Sinusoidale"
 
 #: plug-ins/Lighting/lighting_ui.c:53
 msgid "Spherical"
@@ -736,11 +737,11 @@ msgstr "Diffusione:"
 
 #: plug-ins/Lighting/lighting_ui.c:797
 msgid "Amount of original color to show where no direct light falls"
-msgstr ""
+msgstr "Ammontare dei colori originali per visualizzare la provenienza della luce passiva"
 
 #: plug-ins/Lighting/lighting_ui.c:798
 msgid "Intensity of original color when lit by a light source"
-msgstr ""
+msgstr "Intensità dei colori originali quando illuminati da una sorgente di luce"
 
 #: plug-ins/Lighting/lighting_ui.c:803
 msgid "Reflectivity"
@@ -902,7 +903,7 @@ msgstr ""
 
 #: plug-ins/common/apply_lens.c:490
 msgid "Lens refraction index: "
-msgstr ""
+msgstr "Indice di rifrazione delle lenti:"
 
 #: plug-ins/common/autostretch_hsv.c:82
 msgid ""
@@ -941,11 +942,11 @@ msgstr ""
 
 #: plug-ins/common/blur.c:208
 msgid "<Image>/Filters/Blur/Blur"
-msgstr ""
+msgstr "<Image>/Filtri/Sfocatura/Sfocatura"
 
 #: plug-ins/common/blur.c:620
 msgid "Accept settings and apply filter to image"
-msgstr ""
+msgstr "Accetta le configurazini e applica il filtro all'immagine"
 
 #: plug-ins/common/blur.c:622
 msgid "Close plug-in without making any changes"
@@ -986,7 +987,7 @@ msgstr ""
 
 #: plug-ins/common/blur.c:661
 msgid "Value for seeding the random number generator"
-msgstr ""
+msgstr "Valore di partenza per la generazione dei numeri casuali"
 
 #.
 #. *  Randomization percentage label & scale (1 to 100)
@@ -997,7 +998,7 @@ msgstr "Casualità %:"
 
 #: plug-ins/common/blur.c:669
 msgid "Percentage of pixels to be filtered"
-msgstr ""
+msgstr "Percentuale di pixel da filtrare"
 
 #.
 #. *  Repeat count label & scale (1 to 100)
@@ -1040,7 +1041,7 @@ msgstr "%s: file BMP non valido %s\n"
 #: plug-ins/bmp/bmpread.c:95
 #, c-format
 msgid "%s: error reading BMP file header\n"
-msgstr ""
+msgstr "%s: errore durante la lettura dell'header file BMP\n"
 
 #: plug-ins/bmp/bmpread.c:70
 msgid "OS/2 unsupported!\n"
@@ -1069,12 +1070,12 @@ msgstr "Sfondo"
 
 #: plug-ins/bmp/bmpwrite.c:83
 msgid "bmp: cannot operate on unknown image types or alpha images"
-msgstr ""
+msgstr "bmp: impossibile operare su tipi di immagine o immagini alpha"
 
 #: plug-ins/bmp/bmpwrite.c:140
 #, c-format
 msgid "can't open %s\n"
-msgstr ""
+msgstr "impossibile aprire %s\n"
 
 #: plug-ins/bmp/bmpwrite.c:154 plug-ins/common/jpeg.c:759
 #: plug-ins/common/png.c:595 plug-ins/common/png.c:597
@@ -1095,11 +1096,11 @@ msgstr "Opzioni Salvataggio"
 
 #: plug-ins/bmp/bmpwrite.c:454
 msgid "RLE encoded"
-msgstr ""
+msgstr "RLE encodato"
 
 #: plug-ins/borderaverage/borderaverage.c:98
 msgid "<Image>/Filters/Colors/Border Average"
-msgstr ""
+msgstr "<Image>/Filtri/Colori/Border Average"
 
 #: plug-ins/borderaverage/borderaverage.c:339
 msgid "Border Size"
@@ -1131,7 +1132,7 @@ msgstr "Mappa Sinusoidale"
 
 #: plug-ins/common/bumpmap.c:346
 msgid "Create an embossing effect using an image as a bump map"
-msgstr ""
+msgstr "Creazione di un effetto di rilievo utilizzando una immagine come bump map"
 
 #: plug-ins/common/bumpmap.c:354
 msgid "<Image>/Filters/Map/Bump Map"
@@ -1149,7 +1150,7 @@ msgstr "Bump map"
 #. Compensate darkening
 #: plug-ins/common/bumpmap.c:884
 msgid "Compensate for darkening"
-msgstr ""
+msgstr "Compensazione toni scuri"
 
 #. Invert bumpmap
 #: plug-ins/common/bumpmap.c:895
@@ -1188,32 +1189,32 @@ msgstr "Ambiente"
 #: plug-ins/common/bz2.c:293 plug-ins/common/bz2.c:358
 #, c-format
 msgid "bz2: fork failed: %s\n"
-msgstr ""
+msgstr "bz2: fallimento operazione: %s\n"
 
 #: plug-ins/common/bz2.c:300 plug-ins/common/bz2.c:365
 #, c-format
 msgid "bz2: fopen failed: %s\n"
-msgstr ""
+msgstr "bz2: fopen fallito: %s\n"
 
 #: plug-ins/common/bz2.c:306 plug-ins/common/bz2.c:371
 #, c-format
 msgid "bz2: dup2 failed: %s\n"
-msgstr ""
+msgstr "bz2: dup2 fallito: %s\n"
 
 #: plug-ins/common/bz2.c:310
 #, c-format
 msgid "bz2: exec failed: bzip2: %s\n"
-msgstr ""
+msgstr "bz2: exec fallito: bzip2: %s\n"
 
 #: plug-ins/common/bz2.c:324 plug-ins/common/bz2.c:389
 #, c-format
 msgid "bz2: bzip2 exited abnormally on file %s\n"
-msgstr ""
+msgstr "bz2: bzip2 uscita anormale dal file %s\n"
 
 #: plug-ins/common/bz2.c:375
 #, c-format
 msgid "bz2: exec failed: bunzip2: %s\n"
-msgstr ""
+msgstr "bz2: exec fallito: bunzip2: %s\n"
 
 #: plug-ins/common/bz2.c:443
 msgid "bz2: can't open bzip2ed file without a sensible extension\n"
@@ -1221,11 +1222,11 @@ msgstr ""
 
 #: plug-ins/common/checkerboard.c:97
 msgid "Adds a checkerboard pattern to an image"
-msgstr ""
+msgstr "Aggiungi un pattern a scacchi all'immagine"
 
 #: plug-ins/common/checkerboard.c:102
 msgid "<Image>/Filters/Render/Checkerboard"
-msgstr ""
+msgstr "<Image>/Filtri/Render/Scacchiera"
 
 #: plug-ins/common/checkerboard.c:164
 msgid "Adding Checkerboard..."
@@ -1237,7 +1238,7 @@ msgstr "Scacchiera"
 
 #: plug-ins/common/checkerboard.c:407
 msgid "Psychobilly"
-msgstr ""
+msgstr "Psychobilly"
 
 #: plug-ins/common/checkerboard.c:415
 msgid "Check Size"
@@ -1265,7 +1266,7 @@ msgstr ""
 
 #: plug-ins/common/colorify.c:314
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: plug-ins/common/colorify.c:331 plug-ins/common/xpm.c:406
 #: plug-ins/print/print.c:848
@@ -1298,7 +1299,7 @@ msgstr "Blu:"
 
 #: plug-ins/common/compose.c:126
 msgid "rgb-compose"
-msgstr ""
+msgstr "rgb-compose"
 
 #: plug-ins/common/compose.c:127
 msgid "RGBA"
@@ -1366,11 +1367,11 @@ msgstr "cmyk-composto"
 
 #: plug-ins/common/compose.c:228
 msgid "Compose an image from multiple gray images"
-msgstr ""
+msgstr "Componi una immagine da multiple immagini in scala di grigio"
 
 #: plug-ins/common/compose.c:229
 msgid "This function creates a new image from multiple gray images"
-msgstr ""
+msgstr "Questa funzione crea una nuova immagine da multiple immagini in scala di grigio"
 
 #: plug-ins/common/compose.c:234
 msgid "<Image>/Image/Channel Ops/Compose"
@@ -1384,6 +1385,7 @@ msgstr ""
 msgid ""
 "This function creates a new image from multiple drawables of gray images"
 msgstr ""
+"Questa funzione crea una nuova immagine da multiple figure in scala di grigio"
 
 #: plug-ins/common/compose.c:305
 #, c-format
@@ -1413,16 +1415,16 @@ msgstr ""
 
 #: plug-ins/common/compose.c:483 plug-ins/common/compose.c:498
 msgid "compose: not enough memory"
-msgstr ""
+msgstr "compose: memoria insufficiente"
 
 #: plug-ins/common/compose.c:809
 msgid "Compose"
-msgstr ""
+msgstr "Compose"
 
 #. The left frame keeps the compose type toggles
 #: plug-ins/common/compose.c:841
 msgid "Compose channels:"
-msgstr ""
+msgstr "Compose canali:"
 
 #. The right frame keeps the selection menues for images.
 #. Because the labels within this frame will change when a toggle
@@ -1471,7 +1473,7 @@ msgstr ""
 
 #: plug-ins/common/convmatrix.c:178
 msgid "<Image>/Filters/Generic/Convolution Matrix"
-msgstr ""
+msgstr "<Image>/Filtri/Generic/Convolution Matrix"
 
 #: plug-ins/common/convmatrix.c:239
 msgid "Applying convolution"
@@ -1479,7 +1481,7 @@ msgstr ""
 
 #: plug-ins/common/convmatrix.c:700
 msgid "Convolution Matrix"
-msgstr ""
+msgstr "Convolution Matrix"
 
 #: plug-ins/common/convmatrix.c:715
 msgid "Defaults"
@@ -1498,7 +1500,7 @@ msgstr "Divisore"
 #. Offset
 #: plug-ins/common/convmatrix.c:803 plug-ins/common/depthmerge.c:728
 msgid "Offset"
-msgstr ""
+msgstr "Sposta"
 
 #: plug-ins/common/convmatrix.c:823
 msgid "Automatic"
@@ -1542,11 +1544,11 @@ msgstr "Utilizza Colore di Sfondo"
 
 #: plug-ins/common/cubism.c:372
 msgid "Tile Size"
-msgstr ""
+msgstr "Dimensione Tile"
 
 #: plug-ins/common/cubism.c:388
 msgid "Tile Saturation"
-msgstr ""
+msgstr "Saturazione Tile"
 
 #: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:130
 msgid "red"
@@ -1767,7 +1769,7 @@ msgstr "Larghezza"
 
 #: plug-ins/common/gif.c:408
 msgid "saves files in Compuserve GIF file format"
-msgstr ""
+msgstr "salva i file nel formato Compuserve GIF"
 
 #: plug-ins/common/gif.c:682
 msgid "GIF: Couldn't simply reduce colours further.  Saving as opaque.\n"
@@ -1782,7 +1784,7 @@ msgstr ""
 #: plug-ins/common/gif.c:957
 #, c-format
 msgid "GIF: can't open %s\n"
-msgstr ""
+msgstr "GIF: impossibile aprire %s\n"
 
 #: plug-ins/common/gif.c:1064
 msgid ""
@@ -1867,7 +1869,7 @@ msgstr ""
 
 #: plug-ins/common/gifload.c:134
 msgid "loads files of Compuserve GIF file format"
-msgstr ""
+msgstr "apri file nel formato Compuserve GIF"
 
 #: plug-ins/common/gifload.c:279
 #, c-format
@@ -1876,7 +1878,7 @@ msgstr "GIF: impossibile aprire \"%s\"\n"
 
 #: plug-ins/common/gifload.c:294
 msgid "GIF: error reading magic number\n"
-msgstr ""
+msgstr "GIF: errore di lettura del magic number\n"
 
 #: plug-ins/common/gifload.c:300
 msgid "GIF: not a GIF file\n"
@@ -1884,7 +1886,7 @@ msgstr "GIF: non è un file GIF\n"
 
 #: plug-ins/common/gifload.c:309
 msgid "GIF: bad version number, not '87a' or '89a'\n"
-msgstr ""
+msgstr "GIF: versione errata, ne '87a'  '89a'\n"
 
 #: plug-ins/common/gifload.c:315
 msgid "GIF: failed to read screen descriptor\n"
@@ -1900,7 +1902,7 @@ msgstr ""
 
 #: plug-ins/common/gifload.c:349 plug-ins/common/gifload.c:803
 msgid "GIF: EOF / read error on image data\n"
-msgstr ""
+msgstr "GIF: EOF / errore di lettura sull'immagine\n"
 
 #: plug-ins/common/gifload.c:364
 msgid "GIF: EOF / read error on extension function code\n"
@@ -1956,12 +1958,12 @@ msgstr "Sfondo (%dms)"
 #: plug-ins/common/gifload.c:877
 #, c-format
 msgid "Frame %d"
-msgstr ""
+msgstr "Frame %d"
 
 #: plug-ins/common/gifload.c:879
 #, c-format
 msgid "Frame %d (%dms)"
-msgstr ""
+msgstr "Frame %d (%dms)"
 
 #. 'don't care'
 #: plug-ins/common/gifload.c:885 plug-ins/common/gifload.c:887
@@ -1984,7 +1986,7 @@ msgstr ""
 
 #: plug-ins/common/gifload.c:896
 msgid "GIF: Something got corrupted.\n"
-msgstr ""
+msgstr "GIF: file corrotto.\n"
 
 #: plug-ins/common/gifload.c:925
 #, c-format
@@ -2081,11 +2083,11 @@ msgstr ""
 #. Encapsulation radiobutton
 #: plug-ins/common/mail.c:683
 msgid "Uuencode"
-msgstr ""
+msgstr "Uuencode"
 
 #: plug-ins/common/mail.c:685
 msgid "MIME"
-msgstr ""
+msgstr "MIME"
 
 #: plug-ins/common/mail.c:799
 msgid "mail: some sort of error with the file extension or lack thereof \n"
@@ -2127,7 +2129,7 @@ msgstr "Carica file del formato PNG"
 
 #: plug-ins/common/png.c:150
 msgid "This plug-in loads Portable Network Graphics (PNG) files."
-msgstr ""
+msgstr "Questo plugin carica file PNG (Portable Network Graphics)."
 
 #: plug-ins/common/png.c:818
 msgid "PNG Options"
@@ -2221,127 +2223,127 @@ msgstr ""
 
 #: plug-ins/print/print-pcl.c:256
 msgid "150 DPI"
-msgstr ""
+msgstr "150 DPI"
 
 #: plug-ins/print/print-pcl.c:257
 msgid "300 DPI"
-msgstr ""
+msgstr "300 DPI"
 
 #: plug-ins/print/print-pcl.c:258
 msgid "600 DPI"
-msgstr ""
+msgstr "600 DPI"
 
 #: plug-ins/print/print.c:229
 msgid "PostScript Level 1"
-msgstr ""
+msgstr "PostScript Livello 1"
 
 #: plug-ins/print/print.c:231
 msgid "PostScript Level 2"
-msgstr ""
+msgstr "PostScript Livello 2"
 
 #: plug-ins/print/print.c:233
 msgid "HP DeskJet 500, 520"
-msgstr ""
+msgstr "HP DeskJet 500, 520"
 
 #: plug-ins/print/print.c:235
 msgid "HP DeskJet 500C, 540C"
-msgstr ""
+msgstr "HP DeskJet 500C, 540C"
 
 #: plug-ins/print/print.c:237
 msgid "HP DeskJet 550C, 560C"
-msgstr ""
+msgstr "HP DeskJet 550C, 560C"
 
 #: plug-ins/print/print.c:239
 msgid "HP DeskJet 600 series"
-msgstr ""
+msgstr "HP DeskJet 600 serie"
 
 #: plug-ins/print/print.c:241
 msgid "HP DeskJet 800 series"
-msgstr ""
+msgstr "HP DeskJet 800 serie"
 
 #: plug-ins/print/print.c:243
 msgid "HP DeskJet 1100C, 1120C"
-msgstr ""
+msgstr "HP DeskJet 1100C, 1120C"
 
 #: plug-ins/print/print.c:245
 msgid "HP DeskJet 1200C, 1600C"
-msgstr ""
+msgstr "HP DeskJet 1200C, 1600C"
 
 #: plug-ins/print/print.c:247
 msgid "HP LaserJet II series"
-msgstr ""
+msgstr "HP LaserJet II serie"
 
 #: plug-ins/print/print.c:249
 msgid "HP LaserJet III series"
-msgstr ""
+msgstr "HP LaserJet III serie"
 
 #: plug-ins/print/print.c:251
 msgid "HP LaserJet 4 series"
-msgstr ""
+msgstr "HP LaserJet 4 serie"
 
 #: plug-ins/print/print.c:253
 msgid "HP LaserJet 4V, 4Si"
-msgstr ""
+msgstr "HP LaserJet 4V, 4Si"
 
 #: plug-ins/print/print.c:255
 msgid "HP LaserJet 5 series"
-msgstr ""
+msgstr "HP LaserJet 5 serie"
 
 #: plug-ins/print/print.c:257
 msgid "HP LaserJet 5Si"
-msgstr ""
+msgstr "HP LaserJet 5Si"
 
 #: plug-ins/print/print.c:259
 msgid "HP LaserJet 6 series"
-msgstr ""
+msgstr "HP LaserJet 6 serie"
 
 #: plug-ins/print/print.c:261
 msgid "EPSON Stylus Color"
-msgstr ""
+msgstr "EPSON Stylus Color"
 
 #: plug-ins/print/print.c:263
 msgid "EPSON Stylus Color Pro"
-msgstr ""
+msgstr "EPSON Stylus Color Pro"
 
 #: plug-ins/print/print.c:265
 msgid "EPSON Stylus Color Pro XL"
-msgstr ""
+msgstr "EPSON Stylus Color Pro XL"
 
 #: plug-ins/print/print.c:267
 msgid "EPSON Stylus Color 1500"
-msgstr ""
+msgstr "EPSON Stylus Color 1500"
 
 #: plug-ins/print/print.c:269
 msgid "EPSON Stylus Color 400"
-msgstr ""
+msgstr "EPSON Stylus Color 400"
 
 #: plug-ins/print/print.c:271
 msgid "EPSON Stylus Color 500"
-msgstr ""
+msgstr "EPSON Stylus Color 500"
 
 #: plug-ins/print/print.c:273
 msgid "EPSON Stylus Color 600"
-msgstr ""
+msgstr "EPSON Stylus Color 600"
 
 #: plug-ins/print/print.c:275
 msgid "EPSON Stylus Color 800"
-msgstr ""
+msgstr "EPSON Stylus Color 800"
 
 #: plug-ins/print/print.c:277
 msgid "EPSON Stylus Color 1520"
-msgstr ""
+msgstr "EPSON Stylus Color 1520"
 
 #: plug-ins/print/print.c:279
 msgid "EPSON Stylus Color 3000"
-msgstr ""
+msgstr "EPSON Stylus Color 3000"
 
 #: plug-ins/print/print.c:332
 msgid "This plug-in prints images from The GIMP."
-msgstr ""
+msgstr "Questo plugin stampa immagin da Gimp."
 
 #: plug-ins/print/print.c:333
 msgid "Prints images to PostScript, PCL, or ESC/P2 printers."
-msgstr ""
+msgstr "Stampa immagini a stampanti PostScript, PCCl, o ESC/P2."
 
 #: plug-ins/print/print.c:337
 msgid "<Image>/File/Print"
@@ -2357,7 +2359,7 @@ msgstr "Ritratto"
 
 #: plug-ins/print/print.c:652
 msgid "Landscape"
-msgstr ""
+msgstr "Panoramica"
 
 #: plug-ins/print/print.c:685
 #, c-format
@@ -2369,21 +2371,21 @@ msgstr "Stampa v%s"
 #.
 #: plug-ins/print/print.c:735
 msgid "Media Size:"
-msgstr ""
+msgstr "Dimensione:"
 
 #.
 #. * Media type option menu...
 #.
 #: plug-ins/print/print.c:751
 msgid "Media Type:"
-msgstr ""
+msgstr "Tipo:"
 
 #.
 #. * Media source option menu...
 #.
 #: plug-ins/print/print.c:767
 msgid "Media Source:"
-msgstr ""
+msgstr "Sorgente:"
 
 #.
 #. * Orientation option menu...
@@ -2419,11 +2421,11 @@ msgstr "Scalatura:"
 
 #: plug-ins/print/print.c:896
 msgid "Percent"
-msgstr ""
+msgstr "Percentuale"
 
 #: plug-ins/print/print.c:905
 msgid "PPI"
-msgstr ""
+msgstr "PPI"
 
 #.
 #. * Brightness slider...
@@ -2502,6 +2504,7 @@ msgstr "salva file nel formato Postscript"
 msgid ""
 "PostScript saving handles all image types except those with alpha channels."
 msgstr ""
+"PostScript salva tutti i tipi di immagine eccetto quelli con canali alpha."
 
 #: plug-ins/common/ps.c:550
 msgid "PS: can't open file for reading"
@@ -2518,7 +2521,7 @@ msgstr "PS: impossibile interpretare il file"
 
 #: plug-ins/common/ps.c:647
 msgid "PostScript save cannot handle images with alpha channels"
-msgstr ""
+msgstr "Il salvataggio PostScript non può avvenire su immagini con canali alpha"
 
 #: plug-ins/common/ps.c:658
 msgid "PS: cannot operate on unknown image types"
@@ -2571,16 +2574,16 @@ msgstr ""
 
 #: plug-ins/common/ps.c:2003
 msgid "strong"
-msgstr ""
+msgstr "forte"
 
 #: plug-ins/common/ps.c:2016
-msgid "Load PostScript"
+msgid "Apri PostScript"
 msgstr "Carica PostScript"
 
 #. Rendering
 #: plug-ins/common/ps.c:2049
 msgid "Rendering"
-msgstr ""
+msgstr "Rendering"
 
 #: plug-ins/common/ps.c:2089
 msgid "try BoundingBox"
@@ -2601,27 +2604,27 @@ msgstr "Antialiasing del testo"
 
 #: plug-ins/common/ps.c:2264
 msgid "X-offset:"
-msgstr ""
+msgstr "X-offset:"
 
 #: plug-ins/common/ps.c:2264
 msgid "Y-offset:"
-msgstr ""
+msgstr "Y-offset:"
 
 #: plug-ins/common/ps.c:2266
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: plug-ins/common/ps.c:2266
 msgid "90"
-msgstr ""
+msgstr "90"
 
 #: plug-ins/common/ps.c:2266
 msgid "180"
-msgstr ""
+msgstr "180"
 
 #: plug-ins/common/ps.c:2266
 msgid "270"
-msgstr ""
+msgstr "270"
 
 #: plug-ins/common/ps.c:2268
 msgid "Inch"
@@ -2642,7 +2645,7 @@ msgstr "Dimensione Immagine"
 
 #: plug-ins/common/ps.c:2363
 msgid "keep aspect ratio"
-msgstr ""
+msgstr "Mantieni dimensioni"
 
 #. Unit
 #: plug-ins/common/ps.c:2373
@@ -2661,7 +2664,7 @@ msgstr "Uscita"
 
 #: plug-ins/common/ps.c:2439
 msgid "Encapsulated PostScript"
-msgstr ""
+msgstr "Encapsulated PostScript"
 
 #: plug-ins/common/ps.c:2465
 msgid "Preview size"
@@ -2669,7 +2672,7 @@ msgstr "Dimensione anteprima"
 
 #: plug-ins/common/xbm.c:163
 msgid "Load a file in X10 or X11 bitmap (XBM) file format"
-msgstr ""
+msgstr "Apri una immagine bitmap nel formato X10/X11"
 
 #: plug-ins/common/xbm.c:164
 msgid ""
@@ -2684,7 +2687,7 @@ msgstr "Creato con Gimp"
 #: plug-ins/common/xbm.c:518
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
-msgstr ""
+msgstr "XBM: impossibile aprire \"%s\"\n"
 
 #: plug-ins/common/xbm.c:583
 #, c-format
@@ -2693,7 +2696,7 @@ msgstr ""
 
 #: plug-ins/common/xbm.c:589
 msgid "XBM: no image width specified\n"
-msgstr ""
+msgstr "XBM: larghezza immagine non specificata\n"
 
 #: plug-ins/common/xbm.c:595
 msgid "XBM: no image height specified\n"
@@ -2723,7 +2726,7 @@ msgstr ""
 #: plug-ins/common/xbm.c:799
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
-msgstr ""
+msgstr "XBM: impossibile creare \"%s\"\n"
 
 #: plug-ins/common/xbm.c:949
 msgid "Save as XBM"
@@ -2749,11 +2752,11 @@ msgstr "Prefisso identificativo: "
 
 #: plug-ins/common/xpm.c:170
 msgid "loads files of the xpm file format"
-msgstr ""
+msgstr "apri file in formato xpm"
 
 #: plug-ins/common/xpm.c:182
 msgid "saves files in the xpm file format (if you're on a 16 bit display...)"
-msgstr ""
+msgstr "salva file in formato xpm (se si ha una modalità a 16 bit del display...)"
 
 #: plug-ins/common/xpm.c:756
 msgid "Save as Xpm"
@@ -2765,7 +2768,7 @@ msgstr "Soglia Alpha"
 
 #: plug-ins/common/xwd.c:226 plug-ins/common/xwd.c:227
 msgid "load file of the XWD file format"
-msgstr ""
+msgstr "apri file del formato XWD"
 
 #: plug-ins/common/xwd.c:238
 msgid "saves files in the XWD file format"
@@ -2793,7 +2796,7 @@ msgstr ""
 
 #: plug-ins/common/xwd.c:448
 msgid "this image depth/format is not supported"
-msgstr ""
+msgstr "la definizione e il formato dell'immagini non sono supportati"
 
 #: plug-ins/common/xwd.c:452
 #, c-format
@@ -2809,7 +2812,7 @@ msgstr ""
 
 #: plug-ins/common/xwd.c:491
 msgid "cannot operate on unknown image types"
-msgstr ""
+msgstr "impossibile applicare operazioni su formati di immagine sconosciuti"
 
 #: plug-ins/common/xwd.c:500
 msgid "can't open file for writing"
@@ -2822,7 +2825,7 @@ msgstr "EOF riscontrata in "
 #: plug-ins/common/xwd.c:1250 plug-ins/common/xwd.c:1412
 #: plug-ins/common/xwd.c:1609 plug-ins/common/xwd.c:1858
 msgid "EOF encountered on reading"
-msgstr ""
+msgstr "EOF riscontrato in lettura"
 
 #: plug-ins/common/xwd.c:1298
 msgid "No memory for mapping colors"
@@ -2830,8 +2833,8 @@ msgstr ""
 
 #: plug-ins/common/xwd.c:1982
 msgid "Error during writing indexed/grey image"
-msgstr ""
+msgstr "Errore durante la scrittura Indicizzata/Scala di grigio dell'immagine"
 
 #: plug-ins/common/xwd.c:2071
 msgid "Error during writing rgb image"
-msgstr ""
+msgstr "Errore durenate la scrittura dell'immagine rgb"
