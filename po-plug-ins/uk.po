@@ -3417,7 +3417,7 @@ msgstr "Зам╕на кольору"
 
 #: plug-ins/common/exchange.c:369
 msgid "Preview: Click Inside to Pick \"From Color\""
-msgstr ""
+msgstr "Перегляд: Клацть всередин╕ щоб вибрати початковий кол╕р"
 
 #: plug-ins/common/exchange.c:400
 msgid "To Color"
@@ -4176,7 +4176,7 @@ msgstr ""
 
 #: plug-ins/common/gz.c:446
 msgid "gz: no sensible extension, attempting to load with file magic\n"
-msgstr ""
+msgstr "gz: нема╓ потр╕бного розширення, спроба вгадати формат файлу\n"
 
 #: plug-ins/common/hot.c:234
 msgid "<Image>/Filters/Colors/Hot..."
@@ -4271,23 +4271,23 @@ msgstr "Перем╕стити"
 
 #: plug-ins/common/iwarp.c:1035
 msgid "Grow"
-msgstr ""
+msgstr "Р╕ст"
 
 #: plug-ins/common/iwarp.c:1036
 msgid "Swirl CCW"
-msgstr ""
+msgstr "Вихор CCW"
 
 #: plug-ins/common/iwarp.c:1038
 msgid "Shrink"
-msgstr ""
+msgstr "Зменшення"
 
 #: plug-ins/common/iwarp.c:1039
 msgid "Swirl CW"
-msgstr ""
+msgstr "Вихор CW"
 
 #: plug-ins/common/iwarp.c:1060 plug-ins/common/sinus.c:1989
 msgid "Bilinear"
-msgstr ""
+msgstr "Б╕л╕н╕йний"
 
 #: plug-ins/common/iwarp.c:1078
 msgid "Adaptive Supersample"
