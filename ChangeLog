@@ -1,5 +1,13 @@
 2005-02-05  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontrollers.c (gimp_controllers_init): removed
+	some eeeky code that used to fiddle with the GimpController type.
+
+	* libgimpwidgets/gimpcontroller.c (gimp_controller_get_type): add
+	the GimpConfig interface here, where it belongs.
+
+2005-02-05  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_colorblind.c
 	* modules/cdisplay_gamma.c
 	* modules/cdisplay_highcontrast.c

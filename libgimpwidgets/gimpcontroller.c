@@ -25,6 +25,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "gimpwidgetstypes.h"
 
@@ -83,9 +84,19 @@ gimp_controller_get_type (void)
         NULL            /* instance_init  */
       };
 
+      static const GInterfaceInfo controller_iface_info =
+      {
+        NULL,           /* iface_init     */
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
+
       controller_type = g_type_register_static (G_TYPE_OBJECT,
                                                 "GimpController",
                                                 &controller_info, 0);
+
+      g_type_add_interface_static (controller_type,
+                                   GIMP_TYPE_CONFIG, &controller_iface_info);
     }
 
   return controller_type;

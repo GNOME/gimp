@@ -106,19 +106,6 @@ gimp_controllers_init (Gimp *gimp)
                                 G_CALLBACK (gimp_controllers_event_mapped),
                                 manager);
 
-  /*  EEEEEEK  */
-  {
-    static const GInterfaceInfo config_iface_info =
-    {
-      NULL,  /* iface_init     */
-      NULL,  /* iface_finalize */
-      NULL   /* iface_data     */
-    };
-
-    g_type_add_interface_static (GIMP_TYPE_CONTROLLER, GIMP_TYPE_CONFIG,
-                                 &config_iface_info);
-  }
-
   g_type_class_ref (GIMP_TYPE_CONTROLLER_WHEEL);
   g_type_class_ref (GIMP_TYPE_CONTROLLER_KEYBOARD);
 }
