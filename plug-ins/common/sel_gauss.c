@@ -105,7 +105,7 @@ query (void)
     { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT, "radius", "Radius of gaussian blur (in pixels >= 0.1)" },
+    { GIMP_PDB_FLOAT, "radius", "Radius of gaussian blur (in pixels, > 0.0)" },
     { GIMP_PDB_INT32, "maxdelta", "Maximum delta" }
   };
 
@@ -171,7 +171,7 @@ run (gchar      *name,
 	  bvals.radius   = param[3].data.d_float;
 	  bvals.maxdelta = CLAMP (param[4].data.d_int32, 0, 255);
 
-          if (bvals.radius < 0.1)
+          if (bvals.radius <= 0.0)
             status = GIMP_PDB_CALLING_ERROR;
 	}
       break;
@@ -265,7 +265,7 @@ sel_gauss_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   spinbutton = gimp_spin_button_new (&adj,
-				     bvals.radius, 0.1, G_MAXINT, 1.0, 5.0,
+				     bvals.radius, 0.0, G_MAXINT, 1.0, 5.0,
 				     0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("_Blur Radius:"), 1.0, 0.5,

@@ -120,7 +120,7 @@ query (void)
     { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT, "radius", "Radius of gaussian blur (in pixels > 1.0)" },
+    { GIMP_PDB_FLOAT, "radius", "Radius of gaussian blur (in pixels, > 0.0)" },
     { GIMP_PDB_INT32, "horizontal", "Blur in horizontal direction" },
     { GIMP_PDB_INT32, "vertical", "Blur in vertical direction" }
   };
@@ -130,8 +130,8 @@ query (void)
     { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE, "image", "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT, "horizontal", "Horizontal radius of gaussian blur (in pixels)" },
-    { GIMP_PDB_FLOAT, "vertical",   "Vertical radius of gaussian blur (in pixels)" }
+    { GIMP_PDB_FLOAT, "horizontal", "Horizontal radius of gaussian blur (in pixels, > 0.0)" },
+    { GIMP_PDB_FLOAT, "vertical",   "Vertical radius of gaussian blur (in pixels, > 0.0)" }
   };
 
   gimp_install_procedure ("plug_in_gauss_rle",
@@ -144,9 +144,7 @@ query (void)
 			  "independently invoked by specifying only one to "
 			  "run.  The RLE gaussian blurring performs most "
 			  "efficiently on computer-generated images or images "
-			  "with large areas of constant intensity.  Values for "
-			  "radii less than 1.0 are invalid as they would "
-			  "generate spurious results.",
+			  "with large areas of constant intensity.",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1995-1996",
@@ -166,11 +164,7 @@ query (void)
 			  "horizontal and the vertical direction. The RLE "
 			  "gaussian blurring performs most efficiently on "
 			  "computer-generated images or images with large "
-			  "areas of constant intensity.  Values for radii "
-			  "less than 1.0 would generate spurious results. "
-			  "Therefore they are interpreted as 0.0, which means "
-			  "that the computation for this orientation is "
-			  "skipped.",
+			  "areas of constant intensity.",
 			  "Spencer Kimball, Peter Mattis & Sven Neumann",
 			  "Spencer Kimball, Peter Mattis & Sven Neumann",
 			  "1995-2000",
@@ -230,7 +224,7 @@ run (gchar      *name,
 	      bvals.horizontal = (param[4].data.d_int32) ? TRUE : FALSE;
 	      bvals.vertical = (param[5].data.d_int32) ? TRUE : FALSE;
 	    }
-	  if (status == GIMP_PDB_SUCCESS && (bvals.radius < 1.0))
+	  if (status == GIMP_PDB_SUCCESS && (bvals.radius <= 0.0))
 	    status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	  
@@ -274,7 +268,7 @@ run (gchar      *name,
 	      b2vals.horizontal = param[3].data.d_float;
 	      b2vals.vertical   = param[4].data.d_float;
 	    }
-	  if (status == GIMP_PDB_SUCCESS && (b2vals.horizontal < 1.0 && b2vals.vertical < 1.0))
+	  if (status == GIMP_PDB_SUCCESS && (b2vals.horizontal <= 0.0 && b2vals.vertical <= 0.0))
 	    status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	  
@@ -404,8 +398,8 @@ gauss_rle_dialog (void)
   gtk_widget_show (label);
 
   spinbutton = gimp_spin_button_new (&adj,
-				     bvals.radius, 1.0, GIMP_MAX_IMAGE_SIZE,
-				     1.0, 5.0, 0, 1, 2);
+				     bvals.radius, 0.0, GIMP_MAX_IMAGE_SIZE,
+				     0.0, 5.0, 0, 1, 2);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, TRUE, 0);
   gtk_widget_show (spinbutton);
 
@@ -576,7 +570,7 @@ gauss_rle (GimpDrawable *drawable,
   gint     initial_p, initial_m;
   gdouble  std_dev;
 
-  if (horz < 1.0 && vert < 1.0)
+  if (horz <= 0.0 && vert <= 0.0)
     return;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
@@ -604,14 +598,14 @@ gauss_rle (GimpDrawable *drawable,
                        TRUE, TRUE);
 
   progress = 0.0;
-  max_progress  = (horz < 1.0 ) ? 0 : width * height * horz;
-  max_progress += (vert < 1.0 ) ? 0 : width * height * vert;
+  max_progress  = (horz <= 0.0 ) ? 0 : width * height * horz;
+  max_progress += (vert <= 0.0 ) ? 0 : width * height * vert;
 	  
   if (has_alpha)
     multiply_alpha (src, height, bytes);
 
   /*  First the vertical pass  */
-  if (vert >= 1.0)
+  if (vert > 0.0)
     {
       vert = fabs (vert) + 1.0;
       std_dev = sqrt (-(vert * vert) / (2 * log (1.0 / 255.0)));
@@ -685,7 +679,7 @@ gauss_rle (GimpDrawable *drawable,
     }
 
   /*  Now the horizontal pass  */
-  if (horz >= 1.0)
+  if (horz > 0.0)
     {
       horz = fabs (horz) + 1.0;
 
