@@ -1,5 +1,10 @@
 2004-08-30  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpregioniterator.c: always update the progress.
+	Makes all "run_mode" parameters useless.
+
+2004-08-30  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/gauss.c: add "..." to the progress text.
 
 2004-08-30  Sven Neumann  <sven@gimp.org>

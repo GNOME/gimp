@@ -96,11 +96,8 @@ gimp_rgn_iterator_iter_single (GimpRgnIterator *iter,
           src += srcPR->rowstride;
         }
 
-      if (iter->run_mode != GIMP_RUN_NONINTERACTIVE)
-        {
-          area_so_far += srcPR->w * srcPR->h;
-          gimp_progress_update ((gdouble) area_so_far /        (gdouble) total_area);
-        }
+      area_so_far += srcPR->w * srcPR->h;
+      gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
     }
 }
 
@@ -170,12 +167,8 @@ gimp_rgn_iterator_src_dest (GimpRgnIterator    *iter,
           dest += destPR.rowstride;
         }
 
-      if (iter->run_mode != GIMP_RUN_NONINTERACTIVE)
-        {
-          area_so_far += srcPR.w * srcPR.h;
-          gimp_progress_update ((gdouble) area_so_far /
-                                (gdouble) total_area);
-        }
+      area_so_far += srcPR.w * srcPR.h;
+      gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
     }
 
   gimp_drawable_flush (iter->drawable);
@@ -284,14 +277,10 @@ gimp_rgn_iterate1 (GimpDrawable *drawable,
           src += srcPR.rowstride;
         }
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        {
-          area_so_far += srcPR.w * srcPR.h;
+      area_so_far += srcPR.w * srcPR.h;
 
-          if (((progress_skip++) % 10) == 0)
-            gimp_progress_update ((gdouble) area_so_far /
-                                  (gdouble) total_area);
-        }
+      if (((progress_skip++) % 10) == 0)
+        gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
     }
 }
 
@@ -327,14 +316,10 @@ gimp_rgn_iterate2 (GimpDrawable *drawable,
     {
       gimp_rgn_render_region (&srcPR, &destPR, func, data);
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        {
-          area_so_far += srcPR.w * srcPR.h;
+      area_so_far += srcPR.w * srcPR.h;
 
-          if (((progress_skip++) % 10) == 0)
-            gimp_progress_update ((gdouble) area_so_far /
-                                  (gdouble) total_area);
-        }
+      if (((progress_skip++) % 10) == 0)
+        gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
     }
 
   /*  update the processed region  */
