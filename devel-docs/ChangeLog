@@ -1,3 +1,8 @@
+2003-10-19  Sven Neumann  <sven@gimp.org>
+
+	* app/app-docs.sgml
+	* app/app-sections.txt: added new fonts UI functions.
+
 2003-10-17  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/libgimpbase-sections.txt

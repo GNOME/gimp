@@ -637,6 +637,7 @@
       <xi:include href="xml/gimpcontainereditor.xml"/>
       <xi:include href="xml/gimpbufferview.xml"/>
       <xi:include href="xml/gimpdocumentview.xml"/>
+      <xi:include href="xml/gimpfontview.xml"/>
       <xi:include href="xml/gimpimageview.xml"/>
       <xi:include href="xml/gimptemplateview.xml"/>
     </chapter>
@@ -836,6 +837,8 @@
       <xi:include href="xml/documents-commands.xml"/>
       <xi:include href="xml/error-console-menu.xml"/>
       <xi:include href="xml/error-console-commands.xml"/>
+      <xi:include href="xml/fonts-commands.xml"/>
+      <xi:include href="xml/fonts-menu.xml"/>
       <xi:include href="xml/gradient-editor-menu.xml"/>
       <xi:include href="xml/gradient-editor-commands.xml"/>
       <xi:include href="xml/images-menu.xml"/>

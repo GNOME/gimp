@@ -3904,6 +3904,22 @@ GIMP_IS_FONT_SELECTION_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpfontview</FILE>
+<TITLE>GimpFontView</TITLE>
+GimpFontView
+gimp_font_view_new
+<SUBSECTION Standard>
+GimpFontViewClass
+GIMP_FONT_VIEW
+GIMP_IS_FONT_VIEW
+GIMP_TYPE_FONT_VIEW
+gimp_font_view_get_type
+GIMP_FONT_VIEW_CLASS
+GIMP_IS_FONT_VIEW_CLASS
+GIMP_FONT_VIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpgradienteditor</FILE>
 GRAD_NUM_COLORS
 GradientEditorDragMode
@@ -6042,6 +6058,17 @@ file_save_a_copy_dialog_show
 n_file_save_menu_entries
 file_save_menu_setup
 file_save_menu_update
+</SECTION>
+
+<SECTION>
+<FILE>fonts-commands</FILE>
+fonts_refresh_cmd_callback
+</SECTION>
+
+<SECTION>
+<FILE>fonts-menu</FILE>
+n_fonts_menu_entries
+fonts_menu_update
 </SECTION>
 
 <SECTION>
