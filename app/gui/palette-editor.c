@@ -59,7 +59,6 @@ struct _Palette {
   GtkWidget *color_area;
   GtkWidget *color_name;
   GtkWidget *palette_ops;
-  GtkWidget *clist;
   GdkGC *gc;
   GtkAdjustment *sbar_data;
   PaletteEntriesP entries;
@@ -111,8 +110,6 @@ static int              num_palette_entries = 0;
 static unsigned char    foreground[3] = { 0, 0, 0 };
 static unsigned char    background[3] = { 255, 255, 255 };
 
-static PaletteEntriesP p_entries = NULL;
-
 /*  Color select dialog  */
 /* static ColorSelectP color_select = NULL;
 static int color_select_active = 0; */
@@ -149,13 +146,11 @@ palettes_free ()
 void
 palette_create ()
 {
-  /* why isnt this stuff in the Palette struct? */
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *sbar;
   GtkWidget *frame;
   GtkWidget *options_box;
-  GtkWidget *clist_box;
   GtkWidget *arrow_hbox;
   GtkWidget *label;
   GtkWidget *arrow;
@@ -172,7 +167,7 @@ palette_create ()
       palette->color_select = NULL;
       palette->color_select_active = 0;
       palette->scroll_offset = 0;
-      palette->gc = NULL;\
+      palette->gc = NULL;
       palette->updating = FALSE;
 
       /*  The shell and main vbox  */
@@ -193,10 +188,6 @@ palette_create ()
       /*  The palette options box  */
       options_box = gtk_hbox_new (FALSE, 1);
       gtk_box_pack_start (GTK_BOX (vbox), options_box, FALSE, FALSE, 0);
-
-      /* the clist box */
-      clist_box = gtk_hbox_new(FALSE, 1);
-      gtk_box_pack_start(GTK_BOX(vbox), clist_box, FALSE, FALSE, 0);
 
       /*  The popup menu -- palette_ops  */
       for (i = 0; palette_ops[i].label; i++)
@@ -225,28 +216,11 @@ palette_create ()
       gtk_widget_show (menu_bar_item);
       gtk_widget_show (menu_bar);
 
-      /* the clist  */
-      palette->clist = gtk_clist_new(1);  /* one column */
-      /* dont forget the callback */
-      /* It isn't necessary to shadow the border, but it looks nice :) */
-      gtk_clist_set_border(GTK_CLIST(palette->clist), GTK_SHADOW_OUT);
-      gtk_clist_set_column_width (GTK_CLIST(palette->clist), 0, 100);
-      /* slap the clist in place of the option menu for testing */
-      gtk_box_pack_start (GTK_BOX (clist_box), palette->clist, TRUE, TRUE, 0);
-      gtk_widget_show(palette->clist);
-      
-      gtk_signal_connect(GTK_OBJECT(palette->clist), "select_row",
-			 GTK_SIGNAL_FUNC(palette_entries_set_callback),
-			 (gpointer) p_entries);
-
-
       /*  The option menu  */
-      /* slap both of them into that box for now... */
-/*       palette->option_menu = gtk_option_menu_new ();   */
-/*       gtk_box_pack_start (GTK_BOX (options_box), palette->option_menu, TRUE, TRUE, 0);  */
-/*       gtk_widget_show (palette->option_menu);  */
-      /*     gtk_widget_show (options_box); */
-      gtk_widget_show(clist_box);
+      palette->option_menu = gtk_option_menu_new ();
+      gtk_box_pack_start (GTK_BOX (options_box), palette->option_menu, TRUE, TRUE, 0);
+      gtk_widget_show (palette->option_menu);
+      gtk_widget_show (options_box);
 
       /*  The active color name  */
       palette->color_name = gtk_entry_new ();
@@ -468,7 +442,7 @@ palette_create_palette_menu (PaletteP        palette,
 {
   GtkWidget *menu_item;
   GSList *list;
-  /*  PaletteEntriesP p_entries = NULL;  */
+  PaletteEntriesP p_entries = NULL;
   PaletteEntriesP found_entries = NULL;
   int i = 0;
   int default_index = -1;
@@ -494,18 +468,12 @@ palette_create_palette_menu (PaletteP        palette,
 	  default_index = i;
 	}
 
-      /* add each palette to the clist  */
-      /* casting? */
-      gtk_clist_append( (GtkCList*)(palette->clist), &p_entries->name);
-
- 
-      
-     /*  menu_item = gtk_menu_item_new_with_label (p_entries->name); */
-/*       gtk_signal_connect (GTK_OBJECT (menu_item), "activate", */
-/* 			  (GtkSignalFunc) palette_entries_set_callback, */
-/* 			  (gpointer) p_entries); */
-/*       gtk_container_add (GTK_CONTAINER (palette->menu), menu_item); */
-/*       gtk_widget_show (menu_item); */
+      menu_item = gtk_menu_item_new_with_label (p_entries->name);
+      gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
+			  (GtkSignalFunc) palette_entries_set_callback,
+			  (gpointer) p_entries);
+      gtk_container_add (GTK_CONTAINER (palette->menu), menu_item);
+      gtk_widget_show (menu_item);
 
       i++;
     }
