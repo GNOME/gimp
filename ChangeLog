@@ -1,3 +1,9 @@
+Fri Jul 24 12:01:31 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/gdisplay.c (gdisplay_update_cursor): Fixed a string
+	allocation problem that failed to account for the trailing \0
+	(removed time sensitve calculation/malloc in the process).
+
 Fri Jul 24 01:33:13 PDT 1998  Jay Cox <jaycox@earthlink.net>
 
 	* app/vector2d.[ch] Makefile.am: new files for vector math.

@@ -660,13 +660,13 @@ gdisplay_draw_cursor (GDisplay *gdisp)
 		 x+1, y - 7, x+1, y + 7);
 }
 
+#define CURSOR_STR_LENGTH 256
+
 void
 gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 {
   int new_cursor;
-  char *buffer;
-  int buffer_size;
-  int tmp;
+  char buffer[CURSOR_STR_LENGTH];
   int t_x, t_y;
 
   new_cursor = gdisp->draw_cursor && gdisp->proximity;
@@ -694,36 +694,8 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
     } 
   else 
     {
-      buffer_size = 6;
-      tmp = t_x;
-      if (tmp < 0) 
-	{
-	  buffer_size++;
-	  tmp *= -1;
-	}
-      while (tmp > 9) 
-	{
-	  buffer_size++;
-	  tmp /= 10;
-	}
-      
-      tmp = t_y;
-      if (tmp < 0) 
-	{
-	  buffer_size++;
-	  tmp *= -1;
-	}
-      while (tmp > 9) 
-	{
-	  buffer_size++;
-	  tmp /= 10;
-	}
-      
-      buffer = malloc(sizeof(char)*buffer_size);
-      sprintf(buffer, " %d, %d ", t_x, t_y);
-      
+      g_snprintf(buffer, CURSOR_STR_LENGTH, " %d, %d ", t_x, t_y);
       gtk_label_set(GTK_LABEL (gdisp->cursor_label), buffer);
-      free(buffer);
     }
 
   gdisp->have_cursor = new_cursor;
