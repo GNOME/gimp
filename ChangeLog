@@ -1,5 +1,11 @@
 2003-08-28  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/common/screenshot.c: cleanups. sizeof() isn't valid
+	in preprocessor land. Use GDK_WINDOWING_* instead of G_OS_WIN32.
+	XFreeCursor when we're done with it.
+
+2003-08-28  Manish Singh  <yosh@gimp.org>
+
 	* app/core/gimpbrush.c
 	* app/core/gimpbrushgenerated.c
 	* app/core/gimpbrushpipe.c

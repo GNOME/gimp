@@ -48,7 +48,7 @@
 
 #ifdef __GNUC__
 #ifdef GDK_NATIVE_WINDOW_POINTER
-#if GLIB_SIZEOF_VOID_P != sizeof (guint32)
+#if GLIB_SIZEOF_VOID_P != 4
 #warning window_id does not fit in PDB_INT32
 #endif
 #endif
@@ -239,19 +239,11 @@ run (const gchar      *name,
 static GdkNativeWindow
 select_window (const GdkScreen *screen)
 {
-#ifdef G_OS_WIN32
-  /* MS Windows specific code goes here (yet to be written) */
-
-  /* basically the code should grab the pointer using a crosshair
-     cursor, allow the user to click on a window and return the
-     obtained HWND (as a GdkNativeWindow) - for more details consult
-     the X11 specific code below */
-
-  /* note to self: take a look at the winsnap plug-in for example
-     code */
-
-#else /* ! G_OS_WIN32 */
+#if defined(GDK_WINDOWING_X11)
   /* X11 specific code */
+
+#define MASK (ButtonPressMask | ButtonReleaseMask)
+
   Display    *x_dpy;
   Cursor      x_cursor;
   XEvent      x_event;
@@ -270,8 +262,7 @@ select_window (const GdkScreen *screen)
   buttons  = 0;
 
   status = XGrabPointer (x_dpy, x_root, False,
-                         ButtonPressMask|ButtonReleaseMask,
-                         GrabModeSync, GrabModeAsync,
+                         MASK, GrabModeSync, GrabModeAsync,
                          x_root, x_cursor, CurrentTime);
 
   if (status != GrabSuccess)
@@ -283,7 +274,7 @@ select_window (const GdkScreen *screen)
   while ((x_win == None) || (buttons != 0))
     {
       XAllowEvents (x_dpy, SyncPointer, CurrentTime);
-      XWindowEvent (x_dpy, x_root, ButtonPressMask|ButtonReleaseMask, &x_event);
+      XWindowEvent (x_dpy, x_root, MASK, &x_event);
 
       switch (x_event.type)
         {
@@ -308,9 +299,26 @@ select_window (const GdkScreen *screen)
     }
 
   XUngrabPointer (x_dpy, CurrentTime);
+  XFreeCursor (x_dpy, x_cursor);
 
   return x_win;
-#endif /* ! G_OS_WIN32 */
+#elif defined(GDK_WINDOWING_WIN32)
+  /* MS Windows specific code goes here (yet to be written) */
+
+  /* basically the code should grab the pointer using a crosshair
+     cursor, allow the user to click on a window and return the
+     obtained HWND (as a GdkNativeWindow) - for more details consult
+     the X11 specific code below */
+
+  /* note to self: take a look at the winsnap plug-in for example
+     code */
+
+#warning Win32 screenshot window chooser not implemented yet
+  return 0;
+#else
+#warning screenshot window chooser not implemented yet for this GDB backend
+  return 0;
+#endif /* G_OS_WIN32 */
 }
 
 /* Create a GimpImage from a GdkPixbuf */
@@ -462,7 +470,6 @@ shoot (void)
     }
 
   image_ID = create_image (GDK_PIXBUF (screenshot));
-
 }
 
 /*  ScreenShot dialog  */
@@ -603,12 +610,12 @@ shoot_delay (gint delay)
 gboolean
 shoot_delay_callback (gpointer data)
 {
-  gint *seconds_left = (gint *)data;
+  gint *seconds_left = data;
 
   (*seconds_left)--;
 
   if (!*seconds_left)
-    gtk_main_quit();
+    gtk_main_quit ();
 
   return *seconds_left;
 }
