@@ -176,7 +176,7 @@ static double gradient_repeat_triangular(double val);
 
 static void   gradient_precalc_shapeburst   (GImage *gimage, GimpDrawable *drawable, PixelArea *PR, double dist);
 
-static void   gradient_render_pixel(double x, double y, PixelRow *color, int xoffset, void *render_data);
+static void gradient_render_pixel  (double x, double y, gfloat * color, void * render_data);
 #if 0
 static void   gradient_put_pixel(int x, int y, color_t color, void *put_pixel_data);
 #endif
@@ -185,7 +185,7 @@ static void   gradient_fill_region          (GImage *gimage, GimpDrawable *drawa
 					     BlendMode blend_mode, GradientType gradient_type,
 					     double offset, RepeatMode repeat,
 					     int supersample, int max_depth, double threshold,
-					     double sx, double sy, double ex, double ey);
+					     double sx, double sy, double ex, double ey, gfloat, int);
 
 static void calc_rgb_to_hsv(double *r, double *g, double *b);
 static void calc_hsv_to_rgb(double *h, double *s, double *v);
@@ -747,35 +747,27 @@ blend  (
         double endy
         )
 {
-  Canvas * buf;
+  Canvas * buf = NULL;
   PixelArea bufPR;
   int x1, y1, x2, y2;
-  
+
   (void) drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-  {
-    /* add alpha channel so we can do transparent blends */
-    Tag buftag = drawable_tag (drawable);
-    buftag = tag_set_alpha (buftag, ALPHA_YES);
-    buf = canvas_new (buftag, (x2 - x1), (y2 - y1), STORAGE_TILED);
-  }
-  
+  /* only needed for x y w h */
   pixelarea_init (&bufPR, buf, NULL,
                   0, 0, (x2 - x1), (y2 - y1), TRUE);
 
   gradient_fill_region (gimage, drawable,
-			&bufPR, (x2 - x1), (y2 - y1),
-			blend_mode, gradient_type, offset, repeat,
-			supersample, max_depth, threshold,
-			(startx - x1), (starty - y1),
-			(endx - x1), (endy - y1));
-
-  gimage_apply_painthit (gimage, drawable, NULL, buf,
-                         TRUE, opacity / 100, paint_mode, x1, y1);
+                        &bufPR, (x2 - x1), (y2 - y1),
+                        blend_mode, gradient_type, offset, repeat,
+                        supersample, max_depth, threshold,
+                        (startx - x1), (starty - y1),
+                        (endx - x1), (endy - y1), opacity/100, paint_mode);
+  
+/*   gimage_apply_painthit (gimage, drawable, NULL, buf, */
+/*                          TRUE, opacity / 100, paint_mode, x1, y1); */
   
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
-
-  canvas_delete (buf);
 }
 
 
@@ -1212,18 +1204,17 @@ static void
 gradient_render_pixel  (
                         double x,
                         double y,
-                        PixelRow * color,
-                        int xoffset,
+                        gfloat * color,
                         void * render_data
                         )
 {
   RenderBlendData *rbd;
   double           factor;
 
+  
   rbd = render_data;
 
   /* Calculate blending factor */
-
   switch (rbd->gradient_type)
     {
     case Radial:
@@ -1274,22 +1265,19 @@ gradient_render_pixel  (
       return;
     }
 
+  
   /* Adjust for repeat */
-
   factor = (*rbd->repeat_func)(factor);
 
+  
   /* Blend the colors */
   {
-    PixelRow src, dst;
-    gfloat e[4];
     color_t c;
     
     if (rbd->blend_mode == CUSTOM_MODE)
       grad_get_color_at(factor, &c.r, &c.g, &c.b, &c.a);
     else
       {
-        /* Blend values */
-        
         c.r = rbd->fg.r + (rbd->bg.r - rbd->fg.r) * factor;
         c.g = rbd->fg.g + (rbd->bg.g - rbd->fg.g) * factor;
         c.b = rbd->fg.b + (rbd->bg.b - rbd->fg.b) * factor;
@@ -1298,15 +1286,11 @@ gradient_render_pixel  (
         if (rbd->blend_mode == FG_BG_HSV_MODE)
           calc_hsv_to_rgb(&c.r, &c.g, &c.b);
       }
-
-    e[0] = c.r;
-    e[1] = c.g;
-    e[2] = c.b;
-    e[3] = c.a;
     
-    pixelrow_init (&src, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_YES), (guchar *)e, 1);
-    pixelrow_init (&dst, pixelrow_tag (color), pixelrow_getdata (color, xoffset), 1);
-    copy_row (&src, &dst);
+    color[0] = c.r;
+    color[1] = c.g;
+    color[2] = c.b;
+    color[3] = c.a;
   }
 }
 
@@ -1364,7 +1348,10 @@ gradient_fill_region (GImage       *gimage,
 		      double        sx,
 		      double        sy,
 		      double        ex,
-		      double        ey)
+		      double        ey,
+                      gfloat opacity,
+                      int mode
+                      )
 {
   RenderBlendData  rbd;
 #if 0
@@ -1512,33 +1499,101 @@ gradient_fill_region (GImage       *gimage,
 #endif
     }
   else
+#if 1
     {
-      PixelRow row;
+      Canvas * render;
+      Canvas * apply;
+      Tag rendertag;
+      Tag applytag;
+
+#define FOO 64
+
+      /* figure out what tags to use */
+      rendertag = tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_YES);
+      applytag = drawable_tag (drawable);
+      applytag = tag_set_alpha (applytag, ALPHA_YES);
+
+      /* alloc canvases */
+      render = canvas_new (rendertag, pixelarea_width (PR), FOO, STORAGE_TILED);
+      apply = canvas_new (applytag, pixelarea_width (PR), FOO, STORAGE_TILED);
+
+      {
+        int yy;
+        for (yy = 0; yy < pixelarea_height (PR); yy+=FOO)
+          {
+            PixelArea PRrender;
+            PixelArea PRapply;
+            void * pr;
+            
+            pixelarea_init (&PRrender, render, NULL, 0, 0, 0, FOO, TRUE);
+        
+            for (pr = pixelarea_register(1, &PRrender);
+                 pr != NULL;
+                 pr = pixelarea_process(pr))
+              {
+                gint y = pixelarea_y (&PRrender);
+                gint h = pixelarea_height (&PRrender);
+
+                for (; h--; y++)
+                  {
+                    gint x = pixelarea_x (&PRrender);
+                    gint w = pixelarea_width (&PRrender);
+                    for (; w--; x++)
+                      {
+                        gradient_render_pixel (x, y + yy,
+                                               (gfloat*) canvas_portion_data (render, x, y),
+                                               &rbd);
+                      }
+                  }
+              }
+        
+            pixelarea_init (&PRrender, render, NULL, 0, 0, 0, FOO, TRUE);
+            pixelarea_init (&PRapply, apply, NULL, 0, 0, 0, FOO, TRUE);
+            copy_area (&PRrender, &PRapply);
+            
+            gimage_apply_painthit (gimage, drawable, NULL, apply,
+                                   TRUE, opacity, mode, 0, yy);
+          }
+      }
+    }
+#else
+    {
+      PixelArea PR2;
+      Canvas * c;
       void *pr;
-      
-      for (pr = pixelarea_register(1, PR);
+
+      /* alloc a new canvas to build the gradient in */
+      c = canvas_new (tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_YES),
+                      pixelarea_width (PR),
+                      pixelarea_height (PR),
+                      STORAGE_TILED);
+      pixelarea_init (&PR2, c, NULL, 0, 0, 0, 0, TRUE);
+
+
+      for (pr = pixelarea_register(1, &PR2);
            pr != NULL;
            pr = pixelarea_process(pr))
 	{
-          gint y;
-          gint h = pixelarea_height (PR);
-
-          for (y = 0; h--; y++)
+          gint h = pixelarea_height (&PR2);
+          gint y = pixelarea_y (&PR2);
+          for (; h--; y++)
             {
-              gint x;
-              gint w = pixelarea_width (PR);
-              
-              pixelarea_getdata (PR, &row, y);
-
-              for (x = 0; w--; x++)
+              gint w = pixelarea_width (&PR2);
+              gint x = pixelarea_x (&PR2);
+              for (; w--; x++)
                 {
-                  gradient_render_pixel (pixelarea_x (PR) + x,
-                                         pixelarea_y (PR) + y,
-                                         &row, x, &rbd);
+                  gradient_render_pixel (x, y,
+                                         (gfloat*) canvas_portion_data (c, x, y),
+                                         &rbd);
                 }
             }
         }
+
+      pixelarea_init (&PR2, c, NULL, 0, 0, 0, 0, TRUE);
+      copy_area (&PR2, PR);
+      canvas_delete (c);
     }
+#endif
 }
 
 

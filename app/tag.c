@@ -150,7 +150,7 @@ tag_num_channels (
 {
   int y;
   
-  switch (tag_format (x))
+  switch ((x >> SHIFT_FORMAT) & MASK_FORMAT) /* (tag_format (x)) */
     {
     case FORMAT_RGB:
       y = 3;
@@ -164,7 +164,7 @@ tag_num_channels (
       return 0;
     }
 
-  switch (tag_alpha(x))
+  switch ((x >> SHIFT_ALPHA) & MASK_ALPHA) /* (tag_alpha(x)) */
     {
     case ALPHA_YES:
       y++;
@@ -186,8 +186,34 @@ tag_bytes (
 {
   int y;
   
-  y = tag_num_channels (x);
-  switch (tag_precision (x))
+  /* y = tag_num_channels (x); */
+  switch ((x >> SHIFT_FORMAT) & MASK_FORMAT) /* (tag_format (x)) */
+    {
+    case FORMAT_RGB:
+      y = 3;
+      break;
+    case FORMAT_GRAY:
+    case FORMAT_INDEXED:
+      y = 1;
+      break;
+    case FORMAT_NONE:
+    default:
+      return 0;
+    }
+
+  switch ((x >> SHIFT_ALPHA) & MASK_ALPHA) /* (tag_alpha(x)) */
+    {
+    case ALPHA_YES:
+      y++;
+      break;
+    case ALPHA_NO:
+      break;
+    case ALPHA_NONE:
+    default:
+      return 0;
+    }
+
+  switch ((x >> SHIFT_PRECISION) & MASK_PRECISION) /* (tag_precision (x)) */
     {
     case PRECISION_U8:
       y *= sizeof(guint8);

@@ -187,7 +187,7 @@ paint_core_16_init  (
   undo_tiles = canvas_new (drawable_tag (drawable),
                            drawable_width (drawable),
                            drawable_height (drawable),
-                           STORAGE_FLAT);
+                           STORAGE_TILED);
   canvas_set_autoalloc (undo_tiles, FALSE);
   
 
@@ -199,7 +199,7 @@ paint_core_16_init  (
                                       ALPHA_NO),
                              drawable_width (drawable),
                              drawable_height (drawable),
-                             STORAGE_FLAT);
+                             STORAGE_TILED);
 
   /*  Get the initial undo extents  */
   paint_core->x1 = paint_core->x2 = paint_core->curx;
@@ -625,7 +625,7 @@ paint_core_16_area  (
 
   if (canvas_buf)
     canvas_delete (canvas_buf);
-  canvas_buf = canvas_new (tag, (x2 - x1), (y2 - y1), STORAGE_FLAT);
+  canvas_buf = canvas_new (tag, (x2 - x1), (y2 - y1), STORAGE_TILED);
   
   return canvas_buf;
 }
@@ -649,7 +649,7 @@ paint_core_16_area_original  (
   tag = tag_set_alpha (drawable_tag (drawable), ALPHA_YES);
   if (orig_buf)
     canvas_delete (orig_buf);
-  orig_buf = canvas_new (tag, (x2 - x1), (y2 - y1), STORAGE_FLAT);
+  orig_buf = canvas_new (tag, (x2 - x1), (y2 - y1), STORAGE_TILED);
 
   
   x1 = CLAMP (x1, 0, drawable_width (drawable));
@@ -788,19 +788,19 @@ painthit_init  (
 
       if (canvas_portion_alloced (undo_tiles, x, y) == FALSE)
         {
-          int t = canvas_portion_top (undo_tiles, x, y);
-          int l = canvas_portion_left (undo_tiles, x, y);
-          int w = canvas_portion_width (undo_tiles, t, l);
-          int h = canvas_portion_height (undo_tiles, t, l);
+          int l = canvas_portion_x (undo_tiles, x, y);
+          int t = canvas_portion_y (undo_tiles, x, y);
+          int w = canvas_portion_width (undo_tiles, l, t);
+          int h = canvas_portion_height (undo_tiles, l, t);
 
           /* alloc the portion of the undo tiles */
           canvas_portion_alloc (undo_tiles, x, y);
 
           /* init the undo section from the original image */
           pixelarea_init (&src, drawable_data_canvas (drawable), NULL,
-                          t, l, w, h, FALSE);
+                          l, t, w, h, FALSE);
           pixelarea_init (&dst, undo_tiles, NULL,
-                          t, l, w, h, TRUE);
+                          l, t, w, h, TRUE);
           copy_area (&src, &dst);
         }
     }

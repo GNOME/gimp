@@ -950,7 +950,7 @@ gimage_replace_painthit  (
       
       /* create a temp canvas to hold the combined selection and brush masks */
       temp_tag = tag_new (prec, FORMAT_GRAY, ALPHA_NO);
-      temp_canvas = canvas_new ( temp_tag, x2 - x1, y2 - y1, STORAGE_FLAT);
+      temp_canvas = canvas_new ( temp_tag, x2 - x1, y2 - y1, STORAGE_TILED);
       
       /*  first initialize mask_area with the selection mask 
        *  don't use x1 and y1 because they are in layer

@@ -515,7 +515,7 @@ undo_push_image_mod  (
 
   tiles = (Canvas *) tiles_ptr;
   size = canvas_width (tiles) * canvas_height (tiles) *
-    tag_bytes (canvas_tag (tiles)) + sizeof (void *) * 2;
+    canvas_bytes (tiles) + sizeof (void *) * 2;
 
   if ((new = undo_push (gimage, size, IMAGE_MOD_UNDO)))
     {

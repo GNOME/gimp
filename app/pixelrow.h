@@ -18,13 +18,11 @@
 #ifndef __PIXEL_ROW_H__
 #define __PIXEL_ROW_H__
 
-#include "glib.h"
 #include "tag.h"
 
-/* forward declarations */
-struct _Paint;
 
-
+/* a structure that attaches a length and data encoding format to a
+   buffer of raw data */
 typedef struct _PixelRow PixelRow;
 
 struct _PixelRow
@@ -32,14 +30,18 @@ struct _PixelRow
   Tag        tag;
   guchar *   buffer;
   int        width;
+
+  int        bytes;
 };
 
 
-void              pixelrow_init           (PixelRow *, Tag, guchar *buf, int numpixels);
+/* init a new row */
+void              pixelrow_init           (PixelRow *, Tag, guchar *, int);
 
+/* get a pointer to a specific element of the array */
 guchar *          pixelrow_getdata        (PixelRow *, int);
-struct _Paint *   pixelrow_convert_paint  (PixelRow *, struct _Paint *);
 
+/* retrieve the member fields */
 Tag               pixelrow_tag            (PixelRow *);
 int               pixelrow_width          (PixelRow *);
 guchar *          pixelrow_data           (PixelRow *);

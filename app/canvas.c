@@ -28,6 +28,11 @@ struct _Canvas
   int        autoalloc;
   TileBuf  * tile_data;
   FlatBuf  * flat_data;
+
+  Tag   tag;
+  int   bytes;
+  int   width;
+  int   height;
 };
 
 
@@ -47,6 +52,11 @@ canvas_new (
   c->storage = storage;
   c->autoalloc = TRUE;
   
+  c->tag    = tag;
+  c->bytes  = tag_bytes (tag);
+  c->width  = w;
+  c->height = h;
+
   switch (storage)
     {
     case STORAGE_FLAT:
@@ -100,6 +110,11 @@ canvas_clone  (
       if (c->flat_data)
         new_c->flat_data = flatbuf_clone (c->flat_data);
       
+      new_c->tag = c->tag;
+      new_c->bytes = c->bytes;
+      new_c->width = c->width;
+      new_c->height = c->height;
+      
       return new_c;
     }
   return NULL;
@@ -138,10 +153,7 @@ canvas_tag  (
              )
 {
   if (c)
-    if (c->tile_data)
-      return tilebuf_tag (c->tile_data);
-    else if (c->flat_data)
-      return flatbuf_tag (c->flat_data);
+    return c->tag;
 
   return tag_null ();
 }
@@ -152,7 +164,7 @@ canvas_precision  (
                    Canvas * c
                    )
 {
-  return tag_precision (canvas_tag (c));
+  return ( c ? tag_precision (c->tag) : PRECISION_NONE);
 }
 
 
@@ -161,7 +173,7 @@ canvas_format  (
                 Canvas * c
                 )
 {
-  return tag_format (canvas_tag (c));
+  return ( c ? tag_format (c->tag) : FORMAT_NONE);
 }
 
 
@@ -170,7 +182,7 @@ canvas_alpha  (
                Canvas * c
                )
 {
-  return tag_alpha (canvas_tag (c));
+  return ( c ? tag_alpha (c->tag) : ALPHA_NONE);
 }
 
 
@@ -179,9 +191,7 @@ canvas_storage  (
                  Canvas * c
                  )
 {
-  if (c)
-    return c->storage;
-  return STORAGE_NONE;
+  return ( c ? c->storage : STORAGE_NONE);
 }
 
 
@@ -190,9 +200,7 @@ canvas_autoalloc (
                   Canvas * c
                   )
 {
-  if (c)
-    return c->autoalloc;
-  return TRUE;
+  return ( c ? c->autoalloc : TRUE);
 }
 
 
@@ -219,13 +227,7 @@ canvas_width  (
                Canvas * c
                )
 {
-  if (c)
-    if (c->tile_data)
-      return tilebuf_width (c->tile_data);
-    else if (c->flat_data)
-      return flatbuf_width (c->flat_data);
-
-  return 0;
+  return ( c ? c->width : 0);
 }
 
 
@@ -234,18 +236,17 @@ canvas_height  (
                 Canvas * c
                 )
 {
-  if (c)
-    if (c->tile_data)
-      return tilebuf_height (c->tile_data);
-    else if (c->flat_data)
-      return flatbuf_height (c->flat_data);
-
-  return 0;
+  return ( c ? c->height : 0);
 }
 
 
-
-
+int 
+canvas_bytes  (
+               Canvas * c
+               )
+{
+  return ( c ? c->bytes : 0);
+}
 
 
 
@@ -333,34 +334,34 @@ canvas_portion_height  (
 
 
 guint 
-canvas_portion_top  (
-                     Canvas * c,
-                     int x,
-                     int y
-                     )
+canvas_portion_y  (
+                   Canvas * c,
+                   int x,
+                   int y
+                   )
 {
   if (c)
     if (c->tile_data)
-      return tilebuf_portion_top (c->tile_data, x, y);
+      return tilebuf_portion_y (c->tile_data, x, y);
     else if (c->flat_data)
-      return flatbuf_portion_top (c->flat_data, x, y);
+      return flatbuf_portion_y (c->flat_data, x, y);
 
   return 0;
 }
 
 
 guint 
-canvas_portion_left  (
-                      Canvas * c,
-                      int x,
-                      int y
-                      )
+canvas_portion_x  (
+                   Canvas * c,
+                   int x,
+                   int y
+                   )
 {
   if (c)
     if (c->tile_data)
-      return tilebuf_portion_left (c->tile_data, x, y);
+      return tilebuf_portion_x (c->tile_data, x, y);
     else if (c->flat_data)
-      return flatbuf_portion_left (c->flat_data, x, y);
+      return flatbuf_portion_x (c->flat_data, x, y);
 
   return 0;
 }

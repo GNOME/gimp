@@ -34,6 +34,8 @@ pixelrow_init  (
       p->tag = tag;
       p->buffer = buffer;
       p->width = width;
+
+      p->bytes = tag_bytes (tag);
     }
 }
 
@@ -45,37 +47,8 @@ pixelrow_getdata  (
                    )
 {
   if (p && (x < p->width))
-    return (p->buffer + (x * tag_bytes (p->tag)));
+    return (p->buffer + (x * p->bytes));
   return NULL;
-}
-
-
-Paint * 
-pixelrow_convert_paint  (
-                         PixelRow * p,
-                         Paint * paint
-                         )
-{
-  Paint * new = paint;
-  
-  if (! tag_equal (paint_tag (paint), pixelrow_tag (p)))
-    {
-      Precision precision = tag_precision (pixelrow_tag (p));
-      Format format = tag_format (pixelrow_tag (p));
-      Alpha alpha = tag_alpha (pixelrow_tag (p));
-      
-      new = paint_clone (paint);
-      
-      if ((paint_set_precision (new, precision) != precision) ||
-          (paint_set_format (new, format) != format) ||
-          (paint_set_alpha (new, alpha) != alpha))
-        {
-          paint_delete (new);
-          return NULL;
-        }
-    }
-  
-  return new;
 }
 
 

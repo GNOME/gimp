@@ -43,30 +43,40 @@ Format         canvas_format         (Canvas *);
 Alpha          canvas_alpha          (Canvas *);
 Storage        canvas_storage        (Canvas *);
 
+/* should a canvas_portion_ref() automatically perform a
+   canvas_portion_alloc() ? */
 int            canvas_autoalloc      (Canvas *);
 int            canvas_set_autoalloc  (Canvas *, int);
 
 int            canvas_width          (Canvas *);
 int            canvas_height         (Canvas *);
 
+int            canvas_bytes          (Canvas *);
 
-/* a portion is a rectangular area of a Canvas with identical
-   properties.  at the moment, the only defined property is the
-   backing store.  ie: a portion is a section of Canvas that all fits
-   on a single tile.  in the future, other properties like
-   'initialized' may be added */
 
+/* a portion is a rectangular area of a Canvas that resides on a
+   single underlying chunk of memory (eg: a tile) */
+
+/* allocate and/or swap in the backing store for this pixel */
 guint          canvas_portion_ref       (Canvas *, int x, int y);
 void           canvas_portion_unref     (Canvas *, int x, int y);
 
+/* return the TOP LEFT coordinate of the tile this pixel lies on */
+guint          canvas_portion_x         (Canvas *, int x, int y);
+guint          canvas_portion_y         (Canvas *, int x, int y);
+
+/* return the maximum width and height of the rectangle that has the
+   specified TOP LEFT pixel AND is contained on a single tile */
 guint          canvas_portion_width     (Canvas *, int x, int y);
 guint          canvas_portion_height    (Canvas *, int x, int y);
-guint          canvas_portion_top       (Canvas *, int x, int y);
-guint          canvas_portion_left      (Canvas *, int x, int y);
 
+/* get the data pointer and rowstride for the rectangle with the
+   specified TOP LEFT corner */
 guchar *       canvas_portion_data      (Canvas *, int x, int y);
 guint          canvas_portion_rowstride (Canvas *, int x, int y);
 
+/* check if a pixel needs to have memory allocated, alloc and dealloc
+   the memory */
 guint          canvas_portion_alloced   (Canvas *, int x, int y);
 guint          canvas_portion_alloc     (Canvas *, int x, int y);
 guint          canvas_portion_unalloc   (Canvas *, int x, int y);

@@ -43,10 +43,10 @@ guint          flatbuf_height         (FlatBuf *);
 guint          flatbuf_portion_ref       (FlatBuf *, int x, int y);
 void           flatbuf_portion_unref     (FlatBuf *, int x, int y);
 
+guint          flatbuf_portion_x         (FlatBuf *, int x, int y);
+guint          flatbuf_portion_y         (FlatBuf *, int x, int y);
 guint          flatbuf_portion_width     (FlatBuf *, int x, int y);
 guint          flatbuf_portion_height    (FlatBuf *, int x, int y);
-guint          flatbuf_portion_top       (FlatBuf *, int x, int y);
-guint          flatbuf_portion_left      (FlatBuf *, int x, int y);
 
 guchar *       flatbuf_portion_data      (FlatBuf *, int x, int y);
 guint          flatbuf_portion_rowstride (FlatBuf *, int x, int y);
@@ -54,11 +54,5 @@ guint          flatbuf_portion_rowstride (FlatBuf *, int x, int y);
 guint          flatbuf_portion_alloced   (FlatBuf *, int x, int y);
 guint          flatbuf_portion_alloc     (FlatBuf *, int x, int y);
 guint          flatbuf_portion_unalloc   (FlatBuf *, int x, int y);
-
-
-
-/* temporary evil */
-void flatbuf_init (FlatBuf *, FlatBuf *, int x, int y);
-
 
 #endif /* __FLATBUF_H__ */

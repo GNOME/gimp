@@ -468,14 +468,17 @@ swap_row (
   guint8 *dest = (guint8*)pixelrow_data (dest_row);
   guint8 *src  = (guint8*)pixelrow_data (src_row);
   gint    width = pixelrow_width (dest_row) * tag_bytes (pixelrow_tag (dest_row));
-  
-  while (width--)
+
+  if (src && dest)
     {
-      *src = *src ^ *dest;
-      *dest = *dest ^ *src;
-      *src = *src ^ *dest;
-      src++;
-      dest++;
+      while (width--)
+        {
+          *src = *src ^ *dest;
+          *dest = *dest ^ *src;
+          *src = *src ^ *dest;
+          src++;
+          dest++;
+        }
     }
 #else
   switch (tag_precision (pixelrow_tag (dest_row)))

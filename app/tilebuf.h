@@ -44,10 +44,10 @@ guint            tilebuf_height         (TileBuf *);
 guint            tilebuf_portion_ref       (TileBuf *, int x, int y);
 void             tilebuf_portion_unref     (TileBuf *, int x, int y);
 
+guint            tilebuf_portion_x         (TileBuf *, int x, int y);
+guint            tilebuf_portion_y         (TileBuf *, int x, int y);
 guint            tilebuf_portion_width     (TileBuf *, int x, int y);
 guint            tilebuf_portion_height    (TileBuf *, int x, int y);
-guint            tilebuf_portion_top       (TileBuf *, int x, int y);
-guint            tilebuf_portion_left      (TileBuf *, int x, int y);
 
 guchar *         tilebuf_portion_data      (TileBuf *, int x, int y);
 guint            tilebuf_portion_rowstride (TileBuf *, int x, int y);
@@ -55,10 +55,5 @@ guint            tilebuf_portion_rowstride (TileBuf *, int x, int y);
 guint            tilebuf_portion_alloced   (TileBuf *, int x, int y);
 guint            tilebuf_portion_alloc     (TileBuf *, int x, int y);
 guint            tilebuf_portion_unalloc   (TileBuf *, int x, int y);
-
-
-
-/* temporary evil */
-void tilebuf_init (TileBuf *, TileBuf *, int x, int y);
 
 #endif /* __TILE_BUF_H__ */

@@ -24,7 +24,6 @@
 /* Forward declarations */
 struct _Canvas;
 struct _PixelRow;
-struct _Paint;
 
 
 typedef struct _PixelArea PixelArea;
@@ -34,9 +33,6 @@ struct _PixelArea
   /* the image we're iterating over */
   struct _Canvas * canvas;
 
-  /* the Canvas to init new storage from */
-  struct _Canvas * init;
-  
   /* the current area */
   int   x, y;
   int   w, h;

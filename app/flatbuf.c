@@ -32,6 +32,8 @@ struct _FlatBuf
   int      valid;
   int      ref_count;
   void *   data;
+
+  int      bytes;
 };
 
 
@@ -55,6 +57,8 @@ flatbuf_new (
   f->ref_count = 0;
   f->data = NULL;
 
+  f->bytes = tag_bytes (tag);
+  
   return f;
 }
 
@@ -256,11 +260,11 @@ flatbuf_portion_height  (
 
 
 guint 
-flatbuf_portion_top  (
-                      FlatBuf * f,
-                      int x,
-                      int y
-                      )
+flatbuf_portion_y  (
+                    FlatBuf * f,
+                    int x,
+                    int y
+                    )
 {
   /* always 0 */
   return 0;
@@ -268,11 +272,11 @@ flatbuf_portion_top  (
 
 
 guint 
-flatbuf_portion_left  (
-                       FlatBuf * f,
-                       int x,
-                       int y
-                       )
+flatbuf_portion_x  (
+                    FlatBuf * f,
+                    int x,
+                    int y
+                    )
 {
   /* always 0 */
   return 0;
@@ -289,7 +293,7 @@ flatbuf_portion_data  (
   if (f && (x < f->width) && (y < f->height))
     {
       if (f->data)
-        return (guchar*)f->data + ((y * f->width) + x) * tag_bytes (f->tag);
+        return (guchar*)f->data + ((y * f->width) + x) * f->bytes;
     }
   return NULL;
 }
@@ -303,7 +307,7 @@ flatbuf_portion_rowstride  (
                             )
 {
   if (f && (x < f->width) && (y < f->height))
-    return f->width * tag_bytes (f->tag);
+    return f->width * f->bytes;
   return 0;
 }
 
@@ -332,7 +336,7 @@ flatbuf_portion_alloc  (
     {
       if (f->valid == FALSE)
         {
-          int n = tag_bytes (flatbuf_tag (f)) * f->width * f->height;
+          int n = f->bytes * f->width * f->height;
           f->data = g_malloc (n);
           if (f->data)
             {
@@ -364,33 +368,5 @@ flatbuf_portion_unalloc  (
         }
     }
   return FALSE;
-}
-
-
-
-
-
-/* temporary evil */
-void 
-flatbuf_init  (
-               FlatBuf * f,
-               FlatBuf * src,
-               int x,
-               int y
-               )
-{
-  if (f && src
-      && (f->width == src->width)
-      && (f->height == src->height)
-      && (x < f->width)
-      && (y < f->height)
-      && tag_equal (f->tag, src->tag))
-    {
-      flatbuf_portion_ref (f, 0, 0);
-      flatbuf_portion_ref (src, 0, 0);
-      memcpy (f->data, src->data, f->width * f->height * tag_bytes (f->tag));
-      flatbuf_portion_unref (src, 0, 0);
-      flatbuf_portion_unref (f, 0, 0);
-    }
 }
 
