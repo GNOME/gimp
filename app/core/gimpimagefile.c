@@ -377,7 +377,8 @@ gimp_imagefile_get_description (GimpViewable   *viewable,
   imagefile = GIMP_IMAGEFILE (viewable);
   thumbnail = imagefile->thumbnail;
 
-  g_return_val_if_fail (thumbnail->image_uri != NULL, NULL);
+  if (! thumbnail->image_uri)
+    return NULL;
 
   if (tooltip)
     {

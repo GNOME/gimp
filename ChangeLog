@@ -1,3 +1,12 @@
+2003-12-08  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_load_thumb): don't
+	scale the pixbuf, always return the pixbuf as loaded from disk.
+	
+	* app/core/gimpimagefile.c (gimp_imagefile_get_description):
+	return NULL when being asked for a description on a thumbnail
+	without an image_uri.
+
 2003-12-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdatafactory.c: code review / cleanup.
