@@ -768,10 +768,11 @@ compute_image (void)
   if (new_image_id != -1)
     {
       gimp_display_new (new_image_id);
-      gimp_displays_flush ();
       gimp_drawable_detach (output_drawable);
       gimp_image_undo_enable (new_image_id);
     }
+
+  gimp_displays_flush ();
 }
 
 /**************************/

@@ -1,5 +1,10 @@
 2003-05-24  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/lic.c (compute_image): always flush the
+	displays, not only when creating a new image.
+
+2003-05-24  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/lic.c (create_main_dialog): actually connect
 	the "Create New Image" toggle with its value. Fixes bug #113610.
 	Cleaned up a bit.
