@@ -1,5 +1,10 @@
 2003-05-26  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpexport.c (export_merge): merged fix for bug #113639
+	from HEAD branch.
+
+2003-05-26  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped version number to 1.2.5 (interface age 5,
 	binary age 5).
 

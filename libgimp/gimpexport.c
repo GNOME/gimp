@@ -92,8 +92,21 @@ export_merge (gint32  image_ID,
 	return;  /* shouldn't happen */
       
       layers = gimp_image_get_layers (image_ID, &nlayers);
-    }    
-  
+
+      /*  make sure that the merged drawable matches the image size  */
+      if (gimp_drawable_width  (merged) != gimp_image_width  (image_ID) ||
+          gimp_drawable_height (merged) != gimp_image_height (image_ID))
+        {
+          gint off_x, off_y;
+
+          gimp_drawable_offsets (merged, &off_x, &off_y);
+          gimp_layer_resize (merged,
+                             gimp_image_width (image_ID),
+                             gimp_image_height (image_ID),
+                             off_x, off_y);
+        }
+    }
+
   /* remove any remaining (invisible) layers */ 
   for (i = 0; i < nlayers; i++)
     {
