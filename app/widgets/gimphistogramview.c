@@ -31,8 +31,6 @@
 #include "gimphistogramview.h"
 
 
-#define RANGE_MASK ()
-
 enum
 {
   RANGE_CHANGED,
@@ -46,19 +44,19 @@ enum
   PROP_SCALE
 };
 
-static void  gimp_histogram_view_class_init (GimpHistogramViewClass *klass);
-static void  gimp_histogram_view_init       (GimpHistogramView      *view);
-static void  gimp_histogram_view_finalize     (GObject             *object);
-static void  gimp_histogram_view_set_property (GObject             *object,
-					       guint                property_id,
-					       const GValue        *value,
-					       GParamSpec          *pspec);
-static void  gimp_histogram_view_get_property (GObject             *object,
-					       guint                property_id,
-					       GValue              *value,
-					       GParamSpec          *pspec);
-static gboolean  gimp_histogram_view_expose   (GtkWidget           *widget,
-					       GdkEventExpose      *event);
+static void  gimp_histogram_view_class_init   (GimpHistogramViewClass *klass);
+static void  gimp_histogram_view_init         (GimpHistogramView *view);
+static void  gimp_histogram_view_finalize     (GObject           *object);
+static void  gimp_histogram_view_set_property (GObject           *object,
+					       guint              property_id,
+					       const GValue      *value,
+					       GParamSpec        *pspec);
+static void  gimp_histogram_view_get_property (GObject           *object,
+					       guint              property_id,
+					       GValue            *value,
+					       GParamSpec        *pspec);
+static gboolean  gimp_histogram_view_expose   (GtkWidget         *widget,
+					       GdkEventExpose    *event);
 
 
 static guint histogram_view_signals[LAST_SIGNAL] = { 0 };
@@ -134,7 +132,7 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
   g_object_class_install_property (object_class, PROP_SCALE,
 				   g_param_spec_enum ("histogram-scale", NULL, NULL,
 						      GIMP_TYPE_HISTOGRAM_SCALE,
-						      GIMP_HISTOGRAM_SCALE_LOGARITHMIC,
+						      GIMP_HISTOGRAM_SCALE_LINEAR,
 						      G_PARAM_READWRITE |
 						      G_PARAM_CONSTRUCT));
 }
@@ -170,15 +168,17 @@ gimp_histogram_view_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CHANNEL:
-      gimp_histogram_view_set_channel (view, g_value_get_enum (value));
+      view->channel = g_value_get_enum (value);
       break;
     case PROP_SCALE:
-      gimp_histogram_view_set_scale (view, g_value_get_enum (value));
+      view->scale = g_value_get_enum (value);
       break;
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+
+  gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
 static void
@@ -236,7 +236,8 @@ gimp_histogram_view_expose (GtkWidget      *widget,
     }
 
   /*  Draw the axis  */
-  gdk_draw_line (widget->window, widget->style->black_gc,
+  gdk_draw_line (widget->window,
+                 widget->style->black_gc,
                  1, height + 1, width, height + 1);
 
   /*  Draw the spikes  */
@@ -369,12 +370,17 @@ gimp_histogram_view_new (gint     width,
   gtk_widget_set_size_request (view, width + 2, height + 2);
 
   if (range)
-    gtk_widget_add_events (view,
-                           GDK_BUTTON_PRESS_MASK   |
-                           GDK_BUTTON_RELEASE_MASK |
-                           GDK_BUTTON1_MOTION_MASK);
+    {
+      gtk_widget_add_events (view,
+                             GDK_BUTTON_PRESS_MASK   |
+                             GDK_BUTTON_RELEASE_MASK |
+                             GDK_BUTTON1_MOTION_MASK);
+    }
   else
-    GIMP_HISTOGRAM_VIEW (view)->start = GIMP_HISTOGRAM_VIEW (view)->end = -1;
+    {
+      GIMP_HISTOGRAM_VIEW (view)->start = -1;
+      GIMP_HISTOGRAM_VIEW (view)->end   = -1;
+    }
 
   g_signal_connect (view, "event",
                     G_CALLBACK (gimp_histogram_view_events),
@@ -422,15 +428,7 @@ gimp_histogram_view_set_channel (GimpHistogramView    *view,
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
 
-  view->channel = channel;
-
-  g_object_notify (G_OBJECT (view), "histogram-channel");
-
-  gtk_widget_queue_draw (GTK_WIDGET (view));
-
-  /* FIXME: shouldn't emit range_checked here */
-  g_signal_emit (view, histogram_view_signals[RANGE_CHANGED], 0,
-                 view->start, view->end);
+  g_object_set (view, "histogram-channel", channel, NULL);
 }
 
 GimpHistogramChannel
@@ -447,11 +445,7 @@ gimp_histogram_view_set_scale (GimpHistogramView  *view,
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
 
-  view->scale = scale;
-
-  g_object_notify (G_OBJECT (view), "histogram-scale");
-
-  gtk_widget_queue_draw (GTK_WIDGET (view));
+  g_object_set (view, "histogram-scale", scale, NULL);
 }
 
 GimpHistogram *

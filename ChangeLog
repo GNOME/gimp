@@ -1,5 +1,9 @@
 2003-10-24  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphistogramview.c: code cleanup.
+
+2003-10-24  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/Makefile.am
 	* app/tools/gimphistogramoptions.[ch]: new tool options class
 	GimpHistogramOptions, derived from GimpColorOptions.
