@@ -161,7 +161,7 @@ gimp_drawable_transform_matrix_perspective (gint        x1,
     dx2 = tx3 - tx4;
     dx3 = tx1 - tx2 + tx4 - tx3;
 
-    dy1 = ty2 - ty3;
+    dy1 = ty2 - ty4;
     dy2 = ty3 - ty4;
     dy3 = ty1 - ty2 + ty4 - ty3;
 

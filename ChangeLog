@@ -1,3 +1,9 @@
+2003-03-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-transform-utils.c
+	(gimp_drawable_transform_matrix_perspective): applied patch from
+	Øyvind Kolås that fixes bug #109570.
+
 2003-03-30  Sven Neumann  <sven@gimp.org>
 
 	* configure.in
