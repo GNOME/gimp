@@ -2,10 +2,9 @@
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = #STD#
+pluginlib_PROGRAMS = aa
 
-#STD#_SOURCES = \
-	#STD#.c
+aa_SOURCES = aa.c
 
 INCLUDES = \
 	$(X_CFLAGS)			\
@@ -16,6 +15,7 @@ LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(X_LIBS)				\
+	-laa					\
 	-lc
 
 DEPS = \

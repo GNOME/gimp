@@ -508,6 +508,7 @@ script_fu_script_proc (char     *name,
   GStatusType status = STATUS_SUCCESS;
   GRunModeType run_mode;
   SFScript *script;
+  int min_args;
 
   run_mode = params[0].data.d_int32;
 
@@ -530,8 +531,12 @@ script_fu_script_proc (char     *name,
 	    script->image_based = FALSE;
 
 	  /*  First acquire information with a dialog  */
-	  script_fu_interface (script);
-	  break;
+	  /*  Skip this part if the script takes no parameters */ 
+	  min_args = (script->image_based) ? 2 : 0;
+	  if (script->num_args > min_args) {
+	    script_fu_interface (script); 
+	    break;
+	  }
 
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */

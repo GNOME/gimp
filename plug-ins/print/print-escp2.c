@@ -3,7 +3,7 @@
  *
  *   Print plug-in EPSON ESC/P2 driver for the GIMP.
  *
- *   Copyright 1997 Michael Sweet (mike@easysw.com)
+ *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
  *
  *   This program is free software; you can redistribute it and/or modify it
  *   under the terms of the GNU General Public License as published by the Free
@@ -27,21 +27,15 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.1.1.1  1997/11/24 22:04:34  sopwith
- *   Let's try this import one last time.
+ *   Revision 1.2  1998/01/25 09:29:25  yosh
+ *   Plugin updates
+ *   Properly generated aa Makefile (still not built by default)
+ *   Sven's no args script patch
  *
- *   Revision 1.3  1997/11/18 03:04:25  nobody
- *   fixed ugly comment-bugs introduced by evil darkwing
- *   keep out configuration empty dirs
- *   	--darkwing
+ *   -Yosh
  *
- *   Revision 1.2  1997/11/17 05:43:56  nobody
- *   updated ChangeLog
- *   dropped non-working doc/Makefile entries
- *   applied many fixes from the registry as well as the devel ML
- *   applied missing patches by Art Haas
- *
- *   	--darkwing
+ *   Revision 1.8  1998/01/21  21:33:47  mike
+ *   Updated copyright.
  *
  *   Revision 1.7  1997/11/12  15:57:48  mike
  *   Minor changes for clean compiles under Digital UNIX.

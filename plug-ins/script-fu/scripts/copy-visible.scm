@@ -15,7 +15,7 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
-; "Copy Visible"  version 0.05 10/19/97
+; "Copy Visible"  version 0.11 01/24/98
 ;     by Adrian Likins <adrian@gimp.org>
 ;   _heavily_ based on:
 ;        cyn-merge.scm   version 0.02   10/10/97
@@ -26,9 +26,10 @@
 			     drawable)
   (let* ((layers (gimp-image-get-layers image))
 	 (num-layers (car layers))
+	 (num-visi-layers 0)
 	 (layer-array (cadr layers)))
   
-  (gimp-image-disable-undo image)
+  (gimp-undo-push-group-start image)
 	
   ; copy all visible layers and make them invisible
   (set! layer-count 1)
@@ -42,35 +43,39 @@
 	       (set! copy (car (gimp-layer-copy layer TRUE)))
 	       (gimp-image-add-layer image copy -1)
 	       (gimp-layer-set-visible copy TRUE)
-	       (gimp-layer-set-visible layer FALSE)))
+	       (gimp-layer-set-visible layer FALSE)
+	       (set! num-visi-layers (+ num-visi-layers 1))))
 	 (set! layer-count (+ layer-count 1)))
   
   ; merge all visible layers
-  ;changed
-  (set! merged-layer (car (gimp-image-merge-visible-layers image EXPAND-AS-NECESSARY)))
-  
+  (if (> num-visi-layers 1)
+      (set! merged-layer (car (gimp-image-merge-visible-layers image EXPAND-AS-NECESSARY)))
+      (if (> num-visi-layers 0) 
+	  (set! merged-layer copy)))
+
+  (if (> num-visi-layers 0) 
+      (begin
+	(gimp-edit-copy image merged-layer)
+	(gimp-image-remove-layer image merged-layer)))
+
   ; restore the layers visibilty
   (set! layer-count 0)
   (while (< layer-count num-layers)
 	 (set! layer (aref layer-array layer-count))
 	 (gimp-layer-set-visible layer (aref visi-array layer-count))
 	 (set! layer-count (+ layer-count 1)))
-  ;changed
-  (gimp-edit-copy image merged-layer)
+  
   (gimp-image-set-active-layer image drawable)
-  (gimp-image-remove-layer image merged-layer)
 
-  (gimp-image-enable-undo image)
+  (gimp-undo-push-group-end image)
   (gimp-displays-flush)))
 
 (script-fu-register "script-fu-copy-visible" 
-;  I use the script under the edit menu, but probabaly bad style for a dist version.
-;		    "<Image>/Edit/Copy Visible"
-		    "<Image>/Script-Fu/Selection/Copy Visible"
+		    "<Image>/Edit/Copy Visible"
 		    "Copy the visible selction"
 		    "Sven Neumann (neumanns@uni-duesseldorf.de), Adrian Likins <adrian@gimp.org>"
 		    "Sven Neumann, Adrian Likins"
-		    "10/19/1997"
+		    "01/24/1998"
 		    "RGB* INDEXED* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0)

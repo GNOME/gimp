@@ -3,7 +3,7 @@
  *
  *   Print plug-in driver utility functions for the GIMP.
  *
- *   Copyright 1997 Michael Sweet (mike@easysw.com)
+ *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
  *
  *   This program is free software; you can redistribute it and/or modify it
  *   under the terms of the GNU General Public License as published by the Free
@@ -35,21 +35,15 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.1.1.1  1997/11/24 22:04:34  sopwith
- *   Let's try this import one last time.
+ *   Revision 1.2  1998/01/25 09:29:27  yosh
+ *   Plugin updates
+ *   Properly generated aa Makefile (still not built by default)
+ *   Sven's no args script patch
  *
- *   Revision 1.3  1997/11/18 03:04:26  nobody
- *   fixed ugly comment-bugs introduced by evil darkwing
- *   keep out configuration empty dirs
- *   	--darkwing
+ *   -Yosh
  *
- *   Revision 1.2  1997/11/17 05:43:57  nobody
- *   updated ChangeLog
- *   dropped non-working doc/Makefile entries
- *   applied many fixes from the registry as well as the devel ML
- *   applied missing patches by Art Haas
- *
- *   	--darkwing
+ *   Revision 1.8  1998/01/21  21:33:47  mike
+ *   Replaced Burkes dither with stochastic (random) dither.
  *
  *   Revision 1.7  1997/10/02  17:57:26  mike
  *   Replaced ordered dither with Burkes dither (error-diffusion).
@@ -127,44 +121,51 @@ dither_black(guchar        *gray,	/* I - Grayscale pixels */
   unsigned char	bit,		/* Current bit */
 		*kptr;		/* Current black pixel */
   int		k,		/* Current black error */
+		ditherk,	/* Next error value in buffer */
 		*kerror0,	/* Pointer to current error row */
 		*kerror1;	/* Pointer to next error row */
+  int		ditherbit;	/* Random dithering bitmask */
 
 
   xstep  = src_width / dst_width;
   xmod   = src_width % dst_width;
   length = (dst_width + 7) / 8;
 
-  kerror0    = error[row & 1][3] + 2;
-  kerror1    = error[1 - (row & 1)][3] + 2;
+  kerror0    = error[row & 1][3] + 1;
+  kerror1    = error[1 - (row & 1)][3] + 1;
   kerror1[0] = 0;
   kerror1[1] = 0;
 
   memset(black, 0, length);
 
-  for (x = 0, bit = 128, kptr = black, xerror = 0;
+  for (x = 0, bit = 128, kptr = black, xerror = 0,
+           ditherbit = rand(), ditherk = *kerror0;
        x < dst_width;
        x ++, kerror0 ++, kerror1 ++)
   {
-    k = 255 - *gray + *kerror0;
+    k = 255 - *gray + ditherk / 4;
     if (k > 127)
     {
       *kptr |= bit;
       k -= 255;
     };
 
-    kerror0[1]  += k / 4;
-    kerror0[2]  += k / 8;
-    kerror1[-2] += k / 16;
-    kerror1[-1] += k / 8;
-    kerror1[0]  += k / 4;
-    kerror1[1]  += k / 8;
-    kerror1[2]  = k / 16;
+    if (ditherbit & bit)
+    {
+      kerror1[0] = 3 * k;
+      ditherk    = kerror0[1] + k;
+    }
+    else
+    {
+      kerror1[0] = k;
+      ditherk    = kerror0[1] + 3 * k;
+    };
 
     if (bit == 1)
     {
       kptr ++;
-      bit = 128;
+      bit       = 128;
+      ditherbit = rand();
     }
     else
       bit >>= 1;
@@ -205,18 +206,19 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
 		*mptr,		/* Current magenta pixel */
 		*yptr,		/* Current yellow pixel */
 		*kptr;		/* Current black pixel */
-  int		cerror,		/* Current cyan error */
+  int		ditherc,	/* Next error value in buffer */
 		*cerror0,	/* Pointer to current error row */
 		*cerror1;	/* Pointer to next error row */
-  int		yerror,		/* Current yellow error */
+  int		dithery,	/* Next error value in buffer */
 		*yerror0,	/* Pointer to current error row */
 		*yerror1;	/* Pointer to next error row */
-  int		merror,		/* Current magenta error */
+  int		ditherm,	/* Next error value in buffer */
 		*merror0,	/* Pointer to current error row */
 		*merror1;	/* Pointer to next error row */
-  int		kerror,		/* Current black error */
+  int		ditherk,	/* Next error value in buffer */
 		*kerror0,	/* Pointer to current error row */
 		*kerror1;	/* Pointer to next error row */
+  int		ditherbit;	/* Random dither bitmask */
 
 
   xstep  = 3 * (src_width / dst_width);
@@ -250,7 +252,8 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
     memset(black, 0, length);
 
   for (x = 0, bit = 128, cptr = cyan, mptr = magenta, yptr = yellow, kptr=black,
-           xerror = 0;
+           xerror = 0, ditherbit = rand(), ditherc = cerror0[0],
+           ditherm = merror0[0], dithery = yerror0[0], ditherk = kerror0[0];
        x < dst_width;
        x ++, cerror0 ++, cerror1 ++, merror0 ++, merror1 ++, yerror0 ++,
            yerror1 ++, kerror0 ++, kerror1 ++)
@@ -272,76 +275,89 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
         y  = 255 * (y - k) / ik;
       };
 
-      k += *kerror0;
+      k += ditherk / 4;
       if (k > 127)
       {
 	*kptr |= bit;
 	k -= 255;
       };
 
-      kerror0[1]  += k / 4;
-      kerror0[2]  += k / 8;
-      kerror1[-2] += k / 16;
-      kerror1[-1] += k / 8;
-      kerror1[0]  += k / 4;
-      kerror1[1]  += k / 8;
-      kerror1[2]  = k / 16;
+      if (ditherbit & bit)
+      {
+	kerror1[0] = 3 * k;
+	ditherk    = kerror0[1] + k;
+      }
+      else
+      {
+	kerror1[0] = k;
+	ditherk    = kerror0[1] + 3 * k;
+      };
 
       if (bit == 1)
         kptr ++;
     };
 
-    c += *cerror0;
+    c += ditherc / 4;
     if (c > 127)
     {
       *cptr |= bit;
       c -= 255;
     };
 
-    cerror0[1]  += c / 4;
-    cerror0[2]  += c / 8;
-    cerror1[-2] += c / 16;
-    cerror1[-1] += c / 8;
-    cerror1[0]  += c / 4;
-    cerror1[1]  += c / 8;
-    cerror1[2]  = c / 16;
+    if (ditherbit & bit)
+    {
+      cerror1[0] = 3 * c;
+      ditherc    = cerror0[1] + c;
+    }
+    else
+    {
+      cerror1[0] = c;
+      ditherc    = cerror0[1] + 3 * c;
+    };
 
-    m += *merror0;
+    m += ditherm / 4;
     if (m > 127)
     {
       *mptr |= bit;
       m -= 255;
     };
 
-    merror0[1]  += m / 4;
-    merror0[2]  += m / 8;
-    merror1[-2] += m / 16;
-    merror1[-1] += m / 8;
-    merror1[0]  += m / 4;
-    merror1[1]  += m / 8;
-    merror1[2]  = m / 16;
+    if (ditherbit & bit)
+    {
+      merror1[0] = 3 * m;
+      ditherm    = merror0[1] + m;
+    }
+    else
+    {
+      merror1[0] = m;
+      ditherm    = merror0[1] + 3 * m;
+    };
 
-    y += *yerror0;
+    y += dithery / 4;
     if (y > 127)
     {
       *yptr |= bit;
       y -= 255;
     };
 
-    yerror0[1]  += y / 4;
-    yerror0[2]  += y / 8;
-    yerror1[-2] += y / 16;
-    yerror1[-1] += y / 8;
-    yerror1[0]  += y / 4;
-    yerror1[1]  += y / 8;
-    yerror1[2]  = y / 16;
+    if (ditherbit & bit)
+    {
+      yerror1[0] = 3 * y;
+      dithery    = yerror0[1] + y;
+    }
+    else
+    {
+      yerror1[0] = y;
+      dithery    = yerror0[1] + 3 * y;
+    };
 
     if (bit == 1)
     {
       cptr ++;
       mptr ++;
       yptr ++;
-      bit = 128;
+      bit       = 128;
+      ditherbit = rand();
     }
     else
       bit >>= 1;

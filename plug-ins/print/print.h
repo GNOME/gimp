@@ -3,7 +3,7 @@
  *
  *   Print plug-in header file for the GIMP.
  *
- *   Copyright 1997 Michael Sweet (mike@easysw.com)
+ *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
  *
  *   This program is free software; you can redistribute it and/or modify it
  *   under the terms of the GNU General Public License as published by the Free
@@ -22,21 +22,17 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.1.1.1  1997/11/24 22:04:34  sopwith
- *   Let's try this import one last time.
+ *   Revision 1.2  1998/01/25 09:29:28  yosh
+ *   Plugin updates
+ *   Properly generated aa Makefile (still not built by default)
+ *   Sven's no args script patch
  *
- *   Revision 1.3  1997/11/18 03:04:27  nobody
- *   fixed ugly comment-bugs introduced by evil darkwing
- *   keep out configuration empty dirs
- *   	--darkwing
+ *   -Yosh
  *
- *   Revision 1.2  1997/11/17 05:43:57  nobody
- *   updated ChangeLog
- *   dropped non-working doc/Makefile entries
- *   applied many fixes from the registry as well as the devel ML
- *   applied missing patches by Art Haas
- *
- *   	--darkwing
+ *   Revision 1.9  1998/01/21  21:33:47  mike
+ *   Added Level 2 PostScript driver.
+ *   Replaced Burkes dither with stochastic (random) dither.
+ *   Now use Level 2 ASCII85 filter for Level 2 printers.
  *
  *   Revision 1.8  1997/11/14  17:17:59  mike
  *   Updated to dynamically allocate return params in the run() function.
@@ -89,7 +85,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION		"1.2.2 - 14 November 1997"
+#define PLUG_IN_VERSION		"1.3 - 22 January 1998"
 #define PLUG_IN_NAME		"Print"
 
 #define MEDIA_LETTER		0	/* 8.5x11" a.k.a. "A" size */

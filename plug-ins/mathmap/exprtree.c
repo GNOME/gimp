@@ -35,6 +35,8 @@ make_var (char *name)
 	tree->type = EXPR_VAR_X;
     else if (strcmp(name, "y") == 0)
 	tree->type = EXPR_VAR_Y;
+    else if (strcmp(name, "t") == 0)
+	tree->type = EXPR_VAR_T;
     else if (strcmp(name, "r") == 0)
     {
 	tree->type = EXPR_VAR_R;
@@ -81,137 +83,13 @@ make_operator (int type, exprtree *left, exprtree *right)
 }
 
 exprtree*
-make_function (char *name, exprtree *args)
+make_function (builtin *theBuiltin, exprtree *args)
 {
     exprtree *tree = (exprtree*)malloc(sizeof(exprtree));
 
-    if (strcmp(name, "sin") == 0)
-    {
-	tree->val.func.routine = builtin_sin;
-	tree->val.func.numArgs = 1;
-    }
-    else if (strcmp(name, "cos") == 0)
-    {
-	tree->val.func.routine = builtin_cos;
-	tree->val.func.numArgs = 1;
-    }
-    else if (strcmp(name, "tan") == 0)
-    {
-	tree->val.func.routine = builtin_tan;
-	tree->val.func.numArgs = 1;
-    }
-    else if (strcmp(name, "asin") == 0)
-    {
-	tree->val.func.routine = builtin_asin;
-	tree->val.func.numArgs = 1;
-    }
-    else if (strcmp(name, "acos") == 0)
-    {
-	tree->val.func.routine = builtin_acos;
-	tree->val.func.numArgs = 1;
-    }
-    else if (strcmp(name, "atan") == 0)
-    {
-	tree->val.func.routine = builtin_atan;
-	tree->val.func.numArgs = 1;
-    }
-    else if (strcmp(name, "abs") == 0)
-    {
-	tree->val.func.routine = builtin_abs;
-	tree->val.func.numArgs = 1;
-    }
-    else if (strcmp(name, "sign") == 0)
-    {
-	tree->val.func.routine = builtin_sign;
-	tree->val.func.numArgs = 1;
-    }
-    else if (strcmp(name, "min") == 0)
-    {
-	tree->val.func.routine = builtin_min;
-	tree->val.func.numArgs = 2;
-    }
-    else if (strcmp(name, "max") == 0)
-    {
-	tree->val.func.routine = builtin_max;
-	tree->val.func.numArgs = 2;
-    }
-    else if (strcmp(name, "or") == 0)
-    {
-	tree->val.func.routine = builtin_or;
-	tree->val.func.numArgs = 2;
-    }
-    else if (strcmp(name, "and") == 0)
-    {
-	tree->val.func.routine = builtin_and;
-	tree->val.func.numArgs = 2;
-    }
-    else if (strcmp(name, "less") == 0)
-    {
-	tree->val.func.routine = builtin_less;
-	tree->val.func.numArgs = 2;
-    }
-    else if (strcmp(name, "inintv") == 0)
-    {
-	tree->val.func.routine = builtin_inintv;
-	tree->val.func.numArgs = 3;
-    }
-    else if (strcmp(name, "rand") == 0)
-    {
-	tree->val.func.routine = builtin_rand;
-	tree->val.func.numArgs = 2;
-    }
-    else if (strcmp(name, "origValXY") == 0)
-    {
-	if (intersamplingEnabled)
-	    tree->val.func.routine = builtin_origValXYIntersample;
-	else
-	    tree->val.func.routine = builtin_origValXY;
-	tree->val.func.numArgs = 2;
-    }
-    else if (strcmp(name, "origValRA") == 0)
-    {
-	if (intersamplingEnabled)
-	    tree->val.func.routine = builtin_origValRAIntersample;
-	else
-	    tree->val.func.routine = builtin_origValRA;
-	tree->val.func.numArgs = 2;
-    }
-    else if (strcmp(name, "red") == 0)
-    {
-	tree->val.func.routine = builtin_red;
-	tree->val.func.numArgs = 1;
-    }
-    else if (strcmp(name, "green") == 0)
-    {
-	tree->val.func.routine = builtin_green;
-	tree->val.func.numArgs = 1;
-    }
-    else if (strcmp(name, "blue") == 0)
-    {
-	tree->val.func.routine = builtin_blue;
-	tree->val.func.numArgs = 1;
-    }
-    else if (strcmp(name, "rgbColor") == 0)
-    {
-	tree->val.func.routine = builtin_rgbColor;
-	tree->val.func.numArgs = 3;
-    }
-    else if (strcmp(name, "grayColor") == 0)
-    {
-	tree->val.func.routine = builtin_grayColor;
-	tree->val.func.numArgs = 1;
-    }
-    else
-    {
-	tree->type = EXPR_NUMBER;
-	tree->val.number = 0.0;
-
-	tree->next = 0;
-
-	return tree;
-    }
-    
     tree->type = EXPR_FUNC;
+    tree->val.func.routine = theBuiltin->function;
+    tree->val.func.numArgs = theBuiltin->numParams;
     tree->val.func.args = args;
 
     tree->next = 0;

@@ -1,36 +1,25 @@
-CFLAGS=-D_GIMP
+CFLAGS=-D_GIMP -Wall -O3
+CC = gcc
 
-OBJECTS=mathmap.o builtins.o exprtree.o parser.o scanner.o postfix.o
+OBJECTS=mathmap.o builtins.o exprtree.o parser.o scanner.o postfix.o vars.o
 
 mathmap : $(OBJECTS)
-	gcc -o mathmap -lglib -lgdk -lgtk -lgimp -lm $(OBJECTS)
+	$(CC) -o mathmap -lglib -lgdk -lgtk -lgimp -lm $(OBJECTS)
 
-mathmap.o : mathmap.c
-	gcc $(CFLAGS) -c mathmap.c
+%.o : %.c
+	$(CC) $(CFLAGS) -c $<
 
-builtins.o : builtins.c
-	gcc $(CFLAGS) -c builtins.c
-
-exprtree.o : exprtree.c
-	gcc $(CFLAGS) -c exprtree.c
-
-postfix.o : postfix.c
-	gcc $(CFLAGS) -c postfix.c
-
-parser.o : parser.tab.c
-	gcc $(CFLAGS) -c -o parser.o parser.tab.c
-
-scanner.o : lex.yy.c
-	gcc $(CFLAGS) -c -o scanner.o lex.yy.c
-
-parser.tab.c : parser.y
+parser.c : parser.y
 	bison -d parser.y
+	mv parser.tab.c parser.c
+	mv parser.tab.h parser.h
 
-lex.yy.c : scanner.fl
+scanner.c : scanner.fl
 	flex scanner.fl
+	mv lex.yy.c scanner.c
 
 install : mathmap
 	cp mathmap $(HOME)/.gimp/plug-ins/
 
 clean :
-	rm -f *~ *.o mathmap lex.yy.c parser.tab.[ch]
+	rm -f *~ *.o mathmap scanner.c parser.[ch]

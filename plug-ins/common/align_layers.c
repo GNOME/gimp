@@ -1,9 +1,9 @@
 /* align_layers.c -- This is a plug-in for the GIMP (1.0's API)
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
- * Time-stamp: <1997/10/23 23:44:11 narazaki@InetQ.or.jp>
- * Version:  0.25
+ * Time-stamp: <1998/01/17 00:32:23 narazaki@InetQ.or.jp>
+ * Version:  0.26
  *
- * Copyright (C) 1997 Shuji Narazaki <narazaki@InetQ.or.jp>
+ * Copyright (C) 1997-1998 Shuji Narazaki <narazaki@InetQ.or.jp>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -220,7 +220,7 @@ query ()
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Align visible layers",
 			  "align visible layers",
-			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
+			  "Shuji Narazaki <narazaki@InetQ.or.jp>",
 			  "Shuji Narazaki",
 			  "1997",
 			  MENU_POSITION,
@@ -285,6 +285,8 @@ run (char	*name,
 static GStatusType
 align_layers (gint32 image_id)
 {
+  GParam*	return_vals;
+  gint	retvals;
   gint	layer_num = 0;
   gint	visible_layer_num = 1;
   gint	*layers = NULL;
@@ -361,6 +363,12 @@ align_layers (gint32 image_id)
 	base_y = min_y;
     }
 
+  return_vals = gimp_run_procedure ("gimp_undo_push_group_start",
+				    &retvals,
+				    PARAM_IMAGE, image_id,
+				    PARAM_END);
+  gimp_destroy_params (return_vals, retvals);
+
   for (vindex = -1, index = 0; index < layer_num; index++)
     {
       if (gimp_layer_get_visible (layers[index])) 
@@ -413,9 +421,13 @@ align_layers (gint32 image_id)
 	}
       gimp_layer_set_offsets (layers[index], x, y);
     }
+  return_vals = gimp_run_procedure ("gimp_undo_push_group_end",
+				    &retvals,
+				    PARAM_IMAGE, image_id,
+				    PARAM_END);
+  gimp_destroy_params (return_vals, retvals);
   return STATUS_SUCCESS;
 }
-
 
 static void
 align_layers_get_align_offsets (gint32	drawable_id,

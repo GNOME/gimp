@@ -3,7 +3,7 @@
  *
  *   Print plug-in Adobe PostScript driver for the GIMP.
  *
- *   Copyright 1997 Michael Sweet (mike@easysw.com)
+ *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
  *
  *   This program is free software; you can redistribute it and/or modify it
  *   under the terms of the GNU General Public License as published by the Free
@@ -21,27 +21,27 @@
  *
  * Contents:
  *
- *   ps_print() - Print an image to a PostScript printer.
- *   ps_hex()   - Print binary data as a series of hexadecimal numbers.
+ *   ps_print()   - Print an image to a PostScript printer.
+ *   ps_hex()     - Print binary data as a series of hexadecimal numbers.
+ *   ps_ascii85() - Print binary data as a series of base-85 numbers.
  *
  * Revision History:
  *
  *   $Log$
- *   Revision 1.1.1.1  1997/11/24 22:04:34  sopwith
- *   Let's try this import one last time.
+ *   Revision 1.2  1998/01/25 09:29:27  yosh
+ *   Plugin updates
+ *   Properly generated aa Makefile (still not built by default)
+ *   Sven's no args script patch
  *
- *   Revision 1.3  1997/11/18 03:04:26  nobody
- *   fixed ugly comment-bugs introduced by evil darkwing
- *   keep out configuration empty dirs
- *   	--darkwing
+ *   -Yosh
  *
- *   Revision 1.2  1997/11/17 05:43:57  nobody
- *   updated ChangeLog
- *   dropped non-working doc/Makefile entries
- *   applied many fixes from the registry as well as the devel ML
- *   applied missing patches by Art Haas
+ *   Revision 1.10  1998/01/22  15:38:46  mike
+ *   Updated copyright notice.
+ *   Whoops - wasn't encoding correctly for portrait output to level 2 printers!
  *
- *   	--darkwing
+ *   Revision 1.9  1998/01/21  21:33:47  mike
+ *   Added support for Level 2 filters; images are now sent in hex or
+ *   base-85 ASCII as necessary (faster printing).
  *
  *   Revision 1.8  1997/11/12  15:57:48  mike
  *   Minor changes for clean compiles under Digital UNIX.
@@ -86,6 +86,7 @@
  */
 
 static void	ps_hex(FILE *, guchar *, int);
+static void	ps_ascii85(FILE *, guchar *, int, int);
 
 
 /*
@@ -117,11 +118,18 @@ ps_print(FILE      *prn,	/* I - File to print to */
 		out_width,	/* Width of image on page */
 		out_height,	/* Height of image on page */
 		out_bpp,	/* Output bytes per pixel */
+		out_length,	/* Output length (Level 2 output) */
+		out_offset,	/* Output offset (Level 2 output) */
 		temp_width,	/* Temporary width of image on page */
 		temp_height,	/* Temporary height of image on page */
 		landscape;	/* True if we rotate the output 90 degrees */
   time_t	curtime;	/* Current time of day */
   convert_t	colorfunc;	/* Color conversion function... */
+  static char	*filters[2] =	/* PostScript image filters... */
+		{
+		  "{currentfile picture readhexstring pop}",	/* Level 1 */
+		  "currentfile /ASCII85Decode filter"		/* Level 2 */
+		};
 
 
  /*
@@ -226,12 +234,12 @@ ps_print(FILE      *prn,	/* I - File to print to */
   fputs("%!PS-Adobe-3.0\n", prn);
   fputs("%%Creator: " PLUG_IN_NAME " plug-in V" PLUG_IN_VERSION " for GIMP.\n", prn);
   fprintf(prn, "%%%%CreationDate: %s", ctime(&curtime));
-  fputs("%%Copyright: 1997 by Michael Sweet (mike@easysw.com)\n", prn);
+  fputs("%%Copyright: 1997-1998 by Michael Sweet (mike@easysw.com)\n", prn);
   fprintf(prn, "%%%%BoundingBox: %d %d %d %d\n",
           (page_width - out_width) / 2 + 18, (page_height - out_height) / 2 + 36,
           (page_width + out_width) / 2 + 18, (page_height + out_height) / 2 + 36);
   fputs("%%DocumentData: Clean7Bit\n", prn);
-  fprintf(prn, "%%%%LanguageLevel: %d\n", output_type + 1);
+  fprintf(prn, "%%%%LanguageLevel: %d\n", model + 1);
   fputs("%%Pages: 1\n", prn);
   fputs("%%Orientation: Portrait\n", prn);
   fputs("%%EndComments\n", prn);
@@ -260,55 +268,99 @@ ps_print(FILE      *prn,	/* I - File to print to */
   if (landscape)
   {
     in  = g_malloc(drawable->height * drawable->bpp);
-    out = g_malloc(drawable->height * out_bpp);
+    out = g_malloc(drawable->height * out_bpp + 3);
 
-    fprintf(prn, "/picture %d string def\n", drawable->height * out_bpp);
+    if (model == 0)
+      fprintf(prn, "/picture %d string def\n", drawable->height * out_bpp);
 
     if (output_type == OUTPUT_GRAY)
-      fprintf(prn, "%d %d 8 [%d 0 0 %d 0 %d] {currentfile picture readhexstring pop} image\n",
+      fprintf(prn, "%d %d 8 [%d 0 0 %d 0 %d] %s image\n",
               drawable->height, drawable->width,
-              drawable->height, drawable->width, 0);
+              drawable->height, drawable->width, 0,
+              filters[model]);
     else
-      fprintf(prn, "%d %d 8 [%d 0 0 %d 0 %d] {currentfile picture readhexstring pop} false 3 colorimage\n",
+      fprintf(prn, "%d %d 8 [%d 0 0 %d 0 %d] %s false 3 colorimage\n",
               drawable->height, drawable->width,
-              drawable->height, drawable->width, 0);
+              drawable->height, drawable->width, 0,
+              filters[model]);
 
-    for (x = 0; x < drawable->width; x ++)
+    for (x = 0, out_offset = 0; x < drawable->width; x ++)
     {
       if ((x & 15) == 0)
         gimp_progress_update((double)x / (double)drawable->width);
 
       gimp_pixel_rgn_get_col(&rgn, in, x, 0, drawable->height);
-      (*colorfunc)(in, out, drawable->height, drawable->bpp, lut, cmap);
+      (*colorfunc)(in, out + out_offset, drawable->height, drawable->bpp, lut, cmap);
 
-      ps_hex(prn, out, drawable->height * out_bpp);
+      if (model)
+      {
+        out_length = out_offset + drawable->height * out_bpp;
+
+        if (x < (drawable->width - 1))
+        {
+          ps_ascii85(prn, out, out_length & ~3, 0);
+          out_offset = out_length & 3;
+        }
+        else
+        {
+          ps_ascii85(prn, out, out_length, 1);
+          out_offset = 0;
+        };
+
+        if (out_offset > 0)
+          memcpy(out, out + out_length - out_offset, out_offset);
+      }
+      else
+        ps_hex(prn, out, drawable->height * out_bpp);
     };
   }
   else
   {
     in  = g_malloc(drawable->width * drawable->bpp);
-    out = g_malloc(drawable->width * out_bpp);
+    out = g_malloc(drawable->width * out_bpp + 3);
 
-    fprintf(prn, "/picture %d string def\n", drawable->width * out_bpp);
+    if (model == 0)
+      fprintf(prn, "/picture %d string def\n", drawable->width * out_bpp);
 
     if (output_type == OUTPUT_GRAY)
-      fprintf(prn, "%d %d 8 [%d 0 0 %d 0 %d] {currentfile picture readhexstring pop} image\n",
+      fprintf(prn, "%d %d 8 [%d 0 0 %d 0 %d] %s image\n",
               drawable->width, drawable->height,
-              drawable->width, -drawable->height, drawable->height); 
+              drawable->width, -drawable->height, drawable->height,
+              filters[model]); 
     else
-      fprintf(prn, "%d %d 8 [%d 0 0 %d 0 %d] {currentfile picture readhexstring pop} false 3 colorimage\n",
+      fprintf(prn, "%d %d 8 [%d 0 0 %d 0 %d] %s false 3 colorimage\n",
               drawable->width, drawable->height,
-              drawable->width, -drawable->height, drawable->height); 
+              drawable->width, -drawable->height, drawable->height,
+              filters[model]); 
 
-    for (y = 0; y < drawable->height; y ++)
+    for (y = 0, out_offset = 0; y < drawable->height; y ++)
     {
       if ((y & 15) == 0)
         gimp_progress_update((double)y / (double)drawable->height);
 
       gimp_pixel_rgn_get_row(&rgn, in, 0, y, drawable->width);
-      (*colorfunc)(in, out, drawable->width, drawable->bpp, lut, cmap);
+      (*colorfunc)(in, out + out_offset, drawable->width, drawable->bpp, lut, cmap);
 
-      ps_hex(prn, out, drawable->width * out_bpp);
+      if (model)
+      {
+        out_length = out_offset + drawable->width * out_bpp;
+
+        if (y < (drawable->height - 1))
+        {
+          ps_ascii85(prn, out, out_length & ~3, 0);
+          out_offset = out_length & 3;
+        }
+        else
+        {
+          ps_ascii85(prn, out, out_length, 1);
+          out_offset = 0;
+        };
+
+        if (out_offset > 0)
+          memcpy(out, out + out_length - out_offset, out_offset);
+      }
+      else
+	ps_hex(prn, out, drawable->width * out_bpp);
     };
   };
 
@@ -349,6 +401,77 @@ ps_hex(FILE   *prn,	/* I - File to print to */
   };
 
   putc('\n', prn);
+}
+
+
+/*
+ * 'ps_ascii85()' - Print binary data as a series of base-85 numbers.
+ */
+
+static void
+ps_ascii85(FILE   *prn,		/* I - File to print to */
+	   guchar *data,	/* I - Data to print */
+	   int    length,	/* I - Number of bytes to print */
+	   int    last_line)	/* I - Last line of raster data? */
+{
+  unsigned	b;		/* Binary data word */
+  unsigned char	c[5];		/* ASCII85 encoded chars */
+  int		col;		/* Current column */
+
+
+  col = 0;
+  while (length > 3)
+  {
+    b = (((((data[0] << 8) | data[1]) << 8) | data[2]) << 8) | data[3];
+
+    if (b == 0)
+      putc('z', prn);
+    else
+    {
+      c[4] = (b % 85) + '!';
+      b /= 85;
+      c[3] = (b % 85) + '!';
+      b /= 85;
+      c[2] = (b % 85) + '!';
+      b /= 85;
+      c[1] = (b % 85) + '!';
+      b /= 85;
+      c[0] = b + '!';
+
+      fwrite(c, 5, 1, prn);
+    };
+
+    data += 4;
+    length -= 4;
+
+    col = (col + 1) & 15;
+    if (col == 0 && length > 0)
+      putc('\n', prn);
+  };
+
+  if (last_line)
+  {
+    if (length > 0)
+    {
+      for (b = 0, col = length; col > 0; b = (b << 8) | data[0], data ++, col --);
+
+      c[4] = (b % 85) + '!';
+      b /= 85;
+      c[3] = (b % 85) + '!';
+      b /= 85;
+      c[2] = (b % 85) + '!';
+      b /= 85;
+      c[1] = (b % 85) + '!';
+      b /= 85;
+      c[0] = b + '!';
+
+      fwrite(c, length + 1, 1, prn);
+    };
+
+    fputs("~>\n", prn);
+  }
+  else
+    putc('\n', prn);
 }
 
 

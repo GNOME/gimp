@@ -3,7 +3,7 @@
  *
  *   Print plug-in for the GIMP.
  *
- *   Copyright 1997 Michael Sweet (mike@easysw.com)
+ *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
  *
  *   This program is free software; you can redistribute it and/or modify it
  *   under the terms of the GNU General Public License as published by the Free
@@ -39,21 +39,22 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.1.1.1  1997/11/24 22:04:34  sopwith
- *   Let's try this import one last time.
+ *   Revision 1.2  1998/01/25 09:29:27  yosh
+ *   Plugin updates
+ *   Properly generated aa Makefile (still not built by default)
+ *   Sven's no args script patch
  *
- *   Revision 1.3  1997/11/18 03:04:27  nobody
- *   fixed ugly comment-bugs introduced by evil darkwing
- *   keep out configuration empty dirs
- *   	--darkwing
+ *   -Yosh
  *
- *   Revision 1.2  1997/11/17 05:43:57  nobody
- *   updated ChangeLog
- *   dropped non-working doc/Makefile entries
- *   applied many fixes from the registry as well as the devel ML
- *   applied missing patches by Art Haas
+ *   Revision 1.13  1998/01/22  15:06:31  mike
+ *   Added "file" printer for printing to file.
+ *   Now you don't need the "|" in front of print commands.
+ *   Now "remembers" last selected printer.
  *
- *   	--darkwing
+ *   Revision 1.12  1998/01/21  21:33:47  mike
+ *   Added Level 2 PostScript driver.
+ *   Fixed bug in dialog - didn't display correct output file/command
+ *   and driver for the default printer.
  *
  *   Revision 1.11  1997/11/14  17:17:59  mike
  *   Updated to dynamically allocate return params in the run() function.
@@ -180,8 +181,8 @@ struct					/* Plug-in variables */
 	top;			/* ... */
 }		vars =
 {
-	"|lp",			/* Name of file or command to print to */
-	"ps",			/* Name of printer "driver" */
+	"",			/* Name of file or command to print to */
+	"ps2",			/* Name of printer "driver" */
 	MEDIA_LETTER,		/* Size of output media */
 	OUTPUT_COLOR,		/* Color or grayscale output */
 	100,			/* Output brightness */
@@ -218,6 +219,7 @@ int		runme = FALSE,		/* True if print should proceed */
 printer_t	printers[] =		/* List of supported printer types */
 {
   { "PostScript Printer",	"ps",		72,	72,	1,	1,	0,	1.000,	1.000,	ps_print },
+  { "PostScript Printer (Level 2)",	"ps2",		72,	72,	1,	1,	1,	1.000,	1.000,	ps_print },
   { "HP DeskJet 500, 520",	"pcl-500",	300,	300,	0,	0,	500,	0.541,	0.548,	pcl_print },
   { "HP DeskJet 500C, 540C",	"pcl-501",	300,	300,	0,	1,	501,	0.541,	0.548,	pcl_print },
   { "HP DeskJet 550C, 560C",	"pcl-550",	300,	300,	0,	1,	550,	0.541,	0.548,	pcl_print },
@@ -445,8 +447,8 @@ run(char   *name,		/* I - Name of print program. */
     * Open the file/execute the print command...
     */
 
-    if (vars.output_to[0] == '|')
-      prn = popen(vars.output_to + 1, "w");
+    if (plist_current > 0)
+      prn = popen(vars.output_to, "w");
     else
       prn = fopen(vars.output_to, "w");
 
@@ -491,7 +493,7 @@ run(char   *name,		/* I - Name of print program. */
                         vars.output_type, printer->model, lut, cmap,
                         vars.orientation, vars.scaling, vars.left, vars.top);
 
-      if (vars.output_to[0] == '|')
+      if (plist_current > 0)
         pclose(prn);
       else
         fclose(prn);
@@ -573,7 +575,7 @@ print_dialog(void)
   */
 
   dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dialog), "Print");
+  gtk_window_set_title(GTK_WINDOW(dialog), "Print " PLUG_IN_VERSION);
   gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width(GTK_CONTAINER(dialog), 0);
   gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
@@ -627,9 +629,6 @@ print_dialog(void)
   menu = gtk_menu_new();
   for (i = 0; i < plist_count; i ++)
   {
-    if (strcmp(plist[i].command, vars.output_to) == 0)
-      plist_current = i;
-
     item = gtk_menu_item_new_with_label(plist[i].name);
     gtk_menu_append(GTK_MENU(menu), item);
     gtk_signal_connect(GTK_OBJECT(item), "activate",
@@ -770,7 +769,7 @@ print_dialog(void)
   * Print file/command...
   */
 
-  label = gtk_label_new("File/|Command:");
+  label = gtk_label_new("File/Command:");
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 11, 12, GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show(label);
@@ -808,6 +807,8 @@ print_dialog(void)
  /*
   * Show it and wait for the user to do something...
   */
+
+  plist_callback(NULL, plist_current);
 
   gtk_widget_show(dialog);
 
@@ -1269,9 +1270,18 @@ printrc_load(void)
 
       if (sscanf(line, "%s%s%d%*[ \t]%[^\n]", key.name, key.driver,
                  &(key.output_type), key.command) == 4)
-        if ((p = bsearch(&key, plist, plist_count, sizeof(plist_t),
+      {
+       /*
+        * Check to see if this is an old printrc file...
+        */
+
+        if (key.command[0] == '|')
+          strcpy(key.command, key.command + 1);
+
+        if ((p = bsearch(&key, plist + 1, plist_count - 1, sizeof(plist_t),
                          (int (*)(const void *, const void *))compare_printers)) != NULL)
           memcpy(p, &key, sizeof(plist_t));
+      };
     };
 
     fclose(fp);
@@ -1309,7 +1319,7 @@ printrc_save(void)
 
     fputs("#PRINTRC " PLUG_IN_VERSION "\n", fp);
 
-    for (i = 0, p = plist; i < plist_count; i ++, p ++)
+    for (i = 1, p = plist + 1; i < plist_count; i ++, p ++)
       fprintf(fp, "%s %s %d %s\n", p->name, p->driver, p->output_type, p->command);
 
     fclose(fp);
@@ -1346,10 +1356,14 @@ get_printers(void)
   defname[0] = '\0';
 
   memset(plist, 0, sizeof(plist));
+  plist_count = 1;
+  strcpy(plist[0].name, "File");
+  sprintf(plist[0].command, "file.ps", line);
+  strcpy(plist[0].driver, "ps2");
+  plist[0].output_type = OUTPUT_COLOR;
 
 #ifndef sun	/* Sun Solaris merges LPR and LP queues */
-  if (access("/usr/etc/lpc", 0) == 0 &&
-      (pfile = popen("/usr/etc/lpc status", "r")) != NULL)
+  if ((pfile = popen("lpc status", "r")) != NULL)
   {
     while (fgets(line, sizeof(line), pfile) != NULL &&
            plist_count < MAX_PLIST)
@@ -1357,8 +1371,8 @@ get_printers(void)
       {
         *strchr(line, ':') = '\0';
         strcpy(plist[plist_count].name, line);
-        sprintf(plist[plist_count].command, "|lpr -P%s -l", line);
-        strcpy(plist[plist_count].driver, "ps");
+        sprintf(plist[plist_count].command, "lpr -P%s -l", line);
+        strcpy(plist[plist_count].driver, "ps2");
         plist[plist_count].output_type = OUTPUT_COLOR;
         plist_count ++;
       };
@@ -1367,8 +1381,7 @@ get_printers(void)
   };
 #endif /* !sun */
 
-  if (access("/usr/bin/lpstat", 0) == 0 &&
-      (pfile = popen("/usr/bin/lpstat -d -p", "r")) != NULL)
+  if ((pfile = popen("lpstat -d -p", "r")) != NULL)
   {
     while (fgets(line, sizeof(line), pfile) != NULL &&
            plist_count < MAX_PLIST)
@@ -1377,11 +1390,11 @@ get_printers(void)
       {
 	strcpy(plist[plist_count].name, name);
 #ifdef __sgi /* SGI still uses the SVR3 spooler */
-	sprintf(plist[plist_count].command, "|lp -s -oraw -d%s", name);
+	sprintf(plist[plist_count].command, "lp -s -d%s", name);
 #else
-	sprintf(plist[plist_count].command, "|lp -s -oraw -d %s", name);
+	sprintf(plist[plist_count].command, "lp -s -d %s", name);
 #endif /* __sgi */
-        strcpy(plist[plist_count].driver, "ps");
+        strcpy(plist[plist_count].driver, "ps2");
         plist[plist_count].output_type = OUTPUT_COLOR;
         plist_count ++;
       }
@@ -1392,14 +1405,23 @@ get_printers(void)
     pclose(pfile);
   };
 
-  if (plist_count > 1)
-    qsort(plist, plist_count, sizeof(plist_t),
+  if (plist_count > 2)
+    qsort(plist + 1, plist_count - 1, sizeof(plist_t),
           (int (*)(const void *, const void *))compare_printers);
 
-  if (defname[0] != '\0')
+  if (defname[0] != '\0' && vars.output_to[0] == '\0')
   {
     for (i = 0; i < plist_count; i ++)
       if (strcmp(defname, plist[i].name) == 0)
+        break;
+
+    if (i < plist_count)
+      plist_current = i;
+  }
+  else if (vars.output_to[0] != '\0')
+  {
+    for (i = 0; i < plist_count; i ++)
+      if (strcmp(vars.output_to, plist[i].command) == 0)
         break;
 
     if (i < plist_count)

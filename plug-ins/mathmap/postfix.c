@@ -9,6 +9,7 @@
 
 extern double currentX,
     currentY,
+    currentT,
     currentR,
     currentA,
     imageR,
@@ -140,6 +141,12 @@ void
 stack_var_y (void *arg)
 {
     stack[stackp++] = currentY;
+}
+
+void
+stack_var_t (void *arg)
+{
+    stack[stackp++] = currentT;
 }
 
 void
@@ -305,6 +312,10 @@ make_postfix_recursive (exprtree *tree)
 
 	case EXPR_VAR_Y :
 	    expression[exprp++].func = stack_var_y;
+	    break;
+	 
+	case EXPR_VAR_T :
+	    expression[exprp++].func = stack_var_t;
 	    break;
 	 
 	case EXPR_VAR_R :
@@ -487,6 +498,8 @@ output_postfix (void)
 	    printf("push x\n");
 	else if (expression[i].func == stack_var_y)
 	    printf("push y\n");
+	else if (expression[i].func == stack_var_t)
+	    printf("push t\n");
 	else if (expression[i].func == stack_var_r)
 	    printf("push r\n");
 	else if (expression[i].func == stack_var_a)
@@ -505,6 +518,7 @@ output_postfix (void)
 	    printf("push %s\n", ((variable*)expression[i].arg)->name);
 	else if (expression[i].func == (stackfunc)stack_assign)
 	    printf("sto %s\n", ((variable*)expression[i].arg)->name);
+	/*
 	else if (expression[i].func == builtin_sin)
 	    printf("sin\n");
 	else if (expression[i].func == builtin_cos)
@@ -537,6 +551,7 @@ output_postfix (void)
 	    printf("origValRA\n");
 	else if (expression[i].func == builtin_grayColor)
 	    printf("grayColor\n");
+	    */
 	else
 	    printf("unknown opcode\n");
     }

@@ -10,7 +10,7 @@
  *   Copyright (C) 1997 Federico Mena Quintero
  *   federico@nuclecu.unam.mx
  *
- * Version 0.2
+ * Version 0.4
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
@@ -54,17 +55,20 @@
 #define ENTRY_WIDTH  60
 
 #define DEFAULT_EXPRESSION      "origValXY(x+sin(y*10)*3,y+sin(x*10)*3)"
+#define DEFAULT_NUMBER_FRAMES   10
 
 #define FLAG_INTERSAMPLING      1
 #define FLAG_OVERSAMPLING       2
+#define FLAG_ANIMATION          4
 
-#define MAX_EXPRESSION_LENGTH   1024
+#define MAX_EXPRESSION_LENGTH   8192
 
 /***** Types *****/
 
 typedef struct {
     gchar expression[MAX_EXPRESSION_LENGTH];
     gint flags;
+    gint frames;
 } mathmap_vals_t;
 
 typedef struct {
@@ -89,17 +93,23 @@ static void expression_copy (gchar *dest, gchar *src);
 
 static void mathmap (void);
 void   mathmap_get_pixel(int x, int y, guchar *pixel);
+static gint32 mathmap_layer_copy(gint32 layerID);
+
+extern int yyparse (void);
 
 static void build_preview_source_image(void);
 
 static gint mathmap_dialog(void);
 static void dialog_update_preview(void);
+/*
 static void dialog_create_value(char *title, GtkTable *table, int row, gdouble *value,
 				double left, double right);
-static void dialog_scale_update(GtkAdjustment *adjustment, gdouble *value);
-static void dialog_entry_update(GtkWidget *widget, gdouble *value);
+				*/
+static void dialog_scale_update(GtkAdjustment *adjustment, gint *value);
+static void dialog_entry_update(GtkWidget *widget, gpointer value);
 static void dialog_intersampling_update (GtkWidget *widget, gpointer data);
 static void dialog_oversampling_update (GtkWidget *widget, gpointer data);
+static void dialog_animation_update (GtkWidget *widget, gpointer data);
 static void dialog_preview_callback (GtkWidget *widget, gpointer data);
 static void dialog_example_callback (GtkWidget *widget, char *expression);
 static void dialog_close_callback(GtkWidget *widget, gpointer data);
@@ -118,7 +128,8 @@ GPlugInInfo PLUG_IN_INFO = {
 
 static mathmap_vals_t mmvals = {
 	DEFAULT_EXPRESSION,      /* expression */
-	FLAG_INTERSAMPLING       /* flags */
+	FLAG_INTERSAMPLING,      /* flags */
+	DEFAULT_NUMBER_FRAMES    /* frames */
 }; /* mmvals */
 
 static mathmap_interface_t wint = {
@@ -128,10 +139,13 @@ static mathmap_interface_t wint = {
 	FALSE  /* run */
 }; /* wint */
 
-static GDrawable *drawable;
+static gint32 image_id;
+static gint32 layer_id;
+static GDrawable *input_drawable;
+static GDrawable *output_drawable;
 
 static gint   tile_width, tile_height;
-static gint   img_width, img_height, img_bpp;
+static gint   img_width, img_height;
 static gint   sel_x1, sel_y1, sel_x2, sel_y2;
 static gint   sel_width, sel_height;
 static gint   preview_width, preview_height;
@@ -141,7 +155,8 @@ static double cen_x, cen_y;
 static double scale_x, scale_y;
 static double radius, radius2;
 
-GtkWidget *expressionEntry = 0;
+GtkWidget *expression_entry = 0,
+    *animate_table;
 
 exprtree *theExprtree = 0;
 int imageWidth,
@@ -149,43 +164,54 @@ int imageWidth,
     wholeImageWidth,
     wholeImageHeight,
     originX,
-    originY;
+    originY,
+    inputBPP,
+    outputBPP;
 int usesRA = 0;
 double currentX,
     currentY,
     currentR,
     currentA,
+    currentT,
     imageR,
     imageX,
     imageY,
     middleX,
     middleY;
 int intersamplingEnabled,
-    oversamplingEnabled;
+    oversamplingEnabled,
+    animationEnabled = 1;
 
 char *examples[][2] = {
-    { "wave", "origValXY(x+sin(y*10)*3,y+sin(x*10)*3)" },
+    { "wave", "origValXY(x+sin(y*10+t*360)*3,y+sin(x*10+t*360)*3)" },
     { "square", "origValXY(sign(x)*x*x/50,sign(y)*y*y/50)" },
     { "mosaic", "origValXY(x-x%5,y-y%5)" },
-    { "slice", "origValXY(x+5*sign(cos(9*y)),y+5*sign(cos(9*x)))" },
-    { "mercator", "origValXY(x*cos(90/Y*y),y)" },
-    { "pond", "origValRA(r+sin(r*30)*3,a)" },
-    { "enhanced pond", "origValRA(r+(sin(500000/(r+100))*7),a)" },
+    { "slice", "q=t*360;origValXY(x+5*sign(cos(9*y+q)),y+5*sign(cos(9*x+q)))" },
+    { "mercator", "origValXY(x*cos(90/Y*y+t*360),y)" },
+    { "pond", "origValRA(r+sin(r*20+t*360)*3,a)" },
+    { "enhanced pond", "origValRA(r+(sin(500000/(r+100)+t*360)*7),a)" },
+    { "sea 1", "origValXY(x+10*sin(t*360+2000*Y*pow(y+Y+60,-1)),y)" },
+    { "sea 2", "origValXY(x,y+5*sin(t*360+2000*Y*pow(y+Y+60,-1)))" },
+    { "sea 3", "s=sin(t*360+2000*Y*pow(y+Y+60,-1));origValXY(x+10*s,y+5*s)" },
     { "twirl 90", "origValRA(r,a+(r/R-1)*45)" },
     { "sphere", "p=r/(X*2);origValRA(r*(1-inintv(p,-0.5,0.5))+X/90*asin(inintv(p,-0.5,0.5)*r/X),a)" },
-    { "jitter", "origValRA(r,a+a%8-4)" },
+    { "jitter", "origValRA(r,a+(a+t*8)%8-4)" },
     { "radial mosaic", "origValRA(r-r%5,a-a%5)" },
-    { "circular slice", "origValRA(r,a+(r%5)-2)" },
-    { "fisheye", "origValRA(r*r/R,a)" },
+    { "circular slice", "origValRA(r,a+(r+t*6)%6-3)" },
+    { "fisheye", "origValRA(pow(r,2-t)/pow(R,1-t),a)" },
     { "center shake", "origValXY(x+max(0,cos(x*2))*5*max(0,cos(y*2))*cos(y*10),y+max(0,cos(x*2))*5*max(0,cos(y*2))*cos(x*10))" },
+    { "spiral", "p=origValXY(x,y);q=sin((r-a*0.1)*10+t*360)*0.5+0.5;rgbColor(q*red(p),q*green(p),q*blue(p))" },
+    { "alpha spiral", "p=origValXY(x,y);rgbaColor(red(p),green(p),blue(p),sin((r-a*0.1)*10+t*360)*0.5+0.5)" },
     { "scatter", "origValXY(x+rand(-3,3),y+rand(-3,3))" },
+    { "desaturate", "p=origValXY(x,y);grayaColor(gray(p),alpha(p))" },
     { "darts", "p=origValXY(x,y);p=if inintv((a-9)%36,0,18) then p else rgbColor(1-red(p),1-green(p),1-blue(p)) end;if inintv(r%80,68,80) then p else rgbColor(1-red(p),1-green(p),1-blue(p)) end" },
+    { "tile", "origValXY((x+X)*2%W-X,(y+Y)*2%H-Y)" },
     { "?", "origValRA(r,a+sin(a*10)*20)" },
     { "?", "origValRA(r+r%20,a)" },
     { "sine wave", "grayColor(sin(r*10)*0.5+0.5)" },
     { "grid", "grayColor(if (x%20)*(y%20) then 1 else 0 end)" },
-    { "moire1", "rgbColor(abs(sin(15*r)+sin(15*a))*0.5,abs(sin(17*r)+sin(17*a))*0.5,abs(sin(19*r)+sin(19*a))*0.5)" },
-    { "moire2", "grayColor(sin(x*y)*0.5+0.5)" },
+    { "moire1", "q=t*360;rgbColor(abs(sin(15*r+q)+sin(15*a+q))*0.5,abs(sin(17*r+q)+sin(17*a+q))*0.5,abs(sin(19*r+q)+sin(19*a+q))*0.5)" },
+    { "moire2", "grayColor(sin(x*y+t*360)*0.5+0.5)" },
     { "mandelbrot",
       "tx=1.5*x/X-0.5; "
       "ty=1.5*y/X-0; "
@@ -194,7 +220,7 @@ char *examples[][2] = {
       "xi=0; "
       "xrsq=0; "
       "xisq=0; "
-      "while and(less(xrsq+xisq,4),less(iter,31)) "
+      "while xrsq+xisq<4 && iter<31 "
       "do "
           "xrsq=xr*xr; "
           "xisq=xi*xi; "
@@ -234,7 +260,8 @@ query(void)
 	{ PARAM_IMAGE,    "image",      "Input image" },
 	{ PARAM_DRAWABLE, "drawable",   "Input drawable" },
 	{ PARAM_STRING,   "expression", "MathMap expression" },
-	{ PARAM_INT32,    "flags",      "1: Intersampling 2: Oversampling" }
+	{ PARAM_INT32,    "flags",      "1: Intersampling 2: Oversampling 4: Animate" },
+	{ PARAM_INT32,    "frames",     "Number of Frames" }
     }; /* args */
 
     static GParamDef *return_vals  = NULL;
@@ -245,12 +272,12 @@ query(void)
 			   "Generate an image using a mathematical expression.",
 			   "Generates an image by means of a mathematical expression. The expression "
 			   "can also refer to the data of an original image. Thus, arbitrary "
-			   "distortions can be constructed.",
+			   "distortions can be constructed. Even animations can be generated.",
 			   "Mark Probst",
 			   "Mark Probst",
-			   "October 1997, 0.1",
-			   "<Image>/Filters/Generic/MathMap",
-			   "RGB",
+			   "January 1998, 0.4",
+			   "<Image>/Filters/Distorts/MathMap",
+			   "RGB*, GRAY*",
 			   PROC_PLUG_IN,
 			   nargs,
 			   nreturn_vals,
@@ -278,6 +305,9 @@ run(char    *name,
     status   = STATUS_SUCCESS;
     run_mode = param[0].data.d_int32;
 
+    image_id = param[1].data.d_int32;
+    layer_id = gimp_image_get_active_layer(image_id);
+
     values[0].type          = PARAM_STATUS;
     values[0].data.d_status = status;
 
@@ -286,16 +316,16 @@ run(char    *name,
 
 	/* Get the active drawable info */
 
-    drawable = gimp_drawable_get(param[2].data.d_drawable);
+    input_drawable = gimp_drawable_get(param[2].data.d_drawable);
 
     tile_width  = gimp_tile_width();
     tile_height = gimp_tile_height();
 
-    img_width  = gimp_drawable_width(drawable->id);
-    img_height = gimp_drawable_height(drawable->id);
-    img_bpp    = gimp_drawable_bpp(drawable->id);
+    img_width  = gimp_drawable_width(input_drawable->id);
+    img_height = gimp_drawable_height(input_drawable->id);
+    inputBPP = gimp_drawable_bpp(input_drawable->id);
 
-    gimp_drawable_mask_bounds(drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+    gimp_drawable_mask_bounds(input_drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
     originX = sel_x1;
     originY = sel_y1;
@@ -335,6 +365,8 @@ run(char    *name,
 
     preview_width  = MAX(pwidth, 2);  /* Min size is 2 */
     preview_height = MAX(pheight, 2);
+
+    init_builtins();
 
     /* See how we will run */
 
@@ -377,20 +409,45 @@ run(char    *name,
 
     /* Mathmap the image */
 
-    if ((status == STATUS_SUCCESS) &&
-	(gimp_drawable_color(drawable->id) ||
-	 gimp_drawable_gray(drawable->id))) {
-
+    if ((status == STATUS_SUCCESS)
+	&& (gimp_drawable_color(input_drawable->id)
+	    || gimp_drawable_gray(input_drawable->id)))
+    {
 	intersamplingEnabled = mmvals.flags & FLAG_INTERSAMPLING;
 	oversamplingEnabled = mmvals.flags & FLAG_OVERSAMPLING;
+	animationEnabled = mmvals.flags & FLAG_ANIMATION;
 
 	/* Set the tile cache size */
 
-	gimp_tile_cache_ntiles((drawable->width + gimp_tile_width() - 1) / gimp_tile_width());
+	gimp_tile_cache_ntiles((input_drawable->width + gimp_tile_width() - 1)
+			       / gimp_tile_width());
 
 	/* Run! */
 
-	mathmap();
+	if (animationEnabled)
+	{
+	    int frameNum;
+
+	    for (frameNum = 0; frameNum < mmvals.frames; ++frameNum)
+	    {
+		gint32 layer;
+		char layerName[100];
+
+		currentT = (double)frameNum / (double)mmvals.frames;
+		layer = mathmap_layer_copy(layer_id);
+		sprintf(layerName, "kurdenlayer %d", frameNum);
+		gimp_layer_set_name(layer, layerName);
+		output_drawable = gimp_drawable_get(layer);
+		mathmap();
+		gimp_image_add_layer(image_id, layer, 0);
+	    }
+	}
+	else
+	{
+	    currentT = 0.0;
+	    output_drawable = input_drawable;
+	    mathmap();
+	}
 
 	/* If run mode is interactive, flush displays */
 
@@ -406,7 +463,7 @@ run(char    *name,
 
     values[0].data.d_status = status;
 
-    gimp_drawable_detach(drawable);
+    gimp_drawable_detach(input_drawable);
 } /* run */
 
 
@@ -431,6 +488,27 @@ calc_ra (void)
     }
 }
 
+static gint32 
+mathmap_layer_copy(gint32 layerID)
+{
+    GParam *return_vals;
+    int nreturn_vals;
+    gint32 nlayer;
+
+    return_vals = gimp_run_procedure ("gimp_layer_copy", 
+				      &nreturn_vals,
+				      PARAM_LAYER, layerID,
+				      PARAM_INT32, TRUE,
+				      PARAM_END);
+ 
+    if (return_vals[0].data.d_status == STATUS_SUCCESS)
+	nlayer = return_vals[1].data.d_layer;
+    else
+	nlayer = -1;
+    gimp_destroy_params(return_vals, nreturn_vals);
+    return nlayer;
+} 
+
 static void
 mathmap(void)
 {
@@ -440,15 +518,15 @@ mathmap(void)
     guchar   *dest_row;
     guchar   *dest;
     gint      row, col;
-    guchar    pixel[4][4];
-    guchar    values[4];
     double    cx, cy;
     int       ix, iy;
-    int       i;
     double result;
     int red,
 	green,
-	blue;
+	blue,
+	alpha;
+
+    outputBPP = gimp_drawable_bpp(output_drawable->id);
 
     theExprtree = 0;
 
@@ -464,7 +542,7 @@ mathmap(void)
 
     /* Initialize pixel region */
 
-    gimp_pixel_rgn_init(&dest_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height,
+    gimp_pixel_rgn_init(&dest_rgn, output_drawable, sel_x1, sel_y1, sel_width, sel_height,
 			TRUE, TRUE);
 
     imageWidth = sel_width;
@@ -490,7 +568,7 @@ mathmap(void)
     progress     = 0;
     max_progress = sel_width * sel_height;
 
-    gimp_progress_init("Mathmaping...");
+    gimp_progress_init("Mathmapping...");
 
     for (pr = gimp_pixel_rgns_register(1, &dest_rgn);
 	 pr != NULL; pr = gimp_pixel_rgns_process(pr))
@@ -512,7 +590,7 @@ mathmap(void)
 		currentX = col + dest_rgn.x - sel_x1 - middleX;
 		currentY = 0.0 + dest_rgn.y - sel_y1 - middleY;
 		calc_ra(); result = eval_postfix();
-		double_to_color(result, &red, &green, &blue);
+		double_to_color(result, &red, &green, &blue, &alpha);
 
 		line1[col * 3 + 0] = red;
 		line1[col * 3 + 1] = green;
@@ -528,7 +606,7 @@ mathmap(void)
 		    currentX = col + dest_rgn.x - sel_x1 + 0.5 - middleX;
 		    currentY = row + dest_rgn.y - sel_y1 + 0.5 - middleY;
 		    calc_ra(); result = eval_postfix();
-		    double_to_color(result, &red, &green, &blue);
+		    double_to_color(result, &red, &green, &blue, &alpha);
 		    
 		    line2[col * 3 + 0] = red;
 		    line2[col * 3 + 1] = green;
@@ -539,7 +617,7 @@ mathmap(void)
 		    currentX = col + dest_rgn.x - sel_x1 - middleX;
 		    currentY = row + dest_rgn.y - sel_y1 + 1.0 - middleY;
 		    calc_ra(); result = eval_postfix();
-		    double_to_color(result, &red, &green, &blue);
+		    double_to_color(result, &red, &green, &blue, &alpha);
 		
 		    line3[col * 3 + 0] = red;
 		    line3[col * 3 + 1] = green;
@@ -567,7 +645,7 @@ mathmap(void)
 		    dest[0] = red / 6;
 		    dest[1] = green / 6;
 		    dest[2] = blue / 6;
-		    dest += img_bpp;
+		    dest += outputBPP;
 		}
 
 		memcpy(line1, line3, (imageWidth + 1) * 3);
@@ -589,18 +667,20 @@ mathmap(void)
 		    iy = (int) cy;
 
 		    currentX = col - sel_x1 - middleX; currentY = row - sel_y1 - middleY;
-		    if (!intersamplingEnabled)
-		    {
-			currentX += 0.5;
-			currentY += 0.5;
-		    }
 		    calc_ra(); result = eval_postfix();
-		    double_to_color(result, &red, &green, &blue);
+		    double_to_color(result, &red, &green, &blue, &alpha);
 		    
 		    dest[0] = red;
-		    dest[1] = green;
-		    dest[2] = blue;
-		    dest += img_bpp;
+		    if (outputBPP == 2)
+			dest[1] = alpha;
+		    else if (outputBPP >= 3)
+		    {
+			dest[1] = green;
+			dest[2] = blue;
+			if (outputBPP == 4)
+			    dest[3] = alpha;
+		    }
+		    dest += outputBPP;
 		}
 		
 		dest_row += dest_rgn.rowstride;
@@ -617,9 +697,9 @@ mathmap(void)
 	the_tile = NULL;
     } /* if */
 
-    gimp_drawable_flush(drawable);
-    gimp_drawable_merge_shadow(drawable->id, TRUE);
-    gimp_drawable_update(drawable->id, sel_x1, sel_y1, sel_width, sel_height);
+    gimp_drawable_flush(output_drawable);
+    gimp_drawable_merge_shadow(output_drawable->id, TRUE);
+    gimp_drawable_update(output_drawable->id, sel_x1, sel_y1, sel_width, sel_height);
 } /* mathmap */
 
 
@@ -654,7 +734,7 @@ mathmap_get_pixel(int x, int y, guchar *pixel)
 	if (the_tile != NULL)
 	    gimp_tile_unref(the_tile, FALSE);
 
-	the_tile = gimp_drawable_get_tile(drawable, FALSE, newrow, newcol);
+	the_tile = gimp_drawable_get_tile(input_drawable, FALSE, newrow, newcol);
 	assert(the_tile != 0);
 	gimp_tile_ref(the_tile);
 
@@ -664,7 +744,7 @@ mathmap_get_pixel(int x, int y, guchar *pixel)
 
     p = the_tile->data + the_tile->bpp * (the_tile->ewidth * newrowoff + newcoloff);
 
-    for (i = img_bpp; i; i--)
+    for (i = inputBPP; i; i--)
 	*pixel++ = *p++;
 }
 
@@ -703,7 +783,7 @@ build_preview_source_image(void)
 	{
 	    mathmap_get_pixel((int) px, (int) py, pixel);
 
-	    if (img_bpp < 3)
+	    if (inputBPP < 3)
 	    {
 		pixel[1] = pixel[0];
 		pixel[2] = pixel[0];
@@ -727,12 +807,12 @@ static gint
 mathmap_dialog(void)
 {
     GtkWidget  *dialog;
-    GtkWidget  *top_table;
+    GtkWidget *top_table,
+	*middle_table;
     GtkWidget  *frame;
     GtkWidget  *table;
     GtkWidget  *button;
     GtkWidget  *label;
-    GtkWidget  *entry;
     GtkWidget  *toggle;
     GtkWidget  *arrow;
     GtkWidget  *alignment;
@@ -741,6 +821,8 @@ mathmap_dialog(void)
     GtkWidget  *menubaritem;
     GtkWidget  *menu;
     GtkWidget  *item;
+    GtkWidget *scale;
+    GtkObject *adjustment;
     int i;
     gint        argc;
     gchar     **argv;
@@ -773,13 +855,13 @@ mathmap_dialog(void)
 		       (GtkSignalFunc) dialog_close_callback,
 		       NULL);
 
-    top_table = gtk_table_new(6, 3, FALSE);
+    top_table = gtk_table_new(5, 3, FALSE);
     gtk_container_border_width(GTK_CONTAINER(top_table), 6);
     gtk_table_set_row_spacings(GTK_TABLE(top_table), 4);
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), top_table, FALSE, FALSE, 0);
     gtk_widget_show(top_table);
 
-	/* Preview */
+    /* Preview */
 
     frame = gtk_frame_new(NULL);
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
@@ -796,25 +878,112 @@ mathmap_dialog(void)
     gtk_table_attach(GTK_TABLE(top_table), button, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
     gtk_widget_show(button);
 
-    alignment = gtk_alignment_new(0, 0, 0, 0);
-    toggle = gtk_check_button_new_with_label("Intersampling");
-    gtk_container_add(GTK_CONTAINER(alignment), toggle);
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), mmvals.flags & FLAG_INTERSAMPLING);
-    gtk_table_attach(GTK_TABLE(top_table), alignment, 0, 3, 2, 3, GTK_FILL, 0, 0, 0);
-    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-		       (GtkSignalFunc)dialog_intersampling_update, 0);
-    gtk_widget_show(toggle);
-    gtk_widget_show(alignment);
+    middle_table = gtk_table_new(1, 2, FALSE);
+    gtk_container_border_width(GTK_CONTAINER(middle_table), 6);
+    gtk_table_set_col_spacings(GTK_TABLE(middle_table), 4);
+    gtk_table_attach(GTK_TABLE(top_table), middle_table, 0, 3, 2, 3, GTK_FILL, 0, 0, 0);
+    gtk_widget_show(middle_table);
 
-    alignment = gtk_alignment_new(0, 0, 0, 0);
-    toggle = gtk_check_button_new_with_label("Oversampling");
-    gtk_container_add(GTK_CONTAINER(alignment), toggle);
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), mmvals.flags & FLAG_OVERSAMPLING);
-    gtk_table_attach(GTK_TABLE(top_table), alignment, 0, 3, 3, 4, GTK_FILL, 0, 0, 0);
-    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-		       (GtkSignalFunc)dialog_oversampling_update, 0);
-    gtk_widget_show(toggle);
-    gtk_widget_show(alignment);
+        /* Sampling */
+
+        table = gtk_table_new(2, 1, FALSE);
+	gtk_container_border_width(GTK_CONTAINER(table), 6);
+	gtk_table_set_row_spacings(GTK_TABLE(table), 4);
+    
+	frame = gtk_frame_new(NULL);
+	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
+	gtk_container_add(GTK_CONTAINER(frame), table);
+
+	alignment = gtk_alignment_new(0, 0, 0, 0);
+	gtk_container_add(GTK_CONTAINER(alignment), frame);
+	gtk_table_attach(GTK_TABLE(middle_table), alignment, 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
+
+	gtk_widget_show(table);
+	gtk_widget_show(frame);
+	gtk_widget_show(alignment);
+
+            /* Intersampling */
+
+            alignment = gtk_alignment_new(0, 0, 0, 0);
+	    toggle = gtk_check_button_new_with_label("Intersampling");
+	    gtk_container_add(GTK_CONTAINER(alignment), toggle);
+	    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle),
+					mmvals.flags & FLAG_INTERSAMPLING);
+	    gtk_table_attach(GTK_TABLE(table), alignment, 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
+	    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
+			       (GtkSignalFunc)dialog_intersampling_update, 0);
+	    gtk_widget_show(toggle);
+	    gtk_widget_show(alignment);
+
+	    /* Oversampling */
+	    
+	    alignment = gtk_alignment_new(0, 0, 0, 0);
+	    toggle = gtk_check_button_new_with_label("Oversampling");
+	    gtk_container_add(GTK_CONTAINER(alignment), toggle);
+	    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle),
+					mmvals.flags & FLAG_OVERSAMPLING);
+	    gtk_table_attach(GTK_TABLE(table), alignment, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
+	    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
+			       (GtkSignalFunc)dialog_oversampling_update, 0);
+	    gtk_widget_show(toggle);
+	    gtk_widget_show(alignment);
+
+	/* Animation */
+	    
+	table = gtk_table_new(2, 1, FALSE);
+	gtk_container_border_width(GTK_CONTAINER(table), 6);
+	gtk_table_set_row_spacings(GTK_TABLE(table), 4);
+	gtk_table_set_col_spacings(GTK_TABLE(table), 4);
+    
+	frame = gtk_frame_new(NULL);
+	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
+	gtk_container_add(GTK_CONTAINER(frame), table);
+
+	alignment = gtk_alignment_new(0, 0, 0, 0);
+	gtk_container_add(GTK_CONTAINER(alignment), frame);
+	gtk_table_attach(GTK_TABLE(middle_table), alignment, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
+
+	gtk_widget_show(table);
+	gtk_widget_show(frame);
+	gtk_widget_show(alignment);
+
+	    /* Animation Toggle */
+
+	    alignment = gtk_alignment_new(0, 0, 0, 0);
+	    toggle = gtk_check_button_new_with_label("Animate");
+	    gtk_container_add(GTK_CONTAINER(alignment), toggle);
+	    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle),
+					mmvals.flags & FLAG_ANIMATION);
+	    gtk_table_attach(GTK_TABLE(table), alignment, 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
+	    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
+			       (GtkSignalFunc)dialog_animation_update, 0);
+	    gtk_widget_show(toggle);
+	    gtk_widget_show(alignment);
+
+	    /* Number of Frames */
+
+	    animate_table = gtk_table_new(1, 2, FALSE);
+	    gtk_table_set_col_spacings(GTK_TABLE(animate_table), 4);
+	    gtk_table_attach(GTK_TABLE(table), animate_table, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
+
+	    label = gtk_label_new("Frames");
+	    gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
+	    gtk_table_attach(GTK_TABLE(animate_table), label, 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
+	    adjustment = gtk_adjustment_new(mmvals.frames, 2, 100, 1.0, 1.0, 0.0);
+	    scale = gtk_hscale_new(GTK_ADJUSTMENT(adjustment));
+	    gtk_widget_set_usize(scale, 100, 0);
+	    gtk_table_attach (GTK_TABLE (animate_table), scale, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
+	    gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+	    gtk_scale_set_digits(GTK_SCALE(scale),0);
+	    gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+	    gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+				(GtkSignalFunc) dialog_scale_update,
+				&mmvals.frames);
+	    gtk_widget_show(label);
+	    gtk_widget_show(scale);
+
+	    gtk_widget_show(animate_table);
+	    gtk_widget_set_sensitive(animate_table, mmvals.flags & FLAG_ANIMATION);
 
     /* Menu */
 
@@ -824,7 +993,8 @@ mathmap_dialog(void)
     {
 	item = gtk_menu_item_new_with_label(examples[i][0]);
 	gtk_menu_append(GTK_MENU(menu), item);
-	gtk_signal_connect(GTK_OBJECT(item), "activate", (GtkSignalFunc)dialog_example_callback, examples[i][1]);
+	gtk_signal_connect(GTK_OBJECT(item), "activate",
+			   (GtkSignalFunc)dialog_example_callback, examples[i][1]);
 	gtk_widget_show(item);
     }
 
@@ -843,7 +1013,7 @@ mathmap_dialog(void)
     gtk_container_add(GTK_CONTAINER(menubar), menubaritem);
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(menubaritem), menu);
 
-    gtk_table_attach(GTK_TABLE(top_table), alignment, 0, 3, 4, 5, GTK_FILL, 0, 0, 0);
+    gtk_table_attach(GTK_TABLE(top_table), alignment, 0, 3, 3, 4, GTK_FILL, 0, 0, 0);
 
     gtk_widget_show(arrow);
     gtk_widget_show(label);
@@ -856,7 +1026,7 @@ mathmap_dialog(void)
 
     table = gtk_table_new(1, 2, FALSE);
     gtk_container_border_width(GTK_CONTAINER(table), 0);
-    gtk_table_attach(GTK_TABLE(top_table), table, 0, 3, 5, 6, GTK_EXPAND | GTK_FILL, 0, 0, 0);
+    gtk_table_attach(GTK_TABLE(top_table), table, 0, 3, 4, 5, GTK_EXPAND | GTK_FILL, 0, 0, 0);
     gtk_widget_show(table);
 
     label = gtk_label_new("Expression");
@@ -864,19 +1034,19 @@ mathmap_dialog(void)
     gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 4, 0);
     gtk_widget_show(label);
 
-    expressionEntry = gtk_entry_new();
+    expression_entry = gtk_entry_new();
     /*
 	gtk_object_set_user_data(GTK_OBJECT(entry), scale_data);
 	gtk_object_set_user_data(scale_data, entry);
 	*/
-    gtk_widget_set_usize(expressionEntry, ENTRY_WIDTH, 0);
-    gtk_entry_set_text(GTK_ENTRY(expressionEntry), mmvals.expression);
-    gtk_signal_connect(GTK_OBJECT(expressionEntry), "changed",
+    gtk_widget_set_usize(expression_entry, ENTRY_WIDTH, 0);
+    gtk_entry_set_text(GTK_ENTRY(expression_entry), mmvals.expression);
+    gtk_signal_connect(GTK_OBJECT(expression_entry), "changed",
 		       (GtkSignalFunc) dialog_entry_update,
 		       0);
-    gtk_table_attach(GTK_TABLE(table), expressionEntry, 1, 2, 0, 1,
+    gtk_table_attach(GTK_TABLE(table), expression_entry, 1, 2, 0, 1,
 		     GTK_EXPAND | GTK_FILL, GTK_FILL, 4, 0);
-    gtk_widget_show(expressionEntry);
+    gtk_widget_show(expression_entry);
 	
 	/* Buttons */
 
@@ -926,11 +1096,9 @@ dialog_update_preview(void)
 {
     double  left, right, bottom, top;
     double  dx, dy;
-    double  cx, cy;
-    int     ix, iy;
     int     x, y;
     double  scale_x, scale_y;
-    guchar *p_ul, *p_lr, *i, *p;
+    guchar *p_ul, *p_lr, *p;
 
     intersamplingEnabled = mmvals.flags & FLAG_INTERSAMPLING;
     oversamplingEnabled = mmvals.flags & FLAG_OVERSAMPLING;
@@ -985,12 +1153,13 @@ dialog_update_preview(void)
 	    double result;
 	    int red,
 		green,
-		blue;
+		blue,
+		alpha;
 
 	    currentX = x * imageWidth / preview_width - middleX;
 	    currentY = y * imageHeight / preview_height - middleY;
 	    calc_ra(); result = eval_postfix();
-	    double_to_color(result, &red, &green, &blue);
+	    double_to_color(result, &red, &green, &blue, &alpha);
 
 	    p_ul[0] = red;
 	    p_ul[1] = green;
@@ -1016,6 +1185,7 @@ dialog_update_preview(void)
 
 /*****/
 
+/*
 static void
 dialog_create_value(char *title, GtkTable *table, int row, gdouble *value,
 		    double left, double right)
@@ -1059,36 +1229,23 @@ dialog_create_value(char *title, GtkTable *table, int row, gdouble *value,
 		       value);
     gtk_table_attach(GTK_TABLE(table), entry, 2, 3, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
     gtk_widget_show(entry);
-} /* dialog_create_value */
+}
+*/
 
 
 /*****/
 
 static void
-dialog_scale_update(GtkAdjustment *adjustment, gdouble *value)
+dialog_scale_update(GtkAdjustment *adjustment, gint *value)
 {
-    GtkWidget *entry;
-    char       buf[256];
-
-    if (*value != adjustment->value) {
-	*value = adjustment->value;
-
-	entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-	sprintf(buf, "%0.2f", *value);
-
-	gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
-	gtk_entry_set_text(GTK_ENTRY(entry), buf);
-	gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
-
-	/*		dialog_update_preview(); */
-    } /* if */
+    *value = (gint)adjustment->value;
 } /* dialog_scale_update */
 
 
 /*****/
 
 static void
-dialog_entry_update(GtkWidget *widget, gdouble *value)
+dialog_entry_update(GtkWidget *widget, gpointer value)
 {
     expression_copy(mmvals.expression, gtk_entry_get_text(GTK_ENTRY(widget)));
 } /* dialog_entry_update */
@@ -1118,9 +1275,22 @@ dialog_intersampling_update (GtkWidget *widget, gpointer data)
 /*****/
 
 static void
+dialog_animation_update (GtkWidget *widget, gpointer data)
+{
+    mmvals.flags &= ~FLAG_ANIMATION;
+
+    if (GTK_TOGGLE_BUTTON(widget)->active)
+	mmvals.flags |= FLAG_ANIMATION;
+
+    gtk_widget_set_sensitive(animate_table, mmvals.flags & FLAG_ANIMATION);
+}
+
+/*****/
+
+static void
 dialog_example_callback (GtkWidget *widget, char *expression)
 {
-    gtk_entry_set_text(GTK_ENTRY(expressionEntry), expression);
+    gtk_entry_set_text(GTK_ENTRY(expression_entry), expression);
 }
 
 /*****/
