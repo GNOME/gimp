@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
-"POT-Creation-Date: 2001-11-27 19:23+0100\n"
-"PO-Revision-Date: 2001-11-27 19:23+0100\n"
+"POT-Creation-Date: 2001-12-30 21:08+0100\n"
+"PO-Revision-Date: 2001-12-30 21:10+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1054,7 +1054,8 @@ msgstr "Liniowy"
 msgid "Logarithmic"
 msgstr "Logarytmiczny"
 
-#: plug-ins/Lighting/lighting_ui.c:1 plug-ins/flame/flame.c:1
+#: plug-ins/Lighting/lighting_ui.c:1 plug-ins/common/sinus.c:1
+#: plug-ins/flame/flame.c:1
 msgid "Sinusoidal"
 msgstr "Sinusoidalny"
 
@@ -5888,10 +5889,6 @@ msgid "Blend Settings"
 msgstr "Ustawienia zlewania"
 
 #: plug-ins/common/sinus.c:1
-msgid "Sinusodial"
-msgstr "Sinusoidalny"
-
-#: plug-ins/common/sinus.c:1
 msgid "Exponent:"
 msgstr "Wyk³adnik:"
 
@@ -7713,13 +7710,13 @@ msgstr "Film:"
 msgid ""
 "Name of a videofile to READ by xanim.\n"
 "Frames are extracted from the videofile\n"
-"and written to seprate diskfiles.\n"
+"and written to separate diskfiles.\n"
 "xanim exporting edition is required."
 msgstr ""
-"Nazwa filmu odczytywanego przez xanim.\n"
-"Ramki s± wydzielane z pliku\n"
+"Nazwa filmu ODCZYTYWANEGO przez xanim.\n"
+"Ramki s± wydzielane z pliku video\n"
 "i zapisywane w niezale¿nych plikach.\n"
-"Wymagana jest xanim w wersji eksportuj±cej."
+"Wymagany jest xanim w wersji eksportuj±cej."
 
 #: plug-ins/gap/gap_decode_xanim.c:1
 msgid ""
@@ -13280,3 +13277,6 @@ msgstr "B³±d: Nie mo¿na odczytaæ pliku z w³a¶ciwo¶ciami XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "B³±d: Plik z w³a¶ciwo¶ciami XJT %s jest pusty"
+
+msgid "Sinusodial"
+msgstr "Sinusoidalny"
