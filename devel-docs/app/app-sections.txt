@@ -3772,7 +3772,6 @@ GIMP_DIALOG_FACTORY_GET_CLASS
 <FILE>gimpdock</FILE>
 <TITLE>GimpDock</TITLE>
 GimpDock
-gimp_dock_construct
 gimp_dock_setup
 gimp_dock_add
 gimp_dock_remove
@@ -4697,9 +4696,8 @@ GTK_VWRAP_BOX_GET_CLASS
 
 <SECTION>
 <FILE>app_procs</FILE>
-the_gimp
 app_gui_libs_init
-app_init
+app_run
 </SECTION>
 
 <SECTION>
@@ -7072,17 +7070,21 @@ gimp_dnd_file_dest_remove
 gimp_dnd_open_files
 GimpDndDropColorFunc
 GimpDndDragColorFunc
-gimp_dnd_color_source_set
+gimp_dnd_color_source_add
+gimp_dnd_color_source_remove
 gimp_dnd_color_dest_add
 gimp_dnd_color_dest_remove
+GimpDndDragFileFunc
+gimp_dnd_file_source_add
+gimp_dnd_file_source_remove
 GimpDndDropViewableFunc
 GimpDndDragViewableFunc
-gimp_dnd_drag_source_set_by_type
-gimp_dnd_viewable_source_set
-gimp_dnd_viewable_source_unset
-gimp_dnd_drag_dest_set_by_type
+gimp_dnd_viewable_source_add
+gimp_dnd_viewable_source_remove
 gimp_dnd_viewable_dest_add
 gimp_dnd_viewable_dest_remove
+gimp_dnd_drag_source_set_by_type
+gimp_dnd_drag_dest_set_by_type
 gimp_dnd_get_drag_data
 </SECTION>
 
@@ -7138,6 +7140,7 @@ gimp_get_mod_separator
 gimp_get_screen_resolution
 gimp_rgb_get_gdk_color
 gimp_rgb_set_gdk_color
+gimp_window_type_hint_to_gdk_hint
 </SECTION>
 
 <SECTION>
@@ -7154,6 +7157,8 @@ GIMP_TYPE_TAB_STYLE
 GimpTabStyle
 GIMP_TYPE_VIEW_TYPE
 GimpViewType
+GIMP_TYPE_WINDOW_TYPE_HINT
+GimpWindowTypeHint
 GIMP_TYPE_ZOOM_TYPE
 GimpZoomType
 GimpPreviewBG
@@ -7169,6 +7174,7 @@ gimp_help_browser_type_get_type
 gimp_histogram_scale_get_type
 gimp_tab_style_get_type
 gimp_view_type_get_type
+gimp_window_type_hint_get_type
 gimp_zoom_type_get_type
 </SECTION>
 
