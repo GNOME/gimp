@@ -84,7 +84,6 @@ safe_mode_init (void)
 
   tool_plug_in_path++;
   tool_plug_in_path[strlen(tool_plug_in_path)-1] = 0;
-  g_message ("bah1");
   
   if (g_module_supported () && tool_plug_in_path) 
     {
@@ -96,7 +95,6 @@ safe_mode_init (void)
       const gchar   *dir_ent;
       struct stat    filestat;
 
-  g_message ("bah2");
 
 #ifdef __EMX__
   /*
@@ -154,8 +152,3 @@ safe_mode_init (void)
 
   g_message ("tool-safe-mode init done");
 }
-
-
-
-
-
