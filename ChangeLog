@@ -1,3 +1,8 @@
+Wed Mar 11 02:49:14 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/fileops.c: no need to hide the help button for fileops,
+	since it doesn't exist anymore
+
 Wed Mar 11 02:26:51 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* added animoptimize plugin
