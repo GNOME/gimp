@@ -6,8 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2003-08-23 07:15+0800\n"
-"PO-Revision-Date: 2003-07-21 08:00+0800\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-11-01 01:41+0800\n"
+"PO-Revision-Date: 2003-10-30 08:00+0800\n"
 "Last-Translator: Mimos Open Source Development Group <syed@mimos.my>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
 "MIME-Version: 1.0\n"
@@ -15,9 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpbrushmenu.c:132
-#, fuzzy
 msgid "Brush Selection"
-msgstr "Pemilihan Unit"
+msgstr "Pemilihan Berus"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
@@ -168,14 +168,12 @@ msgstr ""
 "Cara ini tidak akan menyimpan lapisan yang dapat dilihat."
 
 #: libgimp/gimpfontmenu.c:89
-#, fuzzy
 msgid "Font Selection"
-msgstr "Pemilihan Unit"
+msgstr "Pemilihan Fon"
 
 #: libgimp/gimpgradientmenu.c:103
-#, fuzzy
 msgid "Gradient Selection"
-msgstr "Pemilihan Unit"
+msgstr "Pemilihan Kecerunan"
 
 #: libgimp/gimpmenu.c:401
 msgid "None"
@@ -183,7 +181,7 @@ msgstr "Tiada"
 
 #: libgimp/gimpmiscui.c:50
 msgid "Preview"
-msgstr ""
+msgstr "Pralihat"
 
 #: libgimp/gimpmiscui.c:536
 #, c-format
@@ -193,42 +191,54 @@ msgid ""
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
+"Tiada %s dalam gimprc:\n"
+"Anda perlu tambah entri seperti\n"
+"(%s \"%s\")\n"
+"ke fail %s anda."
+
+#: libgimp/gimpmiscui.c:556
+#, fuzzy
+msgid "Parameter Settings"
+msgstr "Pemilihan Corak"
 
 #: libgimp/gimppatternmenu.c:115
-#, fuzzy
 msgid "Pattern Selection"
-msgstr "Pemilihan Unit"
+msgstr "Pemilihan Corak"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "peratus"
 
-#: libgimpbase/gimputils.c:118
+#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
+msgid "(invalid UTF-8 string)"
+msgstr ""
+
+#: libgimpbase/gimputils.c:189
 #, c-format
 msgid "%d Bytes"
 msgstr "%d Bait"
 
-#: libgimpbase/gimputils.c:122
+#: libgimpbase/gimputils.c:193
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: libgimpbase/gimputils.c:126
+#: libgimpbase/gimputils.c:197
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: libgimpbase/gimputils.c:130
+#: libgimpbase/gimputils.c:201
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: libgimpbase/gimputils.c:135
+#: libgimpbase/gimputils.c:206
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: libgimpbase/gimputils.c:140
+#: libgimpbase/gimputils.c:211
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
@@ -246,7 +256,7 @@ msgid ""
 "Module '%s' load error:\n"
 "%s"
 msgstr ""
-"Ralat muat '%s' modul:\n"
+"Ralat muat modul '%s':\n"
 "%s"
 
 #: libgimpmodule/gimpmodule.c:271
@@ -382,83 +392,83 @@ msgstr ""
 "Klik penitis mata, selepas itu klik warna di mana-mana sahaja pada skrin "
 "anda untuk memilih warna tersebut."
 
-#: libgimpwidgets/gimpstock.c:101
+#: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "Tambat"
 
-#: libgimpwidgets/gimpstock.c:102
+#: libgimpwidgets/gimpstock.c:114
 msgid "_Duplicate"
 msgstr "_Pendua"
 
-#: libgimpwidgets/gimpstock.c:103
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Edit"
 msgstr "_Edit"
 
-#: libgimpwidgets/gimpstock.c:104
+#: libgimpwidgets/gimpstock.c:116
 msgid "Linked"
 msgstr "Terpaut"
 
-#: libgimpwidgets/gimpstock.c:105
+#: libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
 msgstr "Tampal sebagai Baru"
 
-#: libgimpwidgets/gimpstock.c:106
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
 msgstr "Tampal Ke dalam"
 
-#: libgimpwidgets/gimpstock.c:107
+#: libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
 msgstr "_Set semula"
 
-#: libgimpwidgets/gimpstock.c:108
+#: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "Dapat dilihat"
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:168
 msgid "L_etter Spacing"
 msgstr "Langkauan A_ksara"
 
-#: libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:169
 msgid "L_ine Spacing"
 msgstr "Langkauan B_aris"
 
-#: libgimpwidgets/gimpstock.c:172
+#: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
 msgstr "_Saiz semula"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:281
 msgid "_Scale"
 msgstr "_Skala"
 
-#: libgimpwidgets/gimpstock.c:235
+#: libgimpwidgets/gimpstock.c:259
 msgid "Crop"
 msgstr "Potong"
 
-#: libgimpwidgets/gimpstock.c:253
+#: libgimpwidgets/gimpstock.c:277
 msgid "_Transform"
 msgstr "_Jelma"
 
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:280
 msgid "_Rotate"
 msgstr "_Putar"
 
-#: libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:282
 msgid "_Shear"
 msgstr "_Ricih"
 
-#: libgimpwidgets/gimpunitmenu.c:267
+#: libgimpwidgets/gimpunitmenu.c:268
 msgid "More..."
 msgstr "Lagi..."
 
-#: libgimpwidgets/gimpunitmenu.c:527
+#: libgimpwidgets/gimpunitmenu.c:576
 msgid "Unit Selection"
 msgstr "Pemilihan Unit"
 
-#: libgimpwidgets/gimpunitmenu.c:573
+#: libgimpwidgets/gimpunitmenu.c:622
 msgid "Unit"
 msgstr "Unit"
 
-#: libgimpwidgets/gimpunitmenu.c:577
+#: libgimpwidgets/gimpunitmenu.c:626
 msgid "Factor"
 msgstr "Faktor"
 
@@ -530,64 +540,65 @@ msgstr "Kontras"
 msgid "Contrast Cycles:"
 msgstr "Kitar Kontras:"
 
-#: modules/colorsel_cmyk.c:70
+#: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
-msgstr ""
+msgstr "Pemilih warna CMYK"
 
-#: modules/colorsel_cmyk.c:129
+#: modules/colorsel_cmyk.c:132
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
-#: modules/colorsel_cmyk.c:143
+#: modules/colorsel_cmyk.c:149
 msgid "_C"
-msgstr ""
-
-#: modules/colorsel_cmyk.c:144
-msgid "_M"
-msgstr ""
-
-#: modules/colorsel_cmyk.c:145
-msgid "_Y"
-msgstr ""
-
-#: modules/colorsel_cmyk.c:146
-msgid "_K"
-msgstr ""
+msgstr "_C"
 
 #: modules/colorsel_cmyk.c:150
-msgid "Cyan"
-msgstr ""
+msgid "_M"
+msgstr "_M"
 
 #: modules/colorsel_cmyk.c:151
-msgid "Magenta"
-msgstr ""
+msgid "_Y"
+msgstr "_y"
 
 #: modules/colorsel_cmyk.c:152
-msgid "Yellow"
-msgstr ""
+msgid "_K"
+msgstr "_K"
 
-#: modules/colorsel_cmyk.c:153
-#, fuzzy
+#: modules/colorsel_cmyk.c:156
+msgid "Cyan"
+msgstr "Cyan"
+
+#: modules/colorsel_cmyk.c:157
+msgid "Magenta"
+msgstr "Magenta"
+
+#: modules/colorsel_cmyk.c:158
+msgid "Yellow"
+msgstr "Kuning"
+
+#: modules/colorsel_cmyk.c:159
 msgid "Black"
-msgstr "/Hitam"
+msgstr "Hitam"
+
+#: modules/colorsel_cmyk.c:193
+msgid "Black Pullout (%):"
+msgstr ""
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr "Pemilih warna segi tiga gaya pengecat"
 
 #: modules/colorsel_triangle.c:182
-#, fuzzy
 msgid "Triangle"
-msgstr "_Segi tiga"
+msgstr "Segi tiga"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
 msgstr "Pemilih warna gaya cat air"
 
 #: modules/colorsel_water.c:176
-#, fuzzy
 msgid "Watercolor"
-msgstr "_Cat air"
+msgstr "Cat air"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
