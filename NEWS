@@ -9,6 +9,9 @@ development takes place on the road to the next stable release.
 
 Overview of Changes in GIMP 1.3.17
 ==================================
+- Store grid settings in XCF [Brix]
+- Redone assembly checks and run-time checks for CPU features [Sven]
+- Added lots of mnemonics to the menus [Jimmac]
 - Support for comments in PNG files [Sven]
 - Constified the libgimp API and adapted all plug-ins [Yosh, Sven]
 - Cleaned up the brush/font/gradient/pattern selector API [Mitch]
@@ -16,7 +19,7 @@ Overview of Changes in GIMP 1.3.17
 - Lots of bug fixes
 
 Other contributors:
-  Manish Singh, Henrik Brix Andersen
+  Eric Pierce
 
 
 Overview of Changes in GIMP 1.3.16
