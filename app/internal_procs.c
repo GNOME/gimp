@@ -156,6 +156,7 @@ internal_procs_init ()
   procedural_db_register (&gimage_raise_layer_proc); pcount++;
   procedural_db_register (&gimage_lower_layer_proc); pcount++;
   procedural_db_register (&gimage_merge_visible_layers_proc); pcount++;
+  procedural_db_register (&gimage_merge_down_proc); pcount++;
   procedural_db_register (&gimage_flatten_proc); pcount++;
   procedural_db_register (&gimage_add_layer_proc); pcount++;
   procedural_db_register (&gimage_remove_layer_proc); pcount++;

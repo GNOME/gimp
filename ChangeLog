@@ -1,3 +1,7 @@
+Mon Aug 31 16:51:35 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/internal_procs.c: included in merge down changes
+
 Mon Aug 31 16:33:11 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
  	* app/gimpimage.[ch]
