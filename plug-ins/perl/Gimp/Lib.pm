@@ -56,7 +56,7 @@ sub gimp_image_get_channels {
 
 # "server-side" perl code evaluation
 sub server_eval {
-   my @res = eval shift;
+   my @res = eval "package Gimp::Eval; $_[0]";
    die $@ if $@;
    @res;
 }
