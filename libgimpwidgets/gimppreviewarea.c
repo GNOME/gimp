@@ -256,13 +256,6 @@ gimp_preview_area_expose (GtkWidget      *widget,
   return FALSE;
 }
 
-static guint
-gimp_preview_area_get_check_size (GimpPreviewArea *area)
-{
-  return (1 << (2 + area->check_size));
-}
-
-
 
 /**
  * gimp_preview_area_new:
