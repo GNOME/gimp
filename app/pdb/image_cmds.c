@@ -3774,7 +3774,7 @@ static ProcRecord image_get_filename_proc =
 {
   "gimp_image_get_filename",
   "Returns the specified image's filename.",
-  "This procedure returns the specified image's filename -- if it was loaded or has since been saved. Otherwise, returns NULL.",
+  "This procedure returns the specified image's filename in the filesystem encoding. The image has a filename only if it was loaded or has since been saved. Otherwise, this function returns %NULL.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3864,8 +3864,12 @@ image_get_name_invoker (Gimp         *gimp,
 
       if (filename)
         {
-          name = g_path_get_basename (filename);
-          g_free (filename);
+          gchar *basename = g_path_get_basename (filename);
+          name = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
+          g_free (basename);
+
+          if (! name)
+            name = g_strdup (_("(invalid UTF-8 string)"));
         }
       else
         {

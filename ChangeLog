@@ -1,5 +1,17 @@
 2004-11-13  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/image.pdb: document the fact that
+	gimp_image_get_filename() returns the filename in the filesystem
+	encoding. Fixed gimp_image_get_name() to actually return the name
+	in UTF-8 encoding.
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.c
+
+	* app/vectors/gimpbezierstroke.h: formatting.
+
+2004-11-13  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimagefile.[ch]
 	* app/file/file-open.c
 	* app/file/file-save.c: pass the MIME type from the save procedure
