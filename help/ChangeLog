@@ -1,3 +1,9 @@
+2001-10-28  Sven Neumann  <sven@gimp.org>
+
+	* C/dialogs/Makefile.am: added new files
+
+	* C/dialogs/confirm_save.html: corrected help text.
+	
 2001-10-08  Michael Natterer  <mitch@gimp.org>
 
 	* C/images/Makefile.am.orig
