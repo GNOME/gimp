@@ -424,6 +424,7 @@ plug-ins/rotators/Makefile
 plug-ins/rotate/Makefile
 plug-ins/ripple/Makefile
 plug-ins/randomize/Makefile
+plug-ins/palette/Makefile
 plug-ins/ps/Makefile
 plug-ins/print/Makefile
 plug-ins/polar/Makefile

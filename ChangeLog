@@ -1,3 +1,7 @@
+Fri Mar 27 11:41:30 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	*plug-ins/palette/*: added the save palette plugin
+
 Fri Mar 27 14:33:42 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* plugins/dbbrowser/dbbrowser_utils.c

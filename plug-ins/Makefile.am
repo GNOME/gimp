@@ -82,6 +82,7 @@ SUBDIRS = 			\
 	normalize		\
 	nova			\
 	oilify			\
+	palette			\
 	papertile		\
 	pat			\
 	pcx			\
