@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-20 23:18+0100\n"
-"PO-Revision-Date: 2004-03-23 19:02+0900\n"
+"PO-Revision-Date: 2004-03-23 23:46+0800\n"
 "Last-Translator: SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -6734,7 +6734,7 @@ msgid "Cannot create folder '%s': %s"
 msgstr "ディレクトリ '%s' を作成できませんでした; %s"
 
 #: app/gui/user-install-dialog.c:1115
-#, c-format
+#, fuzzy, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "'%$2s' から '%$1s' へファイルをコピー中..."
 
