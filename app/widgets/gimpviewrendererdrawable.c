@@ -118,8 +118,7 @@ gimp_preview_renderer_drawable_render (GimpPreviewRenderer *renderer,
       height = MAX (1, ROUND ((((gdouble) height / (gdouble) gimage->height) *
 			      (gdouble) item->height)));
 
-      gimp_viewable_calc_preview_size (renderer->viewable,
-                                       item->width,
+      gimp_viewable_calc_preview_size (item->width,
                                        item->height,
                                        width,
                                        height,
@@ -132,8 +131,7 @@ gimp_preview_renderer_drawable_render (GimpPreviewRenderer *renderer,
     }
   else
     {
-      gimp_viewable_calc_preview_size (renderer->viewable,
-                                       item->width,
+      gimp_viewable_calc_preview_size (item->width,
                                        item->height,
                                        width,
                                        height,

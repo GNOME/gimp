@@ -133,15 +133,16 @@ gimp_undo_class_init (GimpUndoClass *klass)
 		  G_TYPE_NONE, 1,
                   GIMP_TYPE_UNDO_MODE);
 
-  object_class->finalize          = gimp_undo_finalize;
+  object_class->finalize           = gimp_undo_finalize;
 
-  gimp_object_class->get_memsize  = gimp_undo_get_memsize;
+  gimp_object_class->get_memsize   = gimp_undo_get_memsize;
 
-  viewable_class->get_popup_size  = gimp_undo_get_popup_size;
-  viewable_class->get_new_preview = gimp_undo_get_new_preview;
+  viewable_class->default_stock_id = "gtk-undo";
+  viewable_class->get_popup_size   = gimp_undo_get_popup_size;
+  viewable_class->get_new_preview  = gimp_undo_get_new_preview;
 
-  klass->pop                      = gimp_undo_real_pop;
-  klass->free                     = gimp_undo_real_free;
+  klass->pop                       = gimp_undo_real_pop;
+  klass->free                      = gimp_undo_real_free;
 }
 
 static void
@@ -234,8 +235,7 @@ gimp_undo_get_new_preview (GimpViewable *viewable,
       gint preview_width;
       gint preview_height;
 
-      gimp_viewable_calc_preview_size (viewable,
-                                       undo->preview->width,
+      gimp_viewable_calc_preview_size (undo->preview->width,
                                        undo->preview->height,
                                        width,
                                        height,

@@ -126,16 +126,17 @@ gimp_pattern_class_init (GimpPatternClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize          = gimp_pattern_finalize;
+  object_class->finalize           = gimp_pattern_finalize;
 
-  gimp_object_class->get_memsize  = gimp_pattern_get_memsize;
+  gimp_object_class->get_memsize   = gimp_pattern_get_memsize;
 
-  viewable_class->get_popup_size  = gimp_pattern_get_popup_size;
-  viewable_class->get_new_preview = gimp_pattern_get_new_preview;
-  viewable_class->get_description = gimp_pattern_get_description;
+  viewable_class->default_stock_id = "gimp-tool-bucket-fill";
+  viewable_class->get_popup_size   = gimp_pattern_get_popup_size;
+  viewable_class->get_new_preview  = gimp_pattern_get_new_preview;
+  viewable_class->get_description  = gimp_pattern_get_description;
 
-  data_class->get_extension       = gimp_pattern_get_extension;
-  data_class->duplicate           = gimp_pattern_duplicate;
+  data_class->get_extension        = gimp_pattern_get_extension;
+  data_class->duplicate            = gimp_pattern_duplicate;
 }
 
 static void

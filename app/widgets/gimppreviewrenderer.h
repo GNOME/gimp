@@ -40,6 +40,7 @@ struct _GimpPreviewRenderer
 {
   GObject       parent_instance;
 
+  GType         viewable_type;
   GimpViewable *viewable;
 
   gint          width;

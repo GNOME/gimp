@@ -129,6 +129,7 @@ gimp_palette_class_init (GimpPaletteClass *klass)
 
   gimp_object_class->get_memsize   = gimp_palette_get_memsize;
 
+  viewable_class->default_stock_id = "gtk-select-color";
   viewable_class->get_preview_size = gimp_palette_get_preview_size;
   viewable_class->get_popup_size   = gimp_palette_get_popup_size;
   viewable_class->get_new_preview  = gimp_palette_get_new_preview;

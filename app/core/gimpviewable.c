@@ -357,22 +357,19 @@ gimp_viewable_size_changed (GimpViewable *viewable)
 }
 
 void
-gimp_viewable_calc_preview_size (GimpViewable *viewable,
-                                 gint          aspect_width,
-                                 gint          aspect_height,
-                                 gint          width,
-                                 gint          height,
-                                 gboolean      dot_for_dot,
-                                 gdouble       xresolution,
-                                 gdouble       yresolution,
-                                 gint         *return_width,
-                                 gint         *return_height,
-                                 gboolean     *scaling_up)
+gimp_viewable_calc_preview_size (gint       aspect_width,
+                                 gint       aspect_height,
+                                 gint       width,
+                                 gint       height,
+                                 gboolean   dot_for_dot,
+                                 gdouble    xresolution,
+                                 gdouble    yresolution,
+                                 gint      *return_width,
+                                 gint      *return_height,
+                                 gboolean  *scaling_up)
 {
   gdouble xratio;
   gdouble yratio;
-
-  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
   if (aspect_width > aspect_height)
     {
@@ -455,7 +452,7 @@ gimp_viewable_get_popup_size (GimpViewable *viewable,
           if ((w > (2 * GIMP_VIEWABLE_MAX_POPUP_SIZE)) ||
               (h > (2 * GIMP_VIEWABLE_MAX_POPUP_SIZE)))
             {
-              gimp_viewable_calc_preview_size (viewable, w, h,
+              gimp_viewable_calc_preview_size (w, h,
                                                2 * GIMP_VIEWABLE_MAX_POPUP_SIZE,
                                                2 * GIMP_VIEWABLE_MAX_POPUP_SIZE,
                                                dot_for_dot, 1.0, 1.0,

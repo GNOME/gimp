@@ -108,6 +108,7 @@ gimp_buffer_class_init (GimpBufferClass *klass)
 
   gimp_object_class->get_memsize   = gimp_buffer_get_memsize;
 
+  viewable_class->default_stock_id = "gtk-paste";
   viewable_class->get_preview_size = gimp_buffer_get_preview_size;
   viewable_class->get_popup_size   = gimp_buffer_get_popup_size;
   viewable_class->get_new_preview  = gimp_buffer_get_new_preview;
@@ -160,12 +161,9 @@ gimp_buffer_get_preview_size (GimpViewable *viewable,
 			      gint         *width,
 			      gint         *height)
 {
-  GimpBuffer *buffer;
+  GimpBuffer *buffer = GIMP_BUFFER (viewable);
 
-  buffer = GIMP_BUFFER (viewable);
-
-  gimp_viewable_calc_preview_size (viewable,
-                                   gimp_buffer_get_width (buffer),
+  gimp_viewable_calc_preview_size (gimp_buffer_get_width (buffer),
                                    gimp_buffer_get_height (buffer),
                                    size,
                                    size,
@@ -195,8 +193,7 @@ gimp_buffer_get_popup_size (GimpViewable *viewable,
     {
       gboolean scaling_up;
 
-      gimp_viewable_calc_preview_size (viewable,
-                                       buffer_width,
+      gimp_viewable_calc_preview_size (buffer_width,
                                        buffer_height,
                                        width  * 2,
                                        height * 2,

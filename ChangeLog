@@ -1,3 +1,28 @@
+2003-11-17  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpviewable.[ch]: removed the unused GimpViewable
+	parameter from gimp_viewable_calc_preview_size().
+
+	* app/core/gimpbuffer.c
+	* app/core/gimpimage-preview.c
+	* app/core/gimpimagefile.c
+	* app/core/gimpitem-preview.c
+	* app/core/gimpundo.c
+	* app/widgets/gimppreview.c
+	* app/widgets/gimppreviewrendererdrawable.c
+	* app/widgets/gimppreviewrendererimage.c: changed accordingly.
+
+	* app/widgets/gimppreviewrenderer.[ch]: store the viewable_type in
+	the preview renderer and use its default stock_id if no viewable
+	is set.
+
+	* app/core/gimpbrush.c
+	* app/core/gimpbuffer.c
+	* app/core/gimpgradient.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c
+	* app/core/gimpundo.c: set a default stock_id.
+
 2003-11-17  Manish Singh  <yosh@gimp.org>
 
 	* tools/gimp-remote.c (gimp_remote_find_window): search for the

@@ -152,19 +152,20 @@ gimp_brush_class_init (GimpBrushClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->finalize          = gimp_brush_finalize;
+  object_class->finalize           = gimp_brush_finalize;
 
-  gimp_object_class->get_memsize  = gimp_brush_get_memsize;
+  gimp_object_class->get_memsize   = gimp_brush_get_memsize;
 
-  viewable_class->get_popup_size  = gimp_brush_get_popup_size;
-  viewable_class->get_new_preview = gimp_brush_get_new_preview;
-  viewable_class->get_description = gimp_brush_get_description;
+  viewable_class->default_stock_id = "gimp-tool-paintbrush";
+  viewable_class->get_popup_size   = gimp_brush_get_popup_size;
+  viewable_class->get_new_preview  = gimp_brush_get_new_preview;
+  viewable_class->get_description  = gimp_brush_get_description;
 
-  data_class->get_extension       = gimp_brush_get_extension;
+  data_class->get_extension        = gimp_brush_get_extension;
 
-  klass->select_brush             = gimp_brush_real_select_brush;
-  klass->want_null_motion         = gimp_brush_real_want_null_motion;
-  klass->spacing_changed          = NULL;
+  klass->select_brush              = gimp_brush_real_select_brush;
+  klass->want_null_motion          = gimp_brush_real_want_null_motion;
+  klass->spacing_changed           = NULL;
 }
 
 static void

@@ -105,8 +105,7 @@ gimp_preview_renderer_image_render (GimpPreviewRenderer *renderer,
 
   gimage = GIMP_IMAGE (renderer->viewable);
 
-  gimp_viewable_calc_preview_size (renderer->viewable,
-                                   gimage->width,
+  gimp_viewable_calc_preview_size (gimage->width,
                                    gimage->height,
                                    renderer->width,
                                    renderer->height,
@@ -122,12 +121,12 @@ gimp_preview_renderer_image_render (GimpPreviewRenderer *renderer,
       TempBuf *temp_buf;
 
       temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
-						gimage->width, 
-						gimage->height);
+						gimage->width, gimage->height);
 
       if (temp_buf)
         {
-          render_buf = temp_buf_scale (temp_buf, preview_width, preview_height);
+          render_buf = temp_buf_scale (temp_buf,
+                                       preview_width, preview_height);
 
           temp_buf_free (temp_buf);
         }

@@ -347,9 +347,7 @@ gimp_preview_size_allocate (GtkWidget     *widget,
                                               &preview_width,
                                               &preview_height);
 
-              gimp_viewable_calc_preview_size (preview->renderer->viewable,
-                                               preview_width,
-                                               preview_height,
+              gimp_viewable_calc_preview_size (preview_width, preview_height,
                                                width, height,
                                                TRUE, 1.0, 1.0,
                                                &scaled_width, &scaled_height,
@@ -696,16 +694,16 @@ gimp_preview_set_viewable (GimpPreview  *preview,
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
   g_return_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable));
 
+  if (viewable == preview->viewable)
+    return;
+
   if (viewable)
     {
       viewable_type = G_TYPE_FROM_INSTANCE (viewable);
 
-      g_return_if_fail (g_type_is_a (G_TYPE_FROM_INSTANCE (preview->renderer),
-                                     gimp_preview_renderer_type_from_viewable_type (viewable_type)));
+      g_return_if_fail (g_type_is_a (viewable_type,
+                                     preview->renderer->viewable_type));
     }
-
-  if (viewable == preview->viewable)
-    return;
 
   if (preview->viewable)
     {

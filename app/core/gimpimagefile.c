@@ -649,8 +649,7 @@ gimp_imagefile_get_new_preview (GimpViewable *viewable,
       gint preview_width;
       gint preview_height;
 
-      gimp_viewable_calc_preview_size (viewable,
-                                       temp_buf->width,
+      gimp_viewable_calc_preview_size (temp_buf->width,
                                        temp_buf->height,
                                        width,
                                        height,
