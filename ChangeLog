@@ -1,3 +1,11 @@
+Sun Mar 28 00:28:57 EST 1999 Adrian Likins <adrian@gimp.org>
+
+	* app/paintbrush.c: added the ability to select the 
+	gradient repeat mode from the gui. Made the gradient
+	length slider hopefully a bit more useful (ie, a
+	more useful range)
+
+
 1999-03-27  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/brush_select.c

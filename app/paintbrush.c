@@ -34,12 +34,12 @@
 #include "libgimp/gimpintl.h"
 
 /*  forward function declarations  */
-static void         paintbrush_motion      (PaintCore *, GimpDrawable *, double, double, gboolean);
+static void         paintbrush_motion      (PaintCore *, GimpDrawable *, double, double, gboolean, int);
 static Argument *   paintbrush_invoker     (Argument *);
 static Argument *   paintbrush_extended_invoker     (Argument *);
 static Argument *   paintbrush_extended_gradient_invoker     (Argument *);
 static double non_gui_fade_out,non_gui_gradient_length, non_gui_incremental;
-
+static int gradient_type;
 
 /*  defines  */
 #define  PAINT_LEFT_THRESHOLD  0.05
@@ -74,9 +74,15 @@ static void
 paintbrush_scale_update (GtkAdjustment *adjustment,
 			 PaintOptions   *options)
 {
- options->gradient_length = adjustment->value;
- if(options->gradient_length > 0.0)
+
+  if(adjustment->value != 0)
+    options->gradient_length = exp(adjustment->value/10);
+  else
+    options->gradient_length = 0.0;
+
+ if(options->gradient_length > 0.0){
    options->incremental = INCREMENTAL;
+ }
 }
 
 static void
@@ -85,6 +91,15 @@ paintbrush_fade_update (GtkAdjustment *adjustment,
 {
  options->fade_out = adjustment->value;
 }
+
+static void
+paintbrush_gradient_type_callback (GtkWidget *w,
+				   gpointer client_data)
+{
+  gradient_type = (int) client_data;
+}
+
+
 
 static PaintOptions *
 create_paint_options (void)
@@ -99,6 +114,19 @@ create_paint_options (void)
   GtkObject *gradient_length_scale_data;
   GtkWidget *incremental_toggle;
 
+  GSList *group = NULL;
+  GtkWidget *radio_frame;
+  GtkWidget *radio_box;
+  GtkWidget *radio_button;
+  int i;
+
+  char *gradient_types[4] =
+  {
+    N_("Once Forward"),
+    N_("Once Backward"),
+    N_("Loop Sawtooth"),
+    N_("Loop Triangle")
+  };
 
   /*  the new options structure  */
   options = (PaintOptions *) g_malloc (sizeof (PaintOptions));
@@ -148,7 +176,7 @@ create_paint_options (void)
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  gradient_length_scale_data = gtk_adjustment_new (0.0, 0.0, 1000.0, 1.0, 1.0, 0.0);
+  gradient_length_scale_data = gtk_adjustment_new (0.0, 0.0, 50.0,1.1, 0.1, 0.0);
   gradient_length_scale = gtk_hscale_new (GTK_ADJUSTMENT (gradient_length_scale_data));
   gtk_box_pack_start (GTK_BOX (vbox), gradient_length_scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (gradient_length_scale), GTK_POS_TOP);
@@ -158,6 +186,32 @@ create_paint_options (void)
 		      options);
   gtk_widget_show (gradient_length_scale);
   gtk_widget_show (hbox);
+
+   /*  the radio frame and box  */
+  radio_frame = gtk_frame_new (_("Gradient Type"));
+  gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
+
+  radio_box = gtk_vbox_new (FALSE, 1);
+  gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
+
+    /*  the radio buttons  */
+  group = NULL;  
+  for (i = 0; i < 4; i++)
+    {
+      radio_button = gtk_radio_button_new_with_label (group, gradient_types[i]);
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
+      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
+			  (GtkSignalFunc) paintbrush_gradient_type_callback,
+			  (void *)((long) i));
+      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
+      gtk_widget_show (radio_button);
+
+
+    }
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), TRUE);
+  gtk_widget_show (radio_box);
+  gtk_widget_show (radio_frame);
+
 
   /* the incremental toggle */
   incremental_toggle = gtk_check_button_new_with_label (_("Incremental"));
@@ -206,7 +260,8 @@ paintbrush_paint_func (PaintCore *paint_core,
       paintbrush_motion (paint_core, drawable, 
 			 paint_options->fade_out, 
 			 paint_options->gradient_length,
-			 paint_options->incremental);
+			 paint_options->incremental,
+			 gradient_type);
       break;
 
     case FINISH_PAINT :
@@ -258,7 +313,8 @@ paintbrush_motion (PaintCore *paint_core,
 		   GimpDrawable *drawable,
 		   double     fade_out,
 		   double     gradient_length,
-		   gboolean   incremental)
+		   gboolean   incremental,
+		   int gradient_type)
 {
   GImage *gimage;
   TempBuf * area;
@@ -298,7 +354,7 @@ paintbrush_motion (PaintCore *paint_core,
       
       /* hard core to mode LOOP_TRIANGLE */
       /* need to maek a gui to handle this */
-      mode = LOOP_TRIANGLE;
+      mode = gradient_type;
 
       if(gradient_length)
 	{
@@ -336,7 +392,7 @@ paintbrush_non_gui_paint_func (PaintCore *paint_core,
 			       GimpDrawable *drawable,
 			       int        state)
 {	
-  paintbrush_motion (paint_core, drawable, non_gui_fade_out,non_gui_gradient_length,  non_gui_incremental);
+  paintbrush_motion (paint_core, drawable, non_gui_fade_out,non_gui_gradient_length,  non_gui_incremental, gradient_type);
 
   return NULL;
 }
