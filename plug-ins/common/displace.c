@@ -449,7 +449,7 @@ displace_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show  (frame);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Edge behaviour"),
+  frame = gimp_int_radio_group_new (TRUE, _("Edge Behavior"),
                                     G_CALLBACK (gimp_radio_button_update),
                                     &dvals.displace_type, dvals.displace_type,
 

@@ -27,7 +27,7 @@ N_("Sets the canvas padding color used if the padding mode is set to " \
    "custom color.")
 
 #define COLOR_MANAGEMENT_BLURB \
-"Defines the color management behaviour."
+"Defines the color management behavior."
 
 #define CONFIRM_ON_CLOSE_BLURB \
 N_("Ask for confirmation before closing an image without saving.")

@@ -207,8 +207,8 @@ offset_dialog_new (GimpDrawable *drawable,
 		    G_CALLBACK (offset_halfheight_callback),
 		    dialog);
 
-  /*  The edge behaviour frame  */
-  frame = gimp_int_radio_group_new (TRUE, _("Edge Behaviour"),
+  /*  The edge behavior frame  */
+  frame = gimp_int_radio_group_new (TRUE, _("Edge Behavior"),
                                     G_CALLBACK (gimp_radio_button_update),
                                     &dialog->fill_type, dialog->fill_type,
 

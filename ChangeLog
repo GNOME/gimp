@@ -1,3 +1,12 @@
+2005-02-14  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimprc-blurbs.h
+	* app/dialogs/offset-dialog.c
+	* plug-ins/common/displace.c
+	* plug-ins/script-fu/scripts/rendermap.scm
+	* plug-ins/script-fu/scripts/ripply-anim.scm: use the american
+	spelling of "behaviour". Fixes bug #167267.
+
 2005-02-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/file-save-dialog.c (file_save_dialog_check_uri):
