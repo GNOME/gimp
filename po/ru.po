@@ -20,7 +20,7 @@ msgstr "О программе GIMP"
 
 #: app/about_dialog.c:198
 msgid "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
-msgstr ""
+msgstr "-Cronyx-Helvetica-Medium-R-Normal--14-*-*-*-*-*-KOI8-*"
 
 #: app/about_dialog.c:201
 msgid "Version "
@@ -119,7 +119,7 @@ msgstr ""
 
 #: app/batch.c:65
 msgid "script-fu not available: batch mode disabled\n"
-msgstr "script-fu не доступен: пакетный режим отключён\n"
+msgstr "script-fu не доступен: пакетный режим отключен\n"
 
 #: app/batch.c:74
 msgid "reading batch commands from stdin\n"
@@ -326,24 +326,24 @@ msgid "Blend: "
 msgstr "Бленда: "
 
 #: app/blend.c:1326
-#, fuzzy, c-format
+#, c-format
 msgid "gradient_render_pixel(): Unknown gradient type %d"
-msgstr "gradient_render_pixel(): неизвестный тип градиента %d"
+msgstr "gradient_render_pixel(): Неизвестный тип градиента %d"
 
 #: app/blend.c:1464
-#, fuzzy, c-format
+#, c-format
 msgid "gradient_fill_region(): Unknown blend mode %d"
-msgstr "gradient_fill_region(): неизвестный режим бленды %d"
+msgstr "gradient_fill_region(): Неизвестный режим бленды %d"
 
 #: app/blend.c:1505
-#, fuzzy, c-format
+#, c-format
 msgid "gradient_fill_region(): Unknown gradient type %d"
-msgstr "gradient_fill_region(): неизвестный тип градиента %d"
+msgstr "gradient_fill_region(): Неизвестный тип градиента %d"
 
 #: app/blend.c:1527
-#, fuzzy, c-format
+#, c-format
 msgid "gradient_fill_region(): Unknown repeat mode %d"
-msgstr "gradient_fill_region(): неизвестный режим повтора %d"
+msgstr "gradient_fill_region(): Неизвестный режим повтора %d"
 
 #: app/boundary.c:202
 msgid "make_seg(): Unable to reallocate segments array for mask boundary."
@@ -437,7 +437,7 @@ msgstr "Радиус:"
 #. brush hardness scale
 #: app/brush_edit.c:256
 msgid "Hardness:"
-msgstr "Жёсткость:"
+msgstr "Жесткость:"
 
 #. brush aspect ratio scale
 #: app/brush_edit.c:272
@@ -695,7 +695,7 @@ msgstr "Красный"
 #: app/channels_dialog.c:1107 app/color_balance.c:397 app/curves.c:406
 #: app/histogram_tool.c:280 app/levels.c:232
 msgid "Green"
-msgstr "Зелёный"
+msgstr "Зеленый"
 
 #: app/channels_dialog.c:1111 app/color_balance.c:424 app/curves.c:407
 #: app/histogram_tool.c:281 app/levels.c:233
@@ -721,13 +721,12 @@ msgstr "Название канала:"
 
 #. The opacity scale
 #: app/channels_dialog.c:1894 app/channels_dialog.c:2087
-#, fuzzy
 msgid "Fill Opacity:"
-msgstr "Непрозрачность заливки: "
+msgstr "Непрозрачность заливки:"
 
 #: app/channels_dialog.c:2048
 msgid "Edit Channel Attributes"
-msgstr "Редактирование аттрибутов канала"
+msgstr "Редактирование атрибутов канала"
 
 #: app/clone.c:141
 msgid "Image Source"
@@ -804,7 +803,7 @@ msgstr "Пурпурный"
 #. Create the yellow-blue scale widget
 #: app/color_balance.c:407
 msgid "Yellow"
-msgstr "Жёлтый"
+msgstr "Желтый"
 
 #. The preserve luminosity toggle
 #: app/color_balance.c:447
@@ -837,7 +836,7 @@ msgstr "Красный:"
 
 #: app/color_picker.c:227 app/color_picker.c:237
 msgid "Green:"
-msgstr "Зелёный:"
+msgstr "Зеленый:"
 
 #: app/color_picker.c:228 app/color_picker.c:238
 msgid "Blue:"
@@ -1051,7 +1050,7 @@ msgstr "Из выделенной области"
 
 #: app/crop.c:1083
 msgid "Auto Shrink"
-msgstr "Автосжатие"
+msgstr "Авто-сжатие"
 
 #: app/curves.c:368
 msgid "Curves Options"
@@ -1198,7 +1197,7 @@ msgstr "Equalize не действует на индексированные изображения."
 #. the hard toggle
 #: app/eraser.c:102
 msgid "Hard edge"
-msgstr "Жёсткие края"
+msgstr "Жесткие края"
 
 #. the incremental toggle
 #: app/eraser.c:112 app/paintbrush.c:269
@@ -1471,9 +1470,8 @@ msgid "/File/Close"
 msgstr "/Файл/Закрыть"
 
 #: app/gdisplay.c:1591
-#, fuzzy
 msgid "/Edit"
-msgstr "Правка"
+msgstr "/Правка"
 
 #: app/gdisplay.c:1594 app/menus.c:101
 msgid "/Edit/Cut"
@@ -1520,18 +1518,16 @@ msgid "/Edit/Paste Named"
 msgstr "/Правка/Вставить из буфера с именем"
 
 #: app/gdisplay.c:1607
-#, fuzzy
 msgid "/Select"
-msgstr "Выделить"
+msgstr "/Выделить"
 
 #: app/gdisplay.c:1608 app/menus.c:130
 msgid "/Select/Save To Channel"
 msgstr "/Выделение/Сохранить в канале"
 
 #: app/gdisplay.c:1610
-#, fuzzy
 msgid "/View"
-msgstr "/Просмотр/---"
+msgstr "/Просмотр"
 
 #: app/gdisplay.c:1613 app/menus.c:148
 msgid "/View/Toggle Selection"
@@ -1558,24 +1554,20 @@ msgid "/View/Dot for dot"
 msgstr "/Просмотр/Точка за точкой"
 
 #: app/gdisplay.c:1623
-#, fuzzy
 msgid "/Image"
-msgstr "Изображение"
+msgstr "/Изображение"
 
 #: app/gdisplay.c:1624 app/gdisplay.c:1634
-#, fuzzy
 msgid "/Image/Colors"
-msgstr "/Изображение/Цвета/---"
+msgstr "/Изображение/Цвета"
 
 #: app/gdisplay.c:1625
-#, fuzzy
 msgid "/Image/Channel Ops"
-msgstr "/Изображение/Канал/Смещение"
+msgstr "/Изображение/Канал"
 
 #: app/gdisplay.c:1626
-#, fuzzy
 msgid "/Image/Alpha"
-msgstr "/Изображение/Альфа-канал/tearoff1"
+msgstr "/Изображение/Альфа-канал"
 
 #: app/gdisplay.c:1629 app/menus.c:171
 msgid "/Image/RGB"
@@ -1642,9 +1634,8 @@ msgid "/Image/Channel Ops/Offset"
 msgstr "/Изображение/Канал/Смещение"
 
 #: app/gdisplay.c:1653
-#, fuzzy
 msgid "/Layers/Stack"
-msgstr "/Слои/Стопка/tearoff1"
+msgstr "/Слои/Стопка"
 
 #: app/gdisplay.c:1656 app/menus.c:182
 msgid "/Layers/Stack/Previous Layer"
@@ -1695,14 +1686,12 @@ msgid "/Layers/Add Alpha Channel"
 msgstr "/Слои/Новый альфа-канал"
 
 #: app/gdisplay.c:1678
-#, fuzzy
 msgid "/Filters"
-msgstr "/Фильтры/---"
+msgstr "/Фильтры"
 
 #: app/gdisplay.c:1680
-#, fuzzy
 msgid "/Script-Fu"
-msgstr "/Script-Fu/"
+msgstr "/Script-Fu"
 
 #: app/gdisplay.c:2100
 msgid "gdisplays_flush() called recursively."
@@ -1768,9 +1757,8 @@ msgid "Unknown brush format version #%d in \"%s\"\n"
 msgstr "Неизвестная версия формата кистей #%d в \"%s\"\n"
 
 #: app/gimpbrushlist.c:213
-#, fuzzy
 msgid "get_active_brush(): Specified default brush not found!"
-msgstr "Указанная для использования по умолчанию кисть не найдена!"
+msgstr "get_active_brush(): Указанная для использования по умолчанию кисть не найдена!"
 
 #: app/gimpdrawable.c:168
 msgid "Can't fill unknown image type."
@@ -1927,9 +1915,9 @@ msgid "error parsing pluginrc"
 msgstr "ошибка при синтаксическом анализе pluginrc"
 
 #: app/gimprc.c:1640
-#, fuzzy, c-format
+#, c-format
 msgid "transform_path(): gimprc token referenced but not defined: %s"
-msgstr "gimprc ссылка на неопределенный символ: %s"
+msgstr "transform_path(): gimprc ссылка на неопределенный символ: %s"
 
 #: app/gimprc.c:2522
 #, c-format
@@ -2026,14 +2014,14 @@ msgid "Default"
 msgstr "По умолчанию"
 
 #: app/gradient.c:584
-#, fuzzy, c-format
+#, c-format
 msgid "grad_get_color_at(): Unknown gradient type %d"
-msgstr "grad_get_color_at(): ой, неизвестный тип градиента %d"
+msgstr "grad_get_color_at(): Неизвестный тип градиента %d"
 
 #: app/gradient.c:641
-#, fuzzy, c-format
+#, c-format
 msgid "grad_get_color_at(): Unknown coloring mode %d"
-msgstr "grad_get_color_at(): ой, неизвестный режим окрашивания %d"
+msgstr "grad_get_color_at(): Неизвестный режим окрашивания %d"
 
 #: app/gradient.c:708
 msgid "Gradient Editor"
@@ -2051,23 +2039,19 @@ msgstr "Название"
 
 #. Frame & vbox for gradient functions
 #: app/gradient.c:756
-#, fuzzy
 msgid "Gradient Ops"
 msgstr "Градиенты"
 
 #. Buttons for gradient functions
 #: app/gradient.c:764
-#, fuzzy
 msgid "New Gradient"
 msgstr "Новый градиент"
 
 #: app/gradient.c:770
-#, fuzzy
 msgid "Copy Gradient"
 msgstr "Скопировать градиент"
 
 #: app/gradient.c:776
-#, fuzzy
 msgid "Delete Gradient"
 msgstr "Удалить градиент"
 
@@ -2139,17 +2123,18 @@ msgid "Delete gradient"
 msgstr "Удалить градиент"
 
 #: app/gradient.c:1579
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
-msgstr "\"%s\" из списка и с диска?"
+msgstr ""
+"Вы действительно хотите удалить\n"
+"\"%s\" из списка и с диска?"
 
 #: app/gradient.c:1633
-#, fuzzy
 msgid "ed_do_delete_gradient_callback(): Could not find gradient to delete!"
 msgstr ""
-"ed_do_delete_gradient_callback(): ой, не удалось найти градиент для удаления!"
+"ed_do_delete_gradient_callback(): Не удалось найти градиент для удаления!"
 
 #: app/gradient.c:1720
 #, c-format
@@ -2177,10 +2162,10 @@ msgstr ""
 "Цвет переднего плана установлен в RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:2134
-#, fuzzy, c-format
+#, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr ""
-"Цвет переднего плана установлен в RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
+"Цвет фона установлен в RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:2423
 msgid "Drag: move    Shift+drag: move & compress"
@@ -2404,10 +2389,10 @@ msgid "grad_save_gradient(): can't open \"%s\""
 msgstr "grad_save_gradient(): невозможно открыть \"%s\""
 
 #: app/gradient.c:5853
-#, fuzzy, c-format
+#, c-format
 msgid "seg_get_segment_at(): No matching segment for position %0.15f"
 msgstr ""
-"seg_get_segment_at(): ой, нет подходящего сегмента для положения %0.15f"
+"seg_get_segment_at(): Нет подходящего сегмента для положения %0.15f"
 
 #: app/gradient_select.c:508
 msgid "Gradient Selection"
@@ -2423,15 +2408,15 @@ msgstr "Гистограмма не действует на индексированные изображения."
 
 #: app/histogram_tool.c:267
 msgid "Mean:"
-msgstr "Значение:"
+msgstr "Среднее:"
 
 #: app/histogram_tool.c:268
 msgid "Std Dev:"
-msgstr "Станд. устр.:"
+msgstr "Станд. отклонение:"
 
 #: app/histogram_tool.c:269
 msgid "Median:"
-msgstr "Значение (median):"
+msgstr "Медиана:"
 
 #: app/histogram_tool.c:270
 msgid "Pixels:"
@@ -2869,7 +2854,6 @@ msgid "fractalexplorer\n"
 msgstr ""
 
 #: app/install.c:197
-#, fuzzy
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
 "\t\tuser defined fractals to be used by the FractalExplorer\n"
@@ -2878,10 +2862,9 @@ msgid ""
 "\t\twhen searching for fractals.\n"
 msgstr ""
 "\t\tЭто подкаталог, который может быть использован для хранения\n"
-"\t\tсозданных пользователем фрактолов используемых дополнением "
-"FractalExplorer.\n"
-"\t\tПо умолчанию в файле gimprc указана проверка этого подкаталога,\n"
-"\t\tв дополнение к системному при поиске\n"
+"\t\tсозданных пользователем фракталов используемых дополнением\n"
+"\t\tFractalExplorer. По умолчанию в файле gimprc указана проверка\n"
+"\t\tэтого подкаталога, в дополнение к системному при поиске\n"
 "\t\tфракталов.\n"
 
 #: app/install.c:203
@@ -3405,11 +3388,11 @@ msgid "Floating Selection"
 msgstr "Плавающее выделение"
 
 #: app/layers_dialog.c:2751
-#, fuzzy
 msgid ""
 "new_layer_query_ok_callback():\n"
 "could not allocate new layer"
-msgstr "new_layer_query_ok_callback: не удалось разместить новый слой"
+msgstr "new_layer_query_ok_callback:\n"
+"не удалось разместить новый слой"
 
 #: app/layers_dialog.c:2833
 msgid "New Layer Options"
@@ -3432,12 +3415,11 @@ msgstr "Тип заливки слоя"
 
 #: app/layers_dialog.c:3056
 msgid "Edit Layer Attributes"
-msgstr "Правка аттрибутов слоя"
+msgstr "Правка атрибутов слоя"
 
 #: app/layers_dialog.c:3074
-#, fuzzy
 msgid "Layer name:"
-msgstr "Название слоя: "
+msgstr "Название слоя:"
 
 #: app/layers_dialog.c:3183
 msgid "White (Full Opacity)"
@@ -3457,9 +3439,8 @@ msgstr "Добавить параметры маски"
 
 #. The radio frame and box
 #: app/layers_dialog.c:3212
-#, fuzzy
 msgid "Initialize Layer Mask to:"
-msgstr "Инициализовать маску слоя:"
+msgstr "Инициализовать маску слоя с:"
 
 #: app/layers_dialog.c:3315
 msgid "Apply"
@@ -3479,11 +3460,12 @@ msgid "Apply layer mask?"
 msgstr "Применить маску слоя?"
 
 #: app/layers_dialog.c:3402 app/layers_dialog.c:3502
-#, fuzzy
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
-msgstr "Неправильная ширина или высота. Обе должны быть положительными."
+msgstr ""
+"Неправильная ширина или высота.\n"
+"Обе должны быть положительными."
 
 #: app/layers_dialog.c:3640
 msgid "Expanded as necessary"
@@ -3502,12 +3484,10 @@ msgid "Layer Merge Options"
 msgstr "Параметры объединения слоев"
 
 #: app/layers_dialog.c:3671
-#, fuzzy
 msgid "Final, Merged Layer should be:"
 msgstr "В итоге, объединенный слой должен быть:"
 
 #: app/layers_dialog.c:3673
-#, fuzzy
 msgid "Final, Anchored Layer should be:"
 msgstr "В итоге, прицепленный слой должен быть:"
 
@@ -3821,9 +3801,8 @@ msgid "/Select/Float"
 msgstr "/Выделение/Плавающее"
 
 #: app/menus.c:123 app/menus.c:129
-#, fuzzy
 msgid "/Select/---"
-msgstr "/Выделение/Выделить все"
+msgstr "/Выделение/---"
 
 #: app/menus.c:124
 msgid "/Select/Feather"
@@ -4243,7 +4222,7 @@ msgid "can't save palette \"%s\"\n"
 msgstr "не удалось сохранить палитру \"%s\"\n"
 
 #: app/palette.c:631
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette %s:\n"
 "Corrupt palette:\n"
@@ -4251,7 +4230,8 @@ msgid ""
 "Does this file need converting from DOS?"
 msgstr ""
 "Загрузка палитры %s:\n"
-"Испорченная палитра: неверный магический заголовок\n"
+"Испорченная палитра:\n"
+"отсутствует магический заголовок\n"
 "Этот файл надо конвертировать из DOS?"
 
 #: app/palette.c:636
@@ -4403,9 +4383,8 @@ msgid "Pattern Selection"
 msgstr "Выбор шаблона"
 
 #: app/patterns.c:143
-#, fuzzy
 msgid "get_active_pattern(): Specified default pattern not found!"
-msgstr "Указанный для использования по умолчанию шаблон не найден!"
+msgstr "get_active_pattern(): Указанный для использования по умолчанию шаблон не найден!"
 
 #: app/patterns.c:214
 #, c-format
@@ -5116,10 +5095,10 @@ msgid ""
 msgstr ""
 "# GIMP sessionrc\n"
 "# Этот файл содержит сеанс-специфическую информацию (то есть информацию,\n"
-"# которую вы хотите сохранить между двумя секнсами работы в GIMP). Вы\n"
+"# которую вы хотите сохранить между двумя сеансами работы в GIMP). Вы\n"
 "# не должны редактировать его вручную, но конечно же можете делать\n"
 "# это. Этот файл полностью перезаписывается каждый раз, когда\n"
-"# вы выходите из GIMP. Если этот файл не найден, испльзуются значения\n"
+"# вы выходите из GIMP. Если этот файл не найден, используются значения\n"
 "# по умолчанию.\n"
 "\n"
 
@@ -5197,7 +5176,7 @@ msgstr "Порог"
 
 #: app/threshold.c:306
 msgid "Threshold Range: "
-msgstr "Диапазог порога: "
+msgstr "Диапазон порога: "
 
 #: app/tile_cache.c:266
 msgid "starting tile preswapper\n"
@@ -5429,11 +5408,11 @@ msgstr "Заливка с градиентом цвета"
 
 #: app/tools.c:351
 msgid "Pencil"
-msgstr "Карашдаш"
+msgstr "Карандаш"
 
 #: app/tools.c:353
 msgid "/Tools/Pencil"
-msgstr "/Инструменты/Карашдаш"
+msgstr "/Инструменты/Карандаш"
 
 #: app/tools.c:356
 msgid "Draw sharp pencil strokes"
@@ -5847,7 +5826,6 @@ msgid "unit-menu-format string ended within %%-sequence"
 msgstr ""
 
 #: libgimp/gimpunitmenu.c:366
-#, fuzzy
 msgid "unit-menu-format contains unknown format sequence '%%%c'"
 msgstr ""
 "unit-menu-format содержит неизвестную последовательность формата '%%%c'"
