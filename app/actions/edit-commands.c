@@ -41,6 +41,8 @@
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpmessagebox.h"
+#include "widgets/gimpmessagedialog.h"
 
 #include "dialogs/dialogs.h"
 
@@ -54,9 +56,9 @@
 
 static void   edit_paste                 (GimpDisplay *gdisp,
                                           gboolean     paste_into);
-static void   edit_undo_clear_callback   (GtkWidget   *widget,
-                                          gboolean     clear,
-                                          gpointer     data);
+static void   edit_undo_clear_response   (GtkWidget   *dialog,
+                                          gint         response_id,
+                                          GimpImage   *gimage);
 static void   cut_named_buffer_callback  (GtkWidget   *widget,
                                           const gchar *name,
                                           gpointer     data);
@@ -99,16 +101,26 @@ edit_undo_clear_cmd_callback (GtkAction *action,
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  dialog = gimp_query_boolean_box (_("Clear Undo History"), widget,
-                                   gimp_standard_help_func,
-                                   GIMP_HELP_EDIT_UNDO_CLEAR,
-                                   GIMP_STOCK_QUESTION,
-                                   _("Really clear image's undo history?"),
-                                   GTK_STOCK_CLEAR, GTK_STOCK_CANCEL,
-                                   G_OBJECT (gimage),
-                                   "disconnect",
-                                   edit_undo_clear_callback,
-                                   gimage);
+  dialog = gimp_message_dialog_new (_("Clear Undo History"), GIMP_STOCK_WARNING,
+                                    widget, 0,
+                                    gimp_standard_help_func, NULL,
+
+                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                    GTK_STOCK_CLEAR,  GTK_RESPONSE_OK,
+
+                                    NULL);
+
+  g_signal_connect_object (gimage, "disconnect",
+                           G_CALLBACK (gtk_widget_destroy),
+                           dialog, G_CONNECT_SWAPPED);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (edit_undo_clear_response),
+                    gimage);
+
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     _("Really clear image's undo history?"));
+
   gtk_widget_show (dialog);
 }
 
@@ -284,14 +296,14 @@ edit_paste (GimpDisplay *gdisp,
 }
 
 static void
-edit_undo_clear_callback (GtkWidget *widget,
-                          gboolean   clear,
-                          gpointer   data)
+edit_undo_clear_response (GtkWidget *dialog,
+                          gint       response_id,
+                          GimpImage *gimage)
 {
-  if (clear)
-    {
-      GimpImage *gimage = data;
+  gtk_widget_destroy (dialog);
 
+  if (response_id == GTK_RESPONSE_OK)
+    {
       gimp_image_undo_disable (gimage);
       gimp_image_undo_enable (gimage);
       gimp_image_flush (gimage);

@@ -41,6 +41,8 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpmessagebox.h"
+#include "widgets/gimpmessagedialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -72,9 +74,9 @@ static void   file_save_dialog_destroyed   (GtkWidget   *dialog,
 static void   file_new_template_callback   (GtkWidget   *widget,
                                             const gchar *name,
                                             gpointer     data);
-static void   file_revert_confirm_callback (GtkWidget   *widget,
-                                            gboolean     revert,
-                                            gpointer     data);
+static void   file_revert_confirm_response (GtkWidget   *dialog,
+                                            gint         response_id,
+                                            GimpDisplay *gdisp);
 
 
 /*  public functions  */
@@ -269,57 +271,58 @@ file_revert_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
   GimpDisplay *gdisp;
-  GtkWidget   *query_box;
+  GtkWidget   *dialog;
   const gchar *uri;
   return_if_no_display (gdisp, data);
 
   uri = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
 
-  query_box = g_object_get_data (G_OBJECT (gdisp->gimage), REVERT_DATA_KEY);
+  dialog = g_object_get_data (G_OBJECT (gdisp->gimage), REVERT_DATA_KEY);
 
   if (! uri)
     {
       g_message (_("Revert failed. No file name associated with this image."));
     }
-  else if (query_box)
+  else if (dialog)
     {
-      gtk_window_present (GTK_WINDOW (query_box->window));
+      gtk_window_present (GTK_WINDOW (dialog));
     }
   else
     {
       gchar *basename;
-      gchar *text;
+
+      dialog =
+        gimp_message_dialog_new (_("Revert Image"), GIMP_STOCK_QUESTION,
+                                 gdisp->shell, 0,
+                                 gimp_standard_help_func, GIMP_HELP_FILE_REVERT,
+
+                                 GTK_STOCK_CANCEL,          GTK_RESPONSE_CANCEL,
+                                 GTK_STOCK_REVERT_TO_SAVED, GTK_RESPONSE_OK,
+
+                                 NULL);
+
+      g_signal_connect_object (gdisp, "disconnect",
+                               G_CALLBACK (gtk_widget_destroy),
+                               dialog, G_CONNECT_SWAPPED);
+
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (file_revert_confirm_response),
+                        gdisp);
 
       basename = g_path_get_basename (uri);
-
-      text = g_strdup_printf (_("Revert '%s' to\n"
-                                "'%s'?\n\n"
-                                "You will lose all your changes, "
-                                "including all undo information."),
-                              basename, uri);
-
+      gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                         _("Revert '%s' to '%s'?"),
+                                         basename, uri);
       g_free (basename);
 
-      query_box = gimp_query_boolean_box (_("Revert Image"),
-                                          gdisp->shell,
-                                          gimp_standard_help_func,
-                                          GIMP_HELP_FILE_REVERT,
-                                          GIMP_STOCK_QUESTION,
-                                          text,
-                                          GTK_STOCK_YES, GTK_STOCK_NO,
-                                          G_OBJECT (gdisp), "disconnect",
-                                          file_revert_confirm_callback,
-                                          gdisp);
+      gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                 _("By reverting the image to the state saved "
+                                   "on disk, you will lose all changes, "
+                                   "including all undo information."));
 
-      g_free (text);
+      g_object_set_data (G_OBJECT (gdisp->gimage), REVERT_DATA_KEY, dialog);
 
-      g_object_set_data (G_OBJECT (gdisp->gimage), REVERT_DATA_KEY,
-                         query_box);
-
-      gtk_window_set_transient_for (GTK_WINDOW (query_box),
-                                    GTK_WINDOW (gdisp->shell));
-
-      gtk_widget_show (query_box);
+      gtk_widget_show (dialog);
     }
 }
 
@@ -444,24 +447,23 @@ file_new_template_callback (GtkWidget   *widget,
 }
 
 static void
-file_revert_confirm_callback (GtkWidget *widget,
-                              gboolean   revert,
-                              gpointer   data)
+file_revert_confirm_response (GtkWidget   *dialog,
+                              gint         response_id,
+                              GimpDisplay *gdisp)
 {
-  GimpDisplay *gdisp      = GIMP_DISPLAY (data);
-  GimpImage   *old_gimage = gdisp->gimage;
+  GimpImage *old_gimage = gdisp->gimage;
+
+  gtk_widget_destroy (dialog);
 
   g_object_set_data (G_OBJECT (old_gimage), REVERT_DATA_KEY, NULL);
 
-  if (revert)
+  if (response_id == GTK_RESPONSE_OK)
     {
-      Gimp              *gimp;
+      Gimp              *gimp = old_gimage->gimp;
       GimpImage         *new_gimage;
       const gchar       *uri;
       GimpPDBStatusType  status;
       GError            *error = NULL;
-
-      gimp = old_gimage->gimp;
 
       uri = gimp_object_get_name (GIMP_OBJECT (old_gimage));
 

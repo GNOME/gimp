@@ -33,6 +33,8 @@
 #include "widgets/gimpdataeditor.h"
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpmessagebox.h"
+#include "widgets/gimpmessagedialog.h"
 
 #include "dialogs/dialogs.h"
 
@@ -53,9 +55,9 @@ struct _GimpDataDeleteData
 
 /*  local function prototypes  */
 
-static void   data_delete_callback (GtkWidget *widget,
-                                    gboolean   delete,
-                                    gpointer   data);
+static void  data_delete_confirm_response (GtkWidget          *dialog,
+                                           gint                response_id,
+                                           GimpDataDeleteData *delete_data);
 
 
 /*  public functions  */
@@ -138,32 +140,33 @@ data_delete_data_cmd_callback (GtkAction *action,
     {
       GimpDataDeleteData *delete_data;
       GtkWidget          *dialog;
-      gchar              *str;
 
       delete_data = g_new0 (GimpDataDeleteData, 1);
 
       delete_data->factory = view->factory;
       delete_data->data    = data;
 
-      str = g_strdup_printf (_("Are you sure you want to delete '%s' "
-			       "from the list and from disk?"),
-			     GIMP_OBJECT (data)->name);
+      dialog = gimp_message_dialog_new (_("Delete Object"), GIMP_STOCK_WARNING,
+                                        GTK_WIDGET (view), 0,
+                                        gimp_standard_help_func, NULL,
 
-      dialog = gimp_query_boolean_box (_("Delete Data Object"),
-                                       GTK_WIDGET (view),
-				       gimp_standard_help_func, NULL,
-				       GIMP_STOCK_QUESTION,
-				       str,
-				       GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
-				       G_OBJECT (data),
-				       "disconnect",
-				       data_delete_callback,
-				       delete_data);
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_DELETE, GTK_RESPONSE_OK,
 
-      g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, delete_data);
+                                        NULL);
 
-      g_free (str);
+      g_signal_connect_object (data, "disconnect",
+                               G_CALLBACK (gtk_widget_destroy),
+                               dialog, G_CONNECT_SWAPPED);
 
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (data_delete_confirm_response),
+                        delete_data);
+
+      gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                         _("Are you sure you want to delete "
+                                           "'%s' from the list and from disk?"),
+                                         GIMP_OBJECT (data)->name);
       gtk_widget_show (dialog);
     }
 }
@@ -211,13 +214,13 @@ data_edit_data_cmd_callback (GtkAction   *action,
 /*  private functions  */
 
 static void
-data_delete_callback (GtkWidget *widget,
-                      gboolean   delete,
-                      gpointer   data)
+data_delete_confirm_response (GtkWidget          *dialog,
+                              gint                response_id,
+                              GimpDataDeleteData *delete_data)
 {
-  GimpDataDeleteData *delete_data = data;
+  gtk_widget_destroy (dialog);
 
-  if (delete)
+  if (response_id == GTK_RESPONSE_OK)
     {
       GError *error = NULL;
 
@@ -229,4 +232,6 @@ data_delete_callback (GtkWidget *widget,
           g_clear_error (&error);
         }
     }
+
+  g_free (delete_data);
 }

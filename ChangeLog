@@ -1,5 +1,15 @@
 2004-10-13  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpmessagedialog.c: handle parent widget not being
+	a GtkWindow by calling gtk_widget_get_toplevel().
+
+	* app/actions/data-commands.c
+	* app/actions/edit-commands.c
+	* app/actions/file-commands.c: ported more boolean queries to
+	GimpMessageDialog.
+
+2004-10-13  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpmessagedialog.[ch]: added a simple message

@@ -75,7 +75,13 @@ gimp_message_dialog_new (const gchar    *title,
   va_list            args;
 
   g_return_val_if_fail (title != NULL, NULL);
-  g_return_val_if_fail (parent == NULL || GTK_IS_WINDOW (parent), NULL);
+  g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
+
+  if (parent)
+    {
+      if (! GTK_IS_WINDOW (parent))
+        parent = gtk_widget_get_toplevel (parent);
+    }
 
   dialog = g_object_new (GIMP_TYPE_MESSAGE_DIALOG,
                          "title",     title,
@@ -104,8 +110,8 @@ gimp_message_dialog_new (const gchar    *title,
                               NULL);
 
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-                      dialog->box, FALSE, FALSE, 0);
-  gtk_widget_show (dialog->box);
+                      GTK_WIDGET (dialog->box), FALSE, FALSE, 0);
+  gtk_widget_show (GTK_WIDGET (dialog->box));
 
   return GTK_WIDGET (dialog);
 }
