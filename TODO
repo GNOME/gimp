@@ -45,6 +45,10 @@ fix stuff so that the tile size could actually be changed eventually
 	platforms, having this variable could be a real gain in
 	performance tweaking.  
 
+	This will be hard because the XCF file format assumes 64x64
+	tiles.  XCF load/save will have to be written to retile
+	images, or the XCF file format redesigned.  --sg
+
 file new dialog stuff   (i'm working on this...Adrian)
 
 	1. default to size of cut buffer
@@ -336,13 +340,13 @@ Suggestion from Ville Hautamaki (CW):
 	or even just "set 1" etc.
 
 Overwork the transform tools UI:
-	It would be nice if the transformation
-	wouldn't automatically start when releasing the mouse. Instead have 
-	a window that shows the currently choosen transformation numerically 
-	(e.g. Scale X: 0.75 | Scale Y: 1.00). The transformation should be 
-	editable there and with handles on the outline. Perform the 
-	transformation when "OK" is clicked in the dialog or when you 
-	doubleclick(?) into the image. 
+	It would be nice if the transformation wouldn't automatically
+	start when releasing the mouse. Instead have a window that
+	shows the currently choosen transformation numerically
+	(e.g. Scale X: 0.75 | Scale Y: 1.00). The transformation
+	should be editable there and with handles on the
+	outline. Perform the transformation when "OK" is clicked in
+	the dialog or when you doubleclick(?) into the image.
 
 	The new transform tool UI is almost there, and it rocks!! --Sven
 
@@ -362,7 +366,7 @@ Selections should be transformable:
 	be passed to the existent image ops. 
 	
 Have a possibility to add a text as selection:
-	 If selections would be editable as described above, we'd 
+	If selections would be editable as described above, we'd 
 	then have editable vector-text. Is this possibel with type1 fonts?
 
 option to create New Indexed image (with the choice of pattern foo) ?
