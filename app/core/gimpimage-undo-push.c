@@ -1407,9 +1407,6 @@ undo_pop_layer_mod (GimpUndo            *undo,
   lmu->offset_x = GIMP_ITEM (layer)->offset_x;
   lmu->offset_y = GIMP_ITEM (layer)->offset_y;
 
-  /*  Make sure we're not caching any old selection info  */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
-
   GIMP_ITEM (layer)->width    = tile_manager_width (tiles);
   GIMP_ITEM (layer)->height   = tile_manager_height (tiles);
   GIMP_ITEM (layer)->offset_x = offset_x;

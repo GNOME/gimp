@@ -488,9 +488,6 @@ gimp_text_layer_render (GimpTextLayer *layer)
                                 gimp_item_width (item),
                                 gimp_item_height (item));
 
-          /*  Make sure we're not caching any old selection info  */
-          gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
-
           GIMP_ITEM (drawable)->width  = width;
           GIMP_ITEM (drawable)->height = height;
 
@@ -499,8 +496,6 @@ gimp_text_layer_render (GimpTextLayer *layer)
           gimp_drawable_set_tiles (drawable, FALSE, NULL,
                                    new_tiles, gimp_drawable_type (drawable));
           tile_manager_unref (new_tiles);
-
-          layer->modified = FALSE;
 
           gimp_drawable_update (drawable,
                                 0, 0,
@@ -519,7 +514,7 @@ gimp_text_layer_render (GimpTextLayer *layer)
   gimp_text_layer_render_layout (layer, layout);
   g_object_unref (layout);
 
-  gimp_image_flush (image);
+  layer->modified = FALSE;
 
   return (width > 0 && height > 0);
 }

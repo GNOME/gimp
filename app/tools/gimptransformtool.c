@@ -989,8 +989,6 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 
           tile_manager_unref (new_tiles);
 
-          GIMP_CHANNEL (active_item)->bounds_known = FALSE;
-
           gimp_drawable_update (GIMP_DRAWABLE (active_item),
                                 0, 0,
                                 gimp_item_width  (active_item),

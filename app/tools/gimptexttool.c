@@ -429,6 +429,8 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 
   g_list_free (text_tool->pending);
   text_tool->pending = NULL;
+
+  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (text_tool->layer)));
 }
 
 static gboolean

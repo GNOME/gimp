@@ -1,3 +1,31 @@
+2004-03-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/text/gimptextlayer.c (gimp_text_layer_render): don't call
+	gimp_image_flush().
+
+	* app/tools/gimpxttool.c (gimp_text_tool_apply): call it here
+	instead.
+
+	Now that we have a common place that exchanges drawable->tiles,
+	we can abstract away boundary invalidation for this operation:
+
+	* app/core/gimpdrawable.c (gimp_drawable_real_set_tiles):
+	call gimp_drawable_invalidate_boundary() before setting
+	the new tiles.
+
+	* app/core/gimpchannel.c (gimp_channel_set_tiles)
+	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_paste)
+	* app/core/gimpimage-undo-push.c (undo_pop_layer_mod)
+	* app/core/gimplayer.c (gimp_layer_scale) (gimp_layer_resize)
+	(gimp_layer_flip) (gimp_layer_rotate) (gimp_layer_transform)
+	* app/text/gimptextlayer.c (gimp_text_layer_render): removed
+	calls to gimp_drawable_invalidate_boundary() from all functions
+	which finally call gimp_drawable_real_set_tiles().
+
+	* app/tools/gimptransformtool.c (gimp_transform_tool_doit): no
+	need to set channel->bounds_known to FALSE, because
+	gimp_drawable_set_tiles() already did this.
+
 2004-03-15  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/splash.c: moved global variables to a struct and

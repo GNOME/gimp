@@ -659,9 +659,6 @@ gimp_layer_scale (GimpItem              *item,
 
       gimp_image_undo_group_end (gimage);
     }
-
-  /*  Make sure we're not caching any old selection info  */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 }
 
 static void
@@ -692,9 +689,6 @@ gimp_layer_resize (GimpItem *item,
 
       gimp_image_undo_group_end (gimage);
     }
-
-  /*  Make sure we're not caching any old selection info  */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 }
 
 static void
@@ -719,9 +713,6 @@ gimp_layer_flip (GimpItem            *item,
                     flip_type, axis, clip_result);
 
   gimp_image_undo_group_end (gimage);
-
-  /*  Make sure we're not caching any old selection info  */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 }
 
 static void
@@ -749,9 +740,6 @@ gimp_layer_rotate (GimpItem         *item,
                       rotate_type, center_x, center_y, clip_result);
 
   gimp_image_undo_group_end (gimage);
-
-  /*  Make sure we're not caching any old selection info  */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 }
 
 static void
@@ -789,9 +777,6 @@ gimp_layer_transform (GimpItem               *item,
                          progress_callback, progress_data);
 
   gimp_image_undo_group_end (gimage);
-
-  /*  Make sure we're not caching any old selection info  */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 }
 
 static void

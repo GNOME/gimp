@@ -606,6 +606,8 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
 
   old_has_alpha = gimp_drawable_has_alpha (drawable);
 
+  gimp_drawable_invalidate_boundary (drawable);
+
   if (drawable->tiles)
     tile_manager_unref (drawable->tiles);
 

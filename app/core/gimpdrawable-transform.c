@@ -1086,8 +1086,6 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
           return FALSE;
         }
 
-      gimp_drawable_invalidate_boundary (drawable);
-
       if (layer && (tile_manager_bpp (tiles) == 2 ||
                     tile_manager_bpp (tiles) == 4))
         {
