@@ -103,7 +103,7 @@ plug_in_run (Gimp       *gimp,
       config.show_tool_tips = GIMP_GUI_CONFIG (gimp->config)->show_tool_tips;
       config.min_colors     = CLAMP (gimp->config->min_colors, 27, 256);
       config.gdisp_ID       = gdisp_ID;
-      config.wm_name        = g_get_prgname ();
+      config.app_name       = (gchar *) g_get_application_name ();
       config.wm_class       = (gchar *) gimp_get_program_class (gimp);
       config.display_name   = gimp_get_display_name (gimp, gdisp_ID, &monitor);
       config.monitor_number = monitor;

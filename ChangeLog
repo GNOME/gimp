@@ -1,3 +1,26 @@
+2004-02-17  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimpprotocol.[ch]: changed wm_name to app_name in
+	the GimpConfig struct; increased GIMP_PROTOCOL_VERSION.
+
+	* app/plug-in/plug-in-run.c (plug_in_run): pass the return value
+	of g_get_application_name() to the plug-ins.
+
+	* libgimp/gimp.[ch]: removed function gimp_wm_name(). Set the
+	plug-in's application name if an app_name is passed in the config
+	message.
+
+	* libgimp/gimpui.c: removed usage of gimp_wm_name(); it was wrong
+	to do it this way and caused all plug-ins claim to be the gimp-1.3
+	executable in their error messages.
+
+	* libgimp/gimp.def: removed symbol gimp_wm_name.
+
+	* configure.in: reset gimp_binary_age and gimp_interface_age.
+
+	* app/core/gimpimage.c (gimp_image_name_changed): removed unused
+	variable.
+
 2004-02-17  Michael Natterer  <mitch@gimp.org>
 
 	Make sure each GimpItem emits "removed" when it is removed from

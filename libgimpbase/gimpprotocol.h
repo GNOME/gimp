@@ -27,7 +27,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x000F
+#define GIMP_PROTOCOL_VERSION  0x0010
 
 
 enum
@@ -71,7 +71,7 @@ struct _GPConfig
   gint8    show_tool_tips;
   gint32   min_colors;
   gint32   gdisp_ID;
-  gchar   *wm_name;
+  gchar   *app_name;
   gchar   *wm_class;
   gchar   *display_name;
   gint32   monitor_number;

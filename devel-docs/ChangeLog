@@ -1,3 +1,10 @@
+2004-02-17  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimp.sgml: removed gimp_wm_name.
+
+	* devel-docs/libgimpbase/tmpl/gimpprotocol.sgml: updated.
+
 2004-02-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/app-sections.txt: updated.

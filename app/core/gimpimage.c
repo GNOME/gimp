@@ -699,7 +699,6 @@ gimp_image_finalize (GObject *object)
 static void
 gimp_image_name_changed (GimpObject *object)
 {
-  GimpImage   *gimage = GIMP_IMAGE (object);
   const gchar *name;
 
   if (GIMP_OBJECT_CLASS (parent_class)->name_changed)

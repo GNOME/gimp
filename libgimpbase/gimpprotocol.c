@@ -453,39 +453,52 @@ _gp_config_read (GIOChannel  *channel,
 
   config = g_new0 (GPConfig, 1);
 
-  if (! wire_read_int32 (channel, &config->version, 1, user_data))
+  if (! wire_read_int32 (channel,
+                         &config->version, 1, user_data))
     goto cleanup;
-  if (! wire_read_int32 (channel, &config->tile_width, 1, user_data))
+  if (! wire_read_int32 (channel,
+                         &config->tile_width, 1, user_data))
     goto cleanup;
-  if (! wire_read_int32 (channel, &config->tile_height, 1, user_data))
+  if (! wire_read_int32 (channel,
+                         &config->tile_height, 1, user_data))
     goto cleanup;
-  if (! wire_read_int32 (channel, (guint32*) &config->shm_ID, 1, user_data))
+  if (! wire_read_int32 (channel,
+                         (guint32 *) &config->shm_ID, 1, user_data))
     goto cleanup;
-  if (! wire_read_double (channel, &config->gamma, 1, user_data))
+  if (! wire_read_double (channel,
+                          &config->gamma, 1, user_data))
     goto cleanup;
-  if (! wire_read_int8 (channel, (guint8*) &config->install_cmap, 1, user_data))
+  if (! wire_read_int8 (channel,
+                        (guint8 *) &config->install_cmap, 1, user_data))
     goto cleanup;
-  if (! wire_read_int8 (channel, (guint8*) &config->show_tool_tips, 1, user_data))
+  if (! wire_read_int8 (channel,
+                        (guint8 *) &config->show_tool_tips, 1, user_data))
     goto cleanup;
-  if (! wire_read_int32 (channel, (guint32*) &config->min_colors, 1, user_data))
+  if (! wire_read_int32 (channel,
+                         (guint32 *) &config->min_colors, 1, user_data))
     goto cleanup;
-  if (! wire_read_int32 (channel, (guint32*) &config->gdisp_ID, 1, user_data))
+  if (! wire_read_int32 (channel,
+                         (guint32 *) &config->gdisp_ID, 1, user_data))
     goto cleanup;
 
-  if (! wire_read_string (channel, &config->wm_name, 1, user_data))
+  if (! wire_read_string (channel,
+                          &config->app_name, 1, user_data))
     goto cleanup;
-  if (! wire_read_string (channel, &config->wm_class, 1, user_data))
+  if (! wire_read_string (channel,
+                          &config->wm_class, 1, user_data))
     goto cleanup;
-  if (! wire_read_string (channel, &config->display_name, 1, user_data))
+  if (! wire_read_string (channel,
+                          &config->display_name, 1, user_data))
     goto cleanup;
-  if (! wire_read_int32 (channel, (guint32*) &config->monitor_number, 1, user_data))
+  if (! wire_read_int32 (channel,
+                         (guint32 *) &config->monitor_number, 1, user_data))
     goto cleanup;
 
   msg->data = config;
   return;
 
  cleanup:
-  g_free (config->wm_name);
+  g_free (config->app_name);
   g_free (config->wm_class);
   g_free (config->display_name);
   g_free (config);
@@ -517,7 +530,7 @@ _gp_config_write (GIOChannel  *channel,
     return;
   if (! wire_write_int32 (channel, (guint32*) &config->gdisp_ID, 1, user_data))
     return;
-  if (! wire_write_string (channel, &config->wm_name, 1, user_data))
+  if (! wire_write_string (channel, &config->app_name, 1, user_data))
     return;
   if (! wire_write_string (channel, &config->wm_class, 1, user_data))
     return;
@@ -534,7 +547,7 @@ _gp_config_destroy (WireMessage *msg)
 
   config = msg->data;
 
-  g_free (config->wm_name);
+  g_free (config->app_name);
   g_free (config->wm_class);
   g_free (config->display_name);
   g_free (config);

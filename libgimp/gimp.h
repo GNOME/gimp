@@ -308,7 +308,6 @@ gboolean      gimp_install_cmap        (void) G_GNUC_CONST;
 gint          gimp_min_colors          (void) G_GNUC_CONST;
 gboolean      gimp_show_tool_tips      (void) G_GNUC_CONST;
 gint32        gimp_default_display     (void) G_GNUC_CONST;
-const gchar * gimp_wm_name             (void) G_GNUC_CONST;
 const gchar * gimp_wm_class            (void) G_GNUC_CONST;
 const gchar * gimp_display_name        (void) G_GNUC_CONST;
 gint          gimp_monitor_number      (void) G_GNUC_CONST;

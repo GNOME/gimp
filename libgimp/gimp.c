@@ -178,7 +178,6 @@ static gboolean     _install_cmap      = FALSE;
 static gboolean     _show_tool_tips    = TRUE;
 static gint         _min_colors        = 144;
 static gint         _gdisp_ID          = -1;
-static gchar       *_wm_name           = NULL;
 static gchar       *_wm_class          = NULL;
 static gchar       *_display_name      = NULL;
 static gint         _monitor_number    = 0;
@@ -421,7 +420,8 @@ gimp_main (const GimpPlugInInfo *info,
 	(* PLUG_IN_INFO.query_proc) ();
 
       gimp_close ();
-      return 0;
+
+      return EXIT_SUCCESS;
     }
 
   if (strcmp (argv[4], "-init") == 0)
@@ -433,7 +433,8 @@ gimp_main (const GimpPlugInInfo *info,
 	(* PLUG_IN_INFO.init_proc) ();
 
       gimp_close ();
-      return 0;
+
+      return EXIT_SUCCESS;
     }
 
   if (gimp_debug_flags & GIMP_DEBUG_RUN)
@@ -449,7 +450,8 @@ gimp_main (const GimpPlugInInfo *info,
 		  NULL);
 
   gimp_loop ();
-  return 0;
+
+  return EXIT_SUCCESS;
 }
 
 /**
@@ -462,7 +464,8 @@ void
 gimp_quit (void)
 {
   gimp_close ();
-  exit (0);
+
+  exit (EXIT_SUCCESS);
 }
 
 /**
@@ -1124,20 +1127,6 @@ gimp_default_display (void)
 }
 
 /**
- * gimp_wm_name:
- *
- * Returns the window manager name to be used for plug-in windows.
- * This is a constant value given at Plug-In config time.
- *
- * Return value: the window manager name
- **/
-const gchar *
-gimp_wm_name (void)
-{
-  return (const gchar *) _wm_name;
-}
-
-/**
  * gimp_wm_class:
  *
  * Returns the window manager class to be used for plug-in windows.
@@ -1619,10 +1608,12 @@ gimp_config (GPConfig *config)
   _show_tool_tips = config->show_tool_tips;
   _min_colors     = config->min_colors;
   _gdisp_ID       = config->gdisp_ID;
-  _wm_name        = g_strdup (config->wm_name);
   _wm_class       = g_strdup (config->wm_class);
   _display_name   = g_strdup (config->display_name);
   _monitor_number = config->monitor_number;
+
+  if (config->app_name)
+    g_set_application_name (config->app_name);
 
   if (_shm_ID != -1)
     {

@@ -89,11 +89,10 @@ gimp_ui_init (const gchar *prog_name,
         putenv (g_strdup_printf ("%s=%s", var_name, display_name));
     }
 
-  argc    = 3;
-  argv    = g_new (gchar *, 3);
+  argc    = 2;
+  argv    = g_new (gchar *, 2);
   argv[0] = g_strdup (prog_name);
-  argv[1] = g_strdup_printf ("--name=%s",  gimp_wm_name ());
-  argv[2] = g_strdup_printf ("--class=%s", gimp_wm_class ());
+  argv[1] = g_strdup_printf ("--class=%s", gimp_wm_class ());
 
   gtk_init (&argc, &argv);
 
