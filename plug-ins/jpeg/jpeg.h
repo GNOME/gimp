@@ -454,7 +454,7 @@ run (const gchar      *name,
 	}
 
 #ifdef HAVE_EXIF
-      parasite = gimp_image_parasite_find (orig_image_ID, "jpeg-exif-data");
+      parasite = gimp_image_parasite_find (orig_image_ID, "exif-data");
       if (parasite)
         {
           exif_data = exif_data_new_from_data (parasite->data, parasite->size);
@@ -1109,6 +1109,8 @@ load_image (const gchar *filename,
 	}
 
 #ifdef HAVE_EXIF
+#define EXIF_HEADER_SIZE 8
+
       exif_data = exif_data_new_from_file (filename);
       if (exif_data)
         {
@@ -1117,12 +1119,15 @@ load_image (const gchar *filename,
 
           exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
           exif_data_unref (exif_data);
-          exif_parasite = gimp_parasite_new ("jpeg-exif-data",
-                                             GIMP_PARASITE_PERSISTENT,
-                                             exif_buf_len, exif_buf);
-          gimp_image_parasite_attach (image_ID, exif_parasite);
-          gimp_parasite_free (exif_parasite);
-          free (exif_buf);
+	  if (exif_buf_len > EXIF_HEADER_SIZE)
+	    {
+	      exif_parasite = gimp_parasite_new ("exif-data",
+						 GIMP_PARASITE_PERSISTENT,
+						 exif_buf_len, exif_buf);
+	      gimp_image_parasite_attach (image_ID, exif_parasite);
+	      gimp_parasite_free (exif_parasite);
+	    }
+	  free (exif_buf);
         }
 #endif
 
@@ -1181,8 +1186,8 @@ background_jpeg_save (PreviewPersistent *pp)
 
 	  stat (pp->file_name, &buf);
 	  g_snprintf (temp, sizeof (temp),
-		      _("Size: %ld bytes (%02.01f kB)"),
-		      (glong) buf.st_size, (gdouble) (buf.st_size) / 1024.0);
+		      _("File size: %02.01f kB"),
+		      (gdouble) (buf.st_size) / 1024.0);
 	  gtk_label_set_text (GTK_LABEL (preview_size), temp);
 
 	  /* and load the preview */
@@ -1615,7 +1620,7 @@ make_preview (void)
     }
   else
     {
-      gtk_label_set_text (GTK_LABEL (preview_size), _("Size: unknown"));
+      gtk_label_set_text (GTK_LABEL (preview_size), _("File size: unknown"));
       gtk_widget_queue_draw (preview_size);
 
       gimp_displays_flush ();
@@ -1649,15 +1654,18 @@ static gboolean
 save_dialog (void)
 {
   GtkWidget     *dlg;
-  GtkWidget     *vbox;
   GtkWidget     *main_vbox;
-  GtkWidget     *label;
-  GtkWidget     *scale;
-  GtkWidget     *frame;
+  GtkWidget     *hbox;
+  GtkWidget     *hbox2;
+  GtkWidget     *vbox;
+  GtkObject     *entry;
   GtkWidget     *table;
+  GtkWidget     *table2;
+  GtkWidget     *expander;
   GtkWidget     *toggle;
-  GtkWidget     *abox;
+  GtkWidget     *spinbutton;
   GtkObject     *scale_data;
+  GtkWidget     *label;
 #ifdef HAVE_EXIF
   GtkWidget     *exif_toggle;
 #endif
@@ -1667,8 +1675,6 @@ save_dialog (void)
   GtkWidget     *restart;
 
   GtkWidget     *preview;
-  /* GtkWidget *preview_size; -- global */
-
   GtkWidget     *combo;
 
   GtkWidget     *text_view;
@@ -1676,7 +1682,6 @@ save_dialog (void)
   GtkWidget     *com_frame;
   GtkWidget     *scrolled_window;
 
-  GtkWidget     *prv_frame;
   GimpImageType  dtype;
   gboolean       run;
 
@@ -1695,16 +1700,46 @@ save_dialog (void)
 		      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  /* sg - preview */
-  prv_frame = gimp_frame_new (_("Image Preview"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), prv_frame, FALSE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (prv_frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  preview = gtk_check_button_new_with_label (_("Preview in image window"));
-  gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
+  hbox2 = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 12);
+  gtk_widget_show (hbox2);
+
+  table = gtk_table_new (1, 5, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (hbox2), table, FALSE, FALSE, 10);
+  gtk_widget_show (table);
+
+  entry = gimp_scale_entry_new (GTK_TABLE (table), 0, 0, _("_Quality:"),
+				SCALE_WIDTH, 0, jsvals.quality,
+				0., 1., 0.01, 0.1, 2,
+				TRUE, 0., 0., 
+				_("JPEG quality parameter"),
+				"file-jpeg-save-quality");
+
+  g_signal_connect (entry, "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &jsvals.quality);
+  g_signal_connect (entry, "value_changed",
+                    G_CALLBACK (make_preview),
+                    NULL);
+
+
+  
+  hbox2 = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 6);
+  gtk_widget_show (hbox2);
+
+  preview = gtk_check_button_new_with_mnemonic (_("Show _Preview"));
+  gtk_box_pack_start (GTK_BOX (hbox2), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect (preview, "toggled",
@@ -1716,78 +1751,77 @@ save_dialog (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview), jsvals.preview);
 
-  preview_size = gtk_label_new (_("Size: unknown"));
-  gtk_misc_set_alignment (GTK_MISC (preview_size), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (vbox), preview_size, FALSE, FALSE, 0);
-  gtk_widget_show (preview_size);
+  hbox2 = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 6);
+  gtk_widget_show (hbox2);
 
-  gtk_widget_show (prv_frame);
+  preview_size = gtk_label_new (_("File size: unknown"));
+  gtk_misc_set_alignment (GTK_MISC (preview_size), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (hbox2), preview_size, FALSE, FALSE, 0);
+  gtk_widget_show (preview_size);
 
   make_preview ();
 
-  /*  parameter settings  */
-  frame = gimp_frame_new (_("JPEG Parameters"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  com_frame = gimp_frame_new (_("Comment"));
+  gtk_box_pack_start (GTK_BOX (hbox), com_frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new (9, 3, FALSE);
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_widget_set_size_request (scrolled_window, 250, 100);
+  gtk_container_add (GTK_CONTAINER (com_frame), scrolled_window);
+  gtk_widget_show (scrolled_window);
+
+  text_buffer = gtk_text_buffer_new (NULL);
+  if (image_comment)
+    gtk_text_buffer_set_text (text_buffer, image_comment, -1);
+
+  text_view = gtk_text_view_new_with_buffer (text_buffer);
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
+
+  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
+  gtk_widget_show (text_view);
+
+  g_object_unref (text_buffer);
+
+  gtk_widget_show (com_frame);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  expander = gtk_expander_new_with_mnemonic (_("_Advanced Options"));
+  gtk_box_pack_start (GTK_BOX (hbox), expander, FALSE, FALSE, 0);
+  gtk_widget_show (expander);
+
+  table = gtk_table_new (5, 7, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_container_add (GTK_CONTAINER (expander), table);
 
-  label = gtk_label_new (_("Quality:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 20);
 
-  scale_data = gtk_adjustment_new (jsvals.quality, 0.0, 1.0, 0.01, 0.01, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 3, 0, 1,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_widget_show (scale);
+  table2 = gtk_table_new (1, 3, FALSE);
+  gtk_table_attach (GTK_TABLE (table), table2, 
+		    2, 6, 0, 1, GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
+  gtk_widget_show (table2);
 
-  g_signal_connect (scale_data, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &jsvals.quality);
-  g_signal_connect (scale_data, "value_changed",
-                    G_CALLBACK (make_preview),
-                    NULL);
-
-  label = gtk_label_new (_("Smoothing:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (jsvals.smoothing, 0.0, 1.0, 0.01, 0.01, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 3, 1, 2,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_widget_show (scale);
-
-  g_signal_connect (scale_data, "value_changed",
+  entry = gimp_scale_entry_new (GTK_TABLE (table2), 2, 0, _("_Smoothing:"),
+				100, 0, jsvals.smoothing,
+				0., 1., 0.01, 0.1, 2,
+				TRUE, 0., 0., 
+				NULL,
+				"file-jpeg-save-smoothing");
+  g_signal_connect (entry, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &jsvals.smoothing);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (entry, "value_changed",
                     G_CALLBACK (make_preview),
                     NULL);
 
-  /* sg - have to init scale here */
-  scale_data = gtk_adjustment_new ((jsvals.restart == 0) ? 1 : jsvals.restart,
-				   1, 64, 1, 1, 0.0);
-  restart_markers_scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-
-  restart = gtk_check_button_new_with_label (_("Restart markers"));
-  gtk_table_attach (GTK_TABLE (table), restart, 0, 1, 2, 3,
+  restart = gtk_check_button_new_with_label (_("Use restart markers"));
+  gtk_table_attach (GTK_TABLE (table), restart, 2, 4, 1, 2,
 		    GTK_FILL, 0, 0, 0);
   gtk_widget_show (restart);
 
@@ -1795,23 +1829,18 @@ save_dialog (void)
                     G_CALLBACK (save_restart_toggle_update),
                     scale_data);
 
-  restart_markers_label = gtk_label_new (_("Restart frequency (rows):"));
+  restart_markers_label = gtk_label_new (_("  Frequency (rows):"));
   gtk_misc_set_alignment (GTK_MISC (restart_markers_label), 0.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), restart_markers_label, 0, 1, 3, 4,
-		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), restart_markers_label, 4, 5, 1, 2,
+		    GTK_FILL | GTK_SHRINK, 0, 0, 0);
   gtk_widget_show (restart_markers_label);
 
-  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
-  gtk_table_attach (GTK_TABLE (table), abox, 1, 3, 2, 4,
-		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (abox);
-
-  gtk_widget_set_size_request (restart_markers_scale, SCALE_WIDTH, -1);
-  gtk_container_add (GTK_CONTAINER (abox), restart_markers_scale);
-  gtk_scale_set_value_pos (GTK_SCALE (restart_markers_scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (restart_markers_scale), 0);
-  gtk_range_set_update_policy (GTK_RANGE (restart_markers_scale),
-			       GTK_UPDATE_DELAYED);
+  spinbutton = gimp_spin_button_new (&scale_data, 
+				     (jsvals.restart == 0) ? 1 : jsvals.restart,
+				     1.0, 64.0, 1.0, 1.0, 64.0, 1.0, 0); 
+  gtk_table_attach (GTK_TABLE (table), spinbutton, 5, 6, 1, 2,
+		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
+  gtk_widget_show (spinbutton);
 
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (save_restart_update),
@@ -1819,13 +1848,11 @@ save_dialog (void)
 
   gtk_widget_set_sensitive (restart_markers_label,
 			    jsvals.restart ? TRUE : FALSE);
-  gtk_widget_set_sensitive (restart_markers_scale,
+  gtk_widget_set_sensitive (spinbutton,
 			    jsvals.restart ? TRUE : FALSE);
 
-  gtk_widget_show (restart_markers_scale);
-
   toggle = gtk_check_button_new_with_label (_("Optimize"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 4, 5,
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1,
 		    GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
@@ -1839,7 +1866,7 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
 
   progressive = gtk_check_button_new_with_label (_("Progressive"));
-  gtk_table_attach (GTK_TABLE (table), progressive, 0, 3, 5, 6,
+  gtk_table_attach (GTK_TABLE (table), progressive, 0, 1, 1, 2,
 		    GTK_FILL, 0, 0, 0);
   gtk_widget_show (progressive);
 
@@ -1857,8 +1884,8 @@ save_dialog (void)
   gtk_widget_set_sensitive (progressive, FALSE);
 #endif
 
-  baseline = gtk_check_button_new_with_label (_("Force baseline JPEG (Readable by all decoders)"));
-  gtk_table_attach (GTK_TABLE (table), baseline, 0, 3, 6, 7,
+  baseline = gtk_check_button_new_with_label (_("Force baseline JPEG"));
+  gtk_table_attach (GTK_TABLE (table), baseline, 0, 1, 2, 3,
 		    GTK_FILL, 0, 0, 0);
   gtk_widget_show (baseline);
 
@@ -1874,7 +1901,7 @@ save_dialog (void)
 
 #ifdef HAVE_EXIF
   exif_toggle = gtk_check_button_new_with_label (_("Save EXIF data"));
-  gtk_table_attach (GTK_TABLE (table), exif_toggle, 0, 1, 7, 8,
+  gtk_table_attach (GTK_TABLE (table), exif_toggle, 0, 1, 3, 4,
 		    GTK_FILL, 0, 0, 0);
   gtk_widget_show (exif_toggle);
 
@@ -1887,64 +1914,46 @@ save_dialog (void)
 #endif
 
   /* Subsampling */
+  label = gtk_label_new (_("Subsampling:"));
+  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 2, 3,
+		    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (label);
+
   combo = gimp_int_combo_box_new ("2x2,1x1,1x1",         0,
                                   "2x1,1x1,1x1 (4:2:2)", 1,
                                   "1x1,1x1,1x1",         2,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), jsvals.subsmp);
+  gtk_table_attach (GTK_TABLE (table), combo, 3, 6, 2, 3,
+		    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (combo);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (combo_changed_callback),
                     &jsvals.subsmp);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 1, 7,
-			     _("Subsampling:"),
-			     1.0, 0.5,
-			     combo, 1, FALSE);
 
   dtype = gimp_drawable_type (drawable_ID_global);
   if (dtype != GIMP_RGB_IMAGE && dtype != GIMP_RGBA_IMAGE)
     gtk_widget_set_sensitive (combo, FALSE);
 
   /* DCT method */
+  label = gtk_label_new (_("DCT Method"));
+  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 3, 4,
+		    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (label);
+
   combo = gimp_int_combo_box_new (_("Fast Integer"),   1,
                                   _("Integer"),        0,
                                   _("Floating-Point"), 2,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), jsvals.dct);
+  gtk_table_attach (GTK_TABLE (table), combo, 3, 6, 3, 4,
+		    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (combo);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (combo_changed_callback),
                     &jsvals.dct);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 1, 8,
-			     _("DCT method (Speed/quality tradeoff):"),
-			     1.0, 0.5,
-			     combo, 1, FALSE);
-
-  com_frame = gimp_frame_new (_("Comment"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), com_frame, TRUE, TRUE, 0);
-
-  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_AUTOMATIC);
-  gtk_container_add (GTK_CONTAINER (com_frame), scrolled_window);
-  gtk_widget_show (scrolled_window);
-
-  text_buffer = gtk_text_buffer_new (NULL);
-  if (image_comment)
-    gtk_text_buffer_set_text (text_buffer, image_comment, -1);
-
-  text_view = gtk_text_view_new_with_buffer (text_buffer);
-  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
-
-  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
-  gtk_widget_show (text_view);
-
-  g_object_unref (text_buffer);
-
-  gtk_widget_show (com_frame);
 
   gtk_widget_show (table);
   gtk_widget_show (dlg);
