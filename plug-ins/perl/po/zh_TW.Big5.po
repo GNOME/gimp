@@ -202,7 +202,7 @@ msgstr ""
 
 #: examples/windify:0
 msgid "<Image>/Filters/Distorts/Windify..."
-msgstr "<圖像>/過濾器/扭曲/風吹..."
+msgstr "<Image>/過濾器/扭曲/風吹..."
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
@@ -382,7 +382,7 @@ msgstr ""
 
 #: examples/triangle:0
 msgid "<Image>/Select/Triangle..."
-msgstr "<圖像>/選擇/三角形..."
+msgstr "<Image>/選擇/三角形..."
 
 #: examples/gap-vcr:0
 msgid "<Image>/Video/VCR Console..."
@@ -390,7 +390,7 @@ msgstr ""
 
 #: examples/view3d:0
 msgid "<Image>/View/3D Surface..."
-msgstr "<圖像>/選擇/三維表面..."
+msgstr "<Image>/選擇/三維表面..."
 
 #: Gimp/Fu.pm:0
 msgid "<Load> plug-in called without the 3 standard arguments!\n"

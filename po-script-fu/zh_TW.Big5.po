@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.2.2\n"
 "POT-Creation-Date: 2001-07-26 14:09+0200\n"
-"PO-Revision-Date: 2001-07-26 12:33+0800\n"
+"PO-Revision-Date: 2001-07-26 15:25+0200\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -170,11 +170,11 @@ msgstr "伺服器紀錄檔："
 
 #: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr "<工具箱>/擴展/Script-Fu/監視窗..."
+msgstr "<Toolbox>/擴展/Script-Fu/監視窗..."
 
 #: plug-ins/script-fu/script-fu.c:178
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-msgstr "<工具箱>/擴展/Script-Fu/伺服器..."
+msgstr "<Toolbox>/擴展/Script-Fu/伺服器..."
 
 #: plug-ins/script-fu/script-fu.c:1105 plug-ins/script-fu/script-fu.c:1106
 msgid "Re-read all available scripts"
@@ -414,7 +414,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
-msgstr "<工具箱>/擴展/Script-Fu/按鈕/圓形按鈕..."
+msgstr "<Toolbox>/擴展/Script-Fu/按鈕/圓形按鈕..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."

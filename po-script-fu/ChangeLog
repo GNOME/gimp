@@ -1,5 +1,9 @@
 2001-07-26  Sven Neumann  <sven@gimp.org>
 
+	* zh_TW.Big5.po: don't translate <Toolbox> and <Image> !!
+
+2001-07-26  Sven Neumann  <sven@gimp.org>
+
 	* zh_TW.Big5.po: added traditional chinese translation provided by
 	"R.I.P. Deaddog" <maddog@linuxhall.org>.
 
