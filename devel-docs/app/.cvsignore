@@ -13,5 +13,5 @@ app-undocumented.txt
 html
 tmpl
 xml
-version.xml
+version
 *.stamp

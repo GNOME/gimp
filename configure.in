@@ -1162,7 +1162,7 @@ AC_ARG_ENABLE(default-binary, [  --enable-default-binary install this as the def
 AM_CONDITIONAL(DEFAULT_BINARY, test x$enable_default_binary = xyes)
 
 
-AC_ARG_ENABLE(gimp-console, [  --enable-gimp-console build a console-only binary which does not link GTK+ (default=no)], , enable_gimp_console=no)
+AC_ARG_ENABLE(gimp-console, [  --enable-gimp-console   build a console-only binary which does not link GTK+ (default=no)], , enable_gimp_console=no)
 
 AM_CONDITIONAL(ENABLE_GIMP_CONSOLE, test x$enable_gimp_console = xyes)
 
@@ -1362,19 +1362,19 @@ plug-ins/winsnap/Makefile
 modules/Makefile
 devel-docs/Makefile
 devel-docs/app/Makefile
-devel-docs/app/version.xml
+devel-docs/app/version
 devel-docs/libgimp/Makefile
-devel-docs/libgimp/version.xml
+devel-docs/libgimp/version
 devel-docs/libgimpbase/Makefile
-devel-docs/libgimpbase/version.xml
+devel-docs/libgimpbase/version
 devel-docs/libgimpcolor/Makefile
-devel-docs/libgimpcolor/version.xml
+devel-docs/libgimpcolor/version
 devel-docs/libgimpmath/Makefile
-devel-docs/libgimpmath/version.xml
+devel-docs/libgimpmath/version
 devel-docs/libgimpmodule/Makefile
-devel-docs/libgimpmodule/version.xml
+devel-docs/libgimpmodule/version
 devel-docs/libgimpwidgets/Makefile
-devel-docs/libgimpwidgets/version.xml
+devel-docs/libgimpwidgets/version
 docs/Makefile
 docs/gimp-1.3.1
 docs/gimprc-1.3.5

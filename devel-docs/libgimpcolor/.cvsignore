@@ -10,5 +10,5 @@ libgimpcolor-unused.txt
 libgimpcolor-undocumented.txt
 html
 xml
-version.xml
+version
 *.stamp

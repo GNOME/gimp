@@ -1,3 +1,9 @@
+2003-11-08  Sven Neumann  <sven@gimp.org>
+
+	* */version.xml.in: renamed to version.in.
+
+	* */*-docs.sgml: include the version number using XInclude.
+
 2003-11-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/app-sections.txt

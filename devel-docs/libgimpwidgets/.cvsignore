@@ -12,5 +12,5 @@ libgimpwidgets-unused.txt
 libgimpwidgets-undocumented.txt
 html
 xml
-version.xml
+version
 *.stamp

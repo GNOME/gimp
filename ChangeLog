@@ -1,3 +1,8 @@
+2003-11-08  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: renamed version.xml.in to version.in in all API
+	reference manuals.
+
 2003-11-08  Manish Singh  <yosh@gimp.org>
 
 	* libgimp/gimpui.c (gimp_ui_init): #include <stdlib.h> for putenv,

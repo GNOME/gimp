@@ -10,5 +10,5 @@ libgimpmath-unused.txt
 libgimpmath-undocumented.txt
 html
 xml
-version.xml
+version
 *.stamp

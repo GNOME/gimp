@@ -10,5 +10,5 @@ libgimp-unused.txt
 libgimp-undocumented.txt
 html
 xml
-version.xml
+version
 *.stamp

@@ -12,5 +12,5 @@ libgimpmodule-unused.txt
 libgimpmodule-undocumented.txt
 html
 xml
-version.xml
+version
 *.stamp
