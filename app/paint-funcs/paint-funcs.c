@@ -4296,6 +4296,7 @@ initial_sub_region (struct initial_regions_struct *st,
   gboolean             *affect;
   InitialMode           type;
 
+  /* use src->bytes + 1 since DISSOLVE always needs a buffer with alpha */
   buf = alloca (MAX (src->w * (src->bytes + 1),
                      dest->w * dest->bytes));
   data    = st->data;
@@ -4306,7 +4307,7 @@ initial_sub_region (struct initial_regions_struct *st,
 
   s = src->data;
   d = dest->data;
-  m = (mask) ? mask->data : NULL;
+  m = mask ? mask->data : NULL;
 
   for (h = 0; h < src->h; h++)
     {
@@ -4329,10 +4330,12 @@ initial_sub_region (struct initial_regions_struct *st,
         case INITIAL_INTENSITY:
           if (mode == GIMP_DISSOLVE_MODE)
             {
-              dissolve_pixels (s, buf, src->x, src->y + h, opacity, src->w, src->bytes,
-                               src->bytes + 1, 0);
-              initial_inten_pixels (buf, d, m, opacity, affect,
-                                    src->w, src->bytes);
+              dissolve_pixels (s, m, buf, src->x, src->y + h,
+                               opacity, src->w,
+                               src->bytes, src->bytes + 1,
+                               FALSE);
+              initial_inten_a_pixels (buf, d, NULL, OPAQUE_OPACITY, affect,
+                                      src->w, src->bytes + 1);
             }
           else
             initial_inten_pixels (s, d, m, opacity, affect, src->w, src->bytes);
@@ -4341,9 +4344,11 @@ initial_sub_region (struct initial_regions_struct *st,
         case INITIAL_INTENSITY_ALPHA:
           if (mode == GIMP_DISSOLVE_MODE)
             {
-              dissolve_pixels (s, buf, src->x, src->y + h, opacity, src->w, src->bytes,
-                               src->bytes, 1);
-              initial_inten_a_pixels (buf, d, m, opacity, affect,
+              dissolve_pixels (s, m, buf, src->x, src->y + h,
+                               opacity, src->w,
+                               src->bytes, src->bytes,
+                               TRUE);
+              initial_inten_a_pixels (buf, d, NULL, OPAQUE_OPACITY, affect,
                                       src->w, src->bytes);
             }
           else
@@ -4439,6 +4444,8 @@ combine_sub_region (struct combine_regions_struct *st,
 {
   guchar               *data;
   guint                 opacity;
+  guint                 layer_mode_opacity;
+  guchar               *layer_mode_mask;
   GimpLayerModeEffects  mode;
   gboolean             *affect;
   guint                 h;
@@ -4452,9 +4459,11 @@ combine_sub_region (struct combine_regions_struct *st,
   gboolean              transparency_quickskip_possible;
   TileRowHint           hint;
 
+  /* use src2->bytes + 1 since DISSOLVE always needs a buffer with alpha */
   buf = alloca (MAX (MAX (src1->w * src1->bytes,
-                          src2->w * src2->bytes),
+                          src2->w * (src2->bytes + 1)),
                      dest->w * dest->bytes));
+
   opacity    = st->opacity;
   mode       = st->mode;
   affect     = st->affect;
@@ -4469,7 +4478,7 @@ combine_sub_region (struct combine_regions_struct *st,
   s1 = src1->data;
   s2 = src2->data;
   d = dest->data;
-  m = (mask) ? mask->data : NULL;
+  m = mask ? mask->data : NULL;
 
   if (transparency_quickskip_possible || opacity_quickskip_possible)
     {
@@ -4483,6 +4492,19 @@ combine_sub_region (struct combine_regions_struct *st,
 			    src2->offy, src2->offy + (src1->h - 1));
     }
   /* else it's probably a brush-composite */
+
+  /*  use separate variables for the combining opacity and the opacity
+   *  the layer mode is applied with since DISSLOVE_MODE "consumes"
+   *  all opacity and wants to be applied OPAQUE
+   */
+  layer_mode_opacity = opacity;
+  layer_mode_mask    = m;
+
+  if (mode == GIMP_DISSOLVE_MODE)
+    {
+      opacity = OPAQUE_OPACITY;
+      m       = NULL;
+    }
 
   for (h = 0; h < src1->h; h++)
     {
@@ -4530,24 +4552,27 @@ combine_sub_region (struct combine_regions_struct *st,
 	  {
 	    /*  Now, apply the paint mode  */
 	    struct apply_layer_mode_struct alms;
-	    alms.src1 = s1;
-	    alms.src2 = s2;
-	    alms.dest = &s;
-	    alms.x = src1->x;
-	    alms.y = src1->y + h;
-	    alms.opacity = opacity;
+
+	    alms.src1    = s1;
+	    alms.src2    = s2;
+            alms.mask    = layer_mode_mask;
+	    alms.dest    = &s;
+	    alms.x       = src1->x;
+	    alms.y       = src1->y + h;
+	    alms.opacity = layer_mode_opacity;
 	    alms.combine = combine;
-	    alms.length = src1->w;
-	    alms.bytes1 = src1->bytes;
-	    alms.bytes2 = src2->bytes;
+	    alms.length  = src1->w;
+	    alms.bytes1  = src1->bytes;
+	    alms.bytes2  = src2->bytes;
 
 	    /*  Determine whether the alpha channel of the destination can be
 	     *  affected by the specified mode--This keeps consistency with
 	     *  varying opacities
 	     */
-
 	    mode_affect = layer_modes[mode].affect_alpha;
-	    layer_mode_funcs[mode](&alms);
+
+	    layer_mode_funcs[mode] (&alms);
+
 	    combine = (alms.combine == NO_COMBINATION) ? type : alms.combine;
 	    break;
 	  }
@@ -4698,7 +4723,12 @@ combine_sub_region (struct combine_regions_struct *st,
       s2 += src2->rowstride;
       d += dest->rowstride;
       if (mask)
-	m += mask->rowstride;
+        {
+          layer_mode_mask += mask->rowstride;
+
+          if (m)
+            m += mask->rowstride;
+        }
     }
 }
 

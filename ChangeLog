@@ -1,3 +1,27 @@
+2003-06-02  Michael Natterer  <mitch@gimp.org>
+
+	Implemented DISSOLVE_MODE the way it should have always been.
+	Fixes bug #107402.
+
+	* app/paint-funcs-generic.h (struct apply_layer_mode_struct): added
+	"guchar *mask" so it can be used by the layer mode.
+
+	(dissolve_pixels): take an additional "mask" parameter and
+	dissolve the pixels according to the *combined* opacity of the
+	pixel's alpha, the opacity and the mask. Removed a wrong comment
+	about why we call g_rand_int() x times before we start to use its
+	values.
+
+	(layer_dissolve_mode): pass the mask to dissolve_pixels(). No need
+	to call add_alpha_pixels() since we overwrite the dest buffer
+	entirely in disolve_pixels().
+
+	* app/paint-funcs.c (initial_sub_region, combine_sub_region):
+	allocate the buffer large enough for DISSOLVE (which always needs
+	an alpha channel). Pass the mask to the layer mode functions.
+	Discard opacity and mask after applying DISSOLVE since it
+	"consumes" all transparency.
+
 2003-06-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/grid.c: fixed swapped horizontal/vertical

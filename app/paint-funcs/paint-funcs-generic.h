@@ -53,9 +53,10 @@
 struct apply_layer_mode_struct
 {
   guchar             bytes1 : 3; 
-  guchar             bytes2 : 3; 
+  guchar             bytes2 : 3;
   guchar            *src1;
   guchar            *src2;
+  guchar            *mask;
   guchar           **dest;
   gint               x;
   gint               y;
@@ -946,6 +947,7 @@ difference_pixels (const guchar *src1,
 
 static inline void
 dissolve_pixels (const guchar *src,
+                 guchar       *mask,
 		 guchar       *dest,
 		 gint          x,
 		 gint          y,
@@ -955,17 +957,17 @@ dissolve_pixels (const guchar *src,
 		 gint          db,
 		 guint	       has_alpha)
 {
-  gint alpha, b;
-  gint32 rand_val;
-  GRand *gr;
-  
+  gint    alpha, b;
+  gint32  rand_val;
+  gint    combined_opacity;
+  GRand  *gr;
+
   gr = g_rand_new_with_seed (random_table[y % RANDOM_TABLE_SIZE]);
-  
-  /* Ignore a few random values (this probably isn't necessary 
-   * when using g_rand_*) */
+
+  /* Ignore x random values so we get a deterministic result */
   for (b = 0; b < x; b ++)
-    g_rand_int(gr);
-  
+    g_rand_int (gr);
+
   alpha = db - 1;
 
   while (length--)
@@ -977,13 +979,27 @@ dissolve_pixels (const guchar *src,
       /*  dissolve if random value is > opacity  */
       rand_val = g_rand_int_range (gr, 0, 256);       
 
-      if (has_alpha)
-	dest[alpha] = (rand_val > src[alpha]) ? 0 : src[alpha];
-      else
-	dest[alpha] = (rand_val > opacity) ? 0 : OPAQUE_OPACITY;
+      if (mask)
+        {
+          if (has_alpha)
+            combined_opacity = opacity * src[alpha] * *mask / (255 * 255);
+          else
+            combined_opacity = opacity * *mask / 255;       
 
-      dest += db;
+          mask++;
+        }
+      else
+        {
+          if (has_alpha)
+            combined_opacity = opacity * src[alpha] / 255;       
+          else
+            combined_opacity = opacity;
+        }
+
+      dest[alpha] = (rand_val > combined_opacity) ? 0 : OPAQUE_OPACITY;
+
       src  += sb;
+      dest += db;
     }
 
   g_rand_free (gr);
@@ -1591,15 +1607,21 @@ static void
 layer_dissolve_mode (struct apply_layer_mode_struct *alms)
 {
   const guint has_alpha1 = HAS_ALPHA (alms->bytes1); 
-  const guint has_alpha2 = HAS_ALPHA (alms->bytes2); 
+  const guint has_alpha2 = HAS_ALPHA (alms->bytes2);
+  guint dest_bytes;
 
   /*  Since dissolve requires an alpha channel...  */
-  if (!has_alpha2)
-    add_alpha_pixels (alms->src2, *(alms->dest), alms->length, alms->bytes2);
+  if (has_alpha2)
+    dest_bytes = alms->bytes2;
+  else
+    dest_bytes = alms->bytes2 + 1;
 
-  dissolve_pixels (alms->src2, *(alms->dest), alms->x, alms->y, 
-      alms->opacity, alms->length, alms->bytes2, 
-      (has_alpha2 ? alms->bytes2 : alms->bytes2 + 1), has_alpha2);
+  dissolve_pixels (alms->src2, alms->mask, *(alms->dest),
+                   alms->x, alms->y, 
+                   alms->opacity, alms->length,
+                   alms->bytes2, dest_bytes,
+                   has_alpha2);
+
   alms->combine = has_alpha1 ? COMBINE_INTEN_A_INTEN_A : COMBINE_INTEN_INTEN_A;
 }
 
