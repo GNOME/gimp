@@ -317,7 +317,7 @@ gimp_text_layer_rename (GimpItem    *item,
 {
   if (GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc))
     {
-      g_object_set (item, "auto_rename", FALSE, NULL);
+      g_object_set (item, "auto-rename", FALSE, NULL);
 
       return TRUE;
     }

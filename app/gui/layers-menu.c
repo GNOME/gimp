@@ -231,8 +231,7 @@ layers_menu_update (GtkItemFactory *factory,
         next_alpha = FALSE;
 
       text_layer = (layer &&
-                    GIMP_IS_TEXT_LAYER (layer) &&
-                    GIMP_TEXT_LAYER (layer)->text);
+                    gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)));
     }
 
 #define SET_SENSITIVE(menu,condition) \

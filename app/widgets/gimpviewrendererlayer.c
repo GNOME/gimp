@@ -91,8 +91,7 @@ gimp_preview_renderer_layer_render (GimpPreviewRenderer *renderer,
     {
       stock_id = GIMP_STOCK_FLOATING_SELECTION;
     }
-  else if (GIMP_IS_TEXT_LAYER (renderer->viewable) &&
-           GIMP_TEXT_LAYER (renderer->viewable)->text)
+  else if (gimp_drawable_is_text_layer (GIMP_DRAWABLE (renderer->viewable)))
     {
       stock_id = gimp_viewable_get_stock_id (renderer->viewable);
     }

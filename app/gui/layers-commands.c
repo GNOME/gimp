@@ -40,6 +40,7 @@
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
+#include "text/gimptext.h"
 #include "text/gimptextlayer.h"
 
 #include "pdb/procedural_db.h"
@@ -48,6 +49,7 @@
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemtreeview.h"
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -549,7 +551,7 @@ layers_text_tool (GimpLayer *layer,
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
-  if (! GIMP_IS_TEXT_LAYER (layer))
+  if (! gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)))
     {
       layers_edit_layer_query (layer, parent);
       return;
@@ -561,10 +563,8 @@ layers_text_tool (GimpLayer *layer,
 
   if (! GIMP_IS_TEXT_TOOL (active_tool))
     {
-      GimpContainer *tool_info_list;
+      GimpContainer *tool_info_list = gimage->gimp->tool_info_list;
       GimpToolInfo  *tool_info;
-
-      tool_info_list = gimage->gimp->tool_info_list;
 
       tool_info = (GimpToolInfo *)
         gimp_container_get_child_by_name (tool_info_list,
@@ -872,6 +872,7 @@ struct _EditLayerOptions
 {
   GtkWidget *query_box;
   GtkWidget *name_entry;
+  GtkWidget *toggle;
   GimpLayer *layer;
   GimpImage *gimage;
 };
@@ -896,6 +897,15 @@ edit_layer_query_response (GtkWidget        *widget,
               gimp_item_rename (GIMP_ITEM (layer), new_name);
               gimp_image_flush (options->gimage);
             }
+
+          if (options->toggle &&
+              gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)))
+            {
+              g_object_set (layer,
+                            "auto-rename",
+                            GTK_TOGGLE_BUTTON (options->toggle)->active,
+                            NULL);
+            }
         }
     }
 
@@ -907,6 +917,28 @@ edit_layer_query_activate (GtkWidget        *widget,
                            EditLayerOptions *options)
 {
   gtk_dialog_response (GTK_DIALOG (options->query_box), GTK_RESPONSE_OK);
+}
+
+
+static void
+edit_layer_toggle_rename (GtkWidget        *widget,
+                          EditLayerOptions *options)
+{
+  if (GTK_TOGGLE_BUTTON (widget)->active &&
+      gimp_drawable_is_text_layer (GIMP_DRAWABLE (options->layer)))
+    {
+      GimpTextLayer *text_layer = GIMP_TEXT_LAYER (options->layer);
+      GimpText      *text       = gimp_text_layer_get_text (text_layer);
+
+      if (text && text->text)
+        {
+          gchar *name = gimp_utf8_strtrim (text->text, 30);
+
+          gtk_entry_set_text (GTK_ENTRY (options->name_entry), name);
+
+          g_free (name);
+        }
+    }
 }
 
 void
@@ -953,6 +985,7 @@ layers_edit_layer_query (GimpLayer *layer,
   /*  The name label and entry  */
   table = gtk_table_new (1, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -968,6 +1001,24 @@ layers_edit_layer_query (GimpLayer *layer,
   g_signal_connect (options->name_entry, "activate",
 		    G_CALLBACK (edit_layer_query_activate),
 		    options);
+
+  /*  For text layers add a toggle to control "auto-rename"  */
+  if (gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)))
+    {
+      options->toggle =
+        gtk_check_button_new_with_mnemonic (_("Set Name from _Text"));
+
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->toggle),
+                                    GIMP_TEXT_LAYER (layer)->auto_rename);
+
+      gtk_table_attach (GTK_TABLE (table), options->toggle, 1, 2, 1, 2,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (options->toggle);
+
+      g_signal_connect (options->toggle, "toggled",
+                        G_CALLBACK (edit_layer_toggle_rename),
+                        options);
+    }
 
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);

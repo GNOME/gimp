@@ -1,3 +1,19 @@
+2004-03-18  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/layers-commands.c (layers_text_tool)
+	* app/gui/layers-menu.c (layers_menu_update): treat modified text
+	layers like normal layers.
+
+	* app/gui/layers-commands.c (layers_edit_layer_query): added a
+	check button that gives access to the "auto-rename" property of a
+	text layer.
+
+	* app/text/gimptextlayer.c: typo.
+
+	* app/widgets/gimppreviewrendererlayer.c
+	(gimp_preview_renderer_layer_render): show the text layer icon for
+	unmodified text layers only.
+
 2004-03-18  Simon Budig  <simon@gimp.org>
 
 	* app/widgets/gimpitemtreeview.c: compress visibility and linked
