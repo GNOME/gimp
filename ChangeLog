@@ -1,3 +1,10 @@
+Sat Sep  4 00:23:07 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+	* plug-ins/common/sparkle.c,
+        plug-ins/script-fu/scripts/frosty-logo.scm,
+        plug-ins/script-fu/scripts/t-o-p-logo.scm: updated sparkle plug-in and
+        two dependent scripts.
+
 Sat Sep  4 00:16:04 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/common/warp.c,
