@@ -9,15 +9,15 @@
 # This file is distributed under the same license as the gimp package.
 #
 # Artur Polaczyński <artii@o2.pl>, 2002-2003.
-# GNOME PL Team <translators@gnome.pl>, 2002-2003.
+# GNOME PL Team <translators@gnome.pl>, 2002-2004.
 #
 # do przejrzenia !!! grep (TODO)
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp20-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 22:57+0100\n"
-"PO-Revision-Date: 2003-11-19 09:24+0100\n"
+"POT-Creation-Date: 2004-03-23 08:09+0100\n"
+"PO-Revision-Date: 2004-03-22 11:06+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -56,7 +56,6 @@ msgstr ""
 "zamiast koloru pierwszoplanowego zostanie użyty kolor tła."
 
 #: tips/gimp-tips.xml.in.h:5
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -89,7 +88,6 @@ msgstr ""
 "warstwę. Ten sam efekt można uzyskać korzystając z menu kontekstowego."
 
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
@@ -131,17 +129,15 @@ msgstr ""
 "\" (\"Warstwa/Kolory/Krzywe...\")."
 
 #: tips/gimp-tips.xml.in.h:11
-#, fuzzy
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
 "even the Eraser or the Smudge tool."
 msgstr ""
-"Podczas tworzenia pociągnięcia wzdłuż ścieżki lub zaznaczenia (\"Edycja/"
-"Pociągnij ścieżkę...\" lub \"Edycja/Pociągnij zaznaczenie...\") możliwe jest "
-"użycie dowolnego narzędzia rysowania z jego bieżącymi ustawieniami. Można "
-"więc pociągnąć ścieżkę pędzlem w trybie gradientu, a nawet gumką lub "
-"narzędziem rozsmarowywania."
+"Podczas tworzenia pociągnięcia wzdłuż ścieżki (\"Edycja/Pociągnij ścieżkę..."
+"\") możliwe jest użycie dowolnego narzędzia rysowania z jego bieżącymi "
+"ustawieniami. Można więc pociągnąć ścieżkę pędzlem w trybie gradientu, a "
+"nawet gumką lub narzędziem rozsmarowywania."
 
 #: tips/gimp-tips.xml.in.h:12
 msgid ""
@@ -153,7 +149,6 @@ msgstr ""
 "spowoduje ukrycie lub wyświetlenie okien dialogowych albo narzędziówki."
 
 #: tips/gimp-tips.xml.in.h:13
-#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
@@ -175,7 +170,6 @@ msgstr ""
 "wysyłać na adres <b>translators@gnome.pl</b>."
 
 #: tips/gimp-tips.xml.in.h:15
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -312,7 +306,6 @@ msgstr ""
 
 # hmm synch z reszta
 #: tips/gimp-tips.xml.in.h:26
-#, fuzzy
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -342,7 +335,6 @@ msgstr ""
 "zaznaczenia) wybranym kolorem."
 
 #: tips/gimp-tips.xml.in.h:29
-#, fuzzy
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "

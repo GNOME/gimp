@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-21 22:22+0100\n"
-"PO-Revision-Date: 2004-03-20 11:51+0100\n"
+"POT-Creation-Date: 2004-03-23 08:07+0100\n"
+"PO-Revision-Date: 2004-03-22 10:58+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1373,7 +1373,7 @@ msgid "Cut"
 msgstr "Wycięcie"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:636
-#: app/tools/gimptexttool.c:127 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Tekst"
 
@@ -2032,7 +2032,7 @@ msgstr "Włączenie szybkiej maski"
 msgid "Disable QuickMask"
 msgstr "Wyłączenie szybkiej maski"
 
-#: app/core/gimpimage-undo-push.c:2974
+#: app/core/gimpimage-undo-push.c:2847
 #, c-format
 msgid "Can't undo %s"
 msgstr "Nie można cofnąć operacji %s"
@@ -2585,21 +2585,21 @@ msgstr "/_Zgodnie z preferencjami"
 msgid "Toggle QuickMask"
 msgstr "Przełącza szybką maskę"
 
-#: app/display/gimpdisplayshell.c:1403
+#: app/display/gimpdisplayshell.c:1404
 #, c-format
 msgid "Close %s?"
 msgstr "Czy zamknąć plik z obrazem %s?"
 
-#: app/display/gimpdisplayshell.c:1413
+#: app/display/gimpdisplayshell.c:1414
 msgid "_Discard changes"
 msgstr "_Porzuć zmiany"
 
-#: app/display/gimpdisplayshell.c:1453
+#: app/display/gimpdisplayshell.c:1454
 #, c-format
 msgid "Changes were made to '%s'."
 msgstr "Dokonano zmian w pliku z obrazem \"%s\"."
 
-#: app/display/gimpdisplayshell.c:1467
+#: app/display/gimpdisplayshell.c:1468
 msgid "Unsaved changes will be lost."
 msgstr "Niezapisane zmiany zostaną utracone."
 
@@ -2713,11 +2713,11 @@ msgstr "Nieznany typ pliku"
 msgid "Not a regular file"
 msgstr "To nie jest zwykły plik"
 
-#: app/file/file-open.c:158
+#: app/file/file-open.c:166
 msgid "Plug-In returned SUCCESS but did not return an image"
 msgstr "Wtyczka zwróciła kod powodzenia, lecz nie zwróciła obrazu."
 
-#: app/file/file-open.c:166
+#: app/file/file-open.c:174
 msgid "Plug-In could not open image"
 msgstr "Wtyczka nie może otworzyć obrazu"
 
@@ -3351,7 +3351,7 @@ msgid "/Save _Selection to File..."
 msgstr "/Z_apisz zaznaczenie do pliku..."
 
 # c-format
-#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:244
+#: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
 #: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
@@ -3363,7 +3363,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:234 app/gui/file-save-dialog.c:341
+#: app/gui/file-commands.c:233 app/gui/file-save-dialog.c:341
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3374,19 +3374,19 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:275
+#: app/gui/file-commands.c:274
 msgid "Create New Template"
 msgstr "Utworzenie nowego szablonu"
 
-#: app/gui/file-commands.c:279
+#: app/gui/file-commands.c:278
 msgid "Enter a name for this template"
 msgstr "Wprowadź nazwę tego szablonu"
 
-#: app/gui/file-commands.c:302
+#: app/gui/file-commands.c:301
 msgid "Revert failed. No file name associated with this image."
 msgstr "Przywrócenie obrazu nie powiodło się. Obrazowi nie nadano nazwy."
 
-#: app/gui/file-commands.c:315
+#: app/gui/file-commands.c:314
 #, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -3400,16 +3400,16 @@ msgstr ""
 "Zostaną utracone wszystkie zmiany oraz możliwość cofnięcia wykonanych "
 "operacji."
 
-#: app/gui/file-commands.c:323
+#: app/gui/file-commands.c:322
 msgid "Revert Image"
 msgstr "Przywrócenie obrazu"
 
-#: app/gui/file-commands.c:391
+#: app/gui/file-commands.c:390
 msgid "(Unnamed Template)"
 msgstr "(Szablon bez nazwy)"
 
 # c-format
-#: app/gui/file-commands.c:465
+#: app/gui/file-commands.c:462
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -4075,9 +4075,8 @@ msgid "/Select/_Invert"
 msgstr "/Zaznaczenie/_Odwróć"
 
 #: app/gui/image-menu.c:292
-#, fuzzy
 msgid "/Select/Fr_om Path"
-msgstr "/Zaznaczenie/Do ścieżk_i"
+msgstr "/Zaznaczenie/Ze ś_cieżki"
 
 #: app/gui/image-menu.c:297
 msgid "/Select/_Float"
@@ -7433,7 +7432,7 @@ msgstr "Procedura tymczasowa"
 msgid "Free Select"
 msgstr "Zaznaczenie odręczne"
 
-#: app/plug-in/plug-in.c:694
+#: app/plug-in/plug-in.c:702
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -7523,7 +7522,7 @@ msgstr ""
 "pchnąć w tę łódź jeża\n"
 "lub ośm skrzyń fig"
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:634
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:687
 msgid "Add Text Layer"
 msgstr "Dodanie warstwy tekstowej"
 
@@ -7535,15 +7534,15 @@ msgstr "(niepoprawny napis UTF-8)"
 msgid "Text Layer"
 msgstr "Warstwa tekstowa"
 
-#: app/text/gimptextlayer.c:531
+#: app/text/gimptextlayer.c:537
 msgid "Discard Text Information"
 msgstr "Porzucenie informacji o tekście"
 
-#: app/text/gimptextlayer.c:581
+#: app/text/gimptextlayer.c:587
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Funkcje tekstowe nie są dostępne z powodu braku czcionek."
 
-#: app/text/gimptextlayer.c:607
+#: app/text/gimptextlayer.c:615
 msgid "Empty Text Layer"
 msgstr "Pusta warstwa tekstowa"
 
@@ -8734,23 +8733,23 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Utwórz z tekstu ścieżkę"
 
-#: app/tools/gimptexttool.c:128
+#: app/tools/gimptexttool.c:142
 msgid "Add text to the image"
 msgstr "Umieszczanie tekstu na obrazie"
 
-#: app/tools/gimptexttool.c:129
+#: app/tools/gimptexttool.c:143
 msgid "/Tools/Te_xt"
 msgstr "/Narzędzia/_Tekst"
 
-#: app/tools/gimptexttool.c:667
+#: app/tools/gimptexttool.c:718
 msgid "GIMP Text Editor"
 msgstr "Edytor tekstowy programu GIMP"
 
-#: app/tools/gimptexttool.c:757 app/tools/gimptexttool.c:760
+#: app/tools/gimptexttool.c:828 app/tools/gimptexttool.c:831
 msgid "Confirm Text Editing"
-msgstr ""
+msgstr "Potwierdzenie modyfikacji tekstu"
 
-#: app/tools/gimptexttool.c:781
+#: app/tools/gimptexttool.c:852
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -8758,6 +8757,12 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
+"Zaznaczona warstwa jest warstwą tekstową, jednak została zmodyfikowana przy "
+"użyciu innych narzędzi. Wprowadzenie zmian przy użyciu narzędzia tekstowego "
+"spowoduje porzucenie zmian wykonanych wcześniej innymi narzędziami.\n"
+"\n"
+"Możliwe jest zmodyfikowanie warstwy lub utworzenie nowej warstwy tekstowej w "
+"oparciu o atrybuty obecnej."
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"
@@ -9331,7 +9336,7 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Niepoprawny UTF-8"
 
-#: app/widgets/gimpdock.c:383
+#: app/widgets/gimpdock.c:394
 msgid "You can drop dockable dialogs here."
 msgstr "Można tutaj upuszczać dokowalne okna dialogowe."
 
