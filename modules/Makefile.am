@@ -12,6 +12,7 @@ INCLUDES = \
         -I$(includedir)
 
 EXTRA_DIST = \
+	makefile.cygwin		\
 	makefile.msc		\
 	module.def
 

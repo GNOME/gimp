@@ -18,6 +18,10 @@ Sat Jul 03 11:27:47 1999  Tor Lillqvist  <tml@iki.fi>
 	* plug-ins/makefile.cygwin
 	* app/makefile.cygwin: New files.
 
+	* modules/Makefile.am
+	* plug-ins/Makefile.am
+	* app/Makefile.am: Distribute the makefile.cygwin files.
+
 	* app/color_notebook.c: Mark the two functions used by color
 	selection modules for export.
 

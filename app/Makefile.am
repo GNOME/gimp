@@ -395,6 +395,7 @@ gimp_SOURCES = \
 	xcf.h
 
 EXTRA_DIST = \
+	makefile.cygwin		\
 	makefile.msc		\
 	gimp.def		\
 	gimp.rc			\
