@@ -108,6 +108,7 @@ gimp_image_dock_get_type
 gimp_image_editor_get_type
 gimp_image_get_type
 gimp_image_map_get_type
+gimp_image_map_options_get_type
 gimp_image_map_tool_get_type
 gimp_image_view_get_type
 gimp_imagefile_get_type

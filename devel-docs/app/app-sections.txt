@@ -179,7 +179,6 @@ gimp_pdb_dialogs_check
 gimp_get_program_class
 gimp_get_display_name
 gimp_get_theme_dir
-gimp_get_standard_context
 gimp_set_default_context
 gimp_get_default_context
 gimp_set_user_context
@@ -2347,6 +2346,7 @@ GIMP_COLORIZE_TOOL_GET_CLASS
 GimpColorOptions
 gimp_color_options_gui
 <SUBSECTION Standard>
+GimpColorOptionsClass
 GIMP_COLOR_OPTIONS
 GIMP_IS_COLOR_OPTIONS
 GIMP_TYPE_COLOR_OPTIONS
@@ -2646,6 +2646,19 @@ gimp_hue_saturation_tool_get_type
 GIMP_HUE_SATURATION_TOOL_CLASS
 GIMP_IS_HUE_SATURATION_TOOL_CLASS
 GIMP_HUE_SATURATION_TOOL_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpimagemapoptions</FILE>
+GimpImageMapOptions
+<SUBSECTION Standard>
+GIMP_IMAGE_MAP_OPTIONS
+GIMP_IS_IMAGE_MAP_OPTIONS
+GIMP_TYPE_IMAGE_MAP_OPTIONS
+gimp_image_map_options_get_type
+GIMP_IMAGE_MAP_OPTIONS_CLASS
+GIMP_IS_IMAGE_MAP_OPTIONS_CLASS
+GIMP_IMAGE_MAP_OPTIONS_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -3985,6 +3998,7 @@ gimp_enum_radio_frame_new
 gimp_enum_radio_frame_new_with_range
 gimp_enum_stock_box_new
 gimp_enum_stock_box_new_with_range
+gimp_enum_stock_box_set_child_padding
 <SUBSECTION Standard>
 GimpEnumMenuClass
 GIMP_ENUM_MENU
@@ -5446,6 +5460,9 @@ GIMP_OPACITY_TRANSPARENT
 GIMP_OPACITY_OPAQUE
 SizeType
 GimpCoords
+GIMP_COORDS_DEFAULT_PRESSURE
+GIMP_COORDS_DEFAULT_TILT
+GIMP_COORDS_DEFAULT_WHEEL
 GimpTattoo
 GimpInitStatusFunc
 GimpDataObjectLoaderFunc
