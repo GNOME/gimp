@@ -589,7 +589,7 @@ canon_cmd(FILE *prn, /* I - the printer         */
   if (num) {
     va_start(ap, num);
     for (i=0; i<num; i++)
-      buffer[i]= va_arg(ap, unsigned char);
+      buffer[i]= (unsigned char) va_arg(ap, int);
     va_end(ap);
   }
 
