@@ -194,6 +194,9 @@ gimp_dockable_init (GimpDockable *dockable)
   gtk_container_add (GTK_CONTAINER (dockable->menu_button), image);
   gtk_widget_show (image);
 
+  gimp_help_set_help_data (dockable->menu_button, _("Configure this tab"),
+                           GIMP_HELP_DOCK_TAB_MENU);
+
   g_signal_connect (dockable->menu_button, "button_press_event",
                     G_CALLBACK (gimp_dockable_menu_button_press),
                     dockable);
