@@ -1,3 +1,32 @@
+2002-05-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontext.c: override GObjectClass->constructor() and
+	do the setup stuff there, not in gimp_context_new(). This way we
+	can create properly initialized contexts with g_object_new().
+
+	* app/widgets/gimpdeviceinfo.c: Removed the "gimp" property
+	again. Added a constructor() implementation and moved stuff there
+	from gimp_device_info_set_property(PROP_GIMP).
+
+	* app/config/gimpconfig-deserialize.c: made deserialization of
+	value arrays work by actually using the array any not just leaking
+	it ;)
+
+	* app/core/gimpcontainer.c: removed debugging output. Call
+	config_iface->deserialize(child, ...) again instead of calling
+	gimp_config_deserialize_properties() directly.
+
+	* app/widgets/gimpdevices.c: switch to using the new stuff for
+	devicerc.
+
+	* app/widgets/gimpdeviceinfo.[ch]
+	* app/widgets/gimpdevices.[ch]
+	* app/gimprc.c: removed all old gimprc-style devicerc stuff.
+
+	* app/gui/menus.c
+	* app/gui/test-commands.[ch]: removed devicerc testing entries
+	and callbacks.
+
 2002-05-28  Sven Neumann  <sven@gimp.org>
 
 	* autogen.sh: simplified by using a function for version checks.
@@ -27,12 +56,6 @@
 	* app/config/gimpconfig.c (gimp_config_serialize): fixed error code
 	and improved error messages.
 
-2002-05-27  Michael Natterer  <mitch@gimp.org>
-
-	* libgimpwidgets/gimpsizeentry.c (gimp_size_entry_attach_label):
-	set the spinbutton which is attached right of the label as
-	mnemonic_widget for the label.
-
 2002-05-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* libgimpwidgets/gimpwidgets.c (gimp_random_seed_new): 
@@ -48,6 +71,12 @@
 	* plug-ins/common/apply_lens.c (lens_dialog): call to
 	gimp_drawable_has_alpha iso seperate check on GIMP_INDEXEDA_IMAGE |
 	GIMP_GRAYA_IMAGE | GIMP_RGBA_IMAGE
+
+2002-05-27  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpsizeentry.c (gimp_size_entry_attach_label):
+	set the spinbutton which is attached right of the label as
+	mnemonic_widget for the label.
 
 2002-05-27  Michael Natterer  <mitch@gimp.org>
 

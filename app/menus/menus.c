@@ -240,12 +240,6 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { "/File/Debug/Deserialize User Context", NULL,
       test_deserialize_context_cmd_callback, 0 },
     NULL, NULL, NULL },
-  { { "/File/Debug/Serialize test-devicerc", NULL,
-      test_serialize_devicerc_cmd_callback, 0 },
-    NULL, NULL, NULL },
-  { { "/File/Debug/Deserialize test-devicerc", NULL,
-      test_deserialize_devicerc_cmd_callback, 0 },
-    NULL, NULL, NULL },
 #endif
 
   SEPARATOR ("/File/---"),

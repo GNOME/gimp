@@ -29,10 +29,6 @@ void   test_serialize_context_cmd_callback         (GtkWidget *widget,
 						    gpointer   data);
 void   test_deserialize_context_cmd_callback       (GtkWidget *widget,
 						    gpointer   data);
-void   test_serialize_devicerc_cmd_callback        (GtkWidget *widget,
-                                                    gpointer   data);
-void   test_deserialize_devicerc_cmd_callback      (GtkWidget *widget,
-                                                    gpointer   data);
 
 
 #endif /* __TEST_COMMANDS_H__ */

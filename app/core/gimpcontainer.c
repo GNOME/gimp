@@ -536,14 +536,8 @@ gimp_container_deserialize (GObject  *object,
 
             child = gimp_container_get_child_by_name (container, name);
 
-            if (child)
+            if (! child)
               {
-                g_print ("found child \"%s\"\n", name);
-              }
-            else
-              {
-                g_print ("creating child \"%s\"\n", name);
-
                 if (GIMP_IS_GIMP (data))
                   {
                     child = g_object_new (type,
@@ -552,8 +546,8 @@ gimp_container_deserialize (GObject  *object,
                   }
                 else
                   {
-                     child = g_object_new (type,
-                                           "name", name, NULL);
+                    child = g_object_new (type,
+                                          "name", name, NULL);
                  }
 
                 gimp_container_add (container, child);
@@ -563,15 +557,14 @@ gimp_container_deserialize (GObject  *object,
               }
 
             {
-#if 0
               GimpConfigInterface *config_iface;
 
               config_iface = GIMP_GET_CONFIG_INTERFACE (child);
-#endif
-              if (! gimp_config_deserialize_properties (G_OBJECT (child),
-                                                        scanner,
-                                                        nest_level + 1,
-                                                        FALSE))
+
+              if (! config_iface->deserialize (G_OBJECT (child),
+                                               scanner,
+                                               nest_level + 1,
+                                               FALSE))
                 {
                   /*  warning should be already set by child  */
                   return FALSE;

@@ -44,7 +44,6 @@
 #include "core/gimpcoreconfig.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 
 /*#include "tools/gimptool.h"*/
@@ -83,7 +82,6 @@ typedef enum
   TT_INTERP,
   TT_XPREVSIZE,
   TT_XUNIT,
-  TT_XDEVICE,
   TT_XSESSIONINFO,
   TT_XCOLORHISTORY,
   TT_XNAVPREVSIZE,
@@ -131,7 +129,6 @@ static gint           parse_preview_size        (gpointer val1p, gpointer val2p)
 static gint           parse_nav_preview_size    (gpointer val1p, gpointer val2p);
 static gint           parse_thumbnail_size      (gpointer val1p, gpointer val2p);
 static gint           parse_units               (gpointer val1p, gpointer val2p);
-static gint           parse_device              (gpointer val1p, gpointer val2p);
 static gint           parse_session_info        (gpointer val1p, gpointer val2p);
 static gint           parse_help_browser        (gpointer val1p, gpointer val2p);
 static gint           parse_cursor_mode         (gpointer val1p, gpointer val2p);
@@ -276,7 +273,6 @@ static ParseFunc funcs[] =
   { "theme-path",                    TT_PATH,          &gimprc.theme_path, NULL                },
   { "theme",                         TT_STRING,        &gimprc.theme, NULL                     },
 
-  { "device",                        TT_XDEVICE,       NULL, NULL },
   { "session-info",                  TT_XSESSIONINFO,  NULL, NULL },
   { "color-history",                 TT_XCOLORHISTORY, NULL, NULL }
 };
@@ -893,8 +889,6 @@ parse_statement (void)
 	  return parse_thumbnail_size (func->val1p, func->val2p);
 	case TT_XUNIT:
 	  return parse_units (func->val1p, func->val2p);
-	case TT_XDEVICE:
-	  return parse_device (func->val1p, func->val2p);
 	case TT_XSESSIONINFO:
 	  return parse_session_info (func->val1p, func->val2p);
 	case TT_XCOLORHISTORY:
@@ -1644,270 +1638,6 @@ transform_path (gchar    *path,
   return new_path;
 }
 
-/* Copied from gtk_menu_factory_parse_accelerator() */
-static void
-parse_device_accelerator (const gchar  *accelerator,
-			  GdkDeviceKey *key)
-{
-  gboolean done = FALSE;
-
-  g_return_if_fail (accelerator != NULL);
-  g_return_if_fail (key != NULL);
-
-  key->modifiers = 0;
-
-  while (!done)
-    {
-      if (strncmp (accelerator, "<shift>", 7) == 0)
-        {
-          accelerator += 7;
-          key->modifiers |= GDK_SHIFT_MASK;
-        }
-      else if (strncmp (accelerator, "<alt>", 5) == 0)
-        {
-          accelerator += 5;
-          key->modifiers |= GDK_MOD1_MASK;
-        }
-      else if (strncmp (accelerator, "<control>", 9) == 0)
-        {
-          accelerator += 9;
-          key->modifiers |= GDK_CONTROL_MASK;
-        }
-      else
-        {
-          done = TRUE;
-	  /* Tricky, but works... ("" => keyval = 0, or no translation) */
-          key->keyval = accelerator[0];
-        }
-    }
-}
-
-static gint 
-parse_device (gpointer val1p, 
-	      gpointer val2p)
-{
-  GimpDeviceValues values = 0;
-  gint             i;
-  gint             token;
-  
-  /* The initialized values here are meaningless */
-  gchar        *name     = NULL;
-  GdkInputMode  mode     = GDK_MODE_DISABLED;
-  gint          num_axes = 0;
-  GdkAxisUse   *axes     = NULL;
-  gint          num_keys = 0;
-  GdkDeviceKey *keys     = NULL;
-
-  gchar        *tool_name     = NULL;
-  GimpRGB       foreground    = { 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE };
-  GimpRGB       background    = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
-  gchar        *brush_name    = NULL;
-  gchar        *pattern_name  = NULL;
-  gchar        *gradient_name = NULL;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  name = g_strdup (token_str);
-
-  /* Parse options for device */
-
-  while (peek_next_token () == TOKEN_LEFT_PAREN)
-    {
-      token = get_next_token ();
-
-      token = peek_next_token ();
-      if (!token || (token != TOKEN_SYMBOL))
-	goto error;
-      token = get_next_token ();
-
-      if (!strcmp ("mode", token_sym))
-	{
-	  values |= GIMP_DEVICE_VALUE_MODE;
-
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_SYMBOL))
-	    goto error;
-	  token = get_next_token ();
-
-	  if (!strcmp ("disabled", token_sym))
-	    mode = GDK_MODE_DISABLED;
-	  else if (!strcmp ("window", token_sym))
-	    mode = GDK_MODE_WINDOW;
-	  else if (!strcmp ("screen", token_sym))
-	    mode = GDK_MODE_SCREEN;
-	  else
-	    goto error;
-	}
-      else if (!strcmp ("axes", token_sym))
-	{
-	  values |= GIMP_DEVICE_VALUE_AXES;
-
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_NUMBER))
-	    goto error;
-	  token = get_next_token ();
-
-	  num_axes = token_int;
-	  axes = g_new (GdkAxisUse, num_axes);
-
-	  for (i = 0; i < num_axes; i++)
-	    {
-	      token = peek_next_token ();
-	      if (!token || (token != TOKEN_SYMBOL))
-		goto error;
-	      token = get_next_token ();
-
-	      if (!strcmp ("ignore", token_sym))
-		axes[i] = GDK_AXIS_IGNORE;
-	      else if (!strcmp ("x", token_sym))
-		axes[i] = GDK_AXIS_X;
-	      else if (!strcmp ("y", token_sym))
-		axes[i] = GDK_AXIS_Y;
-	      else if (!strcmp ("pressure", token_sym))
-		axes[i] = GDK_AXIS_PRESSURE;
-	      else if (!strcmp ("xtilt", token_sym))
-		axes[i] = GDK_AXIS_XTILT;
-	      else if (!strcmp ("ytilt", token_sym))
-		axes[i] = GDK_AXIS_YTILT;
-	      else if (!strcmp ("wheel", token_sym))
-		axes[i] = GDK_AXIS_WHEEL;
-	      else
-		goto error;
-	    }
-	}
-      else if (!strcmp ("keys", token_sym))
-	{
-	  values |= GIMP_DEVICE_VALUE_KEYS;
-
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_NUMBER))
-	    goto error;
-	  token = get_next_token ();
-
-	  num_keys = token_int;
-	  keys = g_new (GdkDeviceKey, num_keys);
-
-	  for (i=0; i<num_keys; i++)
-	    {
-	      token = peek_next_token ();
-	      if (!token || (token != TOKEN_STRING))
-		goto error;
-	      token = get_next_token ();
-
-	      parse_device_accelerator (token_str, &keys[i]);
-	    }
-	}
-      else if (!strcmp ("tool", token_sym))
-	{
-	  values |= GIMP_DEVICE_VALUE_TOOL;
-
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_STRING))
-	    goto error;
-	  token = get_next_token ();
-
-	  tool_name = g_strdup (token_str);
-	}
-      else if (!strcmp ("foreground", token_sym))
-	{
-	  values |= GIMP_DEVICE_VALUE_FOREGROUND;
-
-	  if (parse_color (&foreground) == ERROR)
-	    goto error;
-
-	  foreground.a = GIMP_OPACITY_OPAQUE;
-	}
-      else if (!strcmp ("background", token_sym))
-	{
-	  values |= GIMP_DEVICE_VALUE_BACKGROUND;
-
-	  if (parse_color (&background) == ERROR)
-	    goto error;
-
-	  background.a = GIMP_OPACITY_OPAQUE;
-	}
-      else if (!strcmp ("brush", token_sym))
-	{
-	  values |= GIMP_DEVICE_VALUE_BRUSH;
-
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_STRING))
-	    goto error;
-	  token = get_next_token ();
-
-	  brush_name = g_strdup (token_str);
-	}
-      else if (!strcmp ("pattern", token_sym))
-	{
-	  values |= GIMP_DEVICE_VALUE_PATTERN;
-
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_STRING))
-	    goto error;
-	  token = get_next_token ();
-
-	  pattern_name = g_strdup (token_str);
-	}
-      else if (!strcmp ("gradient", token_sym))
-	{
-	  values |= GIMP_DEVICE_VALUE_GRADIENT;
-
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_STRING))
-	    goto error;
-	  token = get_next_token ();
-
-	  gradient_name = g_strdup (token_str);
-	}
-      else
-	goto error;
-      
-      token = peek_next_token ();
-      if (!token || (token != TOKEN_RIGHT_PAREN))
-	goto error;
-      token = get_next_token ();
-    }
-
-  if (!token || (token != TOKEN_RIGHT_PAREN))
-    goto error;
-  token = get_next_token ();
-
-  gimp_devices_rc_update (the_gimp,
-                          name,
-                          values,
-                          mode,
-                          num_axes, axes,
-                          num_keys, keys,
-                          tool_name,
-                          &foreground, &background,
-                          brush_name,
-                          pattern_name,
-                          gradient_name);
-
-  g_free (tool_name);
-  g_free (brush_name);
-  g_free (pattern_name);
-  g_free (gradient_name);
-  g_free (name);
-  g_free (axes);
-  g_free (keys);
-
-  return OK;
-
- error:
-  g_free (brush_name);
-  g_free (pattern_name);
-  g_free (gradient_name);
-  g_free (name);
-  g_free (axes);
-  g_free (keys);
-
-  return ERROR;
-}
-
 static gint
 parse_session_info (gpointer val1p, 
 		    gpointer val2p)
@@ -2248,7 +1978,6 @@ gimprc_value_to_str (const gchar *name)
 	  return cursor_mode_to_str (func->val1p, func->val2p);
 	case TT_XCOMMENT:
 	  return comment_to_str (func->val1p, func->val2p);
-	case TT_XDEVICE:
 	case TT_XSESSIONINFO:
 	case TT_XCOLORHISTORY:
 	  return NULL;

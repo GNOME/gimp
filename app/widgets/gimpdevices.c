@@ -42,8 +42,6 @@
 #include "gimpdeviceinfo.h"
 #include "gimpdevices.h"
 
-#include "gimprc.h"
-
 
 #define GIMP_DEVICE_MANAGER_DATA_KEY "gimp-device-manager"
 
@@ -94,6 +92,8 @@ gimp_devices_init (Gimp                   *gimp,
     {
       device = (GdkDevice *) list->data;
 
+      g_print ("############# adding %s\n", device->name);
+
       device_info = gimp_device_info_new (gimp, device->name);
       gimp_container_add (manager->device_info_list, GIMP_OBJECT (device_info));
       g_object_unref (G_OBJECT (device_info));
@@ -124,6 +124,7 @@ gimp_devices_restore (Gimp *gimp)
   GimpDeviceInfo    *device_info;
   GimpContext       *user_context;
   gchar             *filename;
+  GError            *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -131,10 +132,23 @@ gimp_devices_restore (Gimp *gimp)
 
   g_return_if_fail (manager != NULL);
 
-  /* Augment with information from rc file */
   filename = gimp_personal_rc_file ("devicerc");
-  gimprc_parse_file (filename);
+
+  if (! gimp_config_deserialize (G_OBJECT (manager->device_info_list),
+                                 filename,
+                                 gimp,
+                                 &error))
+    {
+      g_message ("Could not read devicerc: %s", error->message);
+      g_clear_error (&error);
+
+      /* don't bail out here */
+    }
+
   g_free (filename);
+
+  GIMP_LIST (manager->device_info_list)->list =
+    g_list_reverse (GIMP_LIST (manager->device_info_list)->list);
 
   device_info = gimp_device_info_get_by_device (manager->current_device);
 
@@ -152,7 +166,7 @@ gimp_devices_save (Gimp *gimp)
 {
   GimpDeviceManager *manager;
   gchar             *filename;
-  FILE              *fp;
+  GError            *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -161,88 +175,15 @@ gimp_devices_save (Gimp *gimp)
   g_return_if_fail (manager != NULL);
 
   filename = gimp_personal_rc_file ("devicerc");
-  fp = fopen (filename, "wb");
-
-  if (fp)
-    {
-      gimp_container_foreach (manager->device_info_list,
-                              (GFunc) gimp_device_info_save, fp);
-      fclose (fp);
-    }
-  else
-    {
-      g_warning ("%s: could not open \"%s\" for writing: %s",
-                 G_STRLOC, filename, g_strerror (errno));
-    }
-
-  g_free (filename);
-}
-
-void
-gimp_devices_restore_test (Gimp *gimp)
-{
-  GimpDeviceManager *manager;
-  GimpDeviceInfo    *device_info;
-  GimpContext       *user_context;
-  gchar             *filename;
-  GError            *error = NULL;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  manager = gimp_device_manager_get (gimp);
-
-  g_return_if_fail (manager != NULL);
-
-  filename = gimp_personal_rc_file ("test-devicerc");
-
-  if (! gimp_config_deserialize (G_OBJECT (manager->device_info_list),
-                                 filename,
-                                 gimp,
-                                 &error))
-    {
-      g_message ("Could not read test-devicerc: %s", error->message);
-      g_clear_error (&error);
-
-      g_free (filename);
-      return;
-    }
-
-  g_free (filename);
-
-  device_info = gimp_device_info_get_by_device (manager->current_device);
-
-  g_return_if_fail (GIMP_IS_DEVICE_INFO (device_info));
-
-  user_context = gimp_get_user_context (gimp);
-
-  gimp_context_copy_properties (GIMP_CONTEXT (device_info), user_context,
-				GIMP_DEVICE_INFO_CONTEXT_MASK);
-  gimp_context_set_parent (GIMP_CONTEXT (device_info), user_context);
-}
-
-void
-gimp_devices_save_test (Gimp *gimp)
-{
-  GimpDeviceManager *manager;
-  gchar             *filename;
-  GError            *error = NULL;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  manager = gimp_device_manager_get (gimp);
-
-  g_return_if_fail (manager != NULL);
-
-  filename = gimp_personal_rc_file ("test-devicerc");
 
   if (! gimp_config_serialize (G_OBJECT (manager->device_info_list),
                                filename,
-                               "# test-devicerc\n",
-                               "# end test-devicerc",
+                               "# GIMP devicerc\n",
+                               "# end devicerc",
                                NULL,
                                &error))
     {
-      g_message ("Could not write test-devicerc: %s", error->message);
+      g_message ("Could not write devicerc: %s", error->message);
       g_clear_error (&error);
     }
 
@@ -347,61 +288,6 @@ gimp_devices_check_change (Gimp     *gimp,
     }
 
   return FALSE;
-}
-
-void
-gimp_devices_rc_update (Gimp               *gimp,
-                        const gchar        *name, 
-                        GimpDeviceValues    values,
-                        GdkInputMode        mode, 
-                        gint                num_axes,
-                        const GdkAxisUse   *axes, 
-                        gint                num_keys, 
-                        const GdkDeviceKey *keys,
-                        const gchar        *tool_name,
-                        const GimpRGB      *foreground,
-                        const GimpRGB      *background,
-                        const gchar        *brush_name, 
-                        const gchar        *pattern_name,
-                        const gchar        *gradient_name)
-{
-  GimpDeviceManager *manager;
-  GimpDeviceInfo    *device_info = NULL;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (name != NULL);
-
-  manager = gimp_device_manager_get (gimp);
-
-  g_return_if_fail (manager != NULL);
-
-  /*  Find device if we have it  */
-  device_info = (GimpDeviceInfo *)
-    gimp_container_get_child_by_name (manager->device_info_list, name);
-
-  if (! device_info)
-    {
-      device_info = gimp_device_info_new (gimp, name);
-      gimp_container_add (manager->device_info_list, GIMP_OBJECT (device_info));
-      g_object_unref (G_OBJECT (device_info));
-    }
-  else if (! device_info->device)
-    {
-      g_warning ("%s: called multiple times for not present device",
-                 G_STRLOC);
-      return;
-    }
-
-  gimp_device_info_set_from_rc (device_info,
-                                values,
-                                mode,
-                                num_axes, axes,
-                                num_keys, keys,
-                                tool_name,
-                                foreground, background,
-                                brush_name,
-                                pattern_name,
-                                gradient_name);
 }
 
 

@@ -30,30 +30,12 @@ void        gimp_devices_exit          (Gimp                   *gimp);
 void        gimp_devices_restore       (Gimp                   *gimp);
 void        gimp_devices_save          (Gimp                   *gimp);
 
-void        gimp_devices_restore_test  (Gimp                   *gimp);
-void        gimp_devices_save_test     (Gimp                   *gimp);
-
 GdkDevice * gimp_devices_get_current   (Gimp                   *gimp);
 
 gboolean    gimp_devices_check_change  (Gimp                   *gimp,
                                         GdkEvent               *event);
 void        gimp_devices_select_device (Gimp                   *gimp,
                                         GdkDevice              *device);
-
-void        gimp_devices_rc_update     (Gimp                   *gimp,
-                                        const gchar            *name,
-                                        GimpDeviceValues        values,
-                                        GdkInputMode            mode,
-                                        gint                    num_axes,
-                                        const GdkAxisUse       *axes,
-                                        gint                    num_keys,
-                                        const GdkDeviceKey     *keys,
-                                        const gchar            *tool_name,
-                                        const GimpRGB          *foreground,
-                                        const GimpRGB          *background,
-                                        const gchar            *brush_name,
-                                        const gchar            *pattern_name,
-                                        const gchar            *gradient_name);
 
 
 #endif /* __GIMP_DEVICES_H__ */

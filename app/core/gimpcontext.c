@@ -70,18 +70,20 @@ static void    gimp_context_class_init        (GimpContextClass    *klass);
 static void    gimp_context_init              (GimpContext         *context);
 static void    gimp_context_config_iface_init (GimpConfigInterface *config_iface);
 
-static void    gimp_context_dispose          (GObject          *object);
-static void    gimp_context_finalize         (GObject          *object);
-static void    gimp_context_set_property     (GObject          *object,
-					      guint             property_id,
-					      const GValue     *value,
-					      GParamSpec       *pspec);
-static void    gimp_context_get_property     (GObject          *object,
-					      guint             property_id,
-					      GValue           *value,
-					      GParamSpec       *pspec);
-
-static gsize   gimp_context_get_memsize      (GimpObject       *object);
+static GObject *  gimp_context_constructor    (GType                  type,
+                                               guint                  n_params,
+                                               GObjectConstructParam *params);
+static void       gimp_context_dispose        (GObject               *object);
+static void       gimp_context_finalize       (GObject               *object);
+static void       gimp_context_set_property   (GObject               *object,
+                                               guint                  property_id,
+                                               const GValue          *value,
+                                               GParamSpec            *pspec);
+static void       gimp_context_get_property   (GObject               *object,
+                                               guint                  property_id,
+                                               GValue                *value,
+                                               GParamSpec            *pspec);
+static gsize      gimp_context_get_memsize    (GimpObject            *object);
 
 static gboolean   gimp_context_serialize_property   (GObject      *object,
                                                      guint         property_id,
@@ -544,6 +546,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_IMAGEFILE);
 
+  object_class->constructor      = gimp_context_constructor;
   object_class->set_property     = gimp_context_set_property;
   object_class->get_property     = gimp_context_get_property;
   object_class->dispose          = gimp_context_dispose;
@@ -681,6 +684,95 @@ gimp_context_config_iface_init (GimpConfigInterface *config_iface)
 {
   config_iface->serialize_property   = gimp_context_serialize_property;
   config_iface->deserialize_property = gimp_context_deserialize_property;
+}
+
+static GObject *
+gimp_context_constructor (GType                  type,
+                          guint                  n_params,
+                          GObjectConstructParam *params)
+{
+  GObject *object;
+  Gimp    *gimp;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  gimp = GIMP_CONTEXT (object)->gimp;
+
+  g_assert (GIMP_IS_GIMP (gimp));
+
+  g_signal_connect_object (G_OBJECT (gimp->images), "remove",
+			   G_CALLBACK (gimp_context_image_removed),
+			   object,
+                           0);
+  g_signal_connect_object (G_OBJECT (gimp->displays), "remove",
+			   G_CALLBACK (gimp_context_display_removed),
+			   object,
+                           0);
+
+  g_signal_connect_object (G_OBJECT (gimp->tool_info_list), "remove",
+			   G_CALLBACK (gimp_context_tool_removed),
+			   object,
+                           0);
+  g_signal_connect_object (G_OBJECT (gimp->tool_info_list), "thaw",
+			   G_CALLBACK (gimp_context_tool_list_thaw),
+			   object,
+                           0);
+
+  g_signal_connect_object (G_OBJECT (gimp->brush_factory->container), "remove",
+			   G_CALLBACK (gimp_context_brush_removed),
+			   object,
+                           0);
+  g_signal_connect_object (G_OBJECT (gimp->brush_factory->container), "thaw",
+			   G_CALLBACK (gimp_context_brush_list_thaw),
+			   object,
+			   0);
+
+  g_signal_connect_object (G_OBJECT (gimp->pattern_factory->container), "remove",
+			   G_CALLBACK (gimp_context_pattern_removed),
+			   object,
+			   0);
+  g_signal_connect_object (G_OBJECT (gimp->pattern_factory->container), "thaw",
+			   G_CALLBACK (gimp_context_pattern_list_thaw),
+			   object,
+			   0);
+
+  g_signal_connect_object (G_OBJECT (gimp->gradient_factory->container), "remove",
+			   G_CALLBACK (gimp_context_gradient_removed),
+			   object,
+			   0);
+  g_signal_connect_object (G_OBJECT (gimp->gradient_factory->container), "thaw",
+			   G_CALLBACK (gimp_context_gradient_list_thaw),
+			   object,
+			   0);
+
+  g_signal_connect_object (G_OBJECT (gimp->palette_factory->container), "remove",
+			   G_CALLBACK (gimp_context_palette_removed),
+			   object,
+			   0);
+  g_signal_connect_object (G_OBJECT (gimp->palette_factory->container), "thaw",
+			   G_CALLBACK (gimp_context_palette_list_thaw),
+			   object,
+			   0);
+
+  g_signal_connect_object (G_OBJECT (gimp->named_buffers), "remove",
+			   G_CALLBACK (gimp_context_buffer_removed),
+			   object,
+			   0);
+  g_signal_connect_object (G_OBJECT (gimp->named_buffers), "thaw",
+			   G_CALLBACK (gimp_context_buffer_list_thaw),
+			   object,
+			   0);
+
+  g_signal_connect_object (G_OBJECT (gimp->documents), "remove",
+			   G_CALLBACK (gimp_context_imagefile_removed),
+			   object,
+			   0);
+  g_signal_connect_object (G_OBJECT (gimp->documents), "thaw",
+			   G_CALLBACK (gimp_context_imagefile_list_thaw),
+			   object,
+			   0);
+
+  return object;
 }
 
 static void
@@ -1090,78 +1182,6 @@ gimp_context_new (Gimp        *gimp,
                           "name", name,
                           "gimp", gimp,
                           NULL);
-
-  g_signal_connect_object (G_OBJECT (gimp->images), "remove",
-			   G_CALLBACK (gimp_context_image_removed),
-			   G_OBJECT (context),
-			   0);
-  g_signal_connect_object (G_OBJECT (gimp->displays), "remove",
-			   G_CALLBACK (gimp_context_display_removed),
-			   G_OBJECT (context),
-			   0);
-
-  g_signal_connect_object (G_OBJECT (gimp->tool_info_list), "remove",
-			   G_CALLBACK (gimp_context_tool_removed),
-			   G_OBJECT (context),
-			   0);
-  g_signal_connect_object (G_OBJECT (gimp->tool_info_list), "thaw",
-			   G_CALLBACK (gimp_context_tool_list_thaw),
-			   G_OBJECT (context),
-			   0);
-
-  g_signal_connect_object (G_OBJECT (gimp->brush_factory->container), "remove",
-			   G_CALLBACK (gimp_context_brush_removed),
-			   G_OBJECT (context),
-			   0);
-  g_signal_connect_object (G_OBJECT (gimp->brush_factory->container), "thaw",
-			   G_CALLBACK (gimp_context_brush_list_thaw),
-			   G_OBJECT (context),
-			   0);
-
-  g_signal_connect_object (G_OBJECT (gimp->pattern_factory->container), "remove",
-			   G_CALLBACK (gimp_context_pattern_removed),
-			   G_OBJECT (context),
-			   0);
-  g_signal_connect_object (G_OBJECT (gimp->pattern_factory->container), "thaw",
-			   G_CALLBACK (gimp_context_pattern_list_thaw),
-			   G_OBJECT (context),
-			   0);
-
-  g_signal_connect_object (G_OBJECT (gimp->gradient_factory->container), "remove",
-			   G_CALLBACK (gimp_context_gradient_removed),
-			   G_OBJECT (context),
-			   0);
-  g_signal_connect_object (G_OBJECT (gimp->gradient_factory->container), "thaw",
-			   G_CALLBACK (gimp_context_gradient_list_thaw),
-			   G_OBJECT (context),
-			   0);
-
-  g_signal_connect_object (G_OBJECT (gimp->palette_factory->container), "remove",
-			   G_CALLBACK (gimp_context_palette_removed),
-			   G_OBJECT (context),
-			   0);
-  g_signal_connect_object (G_OBJECT (gimp->palette_factory->container), "thaw",
-			   G_CALLBACK (gimp_context_palette_list_thaw),
-			   G_OBJECT (context),
-			   0);
-
-  g_signal_connect_object (G_OBJECT (gimp->named_buffers), "remove",
-			   G_CALLBACK (gimp_context_buffer_removed),
-			   G_OBJECT (context),
-			   0);
-  g_signal_connect_object (G_OBJECT (gimp->named_buffers), "thaw",
-			   G_CALLBACK (gimp_context_buffer_list_thaw),
-			   G_OBJECT (context),
-			   0);
-
-  g_signal_connect_object (G_OBJECT (gimp->documents), "remove",
-			   G_CALLBACK (gimp_context_imagefile_removed),
-			   G_OBJECT (context),
-			   0);
-  g_signal_connect_object (G_OBJECT (gimp->documents), "thaw",
-			   G_CALLBACK (gimp_context_imagefile_list_thaw),
-			   G_OBJECT (context),
-			   0);
 
   if (template)
     {
