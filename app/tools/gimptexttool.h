@@ -48,6 +48,7 @@ struct _GimpTextTool
   GimpImage     *image;
 
   GtkWidget     *editor;
+  GtkWidget     *confirm_dialog;
 };
 
 struct _GimpTextToolClass

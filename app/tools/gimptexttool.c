@@ -47,6 +47,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimptexteditor.h"
+#include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
 
@@ -91,7 +92,8 @@ static gboolean  gimp_text_tool_idle_apply     (GimpTextTool      *text_tool);
 static void      gimp_text_tool_apply          (GimpTextTool      *text_tool);
 
 static void      gimp_text_tool_create_vectors (GimpTextTool      *text_tool);
-static void      gimp_text_tool_create_layer   (GimpTextTool      *text_tool);
+static void      gimp_text_tool_create_layer   (GimpTextTool      *text_tool,
+                                                GimpText          *text);
 
 static void      gimp_text_tool_editor         (GimpTextTool      *text_tool);
 static void      gimp_text_tool_text_changed   (GimpTextEditor    *editor,
@@ -99,6 +101,9 @@ static void      gimp_text_tool_text_changed   (GimpTextEditor    *editor,
 
 static void      gimp_text_tool_set_image      (GimpTextTool      *text_tool,
                                                 GimpImage         *image);
+static gboolean  gimp_text_tool_set_drawable   (GimpTextTool      *text_tool,
+                                                GimpDrawable      *drawable,
+                                                gboolean           confirm);
 
 
 /*  local variables  */
@@ -221,8 +226,7 @@ gimp_text_tool_dispose (GObject *object)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (object);
 
-  gimp_text_tool_set_image (text_tool, NULL);
-  gimp_text_tool_connect (text_tool, NULL);
+  gimp_text_tool_set_drawable (text_tool, NULL, FALSE);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -258,7 +262,7 @@ gimp_text_tool_control (GimpTool       *tool,
       if (text_tool->editor)
         gtk_widget_destroy (text_tool->editor);
 
-      gimp_text_tool_set_layer (text_tool, NULL);
+      gimp_text_tool_set_drawable (text_tool, NULL, FALSE);
       break;
     }
 
@@ -273,8 +277,8 @@ gimp_text_tool_button_press (GimpTool        *tool,
 			     GimpDisplay     *gdisp)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
+  GimpText     *text      = text_tool->text;
   GimpDrawable *drawable;
-  GimpItem     *item;
 
   gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
@@ -282,37 +286,34 @@ gimp_text_tool_button_press (GimpTool        *tool,
   text_tool->x1 = coords->x;
   text_tool->y1 = coords->y;
 
-  gimp_text_tool_set_image (text_tool, gdisp->gimage);
-
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  /*  the text tool works on layers only  */
-  if (! GIMP_IS_LAYER (drawable))
-    return;
+  gimp_text_tool_set_drawable (text_tool, drawable, FALSE);
 
-  item = GIMP_ITEM (drawable);
-
-  coords->x -= item->offset_x;
-  coords->y -= item->offset_y;
-
-  /*  if a layer is clicked, attempt to attach to it  */
-  if (coords->x > 0 && coords->x < item->width &&
-      coords->y > 0 && coords->y < item->height)
+  if (GIMP_IS_LAYER (drawable))
     {
-      GimpText *text = text_tool->text;
+      GimpItem *item = GIMP_ITEM (drawable);
 
-      gimp_text_tool_set_layer (text_tool, GIMP_LAYER (drawable));
+      coords->x -= item->offset_x;
+      coords->y -= item->offset_y;
 
-      /*  if we were attached and are still, open the text editor  */
-      if (text_tool->text == text)
-        gimp_text_tool_editor (text_tool);
+      if (coords->x > 0 && coords->x < item->width &&
+          coords->y > 0 && coords->y < item->height)
+        {
+          /*  did the user click on a text layer?  */
+          if (gimp_text_tool_set_drawable (text_tool, drawable, TRUE))
+            {
+              /*  on second click, open the text editor  */
+              if (text && text_tool->text == text)
+                gimp_text_tool_editor (text_tool);
+
+              return;
+            }
+        }
     }
-  else
-    {
-      /*  create a new text layer  */
-      gimp_text_tool_set_layer (text_tool, NULL);
-      gimp_text_tool_editor (text_tool);
-    }
+
+  /*  create a new text layer  */
+  gimp_text_tool_editor (text_tool);
 }
 
 static void
@@ -333,8 +334,6 @@ gimp_text_tool_connect (GimpTextTool *text_tool,
   GimpTool        *tool = GIMP_TOOL (text_tool);
   GimpTextOptions *options;
   GtkWidget       *button;
-
-  g_printerr ("gimp_text_tool_connect (%p)\n", text);
 
   if (text_tool->text == text)
     return;
@@ -530,22 +529,28 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 }
 
 static void
-gimp_text_tool_create_layer (GimpTextTool *text_tool)
+gimp_text_tool_create_layer (GimpTextTool *text_tool,
+                             GimpText     *text)
 {
   GimpTool  *tool = GIMP_TOOL (text_tool);
-  GimpText  *text;
   GimpImage *image;
   GimpLayer *layer;
 
-  g_return_if_fail (text_tool->text == NULL);
+  if (text)
+    {
+      text = gimp_config_duplicate (GIMP_CONFIG (text));
+    }
+  else
+    {
+      g_object_set (text_tool->proxy,
+                    "text",
+                    gimp_text_editor_get_text (GIMP_TEXT_EDITOR (text_tool->editor)),
+                    NULL);
 
-  g_object_set (text_tool->proxy,
-                "text",
-                gimp_text_editor_get_text (GIMP_TEXT_EDITOR (text_tool->editor)),
-                NULL);
+      text = gimp_config_duplicate (GIMP_CONFIG (text_tool->proxy));
+    }
 
   image = tool->gdisp->gimage;
-   text = gimp_config_duplicate (GIMP_CONFIG (text_tool->proxy));
   layer = gimp_text_layer_new (image, text);
 
   g_object_unref (text);
@@ -627,15 +632,111 @@ gimp_text_tool_text_changed (GimpTextEditor *editor,
     }
   else
     {
-      gimp_text_tool_create_layer (text_tool);
+      gimp_text_tool_create_layer (text_tool, NULL);
     }
+}
+
+#define  RESPONSE_NEW 1
+
+static void
+gimp_text_tool_confirm_response (GtkWidget    *widget,
+                                 gint          response_id,
+                                 GimpTextTool *text_tool)
+{
+  GimpLayer *layer = text_tool->layer;
+
+  gtk_widget_destroy (widget);
+
+  if (layer &&
+      GIMP_IS_TEXT_LAYER (layer) && GIMP_TEXT_LAYER (layer)->text)
+    {
+      GimpTextLayer *text_layer = GIMP_TEXT_LAYER (layer);
+
+      switch (response_id)
+        {
+        case RESPONSE_NEW:
+          gimp_text_tool_create_layer (text_tool, text_layer->text);
+          break;
+
+        case GTK_RESPONSE_OK:
+          text_tool->layer = layer;
+          gimp_text_tool_connect (text_tool, text_layer->text);
+          break;
+
+        default:
+          break;
+        }
+    }
+}
+
+static void
+gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
+{
+  GimpTool  *tool = GIMP_TOOL (text_tool);
+  GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *label;
+
+  g_return_if_fail (text_tool->layer != NULL);
+
+  if (text_tool->confirm_dialog)
+    {
+      gtk_window_present (GTK_WINDOW (text_tool->confirm_dialog));
+      return;
+    }
+
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (text_tool->layer),
+                                     _("Confirm Text Editing"),
+                                     "gimp-text-tool-confirm",
+                                     GIMP_STOCK_TEXT_LAYER,
+                                     _("Confirm Text Editing"),
+                                     tool->gdisp->shell,
+                                     gimp_standard_help_func,
+                                     tool->tool_info->help_id,
+                                     GTK_STOCK_NEW,    RESPONSE_NEW,
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GIMP_STOCK_EDIT,  GTK_RESPONSE_OK,
+                                     NULL);
+
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gimp_text_tool_confirm_response),
+                    text_tool);
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 10);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+                      vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  label = gtk_label_new (_("The layer you selected is a text layer but "
+                           "it has been modified using other tools. "
+                           "Editing the layer with the text tool will "
+                           "discard these modifications."
+                           "\n\n"
+                           "You can edit the layer or create a new "
+                           "text layer from its text attributes."));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  gtk_widget_show (dialog);
+
+  text_tool->confirm_dialog = dialog;
+  g_signal_connect_swapped (dialog, "destroy",
+                            G_CALLBACK (g_nullify_pointer),
+                            &text_tool->confirm_dialog);
 }
 
 static void
 gimp_text_tool_layer_changed (GimpImage    *image,
                               GimpTextTool *text_tool)
 {
-  gimp_text_tool_set_layer (text_tool, gimp_image_get_active_layer (image));
+  GimpLayer *layer = gimp_image_get_active_layer (image);
+
+  gimp_text_tool_set_drawable (text_tool, GIMP_DRAWABLE (layer), FALSE);
 }
 
 static void
@@ -674,32 +775,63 @@ gimp_text_tool_set_image (GimpTextTool *text_tool,
     }
 }
 
+static gboolean
+gimp_text_tool_set_drawable (GimpTextTool *text_tool,
+                             GimpDrawable *drawable,
+                             gboolean      confirm)
+{
+  GimpImage *image = NULL;
+
+  if (text_tool->confirm_dialog)
+    gtk_widget_destroy (text_tool->confirm_dialog);
+
+  if (drawable)
+    image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  gimp_text_tool_set_image (text_tool, image);
+
+  if (drawable && GIMP_IS_LAYER (drawable))
+    {
+      text_tool->layer = GIMP_LAYER (drawable);
+
+      if (GIMP_IS_TEXT_LAYER (drawable) && GIMP_TEXT_LAYER (drawable)->text)
+        {
+          GimpTextLayer *text_layer = GIMP_TEXT_LAYER (drawable);
+
+          if (text_layer->text == text_tool->text)
+            return TRUE;
+
+          if (text_layer->modified)
+            {
+              if (confirm)
+                {
+                  gimp_text_tool_connect (text_tool, NULL);
+                  gimp_text_tool_confirm_dialog (text_tool);
+                  return TRUE;
+                }
+            }
+          else
+            {
+              gimp_text_tool_connect (text_tool, text_layer->text);
+              return TRUE;
+            }
+        }
+    }
+  else
+    {
+      text_tool->layer = NULL;
+    }
+
+  gimp_text_tool_connect (text_tool, NULL);
+  return FALSE;
+}
+
 void
 gimp_text_tool_set_layer (GimpTextTool *text_tool,
                           GimpLayer    *layer)
 {
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
+  g_return_if_fail (layer == NULL || GIMP_IS_LAYER (layer));
 
-  g_printerr ("gimp_text_tool_set_layer (%p)\n", layer);
-
-  if (layer)
-    {
-      gimp_text_tool_set_image (text_tool,
-                                gimp_item_get_image (GIMP_ITEM (layer)));
-
-      text_tool->layer = layer;
-
-      if (GIMP_IS_TEXT_LAYER (layer) && GIMP_TEXT_LAYER (layer)->text)
-        {
-          gimp_text_tool_connect (text_tool, GIMP_TEXT_LAYER (layer)->text);
-          return;
-        }
-    }
-  else
-    {
-      gimp_text_tool_set_image (text_tool, NULL);
-      text_tool->layer = NULL;
-    }
-
-  gimp_text_tool_connect (text_tool, NULL);
+  gimp_text_tool_set_drawable (text_tool, GIMP_DRAWABLE (layer), TRUE);
 }
