@@ -33,8 +33,10 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpitemundo.h"
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
+#include "core/gimpundostack.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -1422,6 +1424,8 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
           GList    *off = NULL;
           GList    *list;
           gboolean  iter_valid;
+          GimpUndo *undo;
+          gboolean  push_undo = TRUE;
 
           for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model,
                                                            &iter);
@@ -1444,23 +1448,30 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
               g_object_unref (renderer);
             }
 
-          if (on || off)
+          undo = gimp_undo_stack_peek (gimage->undo_stack);
+
+          /*  compress exclusive visibility/linked undos  */
+          if (! gimp_undo_stack_peek (gimage->redo_stack) &&
+              type == undo->undo_type)
+            push_undo = FALSE;
+
+          if (push_undo && (on || off))
             gimp_image_undo_group_start (gimage, type, undo_desc);
 
-          setter (item, TRUE, TRUE);
+          setter (item, TRUE, push_undo);
 
           if (on)
             {
               for (list = on; list; list = g_list_next (list))
-                setter (GIMP_ITEM (list->data), FALSE, TRUE);
+                setter (GIMP_ITEM (list->data), FALSE, push_undo);
             }
           else if (off)
             {
               for (list = off; list; list = g_list_next (list))
-                setter (GIMP_ITEM (list->data), TRUE, TRUE);
+                setter (GIMP_ITEM (list->data), TRUE, push_undo);
             }
 
-          if (on || off)
+          if (push_undo && (on || off))
             gimp_image_undo_group_end (gimage);
 
           g_list_free (on);
@@ -1468,7 +1479,22 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
         }
       else
         {
-          setter (item, ! active, TRUE);
+          GimpUndo *undo;
+          gboolean  push_undo = TRUE;
+
+          undo = gimp_undo_stack_peek (gimage->undo_stack);
+
+          /*  compress visibility/linked undos  */
+          if (! gimp_undo_stack_peek (gimage->redo_stack)     &&
+              GIMP_IS_ITEM_UNDO (undo)                        &&
+              GIMP_ITEM_UNDO (undo)->item == item             &&
+              ((type == GIMP_UNDO_GROUP_ITEM_VISIBILITY       &&
+                undo->undo_type == GIMP_UNDO_ITEM_VISIBILITY) ||
+               (type == GIMP_UNDO_GROUP_ITEM_LINKED           &&
+                undo->undo_type == GIMP_UNDO_ITEM_LINKED)))
+            push_undo = FALSE;
+
+          setter (item, ! active, push_undo);
         }
 
       gimp_image_flush (gimage);
