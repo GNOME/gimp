@@ -1,33 +1,35 @@
 # Czech translation of GIMP plugins 1.2.3.
 # Copyright (C) 2000 Free Software Foundation, Inc.
-# Stanislav Brabec <utx@penguin.cz>, 2000.
+# Stanislav Brabec <utx@penguin.cz>, 2000
+# Michal Bukovjan <bukm@centrum.cz>, 2002.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.3\n"
-"POT-Creation-Date: 2002-10-10 23:16+0200\n"
-"PO-Revision-Date: 2001-12-04 17:49+0100\n"
-"Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
+"POT-Creation-Date: 2002-10-10 05:37+0200\n"
+"PO-Revision-Date: 2002-10-10 22:00GMT\n"
+"Last-Translator: Michal Bukovjan <bukm@centrum.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 0.9.6\n"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
 msgid "can't handle layers"
-msgstr "neumí zpracovat vrstvy"
+msgstr "neumÃ­ zpracovat vrstvy"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Merge Visible Layers"
-msgstr "Slouèit viditelné vrstvy"
+msgstr "SlouÄit viditelnÃ© vrstvy"
 
 #: libgimp/gimpexport.c:179
 msgid "can't handle layer offsets, size or opacity"
-msgstr "neumí zpracovat posuny vrstev, velikost nebo krytí"
+msgstr "neumÃ­ zpracovat posuny vrstev, velikost nebo krytÃ­"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "can only handle layers as animation frames"
-msgstr "umí zpracovat vrstvy pouze jako políèka animace"
+msgstr "umÃ­ zpracovat vrstvy pouze jako polÃ­Äka animace"
 
 #: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
 msgid "Save as Animation"
@@ -35,59 +37,59 @@ msgstr "Zapsat jako animaci"
 
 #: libgimp/gimpexport.c:198 libgimp/gimpexport.c:207 libgimp/gimpexport.c:216
 msgid "Flatten Image"
-msgstr "Slouèit obraz"
+msgstr "SlouÄit obraz"
 
 #: libgimp/gimpexport.c:215
 msgid "can't handle transparency"
-msgstr "neumí zpracovat prùhlednost"
+msgstr "neumÃ­ zpracovat prÅ¯hlednost"
 
 #: libgimp/gimpexport.c:224
 msgid "can only handle RGB images"
-msgstr "umí zpracovat pouze RGB obrázky"
+msgstr "umÃ­ zpracovat pouze RGB obrÃ¡zky"
 
 #: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
 msgid "Convert to RGB"
-msgstr "Pøevést do RGB"
+msgstr "PÅ™evÃ©st do RGB"
 
 #: libgimp/gimpexport.c:233
 msgid "can only handle grayscale images"
-msgstr "umí zpracovat pouze obrázky v ¹edích"
+msgstr "umÃ­ zpracovat pouze obrÃ¡zky v Å¡edÃ­ch"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
 msgid "Convert to Grayscale"
-msgstr "Pøevést do ¹edí"
+msgstr "PÅ™evÃ©st do Å¡edÃ­"
 
 #: libgimp/gimpexport.c:242
 msgid "can only handle indexed images"
-msgstr "umí zpracovat pouze indexované obrázky"
+msgstr "umÃ­ zpracovat pouze indexovanÃ© obrÃ¡zky"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Konverze do indexovaného pou¾ije implicitní nastavení\n"
-"(Ruèním provedením lze doladit vısledek)"
+"Konverze do indexovanÃ©ho pouÅ¾ije implicitnÃ­ nastavenÃ­\n"
+"(RuÄnÃ­m provedenÃ­m lze doladit vÃ½sledek)"
 
 #: libgimp/gimpexport.c:252
 msgid "can only handle RGB or grayscale images"
-msgstr "umí zpracovat pouze RGB obrázky nebo obrázky v ¹edích"
+msgstr "umÃ­ zpracovat pouze RGB obrÃ¡zky nebo obrÃ¡zky v Å¡edÃ­ch"
 
 #: libgimp/gimpexport.c:261
 msgid "can only handle RGB or indexed images"
-msgstr "umí zpracovat pouze RGB nebo indexované obrázky"
+msgstr "umÃ­ zpracovat pouze RGB nebo indexovanÃ© obrÃ¡zky"
 
 #: libgimp/gimpexport.c:271
 msgid "can only handle grayscale or indexed images"
-msgstr "umí zpracovat pouze obrázky v ¹edích nebo indexované"
+msgstr "umÃ­ zpracovat pouze obrÃ¡zky v Å¡edÃ­ch nebo indexovanÃ©"
 
 #: libgimp/gimpexport.c:282
 msgid "needs an alpha channel"
-msgstr "vy¾aduje alfa kanál"
+msgstr "vyÅ¾aduje alfa kanÃ¡l"
 
 #: libgimp/gimpexport.c:283
 msgid "Add Alpha Channel"
-msgstr "Pøidat alfa kanál"
+msgstr "PÅ™idat alfa kanÃ¡l"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -96,15 +98,15 @@ msgstr "Pøidat alfa kanál"
 #. the dialog
 #: libgimp/gimpexport.c:356
 msgid "Confirm Save"
-msgstr "Potvrzení zápisu"
+msgstr "PotvrzenÃ­ zÃ¡pisu"
 
 #: libgimp/gimpexport.c:360
 msgid "Confirm"
-msgstr "Potvrzení"
+msgstr "PotvrzenÃ­"
 
 #: libgimp/gimpexport.c:362
 msgid "Cancel"
-msgstr "Zru¹it"
+msgstr "ZruÅ¡it"
 
 #: libgimp/gimpexport.c:376
 #, c-format
@@ -113,7 +115,7 @@ msgid ""
 "This will not save the visible layers."
 msgstr ""
 "Chcete zapsat %s jako %s.\n"
-"To nezapí¹e viditelné vrstvy."
+"To nezapÃ­Å¡e viditelnÃ© vrstvy."
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -136,12 +138,12 @@ msgstr "Exportovat"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "Pøed zápisem je tøeba obrázek exportovat z následujících dùvodù:"
+msgstr "PÅ™ed zÃ¡pisem je tÅ™eba obrÃ¡zek exportovat z nÃ¡sledujÃ­cÃ­ch dÅ¯vodÅ¯:"
 
 #. the footline
 #: libgimp/gimpexport.c:527
 msgid "The export conversion won't modify your original image."
-msgstr "Exportní konverze by nemìla zmìnit pùvodní obrázek."
+msgstr "ExportnÃ­ konverze by nemÄ›la zmÄ›nit pÅ¯vodnÃ­ obrÃ¡zek."
 
 #: libgimp/gimpexport.c:595
 msgid "a layer mask"
@@ -149,117 +151,112 @@ msgstr "masku vrstvy"
 
 #: libgimp/gimpexport.c:597
 msgid "a channel (saved selection)"
-msgstr "kanál (zapsanı vıbìr)"
+msgstr "kanÃ¡l (uloÅ¾enÃ½ vÃ½bÄ›r)"
 
 #: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
 #: libgimp/gimpmenu.c:580
 msgid "None"
-msgstr ""
+msgstr "Nic"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "procenta"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
-#, fuzzy
 msgid "/Foreground Color"
-msgstr "/Pou¾ít barvu popøedí"
+msgstr "/Barva popÅ™edÃ­"
 
 #: libgimpwidgets/gimpcolorbutton.c:87
-#, fuzzy
 msgid "/Background Color"
-msgstr "/Pou¾ít barvu pozadí"
+msgstr "/Barva pozadÃ­"
 
 #: libgimpwidgets/gimpcolorbutton.c:90
 msgid "/Black"
-msgstr ""
+msgstr "/ÄŒernÃ¡"
 
 #: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
-msgstr ""
+msgstr "/BÃ­lÃ¡"
 
 #: libgimpwidgets/gimpfileselection.c:352
-#, fuzzy
 msgid "Select Folder"
-msgstr "Vıbìr souboru"
+msgstr "VÃ½bÄ›r adresÃ¡Å™e"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
-msgstr "Vıbìr souboru"
+msgstr "VÃ½bÄ›r souboru"
 
 #: libgimpwidgets/gimpstock.c:88
-#, fuzzy
 msgid "Anchor"
-msgstr "palec"
+msgstr "Ukotvit"
 
 #: libgimpwidgets/gimpstock.c:89
-#, fuzzy
 msgid "Duplicate"
-msgstr "pika"
+msgstr "Duplikovat"
 
 #: libgimpwidgets/gimpstock.c:90
 msgid "Edit"
-msgstr ""
+msgstr "Ãšpravy"
 
 #: libgimpwidgets/gimpstock.c:91
 msgid "Linked"
-msgstr ""
+msgstr "SpojenÃ½"
 
 #: libgimpwidgets/gimpstock.c:92
 msgid "Paste as New"
-msgstr ""
+msgstr "VloÅ¾it jako novÃ©"
 
 #: libgimpwidgets/gimpstock.c:93
 msgid "Paste Into"
-msgstr ""
+msgstr "VloÅ¾it do"
 
 #: libgimpwidgets/gimpstock.c:94
 msgid "_Reset"
-msgstr ""
+msgstr "_Obnovit"
 
 #: libgimpwidgets/gimpstock.c:95
 msgid "Visible"
-msgstr ""
+msgstr "ViditelnÃ½"
 
 #: libgimpwidgets/gimpstock.c:127
 msgid "_Resize"
-msgstr ""
+msgstr "ZmÄ›nit _velikost"
 
 #: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:175
 msgid "_Scale"
-msgstr ""
+msgstr "Å _kÃ¡lovat"
 
 #: libgimpwidgets/gimpstock.c:131
 msgid "L_etter Spacing"
-msgstr ""
+msgstr "Roz_estup pÃ­smen"
 
 #: libgimpwidgets/gimpstock.c:132
 msgid "L_ine Spacing"
-msgstr ""
+msgstr "Å˜Ã¡_dkovÃ¡nÃ­"
 
 #: libgimpwidgets/gimpstock.c:153
 msgid "Crop"
-msgstr ""
+msgstr "OÅ™ezat"
 
 #: libgimpwidgets/gimpstock.c:171
 msgid "_Transform"
-msgstr ""
+msgstr "_Transformace"
 
 #: libgimpwidgets/gimpstock.c:174
 msgid "_Rotate"
-msgstr ""
+msgstr "_Rotovat"
 
 #: libgimpwidgets/gimpstock.c:176
 msgid "_Shear"
-msgstr ""
+msgstr "Na_klonÄ›nÃ­"
 
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
-msgstr "Více..."
+msgstr "VÃ­ce..."
 
 #: libgimpwidgets/gimpunitmenu.c:526
 msgid "Unit Selection"
-msgstr "Vıbìr jednotek"
+msgstr "VÃ½bÄ›r jednotek"
 
 #: libgimpwidgets/gimpunitmenu.c:571
 msgid "Unit"
@@ -274,37 +271,34 @@ msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
-"Pokud tlaèítko \"Èas\" není stisknuto, pou¾ije se této hodnoty pro hnízdo "
-"náhodného generátoru - umo¾òuje to zopakovat zadanou \"náhodnou\" operaci"
+"Pokud tlaÄÃ­tko \"ÄŒas\" nenÃ­ stisknuto, pouÅ¾ije se tÃ©to hodnoty pro hnÃ­zdo "
+"nÃ¡hodnÃ©ho generÃ¡toru - umoÅ¾Åˆuje to zopakovat zadanou \"nÃ¡hodnou\" operaci"
 
 #: libgimpwidgets/gimpwidgets.c:884
-#, fuzzy
 msgid "_Time"
-msgstr "Èas"
+msgstr "ÄŒa_s"
 
 #: libgimpwidgets/gimpwidgets.c:893
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr ""
-"Hnízdo náhodného generátoru z aktuálního èasu - zaruèuje pøimìøenou náhodnost"
+msgstr "HnÃ­zdo nÃ¡hodnÃ©ho generÃ¡toru zÂ aktuÃ¡lnÃ­ho Äasu - zaruÄuje pÅ™imÄ›Å™enou nÃ¡hodnost"
 
 #: libgimpwidgets/gimpwidgets.c:1219
 msgid "Bytes"
-msgstr "bajtù"
+msgstr "bajtÅ¯"
 
 #: libgimpwidgets/gimpwidgets.c:1220
 msgid "KiloBytes"
-msgstr "kilobajtù"
+msgstr "kilobajtÅ¯"
 
 #: libgimpwidgets/gimpwidgets.c:1221
 msgid "MegaBytes"
-msgstr "megabajtù"
+msgstr "megabajtÅ¯"
 
 #: libgimpwidgets/gimpwidgets.c:1222
-#, fuzzy
 msgid "GigaBytes"
-msgstr "megabajtù"
+msgstr "gigabajtÅ¯"
 
 #~ msgid "OK"
 #~ msgstr "OK"
@@ -313,22 +307,23 @@ msgstr "megabajtù"
 #~ msgstr "pixel"
 
 #~ msgid "pixels"
-#~ msgstr "pixelù"
+#~ msgstr "pixelÅ¯"
 
 #~ msgid "inches"
-#~ msgstr "palcù"
+#~ msgstr "palcÅ¯"
 
 #~ msgid "millimeter"
 #~ msgstr "milimetr"
 
 #~ msgid "millimeters"
-#~ msgstr "milimetrù"
+#~ msgstr "milimetrÅ¯"
 
 #~ msgid "point"
 #~ msgstr "bod"
 
 #~ msgid "points"
-#~ msgstr "bodù"
+#~ msgstr "bodÅ¯"
 
 #~ msgid "picas"
 #~ msgstr "pik"
+
