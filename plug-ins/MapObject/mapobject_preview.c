@@ -8,7 +8,6 @@
 
 #include <libgimp/gimp.h>
 
-#include "arcball.h"
 #include "mapobject_main.h"
 #include "mapobject_ui.h"
 #include "mapobject_image.h"

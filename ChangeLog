@@ -1,5 +1,12 @@
 2004-07-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/MapObject/Makefile.am (MapObject_SOURCES): added back
+	arcball.h.
+
+	* plug-ins/MapObject/mapobject_main.c
+	* plug-ins/MapObject/mapobject_preview.c: no need to include
+	arcball.h here.
+
 	* plug-ins/gfig/Makefile.am (SUBDIRS): added back gfig-examples
 
 	* plug-ins/gfig/gfig-examples/Makefile.am: cleanup.
