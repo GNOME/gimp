@@ -2,7 +2,6 @@
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Robert Brady <robert@susu.org.uk> 2000.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp CVS\n"

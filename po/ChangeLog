@@ -1,3 +1,7 @@
+Mon Feb  7 01:18:33 CET 2000  Sven Neumann <sven@gimp.org>
+
+        * en_GB.po: removed fuzzy comment from header
+
 2000-02-05  Tor Lillqvist  <tml@iki.fi>
 
 	* fi.po: Fix fuzzy translations, update and add translations.
