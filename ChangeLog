@@ -1,3 +1,16 @@
+1998-07-10  Chris Lahey  <clahey@umich.edu>
+
+	* app/docindexif.c: New file.
+	* app/docindexif.h: New file.
+	* app/docindex.h: 
+	* app/docindex.c: Lots of changes.  Added docindexif.c and
+	docindexif.h as an interface between the document index and the
+	application.  This way the document index can be used in two
+	applications and updated in both at the same time.  Also, made the
+	document index save files even if it's not shown on the screen.
+
+	* app/Makefile.am (gimp_SOURCES): Added docindexif.c and docindexif.h.
+
 Fri Jul 10 01:44:29 PDT 1998 Jay Cox <jaycox@earthlink.net>
 
 	* paint_core.c paint_core.h gimpbrushlist.h gimpbrushlist.c

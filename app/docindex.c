@@ -1,4 +1,4 @@
-/* docindex.c - Creates the window used by the document index in gimp.
+/* docindex.c - Creates the window used by the document index in go and gimp.
  *
  * Copyright (C) 1998 Chris Lahey.
  *
@@ -17,142 +17,19 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
-#include <gdk/gdkprivate.h>
 
-#include "gimage.h"
-#include "fileops.h"
-#include "file_new_dialog.h"
-#include "commands.h"
 #include "docindex.h"
+#include "docindexif.h"
 
-static void idea_up_callback( GtkWidget *widget, gpointer data );
-static void idea_down_callback( GtkWidget *widget, gpointer data );
-static void idea_remove_callback( GtkWidget *widget, gpointer data );
-static void idea_hide_callback( GtkWidget *widget, gpointer data );
-static void load_idea_manager( idea_manager * );
-static void save_idea_manager( idea_manager * );
+idea_manager *ideas = NULL;
+static GList *idea_list = NULL;   /* of gchar *. */
+static gint x, y, width, height;
 
-idea_manager *ideas;
 
 static char *image_drop_types[] = {"url:ALL"};
 
-GtkWidget *create_idea_toolbar()
-{
-  GtkWidget *toolbar;
-
-  toolbar = gtk_toolbar_new( GTK_ORIENTATION_HORIZONTAL, GTK_TOOLBAR_BOTH);
-  gtk_widget_show( toolbar );
-  gtk_toolbar_set_button_relief( GTK_TOOLBAR( toolbar ), GTK_RELIEF_NONE );
-  
-  gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
-			   "Up", "Move the selected entry up in the index", "Toolbar/Up",
-			   NULL,
-			   (GtkSignalFunc) idea_up_callback, NULL);
-  
-  gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
-			   "Down", "Move the selected entry down in the index", "Toolbar/Down",
-			   NULL,
-			   (GtkSignalFunc) idea_down_callback, NULL );
-  
-  gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
-			   "Remove", "Remove the selected entry from the index", "Toolbar/Remove",
-			   NULL,
-			   (GtkSignalFunc) idea_remove_callback, NULL );
-  
-  gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
-			   "Hide", "Hide the Document Index", "Toolbar/Hide",
-			   NULL,
-			   (GtkSignalFunc) idea_hide_callback, NULL );
-  return toolbar;
-}
-
-#define IDEA_FILE_ITEMS (sizeof( idea_menu ) / sizeof( GtkMenuEntry ))
-
-static GtkMenuEntry idea_menu [] =
-{
-  { "<Main>/File/New", "<control>N", file_new_cmd_callback, NULL },
-  { "<Main>/File/Open...", "<control>O", file_open_callback, NULL },
-  { "<Main>/File/<separator>", NULL, NULL, NULL },
-  { "<Main>/File/Hide Index", "<control>W",idea_hide_callback, NULL },
-  { "<Main>/File/Quit", "<control>Q", file_quit_cmd_callback, NULL },
-  { "<Main>/Help/About...", NULL, about_dialog_cmd_callback, NULL }
-};    
-
-GtkMenuFactory *create_idea_menu()
-{
-  int i;
-  GtkMenuFactory *factory;
-  GtkMenuFactory *subfactory;
-  GtkMenuEntry *current_menu_bar = g_malloc0( sizeof( idea_menu ) );
-
-  for ( i = 0; i < IDEA_FILE_ITEMS; i++ )
-    {
-      current_menu_bar[i] = idea_menu[i];
-    }
-
-  factory = gtk_menu_factory_new( GTK_MENU_FACTORY_MENU_BAR );
-  subfactory = gtk_menu_factory_new( GTK_MENU_FACTORY_MENU_BAR );
-  gtk_menu_factory_add_subfactory( factory, subfactory, "<Main>" );
-  gtk_menu_factory_add_entries( factory, current_menu_bar, IDEA_FILE_ITEMS );
-
-  return subfactory;
-}
-
-gint reset_usize( gpointer data )
-{
-  gtk_widget_set_usize( GTK_WIDGET( data ), 0, 0 );
-  return FALSE;
-}
-
-int getinteger( FILE *fp )
-{
-  gchar nextchar;
-  int response = 0;
-  gboolean negative = FALSE;
-
-  while ( isspace( nextchar = fgetc( fp ) ) )
-    /* empty statement */ ;
-
-  if ( nextchar == '-' )
-    {
-      negative = TRUE;
-      while ( isspace( nextchar = fgetc( fp ) ) )
-	/* empty statement */ ;
-    }
-
-  for ( ; '0' <= nextchar && '9' >= nextchar; nextchar = fgetc( fp ) )
-    {
-      response *= 10;
-      response += nextchar - '0';
-    }
-  for ( ; isspace( nextchar ); nextchar = fgetc( fp ) )
-    /* empty statement */ ;
-  ungetc( nextchar, fp );
-  if ( negative )
-    response = -response;
-  return response;
-}
-
-void clear_white( FILE *fp )
-{
-  gchar nextchar;
-
-  while ( isspace( nextchar = fgetc( fp ) ) )
-    /* empty statement */ ;
-  ungetc( nextchar, fp );
-}
-
-static gchar *append2( gchar *string1, gboolean del1, gchar *string2, gboolean del2)
-{
-  gchar *newstring = g_malloc( strlen( string1 ) + strlen( string2 ) + 1 );
-  sprintf( newstring, "%s%s", string1, string2 );
-  if ( del1 )
-    g_free( string1 );
-  if ( del2 )
-    g_free( string2 );
-  return newstring;
-}
+static void create_idea_list();
+static void load_idea_manager( idea_manager * );
 
 static void
 idea_dnd_drop_data_available_callback(GtkWidget *widget, GdkEventDropDataAvailable *event, gpointer user_data)
@@ -165,12 +42,15 @@ idea_dnd_drop_data_available_callback(GtkWidget *widget, GdkEventDropDataAvailab
     {
       while( len > 0 )
 	{
-	  file_open( data, data );
+	  open_file_in_position( data, -1 );
 	  len -= ( strlen( data ) + 1 );
 	  data += strlen( data ) + 1;
 	}
     }
   return;
+  /*
+    panel_widget_dnd_droped_filename (widget, event, PANEL_WIDGET (data));
+    return;*/
 }
 
 static void
@@ -178,35 +58,48 @@ idea_cell_dnd_drop_data_available_callback(GtkWidget *widget, GdkEventDropDataAv
 {
   gint len = event->data_numbytes;
   gchar *data = event->data;
+  gint position = g_list_index( GTK_TREE( ideas->tree )->children, widget );
   
   /* Test for the type that was dropped */
   if (strcmp (event->data_type, "url:ALL") == 0)
     {
       while( len > 0 )
 	{
-	  file_open( data, data );
+	  open_file_in_position( data, position );
 	  len -= ( strlen( data ) + 1 );
 	  data += strlen( data ) + 1;
+	  position += 1;
 	}
     }
   return;
+  /*
+    panel_widget_dnd_droped_filename (widget, event, PANEL_WIDGET (data));
+    return;*/
 }
 
 static gboolean
 idea_window_delete_event_callback( GtkWidget *widget, GdkEvent *event, gpointer data )
 {
-  save_idea_manager( ideas );
-  free( ideas );
-  ideas = 0;
+  if ( ! exit_from_go() )
+    {
+      save_idea_manager( ideas );
+      create_idea_list();
+      free( ideas );
+      ideas = 0;
+    }
+  
   return FALSE;
 }
 
-static void
+void
 idea_hide_callback( GtkWidget *widget, gpointer data )
 {
-  if ( ideas )
+  save_idea_manager( ideas );
+
+  /* False if exitting */
+  if( ( ! exit_from_go() ) && ideas)
     {
-      save_idea_manager( ideas );
+      create_idea_list();
       gtk_widget_destroy( ideas->window );
       free( ideas );
       ideas = 0;
@@ -217,12 +110,6 @@ void
 open_idea_window()
 {
   make_idea_window( -1, -1 );
-}
-
-void
-close_idea_window()
-{
-  idea_hide_callback( NULL, NULL );
 }
 
 void
@@ -310,52 +197,70 @@ make_idea_window( int x, int y )
 }
 
 static void
+load_from_list( gpointer data, gpointer data_null )
+{
+  idea_add_in_position( (gchar *) data, -1 );
+}
+
+static void
 load_idea_manager( idea_manager *ideas )
 {
-  FILE *fp;
+  FILE *fp = NULL;
   gchar *desktopfile;
   gchar *home_dir;
-    
-  home_dir = getenv( "HOME" );
-  
-  /* open persistant desktop file. */
-  desktopfile = append2( home_dir, FALSE, "/" GIMPDIR "/ideas", FALSE );
-  fp = fopen( desktopfile, "r" );
-  g_free( desktopfile );
-  
-  /* Read in persistant desktop information. */
-  if ( fp )
-    {
-      gint x, y, width, height, length;
-      gchar *title;
-      
-      x = getinteger( fp );
-      y = getinteger( fp );
-      width = getinteger( fp );
-      height = getinteger( fp );
 
+  if ( ! idea_list )
+    {
+      home_dir = getenv( "HOME" );
+      
+      /* open persistant desktop file. */
+      desktopfile = append2( home_dir, FALSE, IDEAPATH, FALSE );
+      fp = fopen( desktopfile, "r" );
+      g_free( desktopfile );
+      
+      /* Read in persistant desktop information. */
+      if ( fp )
+	{	  
+	  x = getinteger( fp );
+	  y = getinteger( fp );
+	  width = getinteger( fp );
+	  height = getinteger( fp );
+	}
+    }
+  
+  if ( idea_list || fp )
+    {
       gtk_widget_set_usize( ideas->window, width, height );
       gtk_widget_show( ideas->window );
       gtk_widget_set_uposition( ideas->window, x, y );
       gtk_idle_add( reset_usize, ideas->window );
-      
-      clear_white( fp );
-
-      while ( ! feof( fp ) )
+      if( fp )
 	{
-	  length = getinteger( fp );
-	  title = g_malloc0( length + 1 );
-	  title[fread( title, 1, length, fp )] = 0;
-	  idea_add_in_position( title, -1 );
-	  g_free( title );
+	  gchar *title;
+	  gint length;
 	  clear_white( fp );
+	  
+	  while ( ! feof( fp ) )
+	    {
+	      length = getinteger( fp );
+	      title = g_malloc0( length + 1 );
+	      title[fread( title, 1, length, fp )] = 0;
+	      idea_add_in_position( title, -1 );
+	      g_free( title );
+	      clear_white( fp );
+	    }
+	  fclose( fp );
 	}
-      fclose( fp );
+      else
+	{
+	  g_list_foreach( idea_list, load_from_list, NULL );
+	  g_list_foreach( idea_list, (GFunc) g_free, NULL );
+	  g_list_free( idea_list );
+	  idea_list = 0;
+	}
     }
   else
-    {
-      gtk_widget_show( ideas->window );
-    }
+    gtk_widget_show( ideas->window );
 }
 
 static void
@@ -367,64 +272,79 @@ save_to_ideas( gpointer data, gpointer user_data )
 }
 
 static void
+save_list_to_ideas( gpointer data, gpointer user_data )
+{
+  gchar *title = (gchar *) data;
+  
+  fprintf( (FILE *) user_data, "%d %s\n", strlen( title ), title );
+}
+
+void
 save_idea_manager( idea_manager *ideas )
 {
   FILE *fp;
   gchar *desktopfile;
   gchar *home_dir;
-  int x, y, width, height;
     
   home_dir = getenv( "HOME" );
   
   /* open persistant desktop file. */
-  desktopfile = append2( home_dir, FALSE, "/" GIMPDIR "/ideas", FALSE );
+  desktopfile = append2( home_dir, FALSE, IDEAPATH, FALSE );
   fp = fopen( desktopfile, "w" );
   g_free( desktopfile );
 
-  gdk_window_get_geometry( ideas->window->window, &x, &y, &width, &height, NULL );
-  gdk_window_get_origin( ideas->window->window, &x, &y );
-  
-  fprintf( fp, "%d %d %d %d\n", x, y, width, height );
-
-  g_list_foreach( GTK_TREE( ideas->tree )->children, save_to_ideas, fp );
-  
-  fclose( fp );
-}
-
-struct bool_char_pair
-{
-  gboolean boole;
-  gchar *string;
-};
-
-static void raise_if_match( gpointer data, gpointer user_data )
-{
-  GimpImage *gimage = GIMP_IMAGE (data);
-  struct bool_char_pair *pair = (struct bool_char_pair *) user_data;
-  if ( ( ! pair->boole ) && gimage->has_filename)
-    if ( strcmp( pair->string, gimage->filename ) == 0 )
-      {
-	pair->boole = TRUE;
-	/*	gdk_raise_window( NULL, gimage-> ); */  /* FIXME */
-      }
-}
-
-void open_or_raise( gchar *file_name )
-{
-  struct bool_char_pair pair;
-  
-  pair.boole = FALSE;
-  pair.string = file_name;
-  
-  gimage_foreach( raise_if_match, &pair );
-  
-  if ( ! pair.boole )
+  if ( fp )
     {
-      file_open( file_name, file_name ); 
+      if ( ideas )
+	{
+	  int x, y, width, height;
+	  
+	  gdk_window_get_geometry( ideas->window->window, &x, &y, &width, &height, NULL );
+	  gdk_window_get_origin( ideas->window->window, &x, &y );
+	  
+	  fprintf( fp, "%d %d %d %d\n", x, y, width, height );
+	  
+	  g_list_foreach( GTK_TREE( ideas->tree )->children, save_to_ideas, fp );
+	}
+      else
+	{
+	  if ( idea_list )
+	    {
+	      fprintf( fp, "%d %d %d %d\n", x, y, width, height );
+	      
+	      g_list_foreach( idea_list, save_list_to_ideas, fp );
+	    }
+	}
+      
+      fclose( fp );
     }
 }
 
-gint open_or_raise_callback( GtkWidget *widget, GdkEventButton *event, gpointer func_data )
+static void
+save_to_list( gpointer data, gpointer null_data )
+{
+  gchar *title = g_strdup( GTK_LABEL( GTK_BIN( (GtkWidget *) data )->child )->label );
+  idea_list = g_list_append( idea_list, title );
+}
+
+static void
+create_idea_list()
+{
+  gdk_window_get_geometry( ideas->window->window, &x, &y, &width, &height, NULL );
+  gdk_window_get_origin( ideas->window->window, &x, &y );
+
+  if( idea_list )
+    {
+      g_list_foreach( idea_list, (GFunc) g_free, NULL );
+      g_list_free( idea_list );
+      idea_list = 0;
+    }
+  
+  g_list_foreach( GTK_TREE( ideas->tree )->children, save_to_list, NULL );
+}
+
+static gint
+open_or_raise_callback( GtkWidget *widget, GdkEventButton *event, gpointer func_data )
 {
   if ( GTK_IS_TREE_ITEM( widget ) &&
        event->type==GDK_2BUTTON_PRESS )
@@ -454,21 +374,31 @@ static void check_needed( gpointer data, gpointer user_data )
     }
 }
 
+static void check_needed_list( gpointer data, gpointer user_data )
+{
+  struct bool_char_pair *pair = (struct bool_char_pair *) user_data;
+  
+  if ( strcmp( pair->string, (gchar *) data ) == 0 )
+    {
+      pair->boole = TRUE;
+    }
+}
+
 void idea_add( gchar *title )
 {
   idea_add_in_position( title, 0 );
 }
 
-void idea_add_in_position_with_select( gchar *title, gint position, gboolean select )
+static void idea_add_in_position_with_select( gchar *title, gint position, gboolean select )
 {
   GtkWidget *treeitem;
   struct bool_char_pair pair;
 
+  pair.boole = FALSE;
+  pair.string = title;
+      
   if ( ideas )
     {
-      pair.boole = FALSE;
-      pair.string = title;
-      
       g_list_foreach( GTK_TREE( ideas->tree )->children, check_needed, &pair );
       
       if ( ! pair.boole )
@@ -497,6 +427,57 @@ void idea_add_in_position_with_select( gchar *title, gint position, gboolean sel
 	    gtk_tree_select_item( GTK_TREE( ideas->tree ), gtk_tree_child_position( GTK_TREE( ideas->tree ), treeitem ) );
 	}
     }
+  else
+    {
+      if( ! idea_list )
+	{
+	  FILE *fp = NULL;
+	  gchar *desktopfile;
+	  gchar *home_dir;
+	  
+	  home_dir = getenv( "HOME" );
+	  
+	  /* open persistant desktop file. */
+	  desktopfile = append2( home_dir, FALSE, IDEAPATH, FALSE );
+	  fp = fopen( desktopfile, "r" );
+	  g_free( desktopfile );
+	  
+	  /* Read in persistant desktop information. */
+	  if ( fp )
+	    {	  
+	      gchar *title;
+	      gint length;
+
+	      x = getinteger( fp );
+	      y = getinteger( fp );
+	      width = getinteger( fp );
+	      height = getinteger( fp );
+
+	      clear_white( fp );
+	  
+	      while ( ! feof( fp ) )
+		{
+		  length = getinteger( fp );
+		  title = g_malloc0( length + 1 );
+		  title[fread( title, 1, length, fp )] = 0;
+		  idea_list = g_list_append( idea_list, g_strdup( title ) );
+		  g_free( title );
+		  clear_white( fp );
+		}
+	      fclose( fp );
+	    }
+	}
+
+      g_list_foreach( idea_list, check_needed_list, &pair );
+      
+      if ( ! pair.boole )
+	{
+	  if ( position < 0 )
+	    idea_list = g_list_append( idea_list, g_strdup( title ) );
+	  else
+	    idea_list = g_list_insert( idea_list, g_strdup( title ), position );
+	}
+    }
 }
 
 void idea_add_in_position( gchar *title, gint position )
@@ -504,7 +485,7 @@ void idea_add_in_position( gchar *title, gint position )
   idea_add_in_position_with_select( title, position, TRUE );
 }
 
-gint idea_move( GtkWidget *widget, gint distance, gboolean select )
+static gint idea_move( GtkWidget *widget, gint distance, gboolean select )
 {
   gint orig_position = g_list_index( GTK_TREE( ideas->tree )->children, widget );
   gint position = orig_position + distance;
@@ -524,7 +505,7 @@ gint idea_move( GtkWidget *widget, gint distance, gboolean select )
   return position - orig_position;
 }
 
-void idea_remove( GtkWidget *widget )
+static void idea_remove( GtkWidget *widget )
 {
   gint position = g_list_index( GTK_TREE( ideas->tree )->children, widget );
   gtk_container_remove( GTK_CONTAINER( ideas->tree ), widget );
@@ -570,3 +551,10 @@ void idea_remove_callback( GtkWidget *widget, gpointer data )
   else
     gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, "There's no selection to remove." );
 }
+
+void
+close_idea_window()
+{
+  idea_hide_callback( NULL, NULL );
+}
+

@@ -288,7 +288,9 @@ gimp_SOURCES = \
 	xcf.c			\
 	xcf.h			\
 	docindex.c		\
-	docindex.h
+	docindex.h		\
+	docindexif.c		\
+	docindexif.h
 
 EXTRA_DIST = \
 	tools/channel.xbm	\

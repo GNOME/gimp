@@ -1,4 +1,4 @@
-/* docindex.h - Header file for document index in gimp.
+/* docindex.h - Header file for the document index.
  *
  * Copyright (C) 1998 Chris Lahey.
  *
@@ -47,6 +47,11 @@ void close_idea_window();
 void idea_add( gchar *label );
 void idea_add_in_position( gchar *label, gint position );
 void raise_idea_callback( GtkWidget *widget, gpointer data );
+void idea_hide_callback( GtkWidget *widget, gpointer data );
+void idea_up_callback( GtkWidget *widget, gpointer data );
+void idea_down_callback( GtkWidget *widget, gpointer data );
+void idea_remove_callback( GtkWidget *widget, gpointer data );
+void save_idea_manager( idea_manager * );
 
 extern idea_manager *ideas;
 
