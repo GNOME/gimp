@@ -705,7 +705,7 @@ app_exit (gboolean kill_it)
  *************************************************/
 
 static void
-really_quit_callback (GtkButton *button,
+really_quit_callback (GtkWidget *button,
 		      gboolean   quit,
 		      gpointer   data)
 {

@@ -1041,13 +1041,6 @@ menus_filters_subdirs_to_top (GtkMenu *menu)
 void
 menus_reorder_plugins (void)
 {
-  static gchar *xtns_plugins[] = { "DB Browser...",
-				   "PDB Explorer",
-				   "Plugin Details...",
-				   "Parasite Editor" };
-  static gint n_xtns_plugins = (sizeof (xtns_plugins) /
-				sizeof (xtns_plugins[0]));
-
   static gchar *rotate_plugins[] = { "90 degrees",
 				     "180 degrees",
                                      "270 degrees" };
@@ -1074,20 +1067,31 @@ menus_reorder_plugins (void)
   GtkWidget *menu;
   GList *list;
   gchar *path;
-  gint i, pos;
+  gint   i, pos;
 
-  /*  Beautify "<Toolbox>/Xtns"  */
-  pos = 2;
-  for (i = 0; i < n_xtns_plugins; i++)
+  /*  Move all menu items under "<Toolbox>/Xtns" which are not submenus or
+   *  separators to the top of the menu
+   */
+  pos = 1;
+  menu_item = gtk_item_factory_get_widget (toolbox_factory,
+					   "/Xtns/Module Browser...");
+  if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
     {
-      path = g_strconcat ("/Xtns/", xtns_plugins[i], NULL);
-      menu_item = gtk_item_factory_get_widget (toolbox_factory, path);
-      g_free (path);
+      menu = menu_item->parent;
 
-      if (menu_item && menu_item->parent)
+      for (list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos); list;
+	   list = g_list_next (list))
 	{
-	  gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, pos);
-	  pos++;
+	  menu_item = GTK_WIDGET (list->data);
+
+	  if (! GTK_MENU_ITEM (menu_item)->submenu &&
+	      GTK_IS_LABEL (GTK_BIN (menu_item)->child))
+	    {
+	      gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
+				      menu_item, pos);
+	      list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos);
+	      pos++;
+	    }
 	}
     }
 
@@ -1486,21 +1490,43 @@ menus_item_key_press (GtkWidget   *widget,
   gchar *help_path = NULL;
   gchar *help_page = NULL;
 
+  item_factory = (GtkItemFactory *) data;
+  active_menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
+
+  /*  first, check if the user tries to assign a shortcut to the help
+   *  menu items and ignore it...
+   */
+  if (active_menu_item)
+    {
+      help_page = (gchar *) gtk_object_get_data (GTK_OBJECT (active_menu_item),
+						 "help_page");
+
+      if (help_page &&
+	  *help_page &&
+	  item_factory == toolbox_factory &&
+	  (strcmp (help_page, "help/dialogs/help.html") == 0 ||
+	   strcmp (help_page, "help/context_help.html") == 0))
+	{
+	  gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
+	  return TRUE;
+	}
+    }
+
+  /*  ...otherwise, for any key except F1, continue with the standard
+   *  GtkItemFactory callback and assign a new shortcut...
+   */
   if (kevent->keyval != GDK_F1)
     return FALSE;
 
-  gtk_signal_emit_stop_by_name (GTK_OBJECT (widget),
-				"key_press_event");
+  /*  ...finally, if F1 was pressed over any menu, show it's help page...
+   */
+  gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
 
-  item_factory = (GtkItemFactory *) data;
   help_path = (gchar *) gtk_object_get_data (GTK_OBJECT (item_factory),
 					     "help_path");
 
-  active_menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
-  if (active_menu_item)
-    help_page = (gchar *) gtk_object_get_data (GTK_OBJECT (active_menu_item),
-					       "help_page");
-  if (! help_page)
+  if (! help_page ||
+      ! *help_page)
     help_page = "index.html";
 
   if (help_path && help_page)

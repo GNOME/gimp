@@ -1,9 +1,19 @@
+2000-02-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c: fix a warning.
+
+	* app/menus.c: don't allow the help menu item accelerators to be
+	changed. Move all ordinary menu items under "<Toolbox>/Xtns"
+	before the separator without explicitly naming them.
+
+	* app/session.[ch]: minor cleanups without changing any logic.
+
 Sat Feb 12 15:37:29 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/info_dialog.c
 	* app/info_window.c: cosmetics and i18n fixes
 
-2000-02-12  Michael Natterer  <mitschel@cs.tu-berlin.de>
+2000-02-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/gdisplay_ops.c
 	* app/gradient.c

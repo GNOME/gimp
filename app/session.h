@@ -26,13 +26,13 @@ typedef struct _SessionInfo SessionInfo;
 
 struct _SessionInfo
 {
-  char name[16];
-  GtkItemFactoryCallback open_callback;
-  int x;
-  int y;
-  int width;
-  int height;
-  int open;
+  gchar                  *name;
+  GtkItemFactoryCallback  open_callback;
+  gint                    x;
+  gint                    y;
+  gint                    width;
+  gint                    height;
+  gint                    open;
 };
 
 /*  global session variables  */
@@ -52,13 +52,13 @@ extern GList *session_info_updates;  /* This list holds all session_infos
 					sessionrc on exit.             */  
 
 /*  function prototypes  */
-void session_get_window_info (GtkWidget   *window, 
-			      SessionInfo *info);
+void session_get_window_info     (GtkWidget   *window, 
+				  SessionInfo *info);
 void session_set_window_geometry (GtkWidget   *window,
 				  SessionInfo *info,
-				  int          set_size);
-void session_init (void);
-void session_restore (void);
-void save_sessionrc (void);
+				  gboolean     set_size);
+void session_init                (void);
+void session_restore             (void);
+void save_sessionrc              (void);
 
 #endif  /*  __SESSION_H__  */
