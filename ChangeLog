@@ -1,3 +1,8 @@
+2000-07-31  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/ps.c: added a tooltip describing the "Keep
+	Aspect Ratio" toggle. Closes bug #11286.
+
 Sun Jul 30 12:52:16 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* plug-ins/gap/gap_mov_dialog.c: Removed embedded EOLs and spaces from

@@ -2702,8 +2702,9 @@ save_dialog (void)
   GtkObject *adj;
   gint       j;
 
-  vals = g_new (SaveDialogVals, 1);
+  gimp_help_init ();
 
+  vals = g_new (SaveDialogVals, 1);
   vals->level = (psvals.level > 1);
 
   dialog = gimp_dialog_new (_("Save as PostScript"), "ps",
@@ -2788,6 +2789,9 @@ save_dialog (void)
 		      &psvals.y_offset);
 
   toggle = gtk_check_button_new_with_label (_("Keep Aspect Ratio"));
+  gimp_help_set_help_data (toggle, _("When toggled, the resulting image will be scaled to fit "
+				     "into the given size without changing the aspect ratio."),
+			   "#keep_aspect_ratio"), 
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                       GTK_SIGNAL_FUNC (gimp_toggle_button_update),
