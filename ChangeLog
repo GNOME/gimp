@@ -1,3 +1,8 @@
+Sun Jul 11 14:05:06 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/paths_dialog.c: my last change did break path deletion - this
+	should be fixed now
+
 Sat Jul 10 16:05:58 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/sel2path/math.c: 

@@ -1018,9 +1018,9 @@ paths_unselect_row (GtkWidget      *widget,
   if(!pwidget)
     return;
 
-  bzp = (PATHP)g_slist_nth_data(paths_dialog->current_path_list->bz_paths,row);
+  bzp = pwidget->bzp;
 
-  g_return_if_fail(bzp != NULL);
+  g_return_if_fail (bzp != NULL);
 
   if (column && bzp->locked)
     {
@@ -1380,6 +1380,13 @@ paths_dialog_delete_path_callback (GtkWidget * widget, gpointer udata)
   new_sz = (g_slist_length(plp->bz_paths) > 0);
   path_free(bzp,NULL);
 
+  /* Remove from the clist ... */ 
+  gtk_signal_handler_block_by_data (GTK_OBJECT (paths_dialog->paths_list), 
+				    paths_dialog);
+  gtk_clist_remove (GTK_CLIST (paths_dialog->paths_list), row);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (paths_dialog->paths_list), 
+				      paths_dialog);
+
   /* If now empty free everything up */
   if(!plp->bz_paths || g_slist_length(plp->bz_paths) == 0)
     {
@@ -1389,10 +1396,6 @@ paths_dialog_delete_path_callback (GtkWidget * widget, gpointer udata)
       pathimagelist_free(plp);
       paths_dialog->current_path_list = NULL;
     }
-
-  /* Do this last since it might cause a new row to become selected */
-  /* Remove from the clist ... */
-  gtk_clist_remove(GTK_CLIST(paths_dialog->paths_list),row);
 
   paths_ops_button_set_sensitive(DUP_PATH_BUTTON,new_sz);
   paths_ops_button_set_sensitive(DEL_PATH_BUTTON,new_sz);
