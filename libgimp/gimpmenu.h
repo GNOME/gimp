@@ -95,7 +95,7 @@ GtkWidget * gimp_brush_select_widget           (gchar     *dname,
 						gpointer   data);
   
 void      gimp_brush_select_widget_set_popup   (GtkWidget *widget,
-						gchar     *pname,
+						gchar     *bname,
 						gdouble    opacity,
 						gint       spacing,
 						gint       paint_mode);

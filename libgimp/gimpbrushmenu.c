@@ -315,6 +315,22 @@ brush_select_callback (GtkWidget *widget,
 				      bsel);
 }
 
+/**
+ * gimp_brush_select_widget:
+ * @dname: Title of the dialog to use.  NULL means to use the default title.
+ * @ibrush: Initial brush name. NULL means to use current selection. 
+ * @opacity: Initial opacity. -1 means to use current opacity.
+ * @spacing: Initial spacing. -1 means to use current spacing.
+ * @paint_mode: Initial paint mode.  -1 means to use current paint mode.
+ * @cback: a function to call when the selected brush changes.
+ * @data: a pointer to arbitary data to be used in the call to @cback.
+ *
+ * Creates a new #GtkWidget that completely controls the selection of a 
+ * #GimpBrush.  This widget is suitable for placement in a table in a
+ * plug-in dialog.
+ *
+ * Returns:A #GtkWidget that you can use in your UI.
+ */
 GtkWidget * 
 gimp_brush_select_widget (gchar                *dname,
 			  gchar                *ibrush, 
@@ -337,6 +353,7 @@ gimp_brush_select_widget (gchar                *dname,
   guint8    *mask_data;
   gchar     *brush_name;
   BSelect   *bsel;
+
 
   bsel = g_new (BSelect, 1);
 
@@ -414,6 +431,12 @@ gimp_brush_select_widget (gchar                *dname,
 }
 
 
+/**
+ * gimp_brush_select_widget_close_popup:
+ * @widget: A brush select widget.
+ *
+ * Closes the popup window associated with @widget.
+ */
 void
 gimp_brush_select_widget_close_popup (GtkWidget *widget)
 {
@@ -428,6 +451,18 @@ gimp_brush_select_widget_close_popup (GtkWidget *widget)
     }
 }
 
+/**
+ * gimp_brush_select_widget_set_popup:
+ * @widget: A brush select widget.
+ * @bname: Brush name to set. NULL means no change. 
+ * @opacity: Opacity to set. -1 means no change.
+ * @spacing: Spacing to set. -1 means no change.
+ * @paint_mode: Paint mode to set.  -1 means no change.
+ *
+ * Sets the current brush and other values for the brush
+ * select widget.  Calls the callback function if one was
+ * supplied in the call to gimp_brush_select_widget().
+ */
 void
 gimp_brush_select_widget_set_popup (GtkWidget *widget,
 				    gchar     *bname,

@@ -1,5 +1,21 @@
 2002-12-17  Nathan Summers  <rock@gimp.org>
 
+        * libgimp/gimpbrushmenu.c
+        * libgimp/gimpgradientmenu.c
+        * libgimp/gimppatternmenu.c: documented all publically visible
+        functions
+
+        * libgimp/gimpmenu.h: fixed a typo
+
+        * devel-docs/libgimp/libgimp-sections.txt: did some rearranging,
+        added all unused functions (except for temporary ones)
+
+        * idevel-docs/libgimp/tmpl/gimp.sgml
+        * devel-docs/libgimp/tmpl/gimpmenu.sgml
+        * devel-docs/libgimp/tmpl/gimpmisc.sgml: regenerated
+
+2002-12-17  Nathan Summers  <rock@gimp.org>
+
         * libgimp/gimp.[ch]
         * libgimp/gimpdrawable.c
         * libgimp/gimpimage.c: added some documentation

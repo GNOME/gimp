@@ -182,6 +182,19 @@ gradient_preview_callback (GtkWidget *widget,
 					 gsel);
 }
 
+/**
+ * gimp_gradient_select_widget:
+ * @dname: Title of the dialog to use.  NULL means to use the default title.
+ * @igradient: Initial gradient name. NULL means to use current selection. 
+ * @cback: a function to call when the selected gradient changes.
+ * @data: a pointer to arbitary data to be used in the call to @cback.
+ *
+ * Creates a new #GtkWidget that completely controls the selection of a 
+ * gradient.  This widget is suitable for placement in a table in a
+ * plug-in dialog.
+ *
+ * Returns:A #GtkWidget that you can use in your UI.
+ */
 GtkWidget * 
 gimp_gradient_select_widget (gchar                   *dname,
 			     gchar                   *igradient, 
@@ -250,6 +263,12 @@ gimp_gradient_select_widget (gchar                   *dname,
 }
 
 
+/**
+ * gimp_gradient_select_widget_close_popup:
+ * @widget: A gradient select widget.
+ *
+ * Closes the popup window associated with @widget.
+ */
 void
 gimp_gradient_select_widget_close_popup (GtkWidget *widget)
 {
@@ -264,6 +283,15 @@ gimp_gradient_select_widget_close_popup (GtkWidget *widget)
     }
 }
 
+/**
+ * gimp_gradient_select_widget_set_popup:
+ * @widget: A gradient select widget.
+ * @gname: gradient name to set.
+ *
+ * Sets the current gradient for the gradient
+ * select widget.  Calls the callback function if one was
+ * supplied in the call to gimp_gradient_select_widget().
+ */
 void
 gimp_gradient_select_widget_set_popup (GtkWidget *widget,
 				       gchar     *gname)
