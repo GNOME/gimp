@@ -208,7 +208,7 @@ gimp_vectors_compat_get_points (GimpVectors *vectors,
           /*  write the skipped control point  */
           if (! anchors->next && stroke->closed)
             {
-              anchor = (GimpAnchor *) stroke->anchors->data;
+              anchor = GIMP_ANCHOR (stroke->anchors->data);
 
               points[i].type = GIMP_VECTORS_COMPAT_CONTROL;
               points[i].x    = anchor->position.x;

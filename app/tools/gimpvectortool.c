@@ -618,22 +618,22 @@ gimp_vector_tool_on_handle (GimpTool        *tool,
 
       while (anchor_list)
         {
-          dx = coords->x - ((GimpAnchor *) anchor_list->data)->position.x;
-          dy = coords->y - ((GimpAnchor *) anchor_list->data)->position.y;
+          dx = coords->x - GIMP_ANCHOR (anchor_list->data)->position.x;
+          dy = coords->y - GIMP_ANCHOR (anchor_list->data)->position.y;
 
           if (mindist < 0 || mindist > dx * dx + dy * dy)
             {
               mindist = dx * dx + dy * dy;
-              anchor = (GimpAnchor *) anchor_list->data;
+              anchor = GIMP_ANCHOR (anchor_list->data);
               if (ret_stroke)
                 *ret_stroke = stroke;
             }
 
           if ((pref_mindist < 0 || pref_mindist > dx * dx + dy * dy) &&
-              ((GimpAnchor *) anchor_list->data)->type == preferred)
+              GIMP_ANCHOR (anchor_list->data)->type == preferred)
             {
               pref_mindist = dx * dx + dy * dy;
-              pref_anchor = (GimpAnchor *) anchor_list->data;
+              pref_anchor = GIMP_ANCHOR (anchor_list->data);
               pref_stroke = stroke;
             }
 
@@ -964,7 +964,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
       for (list = draw_anchors; list; list = g_list_next (list))
         {
-          cur_anchor = (GimpAnchor *) list->data;
+          cur_anchor = GIMP_ANCHOR (list->data);
 
           if (cur_anchor->type == GIMP_ANCHOR_ANCHOR)
             {
@@ -988,7 +988,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
       for (list = draw_anchors; list; list = g_list_next (list))
         {
-          cur_anchor = (GimpAnchor *) list->data;
+          cur_anchor = GIMP_ANCHOR (list->data);
 
           gimp_draw_tool_draw_handle (draw_tool,
                                       GIMP_HANDLE_SQUARE,

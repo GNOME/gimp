@@ -247,7 +247,7 @@ gimp_stroke_finalize (GObject *object)
   stroke = GIMP_STROKE (object);
 
   for (list = stroke->anchors; list; list = list->next)
-    gimp_anchor_free ((GimpAnchor *) list->data);
+    gimp_anchor_free (GIMP_ANCHOR (list->data));
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -326,13 +326,13 @@ gimp_stroke_real_anchor_get (const GimpStroke *stroke,
 
   for (list = anchors; list; list = g_list_next (list))
     {
-      dx = coord->x - ((GimpAnchor *) list->data)->position.x;
-      dy = coord->y - ((GimpAnchor *) list->data)->position.y;
+      dx = coord->x - GIMP_ANCHOR (list->data)->position.x;
+      dy = coord->y - GIMP_ANCHOR (list->data)->position.y;
 
       if (mindist < 0 || mindist > dx * dx + dy * dy)
         {
           mindist = dx * dx + dy * dy;
-          anchor = (GimpAnchor *) list->data;
+          anchor = GIMP_ANCHOR (list->data);
         }
     }
 
@@ -342,13 +342,13 @@ gimp_stroke_real_anchor_get (const GimpStroke *stroke,
 
   for (list = anchors; list; list = g_list_next (list))
     {
-      dx = coord->x - ((GimpAnchor *) list->data)->position.x;
-      dy = coord->y - ((GimpAnchor *) list->data)->position.y;
+      dx = coord->x - GIMP_ANCHOR (list->data)->position.x;
+      dy = coord->y - GIMP_ANCHOR (list->data)->position.y;
 
       if (mindist < 0 || mindist > dx * dx + dy * dy)
         {
           mindist = dx * dx + dy * dy;
-          anchor = (GimpAnchor *) list->data;
+          anchor = GIMP_ANCHOR (list->data);
         }
     }
 
@@ -387,7 +387,7 @@ gimp_stroke_real_anchor_get_next (const GimpStroke *stroke,
     }
 
   if (list)
-    return (GimpAnchor *) list->data;
+    return GIMP_ANCHOR (list->data);
 
   return NULL;
 }
@@ -416,7 +416,7 @@ gimp_stroke_real_anchor_select (GimpStroke *stroke,
     {
       while (list)
         {
-          ((GimpAnchor *) list->data)->selected = FALSE;
+          GIMP_ANCHOR (list->data)->selected = FALSE;
           list = g_list_next (list);
         }
     }
@@ -424,7 +424,7 @@ gimp_stroke_real_anchor_select (GimpStroke *stroke,
   list = g_list_find (stroke->anchors, anchor);
 
   if (list)
-    ((GimpAnchor *) list->data)->selected = TRUE;
+    GIMP_ANCHOR (list->data)->selected = TRUE;
 }
 
 
@@ -784,7 +784,7 @@ gimp_stroke_real_duplicate (const GimpStroke *stroke)
 
   for (list = new_stroke->anchors; list; list = g_list_next (list))
     {
-      list->data = gimp_anchor_duplicate ((GimpAnchor *) list->data);
+      list->data = gimp_anchor_duplicate (GIMP_ANCHOR (list->data));
     }
 
   return new_stroke;
@@ -1057,7 +1057,7 @@ gimp_stroke_real_get_draw_anchors (const GimpStroke  *stroke)
 
   for (list = stroke->anchors; list; list = g_list_next (list))
     {
-      if (((GimpAnchor *) list->data)->type == GIMP_ANCHOR_ANCHOR)
+      if (GIMP_ANCHOR (list->data)->type == GIMP_ANCHOR_ANCHOR)
         ret_list = g_list_prepend (ret_list, list->data);
     }
 

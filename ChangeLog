@@ -1,3 +1,12 @@
+2003-08-26  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpanchor.h: Intruduce casting macro GIMP_ANCHOR.
+
+	* app/tools/gimpvectortool.c
+	* app/vectors/gimpstroke.c
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpvectors-compat.c: Use it for code readibility.
+
 2003-08-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdockbook.c: added gimp_dockbook_help_func()

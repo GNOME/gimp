@@ -277,7 +277,7 @@ gimp_bezier_stroke_anchor_delete (GimpStroke        *stroke,
     {
       g_return_if_fail (list != NULL);
       list2 = g_list_next (list);
-      gimp_anchor_free ((GimpAnchor *) list->data);
+      gimp_anchor_free (GIMP_ANCHOR (list->data));
       stroke->anchors = g_list_delete_link (stroke->anchors, list);
       list = list2;
     }
@@ -354,7 +354,7 @@ gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
 
   for (i=0; i <= 3; i++)
     {
-      beziercoords[i] = ((GimpAnchor *) list->data)->position;
+      beziercoords[i] = GIMP_ANCHOR (list->data)->position;
       list = g_list_next (list);
       if (!list)
         list = stroke->anchors;
@@ -415,7 +415,7 @@ gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
         }
       else
         {
-          ((GimpAnchor *) list->data)->position = subdivided[i];
+          GIMP_ANCHOR (list->data)->position = subdivided[i];
         }
 
       list = g_list_next (list);
@@ -426,7 +426,7 @@ gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
   
   stroke->anchors = g_list_first (stroke->anchors);
 
-  return ((GimpAnchor *) segment_start->data);
+  return GIMP_ANCHOR (segment_start->data);
 }
 
 
@@ -479,7 +479,7 @@ gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
 
   for (i=0; i <= 1; i++)
     {
-      gimp_stroke_anchor_move_relative (stroke, ((GimpAnchor *) list->data),
+      gimp_stroke_anchor_move_relative (stroke, GIMP_ANCHOR (list->data),
                                         &(offsetcoords[i]), feature);
       list = g_list_next (list);
       if (!list)
@@ -511,7 +511,7 @@ gimp_bezier_stroke_point_move_absolute (GimpStroke            *stroke,
 
   for (i=0; i <= 3; i++)
     {
-      beziercoords[i] = ((GimpAnchor *) list->data)->position;
+      beziercoords[i] = GIMP_ANCHOR (list->data)->position;
       list = g_list_next (list);
       if (!list)
         list = stroke->anchors;
@@ -555,7 +555,7 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
   min_dist = -1;
 
   for (anchorlist = stroke->anchors;
-       anchorlist && ((GimpAnchor *) anchorlist->data)->type != GIMP_ANCHOR_ANCHOR;
+       anchorlist && GIMP_ANCHOR (anchorlist->data)->type != GIMP_ANCHOR_ANCHOR;
        anchorlist = g_list_next (anchorlist));
 
   segment_start = anchorlist->data;
@@ -596,12 +596,12 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
 
       while (count < 3)
         {
-          segmentcoords[count] = ((GimpAnchor *) anchorlist->data)->position;
+          segmentcoords[count] = GIMP_ANCHOR (anchorlist->data)->position;
           count++;
         }
       anchorlist = g_list_next (anchorlist);
       if (anchorlist)
-        segmentcoords[3] = ((GimpAnchor *) anchorlist->data)->position;
+        segmentcoords[3] = GIMP_ANCHOR (anchorlist->data)->position;
 
       dist = gimp_bezier_stroke_segment_nearest_point_get (segmentcoords,
                                                            coord, precision,
@@ -795,12 +795,12 @@ gimp_bezier_stroke_is_extendable (GimpStroke *stroke,
           if (listneighbor && neighbor->type == GIMP_ANCHOR_CONTROL)
             {
               if (listneighbor->prev &&
-                  ((GimpAnchor *) listneighbor->prev->data)->type == GIMP_ANCHOR_ANCHOR)
+                  GIMP_ANCHOR (listneighbor->prev->data)->type == GIMP_ANCHOR_ANCHOR)
                 {
                   listneighbor = listneighbor->prev;
                 }
               else if (listneighbor->next &&
-                       ((GimpAnchor *) listneighbor->next->data)->type == GIMP_ANCHOR_ANCHOR)
+                       GIMP_ANCHOR (listneighbor->next->data)->type == GIMP_ANCHOR_ANCHOR)
                 {
                   listneighbor = listneighbor->next;
                 }
@@ -917,12 +917,12 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
               if (listneighbor && neighbor->type == GIMP_ANCHOR_CONTROL)
                 {
                   if (listneighbor->prev &&
-                      ((GimpAnchor *) listneighbor->prev->data)->type == GIMP_ANCHOR_ANCHOR)
+                      GIMP_ANCHOR (listneighbor->prev->data)->type == GIMP_ANCHOR_ANCHOR)
                     {
                       listneighbor = listneighbor->prev;
                     }
                   else if (listneighbor->next &&
-                           ((GimpAnchor *) listneighbor->next->data)->type == GIMP_ANCHOR_ANCHOR)
+                           GIMP_ANCHOR (listneighbor->next->data)->type == GIMP_ANCHOR_ANCHOR)
                     {
                       listneighbor = listneighbor->next;
                     }
@@ -965,7 +965,7 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
           if (loose_end == 1)
             {
               while (listneighbor &&
-                     ((GimpAnchor *) listneighbor->data)->type == GIMP_ANCHOR_CONTROL)
+                     GIMP_ANCHOR (listneighbor->data)->type == GIMP_ANCHOR_CONTROL)
                 {
                   control_count++;
                   listneighbor = listneighbor->prev;
@@ -974,7 +974,7 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
           else
             {
               while (listneighbor &&
-                     ((GimpAnchor *) listneighbor->data)->type == GIMP_ANCHOR_CONTROL)
+                     GIMP_ANCHOR (listneighbor->data)->type == GIMP_ANCHOR_CONTROL)
                 {
                   control_count++;
                   listneighbor = listneighbor->next;
@@ -1077,17 +1077,16 @@ gimp_bezier_stroke_anchor_move_relative (GimpStroke            *stroke,
     {
       if (g_list_previous (anchor_list))
         {
-          coord2 = ((GimpAnchor *) g_list_previous (anchor_list)->data)->position;
+          coord2 = GIMP_ANCHOR (g_list_previous (anchor_list)->data)->position;
           gimp_bezier_coords_add (&coord2, &delta, &coord1);
-          ((GimpAnchor *) g_list_previous (anchor_list)->data)->position =
-              coord1;
+          GIMP_ANCHOR (g_list_previous (anchor_list)->data)->position = coord1;
         }
 
       if (g_list_next (anchor_list))
         {
-          coord2 = ((GimpAnchor *) g_list_next (anchor_list)->data)->position;
+          coord2 = GIMP_ANCHOR (g_list_next (anchor_list)->data)->position;
           gimp_bezier_coords_add (&coord2, &delta, &coord1);
-          ((GimpAnchor *) g_list_next (anchor_list)->data)->position = coord1;
+          GIMP_ANCHOR (g_list_next (anchor_list)->data)->position = coord1;
         }
     }
   else
@@ -1099,7 +1098,7 @@ gimp_bezier_stroke_anchor_move_relative (GimpStroke            *stroke,
           /* search for opposite control point. Sigh. */
           neighbour = g_list_previous (anchor_list);
           if (neighbour &&
-              ((GimpAnchor *) neighbour->data)->type == GIMP_ANCHOR_ANCHOR)
+              GIMP_ANCHOR (neighbour->data)->type == GIMP_ANCHOR_ANCHOR)
             {
               opposite = g_list_previous (neighbour);
             }
@@ -1107,19 +1106,19 @@ gimp_bezier_stroke_anchor_move_relative (GimpStroke            *stroke,
             {
               neighbour = g_list_next (anchor_list);
               if (neighbour &&
-                  ((GimpAnchor *) neighbour->data)->type == GIMP_ANCHOR_ANCHOR)
+                  GIMP_ANCHOR (neighbour->data)->type == GIMP_ANCHOR_ANCHOR)
                 {
                   opposite = g_list_next (neighbour);
                 }
             }
           if (opposite &&
-              ((GimpAnchor *) opposite->data)->type == GIMP_ANCHOR_CONTROL)
+              GIMP_ANCHOR (opposite->data)->type == GIMP_ANCHOR_CONTROL)
             {
-              gimp_bezier_coords_difference (&(((GimpAnchor *) neighbour->data)->position),
+              gimp_bezier_coords_difference (&(GIMP_ANCHOR (neighbour->data)->position),
                                              &(anchor->position), &delta);
-              gimp_bezier_coords_add (&(((GimpAnchor *) neighbour->data)->position),
+              gimp_bezier_coords_add (&(GIMP_ANCHOR (neighbour->data)->position),
                                       &delta, &coord1);
-              ((GimpAnchor *) opposite->data)->position = coord1;
+              GIMP_ANCHOR (opposite->data)->position = coord1;
             }
         }
     }
@@ -1156,21 +1155,21 @@ gimp_bezier_stroke_anchor_convert (GimpStroke            *stroke,
       if (anchor->type == GIMP_ANCHOR_ANCHOR)
         {
           if (g_list_previous (anchor_list))
-            ((GimpAnchor *) g_list_previous (anchor_list)->data)->position =
+            GIMP_ANCHOR (g_list_previous (anchor_list)->data)->position =
               anchor->position;
 
           if (g_list_next (anchor_list))
-            ((GimpAnchor *) g_list_next (anchor_list)->data)->position =
+            GIMP_ANCHOR (g_list_next (anchor_list)->data)->position =
               anchor->position;
         }
       else
         {
           if (g_list_previous (anchor_list) &&
-              ((GimpAnchor *) g_list_previous (anchor_list)->data)->type == GIMP_ANCHOR_ANCHOR)
-            anchor->position = ((GimpAnchor *) g_list_previous (anchor_list)->data)->position;
+              GIMP_ANCHOR (g_list_previous (anchor_list)->data)->type == GIMP_ANCHOR_ANCHOR)
+            anchor->position = GIMP_ANCHOR (g_list_previous (anchor_list)->data)->position;
           if (g_list_next (anchor_list) &&
-              ((GimpAnchor *) g_list_next (anchor_list)->data)->type == GIMP_ANCHOR_ANCHOR)
-            anchor->position = ((GimpAnchor *) g_list_next (anchor_list)->data)->position;
+              GIMP_ANCHOR (g_list_next (anchor_list)->data)->type == GIMP_ANCHOR_ANCHOR)
+            anchor->position = GIMP_ANCHOR (g_list_next (anchor_list)->data)->position;
         }
 
       break;
@@ -1207,7 +1206,7 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
   count = 0;
 
   for (anchorlist = stroke->anchors;
-       anchorlist && ((GimpAnchor *) anchorlist->data)->type != GIMP_ANCHOR_ANCHOR;
+       anchorlist && GIMP_ANCHOR (anchorlist->data)->type != GIMP_ANCHOR_ANCHOR;
        anchorlist = g_list_next (anchorlist));
 
   for ( ; anchorlist; anchorlist = g_list_next (anchorlist))
@@ -1232,12 +1231,12 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
 
       while (count < 3)
         {
-          segmentcoords[count] = ((GimpAnchor *) anchorlist->data)->position;
+          segmentcoords[count] = GIMP_ANCHOR (anchorlist->data)->position;
           count++;
         }
       anchorlist = g_list_next (anchorlist);
       if (anchorlist)
-        segmentcoords[3] = ((GimpAnchor *) anchorlist->data)->position;
+        segmentcoords[3] = GIMP_ANCHOR (anchorlist->data)->position;
 
       gimp_bezier_coords_subdivide (segmentcoords, precision, &ret_coords);
       need_endpoint = TRUE;

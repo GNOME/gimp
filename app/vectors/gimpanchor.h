@@ -22,6 +22,7 @@
 #ifndef __GIMP_ANCHOR_H__
 #define __GIMP_ANCHOR_H__
 
+#define GIMP_ANCHOR(anchor)  ((GimpAnchor *) (anchor))
 
 struct _GimpAnchor
 {
