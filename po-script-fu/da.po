@@ -19,8 +19,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
-"POT-Creation-Date: 2002-02-03 17:56-0800\n"
-"PO-Revision-Date: 2001-10-26 13:01+0200\n"
+"POT-Creation-Date: 2002-04-14 19:41+0200\n"
+"PO-Revision-Date: 2002-04-14 19:42+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -321,7 +321,7 @@ msgstr "<Image>/Script-Fu/Alfa til logo/Blandet..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
-msgstr "<Toolbox>/Script-Fu/Alfa til logo/Kopletter..."
+msgstr "<Image>/Script-Fu/Alfa til logo/Kopletter..."
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
@@ -337,13 +337,13 @@ msgstr "<Image>/Script-Fu/Alfa til logo/Krom..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
-msgstr "<Toolbox>/Script-Fu/Alfa til logo/Tegneserie..."
+msgstr "<Image>/Script-Fu/Alfa til logo/Tegneserie..."
 
 # det er næsten umuligt at oversætte "cool" på en måde så det ikke lyder
 # bøvet i sammenhængen
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
-msgstr "<Toolbox>/Script-Fu/Alfa til logo/Metal..."
+msgstr "<Image>/Script-Fu/Alfa til logo/Metal..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
@@ -359,7 +359,7 @@ msgstr "<Image>/Script-Fu/Alfa til logo/Glohed..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
-msgstr "<Toolbox>/Script-Fu/Alfa til logo/Farveovergangskant..."
+msgstr "<Image>/Script-Fu/Alfa til logo/Farveovergangskant..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
@@ -367,7 +367,7 @@ msgstr "<Image>/Script-Fu/Alfa til logo/Neon..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
-msgstr "<Toolbox>/Script-Fu/Alfa til logo/Partikelspor..."
+msgstr "<Image>/Script-Fu/Alfa til logo/Partikelspor..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
