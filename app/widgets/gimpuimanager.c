@@ -655,7 +655,9 @@ gimp_ui_manager_entry_load (GimpUIManager         *manager,
   filename = g_build_filename (gimp_data_directory (), "menus",
                                entry->basename, NULL);
 
-  g_print ("loading menu: %s for %s\n", filename, entry->ui_path);
+  if (manager->gimp->be_verbose)
+    g_print ("loading menu '%s' for %s\n",
+             gimp_filename_to_utf8 (filename), entry->ui_path);
 
   entry->merge_id = gtk_ui_manager_add_ui_from_file (GTK_UI_MANAGER (manager),
                                                      filename, error);

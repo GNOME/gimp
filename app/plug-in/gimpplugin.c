@@ -539,8 +539,10 @@ plug_in_close (PlugIn   *plug_in,
 #ifndef G_OS_WIN32
   if (kill_it && plug_in->pid)
     {
-      g_warning ("Terminating %s ...",
+      if (gimp->be_verbose)
+        g_print (_("Terminating plug-in: '%s'\n"),
                  gimp_filename_to_utf8 (plug_in->prog));
+
       status = kill (plug_in->pid, SIGKILL);
     }
 
@@ -567,8 +569,10 @@ plug_in_close (PlugIn   *plug_in,
 	}
       if (STILL_ACTIVE == dwExitCode)
 	{
-	  g_warning ("Terminating %s ...",
-		     gimp_filename_to_utf8 (plug_in->prog));
+          if (gimp->be_verbose)
+            g_print (_("Terminating plug-in: '%s'\n"),
+                     gimp_filename_to_utf8 (plug_in->prog));
+
 	  TerminateProcess ((HANDLE) plug_in->pid, 0);
 	}
     }

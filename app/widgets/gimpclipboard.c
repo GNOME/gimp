@@ -143,7 +143,9 @@ gimp_clipboard_init (Gimp *gimp)
                 {
                   gchar *mime_type = *type;
 
-                  g_print ("writable pixbuf format: %s\n", mime_type);
+                  if (gimp->be_verbose)
+                    g_print ("GimpClipboard: writable pixbuf format: %s\n",
+                             mime_type);
 
                   gimp_clip->target_entries[i].target = g_strdup (mime_type);
                   gimp_clip->target_entries[i].flags  = 0;

@@ -1,3 +1,12 @@
+2004-10-29  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpuimanager.c (gimp_ui_manager_entry_load)
+	* app/widgets/gimpclipboard.c (gimp_clipboard_init): only be
+	verbose on request.
+
+	* app/plug-in/plug-in.c (plug_in_close): turned warnings into
+	messages and respect gimp->be_verbose.
+
 2004-10-29  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/actions/drawable-commands.[ch]
