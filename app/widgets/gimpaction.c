@@ -33,6 +33,7 @@
 #include "config/gimpconfig-params.h"
 
 #include "core/gimpmarshal.h"
+#include "core/gimpimagefile.h"  /* eek */
 #include "core/gimpviewable.h"
 
 #include "gimpaction.h"
@@ -312,15 +313,19 @@ gimp_action_set_proxy (GimpAction *action,
         {
           GdkScreen *screen;
           gint       width, height;
+          gint       border_width;
 
           screen = gtk_widget_get_screen (proxy);
           gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
                                              GTK_ICON_SIZE_MENU,
                                              &width, &height);
 
+          /*  FIXME: remove this hack  */
+          border_width = GIMP_IS_IMAGEFILE (action->viewable) ? 0 : 1;
+
           view = gimp_view_new_full (action->viewable,
-                                           width - 2, height - 2, 1,
-                                           FALSE, FALSE, FALSE);
+                                     width - 2, height - 2, border_width,
+                                     FALSE, FALSE, FALSE);
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), view);
           gtk_widget_show (view);
         }

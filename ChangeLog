@@ -1,5 +1,11 @@
 2004-09-28  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpaction.c (gimp_action_set_proxy): added a hack
+	to get rid of the border drawn around thumbnails in the "Open Recent"
+	menu.
+
+2004-09-28  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_settings_dialog):
 	add a shortcut to the filechooser that points to the user's folder.
 
