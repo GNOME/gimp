@@ -144,9 +144,9 @@ int p_layer_modify_dialog(t_anim_info *ainfo_ptr,
   l_rc = -1;
   
   /* the 3 Action Buttons */
-    b_argv[0].but_txt  = _("OK");
+    b_argv[0].but_txt  = GTK_STOCK_OK;
     b_argv[0].but_val  = 0;
-    b_argv[1].but_txt  = _("Cancel");
+    b_argv[1].but_txt  = GTK_STOCK_CANCEL;
     b_argv[1].but_val  = -1;
   
   p_init_arr_arg(&argv[0], WGT_LABEL);
@@ -261,7 +261,7 @@ p_pitstop_dialog(gint text_flag, char *filter_procname)
 
   l_but_argv[0].but_txt  = _("Continue");
   l_but_argv[0].but_val  = 0;
-  l_but_argv[1].but_txt  = _("Cancel");
+  l_but_argv[1].but_txt  = GTK_STOCK_CANCEL;
   l_but_argv[1].but_val  = -1;
 
   l_but_argc = 2;

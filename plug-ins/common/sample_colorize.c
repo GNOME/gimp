@@ -1371,7 +1371,7 @@ p_smp_dialog (void)
 		     NULL, NULL, NULL, TRUE, FALSE,
 		     _("Reset"), p_smp_reset_callback,
 		     NULL, NULL, NULL, FALSE, FALSE,
-		     _("Close"), gtk_widget_destroy,
+		     GTK_STOCK_CLOSE, gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
 
 		     NULL);

@@ -853,11 +853,11 @@ dialog (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("OK"), ok_callback,
+			 GTK_STOCK_OK, ok_callback,
 			 NULL, NULL, &my_widgets.ok, TRUE, FALSE,
 			 _("Reset"), defaults_callback,
 			 NULL, 1, NULL, FALSE, FALSE,
-			 _("Cancel"), gtk_widget_destroy,
+			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);

@@ -3157,7 +3157,7 @@ int  gap_navigator(gint32 image_id)
     (GTK_CONTAINER (GTK_DIALOG (shell)->action_area), 1);
 
   /*  The close button */
-  button = gtk_button_new_with_label (_("Close"));
+  button = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
 			     GTK_OBJECT (shell));

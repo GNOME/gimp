@@ -224,7 +224,7 @@ make_file_menu(GtkWidget *menu_bar)
    make_item_with_label(file_menu, _("Preferences..."), menu_command,
 			&_menu.cmd_preferences);
    make_separator(file_menu);
-   item = make_item_with_label(file_menu, _("Close"), menu_command,
+   item = make_item_with_label(file_menu, GTK_STOCK_CLOSE, menu_command,
 			       &_menu.cmd_close);
    add_accelerator(item, 'W', GDK_CONTROL_MASK);
    item = make_item_with_label(file_menu, _("Quit"), menu_command,

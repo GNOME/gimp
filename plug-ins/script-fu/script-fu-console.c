@@ -174,7 +174,7 @@ script_fu_console_interface (void)
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    _("Close"), gtk_widget_destroy, NULL,
+			    GTK_STOCK_CLOSE, gtk_widget_destroy, NULL,
 			    1, NULL, FALSE, TRUE,
 
 			    NULL);

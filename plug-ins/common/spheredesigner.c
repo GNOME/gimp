@@ -2205,11 +2205,11 @@ GtkWidget* makewindow (void)
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    _("OK"), sphere_ok,
+			    GTK_STOCK_OK, sphere_ok,
 			    NULL, NULL, &okbutton, TRUE, FALSE,
 			    _("Reset"), sphere_reset,
 			    NULL, NULL, &resetbutton, FALSE, FALSE,
-			    _("Cancel"), sphere_cancel,
+			    GTK_STOCK_CANCEL, sphere_cancel,
 			    NULL, NULL, &cancelbutton, FALSE, TRUE,
 
 			    NULL);

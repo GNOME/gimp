@@ -765,8 +765,8 @@ gint p_array_std_dialog(char *title_txt,
   for(l_idx = 0; l_idx < b_argc; l_idx++)
   {
 
-     if(b_argv[l_idx].but_txt == NULL)  button = gtk_button_new_with_label ( _("OK"));
-     else                               button = gtk_button_new_with_label (b_argv[l_idx].but_txt);
+     if(b_argv[l_idx].but_txt == NULL)  button = gtk_button_new_from_stock ( GTK_STOCK_OK);
+     else                               button = gtk_button_new_from_stock (b_argv[l_idx].but_txt);
      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
      gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		         (GtkSignalFunc) but_array_callback,
@@ -780,7 +780,7 @@ gint p_array_std_dialog(char *title_txt,
   if(b_argc < 1)
   {
      /* if no buttons are specified use one CLOSE button per default */
-     button = gtk_button_new_with_label ( _("Close"));
+     button = gtk_button_new_from_stock ( GTK_STOCK_CLOSE);
      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
      gtk_signal_connect (GTK_OBJECT (button), "clicked",
                          (GtkSignalFunc) but_array_callback,
@@ -1007,9 +1007,9 @@ gint p_array_dialog(char *title_txt,
 {
     static t_but_arg  b_argv[2];
 
-    b_argv[0].but_txt  = _("OK");
+    b_argv[0].but_txt  = GTK_STOCK_OK;
     b_argv[0].but_val  = TRUE;
-    b_argv[1].but_txt  = _("Cancel");
+    b_argv[1].but_txt  = GTK_STOCK_CANCEL;
     b_argv[1].but_val  = FALSE;
   
     return( p_array_std_dialog(title_txt,

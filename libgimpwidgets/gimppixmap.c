@@ -58,7 +58,7 @@ gimp_pixmap_get_type (void)
         (GtkClassInitFunc) NULL
       };
 
-      pixmap_type = gtk_type_unique (gtk_pixmap_get_type (), &pixmap_info);
+      pixmap_type = gtk_type_unique (GTK_TYPE_PIXMAP, &pixmap_info);
     }
 
   return pixmap_type;
@@ -95,7 +95,7 @@ gimp_pixmap_new (gchar **xpm_data)
 {
   GimpPixmap *pixmap;
 
-  pixmap = gtk_type_new (gimp_pixmap_get_type ());
+  pixmap = gtk_type_new (GIMP_TYPE_PIXMAP);
 
   gtk_pixmap_set_build_insensitive (GTK_PIXMAP (pixmap), TRUE);
   gimp_pixmap_set (pixmap, xpm_data);
@@ -114,7 +114,6 @@ void
 gimp_pixmap_set (GimpPixmap  *pixmap,
 		 gchar      **xpm_data)
 {
-  g_return_if_fail (pixmap != NULL);
   g_return_if_fail (GIMP_IS_PIXMAP (pixmap));
 
   pixmap->xpm_data = xpm_data;

@@ -35,12 +35,14 @@ extern "C" {
 #define GIMP_UNIT_MENU_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_UNIT_MENU, GimpUnitMenuClass))
 #define GIMP_IS_UNIT_MENU(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_UNIT_MENU))
 #define GIMP_IS_UNIT_MENU_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_UNIT_MENU))
+#define GIMP_UNIT_MENU_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_UNIT_MENU, GimpUnitMenuClass))
+
 
 typedef struct _GimpUnitMenuClass  GimpUnitMenuClass;
 
 struct _GimpUnitMenu
 {
-  GtkOptionMenu  optionmenu;
+  GtkOptionMenu  parent_instance;
 
   /* public (read only) */
   gchar         *format;
@@ -56,13 +58,13 @@ struct _GimpUnitMenu
 
 struct _GimpUnitMenuClass
 {
-  GtkOptionMenuClass parent_class;
+  GtkOptionMenuClass  parent_class;
 
   void (* unit_changed) (GimpUnitMenu *gum);
 };
 
 
-GtkType     gimp_unit_menu_get_type (void);
+GType       gimp_unit_menu_get_type (void);
 
 GtkWidget * gimp_unit_menu_new      (const gchar *format,
 				     GimpUnit     unit,

@@ -138,23 +138,22 @@ gimp_unit_menu_destroy (GtkObject *object)
 
 /**
  * gimp_unit_menu_new:
- * @format: A printf-like format string which is used to create the unit
- *          strings.
- * @unit: The initially selected unit.
- * @show_pixels: #TRUE if the unit menu should contain an item for
- *               GIMP_UNIT_PIXEL.
+ * @format:       A printf-like format string which is used to create the unit
+ *                strings.
+ * @unit:         The initially selected unit.
+ * @show_pixels:  #TRUE if the unit menu should contain an item for
+ *                GIMP_UNIT_PIXEL.
  * @show_percent: #TRUE in the unit menu should contain an item for
  *                GIMP_UNIT_PERCENT.
- * @show_custom: #TRUE if the unit menu should contain a "More..." item for
- *               opening the user-defined-unit selection dialog.
+ * @show_custom:  #TRUE if the unit menu should contain a "More..." item for
+ *                opening the user-defined-unit selection dialog.
  *
  * Creates a new #GimpUnitMenu widget.
  *
  * The @format string supports the following percent expansions:
  *
  * Returns: A pointer to the new #GimpUnitMenu widget.
- *
- */
+ **/
 GtkWidget *
 gimp_unit_menu_new (const gchar *format,
 		    GimpUnit     unit,
@@ -195,12 +194,13 @@ gimp_unit_menu_new (const gchar *format,
 		gtk_menu_item_new_with_label
 		(gimp_unit_menu_build_string (format, GIMP_UNIT_PERCENT));
 	      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	      g_signal_connect (G_OBJECT (menuitem), "activate",
-                                G_CALLBACK (gimp_unit_menu_callback),
-                                gum);
 	      g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu",
                                  (gpointer) GIMP_UNIT_PERCENT);
 	      gtk_widget_show (menuitem);
+
+	      g_signal_connect (G_OBJECT (menuitem), "activate",
+                                G_CALLBACK (gimp_unit_menu_callback),
+                                gum);
 	    }
 
 	  if (show_pixels || show_percent)
@@ -215,12 +215,13 @@ gimp_unit_menu_new (const gchar *format,
       menuitem =
 	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format, u));
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-      g_signal_connect (G_OBJECT (menuitem), "activate",
-                        G_CALLBACK (gimp_unit_menu_callback),
-                        gum);
       g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu",
                          (gpointer) u);
       gtk_widget_show (menuitem);
+
+      g_signal_connect (G_OBJECT (menuitem), "activate",
+                        G_CALLBACK (gimp_unit_menu_callback),
+                        gum);
     }
 
   if ((unit >= gimp_unit_get_number_of_built_in_units ()) &&
@@ -234,12 +235,13 @@ gimp_unit_menu_new (const gchar *format,
       menuitem =
 	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format, unit));
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-      g_signal_connect (G_OBJECT (menuitem), "activate",
-                        G_CALLBACK (gimp_unit_menu_callback),
-                        gum);
       g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu", 
                          (gpointer) unit);
       gtk_widget_show (menuitem);
+
+      g_signal_connect (G_OBJECT (menuitem), "activate",
+                        G_CALLBACK (gimp_unit_menu_callback),
+                        gum);
     }
 
   if (show_custom)
@@ -252,12 +254,13 @@ gimp_unit_menu_new (const gchar *format,
       menuitem =
 	gtk_menu_item_new_with_label (_("More..."));
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-      g_signal_connect (G_OBJECT (menuitem), "activate",
-                        G_CALLBACK (gimp_unit_menu_callback),
-                        gum);
       g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu",
                          (gpointer) (GIMP_UNIT_PERCENT + 1));
       gtk_widget_show (menuitem);
+
+      g_signal_connect (G_OBJECT (menuitem), "activate",
+                        G_CALLBACK (gimp_unit_menu_callback),
+                        gum);
     }
 
   gtk_option_menu_set_menu (GTK_OPTION_MENU (gum), menu);
@@ -277,12 +280,11 @@ gimp_unit_menu_new (const gchar *format,
 
 /**
  * gimp_unit_menu_set_unit:
- * @gum: The unit menu you want to set the unit for.
+ * @gum:  The unit menu you want to set the unit for.
  * @unit: The new unit.
  *
  * Sets a new #GimpUnit for the specified #GimpUnitMenu.
- *
- */
+ **/
 void
 gimp_unit_menu_set_unit (GimpUnitMenu *gum,
 			 GimpUnit      unit)
@@ -291,7 +293,6 @@ gimp_unit_menu_set_unit (GimpUnitMenu *gum,
   GList     *items;
   gint       user_unit;
 
-  g_return_if_fail (gum != NULL);
   g_return_if_fail (GIMP_IS_UNIT_MENU (gum));
   g_return_if_fail (((unit >= GIMP_UNIT_PIXEL) &&
 		     ((unit > GIMP_UNIT_PIXEL) || gum->show_pixels) &&
@@ -328,14 +329,15 @@ gimp_unit_menu_set_unit (GimpUnitMenu *gum,
 								   unit));
       gtk_menu_shell_append (GTK_MENU_SHELL (GTK_OPTION_MENU (gum)->menu),
 			     menuitem);
-      g_signal_connect (G_OBJECT (menuitem), "activate",
-                        G_CALLBACK (gimp_unit_menu_callback),
-                        gum);
       g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu",
                          (gpointer) unit);
       gtk_menu_reorder_child (GTK_MENU (GTK_OPTION_MENU (gum)->menu),
 			      menuitem, user_unit);
       gtk_widget_show (menuitem);
+
+      g_signal_connect (G_OBJECT (menuitem), "activate",
+                        G_CALLBACK (gimp_unit_menu_callback),
+                        gum);
     }
 
   gum->unit = unit;
@@ -358,12 +360,10 @@ gimp_unit_menu_set_unit (GimpUnitMenu *gum,
  * Returns the #GimpUnit the user has selected from the #GimpUnitMenu.
  *
  * Returns: The unit the user has selected.
- *
- */
+ **/
 GimpUnit
 gimp_unit_menu_get_unit (GimpUnitMenu *gum)
 {
-  g_return_val_if_fail (gum != NULL, GIMP_UNIT_INCH);
   g_return_val_if_fail (GIMP_IS_UNIT_MENU (gum), GIMP_UNIT_INCH);
 
   return gum->unit;

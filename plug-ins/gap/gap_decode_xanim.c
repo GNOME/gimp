@@ -173,9 +173,9 @@ p_xanim_info(char *errlist)
   l_idx++;
 
   /* the  Action Button */
-    b_argv[0].but_txt  = _("Cancel");
+    b_argv[0].but_txt  = GTK_STOCK_CANCEL;
     b_argv[0].but_val  = -1;
-    b_argv[1].but_txt  = _("OK");
+    b_argv[1].but_txt  = GTK_STOCK_OK;
     b_argv[1].but_val  = 0;
   
   l_rc = p_array_std_dialog(_("XANIM Information"),
@@ -338,7 +338,7 @@ p_overwrite_dialog(char *filename, gint overwrite_mode)
        l_argv[0].but_val  = 0;
        l_argv[1].but_txt  = _("Overwrite All");
        l_argv[1].but_val  = 1;
-       l_argv[2].but_txt  = _("Cancel");
+       l_argv[2].but_txt  = GTK_STOCK_CANCEL;
        l_argv[2].but_val  = -1;
 
        p_init_arr_arg(&argv[0], WGT_LABEL);

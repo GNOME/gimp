@@ -999,7 +999,7 @@ gimp_plugin_desc (void)
 
 		     _("Search by Name"), dialog_search_callback,
 		     plugindesc, NULL, NULL, FALSE, FALSE,
-		     _("Close"), dialog_close_callback,
+		     GTK_STOCK_CLOSE, dialog_close_callback,
 		     plugindesc, NULL, NULL, TRUE, TRUE,
 
 		     NULL);

@@ -320,9 +320,9 @@ contrast_configure (gpointer cd_ID,
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("OK"), contrast_configure_ok_callback,
+			 GTK_STOCK_OK, contrast_configure_ok_callback,
 			 cd_ID, NULL, NULL, TRUE, FALSE,
-			 _("Cancel"), contrast_configure_cancel_callback,
+			 GTK_STOCK_CANCEL, contrast_configure_cancel_callback,
 			 cd_ID, NULL, NULL, FALSE, TRUE,
 
 			 NULL);

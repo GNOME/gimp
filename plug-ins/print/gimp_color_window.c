@@ -139,7 +139,7 @@ gimp_create_color_adjust_window (void)
 
 		     _("Set Defaults"), gimp_set_color_defaults,
 		     NULL, NULL, NULL, FALSE, FALSE,
-		     _("Close"), gtk_widget_hide,
+		     GTK_STOCK_CLOSE, gtk_widget_hide,
 		     NULL, 1, NULL, TRUE, TRUE,
 
 		     NULL);

@@ -131,7 +131,7 @@ static gint p_pitstop(GimpRunModeType run_mode, char *plugin_name, gint text_fla
 
     l_but_argv[0].but_txt  = _("Continue");
     l_but_argv[0].but_val  = 0;
-    l_but_argv[1].but_txt  = _("Cancel");
+    l_but_argv[1].but_txt  = GTK_STOCK_CANCEL;
     l_but_argv[1].but_val  = -1;
     g_snprintf(l_skip_txt, sizeof(l_skip_txt), _("Skip %d"), (int)layer_idx);
     l_but_argv[2].but_txt  = l_skip_txt;

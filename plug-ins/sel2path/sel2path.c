@@ -333,13 +333,13 @@ sel2path_dialog (SELVALS *sels)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("OK"), sel2path_ok_callback,
+			 GTK_STOCK_OK, sel2path_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 
 			 _("Reset"), sel2path_reset_callback,
 			 NULL, NULL, NULL, FALSE, FALSE,
 
-			 _("Cancel"), gtk_widget_destroy,
+			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);

@@ -334,7 +334,7 @@ p_overwrite_dialog(char *filename, gint overwrite_mode)
        l_argv[0].but_val  = 0;
        l_argv[1].but_txt  = _("Overwrite All");
        l_argv[1].but_val  = 1;
-       l_argv[2].but_txt  = _("Cancel");
+       l_argv[2].but_txt  = GTK_STOCK_CANCEL;
        l_argv[2].but_val  = -1;
 
        p_init_arr_arg(&argv[0], WGT_LABEL);

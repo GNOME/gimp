@@ -494,7 +494,7 @@ mov_dialog ( GimpDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
       
-  button = gtk_button_new_with_label ( _("OK"));
+  button = gtk_button_new_from_stock ( GTK_STOCK_OK);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) mov_ok_callback,
@@ -525,7 +525,7 @@ mov_dialog ( GimpDrawable *drawable, t_mov_path_preview *path_ptr,
                        , NULL);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ( _("Cancel"));
+  button = gtk_button_new_from_stock ( GTK_STOCK_CANCEL);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -2678,7 +2678,7 @@ p_chk_keyframes(t_mov_path_preview *path_ptr)
 
       b_argv[0].but_txt  = _("Reset Keyframes");
       b_argv[0].but_val  = TRUE;
-      b_argv[1].but_txt  = _("Cancel");
+      b_argv[1].but_txt  = GTK_STOCK_CANCEL;
       b_argv[1].but_val  = FALSE;
 
       if(TRUE == p_array_std_dialog( _("Move Path Controlpointcheck"),

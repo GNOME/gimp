@@ -37,13 +37,14 @@
 
 
 static void   query              (void);
-static void   run                (gchar   *name,
-				  gint     nparams,
+static void   run                (gchar      *name,
+				  gint        nparams,
 				  GimpParam  *param,
-				  gint    *nreturn_vals,
+				  gint       *nreturn_vals,
 				  GimpParam **return_vals);
 
 static void   unit_editor_dialog (void);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -54,6 +55,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 MAIN ()
+
 
 static void
 query (void)
@@ -78,10 +80,10 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
   static GimpParam  values[2];
@@ -104,6 +106,7 @@ run (gchar   *name,
     }
 }
 
+
 static GdkPixmap *yes_pixmap = NULL;
 static GdkBitmap *yes_mask   = NULL;
 static GdkPixmap *no_pixmap  = NULL;
@@ -118,6 +121,7 @@ static GdkColor   color;
 
 static GimpUnit   current_unit = GIMP_UNIT_INCH;
 static gint       current_row  = 0;
+
 
 enum
 {
@@ -170,9 +174,9 @@ new_unit (GimpUnit template)
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    _("OK"), new_unit_ok_callback,
+			    GTK_STOCK_OK, new_unit_ok_callback,
 			    &ok, NULL, NULL, TRUE, FALSE,
-			    _("Cancel"), gtk_main_quit,
+			    GTK_STOCK_CANCEL, gtk_main_quit,
 			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);
@@ -523,7 +527,7 @@ unit_editor_dialog (void)
 
 		     _("Refresh"), refresh_callback,
 		     NULL, NULL, NULL, FALSE, FALSE,
-		     _("Close"), gtk_widget_destroy,
+		     GTK_STOCK_CLOSE, gtk_widget_destroy,
 		     NULL, 1, NULL, TRUE, TRUE,
 
 		     NULL);
@@ -612,10 +616,11 @@ unit_editor_dialog (void)
   gtk_widget_set_usize (clist, -1, 200);
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), clist);
+  gtk_widget_show (clist);
+
   gtk_signal_connect (GTK_OBJECT (clist), "select_row",
                       GTK_SIGNAL_FUNC (select_row_callback),
                       NULL);
-  gtk_widget_show (clist);
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
@@ -623,29 +628,32 @@ unit_editor_dialog (void)
 
   button = gimp_pixmap_button_new (new_xpm, _("New Unit"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (new_callback),
 		      NULL);
-  gtk_widget_show (button);
 
   gimp_help_set_help_data (button, _("Create a new unit from scratch."), NULL);
 
   button = gimp_pixmap_button_new (duplicate_xpm, _("Duplicate Unit"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (duplicate_callback),
 		      NULL);
-  gtk_widget_show (button);
 
   gimp_help_set_help_data (button, _("Create a new unit with the currently "
 				     "seleted unit as template."), NULL);
 
   button = gimp_pixmap_button_new (no_xpm, _("Don't Save Unit"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (delete_callback),
 		      NULL);
-  gtk_widget_show (button);
 
   gimp_help_set_help_data (button, _("Don't save the currently selected unit "
 				     "before GIMP exits."), NULL);
@@ -654,10 +662,11 @@ unit_editor_dialog (void)
 
   button = gimp_pixmap_button_new (yes_xpm, _("Save Unit"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (undelete_callback),
 		      NULL);
-  gtk_widget_show (button);
 
   gimp_help_set_help_data (button, _("Save the currently selected unit "
 				     "before GIMP exits."), NULL);

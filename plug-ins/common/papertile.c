@@ -247,9 +247,9 @@ open_dialog (void)
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, FALSE, FALSE,
 
-			    _("OK"), dialog_ok_clicked,
+			    GTK_STOCK_OK, dialog_ok_clicked,
 			    NULL, NULL, NULL, TRUE, FALSE,
-			    _("Cancel"), gtk_widget_destroy,
+			    GTK_STOCK_CANCEL, gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);

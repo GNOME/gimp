@@ -148,9 +148,9 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
 			 dbbrowser, NULL, &dbbrowser->name_button, TRUE, FALSE,
 			 _("Search by Blurb"), dialog_search_callback,
 			 dbbrowser, NULL, &dbbrowser->blurb_button, FALSE, FALSE,
-			 _("Apply"), dialog_apply_callback,
+			 GTK_STOCK_APPLY, dialog_apply_callback,
 			 dbbrowser, NULL, NULL, FALSE, FALSE,
-			 _("Close"), dialog_close_callback,
+			 GTK_STOCK_CLOSE, dialog_close_callback,
 			 dbbrowser, NULL, NULL, FALSE, TRUE,
 
 			 NULL);
@@ -167,7 +167,7 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
 			 dbbrowser, NULL, &dbbrowser->name_button, TRUE, FALSE,
 			 _("Search by Blurb"), dialog_search_callback,
 			 dbbrowser, NULL, &dbbrowser->blurb_button, FALSE, FALSE,
-			 _("Close"), dialog_close_callback,
+			 GTK_STOCK_CLOSE, dialog_close_callback,
 			 dbbrowser, NULL, NULL, FALSE, TRUE,
 
 			 NULL);

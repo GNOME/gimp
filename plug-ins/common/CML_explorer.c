@@ -1173,9 +1173,9 @@ CML_explorer_dialog (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("OK"), CML_explorer_ok_callback,
+			 GTK_STOCK_OK, CML_explorer_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 _("Cancel"), gtk_widget_destroy,
+			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);
@@ -1935,7 +1935,7 @@ function_graph_new (GtkWidget *widget,
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("OK"), gtk_widget_destroy,
+			 GTK_STOCK_OK, gtk_widget_destroy,
 			 NULL, 1, NULL, TRUE, TRUE,
 
 			 NULL);
@@ -2254,9 +2254,9 @@ force_overwrite (const gchar *filename)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, FALSE, FALSE,
 
-			 _("OK"), CML_overwrite_ok_callback,
+			 GTK_STOCK_OK, CML_overwrite_ok_callback,
 			 NULL, NULL, NULL, FALSE, FALSE,
-			 _("Cancel"), gtk_widget_destroy,
+			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, TRUE, TRUE,
 
 			 NULL);

@@ -670,7 +670,7 @@ build_dialog (GimpImageBaseType  basetype,
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("Close"), window_close_callback,
+			 GTK_STOCK_CLOSE, window_close_callback,
 			 NULL, 1, NULL, TRUE, TRUE,
 
 			 NULL);

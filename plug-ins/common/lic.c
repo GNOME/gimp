@@ -1018,9 +1018,9 @@ create_main_dialog (void)
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    _("OK"), ok_button_clicked,
+			    GTK_STOCK_OK, ok_button_clicked,
 			    NULL, NULL, NULL, TRUE, FALSE,
-			    _("Cancel"), gtk_main_quit,
+			    GTK_STOCK_CANCEL, gtk_main_quit,
 			    NULL, NULL, NULL, FALSE, TRUE,
 
 			    NULL);

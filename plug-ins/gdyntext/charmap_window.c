@@ -136,7 +136,7 @@ static void charmap_window_init(CharMapWindow *cmw)
 	gtk_tooltips_set_tip(tooltips, cmw->insert_button, _("Insert the selected char at the cursor position"), NULL);
   gtk_widget_show(cmw->insert_button);
 
-  cmw->close_button = gtk_button_new_with_label(_("Close"));
+  cmw->close_button = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
   gtk_box_pack_start(GTK_BOX(hbbox1), cmw->close_button, FALSE, FALSE, 0);
   GTK_WIDGET_SET_FLAGS(cmw->close_button, GTK_CAN_DEFAULT);
   gtk_widget_grab_default(cmw->close_button);

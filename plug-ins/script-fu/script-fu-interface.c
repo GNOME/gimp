@@ -1523,7 +1523,7 @@ script_fu_interface (SFScript *script)
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_with_label (_("OK"));
+  button = gtk_button_new_from_stock (GTK_STOCK_OK);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_container_add (GTK_CONTAINER (bbox), button);  
   gtk_widget_grab_default (button);
@@ -1533,7 +1533,7 @@ script_fu_interface (SFScript *script)
 		    G_CALLBACK (script_fu_ok_callback),
 		    script);
 
-  button = gtk_button_new_with_label (_("Cancel"));
+  button = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_container_add (GTK_CONTAINER (bbox), button);  
   gtk_widget_show (button);
@@ -1960,7 +1960,7 @@ script_fu_about_callback (GtkWidget *widget,
 				GTK_WIN_POS_MOUSE,
 				FALSE, TRUE, FALSE,
 
-				_("Close"), gtk_widget_destroy, NULL,
+				GTK_STOCK_CLOSE, gtk_widget_destroy, NULL,
 				1, NULL, TRUE, TRUE,
 
 				NULL);

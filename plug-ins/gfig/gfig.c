@@ -1950,7 +1950,7 @@ num_sides_dialog (gchar *d_title,
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    _("Close"), gtk_widget_destroy,
+			    GTK_STOCK_CLOSE, gtk_widget_destroy,
 			    NULL, 1, NULL, TRUE, TRUE,
 
 			    NULL);
@@ -2010,7 +2010,7 @@ bezier_dialog (void)
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, FALSE, FALSE,
 
-			    _("Close"), gtk_widget_destroy,
+			    GTK_STOCK_CLOSE, gtk_widget_destroy,
 			    NULL, 1, NULL, TRUE, TRUE,
 
 			    NULL);
@@ -3931,13 +3931,13 @@ gfig_dialog (void)
 				   NULL, NULL, NULL, TRUE, FALSE,
 				   _("Paint"), gfig_paint_callback,
 				   NULL, NULL, NULL, FALSE, FALSE,
-				   _("Save"), save_button_callback,
+				   GTK_STOCK_SAVE, save_button_callback,
 				   NULL, NULL, &save_button, FALSE, FALSE,
-				   _("Clear"), gfig_clear_callback,
+				   GTK_STOCK_CLEAR, gfig_clear_callback,
 				   NULL, NULL, NULL, FALSE, FALSE,
-				   _("Undo"), gfig_undo_callback,
+				   GTK_STOCK_UNDO, gfig_undo_callback,
 				   NULL, NULL, &undo_widget, FALSE, FALSE,
-				   _("Cancel"), gtk_widget_destroy,
+				   GTK_STOCK_CANCEL, gtk_widget_destroy,
 				   NULL, 1, NULL, FALSE, TRUE,
 
 				   NULL);
@@ -4084,7 +4084,7 @@ gfig_ok_callback (GtkWidget *widget,
 				       "filters/gfig.html",
 				       FALSE,
 				       message,
-				       _("OK"), _("Cancel"),
+				       GTK_STOCK_OK, GTK_STOCK_CANCEL,
 				       NULL, NULL,
 				       gfig_really_ok_callback,
 				       data);
@@ -4429,9 +4429,9 @@ gfig_dialog_edit_list (GtkWidget *lwidget,
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     _("OK"), gfig_list_ok_callback,
+		     GTK_STOCK_OK, gfig_list_ok_callback,
 		     options, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), gfig_list_cancel_callback,
+		     GTK_STOCK_CANCEL, gfig_list_cancel_callback,
 		     options, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
@@ -4512,9 +4512,9 @@ gfig_rescan_list (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("OK"), gfig_rescan_ok_callback,
+			 GTK_STOCK_OK, gfig_rescan_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 _("Cancel"), gtk_widget_destroy,
+			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);
@@ -4817,7 +4817,7 @@ about_button_callback (GtkWidget *widget,
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, FALSE, FALSE,
 
-			    _("OK"), gtk_widget_destroy,
+			    GTK_STOCK_OK, gtk_widget_destroy,
 			    NULL, 1, NULL, TRUE, TRUE,
 
 			    NULL);
@@ -5025,7 +5025,7 @@ gfig_delete_gfig_callback (GtkWidget *widget,
 					  "filters/gfig.html",
 					  FALSE,
 					  str,
-					  _("Delete"), _("Cancel"),
+					  GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
 					  NULL, NULL,
 					  gfig_do_delete_gfig_callback,
 					  data);

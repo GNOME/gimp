@@ -910,7 +910,7 @@ snap_dialog(void)
   gtk_widget_grab_default(button);
   gtk_widget_show(button);
 
-  button = gtk_button_new_with_label(_("Cancel"));
+  button = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,

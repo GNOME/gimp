@@ -843,7 +843,7 @@ open_browser_dialog (gchar *help_path,
   bbox = gtk_hbutton_box_new ();
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
 
-  button = gtk_button_new_with_label (_("Close"));
+  button = gtk_button_new_with_label (GTK_STOCK_CLOSE);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",

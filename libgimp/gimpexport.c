@@ -339,7 +339,7 @@ export_dialog (GSList      *actions,
 			    NULL, NULL, NULL, TRUE, FALSE,
 			    _("Ignore"), export_skip_callback,
 			    NULL, NULL, NULL, FALSE, FALSE,
-			    _("Cancel"), gtk_widget_destroy,
+			    GTK_STOCK_CANCEL, gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);

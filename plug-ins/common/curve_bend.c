@@ -1366,9 +1366,9 @@ bender_new_dialog (GimpDrawable *drawable)
 			       cd, NULL, NULL, FALSE, FALSE,
 			       _("Swap"), bender_swap_callback,
 			       cd, NULL, NULL, FALSE, FALSE,
-			       _("OK"), bender_ok_callback,
+			       GTK_STOCK_OK, bender_ok_callback,
 			       cd, NULL, NULL, TRUE, FALSE,
-			       _("Cancel"), bender_cancel_callback,
+			       GTK_STOCK_CANCEL, bender_cancel_callback,
 			       cd, NULL, NULL, FALSE, TRUE,
 
 			       NULL);

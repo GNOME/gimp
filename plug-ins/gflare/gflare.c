@@ -2462,9 +2462,9 @@ dlg_run (void)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     _("OK"), dlg_ok_callback,
+		     GTK_STOCK_OK, dlg_ok_callback,
 		     NULL, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), gtk_widget_destroy,
+		     GTK_STOCK_CANCEL, gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
 
 		     NULL);
@@ -3377,7 +3377,7 @@ dlg_selector_delete_callback (GtkWidget *widget,
 				   "filters/gflare.html",
 				   FALSE,
 				   str,
-				   _("Delete"), _("Cancel"),
+				   GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
 				   NULL, NULL,
 				   dlg_selector_do_delete_callback,
 				   NULL);
@@ -3476,9 +3476,9 @@ ed_run (GFlare		     *target_gflare,
 
 		     _("Rescan Gradients"), ed_rescan_callback,
 		     NULL, NULL, NULL, FALSE, FALSE,
-		     _("OK"), ed_ok_callback,
+		     GTK_STOCK_OK, ed_ok_callback,
 		     NULL, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), gtk_widget_destroy,
+		     GTK_STOCK_CANCEL, gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
 
 		     NULL);

@@ -117,7 +117,7 @@ make_default_dialog(const gchar *title)
 		    FALSE, 0);
    gtk_widget_show (hbbox);
 
-   data->ok = gtk_button_new_with_label(_("OK"));
+   data->ok = gtk_button_new_from_stock(GTK_STOCK_OK);
    GTK_WIDGET_SET_FLAGS(data->ok, GTK_CAN_DEFAULT);
    gtk_signal_connect(GTK_OBJECT(data->ok), "clicked",
 		      GTK_SIGNAL_FUNC(dialog_ok), (gpointer) data);
@@ -132,7 +132,7 @@ make_default_dialog(const gchar *title)
    gtk_box_pack_start(GTK_BOX(hbbox), data->apply, FALSE, FALSE, 0);
    gtk_widget_show(data->apply);
 
-   data->cancel = gtk_button_new_with_label(_("Cancel"));
+   data->cancel = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
    GTK_WIDGET_SET_FLAGS(data->cancel, GTK_CAN_DEFAULT);
    gtk_signal_connect(GTK_OBJECT(data->cancel), "clicked",
 		      GTK_SIGNAL_FUNC(dialog_cancel), (gpointer) data);

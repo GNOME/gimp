@@ -331,9 +331,9 @@ flare_dialog (GimpDrawable *drawable)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("OK"), flare_ok_callback,
+			 GTK_STOCK_OK, flare_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 _("Cancel"), gtk_widget_destroy,
+			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);

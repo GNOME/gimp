@@ -218,7 +218,7 @@ gap_db_browser_dialog(char *title_txt,
     gtk_widget_show (dbbrowser->app_vary_button);
   } else dbbrowser->app_vary_button = NULL;
 
-  button = gtk_button_new_with_label ( _("Cancel"));
+  button = gtk_button_new_from_stock ( GTK_STOCK_CANCEL);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) dialog_close_callback, dbbrowser);

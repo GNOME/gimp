@@ -328,7 +328,7 @@ color_picker_button_press (Tool           *tool,
       gimp_dialog_create_action_area
 	(GTK_DIALOG (color_picker_info->shell),
 
-	 _("Close"), color_picker_info_window_close_callback,
+	 GTK_STOCK_CLOSE, color_picker_info_window_close_callback,
 	 color_picker_info, NULL, NULL, TRUE, FALSE,
 
 	 NULL);

@@ -1241,7 +1241,7 @@ p_frames_convert(t_anim_info *ainfo_ptr,
                l_argv[0].but_val  = 0;
                l_argv[1].but_txt  = _("Overwrite All");
                l_argv[1].but_val  = 1;
-               l_argv[2].but_txt  = _("Cancel");
+               l_argv[2].but_txt  = GTK_STOCK_CANCEL;
                l_argv[2].but_val  = -1;
 
                l_overwrite_mode =  p_buttons_dialog  ( _("GAP Question"), l_sav_name, 3, l_argv, -1);

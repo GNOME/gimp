@@ -228,7 +228,7 @@ void p_msg_win(GimpRunModeType run_mode, char *msg)
   static t_but_arg  l_argv[1];
   int               l_argc;  
   
-  l_argv[0].but_txt  = _("OK");
+  l_argv[0].but_txt  = GTK_STOCK_OK;
   l_argv[0].but_val  = 0;
   l_argc             = 1;
 
@@ -1024,7 +1024,7 @@ int p_decide_save_as(gint32 image_id, char *sav_name)
     /* no defined value found (this is the 1.st call for this image_id)
      * ask what to do with a 3 Button dialog
      */
-    l_argv[0].but_txt  = _("Cancel");
+    l_argv[0].but_txt  = GTK_STOCK_CANCEL;
     l_argv[0].but_val  = -1;
     l_argv[1].but_txt  = _("Save Flattened");
     l_argv[1].but_val  = 1;

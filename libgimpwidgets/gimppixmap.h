@@ -35,23 +35,26 @@ extern "C" {
 #define GIMP_PIXMAP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PIXMAP, GimpPixmapClass))
 #define GIMP_IS_PIXMAP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PIXMAP))
 #define GIMP_IS_PIXMAP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PIXMAP))
+#define GIMP_PIXMAP_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PIXMAP, GimpPixmapClass))
 
 
 typedef struct _GimpPixmapClass  GimpPixmapClass;
 
 struct _GimpPixmap
 {
-  GtkPixmap   pixmap;
+  GtkPixmap   parent_instance;
 
-  gchar **xpm_data;
+  gchar     **xpm_data;
 };
 
 struct _GimpPixmapClass
 {
-  GtkPixmapClass parent_class;
+  GtkPixmapClass  parent_class;
 };
 
-GtkType     gimp_pixmap_get_type (void);
+
+GType       gimp_pixmap_get_type (void);
+
 GtkWidget * gimp_pixmap_new      (gchar      **xpm_data);
 
 void        gimp_pixmap_set      (GimpPixmap  *pixmap,

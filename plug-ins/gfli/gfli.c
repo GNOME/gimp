@@ -820,9 +820,9 @@ load_dialog (gchar *name)
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    _("OK"), cb_ok,
+			    GTK_STOCK_OK, cb_ok,
 			    NULL, NULL, NULL, TRUE, FALSE,
-			    _("Cancel"), gtk_widget_destroy,
+			    GTK_STOCK_CANCEL, gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);
@@ -889,9 +889,9 @@ save_dialog (gint32 image_id)
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    _("OK"), cb_ok,
+			    GTK_STOCK_OK, cb_ok,
 			    NULL, NULL, NULL, TRUE, FALSE,
-			    _("Cancel"), gtk_widget_destroy,
+			    GTK_STOCK_CANCEL, gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);

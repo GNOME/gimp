@@ -482,7 +482,7 @@ void create_sizemap_dialog(void)
   gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_widget_show(tmpw);
 
-  tmpw = gtk_button_new_with_label( _("OK"));
+  tmpw = gtk_button_new_from_stock( GTK_STOCK_OK);
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
@@ -496,7 +496,7 @@ void create_sizemap_dialog(void)
 		      GTK_SIGNAL_FUNC(smokclick), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Apply, but stay inside the editor"), NULL);
 
-  tmpw = gtk_button_new_with_label( _("Cancel"));
+  tmpw = gtk_button_new_from_stock( GTK_STOCK_CANCEL);
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",

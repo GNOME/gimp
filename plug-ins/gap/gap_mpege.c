@@ -186,9 +186,9 @@ int p_mpege_info(t_anim_info *ainfo_ptr, char *errlist, t_gap_mpeg_encoder encod
   l_idx++;
 
   /* the  Action Button */
-    b_argv[0].but_txt  = _("Cancel");
+    b_argv[0].but_txt  = GTK_STOCK_CANCEL;
     b_argv[0].but_val  = -1;
-    b_argv[1].but_txt  = _("OK");
+    b_argv[1].but_txt  = GTK_STOCK_OK;
     b_argv[1].but_val  = 0;
   
   l_rc = p_array_std_dialog(_("MPEG_ENCODE Information"),
@@ -237,7 +237,7 @@ int p_mpege_dialog(t_anim_info *ainfo_ptr, t_mpg_par *mp_ptr, t_gap_mpeg_encoder
   l_rc = -1;
   
   /* the 3 Action Buttons */
-    b_argv[0].but_txt  = _("Cancel");
+    b_argv[0].but_txt  = GTK_STOCK_CANCEL;
     b_argv[0].but_val  = -1;
     b_argv[1].but_txt  = _("GenParams");
     b_argv[1].but_val  = 0;

@@ -267,7 +267,7 @@ gimp_create_main_window (void)
                      NULL, NULL, NULL, FALSE, FALSE,
                      _("Print"), gimp_print_callback,
                      NULL, NULL, NULL, TRUE, FALSE,
-                     _("Cancel"), gtk_widget_destroy,
+                     GTK_STOCK_CANCEL, gtk_widget_destroy,
                      NULL, 1, NULL, FALSE, TRUE,
 
                      NULL);
@@ -826,9 +826,9 @@ gimp_create_main_window (void)
                      GTK_WIN_POS_MOUSE,
                      FALSE, TRUE, FALSE,
 
-                     _("OK"), gimp_setup_ok_callback,
+                     GTK_STOCK_OK, gimp_setup_ok_callback,
                      NULL, NULL, NULL, TRUE, FALSE,
-                     _("Cancel"), gtk_widget_hide,
+                     GTK_STOCK_CANCEL, gtk_widget_hide,
                      NULL, 1, NULL, FALSE, TRUE,
 
                      NULL);
