@@ -1,3 +1,9 @@
+2002-12-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/webbrowser/web-browser.scm: applied a patch from Raphael
+	Quinet that removes outdated links and adds one for the GUG
+	(bug #101435).
+
 2002-12-13  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/drawable.pdb

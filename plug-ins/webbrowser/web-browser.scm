@@ -33,11 +33,11 @@
 		    ""))
 
 (define (script-fu-bookmark-1)
-    (script-fu-bookmark "http://www.gimp.org/the_gimp.html"))
+    (script-fu-bookmark "http://www.gimp.org/"))
 
 (bookmark-register  "script-fu-bookmark-1"
 		    _"<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-		    "Link to http://www.gimp.org/the_gimp.html")
+		    "Link to http://www.gimp.org/")
 
 (define (script-fu-bookmark-2)
     (script-fu-bookmark "http://www.gimp.org/docs.html"))
@@ -89,11 +89,11 @@
 		    "Link to http://www.gtk.org/")
 
 (define (script-fu-bookmark-10)
-    (script-fu-bookmark "http://news.gimp.org/"))
+    (script-fu-bookmark "http://gug.sunsite.dk/"))
 
 (bookmark-register  "script-fu-bookmark-10"
-		    _"<Toolbox>/Xtns/Web Browser/GIMP News"
-		    "Link to http://news.gimp.org/")
+		    _"<Toolbox>/Xtns/Web Browser/GIMP User Group"
+		    "Link to http://gug.sunsite.dk/")
 
 (define (script-fu-bookmark-11)
     (script-fu-bookmark "http://registry.gimp.org/"))
@@ -102,33 +102,12 @@
 		    _"<Toolbox>/Xtns/Web Browser/Plug-In Registry"
 		    "Link to http://registry.gimp.org/")
 
-(define (script-fu-bookmark-12)
-    (script-fu-bookmark "http://www.rru.com/~meo/gimp/faq-user.html"))
-
-(bookmark-register  "script-fu-bookmark-12"
-		    _"<Toolbox>/Xtns/Web Browser/User FAQ"
-		    "Link to http://www.rru.com/~meo/gimp/faq-user.html")
-
-(define (script-fu-bookmark-13)
-    (script-fu-bookmark "http://www.rru.com/~meo/gimp/faq-dev.html"))
-
-(bookmark-register  "script-fu-bookmark-13"
-		    _"<Toolbox>/Xtns/Web Browser/Developer FAQ"
-		    "Link to http://www.rru.com/~meo/gimp/faq-dev.html")
-
 (define (script-fu-bookmark-14)
     (script-fu-bookmark "http://manual.gimp.org/"))
 
 (bookmark-register  "script-fu-bookmark-14"
 		    _"<Toolbox>/Xtns/Web Browser/GIMP Manual"
 		    "Link to http://manual.gimp.org/")
-
-(define (script-fu-bookmark-15)
-    (script-fu-bookmark "http://abattoir.cc.ndsu.nodak.edu/~nem/gimp/tuts/"))
-
-(bookmark-register  "script-fu-bookmark-15"
-		    _"<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-		    "Link to http://abattoir.cc.ndsu.nodak.edu/~nem/gimp/tuts/")
 
 (define (script-fu-bookmark-16)
     (script-fu-bookmark "http://bugzilla.gnome.org/"))
