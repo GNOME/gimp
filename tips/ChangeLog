@@ -1,3 +1,8 @@
+2004-07-15  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
+
+	* ru.po: Updated Russian translation
+	from Russian team <gnome-cyr@gnome.org>.
+
 2004-06-08  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am (tips_POFILES): added ca.po (Catalan).
