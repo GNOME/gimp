@@ -1,6 +1,9 @@
 2003-12-03  Michael Natterer  <mitch@gimp.org>
 
-	* libgimp/libgimp-sections.txt: updated.
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpchannel.sgml
+	* libgimp/tmpl/gimpdrawable.sgml
+	* libgimp/tmpl/gimplayer.sgml: updated.
 
 2003-11-25  Sven Neumann  <sven@gimp.org>
 
