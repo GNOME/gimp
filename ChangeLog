@@ -1,5 +1,9 @@
 2003-08-15  Helvetix Victorinox  <helvetix@gimp.org>
 
+	* app/composite/gimp-composite-vis.c
+	* app/composite/Makefile.am: Use ARCH_SPARC and USE_VIS to
+	conditionally compile VIS optimisations.
+
 	* app/composite/gimp-composite-vis.c: named gimp_composite_vis_init()
 
 2003-08-15  Michael Natterer  <mitch@gimp.org>
