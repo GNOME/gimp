@@ -1373,9 +1373,11 @@ save_dialog (gint32 image_ID)
   gtk_widget_show (toggle);
 
   parasite = gimp_image_parasite_find (image_ID, "gimp-comment");
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                pngvals.comment && parasite != NULL);
   gtk_widget_set_sensitive (toggle, parasite != NULL);
   gimp_parasite_free (parasite);
-  
+
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &pngvals.comment);

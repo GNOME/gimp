@@ -669,6 +669,8 @@ load_dialog (const gchar *filename)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+
   /* Scalable Vector Graphics is SVG, should perhaps not be translated */
   frame = gtk_frame_new (_("Render Scalable Vector Graphics"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
@@ -736,20 +738,20 @@ load_dialog (const gchar *filename)
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  abox = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 0, 1,
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (abox);
+  gtk_widget_show (hbox);
 
   spinbutton = gimp_spin_button_new (&adj, 1, 1, 1, 1, 10, 1, 1, 2);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
-  gtk_container_add (GTK_CONTAINER (abox), spinbutton);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  abox = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 1, 2,
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (abox);
+  gtk_widget_show (hbox);
 
   size = GIMP_SIZE_ENTRY (gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
                                                TRUE, FALSE, FALSE, 10,
@@ -758,7 +760,7 @@ load_dialog (const gchar *filename)
 
   gimp_size_entry_add_field (size, GTK_SPIN_BUTTON (spinbutton), NULL);
 
-  gtk_container_add (GTK_CONTAINER (abox), GTK_WIDGET (size));
+  gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (size), FALSE, FALSE, 0);
   gtk_widget_show (GTK_WIDGET (size));
 
   gimp_size_entry_set_refval_boundaries (size, 0,
@@ -791,14 +793,15 @@ load_dialog (const gchar *filename)
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  abox = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 2, 4,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (hbox);
+
   table2 = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table2), 0, 2);
   gtk_table_set_row_spacing (GTK_TABLE (table2), 0, 2);
-  gtk_container_add (GTK_CONTAINER (abox), table2);
-  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 2, 4,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (abox);
+  gtk_box_pack_start (GTK_BOX (hbox), table2, FALSE, FALSE, 0);
 
   spinbutton =
     gimp_spin_button_new (&xadj,

@@ -108,11 +108,10 @@ gimp_template_editor_class_init (GimpTemplateEditorClass *klass)
 static void
 gimp_template_editor_init (GimpTemplateEditor *editor)
 {
-  GtkWidget *hbox;
   GtkWidget *aspect_box;
   GtkWidget *vbox;
-  GtkWidget *abox;
   GtkWidget *frame;
+  GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *table2;
   GtkWidget *separator;
@@ -181,16 +180,16 @@ gimp_template_editor_init (GimpTemplateEditor *editor)
   gtk_widget_show (label);
 
   /*  create the sizeentry which keeps it all together  */
-  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 3, 5);
-  gtk_widget_show (abox);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 3, 5);
+  gtk_widget_show (hbox);
 
   editor->size_se = gimp_size_entry_new (0, editor->template->unit, "%a",
                                          FALSE, FALSE, TRUE, SB_WIDTH,
                                          GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gtk_table_set_col_spacing (GTK_TABLE (editor->size_se), 1, 4);
   gtk_table_set_row_spacing (GTK_TABLE (editor->size_se), 1, 2);
-  gtk_container_add (GTK_CONTAINER (abox), editor->size_se);
+  gtk_box_pack_start (GTK_BOX (hbox), editor->size_se, FALSE, FALSE, 0);
   gtk_widget_show (editor->size_se);
 
   /*  height in units  */
@@ -298,9 +297,9 @@ gimp_template_editor_init (GimpTemplateEditor *editor)
   gtk_widget_show (label);
 
   /*  the resolution sizeentry  */
-  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 5, 7);
-  gtk_widget_show (abox);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 5, 7);
+  gtk_widget_show (hbox);
 
   xres = gimp_spin_button_new (&adjustment,
                                1, 1, 1, 1, 10, 0,
@@ -321,6 +320,9 @@ gimp_template_editor_init (GimpTemplateEditor *editor)
   gtk_table_set_col_spacing (GTK_TABLE (editor->resolution_se), 2, 2);
   gtk_table_set_row_spacing (GTK_TABLE (editor->resolution_se), 0, 2);
 
+  gtk_box_pack_start (GTK_BOX (hbox), editor->resolution_se, FALSE, FALSE, 0);
+  gtk_widget_show (editor->resolution_se);
+
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->resolution_se),
 			     GTK_SPIN_BUTTON (yres), NULL);
   gtk_table_attach_defaults (GTK_TABLE (editor->resolution_se), yres,
@@ -332,9 +334,6 @@ gimp_template_editor_init (GimpTemplateEditor *editor)
   gtk_table_attach_defaults (GTK_TABLE (editor->resolution_se), xres,
 			     0, 1, 0, 1);
   gtk_widget_show (xres);
-
-  gtk_container_add (GTK_CONTAINER (abox), editor->resolution_se);
-  gtk_widget_show (editor->resolution_se);
 
   /*  the resolution chainbutton  */
   chainbutton = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
