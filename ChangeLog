@@ -1,3 +1,8 @@
+1999-04-03  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/shear_tool.c: forgot this file. Should compile again now,
+	sorry :(
+
 1999-04-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/gimage_mask.[ch]: made function headers ansi compliant.
