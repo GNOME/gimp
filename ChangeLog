@@ -1,5 +1,22 @@
 2003-05-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-scale.[ch]
+	(gimp_display_shell_scale_zoom_fraction): new utility function
+	which takes GimpZoomType and zooms "scalesrc" and "scaledest".
+	(gimp_display_shell_scale_calc_fraction): new utility function
+	which takes an exact double scale factor and calculates "scalesrc"
+	and "scaledest".
+
+	(gimp_display_shell_scale): use the first.
+	(gimp_display_shell_scale_fit): use the second.
+
+	* app/tools/gimpmagnifytool.[ch]: use the first to click-zoom and
+	the second to area-zoom. Fixes bug #112115. Removed zoom_in() and
+	zoom_out() utiliy functions. Removed "GimpZoomType op" from the
+	GimpMagnifyTool struct. Cleanup.
+
+2003-05-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_snap_coords):
 	don't change the passed GimpCoords if we didn't snap.
 

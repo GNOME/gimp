@@ -20,6 +20,13 @@
 #define __GIMP_DISPLAY_SHELL_SCALE_H__
 
 
+void   gimp_display_shell_scale_zoom_fraction   (GimpZoomType      zoom_type,
+                                                 gint             *scalesrc,
+                                                 gint             *scaledest);
+void   gimp_display_shell_scale_calc_fraction   (gdouble           zoom_factor,
+                                                 gint             *scalesrc,
+                                                 gint             *scaledest);
+
 void   gimp_display_shell_scale_setup           (GimpDisplayShell *shell);
 
 void   gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *gdisp,

@@ -77,13 +77,6 @@ static void   gimp_magnify_tool_cursor_update   (GimpTool        *tool,
 
 static void   gimp_magnify_tool_draw            (GimpDrawTool    *draw_tool);
 
-static void   zoom_in                           (gint            *src,
-                                                 gint            *dest,
-                                                 gint             scale);
-static void   zoom_out                          (gint            *src,
-                                                 gint            *dest,
-                                                 gint             scale);
-
 
 static GimpDrawToolClass *parent_class = NULL;
 
@@ -220,11 +213,6 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
   GimpMagnifyTool    *magnify;
   GimpMagnifyOptions *options;
   GimpDisplayShell   *shell;
-  gint                win_width, win_height;
-  gint                width, height;
-  gint                scalesrc, scaledest;
-  gint                scale;
-  gint                x1, y1, x2, y2, w, h;
 
   magnify = GIMP_MAGNIFY_TOOL (tool);
   options = GIMP_MAGNIFY_OPTIONS (tool->tool_info->tool_options);
@@ -238,8 +226,13 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
   /*  First take care of the case where the user "cancels" the action  */
   if (! (state & GDK_BUTTON3_MASK))
     {
-      x1 = (magnify->w < 0) ? magnify->x + magnify->w : magnify->x;
-      y1 = (magnify->h < 0) ? magnify->y + magnify->h : magnify->y;
+      gint x1, y1, x2, y2, w, h;
+      gint scalesrc, scaledest;
+      gint win_width, win_height;
+      gint offset_x, offset_y;
+
+      x1 = (magnify->w < 0) ?  magnify->x + magnify->w : magnify->x;
+      y1 = (magnify->h < 0) ?  magnify->y + magnify->h : magnify->y;
       w  = (magnify->w < 0) ? -magnify->w : magnify->w;
       h  = (magnify->h < 0) ? -magnify->h : magnify->h;
       x2 = x1 + w;
@@ -253,34 +246,47 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
 
       win_width  = shell->disp_width;
       win_height = shell->disp_height;
-      width  = (win_width  * scalesrc) / scaledest;
-      height = (win_height * scalesrc) / scaledest;
 
       /* we need to compute the mouse movement in screen coordinates */
-      if ( (SCALEX (shell, w) < options->threshold) || 
-           (SCALEY (shell, h) < options->threshold) )
-	scale = 1;
+      if ((SCALEX (shell, w) < options->threshold) || 
+          (SCALEY (shell, h) < options->threshold))
+        {
+          gimp_display_shell_scale_zoom_fraction (options->zoom_type,
+                                                  &scalesrc, &scaledest);
+        }
       else
-	scale = MIN ((width / w), (height / h));
+        {
+          gint    width, height;
+          gdouble scale;
 
-      magnify->op = options->zoom_type;
+          width  = UNSCALEX (shell, win_width);
+          height = UNSCALEY (shell, win_height);
 
-      switch (magnify->op)
-	{
-	case GIMP_ZOOM_IN:
-	  zoom_in (&scalesrc, &scaledest, scale);
-	  break;
-	case GIMP_ZOOM_OUT:
-	  zoom_out (&scalesrc, &scaledest, scale);
-	  break;
-	}
+          switch (options->zoom_type)
+            {
+            case GIMP_ZOOM_IN:
+              scale = MIN (((gdouble) width  / (gdouble) w),
+                           ((gdouble) height / (gdouble) h));
+              break;
+
+            case GIMP_ZOOM_OUT:
+              scale = MIN (((gdouble) w / (gdouble) width),
+                           ((gdouble) h / (gdouble) height));
+              break;
+            }
+
+          scale = scale * (gdouble) scaledest / (gdouble) scalesrc;
+
+          gimp_display_shell_scale_calc_fraction (scale,
+                                                  &scalesrc, &scaledest);
+        }
+
+      offset_x = (scaledest * ((x1 + x2) / 2)) / scalesrc - (win_width  / 2);
+      offset_y = (scaledest * ((y1 + y2) / 2)) / scalesrc - (win_height / 2);
 
       gimp_display_shell_scale_by_values (shell,
                                           (scaledest << 8) + scalesrc,
-                                          ((scaledest * ((x1 + x2) / 2)) / scalesrc -
-                                           (win_width / 2)),
-                                          ((scaledest * ((y1 + y2) / 2)) / scalesrc -
-                                           (win_height / 2)),
+                                          offset_x, offset_y,
                                           options->allow_resize);
     }
 }
@@ -368,38 +374,4 @@ gimp_magnify_tool_draw (GimpDrawTool *draw_tool)
                                  magnify->w,
                                  magnify->h,
                                  FALSE);
-}
-
-
-/*  magnify utility functions  */
-
-static void
-zoom_in (gint *src,
-	 gint *dest,
-	 gint  scale)
-{
-  while (scale--)
-    {
-      if (*src > 1)
-	(*src)--;
-      else
-	if (*dest < 0x10)
-	  (*dest)++;
-    }
-}
-
-
-static void
-zoom_out (gint *src,
-	  gint *dest,
-	  gint  scale)
-{
-  while (scale--)
-    {
-      if (*dest > 1)
-	(*dest)--;
-      else
-	if (*src < 0x10)
-	  (*src)++;
-    }
 }

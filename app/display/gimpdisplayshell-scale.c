@@ -63,6 +63,112 @@ static gdouble  img2real                           (GimpDisplayShell *shell,
 /*  public functions  */
 
 void
+gimp_display_shell_scale_zoom_fraction (GimpZoomType  zoom_type,
+                                        gint         *scalesrc,
+                                        gint         *scaledest)
+{
+  gint src, dest;
+
+  g_return_if_fail (scalesrc != NULL);
+  g_return_if_fail (scaledest != NULL);
+
+  src  = *scalesrc;
+  dest = *scaledest;
+
+  switch (zoom_type)
+    {
+    case GIMP_ZOOM_IN:
+      if (src > 1)
+        src--;
+      else if (dest < 0xFF)
+        dest++;
+      break;
+
+    case GIMP_ZOOM_OUT:
+      if (dest > 1)
+        dest--;
+      else if (src < 0xFF)
+        src++;
+      break;
+
+    default:
+      src  = CLAMP (zoom_type % 100, 1, 0xFF);
+      dest = CLAMP (zoom_type / 100, 1, 0xFF);
+      break;
+    }
+
+  *scalesrc  = src;
+  *scaledest = dest;
+}
+
+void
+gimp_display_shell_scale_calc_fraction (gdouble  zoom_factor,
+                                        gint    *scalesrc,
+                                        gint    *scaledest)
+{
+  gdouble zoom_delta;
+  gdouble min_zoom_delta = G_MAXFLOAT;
+  gint    best_i         = 0xFF;
+  gint    i;
+
+  g_return_if_fail (scalesrc != NULL);
+  g_return_if_fail (scaledest != NULL);
+
+  if (zoom_factor < 1.0)
+    {
+      for (i = 0xFF; i > 0; i--)
+        {
+          *scalesrc  = i;
+          *scaledest = floor ((gdouble) *scalesrc * zoom_factor);
+
+          if (*scaledest < 0x1)
+            *scaledest = 0x1;
+
+          zoom_delta = ABS ((gdouble) *scaledest / (gdouble) *scalesrc -
+                            zoom_factor);
+
+          if (zoom_delta <= min_zoom_delta)
+            {
+              min_zoom_delta = zoom_delta;
+              best_i = i;
+            }
+        }
+
+      *scalesrc  = best_i;
+      *scaledest = floor ((gdouble) *scalesrc * zoom_factor);
+
+      if (*scaledest < 0x1)
+        *scaledest = 0x1;
+    }
+  else
+    {
+      for (i = 0xFF; i > 0; i--)
+        {
+          *scaledest = i;
+          *scalesrc  = ceil ((gdouble) *scaledest / zoom_factor);
+
+          if (*scalesrc < 0x1)
+            *scalesrc = 0x1;
+
+          zoom_delta = ABS ((gdouble) *scaledest / (gdouble) *scalesrc -
+                            zoom_factor);
+
+          if (zoom_delta <= min_zoom_delta)
+            {
+              min_zoom_delta = zoom_delta;
+              best_i = i;
+            }
+        }
+
+      *scaledest = best_i;
+      *scalesrc  = ceil ((gdouble) *scaledest / zoom_factor);
+
+      if (*scalesrc < 0x1)
+        *scalesrc = 0x1;
+    }
+}
+
+void
 gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 {
   GtkRuler *hruler;
@@ -204,9 +310,8 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
                           GimpZoomType      zoom_type)
 {
   GimpDisplayConfig *config;
-
-  guchar  scalesrc, scaledest;
-  gdouble offset_x, offset_y;
+  gint               scalesrc, scaledest;
+  gdouble            offset_x, offset_y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -220,40 +325,13 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
   offset_x *= ((gdouble) scalesrc / (gdouble) scaledest);
   offset_y *= ((gdouble) scalesrc / (gdouble) scaledest);
 
-  switch (zoom_type)
-    {
-    case GIMP_ZOOM_IN:
-      if (scalesrc > 1)
-	scalesrc--;
-      else
-	if (scaledest < 0xFF)
-	  scaledest++;
-	else
-	  return;
-      break;
+  gimp_display_shell_scale_zoom_fraction (zoom_type, &scalesrc, &scaledest);
 
-    case GIMP_ZOOM_OUT:
-      if (scaledest > 1)
-	scaledest--;
-      else
-	if (scalesrc < 0xFF)
-	  scalesrc++;
-	else
-	  return;
-      break;
-
-    default:
-      scalesrc  = CLAMP (zoom_type % 100, 1, 0xFF);
-      scaledest = CLAMP (zoom_type / 100, 1, 0xFF);
-      break;
-    }
-
-  /*  set the offsets  */
   offset_x *= ((gdouble) scaledest / (gdouble) scalesrc);
   offset_y *= ((gdouble) scaledest / (gdouble) scalesrc);
-  
+
   config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
-      
+
   gimp_display_shell_scale_by_values (shell,
                                       (scaledest << 8) + scalesrc,
                                       (offset_x - (shell->disp_width  / 2)),
@@ -270,12 +348,8 @@ gimp_display_shell_scale_fit (GimpDisplayShell *shell)
   gdouble    zoom_x;
   gdouble    zoom_y;
   gdouble    zoom_factor;
-  gdouble    zoom_delta;
-  gdouble    min_zoom_delta = G_MAXFLOAT;
-  gint       scalesrc       = 1;
-  gint       scaledest      = 1;
-  gint       i;
-  gint       best_i         = 0xFF;
+  gint       scalesrc;
+  gint       scaledest;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -298,74 +372,12 @@ gimp_display_shell_scale_fit (GimpDisplayShell *shell)
   zoom_y = (gdouble) shell->disp_height / (gdouble) image_height;
 
   if ((gdouble) image_height * zoom_x <= (gdouble) shell->disp_height)
-    {
-      zoom_factor = zoom_x;
-    }
+    zoom_factor = zoom_x;
   else
-    {
-      zoom_factor = zoom_y;
-    }
+    zoom_factor = zoom_y;
 
-  if (zoom_factor < 1.0)
-    {
-      for (i = 0xFF; i > 0; i--)
-        {
-          scalesrc  = i;
-          scaledest = floor ((gdouble) scalesrc * zoom_factor);
-
-          if (scaledest < 0x1)
-            {
-              scaledest = 0x1;
-            }
-
-          zoom_delta = ABS ((gdouble) scaledest / (gdouble) scalesrc -
-                            zoom_factor);
-
-          if (zoom_delta <= min_zoom_delta)
-            {
-              min_zoom_delta = zoom_delta;
-              best_i = i;
-            }
-        }
-
-      scalesrc  = best_i;
-      scaledest = floor ((gdouble) scalesrc * zoom_factor);
-
-      if (scaledest < 0x1)
-        {
-          scaledest = 0x1;
-        }
-    }
-  else
-    {
-      for (i = 0xFF; i > 0; i--)
-        {
-          scaledest = i;
-          scalesrc  = ceil ((gdouble) scaledest / zoom_factor);
-
-          if (scalesrc < 0x1)
-            {
-              scalesrc = 0x1;
-            }
-
-          zoom_delta = ABS ((gdouble) scaledest / (gdouble) scalesrc -
-                            zoom_factor);
-
-          if (zoom_delta <= min_zoom_delta)
-            {
-              min_zoom_delta = zoom_delta;
-              best_i = i;
-            }
-        }
-
-      scaledest = best_i;
-      scalesrc  = ceil ((gdouble) scaledest / zoom_factor);
-
-      if (scalesrc < 0x1)
-        {
-          scalesrc = 0x1;
-        }
-    }
+  gimp_display_shell_scale_calc_fraction (zoom_factor,
+                                          &scalesrc, &scaledest);
 
   gimp_display_shell_scale_by_values (shell,
                                       (scaledest << 8) + scalesrc,
