@@ -1303,7 +1303,7 @@ transform_core_do (GImage          *gimage,
 	  /*  normalize homogeneous coords  */
 	  if (tw == 0.0)
 	    {
-	      g_message (_("homogeneous coordinate = 0...\n"));
+	      g_warning ("homogeneous coordinate = 0...\n");
 	    }
 	  else if (tw != 1.0)
 	    {
