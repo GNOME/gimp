@@ -1944,7 +1944,9 @@ xcf_load_level (XcfInfo     *info,
       if (previous != NULL) 
 	{
 	  tile_lock (previous);
-	  if (tile_size (tile) == tile_size (previous) &&
+	  if (tile->ewidth == previous->ewidth &&
+	      tile->eheight == previous->eheight &&
+	      tile->bpp == previous->bpp &&
 	      memcmp (tile->data, previous->data,
 		      tile_size (tile)) == 0)
 	    {

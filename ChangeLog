@@ -2,6 +2,11 @@ Mon Jul 27 12:27:47 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/fp/fp.c: make PDB entry for filter pack saner
 
+Mon Jul 27 14:29:39 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/xcf.c (xcf_load_level): Made xcf loader a little less
+	zealous in trying to copy-on-write duplicated tiles.
+
 Sun Jul 26 23:47:33 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/blend.c
