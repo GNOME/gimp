@@ -1,3 +1,7 @@
+2003-11-24  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: (hopefully) fixed the check for the symbol prefix.
+
 2003-11-24  Ville Pätsi  <drc@gimp.org>
 
 	* gimp.spec.in: Fixed path creation typo.

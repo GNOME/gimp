@@ -584,8 +584,8 @@ fi
 
 AC_MSG_CHECKING([whether symbols are prefixed])
 
-case "$target_or_host" in
-  *-*-mingw*)
+case "$host_os" in
+  mingw*)
     SYMPREFIX='_'
     ;;
   darwin* | rhapsody* | machten*)
