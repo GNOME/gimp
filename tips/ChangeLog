@@ -2,6 +2,7 @@
 
 	* fr.po: Added French translation from
 	Raymond Ostertag <r.ostertag@caramail.com>.
+	* Makefile.am: added fr.po.
 
 2003-11-06  Hasbullah Bin Pit <sebol@ikhlas.com>
 
