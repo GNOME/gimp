@@ -36,6 +36,8 @@
 	
 	* tools/pdbgen/pdb/plug_in.pdb: made it create libgimp code 
 
+	* plug-ins/perl/Gimp/Lib.xs: made it compile without warnings.
+
 2000-06-01  Michael Natterer  <mitch@gimp.org>
 	    Sven Neumann  <sven@gimp.org>
 	    Simon Budig  <Simon.Budig@unix-ag.org>

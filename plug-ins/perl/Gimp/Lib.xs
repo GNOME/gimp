@@ -1144,7 +1144,7 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
   char *proc_author;
   char *proc_copyright;
   char *proc_date;
-  int proc_type;
+  GimpPDBProcType proc_type;
   int _nparams;
   GParamDef *params;
   GParamDef *return_defs;
@@ -1396,7 +1396,7 @@ _gimp_procedure_available(proc_name)
 		char *proc_author;
 		char *proc_copyright;
 		char *proc_date;
-		int proc_type;
+		GimpPDBProcType proc_type;
 		int nparams;
 		int nreturn_vals;
 		GParamDef *params;
@@ -1436,7 +1436,7 @@ gimp_query_procedure(proc_name)
 		char *proc_author;
 		char *proc_copyright;
 		char *proc_date;
-		int proc_type;
+		GimpPDBProcType proc_type;
 		int nparams;
 		int nreturn_vals;
 		GParamDef *params;
@@ -1472,7 +1472,7 @@ gimp_call_procedure (proc_name, ...)
 		char *proc_author;
 		char *proc_copyright;
 		char *proc_date;
-		int proc_type;
+		GimpPDBProcType proc_type;
 		int nparams;
 		int nreturn_vals;
 		GParam *args = 0;
