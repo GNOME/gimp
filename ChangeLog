@@ -1,5 +1,14 @@
 2004-11-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gimpressionist/Brushes/snow1.pgm: reverted a change
+	that Hans Breuer committed here, probably accidentally.
+
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/siod-wrapper.c: reverted Hans's changes. There
+	is indeed a Script-Fu server on Win32.
+
+2004-11-21  Sven Neumann  <sven@gimp.org>
+
 	* menus/image-menu.xml.in: removed "Quit" from the image menu.
 
 2004-09-21  Hans Breuer  <hans@breuer.org>
@@ -19,8 +28,8 @@
 
 	* plug-ins/helpbrowser/dialog.c : include gimpwin32-io.h
 
-	* plug-ins/script-fu/siodwrapper.c plug-ins/script-fu/scrip-fu.c : there
-	is no script-fu-server on win32
+	* plug-ins/script-fu/siodwrapper.c plug-ins/script-fu/script-fu.c :
+	there is no script-fu-server on win32
 
 2004-11-21  Michael Schumacher <schumaml@cvs.gnome.org>
 
