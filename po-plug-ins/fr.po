@@ -854,7 +854,6 @@ msgstr ""
 "\"%s\" de la liste et du disque ?"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:739
-#, fuzzy
 msgid "Delete Fractal"
 msgstr "Effacer la fractale"
 
@@ -895,13 +894,12 @@ msgstr ""
 "à votre fichier ~/.gimp-1.1/gimprc.\n"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1169
-#, fuzzy
 msgid ""
 "fractalexplorer-path misconfigured - the following directories were not found"
 msgstr ""
-"Les chemin d'accès aux fichiers de l'Explorateur de\n"
-"Fractales sont mal configurés : le chemin\n"
-"\"%.100s\" n'existe pas.\n"
+"Les chemins d'accès aux fichiers de l'Explorateur de\n"
+"Fractales sont mal configurés ; les répertoires\n"
+"suivants n'ont pas été trouvés :"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1345
 msgid "My first fractal"
@@ -931,7 +929,6 @@ msgid "Rescan for Fractals"
 msgstr "Actualiser la liste de fractales"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1481
-#, fuzzy
 msgid "Add FractalExplorer Path"
 msgstr "Ajouter un chemin de recherche"
 
@@ -950,12 +947,10 @@ msgstr "Réflexion"
 
 #. General options
 #: plug-ins/Lighting/lighting_ui.c:393 plug-ins/MapObject/mapobject_ui.c:532
-#, fuzzy
 msgid "General Options"
 msgstr "Options générales"
 
 #: plug-ins/Lighting/lighting_ui.c:402
-#, fuzzy
 msgid "Use Bump Mapping"
 msgstr "Bosseler d'après une carte"
 
@@ -964,7 +959,6 @@ msgid "Enable/disable bump-mapping (image depth)"
 msgstr "(Dés)activer le bosselage d'après carte (relief)"
 
 #: plug-ins/Lighting/lighting_ui.c:415
-#, fuzzy
 msgid "Use Environment Mapping"
 msgstr "Simuler la réflexion d'un environnement"
 
@@ -975,7 +969,6 @@ msgstr ""
 "surface."
 
 #: plug-ins/Lighting/lighting_ui.c:428
-#, fuzzy
 msgid "Transparent Background"
 msgstr "Fond transparent"
 
@@ -993,7 +986,6 @@ msgid "Create a new image when applying filter"
 msgstr "Créer une nouvelle image lors de l'application du filtre"
 
 #: plug-ins/Lighting/lighting_ui.c:453
-#, fuzzy
 msgid "High Preview Quality"
 msgstr "Aperçu de haute qualité"
 
@@ -1002,7 +994,6 @@ msgid "Enable/disable high quality previews"
 msgstr "(Dés)activer les aperçus de haute qualité"
 
 #: plug-ins/Lighting/lighting_ui.c:465 plug-ins/MapObject/mapobject_ui.c:602
-#, fuzzy
 msgid "Enable Tooltips"
 msgstr "Activer les bulles d'aide"
 
@@ -1012,12 +1003,10 @@ msgstr "(Dés)activer les bulles d'aide"
 
 #. Antialiasing options
 #: plug-ins/Lighting/lighting_ui.c:479 plug-ins/MapObject/mapobject_ui.c:615
-#, fuzzy
 msgid "Antialiasing Options"
 msgstr "Options de lissage"
 
 #: plug-ins/Lighting/lighting_ui.c:488 plug-ins/MapObject/mapobject_ui.c:624
-#, fuzzy
 msgid "Enable Antialiasing"
 msgstr "Activer l'anticrénelage"
 
@@ -1040,9 +1029,8 @@ msgstr ""
 "l'anticrénelage - et plus élevé est le temps de calcul."
 
 #: plug-ins/Lighting/lighting_ui.c:526 plug-ins/MapObject/mapobject_ui.c:662
-#, fuzzy
 msgid "Treshold:"
-msgstr "Seuil:"
+msgstr "Seuil :"
 
 #: plug-ins/Lighting/lighting_ui.c:530 plug-ins/MapObject/mapobject_ui.c:666
 msgid "Stop when pixel differences are smaller than this value"
@@ -7018,23 +7006,19 @@ msgstr "<Toolbox>/Extensions/Explorer la base de procédures..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:146
 #: plug-ins/dbbrowser/dbbrowser_utils.c:165
-#, fuzzy
 msgid "DB Browser (init...)"
 msgstr "Explorateur de la base de procédures (initialisation)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:153
 #: plug-ins/dbbrowser/dbbrowser_utils.c:172
-#, fuzzy
 msgid "Search by Blurb"
 msgstr "Rechercher par blurb"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:380
-#, fuzzy
 msgid "In:"
 msgstr "Entrée :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:427
-#, fuzzy
 msgid "Out:"
 msgstr "Sortie :"
 
@@ -7511,9 +7495,8 @@ msgid "GAP Question"
 msgstr "Question GAP"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:347
-#, fuzzy
 msgid "File already exists:"
-msgstr "le fichier existe déjà :"
+msgstr "Le fichier existe déjà :"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:437
 msgid "Decoding MPEG movie..."
@@ -8474,7 +8457,6 @@ msgid "UpdPreview"
 msgstr "M.à j. aperçu"
 
 #: plug-ins/gap/gap_mov_dialog.c:468
-#, fuzzy
 msgid ""
 "Show PreviewFrame with Selected       \n"
 "SrcLayer at current Controlpoint"
@@ -8640,13 +8622,13 @@ msgstr "Aperçu du déplacement"
 #: plug-ins/gap/gap_mov_dialog.c:1563
 #, fuzzy
 msgid "X Coordinate"
-msgstr "Coloration"
+msgstr "abscisse"
 
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1581
 #, fuzzy
 msgid "Y Coordinate"
-msgstr "Coloration"
+msgstr "ordonnée"
 
 #. label text
 #. scalesize spinsize
@@ -8697,7 +8679,6 @@ msgstr "Opacité du calque source (%)"
 #. Rotation
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:1641
-#, fuzzy
 msgid "Rotate:"
 msgstr "Rotation :"
 
@@ -8749,7 +8730,6 @@ msgid "Insert Point"
 msgstr "Insérer un Point"
 
 #: plug-ins/gap/gap_mov_dialog.c:1759
-#, fuzzy
 msgid ""
 "Insert Controlpoint          \n"
 "(the current Point is duplicated)"
@@ -8764,9 +8744,8 @@ msgid "Delete Point"
 msgstr "Effacer le Point"
 
 #: plug-ins/gap/gap_mov_dialog.c:1771
-#, fuzzy
 msgid "Delete current Controlpoint"
-msgstr "Montrer le point de contrôle suivant"
+msgstr "Effacer le point de contrôle courant"
 
 #: plug-ins/gap/gap_mov_dialog.c:1777
 msgid "Prev Point"
@@ -8785,27 +8764,22 @@ msgid "Show Next Controlpoint"
 msgstr "Montrer le point de contrôle suivant"
 
 #: plug-ins/gap/gap_mov_dialog.c:1803
-#, fuzzy
 msgid "First Point"
-msgstr "R.-à-z. points"
+msgstr "Premier point"
 
 #: plug-ins/gap/gap_mov_dialog.c:1811
-#, fuzzy
 msgid "Show First Controlpoint"
-msgstr "Montrer le point de contrôle suivant"
+msgstr "Montrer le premier point de contrôle"
 
 #: plug-ins/gap/gap_mov_dialog.c:1815
-#, fuzzy
 msgid "Last Point"
-msgstr "Charger points"
+msgstr "Dernier point"
 
 #: plug-ins/gap/gap_mov_dialog.c:1823
-#, fuzzy
 msgid "Show Last Controlpoint"
-msgstr "Montrer le point de contrôle suivant"
+msgstr "Montrer le dernier point de contrôle"
 
 #: plug-ins/gap/gap_mov_dialog.c:1829
-#, fuzzy
 msgid "Clear Point"
 msgstr "Effacer le Point"
 
@@ -8814,7 +8788,9 @@ msgstr "Effacer le Point"
 msgid ""
 "Reset the current Controlpoint\n"
 "to default Values"
-msgstr "Remettre les paramètres à leur valeurs par défaut."
+msgstr ""
+"Remettre les paramètres du point de contrôle\n"
+"courant à à leur valeurs par défaut."
 
 #: plug-ins/gap/gap_mov_dialog.c:1841
 msgid "Reset Points"
@@ -9659,7 +9635,7 @@ msgstr ""
 "OPÉRATION ANNULÉE\n"
 "Cette image est déjà une animation\n"
 "Essayez à nouveau sur une copie\n"
-"(image/op de canal/copie)"
+"(Image/Dupliquer)"
 
 #: plug-ins/gap/resize.c:107
 msgid "Scale"
@@ -9907,7 +9883,7 @@ msgstr "Fusionner"
 
 #: plug-ins/gfig/gfig.c:1942
 msgid "Merge Gfig Object collection into the current edit session"
-msgstr ""
+msgstr "Fusionner une collection d'objets Gfig dans la collection actuellement éditée"
 
 #: plug-ins/gfig/gfig.c:1981
 msgid "Number of Sides/Points/Turns:"
@@ -9955,9 +9931,8 @@ msgid "Star Number of Points"
 msgstr "Étoile : nombre de points"
 
 #: plug-ins/gfig/gfig.c:2097
-#, fuzzy
 msgid "Spiral Number of Points"
-msgstr "Nombre de carreaux"
+msgstr "Spirale : nombre de points"
 
 #: plug-ins/gfig/gfig.c:2121
 msgid "Ops"
@@ -9984,7 +9959,6 @@ msgid "Create reg polygon"
 msgstr "Créer un polygone régulier"
 
 #: plug-ins/gfig/gfig.c:2175
-#, fuzzy
 msgid "Create spiral"
 msgstr "Créer spirale"
 
@@ -10045,17 +10019,16 @@ msgid "New"
 msgstr "Nouveau"
 
 #: plug-ins/gfig/gfig.c:2789
-#, fuzzy
 msgid "Multiple"
-msgstr "Multiplier"
+msgstr "Multiple"
 
 #: plug-ins/gfig/gfig.c:2793
 msgid "Draw all objects on one layer (original or new) or one object per layer"
-msgstr ""
+msgstr "Trace tous les objets sur un calque (préexistant ou nouveau) ou bien un seul objet par calque"
 
 #: plug-ins/gfig/gfig.c:2798
 msgid "Draw on:"
-msgstr ""
+msgstr "Tracer sur :"
 
 #. Create selection
 #: plug-ins/gfig/gfig.c:2807 plug-ins/imagemap/imap_selection.c:358
@@ -10064,47 +10037,44 @@ msgid "Selection"
 msgstr "Sélection"
 
 #: plug-ins/gfig/gfig.c:2809
-#, fuzzy
 msgid "Selection+Fill"
-msgstr "Sélection"
+msgstr "Sélection+Remplissage"
 
 #: plug-ins/gfig/gfig.c:2836
 msgid ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
-msgstr ""
+msgstr "Type de dessin : soit un pinceau soit une sélection. Voyez la page sur les brosses ou la page sur les sélections pour plus d'options."
 
 #: plug-ins/gfig/gfig.c:2840
 msgid "Using:"
-msgstr ""
+msgstr "Utilisant :"
 
 #: plug-ins/gfig/gfig.c:2854
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
-msgstr ""
+msgstr "Type d'arrière plan pour le calque. « Copier » fait que le calque précédent est copié avant que le dessin ne soit effectué."
 
 #: plug-ins/gfig/gfig.c:2859
 msgid "With BG of:"
-msgstr ""
+msgstr "AR plan :"
 
 #: plug-ins/gfig/gfig.c:2862
-#, fuzzy
 msgid "Reverse Line"
-msgstr "Inverser"
+msgstr "Inverser les lignes"
 
 #: plug-ins/gfig/gfig.c:2869
 msgid "Draw lines in reverse order"
-msgstr ""
+msgstr "Trace les lignes en ordre inverse"
 
 #: plug-ins/gfig/gfig.c:2877
-#, fuzzy
 msgid "Scale to Image"
-msgstr "Trames vers image"
+msgstr "Taille = celle de l'image"
 
 #: plug-ins/gfig/gfig.c:2885
 msgid "Scale drawings to images size"
-msgstr ""
+msgstr "Met les dessins à la taille de l'image"
 
 #: plug-ins/gfig/gfig.c:2907
 msgid "Approx. Circles/Ellipses"
@@ -10359,9 +10329,8 @@ msgid "Gfig Layer %d"
 msgstr "Calque Gfig n°%d"
 
 #: plug-ins/gfig/gfig.c:4875
-#, fuzzy
 msgid "About GFig"
-msgstr "À propos"
+msgstr "À propos de GFig"
 
 #: plug-ins/gfig/gfig.c:4899
 msgid "Gfig - GIMP plug-in"
@@ -10384,7 +10353,6 @@ msgid "New gfig obj"
 msgstr "Nouvel obj. gfig"
 
 #: plug-ins/gfig/gfig.c:5083
-#, fuzzy
 msgid "Delete Gfig Drawing"
 msgstr "Effacer le dessin gfig"
 
@@ -10430,9 +10398,9 @@ msgstr "Éblouissement : impossible d'opérer sur des images couleur indexées"
 #, fuzzy
 msgid "gflare-path misconfigured - the following directories were not found"
 msgstr ""
-"Les chemin d'accès aux fichiers de l'Explorateur de\n"
-"Fractales sont mal configurés : le chemin\n"
-"\"%.100s\" n'existe pas.\n"
+"Les chemin d'accès aux fichiers de paramètres\n"
+"d'éblouissement sont mal configurés.\n"
+"Les répertoires suivants n'ont pas été trouvés :"
 
 #: plug-ins/gflare/gflare.c:1354
 #, c-format
@@ -11019,28 +10987,28 @@ msgstr ""
 #: plug-ins/gimpressionist/orientmap.c:500
 #: plug-ins/gimpressionist/sizemap.c:400
 msgid "Adjust the preview's brightness"
-msgstr ""
+msgstr "Réglage de la luminosité de l'aperçu"
 
 #: plug-ins/gimpressionist/orientmap.c:522
 msgid "Select previous vector"
-msgstr ""
+msgstr "Sélectionne le vecteur précédent"
 
 #: plug-ins/gimpressionist/orientmap.c:529
 msgid "Select next vector"
-msgstr ""
+msgstr "Sélectionne le vecteur suivant"
 
 #: plug-ins/gimpressionist/orientmap.c:536
 msgid "Add new vector"
-msgstr ""
+msgstr "Ajoute un nouveau vecteur"
 
 #: plug-ins/gimpressionist/orientmap.c:538
 #: plug-ins/gimpressionist/sizemap.c:438
 msgid "Kill"
-msgstr ""
+msgstr "Supprimer"
 
 #: plug-ins/gimpressionist/orientmap.c:543
 msgid "Delete selected vector"
-msgstr ""
+msgstr "Supprime le vecteur sélectionné"
 
 #: plug-ins/gimpressionist/orientmap.c:563
 msgid "Change the angle of the selected vector"
@@ -11048,44 +11016,44 @@ msgstr "Changer l'angle du vecteur sélectionné"
 
 #: plug-ins/gimpressionist/orientmap.c:577
 msgid "Change the strength of the selected vector"
-msgstr ""
+msgstr "Change la longueur du vecteur sélectionné"
 
 #: plug-ins/gimpressionist/orientmap.c:596
 msgid "Vortex"
-msgstr ""
+msgstr "Vortex"
 
 #: plug-ins/gimpressionist/orientmap.c:608
 msgid "Vortex2"
-msgstr ""
+msgstr "Vortex2"
 
 #: plug-ins/gimpressionist/orientmap.c:614
 msgid "Vortex3"
-msgstr ""
+msgstr "Vortex3"
 
 #: plug-ins/gimpressionist/orientmap.c:631
 #: plug-ins/gimpressionist/sizemap.c:490
 msgid "Apply and exit the editor"
-msgstr ""
+msgstr "Appliquer et quitter l'éditeur"
 
 #: plug-ins/gimpressionist/orientmap.c:638
 #: plug-ins/gimpressionist/sizemap.c:497
 msgid "Apply, but stay inside the editor"
-msgstr ""
+msgstr "Appliquer, mais rester dans l'éditeur"
 
 #: plug-ins/gimpressionist/orientmap.c:645
 #: plug-ins/gimpressionist/sizemap.c:504
 msgid "Cancel all changes and exit"
-msgstr ""
+msgstr "Annuler tous les changements et quitter"
 
 #: plug-ins/gimpressionist/orientmap.c:653
 #: plug-ins/gimpressionist/sizemap.c:512
 msgid "Strength exp.:"
-msgstr ""
+msgstr "Exp. longueur :"
 
 #: plug-ins/gimpressionist/orientmap.c:665
 #: plug-ins/gimpressionist/sizemap.c:524
 msgid "Change the exponent of the strength"
-msgstr "Changer l'exposant de l'intensité"
+msgstr "Changer l'exposant de la longueur"
 
 #: plug-ins/gimpressionist/orientmap.c:667
 msgid "Angle offset:"
@@ -11093,39 +11061,39 @@ msgstr "Décalage de l'angle :"
 
 #: plug-ins/gimpressionist/orientmap.c:679
 msgid "Offset all vectors with a given angle"
-msgstr ""
+msgstr "Décaler tous les vecteurs d'un certain angle"
 
 #: plug-ins/gimpressionist/orientmap.c:681
 #: plug-ins/gimpressionist/sizemap.c:527
 msgid "Voronoi"
-msgstr ""
+msgstr "Voronoï"
 
 #: plug-ins/gimpressionist/orientmap.c:689
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr ""
+msgstr "Le mode Voronoï fait que seul le vecteur le plus proche d'un point donné a une influence."
 
 #: plug-ins/gimpressionist/paper.c:89 plug-ins/gimpressionist/paper.c:94
 msgid "Paper"
-msgstr ""
+msgstr "Papier"
 
 #: plug-ins/gimpressionist/paper.c:130
 msgid "Paper Preview:"
-msgstr ""
+msgstr "Aperçu du papier :"
 
 #. updatepaperprev(NULL);
 #: plug-ins/gimpressionist/paper.c:141
 msgid "Invert"
-msgstr ""
+msgstr "Inverser"
 
 #: plug-ins/gimpressionist/paper.c:148
 msgid "Inverts the Papers texture"
-msgstr ""
+msgstr "Inverse la texture du papier"
 
 #: plug-ins/gimpressionist/paper.c:156
 msgid "Applies the paper as it is (without embossing it)"
-msgstr ""
+msgstr "Applique le papier tel quel (sans le bosseler)"
 
 #: plug-ins/gimpressionist/paper.c:188
 msgid "Specifies the scale of the texture (in percent of original file)"
