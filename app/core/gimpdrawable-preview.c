@@ -114,8 +114,18 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
   gint               subsample;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (src_x >= 0, NULL);
+  g_return_val_if_fail (src_y >= 0, NULL);
+  g_return_val_if_fail (src_width  > 0, NULL);
+  g_return_val_if_fail (src_height > 0, NULL);
+  g_return_val_if_fail (dest_width  > 0, NULL);
+  g_return_val_if_fail (dest_height > 0, NULL);
 
-  item   = GIMP_ITEM (drawable);
+  item = GIMP_ITEM (drawable);
+
+  g_return_val_if_fail ((src_x + src_width)  <= gimp_item_width  (item), NULL);
+  g_return_val_if_fail ((src_y + src_height) <= gimp_item_height (item), NULL);
+
   gimage = gimp_item_get_image (item);
 
   if (! gimage->gimp->config->layer_previews)
@@ -138,12 +148,6 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
   /*  calculate 'acceptable' subsample  */
   subsample = 1;
 
-  /* handle some truncation errors */
-  if (src_width   < 1) src_width   = 1;
-  if (src_height  < 1) src_height  = 1;
-  if (dest_width  < 1) dest_width  = 1;
-  if (dest_height < 1) dest_height = 1;
-
   while ((dest_width  * (subsample + 1) * 2 < src_width) &&
          (dest_height * (subsample + 1) * 2 < src_width))
     subsample += 1;
@@ -164,8 +168,6 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
 
   if (GIMP_IS_LAYER (drawable))
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
       gimp_drawable_preview_scale (base_type,
                                    gimp_image_get_colormap (gimage),
                                    &srcPR, &destPR,

@@ -1,3 +1,14 @@
+2004-12-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-preview.c (gimp_drawable_get_sub_preview):
+	added precondition check for the coords of the src area. Some
+	cleanup and simplification.
+
+	* app/widgets/gimpviewrendererdrawable.c
+	(gimp_view_renderer_drawable_render): don't request a sub-preview
+	of an area outside the drawable and don't reuqest previews of zero
+	width or height. Fixes crashes with the new preview code.
+
 2004-12-12  Sven Neumann  <sven@gimp.org>
 
 	Applied patch from Adam D. Moss (bug #161113):

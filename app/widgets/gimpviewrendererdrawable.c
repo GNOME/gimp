@@ -146,27 +146,55 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
         {
           gint src_x, src_y;
           gint src_width, src_height;
-          gint dest_width;
-          gint dest_height;
 
-          gimp_rectangle_intersect (0, 0,
-                                    item->width, item->height,
-                                    -item->offset_x, -item->offset_y,
-                                    gimage->width, gimage->height,
-                                    &src_x, &src_y,
-                                    &src_width, &src_height);
+          if (gimp_rectangle_intersect (0, 0,
+                                        item->width, item->height,
+                                        -item->offset_x, -item->offset_y,
+                                        gimage->width, gimage->height,
+                                        &src_x, &src_y,
+                                        &src_width, &src_height))
+            {
+              gint dest_width;
+              gint dest_height;
 
-          dest_width  = ROUND (((gdouble) renderer->width /
-                                (gdouble) gimage->width) *
-                               (gdouble) src_width);
-          dest_height = ROUND (((gdouble) renderer->height /
-                                (gdouble) gimage->height) *
-                               (gdouble) src_height);
+              dest_width  = ROUND (((gdouble) renderer->width /
+                                    (gdouble) gimage->width) *
+                                   (gdouble) src_width);
+              dest_height = ROUND (((gdouble) renderer->height /
+                                    (gdouble) gimage->height) *
+                                   (gdouble) src_height);
 
-          render_buf = gimp_drawable_get_sub_preview (drawable,
-                                                      src_x, src_y,
-                                                      src_width, src_height,
-                                                      dest_width, dest_height);
+              if (dest_width  < 1) dest_width  = 1;
+              if (dest_height < 1) dest_height = 1;
+
+              render_buf = gimp_drawable_get_sub_preview (drawable,
+                                                          src_x, src_y,
+                                                          src_width, src_height,
+                                                          dest_width, dest_height);
+            }
+          else
+            {
+              gint   bytes    = 0;
+              guchar empty[4] = { 0, 0, 0, 0 };
+
+              switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
+                {
+                case GIMP_RGB:
+                case GIMP_GRAY:
+                  bytes = gimp_drawable_bytes (drawable);
+                  break;
+
+                case GIMP_INDEXED:
+                  bytes = gimp_drawable_has_alpha (drawable) ? 4 : 3;
+                  break;
+
+                default:
+                  g_return_if_reached ();
+                  break;
+                }
+
+              render_buf = temp_buf_new (1, 1, bytes, 0, 0, empty);
+            }
         }
       else
         {
