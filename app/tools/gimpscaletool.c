@@ -96,7 +96,7 @@ gimp_scale_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-scale-tool",
                 _("Scale"),
                 _("Scale the layer or selection"),
-                N_("/Tools/Transform Tools/Scale"), "<shift>T",
+                N_("/Tools/Transform Tools/_Scale"), "<shift>T",
                 NULL, "tools/transform.html",
                 GIMP_STOCK_TOOL_SCALE,
                 data);

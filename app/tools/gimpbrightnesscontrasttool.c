@@ -81,7 +81,7 @@ gimp_brightness_contrast_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-brightness-contrast-tool",
                 _("Brightness-Contrast"),
                 _("Adjust brightness and contrast"),
-                N_("/Tools/Color Tools/Brightness-Contrast..."), NULL,
+                N_("/Tools/Color Tools/B_rightness-Contrast..."), NULL,
                 NULL, "tools/brightness_contrast.html",
                 GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST,
                 data);

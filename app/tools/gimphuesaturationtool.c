@@ -106,7 +106,7 @@ gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-hue-saturation-tool",
                 _("Hue-Saturation"),
                 _("Adjust hue and saturation"),
-                N_("/Tools/Color Tools/Hue-Saturation..."), NULL,
+                N_("/Tools/Color Tools/Hue-_Saturation..."), NULL,
                 NULL, "tools/hue_saturation.html",
                 GIMP_STOCK_TOOL_HUE_SATURATION,
                 data);

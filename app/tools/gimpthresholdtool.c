@@ -87,7 +87,7 @@ gimp_threshold_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-threshold-tool",
                 _("Threshold"),
                 _("Reduce image to two colors using a threshold"),
-                N_("/Tools/Color Tools/Threshold..."), NULL,
+                N_("/Tools/Color Tools/_Threshold..."), NULL,
                 NULL, "tools/threshold.html",
                 GIMP_STOCK_TOOL_THRESHOLD,
                 data);

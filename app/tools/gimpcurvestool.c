@@ -158,7 +158,7 @@ gimp_curves_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-curves-tool",
                 _("Curves"),
                 _("Adjust color curves"),
-                N_("/Tools/Color Tools/Curves..."), NULL,
+                N_("/Tools/Color Tools/_Curves..."), NULL,
                 NULL, "tools/curves.html",
                 GIMP_STOCK_TOOL_CURVES,
                 data);

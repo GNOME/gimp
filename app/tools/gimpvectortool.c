@@ -113,7 +113,7 @@ gimp_vector_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-vector-tool",
                 _("Vectors"),
                 _("the most promising path tool prototype... :-)"),
-                N_("/Tools/Vectors"), NULL,
+                N_("/Tools/_Vectors"), NULL,
                 NULL, "tools/vector.html",
                 GIMP_STOCK_TOOL_PATH,
                 data);

@@ -127,7 +127,7 @@ gimp_measure_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-measure-tool",
                 _("Measure"),
                 _("Measure angles and lengths"),
-                N_("/Tools/Measure"), NULL,
+                N_("/Tools/_Measure"), NULL,
                 NULL, "tools/measure.html",
                 GIMP_STOCK_TOOL_MEASURE,
                 data);

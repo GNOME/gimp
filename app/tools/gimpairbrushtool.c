@@ -60,7 +60,7 @@ gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-airbrush-tool",
                 _("Airbrush"),
                 _("Airbrush with variable pressure"),
-                N_("/Tools/Paint Tools/Airbrush"), "A",
+                N_("/Tools/Paint Tools/_Airbrush"), "A",
                 NULL, "tools/airbrush.html",
                 GIMP_STOCK_TOOL_AIRBRUSH,
                 data);

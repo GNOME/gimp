@@ -101,7 +101,7 @@ gimp_color_picker_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-color-picker-tool",
                 _("Color Picker"),
                 _("Pick colors from the image"),
-                N_("/Tools/Color Picker"), "O",
+                N_("/Tools/C_olor Picker"), "O",
                 NULL, "tools/color_picker.html",
                 GIMP_STOCK_TOOL_COLOR_PICKER,
                 data);

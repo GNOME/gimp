@@ -120,7 +120,7 @@ gimp_histogram_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-histogram-tool",
                 _("Histogram"),
                 _("View image histogram"),
-                N_("/Tools/Color Tools/Histogram..."), NULL,
+                N_("/Tools/Color Tools/_Histogram..."), NULL,
                 NULL, "tools/histogram.html",
                 GIMP_STOCK_TOOL_HISTOGRAM,
                 data);

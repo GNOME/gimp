@@ -114,7 +114,7 @@ gimp_text_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-text-tool",
                 _("Text"),
                 _("Add text to the image"),
-                N_("/Tools/Text"), "T",
+                N_("/Tools/Te_xt"), "T",
                 NULL, "tools/text.html",
                 GIMP_STOCK_TOOL_TEXT,
                 data);

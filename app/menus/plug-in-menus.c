@@ -353,8 +353,8 @@ plug_in_menus_update (GimpItemFactory *item_factory,
               if (ellipses && ellipses == (basename + strlen (basename) - 3))
                 *ellipses = '\0';
 
-              repeat = g_strdup_printf (_("Repeat \"%s\""), basename);
-              reshow = g_strdup_printf (_("Re-show \"%s\""), basename);
+              repeat = g_strdup_printf (_("Re_peat \"%s\""), basename);
+              reshow = g_strdup_printf (_("R_e-show \"%s\""), basename);
 
               g_free (basename);
 

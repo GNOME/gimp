@@ -55,7 +55,7 @@ gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-paintbrush-tool",
                 _("Paintbrush"),
                 _("Paint fuzzy brush strokes"),
-                N_("/Tools/Paint Tools/Paintbrush"), "P",
+                N_("/Tools/Paint Tools/_Paintbrush"), "P",
                 NULL, "tools/paintbrush.html",
                 GIMP_STOCK_TOOL_PAINTBRUSH,
                 data);

@@ -158,7 +158,7 @@ gimp_crop_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-crop-tool",
                 _("Crop & Resize"),
                 _("Crop or Resize an image"),
-                N_("/Tools/Transform Tools/Crop & Resize"), "<shift>C",
+                N_("/Tools/Transform Tools/_Crop & Resize"), "<shift>C",
                 NULL, "tools/crop_tool.html",
                 GIMP_STOCK_TOOL_CROP,
                 data);
