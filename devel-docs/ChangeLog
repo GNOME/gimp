@@ -1,3 +1,7 @@
+2003-07-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/tmpl/gimpcolornotebook.sgml: regenerated.
+
 2003-07-14  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/libgimpcolor-docs.sgml
