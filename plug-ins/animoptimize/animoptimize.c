@@ -1,5 +1,5 @@
 /*
- * Animation Optimizer plug-in version 0.61.0
+ * Animation Optimizer plug-in version 0.70.0
  *
  * by Adam D. Moss, 1997-98
  *     adam@gimp.org
@@ -10,6 +10,10 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 98.04.19 : version 0.70.0
+ *            Plug-in doubles up as Animation UnOptimize too!  (This
+ *            is somewhat more useful than it sounds.)
  *
  * 98.03.16 : version 0.61.0
  *            Support more rare opaque/transparent combinations.
@@ -101,7 +105,7 @@ GDrawableType drawabletype_alpha;
 guchar     pixelstep;
 guchar*    palette;
 gint       ncolours;
-
+gboolean   optimize;
 
 
 
@@ -125,8 +129,24 @@ static void query()
 			 "",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
-			 "1997",
+			 "1997-98",
 			 "<Image>/Filters/Animation/Animation Optimize",
+			 "RGB*, INDEXED*, GRAY*",
+			 PROC_PLUG_IN,
+			 nargs, nreturn_vals,
+			 args, return_vals);
+
+  gimp_install_procedure("plug_in_animationunoptimize",
+			 "This plugin 'simplifies' a GIMP layer-based"
+			 " animation that has been AnimationOptimized.  This"
+			 " makes the animation much easier to work with if,"
+			 " for example, the optimized version is all you"
+			 " have.",
+			 "",
+			 "Adam D. Moss <adam@gimp.org>",
+			 "Adam D. Moss <adam@gimp.org>",
+			 "1997-98",
+			 "<Image>/Filters/Animation/Animation UnOptimize",
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
@@ -153,6 +173,13 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
 	}
     }
   
+  /* Check the procedure name we were called with, to decide
+     what needs to be done. */
+  if (strcmp(name,"plug_in_animationoptimize")==0)
+    optimize = TRUE;
+  else
+    optimize = FALSE; /* UnOptimize */
+
   if (status == STATUS_SUCCESS)
     {
       image_id = param[1].data.d_image;
@@ -255,7 +282,7 @@ build_dialog(GImageType basetype,
 
   argc = 1;
   argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("animationplay");
+  argv[0] = g_strdup ("animationoptimize");
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
   gdk_set_use_xshm (gimp_use_xshm ());
@@ -743,7 +770,10 @@ do_optimizations(void)
        * OPTIMIZE HERE!
        *
        */
-      if (this_frame_num != 0) /* Can't delta bottom frame! */
+      if (
+	  (this_frame_num != 0) /* Can't delta bottom frame! */
+	  && (optimize)
+	  )
 	{
 	  int xit, yit, byteit;
 

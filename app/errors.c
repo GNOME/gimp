@@ -30,6 +30,7 @@
 #include "errors.h"
 
 extern char *prog_name;
+extern int use_debug_handler;
 
 void
 message (char *fmt, ...)
@@ -81,5 +82,7 @@ terminate (char *fmt, ...)
   printf ("\n");
   va_end (args);
 
+  if (use_debug_handler)
+    g_debug (prog_name);
   gdk_exit (1);
 }

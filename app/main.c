@@ -46,6 +46,7 @@ int no_splash;
 int no_splash_image;
 int be_verbose;
 int use_shm;
+int use_debug_handler;
 char *prog_name;		/* The path name we are invoked with */
 char **batch_cmds;
 
@@ -104,6 +105,7 @@ main (int argc, char **argv)
   no_splash = FALSE;
   no_splash_image = FALSE;
   use_shm = TRUE;
+  use_debug_handler = FALSE;
   batch_cmds = g_new (char*, argc);
   batch_cmds[0] = NULL;
 
@@ -159,6 +161,10 @@ main (int argc, char **argv)
 	{
 	  use_shm = FALSE;
 	}
+      else if (strcmp (argv[i], "--debug-handlers") == 0)
+	{
+	  use_debug_handler = TRUE;
+	}
 /*
  *    ANYTHING ELSE starting with a '-' is an error.
  */
@@ -185,6 +191,7 @@ main (int argc, char **argv)
       g_print ("  --no-splash-image      Do not add an image to the startup window.\n");
       g_print ("  --no-shm               Do not use shared memory between GIMP and its plugins.\n");
       g_print ("  --no-xshm              Do not use the X Shared Memory extension.\n");
+      g_print ("  --debug-handlers       Enable debugging signal handlers.\n");
       g_print ("  --display <display>    Use the designated X display.\n\n");
 
     }

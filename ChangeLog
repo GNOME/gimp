@@ -1,3 +1,12 @@
+Mon Apr 20 18:15:54 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/main.c
+	* app/errors.c: added --debug-handlers switch to get stack traces
+	on all signals again (not all sigabrts and sigpipes are normal
+	things)
+
+	* plug-ins/animoptimize/animoptimze.c: updated
+
 1998-04-20  Marc Ewing  <marc@redhat.com>
 
 	* added RPM/* files and use them in gimp.spec
