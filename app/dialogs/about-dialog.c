@@ -24,7 +24,6 @@
 #include <time.h>
 
 #include <gtk/gtk.h>
-#include <gdk/gdkconfig.h>	/* For GDK_USE_UTF8_MBS */
 #include <gdk/gdkkeysyms.h>
 
 #include "about_dialog.h"
@@ -275,7 +274,7 @@ about_dialog_create (void)
       offset = 0;
       cur_scroll_text = 0;
 
-      if (!double_speed)
+      if (!double_speed && hadja_state != 7)
 	{
 	  for (i = 0; i < nscroll_texts; i++) 
 	    {
@@ -472,6 +471,9 @@ about_dialog_key (GtkWidget      *widget,
 {
   gint i;
   
+  if (hadja_state == 7)
+    return FALSE;
+    
   switch (event->keyval)
     {
     case GDK_h:
@@ -515,15 +517,13 @@ about_dialog_key (GtkWidget      *widget,
 	{
 	  shuffle_array[i] = i;
 	  scroll_text_widths[i] = gdk_string_width (scroll_area->style->font,
-						  scroll_text[i]);
+						    scroll_text[i]);
 	}
       
       scroll_state = 0;
       cur_scroll_index = 0;
       cur_scroll_text = 0;
       offset = 0;
-      
-      double_speed = TRUE;    
     }
   
   return FALSE;

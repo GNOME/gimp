@@ -1,3 +1,7 @@
+2000-08-24  Sven Neumann  <sven@gimp.org>
+
+	* app/about_dialog.c: sorry, Tor, that wouldn't compile under gdk-1.2.
+
 2000-08-24  Tor Lillqvist  <tml@iki.fi>
 
 	* README.win32: Update, tell people the MSVC makefiles are not
