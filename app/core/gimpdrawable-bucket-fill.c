@@ -155,6 +155,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
   guchar       col[MAX_CHANNELS];
   TempBuf     *pat_buf = NULL;
   gboolean     new_buf = FALSE;
+  gboolean     selection;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (fill_mode != GIMP_PATTERN_BUCKET_FILL ||
@@ -223,8 +224,9 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
 
   gimp_set_busy (gimage->gimp);
 
-  bytes = gimp_drawable_bytes (drawable);
+  bytes     = gimp_drawable_bytes (drawable);
   has_alpha = gimp_drawable_has_alpha (drawable);
+  selection = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   /*  Do a seed bucket fill...To do this, calculate a new 
    *  contiguous region. If there is a selection, calculate the 
@@ -232,9 +234,6 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
    */
   if (do_seed_fill)
     {
-      GimpChannel *old_mask = NULL;
-      
-      old_mask = gimp_image_get_mask (gimage);
       mask = gimp_image_contiguous_region_by_seed (gimage, drawable,
                                                    sample_merged,
                                                    TRUE,
@@ -243,16 +242,19 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
                                                    (gint) x,
                                                    (gint) y);
 
-      if ( gimp_channel_bounds (old_mask, &x1, &y1, &x2, &y2))
+      if (selection)
         {
-          gint off_x, off_y;
+          gint off_x = 0;
+          gint off_y = 0;
 
-          gimp_drawable_offsets (drawable, &off_x, &off_y);
-          gimp_channel_combine_mask (mask, old_mask, 
+          if (! sample_merged)
+            gimp_drawable_offsets (drawable, &off_x, &off_y);
+
+          gimp_channel_combine_mask (mask, gimp_image_get_mask (gimage),
                                      GIMP_CHANNEL_OP_INTERSECT,
-                                     off_x, off_y);
+                                     -off_x, -off_y);
         }
-      
+
       gimp_channel_bounds (mask, &x1, &y1, &x2, &y2);
 
       /*  make sure we handle the mask correctly if it was sample-merged  */

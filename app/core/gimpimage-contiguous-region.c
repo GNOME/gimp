@@ -105,6 +105,8 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
 
       has_alpha =
         GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_image_projection_type (gimage));
+
+      bytes = gimp_image_projection_bytes (gimage);
     }
   else
     {
@@ -115,12 +117,12 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
 			 FALSE);
 
       has_alpha = gimp_drawable_has_alpha (drawable);
-    }
 
-  if (gimp_drawable_is_indexed (drawable))
-    bytes = has_alpha ? 4 : 3;
-  else
-    bytes = gimp_drawable_bytes (drawable);
+      if (gimp_drawable_is_indexed (drawable))
+        bytes = has_alpha ? 4 : 3;
+      else
+        bytes = gimp_drawable_bytes (drawable);
+    }
 
   mask = gimp_channel_new_mask (gimage, srcPR.w, srcPR.h);
   pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
