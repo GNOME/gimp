@@ -21,6 +21,24 @@
 
 #include "gimp.h"
 
+/**
+ * gimp_selection_float:
+ * @image_ID: ignored
+ * @drawable_ID: The drawable from which to float selection.
+ * @offx: x offset for translation.
+ * @offy: y offset for translation.
+ *
+ * Float the selection from the specified drawable with initial offsets
+ * as specified.
+ *
+ * This procedure determines the region of the specified drawable that
+ * lies beneath the current selection. The region is then cut from the
+ * drawable and the resulting data is made into a new layer which is
+ * instantiated as a floating selection. The offsets allow initial
+ * positioning of the new floating selection.
+ *
+ * Returns: The floated layer.
+ */
 gint32
 gimp_selection_float (gint32 image_ID,
 		      gint32 drawable_ID,
@@ -31,4 +49,3 @@ gimp_selection_float (gint32 image_ID,
 				offx, 
 				offy);
 }
-

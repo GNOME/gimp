@@ -22,6 +22,19 @@
 #include "gimp.h"
 
 
+/**
+ * gimp_image_get_cmap:
+ * @image_ID: The image.
+ * @num_colors: Number of colors in the colormap array.
+ *
+ * Returns the image's colormap
+ *
+ * This procedure returns an actual pointer to the image's colormap, as
+ * well as the number of colors contained in the colormap. If the image 
+ * is not of base type INDEXED, this pointer will be NULL.
+ *
+ * Returns: The image's colormap.
+ */
 guchar *
 gimp_image_get_cmap (gint32  image_ID,
 		     gint   *num_colors)
@@ -37,6 +50,21 @@ gimp_image_get_cmap (gint32  image_ID,
   return cmap;
 }
 
+/**
+ * gimp_image_set_cmap:
+ * @image_ID: The image.
+ * @cmap: The new colormap values.
+ * @num_colors: Number of colors in the colormap array.
+ *
+ * Sets the entries in the image's colormap.
+ *
+ * This procedure sets the entries in the specified image's colormap.
+ * The number of colors is specified by the \"num_colors\" parameter
+ * and corresponds to the number of INT8 triples that must be contained
+ * in the \"cmap\" array.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_set_cmap (gint32  image_ID,
 		     guchar *cmap,

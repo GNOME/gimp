@@ -1,5 +1,13 @@
 2000-08-25  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpchannel.c
+	* libgimp/gimpimage.c
+	* libgimp/gimplayer.c
+	* libgimp/gimpproceduraldb.c
+	* libgimp/gimpselection.c: document wrapped PDB wrappers
+
+2000-08-25  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimp*_pdb.c
 	* tools/pdbgen/lib.pl: autogenerate gtkdoc comments for all PDB 
 	wrappers.

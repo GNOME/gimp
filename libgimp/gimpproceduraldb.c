@@ -21,6 +21,31 @@
 
 #include "gimp.h"
 
+/**
+ * gimp_procedural_db_proc_info:
+ * @procedure: The procedure name.
+ * @blurb: A short blurb.
+ * @help: Detailed procedure help.
+ * @author: Author(s) of the procedure.
+ * @copyright: The copyright.
+ * @date: Copyright date.
+ * @proc_type: The procedure type.
+ * @num_args: The number of input arguments.
+ * @num_values: The number of return values.
+ * @args: The input arguments.
+ * @return_vals: The return values.
+ *
+ * Queries the procedural database for information on the specified
+ * procedure.
+ *
+ * This procedure returns information on the specified procedure. A
+ * short blurb, detailed help, author(s), copyright information,
+ * procedure type, number of input, and number of return values are 
+ * returned. Additionally this function returns specific information 
+ * about each input argument and return value.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_procedural_db_proc_info (gchar            *procedure,
 			      gchar           **blurb,
@@ -86,6 +111,20 @@ gimp_procedural_db_proc_info (gchar            *procedure,
   return success;
 }
 
+/**
+ * gimp_procedural_db_get_data:
+ * @identifier: The identifier associated with data.
+ * @data: A byte array containing data.
+ *
+ * Returns data associated with the specified identifier.
+ *
+ * This procedure returns any data which may have been associated with
+ * the specified identifier. The data is copied into the given memory 
+ * location.
+ *
+ * Returns: TRUE on success, FALSE if no data has been associated with 
+ * the identifier
+ */
 gboolean
 gimp_procedural_db_get_data (gchar    *identifier,
 			     gpointer  data)
@@ -106,6 +145,19 @@ gimp_procedural_db_get_data (gchar    *identifier,
   return success;
 }
 
+/**
+ * gimp_procedural_db_set_data:
+ * @identifier: The identifier associated with data.
+ * @data: A byte array containing data.
+ *
+ * Associates the specified identifier with the supplied data.
+ *
+ * This procedure associates the supplied data with the provided
+ * identifier. The data may be subsequently retrieved by a call to
+ * 'procedural-db-get-data'.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_procedural_db_set_data (gchar    *identifier,
 			     gpointer  data,
