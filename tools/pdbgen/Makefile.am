@@ -60,7 +60,7 @@ enum_headers = \
 	../../app/paint-funcs/paint-funcs-types.h	\
 	../../app/base/base-enums.h			\
 	../../app/core/core-enums.h			\
-	../../app/core/core-types.h			\
+	../../app/text/text-enums.h			\
 	../../app/paint/paint-enums.h			\
 	../../app/plug-in/plug-in-types.h
 

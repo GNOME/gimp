@@ -1,5 +1,21 @@
 2004-07-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-types.h: removed enum SizeType.
+
+	* app/text/text-enums.h: added it as enum GimpSizeType and added
+	comment that it's for backward compatibility only.
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/pdb/text_tool.pdb: changed accordingly.
+
+	* libgimp/gimpenums.h
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated (pdbgen insisted on
+	reordering the enums).
+
+2004-07-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-types.h: #define MIN and MAX values for
 	GimpCoords.pressure, .tilt and .wheel.
 

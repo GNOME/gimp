@@ -282,16 +282,16 @@ typedef enum
 
 typedef enum
 {
+  GIMP_PIXELS,
+  GIMP_POINTS
+} GimpSizeType;
+
+typedef enum
+{
   GIMP_SHADOWS,
   GIMP_MIDTONES,
   GIMP_HIGHLIGHTS
 } GimpTransferMode;
-
-typedef enum
-{
-  GIMP_PIXELS,
-  GIMP_POINTS
-} GimpSizeType;
 
 
 G_END_DECLS

@@ -406,9 +406,9 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_OFFSET_BACKGROUND => '0',
 		       GIMP_OFFSET_TRANSPARENT => '1' }
 	},
-    SizeType =>
+    GimpSizeType =>
 	{ contig => 1,
-	  header => 'core/core-types.h',
+	  header => 'text/text-enums.h',
 	  symbols => [ qw(GIMP_PIXELS GIMP_POINTS) ],
 	  mapping => { GIMP_PIXELS => '0',
 		       GIMP_POINTS => '1' }

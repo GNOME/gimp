@@ -40,7 +40,7 @@ sub fontname_arg () {{
 sub size_args () {(
     { name => 'size', type => '0 < float',
       desc => 'The size of text in either pixels or points' },
-    { name => 'size_type', type => 'enum SizeType',
+    { name => 'size_type', type => 'enum GimpSizeType',
       desc => 'The units of specified size: %%desc%%' }
 )}
 

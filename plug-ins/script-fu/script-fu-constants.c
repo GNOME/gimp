@@ -228,6 +228,9 @@ init_generated_constants (void)
   setvar (cintern ("RUN-NONINTERACTIVE"), flocons (1), NIL);
   setvar (cintern ("RUN-WITH-LAST-VALS"), flocons (2), NIL);
 
+  setvar (cintern ("PIXELS"), flocons (0), NIL);
+  setvar (cintern ("POINTS"), flocons (1), NIL);
+
   setvar (cintern ("STACK-TRACE-NEVER"), flocons (0), NIL);
   setvar (cintern ("STACK-TRACE-QUERY"), flocons (1), NIL);
   setvar (cintern ("STACK-TRACE-ALWAYS"), flocons (2), NIL);
@@ -242,9 +245,6 @@ init_generated_constants (void)
   setvar (cintern ("UNIT-POINT"), flocons (3), NIL);
   setvar (cintern ("UNIT-PICA"), flocons (4), NIL);
   setvar (cintern ("UNIT-END"), flocons (5), NIL);
-
-  setvar (cintern ("PIXELS"), flocons (0), NIL);
-  setvar (cintern ("POINTS"), flocons (1), NIL);
 
   return;
 }

@@ -24,7 +24,7 @@
 
 GType gimp_text_box_mode_get_type (void) G_GNUC_CONST;
 
-typedef enum
+typedef enum /*< pdb-skip >*/
 {
   GIMP_TEXT_BOX_DYNAMIC,
   GIMP_TEXT_BOX_FIXED
@@ -35,7 +35,7 @@ typedef enum
 
 GType gimp_text_direction_get_type (void) G_GNUC_CONST;
 
-typedef enum
+typedef enum /*< pdb-skip >*/
 {
   GIMP_TEXT_DIRECTION_LTR,   /*< desc="From left to right" >*/
   GIMP_TEXT_DIRECTION_RTL    /*< desc="From right to left" >*/
@@ -46,7 +46,7 @@ typedef enum
 
 GType gimp_text_justification_get_type (void) G_GNUC_CONST;
 
-typedef enum
+typedef enum /*< pdb-skip >*/
 {
   GIMP_TEXT_JUSTIFY_LEFT,    /*< desc="Left justified"  >*/
   GIMP_TEXT_JUSTIFY_RIGHT,   /*< desc="Right justified" >*/
@@ -59,12 +59,21 @@ typedef enum
 
 GType gimp_text_outline_get_type (void) G_GNUC_CONST;
 
-typedef enum
+typedef enum /*< pdb-skip >*/
 {
   GIMP_TEXT_OUTLINE_NONE,
   GIMP_TEXT_OUTLINE_STROKE_ONLY,
   GIMP_TEXT_OUTLINE_STROKE_FILL
 } GimpTextOutline;
+
+
+/*  backward compatibility enums  */
+
+typedef enum /*< skip >*/
+{
+  GIMP_PIXELS,
+  GIMP_POINTS
+} GimpSizeType;
 
 
 #endif /* __TEXT_ENUMS_H__ */

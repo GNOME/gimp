@@ -47,15 +47,6 @@
 #define GIMP_COORDS_DEFAULT_WHEEL     0.5
 
 
-/*  enums  */
-
-typedef enum
-{
-  GIMP_PIXELS,
-  GIMP_POINTS
-} SizeType;
-
-
 /*  base objects  */
 
 typedef struct _GimpObject          GimpObject;
