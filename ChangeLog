@@ -1,6 +1,7 @@
 2003-09-25  Tor Lillqvist  <tml@iki.fi>
 
-	* libgimp/gimpui.def: Add gimp_parameter_settings_new.
+	* libgimp/gimp.def
+	* libgimp/gimpui.def: Add a couple of missing entries.
 
 2003-09-25  DindinX <david@dindinx.net>
 

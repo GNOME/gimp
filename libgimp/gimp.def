@@ -127,6 +127,7 @@ EXPORTS
 	gimp_fuzzy_select
 	gimp_gamma
 	gimp_get_bg_guchar
+	gimp_get_fg_guchar
 	gimp_get_default_comment
 	gimp_get_monitor_resolution
 	gimp_get_path_by_tattoo
@@ -352,6 +353,9 @@ EXPORTS
 	gimp_register_save_handler
 	gimp_rgn_iterate1
 	gimp_rgn_iterate2
+	gimp_rgn_iterator_dest
+	gimp_rgn_iterator_free
+	gimp_rgn_iterator_new
 	gimp_rotate
 	gimp_run_procedure
 	gimp_run_procedure2
