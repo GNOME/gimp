@@ -1001,7 +1001,6 @@ xcf_save_prop (XcfInfo   *info,
             return FALSE;
           }
 
-        g_printerr ("PROP_VECTORS: saved %d bytes\n", length);
         xcf_check_error (xcf_seek_end (info, error));
       }
       break;
@@ -1646,9 +1645,6 @@ xcf_save_vectors (XcfInfo    *info,
   xcf_write_int32_check_error (info, &active_index, 1);
   xcf_write_int32_check_error (info, &num_paths,    1);
 
-  g_printerr ("%d paths (active: %d, version: %d)\n",
-              num_paths, active_index, version);
-
   for (list = GIMP_LIST (gimage->vectors)->list;
        list;
        list = g_list_next (list))
@@ -1689,10 +1685,6 @@ xcf_save_vectors (XcfInfo    *info,
       xcf_write_int32_check_error  (info, &linked,        1);
       xcf_write_int32_check_error  (info, &num_parasites, 1);
       xcf_write_int32_check_error  (info, &num_strokes,   1);
-
-      g_printerr ("name: %s, tattoo: %d, visible: %d, linked: %d, "
-                  "num_parasites %d, num_strokes %d\n",
-                  name, tattoo, visible, linked, num_parasites, num_strokes);
 
       xcf_check_error (xcf_save_parasite_list (info, parasites, error));
 
@@ -1739,9 +1731,6 @@ xcf_save_vectors (XcfInfo    *info,
           xcf_write_int32_check_error (info, &num_axes,            1);
           xcf_write_int32_check_error (info, &control_points->len, 1);
 
-          g_printerr ("stroke_type: %d, closed: %d, num_axes %d, len %d\n",
-                      stroke_type, closed, num_axes, control_points->len);
-
           for (i = 0; i < control_points->len; i++)
             {
               GimpAnchor *anchor;
@@ -1770,10 +1759,6 @@ xcf_save_vectors (XcfInfo    *info,
 
               xcf_write_int32_check_error (info, &type, 1);
               xcf_write_float_check_error (info, coords, num_axes);
-
-              g_printerr ("Anchor: %d, (%f, %f, %f, %f, %f, %f)\n", type,
-                          coords[0], coords[1], coords[2], coords[3],
-                          coords[4], coords[5]);
             }
 
           g_array_free (control_points, TRUE);

@@ -1,5 +1,12 @@
 2003-12-30  Simon Budig  <simon@gimp.org>
 
+	* app/vectors/gimpvectors-compat.c: When there is a visible
+	path, it cannot be stored in the XCF in a portable manner.
+
+	* app/xcf/xcf-save.c: Removed Debug output
+
+2003-12-30  Simon Budig  <simon@gimp.org>
+
 	* app/gui/stroke-dialog.c: Save the stroking type (libart /
 	paint-tool) so that it can be remembered when the dialog
 	gets opened a second time. Fixes Bug #128156.

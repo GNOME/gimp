@@ -141,6 +141,9 @@ gimp_vectors_compat_is_compatible (GimpImage *gimage)
 
       vectors = GIMP_VECTORS (list->data);
 
+      if (GIMP_ITEM (vectors)->visible == TRUE)
+        return FALSE;
+
       for (strokes = vectors->strokes; strokes; strokes = g_list_next (strokes))
         {
           stroke = GIMP_STROKE (strokes->data);
