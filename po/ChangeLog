@@ -1,3 +1,7 @@
+2004-06-02  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: added gimptoolbox-dnd.c and gimptoolbox-image-area.c
+
 2004-06-01  Funda Wang  <fundawang@linux.net.cn>
 
 	* zh_CN.po: Updated Simplified Chinese translation.
