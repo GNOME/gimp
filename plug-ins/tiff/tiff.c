@@ -1053,6 +1053,7 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
   switch (drawable_type)
     {
     case RGB_IMAGE:
+      predictor = 2;
       samplesperpixel = 3;
       bitspersample = 8;
       photometric = PHOTOMETRIC_RGB;
@@ -1067,6 +1068,7 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
       alpha = 0;
       break;
     case RGBA_IMAGE:
+      predictor = 2;
       samplesperpixel = 4;
       bitspersample = 8;
       photometric = PHOTOMETRIC_RGB;

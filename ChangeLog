@@ -1,3 +1,8 @@
+Mon Jan 11 18:11:32 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/tiff/tiff.c: small patch from Nick Lamb that
+	does "The Right Thing (TM)" for RGB tiff images
+
 Mon Jan 11 17:30:06 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* commands.[ch]
