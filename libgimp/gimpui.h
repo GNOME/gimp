@@ -28,6 +28,10 @@
 
 #include <libgimp/gimpexport.h>
 #include <libgimp/gimpmenu.h>
+#include <libgimp/gimpbrushmenu.h>
+#include <libgimp/gimpfontmenu.h>
+#include <libgimp/gimpgradientmenu.h>
+#include <libgimp/gimppatternmenu.h>
 #include <libgimp/gimpmiscui.h>
 
 G_BEGIN_DECLS

@@ -28,160 +28,201 @@
 #include "libgimp-intl.h"
 
 
-#define FSEL_DATA_KEY  "__fsel_data"
+#define FONT_SELECT_DATA_KEY  "gimp-font-selct-data"
 
-typedef struct
+
+typedef struct _FontSelect FontSelect;
+
+struct _FontSelect
 {
   gchar               *title;
   GimpRunFontCallback  callback;
+  gpointer             data;
+
   GtkWidget           *button;
   GtkWidget           *label;
+
   gchar               *font_name;      /* Local copy */
-  gchar               *font_popup_pnt; /* Pointer use to control the popup */
-  gpointer             data;
-} FSelect;
+
+  const gchar         *temp_font_callback;
+};
 
 
-static void
-font_select_invoker (const gchar *name,
-                     gboolean     closing,
-                     gpointer     data)
-{
-  FSelect *fsel = (FSelect*) data;
+/*  local function prototypes  */
 
-  g_free (fsel->font_name);
-  fsel->font_name = g_strdup (name);
+static void   gimp_font_select_widget_callback (const gchar *name,
+                                                gboolean     closing,
+                                                gpointer     data);
+static void   gimp_font_select_widget_clicked  (GtkWidget   *widget,
+                                                FontSelect  *font_sel);
+static void   gimp_font_select_widget_destroy  (GtkWidget   *widget,
+                                                FontSelect  *font_sel);
 
-  gtk_label_set_text (GTK_LABEL (fsel->label), name);
-
-  if (fsel->callback)
-    fsel->callback (name, closing, fsel->data);
-
-  if (closing)
-    fsel->font_popup_pnt = NULL;
-}
-
-
-static void
-fonts_select_callback (GtkWidget *widget,
-                       gpointer   data)
-{
-  FSelect *fsel = (FSelect*) data;
-
-  if (fsel->font_popup_pnt)
-    {
-      /*  calling gimp_fonts_set_popup() raises the dialog  */
-      gimp_fonts_set_popup (fsel->font_popup_pnt, fsel->font_name); 
-    }
-  else
-    {
-      fsel->font_popup_pnt = 
-	gimp_interactive_selection_font (fsel->title ?
-					 fsel->title : _("Font Selection"),
-					 fsel->font_name,
-					 font_select_invoker, fsel);
-    }
-}
 
 /**
- * gimp_font_select_widget:
- * @title: Title of the dialog to use or %NULL means to use the default title.
+ * gimp_font_select_widget_new:
+ * @title:     Title of the dialog to use or %NULL means to use the default
+ *             title.
  * @font_name: Initial font name. 
- * @callback: a function to call when the selected font changes.
- * @data: a pointer to arbitary data to be used in the call to @callback.
+ * @callback:  A function to call when the selected font changes.
+ * @data:      A pointer to arbitary data to be used in the call to @callback.
  *
- * Creates a new #GtkWidget that completely controls the selection of a 
- * font.  This widget is suitable for placement in a table in a
+ * Creates a new #GtkWidget that completely controls the selection of
+ * a font.  This widget is suitable for placement in a table in a
  * plug-in dialog.
  *
- * Returns:A #GtkWidget that you can use in your UI.
+ * Returns: A #GtkWidget that you can use in your UI.
  */
 GtkWidget * 
-gimp_font_select_widget (const gchar         *title,
-                         const gchar         *font_name, 
-                         GimpRunFontCallback  callback,
-                         gpointer             data)
+gimp_font_select_widget_new (const gchar         *title,
+                             const gchar         *font_name, 
+                             GimpRunFontCallback  callback,
+                             gpointer             data)
 {
-  GtkWidget *hbox;
-  GtkWidget *image;
-  FSelect   *fsel;
+  FontSelect *font_sel;
+  GtkWidget  *hbox;
+  GtkWidget  *image;
 
-  g_return_val_if_fail (font_name != NULL, NULL);
+  g_return_val_if_fail (callback != NULL, NULL);
 
-  fsel = g_new0 (FSelect, 1);
-  
-  fsel->callback  = callback;
-  fsel->data      = data;
-  fsel->font_name = g_strdup (font_name);
-  fsel->title     = g_strdup (title);
+  if (! title)
+    title = _("Font Selection");
 
-  fsel->button = gtk_button_new ();
-  
+  font_sel = g_new0 (FontSelect, 1);
+
+  font_sel->title    = g_strdup (title);
+  font_sel->callback = callback;
+  font_sel->data     = data;
+
+  font_sel->font_name = g_strdup (font_name);
+
+  font_sel->button = gtk_button_new ();
+
+  g_signal_connect (font_sel->button, "clicked",
+                    G_CALLBACK (gimp_font_select_widget_clicked),
+                    font_sel);
+  g_signal_connect (font_sel->button, "destroy",
+                    G_CALLBACK (gimp_font_select_widget_destroy),
+                    font_sel);
+
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_add (GTK_CONTAINER (fsel->button), hbox);
+  gtk_container_add (GTK_CONTAINER (font_sel->button), hbox);
   gtk_widget_show (hbox);
-  
-  fsel->label = gtk_label_new (font_name);
-  gtk_box_pack_start (GTK_BOX (hbox), fsel->label, TRUE, TRUE, 4);
-  gtk_widget_show (fsel->label);
+
+  font_sel->label = gtk_label_new (font_name);
+  gtk_box_pack_start (GTK_BOX (hbox), font_sel->label, TRUE, TRUE, 4);
+  gtk_widget_show (font_sel->label);
 
   image = gtk_image_new_from_stock (GTK_STOCK_SELECT_FONT,
                                     GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 4);
   gtk_widget_show (image);
 
-  g_signal_connect (fsel->button, "clicked",
-                    G_CALLBACK (fonts_select_callback),
-                    fsel);
+  g_object_set_data (G_OBJECT (font_sel->button),
+                     FONT_SELECT_DATA_KEY, font_sel);
 
-  g_object_set_data (G_OBJECT (fsel->button), FSEL_DATA_KEY, fsel);
-
-  return fsel->button;
+  return font_sel->button;
 }
 
 /**
- * gimp_font_select_widget_close_popup:
+ * gimp_font_select_widget_close:
  * @widget: A font select widget.
  *
  * Closes the popup window associated with @widget.
  */
 void
-gimp_font_select_widget_close_popup (GtkWidget *widget)
+gimp_font_select_widget_close (GtkWidget *widget)
 {
-  FSelect *fsel;
+  FontSelect *font_sel;
 
-  fsel = (FSelect *) g_object_get_data (G_OBJECT (widget), FSEL_DATA_KEY);
+  font_sel = g_object_get_data (G_OBJECT (widget), FONT_SELECT_DATA_KEY);
 
-  if (fsel && fsel->font_popup_pnt)
+  g_return_if_fail (font_sel != NULL);
+
+  if (font_sel->temp_font_callback)
     {
-      gimp_fonts_close_popup (fsel->font_popup_pnt);
-      fsel->font_popup_pnt = NULL;
+      gimp_font_select_destroy (font_sel->temp_font_callback);
+      font_sel->temp_font_callback = NULL;
     }
 }
 
 /**
- * gimp_font_select_widget_set_popup:
- * @widget: A font select widget.
+ * gimp_font_select_widget_set;
+ * @widget:    A font select widget.
  * @font_name: Font name to set; %NULL means no change. 
  *
- * Sets the current font for the font
- * select widget.  Calls the callback function if one was
- * supplied in the call to gimp_font_select_widget().
+ * Sets the current font for the font select widget.  Calls the
+ * callback function if one was supplied in the call to
+ * gimp_font_select_widget_new().
  */
 void
-gimp_font_select_widget_set_popup (GtkWidget   *widget,
-                                   const gchar *font_name)
+gimp_font_select_widget_set (GtkWidget   *widget,
+                             const gchar *font_name)
 {
-  FSelect  *fsel;
-  
-  fsel = (FSelect*) g_object_get_data (G_OBJECT (widget), FSEL_DATA_KEY);
+  FontSelect *font_sel;
 
-  if (fsel)
+  font_sel = g_object_get_data (G_OBJECT (widget), FONT_SELECT_DATA_KEY);
+
+  g_return_if_fail (font_sel != NULL);
+
+  if (font_sel->temp_font_callback)
+    gimp_fonts_set_popup (font_sel->temp_font_callback, font_name);
+  else
+    gimp_font_select_widget_callback (font_name, FALSE, font_sel);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_font_select_widget_callback (const gchar *name,
+                                  gboolean     closing,
+                                  gpointer     data)
+{
+  FontSelect *font_sel = (FontSelect *) data;
+
+  g_free (font_sel->font_name);
+  font_sel->font_name = g_strdup (name);
+
+  gtk_label_set_text (GTK_LABEL (font_sel->label), name);
+
+  if (font_sel->callback)
+    font_sel->callback (name, closing, font_sel->data);
+
+  if (closing)
+    font_sel->temp_font_callback = NULL;
+}
+
+static void
+gimp_font_select_widget_clicked (GtkWidget  *widget,
+                                 FontSelect *font_sel)
+{
+  if (font_sel->temp_font_callback)
     {
-      font_select_invoker (font_name, FALSE, fsel);
-      
-      if (fsel->font_popup_pnt)
-	gimp_fonts_set_popup (fsel->font_popup_pnt, (gchar *) font_name);
+      /*  calling gimp_fonts_set_popup() raises the dialog  */
+      gimp_fonts_set_popup (font_sel->temp_font_callback, font_sel->font_name); 
+    }
+  else
+    {
+      font_sel->temp_font_callback =
+        gimp_font_select_new (font_sel->title,
+                              font_sel->font_name,
+                              gimp_font_select_widget_callback,
+                              font_sel);
     }
 }
 
+static void
+gimp_font_select_widget_destroy (GtkWidget  *widget,
+                                 FontSelect *font_sel)
+{
+  if (font_sel->temp_font_callback)
+    {
+      gimp_font_select_destroy (font_sel->temp_font_callback);
+      font_sel->temp_font_callback = NULL;
+    }
+
+  g_free (font_sel->title);
+  g_free (font_sel->font_name);
+  g_free (font_sel);
+}

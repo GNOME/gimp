@@ -122,39 +122,3 @@ Functions related to getting and setting brushes.
 @pname: 
 
 
-<!-- ##### FUNCTION gimp_brushes_popup ##### -->
-<para>
-
-</para>
-
-@brush_callback: 
-@popup_title: 
-@initial_brush: 
-@opacity: 
-@spacing: 
-@paint_mode: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_brushes_close_popup ##### -->
-<para>
-
-</para>
-
-@brush_callback: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_brushes_set_popup ##### -->
-<para>
-
-</para>
-
-@brush_callback: 
-@brush_name: 
-@opacity: 
-@spacing: 
-@paint_mode: 
-@Returns: 
-
-

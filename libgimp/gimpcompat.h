@@ -31,18 +31,38 @@ G_BEGIN_DECLS
  * These defines will be removed in the next development cycle. 
  */
 
-#define GimpRunModeType           GimpRunMode
+#define GimpRunModeType                         GimpRunMode
 
-#define gimp_use_xshm             TRUE
-#define gimp_color_cube           ((guchar *) { 6, 6, 4, 24 })
+#define gimp_use_xshm                           TRUE
+#define gimp_color_cube                         ((guchar *) { 6, 6, 4, 24 })
 
-#define gimp_crop                 gimp_image_crop
+#define gimp_crop                               gimp_image_crop
 
-#define gimp_gradients_get_active gimp_gradients_get_gradient
-#define gimp_gradients_set_active gimp_gradients_set_gradient
+#define gimp_gradients_get_active               gimp_gradients_get_gradient
+#define gimp_gradients_set_active               gimp_gradients_set_gradient
 
-#define gimp_help_init()          ((void) 0)
-#define gimp_help_free()          ((void) 0)
+#define gimp_help_init()                        ((void) 0)
+#define gimp_help_free()                        ((void) 0)
+
+#define gimp_interactive_selection_brush        gimp_brush_select_new
+#define gimp_brush_select_widget                gimp_brush_select_widget_new
+#define gimp_brush_select_widget_set_popup      gimp_brush_select_widget_set
+#define gimp_brush_select_widget_close_popup    gimp_brush_select_widget_close
+
+#define gimp_interactive_selection_font         gimp_font_select_new
+#define gimp_gradient_select_widget             gimp_gradient_select_widget_new
+#define gimp_gradient_select_widget_set_popup   gimp_gradient_select_widget_set
+#define gimp_gradient_select_widget_close_popup gimp_gradient_select_widget_close
+
+#define gimp_interactive_selection_gradient     gimp_gradient_select_new
+#define gimp_font_select_widget                 gimp_font_select_widget_new
+#define gimp_font_select_widget_set_popup       gimp_font_select_widget_set
+#define gimp_font_select_widget_close_popup     gimp_font_select_widget_close
+
+#define gimp_interactive_selection_pattern      gimp_pattern_select_new
+#define gimp_pattern_select_widget              gimp_pattern_select_widget_new
+#define gimp_pattern_select_widget_set_popup    gimp_pattern_select_widget_set
+#define gimp_pattern_select_widget_close_popup  gimp_pattern_select_widget_close
 
 
 enum

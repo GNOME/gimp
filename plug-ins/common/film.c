@@ -1286,10 +1286,10 @@ create_selection_tab (GtkWidget *notebook,
                     &filmvals.number_start);
 
   /* Fontfamily for numbering */
-  font_sel = gimp_font_select_widget (NULL,
-                                      filmvals.number_fontf,
-                                      film_font_select_callback,
-                                      &filmvals);
+  font_sel = gimp_font_select_widget_new (NULL,
+                                          filmvals.number_fontf,
+                                          film_font_select_callback,
+                                          &filmvals);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("_Font:"), 1.0, 0.5,
 			     font_sel, 1, FALSE);

@@ -67,33 +67,3 @@ Functions relating to patterns.
 @mask_data_size: 
 
 
-<!-- ##### FUNCTION gimp_patterns_popup ##### -->
-<para>
-
-</para>
-
-@pattern_callback: 
-@popup_title: 
-@initial_pattern: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_patterns_close_popup ##### -->
-<para>
-
-</para>
-
-@pattern_callback: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_patterns_set_popup ##### -->
-<para>
-
-</para>
-
-@pattern_callback: 
-@pattern_name: 
-@Returns: 
-
-

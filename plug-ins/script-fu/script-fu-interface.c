@@ -1338,36 +1338,36 @@ script_fu_interface (SFScript *script)
 	  widget_leftalign = FALSE;
 
 	  sf_interface->args_widgets[i] = 
-	    gimp_font_select_widget (_("Script-Fu Font Selection"),
-                                     script->arg_values[i].sfa_font,
-                                     script_fu_font_preview,
-                                     &script->arg_values[i].sfa_font);
+	    gimp_font_select_widget_new (_("Script-Fu Font Selection"),
+                                         script->arg_values[i].sfa_font,
+                                         script_fu_font_preview,
+                                         &script->arg_values[i].sfa_font);
 	  break;
 
 	case SF_PATTERN:
 	  sf_interface->args_widgets[i] =
-	    gimp_pattern_select_widget (_("Script-fu Pattern Selection"),
-					script->arg_values[i].sfa_pattern, 
-					script_fu_pattern_preview,
-					&script->arg_values[i].sfa_pattern);
+	    gimp_pattern_select_widget_new (_("Script-fu Pattern Selection"),
+                                            script->arg_values[i].sfa_pattern, 
+                                            script_fu_pattern_preview,
+                                            &script->arg_values[i].sfa_pattern);
 	  break;
 	case SF_GRADIENT:
 	  sf_interface->args_widgets[i] =
-	    gimp_gradient_select_widget (_("Script-Fu Gradient Selection"),
-					 script->arg_values[i].sfa_gradient, 
-					 script_fu_gradient_preview,
-					 &script->arg_values[i].sfa_gradient);
+	    gimp_gradient_select_widget_new (_("Script-Fu Gradient Selection"),
+                                             script->arg_values[i].sfa_gradient, 
+                                             script_fu_gradient_preview,
+                                             &script->arg_values[i].sfa_gradient);
 	  break;
 
 	case SF_BRUSH:
 	  sf_interface->args_widgets[i] = 
-	    gimp_brush_select_widget (_("Script-Fu Brush Selection"),
-				      script->arg_values[i].sfa_brush.name, 
-				      script->arg_values[i].sfa_brush.opacity, 
-				      script->arg_values[i].sfa_brush.spacing, 
-				      script->arg_values[i].sfa_brush.paint_mode, 
-				      script_fu_brush_preview,
-				      &script->arg_values[i].sfa_brush);
+	    gimp_brush_select_widget_new (_("Script-Fu Brush Selection"),
+                                          script->arg_values[i].sfa_brush.name, 
+                                          script->arg_values[i].sfa_brush.opacity, 
+                                          script->arg_values[i].sfa_brush.spacing, 
+                                          script->arg_values[i].sfa_brush.paint_mode, 
+                                          script_fu_brush_preview,
+                                          &script->arg_values[i].sfa_brush);
 	  break;
 
 	case SF_OPTION:
@@ -1443,19 +1443,19 @@ script_fu_interface_quit (SFScript *script)
     switch (script->arg_types[i])
       {
       case SF_FONT:
-  	gimp_font_select_widget_close_popup (sf_interface->args_widgets[i]);
+  	gimp_font_select_widget_close (sf_interface->args_widgets[i]);
 	break;
 
       case SF_PATTERN:
-  	gimp_pattern_select_widget_close_popup (sf_interface->args_widgets[i]); 
+  	gimp_pattern_select_widget_close (sf_interface->args_widgets[i]); 
 	break;
 
       case SF_GRADIENT:
-  	gimp_gradient_select_widget_close_popup (sf_interface->args_widgets[i]); 
+  	gimp_gradient_select_widget_close (sf_interface->args_widgets[i]); 
 	break;
 
       case SF_BRUSH:
-  	gimp_brush_select_widget_close_popup (sf_interface->args_widgets[i]); 
+  	gimp_brush_select_widget_close (sf_interface->args_widgets[i]); 
 	break;
 
       default:
@@ -1939,27 +1939,26 @@ script_fu_reset_callback (GtkWidget *widget,
 	break;
 
       case SF_FONT:
-  	gimp_font_select_widget_set_popup
-	  (sf_interface->args_widgets[i], script->arg_defaults[i].sfa_font);  
+  	gimp_font_select_widget_set (sf_interface->args_widgets[i],
+                                     script->arg_defaults[i].sfa_font);  
 	break;
 
       case SF_PATTERN:
-  	gimp_pattern_select_widget_set_popup
-	  (sf_interface->args_widgets[i], script->arg_defaults[i].sfa_pattern);  
+  	gimp_pattern_select_widget_set (sf_interface->args_widgets[i],
+                                        script->arg_defaults[i].sfa_pattern);  
 	break;
 
       case SF_GRADIENT:
-  	gimp_gradient_select_widget_set_popup
-	  (sf_interface->args_widgets[i], script->arg_defaults[i].sfa_gradient);  
+  	gimp_gradient_select_widget_set (sf_interface->args_widgets[i],
+                                         script->arg_defaults[i].sfa_gradient);  
 	break;
 
       case SF_BRUSH:
-  	gimp_brush_select_widget_set_popup
-	  (sf_interface->args_widgets[i],
-	   script->arg_defaults[i].sfa_brush.name,
-	   script->arg_defaults[i].sfa_brush.opacity, 
-	   script->arg_defaults[i].sfa_brush.spacing, 
-	   script->arg_defaults[i].sfa_brush.paint_mode);  
+  	gimp_brush_select_widget_set (sf_interface->args_widgets[i],
+                                      script->arg_defaults[i].sfa_brush.name,
+                                      script->arg_defaults[i].sfa_brush.opacity,
+                                      script->arg_defaults[i].sfa_brush.spacing,
+                                      script->arg_defaults[i].sfa_brush.paint_mode);
 	break;
 
       case SF_OPTION:

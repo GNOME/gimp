@@ -153,16 +153,24 @@ libgimp_1_3_la_SOURCES = \
 	gimptypes.h		\
 	${PDB_WRAPPERS_C}	\
 	${PDB_WRAPPERS_H}	\
+	gimpbrushselect.c	\
+	gimpbrushselect.h	\
 	gimpchannel.c		\
 	gimpchannel.h		\
 	gimpdrawable.c		\
 	gimpdrawable.h		\
+	gimpfontselect.c	\
+	gimpfontselect.h	\
+	gimpgradientselect.c	\
+	gimpdradientselect.h	\
 	gimpimage.c		\
 	gimpimage.h		\
 	gimplayer.c		\
 	gimplayer.h		\
 	gimpmisc.c		\
 	gimpmisc.h		\
+	gimppatternselect.c	\
+	gimppatternselect.h	\
 	gimppixelrgn.c		\
 	gimppixelrgn.h		\
 	gimpproceduraldb.c	\
@@ -184,9 +192,13 @@ libgimpui_1_3_la_SOURCES = \
 	gimpmiscui.c		\
 	gimpmiscui.h		\
 	gimpbrushmenu.c		\
+	gimpbrushmenu.h		\
 	gimpfontmenu.c		\
+	gimpfontmenu.h		\
 	gimpgradientmenu.c 	\
+	gimpgradientmenu.h 	\
 	gimppatternmenu.c	\
+	gimppatternmenu.h	\
 	gimpexport.c		\
 	gimpexport.h
 
@@ -195,21 +207,30 @@ gimpinclude_HEADERS = \
 	gimpcompat.h		\
 	gimptypes.h		\
 	${PDB_WRAPPERS_H}	\
+	gimpbrushselect.h	\
 	gimpchannel.h		\
 	gimpdrawable.h		\
 	gimpenums.h		\
+	gimpfontselect.h	\
+	gimpgradientselect.h	\
 	gimpimage.h		\
 	gimplayer.h		\
 	gimpmisc.h		\
+	gimppatternselect.h	\
 	gimppixelrgn.h		\
 	gimpproceduraldb.h	\
 	gimpselection.h		\
 	gimptile.h		\
+	\
 	gimpexport.h		\
 	gimpmiscui.h		\
 	gimpui.h		\
 	gimpuitypes.h		\
-	gimpmenu.h
+	gimpmenu.h		\
+	gimpbrushmenu.h		\
+	gimpfontmenu.h		\
+	gimpgradientmenu.h	\
+	gimppatternmenu.h
 
 libgimp_1_3_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \

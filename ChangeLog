@@ -1,3 +1,43 @@
+2003-07-01  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpmenu.[ch]: removed all brush, font, gradient
+	and pattern related code.
+
+	* libgimp/gimpbrushselect.[ch]
+	* libgimp/gimpfontselect.[ch]
+	* libgimp/gimpgradientselect.[ch]
+	* libgimp/gimppatternselect.[ch]: new files containing the
+	wrappers around their resp. _pdb.[ch] files. Changed function
+	names to gimp_*_select_new(). Added gimp_*_select_destroy()
+	functions so we're not forced to leak all wrappers. Cleanup.
+
+	* libgimp/gimpbrushmenu.h
+	* libgimp/gimpfontmenu.h
+	* libgimp/gimpgradientmenu.h
+	* libgimp/gimppatternmenu.h: new files. Changed function names
+	here too.
+
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpfontmenu.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimppatternmenu.c: changed accordingly. Free the
+	foo_select wrappers when they are no longer needed (generally,
+	free everthing instead of leaking everything). Lots of cleanup.
+
+	* libgimp/Makefile.am
+	* libgimp/gimp.def
+	* libgimp/gimpui.def: changed accordingly.
+
+	* libgimp/gimp.h
+	* libgimp/gimpui.h: include the new headers.
+
+	* libgimp/gimpcompat.h: added the old function names here.
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/common/film.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/script-fu/script-fu-scripts.c: changed accordingly.
+
 2003-07-01  Sven Neumann  <sven@gimp.org>
 
 	* tools/authorsgen/contributors: removed a double entry, added

@@ -2798,13 +2798,13 @@ select_brush_callback (GtkWidget *widget,
                             bdesc->spacing,
                             bdesc->paint_mode);
   else
-    bdesc->popup = gimp_interactive_selection_brush (_("Gfig Brush Selection"),
-                                                     bdesc->name,
-                                                     100.0,  /*  opacity  */
-                                                     -1,     /*  spacing  */
-                                                     GIMP_NORMAL_MODE,
-                                                     gfig_brush_invoker,
-                                                     bdesc);
+    bdesc->popup = gimp_brush_select_new (_("Gfig Brush Selection"),
+                                          bdesc->name,
+                                          100.0,  /*  opacity  */
+                                          -1,     /*  spacing  */
+                                          GIMP_NORMAL_MODE,
+                                          gfig_brush_invoker,
+                                          bdesc);
 
   brush_list_button_callback (bdesc);
 }

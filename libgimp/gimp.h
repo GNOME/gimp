@@ -31,11 +31,15 @@
 #include <libgimp/gimpenums.h>
 #include <libgimp/gimptypes.h>
 
+#include <libgimp/gimpbrushselect.h>
 #include <libgimp/gimpchannel.h>
 #include <libgimp/gimpdrawable.h>
+#include <libgimp/gimpfontselect.h>
+#include <libgimp/gimpgradientselect.h>
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimplayer.h>
 #include <libgimp/gimpmisc.h>
+#include <libgimp/gimppatternselect.h>
 #include <libgimp/gimppixelrgn.h>
 #include <libgimp/gimpproceduraldb.h>
 #include <libgimp/gimpselection.h>

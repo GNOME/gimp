@@ -3,6 +3,7 @@
                "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
 <!ENTITY Gimp SYSTEM "xml/gimp.xml">
 <!ENTITY GimpBrushes SYSTEM "xml/gimpbrushes.xml">
+<!ENTITY GimpBrushSelect SYSTEM "xml/gimpbrushselect.xml">
 <!ENTITY GimpChannel SYSTEM "xml/gimpchannel.xml">
 <!ENTITY GimpColor SYSTEM "xml/gimpcolor.xml">
 <!ENTITY GimpConvert SYSTEM "xml/gimpconvert.xml">
@@ -11,9 +12,10 @@
 <!ENTITY GimpEdit SYSTEM "xml/gimpedit.xml">
 <!ENTITY GimpFileops SYSTEM "xml/gimpfileops.xml">
 <!ENTITY GimpFloatingsel SYSTEM "xml/gimpfloatingsel.xml">
-<!ENTITY GimpFonts SYSTEM "xml/gimpfonts.xml">
+<!ENTITY GimpFontSelect SYSTEM "xml/gimpfontselect.xml">
 <!ENTITY GimpGimprc SYSTEM "xml/gimpgimprc.xml">
 <!ENTITY GimpGradients SYSTEM "xml/gimpgradients.xml">
+<!ENTITY GimpGradientSelect SYSTEM "xml/gimpgradientselect.xml">
 <!ENTITY GimpGuides SYSTEM "xml/gimpguides.xml">
 <!ENTITY GimpHelp SYSTEM "xml/gimphelp.xml">
 <!ENTITY GimpImage SYSTEM "xml/gimpimage.xml">
@@ -21,6 +23,7 @@
 <!ENTITY GimpMessage SYSTEM "xml/gimpmessage.xml">
 <!ENTITY GimpPalette SYSTEM "xml/gimppalette.xml">
 <!ENTITY GimpPatterns SYSTEM "xml/gimppatterns.xml">
+<!ENTITY GimpPatternSelect SYSTEM "xml/gimppatternselect.xml">
 <!ENTITY GimpPixelrgn SYSTEM "xml/gimppixelrgn.xml">
 <!ENTITY GimpPlugin SYSTEM "xml/gimpplugin.xml">
 <!ENTITY GimpProceduraldb SYSTEM "xml/gimpproceduraldb.xml">
@@ -32,6 +35,10 @@
 <!ENTITY GimpEnums SYSTEM "xml/gimpenums.xml">
 <!ENTITY GimpExport SYSTEM "xml/gimpexport.xml">
 <!ENTITY GimpMenu SYSTEM "xml/gimpmenu.xml">
+<!ENTITY GimpBrushMenu SYSTEM "xml/gimpbrushmenu.xml">
+<!ENTITY GimpFontMenu SYSTEM "xml/gimpfontmenu.xml">
+<!ENTITY GimpGradientMenu SYSTEM "xml/gimpgradientmenu.xml">
+<!ENTITY GimpPatternMenu SYSTEM "xml/gimppatternmenu.xml">
 <!ENTITY GimpUI SYSTEM "xml/gimpui.xml">
 <!ENTITY version SYSTEM "version.xml">
 ]>
@@ -68,7 +75,6 @@
     &GimpEdit;
     &GimpFileops;
     &GimpFloatingsel;
-    &GimpFonts;
     &GimpGimprc;
     &GimpGradients;
     &GimpGuides;
@@ -86,6 +92,11 @@
     &GimpTile;
     &GimpTools;
     &GimpUndo;
+
+    &GimpBrushSelect;
+    &GimpFontSelect;
+    &GimpGradientSelect;
+    &GimpPatternSelect;
   </part>
 
   <part id="libgimpui">
@@ -93,5 +104,9 @@
     &GimpUI;
     &GimpExport;
     &GimpMenu;
+    &GimpBrushMenu;
+    &GimpFontMenu;
+    &GimpGradientMenu;
+    &GimpPatternMenu;
   </part>
 </book>

@@ -904,10 +904,10 @@ explorer_dialog (void)
 
   gradient_name = gimp_gradients_get_gradient ();
   gradient_samples = gimp_gradients_sample_uniform (wvals.ncolors);
-  gradient = gimp_gradient_select_widget (_("FractalExplorer Gradient"),
-					  gradient_name,
-					  explorer_gradient_select_callback,
-					  NULL);
+  gradient = gimp_gradient_select_widget_new (_("FractalExplorer Gradient"),
+                                              gradient_name,
+                                              explorer_gradient_select_callback,
+                                              NULL);
   g_free (gradient_name);
   gtk_box_pack_start (GTK_BOX (hbox), gradient, FALSE, FALSE, 0);
   gtk_widget_show (gradient);
