@@ -55,6 +55,7 @@ scriptdata_DATA = \
 	neon-logo.scm				\
 	perspective-shadow.scm			\
 	predator.scm				\
+	ripply-anim.scm				\
 	round-corners.scm			\
 	select_to_brush.scm			\
 	select_to_image.scm			\
