@@ -17,5 +17,6 @@ EXTRA_DIST = \
 	gpb.txt  		\
 	includes.txt		\
 	parasites.txt		\
+	structure.xml		\
 	undo.txt		\
 	xcf.txt

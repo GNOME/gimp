@@ -1,3 +1,9 @@
+2003-02-19  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
+	* structure.xml: started to work on a document that outlines the
+	directory structure of the GIMP source tree.
+
 2003-02-10  Sven Neumann  <sven@gimp.org>
 
 	* parasites.txt: be more strict and require UTF-8 encoding for

@@ -1,0 +1,179 @@
+<?xml version='1.0'?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+                  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+  <article id="structure" lang="en">
+  <articleinfo>
+    <title>
+      Directory Structure of the <application>GIMP</application> Source Tree
+    </title>
+    <author>
+      <firstname>Sven</firstname>
+      <surname>Neumann</surname>
+    </author>
+    <date>February 2003</date>
+    <abstract>
+      <para>
+	This document outlines the directory structure of the
+	<application>GIMP</application> source tree. It should help
+	people to get started with the <application>GIMP</application> code.
+      </para>
+    </abstract>
+  </articleinfo>
+  
+  <para>
+    The <application>GIMP</application> source tree can be divided
+    into the core application, libraries, plug-ins, data files and
+    some stuff that doesn't fit into these catagories. Here is a list
+    of top-level directories:
+  </para>
+  
+  <informaltable>
+    <tgroup cols="2" align="left">
+      <tbody>
+	<row>
+	  <entry><filename>app</filename></entry>
+	  <entry>the application</entry>
+	</row>
+      </tbody>
+    </tgroup>
+  </informaltable>
+
+  <para>  
+    The contents of these directories will be explained in detail in
+    the following sections.
+  </para>
+
+  <sect1 id="app">
+    <title>The <application>GIMP</application> application</title>
+    <para>
+      The source code of the core <application>GIMP</application>
+      application is found in the <filename>app</filename> directory.
+    </para>
+
+    <informaltable>
+      <tgroup cols="2" align="left">
+	<tbody>
+	  <row>
+	    <entry><filename>app/arch</filename></entry>
+	    <entry>
+	      architecture specific code
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/arch/i386</filename></entry>
+	    <entry>
+	      Intel 386 specific code
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/arch/i386/mmx</filename></entry>
+	    <entry>
+	      MMX code for the Intel 386 processor family
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/base</filename></entry>
+	    <entry>
+	      base functionality such as pixel regions, tiles etc.
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/paint-funcs</filename></entry>
+	    <entry>
+	      functions to manipulate pixels, part of the base
+	      functionality, uses code from the arch directory
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/config</filename></entry>
+	    <entry>
+	      handling of config files, provides the GimpConfig
+	      interface and the GimpRc object which is used from
+	      all over of the application. Depends on GObject
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/core</filename></entry>
+	    <entry>
+	      the core of the GIMP core, makes heavy use of GObject
+              but is not GTK+-dependant.
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/file</filename></entry>
+	    <entry>
+	      file handling routines, part of the core
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/paint</filename></entry>
+	    <entry>
+	      paint core that provides different ways to paint strokes
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/plug-in</filename></entry>
+	    <entry>
+	      plug-in handling, part of the core
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/pdb</filename></entry>
+	    <entry>
+	      core side of the Procedural Database, exposes internal
+	      functionality by means of the PDB
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/text</filename></entry>
+	    <entry>
+	      text handling, part of the core
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/vectors</filename></entry>
+	    <entry>
+	      vectors framework, part of the core
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/xcf</filename></entry>
+	    <entry>
+	      XCF file handling, part of the core
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/display</filename></entry>
+	    <entry>
+	      handles displays (e.g. image windows), part of the GUI
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/tools</filename></entry>
+	    <entry>
+	      user interface part of the tools as found in the toolbox.
+	      The actual tool functionality is in the core
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/widgets</filename></entry>
+	    <entry>
+	      a collection of widgets used in the application GUI
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/gui</filename></entry>
+	    <entry>
+	      he code that puts the user interface together
+	    </entry>
+	  </row>
+
+	</tbody>
+      </tgroup>
+    </informaltable>
+
+  </sect1>
+
+  </article>
+
