@@ -1,3 +1,13 @@
+2003-09-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdockable.c (gimp_dockable_init): default to
+	GIMP_TAB_STYLE_PREVIEW.
+	(gimp_dockable_new): fall back to _ICON if
+	dockable->get_preview_func is NULL.
+
+	* app/widgets/gimpdialogfactory.c
+	(gimp_dialog_factories_restore_foreach): ditto.
+
 2003-09-02  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpeditselectiontool.c (init_edit_selection): removed

@@ -119,7 +119,7 @@ gimp_dockable_init (GimpDockable *dockable)
   dockable->blurb            = NULL;
   dockable->stock_id         = NULL;
   dockable->help_id          = NULL;
-  dockable->tab_style        = GIMP_TAB_STYLE_ICON;
+  dockable->tab_style        = GIMP_TAB_STYLE_PREVIEW;
   dockable->dockbook         = NULL;
   dockable->context          = NULL;
   dockable->get_preview_func = NULL;
@@ -251,6 +251,24 @@ gimp_dockable_new (const gchar                *name,
   dockable->get_preview_func = get_preview_func;
   dockable->get_preview_data = get_preview_data;
   dockable->set_context_func = set_context_func;
+
+  if (! get_preview_func)
+    {
+      switch (dockable->tab_style)
+        {
+        case GIMP_TAB_STYLE_PREVIEW:
+          dockable->tab_style = GIMP_TAB_STYLE_ICON;
+          break;
+        case GIMP_TAB_STYLE_PREVIEW_NAME:
+          dockable->tab_style = GIMP_TAB_STYLE_ICON_BLURB;
+          break;
+        case GIMP_TAB_STYLE_PREVIEW_BLURB:
+          dockable->tab_style = GIMP_TAB_STYLE_ICON_BLURB;
+          break;
+        default:
+          break;
+        }
+    }
 
   gimp_help_set_help_data (GTK_WIDGET (dockable), NULL, help_id);
 

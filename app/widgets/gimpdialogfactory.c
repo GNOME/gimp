@@ -1370,7 +1370,7 @@ gimp_dialog_factories_restore_foreach (gconstpointer      key,
 		  gchar        *identifier;
                   gchar        *substring;
                   gint          preview_size = -1;
-                  GimpTabStyle  tab_style = GIMP_TAB_STYLE_ICON;
+                  GimpTabStyle  tab_style    = GIMP_TAB_STYLE_PREVIEW;
 
 		  identifier = (gchar *) pages->data;
 
@@ -1420,6 +1420,24 @@ gimp_dialog_factories_restore_foreach (gconstpointer      key,
                                                       dock,
                                                       identifier,
                                                       preview_size);
+
+                  if (! GIMP_DOCKABLE (dockable)->get_preview_func)
+                    {
+                      switch (tab_style)
+                        {
+                        case GIMP_TAB_STYLE_PREVIEW:
+                          tab_style = GIMP_TAB_STYLE_ICON;
+                          break;
+                        case GIMP_TAB_STYLE_PREVIEW_NAME:
+                          tab_style = GIMP_TAB_STYLE_ICON_BLURB;
+                          break;
+                        case GIMP_TAB_STYLE_PREVIEW_BLURB:
+                          tab_style = GIMP_TAB_STYLE_ICON_BLURB;
+                          break;
+                        default:
+                          break;
+                        }
+                    }
 
                   GIMP_DOCKABLE (dockable)->tab_style = tab_style;
 
