@@ -538,7 +538,7 @@ query(void)
 
     { PARAM_INT32, "cell_width", "screen cell width, in pixels" },
 
-    { PARAM_INT32, "colourspace", "separate to 0:RGB, 1:CMYK, 2:Intensity" },
+    { PARAM_INT32, "colorspace", "separate to 0:RGB, 1:CMYK, 2:Intensity" },
     { PARAM_INT32, "k_pullout", "Percentage of black to pullout (CMYK only)" },
 
     { PARAM_FLOAT, "gry_ang", "Grey/black screen angle (degrees)" },
@@ -559,7 +559,7 @@ query(void)
 
   gimp_install_procedure ("plug_in_newsprint",
 			  _("Re-sample the image to give a newspaper-like effect"),
-			  _("Halftone the image, trading off resolution to represent colours or grey levels using the process described both in the PostScript language definition, and also by Robert Ulichney, \"Digital halftoning\", MIT Press, 1987."),
+			  _("Halftone the image, trading off resolution to represent colors or grey levels using the process described both in the PostScript language definition, and also by Robert Ulichney, \"Digital halftoning\", MIT Press, 1987."),
 			  "Austin Donnelly",
 			  "Austin Donnelly",
 			  "1998 (" VERSION ")",

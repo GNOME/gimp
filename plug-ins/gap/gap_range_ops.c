@@ -292,15 +292,15 @@ p_convert_indexed_dialog(gint32 *dest_colors, gint32 *dest_dither,
 {
 #define ARGC_INDEXED 6  
   static t_arr_arg  argv[ARGC_INDEXED];
-  static char *radio_paltype[4]  = { N_("Generate optimal palette")
-                                   , N_("WEB palette")
-				   , N_("Use custom palette")
-				   , N_("Use black/white (1-bit) palette")
+  static char *radio_paltype[4]  = { N_("Generate Optimal Palette")
+                                   , N_("WEB Palette")
+				   , N_("Use Custom Palette")
+				   , N_("Use Black/White (1-Bit) Palette")
 				   };
-  static char *radio_dither[4]  = { N_("Floyd-Steinberg colour dithering (normal)")
-                                  , N_("Floyd-Steinberg colour dithering (reduced colour bleeding)")
-				  , N_("Positioned colour dithering")
-                                  , N_("No colour dithering")
+  static char *radio_dither[4]  = { N_("Floyd-Steinberg Color Dithering (Normal)")
+                                  , N_("Floyd-Steinberg Color Dithering (Reduced Color Bleeding)")
+				  , N_("Positioned Color Dithering")
+                                  , N_("No Color Dithering")
 				  };
   static int gettextize_loop = 0;
 
@@ -319,12 +319,12 @@ p_convert_indexed_dialog(gint32 *dest_colors, gint32 *dest_dither,
 
   p_init_arr_arg(&argv[1], WGT_TEXT);
   argv[1].label_txt = _("Custom Palette");
-  argv[1].help_txt  = _("name of a cutom palette\n(is ignored if Palette Type is not custom)");
+  argv[1].help_txt  = _("Name of a cutom palette\n(is ignored if Palette Type is not custom)");
   argv[1].text_buf_len = len_palette;
   argv[1].text_buf_ret = palette;
 
   p_init_arr_arg(&argv[2], WGT_TOGGLE);
-  argv[2].label_txt = _("Remove unused");
+  argv[2].label_txt = _("Remove Unused");
   argv[2].help_txt  = _("Remove unused or double colors\n(is ignored if Palette Type is not custom)");
   argv[2].int_ret   = 1;
 

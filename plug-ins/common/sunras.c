@@ -382,7 +382,7 @@ load_image (gchar *filename)
   FILE *ifp;
   char *temp = ident; /* Just to satisfy gcc/lint */
   L_SUNFILEHEADER sunhdr;
-  unsigned char *suncolmap = NULL;
+  guchar *suncolmap = NULL;
 
   ifp = fopen (filename, "rb");
   if (!ifp)
@@ -411,39 +411,33 @@ load_image (gchar *filename)
   /* Is there a RGB colourmap ? */
   if ((sunhdr.l_ras_maptype == 1) && (sunhdr.l_ras_maplength > 0))
     {
-      suncolmap = (unsigned char *)malloc (sunhdr.l_ras_maplength);
-      if (suncolmap == NULL)
+      suncolmap = g_new (guchar, sunhdr.l_ras_maplength);
+
+      read_sun_cols (ifp, &sunhdr, suncolmap);
+#ifdef DEBUG
+      {
+	int j, ncols;
+	printf ("File %s\n",filename);
+	ncols = sunhdr.l_ras_maplength/3;
+	for (j=0; j < ncols; j++)
+	  printf ("Entry 0x%08x: 0x%04x,  0x%04x, 0x%04x\n",
+		  j,suncolmap[j],suncolmap[j+ncols],suncolmap[j+2*ncols]);
+      }
+#endif
+      if (sunhdr.l_ras_magic != RAS_MAGIC)
 	{
-	  g_message ("Can't get memory for colour map");
+	  g_message (_("Can't read color entries"));
 	  fclose (ifp);
 	  return (-1);
 	}
-
-    read_sun_cols (ifp, &sunhdr, suncolmap);
-#ifdef DEBUG
-    {
-      int j, ncols;
-      printf ("File %s\n",filename);
-      ncols = sunhdr.l_ras_maplength/3;
-      for (j=0; j < ncols; j++)
-	printf ("Entry 0x%08x: 0x%04x,  0x%04x, 0x%04x\n",
-		j,suncolmap[j],suncolmap[j+ncols],suncolmap[j+2*ncols]);
-    }
-#endif
-    if (sunhdr.l_ras_magic != RAS_MAGIC)
-      {
-	g_message ("Can't read colour entries");
-	fclose (ifp);
-	return (-1);
-      }
     }
   else if (sunhdr.l_ras_maplength > 0)
     {
-      g_message (_("Type of colourmap not supported"));
+      g_message (_("Type of colormap not supported"));
       fseek (ifp, (sizeof (L_SUNFILEHEADER)/sizeof (L_CARD32))
 	     *4 + sunhdr.l_ras_maplength, SEEK_SET);
     }
-
+  
   if (l_run_mode != RUN_NONINTERACTIVE)
     {
       temp = g_strdup_printf (_("Loading %s:"), filename);
@@ -476,7 +470,7 @@ load_image (gchar *filename)
 
   fclose (ifp);
 
-  if (suncolmap != NULL) free ((char *)suncolmap);
+  g_free (suncolmap);
 
   if (image_ID == -1)
     {

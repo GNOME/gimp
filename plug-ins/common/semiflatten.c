@@ -82,8 +82,8 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_semiflatten",
-			  _("Flatten pixels in an RGBA image that aren't completely transparent against the current GIMP background colour"),
-			  _("This plugin flattens pixels in an RGBA image that aren't completely transparent against the current GIMP background colour"),
+			  _("Flatten pixels in an RGBA image that aren't completely transparent against the current GIMP background color"),
+			  _("This plugin flattens pixels in an RGBA image that aren't completely transparent against the current GIMP background color"),
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "27th January 1998",
@@ -169,9 +169,6 @@ semiflatten_render_row (const guchar *src_row,
       dest_row[col*bytes+3] = (src_row[col*bytes+3] == 0) ? 0 : 255;
     }
 }
-
-
-
 
 
 static void

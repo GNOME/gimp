@@ -45,7 +45,7 @@ static GimpColorSelectorMethods methods =
 
 static GimpModuleInfo info = {
     NULL,
-    N_("GTK colour selector as a pluggable colour selector"),
+    N_("GTK color selector as a pluggable color selector"),
     "Austin Donnelly <austin@gimp.org>",
     "v0.02",
     "(c) 1999, released under the GPL",

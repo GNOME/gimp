@@ -670,7 +670,7 @@ static int find_unused_ia_colour (guchar *pixels,
       return ((*colors)-1);
     }
   
-  g_message (_("GIF: Couldn't simply reduce colours further.  Saving as opaque.\n"));
+  g_message (_("GIF: Couldn't simply reduce colors further.\nSaving as opaque.\n"));
   return (-1);
 }
 
@@ -1051,8 +1051,8 @@ save_image (gchar  *filename,
 	  g_warning("Promised %d bpp, pondered writing chunk with %d bpp!",
 		    liberalBPP, BitsPerPixel);
 #endif
-	  g_warning(_("Transparent colour *might* be incorrect on viewers which"
-		    " don't support transparency."));
+	  g_warning ("Transparent colour *might* be incorrect "
+		      "on viewers which don't support transparency.");
 	}
       useBPP = (BitsPerPixel > liberalBPP) ? BitsPerPixel : liberalBPP;
 

@@ -369,7 +369,7 @@ load_image (gchar *file,
 	  break;
 
 	default:
-	  g_message (_("Unsupported number of colours (%d)"), colours);
+	  g_message (_("Unsupported number of colors (%d)"), colours);
 	  return -1;
 	}
     

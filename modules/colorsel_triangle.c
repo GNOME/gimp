@@ -75,7 +75,7 @@ static GimpColorSelectorMethods methods =
 
 static GimpModuleInfo info = {
     NULL,
-    N_("Painter-style colour selector as a pluggable colour selector"),
+    N_("Painter-style color selector as a pluggable color selector"),
     "Simon Budig <Simon.Budig@unix-ag.org>",
     "v0.01",
     "(c) 1999, released under the GPL",

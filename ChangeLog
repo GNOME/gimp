@@ -1,3 +1,18 @@
+Mon Jan 31 12:15:27 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* modules/colorsel_gtk.c
+	* modules/colorsel_triangle.c
+	* plug-ins/common/CEL.c
+	* plug-ins/common/depthmerge.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/normalize.c
+	* plug-ins/common/semiflatten.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/vinvert.c
+	* plug-ins/gap/gap_range_ops.c: s/colour/color/
+	( The British will probably want to add en_GB po-files? )
+
 Mon Jan 31 10:59:29 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gap/gap_exchange_image.c
