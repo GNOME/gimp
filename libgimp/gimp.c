@@ -199,21 +199,21 @@ gimp_main (int   argc,
    * has been built with MSVC, and the user has MSVC installed.
    */
   gimp_signal_private (SIGHUP,  gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NOMASK);
+		       SA_RESETHAND | SA_NODEFER);
   gimp_signal_private (SIGINT,  gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NOMASK);
+		       SA_RESETHAND | SA_NODEFER);
   gimp_signal_private (SIGQUIT, gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NOMASK);
+		       SA_RESETHAND | SA_NODEFER);
   gimp_signal_private (SIGBUS,  gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NOMASK);
+		       SA_RESETHAND | SA_NODEFER);
   gimp_signal_private (SIGSEGV, gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NOMASK);
+		       SA_RESETHAND | SA_NODEFER);
   gimp_signal_private (SIGPIPE, gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NOMASK);
+		       SA_RESETHAND | SA_NODEFER);
   gimp_signal_private (SIGTERM, gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NOMASK);
+		       SA_RESETHAND | SA_NODEFER);
   gimp_signal_private (SIGFPE,  gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NOMASK);
+		       SA_RESETHAND | SA_NODEFER);
 #endif
 
 #ifndef G_OS_WIN32

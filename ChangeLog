@@ -1,3 +1,12 @@
+2000-05-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/main.c
+	* libgimp/gimp.c: as noticed by Garry, Tim, Raphael and probably
+	many others, my latest signal change introduced a Linuxism
+	which doesn't compile on any other UNIX system, eek.
+	s/SA_NOMASK/SA_NODEFER/ makes it compile and is hopefully
+	the last chapter in this saga.
+
 2000-05-02  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimpmath.h: #elsifdef?

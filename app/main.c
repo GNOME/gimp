@@ -334,15 +334,15 @@ main (int    argc,
 
   /* Handle some signals */
 
-  gimp_signal_private (SIGHUP,  on_signal, SA_RESETHAND | SA_NOMASK);
-  gimp_signal_private (SIGINT,  on_signal, SA_RESETHAND | SA_NOMASK);
-  gimp_signal_private (SIGQUIT, on_signal, SA_RESETHAND | SA_NOMASK);
-  gimp_signal_private (SIGABRT, on_signal, SA_RESETHAND | SA_NOMASK);
-  gimp_signal_private (SIGBUS,  on_signal, SA_RESETHAND | SA_NOMASK);
-  gimp_signal_private (SIGSEGV, on_signal, SA_RESETHAND | SA_NOMASK);
-  gimp_signal_private (SIGPIPE, on_signal, SA_RESETHAND | SA_NOMASK);
-  gimp_signal_private (SIGTERM, on_signal, SA_RESETHAND | SA_NOMASK);
-  gimp_signal_private (SIGFPE,  on_signal, SA_RESETHAND | SA_NOMASK);
+  gimp_signal_private (SIGHUP,  on_signal, SA_RESETHAND | SA_NODEFER);
+  gimp_signal_private (SIGINT,  on_signal, SA_RESETHAND | SA_NODEFER);
+  gimp_signal_private (SIGQUIT, on_signal, SA_RESETHAND | SA_NODEFER);
+  gimp_signal_private (SIGABRT, on_signal, SA_RESETHAND | SA_NODEFER);
+  gimp_signal_private (SIGBUS,  on_signal, SA_RESETHAND | SA_NODEFER);
+  gimp_signal_private (SIGSEGV, on_signal, SA_RESETHAND | SA_NODEFER);
+  gimp_signal_private (SIGPIPE, on_signal, SA_RESETHAND | SA_NODEFER);
+  gimp_signal_private (SIGTERM, on_signal, SA_RESETHAND | SA_NODEFER);
+  gimp_signal_private (SIGFPE,  on_signal, SA_RESETHAND | SA_NODEFER);
 
 #ifndef __EMX__ /* OS/2 may not support SA_NOCLDSTOP -GRO */
 
