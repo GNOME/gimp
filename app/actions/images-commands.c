@@ -53,7 +53,17 @@ images_raise_views_cmd_callback (GtkAction *action,
 
   if (image && gimp_container_have (container, GIMP_OBJECT (image)))
     {
-      images_raise_views (image);
+      GList *list;
+
+      for (list = GIMP_LIST (image->gimp->displays)->list;
+           list;
+           list = g_list_next (list))
+        {
+          GimpDisplay *display = list->data;
+
+          if (display->gimage == image)
+            gtk_window_present (GTK_WINDOW (display->shell));
+        }
     }
 }
 
@@ -95,23 +105,5 @@ images_delete_image_cmd_callback (GtkAction *action,
     {
       if (image->disp_count == 0)
         g_object_unref (image);
-    }
-}
-
-void
-images_raise_views (GimpImage *gimage)
-{
-  GList *list;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  for (list = GIMP_LIST (gimage->gimp->displays)->list;
-       list;
-       list = g_list_next (list))
-    {
-      GimpDisplay *display = list->data;
-
-      if (display->gimage == gimage)
-        gtk_window_present (GTK_WINDOW (display->shell));
     }
 }

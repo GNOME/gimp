@@ -1,5 +1,13 @@
 2004-10-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/images-commands.[ch]
+	* app/actions/templates-commands.[ch]: made some public functions
+	private or removed them entirely by folding their code into their
+	callers. They used to be passed as function pointers to widgets in
+	the pre action-based dialog buttons era.
+
+2004-10-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/quit-dialog.c: raise the image's displays on
 	double-click in the dirty image list.
 

@@ -31,15 +31,5 @@ void   templates_edit_template_cmd_callback      (GtkAction    *action,
 void   templates_delete_template_cmd_callback    (GtkAction    *action,
                                                   gpointer      data);
 
-void   templates_new_template_dialog             (Gimp         *gimp,
-                                                  GimpTemplate *unused,
-                                                  GtkWidget    *parent);
-void   templates_edit_template_dialog            (Gimp         *gimp,
-                                                  GimpTemplate *template,
-                                                  GtkWidget    *parent);
-void   templates_image_new_dialog                (Gimp         *gimp,
-                                                  GimpTemplate *template,
-                                                  GtkWidget    *parent);
-
 
 #endif /* __TEMPLATES_COMMANDS_H__ */

@@ -27,7 +27,5 @@ void   images_new_view_cmd_callback     (GtkAction *action,
 void   images_delete_image_cmd_callback (GtkAction *action,
                                          gpointer   data);
 
-void   images_raise_views               (GimpImage *gimage);
-
 
 #endif /* __IMAGES_COMMANDS_H__ */

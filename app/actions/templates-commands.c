@@ -50,6 +50,33 @@
 #include "gimp-intl.h"
 
 
+typedef struct _GimpTemplateDeleteData GimpTemplateDeleteData;
+
+struct _GimpTemplateDeleteData
+{
+  GimpContainer *container;
+  GimpTemplate  *template;
+};
+
+
+/*  local function prototypes  */
+
+static void   templates_new_template_dialog     (Gimp         *gimp,
+                                                 GtkWidget    *parent);
+static void   templates_new_template_response   (GtkWidget    *widget,
+                                                 gint          response_id,
+                                                 GtkWidget    *dialog);
+static void   templates_edit_template_dialog    (Gimp         *gimp,
+                                                 GimpTemplate *template,
+                                                 GtkWidget    *parent);
+static void   templates_edit_template_response  (GtkWidget    *widget,
+                                                 gint          response_id,
+                                                 GtkWidget    *dialog);
+static void   templates_delete_confirm_response (GtkWidget    *dialog,
+                                                 gint          response_id,
+                                                 GimpTemplateDeleteData *delete_data);
+
+
 /*  public functions */
 
 void
@@ -68,7 +95,21 @@ templates_create_image_cmd_callback (GtkAction *action,
 
   if (template && gimp_container_have (container, GIMP_OBJECT (template)))
     {
-      templates_image_new_dialog (context->gimp, template, GTK_WIDGET (editor));
+      GdkScreen *screen;
+      GtkWidget *dialog;
+
+      screen = gtk_widget_get_screen (GTK_WIDGET (editor));
+
+      dialog = gimp_dialog_factory_dialog_new (global_dialog_factory, screen,
+                                               "gimp-image-new-dialog",
+                                               -1, FALSE);
+
+      if (dialog)
+        {
+          image_new_dialog_set (dialog, NULL, template);
+
+          gtk_window_present (GTK_WINDOW (dialog));
+        }
     }
 }
 
@@ -90,7 +131,7 @@ templates_new_template_cmd_callback (GtkAction *action,
     {
     }
 
-  templates_new_template_dialog (context->gimp, NULL, GTK_WIDGET (editor));
+  templates_new_template_dialog (context->gimp, GTK_WIDGET (editor));
 }
 
 void
@@ -146,32 +187,6 @@ templates_edit_template_cmd_callback (GtkAction *action,
     }
 }
 
-typedef struct _GimpTemplateDeleteData GimpTemplateDeleteData;
-
-struct _GimpTemplateDeleteData
-{
-  GimpContainer *container;
-  GimpTemplate  *template;
-};
-
-static void
-templates_delete_confirm_response (GtkWidget              *dialog,
-                                   gint                    response_id,
-                                   GimpTemplateDeleteData *delete_data)
-{
-  gtk_widget_destroy (dialog);
-
-  if (response_id == GTK_RESPONSE_OK)
-    {
-      if (gimp_container_have (delete_data->container,
-                               GIMP_OBJECT (delete_data->template)))
-        {
-          gimp_container_remove (delete_data->container,
-                                 GIMP_OBJECT (delete_data->template));
-        }
-    }
-}
-
 void
 templates_delete_template_cmd_callback (GtkAction *action,
                                         gpointer   data)
@@ -223,29 +238,10 @@ templates_delete_template_cmd_callback (GtkAction *action,
     }
 }
 
+/*  private functions  */
+
 static void
-templates_new_template_response (GtkWidget *widget,
-                                 gint       response_id,
-                                 GtkWidget *dialog)
-{
-  if (response_id == GTK_RESPONSE_OK)
-    {
-      GimpTemplate *template;
-      Gimp         *gimp;
-
-      template = g_object_get_data (G_OBJECT (dialog), "gimp-template");
-      gimp     = g_object_get_data (G_OBJECT (dialog), "gimp");
-
-      gimp_container_add (gimp->templates, GIMP_OBJECT (template));
-      gimp_context_set_template (gimp_get_user_context (gimp), template);
-    }
-
-  gtk_widget_destroy (dialog);
-}
-
-void
 templates_new_template_dialog (Gimp         *gimp,
-                               GimpTemplate *unused,
                                GtkWidget    *parent)
 {
   GimpTemplate *template;
@@ -293,28 +289,26 @@ templates_new_template_dialog (Gimp         *gimp,
 }
 
 static void
-templates_edit_template_response (GtkWidget *widget,
-                                  gint       response_id,
-                                  GtkWidget *dialog)
+templates_new_template_response (GtkWidget *widget,
+                                 gint       response_id,
+                                 GtkWidget *dialog)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpTemplateEditor *editor;
-      GimpTemplate       *template;
-      Gimp               *gimp;
+      GimpTemplate *template;
+      Gimp         *gimp;
 
-      editor   = g_object_get_data (G_OBJECT (dialog), "gimp-template-editor");
       template = g_object_get_data (G_OBJECT (dialog), "gimp-template");
       gimp     = g_object_get_data (G_OBJECT (dialog), "gimp");
 
-      gimp_config_sync (GIMP_CONFIG (editor->template),
-                        GIMP_CONFIG (template), 0);
+      gimp_container_add (gimp->templates, GIMP_OBJECT (template));
+      gimp_context_set_template (gimp_get_user_context (gimp), template);
     }
 
   gtk_widget_destroy (dialog);
 }
 
-void
+static void
 templates_edit_template_dialog (Gimp         *gimp,
                                 GimpTemplate *template,
                                 GtkWidget    *parent)
@@ -363,21 +357,42 @@ templates_edit_template_dialog (Gimp         *gimp,
   gtk_widget_show (dialog);
 }
 
-void
-templates_image_new_dialog (Gimp         *gimp,
-                            GimpTemplate *template,
-                            GtkWidget    *parent)
+static void
+templates_edit_template_response (GtkWidget *widget,
+                                  gint       response_id,
+                                  GtkWidget *dialog)
 {
-  GtkWidget *dialog;
-
-  dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
-                                           gtk_widget_get_screen (parent),
-                                           "gimp-image-new-dialog", -1, FALSE);
-
-  if (dialog)
+  if (response_id == GTK_RESPONSE_OK)
     {
-      image_new_dialog_set (dialog, NULL, template);
+      GimpTemplateEditor *editor;
+      GimpTemplate       *template;
+      Gimp               *gimp;
 
-      gtk_window_present (GTK_WINDOW (dialog));
+      editor   = g_object_get_data (G_OBJECT (dialog), "gimp-template-editor");
+      template = g_object_get_data (G_OBJECT (dialog), "gimp-template");
+      gimp     = g_object_get_data (G_OBJECT (dialog), "gimp");
+
+      gimp_config_sync (GIMP_CONFIG (editor->template),
+                        GIMP_CONFIG (template), 0);
+    }
+
+  gtk_widget_destroy (dialog);
+}
+
+static void
+templates_delete_confirm_response (GtkWidget              *dialog,
+                                   gint                    response_id,
+                                   GimpTemplateDeleteData *delete_data)
+{
+  gtk_widget_destroy (dialog);
+
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      if (gimp_container_have (delete_data->container,
+                               GIMP_OBJECT (delete_data->template)))
+        {
+          gimp_container_remove (delete_data->container,
+                                 GIMP_OBJECT (delete_data->template));
+        }
     }
 }
