@@ -1,3 +1,8 @@
+Wed Nov 11 04:18:57 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: fix buglet with making GLIB_LIBS (shouldn't have
+	been tripped, but bug nevertheless)
+
 Wed Nov 11 02:27:46 CET 1998 Marc Lehmann <pcg@goof.com>
 
 	* libgimp/gimp.c (gimp_run_procedure2): fixed a memory leak,
