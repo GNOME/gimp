@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-08 16:43-0500\n"
-"PO-Revision-Date: 2005-03-08 14:29-0400\n"
+"POT-Creation-Date: 2005-03-11 15:43-0500\n"
+"PO-Revision-Date: 2005-03-11 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -709,7 +709,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:126 ../app/core/gimpimage.c:1305
 #: ../app/core/gimppalette-import.c:220 ../app/core/gimppalette.c:518
-#: ../app/core/gimppalette.c:629 ../app/dialogs/palette-import-dialog.c:693
+#: ../app/core/gimppalette.c:629 ../app/dialogs/palette-import-dialog.c:692
 #: ../app/pdb/image_cmds.c:3752
 msgid "Untitled"
 msgstr "Untitled"
@@ -4272,7 +4272,7 @@ msgid "Cut"
 msgstr "Cut"
 
 #: ../app/core/core-enums.c:795 ../app/core/core-enums.c:824
-#: ../app/tools/gimptexttool.c:142 ../app/widgets/widgets-enums.c:263
+#: ../app/tools/gimptexttool.c:146 ../app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Text"
 
@@ -7977,7 +7977,7 @@ msgstr ""
 "Pack my box with\n"
 "five dozen liquor jugs."
 
-#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:700
+#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:750
 msgid "Add Text Layer"
 msgstr "Add Text Layer"
 
@@ -8403,7 +8403,7 @@ msgid "C_olor Picker"
 msgstr "C_olour Picker"
 
 #. tool->gdisp->shell
-#: ../app/tools/gimpcolorpickertool.c:344
+#: ../app/tools/gimpcolorpickertool.c:346
 msgid "Color Picker Information"
 msgstr "Colour Picker Information"
 
@@ -9252,23 +9252,27 @@ msgstr ""
 msgid "Create path from text"
 msgstr "Create path from text"
 
-#: ../app/tools/gimptexttool.c:143
+#: ../app/tools/gimptextoptions.c:504
+msgid "Text along path"
+msgstr "Text along path"
+
+#: ../app/tools/gimptexttool.c:147
 msgid "Add text to the image"
 msgstr "Add text to the image"
 
-#: ../app/tools/gimptexttool.c:144
+#: ../app/tools/gimptexttool.c:148
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:745
+#: ../app/tools/gimptexttool.c:795
 msgid "GIMP Text Editor"
 msgstr "GIMP Text Editor"
 
-#: ../app/tools/gimptexttool.c:855 ../app/tools/gimptexttool.c:858
+#: ../app/tools/gimptexttool.c:905 ../app/tools/gimptexttool.c:908
 msgid "Confirm Text Editing"
 msgstr "Confirm Text Editing"
 
-#: ../app/tools/gimptexttool.c:885
+#: ../app/tools/gimptexttool.c:935
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9513,7 +9517,7 @@ msgstr "Path"
 msgid "Rename Path"
 msgstr "Rename Path"
 
-#: ../app/vectors/gimpvectors.c:231 ../app/vectors/gimpvectors.c:356
+#: ../app/vectors/gimpvectors.c:231 ../app/vectors/gimpvectors.c:357
 msgid "Move Path"
 msgstr "Move Path"
 
@@ -9525,19 +9529,19 @@ msgstr "Scale Path"
 msgid "Resize Path"
 msgstr "Resize Path"
 
-#: ../app/vectors/gimpvectors.c:234 ../app/vectors/gimpvectors.c:449
+#: ../app/vectors/gimpvectors.c:234 ../app/vectors/gimpvectors.c:450
 msgid "Flip Path"
 msgstr "Flip Path"
 
-#: ../app/vectors/gimpvectors.c:235 ../app/vectors/gimpvectors.c:493
+#: ../app/vectors/gimpvectors.c:235 ../app/vectors/gimpvectors.c:494
 msgid "Rotate Path"
 msgstr "Rotate Path"
 
-#: ../app/vectors/gimpvectors.c:236 ../app/vectors/gimpvectors.c:524
+#: ../app/vectors/gimpvectors.c:236 ../app/vectors/gimpvectors.c:525
 msgid "Transform Path"
 msgstr "Transform Path"
 
-#: ../app/vectors/gimpvectors.c:553
+#: ../app/vectors/gimpvectors.c:554
 msgid "Cannot stroke empty path."
 msgstr "Cannot stroke empty path."
 

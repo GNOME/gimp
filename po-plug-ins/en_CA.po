@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-08 16:43-0500\n"
-"PO-Revision-Date: 2005-03-08 14:31-0400\n"
+"POT-Creation-Date: 2005-03-11 15:44-0500\n"
+"PO-Revision-Date: 2005-03-11 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3162,47 +3162,47 @@ msgstr "Sc_ale 1:"
 msgid "Sca_le 2:"
 msgstr "Sca_le 2:"
 
-#: ../plug-ins/common/despeckle.c:173
+#: ../plug-ins/common/despeckle.c:153
 msgid "Des_peckle..."
 msgstr "Des_peckle..."
 
-#: ../plug-ins/common/despeckle.c:414 ../plug-ins/common/despeckle.c:641
+#: ../plug-ins/common/despeckle.c:394 ../plug-ins/common/despeckle.c:621
 msgid "Despeckle"
 msgstr "Despeckle"
 
 #.
 #. * Filter type controls...
 #.
-#: ../plug-ins/common/despeckle.c:445
+#: ../plug-ins/common/despeckle.c:425
 #: ../plug-ins/gimpressionist/orientmap.c:622
 msgid "Type"
 msgstr "Type"
 
 #. parameter settings
-#: ../plug-ins/common/despeckle.c:455
+#: ../plug-ins/common/despeckle.c:434
 msgid "Median"
 msgstr "Median"
 
-#: ../plug-ins/common/despeckle.c:461
+#: ../plug-ins/common/despeckle.c:440
 msgid "_Adaptive"
 msgstr "_Adaptive"
 
-#: ../plug-ins/common/despeckle.c:471
+#: ../plug-ins/common/despeckle.c:450
 msgid "R_ecursive"
 msgstr "R_ecursive"
 
-#: ../plug-ins/common/despeckle.c:495 ../plug-ins/common/neon.c:732
+#: ../plug-ins/common/despeckle.c:474 ../plug-ins/common/neon.c:733
 #: ../plug-ins/common/nlfilt.c:1083 ../plug-ins/common/nova.c:361
 #: ../plug-ins/common/unsharp.c:666 ../plug-ins/common/whirlpinch.c:585
 #: ../plug-ins/gflare/gflare.c:2694 ../plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "_Radius:"
 
-#: ../plug-ins/common/despeckle.c:511
+#: ../plug-ins/common/despeckle.c:490
 msgid "_Black level:"
 msgstr "_Black level:"
 
-#: ../plug-ins/common/despeckle.c:527
+#: ../plug-ins/common/despeckle.c:506
 msgid "_White level:"
 msgstr "_White level:"
 
@@ -5083,11 +5083,11 @@ msgstr "_Neon..."
 msgid "Neon..."
 msgstr "Neon..."
 
-#: ../plug-ins/common/neon.c:697
+#: ../plug-ins/common/neon.c:698
 msgid "Neon Detection"
 msgstr "Neon Detection"
 
-#: ../plug-ins/common/neon.c:747 ../plug-ins/common/unsharp.c:679
+#: ../plug-ins/common/neon.c:748 ../plug-ins/common/unsharp.c:679
 msgid "_Amount:"
 msgstr "_Amount:"
 
@@ -10687,7 +10687,7 @@ msgid "Cannot create file"
 msgstr "Cannot create file"
 
 #: ../plug-ins/metadata/interface.c:484
-msgid "Some error occured while saving"
+msgid "Some error occurred while saving"
 msgstr "Some error occurred while saving"
 
 #: ../plug-ins/metadata/interface.c:494
@@ -11633,13 +11633,13 @@ msgid "URI"
 msgstr "URI"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:95
-#: ../plug-ins/uri/uri-backend-wget.c:278
+#: ../plug-ins/uri/uri-backend-wget.c:279
 #, c-format
 msgid "Downloading %s of image data..."
 msgstr "Downloading %s of image data..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:96
-#: ../plug-ins/uri/uri-backend-wget.c:319
+#: ../plug-ins/uri/uri-backend-wget.c:320
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "Downloaded %s of image data"
@@ -11655,7 +11655,7 @@ msgid "Uploaded %s of image data"
 msgstr "Uploaded %s of image data"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:185
-#: ../plug-ins/uri/uri-backend-wget.c:170
+#: ../plug-ins/uri/uri-backend-wget.c:171
 msgid "Connecting to server..."
 msgstr "Connecting to server..."
 
@@ -11669,33 +11669,33 @@ msgstr "Failed to read %s from '%s': %s"
 msgid "Failed to write %s to '%s': %s"
 msgstr "Failed to write %s to '%s': %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:138
-#: ../plug-ins/uri/uri-backend-wget.c:158
-#: ../plug-ins/uri/uri-backend-wget.c:176
-#: ../plug-ins/uri/uri-backend-wget.c:199
-#: ../plug-ins/uri/uri-backend-wget.c:228
+#: ../plug-ins/uri/uri-backend-wget.c:139
+#: ../plug-ins/uri/uri-backend-wget.c:159
+#: ../plug-ins/uri/uri-backend-wget.c:177
+#: ../plug-ins/uri/uri-backend-wget.c:200
+#: ../plug-ins/uri/uri-backend-wget.c:229
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr "wget exited abnormally on URI '%s'"
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:166
+#: ../plug-ins/uri/uri-backend-wget.c:167
 #, c-format
 msgid "(timeout is %s seconds)"
 msgstr "(timeout is %s seconds)"
 
 #. The fourth line is either the network request or an error
-#: ../plug-ins/uri/uri-backend-wget.c:194
+#: ../plug-ins/uri/uri-backend-wget.c:195
 msgid "Opening URI..."
 msgstr "Opening URI..."
 
-#: ../plug-ins/uri/uri-backend-wget.c:205
-#: ../plug-ins/uri/uri-backend-wget.c:238
+#: ../plug-ins/uri/uri-backend-wget.c:206
+#: ../plug-ins/uri/uri-backend-wget.c:239
 #, c-format
 msgid "A network error occured: %s"
 msgstr "A network error occurred: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:283
+#: ../plug-ins/uri/uri-backend-wget.c:284
 msgid "Downloading unknown amount of image data..."
 msgstr "Downloading unknown amount of image data..."
 
