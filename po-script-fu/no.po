@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-02 21:01+0100\n"
-"PO-Revision-Date: 2003-01-26 17:18+0100\n"
+"PO-Revision-Date: 2004-12-21 00:50+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -115,14 +115,14 @@ msgid "Image Types:"
 msgstr "Bildetyper:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1991
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error while executing\n"
 "%s\n"
 "%s"
 msgstr ""
-"Script-Fu feil under kjøring\n"
-" %s\n"
+"Feil under kjøring\n"
+"%s\n"
 "%s"
 
 #: plug-ins/script-fu/script-fu-server.c:602
@@ -138,23 +138,20 @@ msgid "Server Logfile:"
 msgstr "Loggfil på tjener:"
 
 #: plug-ins/script-fu/script-fu.c:122
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Script-Fu _konsoll"
 
 #: plug-ins/script-fu/script-fu.c:147
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/_Start tjener..."
 
 #: plug-ins/script-fu/script-fu.c:272 plug-ins/script-fu/script-fu.c:273
 msgid "Re-read all available scripts"
 msgstr "Gjenles alle tilgjengelige skript"
 
 #: plug-ins/script-fu/script-fu.c:277
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Gjenoppfrisk"
+msgstr "<Toolbox>/Utvd/Script-Fu/Oppdate_r skript"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:118
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
@@ -212,14 +209,12 @@ msgid "No matches"
 msgstr "Ingen treff"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
-msgstr "<Image>/Script-Fu/Alpha til logo/3D-omriss..."
+msgstr "<Image>/Script-Fu/Alpha til logo/3D-_omriss..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
-msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/3D-omriss..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/3D-_omriss..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Bumpmap (Alpha Layer) Blur Radius"
@@ -382,9 +377,8 @@ msgid "Text"
 msgstr "Tekst"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
-msgstr "<Toolbox>/Utvd/Script-Fu/Mønstre/3D truchet..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Mønstre/3_D-truchet..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
@@ -455,9 +449,8 @@ msgid "Thickness"
 msgstr "Tykkhet"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add B_evel..."
-msgstr "<Image>/Script-Fu/Dekor/Legg til opphøyet kant..."
+msgstr "<Image>/Script-Fu/Dekor/L_egg til opphøyet kant..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
@@ -474,9 +467,8 @@ msgid "Work on Copy"
 msgstr "Jobb med kopi"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add _Border..."
-msgstr "<Image>/Script-Fu/Dekor/Legg til kant..."
+msgstr "<Image>/Script-Fu/Dekor/Legg til _kant..."
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Border Color"
@@ -495,9 +487,8 @@ msgid "Delta Value on Color"
 msgstr "Deltaverdi for farge"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Alien glow/Pil..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Alien glow/_Pil..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -552,9 +543,8 @@ msgid "Up"
 msgstr "Opp"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Alien glow/HRule..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Alien glow/_Hrule..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -565,9 +555,8 @@ msgid "Bar Length"
 msgstr "Lengde for søyle"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Alien glow/Kule..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Alien glow/_Kule..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -583,9 +572,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Alien glow/Knapp..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Alien glow/Kn_app..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -2548,119 +2536,3 @@ msgstr "X-avstand for utheving"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Y-avstand for uthevelse"
-
-#~ msgid "Unable to open a stream on the SIOD output pipe"
-#~ msgstr "Kunne ikke åpne en strøm på SIOD utskriftsrøret"
-
-#~ msgid "Unable to open the SIOD output pipe"
-#~ msgstr "Kunne ikke åpne SIOD rør for utskrift"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-#~ msgstr "<Toolbox>/Utvd/Script-Fu/Mønstre/Swirly (tileable)..."
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/Utvikler OBS"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/GIMP feilrapporter"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/GIMP brukerhåndbok"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/GIMP nyheter"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/GIMP veiledere"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/Dokumentasjon"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/Nedlasting"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/GIMP kunst"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/GTK"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/Lenker"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/E-post lister"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/Ressurser"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/Gimp-Savvy.com"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/\"Grokking the GIMP\""
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-#~ msgstr "<Toolbox>/Utvd/Nettleser/Bruker OBS"
-
-#~ msgid "Border"
-#~ msgstr "Kant"
-
-#~ msgid "Fonts"
-#~ msgstr "Skrifttyper"
-
-#~ msgid ""
-#~ "Burn-In: Need two layers in total!\n"
-#~ "        A foreground text layer with transparency\n"
-#~ "        and a background layer."
-#~ msgstr ""
-#~ "Burn-In: Må ha to lag totalt!\n"
-#~ "         Et forgrunnstekstlag med gjennomsiktighet\n"
-#~ "         og et bakgrunnslag."
-
-#~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
-#~ msgstr "<Image>/Script-Fu/Render/Lag rutenett..."
-
-#~ msgid "Grids X"
-#~ msgstr "Rutenett X"
-
-#~ msgid "Grids Y"
-#~ msgstr "Rutenett Y"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-#~ msgstr "<Toolbox>/Utvd/Script-Fu/Mønstre/Trochoid..."
-
-#~ msgid "Base Radius (pixels)"
-#~ msgstr "Basisradius (piksler)"
-
-#~ msgid "Erase before Draw"
-#~ msgstr "Slett før tegning"
-
-#~ msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-#~ msgstr "Penneradius / hjulradius [0.0:1.0]"
-
-#~ msgid "Wheel Radius (hypo < 0 < epi)"
-#~ msgstr "Hjulradius (hypo < 0 < epi)"
-
-#~ msgid ""
-#~ "At least one font you've choosen is invalid.\n"
-#~ "Please check your settings.\n"
-#~ msgstr ""
-#~ "Minst en skrifttype du har valgt er ugyldig.\n"
-#~ "Vennligst sjekk dine instillinger.\n"
-
-#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-#~ msgstr "<Image>/Script-Fu/Animatorer/Utvalg til AnimImage..."
-
-#~ msgid "Anim-Filter for all Copies"
-#~ msgstr "Anim-filter for alle kopier"
-
-#~ msgid "Fill with BG Color"
-#~ msgstr "Fyll med BG-farge"
-
-#~ msgid "Number of Copies"
-#~ msgstr "Antall kopier"
