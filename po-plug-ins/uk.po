@@ -1067,12 +1067,11 @@ msgstr "Установки середовища"
 
 #: plug-ins/Lighting/lighting_ui.c:1018
 msgid "Enable Environment Mapping"
-msgstr ""
+msgstr "Ув╕мкнути в╕дображення середовища"
 
 #: plug-ins/Lighting/lighting_ui.c:1028
-#, fuzzy
 msgid "Enable/disable environment-mapping (reflection)"
-msgstr "Ув╕мкнути/вимкнути рель╓фне перетворення (глибина зображення)"
+msgstr "Ув╕мкнути/вимкнути в╕дображення середовища (в╕дбивання)"
 
 #: plug-ins/Lighting/lighting_ui.c:1045
 msgid "Environment Image:"
@@ -1103,9 +1102,8 @@ msgid "Bump Map"
 msgstr "Рель╓ф"
 
 #: plug-ins/Lighting/lighting_ui.c:1088
-#, fuzzy
 msgid "Environment Map"
-msgstr "Середовище"
+msgstr "В╕дображення середовища"
 
 #: plug-ins/Lighting/lighting_ui.c:1137
 msgid "Lighting Effects"
