@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2001-01-15 14:06-0800\n"
-"PO-Revision-Date: 2000-12-19 19:34+01:00\n"
+"PO-Revision-Date: 2001-06-19 16:31+0200\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -3572,7 +3572,7 @@ msgstr "Gendan standarder"
 
 #: plug-ins/common/flarefx.c:218
 msgid "<Image>/Filters/Light Effects/FlareFX..."
-msgstr "<Billede>/Filtre/Lyseffekter/FlareFX..."
+msgstr "<Image>/Filtre/Lyseffekter/FlareFX..."
 
 #: plug-ins/common/flarefx.c:291
 msgid "Render Flare..."
