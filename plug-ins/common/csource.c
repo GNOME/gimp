@@ -21,10 +21,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include "config.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 #include <gtk/gtk.h>
-
+#include "libgimp/stdplugins-intl.h"
 
 typedef struct
 {
@@ -79,9 +80,11 @@ query (void)
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+
+  INIT_I18N();
   
   gimp_install_procedure ("file_csource_save",
-                          "Dump image data in RGB(A) format for C source",
+                          _("Dump image data in RGB(A) format for C source"),
                           "FIXME: write help",
                           "Tim Janik",
                           "Tim Janik",
@@ -112,7 +115,7 @@ run (gchar   *name,
   *return_vals = values;
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = STATUS_CALLING_ERROR;
-  
+
   if (run_mode == RUN_INTERACTIVE &&
       strcmp (name, "file_csource_save") == 0)
     {
@@ -138,6 +141,8 @@ run (gchar   *name,
       config.alpha = (drawable_type == RGBA_IMAGE ||
 		      drawable_type == GRAYA_IMAGE ||
 		      drawable_type == INDEXEDA_IMAGE);
+
+      INIT_I18N_UI();
 
       parasite = gimp_image_parasite_find (image_ID, "gimp-comment");
       if (parasite)
@@ -615,14 +620,14 @@ run_save_dialog	(Config *config)
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
   
-  dialog = gimp_dialog_new ("Save as C-Source", "csource",
+  dialog = gimp_dialog_new ( _("Save as C-Source"), "csource",
 			    gimp_plugin_help_func, "filters/csource.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    "OK", cb_set_true,
+			    _("OK"), cb_set_true,
 			    NULL, &do_save, &button, TRUE, FALSE,
-			    "Cancel", gtk_widget_destroy,
+			    _("Cancel"), gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);
@@ -647,7 +652,7 @@ run_save_dialog	(Config *config)
 			 "parent", vbox,
 			 NULL);
   gtk_widget_new (GTK_TYPE_LABEL,
-		  "label", "Prefixed Name: ",
+		  "label", _("Prefixed Name: "),
 		  "xalign", 0.0,
 		  "visible", TRUE,
 		  "parent", hbox,
@@ -667,7 +672,7 @@ run_save_dialog	(Config *config)
 			 "parent", vbox,
 			 NULL);
   gtk_widget_new (GTK_TYPE_LABEL,
-		  "label", "Comment: ",
+		  "label", _("Comment: "),
 		  "xalign", 0.0,
 		  "visible", TRUE,
 		  "parent", hbox,
@@ -687,7 +692,7 @@ run_save_dialog	(Config *config)
 			 "parent", vbox,
 			 NULL);
   use_comment = gtk_widget_new (GTK_TYPE_CHECK_BUTTON,
-				"label", "Save comment to file?",
+				"label", _("Save comment to file?"),
 				"visible", TRUE,
 				"parent", hbox,
 				NULL);
@@ -701,7 +706,7 @@ run_save_dialog	(Config *config)
 			 "parent", vbox,
 			 NULL);
   gtype = gtk_widget_new (GTK_TYPE_CHECK_BUTTON,
-			  "label", "Use GLib types (guint8*)",
+			  "label", _("Use GLib types (guint8*)"),
 			  "visible", TRUE,
 			  "parent", hbox,
 			  NULL);
@@ -715,7 +720,7 @@ run_save_dialog	(Config *config)
 			 "parent", vbox,
 			 NULL);
   use_macros = gtk_widget_new (GTK_TYPE_CHECK_BUTTON,
-			       "label", "Use macros instead of struct",
+			       "label", _("Use macros instead of struct"),
 			       "visible", TRUE,
 			       "parent", hbox,
 			       NULL);
@@ -729,7 +734,7 @@ run_save_dialog	(Config *config)
 			 "parent", vbox,
 			 NULL);
   use_rle = gtk_widget_new (GTK_TYPE_CHECK_BUTTON,
-			    "label", "Use 1 Byte Run-Length-Encoding",
+			    "label", _("Use 1 Byte Run-Length-Encoding"),
 			    "visible", TRUE,
 			    "parent", hbox,
 			    NULL);
@@ -743,7 +748,7 @@ run_save_dialog	(Config *config)
 			 "parent", vbox,
 			 NULL);
   alpha = gtk_widget_new (GTK_TYPE_CHECK_BUTTON,
-			  "label", "Save Alpha channel (RGBA/RGB)",
+			  "label", _("Save Alpha channel (RGBA/RGB)"),
 			  "visible", TRUE,
 			  "parent", hbox,
 			  NULL);
@@ -757,7 +762,7 @@ run_save_dialog	(Config *config)
 			 "parent", vbox,
 			 NULL);
   gtk_widget_new (GTK_TYPE_LABEL,
-		  "label", "Opacity: ",
+		  "label", _("Opacity: "),
 		  "xalign", 0.0,
 		  "visible", TRUE,
 		  "parent", hbox,

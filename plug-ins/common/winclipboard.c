@@ -27,7 +27,9 @@
 #include <windows.h>
 #include <stdlib.h>
 
+#include "config.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* History:
  *  
@@ -95,37 +97,39 @@ query ()
   };
   static int ncopy_args = sizeof (copy_args) / sizeof (copy_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_clipboard_copy",
-                          "copy image to clipboard",
-                          "Copies the active drawable to the clipboard.",
+                          _("copy image to clipboard"),
+                          _("Copies the active drawable to the clipboard."),
                           "Hans Breuer",
                           "Hans Breuer",
                           "1999",
-                          "<Image>/Edit/Copy to Clipboard",
+                          N_("<Image>/Edit/Copy to Clipboard"),
                           "INDEXED*, RGB*",
                           PROC_PLUG_IN,
                           ncopy_args, 0,
                           copy_args, NULL);
 
   gimp_install_procedure ("plug_in_clipboard_paste",
-                          "paste image from clipboard",
-                          "Paste image from clipboard into active image.",
+                          _("paste image from clipboard"),
+                          _("Paste image from clipboard into active image."),
                           "Hans Breuer",
                           "Hans Breuer",
                           "1999",
-                          "<Image>/Edit/Paste from Clipboard",
+                          N_("<Image>/Edit/Paste from Clipboard"),
                           "INDEXED*, RGB*",
                           PROC_PLUG_IN,
                           ncopy_args, 0,
                           copy_args, NULL);
 
   gimp_install_procedure ("extension_clipboard_paste",
-                          "Get image from clipboard",
-                          "Get an image from the Windows clipboard, creating a new image",
+                          _("Get image from clipboard"),
+                          _("Get an image from the Windows clipboard, creating a new image"),
                           "Hans Breuer",
                           "Hans Breuer",
                           "1999",
-                          "<Toolbox>/File/Acquire/From Clipboard",
+                          N_("<Toolbox>/File/Acquire/From Clipboard"),
                           "",
                           PROC_EXTENSION,
                           ncopy_args, 0,
@@ -149,6 +153,8 @@ run (char    *name,
   *return_vals = values;
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = STATUS_CALLING_ERROR;
+
+  INIT_I18N();
 
   if (strcmp (name, "plug_in_clipboard_copy") == 0)
   {
@@ -298,7 +304,7 @@ CB_CopyImage (gboolean interactive,
 
 	/* following the slow part ... */
 	if (interactive)
-	  gimp_progress_init ("Copying ...");
+	  gimp_progress_init ( _("Copying ..."));
 
 	/* speed it up with: */
 	gimp_tile_cache_size(  drawable->width * gimp_tile_height() 
@@ -504,7 +510,7 @@ CB_PasteImage (gboolean interactive,
 			/* create new image */
 			image_ID = gimp_image_new (nWidth, nHeight, nBitsPS <= 8 ? INDEXED : RGB);
 			gimp_image_undo_disable(image_ID);
-			drawable_ID = gimp_layer_new (image_ID, "Background", nWidth, nHeight, 
+			drawable_ID = gimp_layer_new (image_ID, _("Background"), nWidth, nHeight, 
 										  nBitsPS <= 8 ? INDEXED_IMAGE : RGB_IMAGE, 
 										  100, NORMAL_MODE);
 		}
@@ -512,7 +518,7 @@ CB_PasteImage (gboolean interactive,
 		{
 			/* ??? gimp_convert_rgb(image_ID);
 			 */
-			drawable_ID = gimp_layer_new (image_ID, "Pasted", nWidth, nHeight, 
+			drawable_ID = gimp_layer_new (image_ID, _("Pasted"), nWidth, nHeight, 
 										  nBitsPS <= 8 ? INDEXED_IMAGE : RGB_IMAGE, 
 								          100, NORMAL_MODE);
 			bIsNewImage = FALSE;
@@ -525,7 +531,7 @@ CB_PasteImage (gboolean interactive,
 
 	    /* following the slow part ... */
 		if (interactive)
-			gimp_progress_init ("Pasteing ...");
+			gimp_progress_init ( _("Pasteing ..."));
 
 		pData = GlobalLock(hDIB);
 		if (pData)

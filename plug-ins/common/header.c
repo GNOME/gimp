@@ -1,9 +1,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Declare some local functions.
  */
@@ -43,8 +45,10 @@ query ()
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_header_save",
-                          "saves files as C unsigned character array",
+                          _("saves files as C unsigned character array"),
                           "FIXME: write help",
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
@@ -89,6 +93,7 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
+      INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "Header", 
 				      (CAN_HANDLE_RGB | CAN_HANDLE_INDEXED));
