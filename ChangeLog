@@ -1,3 +1,9 @@
+Mon Feb  7 21:00:34 CET 2000  Sven Neumann <sven@gimp.org>  
+
+	* app/info_window.c: Got rid of the "Shades of Colors" info
+	label since with GdkRGB this will never work. In Indexed
+	Color mode we show the number of colors again.
+
 Mon Feb  7 20:05:19 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* Makefile.am

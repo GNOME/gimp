@@ -40,11 +40,11 @@ typedef struct _InfoWinData InfoWinData;
 struct _InfoWinData
 {
   gchar      dimensions_str[MAX_BUF];
+  gchar      real_dimensions_str[MAX_BUF];
   gchar      scale_str[MAX_BUF];
   gchar      color_type_str[MAX_BUF];
   gchar      visual_class_str[MAX_BUF];
   gchar      visual_depth_str[MAX_BUF];
-  gchar      shades_str[MAX_BUF];
   gchar      resolution_str[MAX_BUF];
   gchar      unit_str[MAX_BUF];
 
@@ -71,48 +71,6 @@ static gchar *visual_classes[] =
 
 static gchar * info_window_title (GDisplay *gdisp);
 
-static void
-get_shades (GDisplay *gdisp,
-	    gchar    *buf)
-{
-  g_snprintf (buf, MAX_BUF, "Using GdkRgb - we'll get back to you");
-#if 0
-  GtkPreviewInfo *info;
-
-  info = gtk_preview_get_info ();
-
-  switch (gimage_base_type (gdisp->gimage))
-    {
-    case GRAY:
-      g_snprintf (buf, MAX_BUF, "%d", info->ngray_shades);
-      break;
-    case RGB:
-      switch (gdisp->depth)
-	{
-	case 8 :
-	  g_snprintf (buf, MAX_BUF, "%d / %d / %d",
-		      info->nred_shades,
-		      info->ngreen_shades,
-		      info->nblue_shades);
-	  break;
-	case 15 : case 16 :
-	  g_snprintf (buf, MAX_BUF, "%d / %d / %d",
-		      (1 << (8 - info->visual->red_prec)),
-		      (1 << (8 - info->visual->green_prec)),
-		      (1 << (8 - info->visual->blue_prec)));
-	  break;
-	case 24 :
-	  g_snprintf (buf, MAX_BUF, "256 / 256 / 256");
-	  break;
-	}
-      break;
-
-    case INDEXED:
-      g_snprintf (buf, MAX_BUF, "%d", gdisp->gimage->num_cols);
-      break;
-    }
-#endif
-}
 
 static void
 info_window_image_rename_callback (GimpImage *gimage,
@@ -281,7 +239,6 @@ info_window_image_preview_book (InfoDialog *info_win)
  *    Display info:
  *      visual class
  *      visual depth
- *      shades of color/gray
  */
 
 InfoDialog *
@@ -312,24 +269,24 @@ info_window_create (GDisplay *gdisp)
 
   iwd = g_new (InfoWinData, 1);
   info_win->user_data = iwd;
-  iwd->dimensions_str[0]   = '\0';
-  iwd->resolution_str[0]   = '\0';
-  iwd->unit_str[0]         = '\0';
-  iwd->scale_str[0]        = '\0';
-  iwd->color_type_str[0]   = '\0';
-  iwd->visual_class_str[0] = '\0';
-  iwd->visual_depth_str[0] = '\0';
-  iwd->shades_str[0]       = '\0';
-  iwd->gdisp               = gdisp;
-  iwd->showingPreview      = FALSE;
+
+  iwd->dimensions_str[0]       = '\0';
+  iwd->real_dimensions_str[0]  = '\0';
+  iwd->resolution_str[0]       = '\0';
+  iwd->scale_str[0]            = '\0';
+  iwd->color_type_str[0]       = '\0';
+  iwd->visual_class_str[0]     = '\0';
+  iwd->visual_depth_str[0]     = '\0';
+  iwd->gdisp                   = gdisp;
+  iwd->showingPreview          = FALSE;
 
   /*  add the information fields  */
   info_dialog_add_label (info_win, _("Dimensions (w x h):"),
 			 iwd->dimensions_str);
+  info_dialog_add_label (info_win, '\0',
+			 iwd->real_dimensions_str);
   info_dialog_add_label (info_win, _("Resolution:"),
 			iwd->resolution_str);
-  info_dialog_add_label (info_win, _("Unit:"),
-			 iwd->unit_str);
   info_dialog_add_label (info_win, _("Scale Ratio:"),
 			 iwd->scale_str);
   info_dialog_add_label (info_win, _("Display Type:"),
@@ -338,16 +295,6 @@ info_window_create (GDisplay *gdisp)
 			 iwd->visual_class_str);
   info_dialog_add_label (info_win, _("Visual Depth:"),
 			 iwd->visual_depth_str);
-  if (type == RGB)
-    info_dialog_add_label (info_win, _("Shades of Color:"),
-			   iwd->shades_str);
-  else if (type == INDEXED)
-    info_dialog_add_label (info_win, _("Shades:"),
-			   iwd->shades_str);
-  else if (type == GRAY)
-    info_dialog_add_label (info_win, _("Shades of Gray:"),
-			   iwd->shades_str);
-
   /*  update the fields  */
   /*gdisp->window_info_dialog = info_win;*/
   info_window_update (gdisp);
@@ -565,19 +512,21 @@ info_window_update (GDisplay *gdisp)
    * is not the one we are showing.
    */
 
-  if(info_window_auto && iwd->gdisp != gdisp)
-     return;
+  if (info_window_auto && iwd->gdisp != gdisp)
+    return;
 
   /*  width and height  */
   unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
   unit_digits = gimp_unit_get_digits (gdisp->gimage->unit);
-  g_snprintf (format_buf, sizeof (format_buf),
-	      _("%%d x %%d pixels (%%.%df x %%.%df %s)"),
-	      unit_digits + 1, unit_digits + 1,
-	      gimp_unit_get_symbol (gdisp->gimage->unit));
-  g_snprintf (iwd->dimensions_str, MAX_BUF, format_buf,
+  g_snprintf (iwd->dimensions_str, MAX_BUF,
+	      _("%d x %d pixels"),
 	      (int) gdisp->gimage->width,
-	      (int) gdisp->gimage->height,
+	      (int) gdisp->gimage->height);
+  g_snprintf (format_buf, sizeof (format_buf),
+	      "%%.%df x %%.%df %s",
+	      unit_digits + 1, unit_digits + 1,
+	      gimp_unit_get_plural (gdisp->gimage->unit));
+  g_snprintf (iwd->real_dimensions_str, MAX_BUF, format_buf,
 	      gdisp->gimage->width * unit_factor / gdisp->gimage->xresolution,
 	      gdisp->gimage->height * unit_factor / gdisp->gimage->yresolution);
 
@@ -585,10 +534,6 @@ info_window_update (GDisplay *gdisp)
   g_snprintf (iwd->resolution_str, MAX_BUF, "%g x %g dpi",
 	      gdisp->gimage->xresolution,
 	      gdisp->gimage->yresolution);
-
-  /*  image unit  */
-  g_snprintf (iwd->unit_str, MAX_BUF, "%s",
-	      gimp_unit_get_plural (gdisp->gimage->unit));
 
   /*  user zoom ratio  */
   g_snprintf (iwd->scale_str, MAX_BUF, "%d:%d",
@@ -602,7 +547,8 @@ info_window_update (GDisplay *gdisp)
   else if (type == GRAY)
     g_snprintf (iwd->color_type_str, MAX_BUF, "%s", _("Grayscale"));
   else if (type == INDEXED)
-    g_snprintf (iwd->color_type_str, MAX_BUF, "%s", _("Indexed Color"));
+    g_snprintf (iwd->color_type_str, MAX_BUF, "%s (%d %s)", 
+		_("Indexed Color"), gdisp->gimage->num_cols, _("colors"));
 
   /*  visual class  */
   if (type == RGB ||
@@ -613,9 +559,6 @@ info_window_update (GDisplay *gdisp)
 
   /*  visual depth  */
   g_snprintf (iwd->visual_depth_str, MAX_BUF, "%d", gdisp->depth);
-
-  /*  pure color shades  */
-  get_shades (gdisp, iwd->shades_str);
 
   info_dialog_update (info_win);
 }
