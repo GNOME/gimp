@@ -1,5 +1,12 @@
 2004-03-20  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.c (gimp_text_tool_create_vectors): don't
+	take the image from tool->gdisp, this might be a NULL pointer.
+
+	* app/core/gimpimage-undo-push.c: removed debugging output.
+
+2004-03-20  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppropwidgets.c (gimp_prop_size_entry_callback):
 	avoid to set the unit property with every size change; only set it
 	if it actually changed.

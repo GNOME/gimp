@@ -1770,9 +1770,6 @@ gimp_image_undo_push_text_layer (GimpImage        *gimage,
 
   size = sizeof (TextUndo);
 
-  g_printerr ("gimp_image_undo_push_text_layer (%s)\n",
-              pspec ? pspec->name : NULL);
-
   if (pspec)
     {
       /*  this is incorrect, but how can it be done better?  */

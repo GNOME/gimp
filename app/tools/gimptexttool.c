@@ -545,8 +545,6 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 
       pspec = list->data;
 
-      g_printerr ("gimp_text_tool_apply: changing %s\n", pspec->name);
-
       g_value_init (&value, pspec->value_type);
 
       g_object_get_property (src,  pspec->name, &value);
@@ -574,16 +572,14 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 static void
 gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 {
-  GimpTool    *tool  = GIMP_TOOL (text_tool);
-  GimpImage   *image = tool->gdisp->gimage;
   GimpVectors *vectors;
 
-  if (! text_tool->text)
+  if (! text_tool->text || ! text_tool->image)
     return;
 
-  gimp_tool_control_set_preserve (tool->control, TRUE);
+  gimp_tool_control_set_preserve (GIMP_TOOL (text_tool)->control, TRUE);
 
-  vectors = gimp_text_vectors_new (image, text_tool->text);
+  vectors = gimp_text_vectors_new (text_tool->image, text_tool->text);
 
   if (text_tool->layer)
     {
@@ -593,11 +589,11 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
       gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
     }
 
-  gimp_image_add_vectors (image, vectors, -1);
+  gimp_image_add_vectors (text_tool->image, vectors, -1);
 
-  gimp_tool_control_set_preserve (tool->control, FALSE);
+  gimp_tool_control_set_preserve (GIMP_TOOL (text_tool)->control, FALSE);
 
-  gimp_image_flush (image);
+  gimp_image_flush (text_tool->image);
 }
 
 static void
