@@ -1,3 +1,8 @@
+2002-06-25  Simon Budig  <simon@gimp.org>
+
+	* docs/Wilber.svg: Fixed the SVG so that the Adobe Plugin
+	displays it correctly (the "fill" property defaults to black)
+
 2002-06-25  Mel Boyce  <syngin@gimp.org>
 
 	* plug-ins/helpbrowser/helpbrowser.c: Changed HTML for the
