@@ -56,7 +56,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
   gimage->qmask_state = qmask_state ? TRUE : FALSE;
 
   selection = gimp_image_get_mask (gimage);
-  mask      = gimp_image_get_channel_by_name (gimage, GIMP_IMAGE_QMASK_NAME);
+  mask      = gimp_image_get_qmask (gimage);
 
   if (qmask_state)
     {
@@ -134,6 +134,14 @@ gimp_image_get_qmask_state (const GimpImage *gimage)
   return gimage->qmask_state;
 }
 
+GimpChannel *
+gimp_image_get_qmask (const GimpImage *gimage)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  return gimp_image_get_channel_by_name (gimage, GIMP_IMAGE_QMASK_NAME);
+}
+
 void
 gimp_image_qmask_invert (GimpImage *gimage)
 {
@@ -141,9 +149,7 @@ gimp_image_qmask_invert (GimpImage *gimage)
 
   if (gimage->qmask_state)
     {
-      GimpChannel *qmask;
-
-      qmask = gimp_image_get_channel_by_name (gimage, GIMP_IMAGE_QMASK_NAME);
+      GimpChannel *qmask = gimp_image_get_qmask (gimage);
 
       if (qmask)
         {

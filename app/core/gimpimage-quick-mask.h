@@ -23,11 +23,13 @@
 #define GIMP_IMAGE_QMASK_NAME "Qmask"
 
 
-void       gimp_image_set_qmask_state (GimpImage       *gimage,
-                                       gboolean         qmask_state);
-gboolean   gimp_image_get_qmask_state (const GimpImage *gimage);
+void          gimp_image_set_qmask_state (GimpImage       *gimage,
+                                          gboolean         qmask_state);
+gboolean      gimp_image_get_qmask_state (const GimpImage *gimage);
 
-void       gimp_image_qmask_invert    (GimpImage       *gimage);
+GimpChannel * gimp_image_get_qmask       (const GimpImage *gimage);
+
+void          gimp_image_qmask_invert    (GimpImage       *gimage);
 
 
 #endif /* __GIMP_IMAGE_QMASK_H__ */

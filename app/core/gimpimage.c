@@ -981,8 +981,7 @@ gimp_image_channel_name_changed (GimpChannel *channel,
       gimp_image_set_qmask_state (gimage, TRUE);
     }
   else if (gimp_image_get_qmask_state (gimage) &&
-           ! gimp_container_get_child_by_name (gimage->channels,
-                                               GIMP_IMAGE_QMASK_NAME))
+           ! gimp_image_get_qmask (gimage))
     {
       gimp_image_set_qmask_state (gimage, FALSE);
     }

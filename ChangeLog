@@ -1,5 +1,13 @@
 2004-02-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-qmask.c (gimp_image_get_qmask): new function
+	which returns the image's QMask.
+
+	* app/core/gimpimage.c (gimp_image_channel_name_changed)
+	* app/gui/qmask-commands.c (qmask_query_response): use it.
+
+2004-02-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp.[ch]: added new signal "buffer_changed" and new
 	function gimp_set_global_buffer() which emits it when the global
 	buffer changes.

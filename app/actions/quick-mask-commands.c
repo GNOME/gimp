@@ -213,11 +213,8 @@ qmask_query_response (GtkWidget        *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpChannel *channel;
+      GimpChannel *channel = gimp_image_get_qmask (options->gimage);
       GimpRGB      color;
-
-      channel = gimp_image_get_channel_by_name (options->gimage,
-                                                GIMP_IMAGE_QMASK_NAME);
 
       if (options->gimage && channel)
         {
