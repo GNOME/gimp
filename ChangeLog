@@ -1,5 +1,28 @@
 2005-02-05  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolordisplay.[ch]: deprecate the
+	implementation of the class methods clone, load_state, save_state
+	and configure_reset and implement them in the base class using the
+	GimpConfigInterface.
+
+	* modules/cdisplay_colorblind.c
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/cdisplay_proof.c: removed deprecated implementations here.
+
+2005-02-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolordisplay.c: add the GimpConfig interface
+	in the GimpColorDisplay class...
+
+	* modules/cdisplay_colorblind.c
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/cdisplay_proof.c: ... instead of adding it in each
+	implementation.
+
+2005-02-05  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	(gimp_display_shell_canvas_tool_events): switched meaning of Ctrl
 	and Shift modifiers used with the mouse scroll wheel. The HIG

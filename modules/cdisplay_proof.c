@@ -28,7 +28,6 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpmodule/gimpmodule.h"
@@ -83,7 +82,7 @@ struct _CdisplayProof
 
   cmsHTRANSFORM     transform;
 
-  GtkWidget        *table;
+  GtkWidget        *widget;
 };
 
 struct _CdisplayProofClass
@@ -101,36 +100,30 @@ enum
 };
 
 
-static GType              cdisplay_proof_get_type   (GTypeModule     *module);
-static void               cdisplay_proof_class_init (CdisplayProofClass *klass);
-static void               cdisplay_proof_init       (CdisplayProof   *proof);
+static GType       cdisplay_proof_get_type     (GTypeModule        *module);
+static void        cdisplay_proof_class_init   (CdisplayProofClass *klass);
+static void        cdisplay_proof_init         (CdisplayProof      *proof);
 
-static void               cdisplay_proof_dispose      (GObject       *object);
-static void               cdisplay_proof_finalize     (GObject       *object);
-static void               cdisplay_proof_get_property (GObject       *object,
-                                                       guint          property_id,
-                                                       GValue        *value,
-                                                       GParamSpec    *pspec);
-static void               cdisplay_proof_set_property (GObject       *object,
-                                                       guint          property_id,
-                                                       const GValue  *value,
-                                                       GParamSpec    *pspec);
+static void        cdisplay_proof_dispose      (GObject          *object);
+static void        cdisplay_proof_finalize     (GObject          *object);
+static void        cdisplay_proof_get_property (GObject          *object,
+                                                guint             property_id,
+                                                GValue           *value,
+                                                GParamSpec       *pspec);
+static void        cdisplay_proof_set_property (GObject          *object,
+                                                guint             property_id,
+                                                const GValue     *value,
+                                                GParamSpec       *pspec);
 
 
-static GimpColorDisplay * cdisplay_proof_clone      (GimpColorDisplay *display);
-static void               cdisplay_proof_convert    (GimpColorDisplay *display,
-                                                     guchar           *buf,
-                                                     gint              width,
-                                                     gint              height,
-                                                     gint              bpp,
-                                                     gint              bpl);
-static void               cdisplay_proof_load_state (GimpColorDisplay *display,
-                                                     GimpParasite     *state);
-static GimpParasite     * cdisplay_proof_save_state (GimpColorDisplay *display);
-static GtkWidget        * cdisplay_proof_configure  (GimpColorDisplay *display);
-static void               cdisplay_proof_configure_reset (GimpColorDisplay *display);
-
-static void               cdisplay_proof_changed    (GimpColorDisplay *display);
+static void        cdisplay_proof_convert      (GimpColorDisplay *display,
+                                                guchar           *buf,
+                                                gint              width,
+                                                gint              height,
+                                                gint              bpp,
+                                                gint              bpl);
+static GtkWidget * cdisplay_proof_configure    (GimpColorDisplay *display);
+static void        cdisplay_proof_changed      (GimpColorDisplay *display);
 
 
 static const GimpModuleInfo cdisplay_proof_info =
@@ -213,10 +206,10 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose          = cdisplay_proof_dispose;
-  object_class->finalize         = cdisplay_proof_finalize;
-  object_class->get_property     = cdisplay_proof_get_property;
-  object_class->set_property     = cdisplay_proof_set_property;
+  object_class->dispose      = cdisplay_proof_dispose;
+  object_class->finalize     = cdisplay_proof_finalize;
+  object_class->get_property = cdisplay_proof_get_property;
+  object_class->set_property = cdisplay_proof_set_property;
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTENT,
                                  "intent", NULL,
@@ -231,15 +224,11 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
                                  GIMP_CONFIG_PATH_FILE, NULL,
                                  0);
 
-  display_class->name            = _("Color Proof");
-  display_class->help_id         = "gimp-colordisplay-proof";
-  display_class->clone           = cdisplay_proof_clone;
-  display_class->convert         = cdisplay_proof_convert;
-  display_class->load_state      = cdisplay_proof_load_state;
-  display_class->save_state      = cdisplay_proof_save_state;
-  display_class->configure       = cdisplay_proof_configure;
-  display_class->configure_reset = cdisplay_proof_configure_reset;
-  display_class->changed         = cdisplay_proof_changed;
+  display_class->name        = _("Color Proof");
+  display_class->help_id     = "gimp-colordisplay-proof";
+  display_class->convert     = cdisplay_proof_convert;
+  display_class->configure   = cdisplay_proof_configure;
+  display_class->changed     = cdisplay_proof_changed;
 
   cmsErrorAction (LCMS_ERROR_IGNORE);
 }
@@ -249,7 +238,7 @@ cdisplay_proof_init (CdisplayProof *proof)
 {
   proof->transform = NULL;
   proof->profile   = NULL;
-  proof->table     = NULL;
+  proof->widget     = NULL;
 }
 
 static void
@@ -257,8 +246,8 @@ cdisplay_proof_dispose (GObject *object)
 {
   CdisplayProof *proof = CDISPLAY_PROOF (object);
 
-  if (proof->table)
-    gtk_widget_destroy (proof->table);
+  if (proof->widget)
+    gtk_widget_destroy (proof->widget);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -335,12 +324,6 @@ cdisplay_proof_set_property (GObject      *object,
   gimp_color_display_changed (GIMP_COLOR_DISPLAY (proof));
 }
 
-static GimpColorDisplay *
-cdisplay_proof_clone (GimpColorDisplay *display)
-{
-  return GIMP_COLOR_DISPLAY (gimp_config_duplicate (GIMP_CONFIG (display)));
-}
-
 static void
 cdisplay_proof_convert (GimpColorDisplay *display,
 			guchar           *buf,
@@ -362,77 +345,47 @@ cdisplay_proof_convert (GimpColorDisplay *display,
     cmsDoTransform (proof->transform, buf, buf, width);
 }
 
-static void
-cdisplay_proof_load_state (GimpColorDisplay *display,
-                           GimpParasite     *state)
-{
-  gimp_config_deserialize_string (GIMP_CONFIG (display),
-                                  gimp_parasite_data (state),
-                                  gimp_parasite_data_size (state),
-                                  NULL, NULL);
-}
-
-static GimpParasite *
-cdisplay_proof_save_state (GimpColorDisplay *display)
-{
-  GimpParasite *parasite;
-  gchar        *str;
-
-  str = gimp_config_serialize_to_string (GIMP_CONFIG (display), NULL);
-
-  parasite = gimp_parasite_new ("Display/Proof",
-                                GIMP_PARASITE_PERSISTENT,
-                                strlen (str) + 1, str);
-  g_free (str);
-
-  return parasite;
-}
-
 static GtkWidget *
 cdisplay_proof_configure (GimpColorDisplay *display)
 {
   CdisplayProof *proof = CDISPLAY_PROOF (display);
+  GtkWidget     *table;
   GtkWidget     *combo;
   GtkWidget     *entry;
   GtkWidget     *toggle;
 
-  if (proof->table)
-    gtk_widget_destroy (proof->table);
+  if (proof->widget)
+    gtk_widget_destroy (proof->widget);
 
-  proof->table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (proof->table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (proof->table), 6);
-
-  g_signal_connect (proof->table, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &proof->table);
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (proof), "intent", 0, 0);
 
-  gimp_table_attach_aligned (GTK_TABLE (proof->table), 0, 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("_Intent:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
   entry = gimp_prop_file_entry_new (G_OBJECT (proof), "profile",
                                     _("Choose an ICC Color Profile"),
                                     FALSE, FALSE);
-  gimp_table_attach_aligned (GTK_TABLE (proof->table), 0, 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Profile:"), 0.0, 0.5,
                              entry, 1, FALSE);
 
   toggle = gimp_prop_check_button_new (G_OBJECT (proof),
                                        "black-point-compensation",
                                        _("_Black Point Compensation"));
-  gtk_table_attach_defaults (GTK_TABLE (proof->table), toggle, 1, 2, 2, 3);
+  gtk_table_attach_defaults (GTK_TABLE (table), toggle, 1, 2, 2, 3);
   gtk_widget_show (toggle);
 
-  return proof->table;
-}
+  proof->widget = table;
+  g_signal_connect (proof->widget, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &proof->widget);
 
-static void
-cdisplay_proof_configure_reset (GimpColorDisplay *display)
-{
-  gimp_config_reset (GIMP_CONFIG (display));
+  return proof->widget;
 }
 
 static void

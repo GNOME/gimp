@@ -53,17 +53,27 @@ struct _GimpColorDisplayClass
   const gchar  *help_id;
 
   /*  virtual functions  */
+
+  /*  implementing the GimpColorDisplay::clone method is deprecated       */
   GimpColorDisplay * (* clone)           (GimpColorDisplay *display);
+
   void               (* convert)         (GimpColorDisplay *display,
                                           guchar           *buf,
                                           gint              width,
                                           gint              height,
                                           gint              bpp,
                                           gint              bpl);
+
+  /*  implementing the GimpColorDisplay::load_state method is deprecated  */
   void               (* load_state)      (GimpColorDisplay *display,
                                           GimpParasite     *state);
+
+  /*  implementing the GimpColorDisplay::save_state method is deprecated  */
   GimpParasite     * (* save_state)      (GimpColorDisplay *display);
+
   GtkWidget        * (* configure)       (GimpColorDisplay *display);
+
+  /*  implementing the GimpColorDisplay::configure_reset method is deprecated */
   void               (* configure_reset) (GimpColorDisplay *display);
 
   /*  signals  */

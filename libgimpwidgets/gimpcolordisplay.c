@@ -22,8 +22,11 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
@@ -192,6 +195,8 @@ gimp_color_display_clone (GimpColorDisplay *display)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), NULL);
 
+  /*  implementing the clone method is deprecated
+   */
   if (GIMP_COLOR_DISPLAY_GET_CLASS (display)->clone)
     {
       GimpColorDisplay *clone = NULL;
@@ -204,7 +209,7 @@ gimp_color_display_clone (GimpColorDisplay *display)
       return clone;
     }
 
-  return NULL;
+  return GIMP_COLOR_DISPLAY (gimp_config_duplicate (GIMP_CONFIG (display)));
 }
 
 void
@@ -230,19 +235,44 @@ gimp_color_display_load_state (GimpColorDisplay *display,
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
   g_return_if_fail (state != NULL);
 
+  /*  implementing the load_state method is deprecated
+   */
   if (GIMP_COLOR_DISPLAY_GET_CLASS (display)->load_state)
-    GIMP_COLOR_DISPLAY_GET_CLASS (display)->load_state (display, state);
+    {
+      GIMP_COLOR_DISPLAY_GET_CLASS (display)->load_state (display, state);
+    }
+  else
+    {
+      gimp_config_deserialize_string (GIMP_CONFIG (display),
+                                      gimp_parasite_data (state),
+                                      gimp_parasite_data_size (state),
+                                      NULL, NULL);
+    }
 }
 
 GimpParasite *
 gimp_color_display_save_state (GimpColorDisplay *display)
 {
+  GimpParasite *parasite;
+  gchar        *str;
+
   g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), NULL);
 
+  /*  implementing the save_state method is deprecated
+   */
   if (GIMP_COLOR_DISPLAY_GET_CLASS (display)->save_state)
-    return GIMP_COLOR_DISPLAY_GET_CLASS (display)->save_state (display);
+    {
+      return GIMP_COLOR_DISPLAY_GET_CLASS (display)->save_state (display);
+    }
 
-  return NULL;
+  str = gimp_config_serialize_to_string (GIMP_CONFIG (display), NULL);
+
+  parasite = gimp_parasite_new ("Display/Proof",
+                                GIMP_PARASITE_PERSISTENT,
+                                strlen (str) + 1, str);
+  g_free (str);
+
+  return parasite;
 }
 
 GtkWidget *
@@ -261,8 +291,16 @@ gimp_color_display_configure_reset (GimpColorDisplay *display)
 {
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
 
+  /*  implementing the configure_reset method is deprecated
+   */
   if (GIMP_COLOR_DISPLAY_GET_CLASS (display)->configure_reset)
-    GIMP_COLOR_DISPLAY_GET_CLASS (display)->configure_reset (display);
+    {
+      GIMP_COLOR_DISPLAY_GET_CLASS (display)->configure_reset (display);
+    }
+  else
+    {
+      gimp_config_reset (GIMP_CONFIG (display));
+    }
 }
 
 void

@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -51,7 +49,7 @@ struct _CdisplayGamma
   gdouble           gamma;
   guchar            lookup[256];
 
-  GtkWidget        *hbox;
+  GtkWidget        *widget;
 };
 
 struct _CdisplayGammaClass
@@ -67,34 +65,28 @@ enum
 };
 
 
-static GType   cdisplay_gamma_get_type     (GTypeModule        *module);
-static void    cdisplay_gamma_class_init   (CdisplayGammaClass *klass);
+static GType       cdisplay_gamma_get_type     (GTypeModule        *module);
+static void        cdisplay_gamma_class_init   (CdisplayGammaClass *klass);
 
-static void    cdisplay_gamma_dispose      (GObject            *object);
-static void    cdisplay_gamma_set_property (GObject            *object,
-                                            guint               property_id,
-                                            const GValue       *value,
-                                            GParamSpec         *pspec);
-static void    cdisplay_gamma_get_property (GObject            *object,
-                                            guint               property_id,
-                                            GValue             *value,
-                                            GParamSpec         *pspec);
+static void        cdisplay_gamma_dispose      (GObject            *object);
+static void        cdisplay_gamma_set_property (GObject            *object,
+                                                guint               property_id,
+                                                const GValue       *value,
+                                                GParamSpec         *pspec);
+static void        cdisplay_gamma_get_property (GObject            *object,
+                                                guint               property_id,
+                                                GValue             *value,
+                                                GParamSpec         *pspec);
 
-static GimpColorDisplay * cdisplay_gamma_clone  (GimpColorDisplay *display);
-static void    cdisplay_gamma_convert           (GimpColorDisplay *display,
-                                                 guchar           *buf,
-                                                 gint              w,
-                                                 gint              h,
-                                                 gint              bpp,
-                                                 gint              bpl);
-static void    cdisplay_gamma_load_state        (GimpColorDisplay *display,
-                                                 GimpParasite     *state);
-static GimpParasite * cdisplay_gamma_save_state (GimpColorDisplay *display);
-static GtkWidget    * cdisplay_gamma_configure  (GimpColorDisplay *display);
-static void    cdisplay_gamma_configure_reset   (GimpColorDisplay *display);
-
-static void    cdisplay_gamma_set_gamma         (CdisplayGamma    *gamma,
-                                                 gdouble           value);
+static void        cdisplay_gamma_convert      (GimpColorDisplay   *display,
+                                                guchar             *buf,
+                                                gint                w,
+                                                gint                h,
+                                                 gint               bpp,
+                                                gint                bpl);
+static GtkWidget * cdisplay_gamma_configure    (GimpColorDisplay   *display);
+static void        cdisplay_gamma_set_gamma    (CdisplayGamma      *gamma,
+                                                gdouble             value);
 
 
 static const GimpModuleInfo cdisplay_gamma_info =
@@ -161,23 +153,19 @@ cdisplay_gamma_class_init (CdisplayGammaClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose          = cdisplay_gamma_dispose;
-  object_class->get_property     = cdisplay_gamma_get_property;
-  object_class->set_property     = cdisplay_gamma_set_property;
+  object_class->dispose      = cdisplay_gamma_dispose;
+  object_class->get_property = cdisplay_gamma_get_property;
+  object_class->set_property = cdisplay_gamma_set_property;
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GAMMA,
                                    "gamma", NULL,
                                    0.01, 10.0, DEFAULT_GAMMA,
                                    0);
 
-  display_class->name            = _("Gamma");
-  display_class->help_id         = "gimp-colordisplay-gamma";
-  display_class->clone           = cdisplay_gamma_clone;
-  display_class->convert         = cdisplay_gamma_convert;
-  display_class->load_state      = cdisplay_gamma_load_state;
-  display_class->save_state      = cdisplay_gamma_save_state;
-  display_class->configure       = cdisplay_gamma_configure;
-  display_class->configure_reset = cdisplay_gamma_configure_reset;
+  display_class->name        = _("Gamma");
+  display_class->help_id     = "gimp-colordisplay-gamma";
+  display_class->convert     = cdisplay_gamma_convert;
+  display_class->configure   = cdisplay_gamma_configure;
 }
 
 static void
@@ -185,8 +173,8 @@ cdisplay_gamma_dispose (GObject *object)
 {
   CdisplayGamma *gamma = CDISPLAY_GAMMA (object);
 
-  if (gamma->hbox)
-    gtk_widget_destroy (gamma->hbox);
+  if (gamma->widget)
+    gtk_widget_destroy (gamma->widget);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -229,12 +217,6 @@ cdisplay_gamma_set_property (GObject      *object,
     }
 }
 
-static GimpColorDisplay *
-cdisplay_gamma_clone (GimpColorDisplay *display)
-{
-  return GIMP_COLOR_DISPLAY (gimp_config_duplicate (GIMP_CONFIG (display)));
-}
-
 static void
 cdisplay_gamma_convert (GimpColorDisplay *display,
                         guchar           *buf,
@@ -272,66 +254,36 @@ cdisplay_gamma_convert (GimpColorDisplay *display,
     }
 }
 
-static void
-cdisplay_gamma_load_state (GimpColorDisplay *display,
-                           GimpParasite     *state)
-{
-  gimp_config_deserialize_string (GIMP_CONFIG (display),
-                                  gimp_parasite_data (state),
-                                  gimp_parasite_data_size (state),
-                                  NULL, NULL);
-}
-
-static GimpParasite *
-cdisplay_gamma_save_state (GimpColorDisplay *display)
-{
-  GimpParasite *parasite;
-  gchar        *str;
-
-  str = gimp_config_serialize_to_string (GIMP_CONFIG (display), NULL);
-
-  parasite = gimp_parasite_new ("Display/Gamma",
-                                GIMP_PARASITE_PERSISTENT,
-                                strlen (str) + 1, str);
-  g_free (str);
-
-  return parasite;
-}
-
 static GtkWidget *
 cdisplay_gamma_configure (GimpColorDisplay *display)
 {
   CdisplayGamma *gamma = CDISPLAY_GAMMA (display);
+  GtkWidget     *hbox;
   GtkWidget     *label;
   GtkWidget     *spinbutton;
 
-  if (gamma->hbox)
-    gtk_widget_destroy (gamma->hbox);
+  if (gamma->widget)
+    gtk_widget_destroy (gamma->widget);
 
-  gamma->hbox = gtk_hbox_new (FALSE, 6);
-
-  g_signal_connect (gamma->hbox, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &gamma->hbox);
+  hbox = gtk_hbox_new (FALSE, 6);
 
   label = gtk_label_new_with_mnemonic (_("_Gamma:"));
-  gtk_box_pack_start (GTK_BOX (gamma->hbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   spinbutton = gimp_prop_spin_button_new (G_OBJECT (gamma), "gamma",
                                           0.1, 1.0, 3);
-  gtk_box_pack_start (GTK_BOX (gamma->hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
-  return gamma->hbox;
-}
+  gamma->widget = hbox;
+  g_signal_connect (gamma->widget, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &gamma->widget);
 
-static void
-cdisplay_gamma_configure_reset (GimpColorDisplay *display)
-{
-  gimp_config_reset (GIMP_CONFIG (display));
+  return gamma->widget;
 }
 
 static void

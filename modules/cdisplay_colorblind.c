@@ -103,7 +103,7 @@ struct _CdisplayColorblind
 
   guint32               cache[2 * COLOR_CACHE_SIZE];
 
-  GtkWidget            *hbox;
+  GtkWidget            *widget;
 };
 
 struct _CdisplayColorblindClass
@@ -119,38 +119,31 @@ enum
 };
 
 
-static GType   cdisplay_colorblind_get_type   (GTypeModule             *module);
-static void    cdisplay_colorblind_class_init (CdisplayColorblindClass *klass);
-static void    cdisplay_colorblind_init       (CdisplayColorblind      *colorblind);
+static GType       cdisplay_colorblind_get_type   (GTypeModule             *module);
+static void        cdisplay_colorblind_class_init (CdisplayColorblindClass *klass);
+static void        cdisplay_colorblind_init       (CdisplayColorblind      *colorblind);
 
-static void    cdisplay_colorblind_dispose      (GObject               *object);
-static void    cdisplay_colorblind_set_property (GObject               *object,
-                                                                                                                                 guint                  property_id,
-                                                 const GValue          *value,
-                                                 GParamSpec            *pspec);
-static void    cdisplay_colorblind_get_property (GObject               *object,
-                                                 guint                  property_id,
-                                                 GValue                *value,
-                                                 GParamSpec            *pspec);
+static void        cdisplay_colorblind_dispose       (GObject      *object);
+static void        cdisplay_colorblind_set_property  (GObject      *object,
+                                                      guint         property_id,
+                                                      const GValue *value,
+                                                      GParamSpec   *pspec);
+static void        cdisplay_colorblind_get_property  (GObject      *object,
+                                                      guint         property_id,
+                                                      GValue       *value,
+                                                      GParamSpec   *pspec);
 
+static void        cdisplay_colorblind_convert       (GimpColorDisplay      *display,
+                                                      guchar                *buf,
+                                                      gint                   w,
+                                                      gint                   h,
+                                                      gint                   bpp,
+                                                      gint                   bpl);
+static GtkWidget * cdisplay_colorblind_configure      (GimpColorDisplay     *display);
+static void        cdisplay_colorblind_changed        (GimpColorDisplay     *display);
 
-static GimpColorDisplay * cdisplay_colorblind_clone  (GimpColorDisplay   *display);
-static void    cdisplay_colorblind_convert           (GimpColorDisplay   *display,
-                                                      guchar             *buf,
-                                                      gint                w,
-                                                      gint                h,
-                                                      gint                bpp,
-                                                      gint                bpl);
-static void    cdisplay_colorblind_load_state        (GimpColorDisplay   *display,
-                                                      GimpParasite       *state);
-static GimpParasite * cdisplay_colorblind_save_state (GimpColorDisplay   *display);
-static GtkWidget    * cdisplay_colorblind_configure  (GimpColorDisplay   *display);
-static void    cdisplay_colorblind_configure_reset   (GimpColorDisplay   *display);
-
-static void    cdisplay_colorblind_changed           (GimpColorDisplay   *display);
-
-static void    cdisplay_colorblind_set_deficiency    (CdisplayColorblind   *colorblind,
-                                                      ColorblindDeficiency  value);
+static void        cdisplay_colorblind_set_deficiency (CdisplayColorblind   *colorblind,
+                                                       ColorblindDeficiency  value);
 
 static const GimpModuleInfo cdisplay_colorblind_info =
 {
@@ -236,9 +229,9 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose          = cdisplay_colorblind_dispose;
-  object_class->get_property     = cdisplay_colorblind_get_property;
-  object_class->set_property     = cdisplay_colorblind_set_property;
+  object_class->dispose      = cdisplay_colorblind_dispose;
+  object_class->get_property = cdisplay_colorblind_get_property;
+  object_class->set_property = cdisplay_colorblind_set_property;
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DEFICIENCY,
                                  "deficiency", NULL,
@@ -246,15 +239,11 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
                                  DEFAULT_DEFICIENCY,
                                  0);
 
-  display_class->name            = _("Color Deficient Vision");
-  display_class->help_id         = "gimp-colordisplay-colorblind";
-  display_class->clone           = cdisplay_colorblind_clone;
-  display_class->convert         = cdisplay_colorblind_convert;
-  display_class->load_state      = cdisplay_colorblind_load_state;
-  display_class->save_state      = cdisplay_colorblind_save_state;
-  display_class->configure       = cdisplay_colorblind_configure;
-  display_class->configure_reset = cdisplay_colorblind_configure_reset;
-  display_class->changed         = cdisplay_colorblind_changed;
+  display_class->name        = _("Color Deficient Vision");
+  display_class->help_id     = "gimp-colordisplay-colorblind";
+  display_class->convert     = cdisplay_colorblind_convert;
+  display_class->configure   = cdisplay_colorblind_configure;
+  display_class->changed     = cdisplay_colorblind_changed;
 }
 
 static void
@@ -314,8 +303,8 @@ cdisplay_colorblind_dispose (GObject *object)
 {
   CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (object);
 
-  if (colorblind->hbox)
-    gtk_widget_destroy (colorblind->hbox);
+  if (colorblind->widget)
+    gtk_widget_destroy (colorblind->widget);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -357,12 +346,6 @@ cdisplay_colorblind_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static GimpColorDisplay *
-cdisplay_colorblind_clone (GimpColorDisplay *display)
-{
-  return GIMP_COLOR_DISPLAY (gimp_config_duplicate (GIMP_CONFIG (display)));
 }
 
 static void
@@ -492,67 +475,37 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
       }
 }
 
-static void
-cdisplay_colorblind_load_state (GimpColorDisplay *display,
-                                GimpParasite     *state)
-{
-  gimp_config_deserialize_string (GIMP_CONFIG (display),
-                                  gimp_parasite_data (state),
-                                  gimp_parasite_data_size (state),
-                                  NULL, NULL);
-}
-
-static GimpParasite *
-cdisplay_colorblind_save_state (GimpColorDisplay *display)
-{
-  GimpParasite *parasite;
-  gchar        *str;
-
-  str = gimp_config_serialize_to_string (GIMP_CONFIG (display), NULL);
-
-  parasite = gimp_parasite_new ("Display/Colorblind",
-                                GIMP_PARASITE_PERSISTENT,
-                                strlen (str) + 1, str);
-  g_free (str);
-
-  return parasite;
-}
-
 static GtkWidget *
 cdisplay_colorblind_configure (GimpColorDisplay *display)
 {
   CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (display);
+  GtkWidget          *hbox;
   GtkWidget          *label;
   GtkWidget          *combo;
 
-  if (colorblind->hbox)
-    gtk_widget_destroy (colorblind->hbox);
+  if (colorblind->widget)
+    gtk_widget_destroy (colorblind->widget);
 
-  colorblind->hbox = gtk_hbox_new (FALSE, 6);
-
-  g_signal_connect (colorblind->hbox, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &colorblind->hbox);
+  hbox = gtk_hbox_new (FALSE, 6);
 
   label = gtk_label_new_with_mnemonic (_("Color _Deficiency Type:"));
-  gtk_box_pack_start (GTK_BOX (colorblind->hbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   combo =
     gimp_prop_enum_combo_box_new (G_OBJECT (colorblind), "deficiency", 0, 0);
 
-  gtk_box_pack_start (GTK_BOX (colorblind->hbox), combo, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  return colorblind->hbox;
-}
+  colorblind->widget = hbox;
+  g_signal_connect (colorblind->widget, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &colorblind->widget);
 
-static void
-cdisplay_colorblind_configure_reset (GimpColorDisplay *display)
-{
-  gimp_config_reset (GIMP_CONFIG (display));
+  return colorblind->widget;
 }
 
 static void

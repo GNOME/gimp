@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -51,7 +49,7 @@ struct _CdisplayContrast
   gdouble           contrast;
   guchar            lookup[256];
 
-  GtkWidget        *hbox;
+  GtkWidget        *widget;
 };
 
 struct _CdisplayContrastClass
@@ -67,34 +65,28 @@ enum
 };
 
 
-static GType   cdisplay_contrast_get_type     (GTypeModule        *module);
-static void    cdisplay_contrast_class_init   (CdisplayContrastClass *klass);
+static GType       cdisplay_contrast_get_type     (GTypeModule           *module);
+static void        cdisplay_contrast_class_init   (CdisplayContrastClass *klass);
 
-static void    cdisplay_contrast_dispose      (GObject            *object);
-static void    cdisplay_contrast_set_property (GObject            *object,
-                                               guint               property_id,
-                                               const GValue       *value,
-                                               GParamSpec         *pspec);
-static void    cdisplay_contrast_get_property (GObject            *object,
-                                               guint               property_id,
-                                               GValue             *value,
-                                               GParamSpec         *pspec);
+static void        cdisplay_contrast_dispose      (GObject          *object);
+static void        cdisplay_contrast_set_property (GObject          *object,
+                                                   guint             property_id,
+                                                   const GValue     *value,
+                                                   GParamSpec       *pspec);
+static void        cdisplay_contrast_get_property (GObject          *object,
+                                                   guint             property_id,
+                                                   GValue           *value,
+                                                   GParamSpec       *pspec);
 
-static GimpColorDisplay * cdisplay_contrast_clone  (GimpColorDisplay *display);
-static void    cdisplay_contrast_convert           (GimpColorDisplay *display,
-                                                    guchar           *buf,
-                                                    gint              w,
-                                                    gint              h,
-                                                    gint              bpp,
-                                                    gint              bpl);
-static void    cdisplay_contrast_load_state        (GimpColorDisplay *display,
-                                                    GimpParasite     *state);
-static GimpParasite * cdisplay_contrast_save_state (GimpColorDisplay *display);
-static GtkWidget    * cdisplay_contrast_configure  (GimpColorDisplay *display);
-static void    cdisplay_contrast_configure_reset   (GimpColorDisplay *display);
-
-static void    cdisplay_contrast_set_contrast      (CdisplayContrast *contrast,
-                                                    gdouble           value);
+static void        cdisplay_contrast_convert      (GimpColorDisplay *display,
+                                                   guchar           *buf,
+                                                   gint              w,
+                                                   gint              h,
+                                                   gint              bpp,
+                                                   gint              bpl);
+static GtkWidget * cdisplay_contrast_configure    (GimpColorDisplay *display);
+static void        cdisplay_contrast_set_contrast (CdisplayContrast *contrast,
+                                                   gdouble           value);
 
 
 static const GimpModuleInfo cdisplay_contrast_info =
@@ -161,23 +153,19 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose          = cdisplay_contrast_dispose;
-  object_class->get_property     = cdisplay_contrast_get_property;
-  object_class->set_property     = cdisplay_contrast_set_property;
+  object_class->dispose      = cdisplay_contrast_dispose;
+  object_class->get_property = cdisplay_contrast_get_property;
+  object_class->set_property = cdisplay_contrast_set_property;
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CONTRAST,
                                    "contrast", NULL,
                                    0.01, 10.0, DEFAULT_CONTRAST,
                                    0);
 
-  display_class->name            = _("Contrast");
-  display_class->help_id         = "gimp-colordisplay-contrast";
-  display_class->clone           = cdisplay_contrast_clone;
-  display_class->convert         = cdisplay_contrast_convert;
-  display_class->load_state      = cdisplay_contrast_load_state;
-  display_class->save_state      = cdisplay_contrast_save_state;
-  display_class->configure       = cdisplay_contrast_configure;
-  display_class->configure_reset = cdisplay_contrast_configure_reset;
+  display_class->name        = _("Contrast");
+  display_class->help_id     = "gimp-colordisplay-contrast";
+  display_class->convert     = cdisplay_contrast_convert;
+  display_class->configure   = cdisplay_contrast_configure;
 }
 
 static void
@@ -185,8 +173,8 @@ cdisplay_contrast_dispose (GObject *object)
 {
   CdisplayContrast *contrast = CDISPLAY_CONTRAST (object);
 
-  if (contrast->hbox)
-    gtk_widget_destroy (contrast->hbox);
+  if (contrast->widget)
+    gtk_widget_destroy (contrast->widget);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -229,12 +217,6 @@ cdisplay_contrast_set_property (GObject      *object,
     }
 }
 
-static GimpColorDisplay *
-cdisplay_contrast_clone (GimpColorDisplay *display)
-{
-  return GIMP_COLOR_DISPLAY (gimp_config_duplicate (GIMP_CONFIG (display)));
-}
-
 static void
 cdisplay_contrast_convert (GimpColorDisplay *display,
                            guchar           *buf,
@@ -272,66 +254,36 @@ cdisplay_contrast_convert (GimpColorDisplay *display,
     }
 }
 
-static void
-cdisplay_contrast_load_state (GimpColorDisplay *display,
-                              GimpParasite     *state)
-{
-  gimp_config_deserialize_string (GIMP_CONFIG (display),
-                                  gimp_parasite_data (state),
-                                  gimp_parasite_data_size (state),
-                                  NULL, NULL);
-}
-
-static GimpParasite *
-cdisplay_contrast_save_state (GimpColorDisplay *display)
-{
-  GimpParasite *parasite;
-  gchar        *str;
-
-  str = gimp_config_serialize_to_string (GIMP_CONFIG (display), NULL);
-
-  parasite = gimp_parasite_new ("Display/Contrast",
-                                GIMP_PARASITE_PERSISTENT,
-                                strlen (str) + 1, str);
-  g_free (str);
-
-  return parasite;
-}
-
 static GtkWidget *
 cdisplay_contrast_configure (GimpColorDisplay *display)
 {
   CdisplayContrast *contrast = CDISPLAY_CONTRAST (display);
+  GtkWidget        *hbox;
   GtkWidget        *label;
   GtkWidget        *spinbutton;
 
-  if (contrast->hbox)
-    gtk_widget_destroy (contrast->hbox);
+  if (contrast->widget)
+    gtk_widget_destroy (contrast->widget);
 
-  contrast->hbox = gtk_hbox_new (FALSE, 6);
-
-  g_signal_connect (contrast->hbox, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &contrast->hbox);
+  hbox = gtk_hbox_new (FALSE, 6);
 
   label = gtk_label_new_with_mnemonic (_("Contrast C_ycles:"));
-  gtk_box_pack_start (GTK_BOX (contrast->hbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   spinbutton = gimp_prop_spin_button_new (G_OBJECT (contrast), "contrast",
                                           0.1, 1.0, 3);
-  gtk_box_pack_start (GTK_BOX (contrast->hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
-  return contrast->hbox;
-}
+  contrast->widget = hbox;
+  g_signal_connect (contrast->widget, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &contrast->widget);
 
-static void
-cdisplay_contrast_configure_reset (GimpColorDisplay *display)
-{
-  gimp_config_reset (GIMP_CONFIG (display));
+  return contrast->widget;
 }
 
 static void
