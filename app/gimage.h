@@ -30,6 +30,10 @@
 struct _PixelArea;
 struct _Canvas;
 
+/*
+ * NOTE!! These values are duplicated in tag.h
+*/
+
 /* the image types */
 #define RGB_GIMAGE          0
 #define RGBA_GIMAGE         1
@@ -37,6 +41,20 @@ struct _Canvas;
 #define GRAYA_GIMAGE        3
 #define INDEXED_GIMAGE      4
 #define INDEXEDA_GIMAGE     5
+
+/* These are the 16bit types */
+#define U16_RGB_GIMAGE         6
+#define U16_RGBA_GIMAGE        7
+#define U16_GRAY_GIMAGE        8
+#define U16_GRAYA_GIMAGE       9
+#define U16_INDEXED_GIMAGE     10 
+#define U16_INDEXEDA_GIMAGE    11 
+
+/* These are the float types */
+#define FLOAT_RGB_GIMAGE          12 
+#define FLOAT_RGBA_GIMAGE         13 
+#define FLOAT_GRAY_GIMAGE         14 
+#define FLOAT_GRAYA_GIMAGE        15 
 
 #define TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE) 
 
@@ -52,6 +70,11 @@ struct _Canvas;
 #define RGB              0
 #define GRAY             1
 #define INDEXED          2
+#define U16_RGB     	 3    /*16bit*/
+#define U16_GRAY    	 4
+#define U16_INDEXED		 5
+#define FLOAT_RGB 		 6    /*float*/
+#define FLOAT_GRAY 		 7
 
 #define MAX_CHANNELS     4
 
