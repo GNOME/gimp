@@ -27,11 +27,11 @@
 
 #include "../perl-intl.h"
 
+#if 0
 /* hack, undocumented, argh! */
 static Core* PDL; /* Structure hold core C functions */
 
 /* get pointer to PDL structure. */
-#if 0
 static void need_pdl (void)
 {
   SV *CoreSV;
@@ -165,7 +165,7 @@ static SV *net2sv (int objectify, char **_s)
   SV *sv;
   AV *av;
   unsigned int ui, n;
-  I32 i32,i33;
+  int i, j;
   long l;
   char str[64];
 
@@ -216,11 +216,11 @@ static SV *net2sv (int objectify, char **_s)
         break;
 
       case 'a':
-        sscanf (s, "%x:%n", &i32, &n); s += n;
+        sscanf (s, "%x:%n", &i, &n); s += n;
         av = newAV ();
-        av_extend (av, i32);
-        for (i33 = 0; i33 <= i32; i33++)
-          av_store (av, i33, net2sv (objectify, &s));
+        av_extend (av, (I32)i);
+        for (j = 0; j <= i; j++)
+          av_store (av, (I32)j, net2sv (objectify, &s));
 
         sv = (SV*)av;
         break;

@@ -23,12 +23,14 @@
  * well, nobody knows why... ARGH! */
 GPlugInInfo PLUG_IN_INFO = { 0, 0, 0, 0 };
 
+#if 0
 static void gimp_pattern_select_widget_callback (gchar *name, gint width,
 	gint height, gint bpp, gchar *mask, gint closing, gpointer nameref)
 {
   SV *sv = (SV *)nameref;
   sv_setpv (sv, name);
 }
+#endif
 
 static void need_gtk (void)
 {

@@ -174,7 +174,7 @@ typedef gint32 COLOR;
 typedef gpointer GPixelRgnIterator;
 
 /* new SV with len len.  There _must_ be a better way, but newSV doesn't work.  */
-static SV *newSVn (int len)
+static SV *newSVn (STRLEN len)
 {
   SV *sv = newSVpv ("", 0);
   
@@ -208,7 +208,7 @@ static SV *new_gdrawable (gint32 id)
    if (!gdrawable_cache)
      gdrawable_cache = g_hash_table_new (g_int_hash, g_int_equal);
 
-   if (sv = (SV*)g_hash_table_lookup (gdrawable_cache, &id))
+   if ((sv = (SV*)g_hash_table_lookup (gdrawable_cache, &id)))
      SvREFCNT_inc (sv);
    else
      {
@@ -443,7 +443,7 @@ dump_params (int nparams, GParam *args, GParamDef *params)
     {
       if ((trace & TRACE_TYPE) == TRACE_TYPE)
         {
-	  if (params[i].type >= 0 && params[i].type < PARAM_END+1)
+	  if ((unsigned int)params[i].type < PARAM_END+1)
 	    trace_printf ("%s ", ptype[params[i].type]);
 	  else
 	    trace_printf ("T%d ", params[i].type);
@@ -1422,7 +1422,6 @@ gimp_query_procedure(proc_name)
 		int proc_type;
 		int nparams;
 		int nreturn_vals;
-                int n;
 		GParamDef *params;
 		GParamDef *return_vals;
 		
@@ -2119,11 +2118,11 @@ gimp_pixel_rgn_data(pr,newdata=0)
             old_pdl (&newdata, 2, pr->bpp);
             stride = pr->bpp * newdata->dims[newdata->ndims-2];
 
-            if (pr->h != newdata->dims[newdata->ndims-1])
+            if ((int)pr->h != newdata->dims[newdata->ndims-1])
               croak (__("pdl height != region height"));
 
             for (y   = 0, src = newdata->data, dst = pr->data;
-                 y < pr->h;
+                 y < (int)pr->h;
                  y++    , src += stride      , dst += pr->rowstride)
               Copy (src, dst, stride, char);
 
@@ -2144,7 +2143,7 @@ gimp_pixel_rgn_data(pr,newdata=0)
             p->state |= PDL_DONTTOUCHDATA | PDL_ALLOCATED;
             PDL->add_deletedata_magic(p, pixel_rgn_pdl_delete_data, 0);
 
-            if (pr->w != dims[1])
+            if ((int)pr->w != dims[1])
               p = redim_pdl (p, 1, pr->w);
 
             RETVAL = p;
@@ -2159,7 +2158,7 @@ SV *
 gimp_tile_get_data(tile)
 	GTile *	tile
 	CODE:
-        need_pdl;
+        need_pdl ();
         croak (__("gimp_tile_get_data is not yet implemented\n"));
 	gimp_tile_ref (tile);
 	gimp_tile_unref (tile, 0);
@@ -2171,7 +2170,7 @@ gimp_tile_set_data(tile,data)
 	GTile *	tile
 	SV *	data
 	CODE:
-        croak (__("gimp_tile_set_data is not yet implemented\n")); (void *)data;
+        croak (__("gimp_tile_set_data is not yet implemented\n")); /*(void *)data;*/
 	gimp_tile_ref_zero (tile);
 	gimp_tile_unref (tile, 1);
 

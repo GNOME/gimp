@@ -19,7 +19,9 @@ Revision history for Gimp-Perl extension.
         - the :auto import tag is no longer the default. neither with nor without
           warning.
         - sdf'ified pod documentation. more to come.
-        - move perl-intl.h include below the other includes.
+        - move perl-intl.h include below the other includes. William Sebok
+          finally came up with a nice problem analysis.
+        - try to get rid of -Wall, if possible.
 
 1.17  Wed Nov 24 21:25:19 CET 1999
         - re-fitted i18n translation for most plug-ins.
