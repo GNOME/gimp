@@ -134,7 +134,7 @@
     (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     
     (gimp-ellipse-select img 0 0 text-height text-height REPLACE TRUE FALSE 0)
-    (gimp-palette-set-background (car (gimp-color-picker text-layer text-layers-offset 0 TRUE FALSE)))
+    (gimp-palette-set-background (car (gimp-color-picker img text-layer text-layers-offset 0 TRUE FALSE 0 0)))
     (gimp-edit-fill bg-layer BG-IMAGE-FILL)
 
     ; Fade-out gradient at the right
