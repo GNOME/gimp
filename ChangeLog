@@ -1,3 +1,8 @@
+2003-06-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable.c (gimp_drawable_mask_bounds): added some
+	more g_return_if_fail() to avoid NULL pointer dereferencing.
+
 2003-06-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/pnm.c (pnm_load_raw): improved handling of

@@ -800,6 +800,10 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
   GimpImage *gimage;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (x1 != NULL, FALSE);
+  g_return_val_if_fail (y1 != NULL, FALSE);
+  g_return_val_if_fail (x2 != NULL, FALSE);
+  g_return_val_if_fail (y2 != NULL, FALSE);
 
   item   = GIMP_ITEM (drawable);
   gimage = gimp_item_get_image (item);
