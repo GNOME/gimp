@@ -218,17 +218,22 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
                                                       CDISPLAY_TYPE_PROOF_INTENT,
                                                       INTENT_PERCEPTUAL,
                                                       G_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
+                                                      G_PARAM_CONSTRUCT |
+                                                      GIMP_MODULE_PARAM_SERIALIZE));
+
   g_object_class_install_property (object_class, PROP_BPC,
                                    g_param_spec_boolean ("black-point-compensation", NULL, NULL,
                                                          FALSE,
                                                          G_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
+                                                         G_PARAM_CONSTRUCT |
+                                                         GIMP_MODULE_PARAM_SERIALIZE));
+
   g_object_class_install_property (object_class, PROP_PROFILE,
                                    g_param_spec_string ("profile", NULL, NULL,
                                                         FALSE,
                                                         G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+                                                        G_PARAM_CONSTRUCT |
+                                                        GIMP_MODULE_PARAM_SERIALIZE));
 
   display_class->name            = _("Color Proof");
   display_class->help_id         = "gimp-colordisplay-proof";

@@ -172,7 +172,8 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
                                                         0.01, 10.0,
                                                         DEFAULT_CONTRAST,
                                                         G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+                                                        G_PARAM_CONSTRUCT |
+                                                        GIMP_MODULE_PARAM_SERIALIZE));
 
   display_class->name            = _("Contrast");
   display_class->help_id         = "gimp-colordisplay-contrast";

@@ -25,6 +25,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#define GIMP_MODULE_PARAM_SERIALIZE (1 << (0 + G_PARAM_USER_SHIFT))
+
+
 typedef struct _GimpModule     GimpModule;
 typedef struct _GimpModuleInfo GimpModuleInfo;
 typedef struct _GimpModuleDB   GimpModuleDB;

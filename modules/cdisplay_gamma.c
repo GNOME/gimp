@@ -172,7 +172,8 @@ cdisplay_gamma_class_init (CdisplayGammaClass *klass)
                                                         0.01, 10.0,
                                                         DEFAULT_GAMMA,
                                                         G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+                                                        G_PARAM_CONSTRUCT |
+                                                        GIMP_MODULE_PARAM_SERIALIZE));
 
   display_class->name            = _("Gamma");
   display_class->help_id         = "gimp-colordisplay-gamma";

@@ -219,7 +219,7 @@ linux_input_class_init (ControllerLinuxInputClass *klass)
                                                         NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT |
-                                                        GIMP_CONTROLLER_PARAM_SERIALIZE));
+                                                        GIMP_MODULE_PARAM_SERIALIZE));
 
   controller_class->name            = _("Linux Input Events");
 

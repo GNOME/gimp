@@ -200,7 +200,7 @@ midi_class_init (ControllerMidiClass *klass)
                                                         NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT |
-                                                        GIMP_CONTROLLER_PARAM_SERIALIZE));
+                                                        GIMP_MODULE_PARAM_SERIALIZE));
   g_object_class_install_property (object_class, PROP_CHANNEL,
                                    g_param_spec_int ("channel",
                                                      _("Channel:"),
@@ -208,7 +208,7 @@ midi_class_init (ControllerMidiClass *klass)
                                                      -1, 15, -1,
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT |
-                                                     GIMP_CONTROLLER_PARAM_SERIALIZE));
+                                                     GIMP_MODULE_PARAM_SERIALIZE));
 
   controller_class->name            = _("Midi Events");
 
@@ -220,18 +220,18 @@ midi_class_init (ControllerMidiClass *klass)
 static void
 midi_init (ControllerMidi *midi)
 {
-  midi->device        = NULL;
-  midi->midi_channel  = -1;
-  midi->io            = NULL;
-  midi->io_id         = 0;
+  midi->device       = NULL;
+  midi->midi_channel = -1;
+  midi->io           = NULL;
+  midi->io_id        = 0;
 
-  midi->swallow       = TRUE; /* get rid of data bytes at start of stream */
-  midi->command       = 0x0;
-  midi->channel       = 0x0;
-  midi->key           = -1;
-  midi->velocity      = -1;
-  midi->msb           = -1;
-  midi->lsb           = -1;
+  midi->swallow      = TRUE; /* get rid of data bytes at start of stream */
+  midi->command      = 0x0;
+  midi->channel      = 0x0;
+  midi->key          = -1;
+  midi->velocity     = -1;
+  midi->msb          = -1;
+  midi->lsb          = -1;
 }
 
 static void
@@ -579,7 +579,7 @@ midi_read_event (GIOChannel   *io,
 
               if (midi->command == 0x9)
                 {
-                  D (g_print ("MIDI (ch %02d): note on (%02x vel %02x)\n",
+                  D (g_print ("MIDI (ch %02d): note on  (%02x vel %02x)\n",
                               midi->channel,
                               midi->key, midi->velocity));
 

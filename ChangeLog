@@ -1,3 +1,19 @@
+2004-07-06  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcontroller.h: removed #define
+	GIMP_CONTROLLER_PARAM_SERIALIZE.
+
+	* libgimpmodule/gimpmoduletypes.h: added
+	GIMP_MODULE_PARAM_SERIALIZE instead.
+
+	* modules/controller_linux_input.c
+	* modules/controller_midi.c: changed accordingly.
+
+	* modules/cdisplay_colorblind.c
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/cdisplay_proof.c: made the new properties serializable.
+
 2004-07-05  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/Makefile.am (enum_headers): don't scan
