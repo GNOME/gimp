@@ -139,18 +139,21 @@ load_image (char *filename)
 			       PARAM_STRING, ext + 1,
 			       PARAM_END);
 
-  tmpname = params[1].data.d_string;
+  tmpname = g_strdup (params[1].data.d_string);
+  gimp_destroy_params (params, retvals);
 
 #ifndef __EMX__
   if ((pid = fork()) < 0)
     {
       g_message ("url: fork failed: %s\n", g_strerror(errno));
+      g_free (tmpname);
       return -1;
     }
   else if (pid == 0)
     {
       execlp ("wget", "wget", filename, "-O", tmpname, NULL);
       g_message ("url: exec failed: wget: %s\n", g_strerror(errno));
+      g_free (tmpname);
       _exit(127);
     }
   else
@@ -159,6 +162,7 @@ load_image (char *filename)
   if (pid == -1)
     {
       g_message ("url: spawn failed: %s\n", g_strerror(errno));
+      g_free (tmpname);
       return -1;
     }
 #endif
@@ -169,6 +173,7 @@ load_image (char *filename)
 	  WEXITSTATUS(status) != 0)
 	{
 	  g_message ("url: wget exited abnormally on URL %s\n", filename);
+	  g_free (tmpname);
 	  return -1;
 	}
     }
@@ -181,6 +186,7 @@ load_image (char *filename)
 			       PARAM_END);
 
   unlink (tmpname);
+  g_free (tmpname);
 
   if (params[0].data.d_status == FALSE)
     return -1;

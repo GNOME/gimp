@@ -320,8 +320,8 @@ save_image (char   *filename,
 			       &retvals,
 			       PARAM_STRING, ext + 1,
 			       PARAM_END);
-
-  tmpname = params[1].data.d_string;
+  tmpname = g_strdup (params[1].data.d_string);
+  gimp_destroy_params (params, retvals);
 
   params = gimp_run_procedure ("gimp_file_save",
 			       &retvals,
@@ -334,6 +334,7 @@ save_image (char   *filename,
 
   if (params[0].data.d_status == FALSE || !valid_file(tmpname)) {
     unlink (tmpname);
+    g_free (tmpname);
     return -1;
   }
 
@@ -350,13 +351,15 @@ save_image (char   *filename,
   if ((pid = fork()) < 0)
     {
       g_message ("gz: fork failed: %s\n", g_strerror(errno));
+      g_free (tmpname);
       return -1;
     }
   else if (pid == 0)
     {
 
-      if (!(f = fopen(filename,"w"))){
+      if (!(f = fopen(filename,"w"))) {
 	      g_message("gz: fopen failed: %s\n", g_strerror(errno));
+	      g_free (tmpname);
 	      _exit(127);
       }
 
@@ -367,12 +370,16 @@ save_image (char   *filename,
       /* and gzip into it */
       execlp ("gzip", "gzip", "-cf", tmpname, NULL);
       g_message ("gz: exec failed: gzip: %s\n", g_strerror(errno));
+      g_free (tmpname);
       _exit(127);
     }
   else
 #else /* __EMX__ */      
   if (spawn_gzip(filename, tmpname, "-cf", &pid) == -1)  
+    {
+      g_free (tmpname);
       return -1;
+    }
 #endif
     {
       waitpid (pid, &status, 0);
@@ -381,6 +388,7 @@ save_image (char   *filename,
 	  WEXITSTATUS(status) != 0)
 	{
 	  g_message ("gz: gzip exited abnormally on file %s\n", tmpname);
+	  g_free (tmpname);
 	  return 0;
 	}
     }
@@ -394,6 +402,7 @@ save_image (char   *filename,
       == INVALID_HANDLE_VALUE)
     {
       g_message ("gz: CreateFile failed\n");
+      g_free (tmpname);
       _exit (127);
     }
 
@@ -417,6 +426,7 @@ save_image (char   *filename,
 		      &startupinfo, &processinfo))
     {
       g_message ("gz: CreateProcess failed\n");
+      g_free (tmpname);
       _exit (127);
     }
   CloseHandle (f);
@@ -426,6 +436,7 @@ save_image (char   *filename,
 #endif /* G_OS_WIN32 */
 
   unlink (tmpname);
+  g_free (tmpname);
 
   return TRUE;
 }
@@ -459,7 +470,8 @@ load_image (char *filename, gint32 run_mode)
 			       PARAM_STRING, ext + 1,
 			       PARAM_END);
 
-  tmpname = params[1].data.d_string;
+  tmpname = g_strdup (params[1].data.d_string);
+  gimp_destroy_params (params, retvals);
 
 #ifndef G_OS_WIN32
 
@@ -469,6 +481,7 @@ load_image (char *filename, gint32 run_mode)
   if ((pid = fork()) < 0)
     {
       g_message ("gz: fork failed: %s\n", g_strerror(errno));
+      g_free (tmpname);
       return -1;
     }
   else if (pid == 0)  /* child process */
@@ -476,22 +489,30 @@ load_image (char *filename, gint32 run_mode)
       FILE* f;
        if (!(f = fopen(tmpname,"w"))){
 	      g_message("gz: fopen failed: %s\n", g_strerror(errno));
+	      g_free (tmpname);
 	      _exit(127);
       }
 
       /* make stdout for this child process be the temp file */
       if (-1 == dup2(fileno(f),fileno(stdout)))
-	g_message ("gz: dup2 failed: %s\n", g_strerror(errno));
-
+	{
+	  g_free (tmpname);
+	  g_message ("gz: dup2 failed: %s\n", g_strerror(errno));
+	}
+      
       /* and unzip into it */
       execlp ("gzip", "gzip", "-cfd", filename, NULL);
       g_message ("gz: exec failed: gunzip: %s\n", g_strerror(errno));
+      g_free (tmpname);
       _exit(127);
     }
   else  /* parent process */
 #else /* __EMX__ */
-   if (spawn_gzip(tmpname, filename, "-cfd", &pid) == -1)  
-      return -1;  
+   if (spawn_gzip(tmpname, filename, "-cfd", &pid) == -1)
+     {
+       g_free (tmpname);
+       return -1;
+     }
 #endif
     {
       waitpid (pid, &status, 0);
@@ -500,6 +521,7 @@ load_image (char *filename, gint32 run_mode)
 	  WEXITSTATUS(status) != 0)
 	{
 	  g_message ("gz: gzip exited abnormally on file %s\n", filename);
+	  g_free (tmpname);
 	  return -1;
 	}
     }
@@ -513,6 +535,7 @@ load_image (char *filename, gint32 run_mode)
       == INVALID_HANDLE_VALUE)
     {
       g_message ("gz: CreateFile failed\n");
+      g_free (tmpname);
       _exit (127);
     }
 
@@ -536,6 +559,7 @@ load_image (char *filename, gint32 run_mode)
 		      &startupinfo, &processinfo))
     {
       g_message ("gz: CreateProcess failed: %d\n", GetLastError ());
+      g_free (tmp_name);
       _exit (127);
     }
   CloseHandle (f);
@@ -552,8 +576,8 @@ load_image (char *filename, gint32 run_mode)
 			       PARAM_STRING, tmpname,
 			       PARAM_STRING, tmpname,
 			       PARAM_END);
-
   unlink (tmpname);
+  g_free (tmpname);
 
   if (params[0].data.d_status == FALSE)
     return -1;

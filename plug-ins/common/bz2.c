@@ -264,7 +264,8 @@ save_image (char   *filename,
 			       PARAM_STRING, ext + 1,
 			       PARAM_END);
 
-  tmpname = params[1].data.d_string;
+  tmpname = g_strdup (params[1].data.d_string);
+  gimp_destroy_params (params, retvals);
 
   params = gimp_run_procedure ("gimp_file_save",
 			       &retvals,
@@ -277,6 +278,7 @@ save_image (char   *filename,
 
   if (params[0].data.d_status == FALSE || !valid_file(tmpname)) {
     unlink (tmpname);
+    g_free (tmpname);
     return -1;
   }
 
@@ -290,6 +292,7 @@ save_image (char   *filename,
   if ((pid = fork()) < 0)
     {
       g_message (_("bz2: fork failed: %s\n"), g_strerror(errno));
+      g_free (tmpname);
       return -1;
     }
   else if (pid == 0)
@@ -297,6 +300,7 @@ save_image (char   *filename,
 
       if (!(f = fopen(filename,"w"))){
 	      g_message(_("bz2: fopen failed: %s\n"), g_strerror(errno));
+	      g_free (tmpname);
 	      _exit(127);
       }
 
@@ -307,12 +311,16 @@ save_image (char   *filename,
       /* and bzip2 into it */
       execlp ("bzip2", "bzip2", "-cf", tmpname, NULL);
       g_message (_("bz2: exec failed: bzip2: %s\n"), g_strerror(errno));
+      g_free (tmpname);
       _exit(127);
     }
   else
 #else /* __EMX__ */
-  if (spawn_bz(filename, tmpname, "-cf", &pid) == -1)  
+  if (spawn_bz(filename, tmpname, "-cf", &pid) == -1)
+    {
+      g_free (tmpname);
       return -1;
+    }
 #endif
     {
       waitpid (pid, &status, 0);
@@ -321,11 +329,13 @@ save_image (char   *filename,
 	  WEXITSTATUS(status) != 0)
 	{
 	  g_message (_("bz2: bzip2 exited abnormally on file %s\n"), tmpname);
+	  g_free (tmpname);
 	  return 0;
 	}
     }
 
   unlink (tmpname);
+  g_free (tmpname);
 
   return TRUE;
 }
@@ -348,21 +358,24 @@ load_image (char *filename, gint32 run_mode)
 			       PARAM_STRING, ext + 1,
 			       PARAM_END);
 
-  tmpname = params[1].data.d_string;
+  tmpname = g_strdup (params[1].data.d_string);
+  gimp_destroy_params (params, retvals);
 
 #ifndef __EMX__
   /* fork off a g(un)zip and wait for it */
   if ((pid = fork()) < 0)
     {
       g_message (_("bz2: fork failed: %s\n"), g_strerror(errno));
+      g_free (tmpname);
       return -1;
     }
   else if (pid == 0)  /* child process */
     {
       FILE* f;
        if (!(f = fopen(tmpname,"w"))){
-	      g_message(_("bz2: fopen failed: %s\n"), g_strerror(errno));
-	      _exit(127);
+	 g_message(_("bz2: fopen failed: %s\n"), g_strerror(errno));
+	 g_free (tmpname);
+	 _exit(127);
       }
 
       /* make stdout for this child process be the temp file */
@@ -372,12 +385,16 @@ load_image (char *filename, gint32 run_mode)
       /* and unzip into it */
       execlp ("bzip2", "bzip2", "-cfd", filename, NULL);
       g_message (_("bz2: exec failed: bunzip2: %s\n"), g_strerror(errno));
+      g_free (tmpname);
       _exit(127);
     }
   else  /* parent process */
 #else /* __EMX__ */
-  if (spawn_bz(filename, tmpname, "-cfd", &pid) == -1)  
+  if (spawn_bz(filename, tmpname, "-cfd", &pid) == -1) 
+    {
+      g_free (tmpname);  
       return -1;
+    }
 #endif
     {
       waitpid (pid, &status, 0);
@@ -386,6 +403,7 @@ load_image (char *filename, gint32 run_mode)
 	  WEXITSTATUS(status) != 0)
 	{
 	  g_message (_("bz2: bzip2 exited abnormally on file %s\n"), filename);
+	  g_free (tmpname);
 	  return -1;
 	}
     }
@@ -400,6 +418,7 @@ load_image (char *filename, gint32 run_mode)
 			       PARAM_END);
 
   unlink (tmpname);
+  g_free (tmpname);
 
   if (params[0].data.d_status == FALSE)
     return -1;

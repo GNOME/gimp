@@ -322,7 +322,8 @@ save_image (char *filename,
 			       &retvals,
 			       PARAM_STRING, ext + 1,
 			       PARAM_END);
-  tmpname = params[1].data.d_string;
+  tmpname = g_strdup (params[1].data.d_string);
+  gimp_destroy_params (params, retvals);
 
   /* construct the "sendmail user@location" line */
   strcpy (mailcmdline, MAILER);
@@ -357,6 +358,7 @@ save_image (char *filename,
   if (params[0].data.d_status == FALSE || !valid_file (tmpname))
     {
       unlink (tmpname);
+      g_free (tmpname);
       return -1;
     }
 
@@ -366,6 +368,7 @@ save_image (char *filename,
       if ((pid = fork ()) < 0)
 	  {
 	      g_message ("mail: fork failed: %s\n", g_strerror (errno));
+	      g_free (tmpname);
 	      return -1;
 	  }
       else if (pid == 0)
@@ -382,6 +385,7 @@ save_image (char *filename,
 	      
 	      /* close the pipe now */
 	      pclose (mailpipe);
+	      g_free (tmpname);
 	      _exit (127);
 	  }
       else
@@ -393,6 +397,7 @@ save_image (char *filename,
 	{
 	  g_message ("mail: dup2 failed: %s\n", g_strerror (errno));
 	  close(tfd);
+	  g_free (tmpname);
 	  return -1;
 	}
       fcntl(tfd, F_SETFD, FD_CLOEXEC);
@@ -403,6 +408,7 @@ save_image (char *filename,
       if (pid == -1)
 	{
 	  g_message ("mail: spawn failed: %s\n", g_strerror (errno));
+	  g_free (tmpname);
 	  return -1;
 	}
 #endif
@@ -413,6 +419,7 @@ save_image (char *filename,
 		  WEXITSTATUS (status) != 0)
 		  {
 		      g_message ("mail: mail didnt work or something on file %s\n", tmpname);
+		      g_free (tmpname);
 		      return 0;
 		  }
 	  }
@@ -427,6 +434,8 @@ save_image (char *filename,
   }
   /* delete the tmpfile that was generated */
   unlink (tmpname);
+  g_free (tmpname);
+
   return TRUE;
 }
 

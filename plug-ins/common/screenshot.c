@@ -267,7 +267,8 @@ shoot (void)
 			       &retvals,
 			       PARAM_STRING, "xwd",
 			       PARAM_END);
-  tmpname = params[1].data.d_string;
+  tmpname = g_strdup (params[1].data.d_string);
+  gimp_destroy_params (params, retvals);
 
   /* construct the xwd arguments */
   xwdargv[i++] = XWD;
@@ -299,6 +300,7 @@ shoot (void)
       execvp (XWD, xwdargv);
       /* What are we doing here? exec must have failed */
       g_message ("screenshot: exec failed: xwd: %s\n", g_strerror (errno));
+      g_free (tmpname);
       return;
     }
   else
@@ -307,6 +309,7 @@ shoot (void)
   if (pid == -1)
     {
       g_message ("screenshot: spawn failed: %s\n", g_strerror (errno));
+      g_free (tmpname);
       return;
     }
 #endif
@@ -315,7 +318,8 @@ shoot (void)
 	      
       if (!WIFEXITED (status))
 	{
-	  g_message ("screenshot: xwd didn't work\n");
+	  gimp_message ("screenshot: xwd didn't work\n");
+	  g_free (tmpname);
 	  return;
 	}
     }
@@ -332,6 +336,7 @@ shoot (void)
  
   /* get rid of the tmpfile */
   unlink (tmpname);
+  g_free (tmpname);
 
   /* figure out the monitor resolution and set the image to it */
   params = gimp_run_procedure ("gimp_get_monitor_resolution",
