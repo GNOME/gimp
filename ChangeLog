@@ -1,3 +1,8 @@
+Tue Feb  1 17:30:52 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/interface.c: when dropping an indexed layer onto the toolbox,
+	copy the colormap to the newly created image (fixes bug #5692)
+
 Tue Feb  1 14:46:43 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gimpdrawable.c: check that the passed pointer is indeed a

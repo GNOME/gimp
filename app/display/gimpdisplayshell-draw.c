@@ -1141,8 +1141,13 @@ toolbox_drag_drop (GtkWidget      *widget,
 	  new_gimage = gimage_new (width, height, type);
 	  gimage_disable_undo (new_gimage);
 
-	  gimage_set_resolution (new_gimage,
-				 gimage->xresolution, gimage->yresolution);
+	  if (type == INDEXED) /* copy the colormap */
+	    {
+	      new_gimage->num_cols = gimage->num_cols;
+	      memcpy (new_gimage->cmap, gimage->cmap, COLORMAP_SIZE);
+	    }
+
+	  gimage_set_resolution (new_gimage, gimage->xresolution, gimage->yresolution);
 	  gimage_set_unit (new_gimage, gimage->unit);
 
 	  if (layer)
