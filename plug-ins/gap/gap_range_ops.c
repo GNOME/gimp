@@ -32,6 +32,10 @@
  */
 
 /* revision history
+ * 1.1.9a   1999/09/21   hof: bugfix RUN_NONINTERACTIVE did not work in
+ *                            plug_in_gap_range_convert
+ *                            plug_in_gap_range_layer_del
+ *                            plug_in_gap_range_flatten
  * 1.1.8    1999/08/31   hof: frames convert: save subsequent frames
  *                            with rumode RUN_WITH_LAST_VALS 
  * 0.97.00; 1998/10/19   hof: gap_range_to_multilayer: extended layer selection
@@ -1229,6 +1233,7 @@ int    gap_range_flatten(GRunModeType run_mode, gint32 image_id,
       }
       else
       {
+         l_rc = 0;
          l_from = range_from;
          l_to   = range_to;
       }
@@ -1408,6 +1413,7 @@ int gap_range_layer_del(GRunModeType run_mode, gint32 image_id,
       }
       else
       {
+         l_rc = 0;
          l_from = range_from;
          l_to   = range_to;
          l_position = position;
@@ -1485,6 +1491,7 @@ gint32 gap_range_conv(GRunModeType run_mode, gint32 image_id,
       }
       else
       {
+         l_rc = 0;
          l_from    = range_from;
          l_to      = range_to;
          l_flatten = flatten;

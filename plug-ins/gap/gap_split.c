@@ -1,4 +1,4 @@
-/* gap_range_ops.c
+/* gap_split.c
  * 1997.11.06 hof (Wolfgang Hofer)
  *
  * GAP ... Gimp Animation Plugins
@@ -26,6 +26,7 @@
  */
 
 /* revision history
+ * 1.1.9a;  1999/09/21   hof: bugfix RUN_NONINTERACTIVE mode did not work
  * 1.1.8a;  1999/08/31   hof: accept anim framenames without underscore '_'
  * 1.1.5a;  1999/05/08   hof: bugix (dont mix GDrawableType with GImageType)
  * 0.96.00; 1998/07/01   hof: - added scale, resize and crop 
@@ -85,6 +86,7 @@ p_split_image(t_anim_info *ainfo_ptr,
   int     l_idx;
   long    l_layer_idx;
 
+  if(gap_debug) printf("DEBUG: p_split_image inv:%d no_alpha:%d ext:%s\n", (int)invers, (int)no_alpha, new_extension);
   l_rc = -1;
   l_percentage = 0.0;
   l_run_mode  = ainfo_ptr->run_mode;
@@ -93,7 +95,6 @@ p_split_image(t_anim_info *ainfo_ptr,
     gimp_progress_init("Splitting into Frames ..");
   }
  
-  
   l_new_image_id = -1;
   /* get info about the image  */
   l_width  = gimp_image_width(ainfo_ptr->image_id);
@@ -295,6 +296,7 @@ int gap_split_image(GRunModeType run_mode,
         }
         else
         {
+           l_rc = 0;
            l_inverse_order  =  inverse_order;
            l_no_alpha       =  no_alpha;
            strncpy(l_extension, extension, sizeof(l_extension) -1);

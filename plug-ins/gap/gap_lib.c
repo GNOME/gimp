@@ -28,6 +28,8 @@
  */
 
 /* revision history:
+ * 1.1.9a;  1999/09/14   hof: handle frame filenames with framenumbers
+ *                            that are not the 4digit style. (like frame1.xcf)
  * 1.1.8a;  1999/08/31   hof: for AnimFrame Filtypes != XCF:
  *                            p_decide_save_as does save INTERACTIVE at 1.st time
  *                            and uses RUN_WITH_LAST_VALS for subsequent calls
@@ -425,18 +427,64 @@ char*  p_alloc_extension(char *imagename)
  * p_alloc_fname
  *
  * build the name of a frame using "basename_0000.ext"
+ * 
  * return name or NULL (if malloc fails)
  * ============================================================================
  */
 char*  p_alloc_fname(char *basename, long nr, char *extension)
 {
   char *l_fname;
+  int   l_leading_zeroes;
+  long  l_nr_chk;
   
   if(basename == NULL) return (NULL);
   l_fname = (char *)g_malloc(strlen(basename)  + strlen(extension) + 8);
   if(l_fname != NULL)
   {
-    sprintf(l_fname, "%s%04ld%s", basename, nr, extension);
+    l_leading_zeroes = TRUE;
+    if(nr < 1000)
+    {
+       /* try to figure out if the frame numbers are in
+        * 4-digit style, with leading zeroes  "frame_0001.xcf"
+        * or not                              "frame_1.xcf"
+        */
+       l_nr_chk = nr;
+
+       while(l_nr_chk >= 0)
+       {
+         /* check if frame is on disk with 4-digit style framenumber */
+         sprintf(l_fname, "%s%04ld%s", basename, l_nr_chk, extension);
+         if (p_file_exists(l_fname))
+         {
+            break;
+         }
+
+         /* now check for filename without leading zeroes in the framenumber */
+         sprintf(l_fname, "%s%ld%s", basename, l_nr_chk, extension);
+         if (p_file_exists(l_fname))
+         {
+            l_leading_zeroes = FALSE;
+            break;
+         }
+         l_nr_chk--;
+         
+         /* if the frames nr and nr-1  were not found
+          * try to check frames 1 and 0
+          * to limit down the loop to max 4 cycles
+          */
+         if((l_nr_chk == nr -2) && (l_nr_chk > 1))
+         {
+           l_nr_chk = 1;
+         }
+      }
+    }
+    else
+    {
+      l_leading_zeroes = FALSE;
+    }
+
+    if(l_leading_zeroes)  sprintf(l_fname, "%s%04ld%s", basename, nr, extension);
+    else                  sprintf(l_fname, "%s%ld%s", basename, nr, extension);
   }
   return(l_fname);
 }    /* end p_alloc_fname */
