@@ -1,0 +1,178 @@
+Name: 
+Email:
+url:
+expertise:
+current work:
+commit access:
+
+Name: Matt Wilson
+Email: msw@gimp.org
+url:
+ircnick: msw
+expertise: tool stuff, bug fixing
+current work:
+commit access: yes
+
+Name: Calvin Williamson
+Email: calvin@rhythm.com
+url: http://www.netrover.com/~rayl/gimp/
+expertise: file stuff, deep images, etc
+current work: 8/16/float point support in gimp (HOLLYWOOD branch)
+commit access: yes
+
+Name: Tor Lillqvist
+Email: tml@iki.fi
+url: http://www.iki.fi/tml/gimp/
+ircnick: tml
+expertise: did the new UI for transform tools initially
+	   (others improved it further), native Windows port
+current work: once the Windows port needs less attention, would love
+	      to implement active layers or plug-in tools
+commit access: no
+
+Name: Austin Donnelly
+Email: austin@greenend.org.uk
+url: http://www.cl.cam.ac.uk/~and1000/
+ircnick: austin
+expertise: resolution stuff, fonts
+current work:  random bug fixes, resolution
+commit access: yes
+
+Name: ray lehtiniemi
+Email: rayl@mail.com
+url: http://www.netrover.com/~rayl/
+ircnick: rayl
+expertise:  bit of everything, moreso in the lowest levels like
+            paint_funcs and pixel_region and tilemanagers
+current work: HOLLYWOOD branch  (film and deep image stuff)
+commit access: yes
+
+Name: Sven Neuman
+Email: sven@gimp.org
+url: http://www-public.rz.uni-duesseldorf.de/~neumanns/gimp/
+ircnick: Sven
+expertise: GUI enhancements, Session managment, Script-Fu 
+current work: 	well, currently there are only a few plans:
+		- helping Wolfgang Hofer with the integration of GAP
+		  (GIMP Animation Plugin)
+		- looking into german translation and i18n stuff
+		- more GUI enhancements like displaying lengths in 
+		  realworld units (cm, inch) now that we have 
+		  resolution info in the core 
+commit access: yes
+
+
+Name: Marc Lehman
+Email: pcg@goof.com
+url: http://lehmann.home.ml.org/
+ircnick:
+expertise: perl, language binding issues
+current work: perl-interface, language interface design
+commit access: yes                      
+
+Name:  Jay Cox
+Email:  jaycox@earthlink.net
+url:
+ircnick: j
+expertise: Brushes, selection functions, Parasites.
+current work:  Parasites
+commit access: yes
+
+Name: Larry Ewing
+Email: lewing@gimp.org
+url:  http://www.gimp.org/~lewing/
+ircnick: lewing
+expertise:  ui/core interaction
+current work: Paths/Beziers slowly
+commit access: yes
+
+Name: Adrian Likins
+Email: adrian@gimp.org
+url: adrian.gimp.org
+ircnick: adrian
+expertise: script-fu scripts, documentation, webmaster
+current work: 
+commit access: yes
+
+Name: Tim Janik
+Email: timj@gimp.org
+url: 
+ircnick: rambokid
+expertise: all things gtk
+current work: fixing gimp when gtk changes break gimp
+commit access: yes
+
+Name: Manish Singh
+Email: yosh@gimp.org
+url: http://yosh.gimp.org/
+ircnick: yosh
+expertise: Touched practically everything (Maintainer)
+current work:  PDB stuff, 1.0.x maintaince, making sure
+		the tree is in a mostly sane state
+commit access:  yes
+
+Name: Adam D. Moss
+Email: adam@gimp.org
+url: http://www.foxbox.org
+ircnick: aspirin
+expertise: convert.c, idlerender, general core and UI,  gif.c
+          animationplay.c and various other subversive plugins.
+current work:  making derisive comments about everyone else's cvs
+          commits 
+commit access: yes
+
+Name: Andy Thomas
+Email: alt@picnic.demon.co.uk
+url: 
+ircnick: alt
+expertise: plugin<->gimp communication/PDB 
+	   invocation of the gimp menus. Some gimp plugins and 
+	   libgimp. Also some bits of script-fu.
+current work:  Allow the gradient/brush/pattern menus to be 
+	   controlled via the PDB including callbacks. Got an
+           idea about some type of gimp organizer but thats
+           the secret project.
+commit access: yes   
+
+Name: Raph Levien
+Email: raph@gimp.org
+url: http://www.levien.com/
+ircnick: raph
+expertise: 2d graphics, vectors, fonts, fast code, paint core
+current work: bezier tools (in gfonted) to be eventually folded into
+             gimp;  natural brushes
+commit access: yes        
+
+
+Name: Shawn T. Amundson
+email: amundson@gimp.org
+url: http://www.gimp.org/
+ircnick: snorfle
+Area of expertise: gtk, gimp contests, things gimp.org
+         stuff your working on currently: generic preview widget,
+	 standard plugin ui library
+cvs commit access:  yes
+
+Name: Lauri Alanko
+email: nether@gimp.org
+ircnick: nether
+Area of expertise: High-level IM core, PDB
+current work: Class code autogeneration, gimple
+cvs commit access: yes
+
+Name: Seth Burgess
+Email: sjburges@gimp.org
+url: http://students.ou.edu/B/Seth.J.Burgess-1/
+ircnick: sjburges
+expertise: replying to bug reports, a little plug-in debugging, script
+	   writing, gimp-perl scripts
+current projects: mostly just bug replies, gimp-perl scripts
+commit access: yes
+
+Name:  Tuomas Kuosmanen
+email:  tigert@gimp.org
+ircnick:  tigert
+expertise:  GIMP power user, icons for gnome/gimp
+current projects:  Playing with Intuos/xinput 
+commit access:  yes
+
