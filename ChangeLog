@@ -1,3 +1,37 @@
+2002-02-28  Michael Natterer  <mitch@gimp.org>
+            Sven Naumann  <sven@gimp.org>
+
+	* configure.in
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/preferences/Makefile.am: new directory
+	for themeable preferences icons.
+
+	* themes/Default/images/preferences/default-comment.png
+	* themes/Default/images/preferences/display.png
+	* themes/Default/images/preferences/environment.png
+	* themes/Default/images/preferences/folders.png
+	* themes/Default/images/preferences/help-system.png
+	* themes/Default/images/preferences/image-windows.png
+	* themes/Default/images/preferences/interface.png
+	* themes/Default/images/preferences/monitor.png
+	* themes/Default/images/preferences/new-image.png
+	* themes/Default/images/preferences/session.png
+	* themes/Default/images/preferences/tool-options.png: added some
+	GPL icons from Jimmac's site (http://jimmac.musichall.cz/).
+
+	* app/gui/gui.[ch]: added gui_themes_get_theme_dir() so we can find
+	icons which are loaded on demand.
+
+	* app/gui/preferences-dialog.c: added the icons to the tree and
+	the notebook page headers. Cleaned up and reduced the code a lot
+	by adding utility functions prefs_table_new() and
+	prefs_check_button_new().
+
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell-callbacks.[ch]: added a "Default"
+	menu entry to the display's color button context menu so we can
+	reset the padding color to the theme's bg color.
+
 2002-02-28  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/file-commands.c: fixed message string.

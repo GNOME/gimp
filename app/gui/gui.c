@@ -78,6 +78,8 @@ static void         gui_message                     (Gimp        *gimp,
 static GimpObject * gui_display_new                 (GimpImage   *gimage,
                                                      guint        scale);
 
+static void         gui_themes_dir_foreach_func     (const gchar *filename,
+                                                     gpointer     loader_data);
 static gint         gui_rotate_the_shield_harmonics (GtkWidget   *widget,
                                                      GdkEvent    *eevent,
                                                      gpointer     data);
@@ -100,25 +102,6 @@ static GHashTable *themes_hash = NULL;
 
 
 /*  public functions  */
-
-static void
-gui_themes_dir_foreach_func (const gchar *filename,
-			     gpointer     loader_data)
-{
-  Gimp  *gimp;
-  gchar *basename;
-
-  gimp = (Gimp *) loader_data;
-
-  basename = g_path_get_basename (filename);
-
-  if (gimp->be_verbose)
-    g_print (_("Adding theme '%s' (%s)\n"), basename, filename);
-
-  g_hash_table_insert (themes_hash,
-		       basename,
-		       g_strdup (filename));
-}
 
 void
 gui_libs_init (gint    *argc,
@@ -144,8 +127,8 @@ gui_libs_init (gint    *argc,
 void
 gui_themes_init (Gimp *gimp)
 {
-  gchar *theme_dir;
-  gchar *gtkrc;
+  const gchar *theme_dir;
+  gchar       *gtkrc;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -162,10 +145,7 @@ gui_themes_init (Gimp *gimp)
 				       gimp);
     }
 
-  if (gimprc.theme)
-    theme_dir = g_hash_table_lookup (themes_hash, gimprc.theme);
-  else
-    theme_dir = g_hash_table_lookup (themes_hash, "Default");
+  theme_dir = gui_themes_get_theme_dir (gimp);
 
   if (theme_dir)
     {
@@ -208,6 +188,15 @@ gui_themes_init (Gimp *gimp)
   gdk_rgb_set_install (gimprc.install_cmap);
 
   gtk_widget_set_default_colormap (gdk_rgb_get_colormap ());
+}
+
+const gchar *
+gui_themes_get_theme_dir (Gimp *gimp)
+{
+  if (gimprc.theme)
+    return g_hash_table_lookup (themes_hash, gimprc.theme);
+
+  return g_hash_table_lookup (themes_hash, "Default");
 }
 
 void
@@ -467,6 +456,25 @@ gui_display_new (GimpImage *gimage,
     }
 
   return GIMP_OBJECT (gdisp);
+}
+
+static void
+gui_themes_dir_foreach_func (const gchar *filename,
+			     gpointer     loader_data)
+{
+  Gimp  *gimp;
+  gchar *basename;
+
+  gimp = (Gimp *) loader_data;
+
+  basename = g_path_get_basename (filename);
+
+  if (gimp->be_verbose)
+    g_print (_("Adding theme '%s' (%s)\n"), basename, filename);
+
+  g_hash_table_insert (themes_hash,
+		       basename,
+		       g_strdup (filename));
 }
 
 static gint

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = tools
+SUBDIRS = preferences tools
 
 themedatadir = $(gimpdatadir)/themes/Default/images
 

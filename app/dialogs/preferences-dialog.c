@@ -1369,8 +1369,10 @@ prefs_resolution_calibrate_callback (GtkWidget *widget,
 
 /*  create a new notebook page  */
 static GtkWidget *
-prefs_notebook_append_page (GtkNotebook   *notebook,
+prefs_notebook_append_page (Gimp          *gimp,
+                            GtkNotebook   *notebook,
 			    gchar         *notebook_label,
+                            const gchar   *notebook_icon,
 			    GtkTreeStore  *tree,
 			    gchar         *tree_label,
 			    gchar         *help_data,
@@ -1382,7 +1384,11 @@ prefs_notebook_append_page (GtkNotebook   *notebook,
   GtkWidget   *out_vbox;
   GtkWidget   *vbox;
   GtkWidget   *frame;
+  GtkWidget   *hbox;
+  GtkWidget   *image;
   GtkWidget   *label;
+  GdkPixbuf   *pixbuf = NULL;
+  gchar       *markup;
 
   event_box = gtk_event_box_new ();
   gtk_notebook_append_page (notebook, event_box, NULL);
@@ -1390,7 +1396,7 @@ prefs_notebook_append_page (GtkNotebook   *notebook,
 
   gimp_help_set_help_data (event_box, NULL, help_data);
 
-  out_vbox = gtk_vbox_new (FALSE, 0);
+  out_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_add (GTK_CONTAINER (event_box), out_vbox);
   gtk_widget_show (out_vbox);
 
@@ -1399,11 +1405,51 @@ prefs_notebook_append_page (GtkNotebook   *notebook,
   gtk_box_pack_start (GTK_BOX (out_vbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
-  label = gtk_label_new (notebook_label);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (NULL);
+  gtk_widget_set_size_request (label, -1, 48);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_misc_set_padding (GTK_MISC (label), 2, 1);
-  gtk_container_add (GTK_CONTAINER (frame), label);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  markup = g_strdup_printf ("<b><span size=\"x-large\">%s</span></b>",
+                            notebook_label);
+  gtk_label_set_markup (GTK_LABEL (label), markup);
+  g_free (markup);
+
+  if (notebook_icon)
+    {
+      gchar *filename;
+
+      filename = g_build_filename (gui_themes_get_theme_dir (gimp),
+                                   "images",
+                                   "preferences",
+                                   notebook_icon,
+                                   NULL);
+
+      pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+
+      g_free (filename);
+
+      if (pixbuf)
+        {
+          GdkPixbuf *scaled_pixbuf;
+
+          image = gtk_image_new_from_pixbuf (pixbuf);
+          gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+          gtk_widget_show (image);
+
+          scaled_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
+                                                   18, 18,
+                                                   GDK_INTERP_BILINEAR);
+          g_object_unref (G_OBJECT (pixbuf));
+          pixbuf = scaled_pixbuf;
+        }
+    }
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -1411,7 +1457,10 @@ prefs_notebook_append_page (GtkNotebook   *notebook,
   gtk_widget_show (vbox);
 
   gtk_tree_store_append (tree, iter, parent);
-  gtk_tree_store_set (tree, iter, 0, tree_label, 1, page_index, -1);
+  gtk_tree_store_set (tree, iter, 0, pixbuf, 1, tree_label, 2, page_index, -1);
+
+  if (pixbuf)
+    g_object_unref (pixbuf);
 
   return vbox;
 }
@@ -1428,7 +1477,7 @@ prefs_tree_select_callback (GtkTreeSelection *sel,
   if (! gtk_tree_selection_get_selected (sel, &model, &iter))
     return;
 
-  gtk_tree_model_get_value (model, &iter, 1, &val);
+  gtk_tree_model_get_value (model, &iter, 2, &val);
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook),
 				 g_value_get_int (&val));
@@ -1438,14 +1487,19 @@ prefs_tree_select_callback (GtkTreeSelection *sel,
 
 /*  create a frame with title and a vbox  */
 static GtkWidget *
-prefs_frame_new (gchar  *label,
-		 GtkBox *vbox)
+prefs_frame_new (gchar        *label,
+		 GtkContainer *parent)
 {
   GtkWidget *frame;
   GtkWidget *vbox2;
 
   frame = gtk_frame_new (label);
-  gtk_box_pack_start (vbox, frame, FALSE, FALSE, 0);
+
+  if (GTK_IS_BOX (parent))
+    gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
+  else
+    gtk_container_add (parent, frame);
+
   gtk_widget_show (frame);
 
   vbox2 = gtk_vbox_new (FALSE, 2);
@@ -1454,6 +1508,67 @@ prefs_frame_new (gchar  *label,
   gtk_widget_show (vbox2);
 
   return vbox2;
+}
+
+static GtkWidget *
+prefs_table_new (gint          rows,
+                 GtkContainer *parent,
+                 gboolean      left_align)
+{
+  GtkWidget *table;
+
+  if (left_align)
+    {
+      GtkWidget *hbox;
+
+      hbox = gtk_hbox_new (FALSE, 0);
+
+      if (GTK_IS_BOX (parent))
+        gtk_box_pack_start (GTK_BOX (parent), hbox, FALSE, FALSE, 0);
+      else
+        gtk_container_add (parent, hbox);
+
+      gtk_widget_show (hbox);
+
+      parent = GTK_CONTAINER (hbox);
+    }
+
+  table = gtk_table_new (rows, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+
+  if (rows > 1)
+    gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+
+  if (GTK_IS_BOX (parent))
+    gtk_box_pack_start (GTK_BOX (parent), table, FALSE, FALSE, 0);
+  else
+    gtk_container_add (parent, table);
+
+  gtk_widget_show (table);
+
+  return table;
+}
+
+static GtkWidget *
+prefs_check_button_new (const gchar *label,
+                        gboolean    *value_location,
+                        GtkBox      *vbox)
+{
+  GtkWidget *button;
+
+  button = gtk_check_button_new_with_label (label);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                *value_location);
+  gtk_box_pack_start (vbox, button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    value_location);
+
+  return button;
 }
 
 static void
@@ -1656,14 +1771,21 @@ preferences_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  tree = gtk_tree_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+  tree = gtk_tree_store_new (3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (tree));
   g_object_unref (G_OBJECT (tree));
 
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tv), FALSE);
+
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
-					       -1, _("Categories"),
+                                               0, NULL,
+                                               gtk_cell_renderer_pixbuf_new (),
+                                               "pixbuf", 0, NULL);
+
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
+					       1, NULL,
 					       gtk_cell_renderer_text_new (),
-					       "text", 0, NULL);
+					       "text", 1, NULL);
 
   gtk_container_add (GTK_CONTAINER (frame), tv);
 
@@ -1687,17 +1809,17 @@ preferences_dialog_create (Gimp *gimp)
 
   page_index = 0;
 
-  /* New File page */
-  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-				     _("New File"),
+  /* New Image page */
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("New Image"),
+                                     "new-image.png",
 				     GTK_TREE_STORE (tree),
-				     _("New File"),
+				     _("New Image"),
 				     "dialogs/preferences/new_file.html",
 				     NULL,
 				     &top_iter,
-				     page_index);
-  gtk_widget_show (vbox);
-  page_index++;
+				     page_index++);
 
   /* select this page in the tree */
   gtk_tree_selection_select_iter (sel, &top_iter);
@@ -1806,16 +1928,7 @@ preferences_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry2, FALSE, FALSE, 0);
   gtk_widget_show (sizeentry2);
 
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox), TRUE);
 
   optionmenu =
     gimp_option_menu_new2 (FALSE,
@@ -1846,16 +1959,16 @@ preferences_dialog_create (Gimp *gimp)
 		    &gimprc.max_new_image_size);
 
   /* Default Comment page */
-  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
 				     _("Default Comment"),
+                                     "default-comment.png",
 				     GTK_TREE_STORE (tree),
 				     _("Default Comment"),
 				     "dialogs/preferences/new_file.html#default_comment",
 				     &top_iter,
 				     &child_iter,
-				     page_index);
-  gtk_widget_show (vbox);
-  page_index++;
+				     page_index++);
 
   frame = gtk_frame_new (_("Comment Used for New Images"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
@@ -1884,31 +1997,22 @@ preferences_dialog_create (Gimp *gimp)
 		    &gimp->config->default_comment);
 
   /* Display page */
-  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
 				     _("Display"),
+                                     "display.png",
 				     GTK_TREE_STORE (tree),
 				     _("Display"),
 				     "dialogs/preferences/display.html",
 				     NULL,
 				     &top_iter,
-				     page_index);
-  gtk_widget_show (vbox);
-  page_index++;
+				     page_index++);
 
   frame = gtk_frame_new (_("Transparency")); 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
-
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  table = prefs_table_new (2, GTK_CONTAINER (frame), TRUE);
 
   optionmenu = gimp_option_menu_new2
     (FALSE,
@@ -1948,17 +2052,12 @@ preferences_dialog_create (Gimp *gimp)
 			     _("Check Size:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
-  vbox2 = prefs_frame_new (_("8-Bit Displays"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("8-Bit Displays"), GTK_CONTAINER (vbox));
 
   if (gdk_rgb_get_visual ()->depth != 8)
     gtk_widget_set_sensitive (GTK_WIDGET (vbox2->parent), FALSE);
 
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
   spinbutton =
     gimp_spin_button_new (&adjustment, edit_min_colors,
@@ -1973,60 +2072,35 @@ preferences_dialog_create (Gimp *gimp)
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &edit_min_colors);
 
-  button = gtk_check_button_new_with_label(_("Install Colormap"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				edit_install_cmap);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &edit_install_cmap);
-
-  button = gtk_check_button_new_with_label(_("Colormap Cycling"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				edit_cycled_marching_ants);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &edit_cycled_marching_ants);
+  prefs_check_button_new (_("Install Colormap"),
+                          &edit_install_cmap, GTK_BOX (vbox2));
+  prefs_check_button_new (_("Colormap Cycling"),
+                          &edit_cycled_marching_ants, GTK_BOX (vbox2));
 
 
   /* Interface */
-  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
 				     _("Interface"),
+                                     "interface.png",
 				     GTK_TREE_STORE (tree),
 				     _("Interface"),
 				     "dialogs/preferences/interface.html",
 				     NULL,
 				     &top_iter,
-				     page_index);
-  gtk_widget_show (vbox);
-  page_index++;
+				     page_index++);
 
-  vbox2 = prefs_frame_new (_("General"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox));
 
-  table = gtk_table_new (4, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  table = prefs_table_new (4, GTK_CONTAINER (vbox2), FALSE);
 
 #if 0
   /*  Don't show the Auto-save button until we really 
    *  have auto-saving in the gimp.
    */
-  button = gtk_check_button_new_with_label(_("Auto Save"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), auto_save);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-                    G_CALLBACK (prefs_toggle_callback),
-                    &auto_save);
+  prefs_check_button (_("Auto Save"),
+                      &auto_save,
+                      vbox2);
 #endif
 
   optionmenu =
@@ -2087,95 +2161,45 @@ preferences_dialog_create (Gimp *gimp)
 		    &edit_last_opened_size);
 
   /* Indicators */
-  vbox2 = prefs_frame_new (_("Toolbox"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Toolbox"), GTK_CONTAINER (vbox));
 
-  button = gtk_check_button_new_with_label
-    (_("Display Brush, Pattern and Gradient Indicators"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				edit_show_indicators);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  prefs_check_button_new (_("Display Brush, Pattern and Gradient Indicators"),
+                          &edit_show_indicators, GTK_BOX (vbox2));
 
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &edit_show_indicators);
+  vbox2 = prefs_frame_new (_("Dialog Behaviour"), GTK_CONTAINER (vbox));
 
-  vbox2 = prefs_frame_new (_("Dialog Behaviour"), GTK_BOX (vbox));
+  prefs_check_button_new (_("Navigation Window per Display"),
+                          &edit_nav_window_per_display, GTK_BOX (vbox2));
+  prefs_check_button_new (_("Info Window Follows Mouse"),
+                          &edit_info_window_follows_mouse, GTK_BOX (vbox2));
 
-  button = gtk_check_button_new_with_label (_("Navigation Window per Display"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				edit_nav_window_per_display);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  vbox2 = prefs_frame_new (_("Menus"), GTK_CONTAINER (vbox));
 
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &edit_nav_window_per_display);
-
-  button = gtk_check_button_new_with_label (_("Info Window Follows Mouse"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				edit_info_window_follows_mouse);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &edit_info_window_follows_mouse);
-
-  vbox2 = prefs_frame_new (_("Menus"), GTK_BOX (vbox));
-
-  button = gtk_check_button_new_with_label (_("Disable Tearoff Menus"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				edit_disable_tearoff_menus);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &edit_disable_tearoff_menus);
+  prefs_check_button_new (_("Disable Tearoff Menus"),
+                          &edit_disable_tearoff_menus, GTK_BOX (vbox2));
 
   /* Interface / Help System */
-  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
 				     _("Help System"),
+                                     "help-system.png",
 				     GTK_TREE_STORE (tree),
 				     _("Help System"),
 				     "dialogs/preferences/interface.html#help_system",
 				     &top_iter,
 				     &child_iter,
-				     page_index);
-  gtk_widget_show (vbox);
-  page_index++;
+				     page_index++);
 
-  vbox2 = prefs_frame_new (_("General"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox));
 
-  button = gtk_check_button_new_with_label (_("Show Tool Tips"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				gimprc.show_tool_tips);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  prefs_check_button_new (_("Show Tool Tips"),
+                          &gimprc.show_tool_tips, GTK_BOX (vbox2));
+  prefs_check_button_new (_("Context Sensitive Help with \"F1\""),
+                          &gimprc.use_help, GTK_BOX (vbox2));
 
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &gimprc.show_tool_tips);
+  vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox));
 
-  button =
-    gtk_check_button_new_with_label (_("Context Sensitive Help with \"F1\""));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				gimprc.use_help);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &gimprc.use_help);
-
-  vbox2 = prefs_frame_new (_("Help Browser"), GTK_BOX (vbox));
-
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
   optionmenu = gimp_option_menu_new2
     (FALSE,
@@ -2193,75 +2217,31 @@ preferences_dialog_create (Gimp *gimp)
 			     optionmenu, 1, TRUE);
 
   /* Interface / Image Windows */
-  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
 				     _("Image Windows"),
+                                     "image-windows.png",
 				     GTK_TREE_STORE (tree),
 				     _("Image Windows"),
 				     "dialogs/preferences/interface.html#image_windows",
 				     &top_iter,
 				     &child_iter,
-				     page_index);
-  gtk_widget_show (vbox);
-  page_index++;
+				     page_index++);
 
-  vbox2 = prefs_frame_new (_("Appearance"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Appearance"), GTK_CONTAINER (vbox));
 
-  button = gtk_check_button_new_with_label (_("Use \"Dot for Dot\" by default"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				gimprc.default_dot_for_dot);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  prefs_check_button_new (_("Use \"Dot for Dot\" by default"),
+                          &gimprc.default_dot_for_dot, GTK_BOX (vbox2));
+  prefs_check_button_new (_("Resize Window on Zoom"),
+                          &gimprc.resize_windows_on_zoom, GTK_BOX (vbox2));
+  prefs_check_button_new (_("Resize Window on Image Size Change"),
+                          &gimprc.resize_windows_on_resize, GTK_BOX (vbox2));
+  prefs_check_button_new (_("Show Rulers"),
+                          &gimprc.show_rulers, GTK_BOX (vbox2));
+  prefs_check_button_new (_("Show Statusbar"),
+                          &gimprc.show_statusbar, GTK_BOX (vbox2));
 
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &gimprc.default_dot_for_dot);
-
-  button = gtk_check_button_new_with_label(_("Resize Window on Zoom"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				gimprc.resize_windows_on_zoom);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &gimprc.resize_windows_on_zoom);
-
-  button = gtk_check_button_new_with_label(_("Resize Window on Image Size Change"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				gimprc.resize_windows_on_resize);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &gimprc.resize_windows_on_resize);
-
-  button = gtk_check_button_new_with_label(_("Show Rulers"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				gimprc.show_rulers);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &gimprc.show_rulers);
-
-  button = gtk_check_button_new_with_label(_("Show Statusbar"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				gimprc.show_statusbar);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &gimprc.show_statusbar);
-
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  table = prefs_table_new (3, GTK_CONTAINER (vbox2), FALSE);
 
   spinbutton = gimp_spin_button_new (&adjustment, gimprc.marching_speed,
 				     50.0, 32000.0, 10.0, 100.0, 1.0, 1.0, 0.0);
@@ -2347,34 +2327,14 @@ preferences_dialog_create (Gimp *gimp)
                       &gimprc.image_status_format);
   }
 
-  vbox2 = prefs_frame_new (_("Pointer Movement Feedback"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Pointer Movement Feedback"), GTK_CONTAINER (vbox));
 
-  button =
-    gtk_check_button_new_with_label (_("Perfect-but-Slow Pointer Tracking"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				gimprc.perfectmouse);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  prefs_check_button_new (_("Perfect-but-Slow Pointer Tracking"),
+                          &gimprc.perfectmouse, GTK_BOX (vbox2));
+  prefs_check_button_new (_("Disable Cursor Updating"),
+                          &gimprc.no_cursor_updating, GTK_BOX (vbox2));
 
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &gimprc.perfectmouse);
-
-  button = gtk_check_button_new_with_label (_("Disable Cursor Updating"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				gimprc.no_cursor_updating);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &gimprc.no_cursor_updating);
-
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
   optionmenu =
     gimp_option_menu_new2 (FALSE,
@@ -2397,38 +2357,25 @@ preferences_dialog_create (Gimp *gimp)
 
 
   /* Interface / Tool Options */
-  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
 				     _("Tool Options"),
+                                     "tool-options.png",
 				     GTK_TREE_STORE (tree),
 				     _("Tool Options"),
 				     "dialogs/preferences/interface.html#tool_options",
 				     &top_iter,
 				     &child_iter,
-				     page_index);
-  gtk_widget_show (vbox);
-  page_index++;
+				     page_index++);
 
-  vbox2 = prefs_frame_new (_("Paint Options"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Paint Options"), GTK_CONTAINER (vbox));
 
-  button =
-    gtk_check_button_new_with_label(_("Use Global Paint Options"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				gimprc.global_paint_options);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  prefs_check_button_new (_("Use Global Paint Options"),
+                          &gimprc.global_paint_options, GTK_BOX (vbox2));
 
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &gimprc.global_paint_options);
+  vbox2 = prefs_frame_new (_("Finding Contiguous Regions"), GTK_CONTAINER (vbox));
 
-  vbox2 = prefs_frame_new (_("Finding Contiguous Regions"), GTK_BOX (vbox));
-
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
   /*  Default threshold  */
   spinbutton = gimp_spin_button_new (&adjustment, gimprc.default_threshold,
@@ -2443,39 +2390,27 @@ preferences_dialog_create (Gimp *gimp)
 
 
   /* Environment */
-  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
 				     _("Environment"),
+                                     "environment.png",
 				     GTK_TREE_STORE (tree),
 				     _("Environment"),
 				     "dialogs/preferences/environment.html",
 				     NULL,
 				     &top_iter,
-				     page_index);
-  gtk_widget_show (vbox);
-  page_index++;
+				     page_index++);
 
-  vbox2 = prefs_frame_new (_("Resource Consumption"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Resource Consumption"), GTK_CONTAINER (vbox));
 
-  button = gtk_check_button_new_with_label(_("Conservative Memory Usage"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				edit_stingy_memory_use);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &edit_stingy_memory_use);
+  prefs_check_button_new (_("Conservative Memory Usage"),
+                          &edit_stingy_memory_use, GTK_BOX (vbox2));
 
 #ifdef ENABLE_MP
-  table = gtk_table_new (3, 2, FALSE);
+  table = prefs_table_new (3, GTK_CONTAINER (vbox2), FALSE);
 #else
-  table = gtk_table_new (2, 2, FALSE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
 #endif /* ENABLE_MP */
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
 
   /*  Levels of Undo  */
   spinbutton = gimp_spin_button_new (&adjustment,
@@ -2519,15 +2454,7 @@ preferences_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
-
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  table = prefs_table_new (1, GTK_CONTAINER (frame), TRUE);
 
   optionmenu =
     gimp_option_menu_new2 (FALSE,
@@ -2550,18 +2477,9 @@ preferences_dialog_create (Gimp *gimp)
 			     _("Default Interpolation:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
-  vbox2 = prefs_frame_new (_("File Saving"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("File Saving"), GTK_CONTAINER (vbox));
 
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-      
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2), TRUE);
 
   optionmenu =
     gimp_option_menu_new2 (FALSE,
@@ -2595,28 +2513,21 @@ preferences_dialog_create (Gimp *gimp)
                                      
 
   /* Session Management */
-  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
 				     _("Session Management"),
+                                     "session.png",
 				     GTK_TREE_STORE (tree),
 				     _("Session"),
 				     "dialogs/preferences/session.html",
 				     NULL,
 				     &top_iter,
-				     page_index);
-  gtk_widget_show (vbox);
-  page_index++;
+				     page_index++);
 
-  vbox2 = prefs_frame_new (_("Window Positions"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Window Positions"), GTK_CONTAINER (vbox));
 
-  button = gtk_check_button_new_with_label (_("Save Window Positions on Exit"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				gimprc.save_session_info);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &gimprc.save_session_info);
+  prefs_check_button_new (_("Save Window Positions on Exit"),
+                          &gimprc.save_session_info, GTK_BOX (vbox2));
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
@@ -2632,41 +2543,27 @@ preferences_dialog_create (Gimp *gimp)
 		    G_CALLBACK (prefs_clear_session_info_callback),
 		    NULL);
 
-  button = gtk_check_button_new_with_label (_("Always Try to Restore Session"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				gimprc.always_restore_session);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  prefs_check_button_new (_("Always Try to Restore Session"),
+                          &gimprc.always_restore_session, GTK_BOX (vbox2));
 
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &gimprc.always_restore_session);
+  vbox2 = prefs_frame_new (_("Devices"), GTK_CONTAINER (vbox));
 
-  vbox2 = prefs_frame_new (_("Devices"), GTK_BOX (vbox));
-
-  button = gtk_check_button_new_with_label (_("Save Device Status on Exit"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				gimprc.save_device_status);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (prefs_toggle_callback),
-		    &gimprc.save_device_status);
+  prefs_check_button_new (_("Save Device Status on Exit"),
+                          &gimprc.save_device_status, GTK_BOX (vbox2));
 
   /* Monitor */
-  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
 				     _("Monitor"),
+                                     "monitor.png",
 				     GTK_TREE_STORE (tree),
 				     _("Monitor"),
 				     "dialogs/preferences/monitor.html",
 				     NULL,
 				     &top_iter,
-				     page_index);
-  gtk_widget_show (vbox);
-  page_index++;
+				     page_index++);
 
-  vbox2 = prefs_frame_new (_("Get Monitor Resolution"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Get Monitor Resolution"), GTK_CONTAINER (vbox));
 
   {
     gdouble  xres, yres;
@@ -2778,16 +2675,16 @@ preferences_dialog_create (Gimp *gimp)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
   /* Folders */
-  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
 				     _("Folders"),
+                                     "folders.png",
 				     GTK_TREE_STORE (tree),
 				     _("Folders"),
 				     "dialogs/preferences/folders.html",
 				     NULL,
 				     &top_iter,
-				     page_index);
-  gtk_widget_show (vbox);
-  page_index++;
+				     page_index++);
 
   {
     static const struct
@@ -2802,11 +2699,8 @@ preferences_dialog_create (Gimp *gimp)
       { N_("Swap Dir:"), N_("Select Swap Dir"), &edit_swap_path },
     };
 
-    table = gtk_table_new (G_N_ELEMENTS (dirs) + 1, 2, FALSE);
-    gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-    gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-    gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, TRUE, 0);
-    gtk_widget_show (table);
+    table = prefs_table_new (G_N_ELEMENTS (dirs) + 1,
+                             GTK_CONTAINER (vbox), FALSE);
 
     for (i = 0; i < G_N_ELEMENTS (dirs); i++)
       {
@@ -2871,16 +2765,16 @@ preferences_dialog_create (Gimp *gimp)
 
     for (i = 0; i < G_N_ELEMENTS (paths); i++)
       {
-	vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+	vbox = prefs_notebook_append_page (gimp,
+                                           GTK_NOTEBOOK (notebook),
 					   gettext (paths[i].label),
+                                           "folders.png",
 				           GTK_TREE_STORE (tree),
 					   gettext (paths[i].tree_label),
 					   paths[i].help_data,
 					   &top_iter,
 					   &child_iter,
-					   page_index);
-	gtk_widget_show (vbox);
-	page_index++;
+					   page_index++);
 
 	patheditor = gimp_path_editor_new (gettext (paths[i].fs_label),
 					   *(paths[i].mpath));

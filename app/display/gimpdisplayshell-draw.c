@@ -608,9 +608,26 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   gimp_help_set_help_data (shell->padding_button,
                            _("Set canvas padding color"), "#padding_button");
 
-  g_signal_connect (G_OBJECT (shell->padding_button), "color_changed",
-                    G_CALLBACK (gimp_display_shell_color_changed),
+  g_signal_connect (G_OBJECT (shell->padding_button), "button_press_event",
+                    G_CALLBACK (gimp_display_shell_color_button_press),
                     shell);
+  g_signal_connect (G_OBJECT (shell->padding_button), "color_changed",
+                    G_CALLBACK (gimp_display_shell_color_button_changed),
+                    shell);
+
+  {
+    static GtkItemFactoryEntry menu_items[] =
+    {
+      { "/---", NULL, NULL, 0, "<Separator>"},
+      { N_("/Default Color"), NULL, 
+        gimp_display_shell_color_button_default, 0, NULL }
+    };
+
+    gtk_item_factory_create_items (GIMP_COLOR_BUTTON (shell->padding_button)->item_factory,
+                                   G_N_ELEMENTS (menu_items),
+                                   menu_items,
+                                   shell);
+  }
 
   /*  create the contents of the lower_hbox  *********************************/
 
