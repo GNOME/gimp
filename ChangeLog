@@ -1,3 +1,18 @@
+2003-03-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/gimpimage-preview.[ch]: moved the image preview code
+	to separate files.
+
+	* app/core/gimpimage.c: removed the functions here. Removed the
+	new utility function gimp_image_previews_resize() because it
+	did exactly what gimp_image_size_changed() should do. Moved
+	the missing bits to gimp_image_size_changed().
+
+	* app/core/gimplayer.c (gimp_layer_apply_mask): call
+	gimp_viewable_invalidate_preview() only if we don't call
+	gimp_drawable_update(). Calling them both is redundant.
+
 2003-03-23  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimplayer.c
@@ -21,7 +36,7 @@
 	* app/core/gimpimage.c (get_preview_size): return square
 	dimensions in config->layer_previews is FALSE (except if the size
 	is requested for a popup).
-	(get_popup_size): don't crete popups if config->layer_previews
+	(get_popup_size): don't create popups if config->layer_previews
 	is FALSE.
 
 	* app/core/gimpimage.c: added utility function

@@ -43,6 +43,7 @@
 #include "gimpimage-colorhash.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-mask.h"
+#include "gimpimage-preview.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -110,32 +111,12 @@ static gsize    gimp_image_get_memsize           (GimpObject     *object);
 
 static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
 static void     gimp_image_size_changed          (GimpViewable   *viewable);
-static void     gimp_image_get_preview_size      (GimpViewable   *viewable,
-                                                  gint            size,
-                                                  gboolean        is_popup,
-                                                  gboolean        dot_for_dot,
-                                                  gint           *width,
-                                                  gint           *height);
-static gboolean gimp_image_get_popup_size        (GimpViewable   *viewable,
-                                                  gint            width,
-                                                  gint            height,
-                                                  gboolean        dot_for_dot,
-                                                  gint           *popup_width,
-                                                  gint           *popup_height);
-static TempBuf *gimp_image_get_preview           (GimpViewable   *gimage,
-						  gint            width,
-						  gint            height);
-static TempBuf *gimp_image_get_new_preview       (GimpViewable   *viewable,
-						  gint            width, 
-						  gint            height);
-
 static void     gimp_image_real_colormap_changed (GimpImage      *gimage,
 						  gint            ncol);
 
 static void     gimp_image_get_active_components (const GimpImage    *gimage,
                                                   const GimpDrawable *drawable,
                                                   gboolean           *active);
-static void     gimp_image_previews_resize       (GimpImage          *gimage);
 
 
 static gint valid_combinations[][MAX_CHANNELS + 1] =
@@ -689,6 +670,7 @@ static void
 gimp_image_size_changed (GimpViewable *viewable)
 {
   GimpImage *gimage;
+  GList     *list;
 
   if (GIMP_VIEWABLE_CLASS (parent_class)->size_changed)
     GIMP_VIEWABLE_CLASS (parent_class)->size_changed (viewable);
@@ -701,314 +683,16 @@ gimp_image_size_changed (GimpViewable *viewable)
   gimp_container_foreach (gimage->channels,
 			  (GFunc) gimp_viewable_size_changed,
 			  NULL);
-}
 
-static void
-gimp_image_get_preview_size (GimpViewable *viewable,
-                             gint          size,
-                             gboolean      is_popup,
-                             gboolean      dot_for_dot,
-                             gint         *width,
-                             gint         *height)
-{
-  GimpImage *gimage;
-
-  gimage = GIMP_IMAGE (viewable);
-
-  if (! gimage->gimp->config->layer_previews && ! is_popup)
+  for (list = GIMP_LIST (gimage->layers)->list; list; list = g_list_next (list))
     {
-      *width  = size;
-      *height = size;
-      return;
+      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (list->data));
+
+      if (mask)
+        gimp_viewable_size_changed (GIMP_VIEWABLE (mask));
     }
 
-  gimp_viewable_calc_preview_size (viewable,
-                                   gimage->width,
-                                   gimage->height,
-                                   size,
-                                   size,
-                                   dot_for_dot,
-                                   gimage->xresolution,
-                                   gimage->yresolution,
-                                   width,
-                                   height,
-                                   NULL);
-}
-
-static gboolean
-gimp_image_get_popup_size (GimpViewable *viewable,
-                           gint          width,
-                           gint          height,
-                           gboolean      dot_for_dot,
-                           gint         *popup_width,
-                           gint         *popup_height)
-{
-  GimpImage *gimage;
-
-  gimage = GIMP_IMAGE (viewable);
-
-  if (! gimage->gimp->config->layer_previews)
-    return FALSE;
-
-  if (gimage->width > width || gimage->height > height)
-    {
-      gboolean scaling_up;
-
-      gimp_viewable_calc_preview_size (viewable,
-                                       gimage->width,
-                                       gimage->height,
-                                       MIN (width  * 2,
-                                            GIMP_VIEWABLE_MAX_POPUP_SIZE),
-                                       MIN (height * 2,
-                                            GIMP_VIEWABLE_MAX_POPUP_SIZE),
-                                       dot_for_dot, 1.0, 1.0,
-                                       popup_width,
-                                       popup_height,
-                                       &scaling_up);
-
-      if (scaling_up)
-        {
-          *popup_width  = gimage->width;
-          *popup_height = gimage->height;
-        }
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static TempBuf *
-gimp_image_get_preview (GimpViewable *viewable,
-			gint          width, 
-			gint          height)
-{
-  GimpImage *gimage;
-
-  gimage = GIMP_IMAGE (viewable);
-
-  if (! gimage->gimp->config->layer_previews)
-    return NULL;
-
-  if (gimage->comp_preview_valid            &&
-      gimage->comp_preview->width  == width &&
-      gimage->comp_preview->height == height)
-    {
-      /*  The easy way  */
-      return gimage->comp_preview;
-    }
-  else
-    {
-      /*  The hard way  */
-      if (gimage->comp_preview)
-	temp_buf_free (gimage->comp_preview);
-
-      /*  Actually construct the composite preview from the layer previews!
-       *  This might seem ridiculous, but it's actually the best way, given
-       *  a number of unsavory alternatives.
-       */
-      gimage->comp_preview = gimp_image_get_new_preview (viewable,
-							 width, height);
-
-      gimage->comp_preview_valid = TRUE;
-
-      return gimage->comp_preview;
-    }
-}
-
-static TempBuf *
-gimp_image_get_new_preview (GimpViewable *viewable,
-			    gint          width, 
-			    gint          height)
-{
-  GimpImage   *gimage;
-  GimpLayer   *layer;
-  GimpLayer   *floating_sel;
-  PixelRegion  src1PR, src2PR, maskPR;
-  PixelRegion *mask;
-  TempBuf     *comp;
-  TempBuf     *layer_buf;
-  TempBuf     *mask_buf;
-  GList       *list;
-  GSList      *reverse_list = NULL;
-  gdouble      ratio;
-  gint         x, y, w, h;
-  gint         x1, y1, x2, y2;
-  gint         bytes;
-  gboolean     construct_flag;
-  gboolean     visible_components[MAX_CHANNELS] = { TRUE, TRUE, TRUE, TRUE };
-  gint         off_x, off_y;
-
-  gimage = GIMP_IMAGE (viewable);
-
-  if (! gimage->gimp->config->layer_previews)
-    return NULL;
-
-  ratio = (gdouble) width / (gdouble) gimage->width;
-
-  switch (gimp_image_base_type (gimage))
-    {
-    case GIMP_RGB:
-    case GIMP_INDEXED:
-      bytes = 4;
-      break;
-    case GIMP_GRAY:
-      bytes = 2;
-      break;
-    default:
-      bytes = 0;
-      g_assert_not_reached ();
-      break;
-    }
-
-  /*  The construction buffer  */
-  comp = temp_buf_new (width, height, bytes, 0, 0, NULL);
-  temp_buf_data_clear (comp);
-
-  floating_sel = NULL;
-
-  for (list = GIMP_LIST (gimage->layers)->list; 
-       list; 
-       list = g_list_next (list))
-    {
-      layer = (GimpLayer *) list->data;
-
-      /*  only add layers that are visible to the list  */
-      if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
-	{
-	  /*  floating selections are added right above the layer 
-	   *  they are attached to
-	   */
-	  if (gimp_layer_is_floating_sel (layer))
-	    {
-	      floating_sel = layer;
-	    }
-	  else
-	    {
-	      if (floating_sel &&
-		  floating_sel->fs.drawable == GIMP_DRAWABLE (layer))
-		{
-		  reverse_list = g_slist_prepend (reverse_list, floating_sel);
-		}
-
-	      reverse_list = g_slist_prepend (reverse_list, layer);
-	    }
-	}
-    }
-
-  construct_flag = FALSE;
-
-  for (; reverse_list; reverse_list = g_slist_next (reverse_list))
-    {
-      layer = (GimpLayer *) reverse_list->data;
-
-      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-
-      x = (gint) RINT (ratio * off_x);
-      y = (gint) RINT (ratio * off_y);
-      w = (gint) RINT (ratio * gimp_drawable_width (GIMP_DRAWABLE (layer)));
-      h = (gint) RINT (ratio * gimp_drawable_height (GIMP_DRAWABLE (layer)));
-
-      if (w < 1 || h < 1)
-	continue;
-
-      x1 = CLAMP (x, 0, width);
-      y1 = CLAMP (y, 0, height);
-      x2 = CLAMP (x + w, 0, width);
-      y2 = CLAMP (y + h, 0, height);
-
-      src1PR.bytes     = comp->bytes;
-      src1PR.x         = x1;
-      src1PR.y         = y1;
-      src1PR.w         = (x2 - x1);
-      src1PR.h         = (y2 - y1);
-      src1PR.rowstride = comp->width * src1PR.bytes;
-      src1PR.data      = (temp_buf_data (comp) +
-                          y1 * src1PR.rowstride + x1 * src1PR.bytes);
-
-      layer_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer), w, h);
-
-      g_assert (layer_buf);
-      g_assert (layer_buf->bytes <= comp->bytes);
-
-      src2PR.bytes     = layer_buf->bytes;
-      src2PR.x         = src1PR.x; 
-      src2PR.y         = src1PR.y;
-      src2PR.w         = src1PR.w;  
-      src2PR.h         = src1PR.h;
-      src2PR.rowstride = layer_buf->width * src2PR.bytes;
-      src2PR.data      = (temp_buf_data (layer_buf) + 
-                          (y1 - y) * src2PR.rowstride +
-                          (x1 - x) * src2PR.bytes);
-
-      if (layer->mask && layer->mask->apply_mask)
-	{
-	  mask_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer->mask),
-						w, h);
-	  maskPR.bytes     = mask_buf->bytes;
-          maskPR.x         = src1PR.x; 
-          maskPR.y         = src1PR.y;
-          maskPR.w         = src1PR.w;  
-          maskPR.h         = src1PR.h;
-	  maskPR.rowstride = mask_buf->width * mask_buf->bytes;
-	  maskPR.data      = (mask_buf_data (mask_buf) +
-                              (y1 - y) * maskPR.rowstride +
-                              (x1 - x) * maskPR.bytes);
-	  mask = &maskPR;
-	}
-      else
-	{
-	  mask = NULL;
-	}
-
-      /*  Based on the type of the layer, project the layer onto the
-       *   composite preview...
-       *  Indexed images are actually already converted to RGB and RGBA,
-       *   so just project them as if they were type "intensity"
-       *  Send in all TRUE for visible since that info doesn't matter
-       *   for previews
-       */
-      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-	{
-	  if (! construct_flag)
-	    initial_region (&src2PR, &src1PR, 
-			    mask, NULL,
-                            layer->opacity * 255.999,
-			    layer->mode,
-                            visible_components,
-                            INITIAL_INTENSITY_ALPHA);
-	  else
-	    combine_regions (&src1PR, &src2PR, &src1PR, 
-			     mask, NULL,
-                             layer->opacity * 255.999,
-			     layer->mode,
-                             visible_components,
-                             COMBINE_INTEN_A_INTEN_A);
-        }
-      else
-        {
-	  if (! construct_flag)
-	    initial_region (&src2PR, &src1PR, 
-			    mask, NULL,
-                            layer->opacity * 255.999,
-			    layer->mode,
-                            visible_components,
-                            INITIAL_INTENSITY);
-	  else
-	    combine_regions (&src1PR, &src2PR, &src1PR, 
-			     mask, NULL,
-                             layer->opacity * 255.999,
-			     layer->mode,
-                             visible_components,
-                             COMBINE_INTEN_A_INTEN);
-        }
-
-      construct_flag = TRUE;
-    }
-
-  g_slist_free (reverse_list);
-
-  return comp;
+  gimp_viewable_size_changed (GIMP_VIEWABLE (gimp_image_get_mask (gimage)));
 }
 
 static void 
@@ -1052,30 +736,6 @@ gimp_image_get_active_components (const GimpImage    *gimage,
       if (gimp_drawable_has_alpha (drawable) && layer->preserve_trans)
         active[gimp_drawable_bytes (drawable) - 1] = FALSE;
     }
-}
-
-static void
-gimp_image_previews_resize (GimpImage *gimage)
-{
-  GList *list;
-
-  gimp_container_foreach (gimage->layers, 
-			  (GFunc) gimp_viewable_size_changed,
-			  NULL);
-  gimp_container_foreach (gimage->channels, 
-			  (GFunc) gimp_viewable_size_changed,
-			  NULL);
-
-  for (list = GIMP_LIST (gimage->layers)->list; list; list = g_list_next (list))
-    {
-      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (list->data));
-
-      if (mask)
-        gimp_viewable_size_changed (GIMP_VIEWABLE (mask));
-    }
-
-  gimp_viewable_size_changed (GIMP_VIEWABLE (gimp_image_get_mask (gimage)));
-  gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 }
 
 
@@ -1142,7 +802,7 @@ gimp_image_new (Gimp              *gimp,
                            G_CALLBACK (gimp_image_invalidate_layer_previews),
                            gimage, G_CONNECT_SWAPPED);
   g_signal_connect_object (gimp->config, "notify::layer-previews",
-                           G_CALLBACK (gimp_image_previews_resize),
+                           G_CALLBACK (gimp_viewable_size_changed),
                            gimage, G_CONNECT_SWAPPED);
 
   return gimage;

@@ -791,8 +791,6 @@ gimp_layer_apply_mask (GimpLayer         *layer,
                        gboolean           push_undo)
 {
   GimpImage   *gimage;
-  gint         off_x;
-  gint         off_y;
   PixelRegion  srcPR, maskPR;
   gboolean     view_changed = FALSE;
 
@@ -819,11 +817,10 @@ gimp_layer_apply_mask (GimpLayer         *layer,
     }
 
   /*  check if applying the mask changes the projection  */
-  if ((mode == GIMP_MASK_APPLY   && 
-       (! layer->mask->apply_mask || layer->mask->show_mask))
-      ||
-      (mode == GIMP_MASK_DISCARD && 
-       (  layer->mask->apply_mask || layer->mask->show_mask)))
+  if ((mode == GIMP_MASK_APPLY && (! layer->mask->apply_mask ||
+                                   layer->mask->show_mask)) ||
+      (mode == GIMP_MASK_DISCARD && (layer->mask->apply_mask ||
+                                     layer->mask->show_mask)))
     {
       view_changed = TRUE;
     }
@@ -850,7 +847,6 @@ gimp_layer_apply_mask (GimpLayer         *layer,
 			 FALSE);
 
       apply_mask_to_region (&srcPR, &maskPR, OPAQUE_OPACITY);
-      GIMP_DRAWABLE (layer)->preview_valid = FALSE;
     }
 
   g_object_unref (layer->mask);
@@ -862,14 +858,14 @@ gimp_layer_apply_mask (GimpLayer         *layer,
   /*  If applying actually changed the view  */
   if (view_changed)
     {
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
-
-      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-
       gimp_drawable_update (GIMP_DRAWABLE (layer),
 			    0, 0,
 			    gimp_drawable_width  (GIMP_DRAWABLE (layer)),
 			    gimp_drawable_height (GIMP_DRAWABLE (layer)));
+    }
+  else
+    {
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
     }
 
   g_signal_emit (layer, layer_signals[MASK_CHANGED], 0);

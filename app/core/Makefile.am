@@ -107,6 +107,8 @@ libappcore_a_sources = \
 	gimpimage-new.h			\
 	gimpimage-pick-color.c		\
 	gimpimage-pick-color.h		\
+	gimpimage-preview.c		\
+	gimpimage-preview.h		\
 	gimpimage-projection.c		\
 	gimpimage-projection.h		\
 	gimpimage-qmask.c		\
