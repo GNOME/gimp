@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
 "POT-Creation-Date: 2000-06-07 12:08+0300\n"
-"PO-Revision-Date: 2000-04-26 10:26+02:00\n"
-"Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
+"PO-Revision-Date: 2000-06-07 12:20+03:00\n"
+"Last-Translator: Ville Hautamäki <villeh@cs.joensuu.fi>\n"
 "Language-Team: fi <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -4188,7 +4188,6 @@ msgid "Extensions"
 msgstr "Lisäykset"
 
 #: app/plug_in.c:822
-#, fuzzy, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Liitännäistä ei lötynyt: \"%s\""
 
@@ -4202,6 +4201,11 @@ msgid ""
 "You may want to save your images and restart GIMP\n"
 "to be on the safe side."
 msgstr ""
+"Liitännäinen kaatui: \"%s\"\n"
+"(%s)\n"
+"\n"
+"Kuoleva liitännäinen on mahdollisesti sekoittanut gimp:in sisäisiä\n"
+"asetuksia. Kannattaa tallentaa kuvat ja käynnistää GIMP uudelleen\n"
 
 #: app/posterize.c:148
 msgid "Posterize does not operate on indexed drawables."
@@ -4543,7 +4547,6 @@ msgid "Disable Cursor Updating"
 msgstr "Ei osoittimen päivitystä"
 
 #: app/preferences_dialog.c:2081
-#, fuzzy
 msgid "Tool Icon"
 msgstr "Työkalujen asetukset"
 
