@@ -360,7 +360,7 @@ history_add (gchar *ref,
 
   gtk_signal_handler_block_by_data (GTK_OBJECT (GTK_COMBO (combo)->entry), combo);
   gtk_combo_set_popdown_strings (GTK_COMBO (combo), combo_list);
-  gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (combo)->entry), item->title);
+/*    gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (combo)->entry), item->title); */
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (GTK_COMBO (combo)->entry), combo);
 
   for (list = combo_list; list; list = list->next)
@@ -395,14 +395,14 @@ html_source (HelpPage *page,
       if (!title)
 	title = ("<Untitled>");
       
+      if (add_to_history)
+	history_add (ref, title);
+
       gtk_signal_handler_block_by_data (GTK_OBJECT (GTK_COMBO (combo)->entry),
 					combo);
       gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (combo)->entry), title);
       gtk_signal_handler_unblock_by_data (GTK_OBJECT (GTK_COMBO (combo)->entry),
 					  combo);
-
-      if (add_to_history)
-	history_add (ref, title);
     }
       
   update_toolbar (page);
