@@ -23,6 +23,7 @@
 
 #include "gimpcolor.h"
 #include "gimpcolorspace.h"
+#include "gimppalette_pdb.h"
 #include "gimpmath.h"
 
 

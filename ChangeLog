@@ -1,3 +1,8 @@
+2001-01-22  Daniel Egger  <egger@suse.de>
+
+	* libgimp/gimpcolor.c: #include "gimppalette_pdb.h"
+	to shut up the compiler.
+
 Sun Jan 21 15:23:27 PST 2001 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/enumgen.pl: handle subdirs
