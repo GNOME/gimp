@@ -74,11 +74,15 @@ typedef struct _LevelsDialog LevelsDialog;
 struct _LevelsDialog
 {
   GtkWidget *    shell;
-  GtkWidget *    low_input_text;
+  GtkWidget *    low_input_spin;
+  GtkAdjustment *low_input_adj;
   GtkWidget *    gamma_text;
-  GtkWidget *    high_input_text;
-  GtkWidget *    low_output_text;
-  GtkWidget *    high_output_text;
+  GtkWidget *    high_input_spin;
+  GtkAdjustment *high_input_adj;
+  GtkWidget *    low_output_spin;
+  GtkAdjustment *low_output_adj;
+  GtkWidget *    high_output_spin;
+  GtkAdjustment *high_output_adj;
   GtkWidget *    input_levels_da[2];
   GtkWidget *    output_levels_da[2];
   GtkWidget *    channel_menu;
@@ -133,11 +137,11 @@ static void            levels_ok_callback             (GtkWidget *, gpointer);
 static void            levels_cancel_callback         (GtkWidget *, gpointer);
 static gint            levels_delete_callback         (GtkWidget *, GdkEvent *, gpointer);
 static void            levels_preview_update          (GtkWidget *, gpointer);
-static void            levels_low_input_text_update   (GtkWidget *, gpointer);
+static void            levels_low_input_spin_update   (GtkWidget *, gpointer);
 static void            levels_gamma_text_update       (GtkWidget *, gpointer);
-static void            levels_high_input_text_update  (GtkWidget *, gpointer);
-static void            levels_low_output_text_update  (GtkWidget *, gpointer);
-static void            levels_high_output_text_update (GtkWidget *, gpointer);
+static void            levels_high_input_spin_update  (GtkWidget *, gpointer);
+static void            levels_low_output_spin_update  (GtkWidget *, gpointer);
+static void            levels_high_output_spin_update (GtkWidget *, gpointer);
 static gint            levels_input_da_events         (GtkWidget *, GdkEvent *, LevelsDialog *);
 static gint            levels_output_da_events        (GtkWidget *, GdkEvent *, LevelsDialog *);
 
@@ -423,7 +427,7 @@ levels_new_dialog ()
   gtk_widget_show (channel_hbox);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (ld->channel_menu), menu);
 
-  /*  Horizontal box for levels text widget  */
+  /*  Horizontal box for levels text and spin widgets  */
   hbox = gtk_hbox_new (TRUE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
@@ -431,15 +435,16 @@ levels_new_dialog ()
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  /*  low input text  */
-  ld->low_input_text = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (ld->low_input_text), "0");
-  gtk_widget_set_usize (ld->low_input_text, TEXT_WIDTH, 25);
-  gtk_box_pack_start (GTK_BOX (hbox), ld->low_input_text, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (ld->low_input_text), "changed",
-		      (GtkSignalFunc) levels_low_input_text_update,
-		      ld);
-  gtk_widget_show (ld->low_input_text);
+  /*  low input spin  */
+  ld->low_input_adj = GTK_ADJUSTMENT(gtk_adjustment_new (0, 0, 255, 1, 10, 10));
+  ld->low_input_spin = gtk_spin_button_new (ld->low_input_adj, 0.5, 0);
+  gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(ld->low_input_spin), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), ld->low_input_spin, FALSE, FALSE, 0);
+
+  gtk_signal_connect (GTK_OBJECT (ld->low_input_adj), "value_changed",
+                      (GtkSignalFunc) levels_low_input_spin_update,
+                      ld);
+  gtk_widget_show (ld->low_input_spin);
 
   /* input gamma text  */
   ld->gamma_text = gtk_entry_new ();
@@ -452,16 +457,16 @@ levels_new_dialog ()
   gtk_widget_show (ld->gamma_text);
   gtk_widget_show (hbox);
 
-  /* high input text  */
-  ld->high_input_text = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (ld->high_input_text), "255");
-  gtk_widget_set_usize (ld->high_input_text, TEXT_WIDTH, 25);
-  gtk_box_pack_start (GTK_BOX (hbox), ld->high_input_text, FALSE, FALSE, 0);
+  /* high input spin  */
+  ld->high_input_adj = GTK_ADJUSTMENT(gtk_adjustment_new (255, 0, 255, 1, 10, 10));
+  ld->high_input_spin = gtk_spin_button_new (ld->high_input_adj, 0.5, 0);
+  gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(ld->high_input_spin), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), ld->high_input_spin, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (ld->high_input_text), "changed",
-		      (GtkSignalFunc) levels_high_input_text_update,
+  gtk_signal_connect (GTK_OBJECT (ld->high_input_adj), "value_changed",
+		      (GtkSignalFunc) levels_high_input_spin_update,
 		      ld);
-  gtk_widget_show (ld->high_input_text);
+  gtk_widget_show (ld->high_input_spin);
   gtk_widget_show (hbox);
 
   /*  The levels histogram  */
@@ -510,7 +515,7 @@ levels_new_dialog ()
   gtk_widget_show (frame);
   gtk_widget_show (hbox);
 
-  /*  Horizontal box for levels text widget  */
+  /*  Horizontal box for levels spin widgets  */
   hbox = gtk_hbox_new (TRUE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
@@ -518,25 +523,27 @@ levels_new_dialog ()
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  /*  low output text  */
-  ld->low_output_text = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (ld->low_output_text), "0");
-  gtk_widget_set_usize (ld->low_output_text, TEXT_WIDTH, 25);
-  gtk_box_pack_start (GTK_BOX (hbox), ld->low_output_text, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (ld->low_output_text), "changed",
-		      (GtkSignalFunc) levels_low_output_text_update,
-		      ld);
-  gtk_widget_show (ld->low_output_text);
+  /*  low output spin  */
+  ld->low_output_adj = GTK_ADJUSTMENT(gtk_adjustment_new (0, 0, 255, 1, 10, 10));
+  ld->low_output_spin = gtk_spin_button_new (ld->low_output_adj, 0.5, 0);
+  gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(ld->low_input_spin), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), ld->low_output_spin, FALSE, FALSE, 0);
 
-  /*  high output text  */
-  ld->high_output_text = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (ld->high_output_text), "255");
-  gtk_widget_set_usize (ld->high_output_text, TEXT_WIDTH, 25);
-  gtk_box_pack_start (GTK_BOX (hbox), ld->high_output_text, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (ld->high_output_text), "changed",
-		      (GtkSignalFunc) levels_high_output_text_update,
-		      ld);
-  gtk_widget_show (ld->high_output_text);
+  gtk_signal_connect (GTK_OBJECT (ld->low_output_adj), "value_changed",
+                      (GtkSignalFunc) levels_low_output_spin_update,
+                      ld);
+  gtk_widget_show (ld->low_output_spin);
+
+  /*  high output spin  */
+  ld->high_output_adj = GTK_ADJUSTMENT(gtk_adjustment_new (255, 0, 255, 1, 10, 10));
+  ld->high_output_spin = gtk_spin_button_new (ld->high_output_adj, 0.5, 0);
+  gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(ld->high_input_spin), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), ld->high_output_spin, FALSE, FALSE, 0);
+
+  gtk_signal_connect (GTK_OBJECT (ld->high_output_adj), "value_changed",
+                      (GtkSignalFunc) levels_high_output_spin_update,
+                      ld);
+  gtk_widget_show (ld->high_output_spin);
   gtk_widget_show (hbox);
 
   /*  The output levels drawing area  */
@@ -668,8 +675,8 @@ levels_update (LevelsDialog *ld,
 
   if (update & LOW_INPUT)
     {
-      sprintf (text, "%d", ld->low_input[ld->channel]);
-      gtk_entry_set_text (GTK_ENTRY (ld->low_input_text), text);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON(ld->low_input_spin),
+                                 ld->low_input[ld->channel]);
     }
   if (update & GAMMA)
     {
@@ -678,18 +685,18 @@ levels_update (LevelsDialog *ld,
     }
   if (update & HIGH_INPUT)
     {
-      sprintf (text, "%d", ld->high_input[ld->channel]);
-      gtk_entry_set_text (GTK_ENTRY (ld->high_input_text), text);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON(ld->high_input_spin),
+                                 ld->high_input[ld->channel]);
     }
   if (update & LOW_OUTPUT)
     {
-      sprintf (text, "%d", ld->low_output[ld->channel]);
-      gtk_entry_set_text (GTK_ENTRY (ld->low_output_text), text);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON(ld->low_output_spin),
+                                 ld->low_output[ld->channel]);
     }
   if (update & HIGH_OUTPUT)
     {
-      sprintf (text, "%d", ld->high_output[ld->channel]);
-      gtk_entry_set_text (GTK_ENTRY (ld->high_output_text), text);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON(ld->high_output_spin),
+                                 ld->high_output[ld->channel]);
     }
   if (update & INPUT_LEVELS)
     {
@@ -1017,16 +1024,17 @@ levels_preview_update (GtkWidget *w,
 }
 
 static void
-levels_low_input_text_update (GtkWidget *w,
+levels_low_input_spin_update (GtkWidget *w,
 			      gpointer   data)
 {
   LevelsDialog *ld;
-  char *str;
   int value;
 
-  str = gtk_entry_get_text (GTK_ENTRY (w));
   ld = (LevelsDialog *) data;
-  value = BOUNDS (((int) atof (str)), 0, ld->high_input[ld->channel]);
+  value = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (ld->low_input_spin));
+  value = BOUNDS (value, 0, ld->high_input[ld->channel]);
+  /*  enforce a consistent displayed value (low_input <= high_input)  */
+  gtk_spin_button_set_value(GTK_SPIN_BUTTON (ld->low_input_spin), value);
 
   if (value != ld->low_input[ld->channel])
     {
@@ -1061,16 +1069,17 @@ levels_gamma_text_update (GtkWidget *w,
 }
 
 static void
-levels_high_input_text_update (GtkWidget *w,
+levels_high_input_spin_update (GtkWidget *w,
 			       gpointer   data)
 {
   LevelsDialog *ld;
-  char *str;
   int value;
 
-  str = gtk_entry_get_text (GTK_ENTRY (w));
   ld = (LevelsDialog *) data;
-  value = BOUNDS (((int) atof (str)), ld->low_input[ld->channel], 255);
+  value = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (ld->high_input_spin));
+  value = BOUNDS (value, ld->low_input[ld->channel], 255);
+  /*  enforce a consistent displayed value (high_input >= low_input)  */
+   gtk_spin_button_set_value(GTK_SPIN_BUTTON (ld->high_input_spin), value);
 
   if (value != ld->high_input[ld->channel])
     {
@@ -1083,16 +1092,15 @@ levels_high_input_text_update (GtkWidget *w,
 }
 
 static void
-levels_low_output_text_update (GtkWidget *w,
+levels_low_output_spin_update (GtkWidget *w,
 			       gpointer   data)
 {
   LevelsDialog *ld;
-  char *str;
   int value;
 
-  str = gtk_entry_get_text (GTK_ENTRY (w));
   ld = (LevelsDialog *) data;
-  value = BOUNDS (((int) atof (str)), 0, 255);
+  value = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (ld->low_output_spin));
+  value = BOUNDS (value, 0, 255);
 
   if (value != ld->low_output[ld->channel])
     {
@@ -1105,16 +1113,15 @@ levels_low_output_text_update (GtkWidget *w,
 }
 
 static void
-levels_high_output_text_update (GtkWidget *w,
+levels_high_output_spin_update (GtkWidget *w,
 				gpointer   data)
 {
   LevelsDialog *ld;
-  char *str;
   int value;
 
-  str = gtk_entry_get_text (GTK_ENTRY (w));
   ld = (LevelsDialog *) data;
-  value = BOUNDS (((int) atof (str)), 0, 255);
+  value = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (ld->high_output_spin));
+  value = BOUNDS (value, 0, 255);
 
   if (value != ld->high_output[ld->channel])
     {

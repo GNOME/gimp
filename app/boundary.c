@@ -83,7 +83,7 @@ find_empty_segs (PixelRegion  *maskPR,
   int val, last;
   int tilex;
   Tile *tile = NULL;
-  int endx, l_num_empty, dstep;
+  int endx, l_num_empty, dstep = 0;
 
 
   data  = NULL;

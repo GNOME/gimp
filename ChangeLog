@@ -1,3 +1,13 @@
+Mon Apr 12 21:54:48 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/boundary.c: code cleanup
+
+	* app/levels.c: applied gimp-lecorfec-990314-0, added spin buttons
+	to the levels dialog
+
+	* plug-ins/script-fu/scripts/font-map.scm: changes for updated
+	gimp_text interface
+
 Tue Apr 13 02:27:26 CEST 1999 Marc Lehmann <pcg@goof.com>
 
 	* libgimp/parasite.[ch]: Removed the parasite load/save functions.

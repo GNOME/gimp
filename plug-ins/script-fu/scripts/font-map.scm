@@ -11,7 +11,7 @@
 	   (set! font (car list))
 	   (set! list (cdr list))
 	   (set! extents (gimp-text-get-extents font font-size PIXELS
-						"*" font "*" "*" "*" "*"))
+						"*" font "*" "*" "*" "*" "*" "*"))
 	   (set! width (nth 0 extents))
 	   (if (> width maxwidth) (set! maxwidth width)))
     maxwidth))
@@ -27,7 +27,7 @@
 	   (set! font (car list))
 	   (set! list (cdr list))
 	   (set! extents (gimp-text-get-extents font font-size PIXELS
-						"*" font "*" "*" "*" "*"))
+						"*" font "*" "*" "*" "*" "*" "*"))
 	   (set! height (nth 1 extents))
 	   (if (> height maxheight) (set! maxheight height)))
     maxheight))
@@ -53,7 +53,7 @@
 	   (set! font (car font-list))
 	   (set! font-list (cdr font-list))
 	   (set! text-fs (car (gimp-text img drawable border (+ border (* count maxheight))
-					 font 0 TRUE font-size PIXELS "*" font "*" "*" "*" "*")))
+					 font 0 TRUE font-size PIXELS "*" font "*" "*" "*" "*" "*" "*")))
 	   (set! count (+ count 1))
 	   (gimp-floating-sel-anchor text-fs))
 
