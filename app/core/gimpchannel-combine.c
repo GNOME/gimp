@@ -114,6 +114,8 @@ gimp_channel_class_init (GimpChannelClass *klass)
   gimp_object_class->get_memsize = gimp_channel_get_memsize;
 
   item_class->duplicate          = gimp_channel_duplicate;
+  item_class->default_name       = _("Channel");
+  item_class->rename_desc        = _("Rename Channel");
 }
 
 static void

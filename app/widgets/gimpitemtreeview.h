@@ -101,10 +101,6 @@ struct _GimpItemTreeViewClass
   GimpRemoveItemFunc    remove_item;
   GimpConvertItemFunc   convert_item;
 
-  void (* rename_item) (GimpItemTreeView *view,
-                        GimpItem         *item,
-                        const gchar      *new_name);
-
   /*  various descriptive strings for tooltips and undo steps  */
   const gchar          *new_desc;
   const gchar          *duplicate_desc;
@@ -114,7 +110,6 @@ struct _GimpItemTreeViewClass
   const gchar          *raise_to_top_desc;
   const gchar          *lower_desc;
   const gchar          *lower_to_bottom_desc;
-  const gchar          *rename_desc;
 };
 
 

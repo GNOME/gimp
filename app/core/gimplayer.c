@@ -72,6 +72,9 @@ static void       gimp_layer_invalidate_preview (GimpViewable       *viewable);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
                                                  GType               new_type,
                                                  gboolean            add_alpha);
+static void       gimp_layer_rename             (GimpItem           *item,
+                                                 const gchar        *new_name,
+                                                 const gchar        *undo_desc);
 
 static void       gimp_layer_transform_color    (GimpImage          *gimage,
                                                  PixelRegion        *layerPR,
@@ -180,6 +183,9 @@ gimp_layer_class_init (GimpLayerClass *klass)
   viewable_class->invalidate_preview = gimp_layer_invalidate_preview;
 
   item_class->duplicate              = gimp_layer_duplicate;
+  item_class->rename                 = gimp_layer_rename;
+  item_class->default_name           = _("Layer");
+  item_class->rename_desc            = _("Rename Layer");
 
   klass->opacity_changed             = NULL;
   klass->mode_changed                = NULL;
@@ -309,6 +315,32 @@ gimp_layer_duplicate (GimpItem *item,
     }
 
   return new_item;
+}
+
+static void
+gimp_layer_rename (GimpItem    *item,
+                   const gchar *new_name,
+                   const gchar *undo_desc)
+{
+  GimpImage *gimage;
+  gboolean   floating_sel = FALSE;
+
+  gimage = gimp_item_get_image (item);
+  floating_sel = gimp_layer_is_floating_sel (GIMP_LAYER (item));
+
+  if (gimage && floating_sel)
+    {
+      gimp_image_undo_group_start (gimage,
+                                   GIMP_UNDO_GROUP_ITEM_PROPERTIES,
+                                   undo_desc);
+
+      floating_sel_to_layer (GIMP_LAYER (item));
+    }
+
+  GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc);
+
+  if (gimage && floating_sel)
+    gimp_image_undo_group_end (gimage);
 }
 
 static void

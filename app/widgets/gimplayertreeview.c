@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -36,8 +34,6 @@
 #include "core/gimplayermask.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimpimage-undo-push.h"
 
 #include "gimpcellrenderertoggle.h"
 #include "gimpcellrendererviewable.h"
@@ -70,9 +66,6 @@ static void   gimp_layer_tree_view_set_preview_size (GimpContainerView *view);
 
 static void   gimp_layer_tree_view_remove_item    (GimpImage           *gimage,
                                                    GimpItem            *layer);
-static void   gimp_layer_tree_view_rename_item    (GimpItemTreeView    *view,
-                                                   GimpItem            *item,
-                                                   const gchar         *new_name);
 
 static void   gimp_layer_tree_view_anchor_clicked (GtkWidget           *widget,
 						   GimpLayerTreeView   *view);
@@ -188,7 +181,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_layer;
   item_view_class->remove_item     = gimp_layer_tree_view_remove_item;
   item_view_class->convert_item    = (GimpConvertItemFunc) gimp_layer_new_from_drawable;
-  item_view_class->rename_item     = gimp_layer_tree_view_rename_item;
 
   item_view_class->new_desc             = _("New Layer");
   item_view_class->duplicate_desc       = _("Duplicate Layer");
@@ -198,7 +190,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->raise_to_top_desc    = _("Raise Layer to Top");
   item_view_class->lower_desc           = _("Lower Layer");
   item_view_class->lower_to_bottom_desc = _("Lower Layer to Bottom");
-  item_view_class->rename_desc          = _("Rename Layer");
 
   gimp_rgba_set (&black_color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
@@ -562,40 +553,6 @@ gimp_layer_tree_view_remove_item (GimpImage *gimage,
     floating_sel_remove (GIMP_LAYER (item));
   else
     gimp_image_remove_layer (gimage, GIMP_LAYER (item));
-}
-
-static void
-gimp_layer_tree_view_rename_item (GimpItemTreeView *view,
-                                  GimpItem         *item,
-                                  const gchar      *new_name)
-{
-  if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (item))))
-    {
-      GimpItemTreeViewClass *item_view_class;
-      GimpLayer             *layer;
-
-      item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
-
-      layer = GIMP_LAYER (item);
-
-      gimp_image_undo_group_start (view->gimage,
-                                   GIMP_UNDO_GROUP_ITEM_PROPERTIES,
-                                   item_view_class->rename_desc);
-
-      /*  If the layer is a floating selection, make it a layer  */
-      if (gimp_layer_is_floating_sel (layer))
-        floating_sel_to_layer (layer);
-
-      gimp_image_undo_push_item_rename (view->gimage,
-                                        item_view_class->rename_desc,
-                                        item);
-
-      gimp_object_set_name (GIMP_OBJECT (item), new_name);
-
-      gimp_image_undo_group_end (view->gimage);
-
-      gimp_image_flush (view->gimage);
-    }
 }
 
 

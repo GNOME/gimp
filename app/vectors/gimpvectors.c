@@ -32,6 +32,8 @@
 #include "gimpvectors.h"
 #include "gimpvectors-preview.h"
 
+#include "libgimp/gimpintl.h"
+
 
 static void       gimp_vectors_class_init  (GimpVectorsClass *klass);
 static void       gimp_vectors_init        (GimpVectors      *vectors);
@@ -100,6 +102,8 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   viewable_class->get_new_preview = gimp_vectors_get_new_preview;
 
   item_class->duplicate           = gimp_vectors_duplicate;
+  item_class->default_name        = _("Path");
+  item_class->rename_desc         = _("Rename Path");
 
   klass->changed                  = NULL;
 

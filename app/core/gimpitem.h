@@ -50,12 +50,18 @@ struct _GimpItemClass
   GimpViewableClass  parent_class;
 
   /*  signals  */
-  void       (* removed)   (GimpItem *item);
+  void       (* removed)   (GimpItem    *item);
 
   /*  virtual functions  */
-  GimpItem * (* duplicate) (GimpItem *item,
-                            GType     new_type,
-                            gboolean  add_alpha);
+  GimpItem * (* duplicate) (GimpItem    *item,
+                            GType        new_type,
+                            gboolean     add_alpha);
+  void       (* rename)    (GimpItem    *item,
+                            const gchar *new_name,
+                            const gchar *undo_desc);
+
+  const gchar *default_name;
+  const gchar *rename_desc;
 };
 
 
@@ -69,6 +75,9 @@ void            gimp_item_configure       (GimpItem       *item,
 GimpItem      * gimp_item_duplicate       (GimpItem       *item,
                                            GType           new_type,
                                            gboolean        add_alpha);
+
+void            gimp_item_rename          (GimpItem       *item,
+                                           const gchar    *new_name);
 
 gint            gimp_item_get_ID          (GimpItem       *item);
 GimpItem      * gimp_item_get_by_ID       (Gimp           *gimp,

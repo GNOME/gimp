@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -33,7 +31,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-undo-push.h"
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
 
@@ -80,10 +77,6 @@ static void   gimp_item_tree_view_activate_item     (GimpContainerView *view,
 static void   gimp_item_tree_view_context_item      (GimpContainerView *view,
                                                      GimpViewable      *item,
                                                      gpointer           insert_data);
-
-static void   gimp_item_tree_view_real_rename_item  (GimpItemTreeView  *view,
-                                                     GimpItem          *item,
-                                                     const gchar       *new_name);
 
 static void   gimp_item_tree_view_new_clicked       (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
@@ -195,7 +188,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->add_item                     = NULL;
   klass->remove_item                  = NULL;
   klass->convert_item                 = NULL;
-  klass->rename_item                  = gimp_item_tree_view_real_rename_item;
 
   klass->new_desc                     = NULL;
   klass->duplicate_desc               = NULL;
@@ -574,30 +566,6 @@ gimp_item_tree_view_context_item (GimpContainerView *view,
 }
 
 
-/*  GimpItemTreeView methods  */
-
-static void
-gimp_item_tree_view_real_rename_item (GimpItemTreeView *view,
-                                      GimpItem         *item,
-                                      const gchar      *new_name)
-{
-  if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (item))))
-    {
-      GimpItemTreeViewClass *item_view_class;
-
-      item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
-
-      gimp_image_undo_push_item_rename (view->gimage,
-                                        item_view_class->rename_desc,
-                                        item);
-
-      gimp_object_set_name (GIMP_OBJECT (item), new_name);
-
-      gimp_image_flush (view->gimage);
-    }
-}
-
-
 /*  "New" functions  */
 
 static void
@@ -871,8 +839,8 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
 
       item = GIMP_ITEM (renderer->viewable);
 
-      GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->rename_item (view, item,
-                                                         new_text);
+      gimp_item_rename (item, new_text);
+      gimp_image_flush (gimp_item_get_image (item));
 
       g_object_unref (renderer);
     }

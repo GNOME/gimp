@@ -1,3 +1,23 @@
+2003-03-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpitem.[ch]: added virtual function rename() which
+	pushes an item rename undo. Added "default_name" and "rename_desc"
+	to the GimpItemClass struct which are used as default values.
+
+	* app/core/gimplayer.c: implement it and special-case floating
+	selections. set item_clas->default_name and item_class->rename_desc.
+
+	* app/core/gimpchannel.c
+	* app/vectors/gimpvectors.c: set item_class->default_name and
+	item_class->rename_desc.
+
+	* app/widgets/gimpitemtreeview.[ch]: removed rename_item() virtual
+	function and call gimp_item_rename().
+
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpvectorstreeview.c: changed accordingly.
+
 2003-03-16  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/file-save-dialog.c (file_save_overwrite): set the dialog

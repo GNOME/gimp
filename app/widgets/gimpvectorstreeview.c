@@ -119,7 +119,6 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   item_view_class->raise_to_top_desc    = _("Raise Path to Top");
   item_view_class->lower_desc           = _("Lower Path");
   item_view_class->lower_to_bottom_desc = _("Lower Path to Bottom");
-  item_view_class->rename_desc          = _("Rename Path");
 }
 
 static void

@@ -65,6 +65,9 @@ static gsize      gimp_item_get_memsize    (GimpObject    *object);
 static GimpItem * gimp_item_real_duplicate (GimpItem      *item,
                                             GType          new_type,
                                             gboolean       add_alpha);
+static void       gimp_item_real_rename    (GimpItem      *item,
+                                            const gchar   *new_name,
+                                            const gchar   *undo_desc);
 
 
 /*  private variables  */
@@ -129,6 +132,7 @@ gimp_item_class_init (GimpItemClass *klass)
 
   klass->removed                  = NULL;
   klass->duplicate                = gimp_item_real_duplicate;
+  klass->rename                   = gimp_item_real_rename;
 }
 
 static void
@@ -324,6 +328,17 @@ gimp_item_real_duplicate (GimpItem *item,
   return new_item;
 }
 
+static void
+gimp_item_real_rename (GimpItem    *item,
+                       const gchar *new_name,
+                       const gchar *undo_desc)
+{
+  if (item->gimage)
+    gimp_image_undo_push_item_rename (item->gimage, undo_desc, item);
+
+  gimp_object_set_name (GIMP_OBJECT (item), new_name);
+}
+
 void
 gimp_item_removed (GimpItem *item)
 {
@@ -363,6 +378,23 @@ gimp_item_duplicate (GimpItem *item,
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_ITEM), NULL);
 
   return GIMP_ITEM_GET_CLASS (item)->duplicate (item, new_type, add_alpha);
+}
+
+void
+gimp_item_rename (GimpItem    *item,
+                  const gchar *new_name)
+{
+  GimpItemClass *item_class;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  item_class = GIMP_ITEM_GET_CLASS (item);
+
+  if (! new_name || ! *new_name)
+    new_name = item_class->default_name;
+
+  if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (item))))
+    item_class->rename (item, new_name, item_class->rename_desc);
 }
 
 gint
