@@ -1,3 +1,8 @@
+2003-07-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimptooloptions.c (gimp_tool_options_serialize): 
+	add the name of the tool to the header and footer strings.
+
 2003-07-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_selection.c (selection_update): moved

@@ -205,6 +205,8 @@ gimp_tool_options_serialize (GimpToolOptions  *tool_options,
                              GError          **error)
 {
   gchar    *filename;
+  gchar    *header;
+  gchar    *footer;
   gboolean  retval;
 
   g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), FALSE);
@@ -212,14 +214,20 @@ gimp_tool_options_serialize (GimpToolOptions  *tool_options,
 
   filename = gimp_tool_options_build_filename (tool_options, extension);
 
+  header = g_strdup_printf ("GIMP %s options",
+                            GIMP_OBJECT (tool_options->tool_info)->name);
+  footer = g_strdup_printf ("end of %s options",
+                            GIMP_OBJECT (tool_options->tool_info)->name);
+
   retval = gimp_config_serialize_to_file (G_OBJECT (tool_options),
 					  filename,
-					  "GIMP tool options",
-					  "end of tool options",
+					  header, footer,
 					  NULL,
 					  error);
 
   g_free (filename);
+  g_free (header);
+  g_free (footer);
 
   return retval;
 }
