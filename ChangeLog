@@ -1,3 +1,11 @@
+Thu Feb 25 12:19:50 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* app/file_new_dialog.c
+	* app/preferences_dialog.c: make use of the new GimpSizeEntry
+	widget (patch provided by Michael Natterer). 
+	I'm not yet content with the way two entries are glued together
+	by "Force equal ...", but I'm working on it.
+
 Thu Feb 25 02:21:52 CST 1999 Shawn T. Amundson <amundson@gimp.org>
 
 	* app/menus.c: special case Close/Quit in <Image>/File

@@ -46,6 +46,7 @@
 #include "tips_dialog.h"
 #include "tools.h"
 #include "undo.h"
+#include "libgimp/gimpsizeentry.h"
 
 #include "config.h"
 #include "libgimp/gimpintl.h"
@@ -62,6 +63,7 @@ static void file_prefs_spinbutton_callback (GtkWidget *, gpointer);
 static void file_prefs_preview_size_callback (GtkWidget *, gpointer);
 static void file_prefs_mem_size_unit_callback (GtkWidget *, gpointer);
 static void file_prefs_clear_session_info_callback (GtkWidget *, gpointer);
+static void file_prefs_resolution_callback (GtkWidget *, gpointer);
 
 /*  static variables  */
 static   int          last_type = RGB;
@@ -122,8 +124,9 @@ static   int          edit_num_processors;
 static   GtkWidget   *tile_cache_size_spinbutton = NULL;
 static   int          divided_tile_cache_size;
 static   int          mem_size_unit;
-static   GtkWidget   *xres_spinbutton = NULL;
-static   GtkWidget   *yres_spinbutton = NULL;
+static   GtkWidget   *resolution_xserver_label = NULL;
+static   GtkWidget   *resolution_sizeentry = NULL;
+static   GtkWidget   *resolution_force_equal = NULL;
 static   GtkWidget   *num_processors_spinbutton = NULL;
 
 /* Some information regarding preferences, compiled by Raph Levien 11/3/97.
@@ -253,8 +256,9 @@ file_prefs_ok_callback (GtkWidget *widget,
       
   gtk_widget_destroy (dlg);
   prefs_dlg = NULL;
-  xres_spinbutton = NULL;
-  yres_spinbutton = NULL;
+  resolution_xserver_label = NULL;
+  resolution_sizeentry = NULL;
+  resolution_force_equal = NULL;
 
   if (show_tool_tips)
     gtk_tooltips_enable (tool_tips);
@@ -503,8 +507,9 @@ file_prefs_cancel_callback (GtkWidget *widget,
 {
   gtk_widget_destroy (dlg);
   prefs_dlg = NULL;
-  xres_spinbutton = NULL;
-  yres_spinbutton = NULL;
+  resolution_xserver_label = NULL;
+  resolution_sizeentry = NULL;
+  resolution_force_equal = NULL;
 
   levels_of_undo = old_levels_of_undo;
   marching_speed = old_marching_speed;
@@ -661,6 +666,7 @@ file_prefs_spinbutton_callback (GtkWidget *widget,
   *val = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
 }
 
+/*  commented out because it's not used 
 static void
 file_prefs_float_spinbutton_callback (GtkWidget *widget,
 				      gpointer   data)
@@ -670,6 +676,7 @@ file_prefs_float_spinbutton_callback (GtkWidget *widget,
   val = data;
   *val = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
 }
+*/
 
 static void
 file_prefs_string_callback (GtkWidget *widget,
@@ -693,12 +700,16 @@ static void
 file_prefs_res_source_callback (GtkWidget *widget,
 				gpointer data)
 {
-  if (xres_spinbutton)
-    gtk_widget_set_sensitive (xres_spinbutton,
+  if (resolution_xserver_label)
+    gtk_widget_set_sensitive (resolution_xserver_label,
+			      GTK_TOGGLE_BUTTON (widget)->active);
+
+  if (resolution_sizeentry)
+    gtk_widget_set_sensitive (resolution_sizeentry,
 			      ! GTK_TOGGLE_BUTTON (widget)->active);
 
-  if (yres_spinbutton)
-    gtk_widget_set_sensitive (yres_spinbutton,
+  if (resolution_force_equal)
+    gtk_widget_set_sensitive (resolution_force_equal,
 			      ! GTK_TOGGLE_BUTTON (widget)->active);
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
@@ -708,16 +719,54 @@ file_prefs_res_source_callback (GtkWidget *widget,
   }
   else
   {
-    if (xres_spinbutton)
-      monitor_xres = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON
-							 (xres_spinbutton));
-    if (yres_spinbutton)
-      monitor_yres = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON
-							 (yres_spinbutton));
+    if (resolution_sizeentry)
+      {
+	monitor_xres =
+	  gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_sizeentry), 0);
+	monitor_yres =
+	  gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_sizeentry), 1);
+      }
     using_xserver_resolution = FALSE;
   }
 }
 
+static void
+file_prefs_resolution_callback (GtkWidget *widget,
+				gpointer data)
+{
+  static float xres = 0.0;
+  static float yres = 0.0;
+  float new_xres;
+  float new_yres;
+
+  new_xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
+  new_yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
+
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data)))
+    {
+      if (new_xres != xres)
+	{
+	  yres = new_yres = xres = new_xres;
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, yres);
+	}
+
+      if (new_yres != yres)
+	{
+	  xres = new_xres = yres = new_yres;
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, xres);
+	}
+    }
+  else
+    {
+      if (new_xres != xres)
+	xres = new_xres;
+      if (new_yres != yres)
+	yres = new_yres;
+    }
+
+  monitor_xres = xres;
+  monitor_yres = yres;
+}
 
 void
 file_pref_cmd_callback (GtkWidget *widget,
@@ -1532,9 +1581,10 @@ file_pref_cmd_callback (GtkWidget *widget,
 
 	  g_snprintf (buf, sizeof(buf), _("(currently %d x %d dpi)"),
 		      (int)(xres + 0.5), (int)(yres + 0.5));
-	  label = gtk_label_new (buf);
-	  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-	  gtk_widget_show (label);
+	  resolution_xserver_label = gtk_label_new (buf);
+	  gtk_box_pack_start (GTK_BOX (vbox), resolution_xserver_label,
+			      FALSE, FALSE, 0);
+	  gtk_widget_show (resolution_xserver_label);
       }
 
       button = gtk_radio_button_new_with_label (group, _("manually:"));
@@ -1548,53 +1598,54 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
       gtk_widget_show (abox);
 
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_container_add (GTK_CONTAINER (abox), hbox);
-      gtk_widget_show (hbox);
+      vbox = gtk_vbox_new (FALSE, 2);
+      gtk_container_add (GTK_CONTAINER (abox), vbox);
+      gtk_widget_show (vbox);
 
-      adj = (GtkAdjustment *) gtk_adjustment_new (monitor_xres, 1.0,
-						  32768, 1.0,
-						  15.0, 0.0);
-      xres_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(xres_spinbutton), 
-				       GTK_SHADOW_NONE);
-      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (xres_spinbutton), TRUE);
-      gtk_widget_set_usize (xres_spinbutton, 70, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), xres_spinbutton, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (xres_spinbutton), "changed",
-                          GTK_SIGNAL_FUNC (file_prefs_float_spinbutton_callback),
-                          &monitor_xres);
-      gtk_widget_set_sensitive (xres_spinbutton, !using_xserver_resolution);
-      gtk_widget_show (xres_spinbutton);
+      resolution_force_equal = gtk_check_button_new_with_label (_("Force equal horizontal and vertical resolutions"));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (resolution_force_equal),
+				    TRUE);
 
-      label = gtk_label_new ( _(" by "));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      adj = (GtkAdjustment *) gtk_adjustment_new (monitor_yres, 1.0,
-						  32768, 1.0,
-						  15.0, 0.0);
-      yres_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (yres_spinbutton), 
-				       GTK_SHADOW_NONE);      
-      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (yres_spinbutton), TRUE);
-      gtk_widget_set_usize (yres_spinbutton, 70, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), yres_spinbutton, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (yres_spinbutton), "changed",
-                          GTK_SIGNAL_FUNC (file_prefs_float_spinbutton_callback),
-                          &monitor_yres);
-      gtk_widget_set_sensitive (yres_spinbutton, !using_xserver_resolution);
-      gtk_widget_show (yres_spinbutton);
-
-      label = gtk_label_new ( _("dpi"));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
+      resolution_sizeentry = gimp_size_entry_new (2, UNIT_INCH, "%s",
+						  FALSE, TRUE, 75,
+						  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (resolution_sizeentry),
+					     0, 1, 32767);
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (resolution_sizeentry),
+					     1, 1, 32767);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_sizeentry), 0,
+				  monitor_xres);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_sizeentry), 1,
+				  monitor_yres);
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (resolution_sizeentry),
+				    _("Horizontal"), 0, 1, 0.0);
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (resolution_sizeentry),
+				    _("Vertical"), 0, 2, 0.0);
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (resolution_sizeentry),
+				    _("dpi"), 1, 3, 0.0);
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (resolution_sizeentry),
+				    _("pixels per "), 2, 3, 0.0);
+      gtk_signal_connect (GTK_OBJECT (resolution_sizeentry), "value_changed",
+			  (GtkSignalFunc)file_prefs_resolution_callback,
+			  resolution_force_equal);
+      gtk_signal_connect (GTK_OBJECT (resolution_sizeentry), "refval_changed",
+			  (GtkSignalFunc)file_prefs_resolution_callback,
+			  resolution_force_equal);
+      gtk_box_pack_start (GTK_BOX (vbox), resolution_sizeentry, TRUE, TRUE, 0);
+      gtk_widget_show (resolution_sizeentry);
+      
+      gtk_box_pack_start (GTK_BOX (vbox), resolution_force_equal, TRUE, TRUE, 0);
+      gtk_widget_show (resolution_force_equal);
+      
+      gtk_widget_set_sensitive (resolution_sizeentry, !using_xserver_resolution);
+      gtk_widget_set_sensitive (resolution_force_equal,
+				!using_xserver_resolution);
+      
       label = gtk_label_new (_("Monitor"));
       gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
-
+      
       gtk_widget_show (notebook);
-
+      
       gtk_widget_show (prefs_dlg);
     }
 }

@@ -12,21 +12,26 @@
 #include "plug_in.h"
 #include "tile_manager_pvt.h"
 #include "gdisplay.h"
+#include "libgimp/gimpsizeentry.h"
 
 #include "libgimp/gimpintl.h"
 
 typedef struct {
   GtkWidget *dlg;
-  GtkWidget *height_spinbutton;
-  GtkWidget *width_spinbutton;
-  GtkWidget *height_units_spinbutton;
-  GtkWidget *width_units_spinbutton;
-  GtkWidget *resolution_spinbutton;
-  float resolution;   /* always in dpi */
-  float unit;  /* this is a float that is equal to unit/inch, 2.54 for cm for example */
-  float res_unit;  /* same as above but for the res unit */
+
+  GtkWidget *size_sizeentry;
+  GtkWidget *resolution_sizeentry;
+  GtkWidget *couple_resolutions;
+  GtkWidget *change_size;
+
   int width;
   int height;
+  GUnit unit;
+
+  float xresolution;
+  float yresolution;
+  GUnit res_unit;
+
   int type;
   int fill_type;
 } NewImageValues;
@@ -36,33 +41,26 @@ static void file_new_ok_callback (GtkWidget *, gpointer);
 static void file_new_cancel_callback (GtkWidget *, gpointer);
 static gint file_new_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 static void file_new_toggle_callback (GtkWidget *, gpointer);
-static void file_new_width_update_callback (GtkWidget *, gpointer);
-static void file_new_height_update_callback (GtkWidget *, gpointer);
-static void file_new_width_units_update_callback (GtkWidget *, gpointer);
-static void file_new_height_units_update_callback (GtkWidget *, gpointer);
 static void file_new_resolution_callback (GtkWidget *, gpointer);
-static void file_new_units_inch_menu_callback (GtkWidget *, gpointer);
-static void file_new_units_cm_menu_callback (GtkWidget *, gpointer);
-static void file_new_res_units_inch_callback (GtkWidget *, gpointer);
-static void file_new_res_units_cm_callback (GtkWidget *, gpointer);
-static float file_new_default_unit_parse (int); 
 
 /*  static variables  */
 static   int          last_width = 256;
 static   int          last_height = 256;
 static   int          last_type = RGB;
 static   int          last_fill_type = BACKGROUND_FILL; 
-static   float        last_resolution = 72;     /* always in DPI */
-static   float        last_unit = 1;
-static   float        last_res_unit =1;
+static   float        last_xresolution = 72;     /* always in DPI */
+static   float        last_yresolution = 72;
+static   GUnit        last_unit = UNIT_INCH;
+static   GUnit        last_res_unit = UNIT_INCH;
 static   gboolean     last_new_image = TRUE;
 
 /* these are temps that should be set in gimprc eventually */
 /*  FIXME */
-/* static   float        default_resolution = 72;      this needs to be set in gimprc */
-static   float        default_unit = 1;
+static   float        default_xresolution = 72;
+static   float        default_yresolution = 72;
+static   GUnit        default_unit = UNIT_INCH;
 
-static float default_res_unit = 1;
+static   GUnit        default_res_unit = UNIT_INCH;
 
 
 static int new_dialog_run;
@@ -80,14 +78,23 @@ file_new_ok_callback (GtkWidget *widget,
 
   vals = data;
 
-  vals->width = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (vals->width_spinbutton));
-  vals->height = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (vals->height_spinbutton));
+  /* get the image size in pixels */
+  vals->width =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (vals->size_sizeentry), 0);
+  vals->height =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (vals->size_sizeentry), 1);
 
-  /* resolution is always in DPI, but the value in the spinner may not
-   * be */
-  vals->resolution = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->resolution_spinbutton));
-  vals->resolution *= vals->res_unit;
+  /* get the resolution in dpi */
+  vals->xresolution =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 0);
+  vals->yresolution =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 1);
 
+  /* get the units */
+  vals->unit =
+    gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (vals->size_sizeentry));
+  vals->res_unit =
+    gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (vals->resolution_sizeentry));
 
   last_new_image = TRUE;
   gtk_widget_destroy (vals->dlg);
@@ -96,11 +103,11 @@ file_new_ok_callback (GtkWidget *widget,
   last_height = vals->height;
   last_type = vals->type;
   last_fill_type = vals->fill_type;
-  last_resolution = vals->resolution;
+  last_xresolution = vals->xresolution;
+  last_yresolution = vals->yresolution;
   last_unit = vals->unit;
   last_res_unit = vals->res_unit;
   
-
   switch (vals->fill_type)
     {
     case BACKGROUND_FILL:
@@ -118,10 +125,8 @@ file_new_ok_callback (GtkWidget *widget,
 
   gimage = gimage_new (vals->width, vals->height, vals->type);
 
-  /* XXX for the moment, we set both x and y resolution to the same,
-   * since we don't have the UI to get both values from the user, and
-   * besides, that's what PhotoShop seems to do. */
-  gimp_image_set_resolution(gimage, vals->resolution, vals->resolution);
+  gimp_image_set_resolution (gimage, vals->xresolution, vals->yresolution);
+  gimp_image_set_unit (gimage, vals->unit);
 
   /*  Make the background (or first) layer  */
   layer = layer_new (gimage, gimage->width, gimage->height,
@@ -180,225 +185,51 @@ file_new_toggle_callback (GtkWidget *widget,
 }
 
 static void
-file_new_width_update_callback (GtkWidget *widget,
-				gpointer data)
-{
-  NewImageValues *vals;
-  int new_width;
-  float temp;
-  
-  vals = data;
-  new_width = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (vals->width_spinbutton));
-  
-  temp = ((float) new_width / (float) vals->resolution) * vals->unit;
- 
-   gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_units_spinbutton), vals);
-   gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->width_units_spinbutton), temp);
-   gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_units_spinbutton), vals);
-
-}
-static void
-file_new_height_update_callback (GtkWidget *widget,
-				gpointer data)
-{
-
-  NewImageValues *vals;
-  int new_height;
-  float temp;
-
-  
-  vals = data;
-  new_height = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (vals->height_spinbutton));
-  
- 
-  temp = ((float) new_height / (float) vals->resolution) * vals->unit;
-  
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_units_spinbutton), vals);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->height_units_spinbutton), temp);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_units_spinbutton), vals);
- 
-}
-
-static void
-file_new_width_units_update_callback (GtkWidget *widget,
-				      gpointer data)
-{
-  NewImageValues *vals;
-  float new_width_units;
-  float temp;
-
-  vals = data;
-  new_width_units = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->width_units_spinbutton));
-
-  temp = ((((float) new_width_units) / vals->unit) * ((float) vals->resolution));
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_spinbutton), vals);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->width_spinbutton), temp);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_spinbutton), vals);
- 
-}
-
-static void
-file_new_height_units_update_callback (GtkWidget *widget,
-				      gpointer data)
-{
-  NewImageValues *vals;
-  float new_height_units;
-  float temp;
-
-  vals = data;
-  
-  new_height_units = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->height_units_spinbutton));
- 
- 
-  temp = ((((float) new_height_units) / vals->unit ) * ((float) vals->resolution));
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_spinbutton), vals);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->height_spinbutton), temp);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_spinbutton), vals);
-}
-
-static void
 file_new_resolution_callback (GtkWidget *widget,
 			      gpointer data)
 {
   NewImageValues *vals;
-  float temp_units;
-  float temp_pixels;
-  float temp_resolution;
-  
-  vals = data;
-  temp_resolution = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->resolution_spinbutton));
-  
 
-  /* a bit of a kludge to keep height/width from going to zero */
-  if(temp_resolution <= 1)
-    temp_resolution = 1;
-
-  /* vals->resoluion is always in DPI */
-  vals->resolution = (temp_resolution * vals->res_unit);
-
-  /* figure the new height */
-   temp_units = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->height_units_spinbutton)); 
-
-  temp_pixels  = (float) vals->resolution * ((float)temp_units / vals->unit) ;
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_spinbutton), vals);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->height_spinbutton), temp_pixels);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_spinbutton), vals);
-
-  /* figure the new width */
-
-
-  temp_units = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->width_units_spinbutton));
-  temp_pixels = (float) vals->resolution * ((float) temp_units / vals->unit);
- 
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_spinbutton), vals);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->width_spinbutton), temp_pixels);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_spinbutton), vals);
- 
-
-}
-
-static void
-file_new_units_inch_menu_callback (GtkWidget *widget ,
-				   gpointer data)
-{
-  NewImageValues *vals;
-
-  float temp_pixels_height;
-  float temp_pixels_width;
-  float temp_units_height;
-  float temp_units_width;
+  static float xres = 0.0;
+  static float yres = 0.0;
+  float new_xres;
+  float new_yres;
 
   vals = data;
-  vals->unit = 1;      /* set fo/inch ratio for conversions */
 
-  temp_pixels_height = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (vals->height_spinbutton));
-  temp_pixels_width = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (vals->width_spinbutton));
+  new_xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
+  new_yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
 
-  
-  /* remember vals->resoltuion is always in dpi */
-  temp_units_height = (float) temp_pixels_height / (((float) vals->resolution) * vals->unit);
-  temp_units_width = (float)temp_pixels_width / (((float) vals->resolution) * vals->unit);
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (vals->couple_resolutions)))
+    {
+      if (new_xres != xres)
+	{
+	  yres = new_yres = xres = new_xres;
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 1, yres);
+	}
 
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_units_spinbutton),vals);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->height_units_spinbutton), temp_units_height);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_units_spinbutton),vals);
+      if (new_yres != yres)
+	{
+	  xres = new_xres = yres = new_yres;
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 0, xres);
+	}
+    }
+  else
+    {
+      if (new_xres != xres)
+	xres = new_xres;
+      if (new_yres != yres)
+	yres = new_yres;
+    }
 
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_units_spinbutton),vals);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->width_units_spinbutton), temp_units_width);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_units_spinbutton),vals);
-
-
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (vals->size_sizeentry), 0,
+				  xres,
+				  !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (vals->change_size)));
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (vals->size_sizeentry), 1,
+				  yres,
+				  !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (vals->change_size)));
 }
 
-static void
-file_new_units_cm_menu_callback (GtkWidget *widget ,
-				   gpointer data)
-{
-  NewImageValues *vals;
-
-  float temp_pixels_height;
-  float temp_pixels_width;
-  float temp_units_height;
-  float temp_units_width;
-
-  vals = data;
-  vals->unit = 2.54;
-
-  temp_pixels_height = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->height_spinbutton));
-
-  temp_pixels_width = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->width_spinbutton));
-
-  /* remember resoltuion is always in dpi */
-  /* convert from inches to centimeters here */
-
-  temp_units_height = ((float) temp_pixels_height / (((float) vals->resolution)) * vals->unit);
-  temp_units_width = ((float)temp_pixels_width / (((float) vals->resolution)) * vals->unit);
-
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_units_spinbutton),vals);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->height_units_spinbutton), temp_units_height);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_units_spinbutton),vals);
-
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_units_spinbutton),vals);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->width_units_spinbutton), temp_units_width);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_units_spinbutton),vals);
-
-}
-
-static void file_new_res_units_inch_callback (GtkWidget *widget, gpointer data)
-{
-
-  NewImageValues *vals;
-  float temp_resolution;
-
-  vals = data;
-  vals->res_unit = 1.0;
-  
-  /* vals->resoltuion is alwayd DPI */
-  temp_resolution = (vals->resolution / vals->res_unit);
-
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->resolution_spinbutton),vals);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->resolution_spinbutton), temp_resolution);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->resolution_spinbutton),vals);
- 
-}
-  
-static void file_new_res_units_cm_callback (GtkWidget *widget, gpointer data)
-{
-
-  NewImageValues *vals;
-  float temp_resolution;
-
-  vals = data;
-  vals->res_unit = 2.54;
-
-  /* vals->resolution is always DPI */
-  temp_resolution = (vals->resolution / vals->res_unit);
-
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->resolution_spinbutton),vals);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->resolution_spinbutton), temp_resolution);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->resolution_spinbutton),vals);
-
-}
 
 void
 file_new_cmd_callback (GtkWidget           *widget,
@@ -408,27 +239,23 @@ file_new_cmd_callback (GtkWidget           *widget,
   GDisplay *gdisp;
   NewImageValues *vals;
   GtkWidget *button;
-  GtkWidget *label;
   GtkWidget *vbox;
+  GtkWidget *vbox2;
   GtkWidget *hbox;
-  GtkWidget *table;
   GtkWidget *frame;
   GtkWidget *radio_box;
-  GtkWidget *menu;
-  GtkWidget *menuitem;
-  GtkWidget *optionmenu;
-  GtkAdjustment *adj;
   GSList *group;
-  float temp;
 
-  default_res_unit = file_new_default_unit_parse(default_resolution_units);
+  /* this value is from gimprc.h */
+  default_res_unit = UNIT_INCH; /* ruler_units; */
 
   if(!new_dialog_run)
     {
       last_width = default_width;
       last_height = default_height;
       last_type = default_type;
-      last_resolution = default_resolution;  /* this isnt set in gimprc yet */
+      last_xresolution = default_xresolution;  /* this isnt set in gimprc yet */
+      last_yresolution = default_yresolution;  /* this isnt set in gimprc yet */
       last_unit = default_unit;  /* not in gimprc either, inches for now */
       last_res_unit = default_res_unit;
 
@@ -451,16 +278,18 @@ file_new_cmd_callback (GtkWidget           *widget,
       vals->width = gdisp->gimage->width;
       vals->height = gdisp->gimage->height;
       vals->type = gimage_base_type (gdisp->gimage);
-      vals->resolution = gdisp->gimage->xresolution;
-      vals->unit = last_unit;
-      vals->res_unit = 1.0;
+      vals->xresolution = gdisp->gimage->xresolution;
+      vals->yresolution = gdisp->gimage->yresolution;
+      vals->unit = gdisp->gimage->unit;
+      vals->res_unit = UNIT_INCH;
     }
   else
     {
       vals->width = last_width;
       vals->height = last_height;
       vals->type = last_type;
-      vals->resolution = last_resolution;
+      vals->xresolution = last_xresolution;
+      vals->yresolution = last_yresolution;
       vals->unit = last_unit;
       vals->res_unit = last_res_unit;
     }
@@ -468,7 +297,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   if (vals->type == INDEXED)
     vals->type = RGB;    /* no indexed images */
 
-  /*  if a cut buffer exist, default to using its size for the new image */
+  /* if a cut buffer exist, default to using its size for the new image */
   /* also check to see if a new_image has been opened */
 
   if(global_buf && !last_new_image)
@@ -513,173 +342,88 @@ file_new_cmd_callback (GtkWidget           *widget,
 		      button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-
+  /* vbox holding the rest of the dialog */
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dlg)->vbox),
 		      vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
-
-  /* label for top of table, Width  */
-  label = gtk_label_new (_("Width"));
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  /* Label for top of table, Height */
-  label = gtk_label_new (_("Height"));
-   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  /* width in pixels spinbutton  */
-  adj = (GtkAdjustment *) gtk_adjustment_new (vals->width, 1.0, 32767.0,
-                                              1.0, 50.0, 0.0);
-  vals->width_spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(vals->width_spinbutton), GTK_SHADOW_NONE);
-  gtk_widget_set_usize (vals->width_spinbutton, 75, 0);
-
-  gtk_table_attach (GTK_TABLE (table), vals->width_spinbutton, 0, 1, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (vals->width_spinbutton), "changed",
- 		      (GtkSignalFunc) file_new_width_update_callback, vals);
-  gtk_widget_show (vals->width_spinbutton);
- 
-  /* height in pixels spinbutton */
-  adj = (GtkAdjustment *) gtk_adjustment_new (vals->height, 1.0, 32767.0,
-                                              1.0, 50.0, 0.0);
-  vals->height_spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(vals->height_spinbutton), GTK_SHADOW_NONE);
-  gtk_widget_set_usize (vals->height_spinbutton, 75, 0);
-  gtk_table_attach (GTK_TABLE (table), vals->height_spinbutton, 1, 2, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (vals->height_spinbutton), "changed",
-		      (GtkSignalFunc) file_new_height_update_callback, vals);
-  gtk_widget_show (vals->height_spinbutton);
-
-  /* width in units spinbutton */
-  temp = (float) vals->width / vals->resolution * vals->unit;
-  adj = (GtkAdjustment *) gtk_adjustment_new (temp, 0.0, 32767.0,
-                                              1.0, 0.01, 0.0);
-  vals->width_units_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
-  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON(vals->width_units_spinbutton), GTK_UPDATE_ALWAYS
-				     | GTK_UPDATE_IF_VALID );
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(vals->width_units_spinbutton), GTK_SHADOW_NONE);
-  gtk_spin_button_set_snap_to_ticks(GTK_SPIN_BUTTON(vals->width_units_spinbutton), 0);
-  gtk_widget_set_usize (vals->width_units_spinbutton, 75, 0);
-  gtk_signal_connect (GTK_OBJECT (vals->width_units_spinbutton), "changed",
-		      (GtkSignalFunc) file_new_width_units_update_callback, vals);
-  gtk_table_attach (GTK_TABLE (table), vals->width_units_spinbutton , 0, 1, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (vals->width_units_spinbutton);
-
-  /* height in units spinbutton */
-  temp = (float) vals->height / vals->resolution * vals->unit; 
-  adj = (GtkAdjustment *) gtk_adjustment_new (temp, 0.0, 32767.0,
-                                              1.0, 0.01, 0.0);
-  vals->height_units_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
-  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON(vals->height_units_spinbutton), GTK_UPDATE_ALWAYS |
-				     GTK_UPDATE_IF_VALID);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(vals->height_units_spinbutton), GTK_SHADOW_NONE);
-  gtk_spin_button_set_snap_to_ticks(GTK_SPIN_BUTTON(vals->height_units_spinbutton), 0);
-  gtk_widget_set_usize (vals->height_units_spinbutton, 75, 0);
-  gtk_signal_connect (GTK_OBJECT (vals->height_units_spinbutton), "changed",
-		      (GtkSignalFunc) file_new_height_units_update_callback, vals);
-  gtk_table_attach (GTK_TABLE (table), vals->height_units_spinbutton , 1, 2, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (vals->height_units_spinbutton);
-
-  /* Label for right hand side of pixel size boxes */
-  label = gtk_label_new (_("Pixels"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label , 2, 3, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  /* menu and menu items for the units pop-up menu for the units entries */
-  menu = gtk_menu_new();
-  menuitem = gtk_menu_item_new_with_label (_("inches"));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-      (GtkSignalFunc) file_new_units_inch_menu_callback, vals); 
-  gtk_widget_show(menuitem);
-  menuitem = gtk_menu_item_new_with_label (_("cm"));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-      (GtkSignalFunc) file_new_units_cm_menu_callback, vals); 
-  gtk_widget_show(menuitem);
-
-  optionmenu = gtk_option_menu_new();
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
-  if (vals->unit != 1.0)
-    gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), 1);
-  gtk_table_attach (GTK_TABLE (table), optionmenu , 2, 3, 2, 3,
-		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
-  gtk_widget_show(optionmenu);
+  vals->size_sizeentry = gimp_size_entry_new (2, vals->unit, "%p",
+					      FALSE, TRUE, 75,
+					      GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (vals->size_sizeentry), 0,
+				  vals->xresolution, FALSE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (vals->size_sizeentry), 1,
+				  vals->yresolution, FALSE);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (vals->size_sizeentry),
+					 0, 1, 32767);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (vals->size_sizeentry),
+					 1, 1, 32767);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->size_sizeentry), 0,
+			      vals->width);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->size_sizeentry), 1,
+			      vals->height);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (vals->size_sizeentry),
+				_("Width"), 0, 1, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (vals->size_sizeentry),
+				_("Height"), 0, 2, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (vals->size_sizeentry),
+				_("Pixels"), 1, 4, 0.0);
+  gtk_container_set_border_width (GTK_CONTAINER (vals->size_sizeentry), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), vals->size_sizeentry, TRUE, TRUE, 0);
+  gtk_widget_show (vals->size_sizeentry);
 
   /* resolution frame */
   frame = gtk_frame_new (_("Resolution"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 2);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  /* hbox containing the label, the spinbutton, and the optionmenu */
-  hbox = gtk_hbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-  gtk_container_add(GTK_CONTAINER (frame), hbox);
-  gtk_widget_show(hbox);
+  vbox2 = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
 
-  /* resoltuion spinbutton  */
-  adj = (GtkAdjustment *) gtk_adjustment_new (vals->resolution/vals->res_unit,
-					      1.0, 32767.0,
-                                              1.0, 5.0, 0.0);
-  vals->resolution_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(vals->resolution_spinbutton), GTK_SHADOW_NONE);
-  gtk_widget_set_usize (vals->resolution_spinbutton, 76, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), vals->resolution_spinbutton, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (vals->resolution_spinbutton), "changed",
-		      (GtkSignalFunc) file_new_resolution_callback,
-		      vals);
-  gtk_widget_show (vals->resolution_spinbutton);
- 
-  /* resolution label */
-  label =gtk_label_new (_(" pixels per  "));
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-  gtk_widget_show (label);
+  vals->resolution_sizeentry = gimp_size_entry_new (2, vals->res_unit, "%s",
+						    FALSE, TRUE, 75,
+						    GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (vals->resolution_sizeentry),
+					 0, 1, 32767);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (vals->resolution_sizeentry),
+					 1, 1, 32767);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 0,
+			      vals->xresolution);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 1,
+			      vals->yresolution);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (vals->resolution_sizeentry),
+				_("Horizontal"), 0, 1, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (vals->resolution_sizeentry),
+				_("Vertical"), 0, 2, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (vals->resolution_sizeentry),
+				_("dpi"), 1, 3, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (vals->resolution_sizeentry),
+				_("pixels per "), 2, 3, 0.0);
+  gtk_signal_connect (GTK_OBJECT (vals->resolution_sizeentry), "value_changed",
+		      (GtkSignalFunc)file_new_resolution_callback, vals);
+  gtk_signal_connect (GTK_OBJECT (vals->resolution_sizeentry), "refval_changed",
+		      (GtkSignalFunc)file_new_resolution_callback, vals);
+  gtk_box_pack_start (GTK_BOX (vbox2), vals->resolution_sizeentry,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (vals->resolution_sizeentry);
 
-  menu = gtk_menu_new();
-  /* This units stuff doesnt do anything yet. I'm not real sure if it
-     it should do anything yet, excpet for maybe set some default resolutions
-     and change the image default rulers. But the rulers stuff probabaly
-     needs some gtk acking first to really be useful.
-  */
+  vals->couple_resolutions = gtk_check_button_new_with_label (_("Force equal horizontal and vertical resolutions"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (vals->couple_resolutions),
+				TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox2), vals->couple_resolutions, TRUE, TRUE, 0);
+  gtk_widget_show (vals->couple_resolutions);
 
-  /* probabaly should be more general here */
-  menuitem = gtk_menu_item_new_with_label (_("inch"));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-      (GtkSignalFunc) file_new_res_units_inch_callback, vals); 
-  gtk_widget_show(menuitem);
-  menuitem = gtk_menu_item_new_with_label (_("cm"));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-      (GtkSignalFunc) file_new_res_units_cm_callback, vals); 
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_widget_show(menuitem);
+  vals->change_size = gtk_check_button_new_with_label (_("Change image size with resolution changes"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (vals->change_size), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox2), vals->change_size, TRUE, TRUE, 0);
+  gtk_widget_show (vals->change_size);
 
-  optionmenu = gtk_option_menu_new();
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
-  if (vals->res_unit != 1.0)
-    gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), 1);
-  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, TRUE, TRUE, 0);
-  gtk_widget_show(optionmenu);
-
-
-  /* hbox containing thje Image ype and fill type frames */
+  /* hbox containing the Image type and fill type frames */
   hbox = gtk_hbox_new(FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
@@ -778,22 +522,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 
 void file_new_reset_current_cut_buffer()
 {
-  /* this unction just changes the status of last_image_new
+  /* this function just changes the status of last_image_new
      so i can if theres been a cut/copy since the last file new */
   last_new_image = FALSE;
-
-}
-
-static float file_new_default_unit_parse (int ruler_unit)
-{
-
-  /* checks the enum passed from gimprc to see what the values are */
-
-  if(ruler_unit == 1)
-    return 1.0;
-  if(ruler_unit == 2)
-    return 2.54;
-  
-  return 1.0;
-
 }
