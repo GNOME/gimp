@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-05 01:52+0200\n"
+"POT-Creation-Date: 2004-10-15 01:04+0200\n"
 "PO-Revision-Date: 2004-07-20 16:17+0530\n"
 "Last-Translator: Amanpreet Singh Alam <aalam@redhat.com>\n"
 "Language-Team: Punjabi <pa@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3.1\n"
 
-#: libgimp/gimpbrushmenu.c:126
+#: libgimp/gimpbrushmenu.c:129
 msgid "Brush Selection"
 msgstr "ਬੁਰਸ਼ ਚੋਣ"
 
-#: libgimp/gimpbrushmenu.c:155 libgimp/gimppatternmenu.c:140
+#: libgimp/gimpbrushmenu.c:158 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr "ਝਲਕ਼"
 
@@ -188,7 +188,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "ਫੋਟ ਚੋਣ"
 
-#: libgimp/gimpgradientmenu.c:102
+#: libgimp/gimpgradientmenu.c:104
 msgid "Gradient Selection"
 msgstr "ਢਾਲਵਾ ਚੋਣ"
 
@@ -196,7 +196,7 @@ msgstr "ਢਾਲਵਾ ਚੋਣ"
 msgid "(Empty)"
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:111
+#: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
 msgstr "ਤਰਤੀਬ ਚੋਣ"
 
@@ -361,7 +361,7 @@ msgstr "ਲੋਡ ਅਸਫਲ"
 msgid "Not loaded"
 msgstr "ਲੋਡ ਨਹੀ ਹੋਇਆ"
 
-#: libgimpthumb/gimpthumb-utils.c:196
+#: libgimpthumb/gimpthumb-utils.c:227 libgimpthumb/gimpthumb-utils.c:295
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "ਥੰਮਨੇਲ ਫੋਲਡਰ '%s' ਬਣਾਉਣ ਵਿੱਚ ਅਸਫਲ ।"
@@ -503,7 +503,7 @@ msgid "Check Style"
 msgstr ""
 
 #. toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:238
+#: libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
 msgstr ""
 
@@ -587,7 +587,7 @@ msgstr "ਇਕਾਈ"
 msgid "Factor"
 msgstr "ਗੁਣਾਂਕ"
 
-#: libgimpwidgets/gimpwidgets.c:1007
+#: libgimpwidgets/gimpwidgets.c:1001
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -595,15 +595,15 @@ msgstr ""
 "ਬੇਤਰਤੀਬੇ ਨੰਬਰ ਉਤਪਾਦਕ ਮੂਲ ਲਈ ਇਹ ਮੁੱਲ ਚੁਣੋ - ਇਸ ਨਾਲ ਤੁਸੀ ਦਰਸਾਏੲ \"ਬੇਤਰਤੀਬ\" ਕਿਰਿਆ ਦੁਹਰਾ "
 "ਸਕਦੇ ਹੋ"
 
-#: libgimpwidgets/gimpwidgets.c:1011
+#: libgimpwidgets/gimpwidgets.c:1005
 msgid "_New Seed"
 msgstr "ਨਵਾਂ ਮੂਲ"
 
-#: libgimpwidgets/gimpwidgets.c:1024
+#: libgimpwidgets/gimpwidgets.c:1018
 msgid "Seed random number generator with a generated random number"
 msgstr "ਉਪਜੇ ਬੇਤਰਤੀਬ ਨੰਬਰ ਸਮੇਤ ਮੂਲ ਬੇਤਰਤੀਬ ਨੰਬਰ ਉਤਪਾਦਕ"
 
-#: libgimpwidgets/gimpwidgets.c:1028
+#: libgimpwidgets/gimpwidgets.c:1022
 msgid "_Randomize"
 msgstr "ਬੇਤਰਤੀਬੀ"
 

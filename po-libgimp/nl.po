@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-05 01:52+0200\n"
+"POT-Creation-Date: 2004-10-15 01:04+0200\n"
 "PO-Revision-Date: 2004-03-21 01:54+0100\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -14,14 +14,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:126
+#: libgimp/gimpbrushmenu.c:129
 msgid "Brush Selection"
 msgstr "Penseelselectie"
 
 # Kan ook 'browsen' zijn
 # of misschien 'Overzicht' (een overzicht van alle beschikbare patronen
 # en borstels)
-#: libgimp/gimpbrushmenu.c:155 libgimp/gimppatternmenu.c:140
+#: libgimp/gimpbrushmenu.c:158 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr "_Bladeren..."
 
@@ -192,7 +192,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Fontselectie"
 
-#: libgimp/gimpgradientmenu.c:102
+#: libgimp/gimpgradientmenu.c:104
 msgid "Gradient Selection"
 msgstr "Verloopselectie"
 
@@ -200,7 +200,7 @@ msgstr "Verloopselectie"
 msgid "(Empty)"
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:111
+#: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
 msgstr "Patroonselectie"
 
@@ -365,7 +365,7 @@ msgstr "Laden mislukte"
 msgid "Not loaded"
 msgstr "Niet geladen"
 
-#: libgimpthumb/gimpthumb-utils.c:196
+#: libgimpthumb/gimpthumb-utils.c:227 libgimpthumb/gimpthumb-utils.c:295
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Kon de map '%s' voor de miniaturen niet aanmaken."
@@ -522,7 +522,7 @@ msgid "Check Style"
 msgstr ""
 
 #. toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:238
+#: libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
 msgstr ""
 
@@ -606,7 +606,7 @@ msgstr "Eenheid"
 msgid "Factor"
 msgstr "Factor"
 
-#: libgimpwidgets/gimpwidgets.c:1007
+#: libgimpwidgets/gimpwidgets.c:1001
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -614,18 +614,18 @@ msgstr ""
 "Gebruik deze waarde als bron voor de generering van willekeurige nummers. "
 "Hiermee kunt u een bepaalde \"willekeurige\" operatie herhalen."
 
-#: libgimpwidgets/gimpwidgets.c:1011
+#: libgimpwidgets/gimpwidgets.c:1005
 msgid "_New Seed"
 msgstr "_Nieuw brongetal"
 
-#: libgimpwidgets/gimpwidgets.c:1024
+#: libgimpwidgets/gimpwidgets.c:1018
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Gebruik een gegenereerd willekeurig nummer als bron voor de generering van "
 "een volgend willekeurig nummer."
 
 # Husselen zou misschien kunnen, maar willekeurig maken is wel goed zo.
-#: libgimpwidgets/gimpwidgets.c:1028
+#: libgimpwidgets/gimpwidgets.c:1022
 msgid "_Randomize"
 msgstr "_Willekeurig maken"
 

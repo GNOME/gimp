@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-05 01:52+0200\n"
+"POT-Creation-Date: 2004-10-15 01:04+0200\n"
 "PO-Revision-Date: 2004-05-28 20:07+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:126
+#: libgimp/gimpbrushmenu.c:129
 msgid "Brush Selection"
 msgstr "Ecset kiválasztása"
 
-#: libgimp/gimpbrushmenu.c:155 libgimp/gimppatternmenu.c:140
+#: libgimp/gimpbrushmenu.c:158 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr "_Tallózás..."
 
@@ -190,7 +190,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Betűkészlet kiválasztása"
 
-#: libgimp/gimpgradientmenu.c:102
+#: libgimp/gimpgradientmenu.c:104
 msgid "Gradient Selection"
 msgstr "Színátmenet kiválasztása"
 
@@ -198,7 +198,7 @@ msgstr "Színátmenet kiválasztása"
 msgid "(Empty)"
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:111
+#: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
 msgstr "Minta kiválasztása"
 
@@ -363,7 +363,7 @@ msgstr "Sikertelen betöltés"
 msgid "Not loaded"
 msgstr "Nincs betöltve"
 
-#: libgimpthumb/gimpthumb-utils.c:196
+#: libgimpthumb/gimpthumb-utils.c:227 libgimpthumb/gimpthumb-utils.c:295
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "A(z) \"%s\" bélyegképmappa létrehozása sikertelen."
@@ -507,7 +507,7 @@ msgid "Check Style"
 msgstr ""
 
 #. toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:238
+#: libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
 msgstr ""
 
@@ -591,7 +591,7 @@ msgstr "Mértékegység"
 msgid "Factor"
 msgstr "Szorzó"
 
-#: libgimpwidgets/gimpwidgets.c:1007
+#: libgimpwidgets/gimpwidgets.c:1001
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -599,17 +599,17 @@ msgstr ""
 "Ezt az értéket használja a véletlenszám-előállítás kiindulóértékeként - ez "
 "lehetővé teszi egy adott \"véletlen\" művelet megismétlését"
 
-#: libgimpwidgets/gimpwidgets.c:1011
+#: libgimpwidgets/gimpwidgets.c:1005
 msgid "_New Seed"
 msgstr "Ú_j kiindulóérték"
 
-#: libgimpwidgets/gimpwidgets.c:1024
+#: libgimpwidgets/gimpwidgets.c:1018
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "A véletlenszám-előállítás kiindulóértékének beállítása egy előállított "
 "véletlenszámmal"
 
-#: libgimpwidgets/gimpwidgets.c:1028
+#: libgimpwidgets/gimpwidgets.c:1022
 msgid "_Randomize"
 msgstr "_Véletlenszerűen"
 

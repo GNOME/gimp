@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-05 01:52+0200\n"
+"POT-Creation-Date: 2004-10-15 01:04+0200\n"
 "PO-Revision-Date: 2004-04-22 00:59+0200\n"
 "Last-Translator: Runar Ingebrigtsen <ringe@skolelinux.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:126
+#: libgimp/gimpbrushmenu.c:129
 msgid "Brush Selection"
 msgstr "Penselvalg"
 
-#: libgimp/gimpbrushmenu.c:155 libgimp/gimppatternmenu.c:140
+#: libgimp/gimpbrushmenu.c:158 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr "_Bla gjennom..."
 
@@ -189,7 +189,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Skrifttypevalg"
 
-#: libgimp/gimpgradientmenu.c:102
+#: libgimp/gimpgradientmenu.c:104
 msgid "Gradient Selection"
 msgstr "Graderingsvalg"
 
@@ -197,7 +197,7 @@ msgstr "Graderingsvalg"
 msgid "(Empty)"
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:111
+#: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
 msgstr "Mønstervalg"
 
@@ -362,7 +362,7 @@ msgstr "Lasting feilet"
 msgid "Not loaded"
 msgstr "Ikke lastet"
 
-#: libgimpthumb/gimpthumb-utils.c:196
+#: libgimpthumb/gimpthumb-utils.c:227 libgimpthumb/gimpthumb-utils.c:295
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Kunne ikke opprette miniatyrbildemappe «%s.»"
@@ -506,7 +506,7 @@ msgid "Check Style"
 msgstr ""
 
 #. toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:238
+#: libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
 msgstr ""
 
@@ -590,7 +590,7 @@ msgstr "Enhet"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:1007
+#: libgimpwidgets/gimpwidgets.c:1001
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -598,16 +598,16 @@ msgstr ""
 "Bruk denne verdien som startverdi for generering av tilfeldige tall - dette "
 "lar deg gjenta en gitt «tilfeldig» operasjon"
 
-#: libgimpwidgets/gimpwidgets.c:1011
+#: libgimpwidgets/gimpwidgets.c:1005
 msgid "_New Seed"
 msgstr "_Nytt frø"
 
-#: libgimpwidgets/gimpwidgets.c:1024
+#: libgimpwidgets/gimpwidgets.c:1018
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Gi generator for tilfeldige tall et generert tilfeldig tall som startverdi"
 
-#: libgimpwidgets/gimpwidgets.c:1028
+#: libgimpwidgets/gimpwidgets.c:1022
 #, fuzzy
 msgid "_Randomize"
 msgstr "Gjø_r tilfeldig"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 2.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-05 01:52+0200\n"
+"POT-Creation-Date: 2004-10-15 01:04+0200\n"
 "PO-Revision-Date: 2004-04-24 19:50+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -20,11 +20,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:126
+#: libgimp/gimpbrushmenu.c:129
 msgid "Brush Selection"
 msgstr "Sélection des brosses"
 
-#: libgimp/gimpbrushmenu.c:155 libgimp/gimppatternmenu.c:140
+#: libgimp/gimpbrushmenu.c:158 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr "_Parcourir..."
 
@@ -195,7 +195,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Sélecteur de polices"
 
-#: libgimp/gimpgradientmenu.c:102
+#: libgimp/gimpgradientmenu.c:104
 msgid "Gradient Selection"
 msgstr "Sélecteur de dégradés"
 
@@ -203,7 +203,7 @@ msgstr "Sélecteur de dégradés"
 msgid "(Empty)"
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:111
+#: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
 msgstr "Sélection des motifs"
 
@@ -368,7 +368,7 @@ msgstr "Échec du chargement"
 msgid "Not loaded"
 msgstr "Non chargé"
 
-#: libgimpthumb/gimpthumb-utils.c:196
+#: libgimpthumb/gimpthumb-utils.c:227 libgimpthumb/gimpthumb-utils.c:295
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Échec lors de la création du dossier de vignettes « %s »."
@@ -512,7 +512,7 @@ msgid "Check Style"
 msgstr ""
 
 #. toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:238
+#: libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
 msgstr ""
 
@@ -596,7 +596,7 @@ msgstr "Unité"
 msgid "Factor"
 msgstr "Facteur"
 
-#: libgimpwidgets/gimpwidgets.c:1007
+#: libgimpwidgets/gimpwidgets.c:1001
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -604,15 +604,15 @@ msgstr ""
 "Utiliser cette valeur comme graine du générateur de nombres aléatoires - "
 "cela vous permet de répéter une opération « aléatoire » donnée."
 
-#: libgimpwidgets/gimpwidgets.c:1011
+#: libgimpwidgets/gimpwidgets.c:1005
 msgid "_New Seed"
 msgstr "_Nouvelle graine"
 
-#: libgimpwidgets/gimpwidgets.c:1024
+#: libgimpwidgets/gimpwidgets.c:1018
 msgid "Seed random number generator with a generated random number"
 msgstr "Initialise le générateur de nombre aléatoire avec un nombre aléatoire"
 
-#: libgimpwidgets/gimpwidgets.c:1028
+#: libgimpwidgets/gimpwidgets.c:1022
 msgid "_Randomize"
 msgstr "_Aléatoire"
 

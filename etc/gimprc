@@ -230,11 +230,19 @@
 # 
 # (layer-preview-size medium)
 
-# Sets the size of the thumbnail saved with each image. Note that GIMP can
-# not save thumbnails if layer previews are disabled.  Possible values are
+# Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can
+# not create thumbnails if layer previews are disabled.  Possible values are
 # none, normal and large.
 # 
 # (thumbnail-size normal)
+
+# The thumbnail in the Open dialog will be automatically updated if the file
+# being previewed is smaller than the size set here.  The integer size can
+# contain a suffix of 'B', 'K', 'M' or 'G' which makes GIMP interpret the
+# size as being specified in bytes, kilobytes, megabytes or gigabytes. If no
+# suffix is specified the size defaults to being specified in kilobytes.
+# 
+# (thumbnail-filesize-limit 4M)
 
 # Install a private colormap; might be useful on 8-bit (256 colors) displays.
 #  Possible values are yes and no.

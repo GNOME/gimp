@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-05 01:52+0200\n"
+"POT-Creation-Date: 2004-10-15 01:04+0200\n"
 "PO-Revision-Date: 2001-07-16 06:51+0300\n"
 "Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -14,12 +14,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:126
+#: libgimp/gimpbrushmenu.c:129
 #, fuzzy
 msgid "Brush Selection"
 msgstr "Birim Seçimi"
 
-#: libgimp/gimpbrushmenu.c:155 libgimp/gimppatternmenu.c:140
+#: libgimp/gimpbrushmenu.c:158 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr ""
 
@@ -186,7 +186,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Birim Seçimi"
 
-#: libgimp/gimpgradientmenu.c:102
+#: libgimp/gimpgradientmenu.c:104
 #, fuzzy
 msgid "Gradient Selection"
 msgstr "Birim Seçimi"
@@ -195,7 +195,7 @@ msgstr "Birim Seçimi"
 msgid "(Empty)"
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:111
+#: libgimp/gimppatternmenu.c:113
 #, fuzzy
 msgid "Pattern Selection"
 msgstr "Birim Seçimi"
@@ -360,7 +360,7 @@ msgstr ""
 msgid "Not loaded"
 msgstr ""
 
-#: libgimpthumb/gimpthumb-utils.c:196
+#: libgimpthumb/gimpthumb-utils.c:227 libgimpthumb/gimpthumb-utils.c:295
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr ""
@@ -506,7 +506,7 @@ msgid "Check Style"
 msgstr ""
 
 #. toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:238
+#: libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
 msgstr ""
 
@@ -592,7 +592,7 @@ msgstr "Birim"
 msgid "Factor"
 msgstr "Etken"
 
-#: libgimpwidgets/gimpwidgets.c:1007
+#: libgimpwidgets/gimpwidgets.c:1001
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -601,18 +601,18 @@ msgstr ""
 "Eğer \"Zaman\" düğmesi basılı değilse, bu değeri raslantısal sayı üreticinin "
 "tohumu olarak kullan - bu \"raslantısal\" bir işlemi tekrarlamanızı sağlar"
 
-#: libgimpwidgets/gimpwidgets.c:1011
+#: libgimpwidgets/gimpwidgets.c:1005
 msgid "_New Seed"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1024
+#: libgimpwidgets/gimpwidgets.c:1018
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Raslantısal sayı üreticinin tohumu olarak şu anki zamanı kullan - bu makul "
 "bir raslantısallığı garantiler"
 
-#: libgimpwidgets/gimpwidgets.c:1028
+#: libgimpwidgets/gimpwidgets.c:1022
 msgid "_Randomize"
 msgstr ""
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.PLUGINS.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-05 01:52+0200\n"
+"POT-Creation-Date: 2004-10-15 01:04+0200\n"
 "PO-Revision-Date: 2004-07-15 00:09+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3.1\n"
 
-#: plug-ins/FractalExplorer/Dialogs.c:525 plug-ins/gfig/gfig-dialog.c:292
+#: plug-ins/FractalExplorer/Dialogs.c:523 plug-ins/gfig/gfig-dialog.c:292
 #: plug-ins/gflare/gflare.c:898
 #, c-format
 msgid ""
@@ -34,86 +34,86 @@ msgstr ""
 "(%s \"%s\")\n"
 "в файл %s."
 
-#: plug-ins/FractalExplorer/Dialogs.c:545
-#: plug-ins/FractalExplorer/Dialogs.c:1635 plug-ins/imagemap/imap_about.c:39
+#: plug-ins/FractalExplorer/Dialogs.c:543
+#: plug-ins/FractalExplorer/Dialogs.c:1647 plug-ins/imagemap/imap_about.c:39
 #: plug-ins/print/gimp_main_window.c:367
 msgid "About"
 msgstr "О программе"
 
-#: plug-ins/FractalExplorer/Dialogs.c:610
+#: plug-ins/FractalExplorer/Dialogs.c:608
 msgid "Realtime Preview"
 msgstr "Просмотр в реальном времени"
 
-#: plug-ins/FractalExplorer/Dialogs.c:617
+#: plug-ins/FractalExplorer/Dialogs.c:615
 msgid "If you enable this option the preview will be redrawn automatically"
 msgstr "Если вы выберете этоу опцию, просмотр будет обновляться автоматически"
 
-#: plug-ins/FractalExplorer/Dialogs.c:620
+#: plug-ins/FractalExplorer/Dialogs.c:618
 msgid "Redraw"
 msgstr "Перерисовать"
 
-#: plug-ins/FractalExplorer/Dialogs.c:626
+#: plug-ins/FractalExplorer/Dialogs.c:624
 msgid "Redraw preview"
 msgstr "Перерисовать просмотр"
 
 #. Zoom Options
-#: plug-ins/FractalExplorer/Dialogs.c:629 plug-ins/imagemap/imap_popup.c:146
+#: plug-ins/FractalExplorer/Dialogs.c:627 plug-ins/imagemap/imap_popup.c:146
 msgid "Zoom"
 msgstr "Масштаб"
 
-#: plug-ins/FractalExplorer/Dialogs.c:657
+#: plug-ins/FractalExplorer/Dialogs.c:655
 msgid "Undo last zoom"
 msgstr "Отменить последнее изменение масштаба"
 
-#: plug-ins/FractalExplorer/Dialogs.c:667
+#: plug-ins/FractalExplorer/Dialogs.c:665
 msgid "Redo last zoom"
 msgstr "Повторить последнее изменение масштаба"
 
-#: plug-ins/FractalExplorer/Dialogs.c:682
+#: plug-ins/FractalExplorer/Dialogs.c:680
 msgid "_Parameters"
 msgstr "Параметры"
 
-#: plug-ins/FractalExplorer/Dialogs.c:685
+#: plug-ins/FractalExplorer/Dialogs.c:683
 msgid "Fractal Parameters"
 msgstr "Параметры фрактала"
 
-#: plug-ins/FractalExplorer/Dialogs.c:698
+#: plug-ins/FractalExplorer/Dialogs.c:696
 msgid "XMIN:"
 msgstr "Xмин:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:701
+#: plug-ins/FractalExplorer/Dialogs.c:699
 msgid "Change the first (minimal) x-coordinate delimitation"
 msgstr "Изменить ограничение первой (минимальной) x-координаты"
 
-#: plug-ins/FractalExplorer/Dialogs.c:709
+#: plug-ins/FractalExplorer/Dialogs.c:707
 msgid "XMAX:"
 msgstr "Xмакс:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:712
+#: plug-ins/FractalExplorer/Dialogs.c:710
 msgid "Change the second (maximal) x-coordinate delimitation"
 msgstr "Изменить ограничение второй (максимальной) x-координаты"
 
-#: plug-ins/FractalExplorer/Dialogs.c:720
+#: plug-ins/FractalExplorer/Dialogs.c:718
 msgid "YMIN:"
 msgstr "Yмин:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:723
+#: plug-ins/FractalExplorer/Dialogs.c:721
 msgid "Change the first (minimal) y-coordinate delimitation"
 msgstr "Изменить ограничение первой (минимальной) y-координаты"
 
-#: plug-ins/FractalExplorer/Dialogs.c:731
+#: plug-ins/FractalExplorer/Dialogs.c:729
 msgid "YMAX:"
 msgstr "Yмакс:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:734
+#: plug-ins/FractalExplorer/Dialogs.c:732
 msgid "Change the second (maximal) y-coordinate delimitation"
 msgstr "Изменить ограничение второй (максимальной) y-координаты"
 
-#: plug-ins/FractalExplorer/Dialogs.c:742
+#: plug-ins/FractalExplorer/Dialogs.c:740
 msgid "ITER:"
 msgstr "Итер.:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:745
+#: plug-ins/FractalExplorer/Dialogs.c:743
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
@@ -121,11 +121,11 @@ msgstr ""
 "Изменить число повторов вычисления. Чем выше, тем больше деталей будет "
 "вычислено, но это потребует больше времени"
 
-#: plug-ins/FractalExplorer/Dialogs.c:754
+#: plug-ins/FractalExplorer/Dialogs.c:752
 msgid "CX:"
 msgstr "CX:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:757
+#: plug-ins/FractalExplorer/Dialogs.c:755
 msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
@@ -133,11 +133,11 @@ msgstr ""
 "Изменяет значение CX (меняет пропорции фрактала, действует на любой фрактал "
 "кроме Мандельброта и Серпинского)"
 
-#: plug-ins/FractalExplorer/Dialogs.c:766
+#: plug-ins/FractalExplorer/Dialogs.c:764
 msgid "CY:"
 msgstr "CY:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:769
+#: plug-ins/FractalExplorer/Dialogs.c:767
 msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
@@ -145,169 +145,169 @@ msgstr ""
 "Изменяет значение CY (меняет пропорции фрактала, действует на любой фрактал "
 "кроме Мандельброта и Серпинского)"
 
-#: plug-ins/FractalExplorer/Dialogs.c:786
+#: plug-ins/FractalExplorer/Dialogs.c:784
 msgid "Load a fractal from file"
 msgstr "Загрузить фрактал из файла"
 
-#: plug-ins/FractalExplorer/Dialogs.c:794
+#: plug-ins/FractalExplorer/Dialogs.c:792
 msgid "Reset parameters to default values"
 msgstr "Сбросить параметры в исходные значения"
 
-#: plug-ins/FractalExplorer/Dialogs.c:803
+#: plug-ins/FractalExplorer/Dialogs.c:801
 msgid "Save active fractal to file"
 msgstr "Сохранить текущий фрактал в файле"
 
 #. Fractal type toggle box
-#: plug-ins/FractalExplorer/Dialogs.c:806
+#: plug-ins/FractalExplorer/Dialogs.c:804
 msgid "Fractal Type"
 msgstr "Тип фрактала"
 
-#: plug-ins/FractalExplorer/Dialogs.c:819
+#: plug-ins/FractalExplorer/Dialogs.c:817
 msgid "Mandelbrot"
 msgstr "Мандельброт"
 
-#: plug-ins/FractalExplorer/Dialogs.c:821
+#: plug-ins/FractalExplorer/Dialogs.c:819
 msgid "Julia"
 msgstr "Жюлиа"
 
-#: plug-ins/FractalExplorer/Dialogs.c:823
+#: plug-ins/FractalExplorer/Dialogs.c:821
 msgid "Barnsley 1"
 msgstr "Барнсли 1"
 
-#: plug-ins/FractalExplorer/Dialogs.c:825
+#: plug-ins/FractalExplorer/Dialogs.c:823
 msgid "Barnsley 2"
 msgstr "Барнсли 2"
 
-#: plug-ins/FractalExplorer/Dialogs.c:827
+#: plug-ins/FractalExplorer/Dialogs.c:825
 msgid "Barnsley 3"
 msgstr "Барнсли 3"
 
-#: plug-ins/FractalExplorer/Dialogs.c:829
+#: plug-ins/FractalExplorer/Dialogs.c:827
 msgid "Spider"
 msgstr "Спираль"
 
-#: plug-ins/FractalExplorer/Dialogs.c:831
+#: plug-ins/FractalExplorer/Dialogs.c:829
 msgid "Man'o'war"
 msgstr "Man'o'war"
 
-#: plug-ins/FractalExplorer/Dialogs.c:833
+#: plug-ins/FractalExplorer/Dialogs.c:831
 msgid "Lambda"
 msgstr "Лямбда"
 
-#: plug-ins/FractalExplorer/Dialogs.c:835
+#: plug-ins/FractalExplorer/Dialogs.c:833
 msgid "Sierpinski"
 msgstr "Серпинский"
 
-#: plug-ins/FractalExplorer/Dialogs.c:881 plug-ins/common/sinus.c:880
+#: plug-ins/FractalExplorer/Dialogs.c:879 plug-ins/common/sinus.c:879
 msgid "Co_lors"
 msgstr "Цвета"
 
 #. Number of Colors frame
-#: plug-ins/FractalExplorer/Dialogs.c:885 plug-ins/common/borderaverage.c:405
+#: plug-ins/FractalExplorer/Dialogs.c:883 plug-ins/common/borderaverage.c:404
 msgid "Number of Colors"
 msgstr "Число цветов"
 
-#: plug-ins/FractalExplorer/Dialogs.c:897
+#: plug-ins/FractalExplorer/Dialogs.c:895
 msgid "Number of colors:"
 msgstr "Число цветов:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:900
+#: plug-ins/FractalExplorer/Dialogs.c:898
 msgid "Change the number of colors in the mapping"
 msgstr "Изменить число цветов в отображении"
 
-#: plug-ins/FractalExplorer/Dialogs.c:907
+#: plug-ins/FractalExplorer/Dialogs.c:905
 msgid "Use loglog smoothing"
 msgstr "Использовать loglog cглаживание"
 
-#: plug-ins/FractalExplorer/Dialogs.c:914
+#: plug-ins/FractalExplorer/Dialogs.c:912
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
 "Чтобы избежать разделения изображения на полосы, используйте параметр "
 "\"Сглаживание\""
 
 #. Color Density frame
-#: plug-ins/FractalExplorer/Dialogs.c:918
+#: plug-ins/FractalExplorer/Dialogs.c:916
 msgid "Color Density"
 msgstr "Плотность цвета"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: plug-ins/FractalExplorer/Dialogs.c:930 plug-ins/common/compose.c:128
-#: plug-ins/common/compose.c:138 plug-ins/fp/fp.c:217
+#: plug-ins/FractalExplorer/Dialogs.c:928 plug-ins/common/compose.c:128
+#: plug-ins/common/compose.c:138 plug-ins/common/fp.c:217
 msgid "Red:"
 msgstr "Красный:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:933
+#: plug-ins/FractalExplorer/Dialogs.c:931
 msgid "Change the intensity of the red channel"
 msgstr "Изменить интенсивность красного канала"
 
-#: plug-ins/FractalExplorer/Dialogs.c:940 plug-ins/common/compose.c:129
-#: plug-ins/common/compose.c:139 plug-ins/fp/fp.c:218
+#: plug-ins/FractalExplorer/Dialogs.c:938 plug-ins/common/compose.c:129
+#: plug-ins/common/compose.c:139 plug-ins/common/fp.c:218
 msgid "Green:"
 msgstr "Зелёный:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:943
+#: plug-ins/FractalExplorer/Dialogs.c:941
 msgid "Change the intensity of the green channel"
 msgstr "Изменить интенсивность зеленого канала"
 
-#: plug-ins/FractalExplorer/Dialogs.c:950 plug-ins/common/compose.c:130
-#: plug-ins/common/compose.c:140 plug-ins/fp/fp.c:219
+#: plug-ins/FractalExplorer/Dialogs.c:948 plug-ins/common/compose.c:130
+#: plug-ins/common/compose.c:140 plug-ins/common/fp.c:219
 msgid "Blue:"
 msgstr "Синий:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:953
+#: plug-ins/FractalExplorer/Dialogs.c:951
 msgid "Change the intensity of the blue channel"
 msgstr "Изменить интенсивность синего канала"
 
 #. Color Function frame
-#: plug-ins/FractalExplorer/Dialogs.c:959
+#: plug-ins/FractalExplorer/Dialogs.c:957
 msgid "Color Function"
 msgstr "Цветовая функция"
 
 #. Redmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:968 plug-ins/common/channel_mixer.c:524
+#: plug-ins/FractalExplorer/Dialogs.c:966 plug-ins/common/channel_mixer.c:523
 #: plug-ins/common/decompose.c:131
 msgid "Red"
 msgstr "Красный"
 
-#: plug-ins/FractalExplorer/Dialogs.c:972
-#: plug-ins/FractalExplorer/Dialogs.c:1013
-#: plug-ins/FractalExplorer/Dialogs.c:1054
+#: plug-ins/FractalExplorer/Dialogs.c:970
+#: plug-ins/FractalExplorer/Dialogs.c:1011
+#: plug-ins/FractalExplorer/Dialogs.c:1052
 msgid "Sine"
 msgstr "Синус"
 
-#: plug-ins/FractalExplorer/Dialogs.c:974
-#: plug-ins/FractalExplorer/Dialogs.c:1015
-#: plug-ins/FractalExplorer/Dialogs.c:1056
+#: plug-ins/FractalExplorer/Dialogs.c:972
+#: plug-ins/FractalExplorer/Dialogs.c:1013
+#: plug-ins/FractalExplorer/Dialogs.c:1054
 msgid "Cosine"
 msgstr "Косинус"
 
-#: plug-ins/FractalExplorer/Dialogs.c:976
-#: plug-ins/FractalExplorer/Dialogs.c:1017
-#: plug-ins/FractalExplorer/Dialogs.c:1058 plug-ins/Lighting/lighting_ui.c:369
-#: plug-ins/common/CML_explorer.c:166 plug-ins/common/align_layers.c:417
-#: plug-ins/common/align_layers.c:448 plug-ins/common/postscript.c:2908
+#: plug-ins/FractalExplorer/Dialogs.c:974
+#: plug-ins/FractalExplorer/Dialogs.c:1015
+#: plug-ins/FractalExplorer/Dialogs.c:1056 plug-ins/Lighting/lighting_ui.c:369
+#: plug-ins/common/CML_explorer.c:166 plug-ins/common/align_layers.c:416
+#: plug-ins/common/align_layers.c:447 plug-ins/common/postscript.c:2908
 #: plug-ins/common/postscript.c:2920 plug-ins/common/psp.c:420
 #: plug-ins/fits/fits.c:1016
 msgid "None"
 msgstr "Никакой"
 
-#: plug-ins/FractalExplorer/Dialogs.c:981
-#: plug-ins/FractalExplorer/Dialogs.c:1022
-#: plug-ins/FractalExplorer/Dialogs.c:1063
+#: plug-ins/FractalExplorer/Dialogs.c:979
+#: plug-ins/FractalExplorer/Dialogs.c:1020
+#: plug-ins/FractalExplorer/Dialogs.c:1061
 msgid "Use sine-function for this color component"
 msgstr "Использовать синусоидальную функцию для этого цветового компонента"
 
-#: plug-ins/FractalExplorer/Dialogs.c:984
-#: plug-ins/FractalExplorer/Dialogs.c:1025
-#: plug-ins/FractalExplorer/Dialogs.c:1066
+#: plug-ins/FractalExplorer/Dialogs.c:982
+#: plug-ins/FractalExplorer/Dialogs.c:1023
+#: plug-ins/FractalExplorer/Dialogs.c:1064
 msgid "Use cosine-function for this color component"
 msgstr "Использовать косинусоидальную функцию для этого цветового компонента"
 
-#: plug-ins/FractalExplorer/Dialogs.c:987
-#: plug-ins/FractalExplorer/Dialogs.c:1028
-#: plug-ins/FractalExplorer/Dialogs.c:1069
+#: plug-ins/FractalExplorer/Dialogs.c:985
+#: plug-ins/FractalExplorer/Dialogs.c:1026
+#: plug-ins/FractalExplorer/Dialogs.c:1067
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
@@ -315,15 +315,15 @@ msgstr ""
 "Использовать линейное отображение вместо любой тригонометрической функции "
 "для этого цветового канала"
 
-#: plug-ins/FractalExplorer/Dialogs.c:996
-#: plug-ins/FractalExplorer/Dialogs.c:1037
-#: plug-ins/FractalExplorer/Dialogs.c:1078
+#: plug-ins/FractalExplorer/Dialogs.c:994
+#: plug-ins/FractalExplorer/Dialogs.c:1035
+#: plug-ins/FractalExplorer/Dialogs.c:1076
 msgid "Inversion"
 msgstr "Инверсия"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1004
-#: plug-ins/FractalExplorer/Dialogs.c:1045
-#: plug-ins/FractalExplorer/Dialogs.c:1086
+#: plug-ins/FractalExplorer/Dialogs.c:1002
+#: plug-ins/FractalExplorer/Dialogs.c:1043
+#: plug-ins/FractalExplorer/Dialogs.c:1084
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
@@ -332,27 +332,27 @@ msgstr ""
 "и наоборот"
 
 #. Greenmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:1009 plug-ins/common/channel_mixer.c:529
+#: plug-ins/FractalExplorer/Dialogs.c:1007 plug-ins/common/channel_mixer.c:528
 #: plug-ins/common/decompose.c:132
 msgid "Green"
 msgstr "Зеленый"
 
 #. Bluemode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:1050 plug-ins/common/channel_mixer.c:534
+#: plug-ins/FractalExplorer/Dialogs.c:1048 plug-ins/common/channel_mixer.c:533
 #: plug-ins/common/decompose.c:137
 msgid "Blue"
 msgstr "Синий"
 
 #. Colormode toggle box
-#: plug-ins/FractalExplorer/Dialogs.c:1091
+#: plug-ins/FractalExplorer/Dialogs.c:1089
 msgid "Color Mode"
 msgstr "Цветовой режим"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1100
+#: plug-ins/FractalExplorer/Dialogs.c:1098
 msgid "As specified above"
 msgstr "Как указано выше"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1112
+#: plug-ins/FractalExplorer/Dialogs.c:1110
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
@@ -360,65 +360,65 @@ msgstr ""
 "Создать отображение цветов с указанными выше параметрами (цветовая плотность/"
 "функция). Результат демонстрируется в окне просмотра."
 
-#: plug-ins/FractalExplorer/Dialogs.c:1122
+#: plug-ins/FractalExplorer/Dialogs.c:1120
 msgid "Apply active gradient to final image"
 msgstr "Применить действующий градиент к итоговому изображению"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1134
+#: plug-ins/FractalExplorer/Dialogs.c:1132
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr "Создать отображение цветов используя градиент из редактора градиентов"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1140
+#: plug-ins/FractalExplorer/Dialogs.c:1143
 msgid "FractalExplorer Gradient"
 msgstr "Градиент исследователя Фракталов"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1170
+#: plug-ins/FractalExplorer/Dialogs.c:1173
 msgid "_Fractals"
 msgstr "Фракталы"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1784
+#: plug-ins/FractalExplorer/Dialogs.c:1796
 #: plug-ins/Lighting/lighting_ui.c:1109 plug-ins/bmp/bmpwrite.c:198
-#: plug-ins/common/CEL.c:581 plug-ins/common/CML_explorer.c:2000
-#: plug-ins/common/bz2.c:254 plug-ins/common/bz2.c:327
-#: plug-ins/common/channel_mixer.c:1045 plug-ins/common/curve_bend.c:862
+#: plug-ins/common/CEL.c:581 plug-ins/common/CML_explorer.c:1999
+#: plug-ins/common/channel_mixer.c:1044 plug-ins/common/compressor.c:406
+#: plug-ins/common/compressor.c:537 plug-ins/common/curve_bend.c:866
 #: plug-ins/common/dicom.c:651 plug-ins/common/gbr.c:590
 #: plug-ins/common/gif.c:997 plug-ins/common/gih.c:1254
-#: plug-ins/common/gtm.c:228 plug-ins/common/gz.c:311 plug-ins/common/gz.c:420
-#: plug-ins/common/jpeg.c:1360 plug-ins/common/mng.c:557
-#: plug-ins/common/mng.c:941 plug-ins/common/pat.c:437
-#: plug-ins/common/pcx.c:589 plug-ins/common/pix.c:519
-#: plug-ins/common/png.c:1180 plug-ins/common/pnm.c:776
-#: plug-ins/common/postscript.c:1059 plug-ins/common/psd_save.c:1558
-#: plug-ins/common/spheredesigner.c:2088 plug-ins/common/sunras.c:516
-#: plug-ins/common/tga.c:1032 plug-ins/common/tiff.c:1809
-#: plug-ins/common/xbm.c:1000 plug-ins/common/xwd.c:581
-#: plug-ins/fits/fits.c:454 plug-ins/flame/flame.c:439
-#: plug-ins/gfig/gfig.c:782 plug-ins/gfli/gfli.c:718
-#: plug-ins/ifscompose/ifscompose.c:2541 plug-ins/winicon/icosave.c:238
-#: plug-ins/xjt/xjt.c:1267 plug-ins/xjt/xjt.c:1706
+#: plug-ins/common/gtm.c:228 plug-ins/common/jpeg.c:1360
+#: plug-ins/common/mng.c:557 plug-ins/common/mng.c:941
+#: plug-ins/common/pat.c:437 plug-ins/common/pcx.c:589
+#: plug-ins/common/pix.c:519 plug-ins/common/png.c:1180
+#: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1059
+#: plug-ins/common/psd_save.c:1558 plug-ins/common/spheredesigner.c:2088
+#: plug-ins/common/sunras.c:516 plug-ins/common/tga.c:1032
+#: plug-ins/common/tiff.c:1809 plug-ins/common/xbm.c:1000
+#: plug-ins/common/xwd.c:581 plug-ins/fits/fits.c:454
+#: plug-ins/flame/flame.c:447 plug-ins/gfig/gfig.c:781
+#: plug-ins/gfli/gfli.c:718 plug-ins/ifscompose/ifscompose.c:2541
+#: plug-ins/winicon/icosave.c:238 plug-ins/xjt/xjt.c:1267
+#: plug-ins/xjt/xjt.c:1706
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Невозможно открыть '%s' для записи: %s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1798
+#: plug-ins/FractalExplorer/Dialogs.c:1810
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Не удалось записать '%s': %s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1851
+#: plug-ins/FractalExplorer/Dialogs.c:1863
 msgid "Load Fractal Parameters"
 msgstr "Загрузить параметры фрактала"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1882
+#: plug-ins/FractalExplorer/Dialogs.c:1894
 msgid "Save Fractal Parameters"
 msgstr "Сохранить параметры фрактала"
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: plug-ins/FractalExplorer/Dialogs.c:2082
+#: plug-ins/FractalExplorer/Dialogs.c:2094
 #: plug-ins/Lighting/lighting_ui.c:1247 plug-ins/bmp/bmpread.c:153
-#: plug-ins/common/CEL.c:309 plug-ins/common/CML_explorer.c:2215
-#: plug-ins/common/channel_mixer.c:967 plug-ins/common/curve_bend.c:914
+#: plug-ins/common/CEL.c:309 plug-ins/common/CML_explorer.c:2214
+#: plug-ins/common/channel_mixer.c:966 plug-ins/common/curve_bend.c:918
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:331
 #: plug-ins/common/gifload.c:298 plug-ins/common/gih.c:648
 #: plug-ins/common/jpeg.c:812 plug-ins/common/mng.c:1112
@@ -431,7 +431,7 @@ msgstr "Сохранить параметры фрактала"
 #: plug-ins/common/tga.c:417 plug-ins/common/tiff.c:513
 #: plug-ins/common/xbm.c:723 plug-ins/common/xwd.c:426
 #: plug-ins/faxg3/faxg3.c:221 plug-ins/fits/fits.c:341
-#: plug-ins/flame/flame.c:408 plug-ins/gfig/gfig.c:430
+#: plug-ins/flame/flame.c:416 plug-ins/gfig/gfig.c:429
 #: plug-ins/gfli/gfli.c:427 plug-ins/gfli/gfli.c:463
 #: plug-ins/help/domain.c:419 plug-ins/winicon/icoload.c:128
 #: plug-ins/xjt/xjt.c:2530 plug-ins/xjt/xjt.c:2538
@@ -439,14 +439,14 @@ msgstr "Сохранить параметры фрактала"
 msgid "Could not open '%s' for reading: %s"
 msgstr "Невозможно открыть '%s' для записи: %s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:2090
+#: plug-ins/FractalExplorer/Dialogs.c:2102
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr ""
 "'%s'\n"
 "не является файлом Исследователя Фракталов"
 
-#: plug-ins/FractalExplorer/Dialogs.c:2096
+#: plug-ins/FractalExplorer/Dialogs.c:2108
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr ""
@@ -457,12 +457,6 @@ msgstr ""
 #, fuzzy
 msgid "_Fractal Explorer..."
 msgstr "Добавить путь Исследователя Фракталов"
-
-#: plug-ins/FractalExplorer/FractalExplorer.c:268
-#: plug-ins/common/spheredesigner.c:3128 plug-ins/gfig/gfig.c:140
-#, fuzzy
-msgid "<Image>/Filters/Render"
-msgstr "<Image>/Фильтры/Визуализация/Gfig..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:392
 msgid "Rendering Fractal..."
@@ -540,14 +534,6 @@ msgstr "Освещение..."
 msgid "_Lighting Effects..."
 msgstr "Освещение..."
 
-#. don't translate '<Image>'
-#: plug-ins/Lighting/lighting_main.c:204 plug-ins/common/flarefx.c:198
-#: plug-ins/common/nova.c:199 plug-ins/common/sparkle.c:193
-#: plug-ins/gflare/gflare.c:835
-#, fuzzy
-msgid "<Image>/Filters/Light Effects"
-msgstr "<Image>/Фильтры/Световые эффекты/Градиентная вспышка..."
-
 #. General options
 #: plug-ins/Lighting/lighting_ui.c:261
 msgid "General Options"
@@ -616,7 +602,7 @@ msgid "Light 6"
 msgstr "Свет"
 
 #. row labels
-#: plug-ins/Lighting/lighting_ui.c:358 plug-ins/common/spheredesigner.c:2618
+#: plug-ins/Lighting/lighting_ui.c:358 plug-ins/common/spheredesigner.c:2628
 msgid "Type:"
 msgstr "Тип:"
 
@@ -662,9 +648,9 @@ msgstr "Исходная глубина цвета"
 msgid "Position"
 msgstr "Позиция"
 
-#: plug-ins/Lighting/lighting_ui.c:426 plug-ins/common/flarefx.c:768
-#: plug-ins/common/mblur.c:1002 plug-ins/common/nova.c:476
-#: plug-ins/common/papertile.c:267 plug-ins/flame/flame.c:1203
+#: plug-ins/Lighting/lighting_ui.c:426 plug-ins/common/flarefx.c:756
+#: plug-ins/common/mblur.c:1001 plug-ins/common/nova.c:451
+#: plug-ins/common/papertile.c:267 plug-ins/flame/flame.c:1211
 #: plug-ins/gflare/gflare.c:2645
 msgid "_X:"
 msgstr "_X:"
@@ -673,9 +659,9 @@ msgstr "_X:"
 msgid "Light source X position in XYZ space"
 msgstr "X-координата источника света в XYZ пространстве"
 
-#: plug-ins/Lighting/lighting_ui.c:439 plug-ins/common/flarefx.c:789
-#: plug-ins/common/mblur.c:1008 plug-ins/common/nova.c:497
-#: plug-ins/common/papertile.c:276 plug-ins/flame/flame.c:1217
+#: plug-ins/Lighting/lighting_ui.c:439 plug-ins/common/flarefx.c:761
+#: plug-ins/common/mblur.c:1007 plug-ins/common/nova.c:456
+#: plug-ins/common/papertile.c:276 plug-ins/flame/flame.c:1225
 #: plug-ins/gflare/gflare.c:2649
 msgid "_Y:"
 msgstr "_Y:"
@@ -696,7 +682,7 @@ msgstr "Z-координата источника света в XYZ простр
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
 #: plug-ins/Lighting/lighting_ui.c:461 plug-ins/common/struc.c:1286
-#: plug-ins/common/wind.c:931
+#: plug-ins/common/wind.c:930
 msgid "Direction"
 msgstr "Направление"
 
@@ -808,8 +794,8 @@ msgid "Bumpm_ap image:"
 msgstr "Изображение рельефа:"
 
 #. Map type menu
-#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:897
-#: plug-ins/flame/flame.c:730
+#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:896
+#: plug-ins/flame/flame.c:738
 msgid "Linear"
 msgstr "Линейный"
 
@@ -817,13 +803,13 @@ msgstr "Линейный"
 msgid "Logarithmic"
 msgstr "Логарифмический"
 
-#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:899
-#: plug-ins/flame/flame.c:731
+#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:898
+#: plug-ins/flame/flame.c:739
 msgid "Sinusoidal"
 msgstr "Синусоидальный"
 
-#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:898
-#: plug-ins/flame/flame.c:732
+#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:897
+#: plug-ins/flame/flame.c:740
 msgid "Spherical"
 msgstr "Сферический"
 
@@ -930,16 +916,6 @@ msgstr "Карту в цилиндр"
 msgid "Map _Object..."
 msgstr "Отобразить в объект"
 
-#: plug-ins/MapObject/mapobject_main.c:206 plug-ins/common/bumpmap.c:348
-#: plug-ins/common/displace.c:158 plug-ins/common/fractaltrace.c:133
-#: plug-ins/common/illusion.c:108 plug-ins/common/lic.c:791
-#: plug-ins/common/papertile.c:821 plug-ins/common/tile.c:120
-#: plug-ins/common/tileit.c:230 plug-ins/common/tiler.c:73
-#: plug-ins/common/warp.c:254
-#, fuzzy
-msgid "<Image>/Filters/Map"
-msgstr "<Image>/Фильтры/Отображение/Деформация..."
-
 #: plug-ins/MapObject/mapobject_ui.c:248
 #: plug-ins/MapObject/mapobject_ui.c:1340
 msgid "_Box"
@@ -1012,8 +988,8 @@ msgstr "Включить сглаживание"
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Включить/Выключить удаление зубчатых краев (сглаживание)"
 
-#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:981
-#: plug-ins/common/emboss.c:487 plug-ins/common/fractaltrace.c:792
+#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:980
+#: plug-ins/common/emboss.c:509 plug-ins/common/fractaltrace.c:791
 #: plug-ins/common/struc.c:1318
 msgid "_Depth:"
 msgstr "Глубина:"
@@ -1023,7 +999,7 @@ msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Качество сглаживание. Более высокое лучше, но медленнее"
 
 #: plug-ins/MapObject/mapobject_ui.c:614 plug-ins/common/unsharp.c:717
-#: plug-ins/common/wind.c:994 plug-ins/imagemap/imap_preferences.c:538
+#: plug-ins/common/wind.c:993 plug-ins/imagemap/imap_preferences.c:538
 msgid "_Threshold:"
 msgstr "Порог:"
 
@@ -1152,7 +1128,7 @@ msgid "Map Images to Box Faces"
 msgstr "Отобразить на плоскости параллелепипеда"
 
 #: plug-ins/MapObject/mapobject_ui.c:1178
-#: plug-ins/common/spheredesigner.c:2699
+#: plug-ins/common/spheredesigner.c:2723
 msgid "Scale X:"
 msgstr "Масштаб X:"
 
@@ -1193,7 +1169,7 @@ msgstr "Радиус:"
 msgid "Cylinder radius"
 msgstr "Радиус цилиндра"
 
-#: plug-ins/MapObject/mapobject_ui.c:1287 plug-ins/common/mblur.c:942
+#: plug-ins/MapObject/mapobject_ui.c:1287 plug-ins/common/mblur.c:941
 msgid "L_ength:"
 msgstr "Длина:"
 
@@ -1281,29 +1257,28 @@ msgstr ""
 "Ошибка считывания заголовка BMP-файла\n"
 "из \"%s\""
 
-#: plug-ins/bmp/bmpread.c:435
+#: plug-ins/bmp/bmpread.c:437 plug-ins/bmp/bmpread.c:472
 msgid "Unrecognized or invalid BMP compression format."
 msgstr ""
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/bmp/bmpread.c:444 plug-ins/bmp/bmpread.c:452
-#: plug-ins/bmp/bmpread.c:460 plug-ins/common/CEL.c:361
-#: plug-ins/common/CEL.c:364 plug-ins/common/blinds.c:274
-#: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:584
-#: plug-ins/common/dicom.c:446 plug-ins/common/film.c:950
+#: plug-ins/bmp/bmpread.c:477 plug-ins/common/CEL.c:361
+#: plug-ins/common/CEL.c:364 plug-ins/common/blinds.c:273
+#: plug-ins/common/compose.c:614 plug-ins/common/decompose.c:582
+#: plug-ins/common/dicom.c:446 plug-ins/common/film.c:949
 #: plug-ins/common/gifload.c:867 plug-ins/common/jpeg.c:979
 #: plug-ins/common/pcx.c:338 plug-ins/common/pcx.c:344
 #: plug-ins/common/pix.c:378 plug-ins/common/png.c:810
 #: plug-ins/common/pnm.c:484 plug-ins/common/psd.c:2172
 #: plug-ins/common/smooth_palette.c:257 plug-ins/common/sunras.c:928
 #: plug-ins/common/tga.c:931 plug-ins/common/tiff.c:836
-#: plug-ins/common/tile.c:267 plug-ins/common/winclipboard.c:579
+#: plug-ins/common/tile.c:266 plug-ins/common/winclipboard.c:579
 #: plug-ins/common/xbm.c:871 plug-ins/faxg3/faxg3.c:466
 #: plug-ins/fits/fits.c:510 plug-ins/gfig/gfig-dialog.c:1288
 #: plug-ins/gimpressionist/general.c:121 plug-ins/sgi/sgi.c:380
-#: plug-ins/twain/twain.c:574 plug-ins/winsnap/winsnap.c:1237
+#: plug-ins/twain/twain.c:571 plug-ins/winsnap/winsnap.c:1237
 msgid "Background"
 msgstr "Фон"
 
@@ -1345,139 +1320,131 @@ msgstr "Сохранить как BMP"
 msgid "_RLE encoded"
 msgstr "RLE-кодирование"
 
-#: plug-ins/common/AlienMap2.c:158
+#: plug-ins/common/AlienMap2.c:145
 #, fuzzy
 msgid "_Modify red channel"
 msgstr "Изменить канал красный/тон"
 
-#: plug-ins/common/AlienMap2.c:158
+#: plug-ins/common/AlienMap2.c:145
 #, fuzzy
 msgid "_Modify hue channel"
 msgstr "Изменить канал красный/тон"
 
-#: plug-ins/common/AlienMap2.c:159
+#: plug-ins/common/AlienMap2.c:146
 #, fuzzy
 msgid "Mo_dify green channel"
 msgstr "Изменить канал красный/тон"
 
-#: plug-ins/common/AlienMap2.c:159
+#: plug-ins/common/AlienMap2.c:146
 #, fuzzy
 msgid "Mo_dify saturation channel"
 msgstr "Изменить канал зеленый/насыщенность"
 
-#: plug-ins/common/AlienMap2.c:160
+#: plug-ins/common/AlienMap2.c:147
 #, fuzzy
 msgid "Mod_ify blue channel"
 msgstr "Изменить канал красный/тон"
 
-#: plug-ins/common/AlienMap2.c:160
+#: plug-ins/common/AlienMap2.c:147
 #, fuzzy
 msgid "Mod_ify luminosity channel"
 msgstr "Изменить канал синий/яркость"
 
-#: plug-ins/common/AlienMap2.c:165
+#: plug-ins/common/AlienMap2.c:152
 #, fuzzy
 msgid "Red _frequency:"
 msgstr "R/H-частота:"
 
-#: plug-ins/common/AlienMap2.c:165
+#: plug-ins/common/AlienMap2.c:152
 #, fuzzy
 msgid "Hue _frequency:"
 msgstr "R/H-частота:"
 
-#: plug-ins/common/AlienMap2.c:166
+#: plug-ins/common/AlienMap2.c:153
 #, fuzzy
 msgid "Green fr_equency:"
 msgstr "G/S-частота:"
 
-#: plug-ins/common/AlienMap2.c:166
+#: plug-ins/common/AlienMap2.c:153
 #, fuzzy
 msgid "Saturation fr_equency:"
 msgstr "Насыщенность:"
 
-#: plug-ins/common/AlienMap2.c:167
+#: plug-ins/common/AlienMap2.c:154
 #, fuzzy
 msgid "Blue freq_uency:"
 msgstr "B/L-частота:"
 
-#: plug-ins/common/AlienMap2.c:167
+#: plug-ins/common/AlienMap2.c:154
 #, fuzzy
 msgid "Luminosity freq_uency:"
 msgstr "Порог яркости:"
 
-#: plug-ins/common/AlienMap2.c:169
+#: plug-ins/common/AlienMap2.c:156
 #, fuzzy
 msgid "Red _phaseshift:"
 msgstr "R/H-фазовый сдвиг:"
 
-#: plug-ins/common/AlienMap2.c:169
+#: plug-ins/common/AlienMap2.c:156
 #, fuzzy
 msgid "Hue _phaseshift:"
 msgstr "R/H-фазовый сдвиг:"
 
-#: plug-ins/common/AlienMap2.c:170
+#: plug-ins/common/AlienMap2.c:157
 #, fuzzy
 msgid "Green ph_aseshift:"
 msgstr "G/S-фазовый сдвиг:"
 
-#: plug-ins/common/AlienMap2.c:170
+#: plug-ins/common/AlienMap2.c:157
 #, fuzzy
 msgid "Saturation ph_aseshift:"
 msgstr "Насыщенность:"
 
-#: plug-ins/common/AlienMap2.c:171
+#: plug-ins/common/AlienMap2.c:158
 #, fuzzy
 msgid "Blue pha_seshift:"
 msgstr "B/L-фазовый сдвиг:"
 
-#: plug-ins/common/AlienMap2.c:171
+#: plug-ins/common/AlienMap2.c:158
 #, fuzzy
 msgid "Luminosity pha_seshift:"
 msgstr "Порог яркости:"
 
-#: plug-ins/common/AlienMap2.c:206
+#: plug-ins/common/AlienMap2.c:193
 #, fuzzy
 msgid "Alien Map _2..."
 msgstr "Чужое отображение 2"
 
-#: plug-ins/common/AlienMap2.c:213 plug-ins/common/exchange.c:140
-#: plug-ins/common/gradmap.c:93 plug-ins/common/mapcolor.c:161
-#: plug-ins/common/mapcolor.c:179 plug-ins/common/sample_colorize.c:303
-#: plug-ins/rcm/rcm.c:113
-#, fuzzy
-msgid "<Image>/Filters/Colors/Map"
-msgstr "<Image>/Фильтры/Цвета/Макс. RGB..."
-
-#: plug-ins/common/AlienMap2.c:339
+#: plug-ins/common/AlienMap2.c:325
 msgid "AlienMap2: Transforming..."
 msgstr "Чужое отображение 2: Преобразование..."
 
-#: plug-ins/common/AlienMap2.c:410
+#: plug-ins/common/AlienMap2.c:398
 msgid "AlienMap2"
 msgstr "Чужое отображение 2"
 
-#: plug-ins/common/AlienMap2.c:463 plug-ins/common/AlienMap2.c:487
-#: plug-ins/common/AlienMap2.c:511
+#: plug-ins/common/AlienMap2.c:438 plug-ins/common/AlienMap2.c:462
+#: plug-ins/common/AlienMap2.c:486
 msgid "Number of cycles covering full value range"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:475 plug-ins/common/AlienMap2.c:499
-#: plug-ins/common/AlienMap2.c:523
+#: plug-ins/common/AlienMap2.c:450 plug-ins/common/AlienMap2.c:474
+#: plug-ins/common/AlienMap2.c:498
 msgid "Phase angle, range 0-360"
 msgstr ""
 
 #. Propagate Mode
-#: plug-ins/common/AlienMap2.c:537 plug-ins/common/hot.c:589
-#: plug-ins/common/vpropagate.c:1052 plug-ins/common/waves.c:324
+#: plug-ins/common/AlienMap2.c:512 plug-ins/common/hot.c:588
+#: plug-ins/common/vpropagate.c:1084 plug-ins/common/waves.c:270
 msgid "Mode"
 msgstr "Режим"
 
-#: plug-ins/common/AlienMap2.c:541
+#: plug-ins/common/AlienMap2.c:516
 #, fuzzy
 msgid "_RGB color model"
 msgstr "Цветовая модель RGB"
 
-#: plug-ins/common/AlienMap2.c:542
+#: plug-ins/common/AlienMap2.c:517
 #, fuzzy
 msgid "_HSL color model"
 msgstr "Цветовая модель HSL"
@@ -1714,88 +1681,80 @@ msgstr "(Нет)"
 msgid "CML _Explorer..."
 msgstr "CML_исследователь: выполнение..."
 
-#: plug-ins/common/CML_explorer.c:475 plug-ins/common/checkerboard.c:100
-#: plug-ins/common/diffraction.c:184 plug-ins/common/gqbist.c:422
-#: plug-ins/common/grid.c:156 plug-ins/common/jigsaw.c:395
-#: plug-ins/common/sinus.c:198 plug-ins/maze/maze.c:175
-#, fuzzy
-msgid "<Image>/Filters/Render/Pattern"
-msgstr "<Image>/Фильтры/Визуализация/Шаблон/Лабиринт..."
-
-#: plug-ins/common/CML_explorer.c:759
+#: plug-ins/common/CML_explorer.c:758
 msgid "CML_explorer: evoluting..."
 msgstr "CML_исследователь: выполнение..."
 
-#: plug-ins/common/CML_explorer.c:1185
+#: plug-ins/common/CML_explorer.c:1184
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "Coupled-Map-Lattice Explorer"
 
-#: plug-ins/common/CML_explorer.c:1224
+#: plug-ins/common/CML_explorer.c:1223
 #, fuzzy
 msgid "New seed"
 msgstr "Новое зерно"
 
-#: plug-ins/common/CML_explorer.c:1235
+#: plug-ins/common/CML_explorer.c:1234
 #, fuzzy
 msgid "Fix seed"
 msgstr "Фикс. зерно"
 
-#: plug-ins/common/CML_explorer.c:1246
+#: plug-ins/common/CML_explorer.c:1245
 #, fuzzy
 msgid "Random seed"
 msgstr "Случайное зерно"
 
-#: plug-ins/common/CML_explorer.c:1288 plug-ins/common/lic.c:641
-#: plug-ins/fp/fp.c:664
+#: plug-ins/common/CML_explorer.c:1287 plug-ins/common/fp.c:663
+#: plug-ins/common/lic.c:641
 msgid "_Hue"
 msgstr "Тон"
 
-#: plug-ins/common/CML_explorer.c:1292
+#: plug-ins/common/CML_explorer.c:1291
 msgid "Sat_uration"
 msgstr "Насыщенность"
 
-#: plug-ins/common/CML_explorer.c:1296 plug-ins/fp/fp.c:672
+#: plug-ins/common/CML_explorer.c:1295 plug-ins/common/fp.c:671
 msgid "_Value"
 msgstr "Яркость"
 
-#: plug-ins/common/CML_explorer.c:1300
+#: plug-ins/common/CML_explorer.c:1299
 msgid "_Advanced"
 msgstr "Дополнительные"
 
-#: plug-ins/common/CML_explorer.c:1315
+#: plug-ins/common/CML_explorer.c:1314
 #, fuzzy
 msgid "Channel Independent Parameters"
 msgstr "Параметры независимые от канала"
 
-#: plug-ins/common/CML_explorer.c:1337
+#: plug-ins/common/CML_explorer.c:1336
 #, fuzzy
 msgid "Initial value:"
 msgstr "Начальное значение:"
 
-#: plug-ins/common/CML_explorer.c:1343
+#: plug-ins/common/CML_explorer.c:1342
 #, fuzzy
 msgid "Zoom scale:"
 msgstr "Масштаб:"
 
-#: plug-ins/common/CML_explorer.c:1352
+#: plug-ins/common/CML_explorer.c:1351
 #, fuzzy
 msgid "Start offset:"
 msgstr "Начало смещения:"
 
-#: plug-ins/common/CML_explorer.c:1361
+#: plug-ins/common/CML_explorer.c:1360
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "Случайное зерно (только для режима \"из зерна\")"
 
-#: plug-ins/common/CML_explorer.c:1372 plug-ins/maze/maze_face.c:289
+#: plug-ins/common/CML_explorer.c:1371 plug-ins/maze/maze_face.c:289
 msgid "Seed:"
 msgstr "Зерно:"
 
-#: plug-ins/common/CML_explorer.c:1385
+#: plug-ins/common/CML_explorer.c:1384
 #, fuzzy
 msgid "Switch to \"From seed\" with the last seed"
 msgstr "Переключиться в \"из зерна\" с последним зерном"
 
-#: plug-ins/common/CML_explorer.c:1397
+#: plug-ins/common/CML_explorer.c:1396
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -1807,144 +1766,144 @@ msgstr ""
 "изображений одинакова (по этой причине изображение и его предпросмотр "
 "различаются) и (2) скорости всех мутаций равны 0."
 
-#: plug-ins/common/CML_explorer.c:1405
+#: plug-ins/common/CML_explorer.c:1404
 msgid "O_thers"
 msgstr "Другие"
 
-#: plug-ins/common/CML_explorer.c:1420
+#: plug-ins/common/CML_explorer.c:1419
 msgid "Copy Settings"
 msgstr "Скопировать настройки"
 
-#: plug-ins/common/CML_explorer.c:1439
+#: plug-ins/common/CML_explorer.c:1438
 #, fuzzy
 msgid "Source channel:"
 msgstr "Исходный канал:"
 
-#: plug-ins/common/CML_explorer.c:1454 plug-ins/common/CML_explorer.c:1502
+#: plug-ins/common/CML_explorer.c:1453 plug-ins/common/CML_explorer.c:1501
 #, fuzzy
 msgid "Destination channel:"
 msgstr "Канал назначения:"
 
-#: plug-ins/common/CML_explorer.c:1458
+#: plug-ins/common/CML_explorer.c:1457
 #, fuzzy
 msgid "Copy parameters"
 msgstr "Скопировать параметры"
 
-#: plug-ins/common/CML_explorer.c:1467
+#: plug-ins/common/CML_explorer.c:1466
 msgid "Selective Load Settings"
 msgstr "Выборочная загрузка настроек"
 
-#: plug-ins/common/CML_explorer.c:1487
+#: plug-ins/common/CML_explorer.c:1486
 #, fuzzy
 msgid "Source channel in file:"
 msgstr "Исходный канал в файл:"
 
-#: plug-ins/common/CML_explorer.c:1508
+#: plug-ins/common/CML_explorer.c:1507
 msgid "_Misc Ops."
 msgstr "Разн. парам."
 
-#: plug-ins/common/CML_explorer.c:1557
+#: plug-ins/common/CML_explorer.c:1556
 #, fuzzy
 msgid "Function type:"
 msgstr "Тип функции:"
 
-#: plug-ins/common/CML_explorer.c:1573
+#: plug-ins/common/CML_explorer.c:1572
 msgid "Composition:"
 msgstr "Сборка:"
 
-#: plug-ins/common/CML_explorer.c:1587
+#: plug-ins/common/CML_explorer.c:1586
 #, fuzzy
 msgid "Misc arrange:"
 msgstr "Порядок:"
 
-#: plug-ins/common/CML_explorer.c:1591
+#: plug-ins/common/CML_explorer.c:1590
 #, fuzzy
 msgid "Use cyclic range"
 msgstr "Использовать циклический диапазон"
 
-#: plug-ins/common/CML_explorer.c:1601
+#: plug-ins/common/CML_explorer.c:1600
 #, fuzzy
 msgid "Mod. rate:"
 msgstr "Частота модификации:"
 
-#: plug-ins/common/CML_explorer.c:1610
+#: plug-ins/common/CML_explorer.c:1609
 #, fuzzy
 msgid "Env. sensitivity:"
 msgstr "Чуствительность окружения:"
 
-#: plug-ins/common/CML_explorer.c:1619
+#: plug-ins/common/CML_explorer.c:1618
 #, fuzzy
 msgid "Diffusion dist.:"
 msgstr "Расстояние диффузии"
 
-#: plug-ins/common/CML_explorer.c:1628
+#: plug-ins/common/CML_explorer.c:1627
 #, fuzzy
 msgid "# of subranges:"
 msgstr "Число поддиапазонов:"
 
-#: plug-ins/common/CML_explorer.c:1637
+#: plug-ins/common/CML_explorer.c:1636
 #, fuzzy
 msgid "P(ower factor):"
 msgstr "П(оказатель степени):"
 
-#: plug-ins/common/CML_explorer.c:1646
+#: plug-ins/common/CML_explorer.c:1645
 msgid "Parameter k:"
 msgstr "Параметр \"k\":"
 
-#: plug-ins/common/CML_explorer.c:1655
+#: plug-ins/common/CML_explorer.c:1654
 #, fuzzy
 msgid "Range low:"
 msgstr "Нижний диапазон:"
 
-#: plug-ins/common/CML_explorer.c:1664
+#: plug-ins/common/CML_explorer.c:1663
 #, fuzzy
 msgid "Range high:"
 msgstr "Верхний диапазон:"
 
-#: plug-ins/common/CML_explorer.c:1676
+#: plug-ins/common/CML_explorer.c:1675
 #, fuzzy
 msgid "Plot a graph of the settings"
 msgstr "Вывести график настроек"
 
-#: plug-ins/common/CML_explorer.c:1721
+#: plug-ins/common/CML_explorer.c:1720
 #, fuzzy
 msgid "Ch. sensitivity:"
 msgstr "Чувствительность канала:"
 
-#: plug-ins/common/CML_explorer.c:1731
+#: plug-ins/common/CML_explorer.c:1730
 #, fuzzy
 msgid "Mutation rate:"
 msgstr "Скорость мутаций:"
 
-#: plug-ins/common/CML_explorer.c:1741
+#: plug-ins/common/CML_explorer.c:1740
 #, fuzzy
 msgid "Mutation dist.:"
 msgstr "Расстояние изменений"
 
-#: plug-ins/common/CML_explorer.c:1818
+#: plug-ins/common/CML_explorer.c:1817
 msgid "Graph of the current settings"
 msgstr "График текущих установок"
 
-#: plug-ins/common/CML_explorer.c:1888
+#: plug-ins/common/CML_explorer.c:1887
 msgid "Warning: the source and the destination are the same channel."
 msgstr "Внимание: источник и назначение в одном канале."
 
-#: plug-ins/common/CML_explorer.c:1947
+#: plug-ins/common/CML_explorer.c:1946
 msgid "Save Parameters to"
 msgstr "Сохранить параметры в"
 
-#: plug-ins/common/CML_explorer.c:2055 plug-ins/common/channel_mixer.c:1053
+#: plug-ins/common/CML_explorer.c:2054 plug-ins/common/channel_mixer.c:1052
 #, fuzzy, c-format
 msgid "Parameters were saved to '%s'"
 msgstr ""
 "Параметры были сохранены в\n"
 "\"%s\""
 
-#: plug-ins/common/CML_explorer.c:2076
+#: plug-ins/common/CML_explorer.c:2075
 msgid "CML Explorer: Overwrite File?"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:2090 plug-ins/common/channel_mixer.c:1084
+#: plug-ins/common/CML_explorer.c:2089 plug-ins/common/channel_mixer.c:1083
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -1953,33 +1912,33 @@ msgstr ""
 "Файл %s существует.\n"
 "Переписать?"
 
-#: plug-ins/common/CML_explorer.c:2139
+#: plug-ins/common/CML_explorer.c:2138
 msgid "Load Parameters from"
 msgstr "Загрузить параметры из"
 
-#: plug-ins/common/CML_explorer.c:2141
+#: plug-ins/common/CML_explorer.c:2140
 msgid "Selective Load from"
 msgstr "Выборочная загрузка из"
 
-#: plug-ins/common/CML_explorer.c:2237
+#: plug-ins/common/CML_explorer.c:2236
 msgid "Error: it's not CML parameter file."
 msgstr "Ошибка: это не файл параметров CML"
 
-#: plug-ins/common/CML_explorer.c:2244
+#: plug-ins/common/CML_explorer.c:2243
 #, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr ""
 "Внимание: \"%s\"\n"
 "это файл старого формата."
 
-#: plug-ins/common/CML_explorer.c:2247
+#: plug-ins/common/CML_explorer.c:2246
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
 msgstr ""
 "Внимание: \"%s\"\n"
 "это файл параметров для более новой версии CML_explorer'а чем выполняющаяся."
 
-#: plug-ins/common/CML_explorer.c:2310
+#: plug-ins/common/CML_explorer.c:2309
 msgid "Error: failed to load parameters"
 msgstr "Ошибка: не удалось загрузить параметры"
 
@@ -2002,101 +1961,96 @@ msgstr "Шрифт:"
 msgid "Align _Visible Layers..."
 msgstr "Выровнять видимые слои"
 
-#: plug-ins/common/align_layers.c:142
-#, fuzzy
-msgid "<Image>/Layer"
-msgstr "<Image>/Файл/Печать..."
-
-#: plug-ins/common/align_layers.c:174
+#: plug-ins/common/align_layers.c:173
 msgid "There are not enough layers to align."
 msgstr "Недостаточно слоев для выравнивания."
 
-#: plug-ins/common/align_layers.c:400
+#: plug-ins/common/align_layers.c:399
 msgid "Align Visible Layers"
 msgstr "Выровнять видимые слои"
 
-#: plug-ins/common/align_layers.c:418 plug-ins/common/align_layers.c:449
+#: plug-ins/common/align_layers.c:417 plug-ins/common/align_layers.c:448
 msgid "Collect"
 msgstr "Собрать"
 
-#: plug-ins/common/align_layers.c:419
+#: plug-ins/common/align_layers.c:418
 msgid "Fill (left to right)"
 msgstr "Заполнить (слева на право)"
 
-#: plug-ins/common/align_layers.c:420
+#: plug-ins/common/align_layers.c:419
 msgid "Fill (right to left)"
 msgstr "Заполнить (справа на лево)"
 
 #. "snap to grid" checkbutton at bottom of style frame
-#: plug-ins/common/align_layers.c:421 plug-ins/common/align_layers.c:452
+#: plug-ins/common/align_layers.c:420 plug-ins/common/align_layers.c:451
 #: plug-ins/gfig/gfig-dialog.c:500
 msgid "Snap to grid"
 msgstr "Выровнять по сетке"
 
-#: plug-ins/common/align_layers.c:430
+#: plug-ins/common/align_layers.c:429
 #, fuzzy
 msgid "_Horizontal style:"
 msgstr "Горизонтальный стиль:"
 
-#: plug-ins/common/align_layers.c:434
+#: plug-ins/common/align_layers.c:433
 #, fuzzy
 msgid "Left edge"
 msgstr "Левый край"
 
-#: plug-ins/common/align_layers.c:435 plug-ins/common/align_layers.c:465
+#: plug-ins/common/align_layers.c:434 plug-ins/common/align_layers.c:464
 #: plug-ins/gflare/gflare.c:2633
 msgid "Center"
 msgstr "Центр"
 
-#: plug-ins/common/align_layers.c:436
+#: plug-ins/common/align_layers.c:435
 #, fuzzy
 msgid "Right edge"
 msgstr "Правый край"
 
-#: plug-ins/common/align_layers.c:445
+#: plug-ins/common/align_layers.c:444
 #, fuzzy
 msgid "Ho_rizontal base:"
 msgstr "Горизонтальное основание:"
 
-#: plug-ins/common/align_layers.c:450
+#: plug-ins/common/align_layers.c:449
 msgid "Fill (top to bottom)"
 msgstr "Заполнить (сверху вниз)"
 
-#: plug-ins/common/align_layers.c:451
+#: plug-ins/common/align_layers.c:450
 msgid "Fill (bottom to top)"
 msgstr "Заполнить (снизу вверх)"
 
-#: plug-ins/common/align_layers.c:461
+#: plug-ins/common/align_layers.c:460
 #, fuzzy
 msgid "_Vertical style:"
 msgstr "Вертикальный стиль:"
 
-#: plug-ins/common/align_layers.c:464
+#: plug-ins/common/align_layers.c:463
 #, fuzzy
 msgid "Top edge"
 msgstr "Верхний край"
 
-#: plug-ins/common/align_layers.c:466
+#: plug-ins/common/align_layers.c:465
 #, fuzzy
 msgid "Bottom edge"
 msgstr "Нижний край"
 
-#: plug-ins/common/align_layers.c:475
+#: plug-ins/common/align_layers.c:474
 #, fuzzy
 msgid "Ver_tical base:"
 msgstr "Вертикальное основание:"
 
-#: plug-ins/common/align_layers.c:479
+#: plug-ins/common/align_layers.c:478
 #, fuzzy
 msgid "_Grid size:"
 msgstr "Размер сетки:"
 
-#: plug-ins/common/align_layers.c:488
+#: plug-ins/common/align_layers.c:487
 #, fuzzy
 msgid "_Ignore the bottom layer even if visible"
 msgstr "Игнорировать нижний слой даже если он видим"
 
-#: plug-ins/common/align_layers.c:498
+#: plug-ins/common/align_layers.c:497
 #, fuzzy
 msgid "_Use the (invisible) bottom layer as the base"
 msgstr "Использовать (невидимый) нижний слой как основание"
@@ -2105,13 +2059,6 @@ msgstr "Использовать (невидимый) нижний слой ка
 #, fuzzy
 msgid "_Playback..."
 msgstr "Воспроизведение:"
-
-#: plug-ins/common/animationplay.c:188 plug-ins/common/animoptimize.c:183
-#: plug-ins/common/animoptimize.c:185 plug-ins/common/animoptimize.c:187
-#: plug-ins/common/animoptimize.c:222 plug-ins/common/animoptimize.c:224
-#, fuzzy
-msgid "<Image>/Filters/Animation"
-msgstr "<Image>/Фильтры/Анимация/РазОптимизация"
 
 #: plug-ins/common/animationplay.c:413
 #, fuzzy
@@ -2184,40 +2131,35 @@ msgstr "Оптимизация фильма..."
 msgid "Apply _Lens..."
 msgstr "Применяется линза..."
 
-#: plug-ins/common/apply_lens.c:119 plug-ins/common/glasstile.c:123
-#, fuzzy
-msgid "<Image>/Filters/Glass Effects"
-msgstr "<Image>/Фильтры/Эффекты стекол/Стеклянные блоки..."
-
 #: plug-ins/common/apply_lens.c:179
 msgid "Applying lens..."
 msgstr "Применяется линза..."
 
-#: plug-ins/common/apply_lens.c:390
+#: plug-ins/common/apply_lens.c:391
 msgid "Lens Effect"
 msgstr "Эффект линзы"
 
-#: plug-ins/common/apply_lens.c:412
+#: plug-ins/common/apply_lens.c:417
 #, fuzzy
 msgid "_Keep original surroundings"
 msgstr "Сохранять оригинальное окружение"
 
-#: plug-ins/common/apply_lens.c:424
+#: plug-ins/common/apply_lens.c:432
 #, fuzzy
 msgid "_Set surroundings to index 0"
 msgstr "Устанавливать окружение в индекс 0"
 
-#: plug-ins/common/apply_lens.c:425
+#: plug-ins/common/apply_lens.c:433
 #, fuzzy
 msgid "_Set surroundings to background color"
 msgstr "Устанавливать окружение в цвет фона"
 
-#: plug-ins/common/apply_lens.c:437
+#: plug-ins/common/apply_lens.c:448
 #, fuzzy
 msgid "_Make surroundings transparent"
 msgstr "Делать окружение прозрачным"
 
-#: plug-ins/common/apply_lens.c:451
+#: plug-ins/common/apply_lens.c:465
 #, fuzzy
 msgid "_Lens refraction index:"
 msgstr "Коэффициент преломления линзы:"
@@ -2227,22 +2169,12 @@ msgstr "Коэффициент преломления линзы:"
 msgid "_Autocrop Image"
 msgstr "Все изображение"
 
-#: plug-ins/common/autocrop.c:92 plug-ins/common/zealouscrop.c:76
-#, fuzzy
-msgid "<Image>/Image/Crop"
-msgstr "<Image>/Изображение/Преобразование/Автокадр "
-
-#: plug-ins/common/autocrop.c:100
+#: plug-ins/common/autocrop.c:99
 #, fuzzy
 msgid "_Autocrop Layer"
 msgstr "Слой загиба"
 
-#: plug-ins/common/autocrop.c:107
-#, fuzzy
-msgid "<Image>/Layer/Crop"
-msgstr "<Image>/Слой/Преобразование/Усердное кадрирование"
-
-#: plug-ins/common/autocrop.c:149
+#: plug-ins/common/autocrop.c:146
 msgid "Cropping..."
 msgstr "Кадрирование..."
 
@@ -2250,12 +2182,6 @@ msgstr "Кадрирование..."
 #, fuzzy
 msgid "Stretch _HSV"
 msgstr "Растянуть"
-
-#: plug-ins/common/autostretch_hsv.c:87 plug-ins/common/c_astretch.c:85
-#: plug-ins/common/color_enhance.c:87 plug-ins/common/normalize.c:95
-#, fuzzy
-msgid "<Image>/Layer/Colors/Auto"
-msgstr "<Image>/Слои/Цвета/Авто/Нормализовать"
 
 #: plug-ins/common/autostretch_hsv.c:116
 msgid "Auto-Stretching HSV..."
@@ -2270,51 +2196,39 @@ msgstr ""
 msgid "_Blinds..."
 msgstr "Жалюзи"
 
-#: plug-ins/common/blinds.c:131 plug-ins/common/curve_bend.c:578
-#: plug-ins/common/emboss.c:142 plug-ins/common/engrave.c:115
-#: plug-ins/common/iwarp.c:259 plug-ins/common/mosaic.c:316
-#: plug-ins/common/newsprint.c:542 plug-ins/common/polar.c:177
-#: plug-ins/common/ripple.c:145 plug-ins/common/shift.c:120
-#: plug-ins/common/video.c:1824 plug-ins/common/vpropagate.c:274
-#: plug-ins/common/waves.c:135 plug-ins/common/whirlpinch.c:168
-#: plug-ins/common/wind.c:190 plug-ins/pagecurl/pagecurl.c:244
-#, fuzzy
-msgid "<Image>/Filters/Distorts"
-msgstr "<Image>/Фильтры/Искажения/Ветер..."
-
-#: plug-ins/common/blinds.c:192
+#: plug-ins/common/blinds.c:191
 msgid "Adding Blinds..."
 msgstr "Добавление жалюзи..."
 
-#: plug-ins/common/blinds.c:230
+#: plug-ins/common/blinds.c:229
 msgid "Blinds"
 msgstr "Жалюзи"
 
 #. Orientation toggle box
-#: plug-ins/common/blinds.c:256 plug-ins/common/ripple.c:524
+#: plug-ins/common/blinds.c:255 plug-ins/common/ripple.c:535
 msgid "Orientation"
 msgstr "Ориентация"
 
-#: plug-ins/common/blinds.c:260 plug-ins/common/ripple.c:528
-#: plug-ins/common/tileit.c:419 plug-ins/pagecurl/pagecurl.c:540
+#: plug-ins/common/blinds.c:259 plug-ins/common/ripple.c:539
+#: plug-ins/common/tileit.c:418 plug-ins/pagecurl/pagecurl.c:539
 msgid "_Horizontal"
 msgstr "Горизонтальное"
 
-#: plug-ins/common/blinds.c:261 plug-ins/common/ripple.c:529
-#: plug-ins/common/tileit.c:429 plug-ins/pagecurl/pagecurl.c:539
+#: plug-ins/common/blinds.c:260 plug-ins/common/ripple.c:540
+#: plug-ins/common/tileit.c:428 plug-ins/pagecurl/pagecurl.c:538
 msgid "_Vertical"
 msgstr "Вертикальное"
 
-#: plug-ins/common/blinds.c:278 plug-ins/common/fractaltrace.c:734
+#: plug-ins/common/blinds.c:277 plug-ins/common/fractaltrace.c:733
 #: plug-ins/common/papertile.c:358
 msgid "_Transparent"
 msgstr "Прозрачный"
 
-#: plug-ins/common/blinds.c:304
+#: plug-ins/common/blinds.c:303
 msgid "_Displacement:"
 msgstr "Замещение:"
 
-#: plug-ins/common/blinds.c:316
+#: plug-ins/common/blinds.c:315
 #, fuzzy
 msgid "_Number of segments:"
 msgstr "Число сегментов:"
@@ -2324,14 +2238,7 @@ msgstr "Число сегментов:"
 msgid "_Blur"
 msgstr "Размывание"
 
-#: plug-ins/common/blur.c:154 plug-ins/common/gauss.c:244
-#: plug-ins/common/mblur.c:183 plug-ins/common/pixelize.c:180
-#: plug-ins/common/sel_gauss.c:114
-#, fuzzy
-msgid "<Image>/Filters/Blur"
-msgstr "<Image>/Фильтры/Размывание/Размывание..."
-
-#: plug-ins/common/blur.c:192 plug-ins/common/unsharp.c:263
+#: plug-ins/common/blur.c:191 plug-ins/common/unsharp.c:263
 msgid "Blurring..."
 msgstr "Размывание..."
 
@@ -2340,34 +2247,23 @@ msgstr "Размывание..."
 msgid "_Border Average..."
 msgstr "Поиск среднего значения цвета..."
 
-#: plug-ins/common/borderaverage.c:108 plug-ins/common/ccanalyze.c:117
-#: plug-ins/common/channel_mixer.c:204 plug-ins/common/colorify.c:114
-#: plug-ins/common/colortoalpha.c:104 plug-ins/common/compose.c:302
-#: plug-ins/common/decompose.c:251 plug-ins/common/hot.c:224
-#: plug-ins/common/max_rgb.c:113 plug-ins/common/semiflatten.c:84
-#: plug-ins/common/smooth_palette.c:95 plug-ins/common/vinvert.c:91
-#: plug-ins/fp/fp.c:328
-#, fuzzy
-msgid "<Image>/Filters/Colors"
-msgstr "<Image>/Фильтры/Цвета/\"Горячие\"..."
-
-#: plug-ins/common/borderaverage.c:168
+#: plug-ins/common/borderaverage.c:167
 msgid "Border Average..."
 msgstr "Поиск среднего значения цвета..."
 
-#: plug-ins/common/borderaverage.c:348
+#: plug-ins/common/borderaverage.c:347
 msgid "Borderaverage"
 msgstr "Усредненный цвет рамки"
 
-#: plug-ins/common/borderaverage.c:362
+#: plug-ins/common/borderaverage.c:361
 msgid "Border Size"
 msgstr "Размер рамки"
 
-#: plug-ins/common/borderaverage.c:370
+#: plug-ins/common/borderaverage.c:369
 msgid "_Thickness:"
 msgstr "Толщина:"
 
-#: plug-ins/common/borderaverage.c:413
+#: plug-ins/common/borderaverage.c:412
 #, fuzzy
 msgid "_Bucket size:"
 msgstr "Количество цветов:"
@@ -2377,102 +2273,90 @@ msgstr "Количество цветов:"
 msgid "_Bump Map..."
 msgstr "Карта рельефа"
 
-#: plug-ins/common/bumpmap.c:491
+#: plug-ins/common/bumpmap.c:490
 msgid "Bump-mapping..."
 msgstr "Создание рельефа..."
 
-#: plug-ins/common/bumpmap.c:835
+#: plug-ins/common/bumpmap.c:834
 msgid "Bump Map"
 msgstr "Рельеф"
 
-#: plug-ins/common/bumpmap.c:894
+#: plug-ins/common/bumpmap.c:893
 #, fuzzy
 msgid "_Bump map:"
 msgstr "Карта рельефа:"
 
-#: plug-ins/common/bumpmap.c:909
+#: plug-ins/common/bumpmap.c:908
 #, fuzzy
 msgid "_Map type:"
 msgstr "Тип карты"
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:914
+#: plug-ins/common/bumpmap.c:913
 #, fuzzy
 msgid "Co_mpensate for darkening"
 msgstr "Компенсировать затемнение"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:928
+#: plug-ins/common/bumpmap.c:927
 #, fuzzy
 msgid "I_nvert bumpmap"
 msgstr "Инвертировать рельеф"
 
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:942
+#: plug-ins/common/bumpmap.c:941
 #, fuzzy
 msgid "_Tile bumpmap"
 msgstr "Повторяющийся рельеф"
 
-#: plug-ins/common/bumpmap.c:957 plug-ins/common/emboss.c:463
+#: plug-ins/common/bumpmap.c:956 plug-ins/common/emboss.c:485
 msgid "_Azimuth:"
 msgstr "Азимут:"
 
-#: plug-ins/common/bumpmap.c:969
+#: plug-ins/common/bumpmap.c:968
 msgid "_Elevation:"
 msgstr "Возвышение:"
 
-#: plug-ins/common/bumpmap.c:995 plug-ins/common/postscript.c:3026
+#: plug-ins/common/bumpmap.c:994 plug-ins/common/postscript.c:3026
 #, fuzzy
 msgid "_X offset:"
 msgstr "Смещение по X:"
 
-#: plug-ins/common/bumpmap.c:998 plug-ins/common/bumpmap.c:1012
+#: plug-ins/common/bumpmap.c:997 plug-ins/common/bumpmap.c:1011
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
 msgstr ""
 
-#: plug-ins/common/bumpmap.c:1009 plug-ins/common/postscript.c:3035
+#: plug-ins/common/bumpmap.c:1008 plug-ins/common/postscript.c:3035
 #, fuzzy
 msgid "_Y offset:"
 msgstr "Смещение по Y:"
 
-#: plug-ins/common/bumpmap.c:1023
+#: plug-ins/common/bumpmap.c:1022
 msgid "_Waterlevel:"
 msgstr "Ватерлиния:"
 
-#: plug-ins/common/bumpmap.c:1035
+#: plug-ins/common/bumpmap.c:1034
 msgid "A_mbient:"
 msgstr "Освещение:"
-
-#: plug-ins/common/bz2.c:109 plug-ins/common/bz2.c:129
-msgid "bzip archive"
-msgstr ""
-
-#: plug-ins/common/bz2.c:225 plug-ins/common/gz.c:280
-msgid "No sensible extension, saving as compressed XCF."
-msgstr "Нет подходящего расширения, сохраненяется как сжатый XCF."
-
-#: plug-ins/common/bz2.c:305 plug-ins/common/gz.c:397
-msgid "No sensible extension, attempting to load with file magic."
-msgstr "Нет значимого расширения, попытка загрузки с помощью команды file"
 
 #: plug-ins/common/c_astretch.c:78
 #, fuzzy
 msgid "_Stretch Contrast"
 msgstr "Автоувеличение контраста..."
 
-#: plug-ins/common/c_astretch.c:113
+#: plug-ins/common/c_astretch.c:112
 msgid "Auto-Stretching Contrast..."
 msgstr "Автоувеличение контраста..."
 
-#: plug-ins/common/c_astretch.c:153
+#: plug-ins/common/c_astretch.c:152
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
 msgstr ""
 
-#: plug-ins/common/cartoon.c:228 plug-ins/common/dog.c:246
-#: plug-ins/common/gauss.c:431 plug-ins/common/neon.c:222
-#: plug-ins/common/photocopy.c:241 plug-ins/common/sel_gauss.c:204
+#: plug-ins/common/cartoon.c:228 plug-ins/common/dog.c:245
+#: plug-ins/common/gauss.c:430 plug-ins/common/neon.c:222
+#: plug-ins/common/photocopy.c:241 plug-ins/common/sel_gauss.c:203
 #: plug-ins/common/softglow.c:220 plug-ins/gflare/gflare.c:979
 #: plug-ins/sgi/sgi.c:532 plug-ins/xjt/xjt.c:1677
 msgid "Cannot operate on indexed color images."
@@ -2498,55 +2382,50 @@ msgstr "Процент"
 msgid "Colorcube A_nalysis..."
 msgstr "Анализ изображения"
 
-#: plug-ins/common/ccanalyze.c:119
-#, fuzzy
-msgid "<Image>/Layer/Colors/Info"
-msgstr "<Image>/Слои/Цвета/Авто/Нормализовать"
-
-#: plug-ins/common/ccanalyze.c:202
+#: plug-ins/common/ccanalyze.c:200
 msgid "Colorcube Analysis..."
 msgstr "Анализ изображения"
 
 #. set up the dialog
-#: plug-ins/common/ccanalyze.c:361
+#: plug-ins/common/ccanalyze.c:359
 msgid "Colorcube Analysis"
 msgstr "Анализ изображения"
 
 #. output results
-#: plug-ins/common/ccanalyze.c:387 plug-ins/imagemap/imap_cmd_guides.c:228
+#: plug-ins/common/ccanalyze.c:385 plug-ins/imagemap/imap_cmd_guides.c:228
 #, c-format
 msgid "Image dimensions: %d x %d"
 msgstr "Размеры изображения: %d x %d"
 
-#: plug-ins/common/ccanalyze.c:390
+#: plug-ins/common/ccanalyze.c:388
 msgid "No colors"
 msgstr "Нет цветов "
 
-#: plug-ins/common/ccanalyze.c:392
+#: plug-ins/common/ccanalyze.c:390
 msgid "Only one unique color"
 msgstr "Только один цвет"
 
-#: plug-ins/common/ccanalyze.c:394
+#: plug-ins/common/ccanalyze.c:392
 #, c-format
 msgid "Number of unique colors: %d"
 msgstr "Число цветов: %d"
 
-#: plug-ins/common/ccanalyze.c:397
+#: plug-ins/common/ccanalyze.c:395
 #, c-format
 msgid "Uncompressed size: %s"
 msgstr "Размер несжатого файла в байтах: %s"
 
-#: plug-ins/common/ccanalyze.c:404
+#: plug-ins/common/ccanalyze.c:402
 #, c-format
 msgid "Filename: %s"
 msgstr "Имя файла: %s"
 
-#: plug-ins/common/ccanalyze.c:405
+#: plug-ins/common/ccanalyze.c:403
 #, c-format
 msgid "Compressed size: %s"
 msgstr "Размер сжатого файла %s"
 
-#: plug-ins/common/ccanalyze.c:406
+#: plug-ins/common/ccanalyze.c:404
 #, c-format
 msgid "Compression ratio (approx.): %d to 1"
 msgstr "Степень сжатия (приблизит.): %d к 1"
@@ -2556,55 +2435,55 @@ msgstr "Степень сжатия (приблизит.): %d к 1"
 msgid "Channel Mi_xer.."
 msgstr "Микшер каналов"
 
-#: plug-ins/common/channel_mixer.c:486
+#: plug-ins/common/channel_mixer.c:485
 msgid "Channel Mixer"
 msgstr "Микшер каналов"
 
-#: plug-ins/common/channel_mixer.c:515
+#: plug-ins/common/channel_mixer.c:514
 #, fuzzy
 msgid "O_utput channel:"
 msgstr "Канал вывода:"
 
-#: plug-ins/common/channel_mixer.c:569 plug-ins/common/diffraction.c:498
+#: plug-ins/common/channel_mixer.c:568 plug-ins/common/diffraction.c:498
 #: plug-ins/common/diffraction.c:536 plug-ins/common/diffraction.c:574
-#: plug-ins/common/exchange.c:398 plug-ins/common/noisify.c:437
-#: plug-ins/common/noisify.c:444
+#: plug-ins/common/exchange.c:397 plug-ins/common/noisify.c:436
+#: plug-ins/common/noisify.c:443
 msgid "_Red:"
 msgstr "Красный:"
 
-#: plug-ins/common/channel_mixer.c:587 plug-ins/common/diffraction.c:507
+#: plug-ins/common/channel_mixer.c:586 plug-ins/common/diffraction.c:507
 #: plug-ins/common/diffraction.c:545 plug-ins/common/diffraction.c:583
-#: plug-ins/common/exchange.c:458 plug-ins/common/noisify.c:438
-#: plug-ins/common/noisify.c:445
+#: plug-ins/common/exchange.c:457 plug-ins/common/noisify.c:437
+#: plug-ins/common/noisify.c:444
 msgid "_Green:"
 msgstr "Зелёный:"
 
-#: plug-ins/common/channel_mixer.c:606 plug-ins/common/diffraction.c:516
+#: plug-ins/common/channel_mixer.c:605 plug-ins/common/diffraction.c:516
 #: plug-ins/common/diffraction.c:554 plug-ins/common/diffraction.c:592
-#: plug-ins/common/exchange.c:520 plug-ins/common/noisify.c:439
-#: plug-ins/common/noisify.c:446
+#: plug-ins/common/exchange.c:519 plug-ins/common/noisify.c:438
+#: plug-ins/common/noisify.c:445
 msgid "_Blue:"
 msgstr "Синий:"
 
 #. The monochrome toggle
-#: plug-ins/common/channel_mixer.c:617
+#: plug-ins/common/channel_mixer.c:616
 msgid "_Monochrome"
 msgstr "Монохромный"
 
-#: plug-ins/common/channel_mixer.c:629
+#: plug-ins/common/channel_mixer.c:628
 #, fuzzy
 msgid "Preserve _luminosity"
 msgstr "Сохранять яркость"
 
-#: plug-ins/common/channel_mixer.c:858
+#: plug-ins/common/channel_mixer.c:857
 msgid "Load Channel Mixer Settings"
 msgstr "Загрузить установки микшера каналов"
 
-#: plug-ins/common/channel_mixer.c:990
+#: plug-ins/common/channel_mixer.c:989
 msgid "Save Channel Mixer Settings"
 msgstr "Сохранить установки микшера каналов"
 
-#: plug-ins/common/channel_mixer.c:1069
+#: plug-ins/common/channel_mixer.c:1068
 msgid "Channel Mixer File Operation Warning"
 msgstr "Сообщение микшера каналов"
 
@@ -2643,24 +2522,24 @@ msgstr "Усиление цвета..."
 msgid "Color_Enhance: cmap was NULL!  Quitting...\n"
 msgstr ""
 
-#: plug-ins/common/colorify.c:107
+#: plug-ins/common/colorify.c:110
 #, fuzzy
 msgid "_Colorify..."
 msgstr "Окрашивание..."
 
-#: plug-ins/common/colorify.c:169
+#: plug-ins/common/colorify.c:171
 msgid "Colorifying..."
 msgstr "Окрашивание..."
 
-#: plug-ins/common/colorify.c:235
+#: plug-ins/common/colorify.c:258
 msgid "Colorify"
 msgstr "Окрашивание"
 
-#: plug-ins/common/colorify.c:252
+#: plug-ins/common/colorify.c:285
 msgid "Custom Color:"
 msgstr "Выбор цвета:"
 
-#: plug-ins/common/colorify.c:257
+#: plug-ins/common/colorify.c:290
 msgid "Colorify Custom Color"
 msgstr "Окрашивание выбраным цветом"
 
@@ -2668,12 +2547,6 @@ msgstr "Окрашивание выбраным цветом"
 #, fuzzy
 msgid "Color to _Alpha..."
 msgstr "Цвет -> Альфа-канал"
-
-#: plug-ins/common/colortoalpha.c:106 plug-ins/common/semiflatten.c:86
-#: plug-ins/common/threshold_alpha.c:102
-#, fuzzy
-msgid "<Image>/Layer/Transparency/Modify"
-msgstr "<Image>/Слой/Прозрачность/Порог альфа-канала..."
 
 #: plug-ins/common/colortoalpha.c:176
 msgid "Removing color..."
@@ -2733,17 +2606,17 @@ msgid "CMY"
 msgstr "CMY"
 
 #: plug-ins/common/compose.c:155 plug-ins/common/compose.c:162
-#: plug-ins/fp/fp.c:220 plug-ins/print/gimp_color_window.c:302
+#: plug-ins/common/fp.c:220 plug-ins/print/gimp_color_window.c:302
 msgid "Cyan:"
 msgstr "Голубой:"
 
 #: plug-ins/common/compose.c:156 plug-ins/common/compose.c:163
-#: plug-ins/fp/fp.c:222 plug-ins/print/gimp_color_window.c:321
+#: plug-ins/common/fp.c:222 plug-ins/print/gimp_color_window.c:321
 msgid "Magenta:"
 msgstr "Пурпурный:"
 
 #: plug-ins/common/compose.c:157 plug-ins/common/compose.c:164
-#: plug-ins/fp/fp.c:221 plug-ins/print/gimp_color_window.c:340
+#: plug-ins/common/fp.c:221 plug-ins/print/gimp_color_window.c:340
 msgid "Yellow:"
 msgstr "Желтый:"
 
@@ -2812,43 +2685,38 @@ msgstr "Redness_cr709f:"
 msgid "C_ompose..."
 msgstr "Сборка..."
 
-#: plug-ins/common/compose.c:304 plug-ins/common/decompose.c:253
-#, fuzzy
-msgid "<Image>/Image/Mode"
-msgstr "<Image>/Изображение/Преобразование/Гильотина"
-
-#: plug-ins/common/compose.c:362
+#: plug-ins/common/compose.c:360
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "Не удалось получить слои изображения %d"
 
-#: plug-ins/common/compose.c:413
+#: plug-ins/common/compose.c:411
 msgid "Composing..."
 msgstr "Сборка..."
 
-#: plug-ins/common/compose.c:482
+#: plug-ins/common/compose.c:480
 msgid "Drawables have different size"
 msgstr "Рисунки имеют различный размер"
 
-#: plug-ins/common/compose.c:499
+#: plug-ins/common/compose.c:497
 msgid "Images have different size"
 msgstr "Изображения имеют различный размер"
 
-#: plug-ins/common/compose.c:513
+#: plug-ins/common/compose.c:511
 msgid "Error in getting layer IDs"
 msgstr "Ошибка в получении идентификатора слоя"
 
-#: plug-ins/common/compose.c:530
+#: plug-ins/common/compose.c:528
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "Изображение не является серым (bpp=%d)"
 
-#: plug-ins/common/compose.c:1094
+#: plug-ins/common/compose.c:1092
 msgid "Compose"
 msgstr "Собрать"
 
 #. The left frame keeps the compose type toggles
-#: plug-ins/common/compose.c:1110
+#: plug-ins/common/compose.c:1108
 msgid "Compose Channels"
 msgstr "Собрать каналы"
 
@@ -2856,9 +2724,25 @@ msgstr "Собрать каналы"
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: plug-ins/common/compose.c:1121
+#: plug-ins/common/compose.c:1119
 msgid "Channel Representations"
 msgstr "Представление канала"
+
+#: plug-ins/common/compressor.c:153
+msgid "gzip archive"
+msgstr ""
+
+#: plug-ins/common/compressor.c:174
+msgid "bzip archive"
+msgstr ""
+
+#: plug-ins/common/compressor.c:369
+msgid "No sensible extension, saving as compressed XCF."
+msgstr "Нет подходящего расширения, сохраненяется как сжатый XCF."
+
+#: plug-ins/common/compressor.c:510
+msgid "No sensible extension, attempting to load with file magic."
+msgstr "Нет значимого расширения, попытка загрузки с помощью команды file"
 
 #: plug-ins/common/convmatrix.c:87
 msgid "Gr_ey"
@@ -2884,8 +2768,8 @@ msgstr "Альфа"
 msgid "E_xtend"
 msgstr "Расширять"
 
-#: plug-ins/common/convmatrix.c:97 plug-ins/common/displace.c:358
-#: plug-ins/common/edge.c:717 plug-ins/common/ripple.c:549
+#: plug-ins/common/convmatrix.c:97 plug-ins/common/displace.c:357
+#: plug-ins/common/edge.c:716 plug-ins/common/ripple.c:560
 msgid "_Wrap"
 msgstr "Заворачивать"
 
@@ -2898,51 +2782,45 @@ msgstr "Обрезать"
 msgid "_Convolution Matrix..."
 msgstr "Матрица свёртки"
 
-#: plug-ins/common/convmatrix.c:202 plug-ins/common/vpropagate.c:276
-#: plug-ins/common/vpropagate.c:278
-#, fuzzy
-msgid "<Image>/Filters/Generic"
-msgstr "<Image>/Фильтры/Общие/Эрозия (светлее)"
-
-#: plug-ins/common/convmatrix.c:230
+#: plug-ins/common/convmatrix.c:229
 msgid "Convolution Matrix does not work on layers smaller than 3 pixels."
 msgstr ""
 "Матрица свёртки не работает\n"
 "на слоях меньших трех точек растра."
 
-#: plug-ins/common/convmatrix.c:303
+#: plug-ins/common/convmatrix.c:302
 msgid "Applying convolution"
 msgstr "Применение свертки"
 
-#: plug-ins/common/convmatrix.c:878
+#: plug-ins/common/convmatrix.c:877
 msgid "Convolution Matrix"
 msgstr "Матрица свёртки"
 
-#: plug-ins/common/convmatrix.c:903
+#: plug-ins/common/convmatrix.c:902
 msgid "Matrix"
 msgstr "Матрица"
 
-#: plug-ins/common/convmatrix.c:937
+#: plug-ins/common/convmatrix.c:936
 msgid "D_ivisor:"
 msgstr "Делитель:"
 
-#: plug-ins/common/convmatrix.c:958 plug-ins/common/depthmerge.c:749
+#: plug-ins/common/convmatrix.c:957 plug-ins/common/depthmerge.c:748
 msgid "O_ffset:"
 msgstr "Смещение:"
 
-#: plug-ins/common/convmatrix.c:984
+#: plug-ins/common/convmatrix.c:983
 msgid "A_utomatic"
 msgstr "Автоматически"
 
-#: plug-ins/common/convmatrix.c:993
+#: plug-ins/common/convmatrix.c:992
 msgid "A_lpha-weighting"
 msgstr "Альфа-нагрузка"
 
-#: plug-ins/common/convmatrix.c:1009
+#: plug-ins/common/convmatrix.c:1008
 msgid "Border"
 msgstr "Рамка"
 
-#: plug-ins/common/convmatrix.c:1033
+#: plug-ins/common/convmatrix.c:1032
 msgid "Channels"
 msgstr "Каналы"
 
@@ -3003,79 +2881,73 @@ msgstr "Сохранить альфа-канал (RGBA/RGB)"
 msgid "Op_acity:"
 msgstr "Непрозрачность:"
 
-#: plug-ins/common/cubism.c:146
+#: plug-ins/common/cubism.c:156
 #, fuzzy
 msgid "_Cubism..."
 msgstr "Кубизм"
 
-#: plug-ins/common/cubism.c:153 plug-ins/common/oilify.c:118
-#: plug-ins/common/struc.c:1152 plug-ins/gimpressionist/gimp.c:86
-#, fuzzy
-msgid "<Image>/Filters/Artistic"
-msgstr "<Image>/Фильтры/Имитация/Кубизм..."
-
-#: plug-ins/common/cubism.c:257
+#: plug-ins/common/cubism.c:267
 msgid "Cubism"
 msgstr "Кубизм"
 
-#: plug-ins/common/cubism.c:279
+#: plug-ins/common/cubism.c:296
 #, fuzzy
 msgid "_Tile size:"
 msgstr "Размер элемента:"
 
-#: plug-ins/common/cubism.c:289
+#: plug-ins/common/cubism.c:309
 #, fuzzy
 msgid "T_ile saturation:"
 msgstr "Насыщенность элемента:"
 
-#: plug-ins/common/cubism.c:297
+#: plug-ins/common/cubism.c:320
 #, fuzzy
 msgid "_Use background color"
 msgstr "Использовать цвет фона"
 
-#: plug-ins/common/cubism.c:358
+#: plug-ins/common/cubism.c:410
 #, fuzzy
 msgid "Cubistic Transformation..."
 msgstr "Кубистическое преобразование"
 
-#: plug-ins/common/curve_bend.c:569
+#: plug-ins/common/curve_bend.c:572
 #, fuzzy
 msgid "_Curve Bend..."
 msgstr "Изгиб кривой..."
 
-#: plug-ins/common/curve_bend.c:704
+#: plug-ins/common/curve_bend.c:708
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
 "Эта операция действует только на слоях (а был вызван на канале или маске)"
 
-#: plug-ins/common/curve_bend.c:722
+#: plug-ins/common/curve_bend.c:726
 msgid "Cannot operate on layers with masks."
 msgstr "Невозможно использовать в слоях с маской"
 
-#: plug-ins/common/curve_bend.c:737
+#: plug-ins/common/curve_bend.c:741
 msgid "Cannot operate on empty selections."
 msgstr "Невозможно выполнить действия с пустым выделением"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1240
+#: plug-ins/common/curve_bend.c:1244
 msgid "Curve Bend"
 msgstr "Изгиб кривой"
 
 #. Preview area, top of column
-#: plug-ins/common/curve_bend.c:1269 plug-ins/gimpressionist/orientmap.c:567
+#: plug-ins/common/curve_bend.c:1273 plug-ins/gimpressionist/orientmap.c:567
 #: plug-ins/gimpressionist/sizemap.c:437 plug-ins/ifscompose/ifscompose.c:928
 msgid "Preview"
 msgstr "Просмотр"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1303
+#: plug-ins/common/curve_bend.c:1307
 #, fuzzy
 msgid "_Preview once"
 msgstr "Однократный просмотр"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1312
+#: plug-ins/common/curve_bend.c:1316
 #, fuzzy
 msgid "Automatic pre_view"
 msgstr "Автообновление просмотра"
@@ -3083,110 +2955,110 @@ msgstr "Автообновление просмотра"
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: plug-ins/common/curve_bend.c:1322 plug-ins/common/mosaic.c:530
-#: plug-ins/common/ripple.c:490 plug-ins/gfig/gfig-dialog.c:1227
+#: plug-ins/common/curve_bend.c:1326 plug-ins/common/mosaic.c:529
+#: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1227
 msgid "Options"
 msgstr "Параметры"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1336
+#: plug-ins/common/curve_bend.c:1340
 msgid "Rotat_e:"
 msgstr "Вращение:"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1354
+#: plug-ins/common/curve_bend.c:1358
 msgid "Smoo_thing"
 msgstr "Сглаживание изображения"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1364 plug-ins/common/gqbist.c:848
-#: plug-ins/common/mosaic.c:536 plug-ins/common/ripple.c:499
+#: plug-ins/common/curve_bend.c:1368 plug-ins/common/gqbist.c:847
+#: plug-ins/common/mosaic.c:535 plug-ins/common/ripple.c:510
 msgid "_Antialiasing"
 msgstr "Сглаживание контура"
 
 #. The work_on_copy toggle
-#: plug-ins/common/curve_bend.c:1374
+#: plug-ins/common/curve_bend.c:1378
 #, fuzzy
 msgid "Work on cop_y"
 msgstr "Работать с копией"
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1384
+#: plug-ins/common/curve_bend.c:1388
 msgid "Modify Curves"
 msgstr "Изменить кривые"
 
-#: plug-ins/common/curve_bend.c:1412
+#: plug-ins/common/curve_bend.c:1416
 msgid "Curve for Border"
 msgstr "Кривая для края:"
 
-#: plug-ins/common/curve_bend.c:1416
+#: plug-ins/common/curve_bend.c:1420
 msgid "_Upper"
 msgstr "Верхнего"
 
-#: plug-ins/common/curve_bend.c:1417
+#: plug-ins/common/curve_bend.c:1421
 msgid "_Lower"
 msgstr "Нижнего"
 
-#: plug-ins/common/curve_bend.c:1427
+#: plug-ins/common/curve_bend.c:1431
 msgid "Curve Type"
 msgstr "Тип кривой:"
 
-#: plug-ins/common/curve_bend.c:1431
+#: plug-ins/common/curve_bend.c:1435
 msgid "Smoot_h"
 msgstr "Сглаживание"
 
-#: plug-ins/common/curve_bend.c:1432
+#: plug-ins/common/curve_bend.c:1436
 msgid "_Free"
 msgstr "Свободная"
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1447
+#: plug-ins/common/curve_bend.c:1451
 msgid "_Copy"
 msgstr "Скопировать"
 
-#: plug-ins/common/curve_bend.c:1452
+#: plug-ins/common/curve_bend.c:1456
 msgid "Copy the active curve to the other border"
 msgstr "Скопировать активную кривую на другой край"
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1459
+#: plug-ins/common/curve_bend.c:1463
 msgid "_Mirror"
 msgstr "Отражение"
 
-#: plug-ins/common/curve_bend.c:1464
+#: plug-ins/common/curve_bend.c:1468
 msgid "Mirror the active curve to the other border"
 msgstr "Зеракально отразить активную кривую на другой край"
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1472
+#: plug-ins/common/curve_bend.c:1476
 msgid "S_wap"
 msgstr "Перестановка"
 
-#: plug-ins/common/curve_bend.c:1477
+#: plug-ins/common/curve_bend.c:1481
 msgid "Swap the two curves"
 msgstr "Переставить две кривые"
 
-#: plug-ins/common/curve_bend.c:1489
+#: plug-ins/common/curve_bend.c:1493
 msgid "Reset the active curve"
 msgstr "Сбросить активную кривую"
 
-#: plug-ins/common/curve_bend.c:1506
+#: plug-ins/common/curve_bend.c:1510
 msgid "Load the curves from a file"
 msgstr "Загрузить кривые из файла"
 
-#: plug-ins/common/curve_bend.c:1518
+#: plug-ins/common/curve_bend.c:1522
 msgid "Save the curves to a file"
 msgstr "Сохранить кривые в файле"
 
-#: plug-ins/common/curve_bend.c:2053
+#: plug-ins/common/curve_bend.c:2057
 msgid "Load Curve Points from file"
 msgstr "Загрузить точки кривой из файла"
 
-#: plug-ins/common/curve_bend.c:2080
+#: plug-ins/common/curve_bend.c:2084
 msgid "Save Curve Points to file"
 msgstr "Сохранить точки кривой в файле"
 
-#: plug-ins/common/curve_bend.c:2965
+#: plug-ins/common/curve_bend.c:2969
 msgid "Curve Bend..."
 msgstr "Изгиб кривой..."
 
@@ -3330,21 +3202,21 @@ msgstr "redness_cr709f"
 msgid "_Decompose..."
 msgstr "Разобрать"
 
-#: plug-ins/common/decompose.c:330
+#: plug-ins/common/decompose.c:328
 msgid "Decomposing..."
 msgstr "Разборка..."
 
-#: plug-ins/common/decompose.c:1188
+#: plug-ins/common/decompose.c:1186
 msgid "Decompose"
 msgstr "Разобрать"
 
 #. parameter settings
-#: plug-ins/common/decompose.c:1204
+#: plug-ins/common/decompose.c:1202
 #, fuzzy
 msgid "Extract Channels"
 msgstr "Извлечь каналы:"
 
-#: plug-ins/common/decompose.c:1232
+#: plug-ins/common/decompose.c:1230
 #, fuzzy
 msgid "Decompose to _layers"
 msgstr "Разобрать на слои"
@@ -3354,27 +3226,20 @@ msgstr "Разобрать на слои"
 msgid "_Deinterlace..."
 msgstr "Убрать черезстрочность..."
 
-#: plug-ins/common/deinterlace.c:106 plug-ins/common/despeckle.c:152
-#: plug-ins/common/destripe.c:120 plug-ins/common/nlfilt.c:133
-#: plug-ins/common/sharpen.c:131 plug-ins/common/unsharp.c:154
-#, fuzzy
-msgid "<Image>/Filters/Enhance"
-msgstr "<Image>/Фильтры/Улучшение/Повышение резкости..."
-
-#: plug-ins/common/deinterlace.c:157
+#: plug-ins/common/deinterlace.c:156
 msgid "Deinterlace..."
 msgstr "Убрать черезстрочность..."
 
-#: plug-ins/common/deinterlace.c:316
+#: plug-ins/common/deinterlace.c:315
 msgid "Deinterlace"
 msgstr "Убрать черезстрочность"
 
-#: plug-ins/common/deinterlace.c:341
+#: plug-ins/common/deinterlace.c:340
 #, fuzzy
 msgid "Keep o_dd fields"
 msgstr "Сохранить нечетные поля"
 
-#: plug-ins/common/deinterlace.c:342
+#: plug-ins/common/deinterlace.c:341
 #, fuzzy
 msgid "Keep _even fields"
 msgstr "Сохранить четные поля"
@@ -3384,43 +3249,38 @@ msgstr "Сохранить четные поля"
 msgid "_Depth Merge..."
 msgstr "Объединение глубин"
 
-#: plug-ins/common/depthmerge.c:199 plug-ins/common/film.c:248
-#, fuzzy
-msgid "<Image>/Filters/Combine"
-msgstr "<Image>/Фильтры/Объединение/Фотопленка..."
-
-#: plug-ins/common/depthmerge.c:383
+#: plug-ins/common/depthmerge.c:382
 msgid "Depth-merging..."
 msgstr "Объединение глубин..."
 
-#: plug-ins/common/depthmerge.c:632
+#: plug-ins/common/depthmerge.c:631
 msgid "Depth Merge"
 msgstr "Объединение глубин"
 
-#: plug-ins/common/depthmerge.c:677
+#: plug-ins/common/depthmerge.c:676
 msgid "Source 1:"
 msgstr "Источник 1:"
 
-#: plug-ins/common/depthmerge.c:692 plug-ins/common/depthmerge.c:722
+#: plug-ins/common/depthmerge.c:691 plug-ins/common/depthmerge.c:721
 #, fuzzy
 msgid "Depth map:"
 msgstr "Карта глубин:"
 
-#: plug-ins/common/depthmerge.c:707
+#: plug-ins/common/depthmerge.c:706
 msgid "Source 2:"
 msgstr "Источник 2:"
 
-#: plug-ins/common/depthmerge.c:739
+#: plug-ins/common/depthmerge.c:738
 #, fuzzy
 msgid "O_verlap:"
 msgstr "Перекрывание:"
 
-#: plug-ins/common/depthmerge.c:759
+#: plug-ins/common/depthmerge.c:758
 #, fuzzy
 msgid "Sc_ale 1:"
 msgstr "Масштаб 1:"
 
-#: plug-ins/common/depthmerge.c:769
+#: plug-ins/common/depthmerge.c:768
 #, fuzzy
 msgid "Sca_le 2:"
 msgstr "Масштаб 2:"
@@ -3456,42 +3316,42 @@ msgstr "Удаление пятен"
 #.
 #. * Let the user know what we're doing...
 #.
-#: plug-ins/common/despeckle.c:371
+#: plug-ins/common/despeckle.c:370
 msgid "Despeckling..."
 msgstr "Удаление пятен..."
 
-#: plug-ins/common/despeckle.c:578
+#: plug-ins/common/despeckle.c:577
 msgid "Despeckle"
 msgstr "Удаление пятен"
 
 #.
 #. * Filter type controls...
 #.
-#: plug-ins/common/despeckle.c:604 plug-ins/gimpressionist/orientmap.c:616
+#: plug-ins/common/despeckle.c:603 plug-ins/gimpressionist/orientmap.c:616
 msgid "Type"
 msgstr "Тип"
 
-#: plug-ins/common/despeckle.c:612
+#: plug-ins/common/despeckle.c:611
 msgid "_Adaptive"
 msgstr "Адаптивное"
 
-#: plug-ins/common/despeckle.c:622
+#: plug-ins/common/despeckle.c:621
 msgid "R_ecursive"
 msgstr "Рекурсивное"
 
-#: plug-ins/common/despeckle.c:643 plug-ins/common/neon.c:715
-#: plug-ins/common/nlfilt.c:376 plug-ins/common/nova.c:380
-#: plug-ins/common/unsharp.c:691 plug-ins/common/whirlpinch.c:589
+#: plug-ins/common/despeckle.c:642 plug-ins/common/neon.c:728
+#: plug-ins/common/nlfilt.c:383 plug-ins/common/nova.c:359
+#: plug-ins/common/unsharp.c:691 plug-ins/common/whirlpinch.c:588
 #: plug-ins/gflare/gflare.c:2678 plug-ins/imagemap/imap_circle.c:279
 msgid "_Radius:"
 msgstr "Радиус:"
 
-#: plug-ins/common/despeckle.c:656
+#: plug-ins/common/despeckle.c:655
 #, fuzzy
 msgid "_Black level:"
 msgstr "Уровень черного:"
 
-#: plug-ins/common/despeckle.c:669
+#: plug-ins/common/despeckle.c:668
 #, fuzzy
 msgid "_White level:"
 msgstr "Уровень белого:"
@@ -3501,23 +3361,23 @@ msgstr "Уровень белого:"
 msgid "Des_tripe..."
 msgstr "Убирание штрихов..."
 
-#: plug-ins/common/destripe.c:277
+#: plug-ins/common/destripe.c:276
 msgid "Destriping..."
 msgstr "Убирание штрихов..."
 
-#: plug-ins/common/destripe.c:443
+#: plug-ins/common/destripe.c:442
 msgid "Destripe"
 msgstr "Удалить штрихи"
 
-#: plug-ins/common/destripe.c:470 plug-ins/common/gtm.c:581
+#: plug-ins/common/destripe.c:469 plug-ins/common/gtm.c:581
 #: plug-ins/common/postscript.c:2849 plug-ins/common/postscript.c:3008
-#: plug-ins/common/smooth_palette.c:429 plug-ins/common/tile.c:418
+#: plug-ins/common/smooth_palette.c:429 plug-ins/common/tile.c:417
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
 msgid "_Width:"
 msgstr "Ширина:"
 
-#: plug-ins/common/destripe.c:481
+#: plug-ins/common/destripe.c:480
 #, fuzzy
 msgid "Create _histogram"
 msgstr "Создать гистограмму"
@@ -3566,7 +3426,7 @@ msgid "Sharp edges"
 msgstr "Резкие края"
 
 #: plug-ins/common/diffraction.c:612 plug-ins/common/softglow.c:673
-#: plug-ins/flame/flame.c:1033
+#: plug-ins/flame/flame.c:1041
 msgid "_Brightness:"
 msgstr "Яркость:"
 
@@ -3588,38 +3448,38 @@ msgstr "Другие параметры"
 msgid "_Displace..."
 msgstr "Замещение..."
 
-#: plug-ins/common/displace.c:226
+#: plug-ins/common/displace.c:225
 msgid "Displacing..."
 msgstr "Замещение..."
 
-#: plug-ins/common/displace.c:261
+#: plug-ins/common/displace.c:260
 msgid "Displace"
 msgstr "Замещение"
 
 #. X options
-#: plug-ins/common/displace.c:279
+#: plug-ins/common/displace.c:278
 #, fuzzy
 msgid "_X displacement:"
 msgstr "Замещение по Х:"
 
 #. Y Options
-#: plug-ins/common/displace.c:317
+#: plug-ins/common/displace.c:316
 #, fuzzy
 msgid "_Y displacement:"
 msgstr "Замещение по Y:"
 
-#: plug-ins/common/displace.c:354
+#: plug-ins/common/displace.c:353
 msgid "On Edges:"
 msgstr "На краях:"
 
-#: plug-ins/common/displace.c:360 plug-ins/common/edge.c:730
-#: plug-ins/common/ripple.c:550 plug-ins/common/waves.c:328
+#: plug-ins/common/displace.c:359 plug-ins/common/edge.c:729
+#: plug-ins/common/ripple.c:561 plug-ins/common/waves.c:274
 msgid "_Smear"
 msgstr "Размыть"
 
-#: plug-ins/common/displace.c:362 plug-ins/common/edge.c:743
-#: plug-ins/common/fractaltrace.c:736 plug-ins/common/newsprint.c:407
-#: plug-ins/common/ripple.c:551
+#: plug-ins/common/displace.c:361 plug-ins/common/edge.c:742
+#: plug-ins/common/fractaltrace.c:735 plug-ins/common/newsprint.c:407
+#: plug-ins/common/ripple.c:562
 msgid "_Black"
 msgstr "Черный"
 
@@ -3628,38 +3488,32 @@ msgstr "Черный"
 msgid "Difference of Gaussians..."
 msgstr "Выборочное Гауссово размывание"
 
-#: plug-ins/common/dog.c:145 plug-ins/common/edge.c:169
-#: plug-ins/common/laplace.c:102 plug-ins/common/sobel.c:126
-#, fuzzy
-msgid "<Image>/Filters/Edge-Detect"
-msgstr "<Image>/Фильтры/Выделение края/Лаплас"
-
-#: plug-ins/common/dog.c:222 plug-ins/common/dog.c:273
+#: plug-ins/common/dog.c:221 plug-ins/common/dog.c:272
 #, fuzzy
 msgid "DoG Edge Detect"
 msgstr "Выделение края"
 
-#: plug-ins/common/dog.c:294
+#: plug-ins/common/dog.c:293
 #, fuzzy
 msgid "Smoothing parameters"
 msgstr "Скопировать параметры"
 
-#: plug-ins/common/dog.c:308
+#: plug-ins/common/dog.c:307
 #, fuzzy
 msgid "_Radius 1:"
 msgstr "Радиус:"
 
-#: plug-ins/common/dog.c:312
+#: plug-ins/common/dog.c:311
 #, fuzzy
 msgid "R_adius 2:"
 msgstr "Радиус:"
 
-#: plug-ins/common/dog.c:324 plug-ins/common/normalize.c:88
+#: plug-ins/common/dog.c:323 plug-ins/common/normalize.c:88
 #, fuzzy
 msgid "_Normalize"
 msgstr "Нормальное"
 
-#: plug-ins/common/dog.c:335 plug-ins/gimpressionist/paper.c:149
+#: plug-ins/common/dog.c:334 plug-ins/gimpressionist/paper.c:149
 msgid "_Invert"
 msgstr "Инвертировать"
 
@@ -3668,75 +3522,75 @@ msgstr "Инвертировать"
 msgid "_Edge..."
 msgstr "Края"
 
-#: plug-ins/common/edge.c:235
+#: plug-ins/common/edge.c:234
 msgid "Edge Detection..."
 msgstr "Выделение края..."
 
-#: plug-ins/common/edge.c:649
+#: plug-ins/common/edge.c:648
 msgid "Edge Detection"
 msgstr "Выделение края"
 
-#: plug-ins/common/edge.c:676
+#: plug-ins/common/edge.c:675
 #, fuzzy
 msgid "Sobel"
 msgstr "Собел"
 
-#: plug-ins/common/edge.c:677
+#: plug-ins/common/edge.c:676
 #, fuzzy
 msgid "Prewitt"
 msgstr "По _Превитту"
 
-#: plug-ins/common/edge.c:678 plug-ins/common/sinus.c:898
+#: plug-ins/common/edge.c:677 plug-ins/common/sinus.c:897
 msgid "Gradient"
 msgstr "Градиент"
 
-#: plug-ins/common/edge.c:679
+#: plug-ins/common/edge.c:678
 #, fuzzy
 msgid "Roberts"
 msgstr "По _Робертсу"
 
-#: plug-ins/common/edge.c:680
+#: plug-ins/common/edge.c:679
 #, fuzzy
 msgid "Differential"
 msgstr "Дифференциальный"
 
-#: plug-ins/common/edge.c:681
+#: plug-ins/common/edge.c:680
 #, fuzzy
 msgid "Laplace"
 msgstr "Лаплас"
 
-#: plug-ins/common/edge.c:690
+#: plug-ins/common/edge.c:689
 #, fuzzy
 msgid "_Algorithm:"
 msgstr "Алгоритм"
 
-#: plug-ins/common/edge.c:698
+#: plug-ins/common/edge.c:697
 #, fuzzy
 msgid "A_mount:"
 msgstr "Величина:"
 
-#: plug-ins/common/emboss.c:135
+#: plug-ins/common/emboss.c:133
 #, fuzzy
 msgid "_Emboss..."
 msgstr "Барельеф"
 
-#: plug-ins/common/emboss.c:361 plug-ins/common/emboss.c:417
+#: plug-ins/common/emboss.c:374 plug-ins/common/emboss.c:439
 msgid "Emboss"
 msgstr "Барельеф"
 
-#: plug-ins/common/emboss.c:438
+#: plug-ins/common/emboss.c:460
 msgid "Function"
 msgstr "Функция"
 
-#: plug-ins/common/emboss.c:442
+#: plug-ins/common/emboss.c:464
 msgid "_Bumpmap"
 msgstr "Рельеф"
 
-#: plug-ins/common/emboss.c:443
+#: plug-ins/common/emboss.c:465
 msgid "_Emboss"
 msgstr "Барельеф"
 
-#: plug-ins/common/emboss.c:475
+#: plug-ins/common/emboss.c:497
 msgid "E_levation:"
 msgstr "Возвышение:"
 
@@ -3745,23 +3599,23 @@ msgstr "Возвышение:"
 msgid "En_grave..."
 msgstr "Гравирование..."
 
-#: plug-ins/common/engrave.c:182
+#: plug-ins/common/engrave.c:181
 msgid "Engraving..."
 msgstr "Гравирование..."
 
-#: plug-ins/common/engrave.c:212
+#: plug-ins/common/engrave.c:211
 msgid "Engrave"
 msgstr "Гравюра"
 
-#: plug-ins/common/engrave.c:239 plug-ins/common/film.c:1207
+#: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1206
 #: plug-ins/common/gtm.c:597 plug-ins/common/postscript.c:2858
 #: plug-ins/common/postscript.c:3017 plug-ins/common/smooth_palette.c:434
-#: plug-ins/common/tile.c:422 plug-ins/imagemap/imap_cmd_guides.c:175
+#: plug-ins/common/tile.c:421 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
 msgstr "Высота:"
 
-#: plug-ins/common/engrave.c:250
+#: plug-ins/common/engrave.c:249
 #, fuzzy
 msgid "_Limit line width"
 msgstr "Ограничение ширины линии"
@@ -3771,52 +3625,52 @@ msgstr "Ограничение ширины линии"
 msgid "_Color Exchange..."
 msgstr "Замена цвета..."
 
-#: plug-ins/common/exchange.c:219
+#: plug-ins/common/exchange.c:218
 msgid "Color Exchange..."
 msgstr "Замена цвета..."
 
 #. set up the dialog
-#: plug-ins/common/exchange.c:294
+#: plug-ins/common/exchange.c:293
 msgid "Color Exchange"
 msgstr "Замена цвета"
 
-#: plug-ins/common/exchange.c:309
+#: plug-ins/common/exchange.c:308
 #, fuzzy
 msgid "Middle-click inside preview to pick \"From Color\""
 msgstr "Просмотр: щелкните внутри для выбора \"С цвета\""
 
-#: plug-ins/common/exchange.c:347
+#: plug-ins/common/exchange.c:346
 msgid "To Color"
 msgstr "На цвет"
 
-#: plug-ins/common/exchange.c:347
+#: plug-ins/common/exchange.c:346
 msgid "From Color"
 msgstr "С цвета"
 
-#: plug-ins/common/exchange.c:365
+#: plug-ins/common/exchange.c:364
 msgid "Color Exchange: To Color"
 msgstr "Замена цвета: на цвет"
 
-#: plug-ins/common/exchange.c:366
+#: plug-ins/common/exchange.c:365
 msgid "Color Exchange: From Color"
 msgstr "Замена цвета: с цвета"
 
-#: plug-ins/common/exchange.c:424
+#: plug-ins/common/exchange.c:423
 #, fuzzy
 msgid "R_ed threshold:"
 msgstr "Порог красного:"
 
-#: plug-ins/common/exchange.c:485
+#: plug-ins/common/exchange.c:484
 #, fuzzy
 msgid "G_reen threshold:"
 msgstr "Порог зеленого:"
 
-#: plug-ins/common/exchange.c:546
+#: plug-ins/common/exchange.c:545
 #, fuzzy
 msgid "B_lue threshold:"
 msgstr "Порог синего:"
 
-#: plug-ins/common/exchange.c:574
+#: plug-ins/common/exchange.c:573
 #, fuzzy
 msgid "Lock _thresholds"
 msgstr "Зафиксировать пороги"
@@ -3826,196 +3680,344 @@ msgstr "Зафиксировать пороги"
 msgid "_Film..."
 msgstr "Фотопленка"
 
-#: plug-ins/common/film.c:326
+#: plug-ins/common/film.c:325
 msgid "Composing Images..."
 msgstr "Сборка изображений..."
 
-#: plug-ins/common/film.c:437 plug-ins/common/guillotine.c:184
-#: plug-ins/helpbrowser/dialog.c:475
+#: plug-ins/common/film.c:436 plug-ins/common/guillotine.c:183
+#: plug-ins/helpbrowser/dialog.c:463
 msgid "Untitled"
 msgstr "Неозаглавленное"
 
 #. ** Get a RGB copy of the source region **
-#: plug-ins/common/film.c:704
+#: plug-ins/common/film.c:703
 msgid "Temporary"
 msgstr "Временное"
 
-#: plug-ins/common/film.c:1083
+#: plug-ins/common/film.c:1082
 msgid "Available Images:"
 msgstr "Доступные изображения:"
 
-#: plug-ins/common/film.c:1084
+#: plug-ins/common/film.c:1083
 msgid "On Film:"
 msgstr "Фотопленка:"
 
 #. Create selection
-#: plug-ins/common/film.c:1170 plug-ins/imagemap/imap_selection.c:404
+#: plug-ins/common/film.c:1169 plug-ins/imagemap/imap_selection.c:404
 #: plug-ins/rcm/rcm_dialog.c:159
 msgid "Selection"
 msgstr "Выделение"
 
 #. Film height/colour
-#: plug-ins/common/film.c:1180 plug-ins/common/film.c:1453
+#: plug-ins/common/film.c:1179 plug-ins/common/film.c:1452
 msgid "Film"
 msgstr "Фотопленка"
 
 #. Keep maximum image height
-#: plug-ins/common/film.c:1189
+#: plug-ins/common/film.c:1188
 #, fuzzy
 msgid "_Fit height to images"
 msgstr "Растягивать по высоте изображения"
 
 #. Film color
-#: plug-ins/common/film.c:1225
+#: plug-ins/common/film.c:1224
 msgid "Select Film Color"
 msgstr "Выбрать цвет пленки"
 
-#: plug-ins/common/film.c:1230 plug-ins/common/film.c:1281
-#: plug-ins/common/nova.c:367
+#: plug-ins/common/film.c:1229 plug-ins/common/film.c:1280
+#: plug-ins/common/nova.c:346
 msgid "Co_lor:"
 msgstr "Цвет:"
 
 #. Film numbering: Startindex/Font/colour
-#: plug-ins/common/film.c:1239
+#: plug-ins/common/film.c:1238
 msgid "Numbering"
 msgstr "Нумерация"
 
-#: plug-ins/common/film.c:1257
+#: plug-ins/common/film.c:1256
 #, fuzzy
 msgid "Start _index:"
 msgstr "Считаем от:"
 
-#: plug-ins/common/film.c:1271
+#: plug-ins/common/film.c:1270
 msgid "_Font:"
 msgstr "Шрифт:"
 
 #. Numbering color
-#: plug-ins/common/film.c:1276
+#: plug-ins/common/film.c:1275
 msgid "Select Number Color"
 msgstr "Выбрать цвет цифр"
 
-#: plug-ins/common/film.c:1291
+#: plug-ins/common/film.c:1290
 #, fuzzy
 msgid "At _bottom"
 msgstr "Снизу"
 
-#: plug-ins/common/film.c:1292
+#: plug-ins/common/film.c:1291
 #, fuzzy
 msgid "At _top"
 msgstr "Сверху"
 
 #. ** The right frame keeps the image selection **
-#: plug-ins/common/film.c:1305
+#: plug-ins/common/film.c:1304
 msgid "Image Selection"
 msgstr "Выбор изображения"
 
-#: plug-ins/common/film.c:1333
+#: plug-ins/common/film.c:1332
 msgid "All Values are Fractions of the Film Height"
 msgstr "Все значения - доли высоты пленки"
 
-#: plug-ins/common/film.c:1336
+#: plug-ins/common/film.c:1335
 msgid "Ad_vanced"
 msgstr "Дополнительные"
 
-#: plug-ins/common/film.c:1355
+#: plug-ins/common/film.c:1354
 #, fuzzy
 msgid "Image _height:"
 msgstr "Высота изображения:"
 
-#: plug-ins/common/film.c:1366
+#: plug-ins/common/film.c:1365
 #, fuzzy
 msgid "Image spac_ing:"
 msgstr "Интервал между изображениями:"
 
-#: plug-ins/common/film.c:1377
+#: plug-ins/common/film.c:1376
 #, fuzzy
 msgid "_Hole offset:"
 msgstr "Смещение отверстий:"
 
-#: plug-ins/common/film.c:1388
+#: plug-ins/common/film.c:1387
 #, fuzzy
 msgid "Ho_le width:"
 msgstr "Ширина отверстий:"
 
-#: plug-ins/common/film.c:1399
+#: plug-ins/common/film.c:1398
 #, fuzzy
 msgid "Hol_e height:"
 msgstr "Высота отверстий:"
 
-#: plug-ins/common/film.c:1410
+#: plug-ins/common/film.c:1409
 #, fuzzy
 msgid "Hole sp_acing:"
 msgstr "Интервал между отверстиями:"
 
-#: plug-ins/common/film.c:1421
+#: plug-ins/common/film.c:1420
 #, fuzzy
 msgid "_Number height:"
 msgstr "Высота чисел:"
 
-#: plug-ins/common/flarefx.c:190
+#: plug-ins/common/flarefx.c:196
 #, fuzzy
 msgid "_FlareFX..."
 msgstr "Отблеск"
 
-#: plug-ins/common/flarefx.c:266
+#: plug-ins/common/flarefx.c:271
 msgid "Render Flare..."
 msgstr "Создание отблеска..."
 
-#: plug-ins/common/flarefx.c:304
+#: plug-ins/common/flarefx.c:308
 msgid "FlareFX"
 msgstr "Отблеск"
 
-#. to avoid side effects while initialization
-#: plug-ins/common/flarefx.c:757
+#: plug-ins/common/flarefx.c:741
 #, fuzzy
 msgid "Center of Flare Effect"
 msgstr "Центр отблеска"
 
-#. show / hide cursor
-#: plug-ins/common/flarefx.c:815
+#: plug-ins/common/flarefx.c:777
 #, fuzzy
 msgid "_Show cursor"
 msgstr "Показать курсор"
+
+#: plug-ins/common/fp.c:224
+msgid "Darker:"
+msgstr "Темнее:"
+
+#: plug-ins/common/fp.c:225
+msgid "Lighter:"
+msgstr "Светлее:"
+
+#: plug-ins/common/fp.c:227
+msgid "More Sat:"
+msgstr "Больше насыщ.:"
+
+#: plug-ins/common/fp.c:228
+msgid "Less Sat:"
+msgstr "Меньше насыщ.:"
+
+#. All the previews
+#: plug-ins/common/fp.c:230 plug-ins/common/fp.c:477
+msgid "Current:"
+msgstr "Текущее:"
+
+#: plug-ins/common/fp.c:321
+#, fuzzy
+msgid "_Filter Pack..."
+msgstr "Применяется набор фильтров..."
+
+#: plug-ins/common/fp.c:361
+msgid "Convert the image to RGB first!"
+msgstr "Сначала преобразуйте изображение в RGB!"
+
+#: plug-ins/common/fp.c:366
+msgid "Applying the Filter Pack..."
+msgstr "Применяется набор фильтров..."
+
+#: plug-ins/common/fp.c:474
+msgid "Before and After"
+msgstr "До и после"
+
+#: plug-ins/common/fp.c:481
+msgid "Original:"
+msgstr "Исходное:"
+
+#: plug-ins/common/fp.c:540
+msgid "Hue Variations"
+msgstr "Варианты тона"
+
+#: plug-ins/common/fp.c:594
+msgid "Roughness"
+msgstr "Шероховатость"
+
+#: plug-ins/common/fp.c:637
+msgid "Affected Range"
+msgstr "Обрабатываемый диапазон"
+
+#: plug-ins/common/fp.c:641
+msgid "Sha_dows"
+msgstr "Тени"
+
+#: plug-ins/common/fp.c:642
+msgid "_Midtones"
+msgstr "Полутона"
+
+#: plug-ins/common/fp.c:643
+msgid "H_ighlights"
+msgstr "Блики:"
+
+#: plug-ins/common/fp.c:657
+msgid "Windows"
+msgstr "Окна"
+
+#: plug-ins/common/fp.c:667 plug-ins/common/lic.c:642
+msgid "_Saturation"
+msgstr "Насыщенность"
+
+#: plug-ins/common/fp.c:675
+msgid "A_dvanced"
+msgstr "Дополнительные"
+
+#: plug-ins/common/fp.c:695
+msgid "Value Variations"
+msgstr "Изменения значений"
+
+#: plug-ins/common/fp.c:739
+msgid "Saturation Variations"
+msgstr "Изменения насыщенности"
+
+#: plug-ins/common/fp.c:791
+msgid "Select Pixels by"
+msgstr "Выбрать точки растра по"
+
+#: plug-ins/common/fp.c:796
+msgid "H_ue"
+msgstr "Тон:"
+
+#: plug-ins/common/fp.c:797
+msgid "Satu_ration"
+msgstr "Насыщенность"
+
+#: plug-ins/common/fp.c:798
+msgid "V_alue"
+msgstr "Яркость"
+
+#: plug-ins/common/fp.c:824
+msgid "Show"
+msgstr "Показать"
+
+#: plug-ins/common/fp.c:829
+msgid "_Entire Image"
+msgstr "Все изображение"
+
+#: plug-ins/common/fp.c:830
+msgid "Se_lection Only"
+msgstr "Выделенную часть"
+
+#: plug-ins/common/fp.c:831
+msgid "Selec_tion In Context"
+msgstr "Выделение в контексте"
+
+#: plug-ins/common/fp.c:1143
+msgid "Filter Pack Simulation"
+msgstr "Моделирование набора фильтров"
+
+#: plug-ins/common/fp.c:1253
+msgid "Shadows:"
+msgstr "Тени:"
+
+#: plug-ins/common/fp.c:1254
+msgid "Midtones:"
+msgstr "Полутона:"
+
+#: plug-ins/common/fp.c:1255
+msgid "Highlights:"
+msgstr "Блики:"
+
+#: plug-ins/common/fp.c:1267
+msgid "Advanced Filter Pack Options"
+msgstr "Дополнительные параметры пакета фильтров"
+
+#: plug-ins/common/fp.c:1278
+msgid "Smoothness of Aliasing"
+msgstr "Гладкость выравнивания"
+
+#: plug-ins/common/fp.c:1378
+msgid "Preview as You Drag"
+msgstr "Просмотр при перетаскивании"
+
+#: plug-ins/common/fp.c:1382
+msgid "Preview Size"
+msgstr "Размер просмотра"
 
 #: plug-ins/common/fractaltrace.c:126
 #, fuzzy
 msgid "_Fractal Trace..."
 msgstr "Фрактальный след"
 
-#: plug-ins/common/fractaltrace.c:467 plug-ins/common/fractaltrace.c:694
+#: plug-ins/common/fractaltrace.c:466 plug-ins/common/fractaltrace.c:693
 msgid "Fractal Trace"
 msgstr "Фрактальный след"
 
 #. Settings
-#: plug-ins/common/fractaltrace.c:727
+#: plug-ins/common/fractaltrace.c:726
 msgid "Outside Type"
 msgstr "Тип вывода"
 
-#: plug-ins/common/fractaltrace.c:732
+#: plug-ins/common/fractaltrace.c:731
 msgid "_Warp"
 msgstr "Деформация"
 
-#: plug-ins/common/fractaltrace.c:738
+#: plug-ins/common/fractaltrace.c:737
 msgid "_White"
 msgstr "Белый"
 
-#: plug-ins/common/fractaltrace.c:745
+#: plug-ins/common/fractaltrace.c:744
 msgid "Mandelbrot Parameters"
 msgstr "Параметры Мандельброта"
 
-#: plug-ins/common/fractaltrace.c:756
+#: plug-ins/common/fractaltrace.c:755
 msgid "X_1:"
 msgstr "X1:"
 
-#: plug-ins/common/fractaltrace.c:765
+#: plug-ins/common/fractaltrace.c:764
 msgid "X_2:"
 msgstr "X2:"
 
-#: plug-ins/common/fractaltrace.c:774
+#: plug-ins/common/fractaltrace.c:773
 msgid "Y_1:"
 msgstr "Y1:"
 
-#: plug-ins/common/fractaltrace.c:783
+#: plug-ins/common/fractaltrace.c:782
 msgid "Y_2:"
 msgstr "Y2:"
 
@@ -4024,41 +4026,41 @@ msgstr "Y2:"
 msgid "_Gaussian Blur..."
 msgstr "RLE Гауссово размывание"
 
-#: plug-ins/common/gauss.c:408
+#: plug-ins/common/gauss.c:407
 #, fuzzy
 msgid "Gaussian Blur..."
 msgstr "RLE Гауссово размывание"
 
-#: plug-ins/common/gauss.c:461
+#: plug-ins/common/gauss.c:460
 #, fuzzy
 msgid "Gaussian Blur"
 msgstr "IIR Гауссово размывание"
 
 #. parameter settings
-#: plug-ins/common/gauss.c:484
+#: plug-ins/common/gauss.c:483
 msgid "Blur Radius"
 msgstr "Радиус размывания"
 
-#: plug-ins/common/gauss.c:498 plug-ins/common/jigsaw.c:2517
-#: plug-ins/common/spread.c:379
+#: plug-ins/common/gauss.c:497 plug-ins/common/jigsaw.c:2473
+#: plug-ins/common/spread.c:378
 msgid "_Horizontal:"
 msgstr "Горизонтально:"
 
-#: plug-ins/common/gauss.c:502 plug-ins/common/jigsaw.c:2534
-#: plug-ins/common/spread.c:383
+#: plug-ins/common/gauss.c:501 plug-ins/common/jigsaw.c:2490
+#: plug-ins/common/spread.c:382
 msgid "_Vertical:"
 msgstr "Вертикально:"
 
-#: plug-ins/common/gauss.c:525
+#: plug-ins/common/gauss.c:524
 #, fuzzy
 msgid "Blur Method"
 msgstr "Тип размывания"
 
-#: plug-ins/common/gauss.c:529
+#: plug-ins/common/gauss.c:528
 msgid "_IIR"
 msgstr ""
 
-#: plug-ins/common/gauss.c:530
+#: plug-ins/common/gauss.c:529
 #, fuzzy
 msgid "_RLE"
 msgstr "RLE"
@@ -4097,7 +4099,7 @@ msgid "Save as Brush"
 msgstr "Сохранить как кисть"
 
 #. attach labels
-#: plug-ins/common/gbr.c:687 plug-ins/common/grid.c:768
+#: plug-ins/common/gbr.c:687 plug-ins/common/grid.c:767
 msgid "Spacing:"
 msgstr "Интервал: "
 
@@ -4110,21 +4112,16 @@ msgstr "Описание:"
 msgid "Gee-_Slime"
 msgstr ""
 
-#: plug-ins/common/gee.c:101 plug-ins/common/gee_zoom.c:131
-#, fuzzy
-msgid "<Image>/Filters/Toys"
-msgstr "<Image>/Фильтры/Игры/Масштаб"
-
-#: plug-ins/common/gee.c:153
+#: plug-ins/common/gee.c:152
 msgid "GEE-SLIME"
 msgstr "Скольжение"
 
-#: plug-ins/common/gee.c:159 plug-ins/common/gee_zoom.c:192
+#: plug-ins/common/gee.c:158 plug-ins/common/gee_zoom.c:191
 #, fuzzy
 msgid "Thank you for choosing GIMP"
 msgstr "** Спасибо за то что выбрали Gimp **"
 
-#: plug-ins/common/gee.c:167
+#: plug-ins/common/gee.c:166
 msgid ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
@@ -4137,11 +4134,11 @@ msgstr ""
 msgid "Gee-_Zoom"
 msgstr "Масштаб"
 
-#: plug-ins/common/gee_zoom.c:186
+#: plug-ins/common/gee_zoom.c:185
 msgid "GEE-ZOOM"
 msgstr ""
 
-#: plug-ins/common/gee_zoom.c:200
+#: plug-ins/common/gee_zoom.c:199
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
@@ -4292,8 +4289,8 @@ msgstr "Неквадратные пикселы. Изображение, вер�
 msgid "Background (%d%s)"
 msgstr "Фон (%d%s)"
 
-#: plug-ins/common/gifload.c:917 plug-ins/common/iwarp.c:782
-#: plug-ins/common/iwarp.c:814
+#: plug-ins/common/gifload.c:917 plug-ins/common/iwarp.c:781
+#: plug-ins/common/iwarp.c:813
 #, c-format
 msgid "Frame %d"
 msgstr "Кадр %d"
@@ -4403,7 +4400,7 @@ msgstr "Стеклянные блоки"
 msgid "Tile _width:"
 msgstr "Ширина блока:"
 
-#: plug-ins/common/glasstile.c:284 plug-ins/common/mosaic.c:622
+#: plug-ins/common/glasstile.c:284 plug-ins/common/mosaic.c:621
 #, fuzzy
 msgid "Tile _height:"
 msgstr "Высота блока:"
@@ -4413,21 +4410,21 @@ msgstr "Высота блока:"
 msgid "_Qbist..."
 msgstr "Q-бист..."
 
-#: plug-ins/common/gqbist.c:515
+#: plug-ins/common/gqbist.c:514
 msgid "Qbist ..."
 msgstr "Q-бист..."
 
-#: plug-ins/common/gqbist.c:734
+#: plug-ins/common/gqbist.c:733
 #, fuzzy
 msgid "Load QBE file"
 msgstr "Загрузка QBE-файла..."
 
-#: plug-ins/common/gqbist.c:764
+#: plug-ins/common/gqbist.c:763
 #, fuzzy
 msgid "Save (middle transform) as QBE file"
 msgstr "Сохранение (среднего преобразования) как QBE-файла..."
 
-#: plug-ins/common/gqbist.c:806
+#: plug-ins/common/gqbist.c:805
 msgid "G-Qbist"
 msgstr "G-Q-бист"
 
@@ -4436,7 +4433,7 @@ msgstr "G-Q-бист"
 msgid "_Gradient Map"
 msgstr "Градиентное отображение..."
 
-#: plug-ins/common/gradmap.c:125
+#: plug-ins/common/gradmap.c:124
 msgid "Gradient Map..."
 msgstr "Градиентное отображение..."
 
@@ -4445,51 +4442,51 @@ msgstr "Градиентное отображение..."
 msgid "_Grid..."
 msgstr "Направляющие..."
 
-#: plug-ins/common/grid.c:241
+#: plug-ins/common/grid.c:240
 msgid "Drawing Grid..."
 msgstr "Рисование сетки..."
 
-#: plug-ins/common/grid.c:620 plug-ins/gfig/gfig-dialog.c:1350
+#: plug-ins/common/grid.c:619 plug-ins/gfig/gfig-dialog.c:1350
 #: plug-ins/imagemap/imap_menu.c:384 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:164
 msgid "Grid"
 msgstr "Сетка"
 
 #. attach labels
-#: plug-ins/common/grid.c:695
+#: plug-ins/common/grid.c:694
 msgid "Horizontal"
 msgstr "Горизонталь"
 
-#: plug-ins/common/grid.c:697
+#: plug-ins/common/grid.c:696
 msgid "Vertical"
 msgstr "Вертикаль"
 
-#: plug-ins/common/grid.c:699
+#: plug-ins/common/grid.c:698
 msgid "Intersection"
 msgstr "Пересечение"
 
 #. Width and Height
-#: plug-ins/common/grid.c:702 plug-ins/common/svg.c:695
+#: plug-ins/common/grid.c:701 plug-ins/common/svg.c:695
 #: plug-ins/print/gimp_main_window.c:992
 #: plug-ins/print/gimp_main_window.c:1199
 msgid "Width:"
 msgstr "Ширина:"
 
 #. attach labels
-#: plug-ins/common/grid.c:835
+#: plug-ins/common/grid.c:834
 msgid "Offset:"
 msgstr "Смещение:"
 
 #. attach color selectors
-#: plug-ins/common/grid.c:874
+#: plug-ins/common/grid.c:873
 msgid "Horizontal Color"
 msgstr "Цвет для горизонталей"
 
-#: plug-ins/common/grid.c:892
+#: plug-ins/common/grid.c:891
 msgid "Vertical Color"
 msgstr "Цвет для вертикалей"
 
-#: plug-ins/common/grid.c:910
+#: plug-ins/common/grid.c:909
 msgid "Intersection Color"
 msgstr "Цвет пересечений"
 
@@ -4635,18 +4632,9 @@ msgstr "Размер интервала ячеек."
 msgid "_Guillotine"
 msgstr "Гильотина..."
 
-#: plug-ins/common/guillotine.c:79
-#, fuzzy
-msgid "<Image>/Image/Transform"
-msgstr "<Image>/Изображение/Преобразование/Автокадр "
-
-#: plug-ins/common/guillotine.c:105
+#: plug-ins/common/guillotine.c:104
 msgid "Guillotine..."
 msgstr "Гильотина..."
-
-#: plug-ins/common/gz.c:157 plug-ins/common/gz.c:177
-msgid "gzip archive"
-msgstr ""
 
 #: plug-ins/common/header.c:75
 msgid "C source code header"
@@ -4657,32 +4645,32 @@ msgstr ""
 msgid "_Hot..."
 msgstr "\"Горячие\" цвета..."
 
-#: plug-ins/common/hot.c:380
+#: plug-ins/common/hot.c:379
 msgid "Hot..."
 msgstr "\"Горячие\" цвета..."
 
-#: plug-ins/common/hot.c:571
+#: plug-ins/common/hot.c:570
 msgid "Hot"
 msgstr "\"Горячие\" цвета"
 
-#: plug-ins/common/hot.c:601
+#: plug-ins/common/hot.c:600
 #, fuzzy
 msgid "Create _New layer"
 msgstr "Создать новый слой"
 
-#: plug-ins/common/hot.c:610
+#: plug-ins/common/hot.c:609
 msgid "Action"
 msgstr "Действие"
 
-#: plug-ins/common/hot.c:614
+#: plug-ins/common/hot.c:613
 msgid "Reduce _Luminance"
 msgstr "Уменьшить яркость"
 
-#: plug-ins/common/hot.c:615
+#: plug-ins/common/hot.c:614
 msgid "Reduce _Saturation"
 msgstr "Уменьшить насыщенность"
 
-#: plug-ins/common/hot.c:616 plug-ins/common/waves.c:329
+#: plug-ins/common/hot.c:615 plug-ins/common/waves.c:275
 msgid "_Blacken"
 msgstr "Сделать черным"
 
@@ -4691,24 +4679,24 @@ msgstr "Сделать черным"
 msgid "_Illusion..."
 msgstr "Иллюзия..."
 
-#: plug-ins/common/illusion.c:174
+#: plug-ins/common/illusion.c:173
 msgid "Illusion..."
 msgstr "Иллюзия..."
 
-#: plug-ins/common/illusion.c:395
+#: plug-ins/common/illusion.c:394
 msgid "Illusion"
 msgstr "Иллюзия"
 
-#: plug-ins/common/illusion.c:424
+#: plug-ins/common/illusion.c:423
 #, fuzzy
 msgid "_Divisions:"
 msgstr "Деление:"
 
-#: plug-ins/common/illusion.c:434
+#: plug-ins/common/illusion.c:433
 msgid "Mode _1"
 msgstr "Режим 1"
 
-#: plug-ins/common/illusion.c:449
+#: plug-ins/common/illusion.c:448
 msgid "Mode _2"
 msgstr "Режим 2"
 
@@ -4717,169 +4705,169 @@ msgstr "Режим 2"
 msgid "_IWarp..."
 msgstr "Искажение..."
 
-#: plug-ins/common/iwarp.c:687
+#: plug-ins/common/iwarp.c:686
 msgid "Warping..."
 msgstr "Искажение..."
 
-#: plug-ins/common/iwarp.c:789 plug-ins/common/iwarp.c:802
+#: plug-ins/common/iwarp.c:788 plug-ins/common/iwarp.c:801
 #, c-format
 msgid "Warping Frame No. %d..."
 msgstr "Искажается кадр N %d ..."
 
-#: plug-ins/common/iwarp.c:803
+#: plug-ins/common/iwarp.c:802
 #, fuzzy
 msgid "Ping pong"
 msgstr "Пинг-Понг"
 
-#: plug-ins/common/iwarp.c:937
+#: plug-ins/common/iwarp.c:936
 msgid "A_nimate"
 msgstr "Анимировать"
 
-#: plug-ins/common/iwarp.c:956
+#: plug-ins/common/iwarp.c:955
 msgid "Number of _Frames:"
 msgstr "Число кадров:"
 
-#: plug-ins/common/iwarp.c:965
+#: plug-ins/common/iwarp.c:964
 msgid "R_everse"
 msgstr "Обратить"
 
-#: plug-ins/common/iwarp.c:974
+#: plug-ins/common/iwarp.c:973
 msgid "_Ping Pong"
 msgstr "Пинг-Понг"
 
-#: plug-ins/common/iwarp.c:987
+#: plug-ins/common/iwarp.c:986
 msgid "_Animate"
 msgstr "Анимировать"
 
-#: plug-ins/common/iwarp.c:1008
+#: plug-ins/common/iwarp.c:1007
 msgid "Deform Mode"
 msgstr "Режим деформации"
 
-#: plug-ins/common/iwarp.c:1021
+#: plug-ins/common/iwarp.c:1020
 msgid "_Move"
 msgstr "Переместить"
 
-#: plug-ins/common/iwarp.c:1022
+#: plug-ins/common/iwarp.c:1021
 msgid "_Grow"
 msgstr "Рост"
 
-#: plug-ins/common/iwarp.c:1023
+#: plug-ins/common/iwarp.c:1022
 msgid "S_wirl CCW"
 msgstr "Вихрь CCW"
 
-#: plug-ins/common/iwarp.c:1024
+#: plug-ins/common/iwarp.c:1023
 msgid "Remo_ve"
 msgstr "Удалить"
 
-#: plug-ins/common/iwarp.c:1025
+#: plug-ins/common/iwarp.c:1024
 msgid "S_hrink"
 msgstr "Сокращение"
 
-#: plug-ins/common/iwarp.c:1026
+#: plug-ins/common/iwarp.c:1025
 msgid "Sw_irl CW"
 msgstr "Вихрь CW"
 
-#: plug-ins/common/iwarp.c:1055
+#: plug-ins/common/iwarp.c:1054
 #, fuzzy
 msgid "_Deform radius:"
 msgstr "Радиус деформации:"
 
-#: plug-ins/common/iwarp.c:1065
+#: plug-ins/common/iwarp.c:1064
 #, fuzzy
 msgid "D_eform amount:"
 msgstr "Степень деформации:"
 
-#: plug-ins/common/iwarp.c:1074
+#: plug-ins/common/iwarp.c:1073
 msgid "_Bilinear"
 msgstr "Билинейный"
 
-#: plug-ins/common/iwarp.c:1088
+#: plug-ins/common/iwarp.c:1087
 #, fuzzy
 msgid "Adaptive s_upersample"
 msgstr "Адаптивная супервыборка"
 
-#: plug-ins/common/iwarp.c:1108
+#: plug-ins/common/iwarp.c:1107
 #, fuzzy
 msgid "Ma_x depth:"
 msgstr "Макс. глубина:"
 
-#: plug-ins/common/iwarp.c:1118
+#: plug-ins/common/iwarp.c:1117
 msgid "Thresho_ld:"
 msgstr "Порог:"
 
-#: plug-ins/common/iwarp.c:1131 plug-ins/common/sinus.c:765
+#: plug-ins/common/iwarp.c:1130 plug-ins/common/sinus.c:764
 #: plug-ins/gflare/gflare.c:2787
 msgid "_Settings"
 msgstr "Установки"
 
-#: plug-ins/common/iwarp.c:1147
+#: plug-ins/common/iwarp.c:1146
 msgid "IWarp"
 msgstr "Интерактивное искажение"
 
-#: plug-ins/common/jigsaw.c:388
+#: plug-ins/common/jigsaw.c:381
 #, fuzzy
 msgid "_Jigsaw..."
 msgstr "Пазл"
 
-#: plug-ins/common/jigsaw.c:445
+#: plug-ins/common/jigsaw.c:435
 msgid "Assembling Jigsaw..."
 msgstr "Сборка пазла..."
 
-#: plug-ins/common/jigsaw.c:2472
+#: plug-ins/common/jigsaw.c:2440
 msgid "Jigsaw"
 msgstr "Пазл"
 
-#: plug-ins/common/jigsaw.c:2505
+#: plug-ins/common/jigsaw.c:2461
 msgid "Number of Tiles"
 msgstr "Количество частей пазла"
 
-#: plug-ins/common/jigsaw.c:2520
+#: plug-ins/common/jigsaw.c:2476
 msgid "Number of pieces going across"
 msgstr "Число частей по горизонтали"
 
-#: plug-ins/common/jigsaw.c:2537
+#: plug-ins/common/jigsaw.c:2493
 msgid "Number of pieces going down"
 msgstr "Число частей по вертикали"
 
-#: plug-ins/common/jigsaw.c:2551
+#: plug-ins/common/jigsaw.c:2507
 msgid "Bevel Edges"
 msgstr "Закругленные края"
 
-#: plug-ins/common/jigsaw.c:2561
+#: plug-ins/common/jigsaw.c:2517
 #, fuzzy
 msgid "_Bevel width:"
 msgstr "Закругление краев:"
 
-#: plug-ins/common/jigsaw.c:2565
+#: plug-ins/common/jigsaw.c:2521
 msgid "Degree of slope of each piece's edge"
 msgstr "Степень наклона кромки"
 
-#: plug-ins/common/jigsaw.c:2578
+#: plug-ins/common/jigsaw.c:2534
 msgid "H_ighlight:"
 msgstr "Блики:"
 
-#: plug-ins/common/jigsaw.c:2582
+#: plug-ins/common/jigsaw.c:2538
 msgid "The amount of highlighting on the edges of each piece"
 msgstr "Размер блика на краях каждого кусочка"
 
 #. frame for primitive radio buttons
-#: plug-ins/common/jigsaw.c:2599
+#: plug-ins/common/jigsaw.c:2555
 msgid "Jigsaw Style"
 msgstr "Стиль головоломки"
 
-#: plug-ins/common/jigsaw.c:2603
+#: plug-ins/common/jigsaw.c:2559
 msgid "_Square"
 msgstr "Квадратные"
 
-#: plug-ins/common/jigsaw.c:2604
+#: plug-ins/common/jigsaw.c:2560
 msgid "C_urved"
 msgstr "Искривленные"
 
-#: plug-ins/common/jigsaw.c:2608
+#: plug-ins/common/jigsaw.c:2564
 msgid "Each piece has straight sides"
 msgstr "Каждый кусочек имеет прямые стороны"
 
-#: plug-ins/common/jigsaw.c:2609
+#: plug-ins/common/jigsaw.c:2565
 msgid "Each piece has curved sides"
 msgstr "Каждый кусочек имеет искривленные стороны"
 
@@ -5015,10 +5003,6 @@ msgstr "Ван Гог (LIC)"
 msgid "Effect Channel"
 msgstr "Канал эффекта"
 
-#: plug-ins/common/lic.c:642 plug-ins/fp/fp.c:668
-msgid "_Saturation"
-msgstr "Насыщенность"
-
 #: plug-ins/common/lic.c:643
 msgid "_Brightness"
 msgstr "Яркость"
@@ -5083,16 +5067,10 @@ msgstr "Максимальное значение:"
 msgid "_Van Gogh (LIC)..."
 msgstr "Ван Гог (LIC)..."
 
-#: plug-ins/common/mail.c:214
+#: plug-ins/common/mail.c:215
 #, fuzzy
 msgid "_Mail Image..."
 msgstr "<Image>/Файл/Отправить почтой..."
-
-#: plug-ins/common/mail.c:221 plug-ins/common/winprint.c:243
-#: plug-ins/common/winprint.c:245 plug-ins/print/print.c:171
-#, fuzzy
-msgid "<Image>/File/Send"
-msgstr "<Image>/Файл/Печать..."
 
 #: plug-ins/common/mail.c:434
 msgid "Send to Mail"
@@ -5194,24 +5172,24 @@ msgstr "В:"
 msgid "_Max RGB..."
 msgstr "Макс. RGB..."
 
-#: plug-ins/common/max_rgb.c:146
+#: plug-ins/common/max_rgb.c:145
 msgid "Can only operate on RGB drawables."
 msgstr "Возможна работа только с изображениями в режиме RGB."
 
-#: plug-ins/common/max_rgb.c:246
+#: plug-ins/common/max_rgb.c:245
 msgid "Max RGB..."
 msgstr "Макс. RGB..."
 
-#: plug-ins/common/max_rgb.c:271
+#: plug-ins/common/max_rgb.c:270
 msgid "Max RGB"
 msgstr "Макс. RGB"
 
-#: plug-ins/common/max_rgb.c:296
+#: plug-ins/common/max_rgb.c:295
 #, fuzzy
 msgid "_Hold the maximal channels"
 msgstr "Сохранять максимальные каналы"
 
-#: plug-ins/common/max_rgb.c:299
+#: plug-ins/common/max_rgb.c:298
 #, fuzzy
 msgid "Ho_ld the minimal channels"
 msgstr "Сохранять минимальные каналы"
@@ -5221,39 +5199,39 @@ msgstr "Сохранять минимальные каналы"
 msgid "_Motion Blur..."
 msgstr "Размывание движением..."
 
-#: plug-ins/common/mblur.c:797
+#: plug-ins/common/mblur.c:796
 msgid "Motion Blurring..."
 msgstr "Размывание движением..."
 
-#: plug-ins/common/mblur.c:894
+#: plug-ins/common/mblur.c:893
 msgid "Motion Blur"
 msgstr "Размывание движением"
 
-#: plug-ins/common/mblur.c:916
+#: plug-ins/common/mblur.c:915
 msgid "Blur Type"
 msgstr "Тип размывания"
 
-#: plug-ins/common/mblur.c:920
+#: plug-ins/common/mblur.c:919
 msgid "_Linear"
 msgstr "Линейное"
 
-#: plug-ins/common/mblur.c:921
+#: plug-ins/common/mblur.c:920
 msgid "_Radial"
 msgstr "Радиальное"
 
-#: plug-ins/common/mblur.c:922
+#: plug-ins/common/mblur.c:921
 msgid "_Zoom"
 msgstr "Масштаб"
 
-#: plug-ins/common/mblur.c:931
+#: plug-ins/common/mblur.c:930
 msgid "Blur Parameters"
 msgstr "Параметры размывания"
 
-#: plug-ins/common/mblur.c:957 plug-ins/common/newsprint.c:1011
+#: plug-ins/common/mblur.c:956 plug-ins/common/newsprint.c:1010
 msgid "_Angle:"
 msgstr "Угол:"
 
-#: plug-ins/common/mblur.c:970
+#: plug-ins/common/mblur.c:969
 #, fuzzy
 msgid "Blur Center"
 msgstr "Центр"
@@ -5386,88 +5364,88 @@ msgid "_Mosaic..."
 msgstr "Мозаика"
 
 #. progress bar for gradient finding
-#: plug-ins/common/mosaic.c:436
+#: plug-ins/common/mosaic.c:435
 msgid "Finding Edges..."
 msgstr "Поиск краев..."
 
 #. Progress bar for rendering tiles
-#: plug-ins/common/mosaic.c:484
+#: plug-ins/common/mosaic.c:483
 msgid "Rendering Tiles..."
 msgstr "Визуализация элементов..."
 
-#: plug-ins/common/mosaic.c:510
+#: plug-ins/common/mosaic.c:509
 msgid "Mosaic"
 msgstr "Мозаика"
 
-#: plug-ins/common/mosaic.c:545
+#: plug-ins/common/mosaic.c:544
 #, fuzzy
 msgid "Co_lor averaging"
 msgstr "Усреднение цвета"
 
-#: plug-ins/common/mosaic.c:555
+#: plug-ins/common/mosaic.c:554
 #, fuzzy
 msgid "Allo_w tile splitting"
 msgstr "Позволить расщепление кусочков"
 
-#: plug-ins/common/mosaic.c:565
+#: plug-ins/common/mosaic.c:564
 #, fuzzy
 msgid "_Pitted surfaces"
 msgstr "Поверхности с выемками"
 
-#: plug-ins/common/mosaic.c:575
+#: plug-ins/common/mosaic.c:574
 #, fuzzy
 msgid "_FG/BG lighting"
 msgstr "Осветление переднего плана/фона"
 
 #. tiling primitive
-#: plug-ins/common/mosaic.c:589
+#: plug-ins/common/mosaic.c:588
 msgid "Tiling Primitives"
 msgstr "Элементы мозайки"
 
-#: plug-ins/common/mosaic.c:593
+#: plug-ins/common/mosaic.c:592
 msgid "_Squares"
 msgstr "Квадраты"
 
-#: plug-ins/common/mosaic.c:594
+#: plug-ins/common/mosaic.c:593
 msgid "He_xagons"
 msgstr "Шестиугольники"
 
-#: plug-ins/common/mosaic.c:595
+#: plug-ins/common/mosaic.c:594
 #, fuzzy
 msgid "Oc_tagons & squares"
 msgstr "Восьмиугольники и квадраты"
 
 #. parameter settings
-#: plug-ins/common/mosaic.c:604
+#: plug-ins/common/mosaic.c:603
 msgid "Settings"
 msgstr "Настройки"
 
-#: plug-ins/common/mosaic.c:613
+#: plug-ins/common/mosaic.c:612
 #, fuzzy
 msgid "T_ile size:"
 msgstr "Размер элемента:"
 
-#: plug-ins/common/mosaic.c:631
+#: plug-ins/common/mosaic.c:630
 #, fuzzy
 msgid "Til_e spacing:"
 msgstr "Интервал между элементами:"
 
-#: plug-ins/common/mosaic.c:640
+#: plug-ins/common/mosaic.c:639
 #, fuzzy
 msgid "Tile _neatness:"
 msgstr "Чистота элементов:"
 
-#: plug-ins/common/mosaic.c:650
+#: plug-ins/common/mosaic.c:649
 #, fuzzy
 msgid "Light _direction:"
 msgstr "Направление освещения:"
 
-#: plug-ins/common/mosaic.c:659
+#: plug-ins/common/mosaic.c:658
 #, fuzzy
 msgid "Color _variation:"
 msgstr "Цветовые вариации:"
 
-#: plug-ins/common/mosaic.c:2393
+#: plug-ins/common/mosaic.c:2392
 msgid "Unable to add additional point.\n"
 msgstr "Не удалось добавить дополнительную точку.\n"
 
@@ -5481,12 +5459,12 @@ msgstr "Видео/RGB..."
 msgid "Neon..."
 msgstr "Газетная бумага..."
 
-#: plug-ins/common/neon.c:685
+#: plug-ins/common/neon.c:698
 #, fuzzy
 msgid "Neon Detection"
 msgstr "Выделение края"
 
-#: plug-ins/common/neon.c:730 plug-ins/common/unsharp.c:704
+#: plug-ins/common/neon.c:743 plug-ins/common/unsharp.c:704
 msgid "_Amount:"
 msgstr "Величина:"
 
@@ -5539,79 +5517,79 @@ msgstr "Интенсивность"
 msgid "Newsprin_t..."
 msgstr "Газетная бумага..."
 
-#: plug-ins/common/newsprint.c:637
+#: plug-ins/common/newsprint.c:636
 msgid "Newsprint..."
 msgstr "Газетная бумага..."
 
-#: plug-ins/common/newsprint.c:1038
+#: plug-ins/common/newsprint.c:1037
 #, fuzzy
 msgid "_Spot function:"
 msgstr "Капельная функция:"
 
-#: plug-ins/common/newsprint.c:1187
+#: plug-ins/common/newsprint.c:1186
 msgid "Newsprint"
 msgstr "Газета"
 
 #. resolution settings
-#: plug-ins/common/newsprint.c:1203
+#: plug-ins/common/newsprint.c:1202
 msgid "Resolution"
 msgstr "Разрешение"
 
-#: plug-ins/common/newsprint.c:1222
+#: plug-ins/common/newsprint.c:1221
 msgid "_Input SPI:"
 msgstr "SPI на входе:"
 
-#: plug-ins/common/newsprint.c:1233
+#: plug-ins/common/newsprint.c:1232
 msgid "O_utput LPI:"
 msgstr "LPI на выходе:"
 
-#: plug-ins/common/newsprint.c:1243
+#: plug-ins/common/newsprint.c:1242
 #, fuzzy
 msgid "C_ell size:"
 msgstr "Размер ячейки:"
 
 #. screen settings
-#: plug-ins/common/newsprint.c:1253 plug-ins/gflare/gflare.c:566
+#: plug-ins/common/newsprint.c:1252 plug-ins/gflare/gflare.c:566
 msgid "Screen"
 msgstr "Экран"
 
-#: plug-ins/common/newsprint.c:1272
+#: plug-ins/common/newsprint.c:1271
 #, fuzzy
 msgid "B_lack pullout (%):"
 msgstr "Черная составляющая (%)"
 
-#: plug-ins/common/newsprint.c:1291
+#: plug-ins/common/newsprint.c:1290
 msgid "Separate to:"
 msgstr "Разделить на:"
 
-#: plug-ins/common/newsprint.c:1295
+#: plug-ins/common/newsprint.c:1294
 msgid "_RGB"
 msgstr "RGB"
 
-#: plug-ins/common/newsprint.c:1308
+#: plug-ins/common/newsprint.c:1307
 msgid "C_MYK"
 msgstr "CMYK"
 
-#: plug-ins/common/newsprint.c:1321
+#: plug-ins/common/newsprint.c:1320
 msgid "I_ntensity"
 msgstr "Интенсивность"
 
-#: plug-ins/common/newsprint.c:1342
+#: plug-ins/common/newsprint.c:1341
 #, fuzzy
 msgid "_Lock channels"
 msgstr "Фиксировать каналы"
 
-#: plug-ins/common/newsprint.c:1352
+#: plug-ins/common/newsprint.c:1351
 #, fuzzy
 msgid "_Factory defaults"
 msgstr "Исходные настройки"
 
 #. anti-alias control
-#: plug-ins/common/newsprint.c:1375 plug-ins/gfig/gfig-dialog.c:1262
+#: plug-ins/common/newsprint.c:1374 plug-ins/gfig/gfig-dialog.c:1262
 msgid "Antialiasing"
 msgstr "Сглаживание"
 
-#: plug-ins/common/newsprint.c:1383
+#: plug-ins/common/newsprint.c:1382
 msgid "O_versample:"
 msgstr "Перекрывание:"
 
@@ -5620,117 +5598,104 @@ msgstr "Перекрывание:"
 msgid "_NL Filter..."
 msgstr "Нелинейный фильтр..."
 
-#: plug-ins/common/nlfilt.c:246
+#: plug-ins/common/nlfilt.c:254
 msgid "NL Filter..."
 msgstr "Нелинейный фильтр..."
 
-#: plug-ins/common/nlfilt.c:323
+#: plug-ins/common/nlfilt.c:317
 msgid "NL Filter"
 msgstr "Нелинейный фильтр"
 
-#: plug-ins/common/nlfilt.c:344
+#: plug-ins/common/nlfilt.c:338
 msgid "Filter"
 msgstr "Фильтр"
 
-#: plug-ins/common/nlfilt.c:348
+#: plug-ins/common/nlfilt.c:342
 #, fuzzy
 msgid "_Alpha trimmed mean"
 msgstr "Альфа-усеченное среднее"
 
-#: plug-ins/common/nlfilt.c:350
+#: plug-ins/common/nlfilt.c:344
 #, fuzzy
 msgid "Op_timal estimation"
 msgstr "Оптимальный расчет"
 
-#: plug-ins/common/nlfilt.c:352
+#: plug-ins/common/nlfilt.c:346
 #, fuzzy
 msgid "_Edge enhancement"
 msgstr "Усиление края"
 
-#: plug-ins/common/nlfilt.c:367
+#: plug-ins/common/nlfilt.c:371
 msgid "A_lpha:"
 msgstr "Альфа:"
-
-#: plug-ins/common/nlfilt.c:461 plug-ins/common/waves.c:445
-#, fuzzy
-msgid "_Do preview"
-msgstr "Просматривать"
 
 #: plug-ins/common/noisify.c:133
 #, fuzzy
 msgid "_Scatter RGB..."
 msgstr "Рассеивание HSV..."
 
-#: plug-ins/common/noisify.c:140 plug-ins/common/randomize.c:274
-#: plug-ins/common/randomize.c:275 plug-ins/common/randomize.c:276
-#: plug-ins/common/scatter_hsv.c:140 plug-ins/common/spread.c:106
-#, fuzzy
-msgid "<Image>/Filters/Noise"
-msgstr "<Image>/Фильтры/Шум/Таянье..."
-
-#: plug-ins/common/noisify.c:216
+#: plug-ins/common/noisify.c:215
 msgid "Adding Noise..."
 msgstr "Добавление шума..."
 
-#: plug-ins/common/noisify.c:379
+#: plug-ins/common/noisify.c:378
 #, fuzzy
 msgid "Scatter RGB"
 msgstr "Рассеивание HSV"
 
-#: plug-ins/common/noisify.c:403
+#: plug-ins/common/noisify.c:402
 #, fuzzy
 msgid "_Independent RGB"
 msgstr "Независимое"
 
-#: plug-ins/common/noisify.c:427 plug-ins/common/noisify.c:431
+#: plug-ins/common/noisify.c:426 plug-ins/common/noisify.c:430
 msgid "_Gray:"
 msgstr "Серый:"
 
-#: plug-ins/common/noisify.c:432 plug-ins/common/noisify.c:447
+#: plug-ins/common/noisify.c:431 plug-ins/common/noisify.c:446
 msgid "_Alpha:"
 msgstr "Альфа:"
 
-#: plug-ins/common/noisify.c:457
+#: plug-ins/common/noisify.c:456
 #, c-format
 msgid "Channel #%d:"
 msgstr "Канал #%d:"
 
-#: plug-ins/common/normalize.c:123
+#: plug-ins/common/normalize.c:122
 msgid "Normalizing..."
 msgstr "Нормализация..."
 
-#: plug-ins/common/nova.c:191
+#: plug-ins/common/nova.c:179
 #, fuzzy
 msgid "Su_perNova..."
 msgstr "Сверхновая"
 
-#: plug-ins/common/nova.c:276
+#: plug-ins/common/nova.c:262
 msgid "Rendering SuperNova..."
 msgstr "Визуализация Сверхновой..."
 
-#: plug-ins/common/nova.c:318
+#: plug-ins/common/nova.c:305
 msgid "SuperNova"
 msgstr "Сверхновая"
 
-#: plug-ins/common/nova.c:363
+#: plug-ins/common/nova.c:342
 msgid "SuperNova Color Picker"
 msgstr "Цвет Сверхновой"
 
-#: plug-ins/common/nova.c:392
+#: plug-ins/common/nova.c:371
 msgid "_Spokes:"
 msgstr "Лучи:"
 
-#: plug-ins/common/nova.c:407
+#: plug-ins/common/nova.c:386
 #, fuzzy
 msgid "R_andom hue:"
 msgstr "Случайный тон:"
 
-#. to avoid side effects while initialization
-#: plug-ins/common/nova.c:464
+#: plug-ins/common/nova.c:438
 msgid "Center of SuperNova"
 msgstr "Центр Сверхновой"
 
-#: plug-ins/common/nova.c:522
+#: plug-ins/common/nova.c:472
 #, fuzzy
 msgid "S_how cursor"
 msgstr "Показать курсор"
@@ -5740,20 +5705,20 @@ msgstr "Показать курсор"
 msgid "Oili_fy..."
 msgstr "Масляная краска"
 
-#: plug-ins/common/oilify.c:189
+#: plug-ins/common/oilify.c:188
 msgid "Oil Painting..."
 msgstr "Рисование маслом..."
 
-#: plug-ins/common/oilify.c:478
+#: plug-ins/common/oilify.c:477
 msgid "Oilify"
 msgstr "Масляная краска"
 
-#: plug-ins/common/oilify.c:505
+#: plug-ins/common/oilify.c:504
 #, fuzzy
 msgid "_Mask size:"
 msgstr "Размер маски:"
 
-#: plug-ins/common/oilify.c:516
+#: plug-ins/common/oilify.c:515
 #, fuzzy
 msgid "_Use intensity algorithm"
 msgstr "Использовать алгоритм яркости"
@@ -5834,11 +5799,11 @@ msgstr "Цвет фона"
 msgid "Paper Tile..."
 msgstr "Разрез бумаги..."
 
-#: plug-ins/common/papertile.c:813
+#: plug-ins/common/papertile.c:815
 msgid "September 31, 1999"
 msgstr "Сентябрь 31, 1999"
 
-#: plug-ins/common/papertile.c:814
+#: plug-ins/common/papertile.c:816
 #, fuzzy
 msgid "_Paper Tile..."
 msgstr "Разрез бумаги..."
@@ -5889,7 +5854,7 @@ msgstr "\"Горячие\" цвета..."
 msgid "Photocopy"
 msgstr "Фотография"
 
-#: plug-ins/common/photocopy.c:881 plug-ins/common/sharpen.c:514
+#: plug-ins/common/photocopy.c:881 plug-ins/common/sharpen.c:513
 #: plug-ins/common/softglow.c:687
 msgid "_Sharpness:"
 msgstr "Резкость:"
@@ -5913,19 +5878,19 @@ msgstr ""
 msgid "_Pixelize..."
 msgstr "Пикселизация..."
 
-#: plug-ins/common/pixelize.c:276
+#: plug-ins/common/pixelize.c:275
 msgid "Pixelizing..."
 msgstr "Пикселизация..."
 
-#: plug-ins/common/pixelize.c:316
+#: plug-ins/common/pixelize.c:315
 msgid "Pixelize"
 msgstr "Пикселезовать"
 
-#: plug-ins/common/pixelize.c:338
+#: plug-ins/common/pixelize.c:337
 msgid "Pixel _Width:"
 msgstr "Ширина точки:"
 
-#: plug-ins/common/pixelize.c:343
+#: plug-ins/common/pixelize.c:342
 msgid "Pixel _Height:"
 msgstr "Высота точки:"
 
@@ -5933,11 +5898,6 @@ msgstr "Высота точки:"
 #, fuzzy
 msgid "_Plasma..."
 msgstr "Плазма..."
-
-#: plug-ins/common/plasma.c:192 plug-ins/common/snoise.c:193
-#, fuzzy
-msgid "<Image>/Filters/Render/Clouds"
-msgstr "<Image>/Фильтры/Визуализация/Облака/Плазма..."
 
 #: plug-ins/common/plasma.c:268
 msgid "Plasma..."
@@ -6112,30 +6072,30 @@ msgstr "Ascii"
 msgid "P_olar Coords..."
 msgstr ""
 
-#: plug-ins/common/polar.c:358
+#: plug-ins/common/polar.c:357
 msgid "Polarizing..."
 msgstr "Поляризация..."
 
-#: plug-ins/common/polar.c:590
+#: plug-ins/common/polar.c:589
 msgid "Polarize"
 msgstr "Поляризовать"
 
-#: plug-ins/common/polar.c:621
+#: plug-ins/common/polar.c:620
 #, fuzzy
 msgid "Circle _depth in percent:"
 msgstr "Глубина круга в процентах:"
 
-#: plug-ins/common/polar.c:633
+#: plug-ins/common/polar.c:632
 #, fuzzy
 msgid "Offset _angle:"
 msgstr "Угол смещения:"
 
-#: plug-ins/common/polar.c:648
+#: plug-ins/common/polar.c:647
 #, fuzzy
 msgid "_Map backwards"
 msgstr "Отобразить назад"
 
-#: plug-ins/common/polar.c:654
+#: plug-ins/common/polar.c:653
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
@@ -6143,12 +6103,12 @@ msgstr ""
 "Если отмечено, отображение начнется с правой стороны, в противном случае - с "
 "левой."
 
-#: plug-ins/common/polar.c:665
+#: plug-ins/common/polar.c:664
 #, fuzzy
 msgid "Map from _top"
 msgstr "Отобразить сверху"
 
-#: plug-ins/common/polar.c:671
+#: plug-ins/common/polar.c:670
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
@@ -6156,12 +6116,12 @@ msgstr ""
 "Если не отмечено, то нижняя часть будет помещена в центр, а\n"
 "верхняя - на внешнюю сторону. Если отмечено - то наоборот."
 
-#: plug-ins/common/polar.c:683
+#: plug-ins/common/polar.c:682
 #, fuzzy
 msgid "To _polar"
 msgstr "В полярное"
 
-#: plug-ins/common/polar.c:689
+#: plug-ins/common/polar.c:688
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
@@ -6192,9 +6152,14 @@ msgstr "Невозможно интерпретировать файл '%s'"
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Изображение с альфа-каналами невозможно сохранить как PostScript"
 
-#: plug-ins/common/postscript.c:1538 plug-ins/common/postscript.c:1568
+#: plug-ins/common/postscript.c:1538
 #, c-format
 msgid "Error starting ghostscript (%s)"
+msgstr "Ошибка при запуске ghostscript (%s)"
+
+#: plug-ins/common/postscript.c:1568
+#, fuzzy, c-format
+msgid "Error starting ghostscript: %s"
 msgstr "Ошибка при запуске ghostscript (%s)"
 
 #: plug-ins/common/postscript.c:2368 plug-ins/common/postscript.c:2500
@@ -6407,42 +6372,42 @@ msgstr "Число применений фильтра"
 msgid "_Ripple..."
 msgstr "Создание ряби..."
 
-#: plug-ins/common/ripple.c:220
+#: plug-ins/common/ripple.c:219
 msgid "Rippling..."
 msgstr "Создание ряби..."
 
-#: plug-ins/common/ripple.c:461
+#: plug-ins/common/ripple.c:472
 msgid "Ripple"
 msgstr "Создать рябь"
 
-#: plug-ins/common/ripple.c:511
+#: plug-ins/common/ripple.c:522
 #, fuzzy
 msgid "_Retain tilability"
 msgstr "Сохранить бесшовность"
 
 #. Edges toggle box
-#: plug-ins/common/ripple.c:545
+#: plug-ins/common/ripple.c:556
 msgid "Edges"
 msgstr "Края"
 
 #. Wave toggle box
-#: plug-ins/common/ripple.c:569
+#: plug-ins/common/ripple.c:584
 msgid "Wave Type"
 msgstr "Тип волны"
 
-#: plug-ins/common/ripple.c:573
+#: plug-ins/common/ripple.c:588
 msgid "Saw_tooth"
 msgstr "Пилообразная"
 
-#: plug-ins/common/ripple.c:574
+#: plug-ins/common/ripple.c:589
 msgid "S_ine"
 msgstr "Синус"
 
-#: plug-ins/common/ripple.c:597
+#: plug-ins/common/ripple.c:612
 msgid "_Period:"
 msgstr "Период:"
 
-#: plug-ins/common/ripple.c:610
+#: plug-ins/common/ripple.c:625
 msgid "A_mplitude:"
 msgstr "Амплитуда:"
 
@@ -6549,44 +6514,40 @@ msgstr "Использовать субцвета"
 msgid "Smooth samples"
 msgstr "Сглаживать цвета образца"
 
-#: plug-ins/common/sample_colorize.c:2623
+#: plug-ins/common/sample_colorize.c:2632
 msgid "Sample Analyze..."
 msgstr "Анализ образца..."
 
-#: plug-ins/common/sample_colorize.c:2993
+#: plug-ins/common/sample_colorize.c:3002
 msgid "Remap Colorized..."
 msgstr "Окрашивание по образцу..."
 
-#: plug-ins/common/scatter_hsv.c:133
+#: plug-ins/common/scatter_hsv.c:113
 #, fuzzy
 msgid "S_catter HSV..."
 msgstr "Рассеивание HSV..."
 
-#: plug-ins/common/scatter_hsv.c:232
+#: plug-ins/common/scatter_hsv.c:208
 msgid "Scattering HSV..."
 msgstr "Рассеивание HSV..."
 
-#: plug-ins/common/scatter_hsv.c:336
+#: plug-ins/common/scatter_hsv.c:344
 msgid "Scatter HSV"
 msgstr "Рассеивание HSV"
 
-#: plug-ins/common/scatter_hsv.c:350
-msgid "Right-Click Preview to Jump"
-msgstr ""
-
-#: plug-ins/common/scatter_hsv.c:393
+#: plug-ins/common/scatter_hsv.c:372
 msgid "_Holdness:"
 msgstr "Фиксация:"
 
-#: plug-ins/common/scatter_hsv.c:402
+#: plug-ins/common/scatter_hsv.c:384
 msgid "H_ue:"
 msgstr "Тон:"
 
-#: plug-ins/common/scatter_hsv.c:411
+#: plug-ins/common/scatter_hsv.c:396
 msgid "_Saturation:"
 msgstr "Насыщенность:"
 
-#: plug-ins/common/scatter_hsv.c:420
+#: plug-ins/common/scatter_hsv.c:408
 msgid "_Value:"
 msgstr "Яркость:"
 
@@ -6594,13 +6555,6 @@ msgstr "Яркость:"
 #, fuzzy
 msgid "_Screen Shot..."
 msgstr "Снимок экрана"
-
-#: plug-ins/common/screenshot.c:264 plug-ins/common/winclipboard.c:144
-#: plug-ins/twain/twain.c:322 plug-ins/twain/twain.c:342
-#: plug-ins/twain/twain.c:363 plug-ins/winsnap/winsnap.c:1081
-#, fuzzy
-msgid "<Toolbox>/File/Acquire"
-msgstr "<Toolbox>/Файл/Захватить/TWAIN..."
 
 #: plug-ins/common/screenshot.c:395
 msgid "Error grabbing the pointer"
@@ -6653,20 +6607,20 @@ msgstr "Сделать скриншот через"
 msgid "_Selective Gaussian Blur..."
 msgstr "Выборочное Гауссово размывание"
 
-#: plug-ins/common/sel_gauss.c:187
+#: plug-ins/common/sel_gauss.c:186
 msgid "Selective Gaussian Blur..."
 msgstr "Выборочное Гауссово размывание"
 
-#: plug-ins/common/sel_gauss.c:225
+#: plug-ins/common/sel_gauss.c:224
 msgid "Selective Gaussian Blur"
 msgstr "Выборочное Гауссово размывание"
 
-#: plug-ins/common/sel_gauss.c:257
+#: plug-ins/common/sel_gauss.c:256
 #, fuzzy
 msgid "_Blur radius:"
 msgstr "Радиус размывания:"
 
-#: plug-ins/common/sel_gauss.c:267
+#: plug-ins/common/sel_gauss.c:266
 #, fuzzy
 msgid "_Max. delta:"
 msgstr "Макс. дельта:"
@@ -6688,11 +6642,11 @@ msgstr "Повышение резкости..."
 #.
 #. * Let the user know what we're doing...
 #.
-#: plug-ins/common/sharpen.c:316
+#: plug-ins/common/sharpen.c:315
 msgid "Sharpening..."
 msgstr "Повышение резкости..."
 
-#: plug-ins/common/sharpen.c:485
+#: plug-ins/common/sharpen.c:484
 msgid "Sharpen"
 msgstr "Повышение резкости"
 
@@ -6701,25 +6655,25 @@ msgstr "Повышение резкости"
 msgid "_Shift..."
 msgstr "Выполняется сдвиг..."
 
-#: plug-ins/common/shift.c:192
+#: plug-ins/common/shift.c:191
 msgid "Shifting..."
 msgstr "Выполняется сдвиг..."
 
-#: plug-ins/common/shift.c:350
+#: plug-ins/common/shift.c:349
 msgid "Shift"
 msgstr "Сдвиг"
 
-#: plug-ins/common/shift.c:374
+#: plug-ins/common/shift.c:373
 #, fuzzy
 msgid "Shift _horizontally"
 msgstr "Горизонтальный сдвиг"
 
-#: plug-ins/common/shift.c:375
+#: plug-ins/common/shift.c:374
 #, fuzzy
 msgid "Shift _vertically"
 msgstr "Вертикальный сдвиг"
 
-#: plug-ins/common/shift.c:405
+#: plug-ins/common/shift.c:404
 #, fuzzy
 msgid "Shift _amount:"
 msgstr "Величина сдвига:"
@@ -6729,125 +6683,125 @@ msgstr "Величина сдвига:"
 msgid "_Sinus..."
 msgstr "Cинус"
 
-#: plug-ins/common/sinus.c:285
+#: plug-ins/common/sinus.c:284
 msgid "Sinus: rendering..."
 msgstr "Синус: Визуализация..."
 
 #. Create Main window with a vbox
 #. ==============================
-#: plug-ins/common/sinus.c:649
+#: plug-ins/common/sinus.c:648
 msgid "Sinus"
 msgstr "Cинус"
 
-#: plug-ins/common/sinus.c:684
+#: plug-ins/common/sinus.c:683
 msgid "Drawing Settings"
 msgstr "Настройки рисунка"
 
-#: plug-ins/common/sinus.c:694
+#: plug-ins/common/sinus.c:693
 msgid "_X Scale:"
 msgstr "Масштаб X:"
 
-#: plug-ins/common/sinus.c:703
+#: plug-ins/common/sinus.c:702
 msgid "_Y Scale:"
 msgstr "Масштаб Y:"
 
-#: plug-ins/common/sinus.c:712
+#: plug-ins/common/sinus.c:711
 msgid "Co_mplexity:"
 msgstr "Сложность:"
 
-#: plug-ins/common/sinus.c:722
+#: plug-ins/common/sinus.c:721
 msgid "Calculation Settings"
 msgstr "Настройки рассчета"
 
-#: plug-ins/common/sinus.c:735
+#: plug-ins/common/sinus.c:734
 #, fuzzy
 msgid "R_andom seed:"
 msgstr "Случайное зерно:"
 
-#: plug-ins/common/sinus.c:744
+#: plug-ins/common/sinus.c:743
 #, fuzzy
 msgid "_Force tiling?"
 msgstr "Бесшовность"
 
-#: plug-ins/common/sinus.c:757
+#: plug-ins/common/sinus.c:756
 msgid "_Ideal"
 msgstr "Идеальный"
 
-#: plug-ins/common/sinus.c:758
+#: plug-ins/common/sinus.c:757
 msgid "_Distorted"
 msgstr "Искаженный"
 
-#: plug-ins/common/sinus.c:776 plug-ins/common/sinus.c:792
+#: plug-ins/common/sinus.c:775 plug-ins/common/sinus.c:791
 #: plug-ins/imagemap/imap_preferences.c:516
 msgid "Colors"
 msgstr "Цвета"
 
 #. if in grey scale, the colors are necessarily black and white
-#: plug-ins/common/sinus.c:785
+#: plug-ins/common/sinus.c:784
 msgid "The colors are white and black."
 msgstr "Черный и белый"
 
-#: plug-ins/common/sinus.c:796
+#: plug-ins/common/sinus.c:795
 #, fuzzy
 msgid "Bl_ack & white"
 msgstr "Черный и белый"
 
-#: plug-ins/common/sinus.c:798
+#: plug-ins/common/sinus.c:797
 #, fuzzy
 msgid "_Foreground & background"
 msgstr "Передний план и фон"
 
-#: plug-ins/common/sinus.c:800
+#: plug-ins/common/sinus.c:799
 msgid "C_hoose here:"
 msgstr "Выбрать:"
 
-#: plug-ins/common/sinus.c:813
+#: plug-ins/common/sinus.c:812
 #, fuzzy
 msgid "First color"
 msgstr "Первый цвет"
 
-#: plug-ins/common/sinus.c:823
+#: plug-ins/common/sinus.c:822
 #, fuzzy
 msgid "Second color"
 msgstr "Второй цвет"
 
-#: plug-ins/common/sinus.c:836
+#: plug-ins/common/sinus.c:835
 msgid "Alpha Channels"
 msgstr "Альфа каналы"
 
-#: plug-ins/common/sinus.c:849
+#: plug-ins/common/sinus.c:848
 msgid "F_irst Color:"
 msgstr "Первый цвет:"
 
-#: plug-ins/common/sinus.c:864
+#: plug-ins/common/sinus.c:863
 msgid "S_econd Color:"
 msgstr "Второй цвет:"
 
-#: plug-ins/common/sinus.c:889
+#: plug-ins/common/sinus.c:888
 msgid "Blend Settings"
 msgstr "Настройки смесителя"
 
-#: plug-ins/common/sinus.c:902
+#: plug-ins/common/sinus.c:901
 msgid "L_inear"
 msgstr "Линейный"
 
-#: plug-ins/common/sinus.c:903
+#: plug-ins/common/sinus.c:902
 msgid "Bili_near"
 msgstr "Билинейный"
 
-#: plug-ins/common/sinus.c:904
+#: plug-ins/common/sinus.c:903
 msgid "Sin_usoidal"
 msgstr "Синусоидальный"
 
-#: plug-ins/common/sinus.c:916
+#: plug-ins/common/sinus.c:915
 msgid "_Exponent:"
 msgstr "Экспонента:"
 
-#: plug-ins/common/sinus.c:926
+#: plug-ins/common/sinus.c:925
 msgid "_Blend"
 msgstr "Смешать"
 
-#: plug-ins/common/sinus.c:1043
+#: plug-ins/common/sinus.c:1042
 msgid "Do _Preview"
 msgstr "Просмотр"
 
@@ -6912,24 +6866,24 @@ msgstr "Размер по Y:"
 msgid "_Sobel..."
 msgstr "Собел"
 
-#: plug-ins/common/sobel.c:227
+#: plug-ins/common/sobel.c:226
 msgid "Sobel Edge Detection"
 msgstr "Выделение края по Sobel"
 
-#: plug-ins/common/sobel.c:249
+#: plug-ins/common/sobel.c:248
 msgid "Sobel _Horizontally"
 msgstr "Горизонтальное размывание по Sobel"
 
-#: plug-ins/common/sobel.c:261
+#: plug-ins/common/sobel.c:260
 msgid "Sobel _Vertically"
 msgstr "Вертикальное размывание по Sobel"
 
-#: plug-ins/common/sobel.c:273
+#: plug-ins/common/sobel.c:272
 #, fuzzy
 msgid "_Keep sign of result (one direction only)"
 msgstr "Сохранять знак результата (только одно направление)"
 
-#: plug-ins/common/sobel.c:359
+#: plug-ins/common/sobel.c:358
 msgid "Sobel Edge Detecting..."
 msgstr "Выделение края по Sobel..."
 
@@ -7127,7 +7081,7 @@ msgstr "Спираль"
 msgid "Spots"
 msgstr "Пятна"
 
-#: plug-ins/common/spheredesigner.c:1741 plug-ins/common/spheredesigner.c:2856
+#: plug-ins/common/spheredesigner.c:1741 plug-ins/common/spheredesigner.c:2619
 msgid "Texture"
 msgstr "Текстура"
 
@@ -7135,7 +7089,7 @@ msgstr "Текстура"
 msgid "Bumpmap"
 msgstr "Рельеф"
 
-#: plug-ins/common/spheredesigner.c:1745 plug-ins/common/spheredesigner.c:2858
+#: plug-ins/common/spheredesigner.c:1745 plug-ins/common/spheredesigner.c:2621
 msgid "Light"
 msgstr "Свет"
 
@@ -7147,94 +7101,103 @@ msgstr "Открыть файл"
 msgid "Save File"
 msgstr "Сохранить файл"
 
-#: plug-ins/common/spheredesigner.c:2489
+#: plug-ins/common/spheredesigner.c:2485
 msgid "Sphere Designer"
 msgstr "Создание сферы"
 
-#: plug-ins/common/spheredesigner.c:2525
+#: plug-ins/common/spheredesigner.c:2522
 #, fuzzy
 msgid "Update _Preview"
 msgstr "Автообновление просмотра"
 
-#: plug-ins/common/spheredesigner.c:2557
+#: plug-ins/common/spheredesigner.c:2576
 msgid "Textures"
 msgstr "Текстуры"
 
-#: plug-ins/common/spheredesigner.c:2607
+#: plug-ins/common/spheredesigner.c:2604
 msgid "Texture Properties"
 msgstr "Свойства текстуры"
 
-#: plug-ins/common/spheredesigner.c:2624
+#: plug-ins/common/spheredesigner.c:2620
+msgid "Bump"
+msgstr "Рельеф"
+
+#: plug-ins/common/spheredesigner.c:2648
 msgid "Texture:"
 msgstr "Текстура:"
 
-#: plug-ins/common/spheredesigner.c:2630
+#: plug-ins/common/spheredesigner.c:2653
 msgid "Colors:"
 msgstr "Цвета:"
 
-#: plug-ins/common/spheredesigner.c:2641 plug-ins/common/spheredesigner.c:2652
+#: plug-ins/common/spheredesigner.c:2656 plug-ins/common/spheredesigner.c:2667
 msgid "Color Selection Dialog"
 msgstr "Диалог выбора цвета"
 
 #. Scale
-#: plug-ins/common/spheredesigner.c:2663 plug-ins/gimpressionist/paper.c:176
+#: plug-ins/common/spheredesigner.c:2678 plug-ins/gimpressionist/paper.c:176
 #: plug-ins/ifscompose/ifscompose.c:581
 msgid "Scale:"
 msgstr "Масштаб:"
 
-#: plug-ins/common/spheredesigner.c:2681
+#: plug-ins/common/spheredesigner.c:2686
 msgid "Turbulence:"
 msgstr "Турбулентность:"
 
-#: plug-ins/common/spheredesigner.c:2717
-msgid "Scale Y:"
-msgstr "Масштаб Y:"
-
-#: plug-ins/common/spheredesigner.c:2735
-msgid "Scale Z:"
-msgstr "Масштаб Z:"
-
-#: plug-ins/common/spheredesigner.c:2754
-msgid "Rotate X:"
-msgstr "Вращение по X:"
-
-#: plug-ins/common/spheredesigner.c:2771
-msgid "Rotate Y:"
-msgstr "Вращение по Y:"
-
-#: plug-ins/common/spheredesigner.c:2788
-msgid "Rotate Z:"
-msgstr "Вращение по Z:"
-
-#: plug-ins/common/spheredesigner.c:2805
-msgid "Pos X:"
-msgstr "Поз. X:"
-
-#: plug-ins/common/spheredesigner.c:2822
-msgid "Pos Y:"
-msgstr "Поз. Y:"
-
-#: plug-ins/common/spheredesigner.c:2839
-msgid "Pos Z:"
-msgstr "Поз. Z:"
-
-#: plug-ins/common/spheredesigner.c:2857
-msgid "Bump"
-msgstr "Рельеф"
-
-#: plug-ins/common/spheredesigner.c:2888
+#: plug-ins/common/spheredesigner.c:2693
 msgid "Amount:"
 msgstr "Величина:"
 
-#: plug-ins/common/spheredesigner.c:2906
-msgid "Exp:"
+#: plug-ins/common/spheredesigner.c:2700
+#, fuzzy
+msgid "Exp.:"
 msgstr "Exp:"
 
-#: plug-ins/common/spheredesigner.c:3064
+#: plug-ins/common/spheredesigner.c:2707
+#, fuzzy
+msgid "Texture Transformations"
+msgstr "Преобразование %s"
+
+#: plug-ins/common/spheredesigner.c:2730
+msgid "Scale Y:"
+msgstr "Масштаб Y:"
+
+#: plug-ins/common/spheredesigner.c:2736
+msgid "Scale Z:"
+msgstr "Масштаб Z:"
+
+#: plug-ins/common/spheredesigner.c:2743
+msgid "Rotate X:"
+msgstr "Вращение по X:"
+
+#: plug-ins/common/spheredesigner.c:2750
+msgid "Rotate Y:"
+msgstr "Вращение по Y:"
+
+#: plug-ins/common/spheredesigner.c:2757
+msgid "Rotate Z:"
+msgstr "Вращение по Z:"
+
+#: plug-ins/common/spheredesigner.c:2764
+#, fuzzy
+msgid "Position X:"
+msgstr "Позиция"
+
+#: plug-ins/common/spheredesigner.c:2771
+#, fuzzy
+msgid "Position Y:"
+msgstr "Позиция"
+
+#: plug-ins/common/spheredesigner.c:2778
+#, fuzzy
+msgid "Position Z:"
+msgstr "Позиция"
+
+#: plug-ins/common/spheredesigner.c:2926
 msgid "Rendering Sphere..."
 msgstr "Визуализация сферы..."
 
-#: plug-ins/common/spheredesigner.c:3121
+#: plug-ins/common/spheredesigner.c:2983
 #, fuzzy
 msgid "Sphere _Designer..."
 msgstr "Создание сферы"
@@ -7244,15 +7207,15 @@ msgstr "Создание сферы"
 msgid "Sp_read..."
 msgstr "Рассеивание..."
 
-#: plug-ins/common/spread.c:180
+#: plug-ins/common/spread.c:179
 msgid "Spreading..."
 msgstr "Рассеивание..."
 
-#: plug-ins/common/spread.c:346
+#: plug-ins/common/spread.c:345
 msgid "Spread"
 msgstr "Рассеивание"
 
-#: plug-ins/common/spread.c:364
+#: plug-ins/common/spread.c:363
 msgid "Spread Amount"
 msgstr "Степень рассеивания"
 
@@ -7557,19 +7520,19 @@ msgstr "Комментарий:"
 msgid "_Tile..."
 msgstr "Рассечение..."
 
-#: plug-ins/common/tile.c:193 plug-ins/common/tileit.c:321
+#: plug-ins/common/tile.c:192 plug-ins/common/tileit.c:320
 msgid "Tiling..."
 msgstr "Укладка черепицы..."
 
-#: plug-ins/common/tile.c:395
+#: plug-ins/common/tile.c:394
 msgid "Tile"
 msgstr "Черепица"
 
-#: plug-ins/common/tile.c:409
+#: plug-ins/common/tile.c:408
 msgid "Tile to New Size"
 msgstr "Размер покрываемой площади"
 
-#: plug-ins/common/tile.c:431
+#: plug-ins/common/tile.c:430
 msgid "C_reate New Image"
 msgstr "Создать новое изображение"
 
@@ -7579,45 +7542,45 @@ msgid "_Small Tiles..."
 msgstr "всем секторам"
 
 #. Get the preview image
-#: plug-ins/common/tileit.c:364
+#: plug-ins/common/tileit.c:363
 msgid "TileIt"
 msgstr "Нарезать"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tileit.c:407 plug-ins/ifscompose/ifscompose.c:637
+#: plug-ins/common/tileit.c:406 plug-ins/ifscompose/ifscompose.c:637
 msgid "Flip"
 msgstr "Отражение"
 
-#: plug-ins/common/tileit.c:455
+#: plug-ins/common/tileit.c:454
 #, fuzzy
 msgid "A_ll tiles"
 msgstr "всем секторам"
 
-#: plug-ins/common/tileit.c:469
+#: plug-ins/common/tileit.c:468
 #, fuzzy
 msgid "Al_ternate tiles"
 msgstr "каждому второму сектору"
 
-#: plug-ins/common/tileit.c:483
+#: plug-ins/common/tileit.c:482
 #, fuzzy
 msgid "_Explicit tile"
 msgstr "указанному сектору"
 
-#: plug-ins/common/tileit.c:489
+#: plug-ins/common/tileit.c:488
 msgid "Ro_w:"
 msgstr "Строка:"
 
-#: plug-ins/common/tileit.c:513
+#: plug-ins/common/tileit.c:512
 msgid "Col_umn:"
 msgstr "Столбец:"
 
-#: plug-ins/common/tileit.c:565
+#: plug-ins/common/tileit.c:564
 msgid "O_pacity:"
 msgstr "Непрозрачность:"
 
 #. Lower frame saying howmany segments
-#: plug-ins/common/tileit.c:574
+#: plug-ins/common/tileit.c:573
 #, fuzzy
 msgid "Number of Segments"
 msgstr "Число сегментов:"
@@ -7626,7 +7589,7 @@ msgstr "Число сегментов:"
 msgid "_Make Seamless"
 msgstr ""
 
-#: plug-ins/common/tiler.c:323
+#: plug-ins/common/tiler.c:322
 msgid "Tiler..."
 msgstr "Рассечение..."
 
@@ -7715,12 +7678,6 @@ msgstr "Множественное число единицы."
 #, fuzzy
 msgid "_Unit Editor"
 msgstr "Редактор единиц"
-
-#: plug-ins/common/uniteditor.c:124 plug-ins/dbbrowser/plugin-browser.c:158
-#: plug-ins/dbbrowser/procedure-browser.c:96
-#, fuzzy
-msgid "<Toolbox>/Xtns/Extensions"
-msgstr "<Toolbox>/Расш./Редактор единиц"
 
 #: plug-ins/common/uniteditor.c:176
 msgid "New Unit"
@@ -7832,25 +7789,25 @@ msgstr "Точки"
 msgid "Vi_deo..."
 msgstr "Видео/RGB..."
 
-#: plug-ins/common/video.c:1890
+#: plug-ins/common/video.c:1889
 msgid "Video/RGB..."
 msgstr "Видео/RGB..."
 
-#: plug-ins/common/video.c:2021
+#: plug-ins/common/video.c:2020
 msgid "Video"
 msgstr "Видео"
 
 #. frame for the radio buttons
-#: plug-ins/common/video.c:2036
+#: plug-ins/common/video.c:2035
 #, fuzzy
 msgid "Video Pattern"
 msgstr "Шаблон"
 
-#: plug-ins/common/video.c:2080
+#: plug-ins/common/video.c:2079
 msgid "_Additive"
 msgstr "Дополняющий"
 
-#: plug-ins/common/video.c:2090
+#: plug-ins/common/video.c:2089
 msgid "_Rotated"
 msgstr "Повернутый"
 
@@ -7859,119 +7816,119 @@ msgstr "Повернутый"
 msgid "_Value Invert"
 msgstr "Инверсия значения..."
 
-#: plug-ins/common/vinvert.c:127
+#: plug-ins/common/vinvert.c:126
 msgid "Value Invert..."
 msgstr "Инверсия значения..."
 
-#: plug-ins/common/vpropagate.c:191
+#: plug-ins/common/vpropagate.c:193
 #, fuzzy
 msgid "More _white (larger value)"
 msgstr "Более светлое (большие значения)"
 
-#: plug-ins/common/vpropagate.c:194
+#: plug-ins/common/vpropagate.c:196
 #, fuzzy
 msgid "More blac_k (smaller value)"
 msgstr "Более темное (меньшие значения)"
 
-#: plug-ins/common/vpropagate.c:197
+#: plug-ins/common/vpropagate.c:199
 #, fuzzy
 msgid "_Middle value to peaks"
 msgstr "Cредние значения"
 
-#: plug-ins/common/vpropagate.c:200
+#: plug-ins/common/vpropagate.c:202
 #, fuzzy
 msgid "_Foreground to peaks"
 msgstr "Максимальный цвет переднего плана"
 
-#: plug-ins/common/vpropagate.c:203
+#: plug-ins/common/vpropagate.c:205
 #, fuzzy
 msgid "O_nly foreground"
 msgstr "Только цвет переднего плана"
 
-#: plug-ins/common/vpropagate.c:206
+#: plug-ins/common/vpropagate.c:208
 #, fuzzy
 msgid "Only b_ackground"
 msgstr "Только фон"
 
-#: plug-ins/common/vpropagate.c:209
+#: plug-ins/common/vpropagate.c:211
 #, fuzzy
 msgid "Mor_e opaque"
 msgstr "Менее прозрачный"
 
-#: plug-ins/common/vpropagate.c:212
+#: plug-ins/common/vpropagate.c:214
 #, fuzzy
 msgid "More t_ransparent"
 msgstr "Более прозрачный"
 
-#: plug-ins/common/vpropagate.c:243
+#: plug-ins/common/vpropagate.c:242
 #, fuzzy
 msgid "_Value Propagate..."
 msgstr "Распространение значений"
 
-#: plug-ins/common/vpropagate.c:255
+#: plug-ins/common/vpropagate.c:254
 #, fuzzy
 msgid "E_rode"
 msgstr "Режим"
 
-#: plug-ins/common/vpropagate.c:267
+#: plug-ins/common/vpropagate.c:266
 #, fuzzy
 msgid "_Dilate"
 msgstr "Уменьшить"
 
-#: plug-ins/common/vpropagate.c:466
+#: plug-ins/common/vpropagate.c:476
 msgid "Value Propagating..."
 msgstr "Распространение значений..."
 
-#: plug-ins/common/vpropagate.c:1037
+#: plug-ins/common/vpropagate.c:1058
 msgid "Value Propagate"
 msgstr "Распространение значений"
 
 #. Parameter settings
-#: plug-ins/common/vpropagate.c:1081
+#: plug-ins/common/vpropagate.c:1116
 #, fuzzy
 msgid "Propagate"
 msgstr "Режим распространения"
 
-#: plug-ins/common/vpropagate.c:1094
+#: plug-ins/common/vpropagate.c:1129
 #, fuzzy
 msgid "Lower t_hreshold:"
 msgstr "Нижний порог:"
 
-#: plug-ins/common/vpropagate.c:1103
+#: plug-ins/common/vpropagate.c:1141
 #, fuzzy
 msgid "_Upper threshold:"
 msgstr "Верхний порог:"
 
-#: plug-ins/common/vpropagate.c:1112
+#: plug-ins/common/vpropagate.c:1153
 #, fuzzy
 msgid "_Propagating rate:"
 msgstr "Скорость распространения:"
 
-#: plug-ins/common/vpropagate.c:1120
+#: plug-ins/common/vpropagate.c:1164
 #, fuzzy
 msgid "To l_eft"
 msgstr "Налево"
 
-#: plug-ins/common/vpropagate.c:1123
+#: plug-ins/common/vpropagate.c:1167
 #, fuzzy
 msgid "To _right"
 msgstr "Направо"
 
-#: plug-ins/common/vpropagate.c:1126
+#: plug-ins/common/vpropagate.c:1170
 #, fuzzy
 msgid "To _top"
 msgstr "Вверх"
 
-#: plug-ins/common/vpropagate.c:1129
+#: plug-ins/common/vpropagate.c:1173
 #, fuzzy
 msgid "To _bottom"
 msgstr "Вниз"
 
-#: plug-ins/common/vpropagate.c:1138
+#: plug-ins/common/vpropagate.c:1182
 msgid "Propagating _Alpha Channel"
 msgstr "Распространение альфа-канала"
 
-#: plug-ins/common/vpropagate.c:1149
+#: plug-ins/common/vpropagate.c:1193
 msgid "Propagating Value Channel"
 msgstr "Распространение канала яркости"
 
@@ -7980,114 +7937,114 @@ msgstr "Распространение канала яркости"
 msgid "_Warp..."
 msgstr "Искажение..."
 
-#: plug-ins/common/warp.c:392
+#: plug-ins/common/warp.c:391
 msgid "Warp"
 msgstr "Деформация"
 
-#: plug-ins/common/warp.c:406
+#: plug-ins/common/warp.c:405
 #, fuzzy
 msgid "Basic Options"
 msgstr "Основные параметры"
 
-#: plug-ins/common/warp.c:428
+#: plug-ins/common/warp.c:427
 #, fuzzy
 msgid "Step size:"
 msgstr "Размер шага:"
 
-#: plug-ins/common/warp.c:442 plug-ins/ifscompose/ifscompose.c:1292
+#: plug-ins/common/warp.c:441 plug-ins/ifscompose/ifscompose.c:1292
 msgid "Iterations:"
 msgstr "Кол-во применений фильтра:"
 
 #. Displacement map menu
-#: plug-ins/common/warp.c:451
+#: plug-ins/common/warp.c:450
 #, fuzzy
 msgid "Displacement map:"
 msgstr "Карта замещения:"
 
 #. =======================================================================
 #. Displacement Type
-#: plug-ins/common/warp.c:469
+#: plug-ins/common/warp.c:468
 #, fuzzy
 msgid "On edges:"
 msgstr "На краях:"
 
-#: plug-ins/common/warp.c:480
+#: plug-ins/common/warp.c:479
 msgid "Wrap"
 msgstr "Заворачивать"
 
-#: plug-ins/common/warp.c:495
+#: plug-ins/common/warp.c:494
 msgid "Smear"
 msgstr "Пятно"
 
-#: plug-ins/common/warp.c:510 plug-ins/fits/fits.c:992
-#: plug-ins/flame/flame.c:1127 plug-ins/gfig/gfig-dialog.c:1401
+#: plug-ins/common/warp.c:509 plug-ins/fits/fits.c:992
+#: plug-ins/flame/flame.c:1135 plug-ins/gfig/gfig-dialog.c:1401
 msgid "Black"
 msgstr "Черный"
 
-#: plug-ins/common/warp.c:525
+#: plug-ins/common/warp.c:524
 #, fuzzy
 msgid "FG color"
 msgstr "Цвет переднего плана"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
-#: plug-ins/common/warp.c:545
+#: plug-ins/common/warp.c:544
 #, fuzzy
 msgid "Advanced Options"
 msgstr "Дополнительные параметры пакета фильтров"
 
-#: plug-ins/common/warp.c:561
+#: plug-ins/common/warp.c:560
 #, fuzzy
 msgid "Dither size:"
 msgstr "Размер смешения:"
 
-#: plug-ins/common/warp.c:574
+#: plug-ins/common/warp.c:573
 #, fuzzy
 msgid "Rotation angle:"
 msgstr "Угол поворота:"
 
-#: plug-ins/common/warp.c:587
+#: plug-ins/common/warp.c:586
 msgid "Substeps:"
 msgstr "Подшаги:"
 
 #. Magnitude map menu
-#: plug-ins/common/warp.c:596
+#: plug-ins/common/warp.c:595
 #, fuzzy
 msgid "Magnitude map:"
 msgstr "Карта значений:"
 
-#: plug-ins/common/warp.c:618
+#: plug-ins/common/warp.c:617
 #, fuzzy
 msgid "Use magnitude map"
 msgstr "Карта значений:"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" table         --------------------------
-#: plug-ins/common/warp.c:631
+#: plug-ins/common/warp.c:630
 #, fuzzy
 msgid "More Advanced Options"
 msgstr "Основные параметры"
 
-#: plug-ins/common/warp.c:648
+#: plug-ins/common/warp.c:647
 #, fuzzy
 msgid "Gradient scale:"
 msgstr "Масштаб градиента:"
 
-#: plug-ins/common/warp.c:671
+#: plug-ins/common/warp.c:670
 msgid "Gradient map selection menu"
 msgstr "Меню выбора градиентной карты"
 
-#: plug-ins/common/warp.c:681
+#: plug-ins/common/warp.c:680
 #, fuzzy
 msgid "Vector mag:"
 msgstr "Длина вектора:"
 
 #. Angle
-#: plug-ins/common/warp.c:696 plug-ins/ifscompose/ifscompose.c:595
+#: plug-ins/common/warp.c:695 plug-ins/ifscompose/ifscompose.c:595
 msgid "Angle:"
 msgstr "Угол:"
 
-#: plug-ins/common/warp.c:719
+#: plug-ins/common/warp.c:718
 msgid "Fixed-direction-vector map selection menu"
 msgstr "Меню выбора карты векторов с фикс.направлениями"
 
@@ -8097,50 +8054,50 @@ msgstr "Меню выбора карты векторов с фикс.напра
 #. }
 #.
 #. make sure layer is visible
-#: plug-ins/common/warp.c:1176
+#: plug-ins/common/warp.c:1175
 msgid "Smoothing X gradient..."
 msgstr "Сглаживание Х градиента..."
 
-#: plug-ins/common/warp.c:1178
+#: plug-ins/common/warp.c:1177
 msgid "Smoothing Y gradient..."
 msgstr "Сглаживание  Y градиента..."
 
 #. calculate new X,Y Displacement image maps
-#: plug-ins/common/warp.c:1233
+#: plug-ins/common/warp.c:1232
 msgid "Finding XY gradient..."
 msgstr "Поиск XY градиента..."
 
-#: plug-ins/common/warp.c:1256
+#: plug-ins/common/warp.c:1255
 #, c-format
 msgid "Flow Step %d..."
 msgstr "Текущий шаг %d..."
 
-#: plug-ins/common/waves.c:128
+#: plug-ins/common/waves.c:127
 #, fuzzy
 msgid "_Waves..."
 msgstr "Сохранить как..."
 
-#: plug-ins/common/waves.c:298
+#: plug-ins/common/waves.c:249
 msgid "Waves"
 msgstr "Волны"
 
-#: plug-ins/common/waves.c:335
+#: plug-ins/common/waves.c:287
 msgid "_Reflective"
 msgstr "Отражающиеся"
 
-#: plug-ins/common/waves.c:351
+#: plug-ins/common/waves.c:306
 msgid "_Amplitude:"
 msgstr "Амплитуда:"
 
-#: plug-ins/common/waves.c:360
+#: plug-ins/common/waves.c:318
 msgid "_Phase:"
 msgstr "Фаза:"
 
-#: plug-ins/common/waves.c:369
+#: plug-ins/common/waves.c:330
 msgid "_Wavelength:"
 msgstr "Длина волны:"
 
-#: plug-ins/common/waves.c:513
+#: plug-ins/common/waves.c:431
 msgid "Waving..."
 msgstr "Создание волн..."
 
@@ -8175,20 +8132,20 @@ msgstr ""
 msgid "W_hirl and Pinch..."
 msgstr "Вихрь и щипок"
 
-#: plug-ins/common/whirlpinch.c:349
+#: plug-ins/common/whirlpinch.c:348
 msgid "Whirling and Pinching..."
 msgstr "Создание вихрей и щипков..."
 
-#: plug-ins/common/whirlpinch.c:536
+#: plug-ins/common/whirlpinch.c:535
 msgid "Whirl and Pinch"
 msgstr "Вихрь и щипок"
 
-#: plug-ins/common/whirlpinch.c:565
+#: plug-ins/common/whirlpinch.c:564
 #, fuzzy
 msgid "_Whirl angle:"
 msgstr "Угол вихря:"
 
-#: plug-ins/common/whirlpinch.c:577
+#: plug-ins/common/whirlpinch.c:576
 #, fuzzy
 msgid "_Pinch amount:"
 msgstr "Величина щипка:"
@@ -8207,11 +8164,6 @@ msgstr "<Image>/Правка/Вставить из буфера"
 #, fuzzy
 msgid "From Clipboard"
 msgstr "С цвета"
-
-#: plug-ins/common/winclipboard.c:140 plug-ins/common/winclipboard.c:142
-#, fuzzy
-msgid "<Image>/Edit"
-msgstr "<Image>/Файл/Печать..."
 
 #: plug-ins/common/winclipboard.c:331
 msgid "Copying..."
@@ -8240,69 +8192,69 @@ msgstr "Вставка..."
 msgid "Wi_nd..."
 msgstr "Создание волн..."
 
-#: plug-ins/common/wind.c:316
+#: plug-ins/common/wind.c:315
 msgid "Rendering Blast..."
 msgstr "Отображение порыва ветра..."
 
-#: plug-ins/common/wind.c:439
+#: plug-ins/common/wind.c:438
 msgid "Rendering Wind..."
 msgstr "Отображение ветра..."
 
-#: plug-ins/common/wind.c:874
+#: plug-ins/common/wind.c:873
 msgid "Wind"
 msgstr "Ветер"
 
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: plug-ins/common/wind.c:907
+#: plug-ins/common/wind.c:906
 msgid "Style"
 msgstr "Стиль"
 
-#: plug-ins/common/wind.c:911
+#: plug-ins/common/wind.c:910
 msgid "_Wind"
 msgstr "Ветер"
 
-#: plug-ins/common/wind.c:912
+#: plug-ins/common/wind.c:911
 msgid "_Blast"
 msgstr "Порыв ветра"
 
-#: plug-ins/common/wind.c:935
+#: plug-ins/common/wind.c:934
 msgid "_Left"
 msgstr "Слева"
 
-#: plug-ins/common/wind.c:936
+#: plug-ins/common/wind.c:935
 msgid "_Right"
 msgstr "Справа"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
-#: plug-ins/common/wind.c:955
+#: plug-ins/common/wind.c:954
 msgid "Edge Affected"
 msgstr "Захватываются края"
 
-#: plug-ins/common/wind.c:959
+#: plug-ins/common/wind.c:958
 msgid "L_eading"
 msgstr "Передний"
 
-#: plug-ins/common/wind.c:960
+#: plug-ins/common/wind.c:959
 msgid "Tr_ailing"
 msgstr "Замыкающий"
 
-#: plug-ins/common/wind.c:961
+#: plug-ins/common/wind.c:960
 msgid "Bot_h"
 msgstr "Оба"
 
-#: plug-ins/common/wind.c:998
+#: plug-ins/common/wind.c:997
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Повышение значений ограничивает эффект меньшими областями изображения"
 
-#: plug-ins/common/wind.c:1013 plug-ins/gimpressionist/orientmap.c:669
+#: plug-ins/common/wind.c:1012 plug-ins/gimpressionist/orientmap.c:669
 msgid "_Strength:"
 msgstr "Сила:"
 
-#: plug-ins/common/wind.c:1017
+#: plug-ins/common/wind.c:1016
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Повышение значений усиливает эффект"
 
@@ -8316,32 +8268,32 @@ msgstr "Точечный"
 msgid "Page Setup"
 msgstr "<Image>/Файл/Настройка страницы"
 
-#: plug-ins/common/winprint.c:343
+#: plug-ins/common/winprint.c:341
 #, c-format
 msgid "PrintDlg failed: %d"
 msgstr "Сбой диалога печати: %d"
 
-#: plug-ins/common/winprint.c:379
+#: plug-ins/common/winprint.c:377
 msgid "Printer doesn't support bitmaps"
 msgstr "Принтер не поддерживает битовые карты"
 
-#: plug-ins/common/winprint.c:420
+#: plug-ins/common/winprint.c:418
 msgid "StartPage failed"
 msgstr "Неправильная начальная страница"
 
-#: plug-ins/common/winprint.c:429 plug-ins/print/print-image-gimp.c:320
+#: plug-ins/common/winprint.c:427 plug-ins/print/print-image-gimp.c:320
 msgid "Printing..."
 msgstr "Печать..."
 
-#: plug-ins/common/winprint.c:461
+#: plug-ins/common/winprint.c:459
 msgid "CreateDIBSection failed"
 msgstr "Сбой CreateDIBSection"
 
-#: plug-ins/common/winprint.c:497
+#: plug-ins/common/winprint.c:495
 msgid "SetStretchBltMode failed (warning only)"
 msgstr "Сбой SetStretchBltMode (только предупреждение)"
 
-#: plug-ins/common/winprint.c:560
+#: plug-ins/common/winprint.c:558
 #, c-format
 msgid ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
@@ -8350,11 +8302,11 @@ msgstr ""
 "Сбой StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY), ошибка "
 "= %d, y = %d"
 
-#: plug-ins/common/winprint.c:589
+#: plug-ins/common/winprint.c:587
 msgid "EndPage failed"
 msgstr "Неправильная конечная страница"
 
-#: plug-ins/common/winprint.c:636
+#: plug-ins/common/winprint.c:634
 #, c-format
 msgid "PageSetupDlg failed: %d"
 msgstr "Сбой диалога настройки страницы: %d"
@@ -8570,11 +8522,11 @@ msgstr "Ошибка при записи rgb-изображения"
 msgid "_Zealous Crop"
 msgstr "Усердное кадрирование(tm)..."
 
-#: plug-ins/common/zealouscrop.c:118
+#: plug-ins/common/zealouscrop.c:117
 msgid "ZealousCropping(tm)..."
 msgstr "Усердное кадрирование(tm)..."
 
-#: plug-ins/common/zealouscrop.c:219
+#: plug-ins/common/zealouscrop.c:218
 msgid "Nothing to crop."
 msgstr "Нечего кадрировать."
 
@@ -8776,274 +8728,123 @@ msgstr "Сборка изображения"
 msgid "_Flame..."
 msgstr "Пламя"
 
-#: plug-ins/flame/flame.c:148 plug-ins/ifscompose/ifscompose.c:373
-#, fuzzy
-msgid "<Image>/Filters/Render/Nature"
-msgstr "<Image>/Фильтры/Визуализация/Природа/Пламя..."
-
 #: plug-ins/flame/flame.c:233
 msgid "Drawing Flame..."
 msgstr "Рисование пламени..."
 
-#: plug-ins/flame/flame.c:315
+#: plug-ins/flame/flame.c:323
 msgid "Flame works only on RGB drawables."
 msgstr "Пламя работает только с RGB изображениями."
 
-#: plug-ins/flame/flame.c:398
+#: plug-ins/flame/flame.c:406
 #, c-format
 msgid "'%s' is not a regular file"
 msgstr "\"%s\" не является обычным файлом"
 
-#: plug-ins/flame/flame.c:635
+#: plug-ins/flame/flame.c:643
 msgid "Edit Flame"
 msgstr "Правка пламени"
 
-#: plug-ins/flame/flame.c:653
+#: plug-ins/flame/flame.c:661
 msgid "Directions"
 msgstr "Направления"
 
-#: plug-ins/flame/flame.c:688
+#: plug-ins/flame/flame.c:696
 msgid "Controls"
 msgstr "Управление"
 
-#: plug-ins/flame/flame.c:702
+#: plug-ins/flame/flame.c:710
 msgid "_Speed:"
 msgstr "Скорость:"
 
-#: plug-ins/flame/flame.c:719
+#: plug-ins/flame/flame.c:727
 msgid "_Randomize"
 msgstr "Перемешать"
 
-#: plug-ins/flame/flame.c:728
+#: plug-ins/flame/flame.c:736
 msgid "Same"
 msgstr "Оставить прежние"
 
-#: plug-ins/flame/flame.c:729 plug-ins/gimpressionist/orientation.c:146
+#: plug-ins/flame/flame.c:737 plug-ins/gimpressionist/orientation.c:146
 #: plug-ins/gimpressionist/size.c:149
 msgid "Random"
 msgstr "Случайность"
 
-#: plug-ins/flame/flame.c:733
+#: plug-ins/flame/flame.c:741
 msgid "Swirl"
 msgstr "Вихрь"
 
-#: plug-ins/flame/flame.c:734
+#: plug-ins/flame/flame.c:742
 msgid "Horseshoe"
 msgstr "Подкова"
 
-#: plug-ins/flame/flame.c:735 plug-ins/gfig/gfig-dialog.c:1385
+#: plug-ins/flame/flame.c:743 plug-ins/gfig/gfig-dialog.c:1385
 msgid "Polar"
 msgstr "Полярность"
 
-#: plug-ins/flame/flame.c:736
+#: plug-ins/flame/flame.c:744
 msgid "Bent"
 msgstr "Изгиб"
 
-#: plug-ins/flame/flame.c:749
+#: plug-ins/flame/flame.c:757
 msgid "_Variation:"
 msgstr "Изменение:"
 
-#: plug-ins/flame/flame.c:771
+#: plug-ins/flame/flame.c:779
 msgid "Load Flame"
 msgstr "Загрузить пламя"
 
-#: plug-ins/flame/flame.c:786
+#: plug-ins/flame/flame.c:794
 msgid "Save Flame"
 msgstr "Сохранить пламя"
 
-#: plug-ins/flame/flame.c:927
+#: plug-ins/flame/flame.c:935
 msgid "Flame"
 msgstr "Пламя"
 
-#: plug-ins/flame/flame.c:1021
+#: plug-ins/flame/flame.c:1029
 msgid "_Rendering"
 msgstr "Визуализация"
 
-#: plug-ins/flame/flame.c:1047
+#: plug-ins/flame/flame.c:1055
 msgid "Co_ntrast:"
 msgstr "Контраст:"
 
-#: plug-ins/flame/flame.c:1061
+#: plug-ins/flame/flame.c:1069
 msgid "_Gamma:"
 msgstr "Гамма:"
 
-#: plug-ins/flame/flame.c:1075
+#: plug-ins/flame/flame.c:1083
 #, fuzzy
 msgid "Sample _density:"
 msgstr "Плотность образца:"
 
-#: plug-ins/flame/flame.c:1086
+#: plug-ins/flame/flame.c:1094
 #, fuzzy
 msgid "Spa_tial oversample:"
 msgstr "Пространственное перекрывание:"
 
-#: plug-ins/flame/flame.c:1097
+#: plug-ins/flame/flame.c:1105
 #, fuzzy
 msgid "Spatial _filter radius:"
 msgstr "Радиус пространственного фильтра:"
 
-#: plug-ins/flame/flame.c:1116
+#: plug-ins/flame/flame.c:1124
 msgid "Color_map:"
 msgstr "Цветовая карта:"
 
-#: plug-ins/flame/flame.c:1158
+#: plug-ins/flame/flame.c:1166
 #, fuzzy
 msgid "Custom gradient"
 msgstr "Выбранный градиент"
 
-#: plug-ins/flame/flame.c:1184
+#: plug-ins/flame/flame.c:1192
 msgid "C_amera"
 msgstr "Камера"
 
-#: plug-ins/flame/flame.c:1189
+#: plug-ins/flame/flame.c:1197
 msgid "_Zoom:"
 msgstr "Масштаб:"
-
-#: plug-ins/fp/fp.c:224
-msgid "Darker:"
-msgstr "Темнее:"
-
-#: plug-ins/fp/fp.c:225
-msgid "Lighter:"
-msgstr "Светлее:"
-
-#: plug-ins/fp/fp.c:227
-msgid "More Sat:"
-msgstr "Больше насыщ.:"
-
-#: plug-ins/fp/fp.c:228
-msgid "Less Sat:"
-msgstr "Меньше насыщ.:"
-
-#. All the previews
-#: plug-ins/fp/fp.c:230 plug-ins/fp/fp.c:478
-msgid "Current:"
-msgstr "Текущее:"
-
-#: plug-ins/fp/fp.c:321
-#, fuzzy
-msgid "_Filter Pack..."
-msgstr "Применяется набор фильтров..."
-
-#: plug-ins/fp/fp.c:362
-msgid "Convert the image to RGB first!"
-msgstr "Сначала преобразуйте изображение в RGB!"
-
-#: plug-ins/fp/fp.c:367
-msgid "Applying the Filter Pack..."
-msgstr "Применяется набор фильтров..."
-
-#: plug-ins/fp/fp.c:475
-msgid "Before and After"
-msgstr "До и после"
-
-#: plug-ins/fp/fp.c:482
-msgid "Original:"
-msgstr "Исходное:"
-
-#: plug-ins/fp/fp.c:541
-msgid "Hue Variations"
-msgstr "Варианты тона"
-
-#: plug-ins/fp/fp.c:595
-msgid "Roughness"
-msgstr "Шероховатость"
-
-#: plug-ins/fp/fp.c:638
-msgid "Affected Range"
-msgstr "Обрабатываемый диапазон"
-
-#: plug-ins/fp/fp.c:642
-msgid "Sha_dows"
-msgstr "Тени"
-
-#: plug-ins/fp/fp.c:643
-msgid "_Midtones"
-msgstr "Полутона"
-
-#: plug-ins/fp/fp.c:644
-msgid "H_ighlights"
-msgstr "Блики:"
-
-#: plug-ins/fp/fp.c:658
-msgid "Windows"
-msgstr "Окна"
-
-#: plug-ins/fp/fp.c:676
-msgid "A_dvanced"
-msgstr "Дополнительные"
-
-#: plug-ins/fp/fp.c:696
-msgid "Value Variations"
-msgstr "Изменения значений"
-
-#: plug-ins/fp/fp.c:740
-msgid "Saturation Variations"
-msgstr "Изменения насыщенности"
-
-#: plug-ins/fp/fp.c:792
-msgid "Select Pixels by"
-msgstr "Выбрать точки растра по"
-
-#: plug-ins/fp/fp.c:797
-msgid "H_ue"
-msgstr "Тон:"
-
-#: plug-ins/fp/fp.c:798
-msgid "Satu_ration"
-msgstr "Насыщенность"
-
-#: plug-ins/fp/fp.c:799
-msgid "V_alue"
-msgstr "Яркость"
-
-#: plug-ins/fp/fp.c:825
-msgid "Show"
-msgstr "Показать"
-
-#: plug-ins/fp/fp.c:830
-msgid "_Entire Image"
-msgstr "Все изображение"
-
-#: plug-ins/fp/fp.c:831
-msgid "Se_lection Only"
-msgstr "Выделенную часть"
-
-#: plug-ins/fp/fp.c:832
-msgid "Selec_tion In Context"
-msgstr "Выделение в контексте"
-
-#: plug-ins/fp/fp.c:1144
-msgid "Filter Pack Simulation"
-msgstr "Моделирование набора фильтров"
-
-#: plug-ins/fp/fp.c:1254
-msgid "Shadows:"
-msgstr "Тени:"
-
-#: plug-ins/fp/fp.c:1255
-msgid "Midtones:"
-msgstr "Полутона:"
-
-#: plug-ins/fp/fp.c:1256
-msgid "Highlights:"
-msgstr "Блики:"
-
-#: plug-ins/fp/fp.c:1268
-msgid "Advanced Filter Pack Options"
-msgstr "Дополнительные параметры пакета фильтров"
-
-#: plug-ins/fp/fp.c:1279
-msgid "Smoothness of Aliasing"
-msgstr "Гладкость выравнивания"
-
-#: plug-ins/fp/fp.c:1379
-msgid "Preview as You Drag"
-msgstr "Просмотр при перетаскивании"
-
-#: plug-ins/fp/fp.c:1383
-msgid "Preview Size"
-msgstr "Размер просмотра"
 
 #: plug-ins/gfig/gfig-bezier.c:446
 msgid "Bezier Settings"
@@ -9371,13 +9172,13 @@ msgstr "Число лучей звезды"
 msgid "_Gfig..."
 msgstr "Gfig"
 
-#: plug-ins/gfig/gfig.c:723
+#: plug-ins/gfig/gfig.c:722
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to "
 "drawable.\n"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:744
+#: plug-ins/gfig/gfig.c:743
 #, c-format
 msgid "Error trying to open temp file '%s'for parasite loading.\n"
 msgstr ""
@@ -9832,7 +9633,7 @@ msgstr "Доверительное значение для адаптивног�
 msgid "_GIMPressionist..."
 msgstr "Гимпрессионист"
 
-#: plug-ins/gimpressionist/gimp.c:351
+#: plug-ins/gimpressionist/gimp.c:350
 msgid "Painting..."
 msgstr "Рисование..."
 
@@ -10325,19 +10126,20 @@ msgstr ""
 "Ошибка при открытии файла \"%s\":\n"
 "%s"
 
-#: plug-ins/helpbrowser/dialog.c:149
-msgid "GIMP Help Browser"
+#: plug-ins/helpbrowser/dialog.c:148
+#, fuzzy
+msgid "GIMP Help browser"
 msgstr "Просмотрщик справки GIMP"
 
-#: plug-ins/helpbrowser/dialog.c:532
+#: plug-ins/helpbrowser/dialog.c:520
 msgid "Document Not Found"
 msgstr "Документ не найден"
 
-#: plug-ins/helpbrowser/dialog.c:534
+#: plug-ins/helpbrowser/dialog.c:522
 msgid "Could not locate help document"
 msgstr "Документ справки не найден"
 
-#: plug-ins/helpbrowser/dialog.c:536
+#: plug-ins/helpbrowser/dialog.c:524
 msgid ""
 "The requested document could not be found in your GIMP help path as shown "
 "above. This means that the topic has not yet been written or your "
@@ -10937,45 +10739,40 @@ msgstr "Просмотр"
 msgid "_ImageMap..."
 msgstr "О дополнении \"Карта изображения\"..."
 
-#: plug-ins/imagemap/imap_main.c:135
-#, fuzzy
-msgid "<Image>/Filters/Web"
-msgstr "<Image>/Фильтры/Web/Карта изображения..."
-
-#: plug-ins/imagemap/imap_main.c:595 plug-ins/imagemap/imap_settings.c:169
+#: plug-ins/imagemap/imap_main.c:594 plug-ins/imagemap/imap_settings.c:169
 msgid "<Untitled>"
 msgstr "<Безымянное>"
 
-#: plug-ins/imagemap/imap_main.c:747
+#: plug-ins/imagemap/imap_main.c:746
 msgid "Some data has been changed!"
 msgstr "Некоторые данные изменились!"
 
-#: plug-ins/imagemap/imap_main.c:748
+#: plug-ins/imagemap/imap_main.c:747
 msgid "Do you really want to discard your changes?"
 msgstr "Вы действительно хотите отказаться от изменений?"
 
-#: plug-ins/imagemap/imap_main.c:956
+#: plug-ins/imagemap/imap_main.c:955
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Файл \"%s\" сохранен."
 
-#: plug-ins/imagemap/imap_main.c:960
+#: plug-ins/imagemap/imap_main.c:959
 msgid "Couldn't save file:"
 msgstr "Не удалось сохранить файл: "
 
-#: plug-ins/imagemap/imap_main.c:986
+#: plug-ins/imagemap/imap_main.c:985
 msgid "Image size has changed."
 msgstr "Размер изображения изменен."
 
-#: plug-ins/imagemap/imap_main.c:987
+#: plug-ins/imagemap/imap_main.c:986
 msgid "Resize area's?"
 msgstr "Изменить размер сектора?"
 
-#: plug-ins/imagemap/imap_main.c:1015
+#: plug-ins/imagemap/imap_main.c:1014
 msgid "Couldn't read file:"
 msgstr "Не удалось прочитать файл:"
 
-#: plug-ins/imagemap/imap_main.c:1062
+#: plug-ins/imagemap/imap_main.c:1061
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -11409,67 +11206,67 @@ msgstr "Смотрите %s"
 msgid "_Pagecurl..."
 msgstr "Загибание страницы..."
 
-#: plug-ins/pagecurl/pagecurl.c:452
+#: plug-ins/pagecurl/pagecurl.c:451
 msgid "Pagecurl Effect"
 msgstr "Эффект загнутой страницы"
 
-#: plug-ins/pagecurl/pagecurl.c:467
+#: plug-ins/pagecurl/pagecurl.c:466
 msgid "Curl Location"
 msgstr "Положение загиба"
 
-#: plug-ins/pagecurl/pagecurl.c:487
+#: plug-ins/pagecurl/pagecurl.c:486
 #, fuzzy
 msgid "Lower right"
 msgstr "Снизу справа"
 
-#: plug-ins/pagecurl/pagecurl.c:488
+#: plug-ins/pagecurl/pagecurl.c:487
 #, fuzzy
 msgid "Lower left"
 msgstr "Снизу слева"
 
-#: plug-ins/pagecurl/pagecurl.c:489
+#: plug-ins/pagecurl/pagecurl.c:488
 #, fuzzy
 msgid "Upper left"
 msgstr "Сверху слева"
 
-#: plug-ins/pagecurl/pagecurl.c:490
+#: plug-ins/pagecurl/pagecurl.c:489
 #, fuzzy
 msgid "Upper right"
 msgstr "Сверху справа"
 
-#: plug-ins/pagecurl/pagecurl.c:529
+#: plug-ins/pagecurl/pagecurl.c:528
 msgid "Curl Orientation"
 msgstr "Ориентация загиба"
 
-#: plug-ins/pagecurl/pagecurl.c:573
+#: plug-ins/pagecurl/pagecurl.c:572
 #, fuzzy
 msgid "_Shade under curl"
 msgstr "Тень под загибом"
 
-#: plug-ins/pagecurl/pagecurl.c:586
+#: plug-ins/pagecurl/pagecurl.c:585
 msgid "Current gradient (reversed)"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:591
+#: plug-ins/pagecurl/pagecurl.c:590
 #, fuzzy
 msgid "Current gradient"
 msgstr "Выбранный градиент"
 
-#: plug-ins/pagecurl/pagecurl.c:596
+#: plug-ins/pagecurl/pagecurl.c:595
 #, fuzzy
 msgid "Foreground / background colors"
 msgstr "Передний план и фон"
 
-#: plug-ins/pagecurl/pagecurl.c:616
+#: plug-ins/pagecurl/pagecurl.c:615
 #, fuzzy
 msgid "_Opacity:"
 msgstr "Непрозрачность:"
 
-#: plug-ins/pagecurl/pagecurl.c:739
+#: plug-ins/pagecurl/pagecurl.c:738
 msgid "Curl Layer"
 msgstr "Слой загиба"
 
-#: plug-ins/pagecurl/pagecurl.c:1027
+#: plug-ins/pagecurl/pagecurl.c:1026
 msgid "Page Curl..."
 msgstr "Загибание страницы..."
 
@@ -12092,8 +11889,8 @@ msgstr "Печатать в файл?"
 msgid "_Print..."
 msgstr "Печать..."
 
-#: plug-ins/print/print.c:695 plug-ins/print/print.c:696
-#: plug-ins/print/print.c:786 plug-ins/print/print.c:1125
+#: plug-ins/print/print.c:694 plug-ins/print/print.c:695
+#: plug-ins/print/print.c:785 plug-ins/print/print.c:1124
 msgid "File"
 msgstr "Файл"
 
@@ -12263,16 +12060,16 @@ msgstr ""
 msgid "TWAIN (Dump)..."
 msgstr ""
 
-#: plug-ins/twain/twain.c:333
+#: plug-ins/twain/twain.c:332
 msgid "TWAIN (Read)..."
 msgstr ""
 
-#: plug-ins/twain/twain.c:354
+#: plug-ins/twain/twain.c:352
 msgid "_TWAIN..."
 msgstr ""
 
 #. Initialize our progress dialog
-#: plug-ins/twain/twain.c:492
+#: plug-ins/twain/twain.c:489
 msgid "Transferring TWAIN data..."
 msgstr "Передача TWAIN-данных..."
 
@@ -12414,6 +12211,147 @@ msgstr "Ошибка: невозможно прочитать файл свой�
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Ошибка: файл свойств XJT '%s' пуст"
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Render"
+#~ msgstr "<Image>/Фильтры/Визуализация/Gfig..."
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Light Effects"
+#~ msgstr "<Image>/Фильтры/Световые эффекты/Градиентная вспышка..."
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Map"
+#~ msgstr "<Image>/Фильтры/Отображение/Деформация..."
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Colors/Map"
+#~ msgstr "<Image>/Фильтры/Цвета/Макс. RGB..."
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Render/Pattern"
+#~ msgstr "<Image>/Фильтры/Визуализация/Шаблон/Лабиринт..."
+
+#, fuzzy
+#~ msgid "<Image>/Layer"
+#~ msgstr "<Image>/Файл/Печать..."
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Animation"
+#~ msgstr "<Image>/Фильтры/Анимация/РазОптимизация"
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Glass Effects"
+#~ msgstr "<Image>/Фильтры/Эффекты стекол/Стеклянные блоки..."
+
+#, fuzzy
+#~ msgid "<Image>/Image/Crop"
+#~ msgstr "<Image>/Изображение/Преобразование/Автокадр "
+
+#, fuzzy
+#~ msgid "<Image>/Layer/Crop"
+#~ msgstr "<Image>/Слой/Преобразование/Усердное кадрирование"
+
+#, fuzzy
+#~ msgid "<Image>/Layer/Colors/Auto"
+#~ msgstr "<Image>/Слои/Цвета/Авто/Нормализовать"
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Distorts"
+#~ msgstr "<Image>/Фильтры/Искажения/Ветер..."
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Blur"
+#~ msgstr "<Image>/Фильтры/Размывание/Размывание..."
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Colors"
+#~ msgstr "<Image>/Фильтры/Цвета/\"Горячие\"..."
+
+#, fuzzy
+#~ msgid "<Image>/Layer/Colors/Info"
+#~ msgstr "<Image>/Слои/Цвета/Авто/Нормализовать"
+
+#, fuzzy
+#~ msgid "<Image>/Layer/Transparency/Modify"
+#~ msgstr "<Image>/Слой/Прозрачность/Порог альфа-канала..."
+
+#, fuzzy
+#~ msgid "<Image>/Image/Mode"
+#~ msgstr "<Image>/Изображение/Преобразование/Гильотина"
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Generic"
+#~ msgstr "<Image>/Фильтры/Общие/Эрозия (светлее)"
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Artistic"
+#~ msgstr "<Image>/Фильтры/Имитация/Кубизм..."
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Enhance"
+#~ msgstr "<Image>/Фильтры/Улучшение/Повышение резкости..."
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Combine"
+#~ msgstr "<Image>/Фильтры/Объединение/Фотопленка..."
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Edge-Detect"
+#~ msgstr "<Image>/Фильтры/Выделение края/Лаплас"
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Toys"
+#~ msgstr "<Image>/Фильтры/Игры/Масштаб"
+
+#, fuzzy
+#~ msgid "<Image>/Image/Transform"
+#~ msgstr "<Image>/Изображение/Преобразование/Автокадр "
+
+#, fuzzy
+#~ msgid "<Image>/File/Send"
+#~ msgstr "<Image>/Файл/Печать..."
+
+#, fuzzy
+#~ msgid "_Do preview"
+#~ msgstr "Просматривать"
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Noise"
+#~ msgstr "<Image>/Фильтры/Шум/Таянье..."
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Render/Clouds"
+#~ msgstr "<Image>/Фильтры/Визуализация/Облака/Плазма..."
+
+#, fuzzy
+#~ msgid "<Toolbox>/File/Acquire"
+#~ msgstr "<Toolbox>/Файл/Захватить/TWAIN..."
+
+#~ msgid "Pos X:"
+#~ msgstr "Поз. X:"
+
+#~ msgid "Pos Y:"
+#~ msgstr "Поз. Y:"
+
+#~ msgid "Pos Z:"
+#~ msgstr "Поз. Z:"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Extensions"
+#~ msgstr "<Toolbox>/Расш./Редактор единиц"
+
+#, fuzzy
+#~ msgid "<Image>/Edit"
+#~ msgstr "<Image>/Файл/Печать..."
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Render/Nature"
+#~ msgstr "<Image>/Фильтры/Визуализация/Природа/Пламя..."
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Web"
+#~ msgstr "<Image>/Фильтры/Web/Карта изображения..."
 
 #, fuzzy
 #~ msgid "Source"

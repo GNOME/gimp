@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-05 01:50+0200\n"
+"POT-Creation-Date: 2004-10-15 00:59+0200\n"
 "PO-Revision-Date: 2004-03-28 05:20+0900\n"
 "Last-Translator: SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(このコンソールウィンドウは10秒後に閉じます)\n"
 
-#: app/app_procs.c:237
+#: app/app_procs.c:238
 msgid ""
 "GIMP is not properly installed for the current user.\n"
 "User installation was skipped because the '--no-interface' flag was used.\n"
@@ -30,7 +30,7 @@ msgstr ""
 "がスキップされました. ユーザインストールを行うためには\n"
 "'--no-interface' オプションを付けずに GIMP を起動してください."
 
-#: app/app_procs.c:288
+#: app/app_procs.c:289
 #, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
@@ -41,12 +41,17 @@ msgstr ""
 "\"%s\" に設定されている, スワップディレクトリの場所とパーミッションをチェック"
 "してください."
 
-#: app/app_procs.c:347 app/core/gimppalette-import.c:395
+#: app/app_procs.c:348 app/core/gimppalette-import.c:395
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "'%s' のオープンに失敗: %s"
 
-#: app/main.c:210
+#: app/batch.c:85
+#, c-format
+msgid "The batch interpreter '%s' is not available, batch mode disabled."
+msgstr ""
+
+#: app/main.c:211
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -54,7 +59,7 @@ msgstr ""
 "GIMP はユーザインターフェイスを初期化できませんでした.\n"
 "ディスプレイ環境に対して適切な設定がされているか確認してください."
 
-#: app/main.c:221 app/widgets/gimptoolbox.c:553
+#: app/main.c:222 app/widgets/gimptoolbox.c:553
 #: data/misc/gimp.desktop.in.in.h:3
 msgid "The GIMP"
 msgstr "The GIMP"
@@ -62,7 +67,7 @@ msgstr "The GIMP"
 #.
 #. *  anything else starting with a '-' is an error.
 #.
-#: app/main.c:407
+#: app/main.c:422
 #, c-format
 msgid ""
 "\n"
@@ -71,11 +76,11 @@ msgstr ""
 "\n"
 "不正なオプション \"%s\"\n"
 
-#: app/main.c:485
+#: app/main.c:501
 msgid "GIMP version"
 msgstr "GIMP バージョン"
 
-#: app/main.c:493
+#: app/main.c:509
 #, c-format
 msgid ""
 "\n"
@@ -86,34 +91,34 @@ msgstr ""
 "使用法: %s [オプション ...] [ファイル ...]\n"
 "\n"
 
-#: app/main.c:495
+#: app/main.c:511
 msgid "Options:\n"
 msgstr "オプション:\n"
 
-#: app/main.c:496
+#: app/main.c:512
 msgid "  -h, --help               Output this help.\n"
 msgstr "  -h, --help               このヘルプを表示する.\n"
 
-#: app/main.c:497
+#: app/main.c:513
 msgid "  -v, --version            Output version information.\n"
 msgstr "  -v, --version            バージョン情報を表示する.\n"
 
-#: app/main.c:498
+#: app/main.c:514
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                詳細起動メッセージを表示する.\n"
 
-#: app/main.c:499
+#: app/main.c:515
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
 "  --no-shm                 GIMP とプラグインの間で共有メモリを使用しない.\n"
 
-#: app/main.c:500
+#: app/main.c:516
 msgid "  --no-cpu-accel           Do not use special CPU accelerations.\n"
 msgstr "  --no-cpu-accel           特別な CPU 命令を使用しない.\n"
 
-#: app/main.c:501
+#: app/main.c:517
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
@@ -121,55 +126,55 @@ msgstr ""
 "  -d, --no-data            パターン, グラデーション, パレット, ブラシを読み込"
 "まない.\n"
 
-#: app/main.c:502
+#: app/main.c:518
 msgid "  -f, --no-fonts           Do not load any fonts.\n"
 msgstr "  -f, --no-fonts           フォントを読み込まない.\n"
 
-#: app/main.c:503
+#: app/main.c:519
 msgid "  -i, --no-interface       Run without a user interface.\n"
 msgstr "  -i, --no-interface       ユーザーインターフェースなしで起動する.\n"
 
-#: app/main.c:504
+#: app/main.c:520
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <display>      指定した X ディスプレイを使用する.\n"
 
-#: app/main.c:505
+#: app/main.c:521
 msgid "  -s, --no-splash          Do not show the startup window.\n"
 msgstr "  -s, --no-splash          起動画面を表示しない.\n"
 
-#: app/main.c:506
+#: app/main.c:522
 msgid "  --session <name>         Use an alternate sessionrc file.\n"
 msgstr "  --session <name>         指定した sessionrc ファイルを使用する.\n"
 
-#: app/main.c:507
+#: app/main.c:523
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 msgstr "  -g, --gimprc <gimprc>    指定した gimprc ファイルを使用する.\n"
 
-#: app/main.c:508
+#: app/main.c:524
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> 指定するシステム gimprc を使用する.\n"
 
-#: app/main.c:509
+#: app/main.c:525
 msgid ""
 "  --dump-gimprc            Output a gimprc file with default settings.\n"
 msgstr ""
 "  --dump-gimprc            デフォルト設定の gimprc ファイルを出力する.\n"
 
-#: app/main.c:510
+#: app/main.c:526
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
 msgstr ""
 "  -c, --console-messages   警告をダイアログでなくコンソールに出力する.\n"
 
-#: app/main.c:511
+#: app/main.c:527
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         致命的ではないシグナルに対するデバッグ用シグナルハ"
 "ンドラを有効にする.\n"
 
-#: app/main.c:512
+#: app/main.c:528
 msgid ""
 "  --stack-trace-mode <never | query | always>\n"
 "                           Debugging mode for fatal signals.\n"
@@ -178,7 +183,7 @@ msgstr ""
 "                           致命的なシグナルに対するデバッグモードを指定す"
 "る.\n"
 
-#: app/main.c:514
+#: app/main.c:530
 msgid ""
 "  --pdb-compat-mode <off | on | warn>\n"
 "                           Procedural Database compatibility mode.\n"
@@ -186,7 +191,13 @@ msgstr ""
 "  --pdb-compat-mode <off | on | warn>\n"
 "                           プロシージャデータベース互換性モード.\n"
 
-#: app/main.c:516
+#: app/main.c:532
+msgid ""
+"  --batch-interpreter <procedure>\n"
+"                           The procedure to process batch commands with.\n"
+msgstr ""
+
+#: app/main.c:534
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
 msgstr "  -b, --batch <コマンド>   バッチモードで起動する.\n"
 
@@ -210,16 +221,16 @@ msgid ""
 msgstr ""
 
 #. initialize the list of gimp brushes
-#: app/actions/actions.c:92 app/core/gimp.c:856
-#: app/dialogs/preferences-dialog.c:2377 app/pdb/internal_procs.c:91
+#: app/actions/actions.c:92 app/core/gimp.c:856 app/dialogs/dialogs.c:135
+#: app/dialogs/preferences-dialog.c:2383 app/pdb/internal_procs.c:91
 msgid "Brushes"
 msgstr "ブラシ"
 
-#: app/actions/actions.c:95
+#: app/actions/actions.c:95 app/dialogs/dialogs.c:147
 msgid "Buffers"
 msgstr "バッファ"
 
-#: app/actions/actions.c:98
+#: app/actions/actions.c:98 app/dialogs/dialogs.c:160
 msgid "Channels"
 msgstr "チャンネル"
 
@@ -247,12 +258,12 @@ msgstr "/ダイアログ(_D)"
 msgid "Dockable"
 msgstr "描画対象"
 
-#: app/actions/actions.c:116
+#: app/actions/actions.c:116 app/dialogs/dialogs.c:149
 msgid "Document History"
 msgstr "文書履歴（一覧）"
 
-#: app/actions/actions.c:119 app/core/core-enums.c:567
-#: app/core/core-enums.c:597
+#: app/actions/actions.c:119 app/core/core-enums.c:587
+#: app/core/core-enums.c:617
 msgid "Drawable"
 msgstr "描画対象"
 
@@ -260,7 +271,7 @@ msgstr "描画対象"
 msgid "Edit"
 msgstr "編集"
 
-#: app/actions/actions.c:125
+#: app/actions/actions.c:125 app/dialogs/dialogs.c:128
 msgid "Error Console"
 msgstr "エラーコンソール"
 
@@ -270,18 +281,18 @@ msgid "File"
 msgstr "/ファイル(_F)"
 
 #. initialize the list of gimp fonts
-#: app/actions/actions.c:131 app/core/gimp.c:872
-#: app/dialogs/preferences-dialog.c:2393 app/pdb/internal_procs.c:124
+#: app/actions/actions.c:131 app/core/gimp.c:872 app/dialogs/dialogs.c:143
+#: app/dialogs/preferences-dialog.c:2399 app/pdb/internal_procs.c:124
 msgid "Fonts"
 msgstr "フォント"
 
-#: app/actions/actions.c:134
+#: app/actions/actions.c:134 app/dialogs/dialogs.c:202
 msgid "Gradient Editor"
 msgstr "グラデーションエディタ"
 
 #. initialize the list of gimp gradients
-#: app/actions/actions.c:137 app/core/gimp.c:868
-#: app/dialogs/preferences-dialog.c:2389 app/pdb/internal_procs.c:136
+#: app/actions/actions.c:137 app/core/gimp.c:868 app/dialogs/dialogs.c:139
+#: app/dialogs/preferences-dialog.c:2395 app/pdb/internal_procs.c:136
 msgid "Gradients"
 msgstr "グラデーション"
 
@@ -295,31 +306,32 @@ msgstr "/ヘルプ(_H)"
 msgid "Image"
 msgstr "画像"
 
-#: app/actions/actions.c:146
+#. list & grid views
+#: app/actions/actions.c:146 app/dialogs/dialogs.c:133
 msgid "Images"
 msgstr "画像"
 
-#: app/actions/actions.c:149
+#: app/actions/actions.c:149 app/dialogs/dialogs.c:156
 msgid "Layers"
 msgstr "レイヤー"
 
-#: app/actions/actions.c:152
+#: app/actions/actions.c:152 app/dialogs/dialogs.c:206
 msgid "Palette Editor"
 msgstr "パレット編集"
 
 #. initialize the list of gimp palettes
-#: app/actions/actions.c:155 app/core/gimp.c:864
-#: app/dialogs/preferences-dialog.c:2385 app/pdb/internal_procs.c:166
+#: app/actions/actions.c:155 app/core/gimp.c:864 app/dialogs/dialogs.c:141
+#: app/dialogs/preferences-dialog.c:2391 app/pdb/internal_procs.c:166
 msgid "Palettes"
 msgstr "パレット"
 
 #. initialize the list of gimp patterns
-#: app/actions/actions.c:158 app/core/gimp.c:860
-#: app/dialogs/preferences-dialog.c:2381 app/pdb/internal_procs.c:181
+#: app/actions/actions.c:158 app/core/gimp.c:860 app/dialogs/dialogs.c:137
+#: app/dialogs/preferences-dialog.c:2387 app/pdb/internal_procs.c:181
 msgid "Patterns"
 msgstr "パターン"
 
-#: app/actions/actions.c:161 app/dialogs/preferences-dialog.c:2397
+#: app/actions/actions.c:161 app/dialogs/preferences-dialog.c:2403
 msgid "Plug-Ins"
 msgstr "プラグイン"
 
@@ -333,21 +345,22 @@ msgid "Select"
 msgstr "/選択(_S)"
 
 #. initialize the template list
-#: app/actions/actions.c:170 app/core/gimp.c:880
+#: app/actions/actions.c:170 app/core/gimp.c:880 app/dialogs/dialogs.c:151
 msgid "Templates"
 msgstr "テンプレート"
 
-#: app/actions/actions.c:173 app/dialogs/preferences-dialog.c:1540
-#: app/dialogs/preferences-dialog.c:1543 app/gui/gui.c:409
+#: app/actions/actions.c:173 app/dialogs/dialogs.c:120
+#: app/dialogs/preferences-dialog.c:1540 app/dialogs/preferences-dialog.c:1543
+#: app/gui/gui.c:409
 msgid "Tool Options"
 msgstr "ツールオプション"
 
-#: app/actions/actions.c:176
+#: app/actions/actions.c:176 app/dialogs/dialogs.c:145
 msgid "Tools"
 msgstr "ツール"
 
-#: app/actions/actions.c:179 app/pdb/internal_procs.c:172
-#: app/tools/gimpvectortool.c:160
+#: app/actions/actions.c:179 app/dialogs/dialogs.c:164
+#: app/pdb/internal_procs.c:172 app/tools/gimpvectortool.c:160
 msgid "Paths"
 msgstr "パス"
 
@@ -527,7 +540,7 @@ msgid "%s Channel Copy"
 msgstr "%s チャンネルのコピー"
 
 #: app/actions/channels-commands.c:253 app/core/gimpselection.c:599
-#: app/pdb/selection_cmds.c:953 app/pdb/selection_cmds.c:1075
+#: app/pdb/selection_cmds.c:968 app/pdb/selection_cmds.c:1092
 msgid "Channel to Selection"
 msgstr "チャンネルを選択領域へ"
 
@@ -673,21 +686,22 @@ msgstr "/道具/最初の色に戻す(_D)"
 msgid "S_wap Colors"
 msgstr "/道具/描画色と背景色の交換(_W)"
 
-#: app/actions/data-commands.c:77 app/core/gimpimage.c:1281
+#: app/actions/data-commands.c:79 app/core/gimpimage.c:1283
 #: app/core/gimppalette-import.c:218 app/core/gimppalette.c:523
 #: app/core/gimppalette.c:634 app/dialogs/palette-import-dialog.c:684
-#: app/pdb/image_cmds.c:3679
+#: app/pdb/image_cmds.c:3732
 msgid "Untitled"
 msgstr "名称未設定"
 
-#: app/actions/data-commands.c:148
+#: app/actions/data-commands.c:149
+#, fuzzy
+msgid "Delete Object"
+msgstr "データオブジェクトの削除"
+
+#: app/actions/data-commands.c:167
 #, c-format
 msgid "Are you sure you want to delete '%s' from the list and from disk?"
 msgstr "'%s' を一覧とディスクから削除してよろしいですか?"
-
-#: app/actions/data-commands.c:152
-msgid "Delete Data Object"
-msgstr "データオブジェクトの削除"
 
 #: app/actions/dialogs-actions.c:38
 #, fuzzy
@@ -877,7 +891,7 @@ msgstr "/タブを閉じる(_C)"
 msgid "_Detach Tab"
 msgstr "/タブを切り放す(_D)"
 
-#: app/actions/dockable-actions.c:67 app/actions/view-actions.c:123
+#: app/actions/dockable-actions.c:67 app/actions/view-actions.c:111
 #, fuzzy
 msgid "Move to Screen..."
 msgstr "/スクリーンに移動..."
@@ -1026,7 +1040,7 @@ msgstr "/全てのプレビューを再読込み(_A)"
 msgid "Remove Dangling E_ntries"
 msgstr "/不要なエントリの削除(_n)"
 
-#: app/actions/documents-commands.c:265 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:272 app/actions/file-commands.c:164
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
 #: app/display/gimpdisplayshell-dnd.c:332 app/widgets/gimplayertreeview.c:822
@@ -1071,28 +1085,28 @@ msgstr "/ファイル(_F)"
 msgid "_Linked"
 msgstr "直線"
 
-#: app/actions/drawable-actions.c:84 app/actions/image-actions.c:132
+#: app/actions/drawable-actions.c:84 app/actions/image-actions.c:133
 #, fuzzy
 msgid "Flip _Horizontally"
 msgstr "水平(_H):"
 
-#: app/actions/drawable-actions.c:89 app/actions/image-actions.c:137
+#: app/actions/drawable-actions.c:89 app/actions/image-actions.c:138
 #, fuzzy
 msgid "Flip _Vertically"
 msgstr "垂直(_V):"
 
 #. please use the degree symbol in the translation
-#: app/actions/drawable-actions.c:97 app/actions/image-actions.c:146
+#: app/actions/drawable-actions.c:97 app/actions/image-actions.c:147
 #, fuzzy
 msgid "Rotate 90 degrees _CW"
 msgstr "/レイヤー/変換/時計回りに90°回転(_C)"
 
-#: app/actions/drawable-actions.c:102 app/actions/image-actions.c:151
+#: app/actions/drawable-actions.c:102 app/actions/image-actions.c:152
 #, fuzzy
 msgid "Rotate _180 degrees"
 msgstr "/画像/変換/180°回転(_1)"
 
-#: app/actions/drawable-actions.c:107 app/actions/image-actions.c:156
+#: app/actions/drawable-actions.c:107 app/actions/image-actions.c:157
 #, fuzzy
 msgid "Rotate 90 degrees CC_W"
 msgstr "/画像/変換/反時計回りに90°回転(_W)"
@@ -1109,14 +1123,6 @@ msgstr "インデックスレイヤーに対しては反転操作をしません
 msgid "Equalize does not operate on indexed layers."
 msgstr "インデックスレイヤーに対しては平均化処理をしません."
 
-#: app/actions/drawable-commands.c:189 app/core/gimplayer.c:257
-msgid "Flip Layer"
-msgstr "レイヤーを反転"
-
-#: app/actions/drawable-commands.c:226 app/core/gimplayer.c:258
-msgid "Rotate Layer"
-msgstr "レイヤーを回転"
-
 #: app/actions/edit-actions.c:61
 #, fuzzy
 msgid "_Edit"
@@ -1131,7 +1137,8 @@ msgstr "バッファ"
 msgid "_Undo"
 msgstr "アンドゥ(_U)"
 
-#: app/actions/edit-actions.c:66 app/pdb/internal_procs.c:205
+#: app/actions/edit-actions.c:66 app/dialogs/dialogs.c:180
+#: app/pdb/internal_procs.c:205
 msgid "Undo"
 msgstr "アンドゥ"
 
@@ -1223,36 +1230,36 @@ msgstr "アンドゥ %s(_U)"
 msgid "_Redo %s"
 msgstr "リドゥ %s(_R)"
 
-#: app/actions/edit-commands.c:102
+#: app/actions/edit-commands.c:104
 #, fuzzy
 msgid "Clear Undo History"
 msgstr "アンドゥ履歴"
 
-#: app/actions/edit-commands.c:106
+#: app/actions/edit-commands.c:122
 msgid "Really clear image's undo history?"
 msgstr ""
 
-#: app/actions/edit-commands.c:187
+#: app/actions/edit-commands.c:199
 msgid "Cut Named"
 msgstr "名前を付けて切り取り"
 
-#: app/actions/edit-commands.c:190 app/actions/edit-commands.c:210
+#: app/actions/edit-commands.c:202 app/actions/edit-commands.c:222
 msgid "Enter a name for this buffer"
 msgstr "このバッファに対する名前を入力して下さい"
 
-#: app/actions/edit-commands.c:207
+#: app/actions/edit-commands.c:219
 msgid "Copy Named"
 msgstr "名前を付けてコピー"
 
-#: app/actions/edit-commands.c:314
+#: app/actions/edit-commands.c:326
 msgid "There is no active layer or channel to cut from."
 msgstr "切り取り元とすべきアクティブなレイヤーがありません."
 
-#: app/actions/edit-commands.c:326 app/actions/edit-commands.c:363
+#: app/actions/edit-commands.c:338 app/actions/edit-commands.c:375
 msgid "(Unnamed Buffer)"
 msgstr "(名前の無いバッファ)"
 
-#: app/actions/edit-commands.c:351
+#: app/actions/edit-commands.c:363
 msgid "There is no active layer or channel to copy from."
 msgstr "コピー元とすべきアクティブなレイヤーがありません."
 
@@ -1335,7 +1342,7 @@ msgstr "復帰"
 msgid "_Quit"
 msgstr "/ファイル/終了(_Q)"
 
-#: app/actions/file-commands.c:207 app/dialogs/file-save-dialog.c:253
+#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:254
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1346,57 +1353,60 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/file-commands.c:229 app/dialogs/file-save-dialog.c:76
+#: app/actions/file-commands.c:230 app/dialogs/file-save-dialog.c:78
 msgid "Save Image"
 msgstr "画像の保存"
 
-#: app/actions/file-commands.c:245
+#: app/actions/file-commands.c:246
 msgid "Save a Copy of the Image"
 msgstr "画像のコピーを保存"
 
-#: app/actions/file-commands.c:257
+#: app/actions/file-commands.c:258
 msgid "Create New Template"
 msgstr "新しいテンプレートを作成"
 
-#: app/actions/file-commands.c:261
+#: app/actions/file-commands.c:262
 msgid "Enter a name for this template"
 msgstr "このテンプレートに対する名前を入力して下さい"
 
-#: app/actions/file-commands.c:283
+#: app/actions/file-commands.c:284
 msgid "Revert failed. No file name associated with this image."
 msgstr "復帰に失敗しました. この画像に対するファイル名がありません."
 
 #: app/actions/file-commands.c:296
+msgid "Revert Image"
+msgstr "画像の復帰"
+
+#: app/actions/file-commands.c:317
 #, c-format
+msgid "Revert '%s' to '%s'?"
+msgstr ""
+
+#: app/actions/file-commands.c:323
+#, fuzzy
 msgid ""
-"Revert '%s' to\n"
-"'%s'?\n"
-"\n"
-"You will lose all your changes, including all undo information."
+"By reverting the image to the state saved on disk, you will lose all "
+"changes, including all undo information."
 msgstr ""
 "'%s' を\n"
 "'%s' に復帰します.\n"
 "\n"
 "(アンドゥ情報も含めた全ての変更が失われます)"
 
-#: app/actions/file-commands.c:304
-msgid "Revert Image"
-msgstr "画像の復帰"
-
-#: app/actions/file-commands.c:366
+#: app/actions/file-commands.c:372
 #, fuzzy
 msgid "Open Image as Layer"
 msgstr "画像を開く"
 
-#: app/actions/file-commands.c:371 app/dialogs/file-open-dialog.c:74
+#: app/actions/file-commands.c:377 app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
 msgstr "画像を開く"
 
-#: app/actions/file-commands.c:439
+#: app/actions/file-commands.c:445
 msgid "(Unnamed Template)"
 msgstr "(名前の無いテンプレート)"
 
-#: app/actions/file-commands.c:508
+#: app/actions/file-commands.c:494
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -1526,7 +1536,7 @@ msgstr "/混色関数/球面 (減少)(_D)"
 msgid "(Varies)"
 msgstr ""
 
-#: app/actions/gradient-editor-actions.c:278 app/actions/image-actions.c:114
+#: app/actions/gradient-editor-actions.c:278 app/actions/image-actions.c:115
 #, fuzzy
 msgid "_RGB"
 msgstr "RGB"
@@ -1808,151 +1818,152 @@ msgstr "モード"
 msgid "_Transform"
 msgstr "変換"
 
-#: app/actions/image-actions.c:61 app/actions/image-actions.c:66
+#: app/actions/image-actions.c:59
+#, fuzzy
+msgid "_Guides"
+msgstr "ガイド"
+
+#: app/actions/image-actions.c:62 app/actions/image-actions.c:67
 #, fuzzy
 msgid "_New..."
 msgstr "/新規パス(_N)..."
 
-#: app/actions/image-actions.c:71
+#: app/actions/image-actions.c:72
 #, fuzzy
 msgid "Can_vas Size..."
 msgstr "キャンバスサイズ"
 
-#: app/actions/image-actions.c:76
+#: app/actions/image-actions.c:77
 msgid "F_it Canvas to Layers"
 msgstr ""
 
-#: app/actions/image-actions.c:81
+#: app/actions/image-actions.c:82
 #, fuzzy
 msgid "_Scale Image..."
 msgstr "画像拡大縮小"
 
-#: app/actions/image-actions.c:86
+#: app/actions/image-actions.c:87
 #, fuzzy
 msgid "_Crop Image"
 msgstr "画像の切り抜き"
 
-#: app/actions/image-actions.c:91
+#: app/actions/image-actions.c:92
 #, fuzzy
 msgid "_Duplicate"
 msgstr "複製"
 
-#: app/actions/image-actions.c:96
+#: app/actions/image-actions.c:97
 #, fuzzy
 msgid "Merge Visible _Layers..."
 msgstr "/可視レイヤーの統合(_V)..."
 
-#: app/actions/image-actions.c:101 app/actions/layers-actions.c:123
+#: app/actions/image-actions.c:102 app/actions/layers-actions.c:123
 #, fuzzy
 msgid "_Flatten Image"
 msgstr "/画像の統合(_F)"
 
-#: app/actions/image-actions.c:106
+#: app/actions/image-actions.c:107
 #, fuzzy
 msgid "Configure G_rid..."
 msgstr "グリッドの調整"
 
-#: app/actions/image-actions.c:119
+#: app/actions/image-actions.c:120
 #, fuzzy
 msgid "_Grayscale"
 msgstr "グレースケール"
 
-#: app/actions/image-actions.c:124
+#: app/actions/image-actions.c:125
 #, fuzzy
 msgid "_Indexed..."
 msgstr "インデックス"
 
-#: app/actions/image-commands.c:231 app/actions/image-commands.c:485
+#: app/actions/image-commands.c:232 app/actions/image-commands.c:482
 msgid "Resizing..."
 msgstr "サイズを変形しています..."
 
-#: app/actions/image-commands.c:293
+#: app/actions/image-commands.c:294
 msgid "Flipping..."
 msgstr "反転しています..."
 
-#: app/actions/image-commands.c:314 app/pdb/transform_tools_cmds.c:334
+#: app/actions/image-commands.c:315 app/pdb/transform_tools_cmds.c:336
 #: app/tools/gimprotatetool.c:159
 msgid "Rotating..."
 msgstr "回転しています..."
 
-#: app/actions/image-commands.c:336 app/actions/layers-commands.c:358
+#: app/actions/image-commands.c:337 app/actions/layers-commands.c:362
 msgid "Cannot crop because the current selection is empty."
 msgstr "何も選択されてないので切り抜けません."
 
-#: app/actions/image-commands.c:386
+#: app/actions/image-commands.c:387
 msgid "Merge Layers"
 msgstr "レイヤーの統合"
 
-#: app/actions/image-commands.c:388
+#: app/actions/image-commands.c:390
 msgid "Layers Merge Options"
 msgstr "レイヤー結合オプション"
 
-#: app/actions/image-commands.c:406
+#: app/actions/image-commands.c:404
 msgid "Final, Merged Layer should be:"
 msgstr "最終的に結合されたレイヤーは:"
 
-#: app/actions/image-commands.c:410
+#: app/actions/image-commands.c:408
 msgid "Expanded as necessary"
 msgstr "必要に応じて拡大"
 
-#: app/actions/image-commands.c:413
+#: app/actions/image-commands.c:411
 msgid "Clipped to image"
 msgstr "画像サイズに切り取り"
 
-#: app/actions/image-commands.c:416
+#: app/actions/image-commands.c:414
 msgid "Clipped to bottom layer"
 msgstr "最背面レイヤーサイズに切り取り"
 
-#: app/actions/image-commands.c:502
+#: app/actions/image-commands.c:499
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "サイズ変更エラー: 幅と高さはどちらも0より大きくなければなりません."
 
-#: app/actions/image-commands.c:540
+#: app/actions/image-commands.c:548
+#, fuzzy
+msgid "Confirm Scaling"
+msgstr "拡大縮小"
+
+#: app/actions/image-commands.c:577 app/dialogs/image-new-dialog.c:283
+#, c-format
+msgid "You are trying to create an image with a size of %s."
+msgstr ""
+
+#: app/actions/image-commands.c:583
 #, c-format
 msgid ""
-"You are trying to create an image with a size of %s.\n"
-"\n"
-"Choose OK to create this image anyway.\n"
-"Choose Cancel if you did not intend to create such a large image.\n"
-"\n"
-"To prevent this dialog from appearing, increase the \"Maximum Image Size\" "
-"setting (currently %s) in the Preferences dialog."
+"Scaling the image to the choosen size will make it use more memory than what "
+"is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
+"%s)."
 msgstr ""
-"初期サイズ %s で画像を作成しようとしています.\n"
-"\n"
-"これでよければ「了解」を選択してください.\n"
-"本来意図した大きさでないのならば「取消」を選択してください.\n"
-"\n"
-"このダイアログが表示されないようにするには, 環境設定ダイアログ内の\"最大画像"
-"サイズ\" (現在 %s) の設定を大きくしてください."
 
-#: app/actions/image-commands.c:552
-msgid "Image exceeds maximum image size"
-msgstr "画像が最大画像サイズを越えます"
-
-#: app/actions/image-commands.c:560
-msgid "Layer Too Small"
-msgstr "レイヤーが小さすぎます"
-
-#: app/actions/image-commands.c:561
+#: app/actions/image-commands.c:598
+#, fuzzy
 msgid ""
-"The chosen image size will shrink some layers completely away. Is this what "
-"you want?"
+"Scaling the image to the choosen size will shrink some layers completely "
+"away."
 msgstr ""
 "指定された画像サイズでは, 幾つかのレイヤーが小さすぎて見えなくなる可能性があ"
 "ります. よろしいですか?"
 
-#: app/actions/image-commands.c:625 app/core/gimpimage-scale.c:71
+#: app/actions/image-commands.c:602
+msgid "Is this what you want to do?"
+msgstr ""
+
+#: app/actions/image-commands.c:638 app/core/gimpimage-scale.c:71
 #: app/dialogs/resize-dialog.c:212
 msgid "Scale Image"
 msgstr "画像拡大縮小"
 
-#: app/actions/image-commands.c:641 app/actions/layers-commands.c:1227
-#: app/pdb/transform_tools_cmds.c:451 app/tools/gimpscaletool.c:153
+#: app/actions/image-commands.c:654 app/actions/layers-commands.c:1238
+#: app/pdb/transform_tools_cmds.c:454 app/tools/gimpscaletool.c:153
 msgid "Scaling..."
 msgstr "拡大縮小しています..."
 
-#: app/actions/image-commands.c:654
+#: app/actions/image-commands.c:667
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "拡大縮小エラー: 幅と高さはどちらも0より大きくなければなりません."
 
@@ -2001,7 +2012,7 @@ msgstr "/レイヤー(_L)"
 msgid "Stac_k"
 msgstr "/レイヤー/重なり(_K)"
 
-#: app/actions/layers-actions.c:53 app/tools/gimplevelstool.c:672
+#: app/actions/layers-actions.c:53 app/tools/gimplevelstool.c:667
 msgid "_Auto"
 msgstr "自動(_A)"
 
@@ -2195,84 +2206,87 @@ msgstr "/レイヤー/重なり/次のレイヤーを選択(_N)"
 msgid "Set Opacity"
 msgstr "レイヤー透明度の設定"
 
-#: app/actions/layers-commands.c:368
+#: app/actions/layers-commands.c:372
 msgid "Crop Layer"
 msgstr "レイヤーの切り抜き"
 
-#: app/actions/layers-commands.c:498
+#: app/actions/layers-commands.c:502
 msgid "Layer Mask to Selection"
 msgstr "レイヤーマスクを選択領域に"
 
-#: app/actions/layers-commands.c:791 app/actions/layers-commands.c:815
-#: app/actions/layers-commands.c:850 app/widgets/gimpdrawabletreeview.c:218
+#: app/actions/layers-commands.c:795 app/actions/layers-commands.c:819
+#: app/actions/layers-commands.c:854 app/widgets/gimpdrawabletreeview.c:218
 msgid "New Layer"
 msgstr "新規レイヤー"
 
-#: app/actions/layers-commands.c:795
+#: app/actions/layers-commands.c:799
 msgid "Empty Layer"
 msgstr "空のレイヤー"
 
-#: app/actions/layers-commands.c:817
+#: app/actions/layers-commands.c:821
 msgid "Create a New Layer"
 msgstr "新規レイヤーを作成"
 
-#: app/actions/layers-commands.c:852
+#: app/actions/layers-commands.c:856
 msgid "Layer _Name:"
 msgstr "レイヤー名(_N):"
 
 #. The size labels
-#. the image size labels
-#: app/actions/layers-commands.c:856 app/tools/gimpcroptool.c:1017
-#: app/tools/gimpselectionoptions.c:534 app/widgets/gimptemplateeditor.c:226
+#: app/actions/layers-commands.c:860 app/tools/gimpcroptool.c:1017
+#: app/tools/gimpselectionoptions.c:524
 msgid "Width:"
 msgstr "幅:"
 
-#: app/actions/layers-commands.c:862 app/tools/gimpcroptool.c:1021
-#: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:542
-#: app/widgets/gimptemplateeditor.c:232
+#: app/actions/layers-commands.c:866 app/tools/gimpcroptool.c:1021
+#: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:532
 msgid "Height:"
 msgstr "高さ:"
 
-#: app/actions/layers-commands.c:919
+#: app/actions/layers-commands.c:923
 msgid "Layer Fill Type"
 msgstr "レイヤー塗りつぶし方法"
 
-#: app/actions/layers-commands.c:1020
+#: app/actions/layers-commands.c:1023
 msgid "Layer Attributes"
 msgstr "レイヤーの属性"
 
-#: app/actions/layers-commands.c:1022 app/widgets/gimplayertreeview.c:236
+#: app/actions/layers-commands.c:1025 app/widgets/gimplayertreeview.c:236
 msgid "Edit Layer Attributes"
 msgstr "レイヤーの属性を編集"
 
-#: app/actions/layers-commands.c:1057
+#: app/actions/layers-commands.c:1060
 msgid "Layer _Name"
 msgstr "レイヤー名(_N)"
 
-#: app/actions/layers-commands.c:1064
+#: app/actions/layers-commands.c:1067
 msgid "Set Name from _Text"
 msgstr "テキストから名前を設定(_T)"
 
-#: app/actions/layers-commands.c:1110 app/actions/layers-commands.c:1149
+#: app/actions/layers-commands.c:1113 app/actions/layers-commands.c:1152
 #: app/core/gimplayer.c:1099
 msgid "Add Layer Mask"
 msgstr "レイヤーマスク追加"
 
-#: app/actions/layers-commands.c:1151
+#: app/actions/layers-commands.c:1154
 msgid "Add a Mask to the Layer"
 msgstr "レイヤーにマスクを追加"
 
-#: app/actions/layers-commands.c:1176
+#: app/actions/layers-commands.c:1179
 msgid "Initialize Layer Mask to:"
 msgstr "レイヤーマスクの初期化方法:"
 
-#: app/actions/layers-commands.c:1187
+#: app/actions/layers-commands.c:1189
 msgid "In_vert Mask"
 msgstr "マスク反転(_V)"
 
-#: app/actions/layers-commands.c:1245 app/actions/layers-commands.c:1321
+#: app/actions/layers-commands.c:1254 app/actions/layers-commands.c:1319
 msgid "Invalid width or height. Both must be positive."
 msgstr "幅または高さが不正です. 両方とも正の値でなければいけません."
+
+#: app/actions/layers-commands.c:1270 app/core/gimplayer.c:255
+#: app/dialogs/resize-dialog.c:204
+msgid "Scale Layer"
+msgstr "レイヤーの拡大・縮小"
 
 #: app/actions/palette-editor-actions.c:42
 msgid "Palette Editor Menu"
@@ -2293,12 +2307,12 @@ msgstr "/背景色から新しい色(_B)"
 msgid "_Delete Color"
 msgstr "/色の削除(_D)"
 
-#: app/actions/palette-editor-actions.c:67 app/actions/view-actions.c:78
+#: app/actions/palette-editor-actions.c:67 app/actions/view-actions.c:206
 #, fuzzy
 msgid "Zoom _Out"
 msgstr "/縮小(_O)"
 
-#: app/actions/palette-editor-actions.c:72 app/actions/view-actions.c:84
+#: app/actions/palette-editor-actions.c:72 app/actions/view-actions.c:211
 #, fuzzy
 msgid "Zoom _In"
 msgstr "/拡大(_I)"
@@ -2541,30 +2555,30 @@ msgstr "ツール"
 msgid "Reset all Filters..."
 msgstr "/全ツールオプションリセット(_a)..."
 
-#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:336
+#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:337
 msgid "Repeat Last"
 msgstr "再適用"
 
-#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:338
+#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:339
 msgid "Re-Show Last"
 msgstr "再表示"
 
-#: app/actions/plug-in-actions.c:322
+#: app/actions/plug-in-actions.c:323
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "\"%s\" の再適用(_P)"
 
-#: app/actions/plug-in-actions.c:323
+#: app/actions/plug-in-actions.c:324
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "\"%s\" の再表示(_E)"
 
-#: app/actions/plug-in-commands.c:195
+#: app/actions/plug-in-commands.c:196
 #, fuzzy
 msgid "Reset all Filters"
 msgstr "利用可能なフィルタ"
 
-#: app/actions/plug-in-commands.c:200
+#: app/actions/plug-in-commands.c:210
 #, fuzzy
 msgid "Do you really want to reset all filters to default values?"
 msgstr "本当に全てのツールオプションを初期値に戻してよろしいですか?"
@@ -2797,31 +2811,31 @@ msgstr "/テンプレートを削除(_D)"
 msgid "Delete the selected template"
 msgstr "選択したテンプレートを削除"
 
-#: app/actions/templates-commands.c:198
+#: app/actions/templates-commands.c:200
+msgid "Delete Template"
+msgstr "テンプレートを削除"
+
+#: app/actions/templates-commands.c:218
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "テンプレート '%s' を一覧とディスクから削除してよろしいですか?"
 
-#: app/actions/templates-commands.c:202
-msgid "Delete Template"
-msgstr "テンプレートを削除"
-
-#: app/actions/templates-commands.c:252
+#: app/actions/templates-commands.c:257
 msgid "New Template"
 msgstr "新規テンプレート"
 
-#: app/actions/templates-commands.c:254
+#: app/actions/templates-commands.c:259
 msgid "Create a New Template"
 msgstr "新しいテンプレートを作成する"
 
-#: app/actions/templates-commands.c:275 app/core/gimpbrush.c:610
+#: app/actions/templates-commands.c:280 app/core/gimpbrush.c:610
 #: app/core/gimpcontext.c:1299 app/core/gimpitem.c:485
 #: app/core/gimppattern.c:400 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "名前なし"
 
-#: app/actions/templates-commands.c:322 app/actions/templates-commands.c:324
+#: app/actions/templates-commands.c:327 app/actions/templates-commands.c:329
 msgid "Edit Template"
 msgstr "テンプレートの編集"
 
@@ -2864,33 +2878,33 @@ msgstr "/ツールオプションリセット(_e)"
 msgid "Reset _all Tool Options..."
 msgstr "/全ツールオプションリセット(_a)..."
 
-#: app/actions/tool-options-commands.c:71
+#: app/actions/tool-options-commands.c:73
 msgid "Save Tool Options"
 msgstr "ツールオプションの保存"
 
-#: app/actions/tool-options-commands.c:75
+#: app/actions/tool-options-commands.c:77
 msgid "Enter a name for the saved options"
 msgstr "保存するオプションの名前を入力"
 
-#: app/actions/tool-options-commands.c:76
-#: app/actions/tool-options-commands.c:239
-#: app/actions/tool-options-commands.c:257
+#: app/actions/tool-options-commands.c:78
+#: app/actions/tool-options-commands.c:251
+#: app/actions/tool-options-commands.c:269
 msgid "Saved Options"
 msgstr "保存オプション"
 
-#: app/actions/tool-options-commands.c:144
+#: app/actions/tool-options-commands.c:146
 msgid "Rename Saved Tool Options"
 msgstr "保存済ツールオプションの名前を変更"
 
-#: app/actions/tool-options-commands.c:148
+#: app/actions/tool-options-commands.c:150
 msgid "Enter a new name for the saved options"
 msgstr "保存オプションの名前を入力"
 
-#: app/actions/tool-options-commands.c:213
+#: app/actions/tool-options-commands.c:215
 msgid "Reset Tool Options"
 msgstr "ツールオプション初期化"
 
-#: app/actions/tool-options-commands.c:218
+#: app/actions/tool-options-commands.c:233
 msgid "Do you really want to reset all tool options to default values?"
 msgstr "本当に全てのツールオプションを初期値に戻してよろしいですか?"
 
@@ -3059,7 +3073,7 @@ msgstr ""
 "選択領域をパスへ\n"
 "%s  高度なオプション"
 
-#: app/actions/vectors-commands.c:250 app/pdb/paths_cmds.c:1197
+#: app/actions/vectors-commands.c:250 app/pdb/paths_cmds.c:1210
 msgid "Path to Selection"
 msgstr "パスを選択領域へ"
 
@@ -3092,7 +3106,7 @@ msgstr "パス名:"
 msgid "Import Paths from SVG"
 msgstr "SVG からパスをインポート"
 
-#: app/actions/vectors-commands.c:688 app/widgets/gimpfiledialog.c:494
+#: app/actions/vectors-commands.c:688
 #, fuzzy
 msgid "All Files (*.*)"
 msgstr "利用可能なフィルタ"
@@ -3125,210 +3139,210 @@ msgstr "キャンバス周辺の色:"
 msgid "_Close"
 msgstr "スタンプ"
 
-#: app/actions/view-actions.c:79 app/widgets/gimppaletteeditor.c:325
-#: app/widgets/widgets-enums.c:225
-msgid "Zoom out"
-msgstr "ズームアウト"
-
-#: app/actions/view-actions.c:85 app/widgets/gimppaletteeditor.c:333
-#: app/widgets/widgets-enums.c:224
-msgid "Zoom in"
-msgstr "ズームイン"
-
-#: app/actions/view-actions.c:90
+#: app/actions/view-actions.c:78
 #, fuzzy
 msgid "_Fit Image in Window"
 msgstr "画像ウィンドウ"
 
-#: app/actions/view-actions.c:91
+#: app/actions/view-actions.c:79
 #, fuzzy
 msgid "Fit image in window"
 msgstr "画像ウィンドウ"
 
-#: app/actions/view-actions.c:96
+#: app/actions/view-actions.c:84
 #, fuzzy
 msgid "Fit Image to Window"
 msgstr "ウインドウの大きさにあわせる"
 
-#: app/actions/view-actions.c:97
+#: app/actions/view-actions.c:85
 #, fuzzy
 msgid "Fit image to window"
 msgstr "ウインドウの大きさにあわせる"
 
-#: app/actions/view-actions.c:102
+#: app/actions/view-actions.c:90
 #, fuzzy
 msgid "_Info Window"
 msgstr "情報ウインドウ"
 
-#: app/actions/view-actions.c:107
+#: app/actions/view-actions.c:95
 #, fuzzy
 msgid "Na_vigation Window"
 msgstr "/表示/ナビゲーションウィンドウ(_V)"
 
-#: app/actions/view-actions.c:112
+#: app/actions/view-actions.c:100
 #, fuzzy
 msgid "Display _Filters..."
 msgstr "/表示/ディスプレイフィルタ(_F)..."
 
-#: app/actions/view-actions.c:117
+#: app/actions/view-actions.c:105
 #, fuzzy
 msgid "Shrink _Wrap"
 msgstr "ウィンドウサイズ調整"
 
-#: app/actions/view-actions.c:118
+#: app/actions/view-actions.c:106
 #, fuzzy
 msgid "Shrink wrap"
 msgstr "ウィンドウサイズ調整"
 
-#: app/actions/view-actions.c:131
+#: app/actions/view-actions.c:119
 #, fuzzy
 msgid "_Dot for Dot"
 msgstr "/表示/点に点を対応させる(_D)"
 
-#: app/actions/view-actions.c:137
+#: app/actions/view-actions.c:125
 #, fuzzy
 msgid "Show _Selection"
 msgstr "選択領域を表示する(_E)"
 
-#: app/actions/view-actions.c:143
+#: app/actions/view-actions.c:131
 msgid "Show _Layer Boundary"
 msgstr "レイヤー境界を表示する(_L)"
 
-#: app/actions/view-actions.c:149
+#: app/actions/view-actions.c:137
 msgid "Show _Guides"
 msgstr "ガイドを表示する(_G)"
 
-#: app/actions/view-actions.c:155
+#: app/actions/view-actions.c:143
 #, fuzzy
 msgid "Sn_ap to Guides"
 msgstr "/表示/ガイドにスナップ(_A)"
 
-#: app/actions/view-actions.c:161
+#: app/actions/view-actions.c:149
 #, fuzzy
 msgid "S_how Grid"
 msgstr "グリッドを表示する(_D)"
 
-#: app/actions/view-actions.c:167
+#: app/actions/view-actions.c:155
 #, fuzzy
 msgid "Sna_p to Grid"
 msgstr "/表示/グリッドにスナップ(_P)"
 
-#: app/actions/view-actions.c:173
+#: app/actions/view-actions.c:161
 msgid "Show _Menubar"
 msgstr "メニューバーを表示する(_M)"
 
-#: app/actions/view-actions.c:179
+#: app/actions/view-actions.c:167
 #, fuzzy
 msgid "Show R_ulers"
 msgstr "ものさしを表示する(_R)"
 
-#: app/actions/view-actions.c:185
+#: app/actions/view-actions.c:173
 msgid "Show Scroll_bars"
 msgstr "スクロールバーを表示する(_B)"
 
-#: app/actions/view-actions.c:191
+#: app/actions/view-actions.c:179
 msgid "Show S_tatusbar"
 msgstr "ステータスバーを表示する(_T)"
 
-#: app/actions/view-actions.c:197
+#: app/actions/view-actions.c:185
 #, fuzzy
 msgid "Fullscr_een"
 msgstr "/表示/全画面表示(_E)"
 
-#: app/actions/view-actions.c:206
+#: app/actions/view-actions.c:207 app/widgets/gimppaletteeditor.c:325
+#: app/widgets/widgets-enums.c:225
+msgid "Zoom out"
+msgstr "ズームアウト"
+
+#: app/actions/view-actions.c:212 app/widgets/gimppaletteeditor.c:333
+#: app/widgets/widgets-enums.c:224
+msgid "Zoom in"
+msgstr "ズームイン"
+
+#: app/actions/view-actions.c:232
 #, fuzzy
 msgid "16:1  (1600%)"
 msgstr "/表示/ズーム/16:1  (1600%)"
 
-#: app/actions/view-actions.c:211
+#: app/actions/view-actions.c:237
 #, fuzzy
 msgid "8:1  (800%)"
 msgstr "/表示/ズーム/8:1  (800%)"
 
-#: app/actions/view-actions.c:216
+#: app/actions/view-actions.c:242
 #, fuzzy
 msgid "4:1  (400%)"
 msgstr "/表示/ズーム/4:1  (400%)"
 
-#: app/actions/view-actions.c:221
+#: app/actions/view-actions.c:247
 #, fuzzy
 msgid "2:1  (200%)"
 msgstr "/表示/ズーム/2:1  (200%)"
 
-#: app/actions/view-actions.c:226
+#: app/actions/view-actions.c:252
 #, fuzzy
 msgid "1:1  (100%)"
 msgstr "/表示/ズーム/1:1  (100%)"
 
-#: app/actions/view-actions.c:227
+#: app/actions/view-actions.c:253
 msgid "Zoom 1:1"
 msgstr "1:1"
 
-#: app/actions/view-actions.c:232
+#: app/actions/view-actions.c:258
 #, fuzzy
 msgid "1:2  (50%)"
 msgstr "/表示/ズーム/1:2  (50%)"
 
-#: app/actions/view-actions.c:237
+#: app/actions/view-actions.c:263
 #, fuzzy
 msgid "1:4  (25%)"
 msgstr "/表示/ズーム/1:4  (25%)"
 
-#: app/actions/view-actions.c:242
+#: app/actions/view-actions.c:268
 #, fuzzy
 msgid "1:8  (12.5%)"
 msgstr "/表示/ズーム/1:8  (12.5%)"
 
-#: app/actions/view-actions.c:247
+#: app/actions/view-actions.c:273
 #, fuzzy
 msgid "1:16  (6.25%)"
 msgstr "/表示/ズーム/1:16  (6.25%)"
 
-#: app/actions/view-actions.c:252
+#: app/actions/view-actions.c:278
 #, fuzzy
 msgid "O_ther..."
 msgstr "/選択/境界をぼかす(_T)..."
 
-#: app/actions/view-actions.c:260
+#: app/actions/view-actions.c:286
 #, fuzzy
 msgid "From _Theme"
 msgstr "/テーマから(_T)"
 
-#: app/actions/view-actions.c:265
+#: app/actions/view-actions.c:291
 #, fuzzy
 msgid "_Light Check Color"
 msgstr "/明るい格子の色(_L)"
 
-#: app/actions/view-actions.c:270
+#: app/actions/view-actions.c:296
 #, fuzzy
 msgid "_Dark Check Color"
 msgstr "/暗い格子の色(_D)"
 
-#: app/actions/view-actions.c:275
+#: app/actions/view-actions.c:301
 #, fuzzy
 msgid "Select _Custom Color..."
 msgstr "/カスタムカラーを選択(_C)..."
 
-#: app/actions/view-actions.c:280
+#: app/actions/view-actions.c:306
 #, fuzzy
 msgid "As in _Preferences"
 msgstr "/設定通り(_P)"
 
-#: app/actions/view-actions.c:549
+#: app/actions/view-actions.c:580
 #, c-format
 msgid "Other (%s) ..."
 msgstr "その他 (%s) ..."
 
-#: app/actions/view-actions.c:558
+#: app/actions/view-actions.c:589
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "ズーム(_Z) (%s)"
 
-#: app/actions/view-commands.c:532
+#: app/actions/view-commands.c:572
 msgid "Set Canvas Padding Color"
 msgstr "キャンバスまわりの色"
 
-#: app/actions/view-commands.c:534
+#: app/actions/view-commands.c:574
 #, fuzzy
 msgid "Set Custom Canvas Padding Color"
 msgstr "キャンバスまわりの色"
@@ -3347,17 +3361,17 @@ msgid "Value"
 msgstr "明度"
 
 #: app/base/base-enums.c:34 app/core/core-enums.c:96
-#: app/tools/gimpcolorbalancetool.c:303
+#: app/tools/gimpcolorbalancetool.c:301
 msgid "Red"
 msgstr "赤"
 
 #: app/base/base-enums.c:35 app/core/core-enums.c:97
-#: app/tools/gimpcolorbalancetool.c:310
+#: app/tools/gimpcolorbalancetool.c:308
 msgid "Green"
 msgstr "緑"
 
 #: app/base/base-enums.c:36 app/core/core-enums.c:98
-#: app/tools/gimpcolorbalancetool.c:317
+#: app/tools/gimpcolorbalancetool.c:315
 msgid "Blue"
 msgstr "青"
 
@@ -3374,7 +3388,7 @@ msgstr "RGB"
 msgid "None (Fastest)"
 msgstr "なし (高速)"
 
-#: app/base/base-enums.c:56 app/core/core-enums.c:204
+#: app/base/base-enums.c:56 app/core/core-enums.c:224
 #: app/widgets/widgets-enums.c:145
 msgid "Linear"
 msgstr "線形"
@@ -3447,7 +3461,7 @@ msgstr "展開できません ${%s}"
 #: app/core/gimpbrushpipe.c:344 app/core/gimpgradient-load.c:63
 #: app/core/gimppalette.c:360 app/core/gimppattern.c:328
 #: app/tools/gimpimagemaptool.c:563 app/widgets/gimptexteditor.c:435
-#: app/xcf/xcf.c:295
+#: app/xcf/xcf.c:293
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "読み込み用に '%s' を開けませんでした: %s"
@@ -3456,7 +3470,7 @@ msgstr "読み込み用に '%s' を開けませんでした: %s"
 #: app/core/gimpbrushgenerated.c:255 app/core/gimpgradient-save.c:51
 #: app/core/gimpgradient-save.c:142 app/core/gimppalette.c:567
 #: app/gui/themes.c:238 app/tools/gimpimagemaptool.c:562
-#: app/vectors/gimpvectors-export.c:83 app/xcf/xcf.c:354
+#: app/vectors/gimpvectors-export.c:83 app/xcf/xcf.c:350
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "書き込み用に '%s' を開けませんでした: %s"
@@ -3924,14 +3938,21 @@ msgstr ""
 "す."
 
 #: app/config/gimprc-blurbs.h:360
+#, fuzzy
 msgid ""
-"Sets the size of the thumbnail saved with each image. Note that GIMP can not "
-"save thumbnails if layer previews are disabled."
+"Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can "
+"not create thumbnails if layer previews are disabled."
 msgstr ""
 "個々の画像について保存されるサムネイルの大きさを指定します. GIMP はレイヤープ"
 "レビューが無効になっている場合にはサムネイルを保存しません."
 
 #: app/config/gimprc-blurbs.h:364
+msgid ""
+"The thumbnail in the Open dialog will be automatically updated if the file "
+"being previewed is smaller than the size set here."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:368
 msgid ""
 "The tile cache is used to make sure the GIMP doesn't thrash tiles between "
 "memory and disk. Setting this value higher will cause the GIMP to use less "
@@ -3943,7 +3964,7 @@ msgstr ""
 "少しますが, メモリ利用量は増加します. 逆に小くすると, スワップ利用量は増加"
 "し, メモリ利用量は減少します."
 
-#: app/config/gimprc-blurbs.h:375
+#: app/config/gimprc-blurbs.h:379
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
@@ -3951,21 +3972,21 @@ msgstr ""
 "ツールボックスに設定されるウィンドウタイプヒントです. ウィンドウマネージャに"
 "よるツールボックスウィンドウの装飾と取扱いに影響を与えます."
 
-#: app/config/gimprc-blurbs.h:379
+#: app/config/gimprc-blurbs.h:383
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "画像内の透明部分の表示方法について設定します."
 
-#: app/config/gimprc-blurbs.h:382
+#: app/config/gimprc-blurbs.h:386
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "透明部分の表示に使うチェッカーボードの大きさを設定します."
 
-#: app/config/gimprc-blurbs.h:385
+#: app/config/gimprc-blurbs.h:389
 msgid ""
 "When enabled, the GIMP will not save if the image is unchanged since opening "
 "it."
 msgstr "オンの場合, GIMP は画像が変更されない限り保存しないようになります."
 
-#: app/config/gimprc-blurbs.h:389
+#: app/config/gimprc-blurbs.h:393
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -3973,7 +3994,7 @@ msgstr ""
 "アンドゥ可能な操作の最小回数を指定します. アンドゥサイズの限界に達するまで, "
 "アンドゥを増やすことができます."
 
-#: app/config/gimprc-blurbs.h:393
+#: app/config/gimprc-blurbs.h:397
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -3983,15 +4004,15 @@ msgstr ""
 "ます. この設定によらず, 少くともアンドゥレベルで設定された回数分はアンドゥ可"
 "能です."
 
-#: app/config/gimprc-blurbs.h:398
+#: app/config/gimprc-blurbs.h:402
 msgid "Sets the size of the previews in the Undo History."
 msgstr "アンドゥ履歴のプレビューの大きさを設定します."
 
-#: app/config/gimprc-blurbs.h:401
+#: app/config/gimprc-blurbs.h:405
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "オンの場合, F1キーを押すとヘルプブラウザが開きます."
 
-#: app/config/gimprc-blurbs.h:404
+#: app/config/gimprc-blurbs.h:408
 #, c-format
 msgid ""
 "Sets the external web browser to be used.  This can be an absolute path or "
@@ -4098,622 +4119,637 @@ msgstr "グレースケール"
 msgid "Indexed"
 msgstr "インデックス"
 
-#: app/core/core-enums.c:136
-#, fuzzy
-msgid "No color dithering"
-msgstr "色ディザリングを行わない"
+#: app/core/core-enums.c:136 app/core/core-enums.c:207
+#: app/core/core-enums.c:456 app/tools/gimptransformoptions.c:457
+msgid "None"
+msgstr "なし"
 
 #: app/core/core-enums.c:137
 #, fuzzy
-msgid "Floyd-Steinberg color dithering (normal)"
+msgid "Floyd-Steinberg (normal)"
 msgstr "Floyd-Steinberg 色ディザリング (通常)"
 
 #: app/core/core-enums.c:138
 #, fuzzy
-msgid "Floyd-Steinberg color dithering (reduced color bleeding)"
+msgid "Floyd-Steinberg (reduced color bleeding)"
 msgstr "Floyd-Steinberg 色ディザリング (使用される色数を減らす)"
 
 #: app/core/core-enums.c:139
 #, fuzzy
-msgid "Positioned color dithering"
-msgstr "ポジション色ディザリング"
+msgid "Positioned"
+msgstr "位置: %0.6f"
 
-#: app/core/core-enums.c:182
+#: app/core/core-enums.c:156
+#, fuzzy
+msgid "Generate optimum palette"
+msgstr "最適パレットを生成:"
+
+#: app/core/core-enums.c:157
+#, fuzzy
+msgid "Use web-optimized palette"
+msgstr "WWW 用パレットを使用"
+
+#: app/core/core-enums.c:158
+#, fuzzy
+msgid "Use black and white (1-bit) palette"
+msgstr "白黒(1-bit)パレットを使用"
+
+#: app/core/core-enums.c:159
+#, fuzzy
+msgid "Use custom palette"
+msgstr "カスタムパレットを使用:"
+
+#: app/core/core-enums.c:202
 #, fuzzy
 msgid "Foreground color"
 msgstr "描画色(_F):"
 
-#: app/core/core-enums.c:183
+#: app/core/core-enums.c:203
 #, fuzzy
 msgid "Background color"
 msgstr "背景色(_B):"
 
-#: app/core/core-enums.c:184
+#: app/core/core-enums.c:204
 msgid "White"
 msgstr "白"
 
 #. Transparency
-#: app/core/core-enums.c:185 app/dialogs/preferences-dialog.c:1865
+#: app/core/core-enums.c:205 app/dialogs/preferences-dialog.c:1865
 msgid "Transparency"
 msgstr "透明部分"
 
-#: app/core/core-enums.c:186 app/core/core-enums.c:253
+#: app/core/core-enums.c:206 app/core/core-enums.c:273
 #: app/pdb/internal_procs.c:175
 msgid "Pattern"
 msgstr "パターン"
 
-#: app/core/core-enums.c:187 app/core/core-enums.c:436
-#: app/tools/gimptransformoptions.c:485
-msgid "None"
-msgstr "なし"
-
-#: app/core/core-enums.c:205
+#: app/core/core-enums.c:225
 #, fuzzy
 msgid "Bi-linear"
 msgstr "双一次"
 
-#: app/core/core-enums.c:206
+#: app/core/core-enums.c:226
 msgid "Radial"
 msgstr "放射状"
 
-#: app/core/core-enums.c:207 app/core/core-enums.c:291
-#: app/core/core-enums.c:355
+#: app/core/core-enums.c:227 app/core/core-enums.c:311
+#: app/core/core-enums.c:375
 msgid "Square"
 msgstr "四角形"
 
-#: app/core/core-enums.c:208
+#: app/core/core-enums.c:228
 #, fuzzy
 msgid "Conical (sym)"
 msgstr "円錐形 (対称)"
 
-#: app/core/core-enums.c:209
+#: app/core/core-enums.c:229
 #, fuzzy
 msgid "Conical (asym)"
 msgstr "円錐形 (非対称)"
 
-#: app/core/core-enums.c:210
+#: app/core/core-enums.c:230
 #, fuzzy
 msgid "Shaped (angular)"
 msgstr "形状広がり (角張った)"
 
-#: app/core/core-enums.c:211
+#: app/core/core-enums.c:231
 #, fuzzy
 msgid "Shaped (spherical)"
 msgstr "形状広がり (球面)"
 
-#: app/core/core-enums.c:212
+#: app/core/core-enums.c:232
 #, fuzzy
 msgid "Shaped (dimpled)"
 msgstr "形状広がり (くぼみ)"
 
-#: app/core/core-enums.c:213
+#: app/core/core-enums.c:233
 #, fuzzy
 msgid "Spiral (cw)"
 msgstr "螺旋 (時計回り)"
 
-#: app/core/core-enums.c:214
+#: app/core/core-enums.c:234
 #, fuzzy
 msgid "Spiral (ccw)"
 msgstr "螺旋 (時計回り)"
 
-#: app/core/core-enums.c:231
+#: app/core/core-enums.c:251
 msgid "Intersections (dots)"
 msgstr "共通部分（点）"
 
-#: app/core/core-enums.c:232
+#: app/core/core-enums.c:252
 msgid "Intersections (crosshairs)"
 msgstr "共通部分（クロスヘア）"
 
-#: app/core/core-enums.c:233
+#: app/core/core-enums.c:253
 msgid "Dashed"
 msgstr "破線"
 
-#: app/core/core-enums.c:234
+#: app/core/core-enums.c:254
 #, fuzzy
 msgid "Double dashed"
 msgstr "二点破線"
 
-#: app/core/core-enums.c:235 app/core/core-enums.c:252
+#: app/core/core-enums.c:255 app/core/core-enums.c:272
 msgid "Solid"
 msgstr "実線"
 
-#: app/core/core-enums.c:270
+#: app/core/core-enums.c:290
 msgid "Miter"
 msgstr "面とり"
 
-#: app/core/core-enums.c:271 app/core/core-enums.c:290
+#: app/core/core-enums.c:291 app/core/core-enums.c:310
 msgid "Round"
 msgstr "丸め"
 
-#: app/core/core-enums.c:272
+#: app/core/core-enums.c:292
 msgid "Bevel"
 msgstr "ベベル"
 
-#: app/core/core-enums.c:289
+#: app/core/core-enums.c:309
 msgid "Butt"
 msgstr "鐓"
 
-#: app/core/core-enums.c:308 app/dialogs/preferences-dialog.c:1751
+#: app/core/core-enums.c:328 app/dialogs/preferences-dialog.c:1751
 msgid "Custom"
 msgstr "カスタム"
 
-#: app/core/core-enums.c:309
+#: app/core/core-enums.c:329
 msgid "Line"
 msgstr "直線"
 
-#: app/core/core-enums.c:310
+#: app/core/core-enums.c:330
 #, fuzzy
 msgid "Long dashes"
 msgstr "長破線"
 
-#: app/core/core-enums.c:311
+#: app/core/core-enums.c:331
 #, fuzzy
 msgid "Medium dashes"
 msgstr "中破線"
 
-#: app/core/core-enums.c:312
+#: app/core/core-enums.c:332
 #, fuzzy
 msgid "Short dashes"
 msgstr "単破線"
 
-#: app/core/core-enums.c:313
+#: app/core/core-enums.c:333
 #, fuzzy
 msgid "Sparse dots"
 msgstr "広間点"
 
-#: app/core/core-enums.c:314
+#: app/core/core-enums.c:334
 #, fuzzy
 msgid "Normal dots"
 msgstr "点"
 
-#: app/core/core-enums.c:315
+#: app/core/core-enums.c:335
 #, fuzzy
 msgid "Dense dots"
 msgstr "密点"
 
-#: app/core/core-enums.c:316
+#: app/core/core-enums.c:336
 msgid "Stipples"
 msgstr "点描"
 
-#: app/core/core-enums.c:317
+#: app/core/core-enums.c:337
 #, fuzzy
 msgid "Dash dot..."
 msgstr "一点鎖線..."
 
-#: app/core/core-enums.c:318
+#: app/core/core-enums.c:338
 #, fuzzy
 msgid "Dash dot dot..."
 msgstr "二点鎖線..."
 
-#: app/core/core-enums.c:335
+#: app/core/core-enums.c:355
 msgid "Stock ID"
 msgstr ""
 
-#: app/core/core-enums.c:336
+#: app/core/core-enums.c:356
 msgid "Inline pixbuf"
 msgstr ""
 
-#: app/core/core-enums.c:337
+#: app/core/core-enums.c:357
 #, fuzzy
 msgid "Image file"
 msgstr "画像のサイズ"
 
-#: app/core/core-enums.c:354
+#: app/core/core-enums.c:374
 msgid "Circle"
 msgstr ""
 
-#: app/core/core-enums.c:356
+#: app/core/core-enums.c:376
 msgid "Diamond"
 msgstr ""
 
-#: app/core/core-enums.c:373 app/dialogs/preferences-dialog.c:1897
+#: app/core/core-enums.c:393 app/dialogs/preferences-dialog.c:1897
 msgid "Horizontal"
 msgstr "水平"
 
-#: app/core/core-enums.c:374 app/dialogs/preferences-dialog.c:1899
+#: app/core/core-enums.c:394 app/dialogs/preferences-dialog.c:1899
 msgid "Vertical"
 msgstr "垂直"
 
-#: app/core/core-enums.c:375
+#: app/core/core-enums.c:395
 msgid "Unknown"
 msgstr "不明"
 
-#: app/core/core-enums.c:411
+#: app/core/core-enums.c:431
 msgid "Tiny"
 msgstr "微小"
 
-#: app/core/core-enums.c:412
+#: app/core/core-enums.c:432
 #, fuzzy
 msgid "Very small"
 msgstr "とても小さい"
 
-#: app/core/core-enums.c:413
+#: app/core/core-enums.c:433
 msgid "Small"
 msgstr "小さい"
 
-#: app/core/core-enums.c:414
+#: app/core/core-enums.c:434
 msgid "Medium"
 msgstr "中間"
 
-#: app/core/core-enums.c:415
+#: app/core/core-enums.c:435
 msgid "Large"
 msgstr "大きい"
 
-#: app/core/core-enums.c:416
+#: app/core/core-enums.c:436
 #, fuzzy
 msgid "Very large"
 msgstr "やや大きい"
 
-#: app/core/core-enums.c:417
+#: app/core/core-enums.c:437
 msgid "Huge"
 msgstr "とても大きい"
 
-#: app/core/core-enums.c:418
+#: app/core/core-enums.c:438
 msgid "Enormous"
 msgstr "巨大"
 
-#: app/core/core-enums.c:419
+#: app/core/core-enums.c:439
 msgid "Gigantic"
 msgstr "超巨大"
 
-#: app/core/core-enums.c:437
+#: app/core/core-enums.c:457
 #, fuzzy
 msgid "Sawtooth wave"
 msgstr "鋸歯"
 
-#: app/core/core-enums.c:438
+#: app/core/core-enums.c:458
 #, fuzzy
 msgid "Triangular wave"
 msgstr "三角波"
 
-#: app/core/core-enums.c:476
+#: app/core/core-enums.c:496
 #, fuzzy
 msgid "No thumbnails"
 msgstr "サムネイル無し"
 
-#: app/core/core-enums.c:477
+#: app/core/core-enums.c:497
 msgid "Normal (128x128)"
 msgstr "標準 (128x128)"
 
-#: app/core/core-enums.c:478
+#: app/core/core-enums.c:498
 msgid "Large (256x256)"
 msgstr "大 (256x256)"
 
-#: app/core/core-enums.c:495
+#: app/core/core-enums.c:515
 #, fuzzy
 msgid "Forward (traditional)"
 msgstr "正変換 (忠実)"
 
-#: app/core/core-enums.c:496
+#: app/core/core-enums.c:516
 #, fuzzy
 msgid "Backward (corrective)"
 msgstr "逆変換 (矯正)"
 
-#: app/core/core-enums.c:555
+#: app/core/core-enums.c:575
 msgid "<<invalid>>"
 msgstr "<<不正>>"
 
-#: app/core/core-enums.c:556
+#: app/core/core-enums.c:576
 #, fuzzy
 msgid "Scale image"
 msgstr "画像拡大縮小"
 
-#: app/core/core-enums.c:557
+#: app/core/core-enums.c:577
 #, fuzzy
 msgid "Resize image"
 msgstr "画像のサイズ変更"
 
-#: app/core/core-enums.c:558
+#: app/core/core-enums.c:578
 #, fuzzy
 msgid "Flip image"
 msgstr "画像の反転"
 
-#: app/core/core-enums.c:559
+#: app/core/core-enums.c:579
 #, fuzzy
 msgid "Rotate image"
 msgstr "画像の回転"
 
-#: app/core/core-enums.c:560
+#: app/core/core-enums.c:580
 #, fuzzy
 msgid "Crop image"
 msgstr "画像の切り抜き"
 
-#: app/core/core-enums.c:561
+#: app/core/core-enums.c:581
 #, fuzzy
 msgid "Convert image"
 msgstr "画像の変換"
 
-#: app/core/core-enums.c:562
+#: app/core/core-enums.c:582
 #, fuzzy
 msgid "Merge layers"
 msgstr "レイヤーの統合"
 
-#: app/core/core-enums.c:563
+#: app/core/core-enums.c:583
 #, fuzzy
 msgid "Merge vectors"
 msgstr "ベクタの統合"
 
-#: app/core/core-enums.c:564 app/core/gimpchannel.c:383
+#: app/core/core-enums.c:584 app/core/gimpchannel.c:383
 #, fuzzy
 msgid "Quick Mask"
 msgstr "クイックマスク"
 
-#: app/core/core-enums.c:565 app/core/core-enums.c:594
+#: app/core/core-enums.c:585 app/core/core-enums.c:614
 #: app/core/gimpimage-grid.c:59 app/dialogs/grid-dialog.c:144
 #: app/tools/tools-enums.c:111
 msgid "Grid"
 msgstr "グリッド"
 
-#: app/core/core-enums.c:566 app/core/core-enums.c:595
+#: app/core/core-enums.c:586 app/core/core-enums.c:615
 msgid "Guide"
 msgstr "ガイド"
 
-#: app/core/core-enums.c:568 app/core/core-enums.c:598
+#: app/core/core-enums.c:588 app/core/core-enums.c:618
 #, fuzzy
 msgid "Drawable mod"
 msgstr "描画対象操作"
 
-#: app/core/core-enums.c:569 app/core/core-enums.c:599
+#: app/core/core-enums.c:589 app/core/core-enums.c:619
 #, fuzzy
 msgid "Selection mask"
 msgstr "選択マスク"
 
-#: app/core/core-enums.c:570 app/core/core-enums.c:602
+#: app/core/core-enums.c:590 app/core/core-enums.c:622
 #, fuzzy
 msgid "Item visibility"
 msgstr "アイテムの表示"
 
-#: app/core/core-enums.c:571
+#: app/core/core-enums.c:591
 #, fuzzy
 msgid "Linked item"
 msgstr "リンクされたアイテム"
 
-#: app/core/core-enums.c:572
+#: app/core/core-enums.c:592
 #, fuzzy
 msgid "Item properties"
 msgstr "アイテムのプロパティ"
 
-#: app/core/core-enums.c:573 app/core/core-enums.c:601
+#: app/core/core-enums.c:593 app/core/core-enums.c:621
 #, fuzzy
 msgid "Move item"
 msgstr "アイテムの移動"
 
-#: app/core/core-enums.c:574
+#: app/core/core-enums.c:594
 #, fuzzy
 msgid "Scale item"
 msgstr "画像拡大縮小"
 
-#: app/core/core-enums.c:575
+#: app/core/core-enums.c:595
 #, fuzzy
 msgid "Resize item"
 msgstr "画像のサイズ変更"
 
-#: app/core/core-enums.c:576 app/core/core-enums.c:606
+#: app/core/core-enums.c:596 app/core/core-enums.c:626
 #, fuzzy
 msgid "Add layer mask"
 msgstr "レイヤーマスク追加"
 
-#: app/core/core-enums.c:577
+#: app/core/core-enums.c:597
 #, fuzzy
 msgid "Apply layer mask"
 msgstr "レイヤーマスクの適用"
 
-#: app/core/core-enums.c:578
+#: app/core/core-enums.c:598
 #, fuzzy
 msgid "Floating selection to layer"
 msgstr "フローティング選択領域をレイヤーに"
 
-#: app/core/core-enums.c:579
+#: app/core/core-enums.c:599
 #, fuzzy
 msgid "Float selection"
 msgstr "フローティング選択領域"
 
-#: app/core/core-enums.c:580
+#: app/core/core-enums.c:600
 #, fuzzy
 msgid "Anchor floating selection"
 msgstr "フローティング選択領域を固定"
 
-#: app/core/core-enums.c:581
+#: app/core/core-enums.c:601
 #, fuzzy
 msgid "Remove floating selection"
 msgstr "フローティング選択領域"
 
-#: app/core/core-enums.c:582 app/core/gimp-edit.c:135
+#: app/core/core-enums.c:602 app/core/gimp-edit.c:135
 msgid "Paste"
 msgstr "貼り付け"
 
-#: app/core/core-enums.c:583 app/core/gimp-edit.c:347
+#: app/core/core-enums.c:603 app/core/gimp-edit.c:348
 msgid "Cut"
 msgstr "切り取り"
 
-#: app/core/core-enums.c:584 app/core/core-enums.c:612
+#: app/core/core-enums.c:604 app/core/core-enums.c:632
 #: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:165
 msgid "Text"
 msgstr "文字"
 
-#: app/core/core-enums.c:585 app/core/core-enums.c:625
+#: app/core/core-enums.c:605 app/core/core-enums.c:645
 #: app/core/gimpdrawable-transform.c:873
 msgid "Transform"
 msgstr "変換"
 
-#: app/core/core-enums.c:586 app/core/core-enums.c:626
+#: app/core/core-enums.c:606 app/core/core-enums.c:646
 #: app/paint/gimppaintcore.c:344
 msgid "Paint"
 msgstr "描画"
 
-#: app/core/core-enums.c:587 app/core/core-enums.c:627
+#: app/core/core-enums.c:607 app/core/core-enums.c:647
 #, fuzzy
 msgid "Attach parasite"
 msgstr "パラサイト付加"
 
-#: app/core/core-enums.c:588 app/core/core-enums.c:628
+#: app/core/core-enums.c:608 app/core/core-enums.c:648
 #, fuzzy
 msgid "Remove parasite"
 msgstr "パラサイト削除"
 
-#: app/core/core-enums.c:589
+#: app/core/core-enums.c:609
 #, fuzzy
 msgid "Import paths"
 msgstr "パスのインポート"
 
-#: app/core/core-enums.c:590 app/pdb/drawable_cmds.c:1565
+#: app/core/core-enums.c:610 app/pdb/drawable_cmds.c:1590
 msgid "Plug-In"
 msgstr "プラグイン"
 
-#: app/core/core-enums.c:591
+#: app/core/core-enums.c:611
 #, fuzzy
 msgid "Image type"
 msgstr "画像の種類"
 
-#: app/core/core-enums.c:592
+#: app/core/core-enums.c:612
 #, fuzzy
 msgid "Image size"
 msgstr "画像のサイズ"
 
-#: app/core/core-enums.c:593
+#: app/core/core-enums.c:613
 #, fuzzy
 msgid "Resolution change"
 msgstr "解像度変更"
 
-#: app/core/core-enums.c:596
+#: app/core/core-enums.c:616
 #, fuzzy
 msgid "Change indexed palette"
 msgstr "インデックスパレット変更"
 
-#: app/core/core-enums.c:600
+#: app/core/core-enums.c:620
 #, fuzzy
 msgid "Rename item"
 msgstr "アイテム名の変更"
 
-#: app/core/core-enums.c:603
+#: app/core/core-enums.c:623
 #, fuzzy
 msgid "Set item linked"
 msgstr "アイテムをリンクさせる"
 
-#: app/core/core-enums.c:604
+#: app/core/core-enums.c:624
 #, fuzzy
 msgid "New layer"
 msgstr "新規レイヤー"
 
-#: app/core/core-enums.c:605
+#: app/core/core-enums.c:625
 #, fuzzy
 msgid "Delete layer"
 msgstr "レイヤー削除"
 
-#: app/core/core-enums.c:607
+#: app/core/core-enums.c:627
 #, fuzzy
 msgid "Delete layer mask"
 msgstr "レイヤーマスク削除"
 
-#: app/core/core-enums.c:608
+#: app/core/core-enums.c:628
 #, fuzzy
 msgid "Reposition layer"
 msgstr "レイヤーの再配置"
 
-#: app/core/core-enums.c:609
+#: app/core/core-enums.c:629
 #, fuzzy
 msgid "Set layer mode"
 msgstr "レイヤーモードの設定"
 
-#: app/core/core-enums.c:610
+#: app/core/core-enums.c:630
 #, fuzzy
 msgid "Set layer opacity"
 msgstr "レイヤー透明度の設定"
 
-#: app/core/core-enums.c:611
+#: app/core/core-enums.c:631
 #, fuzzy
 msgid "Set preserve trans"
 msgstr "変換保存の設定"
 
-#: app/core/core-enums.c:613
+#: app/core/core-enums.c:633
 #, fuzzy
 msgid "Text modified"
 msgstr "変更があった時だけ"
 
-#: app/core/core-enums.c:614
+#: app/core/core-enums.c:634
 #, fuzzy
 msgid "New channel"
 msgstr "新規チャンネル"
 
-#: app/core/core-enums.c:615
+#: app/core/core-enums.c:635
 #, fuzzy
 msgid "Delete channel"
 msgstr "チャンネルの削除"
 
-#: app/core/core-enums.c:616
+#: app/core/core-enums.c:636
 #, fuzzy
 msgid "Reposition channel"
 msgstr "チャンネルの再配置"
 
-#: app/core/core-enums.c:617
+#: app/core/core-enums.c:637
 #, fuzzy
 msgid "Channel color"
 msgstr "チャンネルカラー"
 
-#: app/core/core-enums.c:618
+#: app/core/core-enums.c:638
 #, fuzzy
 msgid "New vectors"
 msgstr "新規ベクタ"
 
-#: app/core/core-enums.c:619
+#: app/core/core-enums.c:639
 #, fuzzy
 msgid "Delete vectors"
 msgstr "ベクタの削除"
 
-#: app/core/core-enums.c:620
+#: app/core/core-enums.c:640
 #, fuzzy
 msgid "Vectors mod"
 msgstr "ベクタ操作"
 
-#: app/core/core-enums.c:621
+#: app/core/core-enums.c:641
 #, fuzzy
 msgid "Reposition vectors"
 msgstr "ベクタの再配置"
 
-#: app/core/core-enums.c:622
+#: app/core/core-enums.c:642
 #, fuzzy
 msgid "FS to layer"
 msgstr "フロート選択をレイヤーへ"
 
-#: app/core/core-enums.c:623
+#: app/core/core-enums.c:643
 #, fuzzy
 msgid "FS rigor"
 msgstr "フロート選択くくりつけ"
 
-#: app/core/core-enums.c:624
+#: app/core/core-enums.c:644
 #, fuzzy
 msgid "FS relax"
 msgstr "フロート選択解放"
 
-#: app/core/core-enums.c:629
+#: app/core/core-enums.c:649
 msgid "EEK: can't undo"
 msgstr "EEK: アンドゥできません"
 
-#: app/core/gimp-edit.c:127 app/core/gimp-edit.c:250
+#: app/core/gimp-edit.c:127 app/core/gimp-edit.c:251
 msgid "Pasted Layer"
 msgstr "貼り付けられたレイヤー"
 
-#: app/core/gimp-edit.c:280
+#: app/core/gimp-edit.c:281
 msgid "Clear"
 msgstr "消去"
 
-#: app/core/gimp-edit.c:298
+#: app/core/gimp-edit.c:299
 msgid "Fill with FG Color"
 msgstr "描画色で塗りつぶす"
 
-#: app/core/gimp-edit.c:302 app/core/gimp-edit.c:323
+#: app/core/gimp-edit.c:303 app/core/gimp-edit.c:324
 msgid "Fill with BG Color"
 msgstr "背景色で塗りつぶす"
 
-#: app/core/gimp-edit.c:306
+#: app/core/gimp-edit.c:307
 msgid "Fill with White"
 msgstr "白色で塗りつぶす"
 
-#: app/core/gimp-edit.c:310
+#: app/core/gimp-edit.c:311
 msgid "Fill with Transparency"
 msgstr "透明色で塗りつぶす"
 
-#: app/core/gimp-edit.c:314
+#: app/core/gimp-edit.c:315
 msgid "Fill with Pattern"
 msgstr "パターンで塗りつぶす"
 
@@ -4757,7 +4793,7 @@ msgid "Documents"
 msgstr "文書"
 
 #. initialize the module list
-#: app/core/gimp.c:884 app/dialogs/preferences-dialog.c:2405
+#: app/core/gimp.c:884 app/dialogs/preferences-dialog.c:2411
 msgid "Modules"
 msgstr "モジュール"
 
@@ -5197,202 +5233,202 @@ msgstr "クイックマスク無効"
 msgid "Can't undo %s"
 msgstr "%s はアンドゥできません"
 
-#: app/core/gimpimage.c:1355
+#: app/core/gimpimage.c:1357
 msgid "Change Image Resolution"
 msgstr "画像解像度の変更"
 
-#: app/core/gimpimage.c:1395
+#: app/core/gimpimage.c:1397
 msgid "Change Image Unit"
 msgstr "画像単位の変更"
 
-#: app/core/gimpimage.c:2171
+#: app/core/gimpimage.c:2177
 msgid "Attach Parasite to Image"
 msgstr "画像にパラサイトを付加"
 
-#: app/core/gimpimage.c:2204
+#: app/core/gimpimage.c:2210
 msgid "Remove Parasite from Image"
 msgstr "画像からパラサイトを削除"
 
-#: app/core/gimpimage.c:2672
+#: app/core/gimpimage.c:2678
 msgid "Add Layer"
 msgstr "レイヤーを追加"
 
-#: app/core/gimpimage.c:2739
+#: app/core/gimpimage.c:2745
 msgid "Remove Layer"
 msgstr "レイヤーを削除"
 
-#: app/core/gimpimage.c:2810
+#: app/core/gimpimage.c:2816
 msgid "Layer cannot be raised higher."
 msgstr "これ以上レイヤーを前面に移動させられません"
 
-#: app/core/gimpimage.c:2816 app/core/gimpimage.c:2866
+#: app/core/gimpimage.c:2822 app/core/gimpimage.c:2872
 msgid "Cannot raise a layer without alpha."
 msgstr "アルファチャンネルの無いレイヤーを前面には出せません."
 
-#: app/core/gimpimage.c:2821 app/widgets/gimplayertreeview.c:244
+#: app/core/gimpimage.c:2827 app/widgets/gimplayertreeview.c:244
 msgid "Raise Layer"
 msgstr "レイヤーを前面へ"
 
-#: app/core/gimpimage.c:2838
+#: app/core/gimpimage.c:2844
 msgid "Layer cannot be lowered more."
 msgstr "これ以上レイヤーを背面に移動させられません"
 
-#: app/core/gimpimage.c:2843 app/widgets/gimplayertreeview.c:248
+#: app/core/gimpimage.c:2849 app/widgets/gimplayertreeview.c:248
 msgid "Lower Layer"
 msgstr "レイヤーを背面へ"
 
-#: app/core/gimpimage.c:2860
+#: app/core/gimpimage.c:2866
 msgid "Layer is already on top."
 msgstr "レイヤーは既に最前面にあります"
 
-#: app/core/gimpimage.c:2871 app/widgets/gimplayertreeview.c:246
+#: app/core/gimpimage.c:2877 app/widgets/gimplayertreeview.c:246
 msgid "Raise Layer to Top"
 msgstr "レイヤーを最前面へ"
 
-#: app/core/gimpimage.c:2891
+#: app/core/gimpimage.c:2897
 msgid "Layer is already on the bottom."
 msgstr "レイヤーは既に最背面にあります"
 
-#: app/core/gimpimage.c:2896 app/widgets/gimplayertreeview.c:250
+#: app/core/gimpimage.c:2902 app/widgets/gimplayertreeview.c:250
 msgid "Lower Layer to Bottom"
 msgstr "レイヤーを最背面へ"
 
-#: app/core/gimpimage.c:2935
+#: app/core/gimpimage.c:2941
 #, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
 msgstr ""
 "レイヤー '%s' にはアルファチャンネルがありません. レイヤーはアルファチャンネ"
 "ルの前面に置かれています."
 
-#: app/core/gimpimage.c:2987
+#: app/core/gimpimage.c:2993
 msgid "Add Channel"
 msgstr "チャンネルを追加"
 
-#: app/core/gimpimage.c:3032
+#: app/core/gimpimage.c:3038
 msgid "Remove Channel"
 msgstr "チャンネルを削除"
 
-#: app/core/gimpimage.c:3076
+#: app/core/gimpimage.c:3082
 msgid "Channel cannot be raised higher."
 msgstr "これ以上チャンネルを上昇させられません"
 
-#: app/core/gimpimage.c:3081 app/widgets/gimpchanneltreeview.c:127
+#: app/core/gimpimage.c:3087 app/widgets/gimpchanneltreeview.c:127
 msgid "Raise Channel"
 msgstr "チャンネル上昇"
 
-#: app/core/gimpimage.c:3098
+#: app/core/gimpimage.c:3104
 #, fuzzy
 msgid "Channel is already on top."
 msgstr "レイヤーは既に最前面にあります"
 
-#: app/core/gimpimage.c:3103 app/widgets/gimpchanneltreeview.c:129
+#: app/core/gimpimage.c:3109 app/widgets/gimpchanneltreeview.c:129
 msgid "Raise Channel to Top"
 msgstr "チャンネルを一番上まで上昇"
 
-#: app/core/gimpimage.c:3120
+#: app/core/gimpimage.c:3126
 msgid "Channel cannot be lowered more."
 msgstr "これ以上チャンネルを下降させられません"
 
-#: app/core/gimpimage.c:3125 app/widgets/gimpchanneltreeview.c:131
+#: app/core/gimpimage.c:3131 app/widgets/gimpchanneltreeview.c:131
 msgid "Lower Channel"
 msgstr "チャンネル下降"
 
-#: app/core/gimpimage.c:3145
+#: app/core/gimpimage.c:3151
 #, fuzzy
 msgid "Channel is already on the bottom."
 msgstr "レイヤーは既に最背面にあります"
 
-#: app/core/gimpimage.c:3150 app/widgets/gimpchanneltreeview.c:133
+#: app/core/gimpimage.c:3156 app/widgets/gimpchanneltreeview.c:133
 msgid "Lower Channel to Bottom"
 msgstr "チャンネルを一番下まで下降"
 
-#: app/core/gimpimage.c:3225
+#: app/core/gimpimage.c:3231
 msgid "Add Path"
 msgstr "パスを追加"
 
-#: app/core/gimpimage.c:3270
+#: app/core/gimpimage.c:3276
 msgid "Remove Path"
 msgstr "パスを削除"
 
-#: app/core/gimpimage.c:3314
+#: app/core/gimpimage.c:3320
 msgid "Path cannot be raised higher."
 msgstr "パスをこれ以上前面に移動させられません."
 
-#: app/core/gimpimage.c:3319
+#: app/core/gimpimage.c:3325
 msgid "Raise Path"
 msgstr "パスを上昇"
 
-#: app/core/gimpimage.c:3336
+#: app/core/gimpimage.c:3342
 #, fuzzy
 msgid "Path is already on top."
 msgstr "レイヤーは既に最前面にあります"
 
-#: app/core/gimpimage.c:3341
+#: app/core/gimpimage.c:3347
 msgid "Raise Path to Top"
 msgstr "パスを最前面へ"
 
-#: app/core/gimpimage.c:3358
+#: app/core/gimpimage.c:3364
 msgid "Path cannot be lowered more."
 msgstr "パスをこれ以上背面に移動させられません."
 
-#: app/core/gimpimage.c:3363
+#: app/core/gimpimage.c:3369
 msgid "Lower Path"
 msgstr "パスを下降"
 
-#: app/core/gimpimage.c:3383
+#: app/core/gimpimage.c:3389
 #, fuzzy
 msgid "Path is already on the bottom."
 msgstr "レイヤーは既に最背面にあります"
 
-#: app/core/gimpimage.c:3388
+#: app/core/gimpimage.c:3394
 msgid "Lower Path to Bottom"
 msgstr "パスを最背面へ"
 
-#: app/core/gimpimagefile.c:461
+#: app/core/gimpimagefile.c:517
 msgid "Remote image"
 msgstr "リモート画像"
 
-#: app/core/gimpimagefile.c:466 app/dialogs/preferences-dialog.c:1427
+#: app/core/gimpimagefile.c:522 app/dialogs/preferences-dialog.c:1427
 msgid "Folder"
 msgstr "フォルダ"
 
-#: app/core/gimpimagefile.c:471
+#: app/core/gimpimagefile.c:527
 msgid "Special File"
 msgstr "特殊ファイル"
 
-#: app/core/gimpimagefile.c:498
+#: app/core/gimpimagefile.c:554
 msgid "No preview available"
 msgstr "プレビュー無し"
 
-#: app/core/gimpimagefile.c:502
+#: app/core/gimpimagefile.c:558
 msgid "Loading preview ..."
 msgstr "プレビューを読み込み中..."
 
-#: app/core/gimpimagefile.c:506
+#: app/core/gimpimagefile.c:562
 msgid "Preview is out of date"
 msgstr "プレビューが古すぎます"
 
-#: app/core/gimpimagefile.c:510
+#: app/core/gimpimagefile.c:566
 msgid "Cannot create preview"
 msgstr "プレビューを作成できません"
 
-#. width and height
-#: app/core/gimpimagefile.c:517 app/dialogs/info-window.c:543
-#: app/widgets/gimptemplateeditor.c:665
+#. pixel size
+#: app/core/gimpimagefile.c:573 app/dialogs/info-window.c:540
+#: app/widgets/gimptemplateeditor.c:636 app/widgets/gimptemplateeditor.c:670
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d ピクセル"
 
-#: app/core/gimpimagefile.c:532
+#: app/core/gimpimagefile.c:588
 msgid "1 Layer"
 msgstr "1 枚のレイヤー"
 
-#: app/core/gimpimagefile.c:534
+#: app/core/gimpimagefile.c:590
 #, c-format
 msgid "%d Layers"
 msgstr "%d 枚のレイヤー"
 
-#: app/core/gimpimagefile.c:575
+#: app/core/gimpimagefile.c:631
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "サムネイルファイル '%s' が開けません: %s"
@@ -5442,17 +5478,21 @@ msgstr "レイヤー"
 msgid "Rename Layer"
 msgstr "レイヤー名変更"
 
-#: app/core/gimplayer.c:254 app/pdb/layer_cmds.c:650 app/pdb/layer_cmds.c:728
+#: app/core/gimplayer.c:254 app/pdb/layer_cmds.c:657 app/pdb/layer_cmds.c:736
 msgid "Move Layer"
 msgstr "レイヤーを移動"
-
-#: app/core/gimplayer.c:255 app/dialogs/resize-dialog.c:204
-msgid "Scale Layer"
-msgstr "レイヤーの拡大・縮小"
 
 #: app/core/gimplayer.c:256
 msgid "Resize Layer"
 msgstr "レイヤーサイズの変更"
+
+#: app/core/gimplayer.c:257
+msgid "Flip Layer"
+msgstr "レイヤーを反転"
+
+#: app/core/gimplayer.c:258
+msgid "Rotate Layer"
+msgstr "レイヤーを回転"
 
 #: app/core/gimplayer.c:341 app/core/gimplayer.c:1126
 #: app/core/gimplayermask.c:236
@@ -5604,11 +5644,11 @@ msgstr ""
 "ブラシコールバックを実行できません. 対応するプラグインがクラッシュしたかもし"
 "れません."
 
-#: app/core/gimpprogress.c:106 app/core/gimpprogress.c:153
+#: app/core/gimpprogress.c:107 app/core/gimpprogress.c:154
 msgid "Please wait..."
 msgstr "お待ち下さい..."
 
-#: app/core/gimpselection.c:183 app/tools/gimpeditselectiontool.c:253
+#: app/core/gimpselection.c:183 app/tools/gimpeditselectiontool.c:258
 msgid "Move Selection"
 msgstr "選択領域を移動"
 
@@ -5653,20 +5693,20 @@ msgstr "フローティング選択領域"
 msgid "Floated Layer"
 msgstr "レイヤーを回転"
 
-#: app/core/gimptemplate.c:159
+#: app/core/gimptemplate.c:158
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr "点を点に対応させるモードにおいて表示に利用する単位です."
 
-#: app/core/gimptemplate.c:166
+#: app/core/gimptemplate.c:165
 #, fuzzy
 msgid "The horizontal image resolution."
 msgstr "水平画像解像度"
 
-#: app/core/gimptemplate.c:171
+#: app/core/gimptemplate.c:170
 msgid "The vertical image resolution."
 msgstr "垂直画像解像度"
 
-#: app/core/gimptemplate.c:452 app/widgets/widgets-enums.c:16
+#: app/core/gimptemplate.c:450 app/widgets/widgets-enums.c:16
 msgid "Background"
 msgstr "背景"
 
@@ -5675,8 +5715,8 @@ msgstr "背景"
 msgid "pixel"
 msgstr "ピクセル"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:748
-#: app/tools/gimpmeasuretool.c:836 app/tools/gimppainttool.c:681
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:787
+#: app/tools/gimpmeasuretool.c:875 app/tools/gimppainttool.c:681
 msgid "pixels"
 msgstr "ピクセル"
 
@@ -5743,91 +5783,119 @@ msgstr "貢献は"
 msgid "About The GIMP"
 msgstr "GIMP について"
 
-#: app/dialogs/convert-dialog.c:124
+#: app/dialogs/convert-dialog.c:122
 msgid "Indexed Color Conversion"
 msgstr "インデックスカラー変換"
 
-#: app/dialogs/convert-dialog.c:127
+#: app/dialogs/convert-dialog.c:125
 msgid "Convert Image to Indexed Colors"
 msgstr "インデックスカラーに変換"
 
-#: app/dialogs/convert-dialog.c:163
-msgid "General Palette Options"
-msgstr "一般パレットオプション"
+#: app/dialogs/convert-dialog.c:165 app/pdb/internal_procs.c:160
+msgid "Palette"
+msgstr "パレット"
 
-#: app/dialogs/convert-dialog.c:176
+#: app/dialogs/convert-dialog.c:179
 #, fuzzy
-msgid "Generate optimum palette:"
-msgstr "最適パレットを生成:"
-
-#: app/dialogs/convert-dialog.c:199
-#, fuzzy
-msgid "Max. number of colors:"
+msgid "_Maximum number of colors:"
 msgstr "最大色数:"
 
-#: app/dialogs/convert-dialog.c:218
-msgid "Use WWW-Optimized Palette"
-msgstr "WWW 用パレットを使用"
-
-#. 'mono palette'
-#: app/dialogs/convert-dialog.c:231
+#: app/dialogs/convert-dialog.c:206
 #, fuzzy
-msgid "Use black and white (1-bit) palette"
-msgstr "白黒(1-bit)パレットを使用"
+msgid "_Remove unused colors from final palette"
+msgstr "未使用の色を最終出力パレットから除く"
+
+#. dithering
+#: app/dialogs/convert-dialog.c:221 app/tools/gimpblendoptions.c:268
+msgid "Dithering"
+msgstr "ディザリング"
+
+#: app/dialogs/convert-dialog.c:233
+#, fuzzy
+msgid "Color _dithering:"
+msgstr "色ディザリングを行わない"
 
 #: app/dialogs/convert-dialog.c:248
 #, fuzzy
-msgid "Remove unused colors from final palette"
-msgstr "未使用の色を最終出力パレットから除く"
-
-#: app/dialogs/convert-dialog.c:262
-#, fuzzy
-msgid "Use custom palette:"
-msgstr "カスタムパレットを使用:"
-
-#. the dither type
-#: app/dialogs/convert-dialog.c:298
-msgid "Dithering Options"
-msgstr "ディザリングオプション"
-
-#: app/dialogs/convert-dialog.c:314
-#, fuzzy
-msgid "Enable dithering of transparency"
+msgid "Enable dithering of _transparency"
 msgstr "透明部分のディザリングを行う"
 
-#: app/dialogs/convert-dialog.c:329
-msgid "[ Warning ]"
-msgstr "[ 警告 ]"
-
-#: app/dialogs/convert-dialog.c:334
-msgid ""
-"You are attempting to convert an image with an alpha channel to indexed "
-"colors.\n"
-"Do not generate a palette of more than 255 colors if you intend to create a "
-"transparent or animated GIF file."
-msgstr ""
-"アルファチャンネルを持った画像をインデックス付きの画像へ変換しようとしていま"
-"す.\n"
-"この画像から透明 GIF やアニメ GIF 形式のファイルを作成する場合には, 256 色以"
-"上のパレットを生成してはいけません."
-
-#: app/dialogs/convert-dialog.c:360
+#: app/dialogs/convert-dialog.c:274
 #, fuzzy
 msgid "Converting to indexed..."
 msgstr "インデックスカラーに変換"
 
-#: app/dialogs/convert-dialog.c:464
-#, fuzzy
-msgid "Open the palette selection dialog"
-msgstr "パターン選択ダイアログを開く"
-
-#: app/dialogs/convert-dialog.c:495
+#: app/dialogs/convert-dialog.c:382
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "256色より多いパレットを変換することはできません."
 
 #: app/dialogs/dialogs-constructors.c:171 app/gui/gui.c:160
 msgid "GIMP Message"
 msgstr "GIMP メッセージ"
+
+#: app/dialogs/dialogs.c:124
+msgid "Devices"
+msgstr "デバイス"
+
+#: app/dialogs/dialogs.c:124
+msgid "Device Status"
+msgstr "デバイスの状態"
+
+#: app/dialogs/dialogs.c:128
+msgid "Errors"
+msgstr "エラー"
+
+#: app/dialogs/dialogs.c:149
+msgid "History"
+msgstr "履歴"
+
+#: app/dialogs/dialogs.c:151
+msgid "Image Templates"
+msgstr "画像テンプレート"
+
+#: app/dialogs/dialogs.c:168
+msgid "Colormap"
+msgstr "カラーマップ"
+
+#: app/dialogs/dialogs.c:168
+msgid "Indexed Palette"
+msgstr "インデックスパレット"
+
+#: app/dialogs/dialogs.c:172
+msgid "Histogram"
+msgstr "ヒストグラム"
+
+#: app/dialogs/dialogs.c:176
+msgid "Selection"
+msgstr "選択"
+
+#: app/dialogs/dialogs.c:176
+msgid "Selection Editor"
+msgstr "選択エディタ "
+
+#: app/dialogs/dialogs.c:180
+msgid "Undo History"
+msgstr "アンドゥ履歴"
+
+#: app/dialogs/dialogs.c:186
+msgid "Navigation"
+msgstr "ナビゲーション"
+
+#: app/dialogs/dialogs.c:186
+msgid "Display Navigation"
+msgstr "ナビゲーションを表示"
+
+#: app/dialogs/dialogs.c:192
+msgid "FG/BG"
+msgstr "描画/背景"
+
+#: app/dialogs/dialogs.c:192
+msgid "FG/BG Color"
+msgstr "描画色/背景色"
+
+#: app/dialogs/dialogs.c:198
+msgid "Brush Editor"
+msgstr "ブラシエディタ"
 
 #: app/dialogs/file-open-location-dialog.c:71
 #, fuzzy
@@ -5839,23 +5907,24 @@ msgstr "場所:"
 msgid "Enter location (URI):"
 msgstr "補間の種類:"
 
-#: app/dialogs/file-save-dialog.c:163
-#, c-format
-msgid ""
-"A file named '%s' already exists.\n"
-"\n"
-"Do you want to replace it with the image you are saving?"
-msgstr ""
-
-#: app/dialogs/file-save-dialog.c:168
+#: app/dialogs/file-save-dialog.c:162
 #, fuzzy
-msgid "File exists!"
+msgid "File exists"
 msgstr "ファイルは存在します!"
 
-#: app/dialogs/file-save-dialog.c:173
+#: app/dialogs/file-save-dialog.c:167
 #, fuzzy
-msgid "Replace"
+msgid "_Replace"
 msgstr "複製"
+
+#: app/dialogs/file-save-dialog.c:177
+#, c-format
+msgid "A file named '%s' already exists."
+msgstr ""
+
+#: app/dialogs/file-save-dialog.c:182
+msgid "Do you want to replace it with the image you are saving?"
+msgstr ""
 
 #: app/dialogs/grid-dialog.c:81
 msgid "Configure Grid"
@@ -5865,37 +5934,25 @@ msgstr "グリッドの調整"
 msgid "Configure Image Grid"
 msgstr "画像のグリッドを調整"
 
-#: app/dialogs/image-new-dialog.c:93
+#: app/dialogs/image-new-dialog.c:95
 msgid "Create a New Image"
 msgstr "新規画像を作成"
 
-#: app/dialogs/image-new-dialog.c:129 app/dialogs/preferences-dialog.c:1268
+#: app/dialogs/image-new-dialog.c:131 app/dialogs/preferences-dialog.c:1268
 #, fuzzy
 msgid "_Template:"
 msgstr "テンプレート"
 
-#: app/dialogs/image-new-dialog.c:258
-#, c-format
-msgid ""
-"You are trying to create an image with an initial size of %s.\n"
-"\n"
-"Choose OK to create this image anyway.\n"
-"Choose Cancel if you did not intend to create such a large image.\n"
-"\n"
-"To prevent this dialog from appearing, increase the \"Maximum Image Size\" "
-"setting (currently %s) in the Preferences dialog."
-msgstr ""
-"初期サイズ %s で画像を作成しようとしています.\n"
-"\n"
-"とにかく，この画像を作成するのであれば「了解」を選択してください.\n"
-"このような大きな画像を作成したくないのであれば「取消」を選択してください.\n"
-"\n"
-"このダイアログが表示されないようにするには, 環境設定ダイアログ中の \"最大画像"
-"サイズ\" の設定値 (現在 %s) を大きくしてください."
-
-#: app/dialogs/image-new-dialog.c:273
+#: app/dialogs/image-new-dialog.c:266
 msgid "Confirm Image Size"
 msgstr "画像のサイズを確認"
+
+#: app/dialogs/image-new-dialog.c:290
+#, c-format
+msgid ""
+"An image of the choosen size will use more memory than what is configured as "
+"\"Maximum Image Size\" in the Preferences dialog (currently %s)."
+msgstr ""
 
 #. General
 #: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1498
@@ -5903,147 +5960,149 @@ msgstr "画像のサイズを確認"
 msgid "General"
 msgstr "一般"
 
-#: app/dialogs/info-window.c:85
+#: app/dialogs/info-window.c:83
 msgid "Static Gray"
 msgstr "スタティックグレー"
 
-#: app/dialogs/info-window.c:86 app/dialogs/info-window.c:591
+#: app/dialogs/info-window.c:84 app/dialogs/info-window.c:598
 msgid "Grayscale"
 msgstr "グレースケール"
 
-#: app/dialogs/info-window.c:87
+#: app/dialogs/info-window.c:85
 msgid "Static Color"
 msgstr "スタティックカラー"
 
-#: app/dialogs/info-window.c:88
+#: app/dialogs/info-window.c:86
 msgid "Pseudo Color"
 msgstr "擬カラー"
 
-#: app/dialogs/info-window.c:89
+#: app/dialogs/info-window.c:87
 msgid "True Color"
 msgstr "トゥルーカラー"
 
-#: app/dialogs/info-window.c:90
+#: app/dialogs/info-window.c:88
 msgid "Direct Color"
 msgstr "ダイレクトカラー"
 
-#: app/dialogs/info-window.c:134
-msgid "Extended"
-msgstr "拡張"
+#: app/dialogs/info-window.c:131
+#, fuzzy
+msgid "Cursor"
+msgstr "カーブ"
 
-#: app/dialogs/info-window.c:144 app/dialogs/preferences-dialog.c:1879
+#: app/dialogs/info-window.c:141 app/dialogs/preferences-dialog.c:1879
 #: app/widgets/gimpgrideditor.c:267 app/widgets/gimpgrideditor.c:299
 msgid "Pixels"
 msgstr "ピクセル"
 
-#: app/dialogs/info-window.c:154 app/dialogs/info-window.c:160
-#: app/dialogs/info-window.c:176 app/dialogs/info-window.c:182
-#: app/dialogs/info-window.c:416 app/dialogs/info-window.c:417
-#: app/dialogs/info-window.c:418 app/dialogs/info-window.c:419
+#: app/dialogs/info-window.c:151 app/dialogs/info-window.c:157
+#: app/dialogs/info-window.c:173 app/dialogs/info-window.c:179
+#: app/dialogs/info-window.c:413 app/dialogs/info-window.c:414
+#: app/dialogs/info-window.c:415 app/dialogs/info-window.c:416
 #: app/widgets/gimpcolorframe.c:338
 msgid "n/a"
 msgstr "n/a"
 
-#: app/dialogs/info-window.c:157 app/dialogs/info-window.c:179
-msgid "X:"
+#: app/dialogs/info-window.c:154 app/dialogs/info-window.c:176
+#, fuzzy
+msgid "X"
 msgstr "X:"
 
-#: app/dialogs/info-window.c:163 app/dialogs/info-window.c:185
-#: app/tools/gimprotatetool.c:189
-msgid "Y:"
-msgstr "Y:"
+#: app/dialogs/info-window.c:160 app/dialogs/info-window.c:182
+#, fuzzy
+msgid "Y"
+msgstr "_Y"
 
-#: app/dialogs/info-window.c:166 app/pdb/internal_procs.c:208
+#: app/dialogs/info-window.c:163 app/pdb/internal_procs.c:208
 msgid "Units"
 msgstr "単位"
 
-#: app/dialogs/info-window.c:230
+#: app/dialogs/info-window.c:227
 #, fuzzy
 msgid "Comment"
 msgstr "カウント:"
 
-#: app/dialogs/info-window.c:241 app/dialogs/info-window.c:605
+#: app/dialogs/info-window.c:238 app/dialogs/info-window.c:612
 #: app/display/gimpdisplayshell-title.c:337
 #: app/display/gimpdisplayshell-title.c:349
 msgid "(none)"
 msgstr "(なし)"
 
-#: app/dialogs/info-window.c:266
+#: app/dialogs/info-window.c:263
 msgid "Info Window"
 msgstr "情報ウインドウ"
 
-#: app/dialogs/info-window.c:268
+#: app/dialogs/info-window.c:265
 msgid "Image Information"
 msgstr "画像情報"
 
 #. add the information fields
-#: app/dialogs/info-window.c:285
+#: app/dialogs/info-window.c:282
 #, fuzzy
 msgid "Pixel dimensions:"
 msgstr "ピクセル寸法"
 
-#: app/dialogs/info-window.c:287
+#: app/dialogs/info-window.c:284
 #, fuzzy
 msgid "Print size:"
 msgstr "印刷サイズ:"
 
-#: app/dialogs/info-window.c:289
+#: app/dialogs/info-window.c:286
 msgid "Resolution:"
 msgstr "解像度:"
 
-#: app/dialogs/info-window.c:291
+#: app/dialogs/info-window.c:288
 #, fuzzy
 msgid "Scale ratio:"
 msgstr "拡大率:"
 
-#: app/dialogs/info-window.c:293
+#: app/dialogs/info-window.c:290
 #, fuzzy
 msgid "Number of layers:"
 msgstr "レイヤー数:"
 
-#: app/dialogs/info-window.c:295
+#: app/dialogs/info-window.c:292
 #, fuzzy
 msgid "Size in memory:"
 msgstr "メモリ中のサイズ:"
 
-#: app/dialogs/info-window.c:297
+#: app/dialogs/info-window.c:294
 #, fuzzy
 msgid "Display type:"
 msgstr "表示タイプ:"
 
-#: app/dialogs/info-window.c:299
+#: app/dialogs/info-window.c:296
 #, fuzzy
 msgid "Visual class:"
 msgstr "ビジュアルクラス:"
 
-#: app/dialogs/info-window.c:301
+#: app/dialogs/info-window.c:298
 #, fuzzy
 msgid "Visual depth:"
 msgstr "ビジュアル深度:"
 
-#: app/dialogs/info-window.c:556
+#: app/dialogs/info-window.c:563
 #, c-format
 msgid "pixels/%s"
 msgstr "ピクセル/%s"
 
-#: app/dialogs/info-window.c:558
+#: app/dialogs/info-window.c:565
 #, c-format
 msgid "%g x %g %s"
 msgstr "%g x %g %s"
 
-#: app/dialogs/info-window.c:561 app/dialogs/preferences-dialog.c:1901
+#: app/dialogs/info-window.c:568 app/dialogs/preferences-dialog.c:1901
 msgid "dpi"
 msgstr "dpi"
 
-#: app/dialogs/info-window.c:588
+#: app/dialogs/info-window.c:595
 msgid "RGB Color"
 msgstr "RGB カラー"
 
-#: app/dialogs/info-window.c:595
+#: app/dialogs/info-window.c:602
 msgid "Indexed Color"
 msgstr "インデックスカラー"
 
-#: app/dialogs/info-window.c:595
+#: app/dialogs/info-window.c:602
 msgid "colors"
 msgstr "色"
 
@@ -6312,12 +6371,12 @@ msgstr "グリッドを表示する(_D)"
 
 #: app/dialogs/preferences-dialog.c:1074
 #, fuzzy
-msgid "Canvas padding mode:"
+msgid "Canvas _padding mode:"
 msgstr "キャンバス周辺のモード:"
 
 #: app/dialogs/preferences-dialog.c:1078
 #, fuzzy
-msgid "Custom padding color:"
+msgid "Custom p_adding color:"
 msgstr "キャンバス周辺の色:"
 
 #: app/dialogs/preferences-dialog.c:1079
@@ -6442,7 +6501,7 @@ msgstr "ヘルプブラウザ"
 
 #: app/dialogs/preferences-dialog.c:1515
 #, fuzzy
-msgid "Help _browser to use:"
+msgid "H_elp browser to use:"
 msgstr "使用するヘルプブラウザ(_B):"
 
 #: app/dialogs/preferences-dialog.c:1520
@@ -6456,7 +6515,7 @@ msgstr "ヘルプブラウザの選択"
 
 #: app/dialogs/preferences-dialog.c:1527
 #, fuzzy
-msgid "Web browser to use:"
+msgid "_Web browser to use:"
 msgstr "使用するウェブブラウザ:"
 
 #. Snapping Distance
@@ -6507,7 +6566,7 @@ msgstr "表示形式"
 
 #: app/dialogs/preferences-dialog.c:1614
 #, fuzzy
-msgid "Show foreground & background _color"
+msgid "Show _foreground & background color"
 msgstr "背景色を設定"
 
 #: app/dialogs/preferences-dialog.c:1618
@@ -6556,7 +6615,7 @@ msgstr "ウインドウの大きさにあわせる"
 
 #: app/dialogs/preferences-dialog.c:1672
 #, fuzzy
-msgid "Initial zoom ratio:"
+msgid "Initial zoom _ratio:"
 msgstr "最初に使う拡大率:"
 
 #. Mouse Cursors
@@ -6576,7 +6635,7 @@ msgstr "道具の簡易な説明を表示する(_T)"
 
 #: app/dialogs/preferences-dialog.c:1689
 #, fuzzy
-msgid "Cursor m_ode:"
+msgid "Cursor _mode:"
 msgstr "カーソルモード(_O):"
 
 #: app/dialogs/preferences-dialog.c:1692
@@ -6720,7 +6779,7 @@ msgstr "名前(_N):"
 msgid "Event"
 msgstr "環境"
 
-#: app/dialogs/preferences-dialog.c:2192 app/widgets/gimpactionview.c:295
+#: app/dialogs/preferences-dialog.c:2192 app/widgets/gimpactionview.c:297
 #, fuzzy
 msgid "Action"
 msgstr "加算"
@@ -6774,7 +6833,7 @@ msgid "_Reset Saved Window Positions to Default Values"
 msgstr "保存したウィンドウの位置から起動する(_E)"
 
 #: app/dialogs/preferences-dialog.c:2264 app/dialogs/preferences-dialog.c:2267
-#: app/dialogs/preferences-dialog.c:2409
+#: app/dialogs/preferences-dialog.c:2415
 msgid "Environment"
 msgstr "環境"
 
@@ -6784,179 +6843,189 @@ msgstr "リソースの使い方"
 
 #: app/dialogs/preferences-dialog.c:2285
 #, fuzzy
-msgid "Minimal number of undo levels:"
+msgid "Minimal number of _undo levels:"
 msgstr "覚えておく最小アンドゥ回数:"
 
 #: app/dialogs/preferences-dialog.c:2288
 #, fuzzy
-msgid "Maximum undo memory:"
+msgid "Maximum undo _memory:"
 msgstr "アンドゥに使う最大メモリ:"
 
 #: app/dialogs/preferences-dialog.c:2291
-#: app/dialogs/user-install-dialog.c:1127
 #, fuzzy
-msgid "Tile cache size:"
+msgid "Tile cache _size:"
 msgstr "タイルキャッシュサイズ:"
 
 #: app/dialogs/preferences-dialog.c:2294
 #, fuzzy
-msgid "Maximum new image size:"
+msgid "Maximum _new image size:"
 msgstr "新規画像の最大サイズ:"
 
 #: app/dialogs/preferences-dialog.c:2299
 #, fuzzy
-msgid "Number of processors to use:"
+msgid "Number of _processors to use:"
 msgstr "使用するプロセッサの数:"
 
-#. File Saving
+#. Image Thumbnails
 #: app/dialogs/preferences-dialog.c:2304
-msgid "File Saving"
-msgstr "ファイル保存"
-
-#: app/dialogs/preferences-dialog.c:2307
 #, fuzzy
-msgid "Confirm closing of unsaved images"
-msgstr "未保存の画像を閉じるときの確認"
+msgid "Image Thumbnails"
+msgstr "画像マスク"
 
-#: app/dialogs/preferences-dialog.c:2313
+#: app/dialogs/preferences-dialog.c:2309
 #, fuzzy
-msgid "Size of thumbnail files:"
+msgid "Size of _thumbnails:"
 msgstr "サムネイルファイルのサイズ:"
 
-#: app/dialogs/preferences-dialog.c:2325 app/dialogs/preferences-dialog.c:2328
+#: app/dialogs/preferences-dialog.c:2313
+msgid "Maximum _filesize for thumbnailing:"
+msgstr ""
+
+#. File Saving
+#: app/dialogs/preferences-dialog.c:2317
+#, fuzzy
+msgid "Saving Images"
+msgstr "画像の保存"
+
+#: app/dialogs/preferences-dialog.c:2320
+#, fuzzy
+msgid "Confirm closing of unsa_ved images"
+msgstr "未保存の画像を閉じるときの確認"
+
+#: app/dialogs/preferences-dialog.c:2331 app/dialogs/preferences-dialog.c:2334
 msgid "Folders"
 msgstr "フォルダ"
 
-#: app/dialogs/preferences-dialog.c:2343
+#: app/dialogs/preferences-dialog.c:2349
 #, fuzzy
 msgid "Temp folder:"
 msgstr "テンポラリ:"
 
-#: app/dialogs/preferences-dialog.c:2343
+#: app/dialogs/preferences-dialog.c:2349
 #, fuzzy
 msgid "Select Temp Folder"
 msgstr "テーマ用ディレクトリを選択"
 
-#: app/dialogs/preferences-dialog.c:2344
+#: app/dialogs/preferences-dialog.c:2350
 #: app/dialogs/user-install-dialog.c:1155
 #, fuzzy
 msgid "Swap folder:"
 msgstr "スワップ用ディレクトリ:"
 
-#: app/dialogs/preferences-dialog.c:2344
+#: app/dialogs/preferences-dialog.c:2350
 #, fuzzy
 msgid "Select Swap Folder"
 msgstr "スワップ用ディレクトリを選択"
 
-#: app/dialogs/preferences-dialog.c:2377
+#: app/dialogs/preferences-dialog.c:2383
 msgid "Brush Folders"
 msgstr "ブラシディレクトリ"
 
-#: app/dialogs/preferences-dialog.c:2379
+#: app/dialogs/preferences-dialog.c:2385
 msgid "Select Brush Folders"
 msgstr "ブラシ用ディレクトリを選択"
 
-#: app/dialogs/preferences-dialog.c:2381
+#: app/dialogs/preferences-dialog.c:2387
 msgid "Pattern Folders"
 msgstr "パターン塗りディレクトリ"
 
-#: app/dialogs/preferences-dialog.c:2383
+#: app/dialogs/preferences-dialog.c:2389
 msgid "Select Pattern Folders"
 msgstr "パターン塗り用ディレクトリを選択"
 
-#: app/dialogs/preferences-dialog.c:2385
+#: app/dialogs/preferences-dialog.c:2391
 msgid "Palette Folders"
 msgstr "パレットディレクトリ"
 
-#: app/dialogs/preferences-dialog.c:2387
+#: app/dialogs/preferences-dialog.c:2393
 msgid "Select Palette Folders"
 msgstr "パレット用ディレクトリを選択"
 
-#: app/dialogs/preferences-dialog.c:2389
+#: app/dialogs/preferences-dialog.c:2395
 msgid "Gradient Folders"
 msgstr "グラデーションディレクトリ"
 
-#: app/dialogs/preferences-dialog.c:2391
+#: app/dialogs/preferences-dialog.c:2397
 msgid "Select Gradient Folders"
 msgstr "グラデーション用ディレクトリを選択"
 
-#: app/dialogs/preferences-dialog.c:2393
+#: app/dialogs/preferences-dialog.c:2399
 msgid "Font Folders"
 msgstr "フォントディレクトリ"
 
-#: app/dialogs/preferences-dialog.c:2395
+#: app/dialogs/preferences-dialog.c:2401
 msgid "Select Font Folders"
 msgstr "フォント用ディレクトリを選択"
 
-#: app/dialogs/preferences-dialog.c:2397
+#: app/dialogs/preferences-dialog.c:2403
 msgid "Plug-In Folders"
 msgstr "プラグインディレクトリ"
 
-#: app/dialogs/preferences-dialog.c:2399
+#: app/dialogs/preferences-dialog.c:2405
 msgid "Select Plug-In Folders"
 msgstr "プラグイン用ディレクトリを選択"
 
-#: app/dialogs/preferences-dialog.c:2401
+#: app/dialogs/preferences-dialog.c:2407
 msgid "Scripts"
 msgstr "スクリプト"
 
-#: app/dialogs/preferences-dialog.c:2401
+#: app/dialogs/preferences-dialog.c:2407
 msgid "Script-Fu Folders"
 msgstr "Script-Fu ディレクトリ"
 
-#: app/dialogs/preferences-dialog.c:2403
+#: app/dialogs/preferences-dialog.c:2409
 msgid "Select Script-Fu Folders"
 msgstr "Script-Fu 用ディレクトリを選択"
 
-#: app/dialogs/preferences-dialog.c:2405
+#: app/dialogs/preferences-dialog.c:2411
 msgid "Module Folders"
 msgstr "モジュールディレクトリ"
 
-#: app/dialogs/preferences-dialog.c:2407
+#: app/dialogs/preferences-dialog.c:2413
 msgid "Select Module Folders"
 msgstr "モジュールディレクトリを選択"
 
-#: app/dialogs/preferences-dialog.c:2409
+#: app/dialogs/preferences-dialog.c:2415
 msgid "Environment Folders"
 msgstr "環境ディレクトリ"
 
-#: app/dialogs/preferences-dialog.c:2411
+#: app/dialogs/preferences-dialog.c:2417
 msgid "Select Environment Folders"
 msgstr "環境を保存するディレクトリを選択"
 
-#: app/dialogs/preferences-dialog.c:2413
+#: app/dialogs/preferences-dialog.c:2419
 msgid "Themes"
 msgstr "テーマ"
 
-#: app/dialogs/preferences-dialog.c:2413
+#: app/dialogs/preferences-dialog.c:2419
 msgid "Theme Folders"
 msgstr "テーマディレクトリ"
 
-#: app/dialogs/preferences-dialog.c:2415
+#: app/dialogs/preferences-dialog.c:2421
 msgid "Select Theme Folders"
 msgstr "テーマ用ディレクトリを選択"
 
-#: app/dialogs/quit-dialog.c:74
+#: app/dialogs/quit-dialog.c:76
 #, fuzzy
 msgid "Quit The GIMP"
 msgstr "GIMPを終了しますか?"
 
-#: app/dialogs/quit-dialog.c:79
+#: app/dialogs/quit-dialog.c:81
 #, fuzzy
 msgid "_Discard Changes"
 msgstr "変更を破棄(_D)"
 
-#: app/dialogs/quit-dialog.c:108
+#: app/dialogs/quit-dialog.c:109
 #, fuzzy
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "未保存の変更は失われます."
 
-#: app/dialogs/quit-dialog.c:138
+#: app/dialogs/quit-dialog.c:145
 #, fuzzy
 msgid "There is one image with unsaved changes:"
 msgstr "ズーム時にウィンドウをリサイズする(_S)"
 
-#: app/dialogs/quit-dialog.c:141
+#: app/dialogs/quit-dialog.c:148
 #, c-format
 msgid "There are %d images with unsaved changes:"
 msgstr ""
@@ -6966,7 +7035,7 @@ msgid "Scale Layer Options"
 msgstr "レイヤーの拡大・縮小オプション"
 
 #: app/dialogs/resize-dialog.c:207 app/dialogs/resize-dialog.c:239
-#: app/tools/gimppaintoptions-gui.c:309
+#: app/tools/gimppaintoptions-gui.c:273
 msgid "Size"
 msgstr "大きさ"
 
@@ -7041,22 +7110,22 @@ msgid "Print Size & Display Unit"
 msgstr "印刷サイズと表示単位"
 
 #. the resolution labels
-#: app/dialogs/resize-dialog.c:630 app/widgets/gimptemplateeditor.c:351
+#: app/dialogs/resize-dialog.c:630
 #, fuzzy
 msgid "X resolution:"
 msgstr "解像度:"
 
-#: app/dialogs/resize-dialog.c:636 app/widgets/gimptemplateeditor.c:357
+#: app/dialogs/resize-dialog.c:636
 #, fuzzy
 msgid "Y resolution:"
 msgstr "解像度:"
 
-#: app/dialogs/resize-dialog.c:650 app/widgets/gimptemplateeditor.c:379
+#: app/dialogs/resize-dialog.c:650 app/widgets/gimptemplateeditor.c:381
 #, c-format
 msgid "pixels/%a"
 msgstr "ピクセル/%a"
 
-#: app/dialogs/resize-dialog.c:706 app/tools/gimptransformoptions.c:364
+#: app/dialogs/resize-dialog.c:706 app/tools/gimptransformoptions.c:338
 msgid "Interpolation:"
 msgstr "補間の種類:"
 
@@ -7086,6 +7155,26 @@ msgstr "水平(_H):"
 #: app/dialogs/resolution-calibrate-dialog.c:150
 msgid "_Vertical:"
 msgstr "垂直(_V):"
+
+#. Image size frame
+#: app/dialogs/scale-dialog.c:96 app/widgets/gimptemplateeditor.c:214
+msgid "Image Size"
+msgstr "画像のサイズ"
+
+#: app/dialogs/scale-dialog.c:107
+#, fuzzy
+msgid "Layer Size"
+msgstr "レイヤー選択"
+
+#: app/dialogs/scale-dialog.c:165
+#, fuzzy
+msgid "Quality"
+msgstr "/ファイル/終了(_Q)"
+
+#: app/dialogs/scale-dialog.c:173
+#, fuzzy
+msgid "I_nterpolation:"
+msgstr "補間の種類:"
 
 #: app/dialogs/stroke-dialog.c:127
 msgid "Stroke Options"
@@ -7494,6 +7583,11 @@ msgstr ""
 "す. 他の実行中のプロセス等のことも考えつつ, 実メモリ量に基づいて適切なサイズ"
 "に設定する必要があります."
 
+#: app/dialogs/user-install-dialog.c:1127
+#, fuzzy
+msgid "Tile cache size:"
+msgstr "タイルキャッシュサイズ:"
+
 #: app/dialogs/user-install-dialog.c:1139
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be "
@@ -7554,24 +7648,45 @@ msgstr ""
 msgid "Toggle Quick Mask"
 msgstr "クイックマスクの切り替え"
 
-#: app/display/gimpdisplayshell-close.c:114
-#: app/display/gimpdisplayshell-close.c:171
+#: app/display/gimpdisplayshell-close.c:122
+#: app/display/gimpdisplayshell-close.c:185
 #, fuzzy, c-format
 msgid "Close %s"
 msgstr "%s を閉じる?"
 
-#: app/display/gimpdisplayshell-close.c:123
-msgid "Close _without Saving"
+#: app/display/gimpdisplayshell-close.c:131
+msgid "Do_n't save"
 msgstr ""
 
-#: app/display/gimpdisplayshell-close.c:155
-#, fuzzy
-msgid "If you don't save the image, changes will be lost."
-msgstr "未保存の変更は失われます."
-
-#: app/display/gimpdisplayshell-close.c:176
+#: app/display/gimpdisplayshell-close.c:192
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
+msgstr ""
+
+#: app/display/gimpdisplayshell-close.c:209
+#, fuzzy, c-format
+msgid "If you don't save the image, changes from the last %s will be lost."
+msgstr "未保存の変更は失われます."
+
+#. one second, the time period
+#: app/display/gimpdisplayshell-close.c:268
+#, fuzzy
+msgid "second"
+msgstr "アイコン"
+
+#: app/display/gimpdisplayshell-close.c:271
+#, c-format
+msgid "%d seconds"
+msgstr ""
+
+#: app/display/gimpdisplayshell-close.c:277
+#, fuzzy
+msgid "minute"
+msgstr "直線"
+
+#: app/display/gimpdisplayshell-close.c:279
+#, c-format
+msgid "%d minutes"
 msgstr ""
 
 #: app/display/gimpdisplayshell-dnd.c:96
@@ -7594,19 +7709,19 @@ msgstr "カラーディスプレイフィルタの設定"
 msgid "Layer Select"
 msgstr "レイヤー選択"
 
-#: app/display/gimpdisplayshell-scale.c:535
+#: app/display/gimpdisplayshell-scale.c:537
 msgid "Zoom Ratio"
 msgstr "拡大率"
 
-#: app/display/gimpdisplayshell-scale.c:537
+#: app/display/gimpdisplayshell-scale.c:539
 msgid "Select Zoom Ratio"
 msgstr "拡大率を選択"
 
-#: app/display/gimpdisplayshell-scale.c:572
+#: app/display/gimpdisplayshell-scale.c:574
 msgid "Zoom Ratio:"
 msgstr "拡大率:"
 
-#: app/display/gimpdisplayshell-scale.c:599
+#: app/display/gimpdisplayshell-scale.c:601
 msgid "Zoom:"
 msgstr "ズーム:"
 
@@ -7677,12 +7792,12 @@ msgstr "プラグインは SUCCESS を返しましたが画像が返ってきま
 msgid "Plug-In could not open image"
 msgstr "プラグインから画像をオープンできません"
 
-#: app/file/file-open.c:334
+#: app/file/file-open.c:333
 #, fuzzy
 msgid "Image doesn't contain any visible layers"
 msgstr "全可視レイヤーに基いて選択"
 
-#: app/file/file-save.c:230
+#: app/file/file-save.c:215
 msgid "Plug-In could not save image"
 msgstr "プラグインは画像を保存できません"
 
@@ -7717,7 +7832,7 @@ msgstr "エアブラシ"
 msgid "No brushes available for use with this tool."
 msgstr "有効なブラシがありません."
 
-#: app/paint/gimpclone.c:89 app/tools/gimpclonetool.c:87
+#: app/paint/gimpclone.c:89 app/tools/gimpclonetool.c:89
 msgid "Clone"
 msgstr "スタンプ"
 
@@ -7794,7 +7909,7 @@ msgstr "明確化"
 msgid "Constant"
 msgstr "一定"
 
-#: app/paint/paint-enums.c:108 app/tools/gimppaintoptions-gui.c:173
+#: app/paint/paint-enums.c:108 app/tools/gimppaintoptions-gui.c:161
 msgid "Incremental"
 msgstr "重ね塗り"
 
@@ -7802,41 +7917,41 @@ msgstr "重ね塗り"
 msgid "Brightness-Contrast"
 msgstr "明るさ-コントラスト"
 
-#: app/pdb/color_cmds.c:271 app/pdb/color_cmds.c:391
+#: app/pdb/color_cmds.c:272 app/pdb/color_cmds.c:393
 #: app/tools/gimplevelstool.c:160
 msgid "Levels"
 msgstr "レベル"
 
-#: app/pdb/color_cmds.c:470 app/tools/gimpposterizetool.c:78
+#: app/pdb/color_cmds.c:473 app/tools/gimpposterizetool.c:78
 msgid "Posterize"
 msgstr "ポスタリゼーション"
 
-#: app/pdb/color_cmds.c:743 app/pdb/color_cmds.c:862
+#: app/pdb/color_cmds.c:750 app/pdb/color_cmds.c:870
 #: app/tools/gimpcurvestool.c:143
 msgid "Curves"
 msgstr "カーブ"
 
-#: app/pdb/color_cmds.c:982 app/tools/gimpcolorbalancetool.c:96
+#: app/pdb/color_cmds.c:991 app/tools/gimpcolorbalancetool.c:96
 msgid "Color Balance"
 msgstr "カラーバランス"
 
-#: app/pdb/color_cmds.c:1102 app/tools/gimpcolorizetool.c:96
+#: app/pdb/color_cmds.c:1112 app/tools/gimpcolorizetool.c:96
 msgid "Colorize"
 msgstr "着色"
 
-#: app/pdb/color_cmds.c:1374 app/tools/gimphuesaturationtool.c:110
+#: app/pdb/color_cmds.c:1386 app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
 msgstr "色相-彩度"
 
-#: app/pdb/color_cmds.c:1475 app/tools/gimpthresholdtool.c:92
+#: app/pdb/color_cmds.c:1488 app/tools/gimpthresholdtool.c:92
 msgid "Threshold"
 msgstr "しきい値"
 
-#: app/pdb/edit_cmds.c:588 app/tools/gimpblendtool.c:249
+#: app/pdb/edit_cmds.c:594 app/tools/gimpblendtool.c:249
 msgid "Blending..."
 msgstr "ブレンドしています..."
 
-#: app/pdb/image_cmds.c:3815
+#: app/pdb/image_cmds.c:3870
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "画像の解像度が制限を越えているため, 標準解像度を代わりに使用します."
@@ -7854,7 +7969,7 @@ msgstr "ブラシ:"
 msgid "Brush UI"
 msgstr "ブラシ UI"
 
-#: app/pdb/internal_procs.c:97 app/tools/gimppaintoptions-gui.c:318
+#: app/pdb/internal_procs.c:97 app/tools/gimppaintoptions-gui.c:282
 #: app/widgets/gimpwidgets-constructors.c:75
 #: app/widgets/gimpwidgets-constructors.c:108
 msgid "Color"
@@ -7920,10 +8035,6 @@ msgstr "その他"
 #: app/pdb/internal_procs.c:157
 msgid "Paint Tool procedures"
 msgstr "描画ツールプロシージャ"
-
-#: app/pdb/internal_procs.c:160
-msgid "Palette"
-msgstr "パレット"
 
 #: app/pdb/internal_procs.c:163
 msgid "Palette UI"
@@ -7999,19 +8110,19 @@ msgstr "GIMP 拡張機能"
 msgid "Temporary Procedure"
 msgstr "一時プロシージャ"
 
-#: app/pdb/selection_tools_cmds.c:330 app/tools/gimpfreeselecttool.c:96
+#: app/pdb/selection_tools_cmds.c:332 app/tools/gimpfreeselecttool.c:96
 msgid "Free Select"
 msgstr "自由選択"
 
-#: app/pdb/transform_tools_cmds.c:192 app/tools/gimpperspectivetool.c:141
+#: app/pdb/transform_tools_cmds.c:193 app/tools/gimpperspectivetool.c:141
 msgid "Perspective..."
 msgstr "遠近法..."
 
-#: app/pdb/transform_tools_cmds.c:579 app/tools/gimpsheartool.c:158
+#: app/pdb/transform_tools_cmds.c:583 app/tools/gimpsheartool.c:158
 msgid "Shearing..."
 msgstr "剪断変形しています..."
 
-#: app/pdb/transform_tools_cmds.c:709
+#: app/pdb/transform_tools_cmds.c:714
 #, fuzzy
 msgid "2D Transform..."
 msgstr "変換しています..."
@@ -8271,7 +8382,7 @@ msgstr "グリッドの線数"
 msgid "Grid line spacing"
 msgstr "グリッドの間隔"
 
-#: app/tools/gimp-tools.c:280
+#: app/tools/gimp-tools.c:283
 msgid "This tool has no options."
 msgstr "このツールにはオプションはありません."
 
@@ -8301,25 +8412,21 @@ msgstr "オフセット:"
 msgid "Shape:"
 msgstr "形状:"
 
-#: app/tools/gimpblendoptions.c:260 app/tools/gimppaintoptions-gui.c:482
+#: app/tools/gimpblendoptions.c:260 app/tools/gimppaintoptions-gui.c:406
 msgid "Repeat:"
 msgstr "反復:"
 
-#: app/tools/gimpblendoptions.c:268
-msgid "Dithering"
-msgstr "ディザリング"
-
-#: app/tools/gimpblendoptions.c:287
+#: app/tools/gimpblendoptions.c:286
 #, fuzzy
 msgid "Adaptive supersampling"
 msgstr "適応型スーパーサンプリング"
 
-#: app/tools/gimpblendoptions.c:297
+#: app/tools/gimpblendoptions.c:296
 msgid "Max Depth:"
 msgstr "最大深度:"
 
-#: app/tools/gimpblendoptions.c:304 app/tools/gimpbucketfilloptions.c:297
-#: app/tools/gimpmagnifyoptions.c:233 app/tools/gimpselectionoptions.c:471
+#: app/tools/gimpblendoptions.c:303 app/tools/gimpbucketfilloptions.c:295
+#: app/tools/gimpmagnifyoptions.c:226 app/tools/gimpselectionoptions.c:463
 msgid "Threshold:"
 msgstr "しきい値:"
 
@@ -8379,39 +8486,39 @@ msgid "Maximum color difference"
 msgstr "最大の色の差"
 
 #. fill type
-#: app/tools/gimpbucketfilloptions.c:243
+#: app/tools/gimpbucketfilloptions.c:238
 #, c-format
 msgid "Fill Type  %s"
 msgstr "塗りつぶし方法  %s"
 
 #. fill selection
-#: app/tools/gimpbucketfilloptions.c:252
+#: app/tools/gimpbucketfilloptions.c:250
 #, c-format
 msgid "Affected Area  %s"
 msgstr "影響領域  %s"
 
-#: app/tools/gimpbucketfilloptions.c:256
+#: app/tools/gimpbucketfilloptions.c:254
 #, fuzzy
 msgid "Fill whole selection"
 msgstr "選択領域すべてを塗りつぶす"
 
-#: app/tools/gimpbucketfilloptions.c:257
+#: app/tools/gimpbucketfilloptions.c:255
 #, fuzzy
 msgid "Fill similar colors"
 msgstr "類似色で塗りつぶす"
 
-#: app/tools/gimpbucketfilloptions.c:263 app/tools/gimpselectionoptions.c:442
+#: app/tools/gimpbucketfilloptions.c:261 app/tools/gimpselectionoptions.c:435
 msgid "Finding Similar Colors"
 msgstr "類似色を見つける"
 
-#: app/tools/gimpbucketfilloptions.c:279
+#: app/tools/gimpbucketfilloptions.c:277
 #, fuzzy
 msgid "Fill transparent areas"
 msgstr "透明領域を塗りつぶす"
 
-#: app/tools/gimpbucketfilloptions.c:285
-#: app/tools/gimpcolorpickeroptions.c:179 app/tools/gimpselectionoptions.c:459
-#: app/tools/gimpselectionoptions.c:506
+#: app/tools/gimpbucketfilloptions.c:283
+#: app/tools/gimpcolorpickeroptions.c:179 app/tools/gimpselectionoptions.c:451
+#: app/tools/gimpselectionoptions.c:497
 #, fuzzy
 msgid "Sample merged"
 msgstr "レイヤー結合色"
@@ -8438,20 +8545,20 @@ msgstr "色による領域選択"
 msgid "_By Color Select"
 msgstr "レイヤー選択"
 
-#: app/tools/gimpclonetool.c:88
+#: app/tools/gimpclonetool.c:90
 msgid "Paint using Patterns or Image Regions"
 msgstr "パターンあるいは画像の一部で描画する"
 
-#: app/tools/gimpclonetool.c:89
+#: app/tools/gimpclonetool.c:91
 #, fuzzy
 msgid "_Clone"
 msgstr "スタンプ"
 
-#: app/tools/gimpclonetool.c:263
+#: app/tools/gimpclonetool.c:266
 msgid "Source"
 msgstr "画像源"
 
-#: app/tools/gimpclonetool.c:269
+#: app/tools/gimpclonetool.c:275
 msgid "Alignment"
 msgstr "位置揃え"
 
@@ -8476,28 +8583,28 @@ msgstr "カラーバランスの調整は RGB レイヤーにのみ有効です.
 msgid "Select Range to Modify"
 msgstr "調整する範囲の選択"
 
-#: app/tools/gimpcolorbalancetool.c:285
+#: app/tools/gimpcolorbalancetool.c:284
 msgid "Modify Selected Range's Color Levels"
 msgstr "選択した範囲のカラーレベルを調整する"
 
-#: app/tools/gimpcolorbalancetool.c:303
+#: app/tools/gimpcolorbalancetool.c:301
 msgid "Cyan"
 msgstr "シアン"
 
-#: app/tools/gimpcolorbalancetool.c:310
+#: app/tools/gimpcolorbalancetool.c:308
 msgid "Magenta"
 msgstr "マゼンダ"
 
-#: app/tools/gimpcolorbalancetool.c:317
+#: app/tools/gimpcolorbalancetool.c:315
 msgid "Yellow"
 msgstr "黄"
 
-#: app/tools/gimpcolorbalancetool.c:327
+#: app/tools/gimpcolorbalancetool.c:325
 #, fuzzy
 msgid "R_eset range"
 msgstr "範囲のリセット(_E)"
 
-#: app/tools/gimpcolorbalancetool.c:336
+#: app/tools/gimpcolorbalancetool.c:334
 #, fuzzy
 msgid "Preserve _luminosity"
 msgstr "輝度保存(_L)"
@@ -8523,24 +8630,24 @@ msgstr "着色操作は RGB レイヤーにのみ有効です."
 msgid "Select Color"
 msgstr "色の選択"
 
-#: app/tools/gimpcolorizetool.c:254 app/tools/gimphuesaturationtool.c:363
+#: app/tools/gimpcolorizetool.c:253 app/tools/gimphuesaturationtool.c:361
 msgid "_Hue:"
 msgstr "色相(_H):"
 
-#: app/tools/gimpcolorizetool.c:268 app/tools/gimphuesaturationtool.c:391
+#: app/tools/gimpcolorizetool.c:267 app/tools/gimphuesaturationtool.c:389
 msgid "_Saturation:"
 msgstr "彩度(_S):"
 
-#: app/tools/gimpcolorizetool.c:282 app/tools/gimphuesaturationtool.c:377
+#: app/tools/gimpcolorizetool.c:281 app/tools/gimphuesaturationtool.c:375
 msgid "_Lightness:"
 msgstr "明度(_L):"
 
-#: app/tools/gimpcoloroptions.c:185
+#: app/tools/gimpcoloroptions.c:184
 #, fuzzy
 msgid "Sample average"
 msgstr "色の平均を取る"
 
-#: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:420
+#: app/tools/gimpcoloroptions.c:194 app/tools/gimpselectionoptions.c:413
 #: app/widgets/gimpbrusheditor.c:153
 msgid "Radius:"
 msgstr "半径:"
@@ -8591,7 +8698,7 @@ msgid "Convolve Type  %s"
 msgstr "色混ぜの種類  %s"
 
 #. tool toggle
-#: app/tools/gimpcropoptions.c:188 app/tools/gimpmagnifyoptions.c:215
+#: app/tools/gimpcropoptions.c:188 app/tools/gimpmagnifyoptions.c:208
 #: app/tools/gimpmoveoptions.c:218
 #, c-format
 msgid "Tool Toggle  %s"
@@ -8696,20 +8803,20 @@ msgid "R_eset channel"
 msgstr "チャンネルのリセット(_E)"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:596 app/tools/gimplevelstool.c:640
+#: app/tools/gimpcurvestool.c:596 app/tools/gimplevelstool.c:638
 msgid "All Channels"
 msgstr "全チャンネル"
 
-#: app/tools/gimpcurvestool.c:610
+#: app/tools/gimpcurvestool.c:608
 msgid "Read curves settings from file"
 msgstr "カーブ設定をファイルから読み込む"
 
-#: app/tools/gimpcurvestool.c:616
+#: app/tools/gimpcurvestool.c:614
 msgid "Save curves settings to file"
 msgstr "カーブ設定をファイルに保存する"
 
 #. The radio box for selecting the curve type
-#: app/tools/gimpcurvestool.c:620
+#: app/tools/gimpcurvestool.c:618
 msgid "Curve Type"
 msgstr "カーブの種類"
 
@@ -8736,13 +8843,13 @@ msgstr "モード"
 msgid "Exposure:"
 msgstr "露出:"
 
-#: app/tools/gimpeditselectiontool.c:257
-#: app/tools/gimpeditselectiontool.c:1190
+#: app/tools/gimpeditselectiontool.c:262
+#: app/tools/gimpeditselectiontool.c:1203
 #, fuzzy
 msgid "Move Floating Selection"
 msgstr "フローティング選択領域"
 
-#: app/tools/gimpeditselectiontool.c:459 app/tools/gimpeditselectiontool.c:719
+#: app/tools/gimpeditselectiontool.c:464 app/tools/gimpeditselectiontool.c:732
 msgid "Move: "
 msgstr "移動: "
 
@@ -8771,7 +8878,7 @@ msgid "Anti erase  %s"
 msgstr "逆消ゴム  %s"
 
 #: app/tools/gimpflipoptions.c:161 app/tools/gimpmoveoptions.c:212
-#: app/tools/gimptransformoptions.c:349
+#: app/tools/gimptransformoptions.c:323
 msgid "Affect:"
 msgstr "対象:"
 
@@ -8863,20 +8970,20 @@ msgstr "_M"
 msgid "Select Primary Color to Modify"
 msgstr "調整する基準色を選択"
 
-#: app/tools/gimphuesaturationtool.c:301
+#: app/tools/gimphuesaturationtool.c:300
 msgid "Modify all colors"
 msgstr "全ての色を調整"
 
-#: app/tools/gimphuesaturationtool.c:344
+#: app/tools/gimphuesaturationtool.c:343
 msgid "Modify Selected Color"
 msgstr "選択した色を調整"
 
-#: app/tools/gimphuesaturationtool.c:407
+#: app/tools/gimphuesaturationtool.c:405
 #, fuzzy
 msgid "R_eset color"
 msgstr "色のリセット(_E)"
 
-#: app/tools/gimpimagemaptool.c:249 app/widgets/gimpthumbbox.c:313
+#: app/tools/gimpimagemaptool.c:249 app/widgets/gimpthumbbox.c:354
 msgid "_Preview"
 msgstr "プレビュー(_P)"
 
@@ -8885,34 +8992,34 @@ msgstr "プレビュー(_P)"
 msgid "Adjustment"
 msgstr "補正"
 
-#: app/tools/gimpinkoptions-gui.c:71 app/tools/gimpinkoptions-gui.c:96
+#: app/tools/gimpinkoptions-gui.c:70 app/tools/gimpinkoptions-gui.c:94
 msgid "Size:"
 msgstr "大きさ:"
 
-#: app/tools/gimpinkoptions-gui.c:78 app/tools/gimpmeasuretool.c:852
+#: app/tools/gimpinkoptions-gui.c:77 app/tools/gimpmeasuretool.c:891
 #: app/tools/gimprotatetool.c:169 app/widgets/gimpbrusheditor.c:207
 msgid "Angle:"
 msgstr "角度:"
 
 #. sens sliders
-#: app/tools/gimpinkoptions-gui.c:83
+#: app/tools/gimpinkoptions-gui.c:82
 msgid "Sensitivity"
 msgstr "感度"
 
-#: app/tools/gimpinkoptions-gui.c:103
+#: app/tools/gimpinkoptions-gui.c:101
 msgid "Tilt:"
 msgstr "傾斜:"
 
-#: app/tools/gimpinkoptions-gui.c:110
+#: app/tools/gimpinkoptions-gui.c:108
 msgid "Speed:"
 msgstr "スピード:"
 
-#: app/tools/gimpinkoptions-gui.c:121
+#: app/tools/gimpinkoptions-gui.c:119
 msgid "Type"
 msgstr "種類"
 
 #. Blob shape widget
-#: app/tools/gimpinkoptions-gui.c:151
+#: app/tools/gimpinkoptions-gui.c:149
 msgid "Shape"
 msgstr "形状"
 
@@ -8983,28 +9090,28 @@ msgstr "白色の点を移動"
 msgid "Input Levels"
 msgstr "入力レベル"
 
-#: app/tools/gimplevelstool.c:538
+#: app/tools/gimplevelstool.c:537
 msgid "Gamma"
 msgstr "ガンマ"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:568
+#: app/tools/gimplevelstool.c:567
 msgid "Output Levels"
 msgstr "出力レベル"
 
-#: app/tools/gimplevelstool.c:659
+#: app/tools/gimplevelstool.c:654
 msgid "Read levels settings from file"
 msgstr "ファイルからレベル設定を読み込む"
 
-#: app/tools/gimplevelstool.c:665
+#: app/tools/gimplevelstool.c:660
 msgid "Save levels settings to file"
 msgstr "ファイルにレベル設定を保存する"
 
-#: app/tools/gimplevelstool.c:674
+#: app/tools/gimplevelstool.c:669
 msgid "Adjust levels automatically"
 msgstr "レベルの自動調整"
 
-#: app/tools/gimpmagnifyoptions.c:210
+#: app/tools/gimpmagnifyoptions.c:203
 #, fuzzy
 msgid "Auto-resize window"
 msgstr "ズーム時にウィンドウをリサイズする(_Z)"
@@ -9027,29 +9134,29 @@ msgstr "虫めがね"
 msgid "Use info window"
 msgstr "情報ウインドウを使用"
 
-#: app/tools/gimpmeasuretool.c:114
+#: app/tools/gimpmeasuretool.c:118
 msgid "Measure"
 msgstr "定規"
 
-#: app/tools/gimpmeasuretool.c:115
+#: app/tools/gimpmeasuretool.c:119
 msgid "Measure distances and angles"
 msgstr "距離と角度を測ります"
 
-#: app/tools/gimpmeasuretool.c:116
+#: app/tools/gimpmeasuretool.c:120
 #, fuzzy
 msgid "_Measure"
 msgstr "定規"
 
-#: app/tools/gimpmeasuretool.c:263
+#: app/tools/gimpmeasuretool.c:264
 msgid "Add Guides"
 msgstr "ガイドを追加"
 
 #. tool->gdisp->shell
-#: app/tools/gimpmeasuretool.c:808
+#: app/tools/gimpmeasuretool.c:847
 msgid "Measure Distances and Angles"
 msgstr "距離と角度を測る"
 
-#: app/tools/gimpmeasuretool.c:826
+#: app/tools/gimpmeasuretool.c:865
 msgid "Distance:"
 msgstr "距離:"
 
@@ -9096,79 +9203,59 @@ msgstr "絵筆で線を引く"
 msgid "_Paintbrush"
 msgstr "絵筆"
 
-#: app/tools/gimppaintoptions-gui.c:115 app/widgets/gimpbrushselect.c:201
+#: app/tools/gimppaintoptions-gui.c:102 app/widgets/gimpbrushselect.c:201
 #: app/widgets/gimplayertreeview.c:332
 msgid "Opacity:"
 msgstr "不透明度:"
 
-#: app/tools/gimppaintoptions-gui.c:120 app/tools/gimpselectionoptions.c:379
+#: app/tools/gimppaintoptions-gui.c:107 app/tools/gimpselectionoptions.c:373
 #: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:325
 msgid "Mode:"
 msgstr "モード:"
 
-#: app/tools/gimppaintoptions-gui.c:143
-msgid "Open the brush selection dialog"
-msgstr "ブラシ選択ダイアログを開く"
-
-#: app/tools/gimppaintoptions-gui.c:146
+#: app/tools/gimppaintoptions-gui.c:125
 msgid "Brush:"
 msgstr "ブラシ:"
 
-#: app/tools/gimppaintoptions-gui.c:187
+#: app/tools/gimppaintoptions-gui.c:134 app/tools/gimppaintoptions-gui.c:383
+msgid "Gradient:"
+msgstr "グラデーション:"
+
+#: app/tools/gimppaintoptions-gui.c:175
 #, fuzzy
 msgid "Hard edge"
 msgstr "ハードエッジ"
 
-#: app/tools/gimppaintoptions-gui.c:209
-msgid "Open the pattern selection dialog"
-msgstr "パターン選択ダイアログを開く"
-
-#: app/tools/gimppaintoptions-gui.c:212
-msgid "Pattern:"
-msgstr "パターン:"
-
-#: app/tools/gimppaintoptions-gui.c:250
+#: app/tools/gimppaintoptions-gui.c:214
 #, fuzzy
 msgid "Pressure sensitivity"
 msgstr "圧力感度"
 
-#: app/tools/gimppaintoptions-gui.c:271
+#: app/tools/gimppaintoptions-gui.c:235
 msgid "Opacity"
 msgstr "不透明度"
 
-#: app/tools/gimppaintoptions-gui.c:285
+#: app/tools/gimppaintoptions-gui.c:249
 msgid "Hardness"
 msgstr "強度"
 
-#: app/tools/gimppaintoptions-gui.c:296
+#: app/tools/gimppaintoptions-gui.c:260
 msgid "Rate"
 msgstr "割合"
 
-#: app/tools/gimppaintoptions-gui.c:354
+#: app/tools/gimppaintoptions-gui.c:317
 #, fuzzy
 msgid "Fade out"
 msgstr "フェードアウト"
 
-#: app/tools/gimppaintoptions-gui.c:367 app/tools/gimppaintoptions-gui.c:468
+#: app/tools/gimppaintoptions-gui.c:330 app/tools/gimppaintoptions-gui.c:392
 msgid "Length:"
 msgstr "長さ:"
 
-#: app/tools/gimppaintoptions-gui.c:415
+#: app/tools/gimppaintoptions-gui.c:370
 #, fuzzy
 msgid "Use color from gradient"
 msgstr "グラデーションの色を使う"
-
-#: app/tools/gimppaintoptions-gui.c:432
-msgid "Open the gradient selection dialog"
-msgstr "グラデーション選択ダイアログを開く"
-
-#: app/tools/gimppaintoptions-gui.c:444
-msgid "Reverse"
-msgstr "反転"
-
-#: app/tools/gimppaintoptions-gui.c:449
-msgid "Gradient:"
-msgstr "グラデーション:"
 
 #: app/tools/gimppenciltool.c:52
 msgid "Paint hard edged pixels"
@@ -9268,6 +9355,10 @@ msgstr "回転情報"
 msgid "Center X:"
 msgstr "中心座標 X:"
 
+#: app/tools/gimprotatetool.c:189
+msgid "Y:"
+msgstr "Y:"
+
 #: app/tools/gimpscaletool.c:91
 msgid "Scale"
 msgstr "拡大・縮小"
@@ -9321,26 +9412,26 @@ msgstr "全可視レイヤーに基いて選択"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "選択領域を縮小する際に全可視レイヤーを利用"
 
-#: app/tools/gimpselectionoptions.c:387 app/tools/gimptextoptions.c:466
+#: app/tools/gimpselectionoptions.c:381 app/tools/gimptextoptions.c:442
 msgid "Antialiasing"
 msgstr "アンチエイリアシング"
 
-#: app/tools/gimpselectionoptions.c:410
+#: app/tools/gimpselectionoptions.c:403
 #, fuzzy
 msgid "Feather edges"
 msgstr "境界をぼかす"
 
-#: app/tools/gimpselectionoptions.c:429
+#: app/tools/gimpselectionoptions.c:422
 #, fuzzy
 msgid "Show interactive boundary"
 msgstr "インタラクティブに境界を表示"
 
-#: app/tools/gimpselectionoptions.c:453
+#: app/tools/gimpselectionoptions.c:445
 #, fuzzy
 msgid "Select transparent areas"
 msgstr "透明領域の選択"
 
-#: app/tools/gimpselectionoptions.c:498
+#: app/tools/gimpselectionoptions.c:489
 #, fuzzy
 msgid "Auto shrink selection"
 msgstr "選択領域の自動縮小"
@@ -9381,12 +9472,12 @@ msgstr "画像にじみ"
 msgid "_Smudge"
 msgstr "にじみ"
 
-#: app/tools/gimptextoptions.c:147
+#: app/tools/gimptextoptions.c:143
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr "小さい文字サイズの場合に明瞭なビットマップを生成するためのヒント情報"
 
-#: app/tools/gimptextoptions.c:154
+#: app/tools/gimptextoptions.c:150
 msgid ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
@@ -9394,52 +9485,48 @@ msgstr ""
 "利用可能ならば, フォントからヒントを利用しますが, 常時自動ヒントを利用する方"
 "がよいかもしれません."
 
-#: app/tools/gimptextoptions.c:179
+#: app/tools/gimptextoptions.c:175
 msgid "Indentation of the first line"
 msgstr "一行目で字下げする"
 
-#: app/tools/gimptextoptions.c:184
+#: app/tools/gimptextoptions.c:180
 msgid "Modify line spacing"
 msgstr "行間の調整"
 
-#: app/tools/gimptextoptions.c:421
+#: app/tools/gimptextoptions.c:414
 msgid "_Font:"
 msgstr "フォント(_F):"
 
-#: app/tools/gimptextoptions.c:430
-msgid "Open the font selection dialog"
-msgstr "フォント選択ダイアログを開く"
-
-#: app/tools/gimptextoptions.c:445
+#: app/tools/gimptextoptions.c:421
 msgid "_Size:"
 msgstr "大きさ(_S):"
 
-#: app/tools/gimptextoptions.c:450
+#: app/tools/gimptextoptions.c:426
 msgid "_Hinting"
 msgstr "ヒント情報(_H)"
 
-#: app/tools/gimptextoptions.c:457
+#: app/tools/gimptextoptions.c:433
 #, fuzzy
 msgid "Force auto-hinter"
 msgstr "自動ヒント強制"
 
-#: app/tools/gimptextoptions.c:472
+#: app/tools/gimptextoptions.c:448
 msgid "Text Color"
 msgstr "文字色"
 
-#: app/tools/gimptextoptions.c:477
+#: app/tools/gimptextoptions.c:453
 msgid "Color:"
 msgstr "色"
 
-#: app/tools/gimptextoptions.c:482
+#: app/tools/gimptextoptions.c:458
 msgid "Justify:"
 msgstr "調整:"
 
-#: app/tools/gimptextoptions.c:488
+#: app/tools/gimptextoptions.c:464
 msgid "Indent:"
 msgstr "字下げ:"
 
-#: app/tools/gimptextoptions.c:494
+#: app/tools/gimptextoptions.c:470
 #, fuzzy
 msgid ""
 "Line\n"
@@ -9448,7 +9535,7 @@ msgstr ""
 "行\n"
 "間隔:"
 
-#: app/tools/gimptextoptions.c:497
+#: app/tools/gimptextoptions.c:473
 #, fuzzy
 msgid "Create path from text"
 msgstr "テキストからパスを作成"
@@ -9501,50 +9588,46 @@ msgstr "しきい値を適用"
 msgid "Threshold does not operate on indexed layers."
 msgstr "インデックス・レイヤーにはしきい値操作はできません."
 
-#: app/tools/gimptransformoptions.c:355
+#: app/tools/gimptransformoptions.c:329
 msgid "Transform Direction"
 msgstr "変換方向"
 
-#: app/tools/gimptransformoptions.c:374
+#: app/tools/gimptransformoptions.c:348
 msgid "Supersampling"
 msgstr "スーパーサンプリング"
 
 #. the clip resulting image toggle button
-#: app/tools/gimptransformoptions.c:379
+#: app/tools/gimptransformoptions.c:353
 #, fuzzy
 msgid "Clip result"
 msgstr "結果をクリップ"
 
-#: app/tools/gimptransformoptions.c:393
+#: app/tools/gimptransformoptions.c:367
 #, fuzzy
 msgid "Preview:"
 msgstr "プレビュー"
 
-#: app/tools/gimptransformoptions.c:429
-msgid "Density:"
-msgstr "密度:"
-
 #. the constraints frame
-#: app/tools/gimptransformoptions.c:440
+#: app/tools/gimptransformoptions.c:413
 msgid "Constraints"
 msgstr "制約"
 
-#: app/tools/gimptransformoptions.c:453
+#: app/tools/gimptransformoptions.c:425
 #, fuzzy, c-format
 msgid "15 degrees  %s"
 msgstr "15度  %s"
 
-#: app/tools/gimptransformoptions.c:473
+#: app/tools/gimptransformoptions.c:445
 #, fuzzy, c-format
 msgid "Keep height  %s"
 msgstr "縦幅を固定  %s"
 
-#: app/tools/gimptransformoptions.c:475
+#: app/tools/gimptransformoptions.c:447
 #, fuzzy, c-format
 msgid "Keep width  %s"
 msgstr "横幅を固定  %s"
 
-#: app/tools/gimptransformoptions.c:477
+#: app/tools/gimptransformoptions.c:449
 #, fuzzy, c-format
 msgid "Keep aspect  %s"
 msgstr "固定サイズ / 縦横比"
@@ -9785,34 +9868,44 @@ msgstr "'%s' からのパス読み込み失敗: %s"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpactionview.c:318
+#: app/widgets/gimpactionview.c:320
 #, fuzzy
 msgid "Shortcut"
 msgstr "キーボードショートカット"
 
-#: app/widgets/gimpactionview.c:338
+#: app/widgets/gimpactionview.c:340
 #, fuzzy
 msgid "Name"
 msgstr "名前(_N):"
 
-#: app/widgets/gimpactionview.c:457 app/widgets/gimpactionview.c:637
+#: app/widgets/gimpactionview.c:459 app/widgets/gimpactionview.c:649
 msgid "Changing shortcut failed."
 msgstr ""
 
-#: app/widgets/gimpactionview.c:517
-msgid "Removing shortcut failed."
-msgstr ""
-
-#: app/widgets/gimpactionview.c:522
-msgid "Invalid shortcut."
-msgstr ""
-
-#: app/widgets/gimpactionview.c:607
+#: app/widgets/gimpactionview.c:499
 msgid "Conflicting Shortcuts"
 msgstr ""
 
-#: app/widgets/gimpactionview.c:613
-msgid "_Resassign Shortcut"
+#: app/widgets/gimpactionview.c:505
+msgid "_Reassign shortcut"
+msgstr ""
+
+#: app/widgets/gimpactionview.c:516
+#, c-format
+msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
+msgstr ""
+
+#: app/widgets/gimpactionview.c:520
+#, c-format
+msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
+msgstr ""
+
+#: app/widgets/gimpactionview.c:587
+msgid "Removing shortcut failed."
+msgstr ""
+
+#: app/widgets/gimpactionview.c:592
+msgid "Invalid shortcut."
 msgstr ""
 
 #: app/widgets/gimpbrusheditor.c:168
@@ -9885,7 +9978,7 @@ msgstr ""
 msgid "Clipboard"
 msgstr ""
 
-#: app/widgets/gimpcolordialog.c:168
+#: app/widgets/gimpcolordialog.c:169
 msgid "Add the current color to the color history"
 msgstr "現在の色を色履歴に追加する"
 
@@ -10369,7 +10462,7 @@ msgstr ""
 "全エラーを保存\n"
 "%s  選択したエラーを保存"
 
-#: app/widgets/gimperrorconsole.c:269 app/widgets/gimperrordialog.c:253
+#: app/widgets/gimperrorconsole.c:269 app/widgets/gimperrordialog.c:252
 #, c-format
 msgid "%s Message"
 msgstr "%s 件のメッセージ"
@@ -10409,7 +10502,12 @@ msgstr ""
 msgid "By Extension"
 msgstr "/拡張子で判別"
 
-#: app/widgets/gimpfiledialog.c:607
+#: app/widgets/gimpfiledialog.c:494
+#, fuzzy
+msgid "All Files"
+msgstr "利用可能なフィルタ"
+
+#: app/widgets/gimpfiledialog.c:608
 #, fuzzy, c-format
 msgid "Select File _Type (%s)"
 msgstr "塗りつぶし方法  %s"
@@ -10557,29 +10655,35 @@ msgstr "幅"
 msgid "Height"
 msgstr "高さ"
 
-#: app/widgets/gimphelp.c:196
-msgid "Could not find GIMP Help Browser"
+#: app/widgets/gimphelp.c:187
+#, fuzzy
+msgid "Help browser not found"
+msgstr "使用するヘルプブラウザ(_B):"
+
+#: app/widgets/gimphelp.c:188
+#, fuzzy
+msgid "Could not find GIMP help browser."
 msgstr "GIMP ヘルプブラウザが見付かりません"
 
-#: app/widgets/gimphelp.c:198
+#: app/widgets/gimphelp.c:189
 msgid ""
-"Could not find the GIMP Help Browser procedure. It probably was not compiled "
-"because you don't have GtkHtml2 installed."
+"The GIMP help browser plug-in appears to be missing from your installation."
 msgstr ""
-"GIMP ヘブルプラウザプロシージャが見つかりません. GtkHtml2 がなく, コンパイル"
-"されなかったのかもしれません."
 
-#: app/widgets/gimphelp.c:202 app/widgets/gimphelp.c:236
-msgid "Use web browser instead"
-msgstr "ウェブブラウザで代用する"
+#: app/widgets/gimphelp.c:213
+#, fuzzy
+msgid "Help browser doesn't start"
+msgstr "使用するヘルプブラウザ(_B):"
 
-#: app/widgets/gimphelp.c:233
-msgid "Could not start GIMP Help Browser"
-msgstr "GIMP ヘルプブラウザが起動できませんでした"
-
-#: app/widgets/gimphelp.c:235
-msgid "Could not start the GIMP Help Browser."
+#: app/widgets/gimphelp.c:214
+#, fuzzy
+msgid "Could not start the GIMP help browser plug-in."
 msgstr "GIMP ヘルプブラウザが起動できませんでした."
+
+#: app/widgets/gimphelp.c:240
+#, fuzzy
+msgid "Use _web browser instead"
+msgstr "ウェブブラウザで代用する"
 
 #: app/widgets/gimphistogrameditor.c:133
 msgid "Mean:"
@@ -10666,12 +10770,12 @@ msgstr "レイヤーの並び替え"
 msgid "Keep transparency"
 msgstr "透明保護"
 
-#: app/widgets/gimpmessagebox.c:457
+#: app/widgets/gimpmessagebox.c:458
 #, c-format
 msgid "Message repeated %d times."
 msgstr "%d 回同じメッセージが繰り返されました"
 
-#: app/widgets/gimpmessagebox.c:459
+#: app/widgets/gimpmessagebox.c:460
 msgid "Message repeated once."
 msgstr "同じメッセージが繰り返されました"
 
@@ -10710,7 +10814,7 @@ msgstr "パレットカラーの編集"
 msgid "Edit Color Palette Entry"
 msgstr "カラーパレットのエントリの編集"
 
-#: app/widgets/gimppropwidgets.c:1487
+#: app/widgets/gimppropwidgets.c:1485
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "この文字入力フィールドは %d 文字に制限されています."
@@ -10738,6 +10842,27 @@ msgid ""
 msgstr ""
 "選択領域をパスへ\n"
 "%s  高度なオプション"
+
+#: app/widgets/gimpsizebox.c:215 app/widgets/gimptemplateeditor.c:255
+#, c-format
+msgid "%p"
+msgstr ""
+
+#. the image size labels
+#: app/widgets/gimpsizebox.c:219 app/widgets/gimptemplateeditor.c:236
+#, fuzzy
+msgid "_Width:"
+msgstr "幅:"
+
+#: app/widgets/gimpsizebox.c:226 app/widgets/gimptemplateeditor.c:243
+#, fuzzy
+msgid "H_eight:"
+msgstr "高さ:"
+
+#: app/widgets/gimpsizebox.c:268
+#, fuzzy
+msgid "Keep aspect ratio"
+msgstr "固定サイズ / 縦横比"
 
 #: app/widgets/gimpstrokeeditor.c:198
 #, fuzzy
@@ -10778,50 +10903,51 @@ msgstr "既定の破線:"
 msgid "_Antialiasing"
 msgstr "アンチエイリアシング(_A)"
 
-#. Image size frame
-#: app/widgets/gimptemplateeditor.c:214
-msgid "Image Size"
-msgstr "画像のサイズ"
-
-#: app/widgets/gimptemplateeditor.c:254
-#, c-format
-msgid "%p"
-msgstr ""
-
 #: app/widgets/gimptemplateeditor.c:328
 #, fuzzy
 msgid "_Advanced Options"
 msgstr "保存オプション"
 
-#: app/widgets/gimptemplateeditor.c:433
+#. the resolution labels
+#: app/widgets/gimptemplateeditor.c:361
+#, fuzzy
+msgid "_X resolution:"
+msgstr "解像度:"
+
+#: app/widgets/gimptemplateeditor.c:368
+#, fuzzy
+msgid "_Y resolution:"
+msgstr "解像度:"
+
+#: app/widgets/gimptemplateeditor.c:436
 #, fuzzy
 msgid "Color_space:"
 msgstr "色"
 
-#: app/widgets/gimptemplateeditor.c:441
+#: app/widgets/gimptemplateeditor.c:444
 #, fuzzy
 msgid "_Fill with:"
 msgstr "白色で塗りつぶす"
 
-#: app/widgets/gimptemplateeditor.c:451
+#: app/widgets/gimptemplateeditor.c:454
 #, fuzzy
 msgid "Comme_nt:"
 msgstr "カウント:"
 
-#: app/widgets/gimptemplateeditor.c:561
+#: app/widgets/gimptemplateeditor.c:564
 msgid "_Name:"
 msgstr "名前(_N):"
 
-#: app/widgets/gimptemplateeditor.c:572
+#: app/widgets/gimptemplateeditor.c:575
 msgid "_Icon:"
 msgstr "アイコン(_I):"
 
-#: app/widgets/gimptemplateeditor.c:686
+#: app/widgets/gimptemplateeditor.c:691
 #, fuzzy, c-format
 msgid "%d x %d dpi, %s"
 msgstr "%d x %d ピクセル"
 
-#: app/widgets/gimptemplateeditor.c:690
+#: app/widgets/gimptemplateeditor.c:695
 #, c-format
 msgid "%d dpi, %s"
 msgstr ""
@@ -10845,7 +10971,7 @@ msgstr "テキストファイル (UTF-8) を開く"
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "ファイル '%s' 中に無効な UTF-8 データがあります."
 
-#: app/widgets/gimpthumbbox.c:296
+#: app/widgets/gimpthumbbox.c:337
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -10854,15 +10980,20 @@ msgstr ""
 "クリックしてプレビューを更新\n"
 "%s  クリックして最新のプレビューを強制更新"
 
-#: app/widgets/gimpthumbbox.c:359 app/widgets/gimpthumbbox.c:423
+#: app/widgets/gimpthumbbox.c:407 app/widgets/gimpthumbbox.c:477
 #, fuzzy
 msgid "No selection"
 msgstr "選択なし"
 
-#: app/widgets/gimpthumbbox.c:525 app/widgets/gimpthumbbox.c:549
+#: app/widgets/gimpthumbbox.c:602 app/widgets/gimpthumbbox.c:626
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "サムネイル %d / %d"
+
+#: app/widgets/gimpthumbbox.c:727 app/widgets/gimpthumbbox.c:737
+#, fuzzy
+msgid "Creating Preview ..."
+msgstr "プレビューを読み込み中..."
 
 #: app/widgets/gimptoolbox-color-area.c:135
 msgid "Change Foreground Color"
@@ -10996,6 +11127,31 @@ msgstr ""
 "選択領域をパスへ\n"
 "%s  高度なオプション"
 
+#: app/widgets/gimpviewablebox.c:75
+msgid "Open the brush selection dialog"
+msgstr "ブラシ選択ダイアログを開く"
+
+#: app/widgets/gimpviewablebox.c:115
+msgid "Open the pattern selection dialog"
+msgstr "パターン選択ダイアログを開く"
+
+#: app/widgets/gimpviewablebox.c:155
+msgid "Open the gradient selection dialog"
+msgstr "グラデーション選択ダイアログを開く"
+
+#: app/widgets/gimpviewablebox.c:167
+msgid "Reverse"
+msgstr "反転"
+
+#: app/widgets/gimpviewablebox.c:210
+#, fuzzy
+msgid "Open the palette selection dialog"
+msgstr "パターン選択ダイアログを開く"
+
+#: app/widgets/gimpviewablebox.c:250
+msgid "Open the font selection dialog"
+msgstr "フォント選択ダイアログを開く"
+
 #: app/widgets/gimpwidgets-constructors.c:50
 #: app/widgets/gimpwidgets-constructors.c:85
 msgid "Normal"
@@ -11099,7 +11255,7 @@ msgstr "彩度"
 #. The format string which is used to display modifier names
 #. *  <Shift>, <Ctrl> and <Alt>
 #.
-#: app/widgets/gimpwidgets-utils.c:300
+#: app/widgets/gimpwidgets-utils.c:377
 #, c-format
 msgid "<%s>"
 msgstr "<%s>"
@@ -11138,8 +11294,9 @@ msgid "Fancy"
 msgstr ""
 
 #: app/widgets/widgets-enums.c:127
-msgid "Internal"
-msgstr "内蔵"
+#, fuzzy
+msgid "GIMP help browser"
+msgstr "ヘルプブラウザ"
 
 #: app/widgets/widgets-enums.c:128
 #, fuzzy
@@ -11222,7 +11379,7 @@ msgid "Invalid UTF-8 string in XCF file"
 msgstr "XCF ファイル内に不適切な UTF-8 文字列があります"
 
 #: app/xcf/xcf-save.c:157 app/xcf/xcf-save.c:167 app/xcf/xcf-save.c:177
-#: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:211 app/xcf/xcf.c:348
+#: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:211 app/xcf/xcf.c:344
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "XCF ファイル保存中にエラー: %s"
@@ -11237,12 +11394,12 @@ msgstr "XCF 書き込み中にエラー: %s"
 msgid "Could not seek in XCF file: %s"
 msgstr "XCFファイルをシークできません: %s"
 
-#: app/xcf/xcf.c:86 app/xcf/xcf.c:142
+#: app/xcf/xcf.c:86 app/xcf/xcf.c:143
 #, fuzzy
 msgid "GIMP XCF image"
 msgstr "GIMP メッセージ"
 
-#: app/xcf/xcf.c:286
+#: app/xcf/xcf.c:284
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF エラー: XCF バージョン %d はサポートされていません"
@@ -11256,56 +11413,98 @@ msgstr "画像や写真の作成や編集を行う"
 msgid "Image Editor"
 msgstr "パレット編集"
 
+#~ msgid ""
+#~ "You are trying to create an image with a size of %s.\n"
+#~ "\n"
+#~ "Choose OK to create this image anyway.\n"
+#~ "Choose Cancel if you did not intend to create such a large image.\n"
+#~ "\n"
+#~ "To prevent this dialog from appearing, increase the \"Maximum Image Size"
+#~ "\" setting (currently %s) in the Preferences dialog."
+#~ msgstr ""
+#~ "初期サイズ %s で画像を作成しようとしています.\n"
+#~ "\n"
+#~ "これでよければ「了解」を選択してください.\n"
+#~ "本来意図した大きさでないのならば「取消」を選択してください.\n"
+#~ "\n"
+#~ "このダイアログが表示されないようにするには, 環境設定ダイアログ内の\"最大画"
+#~ "像サイズ\" (現在 %s) の設定を大きくしてください."
+
+#~ msgid "Image exceeds maximum image size"
+#~ msgstr "画像が最大画像サイズを越えます"
+
+#~ msgid "Layer Too Small"
+#~ msgstr "レイヤーが小さすぎます"
+
+#, fuzzy
+#~ msgid "Positioned color dithering"
+#~ msgstr "ポジション色ディザリング"
+
+#~ msgid "General Palette Options"
+#~ msgstr "一般パレットオプション"
+
+#~ msgid "Dithering Options"
+#~ msgstr "ディザリングオプション"
+
+#~ msgid "[ Warning ]"
+#~ msgstr "[ 警告 ]"
+
+#~ msgid ""
+#~ "You are attempting to convert an image with an alpha channel to indexed "
+#~ "colors.\n"
+#~ "Do not generate a palette of more than 255 colors if you intend to create "
+#~ "a transparent or animated GIF file."
+#~ msgstr ""
+#~ "アルファチャンネルを持った画像をインデックス付きの画像へ変換しようとしてい"
+#~ "ます.\n"
+#~ "この画像から透明 GIF やアニメ GIF 形式のファイルを作成する場合には, 256 色"
+#~ "以上のパレットを生成してはいけません."
+
+#~ msgid ""
+#~ "You are trying to create an image with an initial size of %s.\n"
+#~ "\n"
+#~ "Choose OK to create this image anyway.\n"
+#~ "Choose Cancel if you did not intend to create such a large image.\n"
+#~ "\n"
+#~ "To prevent this dialog from appearing, increase the \"Maximum Image Size"
+#~ "\" setting (currently %s) in the Preferences dialog."
+#~ msgstr ""
+#~ "初期サイズ %s で画像を作成しようとしています.\n"
+#~ "\n"
+#~ "とにかく，この画像を作成するのであれば「了解」を選択してください.\n"
+#~ "このような大きな画像を作成したくないのであれば「取消」を選択してくださ"
+#~ "い.\n"
+#~ "\n"
+#~ "このダイアログが表示されないようにするには, 環境設定ダイアログ中の \"最大"
+#~ "画像サイズ\" の設定値 (現在 %s) を大きくしてください."
+
+#~ msgid "Extended"
+#~ msgstr "拡張"
+
+#~ msgid "File Saving"
+#~ msgstr "ファイル保存"
+
+#~ msgid "Pattern:"
+#~ msgstr "パターン:"
+
+#~ msgid "Density:"
+#~ msgstr "密度:"
+
+#~ msgid ""
+#~ "Could not find the GIMP Help Browser procedure. It probably was not "
+#~ "compiled because you don't have GtkHtml2 installed."
+#~ msgstr ""
+#~ "GIMP ヘブルプラウザプロシージャが見つかりません. GtkHtml2 がなく, コンパイ"
+#~ "ルされなかったのかもしれません."
+
+#~ msgid "Could not start GIMP Help Browser"
+#~ msgstr "GIMP ヘルプブラウザが起動できませんでした"
+
+#~ msgid "Internal"
+#~ msgstr "内蔵"
+
 #~ msgid "Black"
 #~ msgstr "黒"
-
-#~ msgid "Selection"
-#~ msgstr "選択"
-
-#~ msgid "Devices"
-#~ msgstr "デバイス"
-
-#~ msgid "Device Status"
-#~ msgstr "デバイスの状態"
-
-#~ msgid "Errors"
-#~ msgstr "エラー"
-
-#~ msgid "History"
-#~ msgstr "履歴"
-
-#~ msgid "Image Templates"
-#~ msgstr "画像テンプレート"
-
-#~ msgid "Colormap"
-#~ msgstr "カラーマップ"
-
-#~ msgid "Indexed Palette"
-#~ msgstr "インデックスパレット"
-
-#~ msgid "Histogram"
-#~ msgstr "ヒストグラム"
-
-#~ msgid "Selection Editor"
-#~ msgstr "選択エディタ "
-
-#~ msgid "Undo History"
-#~ msgstr "アンドゥ履歴"
-
-#~ msgid "Navigation"
-#~ msgstr "ナビゲーション"
-
-#~ msgid "Display Navigation"
-#~ msgstr "ナビゲーションを表示"
-
-#~ msgid "FG/BG"
-#~ msgstr "描画/背景"
-
-#~ msgid "FG/BG Color"
-#~ msgstr "描画色/背景色"
-
-#~ msgid "Brush Editor"
-#~ msgstr "ブラシエディタ"
 
 #~ msgid "Move Floating Layer"
 #~ msgstr "フローティングレイヤーの移動"

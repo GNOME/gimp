@@ -1,5 +1,9 @@
 2004-10-15  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.1.7 release.
+
+2004-10-15  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptransformoptions.c: removed the "Density" label.
 	It wasn't helpful and caused the transform options to be wider than
 	necessary.

@@ -290,9 +290,18 @@ extra-large, huge, enormous and gigantic.
 .TP
 (thumbnail-size normal)
 
-Sets the size of the thumbnail saved with each image. Note that GIMP can not
-save thumbnails if layer previews are disabled.  Possible values are none,
-normal and large.
+Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can
+not create thumbnails if layer previews are disabled.  Possible values are
+none, normal and large.
+
+.TP
+(thumbnail-filesize-limit 4M)
+
+The thumbnail in the Open dialog will be automatically updated if the file
+being previewed is smaller than the size set here.  The integer size can
+contain a suffix of 'B', 'K', 'M' or 'G' which makes GIMP interpret the size
+as being specified in bytes, kilobytes, megabytes or gigabytes. If no suffix
+is specified the size defaults to being specified in kilobytes.
 
 .TP
 (install-colormap no)
