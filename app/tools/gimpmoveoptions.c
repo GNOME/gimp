@@ -45,7 +45,6 @@ enum
 };
 
 
-static void   gimp_move_options_init       (GimpMoveOptions      *options);
 static void   gimp_move_options_class_init (GimpMoveOptionsClass *options_class);
 
 static void   gimp_move_options_set_property (GObject         *object,
@@ -71,14 +70,14 @@ gimp_move_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpMoveOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_move_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpMoveOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_move_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_move_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpMoveOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
@@ -92,9 +91,7 @@ gimp_move_options_get_type (void)
 static void
 gimp_move_options_class_init (GimpMoveOptionsClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -110,11 +107,6 @@ gimp_move_options_class_init (GimpMoveOptionsClass *klass)
                                     "move-current", NULL,
                                     FALSE,
                                     0);
-}
-
-static void
-gimp_move_options_init (GimpMoveOptions *options)
-{
 }
 
 static void
@@ -204,14 +196,12 @@ gimp_move_options_notify_type (GimpMoveOptions *move_options,
 GtkWidget *
 gimp_move_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
+  GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *frame;
   gchar     *title;
-
-  config = G_OBJECT (tool_options);
 
   vbox = gimp_tool_options_gui (tool_options);
 

@@ -59,7 +59,6 @@ enum
 };
 
 
-static void   gimp_transform_options_init       (GimpTransformOptions      *options);
 static void   gimp_transform_options_class_init (GimpTransformOptionsClass *options_class);
 
 static void   gimp_transform_options_set_property   (GObject         *object,
@@ -99,7 +98,7 @@ gimp_transform_options_get_type (void)
         NULL,           /* class_data     */
         sizeof (GimpTransformOptions),
         0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_transform_options_init,
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
@@ -113,11 +112,8 @@ gimp_transform_options_get_type (void)
 static void
 gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
 {
-  GObjectClass         *object_class;
-  GimpToolOptionsClass *options_class;
-
-  object_class  = G_OBJECT_CLASS (klass);
-  options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
+  GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -189,19 +185,12 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
 }
 
 static void
-gimp_transform_options_init (GimpTransformOptions *options)
-{
-}
-
-static void
 gimp_transform_options_set_property (GObject      *object,
                                      guint         property_id,
                                      const GValue *value,
                                      GParamSpec   *pspec)
 {
-  GimpTransformOptions *options;
-
-  options = GIMP_TRANSFORM_OPTIONS (object);
+  GimpTransformOptions *options = GIMP_TRANSFORM_OPTIONS (object);
 
   switch (property_id)
     {
@@ -250,9 +239,7 @@ gimp_transform_options_get_property (GObject    *object,
                                      GValue     *value,
                                      GParamSpec *pspec)
 {
-  GimpTransformOptions *options;
-
-  options = GIMP_TRANSFORM_OPTIONS (object);
+  GimpTransformOptions *options = GIMP_TRANSFORM_OPTIONS (object);
 
   switch (property_id)
     {
@@ -343,8 +330,8 @@ gimp_scale_constraints_callback (GtkWidget *widget,
 GtkWidget *
 gimp_transform_options_gui (GimpToolOptions *tool_options)
 {
-  GObject              *config;
-  GimpTransformOptions *options;
+  GObject              *config  = G_OBJECT (tool_options);
+  GimpTransformOptions *options = GIMP_TRANSFORM_OPTIONS (tool_options);
   GtkWidget            *vbox;
   GtkWidget            *hbox;
   GtkWidget            *label;
@@ -352,9 +339,6 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   GtkWidget            *table;
   GtkWidget            *combo;
   GtkWidget            *button;
-
-  config  = G_OBJECT (tool_options);
-  options = GIMP_TRANSFORM_OPTIONS (tool_options);
 
   vbox = gimp_tool_options_gui (tool_options);
 

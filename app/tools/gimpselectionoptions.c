@@ -63,7 +63,6 @@ enum
 };
 
 
-static void   gimp_selection_options_init       (GimpSelectionOptions      *options);
 static void   gimp_selection_options_class_init (GimpSelectionOptionsClass *options_class);
 
 static void   gimp_selection_options_set_property (GObject         *object,
@@ -95,14 +94,14 @@ gimp_selection_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpSelectionOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_selection_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpSelectionOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_selection_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_selection_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpSelectionOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
@@ -116,11 +115,8 @@ gimp_selection_options_get_type (void)
 static void
 gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
 {
-  GObjectClass         *object_class;
-  GimpToolOptionsClass *options_class;
-
-  object_class  = G_OBJECT_CLASS (klass);
-  options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
+  GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -151,7 +147,7 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SELECT_TRANSPARENT,
                                     "select-transparent",
                                     N_("Allow completely transparent regions "
-				       "to be selected"),
+                                       "to be selected"),
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
@@ -172,7 +168,7 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHRINK_MERGED,
                                     "shrink-merged",
                                     N_("Use all visible layers when shrinking "
-				       "the selection"),
+                                       "the selection"),
                                     FALSE,
                                     0);
 
@@ -201,19 +197,12 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
 }
 
 static void
-gimp_selection_options_init (GimpSelectionOptions *options)
-{
-}
-
-static void
 gimp_selection_options_set_property (GObject      *object,
                                      guint         property_id,
                                      const GValue *value,
                                      GParamSpec   *pspec)
 {
-  GimpSelectionOptions *options;
-
-  options = GIMP_SELECTION_OPTIONS (object);
+  GimpSelectionOptions *options = GIMP_SELECTION_OPTIONS (object);
 
   switch (property_id)
     {
@@ -276,9 +265,7 @@ gimp_selection_options_get_property (GObject    *object,
                                      GValue     *value,
                                      GParamSpec *pspec)
 {
-  GimpSelectionOptions *options;
-
-  options = GIMP_SELECTION_OPTIONS (object);
+  GimpSelectionOptions *options = GIMP_SELECTION_OPTIONS (object);
 
   switch (property_id)
     {
@@ -366,13 +353,10 @@ gimp_selection_options_set_defaults (GimpToolOptions *tool_options)
 GtkWidget *
 gimp_selection_options_gui (GimpToolOptions *tool_options)
 {
-  GObject              *config;
-  GimpSelectionOptions *options;
+  GObject              *config  = G_OBJECT (tool_options);
+  GimpSelectionOptions *options = GIMP_SELECTION_OPTIONS (tool_options);
   GtkWidget            *vbox;
   GtkWidget            *button;
-
-  config  = G_OBJECT (tool_options);
-  options = GIMP_SELECTION_OPTIONS (tool_options);
 
   vbox = gimp_tool_options_gui (tool_options);
 
@@ -437,22 +421,6 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
                                1.0, 10.0, 1,
                                FALSE, 0.0, 0.0);
   }
-
-#if 0
-  /*  a separator between the common and tool-specific selection options  */
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_ISCISSORS_TOOL      ||
-      tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL    ||
-      tool_options->tool_info->tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL ||
-      tool_options->tool_info->tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL   ||
-      tool_options->tool_info->tool_type == GIMP_TYPE_BY_COLOR_SELECT_TOOL)
-    {
-      GtkWidget *separator;
-
-      separator = gtk_hseparator_new ();
-      gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
-      gtk_widget_show (separator);
-    }
-#endif
 
   /* selection tool with an interactive boundary that can be toggled */
   if (tool_options->tool_info->tool_type == GIMP_TYPE_ISCISSORS_TOOL)
@@ -553,13 +521,13 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_container_add (GTK_CONTAINER (frame), table);
 
       gtk_widget_set_sensitive (table,
-				options->fixed_mode != GIMP_RECT_SELECT_MODE_FREE);
+                                options->fixed_mode != GIMP_RECT_SELECT_MODE_FREE);
       g_signal_connect (config, "notify::fixed-mode",
                         G_CALLBACK (selection_options_fixed_mode_notify),
                         table);
 
       width_spinbutton = gimp_prop_spin_button_new (config, "fixed-width",
-						    1.0, 50.0, 0);
+                                                    1.0, 50.0, 0);
       gtk_entry_set_width_chars (GTK_ENTRY (width_spinbutton), 6);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -567,7 +535,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
                                  width_spinbutton, 1, FALSE);
 
       height_spinbutton = gimp_prop_spin_button_new (config, "fixed-height",
-						     1.0, 50.0, 0);
+                                                     1.0, 50.0, 0);
       gtk_entry_set_width_chars (GTK_ENTRY (height_spinbutton), 6);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,

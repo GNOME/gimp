@@ -44,16 +44,16 @@ enum
 };
 
 
-static void   gimp_color_options_class_init (GimpColorOptionsClass *options_class);
+static void   gimp_color_options_class_init   (GimpColorOptionsClass *klass);
 
 static void   gimp_color_options_set_property (GObject      *object,
-					       guint         property_id,
-					       const GValue *value,
-					       GParamSpec   *pspec);
+                                               guint         property_id,
+                                               const GValue *value,
+                                               GParamSpec   *pspec);
 static void   gimp_color_options_get_property (GObject      *object,
-					       guint         property_id,
-					       GValue       *value,
-					       GParamSpec   *pspec);
+                                               guint         property_id,
+                                               GValue       *value,
+                                               GParamSpec   *pspec);
 
 
 GType
@@ -66,14 +66,14 @@ gimp_color_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpColorOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_color_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpColorOptions),
-	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_color_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpColorOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_OPTIONS,
@@ -108,9 +108,9 @@ gimp_color_options_class_init (GimpColorOptionsClass *klass)
 
 static void
 gimp_color_options_set_property (GObject      *object,
-				 guint         property_id,
-				 const GValue *value,
-				 GParamSpec   *pspec)
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec)
 {
   GimpColorOptions *options = GIMP_COLOR_OPTIONS (object);
 
@@ -133,9 +133,9 @@ gimp_color_options_set_property (GObject      *object,
 
 static void
 gimp_color_options_get_property (GObject    *object,
-				 guint       property_id,
-				 GValue     *value,
-				 GParamSpec *pspec)
+                                 guint       property_id,
+                                 GValue     *value,
+                                 GParamSpec *pspec)
 {
   GimpColorOptions *options = GIMP_COLOR_OPTIONS (object);
 

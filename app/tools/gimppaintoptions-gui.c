@@ -75,30 +75,28 @@ static void gradient_options_reverse_notify (GimpPaintOptions *paint_options,
                                              GimpView         *view);
 
 
+/*  public functions  */
+
 GtkWidget *
 gimp_paint_options_gui (GimpToolOptions *tool_options)
 {
-  GimpPaintOptions  *options;
-  GimpContext       *context;
-  GObject           *config;
+  GObject           *config  = G_OBJECT (tool_options);
+  GimpContext       *context = GIMP_CONTEXT (tool_options);
+  GimpPaintOptions  *options = GIMP_PAINT_OPTIONS (tool_options);
+  GimpDialogFactory *dialog_factory;
   GtkWidget         *vbox;
   GtkWidget         *frame;
   GtkWidget         *table;
   GtkWidget         *optionmenu;
   GtkWidget         *mode_label;
   GtkWidget         *button;
-  GimpDialogFactory *dialog_factory;
   GtkWidget         *incremental_toggle = NULL;
   gint               table_row          = 0;
   GType              tool_type;
 
-  options = GIMP_PAINT_OPTIONS (tool_options);
-  context = GIMP_CONTEXT (tool_options);
-  config  = G_OBJECT (tool_options);
+  dialog_factory = gimp_dialog_factory_from_name ("dock");
 
   vbox = gimp_tool_options_gui (tool_options);
-
-  dialog_factory = gimp_dialog_factory_from_name ("dock");
 
   tool_type = tool_options->tool_info->tool_type;
 
@@ -235,12 +233,10 @@ pressure_options_gui (GimpPressureOptions *pressure,
                       GimpPaintOptions    *paint_options,
                       GType                tool_type)
 {
-  GObject   *config;
-  GtkWidget *frame = NULL;
-  GtkWidget *wbox  = NULL;
+  GObject   *config = G_OBJECT (paint_options);
+  GtkWidget *frame  = NULL;
+  GtkWidget *wbox   = NULL;
   GtkWidget *button;
-
-  config = G_OBJECT (paint_options);
 
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
       tool_type == GIMP_TYPE_CLONE_TOOL                  ||
@@ -332,14 +328,12 @@ fade_options_gui (GimpFadeOptions  *fade,
                   GimpPaintOptions *paint_options,
                   GType             tool_type)
 {
-  GObject   *config;
-  GtkWidget *frame = NULL;
+  GObject   *config = G_OBJECT (paint_options);
+  GtkWidget *frame  = NULL;
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkWidget *button;
   GtkWidget *unitmenu;
-
-  config = G_OBJECT (paint_options);
 
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
       tool_type == GIMP_TYPE_CLONE_TOOL                  ||
@@ -391,21 +385,19 @@ gradient_options_gui (GimpGradientOptions *gradient,
                       GType                tool_type,
                       GtkWidget           *incremental_toggle)
 {
-  GObject           *config;
-  GtkWidget         *frame = NULL;
+  GObject           *config  = G_OBJECT (paint_options);
+  GimpContext       *context = GIMP_CONTEXT (paint_options);
+  GimpDialogFactory *dialog_factory;
+  GtkWidget         *frame   = NULL;
   GtkWidget         *table;
   GtkWidget         *spinbutton;
   GtkWidget         *button;
   GtkWidget         *unitmenu;
   GtkWidget         *combo;
-  GimpContext       *context;
-  GimpDialogFactory *dialog_factory;
   GtkWidget         *hbox;
   GtkWidget         *gradient_button;
   GtkWidget         *preview;
 
-  config = G_OBJECT (paint_options);
-  context = GIMP_CONTEXT (paint_options);
   dialog_factory = gimp_dialog_factory_from_name ("dock");
 
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))

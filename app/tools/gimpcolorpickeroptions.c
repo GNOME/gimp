@@ -43,7 +43,7 @@ enum
 };
 
 
-static void   gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *options_class);
+static void   gimp_color_picker_options_class_init   (GimpColorPickerOptionsClass *klass);
 
 static void   gimp_color_picker_options_set_property (GObject      *object,
                                                       guint         property_id,
@@ -89,9 +89,7 @@ gimp_color_picker_options_get_type (void)
 static void
 gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

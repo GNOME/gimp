@@ -44,8 +44,7 @@ enum
 };
 
 
-static void   gimp_flip_options_init       (GimpFlipOptions      *options);
-static void   gimp_flip_options_class_init (GimpFlipOptionsClass *options_class);
+static void   gimp_flip_options_class_init   (GimpFlipOptionsClass *klass);
 
 static void   gimp_flip_options_set_property (GObject         *object,
                                               guint            property_id,
@@ -70,14 +69,14 @@ gimp_flip_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpFlipOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_flip_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpFlipOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_flip_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_flip_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpFlipOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_TRANSFORM_OPTIONS,
@@ -88,12 +87,10 @@ gimp_flip_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_flip_options_class_init (GimpFlipOptionsClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -108,19 +105,12 @@ gimp_flip_options_class_init (GimpFlipOptionsClass *klass)
 }
 
 static void
-gimp_flip_options_init (GimpFlipOptions *options)
-{
-}
-
-static void
 gimp_flip_options_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpFlipOptions *options;
-
-  options = GIMP_FLIP_OPTIONS (object);
+  GimpFlipOptions *options = GIMP_FLIP_OPTIONS (object);
 
   switch (property_id)
     {
@@ -139,9 +129,7 @@ gimp_flip_options_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpFlipOptions *options;
-
-  options = GIMP_FLIP_OPTIONS (object);
+  GimpFlipOptions *options = GIMP_FLIP_OPTIONS (object);
 
   switch (property_id)
     {
@@ -157,14 +145,12 @@ gimp_flip_options_get_property (GObject    *object,
 GtkWidget *
 gimp_flip_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
+  GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *frame;
   gchar     *str;
-
-  config = G_OBJECT (tool_options);
 
   vbox = gimp_tool_options_gui (tool_options);
 

@@ -37,8 +37,7 @@ enum
 };
 
 
-static void   gimp_eraser_options_init       (GimpEraserOptions      *options);
-static void   gimp_eraser_options_class_init (GimpEraserOptionsClass *options_class);
+static void   gimp_eraser_options_class_init   (GimpEraserOptionsClass *klass);
 
 static void   gimp_eraser_options_set_property (GObject         *object,
                                                 guint            property_id,
@@ -63,14 +62,14 @@ gimp_eraser_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpEraserOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_eraser_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpEraserOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_eraser_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_eraser_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpEraserOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_PAINT_OPTIONS,
@@ -84,9 +83,7 @@ gimp_eraser_options_get_type (void)
 static void
 gimp_eraser_options_class_init (GimpEraserOptionsClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -100,19 +97,12 @@ gimp_eraser_options_class_init (GimpEraserOptionsClass *klass)
 }
 
 static void
-gimp_eraser_options_init (GimpEraserOptions *options)
-{
-}
-
-static void
 gimp_eraser_options_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpEraserOptions *options;
-
-  options = GIMP_ERASER_OPTIONS (object);
+  GimpEraserOptions *options = GIMP_ERASER_OPTIONS (object);
 
   switch (property_id)
     {
@@ -131,9 +121,7 @@ gimp_eraser_options_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpEraserOptions *options;
-
-  options = GIMP_ERASER_OPTIONS (object);
+  GimpEraserOptions *options = GIMP_ERASER_OPTIONS (object);
 
   switch (property_id)
     {

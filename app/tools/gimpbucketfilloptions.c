@@ -53,8 +53,7 @@ enum
 };
 
 
-static void   gimp_bucket_fill_options_init       (GimpBucketFillOptions      *options);
-static void   gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *options_class);
+static void   gimp_bucket_fill_options_class_init   (GimpBucketFillOptionsClass *klass);
 
 static void   gimp_bucket_fill_options_set_property (GObject         *object,
                                                      guint            property_id,
@@ -85,14 +84,14 @@ gimp_bucket_fill_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpBucketFillOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_bucket_fill_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpBucketFillOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_bucket_fill_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_bucket_fill_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpBucketFillOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_PAINT_OPTIONS,
@@ -106,11 +105,8 @@ gimp_bucket_fill_options_get_type (void)
 static void
 gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
 {
-  GObjectClass         *object_class;
-  GimpToolOptionsClass *options_class;
-
-  object_class  = G_OBJECT_CLASS (klass);
-  options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
+  GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -131,13 +127,13 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FILL_TRANSPARENT,
                                     "fill-transparent",
                                     N_("Allow completely transparent regions "
-				       "to be filled"),
+                                       "to be filled"),
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                                     "sample-merged",
                                     N_("Base filled area on all visible "
-				       "layers"),
+                                       "layers"),
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
@@ -148,19 +144,12 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
 }
 
 static void
-gimp_bucket_fill_options_init (GimpBucketFillOptions *options)
-{
-}
-
-static void
 gimp_bucket_fill_options_set_property (GObject      *object,
                                        guint         property_id,
                                        const GValue *value,
                                        GParamSpec   *pspec)
 {
-  GimpBucketFillOptions *options;
-
-  options = GIMP_BUCKET_FILL_OPTIONS (object);
+  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_OPTIONS (object);
 
   switch (property_id)
     {
@@ -191,9 +180,7 @@ gimp_bucket_fill_options_get_property (GObject    *object,
                                        GValue     *value,
                                        GParamSpec *pspec)
 {
-  GimpBucketFillOptions *options;
-
-  options = GIMP_BUCKET_FILL_OPTIONS (object);
+  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_OPTIONS (object);
 
   switch (property_id)
     {
@@ -242,15 +229,13 @@ gimp_bucket_fill_options_set_defaults (GimpToolOptions *tool_options)
 GtkWidget *
 gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
+  GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *vbox2;
   GtkWidget *table;
   GtkWidget *frame;
   GtkWidget *button;
   gchar     *str;
-
-  config = G_OBJECT (tool_options);
 
   vbox = gimp_paint_options_gui (tool_options);
 

@@ -45,8 +45,7 @@ enum
 };
 
 
-static void   gimp_crop_options_init       (GimpCropOptions      *options);
-static void   gimp_crop_options_class_init (GimpCropOptionsClass *options_class);
+static void   gimp_crop_options_class_init   (GimpCropOptionsClass *klass);
 
 static void   gimp_crop_options_set_property (GObject      *object,
                                               guint         property_id,
@@ -71,14 +70,14 @@ gimp_crop_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpCropOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_crop_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpCropOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_crop_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_crop_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpCropOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
@@ -92,9 +91,7 @@ gimp_crop_options_get_type (void)
 static void
 gimp_crop_options_class_init (GimpCropOptionsClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -118,11 +115,6 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
                                  GIMP_TYPE_CROP_MODE,
                                  GIMP_CROP_MODE_CROP,
                                  0);
-}
-
-static void
-gimp_crop_options_init (GimpCropOptions *options)
-{
 }
 
 static void
@@ -184,13 +176,11 @@ gimp_crop_options_get_property (GObject    *object,
 GtkWidget *
 gimp_crop_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
+  GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *button;
   gchar     *str;
-
-  config = G_OBJECT (tool_options);
 
   vbox = gimp_tool_options_gui (tool_options);
 

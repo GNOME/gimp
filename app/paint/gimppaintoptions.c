@@ -77,8 +77,8 @@ enum
 };
 
 
-static void   gimp_paint_options_init       (GimpPaintOptions      *options);
-static void   gimp_paint_options_class_init (GimpPaintOptionsClass *options_class);
+static void   gimp_paint_options_init         (GimpPaintOptions      *options);
+static void   gimp_paint_options_class_init   (GimpPaintOptionsClass *klass);
 
 static void   gimp_paint_options_finalize     (GObject         *object);
 static void   gimp_paint_options_set_property (GObject         *object,
@@ -106,14 +106,14 @@ gimp_paint_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpPaintOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_paint_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpPaintOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_paint_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_paint_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpPaintOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_paint_options_init,
       };
 
       type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
@@ -127,9 +127,7 @@ gimp_paint_options_get_type (void)
 static void
 gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -241,12 +239,10 @@ gimp_paint_options_set_property (GObject      *object,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpPaintOptions    *options;
+  GimpPaintOptions    *options = GIMP_PAINT_OPTIONS (object);
   GimpPressureOptions *pressure_options;
   GimpFadeOptions     *fade_options;
   GimpGradientOptions *gradient_options;
-
-  options = GIMP_PAINT_OPTIONS (object);
 
   pressure_options = options->pressure_options;
   fade_options     = options->fade_options;
@@ -319,12 +315,10 @@ gimp_paint_options_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpPaintOptions    *options;
+  GimpPaintOptions    *options = GIMP_PAINT_OPTIONS (object);
   GimpPressureOptions *pressure_options;
   GimpFadeOptions     *fade_options;
   GimpGradientOptions *gradient_options;
-
-  options = GIMP_PAINT_OPTIONS (object);
 
   pressure_options = options->pressure_options;
   fade_options     = options->fade_options;
@@ -395,9 +389,7 @@ static void
 gimp_paint_options_notify (GObject    *object,
                            GParamSpec *pspec)
 {
-  GimpPaintOptions *options;
-
-  options = GIMP_PAINT_OPTIONS (object);
+  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
 
   if (pspec->param_id == PROP_USE_GRADIENT)
     {

@@ -1,3 +1,33 @@
+2004-09-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpairbrushoptions.c
+	* app/paint/gimpcloneoptions.c
+	* app/paint/gimpconvolveoptions.c
+	* app/paint/gimpdodgeburnoptions.c
+	* app/paint/gimperaseroptions.c
+	* app/paint/gimpinkoptions.c
+	* app/paint/gimppaintoptions.c
+	* app/paint/gimppenciloptions.c
+	* app/paint/gimpsmudgeoptions.c
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimpcoloroptions.c
+	* app/tools/gimpcolorpickeroptions.c
+	* app/tools/gimpcropoptions.c
+	* app/tools/gimpflipoptions.c
+	* app/tools/gimphistogramoptions.c
+	* app/tools/gimpimagemapoptions.c
+	* app/tools/gimpmagnifyoptions.c
+	* app/tools/gimpmeasureoptions.c
+	* app/tools/gimpmoveoptions.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimpselectionoptions.c
+	* app/tools/gimptextoptions.c
+	* app/tools/gimptransformoptions.c
+	* app/tools/gimpvectoroptions.c: code cleanup: untabified and
+	trailing whitespace removal, removed empty instance_init()
+	funcions, cleaned up variable declarations/initializations.
+
 2004-09-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpairbrushtool.c (gimp_airbrush_tool_register)

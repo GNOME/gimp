@@ -48,8 +48,7 @@ enum
 };
 
 
-static void   gimp_magnify_options_init       (GimpMagnifyOptions      *options);
-static void   gimp_magnify_options_class_init (GimpMagnifyOptionsClass *options_class);
+static void   gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass);
 
 static void   gimp_magnify_options_set_property (GObject         *object,
                                                  guint            property_id,
@@ -77,14 +76,14 @@ gimp_magnify_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpMagnifyOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_magnify_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpMagnifyOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_magnify_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_magnify_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpMagnifyOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
@@ -98,11 +97,8 @@ gimp_magnify_options_get_type (void)
 static void
 gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
 {
-  GObjectClass         *object_class;
-  GimpToolOptionsClass *options_class;
-
-  object_class  = G_OBJECT_CLASS (klass);
-  options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
+  GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -127,19 +123,12 @@ gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
 }
 
 static void
-gimp_magnify_options_init (GimpMagnifyOptions *options)
-{
-}
-
-static void
 gimp_magnify_options_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpMagnifyOptions *options;
-
-  options = GIMP_MAGNIFY_OPTIONS (object);
+  GimpMagnifyOptions *options = GIMP_MAGNIFY_OPTIONS (object);
 
   switch (property_id)
     {
@@ -164,9 +153,7 @@ gimp_magnify_options_get_property (GObject    *object,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpMagnifyOptions *options;
-
-  options = GIMP_MAGNIFY_OPTIONS (object);
+  GimpMagnifyOptions *options = GIMP_MAGNIFY_OPTIONS (object);
 
   switch (property_id)
     {
@@ -209,14 +196,12 @@ gimp_magnify_options_set_defaults (GimpToolOptions *tool_options)
 GtkWidget *
 gimp_magnify_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
+  GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *button;
   gchar     *str;
-
-  config = G_OBJECT (tool_options);
 
   vbox = gimp_tool_options_gui (tool_options);
 

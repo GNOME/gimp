@@ -61,14 +61,14 @@ gimp_image_map_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpImageMapOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_image_map_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpImageMapOptions),
-	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_image_map_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpImageMapOptions),
+        0,              /* n_preallocs    */
+        NULL            /* instance_init  */
       };
 
       type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,

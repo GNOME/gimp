@@ -52,8 +52,7 @@ enum
 };
 
 
-static void   gimp_blend_options_init       (GimpBlendOptions      *options);
-static void   gimp_blend_options_class_init (GimpBlendOptionsClass *options_class);
+static void   gimp_blend_options_class_init      (GimpBlendOptionsClass *klass);
 
 static void   gimp_blend_options_set_property    (GObject          *object,
                                                   guint             property_id,
@@ -82,14 +81,14 @@ gimp_blend_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpBlendOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_blend_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpBlendOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_blend_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_blend_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpBlendOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_PAINT_OPTIONS,
@@ -103,9 +102,7 @@ gimp_blend_options_get_type (void)
 static void
 gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -147,19 +144,12 @@ gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
 }
 
 static void
-gimp_blend_options_init (GimpBlendOptions *options)
-{
-}
-
-static void
 gimp_blend_options_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpBlendOptions *options;
-
-  options = GIMP_BLEND_OPTIONS (object);
+  GimpBlendOptions *options = GIMP_BLEND_OPTIONS (object);
 
   switch (property_id)
     {
@@ -200,9 +190,7 @@ gimp_blend_options_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpBlendOptions *options;
-
-  options = GIMP_BLEND_OPTIONS (object);
+  GimpBlendOptions *options = GIMP_BLEND_OPTIONS (object);
 
   switch (property_id)
     {
@@ -240,14 +228,12 @@ gimp_blend_options_get_property (GObject    *object,
 GtkWidget *
 gimp_blend_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
+  GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *frame;
   GtkWidget *combo;
   GtkWidget *button;
-
-  config = G_OBJECT (tool_options);
 
   vbox = gimp_paint_options_gui (tool_options);
 
@@ -265,14 +251,14 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (combo),
                                         "gimp-gradient");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-			     _("Shape:"), 0.0, 0.5,
-			     combo, 2, TRUE);
+                             _("Shape:"), 0.0, 0.5,
+                             combo, 2, TRUE);
 
   /*  the repeat option  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
-			     _("Repeat:"), 0.0, 0.5,
-			     combo, 2, TRUE);
+                             _("Repeat:"), 0.0, 0.5,
+                             combo, 2, TRUE);
 
   g_signal_connect (config, "notify::gradient-type",
                     G_CALLBACK (blend_options_gradient_type_notify),

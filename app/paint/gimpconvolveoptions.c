@@ -39,8 +39,7 @@ enum
 };
 
 
-static void   gimp_convolve_options_init       (GimpConvolveOptions      *options);
-static void   gimp_convolve_options_class_init (GimpConvolveOptionsClass *options_class);
+static void   gimp_convolve_options_class_init (GimpConvolveOptionsClass *klass);
 
 static void   gimp_convolve_options_set_property (GObject      *object,
                                                   guint         property_id,
@@ -65,14 +64,14 @@ gimp_convolve_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpConvolveOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_convolve_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpConvolveOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_convolve_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_convolve_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpConvolveOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_PAINT_OPTIONS,
@@ -83,12 +82,10 @@ gimp_convolve_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_convolve_options_class_init (GimpConvolveOptionsClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -107,19 +104,12 @@ gimp_convolve_options_class_init (GimpConvolveOptionsClass *klass)
 }
 
 static void
-gimp_convolve_options_init (GimpConvolveOptions *options)
-{
-}
-
-static void
 gimp_convolve_options_set_property (GObject      *object,
                                     guint         property_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpConvolveOptions *options;
-
-  options = GIMP_CONVOLVE_OPTIONS (object);
+  GimpConvolveOptions *options = GIMP_CONVOLVE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -141,9 +131,7 @@ gimp_convolve_options_get_property (GObject    *object,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpConvolveOptions *options;
-
-  options = GIMP_CONVOLVE_OPTIONS (object);
+  GimpConvolveOptions *options = GIMP_CONVOLVE_OPTIONS (object);
 
   switch (property_id)
     {

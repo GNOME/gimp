@@ -48,8 +48,7 @@ enum
 };
 
 
-static void   gimp_ink_options_init       (GimpInkOptions      *options);
-static void   gimp_ink_options_class_init (GimpInkOptionsClass *options_class);
+static void   gimp_ink_options_class_init   (GimpInkOptionsClass *klass);
 
 static void   gimp_ink_options_set_property (GObject         *object,
                                              guint            property_id,
@@ -74,14 +73,14 @@ gimp_ink_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpInkOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_ink_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpInkOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_ink_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_ink_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpInkOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_PAINT_OPTIONS,
@@ -137,11 +136,6 @@ gimp_ink_options_class_init (GimpInkOptionsClass *klass)
                                    "blob-angle", NULL,
                                    -90.0, 90.0, 0.0,
                                    0);
-}
-
-static void
-gimp_ink_options_init (GimpInkOptions *options)
-{
 }
 
 static void

@@ -37,8 +37,7 @@ enum
 };
 
 
-static void   gimp_smudge_options_init       (GimpSmudgeOptions      *options);
-static void   gimp_smudge_options_class_init (GimpSmudgeOptionsClass *options_class);
+static void   gimp_smudge_options_class_init   (GimpSmudgeOptionsClass *klass);
 
 static void   gimp_smudge_options_set_property (GObject      *object,
                                                 guint         property_id,
@@ -63,14 +62,14 @@ gimp_smudge_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpSmudgeOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_smudge_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpSmudgeOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_smudge_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_smudge_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpSmudgeOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_PAINT_OPTIONS,
@@ -81,12 +80,10 @@ gimp_smudge_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_smudge_options_class_init (GimpSmudgeOptionsClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -100,19 +97,12 @@ gimp_smudge_options_class_init (GimpSmudgeOptionsClass *klass)
 }
 
 static void
-gimp_smudge_options_init (GimpSmudgeOptions *options)
-{
-}
-
-static void
 gimp_smudge_options_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpSmudgeOptions *options;
-
-  options = GIMP_SMUDGE_OPTIONS (object);
+  GimpSmudgeOptions *options = GIMP_SMUDGE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -131,9 +121,7 @@ gimp_smudge_options_get_property (GObject    *object,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpSmudgeOptions *options;
-
-  options = GIMP_SMUDGE_OPTIONS (object);
+  GimpSmudgeOptions *options = GIMP_SMUDGE_OPTIONS (object);
 
   switch (property_id)
     {

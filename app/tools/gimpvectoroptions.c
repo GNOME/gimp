@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * Vector tool
+ * gimpvectoroptions.c
  * Copyright (C) 1999 Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -40,6 +40,7 @@
 
 #include "gimp-intl.h"
 
+
 enum
 {
   PROP_0,
@@ -47,7 +48,7 @@ enum
   PROP_VECTORS_POLYGONAL
 };
 
-static void   gimp_vector_options_init       (GimpVectorOptions      *options);
+
 static void   gimp_vector_options_class_init (GimpVectorOptionsClass *options_class);
 
 static void   gimp_vector_options_set_property (GObject         *object,
@@ -58,6 +59,7 @@ static void   gimp_vector_options_get_property (GObject         *object,
                                                 guint            property_id,
                                                 GValue          *value,
                                                 GParamSpec      *pspec);
+
 
 static GimpToolOptionsClass *parent_class = NULL;
 
@@ -79,7 +81,7 @@ gimp_vector_options_get_type (void)
 	NULL,           /* class_data     */
 	sizeof (GimpVectorOptions),
 	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_vector_options_init,
+	(GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
@@ -90,12 +92,10 @@ gimp_vector_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_vector_options_class_init (GimpVectorOptionsClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -110,14 +110,9 @@ gimp_vector_options_class_init (GimpVectorOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VECTORS_POLYGONAL,
                                     "vectors-polygonal",
-                                    N_("restrict editing to polygonals"),
+                                    N_("Restrict editing to polygons"),
                                     FALSE,
                                     0);
-}
-
-static void
-gimp_vector_options_init (GimpVectorOptions *options)
-{
 }
 
 static void
@@ -126,9 +121,7 @@ gimp_vector_options_set_property (GObject      *object,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpVectorOptions *options;
-
-  options = GIMP_VECTOR_OPTIONS (object);
+  GimpVectorOptions *options = GIMP_VECTOR_OPTIONS (object);
 
   switch (property_id)
     {
@@ -151,9 +144,7 @@ gimp_vector_options_get_property (GObject    *object,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpVectorOptions *options;
-
-  options = GIMP_VECTOR_OPTIONS (object);
+  GimpVectorOptions *options = GIMP_VECTOR_OPTIONS (object);
 
   switch (property_id)
     {
@@ -173,13 +164,11 @@ gimp_vector_options_get_property (GObject    *object,
 GtkWidget *
 gimp_vector_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
+  GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *button;
   gchar     *str;
-
-  config = G_OBJECT (tool_options);
 
   vbox = gimp_tool_options_gui (tool_options);
 

@@ -106,14 +106,14 @@ gimp_text_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpTextOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_text_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpTextOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_text_options_init
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_text_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpTextOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_text_options_init
       };
 
       type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
@@ -135,13 +135,13 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
   object_class->get_property = gimp_text_options_get_property;
 
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
-				 "font-size-unit", NULL,
-				 TRUE, FALSE, GIMP_UNIT_PIXEL,
-				 0);
+                                 "font-size-unit", NULL,
+                                 TRUE, FALSE, GIMP_UNIT_PIXEL,
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
-				   "font-size", NULL,
-				   0.0, 8192.0, 18.0,
-				   0);
+                                   "font-size", NULL,
+                                   0.0, 8192.0, 18.0,
+                                   0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HINTING,
                                     "hinting",
                                     N_("Hinting alters the font outline to "
@@ -161,9 +161,9 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
-				   "language", NULL,
-				   (const gchar *) gtk_get_default_language (),
-				   0);
+                                   "language", NULL,
+                                   (const gchar *) gtk_get_default_language (),
+                                   0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BASE_DIR,
                                 "base-direction", NULL,
                                  GIMP_TYPE_TEXT_DIRECTION,
@@ -175,15 +175,15 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                  GIMP_TEXT_JUSTIFY_LEFT,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_INDENTATION,
-				   "indent",
+                                   "indent",
                                    N_("Indentation of the first line"),
-				   -8192.0, 8192.0, 0.0,
-				   GIMP_PARAM_DEFAULTS);
+                                   -8192.0, 8192.0, 0.0,
+                                   GIMP_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
-				   "line-spacing",
+                                   "line-spacing",
                                    N_("Modify line spacing"),
-				   -8192.0, 8192.0, 0.0,
-				   GIMP_PARAM_DEFAULTS);
+                                   -8192.0, 8192.0, 0.0,
+                                   GIMP_PARAM_DEFAULTS);
 }
 
 static void
@@ -393,8 +393,8 @@ gimp_text_options_connect_text (GimpTextOptions *options,
 GtkWidget *
 gimp_text_options_gui (GimpToolOptions *tool_options)
 {
-  GimpTextOptions   *options;
-  GObject           *config;
+  GObject           *config  = G_OBJECT (tool_options);
+  GimpTextOptions   *options = GIMP_TEXT_OPTIONS (tool_options);
   GtkWidget         *vbox;
   GtkWidget         *table;
   GtkWidget         *hbox;
@@ -405,9 +405,6 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget         *box;
   GtkWidget         *spinbutton;
   gint               row = 0;
-
-  options = GIMP_TEXT_OPTIONS (tool_options);
-  config = G_OBJECT (options);
 
   vbox = gimp_tool_options_gui (tool_options);
 
@@ -457,7 +454,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   row++;
 
   auto_button = gimp_prop_check_button_new (config, "autohint",
-					    _("Force auto-hinter"));
+                                            _("Force auto-hinter"));
   gtk_table_attach (GTK_TABLE (table), auto_button, 0, 3, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (auto_button);
@@ -473,17 +470,17 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   row++;
 
   button = gimp_prop_color_button_new (config, "foreground", _("Text Color"),
-				       -1, 24, GIMP_COLOR_AREA_FLAT);
+                                       -1, 24, GIMP_COLOR_AREA_FLAT);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 GIMP_CONTEXT (options));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Color:"), 0.0, 0.5,
-			     button, 1, FALSE);
+                             button, 1, FALSE);
 
   box = gimp_prop_enum_stock_box_new (config, "justify", "gtk-justify", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Justify:"), 0.0, 0.5,
-			     box, 2, TRUE);
+                             box, 2, TRUE);
 
   spinbutton = gimp_prop_spin_button_new (config, "indent", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
@@ -495,7 +492,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
   gimp_table_attach_stock (GTK_TABLE (table), row++,
                            _("Line\nspacing:"), 0.0,
-			   spinbutton, 1, GIMP_STOCK_LINE_SPACING);
+                           spinbutton, 1, GIMP_STOCK_LINE_SPACING);
 
   button = gtk_button_new_with_label (_("Create path from text"));
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -554,4 +551,3 @@ gimp_text_options_editor_new (GimpTextOptions *options,
 
   return editor;
 }
-

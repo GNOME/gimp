@@ -37,8 +37,7 @@ enum
 };
 
 
-static void   gimp_pencil_options_init       (GimpPencilOptions      *options);
-static void   gimp_pencil_options_class_init (GimpPencilOptionsClass *options_class);
+static void   gimp_pencil_options_class_init   (GimpPencilOptionsClass *klass);
 
 static void   gimp_pencil_options_set_property (GObject         *object,
                                                 guint            property_id,
@@ -63,14 +62,14 @@ gimp_pencil_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpPencilOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_pencil_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpPencilOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_pencil_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_pencil_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpPencilOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_PAINT_OPTIONS,
@@ -84,9 +83,7 @@ gimp_pencil_options_get_type (void)
 static void
 gimp_pencil_options_class_init (GimpPencilOptionsClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -100,19 +97,12 @@ gimp_pencil_options_class_init (GimpPencilOptionsClass *klass)
 }
 
 static void
-gimp_pencil_options_init (GimpPencilOptions *options)
-{
-}
-
-static void
 gimp_pencil_options_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpPencilOptions *options;
-
-  options = GIMP_PENCIL_OPTIONS (object);
+  GimpPencilOptions *options = GIMP_PENCIL_OPTIONS (object);
 
   switch (property_id)
     {
@@ -131,9 +121,7 @@ gimp_pencil_options_get_property (GObject    *object,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpPencilOptions *options;
-
-  options = GIMP_PENCIL_OPTIONS (object);
+  GimpPencilOptions *options = GIMP_PENCIL_OPTIONS (object);
 
   switch (property_id)
     {

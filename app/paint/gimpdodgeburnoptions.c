@@ -41,8 +41,7 @@ enum
 };
 
 
-static void   gimp_dodge_burn_options_init       (GimpDodgeBurnOptions      *options);
-static void   gimp_dodge_burn_options_class_init (GimpDodgeBurnOptionsClass *options_class);
+static void   gimp_dodge_burn_options_class_init   (GimpDodgeBurnOptionsClass *klass);
 
 static void   gimp_dodge_burn_options_set_property (GObject      *object,
                                                     guint         property_id,
@@ -67,14 +66,14 @@ gimp_dodge_burn_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpDodgeBurnOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_dodge_burn_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpDodgeBurnOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_dodge_burn_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_dodge_burn_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpDodgeBurnOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
       };
 
       type = g_type_register_static (GIMP_TYPE_PAINT_OPTIONS,
@@ -85,12 +84,10 @@ gimp_dodge_burn_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_dodge_burn_options_class_init (GimpDodgeBurnOptionsClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -114,19 +111,12 @@ gimp_dodge_burn_options_class_init (GimpDodgeBurnOptionsClass *klass)
 }
 
 static void
-gimp_dodge_burn_options_init (GimpDodgeBurnOptions *options)
-{
-}
-
-static void
 gimp_dodge_burn_options_set_property (GObject      *object,
                                       guint         property_id,
                                       const GValue *value,
                                       GParamSpec   *pspec)
 {
-  GimpDodgeBurnOptions *options;
-
-  options = GIMP_DODGE_BURN_OPTIONS (object);
+  GimpDodgeBurnOptions *options = GIMP_DODGE_BURN_OPTIONS (object);
 
   switch (property_id)
     {
@@ -151,9 +141,7 @@ gimp_dodge_burn_options_get_property (GObject    *object,
                                       GValue     *value,
                                       GParamSpec *pspec)
 {
-  GimpDodgeBurnOptions *options;
-
-  options = GIMP_DODGE_BURN_OPTIONS (object);
+  GimpDodgeBurnOptions *options = GIMP_DODGE_BURN_OPTIONS (object);
 
   switch (property_id)
     {
