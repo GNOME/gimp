@@ -57,14 +57,10 @@ static void   file_actions_last_opened_reorder (GimpContainer   *container,
 
 static GimpActionEntry file_actions[] =
 {
-  { "file-menu", NULL,
-    N_("_File") },
-
-  { "file-open-recent-menu", NULL,
-    N_("Open _Recent") },
-
-  { "file-open-recent-empty", NULL,
-    N_("(Empty)") },
+  { "file-menu",              NULL, N_("_File")        },
+  { "file-open-recent-menu",  NULL, N_("Open _Recent") },
+  { "file-open-recent-empty", NULL, N_("(Empty)")      },
+  { "file-acquire-menu",      NULL, N_("_Acquire")     },
 
   { "file-new", GTK_STOCK_NEW,
     N_("_New..."), "<control>N", NULL,
@@ -132,7 +128,7 @@ file_actions_setup (GimpActionGroup *group,
 
   for (i = 0; i < n_entries; i++)
     {
-      entries[i].name     = g_strdup_printf ("file-last-opened-%02d", i + 1);
+      entries[i].name     = g_strdup_printf ("file-open-recent-%02d", i + 1);
       entries[i].stock_id = GTK_STOCK_OPEN;
       entries[i].label    = NULL;
       entries[i].tooltip  = NULL;

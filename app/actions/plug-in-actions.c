@@ -64,12 +64,12 @@ static gboolean plug_in_actions_tree_traverse_func (gpointer           foo,
 
 static GimpActionEntry plug_in_actions[] =
 {
-  { "plug-in-menu",                NULL, N_("/Filte_rs")      },
+  { "plug-in-menu",                NULL, N_("Filte_rs")      },
   { "plug-in-blur-menu",           NULL, N_("_Blur")          },
   { "plug-in-colors-menu",         NULL, N_("_Colors")        },
   { "plug-in-colors-map-menu",     NULL, N_("Ma_p")           },
   { "plug-in-noise-menu",          NULL, N_("_Noise")         },
-  { "pluf-in-edge-detect-menu",    NULL, N_("Edge-De_tect")   },
+  { "plug-in-edge-detect-menu",    NULL, N_("Edge-De_tect")   },
   { "plug-in-enhance-menu",        NULL, N_("En_hance")       },
   { "plug-in-generic-menu",        NULL, N_("_Generic")       },
   { "plug-in-glass-effects-menu",  NULL, N_("Gla_ss Effects") },

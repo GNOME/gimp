@@ -45,11 +45,10 @@
 
 static GimpActionEntry image_actions[] =
 {
-  { "image-menu", NULL,
-    N_("/_Image") },
-
-  { "image-mode-menu", NULL,
-    N_("/_Mode") },
+  { "image-menubar",        NULL, N_("Image Menu") },
+  { "image-menu",           NULL, N_("_Image")     },
+  { "image-mode-menu",      NULL, N_("_Mode")      },
+  { "image-transform-menu", NULL, N_("_Transform") },
 
   { "image-convert-rgb", GIMP_STOCK_CONVERT_RGB,
     N_("_RGB"), NULL, NULL,
@@ -65,9 +64,6 @@ static GimpActionEntry image_actions[] =
     N_("_Indexed..."), NULL, NULL,
     G_CALLBACK (image_convert_indexed_cmd_callback),
     GIMP_HELP_IMAGE_CONVERT_INDEXED },
-
-  { "image-transform-menu", NULL,
-    N_("/Image/_Transform") },
 
   { "image-resize", GIMP_STOCK_RESIZE,
     N_("Can_vas Size..."), NULL, NULL,

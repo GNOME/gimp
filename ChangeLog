@@ -1,5 +1,35 @@
 2004-04-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/qmask-actions.c
+	* app/actions/qmask-commands.c: prepared qmask_actions_update()
+	and the qmask callbacks to be merged into the image ui manager.
+
+	* app/actions/dialogs-actions.c
+	* app/actions/edit-actions.c
+	* app/actions/file-actions.c
+	* app/actions/image-actions.c
+	* app/actions/layers-actions.c
+	* app/actions/plug-in-actions.c
+	* app/actions/tools-actions.c
+	* app/actions/view-actions.c: fixed lots of typos and buglets
+	spotted in my first test run.
+
+	* app/gui/menus.c: register the needed action groups with the
+	<Image> menu.
+
+	* app/tools/gimp-tools.c
+	* app/tools/gimpdodgeburntool.[ch]
+	* app/tools/gimppaintoptions-gui.c: s/dodgeburn/dodge_burn/g.
+
+	* app/widgets/gimpactionfactory.c
+	* app/widgets/gimpmenufactory.[ch]: s/G_GNUC_FUNCTION/G_STRFUNC/g,
+	updated copyright header.
+
+	* menus/image-menu.xml: fixed typos and added the "Filters"
+	submenus.
+
+2004-04-21  Michael Natterer  <mitch@gimp.org>
+
 	More unused action stuff:
 
 	* app/widgets/Makefile.am

@@ -104,7 +104,7 @@ GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-selection-editor",
     GIMP_HELP_SELECTION_DIALOG },
 
-  { "dialogs-navigations", GIMP_STOCK_NAVIGATION,
+  { "dialogs-navigation", GIMP_STOCK_NAVIGATION,
     N_("Na_vigation"), NULL, NULL,
     "gimp-navigation-view",
     GIMP_HELP_NAVIGATION_DIALOG },

@@ -95,23 +95,37 @@ void
 qmask_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpDisplayShell *shell;
+  GimpDisplay      *gdisp  = NULL;
+  GimpDisplayShell *shell  = NULL;
+  GimpImage        *gimage = NULL;
 
-  shell = GIMP_DISPLAY_SHELL (data);
+  if (GIMP_IS_DISPLAY_SHELL (data))
+    {
+      shell = GIMP_DISPLAY_SHELL (data);
+      gdisp = shell->gdisp;
+    }
+  else if (GIMP_IS_DISPLAY (data))
+    {
+      gdisp = GIMP_DISPLAY (data);
+      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+    }
+
+  if (gdisp)
+    gimage = gdisp->gimage;
 
 #define SET_ACTIVE(action,active) \
         gimp_action_group_set_action_active (group, action, (active))
 #define SET_COLOR(action,color) \
         gimp_action_group_set_action_color (group, action, (color), FALSE)
 
-  SET_ACTIVE ("qmask-toggle", shell->gdisp->gimage->qmask_state);
+  SET_ACTIVE ("qmask-toggle", gimage->qmask_state);
 
-  if (shell->gdisp->gimage->qmask_inverted)
+  if (gimage->qmask_inverted)
     SET_ACTIVE ("qmask-invert-on", TRUE);
   else
     SET_ACTIVE ("qmask-invert-off", TRUE);
 
-  SET_COLOR ("qmask-configure", &shell->gdisp->gimage->qmask_color);
+  SET_COLOR ("qmask-configure", &gimage->qmask_color);
 
 #undef SET_SENSITIVE
 #undef SET_COLOR

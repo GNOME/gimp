@@ -176,7 +176,7 @@ gimp_action_factory_group_new (GimpActionFactory *factory,
     }
 
   g_warning ("%s: no entry registered for \"%s\"",
-             G_GNUC_FUNCTION, identifier);
+             G_STRFUNC, identifier);
 
   return NULL;
 }

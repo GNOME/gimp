@@ -61,8 +61,8 @@ static void   edit_actions_background_changed (GimpContext     *context,
 
 static GimpActionEntry edit_actions[] =
 {
-  { "edit-menu", NULL,
-    N_("/_Edit") },
+  { "edit-menu",        NULL, N_("_Edit")  },
+  { "edit-buffer-menu", NULL, N_("Buffer") },
 
   { "edit-undo", GTK_STOCK_UNDO,
     N_("_Undo"), "<control>Z", NULL,
@@ -99,20 +99,17 @@ static GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_paste_as_new_cmd_callback),
     GIMP_HELP_EDIT_PASTE_AS_NEW },
 
-  { "edit-buffer-menu", NULL,
-    N_("Buffer") },
-
-  { "edit-cut-named", GTK_STOCK_CUT,
+  { "edit-named-cut", GTK_STOCK_CUT,
     N_("Cu_t Named..."), "<control><shift>X",NULL,
     G_CALLBACK (edit_named_cut_cmd_callback),
     GIMP_HELP_BUFFER_CUT },
 
-  { "edit-copy-named", GTK_STOCK_COPY,
+  { "edit-named-copy", GTK_STOCK_COPY,
     N_("_Copy Named..."), "<control><shift>C", NULL,
     G_CALLBACK (edit_named_copy_cmd_callback),
     GIMP_HELP_BUFFER_COPY },
 
-  { "edit-paste-named", GTK_STOCK_PASTE,
+  { "edit-named-paste", GTK_STOCK_PASTE,
     N_("_Paste Named..."), "<control><shift>V", NULL,
     G_CALLBACK (edit_named_paste_cmd_callback),
     GIMP_HELP_BUFFER_PASTE },
@@ -259,8 +256,8 @@ edit_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("edit-paste",      gdisp && group->gimp->global_buffer);
   SET_SENSITIVE ("edit-paste-into", gdisp && group->gimp->global_buffer);
 
-  SET_SENSITIVE ("edit-cut-named",  drawable);
-  SET_SENSITIVE ("edit-copy-named", drawable);
+  SET_SENSITIVE ("edit-named-cut",  drawable);
+  SET_SENSITIVE ("edit-named-paste", drawable);
 
   SET_SENSITIVE ("edit-clear",        drawable);
   SET_SENSITIVE ("edit-fill-fg",      drawable);

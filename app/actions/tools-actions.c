@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -39,20 +41,11 @@
 
 static GimpActionEntry tools_actions[] =
 {
-  { "tools-menu", NULL,
-    N_("_Tools") },
-
-  { "tools-select-menu", NULL,
-    N_("_Selection Tools") },
-
-  { "tools-paint-menu", NULL,
-    N_("_Paint Tools") },
-
-  { "tools-transform-menu", NULL,
-    N_("/Tools/_Transform Tools") },
-
-  { "tools-color-menu", NULL,
-    N_("_Color Tools") },
+  { "tools-menu",           NULL, N_("_Tools")           },
+  { "tools-select-menu",    NULL, N_("_Selection Tools") },
+  { "tools-paint-menu",     NULL, N_("_Paint Tools")     },
+  { "tools-transform-menu", NULL, N_("_Transform Tools") },
+  { "tools-color-menu",     NULL, N_("_Color Tools")     },
 
   { "tools-default-colors", GIMP_STOCK_DEFAULT_COLORS,
     N_("_Default Colors"), "D", NULL,
@@ -88,11 +81,18 @@ tools_actions_setup (GimpActionGroup *group,
           GimpStringActionEntry  entry;
           const gchar           *stock_id;
           const gchar           *identifier;
+          gchar                 *tmp;
+          gchar                 *name;
 
           stock_id   = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
           identifier = gimp_object_get_name (GIMP_OBJECT (tool_info));
 
-          entry.name        = identifier; /* FIXME */
+          tmp = g_strndup (identifier + strlen ("gimp-"),
+                           strlen (identifier) - strlen ("gimp--tool"));
+          name = g_strdup_printf ("tools-%s", tmp);
+          g_free (tmp);
+
+          entry.name        = name;
           entry.stock_id    = stock_id;
           entry.label       = tool_info->menu_path;
           entry.accelerator = tool_info->menu_accel;
@@ -103,6 +103,8 @@ tools_actions_setup (GimpActionGroup *group,
                                                 &entry, 1,
                                                 G_CALLBACK (tools_select_cmd_callback),
                                                 data);
+
+          g_free (name);
         }
     }
 }

@@ -106,7 +106,7 @@ static GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_select_next_cmd_callback),
     GIMP_HELP_LAYER_NEXT },
 
-  { "layer-select-bottom", NULL,
+  { "layers-select-bottom", NULL,
     N_("Select _Bottom Layer"), "End", NULL,
     G_CALLBACK (layers_select_bottom_cmd_callback),
     GIMP_HELP_LAYER_BOTTOM },
@@ -171,6 +171,11 @@ static GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_scale_cmd_callback),
     GIMP_HELP_LAYER_SCALE },
 
+  { "layers-crop", GIMP_STOCK_TOOL_CROP,
+    N_("Cr_op Layer"), NULL, NULL,
+    G_CALLBACK (layers_crop_cmd_callback),
+    GIMP_HELP_LAYER_CROP },
+
   { "layers-mask-add", GIMP_STOCK_LAYER_MASK,
     N_("Add La_yer Mask..."), NULL, NULL,
     G_CALLBACK (layers_mask_add_cmd_callback),
@@ -199,7 +204,7 @@ static GimpEnumActionEntry layers_mask_to_selection_actions[] =
     GIMP_CHANNEL_OP_REPLACE,
     GIMP_HELP_LAYER_MASK_SELECTION_REPLACE },
 
-  { "layer-mask-selection-add", GIMP_STOCK_SELECTION_ADD,
+  { "layers-mask-selection-add", GIMP_STOCK_SELECTION_ADD,
     N_("_Add to Selection"), NULL, NULL,
     GIMP_CHANNEL_OP_ADD,
     GIMP_HELP_LAYER_MASK_SELECTION_ADD },
@@ -232,7 +237,7 @@ static GimpEnumActionEntry layers_alpha_to_selection_actions[] =
     GIMP_CHANNEL_OP_SUBTRACT,
     GIMP_HELP_LAYER_ALPHA_SELECTION_SUBTRACT },
 
-  { "layer-alpha-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
+  { "layers-alpha-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
     N_("_Intersect with Selection"), NULL, NULL,
     GIMP_CHANNEL_OP_INTERSECT,
     GIMP_HELP_LAYER_ALPHA_SELECTION_INTERSECT }

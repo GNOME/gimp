@@ -39,18 +39,18 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_dodgeburn_tool_class_init (GimpDodgeBurnToolClass *klass);
-static void   gimp_dodgeburn_tool_init       (GimpDodgeBurnTool      *dodgeburn);
+static void   gimp_dodge_burn_tool_class_init (GimpDodgeBurnToolClass *klass);
+static void   gimp_dodge_burn_tool_init       (GimpDodgeBurnTool      *dodgeburn);
 
-static void   gimp_dodgeburn_tool_modifier_key  (GimpTool        *tool,
-                                                 GdkModifierType  key,
-                                                 gboolean         press,
-                                                 GdkModifierType  state,
-                                                 GimpDisplay     *gdisp);
-static void   gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
-                                                 GimpCoords      *coords,
-                                                 GdkModifierType  state,
-                                                 GimpDisplay     *gdisp);
+static void   gimp_dodge_burn_tool_modifier_key  (GimpTool        *tool,
+                                                  GdkModifierType  key,
+                                                  gboolean         press,
+                                                  GdkModifierType  state,
+                                                  GimpDisplay     *gdisp);
+static void   gimp_dodge_burn_tool_cursor_update (GimpTool        *tool,
+                                                  GimpCoords      *coords,
+                                                  GdkModifierType  state,
+                                                  GimpDisplay     *gdisp);
 
 static GtkWidget * gimp_dodge_burn_options_gui  (GimpToolOptions *tool_options);
 
@@ -59,14 +59,14 @@ static GimpPaintToolClass *parent_class = NULL;
 
 
 void
-gimp_dodgeburn_tool_register (GimpToolRegisterCallback  callback,
-                              gpointer                  data)
+gimp_dodge_burn_tool_register (GimpToolRegisterCallback  callback,
+                               gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_DODGEBURN_TOOL,
+  (* callback) (GIMP_TYPE_DODGE_BURN_TOOL,
                 GIMP_TYPE_DODGE_BURN_OPTIONS,
                 gimp_dodge_burn_options_gui,
                 GIMP_PAINT_OPTIONS_CONTEXT_MASK,
-                "gimp-dodgeburn-tool",
+                "gimp-dodge-burn-tool",
                 _("Dodge/Burn"),
                 _("Dodge or Burn strokes"),
                 N_("/Tools/Paint Tools/Dod_geBurn"), "<shift>D",
@@ -76,7 +76,7 @@ gimp_dodgeburn_tool_register (GimpToolRegisterCallback  callback,
 }
 
 GType
-gimp_dodgeburn_tool_get_type (void)
+gimp_dodge_burn_tool_get_type (void)
 {
   static GType tool_type = 0;
 
@@ -87,12 +87,12 @@ gimp_dodgeburn_tool_get_type (void)
         sizeof (GimpDodgeBurnToolClass),
         (GBaseInitFunc) NULL,
         (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_dodgeburn_tool_class_init,
+        (GClassInitFunc) gimp_dodge_burn_tool_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data     */
         sizeof (GimpDodgeBurnTool),
         0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_dodgeburn_tool_init,
+        (GInstanceInitFunc) gimp_dodge_burn_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
@@ -104,7 +104,7 @@ gimp_dodgeburn_tool_get_type (void)
 }
 
 static void
-gimp_dodgeburn_tool_class_init (GimpDodgeBurnToolClass *klass)
+gimp_dodge_burn_tool_class_init (GimpDodgeBurnToolClass *klass)
 {
   GimpToolClass	*tool_class;
 
@@ -112,12 +112,12 @@ gimp_dodgeburn_tool_class_init (GimpDodgeBurnToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  tool_class->modifier_key  = gimp_dodgeburn_tool_modifier_key;
-  tool_class->cursor_update = gimp_dodgeburn_tool_cursor_update;
+  tool_class->modifier_key  = gimp_dodge_burn_tool_modifier_key;
+  tool_class->cursor_update = gimp_dodge_burn_tool_cursor_update;
 }
 
 static void
-gimp_dodgeburn_tool_init (GimpDodgeBurnTool *dodgeburn)
+gimp_dodge_burn_tool_init (GimpDodgeBurnTool *dodgeburn)
 {
   GimpTool	*tool;
   GimpPaintTool *paint_tool;
@@ -132,11 +132,11 @@ gimp_dodgeburn_tool_init (GimpDodgeBurnTool *dodgeburn)
 }
 
 static void
-gimp_dodgeburn_tool_modifier_key (GimpTool        *tool,
-                                  GdkModifierType  key,
-                                  gboolean         press,
-				  GdkModifierType  state,
-				  GimpDisplay     *gdisp)
+gimp_dodge_burn_tool_modifier_key (GimpTool        *tool,
+                                   GdkModifierType  key,
+                                   gboolean         press,
+                                   GdkModifierType  state,
+                                   GimpDisplay     *gdisp)
 {
   GimpDodgeBurnOptions *options;
 
@@ -164,10 +164,10 @@ gimp_dodgeburn_tool_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
-                                   GimpCoords      *coords,
-				   GdkModifierType  state,
-				   GimpDisplay     *gdisp)
+gimp_dodge_burn_tool_cursor_update (GimpTool        *tool,
+                                    GimpCoords      *coords,
+                                    GdkModifierType  state,
+                                    GimpDisplay     *gdisp)
 {
   GimpDodgeBurnOptions *options;
 

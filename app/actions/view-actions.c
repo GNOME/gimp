@@ -53,11 +53,8 @@ static void   view_actions_set_zoom (GimpActionGroup  *group,
 
 static GimpActionEntry view_actions[] =
 {
-  { "view-menu", NULL,
-    N_("/_View") },
-
-  { "view-zoom-menu", NULL,
-    N_("_Zoom") },
+  { "view-menu",      NULL, N_("_View") },
+  { "view-zoom-menu", NULL, N_("_Zoom") },
 
   { "view-new", GTK_STOCK_NEW,
     N_("_New View"), "", NULL,
@@ -131,7 +128,7 @@ static GimpToggleActionEntry view_toggle_actions[] =
     TRUE,
     GIMP_HELP_VIEW_SHOW_GUIDES },
 
-  { "view-snap-to-giudes", NULL,
+  { "view-snap-to-guides", NULL,
     N_("Sn_ap to Guides"), NULL, NULL,
     G_CALLBACK (view_snap_to_guides_cmd_callback),
     TRUE,

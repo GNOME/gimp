@@ -122,9 +122,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                           _("Mode:"), 1.0, 0.5,
                                           optionmenu, 2, TRUE);
 
-  if (tool_type == GIMP_TYPE_ERASER_TOOL    ||
-      tool_type == GIMP_TYPE_CONVOLVE_TOOL  ||
-      tool_type == GIMP_TYPE_DODGEBURN_TOOL ||
+  if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
+      tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
       gtk_widget_set_sensitive (optionmenu, FALSE);
@@ -227,10 +227,10 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     }
 
   /* the "hard edge" toggle */
-  if (tool_type == GIMP_TYPE_ERASER_TOOL    ||
-      tool_type == GIMP_TYPE_CLONE_TOOL     ||
-      tool_type == GIMP_TYPE_CONVOLVE_TOOL  ||
-      tool_type == GIMP_TYPE_DODGEBURN_TOOL ||
+  if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
+      tool_type == GIMP_TYPE_CLONE_TOOL      ||
+      tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
       button = gimp_prop_check_button_new (config, "hard", _("Hard Edge"));
@@ -284,7 +284,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
       tool_type == GIMP_TYPE_CLONE_TOOL                  ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL               ||
-      tool_type == GIMP_TYPE_DODGEBURN_TOOL              ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL             ||
       tool_type == GIMP_TYPE_ERASER_TOOL                 ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
@@ -298,7 +298,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
 
   /*  the opacity toggle  */
   if (tool_type == GIMP_TYPE_CLONE_TOOL      ||
-      tool_type == GIMP_TYPE_DODGEBURN_TOOL  ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
       tool_type == GIMP_TYPE_ERASER_TOOL     ||
       tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
       tool_type == GIMP_TYPE_PENCIL_TOOL)
@@ -313,7 +313,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
   if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
       tool_type == GIMP_TYPE_CLONE_TOOL      ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
-      tool_type == GIMP_TYPE_DODGEBURN_TOOL  ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
       tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
@@ -338,7 +338,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
       tool_type == GIMP_TYPE_CLONE_TOOL                  ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL               ||
-      tool_type == GIMP_TYPE_DODGEBURN_TOOL              ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL             ||
       tool_type == GIMP_TYPE_ERASER_TOOL)
     {
       button = gimp_prop_check_button_new (config, "pressure-size",
@@ -376,7 +376,7 @@ fade_options_gui (GimpFadeOptions  *fade,
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
       tool_type == GIMP_TYPE_CLONE_TOOL                  ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL               ||
-      tool_type == GIMP_TYPE_DODGEBURN_TOOL              ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL             ||
       tool_type == GIMP_TYPE_ERASER_TOOL                 ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {

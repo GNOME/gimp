@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <menubar>
+  <menubar action="image-menubar">
 
     <menu action="file-menu">
       <menuitem action="file-new" />
@@ -37,8 +37,8 @@
       <menuitem action="edit-paste-as-new" />
       <menu action="edit-buffer-menu">
         <menuitem action="edit-named-cut" />
-	<menuitem action="edit-names-copy" />
-	<menuitem action="edit-paste-named" />
+	<menuitem action="edit-named-copy" />
+	<menuitem action="edit-named-paste" />
       </menu>
       <separator />
       <menuitem action="edit-clear" />
@@ -46,7 +46,7 @@
       <menuitem action="edit-fill-bg" />
       <menuitem action="edit-fill-pattern" />
       <menuitem action="edit-stroke" />
-      <menuitem action="vectors-stroke-vectors" />
+      <menuitem action="vectors-stroke" />
       <separator />
     </menu>
 
@@ -66,16 +66,17 @@
       <separator />
       <menuitem action="select-toggle-qmask" />
       <menuitem action="select-save" />
-      <menuitem action="select-to-path" />
+      <menuitem action="select-to-vectors" />
     </menu>
 
     <menu action="view-menu">
       <menuitem action="view-new" />
-      <menuitem action="dot-for-dot" />
+      <menuitem action="view-dot-for-dot" />
       <menu action="view-zoom-menu">
         <menuitem action="view-zoom-out" />
         <menuitem action="view-zoom-in" />
         <menuitem action="view-zoom-fit" />
+	<separator />
         <menuitem action="view-zoom-16-1" />
         <menuitem action="view-zoom-8-1" />
         <menuitem action="view-zoom-4-1" />
@@ -90,7 +91,7 @@
       </menu>
       <separator />
       <menuitem action="view-info-window" />
-      <menuitem action="view-navigation" />
+      <menuitem action="view-navigation-window" />
       <menuitem action="view-display-filters" />
       <separator />
       <menuitem action="view-show-selection" />
@@ -212,7 +213,7 @@
     </menu>
 
     <menu action="tools-menu">
-      <menuitem action="dialogs-show-toolbox" />
+      <menuitem action="dialogs-toolbox" />
       <menuitem action="tools-default-colors" />
       <menuitem action="tools-swap-colors" />
       <separator />
@@ -254,9 +255,9 @@
 	<menuitem action="tools-curves" />
 	<menuitem action="tools-posterize" />
       </menu>
-      <menuitem action="tools-vectors" />
+      <menuitem action="tools-vector" />
       <menuitem action="tools-color-picker" />
-      <menuitem action="tools-zoom" />
+      <menuitem action="tools-magnify" />
       <menuitem action="tools-measure" />
       <menuitem action="tools-text" />
     </menu>
@@ -282,7 +283,7 @@
       <menuitem action="dialogs-colors" />
       <menuitem action="dialogs-brushes" />
       <menuitem action="dialogs-patterns" />
-      <menuitem action="dialogs-graidents" />
+      <menuitem action="dialogs-gradients" />
       <menuitem action="dialogs-palettes" />
       <menuitem action="dialogs-fonts" />
       <menuitem action="dialogs-buffers" />
@@ -295,6 +296,52 @@
     </menu>
 
     <menu action="plug-in-menu">
+      <menuitem action="plug-in-repeat" />
+      <menuitem action="plug-in-reshow" />
+      <separator />
+      <menu action="plug-in-blur-menu">
+      </menu>
+      <menu action="plug-in-colors-menu">
+	<menu action="plug-in-colors-map-menu">
+	</menu>
+      </menu>
+      <menu action="plug-in-noise-menu">
+      </menu>
+      <menu action="plug-in-edge-detect-menu">
+      </menu>
+      <menu action="plug-in-enhance-menu">
+      </menu>
+      <menu action="plug-in-generic-menu">
+      </menu>
+      <separator />
+      <menu action="plug-in-glass-effects-menu">
+      </menu>
+      <menu action="plug-in-light-effects-menu">
+      </menu>
+      <menu action="plug-in-distorts-menu">
+      </menu>
+      <menu action="plug-in-artistic-menu">
+      </menu>
+      <menu action="plug-in-map-menu">
+      </menu>
+      <menu action="plug-in-render-menu">
+	<menu action="plug-in-render-clouds-menu">
+	</menu>
+	<menu action="plug-in-render-nature-menu">
+	</menu>
+	<menu action="plug-in-render-pattern-menu">
+	</menu>
+      </menu>
+      <menu action="plug-in-web-menu">
+      </menu>
+      <separator />
+      <menu action="plug-in-animation-menu">
+      </menu>
+      <menu action="plug-in-combine-menu">
+      </menu>
+      <separator />
+      <menu action="plug-in-toys-menu">
+      </menu>
     </menu>
 
   </menubar>

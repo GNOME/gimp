@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpmenufactory.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2004 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -207,7 +207,7 @@ gimp_menu_factory_menu_new (GimpMenuFactory *factory,
     }
 
   g_warning ("%s: no entry registered for \"%s\"",
-             G_GNUC_FUNCTION, identifier);
+             G_STRFUNC, identifier);
 
   return NULL;
 }
@@ -254,7 +254,7 @@ gimp_menu_factory_manager_register (GimpMenuFactory *factory,
     }
 
   g_warning ("%s: no entry registered for \"%s\"",
-             G_GNUC_FUNCTION, identifier);
+             G_STRFUNC, identifier);
 }
 
 GtkUIManager *
@@ -298,7 +298,7 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
     }
 
   g_warning ("%s: no entry registered for \"%s\"",
-             G_GNUC_FUNCTION, identifier);
+             G_STRFUNC, identifier);
 
   return NULL;
 }

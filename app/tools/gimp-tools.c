@@ -114,7 +114,7 @@ gimp_tools_init (Gimp *gimp)
 
     /*  paint tools  */
 
-    gimp_dodgeburn_tool_register,
+    gimp_dodge_burn_tool_register,
     gimp_smudge_tool_register,
     gimp_convolve_tool_register,
     gimp_clone_tool_register,
@@ -343,7 +343,7 @@ gimp_tools_register (GType                   tool_type,
     {
       paint_core_name = "GimpSmudge";
     }
-  else if (tool_type == GIMP_TYPE_DODGEBURN_TOOL)
+  else if (tool_type == GIMP_TYPE_DODGE_BURN_TOOL)
     {
       paint_core_name = "GimpDodgeBurn";
     }

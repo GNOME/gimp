@@ -126,6 +126,10 @@ menus_init (Gimp *gimp)
                                    image_menu_setup, image_menu_update, FALSE,
                                    n_image_menu_entries,
                                    image_menu_entries);
+  gimp_menu_factory_manager_register (global_menu_factory, "<Image>",
+                                      "file", "edit",  "select", "view",
+                                      "image", "drawable", "layers", "vectors",
+                                      "tools", "dialogs", "plug-in", NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Load>",
                                    _("Open Menu"),
