@@ -22,10 +22,46 @@ WILBER_VARIABLES = \
 
 ## Below are compiled in stock icons 
 
+STOCK_MENU_IMAGES = \
+	stock-channel-16.png			\
+	stock-channels-16.png			\
+	stock-convert-grayscale-16.png		\
+	stock-convert-indexed-16.png		\
+	stock-convert-rgb-16.png		\
+	stock-default-colors-12.png		\
+	stock-device-status-16.png		\
+	stock-eye-12.png			\
+	stock-images-16.png			\
+	stock-info-16.png			\
+	stock-invert-16.png			\
+	stock-layer-16.png			\
+	stock-layer-to-imagesize-16.png		\
+	stock-layers-16.png			\
+	stock-merge-down-16.png			\
+	stock-navigation-16.png			\
+	stock-paths-16.png			\
+	stock-plugin-16.png			\
+	stock-qmask-off-16.png			\
+	stock-qmask-on-16.png			\
+	stock-reshow-filter-16.png		\
+	stock-resize-16.png			\
+	stock-rotate-180-16.png			\
+	stock-rotate-270-16.png			\
+	stock-rotate-90-16.png			\
+	stock-scale-16.png			\
+	stock-selection-all-16.png		\
+	stock-selection-grow-16.png		\
+	stock-selection-none-16.png		\
+	stock-selection-shrink-16.png		\
+	stock-swap-colors-12.png		\
+	stock-tool-options-16.png		\
+	stock-warning-16.png			\
+	stock-wilber-16.png
+
 STOCK_BUTTON_IMAGES = \
 	stock-anchor-16.png			\
-	stock-channel-16.png			\
 	stock-channel-24.png			\
+	stock-channels-24.png			\
 	stock-char-picker-22.png		\
 	stock-color-picker-black-18.png		\
 	stock-color-picker-gray-18.png		\
@@ -35,7 +71,6 @@ STOCK_BUTTON_IMAGES = \
 	stock-curve-smooth-16.png		\
 	stock-duplicate-16.png			\
 	stock-edit-16.png			\
-	stock-eye-12.png			\
 	stock-eye-20.png			\
 	stock-gravity-east-24.png		\
 	stock-gravity-north-24.png		\
@@ -45,62 +80,31 @@ STOCK_BUTTON_IMAGES = \
 	stock-gravity-south-east-24.png		\
 	stock-gravity-south-west-24.png		\
 	stock-gravity-west-24.png		\
-	stock-layer-16.png			\
+	stock-hchain-24.png			\
+	stock-hchain-broken-24.png		\
+	stock-images-24.png			\
+	stock-info-24.png			\
 	stock-layer-24.png			\
+	stock-layers-24.png			\
+	stock-letter-spacing-22.png		\
 	stock-line-spacing-22.png		\
 	stock-linked-12.png			\
 	stock-linked-20.png			\
-	stock-letter-spacing-22.png		\
 	stock-paste-as-new-16.png		\
 	stock-paste-into-16.png			\
+	stock-path-stroke-16.png		\
+	stock-paths-22.png			\
 	stock-reset-16.png			\
-	stock-selection-replace-16.png		\
 	stock-selection-add-16.png		\
-	stock-selection-subtract-16.png		\
 	stock-selection-intersect-16.png	\
+	stock-selection-replace-16.png		\
 	stock-selection-stroke-16.png		\
+	stock-selection-subtract-16.png		\
 	stock-selection-to-channel-16.png	\
 	stock-selection-to-path-16.png		\
-	stock-path-stroke-16.png		\
-	stock-hchain-24.png			\
-	stock-hchain-broken-24.png		\
 	stock-vchain-24.png			\
 	stock-vchain-broken-24.png		\
-	stock-info-24.png			\
 	stock-warning-24.png
-
-STOCK_MENU_IMAGES = \
-	stock-convert-grayscale-16.png		\
-	stock-convert-indexed-16.png		\
-	stock-convert-rgb-16.png		\
-	stock-invert-16.png			\
-	stock-merge-down-16.png			\
-	stock-layer-to-imagesize-16.png		\
-	stock-plugin-16.png			\
-	stock-reshow-filter-16.png		\
-	stock-rotate-180-16.png			\
-	stock-rotate-270-16.png			\
-	stock-rotate-90-16.png			\
-	stock-resize-16.png			\
-	stock-scale-16.png			\
-	stock-images-16.png			\
-	stock-layers-16.png			\
-	stock-channels-16.png			\
-	stock-paths-16.png			\
-	stock-selection-all-16.png		\
-	stock-selection-none-16.png		\
-	stock-selection-grow-16.png		\
-	stock-selection-shrink-16.png		\
-	stock-navigation-16.png			\
-	stock-qmask-off-16.png			\
-	stock-qmask-on-16.png			\
-	stock-default-colors-12.png		\
-	stock-swap-colors-12.png		\
-	stock-tool-options-16.png		\
-	stock-device-status-16.png		\
-	stock-info-16.png			\
-	stock-warning-16.png			\
-	stock-wilber-16.png
 
 STOCK_DIALOG_IMAGES = \
 	stock-error-64.png			\
@@ -151,8 +155,8 @@ STOCK_TOOL_IMAGES = \
 	tools/stock-tool-zoom-22.png
 
 STOCK_IMAGES = \
-	$(STOCK_BUTTON_IMAGES)	\
 	$(STOCK_MENU_IMAGES) 	\
+	$(STOCK_BUTTON_IMAGES)	\
 	$(STOCK_DIALOG_IMAGES)	\
 	$(STOCK_TOOL_IMAGES)
 

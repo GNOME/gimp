@@ -271,6 +271,11 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_LETTER_SPACING,           stock_letter_spacing_22           },
   { GIMP_STOCK_LINE_SPACING,             stock_line_spacing_22             },
 
+  { GIMP_STOCK_IMAGES,                   stock_images_24                   },
+  { GIMP_STOCK_LAYERS,                   stock_layers_24                   },
+  { GIMP_STOCK_CHANNELS,                 stock_channels_24                 },
+  { GIMP_STOCK_PATHS,                    stock_paths_22                    },
+
   { GIMP_STOCK_LAYER,                    stock_layer_24                    },
   { GIMP_STOCK_CHANNEL,                  stock_channel_24                  },
 
@@ -398,6 +403,14 @@ gimp_stock_init (void)
 
   gimp_stock_factory = gtk_icon_factory_new ();
 
+  for (i = 0; i < G_N_ELEMENTS (gimp_stock_dialog_pixbufs); i++)
+    {
+      add_sized_with_same_fallback (gimp_stock_factory,
+				    gimp_stock_dialog_pixbufs[i].inline_data,
+				    GTK_ICON_SIZE_DIALOG,
+				    gimp_stock_dialog_pixbufs[i].stock_id);
+    }
+
   for (i = 0; i < G_N_ELEMENTS (gimp_stock_button_pixbufs); i++)
     {
       add_sized_with_same_fallback (gimp_stock_factory,
@@ -412,14 +425,6 @@ gimp_stock_init (void)
 				    gimp_stock_menu_pixbufs[i].inline_data,
 				    GTK_ICON_SIZE_MENU,
 				    gimp_stock_menu_pixbufs[i].stock_id);
-    }
-
-  for (i = 0; i < G_N_ELEMENTS (gimp_stock_dialog_pixbufs); i++)
-    {
-      add_sized_with_same_fallback (gimp_stock_factory,
-				    gimp_stock_dialog_pixbufs[i].inline_data,
-				    GTK_ICON_SIZE_DIALOG,
-				    gimp_stock_dialog_pixbufs[i].stock_id);
     }
 
   gtk_icon_factory_add_default (gimp_stock_factory);

@@ -167,6 +167,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_LINKED ##### -->
 <para>
 <inlinegraphic fileref="stock-linked-20.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-linked-12.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -174,6 +175,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_VISIBLE ##### -->
 <para>
 <inlinegraphic fileref="stock-eye-20.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-eye-12.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -349,6 +351,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_LAYER ##### -->
 <para>
 <inlinegraphic fileref="stock-layer-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-layer-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -356,12 +359,14 @@ size).
 <!-- ##### MACRO GIMP_STOCK_CHANNEL ##### -->
 <para>
 <inlinegraphic fileref="stock-channel-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_IMAGES ##### -->
 <para>
+<inlinegraphic fileref="stock-images-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-images-16.png" format="png"></inlinegraphic>
 </para>
 
@@ -369,6 +374,7 @@ size).
 
 <!-- ##### MACRO GIMP_STOCK_LAYERS ##### -->
 <para>
+<inlinegraphic fileref="stock-layers-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-layers-16.png" format="png"></inlinegraphic>
 </para>
 
@@ -376,6 +382,7 @@ size).
 
 <!-- ##### MACRO GIMP_STOCK_CHANNELS ##### -->
 <para>
+<inlinegraphic fileref="stock-channels-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channels-16.png" format="png"></inlinegraphic>
 </para>
 
@@ -384,6 +391,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_PATHS ##### -->
 <para>
 <inlinegraphic fileref="stock-paths-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-paths-22.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -769,6 +777,8 @@ size).
 <!-- ##### MACRO GIMP_STOCK_INFO ##### -->
 <para>
 <inlinegraphic fileref="stock-info-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-info-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-info-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -783,6 +793,8 @@ size).
 <!-- ##### MACRO GIMP_STOCK_WARNING ##### -->
 <para>
 <inlinegraphic fileref="stock-warning-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-warning-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-warning-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -790,6 +802,9 @@ size).
 <!-- ##### MACRO GIMP_STOCK_WILBER ##### -->
 <para>
 <inlinegraphic fileref="stock-wilber-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-wilber-48.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-wilber-32.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-wilber-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -798,6 +813,3 @@ size).
 <para>
 <inlinegraphic fileref="stock-wilber-eek-64.png" format="png"></inlinegraphic>
 </para>
-
-
-

@@ -1,3 +1,8 @@
+2003-03-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/tmpl/gimpstock.sgml: added new icons. Show icons
+	in all available sizes.
+
 2003-03-20  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets.types

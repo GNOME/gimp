@@ -1,5 +1,17 @@
 2003-03-22  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-channels-24.png
+	* themes/Default/images/stock-images-24.png
+	* themes/Default/images/stock-layers-24.png
+	* themes/Default/images/stock-paths-22.png: added larger versions of
+	some icons (provided by Jimmac).
+
+	* libgimpwidgets/gimpstock.c: added the new icons. Register icons
+	in dialog size first.
+
+2003-03-22  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/layers-commands.c: always flush the image when applying
 	or discarding a layer mask. The active drawable may change and
 	make a menu update necessary (fixes bug #108958).
