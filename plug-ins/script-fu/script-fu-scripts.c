@@ -69,7 +69,7 @@ typedef struct
   gchar     *filename;
 } SFFilename;
 
-typedef struct 
+typedef struct
 {
   gchar                *name;
   gdouble               opacity;
@@ -77,7 +77,7 @@ typedef struct
   GimpLayerModeEffects  paint_mode;
 } SFBrush;
 
-typedef struct 
+typedef struct
 {
   GSList  *list;
   guint    history;
@@ -206,7 +206,7 @@ static void       script_fu_brush_preview           (const gchar   *name,
 static GTree       *script_list  = NULL;
 static SFInterface *sf_interface = NULL;  /*  there can only be at most one
 					      interactive interface  */
-					      
+
 extern gchar        siod_err_msg[];
 
 /*
@@ -221,8 +221,8 @@ script_fu_find_scripts (void)
   /*  Make sure to clear any existing scripts  */
   if (script_list != NULL)
     {
-      g_tree_foreach (script_list, 
-                      (GTraverseFunc) script_fu_remove_script, 
+      g_tree_foreach (script_list,
+                      (GTraverseFunc) script_fu_remove_script,
                       NULL);
       g_tree_destroy (script_list);
     }
@@ -241,8 +241,8 @@ script_fu_find_scripts (void)
   g_free (path_str);
 
   /*  now that all scripts are read in and sorted, tell gimp about them  */
-  g_tree_foreach (script_list, 
-                  (GTraverseFunc) script_fu_install_script, 
+  g_tree_foreach (script_list,
+                  (GTraverseFunc) script_fu_install_script,
                   NULL);
 }
 
@@ -407,11 +407,11 @@ script_fu_add_script (LISP a)
 		  g = CLAMP (get_c_long (car (color_list)), 0, 255);
 		  color_list = cdr (color_list);
 		  b = CLAMP (get_c_long (car (color_list)), 0, 255);
-		  
-		  gimp_rgb_set_uchar (&script->arg_defaults[i].sfa_color, 
+
+		  gimp_rgb_set_uchar (&script->arg_defaults[i].sfa_color,
 				      r, g, b);
 
-		  script->arg_values[i].sfa_color = 
+		  script->arg_values[i].sfa_color =
 		    script->arg_defaults[i].sfa_color;
 
 		  args[i + 1].type = GIMP_PDB_COLOR;
@@ -422,9 +422,9 @@ script_fu_add_script (LISP a)
 		case SF_TOGGLE:
 		  if (!TYPEP (car (a), tc_flonum))
 		    return my_err ("script-fu-register: toggle default must be an integer value", NIL);
-		  script->arg_defaults[i].sfa_toggle = 
+		  script->arg_defaults[i].sfa_toggle =
 		    (get_c_long (car (a))) ? TRUE : FALSE;
-		  script->arg_values[i].sfa_toggle = 
+		  script->arg_values[i].sfa_toggle =
 		    script->arg_defaults[i].sfa_toggle;
 
 		  args[i + 1].type = GIMP_PDB_INT32;
@@ -432,12 +432,12 @@ script_fu_add_script (LISP a)
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
-		case SF_VALUE:  
+		case SF_VALUE:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: value defaults must be string values", NIL);
-		  script->arg_defaults[i].sfa_value = 
+		  script->arg_defaults[i].sfa_value =
 		    g_strdup (get_c_string (car (a)));
-		  script->arg_values[i].sfa_value =  
+		  script->arg_values[i].sfa_value =
 		    g_strdup (script->arg_defaults[i].sfa_value);
 
 		  args[i + 1].type = GIMP_PDB_STRING;
@@ -448,9 +448,9 @@ script_fu_add_script (LISP a)
 		case SF_STRING:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: string defaults must be string values", NIL);
-		  script->arg_defaults[i].sfa_value = 
+		  script->arg_defaults[i].sfa_value =
 		    g_strdup (get_c_string (car (a)));
-		  script->arg_values[i].sfa_value =  
+		  script->arg_values[i].sfa_value =
 		    g_strdup (script->arg_defaults[i].sfa_value);
 
 		  args[i + 1].type = GIMP_PDB_STRING;
@@ -462,28 +462,28 @@ script_fu_add_script (LISP a)
 		  if (!TYPEP (car (a), tc_cons))
 		    return my_err ("script-fu-register: adjustment defaults must be a list", NIL);
 		  adj_list = car (a);
-		  script->arg_defaults[i].sfa_adjustment.value = 
+		  script->arg_defaults[i].sfa_adjustment.value =
 		    get_c_double (car (adj_list));
 		  adj_list = cdr (adj_list);
-		  script->arg_defaults[i].sfa_adjustment.lower = 
+		  script->arg_defaults[i].sfa_adjustment.lower =
 		    get_c_double (car (adj_list));
 		  adj_list = cdr (adj_list);
-		  script->arg_defaults[i].sfa_adjustment.upper = 
+		  script->arg_defaults[i].sfa_adjustment.upper =
 		    get_c_double (car (adj_list));
 		  adj_list = cdr (adj_list);
-		  script->arg_defaults[i].sfa_adjustment.step = 
+		  script->arg_defaults[i].sfa_adjustment.step =
 		    get_c_double (car (adj_list));
 		  adj_list = cdr (adj_list);
-		  script->arg_defaults[i].sfa_adjustment.page = 
+		  script->arg_defaults[i].sfa_adjustment.page =
 		    get_c_double (car (adj_list));
 		  adj_list = cdr (adj_list);
-		  script->arg_defaults[i].sfa_adjustment.digits = 
+		  script->arg_defaults[i].sfa_adjustment.digits =
 		    get_c_long (car (adj_list));
 		  adj_list = cdr (adj_list);
-		  script->arg_defaults[i].sfa_adjustment.type = 
+		  script->arg_defaults[i].sfa_adjustment.type =
 		    get_c_long (car (adj_list));
 		  script->arg_values[i].sfa_adjustment.adj = NULL;
-		  script->arg_values[i].sfa_adjustment.value = 
+		  script->arg_values[i].sfa_adjustment.value =
 		    script->arg_defaults[i].sfa_adjustment.value;
 
 		  args[i + 1].type = GIMP_PDB_FLOAT;
@@ -498,7 +498,7 @@ script_fu_add_script (LISP a)
 		case SF_DIRNAME:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: dirname defaults must be string values", NIL);
-		  script->arg_defaults[i].sfa_file.filename = 
+		  script->arg_defaults[i].sfa_file.filename =
 		    g_strdup (get_c_string (car (a)));
 
 #ifdef G_OS_WIN32
@@ -514,12 +514,12 @@ script_fu_add_script (LISP a)
 		      val++;
 		    }
 #endif
-		  script->arg_values[i].sfa_file.filename =  
+		  script->arg_values[i].sfa_file.filename =
 		    g_strdup (script->arg_defaults[i].sfa_file.filename);
 		  script->arg_values[i].sfa_file.fileselection = NULL;
 
 		  args[i + 1].type = GIMP_PDB_STRING;
-		  args[i + 1].name = (script->arg_types[i] == SF_FILENAME ? 
+		  args[i + 1].name = (script->arg_types[i] == SF_FILENAME ?
                                       "filename" : "dirname");
 		  args[i + 1].description = script->arg_labels[i];
 		 break;
@@ -531,7 +531,7 @@ script_fu_add_script (LISP a)
                     g_strdup (get_c_string (car (a)));
 		  script->arg_values[i].sfa_font =
                     g_strdup (script->arg_defaults[i].sfa_font);
-		  
+
 		  args[i + 1].type = GIMP_PDB_STRING;
 		  args[i + 1].name = "font";
 		  args[i + 1].description = script->arg_labels[i];
@@ -540,9 +540,9 @@ script_fu_add_script (LISP a)
 		case SF_PATTERN:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: pattern defaults must be string values", NIL);
-		  script->arg_defaults[i].sfa_pattern = 
+		  script->arg_defaults[i].sfa_pattern =
 		    g_strdup (get_c_string (car (a)));
-		  script->arg_values[i].sfa_pattern =  
+		  script->arg_values[i].sfa_pattern =
 		    g_strdup (script->arg_defaults[i].sfa_pattern);
 
 		  args[i + 1].type = GIMP_PDB_STRING;
@@ -554,24 +554,24 @@ script_fu_add_script (LISP a)
 		  if (!TYPEP (car (a), tc_cons))
 		    return my_err ("script-fu-register: brush defaults must be a list", NIL);
 		  brush_list = car (a);
-		  script->arg_defaults[i].sfa_brush.name = 
+		  script->arg_defaults[i].sfa_brush.name =
 		    g_strdup (get_c_string (car (brush_list)));
 		  brush_list = cdr (brush_list);
-		  script->arg_defaults[i].sfa_brush.opacity = 
+		  script->arg_defaults[i].sfa_brush.opacity =
 		    get_c_double (car (brush_list));
 		  brush_list = cdr (brush_list);
-		  script->arg_defaults[i].sfa_brush.spacing = 
+		  script->arg_defaults[i].sfa_brush.spacing =
 		    get_c_long (car (brush_list));
 		  brush_list = cdr (brush_list);
-		  script->arg_defaults[i].sfa_brush.paint_mode = 
+		  script->arg_defaults[i].sfa_brush.paint_mode =
 		    get_c_long (car (brush_list));
-		  script->arg_values[i].sfa_brush = 
+		  script->arg_values[i].sfa_brush =
 		    script->arg_defaults[i].sfa_brush;
 		  /* Need this since we need a copy of the string
 		   * in the values area. We could free it later but the
 		   * default one must hang around.
 		   */
-		  script->arg_values[i].sfa_brush.name = 
+		  script->arg_values[i].sfa_brush.name =
 		    g_strdup(script->arg_defaults[i].sfa_brush.name);
 
 		  args[i + 1].type = GIMP_PDB_STRING;
@@ -582,11 +582,11 @@ script_fu_add_script (LISP a)
 		case SF_GRADIENT:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: gradient defaults must be string values", NIL);
-		  script->arg_defaults[i].sfa_gradient = 
+		  script->arg_defaults[i].sfa_gradient =
 		    g_strdup (get_c_string (car (a)));
-		  script->arg_values[i].sfa_gradient =  
+		  script->arg_values[i].sfa_gradient =
 		    g_strdup (script->arg_defaults[i].sfa_pattern);
-		  
+
 		  args[i + 1].type = GIMP_PDB_STRING;
 		  args[i + 1].name = "gradient";
 		  args[i + 1].description = script->arg_labels[i];
@@ -595,12 +595,12 @@ script_fu_add_script (LISP a)
 		case SF_OPTION:
 		  if (!TYPEP (car (a), tc_cons))
 		    return my_err ("script-fu-register: option defaults must be a list", NIL);
-		  for (option_list = car (a); 
-		       option_list; 
+		  for (option_list = car (a);
+		       option_list;
 		       option_list = cdr (option_list))
 		    {
-		      script->arg_defaults[i].sfa_option.list = 
-			g_slist_append (script->arg_defaults[i].sfa_option.list, 
+		      script->arg_defaults[i].sfa_option.list =
+			g_slist_append (script->arg_defaults[i].sfa_option.list,
 					g_strdup (get_c_string (car (option_list))));
 		    }
 		  script->arg_defaults[i].sfa_option.history = 0;
@@ -634,14 +634,14 @@ script_fu_report_cc (gchar *command)
   if (sf_interface == NULL)
     return;
 
-  if (sf_interface->last_command && 
+  if (sf_interface->last_command &&
       strcmp (sf_interface->last_command, command) == 0)
     {
       gchar *new_command;
 
       sf_interface->command_count++;
 
-      new_command = g_strdup_printf ("%s <%d>", 
+      new_command = g_strdup_printf ("%s <%d>",
 				     command, sf_interface->command_count);
       gtk_label_set_text (GTK_LABEL (sf_interface->status), new_command);
       g_free (new_command);
@@ -680,7 +680,7 @@ script_fu_load_script (const GimpDatafileData *file_data,
         script_fu_error_msg (command);
 
 #ifdef G_OS_WIN32
-      /* No, I don't know why, but this is 
+      /* No, I don't know why, but this is
        * necessary on NT 4.0.
        */
       Sleep(0);
@@ -690,9 +690,9 @@ script_fu_load_script (const GimpDatafileData *file_data,
     }
 }
 
-/* 
- *  The following function is a GTraverseFunction.  Please 
- *  note that it frees the script->args structure.  --Sven 
+/*
+ *  The following function is a GTraverseFunction.  Please
+ *  note that it frees the script->args structure.  --Sven
  */
 static gboolean
 script_fu_install_script (gpointer  foo,
@@ -724,7 +724,7 @@ script_fu_install_script (gpointer  foo,
   return FALSE;
 }
 
-/* 
+/*
  *  The following function is a GTraverseFunction.
  */
 static gboolean
@@ -777,13 +777,13 @@ script_fu_script_proc (const gchar      *name,
 	    script->image_based = FALSE;
 
 	  /*  First acquire information with a dialog  */
-	  /*  Skip this part if the script takes no parameters */ 
+	  /*  Skip this part if the script takes no parameters */
 	  min_args = (script->image_based) ? 2 : 0;
-	  if (script->num_args > min_args) 
+	  if (script->num_args > min_args)
 	    {
-	      script_fu_interface (script); 
+	      script_fu_interface (script);
 	      break;
-	    }  
+	    }
 	  /*  else fallthrough  */
 
 	case GIMP_RUN_NONINTERACTIVE:
@@ -841,7 +841,7 @@ script_fu_script_proc (const gchar      *name,
 		  case SF_GRADIENT:
 		  case SF_BRUSH:
 		    length += strlen (params[i + 1].data.d_string) + 3;
-		    break;		    
+		    break;
 
 		  case SF_OPTION:
 		    length += strlen (params[i + 1].data.d_string) + 1;
@@ -881,7 +881,7 @@ script_fu_script_proc (const gchar      *name,
 
                         case SF_TOGGLE:
                           g_snprintf (buffer, sizeof (buffer), "%s",
-				      (params[i + 1].data.d_int32) ? "TRUE" 
+				      (params[i + 1].data.d_int32) ? "TRUE"
 				                                   : "FALSE");
                           text = buffer;
                           break;
@@ -893,7 +893,7 @@ script_fu_script_proc (const gchar      *name,
                         case SF_STRING:
                         case SF_FILENAME:
                         case SF_DIRNAME:
-                          escaped = g_strescape (params[i + 1].data.d_string, 
+                          escaped = g_strescape (params[i + 1].data.d_string,
                                                  NULL);
                           g_snprintf (buffer, sizeof (buffer), "\"%s\"",
 				      escaped);
@@ -936,7 +936,7 @@ script_fu_script_proc (const gchar      *name,
 	      /*  run the command through the interpreter  */
 	      if (repl_c_string (command, 0, 0, 1) != 0)
 		script_fu_error_msg (command);
-     
+
 	      g_free (command);
 	    }
 	  break;
@@ -960,7 +960,7 @@ script_fu_lookup_script (gpointer      *foo,
 			 gconstpointer *name)
 {
   if (strcmp (script->pdb_name, *name) == 0)
-    {  
+    {
       /* store the script in the name pointer and stop the traversal */
       *name = script;
       return TRUE;
@@ -974,8 +974,8 @@ script_fu_find_script (const gchar *pdb_name)
 {
   gconstpointer script = pdb_name;
 
-  g_tree_foreach (script_list, 
-                  (GTraverseFunc) script_fu_lookup_script, 
+  g_tree_foreach (script_list,
+                  (GTraverseFunc) script_fu_lookup_script,
                   &script);
 
   if (script == pdb_name)
@@ -1051,7 +1051,7 @@ script_fu_free_script (SFScript *script)
 	      break;
 
 	    case SF_OPTION:
-	      g_slist_foreach (script->arg_defaults[i].sfa_option.list, 
+	      g_slist_foreach (script->arg_defaults[i].sfa_option.list,
 			       (GFunc)g_free, NULL);
 	      if (script->arg_defaults[i].sfa_option.list)
 		g_slist_free (script->arg_defaults[i].sfa_option.list);
@@ -1109,12 +1109,12 @@ script_fu_interface (SFScript *script)
 
   sf_interface = g_new0 (SFInterface, 1);
   sf_interface->args_widgets = g_new0 (GtkWidget *, script->num_args);
-  
+
   /* strip the first part of the menupath if it contains _("/Script-Fu/") */
   buf = strstr (gettext (script->description), _("/Script-Fu/"));
   if (buf)
     title = g_strdup (buf + strlen (_("/Script-Fu/")));
-  else 
+  else
     title = g_strdup (gettext (script->description));
 
   /* strip mnemonics from the menupath */
@@ -1138,7 +1138,7 @@ script_fu_interface (SFScript *script)
 			 GTK_STOCK_OK, script_fu_ok_callback,
 			 script, NULL, NULL, TRUE, FALSE,
 
-			 NULL);  
+			 NULL);
   g_free (buf);
 
   sf_interface->dialog = dlg;
@@ -1261,7 +1261,7 @@ script_fu_interface (SFScript *script)
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sf_interface->args_widgets[i]),
 				       script->arg_values[i].sfa_toggle);
 
-	  g_signal_connect (sf_interface->args_widgets[i], 
+	  g_signal_connect (sf_interface->args_widgets[i],
 			    "toggled",
 			    G_CALLBACK (gimp_toggle_button_update),
 			    &script->arg_values[i].sfa_toggle);
@@ -1284,11 +1284,11 @@ script_fu_interface (SFScript *script)
 	    case SF_SLIDER:
 	      script->arg_values[i].sfa_adjustment.adj = (GtkAdjustment *)
 		gimp_scale_entry_new (GTK_TABLE (table), 0, i,
-				      label_text, SLIDER_WIDTH, -1, 
+				      label_text, SLIDER_WIDTH, -1,
 				      script->arg_values[i].sfa_adjustment.value,
-				      script->arg_defaults[i].sfa_adjustment.lower, 
-				      script->arg_defaults[i].sfa_adjustment.upper, 
-				      script->arg_defaults[i].sfa_adjustment.step, 
+				      script->arg_defaults[i].sfa_adjustment.lower,
+				      script->arg_defaults[i].sfa_adjustment.upper,
+				      script->arg_defaults[i].sfa_adjustment.step,
 				      script->arg_defaults[i].sfa_adjustment.page,
 				      script->arg_defaults[i].sfa_adjustment.digits,
 				      TRUE, 0.0, 0.0,
@@ -1297,17 +1297,15 @@ script_fu_interface (SFScript *script)
 
 	    case SF_SPINNER:
 	      script->arg_values[i].sfa_adjustment.adj = (GtkAdjustment *)
-		gtk_adjustment_new (script->arg_values[i].sfa_adjustment.value, 
-				    script->arg_defaults[i].sfa_adjustment.lower, 
-				    script->arg_defaults[i].sfa_adjustment.upper, 
-				    script->arg_defaults[i].sfa_adjustment.step, 
+		gtk_adjustment_new (script->arg_values[i].sfa_adjustment.value,
+				    script->arg_defaults[i].sfa_adjustment.lower,
+				    script->arg_defaults[i].sfa_adjustment.upper,
+				    script->arg_defaults[i].sfa_adjustment.step,
 				    script->arg_defaults[i].sfa_adjustment.page, 0);
               sf_interface->args_widgets[i] =
                 gtk_spin_button_new (script->arg_values[i].sfa_adjustment.adj,
                                      0,
                                      script->arg_defaults[i].sfa_adjustment.digits);
-              gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]), TRUE);
-              gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]), TRUE);
 	      break;
 
 	    default: /* this shouldn't happen */
@@ -1330,8 +1328,8 @@ script_fu_interface (SFScript *script)
               gimp_file_selection_new (_("Script-Fu Folder Selection"),
                                        script->arg_values[i].sfa_file.filename,
                                        TRUE, TRUE);
-            
-	  script->arg_values[i].sfa_file.fileselection = 
+
+	  script->arg_values[i].sfa_file.fileselection =
 	    sf_interface->args_widgets[i];
 
 	  g_signal_connect (sf_interface->args_widgets[i],
@@ -1343,7 +1341,7 @@ script_fu_interface (SFScript *script)
 	case SF_FONT:
 	  widget_leftalign = FALSE;
 
-	  sf_interface->args_widgets[i] = 
+	  sf_interface->args_widgets[i] =
 	    gimp_font_select_widget_new (_("Script-Fu Font Selection"),
                                          script->arg_values[i].sfa_font,
                                          script_fu_font_preview,
@@ -1353,25 +1351,25 @@ script_fu_interface (SFScript *script)
 	case SF_PATTERN:
 	  sf_interface->args_widgets[i] =
 	    gimp_pattern_select_widget_new (_("Script-fu Pattern Selection"),
-                                            script->arg_values[i].sfa_pattern, 
+                                            script->arg_values[i].sfa_pattern,
                                             script_fu_pattern_preview,
                                             &script->arg_values[i].sfa_pattern);
 	  break;
 	case SF_GRADIENT:
 	  sf_interface->args_widgets[i] =
 	    gimp_gradient_select_widget_new (_("Script-Fu Gradient Selection"),
-                                             script->arg_values[i].sfa_gradient, 
+                                             script->arg_values[i].sfa_gradient,
                                              script_fu_gradient_preview,
                                              &script->arg_values[i].sfa_gradient);
 	  break;
 
 	case SF_BRUSH:
-	  sf_interface->args_widgets[i] = 
+	  sf_interface->args_widgets[i] =
 	    gimp_brush_select_widget_new (_("Script-Fu Brush Selection"),
-                                          script->arg_values[i].sfa_brush.name, 
-                                          script->arg_values[i].sfa_brush.opacity, 
-                                          script->arg_values[i].sfa_brush.spacing, 
-                                          script->arg_values[i].sfa_brush.paint_mode, 
+                                          script->arg_values[i].sfa_brush.name,
+                                          script->arg_values[i].sfa_brush.opacity,
+                                          script->arg_values[i].sfa_brush.spacing,
+                                          script->arg_values[i].sfa_brush.paint_mode,
                                           script_fu_brush_preview,
                                           &script->arg_values[i].sfa_brush);
 	  break;
@@ -1379,8 +1377,8 @@ script_fu_interface (SFScript *script)
 	case SF_OPTION:
 	  sf_interface->args_widgets[i] = gtk_option_menu_new ();
 	  menu = gtk_menu_new ();
-	  for (list = script->arg_defaults[i].sfa_option.list, j = 0; 
-	       list; 
+	  for (list = script->arg_defaults[i].sfa_option.list, j = 0;
+	       list;
 	       list = g_slist_next (list), j++)
 	    {
 	      menu_item = gtk_menu_item_new_with_label (gettext ((gchar *)list->data));
@@ -1392,10 +1390,10 @@ script_fu_interface (SFScript *script)
 
 	  gtk_option_menu_set_menu (GTK_OPTION_MENU (sf_interface->args_widgets[i]),
 				    menu);
-	  gtk_option_menu_set_history (GTK_OPTION_MENU (sf_interface->args_widgets[i]), 
+	  gtk_option_menu_set_history (GTK_OPTION_MENU (sf_interface->args_widgets[i]),
 							script->arg_values[i].sfa_option.history);
 	  break;
-	  
+
 	default:
 	  break;
 	}
@@ -1403,7 +1401,7 @@ script_fu_interface (SFScript *script)
       if (sf_interface->args_widgets[i])
 	gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
 				   label_text, 1.0, label_yalign,
-				   sf_interface->args_widgets[i], 2, 
+				   sf_interface->args_widgets[i], 2,
 				   widget_leftalign);
       g_free (label_text);
     }
@@ -1438,7 +1436,7 @@ script_fu_interface_quit (SFScript *script)
   gint i;
 
   g_return_if_fail (script != NULL);
-  g_return_if_fail (sf_interface != NULL);  
+  g_return_if_fail (sf_interface != NULL);
 
   g_free (sf_interface->title);
 
@@ -1453,15 +1451,15 @@ script_fu_interface_quit (SFScript *script)
 	break;
 
       case SF_PATTERN:
-  	gimp_pattern_select_widget_close (sf_interface->args_widgets[i]); 
+  	gimp_pattern_select_widget_close (sf_interface->args_widgets[i]);
 	break;
 
       case SF_GRADIENT:
-  	gimp_gradient_select_widget_close (sf_interface->args_widgets[i]); 
+  	gimp_gradient_select_widget_close (sf_interface->args_widgets[i]);
 	break;
 
       case SF_BRUSH:
-  	gimp_brush_select_widget_close (sf_interface->args_widgets[i]); 
+  	gimp_brush_select_widget_close (sf_interface->args_widgets[i]);
 	break;
 
       default:
@@ -1474,7 +1472,7 @@ script_fu_interface_quit (SFScript *script)
   g_free (sf_interface);
   sf_interface = NULL;
 
-  /*  
+  /*
    *  We do not call gtk_main_quit() earlier to reduce the possibility
    *  that script_fu_script_proc() is called from gimp_extension_process()
    *  while we are not finished with the current script. This sucks!
@@ -1528,7 +1526,7 @@ script_fu_font_preview (const gchar *name,
   *fname = g_strdup (name);
 }
 
-static void      
+static void
 script_fu_brush_preview (const gchar          *name,
 			 gdouble               opacity,
 			 gint                  spacing,
@@ -1566,7 +1564,7 @@ script_fu_ok_callback (GtkWidget *widget,
   gint       i;
 
   SFScript  *script = (SFScript *) data;
-  
+
   length = strlen (script->script_name) + 3;
 
   for (i = 0; i < script->num_args; i++)
@@ -1652,8 +1650,8 @@ script_fu_ok_callback (GtkWidget *widget,
 	  break;
 
  	case SF_COLOR:
-	  gimp_rgb_get_uchar (&script->arg_values[i].sfa_color, &r, &g, &b); 
-	  g_snprintf (buffer, sizeof (buffer), "'(%d %d %d)", 
+	  gimp_rgb_get_uchar (&script->arg_values[i].sfa_color, &r, &g, &b);
+	  g_snprintf (buffer, sizeof (buffer), "'(%d %d %d)",
 		      (gint) r, (gint) g, (gint) b);
 	  text = buffer;
 	  break;
@@ -1667,13 +1665,13 @@ script_fu_ok_callback (GtkWidget *widget,
 	case SF_VALUE:
 	  text = (gchar *) gtk_entry_get_text (GTK_ENTRY (sf_interface->args_widgets[i]));
 	  g_free (script->arg_values[i].sfa_value);
-	  script->arg_values[i].sfa_value = g_strdup (text); 
+	  script->arg_values[i].sfa_value = g_strdup (text);
 	  break;
 
 	case SF_STRING:
 	  text = (gchar *) gtk_entry_get_text (GTK_ENTRY (sf_interface->args_widgets[i]));
 	  g_free (script->arg_values[i].sfa_value);
-	  script->arg_values[i].sfa_value = g_strdup (text); 
+	  script->arg_values[i].sfa_value = g_strdup (text);
 	  escaped = g_strescape (text, NULL);
 	  g_snprintf (buffer, sizeof (buffer), "\"%s\"", escaped);
 	  g_free (escaped);
@@ -1685,11 +1683,11 @@ script_fu_ok_callback (GtkWidget *widget,
             {
             case SF_SLIDER:
               script->arg_values[i].sfa_adjustment.value =
-                script->arg_values[i].sfa_adjustment.adj->value;      
+                script->arg_values[i].sfa_adjustment.adj->value;
 	      break;
 
 	    case SF_SPINNER:
-	      script->arg_values[i].sfa_adjustment.value = 
+	      script->arg_values[i].sfa_adjustment.value =
 		gtk_spin_button_get_value (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]));
 	      break;
 
@@ -1702,7 +1700,7 @@ script_fu_ok_callback (GtkWidget *widget,
 
 	case SF_FILENAME:
 	case SF_DIRNAME:
-	  escaped = g_strescape (script->arg_values[i].sfa_file.filename, 
+	  escaped = g_strescape (script->arg_values[i].sfa_file.filename,
                                  NULL);
 	  g_snprintf (buffer, sizeof (buffer), "\"%s\"", escaped);
 	  g_free (escaped);
@@ -1744,9 +1742,9 @@ script_fu_ok_callback (GtkWidget *widget,
           break;
 
 	case SF_OPTION:
-	  menu_item = 
+	  menu_item =
 	    gtk_menu_get_active (GTK_MENU (gtk_option_menu_get_menu (GTK_OPTION_MENU (sf_interface->args_widgets[i]))));
-	  script->arg_values[i].sfa_option.history = 
+	  script->arg_values[i].sfa_option.history =
 	    GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (menu_item),
                                                  "gimp-item-data"));
 	  g_snprintf (buffer, sizeof (buffer), "%d",
@@ -1814,7 +1812,7 @@ script_fu_about_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
 			  TRUE, TRUE, 0);
       gtk_widget_show (frame);
-      
+
       vbox = gtk_vbox_new (FALSE, 0);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
@@ -1829,7 +1827,7 @@ script_fu_about_callback (GtkWidget *widget,
       gtk_misc_set_padding (GTK_MISC (label), 2, 2);
       gtk_container_add (GTK_CONTAINER (frame), label);
       gtk_widget_show (label);
- 
+
       /* the help display */
       scrolled_window = gtk_scrolled_window_new (NULL, NULL);
       gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -1850,7 +1848,7 @@ script_fu_about_callback (GtkWidget *widget,
       gtk_widget_show (text_view);
 
       gtk_text_buffer_set_text (text_buffer, script->help, -1);
-   
+
       /* author, copyright, etc. */
       table = gtk_table_new (2, 4, FALSE);
       gtk_container_set_border_width (GTK_CONTAINER (table), 4);
@@ -1865,13 +1863,13 @@ script_fu_about_callback (GtkWidget *widget,
 				 label, 1, FALSE);
 
       label = gtk_label_new (script->copyright);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5); 
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Copyright:"), 1.0, 0.5,
 				 label, 1, FALSE);
 
       label = gtk_label_new (script->date);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5); 
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 				 _("Date:"), 1.0, 0.5,
 				 label, 1, FALSE);
@@ -1879,7 +1877,7 @@ script_fu_about_callback (GtkWidget *widget,
       if (strlen (script->img_types) > 0)
 	{
 	  label = gtk_label_new (script->img_types);
-	  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5); 
+	  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 				     _("Image Types:"), 1.0, 0.5,
 				     label, 1, FALSE);
@@ -1908,7 +1906,7 @@ script_fu_reset_callback (GtkWidget *widget,
 
       case SF_COLOR:
 	script->arg_values[i].sfa_color = script->arg_defaults[i].sfa_color;
-	gimp_color_button_set_color (GIMP_COLOR_BUTTON (sf_interface->args_widgets[i]), 
+	gimp_color_button_set_color (GIMP_COLOR_BUTTON (sf_interface->args_widgets[i]),
 				     &script->arg_values[i].sfa_color);
 	break;
 
@@ -1922,15 +1920,15 @@ script_fu_reset_callback (GtkWidget *widget,
       case SF_STRING:
 	g_free (script->arg_values[i].sfa_value);
 	script->arg_values[i].sfa_value =
-	  g_strdup (script->arg_defaults[i].sfa_value); 
-	gtk_entry_set_text (GTK_ENTRY (sf_interface->args_widgets[i]), 
+	  g_strdup (script->arg_defaults[i].sfa_value);
+	gtk_entry_set_text (GTK_ENTRY (sf_interface->args_widgets[i]),
 			    script->arg_values[i].sfa_value);
 	break;
 
       case SF_ADJUSTMENT:
 	script->arg_values[i].sfa_adjustment.value =
 	  script->arg_defaults[i].sfa_adjustment.value;
-	gtk_adjustment_set_value (script->arg_values[i].sfa_adjustment.adj, 
+	gtk_adjustment_set_value (script->arg_values[i].sfa_adjustment.adj,
 				  script->arg_values[i].sfa_adjustment.value);
 	break;
 
@@ -1946,17 +1944,17 @@ script_fu_reset_callback (GtkWidget *widget,
 
       case SF_FONT:
   	gimp_font_select_widget_set (sf_interface->args_widgets[i],
-                                     script->arg_defaults[i].sfa_font);  
+                                     script->arg_defaults[i].sfa_font);
 	break;
 
       case SF_PATTERN:
   	gimp_pattern_select_widget_set (sf_interface->args_widgets[i],
-                                        script->arg_defaults[i].sfa_pattern);  
+                                        script->arg_defaults[i].sfa_pattern);
 	break;
 
       case SF_GRADIENT:
   	gimp_gradient_select_widget_set (sf_interface->args_widgets[i],
-                                         script->arg_defaults[i].sfa_gradient);  
+                                         script->arg_defaults[i].sfa_gradient);
 	break;
 
       case SF_BRUSH:
@@ -1968,9 +1966,9 @@ script_fu_reset_callback (GtkWidget *widget,
 	break;
 
       case SF_OPTION:
-	script->arg_values[i].sfa_option.history = 
+	script->arg_values[i].sfa_option.history =
 	  script->arg_defaults[i].sfa_option.history;
-	gtk_option_menu_set_history (GTK_OPTION_MENU (sf_interface->args_widgets[i]), 
+	gtk_option_menu_set_history (GTK_OPTION_MENU (sf_interface->args_widgets[i]),
 				     script->arg_values[i].sfa_option.history);
 
       default:
@@ -1996,13 +1994,13 @@ script_fu_file_selection_callback (GtkWidget *widget,
   if (file->filename)
     g_free (file->filename);
 
-  file->filename = 
+  file->filename =
     gimp_file_selection_get_filename (GIMP_FILE_SELECTION (file->fileselection));
 }
 
 static void
 script_fu_error_msg (const gchar *command)
 {
-  g_message (_("Script-Fu Error while executing\n %s\n%s"), 
+  g_message (_("Script-Fu Error while executing\n %s\n%s"),
 	     command, siod_err_msg);
 }

@@ -1,6 +1,12 @@
+2003-09-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_interface):
+	don't fiddle with the spin-buttons, the defaults are fine.
+	Removed trailing whitespace.
+
 2003-09-04  Manish Singh  <yosh@gimp.org>
 
-	* app/base/cpu-accel.c: null-terminate string for vendor comparisions.
+	* app/base/cpu-accel.c: null-terminate string for vendor comparisons.
 
 2003-09-04  Manish Singh  <yosh@gimp.org>
 
