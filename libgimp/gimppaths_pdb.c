@@ -448,15 +448,15 @@ gimp_get_path_by_tattoo (gint32 image_ID,
  * path. A path can be \"locked\" which means that the transformation
  * tool operations will also apply to the path.
  *
- * Returns: The lock status associated with the name path. 0 is returned if the path is not locked. 1 is returned if the path is locked.
+ * Returns: TRUE if the path is locked, FALSE otherwise.
  */
-gint
+gboolean
 gimp_path_get_locked (gint32       image_ID,
 		      const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gint lockstatus = 0;
+  gboolean locked = FALSE;
 
   return_vals = gimp_run_procedure ("gimp_path_get_locked",
 				    &nreturn_vals,
@@ -465,18 +465,18 @@ gimp_path_get_locked (gint32       image_ID,
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    lockstatus = return_vals[1].data.d_int32;
+    locked = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return lockstatus;
+  return locked;
 }
 
 /**
  * gimp_path_set_locked:
  * @image_ID: The image.
  * @name: the name of the path whose locked status should be set.
- * @lockstatus: The lock status associated with the name path. 0 if the path is not locked. 1 if the path is to be locked.
+ * @locked: Whether the path is locked.
  *
  * Set the locked status associated with the named path.
  *
@@ -489,7 +489,7 @@ gimp_path_get_locked (gint32       image_ID,
 gboolean
 gimp_path_set_locked (gint32       image_ID,
 		      const gchar *name,
-		      gint         lockstatus)
+		      gboolean     locked)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -499,7 +499,7 @@ gimp_path_set_locked (gint32       image_ID,
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, lockstatus,
+				    GIMP_PDB_INT32, locked,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -606,8 +606,8 @@ gimp_path_import (gint32       image_ID,
  * Import paths from an SVG string.
  *
  * This procedure works like gimp_path_import() but takes a string
- * rather than a filename. This allows you to write scripts that
- * generate SVG and feed it to GIMP.
+ * rather than reading the SVG from a file. This allows you to write
+ * scripts that generate SVG and feed it to GIMP.
  *
  * Returns: TRUE on success.
  *

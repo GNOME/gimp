@@ -1027,7 +1027,7 @@ path_get_locked_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpImage *gimage;
   gchar *name;
-  gint32 lockstatus = 0;
+  gboolean locked = FALSE;
   GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
@@ -1043,7 +1043,7 @@ path_get_locked_invoker (Gimp         *gimp,
       vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
-        lockstatus = gimp_item_get_linked (GIMP_ITEM (vectors));
+        locked = gimp_item_get_linked (GIMP_ITEM (vectors));
       else
         success = FALSE;
     }
@@ -1051,7 +1051,7 @@ path_get_locked_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&path_get_locked_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = lockstatus;
+    return_args[1].value.pdb_int = locked;
 
   return return_args;
 }
@@ -1074,8 +1074,8 @@ static ProcArg path_get_locked_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "lockstatus",
-    "The lock status associated with the name path. 0 is returned if the path is not locked. 1 is returned if the path is locked."
+    "locked",
+    "TRUE if the path is locked, FALSE otherwise"
   }
 };
 
@@ -1105,7 +1105,7 @@ path_set_locked_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpImage *gimage;
   gchar *name;
-  gint32 lockstatus = 0;
+  gboolean locked = FALSE;
   GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
@@ -1116,14 +1116,14 @@ path_set_locked_invoker (Gimp         *gimp,
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
-  lockstatus = args[2].value.pdb_int;
+  locked = args[2].value.pdb_int ? TRUE : FALSE;
 
   if (success)
     {
       vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
-        gimp_item_set_linked (GIMP_ITEM (vectors), lockstatus, TRUE);
+        gimp_item_set_linked (GIMP_ITEM (vectors), locked, TRUE);
       else
         success = FALSE;
     }
@@ -1145,8 +1145,8 @@ static ProcArg path_set_locked_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "lockstatus",
-    "The lock status associated with the name path. 0 if the path is not locked. 1 if the path is to be locked"
+    "locked",
+    "Whether the path is locked"
   }
 };
 
@@ -1416,7 +1416,7 @@ static ProcRecord path_import_string_proc =
 {
   "gimp_path_import_string",
   "Import paths from an SVG string.",
-  "This procedure works like gimp_path_import() but takes a string rather than a filename. This allows you to write scripts that generate SVG and feed it to GIMP.",
+  "This procedure works like gimp_path_import() but takes a string rather than reading the SVG from a file. This allows you to write scripts that generate SVG and feed it to GIMP.",
   "Sven Neumann",
   "Sven Neumann",
   "2005",

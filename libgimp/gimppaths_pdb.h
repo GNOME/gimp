@@ -58,11 +58,11 @@ gboolean gimp_path_set_tattoo        (gint32           image_ID,
 				      gint             tattovalue);
 gchar*   gimp_get_path_by_tattoo     (gint32           image_ID,
 				      gint             tattoo);
-gint     gimp_path_get_locked        (gint32           image_ID,
+gboolean gimp_path_get_locked        (gint32           image_ID,
 				      const gchar     *name);
 gboolean gimp_path_set_locked        (gint32           image_ID,
 				      const gchar     *name,
-				      gint             lockstatus);
+				      gboolean         locked);
 gboolean gimp_path_to_selection      (gint32           image_ID,
 				      const gchar     *name,
 				      GimpChannelOps   op,

@@ -2013,7 +2013,7 @@ static ProcRecord drawable_set_pixel_proc =
 {
   "gimp_drawable_set_pixel",
   "Sets the value of the pixel at the specified coordinates.",
-  "This procedure sets the pixel value at the specified coordinates. The 'num_channels' argument must always be equal to the bytes-per-pixel value for the spec ified drawable. Note that this function is not undoable, you should use it only on drawables you just created yourself.",
+  "This procedure sets the pixel value at the specified coordinates. The 'num_channels' argument must always be equal to the bytes-per-pixel value for the specified drawable. Note that this function is not undoable, you should use it only on drawables you just created yourself.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",

@@ -572,10 +572,8 @@ HELP
     );
 
     @outargs = (
-	{ name => 'lockstatus', type => 'int32',
-	  desc => 'The lock status associated with the name path. 0 is
-		   returned if the path is not locked. 1 is returned if the
-		   path is locked.', init => 1  }
+	{ name => 'locked', type => 'boolean',
+	  desc => 'TRUE if the path is locked, FALSE otherwise', init => 1 }
     );
 
     %invoke = (
@@ -585,7 +583,7 @@ HELP
   vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
-    lockstatus = gimp_item_get_linked (GIMP_ITEM (vectors));
+    locked = gimp_item_get_linked (GIMP_ITEM (vectors));
   else
     success = FALSE;
 }
@@ -608,10 +606,8 @@ HELP
 	&std_image_arg,
 	{ name => 'name', type => 'string',
 	  desc => 'the name of the path whose locked status should be set' },
-	{ name => 'lockstatus', type => 'int32',
-	  desc => 'The lock status associated with the name path. 0 if the
-		   path is not locked. 1 if the path is to be locked',
-	  init => 1 }
+	{ name => 'locked', type => 'boolean',
+	  desc => 'Whether the path is locked', init => 1 }
     );
 
     %invoke = (
@@ -621,7 +617,7 @@ HELP
   vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
-    gimp_item_set_linked (GIMP_ITEM (vectors), lockstatus, TRUE);
+    gimp_item_set_linked (GIMP_ITEM (vectors), locked, TRUE);
   else
     success = FALSE;
 }
