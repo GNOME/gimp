@@ -1,3 +1,15 @@
+2001-11-04  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/app.pl: include config.h from all generated files.
+	This is generally a good idea and fixes bug #58842.
+
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb: don't explicitely include 
+	config.h.
+
+	* app/*_cmds.c: regenerated.
+
 2001-11-02  Tor Lillqvist  <tml@iki.fi>
 
 	* README.win32: Updates.

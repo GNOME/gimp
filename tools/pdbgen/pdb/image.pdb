@@ -1429,7 +1429,7 @@ CODE
 }
 
 
-@headers = qw("config.h" <string.h> "gimage.h" 
+@headers = qw(<string.h> "gimage.h" 
 	      "libgimp/gimpmath.h" "libgimp/gimpintl.h" "libgimp/gimplimits.h");
 
 $extra{app}->{code} = <<'CODE';

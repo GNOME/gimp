@@ -722,6 +722,7 @@ GPL
 	my $cfile = "$destdir/${group}_cmds.c$FILE_EXT";
 	open CFILE, "> $cfile" or die "Can't open $cfile: $!\n";
 	print CFILE $gpl;
+	print CFILE qq/#include "config.h"\n\n/;
 	print CFILE qq/#include "procedural_db.h"\n\n/;
 	print CFILE $headers, "\n";
 	print CFILE $extra->{decls}, "\n" if exists $extra->{decls};
