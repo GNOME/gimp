@@ -143,7 +143,8 @@ gimp_histogram_calculate (GimpHistogram *histogram,
     for (j = 0; j < 256; j++)
       histogram->values[i][j] = 0.0;
 
-  pixel_regions_process_parallel ((p_func) gimp_histogram_calculate_sub_region,
+  pixel_regions_process_parallel ((PixelProcessorFunc)
+                                  gimp_histogram_calculate_sub_region,
                                   histogram, 2, region, mask);
 
 #ifdef ENABLE_MP

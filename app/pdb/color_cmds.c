@@ -132,8 +132,8 @@ brightness_contrast_invoker (Gimp         *gimp,
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
 
-              pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-                                              &srcPR, &destPR);
+              pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+                                              lut, 2, &srcPR, &destPR);
 
               gimp_lut_free (lut);
 
@@ -449,8 +449,8 @@ posterize_invoker (Gimp         *gimp,
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
 
-              pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-                                              &srcPR, &destPR);
+              pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+                                              lut, 2, &srcPR, &destPR);
 
               gimp_lut_free (lut);
 
@@ -737,8 +737,8 @@ curves_spline_invoker (Gimp         *gimp,
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
 
-              pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-                                              &srcPR, &destPR);
+              pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+                                              lut, 2, &srcPR, &destPR);
 
               gimp_lut_free (lut);
 
@@ -862,8 +862,8 @@ curves_explicit_invoker (Gimp         *gimp,
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
 
-              pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-                                              &srcPR, &destPR);
+              pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+                                              lut, 2, &srcPR, &destPR);
 
               gimp_lut_free (lut);
 
@@ -1500,8 +1500,8 @@ threshold_invoker (Gimp         *gimp,
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
 
-              pixel_regions_process_parallel ((p_func) threshold_2, &tr, 2,
-                                              &srcPR, &destPR);
+              pixel_regions_process_parallel ((PixelProcessorFunc) threshold_2,
+                                              &tr, 2, &srcPR, &destPR);
 
               gimp_drawable_merge_shadow (drawable, TRUE, _("Threshold"));
               gimp_drawable_update (drawable, x, y, width, height);

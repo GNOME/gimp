@@ -3655,7 +3655,8 @@ apply_mask_to_region (PixelRegion *src,
                       PixelRegion *mask,
                       guint        opacity)
 {
-  pixel_regions_process_parallel ((p_func)apply_mask_to_sub_region,
+  pixel_regions_process_parallel ((PixelProcessorFunc)
+                                  apply_mask_to_sub_region,
                                   &opacity, 2, src, mask);
 }
 
@@ -3713,10 +3714,12 @@ combine_mask_and_region (PixelRegion *src,
                          gboolean     stipple)
 {
   if (stipple)
-    pixel_regions_process_parallel ((p_func)combine_mask_and_sub_region_stipple,
+    pixel_regions_process_parallel ((PixelProcessorFunc)
+                                    combine_mask_and_sub_region_stipple,
                                     &opacity, 2, src, mask);
   else
-    pixel_regions_process_parallel ((p_func)combine_mask_and_sub_region_stroke,
+    pixel_regions_process_parallel ((PixelProcessorFunc)
+                                    combine_mask_and_sub_region_stroke,
                                     &opacity, 2, src, mask);
 }
 
@@ -3946,8 +3949,8 @@ initial_region (PixelRegion          *src,
   st.type    = type;
   st.data    = data;
 
-  pixel_regions_process_parallel ((p_func)initial_sub_region, &st, 3,
-                                    src, dest, mask);
+  pixel_regions_process_parallel ((PixelProcessorFunc) initial_sub_region,
+                                  &st, 3, src, dest, mask);
 }
 
 struct combine_regions_struct
@@ -4423,8 +4426,8 @@ combine_regions (PixelRegion          *src1,
 
   /* Start the actual processing.
    */
-  pixel_regions_process_parallel ((p_func)combine_sub_region, &st, 4,
-                                    src1, src2, dest, mask);
+  pixel_regions_process_parallel ((PixelProcessorFunc) combine_sub_region,
+                                  &st, 4, src1, src2, dest, mask);
 }
 
 void

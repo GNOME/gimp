@@ -53,8 +53,8 @@ gimp_drawable_invert (GimpDrawable *drawable)
   pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
 		     x, y, width, height, TRUE);
 
-  pixel_regions_process_parallel ((p_func)gimp_lut_process, lut,
-				  2, &srcPR, &destPR);
+  pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+                                  lut, 2, &srcPR, &destPR);
 
   gimp_lut_free (lut);
 

@@ -1,5 +1,21 @@
 2005-02-11  Sven Neumann  <sven@gimp.org>
 
+	* app/base/pixel-processor.[ch]: code cleanup. Removed unsued code,
+	renamed variables and types.
+
+	* app/base/gimphistogram.c
+	* app/core/gimpchannel-combine.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-equalize.c
+	* app/core/gimpdrawable-invert.c
+	* app/core/gimpdrawable-levels.c
+	* app/paint-funcs/paint-funcs.c
+	* tools/pdbgen/pdb/color.pdb: changed accordingly.
+
+	* app/pdb/color_cmds.c: regenerated.
+
+2005-02-11  Sven Neumann  <sven@gimp.org>
+
 	* app/base/pixel-processor.c: include <string.h>.
 
 2005-02-11  Sven Neumann  <sven@gimp.org>

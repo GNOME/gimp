@@ -1176,7 +1176,7 @@ gimp_channel_real_sharpen (GimpChannel *channel,
                      TRUE);
   lut = threshold_lut_new (0.5, 1);
 
-  pixel_regions_process_parallel ((p_func) gimp_lut_process_inline,
+  pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process_inline,
                                   lut, 1, &maskPR);
   gimp_lut_free (lut);
 
@@ -1297,8 +1297,9 @@ gimp_channel_real_invert (GimpChannel *channel,
 
       lut = invert_lut_new (1);
 
-      pixel_regions_process_parallel ((p_func) gimp_lut_process_inline, lut,
-                                      1, &maskPR);
+      pixel_regions_process_parallel ((PixelProcessorFunc)
+                                      gimp_lut_process_inline,
+                                      lut, 1, &maskPR);
 
       gimp_lut_free (lut);
 

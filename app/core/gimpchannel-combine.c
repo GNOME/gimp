@@ -514,19 +514,19 @@ gimp_channel_combine_mask (GimpChannel    *mask,
     {
     case GIMP_CHANNEL_OP_ADD:
     case GIMP_CHANNEL_OP_REPLACE:
-      pixel_regions_process_parallel ((p_func)
+      pixel_regions_process_parallel ((PixelProcessorFunc)
 				      gimp_channel_combine_sub_region_add,
 				      NULL, 2, &srcPR, &destPR);
       break;
 
     case GIMP_CHANNEL_OP_SUBTRACT:
-      pixel_regions_process_parallel ((p_func)
+      pixel_regions_process_parallel ((PixelProcessorFunc)
 				      gimp_channel_combine_sub_region_sub,
 				      NULL, 2, &srcPR, &destPR);
       break;
 
     case GIMP_CHANNEL_OP_INTERSECT:
-      pixel_regions_process_parallel ((p_func)
+      pixel_regions_process_parallel ((PixelProcessorFunc)
 				      gimp_channel_combine_sub_region_intersect,
 				      NULL, 2, &srcPR, &destPR);
       break;
