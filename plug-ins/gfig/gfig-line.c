@@ -73,7 +73,7 @@ d_draw_line (GfigObject *obj)
       spnt = epnt;
       epnt = epnt->next;
     }
-  draw_sqr (&spnt->pnt, obj = gfig_context->selected_obj);
+  draw_sqr (&spnt->pnt, obj == gfig_context->selected_obj);
 }
 
 void

@@ -1,3 +1,8 @@
+2004-11-22  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-line.c: fixed a stupid bug which made all lines
+	half-selected.
+
 2004-11-22  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/file-open-location-dialog.c: changed border-size of
