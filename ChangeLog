@@ -1,5 +1,11 @@
 2002-08-27  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/menus.c
+	* app/gui/select-commands.[ch]: added a menu entry that toggles
+	the QuickMask state and bound Shift-Q to it (bug #86580).
+
+2002-08-27  Sven Neumann  <sven@gimp.org>
+
 	* autogen.sh: call 'libtoolize --version' instead of libtool.
 
 2002-08-26  Sven Neumann  <sven@gimp.org>

@@ -489,6 +489,11 @@ static GimpItemFactoryEntry image_entries[] =
 
   SEPARATOR ("/Select/---"),
 
+  { { N_("/Select/Toggle QuickMask"), "<shift>Q",
+      select_toggle_quickmask_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_QMASK_ON },
+    NULL,
+    "select/quickmask.html", NULL },
   { { N_("/Select/Save to Channel"), NULL,
       select_save_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_TO_CHANNEL },

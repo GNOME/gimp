@@ -29,6 +29,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-qmask.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -240,6 +241,17 @@ select_save_cmd_callback (GtkWidget *widget,
   return_if_no_image (gimage, data);
 
   gimp_image_mask_save (gimage);
+  gimp_image_flush (gimage);
+}
+
+void
+select_toggle_quickmask_cmd_callback (GtkWidget *widget,
+                                      gpointer   data)
+{
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
+
+  gimp_image_set_qmask_state (gimage, !gimp_image_get_qmask_state (gimage));
   gimp_image_flush (gimage);
 }
 
