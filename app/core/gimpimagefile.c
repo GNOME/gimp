@@ -519,24 +519,23 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
   thumb_size = MIN (thumb_size, MAX (gimage->width, gimage->height));
   thumb_name = gimp_imagefile_png_thumb_path (uri, &thumb_size);
 
-  /*  the thumbnail directory doesn't exist and couldn't be created */
-  if (! thumb_name)
-    return FALSE;
-
-  if (gimp_imagefile_test (filename, &image_mtime, &image_size))
+  /*  the thumbnail directory exists or could be created */
+  if (thumb_name)
     {
-      success = gimp_imagefile_save_png_thumb (imagefile,
-                                               gimage,
-                                               thumb_name,
-                                               thumb_size,
-                                               image_mtime,
-                                               image_size);
+      if (gimp_imagefile_test (filename, &image_mtime, &image_size))
+        {
+          success = gimp_imagefile_save_png_thumb (imagefile,
+                                                   gimage,
+                                                   thumb_name,
+                                                   thumb_size,
+                                                   image_mtime,
+                                                   image_size);
+        }
+
+      g_free (thumb_name);
     }
 
-  g_free (thumb_name);
-
-  if (success)
-    gimp_imagefile_update (imagefile, thumb_size);
+  g_free (filename);
 
   return success;
 }
@@ -849,7 +848,6 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
     {
       g_message (_("Failed to open thumbnail file '%s': %s"),
                  thumbname, error->message);
-
       goto cleanup;
     }
 
@@ -869,11 +867,12 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
     goto cleanup;
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_SIZE);
-  if (!option || sscanf (option, "%" G_GINT64_FORMAT, &thumb_image_size) != 1)
+  if (option && sscanf (option, "%" G_GINT64_FORMAT, &thumb_image_size) != 1)
     goto cleanup;
 
+  /* TAG_THUMB_SIZE is optional but must match if present */
   if (thumb_image_mtime == imagefile->image_mtime &&
-      thumb_image_size  == (gint64) imagefile->image_size)
+      (option == NULL || thumb_image_size == (gint64) imagefile->image_size))
     {
       if (thumb_size == THUMB_SIZE_FAIL)
         imagefile->state = GIMP_IMAGEFILE_STATE_THUMBNAIL_FAILED;

@@ -4,12 +4,6 @@
 	real bug: "tEXt::Thumb::Size" is optional, so don't fail if it's
 	not present. Plugged some memleaks.
 
-2003-04-01  Michael Natterer  <mitch@gimp.org>
-
-	* app/widgets/gimpnavigationpreview.c
-	(gimp_navigation_preview_draw_marker): the marker rectangle was
-	still not drawn correctly after my last change.
-
 2003-04-01  Nathan Summers  <rock@gimp.org>
 
 	* app/photoshop/*: committed full source to Adobe Photoshop for IRIX.
