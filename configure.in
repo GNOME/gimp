@@ -64,14 +64,6 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_CPP
 
-dnl NeXTStep cc seems to need this
-AC_MSG_CHECKING([whether C compiler needs -posix])
-AC_TRY_COMPILE([#include <dirent.h>], [DIR *dir;], posix=no, posix=yes)
-AC_MSG_RESULT($posix)
-if test "$posix" = yes; then
-  CFLAGS="$CFLAGS -posix"
-fi
-
 AC_GIMP_CHECK
 
 if eval "test x$GCC = xyes"; then
@@ -95,6 +87,35 @@ if eval "test x$GCC = xyes"; then
     fi
   fi
 fi
+
+dnl DU4 native cc currently needs -std1 for ANSI mode (instead of K&R)
+AC_MSG_CHECKING([for extra flags to get ANSI library prototypes])
+gimp_save_LIBS=$LIBS
+LIBS="$LIBS -lm"
+AC_TRY_RUN([#include <math.h>
+             int main (void) { return (log(1) != log(1.)); }],
+  AC_MSG_RESULT(none needed),
+  gimp_save_CFLAGS=$CFLAGS
+  CFLAGS="$CFLAGS -std1"
+  AC_TRY_RUN([#include <math.h>
+               int main (void) { return (log(1) != log(1.)); }],
+    AC_MSG_RESULT(-std1),
+    AC_MSG_RESULT()
+    CFLAGS=$gimp_save_CFLAGS
+    AC_MSG_WARN([No ANSI prototypes found in library. (-std1 didn't work.)])))
+LIBS=$gimp_save_LIBS
+
+dnl NeXTStep cc seems to need this
+AC_MSG_CHECKING([for extra flags for POSIX compliance])
+AC_TRY_COMPILE([#include <dirent.h>], [DIR *dir;],
+  AC_MSG_RESULT(none needed),
+  gimp_save_CFLAGS=$CFLAGS
+  CFLAGS="$CFLAGS -posix"
+  AC_TRY_COMPILE([#include <dirent.h>], [DIR *dir;],
+    AC_MSG_RESULT(-posix),
+    AC_MSG_RESULT()
+    CFLAGS=$gimp_save_CFLAGS
+    AC_MSG_ERROR([Could not determine POSIX flag. (-posix didn't work.)])))
 
 gimp_save_CPPFLAGS="$CPPFLAGS"
 gimp_save_LDFLAGS="$LDFLAGS"
