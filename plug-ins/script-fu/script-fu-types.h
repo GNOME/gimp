@@ -78,7 +78,7 @@ typedef struct
 {
   gchar         *script_name;
   gchar         *pdb_name;
-  gchar         *description;
+  gchar         *menu_path;
   gchar         *help;
   gchar         *author;
   gchar         *copyright;

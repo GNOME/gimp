@@ -160,9 +160,9 @@ script_fu_add_script (LISP a)
     if (*s == '-')
       *s = '_';
 
-  /*  Find the script description  */
+  /*  Find the script menu_path  */
   val = get_c_string (car (a));
-  script->description = g_strdup (val);
+  script->menu_path = g_strdup (val);
   a = cdr (a);
 
   /*  Find the script help  */
@@ -539,7 +539,7 @@ script_fu_add_script (LISP a)
     }
 
   script->args = args;
-  g_tree_insert (script_list, gettext (script->description), script);
+  g_tree_insert (script_list, gettext (script->menu_path), script);
 
   return NIL;
 }
@@ -592,12 +592,12 @@ script_fu_install_script (gpointer  foo,
   gchar *menu_path = NULL;
 
   /* Allow scripts with no menus */
-  if (strncmp (script->description, "<None>", 6) != 0)
-    menu_path = script->description;
+  if (strncmp (script->menu_path, "<None>", 6) != 0)
+    menu_path = script->menu_path;
 
   gimp_install_temp_proc (script->pdb_name,
-                          script->description,
                           script->help,
+                          "",
                           script->author,
                           script->copyright,
                           script->date,
@@ -657,7 +657,7 @@ script_fu_script_proc (const gchar      *name,
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Determine whether the script is image based (runs on an image) */
-	  if (strncmp (script->description, "<Image>", 7) == 0)
+	  if (strncmp (script->menu_path, "<Image>", 7) == 0)
 	    {
 	      script->arg_values[0].sfa_image    = params[1].data.d_image;
 	      script->arg_values[1].sfa_drawable = params[2].data.d_drawable;
@@ -830,7 +830,7 @@ script_fu_free_script (SFScript *script)
   if (script)
     {
       g_free (script->script_name);
-      g_free (script->description);
+      g_free (script->menu_path);
       g_free (script->help);
       g_free (script->author);
       g_free (script->copyright);

@@ -187,11 +187,11 @@ script_fu_interface (SFScript *script)
   sf_interface->args_widgets = g_new0 (GtkWidget *, script->num_args);
 
   /* strip the first part of the menupath if it contains _("/Script-Fu/") */
-  buf = strstr (gettext (script->description), _("/Script-Fu/"));
+  buf = strstr (gettext (script->menu_path), _("/Script-Fu/"));
   if (buf)
     title = g_strdup (buf + strlen (_("/Script-Fu/")));
   else
-    title = g_strdup (gettext (script->description));
+    title = g_strdup (gettext (script->menu_path));
 
   /* strip mnemonics from the menupath */
   sf_interface->title = gimp_strip_uline (title);

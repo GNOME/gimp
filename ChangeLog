@@ -1,5 +1,19 @@
 2004-09-30  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu-types.h (struct SFScript): renamed
+	member "decription" to "menu_path".
+
+	* plug-ins/script-fu/script-fu-interface.c: changed accordingly.
+
+	* plug-ins/script-fu/script-fu-scripts.c: ditto. Don't pass the
+	menu_path as "blurb" to gimp_install_temp_proc(). Instead,
+	pass "help" as "blurb" and nothing as "help".
+
+	* plug-ins/script-fu/scripts/test-sphere.scm: shortened overly
+	long and useless help text.
+
+2004-09-30  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/dbbrowser/gimpprocbox.c: don't include
 	"libgimp/stdplugins-intl.h".
 
