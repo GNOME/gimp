@@ -3070,7 +3070,7 @@ initial_area  (
   if ( (type == INITIAL_INTENSITY && mode == DISSOLVE_MODE) ||
        (type == INITIAL_INTENSITY_ALPHA && mode == DISSOLVE_MODE) ) 
   {	 
-    Tag buf_tag = tag_new (tag_format (src_tag), prec, ALPHA_YES);
+    Tag buf_tag = tag_new (prec, tag_format (src_tag), ALPHA_YES);
     
     if ( tag_alpha(src_tag) == ALPHA_YES )
       buf_size = src_width * src_bytes;
@@ -3182,7 +3182,7 @@ combine_areas  (
   
   /*put in tags check*/
   
-  Tag buf_tag = tag_new (tag_format (src1_tag), prec, ALPHA_YES);
+  Tag buf_tag = tag_new (prec, tag_format (src1_tag), ALPHA_YES);
   
   if ( tag_alpha(src1_tag) == ALPHA_YES )
     buf_size = src1_width * src1_bytes;
