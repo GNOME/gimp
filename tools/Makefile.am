@@ -35,4 +35,6 @@ INCLUDES = @STRIP_BEGIN@ \
 	-I$(includedir)	\
 @STRIP_END@
 
-EXTRA_DIST = gimppath2svg.py
+EXTRA_DIST = \
+	gimppath2svg.py	\
+	rmshm

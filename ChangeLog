@@ -1,5 +1,13 @@
 2001-11-14  Michael Natterer  <mitch@gimp.org>
 
+	* data/misc/Makefile.am
+	* data/misc/rmshm: removed here again...
+
+	* tools/Makefile.am
+	* tools/rmshm: ...and added here.
+
+2001-11-14  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: new directories etc/, data/images/ and data/misc/.
 
 	* Makefile.am

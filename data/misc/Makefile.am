@@ -7,5 +7,4 @@ miscdata_SCRIPTS = \
 
 EXTRA_DIST =
 	$(miscdata_SCRIPTS)	\
-	user_install.bat	\
-	rmshm
+	user_install.bat
