@@ -133,9 +133,15 @@ main (int    argc,
 
   /* Initialize i18n support */
   INIT_LOCALE ("gimp");
+#if defined (HAVE_BIND_TEXTDOMAIN_CODESET) && defined (GDK_WINDOWING_WIN32)
+  bind_textdomain_codeset ("gimp", "UTF-8");
+#endif
 
 #ifdef ENABLE_NLS
   bindtextdomain ("gimp-libgimp", LOCALEDIR);
+#if defined (HAVE_BIND_TEXTDOMAIN_CODESET) && defined (GDK_WINDOWING_WIN32)
+  bind_textdomain_codeset ("gimp-libgimp", "UTF-8");
+#endif
 #endif
 
   gtk_init (&argc, &argv);

@@ -10,6 +10,15 @@
 	#undefs from a current configure-generated config.h for
 	completeness' sake.
 
+	* app/main.c (main)
+	* app/plug_in.c (plug_in_make_menu): If on Win32, call
+	bind_textdomain_codeset() to get messages from gettext in UTF-8,
+	which is what the GTK+ 1.3.0 used on Win32 wants.
+
+	* app/plug_in.c (plug_in_close): Move a variable inside #ifndef
+	G_OS_WIN32.
+	(xspawnv): Remove a couple of leftover unused variables.
+
 2002-10-16  Tor Lillqvist  <tml@iki.fi>
 
 	* gimptool-win32.c.in (find_out_env_flags): Fixes for

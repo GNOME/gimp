@@ -930,10 +930,7 @@ xspawnv (gint                mode,
 	 const gchar *const *argv)
 {
   gchar sExecutable[_MAX_PATH*2];
-  gchar** sArgsList;
   gchar sCmndLine[1024];
-  gchar* sPath;
-  HINSTANCE hInst;
   gint i;
   gint pid;
 
@@ -1088,8 +1085,8 @@ void
 plug_in_close (PlugIn   *plug_in,
 	       gboolean  kill_it)
 {
-  gint status;
 #ifndef G_OS_WIN32
+  gint status;
   struct timeval tv;
 #endif
 
@@ -2519,6 +2516,9 @@ plug_in_make_menu (void)
 
 #ifdef ENABLE_NLS
   bindtextdomain (std_plugins_domain, LOCALEDIR);
+#if defined (HAVE_BIND_TEXTDOMAIN_CODESET) && defined (GDK_WINDOWING_WIN32)
+  bind_textdomain_codeset (std_plugins_domain, "UTF-8");
+#endif
   domains = g_slist_append (domains, std_plugins_domain);
 #endif
 
@@ -2560,6 +2560,9 @@ plug_in_make_menu (void)
 		  bindtextdomain (domain, plug_in_def->locale_path);
 		else
 		  bindtextdomain (domain, LOCALEDIR);
+#if defined (HAVE_BIND_TEXTDOMAIN_CODESET) && defined (GDK_WINDOWING_WIN32)
+		bind_textdomain_codeset (domain, "UTF-8");
+#endif
 	      }
 	  }
       }
