@@ -1,3 +1,8 @@
+2002-11-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcursor.c: removed commented out and unused
+	cruft, cleanup.
+
 2002-11-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptoolbox.c (gimp_toolbox_new): add a file dnd
