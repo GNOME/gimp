@@ -172,6 +172,8 @@ gimp_threads_leave
 gimp_set_busy
 gimp_set_busy_until_idle
 gimp_unset_busy
+gimp_new_progress
+gimp_free_progress
 gimp_message
 gimp_help
 gimp_get_display_by_ID
@@ -182,10 +184,6 @@ gimp_reconnect_displays
 gimp_menus_init
 gimp_menus_create_entry
 gimp_menus_delete_entry
-gimp_start_progress
-gimp_restart_progress
-gimp_update_progress
-gimp_end_progress
 gimp_pdb_dialog_new
 gimp_pdb_dialog_set
 gimp_pdb_dialog_close
@@ -1268,6 +1266,26 @@ GIMP_PATTERN_GET_CLASS
 GPATTERN_FILE_VERSION
 GPATTERN_MAGIC
 PatternHeader
+</SECTION>
+
+<SECTION>
+<FILE>gimpprogress</FILE>
+<TITLE>GimpProgress</TITLE>
+GimpProgress
+gimp_progress_start
+gimp_progress_end
+gimp_progress_set_text
+gimp_progress_set_value
+gimp_progress_get_value
+gimp_progress_cancel
+gimp_progress_update_and_flush
+<SUBSECTION Standard>
+GimpProgressInterface
+GIMP_PROGRESS
+GIMP_IS_PROGRESS
+GIMP_TYPE_PROGRESS
+gimp_progress_interface_get_type
+GIMP_PROGRESS_GET_INTERFACE
 </SECTION>
 
 <SECTION>
@@ -3327,7 +3345,7 @@ TransInfo[TRAN_INFO_SIZE]
 <TITLE>GimpTransformTool</TITLE>
 GimpTransformTool
 GimpTransformToolClass
-gimp_transform_tool_transform_bounding_box
+gimp_transform_tool_recalc
 gimp_transform_tool_expose_preview
 <SUBSECTION Standard>
 GIMP_TRANSFORM_TOOL
@@ -4490,6 +4508,7 @@ gimp_file_dialog_new
 gimp_file_dialog_set_file_proc
 gimp_file_dialog_set_uri
 gimp_file_dialog_set_image
+gimp_file_dialog_set_sensitive
 <SUBSECTION Standard>
 GimpFileDialogClass
 GIMP_FILE_DIALOG
@@ -5076,6 +5095,38 @@ gimp_preview_renderer_vectors_get_type
 GIMP_PREVIEW_RENDERER_VECTORS_CLASS
 GIMP_IS_PREVIEW_RENDERER_VECTORS_CLASS
 GIMP_PREVIEW_RENDERER_VECTORS_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpprogressbox</FILE>
+<TITLE>GimpProgressBox</TITLE>
+GimpProgressBox
+gimp_progress_box_new
+<SUBSECTION Standard>
+GimpProgressBoxClass
+GIMP_PROGRESS_BOX
+GIMP_IS_PROGRESS_BOX
+GIMP_TYPE_PROGRESS_BOX
+gimp_progress_box_get_type
+GIMP_PROGRESS_BOX_CLASS
+GIMP_IS_PROGRESS_BOX_CLASS
+GIMP_PROGRESS_BOX_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpprogressdialog</FILE>
+<TITLE>GimpProgressDialog</TITLE>
+GimpProgressDialog
+gimp_progress_dialog_new
+<SUBSECTION Standard>
+GimpProgressDialogClass
+GIMP_PROGRESS_DIALOG
+GIMP_IS_PROGRESS_DIALOG
+GIMP_TYPE_PROGRESS_DIALOG
+gimp_progress_dialog_get_type
+GIMP_PROGRESS_DIALOG_CLASS
+GIMP_IS_PROGRESS_DIALOG_CLASS
+GIMP_PROGRESS_DIALOG_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -6598,9 +6649,6 @@ gimp_canvas_padding_mode_get_type
 <TITLE>GimpProgress</TITLE>
 GimpProgress
 gimp_progress_start
-gimp_progress_restart
-gimp_progress_update
-gimp_progress_step
 gimp_progress_end
 gimp_progress_update_and_flush
 </SECTION>
@@ -7093,6 +7141,7 @@ plug_in_proc_def_get_label
 plug_in_proc_def_get_stock_id
 plug_in_proc_def_get_pixbuf
 plug_in_proc_def_get_help_id
+plug_in_proc_def_get_sensitive
 </SECTION>
 
 <SECTION>
@@ -7466,6 +7515,7 @@ gimp_get_screen_resolution
 gimp_rgb_get_gdk_color
 gimp_rgb_set_gdk_color
 gimp_window_set_hint
+gimp_dialog_set_sensitive
 </SECTION>
 
 <SECTION>

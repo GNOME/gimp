@@ -272,6 +272,7 @@
     <chapter id="app-core-interfaces">
       <title>Interfaces</title>
       <xi:include href="xml/gimppickable.xml" />
+      <xi:include href="xml/gimpprogress.xml" />
     </chapter>
 
     <chapter id="app-core-misc-utils">
@@ -484,7 +485,6 @@
       <title>Misc. Widgets &amp; Utilities</title>
       <xi:include href="xml/gimpnavigationview.xml" />
       <xi:include href="xml/gimpstatusbar.xml" />
-      <xi:include href="xml/gimpprogress.xml" />
     </chapter>
   </part>
 
@@ -721,6 +721,7 @@
     <chapter id="app-widgets-misc-dialogs">
       <title>Misc. Dialogs</title>
       <xi:include href="xml/gimpfiledialog.xml" />
+      <xi:include href="xml/gimpprogressdialog.xml" />
       <xi:include href="xml/gimptexteditor.xml" />
       <xi:include href="xml/gimptooldialog.xml" />
       <xi:include href="xml/gimpviewabledialog.xml" />
@@ -751,6 +752,7 @@
       <xi:include href="xml/gimpgrideditor.xml" />
       <xi:include href="xml/gimphistogrambox.xml" />
       <xi:include href="xml/gimphistogramview.xml" />
+      <xi:include href="xml/gimpprogressbox.xml" />
       <xi:include href="xml/gimpstrokeeditor.xml" />
       <xi:include href="xml/gimptemplateeditor.xml" />
       <xi:include href="xml/gimpthumbbox.xml" />
