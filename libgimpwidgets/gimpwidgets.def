@@ -26,11 +26,11 @@ EXPORTS
 	gimp_color_display_configure_reset
 	gimp_color_display_convert
 	gimp_color_display_get_enabled
-	gimp_color_display_set_enabled
 	gimp_color_display_get_type
 	gimp_color_display_load_state
 	gimp_color_display_new
 	gimp_color_display_save_state
+	gimp_color_display_set_enabled
 	gimp_color_display_stack_add
 	gimp_color_display_stack_changed
 	gimp_color_display_stack_clone
@@ -73,10 +73,10 @@ EXPORTS
 	gimp_dialog_new
 	gimp_dialog_run
 	gimp_double_adjustment_update
-	gimp_file_selection_get_filename
-	gimp_file_selection_get_type
-	gimp_file_selection_new
-	gimp_file_selection_set_filename
+	gimp_file_entry_get_filename
+	gimp_file_entry_get_type
+	gimp_file_entry_new
+	gimp_file_entry_set_filename
 	gimp_float_adjustment_update
 	gimp_help_connect
 	gimp_help_disable_tooltips

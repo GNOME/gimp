@@ -1,5 +1,10 @@
 2003-11-23  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.def: symbols changes by a patch from
+	Michael Schumacher.
+
+2003-11-23  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpdatafiles.[ch]
 	* libgimpbase/gimpenv.[ch]
 	* libgimpbase/gimputils.c
