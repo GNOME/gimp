@@ -224,24 +224,6 @@ gimp_list_foreach (const GimpContainer *container,
   g_list_foreach (list->list, func, user_data);
 }
 
-GimpContainer *
-gimp_list_new (GType                children_type,
-	       GimpContainerPolicy  policy)
-{
-  GimpList *list;
-
-  g_return_val_if_fail (g_type_is_a (children_type, GIMP_TYPE_OBJECT), NULL);
-  g_return_val_if_fail (policy == GIMP_CONTAINER_POLICY_STRONG ||
-                        policy == GIMP_CONTAINER_POLICY_WEAK, NULL);
-
-  list = g_object_new (GIMP_TYPE_LIST,
-                       "children_type", children_type,
-                       "policy",        policy,
-                       NULL);
-
-  return GIMP_CONTAINER (list);
-}
-
 static GimpObject *
 gimp_list_get_child_by_name (const GimpContainer *container,
 			     const gchar         *name)
@@ -289,4 +271,37 @@ gimp_list_get_child_index (const GimpContainer *container,
   list = GIMP_LIST (container);
 
   return g_list_index (list->list, (gpointer) object);
+}
+
+GimpContainer *
+gimp_list_new (GType                children_type,
+	       GimpContainerPolicy  policy)
+{
+  GimpList *list;
+
+  g_return_val_if_fail (g_type_is_a (children_type, GIMP_TYPE_OBJECT), NULL);
+  g_return_val_if_fail (policy == GIMP_CONTAINER_POLICY_STRONG ||
+                        policy == GIMP_CONTAINER_POLICY_WEAK, NULL);
+
+  list = g_object_new (GIMP_TYPE_LIST,
+                       "children_type", children_type,
+                       "policy",        policy,
+                       NULL);
+
+  return GIMP_CONTAINER (list);
+}
+
+void
+gimp_list_reverse (GimpList *list)
+{
+  g_return_if_fail (GIMP_IS_LIST (list));
+
+  if (GIMP_CONTAINER (list)->num_children > 1)
+    {
+      gimp_container_freeze (GIMP_CONTAINER (list));
+
+      list->list = g_list_reverse (list->list);
+
+      gimp_container_thaw (GIMP_CONTAINER (list));
+    }
 }

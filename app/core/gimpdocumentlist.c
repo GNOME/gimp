@@ -187,6 +187,8 @@ gimp_document_list_deserialize (GObject  *document_list,
         }
     }
 
+  gimp_list_reverse (GIMP_LIST (document_list));
+
   return gimp_config_deserialize_return (scanner, token,
                                          nest_level, document_symbol);
 }

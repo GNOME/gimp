@@ -143,8 +143,7 @@ gimp_devices_restore (Gimp *gimp)
 
   g_free (filename);
 
-  GIMP_LIST (manager->device_info_list)->list =
-    g_list_reverse (GIMP_LIST (manager->device_info_list)->list);
+  gimp_list_reverse (GIMP_LIST (manager->device_info_list));
 
   device_info = gimp_device_info_get_by_device (manager->current_device);
 
