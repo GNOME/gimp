@@ -21,8 +21,8 @@
 
 #ifdef __EMX__
 
-#include <libgimp/color_display.h>
-#include <libgimp/color_selector.h>
+#include <libgimp/gimpcolordisplay.h>
+#include <libgimp/gimpcolorselector.h>
 
 struct main_funcs_struc {
   gchar *name;

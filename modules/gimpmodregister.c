@@ -22,9 +22,6 @@
 #include <stdio.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
-
-#include <libgimp/color_selector.h>
-#include <libgimp/color_display.h>
 #include <libgimp/gimpmodule.h>
 #include <math.h>
 #include "gimpmodregister.h"
