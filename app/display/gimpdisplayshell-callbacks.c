@@ -309,11 +309,11 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
   gdisp = shell->gdisp;
 
-  active_tool = tool_manager_get_active (gdisp->gimage->gimp);
-
   /*  Find out what device the event occurred upon  */
   if (! gdisp->gimage->gimp->busy && devices_check_change (event))
     gimp_display_shell_check_device_cursor (shell);
+
+  active_tool = tool_manager_get_active (gdisp->gimage->gimp);
 
   gimp_display_shell_get_coords (shell, event, current_device, &display_coords);
   gimp_display_shell_get_state (shell, event, current_device, &state);

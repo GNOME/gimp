@@ -1,5 +1,10 @@
 2001-11-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c: get the active_tool
+	_after_ maybe changing it by calling devices_check_change().
+
+2001-11-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/menus.c: the toolbox menu's last_used_documents menu
 	contained one entry too few if the number of documents was smaller
 	or equal than gimprc.last_opened_size.
