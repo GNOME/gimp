@@ -1,3 +1,9 @@
+2001-02-05  Jay Cox  <jaycox@gimp.org>
+
+	* app/gimphistogram.c: Applied patches by Roel Schroeven
+	<rschroev@yahoo.com> that fix histogram with mask calculation bug and
+	median calculation bug.
+
 2001-02-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpcontainergridview.[ch]: add the spacing between the

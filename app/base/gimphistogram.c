@@ -122,7 +122,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
       gdouble masked;
 
       src = region->data;
-      msrc = region->data;
+      msrc = mask->data;
 
       while (h--)
 	{
@@ -471,7 +471,7 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
 
   for (i = start; i <= end; i++)
     {
-      sum += i * histogram->values[channel][i];
+      sum += histogram->values[channel][i];
 
       if (sum * 2 > count)
 	return i;
