@@ -95,17 +95,18 @@
                        GDK_KEY_PRESS_MASK      | \
                        GDK_KEY_RELEASE_MASK)
 
-static GtkWidget *top_level_dlg;
+static GtkWidget    *top_level_dlg;
 static GimpDrawable *gfig_select_drawable;
-GtkWidget    *gfig_preview;
-GtkWidget    *pic_preview;
+GtkWidget           *gfig_preview;
+GtkWidget           *pic_preview;
 static GtkWidget    *gfig_gtk_list;
-gint32        gfig_image;
-gint32        gfig_drawable;
+gint32               gfig_image;
+gint32               gfig_drawable;
 static GtkWidget    *brush_page_pw;
 static GtkWidget    *brush_sel_button;
 
-static gint   img_width, img_height;
+static gint          img_width;
+static gint          img_height;
 
 static void      query  (void);
 static void      run    (const gchar      *name,
@@ -143,9 +144,9 @@ static void      load_button_callback      (GtkWidget *widget,
                                             gpointer   data);
 static void      new_button_callback       (GtkWidget *widget,
                                             gpointer   data);
-static void     gfig_do_delete_gfig_callback (GtkWidget *widget,
-                                              gboolean   delete,
-                                              gpointer   data);
+static void   gfig_do_delete_gfig_callback (GtkWidget *widget,
+                                            gboolean   delete,
+                                            gpointer   data);
 static void      gfig_delete_gfig_callback (GtkWidget *widget,
                                             gpointer   data);
 static void      edit_button_callback      (GtkWidget *widget,
@@ -302,7 +303,7 @@ static GFigObj  * gfig_new                (void);
 static void       clear_undo              (void);
 static void       gfig_obj_modified       (GFigObj *obj, gint stat_type);
 static void       gfig_op_menu_create     (GtkWidget *window);
-static void       gridtype_menu_callback  (GtkWidget *widget, gpointer data);
+static void       gridtype_combo_callback (GtkWidget *widget, gpointer data);
 
 static void       new_obj_2edit           (GFigObj *obj);
 static gint       load_options            (GFigObj *gfig, FILE *fp);
@@ -883,15 +884,9 @@ update_options (GFigObj *old_obj)
     }
   if (selvals.opts.gridtype != current_obj->opts.gridtype)
     {
-      gtk_option_menu_set_history
-        (GTK_OPTION_MENU (gfig_opt_widget.gridtypemenu),
+      gimp_int_combo_box_set_active
+        (GIMP_INT_COMBO_BOX (gfig_opt_widget.gridtypemenu),
          current_obj->opts.gridtype);
-
-      gridtype_menu_callback
-        (gtk_menu_get_active
-         (GTK_MENU (gtk_option_menu_get_menu
-                    (GTK_OPTION_MENU (gfig_opt_widget.gridtypemenu)))),
-         GINT_TO_POINTER (GRID_TYPE_MENU));
 
 #ifdef DEBUG
       printf ("Gridtype set in options to ");
@@ -1398,19 +1393,19 @@ num_sides_dialog (gchar *d_title,
 
   if (which_way)
     {
-      GtkWidget *option_menu;
+      GtkWidget *combo = gimp_int_combo_box_new (_("Clockwise"),      0,
+                                                 _("Anti-Clockwise"), 1,
+                                                 NULL);
 
-      option_menu =
-        gimp_int_option_menu_new (FALSE, G_CALLBACK (gimp_menu_item_update),
-                                  which_way, *which_way,
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), *which_way);
 
-                                  _("Clockwise"),      0, NULL,
-                                  _("Anti-Clockwise"), 1, NULL,
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        which_way);
 
-                                  NULL);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                  _("Orientation:"), 1.0, 0.5,
-                                 option_menu, 1, TRUE);
+                                 combo, 1, TRUE);
     }
 
   gtk_widget_show (window);
@@ -1582,10 +1577,11 @@ gfig_brush_update_preview (GtkWidget *widget,
 }
 
 static void
-gfig_brush_menu_callback (GtkWidget *widget,
-                          gpointer   data)
+gfig_brush_combo_callback (GtkWidget *widget,
+                           gpointer   data)
 {
-  gimp_menu_item_update (widget, &selvals.brshtype);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 (gint *) &selvals.brshtype);
 
   switch (selvals.brshtype)
     {
@@ -1628,11 +1624,11 @@ gfig_brush_menu_callback (GtkWidget *widget,
 static GtkWidget *
 gfig_brush_preview (GtkWidget **pv)
 {
-  GtkWidget *option_menu;
+  GtkWidget *combo;
   GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *vbox;
-  gint y;
+  gint       y;
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
@@ -1665,25 +1661,26 @@ gfig_brush_preview (GtkWidget **pv)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_widget_show (vbox);
 
-  option_menu =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (gfig_brush_menu_callback),
-                              *pv, selvals.brshtype,
+  combo = gimp_int_combo_box_new (_("Brush"),    BRUSH_BRUSH_TYPE,
+                                  _("Airbrush"), BRUSH_AIRBRUSH_TYPE,
+                                  _("Pencil"),   BRUSH_PENCIL_TYPE,
+                                  _("Pattern"),  BRUSH_PATTERN_TYPE,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), selvals.brshtype);
 
-                              _("Brush"),    BRUSH_BRUSH_TYPE,    NULL,
-                              _("Airbrush"), BRUSH_AIRBRUSH_TYPE, NULL,
-                              _("Pencil"),   BRUSH_PENCIL_TYPE,   NULL,
-                              _("Pattern"),  BRUSH_PATTERN_TYPE,  NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gfig_brush_combo_callback),
+                    *pv);
 
-                              NULL);
-  gtk_widget_show (option_menu);
-
-  gtk_container_add (GTK_CONTAINER (vbox), option_menu);
-  gimp_help_set_help_data (option_menu,
-                        _("Use the brush/pencil or the airbrush when drawing "
-                          "on the image. Pattern paints with currently "
-                          "selected brush with a pattern. Only applies to "
-                          "circles/ellipses if Approx. Circles/Ellipses "
-                          "toggle is set."), NULL);
+  gtk_container_add (GTK_CONTAINER (vbox), combo);
+  gimp_help_set_help_data (combo,
+                           _("Use the brush/pencil or the airbrush when "
+                             "drawing on the image. Pattern paints with "
+                             "currently selected brush with a pattern. Only "
+                             "applies to circles/ellipses if the "
+                             "\"Approx. Circles/Ellipses\" toggle is set."),
+                           NULL);
+  gtk_widget_show (combo);
 
   gtk_container_add (GTK_CONTAINER (hbox), vbox);
   gtk_container_add (GTK_CONTAINER (hbox), frame);
@@ -1696,7 +1693,7 @@ gfig_brush_fill_preview_xy (GtkWidget *pw,
                             gint       x1,
                             gint       y1)
 {
-  gint row_count;
+  gint       row_count;
   BrushDesc *bdesc = (BrushDesc *) g_object_get_data (G_OBJECT (pw),
                                                      "brush-desc");
 
@@ -1927,16 +1924,18 @@ static GtkWidget *page_menu_bg;
 static GtkWidget *page_menu_layers;
 
 static void
-paint_menu_callback (GtkWidget *widget,
-                     gpointer   data)
+paint_combo_callback (GtkWidget *widget,
+                      gpointer   data)
 {
   gint mtype = GPOINTER_TO_INT (data);
+  gint value;
 
-  if (mtype == PAINT_LAYERS_MENU)
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
+
+  switch (mtype)
     {
-      selvals.onlayers = (DrawonLayers)
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                            "gimp-item-data"));
+    case PAINT_LAYERS_MENU:
+      selvals.onlayers = (DrawonLayers) value;
 
 #ifdef DEBUG
       printf ("layer type set to %s\n",
@@ -1948,21 +1947,19 @@ paint_menu_callback (GtkWidget *widget,
         gtk_widget_set_sensitive (page_menu_bg, FALSE);
       else
         gtk_widget_set_sensitive (page_menu_bg, TRUE);
-    }
-  else if (mtype == PAINT_BGS_MENU)
-    {
-      selvals.onlayerbg = (LayersBGType)
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                            "gimp-item-data"));
+
+      break;
+
+    case PAINT_BGS_MENU:
+      selvals.onlayerbg = (LayersBGType) value;
+
 #ifdef DEBUG
       printf ("BG type = %d\n", selvals.onlayerbg);
 #endif /* DEBUG */
-    }
-  else if (mtype == PAINT_TYPE_MENU)
-    {
-      selvals.painttype = (PaintType)
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                            "gimp-item-data"));
+      break;
+
+    case PAINT_TYPE_MENU:
+      selvals.painttype = (PaintType) value;
 
 #ifdef DEBUG
       printf ("Got type menu = %d\n", selvals.painttype);
@@ -1997,6 +1994,11 @@ paint_menu_callback (GtkWidget *widget,
         default:
           break;
         }
+      break;
+
+    default:
+      g_return_if_reached ();
+      break;
     }
 }
 
@@ -2021,58 +2023,65 @@ paint_page (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  page_menu_layers =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (paint_menu_callback),
-                              GINT_TO_POINTER (PAINT_LAYERS_MENU), 0,
+  page_menu_layers = gimp_int_combo_box_new (_("Original"), ORIGINAL_LAYER,
+                                             _("New"),      SINGLE_LAYER,
+                                             _("Multiple"), MULTI_LAYER,
+                                             NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (page_menu_layers), 0);
 
-                              _("Original"), ORIGINAL_LAYER, NULL,
-                              _("New"),      SINGLE_LAYER,   NULL,
-                              _("Multiple"), MULTI_LAYER,    NULL,
-
-                              NULL);
+  g_signal_connect (page_menu_layers, "changed",
+                    G_CALLBACK (paint_combo_callback),
+                    GINT_TO_POINTER (PAINT_LAYERS_MENU));
 
   gimp_help_set_help_data (page_menu_layers,
-                        _("Draw all objects on one layer (original or new) "
-                          "or one object per layer"), NULL);
+                           _("Draw all objects on one layer (original or new) "
+                             "or one object per layer."),
+                           NULL);
+
   if (gimp_drawable_is_channel (gfig_drawable))
       gtk_widget_set_sensitive (page_menu_layers, FALSE);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Draw on:"), 1.0, 0.5,
                              page_menu_layers, 1, TRUE);
 
   page_menu_type =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (paint_menu_callback),
-                              GINT_TO_POINTER (PAINT_TYPE_MENU), 0,
+    gimp_int_combo_box_new (_("Brush"),          PAINT_BRUSH_TYPE,
+                            _("Selection"),      PAINT_SELECTION_TYPE,
+                            _("Selection+Fill"), PAINT_SELECTION_FILL_TYPE,
+                            NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (page_menu_type), 0);
 
-                              _("Brush"),          PAINT_BRUSH_TYPE,          NULL,
-                              _("Selection"),      PAINT_SELECTION_TYPE,      NULL,
-                              _("Selection+Fill"), PAINT_SELECTION_FILL_TYPE, NULL,
-
-                             NULL);
+  g_signal_connect (page_menu_type, "changed",
+                    G_CALLBACK (paint_combo_callback),
+                    GINT_TO_POINTER (PAINT_TYPE_MENU));
 
   gimp_help_set_help_data (page_menu_type,
                         _("Draw type. Either a brush or a selection. "
-                          "See brush page or selection page for more options"),
+                          "See brush page or selection page for more options."),
                         NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Using:"), 1.0, 0.5,
                              page_menu_type, 1, TRUE);
 
-  page_menu_bg =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (paint_menu_callback),
-                              GINT_TO_POINTER (PAINT_BGS_MENU), 0,
+  page_menu_bg = gimp_int_combo_box_new (_("Transparent"), LAYER_TRANS_BG,
+                                         _("Background"),  LAYER_BG_BG,
+                                         _("Foreground"),  LAYER_FG_BG,
+                                         _("White"),       LAYER_WHITE_BG,
+                                         _("Copy"),        LAYER_COPY_BG,
+                                         NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (page_menu_bg), 0);
 
-                              _("Transparent"), LAYER_TRANS_BG, NULL,
-                              _("Background"),  LAYER_BG_BG,    NULL,
-                              _("Foreground"),  LAYER_FG_BG,    NULL,
-                              _("White"),       LAYER_WHITE_BG, NULL,
-                              _("Copy"),        LAYER_COPY_BG,  NULL,
+  g_signal_connect (page_menu_bg, "changed",
+                    G_CALLBACK (paint_combo_callback),
+                    GINT_TO_POINTER (PAINT_BGS_MENU));
 
-                              NULL);
   gimp_help_set_help_data (page_menu_bg,
-                        _("Layer background type. Copy causes previous "
-                          "layer to be copied before the draw is performed"),
-                        NULL);
+                           _("Layer background type. Copy causes the previous "
+                             "layer to be copied before the draw is performed."),
+                           NULL);
+
   gtk_widget_set_sensitive (page_menu_bg, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("With BG of:"), 1.0, 0.5,
@@ -2085,7 +2094,7 @@ paint_page (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.reverselines);
   gimp_help_set_help_data (toggle,
-                        _("Draw lines in reverse order"), NULL);
+                           _("Draw lines in reverse order"), NULL);
   gtk_widget_show (toggle);
 
   vbox2 = gtk_vbox_new (FALSE, 0);
@@ -2101,7 +2110,7 @@ paint_page (void)
                     G_CALLBACK (gfig_scale2img_update),
                     &selvals.scaletoimage);
   gimp_help_set_help_data (toggle,
-                        _("Scale drawings to images size"), NULL);
+                           _("Scale drawings to images size"), NULL);
   gtk_widget_show (toggle);
 
   hbox = gtk_hbox_new (FALSE, 1);
@@ -2130,9 +2139,9 @@ paint_page (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.approxcircles);
   gimp_help_set_help_data (toggle,
-                        _("Approx. circles & ellipses using lines. Allows "
-                          "the use of brush fading with these types of "
-                          "objects."), NULL);
+                           _("Approx. circles & ellipses using lines. Allows "
+                             "the use of brush fading with these types of "
+                             "objects."), NULL);
   gtk_widget_show (toggle);
 
   return vbox;
@@ -2311,48 +2320,38 @@ brush_page (void)
 }
 
 static void
-select_menu_callback (GtkWidget *widget,
-                      gpointer   data)
+select_combo_callback (GtkWidget *widget,
+                       gpointer   data)
 {
   gint mtype = GPOINTER_TO_INT (data);
+  gint value;
 
-  if (mtype == SELECT_TYPE_MENU)
-    {
-      SelectionType type = (SelectionType)
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                            "gimp-item-data"));
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
 
-      selopt.type = type;
-    }
-  else if (mtype == SELECT_ARCTYPE_MENU)
+  switch (mtype)
     {
-      ArcType type = (ArcType)
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                            "gimp-item-data"));
-
-      selopt.as_pie = type;
-    }
-  else if (mtype == SELECT_TYPE_MENU_FILL)
-    {
-      FillType type = (FillType)
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                            "gimp-item-data"));
-
-      selopt.fill_type = type;
-    }
-  else if (mtype == SELECT_TYPE_MENU_WHEN)
-    {
-      FillWhen type = (FillWhen)
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                            "gimp-item-data"));
-      selopt.fill_when = type;
+    case SELECT_TYPE_MENU:
+      selopt.type = (SelectionType) value;
+      break;
+    case SELECT_ARCTYPE_MENU:
+      selopt.as_pie = (ArcType) value;
+      break;
+    case SELECT_TYPE_MENU_FILL:
+      selopt.fill_type = (FillType) value;
+      break;
+    case SELECT_TYPE_MENU_WHEN:
+      selopt.fill_when = (FillWhen) value;
+      break;
+    default:
+      g_return_if_reached ();
+      break;
     }
 }
 
 static GtkWidget *
 select_page (void)
 {
-  GtkWidget *menu;
+  GtkWidget *combo;
   GtkWidget *toggle;
   GtkWidget *scale;
   GtkObject *scale_data;
@@ -2369,29 +2368,31 @@ select_page (void)
   gtk_widget_show (table);
 
   /* The secltion settings -
-   * 1) Type (option menu)
+   * 1) Type (combo box)
    * 2) Anti A (toggle)
    * 3) Feather (toggle)
    * 4) F radius (slider)
-   * 5) Fill type (option menu)
+   * 5) Fill type (combo box)
    * 6) Opacity (slider)
    * 7) When to fill (toggle)
    * 8) Arc as segment/sector
    */
 
   /* 1 */
-  menu = gimp_int_option_menu_new (FALSE, G_CALLBACK (select_menu_callback),
-                                   GINT_TO_POINTER (SELECT_TYPE_MENU), 0,
+  combo = gimp_int_combo_box_new (_("Add"),       ADD,
+                                  _("Subtract"),  SUBTRACT,
+                                  _("Replace"),   REPLACE,
+                                  _("Intersect"), INTERSECT,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
 
-                                   _("Add"),       ADD, NULL,
-                                   _("Subtract"),  SUBTRACT, NULL,
-                                   _("Replace"),   REPLACE, NULL,
-                                   _("Intersect"), INTERSECT, NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (select_combo_callback),
+                    GINT_TO_POINTER (SELECT_TYPE_MENU));
 
-                                   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Selection Type:"), 1.0, 0.5,
-                             menu, 1, FALSE);
+                             combo, 1, FALSE);
 
   /* 2 */
   toggle = gtk_check_button_new_with_label (_("Antialiasing"));
@@ -2425,22 +2426,23 @@ select_page (void)
                              scale, 1, FALSE);
 
   /* 5 */
-  menu =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (select_menu_callback),
-                              GINT_TO_POINTER (SELECT_TYPE_MENU_FILL), 0,
+  combo = gimp_int_combo_box_new (_("Pattern"),    FILL_PATTERN,
+                                  _("Foreground"), FILL_FOREGROUND,
+                                  _("Background"), FILL_BACKGROUND,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
 
-                              _("Pattern"),    FILL_PATTERN,    NULL,
-                              _("Foreground"), FILL_FOREGROUND, NULL,
-                              _("Background"), FILL_BACKGROUND, NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (select_combo_callback),
+                    GINT_TO_POINTER (SELECT_TYPE_MENU_FILL));
 
-                              NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Fill Type:"), 1.0, 0.5,
-                             menu, 1, FALSE);
+                             combo, 1, FALSE);
 
   /* 6 */
-  scale_data =
-    gtk_adjustment_new (selopt.fill_opacity, 0.0, 100.0, 1.0, 1.0, 0.0);
+  scale_data = gtk_adjustment_new (selopt.fill_opacity,
+                                   0.0, 100.0, 1.0, 1.0, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
@@ -2452,50 +2454,56 @@ select_page (void)
                              scale, 1, FALSE);
 
   /* 7 */
-  menu =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (select_menu_callback),
-                              GINT_TO_POINTER (SELECT_TYPE_MENU_WHEN), 0,
+  combo = gimp_int_combo_box_new (_("Each Selection"), FILL_EACH,
+                                  _("All Selections"), FILL_AFTER,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
 
-                              _("Each Selection"), FILL_EACH,  NULL,
-                              _("All Selections"), FILL_AFTER, NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (select_combo_callback),
+                    GINT_TO_POINTER (SELECT_TYPE_MENU_WHEN));
 
-                              NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("Fill after:"), 1.0, 0.5,
-                             menu, 1, FALSE);
+                             combo, 1, FALSE);
 
   /* 8 */
-  menu = gimp_int_option_menu_new (FALSE, G_CALLBACK (select_menu_callback),
-                                   GINT_TO_POINTER (SELECT_ARCTYPE_MENU), 0,
+  combo = gimp_int_combo_box_new (_("Segment"), ARC_SEGMENT,
+                                  _("Sector"),  ARC_SECTOR,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
 
-                                   _("Segment"), ARC_SEGMENT, NULL,
-                                   _("Sector"),  ARC_SECTOR,  NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (select_combo_callback),
+                    GINT_TO_POINTER (SELECT_ARCTYPE_MENU));
 
-                                   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              _("Arc as:"), 1.0, 0.5,
-                             menu, 1, FALSE);
+                             combo, 1, FALSE);
 
   return vbox;
 }
 
 static void
-gridtype_menu_callback (GtkWidget *widget,
-                        gpointer   data)
+gridtype_combo_callback (GtkWidget *widget,
+                         gpointer   data)
 {
   gint mtype = GPOINTER_TO_INT (data);
+  gint value;
 
-  if (mtype == GRID_TYPE_MENU)
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
+
+  switch (mtype)
     {
-      selvals.opts.gridtype =
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                            "gimp-item-data"));
-    }
-  else
-    {
-      grid_gc_type =
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                            "gimp-item-data"));
+    case GRID_TYPE_MENU:
+      selvals.opts.gridtype = value;
+      break;
+    case GRID_RENDER_MENU:
+      grid_gc_type = value;
+      break;
+    default:
+      g_return_if_reached ();
+      break;
     }
 
   draw_grid_clear ();
@@ -2505,7 +2513,7 @@ static GtkWidget *
 options_page (void)
 {
   GtkWidget *table;
-  GtkWidget *menu;
+  GtkWidget *combo;
   GtkWidget *toggle;
   GtkWidget *button;
   GtkWidget *vbox;
@@ -2541,36 +2549,39 @@ options_page (void)
                              NULL, 0, 0,
                              button, 1, TRUE);
 
-  menu = gimp_int_option_menu_new (FALSE, G_CALLBACK (gridtype_menu_callback),
-                                   GINT_TO_POINTER (GRID_TYPE_MENU), 0,
+  combo = gimp_int_combo_box_new (_("Rectangle"), RECT_GRID,
+                                  _("Polar"),     POLAR_GRID,
+                                  _("Isometric"), ISO_GRID,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
 
-                                   _("Rectangle"), RECT_GRID,  NULL,
-                                   _("Polar"),     POLAR_GRID, NULL,
-                                   _("Isometric"), ISO_GRID,   NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gridtype_combo_callback),
+                    GINT_TO_POINTER (GRID_TYPE_MENU));
 
-                                   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Grid Type:"), 1.0, 0.5,
-                             menu, 1, TRUE);
+                             combo, 1, TRUE);
 
-  gfig_opt_widget.gridtypemenu = menu;
+  gfig_opt_widget.gridtypemenu = combo;
 
-  menu =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (gridtype_menu_callback),
-                              GINT_TO_POINTER (GRID_RENDER_MENU), 0,
+  combo = gimp_int_combo_box_new (_("Normal"),    GTK_STATE_NORMAL,
+                                  _("Black"),     GFIG_BLACK_GC,
+                                  _("White"),     GFIG_WHITE_GC,
+                                  _("Grey"),      GFIG_GREY_GC,
+                                  _("Darker"),    GTK_STATE_ACTIVE,
+                                  _("Lighter"),   GTK_STATE_PRELIGHT,
+                                  _("Very Dark"), GTK_STATE_SELECTED,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
 
-                              _("Normal"),     GTK_STATE_NORMAL,   NULL,
-                              _("Black"),      GFIG_BLACK_GC,      NULL,
-                              _("White"),      GFIG_WHITE_GC,      NULL,
-                              _("Grey"),       GFIG_GREY_GC,       NULL,
-                              _("Darker"),     GTK_STATE_ACTIVE,   NULL,
-                              _("Lighter"),    GTK_STATE_PRELIGHT, NULL,
-                              _("Very Dark"),  GTK_STATE_SELECTED, NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gridtype_combo_callback),
+                    GINT_TO_POINTER (GRID_RENDER_MENU));
 
-                              NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("Grid Color:"), 1.0, 0.5,
-                             menu, 1, TRUE);
+                             combo, 1, TRUE);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
                                     _("Max Undo:"), 0, 50,
@@ -4272,7 +4283,7 @@ toggle_obj_type (GtkWidget *widget,
 
   if (!p_cursors[selvals.otype])
     {
-      GdkDisplay *display = gtk_widget_get_display (widget);
+      GdkDisplay *display = gtk_widget_get_display (gfig_preview);
 
       p_cursors[selvals.otype] = gdk_cursor_new_for_display (display, ctype);
     }

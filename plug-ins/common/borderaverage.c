@@ -351,8 +351,11 @@ borderaverage_dialog (void)
   GtkWidget *label;
   GtkWidget *spinbutton;
   GtkObject *adj;
-  GtkWidget *menu;
+  GtkWidget *combo;
   gboolean   run;
+
+  const gchar *labels[] =
+    { "1", "2", "4", "8", "16", "32", "64", "128", "256" };
 
   gimp_ui_init ("borderaverage", FALSE);
 
@@ -406,24 +409,17 @@ borderaverage_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  menu = gimp_int_option_menu_new (FALSE, G_CALLBACK (gimp_menu_item_update),
-                                   &borderaverage_bucket_exponent,
-                                   borderaverage_bucket_exponent,
+  combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (labels), labels);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 borderaverage_bucket_exponent);
 
-                                   _("1 (nonsense?)"),   0, NULL,
-                                   "2",                  1, NULL,
-                                   "4",                  2, NULL,
-                                   "8",                  3, NULL,
-                                   "16",                 4, NULL,
-                                   "32",                 5, NULL,
-                                   "64",                 6, NULL,
-                                   "128",                7, NULL,
-                                   _("256 (nonsense?)"), 8, NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    &borderaverage_bucket_exponent);
 
-                                   NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
-  gtk_widget_show (menu);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), menu);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
   gtk_widget_show (dlg);
 

@@ -89,7 +89,7 @@ typedef struct
   GtkAdjustment *green_data;
   GtkAdjustment *blue_data;
 
-  GtkWidget     *option_menu;
+  GtkWidget     *combo;
 
   CmModeType     old_output_channel;
 
@@ -146,7 +146,7 @@ static void cm_save_file_callback           (GtkWidget        *widget,
 static void cm_save_file_response_callback  (GtkFileSelection *filesel,
                                              gint              response_id,
                                              CmParamsType     *mix);
-static void cm_option_callback              (GtkWidget        *widget,
+static void cm_combo_callback               (GtkWidget        *widget,
                                              CmParamsType     *mix);
 
 static gboolean cm_force_overwrite (const gchar *filename,
@@ -592,23 +592,24 @@ cm_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  mix.option_menu =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (cm_option_callback),
-                              &mix, mix.output_channel,
+  mix.combo = gimp_int_combo_box_new (_("Red"),   CM_RED_CHANNEL,
+                                      _("Green"), CM_GREEN_CHANNEL,
+                                      _("Blue"),  CM_BLUE_CHANNEL,
+                                      NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (mix.combo),
+                                 mix.output_channel);
 
-                              _("Red"),   CM_RED_CHANNEL,   NULL,
-                              _("Green"), CM_GREEN_CHANNEL, NULL,
-                              _("Blue"),  CM_BLUE_CHANNEL,  NULL,
+  g_signal_connect (mix.combo, "changed",
+                    G_CALLBACK (cm_combo_callback),
+                    &mix);
 
-                              NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), mix.combo, FALSE, FALSE, 0);
+  gtk_widget_show (mix.combo);
 
-  gtk_box_pack_start (GTK_BOX (hbox), mix.option_menu, FALSE, FALSE, 0);
-  gtk_widget_show (mix.option_menu);
+  if (mix.monochrome_flag)
+    gtk_widget_set_sensitive (mix.combo, FALSE);
 
-  if (mix.monochrome_flag == TRUE)
-    gtk_widget_set_sensitive (mix.option_menu, FALSE);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), mix.option_menu);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), mix.combo);
 
   /*........................................................... */
 
@@ -960,13 +961,13 @@ cm_monochrome_callback (GtkWidget    *widget,
     {
       mix->old_output_channel = mix->output_channel;
       mix->monochrome_flag = TRUE;
-      gtk_widget_set_sensitive (mix->option_menu, FALSE);
+      gtk_widget_set_sensitive (mix->combo, FALSE);
     }
   else
     {
       mix->output_channel = mix->old_output_channel;
       mix->monochrome_flag = FALSE;
-      gtk_widget_set_sensitive (mix->option_menu, TRUE);
+      gtk_widget_set_sensitive (mix->combo, TRUE);
     }
 
   cm_set_adjusters (mix);
@@ -1139,8 +1140,8 @@ cm_load_file_response_callback (GtkFileSelection *fs,
 
           fclose (fp);
 
-          gimp_int_option_menu_set_history (GTK_OPTION_MENU (mix->option_menu),
-                                            mix->output_channel);
+          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (mix->combo),
+                                         mix->output_channel);
           cm_set_adjusters (mix);
 
           if (mix->preview_flag)
@@ -1149,7 +1150,8 @@ cm_load_file_response_callback (GtkFileSelection *fs,
       else
         {
           g_message (_("Could not open '%s' for reading: %s"),
-                     gimp_filename_to_utf8 (mix->filename), g_strerror (errno));
+                     gimp_filename_to_utf8 (mix->filename),
+                     g_strerror (errno));
         }
     }
 
@@ -1368,10 +1370,11 @@ cm_save_file (CmParamsType *mix,
  *
  *--------------------------------------------------------------------*/
 static void
-cm_option_callback (GtkWidget    *widget,
-                    CmParamsType *mix)
+cm_combo_callback (GtkWidget    *widget,
+                   CmParamsType *mix)
 {
-  gimp_menu_item_update (widget, &mix->output_channel);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 (gint *) &mix->output_channel);
 
   cm_set_adjusters (mix);
 }

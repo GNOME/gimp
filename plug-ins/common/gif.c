@@ -1248,7 +1248,7 @@ save_dialog (gint32 image_ID)
   GtkWidget     *vbox;
   GtkWidget     *hbox;
   GtkWidget     *align;
-  GtkWidget     *disposal_option_menu;
+  GtkWidget     *combo;
   GtkWidget     *scrolled_window;
 #ifdef FACEHUGGERS
   GimpParasite  *GIF2_CMNT;
@@ -1404,20 +1404,22 @@ save_dialog (gint32 image_ID)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  disposal_option_menu =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (gimp_menu_item_update),
-			      &gsvals.default_dispose, gsvals.default_dispose,
+  combo = gimp_int_combo_box_new (_("I don't Care"),
+                                  DISPOSE_UNSPECIFIED,
+                                  _("Cumulative Layers (Combine)"),
+                                  DISPOSE_COMBINE,
+                                  _("One Frame per Layer (Replace)"),
+                                  DISPOSE_REPLACE,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 gsvals.default_dispose);
 
-			      _("I don't Care"),
-			      DISPOSE_UNSPECIFIED, NULL,
-			      _("Cumulative Layers (Combine)"),
-			      DISPOSE_COMBINE, NULL,
-			      _("One Frame per Layer (Replace)"),
-			      DISPOSE_REPLACE, NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    &gsvals.default_dispose);
 
-			      NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), disposal_option_menu, FALSE, FALSE, 0);
-  gtk_widget_show (disposal_option_menu);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
 
   gtk_widget_show (hbox);
   gtk_widget_show (vbox);
@@ -1425,10 +1427,10 @@ save_dialog (gint32 image_ID)
   /* If the image has only one layer it can't be animated, so
      desensitize the animation options. */
 
-  if (nlayers == 1) gtk_widget_set_sensitive (frame, FALSE);
+  if (nlayers == 1)
+    gtk_widget_set_sensitive (frame, FALSE);
 
   gtk_widget_show (frame);
-
   gtk_widget_show (dlg);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);

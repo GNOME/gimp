@@ -1174,7 +1174,7 @@ mng_save_dialog (gint32 image_id)
   GtkWidget *table;
   GtkWidget *toggle;
   GtkWidget *hbox;
-  GtkWidget *menu;
+  GtkWidget *combo;
   GtkWidget *label;
   GtkWidget *scale;
   GtkObject *scale_adj;
@@ -1268,46 +1268,42 @@ mng_save_dialog (gint32 image_id)
   gimp_image_get_layers (image_id, &num_layers);
 
   if (num_layers == 1)
-    menu = gimp_int_option_menu_new (FALSE,
-				     G_CALLBACK (gimp_menu_item_update),
-				     &mng_data.default_chunks,
-				     mng_data.default_chunks,
-
-				     _("PNG"), CHUNKS_PNG_D, NULL,
-				     _("JNG"), CHUNKS_JNG_D, NULL,
-
-				     NULL);
+    combo = gimp_int_combo_box_new (_("PNG"), CHUNKS_PNG_D,
+                                    _("JNG"), CHUNKS_JNG_D,
+                                    NULL);
   else
-    menu = gimp_int_option_menu_new (FALSE,
-				     G_CALLBACK (gimp_menu_item_update),
-				     &mng_data.default_chunks,
-				     mng_data.default_chunks,
+    combo = gimp_int_combo_box_new (_("PNG + Delta PNG"), CHUNKS_PNG_D,
+                                    _("JNG + Delta PNG"), CHUNKS_JNG_D,
+                                    _("All PNG"),         CHUNKS_PNG,
+                                    _("All JNG"),         CHUNKS_JNG,
+                                    NULL);
 
-				     _("PNG + Delta PNG"), CHUNKS_PNG_D, NULL,
-				     _("JNG + Delta PNG"), CHUNKS_JNG_D, NULL,
-				     _("All PNG"),         CHUNKS_PNG,   NULL,
-				     _("All JNG"),         CHUNKS_JNG,   NULL,
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 mng_data.default_chunks);
 
-				     NULL);
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    &mng_data.default_chunks);
 
-  gtk_widget_set_sensitive (menu, FALSE);
+  gtk_widget_set_sensitive (combo, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Default Chunks Type:"), 1.0, 0.5,
-                             menu, 1, FALSE);
+                             combo, 1, FALSE);
 
-  menu = gimp_int_option_menu_new (FALSE,
-				   G_CALLBACK (gimp_menu_item_update),
-				   &mng_data.default_dispose,
-				   mng_data.default_dispose,
+  combo = gimp_int_combo_box_new (_("Combine"), DISPOSE_COMBINE,
+                                  _("Replace"), DISPOSE_REPLACE,
+                                  NULL);
 
-				   _("Combine"), DISPOSE_COMBINE, NULL,
-				   _("Replace"), DISPOSE_REPLACE, NULL,
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 mng_data.default_dispose);
 
-				   NULL);
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    &mng_data.default_dispose);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Default Frame Disposal:"), 1.0, 0.5,
-                             menu, 1, FALSE);
+                             combo, 1, FALSE);
 
   scale_adj = gtk_adjustment_new (mng_data.compression_level,
 				  0.0, 9.0, 1.0, 1.0, 0.0);

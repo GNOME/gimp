@@ -66,7 +66,7 @@ static void load_callback     (GtkWidget        *widget,
 static void save_callback     (GtkWidget        *widget,
 			       gpointer          data);
 static void set_edit_preview  (void);
-static void menu_cb           (GtkWidget        *widget,
+static void combo_callback    (GtkWidget        *widget,
 			       gpointer          data);
 static void init_mutants      (void);
 
@@ -616,7 +616,7 @@ edit_callback (GtkWidget *widget,
       GtkWidget *vbox;
       GtkWidget *hbox;
       GtkWidget *button;
-      GtkWidget *optionmenu;
+      GtkWidget *combo;
       GtkWidget *label;
       GtkObject *adj;
       gint       i, j;
@@ -711,27 +711,30 @@ edit_callback (GtkWidget *widget,
                                 G_CALLBACK (randomize_callback),
                                 NULL);
 
-      optionmenu =
-	gimp_int_option_menu_new (FALSE, G_CALLBACK (menu_cb),
-			          &config.variation, VARIATION_SAME,
+      combo = gimp_int_combo_box_new (_("Same"),       VARIATION_SAME,
+                                      _("Random"),     variation_random,
+                                      _("Linear"),     0,
+                                      _("Sinusoidal"), 1,
+                                      _("Spherical"),  2,
+                                      _("Swirl"),      3,
+                                      _("Horseshoe"),  4,
+                                      _("Polar"),      5,
+                                      _("Bent"),       6,
+                                      NULL);
 
-			          _("Same"),       VARIATION_SAME,   NULL,
-			          _("Random"),     variation_random, NULL,
-			          _("Linear"),     0,                NULL,
-			          _("Sinusoidal"), 1,                NULL,
-			          _("Spherical"),  2,                NULL,
-			          _("Swirl"),      3,                NULL,
-			          _("Horseshoe"),  4,                NULL,
-			          _("Polar"),      5,                NULL,
-			          _("Bent"),       6,                NULL,
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                     VARIATION_SAME);
 
-			          NULL);
-      gtk_box_pack_end (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
-      gtk_widget_show (optionmenu);
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (combo_callback),
+                        &config.variation);
+
+      gtk_box_pack_end (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+      gtk_widget_show (combo);
 
       label = gtk_label_new_with_mnemonic (_("_Variation:"));
       gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_label_set_mnemonic_widget (GTK_LABEL (label), optionmenu);
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
       gtk_widget_show (label);
 
       gtk_widget_show (main_vbox);
@@ -775,13 +778,14 @@ save_callback (GtkWidget *widget,
 }
 
 static void
-menu_cb (GtkWidget *widget,
-	 gpointer   data)
+combo_callback (GtkWidget *widget,
+                gpointer   data)
 {
-  gimp_menu_item_update (widget, data);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
   if (VARIATION_SAME != config.variation)
     random_control_point (&edit_cp, config.variation);
+
   init_mutants ();
   set_edit_preview ();
 }
@@ -1073,7 +1077,7 @@ dialog (void)
     GtkWidget *label;
     GtkWidget *menuitem;
     GtkWidget *option_menu;
-    gint32 save_drawable = config.cmap_drawable;
+    gint32     save_drawable = config.cmap_drawable;
 
     sep = gtk_hseparator_new ();
     gtk_box_pack_start (GTK_BOX (box), sep, FALSE, FALSE, 0);

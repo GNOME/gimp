@@ -1,6 +1,5 @@
-/* align_layers.c -- This is a plug-in for the GIMP (1.0's API)
+/* align_layers.c
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
- * Time-stamp: <1999-12-18 05:48:38 yasuhiro>
  * Version:  0.26
  *
  * Copyright (C) 1997-1998 Shuji Narazaki <narazaki@InetQ.or.jp>
@@ -350,7 +349,7 @@ align_layers_get_align_offsets (gint32  drawable_id,
                                 gint   *x,
                                 gint   *y)
 {
-  GimpDrawable  *layer = gimp_drawable_get (drawable_id);
+  GimpDrawable *layer = gimp_drawable_get (drawable_id);
 
   switch (VALS.h_base)
     {
@@ -358,7 +357,7 @@ align_layers_get_align_offsets (gint32  drawable_id,
       *x = 0;
       break;
     case H_BASE_CENTER:
-      *x = (gint) (layer->width / 2);
+      *x = layer->width / 2;
       break;
     case H_BASE_RIGHT:
       *x = layer->width;
@@ -367,13 +366,14 @@ align_layers_get_align_offsets (gint32  drawable_id,
       *x = 0;
       break;
     }
+
   switch (VALS.v_base)
     {
     case V_BASE_TOP:
       *y = 0;
       break;
     case V_BASE_CENTER:
-      *y = (gint) (layer->height / 2);
+      *y = layer->height / 2;
       break;
     case V_BASE_BOTTOM:
       *y = layer->height;
@@ -382,6 +382,8 @@ align_layers_get_align_offsets (gint32  drawable_id,
       *y = 0;
       break;
     }
+
+  gimp_drawable_detach (layer);
 }
 
 /* dialog stuff */
@@ -391,7 +393,7 @@ align_layers_dialog (void)
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *optionmenu;
+  GtkWidget *combo;
   GtkWidget *toggle;
   GtkObject *adj;
   gboolean   run;
@@ -419,61 +421,66 @@ align_layers_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  optionmenu =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (gimp_menu_item_update),
-                              &VALS.h_style, VALS.h_style,
+  combo = gimp_int_combo_box_new (_("None"),                 H_NONE,
+                                  _("Collect"),              H_COLLECT,
+                                  _("Fill (left to right)"), LEFT2RIGHT,
+                                  _("Fill (right to left)"), RIGHT2LEFT,
+                                  _("Snap to Grid"),         SNAP2HGRID,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.h_style);
 
-                              _("None"),                 H_NONE,     NULL,
-                              _("Collect"),              H_COLLECT,  NULL,
-                              _("Fill (left to right)"), LEFT2RIGHT, NULL,
-                              _("Fill (right to left)"), RIGHT2LEFT, NULL,
-                              _("Snap to Grid"),         SNAP2HGRID, NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    &VALS.h_style);
 
-                              NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("_Horizontal Style:"), 1.0, 0.5,
-                             optionmenu, 1, FALSE);
+                             combo, 1, FALSE);
 
-  optionmenu =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (gimp_menu_item_update),
-                              &VALS.h_base, VALS.h_base,
 
-                              _("Left Edge"),  H_BASE_LEFT,   NULL,
-                              _("Center"),     H_BASE_CENTER, NULL,
-                              _("Right Edge"), H_BASE_RIGHT,   NULL,
+  combo = gimp_int_combo_box_new (_("Left Edge"),  H_BASE_LEFT,
+                                  _("Center"),     H_BASE_CENTER,
+                                  _("Right Edge"), H_BASE_RIGHT,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.h_base);
 
-                              NULL);
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    &VALS.h_base);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Ho_rizontal Base:"), 1.0, 0.5,
-                             optionmenu, 1, FALSE);
+                             combo, 1, FALSE);
 
-  optionmenu =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (gimp_menu_item_update),
-                              &VALS.v_style, VALS.v_style,
+  combo = gimp_int_combo_box_new (_("None"),                 V_NONE,
+                                  _("Collect"),              V_COLLECT,
+                                  _("Fill (top to bottom)"), TOP2BOTTOM,
+                                  _("Fill (bottom to top)"), BOTTOM2TOP,
+                                  _("Snap to Grid"),         SNAP2VGRID,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.v_style);
 
-                              _("None"),                 V_NONE,     NULL,
-                              _("Collect"),              V_COLLECT,  NULL,
-                              _("Fill (top to bottom)"), TOP2BOTTOM, NULL,
-                              _("Fill (bottom to top)"), BOTTOM2TOP, NULL,
-                              _("Snap to Grid"),         SNAP2VGRID, NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    &VALS.v_style);
 
-                              NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("_Vertical Style:"), 1.0, 0.5,
-                             optionmenu, 1, FALSE);
+                             combo, 1, FALSE);
 
-  optionmenu =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (gimp_menu_item_update),
-                              &VALS.v_base, VALS.v_base,
+  combo = gimp_int_combo_box_new (_("Top Edge"),    V_BASE_TOP,
+                                  _("Center"),      V_BASE_CENTER,
+                                  _("Bottom Edge"), V_BASE_BOTTOM,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.v_base);
 
-                              _("Top Edge"),    V_BASE_TOP,    NULL,
-                              _("Center"),      V_BASE_CENTER, NULL,
-                              _("Bottom Edge"), V_BASE_BOTTOM, NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    &VALS.v_base);
 
-                              NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              _("Ver_tical Base:"), 1.0, 0.5,
-                             optionmenu, 1, FALSE);
+                             combo, 1, FALSE);
 
   toggle = gtk_check_button_new_with_mnemonic
     (_("_Ignore the Bottom Layer even if Visible"));
