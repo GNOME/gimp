@@ -3164,6 +3164,10 @@ p_colorize_drawable(gint32 drawable_id)
       if(g_Sdebug)  printf ("ROWS done, progress :%f\n", (float)l_progress);
    }
   
+   /*  reset the progress to zero to indiciate that the plug-in has done its job  */
+   if (g_show_progress) 
+     gimp_progress_update (0.0);
+
    gimp_drawable_flush (drawable);
    gimp_drawable_merge_shadow (drawable->id, TRUE);
    gimp_drawable_update (drawable->id, l_x1, l_y1, l_x2 - l_x1, l_y2 - l_y1);
