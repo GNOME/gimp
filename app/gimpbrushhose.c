@@ -37,8 +37,6 @@ gimp_brush_hose_class_init (GimpBrushHoseClass *klass)
   
   parent_class = gtk_type_class (GIMP_TYPE_BRUSH_PIXMAP);
   object_class->destroy = gimp_brush_hose_destroy;
-  
-
 }
 
 void
@@ -74,29 +72,27 @@ gimp_brush_hose_load (char *file_name)
   GimpBrushHose *hose;
   GimpBrushPixmap *brush;
   GimpBrushList *list;
+  GimpObject o;
   FILE *fp;
   unsigned char buf[sz_BrushHeader];
   gchar buf2[1024];
   BrushHeader header;
   int bn_size;
   unsigned int *hp;
-  char *nothing;
   int i;
   int num_of_brushes;
   int brush_count=0;
 
   hose = GIMP_BRUSH_HOSE(gimp_type_new(gimp_brush_hose_get_type()));
   GIMP_BRUSH_HOSE(hose)->filename = g_strdup(file_name);
-  // hose = gimp_brush_hose_new
 
-  brush = GIMP_BRUSH_PIXMAP(gimp_type_new(gimp_brush_pixmap_get_type()));
-  GIMP_BRUSH(brush)->filename = g_strdup(file_name);
+  brush = GIMP_BRUSH (hose);
 
   list = gimp_brush_list_new();
 
-  printf("filename: %s\n  list->num_brushes: %i", file_name, list->num_brushes);
+  printf("opening hose: %s\n", file_name);
 
-  if ((fp =fopen(file_name, "rb")) == NULL)
+  if ((fp = fopen(file_name, "rb")) == NULL)
     return NULL;
   
   /* the file format starts with a painfully simple text header
@@ -132,11 +128,16 @@ gimp_brush_hose_load (char *file_name)
       if ((fread (buf, 1, sz_BrushHeader, fp)) < sz_BrushHeader)
 	{
 	  fclose (fp);
+	  gimp_object_destroy (hose);
 	  gimp_object_destroy (brush);
 	  return NULL;
 	}
       
       
+      if (brush_count > 0)
+	brush = GIMP_BRUSH_PIXMAP(gimp_type_new(gimp_brush_pixmap_get_type()));
+      GIMP_BRUSH(brush)->filename = g_strdup(file_name);
+
       /*  rearrange the bytes in each unsigned int  */
       hp = (unsigned int *) &header;
       for (i = 0; i < (sz_BrushHeader / 4); i++)
@@ -151,6 +152,7 @@ gimp_brush_hose_load (char *file_name)
 	  if (header.version != 1)
 	    {
 	      fclose (fp);
+	      gimp_object_destroy (hose);
 	      gimp_object_destroy (brush);
 	      return NULL;
 	    }
@@ -175,6 +177,7 @@ gimp_brush_hose_load (char *file_name)
 	    {
 	      g_message ("Error in GIMP brush file...aborting.");
 	      fclose (fp);
+	      gimp_object_destroy (hose);
 	      gimp_object_destroy (brush);
 	      return NULL;
 	    }
@@ -204,6 +207,7 @@ gimp_brush_hose_load (char *file_name)
 		     header.version, file_name);
   
 	  fclose (fp);
+	  gimp_object_destroy (hose);
 	  gimp_object_destroy (brush);
 	  return NULL;
 	}
@@ -213,6 +217,8 @@ gimp_brush_hose_load (char *file_name)
       if ((fread (buf, 1, sz_PatternHeader, fp)) < sz_PatternHeader)
 	{
 	  fclose (fp);
+	  gimp_object_destroy (hose);
+	  gimp_object_destroy (brush);
 	  return NULL;
 	}
   
@@ -229,26 +235,16 @@ gimp_brush_hose_load (char *file_name)
 					 0, 0, NULL);
   
      
-      /*  Read in the pattern name  */
+      /*  Skip the pattern name  */
       if ((bn_size = (header.header_size - sz_PatternHeader)))
-	{
-  
-	  nothing = (char *) g_malloc (sizeof (char) * bn_size);
-	  if ((fread (nothing, 1, bn_size, fp)) < bn_size)
-	    {
-	      g_message ("Error in GIMP pattern file...aborting.");
-	      fclose (fp);
-	
-	      return NULL;
-	    }
-        
-	}
-      else
-	{
-        
-	  nothing = g_strdup ("Unnamed");
-	}
-
+	if ((fseek (fp, bn_size, SEEK_CUR)) < 0)
+	  {
+	    g_message ("Error in GIMP pattern file...aborting.");
+	    fclose (fp);
+	    gimp_object_destroy (hose);
+	    gimp_object_destroy (brush);
+	    return NULL;
+	  }
 
       if ((fread (temp_buf_data (brush->pixmap_mask), 1,
 		  header.width * header.height * header.bytes, fp))
@@ -256,8 +252,7 @@ gimp_brush_hose_load (char *file_name)
 	g_message ("GIMP pattern file appears to be truncated.");
 
 
-      if(brush != NULL)
-	gimp_brush_list_add(list,GIMP_BRUSH(brush));
+      gimp_brush_list_add(list,GIMP_BRUSH(brush));
       
       printf("got here brush_count: %i\n", brush_count);
       printf("brush_list_count: %i  \n", gimp_brush_list_length(list));
@@ -268,8 +263,13 @@ gimp_brush_hose_load (char *file_name)
     }
   
   fclose (fp);
-  brush =GIMP_BRUSH_PIXMAP((gimp_brush_list_get_brush_by_index(list,0)));
+
+  if (!GIMP_IS_BRUSH_HOSE(hose))
+    g_print ("Is not BRUSH_HOSE???\n");
+#if 0
+  brush = GIMP_BRUSH_PIXMAP((gimp_brush_list_get_brush_by_index(list,0)));
   hose->pixmap_brush = *brush;
+#endif
   hose->brush_list = list;
   /* random test code */
 
@@ -277,4 +277,3 @@ gimp_brush_hose_load (char *file_name)
   return hose;
 
 }
-

@@ -1,3 +1,19 @@
+1999-08-18  Tor Lillqvist  <tml@iki.fi>
+
+	* app/gimpbrushhose.c (gimp_brush_hose_load): Fix it. Now the hose
+	itself, interpreted as a pixmap brush (which the hose is a
+	subclass of), is the first brush in its list. The rest of the
+	pixmap brushes in the list are separately allocated ones. Don't
+	read the pattern names into dummy buffers, just seek past.
+
+	* app/pixmapbrush.c (pixmapbrush_motion): Now works better, and
+	actually steps through the pixmaps in the hose's list. The
+	paint_core->brush (which points to a brush hose in the cases we're
+	interested in) is temporarily replaced with the current pixmap
+	brush to use, and restored after applying the pixmap brush.
+
+	* app/makefile.{cygwin,msc}: Add new files.
+
 Tue Aug 17 16:36:54 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* libgimp/gimp.c (gimp_uninstall_temp_proc): Prevent calling free with

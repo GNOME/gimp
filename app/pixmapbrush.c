@@ -44,7 +44,16 @@ static void         pixmapbrush_motion      (PaintCore *, GimpDrawable *);
 /* static Argument *   pixmapbrush_extended_gradient_invoker     (Argument *); */
 
 
-
+static void paint_line_pixmap_mask (GImage        *dest,
+				    GimpDrawable  *drawable,
+				    GimpBrushPixmap  *brush,
+				    unsigned char *d,
+				    int            x,
+				    int            offset_x,
+				    int            y,
+				    int            offset_y,
+				    int            bytes,
+				    int            width);
 					 
 					 
 /*  defines  */
@@ -200,36 +209,35 @@ pixmapbrush_motion (PaintCore *paint_core,
 		   GimpDrawable *drawable)
 {
   GImage *gimage;
-  TempBuf * area = NULL;
-  /*  unsigned char col[MAX_CHANNELS]; */
-  void * pr;
+  GimpBrush *saved_brush;
+  TempBuf * area;
   int opacity;
-  GimpBrushHose *brush;
+  static int index = 0;
 
-  pr = NULL;
-  
-  if(GIMP_IS_BRUSH_PIXMAP(paint_core->brush)){
-    printf("looks like were a pixmap\n");
-  }
-
-  if(!( GIMP_IS_BRUSH_HOSE(paint_core->brush))){
-    printf("not gimpbrushhose apparently...but why not i have no idea\n");
-  }
-
-  // brush = GIMP_BRUSH_HOSE(paint_core->brush);
-  
-  
-  //paint_core->brush = gimp_brush_list_get_brush_by_index(&(GIMP_BRUSH_HOSE(brush))->brush_list, 0);
-  
   /* We always need a destination image */ 
   if (! (gimage = drawable_gimage (drawable))) 
     return; 
 
- 
-  /*     Get a region which can be used to p\\aint to  */
-
+  if(!( GIMP_IS_BRUSH_HOSE(paint_core->brush))){
+    g_print("not gimpbrushhose apparently...but why not i have no idea\n");
+    return;
+  } else
+    {
+      saved_brush = paint_core->brush;
+      /* Set paint_core->brush, restore below before returning.
+       * I wonder if this is wise?
+       */
+      paint_core->brush = gimp_brush_list_get_brush_by_index(GIMP_BRUSH_HOSE(paint_core->brush)->brush_list, index++);
+      if (index == gimp_brush_list_length (GIMP_BRUSH_HOSE(saved_brush)->brush_list))
+	index = 0;
+    }
+  
+  /* Get a region which can be used to paint to  */
   if (! (area = paint_core_get_paint_area (paint_core, drawable))) 
-    return; 
+    {
+      paint_core->brush = saved_brush;
+      return;
+    }
   
   color_area_with_pixmap(gimage, drawable, area, paint_core->brush);
 
@@ -242,6 +250,8 @@ pixmapbrush_motion (PaintCore *paint_core,
 			   (int) (gimp_context_get_opacity (NULL) * 255),
 			   gimp_context_get_paint_mode (NULL), SOFT, 
 			   INCREMENTAL);
+
+  paint_core->brush = saved_brush;
 }
 
 
@@ -323,7 +333,7 @@ color_area_with_pixmap (GImage *dest,
 
 }
 
-void
+static void
 paint_line_pixmap_mask (GImage        *dest,
 			GimpDrawable  *drawable,
 			GimpBrushPixmap  *brush,
