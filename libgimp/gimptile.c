@@ -184,6 +184,8 @@ gimp_tile_get (GTile *tile)
 
   if (!gp_tile_ack_write (_writefd))
     gimp_quit ();
+
+  wire_destroy (&msg);
 }
 
 static void
@@ -240,6 +242,8 @@ gimp_tile_put (GTile *tile)
       g_warning ("unexpected message: %d\n", msg.type);
       gimp_quit ();
     }
+
+  wire_destroy (&msg);
 }
 
 /* This function is nearly identical to the function 'tile_cache_insert'

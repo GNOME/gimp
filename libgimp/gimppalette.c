@@ -103,3 +103,29 @@ gimp_palette_set_foreground (guchar red,
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
+
+void
+gimp_palette_set_default_colors (void)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_palette_set_default_colors",
+                                    &nreturn_vals,
+                                    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+void
+gimp_palette_swap_colors (void)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_palette_swap_colors",
+                                    &nreturn_vals,
+                                    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}

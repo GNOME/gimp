@@ -677,6 +677,7 @@ gimp_run_procedure (char *name,
     }
 
   g_free (proc_run.params);
+  g_free (proc_return->name);
   g_free (proc_return);
 
   return return_vals;
