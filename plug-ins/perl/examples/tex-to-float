@@ -79,7 +79,7 @@ sub tex_string_to_pgm {
     my $w = $bbox[2]-$bbox[0];
     my $h = $bbox[3]-$bbox[1];
     $psoutput=~ s/^%%BoundingBox:.*$/%%BoundingBox: 0 0 $w $h/m;
-    $psoutput=~ s/^1 0 bop/-$bbox[0] -$bbox[1] translate\n$&/m;
+    $psoutput=~ s/\b1 0 bop/-$bbox[0] -$bbox[1] translate\n$&/m;
 
     # Output to file in order not to have to use Open2.
     open(PS, ">$fn_base.ps");
