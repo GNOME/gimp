@@ -236,8 +236,3 @@ gap_decode_mpeg_LDADD = @STRIP_BEGIN@ \
 	$(GTK_LIBS)							\
 	$(INTLLIBS)							\
 @STRIP_END@
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

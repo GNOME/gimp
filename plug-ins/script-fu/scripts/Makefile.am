@@ -103,8 +103,3 @@ scriptdata_DATA = \
 	test-sphere.scm
 
 EXTRA_DIST = $(scriptdata_DATA)
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

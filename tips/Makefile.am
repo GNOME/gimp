@@ -17,5 +17,6 @@ tipsdata_DATA = \
 	gimp_tips.tr.txt	\
 	gimp_tips.uk.txt
 
-EXTRA_DIST = $(tipsdata_DATA)	\
+EXTRA_DIST = \
+	$(tipsdata_DATA)	\
 	makefile.mingw

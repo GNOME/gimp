@@ -38,8 +38,3 @@ fractalexplorerdata_DATA = \
 	Zooming_Circle
 
 EXTRA_DIST = $(fractalexplorerdata_DATA)
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-libexecdir = $(gimpplugindir)/plug-ins
-
 SUBDIRS = Brushes Paper Presets
+
+libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = gimpressionist
 
@@ -53,10 +53,3 @@ LDADD = @STRIP_BEGIN@ \
 	$(GTK_LIBS)							\
 	$(INTLLIBS)							\
 @STRIP_END@
-
-.PHONY: files
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

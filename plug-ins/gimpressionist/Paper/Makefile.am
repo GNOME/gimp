@@ -14,8 +14,3 @@ paperdata_DATA = \
 	struc.pgm
 
 EXTRA_DIST = $(paperdata_DATA)
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

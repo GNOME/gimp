@@ -1,4 +1,51 @@
+2001-11-15  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am: removed antique Makefile targets, including the
+	"files" hack (which was some automatic EXTRA_DIST voodoo), added
+	missing stuff to EXTRA_DIST.
+
+	* app/plug-in/Makefile.am
+	* devel-docs/Makefile.am
+	* docs/Makefile.am
+	* plug-ins/Makefile.am
+	* plug-ins/FractalExplorer/Makefile.am
+	* plug-ins/FractalExplorer/fractalexplorer-examples/Makefile.am
+	* plug-ins/Lighting/Makefile.am
+	* plug-ins/MapObject/Makefile.am
+	* plug-ins/bmp/Makefile.am
+	* plug-ins/dbbrowser/Makefile.am
+	* plug-ins/faxg3/Makefile.am
+	* plug-ins/fits/Makefile.am
+	* plug-ins/flame/Makefile.am
+	* plug-ins/gap/Makefile.am
+	* plug-ins/gdyntext/Makefile.am
+	* plug-ins/gflare/Makefile.am
+	* plug-ins/gflare/gflares/Makefile.am
+	* plug-ins/gfli/Makefile.am
+	* plug-ins/gimpressionist/Makefile.am
+	* plug-ins/gimpressionist/Brushes/Makefile.am
+	* plug-ins/gimpressionist/Paper/Makefile.am
+	* plug-ins/gimpressionist/Presets/Makefile.am
+	* plug-ins/ifscompose/Makefile.am
+	* plug-ins/imagemap/Makefile.am
+	* plug-ins/libgck/Makefile.am
+	* plug-ins/libgck/gck/Makefile.am
+	* plug-ins/maze/Makefile.am
+	* plug-ins/mosaic/Makefile.am
+	* plug-ins/pagecurl/Makefile.am
+	* plug-ins/plugin-helper/Makefile.am
+	* plug-ins/print/Makefile.am
+	* plug-ins/rcm/Makefile.am
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/script-fu/scripts/Makefile.am
+	* plug-ins/sel2path/Makefile.am
+	* plug-ins/sgi/Makefile.am
+	* plug-ins/webbrowser/Makefile.am
+	* plug-ins/xjt/Makefile.am
+	* tips/Makefile.am: removed "files" too, some minor cleanups.
+
 2001-11-15  Rebecca Walter <rjp@mail.tele.dk>
+
 	* app/core/gimpbrush.c
 	* app/core/gimpbrushpipe.c
 	* app/core/gimpchannel.c:  Proofreading to strings, approved by Sven

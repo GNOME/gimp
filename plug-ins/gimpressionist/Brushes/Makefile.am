@@ -65,8 +65,3 @@ brushdata_DATA = \
 	worm.pgm
 
 EXTRA_DIST = $(brushdata_DATA)
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

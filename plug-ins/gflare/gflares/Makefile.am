@@ -12,8 +12,3 @@ gflare_DATA = \
 	Hidden_Planet
 
 EXTRA_DIST = $(gflare_DATA)
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

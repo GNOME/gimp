@@ -60,10 +60,3 @@ LDADD = @STRIP_BEGIN@ \
 @STRIP_END@
 
 escputil_LDADD =
-
-.PHONY: files
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

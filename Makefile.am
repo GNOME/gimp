@@ -32,13 +32,20 @@ bin_SCRIPTS = gimptool-1.4 @GIMPINSTALL@
 EXTRA_SCRIPTS = gimpinstall
 
 EXTRA_DIST = \
-	README.i18n			\
-	README.win32			\
-	README.perl			\
+	AUTHORS				\
+	COPYING				\
+	ChangeLog			\
 	ChangeLog.pre-1-0		\
 	ChangeLog.pre-1-2		\
-	PLUGIN_MAINTAINERS		\
+	HACKING				\
+	INSTALL				\
 	MAINTAINERS			\
+	NEWS				\
+	PLUGIN_MAINTAINERS		\
+	README				\
+	README.i18n			\
+	README.perl			\
+	README.win32			\
 	TODO				\
 	TODO.xml			\
 	config.h.win32			\
@@ -60,27 +67,3 @@ install-exec-local:
 
 uninstall-local:
 	rm -f $(DESTDIR)$(bindir)/gimp-config-1.4
-
-.PHONY: files populate checkin release
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done
-	@for subdir in $(SUBDIRS); do \
-	  files=`cd $$subdir; $(MAKE) files | grep -v "make\[[1-9]\]"`; \
-	  for file in $$files; do \
-	    echo $$subdir/$$file; \
-	  done; \
-	done
-
-populate:
-	@echo "populating project"
-	@files=`$(MAKE) files | grep -v "make\[[1-9]\]"`; prcs populate -d gimp.prj $$files
-
-checkin: populate
-	@echo "checking in project"
-	@prcs checkin
-
-release:
-	$(MAKE) dist distdir=$(PACKAGE)`date +"%y%m%d"`
