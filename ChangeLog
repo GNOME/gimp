@@ -1,4 +1,14 @@
-Wed Sep 27 00:46:31 CEST 2000  Daniel Egger  <egger@suse.de>
+Wed Sep 27 19:43:05 CEST 2000  Daniel Egger  <egger@suse.de>
+
+	* gimpbrush.c:
+	* gimpbrush.h:
+	* gimpbrushgenerated.c: Return failed brush load try
+	in gimp_brush_load_brush and react accordingly instead
+	of crashing. Fixes part of bug #8150. I'd really
+	appreciate if some expert could have a look in the
+	pixmapbrush and brushpipe half of this problem.
+
+Wed Sep 27 19:43:13 CEST 2000  Daniel Egger  <egger@suse.de>
 
 	* app/paint_funcs.c: Implemented suggested solution for
 	SPARC alignment problem by Jon Hazen. Fixes bug #21269.

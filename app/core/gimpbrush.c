@@ -126,9 +126,7 @@ gimp_brush_new (gchar *filename)
 {
   GimpBrush *brush = GIMP_BRUSH (gtk_type_new  (gimp_brush_get_type ()));
 
-  gimp_brush_load (brush, filename);
-
-  return brush;
+  return (gimp_brush_load (brush, filename)? brush : NULL);
 }
 
 static GimpBrush *
@@ -193,7 +191,7 @@ gimp_brush_set_spacing (GimpBrush *brush,
   brush->spacing = spacing;
 }
 
-void
+gboolean
 gimp_brush_load (GimpBrush *brush, 
 		 gchar     *filename)
 {
@@ -205,17 +203,20 @@ gimp_brush_load (GimpBrush *brush,
   if (! (fp = fopen (filename, "rb")))
     {
       gimp_object_destroy (brush);
-      return;
+      return FALSE;
     }
 
-  gimp_brush_load_brush (brush, fp, filename);
-
+  if (!gimp_brush_load_brush (brush, fp, filename))
+    return FALSE;
+    
   /*  Clean up  */
   fclose (fp);
 
   /*  Swap the brush to disk (if we're being stingy with memory) */
   if (stingy_memory_use)
     temp_buf_swap (brush->mask);
+ 
+  return TRUE;
 }
 
 gint

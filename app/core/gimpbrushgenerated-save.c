@@ -134,7 +134,10 @@ gimp_brush_generated_load (const gchar *file_name)
 
   /* make sure the file we are reading is the right type */
   fgets (string, 255, fp);
-  g_return_val_if_fail (strncmp (string, "GIMP-VBR", 8) == 0, NULL);
+  
+  if (strncmp (string, "GIMP-VBR", 8) != 0)
+    return NULL;
+  
   /* make sure we are reading a compatible version */
   fgets (string, 255, fp);
   sscanf (string, "%f", &version);

@@ -55,7 +55,7 @@ struct _GimpBrushClass
 GtkType     gimp_brush_get_type    (void);
 GimpBrush * gimp_brush_new         (gchar     *filename);
 
-void        gimp_brush_load        (GimpBrush *brush,
+gboolean    gimp_brush_load        (GimpBrush *brush,
 				    gchar     *filename);
 gint        gimp_brush_load_brush  (GimpBrush *brush,
 				    FILE      *fp,
