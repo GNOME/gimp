@@ -1301,11 +1301,14 @@ fit_one_spline (curve_type curve)
   spline_type spline;
   vector_type start_vector, end_vector;
   unsigned i;
-  vector_type A[CURVE_LENGTH (curve)][2]; /* A dynamically allocated array.  */
   vector_type t1_hat = *CURVE_START_TANGENT (curve);
   vector_type t2_hat = *CURVE_END_TANGENT (curve);
   real C[2][2] = { { 0.0, 0.0 }, { 0.0, 0.0 } };
   real X[2] = { 0.0, 0.0 };
+  int Alen = CURVE_LENGTH (curve);
+  vector_type *A; 
+  
+  A = (vector_type *)calloc(sizeof(vector_type)*2,Alen);
 
   START_POINT (spline) = CURVE_POINT (curve, 0);
   END_POINT (spline) = LAST_CURVE_POINT (curve);
@@ -1314,14 +1317,14 @@ fit_one_spline (curve_type curve)
 
   for (i = 0; i < CURVE_LENGTH (curve); i++)
     {
-      A[i][0] = Vmult_scalar (t1_hat, B1 (U (i)));
-      A[i][1] = Vmult_scalar (t2_hat, B2 (U (i)));
+      A[i*2+0] = Vmult_scalar (t1_hat, B1 (U (i)));
+      A[i*2+1] = Vmult_scalar (t2_hat, B2 (U (i)));
     }
 
   for (i = 0; i < CURVE_LENGTH (curve); i++)
     {
       vector_type temp, temp0, temp1, temp2, temp3;
-      vector_type *Ai = A[i];
+      vector_type *Ai = &A[i*2];
 
       C[0][0] += Vdot (Ai[0], Ai[0]);
       C[0][1] += Vdot (Ai[0], Ai[1]);
@@ -1357,6 +1360,8 @@ fit_one_spline (curve_type curve)
   CONTROL2 (spline) = Vadd_point (END_POINT (spline),
                                   Vmult_scalar (t2_hat, alpha2));
   SPLINE_DEGREE (spline) = CUBIC;
+
+  free(A);
   
   return spline;
 }
@@ -1407,12 +1412,17 @@ reparameterize (curve_type curve, spline_type S)
       real_coordinate_type S2_t = evaluate_spline (S2, t);
 
       /* The differences in x and y (Q1(t) on p.62 of Schneider's thesis).  */
-      real_coordinate_type d = { S_t.x - point.x, S_t.y - point.y };
+      real_coordinate_type d;
+      real numerator;
+      real denominator;
+
+      d.x = S_t.x - point.x;
+      d.y = S_t.y - point.y;
 
       /* The step size, f(t)/f'(t).  */
-      real numerator = d.x * S1_t.x + d.y * S1_t.y;
-      real denominator = (SQUARE (S1_t.x) + d.x * S2_t.x
-			  + SQUARE (S1_t.y) + d.y * S2_t.y);
+      numerator = d.x * S1_t.x + d.y * S1_t.y;
+      denominator = (SQUARE (S1_t.x) + d.x * S2_t.x
+		     + SQUARE (S1_t.y) + d.y * S2_t.y);
 
       /* We compute the distances only to be able to check that we
          really are moving closer.  I don't know how this condition can
@@ -1645,7 +1655,10 @@ find_half_tangent (curve_type c, boolean to_start_point, unsigned *n_points)
   int factor = to_start_point ? 1 : -1;
   unsigned tangent_index = to_start_point ? 0 : c->length - 1;
   real_coordinate_type tangent_point = CURVE_POINT (c, tangent_index);
-  vector_type tangent = { 0.0, 0.0 };
+  vector_type tangent;
+
+  tangent.dx = 0.0;
+  tangent.dy = 0.0;
 
   for (p = 1; p <= tangent_surround; p++)
     {

@@ -207,8 +207,11 @@ append_outline_pixel (pixel_outline_type *o, coordinate_type c)
 void
 append_coordinate (pixel_outline_type *o, int x, int y, edge_type edge)
 {
-  coordinate_type c = { x, y};
+  coordinate_type c;
   char * str;
+
+  c.x = x;
+  c.y = y;
 
   switch (edge)
     {

@@ -1,3 +1,10 @@
+Wed Jul 21 00:00:35 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* plug-ins/sel2path/fit.c
+	* plug-ins/sel2path/pxl-outline.c
+
+	Corrected more non-portable code problems.
+
 1999-07-20  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
         * app/ink.c (ink_options_new): Changed the default step-width of
