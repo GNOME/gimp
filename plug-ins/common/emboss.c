@@ -194,6 +194,9 @@ run(gchar *name, gint nparam, GParam *param,
 
     case RUN_WITH_LAST_VALS:
       gimp_get_data("plug_in_emboss", &args);
+      /* use this image and drawable, even with last args */
+      args.img = param[1].data.d_image;
+      args.drw = param[2].data.d_drawable;
       if (pluginCore(&args)==-1) {
         rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
       }

@@ -140,6 +140,8 @@ run(char *name, gint nparam, GParam *param,
 
   args.radius=-1.0;
   gimp_get_data("plug_in_nlfilt", &args);
+  args.img = param[1].data.d_image;
+  args.drw = param[2].data.d_drawable;
 
   rvals[0].type = PARAM_STATUS;
   rvals[0].data.d_status = STATUS_SUCCESS;
@@ -147,8 +149,6 @@ run(char *name, gint nparam, GParam *param,
      GDrawable *drw;
     case RUN_INTERACTIVE:
       /* XXX: add code here for interactive running */
-      args.img = param[1].data.d_image;
-      args.drw = param[2].data.d_drawable;
       if (args.radius == -1) {
          args.alpha = (gdouble)0.3;
          args.radius = (gdouble)0.3;
@@ -171,8 +171,6 @@ run(char *name, gint nparam, GParam *param,
         rvals[0].data.d_status = STATUS_CALLING_ERROR;
         break;
       }
-      args.img = param[1].data.d_image;
-      args.drw = param[2].data.d_drawable;
       args.alpha = param[3].data.d_float;
       args.radius = param[4].data.d_float;
       args.filter = param[5].data.d_int32;

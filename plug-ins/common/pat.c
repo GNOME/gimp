@@ -152,6 +152,8 @@ run (char    *name,
 			case RUN_NONINTERACTIVE:
 				if (nparams != 6)
 					status = STATUS_CALLING_ERROR;
+		      else
+					 strcpy(description, param[5].data.d_string);
 			case RUN_WITH_LAST_VALS:
 				gimp_get_data ("file_pat_save", description);
 				break;

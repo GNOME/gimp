@@ -234,13 +234,14 @@ run(char *name, int nparam, GParam *param,
 
   gimp_get_data("plug_in_hot", &args);
 
+  args.image = param[1].data.d_image;
+  args.drawable = param[2].data.d_drawable;
+
   rvals[0].type = PARAM_STATUS;
   rvals[0].data.d_status = STATUS_SUCCESS;
   switch (param[0].data.d_int32) {
     case RUN_INTERACTIVE:
       /* XXX: add code here for interactive running */
-      args.image = param[1].data.d_image;
-      args.drawable = param[2].data.d_drawable;
       if(args.mode == -1) {
          args.mode = mode_ntsc;
          args.action =   act_lredux;
@@ -260,8 +261,6 @@ run(char *name, int nparam, GParam *param,
         rvals[0].data.d_status = STATUS_CALLING_ERROR;
         break;
       }
-      args.image = param[1].data.d_image;
-      args.drawable = param[2].data.d_drawable;
       args.mode = param[3].data.d_drawable;
       args.action = param[4].data.d_drawable;
 
