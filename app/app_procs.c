@@ -317,7 +317,6 @@ static GtkWidget *win_initstatus = NULL;
 static GtkWidget *label1 = NULL;
 static GtkWidget *label2 = NULL;
 static GtkWidget *pbar = NULL;
-static gint idle_tag = -1;
 
 static void
 destroy_initialization_status_window(void)
@@ -329,7 +328,6 @@ destroy_initialization_status_window(void)
 	gdk_pixmap_unref(logo_pixmap);
       win_initstatus = label1 = label2 = pbar = logo_area = NULL;
       logo_pixmap = NULL;
-      gtk_idle_remove(idle_tag);
     }
 }
 
@@ -433,10 +431,12 @@ app_init_update_status(char *label1val,
 	{
 	  gtk_progress_bar_update (GTK_PROGRESS_BAR (pbar), pct_progress);
 	}
-      gtk_widget_draw(win_initstatus, &area);
-      idle_tag = gtk_idle_add((GtkFunction) gtk_true, NULL);
-      gtk_main_iteration();
-      gtk_idle_remove(idle_tag);
+      while (gtk_events_pending())
+	gtk_main_iteration();
+      /* We sync here to make sure things get drawn before continuing,
+       * is the improved look worth the time? I'm not sure...
+       */
+      gdk_flush();
     }
 }
 

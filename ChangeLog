@@ -1,3 +1,10 @@
+Sun Aug 30 16:45:05 1998  Owen Taylor  <otaylor@gtk.org>
+
+	* app/app_procs.c (app_init_update_status): Instead
+	of calling gtk_widget_draw() (which was happening before
+	the labels got re-size-allocated), just update the
+	event loop so the idle resize/redraw gets run.
+
 Sat Aug 29 15:32:32 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* libgimp/gimp.c
