@@ -352,9 +352,7 @@ static void do_playback(void)
     palette = gimp_image_get_cmap(image_id, &ncolours);
 
   /* cache hint */
-  gimp_tile_cache_ntiles (MAX(drawable->width,drawable->height)/
-			  MIN(gimp_tile_width(),gimp_tile_height())
-			  +1);
+  gimp_tile_cache_ntiles (1);
 
   init_preview_misc();
   build_dialog(gimp_image_base_type(image_id),
