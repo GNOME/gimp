@@ -33,6 +33,8 @@ typedef struct _GTile        GTile;
 typedef struct _GDrawable    GDrawable;
 typedef struct _GPixelRgn    GPixelRgn;
 typedef struct _GParamDef    GParamDef;
+typedef struct _GParamColor  GParamColor;
+typedef struct _GParamRegion GParamRegion;
 typedef union  _GParamData   GParamData;
 typedef struct _GParam       GParam;
 typedef void   (* GRunProc) (char    *name,
@@ -111,6 +113,21 @@ struct _GParamDef
   char *description;
 };
 
+struct _GParamColor
+{
+  guint8 red;
+  guint8 green;
+  guint8 blue;
+};
+
+struct _GParamRegion
+{
+  gint32 x;
+  gint32 y;
+  gint32 width;
+  gint32 height;
+};
+
 union _GParamData
 {
   gint32 d_int32;
@@ -123,17 +140,8 @@ union _GParamData
   gint8 *d_int8array;
   gdouble *d_floatarray;
   gchar **d_stringarray;
-  struct {
-    guint8 red;
-    guint8 green;
-    guint8 blue;
-  } d_color;
-  struct {
-    gint32 x;
-    gint32 y;
-    gint32 width;
-    gint32 height;
-  } d_region;
+  GParamColor d_color;
+  GParamRegion d_region;
   gint32 d_display;
   gint32 d_image;
   gint32 d_layer;
