@@ -1,3 +1,8 @@
+Sat Aug 15 22:53:36 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/gdisplay.c (gdisplay_update_cursor): Make sure we check the
+	return value from gimp_image_active_drawable.
+
 Sat Aug 15 19:30:42 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* Makefile.am boundary.h boundaryF.h by_color_select.h 
