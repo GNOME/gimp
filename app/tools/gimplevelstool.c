@@ -305,6 +305,7 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 
   l_tool->channel = GIMP_HISTOGRAM_VALUE;
   l_tool->color   = gimp_drawable_is_rgb (drawable);
+  l_tool->alpha   = gimp_drawable_has_alpha (drawable);
 
   if (l_tool->active_picker)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (l_tool->active_picker),
@@ -319,7 +320,10 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 
   /* set the current selection */
   gtk_option_menu_set_history (GTK_OPTION_MENU (l_tool->channel_menu),
-			       l_tool->channel);
+                               l_tool->channel);
+
+  if (! l_tool->color && l_tool->alpha)
+    l_tool->channel = 1;
 
   levels_update (l_tool, ALL);
 
@@ -939,7 +943,7 @@ levels_channel_callback (GtkWidget      *widget,
                                    l_tool->channel);
 
   /* FIXME: hack */
-  if (! l_tool->color)
+  if (! l_tool->color && l_tool->alpha)
     l_tool->channel = (l_tool->channel > 1) ? 2 : 1;
 
   levels_update (l_tool, ALL);

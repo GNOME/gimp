@@ -1,3 +1,16 @@
+2004-01-24  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/color.pdb (levels, curves): fiddle with the
+	passed channel index only for GRAYA drawables, not for all GRAY
+	drawables. Fixes bug #132322.
+
+	* tools/pdbgen/pdb/color.pdb: regenerated.
+
+	* app/tools/gimpcurvestool.[ch]
+	* app/tools/gimplevelstool.[ch]: fixed the same bug here. It never
+	occured because the "channel" field was accidentially initialized
+	with the correct value and never changed after.
+
 2004-01-23  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/mosaic.c: properly use src_rgn.rowstride when

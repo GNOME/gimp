@@ -312,8 +312,9 @@ gimp_curves_tool_initialize (GimpTool    *tool,
 
   curves_init (c_tool->curves);
 
-  c_tool->color   = gimp_drawable_is_rgb (drawable);
   c_tool->channel = GIMP_HISTOGRAM_VALUE;
+  c_tool->color   = gimp_drawable_is_rgb (drawable);
+  c_tool->alpha   = gimp_drawable_has_alpha (drawable);
 
   c_tool->grab_point = -1;
   c_tool->last       = 0;
@@ -332,6 +333,9 @@ gimp_curves_tool_initialize (GimpTool    *tool,
   /* set the current selection */
   gimp_int_option_menu_set_history (GTK_OPTION_MENU (c_tool->channel_menu),
                                     c_tool->channel);
+
+  if (! c_tool->color && c_tool->alpha)
+    c_tool->channel = 1;
 
   curves_update (c_tool, ALL);
 
@@ -797,7 +801,7 @@ curves_channel_callback (GtkWidget      *widget,
                                    c_tool->channel);
 
   /* FIXME: hack */
-  if (! c_tool->color)
+  if (! c_tool->color && c_tool->alpha)
     c_tool->channel = (c_tool->channel > 1) ? 2 : 1;
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (c_tool->curve_type),
@@ -828,10 +832,12 @@ curves_set_sensitive_callback (GimpHistogramChannel  channel,
     {
     case GIMP_HISTOGRAM_VALUE:
       return TRUE;
+
     case GIMP_HISTOGRAM_RED:
     case GIMP_HISTOGRAM_GREEN:
     case GIMP_HISTOGRAM_BLUE:
       return c_tool->color;
+
     case GIMP_HISTOGRAM_ALPHA:
       return gimp_drawable_has_alpha (GIMP_IMAGE_MAP_TOOL (c_tool)->drawable);
     }

@@ -231,7 +231,7 @@ levels_invoker (Gimp     *gimp,
       if (success)
 	{
 	  /* FIXME: hack */
-	  if (gimp_drawable_is_gray (drawable))
+	  if (gimp_drawable_is_gray (drawable) && gimp_drawable_has_alpha (drawable))
 	    channel = (channel > 1) ? 2 : 1;
     
 	  lut = gimp_lut_new ();
@@ -686,7 +686,7 @@ curves_spline_invoker (Gimp     *gimp,
       if (success)
 	{
 	  /* FIXME: hack */
-	  if (gimp_drawable_is_gray (drawable))
+	  if (gimp_drawable_is_gray (drawable) && gimp_drawable_has_alpha (drawable))
 	    channel = (channel > 1) ? 2 : 1;
     
 	  lut = gimp_lut_new ();
@@ -808,7 +808,7 @@ curves_explicit_invoker (Gimp     *gimp,
       if (success)
 	{
 	  /* FIXME: hack */
-	  if (gimp_drawable_is_gray (drawable))
+	  if (gimp_drawable_is_gray (drawable) && gimp_drawable_has_alpha (drawable))
 	    channel = (channel > 1) ? 2 : 1;
     
 	  lut = gimp_lut_new ();

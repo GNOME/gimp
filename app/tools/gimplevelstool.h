@@ -40,6 +40,7 @@ struct _GimpLevelsTool
 
   GimpLut              *lut;
   gboolean              color;
+  gboolean              alpha;
   Levels               *levels;
 
   /* dialog */

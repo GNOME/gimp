@@ -42,6 +42,7 @@ struct _GimpCurvesTool
 
   /* dialog */
   gboolean              color;
+  gboolean              alpha;
   GimpHistogramChannel  channel;
 
   gint                  grab_point;
