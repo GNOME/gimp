@@ -143,7 +143,7 @@ HELP
 	vars => [ 'GList *guides', 'gboolean guide_found' ],
 	code => <<'CODE'
 {
-  success     = FALSE;
+  success     = (gimage->guides == NULL);
   guide_found = FALSE;
 
   for (guides = gimage->guides; guides; guides = g_list_next (guides))

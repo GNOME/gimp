@@ -298,7 +298,7 @@ image_find_next_guide_invoker (Gimp     *gimp,
 
   if (success)
     {
-      success     = FALSE;
+      success     = (gimage->guides == NULL);
       guide_found = FALSE;
     
       for (guides = gimage->guides; guides; guides = g_list_next (guides))

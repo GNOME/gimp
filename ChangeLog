@@ -1,3 +1,10 @@
+2003-03-02  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/guides.pdb
+	* app/pdb/guides_cmds.c: fixed gimp_image_find_next_guide() which
+	was broken for the case when the image had no guides at all. Fixes
+	the hanging rotate plug-in (bug #106823).
+
 2003-03-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppreviewrenderer.[ch]: added "gint bytes" to the
