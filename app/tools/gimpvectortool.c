@@ -1721,8 +1721,12 @@ gimp_vector_tool_delete_selected_anchors (GimpVectorTool *vector_tool)
 {
   GimpAnchor *cur_anchor;
   GimpStroke *cur_stroke = NULL;
-  GList *anchors;
-  GList *list;
+  GList      *anchors;
+  GList      *list;
+  gboolean    have_undo = FALSE;
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (vector_tool));
+  gimp_vectors_freeze (vector_tool->vectors);
 
   while ((cur_stroke = gimp_vectors_stroke_get_next (vector_tool->vectors,
                                                      cur_stroke)))
@@ -1735,11 +1739,25 @@ gimp_vector_tool_delete_selected_anchors (GimpVectorTool *vector_tool)
           cur_anchor = GIMP_ANCHOR (list->data);
 
           if (cur_anchor->selected)
-            gimp_stroke_anchor_delete (cur_stroke, cur_anchor);
+            {
+              if (! have_undo)
+                {
+                  gimp_vector_tool_undo_push (vector_tool, _("Delete Anchors"));
+                  have_undo = TRUE;
+                }
+
+              gimp_stroke_anchor_delete (cur_stroke, cur_anchor);
+
+              if (gimp_stroke_is_empty (cur_stroke))
+                gimp_vectors_stroke_remove (vector_tool->vectors, cur_stroke);
+            }
         }
 
       g_list_free (anchors);
     }
+
+  gimp_vectors_thaw (vector_tool->vectors);
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (vector_tool));
 }
 
 static void

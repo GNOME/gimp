@@ -1,3 +1,8 @@
+2004-06-28  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.c: fixed drawing code to properly
+	update after deleting nodes via BackSpace/Delete.
+
 2004-06-27  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimplevelstool.c: removed two small chunks of code.
