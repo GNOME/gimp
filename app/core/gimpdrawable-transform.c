@@ -55,6 +55,7 @@
 
 /* recursion level should be a usersettable parameter,
    3 seems to be a reasonable default */
+/* temporarily set to 0 - http://bugzilla.gnome.org/show_bug.cgi?id=136702 */
 #define RECURSION_LEVEL 0
 
 
