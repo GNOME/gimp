@@ -1,3 +1,19 @@
+2001-01-25  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/gimp.h
+	* libgimp/gimpcompat.h: removed.
+
+	The GIMP 1.0 API is not supported any more !!!
+
+	* plug-ins/print/print-image-gimp.c
+	* plug-ins/print/print.c
+	* plug-ins/print/print_gimp.h: a quick fix for old compat cruft.
+	This is temporary and will be replaced by Gimp-Print's development
+	version.
+
+	* plug-ins/xjt/xjpeg.c: use GimpRGB.
+
 2001-01-25  Sven Neumann  <sven@gimp.org>
 
 	* app/libgimp_glue.[ch]: cleanup

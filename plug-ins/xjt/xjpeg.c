@@ -481,12 +481,9 @@ xjpg_load_channel (char   *filename,
   int l_tile_height;
   int l_scanlines;
   int l_idx, l_start, l_end;
-  guchar l_color[3];
+  GimpRGB l_color;
 
-
-  l_color[0] = red;
-  l_color[1] = green;
-  l_color[2] = blue;
+  gimp_rgba_set_uchar (&l_color, red, green, blue, 255);
 
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
@@ -566,11 +563,12 @@ xjpg_load_channel (char   *filename,
 
   if(drawable_id < 0)
   {
-     l_drawable_id = gimp_channel_new (image_id, channel_name,
-			     cinfo.output_width,
-			     cinfo.output_height,
-			     channel_opacity,
-			     l_color);
+     l_drawable_id = gimp_channel_new (image_id,
+				       channel_name,
+				       cinfo.output_width,
+				       cinfo.output_height,
+				       channel_opacity,
+				       &l_color);
      if(l_drawable_id < 0)
      {
          fprintf(stderr, "XJT: cant create new channel\n");

@@ -200,7 +200,6 @@ gimpinclude_HEADERS = \
 	gimpadaptivesupersample.h	\
 	gimpbilinear.h			\
 	gimpchannel.h			\
-        gimpcompat.h			\
 	gimpdrawable.h			\
 	gimpenums.h			\
 	gimpenv.h			\

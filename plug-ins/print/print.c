@@ -54,7 +54,7 @@ static int	compare_printers(plist_t *p1, plist_t *p2);
 static void	get_system_printers(void);
 
 static void	query (void);
-static void	run (char *, int, GParam *, int *, GParam **);
+static void	run (char *, int, GimpParam *, int *, GimpParam **);
 static int	do_print_dialog (char *proc_name);
 
 #ifndef GIMP_1_0
@@ -72,7 +72,7 @@ static void	cleanupfunc(void);
  * Globals...
  */
 
-GPlugInInfo	PLUG_IN_INFO =		/* Plug-in information */
+GimpPlugInInfo PLUG_IN_INFO =		/* Plug-in information */
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -177,36 +177,36 @@ cleanupfunc(void)
 static void
 query (void)
 {
-  static GParamDef	args[] =
+  static GimpParamDef	args[] =
   {
-    { PARAM_INT32,	"run_mode",	"Interactive, non-interactive" },
-    { PARAM_IMAGE,	"image",	"Input image" },
-    { PARAM_DRAWABLE,	"drawable",	"Input drawable" },
-    { PARAM_STRING,	"output_to",	"Print command or filename (| to pipe to command)" },
-    { PARAM_STRING,	"driver",	"Printer driver short name" },
-    { PARAM_STRING,	"ppd_file",	"PPD file" },
-    { PARAM_INT32,	"output_type",	"Output type (0 = gray, 1 = color)" },
-    { PARAM_STRING,	"resolution",	"Resolution (\"300\", \"720\", etc.)" },
-    { PARAM_STRING,	"media_size",	"Media size (\"Letter\", \"A4\", etc.)" },
-    { PARAM_STRING,	"media_type",	"Media type (\"Plain\", \"Glossy\", etc.)" },
-    { PARAM_STRING,	"media_source",	"Media source (\"Tray1\", \"Manual\", etc.)" },
-    { PARAM_FLOAT,	"brightness",	"Brightness (0-400%)" },
-    { PARAM_FLOAT,	"scaling",	"Output scaling (0-100%, -PPI)" },
-    { PARAM_INT32,	"orientation",	"Output orientation (-1 = auto, 0 = portrait, 1 = landscape)" },
-    { PARAM_INT32,	"left",		"Left offset (points, -1 = centered)" },
-    { PARAM_INT32,	"top",		"Top offset (points, -1 = centered)" },
-    { PARAM_FLOAT,	"gamma",	"Output gamma (0.1 - 3.0)" },
-    { PARAM_FLOAT,	"contrast",	"Contrast" },
-    { PARAM_FLOAT,	"cyan",		"Cyan level" },
-    { PARAM_FLOAT,	"magenta",	"Magenta level" },
-    { PARAM_FLOAT,	"yellow",		"Yellow level" },
-    { PARAM_INT32,	"linear",	"Linear output (0 = normal, 1 = linear)" },
-    { PARAM_INT32,	"image_type",	"Image type (0 = line art, 1 = solid tones, 2 = continuous tone, 3 = monochrome)"},
-    { PARAM_FLOAT,	"saturation",	"Saturation (0-1000%)" },
-    { PARAM_FLOAT,	"density",	"Density (0-200%)" },
-    { PARAM_STRING,	"ink_type",	"Type of ink or cartridge" },
-    { PARAM_STRING,	"dither_algorithm", "Dither algorithm" },
-    { PARAM_INT32,	"unit",		"Unit 0=Inches 1=Metric" },
+    { GIMP_PDB_INT32,	"run_mode",	"Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,	"image",	"Input image" },
+    { GIMP_PDB_DRAWABLE,	"drawable",	"Input drawable" },
+    { GIMP_PDB_STRING,	"output_to",	"Print command or filename (| to pipe to command)" },
+    { GIMP_PDB_STRING,	"driver",	"Printer driver short name" },
+    { GIMP_PDB_STRING,	"ppd_file",	"PPD file" },
+    { GIMP_PDB_INT32,	"output_type",	"Output type (0 = gray, 1 = color)" },
+    { GIMP_PDB_STRING,	"resolution",	"Resolution (\"300\", \"720\", etc.)" },
+    { GIMP_PDB_STRING,	"media_size",	"Media size (\"Letter\", \"A4\", etc.)" },
+    { GIMP_PDB_STRING,	"media_type",	"Media type (\"Plain\", \"Glossy\", etc.)" },
+    { GIMP_PDB_STRING,	"media_source",	"Media source (\"Tray1\", \"Manual\", etc.)" },
+    { GIMP_PDB_FLOAT,	"brightness",	"Brightness (0-400%)" },
+    { GIMP_PDB_FLOAT,	"scaling",	"Output scaling (0-100%, -PPI)" },
+    { GIMP_PDB_INT32,	"orientation",	"Output orientation (-1 = auto, 0 = portrait, 1 = landscape)" },
+    { GIMP_PDB_INT32,	"left",		"Left offset (points, -1 = centered)" },
+    { GIMP_PDB_INT32,	"top",		"Top offset (points, -1 = centered)" },
+    { GIMP_PDB_FLOAT,	"gamma",	"Output gamma (0.1 - 3.0)" },
+    { GIMP_PDB_FLOAT,	"contrast",	"Contrast" },
+    { GIMP_PDB_FLOAT,	"cyan",		"Cyan level" },
+    { GIMP_PDB_FLOAT,	"magenta",	"Magenta level" },
+    { GIMP_PDB_FLOAT,	"yellow",		"Yellow level" },
+    { GIMP_PDB_INT32,	"linear",	"Linear output (0 = normal, 1 = linear)" },
+    { GIMP_PDB_INT32,	"image_type",	"Image type (0 = line art, 1 = solid tones, 2 = continuous tone, 3 = monochrome)"},
+    { GIMP_PDB_FLOAT,	"saturation",	"Saturation (0-1000%)" },
+    { GIMP_PDB_FLOAT,	"density",	"Density (0-200%)" },
+    { GIMP_PDB_STRING,	"ink_type",	"Type of ink or cartridge" },
+    { GIMP_PDB_STRING,	"dither_algorithm", "Dither algorithm" },
+    { GIMP_PDB_INT32,	"unit",		"Unit 0=Inches 1=Metric" },
   };
   static gint nargs = sizeof(args) / sizeof(args[0]);
 
@@ -301,21 +301,21 @@ volatile int SDEBUG = 1;
 static void
 run (char   *name,		/* I - Name of print program. */
      int    nparams,		/* I - Number of parameters passed in */
-     GParam *param,		/* I - Parameter values */
+     GimpParam *param,		/* I - Parameter values */
      int    *nreturn_vals,	/* O - Number of return values */
-     GParam **return_vals)	/* O - Return values */
+     GimpParam **return_vals)	/* O - Return values */
 {
-  GDrawable	*drawable;	/* Drawable for image */
-  GRunModeType	 run_mode;	/* Current run mode */
+  GimpDrawable	*drawable;	/* Drawable for image */
+  GimpRunModeType	 run_mode;	/* Current run mode */
   FILE		*prn;		/* Print file/command */
   int		 ncolors;	/* Number of colors in colormap */
-  GParam	*values;	/* Return values */
+  GimpParam	*values;	/* Return values */
 #ifdef __EMX__
   char		*tmpfile;	/* temp filename */
 #endif
   gint32         drawable_ID;   /* drawable ID */
 #ifndef GIMP_1_0
-  GimpExportReturnType export = EXPORT_CANCEL;    /* return value of gimp_export_image() */
+  GimpExportReturnType export = GIMP_EXPORT_CANCEL;    /* return value of gimp_export_image() */
 #endif
   int		ppid = getpid (), /* PID of plugin */
 		opid,		/* PID of output process */
@@ -340,10 +340,10 @@ run (char   *name,		/* I - Name of print program. */
   current_printer = get_printer_by_index (0);
   run_mode = (GRunModeType)param[0].data.d_int32;
 
-  values = g_new (GParam, 1);
+  values = g_new (GimpParam, 1);
 
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_SUCCESS;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -363,14 +363,14 @@ run (char   *name,		/* I - Name of print program. */
     case RUN_WITH_LAST_VALS:
       gimp_ui_init ("print", TRUE);
       export = gimp_export_image (&image_ID, &drawable_ID, "Print",
-				  (CAN_HANDLE_RGB |
-				   CAN_HANDLE_GRAY |
-				   CAN_HANDLE_INDEXED |
-				   CAN_HANDLE_ALPHA));
-      if (export == EXPORT_CANCEL)
+				  (GIMP_EXPORT_CAN_HANDLE_RGB |
+				   GIMP_EXPORT_CAN_HANDLE_GRAY |
+				   GIMP_EXPORT_CAN_HANDLE_INDEXED |
+				   GIMP_EXPORT_CAN_HANDLE_ALPHA));
+      if (export == GIMP_EXPORT_CANCEL)
 	{
 	  *nreturn_vals = 1;
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	  return;
 	}
       break;
@@ -690,7 +690,7 @@ run (char   *name,		/* I - Name of print program. */
 
  cleanup:
 #ifndef GIMP_1_0
-  if (export == EXPORT_EXPORT)
+  if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image_ID);
 #else
   ; /* MRS: empty statement to suppress compiler warning */

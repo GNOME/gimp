@@ -69,6 +69,6 @@
  */
 
 /* How to create an Image wrapping a Gimp drawable */
-extern Image Image_GDrawable_new(GDrawable *drawable);
+extern Image Image_GDrawable_new(GimpDrawable *drawable);
 
 #endif  /* __PRINT_GIMP_H__ */

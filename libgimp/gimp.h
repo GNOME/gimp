@@ -50,8 +50,6 @@
 
 #include <libgimp/gimp_pdb.h>
 
-#include <libgimp/gimpcompat.h>  /* to be removed before 1.2 */
-
 #ifdef G_OS_WIN32
 #  include <stdlib.h>		/* For _-argc and __argv */
 #  ifdef LIBGIMP_COMPILATION
