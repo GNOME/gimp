@@ -1,5 +1,10 @@
 2003-02-05  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptextlayer.c
+	* app/tools/gimptexttool.c: fixed includes.
+
+2003-02-05  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/Makefile.am: fixed rules for generated sources.
 
 	* app/text/Makefile.am

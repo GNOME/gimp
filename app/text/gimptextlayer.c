@@ -24,7 +24,6 @@
 #include <string.h>
 
 #include <glib-object.h>
-#include <pango/pangoft2.h>
 
 #include "text-types.h"
 
