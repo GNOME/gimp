@@ -1,7 +1,7 @@
 <HTML
 ><HEAD
 ><TITLE
->PNG</TITLE
+>The PNG File Plug-In</TITLE
 ><META
 NAME="GENERATOR"
 CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
@@ -12,10 +12,10 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="Pixelize"
+TITLE="The Pixelize Filter"
 HREF="../filters/pixelize.html"><LINK
 REL="NEXT"
-TITLE="PNM"
+TITLE="The PNM File Plug-In"
 HREF="../filters/pnm.html"></HEAD
 ><BODY
 CLASS="SECT1"
@@ -67,27 +67,28 @@ CLASS="SECT1"
 CLASS="SECT1"
 ><A
 NAME="FILTERS-PNG"
-><SPAN
+>The <SPAN
 CLASS="ACRONYM"
 >PNG</SPAN
-></A
+> File Plug-In</A
 ></H1
 ><A
-NAME="AEN3213"
+NAME="AEN4123"
 ></A
 ><P
->    Allows you to configure settings for saving a <SPAN
+>    Allows you to configure settings for saving a
+    <SPAN
 CLASS="ACRONYM"
 >PNG</SPAN
->
-    file. All applications which can handle PNG files should be able to
-    read any PNG saved from <SPAN
+> file. All applications which can handle PNG
+    files should be able to read any PNG saved from
+    <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
->. However you
-    can make decisions here
-    about which information about your image should be preserved in the
-    file, and how hard GIMP should try to keep the file size small.
+>. However you can make decisions
+    here about which information about your image should be preserved
+    in the file, and how hard GIMP should try to keep the file size
+    small.
   </P
 ><P
 >    <P
@@ -101,8 +102,9 @@ CLASS="GUILABEL"
 ><DD
 ><P
 >	    The Adam7 interlacing option stores image data in an order
-	    which allows browsers or viewers to show progressively more detail as
-	    they load the file, at the cost of increased file size.
+	    which allows browsers or viewers to show progressively
+	    more detail as they load the file, at the cost of
+	    increased file size.
 	  </P
 ></DD
 ><DT
@@ -112,16 +114,17 @@ CLASS="GUILABEL"
 ></DT
 ><DD
 ><P
->	    This adds a bKGD chunk to your PNG file which advises viewer software
-	    to choose a background color like your currently selected GIMP
-	    background color. Adding this chunk increases file size
-	    slightly.  Netscape <SPAN
+>	    This adds a bKGD chunk to your PNG file which advises
+	    viewer software to choose a background color like your
+	    currently selected GIMP background color. Adding this
+	    chunk increases file size slightly.  Netscape
+	    <SPAN
 CLASS="APPLICATION"
 >Navigator</SPAN
-> will
-	    not display a png transparently if the file has been saved
-	    with this option.  It will instead use the chosen background
-	    color behind the image.
+> will not display a
+	    png transparently if the file has been saved with this
+	    option.  It will instead use the chosen background color
+	    behind the image.
 	  </P
 ></DD
 ><DT
@@ -131,14 +134,15 @@ CLASS="GUILABEL"
 ></DT
 ><DD
 ><P
->	    This adds a gAMA chunk to your PNG file which reflects the current
-	    Gamma factor for your display (set globally for
+>	    This adds a gAMA chunk to your PNG file which reflects the
+	    current Gamma factor for your display (set globally for
 	    <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
->). Viewers with a
-	    different display can compensate to ensure the image doesn't look too
-	    dark or too bright. Adding this chunk increases file size slightly.
+>). Viewers with a different
+	    display can compensate to ensure the image doesn't look
+	    too dark or too bright. Adding this chunk increases file
+	    size slightly.
 	  </P
 ></DD
 ><DT
@@ -148,10 +152,11 @@ CLASS="GUILABEL"
 ></DT
 ><DD
 ><P
->	    If you are saving a single layer which has been shifted (offset)
-	    from the top-left of the image, this will add a oFFs chunk to your
-	    PNG file to preserve this offset factor in other viewers. Adding
-	    this chunk if it's needed increases file size slightly.
+>	    If you are saving a single layer which has been shifted
+	    (offset) from the top-left of the image, this will add a
+	    oFFs chunk to your PNG file to preserve this offset factor
+	    in other viewers. Adding this chunk if it's needed
+	    increases file size slightly.
 	  </P
 ></DD
 ><DT
@@ -161,10 +166,10 @@ CLASS="GUILABEL"
 ></DT
 ><DD
 ><P
->	    This adds a pHYs chunk to your PNG which records the physical
-	    resolution of the image. This is needed by GIMP and other viewers
-	    for printing or actual size previews. Adding this chunk increases
-	    file size slightly.
+>	    This adds a pHYs chunk to your PNG which records the
+	    physical resolution of the image. This is needed by GIMP
+	    and other viewers for printing or actual size
+	    previews. Adding this chunk increases file size slightly.
 	  </P
 ></DD
 ><DT
@@ -174,10 +179,10 @@ CLASS="GUILABEL"
 ></DT
 ><DD
 ><P
->	    This adds a tIME chunk to your PNG which records the exact date
-	    and time when the image was last saved. This will be preserved
-	    and can be viewed in other applications. Adding this chunk increases
-	    file size slightly.
+>	    This adds a tIME chunk to your PNG which records the exact
+	    date and time when the image was last saved. This will be
+	    preserved and can be viewed in other applications. Adding
+	    this chunk increases file size slightly.
 	  </P
 ></DD
 ><DT
@@ -188,9 +193,9 @@ CLASS="GUILABEL"
 ><DD
 ><P
 >	    This controls the amount of compression used to reduce the
-	    file size. Larger numbers will usually reduce file size but will
-	    make saving slower. The default (6) is often an acceptable
-	    compromise, but see below.
+	    file size. Larger numbers will usually reduce file size
+	    but will make saving slower. The default (6) is often an
+	    acceptable compromise, but see below.
 	  </P
 ></DD
 ></DL
@@ -237,7 +242,10 @@ HREF="../filters/pnm.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Pixelize</TD
+>The <SPAN
+CLASS="QUOTE"
+>"Pixelize"</SPAN
+> Filter</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -250,10 +258,10 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
-><SPAN
+>The <SPAN
 CLASS="ACRONYM"
 >PNM</SPAN
-></TD
+> File Plug-In</TD
 ></TR
 ></TABLE
 ></DIV

@@ -12,11 +12,11 @@ REL="UP"
 TITLE="Dialogs"
 HREF="../../dialogs/index.html"><LINK
 REL="PREVIOUS"
-TITLE="Interface Settings"
-HREF="../../dialogs/preferences/interface.html"><LINK
+TITLE="New File Settings"
+HREF="../../dialogs/preferences/new_file.html"><LINK
 REL="NEXT"
-TITLE="Environment Settings"
-HREF="../../dialogs/preferences/environment.html"></HEAD
+TITLE="Interface Settings"
+HREF="../../dialogs/preferences/interface.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -40,7 +40,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../../dialogs/preferences/interface.html"
+HREF="../../dialogs/preferences/new_file.html"
 >Prev</A
 ></TD
 ><TD
@@ -53,7 +53,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../../dialogs/preferences/environment.html"
+HREF="../../dialogs/preferences/interface.html"
 >Next</A
 ></TD
 ></TR
@@ -70,20 +70,32 @@ NAME="DIALOGS-PREFERENCES-DISPLAY"
 >Display Settings</A
 ></H1
 ><A
-NAME="AEN2294"
+NAME="AEN2865"
 ></A
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2296"
+NAME="AEN2867"
+>Transparency</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN2869"
 >Transparency Type</A
-></H2
+></H3
 ><P
->      By default Gimp has a checker bord pattern built up of mid tone gray
-      checks. You can however change that in the drop down menu.
-    </P
+>	By default <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> has a checker bord
+	pattern built up of mid tone gray checks. You can however
+	change that in the drop down menu.
+      </P
 ><DIV
 CLASS="NOTE"
 ><P
@@ -105,25 +117,27 @@ ALT="Note"></TD
 ALIGN="LEFT"
 VALIGN="TOP"
 ><P
->	That white, black and gray only checks disables checks and the
-	transparency will be shown as a solid black, white or gray color.
-      </P
+>	  That white, black and gray only checks disables checks and
+	  the transparency will be shown as a solid black, white or
+	  gray color.
+	</P
 ></TD
 ></TR
 ></TABLE
 ></DIV
 ></DIV
 ><DIV
-CLASS="SECT2"
-><H2
-CLASS="SECT2"
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
 ><A
-NAME="AEN2301"
+NAME="AEN2875"
 >Check Size</A
-></H2
+></H3
 ><P
->      The size of the checkers in the pattern that indicates transparency.
-    </P
+>	The size of the checks in the pattern that indicates
+	transparency.
+      </P
 ><DIV
 CLASS="NOTE"
 ><P
@@ -145,35 +159,77 @@ ALT="Note"></TD
 ALIGN="LEFT"
 VALIGN="TOP"
 ><P
->	If you have set the checker type to white, gray or black only then
-	then the size will have no effect what so ever.
-      </P
+>	  If you have set the checker type to white, gray or black
+	  only then then the size will have no effect what so ever.
+	</P
 ></TD
 ></TR
 ></TABLE
 ></DIV
 ></DIV
-><DIV
-CLASS="SECT2"
-><H2
-CLASS="SECT2"
-><A
-NAME="AEN2306"
->Install Colormap</A
-></H2
-><P
->    </P
 ></DIV
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2309"
->Colormap Cycling</A
+NAME="AEN2880"
+>8-Bit Displays</A
 ></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN2882"
+>Install Colormap</A
+></H3
 ><P
->    </P
+>	If you are working on an 8-Bit display, the GdkRGB subsystem
+	of GDK will automatically figure out if it needs to install an
+	own colormap or not. However since
+	<SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>'s plug-ins are all separate
+	processes with their own instances of GdkRGB if may happen
+	that <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> and some of it's Plug-Ins
+	choose different colormaps, resulting in color flickering.
+      </P
+><P
+>	If you encounter such behaviour, you can activate
+	<SPAN
+CLASS="QUOTE"
+>"Install Colormap"</SPAN
+> in order to force
+	<SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> and it's Plug-Ins to use the
+	same colormap.
+      </P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN2890"
+>Colormap Cycling</A
+></H3
+><P
+>	If you are working on an 8-Bit display, you can display the
+	<SPAN
+CLASS="QUOTE"
+>"Marching Ants"</SPAN
+> which show the current selection
+	by means of a rotating colormap instead of re-drawing them all
+	the time.
+      </P
+></DIV
 ></DIV
 ></DIV
 ><DIV
@@ -191,7 +247,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../../dialogs/preferences/interface.html"
+HREF="../../dialogs/preferences/new_file.html"
 >Prev</A
 ></TD
 ><TD
@@ -207,7 +263,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../../dialogs/preferences/environment.html"
+HREF="../../dialogs/preferences/interface.html"
 >Next</A
 ></TD
 ></TR
@@ -216,7 +272,7 @@ HREF="../../dialogs/preferences/environment.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Interface Settings</TD
+>New File Settings</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -229,7 +285,7 @@ HREF="../../dialogs/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->Environment Settings</TD
+>Interface Settings</TD
 ></TR
 ></TABLE
 ></DIV

@@ -1,7 +1,7 @@
 <HTML
 ><HEAD
 ><TITLE
-> Brush Editor </TITLE
+>The Brush Editor Dialog</TITLE
 ><META
 NAME="GENERATOR"
 CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
@@ -67,13 +67,16 @@ CLASS="SECT1"
 CLASS="SECT1"
 ><A
 NAME="DIALOGS-BRUSH-EDITOR"
-><SPAN
+>The <SPAN
 CLASS="INTERFACE"
 >Brush Editor</SPAN
-></A
+> Dialog</A
 ></H1
 ><A
-NAME="AEN2413"
+NAME="AEN3235"
+></A
+><A
+NAME="AEN3237"
 ></A
 ><P
 >    The <SPAN
@@ -83,37 +86,41 @@ CLASS="INTERFACE"
     alterations to brushes. At the top of the dialog, you can see the
     name of the brush (a new brush will be called
     <SPAN
+CLASS="QUOTE"
+>"<SPAN
 CLASS="GUILABEL"
 >Untitled</SPAN
->). This name can be edited to change
-    the brush name. If you choose a name which is the same as another
-    brush, <SPAN
+>"</SPAN
+>). This name can be
+    edited to change the brush name. If you choose a name which is the
+    same as another brush, <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> will suffix the name with
-    #<TT
+> will suffix
+    the name with #<TT
 CLASS="REPLACEABLE"
 ><I
 >x</I
 ></TT
->.<A
-NAME="AEN2420"
-HREF="#FTN.AEN2420"
+>.
+    <A
+NAME="AEN3245"
+HREF="#FTN.AEN3245"
 >[1]</A
 >
   </P
 ><P
 >    Below the title, you can see a preview of the final brush. If you
-    size the brush to a size larger than the preview
-    area, the preview will be scaled and the scale factor shown below
-    it as a ratio, such as 2:1 for 50% zoomed out.
+    size the brush to a size larger than the preview area, the preview
+    will be scaled and the scale factor shown below it as a ratio,
+    such as 2:1 for 50% zoomed out.
   </P
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="BRUSHEDITOR-SETTINGS"
+NAME="DIALOGS-BRUSH-EDITOR-SETTINGS"
 >Settings</A
 ></H2
 ><P
@@ -130,27 +137,65 @@ CLASS="GUIBUTTON"
 CLASS="GUIBUTTON"
 >Hardness</SPAN
 > slider controls how much the
-      brush fades towards its edges. A value closer to 1 will give a
-      sharp edge and closer to 0 will give a fuzzy, blurred effect.
+      brush fades towards its edges. A value closer to
+      <TT
+CLASS="PARAMETER"
+><I
+>1</I
+></TT
+>  will give a sharp edge and closer to
+      <TT
+CLASS="PARAMETER"
+><I
+>0</I
+></TT
+> will give a fuzzy, blurred effect.
     </P
 ><P
 >      The <SPAN
 CLASS="GUIBUTTON"
 >Aspect Ratio</SPAN
 > defines the vertical
-      diameter in a ratio to the horizontal diameter. A value of 1.0
-      will give a round brush since this means that the horizontal
-      diameter is the same as the vertical. The maximum value is 20
-      which gives a horizontal diameter twenty times larger than the
-      vertical, resulting in a very squashed, elliptical brush.
+      diameter in a ratio to the horizontal diameter. A value of
+      <TT
+CLASS="PARAMETER"
+><I
+>1.0</I
+></TT
+> will give a round brush since this
+      means that the horizontal diameter is the same as the vertical.
+      The maximum value is <TT
+CLASS="PARAMETER"
+><I
+>20.0</I
+></TT
+> which gives a
+      horizontal diameter twenty times larger than the vertical,
+      resulting in a very squashed, elliptical brush.
     </P
 ><P
 >      The final setting is <SPAN
 CLASS="GUIBUTTON"
 >Angle</SPAN
 > which is used
-      when the aspect ratio is more than 1.0. The angle can be between
-      0 and 180 degrees, measured counterclockwise.
+      when the aspect ratio is more than <TT
+CLASS="PARAMETER"
+><I
+>1.0</I
+></TT
+>.
+      The angle can be between <TT
+CLASS="PARAMETER"
+><I
+>0</I
+></TT
+> and
+      <TT
+CLASS="PARAMETER"
+><I
+>180</I
+></TT
+> degrees, measured counterclockwise.
     </P
 ></DIV
 ></DIV
@@ -167,8 +212,8 @@ ALIGN="LEFT"
 VALIGN="TOP"
 WIDTH="5%"
 ><A
-NAME="FTN.AEN2420"
-HREF="../dialogs/brush_editor.html#AEN2420"
+NAME="FTN.AEN3245"
+HREF="../dialogs/brush_editor.html#AEN3245"
 >[1]</A
 ></TD
 ><TD
@@ -176,13 +221,13 @@ ALIGN="LEFT"
 VALIGN="TOP"
 WIDTH="95%"
 ><P
-> where
-    <TT
+>	Where <TT
 CLASS="REPLACEABLE"
 ><I
 >x</I
 ></TT
-> is a number.</P
+> is a number.
+      </P
 ></TD
 ></TR
 ></TABLE

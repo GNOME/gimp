@@ -12,8 +12,8 @@ REL="UP"
 TITLE="Dialogs"
 HREF="../../dialogs/index.html"><LINK
 REL="PREVIOUS"
-TITLE="Display Settings"
-HREF="../../dialogs/preferences/display.html"><LINK
+TITLE="Interface Settings"
+HREF="../../dialogs/preferences/interface.html"><LINK
 REL="NEXT"
 TITLE="Session Management"
 HREF="../../dialogs/preferences/session.html"></HEAD
@@ -40,7 +40,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../../dialogs/preferences/display.html"
+HREF="../../dialogs/preferences/interface.html"
 >Prev</A
 ></TD
 ><TD
@@ -70,114 +70,196 @@ NAME="DIALOGS-PREFERENCES-ENVIRONMENT"
 >Environment Settings</A
 ></H1
 ><A
-NAME="AEN2314"
+NAME="AEN3053"
 ></A
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2316"
->Conservative Memory Usage</A
+NAME="AEN3055"
+>Resource Consumption</A
 ></H2
-><P
->      GIMP is optimized to speed i.e speed is more important than memory
-      usage. Enabling Conservative Memory Usage will "optimize" GIMP to
-      use less memory. The tradeoff is of course speed but if your system
-      is low on memory then it can be an option to use Conservative Memory
-      Usage.
-    </P
-></DIV
 ><DIV
-CLASS="SECT2"
-><H2
-CLASS="SECT2"
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
 ><A
-NAME="AEN2319"
->Levels of Undo</A
-></H2
+NAME="AEN3057"
+>Conservative Memory Usage</A
+></H3
 ><P
->      By default <SPAN
+>	The <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> has five levels of undo.
-      The amount of undo levels is only limited by disk space. A high
-      amount of undo levels requires a large amount of disk space so use
-      it with care. The default value is reasonably good for most use.
-    </P
+> is optimized to speed
+	i.e. speed is more important than memory usage. Enabling
+	<SPAN
+CLASS="QUOTE"
+>"Conservative Memory Usage"</SPAN
+> will "optimize" GIMP
+	to use less memory. The tradeoff is of course speed but if
+	your system is low on memory then it can be an option to use
+	<SPAN
+CLASS="QUOTE"
+>"Conservative Memory Usage"</SPAN
+>.
+      </P
 ></DIV
 ><DIV
-CLASS="SECT2"
-><H2
-CLASS="SECT2"
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
 ><A
-NAME="AEN2323"
+NAME="AEN3063"
+>Levels of Undo</A
+></H3
+><P
+>	By default <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> has five levels of
+	undo.  The amount of undo levels is only limited by disk
+	space. A high amount of undo levels requires a large amount of
+	disk space so use it with care. The default value is
+	reasonably good for most use.
+      </P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3067"
 >Tile Cache Size</A
-></H2
+></H3
 ><P
->      This is the most important parameter that GIMP has, if you set it
-      to low GIMP will be very slow. There isn't a upper level of how much
-      memory that you can give GIMP i.e give GIMP as much as you can. But
-      don't give GIMP more that your physical memory (i.e pure memory
-      without swap). In reality you have to measure how much memory you
-      usually use and give GIMP a little less than the rest of it.
-    </P
+>	This is the most important parameter that
+	<SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> has, if you set it to low
+	<SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> will be very slow. There isn't
+	a upper level of how much memory that you can give
+	<SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> i.e give
+	<SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> as much as you can. But don't
+	give <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> more that your physical
+	memory (i.e. pure memory without swap). In reality you have to
+	measure how much memory you usually use and give
+	<SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> a little less than the rest of
+	it.
+      </P
+></DIV
 ></DIV
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2326"
+NAME="AEN3076"
+>Scaling</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3078"
 >Interpolation Type</A
-></H2
+></H3
 ><P
->      When you scale a image (make it bigger) you have to fill in missing
-      pixels what color and value that those pixels should have is calculated
-      in a interpolation algorithm . Gimp uses a Linear interpolation
-      algorithm by default. Linear is a gives you a mid quality interpolation.
-      Linear interpolation has less quality trade off for speed that Nearest
-      Neighbour interpolation algorithm does. Nearest Neighbour is the fastest
-      way to interpolate but it has the lowest quality of the interpolation
-      algorithms. The Cubic interpolation algorithm produces the highest
-      quality of the three interpolation types supported by GIMP. However it
-      is considerably slower that the linear interpolation algorithm.
-    </P
+>	When you scale a image (make it bigger) you have to fill in
+	missing pixels what color and value that those pixels should
+	have is calculated in a interpolation
+	algorithm. <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> uses a Linear
+	interpolation algorithm by default. Linear is a gives you a
+	mid quality interpolation.  Linear interpolation has less
+	quality trade off for speed that Nearest Neighbour
+	interpolation algorithm does. Nearest Neighbour is the fastest
+	way to interpolate but it has the lowest quality of the
+	interpolation algorithms. The Cubic interpolation algorithm
+	produces the highest quality of the three interpolation types
+	supported by <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>. However it is
+	considerably slower that the linear interpolation algorithm.
+      </P
+></DIV
 ></DIV
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2329"
+NAME="AEN3083"
+>File Saving</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3085"
 >Try to Write a Thumbnail File</A
-></H2
+></H3
 ><P
->      By default when you save a image a thumbnail file will be created
-      storing a little image of your image. When you mark a image in the
-      file open dialog you will see this thumbnail. If you set this option
-      to Never you have to press on the thumbnail button in the
-      <A
+>	By default when you save a image a thumbnail file will be
+	created storing a little image of your image. When you mark a
+	image in the file open dialog you will see this thumbnail. If
+	you set this option to Never you have to press on the
+	thumbnail button in the <A
 HREF="../../dialogs/file_open.html"
->File Open Dialog</A
-> to be able
-      to see a thumbnail of your image.
-    </P
+>File
+	Open</A
+> Dialog to be able to see a thumbnail of your
+	image.
+      </P
 ></DIV
 ><DIV
-CLASS="SECT2"
-><H2
-CLASS="SECT2"
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
 ><A
-NAME="AEN2333"
+NAME="AEN3089"
 >"File &gt; Save" Saves the Image</A
-></H2
+></H3
 ><P
->      This is by default set to Always but if you e.g saves your image on
-      a networked disk (nfs, smb etc.) then saves some times are slow and
-      saving always isn't that necessary. Instead you will only save when
-      the file is really changed.
-    </P
+>	This is by default set to <SPAN
+CLASS="QUOTE"
+>"Always"</SPAN
+> but if you e.g.
+	saves your image on a networked disk (<SPAN
+CLASS="ACRONYM"
+>NFS</SPAN
+>,
+	<SPAN
+CLASS="ACRONYM"
+>SMB</SPAN
+> etc.) then
+	saves some times are slow and saving always isn't that
+	necessary. Instead you will only save when the file is really
+	changed.
+      </P
+></DIV
 ></DIV
 ></DIV
 ><DIV
@@ -195,7 +277,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../../dialogs/preferences/display.html"
+HREF="../../dialogs/preferences/interface.html"
 >Prev</A
 ></TD
 ><TD
@@ -220,7 +302,7 @@ HREF="../../dialogs/preferences/session.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Display Settings</TD
+>Interface Settings</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"

@@ -66,14 +66,17 @@ CLASS="SECT1"
 ><H1
 CLASS="SECT1"
 ><A
-NAME="PATHS"
+NAME="DIALOGS-PATHS-PATHS"
 >The <SPAN
 CLASS="INTERFACE"
 >Paths Dialog</SPAN
 ></A
 ></H1
 ><A
-NAME="AEN1565"
+NAME="AEN1887"
+></A
+><A
+NAME="AEN1889"
 ></A
 ><P
 >    Basically paths are a way to store bezier selections. Limiting
@@ -125,8 +128,8 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN1580"
->Control area:</A
+NAME="AEN1903"
+>Control area</A
 ></H2
 ><P
 >      From left to right we count:
@@ -137,13 +140,30 @@ NAME="AEN1580"
 ><SPAN
 CLASS="GUILABEL"
 >New Path</SPAN
-></DT
+>
+	    (<SPAN
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="../../../images/new_icon.png"
+></IMG
+></SPAN
+>)</DT
 ><DD
 ><P
 >	      You will create a new path and activate the bezier tool.
-	      The path is named Path X where X is a number. If you
-	      want to rename it you have to double click on the path
-	      in the path area. If you do so a <SPAN
+	      The path is named Path#<TT
+CLASS="REPLACEABLE"
+><I
+>X</I
+></TT
+>
+	      <A
+NAME="AEN1916"
+HREF="#FTN.AEN1916"
+>[1]</A
+>.
+	      If you want to rename it you have to double click on the
+	      path in the path area. If you do so a <SPAN
 CLASS="INTERFACE"
 >name
 	      dialog</SPAN
@@ -154,20 +174,43 @@ CLASS="INTERFACE"
 ><SPAN
 CLASS="GUILABEL"
 >Duplicate Path</SPAN
-></DT
+>
+	    (<SPAN
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="../../../images/duplicate_icon.png"
+></IMG
+></SPAN
+>)</DT
 ><DD
 ><P
 >	      Will duplicate the active path. To activate/mark a path
 	      you single click on it in the path area. The name is, by
-	      default, OldName#X where X indicates the N:th
-	      duplication of the path.
+	      default, OldName#<TT
+CLASS="REPLACEABLE"
+><I
+>X</I
+></TT
+>
+	      <A
+NAME="AEN1928"
+HREF="#FTN.AEN1928"
+>[2]</A
+>.
 	    </P
 ></DD
 ><DT
 ><SPAN
 CLASS="GUILABEL"
 >Path to Selection</SPAN
-></DT
+>
+	    (<SPAN
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="../../../images/to_selection_icon.png"
+></IMG
+></SPAN
+>)</DT
 ><DD
 ><P
 >	      Will create a selection out of a path. Notice that the
@@ -180,7 +223,14 @@ CLASS="GUILABEL"
 ><SPAN
 CLASS="GUILABEL"
 >Selection to Path</SPAN
-></DT
+>
+	    (<SPAN
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="../../../images/selection_to_path_icon.png"
+></IMG
+></SPAN
+>)</DT
 ><DD
 ><P
 >	      Will create a path out of a selection. Beware of
@@ -193,11 +243,18 @@ CLASS="GUILABEL"
 ><SPAN
 CLASS="GUILABEL"
 >Stroke Path</SPAN
-></DT
+>
+	    (<SPAN
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="../../../images/stroke_icon.png"
+></IMG
+></SPAN
+>)</DT
 ><DD
 ><P
->	      Will stroke the path with the (active device's) active
-	      brush. The path doesn't have to be closed. The stoke
+>	      Will stroke the path with the brush of the active
+	      device. The path doesn't have to be closed. The stoke
 	      will stroke from one endpoint to another.
 	    </P
 ></DD
@@ -205,7 +262,14 @@ CLASS="GUILABEL"
 ><SPAN
 CLASS="GUILABEL"
 >Delete Path</SPAN
-></DT
+>
+	    (<SPAN
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="../../../images/delete_icon.png"
+></IMG
+></SPAN
+>)</DT
 ><DD
 ><P
 >	      Will delete the active path.
@@ -248,8 +312,8 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN1617"
->Edit area:</A
+NAME="AEN1964"
+>Edit area</A
 ></H2
 ><P
 >      To be able to edit a path, the bezier tool must be active.  If
@@ -262,7 +326,14 @@ NAME="AEN1617"
 ><SPAN
 CLASS="GUILABEL"
 >New Point</SPAN
-></DT
+>
+	    (<SPAN
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="../../../images/pen_normal_icon.png"
+></IMG
+></SPAN
+>)</DT
 ><DD
 ><P
 >	      This command will add a control point to the path and
@@ -300,7 +371,7 @@ CLASS="GUIBUTTON"
 ></DD
 ></DL
 >
-	  
+
       <P
 ></P
 ><DL
@@ -308,7 +379,14 @@ CLASS="GUIBUTTON"
 ><SPAN
 CLASS="GUILABEL"
 >Add Point</SPAN
-></DT
+>
+	    (<SPAN
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="../../../images/pen_add_icon.png"
+></IMG
+></SPAN
+>)</DT
 ><DD
 ><P
 >	      Will add a point to your curve. The new point must be
@@ -318,7 +396,7 @@ CLASS="GUILABEL"
 CLASS="GUIBUTTON"
 >+</SPAN
 > sign when you are over a
-	      curve in the image.  When the <SPAN
+	      curve in the image. When the <SPAN
 CLASS="GUIBUTTON"
 >+</SPAN
 >
@@ -330,7 +408,7 @@ CLASS="GUIBUTTON"
 ></DD
 ></DL
 >
-	  
+
       <P
 ></P
 ><DL
@@ -338,19 +416,25 @@ CLASS="GUIBUTTON"
 ><SPAN
 CLASS="GUILABEL"
 >Remove Point</SPAN
-></DT
+>
+	    (<SPAN
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="../../../images/pen_delete_icon.png"
+></IMG
+></SPAN
+>)</DT
 ><DD
 ><P
 >	      Will remove a point in your curve. The point must be
 	      between the endpoints in a non-closed curve. If the
 	      curve is closed it can be any point within the curve.
-	      You must, however, always have two points in the
-	      curve.
+	      However you always have two points in the curve.
 	    </P
 ></DD
 ></DL
 >
-	  
+
       <P
 ></P
 ><DL
@@ -358,7 +442,14 @@ CLASS="GUILABEL"
 ><SPAN
 CLASS="GUILABEL"
 >Edit Point</SPAN
-></DT
+>
+	    (<SPAN
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="../../../images/pen_edit_icon.png"
+></IMG
+></SPAN
+>)</DT
 ><DD
 ><P
 >	      Will allow you to adjust the curve. When you click on an
@@ -385,8 +476,8 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN1651"
->Path area:</A
+NAME="AEN2010"
+>Path area</A
 ></H2
 ><P
 >	  
@@ -399,18 +490,62 @@ CLASS="MOUSEBUTTON"
       see <A
 HREF="../../paths/index.html"
 >Chapter 7</A
-> for references of
-      those commands. The default name of a path is simple &mdash;
-      it's just <TT
+> for references of those
+      commands. The default name of a path is simple &mdash; it's just
+      <TT
 CLASS="FILENAME"
 >Path</TT
-> followed by a number. It can
-      be useful to change a path's name. To change
-      its name, simply double click on the path and a name dialog will
-      appear.
+> followed by a number. It can be useful
+      to change a path's name. To change its name, simply double click
+      on the path and a name dialog will appear.
     </P
 ></DIV
 ></DIV
+><H3
+CLASS="FOOTNOTES"
+>Notes</H3
+><TABLE
+BORDER="0"
+CLASS="FOOTNOTES"
+WIDTH="100%"
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN1916"
+HREF="../../dialogs/paths/paths.html#AEN1916"
+>[1]</A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>where X is a number</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN1928"
+HREF="../../dialogs/paths/paths.html#AEN1928"
+>[2]</A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>where X indicates the nth duplication of
+	      the path</P
+></TD
+></TR
+></TABLE
 ><DIV
 CLASS="NAVFOOTER"
 ><HR

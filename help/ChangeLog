@@ -1,5 +1,10 @@
 2000-12-17  Michael Natterer  <mitch@gimp.org>
 
+	* C/*: updated all files again. Lotsa fixes: keyboard shortcuts,
+	icons, links, ...
+
+2000-12-17  Michael Natterer  <mitch@gimp.org>
+
 	* images/*: More cleanup, sync'ed Makefile.am again.
 
 2000-12-17  Michael Natterer  <mitch@gimp.org>
