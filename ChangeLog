@@ -1,3 +1,11 @@
+Sun Sep 26 06:45:09 MEST 1999  Jens Lautenbacher <jens@tellux.de>
+                               Sven Neumann <sven@gimp.org>
+
+	* app/cursorutil.c: fixed typo reported on bugs@gimp.org
+
+	* app/smudge.c: applied patch from Garry R. Osgood (he receives 
+	extra points for the very good documentation of his patch!)
+
 Sun Sep 26 05:33:56 MEST 1999  Jens Lautenbacher <jens@tellux.de>
                                Sven Neumann <sven@gimp.org>
 

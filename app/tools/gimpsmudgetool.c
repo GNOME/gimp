@@ -57,28 +57,27 @@ struct _SmudgeOptions
 
 };
 
-static PixelRegion accumPR;
+static PixelRegion    accumPR;
 static unsigned char *accum_data;
 
 /*  the smudge tool options  */
 static SmudgeOptions * smudge_options = NULL;
 
-/* Loca varibles */
-static double non_gui_pressure;
+/*  local variables */
+static double       non_gui_pressure;
 
+/*  function prototypes */
 static void         smudge_motion 	(PaintCore *, PaintPressureOptions *,
 					 double, GimpDrawable *);
 static void 	    smudge_init   	(PaintCore *, GimpDrawable *);
 static void 	    smudge_finish   	(PaintCore *, GimpDrawable *);
 
-static void 
-smudge_nonclipped_painthit_coords (PaintCore *paint_core,
-	gint * x, gint* y, gint* w, gint *h);
-static void
-smudge_allocate_accum_buffer ( gint w, gint h, 
-	gint bytes, gint do_fill);
+static void         smudge_nonclipped_painthit_coords (PaintCore *paint_core,
+						       gint * x, gint* y, 
+						       gint* w, gint *h);
+static void         smudge_allocate_accum_buffer      (gint w, gint h, 
+						       gint bytes, guchar *do_fill);
 
-/* functions  */
 
 static void
 smudge_options_reset (void)
@@ -138,8 +137,8 @@ smudge_options_new (void)
 
 void *
 smudge_paint_func (PaintCore    *paint_core,
-		     GimpDrawable *drawable,
-		     int           state)
+		   GimpDrawable *drawable,
+		   int           state)
 {
   switch (state)
     {
@@ -159,19 +158,22 @@ smudge_paint_func (PaintCore    *paint_core,
 }
 
 static void
-smudge_finish ( PaintCore *paint_core,
-		 GimpDrawable * drawable)
+smudge_finish (PaintCore    *paint_core,
+	       GimpDrawable *drawable)
 {
   if (accum_data)
-  {
-    g_free (accum_data);
-    accum_data = NULL;
-  }
+    {
+      g_free (accum_data);
+      accum_data = NULL;
+    }
 }
 
 static void 
 smudge_nonclipped_painthit_coords (PaintCore *paint_core,
-	gint * x, gint* y, gint* w, gint *h)
+				   gint      *x, 
+				   gint      *y, 
+				   gint      *w, 
+				   gint      *h)
 {
   /* Note: these are the brush mask size plus a border of 1 pixel */
   *x = (gint) paint_core->curx - paint_core->brush->mask->width/2 - 1;
@@ -181,14 +183,15 @@ smudge_nonclipped_painthit_coords (PaintCore *paint_core,
 }
 
 static void
-smudge_init ( PaintCore *paint_core,
-	      GimpDrawable * drawable)
+smudge_init (PaintCore    *paint_core,
+	     GimpDrawable *drawable)
 {
   GImage *gimage;
   TempBuf * area;
   PixelRegion  srcPR;
   gint x,y,w,h;
   gint was_clipped;
+  guchar *do_fill = NULL;
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
   smudge_nonclipped_painthit_coords (paint_core, &x, &y, &w, &h);
@@ -210,16 +213,27 @@ smudge_init ( PaintCore *paint_core,
   else 
     was_clipped = FALSE;
 
-  smudge_allocate_accum_buffer (w,h, 
-	drawable_bytes(drawable), was_clipped);
-
   if (!area) return;
+
+  /* When clipped, accum_data may contain pixels that map to
+     off-canvas pixels of the under-the- brush image, particularly
+     when the brush image contains an edge or corner of the
+     image. These off-canvas pixels are not a part of the current
+     composite, but may be composited in later generations. do_fill
+     contains a copy of the color of the pixel at the center of the
+     brush; assumed this is a reasonable choice for off- canvas pixels
+     that may enter into the blend */
+
+  if (was_clipped)
+  do_fill = gimp_drawable_get_color_at (drawable, (gint)paint_core->curx, (gint) paint_core->cury);
+
+  smudge_allocate_accum_buffer (w, h, drawable_bytes(drawable), do_fill);
 
   accumPR.x = area->x - x; 
   accumPR.y = area->y - y;
   accumPR.w = area->width;
   accumPR.h = area->height;
-  accumPR.rowstride = accumPR.bytes * w;
+  accumPR.rowstride = accumPR.bytes * w; 
   accumPR.data = accum_data 
 	+ accumPR.rowstride * accumPR.y 
 	+ accumPR.x * accumPR.bytes;
@@ -230,34 +244,38 @@ smudge_init ( PaintCore *paint_core,
   /* copy the region under the original painthit. */
   copy_region (&srcPR, &accumPR);
 
-  accumPR.x = 0; 
-  accumPR.y = 0;
+  accumPR.x = area->x - x; 
+  accumPR.y = area->y - y;
   accumPR.w = area->width;
   accumPR.h = area->height;
-  accumPR.rowstride = accumPR.bytes * accumPR.w;
-  accumPR.data = accum_data;
+  accumPR.rowstride = accumPR.bytes * w;
+  accumPR.data = accum_data
+	+ accumPR.rowstride * accumPR.y 
+	+ accumPR.x * accumPR.bytes;
+
+  if(do_fill) g_free(do_fill);
 }
 
 static void
-smudge_allocate_accum_buffer (gint w, 
-			      gint h, 
-			      gint bytes, 
-			      gint do_fill)
+smudge_allocate_accum_buffer (gint    w, 
+			      gint    h, 
+			      gint    bytes,
+			      guchar *do_fill)
 { 
   /*  Allocate the accumulation buffer */
   accumPR.bytes = bytes;
   accum_data = g_malloc (w * h * bytes);
  
-  if (do_fill)
+  if (do_fill != NULL)
   {
-    guchar color[3] = {0,0,0};
+    /* guchar color[3] = {0,0,0}; */
     accumPR.x = 0; 
     accumPR.y = 0;
     accumPR.w = w;
     accumPR.h = h;
     accumPR.rowstride = accumPR.bytes * w;
     accumPR.data = accum_data;
-    color_region (&accumPR, (const guchar*)&color);
+    color_region (&accumPR, (const guchar*)do_fill);
   }
 }
 
@@ -393,9 +411,9 @@ smudge_motion (PaintCore            *paint_core,
 }
 
 static void *
-smudge_non_gui_paint_func (PaintCore *paint_core,
-			     GimpDrawable *drawable,
-			     int        state)
+smudge_non_gui_paint_func (PaintCore    *paint_core,
+			   GimpDrawable *drawable,
+			   int           state)
 {
   smudge_motion (paint_core, &non_gui_pressure_options, non_gui_pressure, drawable);
 
@@ -407,22 +425,20 @@ smudge_non_gui_default (GimpDrawable *drawable,
 			int           num_strokes,
 			double       *stroke_array)
 {
-  double         pressure = SMUDGE_DEFAULT_PRESSURE;
-  SmudgeOptions  *options = smudge_options;
+  double          pressure = SMUDGE_DEFAULT_PRESSURE;
+  SmudgeOptions  *options  = smudge_options;
 
-  if(options)
-    {
-      pressure = options->pressure;
-    }
+  if (options)
+    pressure = options->pressure;
 
   return smudge_non_gui(drawable,pressure,num_strokes,stroke_array);
 }
 
 gboolean
 smudge_non_gui (GimpDrawable *drawable,
-    		  double        pressure,
-		  int           num_strokes,
-		  double       *stroke_array)
+		double        pressure,
+		int           num_strokes,
+		double       *stroke_array)
 {
   int i;
 
@@ -436,8 +452,10 @@ smudge_non_gui (GimpDrawable *drawable,
 
       non_gui_pressure = pressure;
 
-      non_gui_paint_core.curx = non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
-      non_gui_paint_core.cury = non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
+      non_gui_paint_core.curx = non_gui_paint_core.startx = 
+	non_gui_paint_core.lastx = stroke_array[0];
+      non_gui_paint_core.cury = non_gui_paint_core.starty = 
+	non_gui_paint_core.lasty = stroke_array[1];
 
       smudge_non_gui_paint_func (&non_gui_paint_core, drawable, 0); 
 
