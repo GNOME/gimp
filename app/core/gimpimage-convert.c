@@ -763,6 +763,10 @@ convert_image (GImage *gimage,
       layer->type = new_layer_type;
     }
 
+  /*  Delete the quantizer object, if there is one */
+  if (quantobj) 
+    quantobj->delete_func (quantobj);
+
   /*  Make sure the projection is up to date  */
   gimage_projection_realloc (gimage);
 

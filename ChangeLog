@@ -8,6 +8,9 @@ Wed Dec 17 15:33:23 PST 1997 Manish Singh <yosh@gimp.org>
 
 Wed Dec 17 13:24:48 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
 
+	* app/convert.c (convert_image): Closed a rather nasty memory
+	leak.
+
 	* plug-ins/xpm/xpm.c (run): Added access to the alpha cutoff via
 	the PDB.  Added a missing break in the run_mode switch.
 
