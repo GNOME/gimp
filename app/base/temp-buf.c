@@ -431,7 +431,8 @@ temp_buf_copy_area (TempBuf *src,
 		    gint     dest_y)
 {
   TempBuf     *new;
-  PixelRegion  srcR, destR;
+  PixelRegion  srcPR  = { 0 };
+  PixelRegion  destPR = { 0 };
   guchar       empty[MAX_CHANNELS] = { 0, 0, 0, 0 };
   gint         x1, y1, x2, y2;
 
@@ -470,21 +471,21 @@ temp_buf_copy_area (TempBuf *src,
     }
 
   /*  Copy the region  */
-  srcR.bytes     = src->bytes;
-  srcR.w         = width;
-  srcR.h         = height;
-  srcR.rowstride = src->bytes * src->width;
-  srcR.data      = (temp_buf_data (src) +
-		    y1 * srcR.rowstride +
-		    x1 * srcR.bytes);
+  srcPR.bytes     = src->bytes;
+  srcPR.w         = width;
+  srcPR.h         = height;
+  srcPR.rowstride = src->bytes * src->width;
+  srcPR.data      = (temp_buf_data (src) +
+                     y1 * srcPR.rowstride +
+                     x1 * srcPR.bytes);
 
-  destR.bytes     = dest->bytes;
-  destR.rowstride = new->bytes * new->width;
-  destR.data      = (temp_buf_data (new) +
-		     dest_y * destR.rowstride +
-		     dest_x * destR.bytes);
+  destPR.bytes     = dest->bytes;
+  destPR.rowstride = new->bytes * new->width;
+  destPR.data      = (temp_buf_data (new) +
+                      dest_y * destPR.rowstride +
+                      dest_x * destPR.bytes);
 
-  copy_region (&srcR, &destR);
+  copy_region (&srcPR, &destPR);
 
   return new;
 }

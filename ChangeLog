@@ -1,3 +1,21 @@
+2002-08-22  Michael Natterer  <mitch@gimp.org>
+
+	Fixed usage of uninitialized memory found by valgrind,
+	plus some cleanup:
+
+	* app/base/pixel-region.[ch]: allocate PixelRegionIterators and
+	PixelRegionHolders with g_new0(). Changed return values of
+	pixel_regions_register() and pixel_regions_process() from gpointer
+	to PixelRegionIterator*
+
+	* app/base/pixel-processor.c: no need to cast the above return values.
+
+	* app/base/temp-buf.[ch]: initialize PixelRegions with { 0 }
+	before using them for TempBufs.
+
+	* app/gui/device-status-dialog.c: initialize colors before
+	passing them to gimp_color_area_new().
+
 2002-08-21  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/imagemap/imap_cmd_guides.c (make_guides_dialog)

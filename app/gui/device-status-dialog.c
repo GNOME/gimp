@@ -112,7 +112,7 @@ device_status_dialog_create (Gimp *gimp)
   GimpContext    *context;
   GtkWidget      *label;
   GimpRGB         color;
-  GList         *list;
+  GList          *list;
   gint            i;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -120,7 +120,7 @@ device_status_dialog_create (Gimp *gimp)
   if (deviceD)
     return deviceD->shell;
 
-  deviceD = g_new (DeviceStatusDialog, 1);
+  deviceD = g_new0 (DeviceStatusDialog, 1);
 
   deviceD->shell = gimp_dialog_new (_("Device Status"), "device_status",
 				    gimp_standard_help_func,
@@ -154,6 +154,8 @@ device_status_dialog_create (Gimp *gimp)
   deviceD->brushes     = g_new (GtkWidget *, deviceD->num_devices);
   deviceD->patterns    = g_new (GtkWidget *, deviceD->num_devices);
   deviceD->gradients   = g_new (GtkWidget *, deviceD->num_devices);
+
+  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
 
   for (list = gdk_devices_list (), i = 0;
        list;

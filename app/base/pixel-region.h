@@ -101,10 +101,10 @@ void     pixel_region_set_col       (PixelRegion         *PR,
 				     guchar              *data);
 gboolean pixel_region_has_alpha     (PixelRegion         *PR);
 
-gpointer pixel_regions_register     (gint                 num_regions, 
-				     ...);
-gpointer pixel_regions_process      (PixelRegionIterator *PRI);
-void     pixel_regions_process_stop (PixelRegionIterator *PRI);
+PixelRegionIterator * pixel_regions_register     (gint                 num_regions, 
+                                                   ...);
+PixelRegionIterator * pixel_regions_process      (PixelRegionIterator *PRI);
+void                  pixel_regions_process_stop (PixelRegionIterator *PRI);
 
 
 #endif /* __PIXEL_REGION_H__ */

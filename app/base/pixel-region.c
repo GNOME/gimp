@@ -33,11 +33,11 @@
 /*********************/
 /*  Local Functions  */
 
-static gint     get_portion_width       (PixelRegionIterator *PRI);
-static gint     get_portion_height      (PixelRegionIterator *PRI);
-static gpointer pixel_regions_configure (PixelRegionIterator *PRI);
-static void     pixel_region_configure  (PixelRegionHolder   *PRH, 
-					 PixelRegionIterator *PRI);
+static gint                  get_portion_width       (PixelRegionIterator *PRI);
+static gint                  get_portion_height      (PixelRegionIterator *PRI);
+static PixelRegionIterator * pixel_regions_configure (PixelRegionIterator *PRI);
+static void                  pixel_region_configure  (PixelRegionHolder   *PRH, 
+                                                      PixelRegionIterator *PRI);
 
 
 /**************************/
@@ -247,7 +247,7 @@ pixel_region_has_alpha (PixelRegion *PR)
     return FALSE;
 }
 
-gpointer
+PixelRegionIterator *
 pixel_regions_register (gint num_regions, 
 			...)
 {
@@ -257,10 +257,8 @@ pixel_regions_register (gint num_regions,
   gboolean             found;
   va_list              ap;
 
-  PRI = g_new (PixelRegionIterator, 1);
-  PRI->pixel_regions = NULL;
-  PRI->process_count = 0;
-  PRI->dirty_tiles   = 1;
+  PRI = g_new0 (PixelRegionIterator, 1);
+  PRI->dirty_tiles = 1;
 
   if (num_regions < 1)
     return NULL;
@@ -271,7 +269,8 @@ pixel_regions_register (gint num_regions,
   while (num_regions --)
     {
       PR = va_arg (ap, PixelRegion *);
-      PRH = g_new (PixelRegionHolder, 1);
+
+      PRH = g_new0 (PixelRegionHolder, 1);
       PRH->PR = PR;
 
       if (PR != NULL)
@@ -303,7 +302,7 @@ pixel_regions_register (gint num_regions,
 }
 
 
-gpointer
+PixelRegionIterator *
 pixel_regions_process (PixelRegionIterator *PRI)
 {
   GSList              *list;
@@ -476,14 +475,14 @@ get_portion_width (PixelRegionIterator *PRI)
 }
 
 
-static gpointer
+static PixelRegionIterator *
 pixel_regions_configure (PixelRegionIterator *PRI)
 {
   PixelRegionHolder *PRH;
   GSList            *list;
 
   /*  Determine the portion width and height  */
-  PRI->portion_width = get_portion_width (PRI);
+  PRI->portion_width  = get_portion_width (PRI);
   PRI->portion_height = get_portion_height (PRI);
 
   if (PRI->portion_width == 0 || PRI->portion_height == 0)

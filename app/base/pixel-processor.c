@@ -83,7 +83,7 @@ do_parallel_regions (PixelProcessor *p_s)
   pthread_mutex_lock (&p_s->mutex);
 
   if (p_s->nthreads != 0 && p_s->PRI)
-    p_s->PRI =  (PixelRegionIterator*)pixel_regions_process(p_s->PRI);
+    p_s->PRI = pixel_regions_process (p_s->PRI);
 
   if (p_s->PRI == NULL)
     {
@@ -156,7 +156,7 @@ do_parallel_regions (PixelProcessor *p_s)
 
     } 
   while (cont && p_s->PRI &&
-	 (p_s->PRI = (PixelRegionIterator*)pixel_regions_process(p_s->PRI)));
+	 (p_s->PRI = pixel_regions_process (p_s->PRI)));
 
   p_s->nthreads--;
 
@@ -221,7 +221,7 @@ do_parallel_regions_single (PixelProcessor *p_s)
 	cont = 0;
   } 
   while (cont && p_s->PRI &&
-	 (p_s->PRI = (PixelRegionIterator*)pixel_regions_process(p_s->PRI)));
+	 (p_s->PRI = pixel_regions_process (p_s->PRI)));
 
   return NULL;
 }
@@ -291,34 +291,34 @@ pixel_regions_real_process_parallel (p_func             f,
   switch(num_regions)
     {
     case 1:
-      p_s->PRI = (PixelRegionIterator *) pixel_regions_register (num_regions,
-								 p_s->r[0]);
+      p_s->PRI = pixel_regions_register (num_regions,
+                                         p_s->r[0]);
       break;
 
     case 2:
-      p_s->PRI = (PixelRegionIterator *) pixel_regions_register (num_regions,
-								 p_s->r[0],
-								 p_s->r[1]);
-     break;
+      p_s->PRI = pixel_regions_register (num_regions,
+                                         p_s->r[0],
+                                         p_s->r[1]);
+      break;
 
-   case 3:
-     p_s->PRI = (PixelRegionIterator *) pixel_regions_register (num_regions,
-								p_s->r[0],
-								p_s->r[1],
-								p_s->r[2]);
-     break;
+    case 3:
+      p_s->PRI = pixel_regions_register (num_regions,
+                                         p_s->r[0],
+                                         p_s->r[1],
+                                         p_s->r[2]);
+      break;
 
-   case 4:
-     p_s->PRI = (PixelRegionIterator *) pixel_regions_register (num_regions,
-								p_s->r[0],
-								p_s->r[1],
-								p_s->r[2],
-								p_s->r[3]);
-    break;
+    case 4:
+      p_s->PRI = pixel_regions_register (num_regions,
+                                         p_s->r[0],
+                                         p_s->r[1],
+                                         p_s->r[2],
+                                         p_s->r[3]);
+      break;
 
-   default:
-     g_message ("pixel_regions_real_process_parallel: Bad number of regions %d\n",
-		p_s->n_regions);
+    default:
+      g_message ("pixel_regions_real_process_parallel: Bad number of regions %d\n",
+                 p_s->n_regions);
   }
 
   if (!p_s->PRI)
