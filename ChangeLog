@@ -1,3 +1,16 @@
+2003-09-10  Tor Lillqvist  <tml@iki.fi>
+
+	* config.h.win32: Tell it's outdated.
+
+	* app/errors.c (gimp_eek): [Win32] Use full_prog_name, show also
+	reason.
+	
+	* app/xcf/xcf.c (xcf_load_args, xcf_save_arge): Document that
+	filename is in the on-disk charset and encoding, and raw_filename
+	is just the basename, in UTF-8.
+	(xcf_save_invoker): Convert filename to UTF-8 before passing to
+	g_message().
+
 2003-09-10  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: require fontconfig >= 2.2.0 (bug #121752), check

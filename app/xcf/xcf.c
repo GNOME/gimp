@@ -61,10 +61,10 @@ static ProcArg xcf_load_args[] =
     "dummy parameter" },
   { GIMP_PDB_STRING,
     "filename",
-    "The name of the file to load" },
+    "The name of the file to load, in the on-disk character set and encoding" },
   { GIMP_PDB_STRING,
     "raw_filename",
-    "The name of the file to load" },
+    "The basename of the file, in UTF-8" },
 };
 
 static ProcArg xcf_load_return_vals[] =
@@ -117,10 +117,10 @@ static ProcArg xcf_save_args[] =
     "Active drawable of input image" },
   { GIMP_PDB_STRING,
     "filename",
-    "The name of the file to save the image in" },
+    "The name of the file to save the image in, in the on-disk character set and encoding" },
   { GIMP_PDB_STRING,
     "raw_filename",
-    "The name of the file to load" },
+    "The basename of the file, in UTF-8" },
 };
 
 static PlugInProcDef xcf_plug_in_save_proc =
@@ -322,7 +322,9 @@ xcf_save_invoker (Gimp     *gimp,
     }
   else
     {
-      g_message (_("open failed on %s: %s\n"), filename, g_strerror (errno));
+      gchar *utf8_filename = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+      g_message (_("open failed on %s: %s\n"), utf8_filename, g_strerror (errno));
+      g_free (utf8_filename);
     }
 
   return_args = procedural_db_return_args (&xcf_plug_in_save_proc.db_info,

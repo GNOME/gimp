@@ -167,7 +167,7 @@ gimp_eek (const gchar *reason,
 
   /* g_on_error_* don't do anything reasonable on Win32. */
 
-  MessageBox (NULL, message, prog_name, MB_OK|MB_ICONERROR);
+  MessageBox (NULL, g_strdup_printf ("%s: %s", reason, message), full_prog_name, MB_OK|MB_ICONERROR);
 
 #endif /* ! G_OS_WIN32 */
 
