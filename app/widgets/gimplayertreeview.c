@@ -234,7 +234,6 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 {
   GimpContainerTreeView *tree_view;
   GimpDrawableTreeView  *drawable_view;
-  GtkWidget             *abox;
   GtkWidget             *hbox;
   GtkWidget             *toggle;
   GtkWidget             *image;
@@ -256,7 +255,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   gtk_box_reorder_child (GTK_BOX (view), view->options_box, 0);
   gtk_widget_show (view->options_box);
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_hbox_new (FALSE, 4);
 
   /*  Paint mode menu  */
 
@@ -265,7 +264,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 			      view,
 			      FALSE,
 			      GIMP_NORMAL_MODE);
-  gtk_box_pack_start (GTK_BOX (hbox), view->paint_mode_menu, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), view->paint_mode_menu, TRUE, TRUE, 0);
   gtk_widget_show (view->paint_mode_menu);
 
   gimp_help_set_help_data (view->paint_mode_menu,
@@ -273,13 +272,16 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   /*  Preserve transparency toggle  */
 
-  abox = gtk_alignment_new (1.0, 0.5, 0.0, 1.0);
-  gtk_box_pack_end (GTK_BOX (hbox), abox, TRUE, TRUE, 0);
-  gtk_widget_show (abox);
-
   view->preserve_trans_toggle = toggle = gtk_check_button_new ();
-  gtk_container_add (GTK_CONTAINER (abox), toggle);
+  gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+		    G_CALLBACK (gimp_layer_tree_view_preserve_button_toggled),
+		    view);
+
+  gimp_help_set_help_data (toggle,
+			   _("Keep Transparency"), "#keep_trans_button");
 
   gtk_widget_style_get (GTK_WIDGET (view),
                         "button_icon_size", &icon_size,
@@ -288,13 +290,6 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   image = gtk_image_new_from_stock (GIMP_STOCK_TRANSPARENCY, icon_size);
   gtk_container_add (GTK_CONTAINER (toggle), image);
   gtk_widget_show (image);
-
-  g_signal_connect (toggle, "toggled",
-		    G_CALLBACK (gimp_layer_tree_view_preserve_button_toggled),
-		    view);
-
-  gimp_help_set_help_data (toggle,
-			   _("Keep Transparency"), "#keep_trans_button");
 
   gimp_table_attach_aligned (GTK_TABLE (view->options_box), 0, 0,
 			     _("Mode:"), 1.0, 0.5,
