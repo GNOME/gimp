@@ -1,3 +1,8 @@
+Sun Oct 25 18:59:56 CET 1998 Marc Lehmann <pcg@goof.com>
+
+	* configure.in: changed order in library search path
+	for the perl plug-in.
+
 Sat Oct 24 22:42:10 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* applied gimp-joke-981006-0, portabilty patch

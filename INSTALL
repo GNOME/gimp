@@ -2,9 +2,9 @@ There are three basic steps to building and installing the
 GIMP on unix:
 
   1. You need to have installed GTK version 1.0.1 or better
-  2. You may want to install other third party libraries that
-     are needed for some of the available plugins: TIFF, PNG,
-     JPEG, MPEG, etc.
+  2. You may want to install other third party libraries or programs that
+     are needed for some of the available plugins: TIFF, PNG, JPEG, MPEG,
+     perl, etc.
   3. Configure the GIMP by running the `configure' script.
   4. Build the GIMP by running `make'.
   5. Install the GIMP by running `make install'.
@@ -29,7 +29,7 @@ The `configure' script examines your system, and adapts the GIMP to
 run on it. The script has many options, some of which are described in
 the generic instructions included at the end of this file. All of the
 options can be listed using the command `./configure --help'. There
-are six commands special options the GIMP `configure' script
+are five commands special options the GIMP `configure' script
 recognizes. These are:
 
   1. --enable-shared and --disable-shared. This option affects whether
@@ -53,6 +53,10 @@ recognizes. These are:
   4. --enable-gimpdir=DIR. This option changes the default directory
      the gimp uses to search for its configuration files from ~/.gimp (the
      directory .gimp in the users home directory) to DIR.
+  
+  5. --enable-perl and --disable-perl. The perl extension does not build on
+     all systems. If you experience problems use --disable-perl and gimp
+     will not even try to built it.
 
 The `make' command builds several things:
  - The libraries `libgimp/libgimp.la', `libgimp/libgimpi.la' and
@@ -103,6 +107,13 @@ several reasons why this might fail:
   and you later compiled GTK from source.
 
   Fix: remove the old libraries and include files.
+
+* The perl extension does not detect all combinations of libraries and
+  packages it needs to built properly, causing compilation to stop
+  prematurely.
+  
+  Fix: use configure with the "--disable-perl" switch or install perl
+  (version>=5.005) and the Perl-Gtk-interface.
 
 A detailed log of the ./configure output is written to the file
 config.log. This may help diagnose problems.

@@ -9,6 +9,7 @@ SUBDIRS = 			\
 	@AA@			\
 	@JPEG@			\
 	@MPEG@			\
+	@GIMP_PERL@		\
 	@PNG@			\
 	@TIFF@			\
 	@WEBBROWSER@		\

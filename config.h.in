@@ -31,6 +31,9 @@
 /* Define if you have the vprintf function.  */
 #undef HAVE_VPRINTF
 
+/* Define if you have the vsnprintf function.  */
+#undef HAVE_VSNPRINTF
+
 /* Define as __inline if that's what the C compiler calls it.  */
 #undef inline
 
@@ -80,7 +83,6 @@
 #undef HAVE_SYS_SELECT_H
 #undef HAVE_SYS_TIME_H
 #undef HAVE_UNISTD_H
-#undef HAVE_VPRINTF
 #undef HAVE_XSHM_H
 
 #undef IPC_RMID_DEFERRED_RELEASE
@@ -173,3 +175,4 @@
 
 /* Define if you have the i library (-li).  */
 #undef HAVE_LIBI
+
