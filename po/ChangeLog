@@ -1,3 +1,10 @@
+1999-11-16  Tor Lillqvist  <tml@iki.fi>
+
+	* fi.po: Updates (with permission of maintainer Ville
+	Hautamäki). Not claimed to be in any way perfect, but at least
+	fixed all the fuzzy stuff, and added many new translations. Moved
+	the libgimp-only strings to ../po-plug-ins/fi.po.
+
 1999-11-11  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.
