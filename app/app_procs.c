@@ -425,13 +425,13 @@ app_init_update_status(char *label1val,
 	    }
 	  gtk_label_set(GTK_LABEL(label2), label2val);
 	}
-      if(pct_progress >= 0 &&
-	 gtk_progress_get_current_percentage(pbar) != pct_progress)
+      if (pct_progress >= 0.0 && pct_progress <= 1.0 && 
+	  gtk_progress_get_current_percentage (&(GTK_PROGRESS_BAR (pbar)->progress)) != pct_progress)
 	/*
 	 GTK_PROGRESS_BAR(pbar)->percentage != pct_progress)
 	*/
 	{
-	  gtk_progress_bar_update(GTK_PROGRESS_BAR(pbar), pct_progress);
+	  gtk_progress_bar_update (GTK_PROGRESS_BAR (pbar), pct_progress);
 	}
       gtk_widget_draw(win_initstatus, &area);
       idle_tag = gtk_idle_add((GtkFunction) gtk_true, NULL);

@@ -1,3 +1,9 @@
+Tue Aug 11 22:41:20 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/app_procs.c
+	* app/layers_dialog.c: Fixed the progressbar warnings and the 
+	image id in the layers-n-channels dialog. 
+
 Tue Aug 11 21:14:40 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: Added an about-dialog that
