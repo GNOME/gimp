@@ -330,9 +330,9 @@ trace_init ()
     SvCUR_set (trace_var, 0);
 }
 
-#ifndef __STDC_VERSION__
-#warn You need to compile with an ansi-c compiler!!!
-#warn Compilation will continue at your own risk!!
+#ifndef __STDC__
+#error You need to compile with an ansi-c compiler!!!
+#error Compilation will continue at your own risk!!
 #define __STDC_VERSION__ 0
 #endif
 
