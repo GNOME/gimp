@@ -38,10 +38,6 @@
 
 #include "pixmaps.h"
 
-/* This #define is also in gdisplay.c and should */
-/* probably be moved in to gdisplay.h instead.   */
-#define CURSOR_STR_LENGTH 256
-
 /*  local functions  */
 static void  tools_select_update   (GtkWidget *widget,
 				    gpointer   data);
