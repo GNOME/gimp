@@ -200,6 +200,7 @@ sub perl_fu_brushed_metal {
   gimp_layer_set_offsets($float, $x1+$length, $y1+$length);
   gimp_floating_sel_anchor($float);
   gimp_image_remove_layer($image,$templ);
+  # gimp_layer_delete($templ);
 
   gimp_undo_push_group_end($image);
 

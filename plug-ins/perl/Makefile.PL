@@ -173,7 +173,7 @@ sub MY::install {
    my $install = $self->SUPER::install(@_);
    ($install =~ s/\b(un)?install\b/really-$1install/g) or return $install;
    '
-install :: install-po
+install ::
 	@for dir in \
 	   $(INSTALLPRIVLIB) \
 	   $(INSTALLARCHLIB) \

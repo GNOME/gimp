@@ -112,8 +112,8 @@ sub do_bricks {
     gimp_floating_sel_anchor(gimp_image_floating_selection($image));
     gimp_image_add_layer_mask($image,$layerb,$mask);
     gimp_selection_none($image);
-    gimp_image_remove_layer ($border);
-    gimp_image_remove_layer ($layer);
+    gimp_image_remove_layer ($border); gimp_layer_delete ($border);
+    gimp_image_remove_layer ($layer); gimp_layer_delete ($layer);
     gimp_image_remove_layer_mask ($image,$layerb,0);
     gimp_channel_ops_offset ($layerpat,1,0,-1,-1);
     gimp_channel_ops_offset ($layerb,1,0,-1,-1);

@@ -5,7 +5,7 @@ use Gimp::Fu;
 use base 'DynaLoader';
 
 BEGIN {
-   $VERSION = 1.201;
+   $VERSION = 1.21;
    eval {
       require XSLoader;
       XSLoader::load Gimp::UI $VERSION;
@@ -898,7 +898,7 @@ sub interact($$$$@) {
      my $v = new Gtk::HBox 0,4;
      $w->vbox->pack_start($v,0,0,4);
 
-     my $hbbox=new Gtk::HButtonBox;
+     my $hbbox = new Gtk::HButtonBox;
      $hbbox->set_spacing(4);
      $v->pack_end($hbbox,0,0,2);
      
@@ -922,7 +922,7 @@ sub interact($$$$@) {
      
      signal_connect $w "destroy", sub { main_quit Gtk };
 
-     my $hbbox = new Gtk::HButtonBox;
+     $hbbox = new Gtk::HButtonBox;
      $hbbox->set_spacing(4);
      $w->action_area->pack_start($hbbox,0,0,0);
      show $hbbox;
@@ -932,7 +932,7 @@ sub interact($$$$@) {
      signal_connect $button "clicked", sub { help_window($helpwin,$blurb,$help) };
      can_default $button 1;
      
-     my $hbbox = new Gtk::HButtonBox;
+     $hbbox = new Gtk::HButtonBox;
      $hbbox->set_spacing(4);
      $w->action_area->pack_end($hbbox,0,0,0);
      show $hbbox;

@@ -1,7 +1,4 @@
-#!/usr/app/bin/perl
-
-eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
-    if 0; # not running under some shell
+#!/usr/bin/perl
 
 # <sjburges@gimp.org>
 # This is tigert's request.  I suppose it'll be useful to those that do
@@ -213,8 +210,13 @@ register "perlotine",
         $left=0;
         for ($j=0; $j<=scalar(@vert); $j++) {
             $right = ($j>$#vert) ? $img->width : $img->get_guide_position($vert[$j]);
-            $imgname = dosel($img, $savepath, $imgpath, $imgbasename, $extension, $left, $right, $top, $bot, $i, $j);
-            html_table_entry(\*FILE, $imgname, $right-$left, $bot-$top, $capatalize);
+	    # protect against 0 width/height guide selections
+	    if ($left!=$right && $top!=$bot) 
+	      {
+	        # perform cropping, table entry
+	        $imgname = dosel($img, $savepath, $imgpath, $imgbasename, $extension, $left, $right, $top, $bot, $i, $j);
+                html_table_entry(\*FILE, $imgname, $right-$left, $bot-$top, $capatalize);  
+	      }	
             $left = $right + $cellspacing;
 
             # Increment the progress bar
