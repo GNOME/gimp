@@ -62,7 +62,7 @@ Actually this one is maintained by me, that is Daniel Egger
  gettext(text) instead.
  
 
-3.2 N_() [more correctly: void ( void ) ]
+3.2 N_() [more correctly: const char * ( const char * ) ]
 
  This one is a macro for the function gettext_noop(). As you can see and
  guess it doesn't really do anything in the programm i.e. it is a dummy
@@ -151,3 +151,4 @@ Actually this one is maintained by me, that is Daniel Egger
 
 Happy Gimping. Yours,
                      Daniel Egger
+
