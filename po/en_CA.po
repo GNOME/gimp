@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-04 16:29-0500\n"
-"PO-Revision-Date: 2004-11-04 14:29-0400\n"
+"POT-Creation-Date: 2004-11-07 11:07-0500\n"
+"PO-Revision-Date: 2004-11-07 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -5546,8 +5546,8 @@ msgid "_Maximum number of colors:"
 msgstr "_Maximum number of colours:"
 
 #: app/dialogs/convert-dialog.c:206
-msgid "_Remove unused colors from final palette."
-msgstr "_Remove unused colours from final palette."
+msgid "_Remove unused colors from final palette"
+msgstr "_Remove unused colours from final palette"
 
 #. dithering
 #: app/dialogs/convert-dialog.c:221 app/tools/gimpblendoptions.c:268
@@ -6010,15 +6010,15 @@ msgstr "Offset Channel"
 
 #. The offset frame
 #: app/dialogs/offset-dialog.c:108 app/dialogs/offset-dialog.c:136
-#: app/dialogs/resize-dialog.c:185 app/widgets/gimpgrideditor.c:274
+#: app/dialogs/resize-dialog.c:187 app/widgets/gimpgrideditor.c:274
 msgid "Offset"
 msgstr "Offset"
 
-#: app/dialogs/offset-dialog.c:168 app/dialogs/resize-dialog.c:214
+#: app/dialogs/offset-dialog.c:168 app/dialogs/resize-dialog.c:216
 msgid "_X:"
 msgstr "_X:"
 
-#: app/dialogs/offset-dialog.c:170 app/dialogs/resize-dialog.c:215
+#: app/dialogs/offset-dialog.c:170 app/dialogs/resize-dialog.c:217
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -6121,7 +6121,7 @@ msgstr ""
 
 #: app/dialogs/preferences-dialog.c:600
 msgid ""
-"Your window setup will be reset to default values. the next time you start "
+"Your window setup will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
 "Your window setup will be reset to default values the next time you start "
@@ -6743,15 +6743,15 @@ msgstr "There is one image with unsaved changes:"
 msgid "There are %d images with unsaved changes:"
 msgstr "There are %d images with unsaved changes:"
 
-#: app/dialogs/resize-dialog.c:114
+#: app/dialogs/resize-dialog.c:115
 msgid "Canvas Size"
 msgstr "Canvas Size"
 
-#: app/dialogs/resize-dialog.c:125 app/dialogs/scale-dialog.c:107
+#: app/dialogs/resize-dialog.c:126 app/dialogs/scale-dialog.c:107
 msgid "Layer Size"
 msgstr "Layer Size"
 
-#: app/dialogs/resize-dialog.c:232
+#: app/dialogs/resize-dialog.c:234
 msgid "C_enter"
 msgstr "C_entre"
 
@@ -10244,12 +10244,12 @@ msgstr "_Y resolution:"
 msgid "pixels/%a"
 msgstr "pixels/%a"
 
-#: app/widgets/gimpsizebox.c:557
+#: app/widgets/gimpsizebox.c:563
 #, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d dpi"
 
-#: app/widgets/gimpsizebox.c:561
+#: app/widgets/gimpsizebox.c:567
 #, c-format
 msgid "%d dpi"
 msgstr "%d dpi"
