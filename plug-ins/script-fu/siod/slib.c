@@ -96,6 +96,8 @@
 #define MAX_ERROR 1024
 char siod_err_msg[MAX_ERROR];
 
+void (*siod_output_routine) (FILE *, char *, ...);
+
 static void
 init_slib_version (void)
 {
@@ -249,10 +251,10 @@ print_welcome (void)
 {
   if (siod_verbose_level >= 2)
     {
-      fprintf (siod_output, "Welcome to SIOD, Scheme In One Defun, Version %s\n",
-	       siod_version ());
-      fprintf (siod_output, "(C) Copyright 1988-1994 Paradigm Associates Inc. Help: (help)\n\n");
-      fflush (siod_output);
+      (*siod_output_routine) (siod_output,
+           "Welcome to SIOD, Scheme In One Defun, Version %s\n",
+           siod_version ());
+      put_st ("(C) Copyright 1988-1994 Paradigm Associates Inc. Help: (help)\n\n");
     }
 }
 
@@ -261,12 +263,12 @@ print_hs_1 (void)
 {
   if (siod_verbose_level >= 2)
     {
-      fprintf (siod_output, "%ld heaps. size = %ld cells, %ld bytes. %ld inums. GC is %s\n",
-	       nheaps,
-	       heap_size, heap_size * sizeof (struct obj),
-	       inums_dim,
-	       (gc_kind_copying == 1) ? "stop and copy" : "mark and sweep");
-      fflush (siod_output);
+      (*siod_output_routine) (siod_output,
+           "%ld heaps. size = %ld cells, %ld bytes. %ld inums. GC is %s\n",
+           nheaps,
+           heap_size, heap_size * sizeof (struct obj),
+           inums_dim,
+           (gc_kind_copying == 1) ? "stop and copy" : "mark and sweep");
     }
 }
 
@@ -276,10 +278,10 @@ print_hs_2 (void)
   if (siod_verbose_level >= 2)
     {
       if (gc_kind_copying == 1)
-	fprintf (siod_output, "heaps[0] at %p, heaps[1] at %p\n", heaps[0], heaps[1]);
+          (*siod_output_routine) (siod_output,
+               "heaps[0] at %p, heaps[1] at %p\n", heaps[0], heaps[1]);
       else
-	fprintf (siod_output, "heaps[0] at %p\n", heaps[0]);
-      fflush (siod_output);
+          (*siod_output_routine) (siod_output, "heaps[0] at %p\n", heaps[0]);
     }
 }
 
@@ -512,10 +514,7 @@ fput_st (FILE * f, char *st)
   long flag;
   flag = no_interrupt (1);
   if (siod_verbose_level >= 1)
-    {
-      fprintf (f, "%s", st);
-      fflush (siod_output);
-    }
+      (*siod_output_routine) (f, st);
   no_interrupt (flag);
 }
 
@@ -529,8 +528,7 @@ fputs_fcn (char *st, void *cb)
 void
 put_st (char *st)
 {
-  fput_st (siod_output, st);
-  fflush (siod_output);
+  (*siod_output_routine) (siod_output, st);
 }
 
 void
@@ -650,10 +648,7 @@ my_err (char *message, LISP x)
     sprintf (siod_err_msg, "ERROR: %s (see errobj)\n", msg);
 
   if ((siod_verbose_level >= 1) && msg)
-    {
-      fprintf (siod_output, "%s\n", siod_err_msg);
-      fflush (siod_output);
-    }
+      (*siod_output_routine) (siod_output, siod_err_msg);
   if (errjmp_ok == 1)
     {
       inside_err = 1;
@@ -1628,7 +1623,7 @@ allocate_aheap (void)
       {
 	flag = no_interrupt (1);
 	if (gc_status_flag && (siod_verbose_level >= 4))
-	  fprintf (siod_output, "[allocating heap %ld]\n", j);
+	    (*siod_output_routine) (siod_output, "[allocating heap %ld]\n", j);
 	heaps[j] = (LISP) must_malloc (sizeof (struct obj) * heap_size);
 	ptr = heaps[j];
 	end = heaps[j] + heap_size;
@@ -1718,7 +1713,7 @@ gc_ms_stats_start (void)
   gc_rt = myruntime ();
   gc_cells_collected = 0;
   if (gc_status_flag && (siod_verbose_level >= 4))
-    fprintf (siod_output, "[starting GC]\n");
+    put_st ("[starting GC]\n");
 }
 
 void
@@ -1727,9 +1722,10 @@ gc_ms_stats_end (void)
   gc_rt = myruntime () - gc_rt;
   gc_time_taken = gc_time_taken + gc_rt;
   if (gc_status_flag && (siod_verbose_level >= 4))
-    fprintf (siod_output, "[GC took %g cpu seconds, %ld cells collected]\n",
-	     gc_rt,
-	     gc_cells_collected);
+    (*siod_output_routine) (siod_output,
+         "[GC took %g cpu seconds, %ld cells collected]\n",
+	 gc_rt,
+	 gc_cells_collected);
 }
 
 void
@@ -3560,9 +3556,11 @@ lllast_c_errmsg (void)
 LISP
 help (void)
 {
-  fprintf (siod_output, "HELP for SIOD, Version %s\n", siod_version ());
-  fprintf (siod_output, "For the latest Script-Fu tips, tutorials, & info:\n");
-  fprintf (siod_output, "\thttp://www.gimp.org/scripts.html\n\n");
+  (*siod_output_routine) (siod_output,
+       "HELP for SIOD, Version %s\n",
+       siod_version ());
+  put_st ("For the latest Script-Fu tips, tutorials, & info:\n");
+  put_st ("\thttp://www.gimp.org/scripts.html\n\n");
 
   return NIL;
 }

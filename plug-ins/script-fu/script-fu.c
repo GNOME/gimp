@@ -62,7 +62,7 @@ GimpPlugInInfo PLUG_IN_INFO =
   NULL,             /* init_proc  */
   script_fu_quit,   /* quit_proc  */
   script_fu_query,  /* query_proc */
-  script_fu_run,    /* run_proc   */
+  script_fu_run     /* run_proc   */
 };
 
 
@@ -183,6 +183,7 @@ script_fu_run (const gchar      *name,
 {
   INIT_I18N();
 
+  siod_set_console_mode (0);
   siod_set_output_file (stdout);
 
   /*  Determine before we allow scripts to register themselves

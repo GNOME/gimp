@@ -71,9 +71,6 @@ static void       script_fu_response           (GtkWidget    *widget,
 						gpointer      data);
 static void       script_fu_browse_callback    (GtkWidget    *widget,
 						gpointer      data);
-static gboolean   script_fu_siod_read          (GIOChannel   *channel,
-						GIOCondition  cond,
-						gpointer      data);
 static gboolean   script_fu_cc_is_empty        (void);
 static gboolean   script_fu_cc_key_function    (GtkWidget    *widget,
 						GdkEventKey  *event,
@@ -95,13 +92,10 @@ static ConsoleInterface cint =
   -1     /*  input id  */
 };
 
-static gchar  read_buffer[BUFSIZE];
 static GList *history     = NULL;
 static gint   history_len = 0;
 static gint   history_cur = 0;
 static gint   history_max = 50;
-
-static gint   siod_output_pipe[2];
 
 
 /*
@@ -161,7 +155,6 @@ script_fu_console_interface (void)
   GtkWidget  *label;
   GtkWidget  *scrolled_window;
   GtkWidget  *hbox;
-  GIOChannel *input_channel;
 
   gimp_ui_init ("script-fu", FALSE);
 
@@ -232,25 +225,10 @@ script_fu_console_interface (void)
     const gchar *greeting_texts[] =
     {
       "weak",     "\n",
-      "strong",   "The GIMP - GNU Image Manipulation Program\n\n",
-      "emphasis", "Copyright (C) 1995-2001\n",
-      "emphasis", "Spencer Kimball, Peter Mattis and the GIMP Development Team\n",
-      "weak",     "\nThis program is free software; you can redistribute it and/or modify\n",
-      "weak",     "it under the terms of the GNU General Public License as published by\n",
-      "weak",     "the Free Software Foundation; either version 2 of the License, or\n",
-      "weak",     "(at your option) any later version.\n\n",
-      "weak",     "This program is distributed in the hope that it will be useful,\n",
-      "weak",     "but WITHOUT ANY WARRANTY; without even the implied warranty of\n",
-      "weak",     "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n",
-      "weak",     "See the GNU General Public License for more details.\n\n",
-      "weak",     "You should have received a copy of the GNU General Public License\n",
-      "weak",     "along with this program; if not, write to the Free Software\n",
-      "weak",     "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n",
-      "weak",     "MA 02111-1307, USA.\n\n",
       "strong",   "Welcome to SIOD, Scheme In One Defun\n",
-      "weak",     "(C) Copyright 1988-1994 Paradigm Associates Inc.\n\n\n",
+      "weak",     "(C) Copyright 1988-1994 Paradigm Associates Inc.\n\n",
       "strong",   "Script-Fu Console - ",
-      "emphasis", "Interactive Scheme Development",
+      "emphasis", "Interactive Scheme Development\n",
       NULL
     };
 
@@ -299,15 +277,6 @@ script_fu_console_interface (void)
   g_signal_connect (button, "clicked",
 		    G_CALLBACK (script_fu_browse_callback),
 		    NULL);
-
-  input_channel = g_io_channel_unix_new (siod_output_pipe[0]);
-
-  g_io_channel_set_encoding (input_channel, NULL, NULL);
-  g_io_channel_set_buffered (input_channel, FALSE);
-
-  cint.input_id = g_io_add_watch (input_channel,
-				  G_IO_IN, script_fu_siod_read,
-				  NULL);
 
   /*  Initialize the history  */
   history     = g_list_append (history, NULL);
@@ -395,48 +364,18 @@ script_fu_console_scroll_end (void)
   g_idle_add (script_fu_console_idle_scroll_end, view->vadjustment);
 }
 
-static gboolean
-script_fu_siod_read (GIOChannel  *channel,
-		     GIOCondition cond,
-		     gpointer     data)
+void
+script_fu_output_to_console (gchar *text)
 {
-  gsize        count;
-  GIOStatus    status;
-  GError      *error = NULL;
-  GtkTextIter  cursor;
+  GtkTextIter cursor;
 
-  count = 0;
+  gtk_text_buffer_get_end_iter (cint.console, &cursor);
+  gtk_text_buffer_insert_with_tags_by_name (cint.console, &cursor,
+                                            text, -1,
+                                            "weak",
+                                            NULL);
 
-  do
-    {
-      status = g_io_channel_read_chars (channel, read_buffer,
-					BUFSIZE - 1,
-					&count,
-					&error);
-
-      if (error)
-        {
-          g_printerr ("%s: failed to read SIOD's output: %s\n",
-                      g_get_prgname (), error->message);
-          g_clear_error (&error);
-        }
-    }
-  while (status == G_IO_STATUS_AGAIN);
-
-  if (status == G_IO_STATUS_NORMAL)
-    {
-      read_buffer[count] = '\0';
-
-      gtk_text_buffer_get_end_iter (cint.console, &cursor);
-      gtk_text_buffer_insert_with_tags_by_name (cint.console, &cursor,
-						read_buffer, -1,
-						"weak",
-						NULL);
-
-      script_fu_console_scroll_end ();
-    }
-
-  return TRUE;
+  script_fu_console_scroll_end ();
 }
 
 static gboolean
@@ -573,34 +512,8 @@ script_fu_cc_key_function (GtkWidget   *widget,
 static void
 script_fu_open_siod_console (void)
 {
-  FILE *siod_output;
-
-  siod_output = siod_get_output_file ();
-
-  if (siod_output == stdout)
-    {
-      if (pipe (siod_output_pipe) == 0)
-        {
-          siod_output = fdopen (siod_output_pipe [1], "w");
-          if (siod_output != NULL)
-            {
-              siod_set_verbose_level (2);
-              siod_print_welcome ();
-            }
-          else
-            {
-              g_message (_("Unable to open a stream on the SIOD output pipe"));
-              siod_output = stdout;
-            }
-        }
-      else
-        {
-          g_message (_("Unable to open the SIOD output pipe"));
-          siod_output = stdout;
-        }
-    }
-
-  siod_set_output_file (siod_output);
+  siod_set_console_mode (1);
+  siod_set_verbose_level (2);
 }
 
 static void
@@ -613,8 +526,7 @@ script_fu_close_siod_console (void)
   if (siod_output != stdout)
     fclose (siod_output);
 
-  close (siod_output_pipe[0]);
-  close (siod_output_pipe[1]);
+  siod_set_console_mode (0);
 }
 
 void
@@ -640,7 +552,8 @@ script_fu_eval_run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
       status = GIMP_PDB_CALLING_ERROR;
-      g_message (_("Script-Fu evaluate mode allows only noninteractive invocation"));
+      g_message (_("Script-Fu evaluate mode allows only "
+                   "noninteractive invocation"));
       break;
 
     default:

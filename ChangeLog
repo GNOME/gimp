@@ -1,5 +1,15 @@
 2004-07-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-console.[ch]
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/siod-wrapper.[ch]
+	* plug-ins/script-fu/siod/slib.c: applied a patch from Kevin
+	Cozens that removes an unneeded pipe which was causing problems
+	on long output from the SIOD interpreter (bug #139200). Also
+	shortened the welcome message.
+
+2004-07-14  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pagecurl/pagecurl.c: GUI polishing.
 
 2004-07-14  Shlomi Fish  <shlomif@iglu.org.il>
