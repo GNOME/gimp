@@ -198,9 +198,11 @@ gimp_template_editor_constructor (GType                  type,
   GtkWidget          *xres;
   GtkWidget          *yres;
   GtkWidget          *chainbutton;
+  GtkWidget          *expander;
   GtkWidget          *scrolled_window;
   GtkWidget          *text_view;
   GtkTextBuffer      *text_buffer;
+  gchar              *text;
   GList              *focus_chain = NULL;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -466,8 +468,18 @@ gimp_template_editor_constructor (GType                  type,
   gtk_widget_show (frame);
 
   /* frame for Comment */
-  frame = gimp_frame_new (_("Image Comment"));
-  gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
+  text = g_strdup_printf ("<b>%s</b>", _("Image _Comment"));
+  expander = g_object_new (GTK_TYPE_EXPANDER,
+                           "label",      text,
+                           "use_markup", TRUE,
+                           NULL);
+  g_free (text);
+
+  gtk_box_pack_start (GTK_BOX (editor), expander, TRUE, TRUE, 0);
+  gtk_widget_show (expander);
+
+  frame = gimp_frame_new ("<expander>");
+  gtk_container_add (GTK_CONTAINER (expander), frame);
   gtk_widget_show (frame);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);

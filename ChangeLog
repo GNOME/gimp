@@ -1,3 +1,12 @@
+2004-05-03  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpframe.c (gimp_frame_new): added a hack that
+	allows to get the label_spacing but no label. Useful when the frame
+	is packed into a GtkExpander.
+
+	* app/widgets/gimptemplateeditor.c: pack the "Image Comment" frame
+	into a GtkExpander to reduce clutter and dialog size.
+
 2004-05-03  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimphelpui.[ch]: added gimp_help_id_quark()

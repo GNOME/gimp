@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "gimpwidgetstypes.h"
@@ -29,8 +31,9 @@
 #include "gimpframe.h"
 
 
-#define DEFAULT_LABEL_SPACING  6
-#define GIMP_FRAME_INDENT_KEY  "gimp-frame-indent"
+#define DEFAULT_LABEL_SPACING    6
+#define GIMP_FRAME_INDENT_KEY    "gimp-frame-indent"
+#define GIMP_FRAME_EXPANDER_KEY  "gimp-frame-in-expander"
 
 
 static void      gimp_frame_class_init          (GimpFrameClass *klass);
@@ -48,6 +51,7 @@ static gboolean  gimp_frame_expose_event        (GtkWidget      *widget,
                                                  GdkEventExpose *event);
 static void      gimp_frame_label_widget_notify (GtkFrame       *frame);
 static gint      gimp_frame_get_indent          (GtkWidget      *widget);
+static gint      gimp_frame_get_label_spacing   (GtkFrame       *frame);
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -127,21 +131,15 @@ gimp_frame_size_request (GtkWidget      *widget,
 
   if (frame->label_widget && GTK_WIDGET_VISIBLE (frame->label_widget))
     {
-      gint spacing;
-
       gtk_widget_size_request (frame->label_widget, requisition);
-
-      gtk_widget_style_get (widget,
-                            "label_spacing", &spacing,
-                            NULL);
-
-      requisition->height += spacing;
     }
   else
     {
       requisition->width  = 0;
       requisition->height = 0;
     }
+
+  requisition->height += gimp_frame_get_label_spacing (frame);
 
   if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
     {
@@ -208,19 +206,16 @@ gimp_frame_child_allocate (GtkFrame      *frame,
   gint           spacing      = 0;
   gint           indent       = gimp_frame_get_indent (widget);
 
-  if (frame->label_widget)
+  if (frame->label_widget && GTK_WIDGET_VISIBLE (frame->label_widget))
     {
       GtkRequisition  child_requisition;
 
       gtk_widget_get_child_requisition (frame->label_widget,
                                         &child_requisition);
-
-      gtk_widget_style_get (widget,
-                            "label_spacing", &spacing,
-                            NULL);
-
       spacing += child_requisition.height;
     }
+
+  spacing += gimp_frame_get_label_spacing (frame);
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR)
     child_allocation->x    = border_width + indent;
@@ -320,6 +315,22 @@ gimp_frame_get_indent (GtkWidget *widget)
   return width;
 }
 
+static gint
+gimp_frame_get_label_spacing (GtkFrame *frame)
+{
+  gint spacing = 0;
+
+  if ((frame->label_widget && GTK_WIDGET_VISIBLE (frame->label_widget)) ||
+      (g_object_get_data (G_OBJECT (frame), GIMP_FRAME_EXPANDER_KEY)))
+    {
+      gtk_widget_style_get (GTK_WIDGET (frame),
+                            "label_spacing", &spacing,
+                            NULL);
+    }
+
+  return spacing;
+}
+
 /**
  * gimp_frame_new:
  * @label: text to set as the frame's title label (or %NULL for no title)
@@ -337,7 +348,23 @@ gimp_frame_get_indent (GtkWidget *widget)
 GtkWidget *
 gimp_frame_new (const gchar *label)
 {
-  return g_object_new (GIMP_TYPE_FRAME,
-                       "label", label,
-                       NULL);
+  GtkWidget *frame;
+  gboolean   expander = FALSE;
+
+  /*  somewhat hackish, should perhaps be an object property of GimpFrame  */
+  if (label && strcmp (label, "<expander>") == 0)
+    {
+      expander = TRUE;
+      label    = NULL;
+    }
+
+  frame = g_object_new (GIMP_TYPE_FRAME,
+                        "label", label,
+                        NULL);
+
+  if (expander)
+    g_object_set_data (G_OBJECT (frame),
+                       GIMP_FRAME_EXPANDER_KEY, (gpointer) TRUE);
+
+  return frame;
 }
