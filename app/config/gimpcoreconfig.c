@@ -84,7 +84,6 @@ enum
   PROP_UNDO_LEVELS,
   PROP_UNDO_SIZE,
   PROP_PLUGINRC_PATH,
-  PROP_MODULE_LOAD_INHIBIT,
   PROP_LAYER_PREVIEWS,
   PROP_LAYER_PREVIEW_SIZE,
   PROP_THUMBNAIL_SIZE,
@@ -257,11 +256,6 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 				 GIMP_PARAM_PATH_FILE,
                                  "${gimp_dir}" G_DIR_SEPARATOR_S "pluginrc",
                                  GIMP_PARAM_RESTART);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_MODULE_LOAD_INHIBIT,
-                                   "module-load-inhibit",
-                                   MODULE_LOAD_INHIBIT_BLURB,
-                                   NULL,
-                                   0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_LAYER_PREVIEWS,
                                     "layer-previews", LAYER_PREVIEWS_BLURB,
                                     TRUE,
@@ -313,7 +307,6 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->default_font);
   g_free (core_config->default_comment);
   g_free (core_config->plug_in_rc_path);
-  g_free (core_config->module_load_inhibit);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -419,10 +412,6 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_PLUGINRC_PATH:
       g_free (core_config->plug_in_rc_path);
       core_config->plug_in_rc_path = g_value_dup_string (value);
-      break;
-    case PROP_MODULE_LOAD_INHIBIT:
-      g_free (core_config->module_load_inhibit);
-      core_config->module_load_inhibit = g_value_dup_string (value);
       break;
     case PROP_LAYER_PREVIEWS:
       core_config->layer_previews = g_value_get_boolean (value);
@@ -535,9 +524,6 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_PLUGINRC_PATH:
       g_value_set_string (value, core_config->plug_in_rc_path);
-      break;
-    case PROP_MODULE_LOAD_INHIBIT:
-      g_value_set_string (value, core_config->module_load_inhibit);
       break;
     case PROP_LAYER_PREVIEWS:
       g_value_set_boolean (value, core_config->layer_previews);

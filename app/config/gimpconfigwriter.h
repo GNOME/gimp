@@ -24,7 +24,7 @@
 
 
 GimpConfigWriter * gimp_config_writer_new_file    (const gchar       *filename,
-						   gboolean           safe,
+						   gboolean           atomic,
 						   const gchar       *header,
 						   GError           **error);
 GimpConfigWriter * gimp_config_writer_new_fd      (gint               fd);

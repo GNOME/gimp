@@ -65,7 +65,7 @@ static gboolean  gimp_config_writer_close_file (GimpConfigWriter  *writer,
 
 GimpConfigWriter *
 gimp_config_writer_new_file (const gchar  *filename,
-			     gboolean      safe,
+			     gboolean      atomic,
 			     const gchar  *header,
 			     GError      **error)
 {
@@ -76,7 +76,7 @@ gimp_config_writer_new_file (const gchar  *filename,
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  if (safe)
+  if (atomic)
     {
       tmpname = g_strconcat (filename, "XXXXXX", NULL);
   

@@ -1,3 +1,17 @@
+2003-09-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpcoreconfig.[ch]
+	* app/config/gimprc-blurbs.h: removed "module-load-inhibit"
+	property since the GimpModuleDB stores this value.
+
+	* app/config/gimpconfigwriter.[ch] (gimp_config_writer_new):
+	renamed parameter "gboolean safe" to "gboolean atomic".
+
+	* app/core/gimpmodules.c: ported modulerc parsing/writing to
+	GimpScanner and GimpConfigWriter (apparently it was forgotten
+	during gimprc cleanup). Makes keeping modules from being loaded
+	work again. Reported by Michael Schumacher on #gimp.
+
 2003-09-02  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpstroke.c: duplicate the closed property too.

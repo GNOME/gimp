@@ -36,11 +36,12 @@
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h"
 #include "config/gimpconfig-path.h"
+#include "config/gimpconfigwriter.h"
+#include "config/gimpcoreconfig.h"
+#include "config/gimpscanner.h"
 
 #include "gimp.h"
-#include "gimplist.h"
 #include "gimpmodules.h"
 
 #include "gimp-intl.h"
@@ -70,15 +71,85 @@ gimp_modules_exit (Gimp *gimp)
 void
 gimp_modules_load (Gimp *gimp)
 {
+  gchar      *filename;
+  gchar      *path;
+  GScanner   *scanner;
+  GTokenType  token;
+  gchar      *module_load_inhibit = NULL;
+  GError     *error               = NULL;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-#if 0
-  gchar *filename = gimp_personal_rc_file ("modulerc");
-  gimprc_parse_file (filename);
+  filename = gimp_personal_rc_file ("modulerc");
+  scanner = gimp_scanner_new_file (filename, &error);
   g_free (filename);
-#endif
 
-  gimp_modules_refresh (gimp);
+#define MODULE_LOAD_INHIBIT 1
+
+  g_scanner_scope_add_symbol (scanner, 0, "module-load-inhibit",
+                              GINT_TO_POINTER (MODULE_LOAD_INHIBIT));
+
+  token = G_TOKEN_LEFT_PAREN;
+
+  while (g_scanner_peek_next_token (scanner) == token)
+    {
+      token = g_scanner_get_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_LEFT_PAREN:
+          token = G_TOKEN_SYMBOL;
+          break;
+
+        case G_TOKEN_SYMBOL:
+          if (scanner->value.v_symbol == GINT_TO_POINTER (MODULE_LOAD_INHIBIT))
+            {
+              token = G_TOKEN_STRING;
+
+              if (! gimp_scanner_parse_string_no_validate (scanner,
+                                                           &module_load_inhibit))
+                goto error;
+            }
+          token = G_TOKEN_RIGHT_PAREN;
+          break;
+
+        case G_TOKEN_RIGHT_PAREN:
+          token = G_TOKEN_LEFT_PAREN;
+          break;
+
+        default: /* do nothing */
+          break;
+        }
+    }
+
+#undef MODULE_LOAD_INHIBIT
+
+  if (token != G_TOKEN_LEFT_PAREN)
+    {
+      g_scanner_get_next_token (scanner);
+      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
+                             _("fatal parse error"), TRUE);
+    }
+
+ error:
+
+  if (error)
+    {
+      g_message (error->message);
+      g_clear_error (&error);
+    }
+
+  gimp_scanner_destroy (scanner);
+
+  if (module_load_inhibit)
+    {
+      gimp_module_db_set_load_inhibit (gimp->module_db, module_load_inhibit);
+      g_free (module_load_inhibit);
+    }
+
+  path = gimp_config_path_expand (gimp->config->module_path, TRUE, NULL);
+  gimp_module_db_load (gimp->module_db, path);
+  g_free (path);
 }
 
 static void
@@ -102,10 +173,11 @@ gimp_modules_unload (Gimp *gimp)
 
   if (gimp->write_modulerc)
     {
-      GString *str;
-      gchar   *p;
-      gchar   *filename;
-      FILE    *fp;
+      GimpConfigWriter *writer;
+      GString          *str;
+      gchar            *p;
+      gchar            *filename;
+      GError           *error = NULL;
 
       str = g_string_new (NULL);
       g_list_foreach (gimp->module_db->modules, add_to_inhibit_string, str);
@@ -115,18 +187,28 @@ gimp_modules_unload (Gimp *gimp)
         p = "";
 
       filename = gimp_personal_rc_file ("modulerc");
-      fp = fopen (filename, "wt");
+      writer = gimp_config_writer_new_file (filename, TRUE,
+                                            "GIMP modulerc", &error);
       g_free (filename);
 
-      if (fp)
+      if (writer)
         {
-          fprintf (fp, "(module-load-inhibit \"%s\")\n", p);
-          fclose (fp);
+          gimp_config_writer_open (writer, "module-load-inhibit");
+          gimp_config_writer_printf (writer, "\"%s\"", p);
+          gimp_config_writer_close (writer);
+
+          gimp_config_writer_finish (writer, "end of modulerc", &error);
 
           gimp->write_modulerc = FALSE;
         }
 
       g_string_free (str, TRUE);
+
+      if (error)
+        {
+          g_message (error->message);
+          g_clear_error (&error);
+        }
     }
 }
 
@@ -136,9 +218,6 @@ gimp_modules_refresh (Gimp *gimp)
   gchar *path;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  gimp_module_db_set_load_inhibit (gimp->module_db,
-                                   gimp->config->module_load_inhibit);
 
   path = gimp_config_path_expand (gimp->config->module_path, TRUE, NULL);
   gimp_module_db_refresh (gimp->module_db, path);

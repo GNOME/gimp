@@ -65,7 +65,6 @@ struct _GimpCoreConfig
   gint                   levels_of_undo;
   gulong                 undo_size;
   gchar                 *plug_in_rc_path;
-  gchar                 *module_load_inhibit;
   gboolean               layer_previews;
   GimpPreviewSize        layer_preview_size;
   GimpThumbnailSize      thumbnail_size;

@@ -176,9 +176,6 @@ N_("Generally only a concern for 8-bit displays, this sets the minimum " \
 #define MODULE_PATH_BLURB \
 "Sets the module search path."
 
-#define MODULE_LOAD_INHIBIT_BLURB \
-"To inhibit loading of a module, add its name here."
-
 #define MONITOR_RES_FROM_GDK_BLURB \
 "When enabled, the GIMP will use the monitor resolution from the " \
 "windowing system."
