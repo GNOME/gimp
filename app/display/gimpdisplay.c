@@ -364,7 +364,7 @@ gdisplay_draw_guide (GDisplay *gdisp,
   if (initialize)
     {
       GdkGCValues values;
-      char stipple[8] =
+      guchar stipple[8] =
       {
 	0xF0,    /*  ####----  */
 	0xE1,    /*  ###----#  */
@@ -960,7 +960,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   gint alpha = FALSE;
   GimpDrawable *drawable;
   Format format;
-  gint type;
+  Tag t;
 
   fs = (gimage_floating_sel (gdisp->gimage) != NULL);
   aux = (gimage_get_active_channel (gdisp->gimage) != NULL);
@@ -972,11 +972,11 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   lp = (gdisp->gimage->layers != NULL);
   alpha = layer && layer_has_alpha (layer);
 
-  type = -1;
+  t = tag_null ();
   if (lp)
     {
       drawable = gimage_active_drawable (gdisp->gimage);
-      type = drawable_type (drawable);
+      t = drawable_tag (drawable);
     }
 
   menus_set_sensitive ("<Image>/Layers/Raise Layer", !fs && !aux && lp && alpha);
@@ -1030,7 +1030,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   menus_set_state ("<Image>/View/Toggle Guides", gdisp->draw_guides);
   menus_set_state ("<Image>/View/Snap To Guides", gdisp->snap_to_guides);
 
-  plug_in_set_menu_sensitivity (type);
+  plug_in_set_menu_sensitivity (t);
 }
 
 void

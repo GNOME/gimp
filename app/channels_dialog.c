@@ -1161,8 +1161,8 @@ channel_widget_button_events (GtkWidget *widget,
     {
     case Auxillary:
       visible = GIMP_DRAWABLE(channel_widget->channel)->visible;
-      width = GIMP_DRAWABLE(channel_widget->channel)->width;
-      height = GIMP_DRAWABLE(channel_widget->channel)->height;
+      width = drawable_width (GIMP_DRAWABLE(channel_widget->channel));
+      height = drawable_height (GIMP_DRAWABLE(channel_widget->channel));
       break;
     default:
       visible = gimage_get_component_visible (channel_widget->gimage, channel_widget->type);
@@ -1358,8 +1358,8 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
   switch (channel_widget->type)
     {
     case Auxillary:
-      width = GIMP_DRAWABLE(channel_widget->channel)->width;
-      height = GIMP_DRAWABLE(channel_widget->channel)->height;
+      width = drawable_width (GIMP_DRAWABLE(channel_widget->channel));
+      height = drawable_height (GIMP_DRAWABLE(channel_widget->channel));
       channel_widget->width = (int) (channelsD->ratio * width);
       channel_widget->height = (int) (channelsD->ratio * height);
       preview_buf = channel_preview (channel_widget->channel,
@@ -1924,7 +1924,9 @@ edit_channel_query_ok_callback (GtkWidget *w,
     
     if (update)
       {
-	drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
+	drawable_update (GIMP_DRAWABLE(channel),
+                         0, 0,
+                         0, 0);
 	gdisplays_flush ();
       }
   }

@@ -28,35 +28,32 @@ typedef guint Tag;
 #define TAG_MAX_BYTES 16
 
 /* supported precisions */
-typedef enum _Precision Precision;
-enum _Precision
+typedef enum
 {  
   PRECISION_NONE,
   PRECISION_U8,
   PRECISION_U16,
   PRECISION_FLOAT
-};
+} Precision;
 
 
 /* the supported formats */
-typedef enum _Format Format;
-enum _Format
+typedef enum
 {
   FORMAT_NONE,
   FORMAT_RGB,
   FORMAT_GRAY,
   FORMAT_INDEXED
-};
+} Format;
 
 
 /* does the data have an embedded alpha channel */
-typedef enum _Alpha Alpha;
-enum _Alpha
+typedef enum
 {
   ALPHA_NONE,
   ALPHA_NO,
   ALPHA_YES
-};
+} Alpha;
 
 
 Tag       tag_new               (Precision, Format, Alpha);
@@ -73,9 +70,9 @@ guint     tag_num_channels      (Tag);
 guint     tag_bytes             (Tag);
 guint     tag_equal             (Tag, Tag);
 
-guchar *  tag_string_precision  (Precision);
-guchar *  tag_string_format     (Format);
-guchar *  tag_string_alpha      (Alpha);
+gchar *   tag_string_precision  (Precision);
+gchar *   tag_string_format     (Format);
+gchar *   tag_string_alpha      (Alpha);
 
 Tag       tag_null              (void);
 gint      tag_valid             (Tag);

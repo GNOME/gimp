@@ -88,7 +88,6 @@ struct _GImage
 
   Tag tag;
   int width, height;		      /*  width and height attributes  */
-  int base_type;                      /*  base gimage type             */
 
   unsigned char * cmap;               /*  colormap--for indexed        */
   int num_cols;                       /*  number of cols--for indexed  */

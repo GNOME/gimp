@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+#include "trace.h"
 
 /* temporary logging facilities */
 

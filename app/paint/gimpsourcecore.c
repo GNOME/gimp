@@ -164,7 +164,7 @@ create_clone_options (void)
   return options;
 }
 
-void *
+static void *
 clone_paint_func (PaintCore *paint_core,
 		  GimpDrawable *drawable,
 		  int        state)

@@ -549,15 +549,10 @@ blend_button_press (Tool           *tool,
   gdisp = (GDisplay *) gdisp_ptr;
   blend_tool = (BlendTool *) tool->private;
 
-  switch (drawable_type (gimage_active_drawable (gdisp->gimage)))
+  if (tag_format (drawable_tag (gimage_active_drawable (gdisp->gimage))) == FORMAT_INDEXED)
     {
-    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
       g_message ("Blend: Invalid for indexed images.");
       return;
-
-      break;
-    default:
-      break;
     }
 
   /*  Keep the coordinates of the target  */
@@ -661,9 +656,9 @@ blend_cursor_update (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  switch (drawable_type (gimage_active_drawable (gdisp->gimage)))
+  switch (tag_format (drawable_tag (gimage_active_drawable (gdisp->gimage))))
     {
-    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+    case FORMAT_INDEXED:
       gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
       break;
     default:

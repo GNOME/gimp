@@ -27,33 +27,30 @@ struct _GimpDrawable;
 
 
 /* the different states that the painting function can be called with  */
-typedef enum _PaintCoreState PaintCoreState;
-enum _PaintCoreState
+typedef enum
 {
   INIT_PAINT,
   MOTION_PAINT,
   PAUSE_PAINT,
   RESUME_PAINT,
   FINISH_PAINT
-};
+} PaintCoreState;
 
 
 /* brush application types  */
-typedef enum _BrushHardness BrushHardness;
-enum _BrushHardness
+typedef enum
 {
   HARD,    /* pencil */
   SOFT     /* paintbrush */
-};
+} BrushHardness;
 
 
 /* paint application modes  */
-typedef enum _ApplyMode ApplyMode;
-enum _ApplyMode
+typedef enum
 {
   CONSTANT,    /* pencil, paintbrush, airbrush, clone */
   INCREMENTAL  /* convolve, smudge */
-};
+} ApplyMode;
 
 
 /* structure definitions */

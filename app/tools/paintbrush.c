@@ -132,7 +132,7 @@ create_paint_options (void)
   return options;
 }
 
-void *
+static void *
 paintbrush_paint_func (PaintCore *paint_core,
 		       GimpDrawable *drawable,
 		       int        state)

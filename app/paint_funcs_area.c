@@ -33,14 +33,13 @@
 #define EPSILON            0.0001
 
 /* only for scale_area et al. */
-typedef enum _ScaleType ScaleType;
-enum _ScaleType
+typedef enum
 {
   MinifyX_MinifyY,
   MinifyX_MagnifyY,
   MagnifyX_MinifyY,
   MagnifyX_MagnifyY
-};
+} ScaleType;
 
 
 /*  Layer modes information.  only the affect_alpha is used */
@@ -255,12 +254,13 @@ absdiff_area_funcs (
     case PRECISION_U8:
       return absdiff_row_u8;
     case PRECISION_U16:
-      return NULL; /* absdiff_row_u16; */
     case PRECISION_FLOAT:
-      return NULL; /* absdiff_row_float; */
+    case PRECISION_NONE:
     default:
-      return NULL;
+      g_warning ("bad precision");
     } 
+
+  return NULL;
 }
  
 void
@@ -495,7 +495,7 @@ copy_area  (
   PixelRow srow;
   PixelRow drow;
   void * pag;
-  CopyRowFunc copy_row = copy_area_funcs (src_tag);
+  CopyRowFunc copyrow = copy_area_funcs (src_tag);
 
   for (pag = pixelarea_register (2, src_area, dest_area);
        pag != NULL;
@@ -506,7 +506,7 @@ copy_area  (
         {
           pixelarea_getdata (src_area, &srow, h);
           pixelarea_getdata (dest_area, &drow, h);
-          (*copy_row) (&srow, &drow);
+          copyrow (&srow, &drow);
         }
     }
 }
@@ -888,7 +888,7 @@ convolve_area  (
                 PixelArea * src_area,
                 PixelArea * dest_area,
                 gint * matrix,
-                gint matrix_size,
+                guint matrix_size,
                 gint divisor,
                 gint mode
                 )
@@ -914,7 +914,7 @@ convolve_area  (
   
   /*  check for the boundary cases  */
   if (src_area_width < (matrix_size - 1) || 
-		src_area_height < (matrix_size - 1))
+      src_area_height < (matrix_size - 1))
     return;
 
   (*convolve_area_func) (src_area, dest_area, matrix, 
@@ -1341,7 +1341,8 @@ gaussian_blur_area  (
 {
   gdouble *curve;
   gfloat *sum, total;
-  gint length, i, col, row;
+  gint length;
+  guint i, col, row;
   PixelRow src_row, src_col, dest_row, rle_values;
   guchar *src_row_data, *src_col_data, *dest_row_data, *rle_values_data;
   gint *rle_count;  
@@ -2016,6 +2017,8 @@ scale_row_resample_funcs (
     return scale_row_resample_float;	
   case PRECISION_NONE:
   default:
+    g_warning ("bad precision");
+    break;
   }
   return NULL;
 }
@@ -2793,7 +2796,7 @@ thin_area  (
             gint type
             )
 {
-  int i;
+  guint i;
   int found_one;
 
   PixelRow prev_row;
@@ -3607,7 +3610,7 @@ combine_areas_type (
 
   return valid_combos[s_index][d_index];
   
-};
+}
 
 void 
 combine_areas  (

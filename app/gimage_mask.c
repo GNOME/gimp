@@ -146,7 +146,9 @@ gimage_mask_invalidate (gimage)
    */
   layer = gimage_get_active_layer (gimage);
   if (layer && layer_is_floating_sel (layer))
-    drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+    drawable_update (GIMP_DRAWABLE(layer),
+                     0, 0,
+                     0, 0);
 }
 
 

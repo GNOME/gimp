@@ -1218,7 +1218,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       button = gtk_radio_button_new_with_label (NULL, "RGB");
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
-      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) RGB);
+      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) FORMAT_RGB);
       if (last_format == FORMAT_RGB)
 	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
@@ -1228,7 +1228,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       button = gtk_radio_button_new_with_label (group, "Grayscale");
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
-      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) GRAY);
+      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) FORMAT_GRAY);
       if (last_format == FORMAT_GRAY) 
 	  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",

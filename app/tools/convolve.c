@@ -187,7 +187,7 @@ create_convolve_options (void)
   return options;
 }
 
-void *
+static void *
 convolve_paint_func (PaintCore *paint_core,
 		     GimpDrawable *drawable,
 		     int        state)

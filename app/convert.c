@@ -60,6 +60,7 @@
 
 #include "appenv.h"
 #include "actionarea.h"
+#include "canvas.h"
 #include "convert.h"
 #include "drawable.h"
 #include "floating_sel.h"
@@ -67,19 +68,128 @@
 #include "gdisplay.h"
 #include "indexed_palette.h"
 #include "interface.h"
-#include "paint_funcs.h"
 #include "undo.h"
+#include "paint_funcs_area.h"
 #include "palette.h"
+#include "pixelarea.h"
 
-#include "layer_pvt.h"			/* ick. */
-#include "drawable_pvt.h"		/* ick ick. */
-#include "tile_manager_pvt.h"		/* ick ick ick. */
+#include "layer_pvt.h"
+
+static Argument * convert_rgb_invoker               (Argument *);
+static Argument * convert_grayscale_invoker         (Argument *);
+static Argument * convert_indexed_invoker           (Argument *);
+static Argument * convert_indexed_palette_invoker   (Argument *);
+static void       convert_image                     (GImage *, Format, int, int, int);
+
+
+void
+convert_to_rgb (void *gimage_ptr)
+{
+  GImage *gimage;
+
+  gimage = (GImage *) gimage_ptr;
+  convert_image (gimage, FORMAT_RGB, 0, 0, 0);
+  gdisplays_flush ();
+}
+
+void
+convert_to_grayscale (void *gimage_ptr)
+{
+  GImage *gimage;
+
+  gimage = (GImage *) gimage_ptr;
+  convert_image (gimage, FORMAT_GRAY, 0, 0, 0);
+  gdisplays_flush ();
+}
+
+void
+convert_to_indexed (void *gimage_ptr)
+{
+  g_message ("indexed image support has been dropped for the moment");
+  return;
+}
+
+static void
+convert_image (GImage *gimage,
+	       Format  new_format,
+	       int     num_cols,     /*  used only for new_type == INDEXED  */
+	       int     dither,       /*  used only for new_type == INDEXED  */
+	       int     palette_type) /*  used only for new_type == INDEXED  */
+{
+  GSList * list;
+  Layer * floating_layer;
+
+  
+  undo_push_group_start (gimage, GIMAGE_MOD_UNDO);
+
+  /*  Relax the floating selection  */
+  floating_layer = gimage_floating_sel (gimage);
+  if (floating_layer)
+    floating_sel_relax (floating_layer, TRUE);
+  
+  /*  Push the image size to the stack  */
+  undo_push_gimage_mod (gimage);
+
+  /*  Set the new gimage tag */
+  gimage->tag = tag_set_format (gimage->tag, new_format);
+
+  /*  Convert all layers  */
+  for (list = gimage->layers;
+       list;
+       list = g_slist_next (list))
+    {
+      PixelArea old, new;
+
+      /* get the original layer */
+      Layer * layer = (Layer *) list->data;
+
+      /* get the original image buffer */
+      Canvas * old_tiles = drawable_data (GIMP_DRAWABLE (layer));
+
+      /* make a new image buffer */
+      Canvas * new_tiles = canvas_new (tag_set_format (canvas_tag (old_tiles),
+                                                       new_format),
+                                       canvas_width (old_tiles),
+                                       canvas_height (old_tiles),
+                                       STORAGE_TILED);
+        
+      /* convert the image data */
+      pixelarea_init (&old, old_tiles,
+                      0, 0,
+                      0, 0,
+                      FALSE);
+          
+      pixelarea_init (&new, new_tiles,
+                      0, 0,
+                      0, 0,
+                      TRUE);
+
+      copy_area (&old, &new);
+        
+      /*  Push the layer on the undo stack  */
+      undo_push_layer_mod (gimage, layer);
+
+      /* save the converted layer */
+      GIMP_DRAWABLE(layer)->tiles = new_tiles;
+    }
+
+  /*  Make sure the projection is up to date  */
+  gimage_projection_realloc (gimage);
+
+  /*  Rigor the floating selection  */
+  if (floating_layer)
+    floating_sel_rigor (floating_layer, TRUE);
+
+  undo_push_group_end (gimage);
+
+  /*  shrink wrap and update all views  */
+  layer_invalidate_previews (gimage->ID);
+  gimage_invalidate_preview (gimage);
+  gdisplays_update_title (gimage->ID);
+  gdisplays_update_full (gimage->ID);
+}
 
 #define MAXNUMCOLORS 256
-
-#define NODITHER 0
-#define FSDITHER 1
-#define NODESTRUCTDITHER 2
 
 /* adam's extra palette stuff */
 #define MAKE_PALETTE 0
@@ -87,6 +197,15 @@
 #define WEB_PALETTE 2
 #define MONO_PALETTE 3
 #define CUSTOM_PALETTE 4
+static PaletteEntriesP theCustomPalette = NULL;
+
+
+#if 0
+
+#define NODITHER 0
+#define FSDITHER 1
+#define NODESTRUCTDITHER 2
+
 
 #define PRECISION_R 6
 #define PRECISION_G 6
@@ -210,10 +329,6 @@ typedef struct
   int          reusepal_flag;
 } IndexedDialog;
 
-static Argument * convert_rgb_invoker               (Argument *);
-static Argument * convert_grayscale_invoker         (Argument *);
-static Argument * convert_indexed_invoker           (Argument *);
-static Argument * convert_indexed_palette_invoker   (Argument *);
 
 static void indexed_ok_callback     (GtkWidget *, gpointer);
 static void indexed_cancel_callback (GtkWidget *, gpointer);
@@ -222,9 +337,6 @@ static void indexed_num_cols_update (GtkWidget *, gpointer);
 static void indexed_radio_update    (GtkWidget *, gpointer);
 static void indexed_dither_update   (GtkWidget *, gpointer);
 
-static void convert_image       (GImage *, int, int, int, int);
-static void rgb_converter       (Layer *, TileManager *, int);
-static void grayscale_converter (Layer *, TileManager *, int);
 
 static void zero_histogram_gray     (Histogram);
 static void zero_histogram_rgb      (Histogram);
@@ -239,27 +351,6 @@ static gboolean needs_quantize;
 
 static GtkWidget *build_palette_menu(int *default_palette);
 static void palette_entries_callback(GtkWidget *w, gpointer client_data);
-static PaletteEntriesP theCustomPalette = NULL;
-
-void
-convert_to_rgb (void *gimage_ptr)
-{
-  GImage *gimage;
-
-  gimage = (GImage *) gimage_ptr;
-  convert_image (gimage, RGB, 0, 0, 0);
-  gdisplays_flush ();
-}
-
-void
-convert_to_grayscale (void *gimage_ptr)
-{
-  GImage *gimage;
-
-  gimage = (GImage *) gimage_ptr;
-  convert_image (gimage, GRAY, 0, 0, 0);
-  gdisplays_flush ();
-}
 
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
@@ -267,6 +358,7 @@ static ActionAreaItem action_items[] =
   { "OK", indexed_ok_callback, NULL, NULL },
   { "Cancel", indexed_cancel_callback, NULL, NULL }
 };
+
 
 void
 convert_to_indexed (void *gimage_ptr)
@@ -603,348 +695,6 @@ indexed_dither_update (GtkWidget *w,
     dialog->dither = TRUE;
   else
     dialog->dither = FALSE;
-}
-
-static void
-convert_image (GImage *gimage,
-	       int     new_type,
-	       int     num_cols,     /*  used only for new_type == INDEXED  */
-	       int     dither,       /*  used only for new_type == INDEXED  */
-	       int     palette_type) /*  used only for new_type == INDEXED  */
-{
-  QuantizeObj *quantobj;
-  Layer *layer;
-  Layer *floating_layer;
-  int old_type;
-  GSList *list;
-  int new_layer_type;
-  int new_layer_bytes;
-  int has_alpha;
-  TileManager *new_tiles;
-
-  quantobj        = NULL;
-  new_layer_type  = RGBA_GIMAGE;
-  new_layer_bytes = 4;
-
-  /*  Get the floating layer if one exists  */
-  floating_layer = gimage_floating_sel (gimage);
-
-  undo_push_group_start (gimage, GIMAGE_MOD_UNDO);
-
-  /*  Relax the floating selection  */
-  if (floating_layer)
-    floating_sel_relax (floating_layer, TRUE);
-
-  /*  Push the image size to the stack  */
-  undo_push_gimage_mod (gimage);
-
-  /*  Set the new base type  */
-  old_type = 0;
-  /* old_type = gimage->base_type; */
-  /* gimage->base_type = new_type; */
-
-  /*  Convert to indexed?  Build histogram if necessary.  */
-  if (new_type == INDEXED)
-    {
-      int i, j;
-
-      /* don't dither if the input is grayscale and we are simply mapping every color */
-      if (old_type == GRAY && num_cols == 256 && palette_type == MAKE_PALETTE)
-	dither = FALSE;
-
-      quantobj = initialize_median_cut (old_type, num_cols, dither ? FSDITHER : NODITHER, palette_type);
-
-      if (palette_type == MAKE_PALETTE)
-	{
-	  if (old_type == GRAY)
-	    zero_histogram_gray (quantobj->histogram);
-	  else
-	    zero_histogram_rgb (quantobj->histogram);
-
-	  /* To begin, assume that there are fewer colours in
-	   *  the image than the user actually asked for.  In that
-	   *  case, we don't need to quantize or dither.
-	   */
-	  needs_quantize = FALSE;
-	  num_found_cols = 0;
-
-	  /*  Build the histogram  */
-	  list = gimage->layers;
-	  while (list)
-	    {
-	      layer = (Layer *) list->data;
-	      list = g_slist_next (list);
-	      if (old_type == GRAY)
-		generate_histogram_gray (quantobj->histogram, layer);
-	      else
-		generate_histogram_rgb (quantobj->histogram, layer, num_cols);
-	      /*
-	       * Note: generate_histogram_rgb may set needs_quantize if
-	       *  the image contains more colours than the limit specified
-	       *  by the user.
-	       */
-	    }
-	}
-
-       if (
-         (old_type == RGB) &&
-         (!needs_quantize) &&
-         (palette_type == MAKE_PALETTE)
-         )
-
-	{
-         /* If this is an RGB image, and the user wanted a custom-built
-          *  generated palette, and this image has no more colours than
-          *  the user asked for, we don't need the first pass (quantization).
-          *
-          * There's also no point in dithering, since there's no error to
-          *  spread.  So we destroy the old quantobj and make a new one
-          *  with the remapping function set to a special LUT-based
-          *  no-dither remapper.
-          */
-
-	  quantobj->delete_func (quantobj);
-	  quantobj = initialize_median_cut (old_type, num_cols,
-					    NODESTRUCTDITHER, palette_type);
-	  /* We can skip the first pass (palette creation) */
-
-	  quantobj->actual_number_of_colors = num_found_cols;
-	  for (i = 0; i < num_found_cols; i++)
-	    {
-	      quantobj->cmap[i].red = found_cols[i][0];
-	      quantobj->cmap[i].green = found_cols[i][1];
-	      quantobj->cmap[i].blue = found_cols[i][2];
-	    }
-	}
-      else
-	{
-	  (* quantobj->first_pass) (quantobj);
-	}
-
-      if (gimage->cmap)
-	g_free (gimage->cmap);
-      gimage->cmap = (unsigned char *) g_malloc (COLORMAP_SIZE);
-      gimage->num_cols = quantobj->actual_number_of_colors;
-
-      for (i = 0, j = 0; i < quantobj->actual_number_of_colors; i++)
-	{
-	  gimage->cmap[j++] = quantobj->cmap[i].red;
-	  gimage->cmap[j++] = quantobj->cmap[i].green;
-	  gimage->cmap[j++] = quantobj->cmap[i].blue;
-	}
-    }
-
-  /*  Convert all layers  */
-  list = gimage->layers;
-  while (list)
-    {
-      layer = (Layer *) list->data;
-      list = g_slist_next (list);
-
-      has_alpha = layer_has_alpha (layer);
-      switch (new_type)
-	{
-	case RGB:
-	  new_layer_type = (has_alpha) ? RGBA_GIMAGE : RGB_GIMAGE;
-	  new_layer_bytes = (has_alpha) ? 4 : 3;
-	  break;
-	case GRAY:
-	  new_layer_type = (has_alpha) ? GRAYA_GIMAGE : GRAY_GIMAGE;
-	  new_layer_bytes = (has_alpha) ? 2 : 1;
-	  break;
-	case INDEXED:
-	  new_layer_type = (has_alpha) ? INDEXEDA_GIMAGE : INDEXED_GIMAGE;
-	  new_layer_bytes = (has_alpha) ? 2 : 1;
-	  break;
-	default:
-	  break;
-	}
-
-      new_tiles = tile_manager_new (GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, new_layer_bytes);
-
-      switch (new_type)
-	{
-	case RGB:
-	  rgb_converter (layer, new_tiles, old_type);
-	  break;
-	case GRAY:
-	  grayscale_converter (layer, new_tiles, old_type);
-	  break;
-	case INDEXED:
-	  (* quantobj->second_pass) (quantobj, layer, new_tiles);
-	  break;
-	default:
-	  break;
-	}
-
-      /*  Push the layer on the undo stack  */
-      undo_push_layer_mod (gimage, layer);
-
-      GIMP_DRAWABLE(layer)->tiles = new_tiles;
-    }
-
-  /*  Delete the quantizer object, if there is one */
-  if (quantobj) 
-    quantobj->delete_func (quantobj);
-
-  /*  Make sure the projection is up to date  */
-  gimage_projection_realloc (gimage);
-
-  /*  Rigor the floating selection  */
-  if (floating_layer)
-    floating_sel_rigor (floating_layer, TRUE);
-
-  undo_push_group_end (gimage);
-
-  /*  shrink wrap and update all views  */
-  layer_invalidate_previews (gimage->ID);
-  gimage_invalidate_preview (gimage);
-  gdisplays_update_title (gimage->ID);
-  gdisplays_update_full (gimage->ID);
-
-  indexed_palette_update_image_list ();
-}
-
-static void
-rgb_converter (Layer       *layer,
-	       TileManager *new_tiles,
-	       int          old_type)
-{
-  PixelRegion srcPR, destPR;
-  int row, col;
-  int offset;
-  int has_alpha;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  unsigned char *cmap;
-  void *pr;
-
-  has_alpha = layer_has_alpha (layer);
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-
-  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      src = srcPR.data;
-      dest = destPR.data;
-
-      switch (old_type)
-	{
-	case GRAY:
-	  for (row = 0; row < srcPR.h; row++)
-	    {
-	      s = src;
-	      d = dest;
-	      for (col = 0; col < srcPR.w; col++)
-		{
-		  d[RED_PIX] = *s;
-		  d[GREEN_PIX] = *s;
-		  d[BLUE_PIX] = *s;
-
-		  d += 3;
-		  s++;
-		  if (has_alpha)
-		    *d++ = *s++;
-		}
-
-	      src += srcPR.rowstride;
-	      dest += destPR.rowstride;
-	    }
-	  break;
-	case INDEXED:
-	  cmap = drawable_cmap (GIMP_DRAWABLE(layer));
-	  for (row = 0; row < srcPR.h; row++)
-	    {
-	      s = src;
-	      d = dest;
-	      for (col = 0; col < srcPR.w; col++)
-		{
-		  offset = *s++ * 3;
-		  d[RED_PIX] = cmap[offset + 0];
-		  d[GREEN_PIX] = cmap[offset + 1];
-		  d[BLUE_PIX] = cmap[offset + 2];
-
-		  d += 3;
-		  if (has_alpha)
-		    *d++ = *s++;
-		}
-
-	      src += srcPR.rowstride;
-	      dest += destPR.rowstride;
-	    }
-	  break;
-	default:
-	  break;
-	}
-    }
-}
-
-static void
-grayscale_converter (Layer       *layer,
-		     TileManager *new_tiles,
-		     int          old_type)
-{
-  PixelRegion srcPR, destPR;
-  int row, col;
-  int offset, val;
-  int has_alpha;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  unsigned char *cmap;
-  void *pr;
-
-  has_alpha = layer_has_alpha (layer);
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-
-  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      src = srcPR.data;
-      dest = destPR.data;
-
-      switch (old_type)
-	{
-	case RGB:
-	  for (row = 0; row < srcPR.h; row++)
-	    {
-	      s = src;
-	      d = dest;
-	      for (col = 0; col < srcPR.w; col++)
-		{
-		  val = INTENSITY (s[RED_PIX], s[GREEN_PIX], s[BLUE_PIX]);
-		  *d++ = (unsigned char) val;
-		  s += 3;
-		  if (has_alpha)
-		    *d++ = *s++;
-		}
-
-	      src += srcPR.rowstride;
-	      dest += destPR.rowstride;
-	    }
-	  break;
-	case INDEXED:
-	  cmap = drawable_cmap (GIMP_DRAWABLE(layer));
-	  for (row = 0; row < srcPR.h; row++)
-	    {
-	      s = src;
-	      d = dest;
-	      for (col = 0; col < srcPR.w; col++)
-		{
-		  offset = *s++ * 3;
-		  val = INTENSITY (cmap[offset+0], cmap[offset+1], cmap[offset+2]);
-		  *d++ = (unsigned char) val;
-		  if (has_alpha)
-		    *d++ = *s++;
-		}
-
-	      src += srcPR.rowstride;
-	      dest += destPR.rowstride;
-	    }
-	  break;
-	default:
-	  break;
-	}
-    }
 }
 
 
@@ -2796,6 +2546,8 @@ initialize_median_cut (int type,
   return quantobj;
 }
 
+#endif
+
 
 /*
  *  Procedure database functions and data structures
@@ -2852,7 +2604,7 @@ convert_rgb_invoker (Argument *args)
     success = (tag_format (gimage_tag (gimage)) != FORMAT_RGB);
 
   if (success)
-    convert_image ((void *) gimage, RGB, 0, 0, 0);
+    convert_image ((void *) gimage, FORMAT_RGB, 0, 0, 0);
 
   return procedural_db_return_args (&convert_rgb_proc, success);
 }
@@ -2910,7 +2662,7 @@ convert_grayscale_invoker (Argument *args)
     success = (tag_format (gimage_tag (gimage)) != FORMAT_GRAY);
 
   if (success)
-    convert_image ((void *) gimage, GRAY, 0, 0, 0);
+    convert_image ((void *) gimage, FORMAT_GRAY, 0, 0, 0);
 
   return procedural_db_return_args (&convert_grayscale_proc, success);
 }
@@ -2986,7 +2738,7 @@ convert_indexed_invoker (Argument *args)
     }
 
   if (success)
-    convert_image ((void *) gimage, INDEXED, num_cols, dither, 0);
+    convert_image ((void *) gimage, FORMAT_INDEXED, num_cols, dither, 0);
 
   return procedural_db_return_args (&convert_indexed_proc, success);
 }

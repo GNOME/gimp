@@ -1349,7 +1349,7 @@ static char*
 transform_path (char *path,
 		int   destroy)
 {
-  int length;
+  guint length;
   char *new_path;
   char *home;
   char *token;

@@ -186,7 +186,7 @@ tools_free_transform_tool (Tool *tool)
 static void
 transform_change_type (int new_type)
 {
-  if (transform_options->type != new_type)
+  if ((int) transform_options->type != new_type)
     {
       /*  change the type, free the old tool, create the new tool  */
       transform_options->type = new_type;

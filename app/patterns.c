@@ -158,7 +158,7 @@ load_pattern (char *filename)
   unsigned char buf [sz_PatternHeader];
   PatternHeader header;
   unsigned int * hp;
-  int i;
+  guint i;
   gint bytes; 
   Tag tag;
 

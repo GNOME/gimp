@@ -36,7 +36,7 @@ static Argument *   pencil_invoker  (Argument *);
 
 static void *  pencil_options = NULL;
 
-void *
+static void *
 pencil_paint_func (paint_core, drawable, state)
      PaintCore *paint_core;
      GimpDrawable *drawable;

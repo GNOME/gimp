@@ -450,7 +450,7 @@ by_color_select_new_dialog ()
   GtkWidget *radio_button;
   GtkObject *data;
   GSList *group = NULL;
-  int i;
+  guint i;
   char *button_names[4] =
   {
     "Replace",

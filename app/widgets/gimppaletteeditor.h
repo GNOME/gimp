@@ -47,7 +47,7 @@ struct _PixelRow;
         pixelrow_init (&name, name##_tag, (guchar *)name##_data, 1)
 
           
-void palettes_init (int no_data);
+void palettes_init (int);
 void palettes_free (void);
 void palette_create (void);
 void palette_free (void);
@@ -83,7 +83,7 @@ struct _PaletteEntry {
 typedef struct _PaletteEntry _PaletteEntry, *PaletteEntryP;
 
 extern GSList * palette_entries_list;
-void palette_init_palettes (int no_data);
+void palette_init_palettes (int);
 void palette_free_palettes (void);
 
 /*  Procedure definition and marshalling function  */

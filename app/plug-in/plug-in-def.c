@@ -1161,12 +1161,13 @@ plug_in_repeat (int with_interface)
 }
 
 void
-plug_in_set_menu_sensitivity (int base_type)
+plug_in_set_menu_sensitivity (Tag t)
 {
   PlugInProcDef *proc_def;
   GSList *tmp;
   int sensitive = FALSE;
-
+  int base_type = tag_to_drawable_type (t);
+  
   tmp = proc_defs;
   while (tmp)
     {

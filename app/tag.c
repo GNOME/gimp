@@ -245,7 +245,7 @@ tag_equal (
 }
 
 
-guchar *
+gchar *
 tag_string_precision (
                       Precision x
                       )
@@ -265,7 +265,7 @@ tag_string_precision (
 }
 
 
-guchar *
+gchar *
 tag_string_format (
                    Format x
                    )
@@ -285,7 +285,7 @@ tag_string_format (
 }
 
 
-guchar *
+gchar *
 tag_string_alpha (
                   Alpha x
                   )

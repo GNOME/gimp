@@ -879,8 +879,8 @@ xcf_save_layer (XcfInfo *info,
     }
 
   /* write out the width, height and image type information for the layer */
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->width, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->height, 1);
+  /* info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->width, 1); */
+  /* info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->height, 1);*/
   /* info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->type, 1); */
 
   if (info->compression == COMPRESS_FRACTAL)
@@ -942,8 +942,8 @@ xcf_save_channel (XcfInfo *info,
     }
 
   /* write out the width and height information for the channel */
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(channel)->width, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(channel)->height, 1);
+  /* info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(channel)->width, 1); */
+  /* info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(channel)->height, 1); */
 
   /* write out the channels name */
   info->cp += xcf_write_string (info->fp, &GIMP_DRAWABLE(channel)->name, 1);

@@ -60,8 +60,9 @@ floating_sel_attach (Layer *layer,
   layer->preserve_trans = TRUE;
   layer->fs.drawable = drawable;
   layer->fs.backing_store = canvas_new (drawable_tag (drawable),
-	GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, 
-	STORAGE_FLAT);
+                                        drawable_width (GIMP_DRAWABLE(layer)),
+                                        drawable_height (GIMP_DRAWABLE(layer)), 
+                                        STORAGE_FLAT);
 
   /*  because setting the sensitivity in the layers_dialog lock call redraws the
    *  previews, we need to lock the dialogs before the floating sel is actually added.
@@ -117,8 +118,11 @@ floating_sel_anchor (Layer *layer)
   floating_sel_relax (layer, TRUE);
 
   /*  Composite the floating selection contents  */
-  floating_sel_composite (layer, GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y,
-			  GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
+  floating_sel_composite (layer,
+                          GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y,
+			  drawable_width (GIMP_DRAWABLE(layer)),
+                          drawable_height (GIMP_DRAWABLE(layer)),
+                          TRUE);
 
   /*  remove the floating selection  */
   gimage_remove_layer (gimage, layer);
@@ -178,7 +182,10 @@ floating_sel_to_layer (Layer *layer)
     }
 
   /*  restore the contents of the drawable  */
-  floating_sel_restore (layer, GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+  floating_sel_restore (layer,
+                        GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y,
+                        drawable_width (GIMP_DRAWABLE(layer)),
+                        drawable_height (GIMP_DRAWABLE(layer)));
 
   /*  determine whether the resulting layer needs an update  */
   drawable_offsets (layer->fs.drawable, &off_x, &off_y);
@@ -213,8 +220,9 @@ floating_sel_to_layer (Layer *layer)
       msw@gimp.org
   */
 
-  drawable_update (GIMP_DRAWABLE(layer), 0, 0,
-		   GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+  drawable_update (GIMP_DRAWABLE(layer),
+                   0, 0,
+                   0, 0);
 }
 
 void
@@ -239,8 +247,8 @@ floating_sel_store (Layer *layer,
       canvas_delete(layer->fs.backing_store);
 
       layer->fs.backing_store = canvas_new (fs_drawable_tag,
-                                            GIMP_DRAWABLE(layer)->width,
-                                            GIMP_DRAWABLE(layer)->height,
+                                            drawable_width (GIMP_DRAWABLE(layer)),
+                                            drawable_height (GIMP_DRAWABLE(layer)),
                                             STORAGE_FLAT);
     }
 
@@ -253,8 +261,10 @@ floating_sel_store (Layer *layer,
   /*  Find the minimum area we need to uncover -- in gimage space  */
   x1 = MAXIMUM (GIMP_DRAWABLE(layer)->offset_x, offx);
   y1 = MAXIMUM (GIMP_DRAWABLE(layer)->offset_y, offy);
-  x2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width, offx + drawable_width (layer->fs.drawable));
-  y2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height, offy + drawable_height (layer->fs.drawable));
+  x2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_x + drawable_width (GIMP_DRAWABLE(layer)),
+                offx + drawable_width (layer->fs.drawable));
+  y2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_y + drawable_height (GIMP_DRAWABLE(layer)),
+                offy + drawable_height (layer->fs.drawable));
 
   x1 = BOUNDS (x, x1, x2);
   y1 = BOUNDS (y, y1, y2);
@@ -296,8 +306,10 @@ floating_sel_restore (Layer *layer,
   drawable_offsets (layer->fs.drawable, &offx, &offy);
   x1 = MAXIMUM (GIMP_DRAWABLE(layer)->offset_x, offx);
   y1 = MAXIMUM (GIMP_DRAWABLE(layer)->offset_y, offy);
-  x2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width, offx + drawable_width (layer->fs.drawable));
-  y2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height, offy + drawable_height (layer->fs.drawable));
+  x2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_x + drawable_width (GIMP_DRAWABLE(layer)),
+                offx + drawable_width (layer->fs.drawable));
+  y2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_y + drawable_height (GIMP_DRAWABLE(layer)),
+                offy + drawable_height (layer->fs.drawable));
 
   x1 = BOUNDS (x, x1, x2);
   y1 = BOUNDS (y, y1, y2);
@@ -329,7 +341,11 @@ floating_sel_rigor (Layer *layer,
     return;
 
   /*  store the affected area from the drawable in the backing store  */
-  floating_sel_store (layer, GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+  floating_sel_store (layer,
+                      GIMP_DRAWABLE(layer)->offset_x,
+                      GIMP_DRAWABLE(layer)->offset_y,
+                      drawable_width (GIMP_DRAWABLE(layer)),
+                      drawable_height (GIMP_DRAWABLE(layer)));
   layer->fs.initial = TRUE;
 
   if (undo)
@@ -347,7 +363,11 @@ floating_sel_relax (Layer *layer,
 
   /*  restore the contents of drawable the floating layer is attached to  */
   if (layer->fs.initial == FALSE)
-    floating_sel_restore (layer, GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+    floating_sel_restore (layer,
+                          GIMP_DRAWABLE(layer)->offset_x,
+                          GIMP_DRAWABLE(layer)->offset_y,
+                          drawable_width (GIMP_DRAWABLE(layer)),
+                          drawable_height (GIMP_DRAWABLE(layer)));
   layer->fs.initial = TRUE;
 
   if (undo)
@@ -394,8 +414,10 @@ floating_sel_composite (Layer *layer,
       drawable_offsets (layer->fs.drawable, &offx, &offy);
       x1 = MAXIMUM (GIMP_DRAWABLE(layer)->offset_x, offx);
       y1 = MAXIMUM (GIMP_DRAWABLE(layer)->offset_y, offy);
-      x2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width, offx + drawable_width (layer->fs.drawable));
-      y2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height, offy + drawable_height (layer->fs.drawable));
+      x2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_x + drawable_width (GIMP_DRAWABLE(layer)),
+                    offx + drawable_width (layer->fs.drawable));
+      y2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_y + drawable_height (GIMP_DRAWABLE(layer)),
+                    offy + drawable_height (layer->fs.drawable));
 
       x1 = BOUNDS (x, x1, x2);
       y1 = BOUNDS (y, y1, y2);
@@ -467,11 +489,14 @@ floating_sel_boundary (Layer *layer,
 
       /*  find the segments  */
       pixelarea_init (&bPR, GIMP_DRAWABLE(layer)->tiles, 
-		0, 0, 
-		GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+                      0, 0,
+                      0, 0,
+                      FALSE);
       layer->fs.segs = find_mask_boundary (&bPR, &layer->fs.num_segs,
-					   WithinBounds, 0, 0,
-					   GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+					   WithinBounds,
+                                           0, 0,
+					   drawable_width (GIMP_DRAWABLE(layer)),
+                                           drawable_height (GIMP_DRAWABLE(layer)));
 
       /*  offset the segments  */
       for (i = 0; i < layer->fs.num_segs; i++)

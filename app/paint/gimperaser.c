@@ -106,7 +106,7 @@ create_eraser_options (void)
   return options;
 }
   
-void *
+static void *
 eraser_paint_func (paint_core, drawable, state)
      PaintCore *paint_core;
      GimpDrawable *drawable;

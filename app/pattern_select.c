@@ -237,7 +237,7 @@ pattern_popup_open (PatternSelectP psp,
 {
   gint x_org, y_org;
   gint scr_w, scr_h;
-  gchar *src, *buf;
+  guchar *src, *buf;
   gint pattern_width, pattern_height;
   gint rowbytes;
   Tag pattern_tag;

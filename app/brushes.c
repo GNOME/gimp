@@ -487,7 +487,7 @@ static void
 free_brush (brush)
      GBrushP brush;
 {
-  if (brush->mask);
+  if (brush->mask)
     canvas_delete (brush->mask);
   if (brush->filename)
     g_free (brush->filename);

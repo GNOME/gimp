@@ -1307,7 +1307,9 @@ paint_mode_menu_callback (GtkWidget *w,
 	{
 	  layer->mode = mode;
 
-	  drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+	  drawable_update (GIMP_DRAWABLE(layer),
+                           0, 0,
+                           0, 0);
 	  gdisplays_flush ();
 	}
     }
@@ -1348,7 +1350,9 @@ opacity_scale_update (GtkAdjustment *adjustment,
     {
       layer->opacity = opacity;
 
-      drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+      drawable_update (GIMP_DRAWABLE(layer),
+                       0, 0,
+                       0, 0);
       gdisplays_flush ();
     }
 }
@@ -2060,9 +2064,9 @@ layer_widget_button_events (GtkWidget *widget,
 	  else if (old_state != GIMP_DRAWABLE(layer_widget->layer)->visible)
 	    {
 	      /*  Invalidate the gimage preview  */
-	      drawable_update (GIMP_DRAWABLE(layer_widget->layer), 0, 0,
-			       GIMP_DRAWABLE(layer_widget->layer)->width,
-			       GIMP_DRAWABLE(layer_widget->layer)->height);
+	      drawable_update (GIMP_DRAWABLE(layer_widget->layer),
+                               0, 0,
+                               0, 0);
 	      gdisplays_flush ();
 	    }
 	}
@@ -2365,8 +2369,8 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
   else
     {
       /*  determine width and height  */
-      layer_widget->width = (int) (layersD->ratio * GIMP_DRAWABLE(layer_widget->layer)->width);
-      layer_widget->height = (int) (layersD->ratio * GIMP_DRAWABLE(layer_widget->layer)->height);
+      layer_widget->width = (int) (layersD->ratio * drawable_width (GIMP_DRAWABLE(layer_widget->layer)));
+      layer_widget->height = (int) (layersD->ratio * drawable_height (GIMP_DRAWABLE(layer_widget->layer)));
       if (layer_widget->width < 1) layer_widget->width = 1;
       if (layer_widget->height < 1) layer_widget->height = 1;
       offx = (int) (layersD->ratio * GIMP_DRAWABLE(layer_widget->layer)->offset_x);

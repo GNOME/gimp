@@ -135,7 +135,7 @@ drawable_tag (
               GimpDrawable *drawable
               )
 {
-  return (drawable ? drawable->tag : tag_null ());
+  return (drawable ? canvas_tag (drawable->tiles) : tag_null ());
 }
 
 int 
@@ -267,6 +267,13 @@ drawable_update  (
   drawable_offsets (drawable, &offset_x, &offset_y);
   x += offset_x;
   y += offset_y;
+
+  if (w == 0)
+    w = drawable_width (drawable);
+  
+  if (h == 0)
+    h = drawable_height (drawable);
+
   gdisplays_update_area (gimage->ID, x, y, w, h);
 
   /*  invalidate the preview  */
@@ -360,14 +367,6 @@ drawable_gimage (GimpDrawable *drawable)
 
 
 int
-drawable_type (GimpDrawable *drawable)
-{
-  g_return_val_if_fail ((drawable != NULL), -1);
-
-  return tag_to_drawable_type (drawable->tag);
-}
-
-int
 drawable_has_alpha (GimpDrawable *drawable)
 {
   if (tag_alpha (drawable_tag (drawable)) == ALPHA_YES)
@@ -397,13 +396,14 @@ drawable_color (GimpDrawable *drawable)
 {
   g_return_val_if_fail ((drawable != NULL), FALSE);
 
-  switch (tag_format (drawable->tag))
+  switch (tag_format (drawable_tag (drawable)))
     {
     case FORMAT_RGB:
       return TRUE;
     case FORMAT_GRAY:
     case FORMAT_INDEXED:
     case FORMAT_NONE:
+      return FALSE;
     }
 
   return FALSE;
@@ -415,15 +415,15 @@ drawable_gray (GimpDrawable *drawable)
 {
   g_return_val_if_fail ((drawable != NULL), FALSE);
 
-  switch (tag_format (drawable->tag))
+  switch (tag_format (drawable_tag (drawable)))
     {
     case FORMAT_GRAY:
       return TRUE;
     case FORMAT_RGB:
     case FORMAT_INDEXED:
     case FORMAT_NONE:
+      return FALSE;
     }
-
   return FALSE;
 }
 
@@ -433,15 +433,15 @@ drawable_indexed (GimpDrawable *drawable)
 {
   g_return_val_if_fail ((drawable != NULL), FALSE);
 
-  switch (tag_format (drawable->tag))
+  switch (tag_format (drawable_tag (drawable)))
     {
     case FORMAT_INDEXED:
       return TRUE;
     case FORMAT_GRAY:
     case FORMAT_RGB:
     case FORMAT_NONE:
+      return FALSE;
     }
-
   return FALSE;
 }
 
@@ -464,8 +464,8 @@ drawable_shadow (GimpDrawable *drawable)
   gimage = drawable_gimage (drawable);
   g_return_val_if_fail ((gimage != NULL), NULL);
 
-  return gimage_shadow (gimage, drawable->width, drawable->height, 
-                        drawable->tag);
+  return gimage_shadow (gimage, drawable_width (drawable), drawable_height (drawable), 
+                        drawable_tag (drawable));
 }
 
 int
@@ -473,7 +473,7 @@ drawable_bytes (GimpDrawable *drawable)
 {
   g_return_val_if_fail ((drawable != NULL), 0);
 
-  return tag_bytes (drawable->tag);
+  return tag_bytes (drawable_tag (drawable));
 }
 
 
@@ -482,7 +482,7 @@ drawable_width (GimpDrawable *drawable)
 {
   g_return_val_if_fail ((drawable != NULL), -1);
 
-  return drawable->width;
+  return canvas_width (drawable->tiles);
 }
 
 
@@ -491,7 +491,7 @@ drawable_height (GimpDrawable *drawable)
 {
   g_return_val_if_fail ((drawable != NULL), -1);
 
-  return drawable->height;
+  return canvas_height (drawable->tiles);
 }
 
 
@@ -564,7 +564,6 @@ gimp_drawable_init (GimpDrawable *drawable)
   drawable->name = NULL;
   drawable->tiles = NULL;
   drawable->visible = FALSE;
-  drawable->width = drawable->height = 0;
   drawable->offset_x = drawable->offset_y = 0;
   drawable->dirty = FALSE;
   drawable->gimage_ID = -1;
@@ -620,20 +619,16 @@ gimp_drawable_configure  (
   if (!name)
     name = "unnamed";
   
-  drawable->tag = tag;
-  
   if (drawable->name) 
     g_free (drawable->name);
   drawable->name = g_strdup(name);
-  drawable->width = width;
-  drawable->height = height;
 
   drawable->offset_x = 0;
   drawable->offset_y = 0;
 
   if (drawable->tiles)
     canvas_delete (drawable->tiles);
-  drawable->tiles = canvas_new (drawable->tag, width, height, storage);
+  drawable->tiles = canvas_new (tag, width, height, storage);
 
   drawable->dirty = FALSE;
   drawable->visible = TRUE;

@@ -51,7 +51,6 @@ int              drawable_mask_bounds        (GimpDrawable *,
 void             drawable_invalidate_preview (GimpDrawable *);
 int              drawable_dirty              (GimpDrawable *);
 int              drawable_clean              (GimpDrawable *);
-int              drawable_type               (GimpDrawable *);
 int              drawable_has_alpha          (GimpDrawable *);
 int              drawable_color              (GimpDrawable *);
 int              drawable_gray               (GimpDrawable *);

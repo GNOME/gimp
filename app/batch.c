@@ -84,7 +84,7 @@ batch_is_cmd (char *cmd)
   return (paren_level == 0);
 }
 
-char *
+static char *
 get_tok(char **rest)
 {
   char *tok_start, *tok;

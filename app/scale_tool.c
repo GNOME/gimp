@@ -388,8 +388,7 @@ scale_tool_scale (gimage, drawable, trans_info, float_tiles, interpolation, matr
                   TRUE);
 
 
-  if (drawable_type (drawable) == INDEXED_GIMAGE ||
-      drawable_type (drawable) == INDEXEDA_GIMAGE ||
+  if (tag_format (drawable_tag (drawable)) == FORMAT_INDEXED ||
       !interpolation)
     scale_area_no_resample (&srcPR, &destPR);
   else

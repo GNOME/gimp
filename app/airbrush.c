@@ -140,7 +140,7 @@ create_airbrush_options (void)
   return options;
 }
 
-void *
+static void *
 airbrush_paint_func (PaintCore *paint_core,
 		     GimpDrawable *drawable,
 		     int        state)

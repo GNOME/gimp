@@ -805,24 +805,24 @@ painthit_init  (
        pag != NULL;
        pag = pixelarea_process (pag))
     {
-      int x = pixelarea_x (&undo);
-      int y = pixelarea_y (&undo);
+      int xx = pixelarea_x (&undo);
+      int yy = pixelarea_y (&undo);
 
-      if (canvas_portion_alloced (undo_tiles, x, y) == FALSE)
+      if (canvas_portion_alloced (undo_tiles, xx, yy) == FALSE)
         {
-          int l = canvas_portion_x (undo_tiles, x, y);
-          int t = canvas_portion_y (undo_tiles, x, y);
-          int w = canvas_portion_width (undo_tiles, l, t);
-          int h = canvas_portion_height (undo_tiles, l, t);
+          int ll = canvas_portion_x (undo_tiles, xx, yy);
+          int tt = canvas_portion_y (undo_tiles, xx, yy);
+          int ww = canvas_portion_width (undo_tiles, ll, tt);
+          int hh = canvas_portion_height (undo_tiles, ll, tt);
 
           /* alloc the portion of the undo tiles */
-          canvas_portion_alloc (undo_tiles, x, y);
+          canvas_portion_alloc (undo_tiles, xx, yy);
 
           /* init the undo section from the original image */
           pixelarea_init (&src, drawable_data (drawable),
-                          l, t, w, h, FALSE);
+                          ll, tt, ww, hh, FALSE);
           pixelarea_init (&dst, undo_tiles,
-                          l, t, w, h, TRUE);
+                          ll, tt, ww, hh, TRUE);
           copy_area (&src, &dst);
         }
     }

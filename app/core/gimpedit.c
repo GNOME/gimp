@@ -301,8 +301,8 @@ edit_paste (GImage      *gimage,
       cx += (x1 + x2) >> 1;
       cy += (y1 + y2) >> 1;
 
-      GIMP_DRAWABLE(float_layer)->offset_x = cx - (GIMP_DRAWABLE(float_layer)->width >> 1);
-      GIMP_DRAWABLE(float_layer)->offset_y = cy - (GIMP_DRAWABLE(float_layer)->height >> 1);
+      GIMP_DRAWABLE(float_layer)->offset_x = cx - (drawable_width (GIMP_DRAWABLE(float_layer)) >> 1);
+      GIMP_DRAWABLE(float_layer)->offset_y = cy - (drawable_height (GIMP_DRAWABLE(float_layer)) >> 1);
 
       /*  If there is a selection mask clear it--
        *  this might not always be desired, but in general,

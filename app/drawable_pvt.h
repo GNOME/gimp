@@ -28,20 +28,16 @@ struct _GimpDrawable
 {
   GtkData data;
 
-  char *name;				/* name of drawable */
-  struct _Canvas *tiles;		/* tiles for drawable data */
-  int visible;				/* controls visibility */
-  int offset_x, offset_y;		/* offset of layer in image */
-
-  /* cached from tiles */
-  Tag tag;
-  int width, height;			/* size of drawable */
-  
-  int dirty;				/* dirty bit */
   int ID;				/* provides a unique ID */
   int gimage_ID;			/* ID of gimage owner */
 
-  /*  Preview variables  */
+  char *name;				/* name of drawable */
+  int offset_x, offset_y;		/* offset of layer in image */
+
+  struct _Canvas *tiles;		/* tiles for drawable data */
+  int visible;				/* controls visibility */
+  int dirty;				/* dirty bit */
+
   struct _Canvas *preview;		/* preview of the channel */
   int preview_valid;			/* is the preview valid? */
 };

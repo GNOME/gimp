@@ -24,36 +24,33 @@
 /* what sort of physical representation to use */
 typedef struct _Canvas Canvas;
 
-typedef enum _Storage Storage;
-enum _Storage
+typedef enum
 {
   STORAGE_NONE   = 0,
   STORAGE_FLAT   = 1,
   STORAGE_TILED  = 2,
   STORAGE_SHM    = 3
-};
+} Storage;
 
 
 /* should a ref of an unalloced portion automatically allocate the
    memory or simply fail */
-typedef enum _AutoAlloc AutoAlloc;
-enum _AutoAlloc
+typedef enum
 {
   AUTOALLOC_NONE = 0,
   AUTOALLOC_OFF  = 1,
   AUTOALLOC_ON   = 2
-};
+} AutoAlloc;
 
 
 /* the result of referencing a portion.  a successful ref means the
    data pointer is non-null */
-typedef enum _RefRC RefRC;
-enum _RefRC
+typedef enum
 {
   REFRC_NONE   = 0,
   REFRC_OK     = 1,
   REFRC_FAIL   = 2
-};
+} RefRC;
 
 
 Canvas *       canvas_new            (Tag, int w, int h, Storage);

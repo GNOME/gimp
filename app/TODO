@@ -29,6 +29,8 @@ drawable creation
   parameters for building one.
 
 
+convert brush storage header 'type' field to store a Tag instead
+convert pattern storage header 'type' field to store a Tag instead
 
 fix blend supersampling
 

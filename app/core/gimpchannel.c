@@ -186,8 +186,8 @@ channel_copy (Channel *channel)
 
   /*  allocate a new channel object  */
   new_channel = channel_new (GIMP_DRAWABLE(channel)->gimage_ID, 
-                             GIMP_DRAWABLE(channel)->width, 
-                             GIMP_DRAWABLE(channel)->height,
+                             drawable_width (GIMP_DRAWABLE(channel)), 
+                             drawable_height (GIMP_DRAWABLE(channel)),
                              tag_precision (tag), 
                              channel_name, channel->opacity, &channel->col);
   GIMP_DRAWABLE(new_channel)->visible = GIMP_DRAWABLE(channel)->visible;
@@ -196,11 +196,13 @@ channel_copy (Channel *channel)
   /*  copy the contents across channels  */
   pixelarea_init (&src_area, GIMP_DRAWABLE(channel)->tiles,
                   0, 0, 
-                  GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height,
+                  drawable_width (GIMP_DRAWABLE(channel)),
+                  drawable_height (GIMP_DRAWABLE(channel)),
                   FALSE);
   pixelarea_init (&dest_area, GIMP_DRAWABLE(new_channel)->tiles, 
                   0, 0,
-                  GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height,
+                  drawable_width (GIMP_DRAWABLE(channel)),
+                  drawable_height (GIMP_DRAWABLE(channel)),
                   TRUE);
   copy_area (&src_area, &dest_area);
 
@@ -255,23 +257,32 @@ channel_scale (Channel *channel, int new_width, int new_height)
 {
   PixelArea src_area, dest_area;
   Canvas *new_canvas;
+  
   if (new_width == 0 || new_height == 0)
     return;
 
   /*  Update the old channel position  */
-  drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
+  drawable_update (GIMP_DRAWABLE(channel),
+                   0, 0,
+                   0, 0);
 
   /*  Configure the pixel areas  */
   pixelarea_init (&src_area, GIMP_DRAWABLE(channel)->tiles, 
-	0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height, FALSE);
+                  0, 0,
+                  0, 0,
+                  FALSE);
 
   /*  Allocate the new channel, configure dest region  */
   new_canvas = canvas_new (drawable_tag (GIMP_DRAWABLE(channel)), 
-		new_width, new_height, STORAGE_TILED);
-  pixelarea_init (&dest_area, new_canvas, 
-		0, 0, new_width, new_height, TRUE);
+                           new_width, new_height,
+                           STORAGE_TILED);
 
   /*  Scale the area  */
+  pixelarea_init (&dest_area, new_canvas, 
+                  0, 0,
+                  0, 0,
+                  TRUE);
+
   scale_area (&src_area, &dest_area);
 
   /*  Push the channel on the undo stack  */
@@ -279,14 +290,14 @@ channel_scale (Channel *channel, int new_width, int new_height)
 
   /*  Configure the new channel  */
   GIMP_DRAWABLE(channel)->tiles = new_canvas;
-  GIMP_DRAWABLE(channel)->width = new_width;
-  GIMP_DRAWABLE(channel)->height = new_height;
 
   /*  bounds are now unknown  */
   channel->bounds_known = FALSE;
 
   /*  Update the new channel position  */
-  drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
+  drawable_update (GIMP_DRAWABLE(channel),
+                   0, 0,
+                   0, 0);
 }
 
 
@@ -305,8 +316,8 @@ channel_resize (Channel *channel, int new_width, int new_height,
 
   x1 = BOUNDS (offx, 0, new_width);
   y1 = BOUNDS (offy, 0, new_height);
-  x2 = BOUNDS ((offx + GIMP_DRAWABLE(channel)->width), 0, new_width);
-  y2 = BOUNDS ((offy + GIMP_DRAWABLE(channel)->height), 0, new_height);
+  x2 = BOUNDS ((offx + drawable_width (GIMP_DRAWABLE(channel))), 0, new_width);
+  y2 = BOUNDS ((offy + drawable_height (GIMP_DRAWABLE(channel))), 0, new_height);
   w = x2 - x1;
   h = y2 - y1;
 
@@ -333,15 +344,19 @@ channel_resize (Channel *channel, int new_width, int new_height,
     }
 
   /*  Update the old channel position  */
-  drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
+  drawable_update (GIMP_DRAWABLE(channel),
+                   0, 0,
+                   0, 0);
 
   /*  Configure the pixel regions  */
   pixelarea_init (&src_area, GIMP_DRAWABLE(channel)->tiles, 
-	x1, y1, w, h, FALSE);
+                  x1, y1,
+                  w, h,
+                  FALSE);
 
   /*  Determine whether the new channel needs to be initially cleared  */
-  if ((new_width > GIMP_DRAWABLE(channel)->width) ||
-      (new_height > GIMP_DRAWABLE(channel)->height) ||
+  if ((new_width > drawable_width (GIMP_DRAWABLE(channel))) ||
+      (new_height > drawable_height (GIMP_DRAWABLE(channel))) ||
       (x2 || y2))
     clear = TRUE;
   else
@@ -349,7 +364,8 @@ channel_resize (Channel *channel, int new_width, int new_height,
 
   /*  Allocate the new channel, configure dest region  */
   new_canvas = canvas_new (drawable_tag (GIMP_DRAWABLE(channel)), 
-	new_width, new_height, STORAGE_TILED);
+                           new_width, new_height,
+                           STORAGE_TILED);
 
   /*  Set to black (empty--for selections)  */
   if (clear)
@@ -360,14 +376,18 @@ channel_resize (Channel *channel, int new_width, int new_height,
 
       pixelarea_init (&dest_area, new_canvas, 
                       0, 0,
-                      new_width, new_height,
+                      0, 0,
                       TRUE);
 
       color_area (&dest_area, &bg_color);
     }
 
   /*  copy from the old to the new  */
-  pixelarea_init (&dest_area, new_canvas, x2, y2, w, h, TRUE);
+  pixelarea_init (&dest_area, new_canvas,
+                  x2, y2,
+                  w, h,
+                  TRUE);
+
   if (w && h)
     copy_area (&src_area, &dest_area);
 
@@ -376,14 +396,14 @@ channel_resize (Channel *channel, int new_width, int new_height,
 
   /*  Configure the new channel  */
   GIMP_DRAWABLE(channel)->tiles = new_canvas;
-  GIMP_DRAWABLE(channel)->width = new_width;
-  GIMP_DRAWABLE(channel)->height = new_height;
 
   /*  bounds are now unknown  */
   channel->bounds_known = FALSE;
 
   /*  update the new channel area  */
-  drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
+  drawable_update (GIMP_DRAWABLE(channel),
+                   0, 0,
+                   0, 0);
 }
 
 
@@ -522,7 +542,9 @@ channel_boundary (Channel *mask, BoundSeg **segs_in, BoundSeg **segs_out,
 	  if (x2 > x1 && y2 > y1)
 	    {
 	      pixelarea_init (&b_area, GIMP_DRAWABLE(mask)->tiles, 
-		0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, FALSE);
+                              0, 0,
+                              0, 0,
+                              FALSE);
 	      mask->segs_in =  find_mask_boundary (&b_area, &mask->num_segs_in,
 						   WithinBounds,
 						   x1, y1,
@@ -572,7 +594,8 @@ channel_value (Channel *mask, int x, int y)
     }
   else
     {
-      if (x < 0 || x >= GIMP_DRAWABLE(mask)->width || y < 0 || y >= GIMP_DRAWABLE(mask)->height)
+      if (x < 0 || x >= drawable_width (GIMP_DRAWABLE(mask)) ||
+          y < 0 || y >= drawable_height (GIMP_DRAWABLE(mask)))
 	return 0;
     }
   canvas_portion_refro (canvas, x, y);
@@ -605,13 +628,16 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
     }
 
   /*  go through and calculate the bounds  */
-  *x1 = GIMP_DRAWABLE(mask)->width;
-  *y1 = GIMP_DRAWABLE(mask)->height;
+  *x1 = drawable_width (GIMP_DRAWABLE(mask));
+  *y1 = drawable_height (GIMP_DRAWABLE(mask));
   *x2 = 0;
   *y2 = 0;
 
-  pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, 0, 0, 
-		GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, FALSE);
+  pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles,
+                  0, 0, 
+                  0, 0,
+                  FALSE);
+
   for (pr = pixelarea_register (1, &maskPR); 
 	pr != NULL; 
 	pr = pixelarea_process (pr))
@@ -642,15 +668,16 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
 	}
     }
 
-  *x2 = BOUNDS (*x2 + 1, 0, GIMP_DRAWABLE(mask)->width);
-  *y2 = BOUNDS (*y2 + 1, 0, GIMP_DRAWABLE(mask)->height);
+  *x2 = BOUNDS (*x2 + 1, 0, drawable_width (GIMP_DRAWABLE(mask)));
+  *y2 = BOUNDS (*y2 + 1, 0, drawable_height (GIMP_DRAWABLE(mask)));
 
-  if (*x1 == GIMP_DRAWABLE(mask)->width && *y1 == GIMP_DRAWABLE(mask)->height)
+  if (*x1 == drawable_width (GIMP_DRAWABLE(mask)) &&
+      *y1 == drawable_height (GIMP_DRAWABLE(mask)))
     {
       mask->empty = TRUE;
       mask->x1 = 0; mask->y1 = 0;
-      mask->x2 = GIMP_DRAWABLE(mask)->width;
-      mask->y2 = GIMP_DRAWABLE(mask)->height;
+      mask->x2 = drawable_width (GIMP_DRAWABLE(mask));
+      mask->y2 = drawable_height (GIMP_DRAWABLE(mask));
     }
   else
     {
@@ -678,7 +705,10 @@ channel_is_empty (Channel *mask)
     return mask->empty;
 
   pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, 
-		0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, FALSE);
+                  0, 0,
+                  0, 0,
+                  FALSE);
+  
   for (pr = pixelarea_register (1, &maskPR); 
 	pr != NULL; 
 	pr = pixelarea_process (pr))
@@ -708,8 +738,8 @@ channel_is_empty (Channel *mask)
   mask->bounds_known = TRUE;
   mask->boundary_known = TRUE;
   mask->x1 = 0;  mask->y1 = 0;
-  mask->x2 = GIMP_DRAWABLE(mask)->width;
-  mask->y2 = GIMP_DRAWABLE(mask)->height;
+  mask->x2 = drawable_width (GIMP_DRAWABLE(mask));
+  mask->y2 = drawable_height (GIMP_DRAWABLE(mask));
 
   return TRUE;
 }
@@ -728,16 +758,20 @@ channel_add_segment (Channel *mask, int x, int y, int width, int value)
   /*  check horizontal extents...  */
   x2 = x + width;
   if (x2 < 0) x2 = 0;
-  if (x2 > GIMP_DRAWABLE(mask)->width) x2 = GIMP_DRAWABLE(mask)->width;
+  if (x2 > drawable_width (GIMP_DRAWABLE(mask))) x2 = drawable_width (GIMP_DRAWABLE(mask));
   if (x < 0) x = 0;
-  if (x > GIMP_DRAWABLE(mask)->width) x = GIMP_DRAWABLE(mask)->width;
+  if (x > drawable_width (GIMP_DRAWABLE(mask))) x = drawable_width (GIMP_DRAWABLE(mask));
   width = x2 - x;
   if (!width) return;
 
-  if (y < 0 || y > GIMP_DRAWABLE(mask)->height)
+  if (y < 0 || y > drawable_height (GIMP_DRAWABLE(mask)))
     return;
 
-  pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, x, y, width, 1, TRUE);
+  pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles,
+                  x, y,
+                  width, 1,
+                  TRUE);
+
   for (pr = pixelarea_register (1, &maskPR); 
 	pr != NULL; 
 	pr = pixelarea_process (pr))
@@ -768,16 +802,20 @@ channel_sub_segment (Channel *mask, int x, int y, int width, int value)
   /*  check horizontal extents...  */
   x2 = x + width;
   if (x2 < 0) x2 = 0;
-  if (x2 > GIMP_DRAWABLE(mask)->width) x2 = GIMP_DRAWABLE(mask)->width;
+  if (x2 > drawable_width (GIMP_DRAWABLE(mask))) x2 = drawable_width (GIMP_DRAWABLE(mask));
   if (x < 0) x = 0;
-  if (x > GIMP_DRAWABLE(mask)->width) x = GIMP_DRAWABLE(mask)->width;
+  if (x > drawable_width (GIMP_DRAWABLE(mask))) x = drawable_width (GIMP_DRAWABLE(mask));
   width = x2 - x;
   if (!width) return;
 
-  if (y < 0 || y > GIMP_DRAWABLE(mask)->height)
+  if (y < 0 || y > drawable_height (GIMP_DRAWABLE(mask)))
     return;
 
-  pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, x, y, width, 1, TRUE);
+  pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles,
+                  x, y,
+                  width, 1,
+                  TRUE);
+  
   for (pr = pixelarea_register (1, &maskPR); 
 	pr != NULL; 
 	pr = pixelarea_process (pr))
@@ -808,17 +846,20 @@ channel_inter_segment (Channel *mask, int x, int y, int width, int value)
   /*  check horizontal extents...  */
   x2 = x + width;
   if (x2 < 0) x2 = 0;
-  if (x2 > GIMP_DRAWABLE(mask)->width) x2 = GIMP_DRAWABLE(mask)->width;
+  if (x2 > drawable_width (GIMP_DRAWABLE(mask))) x2 = drawable_width (GIMP_DRAWABLE(mask));
   if (x < 0) x = 0;
-  if (x > GIMP_DRAWABLE(mask)->width) x = GIMP_DRAWABLE(mask)->width;
+  if (x > drawable_width (GIMP_DRAWABLE(mask))) x = drawable_width (GIMP_DRAWABLE(mask));
   width = x2 - x;
   if (!width) return;
 
-  if (y < 0 || y > GIMP_DRAWABLE(mask)->height)
+  if (y < 0 || y > drawable_height (GIMP_DRAWABLE(mask)))
     return;
 
   pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles,
-	x, y, width, 1, TRUE);
+                  x, y,
+                  width, 1,
+                  TRUE);
+  
   for (pr = pixelarea_register (1, &maskPR); 
         pr != NULL; 
 	pr = pixelarea_process (pr))
@@ -841,7 +882,7 @@ channel_combine_rect (Channel *mask, int op, int x, int y, int w, int h)
 
   for (i = y; i < y + h; i++)
     {
-      if (i >= 0 && i < GIMP_DRAWABLE(mask)->height)
+      if (i >= 0 && i < drawable_height (GIMP_DRAWABLE(mask)))
 	switch (op)
 	  {
 	  case ADD: case REPLACE:
@@ -879,10 +920,10 @@ channel_combine_rect (Channel *mask, int op, int x, int y, int w, int h)
   else
     mask->bounds_known = FALSE;
 
-  mask->x1 = BOUNDS (mask->x1, 0, GIMP_DRAWABLE(mask)->width);
-  mask->y1 = BOUNDS (mask->y1, 0, GIMP_DRAWABLE(mask)->height);
-  mask->x2 = BOUNDS (mask->x2, 0, GIMP_DRAWABLE(mask)->width);
-  mask->y2 = BOUNDS (mask->y2, 0, GIMP_DRAWABLE(mask)->height);
+  mask->x1 = BOUNDS (mask->x1, 0, drawable_width (GIMP_DRAWABLE(mask)));
+  mask->y1 = BOUNDS (mask->y1, 0, drawable_height (GIMP_DRAWABLE(mask)));
+  mask->x2 = BOUNDS (mask->x2, 0, drawable_width (GIMP_DRAWABLE(mask)));
+  mask->y2 = BOUNDS (mask->y2, 0, drawable_height (GIMP_DRAWABLE(mask)));
 }
 
 
@@ -916,7 +957,7 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 
   for (i = y; i < (y + h); i++)
     {
-      if (i >= 0 && i < GIMP_DRAWABLE(mask)->height)
+      if (i >= 0 && i < drawable_height (GIMP_DRAWABLE(mask)))
 	{
 	  /*  Non-antialiased code  */
 	  if (!aa)
@@ -1026,10 +1067,10 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
   else
     mask->bounds_known = FALSE;
 
-  mask->x1 = BOUNDS (mask->x1, 0, GIMP_DRAWABLE(mask)->width);
-  mask->y1 = BOUNDS (mask->y1, 0, GIMP_DRAWABLE(mask)->height);
-  mask->x2 = BOUNDS (mask->x2, 0, GIMP_DRAWABLE(mask)->width);
-  mask->y2 = BOUNDS (mask->y2, 0, GIMP_DRAWABLE(mask)->height);
+  mask->x1 = BOUNDS (mask->x1, 0, drawable_width (GIMP_DRAWABLE(mask)));
+  mask->y1 = BOUNDS (mask->y1, 0, drawable_height (GIMP_DRAWABLE(mask)));
+  mask->x2 = BOUNDS (mask->x2, 0, drawable_width (GIMP_DRAWABLE(mask)));
+  mask->y2 = BOUNDS (mask->y2, 0, drawable_height (GIMP_DRAWABLE(mask)));
 }
 
 
@@ -1047,18 +1088,25 @@ channel_combine_mask (Channel *mask, Channel *add_on, int op,
   int w, h;
   void * pr;
 
-  x1 = BOUNDS (off_x, 0, GIMP_DRAWABLE(mask)->width);
-  y1 = BOUNDS (off_y, 0, GIMP_DRAWABLE(mask)->height);
-  x2 = BOUNDS (off_x + GIMP_DRAWABLE(add_on)->width, 0, GIMP_DRAWABLE(mask)->width);
-  y2 = BOUNDS (off_y + GIMP_DRAWABLE(add_on)->height, 0, GIMP_DRAWABLE(mask)->height);
+  x1 = BOUNDS (off_x, 0, drawable_width (GIMP_DRAWABLE(mask)));
+  y1 = BOUNDS (off_y, 0, drawable_height (GIMP_DRAWABLE(mask)));
+  x2 = BOUNDS (off_x + drawable_width (GIMP_DRAWABLE(add_on)),
+               0, drawable_width (GIMP_DRAWABLE(mask)));
+  y2 = BOUNDS (off_y + drawable_height (GIMP_DRAWABLE(add_on)),
+               0, drawable_height (GIMP_DRAWABLE(mask)));
 
   w = (x2 - x1);
   h = (y2 - y1);
 
   pixelarea_init (&srcPR, GIMP_DRAWABLE(add_on)->tiles,
-			(x1 - off_x), (y1 - off_y), w, h, FALSE);
+                  (x1 - off_x), (y1 - off_y),
+                  w, h,
+                  FALSE);
+
   pixelarea_init (&destPR, GIMP_DRAWABLE(mask)->tiles, 
-			x1, y1, w, h, TRUE);
+                  x1, y1,
+                  w, h,
+                  TRUE);
 
   for (pr = pixelarea_register (2, &srcPR, &destPR); 
 	pr != NULL; 
@@ -1106,17 +1154,22 @@ channel_feather (Channel *input, Channel *output, double radius,
   int x1, y1, x2, y2;
   PixelArea srcPR;
 
-  x1 = BOUNDS (off_x, 0, GIMP_DRAWABLE(output)->width);
-  y1 = BOUNDS (off_y, 0, GIMP_DRAWABLE(output)->height);
-  x2 = BOUNDS (off_x + GIMP_DRAWABLE(input)->width, 0, GIMP_DRAWABLE(output)->width);
-  y2 = BOUNDS (off_y + GIMP_DRAWABLE(input)->height, 0, GIMP_DRAWABLE(output)->height);
+  x1 = BOUNDS (off_x, 0, drawable_width (GIMP_DRAWABLE(output)));
+  y1 = BOUNDS (off_y, 0, drawable_height (GIMP_DRAWABLE(output)));
+  x2 = BOUNDS (off_x + drawable_width (GIMP_DRAWABLE(input)),
+               0, drawable_width (GIMP_DRAWABLE(output)));
+  y2 = BOUNDS (off_y + drawable_height (GIMP_DRAWABLE(input)),
+               0, drawable_height (GIMP_DRAWABLE(output)));
 
   pixelarea_init (&srcPR, GIMP_DRAWABLE(input)->tiles, 
-		(x1 - off_x), (y1 - off_y), (x2 - x1), (y2 - y1), FALSE);
+                  (x1 - off_x), (y1 - off_y),
+                  (x2 - x1), (y2 - y1),
+                  FALSE);
+
   gaussian_blur_area (&srcPR, radius);
 
   if (input != output) 
-    channel_combine_mask(output, input, op, 0, 0);
+    channel_combine_mask (output, input, op, 0, 0);
 
   output->bounds_known = FALSE;
 }
@@ -1180,7 +1233,10 @@ channel_clear (Channel *mask)
     {
       /*  clear the mask  */
       pixelarea_init (&mask_area, GIMP_DRAWABLE(mask)->tiles, 
-	0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
+                      0, 0,
+                      0, 0,
+                      TRUE);
+
       color_area (&mask_area, &bg_color);
     }
 
@@ -1188,8 +1244,8 @@ channel_clear (Channel *mask)
   mask->bounds_known = TRUE;
   mask->empty = TRUE;
   mask->x1 = 0; mask->y1 = 0;
-  mask->x2 = GIMP_DRAWABLE(mask)->width;
-  mask->y2 = GIMP_DRAWABLE(mask)->height;
+  mask->x2 = drawable_width (GIMP_DRAWABLE(mask));
+  mask->y2 = drawable_height (GIMP_DRAWABLE(mask));
 }
 
 
@@ -1205,8 +1261,11 @@ channel_invert (Channel *mask)
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
 
-  pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, 0, 0, 
-		GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
+  pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles,
+                  0, 0, 
+                  0, 0,
+                  TRUE);
+
   for (pr = pixelarea_register (1, &maskPR); 
 	pr != NULL; 
 	pr = pixelarea_process (pr))
@@ -1238,7 +1297,10 @@ channel_sharpen (Channel *mask)
   channel_push_undo (mask);
 
   pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, 
-			0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
+                  0, 0,
+                  0, 0,
+                  TRUE);
+
   for (pr = pixelarea_register (1, &maskPR); 
 	pr != NULL; 
 	pr = pixelarea_process (pr))
@@ -1285,8 +1347,8 @@ channel_all (Channel *mask)
   mask->bounds_known = TRUE;
   mask->empty = FALSE;
   mask->x1 = 0; mask->y1 = 0;
-  mask->x2 = GIMP_DRAWABLE(mask)->width;
-  mask->y2 = GIMP_DRAWABLE(mask)->height;
+  mask->x2 = drawable_width (GIMP_DRAWABLE(mask));
+  mask->y2 = drawable_height (GIMP_DRAWABLE(mask));
 }
 
 
@@ -1315,21 +1377,29 @@ channel_border (Channel *mask, int radius)
   if (mask->bounds_known && !mask->empty)
     {
       pixelarea_init (&bPR, GIMP_DRAWABLE(mask)->tiles,
-			 mask->x1, mask->y1,
-			 (mask->x2 - mask->x1), (mask->y2 - mask->y1), TRUE);
+                      mask->x1, mask->y1,
+                      (mask->x2 - mask->x1), (mask->y2 - mask->y1),
+                      TRUE);
+
       color_area (&bPR, &bg_color);
     }
   else
     {
       /*  clear the mask  */
       pixelarea_init (&bPR, GIMP_DRAWABLE(mask)->tiles, 
-		0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
+                      0, 0,
+                      0, 0,
+                      TRUE);
+
       color_area (&bPR, &bg_color);
     }
 
   /*  calculate a border of specified radius based on the boundary segments  */
   pixelarea_init (&bPR, GIMP_DRAWABLE(mask)->tiles, 
-	0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
+                  0, 0,
+                  0, 0,
+                  TRUE);
+
   border_area (&bPR, bs, num_segs, radius);
 
   g_free (bs);
@@ -1351,7 +1421,9 @@ channel_grow (Channel *mask, int steps)
 
   /*  need full extents for grow  */
   pixelarea_init (&bPR, GIMP_DRAWABLE(mask)->tiles, 
-	0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
+                  0, 0,
+                  0, 0,
+                  TRUE);
 
   while (steps--)
     thin_area (&bPR, GROW_REGION);
@@ -1401,10 +1473,10 @@ channel_translate (Channel *mask, int off_x, int off_y)
   channel_push_undo (mask);
 
   channel_bounds (mask, &x1, &y1, &x2, &y2);
-  x1 = BOUNDS ((x1 + off_x), 0, GIMP_DRAWABLE(mask)->width);
-  y1 = BOUNDS ((y1 + off_y), 0, GIMP_DRAWABLE(mask)->height);
-  x2 = BOUNDS ((x2 + off_x), 0, GIMP_DRAWABLE(mask)->width);
-  y2 = BOUNDS ((y2 + off_y), 0, GIMP_DRAWABLE(mask)->height);
+  x1 = BOUNDS ((x1 + off_x), 0, drawable_width (GIMP_DRAWABLE(mask)));
+  y1 = BOUNDS ((y1 + off_y), 0, drawable_height (GIMP_DRAWABLE(mask)));
+  x2 = BOUNDS ((x2 + off_x), 0, drawable_width (GIMP_DRAWABLE(mask)));
+  y2 = BOUNDS ((y2 + off_y), 0, drawable_height (GIMP_DRAWABLE(mask)));
 
   width = x2 - x1;
   height = y2 - y1;
@@ -1429,17 +1501,24 @@ channel_translate (Channel *mask, int off_x, int off_y)
   /*  clear the mask  */
   pixelarea_init (&srcPR, GIMP_DRAWABLE(mask)->tiles, 
                   0, 0,
-                  GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height,
+                  0, 0,
                   TRUE);
+  
   color_area (&srcPR, &empty_color);
 
   if (width != 0 && height != 0)
     {
       /*  copy the temp mask back to the mask  */
       pixelarea_init (&srcPR, GIMP_DRAWABLE(tmp_mask)->tiles, 
-                      0, 0, width, height, FALSE);
+                      0, 0,
+                      width, height,
+                      FALSE);
+
       pixelarea_init (&destPR, GIMP_DRAWABLE(mask)->tiles, 
-                      x1, y1, width, height, TRUE);
+                      x1, y1,
+                      width, height,
+                      TRUE);
+      
       copy_area (&srcPR, &destPR);
 
       /*  free the temporary mask  */
@@ -1451,8 +1530,8 @@ channel_translate (Channel *mask, int off_x, int off_y)
     {
       mask->empty = TRUE;
       mask->x1 = 0; mask->y1 = 0;
-      mask->x2 = GIMP_DRAWABLE(mask)->width;
-      mask->y2 = GIMP_DRAWABLE(mask)->height;
+      mask->x2 = drawable_width (GIMP_DRAWABLE(mask));
+      mask->y2 = drawable_height (GIMP_DRAWABLE(mask));
     }
   else
     {
@@ -1467,31 +1546,41 @@ channel_translate (Channel *mask, int off_x, int off_y)
 void
 channel_layer_alpha (Channel *mask, Layer *layer)
 {
+  GimpDrawable * dm = GIMP_DRAWABLE(mask);
+  GimpDrawable * dl = GIMP_DRAWABLE(layer);
   PixelArea srcPR, destPR;
   int x1, y1, x2, y2;
-  COLOR16_NEW (empty_color, drawable_tag(GIMP_DRAWABLE(mask)));
-  COLOR16_INIT (empty_color);
-  palette_get_black (&empty_color);
-
-  /*  push the current mask onto the undo stack  */
+  
   channel_push_undo (mask);
 
-  /*  clear the mask  */
-  pixelarea_init (&destPR, GIMP_DRAWABLE(mask)->tiles, 
-	0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
-  color_area (&destPR, &empty_color);
+  pixelarea_init (&destPR, dm->tiles, 
+                  0, 0,
+                  0, 0,
+                  TRUE);
 
-  x1 = BOUNDS (GIMP_DRAWABLE(layer)->offset_x, 0, GIMP_DRAWABLE(mask)->width);
-  y1 = BOUNDS (GIMP_DRAWABLE(layer)->offset_y, 0, GIMP_DRAWABLE(mask)->height);
-  x2 = BOUNDS (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width, 0, GIMP_DRAWABLE(mask)->width);
-  y2 = BOUNDS (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height, 0, GIMP_DRAWABLE(mask)->height);
+  {
+    COLOR16_NEW (empty_color, drawable_tag (dm));
+    COLOR16_INIT (empty_color);
+    palette_get_black (&empty_color);
+    color_area (&destPR, &empty_color);
+  }  
+  
+  x1 = BOUNDS (dl->offset_x, 0, drawable_width (dm));
+  y1 = BOUNDS (dl->offset_y, 0, drawable_height (dm));
+  x2 = BOUNDS (dl->offset_x + drawable_width (dl), 0, drawable_width (dm));
+  y2 = BOUNDS (dl->offset_y + drawable_height (dl), 0, drawable_height (dm));
 
-  pixelarea_init (&srcPR, GIMP_DRAWABLE(layer)->tiles,
-		     (x1 - GIMP_DRAWABLE(layer)->offset_x), (y1 - GIMP_DRAWABLE(layer)->offset_y),
-		     (x2 - x1), (y2 - y1), FALSE);
-  pixelarea_init (&destPR, GIMP_DRAWABLE(mask)->tiles,
-			x1, y1, (x2 - x1), (y2 - y1), TRUE);
-  extract_alpha_area(&srcPR, NULL, &destPR);
+  pixelarea_init (&srcPR, dl->tiles,
+                  (x1 - dl->offset_x), (y1 - dl->offset_y),
+                  (x2 - x1), (y2 - y1),
+                  FALSE);
+  
+  pixelarea_init (&destPR, dm->tiles,
+                  x1, y1,
+                  (x2 - x1), (y2 - y1),
+                  TRUE);
+  
+  extract_alpha_area (&srcPR, NULL, &destPR);
 
   mask->bounds_known = FALSE;
 }
@@ -1509,9 +1598,15 @@ channel_load (Channel *mask, Channel *channel)
 
   /*  copy the channel to the mask  */
   pixelarea_init (&srcPR, GIMP_DRAWABLE(channel)->tiles,
-		0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height, FALSE);
+                  0, 0,
+                  0, 0,
+                  FALSE);
+  
   pixelarea_init (&destPR, GIMP_DRAWABLE(mask)->tiles, 
-			0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height, TRUE);
+                  0, 0,
+                  drawable_width (GIMP_DRAWABLE(channel)), drawable_height (GIMP_DRAWABLE(channel)),
+                  TRUE);
+
   copy_area (&srcPR, &destPR);
 
   mask->bounds_known = FALSE;

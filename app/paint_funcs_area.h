@@ -182,7 +182,7 @@ convolve_area (
 	 	struct _PixelArea   *src_area,
 		struct _PixelArea   *dest_area,
 		gint         *matrix,
-		gint          matrix_size,
+		guint         matrix_size,
 		gint          divisor,
 		gint          mode
 		);

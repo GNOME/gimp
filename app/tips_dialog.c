@@ -35,8 +35,8 @@ tips_dialog_create ()
   guchar *   temp;
   guchar *   src;
   guchar *   dest;
-  int        x;
-  int        y;
+  guint      x;
+  guint      y;
 
   if (tips_count == 0)
     {

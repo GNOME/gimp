@@ -67,24 +67,57 @@ static void     project_channel              (GImage *, Channel *, PixelArea *,
 
 static guint    gimage_validate              (Canvas * c, int x, int y, void * data);
 
-/*
- *  Global variables
- */
-int valid_combinations[][MAX_CHANNELS + 1] =
+
+static int
+get_operation (
+               Tag t1,
+               Tag t2
+               )
 {
-  /* RGB GIMAGE */
-  { -1, -1, -1, COMBINE_INTEN_INTEN, COMBINE_INTEN_INTEN_A },
-  /* RGBA GIMAGE */
-  { -1, -1, -1, COMBINE_INTEN_A_INTEN, COMBINE_INTEN_A_INTEN_A },
-  /* GRAY GIMAGE */
-  { -1, COMBINE_INTEN_INTEN, COMBINE_INTEN_INTEN_A, -1, -1 },
-  /* GRAYA GIMAGE */
-  { -1, COMBINE_INTEN_A_INTEN, COMBINE_INTEN_A_INTEN_A, -1, -1 },
-  /* INDEXED GIMAGE */
-  { -1, COMBINE_INDEXED_INDEXED, COMBINE_INDEXED_INDEXED_A, -1, -1 },
-  /* INDEXEDA GIMAGE */
-  { -1, -1, COMBINE_INDEXED_A_INDEXED_A, -1, -1 },
-};
+  int y = 0;
+  
+  
+  if (tag_precision (t1) != tag_precision (t2))
+    return -1;
+
+  if (tag_format (t1) != tag_format (t2))
+    return -1;
+  
+  if (tag_alpha (t1) == ALPHA_YES)
+    y += 2;
+  
+  if (tag_alpha (t2) == ALPHA_YES)
+    y += 1;
+
+  switch (tag_format (t1))
+    {
+    case FORMAT_RGB:
+    case FORMAT_GRAY:
+      {
+        static int x[] = {
+          COMBINE_INTEN_INTEN,
+          COMBINE_INTEN_INTEN_A,
+          COMBINE_INTEN_A_INTEN,
+          COMBINE_INTEN_A_INTEN_A
+        };
+        return x[y];
+      }
+    case FORMAT_INDEXED:
+      {
+        static int x[] = {
+          COMBINE_INDEXED_INDEXED,
+          COMBINE_INDEXED_INDEXED_A,
+          -1,
+          COMBINE_INDEXED_A_INDEXED_A
+        };
+        return x[y];
+      }
+    case FORMAT_NONE:
+      return -1;
+    }
+  
+  return -1;
+}
 
 
 /*
@@ -507,11 +540,10 @@ gimage_apply_painthit  (
                         )
 {
   int operation;
-
+  
   /* make sure we're doing something legal */
-  operation = valid_combinations
-    [drawable_type (drawable) % 6]
-    [tag_num_channels (pixelarea_tag (src2_area))];
+  operation = get_operation (drawable_tag (drawable),
+                             pixelarea_tag (src2_area));
 
   if (operation == -1)
     {
@@ -635,9 +667,8 @@ gimage_replace_painthit  (
   /*  determine what sort of operation is being attempted and
    *  if it's actually legal...
    */
-  operation = valid_combinations 
-	[drawable_type (drawable) % 6]
-	[tag_num_channels (canvas_tag (src2))];
+  operation = get_operation (drawable_tag (drawable),
+                             canvas_tag (src2));
   
   if (operation == -1)
     {
@@ -676,7 +707,7 @@ gimage_replace_painthit  (
       PixelArea mask_area;
       Tag temp_tag;
       int mx, my;
-      gfloat opacity = OPAQUE_OPACITY;
+      gfloat opac = OPAQUE_OPACITY;
       
       /* create a temp canvas to hold the combined selection and brush masks */
       temp_tag = tag_new (prec, FORMAT_GRAY, ALPHA_NO);
@@ -704,7 +735,7 @@ gimage_replace_painthit  (
       pixelarea_init (&temp_area, temp_canvas, 0, 0, 0, 0, TRUE);
       
       /* apply brush mask to temp canvas */
-      apply_mask_to_area (&temp_area, &mask_area, opacity);
+      apply_mask_to_area (&temp_area, &mask_area, opac);
        
       /* ready the temp_area for combine_areas_replace below */ 
       pixelarea_init (&temp_area, temp_canvas, 0, 0, 0, 0, TRUE);
@@ -1673,7 +1704,6 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
   Tag layer_tag, merge_layer_tag;
   Layer *layer = NULL;
   Layer *bottom;
-  int type;
   int count;
   int x1, y1, x2, y2;
   int x3, y3, x4, y4;
@@ -1683,7 +1713,6 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
   int off_x, off_y;
 
   layer = NULL;
-  type  = RGBA_GIMAGE;
   x1 = y1 = x2 = y2 = 0;
   bottom = NULL;
 
@@ -1756,7 +1785,7 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
   undo_push_group_start (gimage, LAYER_MERGE_UNDO);
 
   if (merge_type == FlattenImage ||
-      drawable_type (GIMP_DRAWABLE (layer)) == INDEXED_GIMAGE)
+      tag_format (drawable_tag (GIMP_DRAWABLE (layer))) == FORMAT_INDEXED)
     {
       merge_layer_tag = gimage_tag (gimage);
       merge_layer = layer_new (gimage->ID, gimage->width, gimage->height,
@@ -1841,9 +1870,8 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
       /*  determine what sort of operation is being attempted and
        *  if it's actually legal...
        */
-      operation = valid_combinations 
-	[drawable_type (GIMP_DRAWABLE(merge_layer)) % 6]
-	[tag_num_channels (drawable_tag (GIMP_DRAWABLE(layer)))];
+      operation = get_operation (drawable_tag (GIMP_DRAWABLE(merge_layer)),
+                                 drawable_tag (GIMP_DRAWABLE(layer)));
       
       if (operation == -1)
 	{
@@ -1915,7 +1943,9 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
    */
   gdisplays_update_title (gimage->ID);
 
-  drawable_update (GIMP_DRAWABLE(merge_layer), 0, 0, drawable_width (GIMP_DRAWABLE(merge_layer)), drawable_height (GIMP_DRAWABLE(merge_layer)));
+  drawable_update (GIMP_DRAWABLE(merge_layer),
+                   0, 0,
+                   0, 0);
 
   return merge_layer;
 }
@@ -1982,9 +2012,8 @@ gimage_add_layer (GImage *gimage, Layer *float_layer, int position)
 
   /*  update the new layer's area  */
   drawable_update (GIMP_DRAWABLE(float_layer), 
-	0, 0, 
-	drawable_width (GIMP_DRAWABLE(float_layer)), 
-	drawable_height (GIMP_DRAWABLE(float_layer)));
+                   0, 0,
+                   0, 0);
 
   /*  invalidate the composite preview  */
   gimage_invalidate_preview (gimage);
@@ -2129,7 +2158,9 @@ gimage_remove_layer_mask (GImage *gimage, Layer *layer, int mode)
 			     drawable_width (GIMP_DRAWABLE(layer)), drawable_height (GIMP_DRAWABLE(layer)));
     }
 
-  drawable_update (GIMP_DRAWABLE(layer), 0, 0, drawable_width (GIMP_DRAWABLE(layer)), drawable_height (GIMP_DRAWABLE(layer)));
+  drawable_update (GIMP_DRAWABLE(layer),
+                   0, 0,
+                   0, 0);
 
   gdisplays_flush ();
 
@@ -2162,7 +2193,9 @@ gimage_raise_channel (GImage *gimage, Channel * channel_arg)
 	    {
 	      list->data = prev_channel;
 	      prev->data = channel;
-	      drawable_update (GIMP_DRAWABLE(channel), 0, 0, drawable_width (GIMP_DRAWABLE(channel)), drawable_height (GIMP_DRAWABLE(channel)));
+	      drawable_update (GIMP_DRAWABLE(channel),
+                               0, 0,
+                               0, 0);
 	      return prev_channel;
 	    }
 	  else
@@ -2208,7 +2241,9 @@ gimage_lower_channel (GImage *gimage, Channel *channel_arg)
 	    {
 	      list->data = next_channel;
 	      next->data = channel;
-	      drawable_update (GIMP_DRAWABLE(channel), 0, 0, drawable_width (GIMP_DRAWABLE(channel)), drawable_height (GIMP_DRAWABLE(channel)));
+	      drawable_update (GIMP_DRAWABLE(channel),
+                               0, 0,
+                               0, 0);
 
 	      return next_channel;
 	    }
@@ -2268,7 +2303,9 @@ gimage_add_channel (GImage *gimage, Channel *channel, int position)
 
   /*  if channel is visible, update the image  */
   if (drawable_visible (GIMP_DRAWABLE(channel)))
-    drawable_update (GIMP_DRAWABLE(channel), 0, 0, drawable_width (GIMP_DRAWABLE(channel)), drawable_height (GIMP_DRAWABLE(channel)));
+    drawable_update (GIMP_DRAWABLE(channel),
+                     0, 0,
+                     0, 0);
 
   return channel;
 }
@@ -2299,7 +2336,9 @@ gimage_remove_channel (GImage *gimage, Channel *channel)
 	}
 
       if (drawable_visible (GIMP_DRAWABLE(channel)))
-	drawable_update (GIMP_DRAWABLE(channel), 0, 0, drawable_width (GIMP_DRAWABLE(channel)), drawable_height (GIMP_DRAWABLE(channel)));
+	drawable_update (GIMP_DRAWABLE(channel),
+                         0, 0,
+                         0, 0);
 
       /*  Important to push the undo here in case the push fails  */
       undo_push_channel (gimage, cu);

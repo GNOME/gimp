@@ -388,8 +388,8 @@ transform_core_cursor_update (tool, mevent, gdisp_ptr)
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
   if ((layer = gimage_get_active_layer (gdisp->gimage)))
     if (x >= GIMP_DRAWABLE(layer)->offset_x && y >= GIMP_DRAWABLE(layer)->offset_y &&
-	x < (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width) &&
-	y < (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height))
+	x < (GIMP_DRAWABLE(layer)->offset_x + drawable_width (GIMP_DRAWABLE(layer))) &&
+	y < (GIMP_DRAWABLE(layer)->offset_y + drawable_height (GIMP_DRAWABLE(layer))))
       {
 	if (gimage_mask_is_empty (gdisp->gimage) ||
 	    gimage_mask_value (gdisp->gimage, x, y))
@@ -915,17 +915,17 @@ transform_core_do_u8  (
   /*  Get the background color  */
   gimage_get_background (gimage, drawable, bg_col);
 
-  switch (drawable_type (drawable))
+  switch (tag_format (drawable_tag (drawable)))
     {
-    case RGB_GIMAGE: case RGBA_GIMAGE:
+    case FORMAT_RGB:
       bg_col[ALPHA_PIX] = TRANSPARENT_OPACITY;
       alpha = 3;
       break;
-    case GRAY_GIMAGE: case GRAYA_GIMAGE:
+    case FORMAT_GRAY:
       bg_col[ALPHA_G_PIX] = TRANSPARENT_OPACITY;
       alpha = 1;
       break;
-    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+    case FORMAT_INDEXED:
       bg_col[ALPHA_I_PIX] = TRANSPARENT_OPACITY;
       alpha = 1;
       /*  If the gimage is indexed color, ignore smoothing value  */
@@ -1303,7 +1303,7 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
 
       gdisplays_update_area (gimage->ID,
 			     GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y,
-			     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+			     drawable_width (GIMP_DRAWABLE(layer)), drawable_height (GIMP_DRAWABLE(layer)));
 
       /*  Push an undo  */
       undo_push_layer_mod (gimage, layer);
@@ -1312,16 +1312,15 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
       GIMP_DRAWABLE(layer)->tiles = tiles;
 
       /*  Fill in the new layer's attributes  */
-      GIMP_DRAWABLE(layer)->width = canvas_width (tiles);;
-      GIMP_DRAWABLE(layer)->height = canvas_height (tiles);
-      /* GIMP_DRAWABLE(layer)->bytes = tiles->levels[0].bpp; */
       GIMP_DRAWABLE(layer)->offset_x = canvas_fixme_getx (tiles);
       GIMP_DRAWABLE(layer)->offset_y = canvas_fixme_gety (tiles);
 
       if (floating_layer)
 	floating_sel_rigor (floating_layer, TRUE);
 
-      drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+      drawable_update (GIMP_DRAWABLE(layer),
+                       0, 0,
+                       0, 0);
 
       return layer;
     }
