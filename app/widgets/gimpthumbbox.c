@@ -344,7 +344,9 @@ gimp_thumb_box_new (Gimp *gimp)
                     box);
 
   box->preview = gimp_view_new (GIMP_VIEWABLE (box->imagefile),
-                                gimp->config->thumbnail_size, 0, FALSE);
+                                /* add some padding here for the shadow frame */
+                                gimp->config->thumbnail_size + 16,
+                                0, FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), box->preview, TRUE, FALSE, 10);
   gtk_widget_show (box->preview);
 

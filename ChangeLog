@@ -1,5 +1,10 @@
 2004-09-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpthumbbox.c (gimp_thumb_box_new): added some
+	padding for the shadow frame to avoid scaling the thumbnail.
+
+2004-09-27  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/images/Makefile.am
 	* themes/Default/images/stock-frame-64.png: added a stock icon
 	that shows a simple drop shadow but could be exchanged for other
