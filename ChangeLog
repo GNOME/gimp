@@ -1,6 +1,6 @@
 2001-03-06  Simon Budig  <simon@gimp.org>
 	
-	* app/mitch.[ch]: Increased Mitch's age by one. Hopefully
+	* app/mit.[ch]: Increased Mitch's age by one. Hopefully
 	this won't break everything.
 
 2001-03-06  Michael Natterer  <mitch@gimp.org>
