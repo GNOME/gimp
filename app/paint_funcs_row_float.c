@@ -1792,7 +1792,7 @@ extract_from_inten_row_float (
                      copy routines
 ********************************************************/
 
-#define INTENSITY(r,g,b) (r * 0.30 + g * 0.59 + b * 0.11 + 0.001)
+#define INTENSITY(r,g,b) ((r) * 0.30 + (g) * 0.59 + (b) * 0.11 + 0.001)
 
 static void
 copy_row_rgb_to_u8_rgb (

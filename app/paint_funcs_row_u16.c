@@ -2506,7 +2506,7 @@ extract_from_indexed_row_u16 (
                      copy routines
 ********************************************************/
 
-#define INTENSITY(r,g,b) (r * 0.30 + g * 0.59 + b * 0.11 + 0.001)
+#define INTENSITY(r,g,b) ((r) * 0.30 + (g) * 0.59 + (b) * 0.11 + 0.001)
 
 static void
 copy_row_rgb_to_u8_rgb (
@@ -2525,19 +2525,19 @@ copy_row_rgb_to_u8_rgb (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = s[0] / 255;
-            d[1] = s[1] / 255;
-            d[2] = s[2] / 255;
-            d[3] = s[3] / 255;
+            d[0] = s[0] >> 8;
+            d[1] = s[1] >> 8;
+            d[2] = s[2] >> 8;
+            d[3] = s[3] >> 8;
             s += 4;
             d += 4;
           }
       else
         while (w--)
           {
-            d[0] = s[0] / 255;
-            d[1] = s[1] / 255;
-            d[2] = s[2] / 255;
+            d[0] = s[0] >> 8;
+            d[1] = s[1] >> 8;
+            d[2] = s[2] >> 8;
             s += 4;
             d += 3;
           }
@@ -2547,9 +2547,9 @@ copy_row_rgb_to_u8_rgb (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = s[0] / 255;
-            d[1] = s[1] / 255;
-            d[2] = s[2] / 255;
+            d[0] = s[0] >> 8;
+            d[1] = s[1] >> 8;
+            d[2] = s[2] >> 8;
             d[3] = 255;
             s += 3;
             d += 4;
@@ -2557,9 +2557,9 @@ copy_row_rgb_to_u8_rgb (
       else
         while (w--)
           {
-            d[0] = s[0] / 255;
-            d[1] = s[1] / 255;
-            d[2] = s[2] / 255;
+            d[0] = s[0] >> 8;
+            d[1] = s[1] >> 8;
+            d[2] = s[2] >> 8;
             s += 3;
             d += 3;
           }
@@ -2584,15 +2584,15 @@ copy_row_rgb_to_u8_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = INTENSITY (s[0] / 255, s[1] / 255, s[2] / 255);
-            d[1] = s[3] / 255;
+            d[0] = INTENSITY (s[0] >> 8, s[1] >> 8, s[2] >> 8);
+            d[1] = s[3] >> 8;
             s += 4;
             d += 2;
           }
       else
         while (w--)
           {
-            d[0] = INTENSITY (s[0] / 255, s[1] / 255, s[2] / 255);
+            d[0] = INTENSITY (s[0] >> 8, s[1] >> 8, s[2] >> 8);
             s += 4;
             d += 1;
           }
@@ -2602,7 +2602,7 @@ copy_row_rgb_to_u8_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = INTENSITY (s[0] / 255, s[1] / 255, s[2] / 255);
+            d[0] = INTENSITY (s[0] >> 8, s[1] >> 8, s[2] >> 8);
             d[1] = 255;
             s += 3;
             d += 2;
@@ -2610,7 +2610,7 @@ copy_row_rgb_to_u8_gray  (
       else
         while (w--)
           {
-            d[0] = INTENSITY (s[0] / 255, s[1] / 255, s[2] / 255);
+            d[0] = INTENSITY (s[0] >> 8, s[1] >> 8, s[2] >> 8);
             s += 3;
             d += 1;
           }
@@ -2836,15 +2836,15 @@ copy_row_gray_to_u8_rgb  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = d[1] = d[2] = s[0] / 255;
-            d[3] = s[1] / 255;
+            d[0] = d[1] = d[2] = s[0] >> 8;
+            d[3] = s[1] >> 8;
             s += 2;
             d += 4;
           }
       else
         while (w--)
           {
-            d[0] = d[1] = d[2] = s[0] / 255;
+            d[0] = d[1] = d[2] = s[0] >> 8;
             s += 2;
             d += 3;
           }
@@ -2854,7 +2854,7 @@ copy_row_gray_to_u8_rgb  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = d[1] = d[2] = s[0] / 255;
+            d[0] = d[1] = d[2] = s[0] >> 8;
             d[3] = 255;
             s += 1;
             d += 4;
@@ -2862,7 +2862,7 @@ copy_row_gray_to_u8_rgb  (
       else
         while (w--)
           {
-            d[0] = d[1] = d[2] = s[0] / 255;
+            d[0] = d[1] = d[2] = s[0] >> 8;
             s += 1;
             d += 3;
           }
@@ -2886,15 +2886,15 @@ copy_row_gray_to_u8_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = s[0] / 255;
-            d[1] = s[1] / 255;
+            d[0] = s[0] >> 8;
+            d[1] = s[1] >> 8;
             s += 2;
             d += 2;
           }
       else
         while (w--)
           {
-            d[0] = s[0] / 255;
+            d[0] = s[0] >> 8;
             s += 2;
             d += 1;
           }
@@ -2904,7 +2904,7 @@ copy_row_gray_to_u8_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = s[0] / 255;
+            d[0] = s[0] >> 8;
             d[1] = 255;
             s += 1;
             d += 2;
@@ -2912,7 +2912,7 @@ copy_row_gray_to_u8_gray  (
       else
         while (w--)
           {
-            d[0] = s[0] / 255;
+            d[0] = s[0] >> 8;
             s += 1;
             d += 1;
           }

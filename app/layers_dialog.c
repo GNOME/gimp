@@ -879,7 +879,15 @@ render_preview (Canvas    *preview_buf,
 		int        channel)
 {
   PixelArea src, back, dest;
-  Canvas * display_buf;
+  Canvas *gray_buf = NULL;
+  Canvas *rgb_buf = NULL;
+  Canvas *eightbit_buf = NULL;
+  Canvas *stripped_alpha = NULL;
+  Canvas *composite = NULL;
+  Canvas *background_buf = NULL;
+  Canvas *display_buf;
+  Canvas *preview_buf8; 
+  Canvas *preview_rgb_buf8;
   gint affect[3];
   Tag preview_tag = canvas_tag (preview_buf);
   Alpha a = tag_alpha (preview_tag);
@@ -891,11 +899,40 @@ render_preview (Canvas    *preview_buf,
 	
   g_return_if_fail (preview_buf != NULL);
 
+  if (p != PRECISION_U8)
+  {
+    eightbit_buf = canvas_new (tag_new (PRECISION_U8, f, a),
+		       width, height,
+		       STORAGE_FLAT);
+
+    pixelarea_init (&src, preview_buf,
+		    0, 0,
+		    0, 0,
+		    FALSE);
+
+    pixelarea_init (&dest, eightbit_buf,
+		    0, 0,
+		    0, 0,
+		    TRUE);
+    canvas_portion_refro (eightbit_buf, 0 , 0);
+    copy_area (&src, &dest);
+    pixelarea_init (&src, preview_buf,
+		    0, 0,
+		    0, 0,
+		    FALSE);
+
+    pixelarea_init (&dest, eightbit_buf,
+		    0, 0,
+		    0, 0,
+		    FALSE);
+    canvas_portion_unref(eightbit_buf, 0 , 0);
+    preview_buf8 = eightbit_buf;
+  }
+  else 
+    preview_buf8 = preview_buf;
+  
   if (color_buf)  /* rgb display expected */
   {  
-    Canvas * composite;
-    Canvas * background_buf;
-    Canvas * preview_rgb_buf;
     affect[0] = affect[1] = affect[2] = 0;
 
     switch (channel)
@@ -909,27 +946,28 @@ render_preview (Canvas    *preview_buf,
     /* create a rgb preview buf if its not one already */
     if (f == FORMAT_GRAY)
     {
-	preview_rgb_buf = canvas_new (tag_new (PRECISION_U8, FORMAT_RGB, a),
+	rgb_buf = canvas_new (tag_new (PRECISION_U8, FORMAT_RGB, a),
 		       width, height,
 		       STORAGE_FLAT);
-        pixelarea_init (&src, preview_buf,
+        pixelarea_init (&src, preview_buf8,
 		    0, 0,
 		    0, 0,
 		    FALSE);
-        pixelarea_init (&dest, preview_rgb_buf,
+        pixelarea_init (&dest, rgb_buf,
 		    0, 0,
 		    0, 0,
 		    TRUE);
-        canvas_portion_refro (preview_rgb_buf, 0 , 0);
+        canvas_portion_refro (rgb_buf, 0 , 0);
 	copy_area (&src, &dest);
-        canvas_portion_unref(preview_rgb_buf, 0 , 0);
+        canvas_portion_unref(rgb_buf, 0 , 0);
+	preview_rgb_buf8 = rgb_buf;
     }
     else 
-	preview_rgb_buf = preview_buf;	
+	preview_rgb_buf8 = preview_buf8;	
 
 
     /* src is preview_rgb_buf */
-    pixelarea_init (&src, preview_rgb_buf,
+    pixelarea_init (&src, preview_rgb_buf8,
 		    0, 0,
 		    0, 0,
 		    FALSE);
@@ -964,14 +1002,9 @@ render_preview (Canvas    *preview_buf,
 
     canvas_portion_unref(background_buf, 0 , 0);
 
-    /* clean up any unneeded canvas at this point */
-    canvas_delete (background_buf);
-    if ( f == FORMAT_GRAY )
-	canvas_delete (preview_rgb_buf);
-	
     if (a == ALPHA_YES)  /* display w/o alpha expected */
     {
-	Canvas * stripped_alpha =  canvas_new (
+	stripped_alpha =  canvas_new (
 		       tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO),
 		       width, height,
 		       STORAGE_FLAT);
@@ -986,7 +1019,6 @@ render_preview (Canvas    *preview_buf,
 	canvas_portion_refro (stripped_alpha, 0 , 0);
 	copy_area (&src, &dest);
         canvas_portion_unref(stripped_alpha, 0 , 0);
-	canvas_delete (composite);
 	display_buf = stripped_alpha;
     }
     else
@@ -995,8 +1027,7 @@ render_preview (Canvas    *preview_buf,
   }
   else  /* gray display expected */
   {
-    Canvas *gray_buf;
-    pixelarea_init (&src, preview_buf,
+    pixelarea_init (&src, preview_buf8,
 		    0, 0,
 		    0, 0,
 		    FALSE);
@@ -1029,7 +1060,19 @@ render_preview (Canvas    *preview_buf,
   canvas_portion_unref (display_buf, 0, 0);
 
   /* clean up */
-  canvas_delete (display_buf);
+
+  if (gray_buf)
+    canvas_delete (gray_buf);
+  if (stripped_alpha)
+    canvas_delete (stripped_alpha);
+  if (composite)
+    canvas_delete (composite);
+  if (background_buf)
+    canvas_delete (background_buf);
+  if (rgb_buf)
+    canvas_delete (rgb_buf);
+  if (eightbit_buf)
+    canvas_delete (eightbit_buf);
 }
 
 void
