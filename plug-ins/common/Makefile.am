@@ -86,11 +86,13 @@ libexec_PROGRAMS = @STRIP_BEGIN@ \
 	$(JPEG) \
 	laplace \
 	lic \
+	mail \
 	mapcolor \
 	max_rgb \
 	mblur \
 	$(MPEG) \
 	newsprint \
+	nlfilt \
 	noisify \
 	normalize \
 	nova \
@@ -101,6 +103,7 @@ libexec_PROGRAMS = @STRIP_BEGIN@ \
 	pix \
 	pixelize \
 	plasma \
+	plugindetails \
 	$(PNG) \
 	pnm \
 	polar \
@@ -1061,6 +1064,20 @@ lic_LDADD = @STRIP_BEGIN@ \
 	$(INTLLIBS)							\
 @STRIP_END@
 
+mail_SOURCES = @STRIP_BEGIN@ \
+	mail.c	\
+@STRIP_END@
+
+mail_LDADD = @STRIP_BEGIN@ \
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(GTK_LIBS)							\
+	$(INTLLIBS)							\
+@STRIP_END@
+
 mapcolor_SOURCES = @STRIP_BEGIN@ \
 	mapcolor.c	\
 @STRIP_END@
@@ -1121,6 +1138,20 @@ newsprint_SOURCES = @STRIP_BEGIN@ \
 @STRIP_END@
 
 newsprint_LDADD = @STRIP_BEGIN@ \
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(GTK_LIBS)							\
+	$(INTLLIBS)							\
+@STRIP_END@
+
+nlfilt_SOURCES = @STRIP_BEGIN@ \
+	nlfilt.c	\
+@STRIP_END@
+
+nlfilt_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
@@ -1259,6 +1290,20 @@ plasma_SOURCES = @STRIP_BEGIN@ \
 @STRIP_END@
 
 plasma_LDADD = @STRIP_BEGIN@ \
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(GTK_LIBS)							\
+	$(INTLLIBS)							\
+@STRIP_END@
+
+plugindetails_SOURCES = @STRIP_BEGIN@ \
+	plugindetails.c	\
+@STRIP_END@
+
+plugindetails_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\

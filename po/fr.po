@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.0\n"
 "POT-Creation-Date: 2001-08-29 10:12+0200\n"
-"PO-Revision-Date: 2001-08-29 10:12+0200\n"
+"PO-Revision-Date: 2001-09-17 13:29+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -4791,7 +4791,7 @@ msgstr "présenté par"
 
 #: app/gui/tips-dialog.c:81
 msgid "gimp_tips.txt"
-msgstr "gimp_conseils.fr.txt"
+msgstr "gimp_tips.fr.txt"
 
 #: app/gui/tips-dialog.c:96
 msgid "GIMP Tip of the Day"

@@ -140,12 +140,12 @@ static GimpPDBStatusType save_image (gchar  *filename,
 				     gint32  run_mode);
 
 static gint   save_dialog          (void);
-static void   ok_callback          (GtkWidget *widget,
-				    gpointer   data);
-static void   mail_entry_callback  (GtkWidget *widget,
-				    gpointer   data);
-static void   mesg_body_callback   (GtkWidget *widget,
-				    gpointer   data);
+static void   ok_callback          (GtkWidget     *widget,
+				    gpointer       data);
+static void   mail_entry_callback  (GtkWidget     *widget,
+				    gpointer       data);
+static void   mesg_body_callback   (GtkTextBuffer *buffer,
+				    gpointer       data);
 
 static gint   valid_file     (gchar *filename);
 static void   create_headers (FILE  *mailpipe);
@@ -189,7 +189,7 @@ static m_info mail_info =
 			  if you prefer that as the default */
 };
 
-static gchar * mesg_body = "\0";
+static gchar * mesg_body = NULL;
 static gint    run_flag  = 0;
 
 MAIN ()
@@ -436,14 +436,14 @@ save_image (gchar  *filename,
 static gint
 save_dialog (void)
 {
-  GtkWidget *dlg;
-  GtkWidget *entry;
-  GtkWidget *table;
-  GtkWidget *table2;
-  GtkWidget *label;
-  GtkWidget *vbox;
-  GtkWidget *text;
-  GtkWidget *vscrollbar;
+  GtkWidget     *dlg;
+  GtkWidget     *entry;
+  GtkWidget     *table;
+  GtkWidget     *label;
+  GtkWidget     *vbox;
+  GtkWidget     *scrolled_window;
+  GtkWidget     *text_view;
+  GtkTextBuffer *text_buffer;
 
   gchar      buffer[BUFFER_SIZE];
   gchar     *gump_from;
@@ -545,34 +545,30 @@ save_dialog (void)
 		      &mail_info.filename);
 
   /* comment  */
-  table2 = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_row_spacing (GTK_TABLE (table2), 0, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (table2), 0, 2);
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
+  gtk_table_attach (GTK_TABLE (table), scrolled_window,
+                    0, 2, 5, 6,
+                    GTK_EXPAND | GTK_FILL,
+                    GTK_EXPAND | GTK_FILL,
+                    0, 0);
+  gtk_widget_show (scrolled_window);
 
-  gtk_table_attach (GTK_TABLE (table), table2, 
-		    0, 2, 5, 6,
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
-		    0, 0);
+  text_buffer = gtk_text_buffer_new (NULL);
 
-  text = gtk_text_new (NULL, NULL);
-  gtk_text_set_editable (GTK_TEXT (text), TRUE);
-  gtk_table_attach (GTK_TABLE (table2), text, 
-		    0, 1, 0, 1,
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
-		    0, 0);
-  gtk_widget_set_usize (text, 200, 100);
-  gtk_widget_show (text);
-  gtk_signal_connect (GTK_OBJECT (text), "changed",
-		      GTK_SIGNAL_FUNC (mesg_body_callback),
-		      mesg_body);
-  gtk_widget_show (table2);
+  text_view = gtk_text_view_new_with_buffer (text_buffer);
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
+  gtk_widget_show (text_view);
 
-  vscrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
-  gtk_table_attach (GTK_TABLE (table2), vscrollbar, 1, 2, 0, 1,
-		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (vscrollbar);
+  g_object_unref (G_OBJECT (text_buffer));
+
+  g_signal_connect (G_OBJECT (text_buffer), "changed",
+                    G_CALLBACK (mesg_body_callback),
+		    NULL);
 
   /* Encapsulation label */
   label = gtk_label_new (_("Encapsulation:"));
@@ -724,11 +720,19 @@ mail_entry_callback (GtkWidget *widget,
 }
 
 static void 
-mesg_body_callback (GtkWidget *widget,
-		    gpointer   data)
+mesg_body_callback (GtkTextBuffer *buffer,
+		    gpointer       data)
 {
-  mesg_body = gtk_editable_get_chars (GTK_EDITABLE (widget), 0,
-				      gtk_text_get_length (GTK_TEXT (widget)));
+  GtkTextIter   start_iter;
+  GtkTextIter   end_iter;
+  gchar        *text;
+
+  gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
+  gtk_text_iter_backward_char (&end_iter);
+
+  if (mesg_body)
+    g_free (mesg_body);
+  mesg_body = gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
 } 
 
 static void
@@ -757,7 +761,8 @@ create_headers (FILE *mailpipe)
     }
   fprintf (mailpipe, mail_info.comment);
   fprintf (mailpipe, "\n\n");
-  fprintf (mailpipe, mesg_body); 
+  if (mesg_body)
+    fprintf (mailpipe, mesg_body); 
   fprintf (mailpipe, "\n\n");
   if (mail_info.encapsulation == ENCAPSULATION_MIME )
     {

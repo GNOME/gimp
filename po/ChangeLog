@@ -1,3 +1,7 @@
+2001-09-17  Sven Neumann  <sven@gimp.org>
+
+	* fr.po: changed gimp_conseils.fr.txt to gimp_tips.fr.txt.
+
 2001-09-17  Andras Timar  <timar@gnome.hu>
 
 	* hu.po: converted to UTF-8.
