@@ -1,3 +1,9 @@
+2002-09-11  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/curve_bend.c: applied a patch from Guillermo
+	S. Romero which cleans up the GUI even more. Changed it a bit to
+	behave nicely on window resizing.
+
 2002-09-11  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c: fixed typo (bug #93031).

@@ -19,6 +19,7 @@
  */
 
 /* Revision history
+ *  (2002/09/xx)  v1.1.18 mitch and gsr: clean interface
  *  (2000/02/16)  v1.1.17b hof: added spinbuttons for rotate entry
  *  (2000/02/16)  v1.1.17 hof: undo bugfix (#6012)
  *                             don't call gimp_undo_push_group_end 
@@ -1290,11 +1291,11 @@ static BenderDialog *
 bender_new_dialog (GimpDrawable *drawable)
 {
   BenderDialog *cd;
+  GtkWidget *main_hbox;
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *vbox2;
   GtkWidget *abox;
-  GtkWidget *hbox2;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *toggle;
@@ -1302,6 +1303,7 @@ bender_new_dialog (GimpDrawable *drawable)
   GtkWidget *button;
   GtkWidget *spinbutton;
   GtkWidget *label;
+  GtkWidget *separator;
   GtkObject *data;
   int i, j;
 
@@ -1334,17 +1336,17 @@ bender_new_dialog (GimpDrawable *drawable)
 
   cd->grab_point = -1;
   for (i = 0; i < 2; i++)
-  {
+    {
       for (j = 0; j < 17; j++)
-      {
+        {
 	  cd->points[i][j][0] = -1;
 	  cd->points[i][j][1] = -1;
-      }
+        }
       cd->points[i][0][0] = 0.0;        /* x */
       cd->points[i][0][1] = 0.5;        /* y */
       cd->points[i][16][0] = 1.0;       /* x */
       cd->points[i][16][1] = 0.5;       /* y */
-  }
+    }
 
 
   p_retrieve_values(cd);       /* Possibly retrieve data from a previous run */
@@ -1363,29 +1365,25 @@ bender_new_dialog (GimpDrawable *drawable)
 			       GTK_STOCK_CANCEL, bender_cancel_callback,
 			       cd, NULL, NULL, FALSE, TRUE,
 
-                               GTK_STOCK_OPEN, bender_load_callback,
-                               cd, NULL, NULL, FALSE, FALSE,
-
-                               GTK_STOCK_SAVE, bender_save_callback,
-                               cd, NULL, NULL, FALSE, FALSE,
-
 			       GTK_STOCK_OK, bender_ok_callback,
 			       cd, NULL, NULL, TRUE, FALSE,
 
 			       NULL);
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cd->shell)->vbox), vbox,
-		      TRUE, TRUE, 0);
-
   /*  The main hbox  */
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  main_hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (cd->shell)->vbox), main_hbox);
+  gtk_widget_show (main_hbox);
 
+  /* Left side column */
+  vbox =  gtk_vbox_new (FALSE, 4);
+  gtk_container_add (GTK_CONTAINER (main_hbox), vbox);
+  gtk_widget_show (vbox);
+
+  /* Preview area, top of column */
   frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   vbox2 = gtk_vbox_new (FALSE, 4);
@@ -1413,13 +1411,13 @@ bender_new_dialog (GimpDrawable *drawable)
                     G_CALLBACK (bender_pv_widget_events),
                     cd);
 
-  hbox2 = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_end (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
-  gtk_widget_show (hbox2);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_end (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   /*  The preview button  */
   button = gtk_button_new_with_mnemonic (_("_Preview Once"));
-  gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "clicked",
@@ -1427,27 +1425,91 @@ bender_new_dialog (GimpDrawable *drawable)
                     cd);
 
   /*  The preview toggle  */
-  toggle = gtk_check_button_new_with_mnemonic (_("Pre_view"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Automatic Pre_view"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->preview);
-  gtk_box_pack_start (GTK_BOX (hbox2), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (G_OBJECT (toggle), "toggled",
                     G_CALLBACK (bender_preview_update),
                     cd);
 
-  /*  The curves graph  */
-  frame = gtk_frame_new (_("Modify Curves"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  /* Options area, bottom of column */
+  frame = gtk_frame_new (_("Options"));
+  gtk_box_pack_end (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox2 = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  /* Render Options  */
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  /*  Rotate spinbutton  */
+  label = gtk_label_new_with_mnemonic (_("R_otate:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  spinbutton = gimp_spin_button_new (&data,
+                                     0, 0.0, 360.0, 1, 45, 90,
+                                     0.5, 1);
+  cd->rotate_data = GTK_ADJUSTMENT (data);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
+
+  g_signal_connect (G_OBJECT (cd->rotate_data), "value_changed",
+                      G_CALLBACK (bender_rotate_adj_callback),
+                      cd);
+
+  /*  The smoothing toggle  */
+  toggle = gtk_check_button_new_with_mnemonic (_("Sm_oothing"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->smoothing);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (bender_smoothing_callback),
+                    cd);
+
+  /*  The antialiasing toggle  */
+  toggle = gtk_check_button_new_with_mnemonic (_("_Antialiasing"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->antialias);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (bender_antialias_callback),
+                    cd);
+
+  /*  The wor_on_copy toggle  */
+  toggle = gtk_check_button_new_with_mnemonic (_("Work on Cop_y"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->work_on_copy);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (bender_work_on_copy_callback),
+                    cd);
+
+
+  /*  The curves graph  */
+  frame = gtk_frame_new (_("Modify Curves"));
+  gtk_container_add (GTK_CONTAINER (main_hbox), frame);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox2), abox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
   cd->graph = gtk_drawing_area_new ();
@@ -1465,7 +1527,7 @@ bender_new_dialog (GimpDrawable *drawable)
   table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   cd->outline_menu = gtk_option_menu_new ();
@@ -1486,7 +1548,7 @@ bender_new_dialog (GimpDrawable *drawable)
 
   /*  hbox for curve options  */
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /*  The Copy button  */
@@ -1537,61 +1599,41 @@ bender_new_dialog (GimpDrawable *drawable)
                     G_CALLBACK (bender_reset_callback),
                     cd);
 
-
-  /*  Render Options  */
+  /*  hbox for curve load and save  */
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  /*  Rotate spinbutton  */
-  label = gtk_label_new_with_mnemonic (_("R_otate:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  /*  The Load button  */
+  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-  spinbutton = gimp_spin_button_new (&data,
-                                     0, 0.0, 360.0, 1, 45, 90,
-                                     0.5, 1);
-  cd->rotate_data = GTK_ADJUSTMENT (data);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
+  gimp_help_set_help_data (button,
+                           _("Load the curves from a file"), NULL);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-
-  g_signal_connect (G_OBJECT (cd->rotate_data), "value_changed",
-                      G_CALLBACK (bender_rotate_adj_callback),
-                      cd);
-
-  /*  The smoothing toggle  */
-  toggle = gtk_check_button_new_with_mnemonic (_("Sm_oothing"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->smoothing);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (G_OBJECT (toggle), "toggled",
-                    G_CALLBACK (bender_smoothing_callback),
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (bender_load_callback),
                     cd);
 
-  /*  The antialiasing toggle  */
-  toggle = gtk_check_button_new_with_mnemonic (_("_Antialiasing"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->antialias);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
+  /*  The Save button  */
+  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
-                    G_CALLBACK (bender_antialias_callback),
+  gimp_help_set_help_data (button,
+                           _("Save the curves to a file"), NULL);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (bender_save_callback),
                     cd);
 
-  /*  The wor_on_copy toggle  */
-  toggle = gtk_check_button_new_with_mnemonic (_("Work on Cop_y"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->work_on_copy);
-  gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
+  /* Separate file ops from pure curve ops */
+  separator = gtk_hseparator_new ();
+  gtk_box_pack_end (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
+  gtk_widget_show (separator);
 
-  g_signal_connect (G_OBJECT (toggle), "toggled",
-                    G_CALLBACK (bender_work_on_copy_callback),
-                    cd);
-
-  gtk_widget_show (vbox);
+  gtk_widget_show (main_hbox);
 
   return cd;
 }
