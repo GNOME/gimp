@@ -1,3 +1,8 @@
+2003-03-03  Sven Neumann  <sven@gimp.org>
+
+	* app/clone.c (clone_paint_func): don't try to get the offsets
+	from a NULL drawable. Fixes bug #107438.
+
 2003-02-27  Raphael Quinet  <quinet@gamers.org>
 
 	* plug-ins/script-fu/scripts/Makefile.am
