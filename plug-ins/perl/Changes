@@ -1,6 +1,10 @@
 Revision history for Gimp-Perl extension.
 
+1.082 Tue May 11 19:02:30 CEST 1999
 	- fixed sunos/solaris socketpair "protocol not implemented" problem.
+        - added the Gimp::register_callback function and made Gimp::Fu use it.
+        - made default font use pixels instead of point size, since gimp-1.1
+          scales according to the image resolution(!).
         - disabled paintbrush in testsuite since it has different calling
           parameters in 1.1.
         - added use File::Basename to Fu.pm.
@@ -12,6 +16,7 @@ Revision history for Gimp-Perl extension.
         - commandline switch printing improved a bit.
         - removed IO::Socket::* dependency from Perl-Server. Was tooo slow.
         - fixed uninitialized memory error.
+        - some small improvements in PDB, gimpmagick and perlcc.
 
 1.081 Thu May  6 19:33:37 CEST 1999
 	- added "oneliners".

@@ -273,7 +273,7 @@ sub interact($$$$@) {
               &new_PF_STRING;
            } else {
               my $fs=new Gtk::FontSelectionDialog "Font Selection Dialog ($desc)";
-              my $def = "-*-helvetica-medium-r-normal-*-*-240-*-*-p-*-iso8859-1";
+              my $def = "-*-helvetica-medium-r-normal-*-24-*-*-*-p-*-iso8859-1";
               my $val;
               
               my $l=new Gtk::Label "!error!";
@@ -530,10 +530,11 @@ sub fu_feature_present($$) {
 sub this_script {
    return $scripts[0] unless $#scripts;
    # well, not-so-easy-day today
-   my $exe = basename($0);
+   require File::Basename;
+   my $exe = File::Basename::basename($0);
    my @names;
    for my $this (@scripts) {
-      my $fun = (split /\//,$this->[0])[-1];
+      my $fun = (split /\//,$this->[1])[-1];
       return $this if lc($exe) eq lc($fun);
       push(@names,$fun);
    }
@@ -589,8 +590,8 @@ sub net {
    my($interact)=1;
    my $params = $this->[8];
    
-   for(@{$this->[10]}) {
-      return unless fu_feature_present($_,$this->[0]);
+   for(@{$this->[11]}) {
+      return unless fu_feature_present($_,$this->[1]);
    }
 
    # %map is a hash that associates (mangled) parameter names to parameter index
@@ -641,7 +642,7 @@ sub query {
    my($type);
    script:
    for(@scripts) {
-      my($function,$blurb,$help,$author,$copyright,$date,
+      my($perl_sub,$function,$blurb,$help,$author,$copyright,$date,
          $menupath,$imagetypes,$params,$results,$features,$code)=@$_;
 
       for(@$features) {
@@ -910,7 +911,7 @@ sub register($$$$$$$$$;@) {
                 function => $function, fatal => 0
       if $function =~ y/-//;
 
-   *$function = sub {
+   my $perl_sub = sub {
       $run_mode=shift;	# global!
       my(@pre,@defaults,@lastvals,$input_image);
 
@@ -998,7 +999,9 @@ sub register($$$$$$$$$;@) {
       Gimp::set_trace ($old_trace);
       wantarray ? @imgs : $imgs[0];
    };
-   push(@scripts,[$function,$blurb,$help,$author,$copyright,$date,
+
+   Gimp::register_callback($function,$perl_sub);
+   push(@scripts,[$perl_sub,$function,$blurb,$help,$author,$copyright,$date,
                   $menupath,$imagetypes,$params,$results,$features,$code]);
 }
 

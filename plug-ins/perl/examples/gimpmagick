@@ -195,8 +195,7 @@ sub update_preview {
 sub gimp_magick {
    my ($drawable)=@_;
 
-   init Gtk;
-   parse Gtk::Rc Gimp->gtkrc;
+   Gimp::init_gtk;
 
    # generate main window
    my $im = new Image::Magick;
@@ -281,7 +280,6 @@ register "gimp_magick",
          sub {
    my($image,$drawable)=@_;
 
-   Gimp::init_gtk;
    gimp_magick ($drawable);
 
    $image;

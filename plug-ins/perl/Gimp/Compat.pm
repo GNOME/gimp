@@ -1,6 +1,6 @@
 =head1 NAME
 
- Gimp::Compat - compatibility functions for older verasions of Gimp.
+ Gimp::Compat - compatibility functions for older versions of Gimp.
 
 =head1 SYNOPSIS
 
@@ -8,7 +8,7 @@
 
 =head1 DESCRIPTION
 
-Older versions of Gimp (vesion 1.0 at the time of this writing) lack some
+Older versions of Gimp (version 1.0 at the time of this writing) lack some
 very important or useful functions.
 
 This module is providing the most needed replacement functions. If you

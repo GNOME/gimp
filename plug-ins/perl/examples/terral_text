@@ -39,17 +39,16 @@ register
         "Otherwise, it overwrites the current layer and uses a solid noise",
 	"Seth Burgess",
 	"Seth Burgess <sjburges\@gimp.org>",
-	"1999-03-15",
+	"1999-05-11",
 	"<Image>/Filters/Render/Terral Text",
 	"RGB*,GRAY*",
 	[
 	  [ PF_RADIO, "solid_noise", "The Texture Type", 0, ["solid noise" => 1, "current picture" => 0]],
-	  [ PF_FONT, "helvetica", "Font Name", "-*-helvetica-medium-r-normal-*-*-240-*-*-p-*-iso8859-1" ],
+	  [ PF_FONT, "font", "Font Name"],
 	  [ PF_STRING, "text", "Enter your Text to be Terral-ified", "TerralText"],
 	  [ PF_SLIDER, "blur_amount", "Blur Amount", 10, [0,26,1]],
 	],
 sub {
-   Gimp::set_trace(TRACE_NAME);
 	($img, $pattern, $solidnoise, $font, $text, $blur) = @_;
 	$oldbg = gimp_palette_get_background();
 	$oldfg = gimp_palette_get_foreground();

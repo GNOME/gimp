@@ -224,7 +224,8 @@ sub init_gtk {
 # internal utility function for Gimp::Fu and others
 sub wrap_text {
    my $x=$_[0];
-   $x=~s/(\G.{1,$_[1]})(\s+|$)/$1\n/g;
+   $x=~s/^(\G.{1,$_[1]})(\s+|$)/$1\n/gm;
+   $x=~s/[ \t\r\n]+$//g;
    $x;
 }
 
@@ -380,11 +381,15 @@ unless ($no_SIG) {
    };
 }
 
+my %callback;
+
 sub call_callback {
    my $req = shift;
    my $cb = shift;
    return () if $caller eq "Gimp";
-   if (UNIVERSAL::can($caller,$cb)) {
+   if ($callback{$cb}) {
+      &{$callback{$cb}};
+   } elsif (UNIVERSAL::can($caller,$cb)) {
       &{"$caller\::$cb"};
    } else {
       die_msg "required callback '$cb' not found\n" if $req;
@@ -410,6 +415,10 @@ sub callback {
       local $in_quit = 1;
       call_callback 0,"quit";
    }
+}
+
+sub register_callback($$) {
+   $callback{$_[0]}=$_[1];
 }
 
 sub main {
@@ -865,10 +874,20 @@ have a copy in /usr/lib/X11/rgb.txt). You can view the default database
 with C<perldoc -m Gimp>, at the end of the file (the default database is
 similar, but not identical to the X11 default rgb.txt)
 
-=item Gimp::initialized ()
+=item Gimp::initialized()
 
 this function returns true whenever it is safe to clal gimp functions. This is
 usually only the case after gimp_main or gimp_init have been called.
+
+=item Gimp::register_callback(gimp_function_name,perl_function)
+
+Using this fucntion you can overwrite the standard Gimp behaviour of
+calling a perl subroutine of the same name as the gimp function.
+
+The first argument is the name of a registered gimp function that you want
+to overwrite ('perl_fu_make_something'), and the second argument can be
+either a name of the corresponding perl sub ('Elsewhere::make_something')
+or a code reference (\&my_make).
 
 =back
 
