@@ -113,20 +113,15 @@ static void dialog_toggle_update (GtkWidget     *widget,
 static void dialog_scale_update  (GtkAdjustment *adjustment,
 				  gdouble       *value);
 
-static gint do_dialog (void);
+static gint do_dialog            (void);
 
-static void init_calculation (void);
+static void     init_calculation (void);
 
-static gint left_of_diagl  (gdouble x, gdouble y);
-static gint right_of_diagr (gdouble x, gdouble y);
-static gint below_diagb    (gdouble x, gdouble y);
-static gint right_of_diagm (gdouble x, gdouble y);
-static gint inside_circle  (gdouble x, gdouble y);
+static void     do_curl_effect      (void);
+static void     clear_curled_region (void);
+static void     page_curl           (void);
+static guchar * get_samples         (GimpDrawable *drawable);
 
-static void    do_curl_effect      (void);
-static void    clear_curled_region (void);
-static void    page_curl           (void);
-static guchar *get_samples         (GimpDrawable *drawable);
 
 /***** Variables *****/
 
@@ -199,13 +194,16 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive (0), non-interactive (1)" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "mode", "Pagecurl-mode: Use FG- and BG-Color (0), Use current gradient (1)" },
-    { GIMP_PDB_INT32, "edge", "Edge to curl (1-4, clockwise, starting in the lower right edge)" },
-    { GIMP_PDB_INT32, "type", "vertical (0), horizontal (1)" },
-    { GIMP_PDB_INT32, "shade", "Shade the region under the curl (1) or not (0)" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive (0), non-interactive (1)" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"                          },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"                       },
+    { GIMP_PDB_INT32,    "mode", 
+        "Pagecurl-mode: Use FG- and BG-Color (0), Use current gradient (1)" },
+    { GIMP_PDB_INT32,    "edge", 
+        "Edge to curl (1-4, clockwise, starting in the lower right edge)"   },
+    { GIMP_PDB_INT32,    "type",     "vertical (0), horizontal (1)"         },
+    { GIMP_PDB_INT32,    "shade", 
+        "Shade the region under the curl (1) or not (0)"                    },
   };
 
   static GimpParamDef return_vals[] =
@@ -285,27 +283,27 @@ run (gchar      *name,
 	      switch (param[4].data.d_int32)
 		{
 		case 1:
-		  curl.do_upper_left = 0;
+		  curl.do_upper_left  = 0;
 		  curl.do_upper_right = 0;
-		  curl.do_lower_left = 0;
+		  curl.do_lower_left  = 0;
 		  curl.do_lower_right = 1;
 		  break;
 		case 2:
-		  curl.do_upper_left = 0;
+		  curl.do_upper_left  = 0;
 		  curl.do_upper_right = 0;
-		  curl.do_lower_left = 1;
+		  curl.do_lower_left  = 1;
 		  curl.do_lower_right = 0;
 		  break;
 		case 3:
-		  curl.do_upper_left = 1;
+		  curl.do_upper_left  = 1;
 		  curl.do_upper_right = 0;
-		  curl.do_lower_left = 0;
+		  curl.do_lower_left  = 0;
 		  curl.do_lower_right = 0;
 		  break;
 		case 4:
-		  curl.do_upper_left = 0;
+		  curl.do_upper_left  = 0;
 		  curl.do_upper_right = 1;
-		  curl.do_lower_left = 0;
+		  curl.do_lower_left  = 0;
 		  curl.do_lower_right = 0;
 		  break;
 		default:
@@ -364,44 +362,42 @@ run (gchar      *name,
  *   +-------------------------+----------------------+
  */
 
-static gint
+static inline gboolean
 left_of_diagl (gdouble x,
 	       gdouble y)
 {
   return (x < (sel_width + (y - sel_height) * diagl_slope));
 }
 
-static gint
+static inline gboolean
 right_of_diagr (gdouble x,
 		gdouble y)
 {
   return (x > (sel_width + (y - sel_height) * diagr_slope));
 }
 
-static gint
+static inline gboolean
 below_diagb (gdouble x,
 	     gdouble y)
 {
   return (y < (right_tangent.y + (x - right_tangent.x) * diagb_slope));
 }
 
-static gint
+static inline gboolean
 right_of_diagm (gdouble x,
 		gdouble y)
 {
   return (x > (sel_width + (y - sel_height) * diagm_slope));
 }
 
-static gint
+static inline gboolean
 inside_circle (gdouble x,
 	       gdouble y)
 {
-  gdouble dx, dy;
+  x -= center.x;
+  y -= center.y;
 
-  dx = x - center.x;
-  dy = y - center.y;
-
-  return (sqrt (dx * dx + dy * dy) <= radius);
+  return x * x + y * y <= radius * radius;
 }
 
 static void
@@ -482,19 +478,11 @@ dialog_toggle_update (GtkWidget *widget,
       break;
     }
 
-  if (curl.do_upper_left + curl.do_upper_right +
-      curl.do_lower_left + curl.do_lower_right == 1 &&
-      curl.do_horizontal + curl.do_vertical == 1)
-    {
-      pixmapindex = (curl.do_lower_left + curl.do_upper_right * 2 +
-                     curl.do_upper_left * 3 + curl.do_horizontal * 4);
+  pixmapindex = (curl.do_lower_left + curl.do_upper_right * 2 +
+		 curl.do_upper_left * 3 + curl.do_horizontal * 4);
 
-      if (pixmapindex < 0 || pixmapindex > 7)
-	pixmapindex = 0;
-
-      gimp_pixmap_set (GIMP_PIXMAP (curl_pixmap_widget),
-                       curl_pixmaps[pixmapindex]);
-    }
+  gimp_pixmap_set (GIMP_PIXMAP (curl_pixmap_widget),
+		   curl_pixmaps[pixmapindex]);
 }
 
 static gint
@@ -714,11 +702,7 @@ init_calculation (void)
   while (drawable_position < nlayers &&
 	 image_layers[drawable_position] != drawable->drawable_id)
     drawable_position++;
-  if (drawable_position >= nlayers)
-    {
-      fprintf (stderr, "Fatal error: drawable not found in layer stack.\n");
-      drawable_position = 0;
-   }
+
   /* Get the bounds of the active selection */
   gimp_drawable_mask_bounds (drawable->drawable_id,
 			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
@@ -806,31 +790,6 @@ do_curl_effect (void)
   gimp_layer_set_offsets (curl_layer->drawable_id, sel_x1 + x1, sel_y1 + y1);
   gimp_tile_cache_ntiles (2 * (curl_layer->width / gimp_tile_width () + 1));
 
-  /* Clear the newly created layer */
-  gimp_pixel_rgn_init (&dest_rgn, curl_layer,
-		       0, 0, true_sel_width, true_sel_height, TRUE, FALSE);
-  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      dest = dest_rgn.data;
-      for (y1 = dest_rgn.y; y1 < dest_rgn.y + dest_rgn.h; y1++)
-	{
-	  pp = dest;
-	  for (x1 = dest_rgn.x; x1 < dest_rgn.x + dest_rgn.w; x1++)
-	    {
-	      for (k = 0; k < dest_rgn.bpp; k++)
-		pp[k] = 0;
-	      pp += dest_rgn.bpp;
-	    }
-	  dest += dest_rgn.rowstride;
-	}
-    }
-
-  gimp_drawable_flush (curl_layer);
-  gimp_drawable_update (curl_layer->drawable_id,
-			0, 0, curl_layer->width, curl_layer->height);
-
   gimp_pixel_rgn_init (&dest_rgn, curl_layer,
 		       0, 0, true_sel_width, true_sel_height, TRUE, TRUE);
 
@@ -873,13 +832,17 @@ do_curl_effect (void)
 	      /* Map coordinates to get the curl correct... */
 	      if (curl.do_horizontal)
 		{
-		  x = (curl.do_lower_right || curl.do_lower_left) ? y1 : sel_width - 1 - y1;
-		  y = (curl.do_upper_left || curl.do_lower_left) ? x1 : sel_height - 1 - x1;
+		  x = ((curl.do_lower_right || curl.do_lower_left) ? 
+                       y1 : sel_width - 1 - y1);
+		  y = ((curl.do_upper_left  || curl.do_lower_left) ? 
+                       x1 : sel_height - 1 - x1);
 		}
 	      else
 		{
-		  x = (curl.do_upper_right || curl.do_lower_right) ? x1 : sel_width - 1 - x1;
-		  y = (curl.do_upper_left || curl.do_upper_right) ? y1 : sel_height - 1 - y1;
+		  x = ((curl.do_upper_right || curl.do_lower_right) ? 
+                       x1 : sel_width - 1 - x1);
+		  y = ((curl.do_upper_left  || curl.do_upper_right) ? 
+                       y1 : sel_height - 1 - y1);
 		}
 	      if (left_of_diagl (x, y))
 		{ /* uncurled region */
@@ -908,17 +871,21 @@ do_curl_effect (void)
 		      factor = angle / alpha;
 		      for (k = 0; k < alpha_pos; k++)
 			pp[k] = 0;
-		      pp[alpha_pos] = curl.do_shade_under ? (guchar) ((float) 255 * (float) factor) : 0;
+		      pp[alpha_pos] = (curl.do_shade_under ? 
+                                       (guchar) ((float) 255 * (float) factor) :
+                                       0);
 		    }
 		  else
 		    {
 		      /* On the curl */
 		      if (curl.do_curl_gradient)
 			{
-			  /* Calculate position in Gradient (0 <= intensity <= 1) */
-			  intensity = (angle/alpha) + sin(G_PI*2 * angle/alpha)*0.075;
+			  /* Calculate position in Gradient */
+                          intensity = 
+                            (angle/alpha) + sin (G_PI*2 * angle/alpha) * 0.075;
 			  /* Check boundaries */
-			  intensity = (intensity < 0 ? 0 : (intensity > 1 ? 1 : intensity ));
+			  intensity = (intensity < 0 ? 
+                                       0 : (intensity > 1 ? 1 : intensity ));
 			  gradsamp = &grad_samples[((guint) (intensity * NGRADSAMPLES)) * dest_rgn.bpp];
 			  if (color_image)
 			    {
@@ -928,20 +895,22 @@ do_curl_effect (void)
 			    }
 			  else 
 			    pp[0] = gradsamp[0];
-			  pp[alpha_pos] = (guchar) ((double) gradsamp[alpha_pos] * (1 - intensity*(1-curl.do_curl_opacity)));
+
+			  pp[alpha_pos] = (guchar) ((double) gradsamp[alpha_pos] * (1.0 - intensity * (1.0 - curl.do_curl_opacity)));
 			}
 		      else
 			{
 			  intensity = pow (sin (G_PI * angle / alpha), 1.5);
 			  if (color_image)
 			    {
-			      pp[0] = (intensity * back_color[0] + (1 - intensity) * fore_color[0]);
-			      pp[1] = (intensity * back_color[1] + (1 - intensity) * fore_color[1]);
-			      pp[2] = (intensity * back_color[2] + (1 - intensity) * fore_color[2]);
+			      pp[0] = (intensity * back_color[0] + (1.0 - intensity) * fore_color[0]);
+			      pp[1] = (intensity * back_color[1] + (1.0 - intensity) * fore_color[1]);
+			      pp[2] = (intensity * back_color[2] + (1.0 - intensity) * fore_color[2]);
 			    }
 			  else
 			    pp[0] = (intensity * back_grayval + (1 - intensity) * fore_grayval);
-			  pp[alpha_pos] = (guchar) ((double) 255 * (1 - intensity*(1-curl.do_curl_opacity)));
+
+			  pp[alpha_pos] = (guchar) ((double) 255.99 * (1.0 - intensity * (1.0 - curl.do_curl_opacity)));
 			}
 		    }
 		}
@@ -959,8 +928,7 @@ do_curl_effect (void)
 			0, 0, curl_layer->width, curl_layer->height);
   gimp_drawable_detach (curl_layer);
 
-  if (grad_samples != NULL)
-    g_free (grad_samples);
+  g_free (grad_samples);
 }
 
 /************************************************/
@@ -986,8 +954,7 @@ clear_curled_region (void)
 		       sel_x1, sel_y1, true_sel_width, true_sel_height,
 		       TRUE, TRUE);
   alpha_pos = dest_rgn.bpp - 1;
-  if (dest_rgn.bpp != src_rgn.bpp)
-    fprintf (stderr, "WARNING: src_rgn.bpp != dest_rgn.bpp!\n");
+
   for (pr = gimp_pixel_rgns_register (2, &dest_rgn, &src_rgn);
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
@@ -1008,8 +975,10 @@ clear_curled_region (void)
 		}
 	      else
 		{
-		  x = (curl.do_upper_right || curl.do_lower_right) ? x1 - sel_x1 : sel_width - 1 - (x1 - sel_x1);
-		  y = (curl.do_upper_left || curl.do_upper_right) ? y1 - sel_y1 : sel_height - 1 - (y1 - sel_y1);
+		  x = ((curl.do_upper_right || curl.do_lower_right) ? 
+                       x1 - sel_x1 : sel_width - 1 - (x1 - sel_x1));
+		  y = ((curl.do_upper_left || curl.do_upper_right) ? 
+                       y1 - sel_y1 : sel_height - 1 - (y1 - sel_y1));
 		}
 	      for (i = 0; i < alpha_pos; i++)
 		pp[i] = sp[i];
@@ -1034,6 +1003,7 @@ clear_curled_region (void)
       progress += dest_rgn.w * dest_rgn.h;
       gimp_progress_update ((double) progress / (double) max_progress);
     }
+
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id,
@@ -1045,7 +1015,7 @@ static void
 page_curl (void)
 {
   gimp_undo_push_group_start (image_id);
-  gimp_progress_init ( _("Page Curl..."));
+  gimp_progress_init (_("Page Curl..."));
   init_calculation ();
   do_curl_effect ();
   clear_curled_region ();
@@ -1078,6 +1048,7 @@ get_samples (GimpDrawable *drawable)
     {
       b_samp = &b_samples[i * bpp];
       f_samp = &f_samples[i * 4];
+
       if (color)
         for (j = 0; j < 3; j++)
           b_samp[j] = f_samp[j] * 255;
