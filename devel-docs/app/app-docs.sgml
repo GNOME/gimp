@@ -22,7 +22,7 @@
     <xi:include href="xml/batch.xml"/>
     <xi:include href="xml/errors.xml"/>
     <xi:include href="xml/gimp-intl.xml"/>
-    <xi:include href="xml/libgimp_glue.xml"/>
+    <xi:include href="xml/units.xml"/>
   </part>
 
   <part id="app-paint-funcs-part">

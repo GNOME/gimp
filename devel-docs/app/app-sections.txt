@@ -1084,6 +1084,7 @@ gimp_object_set_name
 gimp_object_get_name
 gimp_object_set_name_safe
 gimp_object_name_changed
+gimp_object_name_free
 gimp_object_name_collate
 gimp_object_get_memsize
 gimp_g_object_get_memsize
@@ -4094,6 +4095,7 @@ GIMP_IMAGE_EDITOR_GET_CLASS
 
 <SECTION>
 <FILE>gimpimageview</FILE>
+GimpRaiseDisplaysFunc
 <TITLE>GimpImageView</TITLE>
 GimpImageView
 gimp_image_view_new
@@ -4294,6 +4296,7 @@ gimp_preview_renderer_set_dot_for_dot
 gimp_preview_renderer_set_border_color
 gimp_preview_renderer_set_background
 gimp_preview_renderer_invalidate
+gimp_preview_renderer_unrealize
 gimp_preview_renderer_update
 gimp_preview_renderer_update_idle
 gimp_preview_renderer_remove_idle
@@ -4720,19 +4723,8 @@ N_
 </SECTION>
 
 <SECTION>
-<FILE>libgimp_glue</FILE>
-gimp_unit_get_number_of_units
-gimp_unit_get_number_of_built_in_units
-gimp_unit_new
-gimp_unit_get_deletion_flag
-gimp_unit_set_deletion_flag
-gimp_unit_get_factor
-gimp_unit_get_digits
-gimp_unit_get_identifier
-gimp_unit_get_symbol
-gimp_unit_get_abbreviation
-gimp_unit_get_singular
-gimp_unit_get_plural
+<FILE>units</FILE>
+units_init
 </SECTION>
 
 <SECTION>
@@ -5703,12 +5695,14 @@ gimp_item_linked_transform
 
 <SECTION>
 <FILE>gimpitem-preview</FILE>
+<TITLE>GimpItem-preview</TITLE>
 gimp_item_get_preview_size
 gimp_item_get_popup_size
 </SECTION>
 
 <SECTION>
 <FILE>gimppalette-import</FILE>
+<TITLE>GimpPalette-import</TITLE>
 gimp_palette_import_from_gradient
 gimp_palette_import_from_image
 gimp_palette_import_from_indexed_image
@@ -5760,7 +5754,6 @@ gimp_marshal_VOID__OBJECT
 gimp_marshal_VOID__OBJECT_INT
 gimp_marshal_VOID__OBJECT_POINTER
 gimp_marshal_VOID__POINTER
-gimp_marshal_VOID__POINTER_BOOLEAN
 gimp_marshal_VOID__STRING_FLAGS
 gimp_marshal_VOID__VOID
 </SECTION>
@@ -5868,11 +5861,11 @@ channels_menu_update
 <SECTION>
 <FILE>color-history</FILE>
 COLOR_HISTORY_SIZE
+color_history_save
+color_history_restore
 color_history_add
 color_history_set
 color_history_get
-color_history_add_from_rc
-color_history_write
 </SECTION>
 
 <SECTION>
@@ -6223,6 +6216,7 @@ themes_init
 themes_exit
 themes_list_themes
 themes_get_theme_dir
+themes_get_theme_file
 themes_apply_theme
 </SECTION>
 
@@ -6261,6 +6255,7 @@ image_menu_update
 images_raise_views_cmd_callback
 images_new_view_cmd_callback
 images_delete_image_cmd_callback
+images_raise_views
 </SECTION>
 
 <SECTION>

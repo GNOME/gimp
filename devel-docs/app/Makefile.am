@@ -70,7 +70,7 @@ GTKDOC_LIBS = \
         $(top_builddir)/app/app_procs.o					\
         $(top_builddir)/app/batch.o					\
         $(top_builddir)/app/errors.o					\
-        $(top_builddir)/app/libgimp_glue.o				\
+        $(top_builddir)/app/units.o					\
         $(top_builddir)/app/config/libappconfig.a			\
         $(top_builddir)/app/gui/libappgui.a				\
         $(top_builddir)/app/display/libappdisplay.a			\
