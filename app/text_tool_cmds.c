@@ -55,7 +55,7 @@ text_xlfd_insert_size (gchar    *fontname,
   if (antialias)
     size *= SUPERSAMPLE;
 
-  if (metric == PIXELS)
+  if (metric == POINTS)
     size *= 10;
 
   sprintf (buffer, "%d", (int) size);
