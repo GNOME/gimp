@@ -21,6 +21,7 @@
 #include <stdlib.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -95,6 +96,9 @@ static void     gimp_transform_tool_motion         (GimpTool          *tool,
                                                     GimpCoords        *coords,
                                                     guint32            time,
                                                     GdkModifierType    state,
+                                                    GimpDisplay       *gdisp);
+static void     gimp_transform_tool_key_press      (GimpTool          *tool,
+                                                    GdkEventKey       *kevent,
                                                     GimpDisplay       *gdisp);
 static void     gimp_transform_tool_modifier_key   (GimpTool          *tool,
                                                     GdkModifierType    key,
@@ -193,6 +197,7 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   tool_class->button_press   = gimp_transform_tool_button_press;
   tool_class->button_release = gimp_transform_tool_button_release;
   tool_class->motion         = gimp_transform_tool_motion;
+  tool_class->key_press      = gimp_transform_tool_key_press;
   tool_class->modifier_key   = gimp_transform_tool_modifier_key;
   tool_class->oper_update    = gimp_transform_tool_oper_update;
   tool_class->cursor_update  = gimp_transform_tool_cursor_update;
@@ -491,6 +496,36 @@ gimp_transform_tool_motion (GimpTool        *tool,
   tr_tool->lasty = tr_tool->cury;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+}
+
+#define RESPONSE_RESET 1
+
+static void
+gimp_transform_tool_key_press (GimpTool    *tool,
+                               GdkEventKey *kevent,
+                               GimpDisplay *gdisp)
+{
+  GimpTransformTool *trans_tool = GIMP_TRANSFORM_TOOL (tool);
+  GimpDrawTool      *draw_tool = GIMP_DRAW_TOOL (tool);
+
+  if (gdisp == draw_tool->gdisp)
+    {
+      switch (kevent->keyval)
+        {
+          case GDK_KP_Enter:
+          case GDK_Return:
+            gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, trans_tool);
+            break;
+
+          case GDK_Delete:
+          case GDK_BackSpace:
+            gimp_transform_tool_response (NULL, RESPONSE_RESET, trans_tool);
+            break;
+
+          default:
+            break;
+        }
+    }
 }
 
 static void
@@ -1241,8 +1276,6 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
       break;
     }
 }
-
-#define RESPONSE_RESET 1
 
 static void
 gimp_transform_tool_dialog (GimpTransformTool *tr_tool)

@@ -1,5 +1,12 @@
 2004-06-12  Simon Budig  <simon@gimp.org>
 
+	* app/tools/gimptransformtool.c: Make Enter/Return apply the
+	transformation, Backspace/Delete resets the transformation.
+
+	* app/tools/gimpcroptool.c: Simplify the key_press callback.
+
+2004-06-12  Simon Budig  <simon@gimp.org>
+
 	* app/tools/gimpcroptool.c: Make the Enter/Return key do
 	the crop action.
 

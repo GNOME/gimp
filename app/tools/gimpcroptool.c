@@ -547,14 +547,7 @@ gimp_crop_tool_key_press (GimpTool    *tool,
       break;
     case GDK_KP_Enter:
     case GDK_Return:
-      crop_tool_crop_image (gdisp->gimage,
-                            GIMP_CONTEXT (options),
-                            crop->x1, crop->y1,
-                            crop->x2, crop->y2,
-                            options->layer_only,
-                            options->crop_mode);
-      /*  Finish the tool  */
-      crop_response (NULL, GTK_RESPONSE_CANCEL, crop);
+      crop_response (NULL, options->crop_mode, crop);
       return;
     default:
       return;
