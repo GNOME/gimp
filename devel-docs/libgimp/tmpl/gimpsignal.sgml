@@ -1,0 +1,44 @@
+<!-- ##### SECTION Title ##### -->
+gimpsignal
+
+<!-- ##### SECTION Short_Description ##### -->
+Portable signal handling.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### MACRO gimp_signal_syscallrestart ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+
+
+<!-- ##### USER_FUNCTION GimpRetSigType ##### -->
+<para>
+
+</para>
+
+@Param1: 
+
+
+<!-- ##### FUNCTION gimp_signal_private ##### -->
+<para>
+
+</para>
+
+@signum: 
+@gimp_sighandler: 
+@sa_flags: 
+@Returns: 
+
+
