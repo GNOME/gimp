@@ -1,7 +1,4 @@
 /*
- *
- * BETA7 (this line will be removed after a formal release)
- *
  * Multiple-image Network Graphics (MNG) plug-in for The GIMP -- an image
  * manipulation program
  *
@@ -296,39 +293,123 @@ parse_ms_tag_from_layer_name (const gchar *str)
 }
 
 
-/* Spins the color map (palette) so that the background color
- * is in the right place (index 0 -- expected by some applications)
- * in the palette. */
+/* Try to find a colour in the palette which isn't actually 
+ * used in the image, so that we can use it as the transparency 
+ * index. Taken from png.c */
+static gint
+find_unused_ia_colour (guchar *pixels,
+                       gint    numpixels,
+                       gint   *colors)
+{
+  gint     i;
+  gboolean ix_used[256];
+  gboolean trans_used = FALSE;
+
+  for (i = 0; i < *colors; i++)
+    {
+      ix_used[i] = FALSE;
+    }
+
+  for (i = 0; i < numpixels; i++)
+    {
+      /* If alpha is over a threshold, the colour index in the 
+       * palette is taken. Otherwise, this pixel is transparent. */
+      if (pixels[i * 2 + 1] > 127)
+        ix_used[pixels[i * 2]] = TRUE;
+      else
+        trans_used = TRUE;
+    }
+
+  /* If there is no transparency, ignore alpha. */
+  if (trans_used == FALSE)
+    return -1;
+
+  for (i = 0; i < *colors; i++)
+    {
+      if (ix_used[i] == FALSE)
+        {
+          return i;
+        }
+    }
+
+  /* Couldn't find an unused colour index within the number of
+     bits per pixel we wanted.  Will have to increment the number
+     of colours in the image and assign a transparent pixel there. */
+  if ((*colors) < 256)
+    {
+      (*colors)++;
+      return ((*colors) - 1);
+    }
+
+  return (-1);
+}
+
+
+/* Spins the color map (palette) putting the transparent color at
+ * index 0 if there is space. If there isn't any space, warn the user
+ * and forget about transparency.
+ */
 
 static void
-respin_cmap (png_structp png_ptr,
-	     png_infop   png_info_ptr,
-	     gint32      image_id)
+respin_cmap (png_structp  png_ptr,
+	     png_infop    png_info_ptr,
+             guchar       *remap,
+	     gint32       image_id,
+	     GimpDrawable *drawable)
 {
-  GimpRGB bgcolor;
   static guchar trans[] = { 0 };
-  static guchar after[3 * 256];
   gint colors;
   guchar *before;
+  gint transparent;
+  gint cols, rows;
+  GimpPixelRgn pixel_rgn;
+  guchar *pixels;
 
 
   before = gimp_image_get_cmap (image_id, &colors);
 
-  if (colors < 256)
-    {
-      memcpy ((void *) (after + 3), (const void *) before,
-	      (size_t) colors * 3);
+  cols = drawable->width;
+  rows = drawable->height;
 
-      gimp_palette_get_background (&bgcolor);
-      gimp_rgb_get_uchar (&bgcolor, after + 0, after + 1, after + 2);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
+                       drawable->width, drawable->height, FALSE, FALSE);
+
+  pixels = (guchar *) g_malloc (drawable->width * drawable->height * 2);
+
+  gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0,
+                           drawable->width, drawable->height);
+
+  transparent = find_unused_ia_colour (pixels,
+                                       drawable->width * drawable->height,
+                                       &colors);
+
+  if (transparent != 1)
+    {
+      png_color palette[256];
+      gint i;
+
       png_set_tRNS (png_ptr, png_info_ptr, (png_bytep) trans, 1, NULL);
 
-      png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) after,
-		    (int) colors + 1);
+      remap[0] = transparent;
+      remap[transparent] = 0;
+
+      for (i = 0; i < colors; i++)
+        {
+          palette[i].red = before[3 * remap[i]];
+          palette[i].green = before[3 * remap[i] + 1];
+          palette[i].blue = before[3 * remap[i] + 2];
+        }
+
+      png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) palette,
+		    colors);
     }
   else
-    png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) before, (int) colors);
+    {
+      g_message ("Couldn't losslessly save transparency, so saving opacity instead.");
+      png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) before, colors);
+    }
 }
+
 
 static gint
 mng_save_image (const gchar *filename,
@@ -378,6 +459,7 @@ mng_save_image (const gchar *filename,
   unsigned long chunksize;
   unsigned char chunkname[5];
   guchar *chunkbuffer;
+  guchar layer_remap[256];
 
   long chunkwidth;
   long chunkheight;
@@ -621,6 +703,9 @@ mng_save_image (const gchar *filename,
       layer_cols = layer_drawable->width;
       gimp_drawable_offsets (layers[i], &layer_offset_x, &layer_offset_y);
 
+      for (j = 0; j < 256; j++)
+        layer_remap[j] = j;
+
       switch (layer_drawable_type)
 	{
 	case GIMP_RGB_IMAGE:
@@ -833,7 +918,7 @@ mng_save_image (const gchar *filename,
 	  break;
 	case GIMP_INDEXEDA_IMAGE:
 	  png_info_ptr->color_type = PNG_COLOR_TYPE_PALETTE;
-	  respin_cmap (png_ptr, png_info_ptr, image_id);
+	  respin_cmap (png_ptr, png_info_ptr, layer_remap, image_id, layer_drawable);
 	  break;
 	default:
 	  g_warning ("This can't be!\n");
@@ -891,7 +976,7 @@ mng_save_image (const gchar *filename,
 
 		      for (k = 0; k < layer_cols; k++)
 			fixed[k] =
-			  ((fixed[k * 2 + 1] > 127) ? (fixed[k * 2] + 1) : 0);
+			  ((fixed[k * 2 + 1] > 127) ? layer_remap[fixed[k * 2]] : 0);
 		    }
 		}
 	      else
@@ -1148,6 +1233,7 @@ mng_save_dialog (gint32 image_id)
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label (_("Save Background Color"));
+  gtk_widget_set_sensitive (toggle, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),
@@ -1168,6 +1254,7 @@ mng_save_dialog (gint32 image_id)
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label (_("Save Resolution"));
+  gtk_widget_set_sensitive (toggle, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),
@@ -1220,6 +1307,7 @@ mng_save_dialog (gint32 image_id)
 				  GINT_TO_POINTER (CHUNKS_JNG), NULL,
 				  NULL);
 
+  gtk_widget_set_sensitive (menu, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Default Chunks Type:"), 1.0, 0.5,
                              menu, 1, FALSE);
@@ -1267,6 +1355,7 @@ mng_save_dialog (gint32 image_id)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_widget_set_sensitive (scale, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              _("JPEG Compression Quality:"), 1.0, 1.0,
                              scale, 1, FALSE);
@@ -1283,6 +1372,7 @@ mng_save_dialog (gint32 image_id)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_widget_set_sensitive (scale, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
                              _("JPEG Smoothing Factor:"), 1.0, 1.0,
                              scale, 1, FALSE);
