@@ -1,3 +1,9 @@
+2004-02-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c: merged some small fixes/changes
+	from my HEAD tree so the file chooser patch becomes smaller.
+
 2004-02-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.c (gimp_imagefile_save_thumb): peek the

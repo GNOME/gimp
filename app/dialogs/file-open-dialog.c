@@ -57,12 +57,14 @@ static GtkWidget * file_open_dialog_create     (Gimp            *gimp,
 static void        file_open_dialog_response   (GtkWidget       *open_dialog,
                                                 gint             response_id,
                                                 Gimp            *gimp);
-static void        file_open_dialog_open_image (GtkWidget       *open_dialog,
+static gboolean    file_open_dialog_open_image (GtkWidget       *open_dialog,
                                                 Gimp            *gimp,
                                                 const gchar     *uri,
                                                 const gchar     *entered_filename,
                                                 PlugInProcDef   *load_proc);
 
+
+/*  private variables  */
 
 static GtkWidget *fileload  = NULL;
 
@@ -81,6 +83,7 @@ file_open_dialog_show (Gimp            *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
+  g_return_if_fail (parent == NULL || GTK_IS_WIDGET (parent));
 
   if (! fileload)
     fileload = file_open_dialog_create (gimp, menu_factory);
@@ -210,11 +213,14 @@ file_open_dialog_response (GtkWidget *open_dialog,
 
   gtk_widget_set_sensitive (open_dialog, FALSE);
 
-  file_open_dialog_open_image (open_dialog,
-                               gimp,
-                               uri,
-                               entered_filename,
-                               GIMP_FILE_DIALOG (open_dialog)->file_proc);
+  if (file_open_dialog_open_image (open_dialog,
+                                   gimp,
+                                   uri,
+                                   entered_filename,
+                                   GIMP_FILE_DIALOG (open_dialog)->file_proc))
+    {
+      file_dialog_hide (open_dialog);
+    }
 
   g_free (uri);
 
@@ -228,11 +234,14 @@ file_open_dialog_response (GtkWidget *open_dialog,
 	{
           uri = g_filename_to_uri (selections[i], NULL, NULL);
 
-	  file_open_dialog_open_image (open_dialog,
-                                       gimp,
-                                       uri,
-                                       uri,
-                                       GIMP_FILE_DIALOG (open_dialog)->file_proc);
+	  if (file_open_dialog_open_image (open_dialog,
+                                           gimp,
+                                           uri,
+                                           uri,
+                                           GIMP_FILE_DIALOG (open_dialog)->file_proc))
+            {
+              file_dialog_hide (open_dialog);
+            }
 
           g_free (uri);
 	}
@@ -243,7 +252,7 @@ file_open_dialog_response (GtkWidget *open_dialog,
   gtk_widget_set_sensitive (open_dialog, TRUE);
 }
 
-static void
+static gboolean
 file_open_dialog_open_image (GtkWidget     *open_dialog,
                              Gimp          *gimp,
                              const gchar   *uri,
@@ -263,13 +272,11 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
 
   if (gimage)
     {
-      file_dialog_hide (open_dialog);
+      return TRUE;
     }
   else if (status != GIMP_PDB_CANCEL)
     {
-      gchar *filename;
-
-      filename = file_utils_uri_to_utf8_filename (uri);
+      gchar *filename = file_utils_uri_to_utf8_filename (uri);
 
       g_message (_("Opening '%s' failed:\n\n%s"),
                  filename, error->message);
@@ -277,4 +284,6 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
 
       g_free (filename);
     }
+
+  return FALSE;
 }

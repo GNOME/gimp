@@ -53,7 +53,7 @@
 
 static GtkWidget * file_save_dialog_create      (Gimp            *gimp,
                                                  GimpMenuFactory *menu_factory);
-static void        file_save_response_callback  (GtkWidget       *save_dialog,
+static void        file_save_dialog_response    (GtkWidget       *save_dialog,
                                                  gint             response_id,
                                                  Gimp            *gimp);
 static void        file_save_overwrite          (GtkWidget       *save_dialog,
@@ -71,6 +71,8 @@ static void        file_save_dialog_save_image  (GtkWidget       *save_dialog,
                                                  gboolean         set_image_clean);
 
 
+/*  private variables  */
+
 static GtkWidget *filesave = NULL;
 
 
@@ -85,6 +87,7 @@ file_save_dialog_show (GimpImage       *gimage,
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
+  g_return_if_fail (parent == NULL || GTK_IS_WIDGET (parent));
 
   if (! gimp_image_active_drawable (gimage))
     return;
@@ -190,16 +193,16 @@ file_save_dialog_create (Gimp            *gimp,
                                    save_dialog);
 
   g_signal_connect (save_dialog, "response",
-                    G_CALLBACK (file_save_response_callback),
+                    G_CALLBACK (file_save_dialog_response),
                     gimp);
 
   return save_dialog;
 }
 
 static void
-file_save_response_callback (GtkWidget *save_dialog,
-                             gint       response_id,
-                             Gimp      *gimp)
+file_save_dialog_response (GtkWidget *save_dialog,
+                           gint       response_id,
+                           Gimp      *gimp)
 {
   GtkFileSelection *fs;
   const gchar      *filename;
@@ -287,27 +290,25 @@ file_save_overwrite (GtkWidget   *save_dialog,
   overwrite_data->raw_filename = g_strdup (raw_filename);
 
   filename = file_utils_uri_to_utf8_filename (uri);
-
   message = g_strdup_printf (_("File '%s' exists.\n"
                                "Overwrite it?"), filename);
-
   g_free (filename);
 
   query_box = gimp_query_boolean_box (_("File Exists!"),
                                       save_dialog,
-				      gimp_standard_help_func,
-				      GIMP_HELP_FILE_SAVE_OVERWRITE,
-				      GIMP_STOCK_QUESTION,
-				      message,
-				      GTK_STOCK_YES, GTK_STOCK_NO,
-				      NULL, NULL,
-				      file_save_overwrite_callback,
-				      overwrite_data);
+                                      gimp_standard_help_func,
+                                      GIMP_HELP_FILE_SAVE_OVERWRITE,
+                                      GIMP_STOCK_QUESTION,
+                                      message,
+                                      GTK_STOCK_YES, GTK_STOCK_NO,
+                                      NULL, NULL,
+                                      file_save_overwrite_callback,
+                                      overwrite_data);
 
   g_free (message);
 
   gtk_window_set_transient_for (GTK_WINDOW (query_box),
-				GTK_WINDOW (save_dialog));
+                                GTK_WINDOW (save_dialog));
 
   gtk_widget_set_sensitive (save_dialog, FALSE);
 
@@ -365,9 +366,7 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
   if (status != GIMP_PDB_SUCCESS &&
       status != GIMP_PDB_CANCEL)
     {
-      gchar *filename;
-
-      filename = file_utils_uri_to_utf8_filename (uri);
+      gchar *filename = file_utils_uri_to_utf8_filename (uri);
 
       g_message (_("Saving '%s' failed:\n\n%s"),
                  filename, error->message);
