@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "POT-Creation-Date: 2000-10-19 16:30-0200\n"
-"PO-Revision-Date: 2000-09-26 17:20+0300\n"
+"PO-Revision-Date: 2000-10-24 10:20-0300\n"
 "Last-Translator: Marcia Norie Nakaza <norie@conectiva.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -830,7 +830,6 @@ msgid "High Quality Preview"
 msgstr "Pré-visualização em tempo real"
 
 #: plug-ins/Lighting/lighting_ui.c:465
-#, fuzzy
 msgid "Enable/disable high quality preview"
 msgstr "Habilitar/desabilitar pré-visualização de alta qualidade"
 
@@ -1023,7 +1022,6 @@ msgid "Bumpmap Settings"
 msgstr "Configurações de mapa de saliência"
 
 #: plug-ins/Lighting/lighting_ui.c:907
-#, fuzzy
 msgid "Enable Bump Mapping"
 msgstr "Usar mapeamento de saliência"
 
@@ -1085,12 +1083,10 @@ msgid "Environment Settings"
 msgstr "Configurações de ambiente"
 
 #: plug-ins/Lighting/lighting_ui.c:1018
-#, fuzzy
 msgid "Enable Environment Mapping"
-msgstr "Usar mapeamento de ambiente"
+msgstr "Habilitar mapeamento de ambiente"
 
 #: plug-ins/Lighting/lighting_ui.c:1028
-#, fuzzy
 msgid "Enable/disable environment-mapping (reflection)"
 msgstr "Habilitar/desabilitar mapeamento de ambiente (reflexão)"
 
@@ -1376,27 +1372,27 @@ msgid "Loading %s:"
 msgstr "Carregando %s:"
 
 #: plug-ins/bmp/bmpread.c:63
-#, fuzzy, c-format
+#, c-format
 msgid "%s: can't open \"%s\""
-msgstr "%s: não é possível abrir \"%s\"\n"
+msgstr "%s: não é possível abrir \"%s\""
 
 #: plug-ins/bmp/bmpread.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s is not a valid BMP file"
-msgstr "%s: arquivo BMP %s inválido\n"
+msgstr "%s: arquivo BMP %s inválido"
 
 #: plug-ins/bmp/bmpread.c:89 plug-ins/bmp/bmpread.c:107
 #: plug-ins/bmp/bmpread.c:127 plug-ins/bmp/bmpread.c:145
 #: plug-ins/bmp/bmpread.c:163 plug-ins/bmp/bmpread.c:168
 #: plug-ins/bmp/bmpread.c:173
-#, fuzzy, c-format
+#, c-format
 msgid "%s: error reading BMP file header"
-msgstr "%s: erro ao ler cabeçalho do arquivo BMP\n"
+msgstr "%s: erro ao ler cabeçalho do arquivo BMP"
 
 #: plug-ins/bmp/bmpread.c:246
-#, fuzzy, c-format
+#, c-format
 msgid "%s: bad colormap"
-msgstr "%s: mapa de cor inadequado\n"
+msgstr "%s: mapa de cor inadequado"
 
 #. Create an indexed-alpha layer to hold the image...
 #: plug-ins/bmp/bmpread.c:288 plug-ins/bmp/bmpread.c:295
@@ -1421,10 +1417,8 @@ msgid "Background"
 msgstr "Segundo plano"
 
 #: plug-ins/bmp/bmpwrite.c:104
-#, fuzzy
 msgid "BMP: cannot operate on unknown image types or alpha images"
-msgstr ""
-"bmp: não se pode usar em tipos de imagens desconhecidas ou imagens alfa"
+msgstr "BMP: não se pode usar em tipos de imagens desconhecidas ou imagens alfa"
 
 #: plug-ins/bmp/bmpwrite.c:167
 #, c-format
@@ -2258,9 +2252,8 @@ msgid "Bottom Edge"
 msgstr "Extremidade inferior"
 
 #: plug-ins/common/align_layers.c:511
-#, fuzzy
 msgid "Vertical Base:"
-msgstr "Vertical:"
+msgstr "Base vertical:"
 
 #: plug-ins/common/align_layers.c:516
 msgid "Ignore the Bottom Layer even if Visible"
@@ -4364,7 +4357,6 @@ msgid "Image Preview"
 msgstr "Pré-visualização da imagem"
 
 #: plug-ins/common/jpeg.c:1622
-#, fuzzy
 msgid "Preview (in image window)"
 msgstr "Pré-visualização (na janela de imagem)"
 
@@ -4377,12 +4369,10 @@ msgid "Smoothing:"
 msgstr "Uniformizando:"
 
 #: plug-ins/common/jpeg.c:1702
-#, fuzzy
 msgid "Restart markers"
 msgstr "Reinicializar marcadores"
 
 #: plug-ins/common/jpeg.c:1710
-#, fuzzy
 msgid "Restart frequency (rows):"
 msgstr "Reinicializar freqüência (filas):"
 
@@ -4395,9 +4385,8 @@ msgid "Progressive"
 msgstr "Progressivo"
 
 #: plug-ins/common/jpeg.c:1768
-#, fuzzy
 msgid "Force baseline JPEG (Readable by all decoders)"
-msgstr "Forçar linha-base JPEG (legível todos os decodificadores)"
+msgstr "Forçar linha-base JPEG (legível por todos os decodificadores)"
 
 #: plug-ins/common/jpeg.c:1790
 msgid "Subsampling:"
@@ -4416,12 +4405,10 @@ msgid "Floating-point"
 msgstr "Ponto flutuante"
 
 #: plug-ins/common/jpeg.c:1809
-#, fuzzy
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr "Método DCT (troca de velocidade/qualidade):"
 
 #: plug-ins/common/jpeg.c:1826
-#, fuzzy
 msgid "Image comments"
 msgstr "Comentários de imagem"
 
@@ -5159,9 +5146,8 @@ msgid "PNM: Premature end of file."
 msgstr "PNM: Finalização prematura do arquivo."
 
 #: plug-ins/common/pnm.c:452
-#, fuzzy
 msgid "PNM: Invalid file."
-msgstr "PNM: Valor máximo inválido."
+msgstr "PNM: arquivo inválido."
 
 #: plug-ins/common/pnm.c:465
 msgid "PNM: File not in a supported format."
@@ -5361,7 +5347,7 @@ msgstr "Manter taxa de aspecto"
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
-msgstr ""
+msgstr "Quando alternado, a imagem resultante será dimensionada [ara se adequar ao tamanho da janela sem alterar a proporção do aspecto."
 
 #. Unit
 #: plug-ins/common/ps.c:2885
@@ -7145,16 +7131,15 @@ msgstr "Hot Spot X:"
 #. mask file
 #: plug-ins/common/xbm.c:1248
 msgid "Mask File"
-msgstr "Tamanho de máscara:"
+msgstr "Arquivo de máscara:"
 
 #: plug-ins/common/xbm.c:1259
-#, fuzzy
 msgid "Write Extra Mask File"
-msgstr "Tamanho de máscara:"
+msgstr "Gravar arquivo de máscara extra"
 
 #: plug-ins/common/xbm.c:1270
 msgid "Mask File Extension:"
-msgstr "Extensão:"
+msgstr "Extensão de arquivo de máscara:"
 
 #: plug-ins/common/xpm.c:795
 msgid "Save as XPM"
@@ -8576,7 +8561,6 @@ msgid "Move Path"
 msgstr "Mover caminho"
 
 #: plug-ins/gap/gap_mov_dialog.c:503
-#, fuzzy
 msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
 msgstr ""
 "Mostrar quadro de pré-visualização com camada \n"
@@ -8646,11 +8630,8 @@ msgstr "Pré-visualizar quadro:"
 #. constrain
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:598
-#, fuzzy
 msgid "Frame to show when UpdPreview button is pressed"
-msgstr ""
-"quadro a ser mostrado quando botão de \n"
-"pré-visualização é acionado"
+msgstr "Quadro a ser mostrado quando botão de pré-visualização é acionado"
 
 #. the Layerstack scale_entry
 #. table col, row
@@ -8667,13 +8648,11 @@ msgstr "Pilha de camadas:"
 #. constrain
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:614
-#, fuzzy
 msgid ""
 "How to insert SrcLayer into the Dst. Frame's Layerstack\n"
 "0 means on top i.e. in front"
 msgstr ""
-"Como inserir camadas de origem na\n"
-"pilha de camadas do quadro de destino\n"
+"Como inserir camadas de origem na pilha de camadas do quadro de destino\n"
 "0 significa no topo, isto é, na frente"
 
 #. toggle force visibility
@@ -8683,7 +8662,7 @@ msgstr "Forçar particionamento?"
 
 #: plug-ins/gap/gap_mov_dialog.c:633
 msgid "Force visibility for all copied Src-Layers"
-msgstr ""
+msgstr "Forçar visibilidade para todas as camadas de origem copiadas"
 
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:639
@@ -8691,11 +8670,8 @@ msgid "Clip To Frame"
 msgstr "Fixar ao quadro"
 
 #: plug-ins/gap/gap_mov_dialog.c:646
-#, fuzzy
 msgid "Clip all copied Src-Layers at Frame Boundaries"
-msgstr ""
-"Fixar todas as camadas de origem\n"
-"copiadas nos limites dos quadros"
+msgstr "Fixar todas as camadas de origem copiadas nos limites dos quadros"
 
 #: plug-ins/gap/gap_mov_dialog.c:694
 msgid ""
@@ -8710,9 +8686,8 @@ msgid "Object on empty frames"
 msgstr "Detalhes do objeto"
 
 #: plug-ins/gap/gap_mov_dialog.c:791
-#, fuzzy
 msgid "Object on one frame"
-msgstr "Detalhes do objeto"
+msgstr "Objeto em um quadro"
 
 #: plug-ins/gap/gap_mov_dialog.c:792
 msgid "Exact Object on frames"
@@ -8728,7 +8703,7 @@ msgstr "Pré-visualização da imagem"
 
 #: plug-ins/gap/gap_mov_dialog.c:831
 msgid "Scale down size of the generated animated preview (in %)"
-msgstr ""
+msgstr "Diminui a escala da pré-visualização animada gerada (em %)"
 
 #: plug-ins/gap/gap_mov_dialog.c:839
 msgid "Framerate"
@@ -8736,26 +8711,28 @@ msgstr "Taxa de quadro:"
 
 #: plug-ins/gap/gap_mov_dialog.c:840
 msgid "Framerate to use in the animated preview in frames/sec"
-msgstr ""
+msgstr "Taxa de quadro para ser usada na pré-visualização animada em quadros/segundo"
 
 #: plug-ins/gap/gap_mov_dialog.c:854
 msgid "Copy to Video Buffer"
-msgstr ""
+msgstr "Copiar para buffer de vídeo"
 
 #: plug-ins/gap/gap_mov_dialog.c:855
 msgid ""
 "Save all single frames of animated preview to video buffer\n"
 "(configured in gimprc by video-paste-dir and video-paste-basename)"
 msgstr ""
+"Salvar todas os quadros únicos de pré-visualização animada para o \n"
+"buffer de vídeo (configurados em gimprc por video-paste-dir e\n"
+"video-paste-basename)"
 
 #: plug-ins/gap/gap_mov_dialog.c:860
 msgid "Move Path Animated Preview"
 msgstr "Mover pré-visualização de caminho"
 
 #: plug-ins/gap/gap_mov_dialog.c:906
-#, fuzzy
 msgid "Generate Animated Preview failed\n"
-msgstr "Criando imagem animada de camada..."
+msgstr "Falha ao gerar pré-visualização animada\n"
 
 #. filesel is already open
 #: plug-ins/gap/gap_mov_dialog.c:1345
@@ -8800,11 +8777,8 @@ msgid "Stepmode:"
 msgstr "Passo:"
 
 #: plug-ins/gap/gap_mov_dialog.c:2002
-#, fuzzy
 msgid "How to fetch the next SrcLayer at the next handled frame"
-msgstr ""
-"Como alcançar a próxima camada\n"
-"no próximo quadro de manipulação"
+msgstr "Como alcançar a próxima camada de origem no próximo quadro de manipulação"
 
 #. Source Image Handle menu
 #: plug-ins/gap/gap_mov_dialog.c:2008
@@ -8812,11 +8786,8 @@ msgid "Handle:"
 msgstr "Manipular:"
 
 #: plug-ins/gap/gap_mov_dialog.c:2026
-#, fuzzy
 msgid "How to place the SrcLayer at Controlpoint Coordinates"
-msgstr ""
-"Como substituir a camada de origem \n"
-"nas coordenadas do ponto de controle"
+msgstr "Como colocar a camada de origem nas coordenadas do ponto de controle"
 
 #. to avoid side effects while initialization
 #. the frame
@@ -8855,11 +8826,8 @@ msgstr "Largura da camada de origem de escala em porcentagem"
 #. constrain
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:2164
-#, fuzzy
 msgid "Scale SrcLayer's Height in percent"
-msgstr ""
-"Dimensionar altura da camada de origem \n"
-"em porcentagem"
+msgstr "Dimensionar altura da camada de origem em porcentagem"
 
 #. label text
 #. scalesize spinsize
@@ -8870,11 +8838,8 @@ msgstr ""
 #. constrain
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:2181
-#, fuzzy
 msgid "SrcLayer's Opacity in percent"
-msgstr ""
-"Opacidade da camada de origem\n"
-"em porcentagem"
+msgstr "Opacidade da camada de origem em porcentagem"
 
 #. Rotation
 #. table col, row
@@ -8913,13 +8878,14 @@ msgid ""
 "Fix Controlpoint to Keyframe number\n"
 "(0 == No Keyframe)"
 msgstr ""
+"Corrigir ponto de controle para número de Keyframe\n"
+"(0 == Nenhum Keyframe)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2292
 msgid "Add Point"
 msgstr "Adicionar ponto"
 
 #: plug-ins/gap/gap_mov_dialog.c:2300
-#, fuzzy
 msgid ""
 "Add Controlpoint at end\n"
 "(the last Point is duplicated)"
@@ -8933,14 +8899,10 @@ msgid "Show Path"
 msgstr "Exibir caminho"
 
 #: plug-ins/gap/gap_mov_dialog.c:2312
-#, fuzzy
 msgid ""
 "Show Path Lines and enable pick/drag with left button or move with right "
 "button"
-msgstr ""
-"Exibe linhas de caminho e habilita\n"
-"arrastar/soltar com o botão esquerdo\n"
-"ou move com o botão direito"
+msgstr "Exibe linhas de caminho e habilita arrastar/soltar com o botão esquerdo ou mover com o botão direito"
 
 #: plug-ins/gap/gap_mov_dialog.c:2322
 #: plug-ins/imagemap/imap_cmd_insert_point.c:57
@@ -8949,7 +8911,6 @@ msgid "Insert Point"
 msgstr "Inserir ponto"
 
 #: plug-ins/gap/gap_mov_dialog.c:2330
-#, fuzzy
 msgid ""
 "Insert Controlpoint\n"
 "(the current Point is duplicated)"
@@ -9004,11 +8965,8 @@ msgid "Clear Point"
 msgstr "Limpar ponto"
 
 #: plug-ins/gap/gap_mov_dialog.c:2408
-#, fuzzy
 msgid "Reset the current Controlpoint to default Values"
-msgstr ""
-"Restaurar o ponto de controle atual\n"
-"para os valores padrões"
+msgstr "Restaurar o ponto de controle atual para os valores padrões"
 
 #: plug-ins/gap/gap_mov_dialog.c:2412
 msgid "Clear All Points"
@@ -9018,7 +8976,7 @@ msgstr "Limpar ponto"
 msgid ""
 "Reset all Controlpoints to default Values but dont change the path (X/Y "
 "Values)"
-msgstr ""
+msgstr "Restaurar todos os pontos de controle para os valores padrões mas não alterar o caminho (valores X/Y)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2427
 msgid "Rotate Follow"
@@ -9029,6 +8987,8 @@ msgid ""
 "Set Rotation for all Controlpoints to follow the shape of the path.\n"
 "(Shift: use Rotation of contolpoint 1 as offset)"
 msgstr ""
+"Definir a rotação para todos os pontos de controle para seguir o formato\n"
+"do caminho. (Shift: use rotação do ponto de controle 1 como offset)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2445
 msgid "Delete All Points"
@@ -9059,7 +9019,7 @@ msgstr "Salvar pontos de controle no arquivo"
 msgid ""
 "\n"
 "Error: Keyframe %d at point [%d] higher or equal than last handled frame"
-msgstr ""
+msgstr "\nErro: Keyframe %d no ponto [%d] superior ou igual ao último quadro manuseado"
 
 #: plug-ins/gap/gap_mov_dialog.c:2959
 #, c-format
@@ -9068,20 +9028,23 @@ msgid ""
 "Error: Keyframe %d at point [%d] leaves not enough space (frames)\n"
 "for the previous controlpoints"
 msgstr ""
+"\n"
+"Erro: Keyframe %d no ponto [%d] não deixa espaço suficiente (quadros)\n"
+"para os pontos de controles anteriores"
 
 #: plug-ins/gap/gap_mov_dialog.c:2969
 #, c-format
 msgid ""
 "\n"
 "Error: Keyframe %d is not in sequence at point [%d]"
-msgstr ""
+msgstr "\nErro: Keyframe %d não está em seqüência no ponto [%d]"
 
 #: plug-ins/gap/gap_mov_dialog.c:2987
 #, c-format
 msgid ""
 "\n"
 "Error: controlpoint [%d] is out of handled framerange"
-msgstr ""
+msgstr "\nErro: ponto de controle [%d] está fora da faixa de quadros manuseados"
 
 #: plug-ins/gap/gap_mov_dialog.c:3001
 #, c-format
@@ -9090,6 +9053,9 @@ msgid ""
 "Error: more controlpoints (%d) than handled frames (%d)\n"
 "please reduce controlpoints or select more frames"
 msgstr ""
+"\n"
+"Erro: mais pontos de controle (%d) que os quadros manuseados (%d)\n"
+"diminua os pontos de controle ou selecione mais quadros"
 
 #: plug-ins/gap/gap_mov_dialog.c:3014
 msgid ""
@@ -9487,9 +9453,8 @@ msgstr "Cortar"
 
 #. menu_item paste before
 #: plug-ins/gap/gap_navigator_dialog.c:2941
-#, fuzzy
 msgid "Paste before"
-msgstr "Padrão"
+msgstr "Colar antes"
 
 #. menu_item copy
 #: plug-ins/gap/gap_navigator_dialog.c:2951
@@ -9504,7 +9469,7 @@ msgstr "Entrelace"
 #. menu_item copy
 #: plug-ins/gap/gap_navigator_dialog.c:2971
 msgid "Clear Video Buffer"
-msgstr ""
+msgstr "Limpar buffer de vídeo"
 
 #: plug-ins/gap/gap_navigator_dialog.c:2996
 msgid "Videoframes:"
@@ -10054,13 +10019,10 @@ msgid "<Image>/Filters/Render/Dynamic Text..."
 msgstr "<Image>/Filtros/Renderizar/Texto dinâmico..."
 
 #: plug-ins/gdyntext/gdyntext.c:231
-#, fuzzy
 msgid ""
 " Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
 "new layer creation."
-msgstr ""
-"A camada atual não é uma camada GDynText ou não possui canal alfa.\n"
-"  Forçando criação de nova camada.\n"
+msgstr "A camada atual não é uma camada GDynText ou não possui canal alfa. Forçando criação de nova camada."
 
 #: plug-ins/gdyntext/gdyntext.c:313 plug-ins/gdyntext/gdyntext.c:443
 msgid "GDynText Layer"
@@ -10071,9 +10033,8 @@ msgid "GIMP Dynamic Text"
 msgstr "Texto dinâmico Gimp"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:126
-#, fuzzy
 msgid "GDynText: Messages Window"
-msgstr "Janela de mensagens GDnytext"
+msgstr "GDnytext: Janela de mensagens"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:157
 msgid "GDynText: About ..."
@@ -10085,43 +10046,43 @@ msgstr "nenhuma"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:251
 msgid "bottom-left"
-msgstr "Esquerda inferior"
+msgstr "esquerda inferior"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:252
 msgid "bottom-center"
-msgstr "Esquerda inferior"
+msgstr "esquerda inferior"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:253
 msgid "bottom-right"
-msgstr "Direita inferior"
+msgstr "direita inferior"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:254
 msgid "middle-left"
-msgstr ""
+msgstr "esquerda central"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:255
 msgid "center"
-msgstr "Centro"
+msgstr "centro"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:256
 msgid "middle-right"
-msgstr ""
+msgstr "direita central"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:257
 msgid "top-left"
-msgstr "Esquerda superior"
+msgstr "esquerda superior"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:258
 msgid "top-center"
-msgstr "Centro"
+msgstr "centro superior"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:259
 msgid "top-right"
-msgstr "Direita superior"
+msgstr "direita superior"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:268
 msgid "GDynText"
-msgstr "Camada GDnytext"
+msgstr "GDnytext"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:304
 msgid "Toggle creation of a new layer"
@@ -10165,22 +10126,24 @@ msgstr "Alterna janela de mapa de caracteres"
 
 #. Layer Alignment
 #: plug-ins/gdyntext/gdyntext_ui.c:419
-#, fuzzy
 msgid ""
 "Layer\n"
 "Alignment"
-msgstr "Ajustar camada(s) ligada(s)"
+msgstr ""
+"Camada\n"
+"Alinhamento"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:427
 msgid "Set layer alignment"
 msgstr "Ajustar camada(s) ligada(s)"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:457
-#, fuzzy
 msgid ""
 "Line\n"
 "Spacing"
-msgstr "Espaçamento de linha"
+msgstr ""
+"Linha\n"
+"Espaçamento"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:479
 msgid "Set text rotation (degrees)"
@@ -10211,38 +10174,31 @@ msgid "GDynText: CharMap"
 msgstr "GDnytext: mapa de caracteres"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:930
-#, fuzzy
 msgid "GDynText: Load text"
 msgstr "GDnytext: carregar texto"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:975
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
-msgstr ""
-"O arquivo de aviso \"%s\" é maior que o comprimento de texto máximo "
-"permitido (%d)."
+msgstr "O arquivo de aviso \"%s\" é maior que o comprimento de texto máximo permitido (%d).\n"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:986
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening \"%s\"!\n"
-msgstr "Erro ao abrir \"%s\"!"
+msgstr "Erro ao abrir \"%s\"!\n"
 
 #: plug-ins/gdyntext/gdyntextcompat.c:119
-#, fuzzy, c-format
+#, c-format
 msgid ""
 " WARNING: GDynText is too old! A newer version is required to handle this "
 "layer. Get it from %s"
-msgstr ""
-"AVISO: GDyntext é antigo!\n"
-"Você pode perder alguns dados trocando este texto.\n"
-"Uma nova versão é necessária para manipular esta camada.\n"
-"Obter de "
+msgstr "AVISO: GDyntext é antigo! Uma nova versão é necessária para manipular esta camada. Obtê-la de %s"
 
 #: plug-ins/gdyntext/gdyntextcompat.c:172
-#, fuzzy, c-format
+#, c-format
 msgid " Upgrading old GDynText layer to %s."
-msgstr "Atualizando camada GDnytext antiga para"
+msgstr "Atualizando camada GDnytext antiga para %s."
 
 #: plug-ins/gdyntext/message_window.c:115
 msgid "Dismiss"
@@ -11775,7 +11731,7 @@ msgstr "<Sem título>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:752
 #: plug-ins/helpbrowser/helpbrowser.c:768
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "GIMP Help Browser Error.\n"
 "\n"
@@ -11784,7 +11740,8 @@ msgid ""
 msgstr ""
 "Erro no navegador de ajuda Gimp.\n"
 "\n"
-"Não foi possível encontrar meu diretório html raiz."
+"Não foi possível encontrar meu diretório html raiz.\n"
+"(%s)"
 
 #: plug-ins/helpbrowser/helpbrowser.c:784
 msgid "GIMP Help Browser"
@@ -12749,7 +12706,6 @@ msgid "Print Color Adjust"
 msgstr "Ajusta de cor na impressão"
 
 #: plug-ins/print/gimp_color_window.c:140
-#, fuzzy
 msgid "Set Defaults"
 msgstr "Restaurar para padrões"
 
@@ -12758,17 +12714,16 @@ msgid "Density:"
 msgstr "Densidade:"
 
 #: plug-ins/print/gimp_color_window.c:300
-#, fuzzy
 msgid "Dither Algorithm:"
-msgstr "Algoritmo:"
+msgstr "Algoritmo de mistura:"
 
 #.
 #. * Create the main dialog
 #.
 #: plug-ins/print/gimp_main_window.c:255
-#, fuzzy, c-format
+#, c-format
 msgid "%s -- Print v%s"
-msgstr "Imprimir v%s"
+msgstr "%s -- Imprimir v%s"
 
 #: plug-ins/print/gimp_main_window.c:264
 msgid ""
@@ -12800,17 +12755,15 @@ msgstr "Unidades"
 
 #: plug-ins/print/gimp_main_window.c:369
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #: plug-ins/print/gimp_main_window.c:420
-#, fuzzy
 msgid "Right Border:"
-msgstr "Borda:"
+msgstr "Borda direita:"
 
 #: plug-ins/print/gimp_main_window.c:443
-#, fuzzy
 msgid "Bottom Border:"
-msgstr "Extremidade inferior"
+msgstr "Borda inferior:"
 
 #: plug-ins/print/gimp_main_window.c:455
 msgid "Portrait"
@@ -12822,12 +12775,11 @@ msgstr "Paisagem"
 
 #: plug-ins/print/gimp_main_window.c:461
 msgid "Upside down"
-msgstr ""
+msgstr "Para baixo"
 
 #: plug-ins/print/gimp_main_window.c:464
-#, fuzzy
 msgid "Seascape"
-msgstr "Paisagem"
+msgstr "Paisagem marítima"
 
 #.
 #. *  Printer settings frame...
@@ -12856,9 +12808,8 @@ msgstr "Tipo ligação"
 #. * Scaling...
 #.
 #: plug-ins/print/gimp_main_window.c:540
-#, fuzzy
 msgid "Scaling"
-msgstr "Escala:"
+msgstr "Escala"
 
 #: plug-ins/print/gimp_main_window.c:580 plug-ins/print/gimp_main_window.c:589
 msgid "Scaling:"
@@ -12880,9 +12831,8 @@ msgstr "Ajustar escala de imagem"
 #. * Image type
 #.
 #: plug-ins/print/gimp_main_window.c:669
-#, fuzzy
 msgid "Image Settings"
-msgstr "Configurações de matiz"
+msgstr "Configurações de imagem"
 
 #: plug-ins/print/gimp_main_window.c:689
 msgid "Line Art"
@@ -12894,11 +12844,11 @@ msgstr "Segunda cor"
 
 #: plug-ins/print/gimp_main_window.c:711
 msgid "Photograph"
-msgstr ""
+msgstr "Fotografia"
 
 #: plug-ins/print/gimp_main_window.c:722
 msgid "Monochrome"
-msgstr ""
+msgstr "Monocromático"
 
 #: plug-ins/print/gimp_main_window.c:737
 msgid "Adjust Color"
@@ -12927,9 +12877,8 @@ msgstr "Configurar"
 #. * Printer driver option menu...
 #.
 #: plug-ins/print/gimp_main_window.c:853
-#, fuzzy
 msgid "Printer Model:"
-msgstr "Modo pintura:"
+msgstr "Modelo de impressora:"
 
 #.
 #. * PPD file...
@@ -12968,14 +12917,12 @@ msgid "<Image>/File/Print..."
 msgstr "<Image>/Arquivo/Imprimir..."
 
 #: plug-ins/print/print.c:241
-#, fuzzy
 msgid "<Image>/File/Print (Gtk)..."
-msgstr "<Image>/Arquivo/Imprimir..."
+msgstr "<Image>/Arquivo/Imprimir (Gtk)..."
 
 #: plug-ins/print/print.c:249
-#, fuzzy
 msgid "<Image>/File/Print (Gimp)..."
-msgstr "<Image>/Arquivo/Imprimir..."
+msgstr "<Image>/Arquivo/Imprimir (Gimp)..."
 
 #: plug-ins/rcm/rcm.c:118
 msgid "<Image>/Image/Colors/Colormap Rotation..."
@@ -13223,7 +13170,7 @@ msgid "Can't create working dir: %s"
 msgstr "Não é possível criar dir de trabalho: %s"
 
 #: plug-ins/xjt/xjt.c:1647
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open: %s"
 msgstr "Não é possível abrir: %s"
 
@@ -13239,9 +13186,9 @@ msgid "Error: Can't read XJT propertyfile %s"
 msgstr "Erro: Não é possível ler arquivo de propriedade %s XJT"
 
 #: plug-ins/xjt/xjt.c:3124
-#, fuzzy, c-format
+#, c-format
 msgid "Error: XJT propertyfile %s is empty"
-msgstr "Erro, o arquivo de propriedade %s XJT está vazio"
+msgstr "Erro: o arquivo de propriedade %s XJT está vazio"
 
 #~ msgid "Env"
 #~ msgstr "Ambiente"

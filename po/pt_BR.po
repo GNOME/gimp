@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-1.1.21\n"
+"Project-Id-Version: gimp\n"
 "POT-Creation-Date: 2000-10-19 16:30-0200\n"
-"PO-Revision-Date: 2000-05-08 16:28-03:00\n"
+"PO-Revision-Date: 2000-10-23 16:28-03:00\n"
 "Last-Translator: Marcia Norie Nakaza <norie@conectiva.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -299,15 +299,13 @@ msgstr "Reinicializar"
 
 #. Create the brightness scale widget
 #: app/brightness_contrast.c:240
-#, fuzzy
 msgid "Brightness:"
-msgstr "Brilho"
+msgstr "Brilho:"
 
 #. Create the contrast scale widget
 #: app/brightness_contrast.c:271
-#, fuzzy
 msgid "Contrast:"
-msgstr "Contraste"
+msgstr "Contraste:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:306 app/color_balance.c:446 app/curves.c:687
@@ -740,15 +738,15 @@ msgstr "Não disponível"
 
 #: app/color_select.c:238
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: app/color_select.c:239
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: app/color_select.c:240
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: app/color_select.c:241 app/hue_saturation.c:357
 msgid "R"
@@ -1066,20 +1064,25 @@ msgid ""
 "<Shift> Raise window if already open\n"
 "<Ctrl> Load Image dialog"
 msgstr ""
+"Abre a entrada selecionada\n"
+"<Shift> Ativa janela se já estiver aberta\n"
+"<Ctrl> Carrega diálogo de imagem"
 
 #: app/docindex.c:118
-#, fuzzy
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
-msgstr "Mover a entrada selecionada para cima no índice"
+msgstr ""
+"Mover a entrada selecionada para cima no índice\n"
+"<Shift> Para cima"
 
 #: app/docindex.c:122
-#, fuzzy
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
-msgstr "Mover a entrada selecionada para baixo no índice"
+msgstr ""
+"Mover a entrada selecionada para baixo no índice\n"
+"<Shift> Para baixo"
 
 #: app/docindex.c:126
 msgid "Remove the selected entry from the index"
@@ -1242,11 +1245,13 @@ msgid "No Selection."
 msgstr "Sem seleção."
 
 #: app/fileops.c:453 app/fileops.c:1722
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s"
-msgstr "Gravação falha: %s"
+msgstr ""
+"Gravação falha.\n"
+" %s"
 
 #: app/fileops.c:478 app/fileops.c:510
 msgid "Save Image"
@@ -1261,37 +1266,43 @@ msgid "Determine File Type:"
 msgstr "Determinar tipo de arquivo:"
 
 #: app/fileops.c:596
-#, fuzzy
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
-msgstr "Não se pode reverter. Não há arquivo associado com esta imagem."
+msgstr ""
+"Não se pode reverter.\n"
+"Não há arquivo associado com esta imagem."
 
 #: app/fileops.c:603
-#, fuzzy
 msgid "Revert"
-msgstr "Reinicializar"
+msgstr "Reverter"
 
 #: app/fileops.c:614
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Revert failed.\n"
 "%s"
-msgstr "Reversão falhou."
+msgstr ""
+"Reversão falhou.\n"
+"%s"
 
 #: app/fileops.c:711
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s failed.\n"
 "%s: Unknown file type."
-msgstr "Não é possível preencher tipo de imagem desconhecida."
+msgstr ""
+"%s falhou.\n"
+"%s: Tipo de imagem desconhecida."
 
 #: app/fileops.c:728
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s failed.\n"
 "%s is not a regular file."
-msgstr "%s é um arquivo  irregular (%s)"
+msgstr ""
+"%s falhou.\n"
+"%s não é um arquivo regular."
 
 #: app/fileops.c:749
 #, c-format
@@ -1299,24 +1310,30 @@ msgid ""
 "%s failed.\n"
 "%s: Permission denied."
 msgstr ""
+"%s falhou.\n"
+"%s: Permissão negada."
 
 #: app/fileops.c:798
 msgid "Open"
 msgstr "Abrir"
 
 #: app/fileops.c:1105
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s: Unknown file type."
-msgstr "Não é possível preencher tipo de imagem desconhecida."
+msgstr ""
+"A gravação falhou.\n"
+"%s: Tipo de arquivo desconhecido."
 
 #: app/fileops.c:1120
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s is not a regular file."
-msgstr "%s é um arquivo  irregular (%s)"
+msgstr ""
+"A gravação falhou.\n"
+"%s é um arquivo irregular"
 
 #: app/fileops.c:1139
 #, c-format
@@ -1324,6 +1341,8 @@ msgid ""
 "Save failed.\n"
 "%s: Permission denied."
 msgstr ""
+"Gravação falhou.\n"
+"%s: Permissão negada."
 
 #: app/fileops.c:1389
 msgid "(This thumbnail may be out of date)"
@@ -1354,11 +1373,13 @@ msgid "(could not make preview)"
 msgstr "(não foi possível executar a pré-visualização)"
 
 #: app/fileops.c:1606 app/fileops.c:1648
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Open failed.\n"
 "%s"
-msgstr "Falha da abertura: %s"
+msgstr ""
+"Falha de abertura.\n"
+"%s"
 
 #: app/fileops.c:1814
 #, c-format
@@ -1555,15 +1576,12 @@ msgid "Brush pipes should have at least one brush."
 msgstr "Os pipes de pincel devem ter pelo menos um pincel."
 
 #: app/gimpbrushpipe.c:416 app/gimpbrushpipe.c:424
-#, fuzzy
 msgid "Failed to load one of the brushes in the brush pipe."
-msgstr ""
-"Falha ao carregar um dos\n"
-"pincéis no pipe de pincel."
+msgstr "Falha ao carregar um dos pincéis no pipe de pincel."
 
 #: app/gimpbrushpipe.c:484 app/gimpbrushpipe.c:492
 msgid "Failed to load pixmap brush."
-msgstr "Falha ao carregar pincel pixmap %s"
+msgstr "Falha ao carregar pincel pixmap."
 
 #: app/gimpdrawable.c:171
 msgid "Can't fill unknown image type."
@@ -1588,7 +1606,7 @@ msgstr "Camada de tipo %d não é suportada"
 
 #: app/gimphelp.c:190
 msgid "Could not find GIMP Help Browser"
-msgstr ""
+msgstr "Não foi possível encontrar o Navegador de ajuda Gimp"
 
 #: app/gimphelp.c:192
 msgid ""
@@ -1602,7 +1620,7 @@ msgstr ""
 
 #: app/gimphelp.c:195
 msgid "Use Netscape instead"
-msgstr ""
+msgstr "Usar o Netscape"
 
 #: app/gimpimage.c:2322
 msgid "Layer cannot be raised any further"
@@ -2240,21 +2258,18 @@ msgstr "Matiz / Luminosidade / Ajustes de saturação"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:459
-#, fuzzy
 msgid "Hue:"
-msgstr "Matiz"
+msgstr "Matiz:"
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:493
-#, fuzzy
 msgid "Lightness:"
-msgstr "Luminosidade"
+msgstr "Luminosidade:"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:527
-#, fuzzy
 msgid "Saturation:"
-msgstr "Saturação"
+msgstr "Saturação:"
 
 #: app/image_cmds.c:3463
 msgid ""
@@ -2685,12 +2700,11 @@ msgstr "Somente clarear"
 
 #: app/layers_dialog.c:396
 msgid "Keep Trans."
-msgstr "Manter a transparência"
+msgstr "Manter trans."
 
 #: app/layers_dialog.c:405
-#, fuzzy
 msgid "Keep Transparency"
-msgstr "Transparência"
+msgstr "Manter transparência"
 
 #: app/layers_dialog.c:1907
 msgid "Empty Layer Copy"
@@ -2846,95 +2860,76 @@ msgid "Zoom out"
 msgstr "Diminuir"
 
 #: app/main.c:285
-#, fuzzy
 msgid ""
 "\n"
 "Invalid option.\n"
-msgstr "As opções válidas são:\n"
+msgstr "\nOpção inválida.\n"
 
 #: app/main.c:301
 msgid "GIMP version"
 msgstr "Versão do Gimp"
 
 #: app/main.c:305
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "Usage: %s [option ... ] [file ... ]\n"
 "\n"
-msgstr "Uso: %s [opção ...] [arquivos ...]\n"
+msgstr "\nUso: %s [opção ...] [arquivos ...]\n"
 
 #: app/main.c:306
-#, fuzzy
 msgid "Options:\n"
-msgstr "Salvar opções"
+msgstr "Opções:\n"
 
 #: app/main.c:307
-#, fuzzy
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
-msgstr "  -b --batch <comandos>    Execução em lotes de comandos.\n"
+msgstr "  -b, --batch <comandos>    Execução em lotes de comandos.\n"
 
 #: app/main.c:308
-#, fuzzy
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
-msgstr ""
-"  --console-messages       Mostra avisos no console no lugar de caixas de "
-"diálogo.\n"
+msgstr "  -c, --console-messages       Mostra avisos no console no lugar de caixas de diálogo.\n"
 
 #: app/main.c:309
-#, fuzzy
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
-msgstr ""
-"  --no-data               Não carrega texturas, gradientes, paletas, "
-"pincéis.\n"
+msgstr "  -d, --no-data               Não carrega texturas, gradientes, paletas, pincéis.\n"
 
 #: app/main.c:310
-#, fuzzy
 msgid "  -i, --no-interface       Run without a user interface.\n"
-msgstr "  -n --no-interface        Executa sem interface de usuário.\n"
+msgstr "  -i --no-interface        Executa sem interface de usuário.\n"
 
 #: app/main.c:311
-#, fuzzy
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
-msgstr "  -g --gimprc <gimprc>     Usa um arquivo gimprc alternativo.\n"
+msgstr "  -g, --gimprc <gimprc>     Usa um arquivo gimprc alternativo.\n"
 
 #: app/main.c:312
-#, fuzzy
 msgid "  -h, --help               Output this help.\n"
-msgstr " -h --help                Apresenta esta ajuda.\n"
+msgstr " -h, --help                Apresenta esta ajuda.\n"
 
 #: app/main.c:313
-#, fuzzy
 msgid "  -r, --restore-session    Try to restore saved session.\n"
-msgstr "  -r --restore-session     Tenta restaurar sessão salva.\n"
+msgstr "  -r, --restore-session     Tenta restaurar sessão salva.\n"
 
 #: app/main.c:314
-#, fuzzy
 msgid "  -s, --no-splash          Do not show the startup window.\n"
-msgstr "  --no-splash              Não apresenta a janela de inicialização.\n"
+msgstr "  -s, --no-splash              Não apresenta a janela de inicialização.\n"
 
 #: app/main.c:315
-#, fuzzy
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-msgstr ""
-"  --no-splash-image       Não adiciona uma imagem à janela de "
-"inicialização.\n"
+msgstr "  -S, --no-splash-image       Não adiciona uma imagem à janela de inicialização.\n"
 
 #: app/main.c:316
-#, fuzzy
 msgid "  -v, --version            Output version information.\n"
-msgstr " -v --version              Apresenta as informações de versão.\n"
+msgstr " -v, --version              Apresenta as informações de versão.\n"
 
 #: app/main.c:317
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Mostra as mensagens de inicialização.\n"
 
 #: app/main.c:318
-#, fuzzy
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
@@ -2948,7 +2943,6 @@ msgstr ""
 "  --no-xshm                Não usa extensões de Memória Compartilhada do X.\n"
 
 #: app/main.c:320
-#, fuzzy
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
@@ -2968,7 +2962,7 @@ msgstr "  --system-gimprc <gimprc> Usa um arquivo gimprc alternativo.\n"
 msgid ""
 "                           Debugging mode for fatal signals.\n"
 "\n"
-msgstr ""
+msgstr "                           Modo de depuração para sinais fatais.\n\n"
 
 #: app/main.c:341
 msgid "(This console window will close in ten seconds)\n"
@@ -3954,9 +3948,9 @@ msgstr ""
 "Valor RGB fora da faixa"
 
 #: app/palette.c:507
-#, fuzzy, c-format
+#, c-format
 msgid "Can't save palette \"%s\"\n"
-msgstr "não é possível salvar paletas \"%s\"\n"
+msgstr "Não é possível salvar a paleta \"%s\"\n"
 
 #: app/palette.c:1150
 msgid "Black"
@@ -4152,24 +4146,24 @@ msgid "No Patterns available"
 msgstr "Nenhuma textura disponível"
 
 #: app/patterns.c:187
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
 msgstr "Versão do  Gimp desconhecida #%d em \"%s\"\n"
 
 #: app/patterns.c:204
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\""
-msgstr "Erro no arquivo de texturas do Gimp...finalizando."
+msgstr "Erro no arquivo padrão do Gimp \"%s\""
 
 #: app/patterns.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file \"%s\" appears to be truncated."
-msgstr "O arquivo de texturas do Gimp parece estar truncado."
+msgstr "O arquivo padrão do Gimp \"%s\" parece estar truncado."
 
 #: app/patterns.c:278
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading pattern \"%s\""
-msgstr "Erro na abertura do arquivo: %s\n"
+msgstr "Erro ao carregar o padrão \"%s\""
 
 #: app/perspective_tool.c:59
 msgid "Perspective Transform Information"
@@ -4210,9 +4204,9 @@ msgid "Extensions"
 msgstr "Extensões"
 
 #: app/plug_in.c:840
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to locate Plug-In: \"%s\""
-msgstr "Impossível localizar plugins: \"%s\""
+msgstr "Impossível localizar o plugin: \"%s\""
 
 #: app/plug_in.c:1467
 #, c-format
@@ -4224,6 +4218,12 @@ msgid ""
 "You may want to save your images and restart GIMP\n"
 "to be on the safe side."
 msgstr ""
+"Plug-In com problemas: \"%s\"\n"
+"(%s)\n"
+"\n"
+"O dito Plug-In pode ter bagunçado o estado interno do Gimp.\n"
+"Você pode querer salvar suas imagens e reiniciar o Gimp\n"
+"por segurança."
 
 #: app/posterize.c:153
 msgid "Posterize does not operate on indexed drawables."
@@ -4567,21 +4567,20 @@ msgid "Disable Cursor Updating"
 msgstr "Atualização da desabilitação do cursor"
 
 #: app/preferences_dialog.c:2078
-#, fuzzy
 msgid "Tool Icon"
-msgstr "Opções de ferramentas"
+msgstr "Ícone de ferramentas"
 
 #: app/preferences_dialog.c:2080
 msgid "Tool Icon with Crosshair"
-msgstr ""
+msgstr "Ícone de ferramenta com marcação em cruz"
 
 #: app/preferences_dialog.c:2082
 msgid "Crosshair only"
-msgstr ""
+msgstr "Apenas marcação em cruz"
 
 #: app/preferences_dialog.c:2087
 msgid "Cursor Mode:"
-msgstr ""
+msgstr "Modo do cursor:"
 
 #: app/preferences_dialog.c:2093 app/preferences_dialog.c:2095
 #: app/tools.c:1536
@@ -4719,7 +4718,7 @@ msgstr "Calibrar"
 
 #: app/preferences_dialog.c:2418
 msgid "From windowing system"
-msgstr ""
+msgstr "Do sistema de janelas"
 
 #: app/preferences_dialog.c:2440
 msgid "Manually:"
@@ -5064,9 +5063,8 @@ msgid "GIMP Tip of the Day"
 msgstr "Dica Gimp do dia"
 
 #: app/tips_dialog.c:145
-#, fuzzy
 msgid "Show tip next time GIMP starts"
-msgstr "Mostrar dica na próxima vez"
+msgstr "Mostrar dica na próxima inicialização do Gimp"
 
 #: app/tips_dialog.c:175
 msgid "Previous Tip"
@@ -5077,7 +5075,6 @@ msgid "Next Tip"
 msgstr "Próxima dica"
 
 #: app/tips_dialog.c:285
-#, fuzzy
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in\n"
@@ -5281,9 +5278,8 @@ msgid "Magnify"
 msgstr "Ampliar"
 
 #: app/tools.c:345
-#, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Ferramentas/Ferramentas de transformação"
+msgstr "/Ferramentas/Ferramentas de transformação/Aumentar"
 
 #: app/tools.c:350
 msgid "Zoom in & out"
@@ -6284,15 +6280,14 @@ msgid "Installation failed.  Contact system administrator."
 msgstr "Falha na instalação. Avisar seu administrador de sistemas."
 
 #: app/user_install.c:1094
-#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
-"O Gimp usa uma quantidade limitada de memória para armazenamento de dados, o "
-"chamado \"Tile Cache\". Você deve ajustar este tamanho para que se ajuste na "
-"memória. Considerar a quantidade de memória usada por outros processos em "
+"O Gimp usa uma quantidade limitada de memória para armazenamento de dados, o\n"
+"chamado \"Tile Cache\". Você deve ajustar este tamanho para que se ajuste na\n"
+"memória. Considerar a quantidade de memória usada por outros processos em\n"
 "execução."
 
 #: app/user_install.c:1119
@@ -6313,7 +6308,6 @@ msgid "Swap Directory:"
 msgstr "Diretório de troca:"
 
 #: app/user_install.c:1168
-#, fuzzy
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6322,7 +6316,7 @@ msgstr ""
 "Entretanto, a maioria dos servidores X não retornam valores úteis."
 
 #: app/user_install.c:1175
-#, fuzzy, c-format
+#, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Obtém resolução do servidor X (Atualmente %d x %d dpi)"
 
@@ -6371,19 +6365,16 @@ msgid "Gamma:"
 msgstr "Gama:"
 
 #: modules/cdisplay_highcontrast.c:96
-#, fuzzy
 msgid "High Contrast color display filter"
-msgstr "Filtro de exibição de cores de gama"
+msgstr "Filtro de exibição de cores de alto contraste"
 
 #: modules/cdisplay_highcontrast.c:318
-#, fuzzy
 msgid "High Contrast"
-msgstr "Contraste"
+msgstr "Alto contraste"
 
 #: modules/cdisplay_highcontrast.c:337
-#, fuzzy
 msgid "Contrast Cycles:"
-msgstr "Contraste"
+msgstr "Ciclos de contraste:"
 
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"

@@ -21,18 +21,16 @@ msgid "/Use Background Color"
 msgstr "/Usar cor de fundo"
 
 #: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
-#, fuzzy
 msgid "can't handle layers"
-msgstr "Não se pode manusear camadas"
+msgstr "não se pode manusear camadas"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
 msgid "Merge Visible Layers"
 msgstr "Combinar camadas visíveis"
 
 #: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
-#, fuzzy
 msgid "can only handle layers as animation frames"
-msgstr "Só é possível manusear camadas como frames de animação"
+msgstr "só é possível manusear camadas como frames de animação"
 
 #: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
 msgid "Save as Animation"
@@ -43,65 +41,57 @@ msgid "Flatten Image"
 msgstr "Imagem comprimida"
 
 #: libgimp/gimpexport.c:194
-#, fuzzy
 msgid "can't handle transparency"
-msgstr "Não é possível manusear transparência"
+msgstr "não é possível manusear transparência"
 
 #: libgimp/gimpexport.c:203
-#, fuzzy
 msgid "can only handle RGB images"
-msgstr "Não é possível manusear imagens RGB"
+msgstr "não é possível manusear imagens RGB"
 
 #: libgimp/gimpexport.c:204 libgimp/gimpexport.c:232 libgimp/gimpexport.c:241
 msgid "Convert to RGB"
 msgstr "Converter para RGB"
 
 #: libgimp/gimpexport.c:212
-#, fuzzy
 msgid "can only handle grayscale images"
-msgstr "Só é possível manusear imagens na escala de cinza"
+msgstr "só é possível manusear imagens na escala de cinza"
 
 #: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
 msgid "Convert to Grayscale"
 msgstr "Converter para escala de cinza"
 
 #: libgimp/gimpexport.c:221
-#, fuzzy
 msgid "can only handle indexed images"
-msgstr "Só é possível manusear imagens indexadas"
+msgstr "só é possível manusear imagens indexadas"
 
 #: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
-#, fuzzy
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
 "Converter para indexado usando configurações\n"
-"padrões (Faça isso manualmente para ajustar o resultado)"
+"padrões (faça isso manualmente para lapidar o\n"
+"resultado)"
 
 #: libgimp/gimpexport.c:231
-#, fuzzy
 msgid "can only handle RGB or grayscale images"
-msgstr "Só é possível manusear as imagens RGB ou em escala de cinza"
+msgstr "só é possível manusear as imagens RGB ou em escala de cinza"
 
 #: libgimp/gimpexport.c:240
-#, fuzzy
 msgid "can only handle RGB or indexed images"
-msgstr "Só é possível manusear as imagens RGB e indexadas"
+msgstr "só é possível manusear as imagens RGB ou indexadas"
 
 #: libgimp/gimpexport.c:250
-#, fuzzy
 msgid "can only handle grayscale or indexed images"
-msgstr "Só é possível manusear as imagens na escala cinza ou indexadas"
+msgstr "só é possível manusear as imagens na escala cinza ou indexadas"
 
 #: libgimp/gimpexport.c:261
-#, fuzzy
 msgid "needs an alpha channel"
 msgstr "necessita de um canal alfa"
 
 #: libgimp/gimpexport.c:262
 msgid "Add Alpha Channel"
-msgstr "adicionar canal alfa"
+msgstr "Adicionar canal alfa"
 
 #.
 #. *  Plug-ins have called gtk_init () before calling gimp_export ().
