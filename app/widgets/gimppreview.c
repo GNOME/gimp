@@ -462,9 +462,6 @@ gimp_preview_button_press_event (GtkWidget      *widget,
 
 	  if (preview->show_popup && preview->viewable)
             {
-              bevent->x += widget->allocation.x;
-              bevent->y += widget->allocation.y;
-
               gimp_preview_popup_show (widget, bevent,
                                        preview->viewable,
                                        preview->renderer->width,
@@ -475,6 +472,13 @@ gimp_preview_button_press_event (GtkWidget      *widget,
       else
 	{
 	  preview->press_state = 0;
+
+          if (bevent->button == 2)
+            gimp_preview_popup_show (widget, bevent,
+                                     preview->viewable,
+                                     preview->renderer->width,
+                                     preview->renderer->height,
+                                     preview->renderer->dot_for_dot);
 
           if (bevent->button == 3)
             g_signal_emit (widget, preview_signals[CONTEXT], 0);

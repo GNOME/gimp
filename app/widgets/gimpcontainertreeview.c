@@ -910,9 +910,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 
                   if (toggled_cell || clicked_cell)
                     {
-                      gchar *path_str;
-
-                      path_str = gtk_tree_path_to_string (path);
+                      gchar *path_str = gtk_tree_path_to_string (path);
 
                       if (toggled_cell)
                         {
@@ -971,6 +969,19 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
           break;
 
         case 2:
+          if (bevent->type == GDK_BUTTON_PRESS)
+            {
+              if (clicked_cell)
+                {
+                  gchar *path_str = gtk_tree_path_to_string (path);
+
+                  gimp_cell_renderer_viewable_clicked (clicked_cell,
+                                                       path_str,
+                                                       bevent->state);
+
+                  g_free (path_str);
+                }
+            }
           break;
 
         case 3:

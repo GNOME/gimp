@@ -1,5 +1,31 @@
 2004-08-05  Michael Natterer  <mitch@gimp.org>
 
+	Enabled previewing items without selecting them in all list and
+	grid views using mouse button 2. Implicitly enables previewing of
+	items in container popups and thus fixes bug #121011:
+
+	* app/widgets/gimppreview.c (gimp_preview_button_press_event)
+	* app/widgets/gimpcellrendererviewable.c
+	(gimp_cell_renderer_viewable_clicked): show the preview also on
+	mouse button 2 click.
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_button_press): dispatch mouse button 2
+	clicks to GimpCellRendererViewable, but don't select or change
+	anything in the tree_view.
+
+	Unrelated cleanup:
+
+	* app/widgets/gimppreview.c (gimp_preview_button_press_event):
+	don't offset bevent->x,y by widget->allocation.x,y before calling
+	gimp_preview_popup_show() ...
+
+	* app/widgets/gimppreview-popup.c (gimp_preview_popup_show):
+	... instead, do it here generically (check if the parent widget is
+	GTK_WIDGET_NO_WINDOW()).
+
+2004-08-05  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpintstore.c (gimp_int_store_add_empty):
 	allocate the empty_iter using g_new0(). Fixes valgrind warnings
 	about reads from uninitialized memory.

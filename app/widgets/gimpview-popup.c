@@ -104,6 +104,12 @@ gimp_preview_popup_show (GtkWidget      *widget,
   popup->button_x     = bevent->x;
   popup->button_y     = bevent->y;
 
+  if (GTK_WIDGET_NO_WINDOW (widget))
+    {
+      popup->button_x += widget->allocation.x;
+      popup->button_y += widget->allocation.y;
+    }
+
   g_signal_connect (widget, "button_release_event",
                     G_CALLBACK (gimp_preview_popup_button_release),
                     popup);
