@@ -504,6 +504,7 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *w,
     }
   g_free(even);
   g_free(odd);
+  temp_buf_free(buf);
 }
 
 static void

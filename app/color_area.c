@@ -117,7 +117,7 @@ color_area_draw_rect (GdkDrawable *drawable,
     {
       if (color_area_rgb_buf)
 	g_free (color_area_rgb_buf);
-      color_area_rgb_buf = g_malloc (rowstride * height);
+      color_area_rgb_buf = g_malloc (color_area_rgb_buf_size = rowstride * height);
     }
   bp = color_area_rgb_buf;
   for (xx = 0; xx < width; xx++)

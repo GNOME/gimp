@@ -733,6 +733,8 @@ clear_pixmap_preview (PATHWIDGETP pwidget)
 		     paths_dialog->gc, FALSE, 1, 1, 
 		     paths_dialog->image_width+1,
 		     paths_dialog->image_height+1);
+
+  g_free(rgb_buf);
 }
 
 /* insrow == -1 -> append else insert at insrow */

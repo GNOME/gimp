@@ -725,7 +725,12 @@ selection_free (Selection *select)
     gdk_gc_destroy (select->gc_out);
   if (select->gc_layer)
     gdk_gc_destroy (select->gc_layer);
-
+#ifdef USE_XDRAWPOINTS
+  if (select->gc_white)
+    gdk_gc_destroy (select->gc_white);
+  if (select->gc_black)
+    gdk_gc_destroy (select->gc_black);
+#endif
   selection_free_segs (select);
   g_free (select);
 }

@@ -2348,6 +2348,7 @@ image_thumbnail_invoker (Argument *args)
 	  width = buf->width;        
 	  height = buf->height;
 	  bpp = buf->bytes;
+	  temp_buf_free(buf);
 	}
     }
 

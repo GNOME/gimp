@@ -1293,6 +1293,7 @@ HELP
       width = buf->width;	
       height = buf->height;
       bpp = buf->bytes;
+      temp_buf_free(buf);
     }
 }
 CODE

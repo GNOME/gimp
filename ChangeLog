@@ -1,3 +1,14 @@
+Wed Oct 27 20:51:10 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/lc_dialog.c
+	* app/selection.c
+	* app/color_area.c
+	* app/paths_dialog.c
+	* tools/pdbgen/pdb/gimage.pdb
+	* app/gimage_cmds.c
+
+	General memory leaks cleanups/fixes.
+
 Wed Oct 27 13:05:09 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gap/gap_main.c
