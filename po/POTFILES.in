@@ -125,7 +125,6 @@ app/gui/palette-import-dialog.c
 app/gui/palette-select.c
 app/gui/palettes-commands.c
 app/gui/palettes-menu.c
-app/gui/paths-dialog.c
 app/gui/pattern-select.c
 app/gui/patterns-menu.c
 app/gui/plug-in-menus.c
@@ -181,7 +180,6 @@ app/text/gimptextlayer.c
 
 app/tools/tools-enums.c
 app/tools/gimpairbrushtool.c
-app/tools/gimpbezierselecttool.c
 app/tools/gimpblendoptions.c
 app/tools/gimpblendtool.c
 app/tools/gimpbrightnesscontrasttool.c
