@@ -42,8 +42,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "gimpoldpreview.h"
-
 typedef struct
 {
   gint32  img;
@@ -60,11 +58,15 @@ typedef enum
   filter_edge_enhance
 } FilterType;
 
-static gboolean        do_preview = TRUE;
-static GimpOldPreview *preview    = NULL;
+#define PREVIEW_SIZE 128
+static gboolean   do_preview = TRUE;
+static GtkWidget *preview    = NULL;
+static gint       preview_width, preview_height, preview_bpp;
+static guchar    *preview_cache;
 
 static GtkWidget * mw_preview_new   (GtkWidget    *parent,
                                      GimpDrawable *drawable);
+static GimpDrawable *drawable;
 
 /* function protos */
 
@@ -139,7 +141,6 @@ run (const gchar      *name,
      GimpParam       **retvals)
 {
   static GimpParam  rvals[1];
-  GimpDrawable     *drawable;
 
   piArgs args;
 
@@ -339,7 +340,6 @@ pluginCoreIA (piArgs       *argp,
 
   preview = mw_preview_new (hbox, drawable);
   g_object_set_data (G_OBJECT (preview), "piArgs", argp);
-  nlfilt_do_preview (preview);
 
   frame = gimp_int_radio_group_new (TRUE, _("Filter"),
                                     G_CALLBACK (nlfilt_radio_button_update),
@@ -383,6 +383,8 @@ pluginCoreIA (piArgs       *argp,
 
   gtk_widget_show (dlg);
 
+  nlfilt_do_preview (NULL);
+
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dlg);
@@ -397,29 +399,31 @@ nlfilt_do_preview (GtkWidget *w)
   guchar *dst, *src0, *src1, *src2;
   gint y, rowsize, filtno;
 
-  ap = g_object_get_data (G_OBJECT (preview->widget), "piArgs");
+  ap = g_object_get_data (G_OBJECT (preview), "piArgs");
 
-  rowsize = preview->width * preview->bpp;
+  rowsize = preview_width * preview_bpp;
   filtno =  nlfiltInit (ap->alpha, ap->radius, ap->filter);
 
-  src0 = preview->cache + preview->bpp;
+  src0 = preview_cache + preview_bpp;
   src1 = src0 + rowsize;
   src2 = src1 + rowsize;
-  dst = g_malloc (rowsize);
+  dst = g_new (guchar, rowsize * preview_height);
 
   /* for preview, don't worry about edge effects */
-  for (y = 1; y < preview->height - 1; y++)
+  for (y = 1; y < preview_height - 1; y++)
     {
-      nlfiltRow (src0, src1, src2, dst + preview->bpp,
-                 preview->width - 2, preview->bpp, filtno);
+      nlfiltRow (src0, src1, src2, dst + preview_bpp + y*rowsize,
+                 preview_width - 2, preview_bpp, filtno);
       /*
          We should probably fix the edges!
       */
-      gimp_old_preview_do_row (preview, y, preview->width, dst);
       src0 = src1; src1 = src2; src2 += rowsize;
     }
-
-  gtk_widget_queue_draw (preview->widget);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          1, 1, preview_width - 2, preview_height -2,
+                          gimp_drawable_type (drawable->drawable_id),
+                          dst,
+                          rowsize);
   g_free (dst);
 }
 
@@ -444,9 +448,15 @@ mw_preview_new (GtkWidget    *parent,
   gtk_box_pack_start (GTK_BOX (parent), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  preview = gimp_old_preview_new (drawable);
-  gtk_box_pack_start (GTK_BOX (vbox), preview->frame, FALSE, FALSE, 0);
-  gtk_widget_show (preview->frame);
+  preview = gimp_preview_area_new ();
+  preview_width = preview_height = PREVIEW_SIZE;
+  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                                    &preview_width,
+                                                    &preview_height,
+                                                    &preview_bpp);
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
+  gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
+  gtk_widget_show (preview);
 
   button = gtk_check_button_new_with_mnemonic (_("_Do preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
@@ -457,7 +467,7 @@ mw_preview_new (GtkWidget    *parent,
                     G_CALLBACK (mw_preview_toggle_callback),
                     &do_preview);
 
-  return preview->widget;
+  return preview;
 }
 
 /* pnmnlfilt.c - 4 in 1 (2 non-linear) filter
