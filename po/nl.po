@@ -2,16 +2,17 @@
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Wing Tung Leung <tg@skynet.be>, 1998.
 # Gert Dewit <Gert.Dewit@sos.be>, 2000.
-# Branko Collin <collin@xs4all.nl>, 2001.
+# Branko Collin <collin@xs4all.nl>, 2001-2004.
+# Tino Meinen <a.t.meinen@chello.nl>, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:57+0200\n"
-"PO-Revision-Date: 2004-03-20 23:01+0100\n"
-"Last-Translator: Branko Collin <collin@xs4all.nl>\n"
-"Language-Team: Dutch <nl@li.org>\n"
+"POT-Creation-Date: 2004-07-10 03:59+0200\n"
+"PO-Revision-Date: 2004-07-10 16:50+0200\n"
+"Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
+"Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -294,7 +295,7 @@ msgid ""
 "swap file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
-msgstr ""
+msgstr "Kon het wisselbestand niet openen. The Gimp heeft te weinig geheugenruimte maar kan het wisselbestand niet gebruiken. Mogelijkerwijze zijn nu delen van uw afbeelding beschadigd. Probeer uw werk op te slaan onder andere bestandsnamen, start the Gimp opnieuw op en controleer de lokatie van het wisselbestand in uw Voorkeuren."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -380,8 +381,12 @@ msgid "Could not create temporary file for '%s': %s"
 msgstr "Kon geen tijdelijk bestand voor '%s' aanmaken: %s"
 
 # How to translate 'touch'?
+# Datum-tijdstip van originele bestand is niet veranderd? (tino)
+# Ik laat het zo maar staan, als mensen er over vallen moeten ze
+# maar schrijven.
+#
 #: app/config/gimpconfigwriter.c:568
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
@@ -479,17 +484,13 @@ msgstr ""
 "Dit is de afstand in pixels waar magnetische hulplijnen en raster beginnen."
 
 #: app/config/gimprc-blurbs.h:74
-#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the initially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
-msgstr ""
-"Gereedschappen als 'Vage selectie' en 'Vullen' vinden gebieden van "
-"aaneengesloten pixels op basis van een methode die meet of een pixel in "
-"helderheid verschilt met de beginpixel: dat verschil is de drempelwaarde."
+msgstr "Gereedschap als 'Vage selectie' en 'Vullen' vinden gebieden van aaneengesloten pixels op basis van een 'seed-fill' methode. Hierbij wordt vanuit de beginpixel in alle richtingen uitgewaaierd en gekeken wanneer het verschil in helderheid van de pixel met de beginpixel een drempelwaarde overschrijd. Deze waarde staat voor de standaard drempelwaarde."
 
 #: app/config/gimprc-blurbs.h:87
 msgid ""
@@ -589,14 +590,14 @@ msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr ""
+msgstr "Stelt de horizontale beeldresolutie in op dots per inch.  Bij de waarde 0 wordt de X-server gedwongen informatie te geven voor zowel de horizontale als verticale resolutie."
 
 #: app/config/gimprc-blurbs.h:198
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr ""
+msgstr "Stelt de verticale beeldresolutie in op dots per inch.  Bij de waarde 0 wordt de X-server gedwongen informatie te geven voor zowel de horizontale als verticale resolutie."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -1324,14 +1325,12 @@ msgid "Move Item"
 msgstr "Item verplaatsen"
 
 #: app/core/core-enums.c:601
-#, fuzzy
 msgid "Scale Item"
-msgstr "Afbeelding schalen"
+msgstr "Item schalen"
 
 #: app/core/core-enums.c:602
-#, fuzzy
 msgid "Resize Item"
-msgstr "Afbeelding herschalen"
+msgstr "Item herschalen"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
 #: app/core/gimplayer.c:995 app/gui/layers-commands.c:1049
@@ -1356,9 +1355,8 @@ msgid "Anchor Floating Selection"
 msgstr "Drijvende selectie verankeren"
 
 #: app/core/core-enums.c:608 app/core/gimplayer-floating-sel.c:98
-#, fuzzy
 msgid "Remove Floating Selection"
-msgstr "Drijvende Selectie"
+msgstr "Drijvende selectie verwijderen"
 
 #: app/core/core-enums.c:609 app/core/gimp-edit.c:126
 #: app/widgets/gimpbufferview.c:154
@@ -1456,9 +1454,8 @@ msgid "Set Preserve Trans"
 msgstr "'Behoudt transparantie' instellen"
 
 #: app/core/core-enums.c:640
-#, fuzzy
 msgid "Text Modified"
-msgstr "Alleen als gewijzigd"
+msgstr "Tekst gewijzigd"
 
 #: app/core/core-enums.c:641 app/gui/channels-commands.c:318
 #: app/gui/channels-commands.c:348 app/gui/channels-commands.c:387
@@ -1644,7 +1641,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ongeldige UTF-8-tekenreeks in penseelbestand '%s'."
 
-#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
+#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
 #: app/core/gimpitem.c:466 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
@@ -2018,7 +2015,7 @@ msgstr "Snelmasker inschakelen"
 msgid "Disable QuickMask"
 msgstr "Snelmasker uitschakelen"
 
-#: app/core/gimpimage-undo-push.c:2939
+#: app/core/gimpimage-undo-push.c:2937
 #, c-format
 msgid "Can't undo %s"
 msgstr "Kan %s niet ongedaan maken"
@@ -2438,20 +2435,20 @@ msgstr ""
 "De eenheid voor coördinatenweergaven in een andere dan stip-voor-stip-stand."
 
 #: app/core/gimptemplate.c:150
-#, fuzzy
 msgid "The horizontal image resolution."
-msgstr "De horizontale afbeeldingsresolutie"
+msgstr "De horizontale afbeeldingsresolutie."
 
 #: app/core/gimptemplate.c:155
 msgid "The vertical image resolution."
-msgstr "De verticale afbeeldingsresolutie"
+msgstr "De verticale afbeeldingsresolutie."
 
-#  pseudo unit
+# beeldpunt? (tino)
 #. pseudo unit
 #: app/core/gimpunit.c:55
 msgid "pixel"
 msgstr "pixel"
 
+# beeldpunt? (tino)
 #: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:780
 #: app/tools/gimpmeasuretool.c:872 app/tools/gimppainttool.c:707
 msgid "pixels"
@@ -3629,17 +3626,16 @@ msgid "/blendingfunction/_Curved"
 msgstr "/mengfunctie/Krom"
 
 #: app/gui/gradient-editor-menu.c:178
-#, fuzzy
 msgid "/blendingfunction/_Sinusoidal"
-msgstr "/mengfunctie/Sinusachtig"
+msgstr "/mengfunctie/_Sinusachtig"
 
 #: app/gui/gradient-editor-menu.c:183
 msgid "/blendingfunction/Spherical (i_ncreasing)"
-msgstr "/mengfunctie/Sferisch (toenemend)"
+msgstr "/mengfunctie/Sferisch (_toenemend)"
 
 #: app/gui/gradient-editor-menu.c:188
 msgid "/blendingfunction/Spherical (_decreasing)"
-msgstr "/mengfunctie/Sferisch (afnemend)"
+msgstr "/mengfunctie/Sferisch (_afnemend)"
 
 #: app/gui/gradient-editor-menu.c:193
 msgid "/blendingfunction/(Varies)"
@@ -3651,7 +3647,7 @@ msgstr "/kleuringstype/RGB"
 
 #: app/gui/gradient-editor-menu.c:203
 msgid "/coloringtype/HSV (_counter-clockwise hue)"
-msgstr "/kleuringstype/KVW (kleurtoon tegen de klok in)"
+msgstr "/kleuringstype/KVW (_kleurtoon tegen de klok in)"
 
 #: app/gui/gradient-editor-menu.c:208
 msgid "/coloringtype/HSV (clockwise _hue)"
@@ -5752,7 +5748,6 @@ msgid "Fit to Window"
 msgstr "Pas in venster"
 
 #: app/gui/preferences-dialog.c:1512
-#, fuzzy
 msgid "Initial Zoom Ratio:"
 msgstr "Aanvankelijke zoomverhouding:"
 
@@ -6869,7 +6864,7 @@ msgid ""
 "under the terms of the GNU General Public License as published by the Free "
 "Software Foundation; either version 2 of the License, or (at your option) "
 "any later version."
-msgstr ""
+msgstr "Dit programma is vrije software; u kunt het opnieuw distribueren en/of modificeren onder de voorwaarden van de GNU General Public License zoals gepubliceerd door de Free Software Foundation; ofwel versie 2 van deze licentie, of (naar uw believen) een latere versie."
 
 # I do not like to translate legal language. Please contact the FSF for the correct translation.
 #: app/gui/user-install-dialog.c:773
@@ -6878,7 +6873,7 @@ msgid ""
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
 "FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
 "more details."
-msgstr ""
+msgstr "Dit programma wordt gedistribueerd hopende dat het goed te gebruiken zal zijn, maar zonder enige garantie; zelfs zonder de impliciete garantie van verkoopbaarheid of geschiktheid voor een bepaald doel. Zie de GNU general Public License voor meer details."
 
 # I do not like to translate legal language. Please contact the FSF for the correct translation.
 #: app/gui/user-install-dialog.c:779
@@ -6887,6 +6882,9 @@ msgid ""
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
+"U zou een kopie van de GNU General Public License, samen met dit programma, ontvangen moeten hebben; indien dat niet het geval is kunt u schrijven naar de Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n"
+"\n"
+"Aan de vertaling van deze tekst kunnen geen rechten worden ontleend. Hiervoor moet u de oorspronkelijke Engelse teksten gebruiken."
 
 #: app/gui/user-install-dialog.c:804
 msgid "Personal GIMP Folder"
@@ -7977,17 +7975,17 @@ msgstr "Curves opslaan"
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Curves voor geïndexeerde lagen kunnen niet worden aangepast."
 
-#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:411
+#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:412
 #: app/widgets/gimphistogrameditor.c:148
 msgid "Channel:"
 msgstr "Kanaal:"
 
-#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:425
+#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:426
 msgid "R_eset Channel"
 msgstr "Kanaal opnieuw instellen"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:637
+#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:638
 msgid "All Channels"
 msgstr "Alle kanalen"
 
@@ -8123,8 +8121,8 @@ msgstr "Regelingen voor Kleurtoon / Lichtheid / Verzadiging"
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Kleurtoon-Verzadiging werkt enkel op RGB-lagen."
 
+# de schuif die alles bedient
 #: app/tools/gimphuesaturationtool.c:263
-#, fuzzy
 msgid "M_aster"
 msgstr "Allemaal"
 
@@ -8256,45 +8254,45 @@ msgstr "Niveaus opslaan"
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Niveaus voor geïndexeerde lagen kunnen niet worden aangepast."
 
-#: app/tools/gimplevelstool.c:351
+#: app/tools/gimplevelstool.c:352
 msgid "Pick Black Point"
 msgstr "Zwartpunt kiezen"
 
-#: app/tools/gimplevelstool.c:355
+#: app/tools/gimplevelstool.c:356
 msgid "Pick Gray Point"
 msgstr "Grijspunt kiezen"
 
-#: app/tools/gimplevelstool.c:359
+#: app/tools/gimplevelstool.c:360
 msgid "Pick White Point"
 msgstr "Witpunt kiezen"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:440
+#: app/tools/gimplevelstool.c:441
 msgid "Input Levels"
 msgstr "Invoerniveaus"
 
-#: app/tools/gimplevelstool.c:535
+#: app/tools/gimplevelstool.c:536
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:565
+#: app/tools/gimplevelstool.c:566
 msgid "Output Levels"
 msgstr "Uitvoerniveaus"
 
-#: app/tools/gimplevelstool.c:656
+#: app/tools/gimplevelstool.c:657
 msgid "Read levels settings from file"
 msgstr "Niveauinstellingen uit bestand lezen"
 
-#: app/tools/gimplevelstool.c:662
+#: app/tools/gimplevelstool.c:663
 msgid "Save levels settings to file"
 msgstr "Niveauinstellingen in bestand opslaan"
 
-#: app/tools/gimplevelstool.c:670
+#: app/tools/gimplevelstool.c:671
 msgid "_Auto"
 msgstr "Automatisch"
 
-#: app/tools/gimplevelstool.c:672
+#: app/tools/gimplevelstool.c:673
 msgid "Adjust levels automatically"
 msgstr "Niveau's automatisch aanpassen"
 
@@ -8801,17 +8799,17 @@ msgstr "Transformatie (bezig)"
 msgid "Transformations do not work on layers that contain layer masks."
 msgstr "Transformaties werken niet op lagen die laagmaskers bevatten."
 
+# veelhoeken
 #: app/tools/gimpvectoroptions.c:113
-#, fuzzy
 msgid "restrict editing to polygonals"
-msgstr "beperk bewerken tot polygonalen"
+msgstr "bewerken beperken tot polygonalen"
 
 #: app/tools/gimpvectoroptions.c:188
 msgid "Edit Mode"
 msgstr "Bewerkstand"
 
+# veelhoek / meerhoek
 #: app/tools/gimpvectoroptions.c:193
-#, fuzzy
 msgid "Polygonal"
 msgstr "Polygonaal"
 
@@ -9914,7 +9912,6 @@ msgstr "Achter"
 
 # What does this mean?
 #: app/widgets/gimpwidgets-constructors.c:48
-#, fuzzy
 msgid "Color Erase"
 msgstr "Kleur wissen"
 
