@@ -1,3 +1,41 @@
+2002-04-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/temp-buf.c: fixed temp_buf_copy() and
+	temp_buf_to_[color|gray]() to (1) not crash and (2) to assume the
+	correct pixelformat. Bugs were never noticed because the code was
+	never used until today...
+
+	* app/core/gimpviewable.c (gimp_viewable_get_new_preview_pixbuf):
+	use temp_buf_copy() to convert GRAY* TempBufs to RGB* before
+	creating the pixbuf.
+
+	* app/app_procs.c: don't try to open command line images if the
+	filename could not be converted to an URI.
+
+	* app/file/file-open.c
+	* app/file/file-save.c: use g_file_test() instead of stat().
+
+	* app/file/file-utils.[ch]: cleanup, changed
+	file_utils_filename_to_uri() to take a list of procs, not a Gimp
+	pointer.
+
+	* app/core/gimpimage.c: changed accordingly.
+
+	* app/core/gimpimagefile.[ch]: implemented thumbnail saving
+	following the thumbnail standard v0.5 (the implementation is not
+	yet fully standard compliant).
+
+	* app/gui/file-open-dialog.c: use the new thubmnail functions and
+	removed all .xvpics code. Not finished yet...
+
+	* app/core/gimpdocuments.c
+	* app/widgets/gimpdocumentview.c: changed accordingly.
+
+	* tools/pdbgen/pdb/fileops.pdb (file_save_thumbnail): set "success"
+	correctly.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
 2002-04-16  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimppreview.c (gimp_preview_expose_event): don't draw

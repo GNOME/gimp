@@ -246,8 +246,8 @@ HELP
 	code => <<'CODE'
 {
   thumb = make_thumb_tempbuf (gimage);
-  if (file_save_thumbnail (gimage, filename, thumb))
-    success = TRUE;
+  if (! file_save_thumbnail (gimage, filename, thumb))
+    success = FALSE;
 }
 CODE
     );

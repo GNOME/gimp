@@ -111,6 +111,7 @@ gimp_documents_load (Gimp *gimp)
                 }
 
               imagefile = gimp_imagefile_new (uri);
+              gimp_imagefile_update (imagefile);
 
               g_free (uri);
 

@@ -19,13 +19,12 @@
 
 #include "config.h"
 
-#ifdef HAVE_SYS_PARAM_H
-#include <sys/param.h>
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_SYS_PARAM_H
+#include <sys/param.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
@@ -57,57 +56,63 @@
 
 #include "file-utils.h"
 
+#include "libgimp/gimpintl.h"
+
 
 /*  local function prototypes  */
 
-static PlugInProcDef * file_proc_find_by_name  (GSList      *procs,
-                                                const gchar *uri,
-                                                gboolean     skip_magic);
-static void            file_convert_string     (gchar       *instr,
-                                                gchar       *outmem,
-                                                gint         maxmem,
-                                                gint        *nmem);
-static gint            file_check_single_magic (gchar       *offset,
-                                                gchar       *type,
-                                                gchar       *value,
-                                                gint         headsize,
-                                                guchar      *file_head,
-                                                FILE        *ifp);
-static gint            file_check_magic_list   (GSList      *magics_list,
-                                                gint         headsize,
-                                                guchar      *head,
-                                                FILE        *ifp);
+static PlugInProcDef * file_proc_find_by_prefix    (GSList      *procs,
+                                                    const gchar *uri,
+                                                    gboolean     skip_magic);
+static PlugInProcDef * file_proc_find_by_extension (GSList      *procs,
+                                                    const gchar *uri,
+                                                    gboolean     skip_magic);
+static PlugInProcDef * file_proc_find_by_name      (GSList      *procs,
+                                                    const gchar *uri,
+                                                    gboolean     skip_magic);
+static void            file_convert_string         (gchar       *instr,
+                                                    gchar       *outmem,
+                                                    gint         maxmem,
+                                                    gint        *nmem);
+static gint            file_check_single_magic     (gchar       *offset,
+                                                    gchar       *type,
+                                                    gchar       *value,
+                                                    gint         headsize,
+                                                    guchar      *file_head,
+                                                    FILE        *ifp);
+static gint            file_check_magic_list       (GSList      *magics_list,
+                                                    gint         headsize,
+                                                    guchar      *head,
+                                                    FILE        *ifp);
 
 
 /*  public functions  */
 
 gchar *
-file_utils_filename_to_uri (Gimp         *gimp,
+file_utils_filename_to_uri (GSList       *procs,
                             const gchar  *filename,
                             GError      **error)
 {
-  PlugInProcDef *proc;
-  GSList        *procs;
-  GSList        *prefixes;
-  gchar         *absolute;
-  gchar         *uri;
+  gchar *absolute;
+  gchar *uri;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (procs != NULL, NULL);
   g_return_val_if_fail (filename != NULL, NULL);
 
   /*  check for prefixes like http or ftp  */
-  for (procs = gimp->load_procs; procs; procs = g_slist_next (procs))
+  if (file_proc_find_by_prefix (procs, filename, FALSE))
     {
-      proc = (PlugInProcDef *)procs->data;
-
-      for (prefixes = proc->prefixes_list;
-	   prefixes;
-	   prefixes = g_slist_next (prefixes))
-	{
-	  if (strncmp (filename, prefixes->data, strlen (prefixes->data)) == 0)
-	    return g_strdup (filename);
-	}
-     }
+      if (g_utf8_validate (filename, -1, NULL))
+        {
+          return g_strdup (filename);
+        }
+      else
+        {
+          g_set_error (error, G_CONVERT_ERROR, G_CONVERT_ERROR_ILLEGAL_SEQUENCE,
+                       _("Invalid character sequence in URI"));
+          return NULL;
+        }
+    }
 
   if (! g_path_is_absolute (filename))
     {
@@ -295,21 +300,17 @@ file_proc_find_by_prefix (GSList      *procs,
 }
 
 static PlugInProcDef *
-file_proc_find_by_name (GSList      *procs,
-		        const gchar *uri,
-		        gboolean     skip_magic)
+file_proc_find_by_extension (GSList      *procs,
+                             const gchar *uri,
+                             gboolean     skip_magic)
 {
-  PlugInProcDef *proc;
-  GSList        *p;
-  gchar         *ext = strrchr (uri, '.');
+  GSList *p;
+  gchar  *ext;
+
+  ext = strrchr (uri, '.');
 
   if (ext)
     ext++;
-
-  proc = file_proc_find_by_prefix (procs, uri, skip_magic);
-
-  if (proc)
-    return proc;
 
   for (p = procs; p; p = g_slist_next (p))
     {
@@ -341,6 +342,21 @@ file_proc_find_by_name (GSList      *procs,
     }
 
   return NULL;
+}
+
+static PlugInProcDef *
+file_proc_find_by_name (GSList      *procs,
+		        const gchar *uri,
+		        gboolean     skip_magic)
+{
+  PlugInProcDef *proc;
+
+  proc = file_proc_find_by_prefix (procs, uri, skip_magic);
+
+  if (! proc)
+    proc = file_proc_find_by_extension (procs, uri, skip_magic);
+
+  return proc;
 }
 
 static void

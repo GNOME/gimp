@@ -184,7 +184,8 @@ app_init (gint    gimp_argc,
               GError *error = NULL;
               gchar  *uri;
 
-              uri = file_utils_filename_to_uri (the_gimp, gimp_argv[i], &error);
+              uri = file_utils_filename_to_uri (the_gimp->load_procs,
+                                                gimp_argv[i], &error);
 
               if (! uri)
                 {
@@ -192,10 +193,12 @@ app_init (gint    gimp_argc,
                               error->message);
                   g_error_free (error);
                 }
+              else
+                {
+                  file_open_with_display (the_gimp, uri);
 
-              file_open_with_display (the_gimp, uri);
-
-              g_free (uri);
+                  g_free (uri);
+                }
             }
         }
     }

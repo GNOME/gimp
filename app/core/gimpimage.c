@@ -1036,7 +1036,8 @@ gimp_image_set_filename (GimpImage   *gimage,
     {
       gchar *uri;
 
-      uri = file_utils_filename_to_uri (gimage->gimp, filename, NULL);
+      uri = file_utils_filename_to_uri (gimage->gimp->load_procs, filename,
+                                        NULL);
 
       gimp_image_set_uri (gimage, uri);
 

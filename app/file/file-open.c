@@ -26,8 +26,6 @@
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
 #endif
-#include <sys/types.h>
-#include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -71,12 +69,12 @@ file_open_image (Gimp              *gimp,
 		 GimpRunMode        run_mode,
 		 GimpPDBStatusType *status)
 {
-  ProcRecord    *proc;
-  Argument      *args;
-  Argument      *return_vals;
-  gint           gimage_id;
-  gint           i;
-  gchar         *filename;
+  ProcRecord *proc;
+  Argument   *args;
+  Argument   *return_vals;
+  gint        gimage_id;
+  gint        i;
+  gchar      *filename;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (status != NULL, NULL);
@@ -101,18 +99,17 @@ file_open_image (Gimp              *gimp,
 
   if (filename)
     {
-      struct stat statbuf;
-
       /* check if we are opening a file */
-      if (stat (filename, &statbuf) == 0)
+      if (g_file_test (filename, G_FILE_TEST_EXISTS))
         {
-          if (! (statbuf.st_mode & S_IFREG))
+          if (! g_file_test (filename, G_FILE_TEST_IS_REGULAR))
             {
               /*  no errors when making thumbnails  */
               if (run_mode == GIMP_RUN_INTERACTIVE)
                 g_message (_("%s failed.\n"
                              "%s is not a regular file."),
                            open_mode, uri);
+              g_free (filename);
 
               return NULL;
             }
@@ -124,6 +121,7 @@ file_open_image (Gimp              *gimp,
                 g_message (_("%s failed.\n"
                              "%s: %s."),
                            open_mode, uri, g_strerror (errno));
+              g_free (filename);
 
               return NULL;
             }

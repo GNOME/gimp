@@ -289,7 +289,7 @@ gimp_viewable_get_new_preview_pixbuf (GimpViewable *viewable,
                                       gint          height)
 {
   TempBuf   *temp_buf;
-  GdkPixbuf *pixbuf = NULL;
+  GdkPixbuf *pixbuf    = NULL;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (width  > 0, NULL);
@@ -299,22 +299,40 @@ gimp_viewable_get_new_preview_pixbuf (GimpViewable *viewable,
 
   if (temp_buf)
     {
-      gint width;
-      gint height;
-      gint bytes;
+      TempBuf *color_buf = NULL;
+      gint     width;
+      gint     height;
+      gint     bytes;
 
       bytes  = temp_buf->bytes;
       width  = temp_buf->width;
       height = temp_buf->height;
 
-      pixbuf = gdk_pixbuf_new_from_data (temp_buf_data (temp_buf),
+      if (bytes == 1 || bytes == 2)
+        {
+          gint color_bytes;
+
+          color_bytes = (bytes == 2) ? 4 : 3;
+
+          color_buf = temp_buf_new (width, height, color_bytes, 0, 0, NULL);
+          temp_buf_copy (temp_buf, color_buf);
+
+          temp_buf = color_buf;
+          bytes    = color_bytes;
+        }
+
+      pixbuf = gdk_pixbuf_new_from_data (g_memdup (temp_buf_data (temp_buf),
+                                                   width * height * bytes),
                                          GDK_COLORSPACE_RGB,
-                                         (bytes == 2) || (bytes == 4),
+                                         (bytes == 4),
                                          8,
                                          width,
                                          height,
                                          width * bytes,
                                          NULL, NULL);
+
+      if (color_buf)
+        temp_buf_free (color_buf);
     }
 
   return pixbuf;

@@ -71,23 +71,36 @@ temp_buf_to_color (TempBuf *src_buf,
 {
   guchar *src;
   guchar *dest;
-  glong   num_bytes;
+  glong   num_pixels;
 
-  src = temp_buf_data (src_buf);
+  src  = temp_buf_data (src_buf);
   dest = temp_buf_data (dest_buf);
 
-  num_bytes = src_buf->width * src_buf->height;
+  num_pixels = src_buf->width * src_buf->height;
 
-  while (num_bytes--)
+  if (dest_buf->bytes == 4)
     {
-      guchar tmpch;
-      *dest++ = *src++;  /* alpha channel */
-      *dest++ = tmpch = *src++;
-      *dest++ = tmpch;
-      *dest++ = tmpch;
+      while (num_pixels--)
+        {
+          guchar tmpch;
+          *dest++ = tmpch = *src++;
+          *dest++ = tmpch;
+          *dest++ = tmpch;
+
+          *dest++ = *src++;  /* alpha channel */
+        }
+    }
+  else
+    {
+      while (num_pixels--)
+        {
+          guchar tmpch;
+          *dest++ = tmpch = *src++;
+          *dest++ = tmpch;
+          *dest++ = tmpch;
+        }
     }
 }
-
 
 static void
 temp_buf_to_gray (TempBuf *src_buf,
@@ -95,22 +108,35 @@ temp_buf_to_gray (TempBuf *src_buf,
 {
   guchar *src;
   guchar *dest;
-  glong   num_bytes;
+  glong   num_pixels;
   gfloat  pix;
 
-  src = temp_buf_data (src_buf);
+  src  = temp_buf_data (src_buf);
   dest = temp_buf_data (dest_buf);
 
-  num_bytes = src_buf->width * src_buf->height;
+  num_pixels = src_buf->width * src_buf->height;
 
-  while (num_bytes--)
+  if (dest_buf->bytes == 2)
     {
-      *dest++ = src[0];  /* alpha channel */
+      while (num_pixels--)
+        {
+          pix = INTENSITY (src[0], src[1], src[2]);
+          *dest++ = (guchar) pix;
 
-      pix = INTENSITY (src[1], src[2], src[3]);
-      *dest++ = (guchar) pix;
+          *dest++ = src[3];  /* alpha channel */
 
-      src += 4;
+          src += 4;
+        }
+    }
+  else
+    {
+      while (num_pixels--)
+        {
+          pix = INTENSITY (src[0], src[1], src[2]);
+          *dest++ = (guchar) pix;
+
+          src += 3;
+        }
     }
 }
 
@@ -268,40 +294,38 @@ TempBuf *
 temp_buf_copy (TempBuf *src,
 	       TempBuf *dest)
 {
-  TempBuf *new;
-  glong    length;
+  glong length;
 
   g_return_val_if_fail (src != NULL, NULL);
+  g_return_val_if_fail (! dest || (dest->width  == src->width &&
+                                   dest->height == src->height), NULL);
 
-  if (!dest)
+  if (! dest)
     {
-      new = temp_buf_new (src->width, src->height, src->bytes, 0, 0, NULL);
+      dest = temp_buf_new (src->width, src->height, src->bytes, 0, 0, NULL);
+    }
+
+  if (src->bytes != dest->bytes)
+    {
+      if (src->bytes == 4 && dest->bytes == 2)  /* RGBA -> GRAYA */
+        temp_buf_to_gray (src, dest);
+      else if (src->bytes == 3 && dest->bytes == 1)  /* RGB -> GRAY */
+        temp_buf_to_gray (src, dest);
+      else if (src->bytes == 2 && dest->bytes == 4) /* GRAYA -> RGBA */
+        temp_buf_to_color (src, dest);
+      else if (src->bytes == 1 && dest->bytes == 3) /* GRAYA -> RGBA */
+        temp_buf_to_color (src, dest);
+      else
+        g_warning ("temp_buf_copy(): unimplemented color conversion");
     }
   else
     {
-      new = dest;
-      if (dest->width != src->width || dest->height != src->height)
-	g_message ("In temp_buf_copy, the widths or heights don't match.");
-      /*  The temp buf is smart, and can translate between color and gray  */
-      /*  (only necessary if not we allocated it */
-      if (src->bytes != new->bytes)
-        {
-          if (src->bytes == 4)  /* RGB color */
-	    temp_buf_to_gray (src, new);
-          else if (src->bytes == 2) /* grayscale */
-	    temp_buf_to_color (src, new);
-          else
-	    g_message ("Cannot convert from indexed color.");
-
-	  return new;
-        }
+      /* make the copy */
+      length = src->width * src->height * src->bytes;
+      memcpy (temp_buf_data (dest), temp_buf_data (src), length);
     }
 
-  /* make the copy */
-  length = src->width * src->height * src->bytes;
-  memcpy (temp_buf_data (new), temp_buf_data (src), length);
-
-  return new;
+  return dest;
 }
 
 TempBuf *

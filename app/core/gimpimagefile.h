@@ -23,8 +23,18 @@
 #define __GIMP_IMAGEFILE_H__
 
 
+#include <time.h> /* time_t */
+
 #include "gimpviewable.h"
 
+
+typedef enum
+{
+  GIMP_IMAGEFILE_STATE_UNKNOWN,
+  GIMP_IMAGEFILE_STATE_REMOTE,
+  GIMP_IMAGEFILE_STATE_NOT_FOUND,
+  GIMP_IMAGEFILE_STATE_EXISTS
+} GimpImagefileState;
 
 #define GIMP_TYPE_IMAGEFILE            (gimp_imagefile_get_type ())
 #define GIMP_IMAGEFILE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGEFILE, GimpImagefile))
@@ -43,18 +53,27 @@ struct _GimpImagefile
   gint          width;
   gint          height;
   gint          size;
+
+  GimpImagefileState  image_state;
+  time_t              image_mtime;
+
+  GimpImagefileState  thumb_state;
+  time_t              thumb_mtime;
 };
 
 struct _GimpImagefileClass
 {
   GimpViewableClass  parent_class;
+
+  void (* info_changed) (GimpImagefile *imagefile);
 };
 
 
 GType           gimp_imagefile_get_type         (void) G_GNUC_CONST;
 
-GimpImagefile * gimp_imagefile_new              (const gchar   *filename);
-void            gimp_imagefile_update_thumbnail (GimpImagefile *imagefile);
+GimpImagefile * gimp_imagefile_new              (const gchar   *uri);
+void            gimp_imagefile_update           (GimpImagefile *imagefile);
+void            gimp_imagefile_create_thumbnail (GimpImagefile *imagefile);
 
 
 #endif /* __GIMP_IMAGEFILE_H__ */

@@ -23,7 +23,7 @@
 #include <stdio.h>
 
 
-gchar         * file_utils_filename_to_uri      (Gimp          *gimp,
+gchar         * file_utils_filename_to_uri      (GSList        *procs,
                                                  const gchar   *filename,
                                                  GError       **error);
 PlugInProcDef * file_utils_find_proc            (GSList        *procs,

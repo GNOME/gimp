@@ -26,8 +26,6 @@
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
 #endif
-#include <sys/types.h>
-#include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -113,16 +111,15 @@ file_save (GimpImage     *gimage,
 
   if (filename)
     {
-      struct stat statbuf;
-
       /* check if we are saving to a file */
-      if (stat (filename, &statbuf) == 0)
+      if (g_file_test (filename, G_FILE_TEST_EXISTS))
         {
-          if (! (statbuf.st_mode & S_IFREG))
+          if (! g_file_test (filename, G_FILE_TEST_IS_REGULAR))
             {
               g_message (_("Save failed.\n"
                            "%s is not a regular file."),
                          uri);
+              g_free (filename);
 
               return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
             }
@@ -133,10 +130,13 @@ file_save (GimpImage     *gimage,
                            "%s: %s."),
                          uri,
                          g_strerror (errno));
+              g_free (filename);
 
               return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
             }
         }
+
+      g_free (filename);
     }
 
   /* ref the image, so it can't get deleted during save */

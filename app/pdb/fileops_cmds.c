@@ -343,8 +343,8 @@ file_save_thumbnail_invoker (Gimp     *gimp,
   if (success)
     {
       thumb = make_thumb_tempbuf (gimage);
-      if (file_save_thumbnail (gimage, filename, thumb))
-	success = TRUE;
+      if (! file_save_thumbnail (gimage, filename, thumb))
+	success = FALSE;
     }
 
   return procedural_db_return_args (&file_save_thumbnail_proc, success);

@@ -51,6 +51,7 @@
 #include "core/gimpcoreconfig.h"
 #include "core/gimpdocuments.h"
 #include "core/gimpimage.h"
+#include "core/gimpimagefile.h"
 
 #include "plug-in/plug-in-types.h"
 #include "plug-in/plug-in-proc.h"
@@ -59,6 +60,7 @@
 #include "file/file-utils.h"
 
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimppreview.h"
 
 #include "file-dialog-utils.h"
 #include "file-open-dialog.h"
@@ -70,29 +72,26 @@
 
 /*  local function prototypes  */
 
-static void     file_open_dialog_create       (Gimp             *gimp);
-static void     file_open_genbutton_callback  (GtkWidget        *widget,
-					       gpointer          data);
-static void     file_open_selchanged_callback (GtkTreeSelection *sel,
-                                               gpointer          data);
-static void     file_open_ok_callback         (GtkWidget        *widget,
-                                               gpointer          data);
-static void     file_open_type_callback       (GtkWidget        *widget,
-                                               gpointer          data);
+static void     file_open_dialog_create          (Gimp             *gimp);
+static void     file_open_genbutton_callback     (GtkWidget        *widget,
+                                                  gpointer          data);
+static void     file_open_selchanged_callback    (GtkTreeSelection *sel,
+                                                  gpointer          data);
+static void     file_open_ok_callback            (GtkWidget        *widget,
+                                                  gpointer          data);
+static void     file_open_type_callback          (GtkWidget        *widget,
+                                                  gpointer          data);
+static void     file_open_imagefile_info_changed (GimpImagefile    *imagefile,
+                                                  gpointer          data);
 
 
 
-static GtkWidget  *fileload                    = NULL;
-static GtkWidget  *open_options                = NULL;
+static GtkWidget     *fileload               = NULL;
+static GtkWidget     *open_options           = NULL;
+static GimpImagefile *open_options_imagefile = NULL;
 
-static GtkPreview *open_options_preview        = NULL;
-static GtkWidget  *open_options_fixed          = NULL;
-static GtkWidget  *open_options_label          = NULL;
-static GtkWidget  *open_options_frame          = NULL;
-static GtkWidget  *open_options_genbuttonlabel = NULL;
-
-/* Some state for the thumbnailer */
-static gchar *preview_fullname = NULL;
+static GtkWidget     *open_options_label     = NULL;
+static GtkWidget     *open_options_frame     = NULL;
 
 static PlugInProcDef *load_file_proc = NULL;
 
@@ -175,7 +174,6 @@ file_open_dialog_show (Gimp *gimp)
 }
 
 
-
 /*  private functions  */
 
 static void
@@ -227,17 +225,19 @@ file_open_dialog_create (Gimp *gimp)
     GtkWidget       *hbox;
     GtkWidget       *option_menu;
     GtkWidget       *open_options_genbutton;
+    GtkWidget       *preview;
 
-    open_options = gtk_hbox_new (TRUE, 1);
+    open_options = gtk_hbox_new (TRUE, 4);
 
     /* format-chooser frame */
     frame = gtk_frame_new (_("Determine File Type"));
-    gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-    gtk_box_pack_start (GTK_BOX (open_options), frame, TRUE, TRUE, 4);
+    gtk_box_pack_start (GTK_BOX (open_options), frame, TRUE, TRUE, 0);
+    gtk_widget_show (frame);
 
     vbox = gtk_vbox_new (FALSE, 2);
     gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
     gtk_container_add (GTK_CONTAINER (frame), vbox);
+    gtk_widget_show (vbox);
 
     hbox = gtk_hbox_new (FALSE, 0);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -251,84 +251,51 @@ file_open_dialog_create (Gimp *gimp)
     gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu),
                               GTK_ITEM_FACTORY (item_factory)->widget);
 
-    gtk_widget_show (vbox);
-    gtk_widget_show (frame);
-
     /* Preview frame */
-    open_options_frame = frame = gtk_frame_new ("");
-    gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-    gtk_box_pack_end (GTK_BOX (open_options), frame, FALSE, TRUE, 4);
+    open_options_frame = frame = gtk_frame_new (_("Preview"));
+    gtk_box_pack_end (GTK_BOX (open_options), frame, TRUE, TRUE, 0);
+    gtk_widget_show (frame);
 
     vbox = gtk_vbox_new (FALSE, 2);
     gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
     gtk_container_add (GTK_CONTAINER (frame), vbox);
+    gtk_widget_show (vbox);
 
     hbox = gtk_hbox_new (TRUE, 0);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 
     open_options_genbutton = gtk_button_new ();
-    gtk_box_pack_start (GTK_BOX (hbox), open_options_genbutton,
-			TRUE, FALSE, 0);
-    gtk_widget_show (open_options_genbutton);	
+    gtk_box_pack_start (GTK_BOX (hbox), open_options_genbutton, TRUE, FALSE, 0);
+    gtk_widget_show (open_options_genbutton);
 
     g_signal_connect (G_OBJECT (open_options_genbutton), "clicked",
 		      G_CALLBACK (file_open_genbutton_callback),
 		      fileload);
 
-    open_options_fixed = gtk_fixed_new ();
-    gtk_widget_set_size_request (open_options_fixed, 80, 60);
-    gtk_container_add (GTK_CONTAINER (GTK_BIN (open_options_genbutton)),
-		       open_options_fixed);
-    gtk_widget_show (open_options_fixed);
+    gimp_help_set_help_data (open_options_genbutton,
+                             _("Click to create preview"), NULL);
 
-    {
-      GtkWidget* abox;
-      GtkWidget* sbox;
-      GtkWidget* align;
+    open_options_imagefile = gimp_imagefile_new (NULL);
 
-      sbox = gtk_vbox_new (TRUE, 0);
-      gtk_container_add (GTK_CONTAINER (open_options_fixed), sbox);
-      gtk_widget_show (sbox);
+    preview = gimp_preview_new (GIMP_VIEWABLE (open_options_imagefile),
+                                128, 0, FALSE);
+    gtk_container_add (GTK_CONTAINER (open_options_genbutton), preview);
+    gtk_widget_show (preview);
 
-      align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-      gtk_widget_set_size_request (align, 80, 60);
-      gtk_box_pack_start (GTK_BOX (sbox), align, FALSE, TRUE, 0);
-      gtk_widget_show (align);
+    g_signal_connect (G_OBJECT (open_options_imagefile), "info_changed",
+                      G_CALLBACK (file_open_imagefile_info_changed),
+                      NULL);
 
-      abox = gtk_hbox_new (FALSE, 0);
-      gtk_container_add (GTK_CONTAINER (align), abox);
-      gtk_widget_show (abox);
-
-      open_options_preview =
-	GTK_PREVIEW (gtk_preview_new (GTK_PREVIEW_COLOR));
-      gtk_box_pack_start (GTK_BOX (abox), GTK_WIDGET (open_options_preview),
-			  FALSE, TRUE, 0);
-      gtk_widget_show (GTK_WIDGET (open_options_preview));
-
-      open_options_genbuttonlabel = gtk_label_new (_("Generate\nPreview"));
-      gtk_box_pack_start (GTK_BOX (abox), open_options_genbuttonlabel,
-			  FALSE, TRUE, 0);
-      gtk_widget_show (open_options_genbuttonlabel);
-    }
-
-    open_options_label = gtk_label_new ("");
+    open_options_label = gtk_label_new (_("No Selection"));
     gtk_box_pack_start (GTK_BOX (vbox), open_options_label, FALSE, FALSE, 0);
     gtk_widget_show (open_options_label); 
-
-    gtk_widget_show (vbox);
-    gtk_widget_show (frame);
 
     /* pack the containing open_options hbox into the open-dialog */
     gtk_box_pack_end (GTK_BOX (GTK_FILE_SELECTION (fileload)->main_vbox),
 		      open_options, FALSE, FALSE, 0);
   }
 
-  gtk_frame_set_label (GTK_FRAME (open_options_frame), _("Preview"));
-  gtk_label_set_text (GTK_LABEL (open_options_label), _("No Selection"));
-
-  gtk_widget_show (GTK_WIDGET (open_options_genbuttonlabel));
-  gtk_widget_hide (GTK_WIDGET (open_options_preview));
   gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), FALSE);
 
   gtk_widget_show (open_options);
@@ -345,214 +312,60 @@ file_open_type_callback (GtkWidget *widget,
   load_file_proc = proc;
 }
 
-static guchar *
-make_RGBbuf_from_tempbuf (TempBuf *tempbuf,
-			  gint    *width_rtn,
-			  gint    *height_rtn)
+static void
+file_open_imagefile_info_changed (GimpImagefile *imagefile,
+                                  gpointer       data)
 {
-  gint    i, j, w, h;
-  guchar *tbd;
-  guchar *ptr;
-  guchar *rtn = NULL;
-  guchar  alpha, r, g, b;
+  const gchar *uri;
 
-  w = (*width_rtn) = tempbuf->width;
-  h = (*height_rtn) = tempbuf->height;
-  tbd = temp_buf_data (tempbuf);
+  uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
-  switch (tempbuf->bytes)
+  if (! uri)
     {
-    case 4:
-      rtn = ptr = g_malloc (3 * w * h);
-      for (i=0; i<h; i++)
-	{
-	  for (j=0; j<w; j++)
-	    {
-	      r = *(tbd++);
-	      g = *(tbd++);
-	      b = *(tbd++);
-	      alpha = *(tbd++);
+      gtk_label_set_text (GTK_LABEL (open_options_label), _("No Selection"));
+      gtk_frame_set_label (GTK_FRAME (open_options_frame), _("Preview"));
+    }
+  else
+    {
+      gchar *basename;
 
-	      if (alpha & 128)
-		{
-		  *(ptr++) = r;
-		  *(ptr++) = g;
-		  *(ptr++) = b;
-		}
-	      else
-		{
-		  r = (( (i^j) & 4 ) << 5) | 64;
-		  *(ptr++) = r;
-		  *(ptr++) = r;
-		  *(ptr++) = r;
-		}
-	    }
-	}
+      basename = file_utils_uri_to_utf8_basename (uri);
+
+      gtk_frame_set_label (GTK_FRAME (open_options_frame), basename);
+
+      g_free (basename);
+    }
+
+  switch (imagefile->thumb_state)
+    {
+    case GIMP_IMAGEFILE_STATE_UNKNOWN:
+    case GIMP_IMAGEFILE_STATE_REMOTE:
+    case GIMP_IMAGEFILE_STATE_NOT_FOUND:
+      gtk_label_set_text (GTK_LABEL (open_options_label),
+                          _("No preview available"));
       break;
 
-    case 2:
-      rtn = ptr = g_malloc (3 * w * h);
-      for (i=0; i<h; i++)
-	{
-	  for (j=0; j<w; j++)
-	    {
-	      r = *(tbd++);
-	      alpha = *(tbd++);
+    case GIMP_IMAGEFILE_STATE_EXISTS:
+      if (imagefile->image_mtime > imagefile->thumb_mtime)
+        {
+          gtk_label_set_text (GTK_LABEL (open_options_label),
+                              _("Thumbnail is out of date"));
+        }
+      else
+        {
+          gchar *str;
 
-	      if (!(alpha & 128))
-		r = (( (i^j) & 4 ) << 5) | 64;
+          str = g_strdup_printf (_("(%d x %d)"),
+                                 imagefile->width,
+                                 imagefile->height);
 
-	      *(ptr++) = r;
-	      *(ptr++) = r;
-	      *(ptr++) = r;
-	    }
-	}
+          gtk_label_set_text (GTK_LABEL (open_options_label), str);
+          g_free (str);
+        }
       break;
 
     default:
-      g_warning ("%s: Unknown TempBuf width.", G_STRLOC);
-    }
-
-  return (rtn);
-}
-
-/* don't call with preview_fullname as parameter!  will be clobbered! */
-static void
-set_preview (Gimp        *gimp,
-             const gchar *fullfname,
-	     guchar      *RGB_source,
-	     gint         RGB_w,
-	     gint         RGB_h)
-{
-  guchar      *thumb_rgb;
-  guchar      *raw_thumb;
-  gint         tnw,tnh, i;
-  gchar       *dirname;
-  gchar       *basename;
-  gchar       *tname;
-  gchar       *imginfo = NULL;
-  struct stat  file_stat;
-  struct stat  thumb_stat;
-  gboolean     thumb_may_be_outdated = FALSE;
-  gboolean     show_generate_label   = TRUE;
-
-  dirname  = g_path_get_dirname (fullfname);
-  basename = g_path_get_basename (fullfname);
-
-  tname = g_build_filename (dirname, ".xvpics", basename, NULL);
-
-  /*  If the file is newer than its thumbnail, the thumbnail may
-   *  be out of date.
-   */
-  if ((stat (tname,     &thumb_stat) == 0) &&
-      (stat (fullfname, &file_stat ) == 0))
-    {
-      if ((thumb_stat.st_mtime) < (file_stat.st_mtime))
-	{
-	  thumb_may_be_outdated = TRUE;
-	}
-    }
-
-  raw_thumb = readXVThumb (tname, &tnw, &tnh, &imginfo);
-
-  g_free (tname);
-
-  gtk_frame_set_label (GTK_FRAME (open_options_frame), basename);
-
-  g_free (dirname);
-  g_free (basename);
-
-  g_free (preview_fullname);
-  preview_fullname = g_strdup (fullfname);
-
-  if (RGB_source)
-    {
-      gtk_preview_size (open_options_preview, RGB_w, RGB_h);
-      
-      for (i = 0; i < RGB_h; i++)
-	{
-	  gtk_preview_draw_row (open_options_preview, &RGB_source[3*i*RGB_w],
-				0, i,
-				RGB_w);
-	}
-    }
-  else
-    {
-      if (raw_thumb)
-	{
-	  thumb_rgb = g_malloc (3 * tnw * tnh);
-
-	  for (i = 0; i < tnw * tnh; i++)
-	    {
-	      thumb_rgb[i*3  ] = ((raw_thumb[i]>>5)*255)/7;
-	      thumb_rgb[i*3+1] = (((raw_thumb[i]>>2)&7)*255)/7;
-	      thumb_rgb[i*3+2] = (((raw_thumb[i])&3)*255)/3;
-	    }
-
-	  gtk_preview_size (open_options_preview, tnw, tnh);
-
-	  for (i = 0; i < tnh; i++)
-	    {
-	      gtk_preview_draw_row (open_options_preview, &thumb_rgb[3*i*tnw],
-				    0, i,
-				    tnw);
-	    }
-
-	  g_free (thumb_rgb);
-	}
-    }
-
-  if (raw_thumb || RGB_source)  /* We can show *some* kind of preview. */
-    {
-      if (raw_thumb) /* Managed to commit thumbnail file to disk */
-	{
-	  gtk_label_set_text (GTK_LABEL (open_options_label),
-			      thumb_may_be_outdated ?
-			      _("This thumbnail may be out of date") :
-			      (imginfo ? imginfo : _("No Information")));
-	  if (imginfo)
-	    g_free (imginfo);
-	}
-      else
-	{
-          if (gimp->config->write_thumbnails)
-            {
-	      gtk_label_set_text (GTK_LABEL(open_options_label),
-				  _("Could not write thumbnail file."));
-            }
-          else
-            {
-	      gtk_label_set_text (GTK_LABEL(open_options_label),
-				  _("Thumbnail saving is disabled."));
-	    }
-	}
-
-      gtk_widget_show (GTK_WIDGET (open_options_preview));
-      gtk_widget_queue_draw (GTK_WIDGET(open_options_preview));
-
-      show_generate_label = FALSE;
-      
-      g_free (raw_thumb);
-    }
-  else
-    {
-      if (imginfo)
-	g_free (imginfo);
-
-      gtk_widget_hide (GTK_WIDGET (open_options_preview));
-      gtk_label_set_text (GTK_LABEL (open_options_label),
-			  _("No preview available"));
-    }
-
-  if (show_generate_label)
-    {
-      gtk_widget_hide (GTK_WIDGET (open_options_preview));
-      gtk_widget_show (GTK_WIDGET (open_options_genbuttonlabel));
-    }
-  else
-    {
-      gtk_widget_hide (GTK_WIDGET (open_options_genbuttonlabel));
-      gtk_widget_show (GTK_WIDGET (open_options_preview));
+      break;
     }
 }
 
@@ -581,6 +394,8 @@ file_open_selchanged_callback (GtkTreeSelection *sel,
 				       &selected);
   if (selected)
     {
+      gchar *uri;
+
       fileload = GTK_FILE_SELECTION (data);
 
       gimp = GIMP (g_object_get_data (G_OBJECT (fileload), "gimp"));
@@ -588,27 +403,27 @@ file_open_selchanged_callback (GtkTreeSelection *sel,
       fullfname = gtk_file_selection_get_filename (fileload);
 
       gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), TRUE);
-      set_preview (gimp, fullfname, NULL, 0, 0);
+
+      uri = file_utils_filename_to_uri (gimp->load_procs, fullfname, NULL);
+
+      gimp_object_set_name (GIMP_OBJECT (open_options_imagefile), uri);
+
+      g_free (uri);
     }
+  else
+    {
+      gimp_object_set_name (GIMP_OBJECT (open_options_imagefile), NULL);
+    }
+
+  gimp_imagefile_update (open_options_imagefile);
 }
 
 static void
 file_open_genbutton_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  GimpImage *gimage_to_be_thumbed;
-  guchar    *RGBbuf;
-  TempBuf   *tempbuf;
-  gint       RGBbuf_w;
-  gint       RGBbuf_h;
-  Gimp      *gimp;
-
-  /* added for multi-file preview generation... */
   GtkFileSelection  *fs;
-  gchar             *full_filename = NULL;
-  gchar             *raw_filename = NULL;
-  struct stat        buf;
-  gint               err;
+  Gimp              *gimp;
   gchar            **selections;
   gint               i;
 
@@ -616,71 +431,38 @@ file_open_genbutton_callback (GtkWidget *widget,
 
   gimp = GIMP (g_object_get_data (G_OBJECT (fs), "gimp"));
 
-  if (! preview_fullname)
-    {
-      g_warning ("%s: Tried to generate thumbnail for NULL file name.", G_STRLOC);
-      return;
-    }
-
   gimp_set_busy (gimp);
-  gtk_widget_set_sensitive (GTK_WIDGET (fileload), FALSE);
-
-  /* new mult-file preview make: */  
+  gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 
   selections = gtk_file_selection_get_selections (fs);
 
   for (i = 0; selections[i] != NULL; i++)
     {
-      full_filename = selections[i];
-      
-      err = stat (full_filename, &buf);
-      
-      if (! (err == 0 && (buf.st_mode & S_IFDIR)))
+      if (g_file_test (selections[i], G_FILE_TEST_IS_REGULAR))
         {
-          /* Is not directory. */
-          GimpPDBStatusType dummy;
-          
-	  raw_filename = g_path_get_basename (full_filename);
-          gimage_to_be_thumbed = file_open_image (gimp,
-                                                  full_filename,
-                                                  raw_filename,
-                                                  NULL,
-                                                  NULL,
-                                                  GIMP_RUN_NONINTERACTIVE,
-                                                  &dummy);
-	  g_free (raw_filename);
-          
-          if (gimage_to_be_thumbed)
-            {			
-              tempbuf = make_thumb_tempbuf (gimage_to_be_thumbed);
-              RGBbuf  = make_RGBbuf_from_tempbuf (tempbuf,
-                                                  &RGBbuf_w,
-                                                  &RGBbuf_h);
-              if (gimp->config->write_thumbnails)
-                {
-                  file_save_thumbnail (gimage_to_be_thumbed,
-                                       full_filename, tempbuf);
-                }
-              
-              set_preview (gimp, full_filename,
-                           RGBbuf, RGBbuf_w, RGBbuf_h);
-              
-              g_object_unref (G_OBJECT (gimage_to_be_thumbed));
-              
-              if (RGBbuf)
-                g_free (RGBbuf);
+          gchar *uri = g_filename_to_uri (selections[i], NULL, NULL);
+
+          if (gimp->config->write_thumbnails)
+            {
+              gimp_object_set_name (GIMP_OBJECT (open_options_imagefile),
+                                    uri);
+              gimp_imagefile_create_thumbnail (open_options_imagefile);
             }
-          else
+
+#if 0
             {
               gtk_label_set_text (GTK_LABEL (open_options_label),
                                   _("Failed to generate preview."));
             }
-        }      
+#endif
+
+          g_free (uri);
+        }
      }
 
   g_strfreev (selections);
 
-  gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
+  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
   gimp_unset_busy (gimp);
 }
 
@@ -690,14 +472,11 @@ file_open_ok_callback (GtkWidget *widget,
 {
   GtkFileSelection   *fs;
   Gimp               *gimp;
-  gchar              *full_filename;
-  gchar              *raw_filename;
-  struct stat         buf;
-  gint                err;
+  gchar              *entered_filename;
   GimpPDBStatusType   status;
   gchar             **selections;
   gint                i;
-  gchar              *uri = NULL;
+  gchar              *uri;
 
   fs = GTK_FILE_SELECTION (data);
 
@@ -708,50 +487,47 @@ file_open_ok_callback (GtkWidget *widget,
   if (selections == NULL)
     return;
 
-  full_filename = selections[0];
-  raw_filename = g_strdup (gtk_entry_get_text (GTK_ENTRY(fs->selection_entry)));
-
-  err = stat (full_filename, &buf);
-
-  if (err == 0 && (buf.st_mode & S_IFDIR))
+  if (g_file_test (selections[0], G_FILE_TEST_IS_DIR))
     {
-      if (full_filename[strlen (full_filename) - 1] != G_DIR_SEPARATOR)
+      if (selections[0][strlen (selections[0]) - 1] != G_DIR_SEPARATOR)
 	{
-	  gchar *s = g_strconcat (full_filename, G_DIR_SEPARATOR_S, NULL);
+	  gchar *s = g_strconcat (selections[0], G_DIR_SEPARATOR_S, NULL);
 	  gtk_file_selection_set_filename (fs, s);
 	  g_free (s);
 	}
       else
         {
-          gtk_file_selection_set_filename (fs, full_filename);
+          gtk_file_selection_set_filename (fs, selections[0]);
         }
 
-      g_free (raw_filename);
       g_strfreev (selections);
 
       return;
     }
 
+  entered_filename =
+    g_strdup (gtk_entry_get_text (GTK_ENTRY (fs->selection_entry)));
+
   gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 
-  if (err) /* e.g. http://server/filename.jpg */
-    {
-      full_filename = raw_filename;
+  if (! g_file_test (selections[0], G_FILE_TEST_EXISTS))
+    { 
+      /* try with the entered filename in case the user typed an URI */
+
+      uri = g_strdup (entered_filename);
     }
   else
     {
-      uri = g_filename_to_uri (full_filename, NULL, NULL);
-
-      full_filename = uri;
+      uri = g_filename_to_uri (selections[0], NULL, NULL);
     }
 
   status = file_open_with_proc_and_display (gimp,
-                                            full_filename, 
-                                            raw_filename, 
+                                            uri,
+                                            entered_filename, 
                                             load_file_proc);
 
-  if (uri)
-    g_free (uri);
+  g_free (entered_filename);
+  g_free (uri);
 
   if (status == GIMP_PDB_SUCCESS)
     {
@@ -760,7 +536,7 @@ file_open_ok_callback (GtkWidget *widget,
   else if (status != GIMP_PDB_CANCEL)
     {
       /* Hackery required. Please add error message. --bex */
-      g_message (_("Opening '%s' failed."), full_filename);
+      g_message (_("Opening '%s' failed."), uri);
     }
 
   /*
@@ -769,22 +545,13 @@ file_open_ok_callback (GtkWidget *widget,
 
   for (i = 1; selections[i] != NULL; i++)
     {
-      full_filename = selections[i];
-
-      g_free (raw_filename);
-      raw_filename = g_path_get_basename (full_filename);
-      
-      err = stat (full_filename, &buf);
-          
-      if (! (err == 0 && (buf.st_mode & S_IFDIR)))
+      if (g_file_test (selections[i], G_FILE_TEST_IS_REGULAR))
 	{
-          /* Is not directory. */
-
-          uri = g_filename_to_uri (full_filename, NULL, NULL);
+          uri = g_filename_to_uri (selections[i], NULL, NULL);
 
 	  status = file_open_with_proc_and_display (gimp,
 						    uri,
-						    raw_filename,
+						    uri,
 						    load_file_proc);
 
 	  if (status == GIMP_PDB_SUCCESS)
@@ -801,7 +568,6 @@ file_open_ok_callback (GtkWidget *widget,
 	}
     }
 
-  g_free (raw_filename);
   g_strfreev (selections);
     
   gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
