@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 05:42-0500\n"
+"POT-Creation-Date: 2004-12-28 16:58+0100\n"
 "PO-Revision-Date: 2004-12-28 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
@@ -5197,7 +5197,7 @@ msgstr "Cannot create preview"
 
 #. pixel size
 #: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:552
-#: app/widgets/gimpsizebox.c:433 app/widgets/gimptemplateeditor.c:637
+#: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:637
 #: app/widgets/gimptemplateeditor.c:673
 #, c-format
 msgid "%d x %d pixels"
@@ -6769,28 +6769,28 @@ msgid "Print Size"
 msgstr "Print Size"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:226
+#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:222
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "_Width:"
 
-#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:229
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:225
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "H_eight:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:277
+#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:273
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
 msgstr "_X resolution:"
 
-#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:280
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:276
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
 msgstr "_Y resolution:"
 
-#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:273
+#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:269
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -10319,12 +10319,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Invalid UTF-8"
 
-#: app/widgets/gimpsizebox.c:455
+#: app/widgets/gimpsizebox.c:451
 #, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d dpi"
 
-#: app/widgets/gimpsizebox.c:459
+#: app/widgets/gimpsizebox.c:455
 #, c-format
 msgid "%d dpi"
 msgstr "%d dpi"

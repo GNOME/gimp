@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-26 19:11+0100\n"
+"POT-Creation-Date: 2004-12-28 16:58+0100\n"
 "PO-Revision-Date: 2004-12-26 23:47+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -2697,7 +2697,7 @@ msgid "Open Text File (UTF-8)"
 msgstr "Otevřít textový soubor (UTF-8)"
 
 #: app/actions/text-editor-commands.c:132 app/config/gimpconfig-utils.c:552
-#: app/config/gimpscanner.c:92 app/core/gimpbrush.c:393
+#: app/config/gimpscanner.c:92 app/core/gimpbrush.c:396
 #: app/core/gimpbrushgenerated.c:601 app/core/gimpbrushpipe.c:338
 #: app/core/gimpgradient-load.c:63 app/core/gimppalette.c:360
 #: app/core/gimppattern.c:328 app/tools/gimpimagemaptool.c:608
@@ -4568,39 +4568,54 @@ msgstr "Dokumenty"
 msgid "Modules"
 msgstr "Moduly"
 
-#: app/core/gimpbrush.c:531
+#: app/core/gimpbrush.c:534
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "Nemohu načíst %d bajtů ze '%s': %s"
 
-#: app/core/gimpbrush.c:566
+#: app/core/gimpbrush.c:554
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Width = 0."
+msgstr "Fatální chyba zpracování souboru stopy '%s': Neznámá hloubka %d."
+
+#: app/core/gimpbrush.c:563
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Height = 0."
+msgstr "Fatální chyba zpracování souboru stopy '%s': Soubor je poškozen."
+
+#: app/core/gimpbrush.c:572
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Bytes = 0."
+msgstr "Fatální chyba zpracování souboru stopy '%s': Soubor je poškozen."
+
+#: app/core/gimpbrush.c:596
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr "Fatální chyba zpracování souboru stopy '%s': Neznámá hloubka %d."
 
-#: app/core/gimpbrush.c:579
+#: app/core/gimpbrush.c:609
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "Fatální chyba zpracování souboru stopy '%s': Neznámá verze %d."
 
-#: app/core/gimpbrush.c:595 app/core/gimpbrush.c:715
+#: app/core/gimpbrush.c:625 app/core/gimpbrush.c:745
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "Fatální chyba zpracování souboru stopy '%s': Soubor je zřejmě useknut."
 
-#: app/core/gimpbrush.c:603 app/core/gimpbrushgenerated.c:648
+#: app/core/gimpbrush.c:633 app/core/gimpbrushgenerated.c:648
 #: app/core/gimpbrushpipe.c:354
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Neplatný řetězec v kódování UTF-8 v souboru se stopou '%s'."
 
-#: app/core/gimpbrush.c:610 app/core/gimpcontext.c:1299
+#: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
 #: app/core/gimpitem.c:480 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "Beze jména"
 
-#: app/core/gimpbrush.c:704
+#: app/core/gimpbrush.c:734
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -5191,7 +5206,7 @@ msgstr "Nelze vytvořit náhled"
 
 #. pixel size
 #: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:552
-#: app/widgets/gimpsizebox.c:433 app/widgets/gimptemplateeditor.c:637
+#: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:637
 #: app/widgets/gimptemplateeditor.c:673
 #, c-format
 msgid "%d x %d pixels"
@@ -6144,7 +6159,9 @@ msgstr "Nastavit klávesové zkratky"
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
-msgstr "Klávesovou zkratku upravte kliknutím na odpovídající řádek a stisknutím nové klávesové zkratky nebo ji vymažte stisknutím Backspace."
+msgstr ""
+"Klávesovou zkratku upravte kliknutím na odpovídající řádek a stisknutím nové "
+"klávesové zkratky nebo ji vymažte stisknutím Backspace."
 
 #: app/dialogs/preferences-dialog.c:595
 msgid ""
@@ -6766,28 +6783,28 @@ msgid "Print Size"
 msgstr "Velikost tisku"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:226
+#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:222
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "_Šířka:"
 
-#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:229
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:225
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "_Výška:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:277
+#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:273
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
 msgstr "Rozlišení _X:"
 
-#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:280
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:276
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
 msgstr "Rozlišení _Y:"
 
-#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:273
+#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:269
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -10034,7 +10051,9 @@ msgstr "Zavřít všechny odrážky"
 msgid ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
-msgstr "Toto okno má otevřeno %d odrážek. Zavření okna také zavře všechny jeho odrážky."
+msgstr ""
+"Toto okno má otevřeno %d odrážek. Zavření okna také zavře všechny jeho "
+"odrážky."
 
 #: app/widgets/gimpdock.c:474
 msgid "You can drop dockable dialogs here."
@@ -10316,12 +10335,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Neplatné UTF-8"
 
-#: app/widgets/gimpsizebox.c:455
+#: app/widgets/gimpsizebox.c:451
 #, c-format
 msgid "%d x %d dpi"
 msgstr "%d × %d dpi"
 
-#: app/widgets/gimpsizebox.c:459
+#: app/widgets/gimpsizebox.c:455
 #, c-format
 msgid "%d dpi"
 msgstr "%d dpi"

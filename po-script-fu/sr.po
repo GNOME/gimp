@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 01:48+0100\n"
+"POT-Creation-Date: 2004-12-28 15:42+0100\n"
 "PO-Revision-Date: 2004-08-08 14:24+0200\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -332,7 +332,6 @@ msgstr "Стандардне поставке Бумпмап"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/asc2img.scm.h:8
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:3
@@ -373,7 +372,6 @@ msgstr "Писмо"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/asc2img.scm.h:9
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:4
@@ -507,7 +505,6 @@ msgstr "<Toolbox>/Проширења/Скрипт-Фу/Мустре/Земља..
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
-#: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:3
@@ -743,7 +740,6 @@ msgid "Padding"
 msgstr "Подлога"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-#: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:10
@@ -791,53 +787,6 @@ msgstr "Ширина Појаса"
 #, fuzzy
 msgid "Width of gaps"
 msgstr "Ширина Пукотина"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:1
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-#: plug-ins/script-fu/scripts/image-structure.scm.h:1
-#, fuzzy
-msgid "<Image>/Script-Fu/Utils"
-msgstr "<Image>/Скрипт-Фу/Услужни/_ASCII у слој..."
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:2
-#: plug-ins/script-fu/scripts/font-map.scm.h:1
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Utils"
-msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Неонка..."
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:5
-#, fuzzy, no-c-format
-msgid "Buffer amount (% height of text)"
-msgstr "Вриједност бафера (% Висине Текста)"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
-#, fuzzy
-msgid "File name"
-msgstr "Назив Датотеке"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:7
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
-msgid "Filename"
-msgstr "Назив Датотеке"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:11
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-#, fuzzy
-msgid "Transparent background"
-msgstr "Провидна Позадина"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:12
-msgid "_ASCII to Image..."
-msgstr ""
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:13
-#, fuzzy
-msgid "_ASCII to Layer..."
-msgstr "<Image>/Скрипт-Фу/Услужни/_ASCII у слој..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -893,6 +842,13 @@ msgstr "<Toolbox>/Проширења/Скрипт-Фу/Веб теме/Испу�
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
 msgstr "Пречник"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#, fuzzy
+msgid "Transparent background"
+msgstr "Провидна Позадина"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
 msgid "H_eading..."
@@ -1552,6 +1508,12 @@ msgstr "Размера x"
 msgid "_Flatland..."
 msgstr ""
 
+#: plug-ins/script-fu/scripts/font-map.scm.h:1
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Utils"
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Неонка..."
+
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 #, fuzzy
 msgid "Active colors"
@@ -1858,6 +1820,12 @@ msgstr ""
 #: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"
 msgstr ""
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
+#: plug-ins/script-fu/scripts/image-structure.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Utils"
+msgstr "<Image>/Скрипт-Фу/Услужни/_ASCII у слој..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 #, fuzzy
@@ -2280,6 +2248,11 @@ msgstr ""
 msgid "Brush name"
 msgstr "Име четке"
 
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+#, fuzzy
+msgid "File name"
+msgstr "Назив Датотеке"
+
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 #, fuzzy
 msgid "To _Brush..."
@@ -2288,6 +2261,10 @@ msgstr "Тражи..."
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:2
 msgid "To _Image"
 msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+msgid "Filename"
+msgstr "Назив Датотеке"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 #, fuzzy
@@ -2802,6 +2779,14 @@ msgstr "Непровидност осветљеног"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr ""
+
+#, fuzzy
+#~ msgid "Buffer amount (% height of text)"
+#~ msgstr "Вриједност бафера (% Висине Текста)"
+
+#, fuzzy
+#~ msgid "_ASCII to Layer..."
+#~ msgstr "<Image>/Скрипт-Фу/Услужни/_ASCII у слој..."
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 #~ msgstr "<Toolbox>/Проширења/Скрипт-Фу/_Освежи скрипте"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 01:48+0100\n"
+"POT-Creation-Date: 2004-12-28 15:42+0100\n"
 "PO-Revision-Date: 2004-08-23 20:22+0530\n"
 "Last-Translator: Amanpreet Singh Alam <aalam@redhat.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
@@ -331,7 +331,6 @@ msgstr "ਮੂਲ ਬੰਪਮੈਪ ਵਿਵਸਥਾ"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/asc2img.scm.h:8
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:3
@@ -372,7 +371,6 @@ msgstr "ਫੋਟ"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/asc2img.scm.h:9
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:4
@@ -506,7 +504,6 @@ msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu/ਤਰਤੀਬ/ਭੂ-ਖੰਡ...
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
-#: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:3
@@ -741,7 +738,6 @@ msgid "Padding"
 msgstr "ਚਿਣਿਆ"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-#: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:10
@@ -789,53 +785,6 @@ msgstr "ਧਾਰੀਆਂ ਦੀ ਚੌਡ਼ਾਈ"
 #, fuzzy
 msgid "Width of gaps"
 msgstr "ਖਾਲੀ ਥਾਂ ਦੀ ਚੌਡ਼ਾਈ"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:1
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-#: plug-ins/script-fu/scripts/image-structure.scm.h:1
-#, fuzzy
-msgid "<Image>/Script-Fu/Utils"
-msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਵਰਤੋ/_ASCII ਤੋਂ ਪਰਤ..."
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:2
-#: plug-ins/script-fu/scripts/font-map.scm.h:1
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Utils"
-msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu/ਲੋਗੋ/ਨੀਆਨ..."
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:5
-#, fuzzy, no-c-format
-msgid "Buffer amount (% height of text)"
-msgstr "ਬਫਰ ਮੁੱਲ (ਪਾਠ ਦੀ ਉਚਾਈ% )"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
-#, fuzzy
-msgid "File name"
-msgstr "ਫਾਇਲ ਨਾਂ"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:7
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
-msgid "Filename"
-msgstr "ਫਾਇਲ ਨਾਂ"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:11
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-#, fuzzy
-msgid "Transparent background"
-msgstr "ਪਾਰਦਰਸ਼ੀ ਪਿੱਠਭੂਮੀ"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:12
-msgid "_ASCII to Image..."
-msgstr ""
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:13
-#, fuzzy
-msgid "_ASCII to Layer..."
-msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਵਰਤੋ/_ASCII ਤੋਂ ਪਰਤ..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -891,6 +840,13 @@ msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu/ਵੈਬ ਸਫਾ ਸਰੂਪ/�
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
 msgstr "ਵਿਆਸ"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#, fuzzy
+msgid "Transparent background"
+msgstr "ਪਾਰਦਰਸ਼ੀ ਪਿੱਠਭੂਮੀ"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
 msgid "H_eading..."
@@ -1550,6 +1506,12 @@ msgstr "ਪੈਮਾਨਾ Y"
 msgid "_Flatland..."
 msgstr ""
 
+#: plug-ins/script-fu/scripts/font-map.scm.h:1
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Utils"
+msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu/ਲੋਗੋ/ਨੀਆਨ..."
+
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 #, fuzzy
 msgid "Active colors"
@@ -1855,6 +1817,12 @@ msgstr ""
 #: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"
 msgstr ""
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
+#: plug-ins/script-fu/scripts/image-structure.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Utils"
+msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਵਰਤੋ/_ASCII ਤੋਂ ਪਰਤ..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 #, fuzzy
@@ -2277,6 +2245,11 @@ msgstr ""
 msgid "Brush name"
 msgstr "ਬੁਰਸ਼ ਨਾਂ"
 
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+#, fuzzy
+msgid "File name"
+msgstr "ਫਾਇਲ ਨਾਂ"
+
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 #, fuzzy
 msgid "To _Brush..."
@@ -2285,6 +2258,10 @@ msgstr "ਝਲਕ..."
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:2
 msgid "To _Image"
 msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+msgid "Filename"
+msgstr "ਫਾਇਲ ਨਾਂ"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 #, fuzzy
@@ -2799,6 +2776,14 @@ msgstr "ਉਭਾਰੋ ਧੁੰਦਲਾਪਣ"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr ""
+
+#, fuzzy
+#~ msgid "Buffer amount (% height of text)"
+#~ msgstr "ਬਫਰ ਮੁੱਲ (ਪਾਠ ਦੀ ਉਚਾਈ% )"
+
+#, fuzzy
+#~ msgid "_ASCII to Layer..."
+#~ msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਵਰਤੋ/_ASCII ਤੋਂ ਪਰਤ..."
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 #~ msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu/ਮੁਡ਼ ਲੋਡ ਕਰੋ ਸਕਰਿਪਟ"

@@ -1,5 +1,9 @@
 2004-12-28  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.2.1 release.
+
+2004-12-28  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimp.[ch] (gimp_install_procedure, gimp_install_temp_proc):
 	renamed menu_path parameter to menu_label and added a pointer to
 	gimp_plugin_menu_register()

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 01:48+0100\n"
+"POT-Creation-Date: 2004-12-28 15:42+0100\n"
 "PO-Revision-Date: 2004-11-23 14:20+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -320,7 +320,6 @@ msgstr "Standardinställningar för bumpmapp"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/asc2img.scm.h:8
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:3
@@ -361,7 +360,6 @@ msgstr "Typsnitt"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/asc2img.scm.h:9
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:4
@@ -489,7 +487,6 @@ msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster"
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
-#: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:3
@@ -702,7 +699,6 @@ msgid "Padding"
 msgstr "Utfyllnad"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-#: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:10
@@ -744,48 +740,6 @@ msgstr "Bredd på band"
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
 msgid "Width of gaps"
 msgstr "Bredd på mellanrum"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:1
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-#: plug-ins/script-fu/scripts/image-structure.scm.h:1
-msgid "<Image>/Script-Fu/Utils"
-msgstr "<Image>/Script-Fu/Verktyg"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:2
-#: plug-ins/script-fu/scripts/font-map.scm.h:1
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Utils"
-msgstr "<Toolbox>/Utökningar/Script-Fu/Verktyg"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:5
-#, no-c-format
-msgid "Buffer amount (% height of text)"
-msgstr "Buffertmängd (% höjd av text)"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
-msgid "File name"
-msgstr "Filnamn"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:7
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
-msgid "Filename"
-msgstr "Filnamn"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:11
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-msgid "Transparent background"
-msgstr "Genomskinlig bakgrund"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:12
-msgid "_ASCII to Image..."
-msgstr "_ASCII till bild..."
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:13
-msgid "_ASCII to Layer..."
-msgstr "_ASCII till bildlager..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -835,6 +789,12 @@ msgstr "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Avfasat mönster"
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
 msgstr "Diameter"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+msgid "Transparent background"
+msgstr "Genomskinlig bakgrund"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
 msgid "H_eading..."
@@ -1428,6 +1388,11 @@ msgstr "Skala Y"
 msgid "_Flatland..."
 msgstr "_Flatland..."
 
+#: plug-ins/script-fu/scripts/font-map.scm.h:1
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Utils"
+msgstr "<Toolbox>/Utökningar/Script-Fu/Verktyg"
+
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 msgid "Active colors"
 msgstr "Aktiva färger"
@@ -1694,6 +1659,11 @@ msgstr "Ny _guide..."
 #: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"
 msgstr "_Ta bort alla guider"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
+#: plug-ins/script-fu/scripts/image-structure.scm.h:1
+msgid "<Image>/Script-Fu/Utils"
+msgstr "<Image>/Script-Fu/Verktyg"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 msgid "BG opacity"
@@ -2068,6 +2038,10 @@ msgstr "_Runda hörn..."
 msgid "Brush name"
 msgstr "Penselnamn"
 
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+msgid "File name"
+msgstr "Filnamn"
+
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 msgid "To _Brush..."
 msgstr "Till _pensel..."
@@ -2075,6 +2049,10 @@ msgstr "Till _pensel..."
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:2
 msgid "To _Image"
 msgstr "Till _bild"
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+msgid "Filename"
+msgstr "Filnamn"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 msgid "Pattern name"
@@ -2533,6 +2511,15 @@ msgstr "Markeringsopacitet"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-effekt..."
+
+#~ msgid "Buffer amount (% height of text)"
+#~ msgstr "Buffertmängd (% höjd av text)"
+
+#~ msgid "_ASCII to Image..."
+#~ msgstr "_ASCII till bild..."
+
+#~ msgid "_ASCII to Layer..."
+#~ msgstr "_ASCII till bildlager..."
 
 #~ msgid "Copy _Visible"
 #~ msgstr "Kopiera synligt"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 2.2.0pre1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 01:48+0100\n"
+"POT-Creation-Date: 2004-12-28 15:42+0100\n"
 "PO-Revision-Date: 2004-11-13 18:09+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -324,7 +324,6 @@ msgstr "Réglages par défaut du bosselage"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/asc2img.scm.h:8
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:3
@@ -365,7 +364,6 @@ msgstr "Police"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/asc2img.scm.h:9
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:4
@@ -494,7 +492,6 @@ msgstr "<Toolbox>/Exts/Script-Fu/Motifs/_Land..."
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
-#: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:3
@@ -712,7 +709,6 @@ msgid "Padding"
 msgstr "Marge"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-#: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:10
@@ -754,51 +750,6 @@ msgstr "Largeur des bandes"
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
 msgid "Width of gaps"
 msgstr "Largeur des brèches"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:1
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-#: plug-ins/script-fu/scripts/image-structure.scm.h:1
-#, fuzzy
-msgid "<Image>/Script-Fu/Utils"
-msgstr "<Image>/Script-Fu/Utilitaires/_ASCII vers calque..."
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:2
-#: plug-ins/script-fu/scripts/font-map.scm.h:1
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Utils"
-msgstr "<Toolbox>/Exts/Script-Fu"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:5
-#, no-c-format
-msgid "Buffer amount (% height of text)"
-msgstr "Quantité de mémoire tampon (% hauteur de texte)"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
-msgid "File name"
-msgstr "Nom de fichier"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:7
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
-msgid "Filename"
-msgstr "Nom de fichier"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:11
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-msgid "Transparent background"
-msgstr "Arrière-plan transparent"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:12
-msgid "_ASCII to Image..."
-msgstr ""
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:13
-#, fuzzy
-msgid "_ASCII to Layer..."
-msgstr "<Image>/Script-Fu/Utilitaires/_ASCII vers calque..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -853,6 +804,12 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
 msgstr "Diamètre"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+msgid "Transparent background"
+msgstr "Arrière-plan transparent"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
 msgid "H_eading..."
@@ -1459,6 +1416,12 @@ msgstr "Échelle en Y"
 msgid "_Flatland..."
 msgstr ""
 
+#: plug-ins/script-fu/scripts/font-map.scm.h:1
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Utils"
+msgstr "<Toolbox>/Exts/Script-Fu"
+
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 msgid "Active colors"
 msgstr "Activer les couleurs"
@@ -1735,6 +1698,12 @@ msgstr ""
 #, fuzzy
 msgid "_Remove all Guides"
 msgstr "<Image>/Image/Guides/_Enlever tous les guides"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
+#: plug-ins/script-fu/scripts/image-structure.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Utils"
+msgstr "<Image>/Script-Fu/Utilitaires/_ASCII vers calque..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 msgid "BG opacity"
@@ -2114,6 +2083,10 @@ msgstr ""
 msgid "Brush name"
 msgstr "Nom de la brosse"
 
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+msgid "File name"
+msgstr "Nom de fichier"
+
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 #, fuzzy
 msgid "To _Brush..."
@@ -2122,6 +2095,10 @@ msgstr "_Parcourir..."
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:2
 msgid "To _Image"
 msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+msgid "Filename"
+msgstr "Nom de fichier"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 msgid "Pattern name"
@@ -2589,6 +2566,13 @@ msgstr "Opacité d'éclairage"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr ""
+
+#~ msgid "Buffer amount (% height of text)"
+#~ msgstr "Quantité de mémoire tampon (% hauteur de texte)"
+
+#, fuzzy
+#~ msgid "_ASCII to Layer..."
+#~ msgstr "<Image>/Script-Fu/Utilitaires/_ASCII vers calque..."
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 #~ msgstr "<Toolbox>/Exts/Script-Fu/_Rafraîchir les scripts"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 01:48+0100\n"
+"POT-Creation-Date: 2004-12-28 15:42+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -338,7 +338,6 @@ msgstr "Comentariul implicit"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/asc2img.scm.h:8
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:3
@@ -380,7 +379,6 @@ msgstr "punct"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/asc2img.scm.h:9
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:4
@@ -516,7 +514,6 @@ msgstr "Micşorează selecţia"
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
-#: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:3
@@ -753,7 +750,6 @@ msgid "Padding"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-#: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:10
@@ -798,54 +794,6 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
 msgid "Width of gaps"
 msgstr ""
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:1
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-#: plug-ins/script-fu/scripts/image-structure.scm.h:1
-#, fuzzy
-msgid "<Image>/Script-Fu/Utils"
-msgstr "Micşorează selecţia"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:2
-#: plug-ins/script-fu/scripts/font-map.scm.h:1
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Utils"
-msgstr "Micşorează selecţia"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:5
-#, no-c-format
-msgid "Buffer amount (% height of text)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
-#, fuzzy
-msgid "File name"
-msgstr "/Fişier/Salvează"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:7
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
-#, fuzzy
-msgid "Filename"
-msgstr "/Fişier/Salvează"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:11
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-#, fuzzy
-msgid "Transparent background"
-msgstr "Transparent"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:12
-msgid "_ASCII to Image..."
-msgstr ""
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:13
-#, fuzzy
-msgid "_ASCII to Layer..."
-msgstr "FS -> Strat"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -902,6 +850,13 @@ msgstr "Micşorează selecţia"
 #, fuzzy
 msgid "Diameter"
 msgstr "milimetru"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#, fuzzy
+msgid "Transparent background"
+msgstr "Transparent"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
 #, fuzzy
@@ -1579,6 +1534,12 @@ msgstr "Scalare"
 msgid "_Flatland..."
 msgstr ""
 
+#: plug-ins/script-fu/scripts/font-map.scm.h:1
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Utils"
+msgstr "Micşorează selecţia"
+
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 #, fuzzy
 msgid "Active colors"
@@ -1887,6 +1848,12 @@ msgstr "/Strat nou..."
 #: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"
 msgstr ""
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
+#: plug-ins/script-fu/scripts/image-structure.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Utils"
+msgstr "Micşorează selecţia"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 #, fuzzy
@@ -2321,6 +2288,11 @@ msgstr ""
 msgid "Brush name"
 msgstr "Interfaţă utilizator pentru Pensule"
 
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+#, fuzzy
+msgid "File name"
+msgstr "/Fişier/Salvează"
+
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 #, fuzzy
 msgid "To _Brush..."
@@ -2330,6 +2302,11 @@ msgstr "Afişare informaţii de ajutor"
 #, fuzzy
 msgid "To _Image"
 msgstr "Încarcă imagine"
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+#, fuzzy
+msgid "Filename"
+msgstr "/Fişier/Salvează"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 #, fuzzy
@@ -2853,6 +2830,10 @@ msgstr "Opacitate umplere:"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr ""
+
+#, fuzzy
+#~ msgid "_ASCII to Layer..."
+#~ msgstr "FS -> Strat"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"

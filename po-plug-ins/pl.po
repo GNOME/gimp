@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 01:47+0100\n"
+"POT-Creation-Date: 2004-12-28 15:41+0100\n"
 "PO-Revision-Date: 2004-03-20 11:25+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -1002,7 +1002,7 @@ msgstr ""
 "Jakość wygładzania. Duże wartości zapewniają lepszy obraz, ale zmniejszają "
 "szybkość."
 
-#: plug-ins/MapObject/mapobject_ui.c:614 plug-ins/common/unsharp.c:720
+#: plug-ins/MapObject/mapobject_ui.c:614 plug-ins/common/unsharp.c:691
 #: plug-ins/common/wind.c:993 plug-ins/imagemap/imap_preferences.c:539
 msgid "_Threshold:"
 msgstr "_Próg:"
@@ -2210,12 +2210,12 @@ msgid "Orientation"
 msgstr "Ułożenie"
 
 #: plug-ins/common/blinds.c:259 plug-ins/common/ripple.c:539
-#: plug-ins/common/tileit.c:419 plug-ins/pagecurl/pagecurl.c:530
+#: plug-ins/common/tileit.c:418 plug-ins/pagecurl/pagecurl.c:530
 msgid "_Horizontal"
 msgstr "P_oziomo"
 
 #: plug-ins/common/blinds.c:260 plug-ins/common/ripple.c:540
-#: plug-ins/common/tileit.c:429 plug-ins/pagecurl/pagecurl.c:529
+#: plug-ins/common/tileit.c:428 plug-ins/pagecurl/pagecurl.c:529
 msgid "_Vertical"
 msgstr "P_ionowo"
 
@@ -2238,7 +2238,7 @@ msgstr "_Liczba segmentów:"
 msgid "_Blur"
 msgstr "Rozmywanie"
 
-#: plug-ins/common/blur.c:191 plug-ins/common/unsharp.c:383
+#: plug-ins/common/blur.c:191 plug-ins/common/unsharp.c:432
 msgid "Blurring..."
 msgstr "Rozmywanie..."
 
@@ -2359,25 +2359,25 @@ msgstr ""
 msgid "Ca_rtoon..."
 msgstr "Podp_is"
 
-#: plug-ins/common/cartoon.c:228 plug-ins/common/dog.c:246
-#: plug-ins/common/gauss.c:430 plug-ins/common/neon.c:222
-#: plug-ins/common/photocopy.c:241 plug-ins/common/sel_gauss.c:203
+#: plug-ins/common/cartoon.c:229 plug-ins/common/dog.c:247
+#: plug-ins/common/gauss.c:431 plug-ins/common/neon.c:221
+#: plug-ins/common/photocopy.c:241 plug-ins/common/sel_gauss.c:204
 #: plug-ins/common/softglow.c:220 plug-ins/gflare/gflare.c:972
 #: plug-ins/sgi/sgi.c:528 plug-ins/xjt/xjt.c:1673
 msgid "Cannot operate on indexed color images."
 msgstr "Nie można wykonywać tej operacji na obrazach indeksowanych."
 
-#: plug-ins/common/cartoon.c:807
+#: plug-ins/common/cartoon.c:808
 #, fuzzy
 msgid "Cartoon"
 msgstr "Podp_is"
 
-#: plug-ins/common/cartoon.c:837 plug-ins/common/photocopy.c:867
+#: plug-ins/common/cartoon.c:838 plug-ins/common/photocopy.c:867
 #, fuzzy
 msgid "_Mask radius:"
 msgstr "Rozmiar _maski:"
 
-#: plug-ins/common/cartoon.c:851
+#: plug-ins/common/cartoon.c:852
 #, fuzzy
 msgid "_Percent black:"
 msgstr "Procent"
@@ -2543,29 +2543,29 @@ msgstr "Kolor użytkownika:"
 msgid "Colorify Custom Color"
 msgstr "Wybór koloru do koloryzacji"
 
-#: plug-ins/common/colortoalpha.c:105
+#: plug-ins/common/colortoalpha.c:104
 #, fuzzy
 msgid "Color to _Alpha..."
 msgstr "Zmiana koloru w alfę"
 
-#: plug-ins/common/colortoalpha.c:183
+#: plug-ins/common/colortoalpha.c:181
 msgid "Removing color..."
 msgstr "Usuwanie koloru..."
 
-#: plug-ins/common/colortoalpha.c:364
+#: plug-ins/common/colortoalpha.c:377
 msgid "Color to Alpha"
 msgstr "Zmiana koloru w alfę"
 
-#: plug-ins/common/colortoalpha.c:389 plug-ins/common/mapcolor.c:424
+#: plug-ins/common/colortoalpha.c:402 plug-ins/common/mapcolor.c:424
 #: plug-ins/gfli/gfli.c:835 plug-ins/gfli/gfli.c:898
 msgid "From:"
 msgstr "Z:"
 
-#: plug-ins/common/colortoalpha.c:393
+#: plug-ins/common/colortoalpha.c:406
 msgid "Color to Alpha Color Picker"
 msgstr "Wybór koloru"
 
-#: plug-ins/common/colortoalpha.c:407
+#: plug-ins/common/colortoalpha.c:420
 #, fuzzy
 msgid "to alpha"
 msgstr "do alfy"
@@ -2888,26 +2888,26 @@ msgstr "_Krycie:"
 msgid "_Cubism..."
 msgstr "Kubizm"
 
-#: plug-ins/common/cubism.c:267
+#: plug-ins/common/cubism.c:269
 msgid "Cubism"
 msgstr "Kubizm"
 
-#: plug-ins/common/cubism.c:296
+#: plug-ins/common/cubism.c:298
 #, fuzzy
 msgid "_Tile size:"
 msgstr "Rozmiar _kafla:"
 
-#: plug-ins/common/cubism.c:309
+#: plug-ins/common/cubism.c:311
 #, fuzzy
 msgid "T_ile saturation:"
 msgstr "Na_sycenie kafla:"
 
-#: plug-ins/common/cubism.c:320
+#: plug-ins/common/cubism.c:322
 #, fuzzy
 msgid "_Use background color"
 msgstr "Wykorzystanie koloru _tła"
 
-#: plug-ins/common/cubism.c:410
+#: plug-ins/common/cubism.c:412
 #, fuzzy
 msgid "Cubistic Transformation..."
 msgstr "Transformacja kubistyczna"
@@ -3292,44 +3292,44 @@ msgstr "Skala 2:"
 msgid "Des_peckle..."
 msgstr "Odplamkowanie"
 
-#: plug-ins/common/despeckle.c:420 plug-ins/common/despeckle.c:642
+#: plug-ins/common/despeckle.c:418 plug-ins/common/despeckle.c:640
 msgid "Despeckle"
 msgstr "Odplamkowanie"
 
 #.
 #. * Filter type controls...
 #.
-#: plug-ins/common/despeckle.c:446 plug-ins/gimpressionist/orientmap.c:616
+#: plug-ins/common/despeckle.c:444 plug-ins/gimpressionist/orientmap.c:616
 msgid "Type"
 msgstr "Typ"
 
 #. parameter settings
-#: plug-ins/common/despeckle.c:456
+#: plug-ins/common/despeckle.c:454
 #, fuzzy
 msgid "Median"
 msgstr "Radiany"
 
-#: plug-ins/common/despeckle.c:462
+#: plug-ins/common/despeckle.c:460
 msgid "_Adaptive"
 msgstr "_Adaptywnie"
 
-#: plug-ins/common/despeckle.c:472
+#: plug-ins/common/despeckle.c:470
 msgid "R_ecursive"
 msgstr "_Rekurencyjnie"
 
-#: plug-ins/common/despeckle.c:496 plug-ins/common/neon.c:728
+#: plug-ins/common/despeckle.c:494 plug-ins/common/neon.c:727
 #: plug-ins/common/nlfilt.c:1083 plug-ins/common/nova.c:359
-#: plug-ins/common/unsharp.c:694 plug-ins/common/whirlpinch.c:588
+#: plug-ins/common/unsharp.c:665 plug-ins/common/whirlpinch.c:588
 #: plug-ins/gflare/gflare.c:2686 plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "_Promień:"
 
-#: plug-ins/common/despeckle.c:512
+#: plug-ins/common/despeckle.c:510
 #, fuzzy
 msgid "_Black level:"
 msgstr "Poziom _czerni:"
 
-#: plug-ins/common/despeckle.c:528
+#: plug-ins/common/despeckle.c:526
 #, fuzzy
 msgid "_White level:"
 msgstr "Poziom _bieli:"
@@ -3424,7 +3424,7 @@ msgstr "_Inne opcje"
 msgid "_Displace..."
 msgstr "Przesuwanie..."
 
-#: plug-ins/common/displace.c:228
+#: plug-ins/common/displace.c:231
 msgid "Displacing..."
 msgstr "Przesuwanie..."
 
@@ -3464,32 +3464,32 @@ msgstr "_Czarny"
 msgid "Difference of Gaussians..."
 msgstr "Selektywne rozmycie Gaussa..."
 
-#: plug-ins/common/dog.c:222 plug-ins/common/dog.c:273
+#: plug-ins/common/dog.c:227 plug-ins/common/dog.c:274
 #, fuzzy
 msgid "DoG Edge Detect"
 msgstr "Wykrywanie krawędzi"
 
-#: plug-ins/common/dog.c:294
+#: plug-ins/common/dog.c:295
 #, fuzzy
 msgid "Smoothing parameters"
 msgstr "Wygładzanie gradientu X..."
 
-#: plug-ins/common/dog.c:308
+#: plug-ins/common/dog.c:309
 #, fuzzy
 msgid "_Radius 1:"
 msgstr "_Promień:"
 
-#: plug-ins/common/dog.c:312
+#: plug-ins/common/dog.c:313
 #, fuzzy
 msgid "R_adius 2:"
 msgstr "P_romień:"
 
-#: plug-ins/common/dog.c:324 plug-ins/common/normalize.c:88
+#: plug-ins/common/dog.c:325 plug-ins/common/normalize.c:88
 #, fuzzy
 msgid "_Normalize"
 msgstr "_Zwykłe"
 
-#: plug-ins/common/dog.c:335 plug-ins/gimpressionist/paper.c:149
+#: plug-ins/common/dog.c:336 plug-ins/gimpressionist/paper.c:149
 msgid "_Invert"
 msgstr "_Inwersja"
 
@@ -3550,7 +3550,7 @@ msgstr "Wartość:"
 msgid "_Emboss..."
 msgstr "_Wytłoczenie"
 
-#: plug-ins/common/emboss.c:374 plug-ins/common/emboss.c:439
+#: plug-ins/common/emboss.c:376 plug-ins/common/emboss.c:439
 msgid "Emboss"
 msgstr "Wytłoczenie"
 
@@ -3575,7 +3575,7 @@ msgstr "W_zniesienie:"
 msgid "En_grave..."
 msgstr "Grawerowanie..."
 
-#: plug-ins/common/engrave.c:181
+#: plug-ins/common/engrave.c:182
 msgid "Engraving..."
 msgstr "Grawerowanie..."
 
@@ -4003,41 +4003,41 @@ msgstr "Y_2:"
 msgid "_Gaussian Blur..."
 msgstr "Rozmycie Gaussa RLE"
 
-#: plug-ins/common/gauss.c:407
+#: plug-ins/common/gauss.c:413
 #, fuzzy
 msgid "Gaussian Blur..."
 msgstr "Rozmycie Gaussa RLE"
 
-#: plug-ins/common/gauss.c:460
+#: plug-ins/common/gauss.c:461
 #, fuzzy
 msgid "Gaussian Blur"
 msgstr "Rozmycie Gaussa IIR"
 
 #. parameter settings
-#: plug-ins/common/gauss.c:483
+#: plug-ins/common/gauss.c:484
 msgid "Blur Radius"
 msgstr "Promień rozmycia"
 
-#: plug-ins/common/gauss.c:497 plug-ins/common/jigsaw.c:2456
-#: plug-ins/common/spread.c:378
+#: plug-ins/common/gauss.c:498 plug-ins/common/jigsaw.c:2456
+#: plug-ins/common/spread.c:379
 msgid "_Horizontal:"
 msgstr "Po_ziomo"
 
-#: plug-ins/common/gauss.c:501 plug-ins/common/jigsaw.c:2473
-#: plug-ins/common/spread.c:382
+#: plug-ins/common/gauss.c:502 plug-ins/common/jigsaw.c:2473
+#: plug-ins/common/spread.c:383
 msgid "_Vertical:"
 msgstr "Pio_nowo:"
 
-#: plug-ins/common/gauss.c:524
+#: plug-ins/common/gauss.c:525
 #, fuzzy
 msgid "Blur Method"
 msgstr "Typ rozmycia"
 
-#: plug-ins/common/gauss.c:528
+#: plug-ins/common/gauss.c:529
 msgid "_IIR"
 msgstr ""
 
-#: plug-ins/common/gauss.c:529
+#: plug-ins/common/gauss.c:530
 #, fuzzy
 msgid "_RLE"
 msgstr "RLE"
@@ -4365,20 +4365,20 @@ msgstr "Rzędy:"
 msgid "_Glass Tile..."
 msgstr "Nakładanie szklanych płytek..."
 
-#: plug-ins/common/glasstile.c:208
+#: plug-ins/common/glasstile.c:209
 msgid "Glass Tile..."
 msgstr "Nakładanie szklanych płytek..."
 
-#: plug-ins/common/glasstile.c:251
+#: plug-ins/common/glasstile.c:250
 msgid "Glass Tile"
 msgstr "Szklane płytki"
 
-#: plug-ins/common/glasstile.c:282
+#: plug-ins/common/glasstile.c:281
 #, fuzzy
 msgid "Tile _width:"
 msgstr "_Szerokość:"
 
-#: plug-ins/common/glasstile.c:296 plug-ins/common/mosaic.c:621
+#: plug-ins/common/glasstile.c:295 plug-ins/common/mosaic.c:621
 #, fuzzy
 msgid "Tile _height:"
 msgstr "_Wysokość:"
@@ -5439,17 +5439,17 @@ msgstr "Nie można dodać kolejnego punktu.\n"
 msgid "_Neon..."
 msgstr "_Brak"
 
-#: plug-ins/common/neon.c:204
+#: plug-ins/common/neon.c:207
 #, fuzzy
 msgid "Neon..."
 msgstr "Wydruk gazetowy..."
 
-#: plug-ins/common/neon.c:698
+#: plug-ins/common/neon.c:697
 #, fuzzy
 msgid "Neon Detection"
 msgstr "Wykrywanie krawędzi"
 
-#: plug-ins/common/neon.c:743 plug-ins/common/unsharp.c:707
+#: plug-ins/common/neon.c:742 plug-ins/common/unsharp.c:678
 msgid "_Amount:"
 msgstr "Roz_miar:"
 
@@ -5619,7 +5619,7 @@ msgstr "A_lfa:"
 msgid "_Scatter RGB..."
 msgstr "Rozproszenie HSV..."
 
-#: plug-ins/common/noisify.c:284
+#: plug-ins/common/noisify.c:285
 msgid "Adding Noise..."
 msgstr "Dodawanie szumu..."
 
@@ -5695,7 +5695,7 @@ msgstr "Wyświetlanie _kursora"
 msgid "Oili_fy..."
 msgstr "Farba olejna"
 
-#: plug-ins/common/oilify.c:188
+#: plug-ins/common/oilify.c:189
 msgid "Oil Painting..."
 msgstr "Malowanie farbą olejną..."
 
@@ -5839,7 +5839,7 @@ msgstr ""
 msgid "Photocopy"
 msgstr "Fotografia"
 
-#: plug-ins/common/photocopy.c:881 plug-ins/common/sharpen.c:513
+#: plug-ins/common/photocopy.c:881 plug-ins/common/sharpen.c:509
 #: plug-ins/common/softglow.c:687
 msgid "_Sharpness:"
 msgstr "O_strość:"
@@ -6520,7 +6520,7 @@ msgstr "Rozmycie \"w ruchu\"..."
 msgid "_Ripple..."
 msgstr "Falowanie"
 
-#: plug-ins/common/ripple.c:219
+#: plug-ins/common/ripple.c:222
 msgid "Rippling..."
 msgstr "Falowanie"
 
@@ -6756,20 +6756,20 @@ msgstr "Po_branie po"
 msgid "_Selective Gaussian Blur..."
 msgstr "Selektywne rozmycie Gaussa..."
 
-#: plug-ins/common/sel_gauss.c:186
+#: plug-ins/common/sel_gauss.c:187
 msgid "Selective Gaussian Blur..."
 msgstr "Selektywne rozmycie Gaussa..."
 
-#: plug-ins/common/sel_gauss.c:224
+#: plug-ins/common/sel_gauss.c:225
 msgid "Selective Gaussian Blur"
 msgstr "Selektywne rozmycie Gaussa"
 
-#: plug-ins/common/sel_gauss.c:256
+#: plug-ins/common/sel_gauss.c:257
 #, fuzzy
 msgid "_Blur radius:"
 msgstr "Promień _rozmycia:"
 
-#: plug-ins/common/sel_gauss.c:266
+#: plug-ins/common/sel_gauss.c:267
 #, fuzzy
 msgid "_Max. delta:"
 msgstr "_Maksymalna delta:"
@@ -6791,11 +6791,11 @@ msgstr "Wyostrzanie..."
 #.
 #. * Let the user know what we're doing...
 #.
-#: plug-ins/common/sharpen.c:315
+#: plug-ins/common/sharpen.c:311
 msgid "Sharpening..."
 msgstr "Wyostrzanie..."
 
-#: plug-ins/common/sharpen.c:484
+#: plug-ins/common/sharpen.c:480
 msgid "Sharpen"
 msgstr "Wyostrzanie"
 
@@ -6804,7 +6804,7 @@ msgstr "Wyostrzanie"
 msgid "_Shift..."
 msgstr "Przesuwanie..."
 
-#: plug-ins/common/shift.c:191
+#: plug-ins/common/shift.c:194
 msgid "Shifting..."
 msgstr "Przesuwanie..."
 
@@ -7015,24 +7015,24 @@ msgstr "Rozmiar _Y:"
 msgid "_Sobel..."
 msgstr "_Sobel"
 
-#: plug-ins/common/sobel.c:226
+#: plug-ins/common/sobel.c:227
 msgid "Sobel Edge Detection"
 msgstr "Wykrywanie krawędzi \"Sobel\""
 
-#: plug-ins/common/sobel.c:248
+#: plug-ins/common/sobel.c:249
 msgid "Sobel _Horizontally"
 msgstr "Wykrywanie po_ziome"
 
-#: plug-ins/common/sobel.c:260
+#: plug-ins/common/sobel.c:261
 msgid "Sobel _Vertically"
 msgstr "Wykrywanie pio_nowe"
 
-#: plug-ins/common/sobel.c:272
+#: plug-ins/common/sobel.c:273
 #, fuzzy
 msgid "_Keep sign of result (one direction only)"
 msgstr "_Utrzymanie znaku wyniku (tylko jeden kierunek)"
 
-#: plug-ins/common/sobel.c:358
+#: plug-ins/common/sobel.c:359
 msgid "Sobel Edge Detecting..."
 msgstr "Wykrywanie krawędzi \"Sobel\"..."
 
@@ -7356,15 +7356,15 @@ msgstr "Projektowanie sfery"
 msgid "Sp_read..."
 msgstr "Rozrzucanie..."
 
-#: plug-ins/common/spread.c:179
+#: plug-ins/common/spread.c:182
 msgid "Spreading..."
 msgstr "Rozrzucanie..."
 
-#: plug-ins/common/spread.c:345
+#: plug-ins/common/spread.c:346
 msgid "Spread"
 msgstr "Rozrzut"
 
-#: plug-ins/common/spread.c:363
+#: plug-ins/common/spread.c:364
 msgid "Spread Amount"
 msgstr "Rozmiar rozrzutu"
 
@@ -7666,7 +7666,8 @@ msgstr "Komentarz:"
 msgid "_Tile..."
 msgstr "Układanie kafelek..."
 
-#: plug-ins/common/tile.c:192 plug-ins/common/tileit.c:321
+#. Set the tile cache size
+#: plug-ins/common/tile.c:192 plug-ins/common/tileit.c:320
 msgid "Tiling..."
 msgstr "Układanie kafelek..."
 
@@ -7688,45 +7689,45 @@ msgid "_Small Tiles..."
 msgstr "_Wszystkie"
 
 #. Get the preview image
-#: plug-ins/common/tileit.c:364
+#: plug-ins/common/tileit.c:363
 msgid "TileIt"
 msgstr "Kafelki"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tileit.c:407 plug-ins/ifscompose/ifscompose.c:628
+#: plug-ins/common/tileit.c:406 plug-ins/ifscompose/ifscompose.c:628
 msgid "Flip"
 msgstr "Odbicie"
 
-#: plug-ins/common/tileit.c:455
+#: plug-ins/common/tileit.c:454
 #, fuzzy
 msgid "A_ll tiles"
 msgstr "_Wszystkie"
 
-#: plug-ins/common/tileit.c:469
+#: plug-ins/common/tileit.c:468
 #, fuzzy
 msgid "Al_ternate tiles"
 msgstr "A_lternatywnie"
 
-#: plug-ins/common/tileit.c:483
+#: plug-ins/common/tileit.c:482
 #, fuzzy
 msgid "_Explicit tile"
 msgstr "Wy_brana kafelka"
 
-#: plug-ins/common/tileit.c:489
+#: plug-ins/common/tileit.c:488
 msgid "Ro_w:"
 msgstr "_Rząd:"
 
-#: plug-ins/common/tileit.c:513
+#: plug-ins/common/tileit.c:512
 msgid "Col_umn:"
 msgstr "_Kolumna:"
 
-#: plug-ins/common/tileit.c:565
+#: plug-ins/common/tileit.c:564
 msgid "O_pacity:"
 msgstr "_Krycie:"
 
 #. Lower frame saying howmany segments
-#: plug-ins/common/tileit.c:574
+#: plug-ins/common/tileit.c:573
 #, fuzzy
 msgid "Number of Segments"
 msgstr "_Liczba segmentów:"
@@ -7878,16 +7879,16 @@ msgstr "Wszystkie pola tekstowe muszą zawierać wartość."
 msgid "Unit Editor"
 msgstr "Edytor jednostek"
 
-#: plug-ins/common/unsharp.c:149
+#: plug-ins/common/unsharp.c:143
 #, fuzzy
 msgid "_Unsharp Mask..."
 msgstr "Zmiękczenie maski"
 
-#: plug-ins/common/unsharp.c:493
+#: plug-ins/common/unsharp.c:468
 msgid "Merging..."
 msgstr "Łączenie..."
 
-#: plug-ins/common/unsharp.c:664
+#: plug-ins/common/unsharp.c:635
 msgid "Unsharp Mask"
 msgstr "Zmiękczenie maski"
 
@@ -8998,19 +8999,19 @@ msgstr "_Kamera"
 msgid "_Zoom:"
 msgstr "Po_większenie:"
 
-#: plug-ins/gfig/gfig-bezier.c:452
+#: plug-ins/gfig/gfig-bezier.c:448
 msgid "Closed"
 msgstr "Zamknięta"
 
-#: plug-ins/gfig/gfig-bezier.c:457
+#: plug-ins/gfig/gfig-bezier.c:453
 msgid "Close curve on completion"
 msgstr "Zamknięcie krzywej na końcu"
 
-#: plug-ins/gfig/gfig-bezier.c:462
+#: plug-ins/gfig/gfig-bezier.c:458
 msgid "Show Line Frame"
 msgstr "Wyświetlanie szkieletu liniowego"
 
-#: plug-ins/gfig/gfig-bezier.c:467
+#: plug-ins/gfig/gfig-bezier.c:463
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr ""
 "Rysuje linię pomiędzy punktami kontrolnymi. Tylko podczas tworzenia krzywej."

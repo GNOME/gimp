@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-19 03:11+0100\n"
+"POT-Creation-Date: 2004-12-28 16:58+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -1179,11 +1179,11 @@ msgstr ""
 msgid "Remove dangling entries"
 msgstr "Selecţie Plutitoare"
 
-#: app/actions/documents-commands.c:252 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
-#: app/display/gimpdisplayshell-dnd.c:332 app/widgets/gimplayertreeview.c:802
-#: app/widgets/gimptoolbox-dnd.c:123
+#: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
+#: app/widgets/gimptoolbox-dnd.c:125
 #, fuzzy, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1791,186 +1791,186 @@ msgstr "Scalează tot"
 msgid "Zoom all"
 msgstr "Scalează tot"
 
-#: app/actions/gradient-editor-actions.c:582
+#: app/actions/gradient-editor-actions.c:589
 #, fuzzy
 msgid "_Blending Function for Segment"
 msgstr "Tip de colorare pentru segment"
 
-#: app/actions/gradient-editor-actions.c:584
+#: app/actions/gradient-editor-actions.c:591
 #, fuzzy
 msgid "Coloring _Type for Segment"
 msgstr "Tip de colorare pentru segment"
 
-#: app/actions/gradient-editor-actions.c:587
+#: app/actions/gradient-editor-actions.c:594
 #, fuzzy
 msgid "_Flip Segment"
 msgstr "Oglindire segment"
 
-#: app/actions/gradient-editor-actions.c:589
+#: app/actions/gradient-editor-actions.c:596
 #, fuzzy
 msgid "_Replicate Segment..."
 msgstr "Replicare segment"
 
-#: app/actions/gradient-editor-actions.c:591
+#: app/actions/gradient-editor-actions.c:598
 #, fuzzy
 msgid "Split Segment at _Midpoint"
 msgstr "Împarţire segment la punctul median"
 
-#: app/actions/gradient-editor-actions.c:593
+#: app/actions/gradient-editor-actions.c:600
 #, fuzzy
 msgid "Split Segment _Uniformly..."
 msgstr "Împarţire uniformă segment"
 
-#: app/actions/gradient-editor-actions.c:595
+#: app/actions/gradient-editor-actions.c:602
 #, fuzzy
 msgid "_Delete Segment"
 msgstr "Elimină segment"
 
-#: app/actions/gradient-editor-actions.c:597
+#: app/actions/gradient-editor-actions.c:604
 #, fuzzy
 msgid "Re-_center Segment's Midpoint"
 msgstr "Re-centrează mijloc segment"
 
-#: app/actions/gradient-editor-actions.c:599
+#: app/actions/gradient-editor-actions.c:606
 #, fuzzy
 msgid "Re-distribute _Handles in Segment"
 msgstr "Re-distribuire mânere în segment"
 
-#: app/actions/gradient-editor-actions.c:604
+#: app/actions/gradient-editor-actions.c:611
 #, fuzzy
 msgid "_Blending Function for Selection"
 msgstr "Tipul de colorare pentru selecţie"
 
-#: app/actions/gradient-editor-actions.c:606
+#: app/actions/gradient-editor-actions.c:613
 #, fuzzy
 msgid "Coloring _Type for Selection"
 msgstr "Tipul de colorare pentru selecţie"
 
-#: app/actions/gradient-editor-actions.c:609
+#: app/actions/gradient-editor-actions.c:616
 #, fuzzy
 msgid "_Flip Selection"
 msgstr "Oglindire selecţie"
 
-#: app/actions/gradient-editor-actions.c:611
+#: app/actions/gradient-editor-actions.c:618
 #, fuzzy
 msgid "_Replicate Selection..."
 msgstr "Replicare selecţie"
 
-#: app/actions/gradient-editor-actions.c:613
+#: app/actions/gradient-editor-actions.c:620
 #, fuzzy
 msgid "Split Segments at _Midpoints"
 msgstr "Împarte segmentele în punctele mediane"
 
-#: app/actions/gradient-editor-actions.c:615
+#: app/actions/gradient-editor-actions.c:622
 #, fuzzy
 msgid "Split Segments _Uniformly..."
 msgstr "Împarte segmentele în mod uniform"
 
-#: app/actions/gradient-editor-actions.c:617
+#: app/actions/gradient-editor-actions.c:624
 #, fuzzy
 msgid "_Delete Selection"
 msgstr "Elimină selecţia"
 
-#: app/actions/gradient-editor-actions.c:619
+#: app/actions/gradient-editor-actions.c:626
 #, fuzzy
 msgid "Re-_center Midpoints in Selection"
 msgstr "Re-centrează punctele mediane în selecţie"
 
-#: app/actions/gradient-editor-actions.c:621
+#: app/actions/gradient-editor-actions.c:628
 #, fuzzy
 msgid "Re-distribute _Handles in Selection"
 msgstr "Re-distribuire mânere în selecţie"
 
-#: app/actions/gradient-editor-commands.c:84
+#: app/actions/gradient-editor-commands.c:85
 #, fuzzy
 msgid "Left Endpoint Color"
 msgstr "Culoarea punctului din stânga"
 
-#: app/actions/gradient-editor-commands.c:86
+#: app/actions/gradient-editor-commands.c:87
 #, fuzzy
 msgid "Gradient Segment's Left Endpoint Color"
 msgstr "Culoarea punctului din stânga"
 
-#: app/actions/gradient-editor-commands.c:186
+#: app/actions/gradient-editor-commands.c:189
 #, fuzzy
 msgid "Right Endpoint Color"
 msgstr "Culoarea punctului din dreapta"
 
-#: app/actions/gradient-editor-commands.c:188
+#: app/actions/gradient-editor-commands.c:191
 #, fuzzy
 msgid "Gradient Segment's Right Endpoint Color"
 msgstr "Culoarea punctului din dreapta"
 
-#: app/actions/gradient-editor-commands.c:353
+#: app/actions/gradient-editor-commands.c:358
 #, fuzzy
 msgid "Replicate Segment"
 msgstr "Replicare segment"
 
-#: app/actions/gradient-editor-commands.c:354
+#: app/actions/gradient-editor-commands.c:359
 #, fuzzy
 msgid "Replicate Gradient Segment"
 msgstr "Replicare segment"
 
-#: app/actions/gradient-editor-commands.c:358
+#: app/actions/gradient-editor-commands.c:363
 #, fuzzy
 msgid "Replicate Selection"
 msgstr "Replicare selecţie"
 
-#: app/actions/gradient-editor-commands.c:359
+#: app/actions/gradient-editor-commands.c:364
 #, fuzzy
 msgid "Replicate Gradient Selection"
 msgstr "Replicare selecţie"
 
-#: app/actions/gradient-editor-commands.c:371
+#: app/actions/gradient-editor-commands.c:376
 msgid "Replicate"
 msgstr "Replicare"
 
-#: app/actions/gradient-editor-commands.c:386
+#: app/actions/gradient-editor-commands.c:391
 #, fuzzy
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
 msgstr "doriţi să replicaţi segmentul selectat"
 
-#: app/actions/gradient-editor-commands.c:389
+#: app/actions/gradient-editor-commands.c:394
 #, fuzzy
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
 msgstr "Selectaţi vă rog de câte ori"
 
-#: app/actions/gradient-editor-commands.c:444
+#: app/actions/gradient-editor-commands.c:452
 #, fuzzy
 msgid "Split Segment Uniformly"
 msgstr "Împarţire uniformă segment"
 
-#: app/actions/gradient-editor-commands.c:445
+#: app/actions/gradient-editor-commands.c:453
 #, fuzzy
 msgid "Split Gradient Segment Uniformly"
 msgstr "Împarţire uniformă segment"
 
-#: app/actions/gradient-editor-commands.c:449
+#: app/actions/gradient-editor-commands.c:457
 #, fuzzy
 msgid "Split Segments Uniformly"
 msgstr "Împarte segmentele în mod uniform"
 
-#: app/actions/gradient-editor-commands.c:450
+#: app/actions/gradient-editor-commands.c:458
 #, fuzzy
 msgid "Split Gradient Segments Uniformly"
 msgstr "Împarte segmentele în mod uniform"
 
-#: app/actions/gradient-editor-commands.c:462
+#: app/actions/gradient-editor-commands.c:470
 msgid "Split"
 msgstr "Impărţire"
 
-#: app/actions/gradient-editor-commands.c:478
+#: app/actions/gradient-editor-commands.c:486
 #, fuzzy
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
 msgstr "în care doriţi să impărţiţi segmentul selectat"
 
-#: app/actions/gradient-editor-commands.c:481
+#: app/actions/gradient-editor-commands.c:489
 #, fuzzy
 msgid ""
 "Select the number of uniform parts\n"
@@ -2503,7 +2503,7 @@ msgstr "Modificare caracteristici strat"
 
 #: app/actions/layers-commands.c:232 app/actions/layers-commands.c:234
 #: app/actions/layers-commands.c:291 app/actions/layers-commands.c:295
-#: app/widgets/gimpdrawabletreeview.c:238 app/widgets/gimplayertreeview.c:840
+#: app/widgets/gimpdrawabletreeview.c:238 app/widgets/gimplayertreeview.c:842
 msgid "New Layer"
 msgstr "Strat nou"
 
@@ -2516,7 +2516,7 @@ msgstr "Strat nou"
 msgid "Set Layer Boundary Size"
 msgstr "Stabileşte dimensiune exterioară strat"
 
-#: app/actions/layers-commands.c:512 app/core/gimplayer.c:255
+#: app/actions/layers-commands.c:512 app/core/gimplayer.c:253
 msgid "Scale Layer"
 msgstr "Scalează stratul"
 
@@ -2530,7 +2530,7 @@ msgstr "/Strat/Ancorează Strat"
 msgid "Layer Mask to Selection"
 msgstr "/Strat/Masca -> Selecţie"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1085
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
 #: app/dialogs/layer-add-mask-dialog.c:62
 #, fuzzy
 msgid "Add Layer Mask"
@@ -3189,7 +3189,7 @@ msgid "Open Text File (UTF-8)"
 msgstr ""
 
 #: app/actions/text-editor-commands.c:132 app/config/gimpconfig-utils.c:552
-#: app/config/gimpscanner.c:92 app/core/gimpbrush.c:393
+#: app/config/gimpscanner.c:92 app/core/gimpbrush.c:396
 #: app/core/gimpbrushgenerated.c:601 app/core/gimpbrushpipe.c:338
 #: app/core/gimpgradient-load.c:63 app/core/gimppalette.c:360
 #: app/core/gimppattern.c:328 app/tools/gimpimagemaptool.c:608
@@ -5118,7 +5118,7 @@ msgstr "Prim plan -> Fundal (HSV)"
 msgid "FG to Transparent"
 msgstr "Prim plan -> Transparent"
 
-#: app/core/gimp-gui.c:148
+#: app/core/gimp-gui.c:153
 #, fuzzy
 msgid "GIMP"
 msgstr "GIMP"
@@ -5153,39 +5153,54 @@ msgstr "Index document"
 msgid "Modules"
 msgstr "Module"
 
-#: app/core/gimpbrush.c:531
+#: app/core/gimpbrush.c:534
 #, fuzzy, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "Nu am putut deschide fişierul %s"
 
-#: app/core/gimpbrush.c:566
+#: app/core/gimpbrush.c:554
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Width = 0."
+msgstr "Fişierul de pensule al GIMP pare să fie trunchiat: \"%s\"."
+
+#: app/core/gimpbrush.c:563
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Height = 0."
+msgstr "Fişierul de pensule al GIMP pare să fie trunchiat: \"%s\"."
+
+#: app/core/gimpbrush.c:572
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Bytes = 0."
+msgstr "Fişierul de pensule al GIMP pare să fie trunchiat: \"%s\"."
+
+#: app/core/gimpbrush.c:596
 #, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr "Fişierul de pensule al GIMP pare să fie trunchiat: \"%s\"."
 
-#: app/core/gimpbrush.c:579
+#: app/core/gimpbrush.c:609
 #, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "Fişierul de pensule al GIMP pare să fie trunchiat: \"%s\"."
 
-#: app/core/gimpbrush.c:595 app/core/gimpbrush.c:715
+#: app/core/gimpbrush.c:625 app/core/gimpbrush.c:745
 #, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "Fişierul de pensule al GIMP pare să fie trunchiat: \"%s\"."
 
-#: app/core/gimpbrush.c:603 app/core/gimpbrushgenerated.c:648
+#: app/core/gimpbrush.c:633 app/core/gimpbrushgenerated.c:648
 #: app/core/gimpbrushpipe.c:354
 #, fuzzy, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Eroare în fişierul de pensule al GIMP \"%s\"."
 
-#: app/core/gimpbrush.c:610 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:479 app/core/gimppattern.c:400
+#: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
+#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "Fară nume"
 
-#: app/core/gimpbrush.c:704
+#: app/core/gimpbrush.c:734
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -5368,11 +5383,11 @@ msgid ""
 msgstr "Nu am reuşit să citesc traseul din %s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:274 app/core/gimpitem.c:277
+#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
 msgid "copy"
 msgstr "copiere"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:286
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
 #, c-format
 msgid "%s copy"
 msgstr "%s copiere"
@@ -5436,7 +5451,7 @@ msgstr "Răstoarnă unealta"
 msgid "Rotate"
 msgstr "Rotire"
 
-#: app/core/gimpdrawable-transform.c:1119 app/core/gimplayer.c:259
+#: app/core/gimpdrawable-transform.c:1119 app/core/gimplayer.c:257
 #, fuzzy
 msgid "Transform Layer"
 msgstr "Transformare"
@@ -5867,7 +5882,7 @@ msgstr ""
 
 #. pixel size
 #: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:552
-#: app/widgets/gimpsizebox.c:552 app/widgets/gimptemplateeditor.c:637
+#: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:637
 #: app/widgets/gimptemplateeditor.c:673
 #, c-format
 msgid "%d x %d pixels"
@@ -5888,17 +5903,17 @@ msgstr "Strat"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nu am putut redeschide %s\n"
 
-#: app/core/gimpitem.c:1096
+#: app/core/gimpitem.c:1103
 #, fuzzy
 msgid "Attach Parasite"
 msgstr "ataşează parazit"
 
-#: app/core/gimpitem.c:1106
+#: app/core/gimpitem.c:1113
 #, fuzzy
 msgid "Attach Parasite to Item"
 msgstr "ataşează parazit"
 
-#: app/core/gimpitem.c:1145 app/core/gimpitem.c:1152
+#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
 #, fuzzy
 msgid "Remove Parasite from Item"
 msgstr "elimină parazit"
@@ -5935,94 +5950,94 @@ msgstr ""
 msgid "Floating Selection to Layer"
 msgstr "Selecţie Plutitoare"
 
-#: app/core/gimplayer.c:252 app/pdb/internal_procs.c:152
+#: app/core/gimplayer.c:250 app/pdb/internal_procs.c:152
 msgid "Layer"
 msgstr "Strat"
 
-#: app/core/gimplayer.c:253
+#: app/core/gimplayer.c:251
 #, fuzzy
 msgid "Rename Layer"
 msgstr "/Stivă/Ridică Stratul"
 
-#: app/core/gimplayer.c:254 app/pdb/layer_cmds.c:669 app/pdb/layer_cmds.c:742
+#: app/core/gimplayer.c:252 app/pdb/layer_cmds.c:669 app/pdb/layer_cmds.c:742
 #, fuzzy
 msgid "Move Layer"
 msgstr "Strat nou"
 
-#: app/core/gimplayer.c:256
+#: app/core/gimplayer.c:254
 #, fuzzy
 msgid "Resize Layer"
 msgstr "/Stivă/Ridică Stratul"
 
-#: app/core/gimplayer.c:257
+#: app/core/gimplayer.c:255
 #, fuzzy
 msgid "Flip Layer"
 msgstr "Strat"
 
-#: app/core/gimplayer.c:258
+#: app/core/gimplayer.c:256
 #, fuzzy
 msgid "Rotate Layer"
 msgstr "Strat Plutitor"
 
-#: app/core/gimplayer.c:341 app/core/gimplayer.c:1129
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
 msgstr "masca %s"
 
-#: app/core/gimplayer.c:387
+#: app/core/gimplayer.c:385
 #, fuzzy, c-format
 msgid ""
 "Floating Selection\n"
 "(%s)"
 msgstr "Selecţie Plutitoare"
 
-#: app/core/gimplayer.c:1055
+#: app/core/gimplayer.c:1036
 #, fuzzy
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "Nu pot să adaug un strat de tip mască\n"
 "unui strat fără canal alfa(transparenţă)."
 
-#: app/core/gimplayer.c:1062
+#: app/core/gimplayer.c:1043
 #, fuzzy
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Nu pot să adaug stratul mască\n"
 "deoarece stratul are deja unul."
 
-#: app/core/gimplayer.c:1069
+#: app/core/gimplayer.c:1050
 #, fuzzy
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr ""
 "Nu pot să adaug un strat de tip mască\n"
 "unui strat fără canal alfa(transparenţă)."
 
-#: app/core/gimplayer.c:1079
+#: app/core/gimplayer.c:1060
 #, fuzzy
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nu pot să adaug un strat de tip mască unui strat de alte dimensiuni"
 
-#: app/core/gimplayer.c:1183
+#: app/core/gimplayer.c:1164
 msgid "Transfer Alpha to Mask"
 msgstr ""
 
-#: app/core/gimplayer.c:1343
+#: app/core/gimplayer.c:1324
 #, fuzzy
 msgid "Apply Layer Mask"
 msgstr "/Aplică stratul mască"
 
-#: app/core/gimplayer.c:1344
+#: app/core/gimplayer.c:1325
 #, fuzzy
 msgid "Delete Layer Mask"
 msgstr "/Elimină stratul mască"
 
-#: app/core/gimplayer.c:1445
+#: app/core/gimplayer.c:1426
 #, fuzzy
 msgid "Add Alpha Channel"
 msgstr "/Adaugă canal de transparenţa"
 
-#: app/core/gimplayer.c:1467
+#: app/core/gimplayer.c:1448
 #, fuzzy
 msgid "Layer to Image Size"
 msgstr "/Strat -> Dimensiune imagine"
@@ -7647,32 +7662,32 @@ msgid "Print Size"
 msgstr "Dimensiune previzualizare:"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:241
+#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:222
 #: app/widgets/gimptemplateeditor.c:236
 #, fuzzy
 msgid "_Width:"
 msgstr "Lăţime:"
 
-#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:248
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:225
 #: app/widgets/gimptemplateeditor.c:243
 #, fuzzy
 msgid "H_eight:"
 msgstr "Înălţime:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:338
+#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:273
 #: app/widgets/gimptemplateeditor.c:363
 #, fuzzy
 msgid "_X resolution:"
 msgstr "Rezoluţie:"
 
-#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:345
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:276
 #: app/widgets/gimptemplateeditor.c:370
 #, fuzzy
 msgid "_Y resolution:"
 msgstr "Rezoluţie:"
 
-#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:357
+#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:269
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -8396,12 +8411,12 @@ msgstr "Linear"
 msgid "%d minutes"
 msgstr "%d Octeţi"
 
-#: app/display/gimpdisplayshell-dnd.c:96
+#: app/display/gimpdisplayshell-dnd.c:98
 #, fuzzy
 msgid "Drop New Layer"
 msgstr "Strat nou"
 
-#: app/display/gimpdisplayshell-dnd.c:140
+#: app/display/gimpdisplayshell-dnd.c:142
 #, fuzzy
 msgid "Drop New Path"
 msgstr "Traseu nou"
@@ -10036,12 +10051,12 @@ msgid "_Paintbrush"
 msgstr "desen"
 
 #: app/tools/gimppaintoptions-gui.c:103 app/widgets/gimpbrushselect.c:201
-#: app/widgets/gimplayertreeview.c:330
+#: app/widgets/gimplayertreeview.c:332
 msgid "Opacity:"
 msgstr "Opacitate:"
 
 #: app/tools/gimppaintoptions-gui.c:108 app/tools/gimpselectionoptions.c:374
-#: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:323
+#: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:325
 msgid "Mode:"
 msgstr "Mod:"
 
@@ -11574,27 +11589,27 @@ msgstr ""
 msgid "Set Item Exclusive Linked"
 msgstr "Opţiuni strat nou"
 
-#: app/widgets/gimplayertreeview.c:250
+#: app/widgets/gimplayertreeview.c:252
 #, fuzzy
 msgid "Reorder Layer"
 msgstr "/Stivă/Coboară Stratul"
 
-#: app/widgets/gimplayertreeview.c:311
+#: app/widgets/gimplayertreeview.c:313
 #, fuzzy
 msgid "Keep transparency"
 msgstr "Păstrează Transparenţa"
 
-#: app/widgets/gimplayertreeview.c:846
+#: app/widgets/gimplayertreeview.c:848
 #, fuzzy
 msgid "Empty Layer"
 msgstr "Strat de text"
 
-#: app/widgets/gimpmessagebox.c:458
+#: app/widgets/gimpmessagebox.c:460
 #, fuzzy, c-format
 msgid "Message repeated %d times."
 msgstr "Mesaj repetat de %d ori"
 
-#: app/widgets/gimpmessagebox.c:460
+#: app/widgets/gimpmessagebox.c:462
 #, fuzzy
 msgid "Message repeated once."
 msgstr "Mesaj repetat o singură dată"
@@ -11626,17 +11641,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Eroare în fişierul de pensule al GIMP \"%s\"."
 
-#: app/widgets/gimpsizebox.c:290
-#, fuzzy
-msgid "Keep aspect ratio"
-msgstr "Dimensiune fixă / Raport de aspect"
-
-#: app/widgets/gimpsizebox.c:574
+#: app/widgets/gimpsizebox.c:451
 #, fuzzy, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d puncte ecran"
 
-#: app/widgets/gimpsizebox.c:578
+#: app/widgets/gimpsizebox.c:455
 #, fuzzy, c-format
 msgid "%d dpi"
 msgstr "puncte/inch"
@@ -12141,6 +12151,10 @@ msgstr ""
 #, fuzzy
 msgid "Image Editor"
 msgstr "Mască imagine"
+
+#, fuzzy
+#~ msgid "Keep aspect ratio"
+#~ msgstr "Dimensiune fixă / Raport de aspect"
 
 #~ msgid "Y:"
 #~ msgstr "Y:"

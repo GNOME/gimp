@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 01:48+0100\n"
+"POT-Creation-Date: 2004-12-28 15:42+0100\n"
 "PO-Revision-Date: 2004-11-27 11:58+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <<sk-i18n@lists.linux.sk>>\n"
@@ -321,7 +321,6 @@ msgstr "Štandardné nastavenie mapy vyvýšenia"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/asc2img.scm.h:8
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:3
@@ -362,7 +361,6 @@ msgstr "Písmo"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/asc2img.scm.h:9
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:4
@@ -490,7 +488,6 @@ msgstr "<Toolbox>/Rozš./Script-Fu/Vzorky"
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
-#: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:3
@@ -705,7 +702,6 @@ msgid "Padding"
 msgstr "Výplň"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-#: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:10
@@ -747,48 +743,6 @@ msgstr "Šírka pruhov"
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
 msgid "Width of gaps"
 msgstr "Šírka medzier"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:1
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-#: plug-ins/script-fu/scripts/image-structure.scm.h:1
-msgid "<Image>/Script-Fu/Utils"
-msgstr "<Image>/Script-Fu/Pomôcky"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:2
-#: plug-ins/script-fu/scripts/font-map.scm.h:1
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Utils"
-msgstr "<Toolbox>/Rozš./Script-Fu/Pomôcky"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:5
-#, no-c-format
-msgid "Buffer amount (% height of text)"
-msgstr "Veľkosť zásobníka (% výšky textu)"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
-msgid "File name"
-msgstr "Názov súboru"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:7
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
-msgid "Filename"
-msgstr "Meno súboru"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:11
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-msgid "Transparent background"
-msgstr "Priesvitné pozadie"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:12
-msgid "_ASCII to Image..."
-msgstr "_ASCII do obrázku"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:13
-msgid "_ASCII to Layer..."
-msgstr "_ASCII do vrstvy"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -838,6 +792,12 @@ msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Skosený vzor"
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
 msgstr "Priemer"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+msgid "Transparent background"
+msgstr "Priesvitné pozadie"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
 msgid "H_eading..."
@@ -1431,6 +1391,11 @@ msgstr "Zväčšenie Y"
 msgid "_Flatland..."
 msgstr "_Rovina..."
 
+#: plug-ins/script-fu/scripts/font-map.scm.h:1
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Utils"
+msgstr "<Toolbox>/Rozš./Script-Fu/Pomôcky"
+
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 msgid "Active colors"
 msgstr "Aktívne farby"
@@ -1697,6 +1662,11 @@ msgstr "Nové v_odítko..."
 #: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"
 msgstr "_Odstrániť všetky vodítka"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
+#: plug-ins/script-fu/scripts/image-structure.scm.h:1
+msgid "<Image>/Script-Fu/Utils"
+msgstr "<Image>/Script-Fu/Pomôcky"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 msgid "BG opacity"
@@ -2073,6 +2043,10 @@ msgstr "_Zaobliť rohy..."
 msgid "Brush name"
 msgstr "Názov štetca"
 
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+msgid "File name"
+msgstr "Názov súboru"
+
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 msgid "To _Brush..."
 msgstr "Do štetca..."
@@ -2080,6 +2054,10 @@ msgstr "Do štetca..."
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:2
 msgid "To _Image"
 msgstr "Do o_brázku"
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+msgid "Filename"
+msgstr "Meno súboru"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 msgid "Pattern name"
@@ -2538,6 +2516,15 @@ msgstr "Krytie svetiel"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Efekt _Xach..."
+
+#~ msgid "Buffer amount (% height of text)"
+#~ msgstr "Veľkosť zásobníka (% výšky textu)"
+
+#~ msgid "_ASCII to Image..."
+#~ msgstr "_ASCII do obrázku"
+
+#~ msgid "_ASCII to Layer..."
+#~ msgstr "_ASCII do vrstvy"
 
 #~ msgid "Copy _Visible"
 #~ msgstr "Kopírovať _viditeľné"

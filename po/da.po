@@ -81,7 +81,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-19 03:11+0100\n"
+"POT-Creation-Date: 2004-12-28 16:58+0100\n"
 "PO-Revision-Date: 2004-12-12 17:07+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -1101,11 +1101,11 @@ msgstr "Fjern ekstra _punkter"
 msgid "Remove dangling entries"
 msgstr "Fjern ekstra punkter"
 
-#: app/actions/documents-commands.c:252 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
-#: app/display/gimpdisplayshell-dnd.c:332 app/widgets/gimplayertreeview.c:802
-#: app/widgets/gimptoolbox-dnd.c:123
+#: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
+#: app/widgets/gimptoolbox-dnd.c:125
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1618,115 +1618,115 @@ msgstr "Zoom 100%"
 msgid "Zoom all"
 msgstr "Zoom 100%"
 
-#: app/actions/gradient-editor-actions.c:582
+#: app/actions/gradient-editor-actions.c:589
 msgid "_Blending Function for Segment"
 msgstr "_Blandingsfunktion for segment"
 
-#: app/actions/gradient-editor-actions.c:584
+#: app/actions/gradient-editor-actions.c:591
 msgid "Coloring _Type for Segment"
 msgstr "Farve_type for segment"
 
-#: app/actions/gradient-editor-actions.c:587
+#: app/actions/gradient-editor-actions.c:594
 msgid "_Flip Segment"
 msgstr "_Vend segment"
 
-#: app/actions/gradient-editor-actions.c:589
+#: app/actions/gradient-editor-actions.c:596
 msgid "_Replicate Segment..."
 msgstr "_Kopiér segment..."
 
-#: app/actions/gradient-editor-actions.c:591
+#: app/actions/gradient-editor-actions.c:598
 msgid "Split Segment at _Midpoint"
 msgstr "Opdel segment ved _midtpunktet"
 
-#: app/actions/gradient-editor-actions.c:593
+#: app/actions/gradient-editor-actions.c:600
 msgid "Split Segment _Uniformly..."
 msgstr "Opdel segment _jævnt..."
 
-#: app/actions/gradient-editor-actions.c:595
+#: app/actions/gradient-editor-actions.c:602
 msgid "_Delete Segment"
 msgstr "_Slet segment"
 
-#: app/actions/gradient-editor-actions.c:597
+#: app/actions/gradient-editor-actions.c:604
 msgid "Re-_center Segment's Midpoint"
 msgstr "Gen_centrér segmentets midtpunkt"
 
-#: app/actions/gradient-editor-actions.c:599
+#: app/actions/gradient-editor-actions.c:606
 msgid "Re-distribute _Handles in Segment"
 msgstr "Omfordel _håndtag i segment"
 
-#: app/actions/gradient-editor-actions.c:604
+#: app/actions/gradient-editor-actions.c:611
 msgid "_Blending Function for Selection"
 msgstr "_Blandingsfunktion for markering"
 
-#: app/actions/gradient-editor-actions.c:606
+#: app/actions/gradient-editor-actions.c:613
 msgid "Coloring _Type for Selection"
 msgstr "Farve_type for markering"
 
-#: app/actions/gradient-editor-actions.c:609
+#: app/actions/gradient-editor-actions.c:616
 msgid "_Flip Selection"
 msgstr "_Vend det markerede"
 
-#: app/actions/gradient-editor-actions.c:611
+#: app/actions/gradient-editor-actions.c:618
 msgid "_Replicate Selection..."
 msgstr "_Kopiér det markerede..."
 
-#: app/actions/gradient-editor-actions.c:613
+#: app/actions/gradient-editor-actions.c:620
 msgid "Split Segments at _Midpoints"
 msgstr "Opdel segmenter ved _midtpunkter"
 
-#: app/actions/gradient-editor-actions.c:615
+#: app/actions/gradient-editor-actions.c:622
 msgid "Split Segments _Uniformly..."
 msgstr "Opdel segmenter _jævnt..."
 
-#: app/actions/gradient-editor-actions.c:617
+#: app/actions/gradient-editor-actions.c:624
 msgid "_Delete Selection"
 msgstr "_Slet det markerede"
 
-#: app/actions/gradient-editor-actions.c:619
+#: app/actions/gradient-editor-actions.c:626
 msgid "Re-_center Midpoints in Selection"
 msgstr "Gen_centrér midtpunkter i markering"
 
-#: app/actions/gradient-editor-actions.c:621
+#: app/actions/gradient-editor-actions.c:628
 msgid "Re-distribute _Handles in Selection"
 msgstr "Omfordel _håndtag i markeringen"
 
-#: app/actions/gradient-editor-commands.c:84
+#: app/actions/gradient-editor-commands.c:85
 msgid "Left Endpoint Color"
 msgstr "Venstre endepunkts farve"
 
-#: app/actions/gradient-editor-commands.c:86
+#: app/actions/gradient-editor-commands.c:87
 msgid "Gradient Segment's Left Endpoint Color"
 msgstr "Venstre endepunkts farve for overgangssegment"
 
-#: app/actions/gradient-editor-commands.c:186
+#: app/actions/gradient-editor-commands.c:189
 msgid "Right Endpoint Color"
 msgstr "Højre endepunkts farve"
 
-#: app/actions/gradient-editor-commands.c:188
+#: app/actions/gradient-editor-commands.c:191
 msgid "Gradient Segment's Right Endpoint Color"
 msgstr "Højre endepunkts farve for overgangssegment"
 
-#: app/actions/gradient-editor-commands.c:353
+#: app/actions/gradient-editor-commands.c:358
 msgid "Replicate Segment"
 msgstr "Kopiér segment"
 
-#: app/actions/gradient-editor-commands.c:354
+#: app/actions/gradient-editor-commands.c:359
 msgid "Replicate Gradient Segment"
 msgstr "Kopiér overgangssegment"
 
-#: app/actions/gradient-editor-commands.c:358
+#: app/actions/gradient-editor-commands.c:363
 msgid "Replicate Selection"
 msgstr "Kopiér det markerede"
 
-#: app/actions/gradient-editor-commands.c:359
+#: app/actions/gradient-editor-commands.c:364
 msgid "Replicate Gradient Selection"
 msgstr "Kopiér overgangsmarkeringen"
 
-#: app/actions/gradient-editor-commands.c:371
+#: app/actions/gradient-editor-commands.c:376
 msgid "Replicate"
 msgstr "Kopiér"
 
-#: app/actions/gradient-editor-commands.c:386
+#: app/actions/gradient-editor-commands.c:391
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
@@ -1734,7 +1734,7 @@ msgstr ""
 "Vælg antal gange du ønsker\n"
 "at kopiere det markerede segment."
 
-#: app/actions/gradient-editor-commands.c:389
+#: app/actions/gradient-editor-commands.c:394
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
@@ -1742,27 +1742,27 @@ msgstr ""
 "Vælg antal gange du ønsker\n"
 "at kopiere det markerede."
 
-#: app/actions/gradient-editor-commands.c:444
+#: app/actions/gradient-editor-commands.c:452
 msgid "Split Segment Uniformly"
 msgstr "Opdel segment jævnt"
 
-#: app/actions/gradient-editor-commands.c:445
+#: app/actions/gradient-editor-commands.c:453
 msgid "Split Gradient Segment Uniformly"
 msgstr "Opdel overgangssegment jævnt"
 
-#: app/actions/gradient-editor-commands.c:449
+#: app/actions/gradient-editor-commands.c:457
 msgid "Split Segments Uniformly"
 msgstr "Opdel segmenter jævnt"
 
-#: app/actions/gradient-editor-commands.c:450
+#: app/actions/gradient-editor-commands.c:458
 msgid "Split Gradient Segments Uniformly"
 msgstr "Opdel overgangssegmenter jævnt"
 
-#: app/actions/gradient-editor-commands.c:462
+#: app/actions/gradient-editor-commands.c:470
 msgid "Split"
 msgstr "Opdel"
 
-#: app/actions/gradient-editor-commands.c:478
+#: app/actions/gradient-editor-commands.c:486
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
@@ -1770,7 +1770,7 @@ msgstr ""
 "Vælg antallet af ens dele du \n"
 "vil opdele det markerede segment i."
 
-#: app/actions/gradient-editor-commands.c:481
+#: app/actions/gradient-editor-commands.c:489
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
@@ -2212,7 +2212,7 @@ msgstr "Redigér lagets egenskaber"
 
 #: app/actions/layers-commands.c:232 app/actions/layers-commands.c:234
 #: app/actions/layers-commands.c:291 app/actions/layers-commands.c:295
-#: app/widgets/gimpdrawabletreeview.c:238 app/widgets/gimplayertreeview.c:840
+#: app/widgets/gimpdrawabletreeview.c:238 app/widgets/gimplayertreeview.c:842
 msgid "New Layer"
 msgstr "Nyt lag"
 
@@ -2225,7 +2225,7 @@ msgstr "Opret et nyt lag"
 msgid "Set Layer Boundary Size"
 msgstr "Vælg lagkantstørrelse"
 
-#: app/actions/layers-commands.c:512 app/core/gimplayer.c:255
+#: app/actions/layers-commands.c:512 app/core/gimplayer.c:253
 msgid "Scale Layer"
 msgstr "Skalering af lag"
 
@@ -2237,7 +2237,7 @@ msgstr "Tilskær lag"
 msgid "Layer Mask to Selection"
 msgstr "Lagmaske til markering"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1085
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "Tilføjelse af lagmaske"
@@ -2793,7 +2793,7 @@ msgid "Open Text File (UTF-8)"
 msgstr "Åbn tekstfil (UTF-8)"
 
 #: app/actions/text-editor-commands.c:132 app/config/gimpconfig-utils.c:552
-#: app/config/gimpscanner.c:92 app/core/gimpbrush.c:393
+#: app/config/gimpscanner.c:92 app/core/gimpbrush.c:396
 #: app/core/gimpbrushgenerated.c:601 app/core/gimpbrushpipe.c:338
 #: app/core/gimpgradient-load.c:63 app/core/gimppalette.c:360
 #: app/core/gimppattern.c:328 app/tools/gimpimagemaptool.c:608
@@ -4613,7 +4613,7 @@ msgstr "Forgr. til baggr. (HSV med uret)"
 msgid "FG to Transparent"
 msgstr "Fg. til gennemsigtig"
 
-#: app/core/gimp-gui.c:148
+#: app/core/gimp-gui.c:153
 msgid "GIMP"
 msgstr "Gimp'en"
 
@@ -4646,40 +4646,55 @@ msgstr "Dokumenter"
 msgid "Modules"
 msgstr "Programudvidelser"
 
-#: app/core/gimpbrush.c:531
+#: app/core/gimpbrush.c:534
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "Kunne ikke læse %d byte fra '%s': %s"
 
-#: app/core/gimpbrush.c:566
+#: app/core/gimpbrush.c:554
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Width = 0."
+msgstr "Fatal fortolkningsfejl i penselfilen '%s': ukendt dybde %d."
+
+#: app/core/gimpbrush.c:563
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Height = 0."
+msgstr "Fatal fortolkningsfejl i penselfilen '%s': filen er ødelagt."
+
+#: app/core/gimpbrush.c:572
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Bytes = 0."
+msgstr "Fatal fortolkningsfejl i penselfilen '%s': filen er ødelagt."
+
+#: app/core/gimpbrush.c:596
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr "Fatal fortolkningsfejl i penselfilen '%s': ukendt dybde %d."
 
-#: app/core/gimpbrush.c:579
+#: app/core/gimpbrush.c:609
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "Fatal fortolkningsfejl i penselfilen '%s': ukendt version %d."
 
-#: app/core/gimpbrush.c:595 app/core/gimpbrush.c:715
+#: app/core/gimpbrush.c:625 app/core/gimpbrush.c:745
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
 "Fatal fortolkningsfejl i penselfilen '%s': filen ser ud til at være afkortet."
 
-#: app/core/gimpbrush.c:603 app/core/gimpbrushgenerated.c:648
+#: app/core/gimpbrush.c:633 app/core/gimpbrushgenerated.c:648
 #: app/core/gimpbrushpipe.c:354
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ugyldig UTF-8-streng i penselfilen '%s'."
 
-#: app/core/gimpbrush.c:610 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:479 app/core/gimppattern.c:400
+#: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
+#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "Unavngiven"
 
-#: app/core/gimpbrush.c:704
+#: app/core/gimpbrush.c:734
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -4847,11 +4862,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:274 app/core/gimpitem.c:277
+#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
 msgid "copy"
 msgstr "kopi"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:286
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
 #, c-format
 msgid "%s copy"
 msgstr "%s-kopi"
@@ -4915,7 +4930,7 @@ msgstr "Vend"
 msgid "Rotate"
 msgstr "Rotér"
 
-#: app/core/gimpdrawable-transform.c:1119 app/core/gimplayer.c:259
+#: app/core/gimpdrawable-transform.c:1119 app/core/gimplayer.c:257
 msgid "Transform Layer"
 msgstr "Transformér lag"
 
@@ -5283,7 +5298,7 @@ msgstr "Kan ikke generere miniature"
 
 #. pixel size
 #: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:552
-#: app/widgets/gimpsizebox.c:552 app/widgets/gimptemplateeditor.c:637
+#: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:637
 #: app/widgets/gimptemplateeditor.c:673
 #, c-format
 msgid "%d x %d pixels"
@@ -5303,15 +5318,15 @@ msgstr "%d lag"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Kunne ikke åbne miniaturefilen '%s': %s"
 
-#: app/core/gimpitem.c:1096
+#: app/core/gimpitem.c:1103
 msgid "Attach Parasite"
 msgstr "Parasitvedhæftning"
 
-#: app/core/gimpitem.c:1106
+#: app/core/gimpitem.c:1113
 msgid "Attach Parasite to Item"
 msgstr "Vedhæft parasit til element"
 
-#: app/core/gimpitem.c:1145 app/core/gimpitem.c:1152
+#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
 msgid "Remove Parasite from Item"
 msgstr "Fjern parasit fra element"
 
@@ -5339,37 +5354,37 @@ msgstr ""
 msgid "Floating Selection to Layer"
 msgstr "Flydende markering til lag"
 
-#: app/core/gimplayer.c:252 app/pdb/internal_procs.c:152
+#: app/core/gimplayer.c:250 app/pdb/internal_procs.c:152
 msgid "Layer"
 msgstr "Lag"
 
-#: app/core/gimplayer.c:253
+#: app/core/gimplayer.c:251
 msgid "Rename Layer"
 msgstr "Omdøb lag"
 
-#: app/core/gimplayer.c:254 app/pdb/layer_cmds.c:669 app/pdb/layer_cmds.c:742
+#: app/core/gimplayer.c:252 app/pdb/layer_cmds.c:669 app/pdb/layer_cmds.c:742
 msgid "Move Layer"
 msgstr "Flyt lag"
 
-#: app/core/gimplayer.c:256
+#: app/core/gimplayer.c:254
 msgid "Resize Layer"
 msgstr "Ændring af lagstørrelse"
 
-#: app/core/gimplayer.c:257
+#: app/core/gimplayer.c:255
 msgid "Flip Layer"
 msgstr "Vend lag"
 
-#: app/core/gimplayer.c:258
+#: app/core/gimplayer.c:256
 msgid "Rotate Layer"
 msgstr "Rotér lag"
 
-#: app/core/gimplayer.c:341 app/core/gimplayer.c:1129
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
 msgstr "%s-maske"
 
-#: app/core/gimplayer.c:387
+#: app/core/gimplayer.c:385
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -5378,39 +5393,39 @@ msgstr ""
 "Flydende markering\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1055
+#: app/core/gimplayer.c:1036
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Kan ikke tilføje lagmaske til lag som ikke er en del af et billede."
 
-#: app/core/gimplayer.c:1062
+#: app/core/gimplayer.c:1043
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Kan ikke tilføje en lagmaske da laget allerede har en."
 
-#: app/core/gimplayer.c:1069
+#: app/core/gimplayer.c:1050
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Kan ikke tilføje lagmaske til et lag uden en alfakanal."
 
-#: app/core/gimplayer.c:1079
+#: app/core/gimplayer.c:1060
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Kan ikke tilføje lagmaske med andre dimensioner end det angivne lag."
 
-#: app/core/gimplayer.c:1183
+#: app/core/gimplayer.c:1164
 msgid "Transfer Alpha to Mask"
 msgstr "Overfør alfa til maske"
 
-#: app/core/gimplayer.c:1343
+#: app/core/gimplayer.c:1324
 msgid "Apply Layer Mask"
 msgstr "Anvendelse af lagmaske"
 
-#: app/core/gimplayer.c:1344
+#: app/core/gimplayer.c:1325
 msgid "Delete Layer Mask"
 msgstr "Sletning af lagmaske"
 
-#: app/core/gimplayer.c:1445
+#: app/core/gimplayer.c:1426
 msgid "Add Alpha Channel"
 msgstr "Tilføj alfakanal"
 
-#: app/core/gimplayer.c:1467
+#: app/core/gimplayer.c:1448
 msgid "Layer to Image Size"
 msgstr "Lag til billedstørrelse"
 
@@ -6868,28 +6883,28 @@ msgid "Print Size"
 msgstr "Udskriftsstørrelse"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:241
+#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:222
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "_Bredde:"
 
-#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:248
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:225
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "_Højde:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:338
+#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:273
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
 msgstr "_x-opløsning:"
 
-#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:345
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:276
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
 msgstr "_y-opløsning:"
 
-#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:357
+#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:269
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -7513,11 +7528,11 @@ msgstr "minut"
 msgid "%d minutes"
 msgstr "%d minutter"
 
-#: app/display/gimpdisplayshell-dnd.c:96
+#: app/display/gimpdisplayshell-dnd.c:98
 msgid "Drop New Layer"
 msgstr "Drop nyt lag"
 
-#: app/display/gimpdisplayshell-dnd.c:140
+#: app/display/gimpdisplayshell-dnd.c:142
 msgid "Drop New Path"
 msgstr "Drop ny bane"
 
@@ -9077,12 +9092,12 @@ msgid "_Paintbrush"
 msgstr "Malerpensel"
 
 #: app/tools/gimppaintoptions-gui.c:103 app/widgets/gimpbrushselect.c:201
-#: app/widgets/gimplayertreeview.c:330
+#: app/widgets/gimplayertreeview.c:332
 msgid "Opacity:"
 msgstr "Ugennemsigtighed:"
 
 #: app/tools/gimppaintoptions-gui.c:108 app/tools/gimpselectionoptions.c:374
-#: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:323
+#: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:325
 msgid "Mode:"
 msgstr "Tilstand:"
 
@@ -10503,25 +10518,25 @@ msgstr "Sæt element eksklusivt synligt"
 msgid "Set Item Exclusive Linked"
 msgstr "Sæt element eksklusivt kædet"
 
-#: app/widgets/gimplayertreeview.c:250
+#: app/widgets/gimplayertreeview.c:252
 msgid "Reorder Layer"
 msgstr "Omordn lag"
 
-#: app/widgets/gimplayertreeview.c:311
+#: app/widgets/gimplayertreeview.c:313
 #, fuzzy
 msgid "Keep transparency"
 msgstr "Behold gennemsigtighed"
 
-#: app/widgets/gimplayertreeview.c:846
+#: app/widgets/gimplayertreeview.c:848
 msgid "Empty Layer"
 msgstr "Tomt lag"
 
-#: app/widgets/gimpmessagebox.c:458
+#: app/widgets/gimpmessagebox.c:460
 #, c-format
 msgid "Message repeated %d times."
 msgstr "Meddelelse gentaget %d gange."
 
-#: app/widgets/gimpmessagebox.c:460
+#: app/widgets/gimpmessagebox.c:462
 msgid "Message repeated once."
 msgstr "Meddelelse gentaget én gang."
 
@@ -10553,17 +10568,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Ugyldig UTF-8"
 
-#: app/widgets/gimpsizebox.c:290
-#, fuzzy
-msgid "Keep aspect ratio"
-msgstr "Fast formatforhold"
-
-#: app/widgets/gimpsizebox.c:574
+#: app/widgets/gimpsizebox.c:451
 #, fuzzy, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d punkter"
 
-#: app/widgets/gimpsizebox.c:578
+#: app/widgets/gimpsizebox.c:455
 #, fuzzy, c-format
 msgid "%d dpi"
 msgstr "dpi"
@@ -11022,6 +11032,10 @@ msgstr "Opret og redigér billeder eller fotografier"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Billedredigering"
+
+#, fuzzy
+#~ msgid "Keep aspect ratio"
+#~ msgstr "Fast formatforhold"
 
 #~ msgid "Y:"
 #~ msgstr "y:"

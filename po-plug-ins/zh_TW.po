@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 01:47+0100\n"
+"POT-Creation-Date: 2004-12-28 15:41+0100\n"
 "PO-Revision-Date: 2004-09-28 11:46+0800\n"
 "Last-Translator: Abel Cheung <maddog@linuxhall.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -941,7 +941,7 @@ msgstr "深度(_D)："
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "平滑化的品質。數值大品質會較好，但處理較慢"
 
-#: plug-ins/MapObject/mapobject_ui.c:614 plug-ins/common/unsharp.c:720
+#: plug-ins/MapObject/mapobject_ui.c:614 plug-ins/common/unsharp.c:691
 #: plug-ins/common/wind.c:993 plug-ins/imagemap/imap_preferences.c:539
 msgid "_Threshold:"
 msgstr "界限值(_T)："
@@ -2058,12 +2058,12 @@ msgid "Orientation"
 msgstr "方向"
 
 #: plug-ins/common/blinds.c:259 plug-ins/common/ripple.c:539
-#: plug-ins/common/tileit.c:419 plug-ins/pagecurl/pagecurl.c:530
+#: plug-ins/common/tileit.c:418 plug-ins/pagecurl/pagecurl.c:530
 msgid "_Horizontal"
 msgstr "水平(_H)"
 
 #: plug-ins/common/blinds.c:260 plug-ins/common/ripple.c:540
-#: plug-ins/common/tileit.c:429 plug-ins/pagecurl/pagecurl.c:529
+#: plug-ins/common/tileit.c:428 plug-ins/pagecurl/pagecurl.c:529
 msgid "_Vertical"
 msgstr "垂直(_V)"
 
@@ -2084,7 +2084,7 @@ msgstr "區段數目(_N)："
 msgid "_Blur"
 msgstr "模糊(_B)"
 
-#: plug-ins/common/blur.c:191 plug-ins/common/unsharp.c:383
+#: plug-ins/common/blur.c:191 plug-ins/common/unsharp.c:432
 msgid "Blurring..."
 msgstr "模糊化..."
 
@@ -2194,23 +2194,23 @@ msgstr ""
 msgid "Ca_rtoon..."
 msgstr "卡通"
 
-#: plug-ins/common/cartoon.c:228 plug-ins/common/dog.c:246
-#: plug-ins/common/gauss.c:430 plug-ins/common/neon.c:222
-#: plug-ins/common/photocopy.c:241 plug-ins/common/sel_gauss.c:203
+#: plug-ins/common/cartoon.c:229 plug-ins/common/dog.c:247
+#: plug-ins/common/gauss.c:431 plug-ins/common/neon.c:221
+#: plug-ins/common/photocopy.c:241 plug-ins/common/sel_gauss.c:204
 #: plug-ins/common/softglow.c:220 plug-ins/gflare/gflare.c:972
 #: plug-ins/sgi/sgi.c:528 plug-ins/xjt/xjt.c:1673
 msgid "Cannot operate on indexed color images."
 msgstr "不適用於索引色影像。"
 
-#: plug-ins/common/cartoon.c:807
+#: plug-ins/common/cartoon.c:808
 msgid "Cartoon"
 msgstr "卡通"
 
-#: plug-ins/common/cartoon.c:837 plug-ins/common/photocopy.c:867
+#: plug-ins/common/cartoon.c:838 plug-ins/common/photocopy.c:867
 msgid "_Mask radius:"
 msgstr ""
 
-#: plug-ins/common/cartoon.c:851
+#: plug-ins/common/cartoon.c:852
 msgid "_Percent black:"
 msgstr "黑色百分比(_P)："
 
@@ -2368,29 +2368,29 @@ msgstr "自選色彩："
 msgid "Colorify Custom Color"
 msgstr ""
 
-#: plug-ins/common/colortoalpha.c:105
+#: plug-ins/common/colortoalpha.c:104
 msgid "Color to _Alpha..."
 msgstr "色彩轉為透明(_A)..."
 
-#: plug-ins/common/colortoalpha.c:183
+#: plug-ins/common/colortoalpha.c:181
 msgid "Removing color..."
 msgstr "正在移除顏色..."
 
-#: plug-ins/common/colortoalpha.c:364
+#: plug-ins/common/colortoalpha.c:377
 msgid "Color to Alpha"
 msgstr "色彩轉為透明"
 
-#: plug-ins/common/colortoalpha.c:389 plug-ins/common/mapcolor.c:424
+#: plug-ins/common/colortoalpha.c:402 plug-ins/common/mapcolor.c:424
 #: plug-ins/gfli/gfli.c:835 plug-ins/gfli/gfli.c:898
 msgid "From:"
 msgstr "從："
 
 # does not express well in Chinese, so change form -- Abel
-#: plug-ins/common/colortoalpha.c:393
+#: plug-ins/common/colortoalpha.c:406
 msgid "Color to Alpha Color Picker"
 msgstr "選擇準備轉換為透明的顏色"
 
-#: plug-ins/common/colortoalpha.c:407
+#: plug-ins/common/colortoalpha.c:420
 msgid "to alpha"
 msgstr "轉為透明"
 
@@ -2701,23 +2701,23 @@ msgstr "透明度(_A)："
 msgid "_Cubism..."
 msgstr "立體主義(_C)..."
 
-#: plug-ins/common/cubism.c:267
+#: plug-ins/common/cubism.c:269
 msgid "Cubism"
 msgstr "立體主義"
 
-#: plug-ins/common/cubism.c:296
+#: plug-ins/common/cubism.c:298
 msgid "_Tile size:"
 msgstr "磚片尺寸(_T)："
 
-#: plug-ins/common/cubism.c:309
+#: plug-ins/common/cubism.c:311
 msgid "T_ile saturation:"
 msgstr "磚片彩度(_I)："
 
-#: plug-ins/common/cubism.c:320
+#: plug-ins/common/cubism.c:322
 msgid "_Use background color"
 msgstr "使用背景顏色(_U)"
 
-#: plug-ins/common/cubism.c:410
+#: plug-ins/common/cubism.c:412
 msgid "Cubistic Transformation..."
 msgstr "立體主義變換..."
 
@@ -3084,43 +3084,43 @@ msgstr "比例 _2："
 msgid "Des_peckle..."
 msgstr ""
 
-#: plug-ins/common/despeckle.c:420 plug-ins/common/despeckle.c:642
+#: plug-ins/common/despeckle.c:418 plug-ins/common/despeckle.c:640
 msgid "Despeckle"
 msgstr ""
 
 #.
 #. * Filter type controls...
 #.
-#: plug-ins/common/despeckle.c:446 plug-ins/gimpressionist/orientmap.c:616
+#: plug-ins/common/despeckle.c:444 plug-ins/gimpressionist/orientmap.c:616
 msgid "Type"
 msgstr "類型"
 
 #. parameter settings
-#: plug-ins/common/despeckle.c:456
+#: plug-ins/common/despeckle.c:454
 #, fuzzy
 msgid "Median"
 msgstr "弧度"
 
-#: plug-ins/common/despeckle.c:462
+#: plug-ins/common/despeckle.c:460
 msgid "_Adaptive"
 msgstr ""
 
-#: plug-ins/common/despeckle.c:472
+#: plug-ins/common/despeckle.c:470
 msgid "R_ecursive"
 msgstr ""
 
-#: plug-ins/common/despeckle.c:496 plug-ins/common/neon.c:728
+#: plug-ins/common/despeckle.c:494 plug-ins/common/neon.c:727
 #: plug-ins/common/nlfilt.c:1083 plug-ins/common/nova.c:359
-#: plug-ins/common/unsharp.c:694 plug-ins/common/whirlpinch.c:588
+#: plug-ins/common/unsharp.c:665 plug-ins/common/whirlpinch.c:588
 #: plug-ins/gflare/gflare.c:2686 plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "半徑(_R)："
 
-#: plug-ins/common/despeckle.c:512
+#: plug-ins/common/despeckle.c:510
 msgid "_Black level:"
 msgstr ""
 
-#: plug-ins/common/despeckle.c:528
+#: plug-ins/common/despeckle.c:526
 msgid "_White level:"
 msgstr ""
 
@@ -3207,7 +3207,7 @@ msgstr "其它選項"
 msgid "_Displace..."
 msgstr "移位(_D)..."
 
-#: plug-ins/common/displace.c:228
+#: plug-ins/common/displace.c:231
 msgid "Displacing..."
 msgstr "正在進行移位..."
 
@@ -3244,27 +3244,27 @@ msgstr "黑(_B)"
 msgid "Difference of Gaussians..."
 msgstr ""
 
-#: plug-ins/common/dog.c:222 plug-ins/common/dog.c:273
+#: plug-ins/common/dog.c:227 plug-ins/common/dog.c:274
 msgid "DoG Edge Detect"
 msgstr ""
 
-#: plug-ins/common/dog.c:294
+#: plug-ins/common/dog.c:295
 msgid "Smoothing parameters"
 msgstr ""
 
-#: plug-ins/common/dog.c:308
+#: plug-ins/common/dog.c:309
 msgid "_Radius 1:"
 msgstr "半徑 _1："
 
-#: plug-ins/common/dog.c:312
+#: plug-ins/common/dog.c:313
 msgid "R_adius 2:"
 msgstr "半徑 _2："
 
-#: plug-ins/common/dog.c:324 plug-ins/common/normalize.c:88
+#: plug-ins/common/dog.c:325 plug-ins/common/normalize.c:88
 msgid "_Normalize"
 msgstr ""
 
-#: plug-ins/common/dog.c:335 plug-ins/gimpressionist/paper.c:149
+#: plug-ins/common/dog.c:336 plug-ins/gimpressionist/paper.c:149
 msgid "_Invert"
 msgstr "加入(_I)"
 
@@ -3316,7 +3316,7 @@ msgstr ""
 msgid "_Emboss..."
 msgstr "浮雕(_E)..."
 
-#: plug-ins/common/emboss.c:374 plug-ins/common/emboss.c:439
+#: plug-ins/common/emboss.c:376 plug-ins/common/emboss.c:439
 msgid "Emboss"
 msgstr "浮雕"
 
@@ -3340,7 +3340,7 @@ msgstr ""
 msgid "En_grave..."
 msgstr "雕刻(_G)..."
 
-#: plug-ins/common/engrave.c:181
+#: plug-ins/common/engrave.c:182
 msgid "Engraving..."
 msgstr "正在進行雕刻..."
 
@@ -3744,38 +3744,38 @@ msgstr "Y_2："
 msgid "_Gaussian Blur..."
 msgstr "高斯模糊(_G)..."
 
-#: plug-ins/common/gauss.c:407
+#: plug-ins/common/gauss.c:413
 msgid "Gaussian Blur..."
 msgstr "高斯模糊..."
 
-#: plug-ins/common/gauss.c:460
+#: plug-ins/common/gauss.c:461
 msgid "Gaussian Blur"
 msgstr "高斯模糊"
 
 #. parameter settings
-#: plug-ins/common/gauss.c:483
+#: plug-ins/common/gauss.c:484
 msgid "Blur Radius"
 msgstr "模糊半徑"
 
-#: plug-ins/common/gauss.c:497 plug-ins/common/jigsaw.c:2456
-#: plug-ins/common/spread.c:378
+#: plug-ins/common/gauss.c:498 plug-ins/common/jigsaw.c:2456
+#: plug-ins/common/spread.c:379
 msgid "_Horizontal:"
 msgstr "水平(_H)："
 
-#: plug-ins/common/gauss.c:501 plug-ins/common/jigsaw.c:2473
-#: plug-ins/common/spread.c:382
+#: plug-ins/common/gauss.c:502 plug-ins/common/jigsaw.c:2473
+#: plug-ins/common/spread.c:383
 msgid "_Vertical:"
 msgstr "垂直(_V)："
 
-#: plug-ins/common/gauss.c:524
+#: plug-ins/common/gauss.c:525
 msgid "Blur Method"
 msgstr "模糊方式"
 
-#: plug-ins/common/gauss.c:528
+#: plug-ins/common/gauss.c:529
 msgid "_IIR"
 msgstr "_IIR"
 
-#: plug-ins/common/gauss.c:529
+#: plug-ins/common/gauss.c:530
 msgid "_RLE"
 msgstr "_RLE"
 
@@ -4070,19 +4070,19 @@ msgstr ""
 msgid "_Glass Tile..."
 msgstr "玻璃磚片(_G)..."
 
-#: plug-ins/common/glasstile.c:208
+#: plug-ins/common/glasstile.c:209
 msgid "Glass Tile..."
 msgstr "玻璃磚片..."
 
-#: plug-ins/common/glasstile.c:251
+#: plug-ins/common/glasstile.c:250
 msgid "Glass Tile"
 msgstr "玻璃磚片"
 
-#: plug-ins/common/glasstile.c:282
+#: plug-ins/common/glasstile.c:281
 msgid "Tile _width:"
 msgstr "磚片寬度(_W)："
 
-#: plug-ins/common/glasstile.c:296 plug-ins/common/mosaic.c:621
+#: plug-ins/common/glasstile.c:295 plug-ins/common/mosaic.c:621
 msgid "Tile _height:"
 msgstr "磚片高度(_H)："
 
@@ -5063,15 +5063,15 @@ msgstr "無法加上附加點。\n"
 msgid "_Neon..."
 msgstr ""
 
-#: plug-ins/common/neon.c:204
+#: plug-ins/common/neon.c:207
 msgid "Neon..."
 msgstr ""
 
-#: plug-ins/common/neon.c:698
+#: plug-ins/common/neon.c:697
 msgid "Neon Detection"
 msgstr ""
 
-#: plug-ins/common/neon.c:743 plug-ins/common/unsharp.c:707
+#: plug-ins/common/neon.c:742 plug-ins/common/unsharp.c:678
 msgid "_Amount:"
 msgstr "程度(_A)："
 
@@ -5230,7 +5230,7 @@ msgstr "透明(_L)："
 msgid "_Scatter RGB..."
 msgstr ""
 
-#: plug-ins/common/noisify.c:284
+#: plug-ins/common/noisify.c:285
 msgid "Adding Noise..."
 msgstr "增加雜訊..."
 
@@ -5300,7 +5300,7 @@ msgstr "顯示游標(_H)"
 msgid "Oili_fy..."
 msgstr "油畫化(_F)..."
 
-#: plug-ins/common/oilify.c:188
+#: plug-ins/common/oilify.c:189
 msgid "Oil Painting..."
 msgstr "正在演化成油畫..."
 
@@ -5435,7 +5435,7 @@ msgstr "複印(_P)..."
 msgid "Photocopy"
 msgstr "複印"
 
-#: plug-ins/common/photocopy.c:881 plug-ins/common/sharpen.c:513
+#: plug-ins/common/photocopy.c:881 plug-ins/common/sharpen.c:509
 #: plug-ins/common/softglow.c:687
 msgid "_Sharpness:"
 msgstr "銳利程度(_S)："
@@ -6083,7 +6083,7 @@ msgstr "進行動感模糊化..."
 msgid "_Ripple..."
 msgstr "漣漪(_R)..."
 
-#: plug-ins/common/ripple.c:219
+#: plug-ins/common/ripple.c:222
 msgid "Rippling..."
 msgstr "加入漣漪效果..."
 
@@ -6301,19 +6301,19 @@ msgstr ""
 msgid "_Selective Gaussian Blur..."
 msgstr "選擇性高斯模糊(_S)..."
 
-#: plug-ins/common/sel_gauss.c:186
+#: plug-ins/common/sel_gauss.c:187
 msgid "Selective Gaussian Blur..."
 msgstr "加入選擇性高斯模糊效果..."
 
-#: plug-ins/common/sel_gauss.c:224
+#: plug-ins/common/sel_gauss.c:225
 msgid "Selective Gaussian Blur"
 msgstr "選擇性高斯模糊"
 
-#: plug-ins/common/sel_gauss.c:256
+#: plug-ins/common/sel_gauss.c:257
 msgid "_Blur radius:"
 msgstr "模糊半徑(_B)："
 
-#: plug-ins/common/sel_gauss.c:266
+#: plug-ins/common/sel_gauss.c:267
 msgid "_Max. delta:"
 msgstr "最大 Δ 值(_M)："
 
@@ -6332,11 +6332,11 @@ msgstr "銳利化(_S)..."
 #.
 #. * Let the user know what we're doing...
 #.
-#: plug-ins/common/sharpen.c:315
+#: plug-ins/common/sharpen.c:311
 msgid "Sharpening..."
 msgstr "銳利化..."
 
-#: plug-ins/common/sharpen.c:484
+#: plug-ins/common/sharpen.c:480
 msgid "Sharpen"
 msgstr "銳利化"
 
@@ -6344,7 +6344,7 @@ msgstr "銳利化"
 msgid "_Shift..."
 msgstr "平移(_S)..."
 
-#: plug-ins/common/shift.c:191
+#: plug-ins/common/shift.c:194
 msgid "Shifting..."
 msgstr "正在進行平移..."
 
@@ -6539,23 +6539,23 @@ msgstr "_Y 尺寸："
 msgid "_Sobel..."
 msgstr "_Sobel..."
 
-#: plug-ins/common/sobel.c:226
+#: plug-ins/common/sobel.c:227
 msgid "Sobel Edge Detection"
 msgstr "Sobel 邊緣偵測"
 
-#: plug-ins/common/sobel.c:248
+#: plug-ins/common/sobel.c:249
 msgid "Sobel _Horizontally"
 msgstr ""
 
-#: plug-ins/common/sobel.c:260
+#: plug-ins/common/sobel.c:261
 msgid "Sobel _Vertically"
 msgstr ""
 
-#: plug-ins/common/sobel.c:272
+#: plug-ins/common/sobel.c:273
 msgid "_Keep sign of result (one direction only)"
 msgstr "保持結果的正負號[只有一個方向] (_K)"
 
-#: plug-ins/common/sobel.c:358
+#: plug-ins/common/sobel.c:359
 msgid "Sobel Edge Detecting..."
 msgstr "正在進行 Sobel 邊緣偵測..."
 
@@ -6857,15 +6857,15 @@ msgstr "球體設計(_D)..."
 msgid "Sp_read..."
 msgstr "擴散(_R)..."
 
-#: plug-ins/common/spread.c:179
+#: plug-ins/common/spread.c:182
 msgid "Spreading..."
 msgstr "擴散中..."
 
-#: plug-ins/common/spread.c:345
+#: plug-ins/common/spread.c:346
 msgid "Spread"
 msgstr "擴散"
 
-#: plug-ins/common/spread.c:363
+#: plug-ins/common/spread.c:364
 msgid "Spread Amount"
 msgstr "擴散量"
 
@@ -7146,7 +7146,8 @@ msgstr "備註："
 msgid "_Tile..."
 msgstr "鋪排(_T)..."
 
-#: plug-ins/common/tile.c:192 plug-ins/common/tileit.c:321
+#. Set the tile cache size
+#: plug-ins/common/tile.c:192 plug-ins/common/tileit.c:320
 msgid "Tiling..."
 msgstr "正在鋪排..."
 
@@ -7167,42 +7168,42 @@ msgid "_Small Tiles..."
 msgstr "小磚塊(_S)..."
 
 #. Get the preview image
-#: plug-ins/common/tileit.c:364
+#: plug-ins/common/tileit.c:363
 msgid "TileIt"
 msgstr "鋪排"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tileit.c:407 plug-ins/ifscompose/ifscompose.c:628
+#: plug-ins/common/tileit.c:406 plug-ins/ifscompose/ifscompose.c:628
 msgid "Flip"
 msgstr "翻轉"
 
-#: plug-ins/common/tileit.c:455
+#: plug-ins/common/tileit.c:454
 msgid "A_ll tiles"
 msgstr "所有磚塊(_L)"
 
-#: plug-ins/common/tileit.c:469
+#: plug-ins/common/tileit.c:468
 msgid "Al_ternate tiles"
 msgstr ""
 
-#: plug-ins/common/tileit.c:483
+#: plug-ins/common/tileit.c:482
 msgid "_Explicit tile"
 msgstr "特定磚塊(_E)"
 
-#: plug-ins/common/tileit.c:489
+#: plug-ins/common/tileit.c:488
 msgid "Ro_w:"
 msgstr "橫列列數(_W)："
 
-#: plug-ins/common/tileit.c:513
+#: plug-ins/common/tileit.c:512
 msgid "Col_umn:"
 msgstr "直行行數(_U)："
 
-#: plug-ins/common/tileit.c:565
+#: plug-ins/common/tileit.c:564
 msgid "O_pacity:"
 msgstr "透明度(_P)："
 
 #. Lower frame saying howmany segments
-#: plug-ins/common/tileit.c:574
+#: plug-ins/common/tileit.c:573
 msgid "Number of Segments"
 msgstr "區段數目"
 
@@ -7346,15 +7347,15 @@ msgstr "必須填上所有文字欄位"
 msgid "Unit Editor"
 msgstr "長度單位編輯器"
 
-#: plug-ins/common/unsharp.c:149
+#: plug-ins/common/unsharp.c:143
 msgid "_Unsharp Mask..."
 msgstr "反銳化遮罩(_U)..."
 
-#: plug-ins/common/unsharp.c:493
+#: plug-ins/common/unsharp.c:468
 msgid "Merging..."
 msgstr ""
 
-#: plug-ins/common/unsharp.c:664
+#: plug-ins/common/unsharp.c:635
 msgid "Unsharp Mask"
 msgstr "反銳化遮罩"
 
@@ -8394,19 +8395,19 @@ msgstr ""
 msgid "_Zoom:"
 msgstr "縮放(_Z)："
 
-#: plug-ins/gfig/gfig-bezier.c:452
+#: plug-ins/gfig/gfig-bezier.c:448
 msgid "Closed"
 msgstr "封閉"
 
-#: plug-ins/gfig/gfig-bezier.c:457
+#: plug-ins/gfig/gfig-bezier.c:453
 msgid "Close curve on completion"
 msgstr "完成時封閉曲線"
 
-#: plug-ins/gfig/gfig-bezier.c:462
+#: plug-ins/gfig/gfig-bezier.c:458
 msgid "Show Line Frame"
 msgstr ""
 
-#: plug-ins/gfig/gfig-bezier.c:467
+#: plug-ins/gfig/gfig-bezier.c:463
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr ""
 

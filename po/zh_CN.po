@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-19 03:11+0100\n"
+"POT-Creation-Date: 2004-12-28 16:58+0100\n"
 "PO-Revision-Date: 2004-11-24 19:30+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -1017,11 +1017,11 @@ msgstr "删除已不存在的项目(_N)"
 msgid "Remove dangling entries"
 msgstr "删除已不存在的项目"
 
-#: app/actions/documents-commands.c:252 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
-#: app/display/gimpdisplayshell-dnd.c:332 app/widgets/gimplayertreeview.c:802
-#: app/widgets/gimptoolbox-dnd.c:123
+#: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
+#: app/widgets/gimptoolbox-dnd.c:125
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1529,115 +1529,115 @@ msgstr "完整显示"
 msgid "Zoom all"
 msgstr "完整显示"
 
-#: app/actions/gradient-editor-actions.c:582
+#: app/actions/gradient-editor-actions.c:589
 msgid "_Blending Function for Segment"
 msgstr "段混和函数(_B)"
 
-#: app/actions/gradient-editor-actions.c:584
+#: app/actions/gradient-editor-actions.c:591
 msgid "Coloring _Type for Segment"
 msgstr "段着色类型(_T)"
 
-#: app/actions/gradient-editor-actions.c:587
+#: app/actions/gradient-editor-actions.c:594
 msgid "_Flip Segment"
 msgstr "翻转段(_F)"
 
-#: app/actions/gradient-editor-actions.c:589
+#: app/actions/gradient-editor-actions.c:596
 msgid "_Replicate Segment..."
 msgstr "复制段(_R)..."
 
-#: app/actions/gradient-editor-actions.c:591
+#: app/actions/gradient-editor-actions.c:598
 msgid "Split Segment at _Midpoint"
 msgstr "在中点处分割段(_M)"
 
-#: app/actions/gradient-editor-actions.c:593
+#: app/actions/gradient-editor-actions.c:600
 msgid "Split Segment _Uniformly..."
 msgstr "等分切割段(_U)..."
 
-#: app/actions/gradient-editor-actions.c:595
+#: app/actions/gradient-editor-actions.c:602
 msgid "_Delete Segment"
 msgstr "删除段(_D)"
 
-#: app/actions/gradient-editor-actions.c:597
+#: app/actions/gradient-editor-actions.c:604
 msgid "Re-_center Segment's Midpoint"
 msgstr "重置段中点(_C)"
 
-#: app/actions/gradient-editor-actions.c:599
+#: app/actions/gradient-editor-actions.c:606
 msgid "Re-distribute _Handles in Segment"
 msgstr "重置段支点(_H)"
 
-#: app/actions/gradient-editor-actions.c:604
+#: app/actions/gradient-editor-actions.c:611
 msgid "_Blending Function for Selection"
 msgstr "选区的混和函数(_B)"
 
-#: app/actions/gradient-editor-actions.c:606
+#: app/actions/gradient-editor-actions.c:613
 msgid "Coloring _Type for Selection"
 msgstr "选区的着色类型(_T)"
 
-#: app/actions/gradient-editor-actions.c:609
+#: app/actions/gradient-editor-actions.c:616
 msgid "_Flip Selection"
 msgstr "翻转选区(_F)"
 
-#: app/actions/gradient-editor-actions.c:611
+#: app/actions/gradient-editor-actions.c:618
 msgid "_Replicate Selection..."
 msgstr "复制选区(_R)..."
 
-#: app/actions/gradient-editor-actions.c:613
+#: app/actions/gradient-editor-actions.c:620
 msgid "Split Segments at _Midpoints"
 msgstr "在中点处分割段(_M)"
 
-#: app/actions/gradient-editor-actions.c:615
+#: app/actions/gradient-editor-actions.c:622
 msgid "Split Segments _Uniformly..."
 msgstr "等分切割段(_U)..."
 
-#: app/actions/gradient-editor-actions.c:617
+#: app/actions/gradient-editor-actions.c:624
 msgid "_Delete Selection"
 msgstr "删除选中区域(_D)"
 
-#: app/actions/gradient-editor-actions.c:619
+#: app/actions/gradient-editor-actions.c:626
 msgid "Re-_center Midpoints in Selection"
 msgstr "重置选中区域的中点(_C)"
 
-#: app/actions/gradient-editor-actions.c:621
+#: app/actions/gradient-editor-actions.c:628
 msgid "Re-distribute _Handles in Selection"
 msgstr "重置选中区域的支点(_H)"
 
-#: app/actions/gradient-editor-commands.c:84
+#: app/actions/gradient-editor-commands.c:85
 msgid "Left Endpoint Color"
 msgstr "左端点的颜色"
 
-#: app/actions/gradient-editor-commands.c:86
+#: app/actions/gradient-editor-commands.c:87
 msgid "Gradient Segment's Left Endpoint Color"
 msgstr "渐变段的左端点的颜色"
 
-#: app/actions/gradient-editor-commands.c:186
+#: app/actions/gradient-editor-commands.c:189
 msgid "Right Endpoint Color"
 msgstr "右端点的颜色"
 
-#: app/actions/gradient-editor-commands.c:188
+#: app/actions/gradient-editor-commands.c:191
 msgid "Gradient Segment's Right Endpoint Color"
 msgstr "渐变段的右端点的颜色"
 
-#: app/actions/gradient-editor-commands.c:353
+#: app/actions/gradient-editor-commands.c:358
 msgid "Replicate Segment"
 msgstr "复制段"
 
-#: app/actions/gradient-editor-commands.c:354
+#: app/actions/gradient-editor-commands.c:359
 msgid "Replicate Gradient Segment"
 msgstr "复制渐变段"
 
-#: app/actions/gradient-editor-commands.c:358
+#: app/actions/gradient-editor-commands.c:363
 msgid "Replicate Selection"
 msgstr "复制选中区域"
 
-#: app/actions/gradient-editor-commands.c:359
+#: app/actions/gradient-editor-commands.c:364
 msgid "Replicate Gradient Selection"
 msgstr "复制渐变的选中区域"
 
-#: app/actions/gradient-editor-commands.c:371
+#: app/actions/gradient-editor-commands.c:376
 msgid "Replicate"
 msgstr "复制"
 
-#: app/actions/gradient-editor-commands.c:386
+#: app/actions/gradient-editor-commands.c:391
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
@@ -1645,7 +1645,7 @@ msgstr ""
 "选择复制\n"
 "选中的段的次数。"
 
-#: app/actions/gradient-editor-commands.c:389
+#: app/actions/gradient-editor-commands.c:394
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
@@ -1653,27 +1653,27 @@ msgstr ""
 "选择复制所有\n"
 "选中的段的次数。"
 
-#: app/actions/gradient-editor-commands.c:444
+#: app/actions/gradient-editor-commands.c:452
 msgid "Split Segment Uniformly"
 msgstr "等分切割段"
 
-#: app/actions/gradient-editor-commands.c:445
+#: app/actions/gradient-editor-commands.c:453
 msgid "Split Gradient Segment Uniformly"
 msgstr "等分切割渐变段"
 
-#: app/actions/gradient-editor-commands.c:449
+#: app/actions/gradient-editor-commands.c:457
 msgid "Split Segments Uniformly"
 msgstr "等分切割段"
 
-#: app/actions/gradient-editor-commands.c:450
+#: app/actions/gradient-editor-commands.c:458
 msgid "Split Gradient Segments Uniformly"
 msgstr "等分切割渐变段"
 
-#: app/actions/gradient-editor-commands.c:462
+#: app/actions/gradient-editor-commands.c:470
 msgid "Split"
 msgstr "分割"
 
-#: app/actions/gradient-editor-commands.c:478
+#: app/actions/gradient-editor-commands.c:486
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
@@ -1681,7 +1681,7 @@ msgstr ""
 "选择等分切割\n"
 "选中的段的份数。"
 
-#: app/actions/gradient-editor-commands.c:481
+#: app/actions/gradient-editor-commands.c:489
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
@@ -2118,7 +2118,7 @@ msgstr "编辑图层属性"
 
 #: app/actions/layers-commands.c:232 app/actions/layers-commands.c:234
 #: app/actions/layers-commands.c:291 app/actions/layers-commands.c:295
-#: app/widgets/gimpdrawabletreeview.c:238 app/widgets/gimplayertreeview.c:840
+#: app/widgets/gimpdrawabletreeview.c:238 app/widgets/gimplayertreeview.c:842
 msgid "New Layer"
 msgstr "新建图层"
 
@@ -2130,7 +2130,7 @@ msgstr "创建新图层"
 msgid "Set Layer Boundary Size"
 msgstr "设置图层边界大小"
 
-#: app/actions/layers-commands.c:512 app/core/gimplayer.c:255
+#: app/actions/layers-commands.c:512 app/core/gimplayer.c:253
 msgid "Scale Layer"
 msgstr "缩放图层"
 
@@ -2142,7 +2142,7 @@ msgstr "剪裁图层"
 msgid "Layer Mask to Selection"
 msgstr "图层蒙板到选区"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1085
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "添加图层蒙板"
@@ -2686,7 +2686,7 @@ msgid "Open Text File (UTF-8)"
 msgstr "打开文本文件(UTF-8)"
 
 #: app/actions/text-editor-commands.c:132 app/config/gimpconfig-utils.c:552
-#: app/config/gimpscanner.c:92 app/core/gimpbrush.c:393
+#: app/config/gimpscanner.c:92 app/core/gimpbrush.c:396
 #: app/core/gimpbrushgenerated.c:601 app/core/gimpbrushpipe.c:338
 #: app/core/gimpgradient-load.c:63 app/core/gimppalette.c:360
 #: app/core/gimppattern.c:328 app/tools/gimpimagemaptool.c:608
@@ -4448,7 +4448,7 @@ msgstr "前景到背景(HSV 顺时针色调)"
 msgid "FG to Transparent"
 msgstr "前景到透明"
 
-#: app/core/gimp-gui.c:148
+#: app/core/gimp-gui.c:153
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -4480,39 +4480,54 @@ msgstr "文档"
 msgid "Modules"
 msgstr "模块"
 
-#: app/core/gimpbrush.c:531
+#: app/core/gimpbrush.c:534
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "无法从“%2$s”中读取 %1$d 字节：%3$s"
 
-#: app/core/gimpbrush.c:566
+#: app/core/gimpbrush.c:554
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Width = 0."
+msgstr "画笔文件“%s”出现严重解析错误：未知深度 %d。"
+
+#: app/core/gimpbrush.c:563
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Height = 0."
+msgstr "画笔文件“%s”出现严重解析错误：文件已损坏。"
+
+#: app/core/gimpbrush.c:572
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Bytes = 0."
+msgstr "画笔文件“%s”出现严重解析错误：文件已损坏。"
+
+#: app/core/gimpbrush.c:596
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr "画笔文件“%s”出现严重解析错误：未知深度 %d。"
 
-#: app/core/gimpbrush.c:579
+#: app/core/gimpbrush.c:609
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "画笔文件“%s”出现严重解析错误：未知版本 %d。"
 
-#: app/core/gimpbrush.c:595 app/core/gimpbrush.c:715
+#: app/core/gimpbrush.c:625 app/core/gimpbrush.c:745
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "画笔文件“%s”出现严重解析错误：文件看来已被截断。"
 
-#: app/core/gimpbrush.c:603 app/core/gimpbrushgenerated.c:648
+#: app/core/gimpbrush.c:633 app/core/gimpbrushgenerated.c:648
 #: app/core/gimpbrushpipe.c:354
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "画笔文件“%s”中含有无效的 UTF-8 字符串。"
 
-#: app/core/gimpbrush.c:610 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:479 app/core/gimppattern.c:400
+#: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
+#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "未命名"
 
-#: app/core/gimpbrush.c:704
+#: app/core/gimpbrush.c:734
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -4677,11 +4692,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:274 app/core/gimpitem.c:277
+#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
 msgid "copy"
 msgstr "副本"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:286
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
 #, c-format
 msgid "%s copy"
 msgstr "%s副本"
@@ -4744,7 +4759,7 @@ msgstr "翻转"
 msgid "Rotate"
 msgstr "旋转"
 
-#: app/core/gimpdrawable-transform.c:1119 app/core/gimplayer.c:259
+#: app/core/gimpdrawable-transform.c:1119 app/core/gimplayer.c:257
 msgid "Transform Layer"
 msgstr "变换图层"
 
@@ -5102,7 +5117,7 @@ msgstr "无法生成预览"
 
 #. pixel size
 #: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:552
-#: app/widgets/gimpsizebox.c:552 app/widgets/gimptemplateeditor.c:637
+#: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:637
 #: app/widgets/gimptemplateeditor.c:673
 #, c-format
 msgid "%d x %d pixels"
@@ -5122,15 +5137,15 @@ msgstr "%d 个图层"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "无法打开缩略图文件“%s”：%s"
 
-#: app/core/gimpitem.c:1096
+#: app/core/gimpitem.c:1103
 msgid "Attach Parasite"
 msgstr ""
 
-#: app/core/gimpitem.c:1106
+#: app/core/gimpitem.c:1113
 msgid "Attach Parasite to Item"
 msgstr ""
 
-#: app/core/gimpitem.c:1145 app/core/gimpitem.c:1152
+#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
 msgid "Remove Parasite from Item"
 msgstr ""
 
@@ -5156,37 +5171,37 @@ msgstr "无法从浮动选区创建新图层，因为它属于一个图层蒙板
 msgid "Floating Selection to Layer"
 msgstr "浮动选区到图层"
 
-#: app/core/gimplayer.c:252 app/pdb/internal_procs.c:152
+#: app/core/gimplayer.c:250 app/pdb/internal_procs.c:152
 msgid "Layer"
 msgstr "图层"
 
-#: app/core/gimplayer.c:253
+#: app/core/gimplayer.c:251
 msgid "Rename Layer"
 msgstr "重命名图层"
 
-#: app/core/gimplayer.c:254 app/pdb/layer_cmds.c:669 app/pdb/layer_cmds.c:742
+#: app/core/gimplayer.c:252 app/pdb/layer_cmds.c:669 app/pdb/layer_cmds.c:742
 msgid "Move Layer"
 msgstr "移动图层"
 
-#: app/core/gimplayer.c:256
+#: app/core/gimplayer.c:254
 msgid "Resize Layer"
 msgstr "图层改变大小"
 
-#: app/core/gimplayer.c:257
+#: app/core/gimplayer.c:255
 msgid "Flip Layer"
 msgstr "翻转图层"
 
-#: app/core/gimplayer.c:258
+#: app/core/gimplayer.c:256
 msgid "Rotate Layer"
 msgstr "旋转图层"
 
-#: app/core/gimplayer.c:341 app/core/gimplayer.c:1129
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
 msgstr "%s蒙板"
 
-#: app/core/gimplayer.c:387
+#: app/core/gimplayer.c:385
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -5195,39 +5210,39 @@ msgstr ""
 "浮动选区\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1055
+#: app/core/gimplayer.c:1036
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "无法给不属于图像的一部分的图层添加图层蒙板。"
 
-#: app/core/gimplayer.c:1062
+#: app/core/gimplayer.c:1043
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "无法添加图层蒙板，因为已有一个。"
 
-#: app/core/gimplayer.c:1069
+#: app/core/gimplayer.c:1050
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "无法给没有 alpha 通道的图层添加图层蒙板。"
 
-#: app/core/gimplayer.c:1079
+#: app/core/gimplayer.c:1060
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "无法添加跟指定图层尺寸不同的图层蒙板。"
 
-#: app/core/gimplayer.c:1183
+#: app/core/gimplayer.c:1164
 msgid "Transfer Alpha to Mask"
 msgstr "转移 Alpha 到蒙板"
 
-#: app/core/gimplayer.c:1343
+#: app/core/gimplayer.c:1324
 msgid "Apply Layer Mask"
 msgstr "应用图层蒙板"
 
-#: app/core/gimplayer.c:1344
+#: app/core/gimplayer.c:1325
 msgid "Delete Layer Mask"
 msgstr "删除图层蒙板"
 
-#: app/core/gimplayer.c:1445
+#: app/core/gimplayer.c:1426
 msgid "Add Alpha Channel"
 msgstr "添加 Alpha 通道"
 
-#: app/core/gimplayer.c:1467
+#: app/core/gimplayer.c:1448
 msgid "Layer to Image Size"
 msgstr "图层到图像大小"
 
@@ -6660,28 +6675,28 @@ msgid "Print Size"
 msgstr "打印大小"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:241
+#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:222
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "宽度(_W)："
 
-#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:248
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:225
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "高度(_E)："
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:338
+#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:273
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
 msgstr "X 分辨率(_X)："
 
-#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:345
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:276
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
 msgstr "Y 分辨率(_Y)："
 
-#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:357
+#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:269
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -7270,11 +7285,11 @@ msgstr " 1 分钟"
 msgid "%d minutes"
 msgstr " %d 分钟"
 
-#: app/display/gimpdisplayshell-dnd.c:96
+#: app/display/gimpdisplayshell-dnd.c:98
 msgid "Drop New Layer"
 msgstr "拖放入新图层"
 
-#: app/display/gimpdisplayshell-dnd.c:140
+#: app/display/gimpdisplayshell-dnd.c:142
 msgid "Drop New Path"
 msgstr "拖放入新路径"
 
@@ -8728,12 +8743,12 @@ msgid "_Paintbrush"
 msgstr "画笔(_P)"
 
 #: app/tools/gimppaintoptions-gui.c:103 app/widgets/gimpbrushselect.c:201
-#: app/widgets/gimplayertreeview.c:330
+#: app/widgets/gimplayertreeview.c:332
 msgid "Opacity:"
 msgstr "不透明度："
 
 #: app/tools/gimppaintoptions-gui.c:108 app/tools/gimpselectionoptions.c:374
-#: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:323
+#: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:325
 msgid "Mode:"
 msgstr "模式："
 
@@ -10127,24 +10142,24 @@ msgstr "设置项目唯一可见"
 msgid "Set Item Exclusive Linked"
 msgstr "设置项目唯一链接"
 
-#: app/widgets/gimplayertreeview.c:250
+#: app/widgets/gimplayertreeview.c:252
 msgid "Reorder Layer"
 msgstr "重排图层"
 
-#: app/widgets/gimplayertreeview.c:311
+#: app/widgets/gimplayertreeview.c:313
 msgid "Keep transparency"
 msgstr "保持透明部分"
 
-#: app/widgets/gimplayertreeview.c:846
+#: app/widgets/gimplayertreeview.c:848
 msgid "Empty Layer"
 msgstr "空白图层"
 
-#: app/widgets/gimpmessagebox.c:458
+#: app/widgets/gimpmessagebox.c:460
 #, c-format
 msgid "Message repeated %d times."
 msgstr "消息重复了 %d 次。"
 
-#: app/widgets/gimpmessagebox.c:460
+#: app/widgets/gimpmessagebox.c:462
 msgid "Message repeated once."
 msgstr "消息重复了 1 次。"
 
@@ -10176,16 +10191,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "无效的 UTF-8"
 
-#: app/widgets/gimpsizebox.c:290
-msgid "Keep aspect ratio"
-msgstr "保持宽高比"
-
-#: app/widgets/gimpsizebox.c:574
+#: app/widgets/gimpsizebox.c:451
 #, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d dpi"
 
-#: app/widgets/gimpsizebox.c:578
+#: app/widgets/gimpsizebox.c:455
 #, c-format
 msgid "%d dpi"
 msgstr "%d dpi"
@@ -10626,6 +10637,9 @@ msgstr "创建并编辑图像或照片"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "图像编辑器"
+
+#~ msgid "Keep aspect ratio"
+#~ msgstr "保持宽高比"
 
 #~ msgid "Y:"
 #~ msgstr "Y："

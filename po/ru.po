@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-19 03:11+0100\n"
+"POT-Creation-Date: 2004-12-28 16:58+0100\n"
 "PO-Revision-Date: 2004-11-23 14:55+0300\n"
 "Last-Translator: Roxana Chernogolova <padavan@mail.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -1043,11 +1043,11 @@ msgstr "Удалить устаревшие записи"
 msgid "Remove dangling entries"
 msgstr "Удалить устаревшие записи"
 
-#: app/actions/documents-commands.c:252 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
-#: app/display/gimpdisplayshell-dnd.c:332 app/widgets/gimplayertreeview.c:802
-#: app/widgets/gimptoolbox-dnd.c:123
+#: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
+#: app/widgets/gimptoolbox-dnd.c:125
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1557,115 +1557,115 @@ msgstr "Увеличить до размера окна"
 msgid "Zoom all"
 msgstr "Вернуть к размеру окна"
 
-#: app/actions/gradient-editor-actions.c:582
+#: app/actions/gradient-editor-actions.c:589
 msgid "_Blending Function for Segment"
 msgstr "Функция смешивания для сегмента"
 
-#: app/actions/gradient-editor-actions.c:584
+#: app/actions/gradient-editor-actions.c:591
 msgid "Coloring _Type for Segment"
 msgstr "Тип окрашивания для сегмента"
 
-#: app/actions/gradient-editor-actions.c:587
+#: app/actions/gradient-editor-actions.c:594
 msgid "_Flip Segment"
 msgstr "Отразить сегмент"
 
-#: app/actions/gradient-editor-actions.c:589
+#: app/actions/gradient-editor-actions.c:596
 msgid "_Replicate Segment..."
 msgstr "Сделать копию сегмента..."
 
-#: app/actions/gradient-editor-actions.c:591
+#: app/actions/gradient-editor-actions.c:598
 msgid "Split Segment at _Midpoint"
 msgstr "Разделить сегмент по центру"
 
-#: app/actions/gradient-editor-actions.c:593
+#: app/actions/gradient-editor-actions.c:600
 msgid "Split Segment _Uniformly..."
 msgstr "Равномерно разделить сегмент..."
 
-#: app/actions/gradient-editor-actions.c:595
+#: app/actions/gradient-editor-actions.c:602
 msgid "_Delete Segment"
 msgstr "Удалить сегмент"
 
-#: app/actions/gradient-editor-actions.c:597
+#: app/actions/gradient-editor-actions.c:604
 msgid "Re-_center Segment's Midpoint"
 msgstr "Отцентровать среднюю точку сегмента"
 
-#: app/actions/gradient-editor-actions.c:599
+#: app/actions/gradient-editor-actions.c:606
 msgid "Re-distribute _Handles in Segment"
 msgstr "Перераспределить направляющие в сегменте"
 
-#: app/actions/gradient-editor-actions.c:604
+#: app/actions/gradient-editor-actions.c:611
 msgid "_Blending Function for Selection"
 msgstr "Функция смешения для выделения"
 
-#: app/actions/gradient-editor-actions.c:606
+#: app/actions/gradient-editor-actions.c:613
 msgid "Coloring _Type for Selection"
 msgstr "Тип окрашивания для выделения"
 
-#: app/actions/gradient-editor-actions.c:609
+#: app/actions/gradient-editor-actions.c:616
 msgid "_Flip Selection"
 msgstr "Отразить выделение"
 
-#: app/actions/gradient-editor-actions.c:611
+#: app/actions/gradient-editor-actions.c:618
 msgid "_Replicate Selection..."
 msgstr "Сделать копию выделения..."
 
-#: app/actions/gradient-editor-actions.c:613
+#: app/actions/gradient-editor-actions.c:620
 msgid "Split Segments at _Midpoints"
 msgstr "Разделить сегменты по центрам"
 
-#: app/actions/gradient-editor-actions.c:615
+#: app/actions/gradient-editor-actions.c:622
 msgid "Split Segments _Uniformly..."
 msgstr "Равномерно разделить сегменты..."
 
-#: app/actions/gradient-editor-actions.c:617
+#: app/actions/gradient-editor-actions.c:624
 msgid "_Delete Selection"
 msgstr "Удалить выделение"
 
-#: app/actions/gradient-editor-actions.c:619
+#: app/actions/gradient-editor-actions.c:626
 msgid "Re-_center Midpoints in Selection"
 msgstr "Отцентровать средние точки выделения"
 
-#: app/actions/gradient-editor-actions.c:621
+#: app/actions/gradient-editor-actions.c:628
 msgid "Re-distribute _Handles in Selection"
 msgstr "Перераспределить направляющие в выделенном"
 
-#: app/actions/gradient-editor-commands.c:84
+#: app/actions/gradient-editor-commands.c:85
 msgid "Left Endpoint Color"
 msgstr "Цвет крайней левой точки"
 
-#: app/actions/gradient-editor-commands.c:86
+#: app/actions/gradient-editor-commands.c:87
 msgid "Gradient Segment's Left Endpoint Color"
 msgstr "Цвет крайней левой точки сегмента градиента"
 
-#: app/actions/gradient-editor-commands.c:186
+#: app/actions/gradient-editor-commands.c:189
 msgid "Right Endpoint Color"
 msgstr "Цвет крайней правой точки"
 
-#: app/actions/gradient-editor-commands.c:188
+#: app/actions/gradient-editor-commands.c:191
 msgid "Gradient Segment's Right Endpoint Color"
 msgstr "Цвет крайней правой точки сегмента градиента"
 
-#: app/actions/gradient-editor-commands.c:353
+#: app/actions/gradient-editor-commands.c:358
 msgid "Replicate Segment"
 msgstr "Сделать копию сегмента"
 
-#: app/actions/gradient-editor-commands.c:354
+#: app/actions/gradient-editor-commands.c:359
 msgid "Replicate Gradient Segment"
 msgstr "Сделать копию сегмента"
 
-#: app/actions/gradient-editor-commands.c:358
+#: app/actions/gradient-editor-commands.c:363
 msgid "Replicate Selection"
 msgstr "Сделать копию выделения"
 
-#: app/actions/gradient-editor-commands.c:359
+#: app/actions/gradient-editor-commands.c:364
 msgid "Replicate Gradient Selection"
 msgstr "Сделать копию выделения градиента"
 
-#: app/actions/gradient-editor-commands.c:371
+#: app/actions/gradient-editor-commands.c:376
 msgid "Replicate"
 msgstr "Создать копию"
 
-#: app/actions/gradient-editor-commands.c:386
+#: app/actions/gradient-editor-commands.c:391
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
@@ -1673,7 +1673,7 @@ msgstr ""
 "Выбор числа создаваемых\n"
 "копий выделенного сегмента"
 
-#: app/actions/gradient-editor-commands.c:389
+#: app/actions/gradient-editor-commands.c:394
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
@@ -1681,27 +1681,27 @@ msgstr ""
 "Выбор числа создаваемых\n"
 "копий выделения."
 
-#: app/actions/gradient-editor-commands.c:444
+#: app/actions/gradient-editor-commands.c:452
 msgid "Split Segment Uniformly"
 msgstr "Равномерно разделить сегмент"
 
-#: app/actions/gradient-editor-commands.c:445
+#: app/actions/gradient-editor-commands.c:453
 msgid "Split Gradient Segment Uniformly"
 msgstr "Равномерно разделить сегмент градиента"
 
-#: app/actions/gradient-editor-commands.c:449
+#: app/actions/gradient-editor-commands.c:457
 msgid "Split Segments Uniformly"
 msgstr "Равномерно разделить сегменты"
 
-#: app/actions/gradient-editor-commands.c:450
+#: app/actions/gradient-editor-commands.c:458
 msgid "Split Gradient Segments Uniformly"
 msgstr "Равномерно разделить сегменты градиента"
 
-#: app/actions/gradient-editor-commands.c:462
+#: app/actions/gradient-editor-commands.c:470
 msgid "Split"
 msgstr "Разделить"
 
-#: app/actions/gradient-editor-commands.c:478
+#: app/actions/gradient-editor-commands.c:486
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
@@ -1709,7 +1709,7 @@ msgstr ""
 "Выберите число равных частей  \n"
 "на которое надо разделить сегмент"
 
-#: app/actions/gradient-editor-commands.c:481
+#: app/actions/gradient-editor-commands.c:489
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
@@ -2151,7 +2151,7 @@ msgstr "Правка атрибутов слоя"
 
 #: app/actions/layers-commands.c:232 app/actions/layers-commands.c:234
 #: app/actions/layers-commands.c:291 app/actions/layers-commands.c:295
-#: app/widgets/gimpdrawabletreeview.c:238 app/widgets/gimplayertreeview.c:840
+#: app/widgets/gimpdrawabletreeview.c:238 app/widgets/gimplayertreeview.c:842
 msgid "New Layer"
 msgstr "Новый слой"
 
@@ -2163,7 +2163,7 @@ msgstr "Создать новый слой"
 msgid "Set Layer Boundary Size"
 msgstr "Установить размеры границ слоя"
 
-#: app/actions/layers-commands.c:512 app/core/gimplayer.c:255
+#: app/actions/layers-commands.c:512 app/core/gimplayer.c:253
 msgid "Scale Layer"
 msgstr "Масштабировать слой"
 
@@ -2175,7 +2175,7 @@ msgstr "Кадрировать слой"
 msgid "Layer Mask to Selection"
 msgstr "Маска слоя -> Выделение"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1085
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "Добавить маску слоя"
@@ -2722,7 +2722,7 @@ msgid "Open Text File (UTF-8)"
 msgstr "Открыть текствый файл (UTF-8)"
 
 #: app/actions/text-editor-commands.c:132 app/config/gimpconfig-utils.c:552
-#: app/config/gimpscanner.c:92 app/core/gimpbrush.c:393
+#: app/config/gimpscanner.c:92 app/core/gimpbrush.c:396
 #: app/core/gimpbrushgenerated.c:601 app/core/gimpbrushpipe.c:338
 #: app/core/gimpgradient-load.c:63 app/core/gimppalette.c:360
 #: app/core/gimppattern.c:328 app/tools/gimpimagemaptool.c:608
@@ -4552,7 +4552,7 @@ msgstr "Основной в фоновой (HSV по часовой )"
 msgid "FG to Transparent"
 msgstr "Основной в прозрачный"
 
-#: app/core/gimp-gui.c:148
+#: app/core/gimp-gui.c:153
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -4584,39 +4584,54 @@ msgstr "Документы"
 msgid "Modules"
 msgstr "Модули"
 
-#: app/core/gimpbrush.c:531
+#: app/core/gimpbrush.c:534
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "Невозможно прочесть %d байт из '%s': %s"
 
-#: app/core/gimpbrush.c:566
+#: app/core/gimpbrush.c:554
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Width = 0."
+msgstr "Неисправимая ошибка разбора файла кисти '%s': неизвестная глубина %d."
+
+#: app/core/gimpbrush.c:563
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Height = 0."
+msgstr "Неисправимая ошибка разбора файла кисти '%s': файл повреждён."
+
+#: app/core/gimpbrush.c:572
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Bytes = 0."
+msgstr "Неисправимая ошибка разбора файла кисти '%s': файл повреждён."
+
+#: app/core/gimpbrush.c:596
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr "Неисправимая ошибка разбора файла кисти '%s': неизвестная глубина %d."
 
-#: app/core/gimpbrush.c:579
+#: app/core/gimpbrush.c:609
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "Неисправимая ошибка разбора файла кисти '%s': неизвестная версия '%d'."
 
-#: app/core/gimpbrush.c:595 app/core/gimpbrush.c:715
+#: app/core/gimpbrush.c:625 app/core/gimpbrush.c:745
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "Неисправимая ошибка разбора файла кисти '%s': файл вероятно оборван."
 
-#: app/core/gimpbrush.c:603 app/core/gimpbrushgenerated.c:648
+#: app/core/gimpbrush.c:633 app/core/gimpbrushgenerated.c:648
 #: app/core/gimpbrushpipe.c:354
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Недопустимая строка UTF-8 в файле кистей '%s'."
 
-#: app/core/gimpbrush.c:610 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:479 app/core/gimppattern.c:400
+#: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
+#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "Безымянный"
 
-#: app/core/gimpbrush.c:704
+#: app/core/gimpbrush.c:734
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -4784,11 +4799,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:274 app/core/gimpitem.c:277
+#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
 msgid "copy"
 msgstr "копия"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:286
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
 #, c-format
 msgid "%s copy"
 msgstr "%s копировать"
@@ -4851,7 +4866,7 @@ msgstr "Зеркало"
 msgid "Rotate"
 msgstr "Вращение"
 
-#: app/core/gimpdrawable-transform.c:1119 app/core/gimplayer.c:259
+#: app/core/gimpdrawable-transform.c:1119 app/core/gimplayer.c:257
 msgid "Transform Layer"
 msgstr "Преобразование слоя"
 
@@ -5212,7 +5227,7 @@ msgstr "Не удалось создать файл предварительно
 
 #. pixel size
 #: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:552
-#: app/widgets/gimpsizebox.c:552 app/widgets/gimptemplateeditor.c:637
+#: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:637
 #: app/widgets/gimptemplateeditor.c:673
 #, c-format
 msgid "%d x %d pixels"
@@ -5232,15 +5247,15 @@ msgstr "%d Слои"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Не удалось открыть файл миниатюр '%s': %s"
 
-#: app/core/gimpitem.c:1096
+#: app/core/gimpitem.c:1103
 msgid "Attach Parasite"
 msgstr "Добавит шум"
 
-#: app/core/gimpitem.c:1106
+#: app/core/gimpitem.c:1113
 msgid "Attach Parasite to Item"
 msgstr "Добавить шум в элемент"
 
-#: app/core/gimpitem.c:1145 app/core/gimpitem.c:1152
+#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
 msgid "Remove Parasite from Item"
 msgstr "Удалить шум из элемента"
 
@@ -5271,37 +5286,37 @@ msgstr ""
 msgid "Floating Selection to Layer"
 msgstr "Плавающее выделение в слой"
 
-#: app/core/gimplayer.c:252 app/pdb/internal_procs.c:152
+#: app/core/gimplayer.c:250 app/pdb/internal_procs.c:152
 msgid "Layer"
 msgstr "Слой"
 
-#: app/core/gimplayer.c:253
+#: app/core/gimplayer.c:251
 msgid "Rename Layer"
 msgstr "Переименовать слой"
 
-#: app/core/gimplayer.c:254 app/pdb/layer_cmds.c:669 app/pdb/layer_cmds.c:742
+#: app/core/gimplayer.c:252 app/pdb/layer_cmds.c:669 app/pdb/layer_cmds.c:742
 msgid "Move Layer"
 msgstr "Переместить слой"
 
-#: app/core/gimplayer.c:256
+#: app/core/gimplayer.c:254
 msgid "Resize Layer"
 msgstr "Изменить размер слоя"
 
-#: app/core/gimplayer.c:257
+#: app/core/gimplayer.c:255
 msgid "Flip Layer"
 msgstr "Отразить слой"
 
-#: app/core/gimplayer.c:258
+#: app/core/gimplayer.c:256
 msgid "Rotate Layer"
 msgstr "Вращать слой"
 
-#: app/core/gimplayer.c:341 app/core/gimplayer.c:1129
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
 msgstr "%s маска"
 
-#: app/core/gimplayer.c:387
+#: app/core/gimplayer.c:385
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -5310,42 +5325,42 @@ msgstr ""
 "Плавающее выделение\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1055
+#: app/core/gimplayer.c:1036
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "Невозможно добавить маску слоя к слою, не являющемуся частью изображения."
 
-#: app/core/gimplayer.c:1062
+#: app/core/gimplayer.c:1043
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Не удалось добавить маску слоя, так как у слоя уже есть маска."
 
-#: app/core/gimplayer.c:1069
+#: app/core/gimplayer.c:1050
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Невозможно добавить маску слоя к слою без альфа-канала."
 
-#: app/core/gimplayer.c:1079
+#: app/core/gimplayer.c:1060
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Невозможно добавить маску слоя, отличающуюся\n"
 " размерами от указанного слоя."
 
-#: app/core/gimplayer.c:1183
+#: app/core/gimplayer.c:1164
 msgid "Transfer Alpha to Mask"
 msgstr "Преобразовать альфа-канал в маску"
 
-#: app/core/gimplayer.c:1343
+#: app/core/gimplayer.c:1324
 msgid "Apply Layer Mask"
 msgstr "Применить маску слоя"
 
-#: app/core/gimplayer.c:1344
+#: app/core/gimplayer.c:1325
 msgid "Delete Layer Mask"
 msgstr "Удалить маску слоя"
 
-#: app/core/gimplayer.c:1445
+#: app/core/gimplayer.c:1426
 msgid "Add Alpha Channel"
 msgstr "Добавить альфа-канал"
 
-#: app/core/gimplayer.c:1467
+#: app/core/gimplayer.c:1448
 msgid "Layer to Image Size"
 msgstr "Слой к размеру изображения"
 
@@ -6805,28 +6820,28 @@ msgid "Print Size"
 msgstr "Размер при печати:"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:241
+#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:222
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "_Ширина:"
 
-#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:248
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:225
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "_Высота:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:338
+#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:273
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
 msgstr "Разрешение по X:"
 
-#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:345
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:276
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
 msgstr "Разрешение по Y:"
 
-#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:357
+#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:269
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -7477,11 +7492,11 @@ msgstr "Минута"
 msgid "%d minutes"
 msgstr "%d минут"
 
-#: app/display/gimpdisplayshell-dnd.c:96
+#: app/display/gimpdisplayshell-dnd.c:98
 msgid "Drop New Layer"
 msgstr "Опустить новый слой"
 
-#: app/display/gimpdisplayshell-dnd.c:140
+#: app/display/gimpdisplayshell-dnd.c:142
 msgid "Drop New Path"
 msgstr "Опустить новый контур"
 
@@ -8945,12 +8960,12 @@ msgid "_Paintbrush"
 msgstr "_Кисть"
 
 #: app/tools/gimppaintoptions-gui.c:103 app/widgets/gimpbrushselect.c:201
-#: app/widgets/gimplayertreeview.c:330
+#: app/widgets/gimplayertreeview.c:332
 msgid "Opacity:"
 msgstr "Непрозрачность:"
 
 #: app/tools/gimppaintoptions-gui.c:108 app/tools/gimpselectionoptions.c:374
-#: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:323
+#: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:325
 msgid "Mode:"
 msgstr "Режим:"
 
@@ -10356,24 +10371,24 @@ msgstr "Установить видимость элемента"
 msgid "Set Item Exclusive Linked"
 msgstr "Установить связь с элементом"
 
-#: app/widgets/gimplayertreeview.c:250
+#: app/widgets/gimplayertreeview.c:252
 msgid "Reorder Layer"
 msgstr "Реорганизовать слой"
 
-#: app/widgets/gimplayertreeview.c:311
+#: app/widgets/gimplayertreeview.c:313
 msgid "Keep transparency"
 msgstr "Сохранять прозрачность"
 
-#: app/widgets/gimplayertreeview.c:846
+#: app/widgets/gimplayertreeview.c:848
 msgid "Empty Layer"
 msgstr "Пустой слой"
 
-#: app/widgets/gimpmessagebox.c:458
+#: app/widgets/gimpmessagebox.c:460
 #, c-format
 msgid "Message repeated %d times."
 msgstr "Сообщение повторено %d раз"
 
-#: app/widgets/gimpmessagebox.c:460
+#: app/widgets/gimpmessagebox.c:462
 msgid "Message repeated once."
 msgstr "Сообщение повторено один раз"
 
@@ -10405,16 +10420,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "недопустимая строка UTF-8"
 
-#: app/widgets/gimpsizebox.c:290
-msgid "Keep aspect ratio"
-msgstr "Фиксированные пропорции"
-
-#: app/widgets/gimpsizebox.c:574
+#: app/widgets/gimpsizebox.c:451
 #, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d точек растра"
 
-#: app/widgets/gimpsizebox.c:578
+#: app/widgets/gimpsizebox.c:455
 #, c-format
 msgid "%d dpi"
 msgstr "%d dpi"
@@ -10855,6 +10866,9 @@ msgstr "Создание и редактирование изображений 
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Редактор изображений"
+
+#~ msgid "Keep aspect ratio"
+#~ msgstr "Фиксированные пропорции"
 
 #~ msgid "Resize Error: Both width and height must be greater than zero."
 #~ msgstr ""

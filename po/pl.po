@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-19 03:11+0100\n"
+"POT-Creation-Date: 2004-12-28 16:58+0100\n"
 "PO-Revision-Date: 2004-03-22 10:58+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -1066,11 +1066,11 @@ msgid "Remove dangling entries"
 msgstr "Usunięcie nieistniejących pozycji"
 
 # c-format
-#: app/actions/documents-commands.c:252 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
-#: app/display/gimpdisplayshell-dnd.c:332 app/widgets/gimplayertreeview.c:802
-#: app/widgets/gimptoolbox-dnd.c:123
+#: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
+#: app/widgets/gimptoolbox-dnd.c:125
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1587,117 +1587,117 @@ msgstr "Całość"
 msgid "Zoom all"
 msgstr "Widok na całość"
 
-#: app/actions/gradient-editor-actions.c:582
+#: app/actions/gradient-editor-actions.c:589
 msgid "_Blending Function for Segment"
 msgstr "Typ fu_nkcji gradientu dla segmentu"
 
-#: app/actions/gradient-editor-actions.c:584
+#: app/actions/gradient-editor-actions.c:591
 msgid "Coloring _Type for Segment"
 msgstr "_Typ kolorowania segmentu"
 
-#: app/actions/gradient-editor-actions.c:587
+#: app/actions/gradient-editor-actions.c:594
 msgid "_Flip Segment"
 msgstr "O_dbij segment"
 
-#: app/actions/gradient-editor-actions.c:589
+#: app/actions/gradient-editor-actions.c:596
 msgid "_Replicate Segment..."
 msgstr "Zr_eplikuj segment..."
 
-#: app/actions/gradient-editor-actions.c:591
+#: app/actions/gradient-editor-actions.c:598
 msgid "Split Segment at _Midpoint"
 msgstr "_Podziel segment w punkcie pośrednim"
 
-#: app/actions/gradient-editor-actions.c:593
+#: app/actions/gradient-editor-actions.c:600
 msgid "Split Segment _Uniformly..."
 msgstr "Podziel _segment równomiernie..."
 
-#: app/actions/gradient-editor-actions.c:595
+#: app/actions/gradient-editor-actions.c:602
 msgid "_Delete Segment"
 msgstr "_Usuń segment"
 
-#: app/actions/gradient-editor-actions.c:597
+#: app/actions/gradient-editor-actions.c:604
 msgid "Re-_center Segment's Midpoint"
 msgstr "_Wyśrodkuj punkt pośredni segmentu"
 
-#: app/actions/gradient-editor-actions.c:599
+#: app/actions/gradient-editor-actions.c:606
 msgid "Re-distribute _Handles in Segment"
 msgstr "Rozłóż ponownie uc_hwyty w segmencie"
 
-#: app/actions/gradient-editor-actions.c:604
+#: app/actions/gradient-editor-actions.c:611
 msgid "_Blending Function for Selection"
 msgstr "Typ fu_nkcji gradientu dla zaznaczenia"
 
-#: app/actions/gradient-editor-actions.c:606
+#: app/actions/gradient-editor-actions.c:613
 msgid "Coloring _Type for Selection"
 msgstr "_Typ kolorowania zaznaczenia"
 
-#: app/actions/gradient-editor-actions.c:609
+#: app/actions/gradient-editor-actions.c:616
 msgid "_Flip Selection"
 msgstr "O_dbij zaznaczenie"
 
-#: app/actions/gradient-editor-actions.c:611
+#: app/actions/gradient-editor-actions.c:618
 msgid "_Replicate Selection..."
 msgstr "Zr_eplikuj zaznaczenie..."
 
-#: app/actions/gradient-editor-actions.c:613
+#: app/actions/gradient-editor-actions.c:620
 msgid "Split Segments at _Midpoints"
 msgstr "_Podziel segmenty w punktach pośrednich"
 
 # - raz - "Podziel segmenty równomiernie"
 # - dwa - "Równomierny podział segmentów"
-#: app/actions/gradient-editor-actions.c:615
+#: app/actions/gradient-editor-actions.c:622
 msgid "Split Segments _Uniformly..."
 msgstr "Podziel _segmenty równomiernie..."
 
-#: app/actions/gradient-editor-actions.c:617
+#: app/actions/gradient-editor-actions.c:624
 msgid "_Delete Selection"
 msgstr "_Usuń zaznaczenie"
 
-#: app/actions/gradient-editor-actions.c:619
+#: app/actions/gradient-editor-actions.c:626
 msgid "Re-_center Midpoints in Selection"
 msgstr "_Wyśrodkuj punkty pośrednie w zaznaczeniu"
 
-#: app/actions/gradient-editor-actions.c:621
+#: app/actions/gradient-editor-actions.c:628
 msgid "Re-distribute _Handles in Selection"
 msgstr "Rozłóż ponownie uc_hwyty w zaznaczeniu"
 
-#: app/actions/gradient-editor-commands.c:84
+#: app/actions/gradient-editor-commands.c:85
 msgid "Left Endpoint Color"
 msgstr "Kolor lewego punktu końcowego"
 
-#: app/actions/gradient-editor-commands.c:86
+#: app/actions/gradient-editor-commands.c:87
 msgid "Gradient Segment's Left Endpoint Color"
 msgstr "Kolor lewego punktu końcowego segmentu gradientu"
 
-#: app/actions/gradient-editor-commands.c:186
+#: app/actions/gradient-editor-commands.c:189
 msgid "Right Endpoint Color"
 msgstr "Kolor prawego punktu końcowego"
 
-#: app/actions/gradient-editor-commands.c:188
+#: app/actions/gradient-editor-commands.c:191
 msgid "Gradient Segment's Right Endpoint Color"
 msgstr "Kolor prawego punktu końcowego segmentu gradientu"
 
-#: app/actions/gradient-editor-commands.c:353
+#: app/actions/gradient-editor-commands.c:358
 msgid "Replicate Segment"
 msgstr "Zreplikuj segment"
 
-#: app/actions/gradient-editor-commands.c:354
+#: app/actions/gradient-editor-commands.c:359
 msgid "Replicate Gradient Segment"
 msgstr "Replikacja segmentu gradientu"
 
-#: app/actions/gradient-editor-commands.c:358
+#: app/actions/gradient-editor-commands.c:363
 msgid "Replicate Selection"
 msgstr "Zreplikuj zaznaczenie"
 
-#: app/actions/gradient-editor-commands.c:359
+#: app/actions/gradient-editor-commands.c:364
 msgid "Replicate Gradient Selection"
 msgstr "Replikacja zaznaczenia gradientu"
 
-#: app/actions/gradient-editor-commands.c:371
+#: app/actions/gradient-editor-commands.c:376
 msgid "Replicate"
 msgstr "Zreplikuj"
 
-#: app/actions/gradient-editor-commands.c:386
+#: app/actions/gradient-editor-commands.c:391
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
@@ -1705,7 +1705,7 @@ msgstr ""
 "Określ, ile razy powinien zostać\n"
 "zreplikowany zaznaczony segment."
 
-#: app/actions/gradient-editor-commands.c:389
+#: app/actions/gradient-editor-commands.c:394
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
@@ -1713,31 +1713,31 @@ msgstr ""
 "Określ, ile razy powinno zostać\n"
 "zreplikowane zaznaczenie."
 
-#: app/actions/gradient-editor-commands.c:444
+#: app/actions/gradient-editor-commands.c:452
 msgid "Split Segment Uniformly"
 msgstr "Podziel segment równomiernie"
 
 # - raz - "Podziel segment równomiernie"
 # - dwa - "Równomierny podział segmentu"
-#: app/actions/gradient-editor-commands.c:445
+#: app/actions/gradient-editor-commands.c:453
 msgid "Split Gradient Segment Uniformly"
 msgstr "Równomierny podział segmentu gradientu"
 
-#: app/actions/gradient-editor-commands.c:449
+#: app/actions/gradient-editor-commands.c:457
 msgid "Split Segments Uniformly"
 msgstr "Podziel segmenty równomiernie"
 
 # - raz - "Podziel segmenty równomiernie"
 # - dwa - "Równomierny podział segmentów"
-#: app/actions/gradient-editor-commands.c:450
+#: app/actions/gradient-editor-commands.c:458
 msgid "Split Gradient Segments Uniformly"
 msgstr "Równomierny podział segmentów"
 
-#: app/actions/gradient-editor-commands.c:462
+#: app/actions/gradient-editor-commands.c:470
 msgid "Split"
 msgstr "Podziel"
 
-#: app/actions/gradient-editor-commands.c:478
+#: app/actions/gradient-editor-commands.c:486
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
@@ -1745,7 +1745,7 @@ msgstr ""
 "Podaj liczbę jednakowych części, na jakie\n"
 "ma zostać podzielony zaznaczony segment."
 
-#: app/actions/gradient-editor-commands.c:481
+#: app/actions/gradient-editor-commands.c:489
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
@@ -2189,7 +2189,7 @@ msgstr "Modyfikacja atrybutów warstwy"
 
 #: app/actions/layers-commands.c:232 app/actions/layers-commands.c:234
 #: app/actions/layers-commands.c:291 app/actions/layers-commands.c:295
-#: app/widgets/gimpdrawabletreeview.c:238 app/widgets/gimplayertreeview.c:840
+#: app/widgets/gimpdrawabletreeview.c:238 app/widgets/gimplayertreeview.c:842
 msgid "New Layer"
 msgstr "Nowa warstwa"
 
@@ -2201,7 +2201,7 @@ msgstr "Nowa warstwa"
 msgid "Set Layer Boundary Size"
 msgstr "Ustawienie wymiarów granic warstwy"
 
-#: app/actions/layers-commands.c:512 app/core/gimplayer.c:255
+#: app/actions/layers-commands.c:512 app/core/gimplayer.c:253
 msgid "Scale Layer"
 msgstr "Przeskaluj warstwę"
 
@@ -2213,7 +2213,7 @@ msgstr "Wykadrowanie warstwy"
 msgid "Layer Mask to Selection"
 msgstr "Maska warstwy na zaznaczenie"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1085
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "Dodanie maski warstwy"
@@ -2759,7 +2759,7 @@ msgid "Open Text File (UTF-8)"
 msgstr "Otwiera plik tekstowy (UTF-8)"
 
 #: app/actions/text-editor-commands.c:132 app/config/gimpconfig-utils.c:552
-#: app/config/gimpscanner.c:92 app/core/gimpbrush.c:393
+#: app/config/gimpscanner.c:92 app/core/gimpbrush.c:396
 #: app/core/gimpbrushgenerated.c:601 app/core/gimpbrushpipe.c:338
 #: app/core/gimpgradient-load.c:63 app/core/gimppalette.c:360
 #: app/core/gimppattern.c:328 app/tools/gimpimagemaptool.c:608
@@ -4639,7 +4639,7 @@ msgstr "Kolor pierwszoplanowy na kolor tła (odcień HSV prawoskrętnie)"
 msgid "FG to Transparent"
 msgstr "Kolor pierwszoplanowy na przezroczystość"
 
-#: app/core/gimp-gui.c:148
+#: app/core/gimp-gui.c:153
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -4671,45 +4671,66 @@ msgstr "Dokumenty"
 msgid "Modules"
 msgstr "Moduły"
 
-#: app/core/gimpbrush.c:531
+#: app/core/gimpbrush.c:534
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "Nie można odczytać %d bajtów z pliku \"%s\": %s"
 
-#: app/core/gimpbrush.c:566
+#: app/core/gimpbrush.c:554
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Width = 0."
+msgstr ""
+"Poważny błąd przy analizie składniowej pliku \"%s\" z pędzlami: nieznana "
+"głębia %d."
+
+#: app/core/gimpbrush.c:563
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Height = 0."
+msgstr ""
+"Poważny błąd przy analizie składniowej pliku \"%s\" z pędzlami: plik jest "
+"uszkodzony."
+
+#: app/core/gimpbrush.c:572
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Bytes = 0."
+msgstr ""
+"Poważny błąd przy analizie składniowej pliku \"%s\" z pędzlami: plik jest "
+"uszkodzony."
+
+#: app/core/gimpbrush.c:596
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr ""
 "Poważny błąd przy analizie składniowej pliku \"%s\" z pędzlami: nieznana "
 "głębia %d."
 
-#: app/core/gimpbrush.c:579
+#: app/core/gimpbrush.c:609
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr ""
 "Poważny błąd przy analizie składniowej pliku \"%s\" z pędzlami: nieznana "
 "wersja %d."
 
-#: app/core/gimpbrush.c:595 app/core/gimpbrush.c:715
+#: app/core/gimpbrush.c:625 app/core/gimpbrush.c:745
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
 "Poważny błąd przy analizie składniowej pliku \"%s\" z pędzlami: plik wydaje "
 "się być obcięty."
 
-#: app/core/gimpbrush.c:603 app/core/gimpbrushgenerated.c:648
+#: app/core/gimpbrush.c:633 app/core/gimpbrushgenerated.c:648
 #: app/core/gimpbrushpipe.c:354
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Niepoprawny napis UTF-8 w pliku z pędzlami \"%s\"."
 
-#: app/core/gimpbrush.c:610 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:479 app/core/gimppattern.c:400
+#: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
+#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "Bez nazwy"
 
-#: app/core/gimpbrush.c:704
+#: app/core/gimpbrush.c:734
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -4884,11 +4905,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:274 app/core/gimpitem.c:277
+#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
 msgid "copy"
 msgstr "kopia"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:286
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
 #, c-format
 msgid "%s copy"
 msgstr "kopia: %s"
@@ -4951,7 +4972,7 @@ msgstr "Odbicie"
 msgid "Rotate"
 msgstr "Obrót"
 
-#: app/core/gimpdrawable-transform.c:1119 app/core/gimplayer.c:259
+#: app/core/gimpdrawable-transform.c:1119 app/core/gimplayer.c:257
 msgid "Transform Layer"
 msgstr "Przekształcenie warstwy"
 
@@ -5329,7 +5350,7 @@ msgstr "Nie można utworzyć podglądu"
 
 #. pixel size
 #: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:552
-#: app/widgets/gimpsizebox.c:552 app/widgets/gimptemplateeditor.c:637
+#: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:637
 #: app/widgets/gimptemplateeditor.c:673
 #, c-format
 msgid "%d x %d pixels"
@@ -5349,15 +5370,15 @@ msgstr "%d warstw"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nie można otworzyć pliku miniaturki \"%s\": %s"
 
-#: app/core/gimpitem.c:1096
+#: app/core/gimpitem.c:1103
 msgid "Attach Parasite"
 msgstr "Dołączenie danych pasożytniczych"
 
-#: app/core/gimpitem.c:1106
+#: app/core/gimpitem.c:1113
 msgid "Attach Parasite to Item"
 msgstr "Dołączenie do elementu danych pasożytniczych"
 
-#: app/core/gimpitem.c:1145 app/core/gimpitem.c:1152
+#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
 msgid "Remove Parasite from Item"
 msgstr "Usunięcie z elementu danych pasożytniczych"
 
@@ -5386,37 +5407,37 @@ msgstr ""
 msgid "Floating Selection to Layer"
 msgstr "Oderwane zaznaczenie na warstwę"
 
-#: app/core/gimplayer.c:252 app/pdb/internal_procs.c:152
+#: app/core/gimplayer.c:250 app/pdb/internal_procs.c:152
 msgid "Layer"
 msgstr "Warstwa"
 
-#: app/core/gimplayer.c:253
+#: app/core/gimplayer.c:251
 msgid "Rename Layer"
 msgstr "Zmiana nazwy warstwy"
 
-#: app/core/gimplayer.c:254 app/pdb/layer_cmds.c:669 app/pdb/layer_cmds.c:742
+#: app/core/gimplayer.c:252 app/pdb/layer_cmds.c:669 app/pdb/layer_cmds.c:742
 msgid "Move Layer"
 msgstr "Przesunięcie warstwy"
 
-#: app/core/gimplayer.c:256
+#: app/core/gimplayer.c:254
 msgid "Resize Layer"
 msgstr "Zmiana wymiarów warstwy"
 
-#: app/core/gimplayer.c:257
+#: app/core/gimplayer.c:255
 msgid "Flip Layer"
 msgstr "Odbicie warstwy"
 
-#: app/core/gimplayer.c:258
+#: app/core/gimplayer.c:256
 msgid "Rotate Layer"
 msgstr "Obrót warstwy"
 
-#: app/core/gimplayer.c:341 app/core/gimplayer.c:1129
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
 msgstr "maska %s"
 
-#: app/core/gimplayer.c:387
+#: app/core/gimplayer.c:385
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -5425,40 +5446,40 @@ msgstr ""
 "Oderwane zaznaczenie\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1055
+#: app/core/gimplayer.c:1036
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "Nie można dodać maski warstwy do warstwy, która nie jest częścią obrazu."
 
-#: app/core/gimplayer.c:1062
+#: app/core/gimplayer.c:1043
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nie można dodać maski warstwy, ponieważ warstwa już ją ma."
 
-#: app/core/gimplayer.c:1069
+#: app/core/gimplayer.c:1050
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Nie można dodać maski warstwy do warstwy bez kanału alfa."
 
-#: app/core/gimplayer.c:1079
+#: app/core/gimplayer.c:1060
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nie można dodać maski warstwy o wymiarach różnych od wymiarów warstwy."
 
-#: app/core/gimplayer.c:1183
+#: app/core/gimplayer.c:1164
 msgid "Transfer Alpha to Mask"
 msgstr "Przeniesienie kanału alfa na maskę"
 
-#: app/core/gimplayer.c:1343
+#: app/core/gimplayer.c:1324
 msgid "Apply Layer Mask"
 msgstr "Zastosowanie maski warstwy"
 
-#: app/core/gimplayer.c:1344
+#: app/core/gimplayer.c:1325
 msgid "Delete Layer Mask"
 msgstr "Usunięcie maski warstwy"
 
-#: app/core/gimplayer.c:1445
+#: app/core/gimplayer.c:1426
 msgid "Add Alpha Channel"
 msgstr "Dodanie kanału alfa"
 
-#: app/core/gimplayer.c:1467
+#: app/core/gimplayer.c:1448
 msgid "Layer to Image Size"
 msgstr "Dopasowanie wymiarów warstwy do obrazu"
 
@@ -6927,28 +6948,28 @@ msgid "Print Size"
 msgstr "Rozmiar wydruku:"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:241
+#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:222
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "_Szerokość: "
 
-#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:248
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:225
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "_Wysokość:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:338
+#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:273
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
 msgstr "Rozdzielczość _X:"
 
-#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:345
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:276
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
 msgstr "Rozdzielczość _Y:"
 
-#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:357
+#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:269
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -7599,11 +7620,11 @@ msgstr "ostatniej minuty"
 msgid "%d minutes"
 msgstr "ostatnich %d minut"
 
-#: app/display/gimpdisplayshell-dnd.c:96
+#: app/display/gimpdisplayshell-dnd.c:98
 msgid "Drop New Layer"
 msgstr "Upuszczenie nowej warstwy"
 
-#: app/display/gimpdisplayshell-dnd.c:140
+#: app/display/gimpdisplayshell-dnd.c:142
 msgid "Drop New Path"
 msgstr "Upuszczenie nowej ścieżki"
 
@@ -9082,12 +9103,12 @@ msgid "_Paintbrush"
 msgstr "_Pędzel"
 
 #: app/tools/gimppaintoptions-gui.c:103 app/widgets/gimpbrushselect.c:201
-#: app/widgets/gimplayertreeview.c:330
+#: app/widgets/gimplayertreeview.c:332
 msgid "Opacity:"
 msgstr "Krycie:"
 
 #: app/tools/gimppaintoptions-gui.c:108 app/tools/gimpselectionoptions.c:374
-#: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:323
+#: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:325
 msgid "Mode:"
 msgstr "Tryb:"
 
@@ -10510,24 +10531,24 @@ msgstr "Ustawienie wyłącznej widoczności elementu"
 msgid "Set Item Exclusive Linked"
 msgstr "Ustawienie wyłącznego dowiązania elementu"
 
-#: app/widgets/gimplayertreeview.c:250
+#: app/widgets/gimplayertreeview.c:252
 msgid "Reorder Layer"
 msgstr "Zmiana pozycji warstwy"
 
-#: app/widgets/gimplayertreeview.c:311
+#: app/widgets/gimplayertreeview.c:313
 msgid "Keep transparency"
 msgstr "Zachowanie przezroczystości"
 
-#: app/widgets/gimplayertreeview.c:846
+#: app/widgets/gimplayertreeview.c:848
 msgid "Empty Layer"
 msgstr "Pusta warstwa"
 
-#: app/widgets/gimpmessagebox.c:458
+#: app/widgets/gimpmessagebox.c:460
 #, c-format
 msgid "Message repeated %d times."
 msgstr "Powtórzono komunikat %d razy."
 
-#: app/widgets/gimpmessagebox.c:460
+#: app/widgets/gimpmessagebox.c:462
 msgid "Message repeated once."
 msgstr "Powtórzono komunikat"
 
@@ -10559,16 +10580,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Niepoprawny UTF-8"
 
-#: app/widgets/gimpsizebox.c:290
-msgid "Keep aspect ratio"
-msgstr "Stałe proporcje"
-
-#: app/widgets/gimpsizebox.c:574
+#: app/widgets/gimpsizebox.c:451
 #, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d dpi"
 
-#: app/widgets/gimpsizebox.c:578
+#: app/widgets/gimpsizebox.c:455
 #, c-format
 msgid "%d dpi"
 msgstr "%d dpi"
@@ -11010,6 +11027,9 @@ msgstr "Program do tworzenia oraz obróbki obrazów i fotografii"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Edytor obrazu"
+
+#~ msgid "Keep aspect ratio"
+#~ msgstr "Stałe proporcje"
 
 #~ msgid "Y:"
 #~ msgstr "Y:"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 01:47+0100\n"
+"POT-Creation-Date: 2004-12-28 15:41+0100\n"
 "PO-Revision-Date: 2002-07-12 01:30+0900\n"
 "Last-Translator: Ryoichi INAGAKI <ryo1@bc.wakwak.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -1001,7 +1001,7 @@ msgstr "深度(_D):"
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "アンチアエイリアシングの品位. 高い程綺麗だが遅い."
 
-#: plug-ins/MapObject/mapobject_ui.c:614 plug-ins/common/unsharp.c:720
+#: plug-ins/MapObject/mapobject_ui.c:614 plug-ins/common/unsharp.c:691
 #: plug-ins/common/wind.c:993 plug-ins/imagemap/imap_preferences.c:539
 msgid "_Threshold:"
 msgstr "しきい値(_T):"
@@ -2213,12 +2213,12 @@ msgid "Orientation"
 msgstr "向き"
 
 #: plug-ins/common/blinds.c:259 plug-ins/common/ripple.c:539
-#: plug-ins/common/tileit.c:419 plug-ins/pagecurl/pagecurl.c:530
+#: plug-ins/common/tileit.c:418 plug-ins/pagecurl/pagecurl.c:530
 msgid "_Horizontal"
 msgstr "水平(_H)"
 
 #: plug-ins/common/blinds.c:260 plug-ins/common/ripple.c:540
-#: plug-ins/common/tileit.c:429 plug-ins/pagecurl/pagecurl.c:529
+#: plug-ins/common/tileit.c:428 plug-ins/pagecurl/pagecurl.c:529
 msgid "_Vertical"
 msgstr "鉛直(_V)"
 
@@ -2241,7 +2241,7 @@ msgstr "区切りの数(_N):"
 msgid "_Blur"
 msgstr "説明:"
 
-#: plug-ins/common/blur.c:191 plug-ins/common/unsharp.c:383
+#: plug-ins/common/blur.c:191 plug-ins/common/unsharp.c:432
 msgid "Blurring..."
 msgstr "ぼかしています..."
 
@@ -2362,26 +2362,26 @@ msgstr ""
 msgid "Ca_rtoon..."
 msgstr "表題(_A)"
 
-#: plug-ins/common/cartoon.c:228 plug-ins/common/dog.c:246
-#: plug-ins/common/gauss.c:430 plug-ins/common/neon.c:222
-#: plug-ins/common/photocopy.c:241 plug-ins/common/sel_gauss.c:203
+#: plug-ins/common/cartoon.c:229 plug-ins/common/dog.c:247
+#: plug-ins/common/gauss.c:431 plug-ins/common/neon.c:221
+#: plug-ins/common/photocopy.c:241 plug-ins/common/sel_gauss.c:204
 #: plug-ins/common/softglow.c:220 plug-ins/gflare/gflare.c:972
 #: plug-ins/sgi/sgi.c:528 plug-ins/xjt/xjt.c:1673
 #, fuzzy
 msgid "Cannot operate on indexed color images."
 msgstr "xjt: インデックス画像には適用できません"
 
-#: plug-ins/common/cartoon.c:807
+#: plug-ins/common/cartoon.c:808
 #, fuzzy
 msgid "Cartoon"
 msgstr "表題(_A)"
 
-#: plug-ins/common/cartoon.c:837 plug-ins/common/photocopy.c:867
+#: plug-ins/common/cartoon.c:838 plug-ins/common/photocopy.c:867
 #, fuzzy
 msgid "_Mask radius:"
 msgstr "ぼかし半径(_B):"
 
-#: plug-ins/common/cartoon.c:851
+#: plug-ins/common/cartoon.c:852
 #, fuzzy
 msgid "_Percent black:"
 msgstr "パーセント"
@@ -2553,29 +2553,29 @@ msgstr "カスタムカラー:"
 msgid "Colorify Custom Color"
 msgstr "単色塗りカスタムカラー"
 
-#: plug-ins/common/colortoalpha.c:105
+#: plug-ins/common/colortoalpha.c:104
 #, fuzzy
 msgid "Color to _Alpha..."
 msgstr "色を透明度に"
 
-#: plug-ins/common/colortoalpha.c:183
+#: plug-ins/common/colortoalpha.c:181
 msgid "Removing color..."
 msgstr "カラーマップを削除しています..."
 
-#: plug-ins/common/colortoalpha.c:364
+#: plug-ins/common/colortoalpha.c:377
 msgid "Color to Alpha"
 msgstr "色を透明度に"
 
-#: plug-ins/common/colortoalpha.c:389 plug-ins/common/mapcolor.c:424
+#: plug-ins/common/colortoalpha.c:402 plug-ins/common/mapcolor.c:424
 #: plug-ins/gfli/gfli.c:835 plug-ins/gfli/gfli.c:898
 msgid "From:"
 msgstr "最初:"
 
-#: plug-ins/common/colortoalpha.c:393
+#: plug-ins/common/colortoalpha.c:406
 msgid "Color to Alpha Color Picker"
 msgstr "「色を透明度に」色選択"
 
-#: plug-ins/common/colortoalpha.c:407
+#: plug-ins/common/colortoalpha.c:420
 #, fuzzy
 msgid "to alpha"
 msgstr "を透明度に:"
@@ -2902,26 +2902,26 @@ msgstr "不透明度(_A):"
 msgid "_Cubism..."
 msgstr "キュービズム"
 
-#: plug-ins/common/cubism.c:267
+#: plug-ins/common/cubism.c:269
 msgid "Cubism"
 msgstr "キュービズム"
 
-#: plug-ins/common/cubism.c:296
+#: plug-ins/common/cubism.c:298
 #, fuzzy
 msgid "_Tile size:"
 msgstr "タイルサイズ(_T):"
 
-#: plug-ins/common/cubism.c:309
+#: plug-ins/common/cubism.c:311
 #, fuzzy
 msgid "T_ile saturation:"
 msgstr "タイル彩度(_I):"
 
-#: plug-ins/common/cubism.c:320
+#: plug-ins/common/cubism.c:322
 #, fuzzy
 msgid "_Use background color"
 msgstr "背景色を使用(_U)"
 
-#: plug-ins/common/cubism.c:410
+#: plug-ins/common/cubism.c:412
 #, fuzzy
 msgid "Cubistic Transformation..."
 msgstr "キュービズム変換"
@@ -3318,44 +3318,44 @@ msgstr "スケール 2:"
 msgid "Des_peckle..."
 msgstr "非斑化"
 
-#: plug-ins/common/despeckle.c:420 plug-ins/common/despeckle.c:642
+#: plug-ins/common/despeckle.c:418 plug-ins/common/despeckle.c:640
 msgid "Despeckle"
 msgstr "非斑化"
 
 #.
 #. * Filter type controls...
 #.
-#: plug-ins/common/despeckle.c:446 plug-ins/gimpressionist/orientmap.c:616
+#: plug-ins/common/despeckle.c:444 plug-ins/gimpressionist/orientmap.c:616
 msgid "Type"
 msgstr "種類"
 
 #. parameter settings
-#: plug-ins/common/despeckle.c:456
+#: plug-ins/common/despeckle.c:454
 #, fuzzy
 msgid "Median"
 msgstr "ラジアン"
 
-#: plug-ins/common/despeckle.c:462
+#: plug-ins/common/despeckle.c:460
 msgid "_Adaptive"
 msgstr "適応的(_A)"
 
-#: plug-ins/common/despeckle.c:472
+#: plug-ins/common/despeckle.c:470
 msgid "R_ecursive"
 msgstr "再帰的(_E)"
 
-#: plug-ins/common/despeckle.c:496 plug-ins/common/neon.c:728
+#: plug-ins/common/despeckle.c:494 plug-ins/common/neon.c:727
 #: plug-ins/common/nlfilt.c:1083 plug-ins/common/nova.c:359
-#: plug-ins/common/unsharp.c:694 plug-ins/common/whirlpinch.c:588
+#: plug-ins/common/unsharp.c:665 plug-ins/common/whirlpinch.c:588
 #: plug-ins/gflare/gflare.c:2686 plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "半径(_R):"
 
-#: plug-ins/common/despeckle.c:512
+#: plug-ins/common/despeckle.c:510
 #, fuzzy
 msgid "_Black level:"
 msgstr "黒レベル(_B):"
 
-#: plug-ins/common/despeckle.c:528
+#: plug-ins/common/despeckle.c:526
 #, fuzzy
 msgid "_White level:"
 msgstr "白レベル(_W):"
@@ -3454,7 +3454,7 @@ msgstr "その他のオプション(_T)"
 msgid "_Displace..."
 msgstr "ずらしています..."
 
-#: plug-ins/common/displace.c:228
+#: plug-ins/common/displace.c:231
 msgid "Displacing..."
 msgstr "ずらしています..."
 
@@ -3494,32 +3494,32 @@ msgstr "黒(_B)"
 msgid "Difference of Gaussians..."
 msgstr "選択的ガウシアンぼかし..."
 
-#: plug-ins/common/dog.c:222 plug-ins/common/dog.c:273
+#: plug-ins/common/dog.c:227 plug-ins/common/dog.c:274
 #, fuzzy
 msgid "DoG Edge Detect"
 msgstr "輪郭抽出"
 
-#: plug-ins/common/dog.c:294
+#: plug-ins/common/dog.c:295
 #, fuzzy
 msgid "Smoothing parameters"
 msgstr "パラメータコピー"
 
-#: plug-ins/common/dog.c:308
+#: plug-ins/common/dog.c:309
 #, fuzzy
 msgid "_Radius 1:"
 msgstr "半径(_R):"
 
-#: plug-ins/common/dog.c:312
+#: plug-ins/common/dog.c:313
 #, fuzzy
 msgid "R_adius 2:"
 msgstr "半径(_A):"
 
-#: plug-ins/common/dog.c:324 plug-ins/common/normalize.c:88
+#: plug-ins/common/dog.c:325 plug-ins/common/normalize.c:88
 #, fuzzy
 msgid "_Normalize"
 msgstr "標準(_N)"
 
-#: plug-ins/common/dog.c:335 plug-ins/gimpressionist/paper.c:149
+#: plug-ins/common/dog.c:336 plug-ins/gimpressionist/paper.c:149
 msgid "_Invert"
 msgstr "反転(_I)"
 
@@ -3580,7 +3580,7 @@ msgstr "量:"
 msgid "_Emboss..."
 msgstr "エンボス(_E)"
 
-#: plug-ins/common/emboss.c:374 plug-ins/common/emboss.c:439
+#: plug-ins/common/emboss.c:376 plug-ins/common/emboss.c:439
 msgid "Emboss"
 msgstr "エンボス"
 
@@ -3605,7 +3605,7 @@ msgstr "持ち上げ(_L):"
 msgid "En_grave..."
 msgstr "彫金しています..."
 
-#: plug-ins/common/engrave.c:181
+#: plug-ins/common/engrave.c:182
 msgid "Engraving..."
 msgstr "彫金しています..."
 
@@ -4044,41 +4044,41 @@ msgstr "Y_2:"
 msgid "_Gaussian Blur..."
 msgstr "<Image>/フィルタ/ぼかし/ガウシアンぼかし (IIR)..."
 
-#: plug-ins/common/gauss.c:407
+#: plug-ins/common/gauss.c:413
 #, fuzzy
 msgid "Gaussian Blur..."
 msgstr "<Image>/フィルタ/ぼかし/ガウシアンぼかし (IIR)..."
 
-#: plug-ins/common/gauss.c:460
+#: plug-ins/common/gauss.c:461
 #, fuzzy
 msgid "Gaussian Blur"
 msgstr "IIR ガウシアンぼかし"
 
 #. parameter settings
-#: plug-ins/common/gauss.c:483
+#: plug-ins/common/gauss.c:484
 msgid "Blur Radius"
 msgstr "ぼかし半径"
 
-#: plug-ins/common/gauss.c:497 plug-ins/common/jigsaw.c:2456
-#: plug-ins/common/spread.c:378
+#: plug-ins/common/gauss.c:498 plug-ins/common/jigsaw.c:2456
+#: plug-ins/common/spread.c:379
 msgid "_Horizontal:"
 msgstr "水平(_H)"
 
-#: plug-ins/common/gauss.c:501 plug-ins/common/jigsaw.c:2473
-#: plug-ins/common/spread.c:382
+#: plug-ins/common/gauss.c:502 plug-ins/common/jigsaw.c:2473
+#: plug-ins/common/spread.c:383
 msgid "_Vertical:"
 msgstr "鉛直(_V):"
 
-#: plug-ins/common/gauss.c:524
+#: plug-ins/common/gauss.c:525
 #, fuzzy
 msgid "Blur Method"
 msgstr "ぼかしの種類"
 
-#: plug-ins/common/gauss.c:528
+#: plug-ins/common/gauss.c:529
 msgid "_IIR"
 msgstr ""
 
-#: plug-ins/common/gauss.c:529
+#: plug-ins/common/gauss.c:530
 #, fuzzy
 msgid "_RLE"
 msgstr "RLE"
@@ -4402,20 +4402,20 @@ msgstr "並び:"
 msgid "_Glass Tile..."
 msgstr "ガラスタイルにしています..."
 
-#: plug-ins/common/glasstile.c:208
+#: plug-ins/common/glasstile.c:209
 msgid "Glass Tile..."
 msgstr "ガラスタイルにしています..."
 
-#: plug-ins/common/glasstile.c:251
+#: plug-ins/common/glasstile.c:250
 msgid "Glass Tile"
 msgstr "ガラスタイル"
 
-#: plug-ins/common/glasstile.c:282
+#: plug-ins/common/glasstile.c:281
 #, fuzzy
 msgid "Tile _width:"
 msgstr "タイル幅(_W):"
 
-#: plug-ins/common/glasstile.c:296 plug-ins/common/mosaic.c:621
+#: plug-ins/common/glasstile.c:295 plug-ins/common/mosaic.c:621
 #, fuzzy
 msgid "Tile _height:"
 msgstr "タイル高(_H):"
@@ -5485,17 +5485,17 @@ msgstr "これ以上点を追加できません.\n"
 msgid "_Neon..."
 msgstr "ビデオ/RGB..."
 
-#: plug-ins/common/neon.c:204
+#: plug-ins/common/neon.c:207
 #, fuzzy
 msgid "Neon..."
 msgstr "開く..."
 
-#: plug-ins/common/neon.c:698
+#: plug-ins/common/neon.c:697
 #, fuzzy
 msgid "Neon Detection"
 msgstr "輪郭抽出"
 
-#: plug-ins/common/neon.c:743 plug-ins/common/unsharp.c:707
+#: plug-ins/common/neon.c:742 plug-ins/common/unsharp.c:678
 msgid "_Amount:"
 msgstr "量(_A):"
 
@@ -5665,7 +5665,7 @@ msgstr "アルファ(_L):"
 msgid "_Scatter RGB..."
 msgstr "HSV 散乱..."
 
-#: plug-ins/common/noisify.c:284
+#: plug-ins/common/noisify.c:285
 msgid "Adding Noise..."
 msgstr "ノイズを追加しています..."
 
@@ -5741,7 +5741,7 @@ msgstr "カーソル表示(_H)"
 msgid "Oili_fy..."
 msgstr "油絵化"
 
-#: plug-ins/common/oilify.c:188
+#: plug-ins/common/oilify.c:189
 msgid "Oil Painting..."
 msgstr "油絵化しています..."
 
@@ -5891,7 +5891,7 @@ msgstr "ホット..."
 msgid "Photocopy"
 msgstr "写真"
 
-#: plug-ins/common/photocopy.c:881 plug-ins/common/sharpen.c:513
+#: plug-ins/common/photocopy.c:881 plug-ins/common/sharpen.c:509
 #: plug-ins/common/softglow.c:687
 msgid "_Sharpness:"
 msgstr "明瞭度(_S):"
@@ -6577,7 +6577,7 @@ msgstr "モーションぼかし..."
 msgid "_Ripple..."
 msgstr "波立たせています..."
 
-#: plug-ins/common/ripple.c:219
+#: plug-ins/common/ripple.c:222
 msgid "Rippling..."
 msgstr "波立たせています..."
 
@@ -6818,20 +6818,20 @@ msgstr "取り込みは"
 msgid "_Selective Gaussian Blur..."
 msgstr "選択的ガウシアンぼかし..."
 
-#: plug-ins/common/sel_gauss.c:186
+#: plug-ins/common/sel_gauss.c:187
 msgid "Selective Gaussian Blur..."
 msgstr "選択的ガウシアンぼかし..."
 
-#: plug-ins/common/sel_gauss.c:224
+#: plug-ins/common/sel_gauss.c:225
 msgid "Selective Gaussian Blur"
 msgstr "選択的ガウシアンぼかし"
 
-#: plug-ins/common/sel_gauss.c:256
+#: plug-ins/common/sel_gauss.c:257
 #, fuzzy
 msgid "_Blur radius:"
 msgstr "ぼかし半径(_B):"
 
-#: plug-ins/common/sel_gauss.c:266
+#: plug-ins/common/sel_gauss.c:267
 #, fuzzy
 msgid "_Max. delta:"
 msgstr "最大 Δ(_M):"
@@ -6853,11 +6853,11 @@ msgstr "明瞭にしています..."
 #.
 #. * Let the user know what we're doing...
 #.
-#: plug-ins/common/sharpen.c:315
+#: plug-ins/common/sharpen.c:311
 msgid "Sharpening..."
 msgstr "明瞭にしています..."
 
-#: plug-ins/common/sharpen.c:484
+#: plug-ins/common/sharpen.c:480
 #, fuzzy
 msgid "Sharpen"
 msgstr "明瞭化 - %s"
@@ -6867,7 +6867,7 @@ msgstr "明瞭化 - %s"
 msgid "_Shift..."
 msgstr "ずらしています..."
 
-#: plug-ins/common/shift.c:191
+#: plug-ins/common/shift.c:194
 msgid "Shifting..."
 msgstr "ずらしています..."
 
@@ -7078,24 +7078,24 @@ msgstr "_Y サイズ:"
 msgid "_Sobel..."
 msgstr "ソース..."
 
-#: plug-ins/common/sobel.c:226
+#: plug-ins/common/sobel.c:227
 msgid "Sobel Edge Detection"
 msgstr "ソーベル輪郭抽出"
 
-#: plug-ins/common/sobel.c:248
+#: plug-ins/common/sobel.c:249
 msgid "Sobel _Horizontally"
 msgstr "水平方向ソーベル(_H)"
 
-#: plug-ins/common/sobel.c:260
+#: plug-ins/common/sobel.c:261
 msgid "Sobel _Vertically"
 msgstr "鉛直方向ソーベル(_V)"
 
-#: plug-ins/common/sobel.c:272
+#: plug-ins/common/sobel.c:273
 #, fuzzy
 msgid "_Keep sign of result (one direction only)"
 msgstr "結果の符号を保存する (一方向のみ)(_K)"
 
-#: plug-ins/common/sobel.c:358
+#: plug-ins/common/sobel.c:359
 msgid "Sobel Edge Detecting..."
 msgstr "ソーベル輪郭を抽出しています..."
 
@@ -7421,15 +7421,15 @@ msgstr "球面デザイナー"
 msgid "Sp_read..."
 msgstr "拡散させています..."
 
-#: plug-ins/common/spread.c:179
+#: plug-ins/common/spread.c:182
 msgid "Spreading..."
 msgstr "拡散させています..."
 
-#: plug-ins/common/spread.c:345
+#: plug-ins/common/spread.c:346
 msgid "Spread"
 msgstr "拡散"
 
-#: plug-ins/common/spread.c:363
+#: plug-ins/common/spread.c:364
 msgid "Spread Amount"
 msgstr "拡散量"
 
@@ -7726,7 +7726,8 @@ msgstr "コメント:"
 msgid "_Tile..."
 msgstr "タイルを生成しています..."
 
-#: plug-ins/common/tile.c:192 plug-ins/common/tileit.c:321
+#. Set the tile cache size
+#: plug-ins/common/tile.c:192 plug-ins/common/tileit.c:320
 msgid "Tiling..."
 msgstr "並べています..."
 
@@ -7748,45 +7749,45 @@ msgid "_Small Tiles..."
 msgstr "全てのタイル(_L)"
 
 #. Get the preview image
-#: plug-ins/common/tileit.c:364
+#: plug-ins/common/tileit.c:363
 msgid "TileIt"
 msgstr "それを並べる"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tileit.c:407 plug-ins/ifscompose/ifscompose.c:628
+#: plug-ins/common/tileit.c:406 plug-ins/ifscompose/ifscompose.c:628
 msgid "Flip"
 msgstr "反転"
 
-#: plug-ins/common/tileit.c:455
+#: plug-ins/common/tileit.c:454
 #, fuzzy
 msgid "A_ll tiles"
 msgstr "全てのタイル(_L)"
 
-#: plug-ins/common/tileit.c:469
+#: plug-ins/common/tileit.c:468
 #, fuzzy
 msgid "Al_ternate tiles"
 msgstr "一つおきのタイル(_T)"
 
-#: plug-ins/common/tileit.c:483
+#: plug-ins/common/tileit.c:482
 #, fuzzy
 msgid "_Explicit tile"
 msgstr "明示したタイル(_E)"
 
-#: plug-ins/common/tileit.c:489
+#: plug-ins/common/tileit.c:488
 msgid "Ro_w:"
 msgstr "列(_W):"
 
-#: plug-ins/common/tileit.c:513
+#: plug-ins/common/tileit.c:512
 msgid "Col_umn:"
 msgstr "行(_U):"
 
-#: plug-ins/common/tileit.c:565
+#: plug-ins/common/tileit.c:564
 msgid "O_pacity:"
 msgstr "不透明度(_P):"
 
 #. Lower frame saying howmany segments
-#: plug-ins/common/tileit.c:574
+#: plug-ins/common/tileit.c:573
 #, fuzzy
 msgid "Number of Segments"
 msgstr "区切りの数(_N):"
@@ -7936,16 +7937,16 @@ msgstr "全ての文字フィールドが埋められていなければなりま
 msgid "Unit Editor"
 msgstr "単位エディタ"
 
-#: plug-ins/common/unsharp.c:149
+#: plug-ins/common/unsharp.c:143
 #, fuzzy
 msgid "_Unsharp Mask..."
 msgstr "非シャープ化マスク"
 
-#: plug-ins/common/unsharp.c:493
+#: plug-ins/common/unsharp.c:468
 msgid "Merging..."
 msgstr "混ぜ合わせています..."
 
-#: plug-ins/common/unsharp.c:664
+#: plug-ins/common/unsharp.c:635
 msgid "Unsharp Mask"
 msgstr "非シャープ化マスク"
 
@@ -9058,19 +9059,19 @@ msgstr "カメラ(_A)"
 msgid "_Zoom:"
 msgstr "拡大(_Z):"
 
-#: plug-ins/gfig/gfig-bezier.c:452
+#: plug-ins/gfig/gfig-bezier.c:448
 msgid "Closed"
 msgstr "閉じる"
 
-#: plug-ins/gfig/gfig-bezier.c:457
+#: plug-ins/gfig/gfig-bezier.c:453
 msgid "Close curve on completion"
 msgstr "カーブを閉じて完了"
 
-#: plug-ins/gfig/gfig-bezier.c:462
+#: plug-ins/gfig/gfig-bezier.c:458
 msgid "Show Line Frame"
 msgstr "漸近線の表示"
 
-#: plug-ins/gfig/gfig-bezier.c:467
+#: plug-ins/gfig/gfig-bezier.c:463
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr "端点間に直線を引く. カーブが作られている時だけ"
 

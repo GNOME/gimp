@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-26 19:14+0100\n"
+"POT-Creation-Date: 2004-12-28 15:41+0100\n"
 "PO-Revision-Date: 2004-12-26 23:48+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -2386,28 +2386,28 @@ msgstr "Vlastní barva:"
 msgid "Colorify Custom Color"
 msgstr "Vlastní barva kolorování"
 
-#: plug-ins/common/colortoalpha.c:105
+#: plug-ins/common/colortoalpha.c:104
 msgid "Color to _Alpha..."
 msgstr "Barva do _alfy..."
 
-#: plug-ins/common/colortoalpha.c:183
+#: plug-ins/common/colortoalpha.c:181
 msgid "Removing color..."
 msgstr "Odstraňuje se barva..."
 
-#: plug-ins/common/colortoalpha.c:364
+#: plug-ins/common/colortoalpha.c:377
 msgid "Color to Alpha"
 msgstr "Barva do alfy"
 
-#: plug-ins/common/colortoalpha.c:389 plug-ins/common/mapcolor.c:424
+#: plug-ins/common/colortoalpha.c:402 plug-ins/common/mapcolor.c:424
 #: plug-ins/gfli/gfli.c:835 plug-ins/gfli/gfli.c:898
 msgid "From:"
 msgstr "Z:"
 
-#: plug-ins/common/colortoalpha.c:393
+#: plug-ins/common/colortoalpha.c:406
 msgid "Color to Alpha Color Picker"
 msgstr "Barevná pipeta barvy do alfy"
 
-#: plug-ins/common/colortoalpha.c:407
+#: plug-ins/common/colortoalpha.c:420
 msgid "to alpha"
 msgstr "do alfy"
 
@@ -8420,19 +8420,19 @@ msgstr "K_amera"
 msgid "_Zoom:"
 msgstr "Při_blížení:"
 
-#: plug-ins/gfig/gfig-bezier.c:452
+#: plug-ins/gfig/gfig-bezier.c:448
 msgid "Closed"
 msgstr "Zavřeno"
 
-#: plug-ins/gfig/gfig-bezier.c:457
+#: plug-ins/gfig/gfig-bezier.c:453
 msgid "Close curve on completion"
 msgstr "Uzavření křivky při dokončení"
 
-#: plug-ins/gfig/gfig-bezier.c:462
+#: plug-ins/gfig/gfig-bezier.c:458
 msgid "Show Line Frame"
 msgstr "Ukázat čárový model"
 
-#: plug-ins/gfig/gfig-bezier.c:467
+#: plug-ins/gfig/gfig-bezier.c:463
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr "Kreslí čáry mezi řídicími body. Pouze během vytváření křivky"
 
