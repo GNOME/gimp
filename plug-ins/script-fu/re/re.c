@@ -3,7 +3,7 @@
    used for TinyScheme */
 /* Refurbished by Stephen Gildea */
 #include "regex.h"
-#include "scheme-private.h"
+#include "tinyscheme/scheme-private.h"
 
 #if defined(_WIN32)
 #define EXPORT __declspec( dllexport )
