@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-09-19 17:30+0200\n"
-"PO-Revision-Date: 2003-09-15 19:17+0200\n"
+"PO-Revision-Date: 2003-09-23 14:34+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -3639,6 +3639,8 @@ msgid ""
 "Unable to run gradient callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
+"Impossibile eseguire la callback del gradiente.\n"
+"Probabilmente è andato in crash il plug-in corrispondente."
 
 #: app/gui/gradients-commands.c:74
 #, fuzzy, c-format
@@ -3862,7 +3864,7 @@ msgstr "/File/Apri..."
 
 #: app/gui/image-menu.c:103 app/gui/toolbox-menu.c:66
 msgid "/File/Open Recent/(None)"
-msgstr ""
+msgstr "/File/Apri recenti/_Cronologia del documenti..."
 
 #: app/gui/image-menu.c:108 app/gui/toolbox-menu.c:71
 #, fuzzy
@@ -4899,7 +4901,7 @@ msgstr "Successiva"
 #: app/gui/image-menu.c:1672
 #, c-format
 msgid "Other (%d:%d) ..."
-msgstr ""
+msgstr "Altro (%d:%d) ..."
 
 #: app/gui/image-menu.c:1681
 #, fuzzy, c-format
@@ -5006,17 +5008,17 @@ msgstr "V"
 #. Cyan
 #: app/gui/info-window.c:304
 msgid "C:"
-msgstr ""
+msgstr "C:"
 
 #. Magenta
 #: app/gui/info-window.c:311
 msgid "M:"
-msgstr ""
+msgstr "M:"
 
 #. Black
 #: app/gui/info-window.c:325
 msgid "K:"
-msgstr ""
+msgstr "K:"
 
 #: app/gui/info-window.c:347
 msgid "A:"
@@ -5269,7 +5271,7 @@ msgstr "Errori dei moduli"
 
 #: app/gui/module-browser.c:124
 msgid "Manage Loadable Modules"
-msgstr ""
+msgstr "Gestire moduli caricabili"
 
 #: app/gui/module-browser.c:166
 #, fuzzy
@@ -5306,7 +5308,7 @@ msgstr "Carica"
 
 #: app/gui/module-browser.c:479
 msgid "Query"
-msgstr ""
+msgstr "Interrogazione"
 
 #: app/gui/module-browser.c:486
 msgid "Unload"
@@ -5342,7 +5344,7 @@ msgstr "Stato:"
 
 #: app/gui/module-browser.c:508
 msgid "Last Error:"
-msgstr ""
+msgstr "Ultimo errore:"
 
 #: app/gui/module-browser.c:509
 #, fuzzy
@@ -5544,6 +5546,8 @@ msgid ""
 "Unable to run pattern callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
+"Impossibile eseguire la callback dei pattern.\n"
+"Probabilmente è andato in crash il plug-in corrispondente."
 
 #: app/gui/patterns-menu.c:45
 #, fuzzy
@@ -5646,12 +5650,11 @@ msgstr "Anteprima"
 
 #: app/gui/preferences-dialog.c:1160
 msgid "_Enable Layer & Channel Previews"
-msgstr ""
+msgstr "_Abilita anteprime del livello e del canale"
 
 #: app/gui/preferences-dialog.c:1166
-#, fuzzy
 msgid "_Layer & Channel Preview Size:"
-msgstr "Dimensione anteprima:"
+msgstr "Dimensione anteprime di _livello e del canale:"
 
 #: app/gui/preferences-dialog.c:1169
 #, fuzzy
@@ -5660,9 +5663,8 @@ msgstr "Dimensione anteprima:"
 
 #. Dialog Bahavior
 #: app/gui/preferences-dialog.c:1173
-#, fuzzy
 msgid "Dialog Behavior"
-msgstr "Caratteristiche finestre di dialogo"
+msgstr "Comportamento finestre di dialogo"
 
 #: app/gui/preferences-dialog.c:1176
 #, fuzzy
@@ -5671,31 +5673,30 @@ msgstr "Finestra navigatore per display"
 
 #. Menus
 #: app/gui/preferences-dialog.c:1180
-#, fuzzy
 msgid "Menus"
-msgstr "Scarto:"
+msgstr "Menu"
 
 #: app/gui/preferences-dialog.c:1183
 msgid "Enable _Tearoff Menus"
-msgstr ""
+msgstr "Abilita menu staccabili"
 
 #: app/gui/preferences-dialog.c:1189
 #, fuzzy
 msgid "Open _Recent Menu Size:"
-msgstr "Dimensione lista documenti:"
+msgstr "Dimensione elenco _recenti:"
 
 #. Keyboard Shortcuts
 #: app/gui/preferences-dialog.c:1193
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Tasti scorciatoia"
 
 #: app/gui/preferences-dialog.c:1196
 msgid "Dynamic _Keyboard Shortcuts"
-msgstr ""
+msgstr "Tasti scorciatoia dinamici"
 
 #: app/gui/preferences-dialog.c:1199
 msgid "Save Keyboard Shortcuts on Exit"
-msgstr ""
+msgstr "Salva i tasti scorciatoia all'uscita"
 
 #: app/gui/preferences-dialog.c:1202
 #, fuzzy
@@ -5704,12 +5705,11 @@ msgstr "Salva la posizione della finestra all'uscita"
 
 #: app/gui/preferences-dialog.c:1210
 msgid "Save Keyboard Shortcuts Now"
-msgstr ""
+msgstr "Salva i tasti scorciatoia"
 
 #: app/gui/preferences-dialog.c:1219
-#, fuzzy
 msgid "Clear Saved Keyboard Shortcuts Now"
-msgstr "Annulla la posizione delle finestre salvata"
+msgstr "Cancella i tasti scorciatoia salvati"
 
 #. Window Positions
 #: app/gui/preferences-dialog.c:1229
@@ -5717,19 +5717,16 @@ msgid "Window Positions"
 msgstr "Posizione finestra"
 
 #: app/gui/preferences-dialog.c:1232
-#, fuzzy
 msgid "_Save Window Positions on Exit"
-msgstr "Salva la posizione della finestra all'uscita"
+msgstr "_Salva le posizioni delle finestre all'uscita"
 
 #: app/gui/preferences-dialog.c:1235
-#, fuzzy
 msgid "R_estore Saved Window Positions on Start-up"
-msgstr "Salva la posizione della finestra all'uscita"
+msgstr "R_ecupera alla partenza la posizione delle finestre salvata"
 
 #: app/gui/preferences-dialog.c:1243
-#, fuzzy
 msgid "Save Window Positions Now"
-msgstr "Annulla la posizione delle finestre salvata"
+msgstr "Salva la posizione delle finestre"
 
 #: app/gui/preferences-dialog.c:1252
 msgid "Clear Saved Window Positions Now"
@@ -5740,9 +5737,8 @@ msgid "Help System"
 msgstr "Aiuto"
 
 #: app/gui/preferences-dialog.c:1280
-#, fuzzy
 msgid "Show Tool _Tips"
-msgstr "Mostra suggerimenti"
+msgstr "Mostra suggerimen_ti"
 
 #: app/gui/preferences-dialog.c:1283
 #, fuzzy
@@ -5751,7 +5747,7 @@ msgstr "Aiuto contestuale con \"F1\""
 
 #: app/gui/preferences-dialog.c:1286
 msgid "Show Tips on _Startup"
-msgstr ""
+msgstr "Mostra suggerimenti alla partenza"
 
 #. Help Browser
 #: app/gui/preferences-dialog.c:1290
