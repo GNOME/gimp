@@ -1,3 +1,10 @@
+Thu Aug 26 17:17:48 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* libgimp/Makefile.am: use AM_CPPFLAGS instead of CPPFLAGS
+
+	* app/levels.c: added some basic load/save functionality to the levels
+	tool. Still needs some polishing.
+
 1999-08-27  Tor Lillqvist  <tml@iki.fi>
 
 	* app/menus.c: Add Acquire under the File menu.

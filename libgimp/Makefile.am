@@ -2,7 +2,7 @@
 
 gimpincludedir = $(includedir)/libgimp
 
-CPPFLAGS = \
+AM_CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"	\
 	-DDATADIR=\""$(gimpdatadir)"\"	\
 	@GIMP_THREAD_FLAGS@

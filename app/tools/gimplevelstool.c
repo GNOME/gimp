@@ -15,8 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include <math.h>
 #include "appenv.h"
 #include "actionarea.h"
@@ -115,6 +117,9 @@ static ToolOptions *levels_options = NULL;
 /*  the levels tool dialog  */
 static LevelsDialog *levels_dialog = NULL;
 
+/*  the levels file dialog  */
+static GtkWidget *file_dlg = NULL;
+static gboolean   load_save;
 
 /*  levels action functions  */
 static void   levels_control (Tool *, ToolAction, gpointer);
@@ -133,6 +138,8 @@ static void   levels_auto_levels_callback    (GtkWidget *, gpointer);
 static void   levels_ok_callback             (GtkWidget *, gpointer);
 static void   levels_cancel_callback         (GtkWidget *, gpointer);
 static gint   levels_delete_callback         (GtkWidget *, GdkEvent *, gpointer);
+static void   levels_load_callback           (GtkWidget *, gpointer);
+static void   levels_save_callback           (GtkWidget *, gpointer);
 static void   levels_preview_update          (GtkWidget *, gpointer);
 static void   levels_low_input_spin_update   (GtkWidget *, gpointer);
 static void   levels_gamma_text_update       (GtkWidget *, gpointer);
@@ -146,6 +153,11 @@ static gint   levels_output_da_events        (GtkWidget *, GdkEvent *,
 
 static void   levels_histogram_range         (HistogramWidget *,
 					      int, int, void *);
+static void   make_file_dlg                  (gpointer);
+static void   file_ok_callback               (GtkWidget *, gpointer);
+static void   file_cancel_callback           (GtkWidget *, gpointer);
+static gint   read_levels_from_file          (FILE *f);
+static void   write_levels_to_file           (FILE *f);
 
 static void
 levels_histogram_range (HistogramWidget *h,
@@ -327,6 +339,8 @@ levels_new_dialog ()
   GtkWidget *toggle;
   GtkWidget *channel_hbox;
   GtkWidget *menu;
+  GtkWidget *hbbox;
+  GtkWidget *button;
   int i;
 
   static ActionAreaItem action_items[] =
@@ -523,21 +537,36 @@ levels_new_dialog ()
   gtk_widget_show (frame);
   gtk_widget_show (hbox);
 
-  /*  Horizontal box for preview  */
-  hbox = gtk_hbox_new (TRUE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  /*  Horizontal button box for load/sve  */
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (hbbox), GTK_BUTTONBOX_SPREAD);
+  gtk_box_pack_start (GTK_BOX (vbox), hbbox, FALSE, FALSE, 0);
 
   /*  The preview toggle  */
   toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), ld->preview);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), toggle, TRUE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) levels_preview_update,
 		      ld);
-
-  gtk_widget_show (label);
   gtk_widget_show (toggle);
-  gtk_widget_show (hbox);
+
+  button = gtk_button_new_with_label (_("Load"));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) levels_load_callback,
+		      NULL);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label (_("Save"));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) levels_save_callback,
+		      NULL);
+  gtk_widget_show (button);
+
+  gtk_widget_show (hbbox);
 
   /*  The action area  */
   action_items[0].user_data = ld;
@@ -1018,6 +1047,36 @@ levels_cancel_callback (GtkWidget *widget,
 }
 
 static void
+levels_load_callback (GtkWidget *widget,
+		      gpointer   client_data)
+{
+  if (!file_dlg)
+    make_file_dlg (NULL);
+  else if (GTK_WIDGET_VISIBLE (file_dlg)) 
+    return;
+
+  load_save = TRUE;
+
+  gtk_window_set_title(GTK_WINDOW (file_dlg), _("Load Levels"));
+  gtk_widget_show (file_dlg);
+}
+
+static void
+levels_save_callback (GtkWidget *widget,
+		      gpointer   client_data)
+{
+  if (!file_dlg)
+    make_file_dlg (NULL);
+  else if (GTK_WIDGET_VISIBLE (file_dlg)) 
+    return;
+
+  load_save = FALSE;
+
+  gtk_window_set_title(GTK_WINDOW (file_dlg), _("Save Levels"));
+  gtk_widget_show (file_dlg);
+}
+
+static void
 levels_preview_update (GtkWidget *w,
 		       gpointer   data)
 {
@@ -1323,4 +1382,128 @@ levels_output_da_events (GtkWidget    *widget,
     }
 
   return FALSE;
+}
+
+static void
+make_file_dlg (gpointer data)
+{
+  file_dlg = gtk_file_selection_new (_("Load/Save Levels"));
+  gtk_window_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
+  gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
+		     "clicked", (GtkSignalFunc) file_cancel_callback, data);
+  gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
+		     "clicked", (GtkSignalFunc) file_ok_callback, data);
+}
+
+static void
+file_ok_callback (GtkWidget *widget,
+		  gpointer   data)
+{
+  FILE *f;
+  char *filename;
+  int i;
+
+  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_dlg));
+
+  if (load_save)
+    {
+      f = fopen (filename, "rt");
+
+      if (!f)
+	{
+	  g_message (_("Unable to open file %s"), filename);
+	  return;
+	}
+
+      if (!read_levels_from_file (f))
+	{
+	  g_message (("Error in reading file %s"), filename);
+	  return;
+	}
+
+      fclose (f);
+    }
+  else
+    {
+      f = fopen(filename, "wt");
+
+      if (!f)
+	{
+	  g_message (_("Unable to open file %s"), filename);
+	  return;
+	}
+
+      write_levels_to_file (f);
+
+      fclose (f);
+    }
+
+  gtk_widget_hide (file_dlg);
+}
+
+static void
+file_cancel_callback (GtkWidget *widget,
+		      gpointer   data)
+{
+  gtk_widget_hide (file_dlg);
+}
+
+static gint
+read_levels_from_file (FILE *f)
+{
+  int low_input[5];
+  int high_input[5];
+  int low_output[5];
+  int high_output[5];
+  double gamma[5];
+  int i, fields;
+  char buf[50], *nptr;
+  
+  for (i = 0; i < 5; i++)
+    {
+      fields = fscanf (f, "%d %d %d %d ",
+		       &low_input[i],
+		       &high_input[i],
+		       &low_output[i],
+		       &high_output[i]);
+
+      if (fields != 4 || !fgets(buf, 50, f))
+	return FALSE;
+
+      gamma[i] = strtod(buf, &nptr);
+
+      if (buf == nptr || errno == ERANGE)
+	return FALSE;
+    }
+
+  for (i = 0; i < 5; i++)
+    {
+      levels_dialog->low_input[i] = low_input[i];
+      levels_dialog->high_input[i] = high_input[i];
+      levels_dialog->low_output[i] = low_output[i];
+      levels_dialog->high_output[i] = high_output[i];
+      levels_dialog->gamma[i] = gamma[i];
+    }
+
+  levels_update (levels_dialog, ALL);
+  if (levels_dialog->preview)
+    levels_preview (levels_dialog);
+
+  return TRUE;
+}
+
+static void
+write_levels_to_file (FILE *f)
+{
+  int i;
+
+  for (i = 0; i < 5; i++)
+    {
+      fprintf (f, "%d %d %d %d %f\n",
+	       levels_dialog->low_input[i],
+	       levels_dialog->high_input[i],
+	       levels_dialog->low_output[i],
+	       levels_dialog->high_output[i],
+	       levels_dialog->gamma[i]);
+    }
 }
