@@ -1,5 +1,9 @@
 2003-04-10  Sven Neumann  <sven@gimp.org>
 
+	* etc/templaterc: added more standard paper sizes.
+	
+2003-04-10  Sven Neumann  <sven@gimp.org>
+
 	* app/xcf/xcf-load.c 
 	* app/xcf/xcf-save.c: some cosmetic changes before I do any real ones.
 
