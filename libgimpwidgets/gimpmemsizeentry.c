@@ -144,8 +144,9 @@ static void
 gimp_memsize_entry_unit_callback (GtkWidget        *widget,
 				  GimpMemsizeEntry *entry)
 {
-  guint shift = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget),
-						     "gimp-item-data"));
+  guint  shift;
+
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) &shift);
 
 #if _MSC_VER < 1200
 #  define CAST (gint64)
@@ -212,7 +213,8 @@ gimp_memsize_entry_new (guint64  value,
   entry->spinbutton = gimp_spin_button_new ((GtkObject **) &entry->adjustment,
                                             CAST (value >> shift),
                                             CAST (lower >> shift),
-                                            CAST (upper >> shift), 1, 8, 0, 1, 0);
+                                            CAST (upper >> shift),
+                                            1, 8, 0, 1, 0);
 
 #undef CAST
 
@@ -227,14 +229,16 @@ gimp_memsize_entry_new (guint64  value,
                     G_CALLBACK (gimp_memsize_entry_adj_callback),
                     entry);
 
-  entry->menu =
-    gimp_int_option_menu_new (FALSE,
-			      G_CALLBACK (gimp_memsize_entry_unit_callback),
-			      entry, shift,
-			      _("KiloBytes"), 10, NULL,
-			      _("MegaBytes"), 20, NULL,
-			      _("GigaBytes"), 30, NULL,
-			      NULL);
+  entry->menu = gimp_int_combo_box_new (_("KiloBytes"), 10,
+                                        _("MegaBytes"), 20,
+                                        _("GigaBytes"), 30,
+                                        NULL);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (entry->menu), shift);
+
+  g_signal_connect (entry->menu, "changed",
+                    G_CALLBACK (gimp_memsize_entry_unit_callback),
+                    entry);
 
   gtk_box_pack_start (GTK_BOX (entry), entry->menu, FALSE, FALSE, 0);
   gtk_widget_show (entry->menu);
@@ -271,7 +275,7 @@ gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
       entry->shift = shift;
       entry->value = value;
 
-      gimp_int_option_menu_set_history (GTK_OPTION_MENU (entry->menu), shift);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (entry->menu), shift);
     }
 
 #if _MSC_VER < 1200

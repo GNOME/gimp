@@ -1406,6 +1406,12 @@ GIMP_MKENUMS="\$(top_srcdir)/tools/gimp-mkenums"
 AC_SUBST(GIMP_MKENUMS)
 
 
+#############################
+# Disable deprecated GIMP API
+#############################
+
+CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED"
+
 ####################################################
 # Default to disable deprecated GTK+ stuff for 2.2.x
 ####################################################
@@ -1417,6 +1423,7 @@ fi
 ############################
 # Require multihead safe API
 ############################
+
 CPPFLAGS="${CPPFLAGS} -DGDK_MULTIHEAD_SAFE -DGTK_MULTIHEAD_SAFE"
 
 

@@ -57,7 +57,7 @@ struct _CdisplayProof
   cmsHTRANSFORM     transform;
 
   GtkWidget        *table;
-  GtkWidget        *optionmenu;
+  GtkWidget        *combo;
   GtkWidget        *toggle;
 };
 
@@ -311,25 +311,25 @@ cdisplay_proof_configure (GimpColorDisplay *display)
   gtk_table_set_col_spacings (GTK_TABLE (proof->table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (proof->table), 2);
 
-  proof->optionmenu =
-    gimp_int_option_menu_new (FALSE,
-			      G_CALLBACK (proof_intent_callback),
-			      proof, proof->intent,
+  proof->combo = gimp_int_combo_box_new (_("Perceptual"),
+                                         INTENT_PERCEPTUAL,
+                                         _("Relative Colorimetric"),
+                                         INTENT_RELATIVE_COLORIMETRIC,
+                                         _("Saturation"),
+                                         INTENT_SATURATION,
+                                         _("Absolute Colorimetric"),
+                                         INTENT_ABSOLUTE_COLORIMETRIC,
+                                         NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (proof->combo),
+                                 proof->intent);
 
-			      _("Perceptual"),
-			      INTENT_PERCEPTUAL, NULL,
-			      _("Relative Colorimetric"),
-			      INTENT_RELATIVE_COLORIMETRIC, NULL,
-			      _("Saturation"),
-			      INTENT_SATURATION, NULL,
-			      _("Absolute Colorimetric"),
-			      INTENT_ABSOLUTE_COLORIMETRIC, NULL,
-
-                              NULL);
+  g_signal_connect (proof->combo, "changed",
+                    G_CALLBACK (proof_intent_callback),
+                    proof);
 
   gimp_table_attach_aligned (GTK_TABLE (proof->table), 0, 0,
                              _("_Intent:"), 1.0, 0.5,
-                             proof->optionmenu, 1, TRUE);
+                             proof->combo, 1, TRUE);
 
   entry = gimp_file_entry_new (_("Choose an ICC Color Profile"),
                                proof->filename, FALSE, FALSE);
@@ -365,8 +365,8 @@ cdisplay_proof_configure_reset (GimpColorDisplay * display)
 
   if (proof->table)
     {
-      gimp_int_option_menu_set_history (GTK_OPTION_MENU (proof->optionmenu),
-                                        INTENT_PERCEPTUAL);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (proof->combo),
+                                     INTENT_PERCEPTUAL);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (proof->toggle),
                                     proof->bpc);
     }
@@ -419,7 +419,7 @@ static void
 proof_intent_callback (GtkWidget     *widget,
                        CdisplayProof *proof)
 {
-  gimp_menu_item_update (widget, &proof->intent);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &proof->intent);
 
   gimp_color_display_changed (GIMP_COLOR_DISPLAY (proof));
 }

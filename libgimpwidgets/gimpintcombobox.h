@@ -24,6 +24,8 @@
 
 #include <gtk/gtkcombobox.h>
 
+G_BEGIN_DECLS
+
 
 #define GIMP_TYPE_INT_COMBO_BOX            (gimp_int_combo_box_get_type ())
 #define GIMP_INT_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_INT_COMBO_BOX, GimpIntComboBox))
@@ -62,5 +64,7 @@ gboolean    gimp_int_combo_box_set_active (GimpIntComboBox *combo_box,
 gboolean    gimp_int_combo_box_get_active (GimpIntComboBox *combo_box,
                                            gint            *value);
 
+
+G_END_DECLS
 
 #endif  /* __GIMP_INT_COMBO_BOX_H__ */

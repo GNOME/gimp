@@ -96,6 +96,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimpintcombobox.h	\
 	gimpmemsizeentry.c	\
 	gimpmemsizeentry.h	\
+	gimpoldwidgets.c	\
+	gimpoldwidgets.h	\
 	gimpoffsetarea.c	\
 	gimpoffsetarea.h	\
 	gimppatheditor.c	\
@@ -148,7 +150,9 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpdialog.h		\
 	gimpfileentry.h		\
 	gimphelpui.h		\
+	gimpintcombobox.h	\
 	gimpmemsizeentry.h	\
+	gimpoldwidgets.h	\
 	gimpoffsetarea.h	\
 	gimppatheditor.h	\
 	gimppickbutton.h	\

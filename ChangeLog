@@ -1,3 +1,23 @@
+2004-04-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpmemsizeentry.c
+	* modules/cdisplay_proof.c: ported to GimpIntComboBox.
+
+	* libgimpwidgets/gimpwidgets.[ch]: declared the gimp option_menu
+	API as deprecated and removed the code here.
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpoldwidgets.[ch]: new files with deprecated
+	code, guarded with #ifndef GIMP_DISABLE_DEPRECATED ... #endif.
+
+	* libgimpwidgets/gimpintcombobox.h: added G_BEGIN_DECLS, G_END_DECLS.
+
+	* configure.in (CPP_FLAGS): added -DGIMP_DISABLE_DEPRECATED.
+
+	* app/widgets/gimpwidgets-constructors.c: added a #warning and
+	#undef GIMP_DISABLE_DEPRECATED. The paint mode menu is the last
+	remaining user of gimp_int_option_menu_new().
+
 2004-04-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/convert-dialog.[ch]: renamed convert_to_indexed()
