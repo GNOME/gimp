@@ -1676,8 +1676,7 @@ menus_init (void)
   for (i = 0; i < num_tools; i++)
     {
       /* insert separators between tool_groups */
-      if (tool_info[i].tool_id == MOVE ||
-	  tool_info[i].tool_id == TEXT ||
+      if (tool_info[i].tool_id == TEXT ||
 	  tool_info[i].tool_id == BUCKET_FILL ||
 	  tool_info[i].tool_id == MEASURE)
 	{

@@ -83,7 +83,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Rect Select"),
-    N_("/Tools/Rect Select"),
+    N_("/Tools/Select Tools/Rect Select"),
     "R",
     (char **) rect_bits,
     N_("Select rectangular regions"),
@@ -99,7 +99,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Ellipse Select"),
-    N_("/Tools/Ellipse Select"),
+    N_("/Tools/Select Tools/Ellipse Select"),
     "E",
     (char **) circ_bits,
     N_("Select elliptical regions"),
@@ -115,7 +115,7 @@ ToolInfo tool_info[] =
   {
     NULL, 
     N_("Free Select"), 
-    N_("/Tools/Free Select"),
+    N_("/Tools/Select Tools/Free Select"),
     "F",
     (char **) free_bits,
     N_("Select hand-drawn regions"),
@@ -131,7 +131,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Fuzzy Select"),
-    N_("/Tools/Fuzzy Select"),
+    N_("/Tools/Select Tools/Fuzzy Select"),
     "Z",
     (char **) fuzzy_bits,
     N_("Select contiguous regions"),
@@ -147,7 +147,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Bezier Select"),
-    N_("/Tools/Bezier Select"),
+    N_("/Tools/Select Tools/Bezier Select"),
     "B",
     (char **) bezier_bits,
     N_("Select regions using Bezier curves"),
@@ -163,7 +163,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Intelligent Scissors"),
-    N_("/Tools/Intelligent Scissors"),
+    N_("/Tools/Select Tools/Intelligent Scissors"),
     "I",
     (char **) iscissors_bits,
     N_("Select shapes from image"),
@@ -179,7 +179,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Move"),
-    N_("/Tools/Move"),
+    N_("/Tools/Transform Tools/Move"),
     "M",
     (char **) move_bits,
     N_("Move layers & selections"),
@@ -195,7 +195,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Magnify"),
-    N_("/Tools/Magnify"),
+    N_("/Tools/Transform Tools/Magnify"),
     "<shift>M",
     (char **) magnify_bits,
     N_("Zoom in & out"),
@@ -211,7 +211,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Crop & Resize"),
-    N_("/Tools/Crop & Resize"),
+    N_("/Tools/Transform Tools/Crop & Resize"),
     "<shift>C",
     (char **) crop_bits,
     N_("Crop or resize the image"),
@@ -227,7 +227,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Transform"),
-    N_("/Tools/Transform"),
+    N_("/Tools/Transform Tools/Transform"),
     "<shift>T",
     (char **) scale_bits,
     N_("Rotation, scaling, shearing, perspective."),
@@ -246,7 +246,7 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     NULL,
-    N_("Transform the layer or selection"),
+    N_("Rotation, scaling, shearing, perspective."),
     "tools/transform.html",
     SCALE,
     tools_new_transform_tool,
@@ -262,7 +262,7 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     NULL,
-    N_("Transform the layer or selection"),
+    N_("Rotation, scaling, shearing, perspective."),
     "tools/transform.html",
     SHEAR,
     tools_new_transform_tool,
@@ -278,7 +278,7 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     NULL,
-    N_("Transform the layer or selection"),
+    N_("Rotation, scaling, shearing, perspective."),
     "tools/transform.html",
     PERSPECTIVE,
     tools_new_transform_tool,
@@ -291,7 +291,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Flip"),
-    N_("/Tools/Flip"),
+    N_("/Tools/Transform Tools/Flip"),
     "<shift>F",
     (char **) flip_bits,
     N_("Flip the layer or selection"),
@@ -339,7 +339,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Bucket Fill"),
-    N_("/Tools/Bucket Fill"),
+    N_("/Tools/Paint Tools/Bucket Fill"),
     "<shift>B",
     (char **) fill_bits,
     N_("Fill with a color or pattern"),
@@ -355,7 +355,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Blend"),
-    N_("/Tools/Blend"),
+    N_("/Tools/Paint Tools/Blend"),
     "L",
     (char **) gradient_bits,
     N_("Fill with a color gradient"),
@@ -371,7 +371,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Pencil"),
-    N_("/Tools/Pencil"),
+    N_("/Tools/Paint Tools/Pencil"),
     "<shift>P",
     (char **) pencil_bits,
     N_("Draw sharp pencil strokes"),
@@ -387,7 +387,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Paintbrush"),
-    N_("/Tools/Paintbrush"),
+    N_("/Tools/Paint Tools/Paintbrush"),
     "P",
     (char **) paint_bits,
     N_("Paint fuzzy brush strokes"),
@@ -403,7 +403,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Eraser"),
-    N_("/Tools/Eraser"),
+    N_("/Tools/Paint Tools/Eraser"),
     "<shift>E",
     (char **) erase_bits,
     N_("Erase to background or transparency"),
@@ -419,7 +419,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Airbrush"),
-    N_("/Tools/Airbrush"),
+    N_("/Tools/Paint Tools/Airbrush"),
     "A",
     (char **) airbrush_bits,
     N_("Airbrush with variable pressure"),
@@ -435,7 +435,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Clone"),
-    N_("/Tools/Clone"),
+    N_("/Tools/Paint Tools/Clone"),
     "C",
     (char **) clone_bits,
     N_("Paint using patterns or image regions"),
@@ -451,7 +451,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Convolve"),
-    N_("/Tools/Convolve"),
+    N_("/Tools/Paint Tools/Convolve"),
     "V",
     (char **) blur_bits,
     N_("Blur or sharpen"),
@@ -467,7 +467,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Ink"),
-    N_("/Tools/Ink"),
+    N_("/Tools/Paint Tools/Ink"),
     "K",
     (char **) ink_bits,
     N_("Draw in ink"),
@@ -483,7 +483,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Dodge or Burn"),
-    N_("/Tools/DodgeBurn"),
+    N_("/Tools/Paint Tools/DodgeBurn"),
     "<shift>D",
     (char **) dodge_bits,
     N_("Dodge or Burn"),
@@ -499,7 +499,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Smudge"),
-    N_("/Tools/Smudge"),
+    N_("/Tools/Paint Tools/Smudge"),
     "<shift>S",
     (char **) smudge_bits,
     N_("Smudge"),
@@ -515,7 +515,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Xinput Airbrush"),
-    N_("/Tools/XinputAirbrush"),
+    N_("/Tools/Paint Tools/XinputAirbrush"),
     "<shift>A",
     (char **) xinput_airbrush_bits,
     N_("Natural Airbrush"),

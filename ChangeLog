@@ -1,3 +1,8 @@
+Tue Feb  1 20:02:47 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/menus.c
+	* app/tools.c: added submenus to the tools menu
+
 2000-02-01  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpsizeentry.[ch]: attach labels and the unit_menu with
