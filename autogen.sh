@@ -133,6 +133,34 @@ else
     DIE=1
 fi
 
+# Special test for problematic versions of intltool.  Details at:
+#   http://bugzilla.gnome.org/show_bug.cgi?id=137502
+# Print a warning message, but do not exit.
+INTLTOOL_BUG_MIN_VERSION=0.28
+INTLTOOL_BUG_MAX_VERSION=0.31
+echo -n "checking for intltool < $INTLTOOL_BUG_MIN_VERSION or > $INTLTOOL_BUG_MAX_VERSION ... "
+if (intltoolize --version) < /dev/null > /dev/null 2>&1; then
+    VER=`intltoolize --version \
+         | grep intltoolize | sed "s/.* \([0-9.]*\)/\1/"`
+    if expr $VER \>= $INTLTOOL_BUG_MIN_VERSION > /dev/null; then
+        if expr $VER \<= $INTLTOOL_BUG_MAX_VERSION > /dev/null; then
+            echo "no (found version $VER)"
+            echo
+            echo "  Versions of intltool between 0.28 and 0.31 are known to"
+            echo "  generate incorrect XML output.  Please consider using an"
+            echo "  earlier version of intltool in order to avoid these"
+            echo "  problems until a newer version of intltool is released."
+        else
+            echo "yes"
+        fi
+    else
+        echo "yes"
+    fi
+else
+    echo "not found"
+fi
+
+
 if test "$DIE" -eq 1; then
     echo
     echo "Please install/upgrade the missing tools and call me again."
