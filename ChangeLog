@@ -1,3 +1,8 @@
+2004-01-28  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/script-fu/scripts/grid-system.scm: Fix typo that prevented
+	using the inverse of the golden ratio (1/g) as a weight in the list.
+
 2004-01-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimphelp-ids.h: updated help IDs for new/reordered

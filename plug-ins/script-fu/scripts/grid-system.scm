@@ -26,7 +26,7 @@
     (define (wrap-object obj)
       (cond ((number? obj) (string-append (number->string obj) " "))
 	    ((eq? obj 'g) "g ")
-	    (eq? ojb '1/g) "1/g "))
+	    (eq? obj '1/g) "1/g "))
     (string-append "'("
 		   (apply string-append (map wrap-object l))
 		   ")"))
