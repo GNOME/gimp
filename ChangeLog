@@ -1,3 +1,8 @@
+2002-11-27  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/preferences-dialog.c (preferences_dialog_create):
+	added a missing cast to please the compiler.
+
 2002-11-26  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/scatter_hsv.c
