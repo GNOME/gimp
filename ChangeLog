@@ -1,5 +1,13 @@
 2004-10-13  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphelp.c: improved error messages on missing help
+	browser plug-in.
+
+	* libgimpthumb/gimpthumb-utils.c
+	* libgimpthumb/gimpthumbnail.c: improved documentation.
+
+2004-10-13  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-close.c
 	(gimp_display_shell_close_dialog): changed button label.
 

@@ -115,8 +115,9 @@ gimp_help_show (Gimp        *gimp,
 static gboolean
 gimp_idle_help (gpointer data)
 {
-  GimpIdleHelp *idle_help = data;
-  const gchar  *procedure = NULL;
+  GimpIdleHelp  *idle_help = data;
+  GimpGuiConfig *config    = GIMP_GUI_CONFIG (idle_help->gimp->config);
+  const gchar   *procedure = NULL;
 
 #ifdef GIMP_HELP_DEBUG
   g_printerr ("Help Domain: %s\n",
@@ -125,26 +126,24 @@ gimp_idle_help (gpointer data)
               idle_help->help_id     ? idle_help->help_id     : "NULL");
 #endif
 
-  switch (GIMP_GUI_CONFIG (idle_help->gimp->config)->help_browser)
+  if (config->help_browser == GIMP_HELP_BROWSER_GIMP)
     {
-    case GIMP_HELP_BROWSER_GIMP:
       if (gimp_help_internal (idle_help->gimp))
-        {
-          procedure = "extension_gimp_help_browser_temp";
-          break;
-        }
-
-    case GIMP_HELP_BROWSER_WEB_BROWSER:
-      /*  FIXME: should check for procedure availability  */
-      procedure = "plug_in_web_browser";
-      break;
+        procedure = "extension_gimp_help_browser_temp";
     }
 
-  gimp_help_call (idle_help->gimp,
-                  procedure,
-                  idle_help->help_domain,
-                  idle_help->help_locales,
-                  idle_help->help_id);
+  if (config->help_browser == GIMP_HELP_BROWSER_WEB_BROWSER)
+    {
+      /*  FIXME: should check for procedure availability  */
+      procedure = "plug_in_web_browser";
+    }
+
+  if (procedure)
+    gimp_help_call (idle_help->gimp,
+                    procedure,
+                    idle_help->help_domain,
+                    idle_help->help_locales,
+                    idle_help->help_id);
 
   g_free (idle_help->help_domain);
   g_free (idle_help->help_locales);
@@ -172,9 +171,8 @@ gimp_help_internal_not_found_callback (GtkWidget *widget,
 static gboolean
 gimp_help_internal (Gimp *gimp)
 {
-  ProcRecord *proc_rec;
-
-  static gboolean busy = FALSE;
+  static gboolean  busy = FALSE;
+  ProcRecord      *proc_rec;
 
   if (busy)
     return TRUE;
@@ -184,33 +182,31 @@ gimp_help_internal (Gimp *gimp)
   /*  Check if a help browser is already running  */
   proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_browser_temp");
 
-  if (proc_rec == NULL)
+  if (! proc_rec)
     {
       Argument *args = NULL;
 
       proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_browser");
 
-      if (proc_rec == NULL)
+      if (! proc_rec)
 	{
-	  GtkWidget *not_found =
-	    gimp_query_boolean_box (_("Could not find GIMP Help Browser"),
-				    NULL, NULL, NULL, FALSE,
-				    _("Could not find the GIMP Help Browser "
-                                      "procedure. It probably was not compiled "
-                                      "because you don't have GtkHtml2 "
-                                      "installed."),
-				    _("Use web browser instead"),
+	  GtkWidget *dialog =
+	    gimp_query_boolean_box (_("Help browser not found"),
+				    NULL, NULL, NULL, GIMP_STOCK_WARNING,
+				    _("Could not find GIMP help browser.\n\n"
+                                      "The GIMP help browser plug-in appears "
+                                      "to be missing from your installation."),
+				    _("Use _web browser instead"),
 				    GTK_STOCK_CANCEL,
 				    NULL, NULL,
 				    gimp_help_internal_not_found_callback,
 				    gimp);
-	  gtk_widget_show (not_found);
+	  gtk_widget_show (dialog);
 	  gtk_main ();
 
           busy = FALSE;
 
-	  return (GIMP_GUI_CONFIG (gimp->config)->help_browser
-		  != GIMP_HELP_BROWSER_WEB_BROWSER);
+	  return FALSE;
 	}
 
       args = g_new (Argument, 1);
@@ -227,24 +223,24 @@ gimp_help_internal (Gimp *gimp)
   /*  Check if the help browser started properly  */
   proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_browser_temp");
 
-  if (proc_rec == NULL)
+  if (! proc_rec)
     {
-      GtkWidget *not_found =
-        gimp_query_boolean_box (_("Could not start GIMP Help Browser"),
-                                NULL, NULL, NULL, FALSE,
-                                _("Could not start the GIMP Help Browser."),
+      GtkWidget *dialog =
+        gimp_query_boolean_box (_("Help browser doesn't start"),
+                                NULL, NULL, NULL, GIMP_STOCK_WARNING,
+                                _("Could not start the GIMP help browser "
+                                  "plug-in."),
                                 _("Use web browser instead"),
                                 GTK_STOCK_CANCEL,
                                 NULL, NULL,
                                 gimp_help_internal_not_found_callback,
                                 gimp);
-      gtk_widget_show (not_found);
+      gtk_widget_show (dialog);
       gtk_main ();
 
       busy = FALSE;
 
-      return (GIMP_GUI_CONFIG (gimp->config)->help_browser
-              != GIMP_HELP_BROWSER_WEB_BROWSER);
+      return FALSE;
     }
 
   busy = FALSE;
@@ -264,7 +260,7 @@ gimp_help_call (Gimp        *gimp,
   /*  Check if a help parser is already running  */
   proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_temp");
 
-  if (proc_rec == NULL)
+  if (! proc_rec)
     {
       Argument  *args         = NULL;
       gint       n_domains    = 0;
@@ -273,11 +269,9 @@ gimp_help_call (Gimp        *gimp,
 
       proc_rec = procedural_db_lookup (gimp, "extension_gimp_help");
 
-      if (proc_rec == NULL)
-        {
-          /*  FIXME: error msg  */
-          return;
-	}
+      if (! proc_rec)
+        /*  FIXME: error msg  */
+        return;
 
       n_domains = plug_ins_help_domains (gimp, &help_domains, &help_uris);
 
@@ -301,12 +295,7 @@ gimp_help_call (Gimp        *gimp,
   /*  Check if the help parser started properly  */
   proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_temp");
 
-  if (proc_rec == NULL)
-    {
-      /*  FIXME: error msg  */
-      return;
-    }
-  else
+  if (proc_rec)
     {
       Argument *return_vals;
       gint      n_return_vals;

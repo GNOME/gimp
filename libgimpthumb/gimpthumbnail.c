@@ -492,6 +492,9 @@ gimp_thumbnail_set_filename (GimpThumbnail  *thumbnail,
  * it. This allows you to find the image file associated with a
  * thumbnail file.
  *
+ * This will only work with thumbnails from the global thumbnail
+ * directory that contain a valid Thumb::URI tag.
+ *
  * Return value: %TRUE if the pixbuf could be loaded, %FALSE otherwise
  **/
 gboolean

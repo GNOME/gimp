@@ -388,13 +388,14 @@ gimp_thumb_name_from_uri_local (const gchar   *uri,
  * @size: pointer to a #GimpThumbSize
  *
  * This function attempts to locate a thumbnail for the given
- * @url. First it tries the size that is stored at @size. If no
+ * @uri. First it tries the size that is stored at @size. If no
  * thumbnail of that size is found, it will look for a larger
  * thumbnail, then falling back to a smaller size.
  *
  * If the user's thumbnail repository doesn't provide a thumbnail but
  * a local thumbnail repository exists for the folder the image is
- * located in, the same search is done among the local thumbnails.
+ * located in, the same search is done among the local thumbnails (if
+ * there are any).
  *
  * If a thumbnail is found, it's size is written to the variable
  * pointer to by @size and the file location is returned.
