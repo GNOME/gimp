@@ -23,9 +23,6 @@
 #define __GIMP_PREVIEW_H__
 
 
-#include <gtk/gtkdrawingarea.h>
-
-
 #define GIMP_TYPE_PREVIEW            (gimp_preview_get_type ())
 #define GIMP_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREVIEW, GimpPreview))
 #define GIMP_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PREVIEW, GimpPreviewClass))
@@ -38,7 +35,9 @@ typedef struct _GimpPreviewClass  GimpPreviewClass;
 
 struct _GimpPreview
 {
-  GtkDrawingArea       parent_instance;
+  GtkWidget            parent_instance;
+
+  GdkWindow           *event_window;
 
   GimpViewable        *viewable;
   GimpPreviewRenderer *renderer;
@@ -52,11 +51,12 @@ struct _GimpPreview
   gboolean             in_button;
   GdkModifierType      press_state;
   gchar               *bg_stock_id;
+  GdkPixmap           *bg_pixmap;
 };
 
 struct _GimpPreviewClass
 {
-  GtkDrawingAreaClass  parent_class;
+  GtkWidgetClass       parent_class;
 
   /*  signals  */
   void        (* clicked)          (GimpPreview     *preview,

@@ -62,6 +62,9 @@ static void        gimp_preview_init                 (GimpPreview      *preview)
 
 static void        gimp_preview_destroy              (GtkObject        *object);
 static void        gimp_preview_realize              (GtkWidget        *widget);
+static void        gimp_preview_unrealize            (GtkWidget        *widget);
+static void        gimp_preview_map                  (GtkWidget        *widget);
+static void        gimp_preview_unmap                (GtkWidget        *widget);
 static void        gimp_preview_size_request         (GtkWidget        *widget,
 						      GtkRequisition   *requisition);
 static void        gimp_preview_size_allocate        (GtkWidget        *widget,
@@ -83,12 +86,13 @@ static void        gimp_preview_update_callback   (GimpPreviewRenderer *renderer
 static GimpViewable * gimp_preview_drag_viewable     (GtkWidget        *widget,
 						      gpointer          data);
 
-static void        gimp_preview_set_back_pixmap      (GimpPreview      *preview);
+static void        gimp_preview_draw_background   (GimpPreview         *preview,
+                                                   const GdkRectangle  *area);
 
 
 static guint preview_signals[LAST_SIGNAL] = { 0 };
 
-static GtkDrawingAreaClass *parent_class = NULL;
+static GtkWidgetClass *parent_class = NULL;
 
 
 GType
@@ -111,7 +115,7 @@ gimp_preview_get_type (void)
         (GInstanceInitFunc) gimp_preview_init,
       };
 
-      preview_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
+      preview_type = g_type_register_static (GTK_TYPE_WIDGET,
                                              "GimpPreview",
                                              &preview_info, 0);
     }
@@ -162,6 +166,9 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 
   widget_class->activate_signal      = preview_signals[CLICKED];
   widget_class->realize              = gimp_preview_realize;
+  widget_class->unrealize            = gimp_preview_unrealize;
+  widget_class->map                  = gimp_preview_map;
+  widget_class->unmap                = gimp_preview_unmap;
   widget_class->size_request         = gimp_preview_size_request;
   widget_class->size_allocate        = gimp_preview_size_allocate;
   widget_class->expose_event         = gimp_preview_expose_event;
@@ -178,6 +185,8 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 static void
 gimp_preview_init (GimpPreview *preview)
 {
+  GTK_WIDGET_SET_FLAGS (preview, GTK_NO_WINDOW);
+
   preview->viewable          = NULL;
   preview->renderer          = NULL;
 
@@ -189,8 +198,7 @@ gimp_preview_init (GimpPreview *preview)
   preview->in_button         = FALSE;
 
   preview->bg_stock_id       = NULL;
-
-  gtk_widget_set_events (GTK_WIDGET (preview), PREVIEW_EVENT_MASK);
+  preview->bg_pixmap         = NULL;
 }
 
 static void
@@ -213,6 +221,11 @@ gimp_preview_destroy (GtkObject *object)
       g_free (preview->bg_stock_id);
       preview->bg_stock_id = NULL;
     }
+  if (preview->bg_pixmap)
+    {
+      g_object_unref (preview->bg_pixmap);
+      preview->bg_pixmap = NULL;
+    }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
@@ -220,9 +233,66 @@ gimp_preview_destroy (GtkObject *object)
 static void
 gimp_preview_realize (GtkWidget *widget)
 {
-  GTK_WIDGET_CLASS (parent_class)->realize (widget);
+  GimpPreview   *preview;
+  GdkWindowAttr  attributes;
+  gint           attributes_mask;
 
-  gimp_preview_set_back_pixmap (GIMP_PREVIEW (widget));
+  preview = GIMP_PREVIEW (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->realize (widget);
+  
+  attributes.window_type = GDK_WINDOW_CHILD;
+  attributes.x      = widget->allocation.x;
+  attributes.y      = widget->allocation.y;
+  attributes.width  = widget->allocation.width;
+  attributes.height = widget->allocation.height;
+  
+  attributes.wclass = GDK_INPUT_ONLY;
+  attributes.event_mask = gtk_widget_get_events (widget);
+  attributes.event_mask |= PREVIEW_EVENT_MASK;
+
+  attributes_mask = GDK_WA_X | GDK_WA_Y;
+
+  preview->event_window = gdk_window_new (widget->window,
+                                          &attributes, attributes_mask);
+  gdk_window_set_user_data (preview->event_window, preview);
+}
+
+static void
+gimp_preview_unrealize (GtkWidget *widget)
+{
+  GimpPreview *preview = GIMP_PREVIEW (widget);
+
+  if (preview->event_window)
+    {
+      gdk_window_set_user_data (preview->event_window, NULL);
+      gdk_window_destroy (preview->event_window);
+      preview->event_window = NULL;
+    }
+
+  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+}
+
+static void
+gimp_preview_map (GtkWidget *widget)
+{
+  GimpPreview *preview = GIMP_PREVIEW (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->map (widget);
+
+  if (preview->event_window)
+    gdk_window_show (preview->event_window);
+}
+
+static void
+gimp_preview_unmap (GtkWidget *widget)
+{
+  GimpPreview *preview = GIMP_PREVIEW (widget);
+
+  if (preview->event_window)
+    gdk_window_hide (preview->event_window);
+
+  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
 
 static void
@@ -334,29 +404,32 @@ gimp_preview_size_allocate (GtkWidget     *widget,
   allocation->width  = width;
   allocation->height = height;
 
-  if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
-    GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+  widget->allocation = *allocation;
+
+  if (GTK_WIDGET_REALIZED (widget))
+    gdk_window_move_resize (preview->event_window,
+			    allocation->x,
+			    allocation->y,
+			    allocation->width,
+                            allocation->height);
 }
 
 static gboolean
 gimp_preview_expose_event (GtkWidget      *widget,
                            GdkEventExpose *event)
 {
-  GimpPreview  *preview;
-  GdkRectangle  rect;
-
-  preview = GIMP_PREVIEW (widget);
+  GimpPreview *preview;
 
   if (! GTK_WIDGET_DRAWABLE (widget))
     return FALSE;
 
-  rect = widget->allocation;
+  preview = GIMP_PREVIEW (widget);
 
-  rect.x = rect.y = 0;
+  gimp_preview_draw_background (preview, &event->area);
 
   gimp_preview_renderer_draw (preview->renderer,
                               widget->window, widget,
-                              &rect,
+                              &widget->allocation,
                               &event->area);
 
   return FALSE;
@@ -402,6 +475,9 @@ gimp_preview_button_press_event (GtkWidget      *widget,
 
 	  if (preview->show_popup)
             {
+              bevent->x += widget->allocation.x;
+              bevent->y += widget->allocation.y;
+
               gimp_preview_popup_show (widget, bevent,
                                        preview->viewable,
                                        preview->renderer->width,
@@ -682,8 +758,6 @@ gimp_preview_set_viewable (GimpPreview  *preview,
       g_object_add_weak_pointer (G_OBJECT (preview->viewable),
 				 (gpointer *) &preview->viewable);
     }
-
-  gimp_preview_set_back_pixmap (preview);
 }
 
 void
@@ -762,7 +836,10 @@ gimp_preview_set_background (GimpPreview *preview,
 
   preview->bg_stock_id = g_strdup (stock_id);
 
-  gimp_preview_set_back_pixmap (preview);
+  if (preview->bg_pixmap)
+    g_object_unref (preview->bg_pixmap);
+
+  preview->bg_pixmap = NULL;
 }
 
 
@@ -803,19 +880,23 @@ gimp_preview_drag_viewable (GtkWidget *widget,
 }
 
 static void
-gimp_preview_set_back_pixmap (GimpPreview *preview)
+gimp_preview_draw_background (GimpPreview        *preview,
+                              const GdkRectangle *area)
 {
   GtkWidget *widget;
-  GdkPixmap *pixmap = NULL;
-    
+
+  if (!preview->bg_stock_id)
+    return;
+
   if (! GTK_WIDGET_REALIZED (preview))
     return;
 
   widget = GTK_WIDGET (preview);
 
-  if (preview->bg_stock_id && preview->viewable)
+  if (!preview->bg_pixmap);
     {
       GdkPixbuf *pixbuf;
+      GdkPixmap *pixmap;
 
       pixbuf = gtk_widget_render_icon (widget,
                                        preview->bg_stock_id,
@@ -846,11 +927,30 @@ gimp_preview_set_back_pixmap (GimpPreview *preview)
                            GDK_RGB_DITHER_NORMAL, 0, 0);
 
           g_object_unref (pixbuf);
+
+          preview->bg_pixmap = pixmap;
         }
     }
 
-  gdk_window_set_back_pixmap (widget->window, pixmap, FALSE);
+  if (preview->bg_pixmap)
+    {
+      GdkGC       *gc;
+      GdkGCValues  values;
 
-  if (pixmap)
-    g_object_unref (pixmap);
+      values.fill        = GDK_TILED;
+      values.tile        = preview->bg_pixmap;
+      values.ts_x_origin = 0;
+      values.ts_y_origin = 0;
+
+      gc = gdk_gc_new_with_values (GDK_DRAWABLE (widget->window),
+                                   &values,
+                                   GDK_GC_FILL | GDK_GC_TILE |
+                                   GDK_GC_TS_X_ORIGIN | GDK_GC_TS_Y_ORIGIN);
+
+      gdk_draw_rectangle (GDK_DRAWABLE (widget->window), gc,
+                          TRUE,
+                          area->x, area->y, area->width, area->height);
+            
+      g_object_unref (gc);
+    }
 }

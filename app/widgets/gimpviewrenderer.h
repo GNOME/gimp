@@ -110,8 +110,8 @@ void   gimp_preview_renderer_remove_idle      (GimpPreviewRenderer *renderer);
 void   gimp_preview_renderer_draw             (GimpPreviewRenderer *renderer,
                                                GdkWindow           *window,
                                                GtkWidget           *widget,
-                                               GdkRectangle        *draw_area,
-                                               GdkRectangle        *expose_area);
+                                               const GdkRectangle  *draw_area,
+                                               const GdkRectangle  *expose_area);
 
 
 /*  protected  */

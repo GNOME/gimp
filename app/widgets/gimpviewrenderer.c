@@ -488,8 +488,8 @@ void
 gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
                             GdkWindow           *window,
                             GtkWidget           *widget,
-                            GdkRectangle        *draw_area,
-                            GdkRectangle        *expose_area)
+                            const GdkRectangle  *draw_area,
+                            const GdkRectangle  *expose_area)
 {
   GdkRectangle border_rect;
   GdkRectangle buf_rect;
@@ -528,7 +528,8 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
       buf_rect.x += draw_area->x;
       buf_rect.y += draw_area->y;
 
-      if (gdk_rectangle_intersect (&buf_rect, expose_area, &render_rect))
+      if (gdk_rectangle_intersect (&buf_rect, (GdkRectangle *) expose_area,
+                                   &render_rect))
         {
           gdk_draw_pixbuf (GDK_DRAWABLE (window),
                            widget->style->bg_gc[widget->state],
@@ -550,7 +551,8 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
       buf_rect.width  = renderer->width;
       buf_rect.height = renderer->height;
 
-      if (gdk_rectangle_intersect (&buf_rect, expose_area, &render_rect))
+      if (gdk_rectangle_intersect (&buf_rect, (GdkRectangle *) expose_area,
+                                   &render_rect))
         {
           guchar *buf;
 

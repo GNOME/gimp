@@ -1,3 +1,15 @@
+2003-04-11  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimppreview.[ch]: made GimpPreview a NO_WINDOW
+	widget that draws on the parent window. Added an INPUT_ONLY window
+	for events.
+
+	* app/widgets/gimpnavigationpreview.c: take the widget's
+	allocation into account when rendering the marker and grab the
+	mouse on the preview's event_window.
+
+	* app/widgets/gimppreviewrenderer.[ch]: pass GdkRectangles as const.
+
 2003-04-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/file-new-dialog.c: added Portrait/Landscape radio

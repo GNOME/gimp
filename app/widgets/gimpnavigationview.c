@@ -292,6 +292,7 @@ gimp_navigation_preview_grab_pointer (GimpNavigationPreview *nav_preview)
 {
   GtkWidget *widget;
   GdkCursor *cursor;
+  GdkWindow *window;
 
   widget = GTK_WIDGET (nav_preview);
 
@@ -301,12 +302,14 @@ gimp_navigation_preview_grab_pointer (GimpNavigationPreview *nav_preview)
 
   cursor = gdk_cursor_new (GDK_FLEUR);
 
-  gdk_pointer_grab (widget->window, TRUE,
-		    GDK_BUTTON_RELEASE_MASK |
+  window = GIMP_PREVIEW (nav_preview)->event_window;
+
+  gdk_pointer_grab (window, TRUE,
+		    GDK_BUTTON_RELEASE_MASK      |
 		    GDK_POINTER_MOTION_HINT_MASK |
-		    GDK_BUTTON_MOTION_MASK |
+		    GDK_BUTTON_MOTION_MASK       |
 		    GDK_EXTENSION_EVENTS_ALL,
-		    widget->window, cursor, 0);
+		    window, cursor, 0);
 
   gdk_cursor_unref (cursor);
 }
@@ -449,9 +452,9 @@ gimp_navigation_preview_motion_notify (GtkWidget      *widget,
           return FALSE;
         }
       else if (mevent->x >= nav_preview->p_x &&
-          mevent->y >= nav_preview->p_y &&
-          mevent->x <  nav_preview->p_x + nav_preview->p_width &&
-          mevent->y <  nav_preview->p_y + nav_preview->p_height)
+               mevent->y >= nav_preview->p_y &&
+               mevent->x <  nav_preview->p_x + nav_preview->p_width &&
+               mevent->y <  nav_preview->p_y + nav_preview->p_height)
         {
           cursor = gdk_cursor_new (GDK_FLEUR);
         }
@@ -466,7 +469,8 @@ gimp_navigation_preview_motion_notify (GtkWidget      *widget,
       return FALSE;
     }
 
-  gdk_window_get_pointer (widget->window, &tx, &ty, &mask);
+  gdk_window_get_pointer (GIMP_PREVIEW (nav_preview)->event_window,
+                          &tx, &ty, &mask);
 
   tx -= nav_preview->motion_offset_x;
   ty -= nav_preview->motion_offset_y;
@@ -561,13 +565,15 @@ gimp_navigation_preview_draw_marker (GimpNavigationPreview *nav_preview,
 	  nav_preview->width  < gimage->width ||
 	  nav_preview->height < gimage->height)
 	{
+          GtkWidget *widget = GTK_WIDGET (preview);
+
 	  if (area)
 	    gdk_gc_set_clip_rectangle (nav_preview->gc, area);
 
-	  gdk_draw_rectangle (GTK_WIDGET (preview)->window, nav_preview->gc,
+	  gdk_draw_rectangle (widget->window, nav_preview->gc,
 			      FALSE,
-			      nav_preview->p_x + 1,
-			      nav_preview->p_y + 1,
+			      widget->allocation.x + nav_preview->p_x + 1,
+			      widget->allocation.y + nav_preview->p_y + 1,
 			      MAX (1, nav_preview->p_width  - BORDER_PEN_WIDTH),
 			      MAX (1, nav_preview->p_height - BORDER_PEN_WIDTH));
 
