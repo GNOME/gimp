@@ -39,8 +39,8 @@ void
 help_context_help_cmd_callback (GtkAction *action,
 				gpointer   data)
 {
-  GtkWidget *widget = action_data_get_widget (data);
+  GtkWidget *widget;
+  return_if_no_widget (widget, data);
 
-  if (widget)
-    gimp_context_help (widget);
+  gimp_context_help (widget);
 }

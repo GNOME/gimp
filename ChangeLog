@@ -1,5 +1,11 @@
 2005-02-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/help-commands.c (help_context_help_cmd_callback):
+	for consistency, use return_if_no_widget() instead of
+	action_data_get_widget()
+
+2005-02-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/image-scale-dialog.c (image_scale_dialog_new): use
 	the passed parent widget instead of display->shell.
 
