@@ -864,7 +864,7 @@ blend (GImage          *gimage,
   /*  free the temporary buffer  */
   tile_manager_destroy (buf_tiles);
 
-  gimp_remove_busy_cursors();
+  gimp_remove_busy_cursors(NULL);
 }
 
 

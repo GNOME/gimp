@@ -1605,8 +1605,6 @@ gdisplays_update_area (GimpImage* gimage,
   /* int x1, y1, x2, y2; */
   /*  int count = 0; */
 
-  /*  printf("GDUA%p:%d,%d:%dx%d ", gimage,x,y,w,h);fflush(stdout);*/
-
   /*  traverse the linked list of displays  */
   while (list)
     {
@@ -1894,11 +1892,8 @@ gdisplay_reconnect (GDisplay *gdisp, GimpImage *gimage)
 
   if (gdisp->idle_render.active)
     {
-      printf(_("Deleted idlerendering gdisp %p...\n"), gdisp); fflush(stdout);
-      printf(_("\tIdlerender stops now!\n")); fflush(stdout);
       gtk_idle_remove (gdisp->idle_render.idleid);
       gdisp->idle_render.active = FALSE;
-      printf(_("\tDeletion finished.\n")); fflush(stdout);
     }
 
   gimage_delete (gdisp->gimage);

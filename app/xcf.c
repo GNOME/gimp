@@ -360,7 +360,7 @@ xcf_load_invoker (Argument *args)
   if (success)
     return_args[1].value.pdb_int = pdb_image_to_id(gimage);
 
-  gimp_remove_busy_cursors();
+  gimp_remove_busy_cursors(NULL);
 
   return return_args;
 }
@@ -407,7 +407,7 @@ xcf_save_invoker (Argument *args)
 
   return_args = procedural_db_return_args (&xcf_plug_in_save_proc.db_info, success);
 
-  gimp_remove_busy_cursors();
+  gimp_remove_busy_cursors(NULL);
 
   return return_args;
 }

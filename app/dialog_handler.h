@@ -20,9 +20,12 @@
 #ifndef __DIALOG_HANDLER_H_
 #define __DIALOG_HANDLER_H_
 
-void dialog_register(GtkWidget *dialog);
-void dialog_register_toolbox(GtkWidget *dialog);
-void dialog_unregister(GtkWidget *dialog);
-void dialog_toggle();
+void dialog_register         (GtkWidget *dialog);
+void dialog_register_toolbox (GtkWidget *dialog);
+void dialog_unregister       (GtkWidget *dialog);
+void dialog_toggle           (void);
+void dialog_idle_all         (void);
+void dialog_unidle_all       (void);
 
 #endif  /* __DIALOG_HANDLER_H_ */
+

@@ -17,9 +17,13 @@
  */
 #include "appenv.h"
 #include "cursorutil.h"
+#include "dialog_handler.h"
 #include "gdisplay.h" /* for gdisplay_*_override_cursor() */
 
+
 extern GSList* display_list; /* It's in gdisplay.c, FYI */
+static gboolean pending_removebusy = FALSE;
+
 
 void
 change_win_cursor (win, cursortype)
@@ -41,11 +45,24 @@ unset_win_cursor (win)
 }
      
 void
+gimp_add_busy_cursors_until_idle (void)
+{
+  if (!pending_removebusy)
+    {
+      gimp_add_busy_cursors(); 
+      gtk_idle_add_priority (GTK_PRIORITY_HIGH,
+			     gimp_remove_busy_cursors, NULL);
+      pending_removebusy = TRUE;
+    }
+}
+     
+void
 gimp_add_busy_cursors (void)
 {
   GDisplay *gdisp;
   GSList *list = display_list;
 
+  /* Canvases */
   while (list)
     {
       gdisp = (GDisplay *) list->data;
@@ -53,15 +70,20 @@ gimp_add_busy_cursors (void)
 
       list = g_slist_next (list);
     }
+
+  /* Dialogs */
+  dialog_idle_all();
+
   gdk_flush();
 }
-     
-void
-gimp_remove_busy_cursors (void)
+
+int
+gimp_remove_busy_cursors (gpointer data)
 {
   GDisplay *gdisp;
   GSList *list = display_list;
 
+  /* Canvases */
   while (list)
     {
       gdisp = (GDisplay *) list->data;
@@ -69,4 +91,11 @@ gimp_remove_busy_cursors (void)
 
       list = g_slist_next (list);
     }
+
+  /* Dialogs */
+  dialog_unidle_all();
+
+  pending_removebusy = FALSE;
+
+  return 0;
 }

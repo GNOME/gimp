@@ -272,7 +272,7 @@ gimage_resize_invoker (Argument *args)
   if (success)
     gimage_resize (gimage, new_width, new_height, offx, offy);
 
-  gimp_remove_busy_cursors();
+  gimp_remove_busy_cursors(NULL);
 
   return procedural_db_return_args (&gimage_resize_proc, success);
 }
@@ -3714,6 +3714,8 @@ duplicate (GImage *gimage)
   GimpDrawable *floating_sel_drawable = NULL;
   int count;
 
+  gimp_add_busy_cursors();
+
   /*  Create a new image  */
   new_gimage = gimage_new (gimage->width, gimage->height, gimage->base_type);
   gimage_disable_undo (new_gimage);
@@ -3816,7 +3818,11 @@ duplicate (GImage *gimage)
       new_gimage->active[count] = gimage->active[count];
     }
 
+#warning NEED TO COPY GUIDES ALSO
+
   gimage_enable_undo (new_gimage);
+
+  gimp_remove_busy_cursors(NULL);
 
   return new_gimage;
 }

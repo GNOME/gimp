@@ -537,7 +537,7 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
   if (new_buf)
     temp_buf_free (pat_buf);
 
-  gimp_remove_busy_cursors();
+  gimp_remove_busy_cursors(NULL);
 }
 
 

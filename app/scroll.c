@@ -66,14 +66,10 @@ void
 start_grab_and_scroll (GDisplay       *gdisp,
 		       GdkEventButton *bevent)
 {
-  GdkCursor *cursor;
-
   startx = bevent->x + gdisp->offset_x;
   starty = bevent->y + gdisp->offset_y;
 
-  cursor = gdk_cursor_new (GDK_FLEUR);
-  gdk_window_set_cursor (gdisp->canvas->window, cursor);
-  gdk_cursor_destroy (cursor);
+  change_win_cursor(gdisp->canvas->window, GDK_FLEUR);
 }
 
 
@@ -81,11 +77,7 @@ void
 end_grab_and_scroll (GDisplay       *gdisp,
 		     GdkEventButton *bevent)
 {
-  GdkCursor *cursor;
-
-  cursor = gdk_cursor_new (gdisp->current_cursor);
-  gdk_window_set_cursor (gdisp->canvas->window, cursor);
-  gdk_cursor_destroy (cursor);
+  change_win_cursor(gdisp->canvas->window, gdisp->current_cursor);
 }
 
 

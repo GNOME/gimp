@@ -21,7 +21,8 @@
 void change_win_cursor (GdkWindow *, GdkCursorType);
 void unset_win_cursor  (GdkWindow *);
 
-void gimp_add_busy_cursors    (void);
-void gimp_remove_busy_cursors (void);
+void gimp_add_busy_cursors_until_idle (void);
+void gimp_add_busy_cursors            (void);
+int  gimp_remove_busy_cursors         (gpointer);
 
 #endif /*  __CURSORUTIL_H__  */

@@ -399,7 +399,7 @@ gimp_image_resize (GimpImage *gimage, int new_width, int new_height,
 
   gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[RESIZE]);
 
-  gimp_remove_busy_cursors();
+  gimp_remove_busy_cursors(NULL);
 }
 
 
@@ -458,6 +458,8 @@ gimp_image_scale (GimpImage *gimage, int new_width, int new_height)
       list = g_slist_next (list);
     }
 
+#warning NEED TO SCALE GUIDES ALSO
+
   /*  Make sure the projection matches the gimage size  */
   gimp_image_projection_realloc (gimage);
 
@@ -467,7 +469,7 @@ gimp_image_scale (GimpImage *gimage, int new_width, int new_height)
 
   gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[RESIZE]);
 
-  gimp_remove_busy_cursors();
+  gimp_remove_busy_cursors(NULL);
 }
 
 
@@ -936,7 +938,8 @@ gimp_image_get_new_tattoo(GimpImage *image)
 }
 
 void
-gimp_image_colormap_changed (GimpImage *image, gint col){
+gimp_image_colormap_changed (GimpImage *image, gint col)
+{
   g_return_if_fail (image);
   g_return_if_fail (col < image->num_cols);
   gtk_signal_emit (GTK_OBJECT(image),
@@ -1302,7 +1305,7 @@ gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h)
    *  has been written to the gimage raw image yet.
    */
   gimage->construct_flag = 0;
-  
+
   /*  First, determine if the projection image needs to be
    *  initialized--this is the case when there are no visible
    *  layers that cover the entire canvas--either because layers
@@ -1393,6 +1396,8 @@ gimp_image_validate (TileManager *tm, Tile *tile)
   GimpImage *gimage;
   int x, y;
   int w, h;
+
+  gimp_add_busy_cursors_until_idle();
 
   /*  Get the gimage from the tilemanager  */
   gimage = (GimpImage *) tile_manager_get_user_data (tm);
@@ -2010,7 +2015,7 @@ gimp_image_merge_visible_layers (GimpImage *gimage, MergeType merge_type)
       gimp_add_busy_cursors();
       layer = gimp_image_merge_layers (gimage, merge_list, merge_type);
       g_slist_free (merge_list);
-      gimp_remove_busy_cursors();
+      gimp_remove_busy_cursors(NULL);
       return layer;
     }
   else
@@ -2044,7 +2049,7 @@ gimp_image_flatten (GimpImage *gimage)
   layer = gimp_image_merge_layers (gimage, merge_list, FlattenImage);
   g_slist_free (merge_list);
 
-  gimp_remove_busy_cursors();
+  gimp_remove_busy_cursors(NULL);
 
   return layer;
 }
@@ -2088,7 +2093,7 @@ gimp_image_merge_down (GimpImage *gimage,
       gimp_add_busy_cursors();
       layer = gimp_image_merge_layers (gimage, merge_list, merge_type);
       g_slist_free (merge_list);
-      gimp_remove_busy_cursors();
+      gimp_remove_busy_cursors(NULL);
       return layer;
     }
   else 

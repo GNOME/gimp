@@ -919,7 +919,7 @@ convert_image (GImage *gimage,
 
   gimp_image_colormap_changed (gimage, -1);
 
-  gimp_remove_busy_cursors();
+  gimp_remove_busy_cursors(NULL);
 }
 
 static void

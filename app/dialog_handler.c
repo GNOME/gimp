@@ -22,6 +22,7 @@
 #include <string.h>
 
 #include "appenv.h"
+#include "cursorutil.h"
 #include "errors.h"
 #include "general.h"
 
@@ -30,9 +31,9 @@
 
 static GSList * active_dialogs = NULL; /* List of dialogs that have 
 					  been created and are on 
-					  screen (may be hiddenalready).
+					  screen (may be hidden already).
 				       */
-static gint doing_update = FALSE;  /* Prevent multiple keypresse 
+static gint doing_update = FALSE;  /* Prevent multiple keypresses 
 				      from unsetting me.
 				   */
 
@@ -52,7 +53,7 @@ struct _dialog_state {
 };
 
 /* This keeps track of the state the dialogs are in */
-/* ie howmany times we have pressed the tab key */
+/* ie how many times we have pressed the tab key */
 
 typedef enum{
   SHOW_ALL,
@@ -65,8 +66,8 @@ static ShowState dialogs_showing = SHOW_ALL; /* Start off with all
 						dialogs showing 
 					     */
 
-static DIALOGSTATEP toolbox_shell = NULL; /* Copy of the shelll for the tool 
-					      box this has special behavour 
+static DIALOGSTATEP toolbox_shell = NULL; /* Copy of the shell for the tool 
+					      box - this has special behaviour 
 					      so is not on the normal list.
 					   */
 /* Private */
@@ -139,6 +140,56 @@ dialog_hide_toolbox()
 
 /* public */
 
+/* Set hourglass cursor on all currently registered dialogs */
+
+void
+dialog_idle_all()
+{
+  GSList *list = active_dialogs;
+  DIALOGSTATEP dstate;
+
+  while (list)
+    {
+      dstate = (DIALOGSTATEP) list->data;
+      list = g_slist_next (list);
+  
+      if(GTK_WIDGET_VISIBLE (dstate->d))
+	{
+	  change_win_cursor (dstate->d->window, GDK_WATCH);
+	}
+    }
+
+  if (toolbox_shell && GTK_WIDGET_VISIBLE(toolbox_shell->d))
+    {
+      change_win_cursor (toolbox_shell->d->window, GDK_WATCH);
+    }
+}
+
+/* And remove the hourglass again. */
+
+void
+dialog_unidle_all()
+{
+  GSList *list = active_dialogs;
+  DIALOGSTATEP dstate;
+
+  while (list)
+    {
+      dstate = (DIALOGSTATEP) list->data;
+      list = g_slist_next (list);
+  
+      if(GTK_WIDGET_VISIBLE (dstate->d))
+	{
+	  unset_win_cursor (dstate->d->window);
+	}
+    }
+
+  if (toolbox_shell && GTK_WIDGET_VISIBLE(toolbox_shell->d))
+    {
+      unset_win_cursor (toolbox_shell->d->window);
+    }
+}
+
 /* Register a dialog that we can handle */
 
 void
@@ -186,7 +237,7 @@ dialog_unregister(GtkWidget *dialog)
  */
 
 void 
-dialog_toggle(gint leavetoolbox)
+dialog_toggle(void)
 {
   if(doing_update == FALSE)
     doing_update = TRUE;

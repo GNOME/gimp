@@ -504,7 +504,7 @@ fuzzy_select_calculate (Tool *tool, void *gdisp_ptr, int *nsegs)
   /*  free boundary segments  */
   g_free (bsegs);
 
-  gimp_remove_busy_cursors();
+  gimp_remove_busy_cursors(NULL);
 
   return segs;
 }

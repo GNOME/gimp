@@ -437,7 +437,7 @@ transform_core_doit (tool, gdisp_ptr)
 	}
     }
 
-  gimp_remove_busy_cursors();
+  gimp_remove_busy_cursors(NULL);
 
   gdisplays_flush ();
 

@@ -751,7 +751,7 @@ crop_image (GImage *gimage,
       gdisplays_update_full (gimage);
       gdisplays_shrink_wrap (gimage);
     }
-    gimp_remove_busy_cursors();
+    gimp_remove_busy_cursors(NULL);
     gdisplays_flush ();
   }
 }

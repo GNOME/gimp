@@ -1,3 +1,16 @@
+Sun Jan 17 16:56:25 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+        * app/blend.c app/bucket_fill.c app/convert.c app/crop.c
+        app/cursorutil.c app/cursorutil.h app/dialog_handler.c
+        app/dialog_handler.h app/fuzzy_select.c app/gdisplay.c
+        app/gimage_cmds.c app/gimpimage.c app/scroll.c
+        app/transform_core.c app/xcf.c
+
+	Hourglasses also apply to all registered dialogs.  Hourglasses
+	added in a couple more important places.  New hack lets
+	hourglasses be added and automagically removed again when
+	gimp/gtk re-enters the idle loop.
+
 Sat Jan 16 18:21:58 GMT 1999  Austin Donnelly  <austin@greenend.org.uk>
 
 	* plug-ins/jpeg/jpeg.c: re-wrote the gimp-comment stuff so it
