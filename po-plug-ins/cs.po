@@ -2478,7 +2478,7 @@ msgstr "Poměr komprese (přibližně): %d k 1"
 
 #: plug-ins/common/channel_mixer.c:226
 msgid "<Image>/Filters/Colors/Channel Mi_xer.."
-msgstr "f<Image>/Filtry/Barvy/Mi_xér kanálů..."
+msgstr "<Image>/Filtry/Barvy/Mi_xér kanálů..."
 
 #: plug-ins/common/channel_mixer.c:530
 msgid "Channel Mixer"
