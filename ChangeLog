@@ -1,3 +1,8 @@
+2001-02-07  Daniel Egger  <egger@suse.de>
+
+	* configure.in: Changed link order in gtkxmhtml check
+	to fix bug #12653.
+
 2001-02-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpcontext.[ch]: added "set_by_type", "get_by_type" and
