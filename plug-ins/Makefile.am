@@ -32,6 +32,7 @@ SUBDIRS = 			\
 	gdyntext		\
 	gfig			\
 	gfli			\
+	gimpressionist		\
 	ifscompose		\
 	maze			\
 	mosaic			\
