@@ -98,11 +98,11 @@ register
 	"<Image>/Filters/Misc/Prepare for GIF",
 	"RGB*",
 	[
-	 [PF_INT32, "Lower Threshold", "Lower Alpha Threshold", 64],
-	 [PF_INT32, "Growth", "How Much growth for safety ",1],
-	 [PF_TOGGLE, "Convert To Indexed", "Convert Image to indexed", 0],
-	 [PF_TOGGLE, "Dither", "Floyd-Steinberg Dithering?", 1],
-	 [PF_INT32, "Colors", "Colors to quantize to", "255"],
+	 [PF_INT32, "lower_threshold", "Lower Alpha Threshold", 64],
+	 [PF_INT32, "growth", "How Much growth for safety ",1],
+	 [PF_TOGGLE, "convert_to_indexed", "Convert Image to indexed", 0],
+	 [PF_TOGGLE, "dither", "Floyd-Steinberg Dithering?", 1],
+	 [PF_INT32, "colors", "Colors to quantize to", "255"],
 	],
 	\&prep;
 

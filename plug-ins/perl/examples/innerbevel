@@ -1,0 +1,95 @@
+#!/usr/bin/perl 
+# Effect taken from http://tigert.gimp.org/gimp/tutorials/beveled_text/
+# perl-ified by Seth Burgess <sjburges@gimp.org>
+
+# Programatically, this script is about as dull as they come.  The only 
+# exceptions are those of the neat util functions (that aren't all quite
+# working btw).  You can follow step by step with the website at 
+# http://tigert.gimp.org/gimp/tutorials/beveled_text/
+
+use Gimp;
+use Gimp::Fu;
+use Gimp::Util;
+
+$defaultcolor1 = [124,10,18];
+$defaultcolor2 = [200,19,27];
+
+$path = "<Toolbox>/Xtns/Render/Logos/Inner Bevel";
+$shortdesc = "Perform an inner bevel on text";
+$longdesc = "This uses tigert's inner bevel method on text, which can be found with his other excellent tutorials at http://tigert.gimp.org/";
+$date = "1999-03-23";
+$imgtypes = "*";
+$author = "Seth Burgess <sjburges\@gimp.org>";
+
+$path =~ m,/([^/]+)$,; 
+$regname = $1;
+$regname =~ s/ /_/g;
+$regname =~ tr/A-Z/a-z/;
+
+$author =~ m/^(.*) </;
+$authorname = $1;
+
+register $regname, $shortdesc, $longdesc, $authorname, $author, $date, $path, $imgtypes,
+  [ 
+   [PF_FONT, "font", "Font Name"],
+   [PF_STRING, "text", "Enter your text to be beveled", "INNERBEVEL"],
+   [PF_COLOR, "top_color", "Blend to this color", $defaultcolor2],
+   [PF_COLOR, "bot_color", "Blend from this color", $defaultcolor1],
+   [PF_SLIDER, "azimuth", "Direction of the shine", 132, [0,255,5]],
+   [PF_SLIDER, "shinyness", "How shiny the final image will be",30, [0,90,5]],
+   [PF_SLIDER, "depth_shape", "Determines the final shape", 34 , [0,64,32]], 
+   [PF_RADIO, "map", "The type of Map to use", 2, [Linear => 0, Spherical => 1, Sinusoidal => 2] ], 
+  ], sub {
+
+my ($font, $text, $color1, $color2, $azimuth, $elevation, $depth, $maptype) = @_;
+# -- step 1 -- 
+$oldst = get_state();
+
+gimp_palette_set_background($color1);
+gimp_palette_set_foreground($color2);
+
+@dims = gimp_text_wh($text, $font);
+
+$img = gimp_image_new($dims[0]+10, $dims[1]+10, RGB);
+
+# none of the macro's did quite what I was looking for here.  
+# i.e. create a text layer on transparent only...
+
+# -- step 2 --
+$layertmp = $img->add_new_layer(0,TRANS_IMAGE_FILL);
+$txtlayer = $img->text_fontname(-1, 10, 10, $text, 0, 1, xlfd_size($font), $font);
+$dsp = gimp_display_new($img);  # display the image early
+$layer = $img->merge_visible_layers(EXPAND_AS_NECESSARY);
+@pt1 = ($layer->width * 0.5 -1, 0);
+@pt2 = ($layer->width * 0.5 +1, $layer->height);
+# -- step 3 --
+$layer->set_preserve_trans(1);
+$layer->blend(FG_BG_RGB, 0, LINEAR, 100, 0, REPEAT_NONE, 0, 3, 0.20, @pt1, @pt2); # NORMAL isn't recognized
+# -- step 4 -- 
+$layer2 = $layer->copy(0);     # Can you override these to have a default? (would be nice)
+$img->add_layer($layer2, 0);
+# -- step 5 -- 
+$layer2->set_preserve_trans(1);
+$img->selection_all;
+gimp_palette_set_background([255,255,255]);
+$layer2->edit_fill;
+# -- step 6 -- 
+$layer2->set_preserve_trans(0);
+$layer2->gauss_rle(6,1,1);     # Defaults would be cool here too :)
+# -- step 7 --
+$layer->plug_in_bump_map($layer2, $azimuth, $elevation, $depth, 0,0,0,0,1,0,$maptype);
+# -- step 8 --
+$layer2->invert;
+$img->lower_layer($layer2);
+# -- step 9 --
+$layer2->translate(2, 3);
+
+# extra stuff
+$img->add_new_layer(2);
+$img->gimp_selection_none();
+
+set_state($oldst); # Doesn't seem to work - says it can't grok color 
+return();
+};
+
+exit main;  # <-- This lil' bugger caused me much grief.  I suppose its very much required?

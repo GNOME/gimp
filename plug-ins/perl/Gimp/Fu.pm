@@ -1,7 +1,7 @@
 package Gimp::Fu;
 
 use Carp;
-use Gimp qw();
+use Gimp ();
 use Gimp::Data;
 
 require Exporter;
@@ -158,6 +158,7 @@ sub help_window(\$$$) {
 
       $b = new Gtk::Text;
       $b->set_editable (0);
+      $b->set_word_wrap (1);
 
       $font = load Gtk::Gdk::Font "9x15bold";
       $font = fontset_load Gtk::Gdk::Font "-*-courier-medium-r-normal--*-120-*-*-*-*-*" unless $font;
@@ -281,7 +282,7 @@ sub interact($$$$@) {
               my $setval = sub {
                  $val=$_[0];
                  unless (defined $val && $fs->set_font_name ($val)) {
-                    warn "illegal default font description: $val" if defined $val;
+                    warn "illegal default font description for $function: $val\n" if defined $val;
                     $val=$def;
                     $fs->set_font_name ($val);
                  }
@@ -899,18 +900,19 @@ sub register($$$$$$$$$;@) {
    @_==0 or die "register called with too many or wrong arguments\n";
    
    for my $p (@$params,@$results) {
-      int($p->[0]) eq $p->[0] or croak "Argument/return value '$p->[1]' has illegal type '$p->[0]'";
+      int($p->[0]) eq $p->[0] or croak "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'";
+      $p->[1]=~/^[0-9a-z_]+$/ or carp "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z and _ allowed";
    }
    
    $function="perl_fu_".$function unless $function=~/^(?:perl_fu|extension|plug_in)/ || $function=~s/^\+//;
    
+   Gimp::logger message => "function name contains dashes instead of underscores",
+                function => $function, fatal => 0
+      if $function =~ y/-//;
+
    *$function = sub {
       $run_mode=shift;	# global!
       my(@pre,@defaults,@lastvals,$input_image);
-
-      Gimp::logger message => "function name contains dashes instead of underscores",
-                   function => $function, fatal => 0
-         if $function =~ y/-//;
 
       if ($menupath=~/^<Image>\//) {
          @_ >= 2 or die "<Image> plug-in called without both image and drawable arguments!\n";

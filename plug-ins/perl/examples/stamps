@@ -8,7 +8,6 @@ sub stamps {
 
 	gimp_palette_set_background($fgcolor);
 	$img = gimp_image_new($size, $size, RGB);
-	$img = gimp_image_new($size, $size, RGB);
 	$layer = gimp_layer_new($img, $size, $size, RGB, "Layer 1", 100, NORMAL_MODE);
 	gimp_image_add_layer($layer, -1);
 	gimp_palette_set_background($bgcolor);

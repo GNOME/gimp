@@ -54,10 +54,10 @@ register
 	"<Image>/Filters/Distorts/Windify",
 	"*",
 	[
-	 [PF_INT32, "Angle", "Wind Angle, 0 is left", 120],
-	 [PF_INT32, "Density", "How Much Is Blown",80],
-	 [PF_VALUE, "Distance", "How Far Its Blown",30],
-	 [PF_TOGGLE, "Smear?", "Smear on Edges (or Wrap)",0]
+	 [PF_INT32, "angle", "Wind Angle, 0 is left", 120],
+	 [PF_INT32, "density", "How Much Is Blown",80],
+	 [PF_VALUE, "distance", "How Far Its Blown",30],
+	 [PF_TOGGLE, "smear", "Smear on Edges (or Wrap)",0]
 	],
 	\&windify;
 

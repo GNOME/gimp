@@ -7,11 +7,17 @@ $LDFLAGS	= q[@LDFLAGS@];
 $prefix		= q[@prefix@];
 $exec_prefix	= q[@exec_prefix@];
 $libdir		= q[@libdir@];
+$bindir		= q[@bindir@];
+
+$exec_prefix=~s/\${?prefix}?/$prefix/g;
+$libdir=~s/\${?exec_prefix}?/$exec_prefix/g;
+$bindir=~s/\${?exec_prefix}?/$exec_prefix/g;
 
 $IN_GIMP	= q[@IN_GIMP@];
 
 $PERL		= q[@PERL@];
-$GIMP		= q[@GIMP@];
+$GIMP		= $IN_GIMP ? q[@GIMP@] : "$bindir/gimp";
+
 $GIMPTOOL	= q[@GIMPTOOL@];
 $GIMP_INC	= q[@GIMP_CFLAGS@];
 $GIMP_INC_NOUI	= q[@GIMP_CFLAGS_NOUI@];
@@ -34,4 +40,4 @@ if ($IN_GIMP) {
    chomp $GIMP_PREFIX;
 }
 
-$DEFS = ' -DGIMP_PREFIX=\"'.$GIMP_PREFIX.'\"';
+$DEFS = ' -DGIMP_PREFIX=\"'.$GIMP_PREFIX.'\" -DGIMP_PATH=\"'.$GIMP.'\"';

@@ -140,26 +140,31 @@ sub set_trace {
 sub start_server {
    print "trying to start gimp\n" if $Gimp::verbose;
    $server_fh=local *FH;
-   socketpair $server_fh,GIMP_FH,PF_UNIX,SOCK_STREAM,AF_UNIX
+   my $gimp_fh=local *FH;
+   socketpair $server_fh,$gimp_fh,PF_UNIX,SOCK_STREAM,AF_UNIX
       or croak "unable to create socketpair for gimp communications: $!";
    $gimp_pid = fork;
    if ($gimp_pid > 0) {
       Gimp::ignore_functions(@Gimp::gimp_gui_functions);
+      close $gimp_fh;
       return $server_fh;
    } elsif ($gimp_pid == 0) {
       close $server_fh;
       delete $ENV{GIMP_HOST};
       unless ($Gimp::verbose) {
+         open STDIN,"</dev/null";
          open STDOUT,">/dev/null";
          open STDERR,">&1";
-         close STDIN;
       }
       my $args = &Gimp::RUN_NONINTERACTIVE." ".
                  (&Gimp::_PS_FLAG_BATCH | &Gimp::_PS_FLAG_QUIET)." ".
-                 fileno(GIMP_FH);
+                 fileno($gimp_fh);
       { # block to suppress warning with broken perls (e.g. 5.004)
-         exec "gimp","-n","-b","(extension-perl-server $args)",
-                               "(extension_perl_server $args)"
+         exec &Gimp::_gimp_path,
+              "-n","-b","(extension-perl-server $args)",
+              "(extension_perl_server $args)",
+              "(gimp_quit 0)",
+              "(gimp-quit 0)";
       }
       exit(255);
    } else {

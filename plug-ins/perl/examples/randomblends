@@ -1,0 +1,57 @@
+#!/usr/bin/perl
+# <sjburges@gimp.org>
+# This is adrian's idea - take random blends and difference them.  You're
+# bound to come up w/ something cool eventually.
+
+use Gimp;
+use Gimp::Fu;
+use Gimp::Util;
+
+# Gimp::set_trace(TRACE_ALL);
+
+sub randint {
+    my ($int) = @_;
+    return int(rand()*$int +0.5);
+    }    
+
+register "random_blends", 
+         "Random Blends - take a guess.", 
+         "A random approach to art.  Just try it. It might be good.",
+         "Seth Burgess", 
+         "Seth Burgess <sjburges\@gimp.org>", 
+         "1999-03-18",
+         "<Image>/Filters/Render/Random Blends", 
+         "RGB*, GRAY*", 
+         [ 
+           [PF_SPINNER, "number", "How many gradients to apply", 7, [1,255,1]], 
+            ], sub {
+    my($img,$layer,$numgradients) =@_;
+    eval { $img->undo_push_group_start };  # undo is broked for this one.
+# add this to the get_state (after its working?)
+	$oldgradient = gimp_gradients_get_active();
+    ($sel,$x1,$y1,$x2,$y2) = $img->gimp_selection_bounds;
+    srand();
+
+    @gradientlist = gimp_gradients_get_list();  
+    for ($i=0; $i<=$numgradients; $i++) {
+        gimp_gradients_set_active(@gradientlist[randint($#gradientlist)]);
+        $layer->gimp_blend(CUSTOM,  
+                           6,              # DIFFERENCE
+# I'd really like to alternate how many arguments in gradient type depending
+# on what version of gimp is being run.. Hints anyone? -sjb
+                           randint(10),      # gradient type
+                           randint(100),     # opacity
+                           0,                # offset
+                           randint(2),       # repeat
+                           0,3,0.2,          # disabled supersampling
+                           randint($x2-$x1)+$x1, # x1
+                           randint($y2-$y1)+$y1, # y1
+                           randint($x2-$x1)+$x1, # x2
+                           randint($y2-$y1)+$y1, # y2
+                           );
+        }
+    eval { $img->undo_push_group_end };
+	gimp_gradients_set_active($oldgradient);
+    return();
+};
+exit main;

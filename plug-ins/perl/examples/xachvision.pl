@@ -15,8 +15,8 @@ register "xachvision",
          "<Image>/Filters/Noise/Xach Vision",
          "RGB*, GRAY*",
          [
-          [PF_COLOR,	"Color",	"What Color to see the world in", [0, 255, 0]],
-	  [PF_SLIDER,   "Added Noise", "How much noise to add", 25, [0,255,5]]
+          [PF_COLOR,	"color",	"What Color to see the world in", [0, 255, 0]],
+	  [PF_SLIDER,   "added_noise", "How much noise to add", 25, [0,255,5]]
          ],
          sub {
    my($img,$drawable,$color,$amt) =@_;

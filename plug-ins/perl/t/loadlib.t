@@ -1,19 +1,11 @@
-use Test;
+$|=1;
+print "1..1\n";
 
-BEGIN {
-  plan tests => 2;
-}
-
-END {
-  ok(0) unless $loaded;
-}
+# trick Gimp into using the Gimp::Lib-interface.
+BEGIN { @ARGV = '-gimp' }
 
 use Gimp qw(:consts);
-use Gimp::Lib;
-$loaded = 1;
-ok(1);
-
-ok(SHARPEN,1);
+print "ok 1\n";
 
 
 

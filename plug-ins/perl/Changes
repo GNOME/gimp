@@ -1,5 +1,6 @@
 Revision history for Gimp-Perl extension.
 
+1.071 Tue Mar 23 13:47:10 CET 1999
 	- changed the definition of PF_RADIO, simplifying it (it ain't no C).
         - Gimp::Fu scripts try to run with default arguments if Gtk is not
           available.
@@ -10,6 +11,15 @@ Revision history for Gimp-Perl extension.
           bangpath.
         - added font_map. re-added xachshadow.pl, which was mysteriously
           missing.
+        - fixed Gimp::Util::set_state.
+        - improved get/set_state functions.
+        - added perlotine, randomblends and innerbevel plugins.
+        - improved t/run.t and server spawn robustness.
+        - Makefile.PL wrongly required the Gimp.pm in the current directory.
+        - made the 5.004 + gimp-1.0 combination work by working around another
+          bug in 5.004.
+        - fixed reporting of errors at startup time.
+        - enforcing argument name style. Eat it or die!
 
 1.07  Mon Mar 15 01:27:05 CET 1999
 	- added examples/yinyang, examples/image_tile, examples/stamps.

@@ -179,17 +179,17 @@ register
   "<Toolbox>/Xtns/Render/Font Table",
   "*",
   [
-   [PF_STRING, "Foundery (perl regex or \"*\")", "Foundery", "*"],
-   [PF_STRING, "Family (perl regex or \"*\")", "Family", "*"],
-   [PF_STRING, "Weight (perl regex or \"*\")", "Weight", "*"],
-   [PF_STRING, "Slant (perl regex or \"*\")", "Slant", "*"],
-   [PF_INT32, "Point Size", "Size", 18],
-   [PF_COLOR, "Text Color", "FG", 'black'],
-   [PF_COLOR, "Background Color", "BG", 'white'],
-   [PF_FONT, "Label Font", "Font", '-*-courier-medium-r-normal--18-*-*-*-*-*-*-*'],
-   [PF_STRING, "Test String", "String", 'FOUR (4) SCORE and seven (7) years @%$*&'],
-   [PF_INT32, "Text Padding", "Padding", 10],
-   [PF_INT32, "Maximum page height", "Height", 1000]
+   [PF_STRING, "foundery", "Foundery (perl regex or \"*\")", "*"],
+   [PF_STRING, "family", "Family (perl regex or \"*\")", "*"],
+   [PF_STRING, "weight", "Weight (perl regex or \"*\")", "*"],
+   [PF_STRING, "slant", "Slant (perl regex or \"*\")", "*"],
+   [PF_INT32, "point_size", "Point Size", 18],
+   [PF_COLOR, "text_color", "Text Color", 'black'],
+   [PF_COLOR, "bg_color", "Background Color", 'white'],
+   [PF_FONT, "label_font", "Label Font", '-*-courier-medium-r-normal--18-*-*-*-*-*-*-*'],
+   [PF_STRING, "test_string", "Test String", 'FOUR (4) SCORE and seven (7) years @%$*&'],
+   [PF_INT32, "padding", "Text Padding", 10],
+   [PF_INT32, "height", "Maximum page height", 1000]
   ],
   \&font_table;
 

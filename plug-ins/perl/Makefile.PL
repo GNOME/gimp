@@ -10,6 +10,7 @@ $|=1;
       border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl parasite-editor
       scratches.pl blowinout.pl terral_text xachvision.pl gimpmagick perlcc
       sethspin.pl animate_cells image_tile yinyang stamps font_table
+      perlotine randomblends innerbevel
    );
 @shebang = (map("examples/$_",@examples),
    qw(Perl-Server examples/example-net.pl examples/homepage-logo.pl
@@ -24,7 +25,7 @@ if ($ARGV[0] ne "--writemakefile") {
    do './config.pl';
    if(defined $EXTENSIVE_TESTS) {
       print "\nFetched some defaults from an earlier Makefile.PL run.\n";
-      print "Run \"make clean\" if you don't want this\n";
+      print "Run \"make realclean\" if you don't want this\n";
    } else {
       print "
 This module usually does only a very short installation check.
@@ -35,7 +36,7 @@ gimp-1.1 ;)
 If you decide to run these tests (please!), I'd be glad to hear
 success stories (and of course any bug-reports ;)
 
-Do you want me to make these tests [y]? ";
+Do you want me to run these tests [y]? ";
       
       print "y\n";
       $EXTENSIVE_TESTS = 1;
@@ -58,6 +59,45 @@ Do you want me to make these tests [y]? ";
 
 require ExtUtils::MakeMaker;
 import ExtUtils::MakeMaker;
+
+@INC = grep /^\//,@INC;
+eval { $Gimp::no_SIG=1; require Gimp };
+unless($@) {
+   $old_prefix = eval { Gimp::_gimp_prefix() };
+   if ($@) {
+      print <<EOF;
+
+WARNING: I've detected an old version of Gimp-Perl installed
+	 already. Since I cannot detect the prefix used to install
+	 it I will just overwrite it.  If you happen to use two
+	 different and incompatible versions of the Gimp with differing
+	 prefixes you should call configure with the --disable-perl
+	 switch to disable the perl extension, or consider installing
+	 the perl module elsewhere, using the environment variables
+	 PERL5LIB=/my/module/dir and PERL_MM_OPTS="PREFIX=\$PERL5LIB" to
+	 overwrite the installation directory (PERL_MM_OPTS) and run the
+	 Gimp (PERL5LIB). See "perldoc ExtUtils::MakeMaker" for a full
+	 discussion of your options.
+
+EOF
+   } else {
+      if ($GIMP_PREFIX ne $old_prefix) {
+	 print <<EOF;
+
+WARNING: I've detected another installation of the Gimp-Perl extension.
+	    
+	 This version uses the prefix '$GIMP_PREFIX'.
+	 The already installed version uses the prefix '$old_prefix'.
+
+	 They don't match, which indicates that installing Gimp-Perl might
+	 overwrite an old but still used installation. Gimp-Perl will
+	 therefore be disabled, and not be installed.
+
+EOF
+	 not_halt("prefix mismatch");
+      }
+   }
+}
 
 eval "use Gtk;"; $GTK = $@ eq "";
 eval "use PDL;"; $PDL = $@ eq "";
@@ -127,44 +167,6 @@ WARNING: version 0.3 of Gtk is _required_ for this module to
 	 versions may work, but I have warned you!
 
 EOF
-}
-
-eval { $Gimp::no_SIG=1; require Gimp };
-unless($@) {
-   $old_prefix = eval { Gimp::_gimp_prefix() };
-   if ($@) {
-      print <<EOF;
-
-WARNING: I've detected an old version of Gimp-Perl installed
-	 already. Since I cannot detect the prefix used to install
-	 it I will just overwrite it.  If you happen to use two
-	 different and incompatible versions of the Gimp with differing
-	 prefixes you should call configure with the --disable-perl
-	 switch to disable the perl extension, or consider installing
-	 the perl module elsewhere, using the environment variables
-	 PERL5LIB=/my/module/dir and PERL_MM_OPTS="PREFIX=\$PERL5LIB" to
-	 overwrite the installation directory (PERL_MM_OPTS) and run the
-	 Gimp (PERL5LIB). See "perldoc ExtUtils::MakeMaker" for a full
-	 discussion of your options.
-
-EOF
-   } else {
-      if ($GIMP_PREFIX ne $old_prefix) {
-	 print <<EOF;
-
-WARNING: I've detected another installaion of the Gimp-Perl extension.
-	    
-	 This version uses the prefix '$GIMP_PREFIX'.
-	 The already installed version uses the prefix '$old_prefix'.
-
-	 They don't match, which indicates that installing Gimp-Perl might
-	 overwrite an old but still used installation. Gimp-Perl will
-	 therefore be disabled, and not be installed.
-
-EOF
-	 not_halt("prefix mismatch");
-      }
-   }
 }
 
 # wo do no longer do these dirty things

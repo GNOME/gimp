@@ -106,7 +106,7 @@ register
 	"<Image>/Image/Colors/Alpha2Color",
 	"RGBA",
 	[
-	 [PF_COLOR, "Color", "Color for current alpha", [127,127,127]]
+	 [PF_COLOR, "color", "Color for current alpha", [127,127,127]]
 	],
 	\&alpha2col;
 

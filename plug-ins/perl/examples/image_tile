@@ -442,13 +442,13 @@ register
    # Image and drawable are given for free...
    # [PF_IMAGE, "Input image", undef],
    # [PF_DRAWABLE, "Input drawable", undef],
-   [PF_INT32, "Number of tiles (X)", "X tiles", 10],
-   [PF_INT32, "Number of tiles (Y)", "Y tiles", 10],
-   [PF_INT32, "Number of sample cells per tile (X)", "X cells", 4],
-   [PF_INT32, "Number of sample cells per tile (Y)", "Y cells", 4],
-   [PF_INT32, "Duplicates (0[lots] - 100[none])", "Duplicates", 5],
-   [PF_STRING, "Sub-image directories (space speparated)", "Directories"],
-   [PF_TOGGLE, "Delete cached image samples?", "", 0]
+   [PF_INT32, "tiles_x", "Number of tiles (X)", 10],
+   [PF_INT32, "tiles_y", "Number of tiles (Y)", 10],
+   [PF_INT32, "samples_x", "Number of sample cells per tile (X)", 4],
+   [PF_INT32, "samples_y", "Number of sample cells per tile (Y)", 4],
+   [PF_INT32, "duplicates", "Duplicates (0[lots] - 100[none])", 5],
+   [PF_STRING, "image_dirs", "Sub-image directories (space speparated)"],
+   [PF_TOGGLE, "delete_cached", "Delete cached image samples?", 0]
   ],
   \&perl_fu_image_tile;
 

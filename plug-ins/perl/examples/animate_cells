@@ -85,7 +85,7 @@ register
   "<Image>/Filters/Animation/Animate Cells",
   "*",
   [
-   [PF_TOGGLE, "Work on a copy?", "", 1]
+   [PF_TOGGLE, "work_on_copy", "", 1]
   ],
   \&perl_fu_animate_cells;
 

@@ -166,11 +166,11 @@ register "tex_string_to_float", "Turn a TeX-string into floating layer", "Takes 
     "<Image>/Filters/Render/TeX String", 
     "*",
     [
-     [PF_STRING,  "Input file",     "TeX macro file to input"],
-     [PF_STRING,  "TeX String",     "Enter TeX String"],
-     [PF_VALUE,   "DPI",     "Resolution to render the text in",   "72"],
-     [PF_VALUE,   "Magstep",     "TeX magstep",   "2"],
-     [PF_VALUE,   "Anti-aliasing",     "Anti-aliasing factor",   "4"],
+     [PF_STRING,  "input_file",     "TeX macro file to input"],
+     [PF_STRING,  "tex_string",     "Enter TeX String"],
+     [PF_VALUE,   "dpi",     "Resolution to render the text in",   "72"],
+     [PF_VALUE,   "magstep",     "TeX magstep",   "2"],
+     [PF_VALUE,   "anti_aliasing",     "Anti-aliasing factor",   "4"],
     ],
     \&tex_string_to_float;
 

@@ -16,7 +16,7 @@ AC_ARG_WITH(includes,[  --with-includes=DIR     Additionally search for includes
 AC_ARG_WITH(libs,    [  --with-libs=DIR         Additionally search for libraries in dir in DIR (optional)],
    LIBS="$LIBS -L$with_libs")
 
-AC_CHECK_PROGS(GIMP,gimp,gimp)
+AC_PATH_PROGS(GIMP,gimp)
 
 AM_PATH_GIMP(1.0.2,, AC_MSG_ERROR(
 ** unable to find gimp, make sure it's in your path (version 1.0.2+ required!)
@@ -29,7 +29,6 @@ AC_EGREP_CPP(DIVIDE_MODE,[#include <libgimp/gimp.h>],AC_DEFINE(HAVE_DIVIDE_MODE)
 CPPFLAGS="$ac_gimp_save_CPPFLAGS"
 
 AC_CHECK_HEADERS(unistd.h)
-AC_CHECK_FUNCS(_exit)
 
 CONFIG_H="config.h"
 

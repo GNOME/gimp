@@ -1,18 +1,10 @@
-use Test;
-
-BEGIN {
-  plan tests => 2;
-}
-
-END {
-  ok(0) unless $loaded;
-}
+$|=1;
+print "1..2\n";
 
 use Gimp qw(:consts);
-$loaded = 1;
-ok(1);
+print "ok 1\n";
 
-ok(SHARPEN,1);
+print "ok 2\n" if SHARPEN;
 
 
 

@@ -108,13 +108,13 @@ register("yinyang", "Render a stand-alone Yin/Yang image",
 	"Aaron Sherman", "(c) 1998, Aaron Sherman",
 	"1999a", "<Toolbox>/Xtns/Render/Yin-Yang", "*",
 	[
-		[PF_INT32, "Width", "Width", 256],
-		[PF_INT32, "Height", "Height", 256],
-		[PF_TOGGLE, "Insert eyes?", "", 1],
-		[PF_TOGGLE, "Eyes are images?", "", 0],
-		[PF_STRING, "Top eye filename", "eye 1", ""],
-		[PF_STRING, "Bottom eye filename", "eye 2", ""],
-		[PF_TOGGLE, "Anti-aliasing?", "", 1]
+		[PF_INT32, "width", "Width", 256],
+		[PF_INT32, "height", "Height", 256],
+		[PF_TOGGLE, "insert_eyes", "", 1],
+		[PF_TOGGLE, "eyes_are_images", "", 0],
+		[PF_STRING, "top_eye_filename", "eye 1", ""],
+		[PF_STRING, "aobttom_eye_filename", "eye 2", ""],
+		[PF_TOGGLE, "anti_aliasing", "", 1]
 	],
 	\&yinyang);
 

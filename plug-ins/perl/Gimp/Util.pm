@@ -23,11 +23,14 @@ you end up with them and the user cannot see them or delete them. So we
 always attach our created layers to an image here, too avoid memory leaks
 and debugging times.
 
-These functions try to preserve the current settings like colors.
+These functions try to preserve the current settings like colors, but not
+all do.
 
 Also: these functions are handled in exactly the same way as
 PDB-Functions, i.e. the (hypothetical) function C<gimp_image_xyzzy> can be
 called as $image->xyzzy, if the module is available.
+
+The need to explicitly C<use Gimp::Util> will go away in the future.
 
 =head1 FUNCTIONS
 
@@ -55,20 +58,31 @@ use Gimp;
 
 =item C<get_state ()>, C<set_state state>
 
-C<get_state> returns a scalar representing most of gimps global state (at the
-moment foreground colour and background colour). The state can later be
-restored by a call to C<set_state>. This is ideal for library functions such
-as the ones used here, at least when it includes more state in the future.
+C<get_state> returns a scalar representing most of gimps global state
+(at the moment foreground colour, background colour, active gradient,
+pattern and brush). The state can later be restored by a call to
+C<set_state>. This is ideal for library functions such as the ones used
+here, at least when it includes more state in the future.
 
 =cut
 
 sub get_state() {
-   [Palette->get_foreground,Palette->get_background];
+   [
+    Palette->get_foreground,
+    Palette->get_background,
+    Gradients->get_active,
+    scalar Patterns->get_pattern,
+    scalar Brushes->get_brush,
+   ]
 }
 
 sub set_state($) {
-   Palette->set_foreground($_->[0]);
-   Palette->set_background($_->[1]);
+   my $s = shift;
+   Palette->set_foreground($s->[0]);
+   Palette->set_background($s->[1]);
+   Gradients->set_active($s->[2]);
+   Patterns->set_pattern($s->[3]);
+   Brushes->set_brush($s->[4]);
 }
 
 ##############################################################################

@@ -45,8 +45,8 @@ register
 	[ 
 	  [ PF_RADIO, "solid_noise", "The Texture Type", 0, ["solid noise" => 1, "current picture" => 0]],
 	  [ PF_FONT, "helvetica", "Font Name", "-*-helvetica-medium-r-normal-*-*-240-*-*-p-*-iso8859-1" ],
-	  [ PF_STRING, "Text", "Enter your Text to be Terral-ified", "TerralText"],
-	  [ PF_SLIDER, "Blur Amount", "Blur Amount", 10, [0,26,1]],
+	  [ PF_STRING, "text", "Enter your Text to be Terral-ified", "TerralText"],
+	  [ PF_SLIDER, "blur_amount", "Blur Amount", 10, [0,26,1]],
 	], 
         [],
 sub {

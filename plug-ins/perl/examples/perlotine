@@ -1,0 +1,166 @@
+#!/usr/bin/perl
+# <sjburges@gimp.org>
+# This is tigert's request.  I suppose it'll be useful to those that do
+# this sort of thing.  Personally I'll probably only run it to test and 
+# put up a demo image.
+
+use Gimp;
+use Gimp::Fu;
+use Gimp::Util;
+
+# Gimp::set_trace(TRACE_ALL);
+
+sub get_vguides {  # get back an ordered set of vertical guides
+    my ($img)=@_;
+    $i=0;
+    my @vguides;
+    while ($i=$img->findnext_guide($i)) {
+        if (!$img->get_guide_orientation($i)){
+			$keyval = sprintf("%4d", $img->get_guide_position($i));
+            $vkeys{$keyval} = $i;
+            }
+        }
+    foreach $key(sort (keys %vkeys)) {
+		# print "Unshifting ",  $key, "\n";
+        push @vguides, $vkeys{$key};
+        } 
+    return @vguides;
+    }
+
+sub get_hguides { # get back an ordered set of horizontal guides
+    my ($img)=@_;
+    $i=0;
+    my @hguides;
+    while ($i=$img->findnext_guide($i)) {
+        if ($img->get_guide_orientation($i)){
+			$keyval = sprintf("%4d", $img->get_guide_position($i));
+            $hkeys{$keyval} = $i;
+            }
+        }
+    # need to sort them in order of their occurance in the image
+    foreach $key(sort keys %hkeys) {
+        push @hguides, $hkeys{$key};
+        } 
+    return @hguides;
+    }
+
+sub dosel { # do the selection
+    ($img, $savepath, $imgpath, $imgbasename, $l,$r,$t,$b, $i,$j) = @_;
+    $filename =~ m/^(.*)\.[^\.]*$/ ;
+    $imgname = "$imgbasename-$i-$j.gif";
+    $tmpimg = $img->channel_ops_duplicate;
+	# print "Cropping from $l to $r, $t to $b\n";
+    $tmpimg->crop($r-$l, $b-$t, $l, $t);
+    $tmplay = $tmpimg->active_drawable;
+    if (! $tmplay->indexed) {
+        $tmpimg->convert_indexed(1,256);
+        }
+    $tmpimg->gimp_file_save(-1,"$savepath$imgpath$imgname","$savepath$imgpath$imgname");
+    $tmpimg->delete;
+    return "$imgpath$imgname"; # what I want printed in html
+    } 
+
+sub html_table_start {
+    ($fn,$cellpadding,$cellspacing,$border,$capatalize) = @_;
+	$str = $capatalize ? "<TABLE CELLSPACING=$cellspacing CELLPADDING=$cellpadding BORDER=$border>\n" :
+                         "<table cellspacing=$cellspacing cellpadding=$cellpadding border=$border>\n" ;
+	print $fn $str;
+    }
+
+sub html_table_row_start {
+    ($fn, $capatalize) = @_;
+	$str = $capatalize ? "\t<TR>\n" : "\t<tr>\n";
+	print $fn $str;
+    }
+
+sub html_table_entry {
+    ($fn, $imgname, $width, $height, $capatalize) = @_;
+	$str = $capatalize ? "\t\t<TD><IMG SRC=\"$imgname\" WIDTH=\"$width\"HEIGHT=\"$height\"></TD>\n" :
+                         "\t\t<td><img src=\"$imgname\" width=\"$width\"height=\"$height\"></td>\n";
+	print $fn $str;
+    }
+
+sub html_table_row_end {
+    ($fn, $capatalize) = @_;
+	$str = $capatalize ? "\t</TR>\n" : "\t</tr>\n";
+	print $fn $str;
+    }
+
+sub html_table_end {
+    ($fn, $capatalize) = @_;
+	$str = $capatalize ? "</TABLE>\n":"</table>\n";
+	print $fn $str;
+    }
+
+# <tigert> Save-path: [_____________________][browse]
+# <tigert> html-file name: [_________________]
+# <tigert> image-basename [__________________]
+# <tigert> [x] use separate dir for images
+# <tigert> image directory: [___________________] 
+
+# later, decided to have UPPER/lower case HTML toggle
+# cellspacing: ___^
+
+register "perlotine", 
+         "Guilotine implemented ala perl, with html output", 
+         "Add guides to an image.  Then run this.  It will cut along the guides, and give you the html to reassemble the resulting images.",
+         "Seth Burgess", 
+         "Seth Burgess <sjburges\@gimp.org>", 
+         "1999-03-19",
+         "<Image>/Image/Transforms/Perl-o-tine", 
+         "*", 
+         [ 
+           [PF_STRING, "save_path", "The path to export the HTML to",$ENV{HOME}], 
+           [PF_STRING, "html_file_name", "Filename to export","perlotine.html"], 
+           [PF_STRING, "image_basename", "What to call the images","perlotine"], 
+           [PF_TOGGLE, "separate_image_dir", "Use a separate directory for images?",0],
+           [PF_STRING, "relative_image_path", "The path to export the images to, relative to the Save Path", "images/"], 
+           [PF_TOGGLE, "capitalize_tags", "Capatalize HTML tags?", 0], 
+           [PF_SPINNER, "cellspacing", "Add space between the table elements", 0, [0,15,1]],
+            ], sub {
+
+    my($img,$layer,$savepath, $htmlname, $imgbasename, $separate, $imgpath, $capatalize, $cellspacing) =@_;
+
+    @vert = get_vguides($img);
+    @horz = get_hguides($img);
+
+    if (!(scalar(@vert) || scalar(@horz))) { 
+        die ("No horizontal or vertical guides found. Aborted.");
+        }
+   # print @vert, " LEN = ", scalar(@vert), "\n";    
+   # print @horz, " LEN = ", scalar(@horz), "\n";    
+   # foreach $guide (@vert) {
+   #		print $img->get_guide_position($guide), "\n";
+   #		}
+
+
+	if (!($savepath=~ m,/$,)) {  # add a trailing slash if its not on there
+		$savepath = $savepath . "/";
+		} 
+	
+	if (!($imgpath=~ m,/$,)) {  # add a trailing slash if its not on there
+		$imgpath= $imgpath . "/";
+		} 
+	if (!$separate) { $imgpath = ""; }
+
+    open FILE, ">$savepath$htmlname" or die "Couldn't open $savepath$filename: $!\n";
+
+    $top=0;
+    html_table_start(\*FILE,0,$cellspacing,0,$capatalize);
+    for ($i=0; $i<=scalar(@horz); $i++) {
+        $bot = ($i>$#horz) ? $img->height : $img->get_guide_position($horz[$i]);
+        html_table_row_start(\*FILE, $capatalize);
+        $left=0;
+        for ($j=0; $j<=scalar(@vert); $j++) {
+            $right = ($j>$#vert) ? $img->width : $img->get_guide_position($vert[$j]);
+            $imgname = dosel($img, $savepath, $imgpath, $imgbasename, $left, $right, $top, $bot, $i, $j);    
+            html_table_entry(\*FILE, $imgname, $right-$left, $bot-$top, $capatalize);
+            $left = $right + $cellspacing; 
+            }
+        html_table_row_end(\*FILE, $capatalize);
+        $top = $bot + $cellspacing;
+        }
+    html_table_end(\*FILE, $capatalize);
+    return();
+};
+exit main;

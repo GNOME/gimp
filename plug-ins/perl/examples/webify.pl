@@ -16,9 +16,9 @@ register "webify",
          [
           [PF_BOOL,	"new",		"create a new image?", 1],
           [PF_BOOL,	"transparent",	"make transparent?", 1],
-          [PF_COLOUR,	"bg colour",	"the background colour to use for transparency", "white"],
+          [PF_COLOUR,	"bg_color",	"the background colour to use for transparency", "white"],
           [PF_SLIDER,	"threshold",	"the threshold to use for background detection", 3, [0, 255, 1]],
-          [PF_INT32,	"colours",	"how many colours to use (0 = don't convert to indexed)", 32],
+          [PF_INT32,	"colors",	"how many colours to use (0 = don't convert to indexed)", 32],
           [PF_BOOL,	"autocrop",	"autocrop at end?", 1],
          ],
          sub {

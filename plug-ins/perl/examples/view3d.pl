@@ -19,9 +19,9 @@ register
     'Tom Rathborne', 'GPLv2', '1999-03-11',
     '<Image>/View/3D Surface',
     'GRAY', [
-        [ PF_BOOL, 'Polar', 'Radial view', 0],
-        [ PF_BOOL, 'Lines', 'Draw grid lines', 0],
-        [ PF_BOOL, 'Smooth', 'Smooth surface normals', 1]
+        [ PF_BOOL, 'polar', 'Radial view', 0],
+        [ PF_BOOL, 'lines', 'Draw grid lines', 0],
+        [ PF_BOOL, 'smooth', 'Smooth surface normals', 1]
     ], [],
 sub {
     my ($img, $dwb, $polar, $lines, $smooth) = @_;

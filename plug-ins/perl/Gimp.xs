@@ -62,6 +62,13 @@ _gimp_prefix()
 	OUTPUT:
 	RETVAL
 
+char *
+_gimp_path()
+	CODE:
+	RETVAL = GIMP_PATH;
+	OUTPUT:
+	RETVAL
+
 BOOT:
 {
    HV *stash = gv_stashpvn("Gimp", 4, TRUE);

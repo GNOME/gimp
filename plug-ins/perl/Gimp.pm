@@ -162,6 +162,7 @@ sub import($;@) {
       if ($_ eq ":auto") {
          push(@export,@_consts,@_procs);
          *{"${up}::AUTOLOAD"} = sub {
+            croak "cannot autoload '$AUTOLOAD' at this time" unless initialized();
             my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
             *{$AUTOLOAD} = sub { Gimp->$name(@_) };
             goto &$AUTOLOAD;
@@ -329,6 +330,7 @@ unless ($no_SIG) {
 sub call_callback {
    my $req = shift;
    my $cb = shift;
+   return () if $caller eq "Gimp";
    if (UNIVERSAL::can($caller,$cb)) {
       &{"${caller}::$cb"};
    } else {
@@ -338,7 +340,6 @@ sub call_callback {
 
 sub callback {
    my $type = shift;
-   return () if $caller eq "Gimp";
    if ($type eq "-run") {
       local $function = shift;
       local $in_run = 1;
@@ -455,8 +456,6 @@ sub AUTOLOAD {
             wantarray ? @r : $r[0];
          };
          goto &$AUTOLOAD;
-      } elsif (defined(*{"${interface_pkg}::$sub"}{CODE})) {
-         die "safety net $interface_pkg :: $sub (REPORT THIS!!)";#d#
       }
    }
    # for performance reasons: supply a DESTROY method
@@ -790,10 +789,9 @@ interface (L<Gimp::Net>), and not as a native plug-in. Here's an example:
  
  Gimp::init;
  <do something with the gimp>
- Gimp::end;
 
 The optional argument to init has the same format as the GIMP_HOST variable
-described in L<Gimp::Net>.
+described in L<Gimp::Net>. Calling C<Gimp::end> is optional.
 
 =item Gimp::lock(), Gimp::unlock()
 

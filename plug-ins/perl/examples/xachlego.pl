@@ -42,8 +42,8 @@ register "xach_blocks",
          "<Image>/Filters/Map/Xach Blocks",
          "*",
          [
-          [PF_SLIDER,	"Block size",	"The size of the blocks...", 10, [0, 255, 1]],
-          [PF_SLIDER,	"Knob factor",	"The size of your knob...", 67, [0, 100, 5]],
+          [PF_SLIDER,	"block_size",	"The size of the blocks...", 10, [0, 255, 1]],
+          [PF_SLIDER,	"knob_factor",	"The size of your knob...", 67, [0, 100, 5]],
          ],
          sub {
    my($img,$drawable,$blocksize, $knobfactor)=@_;

@@ -47,21 +47,6 @@ sub import {
    }
 }
 
-sub missing {
-   my ($msg,$function)=@_;
-   require Gimp;
-   Gimp::logger(message => "$_[0] is required but not found", function => $function);
-   Gimp::initialized() ? die "BE QUIET ABOUT THIS DIE\n" : exit Gimp::quiet_main();
-}
-
-sub need {
-   my ($feature,$function)=@_;
-   unless (present($feature)) {
-      missing($description{$feature},$function);
-      Gimp::initialized() ? die "BE QUIET ABOUT THIS DIE\n" : exit Gimp::quiet_main();
-   }
-}
-
 sub describe {
    $description{$_[0]};
 }
@@ -111,6 +96,17 @@ sub present {
    }
 }
 
+sub missing {
+   my ($msg,$function)=@_;
+   require Gimp;
+   Gimp::logger(message => "$_[0] is required but not found", function => $function);
+   Gimp::initialized() ? die "BE QUIET ABOUT THIS DIE\n" : exit Gimp::quiet_main();
+}
+
+sub need {
+   my ($feature,$function)=@_;
+   missing($description{$feature},$function) unless present $feature;
+}
 
 1;
 __END__
