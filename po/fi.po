@@ -1572,7 +1572,7 @@ msgstr "parasiitin liittäminen kuvaan"
 
 #: app/gimpdrawable.c:531
 msgid "detach parasite from drawable"
-msgstr ""
+msgstr "irroita parasiitti kuvasta"
 
 #: app/gimpdrawable.c:738
 msgid "unnamed"
@@ -1785,7 +1785,7 @@ msgstr "pistettä"
 
 #: app/gimpunit.c:67
 msgid "pica"
-msgstr ""
+msgstr "pica"
 
 #: app/gimpunit.c:67
 msgid "picas"
@@ -2114,7 +2114,7 @@ msgstr "Edustaväri"
 #: app/gradient.c:4096
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr ""
+msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:4616 app/gradient.c:4686
 msgid "(Varies)"
@@ -2219,27 +2219,27 @@ msgstr "Pää"
 
 #: app/hue_saturation.c:352
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: app/hue_saturation.c:353
 msgid "Y"
- msgstr ""
+msgstr "Y"
 
 #: app/hue_saturation.c:354
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: app/hue_saturation.c:355
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: app/hue_saturation.c:356
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: app/hue_saturation.c:357
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: app/hue_saturation.c:442
 msgid "Hue / Lightness / Saturation Adjustments"
@@ -2281,27 +2281,27 @@ msgstr "%d tavua"
 #: app/image_new.c:332
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f KB"
 
 #: app/image_new.c:334
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f KB"
 
 #: app/image_new.c:336
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d KB"
 
 #: app/image_new.c:338
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f MB"
 
 #: app/image_new.c:340
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f MB"
 
 #: app/indicator_area.c:138
 msgid ""
@@ -2354,19 +2354,19 @@ msgstr "Suoraväritila"
 
 #: app/info_window.c:161
 msgid "R:"
-msgstr ""
+msgstr "R:"
 
 #: app/info_window.c:167
 msgid "G:"
-msgstr ""
+msgstr "G:"
 
 #: app/info_window.c:173
 msgid "B:"
-msgstr ""
+msgstr "B:"
 
 #: app/info_window.c:179
 msgid "A:"
-msgstr ""
+msgstr "A:"
 
 #: app/info_window.c:211
 msgid "Extended"
@@ -2401,7 +2401,7 @@ msgstr "Näyttöluokan syvyys:"
 #: app/info_window.c:314
 #, c-format
 msgid "Info: %s-%d.%d"
-msgstr ""
+msgstr "Info: %s-%d.%d"
 
 #: app/info_window.c:508
 #, c-format
@@ -3825,7 +3825,7 @@ msgstr "Pyyhi"
 
 #: app/paintbrush.c:220
 msgid "Fade Out"
-msgstr ""
+msgstr "Hiivuta"
 
 #. the gradient type
 #: app/paintbrush.c:299
@@ -3989,7 +3989,7 @@ msgstr "Nimi:"
 
 #: app/palette.c:3159
 msgid "new_import"
-msgstr ""
+msgstr "new_import"
 
 #. The source type
 #: app/palette.c:3164
@@ -4180,6 +4180,8 @@ msgid ""
 "Plug-In crashed: %s\n"
 "(%s)"
 msgstr ""
+"Liitännäinen kaatui %s\n"
+"(%s)"
 
 #: app/posterize.c:148
 msgid "Posterize does not operate on indexed drawables."
@@ -4295,7 +4297,7 @@ msgstr "Kuvan oletusresoluutio ja sen mittayksikkö"
 
 #: app/preferences_dialog.c:1581 app/preferences_dialog.c:2350
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #: app/preferences_dialog.c:1628
 msgid "Default Image Type:"
@@ -4374,7 +4376,7 @@ msgstr "8-bittiset näytöt"
 
 #: app/preferences_dialog.c:1749
 msgid "Minimum Number of Colors:"
-msgstr ""
+msgstr "Värien maksimi määrä"
 
 #: app/preferences_dialog.c:1752
 msgid "Install Colormap"
@@ -4447,7 +4449,7 @@ msgstr "Sisäinen"
 
 #: app/preferences_dialog.c:1923
 msgid "Netscape"
-msgstr ""
+msgstr "Netscape"
 
 #: app/preferences_dialog.c:1927
 msgid "Help Browser to Use:"
@@ -4463,7 +4465,7 @@ msgstr "Kuvaikkunan esitys"
 
 #: app/preferences_dialog.c:1944
 msgid "Use \"Dot for Dot\" by default"
-msgstr ""
+msgstr "Käytä \" Piste pisteeltä\" alkuasetuksina"
 
 #: app/preferences_dialog.c:1953
 msgid "Resize Window on Zoom"
@@ -4856,7 +4858,7 @@ msgstr "X-suhde:"
 #. the x and y offset labels
 #: app/resize.c:423
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
 #: app/resize.c:504
 msgid "Print Size & Display Unit"
@@ -4975,7 +4977,7 @@ msgstr "Raja:"
 
 #: app/tips_dialog.c:72
 msgid "gimp_tips.txt"
-msgstr ""
+msgstr "gimp_tips.txt"
 
 #: app/tips_dialog.c:84
 msgid "GIMP Tip of the Day"
@@ -5462,7 +5464,7 @@ msgstr "Tee vinoksi"
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
-msgstr "Muunnokset eivät toimi tasoilla joilla on tasomaski."
+msgstr "Muunnokset eivät toimi kaikilla tasoilla, joilla on tasomaski."
 
 #: app/transform_core.c:1612
 msgid "Transformation"
@@ -5528,7 +5530,7 @@ msgstr "Toiminnon '%s' peruminen ei onnistu"
 
 #: app/undo.c:2864
 msgid "<<invalid>>"
-msgstr ""
+msgstr "<<invalid>>"
 
 #: app/undo.c:2865
 msgid "image"
@@ -5605,15 +5607,15 @@ msgstr "kelluva valinta tasoksi"
 #. ok
 #: app/undo.c:2882
 msgid "gimage"
-msgstr ""
+msgstr "gimage"
 
 #: app/undo.c:2883
 msgid "FS rigor"
-msgstr ""
+msgstr "FS rigoristinen"
 
 #: app/undo.c:2884
 msgid "FS relax"
-msgstr ""
+msgstr "FS relaksoitu"
 
 #: app/undo.c:2885
 msgid "guide"
@@ -5667,7 +5669,7 @@ msgstr "kelluvan valinnan ankkurointi"
 
 #: app/undo.c:2897
 msgid "gimage mod"
-msgstr ""
+msgstr "gimage mod"
 
 #: app/undo.c:2898
 msgid "crop"
@@ -5683,7 +5685,7 @@ msgstr "tason koon muokkaus"
 
 #: app/undo.c:2901
 msgid "quickmask"
-msgstr ""
+msgstr "nopea maski"
 
 #: app/undo.c:2902
 msgid "attach parasite"
@@ -5716,7 +5718,7 @@ msgstr "Peruttujen historia: %s"
 
 #: app/undo_history.c:483
 msgid "[ base image ]"
-msgstr ""
+msgstr "[ perus kuva ]"
 
 #: app/undo_history.c:843
 msgid "Redo"
@@ -6015,7 +6017,7 @@ msgstr "Jatka"
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/user_install.c:587
 msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
-msgstr ""
+msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 
 #: app/user_install.c:684
 msgid ""
@@ -6271,11 +6273,11 @@ msgstr "Värien gammasuodatus"
 
 #: modules/cdisplay_gamma.c:324
 msgid "Gamma"
-msgstr ""
+msgstr "Gamma"
 
 #: modules/cdisplay_gamma.c:343
 msgid "Gamma:"
-msgstr ""
+msgstr "Gamma:"
 
 #: modules/cdisplay_highcontrast.c:96
 msgid "High Contrast color display filter"
