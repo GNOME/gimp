@@ -1,3 +1,183 @@
+2002-03-28  Nathan Summers  <rock@gimp.org>
+
+	* libgimptool
+	* libgimptool/.cvsignore
+	* libgimptool/Makefile.am: a library that contains tool code shared 
+	between the core and plugins
+
+	* app/tools/gimptool.h: Removed here ...
+	
+	* libgimptool/gimptool.h: ... and added here
+
+	* libgimptool/gimptooltypes.h: various types used by the tools.
+	GIMP_CHANNEL_OP_FOO must be declared before this file is included.
+	
+	* libgimptool/gimptool.c: parts of the implementation of the GimpTool
+	class that are not specific to the core
+	
+	* libgimptool/gimptoolcontrol.h: new class that contains the state
+	and control information of the tool. Only the .h file is here because
+	the plug-in code is completely different from the core code.
+	
+	* libgimptool/gimptoolmodule.[ch]: the GTypePlugin that loads the tool
+	plugin modules.  The registration code is not included here and must
+	be supplied by the core or plug-in. Because registration in the core
+	requires a Gimp object, but pluginspace has no Gimp (nor should it)
+	the registration functions have been changed to take a void pointer.
+	
+	* app/tools/tools-enums.h: Removed here ...
+	
+	* libgimptool/gimptoolenums.h: ... and added here
+
+
+	* tools/gimp-mkproxy: a perl script that aids in the creation and 
+	maintainance of proxy objects by parsing c files and including relevant
+	parts
+
+	* libgimpproxy
+	* libgimpproxy/.cvsignore
+	* libgimpproxy/.Makefile.am: a library that contains proxy objects
+	necessary for tool plug-ins.
+	
+	* libgimpproxy/gimpproxytypes.h: declarations of various types needed
+	by tool plug-ins.
+	
+	
+	* app/core/core-enums.h
+	* app/core/core-types.h
+	* app/display/display-types.h 
+	* app/widgets/widgets-enums.h: export types to libgimpproxy 
+	
+	* app/tools/tools-types.h: now just contains core-specific types
+	
+	* app/tools/gimptool.c
+	* app/tools/gimptoolmodule.c
+	* app/tools/gimptoolcontrol.[ch]: parts that are core-specific
+	
+	* plug-ins/tools/gimptool.c
+	* plug-ins/tools/gimptoolcontrol.[ch]: parts that are 
+	pluginspace-specific
+
+
+	* plug-ins/tools/tool-safe-mode.[ch]: pluginspace tool loader
+	
+
+	* Makefile.am
+	* configure.in
+	* app/Makefile.am
+	* app/gimprc.c
+	* app/undo.c
+	* app/core/gimp.c
+	* app/core/gimpcontext.c
+	* app/core/gimpcoreconfig.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpdocuments.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable-offset.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-guides.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-new.c
+	* app/core/gimpimage-projection.c
+	* app/core/gimpimage-qmask.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage.c
+	* app/core/gimpitem.c
+	* app/core/gimpmodules.c
+	* app/core/gimppaintinfo.c
+	* app/core/gimpparasite.c
+	* app/core/gimptoolinfo.c
+	* app/core/gimpunit.c
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppaintcore-stroke.c
+	* app/paint/gimppaintcore.c
+	* app/paint/gimppaintoptions.c
+	* app/paint/gimppencil.c
+	* app/paint/gimpsmudge.c
+	* app/paint/paint.c
+	* app/pdb/pdb-types.h
+	* app/tools/Makefile.am
+	* app/tools/gimpairbrushtool.[ch]
+	* app/tools/gimpbezierselecttool.[ch]
+	* app/tools/gimpblendtool.[ch]
+	* app/tools/gimpbrightnesscontrasttool.[ch]
+	* app/tools/gimpbucketfilltool.[ch]
+	* app/tools/gimpbycolorselecttool.[ch]
+	* app/tools/gimpclonetool.[ch]
+	* app/tools/gimpcolorbalancetool.[ch]
+	* app/tools/gimpcolorpickertool.[ch]
+	* app/tools/gimpconvolvetool.[ch]
+	* app/tools/gimpcroptool.[ch]
+	* app/tools/gimpcurvestool.[ch]
+	* app/tools/gimpdodgeburntool.[ch]
+	* app/tools/gimpdrawtool.[ch]
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimperasertool.[ch]
+	* app/tools/gimpfliptool.[ch]
+	* app/tools/gimpfreeselecttool.[ch]
+	* app/tools/gimpfuzzyselecttool.[ch]
+	* app/tools/gimphistogramtool.[ch]
+	* app/tools/gimphuesaturationtool.[ch]
+	* app/tools/gimpimagemaptool.[ch]
+	* app/tools/gimpinktool.[ch]
+	* app/tools/gimpiscissorstool.[ch]
+	* app/tools/gimplevelstool.[ch]
+	* app/tools/gimpmagnifytool.[ch]
+	* app/tools/gimpmeasuretool.[ch]
+	* app/tools/gimpmovetool.[ch]
+	* app/tools/gimppaintbrushtool.c
+	* app/tools/gimppainttool.[ch]
+	* app/tools/gimppathtool.[ch]
+	* app/tools/gimppenciltool.[ch]
+	* app/tools/gimpperspectivetool.[ch]
+	* app/tools/gimpposterizetool.[ch]
+	* app/tools/gimprectselecttool.[ch]
+	* app/tools/gimprotatetool.[ch]
+	* app/tools/gimpscaletool.[ch]
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimpsheartool.[ch]
+	* app/tools/gimpsmudgetool.[ch]
+	* app/tools/gimptexttool.[ch]
+	* app/tools/gimpthresholdtool.[ch]
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.[ch]
+	* app/tools/paint_options.c
+	* app/tools/selection_options.c
+	* app/tools/tool_manager.c
+	* app/tools/tool_manager.h
+	* app/tools/tools.c
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/gui/convert-dialog.c
+	* app/gui/info-window.c
+	* app/gui/tools-commands.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf.c
+	* plug-ins/tools/.cvsignore
+	* plug-ins/tools/Makefile.am
+	* plug-ins/tools/common/Makefile.am: changed accordingly
+
+
+	* libgimptool/gimptoolenums.c
+	* libgimpproxy/gimpchannel.h
+	* libgimpproxy/gimpobject.[ch]: autogenerated
+
 2002-03-28  Sven Neumann  <sven@gimp.org>
 
 	* Made 1.3.5 release.
