@@ -1,3 +1,15 @@
+Tue May 18 01:14:55 BST 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/app_procs.c: run cleanup code on shutdown in many more
+	    cases.  The should fix Marc's problem of not getting module
+	    unload functions called at quit time.
+
+	* app/gimprc.c: internal "module-load-inhibit" variable, listing
+	    modules to ignore at start of day.
+	* app/module_db.c: new rc file: modulerc.  Keep track of which
+	    modules we've got inhibited.  Add button to module browser to
+	    edit the settings.  Save new version on gimp exit.
+
 1999-05-17  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* libgimp/Makefile.am (../libgimp/gimpfeatures.h): Dummy rule,

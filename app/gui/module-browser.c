@@ -37,9 +37,12 @@
 #include "actionarea.h"
 #include "gimpset.h"
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpmodule.h"
 
+/* export this to gimprc.c */
+char *module_db_load_inhibit = NULL;
 
 typedef enum {
   ST_MODULE_ERROR,         /* missing module_load function or other error */
@@ -77,9 +80,10 @@ typedef struct {
   gchar          *fullpath;   /* path to the module */
   module_state    state;      /* what's happened to the module */
   gboolean        ondisk;     /* TRUE if file still exists */
+  gboolean        load_inhibit; /* user requests not to load at boot time */
+  gint            refs;       /* how many time we're running in the module */
   /* stuff from now on may be NULL depending on the state the module is in */
   GimpModuleInfo *info;       /* returned values from module_init */
-  gint            refs;       /* how many time we're running in the module */
   GModule        *module;     /* handle on the module */
   gchar          *last_module_error;
   GimpModuleInitFunc   *init;
@@ -102,10 +106,15 @@ typedef struct {
   module_info *last_update;
   GtkWidget *button;
   GtkWidget *list;
+  GtkWidget *load_inhibit_check;
 } browser_st;
 
 /* global set of module_info pointers */
 static GimpSet *modules;
+
+/* If the inhibit state of any modules changes, we might need to
+ * re-write the modulerc. */
+static gboolean need_to_rewrite_modulerc = FALSE;
 
 
 /* debug control: */
@@ -153,6 +162,13 @@ static void gimp_module_unref (module_info *mod);
 void
 module_db_init (void)
 {
+  char *filename;
+
+  /* load the modulerc file */
+  filename = gimp_personal_rc_file ("modulerc");
+  parse_gimprc_file (filename);
+  g_free (filename);
+
   /* Load and initialize gimp modules */
 
   modules = gimp_set_new (MODULE_INFO_TYPE, FALSE);
@@ -163,18 +179,6 @@ module_db_init (void)
 #ifdef DUMP_DB
   gimp_set_foreach (modules, print_module_info, NULL);
 #endif
-}
-
-/* not closing the module at exit time is safer and faster.  */
-static void
-free_a_single_module_cb (void *data)
-{
-  module_info *mod = data;
-
-  g_return_if_fail (mod->state == ST_UNLOAD_REQUESTED);
-
-  mod->info = NULL;
-  mod->state = ST_UNLOADED_OK;
 }
 
 static void
@@ -188,11 +192,60 @@ free_a_single_module (gpointer data, gpointer user_data)
     }
 }
 
+static void
+add_to_inhibit_string (gpointer data, gpointer user_data)
+{
+  module_info *mod = data;
+  GString *str = user_data;
+
+  if (mod->load_inhibit)
+    {
+      str = g_string_append_c (str, G_SEARCHPATH_SEPARATOR);
+      str = g_string_append (str, mod->fullpath);
+    }
+}
+
+
+static void
+module_db_write_modulerc (void)
+{
+  GString *str;
+  gchar *p;
+  char *filename;
+  FILE *fp;
+
+  if (!need_to_rewrite_modulerc)
+    return;
+
+  str = g_string_new (NULL);
+  gimp_set_foreach (modules, add_to_inhibit_string, str);
+  if (str->len > 0)
+    p = str->str + 1;
+  else
+    p = "";
+
+  filename = gimp_personal_rc_file ("modulerc");
+  fp = fopen (filename, "w");
+  g_free (filename);
+  if (fp)
+    {
+      fprintf (fp, "(module-load-inhibit \"%s\")\n", p);
+      fclose (fp);
+      need_to_rewrite_modulerc = FALSE;
+    }
+
+  g_string_free (str, TRUE);
+}
+
+
 void
 module_db_free (void)
 {
+  module_db_write_modulerc ();
+
   gimp_set_foreach (modules, free_a_single_module, NULL);
 }
+
 
 GtkWidget *
 module_db_browser_new (void)
@@ -241,7 +294,7 @@ module_db_browser_new (void)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  st->table = gtk_table_new (5, NUM_INFO_LINES, FALSE);
+  st->table = gtk_table_new (5, NUM_INFO_LINES + 1, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), st->table, FALSE, FALSE, 0);
   gtk_widget_show (st->table);
 
@@ -427,6 +480,39 @@ valid_module_name (const char *filename)
 }
 
 
+static gboolean
+module_inhibited (const char *fullpath, const char *inhibit_list)
+{
+  char *p;
+  int pathlen;
+  const char *start, *end;
+
+  /* common case optimisation: the list is empty */
+  if (!inhibit_list || *inhibit_list == '\000')
+    return FALSE;
+
+  p = strstr (inhibit_list, fullpath);
+  if (!p)
+    return FALSE;
+
+  /* we have a substring, but check for colons either side */
+  start = p;
+  while (start != inhibit_list && *start != G_SEARCHPATH_SEPARATOR)
+      start--;
+  if (*start == G_SEARCHPATH_SEPARATOR)
+      start++;
+
+  end = strchr (p, G_SEARCHPATH_SEPARATOR);
+  if (!end)
+    end = inhibit_list + strlen (inhibit_list);
+
+  pathlen = strlen (fullpath);
+  if ((end - start) == pathlen)
+    return TRUE;
+  else
+    return FALSE;
+}
+
 
 static void
 module_initialize (char *filename)
@@ -444,6 +530,13 @@ module_initialize (char *filename)
 
   mod->fullpath = g_strdup (filename);
   mod->ondisk = TRUE;
+  mod->state = ST_MODULE_ERROR;
+
+  mod->info = NULL;
+  mod->module = NULL;
+  mod->last_module_error = NULL;
+  mod->init = NULL;
+  mod->unload = NULL;
 
   /* Count of times main gimp is within the module.  Normally, this
    * will be 1, and we assume that the module won't call its
@@ -453,10 +546,20 @@ module_initialize (char *filename)
    * itself. */
   mod->refs = 0;
 
-  if ((be_verbose == TRUE) || (no_splash == TRUE))
-    g_print (_("load module: \"%s\"\n"), filename);
+  mod->load_inhibit = module_inhibited (mod->fullpath, module_db_load_inhibit);
+  if (!mod->load_inhibit)
+    {
+      if ((be_verbose == TRUE) || (no_splash == TRUE))
+	g_print (_("load module: \"%s\"\n"), filename);
 
-  mod_load (mod, TRUE);
+      mod_load (mod, TRUE);
+    }
+  else
+    {
+      if ((be_verbose == TRUE) || (no_splash == TRUE))
+	g_print (_("skipping module: \"%s\"\n"), filename);
+      mod->state = ST_UNLOADED_OK;
+    }
 
   gimp_set_add (modules, mod);
 }
@@ -618,6 +721,24 @@ browser_destroy_callback (GtkWidget *w, gpointer client_data)
   g_free (client_data);
 }
 
+static void
+browser_load_inhibit_callback (GtkWidget *w, gpointer data)
+{
+  browser_st *st = data;
+  gboolean new_value;
+
+  g_return_if_fail (st->last_update != NULL);
+
+  new_value = ! GTK_TOGGLE_BUTTON (w)->active;
+
+  if (new_value == st->last_update->load_inhibit)
+    return;
+
+  st->last_update->load_inhibit = new_value;
+  module_info_modified (st->last_update);
+
+  need_to_rewrite_modulerc = TRUE;
+}
 
 static void
 browser_info_update (module_info *mod, browser_st *st)
@@ -636,6 +757,7 @@ browser_info_update (module_info *mod, browser_st *st)
       gtk_label_set_text (GTK_LABEL (st->label[i]), "");
     gtk_label_set_text (GTK_LABEL(st->button_label), _("<No modules>"));
     gtk_widget_set_sensitive (GTK_WIDGET (st->button), FALSE);
+    gtk_widget_set_sensitive (GTK_WIDGET (st->load_inhibit_check), FALSE);
     return;
   }
 
@@ -681,6 +803,10 @@ browser_info_update (module_info *mod, browser_st *st)
   gtk_label_set_text (GTK_LABEL (st->label[NUM_INFO_LINES-1]), status);
 
   g_free (status);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (st->load_inhibit_check),
+				!mod->load_inhibit);
+  gtk_widget_set_sensitive (GTK_WIDGET (st->load_inhibit_check), TRUE);
 
   /* work out what the button should do (if anything) */
   switch (mod->state) {
@@ -732,6 +858,15 @@ browser_info_init (browser_st *st, GtkWidget *table)
 		      GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
     gtk_widget_show (st->label[i]);
   }
+
+  st->load_inhibit_check =
+      gtk_check_button_new_with_label (_("Autoload during startup"));
+  gtk_widget_show (st->load_inhibit_check);
+  gtk_table_attach (GTK_TABLE (table), st->load_inhibit_check,
+		    0, 2, i, i+1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
+  gtk_signal_connect (GTK_OBJECT (st->load_inhibit_check), "toggled",
+		      browser_load_inhibit_callback, st);
 }
 
 static void

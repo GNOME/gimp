@@ -652,6 +652,8 @@ app_exit_finish (void)
   /*  Things to do only if there is an interface  */
   if (no_interface == FALSE)
     {
+      toolbox_free ();
+      close_idea_window();
       gximage_free ();
       render_free ();
       tools_options_dialog_free ();
@@ -668,11 +670,6 @@ app_exit (int kill_it)
   /*  If it's the user's perogative, and there are dirty images  */
   if (kill_it == FALSE && gdisplays_dirty () && no_interface == FALSE)
     really_quit_dialog ();
-  else if (no_interface == FALSE)
-    {
-      toolbox_free ();
-      close_idea_window();
-   }
   else
     app_exit_finish ();
 }
@@ -686,8 +683,7 @@ really_quit_callback (GtkButton *button,
 		      GtkWidget *dialog)
 {
   gtk_widget_destroy (dialog);
-  toolbox_free ();
-  close_idea_window ();
+  app_exit_finish ();
 }
 
 static void

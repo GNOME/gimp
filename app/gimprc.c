@@ -151,6 +151,8 @@ int       num_processors = 1;
 char *    image_title_format = NULL;
 int       global_paint_options = TRUE;
 
+extern char * module_db_load_inhibit;
+
 static int get_next_token (void);
 static int peek_next_token (void);
 static int parse_statement (void);
@@ -285,7 +287,8 @@ static ParseFunc funcs[] =
   { "image-title-format",    TT_STRING,     &image_title_format, NULL },
   { "parasite",              TT_XPARASITE,  NULL, NULL },
   { "global-paint-options",   TT_BOOLEAN,    &global_paint_options, NULL },
-  { "no-global-paint-options",TT_BOOLEAN,    NULL, &global_paint_options }
+  { "no-global-paint-options",TT_BOOLEAN,    NULL, &global_paint_options },
+  { "module-load-inhibit",   TT_PATH,       &module_db_load_inhibit, NULL }
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 
