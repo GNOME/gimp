@@ -16,7 +16,7 @@ msgstr ""
 
 #: plug-ins/CML_explorer/CML_explorer.c:226
 msgid "Keep image's values"
-msgstr ""
+msgstr "Keep image's values"
 
 #: plug-ins/CML_explorer/CML_explorer.c:228
 msgid "Keep the first value"
