@@ -1,5 +1,11 @@
 Revision history for Gimp-Perl extension.
 
+	- updated seths scripts, added remove_guides...
+        - examples/glowing_steel was missing from the MANIFEST!!
+        - data types for RADIO, SPINNER etc.. are guessed better now.
+        - added examples/guides_to_selection.
+        - added examples/burst, without even looking at it ;)
+        
 1.1   Fri Jul 30 07:37:30 CEST 1999
 	- one of the most successful releases, in terms of features & bugfixes.
         - it was also a long night. And expensive (irc).

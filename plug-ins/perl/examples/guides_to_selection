@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+ 
+use Gimp;
+use Gimp::Fu;
+use Gimp::Util;
+ 
+register "guide_to_selection",
+         "Selects the area under the selection",
+         "Selects the area under the guides and a small area beneath",
+         "Marc Lehmann",
+         "Marc Lehmann <pcg\@goof.com>",
+         "1999-08-01",
+         "<Image>/Guides/To Selection",
+         "*",
+         [
+          [PF_RADIO,	"operation",	"The selection operation",		REPLACE, [ADD => ADD, SUB => SUB, REPLACE => REPLACE]],
+          [PF_TOGGLE,	"feather",	"Feather the selection?",		0],
+          [PF_SPINNER,	"feather_radius","Radius for feather operation",	1, [0, 1000, 1e0]],
+         ],
+         [],
+         ['gimp-1.1'],
+         sub {
+    my($img, $drawable, $operation, $feather, $radius) = @_;
+    my($W,$H) = ($img->width, $img->height);
+
+    $i = $img->find_next_guide(0);
+    while ($i) {
+      my ($x,$y,$w,$h);
+      $x = $img->get_guide_position($i);
+      if ($img->get_guide_orientation($i) == ORIENTATION_HORIZONTAL) {
+         ($x,$y,$w,$h) = (0,$x-$width,$W,1);
+      } else {
+         ($x,$y,$w,$h) = ($x,0,1,$H);
+      }
+      $img->rect_select($x,$y,$w,$h,$operation,$feather,$radius);
+      $operation = ADD if $operation == REPLACE;
+      
+      $i = $img->find_next_guide($i);
+    }         
+
+    ();
+};
+
+exit main;                                        

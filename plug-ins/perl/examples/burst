@@ -1,0 +1,191 @@
+#!/usr/bin/perl
+
+eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
+# <sjburges@gimp.org> (original release)
+#
+use Gimp;
+use Gimp::Fu;
+use Gimp::Util;
+
+# This script was requested by jimmac, and I thought it sounded moderately
+# useful.  I could have just made a couple selection masks and made it 
+# moderately useful, but instead I redid all the math myself to make it
+# intresting and have a really nice effect on the end points (rather than
+# chopping off odd-shaped brushes when the ellipse ends).
+
+# Its good to exercise the ol geometry skills every now and then ;)
+# Enjoy,
+#  Seth Burgess <sjburges@gimp.org>
+
+# Gimp::set_trace(TRACE_ALL);
+
+register "burst",
+  "Bursts from a central location\n",
+  "Creates a Burst of various sizes from the center of the currently 
+selected areas.  Can create either an elliptical burst, or go to sqare
+spots.  Also, you can specify how much (in pixels) to leave blank on
+the inside and the outside of the burst. \n",
+  "Seth Burgess",
+  "Seth Burgess <sjburges\@gimp.org>",
+  "1999-07-31",
+  "<Image>/Filters/Misc/Burst",
+  "*",
+  [
+   [PF_RADIO, "shape", "Shape To Burst Into", 0,  [Rectangle => 1, Ellipse=> 0]],
+   [PF_RADIO, "fade_dir", "Fade Direction (if set)", 0,  [In => 1, Out => 0]],
+   [PF_VALUE, 'points', "How many points", "16"],
+   [PF_VALUE, 'inside_pixels', "Inside Pixels", "10"],
+   [PF_VALUE, 'outside_pixels', "Outside Pixels", "10"] 
+  ],
+  [],
+  [],
+  sub {
+    my($img,$layer,$shape, $fade_dir, $points, $inside_pixels, $outside_pixels) =@_;
+    $pi = 3.1415927;
+
+    eval { $img->undo_push_group_start };
+    
+    ($dumb, $x1, $y1, $x2, $y2) = $img->selection_bounds;
+    $img->selection_none;
+    
+    $width = $x2 - $x1;
+    $height = $y2 - $y1;
+    
+#    print "X1 = $x1, X2 = $x2, Y1 = $y1, Y2 = $y2\n";
+    $center_x = $x1 + $width/2;
+    $center_y = $y1 + $height/2;
+
+    if ($shape == 0) 
+    { #ellipse
+	$angle = 0;
+	for ($i = 0; $angle <2*$pi-0.01; $i++ )
+	{
+	$angle = $i * 2*$pi/$points;
+	
+	# use the major/minor axis description of an ellipse:
+	# x^2   y^2
+	# --- + --- = 1
+	# a^2   b^2
+	# 
+	# where a is the x axis, b is the y axis, and the equation of
+	# a line passing through 0 (y=mb).  Solve for x&y, and pick the
+	# correct one for the angle.
+
+	$a = $width/2 - $outside_pixels;
+	$b = $height/2 - $outside_pixels;
+
+	# dimensions for an "inside ellipse"
+	$c = ($a>$b)?$inside_pixels:$inside_pixels*$a/$b;
+	$d = ($a>$b)?$inside_pixels*$b/$a:$inside_pixels;
+
+	# get the slope
+	$m = sin($angle)/cos($angle);
+	if ($m ==0) { $m = 0.000000000001; } #avoid div by 0
+	if ($c ==0) { $c = 0.000000000001; } #avoid div by 0
+	if ($d ==0) { $d = 0.000000000001; } #avoid div by 0
+	
+	# find the positive solution of the quadratic for the endpoints	
+	$x = sqrt(1/((1/$a/$a)+($m*$m/$b/$b)));
+	$y = sqrt(1/((1/($m*$m*$a*$a))+(1/$b/$b)));
+
+	# and find the starting points in the same manner
+	$x_start = sqrt(1/((1/$c/$c)+($m*$m/$d/$d)));
+	$y_start = sqrt(1/((1/($m*$m*$c*$c))+(1/$d/$d)));
+
+	# pick the right solution of the quadratic
+	if ($angle < $pi/2 || $angle > 3*$pi/2) 
+	{ 
+		$x = -$x; 
+		$x_start = -$x_start;
+	}
+	if ($angle > $pi) 
+	{
+		$y = -$y; 
+		$y_start = -$y_start;
+	}
+	
+	# do translations to center stuff
+	$x = $x + $center_x;
+	$y = $y + $center_y;
+	$x_start = $x_start + $center_x;
+	$y_start = $y_start + $center_y;
+
+#	print "X = $x, Y = $y, M = $m\n";
+	
+	if ($fade_dir == 1) 
+	{	
+		$layer->paintbrush_default(4, [$x, $y, $x_start, $y_start]);
+	}
+	else
+	{
+		$layer->paintbrush_default(4, [$x_start, $y_start, $x, $y]);
+	}
+      }
+    }
+    else 
+    { #rectangle
+	# The idea here is to see where the line intersects with the
+	# rightmost line.  If the abs of that is higer than the height, 
+	# see where it intersects the top instead.
+
+	#print "width = $width, height = $height\n";	
+
+	$angle = 0;
+	for ($i = 0; $angle <2*$pi-0.01; $i++ )
+	{
+	$angle = $i * 2*$pi/$points;
+	
+	# get the slope
+	$m = sin($angle)/cos($angle);
+# print "M = $m\n";	
+	if (abs($m*$width/2) < $height/2-$outside_pixels)
+	{ # draw on the right/left borders	
+		$x = $width/2-$outside_pixels;
+		$y = $m*($width/2-$outside_pixels);
+		$x_start = ($width>$height)
+			?$inside_pixels
+			:$inside_pixels*$width/$height;
+		$y_start = ($width>$height)
+			?$m*$inside_pixels
+			:$m*$inside_pixels*$width/$height;
+	}
+	else
+	{ # draw on the top/bottom borders
+		$y = $height/2-$outside_pixels;
+		$x = ($height/2-$outside_pixels)/$m;	
+		$y_start = ($width>$height)
+			?$inside_pixels*$height/$width
+			:$inside_pixels;
+		$x_start = ($width>$height)
+			?$inside_pixels*$height/$width/$m
+			:$inside_pixels/$m;
+	}	
+
+	if ($angle  > $pi) 
+	{
+		$x = -$x;
+		$y = -$y;
+		$x_start = -$x_start;
+		$y_start = -$y_start;
+	}		
+	# print "X = $x, Y = $y\n"; 
+	# do translations to center stuff
+	$x = $x + $center_x;
+	$y = $y + $center_y;
+	$x_start = $x_start + $center_x;
+	$y_start = $y_start + $center_y;
+	if ($fade_dir == 1) 
+	{	
+		$layer->paintbrush_default(4, [$x, $y, $x_start, $y_start]);
+	}
+	else
+	{
+		$layer->paintbrush_default(4, [$x_start, $y_start, $x, $y]);
+	}
+      }
+    } 
+   eval { $img->undo_push_group_end };
+   return();
+  };
+exit main;

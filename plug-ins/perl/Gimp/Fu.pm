@@ -790,6 +790,18 @@ Gimp::on_query {
       } else {
          die "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";
       }
+
+      # guess the datatype. yeah!
+      sub datatype(@) {
+         for(@_) {
+            return Gimp::PARAM_STRING unless /^([+-]?)(?=\d|\.\d)\d*(\.\d*)?([Ee]([+-]?\d+))?$/; # perlfaq4
+            return Gimp::PARAM_FLOAT  unless /^[+-]?\d+$/; # again
+         }
+         return Gimp::PARAM_INT32;
+      }
+      sub odd_values(@) {
+         my %x = @_; values %x;
+      }
       
       unshift(@$params,
               [&Gimp::PARAM_INT32,"run_mode","Interactive, [non-interactive]"]);
@@ -797,10 +809,6 @@ Gimp::on_query {
                                    $menupath,$imagetypes,$type,
                                    [map {
                                       $_->[0]=Gimp::PARAM_INT32		if $_->[0] == PF_TOGGLE;
-                                      $_->[0]=Gimp::PARAM_INT32		if $_->[0] == PF_SLIDER;
-                                      $_->[0]=Gimp::PARAM_INT32		if $_->[0] == PF_SPINNER;
-                                      $_->[0]=Gimp::PARAM_INT32		if $_->[0] == PF_ADJUSTMENT;
-                                      $_->[0]=Gimp::PARAM_INT32		if $_->[0] == PF_RADIO;
                                       $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_FONT;
                                       $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_BRUSH;
                                       $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_PATTERN;
@@ -808,6 +816,10 @@ Gimp::on_query {
                                       $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_CUSTOM;
                                       $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_FILE;
                                       $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_TEXT;
+                                      $_->[0]=datatype(odd_values(@{$_->[4]})) if $_->[0] == PF_RADIO;
+                                      $_->[0]=datatype($_->[3],@{$_->[4]}) if $_->[0] == PF_SLIDER;
+				      $_->[0]=datatype($_->[3],@{$_->[4]}) if $_->[0] == PF_SPINNER;
+                                      $_->[0]=datatype($_->[3],@{$_->[4]}) if $_->[0] == PF_ADJUSTMENT;
                                       $_;
                                    } @$params],
                                    $results);

@@ -1,15 +1,15 @@
 #!/usr/bin/perl -w
 
-# This one's all mine.  Well, its GPL/Artisitic but I"m the author and creator. # I think you need gimp 1.1 or better for this - if  you don't, please let
+# This one's all mine.  Well, its GPL/Artisitic but I"m the author and creator. # I think you need gimp 1.1 or better for this - if  you don't, please let 
 # me know
 
 # I'm hacking this on top of my sethspin script, so this is doing even more
 # stuff it wasn't really designed to do.  Hence if you thought sethspin was
-# a bit ugly, look at this one...
+# a bit ugly, look at this one...       
 
-# I think it was tigert that suggested this.  It turned out to be less
+# I think it was tigert that suggested this.  It turned out to be less 
 # complex than I orginally thought so I figured I'd give it a spin.
-
+ 
 # Seth Burgess
 # <sjburges@gimp.org>
 
@@ -25,20 +25,20 @@ sub saw {  # a sawtooth function on PI
 		return ($val/3.14159) ;
 		}
 	elsif ($val < 3.14159) {
-		return (-1+$val/3.14159);
+		return (-1+$val/3.14159); 
 		}
 	elsif ($val < 3.14159+3.14159/2.0) {
 		return ($val/3.14159) ;
 		}
 	else {
-		return (-1+$val/3.14159);
+		return (-1+$val/3.14159); 
 		}
-	}
+	} 
 
 sub spin_layer { # the function for actually spinning the layer
 	my ($img, $spin, $dest, $numframes, $prp, $blinds) = @_;
     # Now lets spin it!
-	$stepsize = 3.14159/$numframes; # in radians
+	$stepsize = 3.14159/$numframes; # in radians 
 	for ($i=0; $i<=3.14159; $i+=$stepsize) {
         	Gimp->progress_update ($i/3.14159);
 		# create a new layer for spinning
@@ -54,17 +54,17 @@ sub spin_layer { # the function for actually spinning the layer
 			# x[1],x[2]                  x[3],x[2]
 	        # x[1],x[4]                  x[3],x[4]
 			$floater = $framelay->perspective(1,
-		$x[1]+saw($i)*$prp*$framelay->width,$x[2]+$blindheight *sin($i)/2,
+		$x[1]+saw($i)*$prp*$framelay->width,$x[2]+$blindheight *sin($i)/2,  
 		$x[3]-saw($i)*$prp*$framelay->width,$x[2]+$blindheight *sin($i)/2,
-		$x[1]-saw($i)*$prp*$framelay->width,$x[4]-$blindheight *sin($i)/2,
-		$x[3]+saw($i)*$prp*$framelay->width,$x[4]-$blindheight *sin($i)/2);
+		$x[1]-saw($i)*$prp*$framelay->width,$x[4]-$blindheight *sin($i)/2,  
+		$x[3]+saw($i)*$prp*$framelay->width,$x[4]-$blindheight *sin($i)/2);  
 			$floater->floating_sel_anchor;
 		} # end for ($j=0;...
 
 		# I need to create another layer beind this spun one now
 		$backlayer = $framelay->layer_copy(0);
 		$img->add_layer($backlayer, 1);
-		$backlayer->fill(1); # BG-IMAGE-FILL
+		$backlayer->fill(1); # BG-IMAGE-FILL 
 	}
 	for ($i=0; $i<$numframes; $i++) {
 		@all_layers = $img->get_layers();
@@ -75,7 +75,7 @@ sub spin_layer { # the function for actually spinning the layer
 	$destfram = $all_layers[$numframes]->copy(0);
 	$img->add_layer($destfram,0);
 
-	# clean up my temporary layers
+	# clean up my temporary layers	
 	$img->remove_layer($all_layers[$numframes]);
 	$img->remove_layer($all_layers[$numframes+1]);
 }
@@ -107,7 +107,7 @@ register "billboard",
 	$img = gimp_image_new($maxwide, $maxhigh, RGB);
 
 
-	$tmpimglayer = $img->add_new_layer(0,3,1);
+	$tmpimglayer = $img->add_new_layer(0,3,1); 
 	$img->display_new;
         Gimp->progress_init("Billboard...",-1);
 	$oldbackground = gimp_palette_get_background();
@@ -134,33 +134,33 @@ register "billboard",
 		}
 
 	spin_layer($img, $spinlayer, $destlayer, $spinback ? $frames/2 : $frames-1, $psp, $shadenum);
-	 $img->set_visible($img->add_new_layer(1),($img->get_layers)[0]);
+	 $img->set_visible($img->add_new_layer(1),($img->get_layers)[0]); 
 	 $img->merge_visible_layers(0);
-
-	if ($spinback) {
+	
+	if ($spinback) { 
 		@layerlist = $img->get_layers();
 		$img->add_layer($layerlist[$frames/2]->copy(0),0);
 		@layerlist = $img->get_layers();
 		spin_layer($img, $layerlist[1], $layerlist[0], $frames/2, $psp, $shadenum);
 		$img->remove_layer(($img->get_layers)[0]);
-		}
-
+		}	
+	
 	# unhide and name layers
 	@all_layers = $img->get_layers;
 	$img->set_visible(@all_layers);
 	for ($i=1; $i<=$frames ; $i++) {
 		$all_layers[$i-1]->set_name("Spin Layer $i (50ms)");
 		}
-	$all_layers[$frames-1]->set_name("Spin Layer SRC (250ms)");
-
+	$all_layers[$frames-1]->set_name("Spin Layer SRC (250ms)");  
+	
 	if ($spinback) {
-		$all_layers[$frames/2-1]->set_name("Spin Layer DEST (250ms)");
+		$all_layers[$frames/2-1]->set_name("Spin Layer DEST (250ms)"); 
 		}
 	else { $all_layers[0]->set_name("Spin Layer DEST (250ms)")}
-
+	
 
 	# indexed conversion wants a display for some reason
-	if ($indexed) { $img->convert_indexed(1,255); }
+	if ($indexed) { $img->convert_indexed(1,255); } 
 
 	Palette->set_background($oldbackground);
 	gimp_displays_flush();

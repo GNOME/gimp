@@ -12,6 +12,9 @@ aaron sherman email schicken(!!!!) wegen logulator
 
 paint_funcs.h convolve.h gimpdrawable.h gimpimage.h lut_funcs.h paint_core.h plug_in.h flip_tool.h
 
+Guides->To Selection
+firetext!
+
 script-fu 4.9 vs. 3.3
 
 bugs
@@ -39,7 +42,8 @@ bugs
   
 important issues
 
-  * gimpdoc with caching & exampling ;--->
+  * constant names (RADIO) automatically into help strings!
+  * gimpdoc with caching & [DONE]exampling ;--->
   * migrate BOOT: into INIT() (forgot why but important for B)
   * gimp_progress_done, gimp_progress_close
   * maybe implement --enable-perl=runtime-only?

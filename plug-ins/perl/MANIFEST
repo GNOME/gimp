@@ -108,3 +108,7 @@ examples/frame_filter
 examples/gouge
 examples/logulator
 examples/miff
+examples/guide_remove
+examples/glowing_steel
+examples/guides_to_selection
+examples/burst

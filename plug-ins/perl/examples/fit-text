@@ -1,7 +1,17 @@
 #!/usr/bin/perl
+
+eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 # <sjburges@gimp.org>
 # This is adrian and xachs idea - take a rectangluar selection, and select
 # font type and string.  Then fill it with whatever size is needed.
+
+# This uses highly non-scientific "for my test image these were ok" 
+# approximations - I didn't chart anything or calcualte tradeoffs.  Really
+# it doesn't matter until the fine tuning, which takes awhile.
+
+# 7/15/99: added support if the user selects in pixels (assumes 72 dpi - deal)
+#          and tuned it a bit more <sjburges@gimp.org>
 
 use Gimp;
 use Gimp::Fu;
@@ -11,12 +21,17 @@ use Gimp::Util;
 
 $defaultfont = "-*-blippo-heavy-r-normal-*-*-360-*-*-p-*-iso8859-1";
 undef $defaultfont;
+$calls = 0;
 
 sub growfont {
 	($fontname, $plussize) = @_;
 	@fontdesc = split /-/, $fontname;
-	$fontdesc[8] += $plussize;
+	$fontdesc[8] eq "*" ?  
+		$fontdesc[7] += $plussize/72 : # if in pixels  
+		$fontdesc[8] += $plussize;     # if in points
 	$outname = join "-", @fontdesc;
+	print ("!!!${fontdesc[8]}-${fondesc[9]}!!!\n");
+	$calls ++;
 	return $outname;
 	}
 
@@ -39,7 +54,7 @@ register "fit_text",
 	$height = $y2-$y1;
 
 	@extents=gimp_text_get_extents_fontname($string,xlfd_size($xlfd),$xlfd);
-	$growsize = ($extents[0]<$width && $extents[1]<$height) ? 80 : -80;
+	$growsize = ($extents[0]<$width && $extents[1]<$height) ? 288 : -288;
 	if ($growsize > 0 ) {
 		 while ($extents[0]<$width && $extents[1]<$height) {
 				$xlfd = growfont($xlfd,$growsize);
@@ -55,15 +70,11 @@ register "fit_text",
 		}
 
 	while ($extents[0]<$width && $extents[1]<$height) {
-		$xlfd = growfont($xlfd,10); # precision for the last bit
+		$xlfd = growfont($xlfd,144); # precision for the last bit
 		@extents=gimp_text_get_extents_fontname($string,xlfd_size($xlfd),$xlfd);
 		}
 
-	 while ($extents[0]>$width || $extents[1]>$height) {
-			$xlfd = growfont($xlfd,-4);
-			@extents=gimp_text_get_extents_fontname($string,xlfd_size($xlfd),$xlfd);
-			}
- 	# print $xlfd, "\n";
+	$xlfd = growfont($xlfd, -144);
 
 	$tmplay = $layer->text_fontname($x1,$y1,$string,0,1,xlfd_size($xlfd), $xlfd);
 	$width2=$tmplay->width;
@@ -73,15 +84,31 @@ register "fit_text",
 #	print "$width2, $height2:$width, $height\n";
 	while ($width2<$width && $height2<$height) {
 		$tmplay->remove;
-		$xlfd = growfont($xlfd,4);
+		$xlfd = growfont($xlfd,288);
 		$tmplay=$layer->text_fontname($x1,$y1,$string,0,1,xlfd_size($xlfd), $xlfd);
 		$width2=$tmplay->width;
 		$height2=$tmplay->height;
 		}
-
-	$tmplay->remove;
-	$xlfd = growfont($xlfd,-2);
-	$tmplay=$layer->text_fontname($x1,$y1,$string,0,1,xlfd_size($xlfd), $xlfd);
+        
+	while ($width2>$width || $height2>$height) {
+		$tmplay->remove;
+		$xlfd = growfont($xlfd,-72);
+		$tmplay=$layer->text_fontname($x1,$y1,$string,0,1,xlfd_size($xlfd), $xlfd);
+		$width2=$tmplay->width;
+		$height2=$tmplay->height;
+		}
+	while ($width2<$width && $height2<$height) {
+		$tmplay->remove;
+		$xlfd = growfont($xlfd,12);
+		$tmplay=$layer->text_fontname($x1,$y1,$string,0,1,xlfd_size($xlfd), $xlfd);
+		$width2=$tmplay->width;
+		$height2=$tmplay->height;
+		}
+        $tmplay->remove;
+	$xlfd = growfont($xlfd,-12);
+	$tmplay=$layer->text_fontname($x1,$y1,$string,0,1,
+                         xlfd_size($xlfd), $xlfd);
+#   print $calls;
     return();
 };
 exit main;

@@ -27,13 +27,13 @@ register "xachvision",
 	$midlayer = $drawable->gimp_layer_copy(1);
 	$img->add_layer($midlayer, 0);
 
-	$toplayer = $drawable->gimp_layer_copy(0);
+	$toplayer = $drawable->gimp_layer_copy(0);	
 	$img->add_layer($toplayer, 0);
 
 	gimp_palette_set_background($color);
 	$toplayer->edit_fill();
 	$toplayer->set_mode(COLOR_MODE);
-
+	
 	gimp_palette_set_background([0,0,0]);
 	$drawable->edit_fill();
 

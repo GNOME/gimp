@@ -1,0 +1,45 @@
+#!/usr/bin/perl
+ 
+#
+# 11/7/99 <brendy@swipnet.se>
+# Guides are pretty good, but I want to be able to remove them.
+#
+ 
+use Gimp;
+use Gimp::Fu;
+use Gimp::Util;
+ 
+# Gimp::set_trace(TRACE_ALL);
+ 
+register "guide_remove",
+         "guideremove - erases all existing guides\n",
+         "Just does it!\n",
+         "Brendon Humphrey",
+         "Brendon Humphrey <brendy\@swipnet.se>",
+         "1999-07-20",
+         "<Image>/Guides/Remove Guides",
+         "*",
+         [],
+         [],
+         ['gimp-1.1'],
+         sub {
+    my($img,$layer,$xspace, $yspace, $xoffset, $yoffset) =@_;
+ 
+    #
+    # Remove all existing guides
+    #    
+    $i=$img->find_next_guide(0);
+    while ($i != 0) {
+      $img->delete_guide($i);
+      $i=$img->find_next_guide($i);
+    }         
+
+    #
+    # Refresh the display (probably not good, works for me!)
+    #
+    #$img->selection_all();
+    #$img->selection_none();        
+ 
+    ();
+};
+exit main;                                        

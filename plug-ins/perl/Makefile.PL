@@ -13,7 +13,7 @@ $|=1;
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel
       repdup centerguide stampify goldenmean triangle billboard mirrorsplit
       oneliners randomart1 pixelmap glowing_steel frame_reshuffle frame_filter
-      logulator miff magick
+      logulator miff magick guide_remove guides_to_selection burst
    );
 @shebang = (map("examples/$_",@examples),
    qw(Perl-Server examples/example-net.pl examples/homepage-logo.pl

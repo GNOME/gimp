@@ -1,8 +1,17 @@
 #!/usr/bin/perl
-# <sjburges@gimp.org>
-# This is adrian's idea - take random blends and difference them.  You're
-# bound to come up w/ something cool eventually.
 
+eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
+# <sjburges@gimp.org> (original release)
+#
+# 11/7/99 <brendy@swipnet.se>
+# Added an option to remove existing guides
+# Added progress bar.
+# ** How can we force the display to update after adding guides? **
+#
+# 12/7/99 <sjburges@gimp.org>
+# Changed the display code in C and got rid of ugly hack in perl.
+#
 use Gimp;
 use Gimp::Fu;
 use Gimp::Util;
@@ -10,36 +19,66 @@ use Gimp::Util;
 # Gimp::set_trace(TRACE_ALL);
 
 register "guide_grid",
-         "GuideGrid - creates a grid of guides\n",
-         "You specify the X spacing, the Y spacing, and initial offsets.  It creates a grid of guides\n",
-         "Seth Burgess",
-         "Seth Burgess <sjburges\@gimp.org>",
-         "1999-03-20",
-         "<Image>/GuideGrid",
-         "*",
-         [
-           [PF_SPINNER, "x_spacing", "How far to space grid horizontally", 24, [1,1000,1]],
-           [PF_SPINNER, "y_spacing", "How far to space grid vertically", 24, [1,1000,1]],
-           [PF_SPINNER, "x_offset", "How much to initially offset it horizontally", 0, [0,1000,1]],
-           [PF_SPINNER, "y_offset", "How much to initially offset it vertically", 0, [0,1000,1]],
-            ],
-         [],
-         ['gimp-1.1'],
-         sub {
-    my($img,$layer,$xspace, $yspace, $xoffset, $yoffset) =@_;
+  "GuideGrid - creates a grid of guides\n",
+  "You specify the X spacing, the Y spacing, and initial offsets.  It creates a grid of guides\n",
+  "Seth Burgess",
+  "Seth Burgess <sjburges\@gimp.org>",
+  "1999-03-20",
+  "<Image>/Guides/Guide Grid",
+  "*",
+  [
+   [PF_SPINNER, "x_spacing", "How far to space grid horizontally", 24, [1,1000,1]],
+   [PF_SPINNER, "y_spacing", "How far to space grid vertically", 24, [1,1000,1]],
+   [PF_SPINNER, "x_offset", "How much to initially offset it horizontally", 0, [0,1000,1]],
+   [PF_SPINNER, "y_offset", "How much to initially offset it vertically", 0, [0,1000,1]],
+   [PF_TOGGLE, "remove_old_guides", "Remove existing guides?", 0],
+  ],
+  [],
+  ['gimp-1.1'],
+  sub {
+    my($img,$layer,$xspace, $yspace, $xoffset, $yoffset, $remove_old_guides) =@_;
 
-	for ($i=$xoffset; $i<$img->width; $i+=$xspace) {
-		if ($i) {
-			$img->add_vguide($i);
-			}
-		}
+    #
+    # Remove all existing guides (this is optional)
+    #    
+    if($remove_old_guides) {
+      $i=$img->find_next_guide(0);
+      while ($i != 0) {
+        $img->delete_guide($i);
+        $i=$img->find_next_guide(0);
+      }         
+    }
 
-	for ($i=$yoffset; $i<$img->height; $i+=$yspace) {
-		if ($i) {
-			$img->add_hguide($i);
-			}
-		}
+    #
+    # Add vertical guides to the image
+    #
+    for ($i=$xoffset; $i<$img->width; $i+=$xspace) {
+      if ($i) {
+	$img->add_vguide($i);
+      }
+    }
+    
+    #
+    # Add horizontal guides to the image
+    #
+    for ($i=$yoffset; $i<$img->height; $i+=$yspace) {
+      if ($i) {
+	$img->add_hguide($i);
+      }
+    }
+    
+    # 
+    # I fixed this in Gimp C code (it wasn't flushing guides properly) 
+    # Seth Burgess <sjburges@gimp.org>
+    #
 
+    ##
+    ## Refresh the display (probably not good, works for me!)
+    ##
+    ##
+    #$img->selection_all();
+    #$img->selection_none();
+    
     return();
-};
+  };
 exit main;

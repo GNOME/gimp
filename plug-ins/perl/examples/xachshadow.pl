@@ -4,11 +4,11 @@
 #[Xach] start off with an image, then pixelize it
 #[Xach] then add alpha->add layer mask                                   [20:21]
 #[Xach] render a checkerboard into the layer mask
-#[Xach] duplicate the image. fill the original with black, then blur the layer
-#           mask (i used 30% of pixelize size) and offset it by some value (i
+#[Xach] duplicate the image. fill the original with black, then blur the layer 
+#           mask (i used 30% of pixelize size) and offset it by some value (i 
 #           chose 20% of the pixelize size)
 #[Xach] duplicate the duplicate, remove the layer mask, move it below everything
-#[Xach] then add a new white layer on top, set the mode to multiply, and render
+#[Xach] then add a new white layer on top, set the mode to multiply, and render 
 #           a grid into it at pixelize size
 #[Xach] that's a bit roundabout, but it's also in the xcf
 #
@@ -17,7 +17,7 @@
 
 # Revision 1.1: Marc Lehman <pcg@goof.com> added undo capability
 # Revision 1.2: Marc Lehman <pcg@goof.com>, changed function name
-# Revision 1.3: Seth Burgess <sjburges@gimp.org>, changed location and
+# Revision 1.3: Seth Burgess <sjburges@gimp.org>, changed location and 
 #                 added my email address
 #
 # Here's the boring start of every script...
@@ -43,23 +43,23 @@ register "xach_shadows",
  #	$selection_flag = 0;
 	if (!$drawable->has_alpha) {
 		$drawable->add_alpha;
-		};
-# This only can be applied to an entire image right now..
+		}; 
+# This only can be applied to an entire image right now..	
 #	$selection = $img->selection_save;
     $img->selection_all;
 	$oldbackground = gimp_palette_get_background();
-# Now the fun begins :)
-	$drawable->plug_in_pixelize($blocksize);
+# Now the fun begins :) 
+	$drawable->plug_in_pixelize($blocksize); 
 	$shadowlayer = $drawable->layer_copy(0);
 	$img->add_layer($shadowlayer,0);
-	$checkmask = $shadowlayer->create_mask(ADD_WHITE_MASK);
+	$checkmask = $shadowlayer->create_mask(WHITE_MASK);
 	$img->add_layer_mask($shadowlayer, $checkmask);
 	plug_in_checkerboard ($img, $checkmask, 0, $blocksize);
 
 	$frontlayer = $shadowlayer->layer_copy(0);
 	$img->add_layer($frontlayer,0);
 	gimp_palette_set_background([0,0,0]);
-	$shadowlayer->fill(BG_IMAGE_FILL);
+	$shadowlayer->fill(BG_IMAGE_FILL);	
 	$checkmask->plug_in_gauss_iir(0.3*$blocksize, 1, 1);
 	gimp_channel_ops_offset ($checkmask, 1, 0, 0.2*$blocksize, 0.2*$blocksize);
 
