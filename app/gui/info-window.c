@@ -20,7 +20,6 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -33,6 +32,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-projection.h"
+#include "core/gimpimage-unit.h"
 #include "core/gimpunit.h"
 
 #include "file/file-utils.h"
@@ -538,16 +538,12 @@ info_window_update_extended (GimpDisplay *gdisp,
   else
     {
       /*  width and height  */
-      unit_factor = _gimp_unit_get_factor (gdisp->gimage->gimp,
-					   gdisp->gimage->unit);
-      unit_digits = _gimp_unit_get_digits (gdisp->gimage->gimp,
-					   gdisp->gimage->unit);
+      unit_factor = gimp_image_unit_get_factor (gdisp->gimage);
+      unit_digits = gimp_image_unit_get_digits (gdisp->gimage);
 
-      if (iwd->unit_str != _gimp_unit_get_abbreviation (gdisp->gimage->gimp,
-							gdisp->gimage->unit))
+      if (iwd->unit_str != gimp_image_unit_get_abbreviation (gdisp->gimage))
         {
-          iwd->unit_str = _gimp_unit_get_abbreviation (gdisp->gimage->gimp,
-						       gdisp->gimage->unit);
+          iwd->unit_str = gimp_image_unit_get_abbreviation (gdisp->gimage);
 
           gtk_label_set_text (GTK_LABEL (iwd->unit_labels[0]), iwd->unit_str);
           gtk_label_set_text (GTK_LABEL (iwd->unit_labels[1]), iwd->unit_str);
@@ -703,21 +699,20 @@ info_window_update (GimpDisplay *gdisp)
   gimage = gdisp->gimage;
 
   /*  width and height  */
-  unit_factor = _gimp_unit_get_factor (gimage->gimp, gimage->unit);
-  unit_digits = _gimp_unit_get_digits (gimage->gimp, gimage->unit);
+  unit_factor = gimp_image_unit_get_factor (gimage);
+  unit_digits = gimp_image_unit_get_digits (gimage);
 
   g_snprintf (iwd->dimensions_str, MAX_BUF, _("%d x %d pixels"),
-	      (int) gimage->width, (int) gimage->height);
+	      gimage->width, gimage->height);
   g_snprintf (format_buf, sizeof (format_buf), "%%.%df x %%.%df %s",
 	      unit_digits + 1, unit_digits + 1,
-	      _gimp_unit_get_plural (gimage->gimp, gimage->unit));
+              gimp_image_unit_get_plural (gimage));
   g_snprintf (iwd->real_dimensions_str, MAX_BUF, format_buf,
 	      gimage->width  * unit_factor / gimage->xresolution,
 	      gimage->height * unit_factor / gimage->yresolution);
 
   /*  image resolution  */
   res_unit = gimage->gimp->config->default_resolution_unit;
-
   res_unit_factor = _gimp_unit_get_factor (gimage->gimp, res_unit);
 
   g_snprintf (format_buf, sizeof (format_buf), _("pixels/%s"),

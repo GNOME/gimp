@@ -23,7 +23,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -32,9 +31,11 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-mask-select.h"
+#include "core/gimpimage-unit.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimpunit.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -207,7 +208,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
 	gdisp->gimage->height * rect_sel->fixed_height / 100;
       break;
     default:
-      unit_factor = gimp_unit_get_factor (unit);
+      unit_factor = _gimp_unit_get_factor (tool->tool_info->gimp, unit);
       rect_sel->fixed_width =
 	 rect_sel->fixed_width * gdisp->gimage->xresolution / unit_factor;
       rect_sel->fixed_height =
@@ -606,15 +607,14 @@ gimp_rect_select_tool_update_options (GimpRectSelectTool *rect_sel,
     }
   else
     {
-      GimpImage *gimage;
-      gdouble    unit_factor;
-
-      gimage = gdisp->gimage;
+      GimpImage *gimage = gdisp->gimage;
 
       unit   = gimage->unit;
-      unit_factor = gimp_unit_get_factor (unit);
-      width  = (gdouble) abs (rect_sel->w) * unit_factor / gimage->xresolution;
-      height = (gdouble) abs (rect_sel->h) * unit_factor / gimage->yresolution;
+
+      width  = ((gdouble) abs (rect_sel->w) *
+                gimp_image_unit_get_factor (gimage) / gimage->xresolution);
+      height = ((gdouble) abs (rect_sel->h) *
+                gimp_image_unit_get_factor (gimage) / gimage->yresolution);
     }
 
   g_object_set (GIMP_TOOL (rect_sel)->tool_info->tool_options,

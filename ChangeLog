@@ -1,5 +1,25 @@
 2003-10-01  Sven Neumann  <sven@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/gimpimage-unit.[ch]: added small wrappers to ease
+	handling of image units and to hide the core GimpUnit API.
+
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-title.c
+	* app/display/gimpstatusbar.c
+	* app/gui/info-window.c:
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimpscaletool.c: use the new functions.
+
+	* app/core/gimp-units.c
+	* app/vectors/gimpvectors-export.c: use the core GimpUnit API.
+
+	* app/vectors/gimpvectors.c: no need to include gimpunit.h here.
+
+2003-10-01  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-utils.c (gimp_config_diff): make it handle
 	aggregate object properties by calling itself recursively.
 

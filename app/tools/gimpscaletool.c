@@ -20,8 +20,8 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -30,6 +30,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimpunit.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -411,6 +412,7 @@ gimp_scale_tool_recalc (GimpTransformTool *tr_tool,
 static void
 gimp_scale_tool_info_update (GimpTransformTool *tr_tool)
 {
+  Gimp     *gimp;
   GimpTool *tool;
   gdouble   ratio_x, ratio_y;
   gint      x1, y1, x2, y2, x3, y3, x4, y4;
@@ -433,13 +435,15 @@ gimp_scale_tool_info_update (GimpTransformTool *tr_tool)
   if (unit != GIMP_UNIT_PERCENT)
     label_unit = unit;
 
-  unit_factor = gimp_unit_get_factor (label_unit);
+  gimp = tool->tool_info->gimp;
+
+  unit_factor = _gimp_unit_get_factor (gimp, label_unit);
 
   if (label_unit) /* unit != GIMP_UNIT_PIXEL */
     {
       g_snprintf (format_buf, sizeof (format_buf), "%%.%df %s",
-		  gimp_unit_get_digits (label_unit) + 1,
-		  gimp_unit_get_symbol (label_unit));
+		  _gimp_unit_get_digits (gimp, label_unit) + 1,
+		  _gimp_unit_get_symbol (gimp, label_unit));
       g_snprintf (orig_width_buf, MAX_INFO_BUF, format_buf,
 		  (x2 - x1) * unit_factor / tool->gdisp->gimage->xresolution);
       g_snprintf (orig_height_buf, MAX_INFO_BUF, format_buf,

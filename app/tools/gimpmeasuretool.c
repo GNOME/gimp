@@ -26,7 +26,6 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -40,6 +39,7 @@
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
+#include "core/gimpimage-unit.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -587,12 +587,12 @@ gimp_measure_tool_motion (GimpTool        *tool,
       else /* show real world units */
 	{
 	  gchar *format_str =
-	    g_strdup_printf ("%%.%df %s, %%.2f %s",
-			     gimp_unit_get_digits (gdisp->gimage->unit),
-			     gimp_unit_get_symbol (gdisp->gimage->unit),
+            g_strdup_printf ("%%.%df %s, %%.2f %s",
+                             gimp_image_unit_get_digits (gdisp->gimage),
+			     gimp_image_unit_get_symbol (gdisp->gimage),
 			     _("degrees"));
 
-	  distance =  gimp_unit_get_factor (gdisp->gimage->unit) *
+	  distance =  gimp_image_unit_get_factor (gdisp->gimage) *
 	    sqrt (SQR ((gdouble)(ax - bx) / gdisp->gimage->xresolution) +
 		  SQR ((gdouble)(ay - by) / gdisp->gimage->yresolution));
 
@@ -615,8 +615,8 @@ gimp_measure_tool_motion (GimpTool        *tool,
 
           format_str =
             g_strdup_printf ("%%.%df %s",
-                             gimp_unit_get_digits (gdisp->gimage->unit),
-                             gimp_unit_get_symbol (gdisp->gimage->unit));
+                             gimp_image_unit_get_digits (gdisp->gimage),
+                             gimp_image_unit_get_symbol (gdisp->gimage));
           g_snprintf (distance_buf, sizeof (distance_buf), format_str,
                       distance);
           g_snprintf (angle_buf, sizeof (angle_buf), "%.2f %s",

@@ -22,7 +22,6 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
@@ -31,6 +30,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-unit.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
@@ -563,13 +563,13 @@ gimp_display_shell_scale_dialog_cancel (GtkWidget       *widget,
 static gdouble
 img2real (GimpDisplayShell *shell,
 	  gboolean          xdir,
-	  gdouble           a)
+	  gdouble           len)
 {
   GimpImage *gimage;
   gdouble    res;
 
   if (shell->dot_for_dot)
-    return a;
+    return len;
 
   gimage = shell->gdisp->gimage;
 
@@ -578,5 +578,5 @@ img2real (GimpDisplayShell *shell,
   else
     res = gimage->yresolution;
 
-  return a * gimp_unit_get_factor (gimage->unit) / res;
+  return len * gimp_image_unit_get_factor (gimage) / res;
 }

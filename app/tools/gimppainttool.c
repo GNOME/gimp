@@ -40,6 +40,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-unit.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimptoolinfo.h"
 
@@ -677,10 +678,10 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
               gchar format_str[64];
 
               g_snprintf (format_str, sizeof (format_str), "%%.%df %s",
-                          gimp_unit_get_digits (gdisp->gimage->unit),
-                          gimp_unit_get_symbol (gdisp->gimage->unit));
+                          gimp_image_unit_get_digits (gdisp->gimage),
+                          gimp_image_unit_get_symbol (gdisp->gimage));
 
-              dist = (gimp_unit_get_factor (gdisp->gimage->unit) *
+              dist = (gimp_image_unit_get_factor (gdisp->gimage) *
                       sqrt (SQR (dx / gdisp->gimage->xresolution) +
                             SQR (dy / gdisp->gimage->yresolution)));
 

@@ -103,19 +103,19 @@ gimp_unitrc_load (Gimp *gimp)
   if (! scanner)
     return;
 
-  g_scanner_scope_add_symbol (scanner, 0, 
+  g_scanner_scope_add_symbol (scanner, 0,
                               "unit-info", GINT_TO_POINTER (UNIT_INFO));
-  g_scanner_scope_add_symbol (scanner, UNIT_INFO, 
+  g_scanner_scope_add_symbol (scanner, UNIT_INFO,
                               "factor", GINT_TO_POINTER (UNIT_FACTOR));
-  g_scanner_scope_add_symbol (scanner, UNIT_INFO, 
+  g_scanner_scope_add_symbol (scanner, UNIT_INFO,
                               "digits", GINT_TO_POINTER (UNIT_DIGITS));
-  g_scanner_scope_add_symbol (scanner, UNIT_INFO, 
+  g_scanner_scope_add_symbol (scanner, UNIT_INFO,
                               "symbol", GINT_TO_POINTER (UNIT_SYMBOL));
-  g_scanner_scope_add_symbol (scanner, UNIT_INFO, 
+  g_scanner_scope_add_symbol (scanner, UNIT_INFO,
                               "abbreviation", GINT_TO_POINTER (UNIT_ABBREV));
-  g_scanner_scope_add_symbol (scanner, UNIT_INFO, 
+  g_scanner_scope_add_symbol (scanner, UNIT_INFO,
                               "singular", GINT_TO_POINTER (UNIT_SINGULAR));
-  g_scanner_scope_add_symbol (scanner, UNIT_INFO, 
+  g_scanner_scope_add_symbol (scanner, UNIT_INFO,
                               "plural", GINT_TO_POINTER (UNIT_PLURAL));
 
   token = G_TOKEN_LEFT_PAREN;
@@ -192,42 +192,48 @@ gimp_unitrc_save (Gimp *gimp)
     return;
 
   /*  save user defined units  */
-  for (i = gimp_unit_get_number_of_built_in_units ();
-       i < gimp_unit_get_number_of_units ();
+  for (i = _gimp_unit_get_number_of_built_in_units (gimp);
+       i < _gimp_unit_get_number_of_units (gimp);
        i++)
     {
-      if (gimp_unit_get_deletion_flag (i) == FALSE)
+      if (_gimp_unit_get_deletion_flag (gimp, i) == FALSE)
         {
           gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
 
           gimp_config_writer_open (writer, "unit-info");
-          gimp_config_writer_string (writer, gimp_unit_get_identifier (i));
+          gimp_config_writer_string (writer,
+                                     _gimp_unit_get_identifier (gimp, i));
 
           gimp_config_writer_open (writer, "factor");
           gimp_config_writer_print (writer,
                                     g_ascii_formatd (buf, sizeof (buf), "%f",
-                                                     gimp_unit_get_factor (i)),
+                                                     _gimp_unit_get_factor (gimp, i)),
                                     -1);
           gimp_config_writer_close (writer);
 
           gimp_config_writer_open (writer, "digits");
-          gimp_config_writer_printf (writer, "%d", gimp_unit_get_digits (i));
+          gimp_config_writer_printf (writer,
+                                     "%d", _gimp_unit_get_digits (gimp, i));
           gimp_config_writer_close (writer);
 
           gimp_config_writer_open (writer, "symbol");
-          gimp_config_writer_string (writer, gimp_unit_get_symbol (i));
+          gimp_config_writer_string (writer,
+                                     _gimp_unit_get_symbol (gimp, i));
           gimp_config_writer_close (writer);
-          
+
           gimp_config_writer_open (writer, "abbreviation");
-          gimp_config_writer_string (writer, gimp_unit_get_abbreviation (i));
+          gimp_config_writer_string (writer,
+                                     _gimp_unit_get_abbreviation (gimp, i));
           gimp_config_writer_close (writer);
 
           gimp_config_writer_open (writer, "singular");
-          gimp_config_writer_string (writer, gimp_unit_get_singular (i));
+          gimp_config_writer_string (writer,
+                                     _gimp_unit_get_singular (gimp, i));
           gimp_config_writer_close (writer);
-         
+
           gimp_config_writer_open (writer, "plural");
-          gimp_config_writer_string (writer, gimp_unit_get_plural (i));
+          gimp_config_writer_string (writer,
+                                     _gimp_unit_get_plural (gimp, i));
           gimp_config_writer_close (writer);
 
           gimp_config_writer_close (writer);
@@ -333,7 +339,7 @@ gimp_unitrc_unit_info_deserialize (GScanner *scanner,
                                  symbol, abbreviation, singular, plural);
 
           /*  make the unit definition persistent  */
-          gimp_unit_set_deletion_flag (unit, FALSE);
+          _gimp_unit_set_deletion_flag (gimp, unit, FALSE);
         }
     }
 

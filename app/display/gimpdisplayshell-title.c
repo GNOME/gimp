@@ -36,6 +36,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-unit.h"
 
 #include "file/file-utils.h"
 
@@ -304,10 +305,10 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
 	    case 'W': /* width in real-world units */
               g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                          gimp_unit_get_digits (gimage->unit) + 1);
+                          gimp_image_unit_get_digits (gimage) + 1);
               i += print (title, title_len, i, unit_format,
                           (gimage->width *
-                           gimp_unit_get_factor (gimage->unit) /
+                           gimp_image_unit_get_factor (gimage) /
                            gimage->xresolution));
               break;
 
@@ -317,21 +318,21 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
 	    case 'H': /* height in real-world units */
               g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                          gimp_unit_get_digits (gimage->unit) + 1);
+                          gimp_image_unit_get_digits (gimage) + 1);
               i += print (title, title_len, i, unit_format,
                           (gimage->height *
-                           gimp_unit_get_factor (gimage->unit) /
+                           gimp_image_unit_get_factor (gimage) /
                            gimage->yresolution));
               break;
 
 	    case 'u': /* unit symbol */
 	      i += print (title, title_len, i, "%s",
-			  gimp_unit_get_symbol (gimage->unit));
+			  gimp_image_unit_get_symbol (gimage));
 	      break;
 
 	    case 'U': /* unit abbreviation */
 	      i += print (title, title_len, i, "%s",
-			  gimp_unit_get_abbreviation (gimage->unit));
+			  gimp_image_unit_get_abbreviation (gimage));
 	      break;
 
 	      /* Other cool things to be added:
