@@ -1,4 +1,11 @@
 
+Wed Oct 21 23:37:01 BST 1998 Andy Thomas <alt@picnic.demon.co.uk>
+
+	Fixed a problem in gradient.c where if a gradient was selected 
+	via the PDB and the editor has not been displayed on the screen
+	gimp would crash.
+
+
 Wed Oct 21 22:38:07 BST 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
 	* plug-ins/script-fu/scripts/beveled-pattern-arrow.scm

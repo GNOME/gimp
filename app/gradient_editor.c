@@ -6356,8 +6356,19 @@ gradients_set_active_invoker(Argument *args)
 				success = TRUE;
 
 				/* Select that gradient in the listbox */
-				gtk_clist_select_row(GTK_CLIST(g_editor->clist),n,-1);
-				gtk_clist_moveto(GTK_CLIST(g_editor->clist),n,0,0.5,0.0);
+				/* Only if gradient editor has been created */
+				if(g_editor)
+				  {
+				    gtk_clist_select_row(GTK_CLIST(g_editor->clist),n,-1);
+				    gtk_clist_moveto(GTK_CLIST(g_editor->clist),n,0,0.5,0.0);
+				  }
+				else
+				  {
+				    /* force internal structs to use selected gradient */
+				    GSList* tmp = g_slist_nth(gradients_list,n);
+				    if(tmp)
+				      curr_gradient = (gradient_t *)(tmp->data);
+				  }
 				break;
 			} /* if */
 
