@@ -438,7 +438,7 @@ msgstr "Зм╕нити к╕льк╕сть кольор╕в у в╕дображенн╕"
 
 #: plug-ins/FractalExplorer/Dialogs.c:648
 msgid "Use loglog Smoothing"
-msgstr ""
+msgstr "Використовувати згладжування \"loglog\""
 
 #: plug-ins/FractalExplorer/Dialogs.c:655
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
@@ -852,11 +852,11 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:557 plug-ins/MapObject/mapobject_ui.c:692
 msgid "Light Settings"
-msgstr "Налаштування св╕тла"
+msgstr "Установки св╕тла"
 
 #: plug-ins/Lighting/lighting_ui.c:574
 msgid "Directional"
-msgstr "Напрямене"
+msgstr "Напрямлене"
 
 #: plug-ins/Lighting/lighting_ui.c:576
 msgid "Point"
@@ -1002,7 +1002,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:898
 msgid "Bumpmap Settings"
-msgstr "Налаштування рель╓фного перетворення"
+msgstr "Установки рель╓фного перетворення"
 
 #: plug-ins/Lighting/lighting_ui.c:907
 msgid "Enable Bump Mapping"
@@ -1063,7 +1063,7 @@ msgstr "Розм╕стити в д╕апазон╕ значень"
 
 #: plug-ins/Lighting/lighting_ui.c:1009
 msgid "Environment Settings"
-msgstr "Налаштування середовища"
+msgstr "Установки середовища"
 
 #: plug-ins/Lighting/lighting_ui.c:1018
 msgid "Enable Environment Mapping"
@@ -1890,19 +1890,19 @@ msgstr "Нова база"
 
 #: plug-ins/common/CML_explorer.c:1279
 msgid "Hue Settings"
-msgstr "Налаштування в╕дт╕нка"
+msgstr "Установки в╕дт╕нка"
 
 #: plug-ins/common/CML_explorer.c:1284
 msgid "Saturation Settings"
-msgstr "Налаштування насиченост╕"
+msgstr "Установки насиченост╕"
 
 #: plug-ins/common/CML_explorer.c:1289
 msgid "Value (Gray Image) Settings"
-msgstr "Налаштування яскравост╕ (с╕ре зображення)"
+msgstr "Установки яскравост╕ (с╕ре зображення)"
 
 #: plug-ins/common/CML_explorer.c:1294
 msgid "Advanced Settings"
-msgstr "Додатков╕ налаштування"
+msgstr "Додатков╕ установки"
 
 #: plug-ins/common/CML_explorer.c:1296 plug-ins/fp/fp_gtk.c:293
 msgid "Advanced"
@@ -1910,7 +1910,7 @@ msgstr "Додатково"
 
 #: plug-ins/common/CML_explorer.c:1306
 msgid "Other Parameter Settings"
-msgstr "Налаштування ╕нших параметр╕в"
+msgstr "Установки ╕нших параметр╕в"
 
 #: plug-ins/common/CML_explorer.c:1315
 msgid "Channel Independed Parameters"
@@ -1958,7 +1958,7 @@ msgstr "Р╕зн╕ операц╕╖"
 
 #: plug-ins/common/CML_explorer.c:1447
 msgid "Copy Settings"
-msgstr "Скоп╕ювати налаштування"
+msgstr "Скоп╕ювати установки"
 
 #: plug-ins/common/CML_explorer.c:1470
 msgid "Source Channel:"
@@ -1974,7 +1974,7 @@ msgstr "Скоп╕ювати параметри"
 
 #: plug-ins/common/CML_explorer.c:1497
 msgid "Selective Load Settings"
-msgstr "Виб╕ркове завантаження налаштувань"
+msgstr "Виб╕ркове завантаження установок"
 
 #: plug-ins/common/CML_explorer.c:1512 plug-ins/common/CML_explorer.c:1530
 msgid "NULL"
@@ -2030,15 +2030,15 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1806
 msgid "Range Low:"
-msgstr ""
+msgstr "Нижн╕й д╕апазон:"
 
 #: plug-ins/common/CML_explorer.c:1815
 msgid "Range High:"
-msgstr ""
+msgstr "Верхн╕й д╕апазон:"
 
 #: plug-ins/common/CML_explorer.c:1827
 msgid "Plot the Graph of the Settings"
-msgstr ""
+msgstr "Накреслити краф╕к установок"
 
 #: plug-ins/common/CML_explorer.c:1880
 msgid "Ch. Sensitivity:"
@@ -2054,11 +2054,11 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1929
 msgid "Graph of the current settings"
-msgstr ""
+msgstr "Граф╕к поточних установок"
 
 #: plug-ins/common/CML_explorer.c:1943
 msgid "The Graph"
-msgstr ""
+msgstr "Граф╕к"
 
 #: plug-ins/common/CML_explorer.c:2049
 msgid "Warning: the source and the destination are the same channel."
@@ -2171,7 +2171,7 @@ msgstr "Вир╕внювання видимих шар╕в"
 #: plug-ins/common/xpm.c:812 plug-ins/maze/maze_face.c:204
 #: plug-ins/mosaic/mosaic.c:643 plug-ins/xjt/xjt.c:805
 msgid "Parameter Settings"
-msgstr "Налаштування параметр╕в"
+msgstr "Установки параметр╕в"
 
 #: plug-ins/common/align_layers.c:454 plug-ins/common/align_layers.c:487
 msgid "Collect"
@@ -4206,7 +4206,7 @@ msgstr "Максимальна глибина:"
 #: plug-ins/common/sinus.c:1847 plug-ins/gap/gap_mod_layer.c:219
 #: plug-ins/gfig/gfig.c:3967 plug-ins/gflare/gflare.c:3032
 msgid "Settings"
-msgstr "Налаштування"
+msgstr "Установки"
 
 #: plug-ins/common/iwarp.c:1137
 msgid "IWarp"
@@ -5684,7 +5684,7 @@ msgstr "Синус"
 
 #: plug-ins/common/sinus.c:1757
 msgid "Drawing Settings"
-msgstr "Налаштування малюнку"
+msgstr "Установки малюнка"
 
 #: plug-ins/common/sinus.c:1769
 msgid "X Scale:"
@@ -5700,7 +5700,7 @@ msgstr "Складн╕сть:"
 
 #: plug-ins/common/sinus.c:1797
 msgid "Calculation Settings"
-msgstr "Налаштування розрахунку"
+msgstr "Установки розрахунку"
 
 #: plug-ins/common/sinus.c:1825
 msgid "Force Tiling?"
@@ -5753,7 +5753,7 @@ msgstr "Другий кол╕р:"
 
 #: plug-ins/common/sinus.c:1973
 msgid "Blend Settings"
-msgstr "Налаштування зм╕шувача"
+msgstr "Уистановки зм╕шувача"
 
 #: plug-ins/common/sinus.c:1990
 msgid "Sinusodial"
@@ -10941,7 +10941,7 @@ msgstr "╫╕мпресион╕ст!"
 
 #: plug-ins/gimpressionist/gimpressionist.c:484
 msgid "Run with the selected settings"
-msgstr ""
+msgstr "Виконати з вибраними установками"
 
 #: plug-ins/gimpressionist/gimpressionist.c:491
 msgid "Quit the program"
@@ -11257,11 +11257,11 @@ msgstr ""
 
 #: plug-ins/gimpressionist/preview.c:122
 msgid "Refresh the Preview window"
-msgstr ""
+msgstr "Оновити к╕вно перегляду"
 
 #: plug-ins/gimpressionist/preview.c:129
 msgid "Revert to the original image"
-msgstr ""
+msgstr "Повернути до початкового зображення"
 
 #: plug-ins/gimpressionist/size.c:72
 msgid "Sizes:"
@@ -11277,11 +11277,11 @@ msgstr "Максимальний розм╕р:"
 
 #: plug-ins/gimpressionist/size.c:104
 msgid "The smallest brush to create"
-msgstr ""
+msgstr "Найменший пензель, що створю╓ться"
 
 #: plug-ins/gimpressionist/size.c:113
 msgid "The largest brush to create"
-msgstr ""
+msgstr "Найб╕льший пензель, що створю╓ться"
 
 #: plug-ins/gimpressionist/size.c:136
 msgid ""
@@ -11295,31 +11295,31 @@ msgstr ""
 
 #: plug-ins/gimpressionist/size.c:156
 msgid "Selects a random size for each stroke"
-msgstr ""
+msgstr "Вибрати випадковий розм╕р кожного мазка"
 
 #: plug-ins/gimpressionist/size.c:166
 msgid "Let the direction from the center determine the size of the stroke"
-msgstr ""
+msgstr "Розм╕р мазка буде визначатись напрямком в╕д центру"
 
 #: plug-ins/gimpressionist/size.c:192
 msgid "The hue of the region determines the size of the stroke"
-msgstr ""
+msgstr "Розм╕р мазка буде визначатись в╕дт╕нком д╕лянки"
 
 #: plug-ins/gimpressionist/size.c:202
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr ""
+msgstr "Вибрати розм╕р пензля, що найб╕льш сп╕впада╓ з початковим зображенням"
 
 #: plug-ins/gimpressionist/size.c:216
 msgid "Manually specify the stroke size"
-msgstr ""
+msgstr "Вказати розм╕р мазка вручну"
 
 #: plug-ins/gimpressionist/size.c:225
 msgid "Opens up the Size Map Editor"
-msgstr ""
+msgstr "В╕дкрити редактор мапи розм╕р╕в"
 
 #: plug-ins/gimpressionist/sizemap.c:361
 msgid "Size Map Editor"
-msgstr ""
+msgstr "Редактор мапи розм╕р╕в"
 
 #: plug-ins/gimpressionist/sizemap.c:369
 msgid "Smvectors"
@@ -11353,13 +11353,15 @@ msgstr "Зм╕нити кут вибраного sm-вектора"
 
 #: plug-ins/gimpressionist/sizemap.c:477
 msgid "Change the strength of the selected smvector"
-msgstr ""
+msgstr "Зм╕нити довжину вибраного sm-вектора"
 
 #: plug-ins/gimpressionist/sizemap.c:535
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr ""
+"В режим╕ \"Вороной\" лише найближчий до задано╖ точки sm-вектор ма╓ "
+"вплив"
 
 #: plug-ins/helpbrowser/helpbrowser.c:95
 #, c-format
@@ -11752,7 +11754,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:245
 msgid "Comment about this area: (optional)"
-msgstr ""
+msgstr "Коментар до ц╕╓╖ д╕лянки: (не обов'язково)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:248
 msgid "Link"
@@ -11768,12 +11770,12 @@ msgstr "JavaScript"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:425
 msgid "Area Settings"
-msgstr ""
+msgstr "Установки д╕лянки"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:469
 #, c-format
 msgid "Area #%d Settings"
-msgstr ""
+msgstr "Установки д╕лянки #%d"
 
 #: plug-ins/imagemap/imap_file.c:50 plug-ins/imagemap/imap_menu.c:66
 msgid "Error opening file"
@@ -11805,43 +11807,43 @@ msgstr "Помилка"
 
 #: plug-ins/imagemap/imap_grid.c:143
 msgid "Grid Settings"
-msgstr "Налаштування с╕тки"
+msgstr "Установки с╕тки"
 
 #: plug-ins/imagemap/imap_grid.c:154
 msgid "Snap-To Grid Enabled"
-msgstr ""
+msgstr "Ув╕мкнути при╓днання до с╕тки"
 
 #: plug-ins/imagemap/imap_grid.c:160
 msgid "Grid Visibility and Type"
-msgstr ""
+msgstr "Тип та видим╕сть с╕тки"
 
 #: plug-ins/imagemap/imap_grid.c:167
 msgid "Hidden"
-msgstr ""
+msgstr "Прибрати"
 
 #: plug-ins/imagemap/imap_grid.c:174
 msgid "Lines"
-msgstr ""
+msgstr "Л╕н╕╖"
 
 #: plug-ins/imagemap/imap_grid.c:183
 msgid "Crosses"
-msgstr ""
+msgstr "Перехрещення"
 
 #: plug-ins/imagemap/imap_grid.c:190
 msgid "Grid Granularity"
-msgstr ""
+msgstr "Зернист╕сть с╕тки"
 
 #: plug-ins/imagemap/imap_grid.c:213
 msgid "Grid Offset"
-msgstr ""
+msgstr "Зм╕щення с╕тки"
 
 #: plug-ins/imagemap/imap_grid.c:224
 msgid "pixels from left"
-msgstr ""
+msgstr "п╕ксел╕в в╕д л╕вого краю"
 
 #: plug-ins/imagemap/imap_grid.c:229
 msgid "pixels from top"
-msgstr ""
+msgstr "п╕ксел╕в в╕д верху"
 
 #: plug-ins/imagemap/imap_main.c:145
 msgid "<Image>/Filters/Web/ImageMap..."
@@ -11849,13 +11851,15 @@ msgstr "<Image>/Ф╕льтри/WWW/Мапа зображення..."
 
 #: plug-ins/imagemap/imap_main.c:660
 msgid "Data changed"
-msgstr ""
+msgstr "Дан╕ зм╕нено"
 
 #: plug-ins/imagemap/imap_main.c:664
 msgid ""
 "Some data has been changed.\n"
 "Do you really want to continue?"
 msgstr ""
+"Деяк╕ дан╕ було зм╕нено.\n"
+"Ви справд╕ хочете продовжити?"
 
 #: plug-ins/imagemap/imap_main.c:873
 #, c-format
@@ -11875,6 +11879,8 @@ msgid ""
 "Image size has changed.\n"
 "Resize Area's?"
 msgstr ""
+"Розм╕р зображення було зм╕нено.\n"
+"Зм╕нити розм╕р д╕лянок?"
 
 #: plug-ins/imagemap/imap_main.c:937
 msgid "Couldn't read file:"
@@ -11913,23 +11919,23 @@ msgstr "Повернути %s"
 
 #: plug-ins/imagemap/imap_menu.c:301
 msgid "Edit Area Info..."
-msgstr ""
+msgstr "Виправлення ╕нформац╕╖ про д╕лянку..."
 
 #: plug-ins/imagemap/imap_menu.c:313
 msgid "View"
-msgstr ""
+msgstr "Перегляд"
 
 #: plug-ins/imagemap/imap_menu.c:317
 msgid "Area List"
-msgstr ""
+msgstr "Список д╕лянок"
 
 #: plug-ins/imagemap/imap_menu.c:321
 msgid "Source..."
-msgstr ""
+msgstr "Джерело..."
 
 #: plug-ins/imagemap/imap_menu.c:329
 msgid "Grayscale"
-msgstr ""
+msgstr "В╕дт╕нки с╕рого"
 
 #: plug-ins/imagemap/imap_menu.c:341
 msgid "Zoom In"
@@ -11945,7 +11951,7 @@ msgstr "Змаштабувати"
 
 #: plug-ins/imagemap/imap_menu.c:379
 msgid "Mapping"
-msgstr ""
+msgstr "В╕дображення"
 
 #: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:129
 msgid "Arrow"
@@ -11961,7 +11967,7 @@ msgstr "Цукерки"
 
 #: plug-ins/imagemap/imap_menu.c:401 plug-ins/imagemap/imap_popup.c:149
 msgid "Grid Settings..."
-msgstr "Налаштування с╕тки..."
+msgstr "Установки с╕тки..."
 
 #: plug-ins/imagemap/imap_menu.c:403
 msgid "Create Guides..."
@@ -12089,7 +12095,7 @@ msgstr "Коментар"
 
 #: plug-ins/imagemap/imap_settings.c:68
 msgid "Settings for this Mapfile"
-msgstr "Налаштування до цього файлу мапи"
+msgstr "Установки до цього файлу мапи"
 
 #: plug-ins/imagemap/imap_settings.c:82
 msgid "Image name:"
@@ -12235,7 +12241,7 @@ msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Шаблон/Моза╖ка..."
 #. progress bar for gradient finding
 #: plug-ins/mosaic/mosaic.c:447
 msgid "Finding Edges..."
-msgstr ""
+msgstr "Пошук кра╖в..."
 
 #. Progress bar for rendering tiles
 #: plug-ins/mosaic/mosaic.c:497
@@ -12377,7 +12383,7 @@ msgid ""
 "Save Settings"
 msgstr ""
 "Друкувати та\n"
-"зберегти налаштування"
+"зберегти установки"
 
 #: plug-ins/print/gimp_main_window.c:232
 msgid ""
@@ -12385,7 +12391,7 @@ msgid ""
 "Settings"
 msgstr ""
 "Зберегти\n"
-"налаштування"
+"установки"
 
 #: plug-ins/print/gimp_main_window.c:234
 msgid "Print"
@@ -12408,7 +12414,7 @@ msgstr "см"
 #.
 #: plug-ins/print/gimp_main_window.c:405
 msgid "Printer Settings"
-msgstr "Налаштування принтера"
+msgstr "Установки принтера"
 
 #: plug-ins/print/gimp_main_window.c:427
 msgid "Media Size:"
@@ -12482,7 +12488,7 @@ msgstr "Монохромне"
 #.
 #: plug-ins/print/gimp_main_window.c:601
 msgid "Scaling and Color Settings"
-msgstr "Налаштування масштабування та кольор╕в"
+msgstr "Установки масштабування та кольор╕в"
 
 #: plug-ins/print/gimp_main_window.c:627 plug-ins/print/gimp_main_window.c:635
 msgid "Scaling:"
@@ -12660,7 +12666,7 @@ msgstr "Н╕чого не вибрано для перетворення"
 
 #: plug-ins/sel2path/sel2path.c:331
 msgid "Sel2Path Advanced Settings"
-msgstr "Додатков╕ налаштування перетворення вид╕лення у контур"
+msgstr "Додатков╕ установки перетворення вид╕лення у контур"
 
 #: plug-ins/sel2path/sel2path.c:540
 #, c-format
