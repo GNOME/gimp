@@ -46,8 +46,6 @@ GPlugInInfo PLUG_IN_INFO =
 };
 
 static gint bytes;
-static gint sx1, sy1, sx2, sy2;
-static gint run_flag = FALSE;
 
 MAIN()
 

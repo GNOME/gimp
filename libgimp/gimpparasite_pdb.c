@@ -22,10 +22,10 @@
 #include "gimp.h"
 
 Parasite *
-gimp_parasite_find (const char *name)
+gimp_parasite_find (const gchar *name)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   Parasite *parasite;
   return_vals = gimp_run_procedure ("gimp_parasite_find",
 				    &nreturn_vals,
@@ -49,7 +49,7 @@ void
 gimp_parasite_attach (const Parasite *p)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_parasite_attach",
 				    &nreturn_vals,
@@ -60,11 +60,13 @@ gimp_parasite_attach (const Parasite *p)
 }
 
 void
-gimp_attach_new_parasite (const char *name, int flags,
-			  int size, const void *data)
+gimp_attach_new_parasite (const gchar    *name, 
+			  gint            flags,
+			  gint            size, 
+			  const gpointer  data)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   Parasite *p = parasite_new(name, flags, size, data);
 
   return_vals = gimp_run_procedure ("gimp_parasite_attach",
@@ -77,10 +79,10 @@ gimp_attach_new_parasite (const char *name, int flags,
 }
 
 void
-gimp_parasite_detach (const char *name)
+gimp_parasite_detach (const gchar *name)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_parasite_detach",
 				    &nreturn_vals,

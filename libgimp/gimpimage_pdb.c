@@ -26,7 +26,7 @@ gimp_image_add_hguide (gint32 image_id,
 		       gint32 yposition)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 guide_id;
 
   return_vals = gimp_run_procedure ("gimp_image_add_hguide",
@@ -49,7 +49,7 @@ gimp_image_add_vguide (gint32 image_id,
 		       gint32 xposition)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 guide_id;
 
   return_vals = gimp_run_procedure ("gimp_image_add_vguide",
@@ -72,7 +72,7 @@ gimp_image_delete_guide (gint32 image_id,
 			 gint32 guide_id)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_delete_guide",
 				    &nreturn_vals,
@@ -88,7 +88,7 @@ gimp_image_find_next_guide (gint32 image_id,
 			    gint32 guide_id)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 rtn_guide_id;
 
   return_vals = gimp_run_procedure ("gimp_image_find_next_guide",
@@ -111,7 +111,7 @@ gimp_image_get_guide_orientation (gint32 image_id,
 				  gint32 guide_id)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   GOrientation rtn_guide_orientation;
 
   return_vals = gimp_run_procedure ("gimp_image_get_guide_orientation",
@@ -134,7 +134,7 @@ gimp_image_get_guide_position (gint32 image_id,
 			       gint32 guide_id)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 rtn_guide_position;
 
   return_vals = gimp_run_procedure ("gimp_image_get_guide_position",
@@ -163,7 +163,7 @@ gimp_image_new (guint      width,
 		GImageType type)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 image_ID;
 
   return_vals = gimp_run_procedure ("gimp_image_new",
@@ -186,7 +186,7 @@ gint32
 gimp_image_duplicate (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 new_image_ID;
 
   return_vals = gimp_run_procedure ("gimp_channel_ops_duplicate",
@@ -207,7 +207,7 @@ void
 gimp_image_delete (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_delete",
 				    &nreturn_vals,
@@ -221,8 +221,8 @@ guint
 gimp_image_width (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int result;
+  gint nreturn_vals;
+  gint result;
 
   return_vals = gimp_run_procedure ("gimp_image_width",
 				    &nreturn_vals,
@@ -242,8 +242,8 @@ guint
 gimp_image_height (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int result;
+  gint nreturn_vals;
+  gint result;
 
   return_vals = gimp_run_procedure ("gimp_image_height",
 				    &nreturn_vals,
@@ -263,8 +263,8 @@ GImageType
 gimp_image_base_type (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int result;
+  gint nreturn_vals;
+  gint result;
 
   return_vals = gimp_run_procedure ("gimp_image_base_type",
 				    &nreturn_vals,
@@ -284,7 +284,7 @@ gint32
 gimp_image_floating_selection (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 layer_ID;
 
   return_vals = gimp_run_procedure ("gimp_image_floating_selection",
@@ -307,7 +307,7 @@ gimp_image_add_channel (gint32 image_ID,
 			int    position)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_add_channel",
 				    &nreturn_vals,
@@ -322,10 +322,10 @@ gimp_image_add_channel (gint32 image_ID,
 void
 gimp_image_add_layer (gint32 image_ID,
 		      gint32 layer_ID,
-		      int    position)
+		      gint   position)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_add_layer",
 				    &nreturn_vals,
@@ -359,7 +359,7 @@ void
 gimp_image_undo_disable (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_undo_disable",
 				    &nreturn_vals,
@@ -373,7 +373,7 @@ void
 gimp_image_undo_enable (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_undo_enable",
 				    &nreturn_vals,
@@ -387,7 +387,7 @@ void
 gimp_image_undo_freeze (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_undo_freeze",
 				    &nreturn_vals,
@@ -401,7 +401,7 @@ void
 gimp_image_undo_thaw (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_undo_thaw",
 				    &nreturn_vals,
@@ -415,7 +415,7 @@ void
 gimp_undo_push_group_start (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_undo_push_group_start",
 				    &nreturn_vals,
@@ -429,7 +429,7 @@ void
 gimp_undo_push_group_end (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_undo_push_group_end",
 				    &nreturn_vals,
@@ -443,7 +443,7 @@ void
 gimp_image_clean_all (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_clean_all",
 				    &nreturn_vals,
@@ -457,7 +457,7 @@ gint32
 gimp_image_flatten (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 layer_ID;
 
   return_vals = gimp_run_procedure ("gimp_image_flatten",
@@ -495,7 +495,7 @@ gimp_image_lower_layer (gint32 image_ID,
 			gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_lower_layer",
 				    &nreturn_vals,
@@ -511,7 +511,7 @@ gimp_image_merge_visible_layers (gint32        image_ID,
 				 GimpMergeType merge_type)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 layer_ID;
 
   return_vals = gimp_run_procedure ("gimp_image_merge_visible_layers",
@@ -535,7 +535,7 @@ gimp_image_pick_correlate_layer (gint32 image_ID,
 				 gint   y)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 layer_ID;
 
   return_vals = gimp_run_procedure ("gimp_image_pick_correlate_layer",
@@ -559,7 +559,7 @@ gimp_image_raise_channel (gint32 image_ID,
 			  gint32 channel_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_raise_channel",
 				    &nreturn_vals,
@@ -575,7 +575,7 @@ gimp_image_raise_layer (gint32 image_ID,
 			gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_raise_layer",
 				    &nreturn_vals,
@@ -591,7 +591,7 @@ gimp_image_remove_channel (gint32 image_ID,
 			   gint32 channel_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_remove_channel",
 				    &nreturn_vals,
@@ -607,7 +607,7 @@ gimp_image_remove_layer (gint32 image_ID,
 			 gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_remove_layer",
 				    &nreturn_vals,
@@ -624,7 +624,7 @@ gimp_image_remove_layer_mask (gint32 image_ID,
 			      gint   mode)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_remove_layer_mask",
 				    &nreturn_vals,
@@ -644,7 +644,7 @@ gimp_image_resize (gint32 image_ID,
 		   gint   offset_y)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_resize",
 				    &nreturn_vals,
@@ -662,7 +662,7 @@ gint32
 gimp_image_get_active_channel (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 channel_ID;
 
   return_vals = gimp_run_procedure ("gimp_image_get_active_channel",
@@ -683,7 +683,7 @@ gint32
 gimp_image_get_active_layer (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 layer_ID;
 
   return_vals = gimp_run_procedure ("gimp_image_get_active_layer",
@@ -705,7 +705,7 @@ gimp_image_get_channels (gint32  image_ID,
 			 gint   *nchannels)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 *channels;
 
   return_vals = gimp_run_procedure ("gimp_image_get_channels",
@@ -731,7 +731,7 @@ gimp_image_get_cmap (gint32  image_ID,
 		     gint   *ncolors)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   guchar *cmap;
 
   return_vals = gimp_run_procedure ("gimp_image_get_cmap",
@@ -752,13 +752,13 @@ gimp_image_get_cmap (gint32  image_ID,
   return cmap;
 }
 
-gint
+gboolean
 gimp_image_get_component_active (gint32 image_ID,
 				 gint   component)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int result;
+  gint nreturn_vals;
+  gboolean result;
 
   return_vals = gimp_run_procedure ("gimp_image_get_component_active",
 				    &nreturn_vals,
@@ -774,13 +774,13 @@ gimp_image_get_component_active (gint32 image_ID,
   return result;
 }
 
-gint
+gboolean
 gimp_image_get_component_visible (gint32 image_ID,
 				  gint   component)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int result;
+  gint nreturn_vals;
+  gboolean result;
 
   return_vals = gimp_run_procedure ("gimp_image_get_component_visible",
 				    &nreturn_vals,
@@ -796,7 +796,7 @@ gimp_image_get_component_visible (gint32 image_ID,
   return result;
 }
 
-char*
+gchar*
 gimp_image_get_filename (gint32 image_ID)
 {
   GParam *return_vals;
@@ -822,7 +822,7 @@ gimp_image_get_layers (gint32  image_ID,
 		       gint   *nlayers)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 *layers;
 
   return_vals = gimp_run_procedure ("gimp_image_get_layers",
@@ -847,7 +847,7 @@ gint32
 gimp_image_get_selection (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 selection_ID;
 
   return_vals = gimp_run_procedure ("gimp_image_get_selection",
@@ -869,7 +869,7 @@ gimp_image_set_active_channel (gint32 image_ID,
 			       gint32 channel_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   if (channel_ID == -1)
     {
@@ -895,7 +895,7 @@ gimp_image_set_active_layer (gint32 image_ID,
 			     gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_set_active_layer",
 				    &nreturn_vals,
@@ -912,7 +912,7 @@ gimp_image_set_cmap (gint32  image_ID,
 		     gint    ncolors)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_set_cmap",
 				    &nreturn_vals,
@@ -925,12 +925,12 @@ gimp_image_set_cmap (gint32  image_ID,
 }
 
 void
-gimp_image_set_component_active (gint32 image_ID,
-				 gint   component,
-				 gint   active)
+gimp_image_set_component_active (gint32   image_ID,
+				 gint     component,
+				 gboolean active)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_set_component_active",
 				    &nreturn_vals,
@@ -943,12 +943,12 @@ gimp_image_set_component_active (gint32 image_ID,
 }
 
 void
-gimp_image_set_component_visible (gint32 image_ID,
-				  gint   component,
-				  gint   visible)
+gimp_image_set_component_visible (gint32   image_ID,
+				  gint     component,
+				  gboolean visible)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_set_component_visible",
 				    &nreturn_vals,
@@ -962,10 +962,10 @@ gimp_image_set_component_visible (gint32 image_ID,
 
 void
 gimp_image_set_filename (gint32  image_ID,
-			 char   *name)
+			 gchar  *name)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_set_filename",
 				    &nreturn_vals,
@@ -977,11 +977,11 @@ gimp_image_set_filename (gint32  image_ID,
 }
 
 Parasite *
-gimp_image_parasite_find (gint32      image_ID, 
-			  const char *name)
+gimp_image_parasite_find (gint32       image_ID, 
+			  const gchar *name)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   Parasite *parasite;
   return_vals = gimp_run_procedure ("gimp_image_parasite_find",
 				    &nreturn_vals,
@@ -1006,7 +1006,7 @@ gimp_image_parasite_attach (gint32          image_ID,
 			    const Parasite *p)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_parasite_attach",
 				    &nreturn_vals,
@@ -1018,14 +1018,14 @@ gimp_image_parasite_attach (gint32          image_ID,
 }
 
 void
-gimp_image_attach_new_parasite (gint32      image_ID, 
-				const char *name, 
-				int         flags,
-				int         size, 
-				const void *data)
+gimp_image_attach_new_parasite (gint32          image_ID, 
+				const gchar    *name, 
+				gint            flags,
+				gint            size, 
+				const gpointer  data)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   Parasite *p = parasite_new(name, flags, size, data);
 
   return_vals = gimp_run_procedure ("gimp_image_parasite_attach",
@@ -1039,11 +1039,11 @@ gimp_image_attach_new_parasite (gint32      image_ID,
 }
 
 void
-gimp_image_parasite_detach (gint32      image_ID, 
-			    const char *name)
+gimp_image_parasite_detach (gint32       image_ID, 
+			    const gchar *name)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_parasite_detach",
 				    &nreturn_vals,
@@ -1060,7 +1060,7 @@ gimp_image_get_resolution (gint32  image_ID,
 			   double *yresolution)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   double xres;
   double yres;
 
@@ -1093,7 +1093,7 @@ gimp_image_set_resolution (gint32 image_ID,
 			   double yresolution)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_set_resolution",
 				    &nreturn_vals,
@@ -1109,7 +1109,7 @@ GimpUnit
 gimp_image_get_unit (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   GimpUnit unit;
 
   return_vals = gimp_run_procedure ("gimp_image_get_unit",
@@ -1133,7 +1133,7 @@ gimp_image_set_unit (gint32   image_ID,
 		     GimpUnit unit)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_set_unit",
 				    &nreturn_vals,
@@ -1149,7 +1149,7 @@ gimp_image_get_layer_by_tattoo (gint32 image_ID,
 				gint32 tattoo)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 layer = 0;
 
   return_vals = gimp_run_procedure ("gimp_image_get_layer_by_tattoo",
@@ -1172,7 +1172,7 @@ gimp_image_get_channel_by_tattoo (gint32 image_ID,
 				  gint32 tattoo)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 channel = 0;
 
   return_vals = gimp_run_procedure ("gimp_image_get_channel_by_tattoo",
@@ -1197,7 +1197,7 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
 			       gint   *bytes)
 {
   GParam *return_vals;
-  int     nreturn_vals;
+  gint    nreturn_vals;
   guchar *image_data = NULL;
 
   return_vals = gimp_run_procedure ("gimp_image_thumbnail",
@@ -1225,7 +1225,7 @@ void
 gimp_image_convert_rgb (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_convert_rgb",
 				    &nreturn_vals,
@@ -1239,7 +1239,7 @@ void
 gimp_image_convert_grayscale (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_convert_grayscale",
 				    &nreturn_vals,
@@ -1259,7 +1259,7 @@ gimp_image_convert_indexed (gint32                 image_ID,
 			    gchar                 *palette)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_convert_indexed",
 				    &nreturn_vals,

@@ -692,8 +692,10 @@ app_exit_finish (void)
       save_sessionrc ();
     }
 
-  /* gtk_exit (0); */
-  gtk_main_quit();
+  /*  There used to be gtk_main_quit() here, but there's a chance 
+   *  that gtk_main() was never called before we reach this point. --Sven  
+   */
+  gtk_exit (0);   
 }
 
 void

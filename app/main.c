@@ -288,7 +288,7 @@ main (int    argc,
       g_print (_("  --no-xshm                Do not use the X Shared Memory extension.\n"));
       g_print (_("  --console-messages       Display warnings to console instead of a dialog box.\n"));
       g_print (_("  --debug-handlers         Enable debugging signal handlers.\n"));
-      g_print (_("  --display <display>      Use the designated X display.\n\n"));
+      g_print (_("  --display <display>      Use the designated X display.\n"));
       g_print (_("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"));
     }
 

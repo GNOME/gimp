@@ -130,8 +130,9 @@ gimp_db_browser (void (* apply_callback) (gchar     *selected_proc_name,
 {
   dbbrowser_t* dbbrowser;
   
-  GtkWidget *button;
-  GtkWidget *hbox,*searchhbox,*vbox;
+  GtkWidget *hbox;
+  GtkWidget *searchhbox;
+  GtkWidget *vbox;
   GtkWidget *label;
 
   dbbrowser = g_new (dbbrowser_t, 1);

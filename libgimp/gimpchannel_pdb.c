@@ -21,14 +21,14 @@
 
 gint32
 gimp_channel_new (gint32   image_ID,
-		  char    *name,
+		  gchar   *name,
 		  guint    width,
 		  guint    height,
 		  gdouble  opacity,
 		  guchar  *color)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 channel_ID;
 
   return_vals = gimp_run_procedure ("gimp_channel_new",
@@ -54,7 +54,7 @@ gint32
 gimp_channel_copy (gint32 channel_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_copy",
 				    &nreturn_vals,
@@ -74,7 +74,7 @@ void
 gimp_channel_delete (gint32 channel_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_delete",
 				    &nreturn_vals,
@@ -115,7 +115,7 @@ gimp_channel_get_color (gint32  channel_ID,
 			guchar *blue)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_get_color",
 				    &nreturn_vals,
@@ -132,12 +132,12 @@ gimp_channel_get_color (gint32  channel_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
-char*
+gchar*
 gimp_channel_get_name (gint32 channel_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  char *name;
+  gint nreturn_vals;
+  gchar *name;
 
   return_vals = gimp_run_procedure ("gimp_channel_get_name",
 				    &nreturn_vals,
@@ -157,7 +157,7 @@ gdouble
 gimp_channel_get_opacity (gint32 channel_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gdouble opacity;
 
   return_vals = gimp_run_procedure ("gimp_channel_get_opacity",
@@ -174,19 +174,19 @@ gimp_channel_get_opacity (gint32 channel_ID)
   return opacity;
 }
 
-gint
+gboolean
 gimp_channel_get_visible (gint32 channel_ID)
 {
-  GParam *return_vals;
-  int nreturn_vals;
-  int visible;
+  GParam   *return_vals;
+  gint      nreturn_vals;
+  gboolean  visible;
 
   return_vals = gimp_run_procedure ("gimp_channel_get_visible",
 				    &nreturn_vals,
 				    PARAM_CHANNEL, channel_ID,
 				    PARAM_END);
 
-  visible = -1;
+  visible = FALSE;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     visible = return_vals[1].data.d_int32;
 
@@ -202,7 +202,7 @@ gimp_channel_set_color (gint32 channel_ID,
 			guchar blue)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   guchar color[3];
 
   color[0] = red;
@@ -220,10 +220,10 @@ gimp_channel_set_color (gint32 channel_ID,
 
 void
 gimp_channel_set_name (gint32  channel_ID,
-		       char   *name)
+		       gchar  *name)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_set_name",
 				    &nreturn_vals,
@@ -239,7 +239,7 @@ gimp_channel_set_opacity (gint32  channel_ID,
 			  gdouble opacity)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_set_opacity",
 				    &nreturn_vals,
@@ -251,11 +251,11 @@ gimp_channel_set_opacity (gint32  channel_ID,
 }
 
 void
-gimp_channel_set_visible (gint32 channel_ID,
-			  gint   visible)
+gimp_channel_set_visible (gint32   channel_ID,
+			  gboolean visible)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_set_visible",
 				    &nreturn_vals,
@@ -270,8 +270,8 @@ gint
 gimp_channel_get_show_masked (gint32 channel_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int show_masked;
+  gint nreturn_vals;
+  gint show_masked;
 
   return_vals = gimp_run_procedure ("gimp_channel_get_show_masked",
 				    &nreturn_vals,
@@ -292,7 +292,7 @@ gimp_channel_set_show_masked (gint32 channel_ID,
 			      gint   show_masked)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_set_show_masked",
 				    &nreturn_vals,
@@ -307,8 +307,8 @@ gint32
 gimp_channel_get_tattoo (gint32 channel_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int tattoo;
+  gint nreturn_vals;
+  gint tattoo;
 
   return_vals = gimp_run_procedure ("gimp_channel_get_tattoo",
 				    &nreturn_vals,

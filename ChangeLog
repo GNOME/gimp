@@ -1,3 +1,27 @@
+2000-03-25  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c: use gtk_exit(0) instead of gtk_main_quit() 
+	since there is a chance that the main loop is never entered.
+	Fixes bug #7744.
+	
+	* app/main.c: cosmetic change
+
+	* libgimp/gimp.[ch]: (gimp_read_expect_msg) don't claim about
+	receiving a message of type GP_QUIT, simply execute it. Fixes a
+	warning that occured when calling gimp_quit from a plug_in.
+
+	Cleanup up the code a bit and changed gint to gboolean where
+	appropriate.
+	
+	* libgimp/gimpchannel.c
+	* libgimp/gimpdrawable.c
+	* libgimp/gimpimage.c
+	* libgimp/gimpparasite.c: cleaned up and changed gint to gboolean 
+	where appropriate.
+
+	* plug-ins/common/autocrop.c
+	* plug-ins/dbbrowser/dbbrowser_utils.c: removed unused variables
+	
 2000-03-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/cursorutil.[ch]: new global variable "gimp_busy" which gets
