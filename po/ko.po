@@ -1,12 +1,12 @@
 # gimp ko.po
 # Copyright (C) 1998 Free Software Foundation, Inc.
-# Sung-Hyun Nam <namsh@lgic.co.kr>, 1998, 1999
+# Sung-Hyun Nam <namsh@kldp.org>, 1998, 1999
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.10\n"
-"POT-Creation-Date: 1999-11-25 12:08-0800\n"
-"PO-Revision-Date: 1999-10-13 05:30:34+0900\n"
-"Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
+"Project-Id-Version: gimp 1.1.12\n"
+"POT-Creation-Date: 1999-11-26 10:30+0900\n"
+"PO-Revision-Date: 1999-11-26 03:49:46+0900\n"
+"Last-Translator: Sung-Hyun Nam <namsh@kldp.org>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=euc-kr\n"
@@ -17,9 +17,8 @@ msgid "About the GIMP"
 msgstr "GIMP에 대하여"
 
 #: app/about_dialog.c:234
-#, fuzzy, c-format
 msgid "Version %s brought to you by"
-msgstr "는 아래 분들이 제공합니다."
+msgstr "Version %s brought to you by"
 
 #: app/about_dialog.c:274
 msgid "Please visit http://www.gimp.org/ for more info"
@@ -208,9 +207,8 @@ msgid "Adaptive supersampling"
 msgstr "슈퍼샘플링 적응성"
 
 #: app/blend.c:412
-#, fuzzy
 msgid "Max Depth:"
-msgstr "최대 깊이(depth):"
+msgstr "최대 깊이:"
 
 #: app/blend.c:425 app/bucket_fill.c:130 app/fuzzy_select.c:641
 msgid "Threshold:"
@@ -329,9 +327,8 @@ msgid "Refresh"
 msgstr "다시 그림"
 
 #: app/brush_select.c:405
-#, fuzzy
 msgid "No Brushes available"
-msgstr "미리보기 가능하지 않음"
+msgstr "브러쉬를 사용할 수 없음"
 
 #: app/brush_select.c:446 app/layers_dialog.c:393 app/tool_options.c:595
 msgid "Opacity:"
@@ -622,9 +619,8 @@ msgid "Color Balance"
 msgstr "색상 균형"
 
 #: app/color_balance.c:286
-#, fuzzy
 msgid "Color Levels:"
-msgstr "색상 수준: "
+msgstr "색상 수준:"
 
 #. Create the cyan-red scale widget
 #: app/color_balance.c:326
@@ -709,7 +705,7 @@ msgstr "명암:"
 #: app/color_picker.c:682 app/info_window.c:197 app/info_window.c:202
 #: app/info_window.c:207 app/info_window.c:212
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: app/colormap_dialog.i.c:175
 msgid "Indexed Color Palette"
@@ -781,14 +777,12 @@ msgid "General Palette Options"
 msgstr "팔렛 옵션"
 
 #: app/convert.c:524
-#, fuzzy
 msgid "Generate optimal palette:"
-msgstr "최적의 팔렛 생성: "
+msgstr "최적의 팔렛 생성:"
 
 #: app/convert.c:557
-#, fuzzy
 msgid "# of colors:"
-msgstr "색상 수: "
+msgstr "색상 수:"
 
 #: app/convert.c:575
 msgid "Use custom palette"
@@ -835,9 +829,8 @@ msgid "Remove unused colours from final palette"
 msgstr "마지막 팔렛에서 사용하지 않는 팔렛 없애기"
 
 #: app/convert.c:765
-#, fuzzy
 msgid "[ Warning ]"
-msgstr " [ 경고 ] "
+msgstr "[ 경고 ]"
 
 #: app/convert.c:775
 msgid ""
@@ -958,15 +951,13 @@ msgid "Curves"
 msgstr "곡선"
 
 #: app/curves.c:577
-#, fuzzy
 msgid "Modify Curves for Channel:"
-msgstr "채널에서 곡선 수정: "
+msgstr "채널에서 곡선 수정:"
 
 #. The option menu for selecting the drawing method
 #: app/curves.c:658
-#, fuzzy
 msgid "Curve Type:"
-msgstr "곡선 종류: "
+msgstr "곡선 종류:"
 
 #: app/desaturate.c:35
 msgid "Desaturate operates only on RGB color drawables."
@@ -1802,9 +1793,9 @@ msgstr ""
 "하기를 원하나요?"
 
 #: app/gradient.c:2008
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open \"%s\""
-msgstr "%s를 다시 열 수 없습니다\n"
+msgstr "\"%s\"를 열 수 없습니다"
 
 #: app/gradient.c:2130
 #, c-format
@@ -1975,7 +1966,7 @@ msgstr "전경 색상"
 #: app/gradient.c:4212
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr ""
+msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:4725 app/gradient.c:4795
 msgid "(Varies)"
@@ -2185,27 +2176,27 @@ msgstr "%d 바이트"
 #: app/image_new.c:265
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f KB"
 
 #: app/image_new.c:267
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f KB"
 
 #: app/image_new.c:269
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d KB"
 
 #: app/image_new.c:271
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f MB"
 
 #: app/image_new.c:273
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f MB"
 
 #: app/indicator_area.c:137
 msgid ""
@@ -2264,22 +2255,19 @@ msgstr "%s: 창 정보"
 
 #: app/info_window.c:217
 msgid "A:"
-msgstr ""
+msgstr "A:"
 
 #: app/info_window.c:222
-#, fuzzy
 msgid "B:"
-msgstr "B"
+msgstr "B:"
 
 #: app/info_window.c:227
-#, fuzzy
 msgid "G:"
-msgstr "G"
+msgstr "G:"
 
 #: app/info_window.c:232
-#, fuzzy
 msgid "R:"
-msgstr "적색:"
+msgstr "R:"
 
 #: app/info_window.c:251
 msgid "Extended"
@@ -2328,7 +2316,7 @@ msgstr "그레이(Gray) 농도:"
 
 #: app/info_window.c:443
 msgid "%%d x %%d pixels (%%.%df x %%.%df %s)"
-msgstr ""
+msgstr "%%d x %%d 픽셀 (%%.%df x %%.%df %s)"
 
 #: app/info_window.c:469
 msgid "RGB Color"
@@ -2454,7 +2442,7 @@ msgstr ""
 
 #: app/install.c:140
 msgid "gimprc\n"
-msgstr ""
+msgstr "gimprc\n"
 
 #: app/install.c:141
 msgid ""
@@ -2470,7 +2458,7 @@ msgstr ""
 
 #: app/install.c:146
 msgid "unitrc\n"
-msgstr ""
+msgstr "unitrc\n"
 
 #: app/install.c:147
 msgid ""
@@ -2487,7 +2475,7 @@ msgstr ""
 
 #: app/install.c:153
 msgid "pluginrc\n"
-msgstr ""
+msgstr "pluginrc\n"
 
 #: app/install.c:154
 msgid ""
@@ -2506,7 +2494,7 @@ msgstr ""
 
 #: app/install.c:161
 msgid "brushes\n"
-msgstr ""
+msgstr "brushes\n"
 
 #: app/install.c:162
 msgid ""
@@ -2537,7 +2525,7 @@ msgstr ""
 
 #: app/install.c:174
 msgid "gradients\n"
-msgstr ""
+msgstr "gradients\n"
 
 #: app/install.c:175
 msgid ""
@@ -2555,7 +2543,7 @@ msgstr ""
 
 #: app/install.c:181
 msgid "gfig\n"
-msgstr ""
+msgstr "gfig\n"
 
 #: app/install.c:182
 msgid ""
@@ -2573,7 +2561,7 @@ msgstr ""
 
 #: app/install.c:188
 msgid "gflares\n"
-msgstr ""
+msgstr "gflares\n"
 
 #: app/install.c:189
 msgid ""
@@ -2591,7 +2579,7 @@ msgstr ""
 
 #: app/install.c:195
 msgid "fractalexplorer\n"
-msgstr ""
+msgstr "fractalexplorer\n"
 
 #: app/install.c:196
 msgid ""
@@ -2609,7 +2597,7 @@ msgstr ""
 
 #: app/install.c:202
 msgid "palettes\n"
-msgstr ""
+msgstr "palettes\n"
 
 #: app/install.c:203
 msgid ""
@@ -2633,7 +2621,7 @@ msgstr ""
 
 #: app/install.c:212
 msgid "patterns\n"
-msgstr ""
+msgstr "patterns\n"
 
 #: app/install.c:213
 msgid ""
@@ -2651,7 +2639,7 @@ msgstr ""
 
 #: app/install.c:219
 msgid "plug-ins\n"
-msgstr ""
+msgstr "plug-ins\n"
 
 #: app/install.c:220
 msgid ""
@@ -2671,7 +2659,7 @@ msgstr ""
 
 #: app/install.c:227
 msgid "modules\n"
-msgstr ""
+msgstr "modules\n"
 
 #: app/install.c:228
 msgid ""
@@ -2689,7 +2677,7 @@ msgstr ""
 
 #: app/install.c:234
 msgid "scripts\n"
-msgstr ""
+msgstr "scripts\n"
 
 #: app/install.c:235
 msgid ""
@@ -2705,7 +2693,7 @@ msgstr ""
 
 #: app/install.c:240
 msgid "tmp\n"
-msgstr ""
+msgstr "tmp\n"
 
 #: app/install.c:241
 msgid ""
@@ -2769,6 +2757,10 @@ msgid ""
 "was successful! Otherwise, quit and investigate\n"
 "the possible reason...\n"
 msgstr ""
+"콘솔 창에 에러 알림말이 출력되었습니까?\n"
+"그렇지 않다면, 성공적으로 인스톨 된 것입니다!\n"
+"에러가 났다면, 종료하시고 왜 에러가 났는지를\n"
+"찾아보시기 바랍니다...\n"
 
 #: app/install.c:518
 msgid ""
@@ -3159,19 +3151,16 @@ msgid "Levels"
 msgstr "레벨"
 
 #: app/levels.c:388
-#, fuzzy
 msgid "Modify Levels for Channel:"
-msgstr "채널을 위한 레벨 바꾸기: "
+msgstr "채널을 위한 레벨 바꾸기:"
 
 #: app/levels.c:404
-#, fuzzy
 msgid "Input Levels:"
-msgstr "입력 레벨: "
+msgstr "입력 레벨:"
 
 #: app/levels.c:513
-#, fuzzy
 msgid "Output Levels:"
-msgstr "출력 레벨: "
+msgstr "출력 레벨:"
 
 #: app/levels.c:617 app/module_db.c:825
 msgid "Load"
@@ -3354,29 +3343,24 @@ msgid "degrees"
 msgstr "각도"
 
 #: app/menus.c:69
-#, fuzzy
 msgid "/Filters/Render/Clouds"
-msgstr "/필터/마지막 반복"
+msgstr "/필터/Render/Clouds"
 
 #: app/menus.c:70
-#, fuzzy
 msgid "/Filters/Render/Nature"
-msgstr "/필터/마지막 반복"
+msgstr "/필터/Render/Nature"
 
 #: app/menus.c:71
-#, fuzzy
 msgid "/Filters/Render/Pattern"
-msgstr "/필터/마지막 반복"
+msgstr "/필터/Render/Pattern"
 
 #: app/menus.c:72
-#, fuzzy
 msgid "/Filters/Colors/Map"
-msgstr "/파일/닫기"
+msgstr "/필터/색/맵"
 
 #: app/menus.c:73
-#, fuzzy
 msgid "/Filters/Misc"
-msgstr "/필터"
+msgstr "/필터/기타"
 
 #. <Toolbox>/File
 #: app/menus.c:84 app/menus.c:194
@@ -3384,19 +3368,16 @@ msgid "/File"
 msgstr "/파일"
 
 #: app/menus.c:86 app/menus.c:196
-#, fuzzy
 msgid "/File/New..."
-msgstr "/파일/새 그림"
+msgstr "/파일/새 그림..."
 
 #: app/menus.c:88 app/menus.c:198
-#, fuzzy
 msgid "/File/Open..."
-msgstr "/파일/열기"
+msgstr "/파일/열기..."
 
 #: app/menus.c:95
-#, fuzzy
 msgid "/File/Acquire"
-msgstr "/파일/수집하기/tearoff1"
+msgstr "/파일/Acquire"
 
 #: app/menus.c:100
 msgid "/File/Preferences..."
@@ -3431,9 +3412,8 @@ msgid "/File/Dialogs/Palette..."
 msgstr "/파일/대화상자/팔렛..."
 
 #: app/menus.c:124
-#, fuzzy
 msgid "/File/Dialogs/Indexed Palette..."
-msgstr "/대화상자/인덱스된 팔렛..."
+msgstr "/파일/대화상자/인덱스된 팔렛..."
 
 #: app/menus.c:129
 msgid "/File/Dialogs/Input Devices..."
@@ -3458,40 +3438,36 @@ msgstr "/파일/대화상자/디스플레이 필터..."
 #. <Toolbox>/Xtns
 #: app/menus.c:150
 msgid "/Xtns"
-msgstr ""
+msgstr "/확장"
 
 #: app/menus.c:152
-#, fuzzy
 msgid "/Xtns/Module Browser..."
-msgstr "/확장/모듈 브라우저"
+msgstr "/확장/모듈 브라우저..."
 
 #. <Toolbox>/Help
 #: app/menus.c:160
 msgid "/Help"
-msgstr ""
+msgstr "/도움말"
 
 #: app/menus.c:162
-#, fuzzy
 msgid "/Help/Help..."
-msgstr "/파일/도움말..."
+msgstr "/도움말/도움말..."
 
 #: app/menus.c:164
 msgid "/Help/Context Help..."
-msgstr ""
+msgstr "/도움말/문맥 도움말..."
 
 #: app/menus.c:166
-#, fuzzy
 msgid "/Help/Tip of the day..."
-msgstr "/파일/오늘의 팁"
+msgstr "/도움말/오늘의 팁..."
 
 #: app/menus.c:168
-#, fuzzy
 msgid "/Help/About..."
-msgstr "/파일/이 프로그램은..."
+msgstr "/도움말/이 프로그램은..."
 
 #: app/menus.c:170
 msgid "/Help/Dump Items (Debug)"
-msgstr ""
+msgstr "/도움말/항목 덤프 (디버그)"
 
 #: app/menus.c:182 app/menus.c:211
 msgid "/File/Quit"
@@ -3502,9 +3478,8 @@ msgid "/File/Save"
 msgstr "/파일/저장"
 
 #: app/menus.c:202
-#, fuzzy
 msgid "/File/Save as..."
-msgstr "/파일/다른 이름으로 저장"
+msgstr "/파일/다른 이름으로 저장..."
 
 #: app/menus.c:204
 msgid "/File/Revert"
@@ -3549,24 +3524,20 @@ msgstr "/편집/새롭게 붙이기"
 
 #. <Image>/Edit/Buffer
 #: app/menus.c:241
-#, fuzzy
 msgid "/Edit/Buffer"
-msgstr "/편집/지우기"
+msgstr "/편집/버퍼"
 
 #: app/menus.c:243
-#, fuzzy
 msgid "/Edit/Buffer/Cut Named..."
-msgstr "/편집/이름붙여 자르기"
+msgstr "/편집/버퍼/이름붙여 자르기..."
 
 #: app/menus.c:245
-#, fuzzy
 msgid "/Edit/Buffer/Copy Named..."
-msgstr "/편집/이름붙여 복사"
+msgstr "/편집/버퍼/이름붙여 복사..."
 
 #: app/menus.c:247
-#, fuzzy
 msgid "/Edit/Buffer/Paste Named..."
-msgstr "/편집/이름붙여 붙이기"
+msgstr "/편집/버퍼/이름붙여 붙이기..."
 
 #: app/menus.c:252
 msgid "/Edit/Clear"
@@ -3602,28 +3573,24 @@ msgid "/Select/Float"
 msgstr "/선택/유동적"
 
 #: app/menus.c:277
-#, fuzzy
 msgid "/Select/Feather..."
-msgstr "/선택/상태"
+msgstr "/선택/Feather..."
 
 #: app/menus.c:279
 msgid "/Select/Sharpen"
 msgstr "/선택/뽀죡하게"
 
 #: app/menus.c:281
-#, fuzzy
 msgid "/Select/Shrink..."
-msgstr "/선택/줄이기"
+msgstr "/선택/줄이기..."
 
 #: app/menus.c:283
-#, fuzzy
 msgid "/Select/Grow..."
-msgstr "/선택/늘리기"
+msgstr "/선택/늘리기..."
 
 #: app/menus.c:285
-#, fuzzy
 msgid "/Select/Border..."
-msgstr "/선택/테두리"
+msgstr "/선택/테두리..."
 
 #: app/menus.c:290
 msgid "/Select/Save To Channel"
@@ -3696,9 +3663,8 @@ msgid "/View/Nav. Window..."
 msgstr "/보기/창 네비게이터..."
 
 #: app/menus.c:334
-#, fuzzy
 msgid "/View/Undo history..."
-msgstr "/편집/히스토리 복구..."
+msgstr "/보기/히스토리 복구..."
 
 #: app/menus.c:339
 msgid "/View/Toggle Selection"
@@ -3735,24 +3701,20 @@ msgstr "/이미지"
 
 #. <Image>/Image/Mode
 #: app/menus.c:367
-#, fuzzy
 msgid "/Image/Mode"
-msgstr "/이미지/인덱스됨(Indexed)"
+msgstr "/이미지/모드"
 
 #: app/menus.c:369
-#, fuzzy
 msgid "/Image/Mode/RGB"
-msgstr "/이미지/RGB"
+msgstr "/이미지/모드/RGB"
 
 #: app/menus.c:371
-#, fuzzy
 msgid "/Image/Mode/Grayscale"
-msgstr "/이미지/그레이스케일"
+msgstr "/이미지/모드/그레이스케일"
 
 #: app/menus.c:373
-#, fuzzy
 msgid "/Image/Mode/Indexed..."
-msgstr "/이미지/인덱스됨(Indexed)"
+msgstr "/이미지/모드/인덱스됨(Indexed)"
 
 #. <Image>/Image/Colors
 #: app/menus.c:381
@@ -3769,14 +3731,12 @@ msgstr "/이미지/색/반대로(Invert)"
 
 #. <Image>/Image/Colors/Auto
 #: app/menus.c:396
-#, fuzzy
 msgid "/Image/Colors/Auto"
-msgstr "/이미지/색"
+msgstr "/이미지/색/자동"
 
 #: app/menus.c:398
-#, fuzzy
 msgid "/Image/Colors/Auto/Equalize"
-msgstr "/이미지/색/균등하기(Equalize)"
+msgstr "/이미지/색/자동/균등하기(Equalize)"
 
 #. <Image>/Image/Alpha
 #: app/menus.c:406
@@ -3793,24 +3753,20 @@ msgid "/Image/Transforms"
 msgstr "/이미지/변환"
 
 #: app/menus.c:415
-#, fuzzy
 msgid "/Image/Transforms/Offset..."
-msgstr "/이미지/변환/옵셋"
+msgstr "/이미지/변환/옵셋..."
 
 #: app/menus.c:417
-#, fuzzy
 msgid "/Image/Transforms/Rotate"
-msgstr "/이미지/변환"
+msgstr "/이미지/변환/회전"
 
 #: app/menus.c:424
-#, fuzzy
 msgid "/Image/Canvas Size..."
-msgstr "/이미지/크기조정"
+msgstr "/이미지/캔버스 크기..."
 
 #: app/menus.c:426
-#, fuzzy
 msgid "/Image/Scale Image..."
-msgstr "/이미지/스케일"
+msgstr "/이미지/스케일 이미지..."
 
 #: app/menus.c:428
 msgid "/Image/Duplicate"
@@ -3856,18 +3812,16 @@ msgstr "/계층/스택/최하층으로"
 
 #. <Image>/Layers/Rotate
 #: app/menus.c:462
-#, fuzzy
 msgid "/Layers/Rotate"
-msgstr "/계층/스택"
+msgstr "/계층/회전"
 
 #: app/menus.c:467
 msgid "/Layers/Anchor Layer"
 msgstr "/계층/계층 고정"
 
 #: app/menus.c:469
-#, fuzzy
 msgid "/Layers/Merge Visible Layers..."
-msgstr "/계층/보이는 계층을 머지"
+msgstr "/계층/보이는 계층을 머지..."
 
 #: app/menus.c:471
 msgid "/Layers/Flatten Image"
@@ -3916,84 +3870,68 @@ msgid "/Filters/Re-show last"
 msgstr "/필터/마지막 다시 보여주기"
 
 #: app/menus.c:515
-#, fuzzy
 msgid "/Filters/Blur"
-msgstr "/필터"
+msgstr "/필터/Blur"
 
 #: app/menus.c:518
-#, fuzzy
 msgid "/Filters/Colors"
-msgstr "/파일/닫기"
+msgstr "/필터/색"
 
 #: app/menus.c:523
-#, fuzzy
 msgid "/Filters/Noise"
-msgstr "/필터"
+msgstr "/필터/잡음"
 
 #: app/menus.c:525
-#, fuzzy
 msgid "/Filters/Edge-Detect"
-msgstr "/필터/마지막 반복"
+msgstr "/필터/가장자리-찾기"
 
 #: app/menus.c:527
-#, fuzzy
 msgid "/Filters/Enhance"
-msgstr "/필터"
+msgstr "/필터/Enhance"
 
 #: app/menus.c:529
-#, fuzzy
 msgid "/Filters/Generic"
-msgstr "/필터"
+msgstr "/필터/Generic"
 
 #: app/menus.c:534
-#, fuzzy
 msgid "/Filters/Glass Effects"
-msgstr "/필터/마지막 반복"
+msgstr "/필터/유리잔 효과"
 
 #: app/menus.c:536
-#, fuzzy
 msgid "/Filters/Light Effects"
-msgstr "/필터/tearoff1"
+msgstr "/필터/조명 효과"
 
 #: app/menus.c:538
-#, fuzzy
 msgid "/Filters/Distorts"
-msgstr "/파일/대화상자"
+msgstr "/필터/Distorts"
 
 #: app/menus.c:540
-#, fuzzy
 msgid "/Filters/Artistic"
-msgstr "/필터/마지막 반복"
+msgstr "/필터/Artistic"
 
 #: app/menus.c:542
-#, fuzzy
 msgid "/Filters/Map"
-msgstr "/필터"
+msgstr "/필터/맵"
 
 #: app/menus.c:544
-#, fuzzy
 msgid "/Filters/Render"
-msgstr "/파일/원래대로 복구"
+msgstr "/필터/Render"
 
 #: app/menus.c:546
-#, fuzzy
 msgid "/Filters/Web"
-msgstr "/필터"
+msgstr "/필터/Web"
 
 #: app/menus.c:551
-#, fuzzy
 msgid "/Filters/Animation"
-msgstr "/필터/tearoff1"
+msgstr "/필터/에니메이션"
 
 #: app/menus.c:553
-#, fuzzy
 msgid "/Filters/Combine"
-msgstr "/파일/닫기"
+msgstr "/필터/Combine"
 
 #: app/menus.c:558
-#, fuzzy
 msgid "/Filters/Toys"
-msgstr "/필터"
+msgstr "/필터/장난감"
 
 #. <Image>/Script-Fu
 #: app/menus.c:563
@@ -4042,14 +3980,12 @@ msgid "/Dialogs/Device Status..."
 msgstr "/대화상자/장치 상태..."
 
 #: app/menus.c:597
-#, fuzzy
 msgid "/Dialogs/Document Index..."
-msgstr "/파일/대화상자/문서 색인..."
+msgstr "/대화상자/문서 색인..."
 
 #: app/menus.c:599
-#, fuzzy
 msgid "/Dialogs/Error Console..."
-msgstr "/파일/대화상자/에러 콘솔..."
+msgstr "/대화상자/에러 콘솔..."
 
 #: app/menus.c:601
 msgid "/Dialogs/Display Filters..."
@@ -4064,9 +4000,8 @@ msgid "/By extension"
 msgstr "/확장자로"
 
 #: app/menus.c:640
-#, fuzzy
 msgid "/New Layer..."
-msgstr "/새 계층"
+msgstr "/새 계층..."
 
 #. <Layers>/Stack
 #: app/menus.c:645
@@ -4111,17 +4046,15 @@ msgstr "/계층 삭제"
 
 #: app/menus.c:669
 msgid "/Layer Boundary Size..."
-msgstr ""
+msgstr "/계층 경계 크기..."
 
 #: app/menus.c:671
-#, fuzzy
 msgid "/Scale Layer..."
-msgstr "/계층 스케일"
+msgstr "/계층 스케일..."
 
 #: app/menus.c:676
-#, fuzzy
 msgid "/Merge Visible Layers..."
-msgstr "/보이는 계층 머지"
+msgstr "/보이는 계층 머지..."
 
 #: app/menus.c:678
 msgid "/Merge Down"
@@ -4132,14 +4065,12 @@ msgid "/Flatten Image"
 msgstr "/플래튼 이미지"
 
 #: app/menus.c:685
-#, fuzzy
 msgid "/Add Layer Mask..."
-msgstr "/계층 마스크 추가"
+msgstr "/계층 마스크 추가..."
 
 #: app/menus.c:687
-#, fuzzy
 msgid "/Apply Layer Mask..."
-msgstr "/계층 마스크 적용"
+msgstr "/계층 마스크 적용..."
 
 #: app/menus.c:689
 msgid "/Mask to Selection"
@@ -4154,9 +4085,8 @@ msgid "/Alpha to Selection"
 msgstr "/셀렉션 알파"
 
 #: app/menus.c:707
-#, fuzzy
 msgid "/New Channel..."
-msgstr "/새로운 채널"
+msgstr "/새로운 채널..."
 
 #: app/menus.c:709
 msgid "/Raise Channel"
@@ -4203,9 +4133,8 @@ msgid "/Path to Selection"
 msgstr "/경로를 셀렉션으로"
 
 #: app/menus.c:746
-#, fuzzy
 msgid "/Selection to Path"
-msgstr "경로를 위한 셀렉션"
+msgstr "/경로를 위한 셀렉션"
 
 #: app/menus.c:748
 msgid "/Stroke Path"
@@ -4224,14 +4153,12 @@ msgid "/Paste Path"
 msgstr "/경로 붙이기"
 
 #: app/menus.c:759
-#, fuzzy
 msgid "/Import Path..."
-msgstr "/경로 가져오기"
+msgstr "/경로 가져오기..."
 
 #: app/menus.c:761
-#, fuzzy
 msgid "/Export Path..."
-msgstr "/경로 전하기"
+msgstr "/경로 전하기..."
 
 #: app/menus.c:1210
 #, c-format
@@ -4239,28 +4166,24 @@ msgid "Error opening file: %s\n"
 msgstr "파일 열기 에러: %s\n"
 
 #: app/module_db.c:58
-#, fuzzy
 msgid "Module error"
-msgstr "모듈 DB"
+msgstr "모듈 에러"
 
 #: app/module_db.c:59
-#, fuzzy
 msgid "Loaded OK"
-msgstr "읽기"
+msgstr "적재 성공"
 
 #: app/module_db.c:60
-#, fuzzy
 msgid "Load failed"
-msgstr "이미지 불러들이기"
+msgstr "적재 실패"
 
 #: app/module_db.c:61
 msgid "Unload requested"
-msgstr ""
+msgstr "내리기 요청됨"
 
 #: app/module_db.c:62
-#, fuzzy
 msgid "Unloaded OK"
-msgstr "내리기"
+msgstr "내리기 성공"
 
 #: app/module_db.c:271
 msgid "Module DB"
@@ -4339,14 +4262,13 @@ msgstr "도구 옵션 이동"
 
 #. create the info dialog
 #: app/nav_window.c:1254
-#, fuzzy, c-format
+#, c-format
 msgid "Window Navigation:%s-%d.%d"
-msgstr "%s: 창 정보"
+msgstr "창 정보:%s-%d.%d"
 
 #: app/nav_window.c:1552
-#, fuzzy
 msgid "No image: Window Navigation"
-msgstr "%s: 창 정보"
+msgstr "이미지 없음: 창 정보"
 
 #: app/paint_core.c:699
 msgid "No brushes available for use with this tool."
@@ -4422,7 +4344,7 @@ msgid ""
 "Read error"
 msgstr ""
 "%s 팔렛 읽는 중 (%d 줄):\n"
-"읽기 애러"
+"읽기 에러"
 
 #. maybe we should just abort?
 #: app/palette.c:454
@@ -4530,7 +4452,7 @@ msgstr "이름:"
 
 #: app/palette.c:3107
 msgid "new_import"
-msgstr ""
+msgstr "new_import"
 
 #. The source type
 #: app/palette.c:3112
@@ -4648,9 +4570,8 @@ msgid "Pattern Selection"
 msgstr "패턴 선택"
 
 #: app/pattern_select.c:226
-#, fuzzy
 msgid "No Patterns available"
-msgstr "채울 패턴"
+msgstr "사용가능한 패턴 없음"
 
 #: app/patterns.c:187
 #, c-format
@@ -4713,50 +4634,48 @@ msgid "Posterize"
 msgstr "포스터라이즈"
 
 #: app/posterize.c:213
-#, fuzzy
 msgid "Posterize Levels:"
-msgstr "포스터라이즈 레벨: "
+msgstr "포스터라이즈 레벨:"
 
 #: app/preferences_dialog.c:215
 msgid "Error: Levels of undo must be zero or greater."
-msgstr "애러: 복구 레벨들은 0 이상 이어야만 합니다."
+msgstr "에러: 복구 레벨들은 0 이상 이어야만 합니다."
 
 #: app/preferences_dialog.c:221
 msgid "Error: Number of processors must be between 1 and 30."
-msgstr "애러: 프로세서의 갯수들은 1에서 30사이어야만 합니다."
+msgstr "에러: 프로세서의 갯수들은 1에서 30사이어야만 합니다."
 
 #: app/preferences_dialog.c:227
 msgid "Error: Marching speed must be 50 or greater."
-msgstr "애러: 진전 속도는 50 이상 이어야만 합니다."
+msgstr "에러: 진전 속도는 50 이상 이어야만 합니다."
 
 #: app/preferences_dialog.c:233
 msgid "Error: Default width must be one or greater."
-msgstr "애러: 넓이 초기값은 1 이상 이어야만 합니다."
+msgstr "에러: 넓이 초기값은 1 이상 이어야만 합니다."
 
 #: app/preferences_dialog.c:239
 msgid "Error: Default height must be one or greater."
-msgstr "애러: 높이 초기값은 1 이상 이어야만 합니다."
+msgstr "에러: 높이 초기값은 1 이상 이어야만 합니다."
 
 #: app/preferences_dialog.c:246
 msgid "Error: Default unit must be within unit range."
-msgstr "애러: 단위 초기값은 단위 범위 안에 있어야만 합니다."
+msgstr "에러: 단위 초기값은 단위 범위 안에 있어야만 합니다."
 
 #: app/preferences_dialog.c:253
-#, fuzzy
 msgid "Error: Default resolution must not be zero."
-msgstr "애러: 해상도 초기값은 0이 되어서는 않됩니다."
+msgstr "에러: 해상도 초기값은 0이 되어서는 않됩니다."
 
 #: app/preferences_dialog.c:261
 msgid "Error: Default resolution unit must be within unit range."
-msgstr "애러: 해상도 단위 초기값은 단위 범위 안에 있어야만 합니다."
+msgstr "에러: 해상도 단위 초기값은 단위 범위 안에 있어야만 합니다."
 
 #: app/preferences_dialog.c:268
 msgid "Error: Monitor resolution must not be zero."
-msgstr "애러: 모니터 해상도가 0이 되어서는 않됩니다."
+msgstr "에러: 모니터 해상도가 0이 되어서는 않됩니다."
 
 #: app/preferences_dialog.c:275
 msgid "Error: Image title format must not be NULL."
-msgstr "애러: 이지미 타이틀 형식이 NULL에 되어서는 않됩니다."
+msgstr "에러: 이지미 타이틀 형식이 NULL에 되어서는 않됩니다."
 
 #: app/preferences_dialog.c:576
 msgid "You will need to restart GIMP for these changes to take effect."
@@ -4867,13 +4786,12 @@ msgid "Scaling"
 msgstr "스케일링"
 
 #: app/preferences_dialog.c:1439
-#, fuzzy
 msgid "Nearest Neighbor (Fast)"
-msgstr "가장 가까이 인접한 것"
+msgstr "가장 가까이 인접한 것 (빠름)"
 
 #: app/preferences_dialog.c:1443
 msgid "Cubic (Slow)"
-msgstr ""
+msgstr "3차 곡선 (느림)"
 
 #: app/preferences_dialog.c:1447
 msgid "Interpolation Type:"
@@ -4885,12 +4803,11 @@ msgstr "인터페이스 설정"
 
 #: app/preferences_dialog.c:1494
 msgid "Tiny"
-msgstr ""
+msgstr "작게"
 
 #: app/preferences_dialog.c:1498
-#, fuzzy
 msgid "Huge"
-msgstr "색상"
+msgstr "크게"
 
 #: app/preferences_dialog.c:1501
 msgid "Preview Size:"
@@ -4910,16 +4827,15 @@ msgstr "최근 문서 목록 크기:"
 
 #: app/preferences_dialog.c:1532
 msgid "Dialog Behaviour"
-msgstr ""
+msgstr "대화상자 동작"
 
 #: app/preferences_dialog.c:1541
 msgid "Navigation Window per Display"
 msgstr ""
 
 #: app/preferences_dialog.c:1552
-#, fuzzy
 msgid "Help System Settings"
-msgstr "도움말 시스템"
+msgstr "도움말 시스템 설정"
 
 #: app/preferences_dialog.c:1554
 msgid "Help System"
@@ -5090,11 +5006,11 @@ msgstr "썸네일(Thumnail) 파일 쓰기 시도:"
 
 #: app/preferences_dialog.c:1965
 msgid "Only when modified"
-msgstr ""
+msgstr "수정되었을 경우에만"
 
 #: app/preferences_dialog.c:1969
 msgid "'File > Save' saves the image:"
-msgstr ""
+msgstr "'파일 > 저장'이 이미지 저장:"
 
 #: app/preferences_dialog.c:1975
 msgid "Session Management"
@@ -5250,14 +5166,14 @@ msgid "Procedural Database"
 msgstr "절차 데이터베이스(Procedural DB)"
 
 #: app/procedural_db.c:137 app/procedural_db.c:149
-#, fuzzy, c-format
+#, c-format
 msgid "PDB calling error %s not found"
-msgstr "PDB 부름 애러 %s"
+msgstr "PDB 부름 에러 %s를 찾을 수 없습니다"
 
 #: app/procedural_db.c:167
 #, c-format
 msgid "PDB calling error %s"
-msgstr "PDB 부름 애러 %s"
+msgstr "PDB 부름 에러 %s"
 
 #: app/procedural_db.c:243
 #, c-format
@@ -5322,9 +5238,8 @@ msgid "Size"
 msgstr "크기"
 
 #: app/resize.c:160
-#, fuzzy
 msgid "Scale Image"
-msgstr "이미지 저장"
+msgstr "이미지 스케일"
 
 #: app/resize.c:162
 msgid "Pixel Dimensions"
@@ -5332,11 +5247,11 @@ msgstr "픽셀 배열"
 
 #: app/resize.c:172
 msgid "Set Layer Boundary Size"
-msgstr ""
+msgstr "계층 경계 크기 설정"
 
 #: app/resize.c:177
 msgid "Set Canvas Size"
-msgstr ""
+msgstr "캔버스 크기 설정"
 
 #. the original width & height labels
 #: app/resize.c:234 app/scale_tool.c:77
@@ -5430,7 +5345,7 @@ msgstr "인덱스된 색상으로 바꿀 수 없습니다."
 #, c-format
 msgid "Error in temp buf caching: \"%s\" is a directory (cannot overwrite)"
 msgstr ""
-"임시 버퍼 캐슁에서 애러: \"%s\"는 디렉토리입니다.(덮어 씌울 수 없습니다.)"
+"임시 버퍼 캐슁에서 에러: \"%s\"는 디렉토리입니다.(덮어 씌울 수 없습니다.)"
 
 #: app/temp_buf.c:485 app/temp_buf.c:494
 #, c-format
@@ -5439,7 +5354,7 @@ msgstr "\"%s\"로 쓸 수 없습니다"
 
 #: app/temp_buf.c:550
 msgid "Error in temp buf caching: information swapped to disk was lost!"
-msgstr "임시 버퍼 캐슁 애러: 디스크에 스왑된 정보를 잃어버렸습니다."
+msgstr "임시 버퍼 캐슁 에러: 디스크에 스왑된 정보를 잃어버렸습니다."
 
 #: app/text_tool.c:154
 msgid "Text Tool Options"
@@ -5502,9 +5417,8 @@ msgid "Threshold"
 msgstr "발단규모(Threshold)"
 
 #: app/threshold.c:287
-#, fuzzy
 msgid "Threshold Range:"
-msgstr "발단규모(Threshold) 범위: "
+msgstr "발단규모(Threshold) 범위:"
 
 #: app/tile_cache.c:270
 msgid "starting tile preswapper\n"
@@ -5664,9 +5578,8 @@ msgid "Pressure"
 msgstr "압력"
 
 #: app/tool_options.c:844
-#, fuzzy
 msgid "Rate"
-msgstr "비율:"
+msgstr "비율"
 
 #: app/tools.c:85
 msgid "Rect Select"
@@ -5991,85 +5904,72 @@ msgid "/Select/By Color..."
 msgstr "/선택/색에 의해..."
 
 #: app/tools.c:602
-#, fuzzy
 msgid "Select regions by color"
-msgstr "베지어 곡선을 이용하여 영역 선택"
+msgstr "색을 이용하여 영역 선택"
 
 #: app/tools.c:616
-#, fuzzy
 msgid "/Image/Colors/Color Balance..."
-msgstr "/이미지/색/색상 균등"
+msgstr "/이미지/색/색상 균등..."
 
 #: app/tools.c:619
-#, fuzzy
 msgid "Adjust color balance"
-msgstr "색상 균형"
+msgstr "색상 균형 조정"
 
 #: app/tools.c:633
-#, fuzzy
 msgid "/Image/Colors/Brightness-Contrast..."
-msgstr "/이미지/색/명도대비"
+msgstr "/이미지/색/명도대비..."
 
 #: app/tools.c:636
-#, fuzzy
 msgid "Adjust brightness and contrast"
-msgstr "명도대비"
+msgstr "명도대비 조정"
 
 #: app/tools.c:650
-#, fuzzy
 msgid "/Image/Colors/Hue-Saturation..."
-msgstr "/이미지/색/색상-채도"
+msgstr "/이미지/색/색상-채도..."
 
 #: app/tools.c:653
 msgid "Adjust hue and saturation"
-msgstr ""
+msgstr "색상과 채도 조정"
 
 #: app/tools.c:667
-#, fuzzy
 msgid "/Image/Colors/Posterize..."
-msgstr "/이미지/색/포스터라이즈"
+msgstr "/이미지/색/포스터라이즈..."
 
 #: app/tools.c:670
 msgid "Reduce image to a fixed numer of colors"
-msgstr ""
+msgstr "고정된 색 수로 이미지를 축소"
 
 #: app/tools.c:684
-#, fuzzy
 msgid "/Image/Colors/Threshold..."
-msgstr "/이미지/색/발단규모(Threshold)"
+msgstr "/이미지/색/발단규모(Threshold)..."
 
 #: app/tools.c:687
 msgid "Reduce image to two colors using a threshold"
 msgstr ""
 
 #: app/tools.c:701
-#, fuzzy
 msgid "/Image/Colors/Curves..."
-msgstr "/이미지/색/곡선"
+msgstr "/이미지/색/곡선..."
 
 #: app/tools.c:704
 msgid "Adjust color curves"
-msgstr ""
+msgstr "색 곡선 조정"
 
 #: app/tools.c:718
-#, fuzzy
 msgid "/Image/Colors/Levels..."
-msgstr "/이미지/색/계층"
+msgstr "/이미지/색/계층..."
 
 #: app/tools.c:721
-#, fuzzy
 msgid "Adjust color levels"
-msgstr "자동 레벨"
+msgstr "색 레벨 조정"
 
 #: app/tools.c:735
-#, fuzzy
 msgid "/Image/Histogram..."
-msgstr "/이미지/히스토그램"
+msgstr "/이미지/히스토그램..."
 
 #: app/tools.c:738
-#, fuzzy
 msgid "View image histogram"
-msgstr "/이미지/히스토그램"
+msgstr "이미지 히스토그램 조기"
 
 #: app/transform_core.c:244
 msgid "Rotate"
@@ -6165,231 +6065,197 @@ msgid "Redo"
 msgstr "반복"
 
 #: app/undo.c:2827
-#, fuzzy, c-format
+#, c-format
 msgid "Can't undo %s"
-msgstr "%s 열 수 없음; %s"
+msgstr "%s를 취소할 수 없습니다"
 
 #: app/undo.c:2855
 msgid "<<invalid>>"
-msgstr ""
+msgstr "<<무효>>"
 
 #: app/undo.c:2856
-#, fuzzy
 msgid "image"
 msgstr "이미지"
 
 #: app/undo.c:2857
-#, fuzzy
 msgid "image mod"
-msgstr "이미지 마스크"
+msgstr "이미지 mod"
 
 #: app/undo.c:2858
-#, fuzzy
 msgid "mask"
-msgstr "마스크 %s"
+msgstr "마스크"
 
 #: app/undo.c:2859
-#, fuzzy
 msgid "layer move"
-msgstr "계층 이름:"
+msgstr "계층 이동"
 
 #. ok
 #: app/undo.c:2860
-#, fuzzy
 msgid "transform"
 msgstr "변환"
 
 #: app/undo.c:2861
-#, fuzzy
 msgid "paint"
-msgstr "포인트"
+msgstr "페인트"
 
 #: app/undo.c:2862
-#, fuzzy
 msgid "new layer"
 msgstr "새 계층"
 
 #: app/undo.c:2863
-#, fuzzy
 msgid "delete layer"
 msgstr "계층 삭제"
 
 #: app/undo.c:2864
-#, fuzzy
 msgid "layer mod"
-msgstr "계층 이름:"
+msgstr "계층 mod"
 
 #: app/undo.c:2865
-#, fuzzy
 msgid "add layer mask"
-msgstr "/계층 마스크 추가"
+msgstr "계층 마스크 추가"
 
 #. ok
 #: app/undo.c:2866
-#, fuzzy
 msgid "delete layer mask"
-msgstr "계층 마스크를 적용할까요?"
+msgstr "계층 마스크 삭제"
 
 #. ok
 #: app/undo.c:2867
-#, fuzzy
 msgid "rename layer"
-msgstr "경로명 변경"
+msgstr "계층명 변경"
 
 #: app/undo.c:2868
-#, fuzzy
 msgid "layer reposition"
-msgstr "계층 머지 옵션"
+msgstr "계층 위치바꿈"
 
 #. ok
 #: app/undo.c:2869
-#, fuzzy
 msgid "new channel"
 msgstr "새 채널"
 
 #: app/undo.c:2870
-#, fuzzy
 msgid "delete channel"
 msgstr "채널 삭제"
 
 #: app/undo.c:2871
-#, fuzzy
 msgid "channel mod"
-msgstr "채널 이름:"
+msgstr "채널 mod"
 
 #: app/undo.c:2872
 msgid "FS to layer"
-msgstr ""
+msgstr "FS to layer"
 
 #. ok
 #: app/undo.c:2873
-#, fuzzy
 msgid "gimage"
-msgstr "이미지"
+msgstr "gimage"
 
 #: app/undo.c:2874
 msgid "FS rigor"
-msgstr ""
+msgstr "FS rigor"
 
 #: app/undo.c:2875
 msgid "FS relax"
-msgstr ""
+msgstr "FS relax"
 
 #: app/undo.c:2876
 msgid "guide"
-msgstr ""
+msgstr "가이드"
 
 #: app/undo.c:2877
-#, fuzzy
 msgid "text"
 msgstr "텍스트"
 
 #: app/undo.c:2878
-#, fuzzy
 msgid "float selection"
 msgstr "유동적 셀렉션"
 
 #: app/undo.c:2879
-#, fuzzy
 msgid "paste"
 msgstr "붙이기"
 
 #: app/undo.c:2880
 msgid "cut"
-msgstr ""
+msgstr "자르기"
 
 #: app/undo.c:2881
-#, fuzzy
 msgid "transform core"
-msgstr "변환"
+msgstr "코어 변환"
 
 #: app/undo.c:2882
 msgid "paint core"
-msgstr ""
+msgstr "코어 페인트"
 
 #: app/undo.c:2883
-#, fuzzy
 msgid "floating layer"
 msgstr "유동적 계층"
 
 #. unused!
 #: app/undo.c:2884
-#, fuzzy
 msgid "linked layer"
-msgstr "유동적 계층"
+msgstr "연결된 계층"
 
 #: app/undo.c:2885
-#, fuzzy
 msgid "apply layer mask"
-msgstr "계층 마스크를 적용할까요?"
+msgstr "계층 마스크 적용"
 
 #. ok
 #: app/undo.c:2886
-#, fuzzy
 msgid "layer merge"
-msgstr "계층 이름:"
+msgstr "계층 머지"
 
 #: app/undo.c:2887
-#, fuzzy
 msgid "FS anchor"
-msgstr "프랙탈"
+msgstr "FS anchor"
 
 #: app/undo.c:2888
-#, fuzzy
 msgid "gimage mod"
-msgstr "이미지 마스크"
+msgstr "gimage mod"
 
 #: app/undo.c:2889
-#, fuzzy
 msgid "crop"
-msgstr "복사"
+msgstr "crop"
 
 #: app/undo.c:2890
-#, fuzzy
 msgid "layer scale"
-msgstr "그레이스케일"
+msgstr "계층 스케일"
 
 #: app/undo.c:2891
-#, fuzzy
 msgid "layer resize"
-msgstr "이미지 크기조정"
+msgstr "계층 크기조정"
 
 #: app/undo.c:2892
 msgid "quickmask"
-msgstr ""
+msgstr "quickmask"
 
 #: app/undo.c:2893
-#, fuzzy
 msgid "attach parasite"
-msgstr "이미지에 기생(parasite) 붙이기"
+msgstr ""
 
 #: app/undo.c:2894
 msgid "remove parasite"
 msgstr ""
 
 #: app/undo.c:2895
-#, fuzzy
 msgid "resolution change"
-msgstr "해상도 X:"
+msgstr "해상도 바꾸기"
 
 #: app/undo.c:2896
-#, fuzzy
 msgid "image scale"
 msgstr "이미지 스케일"
 
 #: app/undo.c:2897
-#, fuzzy
 msgid "image resize"
 msgstr "이미지 크기조정"
 
 #: app/undo.c:2898
 msgid "misc"
-msgstr ""
+msgstr "기타"
 
 #: app/xcf.c:364
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "XCF 애러: 지원되지 않는 XCF 파일 버젼 %d가 충돌되었습니다."
+msgstr "XCF 에러: 지원되지 않는 XCF 파일 버젼 %d가 충돌되었습니다."
 
 #: app/xcf.c:1477 app/xcf.c:2483
 msgid "xcf: zlib compression unimplemented"
@@ -6402,7 +6268,7 @@ msgstr "xcf: 프랙탈 압축이 준비되지 않았음"
 #: app/xcf.c:1626
 #, c-format
 msgid "xcf: uh oh! xcf rle tile saving error: %d"
-msgstr "xvf: 오! XCF RLE 타일 저장 애러: %d"
+msgstr "xvf: 오! XCF RLE 타일 저장 에러: %d"
 
 #: app/xcf.c:1776
 msgid ""
@@ -6425,7 +6291,7 @@ msgstr "경고, XCF 파일에서 해상도 범위가 넘어갔습니다"
 
 #: app/xcf.c:1871
 msgid "Error detected while loading an image's parasites"
-msgstr "이미지 기생(parasites)를 읽는 동안 애러를 인지 했습니다"
+msgstr "이미지 기생(parasites)를 읽는 동안 에러를 인지 했습니다"
 
 #: app/xcf.c:1882
 msgid "Warning, unit out of range in XCF file, falling back to inches"
@@ -6454,272 +6320,3 @@ msgstr "레벨에서 찾은 타일들이 충분치 않습니다."
 #, c-format
 msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 msgstr "XCF 파일에서 타일 데이터를 읽을 수 없습니다: %d ( %d ) 바이트 읽음"
-
-#~ msgid "Version "
-#~ msgstr "판번호 "
-
-#~ msgid "killing stray timer, please report to lewing@gimp.org"
-#~ msgstr "질못된 타이머를 없애고 있습니다, lewing@gimp.org로 보고해 주세요."
-
-#~ msgid "Gradient:"
-#~ msgstr "색감변화도:"
-
-#~ msgid "Active"
-#~ msgstr "활성"
-
-#~ msgid "devices_rc_update called multiple times for not present device\n"
-#~ msgstr "devices_rc_update를 다른 장치에서 여러번 불렀습니다.\n"
-
-#~ msgid "drawable_fill called with unknown fill type"
-#~ msgstr "drawable_fill이 알수 없는 채우기 유형으로 불려짐"
-
-#~ msgid "%s: fatal error: %s\n"
-#~ msgstr "%s: 치명적인 애러: %s\n"
-
-#~ msgid "add_point(): Unable to reallocate points array in free_select."
-#~ msgstr "add_point(): free_select에서 점들의 배열을 재 할당할 수 없습니다."
-
-#~ msgid "/Image/Channels"
-#~ msgstr "/이미지/채널"
-
-#~ msgid "get_active_brush(): Specified default brush not found!"
-#~ msgstr "get_active_brush(): 기본 브러쉬를 찾을 수 없습니다!"
-
-#~ msgid "grad_get_color_at(): Unknown gradient type %d"
-#~ msgstr "grad_get_color_at(): 알수 없는 색감변화도 유형 %d"
-
-#~ msgid "grad_get_color_at(): Unknown coloring mode %d"
-#~ msgstr "grad_get_color_at(): 알수 없는 혼합 모드 %d"
-
-#~ msgid "ed_do_new_gradient_callback(): oops, received NULL in call_data"
-#~ msgstr ""
-#~ "ed_do_new_gradient_callback(): 이런, call_data에서 NULL을 받았습니다."
-
-#~ msgid "ed_do_copy_gradient_callback(): oops, received NULL in call_data"
-#~ msgstr ""
-#~ "ed_do_copy_gradient_callback(): 이런, call_data에서 NULL을 받았습니다."
-
-#~ msgid "ed_do_rename_gradient_callback(): oops, received NULL in call_data"
-#~ msgstr ""
-#~ "ed_do_rename_gradient_callback(): 이런, call_data에서 NULL을 받았습니다."
-
-#~ msgid ""
-#~ "ed_do_rename_gradient_callback(): oops, can't find gradient to rename"
-#~ msgstr ""
-#~ "ed_do_rename_gradient_callback(): 이런, 이름이 바뀐 색감변화도를 찾을 수 "
-#~ "없습니다."
-
-#~ msgid "ed_do_delete_gradient_callback(): Could not find gradient to delete!"
-#~ msgstr ""
-#~ "ed_do_delete_gradient_callback(): 삭제할 색감변화를 찾을 수 없습니다!"
-
-#~ msgid "ed_do_save_pov_callback(): oops, could not open \"%s\""
-#~ msgstr "ed_do_save_pov_callback(): 이런, \"%s\"를 열 수 없습니다."
-
-#~ msgid "control_motion(): Attempt to move bogus handle %d"
-#~ msgstr "control_motion(): 는 가짜 핸들 %d 이동을 시도"
-
-#~ msgid "Unknown info_dialog field type."
-#~ msgstr "info_dialog 필드 유형을 알수 없습니다."
-
-#~ msgid "/Resize Layer"
-#~ msgstr "/계층 크기조정"
-
-#~ msgid "/File/MRU00 "
-#~ msgstr "/파일/MRU00 "
-
-#~ msgid "/File/tearoff1"
-#~ msgstr "/파일/tearoff1"
-
-#~ msgid "/Xtns/tearoff1"
-#~ msgstr "/확장/tearoff1"
-
-#~ msgid "/File/---"
-#~ msgstr "/파일/---"
-
-#~ msgid "/File/---moved"
-#~ msgstr "/파일/---moved"
-
-#~ msgid "/Edit/tearoff1"
-#~ msgstr "/편집/tearoff1"
-
-#~ msgid "/Edit/---"
-#~ msgstr "/편집/---"
-
-#~ msgid "/Select/tearoff1"
-#~ msgstr "/선택/tearoff1"
-
-#~ msgid "/Select/---"
-#~ msgstr "/선택/---"
-
-#~ msgid "/View/tearoff1"
-#~ msgstr "/보기/tearoff1"
-
-#~ msgid "/View/---"
-#~ msgstr "/보기/---"
-
-#~ msgid "/Image/tearoff1"
-#~ msgstr "/이미지/tearoff1"
-
-#~ msgid "/Image/Colors/tearoff1"
-#~ msgstr "/이미지/색/tearoff1"
-
-#~ msgid "/Image/Colors/---"
-#~ msgstr "/이미지/색/---"
-
-#~ msgid "/Image/Channels/tearoff1"
-#~ msgstr "/이미지/채널/tearoff1"
-
-#~ msgid "/Image/Alpha/tearoff1"
-#~ msgstr "/이미지/알파/tearoff1"
-
-#~ msgid "/Image/Transforms/tearoff1"
-#~ msgstr "/이미지/변환/tearoff1"
-
-#~ msgid "/Image/---"
-#~ msgstr "/이미지/---"
-
-#~ msgid "/Layers/tearoff1"
-#~ msgstr "/계층/tearoff1"
-
-#~ msgid "/Layers/Stack/tearoff1"
-#~ msgstr "/계층/스택/tearoff1"
-
-#~ msgid "/Layers/---"
-#~ msgstr "/계층/---"
-
-#~ msgid "/Tools/tearoff1"
-#~ msgstr "/도구/tearoff1"
-
-#~ msgid "/Tools/---"
-#~ msgstr "/도구/---"
-
-#~ msgid "/Filters/---"
-#~ msgstr "/필터/---"
-
-#~ msgid "/Script-Fu/tearoff1"
-#~ msgstr "/Script-Fu/tearoff1"
-
-#~ msgid "/Dialogs/tearoff1"
-#~ msgstr "/대화상자/tearoff1"
-
-#~ msgid "/File/MRU%02d"
-#~ msgstr "/파일/MRU%02d"
-
-#~ msgid "tearoff menu not in top level window"
-#~ msgstr "상위 레벨 창에서 절취 선 메뉴가 없음"
-
-#~ msgid "can't unregister tearoff menu top level window"
-#~ msgstr "상위 레벨 창에서 절취 선 메뉴가 등록되지 않았음"
-
-#~ msgid "missing module_init() symbol"
-#~ msgstr "missing module_init() 심볼"
-
-#~ msgid "%s: module_init() symbol not found"
-#~ msgstr "%s: module_init() 심볼을 찾을 수 없습니다"
-
-#~ msgid "set_undo_tiles: undo_tiles is null"
-#~ msgstr "set_undo_tiles: undo_tiles이 NULL입니다"
-
-#~ msgid "get_active_pattern(): Specified default pattern not found!"
-#~ msgstr "get_active_pattern(): 명시된 기본 패턴을 찾을 수 없음!"
-
-#~ msgid "Cubic"
-#~ msgstr "3차원"
-
-#~ msgid "Resize Layer"
-#~ msgstr "계층 크기바꾸기"
-
-#~ msgid "ERROR: Unknown Selection Type"
-#~ msgstr "에러: 알수 없는 선택 유형"
-
-#~ msgid "ERROR: Unknown Paint Type"
-#~ msgstr "에러: 알수 없는 페인트 유형"
-
-#~ msgid "xcf: uh oh! xcf rle tile loading error: %d"
-#~ msgstr "xcf: 오! XCF RLE 타일 읽기 애러: %d"
-
-#~ msgid "Select File"
-#~ msgstr "파일 선택"
-
-#~ msgid "warning: no home directory."
-#~ msgstr "경고: 홈 디렉토리가 아닙니다."
-
-#~ msgid "More..."
-#~ msgstr "좀 더..."
-
-#~ msgid "unit-menu-format string ended within %%-sequence"
-#~ msgstr "unit-menu-format 스트링이 %%-sequence으로 끝났습니다"
-
-#~ msgid "unit-menu-format contains unknown format sequence '%%%c'"
-#~ msgstr "unit-menu-format 은 알수 없는 형식 시퀸스 '%%%c'를 포함합니다."
-
-#~ msgid "Unit Selection"
-#~ msgstr "단위 셀렉션"
-
-#~ msgid "Unit "
-#~ msgstr "단위 "
-
-#~ msgid "can't handle layers"
-#~ msgstr "계층을 조절할수 없습니다."
-
-#~ msgid "Merge visible layers"
-#~ msgstr "보이는 계층 머지"
-
-#~ msgid "can only handle layers as animation frames"
-#~ msgstr "에니메이션 프래임인 계층만 조절할수 있습니다."
-
-#~ msgid "Save as animation"
-#~ msgstr "에니메이션으로 저장"
-
-#~ msgid "can't handle transparency"
-#~ msgstr "투명하게를 조절할 수 없습니다."
-
-#~ msgid "Flatten Image"
-#~ msgstr "플래튼 이미지"
-
-#~ msgid "can only handle RGB images"
-#~ msgstr "오직 RGB 이미지만 조절할 수 있습니다"
-
-#~ msgid "Convert to RGB"
-#~ msgstr "RGB로 바꾸기"
-
-#~ msgid "can only handle grayscale images"
-#~ msgstr "오직 그레이스케일 이미지만 조절 할수 있습니다"
-
-#~ msgid "Convert to grayscale"
-#~ msgstr "그레이스케일로 바꾸기"
-
-#~ msgid "can only handle indexed images"
-#~ msgstr "인덱스된 이미지들만 조절할 수 있습니다."
-
-#~ msgid ""
-#~ "Convert to indexed using default settings\n"
-#~ "(Do it manually to tune the result)"
-#~ msgstr ""
-#~ "인덱스된 기본 새팅으로 바꾸기\n"
-#~ "(그것의 결과를 직접 조정하세요.)"
-
-#~ msgid "can only handle RGB or grayscale images"
-#~ msgstr "RGB 혹은 그레이스케일 이미지만 조절할 수 있습니다"
-
-#~ msgid "can only handle RGB or indexed images"
-#~ msgstr "RGB 혹은 인덱스된 이미지만 조절할 수 있습니다"
-
-#~ msgid "can only handle grayscale or indexed images"
-#~ msgstr "RGB 혹은 인덱스된 이미지만 조절할 수 있습니다"
-
-#~ msgid "Export File"
-#~ msgstr "경로 전하기(export)"
-
-#~ msgid "Export"
-#~ msgstr "전하기(export)"
-
-#~ msgid ""
-#~ "Your image should be exported before it can be saved for the following "
-#~ "reasons:"
-#~ msgstr ""
-#~ "양식에 따라 그것을 저장하기 전에 당신의 이미지는 전해져야만(export) 합니다 : "
-
-#~ msgid "The export conversion won't modify your original image."
-#~ msgstr "전하기(export) 전환은 당신의 원래 이미지를 바꾸기 않을 것입니다."
