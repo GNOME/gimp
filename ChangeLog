@@ -1,3 +1,8 @@
+2003-01-14  Manish Singh  <yosh@gimp.org>
+ 
+	* configure.in: Oops, the configure.in change below didn't actually
+	work. Refactored so it does.
+
 2003-01-14  Sven Neumann  <sven@gimp.org>
 
 	* app/scale.c: removed two lines which have become obsolete after

@@ -421,8 +421,8 @@ dnl Test for libXpm
 dnl Check for shared memory
 
 dnl MacOS X has broken SysV shm
-case "$host" in
-  *-apple-machten*)
+case "$host_os" in
+  darwin* | rhapsody* | machten*)
     # We can put something else here when something that works is implemented
     shmdefault=none
     ;;
