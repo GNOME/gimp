@@ -1,5 +1,10 @@
 2002-11-18  Sven Neumann  <sven@gimp.org>
 
+	* app/Makefile.am
+	* app/general.[ch]: we don't need these any longer.
+
+2002-11-18  Sven Neumann  <sven@gimp.org>
+
 	Finally landed the new GimpConfig based gimprc parser. It's not
 	finished yet but we need to start somewhere. This release removes
 	the old gimprc.[ch] files. The gimprc format changes slightly, but

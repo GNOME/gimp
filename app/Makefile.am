@@ -31,8 +31,6 @@ gui_sources = \
 ## stuff which is about to be replaced by new subsystems
 ##
 bye_sources = \
-	general.c		\
-	general.h		\
 	ops_buttons.c		\
 	ops_buttons.h		\
 	path.c			\
