@@ -298,6 +298,8 @@ load_pattern (gchar *filename)
 
   pattern = pattern_load_real (fd, filename, FALSE);
 
+  close (fd);
+
   if (!pattern)
     return;
 
