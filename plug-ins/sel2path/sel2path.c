@@ -55,10 +55,10 @@
 /* Variables set in dialog box */
 
 static void      query  (void);
-static void      run    (gchar    *name,
-			 gint      nparams,
+static void      run    (gchar       *name,
+			 gint         nparams,
 			 GimpParam   *param,
-			 gint     *nreturn_vals,
+			 gint        *nreturn_vals,
 			 GimpParam  **return_vals);
 
 static gint      sel2path_dialog         (SELVALS   *sels);
@@ -88,9 +88,16 @@ gboolean       retVal = TRUE;  /* Toggle if cancle button clicked */
 MAIN ()
 
 static void
-query_2 (void)
+query (void)
 {
   static GimpParamDef args[] =
+  {
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+  };
+
+  static GimpParamDef advanced_args[] =
   {
     { GIMP_PDB_INT32,    "run_mode",                    "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",                       "Input image (unused)" },
@@ -116,33 +123,6 @@ query_2 (void)
     { GIMP_PDB_FLOAT,    "subdivide_threshold",         "subdivide_threshold"},
     { GIMP_PDB_INT8,     "tangent_surround",            "tangent_surround"},
   };
-  static GimpParamDef *return_vals = NULL;
-  static int nreturn_vals = 0;
-
-  gimp_install_procedure ("plug_in_sel2path_advanced",
-			  "Converts a selection to a path (with advanced user menu)",
-			  "Converts a selection to a path (with advanced user menu)",
-			  "Andy Thomas",
-			  "Andy Thomas",
-			  "1999",
-			  NULL,
-			  "RGB*, INDEXED*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), nreturn_vals,
-			  args, return_vals);
-}
-
-static void
-query (void)
-{
-  static GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-  };
-  static GimpParamDef *return_vals = NULL;
-  static int nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_sel2path",
 			  "Converts a selection to a path",
@@ -153,10 +133,20 @@ query (void)
 			  N_("<Image>/Select/To Path"),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), nreturn_vals,
-			  args, return_vals);
+			  G_N_ELEMENTS (args), 0,
+			  args, NULL);
 
-  query_2 ();
+  gimp_install_procedure ("plug_in_sel2path_advanced",
+			  "Converts a selection to a path (with advanced user menu)",
+			  "Converts a selection to a path (with advanced user menu)",
+			  "Andy Thomas",
+			  "Andy Thomas",
+			  "1999",
+			  NULL,
+			  "RGB*, INDEXED*, GRAY*",
+			  GIMP_PLUGIN,
+			  G_N_ELEMENTS (advanced_args), 0,
+			  advanced_args, NULL);
 }
 
 static void
@@ -245,11 +235,10 @@ run (gchar      *name,
 	      selVals.subdivide_surround          = param[20].data.d_int8;
 	      selVals.subdivide_threshold         = param[21].data.d_float;
 	      selVals.tangent_surround            = param[22].data.d_int8;
-	      fit_set_params(&selVals);
-	  }
-
+	      fit_set_params (&selVals);
+            }
 	  break;
-	  
+
 	case GIMP_RUN_WITH_LAST_VALS:
 	  if(gimp_get_data_size ("plug_in_sel2path_advanced") > 0)
 	    {
@@ -258,9 +247,8 @@ run (gchar      *name,
 	      /* Set up the last values */
 	      fit_set_params (&selVals);
 	    }
-
 	  break;
-	  
+
 	default:
 	  break;
 	}
@@ -584,10 +572,9 @@ do_sel2path (gint32 drawable_ID,
 
   splines = fitted_splines (olt);
 
-  gimp_selection_none (image_ID);
-  gimp_displays_flush ();
-
   do_points (splines, image_ID);
+
+  gimp_displays_flush ();
 
   return TRUE;
 }
