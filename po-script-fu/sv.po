@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2001-10-10 00:02+0200\n"
-"PO-Revision-Date: 2001-10-10 00:03+0200\n"
+"POT-Creation-Date: 2001-10-10 12:09+0200\n"
+"PO-Revision-Date: 2001-10-10 12:11+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -241,7 +241,7 @@ msgstr "<Image>/Script-Fu/Alfa till logotyp/Färgtonad..."
 # Kommer inte på något bättre
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
-msgstr "<Image>/Script-Fu/Alfa till logotyp/Bovination..."
+msgstr "<Image>/Script-Fu/Alfa till logotyp/Koskinn..."
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
@@ -449,7 +449,7 @@ msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Färgtonad..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Bovination..."
+msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Koskinn..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."

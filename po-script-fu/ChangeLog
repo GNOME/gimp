@@ -1,5 +1,10 @@
 2001-10-10  Christian Rose  <menthos@menthos.com>
 
+	* sv.po: Fixed the Swedish translation. Thanks to
+	Fredrik Wendt <fredrik.wendt@linux.se> for his comment.
+
+2001-10-10  Christian Rose  <menthos@menthos.com>
+
 	* sv.po: Fixed Swedish translation, thanks to
 	Göran Uddeborg <goeran@uddeborg.pp.se> for his review.
 
