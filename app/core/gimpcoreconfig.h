@@ -37,17 +37,17 @@ struct _GimpCoreConfig
 
   gchar             *default_comment;
   GimpImageBaseType  default_type;
-  guint              default_width;
-  guint              default_height;
+  gint               default_width;
+  gint               default_height;
   GimpUnit           default_units;
   gdouble            default_xresolution;
   gdouble            default_yresolution;
   GimpUnit           default_resolution_units;
 
-  guint              levels_of_undo;
+  gint               levels_of_undo;
   gchar             *pluginrc_path;
   gchar             *module_db_load_inhibit;
-  guint              thumbnail_mode;
+  gint               thumbnail_mode;
 };
 
 

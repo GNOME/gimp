@@ -57,8 +57,8 @@ typedef struct _IdleRenderStruct IdleRenderStruct;
 
 struct _IdleRenderStruct
 {
-  guint   width;
-  guint   height;
+  gint    width;
+  gint    height;
   gint    x;
   gint    y;
   gint    basex;
@@ -94,9 +94,9 @@ struct _GimpDisplay
   GtkWidget  *shell;            /*  shell widget for this gdisplay          */
 
   gint        scale;            /*  scale factor from original raw image    */
-  guint       dot_for_dot : 1;  /*  is monitor resolution being ignored?    */
-  guint       draw_guides : 1;  /*  should the guides be drawn?             */
-  guint       snap_to_guides : 1; /*  should the guides be snapped to?      */
+  gboolean    dot_for_dot;      /*  is monitor resolution being ignored?    */
+  gboolean    draw_guides;      /*  should the guides be drawn?             */
+  gboolean    snap_to_guides;   /*  should the guides be snapped to?        */
 
   GSList     *update_areas;     /*  Update areas list                       */
 

@@ -45,10 +45,10 @@ struct _GimpListItem
   GtkWidget           *name_label;
 
   /*< protected >*/
-  guint                preview_size;
+  gint                 preview_size;
 
   /*< private >*/
-  guint                reorderable : 1;
+  gboolean             reorderable;
   GimpContainer       *container;
   GimpDropType         drop_type;
   GimpItemGetNameFunc  get_name_func;

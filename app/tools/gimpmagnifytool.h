@@ -39,7 +39,7 @@ struct _GimpMagnifyTool
   GimpDrawTool  parent_instance;
 
   gint          x, y;       /*  upper left hand coordinate  */
-  guint         w, h;       /*  width and height            */
+  gint          w, h;       /*  width and height            */
 
   GimpZoomType  op;         /*  magnify operation           */
 };

@@ -57,12 +57,12 @@ struct _GimpDisplayShell
   gint              offset_x;          /*  offset of display image into raw image  */
   gint              offset_y;
 
-  guint             disp_width;        /*  width of drawing area   */
-  guint             disp_height;       /*  height of drawing area  */
+  gint              disp_width;        /*  width of drawing area   */
+  gint              disp_height;       /*  height of drawing area  */
   gint              disp_xoffset;
   gint              disp_yoffset;
 
-  guint             proximity : 1;     /* is a device in proximity */
+  gboolean          proximity;         /* is a device in proximity           */
 
   Selection        *select;            /*  Selection object    */
 
@@ -91,7 +91,7 @@ struct _GimpDisplayShell
   guchar           *render_buf;        /*  buffer for rendering the image     */
   GdkGC            *render_gc;         /*  GC for rendering the image         */
 
-  guint             icon_size;         /*  size of the icon pixmap            */
+  gint              icon_size;         /*  size of the icon pixmap            */
   guint             icon_idle_id;      /*  ID of the idle-function            */
 
   GdkCursorType       current_cursor;  /*  Currently installed main cursor    */
@@ -99,10 +99,10 @@ struct _GimpDisplayShell
   GimpCursorModifier  cursor_modifier; /*  Cursor modifier (plus, minus, ...) */
 
   GdkCursorType     override_cursor;   /*  Overriding cursor                  */
-  guint             using_override_cursor : 1; /*  is the cursor overridden?  */
+  gboolean          using_override_cursor; /*  is the cursor overridden?      */
 
-  guint             draw_cursor : 1;   /* should we draw software cursor ?    */
-  guint             have_cursor : 1;   /* is cursor currently drawn ?         */
+  gboolean          draw_cursor;       /* should we draw software cursor ?    */
+  gboolean          have_cursor;       /* is cursor currently drawn ?         */
   gint              cursor_x;          /* software cursor X value             */
   gint              cursor_y;          /* software cursor Y value             */
 

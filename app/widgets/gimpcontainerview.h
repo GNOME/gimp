@@ -45,8 +45,8 @@ struct _GimpContainerView
 
   GHashTable          *hash_table;
 
-  guint                preview_size;
-  guint                reorderable : 1;
+  gint                 preview_size;
+  gboolean             reorderable;
 
   GimpItemGetNameFunc  get_name_func;
 

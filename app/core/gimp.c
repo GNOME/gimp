@@ -332,9 +332,9 @@ gimp_new (gboolean           be_verbose,
 
   gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
 
-  gimp->be_verbose       = be_verbose;
-  gimp->no_data          = no_data;
-  gimp->no_interface     = no_interface;
+  gimp->be_verbose       = be_verbose   ? TRUE : FALSE;
+  gimp->no_data          = no_data      ? TRUE : FALSE;
+  gimp->no_interface     = no_interface ? TRUE : FALSE;
   gimp->stack_trace_mode = stack_trace_mode;
 
   return gimp;

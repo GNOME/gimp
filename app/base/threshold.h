@@ -57,14 +57,14 @@ struct _ThresholdDialog
   GimpHistogramView *histogram;
   GimpHistogram     *hist;
 
-  GimpDrawable *drawable;
-  ImageMap     *image_map;
+  GimpDrawable      *drawable;
+  ImageMap          *image_map;
 
-  gint          color;
-  gint          low_threshold;
-  gint          high_threshold;
+  gint               color;
+  gint               low_threshold;
+  gint               high_threshold;
 
-  guint         preview : 1;
+  gboolean           preview;
 };
 
 

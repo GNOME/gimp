@@ -77,8 +77,8 @@ struct _GimpIscissorsTool
 
   GSList         *curves;       /*  the list of curves                    */
 
-  guint           first_point : 1;  /*  is this the first point?          */
-  guint           connected : 1;    /*  is the region closed?             */
+  gboolean        first_point;  /*  is this the first point?              */
+  gboolean        connected;    /*  is the region closed?                 */
 
   Iscissors_state state;        /*  state of iscissors                    */
   Iscissors_draw  draw;         /*  items to draw on a draw request       */

@@ -61,8 +61,8 @@ typedef struct
 {
   PixelRegion *PR;
   guchar      *row_data;
-  guint        bytes;
-  guint        width;
+  gint         bytes;
+  gint         width;
 } PutPixelData;
 
 

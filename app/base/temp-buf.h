@@ -22,48 +22,48 @@
 
 struct _TempBuf
 {
-  guint    width;
-  guint    height;
-  gint     x, y;        /*  origin of data source                          */
+  gint      bytes;      /*  the necessary info                             */
+  gint      width;
+  gint      height;
+  gint      x, y;       /*  origin of data source                          */
 
-  guint    bytes : 4;   /*  the necessary info                             */
-  guint    swapped : 1; /*  flag indicating whether buf is cached to disk  */
-  gchar   *filename;    /*  filename of cached information                 */
+  gboolean  swapped;    /*  flag indicating whether buf is cached to disk  */
+  gchar    *filename;   /*  filename of cached information                 */
 
-  guchar  *data;        /*  The data buffer. Do never access this field
+  guchar   *data;       /*  The data buffer. Do never access this field
                             directly, use temp_buf_data() instead !!       */
 };
 
 
 /*  The temp buffer functions  */
 
-TempBuf * temp_buf_new        (guint          width,
-			       guint          height,
-			       guint          bytes,
+TempBuf * temp_buf_new        (gint           width,
+			       gint           height,
+			       gint           bytes,
 			       gint           x,
 			       gint           y,
 			       guchar        *col);
-TempBuf * temp_buf_new_check  (guint          width,
-			       guint          height,
+TempBuf * temp_buf_new_check  (gint           width,
+			       gint	      height,
 			       GimpCheckType  check_type,
 			       GimpCheckSize  check_size);
 TempBuf * temp_buf_copy       (TempBuf       *src,
 			       TempBuf       *dest);
 TempBuf * temp_buf_resize     (TempBuf       *buf,
-			       guint          bytes,
+			       gint           bytes,
 			       gint           x,
 			       gint           y,
-			       guint          width,
-			       guint          height);
+			       gint           width,
+			       gint           height);
 TempBuf * temp_buf_scale      (TempBuf       *buf,
-			       guint          width,
-			       guint          height);
+			       gint           width,
+			       gint           height);
 TempBuf * temp_buf_copy_area  (TempBuf       *src,
 			       TempBuf       *dest,
 			       gint           x,
 			       gint           y,
-			       guint          width,
-			       guint          height,
+			       gint           width,
+			       gint           height,
 			       gint           dest_x,
 			       gint           dest_y);
 void      temp_buf_free       (TempBuf       *buf);
@@ -72,8 +72,8 @@ guchar  * temp_buf_data_clear (TempBuf       *buf);
 
 /* The mask buffer functions  */
 
-MaskBuf * mask_buf_new        (guint          width,
-			       guint          height);
+MaskBuf * mask_buf_new        (gint           width,
+			       gint           height);
 void      mask_buf_free       (MaskBuf       *mask_buf);
 guchar  * mask_buf_data       (MaskBuf       *mask_buf);
 guchar  * mask_buf_data_clear (MaskBuf       *mask_buf);

@@ -41,20 +41,20 @@ struct _GimpPreview
 
   GimpViewable *viewable;
 
-  GimpRGB       border_color;
-  
   gint          width;
   gint          height;
   gint          border_width;
-  guint         dot_for_dot : 1;
+  gboolean      dot_for_dot;
 
-  guint         is_popup : 1;
-  guint         clickable : 1;
-  guint         show_popup : 1;
+  GimpRGB       border_color;
+
+  gboolean      is_popup;
+  gboolean      clickable;
+  gboolean      show_popup;
 
   /*< private >*/
-  guint         size;
-  guint         in_button : 1;
+  gint          size;
+  gboolean      in_button;
   guint         press_state;
   guint         idle_id;
   guint         popup_id;

@@ -49,16 +49,14 @@ struct _GimpTool
 
   ToolState     state;        /*  state of tool activity                      */
   gint          paused_count; /*  paused control count                        */
-  guint         scroll_lock : 1;  /*  allow scrolling or not                  */
-  guint         auto_snap_to : 1; /*  snap to guides automatically            */
+  gboolean      scroll_lock;  /*  allow scrolling or not                      */
+  gboolean      auto_snap_to; /*  snap to guides automatically                */
 
-  guint         handle_empty_image : 1; /*  invoke the tool on images without
-                                         *  active drawable                   */
+  gboolean      handle_empty_image; /*  invoke the tool on images without
+                                     *  active drawable
+                                     */
 
-  guint         preserve : 1; /*  Preserve this tool across drawable changes  */
-  guint         toggled : 1;  /*  Bad hack to let the paint_core show the
-			       *  right toggle cursors
-			       */
+  gboolean      preserve;     /*  Preserve this tool across drawable changes  */
   GimpDisplay  *gdisp;        /*  pointer to currently active gdisp           */
   GimpDrawable *drawable;     /*  pointer to the tool's current drawable      */
 
@@ -68,6 +66,10 @@ struct _GimpTool
 				      * functions are properly
 				      * virtualized
 				      */
+
+  gboolean           toggled; /*  Bad hack to let the paint_core show the
+			       *  right toggle cursors
+			       */
 };
 
 struct _GimpToolClass

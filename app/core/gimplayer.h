@@ -37,11 +37,12 @@ struct _GimpLayer
 {
   GimpDrawable      parent_instance;
 
-  guint             opacity;          /*  layer opacity                  */
+  gint              opacity;          /*  layer opacity                  */
   LayerModeEffects  mode;             /*  layer combination mode         */
-  guint             preserve_trans;   /*  preserve transparency      */
-  guint             linked;           /*  control linkage                */
-  
+  gboolean          preserve_trans;   /*  preserve transparency          */
+
+  gboolean          linked;           /*  control linkage                */
+
   GimpLayerMask    *mask;             /*  possible layer mask            */
 
   /*  Floating selections  */
@@ -49,10 +50,11 @@ struct _GimpLayer
   {
     TileManager  *backing_store;      /*  for obscured regions           */
     GimpDrawable *drawable;           /*  floating sel is attached to    */
-    guint         initial : 1;        /*  is fs composited yet?          */
-    guint         boundary_known : 1; /*  is the current boundary valid  */
+    gboolean      initial;            /*  is fs composited yet?          */
+
+    gboolean      boundary_known;     /*  is the current boundary valid  */
     BoundSeg     *segs;               /*  boundary of floating sel       */
-    guint         num_segs;           /*  number of segs in boundary     */
+    gint          num_segs;           /*  number of segs in boundary     */
   } fs;
 };
 

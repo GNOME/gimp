@@ -63,8 +63,9 @@ struct _GimpBezierSelectPoint
   GimpBezierSelectPoint *prev;          /* prev point on curve               */
   GimpBezierSelectPoint *next_curve;    /* Next curve segment                */
 
-  guint        pointflags : 1; /* Status of point 0 = not selected 
-			        * 1 = selected */ 
+  gint         pointflags;    /* Status of point 0 = not selected 
+			       * 1 = selected 
+			       */ 
 };
 
 struct _GimpBezierSelectTool
@@ -80,7 +81,7 @@ struct _GimpBezierSelectTool
   GimpBezierSelectPoint  *cur_control;  /* the current active control point  */
   GimpBezierSelectPoint  *last_point;   /* the last point on the curve       */
 
-  guint         num_points;   /* number of points in the curve     */
+  gint          num_points;   /* number of points in the curve     */
   GimpChannel  *mask;         /* null if the curve is open         */
   GSList      **scanlines;    /* used in converting a curve        */
 };
@@ -98,7 +99,7 @@ typedef void (* GimpBezierSelectPointsFunc) (GimpBezierSelectTool *bezier_sel,
 
 typedef struct
 {
-  guint count;
+  gint count;
 } CountCurves;
 
 

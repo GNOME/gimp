@@ -25,7 +25,7 @@
 struct _GimpLut
 {
   guchar **luts;
-  guint    nchannels;
+  gint     nchannels;
 };
 
 /* TODO: the GimpLutFunc should really be passed the ColorModel of the region,
@@ -36,9 +36,10 @@ struct _GimpLut
  * and do no correction as this will be handled by gimp_lut_setup
  */
 typedef gfloat (*GimpLutFunc) (gpointer user_data, 
-			       guint    nchannels,
-			       guint    channel, 
+			       gint     nchannels,
+			       gint     channel, 
 			       gfloat   value);
+
 
 GimpLut * gimp_lut_new            (void);
 void      gimp_lut_free           (GimpLut     *lut);
@@ -46,7 +47,7 @@ void      gimp_lut_free           (GimpLut     *lut);
 void      gimp_lut_setup          (GimpLut     *lut, 
 				   GimpLutFunc  func,
 				   gpointer     user_data,
-				   guint        nchannels);
+				   gint         nchannels);
 
 /* gimp_lut_setup_exact is currently identical to gimp_lut_setup.  It
  * however is guaranteed to never perform any interpolation or gamma
@@ -55,7 +56,7 @@ void      gimp_lut_setup          (GimpLut     *lut,
 void      gimp_lut_setup_exact    (GimpLut     *lut, 
 				   GimpLutFunc  func,
 				   gpointer     user_data,
-				   guint        nchannels);
+				   gint         nchannels);
 
 void      gimp_lut_process        (GimpLut     *lut,
 				   PixelRegion *srcPR,
@@ -76,5 +77,6 @@ void      gimp_lut_process_inline (GimpLut     *lut,
 void      gimp_lut_process_2      (PixelRegion *srcPR,
 				   PixelRegion *destPR,
 				   GimpLut     *lut);
+
 
 #endif /* __GIMP_LUT_H__ */

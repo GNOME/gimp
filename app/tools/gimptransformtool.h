@@ -79,8 +79,8 @@ struct _GimpTransformTool
 
   TransformAction function;       /*  current tool activity            */
 
-  guint           use_grid : 1;   /*  does the tool use the grid       */
-  guint           use_center : 1; /*  use the center handle            */
+  gboolean        use_grid;       /*  does the tool use the grid       */
+  gboolean        use_center;     /*  use the center handle            */
 
   gint		  ngx, ngy;	  /*  number of grid lines in original
                                    *  x and y directions

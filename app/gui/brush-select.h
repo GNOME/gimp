@@ -37,7 +37,7 @@ struct _BrushSelect
 
   /*  Context to store the current brush & paint options  */
   GimpContext   *context;
-  guint          spacing_value;
+  gint           spacing_value;
 };
 
 

@@ -195,48 +195,48 @@ static gchar        * open_backup_file          (gchar        *filename,
 /*  global gimprc variables  */
 GimpRc gimprc =
 {
-  marching_speed             : 300,       /* 300 ms */
-  last_opened_size           : 4,
-  gamma_val                  : 1.0,
-  transparency_type          : 1,     /* Mid-Tone Checks */
-  perfectmouse               : FALSE, /* off (fast and sloppy) */
-  transparency_size          : 1,     /* Medium sized */
-  min_colors                 : 144,   /* 6*6*4 */
-  install_cmap               : FALSE,
-  cycled_marching_ants       : 0,
-  default_threshold          : 15,
-  resize_windows_on_zoom     : FALSE,
-  resize_windows_on_resize   : FALSE,
-  no_cursor_updating         : FALSE,
-  preview_size               : GIMP_PREVIEW_SIZE_SMALL,
-  nav_preview_size           : GIMP_PREVIEW_SIZE_HUGE,
-  show_rulers                : TRUE,
-  show_statusbar             : TRUE,
-  auto_save                  : TRUE,
-  confirm_on_close           : TRUE,
-  default_dot_for_dot        : TRUE,
-  save_session_info          : TRUE,
-  save_device_status         : FALSE,
-  always_restore_session     : TRUE,
-  show_tips                  : TRUE,
-  last_tip                   : -1,
-  show_tool_tips             : TRUE,
-  monitor_xres               : 72.0,
-  monitor_yres               : 72.0,
-  using_xserver_resolution   : FALSE,
-  image_title_format         : NULL,
-  global_paint_options       : FALSE,
-  show_indicators            : TRUE,
-  max_new_image_size         : 33554432,  /* 32 MB */
-  trust_dirty_flag           : FALSE,
-  use_help                   : TRUE,
-  nav_window_per_display     : FALSE,
-  info_window_follows_mouse  : TRUE,
-  help_browser               : HELP_BROWSER_GIMP,
-  cursor_mode                : CURSOR_MODE_TOOL_ICON,
-  disable_tearoff_menus      : FALSE,
-  theme_path                 : NULL,
-  theme                      : NULL
+  /* marching_speed            */  300,       /* 300 ms */
+  /* last_opened_size          */  4,
+  /* gamma_val                 */  1.0,
+  /* transparency_type         */  1,     /* Mid-Tone Checks */
+  /* perfectmouse              */  FALSE, /* off (fast and sloppy) */
+  /* transparency_size         */  1,     /* Medium sized */
+  /* min_colors                */  144,   /* 6*6*4 */
+  /* install_cmap              */  FALSE,
+  /* cycled_marching_ants      */  0,
+  /* default_threshold         */  15,
+  /* resize_windows_on_zoom    */  FALSE,
+  /* resize_windows_on_resize  */  FALSE,
+  /* no_cursor_updating        */  FALSE,
+  /* preview_size              */  GIMP_PREVIEW_SIZE_SMALL,
+  /* nav_preview_size          */  GIMP_PREVIEW_SIZE_HUGE,
+  /* show_rulers               */  TRUE,
+  /* show_statusbar            */  TRUE,
+  /* auto_save                 */  TRUE,
+  /* confirm_on_close          */  TRUE,
+  /* default_dot_for_dot       */  TRUE,
+  /* save_session_info         */  TRUE,
+  /* save_device_status        */  FALSE,
+  /* always_restore_session    */  TRUE,
+  /* show_tips                 */  TRUE,
+  /* last_tip                  */  -1,
+  /* show_tool_tips            */  TRUE,
+  /* monitor_xres              */  72.0,
+  /* monitor_yres              */  72.0,
+  /* using_xserver_resolution  */  FALSE,
+  /* image_title_format        */  NULL,
+  /* global_paint_options      */  FALSE,
+  /* show_indicators           */  TRUE,
+  /* max_new_image_size        */  33554432,  /* 32 MB */
+  /* trust_dirty_flag          */  FALSE,
+  /* use_help                  */  TRUE,
+  /* nav_window_per_display    */  FALSE,
+  /* info_window_follows_mouse */  TRUE,
+  /* help_browser              */  HELP_BROWSER_GIMP,
+  /* cursor_mode               */  CURSOR_MODE_TOOL_ICON,
+  /* disable_tearoff_menus     */  FALSE,
+  /* theme_path                */  NULL,
+  /* theme                     */  NULL
 };
 
 static GHashTable *parse_func_hash = NULL;

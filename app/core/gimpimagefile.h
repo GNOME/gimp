@@ -40,9 +40,9 @@ struct _GimpImagefile
 {
   GimpViewable  parent_instance;
 
-  guint         width;
-  guint         height;
-  guint         size;
+  gint          width;
+  gint          height;
+  gint          size;
 };
 
 struct _GimpImagefileClass

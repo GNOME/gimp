@@ -326,8 +326,8 @@ gimp_drawable_invalidate_preview (GimpViewable *viewable)
 void
 gimp_drawable_configure (GimpDrawable  *drawable,
 			 GimpImage     *gimage,
-			 guint          width,
-			 guint          height, 
+			 gint           width,
+			 gint           height, 
 			 GimpImageType  type,
 			 const gchar   *name)
 {
@@ -438,8 +438,8 @@ void
 gimp_drawable_update (GimpDrawable *drawable,
 		      gint          x,
 		      gint          y,
-		      guint         w,
-		      guint         h)
+		      gint          w,
+		      gint          h)
 {
   GimpImage *gimage;
   gint       offset_x;
@@ -467,11 +467,11 @@ gimp_drawable_apply_image (GimpDrawable *drawable,
 			   gint          x2,
 			   gint          y2, 
 			   TileManager  *tiles,
-			   gboolean      sparse)
+			   gint          sparse)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  if (!tiles)
+  if (! tiles)
     undo_push_image (drawable->gimage, drawable, 
 		     x1, y1, x2, y2);
   else

@@ -58,7 +58,7 @@ void
 gimp_lut_setup (GimpLut     *lut, 
 		GimpLutFunc  func,
 		void        *user_data, 
-		guint        nchannels)
+		gint         nchannels)
 {
   guint   i, v;
   gdouble val;
@@ -92,7 +92,7 @@ void
 gimp_lut_setup_exact (GimpLut     *lut, 
 		      GimpLutFunc  func,
 		      void        *user_data, 
-		      guint        nchannels)
+		      gint         nchannels)
 {
   gimp_lut_setup (lut, func, user_data, nchannels);
 }

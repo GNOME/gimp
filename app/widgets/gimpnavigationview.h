@@ -42,18 +42,18 @@ struct _GimpNavigationPreview
   /*  values in image coordinates  */
   gint      x;
   gint      y;
-  guint     width;
-  guint     height;
+  gint      width;
+  gint      height;
 
   /*  values in preview coordinates  */
   gint      p_x;
   gint      p_y;
-  guint     p_width;
-  guint     p_height;
+  gint      p_width;
+  gint      p_height;
 
   gint      motion_offset_x;
   gint      motion_offset_y;
-  guint     has_grab : 1;
+  gboolean  has_grab;
 
   GdkGC    *gc;
 };

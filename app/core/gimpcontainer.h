@@ -51,11 +51,11 @@ struct _GimpContainer
   /*  public, read-only  */
   GType                children_type;
   GimpContainerPolicy  policy;
-  guint                num_children;
+  gint                 num_children;
 
   /*  private  */
   GList               *handlers;
-  guint                freeze_count;
+  gint                 freeze_count;
 };
 
 struct _GimpContainerClass

@@ -42,8 +42,8 @@ struct _Resize
   ResizeType   type;
   ResizeTarget target;
 
-  guint        width;
-  guint        height;
+  gint         width;
+  gint         height;
 
   gdouble      resolution_x;
   gdouble      resolution_y;

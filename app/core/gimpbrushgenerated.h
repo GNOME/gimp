@@ -48,7 +48,7 @@ struct _GimpBrushGenerated
   gfloat     aspect_ratio; /* y/x        */
 
   /* private */
-  guint      freeze;
+  gint      freeze;
 };
 
 struct _GimpBrushGeneratedClass

@@ -80,8 +80,8 @@ struct _GimpPaintTool
 
   GimpBrush     * brush;         /*  current brush	        */
 
-  guint           pick_colors : 1; /*  pick color if ctrl or alt is pressed  */
-  guint           pick_state : 1;  /*  was ctrl or alt pressed when clicked? */
+  gboolean        pick_colors;   /*  pick color if ctrl or alt is pressed  */
+  gboolean        pick_state;    /*  was ctrl or alt pressed when clicked? */
   ToolFlags       flags;	 /*  tool flags, see ToolFlags above       */
 
   guint           context_id;    /*  for the statusbar          */

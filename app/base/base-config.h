@@ -29,7 +29,7 @@ struct _GimpBaseConfig
   guint              tile_cache_size;
   gboolean           stingy_memory_use;
   InterpolationType  interpolation_type;
-  guint              num_processors;
+  gint               num_processors;
 };
 
 

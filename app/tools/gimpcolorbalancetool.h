@@ -67,8 +67,8 @@ struct _ColorBalanceDialog
   guchar            g_lookup[256];
   guchar            b_lookup[256];
 
-  guint             preserve_luminosity : 1;
-  guint             preview : 1;
+  gboolean          preserve_luminosity;
+  gboolean          preview;
   GimpTransferMode  application_mode;
 };
 

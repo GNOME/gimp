@@ -77,7 +77,7 @@ struct _HueSaturationDialog
   gdouble        saturation[7];
 
   HueRange       hue_partition;
-  guint          preview : 1;
+  gboolean       preview;
 };
 
 

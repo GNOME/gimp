@@ -24,12 +24,12 @@ struct _TileManager
 {
   gint               x, y;          /*  tile manager offsets                 */
 
-  guint              width;         /*  the width of the tiled area          */
-  guint              height;        /*  the height of the tiled area         */
-  guint              bpp;           /*  the bpp of each tile                 */
+  gint               width;         /*  the width of the tiled area          */
+  gint               height;        /*  the height of the tiled area         */
+  gint               bpp;           /*  the bpp of each tile                 */
 
-  guint              ntile_rows;    /*  the number of tiles in each row      */
-  guint              ntile_cols;    /*  the number of tiles in each columns  */
+  gint               ntile_rows;    /*  the number of tiles in each row      */
+  gint               ntile_cols;    /*  the number of tiles in each columns  */
 
   Tile             **tiles;         /*  the tiles for this level             */
   TileValidateProc   validate_proc; /*  this proc is called when an attempt
@@ -45,11 +45,11 @@ struct _PixelDataHandlePrivate
 {
   PixelDataHandle  public;
   TileManager     *tm;
-  Tile            *tile;
   gint		   x1, x2, y1, y2;
-  guint        	   readable : 1;
-  guint            writeable : 1;
-  guint            local_buffer : 1;
+  gboolean	   readable;
+  gboolean         writeable;
+  gboolean         local_buffer;
+  Tile            *tile;
 };
 
 

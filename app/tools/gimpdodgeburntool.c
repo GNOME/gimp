@@ -106,16 +106,16 @@ static void     gimp_dodgeburn_tool_motion        (GimpPaintTool        *paint_t
 						   GimpLut              *lut);
 
 static gfloat   gimp_dodgeburn_tool_highlights_lut_func (gpointer       user_data,
-					                 guint          nchannels,
-					                 guint          channel,
+					                 gint           nchannels,
+					                 gint           channel,
 					                 gfloat         value);
 static gfloat   gimp_dodgeburn_tool_midtones_lut_func   (gpointer       user_data,
-					                 guint          nchannels,
-					                 guint          channel,
+					                 gint           nchannels,
+					                 gint           channel,
 					                 gfloat         value);
 static gfloat   gimp_dodgeburn_tool_shadows_lut_func    (gpointer       user_data,
-					                 guint          nchannels,
-					                 guint          channel,
+					                 gint           nchannels,
+					                 gint           channel,
 					                 gfloat         value);
 
 static GimpToolOptions * gimp_dodgeburn_tool_options_new   (GimpToolInfo    *tool_info);
@@ -459,8 +459,8 @@ gimp_dodgeburn_tool_motion (GimpPaintTool        *paint_tool,
 
 static gfloat 
 gimp_dodgeburn_tool_highlights_lut_func (gpointer  user_data, 
-			                 guint     nchannels, 
-			                 guint     channel, 
+			                 gint      nchannels, 
+			                 gint      channel, 
 			                 gfloat    value)
 {
   gfloat *exposure_ptr = (gfloat *) user_data;
@@ -476,8 +476,8 @@ gimp_dodgeburn_tool_highlights_lut_func (gpointer  user_data,
 
 static gfloat 
 gimp_dodgeburn_tool_midtones_lut_func (gpointer  user_data, 
-			               guint     nchannels, 
-			               guint     channel, 
+			               gint      nchannels, 
+			               gint      channel, 
 			               gfloat    value)
 {
   gfloat *exposure_ptr = (gfloat *) user_data;
@@ -498,8 +498,8 @@ gimp_dodgeburn_tool_midtones_lut_func (gpointer  user_data,
 
 static gfloat 
 gimp_dodgeburn_tool_shadows_lut_func (gpointer  user_data, 
-			              guint     nchannels, 
-			              guint     channel, 
+			              gint      nchannels, 
+			              gint      channel, 
 			              gfloat    value)
 {
   gfloat *exposure_ptr = (gfloat *) user_data;

@@ -25,21 +25,21 @@ typedef struct _GimpRc GimpRc;
 /*  global gimprc variables  - need some comments on this stuff */
 struct _GimpRc 
 {
-  guint              marching_speed;
-  guint              last_opened_size;
+  gint               marching_speed;
+  gint               last_opened_size;
   gdouble            gamma_val;
-  guint              transparency_type;
+  gint               transparency_type;
   gboolean           perfectmouse;
-  guint              transparency_size;
-  guint              min_colors;
+  gint               transparency_size;
+  gint               min_colors;
   gboolean           install_cmap;
   gboolean           cycled_marching_ants;
-  guint              default_threshold;
+  gint               default_threshold;
   gboolean           resize_windows_on_zoom;
   gboolean           resize_windows_on_resize;
   gboolean           no_cursor_updating;
-  guint              preview_size;
-  guint              nav_preview_size;
+  gint               preview_size;
+  gint               nav_preview_size;
   gboolean           show_rulers;
   gboolean           show_statusbar;
   gboolean           auto_save;

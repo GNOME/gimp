@@ -50,7 +50,7 @@ struct _GimpPathTool
   gdouble      click_position;  /* The position on the segment       */
   gint         click_handle_id; /* The handle ID of the segment      */
 
-  guint        active_count;    /* How many segments are active?     */
+  gint         active_count;    /* How many segments are active?     */
   /*
    * WARNING: single_active_segment may contain non NULL Values
    * which point to the nirvana. But they are important!

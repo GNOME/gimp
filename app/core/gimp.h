@@ -48,9 +48,9 @@ struct _Gimp
 
   GimpCoreConfig        *config;
 
-  guint                  be_verbose : 1;
-  guint                  no_data : 1;
-  guint                  no_interface : 1;
+  gboolean               be_verbose;
+  gboolean               no_data;
+  gboolean               no_interface;
   GimpMessageHandlerType message_handler;
   GimpStackTraceMode     stack_trace_mode;
 
@@ -67,7 +67,7 @@ struct _Gimp
   guint                  busy_idle_id;
 
   GList                 *user_units;
-  guint                  n_user_units;
+  gint                   n_user_units;
 
   GimpParasiteList      *parasites;
 
@@ -105,7 +105,7 @@ struct _Gimp
   GList                 *image_base_type_names;
   GList                 *fill_type_names;
   GimpImageNewValues     image_new_last_values;
-  guint                  have_current_cut_buffer : 1;
+  gboolean               have_current_cut_buffer;
 
   /*  the list of all contexts  */
   GList                 *context_list;

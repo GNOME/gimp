@@ -35,12 +35,6 @@ x( \
   guint count, \
   guchar *dst) __attribute((regparm(3)));
 
-/* A drawable has an alphachannel if contains either 4 or 2 bytes data
- * aka GRAYA and RGBA and thus the macro below works. This will have
- * to change if we support bigger formats. We'll do it so for now because
- * masking is always cheaper than passing parameters over the stack.      */
-#define HAS_ALPHA(bytes) (~##bytes & 1)
-
 #define MMX_PIXEL_OP_3A_1A(op) \
   MMX_PIXEL_OP(op##_pixels_3a_3a) \
   MMX_PIXEL_OP(op##_pixels_1a_1a)

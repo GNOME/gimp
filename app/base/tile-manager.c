@@ -32,17 +32,15 @@
 #include "tile-swap.h"
 
 
-static inline gboolean
-tile_manager_get_tile_num (TileManager *tm,
-			   gint         xpixel,
-			   gint         ypixel,
-			   guint       *tile_num);
+static gint tile_manager_get_tile_num (TileManager *tm,
+				       gint         xpixel,
+				       gint         ypixel);
 
 
 TileManager *
-tile_manager_new (guint toplevel_width,
-		  guint toplevel_height,
-		  guint bpp)
+tile_manager_new (gint toplevel_width,
+		  gint toplevel_height,
+		  gint bpp)
 {
   TileManager *tm;
   gint         width;
@@ -71,8 +69,8 @@ tile_manager_new (guint toplevel_width,
 void
 tile_manager_destroy (TileManager *tm)
 {
-  guint ntiles;
-  guint i;
+  gint ntiles;
+  gint i;
 
   g_return_if_fail (tm != NULL);
   
@@ -107,14 +105,15 @@ Tile *
 tile_manager_get_tile (TileManager *tm,
 		       gint         xpixel,
 		       gint         ypixel,
-		       gboolean     wantread,
-		       gboolean     wantwrite)
+		       gint         wantread,
+		       gint         wantwrite)
 {
-  guint tile_num;
+  gint tile_num;
 
   g_return_val_if_fail (tm != NULL, NULL);
 
-  if (!tile_manager_get_tile_num (tm, xpixel, ypixel, &tile_num))
+  tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel);
+  if (tile_num < 0)
     return NULL;
 
   return tile_manager_get (tm, tile_num, wantread, wantwrite);
@@ -122,23 +121,23 @@ tile_manager_get_tile (TileManager *tm,
 
 Tile *
 tile_manager_get (TileManager *tm,
-		  guint        tile_num,
-		  gboolean     wantread,
-		  gboolean     wantwrite)
+		  gint         tile_num,
+		  gint         wantread,
+		  gint         wantwrite)
 {
   Tile **tiles;
   Tile **tile_ptr;
-  guint  ntiles;
-  guint  nrows, ncols;
+  gint   ntiles;
+  gint   nrows, ncols;
   gint   right_tile;
   gint   bottom_tile;
-  guint  i, j, k;
+  gint   i, j, k;
 
   g_return_val_if_fail (tm != NULL, NULL);
 
   ntiles = tm->ntile_rows * tm->ntile_cols;
 
-  if (tile_num >= ntiles)
+  if ((tile_num < 0) || (tile_num >= ntiles))
     return NULL;
 
   if (!tm->tiles)
@@ -175,6 +174,14 @@ tile_manager_get (TileManager *tm,
     {
       g_warning("WRITE-ONLY TILE... UNTESTED!");
     }
+
+  /*
+  if ((*tile_ptr)->share_count &&
+      (*tile_ptr)->write_count)
+    fprintf(stderr," >> MEEPITY %d,%d << ",
+	    (*tile_ptr)->share_count,
+	    (*tile_ptr)->write_count
+	    ); */
 
   if (wantread) 
     {
@@ -225,6 +232,11 @@ tile_manager_get (TileManager *tm,
 	  (*tile_ptr)->write_count++;
 	  (*tile_ptr)->dirty = TRUE;
 	}
+	/*       else
+	{
+	  if ((*tile_ptr)->write_count)
+	    fprintf(stderr,"STINK! r/o on r/w tile /%d\007  ",(*tile_ptr)->write_count);
+	} */
       TILE_MUTEX_UNLOCK (*tile_ptr);
       tile_lock (*tile_ptr);
     }
@@ -238,14 +250,16 @@ tile_manager_get_async (TileManager *tm,
                         gint         ypixel)
 {
   Tile *tile_ptr;
-  guint tile_num;
+  gint  tile_num;
 
   g_return_if_fail (tm != NULL);
 
-  if (!tile_manager_get_tile_num (tm, xpixel, ypixel, &tile_num))
+  tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel);
+  if (tile_num < 0)
     return;
 
   tile_ptr = tm->tiles[tile_num];
+
   tile_swap_in_async (tile_ptr);
 }
 
@@ -260,6 +274,17 @@ tile_manager_validate (TileManager *tm,
 
   if (tm->validate_proc)
     (* tm->validate_proc) (tm, tile);
+
+/* DEBUG STUFF ->  if (tm->user_data)
+    {
+            fprintf(stderr,"V%p  ",tm->user_data);
+      fprintf(stderr,"V");
+    }
+  else
+    {
+      fprintf(stderr,"v");
+    } */
+
 }
 
 void
@@ -295,12 +320,13 @@ tile_invalidate_tile (Tile        **tile_ptr,
 		      gint          xpixel,
 		      gint          ypixel)
 {
-  guint tile_num;
+  gint tile_num;
 
   g_return_if_fail (tile_ptr != NULL);
   g_return_if_fail (tm != NULL);
 
-  if (!tile_manager_get_tile_num (tm, xpixel, ypixel, &tile_num))
+  tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel);
+  if (tile_num < 0)
     return;
   
   tile_invalidate (tile_ptr, tm, tile_num);
@@ -310,7 +336,7 @@ tile_invalidate_tile (Tile        **tile_ptr,
 void
 tile_invalidate (Tile        **tile_ptr,
 		 TileManager  *tm,
-		 guint         tile_num)
+		 gint          tile_num)
 {
   Tile *tile = *tile_ptr;
 
@@ -364,13 +390,24 @@ tile_manager_map_tile (TileManager *tm,
 		       gint         ypixel,
 		       Tile        *srctile)
 {
-  guint tile_num;
+  gint tile_row;
+  gint tile_col;
+  gint tile_num;
 
+  g_return_if_fail (tm != NULL);
   g_return_if_fail (srctile != NULL);
 
-  if (!tile_manager_get_tile_num (tm, xpixel, ypixel, &tile_num))
-    return;
-  
+  if ((xpixel < 0) || (xpixel >= tm->width) ||
+      (ypixel < 0) || (ypixel >= tm->height))
+    {
+      g_warning ("tile_manager_map_tile: tile co-ord out of range.");
+      return;
+    }
+
+  tile_row = ypixel / TILE_HEIGHT;
+  tile_col = xpixel / TILE_WIDTH;
+  tile_num = tile_row * tm->ntile_cols + tile_col;
+
   tile_manager_map (tm, tile_num, srctile);
 }
 
@@ -415,6 +452,8 @@ tile_manager_map (TileManager *tm,
 	{
 	  for (j = 0; j < ncols; j++, k++)
 	    {
+	      /*	      printf(",");fflush(stdout);*/
+
 	      tiles[k] = g_new (Tile, 1);
 	      tile_init (tiles[k], tm->bpp);
 	      tile_attach (tiles[k], tm, k);
@@ -426,9 +465,13 @@ tile_manager_map (TileManager *tm,
 		tiles[k]->eheight = bottom_tile;
 	    }
 	}
+
+      /*      g_warning ("tile_manager_map: empty tile level - done.");*/
     }
 
   tile_ptr = &tm->tiles[tile_num];
+
+  /*  printf(")");fflush(stdout);*/
 
   if (!srctile->valid)
     g_warning("tile_manager_map: srctile not validated yet!  please report.");
@@ -443,31 +486,41 @@ tile_manager_map (TileManager *tm,
     }
   tile_detach (*tile_ptr, tm, tile_num);
 
+
+  /*  printf(">");fflush(stdout);*/
+
   TILE_MUTEX_LOCK (srctile);
+
+  /*  printf(" [src:%p tm:%p tn:%d] ", srctile, tm, tile_num); fflush(stdout);*/
+
   tile_attach (srctile, tm, tile_num);
   *tile_ptr = srctile;
+
   TILE_MUTEX_UNLOCK (srctile);
+
+  /*  printf("}");fflush(stdout);*/
 }
 
-static inline gboolean 
+static gint
 tile_manager_get_tile_num (TileManager *tm,
 		           gint         xpixel,
-		           gint         ypixel,
-			   guint       *tile_num)
+		           gint         ypixel)
 {
-  guint tile_row;
-  guint tile_col;
+  gint tile_row;
+  gint tile_col;
+  gint tile_num;
 
-  g_return_val_if_fail (tm != NULL, FALSE);
+  g_return_val_if_fail (tm != NULL, -1);
 
-  if ((xpixel < 0) || (ypixel < 0) ||
-      (xpixel >= tm->width) || (ypixel >= tm->height))
-    return FALSE;
+  if ((xpixel < 0) || (xpixel >= tm->width) ||
+      (ypixel < 0) || (ypixel >= tm->height))
+    return -1;
 
   tile_row = ypixel / TILE_HEIGHT;
   tile_col = xpixel / TILE_WIDTH;
-  *tile_num = tile_row * tm->ntile_cols + tile_col;
-  return TRUE;
+  tile_num = tile_row * tm->ntile_cols + tile_col;
+
+  return tile_num;
 }
 
 void 
@@ -609,10 +662,9 @@ request_pixel_data (TileManager *tm,
   pdh->public.width = w = (x2-x1)+1;
   pdh->public.height = h = (y2-y1)+1;
   
-  tile_manager_get_tile_num (tm, x1, y1, &tile_num_1);
-  tile_manager_get_tile_num (tm, x2, y2, &tile_num_2);
+  tile_num_1 = tile_manager_get_tile_num (tm, x1, y1);
+  tile_num_2 = tile_manager_get_tile_num (tm, x2, y2);
 
-  /* FIXME: What if both nums are -1 aka inavlid? */
   if (tile_num_1 == tile_num_2) 
     {
       pdh->tile = tile_manager_get (tm, tile_num_1, wantread, wantwrite);

@@ -54,7 +54,7 @@ static void     temp_buf_to_gray  (TempBuf *src_buf,
 
 /*  Memory management  */
 
-static inline guchar *
+static guchar *
 temp_buf_allocate (guint size)
 {
   guchar *data;
@@ -73,7 +73,7 @@ temp_buf_to_color (TempBuf *src_buf,
 {
   guchar *src;
   guchar *dest;
-  gulong  num_bytes;
+  glong   num_bytes;
 
   src = temp_buf_data (src_buf);
   dest = temp_buf_data (dest_buf);
@@ -97,7 +97,7 @@ temp_buf_to_gray (TempBuf *src_buf,
 {
   guchar *src;
   guchar *dest;
-  gulong  num_bytes;
+  glong   num_bytes;
   gfloat  pix;
 
   src = temp_buf_data (src_buf);
@@ -117,20 +117,19 @@ temp_buf_to_gray (TempBuf *src_buf,
 }
 
 TempBuf *
-temp_buf_new (guint   width,
-	      guint   height,
-	      guint   bytes,
+temp_buf_new (gint    width,
+	      gint    height,
+	      gint    bytes,
 	      gint    x,
 	      gint    y,
 	      guchar *col)
 {
-  const gulong  size = width * height * bytes;
-  glong	        i;
-  gint	        j;
-  guchar       *data;
-  TempBuf      *temp;
+  glong    i;
+  gint     j;
+  guchar  *data;
+  TempBuf *temp;
 
-  g_return_val_if_fail (size > 0, NULL);
+  g_return_val_if_fail (width > 0 && height > 0, NULL);
 
   temp = g_new (TempBuf, 1);
 
@@ -142,7 +141,7 @@ temp_buf_new (guint   width,
   temp->swapped  = FALSE;
   temp->filename = NULL;
 
-  temp->data = data = temp_buf_allocate (size);
+  temp->data = data = temp_buf_allocate (width * height * bytes);
 
   /*  initialize the data  */
   if (col)
@@ -198,8 +197,8 @@ temp_buf_new (guint   width,
    parameters into a newly allocated tempbuf */
 
 TempBuf *
-temp_buf_new_check (guint	  width,
-		    guint	  height,
+temp_buf_new_check (gint width,
+		    gint height,
 		    GimpCheckType check_type,
 	            GimpCheckSize check_size)
 {
@@ -208,7 +207,7 @@ temp_buf_new_check (guint	  width,
   guchar   check_shift = 0;
   guchar   fg_color = 0;
   guchar   bg_color = 0;
-  guint    i, j;
+  gint     i, j;
 
   g_return_val_if_fail (width > 0 && height > 0, NULL);
 
@@ -309,16 +308,18 @@ temp_buf_copy (TempBuf *src,
 
 TempBuf *
 temp_buf_resize (TempBuf *buf,
-		 guint    bytes,
+		 gint     bytes,
 		 gint     x,
 		 gint     y,
-		 guint    width,
-		 guint    height)
+		 gint     width,
+		 gint     height)
 {
-  /*  calculate the requested size  */
-  const gulong size = width * height * bytes;
+  gint size;
 
-  g_return_val_if_fail (size > 0, NULL);
+  g_return_val_if_fail (width > 0 && height > 0, NULL);
+
+  /*  calculate the requested size  */
+  size = width * height * bytes;
 
   /*  First, configure the canvas buffer  */
   if (!buf)
@@ -349,11 +350,11 @@ temp_buf_resize (TempBuf *buf,
 
 TempBuf *
 temp_buf_scale (TempBuf *src,
-		guint    new_width, 
-		guint    new_height)
+		gint     new_width, 
+		gint     new_height)
 {
-  guint    loop1;
-  guint    loop2;
+  gint     loop1;
+  gint     loop2;
   gdouble  x_ratio;
   gdouble  y_ratio;
   guchar  *src_data;
@@ -402,8 +403,8 @@ temp_buf_copy_area (TempBuf *src,
 		    TempBuf *dest,
 		    gint     x,
 		    gint     y,
-		    guint    width,
-		    guint    height,
+		    gint     width,
+		    gint     height,
 		    gint     dest_x,
 		    gint     dest_y)
 {
@@ -507,8 +508,8 @@ temp_buf_data_clear (TempBuf *temp_buf)
 
 
 MaskBuf *
-mask_buf_new (guint width, 
-	      guint height)
+mask_buf_new (gint width, 
+	      gint height)
 {
   static guchar empty = 0;
 
