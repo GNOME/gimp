@@ -1,3 +1,19 @@
+2003-03-27  Michael Natterer  <mitch@gimp.org>
+
+	Someone produces icons faster than I can commit...
+
+	* themes/Default/images/stock-channel-alpha-16.png
+	* themes/Default/images/stock-channel-alpha-24.png: updated.
+
+	* themes/Default/images/stock-channel-alpha-32.png
+	* themes/Default/images/stock-channel-alpha-48.png: new.
+
+	* themes/Default/images/Makefile.am
+	* libgimpwidgets/gimpstock.[ch]: added them to the stock system.
+
+	* app/widgets/gimpcontainerpopup.c: use the new "view as list" and
+	"view as grid" icons.
+
 2003-03-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.[ch]

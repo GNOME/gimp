@@ -479,7 +479,7 @@ gimp_container_popup_create_view (GimpContainerPopup *popup,
                           popup);
 
   button =
-    gimp_editor_add_button (editor, GTK_STOCK_INDEX,
+    gimp_editor_add_button (editor, GIMP_STOCK_LIST,
                             _("View as List"), NULL,
                             G_CALLBACK (gimp_container_popup_list_clicked),
                             NULL,
@@ -488,7 +488,7 @@ gimp_container_popup_create_view (GimpContainerPopup *popup,
     gtk_widget_set_sensitive (button, FALSE);
 
   button =
-    gimp_editor_add_button (editor, GTK_STOCK_SELECT_COLOR,
+    gimp_editor_add_button (editor, GIMP_STOCK_GRID,
                             _("View as Grid"), NULL,
                             G_CALLBACK (gimp_container_popup_grid_clicked),
                             NULL,

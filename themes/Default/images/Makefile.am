@@ -124,6 +124,7 @@ STOCK_BUTTON_IMAGES = \
 
 STOCK_DND_IMAGES = \
 	stock-channel-32.png			\
+	stock-channel-alpha-32.png		\
 	stock-channel-blue-32.png		\
 	stock-channel-gray-32.png		\
 	stock-channel-green-32.png		\
@@ -134,6 +135,7 @@ STOCK_DND_IMAGES = \
 
 STOCK_DIALOG_IMAGES = \
 	stock-channel-48.png			\
+	stock-channel-alpha-48.png		\
 	stock-channel-blue-48.png		\
 	stock-channel-gray-48.png		\
 	stock-channel-green-48.png		\

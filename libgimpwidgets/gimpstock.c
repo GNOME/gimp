@@ -454,7 +454,7 @@ gimp_stock_dnd_pixbufs[] =
   { GIMP_STOCK_CHANNEL_GREEN,        stock_channel_green_32        },
   { GIMP_STOCK_CHANNEL_BLUE,         stock_channel_blue_32         },
   { GIMP_STOCK_CHANNEL_GRAY,         stock_channel_gray_32         },
-  /* { GIMP_STOCK_CHANNEL_ALPHA,        stock_channel_alpha_32        }, */
+  { GIMP_STOCK_CHANNEL_ALPHA,        stock_channel_alpha_32        },
   { GIMP_STOCK_IMAGE,                stock_image_32                },
   { GIMP_STOCK_LAYER,                stock_layer_32                },
   { GIMP_STOCK_TEXT_LAYER,           stock_text_layer_32           }
@@ -472,7 +472,7 @@ gimp_stock_dialog_pixbufs[] =
   { GIMP_STOCK_CHANNEL_GREEN,        stock_channel_green_48        },
   { GIMP_STOCK_CHANNEL_BLUE,         stock_channel_blue_48         },
   { GIMP_STOCK_CHANNEL_GRAY,         stock_channel_gray_48         },
-  /* { GIMP_STOCK_CHANNEL_ALPHA,        stock_channel_alpha_48        }, */
+  { GIMP_STOCK_CHANNEL_ALPHA,        stock_channel_alpha_48        },
   { GIMP_STOCK_IMAGE,                stock_image_48                },
   { GIMP_STOCK_LAYER,                stock_layer_48                },
   { GIMP_STOCK_TEXT_LAYER,           stock_text_layer_48           },
