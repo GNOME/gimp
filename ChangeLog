@@ -1,3 +1,9 @@
+Sun Dec 20 23:34:37 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/rect_select.c: another patch from Xach. Eek, I should have
+	waited for him to finish his changes, but it seems to work 
+	correctly now.
+
 Sat Dec 19 15:46:27 CST 1998 Shawn T. Amundson <amundson@gtk.org>
 
 	* app/brush_edit.c:

@@ -567,10 +567,20 @@ rect_select_motion (Tool           *tool,
     {
       if (rect_sel->fixed_size) 
 	{
-	  rect_sel->x = ox - (w/2);
-	  rect_sel->y = oy - (h/2);
-	  rect_sel->w = w;
-	  rect_sel->h = h;
+          if (mevent->state & GDK_SHIFT_MASK) 
+            {
+              rect_sel->x = ox - w;
+              rect_sel->y = oy - h;
+              rect_sel->w = w * 2;
+              rect_sel->h = h * 2;
+            }
+          else
+            {
+              rect_sel->x = ox - w / 2;
+              rect_sel->y = oy - h / 2;
+              rect_sel->w = w;
+              rect_sel->h = h;
+            }
 	} 
       else 
 	{
