@@ -22,6 +22,8 @@ libappvectors_a_SOURCES = \
 	gimpstroke.c		\
 	gimpvectors.c		\
 	gimpvectors.h		\
+	gimpvectors-compat.c	\
+	gimpvectors-compat.h	\
 	gimpvectors-preview.c	\
 	gimpvectors-preview.h
 

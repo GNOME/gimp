@@ -43,9 +43,8 @@
 #include "core/gimpparasitelist.h"
 #include "core/gimpunit.h"
 
-#include "vectors/gimpanchor.h"
-#include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
+#include "vectors/gimpvectors-compat.h"
 
 #include "xcf-private.h"
 #include "xcf-read.h"
@@ -1407,22 +1406,23 @@ xcf_save_old_paths (XcfInfo    *info,
                                                    GIMP_OBJECT (active_vectors));
 
   xcf_write_int32_check_error (info->fp, &active_index, 1);
-  xcf_write_int32_check_error (info->fp, &num_paths, 1);
+  xcf_write_int32_check_error (info->fp, &num_paths,    1);
 
   for (list = GIMP_LIST (gimage->vectors)->list;
        list;
        list = g_list_next (list))
     {
-      GimpVectors *vectors = list->data;
-      gchar       *name;
-      guint32      locked;
-      guint8       state;
-      guint32      num_points = 0;
-      guint32      closed     = FALSE;
-      guint32      version;
-      guint32      pathtype;
-      guint32      tattoo;
-      GList       *strokes;
+      GimpVectors            *vectors = list->data;
+      gchar                  *name;
+      guint32                 locked;
+      guint8                  state;
+      guint32                 num_points;
+      guint32                 closed;
+      guint32                 version;
+      guint32                 pathtype;
+      guint32                 tattoo;
+      GimpVectorsCompatPoint *points;
+      gint                    i;
 
       /*
        * name (string)
@@ -1436,29 +1436,13 @@ xcf_save_old_paths (XcfInfo    *info,
        * then each point.
        */
 
-      for (strokes = vectors->strokes; strokes; strokes = g_list_next (strokes))
-        {
-          GimpStroke *stroke = strokes->data;
-          gint        n_anchors;
-
-          g_assert (stroke->closed || ! strokes->next);
-
-          n_anchors = g_list_length (stroke->anchors);
-
-          if (! stroke->closed)
-            n_anchors--;
-
-          num_points += n_anchors;
-
-          if (! strokes->next)
-            closed = stroke->closed;
-        }
+      points = gimp_vectors_compat_get_points (vectors, &num_points, &closed);
 
       name     = (gchar *) gimp_object_get_name (GIMP_OBJECT (vectors));
       locked   = gimp_item_get_linked (GIMP_ITEM (vectors));
-      state    = closed ? 4 : 2;
+      state    = closed ? 4 : 2;  /* EDIT : ADD  (editing state, 1.2 compat) */
       version  = 3;
-      pathtype = 1;
+      pathtype = 1;  /* BEZIER  (1.2 compat) */
       tattoo   = gimp_item_get_tattoo (GIMP_ITEM (vectors));
  
       xcf_write_string_check_error (info->fp, &name,       1);
@@ -1470,67 +1454,26 @@ xcf_save_old_paths (XcfInfo    *info,
       xcf_write_int32_check_error  (info->fp, &pathtype,   1);
       xcf_write_int32_check_error  (info->fp, &tattoo,     1);
 
-      for (strokes = vectors->strokes;
-           strokes;
-           strokes = g_list_next (strokes))
+      for (i = 0; i < num_points; i++)
         {
-          GimpStroke *stroke = strokes->data;
-          GList      *anchors;
+          gfloat x;
+          gfloat y;
 
-          for (anchors = stroke->anchors;
-               anchors;
-               anchors = g_list_next (anchors))
-            {
-              GimpAnchor *anchor = anchors->data;
-              guint32     type;
-              gfloat      x;
-              gfloat      y;
+          x = points[i].x;
+          y = points[i].y;
 
-              /*  skip the first anchor, will add it at the end if needed  */
-              if (! anchors->prev)
-                continue;
+          /*
+           * type (gint)
+           * x (gfloat)
+           * y (gfloat)
+           */
 
-              /* type (gint32)
-               * x (float)
-               * y (float)
-               */
-
-              switch (anchor->type)
-                {
-                case GIMP_ANCHOR_ANCHOR:
-                  if (strokes->prev && anchors->prev == stroke->anchors)
-                    type = 3; /* new stroke marker */
-                  else
-                    type = 1; /* ordinary anchor */
-                  break;
-
-                case GIMP_ANCHOR_CONTROL:
-                  type = 2;
-                  break;
-                }
-
-              x = anchor->position.x;
-              y = anchor->position.y;
-
-              xcf_write_int32_check_error (info->fp, &type, 1);
-              xcf_write_float_check_error (info->fp, &x,    1);
-              xcf_write_float_check_error (info->fp, &y,    1);
-
-              /*  write the skipped control point  */
-              if (! anchors->next && stroke->closed)
-                {
-                  anchor = (GimpAnchor *) stroke->anchors->data;
-
-                  type = 2;
-                  x    = anchor->position.x;
-                  y    = anchor->position.y;
-
-                  xcf_write_int32_check_error (info->fp, &type, 1);
-                  xcf_write_float_check_error (info->fp, &x,    1);
-                  xcf_write_float_check_error (info->fp, &y,    1);
-               }
-            }
+          xcf_write_int32_check_error (info->fp, &points[i].type, 1);
+          xcf_write_float_check_error (info->fp, &x,              1);
+          xcf_write_float_check_error (info->fp, &y,              1);
         }
+
+      g_free (points);
     }
 
   return TRUE;

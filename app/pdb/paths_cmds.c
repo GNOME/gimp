@@ -39,6 +39,7 @@
 #include "paint/gimppaintoptions.h"
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
+#include "vectors/gimpvectors-compat.h"
 #include "vectors/gimpvectors.h"
 
 static ProcRecord path_list_proc;
@@ -356,7 +357,7 @@ path_get_points_invoker (Gimp     *gimp,
   gint32 path_type = 0;
   gint32 path_closed = 0;
   gint32 num_points = 0;
-  gdouble *points = NULL;
+  gdouble *points_pairs = NULL;
   GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
@@ -373,79 +374,33 @@ path_get_points_invoker (Gimp     *gimp,
     
       if (vectors)
 	{
-	  GList      *list;
-	  GimpStroke *stroke;
-	  gdouble    *curr_point;
+	  GimpVectorsCompatPoint *points;
     
-	  path_type   = 1;
-	  path_closed = FALSE; /* FIXME */
+	  path_type = 1; /* BEZIER (1.2 compat) */
     
-	  for (list = vectors->strokes; list; list = g_list_next (list))
+	  points = gimp_vectors_compat_get_points (vectors, &num_points,
+						   &path_closed);
+    
+	  if (points)
 	    {
-	      gint num_anchors;
+	      gdouble *curr_point;
+	      gint     i;
     
-	      stroke = (GimpStroke *) list->data;
+	      points_pairs = g_new0 (gdouble, num_points * 3);
     
-	      num_anchors = g_list_length (stroke->anchors);
-    
-	      if (list->next && (num_anchors % 3) != 0)
-		num_anchors++;
-    
-	      num_points += num_anchors;
-	    }
-    
-	  points = g_new0 (gdouble, num_points * 3);
-    
-	  curr_point = points;
-    
-	  for (list = vectors->strokes; list; list = g_list_next (list))
-	    {
-	      GList *anchors;
-    
-	      stroke = (GimpStroke *) list->data;
-    
-	      for (anchors = stroke->anchors;
-		   anchors;
-		   anchors = g_list_next (anchors))
+	      for (i = 0, curr_point = points_pairs;
+		   i < num_points;
+		   i++, curr_point += 3)
 		{
-		  GimpAnchor *anchor      = anchors->data;
-		  gdouble     anchor_type = 1.0;
-    
-		  switch (anchor->type)
-		    {
-		    case GIMP_ANCHOR_ANCHOR:
-		      if (list->prev && ! anchors->prev)
-			anchor_type = 3.0; /* new stroke start */
-		      else
-			anchor_type = 1.0; /* ordinary anchor */
-		      break;
-    
-		    case GIMP_ANCHOR_CONTROL:
-		      anchor_type = 2.0;
-		      break;
-		    }
-    
-		  curr_point[0] = anchor->position.x;
-		  curr_point[1] = anchor->position.y;
-		  curr_point[2] = anchor_type;
-    
-		  curr_point += 3;
-    
-		  /* FIXME */
-		  if (! anchors->next && list->next)
-		    {
-		      /* create a fake closed segment */
-    
-		      anchor = (GimpAnchor *) stroke->anchors->data;
-    
-		      curr_point[0] = anchor->position.x;
-		      curr_point[1] = anchor->position.y;
-		      curr_point[2] = 2.0;
-    
-		      curr_point += 3;
-		    }
+		  curr_point[0] = points[i].x;
+		  curr_point[1] = points[i].y;
+		  curr_point[2] = points[i].type;
 		}
+    
+	      g_free (points);
 	    }
+	  else
+	    success = FALSE;
 	}
       else
 	success = FALSE;
@@ -458,7 +413,7 @@ path_get_points_invoker (Gimp     *gimp,
       return_args[1].value.pdb_int = path_type;
       return_args[2].value.pdb_int = path_closed;
       return_args[3].value.pdb_int = num_points;
-      return_args[4].value.pdb_pointer = points;
+      return_args[4].value.pdb_pointer = points_pairs;
     }
 
   return return_args;
@@ -528,7 +483,7 @@ path_set_points_invoker (Gimp     *gimp,
   gint32 ptype;
   gint32 num_path_points = 0;
   gdouble *points_pairs;
-  gboolean pclosed = FALSE;
+  gboolean closed = FALSE;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -549,79 +504,40 @@ path_set_points_invoker (Gimp     *gimp,
   if (success)
     {
       if ((num_path_points / 3) % 3 == 0)
-	pclosed = TRUE;
+	closed = TRUE;
       else if ((num_path_points / 3) % 3 != 2)
 	success = FALSE;
     
       if (success)
 	{
-	  GimpVectors *vectors;
-	  GimpCoords  *coords;
-	  GimpCoords  *curr_coord;
-	  gint         num_coords;
-	  gdouble     *curr_point_pair;
+	  GimpVectors            *vectors;
+	  gdouble                *curr_point_pair;
+	  GimpVectorsCompatPoint *points;
+	  gint                    n_points;
+	  gint                    i;
     
-	  vectors = gimp_vectors_new (gimage, pname);
+	  n_points = num_path_points / 3;
     
-	  num_coords = num_path_points / 3;
-	  coords     = g_new0 (GimpCoords, num_coords + 1);
+	  points = g_new0 (GimpVectorsCompatPoint, n_points);
     
-	  curr_coord      = coords;
-	  curr_point_pair = points_pairs;
-    
-	  while (num_coords > 0)
+	  for (i = 0, curr_point_pair = points_pairs;
+	       i < n_points;
+	       i++, curr_point_pair += 3)
 	    {
-	      GimpStroke *stroke;
-	      GimpCoords *next_stroke;
-	      gint        num_stroke_coords;
-    
-	      for (next_stroke = curr_coord;
-		   num_coords > 0;
-		   next_stroke++, num_coords--, curr_point_pair += 3)
-		{
-		  next_stroke->x        = curr_point_pair[0];
-		  next_stroke->y        = curr_point_pair[1];
-		  next_stroke->pressure = 1.0;
-		  next_stroke->xtilt    = 0.5;
-		  next_stroke->ytilt    = 0.5;
-		  next_stroke->wheel    = 0.5;
-    
-		  if (next_stroke != curr_coord && curr_point_pair[2] == 3.0)
-		    break;
-		}
-    
-	      num_stroke_coords = next_stroke - curr_coord;
-    
-	      if (num_coords == 0 && ! pclosed)
-		num_stroke_coords++;
-    
-	      {
-		GimpCoords temp_coords;
-		gint       i;
-    
-		temp_coords = curr_coord[num_stroke_coords - 1];
-    
-		for (i = num_stroke_coords - 1; i >= 0; i--)
-		  curr_coord[i] = curr_coord[i - 1];
-    
-		if (num_coords > 0 || pclosed)
-		  curr_coord[0] = temp_coords;
-		else
-		  curr_coord[0] = curr_coord[1];
-	      }
-    
-	      stroke = gimp_bezier_stroke_new_from_coords (curr_coord,
-							   num_stroke_coords,
-							   num_coords > 0 || pclosed);
-	      gimp_vectors_stroke_add (vectors, stroke);
-	      g_object_unref (stroke);
-    
-	      curr_coord = next_stroke;
+	      points[i].x    = curr_point_pair[0];
+	      points[i].y    = curr_point_pair[1];
+	      points[i].type = curr_point_pair[2];
 	    }
     
-	  g_free (coords);
+	  vectors = gimp_vectors_compat_new (gimage, pname, points, n_points,
+					     closed);
     
-	  gimp_image_add_vectors (gimage, vectors, 0);
+	  g_free (points);
+    
+	  if (vectors)
+	    gimp_image_add_vectors (gimage, vectors, 0);
+	  else
+	    success = FALSE;
 	}
     }
 

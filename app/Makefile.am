@@ -77,7 +77,6 @@ INCLUDES = \
 
 gimp_1_3_LDADD = \
 	$(gimp_exp)							\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	config/libappconfig.a						\
 	gui/libappgui.a							\
 	display/libappdisplay.a						\
@@ -87,8 +86,8 @@ gimp_1_3_LDADD = \
 	pdb/libapppdb.a							\
 	paint/libapppaint.a						\
 	text/libapptext.a						\
-	vectors/libappvectors.a						\
 	xcf/libappxcf.a							\
+	vectors/libappvectors.a						\
 	file/libappfile.a						\
 	plug-in/libappplug-in.a						\
 	paint-funcs/libapppaint-funcs.a					\
@@ -97,6 +96,7 @@ gimp_1_3_LDADD = \
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmodule/libgimpmodule-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(PANGOFT2_LIBS)						\
 	$(LIBART_LIBS)							\

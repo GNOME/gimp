@@ -1,3 +1,25 @@
+2003-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/vectors/Makefile.am
+	* app/vectors/gimpvectors-compat.[ch]: new files implementing a
+	compatibility API for converting old XCF and PDB point arrays
+	to GimpVectors and vice versa.
+
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/paths.pdb: use the new functions instead of
+	having slightly different, but equally ugly code twice.
+
+	* app/xcf/xcf-load.c: cleaned up path loading a lot. Removed the
+	path_point loading utility functions.
+
+	* app/pdb/paths_cmds.c: regenerated.
+
+	* app/Makefile.am: link vectors/libappvectors.a after
+	xcf/libappxcf.a so the compat functions (which are not needed in
+	vectors/) are found.  Also reverted an accidentially checked in
+	change to the libgimpwidgets link order.
+
 2003-05-22  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/helpbrowser/Makefile.am

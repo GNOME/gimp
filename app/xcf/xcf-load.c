@@ -46,8 +46,8 @@
 #include "core/gimpparasitelist.h"
 #include "core/gimpunit.h"
 
-#include "vectors/gimpbezierstroke.h"
 #include "vectors/gimpvectors.h"
+#include "vectors/gimpvectors-compat.h"
 
 #include "xcf-private.h"
 #include "xcf-load.h"
@@ -57,55 +57,40 @@
 #include "gimp-intl.h"
 
 
-typedef struct _XcfPathPoint PathPoint;
-
-struct _XcfPathPoint
-{
-  guint32 type;
-  gdouble x;
-  gdouble y;
-};
-
-
-static gboolean        xcf_load_image_props     (XcfInfo     *info,
-                                                 GimpImage   *gimage);
-static gboolean        xcf_load_layer_props     (XcfInfo     *info,
-                                                 GimpImage   *gimage,
-                                                 GimpLayer   *layer,
-                                                 gboolean    *apply_mask,
-                                                 gboolean    *edit_mask,
-                                                 gboolean    *show_mask);
-static gboolean        xcf_load_channel_props   (XcfInfo     *info,
-                                                 GimpImage   *gimage,
-                                                 GimpChannel *channel);
-static gboolean        xcf_load_prop            (XcfInfo     *info,
-                                                 PropType    *prop_type,
-                                                 guint32     *prop_size);
-static GimpLayer     * xcf_load_layer           (XcfInfo     *info,
-                                                 GimpImage   *gimage);
-static GimpChannel   * xcf_load_channel         (XcfInfo     *info,
-                                                 GimpImage   *gimage);
-static GimpLayerMask * xcf_load_layer_mask      (XcfInfo     *info,
-                                                 GimpImage   *gimage);
-static gboolean        xcf_load_hierarchy       (XcfInfo     *info,
-                                                 TileManager *tiles);
-static gboolean        xcf_load_level           (XcfInfo     *info,
-                                                 TileManager *tiles);
-static gboolean        xcf_load_tile            (XcfInfo     *info,
-                                                 Tile        *tile);
-static gboolean        xcf_load_tile_rle        (XcfInfo     *info,
-                                                 Tile        *tile,
-                                                 gint         data_length);
-static GimpParasite  * xcf_load_parasite        (XcfInfo     *info);
-static gboolean        xcf_load_old_paths       (XcfInfo     *info,
-                                                 GimpImage   *gimage);
-static gboolean        xcf_load_old_path        (XcfInfo     *info,
-                                                 GimpImage   *gimage);
-static PathPoint     * xcf_load_old_path_point1 (XcfInfo    *info,
-                                                 GimpCoords *coords);
-static PathPoint     * xcf_load_old_path_point  (XcfInfo    *info,
-                                                 GimpCoords *coords);
-
+static gboolean        xcf_load_image_props   (XcfInfo     *info,
+                                               GimpImage   *gimage);
+static gboolean        xcf_load_layer_props   (XcfInfo     *info,
+                                               GimpImage   *gimage,
+                                               GimpLayer   *layer,
+                                               gboolean    *apply_mask,
+                                               gboolean    *edit_mask,
+                                               gboolean    *show_mask);
+static gboolean        xcf_load_channel_props (XcfInfo     *info,
+                                               GimpImage   *gimage,
+                                               GimpChannel *channel);
+static gboolean        xcf_load_prop          (XcfInfo     *info,
+                                               PropType    *prop_type,
+                                               guint32     *prop_size);
+static GimpLayer     * xcf_load_layer         (XcfInfo     *info,
+                                               GimpImage   *gimage);
+static GimpChannel   * xcf_load_channel       (XcfInfo     *info,
+                                               GimpImage   *gimage);
+static GimpLayerMask * xcf_load_layer_mask    (XcfInfo     *info,
+                                               GimpImage   *gimage);
+static gboolean        xcf_load_hierarchy     (XcfInfo     *info,
+                                               TileManager *tiles);
+static gboolean        xcf_load_level         (XcfInfo     *info,
+                                               TileManager *tiles);
+static gboolean        xcf_load_tile          (XcfInfo     *info,
+                                               Tile        *tile);
+static gboolean        xcf_load_tile_rle      (XcfInfo     *info,
+                                               Tile        *tile,
+                                               gint         data_length);
+static GimpParasite  * xcf_load_parasite      (XcfInfo     *info);
+static gboolean        xcf_load_old_paths     (XcfInfo     *info,
+                                               GimpImage   *gimage);
+static gboolean        xcf_load_old_path      (XcfInfo     *info,
+                                               GimpImage   *gimage);
 
 #ifdef SWAP_FROM_FILE
 static gboolean        xcf_swap_func          (gint         fd,
@@ -1337,19 +1322,16 @@ static gboolean
 xcf_load_old_path (XcfInfo   *info,
                    GimpImage *gimage)
 {
-  gchar       *name;
-  guint32      locked;
-  guint8       state;
-  guint32      closed;
-  guint32      num_points;
-  guint32      version; /* changed from num_paths */
-  GimpTattoo   tattoo = 0;
-  GSList      *pts_list = NULL;
-  GSList      *free_list = NULL;
-  GimpVectors *vectors;
-  GimpCoords  *coords;
-  GimpCoords  *curr_coord;
-  gint         num_coords;
+  gchar                  *name;
+  guint32                 locked;
+  guint8                  state;
+  guint32                 closed;
+  guint32                 num_points;
+  guint32                 version; /* changed from num_paths */
+  GimpTattoo              tattoo = 0;
+  GimpVectors            *vectors;
+  GimpVectorsCompatPoint *points;
+  gint                    i;
 
   info->cp += xcf_read_string (info->fp, &name, 1);
   info->cp += xcf_read_int32  (info->fp, &locked, 1);
@@ -1358,187 +1340,76 @@ xcf_load_old_path (XcfInfo   *info,
   info->cp += xcf_read_int32  (info->fp, &num_points, 1);
   info->cp += xcf_read_int32  (info->fp, &version, 1);
 
-  g_print ("num_points: %d  closed: %d\n", num_points, closed);
-
-  vectors = gimp_vectors_new (gimage, name);
-
-  GIMP_ITEM (vectors)->linked = locked;
-
-  coords     = g_new0 (GimpCoords, num_points + 1);
-  num_coords = num_points;
-
-  curr_coord = coords;
-
-  if (version == 1)
-    {
-      while (num_points-- > 0)
-        {
-          PathPoint *bpt;
-          /* Read in a path */
-          bpt = xcf_load_old_path_point1 (info, curr_coord++);
-          pts_list = g_slist_append (pts_list, bpt);
-        }
-    }
-  else if (version == 2)
+  if (version == 2)
     {
       guint32 dummy;
 
       /* Had extra type field and points are stored as doubles */
       info->cp += xcf_read_int32 (info->fp, (guint32 *) &dummy, 1);
-
-      while (num_points-- > 0)
-        {
-          PathPoint *bpt;
-          /* Read in a path */
-          bpt = xcf_load_old_path_point (info, curr_coord++);
-          pts_list = g_slist_append (pts_list, bpt);
-        }
     }
   else if (version == 3)
     {
       guint32 dummy;
 
       /* Has extra tatto field */
-      info->cp += xcf_read_int32 (info->fp, (guint32 *) &dummy, 1);
+      info->cp += xcf_read_int32 (info->fp, (guint32 *) &dummy,  1);
       info->cp += xcf_read_int32 (info->fp, (guint32 *) &tattoo, 1);
-
-      while (num_points-- > 0)
-	{
-	  PathPoint *bpt;
-	  /* Read in a path */
-	  bpt = xcf_load_old_path_point (info, curr_coord++);
-	  pts_list = g_slist_append (pts_list, bpt);
-	}
     }
-  else
+  else if (version != 1)
     {
       g_warning ("Unknown path type. Possibly corrupt XCF file");
+
+      return FALSE;
     }
 
-  g_print ("\n");
-  
+  g_print ("num_points: %d  closed: %d\n", num_points, closed);
+
+  points = g_new0 (GimpVectorsCompatPoint, num_points);
+
+  for (i = 0; i < num_points; i++)
+    {
+      if (version == 1)
+        {
+          gint32 x;
+          gint32 y;
+
+          info->cp += xcf_read_int32 (info->fp, &points[i].type, 1);
+          info->cp += xcf_read_int32 (info->fp, (guint32 *) &x,  1);
+          info->cp += xcf_read_int32 (info->fp, (guint32 *) &y,  1);
+
+          points[i].x = x;
+          points[i].y = y;
+        }
+      else
+        {
+          gfloat x;
+          gfloat y;
+ 
+          info->cp += xcf_read_int32 (info->fp, &points[i].type, 1);
+          info->cp += xcf_read_float (info->fp, &x,              1);
+          info->cp += xcf_read_float (info->fp, &y,              1);
+
+          g_print ("path point type: %d   (at %f, %f)\n", points[i].type, x, y);
+
+          points[i].x = x;
+          points[i].y = y;
+        }
+    }
+
+  vectors = gimp_vectors_compat_new (gimage, name, points, num_points, closed);
+
+  g_free (points);
+
+  GIMP_ITEM (vectors)->linked = locked;
+
   if (tattoo)
     GIMP_ITEM (vectors)->tattoo = tattoo;
-
-  curr_coord = coords;
-
-  free_list = pts_list;
-
-  while (num_coords > 0)
-    {
-      GimpStroke *stroke;
-      GimpCoords *next_stroke;
-      gint        num_stroke_coords;
-
-      for (next_stroke = curr_coord;
-           num_coords > 0 && pts_list;
-           next_stroke++, num_coords--, pts_list = g_slist_next (pts_list))
-        {
-          PathPoint *bpt = pts_list->data;
-
-          if (next_stroke != curr_coord && bpt->type == 3)
-            break;
-        }
-
-      num_stroke_coords = next_stroke - curr_coord;
-
-      if (num_coords == 0 && ! closed)
-        num_stroke_coords++;
-
-      {
-        GimpCoords temp_coords;
-        gint       i;
-
-        temp_coords = curr_coord[num_stroke_coords - 1];
-
-        for (i = num_stroke_coords - 1; i >= 0; i--)
-          curr_coord[i] = curr_coord[i - 1];
-
-        if (num_coords > 0 || closed)
-          curr_coord[0] = temp_coords;
-        else
-          curr_coord[0] = curr_coord[1];
-      }
-
-      stroke = gimp_bezier_stroke_new_from_coords (curr_coord,
-                                                   num_stroke_coords,
-                                                   num_coords > 0 || closed);
-      gimp_vectors_stroke_add (vectors, stroke);
-      g_object_unref (stroke);
-
-      curr_coord = next_stroke;
-    }
-
-  g_free (coords);
-  g_slist_foreach (free_list, (GFunc) g_free, NULL);
-  g_slist_free (free_list);
 
   gimp_image_add_vectors (gimage, vectors,
                           gimp_container_num_children (gimage->vectors));
 
   return TRUE;
 }
-
-static PathPoint* 
-xcf_load_old_path_point1 (XcfInfo    *info,
-                          GimpCoords *coords)
-{
-  PathPoint *ptr;
-  guint32    type;
-  gint32     x;
-  gint32     y;
-
-  info->cp += xcf_read_int32 (info->fp, &type, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &x, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &y, 1);
-
-  ptr = g_new0 (PathPoint, 1);
-
-  ptr->type = type;
-  ptr->x    = x;
-  ptr->y    = y;
-
-  coords->x        = x;
-  coords->y        = y;
-  coords->pressure = 1.0;
-  coords->xtilt    = 0.5;
-  coords->ytilt    = 0.5;
-  coords->wheel    = 0.5;
-
-  return ptr;
-}
-
-static PathPoint * 
-xcf_load_old_path_point (XcfInfo    *info,
-                         GimpCoords *coords)
-{
-  PathPoint *ptr;
-  guint32    type;
-  gfloat     x;
-  gfloat     y;
- 
-  info->cp += xcf_read_int32 (info->fp, &type, 1);
-  info->cp += xcf_read_float (info->fp, &x, 1);
-  info->cp += xcf_read_float (info->fp, &y, 1);
-
-  g_print ("path point type: %d   (at %f, %f)\n", type, x, y);
- 
-  ptr = g_new0 (PathPoint, 1);
-
-  ptr->type = type;
-  ptr->x    = x;
-  ptr->y    = y;
-
-  coords->x        = x;
-  coords->y        = y;
-  coords->pressure = 1.0;
-  coords->xtilt    = 0.5;
-  coords->ytilt    = 0.5;
-  coords->wheel    = 0.5;
-
-  return ptr;
-}
-
 
 #ifdef SWAP_FROM_FILE
 
