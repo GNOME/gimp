@@ -1129,21 +1129,22 @@ static BenderDialog *
 bender_new_dialog (GimpDrawable *drawable)
 {
   BenderDialog *cd;
-  GtkWidget *main_hbox;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *vbox2;
-  GtkWidget *abox;
-  GtkWidget *frame;
-  GtkWidget *upper, *lower;
-  GtkWidget *smooth, *freew;
-  GtkWidget *toggle;
-  GtkWidget *button;
-  GtkWidget *spinbutton;
-  GtkWidget *label;
-  GtkWidget *separator;
-  GtkObject *data;
-  int i, j;
+  GtkWidget  *main_hbox;
+  GtkWidget  *vbox;
+  GtkWidget  *hbox;
+  GtkWidget  *vbox2;
+  GtkWidget  *abox;
+  GtkWidget  *frame;
+  GtkWidget  *upper, *lower;
+  GtkWidget  *smooth, *freew;
+  GtkWidget  *toggle;
+  GtkWidget  *button;
+  GtkWidget  *spinbutton;
+  GtkWidget  *label;
+  GtkWidget  *separator;
+  GtkObject  *data;
+  GdkDisplay *display;
+  gint        i, j;
 
   cd = g_new (BenderDialog, 1);
 
@@ -1201,8 +1202,9 @@ bender_new_dialog (GimpDrawable *drawable)
 			       NULL);
 
   /*  active and waiting cursor  */
-  cd->cursor_wait = gdk_cursor_new (GDK_WATCH);
-  cd->cursor_acitve = gdk_cursor_new (GDK_TOP_LEFT_ARROW);
+  display = gtk_widget_get_display (cd->shell);
+  cd->cursor_wait   = gdk_cursor_new_for_display (display, GDK_WATCH);
+  cd->cursor_acitve = gdk_cursor_new_for_display (display, GDK_TOP_LEFT_ARROW);
   
   /*  The main hbox  */
   main_hbox = gtk_hbox_new (FALSE, 6);

@@ -229,7 +229,7 @@ mapmenu_callback (GtkWidget *widget,
       gck_gc_set_background (visinfo, gc, 0, 0, 0);
 
       gdk_gc_set_function (gc, GDK_INVERT);
-  
+
       clear_wireframe ();
       linetab[0].x1 = -1;
     }
@@ -239,7 +239,7 @@ mapmenu_callback (GtkWidget *widget,
       if (cylinder_page != NULL)
         {
           gtk_notebook_remove_page
-	    (options_note_book, 
+	    (options_note_book,
 	     g_list_length (options_note_book->children) - 1);
           cylinder_page = NULL;
         }
@@ -275,14 +275,14 @@ mapmenu_callback (GtkWidget *widget,
       if (box_page != NULL)
         {
           gtk_notebook_remove_page
-	    (options_note_book, 
+	    (options_note_book,
 	     g_list_length (options_note_book->children) - 1);
         }
 
       if (cylinder_page != NULL)
         {
           gtk_notebook_remove_page
-	    (options_note_book, 
+	    (options_note_book,
 	     g_list_length (options_note_book->children) - 1);
         }
 
@@ -338,7 +338,7 @@ zoomin_callback (GtkWidget *widget,
 }
 
 /**********************************************/
-/* Main window "Apply" button callback.       */ 
+/* Main window "Apply" button callback.       */
 /* Render to GIMP image, close down and exit. */
 /**********************************************/
 
@@ -368,7 +368,7 @@ box_drawable_callback (gint32   id,
 		       gpointer data)
 {
   gint i;
-  
+
   i = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (data), "_mapwid_id"));
 
   mapvals.boxmap_id[i] = id;
@@ -391,7 +391,7 @@ cylinder_drawable_callback (gint32   id,
 			    gpointer data)
 {
   gint i;
-  
+
   i = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (data), "_mapwid_id"));
 
   mapvals.cylindermap_id[i] = id;
@@ -427,7 +427,7 @@ preview_events (GtkWidget *area,
             if (mapvals.showgrid == 1 && linetab[0].x1 != -1)
               draw_preview_wireframe ();
           }
-        break; 
+        break;
 
       case GDK_ENTER_NOTIFY:
         break;
@@ -545,7 +545,7 @@ create_options_page (void)
   gtk_widget_show (label);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, 
+    gimp_option_menu_new2 (FALSE,
                            G_CALLBACK (mapmenu_callback),
 			   &mapvals.maptype,
 			   (gpointer) mapvals.maptype,
@@ -688,7 +688,7 @@ create_light_page (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);  gtk_widget_show (table);
 
-  optionmenu = gimp_option_menu_new2 (FALSE, 
+  optionmenu = gimp_option_menu_new2 (FALSE,
                                       G_CALLBACK (lightmenu_callback),
 				      &mapvals.lightsource.type,
 				      (gpointer) mapvals.lightsource.type,
@@ -716,7 +716,7 @@ create_light_page (void)
 			     colorbutton, 1, TRUE);
 
   g_signal_connect (colorbutton, "color_changed",
-                    G_CALLBACK (gimp_color_button_get_color), 
+                    G_CALLBACK (gimp_color_button_get_color),
                     &mapvals.lightsource.color);
 
   gimp_help_set_help_data (colorbutton,
@@ -832,7 +832,7 @@ create_light_page (void)
 
   gtk_widget_show (page);
 
-  return page;  
+  return page;
 }
 
 /*********************************/
@@ -1012,7 +1012,7 @@ create_material_page (void)
   gtk_widget_show (pixmap);
 
   gtk_widget_show (page);
-  
+
   return page;
 }
 
@@ -1171,7 +1171,7 @@ create_box_page (void)
       menu = gimp_drawable_menu_new (box_constrain, box_drawable_callback,
 				     (gpointer) optionmenu,
 				     mapvals.boxmap_id[i]);
-      gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);      
+      gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
 				 gettext (labels[i]), 1.0, 0.5,
@@ -1329,15 +1329,15 @@ create_main_notebook (GtkWidget *container)
   page = create_options_page ();
   gtk_notebook_append_page (options_note_book, page,
 			    gtk_label_new_with_mnemonic (_("O_ptions")));
-  
+
   page = create_light_page ();
   gtk_notebook_append_page (options_note_book, page,
 			    gtk_label_new_with_mnemonic (_("_Light")));
-  
+
   page = create_material_page ();
   gtk_notebook_append_page (options_note_book, page,
 			    gtk_label_new_with_mnemonic (_("_Material")));
-  
+
   page = create_orientation_page ();
   gtk_notebook_append_page (options_note_book, page,
 			    gtk_label_new_with_mnemonic (_("O_rientation")));
@@ -1374,8 +1374,6 @@ main_dialog (GimpDrawable *drawable)
   GtkWidget *toggle;
 
   gimp_ui_init ("MapObject", FALSE);
-
-  visinfo = gck_visualinfo_new ();
 
   appwin = gimp_dialog_new (_("Map to Object"), "MapObject",
 			    gimp_standard_help_func,
@@ -1420,7 +1418,7 @@ main_dialog (GimpDrawable *drawable)
   gtk_widget_set_size_request (previewarea, PREVIEW_WIDTH, PREVIEW_HEIGHT);
   gtk_widget_set_events (previewarea, (GDK_EXPOSURE_MASK |
 				       GDK_BUTTON1_MOTION_MASK |
-				       GDK_BUTTON_PRESS_MASK | 
+				       GDK_BUTTON_PRESS_MASK |
 				       GDK_BUTTON_RELEASE_MASK));
   gtk_container_add (GTK_CONTAINER (frame), previewarea);
   gtk_widget_show (previewarea);
@@ -1428,6 +1426,8 @@ main_dialog (GimpDrawable *drawable)
   g_signal_connect (previewarea, "event",
                     G_CALLBACK (preview_events),
                     previewarea);
+
+  visinfo = gck_visualinfo_new (gtk_widget_get_screen (previewarea));
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -1486,18 +1486,18 @@ main_dialog (GimpDrawable *drawable)
   create_main_notebook (main_hbox);
 
   /* Endmarkers for line table */
-  
+
   linetab[0].x1 = -1;
 
   gtk_widget_show (appwin);
 
   {
-    GdkCursor *newcursor;
+    GdkCursor *cursor;
 
-    newcursor = gdk_cursor_new (GDK_HAND2);
-    gdk_window_set_cursor (previewarea->window, newcursor);
-    gdk_cursor_unref (newcursor);
-    gdk_flush ();
+    cursor = gdk_cursor_new_for_display (gtk_widget_get_display (previewarea),
+                                         GDK_HAND2);
+    gdk_window_set_cursor (previewarea->window, cursor);
+    gdk_cursor_unref (cursor);
   }
 
   image_setup (drawable, TRUE);

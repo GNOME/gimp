@@ -401,6 +401,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   GimpDisplay     *gdisp;
   GimpImage       *gimage;
   Gimp            *gimp;
+  GdkDisplay      *gdk_display;
   GimpCoords       display_coords;
   GimpCoords       image_coords;
   GdkModifierType  state;
@@ -442,6 +443,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   gimp_display_shell_untransform_coords (shell,
                                          &display_coords,
                                          &image_coords);
+
+  gdk_display = gtk_widget_get_display (canvas);
 
   switch (event->type)
     {
@@ -547,6 +550,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     case GDK_BUTTON_PRESS:
       {
         GdkEventButton *bevent;
+        GdkEventMask    event_mask;
         GimpTool       *active_tool;
 
         bevent = (GdkEventButton *) event;
@@ -582,30 +586,25 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case 1:
             state |= GDK_BUTTON1_MASK;
 
-            if (((gimp_tool_control_motion_mode (active_tool->control) ==
-                  GIMP_MOTION_MODE_EXACT) &&
-                 GIMP_DISPLAY_CONFIG (gimp->config)->perfect_mouse) ||
+            event_mask = (GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK);
 
+            if (! GIMP_DISPLAY_CONFIG (gimp->config)->perfect_mouse &&
+                (gimp_tool_control_motion_mode (active_tool->control) !=
+                 GIMP_MOTION_MODE_EXACT))
+              {
                 /*  don't request motion hins for XInput devices because
                  *  the wacom driver is known to report crappy hints
                  *  (#6901) --mitch
                  */
-                (gimp_devices_get_current (gimp) !=
-                 gdk_device_get_core_pointer ()))
-              {
-                gdk_pointer_grab (canvas->window, FALSE,
-                                  GDK_BUTTON1_MOTION_MASK |
-                                  GDK_BUTTON_RELEASE_MASK,
-                                  NULL, NULL, time);
+                if (gimp_devices_get_current (gimp) ==
+                    gdk_display_get_core_pointer (gdk_display))
+                  {
+                    event_mask |= (GDK_POINTER_MOTION_HINT_MASK);
+                  }
               }
-            else
-              {
-                gdk_pointer_grab (canvas->window, FALSE,
-                                  GDK_POINTER_MOTION_HINT_MASK |
-                                  GDK_BUTTON1_MOTION_MASK |
-                                  GDK_BUTTON_RELEASE_MASK,
-                                  NULL, NULL, time);
-              }
+
+            gdk_pointer_grab (canvas->window,
+                              FALSE, event_mask, NULL, NULL, time);
 
             if (! shell->space_pressed && ! shell->space_release_pending)
               gdk_keyboard_grab (canvas->window, FALSE, time);
@@ -734,9 +733,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                              gdisp);
 
             if (! shell->space_pressed && ! shell->space_release_pending)
-              gdk_keyboard_ungrab (time);
+              gdk_display_keyboard_ungrab (gdk_display, time);
 
-            gdk_pointer_ungrab (time);
+            gdk_display_pointer_ungrab (gdk_display, time);
 
             if (shell->space_release_pending)
               {
@@ -755,7 +754,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                 shell->space_release_pending = FALSE;
 
-                gdk_keyboard_ungrab (time);
+                gdk_display_keyboard_ungrab (gdk_display, time);
               }
             break;
 
@@ -1110,7 +1109,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                 shell->space_pressed = FALSE;
 
-                gdk_keyboard_ungrab (time);
+                gdk_display_keyboard_ungrab (gdk_display, time);
              }
 
             return_val = TRUE;

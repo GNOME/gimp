@@ -61,13 +61,13 @@ static gboolean gimp_navigation_preview_expose         (GtkWidget      *widget,
                                                         GdkEventExpose *eevent);
 static gboolean gimp_navigation_preview_button_press   (GtkWidget      *widget,
                                                         GdkEventButton *bevent);
-static gboolean gimp_navigation_preview_button_release (GtkWidget      *widget, 
+static gboolean gimp_navigation_preview_button_release (GtkWidget      *widget,
                                                         GdkEventButton *bevent);
-static gboolean gimp_navigation_preview_scroll         (GtkWidget      *widget, 
+static gboolean gimp_navigation_preview_scroll         (GtkWidget      *widget,
                                                         GdkEventScroll *sevent);
-static gboolean gimp_navigation_preview_motion_notify  (GtkWidget      *widget, 
+static gboolean gimp_navigation_preview_motion_notify  (GtkWidget      *widget,
                                                         GdkEventMotion *mevent);
-static gboolean gimp_navigation_preview_key_press      (GtkWidget      *widget, 
+static gboolean gimp_navigation_preview_key_press      (GtkWidget      *widget,
                                                         GdkEventKey    *kevent);
 
 static void gimp_navigation_preview_transform   (GimpNavigationPreview *nav_preview);
@@ -119,7 +119,7 @@ gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  preview_signals[MARKER_CHANGED] = 
+  preview_signals[MARKER_CHANGED] =
     g_signal_new ("marker_changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -217,7 +217,7 @@ gimp_navigation_preview_realize (GtkWidget *widget)
 
   gdk_gc_set_function (nav_preview->gc, GDK_INVERT);
   gdk_gc_set_line_attributes (nav_preview->gc,
-			      BORDER_PEN_WIDTH, 
+			      BORDER_PEN_WIDTH,
 			      GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_ROUND);
 }
 
@@ -274,13 +274,13 @@ gimp_navigation_preview_move_to (GimpNavigationPreview *nav_preview,
               (preview->renderer->width - nav_preview->p_width));
   else
     ratiox = 1.0;
- 
+
   if (preview->renderer->height != nav_preview->p_height)
     ratioy = ((gimage->height - nav_preview->height + 1.0) /
               (preview->renderer->height - nav_preview->p_height));
   else
     ratioy = 1.0;
- 
+
   x = tx * ratiox;
   y = ty * ratioy;
 
@@ -309,7 +309,7 @@ gimp_navigation_preview_grab_pointer (GimpNavigationPreview *nav_preview)
 		    GDK_POINTER_MOTION_HINT_MASK |
 		    GDK_BUTTON_MOTION_MASK       |
 		    GDK_EXTENSION_EVENTS_ALL,
-		    window, cursor, 0);
+		    window, cursor, GDK_CURRENT_TIME);
 
   gdk_cursor_unref (cursor);
 }
@@ -365,7 +365,7 @@ gimp_navigation_preview_button_press (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_navigation_preview_button_release (GtkWidget      *widget, 
+gimp_navigation_preview_button_release (GtkWidget      *widget,
 					GdkEventButton *bevent)
 {
   GimpNavigationPreview *nav_preview;
@@ -378,7 +378,8 @@ gimp_navigation_preview_button_release (GtkWidget      *widget,
       nav_preview->has_grab = FALSE;
 
       gtk_grab_remove (widget);
-      gdk_pointer_ungrab (0);
+      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
+                                  GDK_CURRENT_TIME);
       break;
 
     default:
@@ -389,7 +390,7 @@ gimp_navigation_preview_button_release (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_navigation_preview_scroll (GtkWidget      *widget, 
+gimp_navigation_preview_scroll (GtkWidget      *widget,
 				GdkEventScroll *sevent)
 {
   GimpNavigationPreview *nav_preview;
@@ -430,7 +431,7 @@ gimp_navigation_preview_scroll (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_navigation_preview_motion_notify (GtkWidget      *widget, 
+gimp_navigation_preview_motion_notify (GtkWidget      *widget,
 				       GdkEventMotion *mevent)
 {
   GimpNavigationPreview *nav_preview;
@@ -482,7 +483,7 @@ gimp_navigation_preview_motion_notify (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_navigation_preview_key_press (GtkWidget   *widget, 
+gimp_navigation_preview_key_press (GtkWidget   *widget,
 				   GdkEventKey *kevent)
 {
   GimpNavigationPreview *nav_preview;

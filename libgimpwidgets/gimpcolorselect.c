@@ -1,5 +1,5 @@
-/* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcolorselect.c
  * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
@@ -11,10 +11,10 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -240,7 +240,7 @@ gimp_color_select_get_type (void)
       };
 
       select_type = g_type_register_static (GIMP_TYPE_COLOR_SELECTOR,
-                                            "GimpColorSelect", 
+                                            "GimpColorSelect",
                                             &select_info, 0);
     }
 
@@ -353,7 +353,7 @@ gimp_color_select_init (GimpColorSelect *select)
     {
       N_("_H"), N_("_S"), N_("_V"), N_("_R"), N_("_G"), N_("_B")
     };
-    static const gchar *tips[7] = 
+    static const gchar *tips[7] =
     {
       N_("Hue"),
       N_("Saturation"),
@@ -719,7 +719,8 @@ gimp_color_select_xy_events (GtkWidget       *widget,
       x = bevent->x;
       y = bevent->y;
 
-      gdk_pointer_ungrab (bevent->time);
+      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
+                                  bevent->time);
       break;
 
     case GDK_MOTION_NOTIFY:
@@ -743,10 +744,10 @@ gimp_color_select_xy_events (GtkWidget       *widget,
 
   select->pos[0] = (x * 255) / (XY_DEF_WIDTH - 1);
   select->pos[1] = 255 - (y * 255) / (XY_DEF_HEIGHT - 1);
-  
+
   select->pos[0] = CLAMP (select->pos[0], 0, 255);
   select->pos[1] = CLAMP (select->pos[1], 0, 255);
-  
+
   gimp_color_select_draw_xy_marker (select, NULL);
   gimp_color_select_update (select, UPDATE_VALUES | UPDATE_CALLER);
 
@@ -792,7 +793,8 @@ gimp_color_select_z_events (GtkWidget       *widget,
       bevent = (GdkEventButton *) event;
       z = bevent->y;
 
-      gdk_pointer_ungrab (bevent->time);
+      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
+                                  bevent->time);
       break;
 
     case GDK_MOTION_NOTIFY:
@@ -812,7 +814,7 @@ gimp_color_select_z_events (GtkWidget       *widget,
     }
 
   gimp_color_select_draw_z_marker (select, NULL);
-  
+
   select->pos[2] = 255 - (z * 255) / (Z_DEF_HEIGHT - 1);
   select->pos[2] = CLAMP (select->pos[2], 0, 255);
 

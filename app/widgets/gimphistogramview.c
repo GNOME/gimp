@@ -328,7 +328,8 @@ gimp_histogram_view_events (GimpHistogramView *view,
     case GDK_BUTTON_RELEASE:
       bevent = (GdkEventButton *) event;
 
-      gdk_pointer_ungrab (bevent->time);
+      gdk_display_pointer_ungrab (gtk_widget_get_display (GTK_WIDGET (view)),
+                                  bevent->time);
 
       {
         gint start, end;

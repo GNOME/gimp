@@ -48,7 +48,7 @@ typedef struct
   GckDitherType dithermethod;
 } GckVisualInfo;
 
-GckVisualInfo *gck_visualinfo_new        (void);
+GckVisualInfo *gck_visualinfo_new        (GdkScreen     *screen);
 void           gck_visualinfo_destroy    (GckVisualInfo *visinfo);
 
 

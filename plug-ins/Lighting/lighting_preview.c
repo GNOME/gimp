@@ -81,7 +81,7 @@ compute_preview (gint startx, gint starty, gint w, gint h)
 		ypostab = NULL;
 	      }
 	  }
-	
+
 	if (!ypostab)
 	  {
 	    ypostab = g_new (gdouble, h);
@@ -141,7 +141,7 @@ compute_preview (gint startx, gint starty, gint w, gint h)
 		    imagex = xpostab[xcnt - startx];
 		    imagey = ypostab[ycnt - starty];
 		    pos = int_to_posf (imagex, imagey);
-		    
+
 		    if (mapvals.bump_mapped == TRUE &&
 			mapvals.bumpmap_id != -1 &&
 			xcnt == startx)
@@ -181,7 +181,7 @@ compute_preview (gint startx, gint starty, gint w, gint h)
 				 GIMP_RGB_COMPOSITE_BEHIND);
 			  }
 		      }
-		    
+
 		    gimp_rgb_get_uchar (&color,
 					preview_rgb_data + index,
 					preview_rgb_data + index +
@@ -214,7 +214,7 @@ compute_preview_rectangle (gint * xp, gint * yp, gint * wid, gint * heig)
     {
       w = (PREVIEW_WIDTH - 50.0);
       h = (gdouble) height *(w / (gdouble) width);
-      
+
       x = (PREVIEW_WIDTH - w) / 2.0;
       y = (PREVIEW_HEIGHT - h) / 2.0;
     }
@@ -273,7 +273,7 @@ draw_handles ()
   gint startx, starty, pw, ph;
   GimpVector3 viewpoint;
   GimpVector3 light_position;
-	
+
   gfloat length;
   gfloat delta_x = 0.0,
     delta_y = 0.0;
@@ -366,10 +366,10 @@ draw_handles ()
 	  /* clip coordinates to preview widget sizes */
 	  if ((backbuf.x + backbuf.w) > PREVIEW_WIDTH)
 	    backbuf.w = (PREVIEW_WIDTH - backbuf.x);
-	  
+
 	  if ((backbuf.y + backbuf.h) > PREVIEW_HEIGHT)
 	    backbuf.h = (PREVIEW_HEIGHT - backbuf.y);
-	  
+
 	  backbuf.image = gdk_drawable_get_image (previewarea->window,
 						  backbuf.x, backbuf.y,
 						  backbuf.w, backbuf.h);
@@ -396,7 +396,7 @@ draw_handles ()
 				handle_ypos - LIGHT_SYMBOL_SIZE / 2,
 				LIGHT_SYMBOL_SIZE,
 				LIGHT_SYMBOL_SIZE, 0, 360 * 64);
-	  gdk_draw_line( previewarea->window, gc, 
+	  gdk_draw_line( previewarea->window, gc,
 			 handle_xpos, handle_ypos, startx+pw/2 , starty + ph/2);
 	  break;
 	case NO_LIGHT:
@@ -415,7 +415,7 @@ update_light (gint xpos, gint ypos)
 {
   gint startx, starty, pw, ph;
   GimpVector3 vp;
-  
+
   compute_preview_rectangle (&startx, &starty, &pw, &ph);
 
   vp = mapvals.viewpoint;
@@ -460,19 +460,20 @@ draw_preview_image (gint recompute)
 
   if (recompute == TRUE)
     {
-      GdkCursor *newcursor;
+      GdkDisplay *display = gtk_widget_get_display (previewarea);
+      GdkCursor  *cursor;
 
-      newcursor = gdk_cursor_new (GDK_WATCH);
-      gdk_window_set_cursor (previewarea->window, newcursor);
-      gdk_cursor_unref (newcursor);
-      gdk_flush ();
+      cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
+
+      gdk_window_set_cursor (previewarea->window, cursor);
+      gdk_cursor_unref (cursor);
 
       compute_preview (startx, starty, pw, ph);
-      newcursor = gdk_cursor_new (GDK_HAND2);
-      gdk_window_set_cursor (previewarea->window, newcursor);
-      gdk_cursor_unref (newcursor);
+      cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
+      gdk_window_set_cursor (previewarea->window, cursor);
+      gdk_cursor_unref (cursor);
       gdk_flush ();
-      /* if we recompute, clear backbuf, so we don't 
+      /* if we recompute, clear backbuf, so we don't
        * restore the wrong bitmap */
       if (backbuf.image != NULL)
 	{
@@ -512,7 +513,7 @@ preview_events (GtkWidget *area,
 	}
       else
 	draw_preview_image (FALSE);
-      break; 
+      break;
     case GDK_ENTER_NOTIFY:
       break;
     case GDK_LEAVE_NOTIFY:
@@ -525,14 +526,14 @@ preview_events (GtkWidget *area,
       left_button_pressed = FALSE;
       break;
     case GDK_MOTION_NOTIFY:
-      if (left_button_pressed == TRUE && 
-	  light_hit == TRUE && 
-	  mapvals.interactive_preview == TRUE ) 
+      if (left_button_pressed == TRUE &&
+	  light_hit == TRUE &&
+	  mapvals.interactive_preview == TRUE )
 	{
 	  draw_handles();
 	  interactive_preview_callback(NULL);
 	  update_light (event->motion.x, event->motion.y);
-	} 
+	}
       break;
     default:
       break;

@@ -147,7 +147,7 @@ togglebump_update (GtkWidget *widget,
 		   gpointer   data)
 {
   gimp_toggle_button_update (widget, data);
-  
+
   if (mapvals.bump_mapped)
     {
       bump_page_pos = g_list_length (options_note_book->children);
@@ -271,7 +271,7 @@ zoomin_callback (GtkWidget *widget)
 }
 */
 /**********************************************/
-/* Main window "Apply" button callback.       */ 
+/* Main window "Apply" button callback.       */
 /* Render to GIMP image, close down and exit. */
 /**********************************************/
 
@@ -366,7 +366,7 @@ create_options_page (void)
   gimp_help_set_help_data (toggle,
 			   _("Enable/disable bump-mapping (image depth)"),
 			   NULL);
-  
+
   toggle = gtk_check_button_new_with_label (_("Use Environment Mapping"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.env_mapped);
@@ -452,7 +452,7 @@ create_options_page (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.max_depth);
-  
+
  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("T_hreshold:"), 0, 6,
 			      mapvals.pixel_treshold, 0.01, 1000.0, 1.0, 15.0, 2,
@@ -510,7 +510,7 @@ create_light_page (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  optionmenu = gimp_option_menu_new2 (FALSE, 
+  optionmenu = gimp_option_menu_new2 (FALSE,
                                       G_CALLBACK (lightmenu_callback),
 				      &mapvals.lightsource.type,
 				      (gpointer) mapvals.lightsource.type,
@@ -536,7 +536,7 @@ create_light_page (void)
 				       &mapvals.lightsource.color,
 				       GIMP_COLOR_AREA_FLAT);
   g_signal_connect (colorbutton, "color_changed",
-                    G_CALLBACK (gimp_color_button_get_color), 
+                    G_CALLBACK (gimp_color_button_get_color),
                     &mapvals.lightsource.color);
   g_signal_connect (colorbutton, "color_changed",
 		    G_CALLBACK (interactive_preview_callback),
@@ -674,7 +674,7 @@ create_light_page (void)
 
   gtk_widget_show (page);
 
-  return page;  
+  return page;
 }
 
 /*********************************/
@@ -877,7 +877,7 @@ create_material_page (void)
   gtk_widget_show (pixmap);
 
   gtk_widget_show (page);
-  
+
   return page;
 }
 
@@ -934,7 +934,7 @@ create_bump_page (void)
 			     _("Bumpm_ap Image:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
-  optionmenu = gimp_option_menu_new2 (FALSE, 
+  optionmenu = gimp_option_menu_new2 (FALSE,
 				      G_CALLBACK (mapmenu2_callback),
 				      &mapvals.bumpmaptype,
 				      (gpointer) mapvals.bumpmaptype,
@@ -981,11 +981,11 @@ create_bump_page (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.bumpstretch);
   gtk_widget_show (toggle);
- 
+
   gimp_help_set_help_data (toggle,
 			   _("Fit into value range"),
 			   NULL);
-  
+
   gtk_widget_show (page);
 
   return page;
@@ -1090,7 +1090,7 @@ create_main_notebook (GtkWidget *container)
       gtk_notebook_append_page (options_note_book, bump_page,
 				gtk_label_new (_("Bumpmap")));
     }
-  
+
   if (mapvals.env_mapped == TRUE)
     {
       env_page = create_environment_page ();
@@ -1121,8 +1121,6 @@ main_dialog (GimpDrawable *drawable)
   */
 
   gimp_ui_init ("Lighting", FALSE);
-
-  visinfo = gck_visualinfo_new ();
 
   appwin = gimp_dialog_new (_("Lighting Effects"), "Lighting",
 			    gimp_standard_help_func,
@@ -1170,7 +1168,7 @@ main_dialog (GimpDrawable *drawable)
   gtk_widget_set_size_request (previewarea, PREVIEW_WIDTH, PREVIEW_HEIGHT);
   gtk_widget_set_events (previewarea, (GDK_EXPOSURE_MASK |
 				       GDK_BUTTON1_MOTION_MASK |
-				       GDK_BUTTON_PRESS_MASK | 
+				       GDK_BUTTON_PRESS_MASK |
 				       GDK_BUTTON_RELEASE_MASK));
   g_signal_connect (previewarea, "event",
                     G_CALLBACK (preview_events),
@@ -1178,6 +1176,7 @@ main_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), previewarea);
   gtk_widget_show (previewarea);
 
+  visinfo = gck_visualinfo_new (gtk_widget_get_screen (previewarea));
 
   /* create preview options, frame and vbox */
   hbox = gtk_hbox_new (FALSE, 2);
@@ -1223,12 +1222,12 @@ main_dialog (GimpDrawable *drawable)
 
   gtk_widget_show (appwin);
   {
-    GdkCursor *newcursor;
+    GdkCursor *cursor;
 
-    newcursor = gdk_cursor_new (GDK_HAND2);
-    gdk_window_set_cursor (previewarea->window, newcursor);
-    gdk_cursor_unref (newcursor);
-    gdk_flush ();
+    cursor = gdk_cursor_new_for_display (gtk_widget_get_display (previewarea),
+                                         GDK_HAND2);
+    gdk_window_set_cursor (previewarea->window, cursor);
+    gdk_cursor_unref (cursor);
   }
 
   image_setup (drawable, TRUE);

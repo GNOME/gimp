@@ -1,3 +1,28 @@
+2003-10-28  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimphistogramview.c
+	* app/widgets/gimpnavigationpreview.c
+	* libgimpwidgets/gimpcolorselect.c
+	* libgimpwidgets/gimpoffsetarea.c
+	* libgimpwidgets/gimppickbutton.c: use multihead safe variants of
+	the unsafe functions gdk_pointer_ungrab(), gdk_keyboard_ungrab()
+	and gdk_device_get_core_pointer().
+
+	* plug-ins/libgck/gck/gck.h
+	* plug-ins/libgck/gck/gckcolor.c: made libgck multi-head safe.
+
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_preview.c
+	* plug-ins/MapObject/mapobject_ui.c: changed accordingly.
+
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/imagemap/imap_preview.c: use multihead safe GDK API.
+
 2003-10-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
@@ -32,7 +57,8 @@
 	* app/composite/gimp-composite-regression.c: Added functions to
 	  print the pixels in their various formats.
 
-	* app/composite/gimp-composite-{mmx,sse,sse2,altivec,vis}.c: Regenerated
+	* app/composite/gimp-composite-{mmx,sse,sse2,altivec,vis}.c:
+	Regenerated.
 	
 	* app/composite/gimp-composite-{mmx,sse,sse2}.c: Removed the dodge
 	  optimisation because it has the same problem that the divide

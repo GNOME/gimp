@@ -416,19 +416,18 @@ draw_preview_image (gint docompute)
 
   if (docompute == TRUE)
     {
-      GdkCursor *newcursor;
+      GdkDisplay *display = gtk_widget_get_display (previewarea);
+      GdkCursor  *cursor;
 
-      newcursor = gdk_cursor_new (GDK_WATCH);
-      gdk_window_set_cursor (previewarea->window, newcursor);
-      gdk_cursor_unref (newcursor);
-      gdk_flush ();
+      cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
+      gdk_window_set_cursor (previewarea->window, cursor);
+      gdk_cursor_unref (cursor);
 
       compute_preview (0, 0, width - 1, height - 1, pw, ph);
 
-      newcursor = gdk_cursor_new (GDK_HAND2);
-      gdk_window_set_cursor(previewarea->window, newcursor);
-      gdk_cursor_unref (newcursor);
-      gdk_flush ();
+      cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
+      gdk_window_set_cursor(previewarea->window, cursor);
+      gdk_cursor_unref (cursor);
 
       clear_light_marker ();
     }

@@ -1543,8 +1543,11 @@ prefs_dialog_new (Gimp       *gimp,
   /*  8-Bit Displays  */
   vbox2 = prefs_frame_new (_("8-Bit Displays"), GTK_CONTAINER (vbox), FALSE);
 
+  /*  disabling this entry is not multi-head safe  */
+#if 0
   if (gdk_rgb_get_visual ()->depth != 8)
     gtk_widget_set_sensitive (GTK_WIDGET (vbox2->parent), FALSE);
+#endif
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 

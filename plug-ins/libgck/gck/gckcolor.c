@@ -49,8 +49,10 @@
 
 
 /* returns a static storage */
-static GdkColor *gck_rgb_to_gdkcolor       (GckVisualInfo *visinfo,
-					    guchar r,guchar g,guchar b);
+static GdkColor *gck_rgb_to_gdkcolor (GckVisualInfo *visinfo,
+                                      guchar         r,
+                                      guchar         g,
+                                      guchar         b);
 
 
 /******************/
@@ -190,32 +192,31 @@ void gck_create_8bit_rgb(GckVisualInfo * visinfo)
 /* Get visual and create colormap */
 /**********************************/
 
-GckVisualInfo *gck_visualinfo_new(void)
+GckVisualInfo *gck_visualinfo_new (GdkScreen *screen)
 {
-  GckVisualInfo *visinfo;
+  GckVisualInfo *visinfo = g_new (GckVisualInfo, 1);
 
-  visinfo = (GckVisualInfo *) g_malloc(sizeof(GckVisualInfo));
-  if (visinfo!=NULL)
+  visinfo->visual       = gdk_screen_get_rgb_visual (screen);
+  visinfo->colormap     = gdk_colormap_new (visinfo->visual, FALSE);
+  visinfo->dithermethod = DITHER_FLOYD_STEINBERG;
+
+  g_object_ref (visinfo->visual);
+
+  if (visinfo->visual->type == GDK_VISUAL_PSEUDO_COLOR)
     {
-      visinfo->visual = gdk_visual_get_best();
-      visinfo->colormap = gdk_colormap_new(visinfo->visual, FALSE);
-      visinfo->dithermethod = DITHER_FLOYD_STEINBERG;
-    
-      if (visinfo->visual->type == GDK_VISUAL_PSEUDO_COLOR)
+      /* Allocate colormap and create RGB map */
+      /* ==================================== */
+
+      if (gck_allocate_color_cube (visinfo, 6, 6, 6) == TRUE)
         {
-          /* Allocate colormap and create RGB map */
-          /* ==================================== */
-    
-          if (gck_allocate_color_cube(visinfo, 6, 6, 6) == TRUE)
-	    {
-	      gck_create_8bit_rgb(visinfo);
-	      gdk_colors_store(visinfo->colormap, visinfo->rgbpalette, visinfo->numcolors);
-	    }
-          else
-	    {
-	      g_free(visinfo);
-	      visinfo = NULL;
-	    }
+          gck_create_8bit_rgb (visinfo);
+          gdk_colors_store (visinfo->colormap,
+                            visinfo->rgbpalette, visinfo->numcolors);
+        }
+      else
+        {
+          g_free (visinfo);
+          visinfo = NULL;
         }
     }
 
@@ -228,11 +229,12 @@ GckVisualInfo *gck_visualinfo_new(void)
 
 void gck_visualinfo_destroy(GckVisualInfo * visinfo)
 {
-  g_assert(visinfo!=NULL);
+  g_assert (visinfo != NULL);
 
-  g_object_unref(visinfo->colormap);
+  g_object_unref (visinfo->colormap);
+  g_object_unref (visinfo->visual);
 
-  g_free(visinfo);
+  g_free (visinfo);
 }
 
 /*************************************************/
@@ -242,7 +244,7 @@ void gck_visualinfo_destroy(GckVisualInfo * visinfo)
 
 GckDitherType gck_visualinfo_get_dither(GckVisualInfo * visinfo)
 {
-  g_assert(visinfo!=NULL);  
+  g_assert(visinfo!=NULL);
   return (visinfo->dithermethod);
 }
 
@@ -258,7 +260,7 @@ void gck_visualinfo_set_dither(GckVisualInfo * visinfo, GckDitherType method)
 
 void gck_gc_set_foreground(GckVisualInfo *visinfo,GdkGC *gc,
                            guchar r, guchar g, guchar b)
-{  
+{
   g_assert(visinfo!=NULL);
   g_assert(gc!=NULL);
 
@@ -603,7 +605,7 @@ gck_rgb_to_color16(GckVisualInfo * visinfo, guchar r, guchar g, guchar b)
 /* and Steinberg (aka "Floyd-Steinberg dithering") */
 /***************************************************/
 
-static void 
+static void
 gck_rgb_to_image16_fs_dither(GckVisualInfo * visinfo,
 			     guchar * RGB_data,
 			     GdkImage * image,

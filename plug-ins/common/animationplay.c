@@ -222,7 +222,7 @@ static GdkWindow  *root_win = NULL;
 
 MAIN ()
 
-static void 
+static void
 query (void)
 {
   static GimpParamDef args[] =
@@ -245,10 +245,10 @@ query (void)
 			  args, NULL);
 }
 
-static void 
-run (const gchar      *name, 
-     gint              n_params, 
-     const GimpParam  *param, 
+static void
+run (const gchar      *name,
+     gint              n_params,
+     const GimpParam  *param,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
@@ -263,17 +263,17 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
- if (run_mode == GIMP_RUN_NONINTERACTIVE && n_params != 3) 
+ if (run_mode == GIMP_RUN_NONINTERACTIVE && n_params != 3)
    {
      status = GIMP_PDB_CALLING_ERROR;
    }
 
-  if (status == GIMP_PDB_SUCCESS) 
+  if (status == GIMP_PDB_SUCCESS)
     {
       image_id = param[1].data.d_image;
-      
+
       do_playback();
-      
+
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush();
     }
@@ -298,7 +298,7 @@ find_another_bra:
 
   while ((offset<length) && (str[offset]!='('))
     offset++;
-  
+
   if (offset>=length)
     return(-1);
 
@@ -311,7 +311,7 @@ find_another_bra:
       sum += str[offset] - '0';
       offset++;
     }
-  while ((offset<length) && (isdigit(str[offset])));  
+  while ((offset<length) && (isdigit(str[offset])));
 
   if (length-offset <= 2)
     return(-3);
@@ -333,9 +333,9 @@ parse_disposal_tag (char *str)
 
   while ((offset+9)<=length)
     {
-      if (strncmp(&str[offset],"(combine)",9)==0) 
+      if (strncmp(&str[offset],"(combine)",9)==0)
 	return(DISPOSE_COMBINE);
-      if (strncmp(&str[offset],"(replace)",9)==0) 
+      if (strncmp(&str[offset],"(replace)",9)==0)
 	return(DISPOSE_REPLACE);
       offset++;
     }
@@ -369,7 +369,7 @@ reshape_from_bitmap (gchar* bitmap)
 
 
 static gboolean
-shape_pressed (GtkWidget      *widget, 
+shape_pressed (GtkWidget      *widget,
 	       GdkEventButton *event)
 {
   CursorOffset *p;
@@ -381,7 +381,7 @@ shape_pressed (GtkWidget      *widget,
   p = g_object_get_data (G_OBJECT(widget), "cursor-offset");
   if (!p)
     return FALSE;
-  
+
   p->x = (int) event->x;
   p->y = (int) event->y;
 
@@ -398,12 +398,12 @@ shape_pressed (GtkWidget      *widget,
 
 
 static gboolean
-maybeblocked_expose (GtkWidget      *widget, 
+maybeblocked_expose (GtkWidget      *widget,
 		     GdkEventExpose *event)
 {
   if (playing)
     return TRUE;
- 
+
   return repaint_sda (widget, event, NULL);
 }
 
@@ -411,7 +411,7 @@ static gboolean
 shape_released (GtkWidget *widget)
 {
   gtk_grab_remove (widget);
-  gdk_pointer_ungrab (0);
+  gdk_display_pointer_ungrab (gtk_widget_get_display (widget), 0);
   gdk_flush();
 
   return FALSE;
@@ -452,7 +452,7 @@ shape_motion (GtkWidget      *widget,
 
 
 static gboolean
-repaint_da (GtkWidget      *darea, 
+repaint_da (GtkWidget      *darea,
             GdkEventExpose *event,
 	    gpointer        data)
 {
@@ -468,7 +468,7 @@ repaint_da (GtkWidget      *darea,
 
 
 static gboolean
-repaint_sda (GtkWidget      *darea, 
+repaint_sda (GtkWidget      *darea,
              GdkEventExpose *event,
 	     gpointer        data)
 {
@@ -484,7 +484,7 @@ repaint_sda (GtkWidget      *darea,
 
 
 static gboolean
-preview_pressed (GtkWidget      *widget, 
+preview_pressed (GtkWidget      *widget,
 		 GdkEventButton *event)
 {
   gint xp, yp;
@@ -492,7 +492,7 @@ preview_pressed (GtkWidget      *widget,
 
   if (shaping)
     return FALSE;
-  
+
   /* Create a total-alpha buffer merely for the not-shaped
      drawing area to now display. */
 
@@ -502,7 +502,7 @@ preview_pressed (GtkWidget      *widget,
   gdk_window_get_pointer (root_win, &xp, &yp, &mask);
   gtk_window_move (GTK_WINDOW (shape_window),
                    xp  - event->x, yp  - event->y);
-  
+
   gtk_widget_show (shape_window);
 
   gdk_window_set_back_pixmap(shape_window->window, NULL, 0);
@@ -514,7 +514,7 @@ preview_pressed (GtkWidget      *widget,
   memset(shape_preview_mask, 0, (width*height)/8 + height);
   render_frame(frame_number);
   show_frame();
-  
+
   repaint_da (NULL, NULL, NULL);
 
   /* mildly amusing hack */
@@ -558,10 +558,10 @@ build_dialog (GimpImageBaseType  basetype,
   g_signal_connect (dlg, "delete_event",
                     G_CALLBACK (window_delete_callback),
                     NULL);
-  
+
   {
     /* The 'playback' half of the dialog */
-    
+
     windowname = g_malloc (strlen (_("Playback: ")) + strlen (imagename) + 1);
     if (total_frames > 1)
       {
@@ -570,7 +570,7 @@ build_dialog (GimpImageBaseType  basetype,
       }
     else
       {
-	strcpy (windowname, imagename);	
+	strcpy (windowname, imagename);
       }
     frame = gtk_frame_new (windowname);
     g_free (windowname);
@@ -578,35 +578,35 @@ build_dialog (GimpImageBaseType  basetype,
     gtk_container_set_border_width (GTK_CONTAINER (frame), 3);
     gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
 			frame, TRUE, TRUE, 0);
-    
+
     {
       hbox = gtk_hbox_new (FALSE, 5);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 3);
       gtk_container_add (GTK_CONTAINER (frame), hbox);
-      
+
       {
 	vbox = gtk_vbox_new (FALSE, 5);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 3);
 	gtk_container_add (GTK_CONTAINER (hbox), vbox);
-	
+
 	{
 	  hbox2 = gtk_hbox_new (FALSE, 0);
 	  gtk_container_set_border_width (GTK_CONTAINER (hbox2), 0);
 	  gtk_box_pack_start (GTK_BOX (vbox), hbox2, TRUE, TRUE, 0);
-	  
+
 	  {
 	    psbutton = gtk_toggle_button_new_with_label ( _("Play/Stop"));
 	    g_signal_connect (psbutton, "toggled",
                               G_CALLBACK (playstop_callback), NULL);
 	    gtk_box_pack_start (GTK_BOX (hbox2), psbutton, TRUE, TRUE, 0);
 	    gtk_widget_show (psbutton);
-	    
+
 	    button = gtk_button_new_with_label ( _("Rewind"));
 	    g_signal_connect (button, "clicked",
                               G_CALLBACK (rewind_callback), NULL);
 	    gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
 	    gtk_widget_show (button);
-	    
+
 	    button = gtk_button_new_with_label ( _("Step"));
 	    g_signal_connect (button, "clicked",
                               G_CALLBACK (step_callback), NULL);
@@ -628,11 +628,11 @@ build_dialog (GimpImageBaseType  basetype,
 	    frame2 = gtk_frame_new (NULL);
 	    gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_IN);
 	    gtk_box_pack_start (GTK_BOX (hbox2), frame2, FALSE, FALSE, 0);
-	    
+
 	    {
 	      eventbox = gtk_event_box_new();
 	      gtk_container_add (GTK_CONTAINER (frame2), GTK_WIDGET (eventbox));
-	      
+
 	      {
 		drawing_area = gtk_drawing_area_new ();
                 gtk_widget_set_size_request (drawing_area, width, height);
@@ -657,13 +657,13 @@ build_dialog (GimpImageBaseType  basetype,
 	    gtk_widget_show (GTK_WIDGET (progress));
 	}
 	gtk_widget_show(vbox);
-	
+
       }
       gtk_widget_show(hbox);
-      
+
     }
     gtk_widget_show(frame);
-    
+
   }
   gtk_widget_show(dlg);
 
@@ -684,7 +684,8 @@ build_dialog (GimpImageBaseType  basetype,
 
     gdk_window_set_back_pixmap(shape_window->window, NULL, 0);
 
-    cursor = gdk_cursor_new (GDK_CENTER_PTR);
+    cursor = gdk_cursor_new_for_display (gtk_widget_get_display (shape_window),
+                                         GDK_CENTER_PTR);
     gdk_window_set_cursor(shape_window->window, cursor);
     gdk_cursor_unref (cursor);
 
@@ -714,7 +715,7 @@ build_dialog (GimpImageBaseType  basetype,
 
 
 
-static void 
+static void
 do_playback (void)
 {
   int i;
@@ -740,7 +741,7 @@ do_playback (void)
 
 
   frame_number = 0;
-  
+
   /* cache hint "cache nothing", since we iterate over every
      tile in every layer. */
   gimp_tile_cache_size (0);
@@ -749,7 +750,7 @@ do_playback (void)
 
   build_dialog (gimp_image_base_type (image_id),
                 gimp_image_get_name (image_id));
-  
+
   /* Make sure that whole preview is dirtied with pure-alpha */
   total_alpha_preview(preview_data);
 
@@ -819,7 +820,7 @@ render_frame (gint32 whichframe)
 			  (gimp_drawable_height(drawable->drawable_id)) *
 			  (gimp_drawable_bpp(drawable->drawable_id)));
     }
-	
+
   rawwidth = gimp_drawable_width(drawable->drawable_id);
   rawheight = gimp_drawable_height(drawable->drawable_id);
   rawbpp = gimp_drawable_bpp(drawable->drawable_id);
@@ -857,12 +858,12 @@ render_frame (gint32 whichframe)
 	  /* --- These cases are for the best cases,  in        --- */
 	  /* --- which this frame is the same size and position --- */
 	  /* --- as the preview buffer itself                   --- */
-	  
+
 	  if (gimp_drawable_has_alpha (drawable->drawable_id))
 	    { /* alpha */
 	      destptr = preview_data;
 	      srcptr  = rawframe;
-	      
+
 	      i = rawwidth*rawheight;
 	      while (i--)
 		{
@@ -937,12 +938,12 @@ render_frame (gint32 whichframe)
 	  /* --- These are suboptimal catch-all cases for when  --- */
 	  /* --- this frame is bigger/smaller than the preview  --- */
 	  /* --- buffer, and/or offset within it.               --- */
-	  
+
 	  if (gimp_drawable_has_alpha (drawable->drawable_id))
 	    { /* alpha */
-	      
+
 	      srcptr = rawframe;
-	      
+
 	      for (j=rawy; j<rawheight+rawy; j++)
 		{
 		  for (i=rawx; i<rawwidth+rawx; i++)
@@ -957,11 +958,11 @@ render_frame (gint32 whichframe)
 			      preview_data[(j*width+i)*3 +2] = *(srcptr+2);
 			    }
 			}
-		      
+
 		      srcptr += 4;
 		    }
 		}
-	      
+
 	      if (shaping)
 		{
 		  srcptr = rawframe + 3;
@@ -984,9 +985,9 @@ render_frame (gint32 whichframe)
 	  else
 	    {
 	      /* noalpha */
-	      
+
 	      srcptr = rawframe;
-	      
+
 	      for (j=rawy; j<rawheight+rawy; j++)
 		{
 		  for (i=rawx; i<rawwidth+rawx; i++)
@@ -998,12 +999,12 @@ render_frame (gint32 whichframe)
 			  preview_data[(j*width+i)*3 +1] = *(srcptr+1);
 			  preview_data[(j*width+i)*3 +2] = *(srcptr+2);
 			}
-		      
+
 		      srcptr += 3;
 		    }
 		}
 	    }
-	  
+
 	  /* Display the preview buffer... finally. */
 	  if (shaping)
 	    {
@@ -1074,12 +1075,12 @@ render_frame (gint32 whichframe)
 	  /* --- These cases are for the best cases,  in        --- */
 	  /* --- which this frame is the same size and position --- */
 	  /* --- as the preview buffer itself                   --- */
-	  
+
 	  if (gimp_drawable_has_alpha (drawable->drawable_id))
 	    { /* alpha */
 	      destptr = preview_data;
 	      srcptr  = rawframe;
-	      
+
 	      i = rawwidth*rawheight;
 	      while (i--)
 		{
@@ -1089,7 +1090,7 @@ render_frame (gint32 whichframe)
 		      destptr += 3;
 		      continue;
 		    }
-		  
+
 		  *(destptr++) = palette[3*(*(srcptr))];
 		  *(destptr++) = palette[1+3*(*(srcptr))];
 		  *(destptr++) = palette[2+3*(*(srcptr))];
@@ -1116,7 +1117,7 @@ render_frame (gint32 whichframe)
 	    {
 	      destptr = preview_data;
 	      srcptr  = rawframe;
-	      
+
 	      i = rawwidth*rawheight;
 	      while (--i)
 		{
@@ -1133,7 +1134,7 @@ render_frame (gint32 whichframe)
 			 (rawwidth*rawheight)/8 + rawheight);
 		}
 	    }
-	  
+
 	  /* Display the preview buffer... finally. */
 	  if (shaping)
 	    {
@@ -1160,12 +1161,12 @@ render_frame (gint32 whichframe)
 	  /* --- These are suboptimal catch-all cases for when  --- */
 	  /* --- this frame is bigger/smaller than the preview  --- */
 	  /* --- buffer, and/or offset within it.               --- */
-	  
+
 	  if (gimp_drawable_has_alpha (drawable->drawable_id))
 	    { /* alpha */
-	      
+
 	      srcptr = rawframe;
-	      
+
 	      for (j=rawy; j<rawheight+rawy; j++)
 		{
 		  for (i=rawx; i<rawwidth+rawx; i++)
@@ -1183,11 +1184,11 @@ render_frame (gint32 whichframe)
 				palette[2+3*(*(srcptr))];
 			    }
 			}
-		      
+
 		      srcptr += 2;
 		    }
 		}
-	      
+
 	      if (shaping)
 		{
 		  srcptr = rawframe + 1;
@@ -1212,7 +1213,7 @@ render_frame (gint32 whichframe)
 	      /* noalpha */
 
 	      srcptr = rawframe;
-	      
+
 	      for (j=rawy; j<rawheight+rawy; j++)
 		{
 		  for (i=rawx; i<rawwidth+rawx; i++)
@@ -1227,12 +1228,12 @@ render_frame (gint32 whichframe)
 			  preview_data[(j*width+i)*3 +2] =
 			    palette[2+3*(*(srcptr))];
 			}
-		      
+
 		      srcptr ++;
 		    }
 		}
 	    }
-	  
+
 	  /* Display the preview buffer... finally. */
 	  if (shaping)
 	    {
@@ -1292,10 +1293,10 @@ render_frame (gint32 whichframe)
 	    }
 	}
       break;
-      
+
     }
 
-  /* clean up */  
+  /* clean up */
   gimp_drawable_detach(drawable);
 }
 
@@ -1502,7 +1503,7 @@ get_frame_disposal (const guint whichframe)
 {
   gchar* layer_name;
   DisposeType disposal;
-  
+
   layer_name = gimp_layer_get_name(layers[total_frames-(whichframe+1)]);
   disposal = parse_disposal_tag(layer_name);
   g_free(layer_name);
@@ -1524,7 +1525,7 @@ get_frame_duration (const guint whichframe)
       duration = parse_ms_tag(layer_name);
       g_free(layer_name);
     }
-  
+
   if (duration < 0) duration = 100;  /* FIXME for default-if-not-said  */
   else
     if (duration == 0) duration = 100; /* FIXME - 0-wait is nasty */
@@ -1550,7 +1551,7 @@ is_ms_tag (const char *str, int *duration, int *taglength)
   /* eat any spaces between open-parenthesis and number */
   while ((offset<length) && (str[offset] == ' '))
     offset++;
-  
+
   if ((offset>=length) || (!isdigit(str[offset])))
     return 0;
 
@@ -1560,7 +1561,7 @@ is_ms_tag (const char *str, int *duration, int *taglength)
       sum += str[offset] - '0';
       offset++;
     }
-  while ((offset<length) && (isdigit(str[offset])));  
+  while ((offset<length) && (isdigit(str[offset])));
 
   if (length-offset <= 2)
     return 0;
@@ -1583,7 +1584,7 @@ is_ms_tag (const char *str, int *duration, int *taglength)
     return 0;
 
   offset++;
-  
+
   *duration = sum;
   *taglength = offset;
 
@@ -1606,7 +1607,7 @@ parse_ms_tag (const char *str)
       if (is_ms_tag(&str[i], &rtn, &dummy))
 	return rtn;
     }
-  
+
   return -1;
 }
 
@@ -1616,7 +1617,7 @@ is_disposal_tag (const char *str, DisposeType *disposal, int *taglength)
 {
   if (strlen(str) != 9)
     return 0;
-  
+
   if (strncmp(str, "(combine)", 9) == 0)
     {
       *taglength = 9;

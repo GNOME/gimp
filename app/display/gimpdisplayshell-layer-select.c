@@ -163,7 +163,8 @@ static void
 layer_select_destroy (LayerSelect *layer_select,
                       guint32      time)
 {
-  gdk_keyboard_ungrab (time);
+  gdk_display_keyboard_ungrab (gtk_widget_get_display (layer_select->shell),
+                                                       time);
 
   gtk_widget_destroy (layer_select->shell);
 

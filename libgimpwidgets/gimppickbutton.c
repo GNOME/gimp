@@ -110,7 +110,7 @@ gimp_pick_button_class_init (GimpPickButtonClass* klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  pick_button_signals[COLOR_PICKED] = 
+  pick_button_signals[COLOR_PICKED] =
     g_signal_new ("color_picked",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -172,7 +172,7 @@ gimp_pick_button_destroy (GtkObject *object)
  * gimp_pick_button_new:
  *
  * Creates a new #GimpPickButton widget.
- * 
+ *
  * Returns: A new #GimpPickButton widget.
  **/
 GtkWidget *
@@ -217,7 +217,7 @@ make_cursor (void)
   GdkCursor *cursor;
   GdkColor   bg = { 0, 0xffff, 0xffff, 0xffff };
   GdkColor   fg = { 0, 0x0000, 0x0000, 0x0000 };
-  
+
   GdkPixmap *pixmap =
     gdk_bitmap_create_from_data (NULL,
                                  (gchar *) dropper_bits,
@@ -274,13 +274,14 @@ gimp_pick_button_clicked (GtkButton *gtk_button)
                         button->cursor,
                         gtk_get_current_event_time ()) != GDK_GRAB_SUCCESS)
     {
-      gdk_keyboard_ungrab (GDK_CURRENT_TIME);
+      gdk_display_keyboard_ungrab (gtk_widget_get_display (button->grab_widget),
+                                   GDK_CURRENT_TIME);
       g_warning ("Failed to grab pointer to do eyedropper");
       return;
     }
 
   gtk_grab_add (button->grab_widget);
-  
+
   g_signal_connect (button->grab_widget, "button_press_event",
                     G_CALLBACK (gimp_pick_button_mouse_press),
                     button);
@@ -319,7 +320,7 @@ static gboolean
 gimp_pick_button_key_press (GtkWidget      *invisible,
                             GdkEventKey    *event,
                             GimpPickButton *button)
-{  
+{
   if (event->keyval == GDK_Escape)
     {
       gimp_pick_button_shutdown (button);
@@ -330,7 +331,7 @@ gimp_pick_button_key_press (GtkWidget      *invisible,
       g_signal_handlers_disconnect_by_func (invisible,
                                             gimp_pick_button_key_press,
                                             button);
-      
+
       return TRUE;
     }
 
@@ -343,7 +344,7 @@ gimp_pick_button_mouse_motion (GtkWidget      *invisible,
                                GimpPickButton *button)
 {
   gimp_pick_button_pick (gdk_event_get_screen ((GdkEvent *) event),
-                         event->x_root, event->y_root, button); 
+                         event->x_root, event->y_root, button);
 
   return TRUE;
 }
@@ -360,7 +361,7 @@ gimp_pick_button_mouse_release (GtkWidget      *invisible,
                          event->x_root, event->y_root, button);
 
   gimp_pick_button_shutdown (button);
-  
+
   g_signal_handlers_disconnect_by_func (invisible,
                                         gimp_pick_button_mouse_motion,
                                         button);
@@ -374,8 +375,10 @@ gimp_pick_button_mouse_release (GtkWidget      *invisible,
 static void
 gimp_pick_button_shutdown (GimpPickButton *button)
 {
-  gdk_keyboard_ungrab (gtk_get_current_event_time ());
-  gdk_pointer_ungrab (gtk_get_current_event_time ());
+  GdkDisplay *display = gtk_widget_get_display (button->grab_widget);
+
+  gdk_display_keyboard_ungrab (display, gtk_get_current_event_time ());
+  gdk_display_pointer_ungrab (display, gtk_get_current_event_time ());
 
   gtk_grab_remove (button->grab_widget);
 }
@@ -392,7 +395,7 @@ gimp_pick_button_pick (GdkScreen      *screen,
   guint32      pixel;
   GdkColor     color;
   GimpRGB      rgb;
-  
+
   image = gdk_drawable_get_image (GDK_DRAWABLE (root_window),
                                   x_root, y_root, 1, 1);
   pixel = gdk_image_get_pixel (image, 0, 0);

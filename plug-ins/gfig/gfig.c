@@ -197,7 +197,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 #define GRID_TYPE_MENU   1
 #define GRID_RENDER_MENU 2
-#define GRID_IGNORE      0 
+#define GRID_IGNORE      0
 #define GRID_HIGHTLIGHT  1
 #define GRID_RESTORE     2
 
@@ -324,7 +324,7 @@ static GtkWidget *status_label_dname;
 static GtkWidget *status_label_fname;
 static GFigObj   *gfig_obj_for_menu; /* More static data -
 				      * need to know which object was selected*/
-static GtkWidget *save_menu_item;  
+static GtkWidget *save_menu_item;
 static GtkWidget *save_button;
 
 
@@ -377,7 +377,7 @@ query (void)
     { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "dummy", "dummy" } 
+    { GIMP_PDB_INT32, "dummy", "dummy" }
   };
 
   gimp_install_procedure ("plug_in_gfig",
@@ -432,7 +432,7 @@ run (const gchar      *name,
   sel_height = sel_y2 - sel_y1;
 
   /* Calculate preview size */
-  
+
   if (sel_width > sel_height)
     {
       pwidth  = MIN (sel_width, PREVIEW_SIZE);
@@ -443,9 +443,9 @@ run (const gchar      *name,
       pheight = MIN (sel_height, PREVIEW_SIZE);
       pwidth  = sel_width * pheight / sel_height;
     }
-  
+
   preview_width  = MAX (pwidth, 2);  /* Min size is 2 */
-  preview_height = MAX (pheight, 2); 
+  preview_height = MAX (pheight, 2);
 
   org_scale_x_factor = scale_x_factor =
     (gdouble) sel_width / (gdouble) preview_width;
@@ -565,10 +565,10 @@ gfig_list_pos (GFigObj *gfig)
 
   n = 0;
 
-  for (tmp = gfig_list; tmp; tmp = g_list_next (tmp)) 
+  for (tmp = gfig_list; tmp; tmp = g_list_next (tmp))
     {
       g = tmp->data;
-      
+
       if (strcmp (gfig->draw_name, g->draw_name) <= 0)
 	break;
 
@@ -727,7 +727,7 @@ gfig_load_objs (GFigObj *gfig,
 	{
 	  g_warning ("Unknown obj type file %s line %d\n", gfig->filename, line_no);
 	}
-      
+
       if (obj)
 	{
 	  add_to_all_obj (gfig, obj);
@@ -778,7 +778,7 @@ gfig_load (const gchar *filename,
       g_message ("File '%s' is not a gfig file", gfig->filename);
       return NULL;
     }
-  
+
   get_line (load_buf, MAX_LOAD_LINE, fp, 0);
   sscanf (load_buf, "Name: %100s", str_buf);
   gfig_name_decode (load_buf, str_buf);
@@ -803,7 +803,7 @@ gfig_load (const gchar *filename,
   gfig_load_objs (gfig, load_count, fp);
 
   /* Check count ? */
-  
+
   chk_count = gfig_obj_counts (gfig->obj_list);
 
   if (chk_count != load_count)
@@ -925,7 +925,7 @@ update_options (GFigObj *old_obj)
     {
       gtk_option_menu_set_history
 	(GTK_OPTION_MENU (gfig_opt_widget.gridtypemenu),
-	 current_obj->opts.gridtype); 
+	 current_obj->opts.gridtype);
 
       gridtype_menu_callback
 	(gtk_menu_get_active
@@ -962,7 +962,7 @@ load_options (GFigObj *gfig,
 
   if (strcmp (load_buf, "<OPTIONS>"))
     return (-1);
-  
+
   get_line (load_buf, MAX_LOAD_LINE, fp, 0);
 
 #ifdef DEBUG
@@ -1031,7 +1031,7 @@ load_options (GFigObj *gfig,
 #ifdef DEBUG
       printf ("opt line '%s'\n", load_buf);
 #endif /* DEBUG */
-    }  
+    }
   return (0);
 }
 
@@ -1060,7 +1060,7 @@ gfig_save_callbk (void)
   savename = current_obj->filename;
 
   fp = fopen (savename, "w+");
-  
+
   if (!fp)
     {
       message = g_strdup_printf (_("Error opening file '%s':\n%s"),
@@ -1072,9 +1072,9 @@ gfig_save_callbk (void)
 
   /* Write header out */
   fputs (GFIG_HEADER, fp);
-  
-  /* 
-   * draw_name 
+
+  /*
+   * draw_name
    * version
    * obj_list
    *
@@ -1082,7 +1082,7 @@ gfig_save_callbk (void)
 
   gfig_name_encode (conv_buf, current_obj->draw_name);
   fprintf (fp, "Name: %s\n", conv_buf);
-  fprintf (fp, "Version: %s\n", 
+  fprintf (fp, "Version: %s\n",
            g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", current_obj->version));
   objs = current_obj->obj_list;
 
@@ -1136,7 +1136,7 @@ file_selection_ok (GtkWidget        *w,
       g_message ("Save: Can't save to a folder.");
       return;
     }
-  
+
   obj->filename = g_strdup (filenamebuf);
 
   real_current = current_obj;
@@ -1216,9 +1216,6 @@ gfig_save (void)
 }
 
 
-/* HACK WARNING */
-static void * xxx;
-
 /* Cache the preview image - updates are a lot faster. */
 /* The preview_cache will contain the small image */
 
@@ -1234,7 +1231,7 @@ cache_preview (void)
   gimp_pixel_rgn_init (&src_rgn, gfig_select_drawable,
 		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
 
-  src_rows = g_new (guchar , sel_width * 4); 
+  src_rows = g_new (guchar , sel_width * 4);
   p = pv_cache = g_new (guchar , preview_width * preview_height * 4);
 
   real_img_bpp = gimp_drawable_bpp (gfig_select_drawable->drawable_id);
@@ -1267,7 +1264,7 @@ cache_preview (void)
 
           for (i = 0 ; i < 3; i++)
             p[x*img_bpp+i] =
-              src_rows[((x*sel_width)/preview_width)*src_rgn.bpp +((isgrey)?0:i)]; 
+              src_rows[((x*sel_width)/preview_width)*src_rgn.bpp +((isgrey)?0:i)];
           if (has_alpha)
             p[x*img_bpp+3] =
               src_rows[((x*sel_width)/preview_width)*src_rgn.bpp + ((isgrey)?1:3)];
@@ -1281,16 +1278,16 @@ cache_preview (void)
 static void
 refill_cache (void)
 {
-  GdkCursorType     ctype1 = GDK_WATCH;
-  GdkCursorType     ctype2 = GDK_TOP_LEFT_ARROW;
-  static GdkCursor *preview_cursor1;  
-  static GdkCursor *preview_cursor2;  
+  static GdkCursor *preview_cursor1 = NULL;
+  static GdkCursor *preview_cursor2 = NULL;
 
   if (!preview_cursor1)
-    preview_cursor1 = gdk_cursor_new (ctype1);
+    {
+      GdkDisplay *display = gtk_widget_get_display (GTK_WIDGET (gfig_preview));
 
-  if (!preview_cursor2)
-    preview_cursor2 = gdk_cursor_new (ctype2);
+      preview_cursor1 = gdk_cursor_new_for_display (display, GDK_WATCH);
+      preview_cursor2 = gdk_cursor_new_for_display (display, GDK_TOP_LEFT_ARROW);
+    }
 
   gdk_window_set_cursor
     (gtk_widget_get_toplevel (GTK_WIDGET (gfig_preview))->window,
@@ -1349,7 +1346,7 @@ gfig_obj_modified (GFigObj *obj,
   /* Set the new one up */
   if (stat_type == GFIG_MODIFIED)
     gimp_pixmap_set (GIMP_PIXMAP (obj->pixmap_widget), Floppy6_xpm);
-  else 
+  else
     gimp_pixmap_set (GIMP_PIXMAP (obj->pixmap_widget), blank_xpm);
 }
 
@@ -1405,9 +1402,9 @@ obj_select_buttons (void)
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
-  
+
   button = gtk_button_new ();
-  gimp_help_set_help_data (button, _("Show previous object"), NULL); 
+  gimp_help_set_help_data (button, _("Show previous object"), NULL);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (select_button_clicked),
@@ -1420,7 +1417,7 @@ obj_select_buttons (void)
   gtk_widget_show (image);
 
   button = gtk_button_new ();
-  gimp_help_set_help_data (button, _("Show next object"), NULL); 
+  gimp_help_set_help_data (button, _("Show next object"), NULL);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (select_button_clicked),
@@ -1433,7 +1430,7 @@ obj_select_buttons (void)
   gtk_widget_show (image);
 
   button = gtk_button_new_with_label (_("All"));
-  gimp_help_set_help_data (button, _("Show all objects"), NULL); 
+  gimp_help_set_help_data (button, _("Show all objects"), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (select_button_clicked),
@@ -1452,7 +1449,7 @@ but_with_pix (const gchar  *stock_id,
 
   button = gtk_radio_button_new_with_label (*group, stock_id);
   gtk_button_set_use_stock (GTK_BUTTON (button), TRUE);
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE); 
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
   g_signal_connect (button, "toggled",
                     G_CALLBACK (toggle_obj_type),
                     GINT_TO_POINTER (baction));
@@ -1569,7 +1566,7 @@ bezier_button_press (GtkWidget      *widget,
       (event->button == 1))
     bezier_dialog ();
   return FALSE;
-}              
+}
 
 static GtkWidget *
 draw_buttons (GtkWidget *ww)
@@ -1585,22 +1582,22 @@ draw_buttons (GtkWidget *ww)
   button = but_with_pix (GFIG_STOCK_LINE, &group, LINE);
   gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Create line"), NULL); 
+  gimp_help_set_help_data (button, _("Create line"), NULL);
 
   button = but_with_pix (GFIG_STOCK_CIRCLE, &group, CIRCLE);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Create circle"), NULL); 
+  gimp_help_set_help_data (button, _("Create circle"), NULL);
 
   button = but_with_pix (GFIG_STOCK_ELLIPSE, &group, ELLIPSE);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Create ellipse"), NULL); 
+  gimp_help_set_help_data (button, _("Create ellipse"), NULL);
 
   button = but_with_pix (GFIG_STOCK_CURVE, &group, ARC);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Create arch"), NULL); 
+  gimp_help_set_help_data (button, _("Create arch"), NULL);
 
   button = but_with_pix (GFIG_STOCK_POLYGON, &group, POLY);
   gtk_container_add (GTK_CONTAINER (vbox), button);
@@ -1609,7 +1606,7 @@ draw_buttons (GtkWidget *ww)
   g_signal_connect (button, "button_press_event",
                     G_CALLBACK (poly_button_press),
                     NULL);
-  gimp_help_set_help_data (button, _("Create reg polygon"), NULL); 
+  gimp_help_set_help_data (button, _("Create reg polygon"), NULL);
 
   button = but_with_pix (GFIG_STOCK_STAR, &group, STAR);
   gtk_container_add (GTK_CONTAINER (vbox), button);
@@ -1617,7 +1614,7 @@ draw_buttons (GtkWidget *ww)
   g_signal_connect (button, "button_press_event",
                     G_CALLBACK (star_button_press),
                     NULL);
-  gimp_help_set_help_data (button, _("Create star"), NULL); 
+  gimp_help_set_help_data (button, _("Create star"), NULL);
 
   button = but_with_pix (GFIG_STOCK_SPIRAL, &group, SPIRAL);
   gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
@@ -1626,7 +1623,7 @@ draw_buttons (GtkWidget *ww)
   g_signal_connect (button, "button_press_event",
                     G_CALLBACK (spiral_button_press),
                     NULL);
-  gimp_help_set_help_data (button, _("Create spiral"), NULL); 
+  gimp_help_set_help_data (button, _("Create spiral"), NULL);
 
   button = but_with_pix (GFIG_STOCK_BEZIER, &group, BEZIER);
   gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
@@ -1637,27 +1634,27 @@ draw_buttons (GtkWidget *ww)
 
   gimp_help_set_help_data (button,
 			_("Create bezier curve. "
-			  "Shift + Button ends object creation."), NULL); 
+			  "Shift + Button ends object creation."), NULL);
 
   button = but_with_pix (GFIG_STOCK_MOVE_OBJECT, &group, MOVE_OBJ);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Move an object"), NULL); 
+  gimp_help_set_help_data (button, _("Move an object"), NULL);
 
   button = but_with_pix (GFIG_STOCK_MOVE_POINT, &group, MOVE_POINT);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Move a single point"), NULL); 
+  gimp_help_set_help_data (button, _("Move a single point"), NULL);
 
   button = but_with_pix (GFIG_STOCK_COPY_OBJECT, &group, COPY_OBJ);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Copy an object"), NULL); 
+  gimp_help_set_help_data (button, _("Copy an object"), NULL);
 
   button = but_with_pix (GFIG_STOCK_DELETE_OBJECT, &group, DEL_OBJ);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Delete an object"), NULL); 
+  gimp_help_set_help_data (button, _("Delete an object"), NULL);
 
   button = obj_select_buttons ();
   gtk_container_add (GTK_CONTAINER (vbox), button);
@@ -1931,7 +1928,7 @@ mygimp_brush_info (gint *width,
       g_message ("Failed to get brush info");
       *width = *height = 48;
     }
-}          
+}
 
 void
 gfig_paint (BrushType brush_type,
@@ -1957,7 +1954,7 @@ gfig_paint (BrushType brush_type,
     case BRUSH_AIRBRUSH_TYPE:
       gimp_airbrush (drawable_ID,
 		     selvals.airbrushpressure,
-		     seg_count, line_pnts); 
+		     seg_count, line_pnts);
       break;
 
     case BRUSH_PATTERN_TYPE:
@@ -1973,7 +1970,7 @@ gfig_paint (BrushType brush_type,
 static gint32
 gfig_gen_brush_preview (BrushDesc *bdesc)
 {
-  /* Given the name of a brush then paint it and return the ID of the image 
+  /* Given the name of a brush then paint it and return the ID of the image
    * the preview can be got from
    */
   static  gint32 layer_ID = -1;
@@ -2042,7 +2039,7 @@ gfig_gen_brush_preview (BrushDesc *bdesc)
 	      layer_ID,
 	      2, line_pnts);
 
-  gimp_palette_set_background (&background);  
+  gimp_palette_set_background (&background);
   gimp_palette_set_foreground (&foreground);
 
   mygimp_brush_set (saved_name);
@@ -2160,7 +2157,7 @@ paint_page (void)
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
 
-  table = gtk_table_new (5, 2, FALSE); 
+  table = gtk_table_new (5, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -2263,7 +2260,7 @@ paint_page (void)
                     G_CALLBACK (gfig_scale_update_scale),
                     &selvals.scaletoimagefp);
   gtk_widget_show (scale_scale);
-  gtk_widget_show (hbox);   
+  gtk_widget_show (hbox);
   gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 3, 4,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
 
@@ -2280,7 +2277,7 @@ paint_page (void)
   gimp_help_set_help_data (toggle,
 			_("Approx. circles & ellipses using lines. Allows "
 			  "the use of brush fading with these types of "
-			  "objects."), NULL); 
+			  "objects."), NULL);
   gtk_widget_show (toggle);
 
   return vbox;
@@ -2356,7 +2353,7 @@ brush_page (void)
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
 
-  table = gtk_table_new (2, 3, FALSE); 
+  table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -2383,7 +2380,7 @@ brush_page (void)
 
   gtk_table_attach (GTK_TABLE (table), fade_out_hbox, 0, 2, 1, 2,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_widget_show (fade_out_hbox);   
+  gtk_widget_show (fade_out_hbox);
 
 
   /* Gradient drawing */
@@ -2405,7 +2402,7 @@ brush_page (void)
   gtk_widget_show (scale);
   gtk_table_attach (GTK_TABLE (table), gradient_hbox, 0, 2, 2, 3,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_widget_show (gradient_hbox);   
+  gtk_widget_show (gradient_hbox);
 
 
   pressure_hbox = gtk_hbox_new (FALSE, 4);
@@ -2510,21 +2507,21 @@ select_page (void)
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
 
-  table = gtk_table_new (4, 4, FALSE); 
+  table = gtk_table_new (4, 4, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  /* The secltion settings - 
+  /* The secltion settings -
    * 1) Type (option menu)
    * 2) Anti A (toggle)
    * 3) Feather (toggle)
    * 4) F radius (slider)
-   * 5) Fill type (option menu) 
+   * 5) Fill type (option menu)
    * 6) Opacity (slider)
    * 7) When to fill (toggle)
-   * 8) Arc as segment/sector 
+   * 8) Arc as segment/sector
    */
 
   /* 1 */
@@ -2548,7 +2545,7 @@ select_page (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selopt.antia);
-  gtk_widget_show (toggle); 
+  gtk_widget_show (toggle);
 
   /* 3 */
   toggle = gtk_check_button_new_with_label (_("Feather"));
@@ -2557,7 +2554,7 @@ select_page (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selopt.feather);
-  gtk_widget_show (toggle); 
+  gtk_widget_show (toggle);
 
   /* 4 */
   scale_data =
@@ -2749,7 +2746,7 @@ options_page (void)
   g_signal_connect_after (toggle, "toggled",
                           G_CALLBACK (gfig_pos_enable),
                           NULL);
-  gtk_widget_show (toggle); 
+  gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label (_("Hide Control Points"));
   gtk_table_attach (GTK_TABLE (table), toggle, 1, 3, 4, 5,
@@ -2760,7 +2757,7 @@ options_page (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (toggle_show_image),
                     NULL);
-  gtk_widget_show (toggle); 
+  gtk_widget_show (toggle);
   gfig_opt_widget.showcontrol = toggle;
 
   button = gtk_button_new_with_label (_("About"));
@@ -2793,27 +2790,27 @@ grid_frame (void)
   gtk_widget_show (vbox);
 
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0); 
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   toggle = gtk_check_button_new_with_label (_("Show Grid"));
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0); 
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.opts.drawgrid);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (draw_grid_clear),
                     NULL);
-  gimp_help_set_help_data (toggle, _("Show grid"), NULL); 
+  gimp_help_set_help_data (toggle, _("Show grid"), NULL);
   gtk_widget_show (toggle);
   gfig_opt_widget.drawgrid = toggle;
 
   toggle = gtk_check_button_new_with_label (_("Snap to Grid"));
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0); 
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.opts.snap2grid);
-  gimp_help_set_help_data (toggle, _("Snap to grid"), NULL); 
+  gimp_help_set_help_data (toggle, _("Snap to grid"), NULL);
   gtk_widget_show (toggle);
   gfig_opt_widget.snap2grid = toggle;
 
@@ -2822,7 +2819,7 @@ grid_frame (void)
      it from the user interface */
 
   toggle = gtk_check_button_new_with_label (_("Lock on Grid"));
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0); 
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.opts.lockongrid);
@@ -2832,7 +2829,7 @@ grid_frame (void)
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0); 
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -2854,7 +2851,7 @@ grid_frame (void)
   return frame;
 }
 
-static void 
+static void
 clear_list_items (GtkList *list)
 {
   gtk_list_clear_items (list, 0, -1);
@@ -2938,7 +2935,7 @@ add_objects_list (void)
                     G_CALLBACK (new_button_callback),
                     NULL);
   gimp_help_set_help_data (button, _("Create a new Gfig object collection "
-				     "for editing"), NULL); 
+				     "for editing"), NULL);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
 
@@ -2947,7 +2944,7 @@ add_objects_list (void)
                     G_CALLBACK (load_button_callback),
                     list);
   gimp_help_set_help_data (button,
-			   _("Load a single Gfig object collection"), NULL); 
+			   _("Load a single Gfig object collection"), NULL);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
 
@@ -2955,7 +2952,7 @@ add_objects_list (void)
   g_signal_connect (button, "clicked",
                     G_CALLBACK (edit_button_callback),
                     list);
-  gimp_help_set_help_data (button, _("Edit Gfig object collection"), NULL); 
+  gimp_help_set_help_data (button, _("Edit Gfig object collection"), NULL);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
 
@@ -2964,7 +2961,7 @@ add_objects_list (void)
                     G_CALLBACK (merge_button_callback),
                     list);
   gimp_help_set_help_data (button, _("Merge Gfig Object collection into the "
-				     "current edit session"), NULL); 
+				     "current edit session"), NULL);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
 
@@ -2973,7 +2970,7 @@ add_objects_list (void)
                     G_CALLBACK (gfig_delete_gfig_callback),
                     list);
   gimp_help_set_help_data (button, _("Delete currently selected Gfig Object "
-				     "collection"), NULL); 
+				     "collection"), NULL);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
 
@@ -2983,7 +2980,7 @@ add_objects_list (void)
                     NULL);
   gimp_help_set_help_data (button,
 			_("Select folder and rescan Gfig object collections"),
-			   NULL); 
+			   NULL);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
 
@@ -3031,10 +3028,10 @@ static void
 gfig_obj_size_update (gint sz)
 {
   static gchar buf[256];
-  
+
   sprintf (buf, "%6d", sz);
   gtk_label_set_text (GTK_LABEL (obj_size_label), buf);
-}  
+}
 
 static GtkWidget *
 gfig_obj_size_label (void)
@@ -3050,7 +3047,7 @@ gfig_obj_size_label (void)
   gtk_widget_show (label);
 
   obj_size_label = gtk_label_new ("0");
-  gtk_misc_set_alignment (GTK_MISC (obj_size_label), 0.5, 0.5);    
+  gtk_misc_set_alignment (GTK_MISC (obj_size_label), 0.5, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), obj_size_label, FALSE, FALSE, 0);
   gtk_widget_show (obj_size_label);
 
@@ -3097,7 +3094,7 @@ make_pos_info (void)
 
   hbox = gtk_hbox_new (TRUE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-  gtk_container_add (GTK_CONTAINER (xframe), hbox);  
+  gtk_container_add (GTK_CONTAINER (xframe), hbox);
 
   /* Add labels */
   label = gfig_pos_labels ();
@@ -3153,7 +3150,7 @@ make_status (void)
 		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
   gtk_widget_show (status_label_fname);
 
-  gtk_container_add (GTK_CONTAINER (xframe), table);  
+  gtk_container_add (GTK_CONTAINER (xframe), table);
 
   gtk_widget_show (table);
   gtk_widget_show (xframe);
@@ -3169,7 +3166,7 @@ make_preview (void)
   GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *ruler;
-  
+
   gfig_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_widget_set_events (GTK_WIDGET (gfig_preview), PREVIEW_MASK);
 
@@ -3194,7 +3191,7 @@ make_preview (void)
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_attach (GTK_TABLE (table), gfig_preview, 1, 2, 1, 2,
 		    GTK_FILL , GTK_FILL , 0, 0);
-  gtk_container_add (GTK_CONTAINER (xframe), table); 
+  gtk_container_add (GTK_CONTAINER (xframe), table);
 
   ruler = gtk_hruler_new ();
   gtk_ruler_set_range (GTK_RULER (ruler), 0, preview_width, 0, PREVIEW_SIZE);
@@ -3237,13 +3234,13 @@ make_preview (void)
 }
 
 static void
-gfig_grid_colours (GtkWidget   *widget,
-		   GdkColormap *cmap)
+gfig_grid_colours (GtkWidget *widget)
 {
-  GdkGCValues values;
-  GdkColor new_col1;
-  GdkColor new_col2;
-  guchar stipple[8] =
+  GdkColormap *colormap;
+  GdkGCValues  values;
+  GdkColor     col1;
+  GdkColor     col2;
+  guchar       stipple[8] =
   {
     0xAA,    /*  ####----  */
     0x55,    /*  ###----#  */
@@ -3255,21 +3252,24 @@ gfig_grid_colours (GtkWidget   *widget,
     0x55,    /*  -####---  */
   };
 
-  gdk_color_parse ("gray50", &new_col1);
-  gdk_colormap_alloc_color (xxx, &new_col1, FALSE, TRUE);
-  gdk_color_parse ("gray80", &new_col2);
-  gdk_colormap_alloc_color (xxx, &new_col2, FALSE, TRUE);
-  values.background.pixel = new_col1.pixel;
-  values.foreground.pixel = new_col2.pixel;
+  colormap = gdk_screen_get_rgb_colormap (gtk_widget_get_screen (widget));
+
+  gdk_color_parse ("gray50", &col1);
+  gdk_colormap_alloc_color (colormap, &col1, FALSE, TRUE);
+
+  gdk_color_parse ("gray80", &col2);
+  gdk_colormap_alloc_color (colormap, &col2, FALSE, TRUE);
+
+  values.background.pixel = col1.pixel;
+  values.foreground.pixel = col2.pixel;
   values.fill    = GDK_OPAQUE_STIPPLED;
   values.stipple = gdk_bitmap_create_from_data (widget->window,
-						(gchar *) stipple,
-						4, 4);
+						(gchar *) stipple, 4, 4);
   grid_hightlight_drawgc = gdk_gc_new_with_values (widget->window,
 						   &values,
 						   GDK_GC_FOREGROUND |
 						   GDK_GC_BACKGROUND |
-						   GDK_GC_FILL |
+						   GDK_GC_FILL       |
 						   GDK_GC_STIPPLE);
 }
 
@@ -3284,8 +3284,6 @@ gfig_dialog (void)
 
   gimp_ui_init ("gfig", TRUE);
   gfig_stock_init ();
-
-  xxx = gdk_rgb_get_colormap ();
 
   gfig_path = gimp_plug_in_get_path ("gfig-path", "gfig");
 
@@ -3353,7 +3351,7 @@ gfig_dialog (void)
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
   gtk_box_pack_start (GTK_BOX (vbox), notebook, FALSE, FALSE, 0);
   gtk_widget_show (notebook);
-  
+
   page = paint_page ();
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
 			    gtk_label_new (_("Paint")));
@@ -3386,7 +3384,7 @@ gfig_dialog (void)
   gfig_new_gc (); /* Need this for drawing */
   gfig_update_stat_labels ();
 
-  gfig_grid_colours (gfig_preview, xxx);
+  gfig_grid_colours (gfig_preview);
   /* Popup for list area */
   gfig_op_menu_create (top_level_dlg);
 
@@ -3458,10 +3456,10 @@ gfig_ok_callback (GtkWidget *widget,
 static void
 gfig_preview_realize (GtkWidget *widget)
 {
-  GdkCursor *preview_cursor;
+  GdkDisplay *display = gtk_widget_get_display (widget);
 
-  preview_cursor = gdk_cursor_new (GDK_CROSSHAIR);
-  gdk_window_set_cursor (gfig_preview->window, preview_cursor);
+  gdk_window_set_cursor (gfig_preview->window,
+                         gdk_cursor_new_for_display (display, GDK_CROSSHAIR));
 }
 
 static gboolean
@@ -3501,7 +3499,7 @@ adjust_pic_coords (gint coord,
 
   return (SMALL_PREVIEW_SZ * coord) / pratio;
 }
- 
+
 static gint
 gfig_preview_events (GtkWidget *widget,
 		     GdkEvent  *event)
@@ -3677,7 +3675,7 @@ gfig_list_add (GFigObj *obj)
   list = g_list_append (NULL, list_item);
   gtk_list_insert_items (GTK_LIST (gfig_gtk_list), list, pos);
   gtk_widget_show (list_item);
-  gtk_list_select_item (GTK_LIST (gfig_gtk_list), pos);  
+  gtk_list_select_item (GTK_LIST (gfig_gtk_list), pos);
 
   g_signal_connect (list_item, "button_press_event",
                     G_CALLBACK (list_button_press),
@@ -3897,7 +3895,7 @@ gfig_load_file_selection_ok (GtkWidget        *widget,
       current_obj = NULL;
       gfig = gfig_load (filename, filename);
       current_obj = current_saved;
-      
+
       if (gfig)
 	{
 	  /* Read only ?*/
@@ -3983,11 +3981,11 @@ paint_layer_new (gchar *new_name)
       g_warning ("Error in creating layer");
       return;
     }
-  
+
   gimp_image_add_layer (gfig_image, layer_id, -1);
 
   gfig_drawable = layer_id;
-  
+
   switch (selvals.onlayerbg)
     {
     case LAYER_TRANS_BG:
@@ -4027,7 +4025,7 @@ paint_layer_fill (void)
 		    0.0,                 /* x - ignored */
 		    0.0);                /* y - ignored */
 }
-       
+
 static void
 gfig_paint_callback (GtkWidget *widget,
 		     gpointer   data)
@@ -4090,27 +4088,27 @@ gfig_paint_callback (GtkWidget *widget,
 		  break;
 		}
 	    }
-	  
+
 	  objs->obj->paintfunc (objs->obj);
-	  
+
 	  /* Fill layer if required */
-	  if (selvals.painttype == PAINT_SELECTION_FILL_TYPE 
+	  if (selvals.painttype == PAINT_SELECTION_FILL_TYPE
 	      && selopt.fill_when == FILL_EACH)
 	    paint_layer_fill ();
 	}
 
       objs = objs->next;
-      
+
       ccount++;
     }
 
   /* Fill layer if required */
-  if (selvals.painttype == PAINT_SELECTION_FILL_TYPE 
+  if (selvals.painttype == PAINT_SELECTION_FILL_TYPE
       && selopt.fill_when == FILL_AFTER)
     paint_layer_fill ();
 
   gimp_undo_push_group_end (gfig_image);
-  
+
   gimp_displays_flush ();
 }
 
@@ -4265,7 +4263,7 @@ gfig_do_delete_gfig_callback (GtkWidget *widget,
   /* Get the list and which item is selected */
   /* Only allow single selections */
 
-  sellist = GTK_LIST (list)->selection; 
+  sellist = GTK_LIST (list)->selection;
 
   sel_obj = (GFigObj *) g_object_get_data (G_OBJECT (sellist->data),
                                            "user_data");
@@ -4281,7 +4279,7 @@ gfig_do_delete_gfig_callback (GtkWidget *widget,
     {
       clear_undo ();
     }
-  
+
   /* Free current obj */
   gfig_free_everything (sel_obj);
 
@@ -4304,7 +4302,7 @@ gfig_do_delete_gfig_callback (GtkWidget *widget,
 
   gtk_widget_set_sensitive (object_list, TRUE);
 
-  gtk_list_select_item (GTK_LIST (gfig_gtk_list), pos);  
+  gtk_list_select_item (GTK_LIST (gfig_gtk_list), pos);
 
   current_obj = g_list_nth (gfig_list, pos)->data;
 
@@ -4324,7 +4322,7 @@ gfig_delete_gfig_callback (GtkWidget *widget,
   GList     *sellist;
   GFigObj   *sel_obj;
 
-  sellist = GTK_LIST (list)->selection; 
+  sellist = GTK_LIST (list)->selection;
 
   sel_obj = (GFigObj *) g_object_get_data (G_OBJECT (sellist->data),
                                            "user_data");
@@ -4354,7 +4352,7 @@ gfig_delete_gfig_callback (GtkWidget *widget,
 
   gtk_widget_set_sensitive (GTK_WIDGET (object_list), FALSE);
   gtk_widget_show (delete_dialog);
-} 
+}
 
 static void
 gfig_update_stat_labels (void)
@@ -4409,7 +4407,7 @@ gfig_update_stat_labels (void)
 
 }
 
-static void 
+static void
 new_obj_2edit (GFigObj *obj)
 {
   GFigObj *old_current = current_obj;
@@ -4429,7 +4427,7 @@ new_obj_2edit (GFigObj *obj)
   /* Change options */
   update_options (old_current);
 
-  /* If have old object and NOT scaleing currently then force 
+  /* If have old object and NOT scaleing currently then force
    * back to saved coord type.
    */
   gfig_update_stat_labels ();
@@ -4467,7 +4465,7 @@ edit_button_callback (GtkWidget *widget,
   /* Get the list and which item is selected */
   /* Only allow single selections */
 
-  sellist = GTK_LIST (list)->selection; 
+  sellist = GTK_LIST (list)->selection;
 
   sel_obj = (GFigObj *) g_object_get_data (G_OBJECT (sellist->data),
                                            "user_data");
@@ -4491,7 +4489,7 @@ merge_button_callback (GtkWidget *widget,
   /* Get the list and which item is selected */
   /* Only allow single selections */
 
-  sellist = GTK_LIST (list)->selection; 
+  sellist = GTK_LIST (list)->selection;
 
   sel_obj = (GFigObj *) g_object_get_data (G_OBJECT (sellist->data),
                                            "user_data");
@@ -4584,7 +4582,7 @@ gfig_op_menu_create (GtkWidget *window)
                     G_CALLBACK (gfig_save_menu_callback),
                     NULL);
 
-#if 0 
+#if 0
   gtk_widget_install_accelerator (menu_item,
 				  accelerator_table,
 				  "activate", 'S', 0);
@@ -4597,7 +4595,7 @@ gfig_op_menu_create (GtkWidget *window)
 		    G_CALLBACK (gfig_rename_menu_callback),
                     NULL);
 
-#if 0 
+#if 0
   gtk_widget_install_accelerator (menu_item,
 				  accelerator_table,
 				  "activate", 'A', 0);
@@ -4610,7 +4608,7 @@ gfig_op_menu_create (GtkWidget *window)
 		    G_CALLBACK (gfig_copy_menu_callback),
                     NULL);
 
-#if 0 
+#if 0
   gtk_widget_install_accelerator (menu_item,
 				  accelerator_table,
 				  "activate", 'C', 0);
@@ -4623,7 +4621,7 @@ gfig_op_menu_create (GtkWidget *window)
 		    G_CALLBACK (gfig_edit_menu_callback),
                     NULL);
 
-#if 0 
+#if 0
   gtk_widget_install_accelerator (menu_item,
 				  accelerator_table,
 				  "activate", 'E', 0);
@@ -4692,7 +4690,7 @@ gfig_scale_update_scale (GtkAdjustment *adjustment,
       scale_y_factor = (1 / (*value)) * org_scale_y_factor;
       gtk_widget_queue_draw (gfig_preview);
     }
-} 
+}
 
 /* Use to toggle the toggles */
 static void
@@ -4717,7 +4715,7 @@ gfig_scale2img_update (GtkWidget *widget,
 
 /* Given a row then srink it down a bit */
 static void
-do_gfig_preview (guchar *dest_row, 
+do_gfig_preview (guchar *dest_row,
 		 guchar *src_row,
 		 gint    width,
 		 gint    dh,
@@ -4731,11 +4729,11 @@ static void
 dialog_update_preview (void)
 {
   gint y;
-  gint check, check_0, check_1;  
+  gint check, check_0, check_1;
 
   if (!selvals.showimage)
     {
-      memset (preview_row, -1, preview_width*4);      
+      memset (preview_row, -1, preview_width*4);
       for (y = 0; y < preview_height; y++)
 	{
 	  gtk_preview_draw_row (GTK_PREVIEW (gfig_preview), preview_row,
@@ -4779,14 +4777,14 @@ dialog_update_preview (void)
 		check = check_0;
 	      else
 		check = check_1;
-	    
+
 	      alphaval = preview_row[i + 3];
 
-	      preview_row[j] = 
+	      preview_row[j] =
 		check + (((preview_row[i] - check)*alphaval)/255);
-	      preview_row[j + 1] = 
+	      preview_row[j + 1] =
 		check + (((preview_row[i + 1] - check)*alphaval)/255);
-	      preview_row[j + 2] = 
+	      preview_row[j + 2] =
 		check + (((preview_row[i + 2] - check)*alphaval)/255);
 	    }
 	}
@@ -4815,7 +4813,7 @@ gfig_new_gc (void)
                               GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
 }
 
-static gint 
+static gint
 get_num_radials (void)
 {
   gint gridsp = MAX_GRID + MIN_GRID;
@@ -4840,15 +4838,15 @@ find_grid_pos (GdkPoint *p,
   static gdouble cons_radius;
   static gdouble cons_ang;
   static gboolean cons_center;
-  
+
   if (selvals.opts.gridtype == RECT_GRID)
     {
       if (p->x % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
 	x += selvals.opts.gridspacing;
-      
+
       if (p->y % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
 	y += selvals.opts.gridspacing;
-      
+
       gp->x = (x/selvals.opts.gridspacing)*selvals.opts.gridspacing;
       gp->y = (y/selvals.opts.gridspacing)*selvals.opts.gridspacing;
 
@@ -4866,7 +4864,7 @@ find_grid_pos (GdkPoint *p,
 	}
     }
   else if (selvals.opts.gridtype == POLAR_GRID)
-    { 
+    {
       gdouble ang_grid;
       gdouble ang_radius;
       gdouble real_radius;
@@ -4938,10 +4936,10 @@ find_grid_pos (GdkPoint *p,
       /*
        * This really needs a picture to show the math...
        *
-       * Consider an isometric grid with one of the sets of lines parallel to the 
-       * y axis (vertical alignment). Further define that the origin of a Cartesian 
+       * Consider an isometric grid with one of the sets of lines parallel to the
+       * y axis (vertical alignment). Further define that the origin of a Cartesian
        * grid is at a isometric vertex.  For simplicity consider the first quadrant only.
-       * 
+       *
        *  - Let one line segment between vertices be r
        *  - Define the value of r as the grid spacing
        *  - Assign an integer n identifier to each vertical grid line along the x axis.
@@ -4949,7 +4947,7 @@ find_grid_pos (GdkPoint *p,
        *  - Let m to be any integer
        *  - Let h be the spacing between vertical grid lines measured along the x axis.
        *    It follows from the isometric grid that h has a value of r * COS(1/6 Pi Rad)
-       * 
+       *
        *  Consider a Vertex V at the Cartesian location [Xv, Yv]
        *
        *   It follows that vertices belong to the set...
@@ -4961,13 +4959,13 @@ find_grid_pos (GdkPoint *p,
        * Consider an arbitrary point P[Xp,Yp], find the closest vertex in the set V.
        *
        * Restated this problem is "find values for m and n that are drive V closest to P"
-       * 
+       *
        * A Solution method (there may be a better one?):
-       * 
+       *
        * Step 1) bound n to the two closest values for Xp
-       *         n_lo = (int) (Xp / h) 
+       *         n_lo = (int) (Xp / h)
        *         n_hi = n_lo + 1
-       * 
+       *
        * Step 2) Consider the two closes vertices for each n_lo and n_hi. The further of
        *         the vertices in each pair can readily be discarded.
        *         m_lo_n_lo = (int) ( (Yp / r) - 0.5 (n_lo % 2) )
@@ -4975,7 +4973,7 @@ find_grid_pos (GdkPoint *p,
        *
        *         m_lo_n_hi = (int) ( (Yp / r) - 0.5 (n_hi % 2) )
        *         m_hi_n_hi = m_hi_n_hi
-       * 
+       *
        * Step 3) compute the distance from P to V1 and V2. Snap to the closer point.
        */
       gint n_lo;
@@ -4992,13 +4990,13 @@ find_grid_pos (GdkPoint *p,
       gint x2;
       gint y1;
       gint y2;
-      
+
       r = selvals.opts.gridspacing;
       h = COS_1o6PI_RAD * r;
-      
+
       n_lo = (gint) x / h;
       n_hi = n_lo + 1;
-      
+
       /* evaluate m candidates for n_lo */
       m_lo_n_lo = (gint) ( (y / r) - 0.5 * (n_lo % 2) );
       m_hi_n_lo = m_lo_n_lo + 1;
@@ -5010,7 +5008,7 @@ find_grid_pos (GdkPoint *p,
       else {
 	m_n_lo = m_hi_n_lo;
       }
-      
+
       /* evaluate m candidates for n_hi */
       m_lo_n_hi = (gint) ( (y / r) - 0.5 * (n_hi % 2) );
       m_hi_n_hi = m_lo_n_hi + 1;
@@ -5022,16 +5020,16 @@ find_grid_pos (GdkPoint *p,
       else {
 	m_n_hi = m_hi_n_hi;
       }
-      
-      /* Now, which is closer to [x,y]? we can use a somewhat abbreviated form of the 
+
+      /* Now, which is closer to [x,y]? we can use a somewhat abbreviated form of the
        * distance formula since we only care about relative values. */
 
       x1 = (gint) (n_lo * h);
       y1 = (gint) (m_n_lo * r + (0.5 * r * (n_lo % 2)));
       x2 = (gint) (n_hi * h);
       y2 = (gint) (m_n_hi * r + (0.5 * r * (n_hi % 2)));
-      
-      if (((x - x1) * (x - x1) + (y - y1) * (y - y1)) < 
+
+      if (((x - x1) * (x - x1) + (y - y1) * (y - y1)) <
 	  ((x - x2) * (x - x2) + (y - y2) * (y - y2))) {
 	gp->x =  x1;
 	gp->y =  y1;
@@ -5040,7 +5038,7 @@ find_grid_pos (GdkPoint *p,
 	gp->x =  x2;
 	gp->y =  y2;
       }
-      
+
     }
 }
 
@@ -5100,8 +5098,8 @@ static void
 toggle_obj_type (GtkWidget *widget,
 		 gpointer   data)
 {
-  GdkCursorType ctype = GDK_LAST_CURSOR;
-  static GdkCursor* p_cursors[DEL_OBJ + 1];
+  static GdkCursor *p_cursors[DEL_OBJ + 1];
+  GdkCursorType     ctype = GDK_LAST_CURSOR;
 
   if (selvals.otype != (DobjType) GPOINTER_TO_INT (data))
     {
@@ -5147,7 +5145,11 @@ toggle_obj_type (GtkWidget *widget,
     }
 
   if (!p_cursors[selvals.otype])
-    p_cursors[selvals.otype] = gdk_cursor_new (ctype);
+    {
+      GdkDisplay *display = gtk_widget_get_display (widget);
+
+      p_cursors[selvals.otype] = gdk_cursor_new_for_display (display, ctype);
+    }
 
   gdk_window_set_cursor (gfig_preview->window, p_cursors[selvals.otype]);
 }
@@ -5196,7 +5198,7 @@ draw_grid_polar (GdkGC *drawgc)
       gint lx, ly;
 
       ang_loop = loop * ang_grid;
-	
+
       lx = RINT (ang_radius * cos (ang_loop));
       ly = RINT (ang_radius * sin (ang_loop));
 
@@ -5245,18 +5247,18 @@ static void
 draw_grid_iso (GdkGC *drawgc)
 {
   /* vstep is an int since it's defined from grid size */
-  gint vstep; 
+  gint vstep;
   gdouble loop;
   gdouble hstep;
-  
+
   gdouble diagonal_start;
   gdouble diagonal_end;
   gdouble diagonal_width;
   gdouble diagonal_height;
-  
+
   vstep = selvals.opts.gridspacing;
   hstep = selvals.opts.gridspacing * COS_1o6PI_RAD;
-  
+
   /* Draw the vertical lines - These are easy */
   for (loop = 0 ; loop < preview_width ; loop += hstep){
     gdk_draw_line (gfig_preview->window,
@@ -5266,17 +5268,17 @@ draw_grid_iso (GdkGC *drawgc)
 		   (gint)loop,
 		   (gint)preview_height);
   }
-  
+
   /* draw diag lines at a Theta of +/- 1/6 Pi Rad */
-  
+
   diagonal_start = -(((int)preview_width * TAN_1o6PI_RAD) - (((int)(preview_width * TAN_1o6PI_RAD)) % vstep));
-  
+
   diagonal_end = preview_height + (preview_width * TAN_1o6PI_RAD);
   diagonal_end -= ((int)diagonal_end) % vstep;
-  
+
   diagonal_width = preview_width;
   diagonal_height = preview_width * TAN_1o6PI_RAD;
-  
+
   /* Draw diag lines */
   for (loop = diagonal_start ; loop < diagonal_end ; loop += vstep)
     {
@@ -5286,7 +5288,7 @@ draw_grid_iso (GdkGC *drawgc)
 		     (gint)loop,
 		     (gint)diagonal_width,
 		     (gint)loop + diagonal_height);
-      
+
       gdk_draw_line (gfig_preview->window,
 		     drawgc,
 		     (gint)0,
@@ -5365,10 +5367,10 @@ do_gfig (void)
 
 /* Stuff for the generation/deletion of objects. */
 
-/* Objects are easy one they are created - you just go down the object 
- * list calling the draw function for each object but... when they 
- * are been created we have to be a little more careful. When 
- * the first point is placed on the canvas we create the object, 
+/* Objects are easy one they are created - you just go down the object
+ * list calling the draw function for each object but... when they
+ * are been created we have to be a little more careful. When
+ * the first point is placed on the canvas we create the object,
  * the mouse position then defines the next point that can move around.
  * careful how we draw this position.
  */
@@ -5385,7 +5387,7 @@ free_all_objs (DAllObjs * objs)
 {
   /* Free all objects */
   DAllObjs * next;
-  
+
   while (objs)
     {
       free_one_obj (objs->obj);
@@ -5419,7 +5421,7 @@ get_line (gchar *buf,
   /* The last newline is a pain */
   if (slen > 0)
     buf[slen - 1] = '\0';
-  
+
   if (ferror (from))
     {
       g_warning (_("Error reading file"));
@@ -5483,7 +5485,7 @@ clear_undo (void)
 {
   int lv;
 
-  for (lv = undo_water_mark; lv >= 0; lv--) 
+  for (lv = undo_water_mark; lv >= 0; lv--)
     {
       free_all_objs (undo_table[lv]);
       undo_table[lv] = NULL;
@@ -5499,7 +5501,7 @@ setup_undo (void)
   /* Copy object list to undo buffer */
 #if DEBUG
   printf ("setup undo level [%d]\n", undo_water_mark);
-#endif /*DEBUG*/  
+#endif /*DEBUG*/
 
   if (!current_obj)
     {
@@ -5618,8 +5620,8 @@ reverse_pairs_list (gdouble *list,
   gint i;
 
   struct cs
-  { 
-    gdouble i1; 
+  {
+    gdouble i1;
     gdouble i2;
   } copyit, *orglist;
 
@@ -5635,7 +5637,7 @@ reverse_pairs_list (gdouble *list,
 }
 
 void
-gfig_draw_arc (gint x, gint y, gint width, gint height, gint angle1, 
+gfig_draw_arc (gint x, gint y, gint width, gint height, gint angle1,
 	       gint angle2)
 {
   if (drawing_pic)
@@ -5671,7 +5673,7 @@ gfig_draw_line (gint x0, gint y0, gint x1, gint y1)
   if (drawing_pic)
     {
       gdk_draw_line (pic_preview->window,
-		     pic_preview->style->black_gc,			    
+		     pic_preview->style->black_gc,
 		     adjust_pic_coords (x0, preview_width),
 		     adjust_pic_coords (y0, preview_height),
 		     adjust_pic_coords (x1, preview_width),
@@ -5686,4 +5688,4 @@ gfig_draw_line (gint x0, gint y0, gint x1, gint y1)
 		     gfig_scale_x (x1),
 		     gfig_scale_y (y1));
     }
-} 
+}

@@ -227,7 +227,7 @@ gimp_container_popup_map (GtkWidget *widget)
         }
       else
         {
-          gdk_display_pointer_ungrab (gdk_drawable_get_display (widget->window),
+          gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
                                       GDK_CURRENT_TIME);
         }
     }

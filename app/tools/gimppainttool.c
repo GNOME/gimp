@@ -358,12 +358,15 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   GimpPaintCore    *core;
   GimpBrush        *current_brush;
   GimpDrawable     *drawable;
+  GdkDisplay       *gdk_display;
   GimpCoords        curr_coords;
   gint              off_x, off_y;
 
   draw_tool     = GIMP_DRAW_TOOL (tool);
   paint_tool    = GIMP_PAINT_TOOL (tool);
   paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
+
+  gdk_display = gtk_widget_get_display (gdisp->shell);
 
   core = paint_tool->core;
 
@@ -393,7 +396,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
     }
 
   core->use_pressure = (gimp_devices_get_current (gdisp->gimage->gimp) !=
-                        gdk_device_get_core_pointer ());
+                        gdk_display_get_core_pointer (gdk_display));
 
   if (! gimp_paint_core_start (core, drawable, paint_options, &curr_coords))
     return;

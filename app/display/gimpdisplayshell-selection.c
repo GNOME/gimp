@@ -105,7 +105,7 @@ gimp_display_shell_selection_create (GdkWindow        *win,
         {
           GdkVisual *visual;
 
-          visual = gdk_rgb_get_visual ();
+          visual = gdk_screen_get_rgb_visual (gdk_drawable_get_screen (win));
 
           cycled_ants_pixmap = create_cycled_ants_pixmap (win, visual->depth);
         }

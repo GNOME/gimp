@@ -350,12 +350,16 @@ preview_zoom(Preview_t *preview, gint zoom_factor)
 GdkCursorType
 preview_set_cursor(Preview_t *preview, GdkCursorType cursor_type)
 {
-   GdkCursorType prev_cursor = preview->cursor;
-   GdkCursor *cursor = gdk_cursor_new(cursor_type);
+   GdkCursorType  prev_cursor = preview->cursor;
+   GdkDisplay    *display     = gtk_widget_get_display (preview->window);
+   GdkCursor     *cursor      = gdk_cursor_new_for_display (display,
+                                                            cursor_type);
+
    gdk_window_set_cursor(preview->window->window, cursor);
    gdk_cursor_unref(cursor);
-   gdk_flush();
+
    preview->cursor = cursor_type;
+
    return prev_cursor;
 }
 
