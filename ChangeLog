@@ -1,3 +1,12 @@
+2004-01-07  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/gimprc.pdb: removed redundant "success = TRUE"
+	assignments which simplifies the generated code quite a bit.
+	(most of the changed functions always succeed and don't need a
+	"success" variable at all)
+
+	* app/pdb/gimprc_cmds.c: regenerated.
+
 2004-01-07  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.0pre1 release.

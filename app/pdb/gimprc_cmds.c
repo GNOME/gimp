@@ -70,7 +70,10 @@ gimprc_query_invoker (Gimp     *gimp,
 
   if (success)
     {
-      success = (value = gimp_rc_query (GIMP_RC (gimp->config), token)) != NULL;
+      value = gimp_rc_query (GIMP_RC (gimp->config), token);
+    
+      if (! value)
+	success = FALSE;
     }
 
   return_args = procedural_db_return_args (&gimprc_query_proc, success);
@@ -134,7 +137,6 @@ gimprc_set_invoker (Gimp     *gimp,
   if (success)
     {
       gimp_config_add_unknown_token (GIMP_CONFIG (gimp->config), token, value);
-      success = TRUE;
     }
 
   return procedural_db_return_args (&gimprc_set_proc, success);
@@ -174,17 +176,13 @@ static Argument *
 get_default_comment_invoker (Gimp     *gimp,
                              Argument *args)
 {
-  gboolean success = TRUE;
   Argument *return_args;
   gchar *comment;
 
   comment = g_strdup (gimp->config->default_image->comment);
-  success = TRUE;
 
-  return_args = procedural_db_return_args (&get_default_comment_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_pointer = comment;
+  return_args = procedural_db_return_args (&get_default_comment_proc, TRUE);
+  return_args[1].value.pdb_pointer = comment;
 
   return return_args;
 }
@@ -218,22 +216,17 @@ static Argument *
 get_monitor_resolution_invoker (Gimp     *gimp,
                                 Argument *args)
 {
-  gboolean success = TRUE;
   Argument *return_args;
   gdouble xres;
   gdouble yres;
 
   xres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_xres;
   yres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_yres;
-  success = TRUE;
 
-  return_args = procedural_db_return_args (&get_monitor_resolution_proc, success);
+  return_args = procedural_db_return_args (&get_monitor_resolution_proc, TRUE);
 
-  if (success)
-    {
-      return_args[1].value.pdb_float = xres;
-      return_args[2].value.pdb_float = yres;
-    }
+  return_args[1].value.pdb_float = xres;
+  return_args[2].value.pdb_float = yres;
 
   return return_args;
 }
@@ -272,17 +265,13 @@ static Argument *
 get_theme_dir_invoker (Gimp     *gimp,
                        Argument *args)
 {
-  gboolean success = TRUE;
   Argument *return_args;
   gchar *theme_dir;
 
   theme_dir = g_strdup (gimp_get_theme_dir (gimp));
-  success = TRUE;
 
-  return_args = procedural_db_return_args (&get_theme_dir_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_pointer = theme_dir;
+  return_args = procedural_db_return_args (&get_theme_dir_proc, TRUE);
+  return_args[1].value.pdb_pointer = theme_dir;
 
   return return_args;
 }
@@ -316,17 +305,13 @@ static Argument *
 get_module_load_inhibit_invoker (Gimp     *gimp,
                                  Argument *args)
 {
-  gboolean success = TRUE;
   Argument *return_args;
   gchar *load_inhibit;
 
   load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));
-  success = TRUE;
 
-  return_args = procedural_db_return_args (&get_module_load_inhibit_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_pointer = load_inhibit;
+  return_args = procedural_db_return_args (&get_module_load_inhibit_proc, TRUE);
+  return_args[1].value.pdb_pointer = load_inhibit;
 
   return return_args;
 }

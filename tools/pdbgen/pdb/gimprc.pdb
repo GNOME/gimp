@@ -56,7 +56,10 @@ HELP
 	vars => [ 'gchar *value = NULL' ],
 	code => <<'CODE'
 {
-  success = (value = gimp_rc_query (GIMP_RC (gimp->config), token)) != NULL;
+  value = gimp_rc_query (GIMP_RC (gimp->config), token);
+
+  if (! value)
+    success = FALSE;
 }
 CODE
     );
@@ -88,7 +91,6 @@ HELP
 	code =>  <<'CODE'
 {
   gimp_config_add_unknown_token (GIMP_CONFIG (gimp->config), token, value);
-  success = TRUE;
 }
 CODE
     );
@@ -120,7 +122,6 @@ HELP
 {
   xres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_xres;
   yres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_yres;
-  success = TRUE;
 }
 CODE
     );
@@ -145,7 +146,6 @@ sub get_default_comment {
 	code => <<'CODE'
 {
   comment = g_strdup (gimp->config->default_image->comment);
-  success = TRUE;
 }
 CODE
     );
@@ -169,7 +169,6 @@ sub get_theme_dir {
 	code => <<'CODE'
 {
   theme_dir = g_strdup (gimp_get_theme_dir (gimp));
-  success = TRUE;
 }
 CODE
     );
@@ -194,7 +193,6 @@ sub get_module_load_inhibit {
 	code => <<'CODE'
 {
   load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));
-  success = TRUE;
 }
 CODE
     );
