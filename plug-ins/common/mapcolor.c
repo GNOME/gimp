@@ -27,10 +27,11 @@
  * V 1.02, PK, 19-Mar-00: Better explaining text/dialogue
  *                        Preview added
  *                        Fix problem with divide by zero
+ * V 1.03,neo, 22-May-00: Fixed divide by zero in preview code.
  */
-#define VERSIO                                     1.02
-static char dversio[] =                          "v1.02  19-Mar-00";
-static char ident[] = "@(#) GIMP mapcolor plug-in v1.02  19-Mar-00";
+#define VERSIO                                     1.03
+static char dversio[] =                          "v1.03  22-May-00";
+static char ident[] = "@(#) GIMP mapcolor plug-in v1.03  22-May-00";
 
 #include "config.h"
 
@@ -224,9 +225,10 @@ img_preview_copy (IMG_PREVIEW *src, IMG_PREVIEW **dst)
 
 
 static IMG_PREVIEW *
-img_preview_create_from_drawable (guint maxsize, gint32 drawable_ID)
-
-{GDrawable *drw;
+img_preview_create_from_drawable (guint  maxsize, 
+				  gint32 drawable_ID)
+{
+ GDrawable *drw;
  GPixelRgn pixel_rgn;
  guint drw_width, drw_height;
  guint prv_width, prv_height;
@@ -243,7 +245,8 @@ img_preview_create_from_drawable (guint maxsize, gint32 drawable_ID)
  bpp = gimp_drawable_bpp(drawable_ID);
 
  img_data = g_malloc (drw_width * tile_height * bpp);
- if (img_data == NULL) return NULL;
+ if (img_data == NULL) 
+   return NULL;
 
  /* Calculate preview size */
  if ((drw_width <= maxsize) && (drw_height <= maxsize))
@@ -267,7 +270,8 @@ img_preview_create_from_drawable (guint maxsize, gint32 drawable_ID)
    }
  }
  ip = img_preview_alloc (prv_width, prv_height);
- if (ip == NULL) return NULL;
+ if (ip == NULL) 
+   return NULL;
 
  drw = gimp_drawable_get (drawable_ID);
  prv_data = ip->img;
@@ -278,7 +282,7 @@ img_preview_create_from_drawable (guint maxsize, gint32 drawable_ID)
  /* Get the pixels for the preview from the drawable */
  for (y = 0; y < prv_height; y++)
  {
-   src_y = ((drw_height-1) * y) / (prv_height-1);
+   src_y = (drw_height * y) / prv_height;
    if (src_y > row_end)         /* Need new row ? */
    {
      row_start = (src_y / tile_height) * tile_height;
@@ -290,7 +294,7 @@ img_preview_create_from_drawable (guint maxsize, gint32 drawable_ID)
    cu_row = img_data + (src_y-row_start)*drw_width*bpp;
    for (x = 0; x < prv_width; x++)
    {
-     src_x = ((drw_width-1) * x) / (prv_width-1);
+     src_x = (drw_width * x) / prv_width;
      memcpy (prv_data, cu_row+bpp*src_x, 3);
      prv_data += 3;
    }

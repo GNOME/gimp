@@ -1,3 +1,8 @@
+2000-05-22  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/mapcolor.c: fixed possible divide by zero 
+	spotted by Scott Heavner. Closes bug #11731.
+
 Sun May 21 20:00:55 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	On request of Martin Weber <martweb@gmx.net>:
