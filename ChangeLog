@@ -2,6 +2,13 @@
 
 	Merged from HEAD branch:
 
+	* etc/controllerrc: fixed defaults for mouse wheel controller (bug
+	#171083, fix spotted by Michael Schumacher).
+
+2005-03-21  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
 	* app/widgets/gimpcontainertreeview.c
 	(gimp_container_tree_view_constructor): disable search for tree
 	views so that treeview typeahead doesn't collide with global
