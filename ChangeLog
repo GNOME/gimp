@@ -1,3 +1,18 @@
+Wed Nov 26 14:38:30 1997  Larry Ewing  <lewing@isc.tamu.edu>
+	
+	* Added a bounds check to undo_push_image* to fix drawing
+	outside the image undo bug
+	
+	* Desensitized Add Layer Mask when layer has no alpha channel
+
+	* Wrapped the calls to gtk_list_clear_items with
+	suspend_gimage_notify in app/channels_dialog.c to prevent
+	erroneously deactivating channels.  Fixes "out of paint" bug
+	
+	* replaced calls to info_window_update in app/magnify.c and
+	app/scale.c with a single call in gdisplay_flush () so that
+	the info window reflects the current status
+
 Wed Nov 19 13:22:09 EST 1997 Adrian Likins <adrian@gimp.org>
 
 	* updated vpropagate.c and align_layers.c
