@@ -1143,7 +1143,10 @@ crop_response (GtkWidget    *widget,
                                       NULL);
 
   if (crop->crop_info)
-    info_dialog_hide (crop->crop_info);
+    {
+      info_dialog_free (crop->crop_info);
+      crop->crop_info = NULL;
+    }
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (crop)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (crop));

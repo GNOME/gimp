@@ -1,5 +1,10 @@
 2004-10-01  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcroptool.c (crop_response): destroy the info
+	dialog instead of hiding it. Fixes session management.
+
+2004-10-01  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcroptool.c: unset the highlight from
 	crop_response() so it gets called when cropping is cancelled.
 
