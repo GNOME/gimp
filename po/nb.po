@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-19 03:11+0100\n"
-"PO-Revision-Date: 2004-12-04 17:13+0100\n"
+"POT-Creation-Date: 2004-12-21 21:25+0100\n"
+"PO-Revision-Date: 2004-12-21 21:49+0100\n"
 "Last-Translator: Sigurd Gartmann <sigurd-translate@brogar.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -1156,9 +1156,8 @@ msgstr "_Kopiér"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: app/actions/edit-actions.c:93
-#, fuzzy
 msgid "Copy _Visible"
-msgstr "_Synlig"
+msgstr "Kopier _synlig"
 
 #: app/actions/edit-actions.c:98
 msgid "_Paste"
@@ -1546,115 +1545,115 @@ msgstr "Zoom alt"
 msgid "Zoom all"
 msgstr "Zoom alt"
 
-#: app/actions/gradient-editor-actions.c:582
+#: app/actions/gradient-editor-actions.c:589
 msgid "_Blending Function for Segment"
 msgstr "_Blandingstype for segment"
 
-#: app/actions/gradient-editor-actions.c:584
+#: app/actions/gradient-editor-actions.c:591
 msgid "Coloring _Type for Segment"
 msgstr "Farge_type for segment"
 
-#: app/actions/gradient-editor-actions.c:587
+#: app/actions/gradient-editor-actions.c:594
 msgid "_Flip Segment"
 msgstr "_Vend segment"
 
-#: app/actions/gradient-editor-actions.c:589
+#: app/actions/gradient-editor-actions.c:596
 msgid "_Replicate Segment..."
 msgstr "_Kopier segment..."
 
-#: app/actions/gradient-editor-actions.c:591
+#: app/actions/gradient-editor-actions.c:598
 msgid "Split Segment at _Midpoint"
 msgstr "Del segmentet ved _midtpunktet"
 
-#: app/actions/gradient-editor-actions.c:593
+#: app/actions/gradient-editor-actions.c:600
 msgid "Split Segment _Uniformly..."
 msgstr "Splitt segmentet _enhetlig..."
 
-#: app/actions/gradient-editor-actions.c:595
+#: app/actions/gradient-editor-actions.c:602
 msgid "_Delete Segment"
 msgstr "_Slett segment"
 
-#: app/actions/gradient-editor-actions.c:597
+#: app/actions/gradient-editor-actions.c:604
 msgid "Re-_center Segment's Midpoint"
 msgstr "S_entrer segmentets midtpunkt igjen"
 
-#: app/actions/gradient-editor-actions.c:599
+#: app/actions/gradient-editor-actions.c:606
 msgid "Re-distribute _Handles in Segment"
 msgstr "Distribuer _håndtak i segmentet igjen"
 
-#: app/actions/gradient-editor-actions.c:604
+#: app/actions/gradient-editor-actions.c:611
 msgid "_Blending Function for Selection"
 msgstr "_Blandingsfunksjon for utvalget"
 
-#: app/actions/gradient-editor-actions.c:606
+#: app/actions/gradient-editor-actions.c:613
 msgid "Coloring _Type for Selection"
 msgstr "Farge_type for utvalget"
 
-#: app/actions/gradient-editor-actions.c:609
+#: app/actions/gradient-editor-actions.c:616
 msgid "_Flip Selection"
 msgstr "_Vend utvalg"
 
-#: app/actions/gradient-editor-actions.c:611
+#: app/actions/gradient-editor-actions.c:618
 msgid "_Replicate Selection..."
 msgstr "_Kopier utvalg..."
 
-#: app/actions/gradient-editor-actions.c:613
+#: app/actions/gradient-editor-actions.c:620
 msgid "Split Segments at _Midpoints"
 msgstr "Del segmentene ved _midtpunktet"
 
-#: app/actions/gradient-editor-actions.c:615
+#: app/actions/gradient-editor-actions.c:622
 msgid "Split Segments _Uniformly..."
 msgstr "Del segmenter _enhetlig..."
 
-#: app/actions/gradient-editor-actions.c:617
+#: app/actions/gradient-editor-actions.c:624
 msgid "_Delete Selection"
 msgstr "_Slett utvalg"
 
-#: app/actions/gradient-editor-actions.c:619
+#: app/actions/gradient-editor-actions.c:626
 msgid "Re-_center Midpoints in Selection"
 msgstr "S_entrer midtpunkter i utvalget igjen"
 
-#: app/actions/gradient-editor-actions.c:621
+#: app/actions/gradient-editor-actions.c:628
 msgid "Re-distribute _Handles in Selection"
 msgstr "Distribuer håndtak i utvalget igjen"
 
-#: app/actions/gradient-editor-commands.c:84
+#: app/actions/gradient-editor-commands.c:85
 msgid "Left Endpoint Color"
 msgstr "_Venstre endepunkts farge..."
 
-#: app/actions/gradient-editor-commands.c:86
+#: app/actions/gradient-editor-commands.c:87
 msgid "Gradient Segment's Left Endpoint Color"
 msgstr "Farge på venstre endepunkt av graderingsssegment"
 
-#: app/actions/gradient-editor-commands.c:186
+#: app/actions/gradient-editor-commands.c:189
 msgid "Right Endpoint Color"
 msgstr "_Høyre endepunkts farge"
 
-#: app/actions/gradient-editor-commands.c:188
+#: app/actions/gradient-editor-commands.c:191
 msgid "Gradient Segment's Right Endpoint Color"
 msgstr "Farge på høyre endepunkt av graderingssegment"
 
-#: app/actions/gradient-editor-commands.c:353
+#: app/actions/gradient-editor-commands.c:358
 msgid "Replicate Segment"
 msgstr "Kopier segment"
 
-#: app/actions/gradient-editor-commands.c:354
+#: app/actions/gradient-editor-commands.c:359
 msgid "Replicate Gradient Segment"
 msgstr "Kopier graderingssegment"
 
-#: app/actions/gradient-editor-commands.c:358
+#: app/actions/gradient-editor-commands.c:363
 msgid "Replicate Selection"
 msgstr "Kopier utvalg"
 
-#: app/actions/gradient-editor-commands.c:359
+#: app/actions/gradient-editor-commands.c:364
 msgid "Replicate Gradient Selection"
 msgstr "Kopier graderingsutvalg"
 
-#: app/actions/gradient-editor-commands.c:371
+#: app/actions/gradient-editor-commands.c:376
 msgid "Replicate"
 msgstr "Kopier"
 
-#: app/actions/gradient-editor-commands.c:386
+#: app/actions/gradient-editor-commands.c:391
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
@@ -1662,7 +1661,7 @@ msgstr ""
 "Velg antall ganger du ønsker \n"
 "å kopiere valgt segment."
 
-#: app/actions/gradient-editor-commands.c:389
+#: app/actions/gradient-editor-commands.c:394
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
@@ -1670,27 +1669,27 @@ msgstr ""
 "Velg antall ganger\n"
 "utvalget skal kopieres."
 
-#: app/actions/gradient-editor-commands.c:444
+#: app/actions/gradient-editor-commands.c:452
 msgid "Split Segment Uniformly"
 msgstr "Del segmentet enhetlig"
 
-#: app/actions/gradient-editor-commands.c:445
+#: app/actions/gradient-editor-commands.c:453
 msgid "Split Gradient Segment Uniformly"
 msgstr "Del graderingssegment enhetlig"
 
-#: app/actions/gradient-editor-commands.c:449
+#: app/actions/gradient-editor-commands.c:457
 msgid "Split Segments Uniformly"
 msgstr "Del segmenter enhetlig"
 
-#: app/actions/gradient-editor-commands.c:450
+#: app/actions/gradient-editor-commands.c:458
 msgid "Split Gradient Segments Uniformly"
 msgstr "Del graderingssegmenter enhetlig"
 
-#: app/actions/gradient-editor-commands.c:462
+#: app/actions/gradient-editor-commands.c:470
 msgid "Split"
 msgstr "Del"
 
-#: app/actions/gradient-editor-commands.c:478
+#: app/actions/gradient-editor-commands.c:486
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
@@ -1698,7 +1697,7 @@ msgstr ""
 "Velg antall enhetlige deler\n"
 "du vil dele valgt segment i."
 
-#: app/actions/gradient-editor-commands.c:481
+#: app/actions/gradient-editor-commands.c:489
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
@@ -1781,7 +1780,7 @@ msgstr "Bildemeny"
 
 #: app/actions/image-actions.c:58
 msgid "_Xtns"
-msgstr "/_Utvid"
+msgstr "_Utvid"
 
 #: app/actions/image-actions.c:59
 msgid "_Image"
@@ -1801,7 +1800,7 @@ msgstr "Innrettings_linjer"
 
 #: app/actions/image-actions.c:65 app/actions/image-actions.c:70
 msgid "_New..."
-msgstr "_Ny bane..."
+msgstr "_Ny..."
 
 #: app/actions/image-actions.c:75
 msgid "Can_vas Size..."
@@ -6802,7 +6801,6 @@ msgid "There are %d images with unsaved changes:"
 msgstr "Det er %d bilder med ulagrede endringer:"
 
 #: app/dialogs/quit-dialog.c:183
-#, fuzzy
 msgid "_Discard Changes"
 msgstr "_Forkast endringer"
 
@@ -9009,9 +9007,8 @@ msgid "Center X:"
 msgstr "Senter X:"
 
 #: app/tools/gimprotatetool.c:190
-#, fuzzy
 msgid "Center Y:"
-msgstr "Senter X:"
+msgstr "Senter Y:"
 
 #: app/tools/gimpscaletool.c:91
 msgid "Scale"
@@ -10020,14 +10017,12 @@ msgid "Background: %d, %d, %d"
 msgstr "Bakgrunn: %d, %d, %d"
 
 #: app/widgets/gimpdock.c:348 app/widgets/gimpdock.c:359
-#, fuzzy
 msgid "Close all tabs?"
-msgstr "_Lukk fane"
+msgstr "Lukk alle faner?"
 
 #: app/widgets/gimpdock.c:354
-#, fuzzy
 msgid "Close all Tabs"
-msgstr "_Lukk fane"
+msgstr "Lukk alle faner"
 
 #: app/widgets/gimpdock.c:361
 #, c-format
@@ -10789,18 +10784,6 @@ msgstr "Bildebehandler"
 #~ msgid "Indexed Palette Menu"
 #~ msgstr "Indekspalettmeny"
 
-#, fuzzy
-#~ msgid "Inde_xed Palette"
-#~ msgstr "Indeksert palett"
-
-#, fuzzy
-#~ msgid "_Undo History"
-#~ msgstr "Angre-historikk"
-
-#, fuzzy
-#~ msgid "Brus_hes"
-#~ msgstr "Pensler"
-
 #~ msgid "No preview available"
 #~ msgstr "Ingen forhåndsvisning tilgjengelig"
 
@@ -10809,14 +10792,6 @@ msgstr "Bildebehandler"
 
 #~ msgid "Pixel Dimensions"
 #~ msgstr "Pikseldimensjoner"
-
-#, fuzzy
-#~ msgid "New width:"
-#~ msgstr "Ny bredde:"
-
-#, fuzzy
-#~ msgid "New height:"
-#~ msgstr "Høyde:"
 
 #~ msgid "_Size:"
 #~ msgstr "_Størrelse:"
@@ -10833,10 +10808,6 @@ msgstr "Bildebehandler"
 
 #~ msgid "Edit Indexed Color"
 #~ msgstr "Rediger indeksert farge"
-
-#, fuzzy
-#~ msgid "Edit indexed image palette color"
-#~ msgstr "Rediger indeksert palettfarge for bilde"
 
 #~ msgid ""
 #~ "%s\n"
@@ -10910,18 +10881,6 @@ msgstr "Bildebehandler"
 
 #~ msgid "Dark Checks"
 #~ msgstr "Mørke ruter"
-
-#, fuzzy
-#~ msgid "RGB color"
-#~ msgstr "RGB-farge"
-
-#, fuzzy
-#~ msgid "Indexed color"
-#~ msgstr "Indeksert farge"
-
-#, fuzzy
-#~ msgid "Swap dir:"
-#~ msgstr "Mellomlagermappe:"
 
 #~ msgid "Select Swap Dir"
 #~ msgstr "Velg mellomlagermappe"
