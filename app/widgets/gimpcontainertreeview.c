@@ -820,7 +820,8 @@ gimp_container_tree_view_selection_changed (GtkTreeSelection      *selection,
 }
 
 static GtkCellRenderer *
-gimp_container_tree_view_find_click_cell (GList             *cells,
+gimp_container_tree_view_find_click_cell (GtkWidget         *view,
+                                          GList             *cells,
                                           GtkTreeViewColumn *column,
                                           GdkRectangle      *column_area,
                                           gint               tree_x,
@@ -831,22 +832,22 @@ gimp_container_tree_view_find_click_cell (GList             *cells,
   for (list = cells; list; list = g_list_next (list))
     {
       GtkCellRenderer *renderer = list->data;
-      gint             start_pos;
+      gint             start;
       gint             width;
 
       if (renderer->visible &&
           gtk_tree_view_column_cell_get_position (column, renderer,
-                                                  &start_pos, &width)       &&
-          width > 0                                                         &&
-          column_area->x + start_pos + renderer->xpad             <= tree_x &&
-          column_area->x + start_pos + renderer->xpad + width - 1 >= tree_x)
+                                                  &start, &width))
         {
+          gint x = start + column_area->x;
 #if 0
-          g_print ("click on cell at %d (%d width) (%d column->x) (%d tree_x)\n",
-                   start_pos, width, column_area->x, tree_x);
+          g_print ("cell at %d (%d width) (%d column->x) (%d tree_x)\n",
+                   start, width, column_area->x, tree_x);
 #endif
 
-          return renderer;
+          if (tree_x >= x + renderer->xpad &&
+              tree_x < x + width - renderer->xpad)
+            return renderer;
         }
     }
 
@@ -892,6 +893,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
       gtk_tree_view_widget_to_tree_coords (tree_view->view,
                                            bevent->x, bevent->y,
                                            &tree_x, &tree_y);
+
       gtk_tree_view_get_background_area (tree_view->view, path,
                                          column, &column_area);
 
@@ -901,19 +903,22 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                                                FALSE, FALSE);
 
       toggled_cell = (GimpCellRendererToggle *)
-        gimp_container_tree_view_find_click_cell (tree_view->toggle_cells,
+        gimp_container_tree_view_find_click_cell (widget,
+                                                  tree_view->toggle_cells,
                                                   column, &column_area,
                                                   tree_x, tree_y);
 
       if (! toggled_cell)
         clicked_cell = (GimpCellRendererViewable *)
-          gimp_container_tree_view_find_click_cell (tree_view->renderer_cells,
+          gimp_container_tree_view_find_click_cell (widget,
+                                                    tree_view->renderer_cells,
                                                     column, &column_area,
                                                     tree_x, tree_y);
 
       if (! toggled_cell && ! clicked_cell)
         edit_cell =
-          gimp_container_tree_view_find_click_cell (tree_view->editable_cells,
+          gimp_container_tree_view_find_click_cell (widget,
+                                                    tree_view->editable_cells,
                                                     column, &column_area,
                                                     tree_x, tree_y);
 
