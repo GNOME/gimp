@@ -22,12 +22,6 @@
 #ifndef __GIMP_BEZIER_STROKE_H__
 #define __GIMP_BEZIER_STROKE_H__
 
-#include "config.h"
-
-#include "glib-object.h"
-
-#include "vectors-types.h"
-
 #include "gimpstroke.h"
 
 
@@ -41,7 +35,7 @@
 
 struct _GimpBezierStroke
 {
-  GimpStroke        parent_instance;
+  GimpStroke  parent_instance;
 
   /* Stuff missing? */
 };
@@ -49,15 +43,13 @@ struct _GimpBezierStroke
 
 struct _GimpBezierStrokeClass
 {
-  GimpStrokeClass     parent_class;
+  GimpStrokeClass  parent_class;
 };
 
 
-GType        gimp_bezier_stroke_get_type    (void) G_GNUC_CONST;
-                
-                
-GimpStroke * gimp_bezier_stroke_new         (const GimpCoords   *start);
+GType        gimp_bezier_stroke_get_type        (void) G_GNUC_CONST;
 
+GimpStroke * gimp_bezier_stroke_new             (const GimpCoords   *start);
 GimpStroke * gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
                                                  const gint        ncoords);
 
@@ -66,8 +58,5 @@ GimpAnchor * gimp_bezier_stroke_extend     (GimpBezierStroke     *bezier_stroke,
                                             GimpAnchor           *neighbor,
                                             GimpVectorExtendMode  extend_mode);
 
-GArray *     gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
-                                             const gdouble      precision,
-                                             gboolean          *ret_closed);
 
 #endif /* __GIMP_BEZIER_STROKE_H__ */

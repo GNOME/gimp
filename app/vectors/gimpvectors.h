@@ -54,7 +54,7 @@ struct _GimpVectorsClass
 
   /*  virtual functions  */
   void          (* stroke_add)        (GimpVectors       *vectors,
-                                       const GimpStroke  *stroke);
+                                       GimpStroke        *stroke);
   GimpStroke  * (* stroke_get)        (const GimpVectors *vectors,
 		                       const GimpCoords  *coord);
   GimpStroke  * (* stroke_get_next)   (const GimpVectors *vectors,
@@ -72,8 +72,8 @@ struct _GimpVectorsClass
                                        const GimpCoords  *coord);
   gint          (* interpolate)       (const GimpVectors *vectors,
                                        const GimpStroke  *stroke,
-                                       const gdouble      precision,
-                                       const gint         max_points,
+                                       gdouble            precision,
+                                       gint               max_points,
                                        GimpCoords        *ret_coords);
   GimpVectors * (* make_bezier)       (const GimpVectors *vectors);
 };
@@ -107,31 +107,28 @@ GimpAnchor    * gimp_vectors_anchor_get_next    (const GimpVectors  *vectors,
  * VECTORS_NONE, VECTORS_FIX_ANGLE, VECTORS_FIX_RATIO, VECTORS_RESTRICT_ANGLE
  *  or so.
  */
-void            gimp_vectors_anchor_move_relative (GimpVectors      *vectors,
-                                                   GimpAnchor       *anchor,
-                                                   const GimpCoords *deltacoord,
-                                                   const gint        type);
-
-void            gimp_vectors_anchor_move_absolute (GimpVectors      *vectors,
-                                                   GimpAnchor       *anchor,
-                                                   const GimpCoords *coord,
-                                                   const gint        type);
+void          gimp_vectors_anchor_move_relative (GimpVectors        *vectors,
+                                                 GimpAnchor         *anchor,
+                                                 const GimpCoords   *deltacoord,
+                                                 gint                type);
+void          gimp_vectors_anchor_move_absolute (GimpVectors        *vectors,
+                                                 GimpAnchor         *anchor,
+                                                 const GimpCoords   *coord,
+                                                 gint                type);
 
 void            gimp_vectors_anchor_delete      (GimpVectors        *vectors,
                                                  GimpAnchor         *anchor);
 
 /* GimpStroke is a connected component of a GimpVectors object */
 
-void            gimp_vectors_stroke_add         (GimpVectors       *vectors,
-                                                 GimpStroke        *stroke);
-
+void            gimp_vectors_stroke_add         (GimpVectors        *vectors,
+                                                 GimpStroke         *stroke);
 GimpStroke    * gimp_vectors_stroke_get         (const GimpVectors  *vectors,
                                                  const GimpCoords   *coord);
                                                                     
 /* prev == NULL: "first" stroke */                                  
 GimpStroke    * gimp_vectors_stroke_get_next    (const GimpVectors  *vectors,
                                                  const GimpStroke   *prev);
-                                                                    
 gdouble         gimp_vectors_stroke_get_length  (const GimpVectors  *vectors,
                                                  const GimpStroke   *stroke);
 
@@ -139,15 +136,14 @@ gdouble         gimp_vectors_stroke_get_length  (const GimpVectors  *vectors,
 
 gdouble         gimp_vectors_get_length         (const GimpVectors  *vectors,
                                                  const GimpAnchor   *start);
-                                                                    
 gdouble         gimp_vectors_get_distance       (const GimpVectors  *vectors,
                                                  const GimpCoords   *coord);
                                                                     
 /* returns the number of valid coordinates */                       
 gint            gimp_vectors_interpolate        (const GimpVectors  *vectors,
                                                  const GimpStroke   *stroke,
-                                                 const gdouble       precision,
-                                                 const gint          max_points,
+                                                 gdouble             precision,
+                                                 gint                max_points,
                                                  GimpCoords         *ret_coords);
 
 

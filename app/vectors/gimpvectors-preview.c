@@ -27,6 +27,7 @@
 #include "base/temp-buf.h"
 
 #include "core/gimpimage.h"
+
 #include "gimpstroke.h"
 #include "gimpvectors.h"
 #include "gimpvectors-preview.h"
@@ -41,37 +42,40 @@ gimp_vectors_get_new_preview (GimpViewable *viewable,
 {
   GimpVectors *vectors;
   GimpItem    *item;
-  GArray      *coords;
-  GimpCoords   point;
-  GimpStroke  *cur_stroke = NULL;
+  GimpStroke  *cur_stroke;
   gdouble      xscale, yscale;
-  gint         x, y;
   guchar      *data;
-  gboolean     closed;
-
   TempBuf     *temp_buf;
   guchar       white[1] = { 255 };
-  gint         i;
 
   vectors = GIMP_VECTORS (viewable);
-  item = GIMP_ITEM (viewable);
+  item    = GIMP_ITEM (viewable);
 
-  xscale = ((gdouble) width) / gimp_image_get_width (item->gimage);
+  xscale = ((gdouble) width)  / gimp_image_get_width  (item->gimage);
   yscale = ((gdouble) height) / gimp_image_get_height (item->gimage);
   
   temp_buf = temp_buf_new (width, height, 1, 0, 0, white);
   data = temp_buf_data (temp_buf);
 
-  while ((cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke)))
+  for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+       cur_stroke;
+       cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
     {
-      coords = gimp_stroke_interpolate (cur_stroke, 1.0, &closed);
+      GArray   *coords;
+      gboolean  closed;
+      gint      i;
 
-      for (i=0; i < coords->len; i++)
+      coords = gimp_stroke_interpolate (cur_stroke, 0.5, &closed);
+
+      for (i = 0; i < coords->len; i++)
         {
+          GimpCoords point;
+          gint       x, y;
+
           point = g_array_index (coords, GimpCoords, i);
 
-          x = (gint) (point.x * xscale + 0.5);
-          y = (gint) (point.y * yscale + 0.5);
+          x = ROUND (point.x * xscale);
+          y = ROUND (point.y * yscale);
 
           if (x >= 0 && y >= 0 && x < width && y < height)
             data[y * width + x] = 0;

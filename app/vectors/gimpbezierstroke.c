@@ -19,22 +19,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 #include "config.h"
 
-#include "glib-object.h"
+#include <glib-object.h>
 
 #include "vectors-types.h"
 
 #include "gimpanchor.h"
 #include "gimpbezierstroke.h"
 
+
 #define INPUT_RESOLUTION 256
-
-
-/*  private variables  */
-
-static GimpStrokeClass *parent_class = NULL;
 
 
 /* local prototypes */
@@ -44,15 +39,18 @@ static void gimp_bezier_stroke_init       (GimpBezierStroke      *bezier_stroke)
 static void gimp_bezier_stroke_anchor_move_relative (GimpStroke        *stroke,
                                                      GimpAnchor        *anchor,
                                                      const GimpCoords  *deltacoord,
-                                                     const GimpAnchorFeatureType feature);
+                                                     GimpAnchorFeatureType feature);
 static void gimp_bezier_stroke_anchor_move_absolute (GimpStroke        *stroke,
                                                      GimpAnchor        *anchor,
                                                      const GimpCoords  *coord,
-                                                     const GimpAnchorFeatureType feature);
+                                                     GimpAnchorFeatureType feature);
 
 static void gimp_bezier_stroke_anchor_convert (GimpStroke            *stroke,
                                                GimpAnchor            *anchor,
                                                GimpAnchorFeatureType  feature);
+static GArray *   gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
+                                                  const gdouble      precision,
+                                                  gboolean          *closed);
 
 static void gimp_bezier_stroke_finalize   (GObject               *object);
 
@@ -61,27 +59,21 @@ static void gimp_bezier_coords_mix        (const gdouble          amul,
                                            const gdouble          bmul,
                                            const GimpCoords      *b,
                                            GimpCoords            *ret_val);
-
 static void gimp_bezier_coords_average    (const GimpCoords      *a,
                                            const GimpCoords      *b,
                                            GimpCoords            *ret_average);
-
 static void gimp_bezier_coords_add        (const GimpCoords      *a,
                                            const GimpCoords      *b,
                                            GimpCoords            *ret_add);
-
 static void gimp_bezier_coords_difference (const GimpCoords      *a,
                                            const GimpCoords      *b,
-                                           GimpCoords          *ret_difference);
-
+                                           GimpCoords            *difference);
 static void gimp_bezier_coords_scale      (const gdouble          f,
                                            const GimpCoords      *a,
                                            GimpCoords            *ret_multiply);
-
 static void gimp_bezier_coords_subdivide  (const GimpCoords      *beziercoords,
                                            const gdouble          precision,
                                            GArray               **ret_coords);
-
 static void gimp_bezier_coords_subdivide2 (const GimpCoords      *beziercoords,
                                            const gdouble          precision,
                                            GArray               **ret_coords,
@@ -89,13 +81,15 @@ static void gimp_bezier_coords_subdivide2 (const GimpCoords      *beziercoords,
 
 static gdouble  gimp_bezier_coords_scalarprod  (const GimpCoords *a,
                                                 const GimpCoords *b);
-                                              
 static gdouble  gimp_bezier_coords_length      (const GimpCoords *a);
-                                                                
 static gdouble  gimp_bezier_coords_length2     (const GimpCoords *a);
-
 static gboolean gimp_bezier_coords_is_straight (const GimpCoords *beziercoords,
                                                 const gdouble     precision);
+
+
+/*  private variables  */
+
+static GimpStrokeClass *parent_class = NULL;
 
 
 GType
@@ -129,8 +123,8 @@ gimp_bezier_stroke_get_type (void)
 static void
 gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpStrokeClass   *stroke_class;
+  GObjectClass    *object_class;
+  GimpStrokeClass *stroke_class;
 
   object_class = G_OBJECT_CLASS (klass);
   stroke_class = GIMP_STROKE_CLASS (klass);
@@ -143,7 +137,6 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
   stroke_class->anchor_move_absolute = gimp_bezier_stroke_anchor_move_absolute;
   stroke_class->anchor_convert       = gimp_bezier_stroke_anchor_convert;
   stroke_class->interpolate          = gimp_bezier_stroke_interpolate;
-
 }
 
 static void
@@ -192,22 +185,21 @@ gimp_bezier_stroke_new (const GimpCoords *start)
 
 GimpStroke *
 gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
-                                    const gint        ncoords)
+                                    gint              n_coords)
 {
   GimpBezierStroke *bezier_stroke;
   GimpStroke       *stroke = NULL;
   GimpAnchor       *last_anchor;
-
   gint              count;
 
-  if (ncoords >= 1)
+  if (n_coords >= 1)
     {
       stroke = gimp_bezier_stroke_new (coords);
       bezier_stroke = GIMP_BEZIER_STROKE (stroke);
       last_anchor = (GimpAnchor *) (stroke->anchors->data);
 
       count = 1;
-      while (count < ncoords)
+      while (count < n_coords)
         {
           last_anchor = gimp_bezier_stroke_extend (bezier_stroke,
                                                    &coords[count++],
@@ -225,10 +217,10 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
                            GimpAnchor           *neighbor,
                            GimpVectorExtendMode  extend_mode)
 {
-  GimpAnchor       *anchor=NULL;
-  GimpStroke       *stroke;
-  GList            *listneighbor;
-  gint              loose_end, control_count;
+  GimpAnchor *anchor = NULL;
+  GimpStroke *stroke;
+  GList      *listneighbor;
+  gint        loose_end, control_count;
 
   g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (bezier_stroke), NULL);
   g_return_val_if_fail ((neighbor != NULL), NULL);
@@ -237,6 +229,7 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
 
   loose_end = 0;
   listneighbor = g_list_last (stroke->anchors);
+
   if (listneighbor->data == neighbor)
     {
       loose_end = 1;
@@ -284,14 +277,7 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
         {
         case EXTEND_SIMPLE:
           anchor = g_new0 (GimpAnchor, 1);
-          anchor->position.x = coords->x;
-          anchor->position.y = coords->y;
-          anchor->position.pressure = 1.0;
-          anchor->position.xtilt = 0.5;
-          anchor->position.ytilt = 0.5;
-          anchor->position.wheel = 0.5;
-
-          anchor->selected = FALSE;
+          anchor->position = *coords;
 
           switch (control_count)
             {
@@ -348,28 +334,28 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
                           "%d successive control handles", control_count);
             }
         }
+
       return anchor;
     }
-  else
-    return NULL;   /* No loose end to add an anchor to... */
 
+  return NULL;   /* No loose end to add an anchor to... */
 }
 
 
 static void
-gimp_bezier_stroke_anchor_move_relative (GimpStroke                 *stroke,
-                                         GimpAnchor                 *anchor,
-                                         const GimpCoords           *deltacoord,
-                                         const GimpAnchorFeatureType feature)
+gimp_bezier_stroke_anchor_move_relative (GimpStroke            *stroke,
+                                         GimpAnchor            *anchor,
+                                         const GimpCoords      *deltacoord,
+                                         GimpAnchorFeatureType  feature)
 {
-  GimpCoords delta, coord1, coord2;
-  GList *anchor_list;
+  GimpCoords  delta, coord1, coord2;
+  GList      *anchor_list;
 
   delta = *deltacoord;
   delta.pressure = 0;
-  delta.xtilt = 0;
-  delta.ytilt = 0;
-  delta.wheel = 0;
+  delta.xtilt    = 0;
+  delta.ytilt    = 0;
+  delta.wheel    = 0;
 
   gimp_bezier_coords_add (&(anchor->position), &delta, &coord1);
   anchor->position = coord1;
@@ -431,22 +417,22 @@ gimp_bezier_stroke_anchor_move_relative (GimpStroke                 *stroke,
 
 
 static void
-gimp_bezier_stroke_anchor_move_absolute (GimpStroke                 *stroke,
-                                         GimpAnchor                 *anchor,
-                                         const GimpCoords           *coord,
-                                         const GimpAnchorFeatureType feature)
+gimp_bezier_stroke_anchor_move_absolute (GimpStroke            *stroke,
+                                         GimpAnchor            *anchor,
+                                         const GimpCoords      *coord,
+                                         GimpAnchorFeatureType  feature)
 {
   GimpCoords deltacoord;
-  
-  gimp_bezier_coords_difference (coord, &(anchor->position), &deltacoord);
+
+  gimp_bezier_coords_difference (coord, &anchor->position, &deltacoord);
   gimp_bezier_stroke_anchor_move_relative (stroke, anchor,
                                            &deltacoord, feature);
 }
 
-void
-gimp_bezier_stroke_anchor_convert (GimpStroke *stroke,
-                                   GimpAnchor *anchor,
-                                   GimpAnchorFeatureType feature)
+static void
+gimp_bezier_stroke_anchor_convert (GimpStroke            *stroke,
+                                   GimpAnchor            *anchor,
+                                   GimpAnchorFeatureType  feature)
 {
   GList *anchor_list;
 
@@ -455,36 +441,33 @@ gimp_bezier_stroke_anchor_convert (GimpStroke *stroke,
   g_return_if_fail (anchor_list != NULL);
 
   switch (feature)
-  {
+    {
     case GIMP_ANCHOR_FEATURE_EDGE:
       if (g_list_previous (anchor_list))
         ((GimpAnchor *) g_list_previous (anchor_list)->data)->position =
-            anchor->position;
+          anchor->position;
 
       if (g_list_next (anchor_list))
         ((GimpAnchor *) g_list_next (anchor_list)->data)->position =
-            anchor->position;
-
+          anchor->position;
       break;
 
     default:
       g_printerr ("gimp_bezier_stroke_anchor_convert: "
                   "unimplemented anchor conversion %d\n", feature);
-
-  }
+    }
 }
 
-
-GArray *
+static GArray *
 gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
                                 gdouble            precision,
                                 gboolean          *ret_closed)
 {
-  GArray           *ret_coords;
-  GimpAnchor       *anchor;
-  GList            *anchorlist;
-  GimpCoords        segmentcoords[4];
-  gint              count;
+  GArray     *ret_coords;
+  GimpAnchor *anchor;
+  GList      *anchorlist;
+  GimpCoords  segmentcoords[4];
+  gint        count;
 
   g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), NULL);
   g_return_val_if_fail (ret_closed != NULL, NULL);
@@ -514,7 +497,7 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
 
   /* ret_coords = g_array_append_val (ret_coords, anchor->position); */
 
-  *ret_closed    = FALSE;
+  *ret_closed = FALSE;
 
   return ret_coords;
 }
@@ -525,11 +508,11 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
 /*   amul * a + bmul * b   */
 
 static void
-gimp_bezier_coords_mix (const gdouble amul,
+gimp_bezier_coords_mix (const gdouble     amul,
                         const GimpCoords *a,
-                        const gdouble bmul,
+                        const gdouble     bmul,
                         const GimpCoords *b,
-                        GimpCoords *ret_val)
+                        GimpCoords       *ret_val)
 {
   if (b)
     {
@@ -557,7 +540,7 @@ gimp_bezier_coords_mix (const gdouble amul,
 static void
 gimp_bezier_coords_average (const GimpCoords *a,
                             const GimpCoords *b,
-                            GimpCoords *ret_average)
+                            GimpCoords       *ret_average)
 {
   gimp_bezier_coords_mix (0.5, a, 0.5, b, ret_average);
 }
@@ -568,7 +551,7 @@ gimp_bezier_coords_average (const GimpCoords *a,
 static void
 gimp_bezier_coords_add (const GimpCoords *a,
                         const GimpCoords *b,
-                        GimpCoords *ret_add)
+                        GimpCoords       *ret_add)
 {
   gimp_bezier_coords_mix (1.0, a, 1.0, b, ret_add);
 }
@@ -579,7 +562,7 @@ gimp_bezier_coords_add (const GimpCoords *a,
 static void
 gimp_bezier_coords_difference (const GimpCoords *a,
                                const GimpCoords *b,
-                               GimpCoords *ret_difference)
+                               GimpCoords       *ret_difference)
 {
   gimp_bezier_coords_mix (1.0, a, -1.0, b, ret_difference);
 }
@@ -590,7 +573,7 @@ gimp_bezier_coords_difference (const GimpCoords *a,
 static void
 gimp_bezier_coords_scale (const gdouble     f,
                           const GimpCoords *a,
-                          GimpCoords *ret_multiply)
+                          GimpCoords       *ret_multiply)
 {
   gimp_bezier_coords_mix (f, a, 0.0, NULL, ret_multiply);
 }
@@ -628,14 +611,15 @@ gimp_bezier_coords_length2 (const GimpCoords *a)
   upscaled_a.xtilt    = a->xtilt    * INPUT_RESOLUTION;
   upscaled_a.ytilt    = a->ytilt    * INPUT_RESOLUTION;
   upscaled_a.wheel    = a->wheel    * INPUT_RESOLUTION;
-  return (gimp_bezier_coords_scalarprod (&upscaled_a, &upscaled_a));
+
+  return gimp_bezier_coords_scalarprod (&upscaled_a, &upscaled_a);
 }
 
 
 static gdouble
 gimp_bezier_coords_length (const GimpCoords *a)
 {
-  return (sqrt (gimp_bezier_coords_length2 (a)));
+  return sqrt (gimp_bezier_coords_length2 (a));
 }
 
 
@@ -648,10 +632,10 @@ gimp_bezier_coords_length (const GimpCoords *a)
 
 static gboolean
 gimp_bezier_coords_is_straight (const GimpCoords *beziercoords,
-                                gdouble precision)
+                                gdouble           precision)
 {
   GimpCoords line, tan1, tan2, d1, d2;
-  gdouble l2, s1, s2;
+  gdouble    l2, s1, s2;
 
   gimp_bezier_coords_difference (&(beziercoords[3]),
                                  &(beziercoords[0]),
@@ -792,4 +776,3 @@ gimp_bezier_coords_subdivide (const GimpCoords  *beziercoords,
 {
   gimp_bezier_coords_subdivide2 (beziercoords, precision, ret_coords, 10);
 }
-

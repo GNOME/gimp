@@ -1,5 +1,18 @@
 2003-05-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/vectors/gimpbezierstroke.[ch]
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpvectors-preview.c
+	* app/vectors/gimpvectors.[ch]: massive cleanup / code review:
+	Made default implementations real ones. Don't add "const" to
+	call-by-value parameters. Iterate lists using for() loops. Moved
+	variables to local scopes. Removed tabs. Indentation. Stuff...
+
+	* app/vectors/gimpstroke.[ch]: added unused "gboolean closed"
+	member.
+
+2003-05-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-mask.[ch] (gimp_image_mask_extract): added
 	"gboolean cut_image" parameter so we can float selections
 	without cutting them from the original drawable.
