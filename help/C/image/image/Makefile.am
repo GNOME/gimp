@@ -25,4 +25,4 @@ files:
 
 install-data-local:
 	rm -f $(helpdatadir)/dialogs
-	ln -sf ../../dialogs $(helpdatadir)/dialogs
+	$(LN_S) ../../dialogs $(helpdatadir)/dialogs

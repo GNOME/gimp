@@ -165,18 +165,18 @@ sub parasite_list {
 	      "gimpimage.h");
 
 $extra{lib}->{protos} = <<'CODE';
-void gimp_parasite_attach_new (const gchar  *name,
-			       guint32       flags,
-			       guint32       size,
-			       gconstpoiner  data);
+void gimp_parasite_attach_new (gchar    *name,
+			       gint      flags,
+			       gint      size,
+			       gpointer  data);
 CODE
 
 $extra{lib}->{code} = <<'CODE';
 void
-gimp_parasite_attach_new (const gchar   *name,
-			  guint32        flags,
-			  guint32        size,
-			  gconstpointer  data)
+gimp_parasite_attach_new (gchar    *name,
+			  gint      flags,
+			  gint      size,
+			  gpointer  data)
 {
   Parasite *p = parasite_new (name, flags, size, data);
   gimp_parasite_attach (p);

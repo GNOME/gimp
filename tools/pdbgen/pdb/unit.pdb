@@ -59,7 +59,7 @@ sub unit_get_number_of_units {
     &pdb_misc;
 
     @outargs = (
-	{ name => 'num_units', type => 'int32',
+	{ name => 'num_units', type => 'int32', libdef => 'UNIT_END',
 	  desc => 'The number of units',
 	  alias => 'gimp_unit_get_number_of_units ()', no_declare => 1 }
     );
@@ -96,6 +96,7 @@ HELP
     @outargs = ( &unit_arg );
     $outargs[0]->{desc} = "The new unit's ID";
     $outargs[0]->{init} = 1;
+    $outargs[0]->{libdef} = 'UNIT_INCH';
 
     %invoke = (
 	code => <<'CODE'
@@ -196,6 +197,51 @@ HELP
 }
 
 @headers = qw("libgimp/gimpunit.h");
+
+$extra{lib}->{protos} = <<'CODE';
+GUnit gimp_unit_get_number_of_built_in_units (void);
+CODE
+
+$extra{lib}->{code} = <<'CODE';
+/* internal structures */
+
+typedef struct {
+  guint    delete_on_exit;
+  gdouble  factor;
+  gint     digits;
+  gchar   *identifier;
+  gchar   *symbol;
+  gchar   *abbreviation;
+  gchar   *singular;
+  gchar   *plural;
+} GimpUnitDef;
+
+static GimpUnitDef gimp_unit_defs[UNIT_END] =
+{
+  /* pseudo unit */
+  { FALSE,  0.0, 0, "pixels",      "px", "px", N_("pixel"),      N_("pixels") },
+
+  /* standard units */
+  { FALSE,  1.0, 2, "inches",      "''", "in", N_("inch"),       N_("inches") },
+  { FALSE, 25.4, 1, "millimeters", "mm", "mm", N_("millimeter"), N_("millimeters") },
+
+  /* professional units */
+  { FALSE, 72.0, 0, "points",      "pt", "pt", N_("point"),      N_("points") },
+  { FALSE,  6.0, 1, "picas",       "pc", "pc", N_("pica"),       N_("picas") },
+};
+
+/* Not a unit at all but kept here to have the strings in one place */
+static GimpUnitDef gimp_unit_percent =
+{
+  FALSE,    0.0, 0, "percent",     "%",  "%",  N_("percent"),    N_("percent")
+};
+
+GUnit
+gimp_unit_get_number_of_built_in_units (void)
+{
+  return UNIT_END;
+}
+CODE
 
 @procs = qw(unit_get_number_of_units unit_new unit_get_deletion_flag
 	    unit_set_deletion_flag unit_get_identifier unit_get_factor

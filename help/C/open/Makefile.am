@@ -17,6 +17,6 @@ files:
 
 install-data-local:
 	rm -f $(helpdatadir)/dialogs
-	ln -sf ../dialogs $(helpdatadir)/dialogs
+	$(LN_S) ../dialogs $(helpdatadir)/dialogs
 	rm -f $(helpdatadir)/filters
-	ln -sf ../filters $(helpdatadir)/filters
+	$(LN_S) ../filters $(helpdatadir)/filters

@@ -1,3 +1,15 @@
+Mon Jan 17 12:05:35 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* help/C/*/Makefile.am: use $(LN_S) instead of ln -sf, should fix
+	bug #5289.
+
+	* tools/pdbgen/lib.pl
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/gimage_mask.pdb
+	* tools/pdbgen/pdb/guides.pdb
+	* tools/pdbgen/pdb/parasite.pdb
+	* tools/pdbgen/pdb/unit.pdb: more lib work, slight guide tweak
+
 2000-01-17  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpcolorbutton.c: emit the "color_changed" signal

@@ -37,7 +37,9 @@ sub generate {
 	my ($type, $name) = &arg_parse($arg->{type});
 	my $argtype = $arg_types{$type};
 	
-	return 'gint32 ' if exists $argtype->{id_func};
+	if (exists $argtype->{id_func} || $arg->{type} =~ /guide/) {
+	    return 'gint32 ';
+	}
 
 	if ($type eq 'enum') {
 	    $name = "Gimp$name" if $name !~ /^Gimp/;
@@ -101,7 +103,7 @@ sub generate {
 	foreach (@inargs) {
 	    my ($type) = &arg_parse($_->{type});
 	    my $arg = $arg_types{$type};
-	    my $id = exists $arg->{id_func};
+	    my $id = exists $arg->{id_func} || $_->{type} =~ /guide/;
 
 	    if (exists $_->{implicit_fill}) {
 		$privatevars++;
@@ -154,7 +156,7 @@ CODE
 	    foreach (@outargs) {
 		my ($type) = &arg_parse($_->{type});
 		my $arg = $arg_types{$type};
-		my $id = $arg->{id_ret_func};
+		my $id = $arg->{id_ret_func} || $_->{type} =~ /guide/;
 		my $var;
 
 		$return_marshal = "" unless $once++;
@@ -177,11 +179,24 @@ CODE
 		    # Save the first var to "return" it
 		    $firstvar = $var unless defined $firstvar;
 
-		    # Initialize all IDs to -1
-		    $return_args .= " = -1" if $id;
-
-		    # Initialize pointers to NULL
-		    $return_args .= " = NULL" if !$id && ($arg->{type} =~ /\*/);
+		    if (exists $_->{libdef}) {
+			$return_args .= " = $_->{libdef}";
+		    }
+		    elsif ($id) {
+			# Initialize all IDs to -1
+			$return_args .= " = -1";
+		    }
+		    elsif ($arg->{type} =~ /\*/) {
+			# Initialize pointers to NULL
+			$return_args .= " = NULL";
+		    }
+		    elsif ($arg->{type} =~ /boolean/) {
+			$return_args .= " = TRUE";
+		    }
+		    else {
+			# Default to 0
+			$return_args .= " = 0";
+		    }
 
 		    $return_args .= ";";
 
@@ -204,19 +219,19 @@ CODE
 	    foreach (@outargs) {
 		my ($type) = &arg_parse($_->{type});
 		my $arg = $arg_types{$type};
-		my $id = $arg->{id_ret_func};
+		my $id = $arg->{id_ret_func} || $_->{type} =~ /guide/;
 		my $var;
 
-		my $head = ""; my $foot = "";
+		my $ch = ""; my $cf = "";
 		if ($type =~ /^string(array)?/) {
-		    $head = 'g_strdup (';
-		    $foot = ')';
+		    $ch = 'g_strdup (';
+		    $cf = ')';
 		}
 		elsif ($type =~ /parasite/) {
-		    $head = 'parasite_copy (&';
-		    $foot = ')';
+		    $ch = 'parasite_copy (&';
+		    $cf = ')';
 		}
-		elsif ($type =~ /boolean|enum/) {
+		elsif ($type =~ /boolean|enum|guide/) {
 		    $type = 'int32';
 		}
 
@@ -229,17 +244,27 @@ CODE
 		    chop $datatype;
 		    $datatype =~ s/ *$//;
 
+		    my $var = $_->{name}; my $dh = ""; my $df = "";
+		    unless (exists $_->{retval}) {
+			$var = "*$var"; $dh = "(*"; $df = ")";
+			$arglist .= "$datatype **$_->{name}";
+		    }
+
 		    $return_args .= "\n" . ' ' x 2 . "gint i;";
 
 		    my $numvar = '*' . $_->{array}->{name};
 		    $numvar = "num_$_->{name}" if exists $_->{array}->{no_lib};
 
-		    $return_marshal .= <<CODE;
+		    $return_marshal .= <<NEW . ($ch || $ch) ? <<CP1 : <<CP2;
       $numvar = return_vals[$numpos].data.d_$numtype;
-      $_->{name} = g_new ($datatype, $numvar);
+      $var = g_new ($datatype, $numvar);
+NEW
+      memcpy ($var, return_vals[$argc].data.d_$type\[i],
+	      $numvar * sizeof ($datatype));
+CP1
       for (i = 0; i < $numvar; i++)
-	$_->{name}\[i] = ${head}return_vals[$argc].data.d_$type\[i]${foot};
-CODE
+	$dh$_->{name}$df\[i] = ${ch}return_vals[$argc].data.d_$type\[i]${cf};
+CP2
 		}
 		elsif ($type ne 'color') {
 		    # The return value variable
@@ -259,7 +284,7 @@ CODE
 
 		    $return_marshal .= ' ' x 2 if $#outargs;
 		    $return_marshal .= <<CODE
-    $var = ${head}return_vals[$argc].data.d_$type${foot};
+    $var = ${ch}return_vals[$argc].data.d_$type${cf};
 CODE
 		}
 		else {
@@ -293,29 +318,29 @@ CODE
 	}
 
 	if ($arglist) {
-	    my @arglist = ();
-	    my $longest = 0; my $indirect = 0;
-	    foreach (split(/, /, $arglist)) {
-		my ($type, $var) = /(\w+) ((?:\w|\*)+)/;
-		my $num = scalar @{[ $var =~ /\*/g ]};
-
-		push @arglist, [ $type, $var, $num ];
-
-		$longest = length $type if $longest < length $type;
-		$indirect = $num if $indirect < $num;
+	    my @arglist = split(/, /, $arglist);
+	    my $longest = 0; my $seen = 0;
+	    foreach (@arglist) {
+		/(\w+) \S+/;
+		my $len = length($1);
+		my $num = scalar @{[ /\*/g ]};
+		$seen = $num if $seen < $num;
+		$longest = $len if $longest < $len;
 	    }
 
-	    $longest += $indirect + 1;
+	    $longest += $seen;
 
 	    my $once = 0; $arglist = "";
 	    foreach (@arglist) {
-		my ($type, $var, $num) = @$_;
-		my $space = $longest - length($type) - $num;
-		$arglist .= ",\n\t" if $once++;
-		$arglist .= $type . ' ' x $space . $var;
+		my $len = $longest - index($_, ' ') + 1;
+		$len -= scalar @{[ /\*/g ]};
+		s/ /' ' x $len/e if $len > 1;
+		$arglist .= "\t" if $once;
+                $arglist .= $_;
+                $arglist .= ",\n";
+		$once++;
 	    }
-
-	    $arglist =~ s/ +/ / if !$#arglist;
+	    $arglist =~ s/,\n$//;
 	}
 	else {
 	    $arglist = "void";
@@ -326,23 +351,25 @@ CODE
 	# Our function prototype for the headers
 	(my $hrettype = $rettype) =~ s/ //g;
 
-	my $proto = "$hrettype gimp_$name ($arglist);\n";
+	my $proto = "$hrettype $funcname ($arglist);\n";
 	$proto =~ s/ +/ /g;
-        push @{$out->{proto}}, $proto;
+        push @{$out->{protos}}, $proto;
 
 	my $clist = $arglist;
-	$clist =~ s/\t/' ' x (length("gimp_$name") + 2)/eg;
-	$clist =~ s/ {8}/\t/g;
+	my $padlen = length($funcname) + 2;
+	my $padtab = $padlen / 8; my $padspace = $padlen % 8;
+	my $padding = "\t" x $padtab . ' ' x $padspace;
+	$clist =~ s/\t/$padding/eg;
 
 	$out->{code} .= <<CODE;
 
 $rettype
-gimp_$name ($clist)
+$funcname ($clist)
 {
   GParam *return_vals;
   gint nreturn_vals;$return_args$color
 
-  return_vals = gimp_run_procedure ("gimp_$name",
+  return_vals = gimp_run_procedure ("$funcname",
 				    \&nreturn_vals,$argpass
 				    PARAM_END);
 
@@ -389,10 +416,26 @@ LGPL
 	    $extra = $main::grp{$group}->{extra}->{lib}
 	}
 
-	push @{$out->{proto}}, $extra->{protos} if exists $extra->{protos};
+	if (exists $extra->{protos}) {
+	    my $proto = "";
+	    foreach (split(/\n/, $extra->{protos})) {
+		next if /^\s*$/;
+
+		if (/^\t/ && length($proto)) {
+		    s/\s+/ /g; s/ $//; s/^ /\t/;
+		    $proto .= $_ . "\n";
+		}
+		else {
+		    push @{$out->{protos}}, $proto if length($proto);
+
+		    s/\s+/ /g; s/^ //; s/ $//;
+		    $proto = $_ . "\n";
+		}
+	    }
+	}
 
 	my @longest = (0, 0, 0); my @arglist = (); my $seen = 0;
-	foreach (@{$out->{proto}}) {
+	foreach (@{$out->{protos}}) {
 	    my $len; my $arglist = [ split(' ', $_, 3) ];
 
 	    for (0..1) {
@@ -400,27 +443,28 @@ LGPL
 		$longest[$_] = $len if $longest[$_] < $len;
 	    }
 
-	    my @arg = split(/,/, $arglist->[2]);
-	    foreach (@arg) {
+	    foreach (split(/,/, $arglist->[2])) {
 		/(\w+) \S+/;
 		$len = length($1) + 1;
-		$seen++ if /\*/;
+		my $num = scalar @{[ /\*/g ]};
+		$seen = $num if $seen < $num;
 		$longest[2] = $len if $longest[2] < $len;
 	    }
 
 	    push @arglist, $arglist;
 	}
 
-	$longest[2]++ if $seen;
+	$longest[2] += $seen;
 
-	@{$out->{proto}} = ();
+	@{$out->{protos}} = ();
 	foreach (@arglist) {
 	    my ($type, $func, $arglist) = @$_;
 
 	    my @args = split(/,/, $arglist); $arglist = "";
 	    foreach (@args) {
 		my $len = $longest[2] - index($_, ' ') + 1;
-		$len-- if /\*/;
+		$len -= scalar @{[ /\*/g ]};
+		$len++ if /\t/;
 		s/ /' ' x $len/e if $len > 1;
 		$arglist .= $_;
 		$arglist .= "," if !/;\n$/;
@@ -430,12 +474,12 @@ LGPL
 	    $arg .= ' ' x ($longest[1] - length($func) + 1) . $arglist;
 	    $arg =~ s/\t/' ' x ($longest[0] + $longest[1] + 3)/eg;
 	    while ($arg =~ /^\t* {8}/m) { $arg =~ s/^(\t*) {8}/$1\t/mg }
-	    push @{$out->{proto}}, $arg;
+	    push @{$out->{protos}}, $arg;
 	}
 
 	my $body;
 	$body = $extra->{decls} if exists $extra->{decls};
-	foreach (@{$out->{proto}}) { $body .= $_ }
+	foreach (@{$out->{protos}}) { $body .= $_ }
 	chomp $body;
 
 	open HFILE, "> $hfile" or die "Can't open $hfile: $!\n";

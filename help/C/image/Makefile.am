@@ -25,14 +25,14 @@ files:
 
 install-data-local:
 	rm -f $(helpdatadir)/dialogs
-	ln -sf ../dialogs $(helpdatadir)/dialogs
+	$(LN_S) ../dialogs $(helpdatadir)/dialogs
 	rm -f $(helpdatadir)/file
-	ln -sf ../file $(helpdatadir)/file
+	$(LN_S) ../file $(helpdatadir)/file
 	rm -f $(helpdatadir)/filters
-	ln -sf ../filters $(helpdatadir)/filters
+	$(LN_S) ../filters $(helpdatadir)/filters
 	rm -f $(helpdatadir)/layers
-	ln -sf ../layers $(helpdatadir)/layers
+	$(LN_S) ../layers $(helpdatadir)/layers
 	rm -f $(helpdatadir)/toolbox
-	ln -sf ../toolbox $(helpdatadir)/toolbox
+	$(LN_S) ../toolbox $(helpdatadir)/toolbox
 	rm -f $(helpdatadir)/tools
-	ln -sf ../tools $(helpdatadir)/tools
+	$(LN_S) ../tools $(helpdatadir)/tools

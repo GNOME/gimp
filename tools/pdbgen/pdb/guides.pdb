@@ -43,7 +43,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'guide_id', type => 'guide', init => 1,
+	{ name => 'guide', type => 'guide', init => 1, alias => 'guide_ID',
 	  desc => 'The new guide' }
     );
 
@@ -57,7 +57,7 @@ HELP
       guide = gimp_image_add_${func}guide (gimage);
       undo_push_guide (gimage, guide);
       guide->position = offset;
-      guide_id = guide->guide_ID;
+      guide_ID = guide->guide_ID;
     }
   else
     success = FALSE;
@@ -216,9 +216,9 @@ HELP
     );
 
     @outargs = (
-	{ name => 'orientation',
-	  type => &std_orientation_enum,
-	  desc => "The guide's orientation: { %%desc%% }", init => 1 }
+	{ name => 'orientation', type => &std_orientation_enum, init => 1,
+	  desc => "The guide's orientation: { %%desc%% }",
+	  libdef => 'GIMP_UNKNOWN' }
     );
 
     %invoke = (
@@ -263,7 +263,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'position', type => 'int32', init => 1,
+	{ name => 'position', type => 'int32', init => 1, libdef => '-1',
 	  desc => "The guide's position relative to top or left of image" }
     );
 

@@ -33,4 +33,4 @@ files:
 
 install-data-local:
 	rm -f $(helpdatadir)/dialogs
-	ln -sf ../dialogs/layers $(helpdatadir)/dialogs
+	$(LN_S) ../dialogs/layers $(helpdatadir)/dialogs

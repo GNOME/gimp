@@ -49,7 +49,7 @@ image_add_hguide_invoker (Argument *args)
   Argument *return_args;
   GimpImage *gimage;
   gint32 offset;
-  gint32 guide_id = 0;
+  gint32 guide_ID = 0;
   Guide *guide;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
@@ -67,7 +67,7 @@ image_add_hguide_invoker (Argument *args)
 	  guide = gimp_image_add_hguide (gimage);
 	  undo_push_guide (gimage, guide);
 	  guide->position = offset;
-	  guide_id = guide->guide_ID;
+	  guide_ID = guide->guide_ID;
 	}
       else
 	success = FALSE;
@@ -76,7 +76,7 @@ image_add_hguide_invoker (Argument *args)
   return_args = procedural_db_return_args (&image_add_hguide_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = guide_id;
+    return_args[1].value.pdb_int = guide_ID;
 
   return return_args;
 }
@@ -99,7 +99,7 @@ static ProcArg image_add_hguide_outargs[] =
 {
   {
     PDB_INT32,
-    "guide_id",
+    "guide",
     "The new guide"
   }
 };
@@ -127,7 +127,7 @@ image_add_vguide_invoker (Argument *args)
   Argument *return_args;
   GimpImage *gimage;
   gint32 offset;
-  gint32 guide_id = 0;
+  gint32 guide_ID = 0;
   Guide *guide;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
@@ -145,7 +145,7 @@ image_add_vguide_invoker (Argument *args)
 	  guide = gimp_image_add_vguide (gimage);
 	  undo_push_guide (gimage, guide);
 	  guide->position = offset;
-	  guide_id = guide->guide_ID;
+	  guide_ID = guide->guide_ID;
 	}
       else
 	success = FALSE;
@@ -154,7 +154,7 @@ image_add_vguide_invoker (Argument *args)
   return_args = procedural_db_return_args (&image_add_vguide_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = guide_id;
+    return_args[1].value.pdb_int = guide_ID;
 
   return return_args;
 }
@@ -177,7 +177,7 @@ static ProcArg image_add_vguide_outargs[] =
 {
   {
     PDB_INT32,
-    "guide_id",
+    "guide",
     "The new guide"
   }
 };

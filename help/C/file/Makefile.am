@@ -20,10 +20,10 @@ files:
 
 install-data-local:
 	rm -f $(helpdatadir)/dialogs
-	ln -sf ../dialogs $(helpdatadir)/dialogs
+	$(LN_S) ../dialogs $(helpdatadir)/dialogs
 	rm -f $(helpdatadir)/filters
-	ln -sf ../filters $(helpdatadir)/filters
+	$(LN_S) ../filters $(helpdatadir)/filters
 	rm -f $(helpdatadir)/open
-	ln -sf ../open $(helpdatadir)/open
+	$(LN_S) ../open $(helpdatadir)/open
 	rm -f $(helpdatadir)/save
-	ln -sf ../save $(helpdatadir)/save
+	$(LN_S) ../save $(helpdatadir)/save

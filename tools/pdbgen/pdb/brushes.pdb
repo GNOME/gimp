@@ -314,7 +314,7 @@ HELP
 
     push @outargs, { name => 'mask_data', type => 'int8array', init => 1,
 		     desc => 'The brush mask data',
-		     array => { name => 'length', init => 1,
+		     array => { name => 'length', init => 1, no_lib => 1,
 				desc => 'Length of brush mask data' } };
     
     %invoke = (
