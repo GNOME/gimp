@@ -50,20 +50,17 @@ static TempBuf * gimp_text_layer_get_preview   (GimpViewable       *viewable,
 						gint                width,
 						gint                height);
 
-static PangoLayout  * gimp_text_layer_layout_new      (GimpTextLayer *layer);
-static gboolean       gimp_text_layer_render          (GimpTextLayer *layer);
-static gboolean       gimp_text_layer_position_layout (GimpTextLayer *layer,
-                                                       PangoLayout   *layout,
-                                                       gint          *x,
-                                                       gint          *y,
-                                                       gint          *width,
-                                                       gint          *height);
-static void           gimp_text_layer_render_layout   (GimpTextLayer *layer,
-                                                       PangoLayout   *layout,
-                                                       gint           x,
-                                                       gint           y);
+static PangoLayout  * gimp_text_layer_layout_new      (GimpTextLayer  *layer);
+static gboolean       gimp_text_layer_render          (GimpTextLayer  *layer);
+static gboolean       gimp_text_layer_position_layout (GimpTextLayer  *layer,
+                                                       PangoLayout    *layout,
+                                                       PangoRectangle *pos);
+static void           gimp_text_layer_render_layout   (GimpTextLayer  *layer,
+                                                       PangoLayout    *layout,
+                                                       gint            x,
+                                                       gint            y);
 
-static PangoContext * gimp_image_get_pango_context    (GimpImage     *image);
+static PangoContext * gimp_image_get_pango_context    (GimpImage      *image);
 
 
 static GimpLayerClass *parent_class = NULL;
@@ -156,7 +153,11 @@ gimp_text_layer_new (GimpImage *image,
 
   layer = g_object_new (GIMP_TYPE_TEXT_LAYER, NULL);
 
-  gimp_item_set_image (GIMP_ITEM (layer), image);
+  gimp_drawable_configure (GIMP_DRAWABLE (layer),
+                           image,
+                           0, 0, 0, 0,
+                           gimp_image_base_type_with_alpha (image),
+                           NULL);
 
   layer->text = g_object_ref (text);
 
@@ -209,65 +210,65 @@ gimp_text_layer_get_preview (GimpViewable *viewable,
 							  width, height);
 }
 
-
 static gboolean
 gimp_text_layer_render (GimpTextLayer *layer)
 {
-  GimpImage    *image;
-  GimpDrawable *drawable;
-  PangoLayout  *layout;
-  gchar        *name;
-  gchar        *newline;
-  gint          x, y;
-  gint          width, height;
+  GimpImage      *image;
+  GimpDrawable   *drawable;
+  PangoLayout    *layout;
+  PangoRectangle  pos;
+  gchar          *name;
+  gchar          *newline;
 
   layout = gimp_text_layer_layout_new (layer);
 
-  if (!gimp_text_layer_position_layout (layer, layout,
-                                        &x, &y, &width, &height))
+  if (!gimp_text_layer_position_layout (layer, layout, &pos))
     {
       g_object_unref (layout);
       return FALSE;
     }
 
-  newline = strchr (layer->text->text, '\n');
-  if (newline)
-    name = g_strndup (layer->text->text, newline - layer->text->text);
-  else
-    name = layer->text->text;
-
   image    = gimp_item_get_image (GIMP_ITEM (layer));
   drawable = GIMP_DRAWABLE (layer);
 
-  if (width  != gimp_drawable_width (drawable) ||
-      height != gimp_drawable_height (drawable))
+  if (pos.width  != gimp_drawable_width (drawable) ||
+      pos.height != gimp_drawable_height (drawable))
     {
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
                             gimp_drawable_width (drawable),
                             gimp_drawable_height (drawable));
 
-      gimp_drawable_configure (drawable,
-                               image,
-                               drawable->offset_x,
-                               drawable->offset_y,
-                               width, height,
-                               gimp_image_base_type_with_alpha (image),
-                               name);
+
+      drawable->width  = pos.width;
+      drawable->height = pos.height;
+
+      if (drawable->tiles)
+        tile_manager_destroy (drawable->tiles);
+
+      drawable->tiles = tile_manager_new (drawable->width,
+                                          drawable->height,
+                                          drawable->bytes);
 
       gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
     }
-  else
-    {
-      gimp_object_set_name (GIMP_OBJECT (layer), name);
-    }
 
+  newline = strchr (layer->text->text, '\n');
   if (newline)
-    g_free (name);
+    {
+      name = g_strndup (layer->text->text, newline - layer->text->text);
+      gimp_object_set_name (GIMP_OBJECT (layer), name);
+      g_free (name);
+    }
+  else
+  {
+    gimp_object_set_name (GIMP_OBJECT (layer), layer->text->text);
+  }
 
-  gimp_text_layer_render_layout (layer, layout, x, y);
+  gimp_text_layer_render_layout (layer, layout, pos.x, pos.y);
   g_object_unref (layout);
 
+  gimp_drawable_update (drawable, 0, 0, pos.width, pos.height);
   gimp_image_flush (image);
 
   return TRUE;
@@ -328,16 +329,15 @@ gimp_text_layer_layout_new (GimpTextLayer *layer)
 }
 
 static gboolean
-gimp_text_layer_position_layout (GimpTextLayer *layer,
-                                 PangoLayout   *layout,
-                                 gint          *x,
-                                 gint          *y,
-                                 gint          *width,
-                                 gint          *height)
+gimp_text_layer_position_layout (GimpTextLayer  *layer,
+                                 PangoLayout    *layout,
+                                 PangoRectangle *pos)
 {
   GimpText       *text;
   PangoRectangle  ink;
   PangoRectangle  logical;
+  gint            x1, y1;
+  gint            x2, y2;
   gboolean        fixed;
 
   text = layer->text;
@@ -360,8 +360,13 @@ gimp_text_layer_position_layout (GimpTextLayer *layer,
       if (ink.height > 8192)  ink.height = 8192;
     }
 
-  *width  = fixed ? text->fixed_width  : ink.width;
-  *height = fixed ? text->fixed_height : ink.height;
+  x1 = MIN (0, logical.x);
+  y1 = MIN (0, logical.y);
+  x2 = MAX (ink.x + ink.width,  logical.x + logical.width);
+  y2 = MAX (ink.y + ink.height, logical.y + logical.height);
+
+  pos->width  = fixed ? text->fixed_width  : x2 - x1;
+  pos->height = fixed ? text->fixed_height : y2 - y1;
 
   /* border should only be used by the compatibility API;
      we assume that gravity is CENTER
@@ -370,12 +375,12 @@ gimp_text_layer_position_layout (GimpTextLayer *layer,
     {
       fixed = TRUE;
 
-      *width  = ink.width  + 2 * text->border;
-      *height = ink.height + 2 * text->border;
+      pos->width  += 2 * text->border;
+      pos->height += 2 * text->border;
     }
 
-  *x = - ink.x;
-  *y = - ink.y;
+  pos->x = - ink.x;
+  pos->y = - ink.y;
 
   if (!fixed)
     return TRUE;
@@ -390,13 +395,13 @@ gimp_text_layer_position_layout (GimpTextLayer *layer,
     case GIMP_GRAVITY_CENTER:
     case GIMP_GRAVITY_NORTH:
     case GIMP_GRAVITY_SOUTH:
-      *x += (*width - ink.width)  / 2;
+      pos->x += (pos->width - logical.width) / 2;
       break;
       
     case GIMP_GRAVITY_NORTH_EAST:
     case GIMP_GRAVITY_SOUTH_EAST:
     case GIMP_GRAVITY_EAST:
-      *x += (*width - ink.width);
+      pos->x += (pos->width - logical.width);
       break;
     }
 
@@ -410,13 +415,13 @@ gimp_text_layer_position_layout (GimpTextLayer *layer,
     case GIMP_GRAVITY_CENTER:
     case GIMP_GRAVITY_WEST:
     case GIMP_GRAVITY_EAST:
-      *y += (*height - ink.height)  / 2;
+      pos->y += (pos->height - logical.height) / 2;
       break;
 
     case GIMP_GRAVITY_SOUTH:
     case GIMP_GRAVITY_SOUTH_WEST:
     case GIMP_GRAVITY_SOUTH_EAST:
-      *y += (*height - ink.height);
+      pos->y += (pos->height - logical.height);
       break;
     }
 
@@ -451,8 +456,6 @@ gimp_text_layer_render_layout (GimpTextLayer *layer,
   apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
   
   tile_manager_destroy (mask);
-
-  gimp_drawable_update (drawable, 0, 0, width, height);
 }
 
 

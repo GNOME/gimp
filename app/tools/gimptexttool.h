@@ -39,6 +39,7 @@ struct _GimpTextTool
   gint           click_y;
 
   GimpDisplay   *gdisp;
+  GimpText      *text;
 
   GtkTextBuffer *buffer;
   GtkWidget     *editor;

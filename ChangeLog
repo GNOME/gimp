@@ -1,3 +1,28 @@
+2003-01-31  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptextlayer.c: don't use gimp_drawable_configure() to
+	resize the text layer, it should only ever be called once. Take
+	the logical rectangle into account when calculating the layer size
+	and text position.
+
+	* app/tools/gimptexttool.[ch]: added basic text editing
+	functionality. Needs more work ...
+	
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-gravity-east-24.png
+	* themes/Default/images/stock-gravity-north-24.png
+	* themes/Default/images/stock-gravity-north-east-24.png
+	* themes/Default/images/stock-gravity-north-west-24.png
+	* themes/Default/images/stock-gravity-south-24.png
+	* themes/Default/images/stock-gravity-south-east-24.png
+	* themes/Default/images/stock-gravity-south-west-24.png
+
+	* themes/Default/images/stock-gravity-west-24.png: added new icons
+	for yet-to-written GimpGravityChooser(?) widget. Artwork
+	shamelessly taken from Jimmac's XFree cursors.
+
+	* libgimpwidgets/gimpstock.[ch]: added stock items for the new icons.
+
 2003-01-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.[ch]: added gimp_item_configure() and

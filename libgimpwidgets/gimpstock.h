@@ -39,6 +39,15 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_RESET                "gimp-reset"
 #define GIMP_STOCK_VISIBLE              "gimp-visible"
 
+#define GIMP_STOCK_GRAVITY_EAST         "gimp-gravity-east"
+#define GIMP_STOCK_GRAVITY_NORTH        "gimp-gravity-north"
+#define GIMP_STOCK_GRAVITY_NORTH_EAST   "gimp-gravity-north-east"
+#define GIMP_STOCK_GRAVITY_NORTH_WEST   "gimp-gravity-north-west"
+#define GIMP_STOCK_GRAVITY_SOUTH        "gimp-gravity-south"
+#define GIMP_STOCK_GRAVITY_SOUTH_EAST   "gimp-gravity-south-east"
+#define GIMP_STOCK_GRAVITY_SOUTH_WEST   "gimp-gravity-south-west"
+#define GIMP_STOCK_GRAVITY_WEST         "gimp-gravity-west"
+
 #define GIMP_STOCK_HCHAIN               "gimp-hchain"
 #define GIMP_STOCK_HCHAIN_BROKEN        "gimp-hchain-broken"
 #define GIMP_STOCK_VCHAIN               "gimp-vchain"

@@ -50,6 +50,14 @@ STOCK_BUTTON_IMAGES = \
 	stock-duplicate-16.png			\
 	stock-edit-16.png			\
 	stock-eye-20.png			\
+	stock-gravity-east-24.png		\
+	stock-gravity-north-24.png		\
+	stock-gravity-north-east-24.png		\
+	stock-gravity-north-west-24.png		\
+	stock-gravity-south-24.png		\
+	stock-gravity-south-east-24.png		\
+	stock-gravity-south-west-24.png		\
+	stock-gravity-west-24.png		\
 	stock-line-spacing-22.png		\
 	stock-linked-20.png			\
 	stock-letter-spacing-22.png		\

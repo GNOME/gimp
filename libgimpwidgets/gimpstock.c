@@ -97,6 +97,15 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_RESET,          N_("_Reset"),          0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VISIBLE,        N_("Visible"),         0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_STOCK_GRAVITY_EAST,             NULL,        0, 0, LIBGIMP_DOMAIN }, 
+  { GIMP_STOCK_GRAVITY_NORTH,            NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRAVITY_NORTH_EAST,       NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRAVITY_NORTH_WEST,       NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRAVITY_SOUTH,            NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRAVITY_SOUTH_EAST,       NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRAVITY_SOUTH_WEST,       NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRAVITY_WEST,             NULL,        0, 0, LIBGIMP_DOMAIN },
+
   { GIMP_STOCK_HCHAIN,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_HCHAIN_BROKEN,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VCHAIN,                   NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -209,6 +218,14 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_HCHAIN_BROKEN,            stock_hchain_broken_24            },
   { GIMP_STOCK_VCHAIN,                   stock_vchain_24                   },
   { GIMP_STOCK_VCHAIN_BROKEN,            stock_vchain_broken_24            },
+
+  { GIMP_STOCK_GRAVITY_EAST,             stock_gravity_east_24             },
+  { GIMP_STOCK_GRAVITY_NORTH,            stock_gravity_north_24            },
+  { GIMP_STOCK_GRAVITY_NORTH_EAST,       stock_gravity_north_east_24       },
+  { GIMP_STOCK_GRAVITY_NORTH_WEST,       stock_gravity_north_west_24       },
+  { GIMP_STOCK_GRAVITY_SOUTH,            stock_gravity_south_24            },
+  { GIMP_STOCK_GRAVITY_SOUTH_EAST,       stock_gravity_south_east_24       },
+  { GIMP_STOCK_GRAVITY_SOUTH_WEST,       stock_gravity_south_west_24       },
 
   { GIMP_STOCK_COLOR_PICKER_BLACK,       stock_color_picker_black_18       },
   { GIMP_STOCK_COLOR_PICKER_GRAY,        stock_color_picker_gray_18        },

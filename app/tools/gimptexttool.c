@@ -32,8 +32,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
-#include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
 
 #include "text/gimptext.h"
@@ -44,7 +42,6 @@
 
 #include "display/gimpdisplay.h"
 
-#include "gimpeditselectiontool.h"
 #include "gimptexttool.h"
 #include "tool_options.h"
 
@@ -111,7 +108,10 @@ static void     text_tool_cursor_update        (GimpTool        *tool,
                                                 GdkModifierType  state,
                                                 GimpDisplay     *gdisp);
 
-static void     text_tool_render               (GimpTextTool    *text_tool);
+static void     gimp_text_tool_connect         (GimpTextTool    *tool,
+                                                GimpText        *text);
+
+static void     text_tool_create_layer         (GimpTextTool    *text_tool);
 
 static GimpToolOptions * text_tool_options_new   (GimpToolInfo    *tool_info);
 static void              text_tool_options_reset (GimpToolOptions *tool_options);
@@ -203,7 +203,9 @@ static void
 gimp_text_tool_init (GimpTextTool *text_tool)
 {
   GimpTool *tool = GIMP_TOOL (text_tool);
- 
+
+  text_tool->text = NULL;
+
   text_tool->buffer = gtk_text_buffer_new (NULL);
   gtk_text_buffer_set_text (text_tool->buffer, "Eeek, it's The GIMP", -1);
 
@@ -241,6 +243,8 @@ text_tool_control (GimpTool       *tool,
     case HALT:
       if (GIMP_TEXT_TOOL (tool)->editor)
         gtk_widget_destroy (GIMP_TEXT_TOOL (tool)->editor);
+
+      gimp_text_tool_connect (GIMP_TEXT_TOOL (tool), NULL);
       break;
 
     default:
@@ -258,7 +262,8 @@ text_tool_button_press (GimpTool        *tool,
 			GimpDisplay     *gdisp)
 {
   GimpTextTool *text_tool;
-  GimpLayer    *layer;
+  GimpDrawable *drawable;
+  GimpText     *text = NULL;
 
   text_tool = GIMP_TEXT_TOOL (tool);
 
@@ -270,15 +275,21 @@ text_tool_button_press (GimpTool        *tool,
   text_tool->click_x = coords->x;
   text_tool->click_y = coords->y;
 
-  if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,
-                                                text_tool->click_x,
-                                                text_tool->click_y)))
-    /* if there is a floating selection, and this aint it, use the move tool */
-    if (gimp_layer_is_floating_sel (layer))
-      {
-	init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
-	return;
-      }
+  drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  if (drawable && GIMP_IS_TEXT_LAYER (drawable))
+    {
+      coords->x -= drawable->offset_x;
+      coords->y -= drawable->offset_y;
+
+      if (coords->x > 0 && coords->x < drawable->width &&
+          coords->y > 0 && coords->y < drawable->height)
+        {
+          text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (drawable));
+        }
+    }
+
+  gimp_text_tool_connect (GIMP_TEXT_TOOL (tool), text);
 
   text_tool_editor (text_tool);
 }
@@ -299,22 +310,11 @@ text_tool_cursor_update (GimpTool        *tool,
 			 GdkModifierType  state,
 			 GimpDisplay     *gdisp)
 {
-  GimpLayer *layer;
-
-  layer = gimp_image_pick_correlate_layer (gdisp->gimage,
-                                           coords->x, coords->y);
-
-  gimp_tool_control_set_cursor_modifier (tool->control,
-                                         (layer &&
-                                          gimp_layer_is_floating_sel (layer)) ?
-                                         GIMP_CURSOR_MODIFIER_MOVE            :
-                                         GIMP_CURSOR_MODIFIER_NONE);
-
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static void
-text_tool_render (GimpTextTool *text_tool)
+text_tool_create_layer (GimpTextTool *text_tool)
 {
   TextOptions *options;
   GimpImage   *gimage;
@@ -325,6 +325,8 @@ text_tool_render (GimpTextTool *text_tool)
   gchar       *str;
   GtkTextIter  start_iter;
   GtkTextIter  end_iter;
+
+  g_return_if_fail (text_tool->text == NULL);
 
   options = (TextOptions *) GIMP_TOOL (text_tool)->tool_info->tool_options;
   gimage  = text_tool->gdisp->gimage;
@@ -344,7 +346,8 @@ text_tool_render (GimpTextTool *text_tool)
   if (!str)
     return;
 
-  gimp_context_get_foreground (gimp_get_current_context (gimage->gimp), &color);
+  gimp_context_get_foreground (gimp_get_current_context (gimage->gimp),
+                               &color);
 
   text = GIMP_TEXT (g_object_new (GIMP_TYPE_TEXT,
                                   "text",           str,
@@ -369,19 +372,30 @@ text_tool_render (GimpTextTool *text_tool)
   GIMP_DRAWABLE (layer)->offset_x = text_tool->click_x;
   GIMP_DRAWABLE (layer)->offset_y = text_tool->click_y;
 
-  /*  If there is a selection mask clear it--
-   *  this might not always be desired, but in general,
-   *  it seems like the correct behavior.
-   */
-  if (! gimp_image_mask_is_empty (gimage))
-    gimp_image_mask_clear (gimage);
-
-  floating_sel_attach (layer, gimp_image_active_drawable (gimage));
+  gimp_image_add_layer (gimage, layer, -1);
 
   undo_push_group_end (gimage);
 
   gimp_image_flush (gimage);
 }
+
+static void
+gimp_text_tool_connect (GimpTextTool *tool,
+                        GimpText     *text)
+{
+  if (tool->text == text)
+    return;
+
+  if (tool->text)
+    {
+      g_object_unref (tool->text);
+      tool->text = NULL;
+    }
+
+  if (text)
+    tool->text = g_object_ref (text);
+}
+
 
 /*  tool options stuff  */
 
@@ -418,7 +432,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
 
   options->font_selection = gimp_font_selection_new (NULL);
 
-  gimp_font_selection_set_fontname 
+  gimp_font_selection_set_fontname
     (GIMP_FONT_SELECTION (options->font_selection), DEFAULT_FONT);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -579,7 +593,25 @@ text_tool_editor_ok (GimpTextTool *text_tool)
 {
   gtk_widget_destroy (text_tool->editor);
 
-  text_tool_render (text_tool);
+  if (text_tool->text)
+    {
+      GtkTextIter  start_iter;
+      GtkTextIter  end_iter;
+      gchar       *str;
+
+      gtk_text_buffer_get_bounds (text_tool->buffer, &start_iter, &end_iter);
+      str = gtk_text_buffer_get_text (text_tool->buffer,
+                                      &start_iter, &end_iter, FALSE);
+      if (str)
+        {
+          g_object_set (G_OBJECT (text_tool->text), "text", str, NULL);
+          g_free (str);
+        }
+    }
+  else
+    {
+      text_tool_create_layer (text_tool);
+    }
 }
 
 static void
