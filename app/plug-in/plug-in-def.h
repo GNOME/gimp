@@ -131,7 +131,10 @@ PlugIn* plug_in_new (char *name);
  */
 void plug_in_destroy (PlugIn *plug_in);
 
-/* Open a plug-in. This cause the plug-in to run. */
+/* Open a plug-in. This cause the plug-in to run.
+ * If returns 1, you must destroy the plugin.  If returns 0 you
+ * may not destroy the plugin.
+ */
 int plug_in_open (PlugIn *plug_in);
 
 /* Close a plug-in. This kills the plug-in and releases

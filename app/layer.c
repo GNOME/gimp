@@ -31,7 +31,6 @@
 #include "interface.h"
 #include "layer.h"
 #include "layers_dialog.h"
-#include "linked.h"
 #include "paint_funcs.h"
 #include "temp_buf.h"
 #include "undo.h"
@@ -53,8 +52,10 @@ static void gimp_layer_mask_class_init (GimpLayerMaskClass *klass);
 static void gimp_layer_mask_init       (GimpLayerMask      *layermask);
 static void gimp_layer_mask_destroy    (GtkObject          *object);
 
+/*
 static gint layer_signals[LAST_SIGNAL] = { 0 };
 static gint layer_mask_signals[LAST_SIGNAL] = { 0 };
+*/
 
 static GimpDrawableClass *layer_parent_class = NULL;
 static GimpChannelClass *layer_mask_parent_class = NULL;
@@ -73,7 +74,8 @@ gimp_layer_get_type ()
 	sizeof (GimpLayerClass),
 	(GtkClassInitFunc) gimp_layer_class_init,
 	(GtkObjectInitFunc) gimp_layer_init,
-	(GtkArgFunc) NULL,
+	(GtkArgSetFunc) NULL,
+	(GtkArgGetFunc) NULL,
       };
 
       layer_type = gtk_type_unique (gimp_drawable_get_type (), &layer_info);
@@ -93,7 +95,9 @@ gimp_layer_class_init (GimpLayerClass *class)
 
   layer_parent_class = gtk_type_class (gimp_drawable_get_type ());
 
+  /*
   gtk_object_class_add_signals (object_class, layer_signals, LAST_SIGNAL);
+  */
 
   object_class->destroy = gimp_layer_destroy;
   drawable_class->invalidate_preview = layer_invalidate_preview;
@@ -118,7 +122,8 @@ gimp_layer_mask_get_type ()
 	sizeof (GimpLayerMaskClass),
 	(GtkClassInitFunc) gimp_layer_mask_class_init,
 	(GtkObjectInitFunc) gimp_layer_mask_init,
-	(GtkArgFunc) NULL,
+	(GtkArgSetFunc) NULL,
+	(GtkArgGetFunc) NULL,
       };
 
       layer_mask_type = gtk_type_unique (gimp_channel_get_type (), &layer_mask_info);
@@ -135,7 +140,9 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *class)
   object_class = (GtkObjectClass*) class;
   layer_mask_parent_class = gtk_type_class (gimp_channel_get_type ());
 
+  /*
   gtk_object_class_add_signals (object_class, layer_mask_signals, LAST_SIGNAL);
+  */
 
   object_class->destroy = gimp_layer_mask_destroy;
 }
@@ -260,6 +267,22 @@ layer_new (gimage_ID, width, height, type, name, opacity, mode)
   layer->fs.num_segs = 0;
 
   return layer;
+}
+
+
+Layer *
+layer_ref (Layer *layer)
+{
+  gtk_object_ref  (GTK_OBJECT (layer));
+  gtk_object_sink (GTK_OBJECT (layer));
+  return layer;
+}
+
+
+void
+layer_unref (Layer *layer)
+{
+  gtk_object_unref (GTK_OBJECT (layer));
 }
 
 
@@ -428,15 +451,15 @@ layer_create_mask (layer, add_mask_type)
   LayerMask *mask;
   char * mask_name;
   unsigned char black[3] = {0, 0, 0};
-  unsigned char white_mask = OPAQUE;
-  unsigned char black_mask = TRANSPARENT;
+  unsigned char white_mask = OPAQUE_OPACITY;
+  unsigned char black_mask = TRANSPARENT_OPACITY;
 
   mask_name = (char *) g_malloc (strlen (GIMP_DRAWABLE(layer)->name) + strlen ("mask") + 2);
   sprintf (mask_name, "%s mask", GIMP_DRAWABLE(layer)->name);
 
   /*  Create the layer mask  */
   mask = layer_mask_new (GIMP_DRAWABLE(layer)->gimage_ID, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height,
-		      mask_name, OPAQUE, black);
+		      mask_name, OPAQUE_OPACITY, black);
   GIMP_DRAWABLE(mask)->offset_x = GIMP_DRAWABLE(layer)->offset_x;
   GIMP_DRAWABLE(mask)->offset_y = GIMP_DRAWABLE(layer)->offset_y;
 
@@ -538,7 +561,7 @@ layer_apply_mask (layer, mode)
       pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
       pixel_region_init (&maskPR, GIMP_DRAWABLE(layer->mask)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
 
-      apply_mask_to_region (&srcPR, &maskPR, OPAQUE);
+      apply_mask_to_region (&srcPR, &maskPR, OPAQUE_OPACITY);
       GIMP_DRAWABLE(layer)->preview_valid = FALSE;
 
       layer->mask = NULL;
@@ -1117,7 +1140,7 @@ void
 layer_invalidate_previews (gimage_id)
      int gimage_id;
 {
-  link_ptr tmp;
+  GSList * tmp;
   Layer * layer;
   GImage * gimage;
 
@@ -1130,7 +1153,7 @@ layer_invalidate_previews (gimage_id)
     {
       layer = (Layer *) tmp->data;
       drawable_invalidate_preview (GIMP_DRAWABLE(layer));
-      tmp = next_item (tmp);
+      tmp = g_slist_next (tmp);
     }
 }
 

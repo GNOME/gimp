@@ -20,7 +20,6 @@
 #include <stdarg.h>
 #include <string.h>
 #include "appenv.h"
-#include "linked.h"
 #include "pixel_region.h"
 
 #include "tile_manager_pvt.h"
@@ -40,7 +39,7 @@ typedef struct _PixelRegionIterator PixelRegionIterator;
 
 struct _PixelRegionIterator
 {
-  link_ptr pixel_regions;
+  GSList *pixel_regions;
   int region_width;
   int region_height;
   int portion_width;
@@ -292,7 +291,7 @@ pixel_regions_register (int num_regions, ...)
 	}
 
       /*  Add the pixel region holder to the list  */
-      PRI->pixel_regions = add_to_list (PRI->pixel_regions, PRH);
+      PRI->pixel_regions = g_slist_prepend (PRI->pixel_regions, PRH);
     }
 
   va_end (ap);
@@ -305,7 +304,7 @@ void *
 pixel_regions_process (PRI_ptr)
      void *PRI_ptr;
 {
-  link_ptr list;
+  GSList *list;
   PixelRegionHolder *PRH;
   PixelRegionIterator *PRI;
 
@@ -342,7 +341,7 @@ pixel_regions_process (PRI_ptr)
 	    }
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   return pixel_regions_configure (PRI);
@@ -352,7 +351,7 @@ void
 pixel_regions_process_stop (PRI_ptr)
      void *PRI_ptr;
 {
-  link_ptr list;
+  GSList *list;
   PixelRegionHolder *PRH;
   PixelRegionIterator *PRI;
 
@@ -381,7 +380,7 @@ pixel_regions_process_stop (PRI_ptr)
 	    }
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   if (PRI->pixel_regions)
@@ -390,9 +389,9 @@ pixel_regions_process_stop (PRI_ptr)
       while (list)
 	{
 	  g_free (list->data);
-	  list = next_item (list);
+	  list = g_slist_next (list);
 	}
-      free_list (PRI->pixel_regions);
+      g_slist_free (PRI->pixel_regions);
       g_free (PRI);
     }
 }
@@ -405,7 +404,7 @@ static int
 get_portion_height (PRI)
      PixelRegionIterator *PRI;
 {
-  link_ptr list;
+  GSList *list;
   PixelRegionHolder *PRH;
   int min_height = G_MAXINT;
   int height;
@@ -437,7 +436,7 @@ get_portion_height (PRI)
 	    min_height = height;
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   return min_height;
@@ -448,7 +447,7 @@ static int
 get_portion_width (PRI)
      PixelRegionIterator *PRI;
 {
-  link_ptr list;
+  GSList *list;
   PixelRegionHolder *PRH;
   int min_width = G_MAXINT;
   int width;
@@ -480,7 +479,7 @@ get_portion_width (PRI)
 	    min_width = width;
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   return min_width;
@@ -492,7 +491,7 @@ pixel_regions_configure (PRI)
      PixelRegionIterator *PRI;
 {
   PixelRegionHolder *PRH;
-  link_ptr list;
+  GSList *list;
 
   /*  Determine the portion width and height  */
   PRI->portion_width = get_portion_width (PRI);
@@ -507,9 +506,9 @@ pixel_regions_configure (PRI)
 	  while (list)
 	    {
 	      g_free (list->data);
-	      list = next_item (list);
+	      list = g_slist_next (list);
 	    }
-	  free_list (PRI->pixel_regions);
+	  g_slist_free (PRI->pixel_regions);
 	  g_free (PRI);
 	}
 
@@ -529,7 +528,7 @@ pixel_regions_configure (PRI)
 	  pixel_region_configure (PRH, PRI);
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   return PRI;

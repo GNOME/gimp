@@ -106,14 +106,14 @@ pencil_motion (paint_core, drawable)
     return;
 
   /*  set the alpha channel  */
-  col[area->bytes - 1] = OPAQUE;
+  col[area->bytes - 1] = OPAQUE_OPACITY;
 
   /*  color the pixels  */
   color_pixels (temp_buf_data (area), col,
 		area->width * area->height, area->bytes);
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable, OPAQUE,
+  paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
 			   (int) (get_brush_opacity () * 255),
 			   get_brush_paint_mode (), HARD, CONSTANT);
 }

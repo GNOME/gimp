@@ -8,14 +8,13 @@ SUBDIRS = 			\
 	Anamorphose		\
 	CentralReflection	\
 	Curtain			\
-	Encrypt_Decrypt		\
+	Encript_Decript		\
 	Julia			\
 	Mandelbrot		\
-	DigitalSignature	\
 	dbbrowser		\
 	fuse			\
 	gflare			\
-	@GIMPTCL@		\
+##	@GIMPTCL@		\
 	refract			\
 	script-fu		\
 	struc			\
@@ -63,7 +62,6 @@ SUBDIRS = 			\
 	film			\
 	fits			\
 	flame			\
-	flarefx			\
 	fp			\
 	fractaltrace		\
 	gauss_iir		\
@@ -123,7 +121,6 @@ SUBDIRS = 			\
 	sobel			\
 	sparkle			\
 	spread			\
-	stegano			\
 	stereogram		\
 	sunras			\
 	tga			\

@@ -2,6 +2,5 @@ Makefile.in
 Makefile
 .deps
 _libs
-.libs
 *.lo
 *.la

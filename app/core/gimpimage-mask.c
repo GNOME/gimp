@@ -341,7 +341,7 @@ gimage_mask_float (gimage, drawable, off_x, off_y)
   tiles = gimage_mask_extract (gimage, drawable, TRUE, FALSE);
 
   /*  Create a new layer from the buffer  */
-  layer = layer_from_tiles (gimage, drawable, tiles, "Floated Layer", OPAQUE, NORMAL);
+  layer = layer_from_tiles (gimage, drawable, tiles, "Floated Layer", OPAQUE_OPACITY, NORMAL);
 
   /*  Set the offsets  */
   GIMP_DRAWABLE(layer)->offset_x = tiles->x + off_x;
@@ -573,16 +573,33 @@ gimage_mask_stroke (gimage, drawable)
   non_gui_paint_core.paint_func = gimage_mask_stroke_paint_func;
   gimage_mask_stroking = TRUE;
 
-  non_gui_paint_core.startx = non_gui_paint_core.lastx = (stroke_segs[0].x1 - offx);
-  non_gui_paint_core.starty = non_gui_paint_core.lasty = (stroke_segs[0].y1 - offy);
+  /* Note added by Raph Levien, 27 Jan 1998
+
+     The subtraction of 0.125 is to compensate for imprecision in
+     paint_core_subsample_mask. Ben Jackson posted a patch on 14 Jan
+     1998 to gimp-developers which addresses the imprecision more
+     directly. However, I've chosen this quick hack instead because it
+     is a less drastic change, and has no impact on performance. By
+     contrast, Ben's patch builds 25 rather than 16 subsampled brush
+     masks.
+
+     I'm planning to rework the subsample mechanism anyway to make way
+     for the natural brushes. When that happens, I'll be sure to make
+     it round precisely, at which point these -0.125 offsets can come
+     out.
+
+     */
+
+  non_gui_paint_core.startx = non_gui_paint_core.lastx = (stroke_segs[0].x1 - offx) - 0.125;
+  non_gui_paint_core.starty = non_gui_paint_core.lasty = (stroke_segs[0].y1 - offy) - 0.125;
 
   seg = 0;
   for (i = 0; i < num_strokes; i++)
     {
       while (stroke_segs[seg].x2 != -1)
 	{
-	  non_gui_paint_core.curx = (stroke_segs[seg].x2 - offx);
-	  non_gui_paint_core.cury = (stroke_segs[seg].y2 - offy);
+	  non_gui_paint_core.curx = (stroke_segs[seg].x2 - offx - 0.125);
+	  non_gui_paint_core.cury = (stroke_segs[seg].y2 - offy - 0.125);
 
 	  paint_core_interpolate (&non_gui_paint_core, drawable);
 
@@ -628,14 +645,14 @@ gimage_mask_stroke_paint_func (paint_core, drawable, state)
     return NULL;
 
   /*  set the alpha channel  */
-  col[area->bytes - 1] = OPAQUE;
+  col[area->bytes - 1] = OPAQUE_OPACITY;
 
   /*  color the pixels  */
   color_pixels (temp_buf_data (area), col,
 		area->width * area->height, area->bytes);
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable, OPAQUE,
+  paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
 			   (int) (get_brush_opacity () * 255),
 			   get_brush_paint_mode (), SOFT, CONSTANT);
 

@@ -20,96 +20,89 @@ Version 1.0 Fri Nov  7 1997 Adrian Likins <adrian@gimp.org>
 
 All selections (rectangular, ellipse, fuzzy, magic wand)
 
-	mb1			draw selection
+		mb1			draw selection
 	
-	mb1+mb3 (release mb1)	cancel selection
+		mb1+mb3 (release mb1)	cancel selection
 	
-  At inital click	
+	At inital click	
 	
-	shift+mb1	       	Add selection to existing selection	
+		shift+mb1	       	Add selection to existing selection	
 	
-	ctrl+mb1	        subtract selection from existing selection
+		ctrl+mb1	        subtract selection from existing selection
 	
-	shift+ctrl+mb1		keep part of selection in both 
-				selections (union)
+		shift+ctrl+mb1		 keep part of selection in both selections (union)
 		
-  on active selections
+	on active selections
 	
-	alt+mb1			move selection
+		alt+mb1			move selection
 
 
 ellipse and rectangular selection
 	
-  while making selection
+	while making selection
 
-	shift+mb1	        constrain selection to regular shape 
-				(square/circle)
+		shift+mb1	        constrain selection to regular shape (square/circle)
 	
-	ctrl+mb1	        draw selection centered from click
+		ctrl+mb1	        draw selection centered from click
 	
-	ctrl+shift+mb1          draw (square/circle) selection centered 
-				on click
+		ctrl+shift+mb1          draw (square/circle) selection centered on click
 		
 
-  Tool Options
+	Tool Options
 	
-	Antialiasing     ???
+		Antialiasing     ???
 		
-	Feather		Turns on feathering (similar to blurring a
-			 selection mask)
-			Used to make a "smoother" selection
+		Feather		Turns on feathering (similar to blurring a selection mask)
+				Used to make a "smoother" selection
 							  
-	Feather Radius   Determines the blur radius of the selection mask.
-			  How smooth the selection needs to be.
+		Feather Radius   Determines the blur radius of the selection mask.
+							  How smooth the selection needs to be.
 							  
 							  
 Magic Wand selection
 
-  (all the general selection addition rules apply)
+	(all the general selection addition rules apply)
 	
-  Tool Options
+	Tool Options
 	
-	Sample Merged   If off, just use the contents of the 
-			current drawable
-			if on, use whats visible.
+		Sample Merged   If off, just use the contents of the current drawable
+				if on, use whats visible.
 							 
-	Antialiasing	????
+		Antialiasing	????
 		
-	Feather		Turns on feathering (similar to blurring
-			 a selection mask)
-			 Used to make a "smoother" selection
+		Feather		Turns on feathering (similar to blurring a selection mask)
+				 Used to make a "smoother" selection
 							  
-	Feather Radius   Determines the blur radius of the selection mask.
-			 How smooth the selection needs to be.
+		Feather Radius   Determines the blur radius of the selection mask.
+				 How smooth the selection needs to be.
 							  
 Bezier Select
 
-  While making selection
+	While making selection
 	
-	mb1		sets the control points
+		mb1		sets the control points
 		
-  To make bezier into a selection
+	To make bezier into a selection
 	
-	close the selection (beziers have to be closed), then click
-	inside the selection. Zooming in sometimes helps.
+		close the selection (beziers have to be closed), then click
+		inside the selection. Zooming in sometimes helps.
 			
-  After closing bezier (but before making a selection)
+	After closing bezier (but before making a selection)
 	
-	mb1 on control point 	adjust handles
-	shift+mb1		adjust one handle
-	ctrl+mb1		move the point
+		mb1 on control point 	adjust handles
+		shift+mb1		adjust one handle
+		ctrl+mb1		move the point
 		
 
-  Tool Options
+	Tool Options
 	
-	Antialiasing	????
+		Antialiasing	????
 		
-	Feather		Turns on feathering (similar to
-			 blurring a selection mask)
-			Used to make a "smoother" selection
+		Feather		Turns on feathering (similar to blurring a selection mask)
+				Used to make a "smoother" selection
 							  
-	Feather Radius   Determines the blur radius of the selection mask.
-			 How smooth the selection needs to be.
+		Feather Radius   Determines the blur radius of the selection mask.
+				 How smooth the selection needs to be.
 							  
 							  
 Intelligent scissors
@@ -133,71 +126,65 @@ Magnify (Zoom)
 	
 	Tool Options
 	
-	Allow window resizing  if on, window will resize when
-			        zooming in and out
+	Allow window resizing  if on, window will resize when zooming in and out
 			       if off, window will retain its current size
 								  
 
 Crop
 
-  Before  making crop bounds
-
-	mb1		      select bounds of crop
-	mb1+mb3(release mb1)  cancel crop
+	Before  making crop bounds
+		mb1		      select bounds of crop
+		mb1+mb3(release mb1)  cancel crop
 	
-  After making crop bounds
-
-	mb1(inside bounds)	crop to are selected (same as 
-				pressing crop button)
+	After making crop bounds
+		mb1(inside bounds)	crop to are selected (same as pressing crop button)
 		
 	
-  Crop tool dialog options
+	Crop tool dialog options
 	
-	crop				crop to area selected
-	selection			use the bounds of the 
-					current selection to 
-					set bounds of crop
-	close				cancel the crop
+		crop				crop to area selected
+		selection			use the bounds of the current selection to set bounds of crop
+		close				cancel the crop
 		
 
 
 Transform
 
-  note: transform type is selected via the tool options dialog
+	note: transform type is selected via the tool options dialog
 	
-  Rotation
+	Rotation
 	
-	mb1			free rotation
-	ctrl+mb1		rotate in 15 degree increments
+		mb1			free rotation
+		ctrl+mb1		rotate in 15 degree increments
 		
-  Scaling
+	Scaling
 	
-	mb1			 free scaling
-	ctrl+mb1  		 scale in Y direction only
-	shift+mb1 		 scale in X direction only
-	shift+ctrl+mb1		 scale with constrained ratio
+		mb1			 free scaling
+		ctrl+mb1  		 scale in Y direction only
+		shift+mb1 		 scale in X direction only
+		shift+ctrl+mb1		 scale with constrained ratio
 		
-  Shearing
+	Shearing
 	
-	mb1			free shearing
+		mb1			free shearing
 		
-  Perspective
+	Perspective
 	
-	mb1			move the control points
+		mb1			move the control points
 		
-  Tool Options
+	Tool Options
 	
-	Smoothing		determines if sub-pixel sampling is done
+		Smoothing		determines if sub-pixel sampling is done
 		
 
 Flip
 
 	mb1				Flip in indicated direction
 	
-  Tool options
+	Tool options
 	
-	Horizontal		Flip horizontally
-	Vertical		Flip vertically
+		Horizontal		Flip horizontally
+		Vertical		Flip vertically
 		
 
 Text Tool
@@ -213,37 +200,36 @@ Color Picker
 	
 Bucket Fill
 
-  (with no selection)
+	(with no selection)
 	
-	mb1		do a seeded fill from the pixel where the cursor is
-			filling with the foreground color
+		mb1		do a seeded fill from the pixel where the cursor is
+				filling with the foreground color
 						
-	shift+mb1	do a seeded fill from the pixel where the cursor is
-			filling with the background color
+		shift+mb1	do a seeded fill from the pixel where the cursor is
+				filling with the background color
 						
-  (with a selection active)
+	(with a selection active)
 	
-	mb1		  fill the seelction with foreground color
-	shift+mb2	  fill the selection with the background color
+		mb1		  fill the seelction with foreground color
+		shift+mb2	  fill the selection with the background color
 		
 	
-  Tool Options
+	Tool Options
 	
-	Fill Opacity        opacity of the fill?
+		Fill Opacity        opacity of the fill?
 
-	Fill Threshold	    If the surroundings pixels are within this value
-			     of the inital pixel, they are filled
+		Fill Threshold	    If the surroundings pixels are within this value
+				     of the inital pixel, they are filled
 
-	Mode		    What paint mode to use
+		Mode		    What paint mode to use
 				
-	Fill Type
-		Color Fill	use foreground or background color to fill
-		Pattern Fill	use current active pattern to fill
+		Fill Type
+			Color Fill	use foreground or background color to fill
+			Pattern Fill	use current active pattern to fill
 			
-	Sample merged     if on, use the visible compontents to determine
-			    where to fill
-			  if off, use the active drawable to determine
-			   where to fill
+		Sample merged     if on, use the visible compontents to determine
+				    where to fill
+				  if off, use the active drawable to determine where to fill
 								
 								
 Blend Tool
@@ -251,152 +237,129 @@ Blend Tool
 	mb1		     set start and endpoints of gradient
 	mb1+mb2(release mb1) cancel blend
 	
-  Tool Options
+	Tool Options
 	
-	Opacity	 	How transparent the gradient should be
+		Opacity	 	How transparent the gradient should be
 
-	Offset		at what percentage fo the gradient to 
-			start from (ie, 50 to start the blend at
-			 halfway through the gradient)
+		Offset		at what percentage fo the gradient to start from (ie, 50
+				to start the blend at halfway through the gradient)
 
-	Mode		What paint mode to apply the blend with
-	Blend
-		FG to BG (rgb)      Blend from the foreground color to 
-				    background color  in rgb space 
-		FG to BG (hsv)      Blend from the foreground color 
-				    to the background color in hsv space
-									
-		FG to Transparent   Blends the foreground color from 100% 
-				    opacity to 0% opacity
+		Mode		What paint mode to apply the blend with
+		Blend
+			FG to BG (rgb)      Blend from the foreground color to background color
+					    in rgb space 
+			FG to BG (hsv)      Blend from the foreground color to the background color
+					    in hsv space									
+			FG to Transparent   Blends the foreground color from 100% opacity to 0%
+						  opacity
 									  
-	Gradient
+		Gradient
 		
-		Linear			from point a to point b
+			Linear				from point a to point b
 
-		bi-linear		like linear but "mirrored"
-					 across the inital point
+			bi-linear			like linear but "mirrored" across the inital point
 
-		Radial			blends radial form point A 
-					being the center to point B 
-					being a point on the circumference.
+			Radial				blends radial form point A being the center to point
+							B being a point on the circumference.
 
-		Square			makes a sqaured shaped blend
-					 from a center at Point A
-					to point B on the perimeter
+			Square				makes a sqaured shaped blend from a center at Point A
+							to point B on the perimeter
 
-		conical			????
-		conical  
-			(asymeteric)	????
-		Shapeburst		Fills selections based on 
-					the shape of the selections
+			conical				????
+			conical
+				(asymeteric)	????
+			Shapeburst			Fills selections based on the shape of the selections
 						
-		Repeat
-			None		just make one blend
-			Sawtooth	repeat the blend
-			triangle	another way to repeat... ??
+			Repeat
+				None				just make one blend
+				Sawtooth			repeat the blend
+				triangle			another way to repeat... ??
 			
-		adaptive supersampling
-					if on, blend does supersampling
-					resulting in a much smoother
-					blend if off, blend does no
-					supersampling resulting in a 
-					much faster blend
+			adaptive supersampling
+							if on, blend does supersampling resulting
+							in a much smoother blend
+							if off, blend does no supersampling resulting
+							in a much faster blend
 			
-		Max Depth.			???
-		Threshold			???
+			Max Depth.			???
+			Threshold			???
 			
 
 Pencil
 
 	mb1(hold)		draw with pencil tool
-	alt+mb1(hold)		draw with pencil tool, but store all
-				 of the cursor history events (so you
-				 can draw fast and let it catch up
-				 with you without losing info)
+	alt+mb1(hold)		draw with pencil tool, but store all of the cursor history
+				events (so you can draw fast and let it catch up with you
+				without losing info)
 	
-	shift+mb1		draw a straigtline from the last place
-				 the cursor was
+	shift+mb1		draw a straigtline from the last place the cursor was
 	
 	
 Paintbrush
 
 	mb1(hold)		draw with paintbrush tool
-	alt+mb1(hold)		draw with paintbrush tool, but store
-				all of the cursor history events (so you
-				can draw fast and let it catch up
-				 with you without losing info)
+	alt+mb1(hold)		draw with paintbrush tool, but store all of the cursor history
+				events (so you can draw fast and let it catch up with you
+				without losing info)
 	
-	shift+mb1		draw a straigtline from the last place 
-				the cursor was
+	shift+mb1		draw a straigtline from the last place the cursor was
 		 
 	Tool Options
 	
-	   Fade Out		distance you can paint before 
-				the paint "runs out"
-				set to 0 for unlimited "paint"
+		Fade Out		distance you can paint before the paint "runs out"
+					set to 0 for unlimeted "paint"
 						
 Eraser
 
-	mb1(hold)		erase (set to transparent or background
-				 color)
+	mb1(hold)		erase (set to transparent or background color)
 	alt+mb1(hold)		erase but store all of the cursor history
-				events (so you can erase fast and let
-				 it catch up with you without losing info)
-	shift+mb1		erase a straightline from the 
-				last place the cursor was
+				events (so you can erase fast and let it catch up with you
+				without losing info)
+	shift+mb1		erase a straightline from the last place the cursor was
 	
 
 Airbrush
 
 	
 	mb1(hold)		draw with airbrush tool
-	alt+mb1(hold)		draw with airbrush tool, but store all
-				of the cursor history events (so you
-				can draw fast and let it catch up with
-				 you without losing info)
+	alt+mb1(hold)		draw with airbrush tool, but store all of the cursor history
+				events (so you can draw fast and let it catch up with you
+				without losing info)
 	
-	shift+mb1		draw a straigtline from the last place
-				 the cursor was
+	shift+mb1		draw a straigtline from the last place the cursor was
 		 
 	Tool Options
 	
-		Rate		Controls how quickly the "paint flows".
-				 Higher values reach full value quicker
+		Rate			Controls how quickly the "paint flows". Higher values 
+					reach full value quicker
 						
-		Pressure	the higher the value, the quicker the 
-				airbrush fills the brush
+		Pressure		the higher the value, the quicker the airbrush fills the brush
 		
 
 Clone Tool
 
 
 	mb1(hold)		draw with the clone tool	
-	ctrl+mb1		set the point from which the brush clones
-							  
-	alt+mb1(hold)		draw with clone tool, but store all of
-				the cursor history events (so you can 
-				draw fast and let it catch up with you
-				 without losing info)
+	ctrl+mb1		set the point from which the brush clones							  
+	alt+mb1(hold)		draw with clone tool, but store all of the cursor history
+				events (so you can draw fast and let it catch up with you
+				without losing info)
 	
-	shift+mb1		draw a straigtline from the last place
-				 the cursor was
+	shift+mb1		draw a straigtline from the last place the cursor was
 		 
 	
- Tool Options
+	Tool Options
 	
 	Source
-		Image source     clone from somewhere within the
-				 image (set with ctrl+mb1)
+		Image source     clone from somewhere within the image (set eith ctrl+mb1)
 		Pattern source   clone from the current active pattern
 		
 	Aligned
 	
-		tries to keep the source point and the cloned
-		 point "in sync" YMMV if for pattern source, 
-		having alligned on means the clone tool reveals
-		 a consistent pattern. If off, the clone tool 
-		can start the cloning from a new pointin the pattern
-		 each time.
+		tries to keep the source point and the cloned point "in sync" YMMV
+		if for pattern source, having alligned on means the clone tool
+		reveals a consistent pattern. If off, the clone tool can start the cloning
+		from a new pointin the pattern each time.
 		
 Convolver
 
@@ -409,8 +372,7 @@ Convolver
 		Pressure		used to control intensity of tool
 		
 		Blur			blurs the are under the cursor
-		Sharpen			tries to sharpen the are 
-					under the cursor
+		Sharpen			tries to sharpen the are under the cursor
 		
 
 			

@@ -18,7 +18,7 @@
 #ifndef __BRUSHES_H__
 #define __BRUSHES_H__
 
-#include "linked.h"
+#include <glib.h>
 #include "procedural_db.h"
 #include "temp_buf.h"
 
@@ -35,7 +35,7 @@ struct _GBrush
 };
 
 /*  global variables  */
-extern link_ptr     brush_list;
+extern GSList *     brush_list;
 extern int          num_brushes;
 
 

@@ -43,8 +43,8 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <gtk/gtk.h>
-#include <libgimp/gimp.h>
+#include "gtk/gtk.h"
+#include "libgimp/gimp.h"
 
 
 #define ENTRY_WIDTH 70
@@ -58,10 +58,6 @@
 /* The number of available functions */
 #define N_FUNCTIONS 8
 
-/* I learned that in general PI is not defined in math.h */
-/* (Thanks to all who pointed this out.) Now this #define */
-/* solves the problem rather brutally but once and for all. */
-#define TWIST_PI 3.1415927
 
 /* Identifiers for the distortion function types */
 #define FUNCTION_R_r             0
@@ -328,7 +324,15 @@ static ObjectAndLabel create_slider_with_label(gchar *text,
                                                
 static void	create_functions_menu(GtkWidget *container);                                               
 static void	create_effects_menu(GtkWidget *container);                                 
-                                                                            
+                                               
+static void	create_effects_panel(GtkWidget *container,
+                                   gchar *text1,
+                                   gchar *text2,
+                                   gchar *text3,
+                                   GtkSignalFunc callback_func1,
+                                   GtkSignalFunc callback_func2,
+                                   GtkSignalFunc callback_func3);
+                                   
 static void	create_cutoff_panel(GtkWidget *container);
 
 
@@ -474,6 +478,7 @@ static void run(gchar *name, gint nparams, GParam *param, gint *nreturn_vals, GP
  GDrawable *drawable;
  GRunModeType run_mode;
  GStatusType status = STATUS_SUCCESS;
+ gint i;
  
  run_mode = param[0].data.d_int32;
  
@@ -885,9 +890,6 @@ static void create_functions_menu(GtkWidget *container)
  GtkWidget *child;
  GtkWidget *current_item;
  gint dummy;
- 
- /* current_item must be initialized in order to prevent warnings */
- current_item = NULL;
  
  menu_field = gtk_hbox_new(FALSE, 1);
  gtk_container_border_width(GTK_CONTAINER(menu_field), 2);
@@ -1317,6 +1319,7 @@ static gint user_dialog()
  
  GtkWidget *preview_box;
  GtkWidget *parameter_box;
+ GtkWidget *effects_box;
  GtkWidget *cutoff_box;
  
  GtkWidget *preview_frame;
@@ -1326,6 +1329,12 @@ static gint user_dialog()
  GtkWidget *functions_box;
  
  ObjectAndLabel oal;
+ 
+ 
+ GtkWidget *toggle;
+ 
+ 
+ gchar buffer[12];
  
  /* Create a basic dialog window */
  create_base_dialog();
@@ -2243,20 +2252,19 @@ static void polar_coordinates(gfloat x, gfloat y, gfloat *rho, gfloat *phi)
  
  /* Calculate the radius */
  r = sqrt(x*x + y*y);
- p = 0.0;
  
  /* exceptions first .. */
  if((x == 0.0) && (y == 0.0)) p = 0.0; 
- else if((x < epsilon) && (x > -epsilon) && (y > 0.0)) p = TWIST_PI/2.0;
- else if((x < epsilon) && (x > -epsilon) && (y < 0.0)) p = 3.0*TWIST_PI/2.0;
+ else if((x < epsilon) && (x > -epsilon) && (y > 0.0)) p = M_PI/2.0;
+ else if((x < epsilon) && (x > -epsilon) && (y < 0.0)) p = 3.0*M_PI/2.0;
  else if((x > 0.0) && (y < epsilon) && (y > -epsilon)) p = 0.0;
- else if((x < 0.0) && (y < epsilon) && (y > -epsilon)) p = TWIST_PI;
+ else if((x < 0.0) && (y < epsilon) && (y > -epsilon)) p = M_PI;
  
  /* simple cases in the four quadrants */
  else if((x > 0.0) && (y > 0.0)) p = atan(y/x);
- else if((x < 0.0) && (y > 0.0)) p = TWIST_PI - atan(-y/x);
- else if((x < 0.0) && (y < 0.0)) p = TWIST_PI + atan(y/x);
- else if((x > 0.0) && (y < 0.0)) p = 2.0*TWIST_PI - atan(-y/x);
+ else if((x < 0.0) && (y > 0.0)) p = M_PI - atan(-y/x);
+ else if((x < 0.0) && (y < 0.0)) p = M_PI + atan(y/x);
+ else if((x > 0.0) && (y < 0.0)) p = 2.0*M_PI - atan(-y/x);
  
  /* Return the values */
  *rho = r;
@@ -2358,6 +2366,18 @@ static void distortion_function08(gfloat x1, gfloat x2, gfloat *delta_x1, gfloat
  *delta_x1 = 0.5*parameter_values.a1*(x1 - x0)*exp(-lambda1*(x1 - x0)*(x1 - x0));
  *delta_x2 = 0.5*parameter_values.a2*(x2 - y0)*exp(-lambda2*(x2 - y0)*(x2 - y0));
 }
+
+
+
+static void distortion_function09(gfloat x1, gfloat x2, gfloat *delta_x1, gfloat *delta_x2)
+{
+/*
+ *delta_x1 = 0.1*parameter_values.a1*sin(5.0*parameter_values.a3*x1)*cos(5.0*parameter_values.a4*x1);
+ *delta_x2 = 0.1*parameter_values.a2*sin(5.0*parameter_values.a5*x2)*cos(5.0*parameter_values.a6*x2);
+*/
+}
+
+
 
 
 static void calculate_distortion_function(gint i, gint j, gint width, gint height, gfloat *u, gfloat *v)
@@ -2533,6 +2553,7 @@ static void calculate_pixel_color(gfloat u, gfloat v, guchar *source, gint width
 {
  gint address;
  gfloat ru, rv;
+ gint u0, v0;
  gfloat w0, w1, w2, w3;
  
  guchar red[4];
@@ -2544,13 +2565,13 @@ static void calculate_pixel_color(gfloat u, gfloat v, guchar *source, gint width
   ru = u - (int)u;
   rv = v - (int)v;
   
-  /* Calculate the area weights.  */
+  // Calculate the area weights.
   w0 = (1.0 - ru)*rv;
   w1 = rv*ru;
   w2 = (1.0 - ru)*(1.0 - rv);
   w3 = (1.0 - rv)*ru;
   
-  /* Get the four pixel colors depending on bpp. */
+  // Get the four pixel colors depending on bpp.
   switch(bpp)
   {
    case 4:    

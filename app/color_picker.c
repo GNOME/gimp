@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "appenv.h"
+#include "actionarea.h"
 #include "color_picker.h"
 #include "drawable.h"
 #include "gdisplay.h"
@@ -38,6 +39,7 @@ static void  color_picker_button_release   (Tool *, GdkEventButton *, gpointer);
 static void  color_picker_motion           (Tool *, GdkEventMotion *, gpointer);
 static void  color_picker_cursor_update    (Tool *, GdkEventMotion *, gpointer);
 static void  color_picker_control          (Tool *, int, void *);
+static void  color_picker_info_window_close_callback  (GtkWidget *, gpointer);
 
 static int   get_color                     (GImage *, GimpDrawable *, int, int, int, int);
 static void  color_picker_info_update      (Tool *, int);
@@ -117,6 +119,11 @@ create_color_picker_options (void)
   return options;
 }
 
+static ActionAreaItem action_items[] =
+{
+  { "Close", color_picker_info_window_close_callback, NULL, NULL },
+};
+
 static void
 color_picker_button_press (Tool           *tool,
 			   GdkEventButton *bevent,
@@ -166,6 +173,9 @@ color_picker_button_press (Tool           *tool,
 	default :
 	  break;
 	}
+  /* Create the action area  */
+  action_items[0].user_data = color_picker_info;
+  build_action_area (GTK_DIALOG (color_picker_info->shell), action_items, 1, 0);
     }
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
@@ -198,6 +208,8 @@ color_picker_button_press (Tool           *tool,
 						 COLOR_UPDATE));
       update_type = COLOR_UPDATE;
     }
+
+
 }
 
 static void
@@ -579,4 +591,11 @@ color_picker_invoker (Argument *args)
     }
 
   return return_args;
+}
+
+static void
+color_picker_info_window_close_callback (GtkWidget *w,
+			    gpointer   client_data)
+{
+  info_dialog_popdown ((InfoDialog *) client_data);
 }

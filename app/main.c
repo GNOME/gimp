@@ -41,6 +41,7 @@ static void       init (void);
 /* GLOBAL data */
 int no_interface;
 int no_data;
+int be_verbose;
 int use_shm;
 char *prog_name;		/* The path name we are invoked with */
 char **batch_cmds;
@@ -67,7 +68,7 @@ static char **gimp_argv;
  *      commands.
  */
 
-void
+int
 main (int argc, char **argv)
 {
   int show_version;
@@ -135,6 +136,10 @@ main (int argc, char **argv)
 	{
 	  no_data = TRUE;
 	}
+      else if (strcmp (argv[i], "--verbose") == 0)
+	{
+	  be_verbose = TRUE;
+	}
       else if (strcmp (argv[i], "--no-shm") == 0)
 	{
 	  use_shm = FALSE;
@@ -160,6 +165,7 @@ main (int argc, char **argv)
       g_print ("  -b --batch <commands>  Run in batch mode.\n");
       g_print ("  -n --no-interface      Run without a user interface.\n");
       g_print ("  --no-data              Do not load patterns, gradients, palettes, brushes.\n");
+      g_print ("  --verbose              Show startup messages.\n");
       g_print ("  --no-shm               Do not use shared memory between GIMP and its plugins.\n");
       g_print ("  --no-xshm              Do not use the X Shared Memory extension.\n");
       g_print ("  --display <display>    Use the designated X display.\n\n");
@@ -195,7 +201,10 @@ main (int argc, char **argv)
   install_verify (init);
 
   /* Main application loop */
-  gtk_main ();
+  if (!app_exit_finish_done ())
+    gtk_main ();
+  
+  return 0;
 }
 
 static void

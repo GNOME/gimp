@@ -1,10 +1,14 @@
 /**********************************************************************
- *  AlienMap (Co-)sine color transformation plug-in (Version 1.03)
+ *  AlienMap (Co-)sine color transformation plug-in (Version 1.00)
  *  Daniel Cotting (cotting@mygale.org)
  **********************************************************************
- *  Official homepages: http://www.mygale.org/~cotting
- *                      http://cotting.citeweb.net
- *                      http://village.cyberbrain.com/cotting
+ *  Official Homepage: http://www.mygale.org/~cotting
+ **********************************************************************
+ *  Homepages under construction: http://www.chez.com/cotting
+ *                                http://www.cyberbrain.com/cotting
+ *  You won't be able to see anything yet, as I don't really have the 
+ *  time to build up these two sites :-( 
+ *  Have a look at www.mygale.org/~cotting instead!
  **********************************************************************    
  */
 
@@ -43,7 +47,7 @@
 
 #define PREVIEW_SIZE 128
 #define SCALE_WIDTH  200
-#define ENTRY_WIDTH  45
+#define ENTRY_WIDTH  60
 
 #define SINUS 0
 #define COSINUS 1
@@ -57,19 +61,6 @@ typedef struct {
         gint    redmode;
         gint    greenmode;
         gint    bluemode;
-        gint    redinvert;
-        gint    greeninvert;
-        gint    blueinvert;
-	gdouble redphase;
-        gdouble greenphase;
-        gdouble bluephase;
-	gdouble redfrequency;
-        gdouble greenfrequency;
-        gdouble bluefrequency;
-        gint    redinvert2;
-        gint    greeninvert2;
-        gint    blueinvert2;
-
 } alienmap_vals_t;
 
 typedef struct {
@@ -95,9 +86,9 @@ static void      alienmap_render_row  (const guchar *src_row,
         			     guchar *dest_row,
         			     gint row,
         			     gint row_width,
-        			     gint bytes, double, double, double , double, double, double, double, double, double);
+        			     gint bytes, double, double, double);
 static void      alienmap_get_pixel(int x, int y, guchar *pixel);
-void    	 transform           (short int *, short int *, short int *,double, double, double                  ,double, double, double,double, double, double);
+void    	 transform           (short int *, short int *, short int *,double, double, double);
 
 
 static void      build_preview_source_image(void);
@@ -105,16 +96,15 @@ static void      build_preview_source_image(void);
 static gint      alienmap_dialog(void);
 static void      dialog_update_preview(void);
 static void      dialog_create_value(char *title, GtkTable *table, int row, gdouble *value,
-        			     int left, int right, const char *desc);
+        			     int left, int right);
 static void      dialog_scale_update(GtkAdjustment *adjustment, gdouble *value);
 static void      dialog_entry_update(GtkWidget *widget, gdouble *value);
 static void      dialog_close_callback(GtkWidget *widget, gpointer data);
 static void      dialog_ok_callback(GtkWidget *widget, gpointer data);
-static void      dialog_animation_callback(GtkWidget *widget, gpointer data);
 static void      dialog_cancel_callback(GtkWidget *widget, gpointer data);
 static void      alienmap_toggle_update    (GtkWidget *widget,
         				    gpointer   data);
-GtkWidget       * alienmap_logo_dialog(void);
+GtkWidget * alienmap_logo_dialog(void);
 
 
 
@@ -124,14 +114,6 @@ GtkWidget       * alienmap_logo_dialog(void);
 
 GtkWidget *maindlg;
 GtkWidget *logodlg;
-GtkTooltips *tips;
-GdkColor tips_fg,tips_bg;	
-int ready=0;
-static GParam *ExternalParam=NULL;
-static int     ExternalInt;
-gint32         image_ID;
-
-
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -149,7 +131,7 @@ static alienmap_interface_t wint = {
 }; /* wint */
 
 static alienmap_vals_t wvals = {
-        128,128,128,COSINUS,SINUS,SINUS,0,0,0,0,0,0,1,1,1,0,0,0,
+        128,128,128,COSINUS,SINUS,SINUS,
 }; /* wvals */
 
 static GDrawable *drawable;
@@ -173,46 +155,25 @@ gint do_greennone;
 gint do_bluesinus;
 gint do_bluecosinus;
 gint do_bluenone;
-
-gint do_redinvert;
-gint do_greeninvert;
-gint do_blueinvert;
-
-gint do_redinvert2;
-gint do_greeninvert2;
-gint do_blueinvert2;
-
 /***** Functions *****/
 
 
-MAIN ()
+MAIN ();
 
 static void
 query ()
 {
   static GParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode",    "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",       "Input image" },
-    { PARAM_DRAWABLE, "drawable",    "Input drawable" },
-    { PARAM_FLOAT,    "redstretch",   "Red component stretching factor (0-128)" },
-    { PARAM_FLOAT,    "greenstretch", "Green component stretching factor (0-128)" },
-    { PARAM_FLOAT,    "bluestretch",  "Blue component stretching factor (0-128)" },
+    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",        "Input image" },
+    { PARAM_DRAWABLE, "drawable",     "Input drawable" },
+    { PARAM_INT8,    "redstretch",   "Red component stretching factor (0-128)" },
+    { PARAM_INT8,    "greenstretch", "Green component stretching factor (0-128)" },
+    { PARAM_INT8,    "bluestretch",  "Blue component stretching factor (0-128)" },
     { PARAM_INT8,    "redmode",      "Red application mode (0:SIN;1:COS;2:NONE)" },
     { PARAM_INT8,    "greenmode",    "Green application mode (0:SIN;1:COS;2:NONE)" },
     { PARAM_INT8,    "bluemode",     "Blue application mode (0:SIN;1:COS;2:NONE)" },
-    { PARAM_INT8,    "redinvert",    "Red inversion before transformation (true or false)" },
-    { PARAM_INT8,    "greeninvert",  "Green inversion before transformation (true or false)" },
-    { PARAM_INT8,    "blueinvert",   "Blue inversion before transformation (true or false)" },
-    { PARAM_FLOAT,    "redphase",     "Red component phase displacement [-PI;PI]" },
-    { PARAM_FLOAT,    "greenphase",   "Green component phase displacement [-PI;PI]" },
-    { PARAM_FLOAT,    "bluephase",    "Blue component phase displacement [-PI;PI]" },
-    { PARAM_FLOAT,    "redfrequency",     "Red component frequency" },
-    { PARAM_FLOAT,    "greenfrequency",   "Green component frequency" },
-    { PARAM_FLOAT,    "bluefrequency",    "Blue component frequency" },
-    { PARAM_INT8,    "redinvert2",    "Red inversion after transformation (true or false)" },
-    { PARAM_INT8,    "greeninvert2",  "Green inversion after transformation (true or false)" },
-    { PARAM_INT8,    "blueinvert2",   "Blue inversion after transformation (true or false)" },
   };
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
@@ -223,7 +184,7 @@ query ()
         		  "No help yet. Just try it and you'll see!",
         		  "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
         		  "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
-        		  "December 1997",
+        		  "1th May 1997",
         		  "<Image>/Filters/Image/Alien-Map",
         		  "RGB*",
         		  PROC_PLUG_IN,
@@ -236,37 +197,20 @@ query ()
 void
 transform  (short int *r,
             short int *g,
-            short int *b, double redstretch, double greenstretch, double bluestretch,
-	    double redphase, double greenphase, double bluephase,
-	    double redfrequency, double greenfrequency, double bluefrequency
-	    )
+            short int *b, double redstretch, double greenstretch, double bluestretch)
 {
   int red, green, blue;
-  double pi=atan(1)*4;
+  float pi=3.1415926;
   red = *r;
   green = *g;
   blue = *b;
-  
-     	    if (wvals.redinvert) {
-		red = 255-red;
-	    }
-	    if (wvals.greeninvert) {
-		green = 255-green;
-	    }
-	    if (wvals.blueinvert) {
-		blue = 255-blue;
-	    }
-
   switch (wvals.redmode)
   {
     case SINUS:
-       red    = (int) redstretch*(1.0+sin((red/128.0-1)*pi*redfrequency+redphase));
+       red    = (int) redstretch*(1.0+sin((red/128.0-1)*pi));
        break;
     case COSINUS:
-       red    = (int) redstretch*(1.0+cos((red/128.0-1)*pi*redfrequency+redphase));
-       break;
-    case NONE:
-       red    = (int) (redstretch *(red / 128.0));
+       red    = (int) redstretch*(1.0+cos((red/128.0-1)*pi));
        break;
     default:
     break;
@@ -275,13 +219,10 @@ transform  (short int *r,
   switch (wvals.greenmode)
   {
     case SINUS:
-       green    = (int) greenstretch*(1.0+sin((green/128.0-1)*pi*greenfrequency+greenphase));
+       green    = (int) greenstretch*(1.0+sin((green/128.0-1)*pi));
        break;
     case COSINUS:
-       green    = (int) greenstretch*(1.0+cos((green/128.0-1)*pi*greenfrequency+greenphase));
-       break;
-    case NONE:
-       green    = (int) (greenstretch *(green / 128.0));
+       green    = (int) greenstretch*(1.0+cos((green/128.0-1)*pi));
        break;
     default:
     break;
@@ -290,36 +231,14 @@ transform  (short int *r,
   switch (wvals.bluemode)
   {
     case SINUS:
-       blue    = (int) bluestretch*(1.0+sin((blue/128.0-1)*pi*bluefrequency+bluephase));
+       blue    = (int) bluestretch*(1.0+sin((blue/128.0-1)*pi));
        break;
     case COSINUS:
-       blue    = (int) bluestretch*(1.0+cos((blue/128.0-1)*pi*bluefrequency+bluephase));
-       break;
-    case NONE:
-       blue    = (int) (bluestretch *(blue / 128.0));
+       blue    = (int) bluestretch*(1.0+cos((blue/128.0-1)*pi));
        break;
     default:
     break;
    }
-   
-   if (red== 256) {
-         red= 255;}
-   if (green== 256) {
-         green= 255;}
-   if (blue== 256) 
-       {blue= 255;}
-       
-     	    if (wvals.redinvert2) {
-		red = 255-red;
-	    }
-	    if (wvals.greeninvert2) {
-		green = 255-green;
-	    }
-	    if (wvals.blueinvert2) {
-		blue = 255-blue;
-	    }
-       
-
   *r = red;
   *g = green;
   *b = blue;
@@ -334,6 +253,8 @@ run (char    *name,
      GParam **return_vals)
 {
   static GParam values[1];
+  /* GDrawable *drawable; */
+  /* gint32 image_ID; */
   GRunModeType  run_mode;
   double        xhsiz, yhsiz;
   int   	pwidth, pheight;
@@ -352,7 +273,7 @@ run (char    *name,
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-  image_ID = param[1].data.d_image;
+  /* image_ID = param[1].data.d_image; */
   tile_width  = gimp_tile_width();
   tile_height = gimp_tile_height();
 
@@ -411,29 +332,17 @@ run (char    *name,
         	case RUN_NONINTERACTIVE:
         		/* Make sure all the arguments are present */
 
-        		if (nparams != 21)
+        		if (nparams != 9)
         			status = STATUS_CALLING_ERROR;
 
         		if (status == STATUS_SUCCESS)
 
-        			wvals.redstretch = param[3].data.d_float;
-        			wvals.greenstretch = param[4].data.d_float;
-        			wvals.bluestretch = param[5].data.d_float;
+        			wvals.redstretch = param[3].data.d_int8;
+        			wvals.greenstretch = param[4].data.d_int8;
+        			wvals.bluestretch = param[5].data.d_int8;
         			wvals.redmode = param[6].data.d_int8;
         			wvals.greenmode = param[7].data.d_int8;
         			wvals.bluemode = param[8].data.d_int8;
-        			wvals.redinvert = param[9].data.d_int8;
-        			wvals.greeninvert = param[10].data.d_int8;
-        			wvals.blueinvert = param[11].data.d_int8;
-        			wvals.redphase = param[12].data.d_float;
-        			wvals.greenphase = param[13].data.d_float;
-        			wvals.bluephase = param[14].data.d_float;
-        			wvals.redfrequency = param[15].data.d_float;
-        			wvals.greenfrequency= param[16].data.d_float;
-        			wvals.bluefrequency = param[17].data.d_float;
-        			wvals.redinvert2 = param[18].data.d_int8;
-        			wvals.greeninvert2 = param[19].data.d_int8;
-        			wvals.blueinvert2 = param[20].data.d_int8;
 
 
         		break;
@@ -477,6 +386,7 @@ run (char    *name,
         }
       else
         {
+          /* gimp_message("This filter only applies on RGB-images"); */
           status = STATUS_EXECUTION_ERROR;
         }
     }
@@ -536,10 +446,7 @@ alienmap_render_row (const guchar *src_row,
         	  guchar *dest_row,
         	  gint row,
         	  gint row_width,
-        	  gint bytes, double redstretch, double greenstretch, double bluestretch,
-   	          double redphase, double greenphase, double bluephase,
-          	  double redfrequency, double greenfrequency, double bluefrequency		  
-		  )
+        	  gint bytes, double redstretch, double greenstretch, double bluestretch)
 
 
 
@@ -555,8 +462,7 @@ alienmap_render_row (const guchar *src_row,
       v2 = (short int)src_row[col*bytes +1];
       v3 = (short int)src_row[col*bytes +2];
 
-      transform(&v1, &v2, &v3, redstretch, greenstretch, bluestretch,redphase, greenphase,bluephase,
-	     redfrequency, greenfrequency, bluefrequency);
+      transform(&v1, &v2, &v3, redstretch, greenstretch, bluestretch);
 
       dest_row[col*bytes] = (int)v1;
       dest_row[col*bytes +1] = (int)v2;
@@ -585,8 +491,6 @@ alienmap (GDrawable *drawable)
   gint row;
   gint x1, y1, x2, y2;
   double redstretch,greenstretch,bluestretch;
-  double redphase, greenphase, bluephase;
-  double redfrequency,  greenfrequency,bluefrequency;
 
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only
@@ -616,12 +520,6 @@ alienmap (GDrawable *drawable)
   redstretch = wvals.redstretch;
   greenstretch = wvals.greenstretch;
   bluestretch = wvals.bluestretch;
-  redphase = wvals.redphase;
-  greenphase = wvals.greenphase;
-  bluephase = wvals.bluephase;
-  redfrequency = wvals.redfrequency;
-  greenfrequency = wvals.greenfrequency;
-  bluefrequency = wvals.bluefrequency;
 
   for (row = y1; row < y2; row++)
 
@@ -633,9 +531,7 @@ alienmap (GDrawable *drawable)
         		row,
         		(x2 - x1),
         		bytes,
-        		redstretch, greenstretch, bluestretch,
-			redphase, greenphase, bluephase,
-                        redfrequency, greenfrequency, bluefrequency);
+        		redstretch, greenstretch, bluestretch);
 
       /*  store the dest  */
       gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, (x2 - x1));
@@ -710,79 +606,6 @@ alienmap_close_callback(GtkWidget *widget,  gpointer   data)
   gtk_main_quit();
 }
 
-static void
-dialog_animation_callback(GtkWidget *widget,  gpointer   data)
-{ 
-  char r_stretch[20], g_stretch[20], b_stretch[20];
-  char r_mode[10], g_mode[10], b_mode[10];
-  char r_invert[10], g_invert[10], b_invert[10];
-  char r_invert2[10], g_invert2[10], b_invert2[10];
-  char r_phase[20], g_phase[20], b_phase[20];
-  char r_freq[20], g_freq[20], b_freq[20];
-
-  sprintf(r_stretch,"%f", wvals.redstretch);
-  sprintf(g_stretch,"%f", wvals.greenstretch);
-  sprintf(b_stretch,"%f", wvals.bluestretch);
-
-  sprintf(r_mode,"%i", wvals.redmode);
-  sprintf(g_mode,"%i", wvals.greenmode);
-  sprintf(b_mode,"%i", wvals.bluemode);
-
-  sprintf(r_invert,"%s", (wvals.redinvert) ? "TRUE" : "FALSE");
-  sprintf(g_invert,"%s", (wvals.greeninvert) ? "TRUE" : "FALSE");
-  sprintf(b_invert,"%s", (wvals.blueinvert) ? "TRUE" : "FALSE");
-
-  sprintf(r_phase,"%f", wvals.redphase);
-  sprintf(g_phase,"%f", wvals.greenphase);
-  sprintf(b_phase,"%f", wvals.bluephase);
-
-  sprintf(r_freq,"%f", wvals.redfrequency);
-  sprintf(g_freq,"%f", wvals.greenfrequency);
-  sprintf(b_freq,"%f", wvals.bluefrequency);
-
-    
-  sprintf(r_invert2,"%s", (wvals.redinvert2) ? "TRUE" : "FALSE");
-  sprintf(g_invert2,"%s", (wvals.greeninvert2) ? "TRUE" : "FALSE");
-  sprintf(b_invert2,"%s", (wvals.blueinvert2) ? "TRUE" : "FALSE");
-
-  gtk_main_quit();
-    
-  ExternalParam = gimp_run_procedure("script-fu-colorcycling-anim",&ExternalInt,
-                                     PARAM_INT32, 0,
-				     PARAM_IMAGE, image_ID,
-				     PARAM_DRAWABLE, drawable->id,
-				     PARAM_STRING, "10",
-				     PARAM_STRING, r_stretch,
-				     PARAM_STRING, g_stretch,
-				     PARAM_STRING, b_stretch,
-				     PARAM_STRING, r_stretch,
-				     PARAM_STRING, g_stretch,
-				     PARAM_STRING, b_stretch,
-				     PARAM_STRING, r_mode,
-				     PARAM_STRING, g_mode,
-				     PARAM_STRING, b_mode,
-				     PARAM_STRING, r_invert,
-				     PARAM_STRING, g_invert,
-				     PARAM_STRING, b_invert,
-				     PARAM_STRING, r_phase,
-				     PARAM_STRING, g_phase,
-				     PARAM_STRING, b_phase,
-				     PARAM_STRING, r_phase,
-				     PARAM_STRING, g_phase,
-				     PARAM_STRING, b_phase,
-				     PARAM_STRING, r_freq,
-				     PARAM_STRING, g_freq,
-				     PARAM_STRING, b_freq,
-				     PARAM_STRING, r_freq,
-				     PARAM_STRING, g_freq,
-				     PARAM_STRING, b_freq,
- 			             PARAM_STRING, r_invert2,
-				     PARAM_STRING, g_invert2,
-				     PARAM_STRING, b_invert2,				      
-				     PARAM_END);
-  gtk_main_quit();
-}
-
 
 
 static void
@@ -791,14 +614,6 @@ alienmap_about_callback(GtkWidget *widget, gpointer   data)
   gtk_widget_set_sensitive (maindlg, FALSE);
   alienmap_logo_dialog();
 }
-
-static void
-set_tooltip (GtkTooltips *tooltips, GtkWidget *widget, const char *desc)
-{
-  if (desc && desc[0])
-    gtk_tooltips_set_tips (tooltips, widget, (char *) desc);
-}
-
 
 /*****/
 
@@ -813,7 +628,6 @@ alienmap_dialog(void)
         GtkWidget  *table, *table2, *table3;
         GtkWidget  *button;
         gint        argc;
-	double      pi=atan(1)*4.0;
         gchar     **argv;
         guchar     *color_cube;
         GSList *redmode_group = NULL;
@@ -828,17 +642,12 @@ alienmap_dialog(void)
         do_bluesinus = (wvals.bluemode == SINUS);
         do_bluecosinus = (wvals.bluemode == COSINUS);
         do_bluenone = (wvals.bluemode == NONE);
+        /*
+        printf("Waiting... (pid %d)\n", getpid());
+        kill(getpid(), SIGSTOP);
+        */
 
-        do_redinvert = (wvals.redinvert != 0);
-        do_greeninvert = (wvals.greeninvert != 0);
-        do_blueinvert = (wvals.blueinvert != 0);
-
-
-	do_redinvert2 = (wvals.redinvert2 != 0);
-        do_greeninvert2 = (wvals.greeninvert2 != 0);
-        do_blueinvert2 = (wvals.blueinvert2 != 0);
-
-	argc    = 1;
+        argc    = 1;
         argv    = g_new(gchar *, 1);
         argv[0] = g_strdup("alienmap");
 
@@ -861,147 +670,55 @@ alienmap_dialog(void)
         		   (GtkSignalFunc) dialog_close_callback,
         		   NULL);
 
-        top_table = gtk_table_new(10, 10, FALSE);
+        top_table = gtk_table_new(4, 4, FALSE);
         gtk_container_border_width(GTK_CONTAINER(top_table), 6);
         gtk_table_set_row_spacings(GTK_TABLE(top_table), 4);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), top_table, FALSE, FALSE, 0);
         gtk_widget_show(top_table);
 
-	/* use black as foreground: */
-        tips = gtk_tooltips_new ();
-        tips_fg.red   = 0;
-        tips_fg.green = 0;
-        tips_fg.blue  = 0;
-       /* postit yellow (khaki) as background: */
-        gdk_color_alloc (gtk_widget_get_colormap (top_table), &tips_fg);
-        tips_bg.red   = 61669;
-        tips_bg.green = 59113;
-        tips_bg.blue  = 35979;
-        gdk_color_alloc (gtk_widget_get_colormap (top_table), &tips_bg);
-        gtk_tooltips_set_colors (tips,&tips_bg,&tips_fg);
-
         /* Preview */
 
         frame = gtk_frame_new(NULL);
         gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
-        gtk_table_attach(GTK_TABLE(top_table), frame, 0, 1, 0, 1, 0, 0, 5, 0);
+        gtk_table_attach(GTK_TABLE(top_table), frame, 0, 1, 0, 1, 0, 0, 0, 0);
         gtk_widget_show(frame);
 
         wint.preview = gtk_preview_new(GTK_PREVIEW_COLOR);
         gtk_preview_size(GTK_PREVIEW(wint.preview), preview_width, preview_height);
         gtk_container_add(GTK_CONTAINER(frame), wint.preview);
         gtk_widget_show(wint.preview);
-	
+
         /* Controls */
 
-	frame = gtk_frame_new ("Color intensity");
-        gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-        gtk_container_border_width(GTK_CONTAINER(frame), 0);
-        gtk_table_attach (GTK_TABLE (top_table), frame, 0, 4, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 0);
-        toggle_vbox = gtk_vbox_new (FALSE, 0);
-        gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 0);
-        gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-
         table = gtk_table_new(1, 3, FALSE);
         gtk_container_border_width(GTK_CONTAINER(table), 0);
-        gtk_box_pack_start (GTK_BOX (toggle_vbox), table, FALSE, FALSE, 0);
+        gtk_table_attach(GTK_TABLE(top_table), table, 0, 4, 1, 2, GTK_EXPAND | GTK_FILL, 0, 0, 0);
         gtk_widget_show(table);
 
-        dialog_create_value("R", GTK_TABLE(table), 0, &wvals.redstretch,0,128.00000000000, "Change intensity of the red channel");
+        dialog_create_value("R", GTK_TABLE(table), 0, &wvals.redstretch,0,128);
 
 
         table2 = gtk_table_new(1, 3, FALSE);
         gtk_container_border_width(GTK_CONTAINER(table2), 0);
-        gtk_box_pack_start (GTK_BOX (toggle_vbox), table2, FALSE, FALSE, 0);
+        gtk_table_attach(GTK_TABLE(top_table), table2, 0, 4, 2, 3, GTK_EXPAND | GTK_FILL, 0, 0, 0);
         gtk_widget_show(table2);
 
-        dialog_create_value("G", GTK_TABLE(table2), 0, &wvals.greenstretch,0,128.0000000000000, "Change intensity of the green channel");
+        dialog_create_value("G", GTK_TABLE(table2), 0, &wvals.greenstretch,0,128);
 
 
         table3 = gtk_table_new(1, 3, FALSE);
         gtk_container_border_width(GTK_CONTAINER(table3), 0);
-        gtk_box_pack_start (GTK_BOX (toggle_vbox), table3, FALSE, FALSE, 0);
+        gtk_table_attach(GTK_TABLE(top_table), table3, 0, 4, 3, 4, GTK_EXPAND | GTK_FILL, 0, 0, 0);
         gtk_widget_show(table3);
 
-        dialog_create_value("B", GTK_TABLE(table3), 0, &wvals.bluestretch,0,128.00000000000000, "Change intensity of the blue channel");
-        gtk_widget_show(toggle_vbox);
-        gtk_widget_show(frame);
+        dialog_create_value("B", GTK_TABLE(table3), 0, &wvals.bluestretch,0,128);
 
-	frame = gtk_frame_new ("Phase displacement");
-        gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-        gtk_container_border_width(GTK_CONTAINER(frame), 0);
-        gtk_table_attach (GTK_TABLE (top_table), frame, 0, 4, 4, 5, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 0);
-        toggle_vbox = gtk_vbox_new (FALSE, 0);
-        gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 0);
-        gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-
-        table = gtk_table_new(1, 3, FALSE);
-        gtk_container_border_width(GTK_CONTAINER(table), 0);
-        gtk_box_pack_start (GTK_BOX (toggle_vbox), table, FALSE, FALSE, 0);
-        gtk_widget_show(table);
-        gtk_widget_show(toggle_vbox);
-        gtk_widget_show(frame);
-
-
-        dialog_create_value("R", GTK_TABLE(table), 0, &wvals.redphase,-pi,pi, "Change phase displacement of function for red channel");
-
-
-        table2 = gtk_table_new(1, 3, FALSE);
-        gtk_container_border_width(GTK_CONTAINER(table2), 0);
-        gtk_box_pack_start (GTK_BOX (toggle_vbox), table2, FALSE, FALSE, 0);
-        gtk_widget_show(table2);
-
-        dialog_create_value("G", GTK_TABLE(table2), 0, &wvals.greenphase,-pi,pi, "Change phase displacement of function for green channel");
-
-
-        table3 = gtk_table_new(1, 3, FALSE);
-        gtk_container_border_width(GTK_CONTAINER(table3), 0);
-        gtk_box_pack_start (GTK_BOX (toggle_vbox), table3, FALSE, FALSE, 0);
-        gtk_widget_show(table3);
-
-        dialog_create_value("B", GTK_TABLE(table3), 0, &wvals.bluephase,-pi,pi, "Change phase displacement of function for blue channel");
-
-	
-	frame = gtk_frame_new ("Frequency");
-        gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-        gtk_container_border_width(GTK_CONTAINER(frame), 0);
-        gtk_table_attach (GTK_TABLE (top_table), frame, 0, 4, 7, 8, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 0);
-        toggle_vbox = gtk_vbox_new (FALSE, 0);
-        gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 0);
-        gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-
-        table = gtk_table_new(1, 3, FALSE);
-        gtk_container_border_width(GTK_CONTAINER(table), 0);
-        gtk_box_pack_start (GTK_BOX (toggle_vbox), table, FALSE, FALSE, 0);
-        gtk_widget_show(table);
-        gtk_widget_show(toggle_vbox);
-        gtk_widget_show(frame);
-
-        dialog_create_value("R", GTK_TABLE(table), 0, &wvals.redfrequency,0,10, "Change frequency of function for red channel");
-
-
-        table2 = gtk_table_new(1, 3, FALSE);
-        gtk_container_border_width(GTK_CONTAINER(table2), 0);
-        gtk_box_pack_start (GTK_BOX (toggle_vbox), table2, FALSE, FALSE, 0);
-        gtk_widget_show(table2);
-
-        dialog_create_value("G", GTK_TABLE(table2), 0, &wvals.greenfrequency,0,10, "Change frequency of function for green channel");
-
-
-        table3 = gtk_table_new(1, 3, FALSE);
-        gtk_container_border_width(GTK_CONTAINER(table3), 0);
-	gtk_box_pack_start (GTK_BOX (toggle_vbox), table3, FALSE, FALSE, 0);
-
-        gtk_widget_show(table3);
-
-        dialog_create_value("B", GTK_TABLE(table3), 0, &wvals.bluefrequency,0,10, "Change frequency of function for blue channel");
-	
 /*  Redmode toggle box  */
-    frame = gtk_frame_new ("Red");
+    frame = gtk_frame_new ("Red:");
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-    gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 0);
-    toggle_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 0);
+    gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 5);
+    toggle_vbox = gtk_vbox_new (FALSE, 5);
+    gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
     gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
     toggle = gtk_radio_button_new_with_label (redmode_group, "Sine");
@@ -1012,8 +729,6 @@ alienmap_dialog(void)
         		&do_redsinus);
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_redsinus);
     gtk_widget_show (toggle);
-   
-    set_tooltip(tips,toggle,"Use sine-function for red component");
 
     toggle = gtk_radio_button_new_with_label (redmode_group, "Cosine");
     redmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
@@ -1023,7 +738,6 @@ alienmap_dialog(void)
         		&do_redcosinus);
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_redcosinus);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Use cosine-function for red component");
 
     toggle = gtk_radio_button_new_with_label (redmode_group, "None");
     redmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
@@ -1033,36 +747,17 @@ alienmap_dialog(void)
         		&do_rednone);
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_rednone);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Red channel: use linear mapping instead of any trigonometrical function");
-    
-    toggle = gtk_check_button_new_with_label("Inversion 1");
-    gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
-    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-		       (GtkSignalFunc) alienmap_toggle_update,
-		       		       &wvals.redinvert);
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), wvals.redinvert);
-    gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, "If you enable this option, higher color values will be swapped with lower ones (and vice versa) before color transformation is applied.");
-
-    toggle = gtk_check_button_new_with_label("Inversion 2");
-    gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
-    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-		       (GtkSignalFunc) alienmap_toggle_update,
-		       		       &wvals.redinvert2);
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), wvals.redinvert2);
-    gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, "If you enable this option, higher color values will be swapped with lower ones (and vice versa) after color transformation is applied.");
 
     gtk_widget_show (toggle_vbox);
     gtk_widget_show (frame);
 
 
 /*  Greenmode toggle box  */
-    frame = gtk_frame_new ("Green");
+    frame = gtk_frame_new ("Green:");
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-    gtk_table_attach (GTK_TABLE (top_table), frame, 2, 3, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 0);
-    toggle_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 0);
+    gtk_table_attach (GTK_TABLE (top_table), frame, 2, 3, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 5);
+    toggle_vbox = gtk_vbox_new (FALSE, 5);
+    gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
     gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
     toggle = gtk_radio_button_new_with_label (greenmode_group, "Sine");
@@ -1073,7 +768,6 @@ alienmap_dialog(void)
         		&do_greensinus);
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_greensinus);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Use sine-function for green component");
 
     toggle = gtk_radio_button_new_with_label (greenmode_group, "Cosine");
     greenmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
@@ -1083,7 +777,6 @@ alienmap_dialog(void)
         		&do_greencosinus);
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_greencosinus);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Use cosine-function for green component");
 
     toggle = gtk_radio_button_new_with_label (greenmode_group, "None");
     greenmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
@@ -1093,37 +786,17 @@ alienmap_dialog(void)
         		&do_greennone);
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_greennone);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Green channel: use linear mapping instead of any trigonometrical function");
 
-    toggle = gtk_check_button_new_with_label("Inversion 1");
-    gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
-    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-		       (GtkSignalFunc) alienmap_toggle_update,
-		       		       &wvals.greeninvert);
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), wvals.greeninvert);
-    gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, "If you enable this option higher color values will be swapped with lower ones (and vice versa) before color transformation is applied.");
-
-    toggle = gtk_check_button_new_with_label("Inversion 2");
-    gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
-    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-		       (GtkSignalFunc) alienmap_toggle_update,
-		       		       &wvals.greeninvert2);
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), wvals.greeninvert2);
-    gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, "If you enable this option higher color values will be swapped with lower ones (and vice versa) after color transformation is applied.");
-
-    
     gtk_widget_show (toggle_vbox);
     gtk_widget_show (frame);
 
 
 /*  Bluemode toggle box  */
-    frame = gtk_frame_new ("Blue");
+    frame = gtk_frame_new ("Blue:");
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-    gtk_table_attach (GTK_TABLE (top_table), frame, 3, 4, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 0);
-    toggle_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 0);
+    gtk_table_attach (GTK_TABLE (top_table), frame, 3, 4, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 5);
+    toggle_vbox = gtk_vbox_new (FALSE, 5);
+    gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
     gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
     toggle = gtk_radio_button_new_with_label (bluemode_group, "Sine");
@@ -1134,7 +807,6 @@ alienmap_dialog(void)
         		&do_bluesinus);
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_bluesinus);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Use sine-function for blue component");
 
     toggle = gtk_radio_button_new_with_label (bluemode_group, "Cosine");
     bluemode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
@@ -1144,7 +816,6 @@ alienmap_dialog(void)
         		&do_bluecosinus);
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_bluecosinus);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Use cosine-function for blue component");
 
     toggle = gtk_radio_button_new_with_label (bluemode_group, "None");
     bluemode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
@@ -1154,28 +825,10 @@ alienmap_dialog(void)
         		&do_bluenone);
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_bluenone);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Blue channel: use linear mapping instead of any trigonometrical function");
-
-    toggle = gtk_check_button_new_with_label("Inversion 1");
-    gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
-    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-		       (GtkSignalFunc) alienmap_toggle_update,
-		       		       &wvals.blueinvert);
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), wvals.blueinvert);
-    gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, "If you enable this option higher color values will be swapped with lower ones (and vice versa) before color transformation is applied.");
-
-    toggle = gtk_check_button_new_with_label("Inversion 2");
-    gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
-    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-		       (GtkSignalFunc) alienmap_toggle_update,
-		       		       &wvals.blueinvert2);
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), wvals.blueinvert2);
-    gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, "If you enable this option higher color values will be swapped with lower ones (and vice versa) after color transformation is applied.");
 
     gtk_widget_show (toggle_vbox);
     gtk_widget_show (frame);
+    /*    gtk_widget_show (table); */
 
 
         /* Buttons */
@@ -1191,18 +844,7 @@ gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
         gtk_widget_grab_default(button);
         gtk_widget_show(button);
-        set_tooltip(tips,button,"Accept settings and apply filter on image");
 
-	button = gtk_button_new_with_label("Animation");
-        GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-        gtk_signal_connect(GTK_OBJECT(button), "clicked",
-        		   (GtkSignalFunc) dialog_animation_callback,
-        		   dialog);
-        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-        gtk_widget_show(button);
-        set_tooltip(tips,button,"Create an animation with the color-cycling script and then exit this dialog box.");
-
-	
         button = gtk_button_new_with_label("Cancel");
         GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
         gtk_signal_connect(GTK_OBJECT(button), "clicked",
@@ -1210,7 +852,6 @@ gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
         		   dialog);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
         gtk_widget_show(button);
-        set_tooltip(tips,button,"Reject any changes and close plug-in");
 
 	button = gtk_button_new_with_label("About...");
         GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
@@ -1219,13 +860,10 @@ gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
 		     button, TRUE, TRUE, 0);
         gtk_widget_show(button);
-	set_tooltip(tips,button,"Show information about this plug-in and the author");
-
 
         /* Done */
 
         gtk_widget_show(dialog);
-	ready=1;
         dialog_update_preview();
 
         gtk_main();
@@ -1252,12 +890,10 @@ dialog_update_preview(void)
         int  px, py;
         int     x, y;
         double  redstretch, greenstretch, bluestretch;
-        double  redphase, greenphase, bluephase;
-        double  redfrequency, greenfrequency, bluefrequency;
         short int r,g,b;
         double  scale_x, scale_y;
         guchar *p_ul, *i, *p;
-        if (ready==0) return;
+
         left   = sel_x1;
         right  = sel_x2 - 1;
         bottom = sel_y2 - 1;
@@ -1268,14 +904,6 @@ dialog_update_preview(void)
         redstretch = wvals.redstretch;
         greenstretch = wvals.greenstretch;
         bluestretch = wvals.bluestretch;
-	
-        redphase = wvals.redphase;
-        greenphase = wvals.greenphase;
-        bluephase = wvals.bluephase;
-
-        redfrequency = wvals.redfrequency;
-        greenfrequency = wvals.greenfrequency;
-        bluefrequency = wvals.bluefrequency;
 
         scale_x = (double) (preview_width - 1) / (right - left);
         scale_y = (double) (preview_height - 1) / (bottom - top);
@@ -1292,16 +920,14 @@ dialog_update_preview(void)
         	       r = *i++;
         	       g = *i++;
         	       b = *i;
-        	       transform(&r,&g,&b,redstretch, greenstretch, bluestretch
-		        , redphase, greenphase, bluephase,
-                        redfrequency, greenfrequency, bluefrequency);
+        	       transform(&r,&g,&b,redstretch, greenstretch, bluestretch);
         	       p_ul[0] = r;
         	       p_ul[1] = g;
         	       p_ul[2] = b;
         	       p_ul += 3;
-        	       px += 1; 
+        	       px += 1; /*dx; */
         	} /* for */
-        	py +=1; 
+        	py +=1; /*  dy; */
         } /* for */
 
         p = wint.wimage;
@@ -1319,7 +945,7 @@ dialog_update_preview(void)
 
 static void
 dialog_create_value(char *title, GtkTable *table, int row, gdouble *value,
-        	    int left, int right, const char *desc)
+        	    int left, int right)
 {
         GtkWidget *label;
         GtkWidget *scale;
@@ -1334,8 +960,8 @@ dialog_create_value(char *title, GtkTable *table, int row, gdouble *value,
 
 
         scale_data = gtk_adjustment_new(*value, left, right,
-        				(right - left) / 1000,
-        				(right - left) / 1000,
+        				(right - left) / 128,
+        				(right - left) / 128,
         				0);
 
         gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
@@ -1349,7 +975,6 @@ dialog_create_value(char *title, GtkTable *table, int row, gdouble *value,
         gtk_scale_set_digits(GTK_SCALE(scale), 3);
         gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
         gtk_widget_show(scale);
-        set_tooltip(tips,scale,desc);
 
         entry = gtk_entry_new();
         gtk_object_set_user_data(GTK_OBJECT(entry), scale_data);
@@ -1362,8 +987,6 @@ dialog_create_value(char *title, GtkTable *table, int row, gdouble *value,
         		   value);
         gtk_table_attach(GTK_TABLE(table), entry, 2, 3, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
         gtk_widget_show(entry);
-	set_tooltip(tips,entry,desc);
-
 } /* dialog_create_value */
 
 /*****/
@@ -1472,7 +1095,6 @@ alienmap_toggle_update (GtkWidget *widget,
     wvals.bluemode = COSINUS;
   else if (do_bluenone)
     wvals.bluemode = NONE;
-    
   dialog_update_preview();
 
 }
@@ -1489,8 +1111,8 @@ alienmap_logo_dialog()
   GtkWidget *xvbox;
   GtkWidget *xhbox;
   char *text;
-  guchar *temp,*temp2;
-  unsigned char *datapointer;
+  gchar *temp,*temp2;
+  char *datapointer;
   gint y,x;
   xdlg = logodlg = gtk_dialog_new();
   gtk_window_set_title(GTK_WINDOW(xdlg), "About");
@@ -1508,7 +1130,6 @@ alienmap_logo_dialog()
 		     xbutton, TRUE, TRUE, 0);
   gtk_widget_grab_default(xbutton);
   gtk_widget_show(xbutton);
-  set_tooltip(tips,xbutton,"This closes the information box");
 
   xframe = gtk_frame_new(NULL);
   gtk_frame_set_shadow_type(GTK_FRAME(xframe), GTK_SHADOW_ETCHED_IN);
@@ -1532,7 +1153,7 @@ alienmap_logo_dialog()
   xpreview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (xpreview), logo_width, logo_height);
   temp = g_malloc((logo_width+10)*3);
-  datapointer=header_data+logo_width*logo_height-1;
+  datapointer=header_data;
   for (y = 0; y < logo_height; y++){
     temp2=temp;
     for (x = 0; x< logo_width; x++) {
@@ -1555,8 +1176,8 @@ alienmap_logo_dialog()
   	 "CH-3066 Stettlen (Switzerland)\n\n"
 	 "cotting@mygale.org\n"
 	 "http://www.mygale.org/~cotting\n\n"
-         "AlienMap Plug-In for the GIMP\n"
-         "Version 1.03\n";
+          "AlienMap Plug-In for the GIMP\n"
+          "Version 1.00\n";
   xlabel = gtk_label_new(text);
   gtk_box_pack_start(GTK_BOX(xhbox), xlabel, TRUE, FALSE, 0);
   gtk_widget_show(xlabel);

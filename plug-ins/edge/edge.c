@@ -534,7 +534,7 @@ edge( GDrawable *drawable )
 		       *
 		       *    -- taka
 		       */
-#define PIX(X,Y)  src[ (Y-1)*(int)src_rgn.rowstride + (X-1)*(int)src_rgn.bpp + chan ]
+#define PIX(X,Y)  src[ (Y-1)*src_rgn.rowstride + (X-1)*src_rgn.bpp + chan ]
 		      /* make convolusion */
 		      sum1 = ( PIX(2,0) - PIX(0,0) ) +
 			 2 * ( PIX(2,1) - PIX(0,1) ) +

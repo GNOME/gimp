@@ -161,7 +161,7 @@ edit_selection_button_release (Tool           *tool,
   GDisplay * gdisp;
   Layer *layer;
   Layer *floating_layer;
-  link_ptr layer_list;
+  GSList *layer_list;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -223,7 +223,7 @@ edit_selection_button_release (Tool           *tool,
 		  if (layer == gdisp->gimage->active_layer || 
 		      layer_linked (layer))
 		    layer_translate (layer, (x - edit_select.origx), (y - edit_select.origy));
-		  layer_list = next_item (layer_list);
+		  layer_list = g_slist_next (layer_list);
 		}
 
 	      if (floating_layer)
@@ -296,7 +296,7 @@ edit_selection_draw (Tool *tool)
   GdkSegment * seg;
   Selection * select;
   Layer *layer;
-  link_ptr layer_list;
+  GSList *layer_list;
   int floating_sel;
   int x1, y1, x2, y2;
   int x3, y3, x4, y4;
@@ -404,7 +404,7 @@ edit_selection_draw (Tool *tool)
 	      if (y4 > y2)
 		y2 = y4;
 	    }
-	  layer_list = next_item (layer_list);
+	  layer_list = g_slist_next (layer_list);
 	}
 
       gdk_draw_rectangle (edit_select.core->win,
@@ -485,7 +485,7 @@ edit_sel_arrow_keys_func (Tool        *tool,
   GDisplay *gdisp;
   Layer *layer;
   Layer *floating_layer;
-  link_ptr layer_list;
+  GSList *layer_list;
   EditType edit_type;
 
   layer = NULL;
@@ -547,7 +547,7 @@ edit_sel_arrow_keys_func (Tool        *tool,
 	  layer = (Layer *) layer_list->data;
 	  if (((layer) == gdisp->gimage->active_layer) || layer_linked (layer))
 	    layer_translate (layer, inc_x, inc_y);
-	  layer_list = next_item (layer_list);
+	  layer_list = g_slist_next (layer_list);
 	}
 
       if (floating_layer)

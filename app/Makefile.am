@@ -5,6 +5,28 @@ scriptdata =
 bin_PROGRAMS = gimp
 
 gimp_SOURCES = \
+	\
+	tag.c                   \
+	tag.h                   \
+	paint.c                 \
+	paint.h                 \
+	canvas.c                \
+	canvas.h                \
+	pixelrow.c              \
+	pixelrow.h              \
+	pixelarea.c             \
+	pixelarea.h             \
+	paint_funcs_row.c       \
+	paint_funcs_row.h       \
+	paint_funcs_area.c      \
+	paint_funcs_area.h      \
+	tilebuf.c               \
+	tilebuf.h               \
+	flatbuf.c               \
+	flatbuf.h               \
+	paint_core_16.c         \
+	paint_core_16.h         \
+	\
 	about_dialog.c		\
 	about_dialog.h		\
 	actionarea.c		\
@@ -179,8 +201,6 @@ gimp_SOURCES = \
 	layers_dialogP.h	\
 	levels.c		\
 	levels.h		\
-	linked.h		\
-	linked.c		\
 	magnify.c		\
 	magnify.h		\
 	main.c			\

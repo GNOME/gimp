@@ -26,23 +26,25 @@
 #include "errors.h"
 #include "gimage_mask.h"
 #include "layer.h"
-#include "linked.h"
 #include "paint_funcs.h"
 #include "temp_buf.h"
 #include "undo.h"
 
 #include "channel_pvt.h"
 
+/*
 enum {
   LAST_SIGNAL
 };
-
+*/
 
 static void gimp_channel_class_init (GimpChannelClass *klass);
 static void gimp_channel_init       (GimpChannel      *channel);
 static void gimp_channel_destroy    (GtkObject        *object);
 
+/*
 static gint channel_signals[LAST_SIGNAL] = { 0 };
+*/
 
 static GimpDrawableClass *parent_class = NULL;
 
@@ -60,7 +62,8 @@ gimp_channel_get_type ()
 	sizeof (GimpChannelClass),
 	(GtkClassInitFunc) gimp_channel_class_init,
 	(GtkObjectInitFunc) gimp_channel_init,
-	(GtkArgFunc) NULL,
+	(GtkArgSetFunc) NULL,
+	(GtkArgGetFunc) NULL,
       };
 
       channel_type = gtk_type_unique (gimp_drawable_get_type (), &channel_info);
@@ -77,7 +80,9 @@ gimp_channel_class_init (GimpChannelClass *class)
   object_class = (GtkObjectClass*) class;
   parent_class = gtk_type_class (gimp_drawable_get_type ());
 
+  /*
   gtk_object_class_add_signals (object_class, channel_signals, LAST_SIGNAL);
+  */
 
   object_class->destroy = gimp_channel_destroy;
 }
@@ -104,7 +109,7 @@ static void
 channel_validate (TileManager *tm, Tile *tile, int level)
 {
   /*  Set the contents of the tile to empty  */
-  memset (tile->data, TRANSPARENT, tile->ewidth * tile->eheight);
+  memset (tile->data, TRANSPARENT_OPACITY, tile->ewidth * tile->eheight);
 }
 
 
@@ -141,6 +146,21 @@ channel_new (int gimage_ID, int width, int height, char *name, int opacity,
   channel->y2 = height;
 
   return channel;
+}
+
+Channel *
+channel_ref (Channel *channel)
+{
+  gtk_object_ref  (GTK_OBJECT (channel));
+  gtk_object_sink (GTK_OBJECT (channel));
+  return channel;
+}
+
+
+void
+channel_unref (Channel *channel)
+{
+  gtk_object_unref (GTK_OBJECT (channel));
 }
 
 
@@ -411,7 +431,7 @@ channel_preview (Channel *channel, int width, int height)
 void
 channel_invalidate_previews (int gimage_id)
 {
-  link_ptr tmp;
+  GSList * tmp;
   Channel * channel;
   GImage * gimage;
 
@@ -424,7 +444,7 @@ channel_invalidate_previews (int gimage_id)
     {
       channel = (Channel *) tmp->data;
       drawable_invalidate_preview (GIMP_DRAWABLE(channel));
-      tmp = next_item (tmp);
+      tmp = g_slist_next (tmp);
     }
 }
 

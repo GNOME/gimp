@@ -1932,7 +1932,7 @@ gfig_obj_modified(GFIGOBJ *obj,gint stat_type)
     gfig_set_pixmap(obj,blank_xpm);
 
   /* Remove old */
-  gdk_pixmap_unref(gdk_pix);
+  gdk_pixmap_destroy(gdk_pix);
   gtk_widget_draw(GTK_WIDGET(obj->list_item),NULL);
 }
 

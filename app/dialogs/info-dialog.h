@@ -19,7 +19,6 @@
 #define __INFO_DIALOG_H__
 
 #include "gtk/gtk.h"
-#include "linked.h"
 
 typedef struct _info_field InfoField;
 
@@ -40,7 +39,7 @@ struct _info_dialog
   GtkWidget   *labels;
   GtkWidget   *values;
 
-  link_ptr     field_list;
+  GSList      *field_list;
 
   void        *user_data;
 };

@@ -111,6 +111,7 @@ static void query( void )
     { PARAM_FLOAT,    "xmax",         "xmax fractal image delimiter"     },
     { PARAM_FLOAT,    "ymin",         "ymin fractal image delimiter"     },
     { PARAM_FLOAT,    "ymax",         "ymax fractal image delimiter"     },
+    { PARAM_FLOAT,    "ymax",         "ymax fractal image delimiter"     },
     { PARAM_INT32,    "depth",        "trace depth"                      },
     { PARAM_INT32,    "outside_type", "outside type"
                                       "(0=WRAP/1=TRANS/2=BLACK/3=WHITE)" },

@@ -73,6 +73,9 @@ struct _mask_undo
 
 Channel *       channel_new (int, int, int, char *, int, unsigned char *);
 Channel *       channel_copy (Channel *);
+Channel *	channel_ref (Channel *);
+void   		channel_unref (Channel *);
+
 Channel *       channel_get_ID (int);
 void            channel_delete (Channel *);
 void            channel_scale (Channel *, int, int);

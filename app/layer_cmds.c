@@ -602,7 +602,7 @@ layer_translate_invoker (Argument *args)
   Layer *layer, *tmp_layer;
   Layer *floating_layer;
   GImage *gimage;
-  link_ptr layer_list;
+  GSList *layer_list;
   int offx, offy;
 
   success = TRUE;
@@ -635,7 +635,7 @@ layer_translate_invoker (Argument *args)
 	  tmp_layer = (Layer *) layer_list->data;
 	  if ((tmp_layer == layer) || tmp_layer->linked)
 	    layer_translate (tmp_layer, offx, offy);
-	  layer_list = next_item (layer_list);
+	  layer_list = g_slist_next (layer_list);
 	}
 
       if (floating_layer)

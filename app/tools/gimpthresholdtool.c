@@ -390,6 +390,7 @@ threshold_new_dialog ()
 
   /*  The shell and main vbox  */
   td->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (td->shell), "threshold", "Gimp");
   gtk_window_set_title (GTK_WINDOW (td->shell), "Threshold");
 
   /* handle the wm close signal */
@@ -675,6 +676,10 @@ threshold_invoker (args)
       if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
+  /*  make sure the drawable is not indexed color  */
+  if (success)
+    success = ! drawable_indexed (drawable);
+  
   /*  low threhsold  */
   if (success)
     {

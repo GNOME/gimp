@@ -271,7 +271,7 @@ void  extract_from_indexed_pixels         (unsigned char *, unsigned char *,
 					   unsigned char *, unsigned char *,
 					   unsigned char *, int, int, int, int);
 
-
+#if 0
 /*  variable source to RGB color mapping
  *  src_type == 0  (RGB)
  *  src_type == 1  (GRAY)
@@ -290,7 +290,7 @@ map_to_color                              (int, unsigned char *,
 int    map_rgb_to_indexed                 (unsigned char *, int, int,
 					   int, int, int);
 
-
+#endif
 /*  Region functions  */
 void  color_region                        (PixelRegion *, unsigned char *);
 
@@ -419,8 +419,8 @@ void  rgb_to_hls            (int *, int *, int *);
 void  hls_to_rgb            (int *, int *, int *);
 
 /* Opacities */
-#define TRANSPARENT        0
-#define OPAQUE             255
+#define TRANSPARENT_OPACITY        0
+#define OPAQUE_OPACITY             255
 
 /*  Layer Modes  */
 #define NORMAL_MODE        0

@@ -5,10 +5,7 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = refract
 
 refract_SOURCES = \
-	refmain.c	\
-	refguts.c	\
-	refract.h	\
-	$(top_srcdir)/plug-ins/megawidget/megawidget.h
+	refract.c
 
 INCLUDES = \
 	$(X_CFLAGS)			\
@@ -16,7 +13,7 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	 $(top_builddir)/plug-ins/megawidget/libmegawidget.a		\
+	$(top_builddir)/plug-ins/megawidget/megawidget.o	\
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(X_LIBS)				\
@@ -24,7 +21,6 @@ LDADD = \
 
 DEPS = \
 	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/plug-ins/megawidget/libmegawidget.a		\
 	$(top_builddir)/libgimp/libgimp.la
 
 refract_DEPENDENCIES = $(DEPS)
@@ -41,3 +37,8 @@ files:
 	    echo $$subdir/$$file; \
 	  done; \
 	done
+
+
+
+
+

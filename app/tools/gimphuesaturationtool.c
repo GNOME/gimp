@@ -447,6 +447,7 @@ hue_saturation_new_dialog ()
 
   /*  The shell and main vbox  */
   hsd->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (hsd->shell), "hue_saturation", "Gimp");
   gtk_window_set_title (GTK_WINDOW (hsd->shell), "Hue-Saturation");
   
   /* handle the wm close signal */
@@ -1098,6 +1099,10 @@ hue_saturation_invoker (Argument *args)
       if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
+  /*  make sure the drawable is not indexed color  */
+  if (success)
+    success = ! drawable_indexed (drawable);
+    
   /*  hue_range  */
   if (success)
     {

@@ -18,7 +18,7 @@
 #ifndef __GIMPRC_H__
 #define __GIMPRC_H__
 
-#include "linked.h"
+#include <glib.h>
 #include "procedural_db.h"
 
 /*  global gimprc variables  */

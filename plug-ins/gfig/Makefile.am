@@ -1,7 +1,5 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = gfig-examples
-
 pluginlibdir = $(gimpplugindir)/plug-ins
 
 pluginlib_PROGRAMS = gfig

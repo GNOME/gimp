@@ -91,6 +91,7 @@ pattern_select_new ()
 
   /*  The shell and main vbox  */
   psp->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (psp->shell), "patternselection", "Gimp");
   gtk_window_set_title (GTK_WINDOW (psp->shell), "Pattern Selection");
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_border_width (GTK_CONTAINER (vbox), 1);
@@ -372,7 +373,7 @@ display_setup (PatternSelectP psp)
 static void
 display_patterns (PatternSelectP psp)
 {
-  link_ptr list = pattern_list;    /*  the global pattern list  */
+  GSList *list = pattern_list;    /*  the global pattern list  */
   int row, col;
   GPatternP pattern;
 
@@ -404,7 +405,7 @@ display_patterns (PatternSelectP psp)
 	  col = 0;
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 

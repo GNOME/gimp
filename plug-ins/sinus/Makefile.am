@@ -13,15 +13,16 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/plug-ins/megawidget/libmegawidget.a		\
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(X_LIBS)				\
+					\
+	 $(top_srcdir)/plug-ins/megawidget/libmegawidget.a		\
 	-lc
 
 DEPS = \
 	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/plug-ins/megawidget/libmegawidget.a		\
+	 $(top_srcdir)/plug-ins/megawidget/libmegawidget.a		\
 	$(top_builddir)/libgimp/libgimp.la
 
 sinus_DEPENDENCIES = $(DEPS)

@@ -100,7 +100,7 @@ struct _FontInfo
   int *spacings;        /* An array of valid spacings */
   int **combos;         /* An array of valid combinations of the above 5 items */
   int ncombos;          /* The number of elements in the "combos" array */
-  link_ptr fontnames;   /* An list of valid fontnames.
+  GSList *fontnames;    /* An list of valid fontnames.
 			 * This is used to make sure a family/foundry/weight/slant/set_width
 			 *  combination is valid.
 			 */
@@ -131,7 +131,7 @@ static void       text_validate_combo     (TextTool *, int);
 
 static void       text_get_fonts          (void);
 static void       text_insert_font        (FontInfo **, int *, char *);
-static link_ptr   text_insert_field       (link_ptr, char *, int);
+static GSList*    text_insert_field       (GSList *, char *, int);
 static char*      text_get_field          (char *, int);
 static int        text_field_to_index     (char **, int, char *);
 static int        text_is_xlfd_font_name  (char *);
@@ -143,6 +143,8 @@ static void       text_init_render        (TextTool *);
 static void       text_gdk_image_to_region (GdkImage *, int, PixelRegion *);
 static int        text_get_extents        (char *, char *, int *, int *, int *, int *);
 static Layer *    text_render             (GImage *, GimpDrawable *, int, int, char *, char *, int, int);
+
+static int        font_compare_func (gpointer, gpointer);
 
 static Argument * text_tool_invoker              (Argument *);
 static Argument * text_tool_get_extents_invoker  (Argument *);
@@ -164,11 +166,11 @@ static TextTool *the_text_tool = NULL;
 static FontInfo **font_info;
 static int nfonts = -1;
 
-static link_ptr foundries = NULL;
-static link_ptr weights = NULL;
-static link_ptr slants = NULL;
-static link_ptr set_widths = NULL;
-static link_ptr spacings = NULL;
+static GSList *foundries = NULL;
+static GSList *weights = NULL;
+static GSList *slants = NULL;
+static GSList *set_widths = NULL;
+static GSList *spacings = NULL;
 
 static char **foundry_array = NULL;
 static char **weight_array = NULL;
@@ -281,12 +283,19 @@ text_button_press (Tool           *tool,
     {
     case RGB:
     case GRAY:
-      if (!GTK_WIDGET_VISIBLE (text_tool->antialias_toggle))
+      if (!GTK_WIDGET_VISIBLE (text_tool->antialias_toggle)) {
 	gtk_widget_show (text_tool->antialias_toggle);
+	if (GTK_TOGGLE_BUTTON (text_tool->antialias_toggle)->active)
+	  text_tool->antialias = TRUE;
+	else
+	  text_tool->antialias = FALSE;
+      }
       break;
     case INDEXED:
-      if (GTK_WIDGET_VISIBLE (text_tool->antialias_toggle))
+      if (GTK_WIDGET_VISIBLE (text_tool->antialias_toggle)) {
 	gtk_widget_hide (text_tool->antialias_toggle);
+	text_tool->antialias = FALSE;
+      }
       break;
     }
 
@@ -387,6 +396,7 @@ text_create_dialog (TextTool *text_tool)
 
   /* Create the shell and vertical & horizontal boxes */
   text_tool->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (text_tool->shell), "text_tool", "Gimp");
   gtk_window_set_title (GTK_WINDOW (text_tool->shell), "Text Tool");
   gtk_window_set_policy (GTK_WINDOW (text_tool->shell), FALSE, TRUE, TRUE);
   gtk_window_position (GTK_WINDOW (text_tool->shell), GTK_WIN_POS_MOUSE);
@@ -969,7 +979,7 @@ text_get_fonts ()
   char **fontnames;
   char *fontname;
   char *field;
-  link_ptr temp_list;
+  GSList *temp_list;
   int num_fonts;
   int index;
   int i, j;
@@ -997,11 +1007,11 @@ text_get_fonts ()
 
   XFreeFontNames (fontnames);
 
-  nfoundries = list_length (foundries) + 1;
-  nweights = list_length (weights) + 1;
-  nslants = list_length (slants) + 1;
-  nset_widths = list_length (set_widths) + 1;
-  nspacings = list_length (spacings) + 1;
+  nfoundries = g_slist_length (foundries) + 1;
+  nweights = g_slist_length (weights) + 1;
+  nslants = g_slist_length (slants) + 1;
+  nset_widths = g_slist_length (set_widths) + 1;
+  nspacings = g_slist_length (spacings) + 1;
 
   foundry_array = g_malloc (sizeof (char*) * nfoundries);
   weight_array = g_malloc (sizeof (char*) * nweights);
@@ -1062,7 +1072,7 @@ text_get_fonts ()
       font_info[i]->slants = g_malloc (sizeof (int) * nslants);
       font_info[i]->set_widths = g_malloc (sizeof (int) * nset_widths);
       font_info[i]->spacings = g_malloc (sizeof (int) * nspacings);
-      font_info[i]->ncombos = list_length (font_info[i]->fontnames);
+      font_info[i]->ncombos = g_slist_length (font_info[i]->fontnames);
       font_info[i]->combos = g_malloc (sizeof (int*) * font_info[i]->ncombos);
 
       for (j = 0; j < nfoundries; j++)
@@ -1155,7 +1165,7 @@ text_insert_font (FontInfo **table,
 	  cmp = strcmp (family, table[middle]->family);
 	  if (cmp == 0)
 	    {
-	      table[middle]->fontnames = add_to_list (table[middle]->fontnames, g_strdup (fontname));
+	      table[middle]->fontnames = g_slist_prepend (table[middle]->fontnames, g_strdup (fontname));
 	      return;
 	    }
 	  else if (cmp < 0)
@@ -1173,7 +1183,7 @@ text_insert_font (FontInfo **table,
   table[*ntable]->slants = NULL;
   table[*ntable]->set_widths = NULL;
   table[*ntable]->fontnames = NULL;
-  table[*ntable]->fontnames = add_to_list (table[*ntable]->fontnames, g_strdup (fontname));
+  table[*ntable]->fontnames = g_slist_prepend (table[*ntable]->fontnames, g_strdup (fontname));
   (*ntable)++;
 
   /* Quickly insert the entry into the table in sorted order
@@ -1197,62 +1207,24 @@ text_insert_font (FontInfo **table,
     }
 }
 
-static link_ptr
-text_insert_field (link_ptr  list,
-		   char     *fontname,
-		   int       field_num)
+static int
+font_compare_func (gpointer a, gpointer b)
 {
-  link_ptr temp_list;
-  link_ptr prev_list;
-  link_ptr new_list;
+    return strcmp (a, b);
+}
+
+static GSList *
+text_insert_field (GSList  *list,
+		   char    *fontname,
+		   int      field_num)
+{
   char *field;
-  int cmp;
 
   field = text_get_field (fontname, field_num);
   if (!field)
     return list;
 
-  temp_list = list;
-  prev_list = NULL;
-
-  while (temp_list)
-    {
-      cmp = strcmp (field, temp_list->data);
-      if (cmp == 0)
-	{
-	  free (field);
-	  return list;
-	}
-      else if (cmp < 0)
-	{
-	  new_list = alloc_list ();
-	  new_list->data = field;
-	  new_list->next = temp_list;
-	  if (prev_list)
-	    {
-	      prev_list->next = new_list;
-	      return list;
-	    }
-	  else
-	    return new_list;
-	}
-      else
-	{
-	  prev_list = temp_list;
-	  temp_list = temp_list->next;
-	}
-    }
-
-  new_list = alloc_list ();
-  new_list->data = field;
-  new_list->next = NULL;
-  if (prev_list)
-    {
-      prev_list->next = new_list;
-      return list;
-    }
-  else
-    return new_list;
+  return g_slist_insert_sorted (list, field, font_compare_func);
 }
 
 static char*
@@ -1652,18 +1624,18 @@ text_render (GImage *gimage,
   if (newmask && 
       (layer = layer_new (gimage->ID, newmask->levels[0].width,
 			 newmask->levels[0].height, layer_type,
-			 "Text Layer", OPAQUE, NORMAL_MODE)))
+			 "Text Layer", OPAQUE_OPACITY, NORMAL_MODE)))
     {
       /*  color the layer buffer  */
       gimage_get_foreground (gimage, drawable, color);
-      color[GIMP_DRAWABLE(layer)->bytes - 1] = OPAQUE;
+      color[GIMP_DRAWABLE(layer)->bytes - 1] = OPAQUE_OPACITY;
       pixel_region_init (&textPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
       color_region (&textPR, color);
 
       /*  apply the text mask  */
       pixel_region_init (&textPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
       pixel_region_init (&maskPR, newmask, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-      apply_mask_to_region (&textPR, &maskPR, OPAQUE);
+      apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
 
       /*  Start a group undo  */
       undo_push_group_start (gimage, EDIT_PASTE_UNDO);

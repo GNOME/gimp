@@ -30,5 +30,6 @@
 
 extern int no_interface;
 extern int no_data;
+extern int be_verbose;
 
 #endif /*  APPENV_H  */

@@ -1,14 +1,10 @@
 There are three basic steps to building and installing the
 GIMP on unix:
 
-  1. You need to have installed GTK version 0.99.1 or better
-  2. You may want to install other third party libraries that
-     are needed for some of the available plugins: TIFF, PNG,
-     JPEG, MPEG, etc.
-  3. Configure the GIMP by running the `configure' script.
-  4. Build the GIMP by running `make'.
-  5. Install the GIMP by running `make install'.
-  6. Install the gimp-data package.  Be sure to install this, or you
+  1. Configure the GIMP by running the `configure' script.
+  2. Build the GIMP by running `make'.
+  3. Install the GIMP by running `make install'.
+  4. Install the gimp-data package.  Be sure to install this, or you
      won't have the GIMP's datafiles installed.
 
 Generic instructions for configuring and compiling auto-configured

@@ -22,7 +22,6 @@
 #include "drawable.h"
 #include "channel.h"
 #include "layer.h"
-#include "linked.h"
 #include "paint_funcs.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
@@ -125,9 +124,9 @@ struct _GImage
   GList *guides;                      /*  guides                       */
 
                                       /*  Layer/Channel attributes  */
-  link_ptr layers;                    /*  the list of layers           */
-  link_ptr channels;                  /*  the list of masks            */
-  link_ptr layer_stack;               /*  the layers in MRU order      */
+  GSList *layers;                     /*  the list of layers           */
+  GSList *channels;                   /*  the list of masks            */
+  GSList *layer_stack;                /*  the layers in MRU order      */
 
   Layer * active_layer;               /*  ID of active layer           */
   Channel * active_channel;	      /*  ID of active channel         */
@@ -141,8 +140,8 @@ struct _GImage
                                       /*  "by color" selection dialog  */
 
                                       /*  Undo apparatus  */
-  link_ptr undo_stack;                /*  stack for undo operations    */
-  link_ptr redo_stack;                /*  stack for redo operations    */
+  GSList *undo_stack;                 /*  stack for undo operations    */
+  GSList *redo_stack;                 /*  stack for redo operations    */
   int undo_bytes;                     /*  bytes in undo stack          */
   int undo_levels;                    /*  levels in undo stack         */
   int pushing_undo_group;             /*  undo group status flag       */
@@ -204,7 +203,7 @@ Layer *         gimage_raise_layer            (GImage *, Layer *);
 Layer *         gimage_lower_layer            (GImage *, Layer *);
 Layer *         gimage_merge_visible_layers   (GImage *, MergeType);
 Layer *         gimage_flatten                (GImage *);
-Layer *         gimage_merge_layers           (GImage *, link_ptr, MergeType);
+Layer *         gimage_merge_layers           (GImage *, GSList *, MergeType);
 Layer *         gimage_add_layer              (GImage *, Layer *, int);
 Layer *         gimage_remove_layer           (GImage *, Layer *);
 LayerMask *     gimage_add_layer_mask         (GImage *, Layer *, LayerMask *);

@@ -440,6 +440,7 @@ curves_new_dialog ()
 
   /*  The shell and main vbox  */
   cd->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (cd->shell), "curves", "Gimp");
   gtk_window_set_title (GTK_WINDOW (cd->shell), "Curves");
 
   gtk_signal_connect (GTK_OBJECT (cd->shell), "delete_event",
@@ -1349,6 +1350,11 @@ curves_spline_invoker (Argument *args)
       if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
+  /*  make sure the drawable is not indexed color  */
+  if (success)
+    success = ! drawable_indexed (drawable);
+  
+    
   /*  channel  */
   if (success)
     {
@@ -1497,6 +1503,10 @@ curves_explicit_invoker (Argument *args)
       if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
+  /*  make sure the drawable is not indexed color  */
+  if (success)
+    success = ! drawable_indexed (drawable);
+  
   /*  channel  */
   if (success)
     {

@@ -33,13 +33,12 @@
 #include "errors.h"
 #include "general.h"
 #include "gimprc.h"
-#include "linked.h"
 #include "menus.h"
 
 
 /*  global variables  */
 GPatternP           active_pattern = NULL;
-link_ptr            pattern_list = NULL;
+GSList *            pattern_list = NULL;
 int                 num_patterns = 0;
 
 PatternSelectP      pattern_select_dialog = NULL;
@@ -50,15 +49,18 @@ static Argument    *return_args;
 static int          have_default_pattern = 0;
 
 /*  static function prototypes  */
-static link_ptr     insert_pattern_in_list   (link_ptr, GPatternP);
+static GSList *     insert_pattern_in_list   (GSList *, GPatternP);
 static void         load_pattern             (char *filename);
 static void         free_pattern             (GPatternP);
+static void         pattern_free_one         (gpointer, gpointer);
+static gint         pattern_compare_func     (gpointer, gpointer);
+
 
 /*  function declarations  */
 void
 patterns_init ()
 {
-  link_ptr list;
+  GSList *list;
 
   if (pattern_list)
     patterns_free ();
@@ -75,32 +77,33 @@ patterns_init ()
 
   list = pattern_list;
 
-  while (list)
-  {
+  while (list) {
     /*  Set the pattern index  */
-
     ((GPattern *) list->data)->index = num_patterns++;
-    list = next_item (list);
-  } /* while */
+    list = g_slist_next (list);
+  }
 }
 
+
+static void
+pattern_free_one (gpointer data, gpointer dummy)
+{
+  free_pattern ((GPatternP) data);
+}
+
+static gint
+pattern_compare_func(gpointer first, gpointer second)
+{
+  return strcmp (((GPatternP)first)->name, ((GPatternP)second)->name);
+}
 
 void
 patterns_free ()
 {
-  link_ptr list;
-  GPatternP pattern;
-
-  list = pattern_list;
-
-  while (list)
-    {
-      pattern = (GPatternP) list->data;
-      free_pattern (pattern);
-      list = next_item (list);
-    }
-
-  free_list (list);
+  if (pattern_list) {
+    g_slist_foreach (pattern_list, pattern_free_one, NULL);
+    g_slist_free (pattern_list);
+  }
 
   have_default_pattern = 0;
   active_pattern = NULL;
@@ -137,67 +140,10 @@ get_active_pattern ()
 }
 
 
-static link_ptr
-insert_pattern_in_list (list, pattern)
-     link_ptr list;
-     GPatternP pattern;
+static GSList *
+insert_pattern_in_list (GSList *list, GPatternP pattern)
 {
-  link_ptr tmp;
-  link_ptr prev;
-  link_ptr new_link;
-  GPatternP b;
-  int val;
-
-  /* Insert the item in the list */
-  if (list)
-    {
-      prev = NULL;
-      tmp = list;
-      do {
-	  if (tmp)
-	    {
-	      b = (GPatternP) tmp->data;
-
-	      /* do the comparison needed for the insertion sort */
-	      val = strcmp (pattern->name, b->name);
-	    }
-	  else
-	    val = -1;
-
-          if (val <= 0)
-            {
-	      /* this is the place the item goes */
-	      /* Insert the item into the list. We'll have to create
-	       *  a new link and then do a little insertion.
-	       */
-              new_link = alloc_list ();
-	      if (!new_link)
-		fatal_error ("Unable to allocate memory");
-
-              new_link->data = pattern;
-              new_link->next = tmp;
-
-              if (prev)
-                prev->next = new_link;
-              if (tmp == list)
-                list = new_link;
-
-	      return list;
-            }
-
-	  /* Advance to the next item in the list.
-	   */
-          prev = tmp;
-          tmp = next_item (tmp);
-        } while (prev);
-    }
-  else
-    /* There are no items in the pattern list, so we'll just start
-     *  one right now.
-     */
-    list = add_to_list (list, pattern);
-
-  return list;
+  return g_slist_insert_sorted (list, pattern, pattern_compare_func);
 }
 
 
@@ -302,23 +248,16 @@ load_pattern (char *filename)
 
 
 GPatternP
-get_pattern_by_index (index)
-     int index;
+get_pattern_by_index (int index)
 {
-  link_ptr list;
-  GPatternP pattern;
+  GSList *list;
+  GPatternP pattern = NULL;
 
-  list = pattern_list;
+  list = g_slist_nth (pattern_list, index);
+  if (list)
+    pattern = (GPatternP) list->data;
 
-  while (list)
-    {
-      pattern = (GPatternP) list->data;
-      if (pattern->index == index)
-	return pattern;
-      list = next_item (list);
-    }
-
-  return NULL;
+  return pattern;
 }
 
 
@@ -441,7 +380,7 @@ static Argument *
 patterns_set_pattern_invoker (Argument *args)
 {
   GPatternP patternp;
-  link_ptr list;
+  GSList *list;
   char *name;
 
   success = (name = (char *) args[0].value.pdb_pointer) != NULL;
@@ -462,7 +401,7 @@ patterns_set_pattern_invoker (Argument *args)
 	      break;
 	    }
 
-	  list = next_item (list);
+	  list = g_slist_next (list);
 	}
     }
 
@@ -508,7 +447,7 @@ static Argument *
 patterns_list_invoker (Argument *args)
 {
   GPatternP patternp;
-  link_ptr list;
+  GSList *list;
   char **patterns;
   int i;
 
@@ -522,7 +461,7 @@ patterns_list_invoker (Argument *args)
       patternp = (GPatternP) list->data;
 
       patterns[i++] = g_strdup (patternp->name);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   return_args = procedural_db_return_args (&patterns_list_proc, success);

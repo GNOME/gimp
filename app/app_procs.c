@@ -56,12 +56,13 @@
 #include <gtk/gtk.h>
 
 /*  Function prototype for affirmation dialog when exiting application  */
-static void      app_exit_finish    (void);
 static void      really_quit_dialog (void);
 static Argument* quit_invoker       (Argument *args);
 static void make_initialization_status_window(void);
 static void destroy_initialization_status_window(void);
 
+
+static gint is_app_exit_finish_done = FALSE;
 
 static ProcArg quit_args[] =
 {
@@ -137,6 +138,7 @@ make_initialization_status_window(void)
       GtkWidget *vbox;
 
       win_initstatus = gtk_window_new(GTK_WINDOW_DIALOG);
+      gtk_window_set_wmclass (GTK_WINDOW(win_initstatus), "gimp_startup", "Gimp");
       gtk_window_set_title(GTK_WINDOW(win_initstatus),
 			   "GIMP Startup");
 
@@ -160,6 +162,8 @@ make_initialization_status_window(void)
 			  GTK_WIN_POS_CENTER);
       
       gtk_widget_show(win_initstatus);
+
+      gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, TRUE, FALSE);
     }
 }
 
@@ -188,7 +192,7 @@ app_init_update_status(char *label1val,
 	  gtk_progress_bar_update(GTK_PROGRESS_BAR(pbar), pct_progress);
 	}
       gtk_widget_draw(win_initstatus, &area);
-      idle_tag = gtk_idle_add(my_idle_proc, NULL);
+      idle_tag = gtk_idle_add((GtkFunction) my_idle_proc, NULL);
       gtk_main_iteration();
       gtk_idle_remove(idle_tag);
     }
@@ -221,8 +225,11 @@ app_init ()
   if (gimp_dir[0] != '\000')
     {
       sprintf (filename, "%s/gtkrc", gimp_dir);
+
+      if (be_verbose == TRUE)
       g_print ("parsing \"%s\"\n", filename);
       app_init_update_status("Resource configuration", filename, -1);
+
       gtk_rc_parse (filename);
     }
 
@@ -278,9 +285,19 @@ app_init ()
 
 }
 
-static void
+gint
+app_exit_finish_done (void)
+{
+  return is_app_exit_finish_done;
+}
+
+void
 app_exit_finish ()
 {
+  if (app_exit_finish_done ())
+    return;
+  is_app_exit_finish_done = TRUE;
+
   lc_dialog_free ();
   gdisplays_delete ();
   global_edit_free ();
@@ -309,8 +326,8 @@ app_exit_finish ()
       render_free ();
       tools_options_dialog_free ();
     }
-
-  gtk_exit (0);
+  /*  gtk_exit (0); */
+  gtk_main_quit();
 }
 
 void
@@ -319,6 +336,8 @@ app_exit (int kill_it)
   /*  If it's the user's perogative, and there are dirty images  */
   if (kill_it == 0 && gdisplays_dirty () && no_interface == FALSE)
     really_quit_dialog ();
+  else if (no_interface == FALSE)
+    toolbox_free ();
   else
     app_exit_finish ();
 }
@@ -332,7 +351,7 @@ really_quit_callback (GtkButton *button,
 		      GtkWidget *dialog)
 {
   gtk_widget_destroy (dialog);
-  app_exit_finish ();
+  toolbox_free ();
 }
 
 static void
@@ -365,6 +384,7 @@ really_quit_dialog ()
   menus_set_sensitive ("<Image>/File/Quit", FALSE);
 
   dialog = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (dialog), "really_quit", "Gimp");
   gtk_window_set_title (GTK_WINDOW (dialog), "Really Quit?");
   gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);

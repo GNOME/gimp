@@ -31,7 +31,6 @@
 #include "gimprc.h"
 #include "general.h"
 #include "interface.h"
-#include "linked.h"
 #include "menus.h"
 #include "tools.h"
 
@@ -227,7 +226,7 @@ tools_button_press (GtkWidget      *w,
 
 static gint
 toolbox_delete (GtkWidget *w, GdkEvent *e, gpointer data)
- {
+{
   app_exit (FALSE);
 
   return FALSE;
@@ -235,8 +234,8 @@ toolbox_delete (GtkWidget *w, GdkEvent *e, gpointer data)
 
 static void
 toolbox_destroy ()
- {
-  app_exit (TRUE);
+{
+  app_exit_finish ();
 }
 
 static void
@@ -502,6 +501,7 @@ create_toolbox ()
   GtkAcceleratorTable *table;
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
   gtk_window_set_title (GTK_WINDOW (window), "The GIMP");
   gtk_widget_set_uposition (window, toolbox_x, toolbox_y);
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
@@ -548,6 +548,20 @@ create_toolbox ()
 
   gtk_widget_show (window);
   toolbox_shell = window;
+}
+
+void
+toolbox_free ()
+{
+  int i;
+
+  gtk_widget_destroy (toolbox_shell);
+  for (i = 21; i < NUM_TOOLS; i++)
+    {
+      gtk_object_sink    (GTK_OBJECT (tool_widgets[i]));
+    }			  
+  gtk_object_destroy (GTK_OBJECT (tool_tips));
+  gtk_object_unref   (GTK_OBJECT (tool_tips));
 }
 
 void
@@ -611,6 +625,7 @@ create_display_shell (int   gdisp_id,
   /*  The toplevel shell */
   gdisp->shell = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title (GTK_WINDOW (gdisp->shell), title);
+  gtk_window_set_wmclass (GTK_WINDOW (gdisp->shell), "image_window", "Gimp");
   gtk_window_set_policy (GTK_WINDOW (gdisp->shell), TRUE, TRUE, TRUE);
   gtk_object_set_user_data (GTK_OBJECT (gdisp->shell), (gpointer) gdisp);
   gtk_widget_set_events (gdisp->shell, GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
@@ -744,6 +759,7 @@ query_string_box (char        *title,
 
   qbox = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (qbox), title);
+  gtk_window_set_wmclass (GTK_WINDOW (qbox), "query_box", "Gimp");
   gtk_window_position (GTK_WINDOW (qbox), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (qbox), "delete_event",
 		      (GtkSignalFunc) query_box_delete_callback,
@@ -876,6 +892,7 @@ message_box (char        *message,
   msg_box = (MessageBox *) g_malloc (sizeof (MessageBox));
 
   mbox = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (mbox), "gimp_message", "Gimp");
   gtk_window_set_title (GTK_WINDOW (mbox), "GIMP Message");
   gtk_window_position (GTK_WINDOW (mbox), GTK_WIN_POS_MOUSE);
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (mbox)->action_area), 2);

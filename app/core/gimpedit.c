@@ -27,7 +27,6 @@
 #include "global_edit.h"
 #include "interface.h"
 #include "layer.h"
-#include "linked.h"
 #include "paint_funcs.h"
 #include "tools.h"
 #include "undo.h"
@@ -57,7 +56,7 @@ struct _named_buffer
 
 
 /*  The named buffer list  */
-link_ptr named_buffers = NULL;
+GSList * named_buffers = NULL;
 
 /*  The global edit buffer  */
 TileManager * global_buf = NULL;
@@ -271,7 +270,7 @@ edit_paste (GImage      *gimage,
   int cx, cy;
 
   /*  Make a new floating layer  */
-  float_layer = layer_from_tiles (gimage, drawable, paste, "Pasted Layer", OPAQUE, NORMAL);
+  float_layer = layer_from_tiles (gimage, drawable, paste, "Pasted Layer", OPAQUE_OPACITY, NORMAL);
 
   if (float_layer)
     {
@@ -320,7 +319,7 @@ edit_clear (GImage *gimage,
 
   gimage_get_background (gimage, drawable, col);
   if (drawable_has_alpha (drawable))
-    col [drawable_bytes (drawable) - 1] = OPAQUE;
+    col [drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
 
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
@@ -332,7 +331,7 @@ edit_clear (GImage *gimage,
   color_region (&bufPR, col);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &bufPR, 1, OPAQUE,
+  gimage_apply_image (gimage, drawable, &bufPR, 1, OPAQUE_OPACITY,
 		      ERASE_MODE, NULL, x1, y1);
 
   /*  update the image  */
@@ -358,7 +357,7 @@ edit_fill (GImage *gimage,
 
   gimage_get_background (gimage, drawable, col);
   if (drawable_has_alpha (drawable))
-    col [drawable_bytes (drawable) - 1] = OPAQUE;
+    col [drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
 
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
@@ -370,7 +369,7 @@ edit_fill (GImage *gimage,
   color_region (&bufPR, col);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &bufPR, 1, OPAQUE,
+  gimage_apply_image (gimage, drawable, &bufPR, 1, OPAQUE_OPACITY,
 		      NORMAL_MODE, NULL, x1, y1);
 
   /*  update the image  */
@@ -449,7 +448,7 @@ global_edit_free ()
 static void
 set_list_of_named_buffers (GtkWidget *list_widget)
 {
-  link_ptr list;
+  GSList *list;
   NamedBuffer *nb;
   GtkWidget *list_item;
 
@@ -459,7 +458,7 @@ set_list_of_named_buffers (GtkWidget *list_widget)
   while (list)
     {
       nb = (NamedBuffer *) list->data;
-      list = next_item (list);
+      list = g_slist_next (list);
 
       list_item = gtk_list_item_new_with_label (nb->name);
       gtk_container_add (GTK_CONTAINER (list_widget), list_item);
@@ -513,7 +512,7 @@ named_buffer_delete_foreach (GtkWidget *w,
     {
       pn_dlg = (PasteNamedDlg *) client_data;
       nb = (NamedBuffer *) gtk_object_get_user_data (GTK_OBJECT (w));
-      named_buffers = remove_from_list (named_buffers, (void *) nb);
+      named_buffers = g_slist_remove (named_buffers, (void *) nb);
       g_free (nb->name);
       tile_manager_destroy (nb->buf);
       g_free (nb);
@@ -589,6 +588,7 @@ paste_named_buffer (GDisplay *gdisp)
   pn_dlg->gdisp = gdisp;
 
   pn_dlg->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (pn_dlg->shell), "paste_named_buffer", "Gimp");
   gtk_window_set_title (GTK_WINDOW (pn_dlg->shell), "Paste Named Buffer");
   gtk_window_position (GTK_WINDOW (pn_dlg->shell), GTK_WIN_POS_MOUSE);
 
@@ -652,7 +652,7 @@ new_named_buffer_callback (GtkWidget *w,
   copy_region (&srcPR, &destPR);
 
   nb->name = g_strdup ((char *) call_data);
-  named_buffers = append_to_list (named_buffers, (void *) nb);
+  named_buffers = g_slist_append (named_buffers, (void *) nb);
 }
 
 static void
@@ -716,7 +716,7 @@ named_edit_paste (void *gdisp_ptr)
 void
 named_buffers_free ()
 {
-  link_ptr list;
+  GSList *list;
   NamedBuffer * nb;
 
   list = named_buffers;
@@ -727,9 +727,9 @@ named_buffers_free ()
       tile_manager_destroy (nb->buf);
       g_free (nb->name);
       g_free (nb);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
-  free_list (named_buffers);
+  g_slist_free (named_buffers);
   named_buffers = NULL;
 }

@@ -453,6 +453,7 @@ histogram_tool_new_dialog ()
 
   /*  The shell and main vbox  */
   htd->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (htd->shell), "histogram", "Gimp");
   gtk_window_set_title (GTK_WINDOW (htd->shell), "Histogram");
 
   /* handle the wm close signal */

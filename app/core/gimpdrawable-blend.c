@@ -1095,7 +1095,7 @@ gradient_precalc_shapeburst (GImage      *gimage,
   float *distp;
   int size;
   void * pr;
-  unsigned char white[1] = { OPAQUE };
+  unsigned char white[1] = { OPAQUE_OPACITY };
 
   /*  allocate the distance map  */
   if (distR.tiles)

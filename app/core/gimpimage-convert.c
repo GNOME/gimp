@@ -308,6 +308,7 @@ convert_to_indexed (void *gimage_ptr)
   dialog->monopal_flag = FALSE;
   dialog->reusepal_flag = FALSE;
   dialog->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (dialog->shell), "indexed_color_conversion", "Gimp");
   gtk_window_set_title (GTK_WINDOW (dialog->shell), "Indexed Color Conversion");
   gtk_signal_connect (GTK_OBJECT (dialog->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (indexed_delete_callback),
@@ -458,7 +459,7 @@ static GtkWidget *
 build_palette_menu(int *default_palette){
   GtkWidget *menu;
   GtkWidget *menu_item;
-  link_ptr list;
+  GSList *list;
   PaletteEntriesP entries;
   int i;
 
@@ -477,7 +478,7 @@ build_palette_menu(int *default_palette){
 
   for(i=0,list = palette_entries_list,*default_palette=-1;
       list;
-      i++,list = next_item (list))
+      i++,list = g_slist_next (list))
     {
       entries = (PaletteEntriesP) list->data;
       /*      fprintf(stderr, "(palette %s)\n", entries->filename);*/
@@ -599,7 +600,7 @@ convert_image (GImage *gimage,
   Layer *layer;
   Layer *floating_layer;
   int old_type;
-  link_ptr list;
+  GSList *list;
   int new_layer_type;
   int new_layer_bytes;
   int has_alpha;
@@ -655,7 +656,7 @@ convert_image (GImage *gimage,
 	  while (list)
 	    {
 	      layer = (Layer *) list->data;
-	      list = next_item (list);
+	      list = g_slist_next (list);
 	      if (old_type == GRAY)
 		generate_histogram_gray (quantobj->histogram, layer);
 	      else
@@ -721,7 +722,7 @@ convert_image (GImage *gimage,
   while (list)
     {
       layer = (Layer *) list->data;
-      list = next_item (list);
+      list = g_slist_next (list);
 
       has_alpha = layer_has_alpha (layer);
       switch (new_type)
@@ -2023,7 +2024,7 @@ static void
 custompal_pass1 (QuantizeObj *quantobj)
 {
   int i;
-  link_ptr list;
+  GSList *list;
   PaletteEntryP entry;
 
   /*  fprintf(stderr, "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
@@ -2031,7 +2032,7 @@ custompal_pass1 (QuantizeObj *quantobj)
 
   for (i=0,list=theCustomPalette->colors;
        list;
-       i++,list=next_item(list))
+       i++,list=g_slist_next(list))
     {
       entry=(PaletteEntryP)list->data;
       quantobj->cmap[i].red = entry->color[0];
@@ -3035,7 +3036,7 @@ convert_indexed_palette_invoker (Argument *args)
   if (success)
     {
       PaletteEntriesP entries, the_palette = NULL;
-      link_ptr list;
+      GSList *list;
 
 		palette_type = args[2].value.pdb_int;
 		switch(palette_type) {
@@ -3056,7 +3057,7 @@ convert_indexed_palette_invoker (Argument *args)
           if (!palette_entries_list) palette_init_palettes();
 		    for(list = palette_entries_list;
               list;
-              list = next_item(list)) {
+              list = g_slist_next(list)) {
                 entries = (PaletteEntriesP) list->data;
                 if (strcmp(palette_name, entries->name)==0) {
 	/*					fprintf(stderr, "found it!\n"); */

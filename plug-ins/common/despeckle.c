@@ -44,14 +44,6 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.3  1998/01/04 19:20:55  scott
- *   * plug-ins/despeckle/despeckle.c: realloc buffers when the radius
- *   of effect changes; save all values (not just radius) in plugin
- *   data store; adjusted parameter handling to match PDB registration.
- *   The algorithm still generates artifacts in the top rows of the
- *   image. --sg
- *   #
- *
  *   Revision 1.2  1997/12/09 05:57:27  adrian
  *   	added glasstile, colorify, papertile, and illusion plugins
  *
@@ -140,11 +132,6 @@
 #define FILTER_ADAPTIVE		0x01
 #define FILTER_RECURSIVE	0x02
 
-typedef struct _despeckle_values
-{
-  int radius;
-  int filter_type;
-} DespeckleVals;
 
 /*
  * Local functions...
@@ -188,7 +175,6 @@ int		preview_width,		/* Width of preview widget */
 		preview_y1,		/* Upper-left Y of preview */
 		preview_x2,		/* Lower-right X of preview */
 		preview_y2;		/* Lower-right Y of preview */
-int		preview_buf_size;	/* Allocated buffer size */
 guchar		*preview_src,		/* Source pixel rows */
 		*preview_dst,		/* Destination pixel row */
 		*preview_sort;		/* Pixel value sort array */
@@ -203,12 +189,11 @@ int		sel_x1,			/* Selection bounds */
 int		sel_width,		/* Selection width */
 		sel_height;		/* Selection height */
 int		img_bpp;		/* Bytes-per-pixel in image */
+int		despeckle_radius = 3;	/* Radius of median filter box */
+int		filter_type = FILTER_ADAPTIVE;
+					/* Type of filter */
 gint		run_filter = FALSE;	/* True if we should run the filter */
-DespeckleVals   despeckle_vals =
-{
-  3,					/* Radius of median filter box */
-  FILTER_ADAPTIVE			/* Type of filter */
-};
+
 
 /*
  * 'main()' - Main entry - just call gimp_main()...
@@ -307,7 +292,7 @@ run(char   *name,		/* I - Name of filter program. */
         * Possibly retrieve data...
         */
 
-        gimp_get_data(PLUG_IN_NAME, &despeckle_vals);
+        gimp_get_data(PLUG_IN_NAME, &despeckle_radius);
 
        /*
         * Get information from the dialog...
@@ -322,13 +307,10 @@ run(char   *name,		/* I - Name of filter program. */
         * Make sure all the arguments are present...
         */
 
-        if (nparams != 5)
+        if (nparams != 4)
 	  status = STATUS_CALLING_ERROR;
-	else 
-	  {
-	    despeckle_vals.radius      = param[3].data.d_int32;
-	    despeckle_vals.filter_type = param[4].data.d_int32;
-	  }
+	else
+	  despeckle_radius = param[3].data.d_int32;
         break;
 
     case RUN_WITH_LAST_VALS :
@@ -336,7 +318,7 @@ run(char   *name,		/* I - Name of filter program. */
         * Possibly retrieve data...
         */
 
-	gimp_get_data(PLUG_IN_NAME, &despeckle_vals);
+	gimp_get_data(PLUG_IN_NAME, &despeckle_radius);
 	break;
 
     default :
@@ -378,7 +360,7 @@ run(char   *name,		/* I - Name of filter program. */
       */
 
       if (run_mode == RUN_INTERACTIVE)
-        gimp_set_data(PLUG_IN_NAME, &despeckle_vals, sizeof(despeckle_vals));
+        gimp_set_data(PLUG_IN_NAME, &despeckle_radius, sizeof(despeckle_radius));
     }
     else
       status = STATUS_EXECUTION_ERROR;
@@ -451,7 +433,7 @@ despeckle(void)
   gimp_pixel_rgn_init(&src_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
   gimp_pixel_rgn_init(&dst_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
 
-  size     = despeckle_vals.radius * 2 + 1;
+  size     = despeckle_radius * 2 + 1;
   max_row  = 2 * gimp_tile_height();
   width    = sel_width * img_bpp;
 
@@ -485,7 +467,7 @@ despeckle(void)
 
   for (y = sel_y1 ; y < sel_y2; y ++)
   {
-    if ((y + despeckle_vals.radius) >= lasty &&
+    if ((y + despeckle_radius) >= lasty &&
         lasty < sel_y2)
     {
      /*
@@ -507,7 +489,7 @@ despeckle(void)
     * Now find the median pixels and save the results...
     */
 
-    radius = despeckle_vals.radius;
+    radius = despeckle_radius;
 
     for (x = 0; x < width; x ++)
     {
@@ -571,18 +553,18 @@ despeckle(void)
       * recursive method...
       */
 
-      if (despeckle_vals.filter_type & FILTER_RECURSIVE)
+      if (filter_type & FILTER_RECURSIVE)
         src_rows[(row + y - lasty + max_row) % max_row][x] = dst_row[x];
 
      /*
       * Check the histogram and adjust the radius accordingly...
       */
 
-      if (despeckle_vals.filter_type & FILTER_ADAPTIVE)
+      if (filter_type & FILTER_ADAPTIVE)
       {
 	if (hist0 >= radius || hist255 >= radius)
 	{
-          if (radius < despeckle_vals.radius)
+          if (radius < despeckle_radius)
             radius ++;
 	}
 	else if (radius > 1)
@@ -739,7 +721,7 @@ despeckle_dialog(void)
   gtk_table_attach(GTK_TABLE(ftable), button, 0, 1, 0, 1,
 		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button),
-                              (despeckle_vals.filter_type & FILTER_ADAPTIVE) ? TRUE : FALSE);
+                              (filter_type & FILTER_ADAPTIVE) ? TRUE : FALSE);
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
 		     (GtkSignalFunc)dialog_adaptive_callback,
 		     NULL);
@@ -749,7 +731,7 @@ despeckle_dialog(void)
   gtk_table_attach(GTK_TABLE(ftable), button, 0, 1, 1, 2,
 		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button),
-                              (despeckle_vals.filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
+                              (filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
 		     (GtkSignalFunc)dialog_recursive_callback,
 		     NULL);
@@ -759,7 +741,7 @@ despeckle_dialog(void)
   * Box size (radius) control...
   */
 
-  dialog_create_ivalue("Radius", GTK_TABLE(table), 2, &despeckle_vals.radius, 1, MAX_RADIUS);
+  dialog_create_ivalue("Radius", GTK_TABLE(table), 2, &despeckle_radius, 1, MAX_RADIUS);
 
  /*
   * OK, cancel buttons...
@@ -816,7 +798,8 @@ despeckle_dialog(void)
 static void
 preview_init(void)
 {
-  int   size,		/* Size of filter box */
+  int	row,		/* Current row in preview_srcs */
+	size,		/* Size of filter box */
 	width;		/* Byte width of the image */
 
 
@@ -824,7 +807,7 @@ preview_init(void)
   * Setup for preview filter...
   */
 
-  preview_buf_size = size = despeckle_vals.radius * 2 + 1;
+  size  = despeckle_radius * 2 + 1;
   width = preview_width * img_bpp;
 
   preview_src  = g_malloc(width * preview_height * sizeof(guchar *));
@@ -888,18 +871,8 @@ preview_update(void)
   * Pre-load the preview rectangle...
   */
 
-  size  = despeckle_vals.radius * 2 + 1;
+  size  = despeckle_radius * 2 + 1;
   width = preview_width * img_bpp;
-
-  if (size != preview_buf_size) 
-    {
-      preview_src  = g_realloc(preview_src,
-			       width * preview_height * sizeof(guchar *));
-      preview_dst  = g_realloc(preview_dst,
-			       width * sizeof(guchar));
-      preview_sort = g_realloc(preview_sort,
-			       size * size * sizeof(guchar));
-    }
 
   gimp_pixel_rgn_get_rect(&src_rgn, preview_src, preview_x1, preview_y1,
                           preview_width, preview_height);
@@ -914,7 +887,7 @@ preview_update(void)
     * Now find the median pixels and save the results...
     */
 
-    radius = despeckle_vals.radius;
+    radius = despeckle_radius;
 
     if (y < radius || y >= (preview_height - radius))
       memcpy(preview_dst, preview_src + y * width, width);
@@ -978,18 +951,18 @@ preview_update(void)
 	* recursive method...
 	*/
 
-	if (despeckle_vals.filter_type & FILTER_RECURSIVE)
+	if (filter_type & FILTER_RECURSIVE)
           preview_src[y * width + x] = *dst_ptr;
 
        /*
 	* Check the histogram and adjust the radius accordingly...
 	*/
 
-	if (despeckle_vals.filter_type & FILTER_ADAPTIVE)
+	if (filter_type & FILTER_ADAPTIVE)
 	{
 	  if (hist0 >= radius || hist255 >= radius)
 	  {
-            if (radius < despeckle_vals.radius)
+            if (radius < despeckle_radius)
               radius ++;
 	  }
 	  else if (radius > 1)
@@ -1046,7 +1019,8 @@ preview_update(void)
 static void
 preview_exit(void)
 {
-  int   size;	/* Size of row buffer */
+  int	row,	/* Looping var */
+	size;	/* Size of row buffer */
 
 
   size = MAX_RADIUS * 2 + 1;
@@ -1189,9 +1163,9 @@ dialog_adaptive_callback(GtkWidget *widget,	/* I - Toggle button */
                          gpointer  data)	/* I - Data */
 {
   if (GTK_TOGGLE_BUTTON(widget)->active)
-    despeckle_vals.filter_type |= FILTER_ADAPTIVE;
+    filter_type |= FILTER_ADAPTIVE;
   else
-    despeckle_vals.filter_type &= ~FILTER_ADAPTIVE;
+    filter_type &= ~FILTER_ADAPTIVE;
 
   preview_update();
 }
@@ -1206,9 +1180,9 @@ dialog_recursive_callback(GtkWidget *widget,	/* I - Toggle button */
                           gpointer  data)	/* I - Data */
 {
   if (GTK_TOGGLE_BUTTON(widget)->active)
-    despeckle_vals.filter_type |= FILTER_RECURSIVE;
+    filter_type |= FILTER_RECURSIVE;
   else
-    despeckle_vals.filter_type &= ~FILTER_RECURSIVE;
+    filter_type &= ~FILTER_RECURSIVE;
 
   preview_update();
 }

@@ -25,7 +25,6 @@
 #include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
-#include "linked.h"
 #include "rect_select.h"
 
 #define BEZIER_START     1
@@ -71,7 +70,7 @@ struct _bezier_select
   BezierPoint *last_point;   /* the last point on the curve       */
   int num_points;            /* number of points in the curve     */
   Channel *mask;             /* null if the curve is open         */
-  link_ptr *scanlines;       /* used in converting a curve        */
+  GSList **scanlines;        /* used in converting a curve        */
 };
 
 static void  bezier_select_reset           (BezierSelect *);
@@ -95,8 +94,8 @@ static void  bezier_compose                (BezierMatrix, BezierMatrix, BezierMa
 
 static void  bezier_convert                (BezierSelect *, GDisplay *, int, int);
 static void  bezier_convert_points         (BezierSelect *, GdkPoint *, int);
-static void  bezier_convert_line           (link_ptr *, int, int, int, int);
-static link_ptr  bezier_insert_in_list     (link_ptr, int);
+static void  bezier_convert_line           (GSList **, int, int, int, int);
+static GSList *  bezier_insert_in_list     (GSList *, int);
 
 static BezierMatrix basis =
 {
@@ -1042,7 +1041,7 @@ bezier_convert (BezierSelect *bezier_sel,
   PixelRegion maskPR;
   BezierPoint * points;
   BezierPoint * start_pt;
-  link_ptr list;
+  GSList * list;
   unsigned char *buf, *b;
   int draw_type;
   int * vals, val;
@@ -1084,7 +1083,7 @@ bezier_convert (BezierSelect *bezier_sel,
 				       gdisp->gimage->height);
 
   /* allocate room for the scanlines */
-  bezier_sel->scanlines = g_malloc (sizeof (link_ptr) * height);
+  bezier_sel->scanlines = g_malloc (sizeof (GSList *) * height);
 
   /* zero out the scanlines */
   for (i = 0; i < height; i++)
@@ -1146,7 +1145,7 @@ bezier_convert (BezierSelect *bezier_sel,
 		for (j = 0; j < w; j++)
 		  vals[j + x] += 255;
 
-              list = next_item (list);
+              list = g_slist_next (list);
             }
         }
 
@@ -1168,7 +1167,7 @@ bezier_convert (BezierSelect *bezier_sel,
 				drawable_width (GIMP_DRAWABLE(bezier_sel->mask)), buf);
 	}
 
-      free_list (bezier_sel->scanlines[i]);
+      g_slist_free (bezier_sel->scanlines[i]);
     }
 
   if (antialias)
@@ -1207,7 +1206,7 @@ bezier_convert_points (BezierSelect *bezier_sel,
 }
 
 static void
-bezier_convert_line (link_ptr *scanlines,
+bezier_convert_line (GSList ** scanlines,
 		     int       x1,
 		     int       y1,
 		     int       x2,
@@ -1323,32 +1322,32 @@ bezier_convert_line (link_ptr *scanlines,
     }
 }
 
-static link_ptr
-bezier_insert_in_list (link_ptr list,
+static GSList *
+bezier_insert_in_list (GSList * list,
 		       int      x)
 {
-  link_ptr orig = list;
-  link_ptr rest;
+  GSList * orig = list;
+  GSList * rest;
 
   if (!list)
-    return add_to_list (list, (void *) ((long) x));
+    return g_slist_prepend (list, (void *) ((long) x));
 
   while (list)
     {
-      rest = next_item (list);
+      rest = g_slist_next (list);
       if (x < (long) list->data)
         {
-          rest = add_to_list (rest, list->data);
+          rest = g_slist_prepend (rest, list->data);
           list->next = rest;
           list->data = (void *) ((long) x);
           return orig;
         }
       else if (!rest)
         {
-          append_to_list (list, (void *) ((long) x));
+          g_slist_append (list, (void *) ((long) x));
           return orig;
         }
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   return orig;

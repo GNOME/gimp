@@ -1,3 +1,21 @@
+/* LIBGIMP - The GIMP Library                                                   
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.             
+ *                                                                              
+ * This library is distributed in the hope that it will be useful,              
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of               
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the Free
+ * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */                                                                             
+
 /* Experimental: comment-out the following #define if a memcpy() call is
    slower than compiler-optimized memory copies for transfers of approx.
    64-256 bytes.
@@ -139,7 +157,7 @@ gimp_pixel_rgn_get_row (GPixelRgn *pr,
       tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
       gimp_tile_ref (tile);
 
-      tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
+      tile_data = tile->data + (int)tile->bpp * (int)(tile->ewidth * (int)(y % TILE_HEIGHT) + (x % TILE_WIDTH));
       boundary = x + (tile->ewidth - (x % TILE_WIDTH));
       bpp = tile->bpp;
 

@@ -26,9 +26,8 @@
  * V 1.02, PK, 08-Jun-97: Bug with saving gray images fixed
  * V 1.03, PK, 05-Oct-97: Parse rc-file
  * V 1.04, PK, 12-Oct-97: No progress bars for non-interactive mode
- * V 1.05, nn, 20-Dec-97: Initialize image_ID in run()
  */
-static char ident[] = "@(#) GIMP FITS file-plugin v1.05  20-Dec-97";
+static char ident[] = "@(#) GIMP FITS file-plugin v1.04  12-Oct-97";
 
 #include <stdio.h>
 #include <stdlib.h>

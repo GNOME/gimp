@@ -87,7 +87,7 @@ int valid_combinations[][MAX_CHANNELS + 1] =
  *  Static variables
  */
 static int global_gimage_ID = 1;
-link_ptr image_list = NULL;
+GSList *image_list = NULL;
 
 
 /* static functions */
@@ -125,7 +125,7 @@ gimage_create (void)
   gimage->comp_preview_valid[2] = FALSE;
   gimage->comp_preview = NULL;
 
-  image_list = append_to_list (image_list, (void *) gimage);
+  image_list = g_slist_append (image_list, (void *) gimage);
 
   return gimage;
 }
@@ -265,7 +265,7 @@ gimage_resize (GImage *gimage, int new_width, int new_height,
   Channel *channel;
   Layer *layer;
   Layer *floating_layer;
-  link_ptr list;
+  GSList *list;
 
   if (new_width <= 0 || new_height <= 0) 
     {
@@ -295,7 +295,7 @@ gimage_resize (GImage *gimage, int new_width, int new_height,
     {
       channel = (Channel *) list->data;
       channel_resize (channel, new_width, new_height, offset_x, offset_y);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  Don't forget the selection mask!  */
@@ -308,7 +308,7 @@ gimage_resize (GImage *gimage, int new_width, int new_height,
     {
       layer = (Layer *) list->data;
       layer_translate (layer, offset_x, offset_y);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  Make sure the projection matches the gimage size  */
@@ -335,7 +335,7 @@ gimage_scale (GImage *gimage, int new_width, int new_height)
   Channel *channel;
   Layer *layer;
   Layer *floating_layer;
-  link_ptr list;
+  GSList *list;
   int old_width, old_height;
   int layer_width, layer_height;
 
@@ -363,7 +363,7 @@ gimage_scale (GImage *gimage, int new_width, int new_height)
     {
       channel = (Channel *) list->data;
       channel_scale (channel, new_width, new_height);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  Don't forget the selection mask!  */
@@ -379,7 +379,7 @@ gimage_scale (GImage *gimage, int new_width, int new_height)
       layer_width = (new_width * drawable_width (GIMP_DRAWABLE(layer))) / old_width;
       layer_height = (new_height * drawable_height (GIMP_DRAWABLE(layer))) / old_height;
       layer_scale (layer, layer_width, layer_height, FALSE);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  Make sure the projection matches the gimage size  */
@@ -403,7 +403,7 @@ gimage_scale (GImage *gimage, int new_width, int new_height)
 GImage *
 gimage_get_named (char *name)
 {
-  link_ptr tmp = image_list;
+  GSList *tmp = image_list;
   GImage *gimage;
   char *str;
 
@@ -414,7 +414,7 @@ gimage_get_named (char *name)
       if (strcmp (str, name) == 0)
 	return gimage;
 
-      tmp = next_item (tmp);
+      tmp = g_slist_next (tmp);
     }
 
   return NULL;
@@ -424,7 +424,7 @@ gimage_get_named (char *name)
 GImage *
 gimage_get_ID (int ID)
 {
-  link_ptr tmp = image_list;
+  GSList *tmp = image_list;
   GImage *gimage;
 
   while (tmp)
@@ -433,7 +433,7 @@ gimage_get_ID (int ID)
       if (gimage->ID == ID)
 	return gimage;
 
-      tmp = next_item (tmp);
+      tmp = g_slist_next (tmp);
     }
 
   return NULL;
@@ -479,7 +479,7 @@ gimage_delete (GImage *gimage)
       undo_free (gimage);
 
       /*  remove this image from the global list  */
-      image_list = remove_from_list (image_list, (void *) gimage);
+      image_list = g_slist_remove (image_list, (void *) gimage);
 
       gimage_free_projection (gimage);
       gimage_free_shadow (gimage);
@@ -690,7 +690,7 @@ gimage_replace_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2P
       tempPR.h = y2 - y1;
       tempPR.data = temp_data;
 
-      apply_mask_to_region (&tempPR, maskPR, OPAQUE);
+      apply_mask_to_region (&tempPR, maskPR, OPAQUE_OPACITY);
 
       tempPR.x = 0;
       tempPR.y = 0;
@@ -958,33 +958,33 @@ project_channel (GImage *gimage, Channel *channel,
 static void
 gimage_free_layers (GImage *gimage)
 {
-  link_ptr list = gimage->layers;
+  GSList *list = gimage->layers;
   Layer * layer;
 
   while (list)
     {
       layer = (Layer *) list->data;
       layer_delete (layer);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
-  free_list (gimage->layers);
-  free_list (gimage->layer_stack);
+  g_slist_free (gimage->layers);
+  g_slist_free (gimage->layer_stack);
 }
 
 
 static void
 gimage_free_channels (GImage *gimage)
 {
-  link_ptr list = gimage->channels;
+  GSList *list = gimage->channels;
   Channel * channel;
 
   while (list)
     {
       channel = (Channel *) list->data;
       channel_delete (channel);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
-  free_list (gimage->channels);
+  g_slist_free (gimage->channels);
 }
 
 
@@ -995,14 +995,25 @@ gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
   int x1, y1, x2, y2;
   PixelRegion src1PR, src2PR, maskPR;
   PixelRegion * mask;
-  link_ptr list = gimage->layers;
-  link_ptr reverse_list = NULL;
+  GSList *list = gimage->layers;
+  GSList *reverse_list = NULL;
   int off_x, off_y;
 
   /*  composite the floating selection if it exists  */
   if ((layer = gimage_floating_sel (gimage)))
     floating_sel_composite (layer, x, y, w, h, FALSE);
 
+  /* Note added by Raph Levien, 27 Jan 1998
+
+     This looks it was intended as an optimization, but it seems to
+     have correctness problems. In particular, if all channels are
+     turned off, the screen simply does not update the projected
+     image. It should be black. Turning off this optimization seems to
+     restore correct behavior. At some future point, it may be
+     desirable to turn the optimization back on.
+
+     */
+#if 0
   /*  If all channels are not visible, simply return  */
   switch (gimage_base_type (gimage))
     {
@@ -1021,6 +1032,7 @@ gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
 	return;
       break;
     }
+#endif
 
   while (list)
     {
@@ -1028,9 +1040,9 @@ gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
 
       /*  only add layers that are visible and not floating selections to the list  */
       if (!layer_is_floating_sel (layer) && drawable_visible (GIMP_DRAWABLE(layer)))
-	reverse_list = add_to_list (reverse_list, layer);
+	reverse_list = g_slist_prepend (reverse_list, layer);
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   while (reverse_list)
@@ -1097,10 +1109,10 @@ gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
 	}
       gimage->construct_flag = 1;  /*  something was projected  */
 
-      reverse_list = next_item (reverse_list);
+      reverse_list = g_slist_next (reverse_list);
     }
 
-  free_list (reverse_list);
+  g_slist_free (reverse_list);
 }
 
 
@@ -1109,14 +1121,14 @@ gimage_construct_channels (GImage *gimage, int x, int y, int w, int h)
 {
   Channel * channel;
   PixelRegion src1PR, src2PR;
-  link_ptr list = gimage->channels;
-  link_ptr reverse_list = NULL;
+  GSList *list = gimage->channels;
+  GSList *reverse_list = NULL;
 
   /*  reverse the channel list  */
   while (list)
     {
-      reverse_list = add_to_list (reverse_list, list->data);
-      list = next_item (list);
+      reverse_list = g_slist_prepend (reverse_list, list->data);
+      list = g_slist_next (list);
     }
 
   while (reverse_list)
@@ -1134,17 +1146,17 @@ gimage_construct_channels (GImage *gimage, int x, int y, int w, int h)
 	  gimage->construct_flag = 1;
 	}
 
-      reverse_list = next_item (reverse_list);
+      reverse_list = g_slist_next (reverse_list);
     }
 
-  free_list (reverse_list);
+  g_slist_free (reverse_list);
 }
 
 
 static void
 gimage_initialize_projection (GImage *gimage, int x, int y, int w, int h)
 {
-  link_ptr list;
+  GSList *list;
   Layer *layer;
   int coverage = 0;
   PixelRegion PR;
@@ -1168,7 +1180,7 @@ gimage_initialize_projection (GImage *gimage, int x, int y, int w, int h)
 	  (off_y + drawable_height (GIMP_DRAWABLE(layer)) >= y + h))
 	coverage = 1;
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   if (!coverage)
@@ -1356,7 +1368,7 @@ int
 gimage_get_layer_index (GImage *gimage, Layer *layer_arg)
 {
   Layer *layer;
-  link_ptr layers = gimage->layers;
+  GSList *layers = gimage->layers;
   int index = 0;
 
   while (layers)
@@ -1366,7 +1378,7 @@ gimage_get_layer_index (GImage *gimage, Layer *layer_arg)
 	return index;
 
       index++;
-      layers = next_item (layers);
+      layers = g_slist_next (layers);
     }
 
   return -1;
@@ -1376,7 +1388,7 @@ int
 gimage_get_channel_index (GImage *gimage, Channel *channel_ID)
 {
   Channel *channel;
-  link_ptr channels = gimage->channels;
+  GSList *channels = gimage->channels;
   int index = 0;
 
   while (channels)
@@ -1386,7 +1398,7 @@ gimage_get_channel_index (GImage *gimage, Channel *channel_ID)
 	return index;
 
       index++;
-      channels = next_item (channels);
+      channels = g_slist_next (channels);
     }
 
   return -1;
@@ -1486,8 +1498,8 @@ gimage_set_active_layer (GImage *gimage, Layer * layer)
     return NULL;
 
   /*  Configure the layer stack to reflect this change  */
-  gimage->layer_stack = remove_from_list (gimage->layer_stack, (void *) layer);
-  gimage->layer_stack = add_to_list (gimage->layer_stack, (void *) layer);
+  gimage->layer_stack = g_slist_remove (gimage->layer_stack, (void *) layer);
+  gimage->layer_stack = g_slist_prepend (gimage->layer_stack, (void *) layer);
 
   /*  invalidate the selection boundary because of a layer modification  */
   layer_invalidate_boundary (layer);
@@ -1588,7 +1600,7 @@ Layer *
 gimage_pick_correlate_layer (GImage *gimage, int x, int y)
 {
   Layer *layer;
-  link_ptr list;
+  GSList *list;
 
   list = gimage->layers;
   while (list)
@@ -1597,7 +1609,7 @@ gimage_pick_correlate_layer (GImage *gimage, int x, int y)
       if (layer_pick_correlate (layer, x, y))
 	return layer;
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   return NULL;
@@ -1660,8 +1672,8 @@ gimage_raise_layer (GImage *gimage, Layer *layer_arg)
 {
   Layer *layer;
   Layer *prev_layer;
-  link_ptr list;
-  link_ptr prev;
+  GSList *list;
+  GSList *prev;
   int x1, y1, x2, y2;
   int index = -1;
   int off_x, off_y;
@@ -1712,7 +1724,7 @@ gimage_raise_layer (GImage *gimage, Layer *layer_arg)
 
       prev = list;
       index++;
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   return NULL;
@@ -1724,8 +1736,8 @@ gimage_lower_layer (GImage *gimage, Layer *layer_arg)
 {
   Layer *layer;
   Layer *next_layer;
-  link_ptr list;
-  link_ptr next;
+  GSList *list;
+  GSList *next;
   int x1, y1, x2, y2;
   int index = 0;
   int off_x, off_y;
@@ -1738,7 +1750,7 @@ gimage_lower_layer (GImage *gimage, Layer *layer_arg)
   while (list)
     {
       layer = (Layer *) list->data;
-      next = next_item (list);
+      next = g_slist_next (list);
 
       if (next)
 	next_layer = (Layer *) next->data;
@@ -1789,8 +1801,8 @@ gimage_lower_layer (GImage *gimage, Layer *layer_arg)
 Layer *
 gimage_merge_visible_layers (GImage *gimage, MergeType merge_type)
 {
-  link_ptr layer_list;
-  link_ptr merge_list = NULL;
+  GSList *layer_list;
+  GSList *merge_list = NULL;
   Layer *layer;
 
   layer_list = gimage->layers;
@@ -1798,22 +1810,22 @@ gimage_merge_visible_layers (GImage *gimage, MergeType merge_type)
     {
       layer = (Layer *) layer_list->data;
       if (drawable_visible (GIMP_DRAWABLE(layer)))
-	merge_list = append_to_list (merge_list, layer);
+	merge_list = g_slist_append (merge_list, layer);
 
-      layer_list = next_item (layer_list);
+      layer_list = g_slist_next (layer_list);
     }
 
   if (merge_list && merge_list->next)
     {
       layer = gimage_merge_layers (gimage, merge_list, merge_type);
-      free_list (merge_list);
+      g_slist_free (merge_list);
       return layer;
     }
   else
     {
       message_box ("There are not enough visible layers for a merge.\nThere must be at least two.",
 		   NULL, NULL);
-      free_list (merge_list);
+      g_slist_free (merge_list);
       return NULL;
     }
 }
@@ -1822,8 +1834,8 @@ gimage_merge_visible_layers (GImage *gimage, MergeType merge_type)
 Layer *
 gimage_flatten (GImage *gimage)
 {
-  link_ptr layer_list;
-  link_ptr merge_list = NULL;
+  GSList *layer_list;
+  GSList *merge_list = NULL;
   Layer *layer;
 
   layer_list = gimage->layers;
@@ -1831,21 +1843,21 @@ gimage_flatten (GImage *gimage)
     {
       layer = (Layer *) layer_list->data;
       if (drawable_visible (GIMP_DRAWABLE(layer)))
-	merge_list = append_to_list (merge_list, layer);
+	merge_list = g_slist_append (merge_list, layer);
 
-      layer_list = next_item (layer_list);
+      layer_list = g_slist_next (layer_list);
     }
 
   layer = gimage_merge_layers (gimage, merge_list, FlattenImage);
-  free_list (merge_list);
+  g_slist_free (merge_list);
   return layer;
 }
 
 
 Layer *
-gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
+gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
 {
-  link_ptr reverse_list = NULL;
+  GSList *reverse_list = NULL;
   PixelRegion src1PR, src2PR, maskPR;
   PixelRegion * mask;
   Layer *merge_layer;
@@ -1871,6 +1883,7 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
   while (merge_list)
     {
       layer = (Layer *) merge_list->data;
+      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
 
       switch (merge_type)
 	{
@@ -1905,7 +1918,6 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
 	case ClipToBottomLayer:
 	  if (merge_list->next == NULL)
 	    {
-	      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
 	      x1 = off_x;
 	      y1 = off_y;
 	      x2 = off_x + drawable_width (GIMP_DRAWABLE(layer));
@@ -1924,8 +1936,8 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
 	}
 
       count ++;
-      reverse_list = add_to_list (reverse_list, layer);
-      merge_list = next_item (merge_list);
+      reverse_list = g_slist_prepend (reverse_list, layer);
+      merge_list = g_slist_next (merge_list);
     }
 
   if ((x2 - x1) == 0 || (y2 - y1) == 0)
@@ -1943,7 +1955,7 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
 	case INDEXED: type = INDEXED_GIMAGE; break;
 	}
       merge_layer = layer_new (gimage->ID, gimage->width, gimage->height,
-			       type, drawable_name (GIMP_DRAWABLE(layer)), OPAQUE, NORMAL_MODE);
+			       type, drawable_name (GIMP_DRAWABLE(layer)), OPAQUE_OPACITY, NORMAL_MODE);
 
       if (!merge_layer) {
 	warning("gimage_merge_layers: could not allocate merge layer");
@@ -1990,7 +2002,7 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
        *  in order to add the final, merged layer to the layer list correctly
        */
       layer = (Layer *) reverse_list->data;
-      position = list_length (gimage->layers) - gimage_get_layer_index (gimage, layer);
+      position = g_slist_length (gimage->layers) - gimage_get_layer_index (gimage, layer);
       
       /* set the mode of the bottom layer to normal so that the contents
        *  aren't lost when merging with the all-alpha merge_layer
@@ -1999,6 +2011,7 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
        */
       layer -> mode =NORMAL;
       bottom = layer;
+
     }
 
   while (reverse_list)
@@ -2039,14 +2052,14 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
 		       layer->opacity, layer->mode, active, operation);
 
       gimage_remove_layer (gimage, layer);
-      reverse_list = next_item (reverse_list);
+      reverse_list = g_slist_next (reverse_list);
     }
 
   /* Save old mode in undo */
   if (bottom)
     bottom -> mode = merge_layer -> mode;
 
-  free_list (reverse_list);
+  g_slist_free (reverse_list);
 
   /*  if the type is flatten, remove all the remaining layers  */
   if (merge_type == FlattenImage)
@@ -2055,7 +2068,7 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
       while (merge_list)
 	{
 	  layer = (Layer *) merge_list->data;
-	  merge_list = next_item (merge_list);
+	  merge_list = g_slist_next (merge_list);
 	  gimage_remove_layer (gimage, layer);
 	}
 
@@ -2064,7 +2077,7 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
   else
     {
       /*  Add the layer to the gimage  */
-      gimage_add_layer (gimage, merge_layer, (list_length (gimage->layers) - position + 1));
+      gimage_add_layer (gimage, merge_layer, (g_slist_length (gimage->layers) - position + 1));
     }
 
   /*  End the merge undo group  */
@@ -2097,7 +2110,7 @@ gimage_add_layer (GImage *gimage, Layer *float_layer, int position)
     }
 
   {
-    link_ptr ll = gimage->layers;
+    GSList *ll = gimage->layers;
     while (ll) 
       {
 	if (ll->data == float_layer) 
@@ -2105,7 +2118,7 @@ gimage_add_layer (GImage *gimage, Layer *float_layer, int position)
 	    warning("gimage_add_layer: trying to add layer to image twice");
 	    return NULL;
 	  }
-	ll = next_item(ll);
+	ll = g_slist_next(ll);
       }
   }  
 
@@ -2134,11 +2147,11 @@ gimage_add_layer (GImage *gimage, Layer *float_layer, int position)
        */
       if (gimage_floating_sel (gimage) && (gimage->floating_sel != float_layer) && position == 0)
 	position = 1;
-      gimage->layers = insert_in_list (gimage->layers, float_layer, position);
+      gimage->layers = g_slist_insert (gimage->layers, layer_ref (float_layer), position);
     }
   else
-    gimage->layers = add_to_list (gimage->layers, float_layer);
-  gimage->layer_stack = add_to_list (gimage->layer_stack, float_layer);
+    gimage->layers = g_slist_prepend (gimage->layers, layer_ref (float_layer));
+  gimage->layer_stack = g_slist_prepend (gimage->layer_stack, float_layer);
 
   /*  notify the layers dialog of the currently active layer  */
   gimage_set_active_layer (gimage, float_layer);
@@ -2168,8 +2181,8 @@ gimage_remove_layer (GImage *gimage, Layer * layer)
       lu->prev_layer = layer;
       lu->undo_type = 1;
 
-      gimage->layers = remove_from_list (gimage->layers, layer);
-      gimage->layer_stack = remove_from_list (gimage->layer_stack, layer);
+      gimage->layers = g_slist_remove (gimage->layers, layer);
+      gimage->layer_stack = g_slist_remove (gimage->layer_stack, layer);
 
       /*  If this was the floating selection, reset the fs pointer  */
       if (gimage->floating_sel == layer)
@@ -2299,8 +2312,8 @@ gimage_raise_channel (GImage *gimage, Channel * channel_arg)
 {
   Channel *channel;
   Channel *prev_channel;
-  link_ptr list;
-  link_ptr prev;
+  GSList *list;
+  GSList *prev;
   int index = -1;
 
   list = gimage->channels;
@@ -2331,7 +2344,7 @@ gimage_raise_channel (GImage *gimage, Channel * channel_arg)
 
       prev = list;
       index++;
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   return NULL;
@@ -2343,8 +2356,8 @@ gimage_lower_channel (GImage *gimage, Channel *channel_arg)
 {
   Channel *channel;
   Channel *next_channel;
-  link_ptr list;
-  link_ptr next;
+  GSList *list;
+  GSList *next;
   int index = 0;
 
   list = gimage->channels;
@@ -2353,7 +2366,7 @@ gimage_lower_channel (GImage *gimage, Channel *channel_arg)
   while (list)
     {
       channel = (Channel *) list->data;
-      next = next_item (list);
+      next = g_slist_next (list);
 
       if (next)
 	next_channel = (Channel *) next->data;
@@ -2388,6 +2401,27 @@ gimage_add_channel (GImage *gimage, Channel *channel, int position)
 {
   ChannelUndo * cu;
 
+  if (GIMP_DRAWABLE(channel)->gimage_ID != 0 &&
+      GIMP_DRAWABLE(channel)->gimage_ID != gimage->ID)
+    {
+      warning("gimage_add_channel: attempt to add channel to wrong image");
+      return NULL;
+    }
+
+  {
+    GSList *cc = gimage->channels;
+    while (cc) 
+      {
+	if (cc->data == channel) 
+	  {
+	    warning("gimage_add_channel: trying to add channel to image twice");
+	    return NULL;
+	  }
+	cc = g_slist_next (cc);
+      }
+  }  
+
+
   /*  Prepare a channel undo and push it  */
   cu = (ChannelUndo *) g_malloc (sizeof (ChannelUndo));
   cu->channel = channel;
@@ -2397,7 +2431,7 @@ gimage_add_channel (GImage *gimage, Channel *channel, int position)
   undo_push_channel (gimage, cu);
 
   /*  add the channel to the list  */
-  gimage->channels = add_to_list (gimage->channels, channel);
+  gimage->channels = g_slist_prepend (gimage->channels, channel_ref (channel));
 
   /*  notify this gimage of the currently active channel  */
   gimage_set_active_channel (gimage, channel);
@@ -2424,7 +2458,7 @@ gimage_remove_channel (GImage *gimage, Channel *channel)
       cu->prev_channel = gimage->active_channel;
       cu->undo_type = 1;
 
-      gimage->channels = remove_from_list (gimage->channels, channel);
+      gimage->channels = g_slist_remove (gimage->channels, channel);
 
       if (gimage->active_channel == channel)
 	{
@@ -2479,7 +2513,7 @@ gimage_is_flat (GImage *gimage)
       /*  What makes a flat image?
        *  1) the solitary layer is exactly gimage-sized and placed
        *  2) no layer mask
-       *  3) opacity == OPAQUE
+       *  3) opacity == OPAQUE_OPACITY
        *  4) all channels must be visible
        */
       drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
@@ -2488,7 +2522,7 @@ gimage_is_flat (GImage *gimage)
 	  (off_x != 0) ||
 	  (off_y != 0) ||
 	  (layer->mask != NULL) ||
-	  (layer->opacity != OPAQUE) ||
+	  (layer->opacity != OPAQUE_OPACITY) ||
 	  (ac_visible == FALSE))
 	flat = FALSE;
     }
@@ -2698,17 +2732,17 @@ gimage_projection_opacity (GImage *gimage)
   Layer * layer;
 
   /*  If the gimage is flat, return the opacity of the active layer
-   *  Otherwise, we'll pass back OPAQUE
+   *  Otherwise, we'll pass back OPAQUE_OPACITY
    */
   if (gimage_is_flat (gimage))
     {
       if ((layer =  (gimage->active_layer)))
 	return layer->opacity;
       else
-	return OPAQUE;
+	return OPAQUE_OPACITY;
     }
   else
-    return OPAQUE;
+    return OPAQUE_OPACITY;
 }
 
 void
@@ -2749,8 +2783,8 @@ gimage_construct_composite_preview (GImage *gimage, int width, int height)
   TempBuf *comp;
   TempBuf *layer_buf;
   TempBuf *mask_buf;
-  link_ptr list = gimage->layers;
-  link_ptr reverse_list = NULL;
+  GSList *list = gimage->layers;
+  GSList *reverse_list = NULL;
   double ratio;
   int x, y, w, h;
   int x1, y1, x2, y2;
@@ -2785,9 +2819,9 @@ gimage_construct_composite_preview (GImage *gimage, int width, int height)
 
       /*  only add layers that are visible and not floating selections to the list  */
       if (!layer_is_floating_sel (layer) && drawable_visible (GIMP_DRAWABLE(layer)))
-	reverse_list = add_to_list (reverse_list, layer);
+	reverse_list = g_slist_prepend (reverse_list, layer);
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   construct_flag = 0;
@@ -2866,10 +2900,10 @@ gimage_construct_composite_preview (GImage *gimage, int width, int height)
 
       construct_flag = 1;
 
-      reverse_list = next_item (reverse_list);
+      reverse_list = g_slist_next (reverse_list);
     }
 
-  free_list (reverse_list);
+  g_slist_free (reverse_list);
 
   return comp;
 }
@@ -2944,14 +2978,14 @@ gimage_invalidate_preview (GImage *gimage)
 void
 gimage_invalidate_previews (void)
 {
-  link_ptr tmp = image_list;
+  GSList *tmp = image_list;
   GImage *gimage;
 
   while (tmp)
     {
       gimage = (GImage *) tmp->data;
       gimage_invalidate_preview (gimage);
-      tmp = next_item (tmp);
+      tmp = g_slist_next (tmp);
     }
 }
 

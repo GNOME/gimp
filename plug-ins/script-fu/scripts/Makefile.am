@@ -30,7 +30,6 @@ scriptdata_DATA = \
 	circle-logo.scm				\
 	circuit.scm				\
 	clothify.scm				\
-	color-cycling.scm			\
 	coolmetal-logo.scm			\
 	copy-visible.scm			\
 	crystal-logo.scm			\

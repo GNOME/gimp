@@ -1,6 +1,6 @@
 /*  
- *  Rotate plug-in v0.5 by Sven Neumann, neumanns@uni-duesseldorf.de  
- *  1998/01/09
+ *  Rotate plug-in v0.4 by Sven Neumann, neumanns@uni-duesseldorf.de  
+ *  1997/10/17
  *
  *  Any suggestions, bug-reports or patches are very welcome.
  * 
@@ -37,8 +37,6 @@
  *  (10/01/97)  v0.3   now handles layered images and undo
  *  (10/13/97)  v0.3a  small bugfix, no real changes
  *  (10/17/97)  v0.4   now handles selections
- *  (01/09/98)  v0.5   a few fixes to support portability
- *                  
  */
 
 /* TODO List
@@ -55,7 +53,7 @@
 /* Defines */
 #define PLUG_IN_NAME        "plug_in_rotate"
 #define PLUG_IN_PRINT_NAME  "Rotate"
-#define PLUG_IN_VERSION     "v0.5 (01/09/98)"
+#define PLUG_IN_VERSION     "v0.4 (10/17/97)"
 #define PLUG_IN_MENU_PATH   "<Image>/Filters/Transforms/Rotate"
 #define PLUG_IN_IMAGE_TYPES "RGB*, INDEXED*, GRAY*"
 #define PLUG_IN_AUTHOR      "Sven Neumann (neumanns@uni-duesseldorf.de)"
@@ -67,7 +65,7 @@
 #define IN_ARGS { PARAM_INT32,    "run_mode", "Interactive, non-interactive"},\
 		{ PARAM_IMAGE,    "image", "Input image" },\
 		{ PARAM_DRAWABLE, "drawable", "Input drawable"},\
-                { PARAM_INT32,    "angle", "Angle { 90 (1), 180 (2), 270 (3) } degrees"},\
+                { PARAM_INT32,    "angle", "Angle { 90° (1), 180° (2), 270° (3) }"},\
                 { PARAM_INT32,    "everything", "Rotate the whole image? { TRUE, FALSE }"}
 
 #define NUMBER_OUT_ARGS 0 
@@ -75,7 +73,7 @@
 
 #define NUM_ANGLES 4
 
-gchar *angle_label[NUM_ANGLES] = { "0", "90", "180", "270" };
+char *angle_label[NUM_ANGLES] = { "0°", "90°", "180°", "270°" };
 
 typedef struct {
   gint angle;
@@ -88,7 +86,7 @@ typedef struct {
 
 static RotateValues rotvals = 
 { 
-  1,        /* default to 90 degrees */
+  1,        /* default to 90° */
   1         /* default to whole image */
 };
 
@@ -99,10 +97,10 @@ static RotateInterface rotint =
 
 
 static void  query (void);
-static void  run (gchar *name,
-		  gint nparams,	          /* number of parameters passed in */
+static void  run (char *name,
+		  int nparams,	          /* number of parameters passed in */
 		  GParam * param,	  /* parameters passed in */
-		  gint *nreturn_vals,      /* number of parameters returned */
+		  int *nreturn_vals,      /* number of parameters returned */
 		  GParam ** return_vals); /* parameters to be returned */
 static void  rotate (void);
 static void  rotate_drawable (GDrawable *drawable);
@@ -142,9 +140,9 @@ static void query (void)
 {
 
 static GParamDef args[] = { IN_ARGS };
-static gint nargs = NUMBER_IN_ARGS;
+static int nargs = NUMBER_IN_ARGS;
 static GParamDef *return_vals = OUT_ARGS;
-static gint nreturn_vals = NUMBER_OUT_ARGS;
+static int nreturn_vals = NUMBER_OUT_ARGS;
 
 /* the actual installation of the plugin */
 gimp_install_procedure (PLUG_IN_NAME,
@@ -163,10 +161,10 @@ gimp_install_procedure (PLUG_IN_NAME,
 }
 
 static void 
-run (gchar *name,		/* name of plugin */
-     gint nparams,		/* number of in-paramters */
+run (char *name,		/* name of plugin */
+     int nparams,		/* number of in-paramters */
      GParam * param,		/* in-parameters */
-     gint *nreturn_vals,		/* number of out-parameters */
+     int *nreturn_vals,		/* number of out-parameters */
      GParam ** return_vals)	/* out-parameters */
 {
 
@@ -213,17 +211,19 @@ run (gchar *name,		/* name of plugin */
 	}
       else
 	status = STATUS_CALLING_ERROR;
-      break;
       
-    case RUN_WITH_LAST_VALS:
-      /* Possibly retrieve data from a previous run */
-      gimp_get_data (PLUG_IN_NAME, &rotvals);
-      rotvals.angle = rotvals.angle % NUM_ANGLES;
       break;
+
+  case RUN_WITH_LAST_VALS:
+    /* Possibly retrieve data from a previous run */
+    gimp_get_data (PLUG_IN_NAME, &rotvals);
+    rotvals.angle = rotvals.angle % NUM_ANGLES;
     
-    default:
-      break;
-  } /* switch */
+    break;
+    
+  default:
+    break;
+  }
 
   if (status == STATUS_SUCCESS)
   {
@@ -252,7 +252,7 @@ gint32
 my_gimp_selection_is_empty (gint32 image_ID)
 {
   GParam *return_vals;
-  gint nreturn_vals;
+  int nreturn_vals;
   gint32 is_empty;
 
   /* initialize */
@@ -276,7 +276,7 @@ gint32
 my_gimp_selection_float (gint32 image_ID, gint32 drawable_ID)
 {
   GParam *return_vals;
-  gint nreturn_vals;
+  int nreturn_vals;
   gint32 layer_ID;
 
   return_vals = gimp_run_procedure ("gimp_selection_float",
@@ -563,7 +563,6 @@ rotate_dialog (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *radio_label; 
-  GtkWidget *unit_label; 
   GtkWidget *hbox;
   GtkWidget *radio_button;
   GtkWidget *check_button;
@@ -623,7 +622,7 @@ rotate_dialog (void)
 		      frame, TRUE, TRUE, 0);
 
   /* table for radio_buttons */
-  table = gtk_table_new (6, 6, FALSE);
+  table = gtk_table_new (5, 5, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 8);
   gtk_table_set_col_spacings (GTK_TABLE (table), 1);
   gtk_container_border_width (GTK_CONTAINER (table), 6);
@@ -631,7 +630,7 @@ rotate_dialog (void)
 
   /* radio buttons */
 
-  /* 0 degrees */
+  /* 0° */
   radio_label = gtk_label_new ( angle_label[0] );
   gtk_table_attach ( GTK_TABLE (table), radio_label, 2, 3, 0, 1, 0, 0, 0, 0);
   gtk_widget_show (radio_label);
@@ -645,7 +644,7 @@ rotate_dialog (void)
 				   radio_pressed[0]);
   gtk_widget_show (radio_button);
 
-  /* 90 degrees */  
+  /* 90° */  
   radio_label = gtk_label_new ( angle_label[1] );
   gtk_table_attach ( GTK_TABLE (table), radio_label, 4, 5, 2, 3, 0, 0, 0, 0);
   gtk_widget_show (radio_label);
@@ -659,7 +658,7 @@ rotate_dialog (void)
 				   radio_pressed[1]);
   gtk_widget_show (radio_button);
 
-  /* 180 degrees */
+  /* 180° */
   radio_label = gtk_label_new ( angle_label[2] );
   gtk_table_attach ( GTK_TABLE (table), radio_label, 2, 3, 4, 5, 0, 0, 0, 0);
   gtk_widget_show (radio_label);
@@ -673,7 +672,7 @@ rotate_dialog (void)
 				   radio_pressed[2]);
   gtk_widget_show (radio_button);
 
-  /* 270 degrees */ 
+  /* 270° */ 
   radio_label = gtk_label_new ( angle_label[3] );
   gtk_table_attach ( GTK_TABLE (table), radio_label, 0, 1, 2, 3, 0, 0, 0, 0);
   gtk_widget_show (radio_label);
@@ -687,13 +686,6 @@ rotate_dialog (void)
 				   radio_pressed[3]);
   gtk_widget_show (radio_button);
 
-  /* label: degrees */
-
-  unit_label = gtk_label_new ( "degrees" );
-  gtk_table_attach ( GTK_TABLE (table), unit_label, 5, 6, 5, 6, 0, 0, 0, 0);
-  gtk_widget_show (unit_label);
-
- 
   gtk_widget_show (table);
   gtk_widget_show (frame);
 
@@ -756,7 +748,7 @@ rotate_toggle_update (GtkWidget *widget,
 {
   gint *toggle_val;
 
-  toggle_val = (gint *) data;
+  toggle_val = (int *) data;
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     *toggle_val = TRUE;
@@ -808,8 +800,5 @@ ErrorMessage(guchar *message)
   gtk_widget_show(window);
   gtk_main ();
 }
-
-
-
 
 

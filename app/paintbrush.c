@@ -161,7 +161,7 @@ paintbrush_motion (PaintCore *paint_core,
   GImage *gimage;
   TempBuf * area;
   double x, paint_left;
-  unsigned char blend = OPAQUE;
+  unsigned char blend = OPAQUE_OPACITY;
   unsigned char col[MAX_CHANNELS];
 
   if (! (gimage = drawable_gimage (drawable)))
@@ -186,7 +186,7 @@ paintbrush_motion (PaintCore *paint_core,
   if (blend)
     {
       /*  set the alpha channel  */
-      col[area->bytes - 1] = OPAQUE;
+      col[area->bytes - 1] = OPAQUE_OPACITY;
 
       /*  color the pixels  */
       color_pixels (temp_buf_data (area), col,

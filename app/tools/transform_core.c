@@ -858,15 +858,15 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
   switch (drawable_type (drawable))
     {
     case RGB_GIMAGE: case RGBA_GIMAGE:
-      bg_col[ALPHA_PIX] = TRANSPARENT;
+      bg_col[ALPHA_PIX] = TRANSPARENT_OPACITY;
       alpha = 3;
       break;
     case GRAY_GIMAGE: case GRAYA_GIMAGE:
-      bg_col[ALPHA_G_PIX] = TRANSPARENT;
+      bg_col[ALPHA_G_PIX] = TRANSPARENT_OPACITY;
       alpha = 1;
       break;
     case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-      bg_col[ALPHA_I_PIX] = TRANSPARENT;
+      bg_col[ALPHA_I_PIX] = TRANSPARENT_OPACITY;
       alpha = 1;
       /*  If the gimage is indexed color, ignore smoothing value  */
       interpolation = 0;
@@ -1187,7 +1187,7 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
 
   if (new_layer)
     {
-      layer = layer_from_tiles (gimage, drawable, tiles, "Transformation", OPAQUE, NORMAL_MODE);
+      layer = layer_from_tiles (gimage, drawable, tiles, "Transformation", OPAQUE_OPACITY, NORMAL_MODE);
       GIMP_DRAWABLE(layer)->offset_x = tiles->x;
       GIMP_DRAWABLE(layer)->offset_y = tiles->y;
 

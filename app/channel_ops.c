@@ -101,6 +101,7 @@ channel_ops_offset (void *gimage_ptr)
   off_d->gimage_id = gimage->ID;
 
   off_d->dlg = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (off_d->dlg), "offset", "Gimp");
   gtk_window_set_title (GTK_WINDOW (off_d->dlg), "Offset");
 
   /* handle the wm close signal */
@@ -373,7 +374,7 @@ offset (GImage *gimage,
 	{
 	  palette_get_background (&fill[0], &fill[1], &fill[2]);
 	  if (drawable_has_alpha (drawable))
-	    fill[drawable_bytes (drawable) - 1] = OPAQUE;
+	    fill[drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
 	}
 
       if (offset_x >= 0 && offset_y >= 0)

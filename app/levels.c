@@ -518,6 +518,7 @@ levels_new_dialog ()
 
   /*  The shell and main vbox  */
   ld->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (ld->shell), "levels", "Gimp");
   gtk_window_set_title (GTK_WINDOW (ld->shell), "Levels");
 
   /* handle the wm close signal */
@@ -1522,6 +1523,10 @@ levels_invoker (Argument *args)
       if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
+  /*  make sure the drawable is not indexed color  */
+  if (success)
+    success = ! drawable_indexed (drawable);
+   
   /*  channel  */
   if (success)
     {

@@ -96,6 +96,9 @@ struct _fs_to_layer_undo
 
 Layer *         layer_new (int, int, int, int, char *, int, int);
 Layer *         layer_copy (Layer *, int);
+Layer *		layer_ref (Layer *);
+void   		layer_unref (Layer *);
+
 Layer *         layer_from_tiles (void *, GimpDrawable *, TileManager *, char *, int, int);
 LayerMask *     layer_add_mask (Layer *, LayerMask *);
 LayerMask *     layer_create_mask (Layer *, AddMaskType);

@@ -446,7 +446,7 @@ clone_motion (PaintCore *paint_core,
     }
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable, OPAQUE,
+  paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
 			   (int) (get_brush_opacity () * 255),
 			   get_brush_paint_mode (), SOFT, CONSTANT);
 }
@@ -477,7 +477,7 @@ clone_line_image (GImage        *dest,
       if (has_alpha)
 	d[dest_alpha] = s[src_alpha];
       else
-	d[dest_alpha] = OPAQUE;
+	d[dest_alpha] = OPAQUE_OPACITY;
 
       s += src_bytes;
       d += dest_bytes;
@@ -517,7 +517,7 @@ clone_line_pattern (GImage        *dest,
 
       gimage_transform_color (dest, drawable, p, d, color);
 
-      d[alpha] = OPAQUE;
+      d[alpha] = OPAQUE_OPACITY;
 
       d += bytes;
     }

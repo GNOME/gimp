@@ -18,6 +18,9 @@
 #ifndef __PALETTE_H__
 #define __PALETTE_H__
 
+#include <glib.h>
+#include "procedural_db.h"
+
 #define FOREGROUND 0
 #define BACKGROUND 1
 
@@ -39,7 +42,7 @@ void palette_set_active_color (int, int, int, int);
 struct _PaletteEntries {
   char *name;
   char *filename;
-  link_ptr colors;
+  GSList *colors;
   int n_colors;
   int changed;
 };
@@ -52,11 +55,9 @@ struct _PaletteEntry {
 };
 typedef struct _PaletteEntry _PaletteEntry, *PaletteEntryP;
 
-extern link_ptr palette_entries_list;
+extern GSList * palette_entries_list;
 void palette_init_palettes (void);
 void palette_free_palettes (void);
-
-#include "procedural_db.h"
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord palette_get_foreground_proc;

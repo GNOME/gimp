@@ -24,9 +24,8 @@
 
 /* Event history:
  * V 1.00, PK, 29-Jul-97, Creation
- * V 1.01, nn, 20-Dec-97, Add default case in switch for hsv_to_rgb ()
  */
-static char ident[] = "@(#) GIMP Compose plug-in v1.01 20-Dec-97";
+static char ident[] = "@(#) GIMP Compose plug-in v1.00 29-Jul-97";
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -787,10 +786,10 @@ hsv_to_rgb (unsigned char *h,
         blue = (int)(q * 255.0);
         break;
       default:
-        red = 0;
-        green = 0;
-        blue = 0;
-        break;
+	red = 0;
+	green = 0;
+	blue = 0;
+	break;
       }
     if (red < 0) red = 0; else if (red > 255) red = 255;
     if (green < 0) green = 0; else if (green > 255) green = 255;

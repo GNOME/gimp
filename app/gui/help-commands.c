@@ -111,6 +111,7 @@ static   GtkWidget   *prefs_dlg = NULL;
 static   int          old_transparency_type;
 static   int          old_transparency_size;
 static   int          old_levels_of_undo;
+static   int          old_marching_speed;
 static   int          old_allow_resize_windows;
 static   int          old_auto_save;
 static   int          old_preview_size;
@@ -206,7 +207,7 @@ file_new_ok_callback (GtkWidget *widget,
 
   /*  Make the background (or first) layer  */
   layer = layer_new (gimage->ID, gimage->width, gimage->height,
-		     type, "Background", OPAQUE, NORMAL);
+		     type, "Background", OPAQUE_OPACITY, NORMAL);
 
   if (layer) {
     /*  add the new layer to the gimage  */
@@ -311,6 +312,7 @@ file_new_cmd_callback (GtkWidget *widget,
     vals->type = RGB;    /* no indexed images */
 
   vals->dlg = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (vals->dlg), "new_image", "Gimp");
   gtk_window_set_title (GTK_WINDOW (vals->dlg), "New Image");
   gtk_window_position (GTK_WINDOW (vals->dlg), GTK_WIN_POS_MOUSE);
 
@@ -512,8 +514,8 @@ file_save_as_cmd_callback (GtkWidget *widget,
 
    Still no settings for default-brush, default-gradient,
    default-palette, default-pattern, gamma-correction, color-cube,
-   marching-ants-speed, show-rulers, ruler-units. No widget for
-   confirm-on-close although a lot of stuff is there.
+   show-rulers, ruler-units. No widget for confirm-on-close although
+   a lot of stuff is there.
 
    No UI feedback for the fact that some settings won't take effect
    until the next Gimp restart.
@@ -565,6 +567,13 @@ file_prefs_ok_callback (GtkWidget *widget,
       message_box("Error: Levels of undo must be zero or greater.", 
 		  NULL, NULL);
       levels_of_undo = old_levels_of_undo;
+      return;
+    }
+  if (marching_speed < 50)
+    {
+      message_box("Error: Marching speed must be 50 or greater.",
+		  NULL, NULL);
+      marching_speed = old_marching_speed;
       return;
     }
   if (default_width < 1)
@@ -626,6 +635,8 @@ file_prefs_save_callback (GtkWidget *widget,
 
   if (levels_of_undo != old_levels_of_undo)
     update = g_list_append (update, "undo-levels");
+  if (marching_speed != old_marching_speed)
+    update = g_list_append (update, "marching-ants-speed");
   if (allow_resize_windows != old_allow_resize_windows)
     update = g_list_append (update, "allow-resize-windows");
   if (auto_save != old_auto_save)
@@ -751,6 +762,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   prefs_dlg = NULL;
 
   levels_of_undo = old_levels_of_undo;
+  marching_speed = old_marching_speed;
   allow_resize_windows = old_allow_resize_windows;
   auto_save = old_auto_save;
   no_cursor_updating = old_no_cursor_updating;
@@ -960,6 +972,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       old_transparency_type = transparency_type;
       old_transparency_size = transparency_size;
       old_levels_of_undo = levels_of_undo;
+      old_marching_speed = marching_speed;
       old_allow_resize_windows = allow_resize_windows;
       old_auto_save = auto_save;
       old_preview_size = preview_size;
@@ -983,6 +996,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       file_prefs_strset (&old_gradient_path, edit_gradient_path);
 
       prefs_dlg = gtk_dialog_new ();
+      gtk_window_set_wmclass (GTK_WINDOW (prefs_dlg), "preferences", "Gimp");
       gtk_window_set_title (GTK_WINDOW (prefs_dlg), "Preferences");
 
       /* handle the wm close signal */
@@ -1287,6 +1301,9 @@ file_pref_cmd_callback (GtkWidget *widget,
       sprintf (buffer, "%d", marching_speed);
       gtk_entry_set_text (GTK_ENTRY (entry), buffer);
       gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (entry), "changed",
+                          (GtkSignalFunc) file_prefs_text_callback,
+                          &marching_speed);
       gtk_widget_show (entry);      
 
       label = gtk_label_new ("Interface");
@@ -2094,6 +2111,7 @@ image_resize_cmd_callback (GtkWidget *widget,
 
   /*  the dialog  */
   image_resize->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (image_resize->shell), "image_resize", "Gimp");
   gtk_window_set_title (GTK_WINDOW (image_resize->shell), "Image Resize");
   gtk_window_set_policy (GTK_WINDOW (image_resize->shell), FALSE, FALSE, TRUE);
   gtk_window_position (GTK_WINDOW (image_resize->shell), GTK_WIN_POS_MOUSE);
@@ -2140,6 +2158,7 @@ image_scale_cmd_callback (GtkWidget *widget,
 
   /*  the dialog  */
   image_scale->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (image_scale->shell), "image_scale", "Gimp");
   gtk_window_set_title (GTK_WINDOW (image_scale->shell), "Image Scale");
   gtk_window_set_policy (GTK_WINDOW (image_scale->shell), FALSE, FALSE, TRUE);
   gtk_window_position (GTK_WINDOW (image_scale->shell), GTK_WIN_POS_MOUSE);

@@ -24,7 +24,6 @@
 #include "gimage_mask.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
-#include "linked.h"
 #include "move.h"
 #include "undo.h"
 

@@ -95,6 +95,7 @@ layer_select_init (GImage  *gimage,
 
       /*  The shell and main vbox  */
       layer_select->shell = gtk_window_new (GTK_WINDOW_POPUP);
+      gtk_window_set_wmclass (GTK_WINDOW (layer_select->shell), "layer_select", "Gimp");
       gtk_window_set_title (GTK_WINDOW (layer_select->shell), "Layer Select");
       gtk_window_position (GTK_WINDOW (layer_select->shell), GTK_WIN_POS_MOUSE);
       gtk_signal_connect (GTK_OBJECT (layer_select->shell), "event",
@@ -178,8 +179,8 @@ layer_select_advance (LayerSelect *layer_select,
   int index;
   int length;
   int count;
-  link_ptr list;
-  link_ptr nth;
+  GSList *list;
+  GSList *nth;
   Layer *layer;
 
   index = 0;
@@ -196,17 +197,17 @@ layer_select_advance (LayerSelect *layer_select,
       if (layer == layer_select->current_layer)
 	index = count;
       count++;
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
-  length = list_length (layer_select->gimage->layer_stack);
+  length = g_slist_length (layer_select->gimage->layer_stack);
 
   if (dir == 1)
     index = (index == length - 1) ? 0 : (index + 1);
   else
     index = (index == 0) ? (length - 1) : (index - 1);
 
-  nth = nth_item (layer_select->gimage->layer_stack, index);
+  nth = g_slist_nth (layer_select->gimage->layer_stack, index);
 
   if (nth)
     {

@@ -139,7 +139,8 @@ color_select_new (int                  r,
 		  int                  g,
 		  int                  b,
 		  ColorSelectCallback  callback,
-		  void                *client_data)
+		  void                *client_data,
+		  int                  wants_updates)
 {
   /*  static char *toggle_titles[6] = { "Hue", "Saturation", "Value", "Red", "Green", "Blue" }; */
   static char *toggle_titles[6] = { "H", "S", "V", "R", "G", "B" };
@@ -167,6 +168,7 @@ color_select_new (int                  r,
   csp->z_color_fill = HUE;
   csp->xy_color_fill = SATURATION_VALUE;
   csp->gc = NULL;
+  csp->wants_updates = wants_updates;
 
   csp->values[RED] = csp->orig_values[0] = r;
   csp->values[GREEN] = csp->orig_values[1] = g;
@@ -175,6 +177,7 @@ color_select_new (int                  r,
   color_select_update_pos (csp);
 
   csp->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (csp->shell), "color_selection", "Gimp");
   gtk_window_set_title (GTK_WINDOW (csp->shell), "Color Selection");
   gtk_window_set_policy (GTK_WINDOW (csp->shell), FALSE, FALSE, FALSE);
   gtk_widget_set_uposition (csp->shell, color_select_x, color_select_y);
@@ -313,6 +316,16 @@ color_select_new (int                  r,
   /*  The action area  */
   action_items[0].user_data = csp;
   action_items[1].user_data = csp;
+  if (csp->wants_updates)
+    {
+      action_items[0].label = "Close";
+      action_items[1].label = "Revert to Old Color";
+    }
+  else
+    {
+      action_items[0].label = "OK";
+      action_items[1].label = "Cancel";
+    }
   build_action_area (GTK_DIALOG (csp->shell), action_items, 2, 0);
 
   color_select_image_fill (csp->z_color, csp->z_color_fill, csp->values);
@@ -426,7 +439,7 @@ color_select_update (ColorSelectP          csp,
 static void
 color_select_update_caller (ColorSelectP csp)
 {
-  if (csp && csp->callback)
+  if (csp && csp->wants_updates && csp->callback)
     {
       (* csp->callback) (csp->values[RED],
 			 csp->values[GREEN],

@@ -37,11 +37,10 @@
 /*                                                                            */
 /*  Author        : P. Kirchgessner                                           */
 /*  Date of Gen.  : 12-Apr-97                                                 */
-/*  Last modified : 20-Dec-97                                                 */
-/*  Version       : 0.11                                                      */
+/*  Last modified : 17-May-97                                                 */
+/*  Version       : 0.10                                                      */
 /*  Compiler Opt. :                                                           */
 /*  Changes       :                                                           */
-/*  #MOD-0001, nn, 20-Dec-97, Initialize some variables                       */
 /*                                                                            */
 /*  #END-HDR                                                                  */
 /******************************************************************************/
@@ -55,9 +54,9 @@
 /*                                                                            */
 /******************************************************************************/
 
-#define                                    VERSIO  0.11
+#define                                    VERSIO  0.10
 /* Identifikation:    "@(#) <product>              <ver> <dd-mmm-yy>" */
-static char ident[] = "@(#) libfits.c              0.11  20-Dec-97  (%I%)";
+static char ident[] = "@(#) libfits.c              0.10  17-May-97  (%I%)";
 
 /******************************************************************************/
 /* FITS reading/writing library                                               */

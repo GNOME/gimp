@@ -269,9 +269,9 @@ EmbossRow(guchar *src, guchar *texture, guchar *dst,
            * some cases the sum is unsigned, in others it is
            * signed. ergo, cast to signed.
            */
-      Nx = (int)(s1[-(int)bypp] + s2[-(int)bypp] + s3[-(int)bypp]
+      Nx = (int)(s1[-bypp] + s2[-bypp] + s3[-bypp]
                  - s1[bypp] - s2[bypp] - s3[bypp]);
-      Ny = (int)(s3[-(int)bypp] + s3[0] + s3[bypp] - s1[-(int)bypp]
+      Ny = (int)(s3[-bypp] + s3[0] + s3[bypp] - s1[-bypp]
                  - s1[0] - s1[bypp]);
 
           /* shade with distant light source */

@@ -20,7 +20,6 @@
 
 #include "gimage.h"
 #include "info_dialog.h"
-#include "linked.h"
 #include "selection.h"
 
 /*
@@ -86,8 +85,8 @@ struct _GDisplay
 
   GdkGC *scroll_gc;               /*  GC for scrolling */
 
-  link_ptr update_areas;          /*  Update areas list                       */
-  link_ptr display_areas;         /*  Display areas list                      */
+  GSList *update_areas;           /*  Update areas list                       */
+  GSList *display_areas;          /*  Display areas list                      */
 
   GdkCursorType current_cursor;   /*  Currently installed cursor              */
 };

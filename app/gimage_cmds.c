@@ -33,7 +33,7 @@ static int int_value;
 static int success;
 static Argument *return_args;
 
-extern link_ptr image_list;
+extern GSList * image_list;
 
 static GImage * duplicate  (GImage *gimage);
 
@@ -44,7 +44,7 @@ static Argument * channel_ops_duplicate_invoker  (Argument *args);
 static Argument *
 gimage_list_images_invoker (Argument *args)
 {
-  link_ptr list;
+  GSList *list;
   int num_images;
   int *image_ids;
   Argument *return_args;
@@ -55,7 +55,7 @@ gimage_list_images_invoker (Argument *args)
   if (success)
     {
       list = image_list;
-      num_images = list_length (list);
+      num_images = g_slist_length (list);
       image_ids = NULL;
 
       if (num_images)
@@ -64,7 +64,7 @@ gimage_list_images_invoker (Argument *args)
 
 	  image_ids = (int *) g_malloc (sizeof (int) * num_images);
 
-	  for (i = 0; i < num_images; i++, list = next_item (list))
+	  for (i = 0; i < num_images; i++, list = g_slist_next (list))
 	    image_ids[i] = ((GImage *) list->data)->ID;
 	}
 
@@ -478,7 +478,7 @@ static Argument *
 gimage_get_layers_invoker (Argument *args)
 {
   GImage *gimage;
-  link_ptr layer_list;
+  GSList *layer_list;
   int num_layers;
   int *layer_ids;
   Argument *return_args;
@@ -495,7 +495,7 @@ gimage_get_layers_invoker (Argument *args)
   if (success)
     {
       layer_list = gimage->layers;
-      num_layers = list_length (layer_list);
+      num_layers = g_slist_length (layer_list);
       layer_ids = NULL;
 
       if (num_layers)
@@ -504,7 +504,7 @@ gimage_get_layers_invoker (Argument *args)
 
 	  layer_ids = (int *) g_malloc (sizeof (int) * num_layers);
 
-	  for (i = 0; i < num_layers; i++, layer_list = next_item (layer_list))
+	  for (i = 0; i < num_layers; i++, layer_list = g_slist_next (layer_list))
 	    layer_ids[i] = drawable_ID (GIMP_DRAWABLE(((Layer *) layer_list->data)));
 	}
 
@@ -568,7 +568,7 @@ gimage_get_channels_invoker (Argument *args)
   GImage *gimage;
   int num_channels;
   int *channel_ids;
-  link_ptr channel_list;
+  GSList *channel_list;
   Argument *return_args;
 
   success = TRUE;
@@ -583,7 +583,7 @@ gimage_get_channels_invoker (Argument *args)
   if (success)
     {
       channel_list = gimage->channels;
-      num_channels = list_length (channel_list);
+      num_channels = g_slist_length (channel_list);
       channel_ids = NULL;
 
       if (num_channels)
@@ -592,7 +592,7 @@ gimage_get_channels_invoker (Argument *args)
 
 	  channel_ids = (int *) g_malloc (sizeof (int) * num_channels);
 
-	  for (i = 0; i < num_channels; i++, channel_list = next_item (channel_list))
+	  for (i = 0; i < num_channels; i++, channel_list = g_slist_next (channel_list))
 	    channel_ids[i] = drawable_ID (GIMP_DRAWABLE(((Channel *) channel_list->data)));
 	}
 
@@ -3223,7 +3223,7 @@ duplicate (GImage *gimage)
   Layer *layer, *new_layer;
   Layer *floating_layer;
   Channel *channel, *new_channel;
-  link_ptr list;
+  GSList *list;
   Layer *active_layer = NULL;
   Channel *active_channel = NULL;
   GimpDrawable *new_floating_sel_drawable = NULL;
@@ -3250,10 +3250,10 @@ duplicate (GImage *gimage)
   while (list)
     {
       layer = (Layer *) list->data;
-      list = next_item (list);
+      list = g_slist_next (list);
 
       new_layer = layer_copy (layer, FALSE);
-      GIMP_DRAWABLE(new_layer)->ID = new_gimage->ID;
+      GIMP_DRAWABLE(new_layer)->gimage_ID = new_gimage->ID;
 
       /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
       g_free (drawable_name (GIMP_DRAWABLE(new_layer)));
@@ -3286,7 +3286,7 @@ duplicate (GImage *gimage)
   while (list)
     {
       channel = (Channel *) list->data;
-      list = next_item (list);
+      list = g_slist_next (list);
 
       new_channel = channel_copy (channel);
 

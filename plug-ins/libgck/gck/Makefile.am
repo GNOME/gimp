@@ -25,9 +25,9 @@ gckinclude_HEADERS =	gck.h		\
 libgck_la_LDFLAGS = -version-info 0:1:0 -rpath $(libdir) 
 
 INCLUDES = \
-	-I$(srcdir)/..			\
 	-I$(top_srcdir)		\
-	-I$(includedir)
+	-I$(includedir)		\
+	-I$(srcdir)/..
 
 .PHONY: files
 

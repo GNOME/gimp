@@ -41,6 +41,7 @@ static char *scroll_text[] =
   "Zach Beane",
   "Tom Bech",
   "Marc Bless",
+  "Edward Blevins",
   "Roberto Boyd",
   "Seth Burgess",
   "Brent Burton",
@@ -57,8 +58,10 @@ static char *scroll_text[] =
   "Simon Janes",
   "Tim Janik",
   "Tuomas Kuosmanen",
+  "Peter Kirchgessner", 
   "Karl LaRocca",
   "Jens Lautenbacher",
+  "Laramie Leavitt",
   "Raph Levien",
   "Adrian Likins",
   "Ingo Luetkebohle",
@@ -111,6 +114,7 @@ about_dialog_create (int timeout)
   if (!about_dialog)
     {
       about_dialog = gtk_window_new (GTK_WINDOW_DIALOG);
+      gtk_window_set_wmclass (GTK_WINDOW (about_dialog), "about_dialog", "Gimp");
       gtk_window_set_title (GTK_WINDOW (about_dialog), "About the GIMP");
       gtk_window_set_policy (GTK_WINDOW (about_dialog), FALSE, FALSE, FALSE);
       gtk_window_position (GTK_WINDOW (about_dialog), GTK_WIN_POS_CENTER);

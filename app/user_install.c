@@ -97,6 +97,7 @@ install_help (InstallCallback callback)
   GdkFont   *font;
 
   help_widget = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (help_widget), "gimp_installation", "Gimp");
   gtk_window_set_title (GTK_WINDOW (help_widget), "GIMP Installation");
   gtk_window_position (GTK_WINDOW (help_widget), GTK_WIN_POS_CENTER);
 
@@ -339,6 +340,7 @@ install_run (InstallCallback callback)
   int executable = TRUE;
 
   install_widget = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (install_widget), "installation_log", "Gimp");
   gtk_window_set_title (GTK_WINDOW (install_widget), "Installation Log");
   gtk_window_position (GTK_WINDOW (install_widget), GTK_WIN_POS_CENTER);
   vadj = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 0.0, 0.0, 0.0, 0.0));

@@ -80,12 +80,7 @@
 
 
 (script-fu-register "i26-gunya2"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26"
 		    "Two-colored text by hand"
-		    "Shuji Narazaki"
-		    "Shuji Narazaki"
-		    "1997"
-		    ""
 		    SF-VALUE "Text" "\"The GIMP\""
 		    SF-COLOR "Text Color" '(255 0 0)
 		    SF-COLOR "Frame Color" '(0 34 255)

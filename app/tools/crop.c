@@ -560,7 +560,7 @@ crop_image (GImage *gimage,
   Layer *floating_layer;
   Channel *channel;
   GList *guide_list_ptr;
-  link_ptr list;
+  GSList *list;
   int width, height;
   int lx1, ly1, lx2, ly2;
   int off_x, off_y;
@@ -592,7 +592,7 @@ crop_image (GImage *gimage,
       {
 	channel = (Channel *) list->data;
 	channel_resize (channel, width, height, -x1, -y1);
-	list = next_item (list);
+	list = g_slist_next (list);
       }
 
     /*  Don't forget the selection mask!  */
@@ -616,7 +616,7 @@ crop_image (GImage *gimage,
 	width = lx2 - lx1;
 	height = ly2 - ly1;
 
-	list = next_item (list);
+	list = g_slist_next (list);
 
 	if (width && height)
 	  layer_resize (layer, width, height,

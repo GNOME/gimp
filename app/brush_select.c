@@ -137,6 +137,7 @@ brush_select_new ()
 
   /*  The shell and main vbox  */
   bsp->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (bsp->shell), "brushselection", "Gimp");
   gtk_window_set_title (GTK_WINDOW (bsp->shell), "Brush Selection");
   gtk_window_set_policy(GTK_WINDOW(bsp->shell), TRUE, TRUE, FALSE);
   vbox = gtk_vbox_new (FALSE, 1);
@@ -467,7 +468,7 @@ display_setup (BrushSelectP bsp)
 static void
 display_brushes (BrushSelectP bsp)
 {
-  link_ptr list = brush_list;    /*  the global brush list  */
+  GSList * list = brush_list;    /*  the global brush list  */
   int row, col;
   GBrushP brush;
 
@@ -499,7 +500,7 @@ display_brushes (BrushSelectP bsp)
 	  col = 0;
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 

@@ -1,9 +1,8 @@
 /**********************************************************************
- *  CentralReflection Distortion Plug-In (Version 1.04)
+ *  CentralReflection Distortion Plug-In (Version 1.02)
  *  Daniel Cotting (cotting@mygale.org)
  **********************************************************************
  *  Official homepages: http://www.mygale.org/~cotting
- *                      http://cotting.citeweb.net
  *                      http://village.cyberbrain.com/cotting
  **********************************************************************    
  */
@@ -238,7 +237,7 @@ drawCentralReflection(GDrawable *drawable)
     dx = (gfloat)col - a; 
     for(row = 0; row < regionheight; row++) {
       pixelpos = (col+row*regionwidth)*bytes;
-      dy = -((gfloat)row - b); 
+      dy = -((gfloat)row - b);
       abstand=(sqrt(dx*dx+dy*dy));
       succeeded=1;
       verhaltniss=radius/abstand;
@@ -588,8 +587,8 @@ CentralReflection_logo_dialog()
   GtkWidget *xvbox;
   GtkWidget *xhbox;
   char *text;
-  guchar *temp,*temp2;
-  guchar *datapointer;
+  gchar *temp,*temp2;
+  char *datapointer;
   gint y,x;
   xdlg = logodlg = gtk_dialog_new();
   gtk_window_set_title(GTK_WINDOW(xdlg), "About");
@@ -631,7 +630,7 @@ CentralReflection_logo_dialog()
   xpreview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (xpreview), logo_width, logo_height);
   temp = g_malloc((logo_width+10)*3);
-  datapointer=header_data+logo_width*logo_height-1;
+  datapointer=header_data;
   for (y = 0; y < logo_height; y++){
     temp2=temp;
     for (x = 0; x< logo_width; x++) {
@@ -655,7 +654,7 @@ CentralReflection_logo_dialog()
 	 "cotting@mygale.org\n"
 	 "http://www.mygale.org/~cotting\n\n"
           "Central-Reflection\n Plug-In for the GIMP\n"
-          "Version 1.04\n";
+          "Version 1.02\n";
   xlabel = gtk_label_new(text);
   gtk_box_pack_start(GTK_BOX(xhbox), xlabel, TRUE, FALSE, 0);
   gtk_widget_show(xlabel);

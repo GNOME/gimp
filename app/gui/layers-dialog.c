@@ -87,7 +87,7 @@ struct _LayersDialog {
   Layer * active_layer;
   Channel * active_channel;
   Layer * floating_sel;
-  link_ptr layer_widgets;
+  GSList * layer_widgets;
 };
 
 typedef struct _LayerWidget LayerWidget;
@@ -272,8 +272,10 @@ lc_dialog_create (int gimage_id)
   if (lc_shell == NULL)
     {
       lc_shell = gtk_dialog_new ();
+      gtk_widget_ref (lc_shell);
       
       gtk_window_set_title (GTK_WINDOW (lc_shell), "Layers & Channels");
+      gtk_window_set_wmclass (GTK_WINDOW (lc_shell), "layers_and_channels", "Gimp");
       gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (lc_shell)->vbox), 2);
       gtk_signal_connect (GTK_OBJECT (lc_shell), "delete_event", 
 			  GTK_SIGNAL_FUNC (lc_dialog_close_callback),
@@ -370,7 +372,7 @@ lc_dialog_update_image_list ()
     return;
 
   gtk_option_menu_remove_menu (GTK_OPTION_MENU (image_option_menu));
-  gtk_widget_destroy (image_menu);
+  /* gtk_widget_destroy (image_menu); */
 
   default_id = layersD->gimage_id;
   layersD->gimage_id = -1;		/* ??? */
@@ -411,6 +413,8 @@ lc_dialog_free ()
   channels_dialog_free ();
 
   gtk_widget_destroy (lc_shell);
+  gtk_widget_unref (lc_shell);
+
   lc_shell = NULL;
 }
 
@@ -444,7 +448,7 @@ layers_dialog_flush ()
   GImage *gimage;
   Layer *layer;
   LayerWidget *lw;
-  link_ptr list;
+  GSList *list;
   int gimage_pos;
   int pos;
 
@@ -468,7 +472,7 @@ layers_dialog_flush ()
     {
       lw = (LayerWidget *) list->data;
       lw->visited = FALSE;
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  Add any missing layers  */
@@ -484,7 +488,7 @@ layers_dialog_flush ()
       else
 	lw->visited = TRUE;
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  Remove any extraneous layers  */
@@ -492,7 +496,7 @@ layers_dialog_flush ()
   while (list)
     {
       lw = (LayerWidget *) list->data;
-      list = next_item (list);
+      list = g_slist_next (list);
       if (lw->visited == FALSE)
 	layers_dialog_remove_layer ((lw->layer));
     }
@@ -503,7 +507,7 @@ layers_dialog_flush ()
   while (list)
     {
       lw = (LayerWidget *) list->data;
-      list = next_item (list);
+      list = g_slist_next (list);
       if ((gimage_pos = gimage_get_layer_index (gimage, lw->layer)) != pos)
 	layers_dialog_position_layer ((lw->layer), gimage_pos);
 
@@ -540,7 +544,7 @@ layers_dialog_flush ()
 void
 layers_dialog_free ()
 {
-  link_ptr list;
+  GSList *list;
   LayerWidget *lw;
 
   if (layersD == NULL)
@@ -553,7 +557,7 @@ layers_dialog_free ()
   while (list)
     {
       lw = (LayerWidget *) list->data;
-      list = next_item(list);
+      list = g_slist_next(list);
       layer_widget_delete (lw);
     }
   layersD->layer_widgets = NULL;
@@ -695,14 +699,14 @@ create_image_menu (int              *default_id,
 		   int              *default_index,
 		   MenuItemCallback  callback)
 {
-  extern link_ptr image_list;
+  extern GSList *image_list;
 
   GImage *gimage;
   GtkWidget *menu_item;
   GtkWidget *menu;
   char *menu_item_label;
   char *image_name;
-  link_ptr tmp;
+  GSList *tmp;
   int num_items = 0;
   int id;
 
@@ -715,7 +719,7 @@ create_image_menu (int              *default_id,
   while (tmp)
     {
       gimage = tmp->data;
-      tmp = next_item (tmp);
+      tmp = g_slist_next (tmp);
 
       /*  make sure the default index gets set to _something_, if possible  */
       if (*default_index == -1)
@@ -763,7 +767,7 @@ layers_dialog_update (int gimage_id)
   GImage *gimage;
   Layer *layer;
   LayerWidget *lw;
-  link_ptr list;
+  GSList *list;
   GList *item_list;
 
   if (!layersD)
@@ -782,10 +786,10 @@ layers_dialog_update (int gimage_id)
   while (list)
     {
       lw = (LayerWidget *) list->data;
-      list = next_item(list);
+      list = g_slist_next(list);
       layer_widget_delete (lw);
     }
-  free_list (layersD->layer_widgets);
+  g_slist_free (layersD->layer_widgets);
   layersD->layer_widgets = NULL;
 
   if (! (gimage = gimage_get_ID (layersD->gimage_id)))
@@ -806,10 +810,10 @@ layers_dialog_update (int gimage_id)
       /*  create a layer list item  */
       layer = (Layer *) list->data;
       lw = create_layer_widget (gimage, layer);
-      layersD->layer_widgets = append_to_list (layersD->layer_widgets, lw);
+      layersD->layer_widgets = g_slist_append (layersD->layer_widgets, lw);
       item_list = g_list_append (item_list, lw->list_item);
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  get the index of the active layer  */
@@ -1232,13 +1236,13 @@ layers_dialog_position_layer (Layer * layer,
   /*  Remove the layer from the dialog  */
   list = g_list_append (list, layer_widget->list_item);
   gtk_list_remove_items (GTK_LIST (layersD->layer_list), list);
-  layersD->layer_widgets = remove_from_list (layersD->layer_widgets, layer_widget);
+  layersD->layer_widgets = g_slist_remove (layersD->layer_widgets, layer_widget);
 
   suspend_gimage_notify--;
 
   /*  Add it back at the proper index  */
   gtk_list_insert_items (GTK_LIST (layersD->layer_list), list, new_index);
-  layersD->layer_widgets = insert_in_list (layersD->layer_widgets, layer_widget, new_index);
+  layersD->layer_widgets = g_slist_insert (layersD->layer_widgets, layer_widget, new_index);
 }
 
 
@@ -1261,7 +1265,7 @@ layers_dialog_add_layer (Layer *layer)
   item_list = g_list_append (item_list, layer_widget->list_item);
 
   position = gimage_get_layer_index (gimage, layer);
-  layersD->layer_widgets = insert_in_list (layersD->layer_widgets, layer_widget, position);
+  layersD->layer_widgets = g_slist_insert (layersD->layer_widgets, layer_widget, position);
   gtk_list_insert_items (GTK_LIST (layersD->layer_list), item_list, position);
 }
 
@@ -1286,6 +1290,7 @@ layers_dialog_remove_layer (Layer * layer)
 
   /*  Delete the list item  */
   gtk_widget_destroy (layer_widget->list_item);
+  gtk_widget_unref (layer_widget->list_item);
 
   suspend_gimage_notify--;
 
@@ -1824,7 +1829,7 @@ static LayerWidget *
 layer_widget_get_ID (Layer * ID)
 {
   LayerWidget *lw;
-  link_ptr list;
+  GSList *list;
 
   if (!layersD)
     return NULL;
@@ -1837,7 +1842,7 @@ layer_widget_get_ID (Layer * ID)
       if (lw->layer == ID)
 	return lw;
 
-      list = next_item(list);
+      list = g_slist_next(list);
     }
 
   return NULL;
@@ -1855,6 +1860,7 @@ create_layer_widget (GImage *gimage,
   GtkWidget *alignment;
 
   list_item = gtk_list_item_new ();
+  gtk_widget_ref (GTK_OBJECT (list_item));
 
   /*  create the layer widget and add it to the list  */
   layer_widget = (LayerWidget *) g_malloc (sizeof (LayerWidget));
@@ -1989,7 +1995,7 @@ layer_widget_delete (LayerWidget *layer_widget)
     gdk_pixmap_unref (layer_widget->mask_pixmap);
 
   /*  Remove the layer widget from the list  */
-  layersD->layer_widgets = remove_from_list (layersD->layer_widgets, layer_widget);
+  layersD->layer_widgets = g_slist_remove (layersD->layer_widgets, layer_widget);
 
   /*  Free the widget  */
   g_free (layer_widget);
@@ -2667,7 +2673,7 @@ layer_widget_clip_redraw (LayerWidget *layer_widget)
 static void
 layer_widget_exclusive_visible (LayerWidget *layer_widget)
 {
-  link_ptr list;
+  GSList *list;
   LayerWidget *lw;
   int visible = FALSE;
 
@@ -2682,7 +2688,7 @@ layer_widget_exclusive_visible (LayerWidget *layer_widget)
       if (lw != layer_widget)
 	visible |= GIMP_DRAWABLE(lw->layer)->visible;
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  Now, toggle the visibility for all layers except the specified one  */
@@ -2697,7 +2703,7 @@ layer_widget_exclusive_visible (LayerWidget *layer_widget)
 
       layer_widget_eye_redraw (lw);
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 
@@ -2865,7 +2871,7 @@ new_layer_query_ok_callback (GtkWidget *w,
 
       layer = layer_new (gimage->ID, options->xsize, options->ysize,
 			 gimage_base_type_with_alpha (gimage),
-			 layer_name, OPAQUE, NORMAL_MODE);
+			 layer_name, OPAQUE_OPACITY, NORMAL_MODE);
       if (layer) 
 	{
 	  drawable_fill (GIMP_DRAWABLE(layer), fill_type);
@@ -2979,6 +2985,7 @@ layers_dialog_new_layer_query (int gimage_id)
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "new_layer_options", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options->query_box), "New Layer Options");
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
@@ -3157,6 +3164,7 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "edit_layer_attrributes", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options->query_box), "Edit Layer Attributes");
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
@@ -3314,6 +3322,7 @@ layers_dialog_add_mask_query (Layer *layer)
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "add_mask_options", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options->query_box), "Add Mask Options");
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
@@ -3441,6 +3450,7 @@ layers_dialog_apply_mask_query (Layer *layer)
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "layer_mask_options", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options->query_box), "Layer Mask Options");
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
@@ -3564,6 +3574,7 @@ layers_dialog_scale_layer_query (Layer *layer)
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "scale_layer", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options->query_box), "Scale Layer");
   gtk_window_set_policy (GTK_WINDOW (options->query_box), FALSE, FALSE, TRUE);
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
@@ -3684,6 +3695,7 @@ layers_dialog_resize_layer_query (Layer *layer)
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "resize_layer", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options->query_box), "Resize Layer");
   gtk_window_set_policy (GTK_WINDOW (options->query_box), FALSE, TRUE, TRUE);
   gtk_window_set_policy (GTK_WINDOW (options->query_box), FALSE, FALSE, TRUE);
@@ -3831,6 +3843,7 @@ layers_dialog_layer_merge_query (GImage *gimage,
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "layer_merge_options", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options->query_box), "Layer Merge Options");
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 

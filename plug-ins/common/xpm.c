@@ -60,9 +60,6 @@ static void   run        (char    *name,
 static gint32
 load_image   (char   *filename);
 
-static int
-cmp_icase    (char *s1, char *s2);
-
 static void
 parse_colors (XpmImage  *xpm_image,
               guchar   **cmap);
@@ -312,24 +309,6 @@ load_image (char *filename)
 
 
 
-static int
-cmp_icase (char *s1, char *s2)
-{
-  register int c1, c2;
-
-  while (*s1 && *s2)
-    {
-      c1 = tolower(*s1++); c2 = tolower(*s2++);
-      if (c1 != c2)
-        return (c1 - c2);
-    }
-
-  return (int) (*s1 - *s2);
-}
-
-
-
-
 static void
 parse_colors (XpmImage *xpm_image, guchar **cmap)
 {
@@ -371,7 +350,7 @@ parse_colors (XpmImage *xpm_image, guchar **cmap)
         
           /* parse if it's not transparent.  the assumption is that
              g_new will memset the buffer to zeros */
-          if (cmp_icase(colorspec, "None") != 0) {
+          if (strcmp(colorspec, "None") != 0) {
             XParseColor (display, colormap, colorspec, &xcolor);
             (*cmap)[j++] = xcolor.red >> 8;
             (*cmap)[j++] = xcolor.green >> 8;

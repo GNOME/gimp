@@ -29,9 +29,11 @@
 -------------------------------------------
              REDUCE CODE SIZE
 -------------------------------------------
- With this new release 1.04 the size of
+ With this new release 1.01 the size of
  the logo in the about box has been reduced
- in order to make smaller binaries.
+ in order to make smaller binaries. In 
+ general the compiled plug-in will be
+ about 25-30% of the size of version 1.00.
  If you find that the plug-in is still
  too big, you can compress the executables
  with the gzexe program (if it is avaiable
@@ -51,7 +53,7 @@
    rm PLUGIN_NAME~
     
  This will result in a code size of about
- 20 kB, which isn't too much IMHO.
+ 35 to 40 kB, which isn't too much IMHO.
 ------------------------------------------
 
 

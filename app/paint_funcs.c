@@ -85,7 +85,7 @@ static int color_hash_misses;
 static int color_hash_hits;
 static unsigned char * tmp_buffer;  /* temporary buffer available upon request */
 static int tmp_buffer_size;
-static unsigned char no_mask = OPAQUE;
+static unsigned char no_mask = OPAQUE_OPACITY;
 
 
 /*******************************/
@@ -847,7 +847,7 @@ dissolve_pixels (unsigned char *src,
       if (has_alpha)
 	dest[alpha] = (rand_val > opacity) ? 0 : src[alpha];
       else
-	dest[alpha] = (rand_val > opacity) ? 0 : OPAQUE;
+	dest[alpha] = (rand_val > opacity) ? 0 : OPAQUE_OPACITY;
 
       dest += db;
       src += sb;
@@ -949,7 +949,7 @@ add_alpha_pixels (unsigned char *src,
       for (b = 0; b < bytes; b++)
 	dest[b] = src[b];
 
-      dest[b] = OPAQUE;
+      dest[b] = OPAQUE_OPACITY;
 
       src += bytes;
       dest += alpha;
@@ -1058,7 +1058,7 @@ copy_gray_to_inten_a_pixels (unsigned char *src,
     {
       for (b = 0; b < alpha; b++)
 	dest[b] = *src;
-      dest[b] = OPAQUE;
+      dest[b] = OPAQUE_OPACITY;
 
       src ++;
       dest += bytes;
@@ -1080,7 +1080,7 @@ initial_channel_pixels (unsigned char *src,
       for (b = 0; b < alpha; b++)
 	dest[b] = src[0];
 
-      dest[alpha] = OPAQUE;
+      dest[alpha] = OPAQUE_OPACITY;
 
       dest += bytes;
       src ++;
@@ -1105,7 +1105,7 @@ initial_indexed_pixels (unsigned char *src,
       *dest++ = cmap[col_index++];
       *dest++ = cmap[col_index++];
       *dest++ = cmap[col_index++];
-      *dest++ = OPAQUE;
+      *dest++ = OPAQUE_OPACITY;
     }
 }
 
@@ -1136,7 +1136,7 @@ initial_indexed_a_pixels (unsigned char *src,
       *dest++ = cmap[col_index++];
       *dest++ = cmap[col_index++];
       /*  Set the alpha channel  */
-      *dest++ = (new_alpha > 127) ? OPAQUE : TRANSPARENT;
+      *dest++ = (new_alpha > 127) ? OPAQUE_OPACITY : TRANSPARENT_OPACITY;
 
       if (mask)
 	m++;
@@ -1371,7 +1371,7 @@ combine_indexed_a_and_indexed_a_pixels (unsigned char *src1,
 	  for (b = 0; b < alpha; b++)
 	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
 
-	  dest[alpha] = (affect[alpha] && new_alpha > 127) ? OPAQUE : src1[alpha];
+	  dest[alpha] = (affect[alpha] && new_alpha > 127) ? OPAQUE_OPACITY : src1[alpha];
 
 	  m++;
 
@@ -1389,7 +1389,7 @@ combine_indexed_a_and_indexed_a_pixels (unsigned char *src1,
 	  for (b = 0; b < alpha; b++)
 	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
 
-	  dest[alpha] = (affect[alpha] && new_alpha > 127) ? OPAQUE : src1[alpha];
+	  dest[alpha] = (affect[alpha] && new_alpha > 127) ? OPAQUE_OPACITY : src1[alpha];
 
 	  src1 += bytes;
 	  src2 += bytes;
@@ -1429,7 +1429,7 @@ combine_inten_a_and_indexed_a_pixels (unsigned char *src1,
 	  for (b = 0; b < bytes-1; b++)
 	    dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
 
-	  dest[b] = (new_alpha > 127) ? OPAQUE : src1[b];  /*  alpha channel is opaque  */
+	  dest[b] = (new_alpha > 127) ? OPAQUE_OPACITY : src1[b];  /*  alpha channel is opaque  */
 
 	  m++;
 
@@ -1449,7 +1449,7 @@ combine_inten_a_and_indexed_a_pixels (unsigned char *src1,
 	  for (b = 0; b < bytes-1; b++)
 	    dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
 
-	  dest[b] = (new_alpha > 127) ? OPAQUE : src1[b];  /*  alpha channel is opaque  */
+	  dest[b] = (new_alpha > 127) ? OPAQUE_OPACITY : src1[b];  /*  alpha channel is opaque  */
 
 	  /* m++; /Per */
 
@@ -1880,10 +1880,10 @@ behind_indexed_pixels (unsigned char *src1,
     {
       src1_alpha = src1[alpha];
       src2_alpha = (src2[alpha] * *m * opacity) / 65025;
-      new_alpha = (src2_alpha > 127) ? OPAQUE : TRANSPARENT;
+      new_alpha = (src2_alpha > 127) ? OPAQUE_OPACITY : TRANSPARENT_OPACITY;
 
       for (b = 0; b < b1; b++)
-	dest[b] = (affect[b] && new_alpha == OPAQUE && (src1_alpha > 127)) ?
+	dest[b] = (affect[b] && new_alpha == OPAQUE_OPACITY && (src1_alpha > 127)) ?
 	  src2[b] : src1[b];
 
       if (mask)
@@ -2049,7 +2049,7 @@ erase_indexed_pixels (unsigned char *src1,
 	dest[b] = src1[b];
 
       src2_alpha = (src2[alpha] * *m * opacity) / 65025;
-      dest[alpha] = (src2_alpha > 127) ? TRANSPARENT : src1[alpha];
+      dest[alpha] = (src2_alpha > 127) ? TRANSPARENT_OPACITY : src1[alpha];
 
       if (mask)
 	m++;
@@ -2159,6 +2159,7 @@ extract_from_indexed_pixels (unsigned char *src,
 }
 
 
+#if 0
 void
 map_to_color (int            src_type,
 	      unsigned char *cmap,
@@ -2248,7 +2249,7 @@ map_rgb_to_indexed (unsigned char *cmap,
 
   return cmap_index;
 }
-
+#endif
 
 
 /**************************************************/

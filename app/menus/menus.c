@@ -59,11 +59,9 @@ static GtkMenuEntry menu_items[] =
   { "<Toolbox>/File/Dialogs/Gradient Editor...", "<control>G", dialogs_gradient_editor_cmd_callback, NULL },
   { "<Toolbox>/File/Dialogs/Tool Options...", "<control><shift>T", dialogs_tools_options_cmd_callback, NULL },
   
-  {"<Toolbox>/File/<separator>",NULL,NULL,NULL},
+  { "<Toolbox>/File/<separator>",NULL,NULL,NULL},
 
-
-
- { "<Toolbox>/File/Quit", "<control>Q", file_quit_cmd_callback, NULL },
+  { "<Toolbox>/File/Quit", "<control>Q", file_quit_cmd_callback, NULL },
 
   { "<Image>/File/New", "<control>N", file_new_cmd_callback, (gpointer) 1 },
   { "<Image>/File/Open", "<control>O", file_open_cmd_callback, NULL },
@@ -73,11 +71,9 @@ static GtkMenuEntry menu_items[] =
   { "<Image>/File/<separator>", NULL, NULL, NULL },
 
 
-
-
-
   { "<Image>/File/Close", "<control>W", file_close_cmd_callback, NULL },
   { "<Image>/File/Quit", "<control>Q", file_quit_cmd_callback, NULL },
+  { "<Image>/File/<separator>", NULL, NULL, NULL },
 
   { "<Image>/Edit/Cut", "<control>X", edit_cut_cmd_callback, NULL },
   { "<Image>/Edit/Copy", "<control>C", edit_copy_cmd_callback, NULL },
@@ -92,6 +88,7 @@ static GtkMenuEntry menu_items[] =
   { "<Image>/Edit/Cut Named", "<control><shift>X", edit_named_cut_cmd_callback, NULL },
   { "<Image>/Edit/Copy Named", "<control><shift>C", edit_named_copy_cmd_callback, NULL },
   { "<Image>/Edit/Paste Named", "<control><shift>V", edit_named_paste_cmd_callback, NULL },
+  { "<Image>/Edit/<separator>", NULL, NULL, NULL },
 
   { "<Image>/Select/Toggle", "<control>T", select_toggle_cmd_callback, NULL },
   { "<Image>/Select/Invert", "<control>I", select_invert_cmd_callback, NULL },
@@ -124,18 +121,19 @@ static GtkMenuEntry menu_items[] =
   { "<Image>/View/<separator>", NULL, NULL, NULL },
   { "<Image>/View/New View", NULL, view_new_view_cmd_callback, NULL },
   { "<Image>/View/Shrink Wrap", "<control>E", view_shrink_wrap_cmd_callback, NULL },
-
-  { "<Image>/Image/Map/Equalize", NULL, image_equalize_cmd_callback, NULL },
-  { "<Image>/Image/Map/Invert", NULL, image_invert_cmd_callback, NULL },
-  { "<Image>/Image/Map/Posterize", NULL, image_posterize_cmd_callback, NULL },
-  { "<Image>/Image/Map/Threshold", NULL, image_threshold_cmd_callback, NULL },
-  { "<Image>/Image/Adjust/Color Balance", NULL, image_color_balance_cmd_callback, NULL },
-  { "<Image>/Image/Adjust/Brightness-Contrast", NULL, image_brightness_contrast_cmd_callback, NULL },
-  { "<Image>/Image/Adjust/Hue-Saturation", NULL, image_hue_saturation_cmd_callback, NULL },
-  { "<Image>/Image/Adjust/Curves", NULL, image_curves_cmd_callback, NULL },
-  { "<Image>/Image/Adjust/Levels", NULL, image_levels_cmd_callback, NULL },
-  { "<Image>/Image/Adjust/<separator>", NULL, NULL, NULL },
-  { "<Image>/Image/Adjust/Desaturate", NULL, image_desaturate_cmd_callback, NULL },
+  
+  { "<Image>/Image/Colors/Equalize", NULL, image_equalize_cmd_callback, NULL },
+  { "<Image>/Image/Colors/Invert", NULL, image_invert_cmd_callback, NULL },
+  { "<Image>/Image/Colors/Posterize", NULL, image_posterize_cmd_callback, NULL },
+  { "<Image>/Image/Colors/Threshold", NULL, image_threshold_cmd_callback, NULL },
+  { "<Image>/Image/Colors/<separator>", NULL, NULL, NULL },
+  { "<Image>/Image/Colors/Color Balance", NULL, image_color_balance_cmd_callback, NULL },
+  { "<Image>/Image/Colors/Brightness-Contrast", NULL, image_brightness_contrast_cmd_callback, NULL },
+  { "<Image>/Image/Colors/Hue-Saturation", NULL, image_hue_saturation_cmd_callback, NULL },
+  { "<Image>/Image/Colors/Curves", NULL, image_curves_cmd_callback, NULL },
+  { "<Image>/Image/Colors/Levels", NULL, image_levels_cmd_callback, NULL },
+  { "<Image>/Image/Colors/<separator>", NULL, NULL, NULL },
+  { "<Image>/Image/Colors/Desaturate", NULL, image_desaturate_cmd_callback, NULL },
   { "<Image>/Image/Channel Ops/Duplicate", "<control>D", channel_ops_duplicate_cmd_callback, NULL },
   { "<Image>/Image/Channel Ops/Offset", "<control><shift>O", channel_ops_offset_cmd_callback, NULL },
   { "<Image>/Image/<separator>", NULL, NULL, NULL },
@@ -147,6 +145,7 @@ static GtkMenuEntry menu_items[] =
   { "<Image>/Image/Scale", NULL, image_scale_cmd_callback, NULL },
   { "<Image>/Image/<separator>", NULL, NULL, NULL },
   { "<Image>/Image/Histogram", NULL, image_histogram_cmd_callback, NULL },
+  { "<Image>/Image/<separator>", NULL, NULL, NULL },
 
   { "<Image>/Layers/Layers & Channels...", "<control>L", dialogs_lc_cmd_callback, NULL },
   { "<Image>/Layers/Raise Layer", "<control>F", layers_raise_cmd_callback, NULL },
@@ -361,22 +360,27 @@ menus_quit ()
   char filename[512];
   char *gimp_dir;
 
-  if (!entry_ht)
-    return;
-
-  gimp_dir = gimp_directory ();
-  if ('\000' != gimp_dir[0])
+  if (entry_ht) 
     {
-      sprintf (filename, "%s/menurc", gimp_dir);
-
-      fp = fopen (filename, "w");
-      if (!fp)
-	return;
-
-      g_hash_table_foreach (entry_ht, menus_foreach, fp);
-
-      fclose (fp);
+      gimp_dir = gimp_directory ();
+      if ('\000' != gimp_dir[0])
+	{
+	  sprintf (filename, "%s/menurc", gimp_dir);
+	  
+	  fp = fopen (filename, "w");
+	  if (fp) 
+	    {
+	      g_hash_table_foreach (entry_ht, menus_foreach, fp);
+	      fclose (fp);
+	    }
+	}
     }
+  
+  if (!initialize)
+    {
+      gtk_menu_factory_destroy (factory);
+    }
+
 }
 
 

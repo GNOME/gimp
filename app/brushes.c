@@ -32,13 +32,12 @@
 #include "errors.h"
 #include "general.h"
 #include "gimprc.h"
-#include "linked.h"
 #include "menus.h"
 
 
 /*  global variables  */
 GBrushP             active_brush = NULL;
-link_ptr            brush_list = NULL;
+GSList *            brush_list = NULL;
 int                 num_brushes = 0;
 
 double              opacity = 1.0;
@@ -54,19 +53,21 @@ static Argument    *return_args;
 static int          have_default_brush = 0;
 
 /*  static function prototypes  */
-static link_ptr     insert_brush_in_list   (link_ptr, GBrushP);
+static GSList *     insert_brush_in_list   (GSList *, GBrushP);
 static void         create_default_brush   (void);
 static void         load_brush             (char *filename);
 static void         free_brush             (GBrushP);
+static void         brushes_free_one       (gpointer, gpointer);
+static gint         brush_compare_func     (gpointer, gpointer);
 
 /*  function declarations  */
 void
 brushes_init ()
 {
-  link_ptr list;
+  GSList * list;
 
   if (brush_list)
-    brushes_free ();
+    brushes_free();
 
   brush_list = NULL;
   num_brushes = 0;
@@ -81,30 +82,34 @@ brushes_init ()
   list = brush_list;
 
   while (list) {
-	  /*  Set the brush index  */
-
-	  ((GBrush *) list->data)->index = num_brushes++;
-	  list = next_item (list);
+    /*  Set the brush index  */
+    ((GBrush *) list->data)->index = num_brushes++;
+    list = g_slist_next (list);
   }
+}
+
+
+static void
+brushes_free_one (gpointer data, gpointer dummy)
+{
+  free_brush ((GBrushP) data);
+}
+
+
+static gint
+brush_compare_func (gpointer first, gpointer second)
+{
+  return strcmp (((GBrushP)first)->name, ((GBrushP)second)->name);
 }
 
 
 void
 brushes_free ()
 {
-  link_ptr list;
-  GBrushP brush;
-
-  list = brush_list;
-
-  while (list)
-    {
-      brush = (GBrushP) list->data;
-      free_brush (brush);
-      list = next_item (list);
-    }
-
-  free_list (list);
+  if (brush_list) {
+    g_slist_foreach (brush_list, brushes_free_one, NULL);
+    g_slist_free (brush_list);
+  }
 
   have_default_brush = 0;
   active_brush = NULL;
@@ -140,67 +145,10 @@ get_active_brush ()
 }
 
 
-static link_ptr
-insert_brush_in_list (list, brush)
-     link_ptr list;
-     GBrushP brush;
+static GSList *
+insert_brush_in_list (GSList *list, GBrushP brush)
 {
-  link_ptr tmp;
-  link_ptr prev;
-  link_ptr new_link;
-  GBrushP b;
-  int val;
-
-  /* Insert the item in the list */
-  if (list)
-    {
-      prev = NULL;
-      tmp = list;
-      do {
-	  if (tmp)
-	    {
-	      b = (GBrushP) tmp->data;
-
-	      /* do the comparison needed for the insertion sort */
-	      val = strcmp (brush->name, b->name);
-	    }
-	  else
-	    val = -1;
-
-          if (val <= 0)
-            {
-	      /* this is the place the item goes */
-	      /* Insert the item into the list. We'll have to create
-	       *  a new link and then do a little insertion.
-	       */
-              new_link = alloc_list ();
-	      if (!new_link)
-		fatal_error ("Unable to allocate memory");
-
-              new_link->data = brush;
-              new_link->next = tmp;
-
-              if (prev)
-                prev->next = new_link;
-              if (tmp == list)
-                list = new_link;
-
-	      return list;
-            }
-
-	  /* Advance to the next item in the list.
-	   */
-          prev = tmp;
-          tmp = next_item (tmp);
-        } while (prev);
-    }
-  else
-    /* There are no items in the brush list, so we'll just start
-     *  one right now.
-     */
-    list = add_to_list (list, brush);
-
-  return list;
+  return g_slist_insert_sorted (list, brush, brush_compare_func);
 }
 
 static void
@@ -341,29 +289,21 @@ load_brush(char *filename)
 
 
 GBrushP
-get_brush_by_index (index)
-     int index;
+get_brush_by_index (int index)
 {
-  link_ptr list;
-  GBrushP brush;
+  GSList *list;
+  GBrushP brush = NULL;
 
-  list = brush_list;
+  list = g_slist_nth (brush_list, index);
+  if (list)
+    brush = (GBrushP) list->data;
 
-  while (list)
-    {
-      brush = (GBrushP) list->data;
-      if (brush->index == index)
-	return brush;
-      list = next_item (list);
-    }
-
-  return NULL;
+  return brush;
 }
 
 
 void
-select_brush (brush)
-     GBrushP brush;
+select_brush (GBrushP brush)
 {
   /*  Make sure the active brush is swapped before we get a new one... */
   if (stingy_memory_use)
@@ -579,7 +519,7 @@ static Argument *
 brushes_set_brush_invoker (Argument *args)
 {
   GBrushP brushp;
-  link_ptr list;
+  GSList *list;
   char *name;
 
   success = (name = (char *) args[0].value.pdb_pointer) != NULL;
@@ -600,7 +540,7 @@ brushes_set_brush_invoker (Argument *args)
 	      break;
 	    }
 
-	  list = next_item (list);
+	  list = g_slist_next (list);
 	}
     }
 
@@ -925,7 +865,7 @@ static Argument *
 brushes_list_invoker (Argument *args)
 {
   GBrushP brushp;
-  link_ptr list;
+  GSList *list;
   char **brushes;
   int i;
 
@@ -939,7 +879,7 @@ brushes_list_invoker (Argument *args)
       brushp = (GBrushP) list->data;
 
       brushes[i++] = g_strdup (brushp->name);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   return_args = procedural_db_return_args (&brushes_list_proc, success);

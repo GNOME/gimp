@@ -992,7 +992,7 @@ void gck_visualinfo_destroy(GckVisualInfo * visinfo)
   g_function_enter("gck_visualinfo_destroy");
   g_assert(visinfo!=NULL);
 
-  gdk_colormap_unref(visinfo->colormap);
+  gdk_colormap_destroy(visinfo->colormap);
 
   free(visinfo);
 

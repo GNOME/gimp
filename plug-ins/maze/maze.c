@@ -1,6 +1,6 @@
-/* maze.c, version 0.5.0, July 10, 1998.
+/* maze.c, version 0.4.2, 17 October 1997
  * This is a plug-in for the GIMP.
- * It draws mazes...
+ * It draws mazes...  walls and passages are 1 pixel wide.
  * 
  * Implemented as a GIMP 0.99 Plugin by 
  * Kevin Turner <kevint@poboxes.com>
@@ -19,9 +19,6 @@
  * and used as a template to get me started on this one.  :)
  * 
  * Revision history:
- * 0.5.0  - Added the long-awaited "tileable" option.
- *           Required a change to PDB parameters.
- *        - fixed some stuff with GParam values in run();
  * 0.4.2  - Applied Adrian Likins' patch to fix non-interactive stuff.
  *        - -ansi and -pedantic-errors clean.  Woo-hoo?
  * 0.4.1  - get_colors() now works properly for grayscale images.
@@ -46,10 +43,10 @@
  * 
  *   Fix that stray line down there between maze wall and dead space border...
  *
- *   Resolve the border & tileable maze difficulty.
- *
  *   Make get_colors() work with indexed.  * HELP! *
  *
+ *   Tileable mazes are fun :) 
+ *   
  *   If we add many more paramaters, we'll need a preview box.
  *
  * Also someday:
@@ -83,18 +80,17 @@
 #include "libgimp/gimpui.h"
 
 #define ENTRY_WIDTH 75
-#define MAZE_TITLE "Maze 0.5.0"
+#define MAZE_TITLE "Maze 0.4.2"
 /* entscale stuff begin */
 #define ENTSCALE_INT_SCALE_WIDTH 125
 #define ENTSCALE_INT_ENTRY_WIDTH 40
 /* entscale stuff end */
 
 typedef struct {
-     gint width;
-     gint seed;
-     gint tile;
-     gint multiple;
-     gint offset;
+    gint width;
+    gint seed;
+    gint multiple;
+    gint offset;
 } MazeValues;
 
 typedef struct {
@@ -125,11 +121,6 @@ static gint      mazegen(gint     pos,
 			 gint     x,
                          gint     y,
 			 gint     rnd);
-static gint      mazegen_tileable(gint     pos,
-				  gchar   *maz,
-				  gint     x,
-				  gint     y,
-				  gint     rnd);
 static void      get_colors (GDrawable * drawable,
 			     guint8 *fg,
 			     guint8 *bg);
@@ -145,7 +136,6 @@ static gint maze_dialog (void);
 static void maze_close_callback (GtkWidget *widget, gpointer data);
 static void maze_ok_callback  (GtkWidget *widget, gpointer data);
 static void maze_entry_callback  (GtkWidget *widget, gpointer data);
-static void tile_toggle_callback (GtkWidget *widget, gpointer data);
 
 /* entscale stuff begin */
 void   entscale_int_new ( GtkWidget *table, gint x, gint y,
@@ -178,7 +168,6 @@ static MazeValues mvals =
 {
     1,      /* Passage width */
     0,     /* seed */
-    FALSE, /* Tileable? */
     57,    /* multiple * These two had "Experiment with this?" comments */
     1      /* offset   * in the maz.c source, so, lets expiriment.  :) */
 };
@@ -188,7 +177,7 @@ static MazeInterface mint =
     FALSE  /* run */
 };
 
-MAIN () /*;*/
+MAIN () 
 
 static void
 query ()
@@ -200,7 +189,6 @@ query ()
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
     /* If we did have parameters, these be them: */
     { PARAM_INT32, "mazep_size", "Size of the passages" },
-    { PARAM_INT32, "maze_tile", "Tileable maze?"},
     { PARAM_INT32, "maze_rseed", "Random Seed"},
     { PARAM_INT32, "maze_multiple", "Multiple (use 57)" },
     { PARAM_INT32, "maze_offset", "Offset (use 1)" }
@@ -229,12 +217,10 @@ run    (gchar    *name,
 	gint     *nreturn_vals,
 	GParam  **return_vals)
 {
-  GParam *values;
+  static GParam values[1];
   GDrawable *drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
-
-  values=g_new(GParam,1);
 
   run_mode = param[0].data.d_int32;
 
@@ -265,7 +251,7 @@ run    (gchar    *name,
       
     case RUN_NONINTERACTIVE:
       /* WARNING: Stupidity Follows */
-      if (nparams != 8)
+      if (nparams != 7)
 	{
 	  status = STATUS_CALLING_ERROR;
 	}
@@ -273,9 +259,8 @@ run    (gchar    *name,
 	{
 	  mvals.width = (gint) param[3].data.d_int32;
 	  mvals.seed = (gint) param[4].data.d_int32;
-	  mvals.tile = (gint) param[5].data.d_int32;
-	  mvals.multiple = (gint) param[6].data.d_int32;
-	  mvals.offset = (gint) param[7].data.d_int32;
+	  mvals.multiple = (gint) param[5].data.d_int32;
+	  mvals.offset = (gint) param[6].data.d_int32;
 	}
       break;
       /* #define MAZE_DEBUG */
@@ -346,16 +331,9 @@ maze( GDrawable * drawable)
   mw = (x2-x1) / mvals.width;
   mh = (y2-y1) / mvals.width;
 
-  if (!mvals.tile) {
-       mw -= !(mw & 1); /* mazegen doesn't work with even-sized mazes. */
-       mh -= !(mh & 1); /* Note I don't warn the user about this... */
-  } else { /* On the other hand, tileable mazes must be even. */
-       mw -= (mw & 1);
-       mh -= (mh & 1);
-  };
+  mw -= !(mw & 1); /* mazegen doesn't work with even-sized mazes. */
+  mh -= !(mh & 1); /* Note I don't warn the user about this... */
 
-  /* It will really suck if your tileable maze ends up with this dead
-     space around it.  Oh well, life is hard. */
   deadx = ((x2-x1) - mw * mvals.width)/2;
   deady = ((y2-y1) - mh * mvals.width)/2;
 
@@ -369,12 +347,8 @@ maze( GDrawable * drawable)
 	 (x2-x1),(y2-y1),mw,mh,deadx,deady,mvals.width);
 #endif
 
-  if (mvals.tile) {
-       (void) mazegen_tileable((mw+1), maz, mw, mh, mvals.seed);
-  } else {
-       (void) mazegen((mw+1), maz, mw, mh, mvals.seed);
-       /* (void) mazegen(((x2-x1)+1), maz, (x2-x1), (y2-y1), rnd); */
-  }
+  (void) mazegen((mw+1), maz, mw, mh, mvals.seed);
+  /* (void) mazegen(((x2-x1)+1), maz, (x2-x1), (y2-y1), rnd); */
   /* It's done happening.  Now go through and color dem pixels...  */
 
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn); 
@@ -540,80 +514,6 @@ gchar *maz;
     return 0;
 }
 
-#define ABSMOD(A,B) ( ((A) < 0) ? (((B) + (A)) % (B)) : ((A) % (B)) )
-
-gint mazegen_tileable(pos, maz, x, y, rnd)
-gint pos, x, y, rnd;
-gchar *maz;
-{
-    gchar d, i;
-    gint c=0, j=1, npos=2;
-
-    /* Punch a hole here...  */
-    maz[pos] = 1;
-
-    /* If there is a wall two rows above us, bit 1 is 1. */
-    while((d= (pos < (x*2) ? (maz[x*(y-2)+pos] ? 0 : 1) : (maz[pos - x - x ] ? 0 : 1))
-	  /* If there is a wall two rows below us, bit 2 is 1. */
-	  | (pos >= x * (y-2) ? (maz[pos - x*(y-2)] ? 0 : 2) : (maz[pos +x+x] ? 0 : 2))
-	  /* If there is a wall two columns to the right, bit 3 is 1. */
-	  | (pos % x >= x - 2 ? (maz[pos + 2 - x] ? 0 : 4) : (maz[pos + 2] ? 0 : 4))
-	  /* If there is a wall two colums to the left, bit 4 is 1.  */
-	  | ((pos % x <= 1 ) ? (maz[pos + x - 2] ? 0 : 8) : (maz[pos-2] ? 0 : 8)))) {
-
-	/* Note if all bits are 0, d is false, we don't do this
-	   while loop, we don't call ourselves again, so this branch
-           is done.  */
-
-	/* I see what this loop does (more or less), but I don't know
-	   _why_ it does it this way...  I also haven't figured out exactly
-	   which values of multiple will work and which won't.  */
-	do {
-	    rnd = (rnd * mvals.multiple + mvals.offset);
-	    i = 3 & (rnd / d);
-	    if (++c > 100) {  /* Break and try to salvage something */
-		i=99;         /* if it looks like we're going to be */
-		break;        /* here forever...                    */
-	    }
-	} while ( !(d & ( 1 << i) ) );
-	/* ...While there's *not* a wall in direction i. */
-        /* (stop looping when there is) */
-
-	switch (i) {  /* This is simple enough. */
-	case 0:       /* Go in the direction we just figured . . . */
-	     j = pos < x ? x*(y-1)+pos : pos - x;
-	     npos = pos < (x*2) ? x*(y-2)+pos : pos - x - x;
-	     break;
-	case 1:
-	     j = pos >= x*(y-1) ? pos - x * (y-1) : pos + x;
-	     npos = pos >= x*(y-2) ? pos - x*(y-2) : pos + x + x; 
-	     break;
-	case 2:
-	     j = (pos % x) == (x - 1) ? pos + 1 - x : pos + 1;
-	     npos = (pos % x) >= (x - 2) ? pos + 2 - x : pos + 2;
-	     break;
-	case 3:
-	     j= (pos % x) == 0 ? pos + x - 1 : pos - 1;
-	     npos = (pos % x) <= 1 ? pos + x - 2 : pos - 2;
-	     break;
-	case 99:
-	     return 1;  /* Hey neat, broken mazes! */
-	     break;     /* (Umm... Wow... Yeah, neat.) */
-	default:
-	     break;
-	}
-
-	/* And punch a hole there. */
-	maz[j] = 1;
-
-        /* Now, start again just past where we punched the hole... */
-	mazegen_tileable(npos, maz, x, y, rnd);
-
-    } /* End while(d=...) Loop */
-
-    return 0;
-}
-
 static void 
 get_colors (GDrawable *drawable, guint8 *fg, guint8 *bg) 
 {
@@ -716,7 +616,6 @@ static gint maze_dialog()
   GtkWidget *label;
   GtkWidget *entry;
   GtkWidget *notebook;
-  GtkWidget *tilecheck;
   gchar **argv;
   gint  argc;
   gchar buffer[32];
@@ -763,7 +662,7 @@ static gint maze_dialog()
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   /* gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0); */
-  table = gtk_table_new (3, 2, FALSE);
+  table = gtk_table_new (2, 2, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
@@ -786,13 +685,6 @@ static gint maze_dialog()
   entscale_int_new (table, 0, 1, "Width:", &mvals.width, 
 		    1, 64, FALSE, 
 		    NULL, NULL);
-
-  tilecheck = gtk_check_button_new_with_label ("Tileable?");
-  gtk_signal_connect (GTK_OBJECT (tilecheck), "clicked",
-		      GTK_SIGNAL_FUNC (tile_toggle_callback), NULL);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tilecheck), mvals.tile);
-  gtk_table_attach (GTK_TABLE (table), tilecheck, 0, 2, 2, 3, GTK_FILL, 0, 5, 0 );
-  gtk_widget_show (tilecheck);
 
   /* Add Options page to notebook */
   gtk_widget_show (frame);
@@ -879,12 +771,6 @@ maze_entry_callback (GtkWidget *widget,
     text_val = (gint *) data;
 
     *text_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-}
-
-static void 
-tile_toggle_callback (GtkWidget *widget, gpointer   data)
-{
-    mvals.tile = GTK_TOGGLE_BUTTON (widget)->active;
 }
 
 /* ==================================================================== */
