@@ -1,3 +1,10 @@
+2004-01-06  Sven Neumann  <sven@gimp.org>
+
+	* app/app-sections.txt: updated.
+
+	* libgimpthumb/libgimpthumb-sections.txt
+	* libgimpthumb/tmpl/gimpthumbnail.sgml: updated.
+
 2004-01-06  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/tmpl/gimpenums.sgml: regenerated.

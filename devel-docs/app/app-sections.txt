@@ -1236,6 +1236,7 @@ GIMP_TEMPLATE_GET_CLASS
 <FILE>gimpstrokeoptions</FILE>
 <TITLE>GimpStrokeOptions</TITLE>
 GimpStrokeOptions
+gimp_stroke_options_set_dash_preset
 <SUBSECTION Standard>
 GimpStrokeOptionsClass
 GIMP_STROKE_OPTIONS
@@ -1569,11 +1570,12 @@ gimp_display_shell_update_cursor
 <SECTION>
 <FILE>gimpdisplayshell-dnd</FILE>
 <TITLE>GimpDisplayShell-dnd</TITLE>
-gimp_display_shell_drop_drawable
-gimp_display_shell_drop_vectors
-gimp_display_shell_drop_pattern
-gimp_display_shell_drop_color
 gimp_display_shell_drop_buffer
+gimp_display_shell_drop_color
+gimp_display_shell_drop_drawable
+gimp_display_shell_drop_pattern
+gimp_display_shell_drop_svg
+gimp_display_shell_drop_vectors
 </SECTION>
 
 <SECTION>
@@ -2110,7 +2112,8 @@ GimpTextLayer
 gimp_text_layer_new
 gimp_text_layer_set_text
 gimp_text_layer_get_text
-gimp_text_layer_render
+gimp_text_layer_flush
+gimp_text_layer_discard
 <SUBSECTION Standard>
 GimpTextLayerClass
 GIMP_TEXT_LAYER
@@ -3328,13 +3331,15 @@ gimp_vectors_get_new_preview
 <SECTION>
 <FILE>gimpvectors-import</FILE>
 <TITLE>GimpVectors-import</TITLE>
-gimp_vectors_import
+gimp_vectors_import_file
+gimp_vectors_import_buffer
 </SECTION>
 
 <SECTION>
 <FILE>gimpvectors-export</FILE>
 <TITLE>GimpVectors-export</TITLE>
-gimp_vectors_export
+gimp_vectors_export_file
+gimp_vectors_export_string
 </SECTION>
 
 <SECTION>
@@ -3999,6 +4004,24 @@ gimp_gradient_editor_get_type
 GIMP_GRADIENT_EDITOR_CLASS
 GIMP_IS_GRADIENT_EDITOR_CLASS
 GIMP_GRADIENT_EDITOR_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpdasheditor</FILE>
+<TITLE>GimpDashEditor</TITLE>
+GimpDashEditor
+gimp_dash_editor_new
+gimp_dash_editor_shift_left
+gimp_dash_editor_shift_right
+<SUBSECTION Standard>
+GimpDashEditorClass
+GIMP_DASH_EDITOR
+GIMP_IS_DASH_EDITOR
+GIMP_TYPE_DASH_EDITOR
+gimp_dash_editor_get_type
+GIMP_DASH_EDITOR_CLASS
+GIMP_IS_DASH_EDITOR_CLASS
+GIMP_DASH_EDITOR_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -5275,6 +5298,7 @@ GimpXmlParser
 gimp_xml_parser_new
 gimp_xml_parser_parse_file
 gimp_xml_parser_parse_io_channel
+gimp_xml_parser_parse_buffer
 gimp_xml_parser_free
 </SECTION>
 
@@ -5296,12 +5320,14 @@ GIMP_TYPE_CONTAINER_POLICY
 GimpContainerPolicy
 GIMP_TYPE_CONVERT_DITHER_TYPE
 GimpConvertDitherType
-GIMP_TYPE_GRAVITY_TYPE
-GimpGravityType
+GIMP_TYPE_DASH_PRESET
+GimpDashPreset
 GIMP_TYPE_FILL_TYPE
 GimpFillType
 GIMP_TYPE_GRADIENT_TYPE
 GimpGradientType
+GIMP_TYPE_GRAVITY_TYPE
+GimpGravityType
 GIMP_TYPE_GRID_STYLE
 GimpGridStyle
 GIMP_TYPE_IMAGE_BASE_TYPE
@@ -5351,9 +5377,10 @@ gimp_channel_ops_get_type
 gimp_channel_type_get_type
 gimp_container_policy_get_type
 gimp_convert_dither_type_get_type
-gimp_gravity_type_get_type
+gimp_dash_preset_get_type
 gimp_fill_type_get_type
 gimp_gradient_type_get_type
+gimp_gravity_type_get_type
 gimp_grid_style_get_type
 gimp_image_base_type_get_type
 gimp_image_type_get_type
@@ -5656,6 +5683,7 @@ gimp_image_undo_push_layer_reposition
 gimp_image_undo_push_layer_mode
 gimp_image_undo_push_layer_opacity
 gimp_image_undo_push_layer_preserve_trans
+gimp_image_undo_push_text_layer
 gimp_image_undo_push_channel_add
 gimp_image_undo_push_channel_remove
 gimp_image_undo_push_channel_mod
@@ -6321,6 +6349,7 @@ layers_duplicate_cmd_callback
 layers_anchor_cmd_callback
 layers_merge_down_cmd_callback
 layers_delete_cmd_callback
+layers_text_discard_cmd_callback
 layers_resize_cmd_callback
 layers_resize_to_image_cmd_callback
 layers_scale_cmd_callback
@@ -7061,26 +7090,28 @@ gimp_devices_select_device
 <SECTION>
 <FILE>gimpdnd</FILE>
 GimpDndType
-GIMP_TARGET_URI_LIST
-GIMP_TARGET_TEXT_PLAIN
-GIMP_TARGET_NETSCAPE_URL
-GIMP_TARGET_IMAGE
-GIMP_TARGET_LAYER
-GIMP_TARGET_CHANNEL
-GIMP_TARGET_LAYER_MASK
-GIMP_TARGET_COMPONENT
-GIMP_TARGET_VECTORS
-GIMP_TARGET_COLOR
 GIMP_TARGET_BRUSH
-GIMP_TARGET_PATTERN
-GIMP_TARGET_GRADIENT
-GIMP_TARGET_PALETTE
-GIMP_TARGET_FONT
 GIMP_TARGET_BUFFER
-GIMP_TARGET_IMAGEFILE
-GIMP_TARGET_TEMPLATE
-GIMP_TARGET_TOOL
+GIMP_TARGET_CHANNEL
+GIMP_TARGET_COLOR
+GIMP_TARGET_COMPONENT
 GIMP_TARGET_DIALOG
+GIMP_TARGET_FONT
+GIMP_TARGET_GRADIENT
+GIMP_TARGET_IMAGE
+GIMP_TARGET_IMAGEFILE
+GIMP_TARGET_LAYER
+GIMP_TARGET_LAYER_MASK
+GIMP_TARGET_NETSCAPE_URL
+GIMP_TARGET_PALETTE
+GIMP_TARGET_PATTERN
+GIMP_TARGET_SVG
+GIMP_TARGET_SVG_XML
+GIMP_TARGET_TEMPLATE
+GIMP_TARGET_TEXT_PLAIN
+GIMP_TARGET_TOOL
+GIMP_TARGET_URI_LIST
+GIMP_TARGET_VECTORS
 GimpDndDropFileFunc
 gimp_dnd_init
 gimp_dnd_file_dest_add
@@ -7095,6 +7126,12 @@ gimp_dnd_color_dest_remove
 GimpDndDragFileFunc
 gimp_dnd_file_source_add
 gimp_dnd_file_source_remove
+GimpDndDragSvgFunc
+GimpDndDropSvgFunc
+gimp_dnd_svg_dest_add
+gimp_dnd_svg_dest_remove
+gimp_dnd_svg_source_add
+gimp_dnd_svg_source_remove
 GimpDndDropViewableFunc
 GimpDndDragViewableFunc
 gimp_dnd_viewable_source_add

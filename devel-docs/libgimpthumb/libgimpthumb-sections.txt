@@ -5,6 +5,7 @@ GimpThumbnail
 gimp_thumbnail_new
 gimp_thumbnail_set_uri
 gimp_thumbnail_set_filename
+gimp_thumbnail_set_from_thumb
 gimp_thumbnail_peek_image
 gimp_thumbnail_peek_thumb
 gimp_thumbnail_load_thumb

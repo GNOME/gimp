@@ -1,3 +1,8 @@
+2004-01-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-scale.c (gimp_image_scale_check): fixed inline
+	docs.
+
 2004-01-06  Henrik Brix Andersen  <brix@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/sphere.py (python_sphere): use

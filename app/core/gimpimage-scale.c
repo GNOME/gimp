@@ -195,9 +195,10 @@ gimp_image_scale (GimpImage             *gimage,
 
 /**
  * gimp_image_scale_check:
- * @gimage:     A #GimpImage.
- * @new_width:  The new width.
- * @new_height: The new height.
+ * @gimage:      A #GimpImage.
+ * @new_width:   The new width.
+ * @new_height:  The new height.
+ * @new_memsize: The new memory size.
  *
  * Inventory the layer list in gimage and check that it may be
  * scaled to @new_height and @new_width without problems.
