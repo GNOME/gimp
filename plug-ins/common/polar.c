@@ -93,7 +93,7 @@ typedef struct
   gint polrec;
 } polarize_vals_t;
 
-static GimpFixMePreview *preview;
+static GimpOldPreview *preview;
 
 /***** Prototypes *****/
 
@@ -609,7 +609,7 @@ polarize_dialog (void)
   gtk_container_add (GTK_CONTAINER (abox), pframe);
   gtk_widget_show (pframe);
 
-  preview = gimp_fixme_preview_new (drawable, FALSE);
+  preview = gimp_old_preview_new (drawable, FALSE);
   gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
   gtk_widget_show (preview->widget);
 
@@ -706,7 +706,7 @@ polarize_dialog (void)
 
   gtk_widget_destroy (dialog);
 
-  gimp_fixme_preview_free (preview);
+  gimp_old_preview_free (preview);
 
   return run;
 }
@@ -776,7 +776,7 @@ dialog_update_preview (void)
 	  px += dx;
 	}
 
-      gimp_fixme_preview_do_row (preview, y, preview->width, buffer);
+      gimp_old_preview_do_row (preview, y, preview->width, buffer);
 
       py += dy;
     }

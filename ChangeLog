@@ -1,5 +1,28 @@
 2003-12-09  DindinX  <david@dindinx.org>
 
+	* libgimp/gimpmiscui.c:
+	* libgimp/gimpmiscui.h:
+	* plug-ins/common/AlienMap.c:
+	* plug-ins/common/AlienMap2.c:
+	* plug-ins/common/blinds.c:
+	* plug-ins/common/flarefx.c:
+	* plug-ins/common/glasstile.c:
+	* plug-ins/common/grid.c:
+	* plug-ins/common/illusion.c:
+	* plug-ins/common/jigsaw.c:
+	* plug-ins/common/max_rgb.c:
+	* plug-ins/common/nlfilt.c:
+	* plug-ins/common/noisify.c:
+	* plug-ins/common/nova.c:
+	* plug-ins/common/plasma.c:
+	* plug-ins/common/polar.c:
+	* plug-ins/common/waves.c:
+	* plug-ins/common/wind.c:  Rename GimpFixmePreview into
+	GimpOldPreview. This is just a prelimirary stuff, before moving it
+	into its own, no_inst library.
+
+2003-12-09  DindinX  <david@dindinx.org>
+
 	* plug-ins/common/vpropagate.c (vpropagate_dialog):
 	* plug-ins/common/unsharp.c (unsharp_mask_dialog):
 	* plug-ins/common/threshold_alpha.c (threshold_alpha_dialog):

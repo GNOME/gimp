@@ -63,36 +63,36 @@ typedef enum
 } FilterType;
 
 static gint   do_preview = TRUE;
-static GimpFixMePreview *preview;
+static GimpOldPreview *preview;
 
 static GtkWidget * mw_preview_new   (GtkWidget    *parent,
-				     GimpDrawable *drawable);
+                                     GimpDrawable *drawable);
 
 /* function protos */
 
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparam,
-		   const GimpParam  *param,
-		   gint             *nretvals,
-		   GimpParam       **retvals);
+                   gint              nparam,
+                   const GimpParam  *param,
+                   gint             *nretvals,
+                   GimpParam       **retvals);
 
 static gint pluginCore        (piArgs *argp);
 static gint pluginCoreIA      (piArgs *argp,
-			       GimpDrawable *drawable);
+                               GimpDrawable *drawable);
 
 static void nlfilt_do_preview (GtkWidget  *preview);
 
 static inline gint nlfiltInit (gdouble     alpha,
-			       gdouble     radius,
-			       FilterType  filter);
+                               gdouble     radius,
+                               FilterType  filter);
 static inline void nlfiltRow  (guchar     *srclast,
                                guchar     *srcthis,
                                guchar     *srcnext,
-			       guchar     *dst,
-			       gint        width,
-			       gint        Bpp,
-			       gint        filtno);
+                               guchar     *dst,
+                               gint        width,
+                               gint        Bpp,
+                               gint        filtno);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -118,16 +118,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_nlfilt",
-			  "Nonlinear swiss army knife filter",
-			  "This is the pnmnlfilt, in gimp's clothing.  See the pnmnlfilt manpage for details.",
-			  "Graeme W. Gill, gimp 0.99 plugin by Eric L. Hernes",
-			  "Graeme W. Gill, Eric L. Hernes",
-			  "1997",
-			  N_("<Image>/Filters/Enhance/_NL Filter..."),
-			  "RGB,GRAY",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Nonlinear swiss army knife filter",
+                          "This is the pnmnlfilt, in gimp's clothing.  See the pnmnlfilt manpage for details.",
+                          "Graeme W. Gill, gimp 0.99 plugin by Eric L. Hernes",
+                          "Graeme W. Gill, Eric L. Hernes",
+                          "1997",
+                          N_("<Image>/Filters/Enhance/_NL Filter..."),
+                          "RGB,GRAY",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -162,47 +162,47 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       /* XXX: add code here for interactive running */
       if (args.radius == -1)
-	{
-	  args.alpha  = (gdouble) 0.3;
-	  args.radius = (gdouble) 0.3;
-	  args.filter = 0;
-	}
+        {
+          args.alpha  = (gdouble) 0.3;
+          args.radius = (gdouble) 0.3;
+          args.filter = 0;
+        }
       drawable = gimp_drawable_get (args.drw);
 
       if (pluginCoreIA (&args, drawable) == -1)
-	{
-	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+        }
       else
-	{
-	  gimp_set_data ("plug_in_nlfilt", &args, sizeof (piArgs));
-	}
+        {
+          gimp_set_data ("plug_in_nlfilt", &args, sizeof (piArgs));
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /* XXX: add code here for non-interactive running */
       if (nparam != 6)
-	{
-	  rvals[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-	  break;
-	}
+        {
+          rvals[0].data.d_status = GIMP_PDB_CALLING_ERROR;
+          break;
+        }
       args.alpha  = param[3].data.d_float;
       args.radius = param[4].data.d_float;
       args.filter = param[5].data.d_int32;
 
       if (pluginCore (&args) == -1)
-	{
-	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-	  break;
-	}
+        {
+          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+          break;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* XXX: add code here for last-values running */
       if (pluginCore (&args) == -1)
-	{
-	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+        }
       break;
   }
 }
@@ -254,7 +254,7 @@ pluginCore (piArgs *argp)
   for (y = 0; y < height - 1; y++)
     {
       if ((y % p_update) == 0)
-	gimp_progress_update ((gdouble) y / (gdouble) height);
+        gimp_progress_update ((gdouble) y / (gdouble) height);
 
       gimp_pixel_rgn_get_row (&srcPr, nextrow, 0, y + 1, width);
       memcpy (nextrow - bpp, nextrow, bpp);
@@ -284,7 +284,7 @@ pluginCore (piArgs *argp)
 
 static void
 nlfilt_radio_button_update (GtkWidget *widget,
-			    gpointer   data)
+                            gpointer   data)
 {
   gimp_radio_button_update (widget, data);
 
@@ -294,7 +294,7 @@ nlfilt_radio_button_update (GtkWidget *widget,
 
 static void
 nlfilt_double_adjustment_update (GtkAdjustment *adjustment,
-				 gpointer       data)
+                                 gpointer       data)
 {
   gimp_double_adjustment_update (adjustment, data);
 
@@ -319,17 +319,17 @@ pluginCoreIA (piArgs *argp, GimpDrawable *drawable)
 
   dlg = gimp_dialog_new (_("NL Filter"), "nlfilt",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/nlfilt.html",
+                         gimp_standard_help_func, "filters/nlfilt.html",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
-		      TRUE, TRUE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   hbox = gtk_hbox_new (FALSE, 4);
@@ -341,17 +341,17 @@ pluginCoreIA (piArgs *argp, GimpDrawable *drawable)
   nlfilt_do_preview (preview);
 
   frame = gimp_int_radio_group_new (TRUE, _("Filter"),
-				    G_CALLBACK (nlfilt_radio_button_update),
-				    &argp->filter, argp->filter,
+                                    G_CALLBACK (nlfilt_radio_button_update),
+                                    &argp->filter, argp->filter,
 
-				    _("_Alpha Trimmed Mean"),
-				    filter_alpha_trim, NULL,
-				    _("Op_timal Estimation"),
-				    filter_opt_est, NULL,
-				    _("_Edge Enhancement"),
-				    filter_edge_enhance, NULL,
+                                    _("_Alpha Trimmed Mean"),
+                                    filter_alpha_trim, NULL,
+                                    _("Op_timal Estimation"),
+                                    filter_opt_est, NULL,
+                                    _("_Edge Enhancement"),
+                                    filter_edge_enhance, NULL,
 
-				    NULL);
+                                    NULL);
 
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -369,19 +369,19 @@ pluginCoreIA (piArgs *argp, GimpDrawable *drawable)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("A_lpha:"), 0, 0,
-			      argp->alpha, 0.0, 1.0, 0.05, 0.1, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("A_lpha:"), 0, 0,
+                              argp->alpha, 0.0, 1.0, 0.05, 0.1, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (nlfilt_double_adjustment_update),
                     &argp->alpha);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Radius:"), 0, 0,
-			      argp->radius, 1.0 / 3.0, 1.0, 0.05, 0.1, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Radius:"), 0, 0,
+                              argp->radius, 1.0 / 3.0, 1.0, 0.05, 0.1, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (nlfilt_double_adjustment_update),
                     &argp->radius);
@@ -418,9 +418,9 @@ nlfilt_do_preview (GtkWidget *w)
       nlfiltRow (src0, src1, src2, dst + preview->bpp,
                  preview->width - 2, preview->bpp, filtno);
       /*
-	 We should probably fix the edges!
+         We should probably fix the edges!
       */
-      gimp_fixme_preview_do_row (preview, y, preview->width, dst);
+      gimp_old_preview_do_row (preview, y, preview->width, dst);
       src0 = src1; src1 = src2; src2 += rowsize;
     }
 
@@ -461,7 +461,7 @@ mw_preview_new (GtkWidget *parent, GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), pframe, FALSE, FALSE, 0);
   gtk_widget_show (pframe);
 
-  preview = gimp_fixme_preview_new (drawable, FALSE);
+  preview = gimp_old_preview_new (drawable, FALSE);
   gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
   gtk_widget_show (preview->widget);
 
@@ -552,9 +552,9 @@ mw_preview_new (GtkWidget *parent, GimpDrawable *drawable)
 /* and a rectangle */
 
 static gdouble triang_area(gdouble, gdouble, gdouble, gdouble, gdouble,
-			   gdouble, gdouble, gdouble, gint);
+                           gdouble, gdouble, gdouble, gint);
 static gdouble rectang_area(gdouble, gdouble, gdouble, gdouble,
-			    gdouble, gdouble, gdouble, gdouble);
+                            gdouble, gdouble, gdouble, gdouble);
 static gdouble hex_area(gdouble, gdouble, gdouble, gdouble, gdouble);
 
 gint atfilt0(gint *p);

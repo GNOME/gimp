@@ -886,8 +886,8 @@ static void      alienmap2_logo_dialog   (GtkWidget     *parent);
 
 /***** Variables *****/
 
-static GimpRunMode run_mode;
-static GimpFixMePreview *preview;
+static GimpRunMode     run_mode;
+static GimpOldPreview *preview;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -1176,8 +1176,8 @@ alienmap2_dialog (void)
   gtk_table_attach (GTK_TABLE (top_table), frame, 0, 1, 0, 1, 0, 0, 0, 0);
   gtk_widget_show (frame);
 
-  preview = gimp_fixme_preview_new (NULL, FALSE);
-  gimp_fixme_preview_fill_scaled (preview, drawable);
+  preview = gimp_old_preview_new (NULL, FALSE);
+  gimp_old_preview_fill_scaled (preview, drawable);
   gtk_container_add (GTK_CONTAINER (frame), preview->widget);
   gtk_widget_show (preview->widget);
 
@@ -1320,7 +1320,7 @@ alienmap2_dialog (void)
 static void
 dialog_update_preview (void)
 {
-  gimp_fixme_preview_update (preview, alienmap2_func, NULL);
+  gimp_old_preview_update (preview, alienmap2_func, NULL);
 }
 
 static void

@@ -378,7 +378,7 @@ static globals_t globals =
 };
 
 /* preview globals */
-static GimpFixMePreview *preview;
+static GimpOldPreview *preview;
 
 MAIN ()
 
@@ -547,7 +547,7 @@ jigsaw (gboolean preview_mode)
 
       for (y = 0; y < preview->height; y++)
 	{
-	  gimp_fixme_preview_do_row (preview, y, preview->width,
+	  gimp_old_preview_do_row (preview, y, preview->width,
 				     &buffer[preview->rowstride * y]);
 	}
 
@@ -2550,7 +2550,7 @@ dialog_box (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_hbox, TRUE, TRUE, 0);
   gtk_widget_show (main_hbox);
 
-  preview = gimp_fixme_preview_new (drawable, TRUE);
+  preview = gimp_old_preview_new (drawable, TRUE);
   gtk_box_pack_start (GTK_BOX (main_hbox), preview->frame, FALSE, FALSE, 0);
   jigsaw(TRUE); /* render preview */
   gtk_widget_show (preview->widget);

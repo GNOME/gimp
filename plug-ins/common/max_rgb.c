@@ -39,22 +39,22 @@
 
 
 /* Replace them with the right ones */
-#define	PLUG_IN_NAME	     "plug_in_max_rgb"
-#define SHORT_NAME	     "max_rgb"
+#define PLUG_IN_NAME         "plug_in_max_rgb"
+#define SHORT_NAME           "max_rgb"
 
-static void	query	(void);
-static void	run	(const gchar      *name,
-			 gint              nparams,
-			 const GimpParam  *param,
-			 gint             *nreturn_vals,
-			 GimpParam       **return_vals);
+static void     query   (void);
+static void     run     (const gchar      *name,
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
 static GimpPDBStatusType main_function (GimpDrawable *drawable,
-			                gboolean      preview_mode);
+                                        gboolean      preview_mode);
 
-static gint	   dialog         (GimpDrawable *drawable);
+static gint        dialog         (GimpDrawable *drawable);
 static void        radio_callback (GtkWidget    *widget,
-				   gpointer      data);
+                                   gpointer      data);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -81,8 +81,8 @@ static ValueType pvals =
   MAX_CHANNELS
 };
 
-static GimpRunMode       run_mode;
-static GimpFixMePreview *preview;
+static GimpRunMode     run_mode;
+static GimpOldPreview *preview;
 
 MAIN ()
 
@@ -98,19 +98,19 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Return an image in which each pixel holds only "
-			  "the channel that has the maximum value in three "
-			  "(red, green, blue) channels, and other channels "
-			  "are zero-cleared",
-			  "the help is not yet written for this plug-in since none is needed.",
-			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
-			  "Shuji Narazaki",
-			  "May 2000",
+                          "Return an image in which each pixel holds only "
+                          "the channel that has the maximum value in three "
+                          "(red, green, blue) channels, and other channels "
+                          "are zero-cleared",
+                          "the help is not yet written for this plug-in since none is needed.",
+                          "Shuji Narazaki (narazaki@InetQ.or.jp)",
+                          "Shuji Narazaki",
+                          "May 2000",
                           N_("<Image>/Filters/Colors/_Max RGB..."),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -141,12 +141,12 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_NAME, &pvals);
       /* Since a channel might be selected, we must check wheter RGB or not. */
       if (!gimp_drawable_is_rgb (drawable->drawable_id))
-	{
-	  g_message (_("Can only operate on RGB drawables."));
-	  return;
-	}
+        {
+          g_message (_("Can only operate on RGB drawables."));
+          return;
+        }
       if (! dialog (drawable))
-	return;
+        return;
       break;
     case GIMP_RUN_NONINTERACTIVE:
       /* You must copy the values of parameters to pvals or dialog variables. */
@@ -175,9 +175,9 @@ typedef struct {
 
 static void
 max_rgb_func (const guchar *src,
-	      guchar       *dest,
-	      gint          bpp,
-	      gpointer      data)
+              guchar       *dest,
+              gint          bpp,
+              gpointer      data)
 {
   MaxRgbParam_t *param = (MaxRgbParam_t*) data;
   gint   ch, max_ch = 0;
@@ -187,15 +187,15 @@ max_rgb_func (const guchar *src,
   for (ch = 0; ch < 3; ch++)
     if (param->flag * max <= param->flag * (tmp_value = (*src++)))
       {
-	if (max == tmp_value)
-	  {
-	    max_ch += 1 << ch;
-	  }
-	else
-	  {
-	    max_ch = 1 << ch; /* clear memories of old channels */
-	    max = tmp_value;
-	  }
+        if (max == tmp_value)
+          {
+            max_ch += 1 << ch;
+          }
+        else
+          {
+            max_ch = 1 << ch; /* clear memories of old channels */
+            max = tmp_value;
+          }
       }
 
   dest[0] = (max_ch & (1 << 0)) ? max : 0;
@@ -207,7 +207,7 @@ max_rgb_func (const guchar *src,
 
 static GimpPDBStatusType
 main_function (GimpDrawable *drawable,
-	       gboolean      preview_mode)
+               gboolean      preview_mode)
 {
   MaxRgbParam_t param;
 
@@ -217,7 +217,7 @@ main_function (GimpDrawable *drawable,
 
   if (preview_mode)
     {
-      gimp_fixme_preview_update (preview, max_rgb_func, &param);
+      gimp_old_preview_update (preview, max_rgb_func, &param);
     }
   else
     {
@@ -247,12 +247,12 @@ dialog (GimpDrawable *drawable)
 
   dlg = gimp_dialog_new (_("Max RGB"), "max_rgb",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/max_rgb.html",
+                         gimp_standard_help_func, "filters/max_rgb.html",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -260,22 +260,22 @@ dialog (GimpDrawable *drawable)
                       TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_fixme_preview_new (drawable, TRUE);
+  preview = gimp_old_preview_new (drawable, TRUE);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
   main_function (drawable, TRUE);
   gtk_widget_show (preview->widget);
 
   frame = gimp_int_radio_group_new (TRUE, _("Parameter Settings"),
-				    G_CALLBACK (radio_callback),
-				    &pvals.max_p, pvals.max_p,
+                                    G_CALLBACK (radio_callback),
+                                    &pvals.max_p, pvals.max_p,
 
-				    _("_Hold the Maximal Channels"),
-				    MAX_CHANNELS, &max,
+                                    _("_Hold the Maximal Channels"),
+                                    MAX_CHANNELS, &max,
 
-				    _("Ho_ld the Minimal Channels"),
-				    MIN_CHANNELS, &min,
+                                    _("Ho_ld the Minimal Channels"),
+                                    MIN_CHANNELS, &min,
 
-				    NULL);
+                                    NULL);
 
   g_object_set_data (G_OBJECT (max), "drawable", drawable);
   g_object_set_data (G_OBJECT (min), "drawable", drawable);
@@ -294,7 +294,7 @@ dialog (GimpDrawable *drawable)
 
 static void
 radio_callback (GtkWidget *widget,
-		gpointer  data)
+                gpointer  data)
 {
   gimp_radio_button_update (widget, data);
 

@@ -85,7 +85,7 @@ static GlassValues gtvals =
     20     /* tile height */
 };
 
-static GimpFixMePreview *preview;
+static GimpOldPreview *preview;
 
 /* --- Functions --- */
 
@@ -104,17 +104,17 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_glasstile",
-			  "Divide the image into square glassblocks",
-			  "Divide the image into square glassblocks in "
+                          "Divide the image into square glassblocks",
+                          "Divide the image into square glassblocks in "
                           "which the image is refracted.",
-			  "Karl-Johan Andersson", /* Author */
-			  "Karl-Johan Andersson", /* Copyright */
-			  "May 2000",
-			  N_("<Image>/Filters/Glass Effects/_Glass Tile..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Karl-Johan Andersson", /* Author */
+                          "Karl-Johan Andersson", /* Copyright */
+                          "May 2000",
+                          N_("<Image>/Filters/Glass Effects/_Glass Tile..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -150,25 +150,25 @@ run (const gchar      *name,
 
       /*  First acquire information with a dialog  */
       if (! glass_dialog (drawable))
-	{
-	  gimp_drawable_detach (drawable);
-	  return;
-	}
+        {
+          gimp_drawable_detach (drawable);
+          return;
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  gtvals.xblock = (gint) param[3].data.d_int32;
-	  gtvals.yblock = (gint) param[4].data.d_int32;
-	}
+        {
+          gtvals.xblock = (gint) param[3].data.d_int32;
+          gtvals.yblock = (gint) param[4].data.d_int32;
+        }
       if (gtvals.xblock < 10 || gtvals.xblock > 50)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       if (gtvals.yblock < 10 || gtvals.yblock > 50)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -184,28 +184,28 @@ run (const gchar      *name,
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-	  gimp_drawable_is_gray (drawable->drawable_id))
-	{
-	  gimp_progress_init (_("Glass Tile..."));
-	  gimp_tile_cache_ntiles (2 *
+          gimp_drawable_is_gray (drawable->drawable_id))
+        {
+          gimp_progress_init (_("Glass Tile..."));
+          gimp_tile_cache_ntiles (2 *
                                   (drawable->width / gimp_tile_width () + 1));
 
-	  glasstile (drawable, FALSE);
+          glasstile (drawable, FALSE);
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
-	  /*  Store data  */
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    {
-	      gimp_set_data ("plug_in_glasstile", &gtvals,
-			     sizeof (GlassValues));
-	      gimp_fixme_preview_free (preview);
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
+          /*  Store data  */
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            {
+              gimp_set_data ("plug_in_glasstile", &gtvals,
+                             sizeof (GlassValues));
+              gimp_old_preview_free (preview);
             }
-	}
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   values[0].data.d_status = status;
@@ -227,12 +227,12 @@ glass_dialog (GimpDrawable *drawable)
 
   dlg = gimp_dialog_new (_("Glass Tile"), "glasstile",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/glasstile.html",
+                         gimp_standard_help_func, "filters/glasstile.html",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -240,7 +240,7 @@ glass_dialog (GimpDrawable *drawable)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_fixme_preview_new (drawable, TRUE);
+  preview = gimp_old_preview_new (drawable, TRUE);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
   gtk_widget_show (preview->widget);
   glasstile (drawable, TRUE); /* filter routine, initial pass */
@@ -260,10 +260,10 @@ glass_dialog (GimpDrawable *drawable)
 
   /* Horizontal scale - Width */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Tile _Width:"), 150, 0,
-			      gtvals.xblock, 10, 50, 2, 10, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Tile _Width:"), 150, 0,
+                              gtvals.xblock, 10, 50, 2, 10, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
 
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -274,10 +274,10 @@ glass_dialog (GimpDrawable *drawable)
 
   /* Horizontal scale - Height */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Tile _Height:"), 150, 0,
-			      gtvals.yblock, 10, 50, 2, 10, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Tile _Height:"), 150, 0,
+                              gtvals.yblock, 10, 50, 2, 10, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
 
   g_object_set_data (G_OBJECT (adj), "drawable", drawable);
 
@@ -300,7 +300,7 @@ glass_dialog (GimpDrawable *drawable)
 /*  -  Filter function  -  I wish all filter functions had a pmode :) */
 static void
 glasstile (GimpDrawable *drawable,
-	   gboolean      preview_mode)
+           gboolean      preview_mode)
 {
   GimpPixelRgn srcPR, destPR;
   gint    width, height;
@@ -391,57 +391,57 @@ glasstile (GimpDrawable *drawable,
       ypixel2 = CLAMP (ypixel2, 0, y2 - 1);
 
       if (preview_mode)
-	{
-	  memcpy (cur_row, preview->cache + ypixel2 * preview->rowstride,
-		  preview->rowstride);
-	}
+        {
+          memcpy (cur_row, preview->cache + ypixel2 * preview->rowstride,
+                  preview->rowstride);
+        }
       else
-	{
-	  gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, ypixel2, iwidth);
-	}
+        {
+          gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, ypixel2, iwidth);
+        }
       yoffs++;
 
       /* if current offset = half, do a displacement next time around */
       if (yoffs == yhalv)
-	{
-	  ymitt += ruthojd;
-	  yoffs = - (yhalv + yplus);
-	}
+        {
+          ymitt += ruthojd;
+          yoffs = - (yhalv + yplus);
+        }
 
       xmitt = 0;
       xoffs = 0;
 
       for (col = 0; col < x2 - x1; col++) /* one pixel */
-	{
-	  xpixel1 = (xmitt + xoffs) * bytes;
-	  xpixel2 = (xmitt + xoffs * 2) * bytes;
+        {
+          xpixel1 = (xmitt + xoffs) * bytes;
+          xpixel2 = (xmitt + xoffs * 2) * bytes;
 
-	  if (xpixel2 < ((x2 - x1) * bytes))
-	    {
-	      if(xpixel2 < 0)
-		xpixel2 = 0;
-	      for (i = 0; i < bytes; i++)
-		d[xpixel1 + i] = cur_row[xpixel2 + i];
-	    }
-	  else
-	    {
-	      for (i = 0; i < bytes; i++)
-		d[xpixel1 + i] = cur_row[xpixel1 + i];
-	    }
+          if (xpixel2 < ((x2 - x1) * bytes))
+            {
+              if(xpixel2 < 0)
+                xpixel2 = 0;
+              for (i = 0; i < bytes; i++)
+                d[xpixel1 + i] = cur_row[xpixel2 + i];
+            }
+          else
+            {
+              for (i = 0; i < bytes; i++)
+                d[xpixel1 + i] = cur_row[xpixel1 + i];
+            }
 
-	  xoffs++;
+          xoffs++;
 
-	  if (xoffs == xhalv)
-	    {
-	      xmitt += rutbredd;
-	      xoffs = - (xhalv + xplus);
-	    }
-	}
+          if (xoffs == xhalv)
+            {
+              xmitt += rutbredd;
+              xoffs = - (xhalv + xplus);
+            }
+        }
 
       /*  Store the dest  */
       if (preview_mode)
         {
-          gimp_fixme_preview_do_row (preview, row, width, dest);
+          gimp_old_preview_do_row (preview, row, width, dest);
         }
       else
         {

@@ -148,7 +148,7 @@ static PlasmaValues pvals =
  * Some globals to save passing too many paramaters that don't change.
  */
 
-static GimpFixMePreview *preview;
+static GimpOldPreview *preview;
 static gint	ix1, iy1, ix2, iy2;	/* Selected image size. */
 static gint	bpp, alpha;
 static gboolean has_alpha;
@@ -311,7 +311,7 @@ plasma_dialog (GimpDrawable  *drawable,
 		      main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_fixme_preview_new2 (drawable_type, TRUE);
+  preview = gimp_old_preview_new2 (drawable_type, TRUE);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
 
   plasma (drawable, TRUE); /* preview image */
@@ -483,7 +483,7 @@ get_pixel (GimpPixelFetcher *pft,
     }
   else
     {
-      gimp_fixme_preview_get_pixel (preview, x, y, pixel);
+      gimp_old_preview_get_pixel (preview, x, y, pixel);
     }
 }
 
@@ -500,7 +500,7 @@ put_pixel (GimpPixelFetcher *pft,
     }
   else
     {
-      gimp_fixme_preview_put_pixel (preview, x, y, pixel);
+      gimp_old_preview_put_pixel (preview, x, y, pixel);
     }
 }
 

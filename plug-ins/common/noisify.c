@@ -65,19 +65,19 @@ typedef struct
  */
 static void       query  (void);
 static void       run    (const gchar      *name,
-			  gint              nparams,
-			  const GimpParam  *param,
-			  gint             *nreturn_vals,
-			  GimpParam       **return_vals);
+                          gint              nparams,
+                          const GimpParam  *param,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
 
 static void       noisify (GimpDrawable    *drawable,
                            gboolean         preview_mode);
 static gdouble    gauss   (GRand *gr);
 
 static gint       noisify_dialog                   (GimpDrawable *drawable,
-						    gint           channels);
+                                                    gint           channels);
 static void       noisify_double_adjustment_update (GtkAdjustment *adjustment,
-						    gpointer       data);
+                                                    gpointer       data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -99,8 +99,8 @@ static NoisifyInterface noise_int =
   { NULL, NULL, NULL, NULL }
 };
 
-static GimpRunMode       run_mode;
-static GimpFixMePreview *preview;
+static GimpRunMode     run_mode;
+static GimpOldPreview *preview;
 
 MAIN ()
 
@@ -120,16 +120,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_noisify",
-			  "Adds random noise to a drawable's channels",
-			  "More here later",
-			  "Torsten Martinsen",
-			  "Torsten Martinsen",
-			  "May 2000",
-			  N_("<Image>/Filters/Noise/_Noisify..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Adds random noise to a drawable's channels",
+                          "More here later",
+                          "Torsten Martinsen",
+                          "Torsten Martinsen",
+                          "May 2000",
+                          N_("<Image>/Filters/Noise/_Noisify..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -164,26 +164,26 @@ run (const gchar      *name,
 
       /*  First acquire information with a dialog  */
       if (! noisify_dialog (drawable, drawable->bpp))
-	{
-	  gimp_drawable_detach (drawable);
-	  return;
-	}
+        {
+          gimp_drawable_detach (drawable);
+          return;
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 8)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
-	  nvals.independent = param[3].data.d_int32 ? TRUE : FALSE;
-	  nvals.noise[0]    = param[4].data.d_float;
-	  nvals.noise[1]    = param[5].data.d_float;
-	  nvals.noise[2]    = param[6].data.d_float;
-	  nvals.noise[3]    = param[7].data.d_float;
-	}
+        {
+          nvals.independent = param[3].data.d_int32 ? TRUE : FALSE;
+          nvals.noise[0]    = param[4].data.d_float;
+          nvals.noise[1]    = param[5].data.d_float;
+          nvals.noise[2]    = param[6].data.d_float;
+          nvals.noise[3]    = param[7].data.d_float;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -206,11 +206,11 @@ run (const gchar      *name,
       noisify (drawable, FALSE);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE) {
-	gimp_set_data ("plug_in_noisify", &nvals, sizeof (NoisifyVals));
+        gimp_set_data ("plug_in_noisify", &nvals, sizeof (NoisifyVals));
       }
     }
   else
@@ -226,9 +226,9 @@ run (const gchar      *name,
 
 static void
 noisify_func (const guchar *src,
-	      guchar       *dest,
-	      gint          bpp,
-	      gpointer      data)
+              guchar       *dest,
+              gint          bpp,
+              gpointer      data)
 {
   GRand *gr = (GRand*) data;
   gint noise = 0, b;
@@ -239,15 +239,15 @@ noisify_func (const guchar *src,
   for (b = 0; b < bpp; b++)
     {
       if (nvals.noise[b] > 0.0)
-	{
-	  gint p;
+        {
+          gint p;
 
           if (nvals.independent)
-	    noise = (gint) (nvals.noise[b] * gauss (gr) * 127);
+            noise = (gint) (nvals.noise[b] * gauss (gr) * 127);
 
-	  p = src[b] + noise;
-	  dest[b] = CLAMP0255 (p);
-	}
+          p = src[b] + noise;
+          dest[b] = CLAMP0255 (p);
+        }
       else
         {
           dest[b] = src[b];
@@ -257,14 +257,14 @@ noisify_func (const guchar *src,
 
 static void
 noisify (GimpDrawable *drawable,
-	 gboolean      preview_mode)
+         gboolean      preview_mode)
 {
   GRand *gr;
 
   gr = g_rand_new ();
 
   if (preview_mode)
-    gimp_fixme_preview_update (preview, noisify_func, gr);
+    gimp_old_preview_update (preview, noisify_func, gr);
   else
     gimp_rgn_iterate2 (drawable, run_mode, noisify_func, gr);
 
@@ -273,28 +273,28 @@ noisify (GimpDrawable *drawable,
 
 static void
 noisify_add_channel (GtkWidget *table, gint channel, gchar *name,
-		     GimpDrawable *drawable)
+                     GimpDrawable *drawable)
 {
   GtkObject *adj;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, channel + 1,
-			      name, SCALE_WIDTH, 0,
-			      nvals.noise[channel], 0.0, 1.0, 0.01, 0.1, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              name, SCALE_WIDTH, 0,
+                              nvals.noise[channel], 0.0, 1.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
 
   g_object_set_data (G_OBJECT (adj), "drawable", drawable);
 
   g_signal_connect (adj, "value_changed",
-		    G_CALLBACK (noisify_double_adjustment_update),
-		    &nvals.noise[channel]);
+                    G_CALLBACK (noisify_double_adjustment_update),
+                    &nvals.noise[channel]);
 
   noise_int.channel_adj[channel] = adj;
 }
 
 static gint
 noisify_dialog (GimpDrawable *drawable,
-		gint       channels)
+                gint       channels)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
@@ -307,12 +307,12 @@ noisify_dialog (GimpDrawable *drawable,
 
   dlg = gimp_dialog_new (_("Noisify"), "noisify",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/noisify.html",
+                         gimp_standard_help_func, "filters/noisify.html",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 0);
@@ -320,10 +320,10 @@ noisify_dialog (GimpDrawable *drawable,
   gtk_widget_show (main_vbox);
 
   /* preview */
-  preview = gimp_fixme_preview_new (NULL, TRUE);
+  preview = gimp_old_preview_new (NULL, TRUE);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
   gtk_widget_show (preview->widget);
-  gimp_fixme_preview_fill (preview, drawable);
+  gimp_old_preview_fill (preview, drawable);
   noisify (drawable, TRUE); /* preview noisify */
 
   /*  parameter settings  */
@@ -381,13 +381,13 @@ noisify_dialog (GimpDrawable *drawable,
       gint   i;
 
       for (i = 0; i < channels; i++)
-	{
-	  buffer = g_strdup_printf (_("Channel #%d:"), i);
+        {
+          buffer = g_strdup_printf (_("Channel #%d:"), i);
 
-	  noisify_add_channel (table, i, buffer, drawable);
+          noisify_add_channel (table, i, buffer, drawable);
 
-	  g_free (buffer);
-	}
+          g_free (buffer);
+        }
     }
 
   gtk_widget_show (dlg);
@@ -424,7 +424,7 @@ gauss (GRand *gr)
 
 static void
 noisify_double_adjustment_update (GtkAdjustment *adjustment,
-				  gpointer       data)
+                                  gpointer       data)
 {
   GimpDrawable *drawable;
 
@@ -439,8 +439,8 @@ noisify_double_adjustment_update (GtkAdjustment *adjustment,
       gint i;
 
       for (i = 0; i < noise_int.channels; i++)
-	if (adjustment != GTK_ADJUSTMENT (noise_int.channel_adj[i]))
-	  gtk_adjustment_set_value (GTK_ADJUSTMENT (noise_int.channel_adj[i]),
-				    adjustment->value);
+        if (adjustment != GTK_ADJUSTMENT (noise_int.channel_adj[i]))
+          gtk_adjustment_set_value (GTK_ADJUSTMENT (noise_int.channel_adj[i]),
+                                    adjustment->value);
     }
 }

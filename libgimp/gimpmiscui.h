@@ -56,43 +56,44 @@ typedef struct
   gdouble    scale_x;
   gdouble    scale_y;
   gboolean   is_gray;
-} GimpFixMePreview;
+} GimpOldPreview;
 
-typedef void (*GimpFixeMePreviewFunc)  (const guchar *src,
-                                        guchar       *dest,
-                                        gint          bpp,
-                                        gpointer      data);
+typedef void (*GimpOldPreviewFunc)  (const guchar *src,
+                                     guchar       *dest,
+                                     gint          bpp,
+                                     gpointer      data);
 
-GimpFixMePreview * gimp_fixme_preview_new    (GimpDrawable     *drawable,
-                                              gboolean          has_frame);
-GimpFixMePreview * gimp_fixme_preview_new2   (GimpImageType     drawable_type,
-                                              gboolean          has_frame);
-void               gimp_fixme_preview_free   (GimpFixMePreview *preview);
+GimpOldPreview * gimp_old_preview_new    (GimpDrawable       *drawable,
+                                          gboolean            has_frame);
+GimpOldPreview * gimp_old_preview_new2   (GimpImageType       drawable_type,
+                                          gboolean            has_frame);
+void             gimp_old_preview_free   (GimpOldPreview     *preview);
 
-void               gimp_fixme_preview_update (GimpFixMePreview *preview,
-                                              GimpFixeMePreviewFunc func,
-                                              gpointer          data);
+void             gimp_old_preview_update (GimpOldPreview     *preview,
+                                          GimpOldPreviewFunc  func,
+                                          gpointer            data);
 
-void      gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
-                                              gint32            drawable_ID);
-void      gimp_fixme_preview_fill            (GimpFixMePreview *preview,
-                                              GimpDrawable     *drawable);
-void      gimp_fixme_preview_fill_scaled     (GimpFixMePreview *preview,
-                                              GimpDrawable     *drawable);
 
-void      gimp_fixme_preview_do_row          (GimpFixMePreview *preview,
-                                              gint              row,
-                                              gint              width,
-                                              const guchar     *src);
+void gimp_old_preview_fill_with_thumb (GimpOldPreview   *preview,
+                                       gint32            drawable_ID);
+void gimp_old_preview_fill            (GimpOldPreview *preview,
+                                       GimpDrawable     *drawable);
+void gimp_old_preview_fill_scaled     (GimpOldPreview *preview,
+                                       GimpDrawable     *drawable);
 
-void      gimp_fixme_preview_put_pixel       (GimpFixMePreview *preview,
-                                              gint              x,
-                                              gint              y,
-                                              const guchar     *pixel);
-void      gimp_fixme_preview_get_pixel       (GimpFixMePreview *preview,
-                                              gint              x,
-                                              gint              y,
-                                              guchar           *pixel);
+void gimp_old_preview_do_row          (GimpOldPreview *preview,
+                                       gint              row,
+                                       gint              width,
+                                       const guchar     *src);
+
+void gimp_old_preview_put_pixel       (GimpOldPreview *preview,
+                                       gint              x,
+                                       gint              y,
+                                       const guchar     *pixel);
+void gimp_old_preview_get_pixel       (GimpOldPreview *preview,
+                                       gint              x,
+                                       gint              y,
+                                       guchar           *pixel);
 
 gchar   * gimp_plug_in_get_path              (const gchar *path_name,
                                               const gchar *dir_name);

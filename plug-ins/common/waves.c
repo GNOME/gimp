@@ -55,38 +55,38 @@ typedef struct
 } piArgs;
 
 /*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
-static gint do_preview = TRUE;
-static GimpFixMePreview *preview;
+static gint            do_preview = TRUE;
+static GimpOldPreview *preview;
 
 static GtkWidget *mw_preview_new (GtkWidget *parent,
-				  GimpDrawable *drawable);
+                                  GimpDrawable *drawable);
 
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparam,
-		   const GimpParam  *param,
-		   gint             *nretvals,
-		   GimpParam       **retvals);
+                   gint              nparam,
+                   const GimpParam  *param,
+                   gint             *nretvals,
+                   GimpParam       **retvals);
 
 static gint pluginCore       (piArgs *argp,
-			      GimpDrawable *drawable);
+                              GimpDrawable *drawable);
 static gint pluginCoreIA     (piArgs *argp,
-			      GimpDrawable *drawable);
+                              GimpDrawable *drawable);
 
 static void waves_do_preview (void);
 
 static void wave (guchar  *src,
-		  guchar  *dest,
-		  gint     width,
-		  gint     height,
-		  gint     bypp,
-		  gboolean has_alpha,
-		  gdouble  amplitude,
-		  gdouble  wavelength,
-		  gdouble  phase,
-		  gint     smear,
-		  gint     reflective,
-		  gint     verbose);
+                  guchar  *dest,
+                  gint     width,
+                  gint     height,
+                  gint     bypp,
+                  gboolean has_alpha,
+                  gdouble  amplitude,
+                  gdouble  wavelength,
+                  gdouble  phase,
+                  gint     smear,
+                  gint     reflective,
+                  gint     verbose);
 
 #define WITHIN(a, b, c) ((((a) <= (b)) && ((b) <= (c))) ? TRUE : FALSE)
 
@@ -116,16 +116,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_waves",
-			  "Distort the image with waves",
-			  "none yet",
-			  "Eric L. Hernes, Stephen Norris",
-			  "Stephen Norris",
-			  "1997",
-			  N_("<Image>/Filters/Distorts/_Waves..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Distort the image with waves",
+                          "none yet",
+                          "Eric L. Hernes, Stephen Norris",
+                          "Stephen Norris",
+                          "1997",
+                          N_("<Image>/Filters/Distorts/_Waves..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -160,32 +160,32 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       /* XXX: add code here for interactive running */
       if (args.type == -1)
-	{
-	  args.amplitude  = 10.0;
-	  args.wavelength = 10;
-	  args.phase      = 0.0;
-	  args.type       = MODE_SMEAR;
-	  args.reflective = 0;
-	}
+        {
+          args.amplitude  = 10.0;
+          args.wavelength = 10;
+          args.phase      = 0.0;
+          args.type       = MODE_SMEAR;
+          args.reflective = 0;
+        }
 
       if (pluginCoreIA(&args, drawable) == -1)
-	{
-	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+        }
       else
-	{
-	  gimp_set_data ("plug_in_waves", &args, sizeof (piArgs));
-	}
+        {
+          gimp_set_data ("plug_in_waves", &args, sizeof (piArgs));
+        }
 
     break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /* XXX: add code here for non-interactive running */
       if (nparam != 8)
-	{
-	  rvals[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-	  break;
-	}
+        {
+          rvals[0].data.d_status = GIMP_PDB_CALLING_ERROR;
+          break;
+        }
       args.amplitude  = param[3].data.d_float;
       args.phase      = param[4].data.d_float;
       args.wavelength = param[5].data.d_float;
@@ -193,25 +193,25 @@ run (const gchar      *name,
       args.reflective = param[7].data.d_int32;
 
       if (pluginCore (&args, drawable) == -1)
-	{
-	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-	  break;
-	}
+        {
+          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+          break;
+        }
     break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* XXX: add code here for last-values running */
       if (pluginCore (&args, drawable) == -1)
-	{
-	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+        }
       break;
     }
 }
 
 static gint
 pluginCore (piArgs *argp,
-	    GimpDrawable *drawable)
+            GimpDrawable *drawable)
 {
   gint retval=0;
   GimpPixelRgn srcPr, dstPr;
@@ -248,7 +248,7 @@ pluginCore (piArgs *argp,
 
 static void
 waves_toggle_button_update (GtkWidget *widget,
-			    gpointer   data)
+                            gpointer   data)
 {
   gimp_toggle_button_update (widget, data);
   waves_do_preview ();
@@ -256,7 +256,7 @@ waves_toggle_button_update (GtkWidget *widget,
 
 static void
 waves_radio_button_update (GtkWidget *widget,
-			   gpointer   data)
+                           gpointer   data)
 {
   gimp_radio_button_update (widget, data);
 
@@ -266,7 +266,7 @@ waves_radio_button_update (GtkWidget *widget,
 
 static void
 waves_double_adjustment_update (GtkAdjustment *adjustment,
-				gpointer   data)
+                                gpointer   data)
 {
   gimp_double_adjustment_update (adjustment, data);
   waves_do_preview ();
@@ -274,7 +274,7 @@ waves_double_adjustment_update (GtkAdjustment *adjustment,
 
 static gint
 pluginCoreIA (piArgs *argp,
-	      GimpDrawable *drawable)
+              GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
@@ -292,7 +292,7 @@ pluginCoreIA (piArgs *argp,
 
   dlg = gimp_dialog_new (_("Waves"), "waves",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/waves.html",
+                         gimp_standard_help_func, "filters/waves.html",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -302,7 +302,7 @@ pluginCoreIA (piArgs *argp,
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
-		      TRUE, TRUE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   hbox = gtk_hbox_new (FALSE, 4);
@@ -314,13 +314,13 @@ pluginCoreIA (piArgs *argp,
   waves_do_preview ();
 
   frame = gimp_int_radio_group_new (TRUE, _("Mode"),
-				    G_CALLBACK (waves_radio_button_update),
-				    &argp->type, argp->type,
+                                    G_CALLBACK (waves_radio_button_update),
+                                    &argp->type, argp->type,
 
-				    _("_Smear"),   MODE_SMEAR,   NULL,
-				    _("_Blacken"), MODE_BLACKEN, NULL,
+                                    _("_Smear"),   MODE_SMEAR,   NULL,
+                                    _("_Blacken"), MODE_BLACKEN, NULL,
 
-				    NULL);
+                                    NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -351,28 +351,28 @@ pluginCoreIA (piArgs *argp,
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Amplitude:"), 140, 6,
-			      argp->amplitude, 0.0, 101.0, 1.0, 5.0, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Amplitude:"), 140, 6,
+                              argp->amplitude, 0.0, 101.0, 1.0, 5.0, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (waves_double_adjustment_update),
                     &argp->amplitude);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Phase:"), 140, 6,
-			      argp->phase, 0.0, 360.0, 2.0, 5.0, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Phase:"), 140, 6,
+                              argp->phase, 0.0, 360.0, 2.0, 5.0, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (waves_double_adjustment_update),
                     &argp->phase);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_Wavelength:"), 140, 6,
-			      argp->wavelength, 0.1, 50.0, 1.0, 5.0, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Wavelength:"), 140, 6,
+                              argp->wavelength, 0.1, 50.0, 1.0, 5.0, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (waves_double_adjustment_update),
                     &argp->wavelength);
@@ -403,14 +403,14 @@ waves_do_preview (void)
 
   wave (preview->cache, dst, preview->width, preview->height, preview->bpp,
         preview->bpp == 2 || preview->bpp == 4,
-	argp->amplitude * preview->scale_x,
-	argp->wavelength * preview->scale_x,
-	argp->phase, argp->type == 0, argp->reflective, 0);
+        argp->amplitude * preview->scale_x,
+        argp->wavelength * preview->scale_x,
+        argp->phase, argp->type == 0, argp->reflective, 0);
 
   for (y = 0; y < preview->height; y++)
     {
-      gimp_fixme_preview_do_row (preview, y, preview->width,
-				 dst + y * preview->rowstride);
+      gimp_old_preview_do_row (preview, y, preview->width,
+                                 dst + y * preview->rowstride);
     }
 
   gtk_widget_queue_draw (preview->widget);
@@ -450,9 +450,9 @@ mw_preview_new (GtkWidget *parent, GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), pframe, FALSE, FALSE, 0);
   gtk_widget_show (pframe);
 
-  preview = gimp_fixme_preview_new (drawable, FALSE);
-  /* FIXME: this forces gimp_fixme_preview to set its alpha correctly */
-  gimp_fixme_preview_fill_scaled (preview, drawable);
+  preview = gimp_old_preview_new (drawable, FALSE);
+  /* FIXME: this forces gimp_old_preview to set its alpha correctly */
+  gimp_old_preview_fill_scaled (preview, drawable);
   gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
   gtk_widget_show (preview->widget);
 
@@ -573,63 +573,63 @@ wave (guchar  *src,
       dest = dst;
 
       if (verbose && (y % prog_interval == 0))
-	gimp_progress_update ((double) y / (double) height);
+        gimp_progress_update ((double) y / (double) height);
 
       for (x = x1; x < x2; x++)
-	{
-	  /* Distance from current point to wave center, scaled */
-	  dx = (x - cen_x) * xscale;
-	  dy = (y - cen_y) * yscale;
+        {
+          /* Distance from current point to wave center, scaled */
+          dx = (x - cen_x) * xscale;
+          dy = (y - cen_y) * yscale;
 
-	  /* Distance^2 to center of *circle* (our scaled ellipse) */
-	  d = sqrt (dx * dx + dy * dy);
+          /* Distance^2 to center of *circle* (our scaled ellipse) */
+          d = sqrt (dx * dx + dy * dy);
 
-	  /* Use the formula described above. */
+          /* Use the formula described above. */
 
-	  /* Calculate waved point and scale again to ellipsify */
+          /* Calculate waved point and scale again to ellipsify */
 
-	  /*
-	   * Reflective waves are strange - the effect is much
-	   * more like a mirror which is in the shape of
-	   * the wave than anything else.
-	   */
+          /*
+           * Reflective waves are strange - the effect is much
+           * more like a mirror which is in the shape of
+           * the wave than anything else.
+           */
 
-	  if (reflective)
-	    {
-	      amnt = amplitude * fabs (sin (((d / wavelength) * (2.0 * G_PI) +
-					     phase)));
+          if (reflective)
+            {
+              amnt = amplitude * fabs (sin (((d / wavelength) * (2.0 * G_PI) +
+                                             phase)));
 
-	      needx = (amnt * dx) / xscale + cen_x;
-	      needy = (amnt * dy) / yscale + cen_y;
-	    }
-	  else
-	    {
-	      amnt = amplitude * sin (((d / wavelength) * (2.0 * G_PI) +
-				       phase));
+              needx = (amnt * dx) / xscale + cen_x;
+              needy = (amnt * dy) / yscale + cen_y;
+            }
+          else
+            {
+              amnt = amplitude * sin (((d / wavelength) * (2.0 * G_PI) +
+                                       phase));
 
-	      needx = (amnt + dx) / xscale + cen_x;
-	      needy = (amnt + dy) / yscale + cen_y;
-	    }
+              needx = (amnt + dx) / xscale + cen_x;
+              needy = (amnt + dy) / yscale + cen_y;
+            }
 
-	  /* Calculations complete; now copy the proper pixel */
+          /* Calculations complete; now copy the proper pixel */
 
-	  if (smear)
-	    {
-	      xi = CLAMP (needx, 0, width - 2);
-	      yi = CLAMP (needy, 0, height - 2);
-	    }
-	  else
-	    {
-	      xi = needx;
-	      yi = needy;
-	    }
+          if (smear)
+            {
+              xi = CLAMP (needx, 0, width - 2);
+              yi = CLAMP (needy, 0, height - 2);
+            }
+          else
+            {
+              xi = needx;
+              yi = needy;
+            }
 
-	  p = src + rowsiz * yi + xi * bypp;
+          p = src + rowsiz * yi + xi * bypp;
 
-	  x1_in = WITHIN (0, xi, width - 1);
-	  y1_in = WITHIN (0, yi, height - 1);
-	  x2_in = WITHIN (0, xi + 1, width - 1);
-	  y2_in = WITHIN (0, yi + 1, height - 1);
+          x1_in = WITHIN (0, xi, width - 1);
+          y1_in = WITHIN (0, yi, height - 1);
+          x2_in = WITHIN (0, xi + 1, width - 1);
+          y2_in = WITHIN (0, yi + 1, height - 1);
 
           if (x1_in && y1_in)
             values[0] = p;
@@ -653,7 +653,7 @@ wave (guchar  *src,
 
           gimp_bilinear_pixels_8 (dest, needx, needy, bypp, has_alpha, values);
           dest += bypp;
-	}
+        }
 
       dst += rowsiz;
     }

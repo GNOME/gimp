@@ -5,8 +5,8 @@
  *                     s1041150@u-aizu.ac.jp
  *
  * Preview and new mode added May 2000 by tim copperfield
- * 		       timecop@japan.co.jp
- * 		       http://www.ne.jp/asahi/linux/timecop
+ *                     timecop@japan.co.jp
+ *                     http://www.ne.jp/asahi/linux/timecop
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -44,10 +44,10 @@
 
 static void      query  (void);
 static void      run    (const gchar      *name,
-			 gint              nparam,
-			 const GimpParam  *param,
-			 gint             *nreturn_vals,
-			 GimpParam       **return_vals);
+                         gint              nparam,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
 static void      filter                  (GimpDrawable *drawable);
 static void      filter_preview          (void);
@@ -76,8 +76,8 @@ static IllValues parameters =
 };
 
 
-static GimpFixMePreview *preview;
-static GimpRunMode       run_mode;
+static GimpOldPreview *preview;
+static GimpRunMode     run_mode;
 
 
 MAIN ()
@@ -95,16 +95,16 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "produce illusion",
-			  "produce illusion",
-			  "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
-			  "Hirotsuna Mizuno",
-			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Map/_Illusion..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "produce illusion",
+                          "produce illusion",
+                          "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
+                          "Hirotsuna Mizuno",
+                          PLUG_IN_VERSION,
+                          N_("<Image>/Filters/Map/_Illusion..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -134,19 +134,19 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_NAME, &parameters);
       if (! dialog(drawable))
-	return;
+        return;
       gimp_set_data (PLUG_IN_NAME, &parameters, sizeof (IllValues));
-      gimp_fixme_preview_free (preview);
+      gimp_old_preview_free (preview);
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 5)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
-	  parameters.division = params[3].data.d_int32;
+        {
+          parameters.division = params[3].data.d_int32;
           if (params[4].data.d_int32 == 0)
             {
               parameters.type1 = 1;
@@ -157,7 +157,7 @@ run (const gchar      *name,
               parameters.type1 = 0;
               parameters.type2 = 1;
             }
-	}
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -168,18 +168,18 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-	  gimp_drawable_is_gray (drawable->drawable_id))
-	{
-	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
-  	  gimp_progress_init (_("Illusion..."));
-	  filter (drawable);
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
-	}
+          gimp_drawable_is_gray (drawable->drawable_id))
+        {
+          gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
+          gimp_progress_init (_("Illusion..."));
+          filter (drawable);
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   returnv[0].type          = GIMP_PDB_STATUS;
@@ -190,20 +190,20 @@ run (const gchar      *name,
 
 typedef struct {
   GimpPixelFetcher *pft;
-  gdouble	    center_x;
-  gdouble	    center_y;
-  gdouble	    scale;
-  gdouble	    offset;
-  gboolean	    has_alpha;
+  gdouble           center_x;
+  gdouble           center_y;
+  gdouble           scale;
+  gdouble           offset;
+  gboolean          has_alpha;
 } IllusionParam_t;
 
 static void
 illusion_func (gint x,
-	       gint y,
-	       const guchar *src,
-	       guchar *dest,
-	       gint bpp,
-	       gpointer data)
+               gint y,
+               const guchar *src,
+               guchar *dest,
+               gint bpp,
+               gpointer data)
 {
   IllusionParam_t *param = (IllusionParam_t*) data;
   gint      xx, yy, b;
@@ -222,7 +222,7 @@ illusion_func (gint x,
       xx = x - param->offset * cos (angle);
       yy = y - param->offset * sin (angle);
     }
-  else				/* Type 2 */
+  else                          /* Type 2 */
     {
       xx = x - param->offset * sin (angle);
       yy = y - param->offset * cos (angle);
@@ -237,16 +237,16 @@ illusion_func (gint x,
       guint alpha  = (1 - radius) * alpha1 + radius * alpha2;
 
       if ((dest[bpp - 1] = (alpha >> 1)))
-	{
-	  for (b = 0; b < bpp - 1; b++)
-	    dest[b] = ((1 - radius) * src[b] * alpha1 +
-		       radius * pixel[b] * alpha2) / alpha;
-	}
+        {
+          for (b = 0; b < bpp - 1; b++)
+            dest[b] = ((1 - radius) * src[b] * alpha1 +
+                       radius * pixel[b] * alpha2) / alpha;
+        }
     }
   else
     {
       for (b = 0; b < bpp; b++)
-	dest[b] = (1 - radius) * src[b] + radius * pixel[b];
+        dest[b] = (1 - radius) * src[b] + radius * pixel[b];
     }
 }
 
@@ -307,8 +307,8 @@ filter_preview (void)
       pixels[y]     = g_new (guchar, preview->rowstride);
       destpixels[y] = g_new (guchar, preview->rowstride);
       memcpy (pixels[y],
-	      preview->cache + preview->rowstride * y,
-	      preview->rowstride);
+              preview->cache + preview->rowstride * y,
+              preview->rowstride);
     }
 
   scale  = sqrt (image_width * image_width + image_height * image_height) / 2;
@@ -318,25 +318,25 @@ filter_preview (void)
     {
       cy = ((gdouble)y - center_y) / scale;
       for (x = 0; x < image_width; x++)
-	{
-	  cx = ((gdouble)x - center_x) / scale;
-	  angle = floor (atan2 (cy, cx) * parameters.division / G_PI_2)
-	    * G_PI_2 / parameters.division + (G_PI / parameters.division);
-	  radius = sqrt ((gdouble) (cx * cx + cy * cy));
+        {
+          cx = ((gdouble)x - center_x) / scale;
+          angle = floor (atan2 (cy, cx) * parameters.division / G_PI_2)
+            * G_PI_2 / parameters.division + (G_PI / parameters.division);
+          radius = sqrt ((gdouble) (cx * cx + cy * cy));
 
-	  if (parameters.type1)
-	    {
-	      xx = x - offset * cos (angle);
-	      yy = y - offset * sin (angle);
-	    }
-	  else 			/* Type 2 */
-	    {
-	      xx = x - offset * sin (angle);
-	      yy = y - offset * cos (angle);
-	    }
+          if (parameters.type1)
+            {
+              xx = x - offset * cos (angle);
+              yy = y - offset * sin (angle);
+            }
+          else                  /* Type 2 */
+            {
+              xx = x - offset * sin (angle);
+              yy = y - offset * cos (angle);
+            }
 
-	  xx = CLAMP (xx, 0, image_width - 1);
-	  yy = CLAMP (yy, 0, image_height - 1);
+          xx = CLAMP (xx, 0, image_width - 1);
+          yy = CLAMP (yy, 0, image_height - 1);
 
           if (image_bpp == 2 || image_bpp == 4)
             {
@@ -344,7 +344,7 @@ filter_preview (void)
               gdouble alpha2 = pixels[yy][xx * image_bpp + image_bpp - 1];
               gdouble alpha = (1 - radius) * alpha1 + radius * alpha2;
 
-	      for (b = 0; alpha > 0 && b < image_bpp - 1; b++)
+              for (b = 0; alpha > 0 && b < image_bpp - 1; b++)
                 {
                   destpixels[y][x * image_bpp+b] =
                     ((1-radius) * alpha1 * pixels[y][x * image_bpp + b]
@@ -352,15 +352,15 @@ filter_preview (void)
                 }
               destpixels[y][x * image_bpp + image_bpp-1] = alpha;
             }
-	  else
+          else
             {
-	      for (b = 0; b < image_bpp; b++)
-	        destpixels[y][x*image_bpp+b] =
-	          (1-radius) * pixels[y][x * image_bpp + b]
-	          + radius * pixels[yy][xx * image_bpp + b];
+              for (b = 0; b < image_bpp; b++)
+                destpixels[y][x*image_bpp+b] =
+                  (1-radius) * pixels[y][x * image_bpp + b]
+                  + radius * pixels[yy][xx * image_bpp + b];
             }
-	}
-      gimp_fixme_preview_do_row (preview, y, image_width, destpixels[y]);
+        }
+      gimp_old_preview_do_row (preview, y, image_width, destpixels[y]);
     }
 
   for (y = 0; y < image_height; y++)
@@ -391,12 +391,12 @@ dialog (GimpDrawable *mangle)
 
   dlg = gimp_dialog_new (_("Illusion"), "illusion",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/illusion.html",
+                         gimp_standard_help_func, "filters/illusion.html",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -404,7 +404,7 @@ dialog (GimpDrawable *mangle)
                       TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_fixme_preview_new (mangle, TRUE);
+  preview = gimp_old_preview_new (mangle, TRUE);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
   filter_preview();
   gtk_widget_show (preview->widget);
@@ -421,10 +421,10 @@ dialog (GimpDrawable *mangle)
   gtk_widget_show (table);
 
   spinbutton = gimp_spin_button_new (&adj, parameters.division,
-				     -32, 64, 1, 10, 0, 1, 0);
+                                     -32, 64, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Division:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+                             _("_Division:"), 1.0, 0.5,
+                             spinbutton, 1, TRUE);
 
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),

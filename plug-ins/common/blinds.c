@@ -80,7 +80,7 @@ typedef struct data
   gint bg_trans;
 } BlindVals;
 
-static GimpFixMePreview *preview;
+static GimpOldPreview *preview;
 
 typedef struct
 {
@@ -102,21 +102,21 @@ static GimpDrawable *blindsdrawable;
 
 static void      query  (void);
 static void      run    (const gchar      *name,
-			 gint              nparams,
-			 const GimpParam  *param,
-			 gint             *nreturn_vals,
-			 GimpParam       **return_vals);
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
 static gint      blinds_dialog       (void);
 
 static void      blinds_scale_update   (GtkAdjustment *adjustment,
-					gint          *size_val);
+                                        gint          *size_val);
 static void      blinds_radio_update   (GtkWidget     *widget,
-					gpointer       data);
+                                        gpointer       data);
 static void      blinds_button_update  (GtkWidget     *widget,
-					gpointer       data);
+                                        gpointer       data);
 static void      dialog_update_preview (void);
-static void	 cache_preview         (void);
+static void      cache_preview         (void);
 static void      apply_blinds          (void);
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -156,18 +156,18 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_blinds",
-			  "Adds a blinds effect to the image. Rather like "
-			  "putting the image on a set of window blinds and "
-			  "the closing or opening the blinds",
-			  "More here later",
-			  "Andy Thomas",
-			  "Andy Thomas",
-			  "1997",
-			  N_("<Image>/Filters/Distorts/_Blinds..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Adds a blinds effect to the image. Rather like "
+                          "putting the image on a set of window blinds and "
+                          "the closing or opening the blinds",
+                          "More here later",
+                          "Andy Thomas",
+                          "Andy Thomas",
+                          "1997",
+                          N_("<Image>/Filters/Distorts/_Blinds..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -200,22 +200,22 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_blinds", &bvals);
       if (! blinds_dialog())
-	{
-	  gimp_drawable_detach (drawable);
-	  return;
-	}
+        {
+          gimp_drawable_detach (drawable);
+          return;
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 7)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  bvals.angledsp = param[3].data.d_int32;
-	  bvals.numsegs = param[4].data.d_int32;
-	  bvals.orientation = param[5].data.d_int32;
-	  bvals.bg_trans = param[6].data.d_int32;
-	}
+        {
+          bvals.angledsp = param[3].data.d_int32;
+          bvals.numsegs = param[4].data.d_int32;
+          bvals.orientation = param[5].data.d_int32;
+          bvals.bg_trans = param[6].data.d_int32;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -234,10 +234,10 @@ run (const gchar      *name,
       apply_blinds ();
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_set_data ("plug_in_blinds", &bvals, sizeof (BlindVals));
+        gimp_set_data ("plug_in_blinds", &bvals, sizeof (BlindVals));
     }
   else
     {
@@ -271,12 +271,12 @@ blinds_dialog (void)
 
   dlg = gimp_dialog_new (_("Blinds"), "blinds",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/blinds.html",
+                         gimp_standard_help_func, "filters/blinds.html",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -287,8 +287,8 @@ blinds_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  preview = gimp_fixme_preview_new (NULL, TRUE);
-  gimp_fixme_preview_fill_scaled (preview, blindsdrawable);
+  preview = gimp_old_preview_new (NULL, TRUE);
+  gimp_old_preview_fill_scaled (preview, blindsdrawable);
   gtk_box_pack_start (GTK_BOX (hbox), preview->frame, FALSE, FALSE, 0);
   gtk_widget_show (preview->widget);
 
@@ -298,13 +298,13 @@ blinds_dialog (void)
 
   frame =
     gimp_int_radio_group_new (TRUE, _("Orientation"),
-			      G_CALLBACK (blinds_radio_update),
-			      &bvals.orientation, bvals.orientation,
+                              G_CALLBACK (blinds_radio_update),
+                              &bvals.orientation, bvals.orientation,
 
-			      _("_Horizontal"), HORIZONTAL, NULL,
-			      _("_Vertical"),   VERTICAL,   NULL,
+                              _("_Horizontal"), HORIZONTAL, NULL,
+                              _("_Vertical"),   VERTICAL,   NULL,
 
-			      NULL);
+                              NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -346,22 +346,22 @@ blinds_dialog (void)
   gtk_widget_show (table);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				    _("_Displacement:"), SCALE_WIDTH, 0,
-				    bvals.angledsp, 1, 90, 1, 15, 0,
-				    TRUE, 0, 0,
-				    NULL, NULL);
+                                    _("_Displacement:"), SCALE_WIDTH, 0,
+                                    bvals.angledsp, 1, 90, 1, 15, 0,
+                                    TRUE, 0, 0,
+                                    NULL, NULL);
   g_signal_connect (size_data, "value_changed",
                     G_CALLBACK (blinds_scale_update),
                     &bvals.angledsp);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				    _("_Num Segments:"), SCALE_WIDTH, 0,
-				    bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
-				    TRUE, 0, 0,
-				    NULL, NULL);
+                                    _("_Num Segments:"), SCALE_WIDTH, 0,
+                                    bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
+                                    TRUE, 0, 0,
+                                    NULL, NULL);
   g_signal_connect (size_data, "value_changed",
-		    G_CALLBACK (blinds_scale_update),
-		    &bvals.numsegs);
+                    G_CALLBACK (blinds_scale_update),
+                    &bvals.numsegs);
 
   gtk_widget_show (dlg);
 
@@ -376,7 +376,7 @@ blinds_dialog (void)
 
 static void
 blinds_radio_update (GtkWidget *widget,
-		     gpointer   data)
+                     gpointer   data)
 {
   gimp_radio_button_update (widget, data);
 
@@ -386,7 +386,7 @@ blinds_radio_update (GtkWidget *widget,
 
 static void
 blinds_button_update (GtkWidget *widget,
-		      gpointer   data)
+                      gpointer   data)
 {
   gimp_toggle_button_update (widget, data);
 
@@ -395,7 +395,7 @@ blinds_button_update (GtkWidget *widget,
 
 static void
 blinds_scale_update (GtkAdjustment *adjustment,
-		     gint          *value)
+                     gint          *value)
 {
   gimp_int_adjustment_update (adjustment, value);
 
@@ -422,10 +422,10 @@ cache_preview (void)
 
 static void
 blindsapply (guchar *srow,
-	     guchar *drow,
-	     gint    width,
-	     gint    bpp,
-	     guchar *bg)
+             guchar *drow,
+             gint    width,
+             gint    bpp,
+             guchar *bg)
 {
   guchar *src;
   guchar *dst;
@@ -449,9 +449,9 @@ blindsapply (guchar *srow,
       dst = &drow[i*bpp];
 
       for (j = 0 ; j < bpp; j++)
-	{
-	  dst[j] = bg[j];
-	}
+        {
+          dst[j] = bg[j];
+        }
     }
 
   /* Apply it */
@@ -479,9 +479,9 @@ blindsapply (guchar *srow,
 
       /* Copy pixels across */
       for (j = 0 ; j < bpp; j++)
-	{
-	  dst[j] = src[j];
-	}
+        {
+          dst[j] = src[j];
+        }
     }
 
   /* Disp for each point */
@@ -495,31 +495,31 @@ blindsapply (guchar *srow,
       int fw;
 
       for (i = 0 ; i < (fanwidths[k]/2) ; i++)
-	{
-	  /* Copy pixels across of left half of fan */
-	  fw = fanwidths[k] / 2;
-	  dx = (int) (ang * ((double) (fw - (double)(i % fw))));
+        {
+          /* Copy pixels across of left half of fan */
+          fw = fanwidths[k] / 2;
+          dx = (int) (ang * ((double) (fw - (double)(i % fw))));
 
-	  src = &srow[(available + i) * bpp];
-	  dst = &drow[(available + i + dx) * bpp];
+          src = &srow[(available + i) * bpp];
+          dst = &drow[(available + i + dx) * bpp];
 
-	  for (j = 0; j < bpp; j++)
-	    {
-	      dst[j] = src[j];
-	    }
+          for (j = 0; j < bpp; j++)
+            {
+              dst[j] = src[j];
+            }
 
-	  /* Right side */
-	  j = i + 1;
-	  src = &srow[(available + fanwidths[k] - j
-		       - (fanwidths[k] % 2)) * bpp];
-	  dst = &drow[(available + fanwidths[k] - j
-		       - (fanwidths[k] % 2) - dx) * bpp];
+          /* Right side */
+          j = i + 1;
+          src = &srow[(available + fanwidths[k] - j
+                       - (fanwidths[k] % 2)) * bpp];
+          dst = &drow[(available + fanwidths[k] - j
+                       - (fanwidths[k] % 2) - dx) * bpp];
 
-	  for (j = 0; j < bpp; j++)
-	    {
-	      dst[j] = src[j];
-	    }
-	}
+          for (j = 0; j < bpp; j++)
+            {
+              dst[j] = src[j];
+            }
+        }
 
       available += fanwidths[k];
     }
@@ -541,11 +541,11 @@ dialog_update_preview (void)
   if (bvals.orientation)
     {
       for (y = 0; y < preview->height; y++)
-	{
-	  blindsapply (p, buffer, preview->width, bint.img_bpp, bg);
-	  gimp_fixme_preview_do_row (preview, y, preview->width, buffer);
-	  p += preview->width * bint.img_bpp;
-	}
+        {
+          blindsapply (p, buffer, preview->width, bint.img_bpp, bg);
+          gimp_old_preview_do_row (preview, y, preview->width, buffer);
+          p += preview->width * bint.img_bpp;
+        }
     }
   else
     {
@@ -561,22 +561,22 @@ dialog_update_preview (void)
 
       /* Fill in with background color ? */
       for (i = 0 ; i < preview->width ; i++)
-	{
-	  gint j;
-	  gint bd = bint.img_bpp;
-	  guchar *dst;
-	  dst = &buffer[i * bd];
+        {
+          gint j;
+          gint bd = bint.img_bpp;
+          guchar *dst;
+          dst = &buffer[i * bd];
 
-	  for (j = 0 ; j < bd; j++)
-	    {
-	      dst[j] = bg[j];
-	    }
-	}
+          for (j = 0 ; j < bd; j++)
+            {
+              dst[j] = bg[j];
+            }
+        }
 
       for ( y = 0 ; y < preview->height; y++)
-	{
-	  sr[y] = y+1;
-	}
+        {
+          sr[y] = y+1;
+        }
 
       /* Bit of a fiddle since blindsapply really works on an image
        * row not a set of bytes. - preview can't be > 255
@@ -585,21 +585,21 @@ dialog_update_preview (void)
       blindsapply (sr, dr, preview->height, 1, dummybg);
 
       for (y = 0; y < preview->height; y++)
-	{
-	  if (dr[y] == 0)
-	    {
-	      /* Draw background line */
-	      p = buffer;
-	    }
-	  else
-	    {
-	      /* Draw line from src */
-	      p = preview->cache +
-		(preview->width * bint.img_bpp * (dr[y] - 1));
-	    }
+        {
+          if (dr[y] == 0)
+            {
+              /* Draw background line */
+              p = buffer;
+            }
+          else
+            {
+              /* Draw line from src */
+              p = preview->cache +
+                (preview->width * bint.img_bpp * (dr[y] - 1));
+            }
 
-	  gimp_fixme_preview_do_row (preview, y, preview->width, p);
-	}
+          gimp_old_preview_do_row (preview, y, preview->width, p);
+        }
       g_free (sr);
       g_free (dr);
     }
@@ -631,15 +631,15 @@ apply_blinds (void)
   gimp_get_bg_guchar (blindsdrawable, bvals.bg_trans, bg);
 
   gimp_drawable_mask_bounds (blindsdrawable->drawable_id, &sel_x1, &sel_y1,
-			     &sel_x2, &sel_y2);
+                             &sel_x2, &sel_y2);
 
   sel_width  = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
 
   gimp_pixel_rgn_init (&src_rgn, blindsdrawable,
-		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
+                       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
   gimp_pixel_rgn_init (&des_rgn, blindsdrawable,
-		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
+                       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
 
   src_rows = g_new (guchar, MAX (sel_width, sel_height) * 4 * STEP);
   des_rows = g_new (guchar, MAX (sel_width, sel_height) * 4 * STEP);
@@ -647,37 +647,37 @@ apply_blinds (void)
   if (bvals.orientation)
     {
       for (y = 0; y < sel_height; y += STEP)
-	{
-	  int rr;
-	  int step;
+        {
+          int rr;
+          int step;
 
-	  if((y + STEP) > sel_height)
-	    step = sel_height - y;
-	  else
-	    step = STEP;
+          if((y + STEP) > sel_height)
+            step = sel_height - y;
+          else
+            step = STEP;
 
-	  gimp_pixel_rgn_get_rect (&src_rgn,
-				   src_rows,
-				   sel_x1,
-				   sel_y1 + y,
-				   sel_width,
-				   step);
+          gimp_pixel_rgn_get_rect (&src_rgn,
+                                   src_rows,
+                                   sel_x1,
+                                   sel_y1 + y,
+                                   sel_width,
+                                   step);
 
-	  /* OK I could make this better */
-	  for (rr = 0; rr < STEP; rr++)
-	    blindsapply (src_rows + (sel_width * rr * src_rgn.bpp),
-			 des_rows + (sel_width * rr * src_rgn.bpp),
-			 sel_width, src_rgn.bpp, bg);
+          /* OK I could make this better */
+          for (rr = 0; rr < STEP; rr++)
+            blindsapply (src_rows + (sel_width * rr * src_rgn.bpp),
+                         des_rows + (sel_width * rr * src_rgn.bpp),
+                         sel_width, src_rgn.bpp, bg);
 
-	  gimp_pixel_rgn_set_rect (&des_rgn,
-				   des_rows,
-				   sel_x1,
-				   sel_y1 + y,
-				   sel_width,
-				   step);
+          gimp_pixel_rgn_set_rect (&des_rgn,
+                                   des_rows,
+                                   sel_x1,
+                                   sel_y1 + y,
+                                   sel_width,
+                                   step);
 
-	  gimp_progress_update ((double) y / (double) sel_height);
-	}
+          gimp_progress_update ((double) y / (double) sel_height);
+        }
     }
   else
     {
@@ -695,74 +695,74 @@ apply_blinds (void)
       memset (dummybg, 0, 4);
       memset (dr, 0, sel_height * 4); /* all dr rows are background rows */
       for (y = 0; y < sel_height; y++)
-	{
-	  sr[y] = y+1;
-	}
+        {
+          sr[y] = y+1;
+        }
 
       /* Hmmm. does this work portably? */
       /* This "swaps the intergers around that are held in in the
        * sr & dr arrays.
        */
       blindsapply ((guchar *) sr, (guchar *) dr,
-		   sel_height, sizeof (gint), dummybg);
+                   sel_height, sizeof (gint), dummybg);
 
       /* Fill in with background color ? */
       for (i = 0 ; i < STEP ; i++)
-	{
-	  int j;
-	  guchar *bgdst;
-	  bgdst = &dst[i * src_rgn.bpp];
+        {
+          int j;
+          guchar *bgdst;
+          bgdst = &dst[i * src_rgn.bpp];
 
-	  for (j = 0 ; j < src_rgn.bpp; j++)
-	    {
-	      bgdst[j] = bg[j];
-	    }
-	}
+          for (j = 0 ; j < src_rgn.bpp; j++)
+            {
+              bgdst[j] = bg[j];
+            }
+        }
 
       for (x = 0; x < sel_width; x += STEP)
-	{
-	  int rr;
-	  int step;
-	  guchar *p;
+        {
+          int rr;
+          int step;
+          guchar *p;
 
-	  if((x + STEP) > sel_width)
-	    step = sel_width - x;
-	  else
-	    step = STEP;
+          if((x + STEP) > sel_width)
+            step = sel_width - x;
+          else
+            step = STEP;
 
-	  gimp_pixel_rgn_get_rect (&src_rgn,
-				   src_rows,
-				   sel_x1 + x,
-				   sel_y1,
-				   step,
-				   sel_height);
+          gimp_pixel_rgn_get_rect (&src_rgn,
+                                   src_rows,
+                                   sel_x1 + x,
+                                   sel_y1,
+                                   step,
+                                   sel_height);
 
-	  /* OK I could make this better */
-	  for (rr = 0; rr < sel_height; rr++)
-	    {
-	      if(dr[rr] == 0)
-	  	{
-		  /* Draw background line */
-		  p = dst;
-	  	}
-	      else
-	  	{
-		  /* Draw line from src */
-		  p = src_rows + (step * src_rgn.bpp * (dr[rr] - 1));
-	  	}
-	      memcpy (des_rows + (rr * step * src_rgn.bpp), p,
-		      step * src_rgn.bpp);
-	    }
+          /* OK I could make this better */
+          for (rr = 0; rr < sel_height; rr++)
+            {
+              if(dr[rr] == 0)
+                {
+                  /* Draw background line */
+                  p = dst;
+                }
+              else
+                {
+                  /* Draw line from src */
+                  p = src_rows + (step * src_rgn.bpp * (dr[rr] - 1));
+                }
+              memcpy (des_rows + (rr * step * src_rgn.bpp), p,
+                      step * src_rgn.bpp);
+            }
 
-	  gimp_pixel_rgn_set_rect (&des_rgn,
-				   des_rows,
-				   sel_x1 + x,
-				   sel_y1,
-				   step,
-				   sel_height);
+          gimp_pixel_rgn_set_rect (&des_rgn,
+                                   des_rows,
+                                   sel_x1 + x,
+                                   sel_y1,
+                                   step,
+                                   sel_height);
 
-	  gimp_progress_update ((double) x / (double) sel_width);
-	}
+          gimp_progress_update ((double) x / (double) sel_width);
+        }
 
       g_free (dst);
       g_free (sr);
@@ -775,6 +775,6 @@ apply_blinds (void)
   gimp_drawable_flush (blindsdrawable);
   gimp_drawable_merge_shadow (blindsdrawable->drawable_id, TRUE);
   gimp_drawable_update (blindsdrawable->drawable_id,
-			sel_x1, sel_y1, sel_width, sel_height);
+                        sel_x1, sel_y1, sel_width, sel_height);
 
 }
