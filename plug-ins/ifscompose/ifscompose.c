@@ -2562,8 +2562,8 @@ ifsfile_save_response (GtkWidget *dialog,
 /* replace ifsvals and elements with specified new values
  * recompute and update everything necessary */
 static void
-ifsfile_replace_ifsvals (IfsComposeVals *new_ifsvals,
-                         AffElement **new_elements)
+ifsfile_replace_ifsvals (IfsComposeVals  *new_ifsvals,
+                         AffElement     **new_elements)
 {
   gdouble width = ifsDesign->area->allocation.width;
   gdouble height = ifsDesign->area->allocation.height;
@@ -2607,27 +2607,27 @@ ifsfile_replace_ifsvals (IfsComposeVals *new_ifsvals,
 
 /* load an ifs file */
 static void
-ifsfile_load_response (GtkFileSelection *file_select,
-                       gint              response_id,
-                       gpointer          data)
+ifsfile_load_response (GtkWidget *dialog,
+                       gint       response_id,
+                       gpointer   data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar     *filename;
+      gchar           *filename;
       gchar           *buffer;
       AffElement     **new_elements;
       IfsComposeVals   new_ifsvals;
       GError          *error = NULL;
       guint            i;
 
-      filename = gtk_file_selection_get_filename (file_select);
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
       if (! g_file_get_contents (filename, &buffer, NULL, &error))
         {
-          ifscompose_message_dialog (GTK_MESSAGE_ERROR,
-                                     GTK_WINDOW (file_select),
+          ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dialog),
                                      _("Open failed"), error->message);
           g_error_free (error);
+          g_free (filename);
           return;
         }
 
@@ -2637,9 +2637,9 @@ ifsfile_load_response (GtkFileSelection *file_select,
                                               "an IFS Compose file."),
                                             gimp_filename_to_utf8 (filename));
 
-          ifscompose_message_dialog (GTK_MESSAGE_ERROR,
-                                     GTK_WINDOW (file_select),
+          ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dialog),
                                      _("Open failed"), message);
+          g_free (filename);
           g_free (message);
           g_free (buffer);
 
@@ -2647,6 +2647,7 @@ ifsfile_load_response (GtkFileSelection *file_select,
         }
 
       g_free (buffer);
+      g_free (filename);
 
       undo_begin ();
       for (i = 0; i < ifsvals.num_elements; i++)
@@ -2664,7 +2665,7 @@ ifsfile_load_response (GtkFileSelection *file_select,
       design_area_redraw ();
     }
 
-  gtk_widget_destroy (GTK_WIDGET (file_select));
+  gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
 static void

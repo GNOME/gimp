@@ -1,6 +1,4 @@
 /*
- * "$Id$"
- *
  *   Main window code for Print plug-in for the GIMP.
  *
  *   Copyright 1997-2000 Michael Sweet (mike@easysw.com),
@@ -203,15 +201,16 @@ static void gimp_new_printer_response  (GtkWidget     *widget,
                                         gint           response_id,
                                         gpointer       data);
 static void gimp_ppd_browse_callback   (void);
-static void gimp_ppd_ok_callback       (void);
+static void gimp_ppd_response          (GtkWidget     *dialog,
+                                        gint           response_id);
 static void gimp_print_driver_callback (GtkWidget      *widget,
 					gint            row,
 					gint            column,
 					GdkEventButton *event,
 					gpointer        data);
 
-static void gimp_file_ok_callback      (void);
-static void gimp_file_cancel_callback  (void);
+static void gimp_file_response          (GtkWidget     *dialog,
+                                         gint           response_id);
 
 static void gimp_preview_update              (void);
 static gboolean gimp_preview_expose          (void);
@@ -267,11 +266,11 @@ static stp_param_t *printer_list = 0;
 static int printer_count = 0;
 
 static void
-reset_preview(void)
+reset_preview (void)
 {
   if (!suppress_preview_reset)
     {
-      gimp_help_enable_tooltips();
+      gimp_help_enable_tooltips ();
       buttons_pressed = preview_active = 0;
     }
 }
@@ -385,17 +384,17 @@ create_top_level_structure(void)
    * Top-level containers
    */
 
-  main_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (print_dialog)->vbox), main_vbox,
                       FALSE, FALSE, 0);
   gtk_widget_show (main_vbox);
 
-  main_hbox = gtk_hbox_new (FALSE, 4);
+  main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, FALSE, FALSE, 0);
   gtk_widget_show (main_hbox);
 
-  right_vbox = gtk_vbox_new (FALSE, 2);
+  right_vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_end (GTK_BOX (main_hbox), right_vbox, TRUE, TRUE, 0);
   gtk_widget_show (right_vbox);
 
@@ -407,20 +406,22 @@ create_top_level_structure(void)
 static void
 create_preview (void)
 {
-  GtkWidget *frame;
   GtkWidget *event_box;
+  GtkWidget *vbox;
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (main_hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  event_box = gtk_event_box_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), event_box, FALSE, FALSE, 0);
+  gtk_widget_show (event_box);
 
   preview = gtk_drawing_area_new ();
   gtk_widget_set_size_request (preview,
                                PREVIEW_SIZE_HORIZ + 1, PREVIEW_SIZE_VERT + 1);
-  event_box = gtk_event_box_new ();
   gtk_container_add (GTK_CONTAINER (event_box), preview);
-  gtk_container_add (GTK_CONTAINER (frame), event_box);
-  gtk_widget_show (event_box);
+  gtk_widget_show (preview);
 
   g_signal_connect (preview, "expose_event",
                     G_CALLBACK (gimp_preview_expose), NULL);
@@ -459,17 +460,16 @@ create_positioning_frame (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *box;
-  GtkWidget *sep;
 
-  frame = gtk_frame_new (_("Position"));
-  gtk_box_pack_start (GTK_BOX (right_vbox), frame, TRUE, TRUE, 0);
+  frame = gimp_frame_new (_("Position"));
+  gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (7, 4, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  table = gtk_table_new (5, 4, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 12);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 3, 12);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -497,12 +497,8 @@ create_positioning_frame (void)
                              "landscape)"),
                            NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Orientation:"), 1.0, 0.5,
-                             orientation_menu, 3, TRUE);
-
-  sep = gtk_hseparator_new ();
-  gtk_table_attach_defaults (GTK_TABLE (table), sep, 0, 4, 1, 2);
-  gtk_widget_show (sep);
+                             _("Orientation:"), 0.0, 0.5,
+                             orientation_menu, 3, FALSE);
 
   /*
    * Position entries
@@ -511,8 +507,8 @@ create_positioning_frame (void)
   left_entry = gtk_entry_new ();
   gtk_widget_set_size_request (left_entry, 60, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Left:"), 1.0, 0.5,
-                             left_entry, 1, TRUE);
+                             _("Left:"), 0.0, 0.5,
+                             left_entry, 1, FALSE);
 
   gimp_help_set_help_data (left_entry,
                            _("Distance from the left of the paper to the image"),
@@ -524,8 +520,8 @@ create_positioning_frame (void)
   top_entry = gtk_entry_new ();
   gtk_widget_set_size_request (top_entry, 60, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 2,
-                             _("Top:"), 1.0,
-			     0.5, top_entry, 1, TRUE);
+                             _("Top:"), 0.0, 0.5,
+                             top_entry, 1, FALSE);
 
   gimp_help_set_help_data (top_entry,
                            _("Distance from the top of the paper to the image"),
@@ -537,8 +533,8 @@ create_positioning_frame (void)
   right_entry = gtk_entry_new ();
   gtk_widget_set_size_request (right_entry, 60, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("Right:"), 1.0, 0.5,
-                             right_entry, 1, TRUE);
+                             _("Right:"), 0.0, 0.5,
+                             right_entry, 1, FALSE);
 
   gimp_help_set_help_data (right_entry,
                            _("Distance from the left of the paper to "
@@ -551,8 +547,8 @@ create_positioning_frame (void)
   right_border_entry = gtk_entry_new ();
   gtk_widget_set_size_request (right_border_entry, 60, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-                             _("Right Border:"), 1.0, 0.5,
-                             right_border_entry, 1, TRUE);
+                             _("Right Border:"), 0.0, 0.5,
+                             right_border_entry, 1, FALSE);
 
   gimp_help_set_help_data (right_border_entry,
                            _("Distance from the right of the paper to "
@@ -565,8 +561,8 @@ create_positioning_frame (void)
   bottom_entry = gtk_entry_new ();
   gtk_widget_set_size_request (bottom_entry, 60, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 3,
-                             _("Bottom:"), 1.0, 0.5,
-                             bottom_entry, 1, TRUE);
+                             _("Bottom:"), 0.0, 0.5,
+                             bottom_entry, 1, FALSE);
 
   gimp_help_set_help_data (bottom_entry,
                            _("Distance from the top of the paper to "
@@ -579,8 +575,8 @@ create_positioning_frame (void)
   bottom_border_entry = gtk_entry_new ();
   gtk_widget_set_size_request (bottom_border_entry, 60, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 4,
-                             _("Bottom Border:"), 1.0, 0.5,
-                             bottom_border_entry, 1, TRUE);
+                             _("Bottom Border:"), 0.0, 0.5,
+                             bottom_border_entry, 1, FALSE);
 
   gimp_help_set_help_data (bottom_border_entry,
                            _("Distance from the bottom of the paper to "
@@ -590,17 +586,13 @@ create_positioning_frame (void)
                     G_CALLBACK (gimp_position_callback),
                     NULL);
 
-  sep = gtk_hseparator_new ();
-  gtk_table_attach_defaults (GTK_TABLE (table), sep, 0, 4, 5, 6);
-  gtk_widget_show (sep);
-
   /*
    * Center options
    */
 
-  box = gtk_hbox_new (TRUE, 4);
+  box = gtk_hbox_new (TRUE, 6);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
-                             _("Center:"), 1.0, 0.5,
+                             _("Center:"), 0.0, 0.5,
                              box, 3, FALSE);
 
   recenter_vertical_button =
@@ -666,10 +658,9 @@ create_printer_dialog (void)
    */
 
   table = gtk_table_new (5, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 8);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 100);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (setup_dialog)->vbox), table,
                       TRUE, TRUE, 0);
   gtk_widget_show (table);
@@ -679,14 +670,14 @@ create_printer_dialog (void)
    */
 
   label = gtk_label_new (_("Printer Model:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   event_box = gtk_event_box_new ();
   gtk_table_attach (GTK_TABLE (table), event_box, 1, 3, 0, 2,
-                    GTK_FILL, GTK_FILL|GTK_EXPAND, 0, 0);
+                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
   gtk_widget_show (event_box);
 
   gimp_help_set_help_data (event_box,
@@ -730,14 +721,14 @@ create_printer_dialog (void)
    */
 
   ppd_label = gtk_label_new (_("PPD File:"));
-  gtk_misc_set_alignment (GTK_MISC (ppd_label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (ppd_label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), ppd_label, 0, 1, 3, 4,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ppd_label);
 
-  box = gtk_hbox_new (FALSE, 8);
+  box = gtk_hbox_new (FALSE, 6);
   gtk_table_attach (GTK_TABLE (table), box, 1, 2, 3, 4,
-                    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (box);
 
   ppd_file = gtk_entry_new ();
@@ -745,7 +736,7 @@ create_printer_dialog (void)
   gtk_widget_show (ppd_file);
 
   gimp_help_set_help_data (ppd_file,
-                           _("Enter the correct PPD filename for your printer"),
+                           _("Enter the PPD filename for your printer"),
                            NULL);
 
   ppd_button = gtk_button_new_with_label (_("Browse"));
@@ -754,7 +745,7 @@ create_printer_dialog (void)
   gtk_widget_show (ppd_button);
 
   gimp_help_set_help_data (ppd_button,
-                           _("Choose the correct PPD filename for your printer"),
+                           _("Choose the PPD file for your printer"),
                            NULL);
   g_signal_connect (ppd_button, "clicked",
                     G_CALLBACK (gimp_ppd_browse_callback),
@@ -765,7 +756,7 @@ create_printer_dialog (void)
    */
 
   output_label = gtk_label_new (_("Command:"));
-  gtk_misc_set_alignment (GTK_MISC (output_label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (output_label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), output_label, 0, 1, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (output_label);
@@ -777,38 +768,29 @@ create_printer_dialog (void)
 
   gimp_help_set_help_data
     (output_cmd,
-     _("Enter the correct command to print to your printer. "
+     _("Enter the command to print to your printer. "
        "Note: Please do not remove the `-l' or `-oraw' from "
        "the command string, or printing will probably fail!"),
      NULL);
 
   /*
-   * Output file selection dialog.
-   */
-
-  file_browser = gtk_file_selection_new (_("Print To File?"));
-
-  g_signal_connect (GTK_FILE_SELECTION (file_browser)->ok_button, "clicked",
-		    G_CALLBACK (gimp_file_ok_callback),
-		    NULL);
-  g_signal_connect (GTK_FILE_SELECTION (file_browser)->cancel_button, "clicked",
-		    G_CALLBACK (gimp_file_cancel_callback),
-		    NULL);
-
-  /*
    * PPD file selection dialog.
    */
 
-  ppd_browser = gtk_file_selection_new (_("PPD File?"));
-  gtk_file_selection_hide_fileop_buttons (GTK_FILE_SELECTION (ppd_browser));
+  ppd_browser =
+    gtk_file_chooser_dialog_new (_("Choose PPD File"),
+                                 GTK_WINDOW (setup_dialog),
+                                 GTK_FILE_CHOOSER_ACTION_OPEN,
 
-  g_signal_connect (GTK_FILE_SELECTION (ppd_browser)->ok_button, "clicked",
-		    G_CALLBACK (gimp_ppd_ok_callback),
+                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+
+                                 NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG (ppd_browser), GTK_RESPONSE_OK);
+
+  g_signal_connect (ppd_browser, "response",
+		    G_CALLBACK (gimp_ppd_response),
 		    NULL);
-  g_signal_connect_swapped (GTK_FILE_SELECTION (ppd_browser)->cancel_button,
-			    "clicked",
-			    G_CALLBACK (gtk_widget_hide),
-			    ppd_browser);
 }
 
 static void
@@ -831,17 +813,17 @@ create_new_printer_dialog (void)
                     NULL);
 
   table = gtk_table_new (1, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 8);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (new_printer_dialog)->vbox), table,
                       FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   new_printer_entry = gtk_entry_new ();
   gtk_entry_set_max_length (GTK_ENTRY (new_printer_entry), 127);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, _("Printer Name:"), 1.0,
-			     0.5, new_printer_entry, 1, TRUE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, _("Printer Name:"),
+                             0.0, 0.5, new_printer_entry, 1, FALSE);
 
   gimp_help_set_help_data (new_printer_entry,
                            _("Enter the name you wish to give this logical printer"),
@@ -892,7 +874,7 @@ create_about_dialog (void)
        "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  "
        "USA\n"));
 
-  gtk_misc_set_padding (GTK_MISC (label), 12, 4);
+  gtk_misc_set_padding (GTK_MISC (label), 12, 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (about_dialog)->vbox), label,
                       FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -913,9 +895,9 @@ create_printer_settings_frame (void)
   create_new_printer_dialog ();
 
   table = gtk_table_new (9, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
                             table,
                             gtk_label_new (_("Printer Settings")));
@@ -935,15 +917,16 @@ create_printer_settings_frame (void)
                              "or model, of printer) that you wish to print to"),
                            NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Printer Name:"), 1.0, 0.5,
-                             event_box, 2, TRUE);
+                             _("Printer Name:"), 0.0, 0.5,
+                             event_box, 1, FALSE);
 
   printer_model_label = gtk_label_new ("");
+  gtk_misc_set_alignment (GTK_MISC (printer_model_label), 0.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Printer Model:"), 1.0, 0.5,
-                             printer_model_label, 2, TRUE);
+                             _("Printer Model:"), 0.0, 0.5,
+                             printer_model_label, 2, FALSE);
 
-  printer_hbox = gtk_hbox_new (TRUE, 4);
+  printer_hbox = gtk_hbox_new (TRUE, 6);
   gtk_table_attach_defaults (GTK_TABLE (table), printer_hbox, 1, 2, 2, 3);
   gtk_widget_show (printer_hbox);
 
@@ -994,17 +977,17 @@ create_printer_settings_frame (void)
                            _("Size of paper that you wish to print to"),
                            NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("Media Size:"), 1.0, 0.5,
-                             event_box, 1, TRUE);
+                             _("Media Size:"), 0.0, 0.5,
+                             event_box, 1, FALSE);
 
   /*
    * Custom media size entries
    */
 
-  media_size_hbox = gtk_hbox_new (FALSE, 4);
+  media_size_hbox = gtk_hbox_new (FALSE, 12);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-                             _("Dimensions:"), 1.0, 0.5,
-                             media_size_hbox, 2, TRUE);
+                             _("Dimensions:"), 0.0, 0.5,
+                             media_size_hbox, 1, FALSE);
 
   label = gtk_label_new (_("Width:"));
   gtk_box_pack_start (GTK_BOX (media_size_hbox), label, FALSE, FALSE, 0);
@@ -1013,7 +996,7 @@ create_printer_settings_frame (void)
   custom_size_width = gtk_entry_new ();
   gtk_widget_set_size_request (custom_size_width, 40, -1);
   gtk_box_pack_start (GTK_BOX (media_size_hbox), custom_size_width,
-                      FALSE, FALSE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (custom_size_width);
 
   gimp_help_set_help_data (custom_size_width,
@@ -1030,7 +1013,7 @@ create_printer_settings_frame (void)
   custom_size_height = gtk_entry_new ();
   gtk_widget_set_size_request (custom_size_height, 50, -1);
   gtk_box_pack_start (GTK_BOX (media_size_hbox), custom_size_height,
-                      FALSE, FALSE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (custom_size_height);
 
   gimp_help_set_help_data (custom_size_height,
@@ -1053,8 +1036,8 @@ create_printer_settings_frame (void)
                            _("Type of media you're printing to"),
                            NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
-                             _("Media Type:"), 1.0, 0.5,
-                             event_box, 2, TRUE);
+                             _("Media Type:"), 0.0, 0.5,
+                             event_box, 1, FALSE);
 
   /*
    * Media source combo box.
@@ -1069,8 +1052,8 @@ create_printer_settings_frame (void)
                            _("Source (input slot) of media you're printing to"),
                            NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
-                             _("Media Source:"), 1.0, 0.5,
-                             event_box, 2, TRUE);
+                             _("Media Source:"), 0.0, 0.5,
+                             event_box, 1, FALSE);
 
   /*
    * Ink type combo box.
@@ -1085,8 +1068,8 @@ create_printer_settings_frame (void)
                            _("Type of ink in the printer"),
                            NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 7,
-                             _("Ink Type:"), 1.0, 0.5,
-                             event_box, 2, TRUE);
+                             _("Ink Type:"), 0.0, 0.5,
+                             event_box, 1, FALSE);
 
   /*
    * Resolution combo box.
@@ -1101,8 +1084,8 @@ create_printer_settings_frame (void)
                            _("Resolution and quality of the print"),
                            NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 8,
-                             _("Resolution:"), 1.0, 0.5,
-                             event_box, 2, TRUE);
+                             _("Resolution:"), 0.0, 0.5,
+                             event_box, 1, FALSE);
 }
 
 static void
@@ -1114,20 +1097,18 @@ create_scaling_frame (void)
   GtkWidget *box;
   GtkWidget *label;
   GtkWidget *event_box;
-  GtkWidget *sep;
   GSList    *group;
 
-  frame = gtk_frame_new (_("Size"));
+  frame = gimp_frame_new (_("Size"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
   table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -1149,11 +1130,7 @@ create_scaling_frame (void)
                     G_CALLBACK (gimp_scaling_update),
                     NULL);
 
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 0);
-  gtk_widget_show (sep);
-
-  box = gtk_hbox_new (FALSE, 4);
+  box = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
@@ -1162,7 +1139,8 @@ create_scaling_frame (void)
    */
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (box), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -1185,7 +1163,7 @@ create_scaling_frame (void)
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (scaling_percent));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              NULL, 0.5, 0.5,
-                             scaling_percent, 1, TRUE);
+                             scaling_percent, 1, FALSE);
 
   gimp_help_set_help_data (scaling_percent,
                            _("Scale the print to the size of the page"),
@@ -1197,7 +1175,7 @@ create_scaling_frame (void)
   scaling_ppi = gtk_radio_button_new_with_label (group, _("PPI"));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              NULL, 0.5, 0.5,
-                             scaling_ppi, 1, TRUE);
+                             scaling_ppi, 1, FALSE);
 
   gimp_help_set_help_data (scaling_ppi,
                            _("Scale the print to the number of dots per inch"),
@@ -1206,24 +1184,20 @@ create_scaling_frame (void)
                     G_CALLBACK (gimp_scaling_callback),
                     NULL);
 
-  sep = gtk_vseparator_new ();
-  gtk_box_pack_start (GTK_BOX (box), sep, FALSE, FALSE, 8);
-  gtk_widget_show (sep);
-
   /*
    * The width/height enries
    */
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (box), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   width_entry = gtk_entry_new ();
   gtk_widget_set_size_request (width_entry, 60, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Width:"), 1.0, 0.5,
-                             width_entry, 1, TRUE);
+                             _("Width:"), 0.0, 0.5,
+                             width_entry, 1, FALSE);
 
   gimp_help_set_help_data (width_entry,
                            _("Set the width of the print"),
@@ -1235,8 +1209,8 @@ create_scaling_frame (void)
   height_entry = gtk_entry_new ();
   gtk_widget_set_size_request (height_entry, 60, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Height:"), 1.0, 0.5,
-                             height_entry, 1, TRUE);
+                             _("Height:"), 0.0, 0.5,
+                             height_entry, 1, FALSE);
 
   gimp_help_set_help_data (height_entry,
                            _("Set the height of the print"),
@@ -1250,7 +1224,8 @@ create_scaling_frame (void)
    */
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (box), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -1271,33 +1246,33 @@ create_scaling_frame (void)
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (unit_inch));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              NULL, 0.5, 0.5,
-                             unit_inch, 1, TRUE);
+                             unit_inch, 1, FALSE);
 
   gimp_help_set_help_data (unit_inch,
                            _("Set the base unit of measurement to inches"),
                            NULL);
   g_signal_connect (unit_inch, "toggled",
                     G_CALLBACK (gimp_unit_callback),
-                    (gpointer) 0);
+                    GINT_TO_POINTER (0));
 
   unit_cm = gtk_radio_button_new_with_label (group, _("cm"));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              NULL, 0.5, 0.5,
-                             unit_cm, 1, TRUE);
+                             unit_cm, 1, FALSE);
 
   gimp_help_set_help_data (unit_cm,
                            _("Set the base unit of measurement to centimetres"),
                            NULL);
   g_signal_connect (unit_cm, "toggled",
                     G_CALLBACK (gimp_unit_callback),
-                    (gpointer) 1);
+                    GINT_TO_POINTER (1));
 
   /*
    * The "image size" button
    */
 
   scaling_image = gtk_button_new_with_label (_("Use Original\nImage Size"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (scaling_image)->child), 8, 4);
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (scaling_image)->child), 6, 6);
   gtk_box_pack_end (GTK_BOX (box), scaling_image, FALSE, TRUE, 0);
   gtk_widget_show (scaling_image);
 
@@ -1312,24 +1287,25 @@ create_scaling_frame (void)
 static void
 create_image_settings_frame (void)
 {
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkWidget *label;
-  GtkWidget *event_box;
-  GtkWidget *sep;
-  GSList    *group;
+  GtkSizeGroup *size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  GtkWidget    *vbox;
+  GtkWidget    *table;
+  GtkWidget    *label;
+  GtkWidget    *event_box;
+  GSList       *group;
 
   gimp_create_color_adjust_window ();
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
                             vbox,
                             gtk_label_new (_("Image / Output Settings")));
   gtk_widget_show (vbox);
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -1341,6 +1317,9 @@ create_image_settings_frame (void)
   label = gtk_label_new (_("Image Type:"));
   gtk_container_add (GTK_CONTAINER (event_box), label);
   gtk_widget_show (label);
+
+  gtk_size_group_add_widget (size_group, label);
+  g_object_unref (size_group);
 
   gimp_help_set_help_data (event_box,
                            _("Optimize the output for the type of image "
@@ -1359,7 +1338,7 @@ create_image_settings_frame (void)
                            NULL);
   g_signal_connect (image_line_art, "toggled",
                     G_CALLBACK (gimp_image_type_callback),
-                    (gpointer) IMAGE_LINE_ART);
+                    GINT_TO_POINTER (IMAGE_LINE_ART));
 
   image_solid_tone = gtk_radio_button_new_with_label (group, _("Solid Colors"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (image_solid_tone));
@@ -1373,7 +1352,7 @@ create_image_settings_frame (void)
                            NULL);
   g_signal_connect (image_solid_tone, "toggled",
                     G_CALLBACK (gimp_image_type_callback),
-                    (gpointer) IMAGE_SOLID_TONE);
+                    GINT_TO_POINTER (IMAGE_SOLID_TONE));
 
   image_continuous_tone = gtk_radio_button_new_with_label (group,
                                                            _("Photograph"));
@@ -1389,19 +1368,16 @@ create_image_settings_frame (void)
                            NULL);
   g_signal_connect (image_continuous_tone, "toggled",
                     G_CALLBACK (gimp_image_type_callback),
-                    (gpointer) IMAGE_CONTINUOUS);
-
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 0);
-  gtk_widget_show (sep);
+                    GINT_TO_POINTER (IMAGE_CONTINUOUS));
 
   /*
    * Output type toggles.
    */
 
   table = gtk_table_new (4, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -1413,6 +1389,8 @@ create_image_settings_frame (void)
   label = gtk_label_new (_("Output Type:"));
   gtk_container_add (GTK_CONTAINER (event_box), label);
   gtk_widget_show (label);
+
+  gtk_size_group_add_widget (size_group, label);
 
   gimp_help_set_help_data (event_box,
                            _("Select the desired output type"),
@@ -1427,7 +1405,7 @@ create_image_settings_frame (void)
   gimp_help_set_help_data (output_color, _("Color output"), NULL);
   g_signal_connect (output_color, "toggled",
                     G_CALLBACK (gimp_output_type_callback),
-                    (gpointer) OUTPUT_COLOR);
+                    GINT_TO_POINTER (OUTPUT_COLOR));
 
   output_gray = gtk_radio_button_new_with_label (group, _("Grayscale"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (output_gray));
@@ -1440,7 +1418,7 @@ create_image_settings_frame (void)
                            NULL);
   g_signal_connect (output_gray, "toggled",
                     G_CALLBACK (gimp_output_type_callback),
-                    (gpointer) OUTPUT_GRAY);
+                    GINT_TO_POINTER (OUTPUT_GRAY));
 
   output_monochrome = gtk_radio_button_new_with_label (group,
                                                        _("Black and White"));
@@ -1455,7 +1433,7 @@ create_image_settings_frame (void)
                            NULL);
   g_signal_connect (output_monochrome, "toggled",
                     G_CALLBACK (gimp_output_type_callback),
-                    (gpointer) OUTPUT_MONOCHROME);
+                    GINT_TO_POINTER (OUTPUT_MONOCHROME));
 
   /*
    *  Color adjust button
@@ -1465,14 +1443,14 @@ create_image_settings_frame (void)
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (adjust_color_button)->child), 4, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              NULL, 0.5, 0.5,
-                             adjust_color_button, 1, TRUE);
+                             adjust_color_button, 1, FALSE);
 
   gimp_help_set_help_data (adjust_color_button,
                            _("Adjust color balance, brightness, contrast, "
                              "saturation, and dither algorithm"),
                            NULL);
   g_signal_connect_swapped (adjust_color_button, "clicked",
-                            G_CALLBACK (gtk_widget_show),
+                            G_CALLBACK (gtk_window_present),
                             gimp_color_adjust_dialog);
 }
 
@@ -1497,6 +1475,24 @@ gimp_create_main_window (void)
   create_positioning_frame ();
   create_scaling_frame ();
   create_image_settings_frame ();
+
+  /*
+   * Output file selection dialog.
+   */
+  file_browser =
+    gtk_file_chooser_dialog_new (_("Print to File"),
+                                 GTK_WINDOW (print_dialog),
+                                 GTK_FILE_CHOOSER_ACTION_SAVE,
+
+                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                 GTK_STOCK_PRINT,  GTK_RESPONSE_OK,
+
+                                 NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG (file_browser), GTK_RESPONSE_OK);
+
+  g_signal_connect (file_browser, "response",
+		    G_CALLBACK (gimp_file_response),
+		    NULL);
 
   /*
    * Now actually set up the correct values in the dialog
@@ -2317,7 +2313,7 @@ gimp_output_type_callback (GtkWidget *widget,
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      stp_set_output_type (*pv, (gint) data);
+      stp_set_output_type (*pv, GPOINTER_TO_INT (data));
       gimp_invalidate_preview_thumbnail ();
       gimp_update_adjusted_thumbnail ();
     }
@@ -2341,7 +2337,7 @@ gimp_unit_callback (GtkWidget *widget,
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      stp_set_unit (*pv, (gint) data);
+      stp_set_unit (*pv, GPOINTER_TO_INT (data));
       gimp_preview_update ();
     }
 }
@@ -2357,7 +2353,7 @@ gimp_image_type_callback (GtkWidget *widget,
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      stp_set_image_type (*pv, (gint) data);
+      stp_set_image_type (*pv, GPOINTER_TO_INT (data));
       gimp_invalidate_preview_thumbnail ();
       gimp_update_adjusted_thumbnail ();
     }
@@ -2429,7 +2425,8 @@ gimp_response_callback (GtkWidget *dialog,
 static void
 gimp_setup_update (void)
 {
-  gint idx;
+  gboolean ppd;
+  gint     idx;
 
   current_printer = stp_get_printer_by_driver (stp_get_driver (*pv));
   idx = stp_get_printer_index_by_driver (stp_get_driver (*pv));
@@ -2438,31 +2435,16 @@ gimp_setup_update (void)
 
   gtk_entry_set_text (GTK_ENTRY (ppd_file), stp_get_ppd_file (*pv));
 
-  if (strncmp (stp_get_driver (*pv),"ps", 2) == 0)
-    {
-      gtk_widget_show (ppd_label);
-      gtk_widget_show (ppd_file);
-      gtk_widget_show (ppd_button);
-    }
-  else
-    {
-      gtk_widget_hide (ppd_label);
-      gtk_widget_hide (ppd_file);
-      gtk_widget_hide (ppd_button);
-    }
+  ppd = (strncmp (stp_get_driver (*pv), "ps", 2) == 0);
+
+  gtk_widget_set_sensitive (ppd_label,  ppd);
+  gtk_widget_set_sensitive (ppd_file,   ppd);
+  gtk_widget_set_sensitive (ppd_button, ppd);
 
   gtk_entry_set_text (GTK_ENTRY (output_cmd), stp_get_output_to (*pv));
 
-  if (plist_current == 0)
-    {
-      gtk_widget_hide (output_label);
-      gtk_widget_hide (output_cmd);
-    }
-  else
-    {
-      gtk_widget_show (output_label);
-      gtk_widget_show (output_cmd);
-    }
+  gtk_widget_set_sensitive (output_label, plist_current != 0);
+  gtk_widget_set_sensitive (output_cmd,   plist_current != 0);
 
   gtk_clist_moveto (GTK_CLIST (printer_driver), idx, -1, 0.5, 0.5);
 }
@@ -2585,6 +2567,7 @@ gimp_print_driver_callback (GtkWidget      *widget, /* I - Driver list */
 			    gpointer        data)   /* I - Data */
 {
   stp_vars_t printvars;
+  gboolean   ppd;
 
   gimp_invalidate_preview_thumbnail ();
   reset_preview ();
@@ -2593,18 +2576,11 @@ gimp_print_driver_callback (GtkWidget      *widget, /* I - Driver list */
   gtk_label_set_text (GTK_LABEL (printer_model_label),
                       gettext (stp_printer_get_long_name (current_printer)));
 
-  if (strncmp (stp_printer_get_driver (current_printer), "ps", 2) == 0)
-    {
-      gtk_widget_show (ppd_label);
-      gtk_widget_show (ppd_file);
-      gtk_widget_show (ppd_button);
-    }
-  else
-    {
-      gtk_widget_hide (ppd_label);
-      gtk_widget_hide (ppd_file);
-      gtk_widget_hide (ppd_button);
-    }
+  ppd = (strncmp (stp_printer_get_driver (current_printer), "ps", 2) == 0);
+
+  gtk_widget_set_sensitive (ppd_label,  ppd);
+  gtk_widget_set_sensitive (ppd_file,   ppd);
+  gtk_widget_set_sensitive (ppd_button, ppd);
 
   printvars = stp_printer_get_printvars (current_printer);
 
@@ -2619,53 +2595,60 @@ gimp_print_driver_callback (GtkWidget      *widget, /* I - Driver list */
     }
 }
 
-/*
- *  gimp_ppd_browse_callback() -
- */
 static void
 gimp_ppd_browse_callback (void)
 {
+  const gchar *filename = gtk_entry_get_text (GTK_ENTRY (ppd_file));
+
   reset_preview ();
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (ppd_browser),
-				   gtk_entry_get_text (GTK_ENTRY (ppd_file)));
+
+  if (filename && g_path_is_absolute (filename))
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (ppd_browser), filename);
+
   gtk_widget_show (ppd_browser);
 }
 
-/*
- *  gimp_ppd_ok_callback() -
- */
 static void
-gimp_ppd_ok_callback (void)
+gimp_ppd_response (GtkWidget *dialog,
+                   gint       response_id)
 {
-  reset_preview ();
-  gtk_widget_hide (ppd_browser);
-  gtk_entry_set_text
-    (GTK_ENTRY (ppd_file),
-     gtk_file_selection_get_filename (GTK_FILE_SELECTION (ppd_browser)));
+  gtk_widget_hide (dialog);
+
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      gchar *filename;
+
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+
+      gtk_entry_set_text (GTK_ENTRY (ppd_file), filename);
+
+      g_free (filename);
+    }
 }
 
-/*
- *  gimp_file_ok_callback() - print to file and go away
- */
 static void
-gimp_file_ok_callback (void)
+gimp_file_response (GtkWidget *dialog,
+                    gint       response_id)
 {
-  gtk_widget_hide (file_browser);
-  stp_set_output_to (*pv,
-                     gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_browser)));
+  gtk_widget_hide (dialog);
 
-  runme = TRUE;
-  gimp_destroy_dialogs ();
-}
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      gchar *filename;
 
-/*
- *  gimp_file_cancel_callback() -
- */
-static void
-gimp_file_cancel_callback (void)
-{
-  gtk_widget_hide (file_browser);
-  gimp_dialogs_set_sensitive (TRUE);
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+
+      stp_set_output_to (*pv, filename);
+
+      g_free (filename);
+
+      runme = TRUE;
+      gimp_destroy_dialogs ();
+    }
+  else
+    {
+      gimp_dialogs_set_sensitive (TRUE);
+    }
 }
 
 /*

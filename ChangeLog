@@ -1,3 +1,15 @@
+2004-05-25  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/gimp_color_window.c
+	* plug-ins/print/gimp_main_window.c: HIG-ified and ported to
+	GtkFileChooser.
+ 
+	* plug-ins/ifscompose/ifscompose.c (ifsfile_load_response): ported
+	forgotten callback to GtkFileChooser.
+
+	* plug-ins/imagemap/imap_browse.c
+	* plug-ins/imagemap/imap_file.c: finished port to GtkFileChooser.
+
 2004-05-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/file-actions.c

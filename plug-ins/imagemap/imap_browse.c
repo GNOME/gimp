@@ -38,17 +38,20 @@ select_cb (GtkWidget      *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      gchar       *p;
-      const gchar *file;
+      gchar *p;
+      gchar *file;
 
-      file = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
+      file = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      p = (browse->filter) ? browse->filter (file, browse->filter_data) : (gchar *) file;
+      p = (browse->filter ?
+           browse->filter (file, browse->filter_data) : file);
 
       gtk_entry_set_text (GTK_ENTRY (browse->file), p);
 
       if (browse->filter)
         g_free (p);
+
+      g_free (file);
     }
 
   gtk_widget_hide (dialog);
@@ -63,14 +66,14 @@ browse_cb (GtkWidget      *widget,
      {
        GtkWidget *dialog;
 
-       dialog = browse->file_selection = 
+       dialog = browse->file_selection =
 	 gtk_file_chooser_dialog_new (browse->name,
 				      GTK_WINDOW (gtk_widget_get_toplevel (widget)),
 				      GTK_FILE_CHOOSER_ACTION_OPEN,
-				      
+
 				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				      GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
-				      
+
 				      NULL);
        gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
@@ -84,22 +87,27 @@ browse_cb (GtkWidget      *widget,
    gtk_window_present (GTK_WINDOW (browse->file_selection));
 }
 
-static void 
-handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y, 
+static void
+handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
 	    GtkSelectionData *data, guint info, guint time)
 {
    gboolean success;
-   if (data->length >= 0 && data->format == 8) {
-      gtk_entry_set_text(GTK_ENTRY(widget), data->data);
-      success = TRUE;
-   } else {
-      success = FALSE;
-   }
+
+   if (data->length >= 0 && data->format == 8)
+     {
+       gtk_entry_set_text(GTK_ENTRY(widget), data->data);
+       success = TRUE;
+     }
+   else
+     {
+       success = FALSE;
+     }
+
    gtk_drag_finish(context, success, FALSE, time);
 }
 
 BrowseWidget_t*
-browse_widget_new(const gchar *name)
+browse_widget_new (const gchar *name)
 {
    BrowseWidget_t *browse = g_new(BrowseWidget_t, 1);
    GtkWidget *button;
@@ -127,21 +135,21 @@ browse_widget_new(const gchar *name)
    gtk_widget_show (icon);
 
    gtk_box_pack_end(GTK_BOX (browse->hbox), button, FALSE, FALSE, 0);
-   g_signal_connect (button, "clicked", 
+   g_signal_connect (button, "clicked",
 		     G_CALLBACK(browse_cb), (gpointer) browse);
    gtk_widget_show (button);
 
    return browse;
 }
 
-void 
+void
 browse_widget_set_filename(BrowseWidget_t *browse, const gchar *filename)
 {
    gtk_entry_set_text (GTK_ENTRY (browse->file), filename);
 }
 
-void 
-browse_widget_set_filter(BrowseWidget_t *browse, BrowseFilter_t filter, 
+void
+browse_widget_set_filter(BrowseWidget_t *browse, BrowseFilter_t filter,
 			 gpointer data)
 {
    browse->filter = filter;
