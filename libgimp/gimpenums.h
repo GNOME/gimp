@@ -126,6 +126,22 @@ typedef enum
 
 typedef enum
 {
+  GIMP_GRAD_RGB,
+  GIMP_GRAD_HSV_CCW,
+  GIMP_GRAD_HSV_CW
+} GimpGradientSegmentColor;
+
+typedef enum
+{
+  GIMP_GRAD_LINEAR,
+  GIMP_GRAD_CURVED,
+  GIMP_GRAD_SINE,
+  GIMP_GRAD_SPHERE_INCREASING,
+  GIMP_GRAD_SPHERE_DECREASING
+} GimpGradientSegmentType;
+
+typedef enum
+{
   GIMP_GRADIENT_LINEAR,
   GIMP_GRADIENT_BILINEAR,
   GIMP_GRADIENT_RADIAL,

@@ -37,6 +37,7 @@
 #include <libgimp/gimpfonts_pdb.h>
 #include <libgimp/gimpfontselect_pdb.h>
 #include <libgimp/gimpgimprc_pdb.h>
+#include <libgimp/gimpgradientedit_pdb.h>
 #include <libgimp/gimpgradients_pdb.h>
 #include <libgimp/gimpgradientselect_pdb.h>
 #include <libgimp/gimpguides_pdb.h>

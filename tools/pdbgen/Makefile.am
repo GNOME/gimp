@@ -15,6 +15,7 @@ pdb_sources = \
 	pdb/font_select.pdb	\
 	pdb/fonts.pdb		\
 	pdb/gimprc.pdb		\
+	pdb/gradient_edit.pdb	\
 	pdb/gradient_select.pdb	\
 	pdb/gradients.pdb	\
 	pdb/guides.pdb		\

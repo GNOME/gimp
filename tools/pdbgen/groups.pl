@@ -13,6 +13,7 @@
     font_select
     fonts
     gimprc
+    gradient_edit
     gradient_select
     gradients
     guides

@@ -87,6 +87,7 @@ PDB_WRAPPERS_C = \
 	gimpfonts_pdb.c			\
 	gimpfontselect_pdb.c		\
 	gimpgimprc_pdb.c		\
+	gimpgradientedit_pdb.c		\
 	gimpgradients_pdb.c		\
 	gimpgradientselect_pdb.c	\
 	gimpguides_pdb.c		\
@@ -127,6 +128,7 @@ PDB_WRAPPERS_H = \
 	gimpfonts_pdb.h			\
 	gimpfontselect_pdb.h		\
 	gimpgimprc_pdb.h		\
+	gimpgradientedit_pdb.h		\
 	gimpgradients_pdb.h		\
 	gimpgradientselect_pdb.h	\
 	gimpguides_pdb.h		\

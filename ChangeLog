@@ -1,3 +1,45 @@
+2004-05-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.h
+	* app/core/gimpgradient.[ch]
+	* app/pdb/Makefile.am
+	* app/widgets/gimpgradienteditor.c
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/groups.pl
+	* tools/pdbgen/pdb/gradient_edit.pdb: applied a patch from Shlomi
+	Fish that adds lots of gradient edit functions to
+	gimpgradient.[ch] and makes them available through the PDB.
+	Fixes bug #129675 and bug #129678.
+
+	Did some cleanups / enhancments to the patch:
+
+	* app/core/gimpgradient.[ch]: changed the naming scheme of the new
+	functions and changed old functions to match the new scheme.
+	Introduce a "freeze_count" and public freeze()/thaw() API which
+	enables subsequent gradient changes without "dirty" being emitted
+	all the time.  Added GimpGradient parameters to all functions
+	which modify the gradient.
+
+	* app/widgets/gimpgradienteditor.c: use the new freeze/thaw
+	stuff to keep the gradient from updating when not in
+	"Instant Update" mode.
+
+	* app/actions/gradient-editor-commands.c: removed all gradient
+	editing code and call the new core functions.
+
+	* libgimp/Makefile.am
+	* tools/pdbgen/pdb/gradient_edit.pdb: changed the namespace of all
+	added functions. Generate libgimp wrappers for them..
+
+	* app/pdb/gradient_edit_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimp_pdb.h
+	* libgimp/gimpenums.h
+	* libgimp/gimpgradientedit_pdb.[ch]
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: (re)generated.
+
 2004-05-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/autocrop.c: applied patch from Philip Lafleur

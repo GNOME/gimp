@@ -114,6 +114,8 @@ static void   gimp_gradient_editor_init       (GimpGradientEditor      *editor);
 static void   gimp_gradient_editor_set_data         (GimpDataEditor     *editor,
                                                      GimpData           *data);
 
+static void   gimp_gradient_editor_gradient_dirty   (GimpGradientEditor *editor,
+                                                     GimpGradient       *gradient);
 static void   gradient_editor_drop_gradient         (GtkWidget          *widget,
                                                      GimpViewable       *viewable,
                                                      gpointer            data);
@@ -175,14 +177,11 @@ static void      control_motion                   (GimpGradientEditor  *editor,
 						   GimpGradient        *gradient,
 						   gint                 x);
 
-static void      control_compress_left            (GimpGradientSegment *range_l,
+static void      control_compress_left            (GimpGradient        *gradient,
+                                                   GimpGradientSegment *range_l,
 						   GimpGradientSegment *range_r,
 						   GimpGradientSegment *drag_seg,
 						   gdouble              pos);
-static void      control_compress_range           (GimpGradientSegment *range_l,
-						   GimpGradientSegment *range_r,
-						   gdouble              new_l,
-						   gdouble              new_r);
 
 static double    control_move                     (GimpGradientEditor  *editor,
 						   GimpGradientSegment *range_l,
@@ -223,9 +222,9 @@ static gdouble   control_calc_g_pos               (GimpGradientEditor *editor,
 /* Segment functions */
 
 static void      seg_get_closest_handle           (GimpGradient         *grad,
-						   gdouble               pos,
-						   GimpGradientSegment **seg,
-						   GradientEditorDragMode *handle);
+                                                   gdouble               pos,
+                                                   GimpGradientSegment **seg,
+                                                   GradientEditorDragMode *handle);
 
 
 static GimpDataEditorClass *parent_class = NULL;
@@ -436,8 +435,22 @@ gimp_gradient_editor_set_data (GimpDataEditor *editor,
                                GimpData       *data)
 {
   GimpGradientEditor *gradient_editor = GIMP_GRADIENT_EDITOR (editor);
+  GimpData           *old_data;
+
+  old_data = gimp_data_editor_get_data (editor);
+
+  if (old_data)
+    g_signal_handlers_disconnect_by_func (old_data,
+                                          gimp_gradient_editor_gradient_dirty,
+                                          gradient_editor);
+
 
   GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
+
+  if (data)
+    g_signal_connect_swapped (data, "dirty",
+                              G_CALLBACK (gimp_gradient_editor_gradient_dirty),
+                              gradient_editor);
 
   gimp_preview_set_viewable (GIMP_PREVIEW (gradient_editor->preview),
                              (GimpViewable *) data);
@@ -452,6 +465,38 @@ gimp_gradient_editor_set_data (GimpDataEditor *editor,
   gtk_widget_set_sensitive (gradient_editor->control, editor->data_editable);
 
   control_update (gradient_editor, (GimpGradient *) data, TRUE);
+}
+
+static void
+gimp_gradient_editor_gradient_dirty (GimpGradientEditor *editor,
+                                     GimpGradient       *gradient)
+{
+  GimpGradientSegment *segment;
+  gboolean             left_seen  = FALSE;
+  gboolean             right_seen = FALSE;
+
+  for (segment = gradient->segments; segment; segment = segment->next)
+    {
+      if (segment == editor->control_sel_l)
+        left_seen = TRUE;
+
+      if (segment == editor->control_sel_r)
+        right_seen = TRUE;
+
+      if (right_seen && ! left_seen)
+        {
+          GimpGradientSegment *tmp;
+
+          tmp = editor->control_sel_l;
+          editor->control_sel_l = editor->control_sel_r;
+          editor->control_sel_r = tmp;
+
+          right_seen = FALSE;
+          left_seen  = TRUE;
+        }
+    }
+
+  control_update (editor, gradient, ! (left_seen && right_seen));
 }
 
 
@@ -915,7 +960,17 @@ control_events (GtkWidget          *widget,
 				x, y, bevent->button, bevent->state);
 
 	  if (editor->control_drag_mode != GRAD_DRAG_NONE)
-	    gtk_grab_add (widget);
+            {
+              gtk_grab_add (widget);
+
+              g_signal_handlers_block_by_func (gradient,
+                                               gimp_gradient_editor_gradient_dirty,
+                                               editor);
+
+              if (! editor->instant_update)
+                gimp_gradient_freeze (gradient);
+            }
+
 	}
       break;
 
@@ -948,6 +1003,13 @@ control_events (GtkWidget          *widget,
 
       if (editor->control_drag_mode != GRAD_DRAG_NONE)
 	{
+          if (! editor->instant_update)
+            gimp_gradient_thaw (gradient);
+
+          g_signal_handlers_unblock_by_func (gradient,
+                                             gimp_gradient_editor_gradient_dirty,
+                                             editor);
+
 	  gtk_grab_remove (widget);
 
 	  gtk_widget_get_pointer (editor->control, &x, &y);
@@ -956,8 +1018,7 @@ control_events (GtkWidget          *widget,
 
 	  if ((time - editor->control_click_time) >= GRAD_MOVE_TIME)
 	    {
-	      if (! editor->instant_update)
-		gimp_data_dirty (GIMP_DATA (gradient));
+	      /* stuff was done in motion */
 	    }
 	  else if ((editor->control_drag_mode == GRAD_DRAG_MIDDLE) ||
 		   (editor->control_drag_mode == GRAD_DRAG_ALL))
@@ -1332,13 +1393,13 @@ control_motion (GimpGradientEditor *editor,
 					      seg->prev->middle + EPSILON,
 					      seg->middle - EPSILON);
       else
-	control_compress_left (editor->control_sel_l,
+	control_compress_left (gradient,
+                               editor->control_sel_l,
 			       editor->control_sel_r,
 			       seg, pos);
 
       str = g_strdup_printf (_("Handle position: %0.6f"), seg->left);
       gradient_editor_set_hint (editor, str, "", "");
-
       break;
 
     case GRAD_DRAG_MIDDLE:
@@ -1347,7 +1408,6 @@ control_motion (GimpGradientEditor *editor,
 
       str = g_strdup_printf (_("Handle position: %0.6f"), seg->middle);
       gradient_editor_set_hint (editor, str, "", "");
-
       break;
 
     case GRAD_DRAG_ALL:
@@ -1380,14 +1440,12 @@ control_motion (GimpGradientEditor *editor,
   if (str)
     g_free (str);
 
-  if (editor->instant_update)
-    gimp_data_dirty (GIMP_DATA (gradient));
-
   gimp_gradient_editor_update (editor);
 }
 
 static void
-control_compress_left (GimpGradientSegment *range_l,
+control_compress_left (GimpGradient        *gradient,
+                       GimpGradientSegment *range_l,
 		       GimpGradientSegment *range_r,
 		       GimpGradientSegment *drag_seg,
 		       gdouble              pos)
@@ -1457,52 +1515,24 @@ control_compress_left (GimpGradientSegment *range_l,
   /* Compress segments to the left of the handle */
 
   if (drag_seg == range_l)
-    control_compress_range (range_l->prev, range_l->prev,
-			    range_l->prev->left, pos);
+    gimp_gradient_segment_range_compress (gradient,
+                                          range_l->prev, range_l->prev,
+                                          range_l->prev->left, pos);
   else
-    control_compress_range (range_l, drag_seg->prev, range_l->left, pos);
+    gimp_gradient_segment_range_compress (gradient,
+                                          range_l, drag_seg->prev,
+                                          range_l->left, pos);
 
   /* Compress segments to the right of the handle */
 
   if (drag_seg != range_r->next)
-    control_compress_range (drag_seg, range_r, pos, range_r->right);
+    gimp_gradient_segment_range_compress (gradient,
+                                          drag_seg, range_r,
+                                          pos, range_r->right);
   else
-    control_compress_range (drag_seg, drag_seg, pos, drag_seg->right);
-}
-
-static void
-control_compress_range (GimpGradientSegment *range_l,
-			GimpGradientSegment *range_r,
-			gdouble              new_l,
-			gdouble              new_r)
-{
-  gdouble         orig_l, orig_r;
-  gdouble         scale;
-  GimpGradientSegment *seg, *aseg;
-
-  orig_l = range_l->left;
-  orig_r = range_r->right;
-
-  scale = (new_r - new_l) / (orig_r - orig_l);
-
-  seg = range_l;
-
-  do
-    {
-      if (seg->prev)
-        seg->left = new_l + (seg->left - orig_l) * scale;
-
-      seg->middle = new_l + (seg->middle - orig_l) * scale;
-
-      if (seg->next)
-        seg->right = new_l + (seg->right - orig_l) * scale;
-
-      /* Next */
-
-      aseg = seg;
-      seg  = seg->next;
-    }
-  while (aseg != range_r);
+    gimp_gradient_segment_range_compress (gradient,
+                                          drag_seg, drag_seg,
+                                          pos, drag_seg->right);
 }
 
 /*****/
@@ -1513,109 +1543,18 @@ control_move (GimpGradientEditor  *editor,
 	      GimpGradientSegment *range_r,
 	      gdouble              delta)
 {
-  gdouble              lbound, rbound;
-  gint                 is_first, is_last;
-  GimpGradientSegment *seg, *aseg;
+  GimpGradient *gradient;
+  gdouble       ret;
 
-  /* First or last segments in gradient? */
+  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  is_first = (range_l->prev == NULL);
-  is_last  = (range_r->next == NULL);
+  ret = gimp_gradient_segment_range_move (gradient,
+                                          range_l,
+                                          range_r,
+                                          delta,
+                                          editor->control_compress);
 
-  /* Calculate drag bounds */
-
-  if (! editor->control_compress)
-    {
-      if (!is_first)
-	lbound = range_l->prev->middle + EPSILON;
-      else
-	lbound = range_l->left + EPSILON;
-
-      if (!is_last)
-	rbound = range_r->next->middle - EPSILON;
-      else
-	rbound = range_r->right - EPSILON;
-    }
-  else
-    {
-      if (!is_first)
-	lbound = range_l->prev->left + 2.0 * EPSILON;
-      else
-	lbound = range_l->left + EPSILON;
-
-      if (!is_last)
-	rbound = range_r->next->right - 2.0 * EPSILON;
-      else
-	rbound = range_r->right - EPSILON;
-    }
-
-  /* Fix the delta if necessary */
-
-  if (delta < 0.0)
-    {
-      if (!is_first)
-	{
-	  if (range_l->left + delta < lbound)
-	    delta = lbound - range_l->left;
-	}
-      else
-	if (range_l->middle + delta < lbound)
-	  delta = lbound - range_l->middle;
-    }
-  else
-    {
-      if (!is_last)
-	{
-	  if (range_r->right + delta > rbound)
-	    delta = rbound - range_r->right;
-	}
-      else
-	if (range_r->middle + delta > rbound)
-	  delta = rbound - range_r->middle;
-    }
-
-  /* Move all the segments inside the range */
-
-  seg = range_l;
-
-  do
-    {
-      if (!((seg == range_l) && is_first))
-	seg->left   += delta;
-
-      seg->middle += delta;
-
-      if (!((seg == range_r) && is_last))
-	seg->right  += delta;
-
-      /* Next */
-
-      aseg = seg;
-      seg  = seg->next;
-    }
-  while (aseg != range_r);
-
-  /* Fix the segments that surround the range */
-
-  if (!is_first)
-    {
-      if (! editor->control_compress)
-	range_l->prev->right = range_l->left;
-      else
-	control_compress_range (range_l->prev, range_l->prev,
-				range_l->prev->left, range_l->left);
-    }
-
-  if (!is_last)
-    {
-      if (! editor->control_compress)
-	range_r->next->left = range_r->right;
-      else
-	control_compress_range (range_r->next, range_r->next,
-				range_r->right, range_r->next->right);
-    }
-
-  return delta;
+  return ret;
 }
 
 /*****/
@@ -1649,12 +1588,18 @@ control_update (GimpGradientEditor *editor,
 
       editor->control_pixmap =
 	gdk_pixmap_new (editor->control->window, cwidth, cheight, -1);
-
-      reset_selection = TRUE;
     }
 
-  if (reset_selection && gradient)
-    control_select_single_segment (editor, gradient->segments);
+  if (! editor->control_sel_l || ! editor->control_sel_r)
+    reset_selection = TRUE;
+
+  if (reset_selection)
+    {
+      if (gradient)
+        control_select_single_segment (editor, gradient->segments);
+      else
+        control_select_single_segment (editor, NULL);
+    }
 
   /* Redraw pixmap */
   adjustment = GTK_ADJUSTMENT (editor->scroll_data);
@@ -1697,10 +1642,8 @@ control_draw (GimpGradientEditor *editor,
 
   /* Draw selection */
 
-  sel_l = control_calc_p_pos (editor,
-			      editor->control_sel_l->left);
-  sel_r = control_calc_p_pos (editor,
-			      editor->control_sel_r->right);
+  sel_l = control_calc_p_pos (editor, editor->control_sel_l->left);
+  sel_r = control_calc_p_pos (editor, editor->control_sel_r->right);
 
   gdk_draw_rectangle (pixmap,
 		      editor->control->style->dark_gc[GTK_STATE_NORMAL],
@@ -1708,21 +1651,14 @@ control_draw (GimpGradientEditor *editor,
 
   /* Draw handles */
 
-  seg = gradient->segments;
-
-  while (seg)
+  for (seg = gradient->segments; seg; seg = seg->next)
     {
       control_draw_normal_handle (editor, pixmap, seg->left, height);
       control_draw_middle_handle (editor, pixmap, seg->middle, height);
 
       /* Draw right handle only if this is the last segment */
-
       if (seg->next == NULL)
 	control_draw_normal_handle (editor, pixmap, seg->right, height);
-
-      /* Next! */
-
-      seg = seg->next;
     }
 
   /* Draw the handle which is closest to the mouse position */

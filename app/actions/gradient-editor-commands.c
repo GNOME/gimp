@@ -71,10 +71,8 @@ void
 gradient_editor_left_color_cmd_callback (GtkAction *action,
                                          gpointer   data)
 {
-  GimpGradientEditor *editor;
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
   GimpGradient       *gradient;
-
-  editor = GIMP_GRADIENT_EDITOR (data);
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
@@ -103,13 +101,14 @@ gradient_editor_load_left_cmd_callback (GtkAction *action,
 {
   GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
   GimpGradient        *gradient;
-  GimpContext         *user_context;
+  GimpContext         *context;
   GimpGradientSegment *seg;
   GimpRGB              color;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
+  context =
+    gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
 
   switch (value)
     {
@@ -119,51 +118,32 @@ gradient_editor_load_left_cmd_callback (GtkAction *action,
       else
 	seg = gimp_gradient_segment_get_last (editor->control_sel_l);
 
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              &seg->right_color,
-                                              &editor->control_sel_r->right_color,
-                                              TRUE, TRUE);
+      color = seg->right_color;
       break;
 
     case 1: /* Fetch from right endpoint */
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              &editor->control_sel_r->right_color,
-                                              &editor->control_sel_r->right_color,
-                                              TRUE, TRUE);
+      color = editor->control_sel_r->right_color;
       break;
 
     case 2: /* Fetch from FG color */
-      gimp_context_get_foreground (user_context, &color);
-
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              &color,
-                                              &editor->control_sel_r->right_color,
-                                              TRUE, TRUE);
+      gimp_context_get_foreground (context, &color);
       break;
 
     case 3: /* Fetch from BG color */
-      gimp_context_get_background (user_context, &color);
-
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              &color,
-                                              &editor->control_sel_r->right_color,
-                                              TRUE, TRUE);
+      gimp_context_get_background (context, &color);
       break;
 
     default: /* Load a color */
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              &editor->saved_colors[value - 4],
-                                              &editor->control_sel_r->right_color,
-                                              TRUE, TRUE);
+      color = editor->saved_colors[value - 4];
       break;
     }
 
-  gimp_data_dirty (GIMP_DATA (gradient));
+  gimp_gradient_segment_range_blend (gradient,
+                                     editor->control_sel_l,
+                                     editor->control_sel_r,
+                                     &color,
+                                     &editor->control_sel_r->right_color,
+                                     TRUE, TRUE);
 }
 
 void
@@ -172,8 +152,12 @@ gradient_editor_save_left_cmd_callback (GtkAction *action,
                                         gpointer   data)
 {
   GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradient       *gradient;
 
-  editor->saved_colors[value] = editor->control_sel_l->left_color;
+  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
+
+  gimp_gradient_segment_get_left_color (gradient, editor->control_sel_l,
+                                        &editor->saved_colors[value]);
 }
 
 void
@@ -210,13 +194,14 @@ gradient_editor_load_right_cmd_callback (GtkAction *action,
 {
   GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
   GimpGradient        *gradient;
-  GimpContext         *user_context;
+  GimpContext         *context;
   GimpGradientSegment *seg;
   GimpRGB              color;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
+  context =
+    gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
 
   switch (value)
     {
@@ -226,51 +211,32 @@ gradient_editor_load_right_cmd_callback (GtkAction *action,
       else
 	seg = gimp_gradient_segment_get_first (editor->control_sel_r);
 
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              &editor->control_sel_r->left_color,
-                                              &seg->left_color,
-                                              TRUE, TRUE);
+      color = seg->left_color;
       break;
 
     case 1: /* Fetch from left endpoint */
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              &editor->control_sel_l->left_color,
-                                              &editor->control_sel_l->left_color,
-                                              TRUE, TRUE);
+      color = editor->control_sel_l->left_color;
       break;
 
     case 2: /* Fetch from FG color */
-      gimp_context_get_foreground (user_context, &color);
-
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              &editor->control_sel_l->left_color,
-                                              &color,
-                                              TRUE, TRUE);
+      gimp_context_get_foreground (context, &color);
       break;
 
     case 3: /* Fetch from BG color */
-      gimp_context_get_background (user_context, &color);
-
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              &editor->control_sel_l->left_color,
-                                              &color,
-                                              TRUE, TRUE);
+      gimp_context_get_background (context, &color);
       break;
 
     default: /* Load a color */
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              &editor->control_sel_l->left_color,
-                                              &editor->saved_colors[value - 4],
-                                              TRUE, TRUE);
+      color = editor->saved_colors[value - 4];
       break;
     }
 
-  gimp_data_dirty (GIMP_DATA (gradient));
+  gimp_gradient_segment_range_blend (gradient,
+                                     editor->control_sel_l,
+                                     editor->control_sel_r,
+                                     &editor->control_sel_l->left_color,
+                                     &color,
+                                     TRUE, TRUE);
 }
 
 void
@@ -279,8 +245,12 @@ gradient_editor_save_right_cmd_callback (GtkAction *action,
                                          gpointer   data)
 {
   GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradient       *gradient;
 
-  editor->saved_colors[value] = editor->control_sel_l->left_color;
+  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
+
+  gimp_gradient_segment_get_right_color (gradient, editor->control_sel_r,
+                                         &editor->saved_colors[value]);
 }
 
 void
@@ -291,25 +261,16 @@ gradient_editor_blending_func_cmd_callback (GtkAction *action,
   GimpGradientEditor      *editor = GIMP_GRADIENT_EDITOR (data);
   GimpGradient            *gradient;
   GimpGradientSegmentType  type;
-  GimpGradientSegment     *seg, *aseg;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
   type = (GimpGradientSegmentType)
     gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  seg = editor->control_sel_l;
-
-  do
-    {
-      seg->type = type;
-
-      aseg = seg;
-      seg  = seg->next;
-    }
-  while (aseg != editor->control_sel_r);
-
-  gimp_data_dirty (GIMP_DATA (gradient));
+  gimp_gradient_segment_range_set_blending_function (gradient,
+                                                     editor->control_sel_l,
+                                                     editor->control_sel_r,
+                                                     type);
 }
 
 void
@@ -320,25 +281,16 @@ gradient_editor_coloring_type_cmd_callback (GtkAction *action,
   GimpGradientEditor       *editor = GIMP_GRADIENT_EDITOR (data);
   GimpGradient             *gradient;
   GimpGradientSegmentColor  color;
-  GimpGradientSegment      *seg, *aseg;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
   color = (GimpGradientSegmentColor)
     gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  seg = editor->control_sel_l;
-
-  do
-    {
-      seg->color = color;
-
-      aseg = seg;
-      seg  = seg->next;
-    }
-  while (aseg != editor->control_sel_r);
-
-  gimp_data_dirty (GIMP_DATA (gradient));
+  gimp_gradient_segment_range_set_coloring_type (gradient,
+                                                 editor->control_sel_l,
+                                                 editor->control_sel_r,
+                                                 color);
 }
 
 void
@@ -347,122 +299,14 @@ gradient_editor_flip_cmd_callback (GtkAction *action,
 {
   GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
   GimpGradient        *gradient;
-  GimpGradientSegment *oseg, *oaseg;
-  GimpGradientSegment *seg, *prev, *tmp;
-  GimpGradientSegment *lseg, *rseg;
-  gdouble              left, right;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  left  = editor->control_sel_l->left;
-  right = editor->control_sel_r->right;
-
-  /* Build flipped segments */
-
-  prev = NULL;
-  oseg = editor->control_sel_r;
-  tmp  = NULL;
-
-  do
-    {
-      seg = gimp_gradient_segment_new ();
-
-      if (prev == NULL)
-	{
-	  seg->left = left;
-	  tmp = seg; /* Remember first segment */
-	}
-      else
-	seg->left = left + right - oseg->right;
-
-      seg->middle = left + right - oseg->middle;
-      seg->right  = left + right - oseg->left;
-
-      seg->left_color = oseg->right_color;
-
-      seg->right_color = oseg->left_color;
-
-      switch (oseg->type)
-	{
-	case GIMP_GRAD_SPHERE_INCREASING:
-	  seg->type = GIMP_GRAD_SPHERE_DECREASING;
-	  break;
-
-	case GIMP_GRAD_SPHERE_DECREASING:
-	  seg->type = GIMP_GRAD_SPHERE_INCREASING;
-	  break;
-
-	default:
-	  seg->type = oseg->type;
-	}
-
-      switch (oseg->color)
-	{
-	case GIMP_GRAD_HSV_CCW:
-	  seg->color = GIMP_GRAD_HSV_CW;
-	  break;
-
-	case GIMP_GRAD_HSV_CW:
-	  seg->color = GIMP_GRAD_HSV_CCW;
-	  break;
-
-	default:
-	  seg->color = oseg->color;
-	}
-
-      seg->prev = prev;
-      seg->next = NULL;
-
-      if (prev)
-	prev->next = seg;
-
-      prev = seg;
-
-      oaseg = oseg;
-      oseg  = oseg->prev; /* Move backwards! */
-    }
-  while (oaseg != editor->control_sel_l);
-
-  seg->right = right; /* Squish accumulative error */
-
-  /* Free old segments */
-
-  lseg = editor->control_sel_l->prev;
-  rseg = editor->control_sel_r->next;
-
-  oseg = editor->control_sel_l;
-
-  do
-    {
-      oaseg = oseg->next;
-      gimp_gradient_segment_free (oseg);
-      oseg = oaseg;
-    }
-  while (oaseg != rseg);
-
-  /* Link in new segments */
-
-  if (lseg)
-    lseg->next = tmp;
-  else
-    gradient->segments = tmp;
-
-  tmp->prev = lseg;
-
-  seg->next = rseg;
-
-  if (rseg)
-    rseg->prev = seg;
-
-  /* Reset selection */
-
-  editor->control_sel_l = tmp;
-  editor->control_sel_r = seg;
-
-  /* Done */
-
-  gimp_data_dirty (GIMP_DATA (gradient));
-  gimp_gradient_editor_update (editor);
+  gimp_gradient_segment_range_flip (gradient,
+                                    editor->control_sel_l,
+                                    editor->control_sel_r,
+                                    &editor->control_sel_l,
+                                    &editor->control_sel_r);
 }
 
 void
@@ -544,25 +388,16 @@ void
 gradient_editor_split_midpoint_cmd_callback (GtkAction *action,
                                              gpointer   data)
 {
-  GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg, *lseg, *rseg;
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradient       *gradient;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  seg = editor->control_sel_l;
-
-  do
-    {
-      gimp_gradient_segment_split_midpoint (gradient, seg, &lseg, &rseg);
-      seg = rseg->next;
-    }
-  while (lseg != editor->control_sel_r);
-
-  editor->control_sel_r = rseg;
-
-  gimp_data_dirty (GIMP_DATA (gradient));
-  gimp_gradient_editor_update (editor);
+  gimp_gradient_segment_range_split_midpoint (gradient,
+                                              editor->control_sel_l,
+                                              editor->control_sel_r,
+                                              &editor->control_sel_l,
+                                              &editor->control_sel_r);
 }
 
 void
@@ -646,165 +481,44 @@ void
 gradient_editor_delete_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
-  GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
-  GimpGradient        *gradient;
-  GimpGradientSegment *lseg, *rseg, *seg, *aseg, *next;
-  gdouble              join;
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradient       *gradient;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  /* Remember segments to the left and to the right of the selection */
-
-  lseg = editor->control_sel_l->prev;
-  rseg = editor->control_sel_r->next;
-
-  /* Cannot delete all the segments in the gradient */
-
-  if ((lseg == NULL) && (rseg == NULL))
-    return;
-
-  /* Calculate join point */
-
-  join = (editor->control_sel_l->left +
-	  editor->control_sel_r->right) / 2.0;
-
-  if (lseg == NULL)
-    join = 0.0;
-  else if (rseg == NULL)
-    join = 1.0;
-
-  /* Move segments */
-
-  if (lseg != NULL)
-    gimp_gradient_segments_compress_range (lseg, lseg, lseg->left, join);
-
-  if (rseg != NULL)
-    gimp_gradient_segments_compress_range (rseg, rseg, join, rseg->right);
-
-  /* Link */
-
-  if (lseg)
-    lseg->next = rseg;
-
-  if (rseg)
-    rseg->prev = lseg;
-
-  /* Delete old segments */
-
-  seg = editor->control_sel_l;
-
-  do
-    {
-      next = seg->next;
-      aseg = seg;
-
-      gimp_gradient_segment_free (seg);
-
-      seg = next;
-    }
-  while (aseg != editor->control_sel_r);
-
-  /* Change selection */
-
-  if (rseg)
-    {
-      editor->control_sel_l = rseg;
-      editor->control_sel_r = rseg;
-    }
-  else
-    {
-      editor->control_sel_l = lseg;
-      editor->control_sel_r = lseg;
-    }
-
-  if (lseg == NULL)
-    gradient->segments = rseg;
-
-  /* Done */
-
-  gimp_data_dirty (GIMP_DATA (gradient));
-  gimp_gradient_editor_update (editor);
+  gimp_gradient_segment_range_delete (gradient,
+                                      editor->control_sel_l,
+                                      editor->control_sel_r,
+                                      &editor->control_sel_l,
+                                      &editor->control_sel_r);
 }
 
 void
 gradient_editor_recenter_cmd_callback (GtkAction *action,
                                        gpointer   data)
 {
-  GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg, *aseg;
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradient       *gradient;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  seg = editor->control_sel_l;
-
-  do
-    {
-      seg->middle = (seg->left + seg->right) / 2.0;
-
-      aseg = seg;
-      seg  = seg->next;
-    }
-  while (aseg != editor->control_sel_r);
-
-  gimp_data_dirty (GIMP_DATA (gradient));
-  gimp_gradient_editor_update (editor);
+  gimp_gradient_segment_range_recenter_handles (gradient,
+                                                editor->control_sel_l,
+                                                editor->control_sel_r);
 }
 
 void
 gradient_editor_redistribute_cmd_callback (GtkAction *action,
                                            gpointer   data)
 {
-  GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg, *aseg;
-  gdouble              left, right, seg_len;
-  gint                 num_segs;
-  gint                 i;
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradient       *gradient;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  /* Count number of segments in selection */
-
-  num_segs = 0;
-  seg      = editor->control_sel_l;
-
-  do
-    {
-      num_segs++;
-      aseg = seg;
-      seg  = seg->next;
-    }
-  while (aseg != editor->control_sel_r);
-
-  /* Calculate new segment length */
-
-  left    = editor->control_sel_l->left;
-  right   = editor->control_sel_r->right;
-  seg_len = (right - left) / num_segs;
-
-  /* Redistribute */
-
-  seg = editor->control_sel_l;
-
-  for (i = 0; i < num_segs; i++)
-    {
-      seg->left   = left + i * seg_len;
-      seg->right  = left + (i + 1) * seg_len;
-      seg->middle = (seg->left + seg->right) / 2.0;
-
-      seg = seg->next;
-    }
-
-  /* Fix endpoints to squish accumulative error */
-
-  editor->control_sel_l->left  = left;
-  editor->control_sel_r->right = right;
-
-  /* Done */
-
-  gimp_data_dirty (GIMP_DATA (gradient));
-  gimp_gradient_editor_update (editor);
+  gimp_gradient_segment_range_redistribute_handles (gradient,
+                                                    editor->control_sel_l,
+                                                    editor->control_sel_r);
 }
 
 void
@@ -812,14 +526,16 @@ gradient_editor_blend_color_cmd_callback (GtkAction *action,
                                           gpointer   data)
 {
   GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradient       *gradient;
 
-  gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                          editor->control_sel_r,
-                                          &editor->control_sel_l->left_color,
-                                          &editor->control_sel_r->right_color,
-                                          TRUE, FALSE);
+  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  gimp_data_dirty (GIMP_DATA_EDITOR (editor)->data);
+  gimp_gradient_segment_range_blend (gradient,
+                                     editor->control_sel_l,
+                                     editor->control_sel_r,
+                                     &editor->control_sel_l->left_color,
+                                     &editor->control_sel_r->right_color,
+                                     TRUE, FALSE);
 }
 
 void
@@ -827,14 +543,16 @@ gradient_editor_blend_opacity_cmd_callback (GtkAction *action,
                                             gpointer   data)
 {
   GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradient       *gradient;
 
-  gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                          editor->control_sel_r,
-                                          &editor->control_sel_l->left_color,
-                                          &editor->control_sel_r->right_color,
-                                          FALSE, TRUE);
+  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  gimp_data_dirty (GIMP_DATA_EDITOR (editor)->data);
+  gimp_gradient_segment_range_blend (gradient,
+                                     editor->control_sel_l,
+                                     editor->control_sel_r,
+                                     &editor->control_sel_l->left_color,
+                                     &editor->control_sel_r->right_color,
+                                     FALSE, TRUE);
 }
 
 
@@ -846,32 +564,30 @@ gradient_editor_left_color_changed (ColorNotebook      *cnb,
                                     ColorNotebookState  state,
                                     gpointer            data)
 {
-  GimpGradientEditor *editor;
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
   GimpGradient       *gradient;
-
-  editor = (GimpGradientEditor *) data;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
   switch (state)
     {
     case COLOR_NOTEBOOK_UPDATE:
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              (GimpRGB *) color,
-                                              &editor->control_sel_r->right_color,
-                                              TRUE, TRUE);
-      gimp_data_dirty (GIMP_DATA (gradient));
+      gimp_gradient_segment_range_blend (gradient,
+                                         editor->control_sel_l,
+                                         editor->control_sel_r,
+                                         color,
+                                         &editor->control_sel_r->right_color,
+                                         TRUE, TRUE);
       break;
 
     case COLOR_NOTEBOOK_OK:
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              (GimpRGB *) color,
-                                              &editor->control_sel_r->right_color,
-                                              TRUE, TRUE);
+      gimp_gradient_segment_range_blend (gradient,
+                                         editor->control_sel_l,
+                                         editor->control_sel_r,
+                                         color,
+                                         &editor->control_sel_r->right_color,
+                                         TRUE, TRUE);
       gimp_gradient_segments_free (editor->left_saved_segments);
-      gimp_data_dirty (GIMP_DATA (gradient));
       color_notebook_free (cnb);
       editor->color_notebook = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
@@ -894,32 +610,30 @@ gradient_editor_right_color_changed (ColorNotebook      *cnb,
                                      ColorNotebookState  state,
                                      gpointer            data)
 {
-  GimpGradientEditor *editor;
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
   GimpGradient       *gradient;
-
-  editor = (GimpGradientEditor *) data;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
   switch (state)
     {
     case COLOR_NOTEBOOK_UPDATE:
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              &editor->control_sel_r->left_color,
-                                              (GimpRGB *) color,
-                                              TRUE, TRUE);
-      gimp_data_dirty (GIMP_DATA (gradient));
+      gimp_gradient_segment_range_blend (gradient,
+                                         editor->control_sel_l,
+                                         editor->control_sel_r,
+                                         &editor->control_sel_r->left_color,
+                                         color,
+                                         TRUE, TRUE);
       break;
 
     case COLOR_NOTEBOOK_OK:
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              &editor->control_sel_r->left_color,
-                                              (GimpRGB *) color,
-                                              TRUE, TRUE);
+      gimp_gradient_segment_range_blend (gradient,
+                                         editor->control_sel_l,
+                                         editor->control_sel_r,
+                                         &editor->control_sel_r->left_color,
+                                         color,
+                                         TRUE, TRUE);
       gimp_gradient_segments_free (editor->right_saved_segments);
-      gimp_data_dirty (GIMP_DATA (gradient));
       color_notebook_free (cnb);
       editor->color_notebook = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
@@ -1022,34 +736,16 @@ gradient_editor_split_uniform_response (GtkWidget          *widget,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpGradient        *gradient;
-      GimpGradientSegment *seg, *aseg, *lseg, *rseg, *lsel;
+      GimpGradient *gradient;
 
       gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-      seg  = editor->control_sel_l;
-      lsel = NULL;
-
-      do
-        {
-          aseg = seg;
-
-          gimp_gradient_segment_split_uniform (gradient, seg,
-                                               editor->split_parts,
-                                               &lseg, &rseg);
-
-          if (seg == editor->control_sel_l)
-            lsel = lseg;
-
-          seg = rseg->next;
-        }
-      while (aseg != editor->control_sel_r);
-
-      editor->control_sel_l = lsel;
-      editor->control_sel_r = rseg;
-
-      gimp_data_dirty (GIMP_DATA (gradient));
-      gimp_gradient_editor_update (editor);
+      gimp_gradient_segment_range_split_uniform (gradient,
+                                                 editor->control_sel_l,
+                                                 editor->control_sel_r,
+                                                 editor->split_parts,
+                                                 &editor->control_sel_l,
+                                                 &editor->control_sel_r);
     }
 }
 
@@ -1063,114 +759,15 @@ gradient_editor_replicate_response (GtkWidget          *widget,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpGradient        *gradient;
-      gdouble              sel_left, sel_right, sel_len;
-      gdouble              new_left;
-      gdouble              factor;
-      GimpGradientSegment *prev, *seg, *tmp;
-      GimpGradientSegment *oseg, *oaseg;
-      GimpGradientSegment *lseg, *rseg;
-      gint                 i;
+      GimpGradient *gradient;
 
       gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-      /* Remember original parameters */
-      sel_left  = editor->control_sel_l->left;
-      sel_right = editor->control_sel_r->right;
-      sel_len   = sel_right - sel_left;
-
-      factor = 1.0 / editor->replicate_times;
-
-      /* Build replicated segments */
-
-      prev = NULL;
-      seg  = NULL;
-      tmp  = NULL;
-
-      for (i = 0; i < editor->replicate_times; i++)
-        {
-          /* Build one cycle */
-
-          new_left  = sel_left + i * factor * sel_len;
-
-          oseg = editor->control_sel_l;
-
-          do
-            {
-              seg = gimp_gradient_segment_new ();
-
-              if (prev == NULL)
-                {
-                  seg->left = sel_left;
-                  tmp = seg; /* Remember first segment */
-                }
-              else
-                {
-                  seg->left = new_left + factor * (oseg->left - sel_left);
-                }
-
-              seg->middle = new_left + factor * (oseg->middle - sel_left);
-              seg->right  = new_left + factor * (oseg->right - sel_left);
-
-              seg->left_color  = oseg->left_color;
-              seg->right_color = oseg->right_color;
-
-              seg->type  = oseg->type;
-              seg->color = oseg->color;
-
-              seg->prev = prev;
-              seg->next = NULL;
-
-              if (prev)
-                prev->next = seg;
-
-              prev = seg;
-
-              oaseg = oseg;
-              oseg  = oseg->next;
-            }
-          while (oaseg != editor->control_sel_r);
-        }
-
-      seg->right = sel_right; /* Squish accumulative error */
-
-      /* Free old segments */
-
-      lseg = editor->control_sel_l->prev;
-      rseg = editor->control_sel_r->next;
-
-      oseg = editor->control_sel_l;
-
-      do
-        {
-          oaseg = oseg->next;
-          gimp_gradient_segment_free (oseg);
-          oseg = oaseg;
-        }
-      while (oaseg != rseg);
-
-      /* Link in new segments */
-
-      if (lseg)
-        lseg->next = tmp;
-      else
-        gradient->segments = tmp;
-
-      tmp->prev = lseg;
-
-      seg->next = rseg;
-
-      if (rseg)
-        rseg->prev = seg;
-
-      /* Reset selection */
-
-      editor->control_sel_l = tmp;
-      editor->control_sel_r = seg;
-
-      /* Done */
-
-      gimp_data_dirty (GIMP_DATA (gradient));
-      gimp_gradient_editor_update (editor);
+      gimp_gradient_segment_range_replicate (gradient,
+                                             editor->control_sel_l,
+                                             editor->control_sel_r,
+                                             editor->replicate_times,
+                                             &editor->control_sel_l,
+                                             &editor->control_sel_r);
     }
 }

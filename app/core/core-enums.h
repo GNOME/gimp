@@ -578,7 +578,7 @@ typedef enum  /*< skip >*/
   GIMP_CUSTOM_PALETTE
 } GimpConvertPaletteType;
 
-typedef enum  /*< pdb-skip, skip >*/
+typedef enum  /*< skip >*/
 {
   GIMP_GRAD_LINEAR = 0,
   GIMP_GRAD_CURVED,
@@ -587,7 +587,7 @@ typedef enum  /*< pdb-skip, skip >*/
   GIMP_GRAD_SPHERE_DECREASING
 } GimpGradientSegmentType;
 
-typedef enum  /*< pdb-skip, skip >*/
+typedef enum  /*< skip >*/
 {
   GIMP_GRAD_RGB,      /* normal RGB           */
   GIMP_GRAD_HSV_CCW,  /* counterclockwise hue */

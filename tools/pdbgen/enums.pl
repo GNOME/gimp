@@ -358,6 +358,26 @@ package Gimp::CodeGen::enums;
 		       GIMP_MONO_PALETTE => '3',
 		       GIMP_CUSTOM_PALETTE => '4' }
 	},
+    GimpGradientSegmentType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_GRAD_LINEAR GIMP_GRAD_CURVED GIMP_GRAD_SINE
+			  GIMP_GRAD_SPHERE_INCREASING
+			  GIMP_GRAD_SPHERE_DECREASING) ],
+	  mapping => { GIMP_GRAD_LINEAR => '0',
+		       GIMP_GRAD_CURVED => '1',
+		       GIMP_GRAD_SINE => '2',
+		       GIMP_GRAD_SPHERE_INCREASING => '3',
+		       GIMP_GRAD_SPHERE_DECREASING => '4' }
+	},
+    GimpGradientSegmentColor =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_GRAD_RGB GIMP_GRAD_HSV_CCW GIMP_GRAD_HSV_CW) ],
+	  mapping => { GIMP_GRAD_RGB => '0',
+		       GIMP_GRAD_HSV_CCW => '1',
+		       GIMP_GRAD_HSV_CW => '2' }
+	},
     GimpMaskApplyMode =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
