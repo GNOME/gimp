@@ -280,6 +280,21 @@ typedef enum /*< pdb-skip >*/
 } GimpUndoMode;
 
 
+#define GIMP_TYPE_UNDO_EVENT (gimp_undo_event_get_type ())
+
+GType gimp_undo_event_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_UNDO_EVENT_UNDO_PUSHED,  /* a new undo has been added to the undo stack */
+  GIMP_UNDO_EVENT_UNDO_EXPIRED, /* an undo has been freed from the undo stack  */
+  GIMP_UNDO_EVENT_REDO_EXPIRED, /* a redo has been freed from the redo stack   */
+  GIMP_UNDO_EVENT_UNDO,         /* an undo has been executed                   */
+  GIMP_UNDO_EVENT_REDO,         /* a redo has been executed                    */
+  GIMP_UNDO_EVENT_UNDO_FREE     /* all undo and redo info has been cleared     */
+} GimpUndoEvent;
+
+
 #define GIMP_TYPE_UNDO_TYPE (gimp_undo_type_get_type ())
 
 GType gimp_undo_type_get_type (void) G_GNUC_CONST;

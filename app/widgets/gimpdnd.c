@@ -1141,16 +1141,11 @@ gimp_dnd_data_type_get_by_g_type (GType type)
     {
       dnd_type = GIMP_DND_TYPE_TOOL;
     }
-  else
-    {
-      g_warning ("%s(): unsupported GType \"%s\"",
-		 G_GNUC_FUNCTION, g_type_name (type));
-    }
 
   return dnd_type;
 }
 
-void
+gboolean
 gimp_dnd_drag_source_set_by_type (GtkWidget       *widget,
 				  GdkModifierType  start_button_mask,
 				  GType            type,
@@ -1158,20 +1153,22 @@ gimp_dnd_drag_source_set_by_type (GtkWidget       *widget,
 {
   GimpDndType dnd_type;
 
-  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
 
   dnd_type = gimp_dnd_data_type_get_by_g_type (type);
 
   if (dnd_type == GIMP_DND_TYPE_NONE)
-    return;
+    return FALSE;
 
   gtk_drag_source_set (widget, start_button_mask,
 		       &dnd_data_defs[dnd_type].target_entry,
 		       1,
 		       actions);
+
+  return TRUE;
 }
 
-void
+gboolean
 gimp_dnd_drag_dest_set_by_type (GtkWidget       *widget,
 				GtkDestDefaults  flags,
 				GType            type,
@@ -1179,20 +1176,22 @@ gimp_dnd_drag_dest_set_by_type (GtkWidget       *widget,
 {
   GimpDndType dnd_type;
 
-  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
 
   dnd_type = gimp_dnd_data_type_get_by_g_type (type);
 
   if (dnd_type == GIMP_DND_TYPE_NONE)
-    return;
+    return FALSE;
 
   gtk_drag_dest_set (widget, flags,
 		     &dnd_data_defs[dnd_type].target_entry,
 		     1,
 		     actions);
+
+  return TRUE;
 }
 
-void
+gboolean
 gimp_dnd_viewable_source_set (GtkWidget               *widget,
 			      GType                    type,
 			      GimpDndDragViewableFunc  get_viewable_func,
@@ -1200,36 +1199,40 @@ gimp_dnd_viewable_source_set (GtkWidget               *widget,
 {
   GimpDndType dnd_type;
 
-  g_return_if_fail (GTK_IS_WIDGET (widget));
-  g_return_if_fail (get_viewable_func != NULL);
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
+  g_return_val_if_fail (get_viewable_func != NULL, FALSE);
 
   dnd_type = gimp_dnd_data_type_get_by_g_type (type);
 
   if (dnd_type == GIMP_DND_TYPE_NONE)
-    return;
+    return FALSE;
 
   gimp_dnd_data_source_set (dnd_type, widget,
 			    G_CALLBACK (get_viewable_func),
 			    data);
+
+  return TRUE;
 }
 
-void
+gboolean
 gimp_dnd_viewable_source_unset (GtkWidget *widget,
 				GType      type)
 {
   GimpDndType dnd_type;
 
-  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
 
   dnd_type = gimp_dnd_data_type_get_by_g_type (type);
 
   if (dnd_type == GIMP_DND_TYPE_NONE)
-    return;
+    return FALSE;
 
   gimp_dnd_data_source_unset (widget);
+
+  return TRUE;
 }
 
-void
+gboolean
 gimp_dnd_viewable_dest_add (GtkWidget               *widget,
 			    GType                    type,
 			    GimpDndDropViewableFunc  set_viewable_func,
@@ -1237,33 +1240,37 @@ gimp_dnd_viewable_dest_add (GtkWidget               *widget,
 {
   GimpDndType dnd_type;
 
-  g_return_if_fail (GTK_IS_WIDGET (widget));
-  g_return_if_fail (set_viewable_func != NULL);
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
+  g_return_val_if_fail (set_viewable_func != NULL, FALSE);
 
   dnd_type = gimp_dnd_data_type_get_by_g_type (type);
 
   if (dnd_type == GIMP_DND_TYPE_NONE)
-    return;
+    return FALSE;
 
   gimp_dnd_data_dest_add (dnd_type, widget,
 			  G_CALLBACK (set_viewable_func),
-			  data);  
+			  data);
+
+  return TRUE;
 }
 
-void
+gboolean
 gimp_dnd_viewable_dest_remove (GtkWidget *widget,
                                GType      type)
 {
   GimpDndType dnd_type;
 
-  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
 
   dnd_type = gimp_dnd_data_type_get_by_g_type (type);
 
   if (dnd_type == GIMP_DND_TYPE_NONE)
-    return;
+    return FALSE;
 
   gimp_dnd_data_dest_remove (dnd_type, widget);
+
+  return TRUE;
 }
 
 GimpViewable *

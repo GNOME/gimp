@@ -371,9 +371,10 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, undo_event),
 		  NULL, NULL,
-		  gimp_marshal_VOID__INT,
-		  G_TYPE_NONE, 1,
-		  G_TYPE_INT);
+		  gimp_marshal_VOID__ENUM_OBJECT,
+		  G_TYPE_NONE, 2,
+		  GIMP_TYPE_UNDO_EVENT,
+                  GIMP_TYPE_UNDO);
 
   gimp_image_signals[FLUSH] =
     g_signal_new ("flush",
@@ -1574,10 +1575,14 @@ gimp_image_undo_start (GimpImage *gimage)
 }
 
 void
-gimp_image_undo_event (GimpImage *gimage, 
-		       gint       event)
+gimp_image_undo_event (GimpImage     *gimage,
+		       GimpUndoEvent  event,
+                       GimpUndo      *undo)
 {
-  g_signal_emit (gimage, gimp_image_signals[UNDO_EVENT], 0, event);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (event == GIMP_UNDO_EVENT_UNDO_FREE || GIMP_IS_UNDO (undo));
+
+  g_signal_emit (gimage, gimp_image_signals[UNDO_EVENT], 0, event, undo);
 }
 
 

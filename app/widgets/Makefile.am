@@ -151,6 +151,10 @@ libappwidgets_a_sources = \
 	gimptoolbox-indicator-area.h	\
 	gimptoolinfopreview.c		\
 	gimptoolinfopreview.h		\
+	gimpundoeditor.c		\
+	gimpundoeditor.h		\
+	gimpundopreview.c		\
+	gimpundopreview.h		\
 	gimpvectorslistview.c		\
 	gimpvectorslistview.h		\
 	gimpviewabledialog.c		\

@@ -60,6 +60,7 @@
 #include "widgets/gimpselectioneditor.h"
 #include "widgets/gimptoolbox.h"
 #include "widgets/gimptoolbox-color-area.h"
+#include "widgets/gimpundoeditor.h"
 #include "widgets/gimpvectorslistview.h"
 
 #include "display/gimpdisplay.h"
@@ -81,8 +82,6 @@
 #include "tips-dialog.h"
 #include "tool-options-dialog.h"
 #include "vectors-commands.h"
-
-#include "undo_history.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -128,6 +127,8 @@ static void   dialogs_set_indexed_palette_context_func (GimpDockable  *dockable,
 							GimpContext   *context);
 static void   dialogs_set_selection_editor_context_func (GimpDockable *dockable,
                                                          GimpContext  *context);
+static void   dialogs_set_undo_history_context_func (GimpDockable     *dockable,
+                                                     GimpContext      *context);
 static void   dialogs_set_navigation_context_func (GimpDockable       *dockable,
                                                    GimpContext        *context);
 
@@ -150,6 +151,9 @@ static void dialogs_indexed_palette_image_changed  (GimpContext         *context
 static void dialogs_selection_editor_image_changed (GimpContext         *context,
                                                     GimpImage           *gimage,
                                                     GimpSelectionEditor *editor);
+static void dialogs_undo_history_image_changed     (GimpContext         *context,
+                                                    GimpImage           *gimage,
+                                                    GimpUndoEditor      *editor);
 static void dialogs_navigation_display_changed     (GimpContext         *context,
                                                     GimpDisplay         *gdisp,
                                                     GimpNavigationView  *view);
@@ -181,31 +185,6 @@ dialogs_module_browser_get (GimpDialogFactory *factory,
                             gint               preview_size)
 {
   return module_browser_new (context->gimp);
-}
-
-GtkWidget *
-dialogs_undo_history_get (GimpDialogFactory *factory,
-			  GimpContext       *context,
-                          gint               preview_size)
-{
-  GimpImage *gimage;
-  GtkWidget *undo_history;
-
-  gimage = gimp_context_get_image (context);
-
-  if (! gimage)
-    return NULL;
-
-  undo_history = g_object_get_data (G_OBJECT (gimage), "gimp-undo-history");
-
-  if (! undo_history)
-    {
-      undo_history = undo_history_new (gimage);
-
-      g_object_set_data (G_OBJECT (gimage), "gimp-undo-history", undo_history);
-    }
-
-  return undo_history;
 }
 
 GtkWidget *
@@ -789,6 +768,30 @@ dialogs_selection_editor_new (GimpDialogFactory *factory,
                                    GIMP_STOCK_TOOL_RECT_SELECT,
 				   dialogs_stock_text_tab_func,
 				   dialogs_set_selection_editor_context_func);
+
+  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
+
+  return dockable;
+}
+
+GtkWidget *
+dialogs_undo_history_new (GimpDialogFactory *factory,
+                          GimpContext       *context,
+                          gint               preview_size)
+{
+  GimpImage *gimage;
+  GtkWidget *view;
+  GtkWidget *dockable;
+
+  gimage = gimp_context_get_image (context);
+
+  view = gimp_undo_editor_new (gimage);
+
+  dockable = dialogs_dockable_new (view,
+				   _("Undo History"), _("Undo"),
+                                   GTK_STOCK_UNDO,
+				   dialogs_stock_text_tab_func,
+				   dialogs_set_undo_history_context_func);
 
   gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
 
@@ -1381,6 +1384,41 @@ dialogs_set_selection_editor_context_func (GimpDockable *dockable,
 }
 
 static void
+dialogs_set_undo_history_context_func (GimpDockable *dockable,
+                                       GimpContext  *context)
+{
+  GimpUndoEditor *view;
+
+  view = (GimpUndoEditor *) g_object_get_data (G_OBJECT (dockable),
+                                               "gimp-dialogs-view");
+
+  if (view)
+    {
+      if (dockable->context)
+	{
+	  g_signal_handlers_disconnect_by_func (dockable->context,
+						dialogs_undo_history_image_changed,
+						view);
+	}
+
+      if (context)
+	{
+	  g_signal_connect (context, "image_changed",
+			    G_CALLBACK (dialogs_undo_history_image_changed),
+			    view);
+
+	  dialogs_undo_history_image_changed (context,
+                                              gimp_context_get_image (context),
+                                              view);
+	}
+      else
+	{
+	  dialogs_undo_history_image_changed (NULL, NULL, view);
+	}
+    }
+}
+
+static void
 dialogs_set_navigation_context_func (GimpDockable *dockable,
                                      GimpContext  *context)
 {
@@ -1468,6 +1506,14 @@ dialogs_selection_editor_image_changed (GimpContext         *context,
                                         GimpSelectionEditor *editor)
 {
   gimp_selection_editor_set_image (editor, gimage);
+}
+
+static void
+dialogs_undo_history_image_changed (GimpContext    *context,
+                                    GimpImage      *gimage,
+                                    GimpUndoEditor *editor)
+{
+  gimp_undo_editor_set_image (editor, gimage);
 }
 
 static void

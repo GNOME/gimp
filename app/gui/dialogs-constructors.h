@@ -31,9 +31,6 @@ GtkWidget * dialogs_preferences_get        (GimpDialogFactory *factory,
 GtkWidget * dialogs_module_browser_get     (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
-GtkWidget * dialogs_undo_history_get       (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
 GtkWidget * dialogs_display_filters_get    (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
@@ -124,6 +121,9 @@ GtkWidget * dialogs_indexed_palette_new    (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_selection_editor_new   (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+GtkWidget * dialogs_undo_history_new       (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
 

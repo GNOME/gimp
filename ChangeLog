@@ -1,3 +1,75 @@
+2003-02-20  Michael Natterer  <mitch@gimp.org>
+
+	Reimplemented the undo history:
+
+	* app/Makefile.am
+	* app/undo_history.[ch]: removed.
+
+	Changes/cleanups to the undo system to enable/simplify the new
+	undo history implementation:
+
+	* app/core/core-types.h: removed enum undo_event_t. Removed the
+	GimpImage parameter from GimpUndoPopFunc and GimpUndoFreeFunc
+	because GimpUndo has a GimpImage pointer now (see below).
+
+	* app/core/core-enums.[ch]: added enum GimpUndoEvent. Added an
+	enum value for REDO_EXPIRED.
+
+	* app/core/gimpimage.[ch]: added a GimpUndo pointer to the
+	"undo_event" signal which needs to be passed for all events except
+	UNDO_FREE.
+
+	* app/display/gimpdisplayshell-handlers.c: changed accordingly.
+
+	* app/core/gimpundo.[ch]: added a GimpImage pointer to the
+	GimpUndo struct. Removed GimpImage parameters all over the
+	place. Added preview stuff. The preview creation needs to be
+	triggered explicitly using gimp_undo_create_preview() because the
+	GimpUndo can't know when it's possible to create the preview.
+
+	* app/core/gimpimage-undo-push.c
+	* app/paint/gimppaintcore-undo.c
+	* app/tools/gimptransformtool-undo.c: changed accordingly, cleanup.
+
+	* app/core/gimpundostack.[ch]: ditto. Return the freed undo from
+	gimp_undo_stack_free_bottom(). Removed unused container signal
+	handlers.
+
+	* app/core/gimpimage-undo.c: free the redo stack the same way old
+	undos are freed (from bottom up). Emit "undo_event" with event ==
+	REDO_EXPIRED for each removed redo.
+
+	* app/core/gimpmarshal.list: added new marshallers.
+
+	New undo history implementation:
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpundoeditor.[ch]
+	* app/widgets/gimpundopreview.[ch]: new widgets for the undo
+	step previews and the history itself.
+
+	* app/widgets/gimppreview-utils.c: added GimpUndoPreview to the
+	list of possible preview types.
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs-menu.c
+	* app/gui/dialogs.c
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: removed the old and added the new undo
+	history to the dialog factory and the various dialog menus.
+
+	* app/widgets/gimpdnd.[ch]: don't warn if a GType has no
+	corresponding DND type. Instead, return FALSE from the function
+	that failed.
+
+	* app/widgets/gimppreview.c: check the return value of gimpdnd
+	functions.  Not only add drag sources but also remove them when no
+	longer needed.
+
+	* app/widgets/gimpselectioneditor.h: removed unneeded inclusion of
+	"gui/gui-types.h".
+
 2003-02-19  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimpbase/gimpbase.def: Add gimp_utf8_strtrim. Sort. Remove

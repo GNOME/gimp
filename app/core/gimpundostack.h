@@ -37,7 +37,6 @@ struct _GimpUndoStack
 {
   GimpUndo       parent_instance;
   
-  GimpImage     *gimage;
   GimpContainer *undos;
 };
 
@@ -57,7 +56,7 @@ GimpUndo      * gimp_undo_stack_pop_undo    (GimpUndoStack       *stack,
                                              GimpUndoMode         undo_mode,
                                              GimpUndoAccumulator *accum);
 
-void            gimp_undo_stack_free_bottom (GimpUndoStack       *stack,
+GimpUndo      * gimp_undo_stack_free_bottom (GimpUndoStack       *stack,
                                              GimpUndoMode         undo_mode);
 GimpUndo      * gimp_undo_stack_peek        (GimpUndoStack       *stack);
 

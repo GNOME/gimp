@@ -27,6 +27,7 @@
 #include "gimpimage.h"
 #include "gimpmarshal.h"
 #include "gimpundo.h"
+#include "gimpundostack.h"
 
 
 enum
@@ -37,24 +38,25 @@ enum
 };
 
 
-static void      gimp_undo_class_init  (GimpUndoClass       *klass);
-static void      gimp_undo_init        (GimpUndo            *undo);
+static void      gimp_undo_class_init          (GimpUndoClass       *klass);
+static void      gimp_undo_init                (GimpUndo            *undo);
 
-static void      gimp_undo_finalize    (GObject             *object);
+static void      gimp_undo_finalize            (GObject             *object);
 
-static gsize     gimp_undo_get_memsize (GimpObject          *object);
+static gsize     gimp_undo_get_memsize         (GimpObject          *object);
 
-static TempBuf * gimp_undo_get_preview (GimpViewable        *viewable,
-                                        gint                 width,
-                                        gint                 height);
+static TempBuf * gimp_undo_get_preview         (GimpViewable        *viewable,
+                                                gint                 width,
+                                                gint                 height);
 
-static void      gimp_undo_real_pop    (GimpUndo            *undo,
-                                        GimpImage           *gimage,
-                                        GimpUndoMode         undo_mode,
-                                        GimpUndoAccumulator *accum);
-static void      gimp_undo_real_free   (GimpUndo            *undo,
-                                        GimpImage           *gimage,
-                                        GimpUndoMode         undo_mode);
+static void      gimp_undo_real_pop            (GimpUndo            *undo,
+                                                GimpUndoMode         undo_mode,
+                                                GimpUndoAccumulator *accum);
+static void      gimp_undo_real_free           (GimpUndo            *undo,
+                                                GimpUndoMode         undo_mode);
+
+static gboolean  gimp_undo_create_preview_idle (gpointer             data);
+static void   gimp_undo_create_preview_private (GimpUndo            *undo);
 
 
 static guint undo_signals[LAST_SIGNAL] = { 0 };
@@ -109,9 +111,8 @@ gimp_undo_class_init (GimpUndoClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpUndoClass, pop),
 		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT_ENUM_POINTER,
-		  G_TYPE_NONE, 3,
-		  GIMP_TYPE_IMAGE,
+		  gimp_marshal_VOID__ENUM_POINTER,
+		  G_TYPE_NONE, 2,
                   GIMP_TYPE_UNDO_MODE,
                   G_TYPE_POINTER);
 
@@ -121,9 +122,8 @@ gimp_undo_class_init (GimpUndoClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpUndoClass, free),
 		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT_ENUM,
-		  G_TYPE_NONE, 2,
-		  GIMP_TYPE_IMAGE,
+		  gimp_marshal_VOID__ENUM,
+		  G_TYPE_NONE, 1,
                   GIMP_TYPE_UNDO_MODE);
 
   object_class->finalize         = gimp_undo_finalize;
@@ -139,6 +139,8 @@ gimp_undo_class_init (GimpUndoClass *klass)
 static void
 gimp_undo_init (GimpUndo *undo)
 {
+  undo->gimage        = NULL;
+  undo->undo_type     = 0;
   undo->data          = NULL;
   undo->dirties_image = FALSE;
   undo->pop_func      = NULL;
@@ -152,6 +154,12 @@ gimp_undo_finalize (GObject *object)
   GimpUndo *undo;
 
   undo = GIMP_UNDO (object);
+
+  if (undo->preview_idle_id)
+    {
+      g_source_remove (undo->preview_idle_id);
+      undo->preview_idle_id = 0;
+    }
 
   if (undo->preview)
     {
@@ -183,11 +191,29 @@ gimp_undo_get_preview (GimpViewable *viewable,
                        gint          width,
                        gint          height)
 {
-  return (GIMP_UNDO (viewable)->preview);
+  return GIMP_UNDO (viewable)->preview;
+}
+
+static void
+gimp_undo_real_pop (GimpUndo            *undo,
+                    GimpUndoMode         undo_mode,
+                    GimpUndoAccumulator *accum)
+{
+  if (undo->pop_func)
+    undo->pop_func (undo, undo_mode, accum);
+}
+
+static void
+gimp_undo_real_free (GimpUndo     *undo,
+                     GimpUndoMode  undo_mode)
+{
+  if (undo->free_func)
+    undo->free_func (undo, undo_mode);
 }
 
 GimpUndo *
-gimp_undo_new (GimpUndoType      undo_type,
+gimp_undo_new (GimpImage        *gimage,
+               GimpUndoType      undo_type,
                const gchar      *name,
                gpointer          data,
                gsize             size,
@@ -197,13 +223,15 @@ gimp_undo_new (GimpUndoType      undo_type,
 {
   GimpUndo *undo;
 
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (name != NULL, NULL);
-  //g_return_val_if_fail (size == 0 || data != NULL, NULL);
+  g_return_val_if_fail (size == 0 || data != NULL, NULL);
 
   undo = g_object_new (GIMP_TYPE_UNDO,
                        "name", name,
                        NULL);
-  
+
+  undo->gimage        = gimage;
   undo->undo_type     = undo_type;
   undo->data          = data;
   undo->size          = size;
@@ -216,26 +244,24 @@ gimp_undo_new (GimpUndoType      undo_type,
 
 void
 gimp_undo_pop (GimpUndo            *undo,
-               GimpImage           *gimage,
                GimpUndoMode         undo_mode,
                GimpUndoAccumulator *accum)
 {
   g_return_if_fail (GIMP_IS_UNDO (undo));
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (accum != NULL);
 
-  g_signal_emit (undo, undo_signals[POP], 0, gimage, undo_mode, accum);
+  g_signal_emit (undo, undo_signals[POP], 0, undo_mode, accum);
 
   if (undo->dirties_image)
     {
       switch (undo_mode)
         {
         case GIMP_UNDO_MODE_UNDO:
-          gimp_image_clean (gimage);
+          gimp_image_clean (undo->gimage);
           break;
 
         case GIMP_UNDO_MODE_REDO:
-          gimp_image_dirty (gimage);
+          gimp_image_dirty (undo->gimage);
           break;
         }
     }
@@ -243,30 +269,86 @@ gimp_undo_pop (GimpUndo            *undo,
 
 void
 gimp_undo_free (GimpUndo     *undo,
-                GimpImage    *gimage,
                 GimpUndoMode  undo_mode)
 {
   g_return_if_fail (GIMP_IS_UNDO (undo));
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (undo, undo_signals[FREE], 0, gimage, undo_mode);
+  g_signal_emit (undo, undo_signals[FREE], 0, undo_mode);
 }
 
-static void
-gimp_undo_real_pop (GimpUndo            *undo,
-                    GimpImage           *gimage,
-                    GimpUndoMode         undo_mode,
-                    GimpUndoAccumulator *accum)
+void
+gimp_undo_create_preview (GimpUndo  *undo,
+                          gboolean   create_now)
 {
-  if (undo->pop_func)
-    undo->pop_func (undo, gimage, undo_mode, accum);
+  g_return_if_fail (GIMP_IS_UNDO (undo));
+
+  if (undo->preview || undo->preview_idle_id)
+    return;
+
+  if (create_now)
+    gimp_undo_create_preview_private (undo);
+  else
+    undo->preview_idle_id = g_idle_add (gimp_undo_create_preview_idle, undo);
 }
 
-static void
-gimp_undo_real_free (GimpUndo     *undo,
-                     GimpImage    *gimage,
-                     GimpUndoMode  undo_mode)
+static gboolean
+gimp_undo_create_preview_idle (gpointer data)
 {
-  if (undo->free_func)
-    undo->free_func (undo, gimage, undo_mode);
+  GimpUndo *undo;
+
+  undo = GIMP_UNDO (data);
+
+  if (undo == gimp_undo_stack_peek (undo->gimage->undo_stack))
+    {
+      gimp_undo_create_preview_private (undo);
+    }
+
+  undo->preview_idle_id = 0;
+
+  return FALSE;
+}
+
+void
+gimp_undo_create_preview_private (GimpUndo  *undo)
+{
+  GimpViewable *preview_viewable;
+  gint          width;
+  gint          height;
+
+  switch (undo->undo_type)
+    {
+    case GIMP_UNDO_GROUP_IMAGE_QMASK:
+    case GIMP_UNDO_IMAGE_QMASK:
+    case GIMP_UNDO_MASK:
+      preview_viewable = GIMP_VIEWABLE (gimp_image_get_mask (undo->gimage));
+      break;
+
+    default:
+      preview_viewable = GIMP_VIEWABLE (undo->gimage);
+      break;
+    }
+
+  if (undo->gimage->width <= 64 && undo->gimage->height <= 64)
+    {
+      width  = undo->gimage->width;
+      height = undo->gimage->height;
+    }
+  else
+    {
+      if (undo->gimage->width > undo->gimage->height)
+        {
+          width  = 64;
+          height = MAX (1, undo->gimage->height * 64 / undo->gimage->width);
+        }
+      else
+        {
+          height = 64;
+          width  = MAX (1, undo->gimage->width * 64 / undo->gimage->height);
+        }
+    }
+
+  undo->preview = gimp_viewable_get_new_preview (preview_viewable,
+                                                 width, height);
+
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (undo));
 }

@@ -44,7 +44,8 @@
 static void   gimp_display_shell_clean_dirty_handler        (GimpImage        *gimage,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_undo_event_handler         (GimpImage        *gimage,
-                                                             gint              event,
+                                                             GimpUndoEvent     event,
+                                                             GimpUndo         *undo,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_name_changed_handler       (GimpImage        *gimage,
                                                              GimpDisplayShell *shell);
@@ -267,7 +268,8 @@ gimp_display_shell_clean_dirty_handler (GimpImage        *gimage,
 
 static void
 gimp_display_shell_undo_event_handler (GimpImage        *gimage,
-                                       gint              event,
+                                       GimpUndoEvent     event,
+                                       GimpUndo         *undo,
                                        GimpDisplayShell *shell)
 {
   shell->title_dirty = TRUE;

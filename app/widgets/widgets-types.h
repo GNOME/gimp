@@ -38,16 +38,17 @@ typedef struct _GimpMenuFactory         GimpMenuFactory;
 /*  widgets  */
 
 typedef struct _GimpPreview             GimpPreview;
-typedef struct _GimpImagePreview        GimpImagePreview;
-typedef struct _GimpDrawablePreview     GimpDrawablePreview;
-typedef struct _GimpImagefilePreview    GimpImagefilePreview;
 typedef struct _GimpBrushPreview        GimpBrushPreview;
-typedef struct _GimpNavigationPreview   GimpNavigationPreview;
-typedef struct _GimpPatternPreview      GimpPatternPreview;
-typedef struct _GimpPalettePreview      GimpPalettePreview;
-typedef struct _GimpGradientPreview     GimpGradientPreview;
-typedef struct _GimpToolInfoPreview     GimpToolInfoPreview;
 typedef struct _GimpBufferPreview       GimpBufferPreview;
+typedef struct _GimpDrawablePreview     GimpDrawablePreview;
+typedef struct _GimpGradientPreview     GimpGradientPreview;
+typedef struct _GimpImagePreview        GimpImagePreview;
+typedef struct _GimpImagefilePreview    GimpImagefilePreview;
+typedef struct _GimpNavigationPreview   GimpNavigationPreview;
+typedef struct _GimpPalettePreview      GimpPalettePreview;
+typedef struct _GimpPatternPreview      GimpPatternPreview;
+typedef struct _GimpToolInfoPreview     GimpToolInfoPreview;
+typedef struct _GimpUndoPreview         GimpUndoPreview;
 
 typedef struct _GimpContainerMenu       GimpContainerMenu;
 typedef struct _GimpContainerMenuImpl   GimpContainerMenuImpl;
@@ -63,6 +64,7 @@ typedef struct _GimpBrushEditor         GimpBrushEditor;
 typedef struct _GimpGradientEditor      GimpGradientEditor;
 typedef struct _GimpPaletteEditor       GimpPaletteEditor;
 typedef struct _GimpSelectionEditor     GimpSelectionEditor;
+typedef struct _GimpUndoEditor          GimpUndoEditor;
 
 typedef struct _GimpContainerView       GimpContainerView;
 typedef struct _GimpContainerListView   GimpContainerListView;

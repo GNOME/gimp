@@ -38,6 +38,7 @@ static void          gimp_image_undo_pop_stack    (GimpImage     *gimage,
                                                    GimpUndoStack *redo_stack,
                                                    GimpUndoMode   undo_mode);
 static void          gimp_image_undo_free_space   (GimpImage     *gimage);
+static void          gimp_image_undo_free_redo    (GimpImage     *gimage);
 static const gchar * gimp_image_undo_type_to_name (GimpUndoType   type);
 
 
@@ -78,8 +79,13 @@ gimp_image_undo_free (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_undo_free (GIMP_UNDO (gimage->undo_stack), gimage, GIMP_UNDO_MODE_UNDO);
-  gimp_undo_free (GIMP_UNDO (gimage->redo_stack), gimage, GIMP_UNDO_MODE_REDO);
+  /*  Emit the UNDO_FREE event before actually freeing everything
+   *  so the views can properly detach from the undo items
+   */
+  gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_FREE, NULL);
+
+  gimp_undo_free (GIMP_UNDO (gimage->undo_stack), GIMP_UNDO_MODE_UNDO);
+  gimp_undo_free (GIMP_UNDO (gimage->redo_stack), GIMP_UNDO_MODE_REDO);
 
   /* If the image was dirty, but could become clean by redo-ing
    * some actions, then it should now become 'infinitely' dirty.
@@ -94,7 +100,6 @@ gimp_image_undo_free (GimpImage *gimage)
    * due to undo actions, but since user can't undo without an undo
    * stack, that's not so much a problem.
    */
-  gimp_image_undo_event (gimage, UNDO_FREE);
 }
 
 gboolean
@@ -124,8 +129,7 @@ gimp_image_undo_group_start (GimpImage    *gimage,
     return TRUE;
 
   /*  nuke the redo stack  */
-  gimp_undo_free (GIMP_UNDO (gimage->redo_stack), gimage,
-                  GIMP_UNDO_MODE_REDO);
+  gimp_image_undo_free_redo (gimage);
 
   /* If the image was dirty, but could become clean by redo-ing
    * some actions, then it should now become 'infinitely' dirty.
@@ -170,7 +174,8 @@ gimp_image_undo_group_end (GimpImage *gimage)
       /* Do it here, since undo_push doesn't emit this event while in
        * the middle of a group
        */
-      gimp_image_undo_event (gimage, UNDO_PUSHED);
+      gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_PUSHED,
+                             gimp_undo_stack_peek (gimage->undo_stack));
     }
 
   return TRUE;
@@ -205,8 +210,7 @@ gimp_image_undo_push (GimpImage        *gimage,
     return NULL;
 
   /*  nuke the redo stack  */
-  gimp_undo_free (GIMP_UNDO (gimage->redo_stack), gimage,
-                  GIMP_UNDO_MODE_REDO);
+  gimp_image_undo_free_redo (gimage);
 
   /* If the image was dirty, but could become clean by redo-ing
    * some actions, then it should now become 'infinitely' dirty.
@@ -220,7 +224,8 @@ gimp_image_undo_push (GimpImage        *gimage,
   if (struct_size > 0)
     undo_struct = g_malloc0 (struct_size);
 
-  new = gimp_undo_new (type,
+  new = gimp_undo_new (gimage,
+                       type,
                        name,
                        undo_struct, size,
                        dirties_image,
@@ -232,7 +237,7 @@ gimp_image_undo_push (GimpImage        *gimage,
 
       gimp_image_undo_free_space (gimage);
 
-      gimp_image_undo_event (gimage, UNDO_PUSHED);
+      gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_PUSHED, new);
     }
   else
     {
@@ -292,7 +297,8 @@ gimp_image_undo_pop_stack (GimpImage     *gimage,
   /* let others know that we just popped an action */
   gimp_image_undo_event (gimage,
                          (undo_mode == GIMP_UNDO_MODE_UNDO) ?
-                         UNDO_POPPED : UNDO_REDO);
+                         GIMP_UNDO_EVENT_UNDO : GIMP_UNDO_EVENT_REDO,
+                         undo);
 }
 
 static void
@@ -322,7 +328,10 @@ gimp_image_undo_free_space (GimpImage *gimage)
   while ((gimp_object_get_memsize (GIMP_OBJECT (container)) > undo_size) ||
          (gimp_container_num_children (container) > max_undo_levels))
     {
-      gimp_undo_stack_free_bottom (gimage->undo_stack, GIMP_UNDO_MODE_UNDO);
+      GimpUndo *freed;
+
+      freed = gimp_undo_stack_free_bottom (gimage->undo_stack,
+                                           GIMP_UNDO_MODE_UNDO);
 
 #if 0
       g_print ("freed one step: undo_steps: %d    undo_bytes: %d\n",
@@ -330,10 +339,44 @@ gimp_image_undo_free_space (GimpImage *gimage)
                gimp_object_get_memsize (GIMP_OBJECT (container)));
 #endif
 
-      gimp_image_undo_event (gimage, UNDO_EXPIRED);
+      gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_EXPIRED, freed);
+
+      g_object_unref (freed);
 
       if (gimp_container_num_children (container) <= min_undo_levels)
         return;
+    }
+}
+
+static void
+gimp_image_undo_free_redo (GimpImage *gimage)
+{
+  GimpContainer *container;
+
+  container = gimage->redo_stack->undos;
+
+#if 0
+  g_print ("redo_steps: %d    redo_bytes: %d\n",
+           gimp_container_num_children (container),
+           gimp_object_get_memsize (GIMP_OBJECT (container)));
+#endif
+
+  while (gimp_container_num_children (container) > 0)
+    {
+      GimpUndo *freed;
+
+      freed = gimp_undo_stack_free_bottom (gimage->redo_stack,
+                                           GIMP_UNDO_MODE_REDO);
+
+#if 0
+      g_print ("freed one step: redo_steps: %d    redo_bytes: %d\n",
+               gimp_container_num_children (container),
+               gimp_object_get_memsize (GIMP_OBJECT (container)));
+#endif
+
+      gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_REDO_EXPIRED, freed);
+
+      g_object_unref (freed);
     }
 }
 

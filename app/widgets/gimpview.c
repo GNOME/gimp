@@ -630,17 +630,28 @@ gimp_preview_set_viewable (GimpPreview  *preview,
       g_signal_handlers_disconnect_by_func (preview->viewable,
                                             G_CALLBACK (gimp_preview_size_changed),
                                             preview);
+
+      if (! viewable && ! preview->is_popup)
+        {
+          if (gimp_dnd_viewable_source_unset (GTK_WIDGET (preview),
+                                              G_TYPE_FROM_INSTANCE (preview->viewable)))
+            {
+              gtk_drag_source_unset (GTK_WIDGET (preview));
+            }
+        }
     }
   else if (viewable && ! preview->is_popup)
     {
-      gimp_dnd_drag_source_set_by_type (GTK_WIDGET (preview),
-                                        GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+      if (gimp_dnd_drag_source_set_by_type (GTK_WIDGET (preview),
+                                            GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+                                            viewable_type,
+                                            GDK_ACTION_COPY))
+        {
+          gimp_dnd_viewable_source_set (GTK_WIDGET (preview),
                                         viewable_type,
-                                        GDK_ACTION_COPY);
-      gimp_dnd_viewable_source_set (GTK_WIDGET (preview),
-                                    viewable_type,
-                                    gimp_preview_drag_viewable,
-                                    NULL);
+                                        gimp_preview_drag_viewable,
+                                        NULL);
+        }
     }
 
   preview->viewable = viewable;

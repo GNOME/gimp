@@ -125,6 +125,11 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
       "<StockItem>", GIMP_STOCK_NAVIGATION },
     "gimp-navigation-view",
     NULL, NULL },
+  { { N_("/File/Dialogs/Undo History..."), NULL,
+      dialogs_create_dockable_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_UNDO },
+    "gimp-undo-history",
+    NULL, NULL },
 
   MENU_SEPARATOR ("/File/Dialogs/---"),
 

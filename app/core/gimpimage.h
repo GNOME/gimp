@@ -198,7 +198,8 @@ struct _GimpImageClass
 					 gint                  color_index);
   void (* undo_start)                   (GimpImage            *gimage);
   void (* undo_event)                   (GimpImage            *gimage,
-					 gint                  event);
+					 GimpUndoEvent         event,
+                                         GimpUndo             *undo);
 
   void (* flush)                        (GimpImage            *gimage);
 };
@@ -299,7 +300,8 @@ gboolean        gimp_image_undo_freeze           (GimpImage          *gimage);
 gboolean        gimp_image_undo_thaw             (GimpImage          *gimage);
 void            gimp_image_undo_start            (GimpImage          *gimage);
 void		gimp_image_undo_event            (GimpImage          *gimage,
-                                                  gint                event);
+                                                  GimpUndoEvent       event,
+                                                  GimpUndo           *undo);
 gint            gimp_image_dirty                 (GimpImage          *gimage);
 gint            gimp_image_clean                 (GimpImage          *gimage);
 void            gimp_image_clean_all             (GimpImage          *gimage);

@@ -44,11 +44,9 @@ struct _PaintUndo
 };
 
 static gboolean undo_pop_paint  (GimpUndo            *undo,
-                                 GimpImage           *gimage,
                                  GimpUndoMode         undo_mode,
                                  GimpUndoAccumulator *accum);
 static void     undo_free_paint (GimpUndo            *undo,
-                                 GimpImage           *gimage,
                                  GimpUndoMode         undo_mode);
 
 gboolean
@@ -86,7 +84,6 @@ gimp_paint_core_push_undo (GimpImage     *gimage,
 
 static gboolean
 undo_pop_paint (GimpUndo            *undo,
-                GimpImage           *gimage,
                 GimpUndoMode         undo_mode,
                 GimpUndoAccumulator *accum)
 {
@@ -109,7 +106,6 @@ undo_pop_paint (GimpUndo            *undo,
 
 static void
 undo_free_paint (GimpUndo     *undo,
-                 GimpImage    *gimage,
                  GimpUndoMode  undo_mode)
 {
   PaintUndo *pu;

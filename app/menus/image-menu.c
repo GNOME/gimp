@@ -466,13 +466,6 @@ GimpItemFactoryEntry image_menu_entries[] =
     NULL,
     "layers/flatten_image.html", NULL },
 
-  MENU_SEPARATOR ("/Image/---"),
-
-  { { N_("/Image/Undo History..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp-undo-history-dialog",
-    "dialogs/undo_history.html", NULL },
-
  /*  <Image>/Layer  */
 
   /*  <Image>/Layer/Stack  */
@@ -706,6 +699,11 @@ GimpItemFactoryEntry image_menu_entries[] =
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_NAVIGATION },
     "gimp-navigation-view",
+    NULL, NULL },
+  { { N_("/Dialogs/Undo History..."), NULL,
+      dialogs_create_dockable_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_UNDO },
+    "gimp-undo-history",
     NULL, NULL },
 
   MENU_SEPARATOR ("/Dialogs/---"),
@@ -1277,7 +1275,6 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Image/Duplicate",               gdisp);
   SET_SENSITIVE ("/Image/Merge Visible Layers...", gdisp && !fs && !aux && lp);
   SET_SENSITIVE ("/Image/Flatten Image",           gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("/Image/Undo History...",         gdisp);
 
   /*  Layer  */
 

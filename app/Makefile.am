@@ -36,13 +36,6 @@ scriptdata =
 bin_PROGRAMS = gimp-1.3
 
 ##
-## gui stuff for gui/, display/ or widgets/
-##
-gui_sources = \
-	undo_history.c		\
-	undo_history.h
-
-##
 ## stuff which is about to be replaced by new subsystems
 ##
 bye_sources = \
@@ -69,7 +62,6 @@ stuff_sources = \
 	libgimp_glue.h
 
 gimp_1_3_SOURCES = \
-	$(gui_sources)		\
 	$(bye_sources)		\
 	$(stuff_sources)
 

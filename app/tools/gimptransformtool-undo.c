@@ -54,11 +54,9 @@ struct _TransformUndo
 };
 
 static gboolean undo_pop_transform  (GimpUndo            *undo,
-                                     GimpImage           *gimage,
                                      GimpUndoMode         undo_mode,
                                      GimpUndoAccumulator *accum);
 static void     undo_free_transform (GimpUndo            *undo,
-                                     GimpImage           *gimage,
                                      GimpUndoMode         undo_mode);
 
 gboolean
@@ -102,13 +100,12 @@ gimp_transform_tool_push_undo (GimpImage   *gimage,
 
 static gboolean
 undo_pop_transform (GimpUndo            *undo,
-                    GimpImage           *gimage,
                     GimpUndoMode         undo_mode,
                     GimpUndoAccumulator *accum)
 {
   GimpTool *active_tool;
 
-  active_tool = tool_manager_get_active (gimage->gimp);
+  active_tool = tool_manager_get_active (undo->gimage->gimp);
 
   if (GIMP_IS_TRANSFORM_TOOL (active_tool))
     {
@@ -118,7 +115,7 @@ undo_pop_transform (GimpUndo            *undo,
       tt = GIMP_TRANSFORM_TOOL (active_tool);
       tu = (TransformUndo *) undo->data;
 
-      path_transform_do_undo (gimage, tu->path_undo);
+      path_transform_do_undo (undo->gimage, tu->path_undo);
 
       /*  only pop if the active tool is the tool that pushed this undo  */
       if (tu->tool_ID == active_tool->ID)
@@ -156,7 +153,6 @@ undo_pop_transform (GimpUndo            *undo,
 
 static void
 undo_free_transform (GimpUndo     *undo,
-                     GimpImage    *gimage,
                      GimpUndoMode  undo_mode)
 {
   TransformUndo * tu;
@@ -165,6 +161,8 @@ undo_free_transform (GimpUndo     *undo,
 
   if (tu->original)
     tile_manager_destroy (tu->original);
+
   path_transform_free_undo (tu->path_undo);
+
   g_free (tu);
 }

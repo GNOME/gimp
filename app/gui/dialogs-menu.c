@@ -67,6 +67,8 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
            "<StockItem>",                      GIMP_STOCK_TOOL_RECT_SELECT),
   ADD_TAB (N_("/Add Tab/Navigation..."),       "gimp-navigation-view",
            "<StockItem>",                      GIMP_STOCK_NAVIGATION),
+  ADD_TAB (N_("/Add Tab/Undo History..."),     "gimp-undo-history",
+           "<StockItem>",                      GTK_STOCK_UNDO),
 
   MENU_SEPARATOR ("/Add Tab/---"),
 

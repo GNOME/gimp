@@ -381,6 +381,29 @@ gimp_undo_mode_get_type (void)
 }
 
 
+static const GEnumValue gimp_undo_event_enum_values[] =
+{
+  { GIMP_UNDO_EVENT_UNDO_PUSHED, "GIMP_UNDO_EVENT_UNDO_PUSHED", "undo-pushed" },
+  { GIMP_UNDO_EVENT_UNDO_EXPIRED, "GIMP_UNDO_EVENT_UNDO_EXPIRED", "undo-expired" },
+  { GIMP_UNDO_EVENT_REDO_EXPIRED, "GIMP_UNDO_EVENT_REDO_EXPIRED", "redo-expired" },
+  { GIMP_UNDO_EVENT_UNDO, "GIMP_UNDO_EVENT_UNDO", "undo" },
+  { GIMP_UNDO_EVENT_REDO, "GIMP_UNDO_EVENT_REDO", "redo" },
+  { GIMP_UNDO_EVENT_UNDO_FREE, "GIMP_UNDO_EVENT_UNDO_FREE", "undo-free" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_undo_event_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpUndoEvent", gimp_undo_event_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_undo_type_enum_values[] =
 {
   { GIMP_UNDO_GROUP_NONE, N_("<<invalid>>"), "group-none" },

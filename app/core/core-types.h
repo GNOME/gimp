@@ -44,18 +44,6 @@ typedef enum
   GIMP_POINTS
 } SizeType;
 
-/*  Argument to undo_event signal emitted by images  */
-
-typedef enum  /*< pdb-skip >*/ /*< skip >*/
-{
-  UNDO_PUSHED,	/* a new undo has been added to the undo stack       */
-  UNDO_EXPIRED,	/* an undo has been freed from the undo stack        */
-  UNDO_POPPED,	/* an undo has been executed and moved to redo stack */
-  UNDO_REDO,    /* a redo has been executed and moved to undo stack  */
-  UNDO_FREE     /* all undo and redo info has been cleared           */
-} undo_event_t;
-
-
 
 /*  base objects  */
 
@@ -160,11 +148,9 @@ typedef void       (* GimpInitStatusFunc)       (const gchar         *text1,
 typedef GimpData * (* GimpDataObjectLoaderFunc) (const gchar         *filename);
 
 typedef gboolean   (* GimpUndoPopFunc)          (GimpUndo            *undo,
-                                                 GimpImage           *gimage,
                                                  GimpUndoMode         undo_mode,
                                                  GimpUndoAccumulator *accum);
 typedef void       (* GimpUndoFreeFunc)         (GimpUndo            *undo,
-                                                 GimpImage           *gimage,
                                                  GimpUndoMode         undo_mode);
 
 

@@ -22,8 +22,6 @@
 
 #include "gimpeditor.h"
 
-#include "gui/gui-types.h" /* temp hack */
-
 
 #define GIMP_TYPE_SELECTION_EDITOR            (gimp_selection_editor_get_type ())
 #define GIMP_SELECTION_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SELECTION_EDITOR, GimpSelectionEditor))
