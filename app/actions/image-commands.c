@@ -460,8 +460,8 @@ image_resize_callback (GtkWidget    *dialog,
     }
   else
     {
-      g_message (_("Resize Error: Both width and height must be "
-		   "greater than zero."));
+      g_warning ("Resize Error: "
+                 "Both width and height must be greater than zero.");
     }
 }
 
@@ -474,6 +474,11 @@ image_print_size_callback (GtkWidget *dialog,
                            gpointer   data)
 {
   gtk_widget_destroy (dialog);
+
+  if (xresolution     == image->xresolution     &&
+      yresolution     == image->yresolution     &&
+      resolution_unit == image->resolution_unit)
+    return;
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_SCALE,
                                _("Change Print Size"));
@@ -508,7 +513,7 @@ image_scale_callback (ImageScaleDialog  *dialog)
 
   if (dialog->width != image->width || dialog->height != image->height)
     {
-      if (dialog->width  > 0 && dialog->height > 0)
+      if (dialog->width > 0 && dialog->height > 0)
         {
           GimpProgress *progress;
 
@@ -526,8 +531,8 @@ image_scale_callback (ImageScaleDialog  *dialog)
         }
       else
         {
-          g_message (_("Scale Error: "
-                       "Both width and height must be greater than zero."));
+          g_warning ("Scale Error: "
+                     "Both width and height must be greater than zero.");
         }
     }
 
