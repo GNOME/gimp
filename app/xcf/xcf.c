@@ -43,6 +43,7 @@
 #include "floating_sel.h"
 #include "gimage.h"
 #include "gimage_mask.h"
+#include "gimplayermask.h"
 #include "gimprc.h"
 #include "layer.h"
 #include "plug_in.h"
@@ -136,33 +137,33 @@ static void xcf_save_tile_rle      (XcfInfo     *info,
 				    Tile        *tile,
 				    guchar      *rlebuf);
 
-static GImage*  xcf_load_image         (XcfInfo     *info);
-static gboolean xcf_load_image_props   (XcfInfo     *info,
-					GImage      *gimage);
-static gboolean xcf_load_layer_props   (XcfInfo     *info,
-					GImage      *gimage,
-					Layer       *layer);
-static gboolean xcf_load_channel_props (XcfInfo     *info,
-					GImage      *gimage,
-					Channel     *channel);
-static gboolean xcf_load_prop          (XcfInfo     *info,
-					PropType    *prop_type,
-					guint32     *prop_size);
-static Layer*   xcf_load_layer         (XcfInfo     *info,
-					GImage      *gimage);
-static Channel* xcf_load_channel       (XcfInfo     *info,
-					GImage      *gimage);
-static LayerMask* xcf_load_layer_mask  (XcfInfo     *info,
-					GImage      *gimage);
-static gboolean xcf_load_hierarchy     (XcfInfo     *info,
-					TileManager *tiles);
-static gboolean xcf_load_level         (XcfInfo     *info,
-					TileManager *tiles);
-static gboolean xcf_load_tile          (XcfInfo     *info,
-					Tile        *tile);
-static gboolean xcf_load_tile_rle      (XcfInfo     *info,
-					Tile        *tile,
-					gint         data_length);
+static GimpImage    *  xcf_load_image         (XcfInfo     *info);
+static gboolean        xcf_load_image_props   (XcfInfo     *info,
+					       GImage      *gimage);
+static gboolean        xcf_load_layer_props   (XcfInfo     *info,
+					       GImage      *gimage,
+					       Layer       *layer);
+static gboolean        xcf_load_channel_props (XcfInfo     *info,
+					       GImage      *gimage,
+					       Channel     *channel);
+static gboolean        xcf_load_prop          (XcfInfo     *info,
+					       PropType    *prop_type,
+					       guint32     *prop_size);
+static GimpLayer     * xcf_load_layer         (XcfInfo     *info,
+					       GImage      *gimage);
+static Channel       * xcf_load_channel       (XcfInfo     *info,
+					       GImage      *gimage);
+static GimpLayerMask * xcf_load_layer_mask    (XcfInfo     *info,
+					       GImage      *gimage);
+static gboolean        xcf_load_hierarchy     (XcfInfo     *info,
+					       TileManager *tiles);
+static gboolean        xcf_load_level         (XcfInfo     *info,
+					       TileManager *tiles);
+static gboolean        xcf_load_tile          (XcfInfo     *info,
+					       Tile        *tile);
+static gboolean        xcf_load_tile_rle      (XcfInfo     *info,
+					       Tile        *tile,
+					       gint         data_length);
 
 #ifdef SWAP_FROM_FILE
 static gboolean xcf_swap_func          (gint         fd,
@@ -2225,22 +2226,22 @@ xcf_load_prop (XcfInfo  *info,
   return TRUE;
 }
 
-static Layer*
+static GimpLayer *
 xcf_load_layer (XcfInfo *info,
 		GImage  *gimage)
 {
-  Layer *layer;
-  LayerMask *layer_mask;
-  guint32 hierarchy_offset;
-  guint32 layer_mask_offset;
-  gboolean apply_mask;
-  gboolean edit_mask;
-  gboolean show_mask;
-  gint width;
-  gint height;
-  gint type;
-  gint add_floating_sel;
-  gchar *name;
+  GimpLayer     *layer;
+  GimpLayerMask *layer_mask;
+  guint32        hierarchy_offset;
+  guint32        layer_mask_offset;
+  gboolean       apply_mask;
+  gboolean       edit_mask;
+  gboolean       show_mask;
+  gint           width;
+  gint           height;
+  gint           type;
+  gint           add_floating_sel;
+  gchar         *name;
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment at
@@ -2283,14 +2284,14 @@ xcf_load_layer (XcfInfo *info,
 	goto error;
 
       /* set the offsets of the layer_mask */
-      GIMP_DRAWABLE(layer_mask)->offset_x = GIMP_DRAWABLE(layer)->offset_x;
-      GIMP_DRAWABLE(layer_mask)->offset_y = GIMP_DRAWABLE(layer)->offset_y;
+      GIMP_DRAWABLE (layer_mask)->offset_x = GIMP_DRAWABLE (layer)->offset_x;
+      GIMP_DRAWABLE (layer_mask)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
 
       apply_mask = layer->apply_mask;
       edit_mask  = layer->edit_mask;
       show_mask  = layer->show_mask;
 
-      layer_add_mask (layer, layer_mask);
+      gimp_layer_add_mask (layer, layer_mask);
 
       layer->apply_mask = apply_mask;
       layer->edit_mask  = edit_mask;
@@ -2370,17 +2371,17 @@ error:
   return NULL;
 }
 
-static LayerMask*
+static GimpLayerMask *
 xcf_load_layer_mask (XcfInfo *info,
 		     GImage  *gimage)
 {
-  LayerMask *layer_mask;
-  guint32    hierarchy_offset;
-  gint       width;
-  gint       height;
-  gint       add_floating_sel;
-  gchar     *name;
-  GimpRGB    color = { 0.0, 0.0, 0.0, 1.0 };
+  GimpLayerMask *layer_mask;
+  guint32        hierarchy_offset;
+  gint           width;
+  gint           height;
+  gint           add_floating_sel;
+  gchar         *name;
+  GimpRGB        color = { 0.0, 0.0, 0.0, 1.0 };
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment at
@@ -2394,7 +2395,7 @@ xcf_load_layer_mask (XcfInfo *info,
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new layer mask */
-  layer_mask = layer_mask_new (gimage, width, height, name, &color);
+  layer_mask = gimp_layer_mask_new (gimage, width, height, name, &color);
   g_free (name);
   if (!layer_mask)
     return NULL;
@@ -2423,7 +2424,7 @@ xcf_load_layer_mask (XcfInfo *info,
   return layer_mask;
 
 error:
-  layer_mask_delete (layer_mask);
+  gtk_object_unref (GTK_OBJECT (layer_mask));
   return NULL;
 }
 

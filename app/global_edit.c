@@ -34,6 +34,7 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
+#include "gimplayermask.h"
 #include "global_edit.h"
 #include "layer.h"
 #include "paint_funcs.h"

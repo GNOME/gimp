@@ -28,6 +28,7 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "channel.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"

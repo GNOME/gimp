@@ -127,8 +127,6 @@ TempBuf       * channel_preview             (Channel       *channel,
 					     gint           width,
 					     gint           height);
 
-void            channel_invalidate_previews (GimpImage     *gimage);
-
 Tattoo          channel_get_tattoo          (const Channel *channel);
 void            channel_set_tattoo          (Channel       *channel,
 					     Tattoo         value);
@@ -214,6 +212,11 @@ void            channel_translate           (Channel      *mask,
 					     gint          off_y);
 void            channel_load                (Channel      *mask,
 					     Channel      *channel);
+
+void            channel_layer_alpha         (Channel      *mask, 
+					     GimpLayer    *layer);
+void            channel_layer_mask          (Channel      *mask, 
+					     GimpLayer    *layer);
 
 void		channel_invalidate_bounds   (Channel      *channel);
 

@@ -29,6 +29,7 @@
 #include "apptypes.h"
 
 #include "apptypes.h"
+#include "channel.h"
 #include "channel_ops.h"
 #include "cursorutil.h"
 #include "drawable.h"

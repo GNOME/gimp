@@ -997,12 +997,13 @@ crop_image (GImage   *gimage,
 	  crop_adjust_guides (gimage, x1, y1, x2, y2); 
 
 	  /*  shrink wrap and update all views  */
-	  channel_invalidate_previews (gimage);
-	  layer_invalidate_previews (gimage);
+	  gimp_image_invalidate_layer_previews (gimage);
+	  gimp_image_invalidate_channel_previews (gimage);
 	  gimp_image_invalidate_preview (gimage);
 	  gdisplays_update_full (gimage);
 	  gdisplays_shrink_wrap (gimage);
 	}
+
       gimp_remove_busy_cursors (NULL);
       gdisplays_flush ();
     }

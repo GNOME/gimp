@@ -908,7 +908,7 @@ prefs_cancel_callback (GtkWidget *widget,
       transparency_size = old_transparency_size;
 
       render_setup (transparency_type, transparency_size);
-      gimage_foreach ((GFunc) layer_invalidate_previews, NULL);
+      gimage_foreach ((GFunc) gimp_image_invalidate_layer_previews, NULL);
       gimage_invalidate_previews ();
       gdisplays_expose_full ();
       gdisplays_flush ();
@@ -995,7 +995,7 @@ prefs_toggle_callback (GtkWidget *widget,
       *val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
 
       render_setup (transparency_type, transparency_size);
-      gimage_foreach ((GFunc) layer_invalidate_previews, NULL);
+      gimage_foreach ((GFunc) gimp_image_invalidate_layer_previews, NULL);
       gimage_invalidate_previews ();
       gdisplays_expose_full ();
       gdisplays_flush ();

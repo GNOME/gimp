@@ -888,8 +888,8 @@ file_open_image (const gchar *filename,
 
       if (gimage)
 	{
-	  layer_invalidate_previews (gimage);
-	  channel_invalidate_previews (gimage);
+	  gimp_image_invalidate_layer_previews (gimage);
+	  gimp_image_invalidate_channel_previews (gimage);
 	}
 
       return pdb_id_to_image (gimage_id);

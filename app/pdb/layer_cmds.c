@@ -293,7 +293,7 @@ layer_create_mask_invoker (Argument *args)
   Argument *return_args;
   GimpLayer *layer;
   gint32 mask_type;
-  LayerMask *mask = NULL;
+  GimpLayerMask *mask = NULL;
 
   layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (layer == NULL)

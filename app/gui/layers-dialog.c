@@ -34,6 +34,7 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimpdnd.h"
+#include "gimplayermask.h"
 #include "gimprc.h"
 #include "image_render.h"
 #include "layer.h"
@@ -92,9 +93,9 @@ struct _LayersDialog
   gint       gimage_width, gimage_height;
   gdouble    ratio;
 
-  Layer     *active_layer;
+  GimpLayer *active_layer;
   Channel   *active_channel;
-  Layer     *floating_sel;
+  GimpLayer *floating_sel;
   GSList    *layer_widgets;
 };
 
@@ -116,7 +117,7 @@ struct _LayerWidget
 
  /*  state information  */
   GimpImage *gimage;
-  Layer     *layer;
+  GimpLayer *layer;
   gint       width, height;
 
   gint       active_preview;
@@ -1339,7 +1340,7 @@ layers_dialog_add_layer_mask (Layer *layer)
   if (! GTK_WIDGET_VISIBLE (layer_widget->mask_preview))
     {
       gtk_object_set_data (GTK_OBJECT (layer_widget->mask_preview),
-			   "gimp_layer_mask", layer_get_mask (layer));
+			   "gimp_layer_mask", gimp_layer_get_mask (layer));
       gtk_widget_show (layer_widget->mask_preview);
     }
 
@@ -2021,13 +2022,16 @@ layers_dialog_drag_trashcan_callback (GtkWidget      *widget,
 
   if ((src_widget = gtk_drag_get_source_widget (context)))
     {
-      Layer *layer;
-      LayerMask *layer_mask;
+      GimpLayer     *layer;
+      GimpLayerMask *layer_mask;
 
-      layer = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
-					     "gimp_layer");
-      layer_mask = (LayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						      "gimp_layer_mask");
+      layer =
+	(GimpLayer *) gtk_object_get_data (GTK_OBJECT (src_widget),
+					   "gimp_layer");
+
+      layer_mask =
+	(GimpLayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
+					       "gimp_layer_mask");
 
       if (layer &&
 	  layer == layersD->active_layer)
@@ -2037,7 +2041,7 @@ layers_dialog_drag_trashcan_callback (GtkWidget      *widget,
 	  return_val = TRUE;
 	}
       else if (layer_mask &&
-	       layer_mask_get_layer (layer_mask) == layersD->active_layer)
+	       gimp_layer_mask_get_layer (layer_mask) == layersD->active_layer)
 	{
 	  layers_dialog_delete_layer_mask_callback (widget, NULL);
 
@@ -2097,7 +2101,7 @@ layer_widget_create (GimpImage *gimage,
   layer_widget->mask_pixmap        = NULL;
   layer_widget->width              = -1;
   layer_widget->height             = -1;
-  layer_widget->layer_mask         = (layer_get_mask (layer) != NULL);
+  layer_widget->layer_mask         = (gimp_layer_get_mask (layer) != NULL);
   layer_widget->apply_mask         = layer->apply_mask;
   layer_widget->edit_mask          = layer->edit_mask;
   layer_widget->show_mask          = layer->show_mask;
@@ -2196,7 +2200,7 @@ layer_widget_create (GimpImage *gimage,
   if (layer_get_mask (layer) != NULL)
     {
       gtk_object_set_data (GTK_OBJECT (layer_widget->mask_preview),
-			   "gimp_layer_mask", layer_get_mask (layer));
+			   "gimp_layer_mask", gimp_layer_get_mask (layer));
       gtk_widget_show (layer_widget->mask_preview);
     }
 
@@ -3031,17 +3035,17 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
       switch (preview_type)
 	{
 	case LAYER_PREVIEW:
-	  preview_buf = layer_preview (layer_widget->layer,
-				       layer_widget->width,
-				       layer_widget->height);
+	  preview_buf = gimp_layer_preview (layer_widget->layer,
+					    layer_widget->width,
+					    layer_widget->height);
 	  
 	  layer_widget->layer_pixmap_valid = TRUE;
 	  break;
 
 	case MASK_PREVIEW:
-	  preview_buf = layer_mask_preview (layer_widget->layer,
-					    layer_widget->width,
-					    layer_widget->height);
+	  preview_buf = gimp_layer_mask_preview (layer_widget->layer,
+						 layer_widget->width,
+						 layer_widget->height);
 	  break;
 	}
 
@@ -3797,8 +3801,8 @@ add_mask_query_ok_callback (GtkWidget *widget,
 {
   AddMaskOptions *options;
   GimpImage      *gimage;
-  LayerMask      *mask;
-  Layer          *layer;
+  GimpLayerMask  *mask;
+  GimpLayer      *layer;
 
   options = (AddMaskOptions *) data;
   if ((layer = (options->layer)) &&

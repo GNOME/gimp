@@ -125,6 +125,8 @@ gimp_SOURCES = \
 	gimphistogram.h		\
 	gimpimage.c		\
 	gimpimage.h		\
+	gimplayermask.c		\
+	gimplayermask.h		\
 	gimplist.c		\
 	gimplist.h		\
 	gimplut.c		\

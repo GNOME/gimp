@@ -50,7 +50,6 @@ typedef struct _GimpLayer           GimpLayer;
 typedef struct _GimpLayerMask       GimpLayerMask;
 
 typedef         GimpLayer           Layer;              /* convenience */
-typedef         GimpLayerMask       LayerMask;          /* convenience */
 
 typedef struct _GimpImage           GimpImage;
 typedef         GimpImage           GImage;
@@ -148,11 +147,11 @@ typedef struct _TransformCore       TransformCore;
 
 /*  some undo stuff  */
 
-typedef struct _layer_undo          LayerUndo;
+typedef struct _LayerUndo           LayerUndo;
 
-typedef struct _layer_mask_undo     LayerMaskUndo;
+typedef struct _LayerMaskUndo       LayerMaskUndo;
 
-typedef struct _fs_to_layer_undo    FStoLayerUndo;
+typedef struct _FStoLayerUndo       FStoLayerUndo;
 
 typedef         GSList              PathUndo;
 

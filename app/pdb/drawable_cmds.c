@@ -29,6 +29,7 @@
 
 #include "channel.h"
 #include "drawable.h"
+#include "gimplayermask.h"
 #include "layer.h"
 #include "temp_buf.h"
 #include "tile.h"

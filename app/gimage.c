@@ -56,7 +56,7 @@ static void gimage_repaint_handler      (GimpImage* gimage,
 					 gint, gint, gint, gint);
 
 
-GImage *
+GimpImage *
 gimage_new (gint              width, 
 	    gint              height, 
 	    GimpImageBaseType base_type)
@@ -91,7 +91,7 @@ gimage_new (gint              width,
 }
 
 
-/* Ack, GImages have their own ref counts! This is going to cause
+/* Ack, GimpImages have their own ref counts! This is going to cause
    trouble.. It should be pretty easy to convert to proper GtkObject
    ref counting, though. */
 
@@ -101,7 +101,7 @@ gimage_new (gint              width,
                                                (Sven, 23.01.2000) */ 
 
 void
-gimage_delete (GImage *gimage)
+gimage_delete (GimpImage *gimage)
 {
   if (gimage->disp_count <= 0)
     gtk_object_unref (GTK_OBJECT (gimage));
@@ -208,8 +208,8 @@ gimage_resize_handler (GimpImage *gimage)
   undo_push_group_end (gimage);
 
   /*  shrink wrap and update all views  */
-  channel_invalidate_previews (gimage);
-  layer_invalidate_previews (gimage);
+  gimp_image_invalidate_layer_previews (gimage);
+  gimp_image_invalidate_channel_previews (gimage);
   gimp_image_invalidate_preview (gimage);
   gdisplays_resize_cursor_label (gimage);
   gdisplays_update_full (gimage);
@@ -236,7 +236,7 @@ gimage_repaint_handler (GimpImage *gimage,
 /* These really belong in the layer class */
 
 void
-gimage_set_layer_mask_apply (GImage    *gimage, 
+gimage_set_layer_mask_apply (GimpImage *gimage, 
 			     GimpLayer *layer)
 {
   int off_x, off_y;
@@ -255,9 +255,9 @@ gimage_set_layer_mask_apply (GImage    *gimage,
 }
 
 void
-gimage_set_layer_mask_edit (GImage   *gimage, 
-			    Layer    *layer, 
-			    gboolean  edit)
+gimage_set_layer_mask_edit (GimpImage *gimage, 
+			    Layer     *layer, 
+			    gboolean   edit)
 {
   /*  find the layer  */
   if (!layer)
@@ -268,7 +268,7 @@ gimage_set_layer_mask_edit (GImage   *gimage,
 }
 
 void
-gimage_set_layer_mask_show (GImage    *gimage, 
+gimage_set_layer_mask_show (GimpImage *gimage, 
 			    GimpLayer *layer)
 {
   gint off_x, off_y;

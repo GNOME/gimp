@@ -24,10 +24,12 @@
 
 #include "appenv.h"
 #include "boundary.h"
+#include "channel.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
+#include "gimplayermask.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
 #include "layer.h"
@@ -331,7 +333,7 @@ gimage_mask_extract (GImage       *gimage,
       else if (cut_gimage && GIMP_IS_LAYER_MASK (drawable))
 	{
 	  gimp_image_remove_layer_mask (gimage, 
-					layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
+					gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
 					DISCARD);
 	}
       else if (cut_gimage && GIMP_IS_CHANNEL (drawable))

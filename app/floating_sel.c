@@ -32,6 +32,7 @@
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
+#include "gimplayermask.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"
 #include "tile_manager.h"

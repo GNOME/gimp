@@ -1338,7 +1338,7 @@ image_add_layer_mask_invoker (Argument *args)
   gboolean success = TRUE;
   GimpImage *gimage;
   GimpLayer *layer;
-  LayerMask *mask;
+  GimpLayerMask *mask;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)

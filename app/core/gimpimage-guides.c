@@ -35,6 +35,7 @@
 #include "gimage_mask.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
+#include "gimplayermask.h"
 #include "gimpmarshal.h"
 #include "gimprc.h"
 #include "gimpparasite.h"
@@ -2099,6 +2100,40 @@ gimp_image_validate (TileManager *tm,
   gimp_image_construct (gimage, x, y, w, h);
 }
 
+void
+gimp_image_invalidate_layer_previews (GimpImage *gimage)
+{
+  GSList    *tmp;
+  GimpLayer *layer;
+
+  g_return_if_fail (gimage != NULL);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  for (tmp = gimage->layers; tmp; tmp = g_slist_next (tmp))
+    {
+      layer = (Layer *) tmp->data;
+
+      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer), TRUE);
+    }
+}
+
+void
+gimp_image_invalidate_channel_previews (GimpImage *gimage)
+{
+  GSList  *tmp;
+  Channel *channel;
+
+  g_return_if_fail (gimage != NULL);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  for (tmp = gimage->channels; tmp; tmp = g_slist_next (tmp))
+    {
+      channel = (Channel *) tmp->data;
+
+      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (channel), TRUE);      
+    }
+}
+
 gint
 gimp_image_get_layer_index (const GimpImage *gimage, 
 			    const Layer     *layer_arg)
@@ -3222,10 +3257,10 @@ gimp_image_remove_layer (GimpImage *gimage,
     return NULL;
 }
 
-LayerMask *
-gimp_image_add_layer_mask (GimpImage *gimage, 
-			   Layer     *layer, 
-			   LayerMask *mask)
+GimpLayerMask *
+gimp_image_add_layer_mask (GimpImage     *gimage, 
+			   GimpLayer     *layer, 
+			   GimpLayerMask *mask)
 {
   LayerMaskUndo *lmu;
 
@@ -3258,7 +3293,7 @@ gimp_image_add_layer_mask (GimpImage *gimage,
       return NULL;
     }
 
-  layer_add_mask (layer, mask);
+  gimp_layer_add_mask (layer, mask);
 
   /*  Prepare a layer undo and push it  */
   lmu = g_new (LayerMaskUndo, 1);
@@ -3274,7 +3309,7 @@ gimp_image_add_layer_mask (GimpImage *gimage,
 
 Channel *
 gimp_image_remove_layer_mask (GimpImage     *gimage, 
-			      Layer         *layer, 
+			      GimpLayer     *layer, 
 			      MaskApplyMode  mode)
 {
   LayerMaskUndo *lmu;
@@ -3964,7 +3999,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
 
       if (layer->mask && layer->apply_mask)
 	{
-	  mask_buf = layer_mask_preview (layer, w, h);
+	  mask_buf = gimp_layer_mask_preview (layer, w, h);
 	  maskPR.bytes     = mask_buf->bytes;
 	  maskPR.rowstride = mask_buf->width;
 	  maskPR.data      = mask_buf_data (mask_buf) +

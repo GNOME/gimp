@@ -1457,7 +1457,7 @@ convert_image (GImage		 *gimage,
   undo_push_group_end (gimage);
 
   /*  shrink wrap and update all views  */
-  layer_invalidate_previews (gimage);
+  gimp_image_invalidate_layer_previews (gimage);
   gimp_image_invalidate_preview (gimage);
   gdisplays_update_title (gimage);
   gdisplays_update_full (gimage);

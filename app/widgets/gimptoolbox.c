@@ -657,19 +657,19 @@ toolbox_drag_drop (GtkWidget      *widget,
 
   if ((src_widget = gtk_drag_get_source_widget (context)))
     {
-      GimpDrawable *drawable       = NULL;
-      Layer        *layer          = NULL;
-      Channel      *channel        = NULL;
-      LayerMask    *layer_mask     = NULL;
-      GImage       *component      = NULL;
-      ChannelType   component_type = -1;
+      GimpDrawable  *drawable       = NULL;
+      GimpLayer     *layer          = NULL;
+      Channel       *channel        = NULL;
+      GimpLayerMask *layer_mask     = NULL;
+      GimpImage     *component      = NULL;
+      ChannelType    component_type = -1;
 
-      layer = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
-					     "gimp_layer");
+      layer = (GimpLayer *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						 "gimp_layer");
       channel = (Channel *) gtk_object_get_data (GTK_OBJECT (src_widget),
 						 "gimp_channel");
-      layer_mask = (LayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						      "gimp_layer_mask");
+      layer_mask = (GimpLayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
+							  "gimp_layer_mask");
       component = (GImage *) gtk_object_get_data (GTK_OBJECT (src_widget),
 						  "gimp_component");
 
@@ -694,12 +694,12 @@ toolbox_drag_drop (GtkWidget      *widget,
 
       if (drawable)
 	{
-          GImage *gimage;
-	  GImage *new_gimage;
-	  Layer  *new_layer;
-          gint    width, height;
-	  gint    off_x, off_y;
-	  gint    bytes;
+          GimpImage *gimage;
+	  GimpImage *new_gimage;
+	  GimpLayer *new_layer;
+          gint       width, height;
+	  gint       off_x, off_y;
+	  gint       bytes;
 
 	  GimpImageBaseType type;
 
@@ -735,7 +735,7 @@ toolbox_drag_drop (GtkWidget      *widget,
 
 	  if (layer)
 	    {
-	      new_layer = layer_copy (layer, FALSE);
+	      new_layer = gimp_layer_copy (layer, FALSE);
 	    }
 	  else
 	    {
@@ -754,26 +754,27 @@ toolbox_drag_drop (GtkWidget      *widget,
 
 	      add_alpha_region (&srcPR, &destPR);
 
-	      new_layer = layer_new_from_tiles (new_gimage, 
-                                                gimp_image_base_type_with_alpha(new_gimage), 
-                                                tiles,
-						"", OPAQUE_OPACITY, NORMAL_MODE);
+	      new_layer =
+		gimp_layer_new_from_tiles (new_gimage, 
+					   gimp_image_base_type_with_alpha (new_gimage), 
+					   tiles,
+					   "", OPAQUE_OPACITY, NORMAL_MODE);
 
 	      tile_manager_destroy (tiles);
 	    }
 
 	  gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), new_gimage);
 
-	  layer_set_name (GIMP_LAYER (new_layer),
-			  gimp_object_get_name (GIMP_OBJECT (drawable)));
+	  gimp_layer_set_name (GIMP_LAYER (new_layer),
+			       gimp_object_get_name (GIMP_OBJECT (drawable)));
 
 	  if (layer)
 	    {
-	      LayerMask *mask;
-	      LayerMask *new_mask;
+	      GimpLayerMask *mask;
+	      GimpLayerMask *new_mask;
 
-	      mask     = layer_get_mask (layer);
-	      new_mask = layer_get_mask (new_layer);
+	      mask     = gimp_layer_get_mask (layer);
+	      new_mask = gimp_layer_get_mask (new_layer);
 
 	      if (new_mask)
 		{
@@ -783,7 +784,7 @@ toolbox_drag_drop (GtkWidget      *widget,
 	    }
 
 	  gimp_drawable_offsets (GIMP_DRAWABLE (new_layer), &off_x, &off_y);
-	  layer_translate (new_layer, -off_x, -off_y);
+	  gimp_layer_translate (new_layer, -off_x, -off_y);
 
 	  gimp_image_add_layer (new_gimage, new_layer, 0);
 

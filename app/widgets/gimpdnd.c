@@ -35,6 +35,7 @@
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
 #include "gimpbrushlist.h"
+#include "gimplayermask.h"
 #include "gimprc.h"
 #include "gradient.h"
 #include "gradient_header.h"
@@ -1090,8 +1091,9 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
   else if (GIMP_IS_LAYER_MASK (drawable))
     {
       tmpbuf =
-	layer_mask_preview (layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
-			    width, height);
+	gimp_layer_mask_preview
+	(gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
+	 width, height);
     }
   else if (GIMP_IS_CHANNEL (drawable))
     {

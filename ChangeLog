@@ -1,3 +1,47 @@
+2001-01-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/gimplayermask.[ch]: new files cut out of layer.[ch]. Renamed
+	all functions to gimp_layes_mask_*(). removed artefacts like
+	the ref/unref functions.
+
+	* app/apptypes.h: removed the "LayerMask" typedef.
+
+	* app/layer.[ch]: removed the layer mask stuff and renamed all
+	functions to gimp_layer_*(). Added temporary typedefs for the old
+	function names. The layer mask preview stuff is still there (should
+	probably go to new layer_preview.{ch] files).
+
+	* app/gimpimage.[ch]: added
+	gimp_image_invalidate_[layer|channel]_previews() formerly known as
+	[layer|channel]_invalidate_previews().
+
+	* app/channel.[ch]: moved channel_layer_alpha() and 
+	channel_layer_mask() here because they are methods of the Channel.
+
+	* app/channel_ops.c
+	* app/convert.c
+	* app/disp_callbacks.c
+	* app/fileops.c
+	* app/floating_sel.c
+	* app/gimage.c
+	* app/gimage_mask.c
+	* app/gimpdnd.c
+	* app/global_edit.c
+	* app/layers_dialog.c
+	* app/preferences_dialog.c
+	* app/toolbox.c
+	* app/undo.c
+	* app/xcf.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/tools/crop.c
+	* app/tools/text_tool.c
+	* app/tools/transform_core.c
+	* tools/pdbgen/pdb.pl
+	* tools/pdbgen/pdb/drawable.pdb: changed accordingly, cleanup.
+
 2001-01-26  Daniel Egger  <egger@suse.de>
 
 	* plug-ins/common/iwarp.c: Cleaned up code and

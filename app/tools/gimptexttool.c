@@ -35,6 +35,7 @@
 
 #include "apptypes.h"
 
+#include "channel.h"
 #include "drawable.h"
 #include "errors.h"
 #include "floating_sel.h"

@@ -751,21 +751,21 @@ gdisplay_drag_drop (GtkWidget      *widget,
 
   if (!gimp_busy && (src_widget = gtk_drag_get_source_widget (context)))
     {
-      GimpDrawable *drawable       = NULL;
-      Layer        *layer          = NULL;
-      Channel      *channel        = NULL;
-      LayerMask    *layer_mask     = NULL;
-      GImage       *component      = NULL;
-      ChannelType   component_type = -1;
+      GimpDrawable  *drawable       = NULL;
+      GimpLayer     *layer          = NULL;
+      Channel       *channel        = NULL;
+      GimpLayerMask *layer_mask     = NULL;
+      GimpImage     *component      = NULL;
+      ChannelType    component_type = -1;
 
-      layer = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
-					     "gimp_layer");
+      layer = (GimpLayer *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						 "gimp_layer");
       channel = (Channel *) gtk_object_get_data (GTK_OBJECT (src_widget),
 						 "gimp_channel");
-      layer_mask = (LayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						      "gimp_layer_mask");
-      component = (GImage *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						  "gimp_component");
+      layer_mask = (GimpLayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
+							  "gimp_layer_mask");
+      component = (GimpImage *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						     "gimp_component");
 
       if (layer)
 	{

@@ -66,7 +66,7 @@ package Gimp::CodeGen::pdb;
 		    id_func => '(GimpChannel *) gimp_drawable_get_by_ID',
 		    id_ret_func => 'gimp_drawable_get_ID (GIMP_DRAWABLE ($var))' },
     layer_mask => { name => 'CHANNEL',
-		    type => 'LayerMask *', 
+		    type => 'GimpLayerMask *', 
 		    headers => [ qw("drawable.h" "channel.h") ],
 		    id_func => '(GimpLayerMask *) gimp_drawable_get_by_ID',
 		    id_ret_func => 'gimp_drawable_get_ID (GIMP_DRAWABLE ($var))' },

@@ -546,24 +546,6 @@ channel_preview_private (Channel *channel,
     }
 }
 
-void
-channel_invalidate_previews (GimpImage *gimage)
-{
-  GSList  *tmp;
-  Channel *channel;
-
-  g_return_if_fail (gimage != NULL);
-
-  tmp = gimage->channels;
-
-  while (tmp)
-    {
-      channel = (Channel *) tmp->data;
-      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (channel), TRUE);
-      tmp = g_slist_next (tmp);
-    }
-}
-
 Tattoo
 channel_get_tattoo (const Channel *channel)
 {
@@ -1674,8 +1656,31 @@ channel_translate (Channel *mask,
 }
 
 void
-channel_layer_alpha (Channel *mask,
-		     Layer   *layer)
+channel_load (Channel *mask,
+	      Channel *channel)
+{
+  PixelRegion srcPR, destPR;
+
+  /*  push the current mask onto the undo stack  */
+  channel_push_undo (mask);
+
+  /*  copy the channel to the mask  */
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
+		     0, 0,
+		     GIMP_DRAWABLE (channel)->width,
+		     GIMP_DRAWABLE (channel)->height, FALSE);
+  pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
+		     0, 0,
+		     GIMP_DRAWABLE (channel)->width,
+		     GIMP_DRAWABLE (channel)->height, TRUE);
+  copy_region (&srcPR, &destPR);
+
+  mask->bounds_known = FALSE;
+}
+
+void
+channel_layer_alpha (Channel   *mask,
+		     GimpLayer *layer)
 {
   PixelRegion srcPR, destPR;
   guchar      empty = 0;
@@ -1710,23 +1715,39 @@ channel_layer_alpha (Channel *mask,
 }
 
 void
-channel_load (Channel *mask,
-	      Channel *channel)
+channel_layer_mask (Channel   *mask,
+		    GimpLayer *layer)
 {
   PixelRegion srcPR, destPR;
+  guchar      empty = 0;
+  gint        x1, y1, x2, y2;
 
   /*  push the current mask onto the undo stack  */
   channel_push_undo (mask);
 
-  /*  copy the channel to the mask  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
-		     0, 0,
-		     GIMP_DRAWABLE (channel)->width,
-		     GIMP_DRAWABLE (channel)->height, FALSE);
-  pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
-		     0, 0,
-		     GIMP_DRAWABLE (channel)->width,
-		     GIMP_DRAWABLE (channel)->height, TRUE);
+  /*  clear the mask  */
+  pixel_region_init (&destPR, GIMP_DRAWABLE(mask)->tiles, 
+		     0, 0, 
+		     GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, 
+		     TRUE);
+  color_region (&destPR, &empty);
+
+  x1 = CLAMP (GIMP_DRAWABLE(layer)->offset_x, 0, GIMP_DRAWABLE(mask)->width);
+  y1 = CLAMP (GIMP_DRAWABLE(layer)->offset_y, 0, GIMP_DRAWABLE(mask)->height);
+  x2 = CLAMP (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width, 
+	      0, GIMP_DRAWABLE(mask)->width);
+  y2 = CLAMP (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height, 
+	      0, GIMP_DRAWABLE(mask)->height);
+
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer->mask)->tiles,
+		     (x1 - GIMP_DRAWABLE(layer)->offset_x), 
+		     (y1 - GIMP_DRAWABLE(layer)->offset_y),
+		     (x2 - x1), (y2 - y1), 
+		     FALSE);
+  pixel_region_init (&destPR, GIMP_DRAWABLE(mask)->tiles, 
+		     x1, y1, 
+		     (x2 - x1), (y2 - y1), 
+		     TRUE);
   copy_region (&srcPR, &destPR);
 
   mask->bounds_known = FALSE;
