@@ -1,3 +1,10 @@
+2004-08-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/context-actions.c
+	* app/actions/context-commands.[ch]
+	* menus/image-menu.xml.in: added actions, callbacks and menu items
+	for the brush shape and spikes.
+
 2004-08-04  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/grid.c: changed the default colors for the

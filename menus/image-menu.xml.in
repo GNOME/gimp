@@ -53,33 +53,51 @@
         <menuitem action="context-brush-select-previous" />
         <menuitem action="context-brush-select-next" />
 	<separator />
-        <menuitem action="context-brush-radius-minimum" />
-        <menuitem action="context-brush-radius-maximum" />
-        <menuitem action="context-brush-radius-decrease" />
-        <menuitem action="context-brush-radius-increase" />
-        <menuitem action="context-brush-radius-decrease-skip" />
-        <menuitem action="context-brush-radius-increase-skip" />
-	<separator />
-        <menuitem action="context-brush-hardness-minimum" />
-        <menuitem action="context-brush-hardness-maximum" />
-        <menuitem action="context-brush-hardness-decrease" />
-        <menuitem action="context-brush-hardness-increase" />
-        <menuitem action="context-brush-hardness-decrease-skip" />
-        <menuitem action="context-brush-hardness-increase-skip" />
-	<separator />
-        <menuitem action="context-brush-aspect-minimum" />
-        <menuitem action="context-brush-aspect-maximum" />
-        <menuitem action="context-brush-aspect-decrease" />
-        <menuitem action="context-brush-aspect-increase" />
-        <menuitem action="context-brush-aspect-decrease-skip" />
-        <menuitem action="context-brush-aspect-increase-skip" />
-	<separator />
-        <menuitem action="context-brush-angle-minimum" />
-        <menuitem action="context-brush-angle-maximum" />
-        <menuitem action="context-brush-angle-decrease" />
-        <menuitem action="context-brush-angle-increase" />
-        <menuitem action="context-brush-angle-decrease-skip" />
-        <menuitem action="context-brush-angle-increase-skip" />
+        <menu action="context-brush-shape-menu" name="Shape">
+          <menuitem action="context-brush-shape-circle" />
+          <menuitem action="context-brush-shape-square" />
+          <menuitem action="context-brush-shape-diamond" />
+        </menu>
+        <menu action="context-brush-radius-menu" name="Radius">
+          <menuitem action="context-brush-radius-minimum" />
+          <menuitem action="context-brush-radius-maximum" />
+          <menuitem action="context-brush-radius-decrease" />
+          <menuitem action="context-brush-radius-increase" />
+          <menuitem action="context-brush-radius-decrease-skip" />
+          <menuitem action="context-brush-radius-increase-skip" />
+        </menu>
+        <menu action="context-brush-spikes-menu" name="Spikes">
+          <menuitem action="context-brush-spikes-minimum" />
+          <menuitem action="context-brush-spikes-maximum" />
+          <menuitem action="context-brush-spikes-decrease" />
+          <menuitem action="context-brush-spikes-increase" />
+          <menuitem action="context-brush-spikes-decrease-skip" />
+          <menuitem action="context-brush-spikes-increase-skip" />
+        </menu>
+        <menu action="context-brush-hardness-menu" name="Hardness">
+          <menuitem action="context-brush-hardness-minimum" />
+          <menuitem action="context-brush-hardness-maximum" />
+          <menuitem action="context-brush-hardness-decrease" />
+          <menuitem action="context-brush-hardness-increase" />
+          <menuitem action="context-brush-hardness-decrease-skip" />
+          <menuitem action="context-brush-hardness-increase-skip" />
+        </menu>
+        <menu action="context-brush-aspect-menu" name="Aspect">
+          <menuitem action="context-brush-aspect-minimum" />
+          <menuitem action="context-brush-aspect-maximum" />
+          <menuitem action="context-brush-aspect-decrease" />
+          <menuitem action="context-brush-aspect-increase" />
+          <menuitem action="context-brush-aspect-decrease-skip" />
+          <menuitem action="context-brush-aspect-increase-skip" />
+        </menu>
+        <menu action="context-brush-angle-menu" name="Angle">
+          <menuitem action="context-brush-angle-minimum" />
+          <menuitem action="context-brush-angle-maximum" />
+          <menuitem action="context-brush-angle-decrease" />
+          <menuitem action="context-brush-angle-increase" />
+          <menuitem action="context-brush-angle-decrease-skip" />
+          <menuitem action="context-brush-angle-increase-skip" />
+        </menu>
       </menu>
       <menu action="context-pattern-menu" name="Pattern">
         <menuitem action="context-pattern-select-first" />

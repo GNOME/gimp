@@ -52,6 +52,13 @@ static GimpActionEntry context_actions[] =
   { "context-gradient-menu", GIMP_STOCK_GRADIENT,       N_("_Gradient") },
   { "context-font-menu",     GIMP_STOCK_FONT,           N_("_Font")     },
 
+  { "context-brush-shape-menu",    NULL,                N_("_Shape")    },
+  { "context-brush-radius-menu",   NULL,                N_("_Radius")   },
+  { "context-brush-spikes-menu",   NULL,                N_("S_pikes")   },
+  { "context-brush-hardness-menu", NULL,                N_("_Hardness") },
+  { "context-brush-aspect-menu",   NULL,                N_("_Aspect")   },
+  { "context-brush-angle-menu",    NULL,                N_("A_ngle")    },
+
   { "context-colors-default", GIMP_STOCK_DEFAULT_COLORS,
     N_("_Default Colors"), "D", NULL,
     G_CALLBACK (context_colors_default_cmd_callback),
@@ -407,6 +414,22 @@ static GimpEnumActionEntry context_font_select_actions[] =
     NULL }
 };
 
+static GimpEnumActionEntry context_brush_shape_actions[] =
+{
+  { "context-brush-shape-circle", GIMP_STOCK_SHAPE_CIRCLE,
+    "Circle", NULL, NULL,
+    GIMP_BRUSH_GENERATED_CIRCLE,
+    NULL },
+  { "context-brush-shape-square", GIMP_STOCK_SHAPE_SQUARE,
+    "Square", NULL, NULL,
+    GIMP_BRUSH_GENERATED_SQUARE,
+    NULL },
+  { "context-brush-shape-diamond", GIMP_STOCK_SHAPE_DIAMOND,
+    "Diamond", NULL, NULL,
+    GIMP_BRUSH_GENERATED_DIAMOND,
+    NULL }
+};
+
 static GimpEnumActionEntry context_brush_radius_actions[] =
 {
   { "context-brush-radius-set", NULL,
@@ -435,6 +458,38 @@ static GimpEnumActionEntry context_brush_radius_actions[] =
     NULL },
   { "context-brush-radius-increase-skip", GTK_STOCK_GO_FORWARD,
     "Increase Radius More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT,
+    NULL },
+};
+
+static GimpEnumActionEntry context_brush_spikes_actions[] =
+{
+  { "context-brush-spikes-set", NULL,
+    "Set Brush Spikes", NULL, NULL,
+    GIMP_ACTION_SELECT_SET,
+    NULL },
+  { "context-brush-spikes-minimum", GTK_STOCK_GOTO_FIRST,
+    "Minumum Spikes", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST,
+    NULL },
+  { "context-brush-spikes-maximum", GTK_STOCK_GOTO_LAST,
+    "Maximum Spikes", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST,
+    NULL },
+  { "context-brush-spikes-decrease", GTK_STOCK_GO_BACK,
+    "Decrease Spikes", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS,
+    NULL },
+  { "context-brush-spikes-increase", GTK_STOCK_GO_FORWARD,
+    "Increase Spikes", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT,
+    NULL },
+  { "context-brush-spikes-decrease-skip", GTK_STOCK_GO_BACK,
+    "Decrease Spikes More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "context-brush-spikes-increase-skip", GTK_STOCK_GO_FORWARD,
+    "Increase Spikes More", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT,
     NULL },
 };
@@ -600,9 +655,17 @@ context_actions_setup (GimpActionGroup *group)
                                       G_CALLBACK (context_font_select_cmd_callback));
 
   gimp_action_group_add_enum_actions (group,
+                                      context_brush_shape_actions,
+                                      G_N_ELEMENTS (context_brush_shape_actions),
+                                      G_CALLBACK (context_brush_shape_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
                                       context_brush_radius_actions,
                                       G_N_ELEMENTS (context_brush_radius_actions),
                                       G_CALLBACK (context_brush_radius_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_brush_spikes_actions,
+                                      G_N_ELEMENTS (context_brush_spikes_actions),
+                                      G_CALLBACK (context_brush_spikes_cmd_callback));
   gimp_action_group_add_enum_actions (group,
                                       context_brush_hardness_actions,
                                       G_N_ELEMENTS (context_brush_hardness_actions),
@@ -623,10 +686,11 @@ context_actions_update (GimpActionGroup *group,
 {
   GimpContext *context;
   gboolean     generated = FALSE;
-  gboolean     radius    = 0.0;
-  gboolean     hardness  = 0.0;
-  gboolean     aspect    = 0.0;
-  gboolean     angle     = 0.0;
+  gdouble      radius    = 0.0;
+  gint         spikes    = 0;
+  gdouble      hardness  = 0.0;
+  gdouble      aspect    = 0.0;
+  gdouble      angle     = 0.0;
 
   context = action_data_get_context (data);
 
@@ -641,6 +705,7 @@ context_actions_update (GimpActionGroup *group,
           generated = TRUE;
 
           radius   = gimp_brush_generated_get_radius       (gen);
+          spikes   = gimp_brush_generated_get_spikes       (gen);
           hardness = gimp_brush_generated_get_hardness     (gen);
           aspect   = gimp_brush_generated_get_aspect_ratio (gen);
           angle    = gimp_brush_generated_get_angle        (gen);

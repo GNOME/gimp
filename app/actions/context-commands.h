@@ -68,7 +68,13 @@ void   context_font_select_cmd_callback     (GtkAction *action,
                                              gint       value,
                                              gpointer   data);
 
+void   context_brush_shape_cmd_callback     (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
 void   context_brush_radius_cmd_callback    (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
+void   context_brush_spikes_cmd_callback    (GtkAction *action,
                                              gint       value,
                                              gpointer   data);
 void   context_brush_hardness_cmd_callback  (GtkAction *action,

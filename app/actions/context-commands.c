@@ -257,6 +257,26 @@ context_font_select_cmd_callback (GtkAction *action,
 }
 
 void
+context_brush_shape_cmd_callback (GtkAction *action,
+                                  gint       value,
+                                  gpointer   data)
+{
+  GimpContext *context;
+  GimpBrush   *brush;
+  return_if_no_context (context, data);
+
+  brush = gimp_context_get_brush (context);
+
+  if (GIMP_IS_BRUSH_GENERATED (brush))
+    {
+      GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
+
+      gimp_brush_generated_set_shape (generated,
+                                      (GimpBrushGeneratedShape) value);
+    }
+}
+
+void
 context_brush_radius_cmd_callback (GtkAction *action,
                                    gint       value,
                                    gpointer   data)
@@ -279,6 +299,32 @@ context_brush_radius_cmd_callback (GtkAction *action,
                                     1.0, 256.0,
                                     1.0, 10.0, FALSE);
       gimp_brush_generated_set_radius (generated, radius);
+    }
+}
+
+void
+context_brush_spikes_cmd_callback (GtkAction *action,
+                                   gint       value,
+                                   gpointer   data)
+{
+  GimpContext *context;
+  GimpBrush   *brush;
+  return_if_no_context (context, data);
+
+  brush = gimp_context_get_brush (context);
+
+  if (GIMP_IS_BRUSH_GENERATED (brush))
+    {
+      GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
+      gint                spikes;
+
+      spikes = gimp_brush_generated_get_spikes (generated);
+
+      spikes = action_select_value ((GimpActionSelectType) value,
+                                    spikes,
+                                    2.0, 20.0,
+                                    1.0, 4.0, FALSE);
+      gimp_brush_generated_set_spikes (generated, spikes);
     }
 }
 
