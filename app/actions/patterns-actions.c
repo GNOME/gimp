@@ -43,6 +43,12 @@ static GimpActionEntry patterns_actions[] =
     N_("Patterns Menu"), NULL, NULL, NULL,
     GIMP_HELP_PATTERN_DIALOG },
 
+  { "patterns-open-as-image", GTK_STOCK_OPEN,
+    N_("_Open Pattern as Image"), "",
+    N_("Open pattern as image"),
+    G_CALLBACK (data_open_as_image_cmd_callback),
+    GIMP_HELP_PATTERN_OPEN_AS_IMAGE },
+
   { "patterns-new", GTK_STOCK_NEW,
     N_("_New Pattern"), "",
     N_("New pattern"),
@@ -110,9 +116,10 @@ patterns_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("patterns-edit",      pattern && FALSE);
-  SET_SENSITIVE ("patterns-duplicate", pattern && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("patterns-delete",    pattern && data->deletable);
+  SET_SENSITIVE ("patterns-edit",          pattern && FALSE);
+  SET_SENSITIVE ("patterns-open-as-image", pattern && data->filename);
+  SET_SENSITIVE ("patterns-duplicate",     pattern && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("patterns-delete",        pattern && data->deletable);
 
 #undef SET_SENSITIVE
 }

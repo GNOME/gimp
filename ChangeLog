@@ -1,5 +1,25 @@
 2005-01-13  Michael Natterer  <mitch@gimp.org>
 
+	Allow to easily open brushes and patterns as images.
+	Fixes bug #163059.
+
+	* app/actions/brushes-actions.c
+	* app/actions/patterns-actions.c: added "brushes-open-as-image"
+	and "patterns-open-as-image" actions.
+
+	* app/actions/data-commands.[ch]: added
+	data_open_as_image_cmd_callback() which tries to load
+	data->filename as image.
+
+	* app/widgets/gimphelp-ids.h: added help IDs for the new actions.
+
+	* app/widgets/gimpdatafactoryview.c: added buttons.
+
+	* menus/brushes-menu.xml
+	* menus/patterns-menu.xml: added them to the menus.
+
+2005-01-13  Michael Natterer  <mitch@gimp.org>
+
 	Splitting GimpItem::convert() into two virtual functions was
 	apparently buggy over-engineering. Reverted that stuff and
 	implement item conversion much simpler:

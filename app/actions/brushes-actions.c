@@ -24,8 +24,8 @@
 
 #include "actions-types.h"
 
+#include "core/gimpbrushgenerated.h"
 #include "core/gimpcontext.h"
-#include "core/gimpdata.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
@@ -42,6 +42,12 @@ static GimpActionEntry brushes_actions[] =
   { "brushes-popup", GIMP_STOCK_BRUSH,
     N_("Brushes Menu"), NULL, NULL, NULL,
     GIMP_HELP_BRUSH_DIALOG },
+
+  { "brushes-open-as-image", GTK_STOCK_OPEN,
+    N_("_Open Brush as Image"), "",
+    N_("Open brush as image"),
+    G_CALLBACK (data_open_as_image_cmd_callback),
+    GIMP_HELP_BRUSH_OPEN_AS_IMAGE },
 
   { "brushes-new", GTK_STOCK_NEW,
     N_("_New Brush"), "",
@@ -110,9 +116,10 @@ brushes_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("brushes-edit",      brush);
-  SET_SENSITIVE ("brushes-duplicate", brush && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("brushes-delete",    brush && data->deletable);
+  SET_SENSITIVE ("brushes-edit",          brush);
+  SET_SENSITIVE ("brushes-open-as-image", brush && data->filename && ! GIMP_IS_BRUSH_GENERATED (brush));
+  SET_SENSITIVE ("brushes-duplicate",     brush && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("brushes-delete",        brush && data->deletable);
 
 #undef SET_SENSITIVE
 }

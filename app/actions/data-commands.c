@@ -29,6 +29,9 @@
 #include "core/gimpdata.h"
 #include "core/gimpdatafactory.h"
 
+#include "file/file-open.h"
+#include "file/file-utils.h"
+
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdataeditor.h"
 #include "widgets/gimpdatafactoryview.h"
@@ -61,6 +64,50 @@ static void  data_delete_confirm_response (GtkWidget          *dialog,
 
 
 /*  public functions  */
+
+void
+data_open_as_image_cmd_callback (GtkAction *action,
+                                 gpointer   user_data)
+{
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
+  GimpContext         *context;
+  GimpData            *data;
+
+  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+
+  data = (GimpData *)
+    gimp_context_get_by_type (context,
+			      view->factory->container->children_type);
+
+  if (data && data->filename)
+    {
+      gchar *uri = g_filename_to_uri (data->filename, NULL, NULL);
+
+      if (uri)
+        {
+          GimpImage         *image;
+          GimpPDBStatusType  status;
+          GError            *error = NULL;
+
+          image = file_open_with_display (context->gimp, context, NULL, uri,
+                                          &status, &error);
+
+          if (! image && status != GIMP_PDB_CANCEL)
+            {
+              gchar *filename;
+
+              filename = file_utils_uri_to_utf8_filename (uri);
+              g_message (_("Opening '%s' failed:\n\n%s"),
+                         filename, error->message);
+              g_clear_error (&error);
+
+              g_free (filename);
+            }
+
+          g_free (uri);
+        }
+    }
+}
 
 void
 data_new_data_cmd_callback (GtkAction *action,

@@ -20,6 +20,8 @@
 #define __DATA_COMMANDS_H__
 
 
+void   data_open_as_image_cmd_callback  (GtkAction   *action,
+					 gpointer     data);
 void   data_new_data_cmd_callback       (GtkAction   *action,
 					 gpointer     data);
 void   data_duplicate_data_cmd_callback (GtkAction   *action,
