@@ -1,3 +1,12 @@
+2004-06-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/dog.c: added Difference of Gaussians edge
+	detect plug-in.
+
+	* plug-ins/common/plugin-defs.pl:
+	* plug-ins/common/Makefile.am: added dog and regenerated
+	Makefile.
+	
 2004-06-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/context-actions.c: added GIMP_ACTION_SELECT_SET

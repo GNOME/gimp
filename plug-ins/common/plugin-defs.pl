@@ -34,6 +34,7 @@
     'dicom' => { libdep => 'gtk', ui => 1 },
     'diffraction' => { libdep => 'gtk', ui => 1 },
     'displace' => { libdep => 'gtk', ui => 1 },
+    'dog' => { libdep => 'gtk', ui => 1 },
     'edge' => { libdep => 'gtk', ui => 1 },
     'emboss' => { libdep => 'gtk', ui => 1 },
     'engrave' => { libdep => 'gtk', ui => 1 },

@@ -63,6 +63,7 @@ libexec_PROGRAMS = \
 	dicom \
 	diffraction \
 	displace \
+	dog \
 	edge \
 	emboss \
 	engrave \
@@ -628,6 +629,19 @@ displace_SOURCES = \
 	displace.c
 
 displace_LDADD = \
+	$(libgimpui)							\
+	$(libgimpwidgets)						\
+	$(libgimp)							\
+	$(libgimpcolor)							\
+	$(libgimpbase)							\
+	$(GTK_LIBS)							\
+	$(RT_LIBS)							\
+	$(INTLLIBS)
+
+dog_SOURCES = \
+	dog.c
+
+dog_LDADD = \
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
