@@ -25,13 +25,9 @@
 #include "appenv.h"
 #include "colormaps.h"
 #include "cursorutil.h"
-#include "fileops.h"
 #include "gdisplay_ops.h"
 #include "gimpimage.h"
 #include "gimpui.h"
-#include "gximage.h"
-#include "menus.h"
-#include "scale.h"
 #include "gimprc.h"
 
 #include "libgimp/gimphelpui.h"

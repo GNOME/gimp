@@ -36,10 +36,11 @@
 #include "libgimp/gimpmath.h"
 
 
-static gchar * unique_name (GimpImage *, gchar *);
+static gchar * unique_name (GimpImage *gimage,
+			    gchar     *cstr);
 
 
-Path*
+Path *
 path_new (GimpImage *gimage,
 	  PathType   ptype,
 	  GSList    *path_details,
@@ -59,10 +60,11 @@ path_new (GimpImage *gimage,
     path->name = g_strdup (name);
 
   path->path_details = path_details;
-  path->closed = closed;
-  path->state = state;
-  path->locked = locked;
-  path->pathtype = ptype;
+  path->closed       = closed;
+  path->state        = state;
+  path->locked       = locked;
+  path->pathtype     = ptype;
+
   if(tattoo)
     path->tattoo = tattoo;
   else
@@ -71,23 +73,25 @@ path_new (GimpImage *gimage,
   return path;
 }
 
-Path*
+Path *
 path_copy (GimpImage *gimage,
 	   Path      *path)
 {
-  Path* p_copy = g_new0 (Path, 1);
+  Path  *p_copy = g_new0 (Path, 1);
   gchar *name;
   
   name = unique_name (gimage, path->name);
+
   if (name)
     p_copy->name = name;
   else
     p_copy->name = g_strdup (path->name);
 
-  p_copy->closed = path->closed;
-  p_copy->state = path->state;
-  p_copy->pathtype = path->pathtype;
+  p_copy->closed       = path->closed;
+  p_copy->state        = path->state;
+  p_copy->pathtype     = path->pathtype;
   p_copy->path_details = pathpoints_copy (path->path_details);
+
   if (gimage)
     p_copy->tattoo = gimp_image_get_new_tattoo (gimage);
   else
@@ -107,17 +111,18 @@ path_free (Path *path)
 }
 
 
-PathPoint* 
+PathPoint * 
 path_point_new (guint    type,
 		gdouble  x, 
 		gdouble  y)
 {
-  PathPoint* pathpoint = g_new0 (PathPoint,1);
+  PathPoint *pathpoint = g_new0 (PathPoint,1);
 
   pathpoint->type = type;
-  pathpoint->x = x;
-  pathpoint->y = y;
-  return(pathpoint);
+  pathpoint->x    = x;
+  pathpoint->y    = y;
+
+  return pathpoint;
 }
 
 void
@@ -131,8 +136,8 @@ path_stroke (GimpImage *gimage,
 	     PathList  *pl,
 	     Path      *bzp)
 {
-  BezierSelect * bezier_sel;
-  GDisplay  * gdisp;
+  BezierSelect *bezier_sel;
+  GDisplay     *gdisp;
 
   gdisp = gdisplays_check_valid (pl->gdisp, gimage);
   bezier_sel = path_to_beziersel (bzp);
@@ -147,24 +152,26 @@ path_distance (Path    *bzp,
 	       gint    *y, 
 	       gdouble *grad)
 {
-  gint ret;
-  BezierSelect * bezier_sel;
+  gint          ret;
+  BezierSelect *bezier_sel;
+
   bezier_sel = path_to_beziersel (bzp);
   ret = bezier_distance_along (bezier_sel, !bzp->closed, dist, x, y, grad);
   bezier_select_free (bezier_sel);
-  return (ret);
+
+  return ret;
 }
 
 Tattoo
 path_get_tattoo (Path* p)
 {
-  if(!p)
+  if (!p)
     {
-      g_warning("path_get_tattoo: invalid path");
+      g_warning ("path_get_tattoo: invalid path");
       return 0;
     }
 
-  return (p->tattoo);
+  return p->tattoo;
 }
 
 Path*
@@ -174,7 +181,7 @@ path_get_path_by_tattoo (GimpImage *gimage,
   GSList   *tlist;
   PathList *plp;
 
-  if(!gimage || !tattoo)
+  if (!gimage || !tattoo)
     return NULL;
 
   /* Go around the list and check all tattoos. */
@@ -182,18 +189,17 @@ path_get_path_by_tattoo (GimpImage *gimage,
   /* Get path structure  */
   plp = (PathList*) gimp_image_get_paths (gimage);
 
-  if(!plp)
+  if (!plp)
     return (NULL);
-
-  tlist = plp->bz_paths;
   
-  while(tlist)
+  for (tlist = plp->bz_paths; tlist; tlist = g_slist_next(tlist))
     {
       Path* p = (Path*)(tlist->data);
-      if(p->tattoo == tattoo)
+
+      if (p->tattoo == tattoo)
 	return (p);
-      tlist = g_slist_next(tlist);
     }
+
   return (NULL);
 }
 
@@ -203,29 +209,32 @@ path_list_new (GimpImage *gimage,
 	       GSList    *bz_paths)
 {
   PathList *pip = g_new0 (PathList, 1);
-  pip->gimage = gimage;
+
+  pip->gimage            = gimage;
   pip->last_selected_row = last_selected_row;
   
   /* add connector to image delete/destroy */
-  pip->sig_id = gtk_signal_connect(GTK_OBJECT (gimage),
-				   "destroy",
-				   GTK_SIGNAL_FUNC (paths_dialog_destroy_cb),
-				   pip);
-
+  pip->sig_id = gtk_signal_connect (GTK_OBJECT (gimage),
+				    "destroy",
+				    GTK_SIGNAL_FUNC (paths_dialog_destroy_cb),
+				    pip);
+  
   pip->bz_paths = bz_paths;
 
-  return (PathList *)pip;
+  return (PathList *) pip;
 }
 
 void
 path_list_free (PathList* iml)
 {
   g_return_if_fail (iml != NULL);
+
   if (iml->bz_paths)
     {
-      g_slist_foreach (iml->bz_paths, (GFunc)path_free, NULL);
+      g_slist_foreach (iml->bz_paths, (GFunc) path_free, NULL);
       g_slist_free (iml->bz_paths);
     }
+
   g_free (iml);
 }
 
@@ -243,32 +252,36 @@ path_to_beziersel (Path *bzp)
   bezier_sel = g_new0 (BezierSelect, 1);
 
   bezier_sel->num_points = 0;
-  bezier_sel->mask = NULL;
-  bezier_sel->core = NULL; /* not required will be reset in bezier code */
+  bezier_sel->mask       = NULL;
+  bezier_sel->core       = NULL; /* not required will be reset in bezier code */
   bezier_select_reset (bezier_sel);
   bezier_sel->closed = bzp->closed;
 /*   bezier_sel->state = BEZIER_ADD; */
-  bezier_sel->state = bzp->state;
+  bezier_sel->state  = bzp->state;
 
   while (list)
     {
       PathPoint *pdata;
-      pdata = (PathPoint*)list->data;
+
+      pdata = (PathPoint *) list->data;
+
       if (pdata->type == BEZIER_MOVE)
 	{
-/* 	  printf("Close last curve off\n"); */
 	  bezier_sel->last_point->next = bpnt;
 	  bpnt->prev = bezier_sel->last_point;
-	  bezier_sel->cur_anchor = NULL;
+	  bezier_sel->cur_anchor  = NULL;
 	  bezier_sel->cur_control = NULL;
 	  bpnt = NULL;
 	}
+
       bezier_add_point (bezier_sel,
 			(gint) pdata->type,
-			RINT(pdata->x), /* ALT add rint() */
-			RINT(pdata->y));
+			RINT (pdata->x),
+			RINT (pdata->y));
+
       if (bpnt == NULL)
 	bpnt = bezier_sel->last_point;
+
       list = g_slist_next (list);
     }
   
@@ -303,7 +316,8 @@ strip_off_cnumber (gchar *str)
       (num = atoi(hashptr+1)) > 0 &&                 /* which is a number */
       ((int) log10 (num) + 1) == strlen (hashptr+1)) /* which is at the end */
     {
-      gchar * tstr;
+      gchar *tstr;
+
       /* Has a #<number> */
       *hashptr = '\0';
       tstr = g_strdup (copy);
@@ -320,13 +334,13 @@ static gchar *
 unique_name (GimpImage *gimage,
 	     gchar     *cstr)
 {
-  GSList *tlist;
+  GSList   *tlist;
   PathList *plp;
-  gboolean unique = TRUE;
-  gchar *copy_cstr;
-  gchar *copy_test;
-  gchar *stripped_copy;
-  gint counter = 1;
+  gboolean  unique = TRUE;
+  gchar    *copy_cstr;
+  gchar    *copy_test;
+  gchar    *stripped_copy;
+  gint      counter = 1;
 
   /* Get bzpath structure  */
   if (!gimage || !(plp = (PathList*) gimp_image_get_paths(gimage)))
@@ -336,7 +350,10 @@ unique_name (GimpImage *gimage,
 
   while (tlist)
     {
-      gchar *test_str = ((Path*)(tlist->data))->name;
+      gchar *test_str;
+
+      test_str = ((Path *) (tlist->data))->name;
+
       if (strcmp (cstr, test_str) == 0)
 	{
 	    unique = FALSE;
@@ -356,16 +373,18 @@ unique_name (GimpImage *gimage,
 
   tlist = plp->bz_paths;
 
-  while(tlist)
+  while (tlist)
     {
       copy_test = ((Path*)(tlist->data))->name;
-      if(strcmp(copy_cstr,copy_test) == 0)
+
+      if (strcmp (copy_cstr,copy_test) == 0)
 	{
-	  g_free(copy_cstr);
-	  copy_cstr = g_strdup_printf("%s#%d",stripped_copy,counter++);
+	  g_free (copy_cstr);
+	  copy_cstr = g_strdup_printf ("%s#%d", stripped_copy, counter++);
 	  tlist = plp->bz_paths;
 	  continue;
 	}
+
       tlist = g_slist_next(tlist);
     }
 

@@ -37,7 +37,6 @@
 #include "gimpset.h"
 #include "gimprc.h"
 #include "gimpui.h"
-#include "gximage.h"
 #include "nav_window.h"
 #include "scroll.h"
 #include "scale.h"

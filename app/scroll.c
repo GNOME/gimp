@@ -41,9 +41,9 @@
 
 /*  STATIC variables  */
 /*  These are the values of the initial pointer grab   */
-static int startx, starty;
+static gint startx, starty;
 
-gint
+gboolean
 scrollbar_vert_update (GtkAdjustment *adjustment,
 		       gpointer       data)
 {
@@ -57,7 +57,7 @@ scrollbar_vert_update (GtkAdjustment *adjustment,
 }
 
 
-gint
+gboolean
 scrollbar_horz_update (GtkAdjustment *adjustment,
 		       gpointer       data)
 {
@@ -100,9 +100,7 @@ grab_and_scroll (GDisplay       *gdisp,
 		 GdkEventMotion *mevent)
 {
   if (mevent && mevent->window != gdisp->canvas->window)
-    {
-      return;
-    }
+    return;
 
   scroll_display (gdisp,
 		  startx - mevent->x - gdisp->offset_x,
@@ -114,8 +112,8 @@ void
 scroll_to_pointer_position (GDisplay       *gdisp,
 			    GdkEventMotion *mevent)
 {
-  double child_x, child_y;
-  int off_x, off_y;
+  gdouble child_x, child_y;
+  gint    off_x, off_y;
 
   off_x = off_y = 0;
 
@@ -124,6 +122,7 @@ scroll_to_pointer_position (GDisplay       *gdisp,
     off_x = mevent->x;
   else if (mevent->x > gdisp->disp_width)
     off_x = mevent->x - gdisp->disp_width;
+
   if (mevent->y < 0)
     off_y = mevent->y;
   else if (mevent->y > gdisp->disp_height)
@@ -145,15 +144,14 @@ scroll_to_pointer_position (GDisplay       *gdisp,
     }
 }
 
-
-int
+gboolean
 scroll_display (GDisplay *gdisp,
 		gint      x_offset,
 		gint      y_offset)
 {
-  int old_x, old_y;
-  int src_x, src_y;
-  int dest_x, dest_y;
+  gint      old_x, old_y;
+  gint      src_x, src_y;
+  gint      dest_x, dest_y;
   GdkEvent *event;
 
   old_x = gdisp->offset_x;
@@ -229,16 +227,18 @@ scroll_display (GDisplay *gdisp,
            != NULL)
       {
         gtk_widget_event (gdisp->canvas, event);
+
         if (event->expose.count == 0)
           {
             gdk_event_free (event);
             break;
           }
+
         gdk_event_free (event);
       }
 
-      return 1;
+      return TRUE;
     }
 
-  return 0;
+  return FALSE;
 }

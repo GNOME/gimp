@@ -49,7 +49,6 @@
 #include "plug_in.h"
 #include "qmask.h"
 #include "scale.h"
-#include "scroll.h"
 #include "selection.h"
 #include "undo.h"
 
@@ -58,7 +57,6 @@
 #include "gdisplay_color.h"
 #endif /* DISPLAY_FILTERS */
 
-#include "tools/bezier_selectP.h"
 #include "tools/tools.h"
 
 #include "libgimp/gimpmath.h"

@@ -38,9 +38,7 @@
 #include "layers_dialog.h"
 #include "menus.h"
 #include "paths_dialog.h"
-#include "paint_funcs.h"
 #include "preferences_dialog.h"
-#include "scale.h"
 #include "toolbox.h"
 
 #include "tools/tools.h"
@@ -1018,9 +1016,9 @@ menus_reorder_plugins (void)
   GtkItemFactory *item_factory;
   GtkWidget *menu_item;
   GtkWidget *menu;
-  GList *list;
-  gchar *path;
-  gint   i, pos;
+  GList     *list;
+  gchar     *path;
+  gint      i, pos;
 
   /*  Move all menu items under "<Toolbox>/Xtns" which are not submenus or
    *  separators to the top of the menu
@@ -1212,7 +1210,7 @@ menus_set_sensitive (gchar    *path,
 		     gboolean  sensitive)
 {
   GtkItemFactory *ifactory;
-  GtkWidget *widget = NULL;
+  GtkWidget      *widget = NULL;
 
   if (! path)
     return;
@@ -1240,7 +1238,7 @@ menus_set_state (gchar    *path,
 		 gboolean  state)
 {
   GtkItemFactory *ifactory;
-  GtkWidget *widget = NULL;
+  GtkWidget      *widget = NULL;
 
   if (!menus_initialized)
     menus_init ();
@@ -1297,9 +1295,10 @@ menus_last_opened_cmd_callback (GtkWidget *widget,
                                 gpointer   callback_data,
                                 guint      num)
 {
-  gchar *filename, *raw_filename;
-  guint num_entries;
-  gint  status;
+  gchar *filename;
+  gchar *raw_filename;
+  guint  num_entries;
+  gint   status;
 
   num_entries = g_slist_length (last_opened_raw_filenames); 
   if (num >= num_entries)
