@@ -66,21 +66,13 @@ static void run(char *name,
 		GParam ** return_vals);
 
 static        void do_optimizations   (void);
-static         int parse_ms_tag       (char *str);
+/*static         int parse_ms_tag       (char *str);*/
 static DisposeType parse_disposal_tag (char *str);
 
 static void window_close_callback  (GtkWidget *widget,
 				    gpointer   data);
-static void playstop_callback  (GtkWidget *widget,
-				gpointer   data);
-static void rewind_callback  (GtkWidget *widget,
-			      gpointer   data);
-static void step_callback  (GtkWidget *widget,
-			    gpointer   data);
 
 static DisposeType  get_frame_disposal  (guint whichframe);
-static void         render_frame        (gint32 whichframe);
-static void         show_frame          (void);
 
 
 GPlugInInfo PLUG_IN_INFO =
@@ -176,6 +168,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
 }
 
 
+#if 0 /* function is presently not used */
 
 static int
 parse_ms_tag (char *str)
@@ -212,6 +205,7 @@ parse_ms_tag (char *str)
   return (sum);
 }
 
+#endif /* parse_ms_tag */
 
 static DisposeType
 parse_disposal_tag (char *str)
@@ -234,7 +228,7 @@ parse_disposal_tag (char *str)
 }
 
 
-
+#if 0 /* function is presently unused */
 
 static void
 build_dialog(GImageType basetype,
@@ -378,6 +372,7 @@ build_dialog(GImageType basetype,
   gtk_widget_show(dlg);
 }
 
+#endif /* build_dialog */
 
 
 /* Rendering Functions */
@@ -950,6 +945,8 @@ do_optimizations(void)
 
 /* Util. */
 
+#if 0    /* function is presently unused */
+
 static guint32
 get_frame_duration (guint whichframe)
 {
@@ -966,6 +963,7 @@ get_frame_duration (guint whichframe)
   return ((guint32) duration);
 }
 
+#endif /* get_frame_duration */
 
 static DisposeType
 get_frame_disposal (guint whichframe)

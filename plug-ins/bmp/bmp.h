@@ -8,7 +8,8 @@
 #define BitSet(byte, bit)  (((byte) & (bit)) == (bit))
 
 #define ReadOK(file,buffer,len) (fread(buffer, len, 1, file) != 0)
-#define WriteOK(file,buffer,len) (fwrite(buffer, len, 1, file) != 0)
+#define Write(file,buffer,len)   fwrite(buffer, len, 1, file)
+#define WriteOK(file,buffer,len) (Write(file,buffer,len) != 0)
 
 extern gint32 ToL(guchar *);
 extern void FromL(gint32, guchar *);
@@ -26,7 +27,7 @@ extern char *prog_name;
 extern char *filename;
 extern FILE *errorfile;
 
-static struct 
+struct 
   {
     unsigned long bfSize;		/* 02 */
     unsigned long reserverd;		/* 06 */
@@ -34,7 +35,7 @@ static struct
     unsigned long biSize;		/* 0E */
   }Bitmap_File_Head;
 
-static struct
+struct
   {   
     unsigned long biWidth;		/* 12 */
     unsigned long biHeight;		/* 16 */
@@ -49,7 +50,7 @@ static struct
     					/* 36 */
   }Bitmap_Head;
   
-static struct
+struct
   {   
     unsigned short bcWidth;             /* 12 */
     unsigned short bcHeight;	        /* 14 */

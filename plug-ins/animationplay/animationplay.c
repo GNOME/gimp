@@ -268,17 +268,12 @@ build_dialog(GImageType basetype,
 
   GtkWidget* dlg;
   GtkWidget* button;
-  GtkWidget* toggle;
-  GtkWidget* label;
-  GtkWidget* entry;
   GtkWidget* frame;
   GtkWidget* frame2;
   GtkWidget* vbox;
-  GtkWidget* vbox2;
   GtkWidget* hbox;
   GtkWidget* hbox2;
   guchar* color_cube;
-  GSList* group = NULL;
 
   argc = 1;
   argv = g_new (gchar *, 1);
@@ -407,9 +402,7 @@ build_dialog(GImageType basetype,
 
 static void do_playback(void)
 {
-  GPixelRgn srcPR, destPR;
-  guchar *buffer;
-  int nreturn_vals, i;
+  int i;
 
   width     = gimp_image_width(image_id);
   height    = gimp_image_height(image_id);

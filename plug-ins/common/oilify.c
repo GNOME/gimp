@@ -22,6 +22,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
@@ -207,7 +208,7 @@ oilify (GDrawable *drawable)
   gint width, height;
   guchar *src_row, *src;
   guchar *dest_row, *dest;
-  gint x, y, c, b, i, px, xx, yy, n;
+  gint x, y, c, b, xx, yy, n;
   gint x1, y1, x2, y2;
   gint x3, y3, x4, y4;
   gint Val[4];

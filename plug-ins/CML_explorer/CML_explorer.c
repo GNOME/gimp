@@ -2084,6 +2084,7 @@ CML_execute_save_to_file (GtkWidget *widget, gpointer client_data)
 	  return;
 	}
       else if (buf.st_mode & S_IFREG) /* already exists */
+	{
 #ifdef	VERBOSE_DIALOGS
 	if (! force_overwrite (filename))
 	  return;
@@ -2092,6 +2093,7 @@ CML_execute_save_to_file (GtkWidget *widget, gpointer client_data)
 #else
       file = fopen (filename, "w");
 #endif
+	}
     }
   if ((err != 0) && (file == NULL))
     {

@@ -51,6 +51,14 @@
  *   -Adrian
  *
  *   $Log$
+ *   Revision 1.8  1998/03/26 02:08:17  yosh
+ *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
+ *   optional library tests in configure.
+ *
+ *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
+ *
+ *   -Yosh
+ *
  *   Revision 1.7  1998/03/16 23:02:25  adrian
  *   Mon Mar 16 17:50:56 EST 1998 Adrian Likins <adrian@gimp.org>
  *
@@ -1126,12 +1134,6 @@ preview_update(void)
 static void
 preview_exit(void)
 {
-  int	row,	/* Looping var */
-	size;	/* Size of row buffer */
-
-
-  size = MAX_RADIUS * 2 + 1;
-
   g_free(preview_src);
   g_free(preview_dst);
   g_free(preview_sort);

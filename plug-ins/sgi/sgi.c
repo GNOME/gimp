@@ -34,6 +34,14 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.3  1998/03/26 02:08:28  yosh
+ *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
+ *   optional library tests in configure.
+ *
+ *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
+ *
+ *   -Yosh
+ *
  *   Revision 1.2  1998/03/16 06:33:56  yosh
  *   configure saves CFLAGS properly
  *   all plugins should parse gtkrc now
@@ -70,6 +78,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <signal.h>
 
 #include "sgi.h"		/* SGI image library definitions */
@@ -473,7 +482,7 @@ load_image(char *filename)	/* I - File to load */
 
 
 /*
- * 'save_image()' - Save the specified image to a PNG file.
+ * 'save_image()' - Save the specified image to an SGI file.
  */
 
 static gint
@@ -484,8 +493,6 @@ save_image(char   *filename,	/* I - File to save to */
   int		i, j,		/* Looping var */
 		x,		/* Current X coordinate */
 		y,		/* Current Y coordinate */
-		image_type,	/* Type of image */
-		layer_type,	/* Type of drawable/layer */
 		tile_height,	/* Height of tile in GIMP */
 		count,		/* Count of rows to put in image */
 		zsize;		/* Number of channels in file */
@@ -522,6 +529,12 @@ save_image(char   *filename,	/* I - File to save to */
     case RGBA_IMAGE :
         zsize = 4;
         break;
+	
+    case INDEXED_IMAGE :
+    case INDEXEDA_IMAGE:
+        /* we should never be asked to save images of this type */
+        g_print("internal error: cannot save indexed image\n");
+	gimp_quit();
   };
 
  /*

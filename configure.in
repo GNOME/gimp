@@ -60,6 +60,7 @@ AM_PROG_CC_STDC
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
+AC_PROG_CPP
 AC_GIMP_CHECK
 
 gimp_save_CFLAGS="$CFLAGS"
@@ -99,61 +100,109 @@ LIBS="$LIBS $GTK_LIBS"
 dnl Test for Xmu
   if test -z "$LIBXMU_LIB"; then
     AC_CHECK_LIB(Xmu, XmuClientWindow,
-      WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lXt -lSM -lICE',
-      AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
-	WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lXt',
-	AC_MSG_WARN(*** webbrowser plug-in will not be built ***), -lXt), -lXt -lSM -lICE)
+      AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
+	WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lXt -lSM -lICE',
+	AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)),
+	AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
+	  AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
+	    WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lXt',
+	    AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)),
+	AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU library not found) ***), -lXt), -lXt -lSM -lICE)
   fi
 
 dnl Test for libaa
   if test -z "$LIBAA_LIB"; then
     AC_CHECK_LIB(aa, aa_printf,
-      AA='aa'; LIBAA_LIB='-laa',
-      AC_MSG_WARN(*** AA plug-in will not be built ***))
+      AC_CHECK_HEADER(aalib.h,
+	AA='aa'; LIBAA_LIB='-laa',
+	AC_MSG_WARN(*** AA plug-in will not be built (AA header file not found) ***)),
+      AC_MSG_WARN(*** AA plug-in will not be built (AA library not found) ***))
   fi
 
 dnl Test for libtiff
   if test -z "$LIBTIFF_LIB"; then
     AC_CHECK_LIB(tiff, TIFFReadScanline,
-      TIFF='tiff'; LIBTIFF_LIB='-ltiff',
+      AC_CHECK_HEADER(tiffio.h,
+	TIFF='tiff'; LIBTIFF_LIB='-ltiff',
+	AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)),
       AC_CHECK_LIB(tiff, TIFFWriteScanline,
-        TIFF='tiff'; LIBTIFF_LIB='-ltiff -lz -ljpeg',
-        AC_MSG_WARN(*** TIFF plug-in will not be built ***), -lz -ljpeg -lm), -lm)
+	AC_CHECK_HEADER(tiffio.h,
+          TIFF='tiff'; LIBTIFF_LIB='-ltiff -lz -ljpeg',
+	  AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)),
+        AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF library not found) ***), -lz -ljpeg -lm), -lm)
   fi
 
 dnl Test for libjpeg
   if test -z "$LIBJPEG_LIB"; then
     AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
-      JPEG='jpeg'; LIBJPEG_LIB='-ljpeg',
-      AC_MSG_WARN(*** JPEG plug-in will not be built ***))
+      AC_CHECK_HEADER(jpeglib.h,
+	JPEG='jpeg'; LIBJPEG_LIB='-ljpeg',
+	AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG header file not found) ***)),
+      AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG library not found) ***))
   fi
 
 dnl Test for libpng
   if test -z "$LIBPNG_LIB"; then
     AC_CHECK_LIB(png, png_read_info,
-      PNG='png'; LIBPNG_LIB='-lpng -lz',
-      AC_MSG_WARN(*** PNG plug-in will not be built ***), -lz -lm)
+      AC_CHECK_HEADER(png.h,
+	png_ok=yes,
+	png_ok=no),
+      AC_MSG_WARN(*** PNG plug-in will not be built (PNG library not found) ***), -lz -lm)
+    if test "$png_ok" = yes; then
+      AC_MSG_CHECKING([for png_structp in png.h])
+      AC_TRY_COMPILE([#include <png.h>],
+        [png_structp pp; png_infop info; png_colorp cmap;],
+        png_ok=yes,
+        png_ok=no)
+      AC_MSG_RESULT($png_ok)
+      if test "$png_ok" = yes; then
+        PNG='png'; LIBPNG_LIB='-lpng -lz'
+      else
+        AC_MSG_WARN(*** PNG plug-in will not be built (PNG library is too old) ***)
+      fi
+    else
+      AC_MSG_WARN(*** PNG plug-in will not be built (PNG header file not found) ***)
+    fi
   fi
 
 dnl Test for libmpeg
   if test -z "$LIBMPEG_LIB"; then
     AC_CHECK_LIB(mpeg, GetMPEGFrame,
-      MPEG='mpeg'; LIBMPEG_LIB='-lmpeg',
-      AC_MSG_WARN(*** MPEG plug-in will not be built ***))
+      AC_CHECK_HEADER(mpeg.h,
+	MPEG='mpeg'; LIBMPEG_LIB='-lmpeg',
+	AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG header file not found) ***)),
+      AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG library not found) ***))
   fi
 
 dnl Test for libxdelta
   if test -z "$LIBXDELTA_LIB"; then
     AC_CHECK_LIB(xdelta, xd_checkin,
-      XD='xd'; LIBXDELTA_LIB='-lxdelta -lglib -lgdbm',
-      AC_MSG_WARN(*** XD plug-in will not be built ***), -lglib -lgdbm)
+      xdelta_ok=yes,
+      xdelta_ok=no
+      AC_MSG_WARN(*** XD plug-in will not be built (XDELTA library not found) ***), -lglib -lgdbm)
+    if test "$xdelta_ok" = yes; then
+      AC_MSG_CHECKING([for xdelta.h])
+      AC_TRY_CPP(
+[#include <glib.h>
+#include <xdelta.h>],
+	xdelta_ok=yes
+	xdelta_ok=no)
+      AC_MSG_RESULT($xdelta_ok)
+      if test "$xdelta_ok" = yes; then
+	XD='xd'; LIBXDELTA_LIB='-lxdelta -lglib -lgdbm'
+      else
+	AC_MSG_WARN(*** XD plug-in will not be built (XDELTA header file not found) ***)
+      fi
+    fi
   fi
 
 dnl Test for libXpm
   if test -z "$LIBXPM_LIB"; then
     AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
-      XPM='xpm'; LIBXPM_LIB='-lXpm',
-      AC_MSG_WARN(*** XPM plug-in will not be build ***), $X_LIBS)
+      AC_CHECK_HEADER(X11/xpm.h,
+	XPM='xpm'; LIBXPM_LIB='-lXpm',
+	AC_MSG_WARN(*** XPM plug-in will not be built (XPM header file not found) ***)),
+      AC_MSG_WARN(*** XPM plug-in will not be built (XPM library not found) ***), $X_LIBS)
   fi
 
 dnl Check for shared memory

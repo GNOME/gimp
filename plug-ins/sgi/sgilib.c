@@ -37,6 +37,14 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.2  1998/03/26 02:08:31  yosh
+ *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
+ *   optional library tests in configure.
+ *
+ *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
+ *
+ *   -Yosh
+ *
  *   Revision 1.1.1.1  1997/11/24 22:04:37  sopwith
  *   Let's try this import one last time.
  *
@@ -66,6 +74,10 @@
  *   Revision 1.1  1997/06/15  03:37:19  mike
  *   Initial revision
  */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "sgi.h"
 

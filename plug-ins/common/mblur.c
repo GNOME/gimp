@@ -104,7 +104,7 @@ static void    dialog_help_callback(GtkWidget *, gpointer);
 static void    dialog_scale_update(GtkAdjustment *, gint32 *);
 static void    dialog_toggle_update(GtkWidget *, gint32);
 
-static gint 		mblur_dialog(void);
+static gboolean		mblur_dialog(void);
 /***** Variables *****/
 
 GPlugInInfo PLUG_IN_INFO = {
@@ -120,7 +120,7 @@ static mblur_vals_t mbvals = {
 	45		/* radius */
 }; /* mb_vals */
 
-static mb_run= FALSE;
+static gboolean mb_run = FALSE;
 
 static GDrawable *drawable;
 
@@ -721,7 +721,7 @@ pixel_fetcher_destroy(pixel_fetcher_t *pf)
  *
  ****************************************/
 
-static gint
+static gboolean
 mblur_dialog(void)
 {
   GtkWidget	*dialog;

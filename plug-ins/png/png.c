@@ -37,6 +37,14 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.4  1998/03/26 02:08:23  yosh
+ *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
+ *   optional library tests in configure.
+ *
+ *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
+ *
+ *   -Yosh
+ *
  *   Revision 1.3  1998/03/16 06:33:54  yosh
  *   configure saves CFLAGS properly
  *   all plugins should parse gtkrc now
@@ -349,7 +357,6 @@ static gint32
 load_image(char *filename)	/* I - File to load */
 {
   int		i,		/* Looping var */
-		y,		/* Current Y coordinate */
 		bpp,		/* Bytes per pixel */
 		image_type,	/* Type of image */
 		layer_type,	/* Type of drawable/layer */
@@ -575,7 +582,6 @@ save_image(char   *filename,	/* I - File to save to */
 	   gint32 drawable_ID)	/* I - Current drawable */
 {
   int		i,		/* Looping var */
-		y,		/* Current Y coordinate */
 		bpp,		/* Bytes per pixel */
 		type,		/* Type of drawable/layer */
 		num_passes,	/* Number of interlace passes in file */

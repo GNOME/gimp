@@ -234,6 +234,7 @@ MAIN_FUNCTION (gint32 drawable_id)
 	      max = init_value;
 	      for (ch = 0; ch < 3; ch++)
 		if (flag * max <= flag * (tmp_value = (*src++)))
+		  {
 		  if (max == tmp_value)
 		    max_ch += 1 << ch;
 		  else
@@ -241,6 +242,7 @@ MAIN_FUNCTION (gint32 drawable_id)
 		      max_ch = 1 << ch; /* clear memories of old channels */
 		      max = tmp_value;
 		    }
+		  }
 	      for ( ch = 0; ch < 3; ch++)
 		*dest++ = (guchar)(((max_ch & (1 << ch)) > 0) ? max : 0);
 	      if (gap) *dest++=*src++;

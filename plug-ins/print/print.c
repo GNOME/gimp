@@ -39,6 +39,14 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.4  1998/03/26 02:08:27  yosh
+ *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
+ *   optional library tests in configure.
+ *
+ *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
+ *
+ *   -Yosh
+ *
  *   Revision 1.3  1998/03/19 02:11:42  adrian
  *    *AlienMap/AlienMap.c CEL/CEL.c CML_explorer/CML_explorer.c
  *           align_layers/align_layers.c animationplay/animationplay.c
@@ -1377,7 +1385,7 @@ get_printers(void)
   memset(plist, 0, sizeof(plist));
   plist_count = 1;
   strcpy(plist[0].name, "File");
-  sprintf(plist[0].command, "file.ps", line);
+  strcpy(plist[0].command, "file.ps");
   strcpy(plist[0].driver, "ps2");
   plist[0].output_type = OUTPUT_COLOR;
 

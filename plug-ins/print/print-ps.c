@@ -28,6 +28,14 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.3  1998/03/26 02:08:25  yosh
+ *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
+ *   optional library tests in configure.
+ *
+ *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
+ *
+ *   -Yosh
+ *
  *   Revision 1.2  1998/01/25 09:29:27  yosh
  *   Plugin updates
  *   Properly generated aa Makefile (still not built by default)
@@ -111,8 +119,7 @@ ps_print(FILE      *prn,	/* I - File to print to */
   int		x, y;		/* Looping vars */
   GPixelRgn	rgn;		/* Image region */
   guchar	*in,		/* Input pixels from image */
-		*out,		/* Output pixels for printer */
-		*outptr;	/* Current output pixel */
+		*out;		/* Output pixels for printer */
   int		page_width,	/* Width of page */
 		page_height,	/* Height of page */
 		out_width,	/* Width of image on page */

@@ -22,6 +22,14 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.3  1998/03/26 02:08:30  yosh
+ *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
+ *   optional library tests in configure.
+ *
+ *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
+ *
+ *   -Yosh
+ *
  *   Revision 1.2  1998/03/25 02:17:34  yosh
  *   * configure.in: corrected test for libXmu for some systems; added test for
  *   difftime
@@ -33,7 +41,7 @@
  *   * plug-ins/script-fu/script-fu-console.c: don't need to init gtkpreview stuff,
  *   since we don't use them
  *
- *   * plug-ins/script-fu/*: many portability fixes
+ *   * plug-ins/script-fu/: many portability fixes
  *
  *   * plug-ins/pnm/pnm.c: sprintf portability patch
  *

@@ -35,6 +35,14 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.3  1998/03/26 02:08:26  yosh
+ *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
+ *   optional library tests in configure.
+ *
+ *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
+ *
+ *   -Yosh
+ *
  *   Revision 1.2  1998/01/25 09:29:27  yosh
  *   Plugin updates
  *   Properly generated aa Makefile (still not built by default)
@@ -99,7 +107,7 @@
  * (currently 720) to avoid problems...
  */
 
-int	error[2][4][11*720+4] = { 0 };
+int	error[2][4][11*720+4] = { { { 0 } } };
 
 
 /*

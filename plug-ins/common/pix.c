@@ -271,10 +271,7 @@ static gint32 load_image (char *filename)
  */
 {
 	gint i, j, tile_height, row;	
-	gint        result = -1;
 	FILE      * file = NULL;
-	gint32    * offsetTable = NULL;
-	gint32    * lengthTable = NULL;
 	gchar     * progMessage;
 	guchar    * dest; 
 	guchar    * dest_base;
@@ -432,7 +429,7 @@ static gint save_image( char *filename,  gint32 image_ID, gint32 drawable_ID )
  */
 {
 	gint        depth, i, j, row, tile_height, writelen, rectHeight;
-	gboolean    savingAlpha = FALSE;
+	/* gboolean    savingAlpha = FALSE; */
 	gboolean    savingColor = TRUE;
 	guchar    * src; 
 	guchar    * src_base;
@@ -514,9 +511,6 @@ static gint save_image( char *filename,  gint32 image_ID, gint32 drawable_ID )
 				  i += 1, row += 1)
 			{
 				/* Write a row of the image */
-				guchar count;
-				gint cnt = 0;
-
 				record[0] = 1;
 				record[3] = src[0];
 				record[2] = src[1];
@@ -561,9 +555,6 @@ static gint save_image( char *filename,  gint32 image_ID, gint32 drawable_ID )
 				  i += 1, row += 1)
 			{
 				/* Write a row of the image */
-				guchar count;
-				gint cnt = 0;
-
 				record[0] = 1;
 				record[1] = src[0];
 				src += depth;
