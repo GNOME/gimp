@@ -1,5 +1,10 @@
 2004-07-05  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/libgimp-docs.sgml: oops, gimpenums.xml used to be there
+	already, don't include it twice. Added missing gimppalettes.xml.
+	
+2004-07-05  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/libgimp-docs.sgml: include gimpenums.xml and gimppaths.xml.
 
 2004-07-04  Sven Neumann  <sven@gimp.org>

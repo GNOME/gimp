@@ -213,16 +213,17 @@ run (const gchar      *name,
           if (! dog_dialog (image_ID, drawable))
             return;
           break;
+
         case GIMP_RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
           if (nparams != 7)
             status = GIMP_PDB_CALLING_ERROR;
           if (status == GIMP_PDB_SUCCESS)
             {
-              dogvals.inner = param[3].data.d_float;
-              dogvals.outer   = param[4].data.d_float;
+              dogvals.inner     = param[3].data.d_float;
+              dogvals.outer     = param[4].data.d_float;
               dogvals.normalize = param[5].data.d_int32;
-              dogvals.invert = param[6].data.d_int32;
+              dogvals.invert    = param[6].data.d_int32;
             }
           if (status == GIMP_PDB_SUCCESS &&
               (dogvals.inner <= 0.0 && dogvals.outer <= 0.0))
@@ -324,27 +325,26 @@ dog_dialog (gint32        image_ID,
   unit = gimp_image_get_unit (image_ID);
 
   coord = gimp_coordinates_new (unit, "%a", TRUE, FALSE, -1,
-                                     GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
-                                     FALSE,
-                                     TRUE,
+                                FALSE,
+                                TRUE,
 
-                                     _("_Radius 1:"), dogvals.inner, xres,
-                                     0, 8 * MAX (drawable->width,
-                                                 drawable->height),
-                                     0, 0,
+                                _("_Radius 1:"), dogvals.inner, xres,
+                                0, 8 * MAX (drawable->width, drawable->height),
+                                0, 0,
 
-                                     _("R_adius 2:"), dogvals.outer, yres,
-                                     0, 8 * MAX (drawable->width,
-                                                 drawable->height),
-                                     0, 0);
+                                _("R_adius 2:"), dogvals.outer, yres,
+                                0, 8 * MAX (drawable->width, drawable->height),
+                                0, 0);
+
   gtk_container_add (GTK_CONTAINER (frame), coord);
   gtk_widget_show (coord);
 
   gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (coord), 1);
   g_signal_connect (coord, "value-changed",
                     G_CALLBACK (change_radius_callback),
-                    (gpointer)preview);
+                    preview);
 
   button = gtk_check_button_new_with_mnemonic (_("_Normalize"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -354,7 +354,7 @@ dog_dialog (gint32        image_ID,
                     &dogvals.normalize);
   g_signal_connect (button, "toggled",
                     G_CALLBACK (preview_update_preview),
-                    (gpointer)preview);
+                    preview);
   gtk_widget_show (button);
 
   button = gtk_check_button_new_with_mnemonic (_("_Invert"));
@@ -365,7 +365,7 @@ dog_dialog (gint32        image_ID,
                     &dogvals.invert);
   g_signal_connect (button, "toggled",
                     G_CALLBACK (preview_update_preview),
-                    (gpointer)preview);
+                    preview);
   gtk_widget_show (button);
 
   gtk_widget_show (dlg);
@@ -392,12 +392,13 @@ multiply_alpha (guchar *buf,
                 gint    width,
                 gint    bytes)
 {
-  gint i, j;
+  gint    i, j;
   gdouble alpha;
 
   for (i = 0; i < width * bytes; i += bytes)
     {
       alpha = buf[i + bytes - 1] * (1.0 / 255.0);
+
       for (j = 0; j < bytes - 1; j++)
         buf[i + j] *= alpha;
     }
@@ -410,17 +411,19 @@ separate_alpha (guchar *buf,
                 gint    width,
                 gint    bytes)
 {
-  gint i, j;
-  guchar alpha;
+  gint    i, j;
+  guchar  alpha;
   gdouble recip_alpha;
-  gint new_val;
+  gint    new_val;
 
   for (i = 0; i < width * bytes; i += bytes)
     {
       alpha = buf[i + bytes - 1];
+
       if (alpha != 0 && alpha != 255)
         {
           recip_alpha = 255.0 / alpha;
+
           for (j = 0; j < bytes - 1; j++)
             {
               new_val = buf[i + j] * recip_alpha;
@@ -438,15 +441,15 @@ dog (GimpDrawable *drawable,
 {
   GimpDrawable *drawable1;
   GimpDrawable *drawable2;
-  gint32  drawable_id;
-  gint32  layer1;
-  gint32  layer2;
-  gint    width, height;
-  gint    x1, y1, x2, y2;
-  guchar  maxval = 255;
+  gint32        drawable_id = drawable->drawable_id;
+  gint32        layer1;
+  gint32        layer2;
+  gint          width, height;
+  gint          x1, y1, x2, y2;
+  guchar        maxval = 255;
 
-  drawable_id = drawable->drawable_id;
   gimp_drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+
   width  = (x2 - x1);
   height = (y2 - y1);
 
@@ -483,7 +486,6 @@ dog (GimpDrawable *drawable,
 
   if (dogvals.invert)
     gimp_invert (drawable_id);
-
 }
 
 
@@ -588,7 +590,7 @@ normalize (GimpDrawable *drawable,
   if (maxval == 0)
     return;
   else
-    factor = 255./maxval;
+    factor = 255.0 / maxval;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   bpp = drawable->bpp;
@@ -714,6 +716,7 @@ gauss_rle (GimpDrawable *drawable,
   for (col = 0; col < width; col++)
     {
       gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, (y2 - y1));
+
       if (has_alpha)
         multiply_alpha (src, height, bytes);
 
@@ -745,8 +748,10 @@ gauss_rle (GimpDrawable *drawable,
                 {
                   pixels = bb[0];
                   i += pixels;
+
                   if (i > end)
                     i = end;
+
                   val += bb[1] * (sum[i] - sum[start]);
                   bb += (pixels * 2);
                   start = i;
@@ -758,13 +763,16 @@ gauss_rle (GimpDrawable *drawable,
               dp[row * bytes + b] = val / total;
             }
         }
+
       if (has_alpha)
         separate_alpha (dest, height, bytes);
 
       gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, (y2 - y1));
+
       if (show_progress)
         {
           progress += height * radius;
+
           if ((col % 5) == 0)
             gimp_progress_update (0.5 * (pass + progress / max_progress));
         }
@@ -809,8 +817,10 @@ gauss_rle (GimpDrawable *drawable,
                 {
                   pixels = bb[0];
                   i += pixels;
+
                   if (i > end)
                     i = end;
+
                   val += bb[1] * (sum[i] - sum[start]);
                   bb += (pixels * 2);
                   start = i;
@@ -822,22 +832,25 @@ gauss_rle (GimpDrawable *drawable,
               dp[col * bytes + b] = val / total;
             }
         }
+
       if (has_alpha)
         separate_alpha (dest, width, bytes);
 
       gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, (x2 - x1));
+
       if (show_progress)
         {
           progress += width * radius;
+
           if ((row % 5) == 0)
             gimp_progress_update (0.5 * (pass + progress / max_progress));
         }
     }
 
   /*  merge the shadow, update the drawable  */
-   gimp_drawable_flush (drawable);
-   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
   /*  free buffers  */
   g_free (buf);
@@ -1083,10 +1096,9 @@ preview_update_src_view (GtkWidget *widget,
           *(pixdata++) = *src;
           *(pixdata++) = *src;
           *(pixdata++) = *(src++);
+
           if (has_alpha)
-            {
-              *(pixdata++) = *(src++);
-            }
+            *(pixdata++) = *(src++);
         }
     }
   else
@@ -1106,11 +1118,11 @@ static void
 preview_update_preview (GtkWidget *widget,
                         gpointer   data)
 {
-  Preview   *preview = data;
+  Preview   *preview   = data;
   GdkPixbuf *pixbuf;
   gint       x0, y0;
-  gint       w = PREVIEWSIZE;
-  gint       bpp = gimp_drawable_bpp (preview->preview_id);
+  gint       w         = PREVIEWSIZE;
+  gint       bpp       = gimp_drawable_bpp (preview->preview_id);
   gint       has_alpha = gimp_drawable_has_alpha (preview->preview_id);
   guchar    *pixdata;
   guchar    *src;
@@ -1159,7 +1171,7 @@ preview_update_preview (GtkWidget *widget,
       pixbuf = gdk_pixbuf_new_from_data (preview->preview_buffer,
                                          GDK_COLORSPACE_RGB,
                                          has_alpha, 8, w, w,
-                                         w*bpp,
+                                         w * bpp,
                                          NULL, NULL);
     }
 
@@ -1172,7 +1184,7 @@ change_radius_callback (GtkWidget *widget,
                         gpointer   data)
 {
    dogvals.inner = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (coord), 0);
-   dogvals.outer   = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (coord), 1);
+   dogvals.outer = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (coord), 1);
 
    preview_update_preview (widget, data);
 }

@@ -1,3 +1,11 @@
+2004-07-05  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/plug-in-rc.c (plug_in_icon_deserialize): fixed a
+	compiler warning.
+
+	* plug-ins/common/dog.c: removed some redundant casts and other
+	trivial cleanups.
+
 2004-07-06  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcontroller.h: removed #define

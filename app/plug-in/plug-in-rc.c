@@ -403,7 +403,8 @@ plug_in_icon_deserialize (GScanner      *scanner,
   GEnumValue   *enum_value;
   GimpIconType  icon_type;
   gint          icon_data_length;
-  gchar        *icon_data;
+  gchar        *icon_name;
+  guint8       *icon_data;
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_LEFT_PAREN))
     return G_TOKEN_LEFT_PAREN;
@@ -464,8 +465,10 @@ plug_in_icon_deserialize (GScanner      *scanner,
     case GIMP_ICON_TYPE_IMAGE_FILE:
       icon_data_length = -1;
 
-      if (! gimp_scanner_parse_string_no_validate (scanner, &icon_data))
+      if (! gimp_scanner_parse_string_no_validate (scanner, &icon_name))
         return G_TOKEN_STRING;
+
+      icon_data = icon_name;
       break;
 
     case GIMP_ICON_TYPE_INLINE_PIXBUF:
