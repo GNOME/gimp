@@ -141,8 +141,8 @@ sub start_server {
    print "trying to start gimp with options \"$opt\"\n" if $Gimp::verbose;
    $server_fh=local *SERVER_FH;
    my $gimp_fh=local *CLIENT_FH;
-   socketpair $server_fh,$gimp_fh,PF_UNIX,SOCK_STREAM,AF_UNIX
-      or socketpair $server_fh,$gimp_fh,PF_UNIX,SOCK_STREAM,PF_UNSPEC
+   socketpair $server_fh,$gimp_fh,AF_UNIX,SOCK_STREAM,PF_UNSPEC
+      or socketpair $server_fh,$gimp_fh,AF_LOCAL,SOCK_STREAM,PF_UNSPEC
       or croak "unable to create socketpair for gimp communications: $!";
 
    # do it here so it i done only once

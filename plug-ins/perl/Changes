@@ -1,5 +1,8 @@
 Revision history for Gimp-Perl extension.
 
+1.12  Tue Aug 24 19:30:29 CEST 1999
+	- do not emit warning for function names prefixed with "+".
+
 1.11  Tue Aug  3 03:23:23 CEST 1999
 	- EXPERIMENTALLY re-enabled the return path from main. It works
           with perl 5.005_60, but I remember problems with other versions.

@@ -647,10 +647,10 @@ sub register($$$$$$$$$;@) {
       $p->[1]=~/^[0-9a-z_]+$/ or carp "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z and _ allowed";
    }
 
+   $function="perl_fu_".$function unless $function =~ /^(?:perl_fu_|extension_|plug_in_|file_)/ || $function =~ s/^\+//;
+   
    $function=~/^[0-9a-z_]+(-ALT)?$/ or carp "$function: function name contains unusual characters, good style is to use only 0-9, a-z and _";
-   
-   $function="perl_fu_".$function unless $function=~/^(?:\+|perl_fu_|extension_|plug_in_|file_)/;
-   
+
    Gimp::logger message => "function name contains dashes instead of underscores",
                 function => $function, fatal => 0
       if $function =~ y/-//;
@@ -670,8 +670,9 @@ sub register($$$$$$$$$;@) {
       } elsif ($menupath=~/^<Save>\//) {
          @_ >= 4 or die "<Save> plug-in called without the 5 standard arguments!\n";
          @pre = (shift,shift,shift,shift);
+      } elsif ($menupath=~/^<None>\/?/) {
       } else {
-         die "menupath _must_ start with <Image>, <Toolbox>, <Load> or <Save>!";
+         die "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";
       }
       
       if (@defaults) {
