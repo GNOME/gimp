@@ -29,7 +29,6 @@
 #include "procedural_db.h"
 
 #include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayer.h"
 
@@ -210,12 +209,10 @@ floating_sel_attach_invoker (Gimp     *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
     
-      if (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)))
+      if (success)
 	floating_sel_attach (layer, drawable);
-      else
-	success = FALSE;
     }
 
   return procedural_db_return_args (&floating_sel_attach_proc, success);

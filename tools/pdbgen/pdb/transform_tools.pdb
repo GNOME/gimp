@@ -68,9 +68,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  success = gimp_image_owns_item (gimage, GIMP_ITEM (drawable));
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
   if (success)
     success = gimp_drawable_transform_flip (drawable, flip_type);
@@ -128,9 +126,7 @@ HELP
 	vars => [ 'gdouble trans_info[8]' ],
 	code => <<'CODE'
 {
-  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  success = gimp_image_owns_item (gimage, GIMP_ITEM (drawable));
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
   if (success)
     {
@@ -194,9 +190,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  success = gimp_image_owns_item (gimage, GIMP_ITEM (drawable));
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
   if (success)
     {
@@ -264,9 +258,7 @@ HELP
 	vars => [ 'gdouble trans_info[4]' ],
 	code => <<'CODE'
 {
-  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  success = (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)) &&
+  success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
              trans_info[X0] < trans_info[X1] &&
              trans_info[Y0] < trans_info[X1]);
 
@@ -335,9 +327,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  success = gimp_image_owns_item (gimage, GIMP_ITEM (drawable));
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
   if (success)
     {
@@ -413,9 +403,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  success = gimp_image_owns_item (gimage, GIMP_ITEM (drawable));
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
   if (success)
     {

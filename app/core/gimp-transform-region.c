@@ -814,12 +814,10 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
   gboolean     success = FALSE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (matrix != NULL, FALSE);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  g_return_val_if_fail (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)),
-                        FALSE);
 
   /* Start a transform undo group */
   gimp_image_undo_group_start (gimage,
@@ -872,11 +870,9 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
   gboolean     success = FALSE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  g_return_val_if_fail (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)),
-                        FALSE);
 
   /* Start a transform undo group */
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM, _("Flip"));
@@ -940,11 +936,9 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
   gboolean     success = FALSE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  g_return_val_if_fail (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)),
-                        FALSE);
 
   /* Start a transform undo group */
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM, _("Rotate"));
@@ -1041,12 +1035,10 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
   GimpLayer   *floating_layer;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (tiles != NULL, FALSE);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  g_return_val_if_fail (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)),
-                        FALSE);
 
   if (new_layer)
     {

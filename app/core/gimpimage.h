@@ -379,9 +379,6 @@ GimpContainer * gimp_image_get_layers            (const GimpImage    *gimage);
 GimpContainer * gimp_image_get_channels          (const GimpImage    *gimage);
 GimpContainer * gimp_image_get_vectors           (const GimpImage    *gimage);
 
-gboolean        gimp_image_owns_item             (const GimpImage    *gimage,
-                                                  const GimpItem     *item);
-
 GimpDrawable  * gimp_image_active_drawable       (const GimpImage    *gimage);
 GimpLayer     * gimp_image_get_active_layer      (const GimpImage    *gimage);
 GimpChannel   * gimp_image_get_active_channel    (const GimpImage    *gimage);

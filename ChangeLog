@@ -1,5 +1,34 @@
 2004-01-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.[ch]: removed gimp_image_owns_item() again.
+
+	* app/core/gimpitem.[ch]: instead, added new virtual function
+	GimpItem::is_attached().
+
+	* app/core/gimpchannel.c
+	* app/core/gimplayer.c
+	* app/core/gimplayermask.c
+	* app/core/gimpselection.c
+	* app/vectors/gimpvectors.c: implement it.
+
+	* app/core/gimp-edit.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimplayer-floating-sel.c
+	* app/text/gimptext-compat.c
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/floating_sel.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/text_tool.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb_ changed accordingly.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/floating_sel_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/text_tool_cmds.c
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
+2004-01-26  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scripts/unsharp-mask.scm: add the layer to
 	the image before pasting to it. Fixes bug #132504.
 

@@ -369,12 +369,12 @@ selection_float_invoker (Gimp     *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-    
-      success = gimp_image_owns_item (gimage, GIMP_ITEM (drawable));
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
     
       if (success)
 	{
+	  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+    
 	  layer = gimp_selection_float (gimp_image_get_mask (gimage),
 					drawable, TRUE, offx, offy);
 	  if (! layer)

@@ -65,8 +65,7 @@ text_render (GimpImage    *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (drawable == NULL ||
-                        gimp_image_owns_item (gimage,
-                                              GIMP_ITEM (drawable)), FALSE);
+                        gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
 

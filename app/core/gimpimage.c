@@ -2093,43 +2093,6 @@ gimp_image_get_vectors (const GimpImage *gimage)
   return gimage->vectors;
 }
 
-gboolean
-gimp_image_owns_item (const GimpImage *gimage,
-                      const GimpItem  *item)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
-
-  if (GIMP_IS_VECTORS (item))
-    {
-      return gimp_container_have (gimage->vectors, GIMP_OBJECT (item));
-    }
-  else if (GIMP_IS_LAYER_MASK (item))
-    {
-      GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
-      GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
-
-      if (gimp_layer_get_mask (layer) == mask)
-        return gimp_image_owns_item (gimage, GIMP_ITEM (layer));
-
-      return FALSE;
-    }
-  else if (GIMP_IS_SELECTION (item))
-    {
-      return GIMP_CHANNEL (item) == gimp_image_get_mask (gimage);
-    }
-  else if (GIMP_IS_CHANNEL (item))
-    {
-      return gimp_container_have (gimage->channels, GIMP_OBJECT (item));
-    }
-  else if (GIMP_IS_LAYER (item))
-    {
-      return gimp_container_have (gimage->layers, GIMP_OBJECT (item));
-    }
-
-  return FALSE;
-}
-
 GimpDrawable *
 gimp_image_active_drawable (const GimpImage *gimage)
 {

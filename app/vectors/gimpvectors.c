@@ -28,6 +28,7 @@
 #include "vectors-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-stroke.h"
 #include "core/gimp-transform-utils.h"
@@ -64,6 +65,7 @@ static void       gimp_vectors_finalize     (GObject          *object);
 static gint64     gimp_vectors_get_memsize  (GimpObject       *object,
                                              gint64           *gui_size);
 
+static gboolean   gimp_vectors_is_attached  (GimpItem         *item);
 static GimpItem * gimp_vectors_duplicate    (GimpItem         *item,
                                              GType             new_type,
                                              gboolean          add_alpha);
@@ -212,6 +214,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   viewable_class->get_new_preview  = gimp_vectors_get_new_preview;
   viewable_class->default_stock_id = "gimp-path";
 
+  item_class->is_attached          = gimp_vectors_is_attached;
   item_class->duplicate            = gimp_vectors_duplicate;
   item_class->convert              = gimp_vectors_convert;
   item_class->translate            = gimp_vectors_translate;
@@ -286,6 +289,12 @@ gimp_vectors_get_memsize (GimpObject *object,
                                                                   gui_size);
 }
 
+static gboolean
+gimp_vectors_is_attached (GimpItem *item)
+{
+  return (GIMP_IS_IMAGE (item->gimage) &&
+          gimp_container_have (item->gimage->vectors, GIMP_OBJECT (item)));
+}
 
 static GimpItem *
 gimp_vectors_duplicate (GimpItem *item,

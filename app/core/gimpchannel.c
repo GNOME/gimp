@@ -41,6 +41,7 @@
 
 #include "gimp.h"
 #include "gimp-utils.h"
+#include "gimpcontainer.h"
 #include "gimpimage.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
@@ -63,6 +64,7 @@ static void       gimp_channel_finalize      (GObject          *object);
 static gint64     gimp_channel_get_memsize   (GimpObject       *object,
                                               gint64           *gui_size);
 
+static gboolean   gimp_channel_is_attached   (GimpItem         *item);
 static GimpItem * gimp_channel_duplicate     (GimpItem         *item,
                                               GType             new_type,
                                               gboolean          add_alpha);
@@ -227,6 +229,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   viewable_class->default_stock_id = "gimp-channel";
 
+  item_class->is_attached  = gimp_channel_is_attached;
   item_class->duplicate    = gimp_channel_duplicate;
   item_class->translate    = gimp_channel_translate;
   item_class->scale        = gimp_channel_scale;
@@ -318,6 +321,13 @@ gimp_channel_get_memsize (GimpObject *object,
   *gui_size += channel->num_segs_out * sizeof (BoundSeg);
 
   return GIMP_OBJECT_CLASS (parent_class)->get_memsize (object, gui_size);
+}
+
+static gboolean
+gimp_channel_is_attached (GimpItem *item)
+{
+  return (GIMP_IS_IMAGE (item->gimage) &&
+          gimp_container_have (item->gimage->channels, GIMP_OBJECT (item)));
 }
 
 static GimpItem *

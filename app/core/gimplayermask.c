@@ -27,6 +27,7 @@
 
 #include "core-types.h"
 
+#include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
@@ -43,12 +44,13 @@ enum
 };
 
 
-static void       gimp_layer_mask_class_init (GimpLayerMaskClass *klass);
-static void       gimp_layer_mask_init       (GimpLayerMask      *layer_mask);
+static void       gimp_layer_mask_class_init  (GimpLayerMaskClass *klass);
+static void       gimp_layer_mask_init        (GimpLayerMask      *layer_mask);
 
-static GimpItem * gimp_layer_mask_duplicate  (GimpItem           *item,
-                                              GType               new_type,
-                                              gboolean            add_alpha);
+static gboolean   gimp_layer_mask_is_attached (GimpItem           *item);
+static GimpItem * gimp_layer_mask_duplicate   (GimpItem           *item,
+                                               GType               new_type,
+                                               gboolean            add_alpha);
 
 
 static guint  layer_mask_signals[LAST_SIGNAL] = { 0 };
@@ -120,7 +122,8 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  item_class->duplicate = gimp_layer_mask_duplicate;
+  item_class->is_attached = gimp_layer_mask_is_attached;
+  item_class->duplicate   = gimp_layer_mask_duplicate;
 }
 
 static void
@@ -130,6 +133,18 @@ gimp_layer_mask_init (GimpLayerMask *layer_mask)
   layer_mask->apply_mask = TRUE;
   layer_mask->edit_mask  = TRUE;
   layer_mask->show_mask  = FALSE;
+}
+
+static gboolean
+gimp_layer_mask_is_attached (GimpItem *item)
+{
+  GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
+  GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
+
+  return (GIMP_IS_IMAGE (item->gimage)        &&
+          GIMP_IS_LAYER (layer)               &&
+          gimp_layer_get_mask (layer) == mask &&
+          gimp_item_is_attached (GIMP_ITEM (layer)));
 }
 
 static GimpItem *

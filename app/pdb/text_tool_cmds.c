@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <string.h>
 
 #include <glib-object.h>
 
@@ -103,7 +101,7 @@ text_fontname_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (drawable && ! gimp_image_owns_item (gimage, GIMP_ITEM (drawable)))
+      if (drawable && ! gimp_item_is_attached (GIMP_ITEM (drawable)))
 	success = FALSE;
     
       if (success)
@@ -413,7 +411,7 @@ text_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (drawable && ! gimp_image_owns_item (gimage, GIMP_ITEM (drawable)))
+      if (drawable && ! gimp_item_is_attached (GIMP_ITEM (drawable)))
 	success = FALSE;
     
       if (success)

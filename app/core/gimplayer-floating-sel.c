@@ -49,13 +49,12 @@ floating_sel_attach (GimpLayer    *layer,
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (drawable != GIMP_DRAWABLE (layer));
   g_return_if_fail (gimp_item_get_image (GIMP_ITEM (layer)) ==
                     gimp_item_get_image (GIMP_ITEM (drawable)));
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  g_return_if_fail (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)));
 
   /*  If there is already a floating selection, anchor it  */
   if (gimage->floating_sel)

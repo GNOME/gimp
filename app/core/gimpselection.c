@@ -44,6 +44,7 @@
 static void       gimp_selection_class_init    (GimpSelectionClass *klass);
 static void       gimp_selection_init          (GimpSelection      *selection);
 
+static gboolean   gimp_selection_is_attached   (GimpItem        *item);
 static void       gimp_selection_translate     (GimpItem        *item,
                                                 gint             offset_x,
                                                 gint             offset_y,
@@ -172,6 +173,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
 
   viewable_class->default_stock_id    = "gimp-selection";
 
+  item_class->is_attached             = gimp_selection_is_attached;
   item_class->translate               = gimp_selection_translate;
   item_class->scale                   = gimp_selection_scale;
   item_class->resize                  = gimp_selection_resize;
@@ -209,6 +211,13 @@ static void
 gimp_selection_init (GimpSelection *selection)
 {
   selection->stroking = FALSE;
+}
+
+static gboolean
+gimp_selection_is_attached (GimpItem *item)
+{
+  return (GIMP_IS_IMAGE (item->gimage) &&
+          gimp_image_get_mask (item->gimage) == GIMP_CHANNEL (item));
 }
 
 static void
@@ -805,11 +814,9 @@ gimp_selection_float (GimpChannel  *selection,
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (selection));
-
-  g_return_val_if_fail (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)),
-                        NULL);
 
   /*  Make sure there is a region to float...  */
   non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);

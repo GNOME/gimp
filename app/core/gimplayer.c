@@ -70,6 +70,7 @@ static gint64     gimp_layer_get_memsize        (GimpObject         *object,
 
 static void       gimp_layer_invalidate_preview (GimpViewable       *viewable);
 
+static gboolean   gimp_layer_is_attached        (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
                                                  GType               new_type,
                                                  gboolean            add_alpha);
@@ -224,6 +225,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   viewable_class->default_stock_id    = "gimp-layer";
   viewable_class->invalidate_preview  = gimp_layer_invalidate_preview;
 
+  item_class->is_attached             = gimp_layer_is_attached;
   item_class->duplicate               = gimp_layer_duplicate;
   item_class->convert                 = gimp_layer_convert;
   item_class->rename                  = gimp_layer_rename;
@@ -351,6 +353,13 @@ gimp_layer_get_active_components (const GimpDrawable *drawable,
 
   if (gimp_drawable_has_alpha (drawable) && layer->preserve_trans)
     active[gimp_drawable_bytes (drawable) - 1] = FALSE;
+}
+
+static gboolean
+gimp_layer_is_attached (GimpItem *item)
+{
+  return (GIMP_IS_IMAGE (item->gimage) &&
+          gimp_container_have (item->gimage->layers, GIMP_OBJECT (item)));
 }
 
 static GimpItem *

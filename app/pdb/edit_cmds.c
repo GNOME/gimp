@@ -171,13 +171,12 @@ edit_paste_invoker (Gimp     *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-    
-      success = gimp_image_owns_item (gimage, GIMP_ITEM (drawable));
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
     
       if (success)
 	{
-	  layer = gimp_edit_paste (gimage, drawable, gimp->global_buffer,
+	  layer = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
+				   drawable, gimp->global_buffer,
 				   paste_into, -1, -1, -1, -1);
 	  if (! layer)
 	    success = FALSE;

@@ -74,9 +74,7 @@ flip_invoker (Gimp     *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-    
-      success = gimp_image_owns_item (gimage, GIMP_ITEM (drawable));
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
     
       if (success)
 	success = gimp_drawable_transform_flip (drawable, flip_type);
@@ -163,9 +161,7 @@ perspective_invoker (Gimp     *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-    
-      success = gimp_image_owns_item (gimage, GIMP_ITEM (drawable));
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
     
       if (success)
 	{
@@ -303,9 +299,7 @@ rotate_invoker (Gimp     *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-    
-      success = gimp_image_owns_item (gimage, GIMP_ITEM (drawable));
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
     
       if (success)
 	{
@@ -408,9 +402,7 @@ scale_invoker (Gimp     *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-    
-      success = (gimp_image_owns_item (gimage, GIMP_ITEM (drawable)) &&
+      success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
 		 trans_info[X0] < trans_info[X1] &&
 		 trans_info[Y0] < trans_info[X1]);
     
@@ -532,9 +524,7 @@ shear_invoker (Gimp     *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-    
-      success = gimp_image_owns_item (gimage, GIMP_ITEM (drawable));
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
     
       if (success)
 	{
@@ -656,9 +646,7 @@ transform_2d_invoker (Gimp     *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-    
-      success = gimp_image_owns_item (gimage, GIMP_ITEM (drawable));
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
     
       if (success)
 	{

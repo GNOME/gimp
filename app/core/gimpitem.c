@@ -182,6 +182,7 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->visibility_changed        = NULL;
   klass->linked_changed            = NULL;
 
+  klass->is_attached               = NULL;
   klass->duplicate                 = gimp_item_real_duplicate;
   klass->convert                   = gimp_item_real_convert;
   klass->rename                    = gimp_item_real_rename;
@@ -190,7 +191,7 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->resize                    = gimp_item_real_resize;
   klass->flip                      = NULL;
   klass->rotate                    = NULL;
-  klass->transform                 =  NULL;
+  klass->transform                 = NULL;
   klass->stroke                    = NULL;
 }
 
@@ -442,6 +443,14 @@ gimp_item_configure (GimpItem    *item,
   item->offset_y = offset_y;
 
   gimp_object_set_name (GIMP_OBJECT (item), name ? name : _("Unnamed"));
+}
+
+gboolean
+gimp_item_is_attached (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return GIMP_ITEM_GET_CLASS (item)->is_attached (item);
 }
 
 GimpItem *
