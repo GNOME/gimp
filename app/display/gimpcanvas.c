@@ -211,6 +211,12 @@ gimp_canvas_unrealize (GtkWidget *widget)
         }
     }
 
+  if (canvas->layout)
+    {
+      g_object_unref (canvas->layout);
+      canvas->layout = NULL;
+    }
+
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
@@ -231,6 +237,8 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
     {
     case GIMP_CANVAS_STYLE_BLACK:
     case GIMP_CANVAS_STYLE_WHITE:
+    case GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL:
+    case GIMP_CANVAS_STYLE_SAMPLE_POINT_ACTIVE:
       break;
 
     case GIMP_CANVAS_STYLE_RENDER:
@@ -332,6 +340,18 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
       bg.red   = 0xffff;
       bg.green = 0x0;
       bg.blue  = 0x0;
+      break;
+
+    case GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL:
+      fg.red   = 0x0;
+      fg.green = 0x7f7f;
+      fg.blue  = 0xffff;
+      break;
+
+    case GIMP_CANVAS_STYLE_SAMPLE_POINT_ACTIVE:
+      fg.red   = 0xffff;
+      fg.green = 0x0;
+      fg.blue  = 0x0;
       break;
     }
 
@@ -616,8 +636,50 @@ gimp_canvas_draw_segments (GimpCanvas      *canvas,
       num_segments -= 32000;
       segments     += 32000;
     }
+
   gdk_draw_segments (GTK_WIDGET (canvas)->window, canvas->gc[style],
                      segments, num_segments);
+}
+
+/**
+ * gimp_canvas_draw_text:
+ * @canvas: a #GimpCanvas widget
+ * @style:  one of the enumerated #GimpCanvasStyle's.
+ * @x:      X coordinate of the left edge of the layout.
+ * @y:      Y coordinate of the top edge of the layout.
+ * @layout: a #PangoLayout object.
+ *
+ * Draws a layout, in the specified style.
+ **/
+void
+gimp_canvas_draw_text (GimpCanvas      *canvas,
+                       GimpCanvasStyle  style,
+                       gint             x,
+                       gint             y,
+                       const gchar     *format,
+                       ...)
+{
+  va_list  args;
+  gchar   *text;
+
+  if (! gimp_canvas_ensure_style (canvas, style))
+    return;
+
+  if (! canvas->layout)
+    {
+      canvas->layout = gtk_widget_create_pango_layout (GTK_WIDGET (canvas),
+                                                       NULL);
+    }
+
+  va_start (args, format);
+  text = g_strdup_vprintf (format, args);
+  va_end (args);
+
+  pango_layout_set_text (canvas->layout, text, -1);
+  g_free (text);
+
+  gdk_draw_layout (GTK_WIDGET (canvas)->window, canvas->gc[style],
+                   x, y, canvas->layout);
 }
 
 /**

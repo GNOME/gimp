@@ -547,8 +547,8 @@ undo_pop_image_sample_point (GimpUndo            *undo,
 
   if (gu->sample_point->x == -1)
     {
-      undo->gimage->sample_points = g_list_prepend (undo->gimage->sample_points,
-                                                    gu->sample_point);
+      undo->gimage->sample_points = g_list_append (undo->gimage->sample_points,
+                                                   gu->sample_point);
       gu->sample_point->x = gu->x;
       gu->sample_point->y = gu->y;
       gimp_image_sample_point_ref (gu->sample_point);

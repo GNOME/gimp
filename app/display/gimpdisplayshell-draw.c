@@ -297,10 +297,11 @@ gimp_display_shell_draw_sample_point (GimpDisplayShell *shell,
                                       GimpSamplePoint  *sample_point,
                                       gboolean          active)
 {
-  gint  x1, x2;
-  gint  y1, y2;
-  gint  x, y;
-  gint  w, h;
+  GimpCanvasStyle style;
+  gint            x1, x2;
+  gint            y1, y2;
+  gint            x, y;
+  gint            w, h;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (sample_point != NULL);
@@ -318,7 +319,6 @@ gimp_display_shell_draw_sample_point (GimpDisplayShell *shell,
   y1 = y - GIMP_SAMPLE_POINT_DRAW_SIZE;
   y2 = y + GIMP_SAMPLE_POINT_DRAW_SIZE;
 
-
   gdk_drawable_get_size (shell->canvas->window, &w, &h);
 
   if (x < 0 || y < 0 || x >= w || y >= h)
@@ -329,14 +329,35 @@ gimp_display_shell_draw_sample_point (GimpDisplayShell *shell,
   if (x2 > w) x2 = w;
   if (y2 > h) y2 = h;
 
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
-                         (active ?
-                          GIMP_CANVAS_STYLE_GUIDE_ACTIVE :
-                          GIMP_CANVAS_STYLE_GUIDE_NORMAL), x, y1, x, y2);
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
-                         (active ?
-                          GIMP_CANVAS_STYLE_GUIDE_ACTIVE :
-                          GIMP_CANVAS_STYLE_GUIDE_NORMAL), x1, y, x2, y);
+  if (active)
+    style = GIMP_CANVAS_STYLE_SAMPLE_POINT_ACTIVE;
+  else
+    style = GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL;
+
+#define HALF_SIZE (GIMP_SAMPLE_POINT_DRAW_SIZE / 2)
+
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), style,
+                         x, y1, x, y1 + HALF_SIZE);
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), style,
+                         x, y2 - HALF_SIZE, x, y2);
+
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), style,
+                         x1, y, x1 + HALF_SIZE, y);
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), style,
+                         x2 - HALF_SIZE, y, x2, y);
+
+  gimp_canvas_draw_arc (GIMP_CANVAS (shell->canvas), style,
+                        FALSE,
+                        x - HALF_SIZE, y - HALF_SIZE,
+                        GIMP_SAMPLE_POINT_DRAW_SIZE,
+                        GIMP_SAMPLE_POINT_DRAW_SIZE,
+                        0, 64 * 270);
+
+  gimp_canvas_draw_text (GIMP_CANVAS (shell->canvas), style,
+                         x + 2, y + 2,
+                         "%d",
+                         g_list_index (shell->gdisp->gimage->sample_points,
+                                       sample_point) + 1);
 }
 
 void

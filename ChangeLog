@@ -1,3 +1,35 @@
+2005-03-09  Michael Natterer  <mitch@gimp.org>
+
+	More sample point stuff. Addresses bug #137776.
+
+	* app/core/gimpimage-sample-points.c
+	* app/core/gimpimage-undo-push.c: append, not prepend the sample
+	paints to the image's list because their index matters. Update
+	sample points when their index changes.
+
+	* app/display/gimpcanvas.[ch]: added own sytles for the sample
+	points.  Added gimp_canvas_draw_text() which uses a PangoLayout
+	which is cached in the canvas.
+
+	* app/display/gimpdisplayshell-draw.c
+	(gimp_display_shell_draw_sample_point): draw the sample points
+	more distinct from guides using the new canvas APIs above.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_[hv]ruler_button_press): factored out all
+	code to
+
+	(gimp_display_shell_ruler_burron_press): which takes a boolean
+	"horizontal" variable and allows to add sample points with
+	<control>+drag.
+
+	* app/tools/gimpcolortool.[ch]: implement adding, moving and
+	removing of sample points in the same way as the move tool moves
+	guides.
+
+	* app/tools/gimpcolorpickertool.c
+	(gimp_color_picker_tool_oper_update): chain up.
+
 2005-03-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/metadata/interface.c: fix spelling error

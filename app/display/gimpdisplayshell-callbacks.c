@@ -41,6 +41,7 @@
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
 
+#include "tools/gimpcolortool.h"
 #include "tools/gimpmovetool.h"
 #include "tools/gimptoolcontrol.h"
 #include "tools/tool_manager.h"
@@ -1355,9 +1356,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 }
 
 gboolean
-gimp_display_shell_hruler_button_press (GtkWidget        *widget,
-                                        GdkEventButton   *event,
-                                        GimpDisplayShell *shell)
+gimp_display_shell_ruler_button_press (GtkWidget        *widget,
+                                       GdkEventButton   *event,
+                                       GimpDisplayShell *shell,
+                                       gboolean          horizontal)
 {
   GimpDisplay *gdisp = shell->gdisp;
 
@@ -1366,33 +1368,46 @@ gimp_display_shell_hruler_button_press (GtkWidget        *widget,
 
   if (event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
-      GimpToolInfo *tool_info;
+      GimpTool *active_tool;
+      gboolean  sample_point;
 
-      tool_info = (GimpToolInfo *)
-        gimp_container_get_child_by_name (gdisp->gimage->gimp->tool_info_list,
-                                          "gimp-move-tool");
+      active_tool  = tool_manager_get_active (gdisp->gimage->gimp);
+      sample_point = (event->state & GDK_CONTROL_MASK);
 
-      if (tool_info)
+      if (! ((sample_point   && GIMP_IS_COLOR_TOOL (active_tool)) ||
+             (! sample_point && GIMP_IS_MOVE_TOOL (active_tool))))
         {
-          GimpTool *active_tool;
+          GimpToolInfo *tool_info;
 
-          gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp),
-                                 tool_info);
+          tool_info = (GimpToolInfo *)
+            gimp_container_get_child_by_name (gdisp->gimage->gimp->tool_info_list,
+                                              sample_point ?
+                                              "gimp-color-picker-tool" :
+                                              "gimp-move-tool");
 
-          active_tool = tool_manager_get_active (gdisp->gimage->gimp);
+          if (tool_info)
+            gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp),
+                                   tool_info);
+        }
 
-          if (active_tool)
-            {
-              gdk_pointer_grab (shell->canvas->window, FALSE,
-                                GDK_POINTER_MOTION_HINT_MASK |
-                                GDK_BUTTON1_MOTION_MASK |
-                                GDK_BUTTON_RELEASE_MASK,
-                                NULL, NULL, event->time);
+      active_tool = tool_manager_get_active (gdisp->gimage->gimp);
 
-              gdk_keyboard_grab (shell->canvas->window, FALSE, event->time);
+      if (active_tool)
+        {
+          gdk_pointer_grab (shell->canvas->window, FALSE,
+                            GDK_POINTER_MOTION_HINT_MASK |
+                            GDK_BUTTON1_MOTION_MASK |
+                            GDK_BUTTON_RELEASE_MASK,
+                            NULL, NULL, event->time);
 
-              gimp_move_tool_start_hguide (active_tool, gdisp);
-            }
+          gdk_keyboard_grab (shell->canvas->window, FALSE, event->time);
+
+          if (sample_point)
+            gimp_color_tool_start_sample_point (active_tool, gdisp);
+          else if (horizontal)
+            gimp_move_tool_start_hguide (active_tool, gdisp);
+          else
+            gimp_move_tool_start_vguide (active_tool, gdisp);
         }
     }
 
@@ -1400,48 +1415,19 @@ gimp_display_shell_hruler_button_press (GtkWidget        *widget,
 }
 
 gboolean
+gimp_display_shell_hruler_button_press (GtkWidget        *widget,
+                                        GdkEventButton   *event,
+                                        GimpDisplayShell *shell)
+{
+  return gimp_display_shell_ruler_button_press (widget, event, shell, TRUE);
+}
+
+gboolean
 gimp_display_shell_vruler_button_press (GtkWidget        *widget,
                                         GdkEventButton   *event,
                                         GimpDisplayShell *shell)
 {
-  GimpDisplay *gdisp = shell->gdisp;
-
-  if (gdisp->gimage->gimp->busy)
-    return TRUE;
-
-  if (event->type == GDK_BUTTON_PRESS && event->button == 1)
-    {
-      GimpToolInfo *tool_info;
-
-      tool_info = (GimpToolInfo *)
-        gimp_container_get_child_by_name (gdisp->gimage->gimp->tool_info_list,
-                                          "gimp-move-tool");
-
-      if (tool_info)
-        {
-          GimpTool *active_tool;
-
-          gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp),
-                                 tool_info);
-
-          active_tool = tool_manager_get_active (gdisp->gimage->gimp);
-
-          if (active_tool)
-            {
-              gdk_pointer_grab (shell->canvas->window, FALSE,
-                                GDK_POINTER_MOTION_HINT_MASK |
-                                GDK_BUTTON1_MOTION_MASK |
-                                GDK_BUTTON_RELEASE_MASK,
-                                NULL, NULL, event->time);
-
-              gdk_keyboard_grab (shell->canvas->window, FALSE, event->time);
-
-              gimp_move_tool_start_vguide (active_tool, gdisp);
-            }
-        }
-    }
-
-  return FALSE;
+  return gimp_display_shell_ruler_button_press (widget, event, shell, FALSE);
 }
 
 gboolean

@@ -259,6 +259,8 @@ gimp_color_picker_tool_oper_update (GimpTool        *tool,
   options = GIMP_COLOR_PICKER_OPTIONS (tool->tool_info->tool_options);
 
   GIMP_COLOR_TOOL (tool)->pick_mode = options->pick_mode;
+
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
 }
 
 static void
