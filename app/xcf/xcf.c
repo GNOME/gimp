@@ -156,11 +156,10 @@ static PlugInProcDef xcf_plug_in_save_proc =
 
 static GimpXcfLoaderFunc *xcf_loaders[] =
 {
-  xcf_load_image,	/* version 0 */
+  xcf_load_image,   /* version 0 */
   xcf_load_image,   /* version 1 */
   xcf_load_image    /* version 2 */
 };
-static gint n_xcf_loaders = sizeof (xcf_loaders) / sizeof (xcf_loaders[0]);
 
 
 void
@@ -250,7 +249,7 @@ xcf_load_invoker (Gimp     *gimp,
       
       if (success)
 	{
-	  if (info.file_version < n_xcf_loaders)
+	  if (info.file_version < G_N_ELEMENTS (xcf_loaders))
 	    {
 	      gimage = (*(xcf_loaders[info.file_version])) (gimp, &info);
 
