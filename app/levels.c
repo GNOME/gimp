@@ -45,7 +45,7 @@
 #define DRAW               0x200
 #define ALL                0xFFF
 
-#define TEXT_WIDTH       45
+#define TEXT_WIDTH       50
 #define DA_WIDTH         256
 #define DA_HEIGHT        25
 #define GRADIENT_HEIGHT  15
@@ -111,7 +111,7 @@ static void   levels_motion         (Tool *, GdkEventMotion *, gpointer);
 static void   levels_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void   levels_control        (Tool *, int, gpointer);
 
-static LevelsDialog *  levels_new_dialog              (void);
+static LevelsDialog *  levels_new_dialog              (gint);
 static void            levels_update                  (LevelsDialog *, int);
 static void            levels_preview                 (LevelsDialog *);
 static void            levels_value_callback          (GtkWidget *, gpointer);
@@ -138,7 +138,7 @@ static void *levels_options = NULL;
 static LevelsDialog *levels_dialog = NULL;
 
 static void       levels_histogram_info (PixelArea *, PixelArea *, HistogramValues, void *);
-static void       levels_histogram_range (int, int, HistogramValues, void *);
+static void       levels_histogram_range (int, int, int, HistogramValues, void *);
 static Argument * levels_invoker (Argument *);
 
 static void  levels_funcs (Tag);
@@ -1243,6 +1243,7 @@ levels_histogram_info (PixelArea     *src_area,
 static void
 levels_histogram_range (int              start,
 			int              end,
+			int		 bins,
 			HistogramValues  values,
 			void            *user_data)
 {
@@ -1378,9 +1379,10 @@ static MenuItem color_option_items[] =
 void
 levels_initialize (void *gdisp_ptr)
 {
-  GDisplay *gdisp;
-  int i;
-  GimpDrawable * drawable;
+  GDisplay	   *gdisp;
+  int 			i;
+  gint			bins;
+  GimpDrawable *drawable;
 
   gdisp = (GDisplay *) gdisp_ptr;
   drawable = gimage_active_drawable (gdisp->gimage);
@@ -1391,10 +1393,25 @@ levels_initialize (void *gdisp_ptr)
       return;
     }
 
+  switch( tag_precision( gimage_tag( gdisp->gimage ) ) )
+  {
+  case PRECISION_U8:
+      bins = 256;
+      break;
+
+  case PRECISION_U16:
+      bins = 65536;
+      break;
+
+  case PRECISION_FLOAT:
+      g_warning( "levels_float not implemented yet." );
+      return;
+  }
+
   levels_funcs ( drawable_tag (drawable));
   /*  The levels dialog  */
   if (!levels_dialog)
-    levels_dialog = levels_new_dialog ();
+    levels_dialog = levels_new_dialog ( bins );
   else
     if (!GTK_WIDGET_VISIBLE (levels_dialog->shell))
       gtk_widget_show (levels_dialog->shell);
@@ -1471,8 +1488,11 @@ static ActionAreaItem action_items[] =
 };
 
 
+/*
+ *  TBD - WRB -make work with 16 bit & float data
+*/
 LevelsDialog *
-levels_new_dialog ()
+levels_new_dialog ( gint bins )
 {
   LevelsDialog *ld;
   GtkWidget *vbox;
@@ -1569,7 +1589,7 @@ levels_new_dialog ()
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
 
-  ld->histogram = histogram_create (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT,
+  ld->histogram = histogram_create (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT, bins,
 				    levels_histogram_range, (void *) ld);
   gtk_container_add (GTK_CONTAINER (frame), ld->histogram->histogram_widget);
   gtk_widget_show (ld->histogram->histogram_widget);

@@ -26,6 +26,7 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "histogram.h"
+#include "tag.h"
 
 #define WAITING 0
 #define WORKING 1
@@ -50,15 +51,19 @@ typedef struct _HistogramPrivate
   HistogramValues         values;
   int                     start;
   int                     end;
+  int                     bins;
 } HistogramPrivate;
 
 
 /**************************/
 /*  Function definitions  */
 
+/*
+ *  TBD - WRB -make work with float data
+*/
 static void
 histogram_draw (Histogram *histogram,
-		int        update)
+		        int        update)
 {
   HistogramPrivate *histogram_p;
   double max;
@@ -75,7 +80,7 @@ histogram_draw (Histogram *histogram,
     {
       /*  find the maximum value  */
       max = 1.0;
-      for (i = 0; i < 256; i++)
+      for (i = 0; i < histogram_p->bins; i++)
 	{
 	  if (histogram_p->values[histogram_p->channel][i])
 	    log_val = log (histogram_p->values[histogram_p->channel][i]);
@@ -95,9 +100,9 @@ histogram_draw (Histogram *histogram,
 		     1, height + 1, width, height + 1);
 
       /*  Draw the spikes  */
-      for (i = 0; i < 256; i++)
+      for (i = 0; i < histogram_p->bins; i++)
 	{
-	  x = (width * i) / 256 + 1;
+	  x = (width * i) / histogram_p->bins + 1;
 	  if (histogram_p->values[histogram_p->channel][i])
 	    y = (int) ((height * log (histogram_p->values[histogram_p->channel][i])) / max);
 	  else
@@ -110,8 +115,8 @@ histogram_draw (Histogram *histogram,
     }
   if ((update & RANGE) && histogram_p->start >= 0)
     {
-      x1 = (width * MIN (histogram_p->start, histogram_p->end)) / 256 + 1;
-      x2 = (width * MAX (histogram_p->start, histogram_p->end)) / 256 + 1;
+      x1 = (width * MIN (histogram_p->start, histogram_p->end)) / histogram_p->bins + 1;
+      x2 = (width * MAX (histogram_p->start, histogram_p->end)) / histogram_p->bins + 1;
       gdk_gc_set_function (histogram->histogram_widget->style->black_gc, GDK_INVERT);
       gdk_draw_rectangle (histogram->histogram_widget->window,
 			  histogram->histogram_widget->style->black_gc, TRUE,
@@ -120,6 +125,9 @@ histogram_draw (Histogram *histogram,
     }
 }
 
+/*
+ *  TBD - WRB -make work with float data
+*/
 static gint
 histogram_events (GtkWidget *widget,
 		  GdkEvent  *event)
@@ -147,7 +155,7 @@ histogram_events (GtkWidget *widget,
 
       histogram_draw (histogram, RANGE);
 
-      histogram_p->start = BOUNDS ((((bevent->x - 1) * 256) / width), 0, 255);
+      histogram_p->start = BOUNDS ((((bevent->x - 1) * histogram_p->bins) / width), 0, histogram_p->bins-1);
       histogram_p->end = histogram_p->start;
 
       histogram_draw (histogram, RANGE);
@@ -156,6 +164,7 @@ histogram_events (GtkWidget *widget,
     case GDK_BUTTON_RELEASE:
       (* histogram_p->range_callback) (MIN (histogram_p->start, histogram_p->end),
 				       MAX (histogram_p->start, histogram_p->end),
+					   histogram_p->bins,
 				       histogram_p->values,
 				       histogram_p->user_data);
       break;
@@ -166,7 +175,7 @@ histogram_events (GtkWidget *widget,
 
       histogram_draw (histogram, RANGE);
 
-      histogram_p->start = BOUNDS ((((mevent->x - 1) * 256) / width), 0, 255);
+      histogram_p->start = BOUNDS ((((mevent->x - 1) * histogram_p->bins) / width), 0, histogram_p->bins-1);
 
       histogram_draw (histogram, RANGE);
       break;
@@ -181,12 +190,13 @@ histogram_events (GtkWidget *widget,
 Histogram *
 histogram_create (int                     width,
 		  int                     height,
+		  int			  bins,
 		  HistogramRangeCallback  range_callback,
 		  void                   *user_data)
 {
-  Histogram *histogram;
+  Histogram        *histogram;
   HistogramPrivate *histogram_p;
-  int i, j;
+  int               i, j;
 
   histogram = (Histogram *) g_malloc (sizeof (Histogram));
   histogram->histogram_widget = gtk_drawing_area_new ();
@@ -203,12 +213,17 @@ histogram_create (int                     width,
   histogram_p->user_data = user_data;
   histogram_p->channel = HISTOGRAM_VALUE;
   histogram_p->start = 0;
-  histogram_p->end = 255;
+  histogram_p->end = bins-1;
+  histogram_p->bins = bins;
 
   /*  Initialize the values array  */
-  for (j = 0; j < 4; j++)
-    for (i = 0; i < 256; i++)
+  for (j = 0; j <= HISTOGRAM_ALPHA; j++)
+  {
+    histogram_p->values[j] = (double*)g_malloc( sizeof(double) * bins );
+
+    for (i = 0; i < bins; i++)
       histogram_p->values[j][i] = 0.0;
+  }
 
   return histogram;
 }
@@ -216,8 +231,15 @@ histogram_create (int                     width,
 void
 histogram_free (Histogram  *histogram)
 {
+  int j;
+  HistogramPrivate *histogram_p = (HistogramPrivate*)histogram->private_part;
+
   gtk_widget_destroy (histogram->histogram_widget);
-  g_free (histogram->private_part);
+
+  for (j = 0; j <= HISTOGRAM_ALPHA; j++)
+      g_free( histogram_p->values[j] );
+
+  g_free (histogram_p);
   g_free (histogram);
 }
 
@@ -228,46 +250,47 @@ histogram_update (Histogram         *histogram,
 		  void              *user_data)
 {
   HistogramPrivate *histogram_p;
-  GImage *gimage;
-  Channel *mask;
-  PixelRegion srcPR, maskPR;
-  int no_mask;
-  void *pr;
-  int x1, y1, x2, y2;
-  int off_x, off_y;
-  int i, j;
-
-  histogram_p = (HistogramPrivate *) histogram->private_part;
+  GImage           *gimage;
+  Channel          *mask;
+  PixelArea         src_area, mask_area;
+  int               no_mask, i, j;
+  int               x1, y1, x2, y2;
+  int               off_x, off_y;
+  void             *pr;
 
   /*  Make sure the drawable is still valid  */
-  if (! (gimage = drawable_gimage ( (drawable))))
+  if( (gimage = drawable_gimage(drawable)) == NULL )
     return;
+
+  histogram_p = (HistogramPrivate *) histogram->private_part;
 
   /*  The information collection should occur only within selection bounds  */
   no_mask = (drawable_mask_bounds ( (drawable), &x1, &y1, &x2, &y2) == FALSE);
   drawable_offsets ( (drawable), &off_x, &off_y);
 
-  /*  Configure the src from the drawable data  */
-  pixel_region_init (&srcPR, drawable_data ( (drawable)),
+  pixelarea_init (&src_area, drawable_data ( (drawable)),
 		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 
-  /*  Configure the mask from the gimage's selection mask  */
   mask = gimage_get_mask (gimage);
-  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)),
+  pixelarea_init (&mask_area, drawable_data (GIMP_DRAWABLE(mask)),
 		     x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
 
   /*  Initialize the values array  */
-  for (j = 0; j < 4; j++)
-    for (i = 0; i < 256; i++)
+  for (j = 0; j <= HISTOGRAM_ALPHA; j++)
+    for (i = 0; i < histogram_p->bins; i++)
       histogram_p->values[j][i] = 0.0;
 
   /*  Apply the image transformation to the pixels  */
   if (no_mask)
-    for (pr = pixel_regions_register (1, &srcPR); pr != NULL; pr = pixel_regions_process (pr))
-      (* info_func) (&srcPR, NULL, histogram_p->values, user_data);
+  {
+    for (pr = pixelarea_register (1, &src_area); pr != NULL; pr = pixelarea_process (pr))
+        (* info_func) (&src_area, NULL, histogram_p->values, user_data);
+  }
   else
-    for (pr = pixel_regions_register (2, &srcPR, &maskPR); pr != NULL; pr = pixel_regions_process (pr))
-      (* info_func) (&srcPR, &maskPR, histogram_p->values, user_data);
+  {
+    for (pr = pixelarea_register (2, &src_area, &mask_area); pr != NULL; pr = pixelarea_process (pr))
+      (* info_func) (&src_area, &mask_area, histogram_p->values, user_data);
+  }
 
   /*  Make sure the histogram is updated  */
   gtk_widget_draw (histogram->histogram_widget, NULL);
@@ -275,6 +298,7 @@ histogram_update (Histogram         *histogram,
   /*  Give a range callback  */
   (* histogram_p->range_callback) (MIN (histogram_p->start, histogram_p->end),
 				   MAX (histogram_p->start, histogram_p->end),
+				   histogram_p->bins,
 				   histogram_p->values,
 				   histogram_p->user_data);
 }
@@ -307,6 +331,7 @@ histogram_channel (Histogram *histogram,
   /*  Give a range callback  */
   (* histogram_p->range_callback) (MIN (histogram_p->start, histogram_p->end),
 				   MAX (histogram_p->start, histogram_p->end),
+				   histogram_p->bins,
 				   histogram_p->values,
 				   histogram_p->user_data);
 }

@@ -70,7 +70,7 @@ static void   histogram_tool_motion         (Tool *, GdkEventMotion *, gpointer)
 static void   histogram_tool_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void   histogram_tool_control        (Tool *, int, gpointer);
 
-static HistogramToolDialog *  histogram_tool_new_dialog       (void);
+static HistogramToolDialog *  histogram_tool_new_dialog       (gint);
 static void                   histogram_tool_close_callback   (GtkWidget *, gpointer);
 static gint                   histogram_tool_delete_callback  (GtkWidget *, GdkEvent *, gpointer);
 static void                   histogram_tool_value_callback   (GtkWidget *, gpointer);
@@ -81,8 +81,8 @@ static void                   histogram_tool_blue_callback    (GtkWidget *, gpoi
 static void *histogram_tool_options = NULL;
 static HistogramToolDialog *histogram_tool_dialog = NULL;
 
-static void       histogram_tool_histogram_info  (PixelRegion *, PixelRegion *, HistogramValues, void *);
-static void       histogram_tool_histogram_range (int, int, HistogramValues, void *);
+static void       histogram_tool_histogram_info  (PixelArea *, PixelArea *, HistogramValues, void *);
+static void       histogram_tool_histogram_range (int, int, int, HistogramValues, void *);
 static void       histogram_tool_dialog_update   (HistogramToolDialog *, int, int);
 
 static Argument * histogram_invoker (Argument *args);
@@ -101,105 +101,192 @@ static char * histogram_info_names[7] =
 
 /*  histogram_tool machinery  */
 
+/*
+ *  TBD -WRB need to make work with float data
+*/
 static void
-histogram_tool_histogram_info (PixelRegion     *srcPR,
-			       PixelRegion     *maskPR,
+histogram_tool_histogram_info (PixelArea       *src_area,
+			       PixelArea       *mask_area,
 			       HistogramValues  values,
 			       void            *user_data)
 {
   HistogramToolDialog *htd;
-  unsigned char *src, *s;
-  unsigned char *mask, *m;
-  int w, h;
-  int value, red, green, blue;
+  int                  w, h;
+  guint8	      *src, *mask = NULL;
 
-  mask = NULL;
-  m    = NULL;
+  Tag                  src_tag = pixelarea_tag (src_area);
+  gint                 s_num_channels = tag_num_channels (src_tag);
+  gint                 alpha = tag_alpha (src_tag);
+
+  Tag                  mask_tag = pixelarea_tag (mask_area);
+  gint                 m_num_channels = tag_num_channels (mask_tag);
 
   htd = (HistogramToolDialog *) user_data;
 
-  h = srcPR->h;
-  src = srcPR->data;
+  h = pixelarea_height (src_area);
 
-  if (maskPR)
-    mask = maskPR->data;
+  src = (guint8*)pixelarea_data (src_area);
 
-  while (h--)
-    {
-      w = srcPR->w;
-      s = src;
+  if (mask_area)
+    mask = (guint8*)pixelarea_data (mask_area);
 
-      if (maskPR)
-	m = mask;
+  switch( tag_precision( src_tag ) )
+  {
+  case PRECISION_U8:
+  {
+     guint8 *s, *m = NULL;
+     gint    value, red, green, blue;
+     gfloat  scale = 1./255.;
 
-      while (w--)
-	{
-	  if (htd->color)
-	    {
-	      value = MAX (s[RED_PIX], s[GREEN_PIX]);
-	      value = MAX (value, s[BLUE_PIX]);
-	      red   = s[RED_PIX];
-	      green = s[GREEN_PIX];
-	      blue  = s[BLUE_PIX];
+     while (h--)
+       {
+         w = pixelarea_width (src_area);
+         s = src;
 
-	      if (maskPR)
-		{
-		  values[HISTOGRAM_VALUE][value] += (double) *m / 255.0;
-		  values[HISTOGRAM_RED][red]     += (double) *m / 255.0;
-		  values[HISTOGRAM_GREEN][green] += (double) *m / 255.0;
-		  values[HISTOGRAM_BLUE][blue]   += (double) *m / 255.0;
-		}
-	      else
-		{
-		  values[HISTOGRAM_VALUE][value] += 1.0;
-		  values[HISTOGRAM_RED][red]     += 1.0;
-		  values[HISTOGRAM_GREEN][green] += 1.0;
-		  values[HISTOGRAM_BLUE][blue]   += 1.0;
-		}
-	    }
-	  else
-	    {
-	      value = s[GRAY_PIX];
-	      if (maskPR)
-		values[HISTOGRAM_VALUE][value] += (double) *m / 255.0;
-	      else
-		values[HISTOGRAM_VALUE][value] += 1.0;
-	    }
+         if (mask_area)
+	   m = mask;
 
-	  s += srcPR->bytes;
+         while (w--)
+	   {
+	     if (htd->color)
+	       {
+	         value = MAX (s[RED_PIX], s[GREEN_PIX]);
+	         value = MAX (value, s[BLUE_PIX]);
+	         red   = s[RED_PIX];
+	         green = s[GREEN_PIX];
+	         blue  = s[BLUE_PIX];
 
-	  if (maskPR)
-	    m += maskPR->bytes;
-	}
+	         if (mask_area)
+		   {
+		     values[HISTOGRAM_VALUE][value] += (double) *m * scale;
+		     values[HISTOGRAM_RED][red]     += (double) *m * scale;
+		     values[HISTOGRAM_GREEN][green] += (double) *m * scale;
+		     values[HISTOGRAM_BLUE][blue]   += (double) *m * scale;
+		   }
+	         else
+		   {
+		     values[HISTOGRAM_VALUE][value] += 1.0;
+		     values[HISTOGRAM_RED][red]     += 1.0;
+		     values[HISTOGRAM_GREEN][green] += 1.0;
+		     values[HISTOGRAM_BLUE][blue]   += 1.0;
+		   }
+	       }
+	     else
+	       {
+	         value = s[GRAY_PIX];
+	         if (mask_area)
+		   values[HISTOGRAM_VALUE][value] += (double) *m * scale;
+	         else
+		   values[HISTOGRAM_VALUE][value] += 1.0;
+	       }
 
-      src += srcPR->rowstride;
+	     s += s_num_channels;
 
-      if (maskPR)
-	mask += maskPR->rowstride;
-    }
+	     if (mask_area)
+	       m += m_num_channels;
+	   }
+
+           src += pixelarea_rowstride (src_area);
+
+           if (mask_area)
+	     mask += pixelarea_rowstride (mask_area);
+       }
+       break;
+  }
+  case PRECISION_U16:
+  {
+     guint16 *s, *m = NULL;
+     gint    value, red, green, blue;
+     gfloat  scale = 1./65535.;
+
+     while (h--)
+       {
+         w = pixelarea_width (src_area);
+         s = (guint16*)src;
+
+         if (mask_area)
+	   m = (guint16*)mask;
+
+         while (w--)
+	   {
+	     if (htd->color)
+	       {
+	         value = MAX (s[RED_PIX], s[GREEN_PIX]);
+	         value = MAX (value, s[BLUE_PIX]);
+	         red   = s[RED_PIX];
+	         green = s[GREEN_PIX];
+	         blue  = s[BLUE_PIX];
+
+	         if (mask_area)
+		   {
+		     values[HISTOGRAM_VALUE][value] += (double) *m * scale;
+		     values[HISTOGRAM_RED][red]     += (double) *m * scale;
+		     values[HISTOGRAM_GREEN][green] += (double) *m * scale;
+		     values[HISTOGRAM_BLUE][blue]   += (double) *m * scale;
+		   }
+	         else
+		   {
+		     values[HISTOGRAM_VALUE][value] += 1.0;
+		     values[HISTOGRAM_RED][red]     += 1.0;
+		     values[HISTOGRAM_GREEN][green] += 1.0;
+		     values[HISTOGRAM_BLUE][blue]   += 1.0;
+		   }
+	       }
+	     else
+	       {
+	         value = s[GRAY_PIX];
+	         if (mask_area)
+		   values[HISTOGRAM_VALUE][value] += (double) *m * scale;
+	         else
+		   values[HISTOGRAM_VALUE][value] += 1.0;
+	       }
+
+	     s += s_num_channels;
+
+	     if (mask_area)
+	       m += m_num_channels;
+	   }
+
+           src += pixelarea_rowstride (src_area);
+
+           if (mask_area)
+	     mask += pixelarea_rowstride (mask_area);
+       }
+       break;
+  }
+  case PRECISION_FLOAT:
+  {
+       g_warning( "histogram_float not implemented yet." );
+       break;
+  }
+  }
 }
 
+/*
+ *  TBD-WRB - need to make to work with F.P. image data (median calculation)
+*/
 static void
 histogram_tool_histogram_range (int              start,
 				int              end,
+				int		 bins,
 				HistogramValues  values,
 				void            *user_data)
 {
-  HistogramToolDialog *htd;
-  double pixels;
-  double mean;
-  double std_dev;
-  int median;
-  double count;
-  double percentile;
-  double tmp;
-  int i;
+  HistogramToolDialog	*htd;
+  double		 pixels;
+  double 		 mean;
+  double 		 std_dev;
+  int 			 median;
+  double 		 count;
+  double 		 percentile;
+  double 		 tmp;
+  int 			 i;
 
   htd = (HistogramToolDialog *) user_data;
 
   count = 0.0;
   pixels = 0.0;
-  for (i = 0; i < 256; i++)
+  for (i = 0; i < bins; i++)
     {
       pixels += values[htd->channel][i];
 
@@ -217,6 +304,7 @@ histogram_tool_histogram_range (int              start,
       if (median == -1 && tmp > count / 2)
 	median = i;
     }
+
   if (count)
     mean /= count;
 
@@ -378,10 +466,14 @@ tools_free_histogram_tool (Tool *tool)
   g_free (hist);
 }
 
+/*
+ *  TBD - WRB -make work with float data
+*/
 void
 histogram_tool_initialize (void *gdisp_ptr)
 {
   GDisplay *gdisp;
+  gint	    bins;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -391,9 +483,25 @@ histogram_tool_initialize (void *gdisp_ptr)
       return;
     }
 
+  switch( tag_precision( gimage_tag( gdisp->gimage ) ) )
+  {
+  case PRECISION_U8:
+      bins = 256;
+      break;
+
+  case PRECISION_U16:
+      bins = 65536;
+      break;
+
+  case PRECISION_FLOAT:
+      g_warning( "histogram_float not implemented yet." );
+      return;
+  }
+
+
   /*  The histogram_tool dialog  */
   if (!histogram_tool_dialog)
-    histogram_tool_dialog = histogram_tool_new_dialog ();
+    histogram_tool_dialog = histogram_tool_new_dialog ( bins );
   else if (!GTK_WIDGET_VISIBLE (histogram_tool_dialog->shell))
     gtk_widget_show (histogram_tool_dialog->shell);
 
@@ -435,7 +543,7 @@ static MenuItem color_option_items[] =
 
 
 static HistogramToolDialog *
-histogram_tool_new_dialog ()
+histogram_tool_new_dialog ( gint bins )
 {
   HistogramToolDialog *htd;
   GtkWidget *vbox;
@@ -492,7 +600,7 @@ histogram_tool_new_dialog ()
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
 
-  htd->histogram = histogram_create (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT,
+  htd->histogram = histogram_create (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT, bins,
 				     histogram_tool_histogram_range, (void *) htd);
   gtk_container_add (GTK_CONTAINER (frame), htd->histogram->histogram_widget);
   gtk_widget_show (htd->histogram->histogram_widget);
@@ -690,11 +798,14 @@ ProcRecord histogram_proc =
 };
 
 
+/*
+ *  TBD - WRB -make work with float data
+*/
 static Argument *
 histogram_invoker (Argument *args)
 {
   Argument *return_args;
-  PixelRegion srcPR, maskPR;
+  PixelArea src_area, mask_area;
   int success = TRUE;
   HistogramToolDialog htd;
   GImage *gimage;
@@ -705,6 +816,7 @@ histogram_invoker (Argument *args)
   int high_range;
   int int_value;
   int no_mask;
+  int max, bins;
   int x1, y1, x2, y2;
   int off_x, off_y;
   void *pr;
@@ -750,10 +862,32 @@ histogram_invoker (Argument *args)
       channel = int_value;
     }
   /*  low range  */
+
+  if( success )
+  {
+      switch( tag_precision( gimage_tag( gimage ) ) )
+      {
+      case PRECISION_U8:
+	  bins = 256;
+	  max = bins-1;
+	  break;
+
+      case PRECISION_U16:
+	  bins = 65536;
+	  max = bins-1;
+	  break;
+
+      case PRECISION_FLOAT:
+	  g_warning( "histogram_float not implemented yet." );
+	  success = FALSE;
+      }
+  } 
+
   if (success)
     {
       int_value = args[3].value.pdb_int;
-      if (int_value >= 0 && int_value < 256)
+	  /*printf( "low range int: %d\n", int_value );*/
+      if (int_value >= 0 && int_value <= max)
 	low_range = int_value;
       else
 	success = FALSE;
@@ -762,7 +896,8 @@ histogram_invoker (Argument *args)
   if (success)
     {
       int_value = args[4].value.pdb_int;
-      if (int_value >= 0 && int_value < 256)
+	  /*printf( "hight range int: %d\n", int_value );*/
+      if (int_value >= 0 && int_value <= max)
 	high_range = int_value;
       else
 	success = FALSE;
@@ -775,7 +910,7 @@ histogram_invoker (Argument *args)
       htd.channel = channel;
       htd.drawable = drawable;
       htd.color = drawable_color (drawable);
-      htd.histogram = histogram_create (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT,
+      htd.histogram = histogram_create (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT, bins,
 					histogram_tool_histogram_range, (void *) &htd);
 
       /*  The information collection should occur only within selection bounds  */
@@ -783,24 +918,24 @@ histogram_invoker (Argument *args)
       drawable_offsets (drawable, &off_x, &off_y);
 
       /*  Configure the src from the drawable data  */
-      pixel_region_init (&srcPR, drawable_data (drawable),
+      pixelarea_init (&src_area, drawable_data (drawable),
 			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
 
       /*  Configure the mask from the gimage's selection mask  */
       mask = gimage_get_mask (gimage);
-      pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)),
+      pixelarea_init (&mask_area, drawable_data (GIMP_DRAWABLE(mask)),
 			 x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
 
       /*  Apply the image transformation to the pixels  */
       if (no_mask)
-	for (pr = pixel_regions_register (1, &srcPR); pr != NULL; pr = pixel_regions_process (pr))
-	  histogram_tool_histogram_info (&srcPR, NULL, *(histogram_values (htd.histogram)), &htd);
+	for (pr = pixelarea_register (1, &src_area); pr != NULL; pr = pixelarea_process (pr))
+	  histogram_tool_histogram_info (&src_area, NULL, *(histogram_values (htd.histogram)), &htd);
       else
-	for (pr = pixel_regions_register (2, &srcPR, &maskPR); pr != NULL; pr = pixel_regions_process (pr))
-	  histogram_tool_histogram_info (&srcPR, &maskPR, *(histogram_values (htd.histogram)), &htd);
+	for (pr = pixelarea_register (2, &src_area, &mask_area); pr != NULL; pr = pixelarea_process (pr))
+	  histogram_tool_histogram_info (&src_area, &mask_area, *(histogram_values (htd.histogram)), &htd);
 
       /*  calculate the statistics  */
-      histogram_tool_histogram_range (low_range, high_range,
+      histogram_tool_histogram_range (low_range, high_range, bins,
 				      *(histogram_values (htd.histogram)), &htd);
 
       return_args = procedural_db_return_args (&histogram_proc, success);

@@ -18,7 +18,7 @@
 #ifndef __HISTOGRAM_H__
 #define __HISTOGRAM_H__
 
-#include "pixel_region.h"
+#include "pixelarea.h"
 
 #define HISTOGRAM_VALUE  0
 #define HISTOGRAM_RED    1
@@ -38,15 +38,15 @@ struct _Histogram
   void *     private_part;
 };
 
-typedef double  Values[256];
-typedef Values  HistogramValues[5];
+typedef double  *Values;
+typedef Values   HistogramValues[5];
 
-typedef void (* HistogramInfoFunc)  (PixelRegion *, PixelRegion *, HistogramValues, void *);
-typedef void (* HistogramRangeCallback)  (int, int, HistogramValues, void *);
+typedef void (* HistogramInfoFunc)  (PixelArea *, PixelArea *, HistogramValues, void *);
+typedef void (* HistogramRangeCallback)  (int, int, int, HistogramValues, void *);
 
 /*  Histogram functions  */
 
-Histogram *      histogram_create  (int, int, HistogramRangeCallback, void *);
+Histogram *      histogram_create  (int, int, int, HistogramRangeCallback, void *);
 void             histogram_free    (Histogram *);
 void             histogram_update  (Histogram *, GimpDrawable *, HistogramInfoFunc, void *);
 void             histogram_range   (Histogram *, int, int);
