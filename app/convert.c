@@ -1062,10 +1062,6 @@ generate_histogram_rgb (Histogram  histogram,
 		      
 		      /* Remember the new colour we just found.
 		       */
-		      found_cols[num_found_cols][0] = data[RED_PIX];
-		      found_cols[num_found_cols][1] = data[GREEN_PIX];
-		      found_cols[num_found_cols][2] = data[BLUE_PIX];
-		      
 		      if (num_found_cols > col_limit)
 			{
 			  /* There are more colours in the image
@@ -1078,6 +1074,10 @@ generate_histogram_rgb (Histogram  histogram,
 			  goto already_found;
 			}
 
+		      found_cols[num_found_cols][0] = data[RED_PIX];
+		      found_cols[num_found_cols][1] = data[GREEN_PIX];
+		      found_cols[num_found_cols][2] = data[BLUE_PIX];
+		      
 		      num_found_cols++;
 		      
 		    }
