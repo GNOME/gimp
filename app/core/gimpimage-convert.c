@@ -1023,6 +1023,7 @@ gimp_image_convert (GimpImage              *gimage,
   gimp_image_colormap_changed (gimage, -1); 
 #endif
 
+  gimp_image_invalidate_layer_previews (gimage);
   gimp_image_mode_changed (gimage);
 
   gimp_unset_busy (gimage->gimp);

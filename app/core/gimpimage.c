@@ -733,6 +733,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       break;
     default:
       bytes = 0;
+      g_assert_not_reached ();
       break;
     }
 
@@ -802,6 +803,10 @@ gimp_image_get_new_preview (GimpViewable *viewable,
                           y1 * src1PR.rowstride + x1 * src1PR.bytes);
 
       layer_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer), w, h);
+
+      g_assert (layer_buf);
+      g_assert (layer_buf->bytes <= comp->bytes);
+
       src2PR.bytes     = layer_buf->bytes;
       src2PR.w         = src1PR.w;  
       src2PR.h         = src1PR.h;
