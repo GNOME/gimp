@@ -1,3 +1,26 @@
+2004-03-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-transform-utils.c
+	(gimp_transform_matrix_perspective): make sure 0.0/0.0 results
+	in 1.0, not NaN.
+
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_tiles_affine): instead of returning NULL
+	if the transformation shrinks the tiles completely away, return at
+	least the pixel (or the row or column of pixels) which best covers
+	the sub-pixel area of the transform result:
+
+	- Changed rounding of the transformed coordinates from RINT()
+	  to floor()/ceil() so we don't cut off sub-pixel portions of the
+	  transform result.
+	- Force the minimal size if the changed rounding didn't help.
+
+	Fixes bug #138117.
+
+	Also added paranoia code which falls back to clip_result if the
+	passed matrix produces NaN coordinates (copied the FINITE() macro
+	from image_cmds.c).
+
 2004-03-30  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/grid-system.scm: define "map" here,

@@ -208,9 +208,18 @@ gimp_transform_matrix_perspective (gint         x1,
 
         det1 = dx3 * dy2 - dy3 * dx2;
         det2 = dx1 * dy2 - dy1 * dx2;
-        matrix.coeff[2][0] = det1 / det2;
+
+        if (det1 == 0.0 && det2 == 0.0)
+          matrix.coeff[2][0] = 1.0;
+        else
+          matrix.coeff[2][0] = det1 / det2;
+
         det1 = dx1 * dy3 - dy1 * dx3;
-        matrix.coeff[2][1] = det1 / det2;
+
+        if (det1 == 0.0 && det2 == 0.0)
+          matrix.coeff[2][1] = 1.0;
+        else
+          matrix.coeff[2][1] = det1 / det2;
 
         matrix.coeff[0][0] = tx2 - tx1 + matrix.coeff[2][0] * tx2;
         matrix.coeff[0][1] = tx3 - tx1 + matrix.coeff[2][1] * tx3;

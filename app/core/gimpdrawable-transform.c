@@ -49,6 +49,17 @@
 #include "gimp-intl.h"
 
 
+#if defined (HAVE_FINITE)
+#define FINITE(x) finite(x)
+#elif defined (HAVE_ISFINITE)
+#define FINITE(x) isfinite(x)
+#elif defined (G_OS_WIN32)
+#define FINITE(x) _finite(x)
+#else
+#error "no FINITE() implementation available?!"
+#endif
+
+
 #define MIN4(a,b,c,d) MIN(MIN(a,b),MIN(c,d))
 #define MAX4(a,b,c,d) MAX(MAX(a,b),MAX(c,d))
 
@@ -224,16 +235,33 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       gimp_matrix3_transform_point (&inv, u1, v2, &dx3, &dy3);
       gimp_matrix3_transform_point (&inv, u2, v2, &dx4, &dy4);
 
-      x1 = RINT (MIN4 (dx1, dx2, dx3, dx4));
-      y1 = RINT (MIN4 (dy1, dy2, dy3, dy4));
+      if (! FINITE (dx1) || ! FINITE (dy1) ||
+          ! FINITE (dx2) || ! FINITE (dy2) ||
+          ! FINITE (dx3) || ! FINITE (dy3) ||
+          ! FINITE (dx4) || ! FINITE (dy4))
+        {
+          /*  fallback to clip_result if the passed matrix is broken  */
 
-      x2 = RINT (MAX4 (dx1, dx2, dx3, dx4));
-      y2 = RINT (MAX4 (dy1, dy2, dy3, dy4));
+          x1 = u1;
+          y1 = v1;
+          x2 = u2;
+          y2 = v2;
+        }
+      else
+        {
+          x1 = (gint) floor (MIN4 (dx1, dx2, dx3, dx4));
+          y1 = (gint) floor (MIN4 (dy1, dy2, dy3, dy4));
+
+          x2 = (gint) ceil (MAX4 (dx1, dx2, dx3, dx4));
+          y2 = (gint) ceil (MAX4 (dy1, dy2, dy3, dy4));
+
+          if (x1 == x2)
+            x2++;
+
+          if (y1 == y2)
+            y2++;
+        }
     }
-
-  /*  Check if the matrix transforms the tiles into nothing  */
-  if ((x2 - x1) < 1 || (y2 - y1) < 1)
-    return NULL;
 
   /*  Get the new temporary buffer for the transformed result  */
   new_tiles = tile_manager_new (x2 - x1, y2 - y1,
