@@ -1,3 +1,7 @@
+2001-02-20  Nick Lamb  <njl195@zepler.org.uk>
+
+	* libgimpwidgets/gimpwidgets.c: include string.h
+
 2001-02-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpdnd.[ch]: removed all brush, pattern, gradient and palette
