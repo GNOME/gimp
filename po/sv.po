@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-05-19 14:56+0200\n"
-"PO-Revision-Date: 2003-05-19 14:59+0200\n"
+"POT-Creation-Date: 2003-05-20 10:02+0200\n"
+"PO-Revision-Date: 2003-05-20 10:04+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -221,17 +221,17 @@ msgid "Value"
 msgstr "Värde"
 
 #: app/base/base-enums.c:76 app/core/core-enums.c:97
-#: app/tools/gimpcolorbalancetool.c:307
+#: app/tools/gimpcolorbalancetool.c:306
 msgid "Red"
 msgstr "Röd"
 
 #: app/base/base-enums.c:77 app/core/core-enums.c:98
-#: app/tools/gimpcolorbalancetool.c:314
+#: app/tools/gimpcolorbalancetool.c:313
 msgid "Green"
 msgstr "Grön"
 
 #: app/base/base-enums.c:78 app/core/core-enums.c:99
-#: app/tools/gimpcolorbalancetool.c:321
+#: app/tools/gimpcolorbalancetool.c:320
 msgid "Blue"
 msgstr "Blå"
 
@@ -1788,7 +1788,7 @@ msgstr "Kan inte ångra %s"
 
 #: app/core/gimpimage.c:913 app/core/gimppalette-import.c:204
 #: app/core/gimppalette.c:652 app/gui/palette-import-dialog.c:589
-#: app/pdb/image_cmds.c:3697 app/widgets/gimpdatafactoryview.c:281
+#: app/pdb/image_cmds.c:3755 app/widgets/gimpdatafactoryview.c:281
 msgid "Untitled"
 msgstr "Namnlös"
 
@@ -2821,7 +2821,7 @@ msgstr "Markering"
 msgid "Undo History"
 msgstr "Ångringshistorik"
 
-#: app/gui/dialogs-constructors.c:834 app/gui/image-menu.c:1250
+#: app/gui/dialogs-constructors.c:834 app/gui/image-menu.c:1263
 #: app/pdb/internal_procs.c:185 app/widgets/gimpundoeditor.c:122
 msgid "Undo"
 msgstr "Ångra"
@@ -3939,24 +3939,20 @@ msgstr "/Bild/Format/Indexerad..."
 
 #. <Image>/Image/Transform
 #: app/gui/image-menu.c:467
-msgid "/Image/Transform"
-msgstr "/Bild/Transformera"
+msgid "/Image/Transform/Flip Horizontally"
+msgstr "/Bild/Transformera/Vänd bild horisontellt"
 
-#: app/gui/image-menu.c:473
+#: app/gui/image-menu.c:472
+msgid "/Image/Transform/Flip Vertically"
+msgstr "/Bild/Transformera/Vänd bild vertikalt"
+
+#: app/gui/image-menu.c:483
 msgid "/Image/Canvas Size..."
 msgstr "/Bild/Canvasstorlek..."
 
-#: app/gui/image-menu.c:478
+#: app/gui/image-menu.c:488
 msgid "/Image/Scale Image..."
 msgstr "/Bild/Skala bild..."
-
-#: app/gui/image-menu.c:483
-msgid "/Image/Flip Image Horizontally"
-msgstr "/Bild/Vänd bild horisontellt"
-
-#: app/gui/image-menu.c:488
-msgid "/Image/Flip Image Vertically"
-msgstr "/Bild/Vänd bild vertikalt"
 
 #: app/gui/image-menu.c:493
 msgid "/Image/Crop Image"
@@ -4040,267 +4036,276 @@ msgstr "/Lager/Skala lager..."
 msgid "/Layer/Crop Layer"
 msgstr "/Lager/Beskär lager"
 
-#: app/gui/image-menu.c:603
+#. <Image>/Layer/Transform
+#: app/gui/image-menu.c:601
+msgid "/Layer/Transform/Flip Horizontally"
+msgstr "/Lager/Transformera/Vänd bild horisontellt"
+
+#: app/gui/image-menu.c:606
+msgid "/Layer/Transform/Flip Vertically"
+msgstr "/Lager/Transformera/Vänd bild vertikalt"
+
+#: app/gui/image-menu.c:615
 msgid "/Layer/Transform/Offset..."
 msgstr "/Lager/Transformera/Offset..."
 
-#: app/gui/image-menu.c:614
+#: app/gui/image-menu.c:626
 msgid "/Layer/Colors/Desaturate"
 msgstr "/Lager/Färger/Avfärga"
 
-#: app/gui/image-menu.c:619
+#: app/gui/image-menu.c:631
 msgid "/Layer/Colors/Invert"
 msgstr "/Lager/Färger/Invertera"
 
 #. <Image>/Layer/Colors/Auto
-#: app/gui/image-menu.c:627
+#: app/gui/image-menu.c:639
 msgid "/Layer/Colors/Auto/Equalize"
 msgstr "/Lager/Färger/Auto/Jämna ut"
 
 #. <Image>/Layer/Mask
-#: app/gui/image-menu.c:636
+#: app/gui/image-menu.c:648
 msgid "/Layer/Mask/Add Layer Mask..."
 msgstr "/Lager/Mask/Lägg till mask..."
 
-#: app/gui/image-menu.c:640
+#: app/gui/image-menu.c:652
 msgid "/Layer/Mask/Apply Layer Mask"
 msgstr "/Lager/Mask/Applicera lagermask"
 
-#: app/gui/image-menu.c:644
+#: app/gui/image-menu.c:656
 msgid "/Layer/Mask/Delete Layer Mask"
 msgstr "/Lager/Mask/Ta bort lagermask"
 
-#: app/gui/image-menu.c:649
+#: app/gui/image-menu.c:661
 msgid "/Layer/Mask/Mask to Selection"
 msgstr "/Lager/Mask/Mask till markering"
 
 #. <Image>/Layer/Transparency
-#: app/gui/image-menu.c:657
+#: app/gui/image-menu.c:669
 msgid "/Layer/Transparency/Add Alpha Channel"
 msgstr "/Lager/Transparens/Lägg till alfakanal"
 
-#: app/gui/image-menu.c:661
+#: app/gui/image-menu.c:673
 msgid "/Layer/Transparency/Alpha to Selection"
 msgstr "/Lager/Transparens/Alfakanal till markering"
 
 #. <Image>/Tools
-#: app/gui/image-menu.c:673
+#: app/gui/image-menu.c:685
 msgid "/_Tools"
 msgstr "/_Verktyg"
 
-#: app/gui/image-menu.c:675
+#: app/gui/image-menu.c:687
 msgid "/Tools/Toolbox"
 msgstr "/Verktyg/Verktygslåda"
 
-#: app/gui/image-menu.c:679
+#: app/gui/image-menu.c:691
 msgid "/Tools/Default Colors"
 msgstr "/Verktyg/Standardfärger"
 
-#: app/gui/image-menu.c:684
+#: app/gui/image-menu.c:696
 msgid "/Tools/Swap Colors"
 msgstr "/Verktyg/Byt färgplats"
 
-#: app/gui/image-menu.c:692
+#: app/gui/image-menu.c:704
 msgid "/Tools/Selection Tools"
 msgstr "/Verktyg/Markeringsverktyg"
 
-#: app/gui/image-menu.c:693
+#: app/gui/image-menu.c:705
 msgid "/Tools/Paint Tools"
 msgstr "/Verktyg/Målarverktyg"
 
-#: app/gui/image-menu.c:694
+#: app/gui/image-menu.c:706
 msgid "/Tools/Transform Tools"
 msgstr "/Verktyg/Transformeringsverktyg"
 
 #. <Image>/Dialogs
-#: app/gui/image-menu.c:698
+#: app/gui/image-menu.c:710
 msgid "/_Dialogs"
 msgstr "/_Fönster"
 
-#: app/gui/image-menu.c:700
+#: app/gui/image-menu.c:712
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "/Fönster/Lager, kanaler och slingor..."
 
-#: app/gui/image-menu.c:704
+#: app/gui/image-menu.c:716
 msgid "/Dialogs/Brushes, Patterns & Stuff..."
 msgstr "/Fönster/Penslar, mönster och annat..."
 
-#: app/gui/image-menu.c:708
+#: app/gui/image-menu.c:720
 msgid "/Dialogs/Tool Options..."
 msgstr "/Fönster/Verktygsalternativ..."
 
-#: app/gui/image-menu.c:713
+#: app/gui/image-menu.c:725
 msgid "/Dialogs/Device Status..."
 msgstr "/Fönster/Enhetsstatus..."
 
-#: app/gui/image-menu.c:721
+#: app/gui/image-menu.c:733
 msgid "/Dialogs/Layers..."
 msgstr "/Fönster/Lager..."
 
-#: app/gui/image-menu.c:726
+#: app/gui/image-menu.c:738
 msgid "/Dialogs/Channels..."
 msgstr "/Fönster/Kanaler..."
 
-#: app/gui/image-menu.c:731
+#: app/gui/image-menu.c:743
 msgid "/Dialogs/Paths..."
 msgstr "/Fönster/Slingor..."
 
-#: app/gui/image-menu.c:736
+#: app/gui/image-menu.c:748
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Fönster/Indexerad palett..."
 
-#: app/gui/image-menu.c:741
+#: app/gui/image-menu.c:753
 msgid "/Dialogs/Selection Editor..."
 msgstr "/Fönster/Markeringsredigerare..."
 
-#: app/gui/image-menu.c:746
+#: app/gui/image-menu.c:758
 msgid "/Dialogs/Navigation..."
 msgstr "/Fönster/Navigering..."
 
-#: app/gui/image-menu.c:751
+#: app/gui/image-menu.c:763
 msgid "/Dialogs/Undo History..."
 msgstr "/Fönster/Ångringshistorik..."
 
-#: app/gui/image-menu.c:759
+#: app/gui/image-menu.c:771
 msgid "/Dialogs/Colors..."
 msgstr "/Fönster/Färger..."
 
-#: app/gui/image-menu.c:764
+#: app/gui/image-menu.c:776
 msgid "/Dialogs/Brushes..."
 msgstr "/Fönster/Penslar..."
 
-#: app/gui/image-menu.c:769
+#: app/gui/image-menu.c:781
 msgid "/Dialogs/Patterns..."
 msgstr "/Fönster/Mönster..."
 
-#: app/gui/image-menu.c:774
+#: app/gui/image-menu.c:786
 msgid "/Dialogs/Gradients..."
 msgstr "/Fönster/Färgskalor..."
 
-#: app/gui/image-menu.c:779
+#: app/gui/image-menu.c:791
 msgid "/Dialogs/Palettes..."
 msgstr "/Fönster/Paletter..."
 
-#: app/gui/image-menu.c:784
+#: app/gui/image-menu.c:796
 msgid "/Dialogs/Fonts..."
 msgstr "/Fönster/Typsnitt..."
 
-#: app/gui/image-menu.c:789
+#: app/gui/image-menu.c:801
 msgid "/Dialogs/Buffers..."
 msgstr "/Fönster/Buffertar..."
 
-#: app/gui/image-menu.c:797
+#: app/gui/image-menu.c:809
 msgid "/Dialogs/Images..."
 msgstr "/Fönster/Bilder..."
 
-#: app/gui/image-menu.c:802
+#: app/gui/image-menu.c:814
 msgid "/Dialogs/Document History..."
 msgstr "/Fönster/Dokumenthistorik..."
 
-#: app/gui/image-menu.c:807
+#: app/gui/image-menu.c:819
 msgid "/Dialogs/Templates..."
 msgstr "/Fönster/Mallar..."
 
-#: app/gui/image-menu.c:812
+#: app/gui/image-menu.c:824
 msgid "/Dialogs/Error Console..."
 msgstr "/Fönster/Felmeddelanden..."
 
-#: app/gui/image-menu.c:822
+#: app/gui/image-menu.c:834
 msgid "/Filte_rs"
 msgstr "/Filte_r"
 
-#: app/gui/image-menu.c:824
+#: app/gui/image-menu.c:836
 msgid "/Filters/Repeat Last"
 msgstr "/Filter/Upprepa senaste"
 
-#: app/gui/image-menu.c:829
+#: app/gui/image-menu.c:841
 msgid "/Filters/Re-Show Last"
 msgstr "/Filter/Visa senaste"
 
-#: app/gui/image-menu.c:837
+#: app/gui/image-menu.c:849
 msgid "/Filters/Blur"
 msgstr "/Filter/Suddigare"
 
-#: app/gui/image-menu.c:838
+#: app/gui/image-menu.c:850
 msgid "/Filters/Colors"
 msgstr "/Filter/Färger"
 
-#: app/gui/image-menu.c:839
+#: app/gui/image-menu.c:851
 msgid "/Filters/Noise"
 msgstr "/Filter/Brus"
 
-#: app/gui/image-menu.c:840
+#: app/gui/image-menu.c:852
 msgid "/Filters/Edge-Detect"
 msgstr "/Filter/Leta kanter"
 
-#: app/gui/image-menu.c:841
+#: app/gui/image-menu.c:853
 msgid "/Filters/Enhance"
 msgstr "/Filter/Förbättra"
 
-#: app/gui/image-menu.c:842
+#: app/gui/image-menu.c:854
 msgid "/Filters/Generic"
 msgstr "/Filter/Allmänna"
 
-#: app/gui/image-menu.c:846
+#: app/gui/image-menu.c:858
 msgid "/Filters/Glass Effects"
 msgstr "/Filter/Glaseffekter"
 
-#: app/gui/image-menu.c:847
+#: app/gui/image-menu.c:859
 msgid "/Filters/Light Effects"
 msgstr "/Filter/Ljuseffekter"
 
-#: app/gui/image-menu.c:848
+#: app/gui/image-menu.c:860
 msgid "/Filters/Distorts"
 msgstr "/Filter/Störningar"
 
-#: app/gui/image-menu.c:849
+#: app/gui/image-menu.c:861
 msgid "/Filters/Artistic"
 msgstr "/Filter/Artistiskt"
 
-#: app/gui/image-menu.c:850
+#: app/gui/image-menu.c:862
 msgid "/Filters/Map"
 msgstr "/Filter/Mappa"
 
-#: app/gui/image-menu.c:851
+#: app/gui/image-menu.c:863
 msgid "/Filters/Render"
 msgstr "/Filter/Rendera"
 
-#: app/gui/image-menu.c:852
+#: app/gui/image-menu.c:864
 msgid "/Filters/Web"
 msgstr "/Filter/Webb"
 
-#: app/gui/image-menu.c:856
+#: app/gui/image-menu.c:868
 msgid "/Filters/Animation"
 msgstr "/Filter/Animation"
 
-#: app/gui/image-menu.c:857
+#: app/gui/image-menu.c:869
 msgid "/Filters/Combine"
 msgstr "/Filter/Kombinera"
 
-#: app/gui/image-menu.c:861
+#: app/gui/image-menu.c:873
 msgid "/Filters/Toys"
 msgstr "/Filter/Leksaker"
 
-#: app/gui/image-menu.c:1241
+#: app/gui/image-menu.c:1254
 #, c-format
 msgid "Undo %s"
 msgstr "Ångra %s"
 
-#: app/gui/image-menu.c:1246
+#: app/gui/image-menu.c:1259
 #, c-format
 msgid "Redo %s"
 msgstr "Gör om %s"
 
-#: app/gui/image-menu.c:1251 app/widgets/gimpundoeditor.c:130
+#: app/gui/image-menu.c:1264 app/widgets/gimpundoeditor.c:130
 msgid "Redo"
 msgstr "Gör om"
 
-#: app/gui/image-menu.c:1471
+#: app/gui/image-menu.c:1489
 #, c-format
 msgid "Other (%d:%d) ..."
 msgstr "Annat (%d:%d)..."
 
-#: app/gui/image-menu.c:1480
+#: app/gui/image-menu.c:1498
 #, c-format
 msgid "Zoom (%d:%d)"
 msgstr "Zooma(%d:%d)"
@@ -6550,7 +6555,7 @@ msgstr "Konstant"
 msgid "Incremental"
 msgstr "Inkrementell"
 
-#: app/pdb/color_cmds.c:129 app/tools/gimpbrightnesscontrasttool.c:83
+#: app/pdb/color_cmds.c:129 app/tools/gimpbrightnesscontrasttool.c:82
 msgid "Brightness-Contrast"
 msgstr "Ljusstyrka-Kontrast"
 
@@ -6558,7 +6563,7 @@ msgstr "Ljusstyrka-Kontrast"
 msgid "Levels"
 msgstr "Nivåer"
 
-#: app/pdb/color_cmds.c:359 app/tools/gimpposterizetool.c:76
+#: app/pdb/color_cmds.c:359 app/tools/gimpposterizetool.c:75
 msgid "Posterize"
 msgstr "Posterisering"
 
@@ -6567,19 +6572,19 @@ msgstr "Posterisering"
 msgid "Curves"
 msgstr "Kurvor"
 
-#: app/pdb/color_cmds.c:835 app/tools/gimpcolorbalancetool.c:95
+#: app/pdb/color_cmds.c:835 app/tools/gimpcolorbalancetool.c:94
 msgid "Color Balance"
 msgstr "Färgbalans"
 
-#: app/pdb/color_cmds.c:1131 app/tools/gimphuesaturationtool.c:108
+#: app/pdb/color_cmds.c:1131 app/tools/gimphuesaturationtool.c:107
 msgid "Hue-Saturation"
 msgstr "Nyans-Mättnad"
 
-#: app/pdb/color_cmds.c:1229 app/tools/gimpthresholdtool.c:89
+#: app/pdb/color_cmds.c:1229 app/tools/gimpthresholdtool.c:88
 msgid "Threshold"
 msgstr "Tröskelvärde"
 
-#: app/pdb/image_cmds.c:3829
+#: app/pdb/image_cmds.c:3887
 msgid ""
 "Image resolution is out of bounds,\n"
 "using the default resolution instead."
@@ -6988,27 +6993,27 @@ msgstr "Tonar färg..."
 msgid "Blend: "
 msgstr "Färgtoning: "
 
-#: app/tools/gimpbrightnesscontrasttool.c:84
+#: app/tools/gimpbrightnesscontrasttool.c:83
 msgid "Adjust brightness and contrast"
 msgstr "Justera ljusstyrka och kontrast"
 
-#: app/tools/gimpbrightnesscontrasttool.c:85
+#: app/tools/gimpbrightnesscontrasttool.c:84
 msgid "/Layer/Colors/Brightness-Contrast..."
 msgstr "/Lager/Färger/Ljusstyrka-Kontrast..."
 
-#: app/tools/gimpbrightnesscontrasttool.c:149
+#: app/tools/gimpbrightnesscontrasttool.c:148
 msgid "Adjust Brightness and Contrast"
 msgstr "Justera ljusstyrka och kontrast"
 
-#: app/tools/gimpbrightnesscontrasttool.c:182
+#: app/tools/gimpbrightnesscontrasttool.c:181
 msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Ljusstyrka-Kontrast går inte att använda på indexerade bilder."
 
-#: app/tools/gimpbrightnesscontrasttool.c:237
+#: app/tools/gimpbrightnesscontrasttool.c:236
 msgid "_Brightness:"
 msgstr "_Ljusstyrka:"
 
-#: app/tools/gimpbrightnesscontrasttool.c:252
+#: app/tools/gimpbrightnesscontrasttool.c:251
 msgid "Con_trast:"
 msgstr "Kon_trast:"
 
@@ -7080,47 +7085,47 @@ msgstr "Källa"
 msgid "Alignment"
 msgstr "Uppställning"
 
-#: app/tools/gimpcolorbalancetool.c:96
+#: app/tools/gimpcolorbalancetool.c:95
 msgid "Adjust color balance"
 msgstr "Justera färgbalans"
 
-#: app/tools/gimpcolorbalancetool.c:97
+#: app/tools/gimpcolorbalancetool.c:96
 msgid "/Layer/Colors/Color Balance..."
 msgstr "/Lager/Färger/Färgbalans..."
 
-#: app/tools/gimpcolorbalancetool.c:161
+#: app/tools/gimpcolorbalancetool.c:160
 msgid "Adjust Color Balance"
 msgstr "Justera färgbalans"
 
-#: app/tools/gimpcolorbalancetool.c:195
+#: app/tools/gimpcolorbalancetool.c:194
 msgid "Color balance operates only on RGB color drawables."
 msgstr "Färgbalans fungerar endast på RGB-bilder."
 
-#: app/tools/gimpcolorbalancetool.c:280
+#: app/tools/gimpcolorbalancetool.c:279
 msgid "Select Range to Modify"
 msgstr "Välj intervall att modifiera"
 
-#: app/tools/gimpcolorbalancetool.c:289
+#: app/tools/gimpcolorbalancetool.c:288
 msgid "Modify Selected Range's Color Levels"
 msgstr "Modifiera markerade intervallets färgnivåer"
 
-#: app/tools/gimpcolorbalancetool.c:307
+#: app/tools/gimpcolorbalancetool.c:306
 msgid "Cyan"
 msgstr "Cyan"
 
-#: app/tools/gimpcolorbalancetool.c:314
+#: app/tools/gimpcolorbalancetool.c:313
 msgid "Magenta"
 msgstr "Magenta"
 
-#: app/tools/gimpcolorbalancetool.c:321
+#: app/tools/gimpcolorbalancetool.c:320
 msgid "Yellow"
 msgstr "Gul"
 
-#: app/tools/gimpcolorbalancetool.c:331
+#: app/tools/gimpcolorbalancetool.c:330
 msgid "R_eset Range"
 msgstr "_Återställ intervall"
 
-#: app/tools/gimpcolorbalancetool.c:340
+#: app/tools/gimpcolorbalancetool.c:339
 msgid "Preserve _Luminosity"
 msgstr "Behåll _luminans"
 
@@ -7455,75 +7460,75 @@ msgstr "Information om kanal:"
 msgid "Histogram Scale:"
 msgstr "Histogramskala:"
 
-#: app/tools/gimphuesaturationtool.c:109
+#: app/tools/gimphuesaturationtool.c:108
 msgid "Adjust hue and saturation"
 msgstr "Justera nyans och mättnad"
 
-#: app/tools/gimphuesaturationtool.c:110
+#: app/tools/gimphuesaturationtool.c:109
 msgid "/Layer/Colors/Hue-Saturation..."
 msgstr "/Lager/Färger/Nyans-Mättnad..."
 
-#: app/tools/gimphuesaturationtool.c:177
+#: app/tools/gimphuesaturationtool.c:176
 msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Justera nyans / ljusstyrka / mättnad"
 
-#: app/tools/gimphuesaturationtool.c:211
+#: app/tools/gimphuesaturationtool.c:210
 msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "Nyans-Mättnad fungerar endast på RGB bilder."
 
-#: app/tools/gimphuesaturationtool.c:266
+#: app/tools/gimphuesaturationtool.c:265
 msgid "_Master"
 msgstr "_Huvud"
 
-#: app/tools/gimphuesaturationtool.c:267
+#: app/tools/gimphuesaturationtool.c:266
 msgid "_R"
 msgstr "_R"
 
-#: app/tools/gimphuesaturationtool.c:268
+#: app/tools/gimphuesaturationtool.c:267
 msgid "_Y"
 msgstr "_Y"
 
-#: app/tools/gimphuesaturationtool.c:269
+#: app/tools/gimphuesaturationtool.c:268
 msgid "_G"
 msgstr "_G"
 
-#: app/tools/gimphuesaturationtool.c:270
+#: app/tools/gimphuesaturationtool.c:269
 msgid "_C"
 msgstr "_C"
 
-#: app/tools/gimphuesaturationtool.c:271
+#: app/tools/gimphuesaturationtool.c:270
 msgid "_B"
 msgstr "_B"
 
-#: app/tools/gimphuesaturationtool.c:272
+#: app/tools/gimphuesaturationtool.c:271
 msgid "_M"
 msgstr "_M"
 
-#: app/tools/gimphuesaturationtool.c:277
+#: app/tools/gimphuesaturationtool.c:276
 msgid "Select Primary Color to Modify"
 msgstr "Välj primär färg att modifiera"
 
-#: app/tools/gimphuesaturationtool.c:306
+#: app/tools/gimphuesaturationtool.c:305
 msgid "Modify all colors"
 msgstr "Modifiera alla färger"
 
-#: app/tools/gimphuesaturationtool.c:349
+#: app/tools/gimphuesaturationtool.c:348
 msgid "Modify Selected Color"
 msgstr "Modifiera markerad färg"
 
-#: app/tools/gimphuesaturationtool.c:368
+#: app/tools/gimphuesaturationtool.c:367
 msgid "_Hue:"
 msgstr "_Nyans:"
 
-#: app/tools/gimphuesaturationtool.c:382
+#: app/tools/gimphuesaturationtool.c:381
 msgid "_Lightness:"
 msgstr "_Ljusstyrka:"
 
-#: app/tools/gimphuesaturationtool.c:396
+#: app/tools/gimphuesaturationtool.c:395
 msgid "_Saturation:"
 msgstr "_Mättnad:"
 
-#: app/tools/gimphuesaturationtool.c:412
+#: app/tools/gimphuesaturationtool.c:411
 msgid "R_eset Color"
 msgstr "_Återställ färg"
 
@@ -7780,23 +7785,23 @@ msgstr "Perspektiv..."
 msgid "Matrix:"
 msgstr "Matris:"
 
-#: app/tools/gimpposterizetool.c:77
+#: app/tools/gimpposterizetool.c:76
 msgid "Reduce image to a fixed number of colors"
 msgstr "Reducera bilden till ett fixt antal färger"
 
-#: app/tools/gimpposterizetool.c:78
+#: app/tools/gimpposterizetool.c:77
 msgid "/Layer/Colors/Posterize..."
 msgstr "/Lager/Färger/Posterisering..."
 
-#: app/tools/gimpposterizetool.c:142
+#: app/tools/gimpposterizetool.c:141
 msgid "Posterize (Reduce Number of Colors)"
 msgstr "Posterisera (reducera antalet färger)"
 
-#: app/tools/gimpposterizetool.c:174
+#: app/tools/gimpposterizetool.c:173
 msgid "Posterize does not operate on indexed drawables."
 msgstr "Kan inte använda posterisering på indexerade bilder."
 
-#: app/tools/gimpposterizetool.c:228
+#: app/tools/gimpposterizetool.c:227
 msgid "Posterize _Levels:"
 msgstr "Posterisera _nivåer:"
 
@@ -8004,23 +8009,23 @@ msgstr "/Verktyg/Text"
 msgid "GIMP Text Editor"
 msgstr "GIMP-textredigerare"
 
-#: app/tools/gimpthresholdtool.c:90
+#: app/tools/gimpthresholdtool.c:89
 msgid "Reduce image to two colors using a threshold"
 msgstr "Reducera bilden till två färger genom att använda ett tröskelvärde"
 
-#: app/tools/gimpthresholdtool.c:91
+#: app/tools/gimpthresholdtool.c:90
 msgid "/Layer/Colors/Threshold..."
 msgstr "/Lager/Färger/Tröskelvärde..."
 
-#: app/tools/gimpthresholdtool.c:158
+#: app/tools/gimpthresholdtool.c:157
 msgid "Apply Threshold"
 msgstr "Applicera tröskelvärde"
 
-#: app/tools/gimpthresholdtool.c:202
+#: app/tools/gimpthresholdtool.c:201
 msgid "Threshold does not operate on indexed drawables."
 msgstr "Kan inte använda tröskelvärde på indexerade bilder."
 
-#: app/tools/gimpthresholdtool.c:261
+#: app/tools/gimpthresholdtool.c:260
 msgid "Threshold Range:"
 msgstr "Tröskelvärdets område:"
 
@@ -8894,6 +8899,9 @@ msgstr "Skapa och redigera bilder eller fotografier"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (ostabil)"
+
+#~ msgid "/Image/Transform"
+#~ msgstr "/Bild/Transformera"
 
 #~ msgid "Translate Channel"
 #~ msgstr "Translatera kanal"
