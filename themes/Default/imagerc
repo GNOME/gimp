@@ -48,6 +48,11 @@ style "gimp-icons"
       { "images/stock-info-24.png", *, *, "gtk-button" },
       { "images/stock-info-24.png", *, *, *            },
     }
+  stock["gimp-invert"] =
+    {
+      { "images/stock-invert-16.png", *, *, "gtk-button" },
+      { "images/stock-invert-24.png", *, *, *            },
+    }
   stock["gimp-linked"] =
     {
       { "images/stock-linked-16.png", *, *, "gtk-button" },
@@ -68,10 +73,10 @@ style "gimp-icons"
       { "images/stock-reset-16.png", *, *, "gtk-button" },
       { "images/stock-reset-16.png", *, *, *            }
     }
-  stock["gimp-stroke"] =
+  stock["gimp-selection-stroke"] =
     {
-      { "images/stock-stroke-16.png", *, *, "gtk-button" },
-      { "images/stock-stroke-16.png", *, *, *            }
+      { "images/stock-selection-stroke-16.png", *, *, "gtk-button" },
+      { "images/stock-selection-stroke-16.png", *, *, *            }
     }
   stock["gimp-to-path"] =
     {
@@ -179,6 +184,11 @@ style "gimp-icons"
     {
       { "images/stock-tool-options-16.png", *, *, "gtk-menu" },
       { "images/stock-tool-options-16.png", *, *, * }
+    }
+  stock["gimp-layer-to-imagesize"] =
+    {
+      { "images/stock-layer-to-imagesize-16.png", *, *, "gtk-menu" },
+      { "images/stock-layer-to-imagesize-16.png", *, *, * }
     }
 
   # Image window icons

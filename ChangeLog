@@ -1,3 +1,8 @@
+2002-07-22  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/imagerc: applied a patch from Guillermo S. Romero
+	that updates the example imagerc.
+
 2002-07-11  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumbed version number to 1.3.8.
