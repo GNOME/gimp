@@ -1,3 +1,7 @@
+2004-07-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-docs.sgml:  include gimpenums.xml and gimppaths.xml.
+
 2004-04-19  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am: ignore gimp-intl.h.
