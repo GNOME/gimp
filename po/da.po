@@ -608,13 +608,12 @@ msgid "Zero width or height layers not allowed."
 msgstr "Lag uden højde eller bredde er ikke tilladt."
 
 #: app/gimplayer.c:485
-#, fuzzy
 msgid ""
 "Cannot add layer mask to layer\n"
 "which is not part of an image."
 msgstr ""
 "Kan ikke tilføje lagmaske til et lag\n"
-"uden en alpha-kanal."
+"som ikke er en del af et billede."
 
 #: app/gimplayer.c:492
 msgid ""
@@ -641,12 +640,12 @@ msgstr ""
 "uden en alpha-kanal."
 
 #: app/gimplayer.c:516
-#, fuzzy
 msgid ""
 "Cannot add layer mask of different\n"
 "dimensions than specified layer."
 msgstr ""
-"Kan ikke tilføje lagmaske med forskellig dimension fra det angivne lag."
+"Kan ikke tilføje lagmaske med andre\n"
+"dimensioner end det angivne lag." 
 
 #: app/gimplayer.c:565
 #, c-format
@@ -2983,9 +2982,8 @@ msgid "Selection"
 msgstr "Markering"
 
 #: app/gui/layers-commands.c:889
-#, fuzzy
 msgid "Inverse Selection"
-msgstr "/Kryds med markering"
+msgstr "Omvendt udvælgelse"
 
 #: app/gui/layers-commands.c:891 app/gui/layers-commands.c:906
 msgid "White (Full Opacity)"
@@ -3142,14 +3140,12 @@ msgid "/File/Dialogs/Display Filters..."
 msgstr "/Filer/Dialoger/Vis filtre..."
 
 #: app/gui/menus.c:164
-#, fuzzy
 msgid "/File/Test Dialogs/List Dock..."
-msgstr "/Filer/testdialoger/Lagliste..."
+msgstr "/Filer/Testdialoger/List dock..."
 
 #: app/gui/menus.c:166
-#, fuzzy
 msgid "/File/Test Dialogs/Grid Dock..."
-msgstr "/Filer/testdialoger/Lagliste..."
+msgstr "/Filer/Testdialoger/Gitter dock..."
 
 #: app/gui/menus.c:172
 msgid "/File/Test Dialogs/Layer List..."
@@ -4971,7 +4967,7 @@ msgstr "Sprøjtepensel"
 
 #: app/tools/gimpairbrushtool.c:130
 msgid "Airbrush with variable pressure"
-msgstr ""
+msgstr "Sprøjtepensel med variabelt tryk"
 
 #: app/tools/gimpairbrushtool.c:131
 msgid "/Tools/Paint Tools/Airbrush"
@@ -4992,11 +4988,11 @@ msgstr "Vælg Bezier"
 
 #: app/tools/gimpbezierselecttool.c:280
 msgid "Select regions using Bezier curves"
-msgstr ""
+msgstr "Udvælg områder med Bezier-kurver"
 
 #: app/tools/gimpbezierselecttool.c:281
 msgid "/Tools/Selection Tools/Bezier Select"
-msgstr ""
+msgstr "/Værktøjer/Udvælgelsesværktøjer/Bezier-udvælgelse"
 
 #: app/tools/gimpbezierselecttool.c:1157
 msgid "Bezier path already closed."
@@ -5137,11 +5133,11 @@ msgstr "Tærskel:"
 
 #: app/tools/gimpbucketfilltool.c:132
 msgid "Bucket Fill"
-msgstr ""
+msgstr "Spandefyld"
 
 #: app/tools/gimpbucketfilltool.c:133
 msgid "Fill with a color or pattern"
-msgstr ""
+msgstr "Fyld med en farve eller mønster"
 
 #: app/tools/gimpbucketfilltool.c:134
 msgid "/Tools/Paint Tools/Bucket Fill"
@@ -5216,7 +5212,7 @@ msgstr "Klon"
 
 #: app/tools/gimpclonetool.c:165
 msgid "Paint using Patterns or Image Regions"
-msgstr ""
+msgstr "Mal med mønstre eller billedområder"
 
 #: app/tools/gimpclonetool.c:166
 msgid "/Tools/Paint Tools/Clone"
@@ -5301,7 +5297,7 @@ msgstr "Intensitet:"
 
 #: app/tools/gimpconvolvetool.c:174
 msgid "Convolve"
-msgstr ""
+msgstr "Sammenrul"
 
 #: app/tools/gimpconvolvetool.c:175
 msgid "Blur or Sharpen"
@@ -5471,7 +5467,7 @@ msgstr "Vælg sammenhængende områder"
 
 #: app/tools/gimpfuzzyselecttool.c:95
 msgid "/Tools/Selection Tools/Fuzzy Select"
-msgstr ""
+msgstr "/Værktøjer/Udvælgelsesværktøjer/Vælg uklart"
 
 #: app/tools/gimpinktool.c:237
 msgid "Ink Tool"
@@ -5603,11 +5599,11 @@ msgstr "Omvendt udvælgelse"
 
 #: app/tools/gimprectselecttool.c:98
 msgid "Select rectangular regions"
-msgstr ""
+msgstr "Udvælg firkantede områder"
 
 #: app/tools/gimprectselecttool.c:99
 msgid "/Tools/Selection Tools/Rect Select"
-msgstr ""
+msgstr "/Værktøjer/Udvælgelsesværktøjer/Firkant udvælgelse"
 
 #: app/tools/gimprectselecttool.c:332
 msgid "Selection: ADD"
