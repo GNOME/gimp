@@ -1,15 +1,20 @@
-<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
-<!entity GimpModule SYSTEM "sgml/gimpmodule.sgml">
-<!entity GimpModuleDB SYSTEM "sgml/gimpmoduledb.sgml">
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY GimpModule SYSTEM "xml/gimpmodule.xml">
+<!ENTITY GimpModuleDB SYSTEM "xml/gimpmoduledb.xml">
+<!ENTITY version SYSTEM "version.xml">
 ]>
+
 <book id="index">
   <bookinfo>
     <title>GIMP Module Library Reference Manual</title>
+    <releaseinfo>for GIMP &version;</releaseinfo>
   </bookinfo>
 
-  <chapter id="libgimpmodule">
+  <part id="libgimpmodule">
     <title>GIMP Module Library</title>
     &GimpModule;
     &GimpModuleDB;
-  </chapter>
+  </part>
 </book>

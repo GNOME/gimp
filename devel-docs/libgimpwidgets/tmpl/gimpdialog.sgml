@@ -69,8 +69,8 @@ dialog-related stuff.
 
 The @va_list describing the action_area #GtkButton's has the following format:
 
-<informaltable pgwide=1 frame="none" role="struct">
-<tgroup cols="2"><colspec colwidth="4*"><colspec colwidth="8*">
+<informaltable pgwide="1" frame="none" role="struct">
+<tgroup cols="2"><colspec colwidth="4*"/><colspec colwidth="8*"/>
 <tbody>
 
 <row>

@@ -1,19 +1,24 @@
-<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
-<!entity GimpMath SYSTEM "sgml/gimpmath.sgml">
-<!entity GimpMatrix SYSTEM "sgml/gimpmatrix.sgml">
-<!entity GimpVector SYSTEM "sgml/gimpvector.sgml">
-<!entity GimpMD5 SYSTEM "sgml/gimpmd5.sgml">
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY GimpMath SYSTEM "xml/gimpmath.xml">
+<!ENTITY GimpMatrix SYSTEM "xml/gimpmatrix.xml">
+<!ENTITY GimpVector SYSTEM "xml/gimpvector.xml">
+<!ENTITY GimpMD5 SYSTEM "xml/gimpmd5.xml">
+<!ENTITY version SYSTEM "version.xml">
 ]>
+
 <book id="index">
   <bookinfo>
     <title>GIMP Math Library Reference Manual</title>
+    <releaseinfo>for GIMP &version;</releaseinfo>
   </bookinfo>
 
-  <chapter id="libgimpmath">
+  <part id="libgimpmath">
     <title>GIMP Math Library</title>
     &GimpMath;
     &GimpMatrix;
     &GimpVector;
     &GimpMD5;
-  </chapter>
+  </part>
 </book>

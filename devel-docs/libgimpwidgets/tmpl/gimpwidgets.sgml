@@ -27,8 +27,8 @@ helper functions.
 
 The @va_list describing the #GtkMenuItem's has the following format:
 
-<informaltable pgwide=1 frame="none" role="struct">
-<tgroup cols="2"><colspec colwidth="4*"><colspec colwidth="8*">
+<informaltable pgwide="1" frame="none" role="struct">
+<tgroup cols="2"><colspec colwidth="4*"/><colspec colwidth="8*"/>
 <tbody>
 
 <row>
@@ -77,8 +77,8 @@ gtk_object_set_user_data().</entry>
 
 The @va_list describing the #GtkMenuItem's has the following format:
 
-<informaltable pgwide=1 frame="none" role="struct">
-<tgroup cols="2"><colspec colwidth="4*"><colspec colwidth="8*">
+<informaltable pgwide="1" frame="none" role="struct">
+<tgroup cols="2"><colspec colwidth="4*"/><colspec colwidth="8*"/>
 <tbody>
 
 <row>
@@ -143,8 +143,8 @@ gtk_object_set_user_data().</entry>
 
 The @va_list describing the #GtkRadioButton's has the following format:
 
-<informaltable pgwide=1 frame="none" role="struct">
-<tgroup cols="2"><colspec colwidth="4*"><colspec colwidth="8*">
+<informaltable pgwide="1" frame="none" role="struct">
+<tgroup cols="2"><colspec colwidth="4*"/><colspec colwidth="8*"/>
 <tbody>
 
 <row>
@@ -194,8 +194,8 @@ gtk_object_set_user_data().</entry>
 
 The @va_list describing the #GtkRadioButton's has the following format:
 
-<informaltable pgwide=1 frame="none" role="struct">
-<tgroup cols="2"><colspec colwidth="4*"><colspec colwidth="8*">
+<informaltable pgwide="1" frame="none" role="struct">
+<tgroup cols="2"><colspec colwidth="4*"/><colspec colwidth="8*"/>
 <tbody>
 
 <row>

@@ -42,12 +42,12 @@
     <releaseinfo>for GIMP &version;</releaseinfo>
   </bookinfo>
 
-  <chapter id="gimpdefinitions">
+  <part id="gimpdefinitions">
     <title>GIMP Constants</title>
     &GimpEnums;
-  </chapter>
+  </part>
 
-  <chapter id="libgimp">
+  <part id="libgimp">
     <title>GIMP Library</title>
     &Gimp;
     &GimpBrushes;
@@ -77,12 +77,12 @@
     &GimpTile;
     &GimpTools;
     &GimpUndo;
-  </chapter>
+  </part>
 
-  <chapter id="libgimpui">
+  <part id="libgimpui">
     <title>GIMP User Interface Library</title>
     &GimpUI;
     &GimpExport;
     &GimpMenu;
-  </chapter>
+  </part>
 </book>

@@ -9,5 +9,6 @@ libgimpmath-decl-list.txt
 libgimpmath-unused.txt
 libgimpmath-undocumented.txt
 html
-sgml
+xml
+version.xml
 *.stamp

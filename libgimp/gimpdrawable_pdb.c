@@ -115,7 +115,7 @@ gimp_drawable_fill (gint32       drawable_ID,
  * This procedure updates the specified region of the drawable. The (x,
  * y) coordinate pair is relative to the drawable's origin, not to the
  * image origin. Therefore, the entire drawable can be updated with:
- * {x->0, y->0, w->width, h->height }.
+ * {x-&gt;0, y-&gt;0, w-&gt;width, h-&gt;height }.
  *
  * Returns: TRUE on success.
  */

@@ -42,8 +42,8 @@ gimp_coordinates_new()
 <!-- ##### FUNCTION gimp_unit_menu_new ##### -->
 <para>
 
-<informaltable pgwide=1 frame="none" role="enum">
-<tgroup cols="2"><colspec colwidth="1*"><colspec colwidth="8*">
+<informaltable pgwide="1" frame="none" role="enum">
+<tgroup cols="2"><colspec colwidth="1*"/><colspec colwidth="8*"/>
 <tbody>
 
 <row>

@@ -33,6 +33,9 @@ use Text::Wrap qw(wrap);
 sub desc_wrap {
     my ($str) = @_;
     my $leading = ' * ';
+    $str =~ s/&/&amp\;/g;
+    $str =~ s/\</&lt\;/g;
+    $str =~ s/\>/&gt\;/g;
     $Text::Wrap::columns = 72;
     wrap($leading, $leading, $str);
 }

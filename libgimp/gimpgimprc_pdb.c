@@ -37,9 +37,9 @@
  * stored in the user gimprc file and can use this procedure to
  * retrieve it. This query procedure will return the value associated
  * with the specified token. This corresponds _only_ to entries with
- * the format: (<token> <value>). The value must be a string. Entries
- * not corresponding to this format will cause warnings to be issued on
- * gimprc parsing and will not be queryable.
+ * the format: (&lt;token&gt; &lt;value&gt;). The value must be a
+ * string. Entries not corresponding to this format will cause warnings
+ * to be issued on gimprc parsing and will not be queryable.
  *
  * Returns: The value associated with the queried token.
  */
@@ -74,9 +74,10 @@ gimp_gimprc_query (gchar *token)
  * the gimprc file that is considered extraneous to the operation of
  * the GIMP. Plug-ins that need configuration information can use this
  * function to store it, and gimp_gimprc_query to retrieve it. This
- * will accept _only_ parameters in the format of (<token> <value>),
- * where <token> and <value> must be strings. Entries not corresponding
- * to this format will be eaten and no action will be performed.
+ * will accept _only_ parameters in the format of (&lt;token&gt;
+ * &lt;value&gt;), where &lt;token&gt; and &lt;value&gt; must be
+ * strings. Entries not corresponding to this format will be eaten and
+ * no action will be performed.
  *
  * Returns: TRUE on success.
  */

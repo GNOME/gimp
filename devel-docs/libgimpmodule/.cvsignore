@@ -11,5 +11,6 @@ libgimpmodule-decl-list.txt
 libgimpmodule-unused.txt
 libgimpmodule-undocumented.txt
 html
-sgml
+xml
+version.xml
 *.stamp

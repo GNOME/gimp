@@ -128,7 +128,7 @@ gimp_airbrush_default (gint32   drawable_ID,
  * coordinates and subsequent stroke offsets exceeds the extents of the
  * src drawable, then no paint is transferred. The clone tool is
  * capable of transforming between any image types including
- * RGB->Indexed--although converting from any type to indexed is
+ * RGB-&gt;Indexed--although converting from any type to indexed is
  * significantly slower.
  *
  * Returns: TRUE on success.

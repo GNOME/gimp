@@ -32,7 +32,7 @@
  * @handler: Handler that maps to signum. Invoked by O/S. 
  *           Handler gets signal that caused invocation. Corresponds
  *           to the @sa_handler field of the @sigaction struct.
- * @flags: Preferences. OR'ed SA_<xxx>. See man sigaction. Corresponds
+ * @flags: Preferences. OR'ed SA_&lt;xxx&gt;. See man sigaction. Corresponds
  *         to the @sa_flags field of the @sigaction struct.
  *
  * This function furnishes a workalike for signal(2) but

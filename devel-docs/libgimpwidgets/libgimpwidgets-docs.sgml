@@ -1,34 +1,35 @@
-<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
-
-<!notation PNG system "PNG">
-<!entity % local.notation.class "| PNG">
-
-<!entity GimpButton SYSTEM "sgml/gimpbutton.sgml">
-<!entity GimpChainButton SYSTEM "sgml/gimpchainbutton.sgml">
-<!entity GimpColorArea SYSTEM "sgml/gimpcolorarea.sgml">
-<!entity GimpColorButton SYSTEM "sgml/gimpcolorbutton.sgml">
-<!entity GimpColorDisplay SYSTEM "sgml/gimpcolordisplay.sgml">
-<!entity GimpColorNotebook SYSTEM "sgml/gimpcolornotebook.sgml">
-<!entity GimpColorScale SYSTEM "sgml/gimpcolorscale.sgml">
-<!entity GimpColorScales SYSTEM "sgml/gimpcolorscales.sgml">
-<!entity GimpColorSelect SYSTEM "sgml/gimpcolorselect.sgml">
-<!entity GimpColorSelector SYSTEM "sgml/gimpcolorselector.sgml">
-<!entity GimpDialog SYSTEM "sgml/gimpdialog.sgml">
-<!entity GimpFileSelection SYSTEM "sgml/gimpfileselection.sgml">
-<!entity GimpHelpUI SYSTEM "sgml/gimphelpui.sgml">
-<!entity GimpMemsizeEntry SYSTEM "sgml/gimpmemsizeentry.sgml">
-<!entity GimpPathEditor SYSTEM "sgml/gimppatheditor.sgml">
-<!entity GimpPickButton SYSTEM "sgml/gimppickbutton.sgml">
-<!entity GimpPixmap SYSTEM "sgml/gimppixmap.sgml">
-<!entity GimpQueryBox SYSTEM "sgml/gimpquerybox.sgml">
-<!entity GimpSizeEntry SYSTEM "sgml/gimpsizeentry.sgml">
-<!entity GimpStock SYSTEM "sgml/gimpstock.sgml">
-<!entity GimpUnitMenu SYSTEM "sgml/gimpunitmenu.sgml">
-<!entity GimpWidgets SYSTEM "sgml/gimpwidgets.sgml">
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY GimpButton SYSTEM "xml/gimpbutton.xml">
+<!ENTITY GimpChainButton SYSTEM "xml/gimpchainbutton.xml">
+<!ENTITY GimpColorArea SYSTEM "xml/gimpcolorarea.xml">
+<!ENTITY GimpColorButton SYSTEM "xml/gimpcolorbutton.xml">
+<!ENTITY GimpColorDisplay SYSTEM "xml/gimpcolordisplay.xml">
+<!ENTITY GimpColorNotebook SYSTEM "xml/gimpcolornotebook.xml">
+<!ENTITY GimpColorScale SYSTEM "xml/gimpcolorscale.xml">
+<!ENTITY GimpColorScales SYSTEM "xml/gimpcolorscales.xml">
+<!ENTITY GimpColorSelect SYSTEM "xml/gimpcolorselect.xml">
+<!ENTITY GimpColorSelector SYSTEM "xml/gimpcolorselector.xml">
+<!ENTITY GimpDialog SYSTEM "xml/gimpdialog.xml">
+<!ENTITY GimpFileSelection SYSTEM "xml/gimpfileselection.xml">
+<!ENTITY GimpHelpUI SYSTEM "xml/gimphelpui.xml">
+<!ENTITY GimpMemsizeEntry SYSTEM "xml/gimpmemsizeentry.xml">
+<!ENTITY GimpPathEditor SYSTEM "xml/gimppatheditor.xml">
+<!ENTITY GimpPickButton SYSTEM "xml/gimppickbutton.xml">
+<!ENTITY GimpPixmap SYSTEM "xml/gimppixmap.xml">
+<!ENTITY GimpQueryBox SYSTEM "xml/gimpquerybox.xml">
+<!ENTITY GimpSizeEntry SYSTEM "xml/gimpsizeentry.xml">
+<!ENTITY GimpStock SYSTEM "xml/gimpstock.xml">
+<!ENTITY GimpUnitMenu SYSTEM "xml/gimpunitmenu.xml">
+<!ENTITY GimpWidgets SYSTEM "xml/gimpwidgets.xml">
+<!ENTITY version SYSTEM "version.xml">
 ]>
+
 <book id="index">
   <bookinfo>
     <title>GIMP Widgets Library Reference Manual</title>
+    <releaseinfo>for GIMP &version;</releaseinfo>
   </bookinfo>
 
   <part id="libgimpwidgets-widgets">

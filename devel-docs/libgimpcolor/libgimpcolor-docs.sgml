@@ -1,21 +1,26 @@
-<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
-<!entity GimpRGB SYSTEM "sgml/gimprgb.sgml">
-<!entity GimpHSV SYSTEM "sgml/gimphsv.sgml">
-<!entity GimpColorSpace SYSTEM "sgml/gimpcolorspace.sgml">
-<!entity GimpAdaptiveSupersample SYSTEM "sgml/gimpadaptivesupersample.sgml">
-<!entity GimpBilinear SYSTEM "sgml/gimpbilinear.sgml">
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY GimpRGB SYSTEM "xml/gimprgb.xml">
+<!ENTITY GimpHSV SYSTEM "xml/gimphsv.xml">
+<!ENTITY GimpColorSpace SYSTEM "xml/gimpcolorspace.xml">
+<!ENTITY GimpAdaptiveSupersample SYSTEM "xml/gimpadaptivesupersample.xml">
+<!ENTITY GimpBilinear SYSTEM "xml/gimpbilinear.xml">
+<!ENTITY version SYSTEM "version.xml">
 ]>
+
 <book id="index">
   <bookinfo>
     <title>GIMP Color Library Reference Manual</title>
+    <releaseinfo>for GIMP &version;</releaseinfo>
   </bookinfo>
 
-  <chapter id="libgimpcolor">
+  <part id="libgimpcolor">
     <title>GIMP Color Library</title>
     &GimpRGB;
     &GimpHSV;
     &GimpColorSpace;
     &GimpAdaptiveSupersample;
     &GimpBilinear;
-  </chapter>
+  </part>
 </book>

@@ -22,7 +22,7 @@
     <releaseinfo>for GIMP &version;</releaseinfo>
   </bookinfo>
 
-  <chapter id="libgimpbase">
+  <part id="libgimpbase">
     <title>GIMP Base Library</title>
     &GimpBaseTypes;
     &GimpVersion;
@@ -36,5 +36,5 @@
     &GimpUtils;
     &GimpProtocol;
     &GimpWire;
-  </chapter>
+  </part>
 </book>

@@ -11,5 +11,6 @@ libgimpwidgets-decl-list.txt
 libgimpwidgets-unused.txt
 libgimpwidgets-undocumented.txt
 html
-sgml
+xml
+version.xml
 *.stamp

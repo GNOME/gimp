@@ -9,5 +9,6 @@ libgimpcolor-decl-list.txt
 libgimpcolor-unused.txt
 libgimpcolor-undocumented.txt
 html
-sgml
+xml
+version.xml
 *.stamp
