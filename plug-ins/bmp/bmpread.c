@@ -300,6 +300,13 @@ ReadBMP (const gchar *name)
       return -1;
   }
 
+  if (Bitmap_Head.biWidth < 0)
+    {
+      g_message (_("'%s' is not a valid BMP file"),
+                  gimp_filename_to_utf8 (filename));
+      return -1;
+    }
+
   if (Bitmap_Head.biPlanes != 1) {
       g_message (_("Error reading BMP file header from '%s'"),
                   gimp_filename_to_utf8 (filename));

@@ -1,3 +1,10 @@
+2005-03-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/bmp/bmp.h (Bitmap_Head_Struct)
+	* plug-ins/bmp/bmpread.c: use a signed long for width and height
+	and check that width is > 0 (negative height is allowed and
+	handled by our code). Fixes bug #171453.
+
 2005-03-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpimage-undo-push.[ch]
