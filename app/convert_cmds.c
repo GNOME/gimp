@@ -188,7 +188,7 @@ convert_indexed_invoker (Argument *args)
     
 	    case CUSTOM_PALETTE:
 	      if (!palette_entries_list)
-		palette_init_palettes (FALSE);
+		palettes_init (FALSE);
     
 	      for (list = palette_entries_list; list; list = list->next)
 		{

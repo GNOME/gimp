@@ -264,8 +264,8 @@ palette_refresh_invoker (Argument *args)
    *   -and shamelessly stolen by Adrian Likins for use here...
    */
 
-  palette_free_palettes ();
-  palette_init_palettes (FALSE);
+  palettes_free ();
+  palettes_init (FALSE);
 
   return procedural_db_return_args (&palette_refresh_proc, TRUE);
 }

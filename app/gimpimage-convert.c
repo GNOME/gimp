@@ -788,7 +788,7 @@ build_palette_button (void)
 
   if (!palette_entries_list)
     {
-      palette_init_palettes (FALSE);
+      palettes_init (FALSE);
     }
 
   list = palette_entries_list;

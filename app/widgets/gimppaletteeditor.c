@@ -182,12 +182,6 @@ palettes_init (gint no_data)
 }
 
 void
-palette_init_palettes (gint no_data)
-{
-  palettes_init (no_data);
-}
-
-void
 palettes_free (void)
 {
   PaletteEntries *entries;
@@ -209,12 +203,6 @@ palettes_free (void)
 
   num_palette_entries = 0;
   palette_entries_list = NULL;
-}
-
-void
-palette_free_palettes (void)
-{
-  palettes_free ();
 }
 
 void 
