@@ -72,11 +72,10 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -1999,7 +1998,7 @@ CML_save_to_file_response (GtkWidget *dialog,
       ! force_overwrite (filename, dialog))
     return;
 
-  file = fopen (filename, "w");
+  file = g_fopen (filename, "w");
 
   if (! file)
     {
@@ -2214,7 +2213,7 @@ CML_load_parameter_file (const gchar *filename,
   gint       seed = 0;
   gint       old2new_function_id[] = { 3, 4, 5, 6, 7, 9, 10, 11, 1, 2 };
 
-  file = fopen (filename, "r");
+  file = g_fopen (filename, "r");
 
   if (!file)
     {

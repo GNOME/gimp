@@ -20,12 +20,8 @@
  *
  * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
  */
+
 #include "config.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>

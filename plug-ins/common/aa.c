@@ -29,9 +29,8 @@
 #include "config.h"
 
 #include <string.h>
-#include <aalib.h>
 
-#include <gtk/gtk.h>
+#include <aalib.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>

@@ -25,8 +25,9 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <string.h>
+
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -283,7 +284,7 @@ load_image (const gchar *filename)
   gboolean        toggle_endian     = FALSE;
 
   /* open the file */
-  DICOM = fopen (filename, "rb");
+  DICOM = g_fopen (filename, "rb");
 
   if (!DICOM)
     {
@@ -640,7 +641,7 @@ save_image (const gchar  *filename,
   g_date_free (date);
 
   /* Open the output file. */
-  DICOM = fopen (filename, "wb");
+  DICOM = g_fopen (filename, "wb");
 
   if (!DICOM)
     {

@@ -36,12 +36,11 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -855,7 +854,7 @@ p_save_pointfile (BenderDialog *cd,
   gint j;
   FILE *l_fp;
 
-  l_fp = fopen(filename, "w+");
+  l_fp = g_fopen(filename, "w+");
   if (!l_fp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
@@ -907,7 +906,7 @@ p_load_pointfile (BenderDialog *cd,
   float l_fux, l_fuy, l_flx, l_fly;
   gint  l_iuy, l_ily ;
 
-  l_fp = fopen(filename, "r");
+  l_fp = g_fopen(filename, "r");
   if (!l_fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),

@@ -26,14 +26,14 @@
 #include "config.h"
 
 #include <string.h>
-#include <sys/stat.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 /* lets prototype */
 static void query (void);
@@ -394,7 +394,7 @@ doDialog (void)
   doLabel (vbox, _("Uncompressed size: %s"), memsize);
   g_free (memsize);
 
-  if (filename && !stat (filename, &st) && !gimp_image_is_dirty (imageID))
+  if (filename && !g_stat (filename, &st) && !gimp_image_is_dirty (imageID))
     {
       gchar *memsize = gimp_memsize_to_string (st.st_size);
 

@@ -35,16 +35,13 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 typedef enum
 {
@@ -607,7 +604,7 @@ draw_jigsaw (guchar   *buffer,
   else
     {
       printf("draw_jigsaw: bad style\n");
-      exit(1);
+      gimp_quit ();
     }
 
   g_free (globals.gridx);

@@ -22,11 +22,8 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -2570,7 +2567,7 @@ p_init_gdrw (t_GDRW       *gdrw,
   if (non_empty && (l_sel_channel_id >= 0))
     {
       /* selection is TRUE */
-      l_sel_gdrw = (t_GDRW *) calloc(1, sizeof(t_GDRW));
+      l_sel_gdrw = g_new0 (t_GDRW, 1);
       l_sel_gdrw->drawable = gimp_drawable_get (l_sel_channel_id);
 
       l_sel_gdrw->tile = NULL;

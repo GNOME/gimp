@@ -36,19 +36,11 @@
 
 #include "config.h"
 
-#include <glib.h>		/* We want glib.h first because of some
-				 * pretty obscure Win32 compilation issues.
-				 */
-
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <zlib.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -1456,7 +1448,7 @@ load_image (const gchar *filename)
   if (stat (filename, &st) == -1)
     return -1;
 
-  f = fopen (filename, "rb");
+  f = g_fopen (filename, "rb");
   if (f == NULL)
     {
       g_message (_("Could not open '%s' for reading: %s"),

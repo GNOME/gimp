@@ -46,11 +46,7 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -604,7 +600,7 @@ render_frame (gint32 whichframe)
     {
       printf( "playback: Asked for frame number %d in a %d-frame animation!\n",
              (int) (whichframe+1), (int) total_frames);
-      exit(-1);
+      gimp_quit ();
     }
 
   drawable = gimp_drawable_get (layers[total_frames-(whichframe+1)]);

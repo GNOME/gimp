@@ -22,17 +22,13 @@
  * Possible future additions:
  *  +   Save (perhaps optionally?) the palette in a KCF
  */
+
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -298,7 +294,7 @@ load_image (const gchar *file,
 
 
   /* Open the file for reading */
-  fp = fopen (file, "r");
+  fp = g_fopen (file, "r");
 
   if (fp == NULL)
     {
@@ -570,7 +566,7 @@ save_image (const gchar *file,
   drawable = gimp_drawable_get (layer);
 
   /* Open the file for writing */
-  fp = fopen (file, "w");
+  fp = g_fopen (file, "w");
 
   if (fp == NULL)
     {

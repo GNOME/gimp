@@ -17,11 +17,9 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -295,7 +293,7 @@ load_image (const gchar *filename)
   gint32 image, layer;
   guchar *dest, cmap[768];
 
-  fd = fopen (filename, "rb");
+  fd = g_fopen (filename, "rb");
   if (!fd)
     {
       g_message (_("Could not open '%s' for reading: %s"),
@@ -576,7 +574,7 @@ save_image (const gchar *filename,
       return FALSE;
   }
 
-  if ((fp = fopen (filename, "wb")) == NULL)
+  if ((fp = g_fopen (filename, "wb")) == NULL)
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));

@@ -1,5 +1,9 @@
 2005-03-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/*: ported to gstdio, removed unnecessary includes.
+
+2005-03-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/FractalExplorer
 	* plug-ins/Lighting
 	* plug-ins/bmp

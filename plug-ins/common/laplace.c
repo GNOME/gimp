@@ -30,13 +30,10 @@
    don't use rint;
    if gamma-channel: set to white if at least one colour channel is >15 */
 
-/* update 03/10/97
-   #ifdef MAX and MIN */
 
 #include "config.h"
 
 #include <stdlib.h>
-#include <stdio.h>
 
 #include <libgimp/gimp.h>
 

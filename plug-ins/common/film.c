@@ -22,15 +22,9 @@
  * This plug-in generates a film roll with several images
  */
 
-static char ident[] = "@(#) GIMP Film plug-in v1.04 1999-10-08";
-
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -686,7 +680,7 @@ scale_layer (gint32  src_layer,
 	     gint    dst_height)
 {
   gint tile_height, i, scan_lines, numpix;
-  guchar *src, *tmp = (guchar *) ident; /* Just to satisfy gcc */
+  guchar *src, *tmp;
   gint32 tmp_image, tmp_layer;
   GimpDrawable *tmp_drawable, *src_drawable, *dst_drawable;
   GimpPixelRgn tmp_pixel_rgn, src_pixel_rgn, dst_pixel_rgn;

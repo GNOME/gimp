@@ -54,15 +54,7 @@
 #include "config.h"
 
 #include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
 #include <string.h>
-#include <sys/types.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>

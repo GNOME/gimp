@@ -48,19 +48,13 @@
                           specified as big-endian). Trim magic header
  * V 1.95, PK, 02-Jul-01: Fix problem with 8 bit image
  */
-static char ident[] = "@(#) GIMP XWD file-plugin v1.95  02-Jul-2001";
 
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -415,7 +409,7 @@ load_image (const gchar *filename)
   L_XWDFILEHEADER  xwdhdr;
   L_XWDCOLOR      *xwdcolmap = NULL;
 
-  ifp = fopen (filename, "rb");
+  ifp = g_fopen (filename, "rb");
   if (!ifp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
@@ -562,7 +556,7 @@ save_image (const gchar *filename,
     }
 
   /* Open the output file. */
-  ofp = fopen (filename, "wb");
+  ofp = g_fopen (filename, "wb");
   if (!ofp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
@@ -1176,7 +1170,7 @@ load_xwd_f2_d1_b1 (const gchar     *filename,
   guchar           c1, c2, c3, c4;
   gint             width, height, linepad, scan_lines, tile_height;
   gint             i, j, ncols;
-  gchar           *temp = ident;  /* Just to satisfy lint/gcc */
+  gchar           *temp;
   guchar           bit2byte[256 * 8];
   guchar          *data, *scanline;
   gint             err = 0;

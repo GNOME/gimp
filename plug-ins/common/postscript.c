@@ -70,13 +70,10 @@
  */
 #define VERSIO 1.17
 static char dversio[] = "v1.17  19-Sep-2004";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.17  19-Sep-2004";
 
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
@@ -85,6 +82,8 @@ static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.17  19-Sep-2004";
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -984,7 +983,7 @@ load_image (const gchar *filename)
 #endif
 
   /* Try to see if PostScript file is available */
-  ifp = fopen (filename, "r");
+  ifp = g_fopen (filename, "r");
   if (ifp == NULL)
     {
       g_message (_("Could not open '%s' for reading: %s"),
@@ -1115,7 +1114,7 @@ save_image (const gchar *filename,
     }
 
   /* Open the output file. */
-  ofp = fopen (filename, "wb");
+  ofp = g_fopen (filename, "wb");
   if (!ofp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
@@ -1416,7 +1415,8 @@ ps_open (const gchar      *filename,
          gint             *is_epsf,
          gint             *ChildPidPtr)
 {
-  char *gs, *driver;
+  const gchar *gs;
+  gchar *driver;
   GPtrArray *cmdA;
   gchar **pcmdA;
   FILE *fd_popen = NULL;
@@ -1445,7 +1445,7 @@ ps_open (const gchar      *filename,
   /* Check if it is a EPS-file */
   *is_epsf = 0;
 
-  eps_file = fopen (filename, "rb");
+  eps_file = g_fopen (filename, "rb");
 
   if (eps_file != NULL)
     {
@@ -1530,7 +1530,7 @@ ps_open (const gchar      *filename,
   pnmfile = "-";
 #endif
 
-  gs = getenv ("GS_PROG");
+  gs = g_getenv ("GS_PROG");
   if (gs == NULL)
     gs = DEFAULT_GS_PROG;
 
@@ -1557,7 +1557,7 @@ ps_open (const gchar      *filename,
   g_ptr_array_add (cmdA, g_strdup ("-dNOPAUSE"));
 
   /* If no additional options specified, use at least -dSAFER */
-  if (getenv ("GS_OPTIONS") == NULL)
+  if (g_getenv ("GS_OPTIONS") == NULL)
     g_ptr_array_add (cmdA, g_strdup ("-dSAFER"));
 
   /* Output file name */
@@ -1649,7 +1649,7 @@ ps_open (const gchar      *filename,
       g_message (_("Error starting ghostscript: %s"), Gerr->message);
       g_error_free (Gerr);
 
-      unlink (pnmfile);
+      g_unlink (pnmfile);
 
       goto out;
     }
@@ -1657,7 +1657,7 @@ ps_open (const gchar      *filename,
   /* Don't care about exit status of ghostscript. */
   /* Just try to read what it wrote. */
 
-  fd_popen = fopen (pnmfile, "rb");
+  fd_popen = g_fopen (pnmfile, "rb");
 
 #endif
 
@@ -1716,7 +1716,7 @@ ps_close (FILE *ifp, gint ChildPid)
 #else  /*  USE_REAL_OUTPUTFILE  */
  /* If a real outputfile was used, close the file and remove it. */
   fclose (ifp);
-  unlink (pnmfile);
+  g_unlink (pnmfile);
 #endif
 }
 

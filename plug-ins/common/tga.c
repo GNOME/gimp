@@ -74,14 +74,9 @@
 #endif
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -408,7 +403,7 @@ load_image (const gchar *filename)
 
   gint32 image_ID = -1;
 
-  fp = fopen (filename, "rb");
+  fp = g_fopen (filename, "rb");
   if (!fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
@@ -1022,7 +1017,7 @@ save_image (const gchar *filename,
   width  = drawable->width;
   height = drawable->height;
 
-  if ((fp = fopen (filename, "wb")) == NULL)
+  if ((fp = g_fopen (filename, "wb")) == NULL)
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));

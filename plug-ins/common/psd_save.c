@@ -61,14 +61,9 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
@@ -1329,7 +1324,7 @@ save_image (const gchar *filename,
   g_free (layers);
 
 
-  fd = fopen (filename, "wb");
+  fd = g_fopen (filename, "wb");
   if (fd == NULL)
     {
       g_message (_("Could not open '%s' for writing: %s"),

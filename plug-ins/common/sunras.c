@@ -36,19 +36,13 @@
  * V 1.96, PK, 21-Nov-99: Internationalization
  * V 1.97, PK, 20-Dec-00: Recognize extensions .rs and .ras too
  */
-static char ident[] = "@(#) GIMP SunRaster file-plugin v1.97  20-Dec-00";
 
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -375,7 +369,7 @@ load_image (const gchar *filename)
   L_SUNFILEHEADER sunhdr;
   guchar *suncolmap = NULL;
 
-  ifp = fopen (filename, "rb");
+  ifp = g_fopen (filename, "rb");
   if (!ifp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
@@ -504,7 +498,7 @@ save_image (const gchar *filename,
     }
 
   /* Open the output file. */
-  ofp = fopen (filename, "wb");
+  ofp = g_fopen (filename, "wb");
   if (!ofp)
     {
       g_message (_("Could not open '%s' for writing: %s"),

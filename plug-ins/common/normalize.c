@@ -30,7 +30,6 @@
 #include "config.h"
 
 #include <stdlib.h>
-#include <stdio.h>
 
 #include <libgimp/gimp.h>
 
@@ -161,7 +160,7 @@ indexed_normalize (gint32 image_ID)  /* a.d.m. */
 
   if (cmap==NULL)
     {
-      printf ("normalize: cmap was NULL!  Quitting...\n");
+      g_printerr ("normalize: cmap was NULL!  Quitting...\n");
       return;
     }
 

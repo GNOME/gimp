@@ -30,10 +30,11 @@
  * purpose, all channels of the control image are summed for a scalar
  * value at each pixel coordinate for the gradient operation.
  *
- * The X,Y components of the calculated gradient are then used to displace pixels
- * from the source image into the destination image. The displacement vector is
- * rotated a user-specified amount first. This displacement operation happens
- * iteratively, generating a new displaced image from each prior image.
+ * The X,Y components of the calculated gradient are then used to
+ * displace pixels from the source image into the destination
+ * image. The displacement vector is rotated a user-specified amount
+ * first. This displacement operation happens iteratively, generating
+ * a new displaced image from each prior image.
  * -------------------------------------------------------------------
  *
  * Revision History:
@@ -57,18 +58,13 @@
  *
  * Version 0.31  10/25/97   Fixed src/dest pixregions so program works
  *               with multiple-layer images. Still don't know
- *               exactly what I did to fix it :-/  Also, added 'color' option for
- *               border pixels to use the current selected foreground color.
+ *               exactly what I did to fix it :-/  Also, added 'color' option
+ *               for border pixels to use the current selected foreground color.
  *
  * Version 0.3   10/20/97  Initial release for Gimp 0.99.xx
  */
 
 #include "config.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -768,10 +764,10 @@ blur16 (GimpDrawable *drawable)
 
   /*  allocate row buffers for source & dest. data  */
 
-  prev_row = (guchar *) malloc ((x2 - x1 + 2) * src_bytes);
-  cur_row = (guchar *) malloc ((x2 - x1 + 2) * src_bytes);
-  next_row = (guchar *) malloc ((x2 - x1 + 2) * src_bytes);
-  dest = (guchar *) malloc ((x2 - x1) * src_bytes);
+  prev_row = g_new (guchar, (x2 - x1 + 2) * src_bytes);
+  cur_row = g_new (guchar, (x2 - x1 + 2) * src_bytes);
+  next_row = g_new (guchar, (x2 - x1 + 2) * src_bytes);
+  dest = g_new (guchar, (x2 - x1) * src_bytes);
 
   /* initialize the pixel regions (read from source, write into dest)  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
@@ -830,10 +826,10 @@ blur16 (GimpDrawable *drawable)
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
-  free (prev_row);  /* row buffers allocated at top of fn. */
-  free (cur_row);
-  free (next_row);
-  free (dest);
+  g_free (prev_row);  /* row buffers allocated at top of fn. */
+  g_free (cur_row);
+  g_free (next_row);
+  g_free (dest);
 
 } /* end blur16() */
 
@@ -985,14 +981,6 @@ diff (GimpDrawable *drawable,
 
   destx = g_new (guchar, (x2 - x1) * dest_bytes);
   desty = g_new (guchar, (x2 - x1) * dest_bytes);
-
-  if ((desty==NULL) || (destx==NULL) || (cur_row_m==NULL) || (cur_row_v==NULL)
-      || (next_row_g==NULL) || (cur_row_g==NULL) || (prev_row_g==NULL)
-      || (next_row==NULL) || (cur_row==NULL) || (prev_row==NULL))
-    {
-      g_printerr ("Warp diff: error allocating memory.\n");
-      exit (EXIT_FAILURE);
-    }
 
   /*  initialize the source and destination pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);  /* 'curl' vector-rotation input */

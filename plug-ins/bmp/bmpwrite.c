@@ -34,14 +34,13 @@
 
 #include <glib/gstdio.h>
 
-#include <gtk/gtk.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "bmp.h"
 
 #include "libgimp/stdplugins-intl.h"
+
 
 static gint cur_progress = 0;
 static gint max_progress = 0;

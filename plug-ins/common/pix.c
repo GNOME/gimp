@@ -40,18 +40,12 @@
  *       colour, so neither does this plug-in
  */
 
-static char ident[] = "@(#) GIMP Alias|Wavefront pix image file-plugin v1.0  24-jun-97";
-
 #include "config.h"
 
 #include <errno.h>
-#include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -325,7 +319,7 @@ load_image (const gchar *filename)
   PIX_DEBUG_PRINT ("Opening file: %s\n", filename);
 
   /* Open the file */
-  file = fopen (filename, "rb");
+  file = g_fopen (filename, "rb");
   if (NULL == file)
     {
       g_message (_("Could not open '%s' for reading: %s"),
@@ -505,7 +499,7 @@ save_image (const gchar *filename,
   depth = gimp_drawable_bpp (drawable_ID);
 
   /* Open the output file. */
-  file = fopen (filename, "wb");
+  file = g_fopen (filename, "wb");
   if (!file)
     {
       g_message (_("Could not open '%s' for writing: %s"),

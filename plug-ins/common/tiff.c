@@ -39,12 +39,9 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include <tiffio.h>
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>

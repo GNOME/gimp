@@ -27,18 +27,10 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
-#ifdef G_OS_WIN32
-#include <libgimpbase/gimpwin32-io.h>
-#endif
-
-#include <libgimpmath/gimpmath.h>
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -920,7 +912,7 @@ cm_load_file_response_callback (GtkWidget    *dialog,
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      fp = fopen (filename, "r");
+      fp = g_fopen (filename, "r");
 
       if (fp)
         {
@@ -1054,7 +1046,7 @@ cm_save_file_response_callback (GtkWidget    *dialog,
       return;
     }
 
-  file = fopen (filename, "w");
+  file = g_fopen (filename, "w");
 
   if (! file)
     {

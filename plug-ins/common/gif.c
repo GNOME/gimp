@@ -275,9 +275,9 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -988,7 +988,7 @@ save_image (const gchar *filename,
 
 
   /* open the destination file for writing */
-  outfile = fopen (filename, "wb");
+  outfile = g_fopen (filename, "wb");
   if (!outfile)
     {
       g_message (_("Could not open '%s' for writing: %s"),

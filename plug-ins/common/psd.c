@@ -182,14 +182,10 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 #include <string.h>
 
-#include <glib.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 
@@ -1776,7 +1772,7 @@ load_image (const gchar *name)
 
   IFDBG printf("------- %s ---------------------------------\n",name);
 
-  fd = fopen (name, "rb");
+  fd = g_fopen (name, "rb");
   if (! fd)
     {
       g_message (_("Could not open '%s' for reading: %s"),

@@ -1,10 +1,4 @@
 /*
- * file: hot/hot.c
- *
- * $Id$
- */
-
-/*
  * hot.c - Scan an image for pixels with RGB values that will give
  *	"unsafe" values of chrominance signal or composite signal
  *	amplitude when encoded into an NTSC or PAL colour signal.
@@ -66,16 +60,13 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 typedef struct
 {

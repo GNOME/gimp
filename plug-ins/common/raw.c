@@ -25,12 +25,17 @@
 #include "config.h"
 
 #include <errno.h>
-#include <fcntl.h>
-#include <stdio.h>
 #include <string.h>
+
+#include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+
+#include <glib/gstdio.h>
 
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
@@ -223,7 +228,7 @@ run (const gchar      *name,
         {
           gimp_get_data ("file_raw_load", runtime);
 
-          preview_fd = open (param[1].data.d_string, O_RDONLY);
+          preview_fd = g_open (param[1].data.d_string, O_RDONLY);
 
           if (preview_fd < 0)
             {
@@ -426,7 +431,7 @@ raw_load_palette (RawGimpData *data,
 
   if (palette_file)
     {
-      fd = open (palette_file, O_RDONLY);
+      fd = g_open (palette_file, O_RDONLY);
 
       if (! fd)
         return FALSE;
@@ -510,7 +515,7 @@ save_image (gchar  *filename,
 
   gimp_pixel_rgn_get_rect (&pixel_rgn, buf, 0, 0, width, height);
 
-  fp = fopen (filename, "wb");
+  fp = g_fopen (filename, "wb");
 
   if (! fp)
     {
@@ -537,7 +542,7 @@ save_image (gchar  *filename,
           gchar *newfile = g_strconcat (filename, ".pal", NULL);
           gchar *temp;
 
-          fp = fopen (newfile, "wb");
+          fp = g_fopen (newfile, "wb");
 
           if (! fp)
             {
@@ -628,7 +633,7 @@ load_image (gchar *filename)
 
   data = g_new0 (RawGimpData, 1);
 
-  data->fp = fopen (filename, "rb");
+  data->fp = g_fopen (filename, "rb");
   if (! data->fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
@@ -822,7 +827,7 @@ preview_update (GimpPreviewArea *preview)
               {
                 gint fd;
 
-                fd = open (palfile, O_RDONLY);
+                fd = g_open (palfile, O_RDONLY);
                 lseek (fd, runtime->palette_offset, SEEK_SET);
                 read (fd, preview_cmap,
                       (runtime->palette_type == RAW_PALETTE_RGB) ? 768 : 1024);

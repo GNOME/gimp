@@ -26,16 +26,13 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 #define PLUG_IN_NAME    "plug_in_illusion"
 #define PLUG_IN_VERSION "v0.8 (May 14 2000)"

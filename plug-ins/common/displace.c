@@ -42,22 +42,7 @@
 
 /* Version 1.12. */
 
-typedef enum
-{
-  CARTESIAN_MODE = 0,
-  POLAR_MODE = 1
-} DisplaceMode;
-
 #include "config.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-#include <signal.h>
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -69,6 +54,13 @@ typedef enum
 
 #define ENTRY_WIDTH     75
 #define TILE_CACHE_SIZE 48
+
+
+typedef enum
+{
+  CARTESIAN_MODE = 0,
+  POLAR_MODE = 1
+} DisplaceMode;
 
 typedef struct
 {

@@ -51,11 +51,9 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -217,7 +215,7 @@ save_image (const gchar  *filename,
 
   palloc = g_new (int, drawable->width * drawable->height);
 
-  fp = fopen (filename, "w");
+  fp = g_fopen (filename, "w");
 
   if (! fp)
     {

@@ -30,13 +30,10 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <libgimpmath/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
 

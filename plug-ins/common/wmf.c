@@ -23,18 +23,12 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include <libwmf/api.h>
 #include <libwmf/gd.h>
 
-#include <gtk/gtk.h>
-
-#include <libgimpmath/gimpmath.h>
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include <libgimpmath/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
 

@@ -12,10 +12,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
-
 #include <libgimp/gimp.h>
 
 #include "libgimp/stdplugins-intl.h"

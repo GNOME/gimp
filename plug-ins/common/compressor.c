@@ -59,21 +59,26 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+
 #include <sys/types.h>
+
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
 #endif
+
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
 #endif
+
 #include <sys/stat.h>
-#include <string.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <errno.h>
+
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 
@@ -378,7 +383,7 @@ save_image (const Compressor *compressor,
                          tmpname,
                          tmpname) && valid_file (tmpname)))
     {
-      unlink (tmpname);
+      g_unlink (tmpname);
       g_free (tmpname);
       return GIMP_PDB_EXECUTION_ERROR;
     }
@@ -399,7 +404,7 @@ save_image (const Compressor *compressor,
       {
         FILE *f;
 
-        if (!(f = fopen (filename, "w")))
+        if (!(f = g_fopen (filename, "w")))
           {
             g_message (_("Could not open '%s' for writing: %s"),
                        gimp_filename_to_utf8 (filename), g_strerror (errno));
@@ -450,8 +455,8 @@ save_image (const Compressor *compressor,
     STARTUPINFO          startupinfo;
     PROCESS_INFORMATION  processinfo;
 
-    in  = fopen (tmpname, "rb");
-    out = fopen (filename, "wb");
+    in  = g_fopen (tmpname, "rb");
+    out = g_fopen (filename, "wb");
 
     startupinfo.cb          = sizeof (STARTUPINFO);
     startupinfo.lpReserved  = NULL;
@@ -485,7 +490,7 @@ save_image (const Compressor *compressor,
   }
 #endif /* G_OS_WIN32 */
 
-  unlink (tmpname);
+  g_unlink (tmpname);
   g_free (tmpname);
 
   return GIMP_PDB_SUCCESS;
@@ -530,7 +535,7 @@ load_image (const Compressor  *compressor,
       {
         FILE *f;
 
-        if (! (f = fopen (tmpname, "w")))
+        if (! (f = g_fopen (tmpname, "w")))
           {
             g_message (_("Could not open '%s' for writing: %s"),
                        gimp_filename_to_utf8 (tmpname), g_strerror (errno));
@@ -586,8 +591,8 @@ load_image (const Compressor  *compressor,
     STARTUPINFO          startupinfo;
     PROCESS_INFORMATION  processinfo;
 
-    in  = fopen (filename, "rb");
-    out = fopen (tmpname, "wb");
+    in  = g_fopen (filename, "rb");
+    out = g_fopen (tmpname, "wb");
 
     startupinfo.cb          = sizeof (STARTUPINFO);
     startupinfo.lpReserved  = NULL;
@@ -626,7 +631,7 @@ load_image (const Compressor  *compressor,
 
   image_ID = gimp_file_load (run_mode, tmpname, tmpname);
 
-  unlink (tmpname);
+  g_unlink (tmpname);
   g_free (tmpname);
 
   if (image_ID != -1)

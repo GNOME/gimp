@@ -45,10 +45,11 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#include <glib/gstdio.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -553,7 +554,7 @@ mng_save_image (const gchar *filename,
 
   userdata = g_new0 (struct mnglib_userdata_t, 1);
 
-  if ((userdata->fp = fopen (filename, "wb")) == NULL)
+  if ((userdata->fp = g_fopen (filename, "wb")) == NULL)
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
@@ -941,12 +942,12 @@ mng_save_image (const gchar *filename,
           return 0;
         }
 
-      if ((outfile = fopen (temp_file_name, "wb")) == NULL)
+      if ((outfile = g_fopen (temp_file_name, "wb")) == NULL)
         {
           g_message (_("Could not open '%s' for writing: %s"),
                      gimp_filename_to_utf8 (temp_file_name),
                      g_strerror (errno));
-          unlink (temp_file_name);
+          g_unlink (temp_file_name);
           mng_cleanup (&handle);
           fclose (userdata->fp);
           g_free (userdata);
@@ -961,7 +962,7 @@ mng_save_image (const gchar *filename,
           g_warning
             ("Unable to png_create_write_struct() in mng_save_image()");
           fclose (outfile);
-          unlink (temp_file_name);
+          g_unlink (temp_file_name);
           mng_cleanup (&handle);
           fclose (userdata->fp);
           g_free (userdata);
@@ -974,7 +975,7 @@ mng_save_image (const gchar *filename,
             ("Unable to png_create_info_struct() in mng_save_image()");
           png_destroy_write_struct (&png_ptr, (png_infopp) NULL);
           fclose (outfile);
-          unlink (temp_file_name);
+          g_unlink (temp_file_name);
           mng_cleanup (&handle);
           fclose (userdata->fp);
           g_free (userdata);
@@ -986,7 +987,7 @@ mng_save_image (const gchar *filename,
           g_warning ("HRM saving PNG in mng_save_image()");
           png_destroy_write_struct (&png_ptr, (png_infopp) NULL);
           fclose (outfile);
-          unlink (temp_file_name);
+          g_unlink (temp_file_name);
           mng_cleanup (&handle);
           fclose (userdata->fp);
           g_free (userdata);
@@ -1112,12 +1113,12 @@ mng_save_image (const gchar *filename,
 
       fclose (outfile);
 
-      if ((infile = fopen (temp_file_name, "rb")) == NULL)
+      if ((infile = g_fopen (temp_file_name, "rb")) == NULL)
         {
           g_message (_("Could not open '%s' for reading: %s"),
                      gimp_filename_to_utf8 (temp_file_name),
                      g_strerror (errno));
-          unlink (temp_file_name);
+          g_unlink (temp_file_name);
           mng_cleanup (&handle);
           fclose (userdata->fp);
           g_free (userdata);
@@ -1260,7 +1261,7 @@ mng_save_image (const gchar *filename,
         }
 
       fclose (infile);
-      unlink (temp_file_name);
+      g_unlink (temp_file_name);
     }
 
   if ((ret = mng_putchunk_mend (handle)) != MNG_NOERROR)

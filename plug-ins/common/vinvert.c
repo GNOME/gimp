@@ -22,9 +22,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include <libgimp/gimp.h>
 
 #include "libgimp/stdplugins-intl.h"

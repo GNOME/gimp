@@ -39,11 +39,9 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -711,7 +709,7 @@ load_image (const gchar *filename)
     0xff, 0xff, 0xff		/* white */
   };
 
-  fp = fopen (filename, "rb");
+  fp = g_fopen (filename, "rb");
   if (!fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
@@ -987,7 +985,7 @@ save_image (const gchar *filename,
     }
 
   /* Now actually save the data. */
-  fp = fopen (filename, "w");
+  fp = g_fopen (filename, "w");
   if (!fp)
     {
       g_message (_("Could not open '%s' for writing: %s"),

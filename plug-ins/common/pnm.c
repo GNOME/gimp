@@ -28,16 +28,18 @@
 #include "config.h"
 
 #include <errno.h>
+#include <string.h>
+
 #include <setjmp.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -424,7 +426,7 @@ load_image (const gchar *filename)
   int ctr;
 
   /* open the file */
-  fd = open (filename, O_RDONLY | _O_BINARY);
+  fd = g_open (filename, O_RDONLY | _O_BINARY);
 
   if (fd == -1)
     {
@@ -800,7 +802,7 @@ save_image (const gchar *filename,
     }
 
   /* open the file */
-  fd = open (filename, O_WRONLY | O_CREAT | O_TRUNC | _O_BINARY, 0644);
+  fd = g_open (filename, O_WRONLY | O_CREAT | O_TRUNC | _O_BINARY, 0644);
 
   if (fd == -1)
     {

@@ -43,11 +43,9 @@ Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #ifdef GDK_WINDOWING_WIN32
 #ifndef XPM_NO_X

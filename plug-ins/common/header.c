@@ -18,11 +18,9 @@
 
 #include "config.h"
 
-#include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -164,7 +162,7 @@ save_image (const gchar *filename,
   guchar *cmap;
   gint colors;
 
-  if ((fp = fopen (filename, "w")) == NULL)
+  if ((fp = g_fopen (filename, "w")) == NULL)
     return FALSE;
 
   drawable = gimp_drawable_get (drawable_ID);

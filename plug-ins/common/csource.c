@@ -21,11 +21,9 @@
 
 #include "config.h"
 
-#include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -382,7 +380,7 @@ save_image (Config *config,
   guint8 *img_buffer, *img_buffer_end;
   gchar *basename;
 
-  fp = fopen (config->file_name, "w");
+  fp = g_fopen (config->file_name, "w");
   if (!fp)
     return FALSE;
 

@@ -126,7 +126,7 @@ background_jpeg_save (PreviewPersistent *pp)
           struct stat buf;
           gchar       temp[128];
 
-          stat (pp->file_name, &buf);
+          g_stat (pp->file_name, &buf);
           g_snprintf (temp, sizeof (temp),
                       _("File size: %02.01f kB"),
                       (gdouble) (buf.st_size) / 1024.0);

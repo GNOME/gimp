@@ -66,11 +66,9 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 
@@ -290,7 +288,7 @@ load_image (const gchar *filename)
   char version[4];
   gint32 image_ID = -1;
 
-  fd = fopen (filename, "rb");
+  fd = g_fopen (filename, "rb");
   if (!fd)
     {
       g_message (_("Could not open '%s' for reading: %s"),

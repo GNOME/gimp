@@ -43,16 +43,18 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
+#include <glib/gstdio.h>
 
 #include <glib.h>
 
@@ -63,8 +65,6 @@
 #ifndef _O_BINARY
 #define _O_BINARY 0
 #endif
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -640,7 +640,7 @@ gih_load_image (const gchar *filename)
   gchar   *paramstring;
   GimpParasite *pipe_parasite;
 
-  fd = open (filename, O_RDONLY | _O_BINARY);
+  fd = g_open (filename, O_RDONLY | _O_BINARY);
 
   if (fd == -1)
     {
@@ -1250,7 +1250,7 @@ gih_save_image (const gchar *filename,
   imageh = gimp_image_height (image_ID);
   gimp_tile_cache_size (gimp_tile_height () * imagew * 4);
 
-  fd = open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
+  fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
 
   if (fd == -1)
     {

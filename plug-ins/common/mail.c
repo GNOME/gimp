@@ -80,17 +80,19 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-#include <string.h>
-#include <unistd.h>
-#include <errno.h>
 
-#include <gtk/gtk.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -435,7 +437,7 @@ save_image (const gchar *filename,
   else
     {
       /* This must be MIME stuff. Base64 away... */
-      infile = fopen (tmpname, "r");
+      infile = g_fopen (tmpname, "r");
       to64 (infile, mailpipe);
 
       /* close off mime */
@@ -456,7 +458,7 @@ cleanup:
   waitpid (mailpid, NULL, 0);
 
   /* delete the tmpfile that was generated */
-  unlink (tmpname);
+  g_unlink (tmpname);
   g_free (tmpname);
 
   return status;

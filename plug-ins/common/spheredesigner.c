@@ -24,16 +24,10 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -1203,8 +1197,7 @@ objnormal (GimpVector4 *res, common *obj, GimpVector4 *p)
       vset (res, 1, 1, 1);      /* fixme */
       break;
     default:
-      fprintf (stderr, "objnormal(): Unsupported object type!?\n");
-      exit (0);
+      g_error ("objnormal(): Unsupported object type!?\n");
     }
   vnorm (res, 1.0);
 
@@ -1468,8 +1461,7 @@ traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
           t = checkcylinder (r, (cylinder *) & world.obj[i]);
           break;
         default:
-          fprintf (stderr, "Illegal object!!\n");
-          exit (0);
+          g_error ("Illegal object!!\n");
         }
       if (t <= 0.0)
         continue;
@@ -1983,7 +1975,7 @@ loadit (const gchar * fn)
   texture *t;
   gint     majtype, type;
 
-  f = fopen (fn, "rt");
+  f = g_fopen (fn, "rt");
   if (! f)
     {
       g_message (_("Could not open '%s' for reading: %s"),
@@ -2093,7 +2085,7 @@ saveit (const gchar *fn)
   FILE  *f;
   gchar  buf[G_ASCII_DTOSTR_BUF_SIZE];
 
-  f = fopen (fn, "wt");
+  f = g_fopen (fn, "wt");
   if (!f)
     {
       g_message (_("Could not open '%s' for writing: %s"),

@@ -41,12 +41,10 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <errno.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -666,7 +664,7 @@ load_image (const gchar *filename,
    * Open the file and initialize the PNG read "engine"...
    */
 
-  fp = fopen (filename, "rb");
+  fp = g_fopen (filename, "rb");
 
   if (fp == NULL)
     {
@@ -1169,7 +1167,7 @@ save_image (const gchar *filename,
    * Open the file and initialize the PNG write "engine"...
    */
 
-  fp = fopen (filename, "wb");
+  fp = g_fopen (filename, "wb");
   if (fp == NULL)
     {
       g_message (_("Could not open '%s' for writing: %s"),

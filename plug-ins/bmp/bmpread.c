@@ -28,13 +28,12 @@
 
 #include <glib/gstdio.h>
 
-#include <gtk/gtk.h>
-
 #include <libgimp/gimp.h>
 
 #include "bmp.h"
 
 #include "libgimp/stdplugins-intl.h"
+
 
 #if !defined(WIN32) || defined(__MINGW32__)
 #define BI_RGB 		0
