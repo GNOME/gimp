@@ -1,0 +1,30 @@
+<!-- ##### SECTION Title ##### -->
+gimpmodule
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### ENUM GimpModuleStatus ##### -->
+<para>
+
+</para>
+
+@GIMP_MODULE_OK: 
+@GIMP_MODULE_UNLOAD: 
+
+<!-- ##### TYPEDEF GimpModuleInfo ##### -->
+<para>
+
+</para>
+
+

@@ -1,0 +1,142 @@
+<!-- ##### SECTION Title ##### -->
+color_display
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### USER_FUNCTION GimpColorDisplayInit ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### USER_FUNCTION GimpColorDisplayNew ##### -->
+<para>
+
+</para>
+
+@type: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION GimpColorDisplayClone ##### -->
+<para>
+
+</para>
+
+@cd_ID: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION GimpColorDisplayConvert ##### -->
+<para>
+
+</para>
+
+@cd_ID: 
+@buf: 
+@width: 
+@height: 
+@bpp: 
+@bpl: 
+
+
+<!-- ##### USER_FUNCTION GimpColorDisplayDestroy ##### -->
+<para>
+
+</para>
+
+@cd_ID: 
+
+
+<!-- ##### USER_FUNCTION GimpColorDisplayFinalize ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### USER_FUNCTION GimpColorDisplayLoadState ##### -->
+<para>
+
+</para>
+
+@cd_ID: 
+@state: 
+
+
+<!-- ##### USER_FUNCTION GimpColorDisplaySaveState ##### -->
+<para>
+
+</para>
+
+@cd_ID: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION GimpColorDisplayConfigure ##### -->
+<para>
+
+</para>
+
+@cd_ID: 
+@ok_func: 
+@ok_data: 
+@cancel_func: 
+@cancel_data: 
+
+
+<!-- ##### USER_FUNCTION GimpColorDisplayConfigureCancel ##### -->
+<para>
+
+</para>
+
+@cd_ID: 
+
+
+<!-- ##### STRUCT GimpColorDisplayMethods ##### -->
+<para>
+
+</para>
+
+@init: 
+@new: 
+@clone: 
+@convert: 
+@destroy: 
+@finalize: 
+@load: 
+@save: 
+@configure: 
+@cancel: 
+
+<!-- ##### FUNCTION gimp_color_display_register ##### -->
+<para>
+
+</para>
+
+@name: 
+@methods: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_color_display_unregister ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+

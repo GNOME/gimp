@@ -1,0 +1,72 @@
+<!-- ##### SECTION Title ##### -->
+gimplimits
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### MACRO GIMP_MIN_IMAGE_SIZE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_MAX_IMAGE_SIZE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_MIN_RESOLUTION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_MAX_RESOLUTION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_CHECK_SIZE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_CHECK_SIZE_SM ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_CHECK_DARK ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_CHECK_LIGHT ##### -->
+<para>
+
+</para>
+
+
+

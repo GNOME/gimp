@@ -1,0 +1,49 @@
+<!-- ##### SECTION Title ##### -->
+gimpenv
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_directory ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_personal_rc_file ##### -->
+<para>
+
+</para>
+
+@basename: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_data_directory ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gtkrc ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

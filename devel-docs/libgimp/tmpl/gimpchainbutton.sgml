@@ -1,0 +1,67 @@
+<!-- ##### SECTION Title ##### -->
+GimpChainButton
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpChainButton ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GIMP_CHAIN_BUTTON ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### ENUM GimpChainPosition ##### -->
+<para>
+
+</para>
+
+@GIMP_CHAIN_TOP: 
+@GIMP_CHAIN_LEFT: 
+@GIMP_CHAIN_BOTTOM: 
+@GIMP_CHAIN_RIGHT: 
+
+<!-- ##### FUNCTION gimp_chain_button_new ##### -->
+<para>
+
+</para>
+
+@position: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_chain_button_set_active ##### -->
+<para>
+
+</para>
+
+@gcb: 
+@is_active: 
+
+
+<!-- ##### FUNCTION gimp_chain_button_get_active ##### -->
+<para>
+
+</para>
+
+@gcb: 
+@Returns: 
+
+

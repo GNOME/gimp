@@ -1,0 +1,98 @@
+<!-- ##### SECTION Title ##### -->
+color_selector
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### USER_FUNCTION GimpColorSelector_Callback ##### -->
+<para>
+
+</para>
+
+@data: 
+@r: 
+@g: 
+@b: 
+
+
+<!-- ##### USER_FUNCTION GimpColorSelector_NewFunc ##### -->
+<para>
+
+</para>
+
+@r: 
+@g: 
+@b: 
+@cb: 
+@data: 
+@selector_data: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION GimpColorSelector_FreeFunc ##### -->
+<para>
+
+</para>
+
+@selector_data: 
+
+
+<!-- ##### USER_FUNCTION GimpColorSelector_SetColorFunc ##### -->
+<para>
+
+</para>
+
+@selector_data: 
+@r: 
+@g: 
+@b: 
+@set_current: 
+
+
+<!-- ##### STRUCT GimpColorSelectorMethods ##### -->
+<para>
+
+</para>
+
+@new: 
+@free: 
+@setcolor: 
+
+<!-- ##### TYPEDEF GimpColorSelectorID ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_color_selector_register ##### -->
+<para>
+
+</para>
+
+@name: 
+@help_page: 
+@methods: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_color_selector_unregister ##### -->
+<para>
+
+</para>
+
+@id: 
+@callback: 
+@data: 
+@Returns: 
+
+

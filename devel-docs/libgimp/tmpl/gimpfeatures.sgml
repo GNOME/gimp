@@ -1,0 +1,117 @@
+<!-- ##### SECTION Title ##### -->
+gimpfeatures
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### MACRO GIMP_MAJOR_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_MINOR_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_MICRO_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_CHECK_VERSION ##### -->
+<para>
+
+</para>
+
+@major: 
+@minor: 
+@micro: 
+
+
+<!-- ##### MACRO GIMP_HAVE_PROCEDURAL_DB_GET_DATA_SIZE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_HAVE_PARASITES ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_HAVE_RESOLUTION_INFO ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_HAVE_DESTROY_PARAMDEFS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_HAVE_FEATURES_1_1_5 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_HAVE_DEFAULT_DISPLAY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_HAVE_PIXEL_RGNS_REGISTER2 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_HAVE_NEW_ENUMS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_HAVE_EXPORT ##### -->
+<para>
+
+</para>
+
+
+

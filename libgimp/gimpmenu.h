@@ -35,32 +35,32 @@ typedef void (*GimpMenuCallback)   (gint32   id,
 				    gpointer data);
 
 /* Popup the brush dialog interactively */
-typedef void (* GRunBrushCallback) (gchar *, /* Name */
-                                    gdouble, /* opacity */
-                                    gint,    /* spacing */
-                                    gint,    /* paint_mode */
-                                    gint,    /* width */
-                                    gint,    /* height */
-                                    gchar *, /* mask data */
-                                    gint,    /* dialog closing */
-				    gpointer /* user data */);
+typedef void (* GRunBrushCallback) (gchar    *name,
+				    gdouble   opacity,
+				    gint      spacing,
+				    gint      paint_mode,
+				    gint      width,
+				    gint      height,
+				    gchar    *mask_data,
+				    gint      dialog_closing,
+				    gpointer  user_data);
 
 /* Popup the pattern dialog */
-typedef void (*GRunPatternCallback) (gchar *, /* Name */
-				     gint,    /* Width */
-				     gint,    /* Heigth */
-				     gint,    /* bytes pp in mask */
-				     gchar *, /* mask data */
-				     gint,    /* dialog closing */
-				     gpointer /* user data */);
-
+typedef void (*GRunPatternCallback) (gchar    *name,
+				     gint      width,
+				     gint      height,
+				     gint      bpp,
+				     gchar    *mask_data,
+				     gint      dialog_closing,
+				     gpointer  user_data);
+  
 /* Popup the gradient dialog */
-typedef void (*GRunGradientCallback) (gchar *, /* Name */
-				      gint,    /* Width */
-				      gdouble *, /* grad data */
-				      gint,    /* dialog closing */
-				      gpointer /* user data */);
-
+typedef void (*GRunGradientCallback) (gchar    *name,
+				      gint      width,
+				      gdouble  *grad_data,
+				      gint      dialog_closing,
+				      gpointer  user_data);
+  
 GtkWidget* gimp_image_menu_new    (GimpConstraintFunc constraint,
 				   GimpMenuCallback   callback,
 				   gpointer           data,

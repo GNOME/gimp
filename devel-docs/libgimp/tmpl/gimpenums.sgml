@@ -1,0 +1,922 @@
+<!-- ##### SECTION Title ##### -->
+gimpenums
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### ENUM GimpAddMaskType ##### -->
+<para>
+
+</para>
+
+@GIMP_WHITE_MASK: 
+@GIMP_BLACK_MASK: 
+@GIMP_ALPHA_MASK: 
+
+<!-- ##### ENUM GimpBlendMode ##### -->
+<para>
+
+</para>
+
+@GIMP_FG_BG_RGB: 
+@GIMP_FG_BG_HSV: 
+@GIMP_FG_TRANS: 
+@GIMP_CUSTOM: 
+
+<!-- ##### ENUM GimpBrushApplicationMode ##### -->
+<para>
+
+</para>
+
+@GIMP_HARD: 
+@GIMP_SOFT: 
+@GIMP_PRESSURE: 
+
+<!-- ##### ENUM GimpBucketFillMode ##### -->
+<para>
+
+</para>
+
+@GIMP_FG_BUCKET_FILL: 
+@GIMP_BG_BUCKET_FILL: 
+@GIMP_PATTERN_BUCKET_FILL: 
+
+<!-- ##### ENUM GimpChannelLutType ##### -->
+<para>
+
+</para>
+
+@GIMP_VALUE_LUT: 
+@GIMP_RED_LUT: 
+@GIMP_GREEN_LUT: 
+@GIMP_BLUE_LUT: 
+@GIMP_ALPHA_LUT: 
+
+<!-- ##### ENUM GimpChannelOffsetType ##### -->
+<para>
+
+</para>
+
+@GIMP_OFFSET_BACKGROUND: 
+@GIMP_OFFSET_TRANSPARENT: 
+
+<!-- ##### ENUM GimpChannelOps ##### -->
+<para>
+
+</para>
+
+@GIMP_ADD: 
+@GIMP_SUB: 
+@GIMP_REPLACE: 
+@GIMP_INTERSECT: 
+
+<!-- ##### ENUM GimpChannelType ##### -->
+<para>
+
+</para>
+
+@GIMP_RED_CHANNEL: 
+@GIMP_GREEN_CHANNEL: 
+@GIMP_BLUE_CHANNEL: 
+@GIMP_GRAY_CHANNEL: 
+@GIMP_INDEXED_CHANNEL: 
+@GIMP_AUXILLARY_CHANNEL: 
+
+<!-- ##### ENUM GimpCloneType ##### -->
+<para>
+
+</para>
+
+@GIMP_IMAGE_CLONE: 
+@GIMP_PATTERN_CLONE: 
+
+<!-- ##### ENUM GimpConvertDitherType ##### -->
+<para>
+
+</para>
+
+@GIMP_NO_DITHER: 
+@GIMP_FS_DITHER: 
+@GIMP_FSLOWBLEED_DITHER: 
+@GIMP_FIXED_DITHER: 
+@GIMP_NODESTRUCT_DITHER: 
+
+<!-- ##### ENUM GimpConvertPaletteType ##### -->
+<para>
+
+</para>
+
+@GIMP_MAKE_PALETTE: 
+@GIMP_REUSE_PALETTE: 
+@GIMP_WEB_PALETTE: 
+@GIMP_MONO_PALETTE: 
+@GIMP_CUSTOM_PALETTE: 
+
+<!-- ##### ENUM GimpConvolutionType ##### -->
+<para>
+
+</para>
+
+@GIMP_NORMAL_CONVOL: 
+@GIMP_ABSOLUTE_CONVOL: 
+@GIMP_NEGATIVE_CONVOL: 
+
+<!-- ##### ENUM GimpConvolveType ##### -->
+<para>
+
+</para>
+
+@GIMP_BLUR_CONVOLVE: 
+@GIMP_SHARPEN_CONVOLVE: 
+@GIMP_CUSTOM_CONVOLVE: 
+
+<!-- ##### ENUM GimpDodgeBurnMode ##### -->
+<para>
+
+</para>
+
+@GIMP_DODGEBURN_HIGHLIGHTS: 
+@GIMP_DODGEBURN_MIDTONES: 
+@GIMP_DODGEBURN_SHADOWS: 
+
+<!-- ##### ENUM GimpDodgeBurnType ##### -->
+<para>
+
+</para>
+
+@GIMP_DODGE: 
+@GIMP_BURN: 
+
+<!-- ##### ENUM GimpFillType ##### -->
+<para>
+
+</para>
+
+@GIMP_FG_IMAGE_FILL: 
+@GIMP_BG_IMAGE_FILL: 
+@GIMP_WHITE_IMAGE_FILL: 
+@GIMP_TRANS_IMAGE_FILL: 
+@GIMP_NO_IMAGE_FILL: 
+
+<!-- ##### ENUM GimpImageBaseType ##### -->
+<para>
+
+</para>
+
+@GIMP_RGB: 
+@GIMP_GRAY: 
+@GIMP_INDEXED: 
+
+<!-- ##### ENUM GimpImageType ##### -->
+<para>
+
+</para>
+
+@GIMP_RGB_IMAGE: 
+@GIMP_RGBA_IMAGE: 
+@GIMP_GRAY_IMAGE: 
+@GIMP_GRAYA_IMAGE: 
+@GIMP_INDEXED_IMAGE: 
+@GIMP_INDEXEDA_IMAGE: 
+
+<!-- ##### ENUM GimpGradientPaintMode ##### -->
+<para>
+
+</para>
+
+@GIMP_ONCE_FORWARD: 
+@GIMP_ONCE_BACKWARDS: 
+@GIMP_LOOP_SAWTOOTH: 
+@GIMP_LOOP_TRIANGLE: 
+@GIMP_ONCE_END_COLOR: 
+
+<!-- ##### ENUM GimpGradientType ##### -->
+<para>
+
+</para>
+
+@GIMP_LINEAR: 
+@GIMP_BILINEAR: 
+@GIMP_RADIAL: 
+@GIMP_SQUARE: 
+@GIMP_CONICAL_SYMMETRIC: 
+@GIMP_CONICAL_ASYMMETRIC: 
+@GIMP_SHAPEBURST_ANGULAR: 
+@GIMP_SHAPEBURST_SPHERICAL: 
+@GIMP_SHAPEBURST_DIMPLED: 
+@GIMP_SPIRAL_CLOCKWISE: 
+@GIMP_SPIRAL_ANTICLOCKWISE: 
+
+<!-- ##### ENUM GimpHueRange ##### -->
+<para>
+
+</para>
+
+@GIMP_ALL_HUES: 
+@GIMP_RED_HUES: 
+@GIMP_YELLOW_HUES: 
+@GIMP_GREEN_HUES: 
+@GIMP_CYAN_HUES: 
+@GIMP_BLUE_HUES: 
+@GIMP_MAGENTA_HUES: 
+
+<!-- ##### ENUM GimpInterpolationType ##### -->
+<para>
+
+</para>
+
+@GIMP_LINEAR_INTERPOLATION: 
+@GIMP_CUBIC_INTERPOLATION: 
+@GIMP_NEAREST_NEIGHBOR_INTERPOLATION: 
+
+<!-- ##### ENUM GimpLayerModeEffects ##### -->
+<para>
+
+</para>
+
+@GIMP_NORMAL_MODE: 
+@GIMP_DISSOLVE_MODE: 
+@GIMP_BEHIND_MODE: 
+@GIMP_MULTIPLY_MODE: 
+@GIMP_SCREEN_MODE: 
+@GIMP_OVERLAY_MODE: 
+@GIMP_DIFFERENCE_MODE: 
+@GIMP_ADDITION_MODE: 
+@GIMP_SUBTRACT_MODE: 
+@GIMP_DARKEN_ONLY_MODE: 
+@GIMP_LIGHTEN_ONLY_MODE: 
+@GIMP_HUE_MODE: 
+@GIMP_SATURATION_MODE: 
+@GIMP_COLOR_MODE: 
+@GIMP_VALUE_MODE: 
+@GIMP_DIVIDE_MODE: 
+
+<!-- ##### ENUM GimpMaskApplyMode ##### -->
+<para>
+
+</para>
+
+@GIMP_APPLY: 
+@GIMP_DISCARD: 
+
+<!-- ##### ENUM GimpMergeType ##### -->
+<para>
+
+</para>
+
+@GIMP_EXPAND_AS_NECESSARY: 
+@GIMP_CLIP_TO_IMAGE: 
+@GIMP_CLIP_TO_BOTTOM_LAYER: 
+@GIMP_FLATTEN_IMAGE: 
+
+<!-- ##### ENUM GimpMessageHandlerType ##### -->
+<para>
+
+</para>
+
+@GIMP_MESSAGE_BOX: 
+@GIMP_CONSOLE: 
+@GIMP_ERROR_CONSOLE: 
+
+<!-- ##### ENUM GimpOrientationType ##### -->
+<para>
+
+</para>
+
+@GIMP_HORIZONTAL: 
+@GIMP_VERTICAL: 
+@GIMP_UNKNOWN: 
+
+<!-- ##### ENUM GimpPDBArgType ##### -->
+<para>
+
+</para>
+
+@GIMP_PDB_INT32: 
+@GIMP_PDB_INT16: 
+@GIMP_PDB_INT8: 
+@GIMP_PDB_FLOAT: 
+@GIMP_PDB_STRING: 
+@GIMP_PDB_INT32ARRAY: 
+@GIMP_PDB_INT16ARRAY: 
+@GIMP_PDB_INT8ARRAY: 
+@GIMP_PDB_FLOATARRAY: 
+@GIMP_PDB_STRINGARRAY: 
+@GIMP_PDB_COLOR: 
+@GIMP_PDB_REGION: 
+@GIMP_PDB_DISPLAY: 
+@GIMP_PDB_IMAGE: 
+@GIMP_PDB_LAYER: 
+@GIMP_PDB_CHANNEL: 
+@GIMP_PDB_DRAWABLE: 
+@GIMP_PDB_SELECTION: 
+@GIMP_PDB_BOUNDARY: 
+@GIMP_PDB_PATH: 
+@GIMP_PDB_PARASITE: 
+@GIMP_PDB_STATUS: 
+@GIMP_PDB_END: 
+
+<!-- ##### ENUM GimpPDBProcType ##### -->
+<para>
+
+</para>
+
+@GIMP_INTERNAL: 
+@GIMP_PLUGIN: 
+@GIMP_EXTENSION: 
+@GIMP_TEMPORARY: 
+
+<!-- ##### ENUM GimpPDBStatusType ##### -->
+<para>
+
+</para>
+
+@GIMP_PDB_EXECUTION_ERROR: 
+@GIMP_PDB_CALLING_ERROR: 
+@GIMP_PDB_PASS_THROUGH: 
+@GIMP_PDB_SUCCESS: 
+@GIMP_PDB_CANCEL: 
+
+<!-- ##### ENUM GimpPaintApplicationMode ##### -->
+<para>
+
+</para>
+
+@GIMP_CONTINUOUS: 
+@GIMP_INCREMENTAL: 
+
+<!-- ##### ENUM GimpRepeatMode ##### -->
+<para>
+
+</para>
+
+@GIMP_REPEAT_NONE: 
+@GIMP_REPEAT_SAWTOOTH: 
+@GIMP_REPEAT_TRIANGULAR: 
+
+<!-- ##### ENUM GimpRunModeType ##### -->
+<para>
+
+</para>
+
+@GIMP_RUN_INTERACTIVE: 
+@GIMP_RUN_NONINTERACTIVE: 
+@GIMP_RUN_WITH_LAST_VALS: 
+
+<!-- ##### ENUM GimpSizeType ##### -->
+<para>
+
+</para>
+
+@GIMP_PIXELS: 
+@GIMP_POINTS: 
+
+<!-- ##### ENUM GimpTransferMode ##### -->
+<para>
+
+</para>
+
+@GIMP_SHADOWS: 
+@GIMP_MIDTONES: 
+@GIMP_HIGHLIGHTS: 
+
+<!-- ##### TYPEDEF GFillType ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF GImageType ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF GDrawableType ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF GLayerMode ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF GRunModeType ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF GOrientation ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF GParamType ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF GProcedureType ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF GStatusType ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO PARAM_INT32 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_INT16 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_INT8 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_FLOAT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_STRING ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_INT32ARRAY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_INT16ARRAY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_INT8ARRAY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_FLOATARRAY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_STRINGARRAY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_COLOR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_REGION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_DISPLAY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_IMAGE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_LAYER ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_CHANNEL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_DRAWABLE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_SELECTION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_BOUNDARY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_PATH ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_PARASITE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_STATUS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARAM_END ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO STATUS_EXECUTION_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO STATUS_CALLING_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO STATUS_PASS_THROUGH ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO STATUS_SUCCESS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO STATUS_CANCEL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PROC_INTERNAL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PROC_PLUG_IN ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PROC_EXTENSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PROC_TEMPORARY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO ORIENTATION_HORIZONTAL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO ORIENTATION_VERTICAL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO ORIENTATION_UNKNOWN ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO FG_IMAGE_FILL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO BG_IMAGE_FILL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO WHITE_IMAGE_FILL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO TRANS_IMAGE_FILL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO NO_IMAGE_FILL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO RGB ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GRAY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO INDEXED ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO RGB_IMAGE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO RGBA_IMAGE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GRAY_IMAGE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GRAYA_IMAGE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO INDEXED_IMAGE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO INDEXEDA_IMAGE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO NORMAL_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO DISSOLVE_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO BEHIND_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MULTIPLY_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SCREEN_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO OVERLAY_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO DIFFERENCE_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO ADDITION_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SUBTRACT_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO DARKEN_ONLY_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO LIGHTEN_ONLY_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO HUE_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO SATURATION_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO COLOR_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO VALUE_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO DIVIDE_MODE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO RUN_INTERACTIVE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO RUN_NONINTERACTIVE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO RUN_WITH_LAST_VALS ##### -->
+<para>
+
+</para>
+
+
+

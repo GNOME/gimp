@@ -1,0 +1,83 @@
+<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
+<!entity libgimp-gimp SYSTEM "sgml/gimp.sgml">
+<!entity libgimp-gimpprotocol SYSTEM "sgml/gimpprotocol.sgml">
+<!entity libgimp-gimpcolorspace SYSTEM "sgml/gimpcolorspace.sgml">
+<!entity libgimp-gimpenums SYSTEM "sgml/gimpenums.sgml">
+<!entity libgimp-gimpwire SYSTEM "sgml/gimpwire.sgml">
+<!entity libgimp-gimpmatrix SYSTEM "sgml/gimpmatrix.sgml">
+<!entity libgimp-parasite SYSTEM "sgml/parasite.sgml">
+<!entity libgimp-parasiteF SYSTEM "sgml/parasiteF.sgml">
+<!entity libgimp-parasiteP SYSTEM "sgml/parasiteP.sgml">
+<!entity libgimp-gserialize SYSTEM "sgml/gserialize.sgml">
+<!entity libgimp-color-selector SYSTEM "sgml/color_selector.sgml">
+<!entity libgimp-gimpmodule SYSTEM "sgml/gimpmodule.sgml">
+<!entity libgimp-gimpmath SYSTEM "sgml/gimpmath.sgml">
+<!entity libgimp-color-display SYSTEM "sgml/color_display.sgml">
+<!entity libgimp-gimpenv SYSTEM "sgml/gimpenv.sgml">
+<!entity libgimp-gimplimits SYSTEM "sgml/gimplimits.sgml">
+<!entity libgimp-gimpexport SYSTEM "sgml/gimpexport.sgml">
+<!entity libgimp-parasiteio SYSTEM "sgml/parasiteio.sgml">
+<!entity libgimp-gimpcompat SYSTEM "sgml/gimpcompat.sgml">
+<!entity libgimp-gimpfeatures SYSTEM "sgml/gimpfeatures.sgml">
+<!entity GimpChainButton SYSTEM "sgml/gimpchainbutton.sgml">
+<!entity GimpColorButton SYSTEM "sgml/gimpcolorbutton.sgml">
+<!entity GimpFileSelection SYSTEM "sgml/gimpfileselection.sgml">
+<!entity GimpPathEditor SYSTEM "sgml/gimppatheditor.sgml">
+<!entity GimpSizeEntry SYSTEM "sgml/gimpsizeentry.sgml">
+<!entity GimpUnitMenu SYSTEM "sgml/gimpunitmenu.sgml">
+<!entity libgimp-gimpdialog SYSTEM "sgml/gimpdialog.sgml">
+<!entity libgimp-gimphelpui SYSTEM "sgml/gimphelpui.sgml">
+<!entity libgimp-gimpmenu SYSTEM "sgml/gimpmenu.sgml">
+<!entity libgimp-gimpunit SYSTEM "sgml/gimpunit.sgml">
+<!entity libgimp-gimpwidgets SYSTEM "sgml/gimpwidgets.sgml">
+]>
+<book>
+  <bookinfo>
+    <title>GIMP Library Reference Manual</title>
+  </bookinfo>
+
+  <chapter id="libgimp">
+    <title>GIMP Library</title>
+    &libgimp-gimp;
+    &libgimp-gimpprotocol;
+    &libgimp-gimpcolorspace;
+    &libgimp-gimpenums;
+    &libgimp-gimpwire;
+    &libgimp-gimpmatrix;
+    &libgimp-parasite;
+    &libgimp-parasiteF;
+    &libgimp-parasiteP;
+    &libgimp-gserialize;
+    &libgimp-color-selector;
+    &libgimp-gimpmodule;
+    &libgimp-gimpmath;
+    &libgimp-color-display;
+    &libgimp-gimpenv;
+    &libgimp-gimplimits;
+    &libgimp-gimpexport;
+    &libgimp-parasiteio;
+    &libgimp-gimpcompat;
+    &libgimp-gimpfeatures;
+  </chapter>
+
+  <chapter id="libgimpui">
+    <title>GIMP User Interface Library</title>
+    &GimpChainButton;
+    &GimpColorButton;
+    &GimpFileSelection;
+    &GimpPathEditor;
+    &GimpSizeEntry;
+    &GimpUnitMenu;
+    &libgimp-gimpdialog;
+    &libgimp-gimphelpui;
+    &libgimp-gimpmenu;
+    &libgimp-gimpunit;
+    &libgimp-gimpwidgets;
+  </chapter>
+</book>
+
+
+
+
+
+

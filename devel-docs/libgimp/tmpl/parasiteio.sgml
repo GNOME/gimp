@@ -1,0 +1,55 @@
+<!-- ##### SECTION Title ##### -->
+parasiteio
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### MACRO PIXPIPE_MAXDIM ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### TYPEDEF PixPipeParams ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION pixpipeparams_init ##### -->
+<para>
+
+</para>
+
+@params: 
+
+
+<!-- ##### FUNCTION pixpipeparams_parse ##### -->
+<para>
+
+</para>
+
+@parameters: 
+@params: 
+
+
+<!-- ##### FUNCTION pixpipeparams_build ##### -->
+<para>
+
+</para>
+
+@params: 
+@Returns: 
+
+

@@ -1,0 +1,76 @@
+<!-- ##### SECTION Title ##### -->
+gimpdialog
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_dialog_new ##### -->
+<para>
+
+</para>
+
+@title: 
+@wmclass_name: 
+@help_func: 
+@help_data: 
+@position: 
+@allow_shrink: 
+@allow_grow: 
+@auto_shrink: 
+@Varargs: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_dialog_newv ##### -->
+<para>
+
+</para>
+
+@title: 
+@wmclass_name: 
+@help_func: 
+@help_data: 
+@position: 
+@allow_shrink: 
+@allow_grow: 
+@auto_shrink: 
+@args: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_dialog_set_icon ##### -->
+<para>
+
+</para>
+
+@dialog: 
+
+
+<!-- ##### FUNCTION gimp_dialog_create_action_area ##### -->
+<para>
+
+</para>
+
+@dialog: 
+@Varargs: 
+
+
+<!-- ##### FUNCTION gimp_dialog_create_action_areav ##### -->
+<para>
+
+</para>
+
+@dialog: 
+@args: 
+
+

@@ -1,0 +1,149 @@
+<!-- ##### SECTION Title ##### -->
+gimpcompat
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### MACRO gimp_attach_parasite ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_detach_parasite ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_find_parasite ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_image_attach_parasite ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_image_detach_parasite ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_image_find_parasite ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_drawable_attach_parasite ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_drawable_detach_parasite ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_drawable_find_parasite ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_drawable_channel ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_drawable_gray ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_drawable_color ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_drawable_indexed ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_drawable_layer ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_drawable_layer_mask ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_image_disable_undo ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_image_enable_undo ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_image_freeze_undo ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_image_thaw_undo ##### -->
+<para>
+
+</para>
+
+
+

@@ -1,0 +1,140 @@
+<!-- ##### SECTION Title ##### -->
+gimpcolorspace
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_rgb_to_hsv ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Param2: 
+@Param3: 
+
+
+<!-- ##### FUNCTION gimp_hsv_to_rgb ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Param2: 
+@Param3: 
+
+
+<!-- ##### FUNCTION gimp_rgb_to_hls ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Param2: 
+@Param3: 
+
+
+<!-- ##### FUNCTION gimp_rgb_to_l ##### -->
+<para>
+
+</para>
+
+@Varargs: 
+@Varargs: 
+@Varargs: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_hls_to_rgb ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Param2: 
+@Param3: 
+
+
+<!-- ##### FUNCTION gimp_rgb_to_hsv_double ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Param2: 
+@Param3: 
+
+
+<!-- ##### FUNCTION gimp_hsv_to_rgb_double ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Param2: 
+@Param3: 
+
+
+<!-- ##### FUNCTION gimp_rgb_to_hsv4 ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Param2: 
+@Param3: 
+@Param4: 
+
+
+<!-- ##### FUNCTION gimp_hsv_to_rgb4 ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Param2: 
+@Param3: 
+@Param4: 
+
+
+<!-- ##### MACRO INTENSITY_RED ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO INTENSITY_GREEN ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO INTENSITY_BLUE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO INTENSITY ##### -->
+<para>
+
+</para>
+
+@r: 
+@g: 
+@b: 
+
+

@@ -1,0 +1,67 @@
+<!-- ##### SECTION Title ##### -->
+GimpFileSelection
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpFileSelection ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GIMP_FILE_SELECTION ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### FUNCTION gimp_file_selection_new ##### -->
+<para>
+
+</para>
+
+@title: 
+@filename: 
+@dir_only: 
+@check_valid: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_file_selection_get_filename ##### -->
+<para>
+
+</para>
+
+@gfs: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_file_selection_set_filename ##### -->
+<para>
+
+</para>
+
+@gfs: 
+@filename: 
+
+
+<!-- ##### SIGNAL GimpFileSelection::filename-changed ##### -->
+<para>
+
+</para>
+
+@gimpfileselection: the object which received the signal.
+

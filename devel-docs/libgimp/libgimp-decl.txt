@@ -1,0 +1,4001 @@
+<MACRO>
+<NAME>GIMPVAR</NAME>
+#    define GIMPVAR __declspec(dllexport)
+</MACRO>
+<MACRO>
+<NAME>GIMPVAR</NAME>
+#    define GIMPVAR extern __declspec(dllimport)
+</MACRO>
+<MACRO>
+<NAME>GIMPVAR</NAME>
+#  define GIMPVAR extern
+</MACRO>
+<STRUCT>
+<NAME>GPlugInInfo</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GTile</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GDrawable</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPixelRgn</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GParamDef</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GParamColor</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GParamRegion</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GParam</NAME>
+</STRUCT>
+<USER_FUNCTION>
+<NAME>GRunProc</NAME>
+<RETURNS>void </RETURNS>
+char    *name,
+			     int      nparams,
+			     GParam  *param,
+			     int     *nreturn_vals,
+			     GParam **return_vals
+</USER_FUNCTION>
+<STRUCT>
+<NAME>GPlugInInfo</NAME>
+struct GPlugInInfo
+{
+  /* called when the gimp application initially starts up */
+  void (*init_proc) (void);
+
+  /* called when the gimp application exits */
+  void (*quit_proc) (void);
+
+  /* called by the gimp so that the plug-in can inform the
+   *  gimp of what it does. (ie. installing a procedure database
+   *  procedure).
+   */
+  void (*query_proc) (void);
+
+  /* called to run a procedure the plug-in installed in the
+   *  procedure database.
+   */
+  GRunProc run_proc;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GTile</NAME>
+struct GTile
+{
+  guint ewidth;        /* the effective width of the tile */
+  guint eheight;       /* the effective height of the tile */
+  guint bpp;           /* the bytes per pixel (1, 2, 3 or 4 ) */
+  guint tile_num;      /* the number of this tile within the drawable */
+  guint16 ref_count;   /* reference count for the tile */
+  guint dirty : 1;     /* is the tile dirty? has it been modified? */
+  guint shadow: 1;     /* is this a shadow tile */
+  guchar *data;        /* the pixel data for the tile */
+  GDrawable *drawable; /* the drawable this tile came from */
+};
+</STRUCT>
+<STRUCT>
+<NAME>GDrawable</NAME>
+struct GDrawable
+{
+  gint32 id;            /* drawable ID */
+  guint width;          /* width of drawble */
+  guint height;         /* height of drawble */
+  guint bpp;            /* bytes per pixel of drawable */
+  guint ntile_rows;     /* # of tile rows */
+  guint ntile_cols;     /* # of tile columns */
+  GTile *tiles;         /* the normal tiles */
+  GTile *shadow_tiles;  /* the shadow tiles */
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPixelRgn</NAME>
+struct GPixelRgn
+{
+  guchar *data;         /* pointer to region data */
+  GDrawable *drawable;  /* pointer to drawable */
+  guint bpp;            /* bytes per pixel */
+  guint rowstride;      /* bytes per pixel row */
+  guint x, y;           /* origin */
+  guint w, h;           /* width and height of region */
+  guint dirty : 1;      /* will this region be dirtied? */
+  guint shadow : 1;     /* will this region use the shadow or normal tiles */
+  guint process_count;  /* used internally */
+};
+</STRUCT>
+<STRUCT>
+<NAME>GParamDef</NAME>
+struct GParamDef
+{
+  GParamType type;
+  char *name;
+  char *description;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GParamColor</NAME>
+struct GParamColor
+{
+  guint8 red;
+  guint8 green;
+  guint8 blue;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GParamRegion</NAME>
+struct GParamRegion
+{
+  gint32 x;
+  gint32 y;
+  gint32 width;
+  gint32 height;
+};
+</STRUCT>
+<UNION>
+<NAME>GParamData</NAME>
+union GParamData
+{
+  gint32 d_int32;
+  gint16 d_int16;
+  gint8 d_int8;
+  gdouble d_float;
+  gchar *d_string;
+  gint32 *d_int32array;
+  gint16 *d_int16array;
+  gint8 *d_int8array;
+  gdouble *d_floatarray;
+  gchar **d_stringarray;
+  GParamColor d_color;
+  GParamRegion d_region;
+  gint32 d_display;
+  gint32 d_image;
+  gint32 d_layer;
+  gint32 d_channel;
+  gint32 d_drawable;
+  gint32 d_selection;
+  gint32 d_boundary;
+  gint32 d_path;
+  Parasite d_parasite;
+  gint32 d_status;
+};
+</UNION>
+<STRUCT>
+<NAME>GParam</NAME>
+struct GParam
+{
+  GParamType type;
+  GParamData data;
+};
+</STRUCT>
+<MACRO>
+<NAME>MAIN</NAME>
+#  define MAIN()			\
+   static int				\
+   win32_gimp_main (int argc, char **argv)	\
+   {					\
+     extern void set_gimp_PLUG_IN_INFO_PTR(GPlugInInfo *);	\
+     set_gimp_PLUG_IN_INFO_PTR(&PLUG_IN_INFO);	\
+     return gimp_main (argc, argv);	\
+   }					\
+					\
+   struct HINSTANCE__;			\
+   int _stdcall				\
+   WinMain (struct HINSTANCE__ *hInstance, \
+	    struct HINSTANCE__ *hPrevInstance,	\
+	    char *lpszCmdLine,		\
+	    int   nCmdShow)		\
+   {					\
+     return win32_gimp_main (__argc, __argv);	\
+   }					\
+					\
+   int					\
+   main (int argc, char *argv[])	\
+   {					\
+     return win32_gimp_main (argc, argv);	\
+   }
+</MACRO>
+<MACRO>
+<NAME>MAIN</NAME>
+#  define MAIN()			\
+   int					\
+   main (int argc, char *argv[])	\
+   {					\
+     return gimp_main (argc, argv);	\
+   }
+</MACRO>
+<MACRO>
+<NAME>MAIN</NAME>
+#  define MAIN()				\
+   int						\
+   main (int argc, char *argv[])		\
+   {						\
+     set_gimp_PLUG_IN_INFO(&PLUG_IN_INFO);	\
+     return gimp_main (argc, argv);		\
+   }
+</MACRO>
+<FUNCTION>
+<NAME>gimp_main</NAME>
+<RETURNS>int  </RETURNS>
+int   argc,char *argv[]
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_set_data</NAME>
+<RETURNS>void  </RETURNS>
+gchar *  id,gpointer data,guint32  length
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_get_data</NAME>
+<RETURNS>void  </RETURNS>
+gchar *  id,gpointer data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_get_data_size</NAME>
+<RETURNS>guint32  </RETURNS>
+gchar * id
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_progress_init</NAME>
+<RETURNS>void  </RETURNS>
+char *message
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_progress_update</NAME>
+<RETURNS>void  </RETURNS>
+gdouble percentage
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_default_display</NAME>
+<RETURNS>gint32  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_message</NAME>
+<RETURNS>void  </RETURNS>
+const gchar *message
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_query_database</NAME>
+<RETURNS>void  </RETURNS>
+char   *name_regexp,char   *blurb_regexp,char   *help_regexp,char   *author_regexp,char   *copyright_regexp,char   *date_regexp,char   *proc_type_regexp,int    *nprocs,char ***proc_names
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_query_procedure</NAME>
+<RETURNS>gint  </RETURNS>
+char       *proc_name,char      **proc_blurb,char      **proc_help,char      **proc_author,char      **proc_copyright,char      **proc_date,int        *proc_type,int        *nparams,int        *nreturn_vals,GParamDef  **params,GParamDef  **return_vals
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_query_images</NAME>
+<RETURNS>gint32 *</RETURNS>
+int *nimages
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_install_procedure</NAME>
+<RETURNS>void  </RETURNS>
+char      *name,char      *blurb,char      *help,char      *author,char      *copyright,char      *date,char      *menu_path,char      *image_types,int        type,int        nparams,int        nreturn_vals,GParamDef *params,GParamDef *return_vals
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_install_temp_proc</NAME>
+<RETURNS>void  </RETURNS>
+char      *name,char      *blurb,char      *help,char      *author,char      *copyright,char      *date,char      *menu_path,char      *image_types,int        type,int        nparams,int        nreturn_vals,GParamDef *params,GParamDef *return_vals,GRunProc   run_proc
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_uninstall_temp_proc</NAME>
+<RETURNS>void  </RETURNS>
+char *name
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_register_magic_load_handler</NAME>
+<RETURNS>void  </RETURNS>
+char *name,char *extensions,char *prefixes,char *magics
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_register_load_handler</NAME>
+<RETURNS>void  </RETURNS>
+char *name,char *extensions,char *prefixes
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_register_save_handler</NAME>
+<RETURNS>void  </RETURNS>
+char *name,char *extensions,char *prefixes
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_run_procedure</NAME>
+<RETURNS>GParam *</RETURNS>
+char *name,int  *nreturn_vals,...
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_run_procedure2</NAME>
+<RETURNS>GParam *</RETURNS>
+char   *name,int    *nreturn_vals,int     nparams,GParam *params
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_destroy_params</NAME>
+<RETURNS>void  </RETURNS>
+GParam *params,int     nparams
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_destroy_paramdefs</NAME>
+<RETURNS>void  </RETURNS>
+GParamDef *paramdefs,int        nparams
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_gamma</NAME>
+<RETURNS>gdouble  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_install_cmap</NAME>
+<RETURNS>gint  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_use_xshm</NAME>
+<RETURNS>gint  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_color_cube</NAME>
+<RETURNS>guchar *</RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_request_wakeups</NAME>
+<RETURNS>void  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_new</NAME>
+<RETURNS>gint32  </RETURNS>
+guint      width,guint      height,GImageType type
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_duplicate</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_delete</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_width</NAME>
+<RETURNS>guint  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_height</NAME>
+<RETURNS>guint  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_base_type</NAME>
+<RETURNS>GImageType  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_floating_selection</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_add_channel</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint32     channel_ID,gint       position
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_add_layer</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint32     layer_ID,gint       position
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_add_layer_mask</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint32     layer_ID,gint32     mask_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_clean_all</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_undo_disable</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_undo_enable</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_undo_freeze</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_undo_thaw</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_undo_push_group_start</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_undo_push_group_end</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_clean_all</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_flatten</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_lower_channel</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint32     channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_lower_layer</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint32     layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_merge_visible_layers</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID,GimpMergeType merge_type
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_pick_correlate_layer</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID,gint       x,gint       y
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_raise_channel</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint32     channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_raise_layer</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint32     layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_remove_channel</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint32     channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_remove_layer</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint32     layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_remove_layer_mask</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint32     layer_ID,gint       mode
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_resize</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,guint      new_width,guint      new_height,gint       offset_x,gint       offset_y
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_active_channel</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_active_layer</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_channels</NAME>
+<RETURNS>gint32 *</RETURNS>
+gint32     image_ID,gint      *nchannels
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_cmap</NAME>
+<RETURNS>guchar *</RETURNS>
+gint32     image_ID,gint      *ncolors
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_component_active</NAME>
+<RETURNS>gint  </RETURNS>
+gint32     image_ID,gint       component
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_component_visible</NAME>
+<RETURNS>gint  </RETURNS>
+gint32     image_ID,gint       component
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_filename</NAME>
+<RETURNS>char *</RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_layers</NAME>
+<RETURNS>gint32 *</RETURNS>
+gint32     image_ID,gint      *nlayers
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_selection</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_set_active_channel</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint32     channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_set_active_layer</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint32     layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_set_cmap</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,guchar    *cmap,gint       ncolors
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_set_component_active</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint       component,gint       active
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_set_component_visible</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint       component,gint       visible
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_set_filename</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,char      *name
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_parasite_find</NAME>
+<RETURNS>Parasite   *</RETURNS>
+gint32     image_ID,const char *name
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_parasite_attach</NAME>
+<RETURNS>void  </RETURNS>
+gint32      image_ID,const Parasite *p
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_attach_new_parasite</NAME>
+<RETURNS>void  </RETURNS>
+gint32      image_ID,const char *name,int         flags,int         size,const void *data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_parasite_detach</NAME>
+<RETURNS>void  </RETURNS>
+gint32      image_ID,const char *name
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_set_resolution</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,double     xresolution,double     yresolution
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_resolution</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,double     *xresolution,double     *yresolution
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_set_unit</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,GUnit      unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_unit</NAME>
+<RETURNS>GUnit  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_layer_by_tattoo</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID,gint32     tattoo
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_channel_by_tattoo</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID,gint32     tattoo
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_thumbnail_data</NAME>
+<RETURNS>guchar  *</RETURNS>
+gint32     image_ID,gint      *width,gint      *height,gint      *bytes
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_convert_rgb</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_convert_grayscale</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_convert_indexed</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,GimpConvertDitherType  dither_type,GimpConvertPaletteType palette_type,gint       num_colors,gint       alpha_dither,gint       remove_unused,gchar     *palette
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_add_hguide</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID,gint32     yposition
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_add_vguide</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID,gint32     xposition
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_delete_guide</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID,gint32     guide_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_find_next_guide</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID,gint32     guide_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_guide_orientation</NAME>
+<RETURNS>GOrientation  </RETURNS>
+gint32     image_ID,gint32     guide_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_get_guide_position</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID,gint32     guide_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_display_new</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32 image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_display_delete</NAME>
+<RETURNS>void  </RETURNS>
+gint32 display_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_displays_flush</NAME>
+<RETURNS>void  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_new</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32        image_ID,char         *name,guint         width,guint         height,GDrawableType  type,gdouble       opacity,GLayerMode    mode
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_copy</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_delete</NAME>
+<RETURNS>void  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_width</NAME>
+<RETURNS>guint  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_height</NAME>
+<RETURNS>guint  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_bpp</NAME>
+<RETURNS>guint  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_type</NAME>
+<RETURNS>GDrawableType  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_add_alpha</NAME>
+<RETURNS>void  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_create_mask</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32        layer_ID,GimpAddMaskType mask_type
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_resize</NAME>
+<RETURNS>void  </RETURNS>
+gint32        layer_ID,guint         new_width,guint         new_height,gint          offset_x,gint          offset_y
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_scale</NAME>
+<RETURNS>void  </RETURNS>
+gint32        layer_ID,guint         new_width,guint         new_height,gint          local_origin
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_translate</NAME>
+<RETURNS>void  </RETURNS>
+gint32        layer_ID,gint          offset_x,gint          offset_y
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_is_floating_selection</NAME>
+<RETURNS>gint  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_get_image_id</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_get_mask_id</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_get_apply_mask</NAME>
+<RETURNS>gint  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_get_edit_mask</NAME>
+<RETURNS>gint  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_get_mode</NAME>
+<RETURNS>GLayerMode  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_get_name</NAME>
+<RETURNS>char *</RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_get_opacity</NAME>
+<RETURNS>gdouble  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_get_preserve_transparency</NAME>
+<RETURNS>gint  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_get_show_mask</NAME>
+<RETURNS>gint  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_get_visible</NAME>
+<RETURNS>gint  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_set_apply_mask</NAME>
+<RETURNS>void  </RETURNS>
+gint32        layer_ID,gint          apply_mask
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_set_edit_mask</NAME>
+<RETURNS>void  </RETURNS>
+gint32        layer_ID,gint          edit_mask
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_set_mode</NAME>
+<RETURNS>void  </RETURNS>
+gint32        layer_ID,GLayerMode    mode
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_set_name</NAME>
+<RETURNS>void  </RETURNS>
+gint32        layer_ID,char         *name
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_set_offsets</NAME>
+<RETURNS>void  </RETURNS>
+gint32        layer_ID,gint          offset_x,gint          offset_y
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_set_opacity</NAME>
+<RETURNS>void  </RETURNS>
+gint32        layer_ID,gdouble       opacity
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_set_preserve_transparency</NAME>
+<RETURNS>void  </RETURNS>
+gint32        layer_ID,gint          preserve_transparency
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_set_show_mask</NAME>
+<RETURNS>void  </RETURNS>
+gint32        layer_ID,gint          show_mask
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_set_visible</NAME>
+<RETURNS>void  </RETURNS>
+gint32        layer_ID,gint          visible
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_get_tattoo</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32        layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_new</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32   image_ID,char    *name,guint    width,guint    height,gdouble  opacity,guchar  *color
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_copy</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32   channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_delete</NAME>
+<RETURNS>void  </RETURNS>
+gint32   channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_width</NAME>
+<RETURNS>guint  </RETURNS>
+gint32   channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_height</NAME>
+<RETURNS>guint  </RETURNS>
+gint32   channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_get_image_id</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32   channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_get_layer_id</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32   channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_get_color</NAME>
+<RETURNS>void  </RETURNS>
+gint32   channel_ID,guchar  *red,guchar  *green,guchar  *blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_get_name</NAME>
+<RETURNS>char *</RETURNS>
+gint32   channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_get_opacity</NAME>
+<RETURNS>gdouble  </RETURNS>
+gint32   channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_get_show_masked</NAME>
+<RETURNS>gint  </RETURNS>
+gint32   channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_get_visible</NAME>
+<RETURNS>gint  </RETURNS>
+gint32   channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_set_color</NAME>
+<RETURNS>void  </RETURNS>
+gint32   channel_ID,guchar   red,guchar   green,guchar   blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_set_name</NAME>
+<RETURNS>void  </RETURNS>
+gint32   channel_ID,char    *name
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_set_opacity</NAME>
+<RETURNS>void  </RETURNS>
+gint32   channel_ID,gdouble  opacity
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_set_show_masked</NAME>
+<RETURNS>void  </RETURNS>
+gint32   channel_ID,gint     show_masked
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_set_visible</NAME>
+<RETURNS>void  </RETURNS>
+gint32   channel_ID,gint     visible
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_get_tattoo</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32   channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_get</NAME>
+<RETURNS>GDrawable *</RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_detach</NAME>
+<RETURNS>void  </RETURNS>
+GDrawable *drawable
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_flush</NAME>
+<RETURNS>void  </RETURNS>
+GDrawable *drawable
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_delete</NAME>
+<RETURNS>void  </RETURNS>
+GDrawable *drawable
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_update</NAME>
+<RETURNS>void  </RETURNS>
+gint32     drawable_ID,gint       x,gint       y,guint      width,guint      height
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_merge_shadow</NAME>
+<RETURNS>void  </RETURNS>
+gint32     drawable_ID,gint       undoable
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_image_id</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_name</NAME>
+<RETURNS>char *</RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_width</NAME>
+<RETURNS>guint  </RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_height</NAME>
+<RETURNS>guint  </RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_bpp</NAME>
+<RETURNS>guint  </RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_type</NAME>
+<RETURNS>GDrawableType  </RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_visible</NAME>
+<RETURNS>gint  </RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_is_channel</NAME>
+<RETURNS>gint  </RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_is_rgb</NAME>
+<RETURNS>gint  </RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_is_gray</NAME>
+<RETURNS>gint  </RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_has_alpha</NAME>
+<RETURNS>gint  </RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_is_indexed</NAME>
+<RETURNS>gint  </RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_is_layer</NAME>
+<RETURNS>gint  </RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_is_layer_mask</NAME>
+<RETURNS>gint  </RETURNS>
+gint32     drawable_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_mask_bounds</NAME>
+<RETURNS>gint  </RETURNS>
+gint32     drawable_ID,gint      *x1,gint      *y1,gint      *x2,gint      *y2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_offsets</NAME>
+<RETURNS>void  </RETURNS>
+gint32     drawable_ID,gint      *offset_x,gint      *offset_y
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_fill</NAME>
+<RETURNS>void  </RETURNS>
+gint32     drawable_ID,GimpFillType fill_type
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_set_name</NAME>
+<RETURNS>void  </RETURNS>
+gint32     drawable_ID,char      *name
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_set_visible</NAME>
+<RETURNS>void  </RETURNS>
+gint32     drawable_ID,gint       visible
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_get_tile</NAME>
+<RETURNS>GTile *</RETURNS>
+GDrawable *drawable,gint       shadow,gint       row,gint       col
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_get_tile2</NAME>
+<RETURNS>GTile *</RETURNS>
+GDrawable *drawable,gint       shadow,gint       x,gint       y
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_parasite_find</NAME>
+<RETURNS>Parasite *</RETURNS>
+gint32          drawable,const char     *name
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_parasite_attach</NAME>
+<RETURNS>void  </RETURNS>
+gint32          drawable,const Parasite *p
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_attach_new_parasite</NAME>
+<RETURNS>void  </RETURNS>
+gint32          drawable,const char     *name,int             flags,int             size,const void     *data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_parasite_detach</NAME>
+<RETURNS>void  </RETURNS>
+gint32          drawable,const char     *name
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_get_thumbnail_data</NAME>
+<RETURNS>guchar *</RETURNS>
+gint32          drawable_ID,gint           *width,gint           *height,gint           *bytes
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_bounds</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID,gint32    *non_empty,gint32    *x1,gint32    *y1,gint32    *x2,gint32    *y2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_float</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID,gint32     drawable_ID,gint32     x_offset,gint32     y_offset
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_is_empty</NAME>
+<RETURNS>gint32  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_none</NAME>
+<RETURNS>void  </RETURNS>
+gint32     image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_tile_ref</NAME>
+<RETURNS>void  </RETURNS>
+GTile   *tile
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_tile_ref_zero</NAME>
+<RETURNS>void  </RETURNS>
+GTile   *tile
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_tile_unref</NAME>
+<RETURNS>void  </RETURNS>
+GTile   *tile,int     dirty
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_tile_flush</NAME>
+<RETURNS>void  </RETURNS>
+GTile   *tile
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_tile_cache_size</NAME>
+<RETURNS>void  </RETURNS>
+gulong  kilobytes
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_tile_cache_ntiles</NAME>
+<RETURNS>void  </RETURNS>
+gulong  ntiles
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_tile_width</NAME>
+<RETURNS>guint  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_tile_height</NAME>
+<RETURNS>guint  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixel_rgn_init</NAME>
+<RETURNS>void  </RETURNS>
+GPixelRgn *pr,GDrawable *drawable,int        x,int        y,int        width,int        height,int        dirty,int        shadow
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixel_rgn_resize</NAME>
+<RETURNS>void  </RETURNS>
+GPixelRgn *pr,int        x,int        y,int        width,int        height
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixel_rgn_get_pixel</NAME>
+<RETURNS>void  </RETURNS>
+GPixelRgn *pr,guchar    *buf,int        x,int        y
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixel_rgn_get_row</NAME>
+<RETURNS>void  </RETURNS>
+GPixelRgn *pr,guchar    *buf,int        x,int        y,int        width
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixel_rgn_get_col</NAME>
+<RETURNS>void  </RETURNS>
+GPixelRgn *pr,guchar    *buf,int        x,int        y,int        height
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixel_rgn_get_rect</NAME>
+<RETURNS>void  </RETURNS>
+GPixelRgn *pr,guchar    *buf,int        x,int        y,int        width,int        height
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixel_rgn_set_pixel</NAME>
+<RETURNS>void  </RETURNS>
+GPixelRgn *pr,guchar    *buf,int        x,int        y
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixel_rgn_set_row</NAME>
+<RETURNS>void  </RETURNS>
+GPixelRgn *pr,guchar    *buf,int        x,int        y,int        width
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixel_rgn_set_col</NAME>
+<RETURNS>void  </RETURNS>
+GPixelRgn *pr,guchar    *buf,int        x,int        y,int        height
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixel_rgn_set_rect</NAME>
+<RETURNS>void  </RETURNS>
+GPixelRgn *pr,guchar    *buf,int        x,int        y,int        width,int        height
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixel_rgns_register</NAME>
+<RETURNS>gpointer  </RETURNS>
+int        nrgns,...
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixel_rgns_register2</NAME>
+<RETURNS>gpointer  </RETURNS>
+int        nrgns,GPixelRgn **prs
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixel_rgns_process</NAME>
+<RETURNS>gpointer  </RETURNS>
+gpointer   pri_ptr
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_palette_get_background</NAME>
+<RETURNS>void  </RETURNS>
+guchar *red,guchar *green,guchar *blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_palette_get_foreground</NAME>
+<RETURNS>void  </RETURNS>
+guchar *red,guchar *green,guchar *blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_palette_set_background</NAME>
+<RETURNS>void  </RETURNS>
+guchar  red,guchar  green,guchar  blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_palette_set_foreground</NAME>
+<RETURNS>void  </RETURNS>
+guchar  red,guchar  green,guchar  blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_gradients_get_list</NAME>
+<RETURNS>char **</RETURNS>
+gint    *num_gradients
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_gradients_get_active</NAME>
+<RETURNS>char *</RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_gradients_set_active</NAME>
+<RETURNS>void  </RETURNS>
+char    *name
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_gradients_sample_uniform</NAME>
+<RETURNS>gdouble *</RETURNS>
+gint     num_samples
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_gradients_sample_custom</NAME>
+<RETURNS>gdouble *</RETURNS>
+gint     num_samples,gdouble *positions
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_parasite_find</NAME>
+<RETURNS>Parasite  *</RETURNS>
+const char     *name
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_parasite_attach</NAME>
+<RETURNS>void  </RETURNS>
+const Parasite *p
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_attach_new_parasite</NAME>
+<RETURNS>void  </RETURNS>
+const char     *name,int             flags,int             size,const void     *data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_parasite_detach</NAME>
+<RETURNS>void  </RETURNS>
+const char     *name
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_plugin_help_func</NAME>
+<RETURNS>void  </RETURNS>
+gchar *help_data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_help</NAME>
+<RETURNS>void  </RETURNS>
+gchar *help_data
+</FUNCTION>
+<ENUM>
+<NAME>GimpAddMaskType</NAME>
+typedef enum
+{
+  GIMP_WHITE_MASK,
+  GIMP_BLACK_MASK,
+  GIMP_ALPHA_MASK
+} GimpAddMaskType;
+</ENUM>
+<ENUM>
+<NAME>GimpBlendMode</NAME>
+typedef enum
+{
+  GIMP_FG_BG_RGB,
+  GIMP_FG_BG_HSV,
+  GIMP_FG_TRANS,
+  GIMP_CUSTOM
+} GimpBlendMode;
+</ENUM>
+<ENUM>
+<NAME>GimpBrushApplicationMode</NAME>
+typedef enum
+{
+  GIMP_HARD,
+  GIMP_SOFT,
+  GIMP_PRESSURE
+} GimpBrushApplicationMode;
+</ENUM>
+<ENUM>
+<NAME>GimpBucketFillMode</NAME>
+typedef enum
+{
+  GIMP_FG_BUCKET_FILL,
+  GIMP_BG_BUCKET_FILL,
+  GIMP_PATTERN_BUCKET_FILL
+} GimpBucketFillMode;
+</ENUM>
+<ENUM>
+<NAME>GimpChannelLutType</NAME>
+typedef enum
+{
+  GIMP_VALUE_LUT,
+  GIMP_RED_LUT,
+  GIMP_GREEN_LUT,
+  GIMP_BLUE_LUT,
+  GIMP_ALPHA_LUT
+} GimpChannelLutType;
+</ENUM>
+<ENUM>
+<NAME>GimpChannelOffsetType</NAME>
+typedef enum
+{
+  GIMP_OFFSET_BACKGROUND,
+  GIMP_OFFSET_TRANSPARENT
+} GimpChannelOffsetType;
+</ENUM>
+<ENUM>
+<NAME>GimpChannelOps</NAME>
+typedef enum
+{
+  GIMP_ADD,
+  GIMP_SUB,
+  GIMP_REPLACE,
+  GIMP_INTERSECT
+} GimpChannelOps;
+</ENUM>
+<ENUM>
+<NAME>GimpChannelType</NAME>
+typedef enum
+{
+  GIMP_RED_CHANNEL,
+  GIMP_GREEN_CHANNEL,
+  GIMP_BLUE_CHANNEL,
+  GIMP_GRAY_CHANNEL,
+  GIMP_INDEXED_CHANNEL,
+  GIMP_AUXILLARY_CHANNEL
+} GimpChannelType;
+</ENUM>
+<ENUM>
+<NAME>GimpCloneType</NAME>
+typedef enum
+{
+  GIMP_IMAGE_CLONE,
+  GIMP_PATTERN_CLONE
+} GimpCloneType;
+</ENUM>
+<ENUM>
+<NAME>GimpConvertDitherType</NAME>
+typedef enum
+{
+  GIMP_NO_DITHER,
+  GIMP_FS_DITHER,
+  GIMP_FSLOWBLEED_DITHER,
+  GIMP_FIXED_DITHER,
+  GIMP_NODESTRUCT_DITHER
+} GimpConvertDitherType;
+</ENUM>
+<ENUM>
+<NAME>GimpConvertPaletteType</NAME>
+typedef enum
+{
+  GIMP_MAKE_PALETTE,
+  GIMP_REUSE_PALETTE,
+  GIMP_WEB_PALETTE,
+  GIMP_MONO_PALETTE,
+  GIMP_CUSTOM_PALETTE
+} GimpConvertPaletteType;
+</ENUM>
+<ENUM>
+<NAME>GimpConvolutionType</NAME>
+typedef enum
+{
+  GIMP_NORMAL_CONVOL,
+  GIMP_ABSOLUTE_CONVOL,
+  GIMP_NEGATIVE_CONVOL
+} GimpConvolutionType;
+</ENUM>
+<ENUM>
+<NAME>GimpConvolveType</NAME>
+typedef enum
+{
+  GIMP_BLUR_CONVOLVE,
+  GIMP_SHARPEN_CONVOLVE,
+  GIMP_CUSTOM_CONVOLVE
+} GimpConvolveType;
+</ENUM>
+<ENUM>
+<NAME>GimpDodgeBurnMode</NAME>
+typedef enum
+{
+  GIMP_DODGEBURN_HIGHLIGHTS,
+  GIMP_DODGEBURN_MIDTONES,
+  GIMP_DODGEBURN_SHADOWS
+} GimpDodgeBurnMode;
+</ENUM>
+<ENUM>
+<NAME>GimpDodgeBurnType</NAME>
+typedef enum
+{
+  GIMP_DODGE,
+  GIMP_BURN
+} GimpDodgeBurnType;
+</ENUM>
+<ENUM>
+<NAME>GimpFillType</NAME>
+typedef enum
+{
+  GIMP_FG_IMAGE_FILL,
+  GIMP_BG_IMAGE_FILL,
+  GIMP_WHITE_IMAGE_FILL,
+  GIMP_TRANS_IMAGE_FILL,
+  GIMP_NO_IMAGE_FILL
+} GimpFillType;
+</ENUM>
+<ENUM>
+<NAME>GimpImageBaseType</NAME>
+typedef enum
+{
+  GIMP_RGB,
+  GIMP_GRAY,
+  GIMP_INDEXED
+} GimpImageBaseType;
+</ENUM>
+<ENUM>
+<NAME>GimpImageType</NAME>
+typedef enum
+{
+  GIMP_RGB_IMAGE,
+  GIMP_RGBA_IMAGE,
+  GIMP_GRAY_IMAGE,
+  GIMP_GRAYA_IMAGE,
+  GIMP_INDEXED_IMAGE,
+  GIMP_INDEXEDA_IMAGE
+} GimpImageType;
+</ENUM>
+<ENUM>
+<NAME>GimpGradientPaintMode</NAME>
+typedef enum
+{
+  GIMP_ONCE_FORWARD,
+  GIMP_ONCE_BACKWARDS,
+  GIMP_LOOP_SAWTOOTH,
+  GIMP_LOOP_TRIANGLE,
+  GIMP_ONCE_END_COLOR
+} GimpGradientPaintMode;
+</ENUM>
+<ENUM>
+<NAME>GimpGradientType</NAME>
+typedef enum
+{
+  GIMP_LINEAR,
+  GIMP_BILINEAR,
+  GIMP_RADIAL,
+  GIMP_SQUARE,
+  GIMP_CONICAL_SYMMETRIC,
+  GIMP_CONICAL_ASYMMETRIC,
+  GIMP_SHAPEBURST_ANGULAR,
+  GIMP_SHAPEBURST_SPHERICAL,
+  GIMP_SHAPEBURST_DIMPLED,
+  GIMP_SPIRAL_CLOCKWISE,
+  GIMP_SPIRAL_ANTICLOCKWISE
+} GimpGradientType;
+</ENUM>
+<ENUM>
+<NAME>GimpHueRange</NAME>
+typedef enum
+{
+  GIMP_ALL_HUES,
+  GIMP_RED_HUES,
+  GIMP_YELLOW_HUES,
+  GIMP_GREEN_HUES,
+  GIMP_CYAN_HUES,
+  GIMP_BLUE_HUES,
+  GIMP_MAGENTA_HUES
+} GimpHueRange;
+</ENUM>
+<ENUM>
+<NAME>GimpInterpolationType</NAME>
+typedef enum
+{
+  GIMP_LINEAR_INTERPOLATION,
+  GIMP_CUBIC_INTERPOLATION,
+  GIMP_NEAREST_NEIGHBOR_INTERPOLATION
+} GimpInterpolationType;
+</ENUM>
+<ENUM>
+<NAME>GimpLayerModeEffects</NAME>
+typedef enum
+{
+  GIMP_NORMAL_MODE,
+  GIMP_DISSOLVE_MODE,
+  GIMP_BEHIND_MODE,
+  GIMP_MULTIPLY_MODE,
+  GIMP_SCREEN_MODE,
+  GIMP_OVERLAY_MODE,
+  GIMP_DIFFERENCE_MODE,
+  GIMP_ADDITION_MODE,
+  GIMP_SUBTRACT_MODE,
+  GIMP_DARKEN_ONLY_MODE,
+  GIMP_LIGHTEN_ONLY_MODE,
+  GIMP_HUE_MODE,
+  GIMP_SATURATION_MODE,
+  GIMP_COLOR_MODE,
+  GIMP_VALUE_MODE,
+  GIMP_DIVIDE_MODE
+} GimpLayerModeEffects;
+</ENUM>
+<ENUM>
+<NAME>GimpMaskApplyMode</NAME>
+typedef enum
+{
+  GIMP_APPLY,
+  GIMP_DISCARD
+} GimpMaskApplyMode;
+</ENUM>
+<ENUM>
+<NAME>GimpMergeType</NAME>
+typedef enum
+{
+  GIMP_EXPAND_AS_NECESSARY,
+  GIMP_CLIP_TO_IMAGE,
+  GIMP_CLIP_TO_BOTTOM_LAYER,
+  GIMP_FLATTEN_IMAGE
+} GimpMergeType;
+</ENUM>
+<ENUM>
+<NAME>GimpMessageHandlerType</NAME>
+typedef enum
+{
+  GIMP_MESSAGE_BOX,
+  GIMP_CONSOLE,
+  GIMP_ERROR_CONSOLE
+} GimpMessageHandlerType;
+</ENUM>
+<ENUM>
+<NAME>GimpOrientationType</NAME>
+typedef enum
+{
+  GIMP_HORIZONTAL,
+  GIMP_VERTICAL,
+  GIMP_UNKNOWN
+} GimpOrientationType;
+</ENUM>
+<ENUM>
+<NAME>GimpPDBArgType</NAME>
+typedef enum
+{
+  GIMP_PDB_INT32,
+  GIMP_PDB_INT16,
+  GIMP_PDB_INT8,
+  GIMP_PDB_FLOAT,
+  GIMP_PDB_STRING,
+  GIMP_PDB_INT32ARRAY,
+  GIMP_PDB_INT16ARRAY,
+  GIMP_PDB_INT8ARRAY,
+  GIMP_PDB_FLOATARRAY,
+  GIMP_PDB_STRINGARRAY,
+  GIMP_PDB_COLOR,
+  GIMP_PDB_REGION,
+  GIMP_PDB_DISPLAY,
+  GIMP_PDB_IMAGE,
+  GIMP_PDB_LAYER,
+  GIMP_PDB_CHANNEL,
+  GIMP_PDB_DRAWABLE,
+  GIMP_PDB_SELECTION,
+  GIMP_PDB_BOUNDARY,
+  GIMP_PDB_PATH,
+  GIMP_PDB_PARASITE,
+  GIMP_PDB_STATUS,
+  GIMP_PDB_END
+} GimpPDBArgType;
+</ENUM>
+<ENUM>
+<NAME>GimpPDBProcType</NAME>
+typedef enum
+{
+  GIMP_INTERNAL,
+  GIMP_PLUGIN,
+  GIMP_EXTENSION,
+  GIMP_TEMPORARY
+} GimpPDBProcType;
+</ENUM>
+<ENUM>
+<NAME>GimpPDBStatusType</NAME>
+typedef enum
+{
+  GIMP_PDB_EXECUTION_ERROR,
+  GIMP_PDB_CALLING_ERROR,
+  GIMP_PDB_PASS_THROUGH,
+  GIMP_PDB_SUCCESS,
+  GIMP_PDB_CANCEL
+} GimpPDBStatusType;
+</ENUM>
+<ENUM>
+<NAME>GimpPaintApplicationMode</NAME>
+typedef enum
+{
+  GIMP_CONTINUOUS,
+  GIMP_INCREMENTAL
+} GimpPaintApplicationMode;
+</ENUM>
+<ENUM>
+<NAME>GimpRepeatMode</NAME>
+typedef enum
+{
+  GIMP_REPEAT_NONE,
+  GIMP_REPEAT_SAWTOOTH,
+  GIMP_REPEAT_TRIANGULAR
+} GimpRepeatMode;
+</ENUM>
+<ENUM>
+<NAME>GimpRunModeType</NAME>
+typedef enum
+{
+  GIMP_RUN_INTERACTIVE,
+  GIMP_RUN_NONINTERACTIVE,
+  GIMP_RUN_WITH_LAST_VALS
+} GimpRunModeType;
+</ENUM>
+<ENUM>
+<NAME>GimpSizeType</NAME>
+typedef enum
+{
+  GIMP_PIXELS,
+  GIMP_POINTS
+} GimpSizeType;
+</ENUM>
+<ENUM>
+<NAME>GimpTransferMode</NAME>
+typedef enum
+{
+  GIMP_SHADOWS,
+  GIMP_MIDTONES,
+  GIMP_HIGHLIGHTS
+} GimpTransferMode;
+</ENUM>
+<TYPEDEF>
+<NAME>GFillType</NAME>
+typedef GimpFillType GFillType;
+</TYPEDEF>
+<TYPEDEF>
+<NAME>GImageType</NAME>
+typedef GimpImageBaseType GImageType;
+</TYPEDEF>
+<TYPEDEF>
+<NAME>GDrawableType</NAME>
+typedef GimpImageType GDrawableType;
+</TYPEDEF>
+<TYPEDEF>
+<NAME>GLayerMode</NAME>
+typedef GimpLayerModeEffects GLayerMode;
+</TYPEDEF>
+<TYPEDEF>
+<NAME>GRunModeType</NAME>
+typedef GimpRunModeType GRunModeType;
+</TYPEDEF>
+<TYPEDEF>
+<NAME>GOrientation</NAME>
+typedef GimpOrientationType GOrientation;
+</TYPEDEF>
+<TYPEDEF>
+<NAME>GParamType</NAME>
+typedef GimpPDBArgType GParamType;
+</TYPEDEF>
+<TYPEDEF>
+<NAME>GProcedureType</NAME>
+typedef GimpPDBProcType GProcedureType;
+</TYPEDEF>
+<TYPEDEF>
+<NAME>GStatusType</NAME>
+typedef GimpPDBStatusType GStatusType;
+</TYPEDEF>
+<MACRO>
+<NAME>PARAM_INT32</NAME>
+#define PARAM_INT32 GIMP_PDB_INT32
+</MACRO>
+<MACRO>
+<NAME>PARAM_INT16</NAME>
+#define PARAM_INT16 GIMP_PDB_INT16
+</MACRO>
+<MACRO>
+<NAME>PARAM_INT8</NAME>
+#define PARAM_INT8 GIMP_PDB_INT8
+</MACRO>
+<MACRO>
+<NAME>PARAM_FLOAT</NAME>
+#define PARAM_FLOAT GIMP_PDB_FLOAT
+</MACRO>
+<MACRO>
+<NAME>PARAM_STRING</NAME>
+#define PARAM_STRING GIMP_PDB_STRING
+</MACRO>
+<MACRO>
+<NAME>PARAM_INT32ARRAY</NAME>
+#define PARAM_INT32ARRAY GIMP_PDB_INT32ARRAY
+</MACRO>
+<MACRO>
+<NAME>PARAM_INT16ARRAY</NAME>
+#define PARAM_INT16ARRAY GIMP_PDB_INT16ARRAY
+</MACRO>
+<MACRO>
+<NAME>PARAM_INT8ARRAY</NAME>
+#define PARAM_INT8ARRAY GIMP_PDB_INT8ARRAY
+</MACRO>
+<MACRO>
+<NAME>PARAM_FLOATARRAY</NAME>
+#define PARAM_FLOATARRAY GIMP_PDB_FLOATARRAY
+</MACRO>
+<MACRO>
+<NAME>PARAM_STRINGARRAY</NAME>
+#define PARAM_STRINGARRAY GIMP_PDB_STRINGARRAY
+</MACRO>
+<MACRO>
+<NAME>PARAM_COLOR</NAME>
+#define PARAM_COLOR GIMP_PDB_COLOR
+</MACRO>
+<MACRO>
+<NAME>PARAM_REGION</NAME>
+#define PARAM_REGION GIMP_PDB_REGION
+</MACRO>
+<MACRO>
+<NAME>PARAM_DISPLAY</NAME>
+#define PARAM_DISPLAY GIMP_PDB_DISPLAY
+</MACRO>
+<MACRO>
+<NAME>PARAM_IMAGE</NAME>
+#define PARAM_IMAGE GIMP_PDB_IMAGE
+</MACRO>
+<MACRO>
+<NAME>PARAM_LAYER</NAME>
+#define PARAM_LAYER GIMP_PDB_LAYER
+</MACRO>
+<MACRO>
+<NAME>PARAM_CHANNEL</NAME>
+#define PARAM_CHANNEL GIMP_PDB_CHANNEL
+</MACRO>
+<MACRO>
+<NAME>PARAM_DRAWABLE</NAME>
+#define PARAM_DRAWABLE GIMP_PDB_DRAWABLE
+</MACRO>
+<MACRO>
+<NAME>PARAM_SELECTION</NAME>
+#define PARAM_SELECTION GIMP_PDB_SELECTION
+</MACRO>
+<MACRO>
+<NAME>PARAM_BOUNDARY</NAME>
+#define PARAM_BOUNDARY GIMP_PDB_BOUNDARY
+</MACRO>
+<MACRO>
+<NAME>PARAM_PATH</NAME>
+#define PARAM_PATH GIMP_PDB_PATH
+</MACRO>
+<MACRO>
+<NAME>PARAM_PARASITE</NAME>
+#define PARAM_PARASITE GIMP_PDB_PARASITE
+</MACRO>
+<MACRO>
+<NAME>PARAM_STATUS</NAME>
+#define PARAM_STATUS GIMP_PDB_STATUS
+</MACRO>
+<MACRO>
+<NAME>PARAM_END</NAME>
+#define PARAM_END GIMP_PDB_END
+</MACRO>
+<MACRO>
+<NAME>STATUS_EXECUTION_ERROR</NAME>
+#define STATUS_EXECUTION_ERROR GIMP_PDB_EXECUTION_ERROR
+</MACRO>
+<MACRO>
+<NAME>STATUS_CALLING_ERROR</NAME>
+#define STATUS_CALLING_ERROR GIMP_PDB_CALLING_ERROR
+</MACRO>
+<MACRO>
+<NAME>STATUS_PASS_THROUGH</NAME>
+#define STATUS_PASS_THROUGH GIMP_PDB_PASS_THROUGH
+</MACRO>
+<MACRO>
+<NAME>STATUS_SUCCESS</NAME>
+#define STATUS_SUCCESS GIMP_PDB_SUCCESS
+</MACRO>
+<MACRO>
+<NAME>STATUS_CANCEL</NAME>
+#define STATUS_CANCEL GIMP_PDB_CANCEL
+</MACRO>
+<MACRO>
+<NAME>PROC_INTERNAL</NAME>
+#define PROC_INTERNAL GIMP_INTERNAL
+</MACRO>
+<MACRO>
+<NAME>PROC_PLUG_IN</NAME>
+#define PROC_PLUG_IN GIMP_PLUGIN
+</MACRO>
+<MACRO>
+<NAME>PROC_EXTENSION</NAME>
+#define PROC_EXTENSION GIMP_EXTENSION
+</MACRO>
+<MACRO>
+<NAME>PROC_TEMPORARY</NAME>
+#define PROC_TEMPORARY GIMP_TEMPORARY
+</MACRO>
+<MACRO>
+<NAME>ORIENTATION_HORIZONTAL</NAME>
+#define ORIENTATION_HORIZONTAL GIMP_HORIZONTAL
+</MACRO>
+<MACRO>
+<NAME>ORIENTATION_VERTICAL</NAME>
+#define ORIENTATION_VERTICAL GIMP_VERTICAL
+</MACRO>
+<MACRO>
+<NAME>ORIENTATION_UNKNOWN</NAME>
+#define ORIENTATION_UNKNOWN GIMP_UNKNOWN
+</MACRO>
+<MACRO>
+<NAME>FG_IMAGE_FILL</NAME>
+#define FG_IMAGE_FILL GIMP_FG_IMAGE_FILL
+</MACRO>
+<MACRO>
+<NAME>BG_IMAGE_FILL</NAME>
+#define BG_IMAGE_FILL GIMP_BG_IMAGE_FILL
+</MACRO>
+<MACRO>
+<NAME>WHITE_IMAGE_FILL</NAME>
+#define WHITE_IMAGE_FILL GIMP_WHITE_IMAGE_FILL
+</MACRO>
+<MACRO>
+<NAME>TRANS_IMAGE_FILL</NAME>
+#define TRANS_IMAGE_FILL GIMP_TRANS_IMAGE_FILL
+</MACRO>
+<MACRO>
+<NAME>NO_IMAGE_FILL</NAME>
+#define NO_IMAGE_FILL GIMP_NO_IMAGE_FILL
+</MACRO>
+<MACRO>
+<NAME>RGB</NAME>
+#define RGB GIMP_RGB
+</MACRO>
+<MACRO>
+<NAME>GRAY</NAME>
+#define GRAY GIMP_GRAY
+</MACRO>
+<MACRO>
+<NAME>INDEXED</NAME>
+#define INDEXED GIMP_INDEXED
+</MACRO>
+<MACRO>
+<NAME>RGB_IMAGE</NAME>
+#define RGB_IMAGE GIMP_RGB_IMAGE
+</MACRO>
+<MACRO>
+<NAME>RGBA_IMAGE</NAME>
+#define RGBA_IMAGE GIMP_RGBA_IMAGE
+</MACRO>
+<MACRO>
+<NAME>GRAY_IMAGE</NAME>
+#define GRAY_IMAGE GIMP_GRAY_IMAGE
+</MACRO>
+<MACRO>
+<NAME>GRAYA_IMAGE</NAME>
+#define GRAYA_IMAGE GIMP_GRAYA_IMAGE
+</MACRO>
+<MACRO>
+<NAME>INDEXED_IMAGE</NAME>
+#define INDEXED_IMAGE GIMP_INDEXED_IMAGE
+</MACRO>
+<MACRO>
+<NAME>INDEXEDA_IMAGE</NAME>
+#define INDEXEDA_IMAGE GIMP_INDEXEDA_IMAGE
+</MACRO>
+<MACRO>
+<NAME>NORMAL_MODE</NAME>
+#define NORMAL_MODE GIMP_NORMAL_MODE
+</MACRO>
+<MACRO>
+<NAME>DISSOLVE_MODE</NAME>
+#define DISSOLVE_MODE GIMP_DISSOLVE_MODE
+</MACRO>
+<MACRO>
+<NAME>BEHIND_MODE</NAME>
+#define BEHIND_MODE GIMP_BEHIND_MODE
+</MACRO>
+<MACRO>
+<NAME>MULTIPLY_MODE</NAME>
+#define MULTIPLY_MODE GIMP_MULTIPLY_MODE
+</MACRO>
+<MACRO>
+<NAME>SCREEN_MODE</NAME>
+#define SCREEN_MODE GIMP_SCREEN_MODE
+</MACRO>
+<MACRO>
+<NAME>OVERLAY_MODE</NAME>
+#define OVERLAY_MODE GIMP_OVERLAY_MODE
+</MACRO>
+<MACRO>
+<NAME>DIFFERENCE_MODE</NAME>
+#define DIFFERENCE_MODE GIMP_DIFFERENCE_MODE
+</MACRO>
+<MACRO>
+<NAME>ADDITION_MODE</NAME>
+#define ADDITION_MODE GIMP_ADDITION_MODE
+</MACRO>
+<MACRO>
+<NAME>SUBTRACT_MODE</NAME>
+#define SUBTRACT_MODE GIMP_SUBTRACT_MODE
+</MACRO>
+<MACRO>
+<NAME>DARKEN_ONLY_MODE</NAME>
+#define DARKEN_ONLY_MODE GIMP_DARKEN_ONLY_MODE
+</MACRO>
+<MACRO>
+<NAME>LIGHTEN_ONLY_MODE</NAME>
+#define LIGHTEN_ONLY_MODE GIMP_LIGHTEN_ONLY_MODE
+</MACRO>
+<MACRO>
+<NAME>HUE_MODE</NAME>
+#define HUE_MODE GIMP_HUE_MODE
+</MACRO>
+<MACRO>
+<NAME>SATURATION_MODE</NAME>
+#define SATURATION_MODE GIMP_SATURATION_MODE
+</MACRO>
+<MACRO>
+<NAME>COLOR_MODE</NAME>
+#define COLOR_MODE GIMP_COLOR_MODE
+</MACRO>
+<MACRO>
+<NAME>VALUE_MODE</NAME>
+#define VALUE_MODE GIMP_VALUE_MODE
+</MACRO>
+<MACRO>
+<NAME>DIVIDE_MODE</NAME>
+#define DIVIDE_MODE GIMP_DIVIDE_MODE
+</MACRO>
+<MACRO>
+<NAME>RUN_INTERACTIVE</NAME>
+#define RUN_INTERACTIVE GIMP_RUN_INTERACTIVE
+</MACRO>
+<MACRO>
+<NAME>RUN_NONINTERACTIVE</NAME>
+#define RUN_NONINTERACTIVE GIMP_RUN_NONINTERACTIVE
+</MACRO>
+<MACRO>
+<NAME>RUN_WITH_LAST_VALS</NAME>
+#define RUN_WITH_LAST_VALS GIMP_RUN_WITH_LAST_VALS
+</MACRO>
+<USER_FUNCTION>
+<NAME>GimpConstraintFunc</NAME>
+<RETURNS>gint </RETURNS>
+gint32   image_id,
+				    gint32   drawable_id,
+				    gpointer data
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpMenuCallback</NAME>
+<RETURNS>void </RETURNS>
+gint32   id,
+				    gpointer data
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GRunBrushCallback</NAME>
+<RETURNS>void </RETURNS>
+gchar    *name,
+				    gdouble   opacity,
+				    gint      spacing,
+				    gint      paint_mode,
+				    gint      width,
+				    gint      height,
+				    gchar    *mask_data,
+				    gint      dialog_closing,
+				    gpointer  user_data
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GRunPatternCallback</NAME>
+<RETURNS>void </RETURNS>
+gchar    *name,
+				     gint      width,
+				     gint      height,
+				     gint      bpp,
+				     gchar    *mask_data,
+				     gint      dialog_closing,
+				     gpointer  user_data
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GRunGradientCallback</NAME>
+<RETURNS>void </RETURNS>
+gchar    *name,
+				      gint      width,
+				      gdouble  *grad_data,
+				      gint      dialog_closing,
+				      gpointer  user_data
+</USER_FUNCTION>
+<FUNCTION>
+<NAME>gimp_image_menu_new</NAME>
+<RETURNS>GtkWidget *</RETURNS>
+GimpConstraintFunc constraint,GimpMenuCallback   callback,gpointer           data,gint32             active_image
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_layer_menu_new</NAME>
+<RETURNS>GtkWidget *</RETURNS>
+GimpConstraintFunc constraint,GimpMenuCallback   callback,gpointer           data,gint32             active_layer
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_channel_menu_new</NAME>
+<RETURNS>GtkWidget *</RETURNS>
+GimpConstraintFunc constraint,GimpMenuCallback   callback,gpointer           data,gint32             active_channel
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_drawable_menu_new</NAME>
+<RETURNS>GtkWidget *</RETURNS>
+GimpConstraintFunc constraint,GimpMenuCallback   callback,gpointer           data,gint32             active_drawable
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_interactive_selection_brush</NAME>
+<RETURNS>void  *</RETURNS>
+gchar *dialogname,gchar *brush_name,gdouble opacity,gint spacing,gint paint_mode,GRunBrushCallback callback,gpointer udata
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_brush_select_widget</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gchar * dname,gchar * ibrush,gdouble opacity,gint spacing,gint paint_mode,GRunBrushCallback cback,gpointer
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_brush_select_widget_close_popup</NAME>
+<RETURNS>gint  </RETURNS>
+GtkWidget *w
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_brush_select_widget_set_popup</NAME>
+<RETURNS>gint  </RETURNS>
+GtkWidget *w,gchar *pname,gdouble opacity,gint spacing,gint paint_mode
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_brushes_get_brush_data</NAME>
+<RETURNS>gchar  *</RETURNS>
+gchar *pname,gdouble *opacity,gint *spacing,gint *paint_mode,gint  *width,gint  *height,gchar  **mask_data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_brush_set_popup</NAME>
+<RETURNS>gint  </RETURNS>
+void * popup_pnt,gchar * pname,gdouble opacity,gint spacing,gint paint_mode
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_brush_close_popup</NAME>
+<RETURNS>gint  </RETURNS>
+void * popup_pnt
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_interactive_selection_pattern</NAME>
+<RETURNS>void  *</RETURNS>
+gchar *dialogtitle,gchar *pattern_name,GRunPatternCallback callback,gpointer udata
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pattern_select_widget</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gchar * dname,gchar * ipattern,GRunPatternCallback cback,gpointer
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pattern_select_widget_close_popup</NAME>
+<RETURNS>gint  </RETURNS>
+GtkWidget *w
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pattern_select_widget_set_popup</NAME>
+<RETURNS>gint  </RETURNS>
+GtkWidget *w,gchar *pname
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pattern_get_pattern_data</NAME>
+<RETURNS>gchar  *</RETURNS>
+gchar *pname,gint  *width,gint  *height,gint  *bytes,gchar  **mask_data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pattern_set_popup</NAME>
+<RETURNS>gint  </RETURNS>
+void * popup_pnt, gchar * pname
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pattern_close_popup</NAME>
+<RETURNS>gint  </RETURNS>
+void * popup_pnt
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_interactive_selection_gradient</NAME>
+<RETURNS>void  *</RETURNS>
+gchar *dialogtitle,gchar *gradient_name,gint sample_sz,GRunGradientCallback callback,gpointer udata
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_gradient_select_widget</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gchar * gname,gchar * igradient,GRunGradientCallback cback,gpointer
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_gradient_select_widget_close_popup</NAME>
+<RETURNS>gint  </RETURNS>
+GtkWidget *w
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_gradient_select_widget_set_popup</NAME>
+<RETURNS>gint  </RETURNS>
+GtkWidget *w,gchar *pname
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_gradient_get_gradient_data</NAME>
+<RETURNS>gchar  *</RETURNS>
+gchar *pname,gint  *width,gint sample_sz,gdouble **mask_data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_gradient_set_popup</NAME>
+<RETURNS>gint  </RETURNS>
+void * popup_pnt, gchar * pname
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_gradient_close_popup</NAME>
+<RETURNS>gint  </RETURNS>
+void * popup_pnt
+</FUNCTION>
+<MACRO>
+<NAME>GP_VERSION</NAME>
+#define GP_VERSION 0x0003
+</MACRO>
+<STRUCT>
+<NAME>GPConfig</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPTileReq</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPTileAck</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPTileData</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPParam</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPParamDef</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPProcRun</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPProcReturn</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPProcInstall</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPProcUninstall</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPConfig</NAME>
+struct GPConfig
+{
+  guint32 version;
+  guint32 tile_width;
+  guint32 tile_height;
+  gint32 shm_ID;
+  gdouble gamma;
+  gint8 install_cmap;
+  gint8 use_xshm;
+  guint8 color_cube[4];
+  gint32 gdisp_ID;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPTileReq</NAME>
+struct GPTileReq
+{
+  gint32 drawable_ID;
+  guint32 tile_num;
+  guint32 shadow;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPTileData</NAME>
+struct GPTileData
+{
+  gint32 drawable_ID;
+  guint32 tile_num;
+  guint32 shadow;
+  guint32 bpp;
+  guint32 width;
+  guint32 height;
+  guint32 use_shm;
+  guchar *data;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPParam</NAME>
+struct GPParam
+{
+  guint32 type;
+
+  union {
+    gint32 d_int32;
+    gint16 d_int16;
+    gint8 d_int8;
+    gdouble d_float;
+    gchar *d_string;
+    gint32 *d_int32array;
+    gint16 *d_int16array;
+    gint8 *d_int8array;
+    gdouble *d_floatarray;
+    gchar **d_stringarray;
+    struct {
+      guint8 red;
+      guint8 green;
+      guint8 blue;
+    } d_color;
+    struct {
+      gint32 x;
+      gint32 y;
+      gint32 width;
+      gint32 height;
+    } d_region;
+    gint32 d_display;
+    gint32 d_image;
+    gint32 d_layer;
+    gint32 d_channel;
+    gint32 d_drawable;
+    gint32 d_selection;
+    gint32 d_boundary;
+    gint32 d_path;
+    struct
+    {
+      char *name;
+      guint32 flags;
+      guint32 size;
+      void *data;
+    } d_parasite;
+    gint32 d_status;
+  } data;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPParamDef</NAME>
+struct GPParamDef
+{
+  guint32 type;
+  char *name;
+  char *description;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPProcRun</NAME>
+struct GPProcRun
+{
+  char *name;
+  guint32 nparams;
+  GPParam *params;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPProcReturn</NAME>
+struct GPProcReturn
+{
+  char *name;
+  guint32 nparams;
+  GPParam *params;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPProcInstall</NAME>
+struct GPProcInstall
+{
+  char *name;
+  char *blurb;
+  char *help;
+  char *author;
+  char *copyright;
+  char *date;
+  char *menu_path;
+  char *image_types;
+  guint32 type;
+  guint32 nparams;
+  guint32 nreturn_vals;
+  GPParamDef *params;
+  GPParamDef *return_vals;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPProcUninstall</NAME>
+struct GPProcUninstall
+{
+  char *name;
+};
+</STRUCT>
+<FUNCTION>
+<NAME>gp_init</NAME>
+<RETURNS>void  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_quit_write</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel    *channel
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_config_write</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel    *channel,GPConfig      *config
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_tile_req_write</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel    *channel,GPTileReq     *tile_req
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_tile_ack_write</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel    *channel
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_tile_data_write</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel    *channel,GPTileData    *tile_data
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_proc_run_write</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel    *channel,GPProcRun     *proc_run
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_proc_return_write</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel    *channel,GPProcReturn  *proc_return
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_temp_proc_run_write</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel    *channel,GPProcRun     *proc_run
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_temp_proc_return_write</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel    *channel,GPProcReturn  *proc_return
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_proc_install_write</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel    *channel,GPProcInstall *proc_install
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_proc_uninstall_write</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel    *channel,GPProcUninstall *proc_uninstall
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_extension_ack_write</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel    *channel
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_request_wakeups_write</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel    *channel
+</FUNCTION>
+<STRUCT>
+<NAME>WireMessage</NAME>
+</STRUCT>
+<USER_FUNCTION>
+<NAME>WireReadFunc</NAME>
+<RETURNS>void </RETURNS>
+GIOChannel *channel, WireMessage *msg
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>WireWriteFunc</NAME>
+<RETURNS>void </RETURNS>
+GIOChannel *channel, WireMessage *msg
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>WireDestroyFunc</NAME>
+<RETURNS>void </RETURNS>
+WireMessage *msg
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>WireIOFunc</NAME>
+<RETURNS>int </RETURNS>
+GIOChannel *channel, guint8 *buf, gulong count
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>WireFlushFunc</NAME>
+<RETURNS>int </RETURNS>
+GIOChannel *channel
+</USER_FUNCTION>
+<STRUCT>
+<NAME>WireMessage</NAME>
+struct WireMessage
+{
+  guint32 type;
+  gpointer data;
+};
+</STRUCT>
+<FUNCTION>
+<NAME>wire_register</NAME>
+<RETURNS>void  </RETURNS>
+guint32          type,WireReadFunc     read_func,WireWriteFunc    write_func,WireDestroyFunc  destroy_func
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_set_reader</NAME>
+<RETURNS>void  </RETURNS>
+WireIOFunc       read_func
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_set_writer</NAME>
+<RETURNS>void  </RETURNS>
+WireIOFunc       write_func
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_set_flusher</NAME>
+<RETURNS>void  </RETURNS>
+WireFlushFunc    flush_func
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_read</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel,guint8          *buf,gulong           count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_write</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel,guint8          *buf,gulong           count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_flush</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_error</NAME>
+<RETURNS>int  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_clear_error</NAME>
+<RETURNS>void  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_read_msg</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel,WireMessage     *msg
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_write_msg</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel,WireMessage     *msg
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_destroy</NAME>
+<RETURNS>void  </RETURNS>
+WireMessage     *msg
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_read_int32</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel,guint32         *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_read_int16</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel,guint16         *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_read_int8</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel,guint8          *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_read_double</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel,gdouble         *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_read_string</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel,gchar          **data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_write_int32</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel,guint32         *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_write_int16</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel,guint16         *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_write_int8</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel,guint8          *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_write_double</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel,gdouble         *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_write_string</NAME>
+<RETURNS>int  </RETURNS>
+GIOChannel	*channel,gchar          **data,gint             count
+</FUNCTION>
+<TYPEDEF>
+<NAME>GimpMatrix[3][3]</NAME>
+typedef double GimpMatrix[3][3];
+</TYPEDEF>
+<FUNCTION>
+<NAME>gimp_matrix_transform_point</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix, double, double,double *, double *
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix_mult</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix, GimpMatrix
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix_identity</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix_translate</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix, double, double
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix_scale</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix, double, double
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix_rotate</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix, double
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix_xshear</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix, double
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix_yshear</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix, double
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix_determinant</NAME>
+<RETURNS>double  </RETURNS>
+GimpMatrix
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix_invert</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix m, GimpMatrix m_inv
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix_duplicate</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix src, GimpMatrix target
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix_is_diagonal</NAME>
+<RETURNS>int  </RETURNS>
+GimpMatrix m
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix_is_identity</NAME>
+<RETURNS>int  </RETURNS>
+GimpMatrix m
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix_is_simple</NAME>
+<RETURNS>int  </RETURNS>
+GimpMatrix m
+</FUNCTION>
+<MACRO>
+<NAME>PARASITE_PERSISTENT</NAME>
+#define PARASITE_PERSISTENT 1
+</MACRO>
+<MACRO>
+<NAME>PARASITE_UNDOABLE</NAME>
+#define PARASITE_UNDOABLE   2
+</MACRO>
+<MACRO>
+<NAME>PARASITE_ATTACH_PARENT</NAME>
+#define PARASITE_ATTACH_PARENT (0x80 << 8)
+</MACRO>
+<MACRO>
+<NAME>PARASITE_PARENT_PERSISTENT</NAME>
+#define PARASITE_PARENT_PERSISTENT (PARASITE_PERSISTENT << 8)
+</MACRO>
+<MACRO>
+<NAME>PARASITE_PARENT_UNDOABLE</NAME>
+#define PARASITE_PARENT_UNDOABLE (PARASITE_UNDOABLE << 8)
+</MACRO>
+<MACRO>
+<NAME>PARASITE_ATTACH_GRANDPARENT</NAME>
+#define PARASITE_ATTACH_GRANDPARENT (0x80 << 16)
+</MACRO>
+<MACRO>
+<NAME>PARASITE_GRANDPARENT_PERSISTENT</NAME>
+#define PARASITE_GRANDPARENT_PERSISTENT (PARASITE_PERSISTENT << 16)
+</MACRO>
+<MACRO>
+<NAME>PARASITE_GRANDPARENT_UNDOABLE</NAME>
+#define PARASITE_GRANDPARENT_UNDOABLE (PARASITE_UNDOABLE << 16)
+</MACRO>
+<FUNCTION>
+<NAME>parasite_new</NAME>
+<RETURNS>Parasite    *</RETURNS>
+const char *name, guint32 flags,guint32 size, const void *data
+</FUNCTION>
+<FUNCTION>
+<NAME>parasite_free</NAME>
+<RETURNS>void  </RETURNS>
+Parasite *parasite
+</FUNCTION>
+<FUNCTION>
+<NAME>parasite_copy</NAME>
+<RETURNS>Parasite    *</RETURNS>
+const Parasite *parasite
+</FUNCTION>
+<FUNCTION>
+<NAME>parasite_compare</NAME>
+<RETURNS>int  </RETURNS>
+const Parasite *a, const Parasite *b
+</FUNCTION>
+<FUNCTION>
+<NAME>parasite_is_type</NAME>
+<RETURNS>int  </RETURNS>
+const Parasite *parasite,const char *name
+</FUNCTION>
+<FUNCTION>
+<NAME>parasite_is_persistent</NAME>
+<RETURNS>int  </RETURNS>
+const Parasite *p
+</FUNCTION>
+<FUNCTION>
+<NAME>parasite_is_undoable</NAME>
+<RETURNS>int  </RETURNS>
+const Parasite *p
+</FUNCTION>
+<FUNCTION>
+<NAME>parasite_has_flag</NAME>
+<RETURNS>int  </RETURNS>
+const Parasite *p, gulong flag
+</FUNCTION>
+<FUNCTION>
+<NAME>parasite_flags</NAME>
+<RETURNS>gulong  </RETURNS>
+const Parasite *p
+</FUNCTION>
+<FUNCTION>
+<NAME>parasite_name</NAME>
+<RETURNS>const char  *</RETURNS>
+const Parasite *p
+</FUNCTION>
+<FUNCTION>
+<NAME>parasite_data</NAME>
+<RETURNS>void        *</RETURNS>
+const Parasite *p
+</FUNCTION>
+<FUNCTION>
+<NAME>parasite_data_size</NAME>
+<RETURNS>long  </RETURNS>
+const Parasite *p
+</FUNCTION>
+<STRUCT>
+<NAME>Parasite</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>Parasite</NAME>
+struct Parasite
+{
+  char *name;           /* The name of the parasite. USE A UNIQUE PREFIX! */
+  guint32 flags;	/* save Parasite in XCF file, etc.                */
+  guint32 size;         /* amount of data                                 */
+  void *data;           /* a pointer to the data.  plugin is              *
+			 * responsible for tracking byte order            */
+};
+</STRUCT>
+<ENUM>
+<NAME>GSerialType</NAME>
+typedef enum {
+  GSERIAL_END          = 0,           /* for internal use only */
+  GSERIAL_INT8         = 1,
+  GSERIAL_INT16        = 2,
+  GSERIAL_INT32        = 3,
+  GSERIAL_FLOAT        = 4,         /* 32 bit IEEE fp value */
+  GSERIAL_DOUBLE       = 5,        /* 64 bit IEEE fp value */
+  GSERIAL_STRING       = 101,
+  GSERIAL_INT8ARRAY    = 102,
+  GSERIAL_INT16ARRAY   = 103,
+  GSERIAL_INT32ARRAY   = 104,
+  GSERIAL_FLOATARRAY   = 105,
+  GSERIAL_DOUBLEARRAY  = 106,
+  GSERIAL_LAST_TYPE    = 107
+} GSerialType;
+</ENUM>
+<STRUCT>
+<NAME>GSerialItem</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GSerialDescription</NAME>
+</STRUCT>
+<FUNCTION>
+<NAME>g_new_serial_item</NAME>
+<RETURNS>GSerialItem  *</RETURNS>
+GSerialType type, gulong offset,gint32 length, gulong length_offset
+</FUNCTION>
+<MACRO>
+<NAME>g_serial_item</NAME>
+#define g_serial_item(type, struct_, member) \
+  g_new_serial_item(type, G_STRUCT_OFFSET(struct_, member), 0, 0)
+</MACRO>
+<MACRO>
+<NAME>g_serial_array</NAME>
+#define g_serial_array(type, struct_, member, length) \
+  g_new_serial_item(type, G_STRUCT_OFFSET(struct_, member), length, 0)
+</MACRO>
+<MACRO>
+<NAME>g_serial_vlen_array</NAME>
+#define g_serial_vlen_array(type, struct_, member, length_member) \
+  g_new_serial_item(type, G_STRUCT_OFFSET(struct_, member), -1,   \
+		    G_STRUCT_OFFSET(struct_, length_member))
+</MACRO>
+<FUNCTION>
+<NAME>g_new_serial_description</NAME>
+<RETURNS>GSerialDescription  *</RETURNS>
+char *name, ...
+</FUNCTION>
+<FUNCTION>
+<NAME>g_free_serial_description</NAME>
+<RETURNS>void  </RETURNS>
+GSerialDescription *
+</FUNCTION>
+<FUNCTION>
+<NAME>g_serialize</NAME>
+<RETURNS>long  </RETURNS>
+GSerialDescription *d, void **output, void *struct_data
+</FUNCTION>
+<FUNCTION>
+<NAME>g_deserialize</NAME>
+<RETURNS>long  </RETURNS>
+GSerialDescription *d,  void *output, void *serial
+</FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpColorSelector_Callback</NAME>
+<RETURNS>void </RETURNS>
+void *data, int r, int g, int b
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpColorSelector_NewFunc</NAME>
+<RETURNS>GtkWidget *</RETURNS>
+int r, int g, int b,
+						 GimpColorSelector_Callback cb,
+						 void *data,
+						 void  **selector_data
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpColorSelector_FreeFunc</NAME>
+<RETURNS>void </RETURNS>
+void *selector_data
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpColorSelector_SetColorFunc</NAME>
+<RETURNS>void </RETURNS>
+void *selector_data,
+					       int r, int g, int b,
+					       int set_current
+</USER_FUNCTION>
+<STRUCT>
+<NAME>GimpColorSelectorMethods</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpColorSelectorMethods</NAME>
+struct GimpColorSelectorMethods {
+  GimpColorSelector_NewFunc      new;
+  GimpColorSelector_FreeFunc     free;
+  GimpColorSelector_SetColorFunc setcolor;
+};
+</STRUCT>
+<TYPEDEF>
+<NAME>GimpColorSelectorID</NAME>
+typedef void *GimpColorSelectorID;
+</TYPEDEF>
+<FUNCTION>
+<NAME>gimp_color_selector_register</NAME>
+<RETURNS>GimpColorSelectorID  </RETURNS>
+const char *name,const char *help_page,GimpColorSelectorMethods *methods
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_color_selector_unregister</NAME>
+<RETURNS>gboolean  </RETURNS>
+GimpColorSelectorID id,void (*callback)(void *data),void *data
+</FUNCTION>
+<ENUM>
+<NAME>GimpModuleStatus</NAME>
+typedef enum {
+  GIMP_MODULE_OK,
+  GIMP_MODULE_UNLOAD
+} GimpModuleStatus;
+</ENUM>
+<TYPEDEF>
+<NAME>GimpModuleInfo</NAME>
+typedef struct {
+  void *shutdown_data;
+  const char *purpose;
+  const char *author;
+  const char *version;
+  const char *copyright;
+  const char *date;
+} GimpModuleInfo;
+</TYPEDEF>
+<ENUM>
+<NAME>GUnit</NAME>
+typedef enum
+{
+  UNIT_PIXEL = 0,
+  UNIT_INCH  = 1,
+  UNIT_MM    = 2,
+  UNIT_POINT = 3,
+  UNIT_PICA  = 4,
+  UNIT_END   = 5,      /*  never use UNIT_END but
+			*  gimp_unit_get_number_of_units() instead
+			*/
+
+  UNIT_PERCENT = 65536 /*  this one does not really belong here but it's
+			*  convenient to use the unit system for the
+			*  various strings (symbol, singular, ...)
+			*
+			*  you can only ask it for it's strings, asking for
+			*  factor, digits or deletion_flag will produce
+			*  an error.
+			*/
+} GUnit;
+</ENUM>
+<FUNCTION>
+<NAME>gimp_unit_get_number_of_units</NAME>
+<RETURNS>gint  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_number_of_built_in_units</NAME>
+<RETURNS>gint  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_new</NAME>
+<RETURNS>GUnit  </RETURNS>
+gchar   *identifier,gdouble  factor,gint     digits,gchar   *symbol,gchar   *abbreviation,gchar   *singular,gchar   *plural
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_deletion_flag</NAME>
+<RETURNS>guint  </RETURNS>
+GUnit  unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_set_deletion_flag</NAME>
+<RETURNS>void  </RETURNS>
+GUnit  unit,guint  deletion_flag
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_factor</NAME>
+<RETURNS>gdouble  </RETURNS>
+GUnit  unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_digits</NAME>
+<RETURNS>gint  </RETURNS>
+GUnit  unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_identifier</NAME>
+<RETURNS>gchar  *</RETURNS>
+GUnit  unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_symbol</NAME>
+<RETURNS>gchar  *</RETURNS>
+GUnit  unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_abbreviation</NAME>
+<RETURNS>gchar  *</RETURNS>
+GUnit  unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_singular</NAME>
+<RETURNS>gchar  *</RETURNS>
+GUnit  unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_plural</NAME>
+<RETURNS>gchar  *</RETURNS>
+GUnit  unit
+</FUNCTION>
+<MACRO>
+<NAME>GIMP_TYPE_UNIT_MENU</NAME>
+#define GIMP_TYPE_UNIT_MENU            (gimp_unit_menu_get_type ())
+</MACRO>
+<MACRO>
+<NAME>GIMP_UNIT_MENU</NAME>
+#define GIMP_UNIT_MENU(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_UNIT_MENU, GimpUnitMenu))
+</MACRO>
+<MACRO>
+<NAME>GIMP_UNIT_MENU_CLASS</NAME>
+#define GIMP_UNIT_MENU_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_UNIT_MENU, GimpUnitMenuClass))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_UNIT_MENU</NAME>
+#define GIMP_IS_UNIT_MENU(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_UNIT_MENU))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_UNIT_MENU_CLASS</NAME>
+#define GIMP_IS_UNIT_MENU_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_UNIT_MENU))
+</MACRO>
+<STRUCT>
+<NAME>GimpUnitMenu</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpUnitMenuClass</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpUnitMenu</NAME>
+struct GimpUnitMenu
+{
+  GtkOptionMenu  optionmenu;
+
+  /* private */
+  GtkWidget     *selection;
+  GtkWidget     *clist;
+
+  /* public */
+  gchar         *format;
+  GUnit          unit;
+
+  gboolean       show_pixels;
+  gboolean       show_percent;
+};
+</STRUCT>
+<FUNCTION>
+<NAME>gimp_unit_menu_get_type</NAME>
+<RETURNS>GtkType  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_menu_new</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gchar       *format,GUnit        unit,gboolean     show_pixels,gboolean     show_percent,gboolean     show_custom
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_menu_set_unit</NAME>
+<RETURNS>void  </RETURNS>
+GimpUnitMenu *gum,GUnit         unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_menu_get_unit</NAME>
+<RETURNS>GUnit  </RETURNS>
+GimpUnitMenu *gum
+</FUNCTION>
+<MACRO>
+<NAME>GIMP_TYPE_SIZE_ENTRY</NAME>
+#define GIMP_TYPE_SIZE_ENTRY            (gimp_size_entry_get_type ())
+</MACRO>
+<MACRO>
+<NAME>GIMP_SIZE_ENTRY</NAME>
+#define GIMP_SIZE_ENTRY(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntry))
+</MACRO>
+<MACRO>
+<NAME>GIMP_SIZE_ENTRY_CLASS</NAME>
+#define GIMP_SIZE_ENTRY_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntryClass))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_SIZE_ENTRY</NAME>
+#define GIMP_IS_SIZE_ENTRY(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_SIZE_ENTRY))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_SIZE_ENTRY_CLASS</NAME>
+#define GIMP_IS_SIZE_ENTRY_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SIZE_ENTRY))
+</MACRO>
+<STRUCT>
+<NAME>GimpSizeEntry</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpSizeEntryClass</NAME>
+</STRUCT>
+<ENUM>
+<NAME>GimpSizeEntryUP</NAME>
+typedef enum
+{
+  GIMP_SIZE_ENTRY_UPDATE_NONE       = 0,
+  GIMP_SIZE_ENTRY_UPDATE_SIZE       = 1,
+  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION = 2
+} GimpSizeEntryUP;
+</ENUM>
+<STRUCT>
+<NAME>GimpSizeEntryField</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpSizeEntry</NAME>
+struct GimpSizeEntry
+{
+  GtkTable         table;
+
+  GSList          *fields;
+  gint             number_of_fields;
+
+  GtkWidget       *unitmenu;
+  GUnit            unit;
+  gboolean         menu_show_pixels;
+  gboolean         menu_show_percent;
+
+  gboolean         show_refval;
+  GimpSizeEntryUP  update_policy;
+};
+</STRUCT>
+<FUNCTION>
+<NAME>gimp_size_entry_get_type</NAME>
+<RETURNS>GtkType  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_new</NAME>
+<RETURNS>GtkWidget *</RETURNS>
+gint             number_of_fields,GUnit            unit,gchar           *unit_format,gboolean         menu_show_pixels,gboolean         menu_show_percent,gboolean         show_refval,gint             spinbutton_usize,GimpSizeEntryUP  update_policy
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_add_field</NAME>
+<RETURNS>void  </RETURNS>
+GimpSizeEntry   *gse,GtkSpinButton   *value_spinbutton,GtkSpinButton   *refval_spinbutton
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_attach_label</NAME>
+<RETURNS>void  </RETURNS>
+GimpSizeEntry *gse,gchar         *text,gint           row,gint           column,gfloat         alignment
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_set_resolution</NAME>
+<RETURNS>void  </RETURNS>
+GimpSizeEntry *gse,gint           field,gdouble        resolution,guint          keep_size
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_set_size</NAME>
+<RETURNS>void  </RETURNS>
+GimpSizeEntry *gse,gint           field,gdouble        lower,gdouble        upper
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_set_value_boundaries</NAME>
+<RETURNS>void  </RETURNS>
+GimpSizeEntry *gse,gint           field,gdouble        lower,gdouble        upper
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_get_value</NAME>
+<RETURNS>gdouble  </RETURNS>
+GimpSizeEntry *gse,gint           field
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_set_value</NAME>
+<RETURNS>void  </RETURNS>
+GimpSizeEntry *gse,gint           field,gdouble        value
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_set_refval_boundaries</NAME>
+<RETURNS>void  </RETURNS>
+GimpSizeEntry *gse,gint           field,gdouble        lower,gdouble        upper
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_set_refval_digits</NAME>
+<RETURNS>void  </RETURNS>
+GimpSizeEntry *gse,gint           field,gint           digits
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_get_refval</NAME>
+<RETURNS>gdouble  </RETURNS>
+GimpSizeEntry *gse,gint           field
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_set_refval</NAME>
+<RETURNS>void  </RETURNS>
+GimpSizeEntry *gse,gint           field,gdouble        refval
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_get_unit</NAME>
+<RETURNS>GUnit  </RETURNS>
+GimpSizeEntry *gse
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_set_unit</NAME>
+<RETURNS>void  </RETURNS>
+GimpSizeEntry *gse,GUnit          unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_size_entry_grab_focus</NAME>
+<RETURNS>void  </RETURNS>
+GimpSizeEntry *gse
+</FUNCTION>
+<MACRO>
+<NAME>GIMP_TYPE_CHAIN_BUTTON</NAME>
+#define GIMP_TYPE_CHAIN_BUTTON            (gimp_chain_button_get_type ())
+</MACRO>
+<MACRO>
+<NAME>GIMP_CHAIN_BUTTON</NAME>
+#define GIMP_CHAIN_BUTTON(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CHAIN_BUTTON, GimpChainButton))
+</MACRO>
+<MACRO>
+<NAME>GIMP_CHAIN_BUTTON_CLASS</NAME>
+#define GIMP_CHAIN_BUTTON_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHAIN_BUTTON, GimpChainButtonClass))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_CHAIN_BUTTON</NAME>
+#define GIMP_IS_CHAIN_BUTTON(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CHAIN_BUTTON))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_CHAIN_BUTTON_CLASS</NAME>
+#define GIMP_IS_CHAIN_BUTTON_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHAIN_BUTTON))
+</MACRO>
+<STRUCT>
+<NAME>GimpChainButton</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpChainButtonClass</NAME>
+</STRUCT>
+<ENUM>
+<NAME>GimpChainPosition</NAME>
+typedef enum
+{
+  GIMP_CHAIN_TOP,
+  GIMP_CHAIN_LEFT,
+  GIMP_CHAIN_BOTTOM,
+  GIMP_CHAIN_RIGHT
+} GimpChainPosition;
+</ENUM>
+<STRUCT>
+<NAME>GimpChainButton</NAME>
+struct GimpChainButton
+{
+  GtkTable table;
+
+  GimpChainPosition  position;
+  GtkWidget         *button;
+  GtkWidget         *line1;
+  GtkWidget         *line2;
+  GtkWidget         *pixmap;
+  GdkPixmap         *broken;
+  GdkBitmap         *broken_mask;
+  GdkPixmap         *chain;
+  GdkBitmap         *chain_mask;
+  gboolean           active;
+};
+</STRUCT>
+<FUNCTION>
+<NAME>gimp_chain_button_get_type</NAME>
+<RETURNS>GtkType  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_chain_button_new</NAME>
+<RETURNS>GtkWidget *</RETURNS>
+GimpChainPosition  position
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_chain_button_set_active</NAME>
+<RETURNS>void  </RETURNS>
+GimpChainButton   *gcb,gboolean           is_active
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_chain_button_get_active</NAME>
+<RETURNS>gboolean  </RETURNS>
+GimpChainButton   *gcb
+</FUNCTION>
+<MACRO>
+<NAME>G_PI</NAME>
+#define G_PI    3.14159265358979323846
+</MACRO>
+<MACRO>
+<NAME>G_PI_2</NAME>
+#define G_PI_2  1.57079632679489661923
+</MACRO>
+<MACRO>
+<NAME>G_PI_4</NAME>
+#define G_PI_4  0.78539816339744830962
+</MACRO>
+<MACRO>
+<NAME>G_SQRT2</NAME>
+#define G_SQRT2 1.4142135623730951
+</MACRO>
+<MACRO>
+<NAME>G_MAXRAND</NAME>
+#define G_MAXRAND G_MAXINT
+</MACRO>
+<MACRO>
+<NAME>G_MAXRAND</NAME>
+#define G_MAXRAND RAND_MAX
+</MACRO>
+<MACRO>
+<NAME>RINT</NAME>
+#define RINT(x) rint(x)
+</MACRO>
+<MACRO>
+<NAME>RINT</NAME>
+#define RINT(x) floor ((x) + 0.5)
+</MACRO>
+<MACRO>
+<NAME>ROUND</NAME>
+#define ROUND(x) ((int) ((x) + 0.5))
+</MACRO>
+<MACRO>
+<NAME>SQR</NAME>
+#define SQR(x) ((x) * (x))
+</MACRO>
+<MACRO>
+<NAME>MAX255</NAME>
+#define MAX255(a)  ((a) | (((a) & 256) - (((a) & 256) >> 8)))
+</MACRO>
+<MACRO>
+<NAME>CLAMP0255</NAME>
+#define CLAMP0255(a)  CLAMP(a,0,255)
+</MACRO>
+<FUNCTION>
+<NAME>gimp_directory</NAME>
+<RETURNS>char  *</RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_personal_rc_file</NAME>
+<RETURNS>char  *</RETURNS>
+char *basename
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_data_directory</NAME>
+<RETURNS>char  *</RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_gtkrc</NAME>
+<RETURNS>char  *</RETURNS>
+void
+</FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpColorDisplayInit</NAME>
+<RETURNS>void </RETURNS>
+void
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpColorDisplayNew</NAME>
+<RETURNS>gpointer </RETURNS>
+int       type
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpColorDisplayClone</NAME>
+<RETURNS>gpointer </RETURNS>
+gpointer  cd_ID
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpColorDisplayConvert</NAME>
+<RETURNS>void </RETURNS>
+gpointer  cd_ID,
+						       guchar    *buf,
+						       int        width,
+						       int        height,
+						       int        bpp,
+						       int        bpl
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpColorDisplayDestroy</NAME>
+<RETURNS>void </RETURNS>
+gpointer   cd_ID
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpColorDisplayFinalize</NAME>
+<RETURNS>void </RETURNS>
+void
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpColorDisplayLoadState</NAME>
+<RETURNS>void </RETURNS>
+gpointer   cd_ID,
+						       Parasite  *state
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpColorDisplaySaveState</NAME>
+<RETURNS>Parasite *</RETURNS>
+gpointer   cd_ID
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpColorDisplayConfigure</NAME>
+<RETURNS>void </RETURNS>
+gpointer   cd_ID,
+    						       GFunc      ok_func,
+						       gpointer   ok_data,
+						       GFunc      cancel_func,
+						       gpointer   cancel_data
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpColorDisplayConfigureCancel</NAME>
+<RETURNS>void </RETURNS>
+gpointer   cd_ID
+</USER_FUNCTION>
+<STRUCT>
+<NAME>GimpColorDisplayMethods</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpColorDisplayMethods</NAME>
+struct GimpColorDisplayMethods
+{
+  GimpColorDisplayInit            init;
+  GimpColorDisplayNew             new;
+  GimpColorDisplayClone           clone;
+  GimpColorDisplayConvert         convert;
+  GimpColorDisplayDestroy         destroy;
+  GimpColorDisplayFinalize        finalize;
+  GimpColorDisplayLoadState       load;
+  GimpColorDisplaySaveState       save;
+  GimpColorDisplayConfigure       configure;
+  GimpColorDisplayConfigureCancel cancel;
+};
+</STRUCT>
+<FUNCTION>
+<NAME>gimp_color_display_register</NAME>
+<RETURNS>gboolean  </RETURNS>
+const char              *name,GimpColorDisplayMethods *methods
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_color_display_unregister</NAME>
+<RETURNS>gboolean  </RETURNS>
+const char              *name
+</FUNCTION>
+<MACRO>
+<NAME>GIMP_MIN_IMAGE_SIZE</NAME>
+#define GIMP_MIN_IMAGE_SIZE  1
+</MACRO>
+<MACRO>
+<NAME>GIMP_MAX_IMAGE_SIZE</NAME>
+#define GIMP_MAX_IMAGE_SIZE  16777216
+</MACRO>
+<MACRO>
+<NAME>GIMP_MIN_RESOLUTION</NAME>
+#define GIMP_MIN_RESOLUTION  (1.0 / 65536.0)
+</MACRO>
+<MACRO>
+<NAME>GIMP_MAX_RESOLUTION</NAME>
+#define GIMP_MAX_RESOLUTION  65536.0
+</MACRO>
+<MACRO>
+<NAME>GIMP_CHECK_SIZE</NAME>
+#define GIMP_CHECK_SIZE    8
+</MACRO>
+<MACRO>
+<NAME>GIMP_CHECK_SIZE_SM</NAME>
+#define GIMP_CHECK_SIZE_SM 4
+</MACRO>
+<MACRO>
+<NAME>GIMP_CHECK_DARK</NAME>
+#define GIMP_CHECK_DARK  (1.0 / 3.0)
+</MACRO>
+<MACRO>
+<NAME>GIMP_CHECK_LIGHT</NAME>
+#define GIMP_CHECK_LIGHT (2.0 / 3.0)
+</MACRO>
+<MACRO>
+<NAME>GIMP_TYPE_FILE_SELECTION</NAME>
+#define GIMP_TYPE_FILE_SELECTION            (gimp_file_selection_get_type ())
+</MACRO>
+<MACRO>
+<NAME>GIMP_FILE_SELECTION</NAME>
+#define GIMP_FILE_SELECTION(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_FILE_SELECTION, GimpFileSelection))
+</MACRO>
+<MACRO>
+<NAME>GIMP_FILE_SELECTION_CLASS</NAME>
+#define GIMP_FILE_SELECTION_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILE_SELECTION, GimpFileSelectionClass))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_FILE_SELECTION</NAME>
+#define GIMP_IS_FILE_SELECTION(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_FILE_SELECTION))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_FILE_SELECTION_CLASS</NAME>
+#define GIMP_IS_FILE_SELECTION_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FILE_SELECTION))
+</MACRO>
+<STRUCT>
+<NAME>GimpFileSelection</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpFileSelectionClass</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpFileSelection</NAME>
+struct GimpFileSelection
+{
+  GtkVBox    hbox;
+
+  GtkWidget *file_exists;
+  GtkWidget *entry;
+  GtkWidget *browse_button;
+
+  GtkWidget *file_selection;
+
+  GdkPixmap *yes_pixmap;
+  GdkBitmap *yes_mask;
+  GdkPixmap *no_pixmap;
+  GdkBitmap *no_mask;
+
+  gchar     *title;
+  gboolean   dir_only;
+  gboolean   check_valid;
+};
+</STRUCT>
+<FUNCTION>
+<NAME>gimp_file_selection_get_type</NAME>
+<RETURNS>GtkType  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_file_selection_new</NAME>
+<RETURNS>GtkWidget *</RETURNS>
+gchar             *title,gchar             *filename,gboolean           dir_only,gboolean           check_valid
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_file_selection_get_filename</NAME>
+<RETURNS>gchar *</RETURNS>
+GimpFileSelection *gfs
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_file_selection_set_filename</NAME>
+<RETURNS>void  </RETURNS>
+GimpFileSelection *gfs,gchar             *filename
+</FUNCTION>
+<MACRO>
+<NAME>GIMP_TYPE_PATH_EDITOR</NAME>
+#define GIMP_TYPE_PATH_EDITOR            (gimp_path_editor_get_type ())
+</MACRO>
+<MACRO>
+<NAME>GIMP_PATH_EDITOR</NAME>
+#define GIMP_PATH_EDITOR(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PATH_EDITOR, GimpPathEditor))
+</MACRO>
+<MACRO>
+<NAME>GIMP_PATH_EDITOR_CLASS</NAME>
+#define GIMP_PATH_EDITOR_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATH_EDITOR, GimpPathEditorClass))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_PATH_EDITOR</NAME>
+#define GIMP_IS_PATH_EDITOR(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_PATH_EDITOR))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_PATH_EDITOR_CLASS</NAME>
+#define GIMP_IS_PATH_EDITOR_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATH_EDITOR))
+</MACRO>
+<STRUCT>
+<NAME>GimpPathEditor</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpPathEditorClass</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpPathEditor</NAME>
+struct GimpPathEditor
+{
+  GtkVBox    vbox;
+
+  GtkWidget *upper_hbox;
+
+  GtkWidget *new_button;
+  GtkWidget *up_button;
+  GtkWidget *down_button;
+  GtkWidget *delete_button;
+
+  GtkWidget *file_selection;
+
+  GtkWidget *dir_list;
+
+  GtkWidget *selected_item;
+  gint       number_of_items;
+};
+</STRUCT>
+<FUNCTION>
+<NAME>gimp_path_editor_get_type</NAME>
+<RETURNS>GtkType  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_path_editor_new</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gchar *filesel_title,gchar *path
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_path_editor_get_path</NAME>
+<RETURNS>gchar      *</RETURNS>
+GimpPathEditor *gpe
+</FUNCTION>
+<MACRO>
+<NAME>PIXPIPE_MAXDIM</NAME>
+#define PIXPIPE_MAXDIM 4
+</MACRO>
+<TYPEDEF>
+<NAME>PixPipeParams</NAME>
+typedef struct {
+  gint step;
+  gint ncells;
+  gint dim;
+  gint cols;
+  gint rows;
+  gint cellwidth;
+  gint cellheight;
+  gchar *placement;
+  gboolean free_placement_string;
+  gint rank[PIXPIPE_MAXDIM];
+  gchar *selection[PIXPIPE_MAXDIM];
+  gboolean free_selection_string;
+} PixPipeParams;
+</TYPEDEF>
+<FUNCTION>
+<NAME>pixpipeparams_init</NAME>
+<RETURNS>void  </RETURNS>
+PixPipeParams *params
+</FUNCTION>
+<FUNCTION>
+<NAME>pixpipeparams_parse</NAME>
+<RETURNS>void  </RETURNS>
+gchar *parameters,PixPipeParams *params
+</FUNCTION>
+<FUNCTION>
+<NAME>pixpipeparams_build</NAME>
+<RETURNS>gchar  *</RETURNS>
+PixPipeParams *params
+</FUNCTION>
+<MACRO>
+<NAME>CAN_HANDLE_RGB</NAME>
+#define CAN_HANDLE_RGB                  1 << 0
+</MACRO>
+<MACRO>
+<NAME>CAN_HANDLE_GRAY</NAME>
+#define CAN_HANDLE_GRAY                 1 << 1
+</MACRO>
+<MACRO>
+<NAME>CAN_HANDLE_INDEXED</NAME>
+#define CAN_HANDLE_INDEXED              1 << 2
+</MACRO>
+<MACRO>
+<NAME>CAN_HANDLE_ALPHA</NAME>
+#define CAN_HANDLE_ALPHA                1 << 3
+</MACRO>
+<MACRO>
+<NAME>CAN_HANDLE_LAYERS</NAME>
+#define CAN_HANDLE_LAYERS               1 << 4
+</MACRO>
+<MACRO>
+<NAME>CAN_HANDLE_LAYERS_AS_ANIMATION</NAME>
+#define CAN_HANDLE_LAYERS_AS_ANIMATION  1 << 5
+</MACRO>
+<MACRO>
+<NAME>NEEDS_ALPHA</NAME>
+#define NEEDS_ALPHA                     1 << 6
+</MACRO>
+<ENUM>
+<NAME>GimpExportReturnType</NAME>
+typedef enum
+{
+  EXPORT_CANCEL,
+  EXPORT_IGNORE,
+  EXPORT_EXPORT
+} GimpExportReturnType;
+</ENUM>
+<FUNCTION>
+<NAME>gimp_export_image</NAME>
+<RETURNS>GimpExportReturnType  </RETURNS>
+gint32*,gint32*,gchar*,gint
+</FUNCTION>
+<MACRO>
+<NAME>GIMP_MAJOR_VERSION</NAME>
+#define GIMP_MAJOR_VERSION				(1)
+</MACRO>
+<MACRO>
+<NAME>GIMP_MINOR_VERSION</NAME>
+#define GIMP_MINOR_VERSION				(1)
+</MACRO>
+<MACRO>
+<NAME>GIMP_MICRO_VERSION</NAME>
+#define GIMP_MICRO_VERSION				(16)
+</MACRO>
+<MACRO>
+<NAME>GIMP_VERSION</NAME>
+#define GIMP_VERSION					"1.1.16"
+</MACRO>
+<MACRO>
+<NAME>GIMP_CHECK_VERSION</NAME>
+#define GIMP_CHECK_VERSION(major, minor, micro)	\
+    (GIMP_MAJOR_VERSION > (major) || \
+     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION > (minor)) || \
+     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION == (minor) && \
+      GIMP_MICRO_VERSION >= (micro)))
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_PROCEDURAL_DB_GET_DATA_SIZE</NAME>
+#define GIMP_HAVE_PROCEDURAL_DB_GET_DATA_SIZE		1-1-0
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_PARASITES</NAME>
+#define GIMP_HAVE_PARASITES				1-1-0
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_RESOLUTION_INFO</NAME>
+#define GIMP_HAVE_RESOLUTION_INFO			1-1-0
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_DESTROY_PARAMDEFS</NAME>
+#define GIMP_HAVE_DESTROY_PARAMDEFS			1-1-0
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_FEATURES_1_1_5</NAME>
+#define GIMP_HAVE_FEATURES_1_1_5			1-1-5
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_DEFAULT_DISPLAY</NAME>
+#define GIMP_HAVE_DEFAULT_DISPLAY			1-1-5
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_PIXEL_RGNS_REGISTER2</NAME>
+#define GIMP_HAVE_PIXEL_RGNS_REGISTER2			1-1-5
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_NEW_ENUMS</NAME>
+#define GIMP_HAVE_NEW_ENUMS				1-1-10
+</MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_EXPORT</NAME>
+#define GIMP_HAVE_EXPORT                                1-1-10
+</MACRO>
+<MACRO>
+<NAME>gimp_attach_parasite</NAME>
+#define gimp_attach_parasite		gimp_parasite_attach
+</MACRO>
+<MACRO>
+<NAME>gimp_detach_parasite</NAME>
+#define gimp_detach_parasite		gimp_parasite_detach
+</MACRO>
+<MACRO>
+<NAME>gimp_find_parasite</NAME>
+#define gimp_find_parasite		gimp_parasite_find
+</MACRO>
+<MACRO>
+<NAME>gimp_image_attach_parasite</NAME>
+#define gimp_image_attach_parasite	gimp_image_parasite_attach
+</MACRO>
+<MACRO>
+<NAME>gimp_image_detach_parasite</NAME>
+#define gimp_image_detach_parasite	gimp_image_parasite_detach
+</MACRO>
+<MACRO>
+<NAME>gimp_image_find_parasite</NAME>
+#define gimp_image_find_parasite	gimp_image_parasite_find
+</MACRO>
+<MACRO>
+<NAME>gimp_drawable_attach_parasite</NAME>
+#define gimp_drawable_attach_parasite	gimp_drawable_parasite_attach
+</MACRO>
+<MACRO>
+<NAME>gimp_drawable_detach_parasite</NAME>
+#define gimp_drawable_detach_parasite	gimp_drawable_parasite_detach
+</MACRO>
+<MACRO>
+<NAME>gimp_drawable_find_parasite</NAME>
+#define gimp_drawable_find_parasite	gimp_drawable_parasite_find
+</MACRO>
+<MACRO>
+<NAME>gimp_drawable_channel</NAME>
+#define gimp_drawable_channel		gimp_drawable_is_channel
+</MACRO>
+<MACRO>
+<NAME>gimp_drawable_gray</NAME>
+#define gimp_drawable_gray		gimp_drawable_is_gray
+</MACRO>
+<MACRO>
+<NAME>gimp_drawable_color</NAME>
+#define gimp_drawable_color		gimp_drawable_is_rgb
+</MACRO>
+<MACRO>
+<NAME>gimp_drawable_indexed</NAME>
+#define gimp_drawable_indexed		gimp_drawable_is_indexed
+</MACRO>
+<MACRO>
+<NAME>gimp_drawable_layer</NAME>
+#define gimp_drawable_layer		gimp_drawable_is_layer
+</MACRO>
+<MACRO>
+<NAME>gimp_drawable_layer_mask</NAME>
+#define gimp_drawable_layer_mask	gimp_drawable_is_layer_mask
+</MACRO>
+<MACRO>
+<NAME>gimp_image_disable_undo</NAME>
+#define gimp_image_disable_undo		gimp_image_undo_disable
+</MACRO>
+<MACRO>
+<NAME>gimp_image_enable_undo</NAME>
+#define gimp_image_enable_undo		gimp_image_undo_enable
+</MACRO>
+<MACRO>
+<NAME>gimp_image_freeze_undo</NAME>
+#define gimp_image_freeze_undo		gimp_image_undo_freeze
+</MACRO>
+<MACRO>
+<NAME>gimp_image_thaw_undo</NAME>
+#define gimp_image_thaw_undo		gimp_image_undo_thaw
+</MACRO>
+<MACRO>
+<NAME>GIMP_TYPE_COLOR_BUTTON</NAME>
+#define GIMP_TYPE_COLOR_BUTTON            (gimp_color_button_get_type ())
+</MACRO>
+<MACRO>
+<NAME>GIMP_COLOR_BUTTON</NAME>
+#define GIMP_COLOR_BUTTON(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_COLOR_BUTTON, GimpColorButton))
+</MACRO>
+<MACRO>
+<NAME>GIMP_COLOR_BUTTON_CLASS</NAME>
+#define GIMP_COLOR_BUTTON_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_BUTTON, GimpColorButtonClass))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_COLOR_BUTTON</NAME>
+#define GIMP_IS_COLOR_BUTTON(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_COLOR_BUTTON))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_COLOR_BUTTON_CLASS</NAME>
+#define GIMP_IS_COLOR_BUTTON_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_BUTTON))
+</MACRO>
+<STRUCT>
+<NAME>GimpColorButton</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpColorButtonClass</NAME>
+</STRUCT>
+<FUNCTION>
+<NAME>gimp_color_button_get_type</NAME>
+<RETURNS>GtkType  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_color_button_new</NAME>
+<RETURNS>GtkWidget *</RETURNS>
+gchar   *title,gint     width,gint     height,guchar  *color,gint     bpp
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_color_button_update</NAME>
+<RETURNS>void  </RETURNS>
+GimpColorButton *gcb
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hsv</NAME>
+<RETURNS>void 	</RETURNS>
+int *, int *, int *
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsv_to_rgb</NAME>
+<RETURNS>void 	</RETURNS>
+int *, int *, int *
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hls</NAME>
+<RETURNS>void 	</RETURNS>
+int *, int *, int *
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_l</NAME>
+<RETURNS>int 	</RETURNS>
+int, int, int
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hls_to_rgb</NAME>
+<RETURNS>void 	</RETURNS>
+int *, int *, int *
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hsv_double</NAME>
+<RETURNS>void 	</RETURNS>
+double *, double *, double *
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsv_to_rgb_double</NAME>
+<RETURNS>void 	</RETURNS>
+double *, double *, double *
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hsv4</NAME>
+<RETURNS>void 	</RETURNS>
+guchar *, double *, double *, double *
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsv_to_rgb4</NAME>
+<RETURNS>void 	</RETURNS>
+guchar *, double, double, double
+</FUNCTION>
+<MACRO>
+<NAME>INTENSITY_RED</NAME>
+#define INTENSITY_RED   0.30
+</MACRO>
+<MACRO>
+<NAME>INTENSITY_GREEN</NAME>
+#define INTENSITY_GREEN 0.59
+</MACRO>
+<MACRO>
+<NAME>INTENSITY_BLUE</NAME>
+#define INTENSITY_BLUE  0.11
+</MACRO>
+<MACRO>
+<NAME>INTENSITY</NAME>
+#define INTENSITY(r,g,b) ((r) * INTENSITY_RED   + \
+			  (g) * INTENSITY_GREEN + \
+			  (b) * INTENSITY_BLUE  + 0.001)
+</MACRO>
+<FUNCTION>
+<NAME>gimp_dialog_new</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+const gchar        *title,const gchar        *wmclass_name,GimpHelpFunc        help_func,gchar              *help_data,GtkWindowPosition   position,gint                allow_shrink,gint                allow_grow,gint                auto_shrink,...
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_dialog_newv</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+const gchar        *title,const gchar        *wmclass_name,GimpHelpFunc        help_func,gchar              *help_data,GtkWindowPosition   position,gint                allow_shrink,gint                allow_grow,gint                auto_shrink,va_list             args
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_dialog_set_icon</NAME>
+<RETURNS>void  </RETURNS>
+GtkWidget          *dialog
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_dialog_create_action_area</NAME>
+<RETURNS>void  </RETURNS>
+GtkDialog          *dialog,...
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_dialog_create_action_areav</NAME>
+<RETURNS>void  </RETURNS>
+GtkDialog          *dialog,va_list             args
+</FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpHelpFunc</NAME>
+<RETURNS>void </RETURNS>
+gchar *
+</USER_FUNCTION>
+<FUNCTION>
+<NAME>gimp_help_init</NAME>
+<RETURNS>void  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_help_free</NAME>
+<RETURNS>void  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_help_enable_tooltips</NAME>
+<RETURNS>void  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_help_disable_tooltips</NAME>
+<RETURNS>void  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_standard_help_func</NAME>
+<RETURNS>void  </RETURNS>
+gchar        *help_data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_help_connect_help_accel</NAME>
+<RETURNS>void  </RETURNS>
+GtkWidget    *widget,GimpHelpFunc  help_func,gchar        *help_data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_help_set_help_data</NAME>
+<RETURNS>void  </RETURNS>
+GtkWidget    *widget,const gchar  *tool_tip,gchar        *help_data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_context_help</NAME>
+<RETURNS>void  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_option_menu_new</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gboolean            menu_only,...
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_option_menu_new2</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gboolean            menu_only,GtkSignalFunc       menu_item_callback,gpointer            data,gpointer            initial,...
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_radio_group_new</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gboolean            in_frame,gchar              *frame_title,...
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_radio_group_new2</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gboolean            in_frame,gchar              *frame_title,GtkSignalFunc       radio_button_callback,gpointer            data,gpointer            initial,...
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_spin_button_new</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+GtkObject         **adjustment,gfloat              value,gfloat              lower,gfloat              upper,gfloat              step_increment,gfloat              page_increment,gfloat              page_size,gfloat              climb_rate,guint               digits
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_scale_entry_new</NAME>
+<RETURNS>GtkObject  *</RETURNS>
+GtkTable           *table,gint                column,gint                row,gchar              *text,gint                scale_usize,gint                spinbutton_usize,gfloat              value,gfloat              lower,gfloat              upper,gfloat              step_increment,gfloat              page_increment,guint               digits,gchar              *tooltip,gchar              *private_tip
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_random_seed_new</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gint               *seed,gint               *use_time,gint                time_true,gint                time_false
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_coordinates_new</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+GUnit               unit,gchar              *unit_format,gboolean            menu_show_pixels,gboolean            menu_show_percent,gint                spinbutton_usize,GimpSizeEntryUP     update_policy,gboolean            chainbutton_active,gboolean            chain_constrains_ratio,GtkWidget         **chainbutton,gchar              *xlabel,gdouble             x,gdouble             xres,gdouble             lower_boundary_x,gdouble             upper_boundary_x,gdouble             xsize_0,gdouble             xsize_100,gchar              *ylabel,gdouble             y,gdouble             yres,gdouble             lower_boundary_y,gdouble             upper_boundary_y,gdouble             ysize_0,gdouble             ysize_100
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_toggle_button_update</NAME>
+<RETURNS>void  </RETURNS>
+GtkWidget          *widget,gpointer            data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_menu_item_update</NAME>
+<RETURNS>void  </RETURNS>
+GtkWidget          *widget,gpointer            data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_radio_button_update</NAME>
+<RETURNS>void  </RETURNS>
+GtkWidget          *widget,gpointer            data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_int_adjustment_update</NAME>
+<RETURNS>void  </RETURNS>
+GtkAdjustment      *adjustment,gpointer            data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_float_adjustment_update</NAME>
+<RETURNS>void  </RETURNS>
+GtkAdjustment      *adjustment,gpointer            data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_double_adjustment_update</NAME>
+<RETURNS>void  </RETURNS>
+GtkAdjustment      *adjustment,gpointer            data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_menu_update</NAME>
+<RETURNS>void  </RETURNS>
+GtkWidget          *widget,gpointer            data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_table_attach_aligned</NAME>
+<RETURNS>void  </RETURNS>
+GtkTable           *table,gint                column,gint                row,gchar              *label_text,gfloat              xalign,gfloat              yalign,GtkWidget          *widget,gint                colspan,gboolean            left_align
+</FUNCTION>

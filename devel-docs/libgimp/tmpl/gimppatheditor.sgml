@@ -1,0 +1,56 @@
+<!-- ##### SECTION Title ##### -->
+GimpPathEditor
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpPathEditor ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GIMP_PATH_EDITOR ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### FUNCTION gimp_path_editor_new ##### -->
+<para>
+
+</para>
+
+@filesel_title: 
+@path: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_path_editor_get_path ##### -->
+<para>
+
+</para>
+
+@gpe: 
+@Returns: 
+
+
+<!-- ##### SIGNAL GimpPathEditor::path-changed ##### -->
+<para>
+
+</para>
+
+@gimppatheditor: the object which received the signal.
+

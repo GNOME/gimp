@@ -1,0 +1,91 @@
+<!-- ##### SECTION Title ##### -->
+gimpmath
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### MACRO G_PI ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO G_PI_2 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO G_PI_4 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO G_SQRT2 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO G_MAXRAND ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO RINT ##### -->
+<para>
+
+</para>
+
+@x: 
+
+
+<!-- ##### MACRO ROUND ##### -->
+<para>
+
+</para>
+
+@x: 
+
+
+<!-- ##### MACRO SQR ##### -->
+<para>
+
+</para>
+
+@x: 
+
+
+<!-- ##### MACRO MAX255 ##### -->
+<para>
+
+</para>
+
+@a: 
+
+
+<!-- ##### MACRO CLAMP0255 ##### -->
+<para>
+
+</para>
+
+@a: 
+
+

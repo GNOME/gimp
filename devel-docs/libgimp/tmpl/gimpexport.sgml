@@ -1,0 +1,86 @@
+<!-- ##### SECTION Title ##### -->
+gimpexport
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### MACRO CAN_HANDLE_RGB ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO CAN_HANDLE_GRAY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO CAN_HANDLE_INDEXED ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO CAN_HANDLE_ALPHA ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO CAN_HANDLE_LAYERS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO CAN_HANDLE_LAYERS_AS_ANIMATION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO NEEDS_ALPHA ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM GimpExportReturnType ##### -->
+<para>
+
+</para>
+
+@EXPORT_CANCEL: 
+@EXPORT_IGNORE: 
+@EXPORT_EXPORT: 
+
+<!-- ##### FUNCTION gimp_export_image ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Param2: 
+@Param3: 
+@Param4: 
+@Returns: 
+
+

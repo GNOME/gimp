@@ -46,7 +46,6 @@ typedef void (*GimpColorSelector_Callback)(void *data, int r, int g, int b);
 typedef GtkWidget * (*GimpColorSelector_NewFunc)(int r, int g, int b,
 						 GimpColorSelector_Callback cb,
 						 void *data,
-						 /* RETURNS: */
 						 void  **selector_data);
 
 /* A function of this type is called when the color selector is no
@@ -102,3 +101,9 @@ gboolean gimp_color_selector_unregister (GimpColorSelectorID id,
 #endif /* !__COLOR_NOTEBOOK_C__ */
 
 #endif /* __COLOR_SELECTOR_H__ */
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+#include <gtk/gtk.h>
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
+gimp_chain_button_get_type
+gimp_color_button_get_type
+gimp_file_selection_get_type
+gimp_path_editor_get_type
+gimp_size_entry_get_type
+gimp_unit_menu_get_type

@@ -1,0 +1,48 @@
+Developers documentation 
+------------------------
+
+Principle
+---------
+
+Right now this only applies to libgimp. Other parts of the 
+code may follow later, but not before libgimp is properly
+documented. The documentation is extracted out of the source 
+using gtk-doc. We use a combination of comment blocks 
+embedded into the source and additional information added 
+manually into the SGML files. It is planned to extract useful 
+inforamtion about the PDB wrappers out of the PDB (probably 
+using pdbgen).
+
+
+Requirements
+------------
+GIMP releases will contain a complete set of HTML files and
+the SGML files to create other formats. You will only need
+gtk-doc if you want to work on the documentation itself. 
+In that case you will need the following utilities:
+
+Perl v5 - the main scripts are in Perl.
+
+DocBook DTD v3.0 - This is the DocBook SGML DTD.
+    http://www.ora.com/davenport
+
+Jade v1.1 - This is a DSSSL processor for converting SGML 
+    to various formats. 
+    http://www.jclark.com/jade
+
+Modular DocBook Stylesheets (v1.19+ should be OK)
+    This is the DSSSL code to convert DocBook to HTML (and 
+    a few other formats). It's used together with jade.
+    http://nwalsh.com/docbook/dsssl
+
+gtk-doc - This package automatically generates DocBook 
+    documentation for GTK+ and converts the DocBook 
+    documentation into HTML (and man pages in future).
+    http://www.gtk.org/rdp/download.html
+
+
+HOWTO
+-----
+Carefully read the README that comes with gtk-doc. Then 
+read it again. Once you think you really understood how 
+it is supposed to work, fill in this chapter.

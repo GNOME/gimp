@@ -1,0 +1,368 @@
+<!-- ##### SECTION Title ##### -->
+gimpmenu
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### USER_FUNCTION GimpConstraintFunc ##### -->
+<para>
+
+</para>
+
+@image_id: 
+@drawable_id: 
+@data: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION GimpMenuCallback ##### -->
+<para>
+
+</para>
+
+@id: 
+@data: 
+
+
+<!-- ##### USER_FUNCTION GRunBrushCallback ##### -->
+<para>
+
+</para>
+
+@name: 
+@opacity: 
+@spacing: 
+@paint_mode: 
+@width: 
+@height: 
+@mask_data: 
+@dialog_closing: 
+@user_data: 
+<!-- # Unused Parameters # -->
+@Param1: 
+
+
+<!-- ##### USER_FUNCTION GRunPatternCallback ##### -->
+<para>
+
+</para>
+
+@name: 
+@width: 
+@height: 
+@bpp: 
+@mask_data: 
+@dialog_closing: 
+@user_data: 
+<!-- # Unused Parameters # -->
+@Param1: 
+
+
+<!-- ##### USER_FUNCTION GRunGradientCallback ##### -->
+<para>
+
+</para>
+
+@name: 
+@width: 
+@grad_data: 
+@dialog_closing: 
+@user_data: 
+<!-- # Unused Parameters # -->
+@Param1: 
+
+
+<!-- ##### FUNCTION gimp_image_menu_new ##### -->
+<para>
+
+</para>
+
+@constraint: 
+@callback: 
+@data: 
+@active_image: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_menu_new ##### -->
+<para>
+
+</para>
+
+@constraint: 
+@callback: 
+@data: 
+@active_layer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_channel_menu_new ##### -->
+<para>
+
+</para>
+
+@constraint: 
+@callback: 
+@data: 
+@active_channel: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_menu_new ##### -->
+<para>
+
+</para>
+
+@constraint: 
+@callback: 
+@data: 
+@active_drawable: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_interactive_selection_brush ##### -->
+<para>
+
+</para>
+
+@dialogname: 
+@brush_name: 
+@opacity: 
+@spacing: 
+@paint_mode: 
+@callback: 
+@udata: 
+
+
+<!-- ##### FUNCTION gimp_brush_select_widget ##### -->
+<para>
+
+</para>
+
+@dname: 
+@ibrush: 
+@opacity: 
+@spacing: 
+@paint_mode: 
+@cback: 
+@Param7: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_select_widget_close_popup ##### -->
+<para>
+
+</para>
+
+@w: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_select_widget_set_popup ##### -->
+<para>
+
+</para>
+
+@w: 
+@pname: 
+@opacity: 
+@spacing: 
+@paint_mode: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brushes_get_brush_data ##### -->
+<para>
+
+</para>
+
+@pname: 
+@opacity: 
+@spacing: 
+@paint_mode: 
+@width: 
+@height: 
+@mask_data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_set_popup ##### -->
+<para>
+
+</para>
+
+@popup_pnt: 
+@pname: 
+@opacity: 
+@spacing: 
+@paint_mode: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_close_popup ##### -->
+<para>
+
+</para>
+
+@popup_pnt: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_interactive_selection_pattern ##### -->
+<para>
+
+</para>
+
+@dialogtitle: 
+@pattern_name: 
+@callback: 
+@udata: 
+
+
+<!-- ##### FUNCTION gimp_pattern_select_widget ##### -->
+<para>
+
+</para>
+
+@dname: 
+@ipattern: 
+@cback: 
+@Param4: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_pattern_select_widget_close_popup ##### -->
+<para>
+
+</para>
+
+@w: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_pattern_select_widget_set_popup ##### -->
+<para>
+
+</para>
+
+@w: 
+@pname: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_pattern_get_pattern_data ##### -->
+<para>
+
+</para>
+
+@pname: 
+@width: 
+@height: 
+@bytes: 
+@mask_data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_pattern_set_popup ##### -->
+<para>
+
+</para>
+
+@popup_pnt: 
+@pname: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_pattern_close_popup ##### -->
+<para>
+
+</para>
+
+@popup_pnt: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_interactive_selection_gradient ##### -->
+<para>
+
+</para>
+
+@dialogtitle: 
+@gradient_name: 
+@sample_sz: 
+@callback: 
+@udata: 
+
+
+<!-- ##### FUNCTION gimp_gradient_select_widget ##### -->
+<para>
+
+</para>
+
+@gname: 
+@igradient: 
+@cback: 
+@Param4: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradient_select_widget_close_popup ##### -->
+<para>
+
+</para>
+
+@w: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradient_select_widget_set_popup ##### -->
+<para>
+
+</para>
+
+@w: 
+@pname: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradient_get_gradient_data ##### -->
+<para>
+
+</para>
+
+@pname: 
+@width: 
+@sample_sz: 
+@mask_data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradient_set_popup ##### -->
+<para>
+
+</para>
+
+@popup_pnt: 
+@pname: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradient_close_popup ##### -->
+<para>
+
+</para>
+
+@popup_pnt: 
+@Returns: 
+
+

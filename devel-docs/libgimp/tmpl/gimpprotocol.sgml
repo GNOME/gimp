@@ -1,0 +1,269 @@
+<!-- ##### SECTION Title ##### -->
+gimpprotocol
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### MACRO GP_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### STRUCT GPConfig ##### -->
+<para>
+
+</para>
+
+@version: 
+@tile_width: 
+@tile_height: 
+@shm_ID: 
+@gamma: 
+@install_cmap: 
+@use_xshm: 
+@color_cube: 
+@gdisp_ID: 
+
+<!-- ##### STRUCT GPTileReq ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@tile_num: 
+@shadow: 
+
+<!-- ##### STRUCT GPTileAck ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GPTileData ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@tile_num: 
+@shadow: 
+@bpp: 
+@width: 
+@height: 
+@use_shm: 
+@data: 
+
+<!-- ##### STRUCT GPParam ##### -->
+<para>
+
+</para>
+
+@type: 
+@d_display: 
+@d_image: 
+@d_layer: 
+@d_channel: 
+@d_drawable: 
+@d_selection: 
+@d_boundary: 
+@d_path: 
+@d_status: 
+
+<!-- ##### STRUCT GPParamDef ##### -->
+<para>
+
+</para>
+
+@type: 
+@name: 
+@description: 
+
+<!-- ##### STRUCT GPProcRun ##### -->
+<para>
+
+</para>
+
+@name: 
+@nparams: 
+@params: 
+
+<!-- ##### STRUCT GPProcReturn ##### -->
+<para>
+
+</para>
+
+@name: 
+@nparams: 
+@params: 
+
+<!-- ##### STRUCT GPProcInstall ##### -->
+<para>
+
+</para>
+
+@name: 
+@blurb: 
+@help: 
+@author: 
+@copyright: 
+@date: 
+@menu_path: 
+@image_types: 
+@type: 
+@nparams: 
+@nreturn_vals: 
+@params: 
+@return_vals: 
+
+<!-- ##### STRUCT GPProcUninstall ##### -->
+<para>
+
+</para>
+
+@name: 
+
+<!-- ##### FUNCTION gp_init ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gp_quit_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gp_config_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@config: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gp_tile_req_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@tile_req: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gp_tile_ack_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gp_tile_data_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@tile_data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gp_proc_run_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@proc_run: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gp_proc_return_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@proc_return: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gp_temp_proc_run_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@proc_run: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gp_temp_proc_return_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@proc_return: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gp_proc_install_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@proc_install: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gp_proc_uninstall_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@proc_uninstall: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gp_extension_ack_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gp_request_wakeups_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@Returns: 
+
+

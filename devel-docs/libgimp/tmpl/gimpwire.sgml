@@ -1,0 +1,289 @@
+<!-- ##### SECTION Title ##### -->
+gimpwire
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT WireMessage ##### -->
+<para>
+
+</para>
+
+@type: 
+@data: 
+
+<!-- ##### USER_FUNCTION WireReadFunc ##### -->
+<para>
+
+</para>
+
+@channel: 
+@msg: 
+
+
+<!-- ##### USER_FUNCTION WireWriteFunc ##### -->
+<para>
+
+</para>
+
+@channel: 
+@msg: 
+
+
+<!-- ##### USER_FUNCTION WireDestroyFunc ##### -->
+<para>
+
+</para>
+
+@msg: 
+
+
+<!-- ##### USER_FUNCTION WireIOFunc ##### -->
+<para>
+
+</para>
+
+@channel: 
+@buf: 
+@count: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION WireFlushFunc ##### -->
+<para>
+
+</para>
+
+@channel: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_register ##### -->
+<para>
+
+</para>
+
+@type: 
+@read_func: 
+@write_func: 
+@destroy_func: 
+
+
+<!-- ##### FUNCTION wire_set_reader ##### -->
+<para>
+
+</para>
+
+@read_func: 
+
+
+<!-- ##### FUNCTION wire_set_writer ##### -->
+<para>
+
+</para>
+
+@write_func: 
+
+
+<!-- ##### FUNCTION wire_set_flusher ##### -->
+<para>
+
+</para>
+
+@flush_func: 
+
+
+<!-- ##### FUNCTION wire_read ##### -->
+<para>
+
+</para>
+
+@channel: 
+@buf: 
+@count: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@buf: 
+@count: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_flush ##### -->
+<para>
+
+</para>
+
+@channel: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_error ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_clear_error ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION wire_read_msg ##### -->
+<para>
+
+</para>
+
+@channel: 
+@msg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_write_msg ##### -->
+<para>
+
+</para>
+
+@channel: 
+@msg: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_destroy ##### -->
+<para>
+
+</para>
+
+@msg: 
+
+
+<!-- ##### FUNCTION wire_read_int32 ##### -->
+<para>
+
+</para>
+
+@channel: 
+@data: 
+@count: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_read_int16 ##### -->
+<para>
+
+</para>
+
+@channel: 
+@data: 
+@count: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_read_int8 ##### -->
+<para>
+
+</para>
+
+@channel: 
+@data: 
+@count: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_read_double ##### -->
+<para>
+
+</para>
+
+@channel: 
+@data: 
+@count: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_read_string ##### -->
+<para>
+
+</para>
+
+@channel: 
+@data: 
+@count: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_write_int32 ##### -->
+<para>
+
+</para>
+
+@channel: 
+@data: 
+@count: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_write_int16 ##### -->
+<para>
+
+</para>
+
+@channel: 
+@data: 
+@count: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_write_int8 ##### -->
+<para>
+
+</para>
+
+@channel: 
+@data: 
+@count: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_write_double ##### -->
+<para>
+
+</para>
+
+@channel: 
+@data: 
+@count: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wire_write_string ##### -->
+<para>
+
+</para>
+
+@channel: 
+@data: 
+@count: 
+@Returns: 
+
+

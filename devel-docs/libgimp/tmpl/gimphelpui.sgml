@@ -1,0 +1,87 @@
+<!-- ##### SECTION Title ##### -->
+gimphelpui
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### USER_FUNCTION GimpHelpFunc ##### -->
+<para>
+
+</para>
+
+@Param1: 
+
+
+<!-- ##### FUNCTION gimp_help_init ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gimp_help_free ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gimp_help_enable_tooltips ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gimp_help_disable_tooltips ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gimp_standard_help_func ##### -->
+<para>
+
+</para>
+
+@help_data: 
+
+
+<!-- ##### FUNCTION gimp_help_connect_help_accel ##### -->
+<para>
+
+</para>
+
+@widget: 
+@help_func: 
+@help_data: 
+
+
+<!-- ##### FUNCTION gimp_help_set_help_data ##### -->
+<para>
+
+</para>
+
+@widget: 
+@tool_tip: 
+@help_data: 
+
+
+<!-- ##### FUNCTION gimp_context_help ##### -->
+<para>
+
+</para>
+
+
+

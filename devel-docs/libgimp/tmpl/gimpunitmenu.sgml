@@ -1,0 +1,68 @@
+<!-- ##### SECTION Title ##### -->
+GimpUnitMenu
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpUnitMenu ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GIMP_UNIT_MENU ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### FUNCTION gimp_unit_menu_new ##### -->
+<para>
+
+</para>
+
+@format: 
+@unit: 
+@show_pixels: 
+@show_percent: 
+@show_custom: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_unit_menu_set_unit ##### -->
+<para>
+
+</para>
+
+@gum: 
+@unit: 
+
+
+<!-- ##### FUNCTION gimp_unit_menu_get_unit ##### -->
+<para>
+
+</para>
+
+@gum: 
+@Returns: 
+
+
+<!-- ##### SIGNAL GimpUnitMenu::unit-changed ##### -->
+<para>
+
+</para>
+
+@gimpunitmenu: the object which received the signal.
+

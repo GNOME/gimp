@@ -1,0 +1,58 @@
+<!-- ##### SECTION Title ##### -->
+GimpColorButton
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpColorButton ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GIMP_COLOR_BUTTON ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### FUNCTION gimp_color_button_new ##### -->
+<para>
+
+</para>
+
+@title: 
+@width: 
+@height: 
+@color: 
+@bpp: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_color_button_update ##### -->
+<para>
+
+</para>
+
+@gcb: 
+
+
+<!-- ##### SIGNAL GimpColorButton::color-changed ##### -->
+<para>
+
+</para>
+
+@gimpcolorbutton: the object which received the signal.
+

@@ -1,3 +1,11 @@
+Fri Feb  4 00:37:43 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* Makefile.am
+	* configure.in
+	* libgimp/color_selector.h
+	* libgimp/gimpmenu.h
+	* devel-docs: added framework for libgimp documentation
+
 Thu Feb  3 21:45:45 GMT 2000 Andy Thomas <alt@gimp.org>
 
 	* plug-ins/xjt/xjt.c
