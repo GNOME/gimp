@@ -1,5 +1,11 @@
 2005-03-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/bmp/bmpread.c: applied a patch from David Costanzo that
+	fixes handling of odd-length pixel encodings in "absolute mode" of
+	RLE4 compressed data (bug #171306).
+
+2005-03-24  Sven Neumann  <sven@gimp.org>
+
 	Merged from gimp-2-2 branch:
 
 	* app/widgets/gimphistogrameditor.c: change to the Value channel

@@ -427,7 +427,8 @@ ReadImage (FILE     *fd,
   guchar             gimp_cmap[768];
   gushort            rgb;
   glong              rowstride, channels;
-  gint               i, j, cur_progress, max_progress;
+  gint               i, i_max, j, cur_progress, max_progress;
+  gint               total_bytes_read;
   GimpImageBaseType  base_type;
   GimpImageType      image_type;
 
@@ -568,6 +569,7 @@ ReadImage (FILE     *fd,
     case 1:
       {
         if (compression == 0)
+          /* no compression */
 	  {
 	    while (ReadOK (fd, &v, 1))
 	      {
@@ -598,12 +600,17 @@ ReadImage (FILE     *fd,
 	  }
 	else
 	  {
+            /* compressed image (either RLE8 or RLE4) */
 	    while (ypos >= 0 && xpos <= width)
 	      {
 		ReadOK (fd, buffer, 2);
 		if ((guchar) buffer[0] != 0)
 		  /* Count + Color - record */
 		  {
+                    /* encoded mode run -
+                         buffer[0] == run_length
+                         buffer[1] == pixel data
+                    */
 		    for (j = 0; ((guchar) j < (guchar) buffer[0]) && (xpos < width);)
 		      {
 #ifdef DEBUG2
@@ -626,14 +633,25 @@ ReadImage (FILE     *fd,
 		  /* uncompressed record */
 		  {
 		    n = buffer[1];
+                    total_bytes_read = 0;
 		    for (j = 0; j < n; j += (8 / bpp))
 		      {
-			ReadOK (fd, &v, 1);
+                        /* read the next byte in the record */
+                        ReadOK (fd, &v, 1);
+                        total_bytes_read++;
+
+                        /* read all pixels from that byte */
+                        i_max = 8 / bpp;
+                        if (n - j < i_max)
+                          {
+                            i_max = n - j;
+                          }
+
 			i = 1;
-			while ((i <= (8 / bpp)) && (xpos < width))
+			while ((i <= i_max) && (xpos < width))
 			  {
 			    temp = dest + (ypos * rowstride) + (xpos * channels);
-			    *temp = (v & (((1<<bpp)-1) << (8-(i*bpp)))) >> (8-(i*bpp));
+                            *temp = (v >> (8-(i*bpp))) & ((1<<bpp)-1);
 			    if (grey)
 			      *temp = cmap[*temp][0];
 			    i++;
@@ -641,13 +659,9 @@ ReadImage (FILE     *fd,
 			  }
 		      }
 
-		    if ((n % 2) && (bpp==4))
-		      n++;
-
-		    if ((n / (8 / bpp)) % 2)
-		      ReadOK (fd, &v, 1);
-
-		    /*if odd(x div (8 div bpp )) then blockread(f,z^,1);*/
+                    /* absolute mode runs are padded to 16-bit alignment */
+                    if (total_bytes_read % 2)
+                      ReadOK (fd, &v, 1);
 		  }
 		if (((guchar) buffer[0] == 0) && ((guchar) buffer[1]==0))
 		  /* Line end */
@@ -687,17 +701,17 @@ ReadImage (FILE     *fd,
   if (bpp <= 8)
     for (i = 0, j = 0; i < ncols; i++)
       {
-	gimp_cmap[j++] = cmap[i][0];
-	gimp_cmap[j++] = cmap[i][1];
-	gimp_cmap[j++] = cmap[i][2];
+        gimp_cmap[j++] = cmap[i][0];
+        gimp_cmap[j++] = cmap[i][1];
+        gimp_cmap[j++] = cmap[i][2];
       }
 
   gimp_progress_update (1);
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
-		       0, 0, drawable->width, drawable->height, TRUE, FALSE);
+                       0, 0, drawable->width, drawable->height, TRUE, FALSE);
   gimp_pixel_rgn_set_rect (&pixel_rgn, dest,
-			   0, 0, drawable->width, drawable->height);
+                           0, 0, drawable->width, drawable->height);
 
   if ((!grey) && (bpp<= 8))
     gimp_image_set_colormap (image, gimp_cmap, ncols);
