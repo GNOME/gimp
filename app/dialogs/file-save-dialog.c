@@ -60,8 +60,7 @@ static gboolean   file_save_dialog_save_image  (GtkWidget     *save_dialog,
                                                 const gchar   *uri,
                                                 const gchar   *raw_filename,
                                                 PlugInProcDef *save_proc,
-                                                gboolean       set_uri_and_proc,
-                                                gboolean       set_image_clean);
+                                                gboolean       save_a_copy);
 
 
 /*  public functions  */
@@ -123,8 +122,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
                                        uri,
                                        uri,
                                        dialog->file_proc,
-                                       dialog->set_uri_and_proc,
-                                       dialog->set_image_clean))
+                                       dialog->save_a_copy))
         {
           gtk_widget_hide (save_dialog);
         }
@@ -209,8 +207,7 @@ file_save_overwrite_response (GtkWidget *dialog,
                                        overwrite_data->uri,
                                        overwrite_data->raw_filename,
                                        save_dialog->file_proc,
-                                       save_dialog->set_uri_and_proc,
-                                       save_dialog->set_image_clean))
+                                       save_dialog->save_a_copy))
         {
           gtk_widget_hide (overwrite_data->save_dialog);
         }
@@ -229,8 +226,7 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
                              const gchar   *uri,
                              const gchar   *raw_filename,
                              PlugInProcDef *save_proc,
-                             gboolean       set_uri_and_proc,
-                             gboolean       set_image_clean)
+                             gboolean       save_a_copy)
 {
   GimpPDBStatusType  status;
   GError            *error = NULL;
@@ -242,8 +238,7 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
                          raw_filename,
                          save_proc,
                          GIMP_RUN_INTERACTIVE,
-                         set_uri_and_proc,
-                         set_image_clean,
+                         save_a_copy,
                          &error);
 
   if (status != GIMP_PDB_SUCCESS &&

@@ -42,8 +42,7 @@ struct _GimpFileDialog
   PlugInProcDef        *file_proc;
 
   GimpImage            *gimage;
-  gboolean              set_uri_and_proc;
-  gboolean              set_image_clean;
+  gboolean              save_a_copy;
 
   GtkWidget            *thumb_box;
   GtkWidget            *proc_expander;
@@ -83,8 +82,7 @@ void        gimp_file_dialog_set_uri       (GimpFileDialog       *dialog,
                                             const gchar          *uri);
 void        gimp_file_dialog_set_image     (GimpFileDialog       *dialog,
                                             GimpImage            *gimage,
-                                            gboolean              set_uri_and_proc,
-                                            gboolean              set_image_clean);
+                                            gboolean              save_a_copy);
 
 
 G_END_DECLS

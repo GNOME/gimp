@@ -67,8 +67,7 @@ static void   file_open_dialog_show        (GtkWidget   *parent,
 static void   file_save_dialog_show        (GimpImage   *gimage,
                                             GtkWidget   *parent,
                                             const gchar *title,
-                                            gboolean     set_uri_and_proc,
-                                            gboolean     set_image_clean);
+                                            gboolean     save_a_copy);
 static void   file_save_dialog_destroyed   (GtkWidget   *dialog,
                                             GimpImage   *gimage);
 static void   file_new_template_callback   (GtkWidget   *widget,
@@ -228,8 +227,8 @@ file_save_as_cmd_callback (GtkAction *action,
   if (! gimp_image_active_drawable (gdisp->gimage))
     return;
 
-  file_save_dialog_show (gdisp->gimage, widget, _("Save Image"),
-                         TRUE, TRUE);
+  file_save_dialog_show (gdisp->gimage, widget,
+                         _("Save Image"), FALSE);
 }
 
 void
@@ -244,8 +243,8 @@ file_save_a_copy_cmd_callback (GtkAction *action,
   if (! gimp_image_active_drawable (gdisp->gimage))
     return;
 
-  file_save_dialog_show (gdisp->gimage, widget, _("Save a Copy of the Image"),
-                         FALSE, FALSE);
+  file_save_dialog_show (gdisp->gimage, widget,
+                         _("Save a Copy of the Image"), TRUE);
 }
 
 void
@@ -387,8 +386,7 @@ static void
 file_save_dialog_show (GimpImage   *gimage,
                        GtkWidget   *parent,
                        const gchar *title,
-                       gboolean     set_uri_and_proc,
-                       gboolean     set_image_clean)
+                       gboolean     save_a_copy)
 {
   GtkWidget *dialog;
 
@@ -417,8 +415,8 @@ file_save_dialog_show (GimpImage   *gimage,
     {
       gtk_window_set_title (GTK_WINDOW (dialog), title);
 
-      gimp_file_dialog_set_image (GIMP_FILE_DIALOG (dialog), gimage,
-                                  set_uri_and_proc, set_image_clean);
+      gimp_file_dialog_set_image (GIMP_FILE_DIALOG (dialog),
+                                  gimage, save_a_copy);
 
       gtk_window_present (GTK_WINDOW (dialog));
     }

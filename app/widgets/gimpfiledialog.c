@@ -428,20 +428,22 @@ gimp_file_dialog_set_uri (GimpFileDialog  *dialog,
 void
 gimp_file_dialog_set_image (GimpFileDialog *dialog,
                             GimpImage      *gimage,
-                            gboolean        set_uri_and_proc,
-                            gboolean        set_image_clean)
+                            gboolean        save_a_copy)
 {
-  const gchar *uri;
+  const gchar *uri     = NULL;
   gboolean     uri_set = FALSE;
 
   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  dialog->gimage           = gimage;
-  dialog->set_uri_and_proc = set_uri_and_proc;
-  dialog->set_image_clean  = set_image_clean;
+  dialog->gimage      = gimage;
+  dialog->save_a_copy = save_a_copy;
 
-  uri = gimp_object_get_name (GIMP_OBJECT (gimage));
+  if (save_a_copy)
+    uri = g_object_get_data (G_OBJECT (gimage), "gimp-image-save-a-copy");
+
+  if (! uri)
+    uri = gimp_object_get_name (GIMP_OBJECT (gimage));
 
   if (uri)
     uri_set = gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);

@@ -90,8 +90,7 @@ file_save (GimpImage    *gimage,
   file_proc = gimp_image_get_save_proc (gimage);
 
   return file_save_as (gimage, context, progress,
-                       uri, uri, file_proc, run_mode,
-                       FALSE, TRUE, error);
+                       uri, uri, file_proc, run_mode, FALSE, error);
 }
 
 GimpPDBStatusType
@@ -102,8 +101,7 @@ file_save_as (GimpImage      *gimage,
               const gchar    *raw_filename,
               PlugInProcDef  *file_proc,
               GimpRunMode     run_mode,
-              gboolean        set_uri_and_proc,
-              gboolean        set_image_clean,
+              gboolean        save_a_copy,
               GError        **error)
 {
   const ProcRecord  *proc;
@@ -189,21 +187,21 @@ file_save_as (GimpImage      *gimage,
       GimpDocumentList *documents;
       GimpImagefile    *imagefile;
 
-      if (set_image_clean)
+      if (save_a_copy)
         {
-          /*  set this image to clean  */
-          gimp_image_clean_all (gimage);
+          g_object_set_data_full (G_OBJECT (gimage), "gimp-image-save-a-copy",
+                                  g_strdup (uri), (GDestroyNotify) g_free);
         }
+      else
+	{
+	  gimp_image_set_uri (gimage, uri);
+          gimp_image_set_save_proc (gimage, file_proc);
+          gimp_image_clean_all (gimage);
+	}
 
       documents = GIMP_DOCUMENT_LIST (gimage->gimp->documents);
       imagefile = gimp_document_list_add_uri (documents,
                                               uri, file_proc->mime_type);
-
-      if (set_uri_and_proc)
-	{
-	  gimp_image_set_uri (gimage, uri);
-          gimp_image_set_save_proc (gimage, file_proc);
-	}
 
       gimp_imagefile_save_thumbnail (imagefile, file_proc->mime_type, gimage);
 

@@ -34,8 +34,7 @@ GimpPDBStatusType   file_save_as (GimpImage      *gimage,
                                   const gchar    *raw_filename,
                                   PlugInProcDef  *file_proc,
                                   GimpRunMode     run_mode,
-                                  gboolean        set_uri_and_proc,
-                                  gboolean        set_image_clean,
+                                  gboolean        save_a_copy,
                                   GError        **error);
 
 

@@ -1,5 +1,15 @@
 2004-11-16  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/file-commands.c
+	* app/dialogs/file-save-dialog.c
+	* app/file/file-save.[ch]
+	* app/widgets/gimpfiledialog.[ch]: combined "set_uri_and_proc" and
+	"set_image_clean" parameters into a single "save_a_copy"
+	parameter.  When saving a copy, attach the used URI to the image and
+	let the "Save a Copy" file chooser default to the last used value.
+
+2004-11-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/glossy.scm: fixed typo (bug #158425).
 
 2004-11-15  DindinX  <dindinx@gimp.org>
