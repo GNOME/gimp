@@ -323,6 +323,7 @@ gimp_SOURCES = \
 	scroll.h		\
 	selection.c		\
 	selection.h		\
+	selection_options.h	\
 	session.h		\
 	session.c		\
 	shear_tool.c		\
@@ -346,6 +347,9 @@ gimp_SOURCES = \
 	tile_swap.h		\
 	tips_dialog.c		\
 	tips_dialog.h		\
+	tool_options.c		\
+	tool_options.h		\
+	tool_options_ui.h	\
 	tools.c			\
 	tools.h			\
 	toolsF.h		\

@@ -65,9 +65,9 @@
 
 /* Global Data */
 
-Tool * active_tool = NULL;
-Layer * active_tool_layer = NULL;
-ToolType active_tool_type = -1;
+Tool     * active_tool = NULL;
+Layer    * active_tool_layer = NULL;
+ToolType   active_tool_type = -1;
 
 /* Local Data */
 
@@ -81,8 +81,6 @@ static int global_tool_ID = 0;
 ToolInfo tool_info[] =
 {
   {
-    NULL,
-    NULL,
     NULL,
     N_("Rect Select"),
     0,
@@ -99,8 +97,6 @@ ToolInfo tool_info[] =
 
   {
     NULL,
-    NULL,
-    NULL,
     N_("Ellipse Select"),
     1,
     N_("/Tools/Ellipse Select"),
@@ -116,8 +112,6 @@ ToolInfo tool_info[] =
 
   {
     NULL, 
-    NULL,
-    NULL,
     N_("Free Select"), 
     2, 
     N_("/Tools/Free Select"),
@@ -132,8 +126,6 @@ ToolInfo tool_info[] =
   },
   
   {
-    NULL,
-    NULL,
     NULL,
     N_("Fuzzy Select"),
     3,
@@ -150,8 +142,6 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    NULL,
-    NULL,
     N_("Bezier Select"),
     4,
     N_("/Tools/Bezier Select"),
@@ -167,8 +157,6 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    NULL,
-    NULL,
     N_("Intelligent Scissors"),
     5,
     N_("/Tools/Intelligent Scissors"),
@@ -183,8 +171,6 @@ ToolInfo tool_info[] =
   },
   
   {
-    NULL, 
-    NULL,
     NULL,
     N_("Move"),
     6,
@@ -201,8 +187,6 @@ ToolInfo tool_info[] =
 
   {
     NULL,
-    NULL,
-    NULL,
     N_("Magnify"),
     7,
     N_("/Tools/Magnify"),
@@ -217,8 +201,6 @@ ToolInfo tool_info[] =
   },
 
   {
-    NULL,
-    NULL,
     NULL,
     N_("Crop"),
     8,
@@ -235,8 +217,6 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    NULL,
-    NULL,
     N_("Transform"),
     9,
     N_("/Tools/Transform"),
@@ -252,8 +232,6 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    NULL,
-    NULL,
     N_("Transform"),
     9,
     NULL,
@@ -268,8 +246,6 @@ ToolInfo tool_info[] =
   }, /* scale */
   
   {
-    NULL, 
-    NULL,
     NULL,
     N_("Transform"),
     9,
@@ -285,8 +261,6 @@ ToolInfo tool_info[] =
   }, /* shear */
   
   {
-    NULL, 
-    NULL,
     NULL,
     N_("Transform"),
     9,
@@ -303,8 +277,6 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    NULL,
-    NULL,
     N_("Flip"),
     10,
     N_("/Tools/Flip"),
@@ -319,8 +291,6 @@ ToolInfo tool_info[] =
   }, /* horizontal */
   
   {
-    NULL,
-    NULL,
     NULL,
     N_("Flip"),
     10,
@@ -337,8 +307,6 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    NULL,
-    NULL,
     N_("Text"),
     11,
     N_("/Tools/Text"),
@@ -353,8 +321,6 @@ ToolInfo tool_info[] =
   },
   
   {
-    NULL,
-    NULL,
     NULL,
     N_("Color Picker"),
     12,
@@ -371,8 +337,6 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    NULL,
-    NULL,
     N_("Bucket Fill"),
     13,
     N_("/Tools/Bucket Fill"),
@@ -387,8 +351,6 @@ ToolInfo tool_info[] =
   },
 
   { 
-    NULL,
-    NULL,
     NULL,
     N_("Blend"),
     14,
@@ -405,8 +367,6 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    NULL,
-    NULL,
     N_("Pencil"),
     15,
     N_("/Tools/Pencil"),
@@ -421,8 +381,6 @@ ToolInfo tool_info[] =
   },
   
   {
-    NULL,
-    NULL,
     NULL,
     N_("Paintbrush"),
     16,
@@ -439,8 +397,6 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    NULL,
-    NULL,
     N_("Eraser"),
     17,
     N_("/Tools/Eraser"),
@@ -455,8 +411,6 @@ ToolInfo tool_info[] =
   },
   
   { 
-    NULL,
-    NULL,
     NULL,
     N_("Airbrush"),
     18,
@@ -473,8 +427,6 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    NULL,
-    NULL,
     N_("Clone"),
     19,
     N_("/Tools/Clone"),
@@ -490,8 +442,6 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    NULL,
-    NULL,
     N_("Convolve"),
     20,
     N_("/Tools/Convolve"),
@@ -506,8 +456,6 @@ ToolInfo tool_info[] =
   },
 
   {
-    NULL,
-    NULL,
     NULL,
     N_("Ink"),
     21,
@@ -525,8 +473,6 @@ ToolInfo tool_info[] =
   /*  Non-toolbox tools  */
   { 
     NULL,
-    NULL,
-    NULL,
     N_("By Color Select"),
     22,
     N_("/Select/By Color..."),
@@ -541,8 +487,6 @@ ToolInfo tool_info[] =
   },
   
   { 
-    NULL,
-    NULL,
     NULL,
     N_("Color Balance"),
     23,
@@ -559,8 +503,6 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    NULL,
-    NULL,
     N_("Brightness-Contrast"),
     24,
     N_("/Image/Colors/Brightness-Contrast"),
@@ -575,8 +517,6 @@ ToolInfo tool_info[] =
   },
   
   { 
-    NULL,
-    NULL,
     NULL,
     N_("Hue-Saturation"),
     25,
@@ -593,8 +533,6 @@ ToolInfo tool_info[] =
 
   { 
     NULL,
-    NULL,
-    NULL,
     N_("Posterize"),
     26,
     N_("/Image/Colors/Posterize"),
@@ -609,8 +547,6 @@ ToolInfo tool_info[] =
   },
   
   { 
-    NULL,
-    NULL,
     NULL,
     N_("Threshold"), 
     27,
@@ -627,8 +563,6 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    NULL,
-    NULL,
     N_("Curves"),
     28,
     N_("/Image/Colors/Curves"),
@@ -644,8 +578,6 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    NULL,
-    NULL,
     N_("Levels"),
     29,
     N_("/Image/Colors/Levels"),
@@ -660,8 +592,6 @@ ToolInfo tool_info[] =
   },
   
   { 
-    NULL,
-    NULL,
     NULL,
     N_("Histogram"),
     30,
@@ -679,6 +609,7 @@ ToolInfo tool_info[] =
 
 gint num_tools = sizeof (tool_info) / sizeof (ToolInfo);
 
+
 /*  Local function declarations  */
 
 static void tools_options_reset_callback  (GtkWidget *, gpointer);
@@ -686,7 +617,7 @@ static void tools_options_close_callback  (GtkWidget *, gpointer);
 static gint tools_options_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 
 
-/* Function definitions */
+/*  Function definitions  */
 
 static void
 active_tool_free (void)
@@ -695,7 +626,7 @@ active_tool_free (void)
     return;
 
   if (tool_info[(int) active_tool->type].tool_options)
-    gtk_widget_hide (tool_info[(int) active_tool->type].tool_options);
+    gtk_widget_hide (tool_info[(int) active_tool->type].tool_options->main_vbox);
   
   (* tool_info[(int) active_tool->type].free_func) (active_tool);
 
@@ -715,14 +646,14 @@ tools_select (ToolType type)
 
   /*  Show the options and the title label of the active tool
    */
-  if (tool_info[(int) active_tool->type].tool_options)
-    gtk_widget_show (tool_info[(int) active_tool->type].tool_options);
+  if (tool_info[(int) active_tool->type].tool_options->main_vbox)
+    gtk_widget_show (tool_info[(int) active_tool->type].tool_options->main_vbox);
 
-  if (tool_info[(int) active_tool->type].tool_options_title)
+  if (tool_info[(int) active_tool->type].tool_options->title)
     gtk_label_set_text (GTK_LABEL (options_label),
-			tool_info[(int) active_tool->type].tool_options_title);
+			tool_info[(int) active_tool->type].tool_options->title);
 
-  if (tool_info[(int) active_tool->type].tool_options_reset_func)
+  if (tool_info[(int) active_tool->type].tool_options->reset_func)
     gtk_widget_set_sensitive (options_reset_button, TRUE);
   else
     gtk_widget_set_sensitive (options_reset_button, FALSE);
@@ -736,7 +667,7 @@ tools_select (ToolType type)
   active_tool_type = active_tool->type;
 
   /* Update the device-information dialog */
-  
+
   device_status_update (current_device);
 }
 
@@ -749,12 +680,15 @@ tools_initialize (ToolType type, GDisplay *gdisp)
 
   if (tool_info[(int) type].init_func)
     {
-      if (gdisp) {
-	active_tool = (* tool_info[(int) type].new_func) ();
-	(* tool_info[(int) type].init_func) (gdisp);
-      } else {
-	active_tool = tools_new_rect_select ();
-      }
+      if (gdisp)
+	{
+	  active_tool = (* tool_info[(int) type].new_func) ();
+	  (* tool_info[(int) type].init_func) (gdisp);
+	} 
+      else
+	{
+	  active_tool = tools_new_rect_select ();
+	}
     }
   else 
     active_tool = (* tool_info[(int) type].new_func) ();
@@ -762,13 +696,13 @@ tools_initialize (ToolType type, GDisplay *gdisp)
   /*  Show the options and the title label of the active tool
    */
   if (tool_info[(int) active_tool->type].tool_options)
-    gtk_widget_show (tool_info[(int) active_tool->type].tool_options);
+    gtk_widget_show (tool_info[(int) active_tool->type].tool_options->main_vbox);
 
-  if (tool_info[(int) active_tool->type].tool_options_title)
+  if (tool_info[(int) active_tool->type].tool_options->title)
     gtk_label_set_text (GTK_LABEL (options_label),
-			tool_info[(int) active_tool->type].tool_options_title);
+			tool_info[(int) active_tool->type].tool_options->title);
 
-  if (tool_info[(int) active_tool->type].tool_options_reset_func)
+  if (tool_info[(int) active_tool->type].tool_options->reset_func)
     gtk_widget_set_sensitive (options_reset_button, TRUE);
   else
     gtk_widget_set_sensitive (options_reset_button, FALSE);
@@ -886,40 +820,24 @@ tools_options_dialog_free ()
 
 
 void
-tools_register (ToolType              tool_type,
-		GtkWidget            *tool_options,
-		gchar                *tool_options_title,
-		ToolOptionsResetFunc  tool_options_reset_func)
+tools_register (ToolType     tool_type,
+		ToolOptions *tool_options)
 {
-  if (! tool_options)
-    {
-      /*  this tool has no special options  */
-      tool_options = gtk_label_new (_("This tool has no options."));
-      gtk_misc_set_padding (GTK_MISC (tool_options), 2, 6);
-    }
+  g_return_if_fail (tool_options != NULL);
+
   tool_info [(int) tool_type].tool_options = tool_options;
 
   /*  need to check whether the widget is visible...this can happen
    *  because some tools share options such as the transformation tools
    */
-  if (! GTK_WIDGET_VISIBLE (tool_options))
+  if (! GTK_WIDGET_VISIBLE (tool_options->main_vbox))
     {
-      gtk_box_pack_start (GTK_BOX (options_vbox), tool_options, TRUE, TRUE, 0);
-      gtk_widget_show (tool_options);
+      gtk_box_pack_start (GTK_BOX (options_vbox), tool_options->main_vbox,
+			  TRUE, TRUE, 0);
+      gtk_widget_show (tool_options->main_vbox);
     }
 
-  if (! tool_options_title)
-    {
-      /*  this tool didn't pass a title string  */
-      tool_options_title =
-	g_strconcat (tool_info [(int) tool_type].tool_name,
-		     _(" Tool Options"), NULL);
-    }
-  tool_info [(int) tool_type].tool_options_title = tool_options_title;
-
-  gtk_label_set_text (GTK_LABEL (options_label), tool_options_title);
-
-  tool_info [(int) tool_type].tool_options_reset_func = tool_options_reset_func;
+  gtk_label_set_text (GTK_LABEL (options_label), tool_options->title);
 }
 
 
@@ -1009,6 +927,6 @@ tools_options_reset_callback (GtkWidget *w,
   if (active_tool_type == -1)
     return;
 
-  if (tool_info[(int) active_tool_type].tool_options_reset_func)
-    (* tool_info[(int) active_tool_type].tool_options_reset_func) ();
+  if (tool_info[(int) active_tool_type].tool_options->reset_func)
+    (* tool_info[(int) active_tool_type].tool_options->reset_func) ();
 }

@@ -80,8 +80,9 @@ struct _ColorBalanceDialog
   gint         application_mode;
 };
 
+
 /*  the color balance tool options  */
-static void *color_balance_options = NULL;  /* dummy */
+static ToolOptions *color_balance_options = NULL;
 
 /*  the color balance dialog  */
 static ColorBalanceDialog *color_balance_dialog = NULL;
@@ -114,6 +115,7 @@ static void                  color_balance_yb_text_update      (GtkWidget *, gpo
 
 static void       color_balance (PixelRegion *, PixelRegion *, void *);
 static Argument * color_balance_invoker (Argument *);
+
 
 /*  color balance machinery  */
 
@@ -252,8 +254,8 @@ tools_new_color_balance ()
   /*  The tool options  */
   if (!color_balance_options)
     {
-      tools_register (COLOR_BALANCE, NULL, _("Color Balance Options"), NULL);
-      color_balance_options = (void *) 1;
+      color_balance_options = tool_options_new (_("Color Balance Options"));
+      tools_register (COLOR_BALANCE, color_balance_options);
     }
 
   tool = (Tool *) g_malloc (sizeof (Tool));

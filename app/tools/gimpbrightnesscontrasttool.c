@@ -43,15 +43,15 @@
 #define CONTRAST_TEXT     0x8
 #define ALL               0xF
 
-typedef struct _BrightnessContrast BrightnessContrast;
+/*  the brightness-contrast structures  */
 
+typedef struct _BrightnessContrast BrightnessContrast;
 struct _BrightnessContrast
 {
   int x, y;    /*  coords for last mouse click  */
 };
 
 typedef struct _BrightnessContrastDialog BrightnessContrastDialog;
-
 struct _BrightnessContrastDialog
 {
   GtkWidget   *shell;
@@ -72,6 +72,14 @@ struct _BrightnessContrastDialog
   GimpLut      *lut;
 };
 
+
+/*  the brightness-contrast tool options  */
+static ToolOptions *brightness_contrast_options = NULL;
+
+/*  the brightness-contrast dialog  */
+static BrightnessContrastDialog *brightness_contrast_dialog = NULL;
+
+
 /*  brightness contrast action functions  */
 
 static void   brightness_contrast_button_press   (Tool *, GdkEventButton *, gpointer);
@@ -91,10 +99,6 @@ static void   brightness_contrast_brightness_scale_update (GtkAdjustment *, gpoi
 static void   brightness_contrast_contrast_scale_update   (GtkAdjustment *, gpointer);
 static void   brightness_contrast_brightness_text_update  (GtkWidget *, gpointer);
 static void   brightness_contrast_contrast_text_update    (GtkWidget *, gpointer);
-
-static void *brightness_contrast_options = NULL;
-static BrightnessContrastDialog *brightness_contrast_dialog = NULL;
-
 
 
 /*  by_color select action functions  */
@@ -168,10 +172,10 @@ tools_new_brightness_contrast ()
   /*  The tool options  */
   if (!brightness_contrast_options)
     {
-      tools_register (BRIGHTNESS_CONTRAST, NULL,
-		      _("Brightness-Contrast Options"), NULL);
-      brightness_contrast_options = (void *) 1;
-    }
+      brightness_contrast_options =
+	tool_options_new (_("Brightness-Contrast Options"));
+      tools_register (BRIGHTNESS_CONTRAST, brightness_contrast_options);
+   }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (BrightnessContrast *) g_malloc (sizeof (BrightnessContrast));
@@ -286,7 +290,7 @@ brightness_contrast_new_dialog ()
 
   /*  Create the brightness scale widget  */
   label = gtk_label_new (_("Brightness"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
 
@@ -317,10 +321,9 @@ brightness_contrast_new_dialog ()
   gtk_widget_show (bcd->brightness_text);
   gtk_widget_show (slider);
 
-
   /*  Create the contrast scale widget  */
   label = gtk_label_new (_("Contrast"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
 

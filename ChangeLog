@@ -1,3 +1,65 @@
+1999-04-12  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/airbrush.c
+	* app/bezier_select.c
+	* app/blend.c
+	* app/brightness_contrast.c
+	* app/bucket_fill.c
+	* app/by_color_select.c
+	* app/clone.c
+	* app/color_balance.c
+	* app/color_picker.c
+	* app/convolve.c
+	* app/crop.c
+	* app/curves.c
+	* app/ellipse_select.c
+	* app/eraser.c
+	* app/flip_tool.c
+	* app/free_select.c
+	* app/fuzzy_select.c
+	* app/histogram_tool.c
+	* app/hue_saturation.c
+	* app/ink.c
+	* app/iscissors.c
+	* app/levels.c
+	* app/magnify.c
+	* app/move.c
+	* app/paintbrush.c
+	* app/pencil.c
+	* app/posterize.c
+	* app/rect_select.[ch]
+	* app/text_tool.c
+	* app/threshold.c
+	* app/transform_tool.c
+
+	* app/tools.[ch]
+	* app/toolsF.h: again: all tools :( 
+
+	* app/Makefile.am
+	* app/tool_options.[ch]
+	* app/selection_options.h
+	* app/tool_options_ui.h: new files.
+
+	Ok, this time it's general enough for future extensions:
+
+	- The tool options structures are organized like the gtk object
+	  system to allow derived tool options.
+	- Renamed all create and reset functions to *_options_new() and
+	  *_options_reset() to reflect this.
+	- Changed tools_register() again. Now it takes just a pointer to a
+	  ToolOptions structure.
+	- Moved almost the entire tool options gui code to tool_options.c.
+	- Visually separated the common selection options from the
+	  tool-specific ones. I'd like to do the same with opacity/paint
+	  mode in all paint tool options but I think this needs some more
+	  discussion.
+
+	* app/histogram_tool.c: changed packing boxes, label alignments.
+
+	* app/paintbrush.c: some more sensitive settings. The gradient
+	feature can now be toggled with a button. Hopefully didn't break
+	anything.
+
 Sun Apr 11 23:35:31 CEST 1999 Marc Lehmann <pcg@goof.com>
 
 	* app/general.c: save string token length into "token_int".

@@ -28,7 +28,7 @@
 #include "gimage_mask.h"
 #include "gimprc.h"
 #include "gdisplay.h"
-#include "rect_select.h"
+#include "selection_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -62,7 +62,8 @@ struct _ByColorDialog
   GImage      *gimage;    /*  gimage which is currently under examination  */
 };
 
-/*  by color selection tool options  */
+
+/*  the by color selection tool options  */
 static SelectionOptions *by_color_options = NULL;
 
 /*  the by color selection dialog  */
@@ -91,6 +92,7 @@ static int        is_pixel_sufficiently_different (unsigned char *, unsigned cha
 static Channel *  by_color_select_color (GImage *, GimpDrawable *, unsigned char *, int, int, int);
 static void       by_color_select (GImage *, GimpDrawable *, unsigned char *, int, int, int, int, double, int);
 static Argument * by_color_select_invoker (Argument *);
+
 
 /*  by_color selection machinery  */
 
@@ -444,9 +446,9 @@ by_color_select_control (Tool     *tool,
 }
 
 static void
-by_color_select_reset_options ()
+by_color_select_options_reset ()
 {
-  reset_selection_options (by_color_options);
+  selection_options_reset (by_color_options);
 }
 
 Tool *
@@ -457,8 +459,11 @@ tools_new_by_color_select ()
 
   /*  The tool options  */
   if (!by_color_options)
-    by_color_options =
-      create_selection_options (BY_COLOR_SELECT, by_color_select_reset_options);
+    {
+      by_color_options =
+	selection_options_new (BY_COLOR_SELECT, by_color_select_options_reset);
+      tools_register (BY_COLOR_SELECT, (ToolOptions *) by_color_options);
+    }
 
   /*  The "by color" dialog  */
   if (!by_color_dialog)

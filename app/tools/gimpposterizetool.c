@@ -63,8 +63,9 @@ struct _PosterizeDialog
   GimpLut       *lut;
 };
 
+
 /*  the posterize tool options  */
-static void *posterize_options = NULL;  /* dummy */
+static ToolOptions *posterize_options = NULL;
 
 /* the posterize tool dialog  */
 static PosterizeDialog *posterize_dialog = NULL;
@@ -86,7 +87,7 @@ static void               posterize_levels_text_update  (GtkWidget *, gpointer);
 static gint               posterize_delete_callback     (GtkWidget *, GdkEvent *, gpointer);
 
 
-/*  by_color select action functions  */
+/*  posterize select action functions  */
 
 static void
 posterize_button_press (Tool           *tool,
@@ -159,10 +160,10 @@ tools_new_posterize ()
   Posterize * private;
 
   /*  The tool options  */
-  if (!posterize_options)
+  if (! posterize_options)
     {
-      tools_register (POSTERIZE, NULL, _("Posterize Options"), NULL);
-      posterize_options = (void *) 1;
+      posterize_options = tool_options_new (("Posterize Options"));
+      tools_register (POSTERIZE, posterize_options);
     }
 
   /*  The posterize dialog  */

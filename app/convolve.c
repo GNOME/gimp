@@ -26,6 +26,7 @@
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "selection.h"
+#include "tool_options_ui.h"
 #include "tools.h"
 #include "gimage.h"
 
@@ -42,6 +43,8 @@
 typedef struct _ConvolveOptions ConvolveOptions;
 struct _ConvolveOptions
 {
+  ToolOptions   tool_options;
+
   ConvolveType  type;
   ConvolveType  type_d;
   GtkWidget    *type_w;
@@ -51,8 +54,9 @@ struct _ConvolveOptions
   GtkObject    *pressure_w;
 };
 
-/*  convolve tool options  */
-static ConvolveOptions *convolve_options = NULL;
+
+/*  the convolve tool options  */
+static ConvolveOptions * convolve_options = NULL;
 
 /*  local variables  */
 static int          matrix [25];
@@ -100,21 +104,14 @@ static Argument *   convolve_invoker     (Argument *);
 /* functions  */
 
 static void
-convolve_scale_update (GtkAdjustment *adjustment,
-		       double        *scale_val)
+convolve_type_callback (GtkWidget *widget,
+			gpointer   data)
 {
-  *scale_val = adjustment->value;
+  convolve_options->type = (ConvolveType) data;
 }
 
 static void
-convolve_type_callback (GtkWidget *w,
-			gpointer  client_data)
-{
-  convolve_options->type = (ConvolveType) client_data;
-}
-
-static void
-reset_convolve_options (void)
+convolve_options_reset (void)
 {
   ConvolveOptions *options = convolve_options;
 
@@ -124,17 +121,19 @@ reset_convolve_options (void)
 }
 
 static ConvolveOptions *
-create_convolve_options (void)
+convolve_options_new (void)
 {
   ConvolveOptions *options;
+
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *scale;
-  GtkWidget *frame;
   GSList    *group = NULL;
+  GtkWidget *frame;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
+
   int i;
   char *button_names[3] =
   {
@@ -143,13 +142,16 @@ create_convolve_options (void)
     N_("Custom")
   };
 
-  /*  the new options structure  */
+  /*  the new convolve tool options structure  */
   options = (ConvolveOptions *) g_malloc (sizeof (ConvolveOptions));
+  tool_options_init ((ToolOptions *) options,
+		     _("Convolver Options"),
+		     convolve_options_reset);
   options->type     = options->type_d     = Blur;
   options->pressure = options->pressure_d = 50.0;
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = options->tool_options.main_vbox;
 
   /*  the pressure scale  */
   hbox = gtk_hbox_new (FALSE, 6);
@@ -167,7 +169,7 @@ create_convolve_options (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->pressure_w), "value_changed",
-		      (GtkSignalFunc) convolve_scale_update,
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
 		      &options->pressure);
   gtk_widget_show (scale);
   gtk_widget_show (hbox);
@@ -197,11 +199,6 @@ create_convolve_options (void)
     }
   gtk_widget_show (radio_box);
 
-  /*  Register this selection options widget with the main tools options dialog
-   */
-  tools_register (CONVOLVE, vbox, _("Convolver Options"),
-		  reset_convolve_options);
-
   return options;
 }
 
@@ -226,8 +223,12 @@ tools_new_convolve ()
   Tool * tool;
   PaintCore * private;
 
+  /*  The tool options  */
   if (! convolve_options)
-    convolve_options = create_convolve_options ();
+    {
+      convolve_options = convolve_options_new ();
+      tools_register (CONVOLVE, (ToolOptions *) convolve_options);
+    }
 
   tool = paint_core_new (CONVOLVE);
 

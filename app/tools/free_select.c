@@ -25,6 +25,7 @@
 #include "gimage_mask.h"
 #include "gdisplay.h"
 #include "rect_select.h"
+#include "selection_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -33,7 +34,7 @@
 #define SUPERSAMPLE      3
 #define SUPERSAMPLE2     9
 
-/* the free select structures  */
+/*  the free selection structures  */
 
 typedef struct _free_select FreeSelect;
 struct _free_select
@@ -49,7 +50,8 @@ struct _FreeSelectPoint
   double x, y;
 };
 
-/*  free select tool options  */
+
+/*  the free selection tool options  */
 static SelectionOptions * free_options = NULL;
 
 /*  The global array of XPoints for drawing the polygon...  */
@@ -448,9 +450,9 @@ free_select_draw (Tool *tool)
 }
 
 static void
-free_select_reset_options ()
+free_select_options_reset ()
 {
-  reset_selection_options (free_options);
+  selection_options_reset (free_options);
 }
 
 Tool *
@@ -461,8 +463,11 @@ tools_new_free_select (void)
 
   /*  The tool options  */
   if (!free_options)
-    free_options =
-      create_selection_options (FREE_SELECT, free_select_reset_options);
+    {
+      free_options =
+	selection_options_new (FREE_SELECT, free_select_options_reset);
+      tools_register (FREE_SELECT, (ToolOptions *) free_options);
+    }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (FreeSelect *) g_malloc (sizeof (FreeSelect));

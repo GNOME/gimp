@@ -24,17 +24,20 @@
 #include "rect_select.h"
 /*  private header file for rect_select data structure  */
 #include "rect_selectP.h"
+#include "selection_options.h"
 
 #include "libgimp/gimpintl.h"
 
-/*  ellipse select tool options  */
-SelectionOptions *ellipse_options = NULL;
+
+/*  the ellipse selection tool options  */
+SelectionOptions * ellipse_options = NULL;
 
 
 /*  local function prototypes  */
 void ellipse_select (GImage *, int, int, int, int, int, int, int, double);
 
 static Argument *ellipse_select_invoker (Argument *);
+
 
 /*************************************/
 /*  Ellipsoidal selection apparatus  */
@@ -104,9 +107,9 @@ ellipse_select_draw (Tool *tool)
 }
 
 static void
-ellipse_select_reset_options (void)
+ellipse_select_options_reset (void)
 {
-  reset_selection_options (ellipse_options);
+  selection_options_reset (ellipse_options);
 }
 
 Tool *
@@ -117,8 +120,11 @@ tools_new_ellipse_select (void)
 
   /*  The tool options  */
   if (!ellipse_options)
-    ellipse_options = create_selection_options (ELLIPSE_SELECT,
-						ellipse_select_reset_options);
+    {
+      ellipse_options =
+	selection_options_new (ELLIPSE_SELECT, ellipse_select_options_reset);
+      tools_register (ELLIPSE_SELECT, (ToolOptions *) ellipse_options);
+    }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (EllipseSelect *) g_malloc (sizeof (EllipseSelect));

@@ -18,14 +18,15 @@
 #include "gdk/gdkkeysyms.h"
 #include "appenv.h"
 #include "actionarea.h"
+#include "crop.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
-#include "crop.h"
 #include "info_dialog.h"
+#include "tool_options_ui.h"
 #include "undo.h"
 
 #include "libgimp/gimpsizeentry.h"
@@ -72,18 +73,21 @@ struct _Crop
 typedef struct _CropOptions CropOptions;
 struct _CropOptions
 {
-  int        layer_only;
-  int        layer_only_d;
-  GtkWidget *layer_only_w;
+  ToolOptions  tool_options;
 
-  int        default_to_enlarge;
-  int        default_to_enlarge_d;
-  GtkWidget *default_to_enlarge_w;
+  int          layer_only;
+  int          layer_only_d;
+  GtkWidget   *layer_only_w;
 
-  int        default_to_crop;
-  int        default_to_crop_d;
-  GtkWidget *default_to_crop_w;
+  int          default_to_enlarge;
+  int          default_to_enlarge_d;
+  GtkWidget   *default_to_enlarge_w;
+
+  int          default_to_crop;
+  int          default_to_crop_d;
+  GtkWidget   *default_to_crop_w;
 };
+
 
 /*  the crop tool options  */
 static CropOptions *crop_options = NULL;
@@ -106,9 +110,9 @@ static void crop_cursor_update      (Tool *, GdkEventMotion *, gpointer);
 static void crop_control            (Tool *, int, gpointer);
 static void crop_arrow_keys_func    (Tool *, GdkEventKey *, gpointer);
 
-
 /*  Crop helper functions   */
-static void crop_image              (GImage *gimage, int, int, int, int, int, int);
+static void crop_image              (GImage *gimage,
+				     int, int, int, int, int, int);
 static void crop_recalc             (Tool *, Crop *);
 static void crop_start              (Tool *, Crop *);
 static void crop_adjust_guides      (GImage *, int, int, int, int);
@@ -125,56 +129,58 @@ static void crop_close_callback     (GtkWidget *, gpointer);
 static void crop_orig_changed       (GtkWidget *, gpointer);
 static void crop_size_changed       (GtkWidget *, gpointer);
 
-/*  Options callbacks */
-static void crop_checkbutton_update (GtkWidget *, gpointer);
-			
 static Argument *crop_invoker       (Argument *);
 
 
 /*  Functions  */
 
 static void
-reset_crop_options (void)
+crop_options_reset (void)
 {
   CropOptions *options = crop_options;
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->layer_only_w),
 				options->layer_only_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->default_to_enlarge_w),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(options->default_to_enlarge_w),
 				options->default_to_enlarge_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->default_to_crop_w),
 				options->default_to_crop_d);
 }
 
 static CropOptions *
-init_crop_options (void)
+crop_options_new (void)
 {
   CropOptions *options;
-  GtkWidget   *vbox;
-  GtkWidget   *defaults_frame;
-  GtkWidget   *defaults_vbox;
 
+  GtkWidget *vbox;
+  GtkWidget *defaults_frame;
+  GtkWidget *defaults_vbox;
+
+  /*  the new crop tool options structure  */
   options = (CropOptions *) g_malloc (sizeof (CropOptions));
+  tool_options_init ((ToolOptions *) options,
+		     _("Crop Options"),
+		     crop_options_reset);
   options->layer_only         = options->layer_only_d         = FALSE;
   options->default_to_enlarge = options->default_to_enlarge_d = TRUE;
   options->default_to_crop    = options->default_to_crop_d    = FALSE;
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = options->tool_options.main_vbox;
 
-  /* layer toggle */
+  /*  layer toggle  */
   options->layer_only_w =
     gtk_check_button_new_with_label(_("Current layer only"));
   gtk_box_pack_start (GTK_BOX (vbox), options->layer_only_w,
 		      FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->layer_only_w), "toggled",
-		      (GtkSignalFunc) crop_checkbutton_update,
+		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->layer_only);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->layer_only_w),
 				options->layer_only_d);
   gtk_widget_show (options->layer_only_w);
 
-  /* defaults */
+  /*  defaults  */
   defaults_frame = gtk_frame_new (_("Defaults"));
   gtk_box_pack_start (GTK_BOX (vbox), defaults_frame, FALSE, FALSE, 0);
 
@@ -182,25 +188,25 @@ init_crop_options (void)
   gtk_container_set_border_width (GTK_CONTAINER (defaults_vbox), 2);
   gtk_container_add (GTK_CONTAINER (defaults_frame), defaults_vbox);
   
-  /* enlarge toggle */
+  /*  enlarge toggle  */
   options->default_to_enlarge_w =
     gtk_check_button_new_with_label (_("Allow Enlarging"));
   gtk_box_pack_start (GTK_BOX (defaults_vbox), options->default_to_enlarge_w,
 		      FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->default_to_enlarge_w), "toggled",
-		      (GtkSignalFunc) crop_checkbutton_update,
+		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->default_to_enlarge);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(options->default_to_enlarge_w),
 				options->default_to_enlarge_d);
   gtk_widget_show (options->default_to_enlarge_w);
 
-  /* crop toggle */
+  /*  crop toggle  */
   options->default_to_crop_w =
     gtk_check_button_new_with_label(_("Crop Layers"));
   gtk_box_pack_start (GTK_BOX (defaults_vbox), options->default_to_crop_w,
 		      FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->default_to_crop_w), "toggled",
-		      (GtkSignalFunc) crop_checkbutton_update,
+		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->default_to_crop);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->default_to_crop_w),
 				options->default_to_crop_d);
@@ -209,27 +215,9 @@ init_crop_options (void)
   gtk_widget_show (defaults_vbox);
   gtk_widget_show (defaults_frame);
 
-  /* Register this selection options widget with the main tools
-   * options dialog */
-
-  tools_register (CROP, vbox, _("Crop Options"), reset_crop_options);
-
   return options;
 }
 
-static void
-crop_checkbutton_update (GtkWidget *w,
-			 gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (w)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
 
 static void
 crop_button_press (Tool           *tool,
@@ -783,8 +771,12 @@ tools_new_crop ()
   Tool * tool;
   Crop * private;
 
+  /*  The tool options  */
   if (! crop_options)
-    crop_options = init_crop_options ();
+    {
+      crop_options = crop_options_new ();
+      tools_register (CROP, (ToolOptions *) crop_options);
+    }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (Crop *) g_malloc (sizeof (Crop));

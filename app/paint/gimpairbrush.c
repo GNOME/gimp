@@ -26,6 +26,7 @@
 #include "palette.h"
 #include "airbrush.h"
 #include "selection.h"
+#include "tool_options_ui.h"
 #include "tools.h"
 #include "gimage.h"
 
@@ -49,16 +50,19 @@ struct _AirbrushTimeout
 typedef struct _AirbrushOptions AirbrushOptions;
 struct _AirbrushOptions
 {
-  double     rate;
-  double     rate_d;
-  GtkObject *rate_w;
+  ToolOptions  tool_options;
 
-  double     pressure;
-  double     pressure_d;
-  GtkObject *pressure_w;
+  double       rate;
+  double       rate_d;
+  GtkObject   *rate_w;
+
+  double       pressure;
+  double       pressure_d;
+  GtkObject   *pressure_w;
 };
 
-/*  airbrush tool options  */
+
+/*  the airbrush tool options  */
 static AirbrushOptions *airbrush_options = NULL;
 
 /*  local variables  */
@@ -78,14 +82,7 @@ static Argument *   airbrush_invoker  (Argument *);
 /*  functions  */
 
 static void
-airbrush_scale_update (GtkAdjustment *adjustment,
-		       double        *scale_val)
-{
-  *scale_val = adjustment->value;
-}
-
-static void
-reset_airbrush_options (void)
+airbrush_options_reset (void)
 {
   AirbrushOptions *options = airbrush_options;
 
@@ -96,21 +93,25 @@ reset_airbrush_options (void)
 }
 
 static AirbrushOptions *
-create_airbrush_options (void)
+airbrush_options_new (void)
 {
   AirbrushOptions *options;
-  GtkWidget       *vbox;
-  GtkWidget       *table;
-  GtkWidget       *label;
-  GtkWidget       *scale;
 
-  /*  the new options structure  */
+  GtkWidget *vbox;
+  GtkWidget *table;
+  GtkWidget *label;
+  GtkWidget *scale;
+
+  /*  the new airbrush tool options structure  */
   options = (AirbrushOptions *) g_malloc (sizeof (AirbrushOptions));
+  tool_options_init ((ToolOptions *) options,
+		     _("Airbrush Options"),
+		     airbrush_options_reset);
   options->rate     = options->rate_d     = 80.0;
   options->pressure = options->pressure_d = 10.0;
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = options->tool_options.main_vbox;
 
   /*  the rate scale  */
   table = gtk_table_new (2, 2, FALSE);
@@ -131,7 +132,8 @@ create_airbrush_options (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->rate_w), "value_changed",
-		      (GtkSignalFunc) airbrush_scale_update, &options->rate);
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      &options->rate);
   gtk_widget_show (scale);
 
   /*  the pressure scale  */
@@ -148,16 +150,34 @@ create_airbrush_options (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->pressure_w), "value_changed",
-		      (GtkSignalFunc) airbrush_scale_update, &options->pressure);
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      &options->pressure);
   gtk_widget_show (scale);
 
   gtk_widget_show (table);
 
-  /*  Register this selection options widget with the main tools options dialog
-   */
-  tools_register (AIRBRUSH, vbox, _("Airbrush Options"), reset_airbrush_options);
-
   return options;
+}
+
+Tool *
+tools_new_airbrush ()
+{
+  Tool * tool;
+  PaintCore * private;
+
+  /*  The tool options  */
+  if (! airbrush_options)
+    {
+      airbrush_options = airbrush_options_new ();
+      tools_register (AIRBRUSH, (ToolOptions *) airbrush_options);
+    }
+
+  tool = paint_core_new (AIRBRUSH);
+
+  private = (PaintCore *) tool->private;
+  private->paint_func = airbrush_paint_func;
+
+  return tool;
 }
 
 void *
@@ -211,24 +231,6 @@ airbrush_paint_func (PaintCore *paint_core,
     }
 
   return NULL;
-}
-
-
-Tool *
-tools_new_airbrush ()
-{
-  Tool * tool;
-  PaintCore * private;
-
-  if (! airbrush_options)
-    airbrush_options = create_airbrush_options ();
-
-  tool = paint_core_new (AIRBRUSH);
-
-  private = (PaintCore *) tool->private;
-  private->paint_func = airbrush_paint_func;
-
-  return tool;
 }
 
 

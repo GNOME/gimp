@@ -39,8 +39,9 @@ struct _MoveTool
   GDisplay *disp;
 };
 
-/*  move tool options  */
-static void  *move_options = NULL;  /* dummy */
+
+/*  the move tool options  */
+static ToolOptions *move_options = NULL;
 
 /*  local variables  */
 static GdkGC *move_gc = NULL;
@@ -431,10 +432,11 @@ tools_new_move_tool ()
   Tool * tool;
   MoveTool * private;
 
+  /*  The tool options  */
   if (! move_options)
     {
-      tools_register (MOVE, NULL, _("Move Tool Options"), NULL);
-      move_options = (void *) 1;
+      move_options = tool_options_new (_("Move Tool Options"));
+      tools_register (MOVE, (ToolOptions *) move_options);
     }
 
   tool = (Tool *) g_malloc (sizeof (Tool));

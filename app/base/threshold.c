@@ -60,8 +60,9 @@ struct _ThresholdDialog
   gint         preview;
 };
 
+
 /*  the threshold tool options  */
-static void *threshold_options = NULL;  /* dummy */
+static ToolOptions *threshold_options = NULL;
 
 /*  the threshold tool dialog  */
 static ThresholdDialog *threshold_dialog = NULL;
@@ -249,14 +250,14 @@ tools_new_threshold ()
   Threshold * private;
 
   /*  The tool options  */
-  if (!threshold_options)
+  if (! threshold_options)
     {
-      tools_register (THRESHOLD, NULL, _("Threshold Options"), NULL);
-      threshold_options = (void *) 1;
+      threshold_options = tool_options_new (_("Threshold Options"));
+      tools_register (THRESHOLD, threshold_options);
     }
 
   /*  The threshold dialog  */
-  if (!threshold_dialog)
+  if (! threshold_dialog)
     threshold_dialog = threshold_new_dialog ();
   else
     if (!GTK_WIDGET_VISIBLE (threshold_dialog->shell))

@@ -48,16 +48,19 @@ typedef enum
 typedef struct _CloneOptions CloneOptions;
 struct _CloneOptions
 {
-  CloneType  type;
-  CloneType  type_d;
-  GtkWidget *type_w;
+  ToolOptions  tool_options;
 
-  AlignType  aligned;
-  AlignType  aligned_d;
-  GtkWidget *aligned_w;
+  CloneType    type;
+  CloneType    type_d;
+  GtkWidget   *type_w;
+
+  AlignType    aligned;
+  AlignType    aligned_d;
+  GtkWidget   *aligned_w;
 };
 
-/*  clone tool options  */
+
+/*  the clone tool options  */
 static CloneOptions *clone_options = NULL;
 
 /*  local variables  */
@@ -92,21 +95,21 @@ static Argument *   clone_invoker         (Argument *);
 /*  functions  */
 
 static void
-clone_type_callback (GtkWidget *w,
-		     gpointer   client_data)
+clone_type_callback (GtkWidget *widget,
+		     gpointer   data)
 {
-  clone_options->type =(CloneType) client_data;
+  clone_options->type = (CloneType) data;
 }
 
 static void
-align_type_callback (GtkWidget *w,
-		     gpointer   client_data)
+align_type_callback (GtkWidget *widget,
+		     gpointer   data)
 {
-  clone_options->aligned =(AlignType) client_data;
+  clone_options->aligned = (AlignType) data;
 }
 
 static void
-reset_clone_options (void)
+clone_options_reset (void)
 {
   CloneOptions *options = clone_options;
 
@@ -115,14 +118,16 @@ reset_clone_options (void)
 }
 
 static CloneOptions *
-create_clone_options (void)
+clone_options_new (void)
 {
   CloneOptions *options;
-  GtkWidget    *vbox;
-  GtkWidget    *radio_frame;
-  GtkWidget    *radio_box;
-  GtkWidget    *radio_button;
-  GSList       *group = NULL;
+
+  GtkWidget *vbox;
+  GSList    *group = NULL;
+  GtkWidget *radio_frame;
+  GtkWidget *radio_box;
+  GtkWidget *radio_button;
+
   int           i;
   char *button_names[2] =
   {
@@ -136,13 +141,16 @@ create_clone_options (void)
     N_("Registered")
   };
 
-  /*  the new options structure  */
+  /*  the new clone tool options structure  */
   options = (CloneOptions *) g_malloc (sizeof (CloneOptions));
+  tool_options_init ((ToolOptions *) options,
+		     _("Clone Tool Options"),
+		     clone_options_reset);
   options->type    = options->type_d    = ImageClone;
   options->aligned = options->aligned_d = AlignNo;
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = options->tool_options.main_vbox;
 
   /*  the radio frame and box  */
   radio_frame = gtk_frame_new (_("Source"));
@@ -196,10 +204,6 @@ create_clone_options (void)
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
   
-  /*  Register this selection options widget with the main tools options dialog
-   */
-  tools_register (CLONE, vbox, _("Clone Tool Options"), reset_clone_options);
-
   return options;
 }
 
@@ -348,8 +352,12 @@ tools_new_clone ()
   Tool * tool;
   PaintCore * private;
 
+  /*  The tool options  */
   if (! clone_options)
-    clone_options = create_clone_options ();
+    {
+      clone_options = clone_options_new ();
+      tools_register (CLONE, (ToolOptions *) clone_options);
+    }
 
   tool = paint_core_new (CLONE);
 

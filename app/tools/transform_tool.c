@@ -19,6 +19,7 @@
 #include <math.h>
 #include "appenv.h"
 #include "gdisplay.h"
+#include "tool_options_ui.h"
 #include "tools.h"
 #include "perspective_tool.h"
 #include "rotate_tool.h"
@@ -35,30 +36,33 @@
 typedef struct _TransformOptions TransformOptions;
 struct _TransformOptions
 {
-  int	      direction;
-  int         direction_d;
-  GtkWidget  *direction_w;
+  ToolOptions  tool_options;
 
-  int         smoothing;
-  int         smoothing_d;
-  GtkWidget  *smoothing_w;
+  int	       direction;
+  int          direction_d;
+  GtkWidget   *direction_w;
 
-  int	      clip;
-  int         clip_d;
-  GtkWidget  *clip_w;
+  int          smoothing;
+  int          smoothing_d;
+  GtkWidget   *smoothing_w;
 
-  int	      grid_size;
-  int         grid_size_d;
-  GtkObject  *grid_size_w;
+  int	       clip;
+  int          clip_d;
+  GtkWidget   *clip_w;
 
-  int         show_grid;
-  int         show_grid_d;
-  GtkWidget  *show_grid_w;
+  int	       grid_size;
+  int          grid_size_d;
+  GtkObject   *grid_size_w;
 
-  ToolType    type;
-  ToolType    type_d;
-  GtkWidget  *type_w;
+  int          show_grid;
+  int          show_grid_d;
+  GtkWidget   *show_grid_w;
+
+  ToolType     type;
+  ToolType     type_d;
+  GtkWidget   *type_w;
 };
+
 
 /*  the transform tool options  */
 static TransformOptions *transform_options = NULL;
@@ -71,36 +75,22 @@ static void         transform_change_type     (int);
 /*  functions  */
 
 static void
-transform_toggle_update (GtkWidget *w,
-			 gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (w)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-transform_show_grid_update (GtkWidget *w,
+transform_show_grid_update (GtkWidget *widget,
 			    gpointer   data)
 {
-  transform_toggle_update (w, data);
+  tool_options_toggle_update (widget, data);
   transform_core_grid_density_changed ();
 }
 
 static void
-transform_type_callback (GtkWidget *w,
+transform_type_callback (GtkWidget *widget,
 			 gpointer   client_data)
 {
   transform_change_type ((long) client_data);
 }
 
 static void
-transform_direction_callback (GtkWidget *w,
+transform_direction_callback (GtkWidget *widget,
 			      gpointer   client_data)
 {
   long dir = (long) client_data;
@@ -121,7 +111,7 @@ transform_grid_density_callback (GtkWidget *w,
 }
 
 static void
-reset_transform_options (void)
+transform_options_reset (void)
 {
   TransformOptions *options = transform_options;
 
@@ -139,16 +129,20 @@ reset_transform_options (void)
 }
 
 static TransformOptions *
-create_transform_options (void)
+transform_options_new (void)
 {
   TransformOptions *options;
-  GtkWidget *main_box, *vbox, *hbox;
+
+  GtkWidget *main_box;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *label;
+  GSList    *group;
   GtkWidget *radio_frame;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
   GtkWidget *grid_density;
-  GSList *group;
+
   int i;
   static const char *transform_button_names[] =
   {
@@ -163,8 +157,11 @@ create_transform_options (void)
     N_("Corrective")
   };
 
-  /*  the new options structure  */
+  /*  the new transform tool options structure  */
   options = (TransformOptions *) g_malloc (sizeof (TransformOptions));
+  tool_options_init ((ToolOptions *) options,
+		     _("Transform Tool Options"),
+		     transform_options_reset);
   options->type      = options->type_d      = ROTATE;
   options->smoothing = options->smoothing_d = TRUE;
   options->clip      = options->clip_d      = FALSE;
@@ -174,6 +171,8 @@ create_transform_options (void)
 
   /* the main hbox */
   main_box = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), main_box,
+		      FALSE, FALSE, 0);
 
   /*  the left vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -212,7 +211,7 @@ create_transform_options (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->smoothing_w),
 				options->smoothing);
   gtk_signal_connect (GTK_OBJECT (options->smoothing_w), "toggled",
-		      (GtkSignalFunc) transform_toggle_update,
+		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->smoothing);
   gtk_box_pack_start (GTK_BOX (vbox), options->smoothing_w, FALSE, FALSE, 0);
   gtk_widget_show (options->smoothing_w);
@@ -288,32 +287,29 @@ create_transform_options (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->clip_w),
 				options->clip);
   gtk_signal_connect (GTK_OBJECT (options->clip_w), "toggled",
-		      (GtkSignalFunc) transform_toggle_update,
+		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->clip);
   gtk_box_pack_start (GTK_BOX (vbox), options->clip_w, FALSE, FALSE, 0);
   gtk_widget_show (options->clip_w);
 
   gtk_widget_show (vbox);
+  gtk_widget_show (main_box);
   
-  /*  Register this selection options widget with the main tools options dialog
-   */
-  tools_register (ROTATE, main_box, _("Transform Tool Options"),
-		  reset_transform_options);
-  tools_register (SCALE, main_box, _("Transform Tool Options"),
-		  reset_transform_options);
-  tools_register (SHEAR, main_box, _("Transform Tool Options"),
-		  reset_transform_options);
-  tools_register (PERSPECTIVE, main_box, _("Transform Tool Options"),
-		  reset_transform_options);
-
   return options;
 }
 
 Tool *
 tools_new_transform_tool (void)
 {
+  /* The tool options */
   if (! transform_options)
-    transform_options = create_transform_options ();
+    {
+      transform_options = transform_options_new ();
+      tools_register (ROTATE, (ToolOptions *) transform_options);
+      tools_register (SCALE, (ToolOptions *) transform_options);
+      tools_register (SHEAR, (ToolOptions *) transform_options);
+      tools_register (PERSPECTIVE, (ToolOptions *) transform_options);
+    }
 
   switch (transform_options->type)
     {

@@ -24,32 +24,34 @@
 #include "gdisplay.h"
 #include "info_dialog.h"
 #include "palette.h"
+#include "tool_options_ui.h"
 #include "tools.h"
 
 #include "libgimp/gimpintl.h"
 
 /*  maximum information buffer size  */
-#define MAX_INFO_BUF    8
+#define MAX_INFO_BUF 8
 
 /*  the color picker structures  */
 
 typedef struct _ColorPickerOptions ColorPickerOptions;
 struct _ColorPickerOptions
 {
-  int        sample_merged;
-  int        sample_merged_d;
-  GtkWidget *sample_merged_w;
+  ToolOptions  tool_options;
+
+  int          sample_merged;
+  int          sample_merged_d;
+  GtkWidget   *sample_merged_w;
   
-  int        sample_average;
-  int        sample_average_d;
-  GtkWidget *sample_average_w;
+  int          sample_average;
+  int          sample_average_d;
+  GtkWidget   *sample_average_w;
   
-  GtkWidget *average_radius_box;
-  
-  double     average_radius;
-  double     average_radius_d;
-  GtkObject *average_radius_w;
+  double       average_radius;
+  double       average_radius_d;
+  GtkObject   *average_radius_w;
 };
+
 
 /*  the color picker tool options  */
 static ColorPickerOptions * color_picker_options = NULL;
@@ -86,45 +88,7 @@ static Argument *color_picker_invoker (Argument *);
 /*  functions  */
 
 static void
-color_picker_toggle_update (GtkWidget *w,
-			    gpointer   data)
-{
-  GtkWidget *set_sensitive;
-  int       *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (w)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-
-  set_sensitive =
-    (GtkWidget*) gtk_object_get_data (GTK_OBJECT (w), "set_sensitive");
-    
-  if (set_sensitive)
-    {
-      gtk_widget_set_sensitive (set_sensitive, *toggle_val);
-		  
-      if (GTK_IS_SCALE (set_sensitive))
-	{
-	  set_sensitive =
-	    gtk_object_get_data (GTK_OBJECT (set_sensitive), "scale_label");
-	  if (set_sensitive)
-	    gtk_widget_set_sensitive (set_sensitive, *toggle_val);
-	}
-    }
-}
-
-static void
-color_picker_scale_update (GtkAdjustment *adjustment,
-			   double        *scale_val)
-{
-  *scale_val = adjustment->value;
-}
-
-static void
-reset_color_picker_options (void)
+color_picker_options_reset (void)
 {
   ColorPickerOptions *options = color_picker_options;
 
@@ -132,26 +96,32 @@ reset_color_picker_options (void)
 				options->sample_merged_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
 				options->sample_average_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->average_radius_w),
+			    options->average_radius_d);
 }
 
 static ColorPickerOptions *
-create_color_picker_options (void)
+color_picker_options_new (void)
 {
   ColorPickerOptions *options;
-  GtkWidget          *vbox;
-  GtkWidget          *abox;
-  GtkWidget          *table;
-  GtkWidget          *label;
-  GtkWidget          *scale;
 
-  /*  the new options structure  */
+  GtkWidget *vbox;
+  GtkWidget *abox;
+  GtkWidget *table;
+  GtkWidget *label;
+  GtkWidget *scale;
+
+  /*  the new color picker tool options structure  */
   options = (ColorPickerOptions *) g_malloc (sizeof (ColorPickerOptions));
-  options->sample_merged = options->sample_merged_d = FALSE;
+  tool_options_init ((ToolOptions *) options,
+		     _("Color Picker Options"),
+		     color_picker_options_reset);
+  options->sample_merged  = options->sample_merged_d  = FALSE;
   options->sample_average = options->sample_average_d = FALSE;
   options->average_radius = options->average_radius_d = 1.0;
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = options->tool_options.main_vbox;
 
   /*  the sample merged toggle button  */
   options->sample_merged_w =
@@ -160,7 +130,7 @@ create_color_picker_options (void)
 				options->sample_merged_d);
   gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->sample_merged_w), "toggled",
-		      (GtkSignalFunc) color_picker_toggle_update,
+		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->sample_merged);
   gtk_widget_show (options->sample_merged_w);
 
@@ -176,7 +146,7 @@ create_color_picker_options (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
 				options->sample_average_d);
   gtk_signal_connect (GTK_OBJECT (options->sample_average_w), "toggled",
-		      (GtkSignalFunc) color_picker_toggle_update,
+		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->sample_average);
   gtk_widget_show (options->sample_average_w);
 
@@ -199,28 +169,19 @@ create_color_picker_options (void)
   gtk_widget_set_sensitive (scale, options->sample_average_d);
   gtk_object_set_data (GTK_OBJECT (options->sample_average_w), "set_sensitive",
 		       scale);
-  gtk_object_set_data (GTK_OBJECT (scale), "scale_label",
+  gtk_widget_set_sensitive (label, options->sample_average_d);
+  gtk_object_set_data (GTK_OBJECT (scale), "set_sensitive",
 		       label);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->average_radius_w), "value_changed",
-		      (GtkSignalFunc) color_picker_scale_update,
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
 		      &options->average_radius);
   gtk_widget_show (scale);
   gtk_widget_show (table);
 
-  /*  Register this selection options widget with the main tools options dialog
-   */
-  tools_register (COLOR_PICKER, vbox, _("Color Picker Options"),
-		  reset_color_picker_options);
-
   return options;
 }
-
-static ActionAreaItem action_items[] =
-{
-  { N_("Close"), color_picker_info_window_close_callback, NULL, NULL },
-};
 
 static void
 color_picker_button_press (Tool           *tool,
@@ -229,6 +190,11 @@ color_picker_button_press (Tool           *tool,
 {
   GDisplay * gdisp;
   int x, y;
+
+  static ActionAreaItem action_items[] =
+  {
+    { N_("Close"), color_picker_info_window_close_callback, NULL, NULL },
+  };
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -274,9 +240,11 @@ color_picker_button_press (Tool           *tool,
 	default :
 	  break;
 	}
-  /* Create the action area  */
-  action_items[0].user_data = color_picker_info;
-  build_action_area (GTK_DIALOG (color_picker_info->shell), action_items, 1, 0);
+
+      /*  create the action area  */
+      action_items[0].user_data = color_picker_info;
+      build_action_area (GTK_DIALOG (color_picker_info->shell),
+			 action_items, 1, 0);
     }
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
@@ -548,8 +516,12 @@ tools_new_color_picker ()
 {
   Tool * tool;
 
+  /*  The tool options  */
   if (! color_picker_options)
-    color_picker_options = create_color_picker_options ();
+    {
+      color_picker_options = color_picker_options_new ();
+      tools_register (COLOR_PICKER, (ToolOptions *) color_picker_options);
+    }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
 

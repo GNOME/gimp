@@ -26,6 +26,7 @@
 #include "palette.h"
 #include "eraser.h"
 #include "selection.h"
+#include "tool_options_ui.h"
 #include "tools.h"
 
 #include "libgimp/gimpintl.h"
@@ -35,16 +36,19 @@
 typedef struct _EraserOptions EraserOptions;
 struct _EraserOptions
 {
-  gboolean   hard;
-  gboolean   hard_d;
-  GtkWidget *hard_w;
+  ToolOptions  tool_options;
 
-  gboolean   incremental;
-  gboolean   incremental_d;
-  GtkWidget *incremental_w;
+  gboolean     hard;
+  gboolean     hard_d;
+  GtkWidget   *hard_w;
+
+  gboolean     incremental;
+  gboolean     incremental_d;
+  GtkWidget   *incremental_w;
 };
 
-/*  eraser tool options  */
+
+/*  the eraser tool options  */
 static EraserOptions *eraser_options = NULL;
 
 /*  local variables  */
@@ -53,29 +57,16 @@ static gboolean       non_gui_incremental;
 
 
 /*  forward function declarations  */
-static void        eraser_motion   (PaintCore *, GimpDrawable *, gboolean, gboolean);
-static Argument *  eraser_invoker  (Argument *);
-static Argument *  eraser_extended_invoker  (Argument *);
+static void       eraser_motion            (PaintCore *, GimpDrawable *,
+					    gboolean, gboolean);
+static Argument * eraser_invoker           (Argument *);
+static Argument * eraser_extended_invoker  (Argument *);
 
 
 /*  functions  */
 
 static void
-eraser_toggle_update (GtkWidget *w,
-		      gpointer   data)
-{
-  gboolean *toggle_val;
-
-  toggle_val = (gboolean *) data;
-
-  if (GTK_TOGGLE_BUTTON (w)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-reset_eraser_options (void)
+eraser_options_reset (void)
 {
   EraserOptions *options = eraser_options;
 
@@ -86,23 +77,28 @@ reset_eraser_options (void)
 }
   
 static EraserOptions *
-create_eraser_options (void)
+eraser_options_new (void)
 {
   EraserOptions *options;
-  GtkWidget     *vbox;
 
+  GtkWidget *vbox;
+
+  /*  the new eraser tool options structure  */
   options = (EraserOptions *) g_malloc (sizeof (EraserOptions));
+  tool_options_init ((ToolOptions *) options,
+		     _("Eraser Options"),
+		     eraser_options_reset);
   options->hard        = options->hard_d        = FALSE;
   options->incremental = options->incremental_d = FALSE;
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
+  vbox = options->tool_options.main_vbox;
 
   /* the hard toggle */
   options->hard_w = gtk_check_button_new_with_label (_("Hard edge"));
   gtk_box_pack_start (GTK_BOX (vbox), options->hard_w, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->hard_w), "toggled",
-		      (GtkSignalFunc) eraser_toggle_update,
+		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->hard);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
 				options->hard_d);
@@ -112,15 +108,12 @@ create_eraser_options (void)
   options->incremental_w = gtk_check_button_new_with_label (_("Incremental"));
   gtk_box_pack_start (GTK_BOX (vbox), options->incremental_w, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->incremental_w), "toggled",
-		      (GtkSignalFunc) eraser_toggle_update,
+		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->incremental);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
 				options->incremental_d);
   gtk_widget_show (options->incremental_w);
   
-  /*  Register this eraser options widget with the main tools options dialog  */
-  tools_register (ERASER, vbox, _("Eraser Options"), reset_eraser_options);
-
   return options;
 }
   
@@ -155,8 +148,12 @@ tools_new_eraser ()
   Tool * tool;
   PaintCore * private;
 
+  /*  The tool options  */
   if (! eraser_options)
-    eraser_options = create_eraser_options ();
+    {
+      eraser_options = eraser_options_new ();
+      tools_register (ERASER, (ToolOptions *) eraser_options);
+    }
 
   tool = paint_core_new (ERASER);
 

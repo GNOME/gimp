@@ -104,8 +104,9 @@ struct _LevelsDialog
   GimpLut       *lut;
 };
 
+
 /*  the levels tool options  */
-static void *levels_options = NULL;  /* dummy */
+static ToolOptions *levels_options = NULL;
 
 /*  the levels tool dialog  */
 static LevelsDialog *levels_dialog = NULL;
@@ -229,10 +230,10 @@ tools_new_levels ()
   Levels * private;
 
   /*  The tool options  */
-  if (!levels_options)
+  if (! levels_options)
     {
-      tools_register (LEVELS, NULL, _("Levels Options"), NULL);
-      levels_options = (void *) 1;
+      levels_options = tool_options_new (_("Levels Options"));
+      tools_register (LEVELS, levels_options);
     }
 
   tool = (Tool *) g_malloc (sizeof (Tool));

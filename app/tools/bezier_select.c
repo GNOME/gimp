@@ -31,6 +31,7 @@
 #include "bezier_select.h"
 #include "bezier_selectP.h"
 #include "paths_dialog.h"
+#include "selection_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -64,13 +65,12 @@
 
 #define ROUND(x)  ((int) ((x) + 0.5))
 
-/* bezier select type definitions */
+/*  the bezier select structures  */
 
 typedef double BezierMatrix[4][4];
 
-/* The named paste dialog */
+/*  The named paste dialog  */
 typedef struct _PasteNamedDlg PasteNamedDlg;
-
 struct _PasteNamedDlg
 {
   GtkWidget   *shell;
@@ -78,9 +78,8 @@ struct _PasteNamedDlg
   GDisplay    *gdisp; 
 };
 
-/* The named buffer structure... */
+/*  The named buffer structure...  */
 typedef struct _named_buffer BezierNamedBuffer;
-
 struct _named_buffer
 {
   BezierSelect *sel;
@@ -104,6 +103,42 @@ typedef struct {
   gdouble  lasty;
   gboolean found;
 } BezierDistance;
+
+
+/*  the bezier selection tool options  */ 
+static SelectionOptions *bezier_options = NULL;
+
+/*  local variables  */
+static BezierMatrix basis =
+{
+  { -1,  3, -3,  1 },
+  {  3, -6,  3,  0 },
+  { -3,  3,  0,  0 },
+  {  1,  0,  0,  0 },
+};
+
+/*
+static BezierMatrix basis =
+{
+  { -1/6.0,  3/6.0, -3/6.0,  1/6.0 },
+  {  3/6.0, -6/6.0,  3/6.0,  0 },
+  { -3/6.0,  0,  3/6.0,  0 },
+  {  1/6.0,  4/6.0,  1,  0 },
+};
+*/
+
+/*  The named buffer list  */
+GSList *bezier_named_buffers = NULL;
+
+/*  Global Static Variable to maintain informations about the "contexte"  */
+static BezierSelect * curSel;
+static Tool * curTool;
+static GDisplay * curGdisp;
+static DrawCore * curCore;
+static int ModeEdit = EXTEND_NEW;
+
+
+/*  local function prototypes  */
 
 static void  bezier_select_button_press    (Tool *, GdkEventButton *, gpointer);
 static void  bezier_select_button_release  (Tool *, GdkEventButton *, gpointer);
@@ -132,41 +167,13 @@ static void  bezier_stack_points	   (BezierSelect *, GdkPoint *, int, gpointer);
 static gboolean stroke_interpolatable    (int, int, int, int, gdouble);
 static void bezier_stack_points_aux      (GdkPoint *, int, int, gdouble, BezierRenderPnts *);
 
-static BezierMatrix basis =
-{
-  { -1,  3, -3,  1 },
-  {  3, -6,  3,  0 },
-  { -3,  3,  0,  0 },
-  {  1,  0,  0,  0 },
-};
 
-/*
-static BezierMatrix basis =
-{
-  { -1/6.0,  3/6.0, -3/6.0,  1/6.0 },
-  {  3/6.0, -6/6.0,  3/6.0,  0 },
-  { -3/6.0,  0,  3/6.0,  0 },
-  {  1/6.0,  4/6.0,  1,  0 },
-};
-*/
-
-/*  The named buffer list  */
-GSList *bezier_named_buffers = NULL;
- 
-static SelectionOptions *bezier_options = NULL;
-
-/* Global Static Variable to maintain informations about rhe "contexte" */
-static BezierSelect * curSel;
-static Tool * curTool;
-static GDisplay * curGdisp;
-static DrawCore * curCore;
-static int ModeEdit = EXTEND_NEW;
-
+/*  functions  */
 
 static void
-bezier_select_reset_options ()
+bezier_select_options_reset ()
 {
-  reset_selection_options (bezier_options);
+  selection_options_reset (bezier_options);
 }
 
 Tool*
@@ -176,9 +183,12 @@ tools_new_bezier_select ()
   BezierSelect * bezier_sel;
 
   /*  The tool options  */
-  if (!bezier_options)
-    bezier_options = create_selection_options (BEZIER_SELECT,
-					       bezier_select_reset_options);
+  if (! bezier_options)
+    {
+      bezier_options =
+	selection_options_new (BEZIER_SELECT, bezier_select_options_reset);
+      tools_register (BEZIER_SELECT, (ToolOptions *) bezier_options);
+    }
 
   tool = g_malloc (sizeof (Tool));
 

@@ -30,29 +30,34 @@
 
 #include "tile_manager_pvt.h"		/* ick. */
 
-#define FLIP       0
+#define FLIP 0
 
 /*  the flip structures  */
 
 typedef struct _FlipOptions FlipOptions;
 struct _FlipOptions
 {
-  ToolType    type;
-  ToolType    type_d;
-  GtkWidget  *type_w;
+  ToolOptions  tool_options;
+
+  ToolType     type;
+  ToolType     type_d;
+  GtkWidget   *type_w;
 };
+
 
 /*  the flip tool options  */
 static FlipOptions *flip_options = NULL;
 
 
 /*  forward function declarations  */
-static Tool *         tools_new_flip_horz  (void);
-static Tool *         tools_new_flip_vert  (void);
-static TileManager *  flip_tool_flip_horz  (GImage *, GimpDrawable *, TileManager *, int);
-static TileManager *  flip_tool_flip_vert  (GImage *, GimpDrawable *, TileManager *, int);
-static void           flip_change_type     (int);
-static Argument *     flip_invoker         (Argument *);
+static Tool        * tools_new_flip_horz  (void);
+static Tool        * tools_new_flip_vert  (void);
+static TileManager * flip_tool_flip_horz  (GImage *, GimpDrawable *,
+					   TileManager *, int);
+static TileManager * flip_tool_flip_vert  (GImage *, GimpDrawable *,
+					   TileManager *, int);
+static void          flip_change_type     (int);
+static Argument    * flip_invoker         (Argument *);
 
 
 /*  functions  */
@@ -65,7 +70,7 @@ flip_type_callback (GtkWidget *w,
 }
 
 static void
-reset_flip_options (void)
+flip_options_reset (void)
 {
   FlipOptions *options = flip_options;
 
@@ -73,20 +78,24 @@ reset_flip_options (void)
 }
 
 static FlipOptions *
-create_flip_options (void)
+flip_options_new (void)
 {
   FlipOptions *options;
-  GtkWidget   *vbox;
-  GtkWidget   *radio_box;
-  GtkWidget   *radio_button;
-  GSList      *group = NULL;
 
-  /*  the new options structure  */
+  GtkWidget *vbox;
+  GSList    *group = NULL;
+  GtkWidget *radio_box;
+  GtkWidget *radio_button;
+
+  /*  the new flip tool options structure  */
   options = (FlipOptions *) g_malloc (sizeof (FlipOptions));
+  tool_options_init ((ToolOptions *) options,
+		     _("Flip Tool Options"),
+		     flip_options_reset);
   options->type = options->type_d = FLIP_HORZ;
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
+  vbox = options->tool_options.main_vbox;
 
   radio_box = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), radio_box, FALSE, FALSE, 0);
@@ -110,11 +119,6 @@ create_flip_options (void)
   gtk_widget_show (radio_button);
 
   gtk_widget_show (radio_box);
-
-  /*  Register this selection options widget with the main tools options dialog
-   */
-  tools_register (FLIP_HORZ, vbox, _("Flip Tool Options"), reset_flip_options);
-  tools_register (FLIP_VERT, vbox, _("Flip Tool Options"), reset_flip_options);
 
   return options;
 }
@@ -188,8 +192,13 @@ flip_tool_transform_vert (Tool     *tool,
 Tool *
 tools_new_flip ()
 {
+  /*  The tool options  */
   if (! flip_options)
-    flip_options = create_flip_options ();
+    {
+      flip_options = flip_options_new ();
+      tools_register (FLIP_HORZ, (ToolOptions *) flip_options);
+      tools_register (FLIP_VERT, (ToolOptions *) flip_options);
+    }
 
   switch (flip_options->type)
     {

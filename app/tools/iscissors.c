@@ -35,6 +35,7 @@
 #include "edit_selection.h"
 #include "paint_funcs.h"
 #include "rect_select.h"
+#include "selection_options.h"
 #include "temp_buf.h"
 #include "tools.h"
 #include "bezier_selectP.h"
@@ -51,7 +52,6 @@
 /*  the intelligent scissors structures  */
 
 typedef struct _kink Kink;
-
 struct _kink
 {
   int             x, y;         /*  coordinates  */
@@ -90,36 +90,27 @@ struct _iscissors
 typedef struct _IScissorsOptions IScissorsOptions;
 struct _IScissorsOptions
 {
-  int        antialias;
-  int        antialias_d;
-  GtkWidget *antialias_w;
+  SelectionOptions  selection_options;
 
-  int        feather;
-  int        feather_d;
-  GtkWidget *feather_w;
+  double            resolution;
+  double            resolution_d;
+  GtkObject        *resolution_w;
 
-  double     feather_radius;
-  double     feather_radius_d;
-  GtkObject *feather_radius_w;
+  double            threshold;
+  double            threshold_d;
+  GtkObject        *threshold_w;
 
-  double     resolution;
-  double     resolution_d;
-  GtkObject *resolution_w;
-
-  double     threshold;
-  double     threshold_d;
-  GtkObject *threshold_w;
-
-  double     elasticity;
-  double     elasticity_d;
-  GtkObject *elasticity_w;
+  double            elasticity;
+  double            elasticity_d;
+  GtkObject        *elasticity_w;
 };
-
-/*  intelligent scissors tool options  */
-static IScissorsOptions *iscissors_options = NULL;
 
 typedef double BezierMatrix[4][4];
 typedef double CRMatrix[4][4];
+
+
+/*  the intelligent scissors tool options  */
+static IScissorsOptions *iscissors_options = NULL;
 
 
 /**********************************************/
@@ -153,11 +144,7 @@ typedef double CRMatrix[4][4];
 #define  EDGE_STRENGTH     255
 #define  EPSILON           0.00001
 
-#define  NO                0
-#define  YES               1
-
 /*  functional defines  */
-
 #define  SQR(x)            ((x) * (x))
 #define  BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
      ((1-dy) * ((1-dx)*jk + dx*j1k) + \
@@ -203,9 +190,6 @@ static CRMatrix CR_bezier_basis =
   {  0.0,  0.16667, 1.0, -0.16667 },
   {  0.0,  0.0,  1.0,  0.0 },
 };
-
-
-/***********************************************************************/
 
 
 /*  Local function prototypes  */
@@ -265,40 +249,7 @@ static void   CR_convert_line           (GSList **, int, int, int, int);
 static GSList * CR_insert_in_list       (GSList *, int);
 
 
-/*******************************************************/
-/*  Selection options dialog--for all selection tools  */
-/*******************************************************/
-
-static void
-selection_toggle_update (GtkWidget *w,
-			 gpointer   data)
-{
-  GtkWidget *set_sensitive;
-  int       *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (w)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-
-  set_sensitive =
-    (GtkWidget*) gtk_object_get_data (GTK_OBJECT (w), "set_sensitive");
-
-  if (set_sensitive)
-    {
-      gtk_widget_set_sensitive (set_sensitive, *toggle_val);
-
-      if (GTK_IS_SCALE (set_sensitive))
-	{
-	  set_sensitive =
-	    gtk_object_get_data (GTK_OBJECT (set_sensitive), "scale_label");
-	  if (set_sensitive)
-	    gtk_widget_set_sensitive (set_sensitive, *toggle_val);
-	}
-    }
-}
+/*  functions  */
 
 static void
 selection_scale_update (GtkAdjustment *adjustment,
@@ -308,28 +259,26 @@ selection_scale_update (GtkAdjustment *adjustment,
 }
 
 static void   
-selection_to_bezier(GtkWidget *w, gpointer none)
+selection_to_bezier(GtkWidget *w,
+		    gpointer   none)
 {
    Iscissors *iscissors;
-   if(last_tool) {
-	iscissors = (Iscissors *) last_tool->private;
-	last_tool->state = INACTIVE;
-	bezierify_boundary (last_tool);
-    }
-   return;
+
+   if(last_tool)
+     {
+       iscissors = (Iscissors *) last_tool->private;
+       last_tool->state = INACTIVE;
+       bezierify_boundary (last_tool);
+     }
 }
 
 static void
-reset_iscissors_options (void)
+iscissors_options_reset (void)
 {
   IScissorsOptions *options = iscissors_options;
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
-				options->antialias_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->feather_w),
-				options->feather_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->feather_radius_w),
-			    options->feather_radius_d);
+  selection_options_reset ((SelectionOptions *) options);
+
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->resolution_w),
 			    options->resolution_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
@@ -339,9 +288,10 @@ reset_iscissors_options (void)
 }
 
 static IScissorsOptions *
-create_iscissors_options (void)
+iscissors_options_new (void)
 {
   IScissorsOptions *options;
+
   GtkWidget *vbox;
   GtkWidget *abox;
   GtkWidget *table;
@@ -349,90 +299,39 @@ create_iscissors_options (void)
   GtkWidget *scale;
   GtkWidget *convert_button;
 
-  /*  the new options structure  */
+  /*  the new intelligent scissors tool options structure  */
   options = (IScissorsOptions *) g_malloc (sizeof (IScissorsOptions));
-  options->antialias      = options->antialias_d      = TRUE;
-  options->feather        = options->feather_d        = FALSE;
-  options->feather_radius = options->feather_radius_d = 10.0;
+  selection_options_init ((SelectionOptions *) options,
+			  ISCISSORS,
+			  iscissors_options_reset);
   options->resolution     = options->resolution_d     = 40.0;
   options->threshold      = options->threshold_d      = 15.0;
   options->elasticity     = options->elasticity_d     = 0.30;
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-
-  /*  the antialias toggle button  */
-  options->antialias_w = gtk_check_button_new_with_label (_("Antialiasing"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
-				options->antialias_d);
-  gtk_box_pack_start (GTK_BOX (vbox), options->antialias_w, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (options->antialias_w), "toggled",
-		      (GtkSignalFunc) selection_toggle_update,
-		      &options->antialias);
-  gtk_widget_show (options->antialias_w);
-
-  /*  the feather options  */
-  table = gtk_table_new (7, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 3, 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 5, 1);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-
-  options->feather_w = gtk_check_button_new_with_label (_("Feather"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->feather_w),
-				options->feather_d);
-  gtk_table_attach (GTK_TABLE (table), options->feather_w, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (options->feather_w), "toggled",
-		      (GtkSignalFunc) selection_toggle_update,
-		      &options->feather);
-  gtk_widget_show (options->feather_w);
-
-  label = gtk_label_new (_("Radius:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  /*  the feather radius scale  */
-  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
-  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 0, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (abox);
-
-  options->feather_radius_w =
-    gtk_adjustment_new (options->feather_radius_d, 0.0, 100.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->feather_radius_w));
-  gtk_container_add (GTK_CONTAINER (abox), scale);
-  gtk_widget_set_sensitive (scale, options->feather_d);
-  gtk_object_set_data (GTK_OBJECT (options->feather_w), "set_sensitive",
-		       scale);
-  gtk_widget_set_sensitive (label, options->feather_d);
-  gtk_object_set_data (GTK_OBJECT (scale), "scale_label",
-		       label);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->feather_radius_w), "value_changed",
-		      (GtkSignalFunc) selection_scale_update,
-		      &options->feather_radius);
-  gtk_widget_show (scale);
+  vbox = ((ToolOptions *) options)->main_vbox;
 
   /*  the resolution scale  */
+  table = gtk_table_new (5, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 3, 1);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+
   label = gtk_label_new (_("Curve"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Resolution:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (label);
 
   abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
-  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 2, 4,
+  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 0, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (abox);
 
@@ -450,18 +349,18 @@ create_iscissors_options (void)
   /*  the threshold scale  */
   label = gtk_label_new (_("Edge Detect "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Threshold:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (label);
 
   abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
-  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 4, 6,
+  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 2, 4,
 		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (abox);
 
@@ -479,14 +378,14 @@ create_iscissors_options (void)
   /*  the elasticity scale  */
   label = gtk_label_new (_("Elasticity:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   options->elasticity_w =
     gtk_adjustment_new (options->elasticity_d, 0.0, 1.0, 0.05, 0.05, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->elasticity_w));
-  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 6, 7);
+  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 4, 5);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->elasticity_w), "value_changed",
@@ -504,12 +403,6 @@ create_iscissors_options (void)
 			NULL);
   gtk_widget_show (convert_button);
 
-  
-  /*  Register this selection options widget with the main tools options dialog
-   */
-  tools_register (ISCISSORS, vbox, _("Intelligent Scissors Options"),
-		  reset_iscissors_options);
-
   return options;
 }
 
@@ -520,8 +413,12 @@ tools_new_iscissors ()
   Tool * tool;
   Iscissors * private;
 
-  if (!iscissors_options)
-    iscissors_options = create_iscissors_options ();
+  /*  The tool options  */
+  if (! iscissors_options)
+    {
+      iscissors_options = iscissors_options_new ();
+      tools_register (ISCISSORS, (ToolOptions *) iscissors_options);
+    }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (Iscissors *) g_malloc (sizeof (Iscissors));
@@ -665,8 +562,8 @@ iscissors_button_press (Tool           *tool,
 	  /*  If we're antialiased, then recompute the
 	   *  mask...
 	   */
-	  if (iscissors_options->antialias)
-	    CR_convert (iscissors, tool->gdisp_ptr, YES);
+	  if (((SelectionOptions *) iscissors_options)->antialias)
+	    CR_convert (iscissors, tool->gdisp_ptr, TRUE);
 
 	  draw_core_stop (iscissors->core, tool);
 
@@ -675,10 +572,11 @@ iscissors_button_press (Tool           *tool,
 	  else
 	    gimage_mask_undo (gdisp->gimage);
 
-	  if (iscissors_options->feather)
+	  if (((SelectionOptions *) iscissors_options)->feather)
 	    channel_feather (iscissors->mask,
 			     gimage_get_mask (gdisp->gimage),
-			     iscissors_options->feather_radius, op, 0, 0);
+			     ((SelectionOptions *) iscissors_options)->feather_radius,
+			     op, 0, 0);
 	  else
 	    channel_combine_mask (gimage_get_mask (gdisp->gimage),
 				  iscissors->mask, op, 0, 0);
@@ -1364,7 +1262,7 @@ find_boundary (Tool *tool)
 
   /*  convert the boundary into a mask  */
   CR_convert ((Iscissors *) tool->private,
-	      (GDisplay *) tool->gdisp_ptr, NO);
+	      (GDisplay *) tool->gdisp_ptr, FALSE);
 }
 
 static void

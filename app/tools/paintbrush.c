@@ -29,6 +29,7 @@
 #include "palette.h"
 #include "paintbrush.h"
 #include "selection.h"
+#include "tool_options_ui.h"
 #include "tools.h"
 
 #include "libgimp/gimpintl.h"
@@ -41,25 +42,31 @@
 typedef struct _PaintOptions PaintOptions;
 struct _PaintOptions
 {
-  double     fade_out;
-  double     fade_out_d;
-  GtkObject *fade_out_w;
+  ToolOptions  tool_options;
 
-  double     gradient_length;
-  double     gradient_length_d;
-  GtkObject *gradient_length_w;
+  double       fade_out;
+  double       fade_out_d;
+  GtkObject   *fade_out_w;
 
-  int        gradient_type;
-  int        gradient_type_d;
-  GtkWidget *gradient_type_w;
+  int          use_gradient;
+  int          use_gradient_d;
+  GtkWidget   *use_gradient_w;
 
-  gboolean   incremental;
-  gboolean   incremental_d;
-  GtkWidget *incremental_w;
+  double       gradient_length;
+  double       gradient_length_d;
+  GtkObject   *gradient_length_w;
+
+  int          gradient_type;
+  int          gradient_type_d;
+  GtkWidget   *gradient_type_w;
+
+  gboolean     incremental;
+  gboolean     incremental_d;
+  GtkWidget   *incremental_w;
 };
 
-/*  paint brush tool options  */
-static PaintOptions *paint_options = NULL;
+/*  the paint brush tool options  */
+static PaintOptions *paintbrush_options = NULL;
 
 /*  local variables  */
 static double        non_gui_fade_out;
@@ -78,57 +85,48 @@ static Argument *   paintbrush_extended_gradient_invoker     (Argument *);
 /*  functions  */
 
 static void
-paintbrush_toggle_update (GtkWidget *w,
-			  gpointer   data)
+paintbrush_gradient_toggle_callback (GtkWidget *widget,
+				     gpointer   data)
 {
-  gboolean *toggle_val;
+  PaintOptions *options = paintbrush_options;
 
-  toggle_val = (gboolean *) data;
+  static int incremental_save = FALSE;
 
-  if (GTK_TOGGLE_BUTTON (w)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
+  tool_options_toggle_update (widget, data);
 
-static void
-paintbrush_scale_update (GtkAdjustment *adjustment,
-			 PaintOptions  *options)
-{
-  if(adjustment->value != 0)
-    options->gradient_length = exp(adjustment->value/10);
-  else
-    options->gradient_length = 0.0;
-
-  if(options->gradient_length > 0.0)
+  if (paintbrush_options->use_gradient)
     {
-      options->incremental = INCREMENTAL;
+      incremental_save = options->incremental;
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
+				    TRUE);
+      gtk_widget_set_sensitive (options->incremental_w, FALSE);
+    }
+  else
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
+				    incremental_save);
+      gtk_widget_set_sensitive (options->incremental_w, TRUE);
     }
 }
 
 static void
-paintbrush_fade_update (GtkAdjustment *adjustment,
-			PaintOptions   *options)
+paintbrush_gradient_type_callback (GtkWidget *widget,
+				   gpointer   data)
 {
-  options->fade_out = adjustment->value;
-}
-
-static void
-paintbrush_gradient_type_callback (GtkWidget *w,
-				   gpointer   client_data)
-{
-  if (paint_options)
-    paint_options->gradient_type = (int) client_data;
+  if (paintbrush_options)
+    paintbrush_options->gradient_type = (int) data;
 }
 
 
 static void
-reset_paint_options (void)
+paintbrush_options_reset (void)
 {
-  PaintOptions *options = paint_options;
+  PaintOptions *options = paintbrush_options;
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->fade_out_w),
 			    options->fade_out_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_gradient_w),
+				options->use_gradient_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->gradient_length_w),
 			    options->gradient_length_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->gradient_type_w),
@@ -138,9 +136,10 @@ reset_paint_options (void)
 }
 
 static PaintOptions *
-create_paint_options (void)
+paintbrush_options_new (void)
 {
   PaintOptions *options;
+
   GtkWidget *vbox;
   GtkWidget *abox;
   GtkWidget *table;
@@ -150,6 +149,7 @@ create_paint_options (void)
   GtkWidget *radio_frame;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
+
   int i;
   char *gradient_types[4] =
   {
@@ -159,15 +159,19 @@ create_paint_options (void)
     N_("Loop Triangle")
   };
 
-  /*  the new options structure  */
+  /*  the new paint tool options structure  */
   options = (PaintOptions *) g_malloc (sizeof (PaintOptions));
+  tool_options_init ((ToolOptions *) options,
+		     _("Paintbrush Options"),
+		     paintbrush_options_reset);
   options->fade_out        = options->fade_out_d        = 0.0;
   options->incremental     = options->incremental_d     = FALSE;
-  options->gradient_length = options->gradient_length_d = 0.0;
+  options->use_gradient    = options->use_gradient_d    = FALSE;
+  options->gradient_length = options->gradient_length_d = 10.0;
   options->gradient_type   = options->gradient_type_d   = 3;
   
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = options->tool_options.main_vbox;
 
   /*  the fade-out scale  */
   table = gtk_table_new (4, 2, FALSE);
@@ -189,53 +193,60 @@ create_paint_options (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->fade_out_w), "value_changed",
-		      (GtkSignalFunc) paintbrush_fade_update,
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
 		      options);
   gtk_widget_show (scale);
 
-  /*              gradient thingamajig */
-  /* this is a little unintuitive, probabaly put the slider */
-  /* in a frame later with a checkbutton for "use gradients" */
-  /* and default the gradient length to 10 or something */
-#if 0
-  //  hbox = gtk_hbox_new (FALSE, 1);
-  //gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  //gtk_widget_show(hbox);
-#endif
-  
-  label = gtk_label_new (_("Gradient"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+  /*  the use gradient toggle  */
+  options->use_gradient_w =
+    gtk_check_button_new_with_label (_("Gradient"));
+  gtk_table_attach (GTK_TABLE (table), options->use_gradient_w, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
-  gtk_widget_show (label);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_gradient_w),
+				options->use_gradient_d);
+  gtk_signal_connect (GTK_OBJECT (options->use_gradient_w), "toggled",
+		      (GtkSignalFunc) paintbrush_gradient_toggle_callback,
+		      &options->use_gradient);
+  gtk_widget_show (options->use_gradient_w);
 
   label = gtk_label_new (_("Length:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
+  /*  the gradient length scale  */
   abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
   gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 1, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (abox);
 
   options->gradient_length_w =
-    gtk_adjustment_new (options->gradient_length_d, 0.0, 50.0,1.1, 0.1, 0.0);
+    gtk_adjustment_new (options->gradient_length_d, 1.0, 50.0, 1.1, 0.1, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->gradient_length_w));
   gtk_container_add (GTK_CONTAINER (abox), scale);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->gradient_length_w), "value_changed",
-		      (GtkSignalFunc) paintbrush_scale_update,
-		      options);
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      &options->gradient_length);
   gtk_widget_show (scale);
-
   gtk_widget_show (table);
 
    /*  the radio frame and box  */
   radio_frame = gtk_frame_new (_("Gradient Type"));
   gtk_table_attach_defaults (GTK_TABLE (table), radio_frame, 0, 2, 3, 4);
+
+  /*  automatically set the sensitive state of the gradient stuff  */
+  gtk_widget_set_sensitive (scale, options->use_gradient_d);
+  gtk_widget_set_sensitive (label, options->use_gradient_d);
+  gtk_widget_set_sensitive (radio_frame, options->use_gradient_d);
+  gtk_object_set_data (GTK_OBJECT (options->use_gradient_w), "set_sensitive",
+		       scale);
+  gtk_object_set_data (GTK_OBJECT (scale), "set_sensitive",
+		       label);
+  gtk_object_set_data (GTK_OBJECT (label), "set_sensitive",
+		       radio_frame);
 
   radio_box = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
@@ -261,22 +272,16 @@ create_paint_options (void)
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
 
-
   /* the incremental toggle */
   options->incremental_w = gtk_check_button_new_with_label (_("Incremental"));
   gtk_box_pack_start (GTK_BOX (vbox), options->incremental_w, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->incremental_w), "toggled",
-		      (GtkSignalFunc) paintbrush_toggle_update,
+		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->incremental);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
 				options->incremental_d);
   gtk_widget_show (options->incremental_w);
   
-  /*  Register this selection options widget with the main tools options dialog
-   */
-  tools_register (PAINTBRUSH, vbox, _("Paintbrush Options"),
-		  reset_paint_options);
-
   return options;
 }
 
@@ -310,10 +315,11 @@ paintbrush_paint_func (PaintCore *paint_core,
 
     case MOTION_PAINT :
       paintbrush_motion (paint_core, drawable, 
-			 paint_options->fade_out, 
-			 paint_options->gradient_length,
-			 paint_options->incremental,
-			 paint_options->gradient_type);
+			 paintbrush_options->fade_out, 
+			 paintbrush_options->use_gradient ? 
+			 exp(paintbrush_options->gradient_length/10) : 0,
+			 paintbrush_options->incremental,
+			 paintbrush_options->gradient_type);
       break;
 
     case FINISH_PAINT :
@@ -341,8 +347,12 @@ tools_new_paintbrush ()
   Tool * tool;
   PaintCore * private;
 
-  if (! paint_options)
-    paint_options = create_paint_options ();
+  /*  The tool options  */
+  if (! paintbrush_options)
+    {
+      paintbrush_options = paintbrush_options_new ();
+      tools_register (PAINTBRUSH, (ToolOptions *) paintbrush_options);
+    }
 
   tool = paint_core_new (PAINTBRUSH);
 

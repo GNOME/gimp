@@ -15,9 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
+#include <math.h>
+#include <stdlib.h>
 #include <string.h>
-
 #include "appenv.h"
 #include "drawable.h"
 #include "draw_core.h"
@@ -25,6 +25,7 @@
 #include "gimpbrushlist.h"
 #include "gimprc.h"
 #include "ink.h"
+#include "tool_options_ui.h"
 #include "tools.h"
 #include "undo.h"
 #include "blob.h"
@@ -33,10 +34,6 @@
 #include "libgimp/gimpintl.h"
 
 #include "tile.h"			/* ick. */
-
-#include <math.h>
-#include <stdlib.h>
-#include <string.h>
 
 #ifndef M_PI
 #define M_PI    3.14159265358979323846
@@ -73,40 +70,6 @@ struct _InkTool
   gboolean init_velocity;
 };
 
-typedef struct _InkOptions InkOptions;
-struct _InkOptions
-{
-  double     size;
-  double     size_d;
-  GtkObject *size_w;
-
-  double     sensitivity;
-  double     sensitivity_d;
-  GtkObject *sensitivity_w;
-
-  double     vel_sensitivity;
-  double     vel_sensitivity_d;
-  GtkObject *vel_sensitivity_w;
-
-  double     tilt_sensitivity;
-  double     tilt_sensitivity_d;
-  GtkObject *tilt_sensitivity_w;
-
-  double     tilt_angle;
-  double     tilt_angle_d;
-  GtkObject *tilt_angle_w;
-
-  BlobFunc   function;
-  BlobFunc   function_d;
-  GtkWidget *function_w;
-
-  double     aspect;
-  double     aspect_d;
-  double     angle;
-  double     angle_d;
-  GtkWidget *shape_w;
-};
-
 typedef struct _BrushWidget BrushWidget;
 struct _BrushWidget
 {
@@ -114,13 +77,47 @@ struct _BrushWidget
   gboolean     state;
 };
 
+typedef struct _InkOptions InkOptions;
+struct _InkOptions
+{
+  ToolOptions  tool_options;
+
+  double       size;
+  double       size_d;
+  GtkObject   *size_w;
+
+  double       sensitivity;
+  double       sensitivity_d;
+  GtkObject   *sensitivity_w;
+
+  double       vel_sensitivity;
+  double       vel_sensitivity_d;
+  GtkObject   *vel_sensitivity_w;
+
+  double       tilt_sensitivity;
+  double       tilt_sensitivity_d;
+  GtkObject   *tilt_sensitivity_w;
+
+  double       tilt_angle;
+  double       tilt_angle_d;
+  GtkObject   *tilt_angle_w;
+
+  BlobFunc     function;
+  BlobFunc     function_d;
+  GtkWidget   *function_w;
+
+  double       aspect;
+  double       aspect_d;
+  double       angle;
+  double       angle_d;
+  BrushWidget *brush_w;
+};
+
+
 /* the ink tool options  */
 static InkOptions *ink_options = NULL;
 
 /* local variables */
-
-/* Global variable to store brush widget */
-static BrushWidget *brush_widget;
 
 /*  undo blocks variables  */
 static TileManager *  undo_tiles = NULL;
@@ -133,7 +130,9 @@ static TileManager *  canvas_tiles = NULL;
  */
 static TempBuf *  canvas_buf = NULL;
 
+
 /*  local function prototypes  */
+
 static void   ink_button_press            (Tool *, GdkEventButton *, gpointer);
 static void   ink_button_release          (Tool *, GdkEventButton *, gpointer);
 static void   ink_motion                  (Tool *, GdkEventMotion *, gpointer);
@@ -147,7 +146,6 @@ static void    dist_smoother_add    (InkTool* ink_tool, gdouble value);
 static gdouble dist_smoother_result (InkTool* ink_tool);
 static void    dist_smoother_init   (InkTool* ink_tool, gdouble initval);
 
-static InkOptions *create_ink_options   (void);
 static Argument *ink_invoker              (Argument *);
 
 static void ink_init   (InkTool      *ink_tool, 
@@ -159,8 +157,6 @@ static void ink_finish (InkTool      *ink_tool,
 			int           tool_id);
 static void ink_cleanup (void);
 
-static void ink_scale_update              (GtkAdjustment  *adjustment, 
-                                           gdouble        *value);
 static void ink_type_update               (GtkWidget      *radio_button,
                                            BlobFunc        function);
 static GdkPixmap *blob_pixmap (GdkColormap *colormap,
@@ -171,7 +167,6 @@ static void paint_blob (GdkDrawable  *drawable,
 			Blob         *blob);
 
 /* Rendering functions */
-
 static void ink_set_paint_area  (InkTool      *ink_tool, 
 				 GimpDrawable *drawable, 
 				 Blob         *blob);
@@ -214,8 +209,20 @@ static void brush_widget_motion_notify    (GtkWidget      *w,
 
 /*  functions  */
 
+static void 
+ink_type_update (GtkWidget      *radio_button,
+		 BlobFunc        function)
+{
+  InkOptions *options = ink_options;
+
+  if (GTK_TOGGLE_BUTTON (radio_button)->active)
+    options->function = function;
+
+  gtk_widget_queue_draw (options->brush_w->widget);
+}
+
 static void
-reset_ink_options (void)
+ink_options_reset (void)
 {
   InkOptions *options = ink_options;
 
@@ -233,13 +240,14 @@ reset_ink_options (void)
 
   options->aspect = options->aspect_d;
   options->angle  = options->angle_d;
-  gtk_widget_draw (options->shape_w, NULL);
+  gtk_widget_queue_draw (options->brush_w->widget);
 }
 
 static InkOptions *
-create_ink_options (void)
+ink_options_new (void)
 {
   InkOptions *options;
+
   GtkWidget *table;
   GtkWidget *vbox;
   GtkWidget *abox;
@@ -251,8 +259,11 @@ create_ink_options (void)
   GtkWidget *darea;
   GdkPixmap *pixmap;
 
-  /*  the new options structure  */
+  /*  the new ink tool options structure  */
   options = (InkOptions *) g_malloc (sizeof (InkOptions));
+  tool_options_init ((ToolOptions *) options,
+		     _("Ink Options"),
+		     ink_options_reset);
   options->size             = options->size_d             = 4.4;
   options->sensitivity      = options->sensitivity_d      = 1.0;
   options->vel_sensitivity  = options->vel_sensitivity_d  = 0.8;
@@ -269,6 +280,8 @@ create_ink_options (void)
   gtk_table_set_row_spacing (GTK_TABLE (table), 1, 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 3, 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 5, 6);
+  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), table,
+		      FALSE, FALSE, 0);
 
   /*  size slider  */
   label = gtk_label_new (_("Size:"));
@@ -284,7 +297,7 @@ create_ink_options (void)
   gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 0, 1);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->size_w), "value_changed",
-		      (GtkSignalFunc) ink_scale_update,
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
 		      &options->size);
   gtk_widget_show (slider);
 
@@ -302,7 +315,7 @@ create_ink_options (void)
   gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 1, 2);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->sensitivity_w), "value_changed",
-		      (GtkSignalFunc) ink_scale_update,
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
 		      &options->sensitivity);
   gtk_widget_show (slider);
   
@@ -331,7 +344,7 @@ create_ink_options (void)
   gtk_container_add (GTK_CONTAINER (abox), slider);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->tilt_sensitivity_w), "value_changed",
-		      (GtkSignalFunc) ink_scale_update,
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
 		      &options->tilt_sensitivity);
   gtk_widget_show (slider);
 
@@ -361,7 +374,7 @@ create_ink_options (void)
   gtk_container_add (GTK_CONTAINER (abox), slider);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->vel_sensitivity_w), "value_changed",
-		      (GtkSignalFunc) ink_scale_update,
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
 		      &options->vel_sensitivity);
   gtk_widget_show (slider);
 
@@ -391,7 +404,7 @@ create_ink_options (void)
   gtk_container_add (GTK_CONTAINER (abox), slider);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->tilt_angle_w), "value_changed",
-		      (GtkSignalFunc) ink_scale_update,
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
 		      &options->tilt_angle);
 
   /* Brush type radiobuttons */
@@ -465,16 +478,15 @@ create_ink_options (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  brush_widget = g_new (BrushWidget, 1);
-  brush_widget->state = FALSE;
+  options->brush_w = g_new (BrushWidget, 1);
+  options->brush_w->state = FALSE;
   
   frame = gtk_aspect_frame_new (NULL, 0.5, 0.5, 1.0, FALSE);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
   darea = gtk_drawing_area_new();
-  brush_widget->widget = darea;
-  options->shape_w = darea;
+  options->brush_w->widget = darea;
   
   gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 60, 60);
   gtk_container_add (GTK_CONTAINER (frame), darea);
@@ -484,29 +496,27 @@ create_ink_options (void)
 			 | GDK_POINTER_MOTION_MASK | GDK_EXPOSURE_MASK);
   gtk_signal_connect (GTK_OBJECT (darea), "button_press_event",
 		      GTK_SIGNAL_FUNC (brush_widget_button_press),
-		      brush_widget);
+		      options->brush_w);
   gtk_signal_connect (GTK_OBJECT (darea), "button_release_event",
 		      GTK_SIGNAL_FUNC (brush_widget_button_release),
-		      brush_widget);
+		      options->brush_w);
   gtk_signal_connect (GTK_OBJECT (darea), "motion_notify_event",
 		      GTK_SIGNAL_FUNC (brush_widget_motion_notify),
-		      brush_widget);
+		      options->brush_w);
   gtk_signal_connect (GTK_OBJECT (darea), "expose_event",
 		      GTK_SIGNAL_FUNC (brush_widget_expose), 
-		      brush_widget);
+		      options->brush_w);
   gtk_signal_connect (GTK_OBJECT (darea), "realize",
 		      GTK_SIGNAL_FUNC (brush_widget_realize),
-		      brush_widget);
+		      options->brush_w);
 
   gtk_widget_show_all (table);
-  gtk_widget_hide (table);
-
-  /*  Register this selection options widget with the main tools options dialog
-   */
-  tools_register (INK, table, _("Ink Options"), reset_ink_options);
 
   return options;
 }
+
+
+/*  the brush widget functions  */
 
 static void
 brush_widget_active_rect (BrushWidget *brush_widget, GtkWidget *w,
@@ -632,22 +642,6 @@ brush_widget_motion_notify (GtkWidget *w, GdkEventMotion *event,
 	  gtk_widget_draw(w, NULL);
 	}
     }
-}
-
-static void
-ink_scale_update (GtkAdjustment *adjustment, gdouble *value)
-{
-  *value = adjustment->value;
-}
-
-static void 
-ink_type_update (GtkWidget      *radio_button,
-		 BlobFunc        function)
-{
-  if (GTK_TOGGLE_BUTTON (radio_button)->active)
-    ink_options->function = function;
-
-  gtk_widget_queue_draw (brush_widget->widget);
 }
 
 /*
@@ -1532,8 +1526,12 @@ tools_new_ink ()
   Tool * tool;
   InkTool * private;
 
+  /*  The tool options  */
   if (! ink_options)
-    ink_options = create_ink_options ();
+    {
+      ink_options = ink_options_new ();
+      tools_register (INK, (ToolOptions *) ink_options);
+    }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (InkTool *) g_malloc (sizeof (InkTool));

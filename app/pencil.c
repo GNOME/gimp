@@ -31,8 +31,9 @@
 
 #include "libgimp/gimpintl.h"
 
-/*  pencil tool options  */
-static void *       pencil_options = NULL;  /* dummy */
+
+/*  the pencil tool options  */
+static ToolOptions *  pencil_options = NULL;
 
 
 /*  forward function declarations  */
@@ -72,10 +73,11 @@ tools_new_pencil ()
   Tool * tool;
   PaintCore * private;
 
+  /*  The tool options  */
   if (!pencil_options)
     {
-      tools_register (PENCIL, NULL, _("Pencil Options"), NULL);
-      pencil_options = (void *) 1;
+      pencil_options = tool_options_new (_("Pencil Options"));
+      tools_register (PENCIL, pencil_options);
     }
 
   tool = paint_core_new (PENCIL);

@@ -37,6 +37,7 @@
 #include "procedural_db.h"
 #include "selection.h"
 #include "text_tool.h"
+#include "tool_options_ui.h"
 #include "tools.h"
 #include "undo.h"
 
@@ -70,16 +71,19 @@ struct _TextTool
 typedef struct _TextOptions TextOptions;
 struct _TextOptions
 {
-  int        antialias;
-  int        antialias_d;
-  GtkWidget *antialias_w;
+  ToolOptions  tool_options;
 
-  int        border;
-  int        border_d;
-  GtkObject *border_w;
+  int          antialias;
+  int          antialias_d;
+  GtkWidget   *antialias_w;
+
+  int          border;
+  int          border_d;
+  GtkObject   *border_w;
 };
 
-/*  text tool options  */
+
+/*  the text tool options  */
 static TextOptions *text_options = NULL;
 
 /*  local variables  */
@@ -101,25 +105,98 @@ static void       text_init_render        (TextTool *);
 static void       text_gdk_image_to_region (GdkImage *, int, PixelRegion *);
 static void       text_size_multiply      (char **fontname, int);
 
-static void          text_antialias_update   (GtkWidget *, gpointer);
-static void          text_adjustment_update  (GtkWidget *, gpointer);
-
-static void          reset_text_options      (void);
-static TextOptions * init_text_options       (void);
+Layer *           text_render             (GImage *, GimpDrawable *,
+					   int, int, char *, char *, int, int);
 
 
-/*  Functions  */
+/*  functions  */
+
+static void
+text_options_reset (void)
+{
+  TextOptions *options = text_options;
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
+				options->antialias_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->border_w),
+			    options->border_d);
+}
+
+static TextOptions *
+text_options_new (void)
+{
+  TextOptions *options;
+
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *spinbutton;
+
+  /*  the new text tool options structure  */
+  options = (TextOptions *) g_malloc (sizeof (TextOptions));
+  tool_options_init ((ToolOptions *) options,
+		     _("Text Tool Options"),
+		     text_options_reset);
+  options->antialias = options->antialias_d = TRUE;
+  options->border    = options->border_d    = 0;
+
+  /*  the main vbox  */
+  vbox = options->tool_options.main_vbox;
+
+  /*  antialias toggle  */
+  options->antialias_w =
+    gtk_check_button_new_with_label (_("Antialiasing"));
+  gtk_signal_connect (GTK_OBJECT (options->antialias_w), "toggled",
+		      (GtkSignalFunc) tool_options_toggle_update,
+		      &options->antialias);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
+				options->antialias_d);
+  gtk_box_pack_start (GTK_BOX (vbox), options->antialias_w,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (options->antialias_w);
+
+  /*  the border spinbutton  */
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+
+  label = gtk_label_new (_("Border:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show(label);
+
+  options->border_w =
+    gtk_adjustment_new (options->border_d, 0.0, 32767.0, 1.0, 50.0, 0.0);
+  gtk_signal_connect(GTK_OBJECT (options->border_w), "changed",
+		     (GtkSignalFunc) tool_options_int_adjustment_update,
+		     &options->border);
+  spinbutton =
+    gtk_spin_button_new (GTK_ADJUSTMENT (options->border_w), 1.0, 0.0);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+				   GTK_SHADOW_NONE);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_widget_set_usize (spinbutton, 75, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
+
+  gtk_widget_show (hbox);
+
+  return options;
+}
 
 Tool*
-tools_new_text (void)
+tools_new_text ()
 {
   Tool     * tool;
 
+  /*  The tool options  */
   if (! text_options)
-    text_options = init_text_options ();
+    {
+      text_options = text_options_new ();
+      tools_register (TEXT, (ToolOptions *) text_options);
+    }
 
-  tool = g_new (Tool, 1);
-  the_text_tool = g_new (TextTool, 1);
+  /*  the new text tool structure  */
+  tool = (Tool *) g_malloc (sizeof (Tool));
+  the_text_tool = (TextTool *) g_malloc (sizeof (TextTool));
   the_text_tool->shell = NULL;
 
   tool->type = TEXT;
@@ -144,100 +221,6 @@ tools_free_text (Tool *tool)
 {
   g_free (tool->private);
 }
-
-static void
-text_antialias_update (GtkWidget *w,
-		       gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (w)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-text_adjustment_update (GtkWidget *widget,
-			gpointer   data)
-{
-  int *val;
-
-  val = data;
-  *val = GTK_ADJUSTMENT (widget)->value;
-}
-
-static void
-reset_text_options (void)
-{
-  TextOptions *options = text_options;
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
-				options->antialias_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->border_w),
-			    options->border_d);
-}
-
-static TextOptions *
-init_text_options (void)
-{
-  TextOptions *options;
-  GtkWidget   *vbox;
-  GtkWidget   *hbox;
-  GtkWidget   *label;
-  GtkWidget   *spinbutton;
-
-  /*  the new options structure  */
-  options = g_new (TextOptions, 1);
-  options->antialias = options->antialias_d = TRUE;
-  options->border    = options->border_d    = 0;
-
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-
-  /* antialias toggle */
-  options->antialias_w =
-    gtk_check_button_new_with_label (_("Antialiasing"));
-  gtk_signal_connect (GTK_OBJECT (options->antialias_w), "toggled",
-		      (GtkSignalFunc) text_antialias_update,
-		      &options->antialias);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
-				options->antialias_d);
-  gtk_box_pack_start (GTK_BOX (vbox), options->antialias_w,
-		      FALSE, FALSE, 0);
-  gtk_widget_show (options->antialias_w);
-
-  /* Create the border hbox, border spinner, and label  */
-  hbox = gtk_hbox_new (FALSE, 6);
-  label = gtk_label_new (_("Border:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show(label);
-
-  options->border_w =
-    gtk_adjustment_new (options->border_d, 0.0, 32767.0, 1.0, 50.0, 0.0);
-  gtk_signal_connect(GTK_OBJECT (options->border_w), "changed",
-		     (GtkSignalFunc) text_adjustment_update,
-		     &options->border);
-  spinbutton =
-    gtk_spin_button_new (GTK_ADJUSTMENT (options->border_w), 1.0, 0.0);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				   GTK_SHADOW_NONE);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-  gtk_widget_show (hbox);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  /*  Register this selection options widget with the main tools options dialog
-   */
-  tools_register (TEXT, vbox, _("Text Tool Options"), reset_text_options);
-
-  return options;
-}
-
 
 static void
 text_button_press (Tool           *tool,

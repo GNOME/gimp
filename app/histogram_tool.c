@@ -67,11 +67,13 @@ struct _HistogramToolDialog
   int          color;
 };
 
+
 /*  the histogram tool options  */
-static void *histogram_tool_options = NULL;  /* dummy */
+static ToolOptions *histogram_tool_options = NULL;
 
 /*  the histogram tool dialog  */
 static HistogramToolDialog *histogram_tool_dialog = NULL;
+
 
 /*  histogram_tool action functions  */
 static void   histogram_tool_button_press   (Tool *, GdkEventButton *, gpointer);
@@ -94,17 +96,6 @@ static void       histogram_tool_dialog_update   (HistogramToolDialog *, int, in
 
 static Argument * histogram_invoker (Argument *args);
 
-
-static char * histogram_info_names[7] =
-{
-  N_("Mean: "),
-  N_("Std Dev: "),
-  N_("Median: "),
-  N_("Pixels: "),
-  N_("Intensity: "),
-  N_("Count: "),
-  N_("Percentile: ")
-};
 
 /*  histogram_tool machinery  */
 
@@ -242,10 +233,10 @@ tools_new_histogram_tool ()
   HistogramTool * private;
 
   /*  The tool options  */
-  if (!histogram_tool_options)
+  if (! histogram_tool_options)
     {
-      tools_register (HISTOGRAM, NULL, _("Histogram Options"), NULL);
-      histogram_tool_options = (void *) 1;
+      histogram_tool_options = tool_options_new (_("Histogram Options"));
+      tools_register (HISTOGRAM, histogram_tool_options);
     }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
@@ -324,28 +315,12 @@ histogram_tool_initialize (GDisplay *gdisp)
 /*  Histogram Tool dialog  */
 /***************************/
 
-/*  the action area structure  */
-static ActionAreaItem action_items[] =
-{
-  { "Close", histogram_tool_close_callback, NULL, NULL }
-};
-
-static MenuItem color_option_items[] =
-{
-  { "Value", 0, 0, histogram_tool_value_callback, NULL, NULL, NULL },
-  { "Red", 0, 0, histogram_tool_red_callback, NULL, NULL, NULL },
-  { "Green", 0, 0, histogram_tool_green_callback, NULL, NULL, NULL },
-  { "Blue", 0, 0, histogram_tool_blue_callback, NULL, NULL, NULL },
-  { NULL, 0, 0, NULL, NULL, NULL, NULL }
-};
-
-
 static HistogramToolDialog *
 histogram_tool_new_dialog ()
 {
   HistogramToolDialog *htd;
   GtkWidget *vbox;
-  GtkWidget *hbox;
+  GtkWidget *vbox2;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *label;
@@ -353,6 +328,29 @@ histogram_tool_new_dialog ()
   GtkWidget *menu;
   int i;
   int x, y;
+
+  static ActionAreaItem action_items[] =
+  {
+    { "Close", histogram_tool_close_callback, NULL, NULL }
+  };
+  static char * histogram_info_names[7] =
+  {
+    N_("Mean:"),
+    N_("Std Dev:"),
+    N_("Median:"),
+    N_("Pixels:"),
+    N_("Intensity:"),
+    N_("Count:"),
+    N_("Percentile:")
+  };
+  static MenuItem color_option_items[] =
+  {
+    { "Value", 0, 0, histogram_tool_value_callback, NULL, NULL, NULL },
+    { "Red", 0, 0, histogram_tool_red_callback, NULL, NULL, NULL },
+    { "Green", 0, 0, histogram_tool_green_callback, NULL, NULL, NULL },
+    { "Blue", 0, 0, histogram_tool_blue_callback, NULL, NULL, NULL },
+    { NULL, 0, 0, NULL, NULL, NULL, NULL }
+  };
 
   htd = (HistogramToolDialog *) g_malloc (sizeof (HistogramToolDialog));
   htd->channel = HISTOGRAM_VALUE;
@@ -372,20 +370,24 @@ histogram_tool_new_dialog ()
 		      (GtkSignalFunc) histogram_tool_delete_callback,
 		      htd);
 
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (htd->shell)->vbox), vbox, TRUE, TRUE, 0);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (htd->shell)->vbox), vbox);
+
+  /*  The vbox for the menu and histogram  */
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
 
   /*  The option menu for selecting channels  */
-  htd->channel_menu = gtk_hbox_new (TRUE, 1);
-  gtk_box_pack_start (GTK_BOX (vbox), htd->channel_menu, FALSE, FALSE, 0);
+  htd->channel_menu = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox2), htd->channel_menu, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Information on Channel: ");
+  label = gtk_label_new ("Information on Channel:");
   gtk_box_pack_start (GTK_BOX (htd->channel_menu), label, FALSE, FALSE, 0);
 
   menu = build_menu (color_option_items, NULL);
   option_menu = gtk_option_menu_new ();
-  gtk_box_pack_start (GTK_BOX (htd->channel_menu), option_menu, FALSE, FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (htd->channel_menu), option_menu, FALSE, FALSE, 0);
 
   gtk_widget_show (label);
   gtk_widget_show (option_menu);
@@ -393,12 +395,9 @@ histogram_tool_new_dialog ()
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
 
   /*  The histogram tool histogram  */
-  hbox = gtk_hbox_new (TRUE, 1);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
-
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
 
   htd->histogram = histogram_widget_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
 
@@ -409,10 +408,11 @@ histogram_tool_new_dialog ()
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(htd->histogram));
   gtk_widget_show (GTK_WIDGET(htd->histogram));
   gtk_widget_show (frame);
-  gtk_widget_show (hbox);
+  gtk_widget_show (vbox2);
 
   /*  The table containing histogram information  */
   table = gtk_table_new (4, 4, TRUE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  the labels for histogram information  */
@@ -422,14 +422,15 @@ histogram_tool_new_dialog ()
       x = (i / 4) * 2;
 
       label = gtk_label_new (gettext(histogram_info_names[i]));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, x, x + 1, y, y + 1,
 			GTK_FILL, GTK_FILL, 2, 2);
       gtk_widget_show (label);
 
       htd->info_labels[i] = gtk_label_new ("0");
-      gtk_misc_set_alignment (GTK_MISC (htd->info_labels[i]), 0.5, 0.5);
-      gtk_table_attach (GTK_TABLE (table), htd->info_labels[i], x + 1, x + 2, y, y + 1,
+      gtk_misc_set_alignment (GTK_MISC (htd->info_labels[i]), 0.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), htd->info_labels[i],
+			x + 1, x + 2, y, y + 1,
 			GTK_FILL, GTK_FILL, 2, 2);
       gtk_widget_show (htd->info_labels[i]);
     }

@@ -23,6 +23,7 @@
 #include "info_window.h"
 #include "magnify.h"
 #include "scale.h"
+#include "tool_options_ui.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -46,16 +47,19 @@ struct _magnify
 typedef struct _MagnifyOptions MagnifyOptions;
 struct _MagnifyOptions
 {
-  /* int     allow_resize_windows; (from gimprc) */
-  int        allow_resize_d;
-  GtkWidget *allow_resize_w;
+  ToolOptions  tool_options;
+
+  /* int       allow_resize_windows; (from gimprc) */
+  int          allow_resize_d;
+  GtkWidget   *allow_resize_w;
 };
 
-/*  magnify tool options  */
-static void  *magnify_options = NULL;
+
+/*  the magnify tool options  */
+static MagnifyOptions *magnify_options = NULL;
 
 
-/*   magnify utility functions  */
+/*  magnify utility functions  */
 static void   zoom_in                   (int *, int *, int);
 static void   zoom_out                  (int *, int *, int);
 
@@ -67,7 +71,50 @@ static void   magnify_cursor_update     (Tool *, GdkEventMotion *, gpointer);
 static void   magnify_control           (Tool *, int, gpointer);
 
 
-/*   magnify utility functions  */
+/*  magnify tool options functions  */
+
+static void
+magnify_options_reset (void)
+{
+  MagnifyOptions *options = magnify_options;
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
+				options->allow_resize_d);
+}
+
+static MagnifyOptions *
+magnify_options_new (void)
+{
+  MagnifyOptions *options;
+
+  GtkWidget *vbox;
+
+  /*  the new magnify tool options structure  */
+  options = (MagnifyOptions *) g_malloc (sizeof (MagnifyOptions));
+  tool_options_init ((ToolOptions *) options,
+		     _("Magnify Options"),
+		     magnify_options_reset);
+  options->allow_resize_d = allow_resize_windows;
+
+  /*  the main vbox  */
+  vbox = options->tool_options.main_vbox;
+
+  /*  the allow_resize toggle button  */
+  options->allow_resize_w =
+    gtk_check_button_new_with_label (_("Allow Window Resizing"));
+  gtk_signal_connect (GTK_OBJECT (options->allow_resize_w), "toggled",
+		      (GtkSignalFunc) tool_options_toggle_update,
+		      &allow_resize_windows);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
+				allow_resize_windows);
+  gtk_box_pack_start (GTK_BOX (vbox), options->allow_resize_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->allow_resize_w);
+
+  return options;
+}
+
+
+/*  magnify utility functions  */
 
 static void
 zoom_in (int *src,
@@ -102,61 +149,6 @@ zoom_out (int *src,
 
 
 /*  magnify action functions  */
-
-static void
-magnify_toggle_update (GtkWidget *w,
-		       gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (w)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-reset_magnify_options (void)
-{
-  MagnifyOptions *options = magnify_options;
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
-				options->allow_resize_d);
-}
-
-static MagnifyOptions *
-create_magnify_options (void)
-{
-  MagnifyOptions *options;
-  GtkWidget      *vbox;
-
-  /*  the new options structure  */
-  options = (MagnifyOptions *) g_malloc (sizeof (MagnifyOptions));
-  options->allow_resize_d = allow_resize_windows;
-
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-
-  /*  the allow_resize toggle button  */
-  options->allow_resize_w =
-    gtk_check_button_new_with_label (_("Allow Window Resizing"));
-  gtk_signal_connect (GTK_OBJECT (options->allow_resize_w), "toggled",
-		      (GtkSignalFunc) magnify_toggle_update,
-		      &allow_resize_windows);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
-				allow_resize_windows);
-  gtk_box_pack_start (GTK_BOX (vbox), options->allow_resize_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->allow_resize_w);
-
-  /*  Register this selection options widget with the main tools options dialog
-   */
-  tools_register (MAGNIFY, vbox, _("Magnify Options"), reset_magnify_options);
-
-  return options;
-}
-
 
 static void
 magnify_button_press (Tool           *tool,
@@ -355,8 +347,12 @@ tools_new_magnify (void)
   Tool * tool;
   Magnify * private;
 
+  /*  The tool options  */
   if (! magnify_options)
-    magnify_options = create_magnify_options ();
+    {
+      magnify_options = magnify_options_new ();
+      tools_register (MAGNIFY, (ToolOptions *) magnify_options);
+    }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (Magnify *) g_malloc (sizeof (Magnify));

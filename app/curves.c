@@ -104,11 +104,12 @@ struct _CurvesDialog
 
 typedef double CRMatrix[4][4];
 
+
 /*  the curves tool options  */
-static void *curves_options = NULL;  /* dummy */
+static ToolOptions  * curves_options = NULL;
 
 /*  the curves dialog  */
-static CurvesDialog *curves_dialog = NULL;
+static CurvesDialog * curves_dialog = NULL;
 
 static CRMatrix CR_basis =
 {
@@ -359,8 +360,8 @@ tools_new_curves ()
   /*  The tool options  */
   if (!curves_options)
     {
-      tools_register (CURVES, NULL, _("Curves Options"), NULL);
-      curves_options = (void *) 1;
+      curves_options = tool_options_new (_("Curves Options"));
+      tools_register (CURVES, curves_options);
     }
 
   tool = (Tool *) g_malloc (sizeof (Tool));

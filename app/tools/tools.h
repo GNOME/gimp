@@ -20,6 +20,7 @@
 
 #include "layerF.h"
 #include "gdisplayF.h"
+#include "tool_options.h"
 
 #include "toolsF.h"
 
@@ -74,25 +75,23 @@ struct _tool
 
 struct _ToolInfo
 {
-  GtkWidget            *tool_options;
-  char                 *tool_options_title;
-  ToolOptionsResetFunc  tool_options_reset_func;
+  ToolOptions *tool_options;
 
-  char *tool_name;
+  char  *tool_name;
 
-  int toolbar_position;  
+  int    toolbar_position;  
 
-  char *menu_path;  
-  char *menu_accel; 
+  char  *menu_path;  
+  char  *menu_accel; 
 
   char **icon_data;
 
-  char *tool_desc;
-  char *private_tip;
+  char  *tool_desc;
+  char  *private_tip;
 
-  gint tool_id;
+  gint   tool_id;
 
-  ToolInfoNewFunc new_func;
+  ToolInfoNewFunc  new_func;
   ToolInfoFreeFunc free_func;
   ToolInfoInitFunc init_func;
 
@@ -115,10 +114,8 @@ void   tools_options_dialog_new  (void);
 void   tools_options_dialog_show (void);
 void   tools_options_dialog_free (void);
 
-void   tools_register            (ToolType              tool_type,
-				  GtkWidget            *tool_options,
-				  gchar                *tool_options_title,
-				  ToolOptionsResetFunc  tool_options_reset_func);
+void   tools_register            (ToolType     tool_type,
+				  ToolOptions *tool_options);
 
 void   active_tool_control       (int, void *);
 

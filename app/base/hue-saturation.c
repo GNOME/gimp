@@ -82,8 +82,9 @@ struct _HueSaturationDialog
   gint         preview;
 };
 
+
 /*  the hue-saturation tool options  */
-static void *hue_saturation_options = NULL;  /* dummy */
+static ToolOptions *hue_saturation_options = NULL;
 
 /*  the hue-saturation tool dialog  */
 static HueSaturationDialog *hue_saturation_dialog = NULL;
@@ -326,8 +327,8 @@ tools_new_hue_saturation ()
   /*  The tool options  */
   if (!hue_saturation_options)
     {
-      tools_register (HUE_SATURATION, NULL, _("Hue-Saturation Options"), NULL);
-      hue_saturation_options = (void *) 1;
+      hue_saturation_options = tool_options_new (_("Hue-Saturation Options"));
+      tools_register (HUE_SATURATION, hue_saturation_options);
     }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
@@ -416,13 +417,6 @@ hue_saturation_free ()
 /*  Select by Color dialog  */
 /****************************/
 
-/*  the action area structure  */
-static ActionAreaItem action_items[] =
-{
-  { N_("OK"), hue_saturation_ok_callback, NULL, NULL },
-  { N_("Cancel"), hue_saturation_cancel_callback, NULL, NULL }
-};
-
 static HueSaturationDialog *
 hue_saturation_new_dialog ()
 {
@@ -440,6 +434,12 @@ hue_saturation_new_dialog ()
   GtkObject *data;
   GSList *group = NULL;
   int i;
+
+  static ActionAreaItem action_items[] =
+  {
+    { N_("OK"), hue_saturation_ok_callback, NULL, NULL },
+    { N_("Cancel"), hue_saturation_cancel_callback, NULL, NULL }
+  };
   char *hue_partition_names[7] =
   {
     N_("Master"),
@@ -541,7 +541,7 @@ hue_saturation_new_dialog ()
 
   /*  Create the hue scale widget  */
   label = gtk_label_new (_("Hue"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
 
@@ -575,7 +575,7 @@ hue_saturation_new_dialog ()
 
   /*  Create the lightness scale widget  */
   label = gtk_label_new (_("Lightness"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
 
@@ -609,7 +609,7 @@ hue_saturation_new_dialog ()
 
   /*  Create the saturation scale widget  */
   label = gtk_label_new (_("Saturation"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
 
