@@ -1,3 +1,12 @@
+Wed Jan 20 20:45:23 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* HACKING: updated
+
+	* configure.in: version number bump to 1.1
+
+	* plug-ins/deinterlace/Makefile.am: don't list files from other
+	directories
+
 1999-01-20  Raja R Harinath  <harinath@cs.umn.edu>
 
 	Satisfy a more pedantic `automake'.

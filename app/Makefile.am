@@ -376,8 +376,8 @@ LDADD = \
 	libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\
-	$(GIMP_THREAD_LIBS)	#		\
-#	$(INTLLIBS)
+	$(GIMP_THREAD_LIBS)			\
+	$(INTLLIBS)
 
 DEPS = \
 	libgimpim.a \

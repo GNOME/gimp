@@ -5,7 +5,6 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = deinterlace
 
 deinterlace_SOURCES = \
-	$(top_srcdir)/plug-ins/megawidget/megawidget.h	\
 	deinterlace.c
 
 INCLUDES = \
