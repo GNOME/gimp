@@ -38,7 +38,8 @@ struct _GimpColorPickerOptions
 {
   GimpColorOptions  parent_instance;
 
-  gboolean          update_active;
+  gboolean          update_toolbox;
+  GimpColorPickMode pick_mode;
 };
 
 

@@ -40,6 +40,7 @@ struct _GimpColorTool
   gboolean          enabled;
   gint              center_x;
   gint              center_y;
+  GimpColorPickMode pick_mode;
 
   GimpColorOptions *options;
 };

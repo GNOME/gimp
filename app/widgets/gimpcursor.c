@@ -353,52 +353,52 @@ static GimpBitmapCursor gimp_modifier_cursors[] =
   {
     plus_bits, plus_mask_bits,
     plus_width, plus_height,
-    plus_x_hot, plus_y_hot, NULL, NULL
+    0, 0, NULL, NULL
   },
   {
     minus_bits, minus_mask_bits,
     minus_width, minus_height,
-    minus_x_hot, minus_y_hot, NULL, NULL
+    0, 0, NULL, NULL
   },
   {
     intersect_bits, intersect_mask_bits,
     intersect_width, intersect_height,
-    intersect_x_hot, intersect_y_hot, NULL, NULL
+    0, 0, NULL, NULL
   },
   {
     move_bits, move_mask_bits,
     move_width, move_height,
-    move_x_hot, move_y_hot, NULL, NULL
+    0, 0, NULL, NULL
   },
   {
     resize_bits, resize_mask_bits,
     resize_width, resize_height,
-    resize_x_hot, resize_y_hot, NULL, NULL
+    0, 0, NULL, NULL
   },
   {
     control_bits, control_mask_bits,
     control_width, control_height,
-    control_x_hot, control_y_hot, NULL, NULL
+    0, 0, NULL, NULL
   },
   {
     anchor_bits, anchor_mask_bits,
     anchor_width, anchor_height,
-    anchor_x_hot, anchor_y_hot, NULL, NULL
+    0, 0, NULL, NULL
   },
   {
     foreground_bits, foreground_mask_bits,
     foreground_width, foreground_height,
-    foreground_x_hot, foreground_y_hot, NULL, NULL
+    0, 0, NULL, NULL
   },
   {
     background_bits, background_mask_bits,
     background_width, background_height,
-    background_x_hot, background_y_hot, NULL, NULL
+    0, 0, NULL, NULL
   },
   {
     pattern_bits, pattern_mask_bits,
     pattern_width, pattern_height,
-    pattern_x_hot, pattern_y_hot, NULL, NULL
+    0, 0, NULL, NULL
   }
 };
 

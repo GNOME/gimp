@@ -44,6 +44,7 @@
 #include "gimppaletteeditor.h"
 #include "gimppreview.h"
 #include "gimptoolbox-color-area.h"
+#include "gimpwidgets-utils.h"
 
 #include "gui/color-notebook.h"
 
@@ -95,6 +96,9 @@ static void   palette_editor_columns_changed       (GtkAdjustment     *adj,
                                                     GimpPaletteEditor *editor);
 
 static void   palette_editor_new_clicked           (GtkWidget         *widget,
+                                                    GimpPaletteEditor *editor);
+static void   palette_editor_new_ext_clicked       (GtkWidget         *widget,
+                                                    GdkModifierType    state,
                                                     GimpPaletteEditor *editor);
 static void   palette_editor_edit_clicked          (GtkWidget         *widget,
                                                     GimpPaletteEditor *editor);
@@ -192,6 +196,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *spinbutton;
+  gchar     *str;
 
   editor->zoom_factor   = 1.0;
   editor->columns       = COLUMNS;
@@ -283,13 +288,16 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                             NULL,
                             editor);
 
+  str = g_strdup_printf (_("New Color from FG\n%s  from BG"),
+                         gimp_get_mod_name_control ());
   editor->new_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
-                            GTK_STOCK_NEW, _("New Color"),
+                            GTK_STOCK_NEW, str,
                             GIMP_HELP_PALETTE_EDITOR_NEW,
                             G_CALLBACK (palette_editor_new_clicked),
-                            NULL,
+                            G_CALLBACK (palette_editor_new_ext_clicked),
                             editor);
+  g_free (str);
 
   editor->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
@@ -548,24 +556,12 @@ palette_editor_color_area_button_press (GtkWidget         *widget,
 
       if (list)
         {
-          if (active_color == FOREGROUND)
-            {
-              if (bevent->state & GDK_CONTROL_MASK)
-                gimp_context_set_background (user_context,
-                                             &editor->color->color);
-              else
-                gimp_context_set_foreground (user_context,
-                                             &editor->color->color);
-            }
-          else if (active_color == BACKGROUND)
-            {
-              if (bevent->state & GDK_CONTROL_MASK)
-                gimp_context_set_foreground (user_context,
-                                             &editor->color->color);
-              else
-                gimp_context_set_background (user_context,
-                                             &editor->color->color);
-            }
+          if (bevent->state & GDK_CONTROL_MASK)
+            gimp_context_set_background (user_context,
+                                         &editor->color->color);
+          else
+            gimp_context_set_foreground (user_context,
+                                         &editor->color->color);
 
           palette_editor_draw_entries (editor, row, col);
 
@@ -1027,6 +1023,14 @@ static void
 palette_editor_new_clicked (GtkWidget         *widget,
                             GimpPaletteEditor *editor)
 {
+  palette_editor_new_ext_clicked (widget, 0, editor);
+}
+
+static void
+palette_editor_new_ext_clicked (GtkWidget         *widget,
+                                GdkModifierType    state,
+                                GimpPaletteEditor *editor)
+{
   GimpDataEditor *data_editor;
   GimpPalette    *palette;
   GimpContext    *user_context;
@@ -1041,10 +1045,10 @@ palette_editor_new_clicked (GtkWidget         *widget,
 
   user_context = gimp_get_user_context (data_editor->gimp);
 
-  if (active_color == FOREGROUND)
-    gimp_context_get_foreground (user_context, &color);
-  else if (active_color == BACKGROUND)
+  if (state & GDK_CONTROL_MASK)
     gimp_context_get_background (user_context, &color);
+  else
+    gimp_context_get_foreground (user_context, &color);
 
   editor->color = gimp_palette_add_entry (palette, NULL, &color);
 }
@@ -1229,13 +1233,6 @@ palette_editor_color_notebook_callback (ColorNotebook      *color_notebook,
       if (editor->color)
 	{
 	  editor->color->color = *color;
-
-	  /*  Update either foreground or background colors  */
-	  if (active_color == FOREGROUND)
-	    gimp_context_set_foreground (user_context, color);
-	  else if (active_color == BACKGROUND)
-	    gimp_context_set_background (user_context, color);
-
 	  gimp_data_dirty (GIMP_DATA (palette));
 	}
 

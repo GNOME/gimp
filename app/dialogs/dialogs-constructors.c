@@ -31,6 +31,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-colormap.h"
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
 
@@ -65,7 +66,6 @@
 #include "widgets/gimpselectioneditor.h"
 #include "widgets/gimptemplateview.h"
 #include "widgets/gimptoolbox.h"
-#include "widgets/gimptoolbox-color-area.h"
 #include "widgets/gimpundoeditor.h"
 #include "widgets/gimpvectorstreeview.h"
 
@@ -94,6 +94,7 @@
 /*  local function prototypes  */
 
 static void dialogs_indexed_palette_selected      (GimpColormapEditor *editor,
+                                                   GdkModifierType     state,
                                                    GimpDockable       *dockable);
 
 static GtkWidget * dialogs_viewable_preview_func  (GimpDockable       *dockable,
@@ -1103,32 +1104,26 @@ dialogs_edit_palette_func (GimpData *data)
 
 static void
 dialogs_indexed_palette_selected (GimpColormapEditor *editor,
+                                  GdkModifierType     state,
 				  GimpDockable       *dockable)
 {
-  GimpContext *context;
+  GimpImage *gimage;
 
-  context = (GimpContext *) g_object_get_data (G_OBJECT (editor),
-					       "gimp-dialogs-context");
+  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
-  if (context)
+  if (gimage)
     {
-      GimpImage *gimage;
-      GimpRGB    color;
-      gint       index;
+      GimpRGB color;
+      gint    index;
 
-      gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
-      index  = gimp_colormap_editor_col_index (editor);
+      index = gimp_colormap_editor_col_index (editor);
 
-      gimp_rgba_set_uchar (&color,
-			   gimage->cmap[index * 3],
-			   gimage->cmap[index * 3 + 1],
-			   gimage->cmap[index * 3 + 2],
-			   255);
+      gimp_image_get_colormap_entry (gimage, index, &color);
 
-      if (active_color == FOREGROUND)
-	gimp_context_set_foreground (context, &color);
-      else if (active_color == BACKGROUND)
-	gimp_context_set_background (context, &color);
+      if (state & GDK_CONTROL_MASK)
+        gimp_context_set_background (dockable->context, &color);
+      else
+        gimp_context_set_foreground (dockable->context, &color);
     }
 }
 

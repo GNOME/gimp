@@ -172,10 +172,11 @@ gimp_color_tool_finalize (GObject *object)
 static void
 gimp_color_tool_init (GimpColorTool *color_tool)
 {
-  color_tool->enabled  = FALSE;
-  color_tool->center_x = 0;
-  color_tool->center_y = 0;
-  color_tool->options  = NULL;
+  color_tool->enabled   = FALSE;
+  color_tool->center_x  = 0;
+  color_tool->center_y  = 0;
+  color_tool->pick_mode = GIMP_COLOR_PICK_MODE_FOREGROUND;
+  color_tool->options   = NULL;
 }
 
 static void
@@ -262,12 +263,8 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
     {
       GdkCursorType cursor = GIMP_BAD_CURSOR;
 
-      if (gdisp->gimage &&
-
-          coords->x > 0 &&
-          coords->x < gdisp->gimage->width &&
-          coords->y > 0 &&
-          coords->y < gdisp->gimage->height &&
+      if (coords->x > 0 && coords->x < gdisp->gimage->width  &&
+          coords->y > 0 && coords->y < gdisp->gimage->height &&
 
           (color_tool->options->sample_merged ||
            gimp_display_coords_in_active_drawable (gdisp, coords)))
@@ -278,7 +275,10 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
       gimp_tool_set_cursor (tool, gdisp,
                             cursor,
                             GIMP_COLOR_PICKER_TOOL_CURSOR,
-                            GIMP_CURSOR_MODIFIER_NONE);
+                            color_tool->pick_mode ==
+                            GIMP_COLOR_PICK_MODE_FOREGROUND ?
+                            GIMP_CURSOR_MODIFIER_FOREGROUND :
+                            GIMP_CURSOR_MODIFIER_BACKGROUND);
 
       return;  /*  don't chain up  */
     }

@@ -45,8 +45,13 @@ GimpItemFactoryEntry palette_editor_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/_New Color"), "",
+  { { N_("/_New Color from FG"), "",
       palette_editor_new_color_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_NEW },
+    NULL,
+    GIMP_HELP_PALETTE_EDITOR_NEW, NULL },
+  { { N_("/_New Color from BG"), "",
+      palette_editor_new_color_cmd_callback, TRUE,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
     GIMP_HELP_PALETTE_EDITOR_NEW, NULL },
@@ -95,9 +100,10 @@ palette_editor_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Edit Color...", editable && editor->color);
-  SET_SENSITIVE ("/New Color",     editable);
-  SET_SENSITIVE ("/Delete Color",  editable && editor->color);
+  SET_SENSITIVE ("/Edit Color...",     editable && editor->color);
+  SET_SENSITIVE ("/New Color from FG", editable);
+  SET_SENSITIVE ("/New Color from BG", editable);
+  SET_SENSITIVE ("/Delete Color",      editable && editor->color);
 
   SET_SENSITIVE ("/Zoom Out", data_editor->data);
   SET_SENSITIVE ("/Zoom In",  data_editor->data);

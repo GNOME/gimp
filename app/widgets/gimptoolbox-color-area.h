@@ -20,14 +20,6 @@
 #define __GIMP_TOOLBOX_COLOR_AREA_H__
 
 
-#define FOREGROUND 0
-#define BACKGROUND 1
-
-/*
- *  Global variables
- */
-extern gint      active_color;     /* foreground (= 0) or background (= 1) */
-
 #ifdef DISPLAY_FILTERS
 extern GimpDisplay *color_area_gdisp; /* hack for color displays */
 #endif /* DISPLAY_FILTERS */

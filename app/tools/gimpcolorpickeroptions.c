@@ -27,6 +27,7 @@
 #include "config/gimpconfig-params.h"
 
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcolorpickeroptions.h"
 
@@ -36,10 +37,8 @@
 enum
 {
   PROP_0,
-  PROP_SAMPLE_MERGED,
-  PROP_SAMPLE_AVERAGE,
-  PROP_AVERAGE_RADIUS,
-  PROP_UPDATE_ACTIVE
+  PROP_UPDATE_TOOLBOX,
+  PROP_PICK_MODE
 };
 
 
@@ -87,7 +86,7 @@ gimp_color_picker_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
 {
   GObjectClass *object_class;
@@ -99,10 +98,15 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
   object_class->set_property = gimp_color_picker_options_set_property;
   object_class->get_property = gimp_color_picker_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_UPDATE_ACTIVE,
-                                    "update-active", NULL,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_UPDATE_TOOLBOX,
+                                    "update-toolbox", NULL,
                                     TRUE,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PICK_MODE,
+                                 "pick-mode", NULL,
+                                 GIMP_TYPE_COLOR_PICK_MODE,
+                                 GIMP_COLOR_PICK_MODE_FOREGROUND,
+                                 0);
 }
 
 static void
@@ -122,8 +126,11 @@ gimp_color_picker_options_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_UPDATE_ACTIVE:
-      options->update_active = g_value_get_boolean (value);
+    case PROP_UPDATE_TOOLBOX:
+      options->update_toolbox = g_value_get_boolean (value);
+      break;
+    case PROP_PICK_MODE:
+      options->pick_mode = g_value_get_enum (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -143,8 +150,11 @@ gimp_color_picker_options_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_UPDATE_ACTIVE:
-      g_value_set_boolean (value, options->update_active);
+    case PROP_UPDATE_TOOLBOX:
+      g_value_set_boolean (value, options->update_toolbox);
+      break;
+    case PROP_PICK_MODE:
+      g_value_set_enum (value, options->pick_mode);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -155,11 +165,15 @@ gimp_color_picker_options_get_property (GObject    *object,
 GtkWidget *
 gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
-  GtkWidget *vbox;
-  GtkWidget *button;
+  GimpColorPickerOptions *options;
+  GObject                *config;
+  GtkWidget              *vbox;
+  GtkWidget              *button;
+  GtkWidget              *frame;
+  gchar                  *str;
 
-  config = G_OBJECT (tool_options);
+  options = GIMP_COLOR_PICKER_OPTIONS (tool_options);
+  config  = G_OBJECT (tool_options);
 
   vbox = gimp_color_options_gui (tool_options);
 
@@ -169,11 +183,22 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  /*  the update active color toggle button  */
-  button = gimp_prop_check_button_new (config, "update-active",
-                                       _("Update Active Color"));
+  /*  the update toolbox color toggle button  */
+  button = gimp_prop_check_button_new (config, "update-toolbox",
+                                       _("Update Toolbox Color"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  /*  the pick FG/BG frame  */
+  str = g_strdup_printf (_("Pick Mode  %s"), gimp_get_mod_name_control ());
+  frame = gimp_prop_enum_radio_frame_new (config, "pick-mode", str, -1, -1);
+  g_free (str);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  gtk_widget_set_sensitive (frame, options->update_toolbox);
+  g_object_set_data (G_OBJECT (button), "set_sensitive", frame);
 
   return vbox;
 }

@@ -56,7 +56,7 @@
 #include "gimphelp-ids.h"
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
-#include "gimptoolbox-color-area.h"
+#include "gimpwidgets-utils.h"
 
 #include "gui/color-notebook.h"
 
@@ -88,7 +88,6 @@ static void   gimp_colormap_editor_unmap           (GtkWidget          *widget);
 static void   gimp_colormap_editor_set_image       (GimpImageEditor    *editor,
                                                     GimpImage          *gimage);
 
-static void   gimp_colormap_editor_real_selected   (GimpColormapEditor *editor);
 static void   gimp_colormap_editor_draw            (GimpColormapEditor *editor);
 static void   gimp_colormap_editor_draw_cell       (GimpColormapEditor *editor,
                                                     gint                col);
@@ -123,6 +122,9 @@ static gboolean gimp_colormap_hex_entry_focus_out  (GtkEntry           *entry,
 static void   gimp_colormap_edit_clicked           (GtkWidget          *widget,
                                                     GimpColormapEditor *editor);
 static void   gimp_colormap_add_clicked            (GtkWidget          *widget,
+                                                    GimpColormapEditor *editor);
+static void   gimp_colormap_add_ext_clicked        (GtkWidget          *widget,
+                                                    GdkModifierType     state,
                                                     GimpColormapEditor *editor);
 
 static void   gimp_colormap_image_mode_changed     (GimpImage          *gimage,
@@ -189,8 +191,9 @@ gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpColormapEditorClass, selected),
 		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+		  gimp_marshal_VOID__ENUM,
+		  G_TYPE_NONE, 1,
+                  GDK_TYPE_MODIFIER_TYPE);
 
   object_class->destroy         = gimp_colormap_editor_destroy;
 
@@ -198,12 +201,14 @@ gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
 
   image_editor_class->set_image = gimp_colormap_editor_set_image;
 
-  klass->selected               = gimp_colormap_editor_real_selected;
+  klass->selected               = NULL;
 }
 
 static void
 gimp_colormap_editor_init (GimpColormapEditor *editor)
 {
+  gchar *str;
+
   editor->col_index        = 0;
   editor->dnd_col_index    = 0;
   editor->palette          = NULL;
@@ -223,14 +228,16 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
                             NULL,
                             editor);
 
+  str = g_strdup_printf (_("Add Color from FG\n%s  from BG"),
+                         gimp_get_mod_name_control ());
   editor->add_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
-                            GTK_STOCK_ADD, _("Add Color"),
+                            GTK_STOCK_ADD, str,
                             GIMP_HELP_INDEXED_PALETTE_ADD,
                             G_CALLBACK (gimp_colormap_add_clicked),
-                            NULL,
+                            G_CALLBACK (gimp_colormap_add_ext_clicked),
                             editor);
-
+  g_free (str);
 }
 
 static void
@@ -411,11 +418,12 @@ gimp_colormap_editor_new (GimpImage       *gimage,
 }
 
 void
-gimp_colormap_editor_selected (GimpColormapEditor *editor)
+gimp_colormap_editor_selected (GimpColormapEditor *editor,
+                               GdkModifierType     state)
 {
   g_return_if_fail (GIMP_IS_COLORMAP_EDITOR (editor));
 
-  g_signal_emit (editor, editor_signals[SELECTED], 0);
+  g_signal_emit (editor, editor_signals[SELECTED], 0, state);
 }
 
 gint
@@ -428,29 +436,6 @@ gimp_colormap_editor_col_index (GimpColormapEditor *editor)
 
 
 /*  private functions  */
-
-static void
-gimp_colormap_editor_real_selected (GimpColormapEditor *editor)
-{
-  GimpContext *user_context;
-  GimpImage   *gimage;
-  GimpRGB      color;
-
-  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
-
-  if (!gimage)
-    return;
-
-  user_context = gimp_get_user_context (gimage->gimp);
-
-  gimp_image_get_colormap_entry (gimage, editor->col_index, &color);
-
-  if (active_color == FOREGROUND)
-    gimp_context_set_foreground (user_context, &color);
-  else if (active_color == BACKGROUND)
-    gimp_context_set_background (user_context, &color);
-}
-
 
 #define MIN_CELL_SIZE 4
 
@@ -770,7 +755,7 @@ gimp_colormap_preview_button_press (GtkWidget          *widget,
     {
     case 1:
       gimp_colormap_editor_set_index (editor, col);
-      gimp_colormap_editor_selected (editor);
+      gimp_colormap_editor_selected (editor, bevent->state);
 
       if (bevent->type == GDK_2BUTTON_PRESS)
         gimp_colormap_edit_clicked (editor->edit_button, editor);
@@ -964,18 +949,29 @@ static void
 gimp_colormap_add_clicked (GtkWidget          *widget,
                            GimpColormapEditor *editor)
 {
+  gimp_colormap_add_ext_clicked (widget, 0, editor);
+}
+
+static void
+gimp_colormap_add_ext_clicked (GtkWidget          *widget,
+                               GdkModifierType     state,
+                               GimpColormapEditor *editor)
+{
   GimpImage *gimage;
 
   gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
   if (gimage && gimage->num_cols < 256)
     {
-      GimpRGB color;
+      GimpContext *context;
+      GimpRGB      color;
 
-      gimp_rgb_set_uchar (&color,
-                          gimage->cmap[editor->col_index * 3],
-                          gimage->cmap[editor->col_index * 3 + 1],
-                          gimage->cmap[editor->col_index * 3 + 2]);
+      context = gimp_get_user_context (gimage->gimp);
+
+      if (state & GDK_CONTROL_MASK)
+        gimp_context_get_background (context, &color);
+      else
+        gimp_context_get_foreground (context, &color);
 
       gimp_image_add_colormap_entry (gimage, &color);
     }

@@ -38,7 +38,6 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppaletteeditor.h"
-#include "widgets/gimptoolbox-color-area.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -57,20 +56,30 @@
 
 /*  local function prototypes  */
 
-static void 	  gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass);
-static void       gimp_color_picker_tool_init       (GimpColorPickerTool      *tool);
-static GObject  * gimp_color_picker_tool_constructor(GType              type,
-                                                     guint              n_params,
-                                                     GObjectConstructParam *params);
-static void       gimp_color_picker_tool_finalize   (GObject                  *object);
+static void      gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass);
+static void      gimp_color_picker_tool_init       (GimpColorPickerTool      *tool);
+static GObject * gimp_color_picker_tool_constructor(GType              type,
+                                                    guint              n_params,
+                                                    GObjectConstructParam *params);
+static void      gimp_color_picker_tool_finalize     (GObject         *object);
 
-static void       gimp_color_picker_tool_control    (GimpTool       *tool,
-                                                     GimpToolAction  action,
-                                                     GimpDisplay    *gdisp);
-static void       gimp_color_picker_tool_picked     (GimpColorTool  *color_tool,
-                                                     GimpImageType   sample_type,
-                                                     GimpRGB        *color,
-                                                     gint            color_index);
+static void      gimp_color_picker_tool_control      (GimpTool        *tool,
+                                                      GimpToolAction   action,
+                                                      GimpDisplay     *gdisp);
+static void      gimp_color_picker_tool_modifier_key (GimpTool        *tool,
+                                                      GdkModifierType  key,
+                                                      gboolean         press,
+                                                      GdkModifierType  state,
+                                                      GimpDisplay     *gdisp);
+static void      gimp_color_picker_tool_oper_update  (GimpTool        *tool,
+                                                      GimpCoords      *coords,
+                                                      GdkModifierType  state,
+                                                      GimpDisplay     *gdisp);
+
+static void      gimp_color_picker_tool_picked       (GimpColorTool   *color_tool,
+                                                      GimpImageType    sample_type,
+                                                      GimpRGB         *color,
+                                                      gint             color_index);
 
 static InfoDialog * gimp_color_picker_tool_info_create (GimpTool      *tool);
 static void         gimp_color_picker_tool_info_close  (GtkWidget     *widget,
@@ -154,6 +163,8 @@ gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass)
   object_class->finalize    = gimp_color_picker_tool_finalize;
 
   tool_class->control       = gimp_color_picker_tool_control;
+  tool_class->modifier_key  = gimp_color_picker_tool_modifier_key;
+  tool_class->oper_update   = gimp_color_picker_tool_oper_update;
 
   color_tool_class->picked  = gimp_color_picker_tool_picked;
 }
@@ -162,11 +173,6 @@ static void
 gimp_color_picker_tool_init (GimpColorPickerTool *tool)
 {
   gimp_tool_control_set_preserve (GIMP_TOOL (tool)->control, FALSE);
-
-  gimp_tool_control_set_cursor (GIMP_TOOL (tool)->control,
-                                GIMP_COLOR_PICKER_CURSOR);
-  gimp_tool_control_set_tool_cursor (GIMP_TOOL (tool)->control,
-                                     GIMP_COLOR_PICKER_TOOL_CURSOR);
 }
 
 static GObject *
@@ -224,6 +230,51 @@ gimp_color_picker_tool_control (GimpTool       *tool,
 }
 
 static void
+gimp_color_picker_tool_modifier_key (GimpTool        *tool,
+                                     GdkModifierType  key,
+                                     gboolean         press,
+                                     GdkModifierType  state,
+                                     GimpDisplay     *gdisp)
+{
+  GimpColorPickerOptions *options;
+
+  options = GIMP_COLOR_PICKER_OPTIONS (tool->tool_info->tool_options);
+
+  if (key == GDK_CONTROL_MASK)
+    {
+       switch (options->pick_mode)
+        {
+        case GIMP_COLOR_PICK_MODE_FOREGROUND:
+          g_object_set (options, "pick-mode", GIMP_COLOR_PICK_MODE_BACKGROUND,
+                        NULL);
+          break;
+
+        case GIMP_COLOR_PICK_MODE_BACKGROUND:
+          g_object_set (options, "pick-mode", GIMP_COLOR_PICK_MODE_FOREGROUND,
+                        NULL);
+          break;
+
+        default:
+          break;
+        }
+
+    }
+}
+
+static void
+gimp_color_picker_tool_oper_update (GimpTool        *tool,
+                                    GimpCoords      *coords,
+                                    GdkModifierType  state,
+                                    GimpDisplay     *gdisp)
+{
+  GimpColorPickerOptions *options;
+
+  options = GIMP_COLOR_PICKER_OPTIONS (tool->tool_info->tool_options);
+
+  GIMP_COLOR_TOOL (tool)->pick_mode = options->pick_mode;
+}
+
+static void
 gimp_color_picker_tool_picked (GimpColorTool *color_tool,
                                GimpImageType  sample_type,
                                GimpRGB       *color,
@@ -241,7 +292,7 @@ gimp_color_picker_tool_picked (GimpColorTool *color_tool,
 
   options = GIMP_COLOR_PICKER_OPTIONS (color_tool->options);
 
-  if (options->update_active)
+  if (options->update_toolbox)
     {
       GimpContext *user_context;
 
@@ -251,10 +302,16 @@ gimp_color_picker_tool_picked (GimpColorTool *color_tool,
       gimp_palette_editor_update_color (user_context, color, update_state);
 #endif
 
-      if (active_color == FOREGROUND)
-        gimp_context_set_foreground (user_context, color);
-      else if (active_color == BACKGROUND)
-        gimp_context_set_background (user_context, color);
+      switch (options->pick_mode)
+        {
+        case GIMP_COLOR_PICK_MODE_FOREGROUND:
+          gimp_context_set_foreground (user_context, color);
+          break;
+
+        case GIMP_COLOR_PICK_MODE_BACKGROUND:
+          gimp_context_set_background (user_context, color);
+          break;
+        }
     }
 }
 

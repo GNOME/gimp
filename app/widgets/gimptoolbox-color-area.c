@@ -58,6 +58,9 @@ typedef enum
   INVALID_AREA
 } ColorAreaTarget;
 
+#define FOREGROUND 0
+#define BACKGROUND 1
+
 
 /*  local function prototypes  */
 
@@ -90,13 +93,13 @@ static gboolean color_area_events          (GtkWidget          *widget,
 
 
 /*  Global variables  */
-gint         active_color     = FOREGROUND;
 GimpDisplay *color_area_gdisp = NULL;
 
 /*  Static variables  */
 static GtkWidget     *color_area            = NULL;
 static ColorNotebook *color_notebook        = NULL;
 static gboolean       color_notebook_active = FALSE;
+static gint           active_color          = FOREGROUND;
 static gint           edit_color;
 static GimpRGB        revert_fg;
 static GimpRGB        revert_bg;

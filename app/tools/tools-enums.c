@@ -9,6 +9,25 @@
 
 /* enumerations from "./tools-enums.h" */
 
+static const GEnumValue gimp_color_pick_mode_enum_values[] =
+{
+  { GIMP_COLOR_PICK_MODE_FOREGROUND, N_("Pick Foreground Color"), "foreground" },
+  { GIMP_COLOR_PICK_MODE_BACKGROUND, N_("Pick Background Color"), "background" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_color_pick_mode_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpColorPickMode", gimp_color_pick_mode_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_crop_type_enum_values[] =
 {
   { GIMP_CROP, N_("Crop"), "crop" },

@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "gui-types.h"
 
 #include "widgets/gimppaletteeditor.h"
@@ -30,17 +32,6 @@
 /*  public functions  */
 
 void
-palette_editor_new_color_cmd_callback (GtkWidget *widget,
-                                       gpointer   data,
-                                       guint      action)
-{
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
-
-  if (GTK_WIDGET_SENSITIVE (editor->edit_button))
-    gtk_button_clicked (GTK_BUTTON (editor->edit_button));
-}
-
-void
 palette_editor_edit_color_cmd_callback (GtkWidget *widget,
                                         gpointer   data,
                                         guint      action)
@@ -49,6 +40,18 @@ palette_editor_edit_color_cmd_callback (GtkWidget *widget,
 
   if (GTK_WIDGET_SENSITIVE (editor->edit_button))
     gtk_button_clicked (GTK_BUTTON (editor->edit_button));
+}
+
+void
+palette_editor_new_color_cmd_callback (GtkWidget *widget,
+                                       gpointer   data,
+                                       guint      action)
+{
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
+
+  if (GTK_WIDGET_SENSITIVE (editor->new_button))
+    gimp_button_extended_clicked (GIMP_BUTTON (editor->new_button),
+                                  action ? GDK_CONTROL_MASK : 0);
 }
 
 void

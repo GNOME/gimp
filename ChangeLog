@@ -1,3 +1,57 @@
+2003-09-26  Michael Natterer  <mitch@gimp.org>
+
+	Cleaned up all places which pick colors to work consistently: the
+	concept of an "active color" has disappeared, instead <ctrl> picks
+	the BG color all over the place (fixes bug #122931).
+
+	* app/tools/tools-enums.[ch]: added enum GimpColorPickMode which
+	can be one of { FOREGROUND, BACKGROUND }. Reordered enums so
+	non-registered ones are at the end of the file. Removed trailing
+	whitespace.
+
+	* app/tools/gimpcolorpickeroptions.[ch]: added a "pick-mode"
+	property and a GUI for it. Renamed the "update-active" property to
+	"update-toolbox".
+
+	* app/tools/gimpcolorpickertool.c: honor the new option. Toggle
+	pick-mode on <ctrl>.
+
+	* app/tools/gimpcolortool.[ch]: added pick_mode member and change
+	the cursor accordingly.
+
+	* app/widgets/gimpcolormapeditor.[ch]: added "GdkModifierType
+	state" to the "selected" signal. Removed the signal's default
+	implementation.
+
+	* app/gui/dialogs-constructors.c: fixed the signal handler which
+	lives here and set BG if <ctrl> was pressed.
+
+	* app/widgets/gimppaletteeditor.c: removed weird <ctrl> <->
+	active_color interaction and pick BG on <ctrl>. Don't change the
+	toolbox color when editing a color in the palette.
+
+	* app/widgets/gimptoolbox-color-area.[ch]: made the whole
+	active_color stuff private. Will remove these artefacts soon...
+
+	* app/gui/colormap-editor-menu.c
+	* app/gui/palette-editor-menu.c: added separate menu entries
+	for adding a color from the current FG and BG.
+
+	* app/gui/colormap-editor-commands.c
+	* app/gui/palette-editor-commands.[ch]: changed callbacks
+	accordingly.
+
+	* cursors/background.xbm
+	* cursors/background_mask.xbm
+	* cursors/foreground.xbm
+	* cursors/foreground_mask.xbm
+	* cursors/gimp-tool-cursors.xcf: moved the FG/BG cursor modifiers
+	closer to the upper right corner.
+
+	* app/widgets/gimpcursor.c: ignore the cursor modifiers' hotspots
+	since they are not relevant and I didn't save the hotspot in the
+	updated cursor files for that reason.
+
 2003-09-26  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpscanconvert.[ch]: Add some parameters to

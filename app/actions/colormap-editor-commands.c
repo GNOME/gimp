@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "gui-types.h"
 
 #include "widgets/gimpcolormapeditor.h"
@@ -48,5 +50,6 @@ colormap_editor_add_color_cmd_callback (GtkWidget *widget,
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
 
   if (GTK_WIDGET_SENSITIVE (editor->add_button))
-    gtk_button_clicked (GTK_BUTTON (editor->add_button));
+    gimp_button_extended_clicked (GIMP_BUTTON (editor->add_button),
+                                  action ? GDK_CONTROL_MASK : 0);
 }
