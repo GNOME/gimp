@@ -167,14 +167,17 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
 {
   GimpTool *tool = GIMP_TOOL (move_tool);
 
-  move_tool->layer             = NULL;
-  move_tool->guide             = NULL;
+  move_tool->floating_layer     = NULL;
+  move_tool->guide              = NULL;
 
-  move_tool->moving_guide      = FALSE;
-  move_tool->guide_position    = -1;
-  move_tool->guide_orientation = GIMP_ORIENTATION_UNKNOWN;
+  move_tool->moving_guide       = FALSE;
+  move_tool->guide_position     = -1;
+  move_tool->guide_orientation  = GIMP_ORIENTATION_UNKNOWN;
 
-  move_tool->saved_type        = GIMP_TRANSFORM_TYPE_LAYER;
+  move_tool->saved_type         = GIMP_TRANSFORM_TYPE_LAYER;
+
+  move_tool->old_active_layer   = NULL;
+  move_tool->old_active_vectors = NULL;
 
   gimp_tool_control_set_snap_to             (tool->control, FALSE);
   gimp_tool_control_set_handles_empty_image (tool->control, TRUE);
@@ -229,9 +232,11 @@ gimp_move_tool_button_press (GimpTool        *tool,
 
   tool->gdisp = gdisp;
 
-  move->layer        = NULL;
-  move->guide        = NULL;
-  move->moving_guide = FALSE;
+  move->floating_layer     = NULL;
+  move->guide              = NULL;
+  move->moving_guide       = FALSE;
+  move->old_active_layer   = NULL;
+  move->old_active_vectors = NULL;
 
   if (! options->move_current)
     {
@@ -243,6 +248,9 @@ gimp_move_tool_button_press (GimpTool        *tool,
                                          coords, 7, 7,
                                          NULL, NULL, NULL, NULL, NULL, &vectors))
             {
+              move->old_active_vectors =
+                gimp_image_get_active_vectors (gdisp->gimage);
+
               gimp_image_set_active_vectors (gdisp->gimage, vectors);
             }
           else
@@ -292,13 +300,16 @@ gimp_move_tool_button_press (GimpTool        *tool,
                   /*  If there is a floating selection, and this aint it,
                    *  use the move tool to anchor it.
                    */
-                  move->layer = gimp_image_floating_sel (gdisp->gimage);
+                  move->floating_layer = gimp_image_floating_sel (gdisp->gimage);
                   gimp_tool_control_activate (tool->control);
 
                   return;
                 }
               else
                 {
+                  move->old_active_layer =
+                    gimp_image_get_active_layer (gdisp->gimage);
+
                   gimp_image_set_active_layer (gdisp->gimage, layer);
                 }
             }
@@ -316,13 +327,13 @@ gimp_move_tool_button_press (GimpTool        *tool,
     case GIMP_TRANSFORM_TYPE_PATH:
       if (gimp_image_get_active_vectors (gdisp->gimage))
         gimp_edit_selection_tool_start (tool, gdisp, coords,
-                                        GIMP_TRANSLATE_MODE_VECTORS);
+                                        GIMP_TRANSLATE_MODE_VECTORS, TRUE);
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
       if (! gimp_channel_is_empty (gimp_image_get_mask (gdisp->gimage)))
         gimp_edit_selection_tool_start (tool, gdisp, coords,
-                                        GIMP_TRANSLATE_MODE_MASK);
+                                        GIMP_TRANSLATE_MODE_MASK, TRUE);
       break;
 
     case GIMP_TRANSFORM_TYPE_LAYER:
@@ -331,13 +342,13 @@ gimp_move_tool_button_press (GimpTool        *tool,
 
         if (GIMP_IS_LAYER_MASK (drawable))
           gimp_edit_selection_tool_start (tool, gdisp, coords,
-                                          GIMP_TRANSLATE_MODE_LAYER_MASK);
+                                          GIMP_TRANSLATE_MODE_LAYER_MASK, TRUE);
         else if (GIMP_IS_CHANNEL (drawable))
           gimp_edit_selection_tool_start (tool, gdisp, coords,
-                                          GIMP_TRANSLATE_MODE_CHANNEL);
+                                          GIMP_TRANSLATE_MODE_CHANNEL, TRUE);
         else if (GIMP_IS_LAYER (drawable))
           gimp_edit_selection_tool_start (tool, gdisp, coords,
-                                          GIMP_TRANSLATE_MODE_LAYER);
+                                          GIMP_TRANSLATE_MODE_LAYER, TRUE);
       }
       break;
     }
@@ -353,7 +364,8 @@ gimp_move_tool_button_release (GimpTool        *tool,
   GimpMoveTool     *move  = GIMP_MOVE_TOOL (tool);
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_tool_control_halt (tool->control);
+  if (gimp_tool_control_is_active (tool->control))
+    gimp_tool_control_halt (tool->control);
 
   if (move->moving_guide)
     {
@@ -443,12 +455,26 @@ gimp_move_tool_button_release (GimpTool        *tool,
     }
   else
     {
+      if (move->old_active_layer)
+        {
+          gimp_image_set_active_layer (gdisp->gimage,
+                                       move->old_active_layer);
+          move->old_active_layer = NULL;
+        }
+
+      if (move->old_active_vectors)
+        {
+          gimp_image_set_active_vectors (gdisp->gimage,
+                                         move->old_active_vectors);
+          move->old_active_vectors = NULL;
+        }
+
       /*  Take care of the case where the user "cancels" the action  */
       if (! (state & GDK_BUTTON3_MASK))
 	{
-	  if (move->layer)
+	  if (move->floating_layer)
 	    {
-	      floating_sel_anchor (move->layer);
+	      floating_sel_anchor (move->floating_layer);
 	      gimp_image_flush (gdisp->gimage);
 	    }
 	}

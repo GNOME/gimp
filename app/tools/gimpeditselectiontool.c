@@ -91,6 +91,8 @@ struct _GimpEditSelectionTool
   GimpTranslateMode   edit_mode;       /*  Translate the mask or layer?      */
 
   gboolean            first_move;      /*  Don't push undos after the first  */
+
+  gboolean            propagate_release;
 };
 
 struct _GimpEditSelectionToolClass
@@ -206,7 +208,8 @@ void
 gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                                 GimpDisplay       *gdisp,
                                 GimpCoords        *coords,
-                                GimpTranslateMode  edit_mode)
+                                GimpTranslateMode  edit_mode,
+                                gboolean           propagate_release)
 {
   GimpEditSelectionTool *edit_select;
   GimpDisplayShell      *shell;
@@ -215,6 +218,8 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   const gchar           *undo_desc;
 
   edit_select = g_object_new (GIMP_TYPE_EDIT_SELECTION_TOOL, NULL);
+
+  edit_select->propagate_release = propagate_release;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -568,6 +573,14 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
   edit_select->num_segs_in  = 0;
   edit_select->num_segs_out = 0;
 
+  if (edit_select->propagate_release &&
+      tool_manager_get_active (gdisp->gimage->gimp))
+    {
+      tool_manager_button_release_active (gdisp->gimage->gimp,
+                                          coords, time, state,
+                                          gdisp);
+    }
+
   g_object_unref (edit_select);
 }
 
@@ -704,14 +717,14 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
           default:
             g_warning ("esm / BAD FALLTHROUGH");
           }
+
+        edit_select->first_move = FALSE;
       }
 
     gimp_projection_flush (gdisp->gimage->projection);
   }
   /********************************************************************/
   /********************************************************************/
-
-  edit_select->first_move = FALSE;
 
   gimp_tool_pop_status (tool);
 

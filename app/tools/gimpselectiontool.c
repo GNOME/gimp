@@ -293,17 +293,18 @@ gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
     {
     case SELECTION_MOVE_MASK:
       gimp_edit_selection_tool_start (tool, tool->gdisp, coords,
-                                      GIMP_TRANSLATE_MODE_MASK);
+                                      GIMP_TRANSLATE_MODE_MASK, FALSE);
       return TRUE;
 
     case SELECTION_MOVE:
       gimp_edit_selection_tool_start (tool, tool->gdisp, coords,
-                                      GIMP_TRANSLATE_MODE_MASK_TO_LAYER);
+                                      GIMP_TRANSLATE_MODE_MASK_TO_LAYER, FALSE);
       return TRUE;
 
     case SELECTION_MOVE_COPY:
       gimp_edit_selection_tool_start (tool, tool->gdisp, coords,
-                                      GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER);
+                                      GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER,
+                                      FALSE);
       return TRUE;
 
     default:

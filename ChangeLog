@@ -1,5 +1,28 @@
 2004-10-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpeditselectiontool.[ch]: added new parameter
+	"gboolean propagate_release" to gimp_edit_slection_tool_start()
+	and remember it in the GimpEditSelectionTool struct. If requested,
+	propagate GimpTool::button_release() to the tool below in the tool
+	stack.
+
+	* app/tools/gimpselectiontool.c (gimp_selection_tool_start_edit):
+	pass FALSE so we don't get the button_release().
+
+	* app/tools/gimpmovetool.[ch]: pass TRUE so we get
+	button_release(). If moving a layer or path in "pick active" mode,
+	remember the old active layer/path and switch back to it in
+	button_release(). Fixes bug #97734.
+
+	Unrelated:
+
+	* app/tools/gimpeditselectiontool.c
+	(gimp_edit_selection_tool_motion): set "first_move" to FALSE only
+	if a move actually happened. Fixes un-undoable moves at high zoom
+	factors.
+
+2004-10-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdnd.c (gimp_dnd_data_drag_begin): remember for
 	which GdkDragContext the icon_widget was made.
 

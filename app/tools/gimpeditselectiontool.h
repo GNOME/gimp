@@ -23,7 +23,8 @@
 void       gimp_edit_selection_tool_start     (GimpTool          *parent_tool,
                                                GimpDisplay       *gdisp,
                                                GimpCoords        *coords,
-                                               GimpTranslateMode  edit_mode);
+                                               GimpTranslateMode  edit_mode,
+                                               gboolean           propagate_release);
 
 
 gboolean   gimp_edit_selection_tool_key_press (GimpTool          *tool,

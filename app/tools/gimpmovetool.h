@@ -38,7 +38,7 @@ struct _GimpMoveTool
 {
   GimpDrawTool         parent_instance;
 
-  GimpLayer           *layer;
+  GimpLayer           *floating_layer;
   GimpGuide           *guide;
 
   gboolean             moving_guide;
@@ -46,6 +46,9 @@ struct _GimpMoveTool
   GimpOrientationType  guide_orientation;
 
   GimpTransformType    saved_type;
+
+  GimpLayer           *old_active_layer;
+  GimpVectors         *old_active_vectors;
 };
 
 struct _GimpMoveToolClass
