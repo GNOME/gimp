@@ -53,8 +53,7 @@ INCLUDES = \
 	-I$(includedir)
 
 EXTRA_DIST = \
-	gimpversion.h.in	\
-	makefile.msc		\
+	makefile.msc	\
 	gimpbase.def
 
 lib_LTLIBRARIES = libgimpbase-1.3.la

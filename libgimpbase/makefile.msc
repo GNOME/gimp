@@ -47,7 +47,6 @@ libgimpbaseincludedir = \
 	$(includedir)/gimp-$(LT_RELEASE)/libgimpbase
 
 EXTRA_DIST = \
-	gimpversion.h.in \
 	makefile.mingw \
 	makefile.mingw.in \
 	makefile.msc \

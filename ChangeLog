@@ -1,3 +1,11 @@
+2003-08-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/Makefile.am (EXTRA_DIST)
+	* libgimpbase/makefile.msc (EXTRA_DIST): removed gimpversion.h.in.
+
+	* app/composite/Makefile.am (libappcomposite_a_built_sources):
+	removed gimp-composite-*-installer.h.
+
 2003-08-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimphelp-ids.h: added some toolbox and dock related

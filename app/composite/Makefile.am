@@ -38,23 +38,18 @@ libappcomposite_a_sources = \
 	gimp-composite-vis.h			\
 	gimp-composite-util.h
 
-libappcomposite_a_built_sources =   \
+libappcomposite_a_built_sources = \
 	gimp-composite-generic-installer.c	\
-	gimp-composite-generic-installer.h	\
 	gimp-composite-mmx-installer.c		\
-	gimp-composite-mmx-installer.h		\
 	gimp-composite-sse-installer.c		\
-	gimp-composite-sse-installer.h		\
 	gimp-composite-sse2-installer.c		\
-	gimp-composite-sse2-installer.h		\
 	gimp-composite-3dnow-installer.c	\
-	gimp-composite-3dnow-installer.h	\
 	gimp-composite-altivec-installer.c	\
-	gimp-composite-altivec-installer.h	\
-	gimp-composite-vis-installer.c		\
-	gimp-composite-vis-installer.h
+	gimp-composite-vis-installer.c
 
-libappcomposite_a_SOURCES = $(libappcomposite_a_built_sources) $(libappcomposite_a_sources)
+libappcomposite_a_SOURCES = \
+	$(libappcomposite_a_built_sources)	\
+	$(libappcomposite_a_sources)
 
 regenerate: gimp-composite-generic.o gimp-composite-mmx.o gimp-composite-sse.o gimp-composite-sse2.o gimp-composite-3dnow.o gimp-composite-altivec.o gimp-composite-vis.o
 	$(srcdir)/make-installer.py                                                                        -f gimp-composite-generic.o
