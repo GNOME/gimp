@@ -145,9 +145,12 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
  * Convenience function that creates a parasite and attaches it
  * to the GIMP.
  *
+ * Return value: TRUE on successful creation and attachment of
+ * the new parasite.
+ *
  * See Also: gimp_image_parasite_attach()
  */
-void
+gboolean
 gimp_image_attach_new_parasite (gint32         image_ID,
 				const gchar   *name,
 				gint           flags,
@@ -155,8 +158,11 @@ gimp_image_attach_new_parasite (gint32         image_ID,
 				gconstpointer  data)
 {
   GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
+  gboolean      success;
 
-  gimp_image_parasite_attach (image_ID, parasite);
+  success = gimp_image_parasite_attach (image_ID, parasite);
 
   gimp_parasite_free (parasite);
+
+  return success;
 }

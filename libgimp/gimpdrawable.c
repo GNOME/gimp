@@ -331,9 +331,12 @@ gimp_drawable_get_sub_thumbnail_data (gint32  drawable_ID,
  * Convenience function that creates a parasite and attaches it
  * to the GIMP.
  *
+ * Return value: TRUE on successful creation and attachment of
+ * the new parasite.
+ *
  * See Also: gimp_drawable_parasite_attach()
  */
-void
+gboolean
 gimp_drawable_attach_new_parasite (gint32          drawable_ID,
 				   const gchar    *name,
 				   gint            flags,
@@ -341,8 +344,11 @@ gimp_drawable_attach_new_parasite (gint32          drawable_ID,
 				   gconstpointer   data)
 {
   GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
+  gboolean      success;
 
-  gimp_drawable_parasite_attach (drawable_ID, parasite);
+  success = gimp_drawable_parasite_attach (drawable_ID, parasite);
 
   gimp_parasite_free (parasite);
+
+  return success;
 }

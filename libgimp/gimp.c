@@ -1374,19 +1374,25 @@ gimp_extension_process (guint timeout)
  * Convenience function that creates a parasite and attaches it
  * to the GIMP.
  *
+ * Return value: TRUE on successful creation and attachment of
+ * the new parasite.
+ *
  * See Also: gimp_parasite_attach()
  */
-void
+gboolean
 gimp_attach_new_parasite (const gchar   *name,
 			  gint           flags,
 			  gint           size,
 			  gconstpointer  data)
 {
   GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
+  gboolean      success;
 
-  gimp_parasite_attach (parasite);
+  success = gimp_parasite_attach (parasite);
 
   gimp_parasite_free (parasite);
+
+  return success;
 }
 
 

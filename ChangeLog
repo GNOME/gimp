@@ -1,3 +1,10 @@
+2005-03-02  Manish Singh  <yosh@gimp.org>
+
+	* libgimp/gimp.[ch]
+	* libgimp/gimpdrawable.[ch]
+	* libgimp/gimpimage.[ch]: changed attach_new_parasite variants
+	to return success or failure.
+
 2005-03-02  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/resize-dialog.c (resize_dialog_reset)

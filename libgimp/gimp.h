@@ -326,7 +326,7 @@ gint          gimp_monitor_number      (void) G_GNUC_CONST;
 const gchar * gimp_get_progname        (void) G_GNUC_CONST;
 
 
-void          gimp_attach_new_parasite (const gchar    *name,
+gboolean      gimp_attach_new_parasite (const gchar    *name,
                                         gint            flags,
                                         gint            size,
                                         gconstpointer   data);

@@ -46,7 +46,7 @@ guchar   * gimp_image_get_thumbnail_data  (gint32          image_ID,
                                            gint           *height,
                                            gint           *bpp);
 
-void       gimp_image_attach_new_parasite (gint32          image_ID,
+gboolean   gimp_image_attach_new_parasite (gint32          image_ID,
                                            const gchar    *name,
                                            gint            flags,
                                            gint            size,

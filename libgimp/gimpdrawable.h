@@ -69,7 +69,7 @@ guchar       * gimp_drawable_get_sub_thumbnail_data (gint32         drawable_ID,
                                                      gint          *dest_height,
                                                      gint          *bpp);
 
-void           gimp_drawable_attach_new_parasite    (gint32         drawable_ID,
+gboolean       gimp_drawable_attach_new_parasite    (gint32         drawable_ID,
                                                      const gchar   *name,
                                                      gint           flags,
                                                      gint           size,
