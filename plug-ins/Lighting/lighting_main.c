@@ -307,6 +307,7 @@ void lighting_interactive(GDrawable *drawable)
   gdk_set_use_xshm(gimp_use_xshm());
 
   gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 
   /* Create application window */
   /* ========================= */

@@ -1,3 +1,8 @@
+Sun Jun  7 16:18:16 PDT 1998 Manish singh <yosh@gimp.org>
+
+	* plug-ins/Lighting/lighting_main.c
+	* plug-ins/Lighting/lighting_ui.c: ui fixes (taken from MapObject)
+
 Sun Jun  7 18:44:17 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* plug-ins/webbrowser/web-browser.scm: changed the URL for the
