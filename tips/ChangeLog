@@ -7,6 +7,8 @@
 
 	* update.sh: removed redundant call to intltool-extract.
 
+	* gimp-tips.dtd: use NMTOKEN for xml:lang attribute values.
+
 2002-03-09  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am: added update-po rule, improved dist-hook rule.
