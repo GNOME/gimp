@@ -95,6 +95,7 @@ sub present {
          VMS		=> 1,
          RISCOS		=> 1,
          AmigaOS	=> 1,
+         utwin		=> 1,
        }->{$^O};
    } elsif ($_ eq "never") {
       0;
