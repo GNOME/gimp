@@ -1,3 +1,8 @@
+2000-08-17  Daniel Egger  <egger@suse.de>
+
+	* help/C/dialogs/color_selectors/*.html: Checking proofread
+	versions by Rebecca.
+
 2000-08-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gdyntext/gdyntext_ui.c
