@@ -15,6 +15,19 @@
 	* libgimpmodule/Makefile.am (INCLUDES): Add GMODULE_CFLAGS.
 	(LIBADD): Add GMODULE_LIBS.
 
+	* libgimpwidgets/Makefile.am: Similar additions for Win32 as in
+	the other libgimp*/Makefile.am files: Use -no-undefined. Use the
+	.def file. Produce MS style import library if possible. Install
+	and uninstall import libraries.
+	(AM_CPPFLAGS) Define LT_RELEASE and LT_CURRENT_MINUS_AGE.
+	(libgimpwidgets_1_3_la_sources) Include libgimp-glue.c
+
+	* libgimpwidgets/libgimp-glue.c: Bypass whole file unless Win32.
+	(dynamic_resolve): Try both the libtool style DLL name and Hans
+	Breuer's naming scheme.
+	(gimp_*) Replace duplicated code snippets with calls of a
+	preprocessor macro.
+
 2002-12-21  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/imagemap/imap_csim.l: add "<string.h> to remove warning.

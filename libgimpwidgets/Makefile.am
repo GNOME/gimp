@@ -1,9 +1,52 @@
 ## Process this file with automake to produce Makefile.in
 
+if PLATFORM_WIN32
+no_undefined = -no-undefined
+conditional_libgimpcolor_la = ../libgimpcolor/libgimpcolor-1.3.la
+endif
+
+if PLATFORM_WIN32
+else
+libm = -lm
+endif
+
+if OS_WIN32
+gimpwidgets_def = gimpwidgets.def
+libgimpwidgets_export_symbols = -export-symbols gimpwidgets.def
+
+install-libtool-import-lib:
+	$(INSTALL) .libs/libgimpwidgets-1.3.dll.a $(DESTDIR)$(libdir)
+
+uninstall-libtool-import-lib:
+	-rm $(DESTDIR)$(libdir)/libgimpwidgets-1.3.dll.a
+else
+install-libtool-import-lib:
+uninstall-libtool-import-lib:
+endif
+
+if MS_LIB_AVAILABLE
+noinst_DATA = gimpwidgets-1.3.lib
+
+install-ms-lib:
+	$(INSTALL) gimpwidgets-1.3.lib $(DESTDIR)$(libdir)
+
+uninstall-ms-lib:
+	-rm $(DESTDIR)$(libdir)/gimpwidgets-1.3.lib
+
+gimpwidgets-1.3.lib: gimpwidgets.def
+	lib -name:libgimpwidgets-1.3-@LT_CURRENT_MINUS_AGE@.dll -def:gimpwidgets.def -out:$@
+
+else
+install-ms-lib:
+uninstall-ms-lib:
+endif
+
 libgimpwidgetsincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpwidgets
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpWidgets\"	\
+	-DLT_RELEASE=\"@LT_RELEASE@\"		\
+	-DLT_CURRENT_MINUS_AGE=\"@LT_CURRENT_MINUS_AGE@\" \
 	@GIMP_THREAD_FLAGS@
 
 INCLUDES = \
@@ -58,7 +101,8 @@ libgimpwidgets_1_3_la_sources = \
 	gimpstock.c		\
 	gimpstock.h		\
 	gimpunitmenu.c		\
-	gimpunitmenu.h
+	gimpunitmenu.h		\
+	libgimp-glue.c
 
 libgimpwidgets_1_3_la_built_sources = \
 	gimpwidgetsmarshal.c	\
@@ -67,8 +111,6 @@ libgimpwidgets_1_3_la_built_sources = \
 libgimpwidgets_1_3_la_extra_sources = gimpwidgetsmarshal.list
 
 EXTRA_DIST = \
-	makefile.mingw				\
-	makefile.mingw.in			\
 	makefile.msc				\
 	gimpwidgets.def				\
 	$(libgimpwidgets_1_3_la_extra_sources)
@@ -103,9 +145,13 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpunitmenu.h
 
 libgimpwidgets_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
+	$(no_undefined) \
+	$(libgimpwidgets_export_symbols)
 
-libgimpwidgets_1_3_la_LIBADD = $(GLIB_LIBS) -lm
+libgimpwidgets_1_3_la_LIBADD = $(conditional_libgimpcolor_la) $(GTK_LIBS) $(libm)
+
+libgimpwidgets_1_3_la_DEPENDENCIES = $(gimpwidgets_def)
 
 #
 # rules to generate built sources
@@ -125,3 +171,6 @@ $(srcdir)/gimpwidgetsmarshal.c: $(srcdir)/gimpwidgetsmarshal.h
 	&& cp xgen-gwmc $(@F) \
 	&& rm -f xgen-gwmc xgen-gwmc~
 
+install-data-local: install-ms-lib install-libtool-import-lib
+
+uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib

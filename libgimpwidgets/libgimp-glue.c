@@ -23,7 +23,7 @@
 /*
  * Supports dynamic linking at run-time against
  * libgimp (if used by a plug-in, or gimp.exe
- * if used by itself)
+ * if used by gimp.exe itself)
  *
 
 gimp_palette_get_background
@@ -42,6 +42,8 @@ gimp_unit_get_symbol
 
 #include <glib.h>
 
+#ifdef G_OS_WIN32 /* Bypass whole file otherwise */
+
 #include "libgimpcolor/gimpcolortypes.h"
 #include "libgimpbase/gimpbasetypes.h"
 #include "libgimpbase/gimpunit.h"
@@ -55,13 +57,15 @@ gimp_unit_get_symbol
 
 #include <windows.h>
 
+typedef int voidish;
+
 /* function pointer prototypes */
 typedef gboolean (* PFN_QueryColor) (GimpRGB *color);
 typedef gchar* (* PFN_GetUnitStr) (GimpUnit);
 typedef gdouble (* PFN_GetUnitInt) (GimpUnit);
 typedef gdouble (* PFN_GetUnitDouble) (GimpUnit);
 typedef gint (* PFN_GetNumber) (void);
-typedef void (* PFN_Help) (const char*);
+typedef voidish (* PFN_Help) (const char*);
 
 static FARPROC 
 dynamic_resolve (const gchar* name, HMODULE* hMod)
@@ -74,7 +78,11 @@ dynamic_resolve (const gchar* name, HMODULE* hMod)
 
   if (!fn)
     {
-      *hMod = LoadLibrary ("gimp-1.3.dll");
+      /* First try the libtool style name */
+      *hMod = LoadLibrary ("libgimp-" LT_RELEASE "-" LT_CURRENT_MINUS_AGE ".dll");
+      /* If that didn't work, try the name style used by Hans Breuer */
+      if (!hMod)
+	*hMod = LoadLibrary ("gimp-1.3.dll");
       fn = GetProcAddress (*hMod, name); 
     }
 
@@ -84,154 +92,41 @@ dynamic_resolve (const gchar* name, HMODULE* hMod)
   return fn;
 }
 
-gboolean
-gimp_palette_get_foreground (GimpRGB *color)
-{
-  HMODULE h = NULL;
-  gboolean ret = FALSE;
-  PFN_QueryColor fn = (PFN_QueryColor) dynamic_resolve ("gimp_palette_get_foreground", &h);
-  if (fn)
-    ret = fn (color);
-
-  if (h)
-    FreeLibrary (h);
-  return ret;
+#define ENTRY(type, name, parlist, defaultval, fntype, arglist)	\
+type 								\
+name parlist							\
+{								\
+  HMODULE h = NULL;						\
+  type ret = defaultval;					\
+  fntype fn = (fntype) dynamic_resolve (#name, &h);		\
+  if (fn)							\
+    ret = fn arglist;						\
+								\
+  if (h)							\
+    FreeLibrary (h);						\
+  return ret;							\
 }
 
-gboolean
-gimp_palette_get_background (GimpRGB *color)
-{
-  HMODULE h = NULL;
-  gboolean ret = FALSE;
-  PFN_QueryColor fn = (PFN_QueryColor) dynamic_resolve ("gimp_palette_get_background", &h);
-  if (fn)
-    ret = fn (color);
+ENTRY (gboolean, gimp_palette_get_foreground, (GimpRGB *color), FALSE,  PFN_QueryColor, (color));
 
-  if (h)
-    FreeLibrary (h);
-  return ret;
-}
+ENTRY (gboolean, gimp_palette_get_background, (GimpRGB *color), FALSE, PFN_QueryColor, (color));
 
-void
-gimp_standard_help_func (const gchar *help_data)
-{
-  HMODULE h = NULL;
-  PFN_Help fn = (PFN_Help) dynamic_resolve ("gimp_standard_help_func", &h);
-  if (fn)
-    fn (help_data);
+ENTRY (voidish, gimp_standard_help_func, (const gchar *help_data), 0, PFN_Help, (help_data));
 
-  if (h)
-    FreeLibrary (h);
-}
+ENTRY (const gchar *, gimp_unit_get_abbreviation, (GimpUnit unit), NULL, PFN_GetUnitStr, (unit));
 
-const gchar *
-gimp_unit_get_abbreviation (GimpUnit unit)
-{
-  HMODULE h = NULL;
-  gchar* ret = NULL;
-  PFN_GetUnitStr fn = (PFN_GetUnitStr) dynamic_resolve ("gimp_unit_get_abbreviation", &h);
-  if (fn)
-    ret = fn (unit);
+ENTRY (const gchar *, gimp_unit_get_singular, (GimpUnit unit), NULL, PFN_GetUnitStr, (unit));
 
-  if (h)
-    FreeLibrary (h);
-  return ret;
-}
+ENTRY (const gchar *, gimp_unit_get_plural, (GimpUnit unit), NULL, PFN_GetUnitStr, (unit));
 
-const gchar *
-gimp_unit_get_singular (GimpUnit unit)
-{
-  HMODULE h = NULL;
-  gchar* ret = NULL;
-  PFN_GetUnitStr fn = (PFN_GetUnitStr) dynamic_resolve ("gimp_unit_get_singular", &h);
-  if (fn)
-    ret = fn (unit);
+ENTRY (gint, gimp_unit_get_digits, (GimpUnit unit), 0, PFN_GetUnitInt, (unit));
 
-  if (h)
-    FreeLibrary (h);
-  return ret;
-}
+ENTRY (gdouble, gimp_unit_get_factor, (GimpUnit unit), 0., PFN_GetUnitDouble, (unit));
 
-const gchar *
-gimp_unit_get_plural (GimpUnit unit)
-{
-  HMODULE h = NULL;
-  gchar* ret = NULL;
-  PFN_GetUnitStr fn = (PFN_GetUnitStr) dynamic_resolve ("gimp_unit_get_plural", &h);
-  if (fn)
-    ret = fn (unit);
+ENTRY (gint, gimp_unit_get_number_of_built_in_units, (void), 0, PFN_GetNumber, ());
 
-  if (h)
-    FreeLibrary (h);
-  return ret;
-}
+ENTRY (gint, gimp_unit_get_number_of_units, (void), 0, PFN_GetNumber, ());
 
-gint
-gimp_unit_get_digits (GimpUnit unit)
-{
-  HMODULE h = NULL;
-  gint ret = 0;
-  PFN_GetUnitInt fn = (PFN_GetUnitInt) dynamic_resolve ("gimp_unit_get_digits", &h);
-  if (fn)
-    ret = fn (unit);
+ENTRY (const gchar *, gimp_unit_get_symbol, (GimpUnit unit), NULL, PFN_GetUnitStr, (unit));
 
-  if (h)
-    FreeLibrary (h);
-  return ret;
-}
-
-gdouble
-gimp_unit_get_factor (GimpUnit unit)
-{
-  HMODULE h = NULL;
-  gdouble ret = 0.0;
-  PFN_GetUnitDouble fn = (PFN_GetUnitDouble) dynamic_resolve ("gimp_unit_get_factor", &h);
-  if (fn)
-    ret = fn (unit);
-
-  if (h)
-    FreeLibrary (h);
-  return ret;
-}
-
-gint
-gimp_unit_get_number_of_built_in_units (void)
-{
-  HMODULE h = NULL;
-  gint ret = 0;
-  PFN_GetNumber fn = (PFN_GetNumber) dynamic_resolve ("gimp_unit_get_number_of_built_in_units", &h);
-  if (fn)
-    ret = fn ();
-
-  if (h)
-    FreeLibrary (h);
-  return ret;
-}
-
-gint
-gimp_unit_get_number_of_units (void)
-{
-  HMODULE h = NULL;
-  gint ret = 0;
-  PFN_GetNumber fn = (PFN_GetNumber) dynamic_resolve ("gimp_unit_get_number_of_units", &h);
-  if (fn)
-    ret = fn ();
-
-  if (h)
-    FreeLibrary (h);
-  return ret;
-}
-
-const gchar *
-gimp_unit_get_symbol (GimpUnit unit)
-{
-  HMODULE h = NULL;
-  gchar* ret = NULL;
-  PFN_GetUnitStr fn = (PFN_GetUnitStr) dynamic_resolve ("gimp_unit_get_symbol", &h);
-  if (fn)
-    ret = fn (unit);
-
-  if (h)
-    FreeLibrary (h);
-  return ret;
-}
+#endif /* G_OS_WIN32 */
