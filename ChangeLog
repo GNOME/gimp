@@ -4,6 +4,8 @@
 	the mnemonics stripped. Avoids weird ordering in the "C" and
 	"POSIX" locales.
 
+	Fixes bug #137435.
+
 	* app/widgets/gimpitemtreeview.c: make a simple click on the
 	"New" Button use defaults and use shift-click for the new-dialog
 	invocation.
