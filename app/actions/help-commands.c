@@ -1288,7 +1288,7 @@ void
 help_about_cmd_callback (GtkWidget *widget,
 			 gpointer   client_data)
 {
-  about_dialog_create (FALSE);
+  about_dialog_create ();
 }
 
 

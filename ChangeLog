@@ -1,6 +1,16 @@
+2000-06-27  Sven Neumann  <sven@gimp.org>
+
+	* app/about_dialog.c: we used an array with a hardcoded size here 
+	which was too small to hold all the authors recently added. Made 
+	it a dynamic one. This fixes the "Can't quit The GIMP" bug #15483.
+
+	* app/about_dialog.h
+	* app/commands.c: removed the timeout parameter from 
+	about_dialog_create() since it wasn't used at all.
+	
 Tue Jun 27 22:26:30 BST 2000 Andy Thomas <alt@gimp.org>
 
-	* app/paint_core.c
+	* app/paint_core.c:
 
 	Fixed problem with coloured brushes/grayscale images and painting
 	close to the edge. Fixes bug #14159

@@ -230,14 +230,14 @@ static gchar *scroll_text[] =
 #endif
 };
 static gint nscroll_texts = sizeof (scroll_text) / sizeof (scroll_text[0]);
-static gint scroll_text_widths[100] = { 0 };
+static gint scroll_text_widths[ sizeof(scroll_text) / sizeof(scroll_text[0]) ];
 static gint cur_scroll_text = 0;
 static gint cur_scroll_index; 
 
 static gint shuffle_array[ sizeof(scroll_text) / sizeof(scroll_text[0]) ];
 
 void
-about_dialog_create (gint timeout)
+about_dialog_create ()
 {
   GtkWidget *vbox;
   GtkWidget *aboutframe;
@@ -559,7 +559,7 @@ about_dialog_timer (gpointer data)
 
   if (do_animation)
     {
-      if(logo_area->allocation.width != 1)
+      if (logo_area->allocation.width != 1)
 	{
 	  for (i = 0, k = 0; i < dissolve_height; i++)
 	    for (j = 0; j < dissolve_width; j++, k++)
