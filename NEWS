@@ -13,7 +13,7 @@ Overview of Changes in GIMP 2.1.2
 - Further improvements to the new input controllers; added a keyboard
   controller.
 
-- Show image preview in GFig plug-in.
+- Show image preview in GFig plug-in, started a complete overhaul.
 
 - Added Difference of Gaussians edge detection plug-in.
 
@@ -30,6 +30,12 @@ Overview of Changes in GIMP 2.1.2
 - Allow to cut'n'paste image data between GIMP and other applications
   (for example Abiword) using the system clipboard.
 
+- List unsaved images in Quit dialog.
+
+- Completed core/gui separation. Optionally build a gimp-console
+  application that behaves like 'gimp --no-interface' and doesn't link
+  to GTK+ at all.
+
 - Lots of bug fizes and other goodies. Check the ChangeLog for details.
 
 
@@ -37,7 +43,7 @@ Contributors:
 
    Michael Natterer, Sven Neumann, Philip Lafleur, William Skaggs,
    Geert Jordaens, Simon Budig, Roman Joost, Michael Schumacher,
-   Shlomi Fish
+   Shlomi Fish, Hans Breuer, Brion Vibber, Robert Oegren
 
 
 Overview of Changes in GIMP 2.1.1
