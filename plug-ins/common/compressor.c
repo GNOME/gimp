@@ -59,12 +59,17 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#ifdef __EMX__
+#include <fcntl.h>
+#include <process.h>
+#endif
 #include "libgimp/gimp.h"
 
 /* Author 1: Josh MacDonald (url.c) */
@@ -229,6 +234,41 @@ run (char    *name,
     g_assert (FALSE);
 }
 
+#ifdef __EMX__
+static int spawn_gzip(char *filename, char* tmpname, char *parms, int *pid)
+{
+  FILE *f;
+  int tfd;
+  
+  if (!(f = fopen(filename,"w"))){
+    g_message("gz: fopen failed: %s\n", g_strerror(errno));
+    return -1;
+  }
+
+  /* save fileno(stdout) */
+  tfd = dup(fileno(stdout));
+  /* make stdout for this process be the output file */
+  if (dup2(fileno(f),fileno(stdout)) == -1)
+    {
+      g_message ("gz: dup2 failed: %s\n", g_strerror(errno));
+      close(tfd);
+      return -1;
+    }
+  fcntl(tfd, F_SETFD, FD_CLOEXEC);
+  *pid = spawnlp (P_NOWAIT, "gzip", "gzip", parms, tmpname, NULL);
+  fclose(f);
+  /* restore fileno(stdout) */
+  dup2(tfd,fileno(stdout));
+  close(tfd);
+  if (*pid == -1)
+    {
+      g_message ("gz: spawn failed: %s\n", g_strerror(errno));
+      return -1;
+    }
+  return 0;  
+}
+#endif
+
 static gint
 save_image (char   *filename,
 	    gint32  image_ID,
@@ -277,6 +317,7 @@ save_image (char   *filename,
 /*     return -1; */
 /*   } */
 
+#ifndef __EMX__
   /* fork off a gzip process */
   if ((pid = fork()) < 0)
     {
@@ -301,6 +342,10 @@ save_image (char   *filename,
       _exit(127);
     }
   else
+#else /* __EMX__ */      
+  if (spawn_gzip(filename, tmpname, "-cf", &pid) == -1)  
+      return -1;
+#endif
     {
       waitpid (pid, &status, 0);
 
@@ -340,6 +385,7 @@ load_image (char *filename, gint32 run_mode)
 
   tmpname = params[1].data.d_string;
 
+#ifndef __EMX__
   /* fork off a g(un)zip and wait for it */
   if ((pid = fork()) < 0)
     {
@@ -364,6 +410,10 @@ load_image (char *filename, gint32 run_mode)
       _exit(127);
     }
   else  /* parent process */
+#else /* __EMX__ */
+   if (spawn_gzip(filename, tmpname, "-cfd", &pid) == -1)  
+      return -1;  
+#endif
     {
       waitpid (pid, &status, 0);
 
