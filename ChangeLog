@@ -2,6 +2,7 @@
 
 	* app/paint/gimpbrushcore.c (gimp_brush_core_subsample_mask):
 	don't set array outside its bounds.  Should fix bug #161323.
+	Credit to Robert Ogren for figuring out what was wrong.
 	
 2004-12-27  Sven Neumann  <sven@gimp.org>
 
