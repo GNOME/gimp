@@ -107,20 +107,20 @@ static void      preview_update       (void);
 
 /* create a few globals, set default values */
 static UnsharpMaskParams unsharp_params =
-{
-  5.0, /* default radius = 5 */
-  0.5, /* default amount = .5 */
-  0    /* default threshold = 0 */
-};
+  {
+    5.0, /* default radius = 5 */
+    0.5, /* default amount = .5 */
+    0    /* default threshold = 0 */
+  };
 
 /* Setting PLUG_IN_INFO */
 GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
+  {
+    NULL,  /* init_proc  */
+    NULL,  /* quit_proc  */
+    query, /* query_proc */
+    run,   /* run_proc   */
+  };
 
 static  GimpRunMode   run_mode;
 static  GtkWidget    *preview  = NULL;         /* Preview widget */
@@ -129,37 +129,37 @@ static  gint          delta_x  = 0;            /* preview x offset */
 static  gint          delta_y  = 0;            /* preview y offset */
 
 MAIN ()
-
+     
 static void
 query (void)
 {
   static GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",     "(unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable",  "Drawable to draw on" },
-    { GIMP_PDB_FLOAT,    "radius",    "Radius of gaussian blur (in pixels > 1.0)" },
-    { GIMP_PDB_FLOAT,    "amount",    "Strength of effect" },
-    { GIMP_PDB_FLOAT,    "threshold", "Threshold" }
-  };
-
+    {
+      { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+      { GIMP_PDB_IMAGE,    "image",     "(unused)" },
+      { GIMP_PDB_DRAWABLE, "drawable",  "Drawable to draw on" },
+      { GIMP_PDB_FLOAT,    "radius",    "Radius of gaussian blur (in pixels > 1.0)" },
+      { GIMP_PDB_FLOAT,    "amount",    "Strength of effect" },
+      { GIMP_PDB_FLOAT,    "threshold", "Threshold" }
+    };
+  
   gimp_install_procedure ("plug_in_unsharp_mask",
-			  "An unsharp mask filter",
-			  "The unsharp mask is a sharpening filter that works "
-			  "by comparing using the difference of the image and "
-			  "a blurred version of the image.  It is commonly "
-			  "used on photographic images, and is provides a much "
-			  "more pleasing result than the standard sharpen "
-			  "filter.",
-			  "Winston Chang <winstonc@cs.wisc.edu>",
-			  "Winston Chang",
-			  "1999",
-			  N_("_Unsharp Mask..."),
-			  "GRAY*, RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
-
+                          "An unsharp mask filter",
+                          "The unsharp mask is a sharpening filter that works "
+                          "by comparing using the difference of the image and "
+                          "a blurred version of the image.  It is commonly "
+                          "used on photographic images, and is provides a much "
+                          "more pleasing result than the standard sharpen "
+                          "filter.",
+                          "Winston Chang <winstonc@cs.wisc.edu>",
+                          "Winston Chang",
+                          "1999",
+                          N_("_Unsharp Mask..."),
+                          "GRAY*, RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
+  
   gimp_plugin_menu_register ("plug_in_unsharp_mask",
                              N_("<Image>/Filters/Enhance"));
 }
@@ -176,50 +176,51 @@ run (const gchar      *name,
 #ifdef TIMER
   GTimer *timer = g_timer_new ();
 #endif
-
+  
   run_mode = param[0].data.d_int32;
-
+  
   *return_vals  = values;
   *nreturn_vals = 1;
-
+  
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-
+  
   INIT_I18N ();
-
+  
   /*
    * Get drawable information...
    */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-
+  gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
+  
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_unsharp_mask", &unsharp_params);
       /* Reset default values show preview unmodified */
-
+      
       /* initialize pixel regions and buffer */
       if (! unsharp_mask_dialog ())
         return;
-
+      
       break;
-
+      
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 6)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
-	  unsharp_params.radius = param[3].data.d_float;
-	  unsharp_params.amount = param[4].data.d_float;
-	  unsharp_params.threshold = param[5].data.d_int32;
+        {
+          unsharp_params.radius = param[3].data.d_float;
+          unsharp_params.amount = param[4].data.d_float;
+          unsharp_params.threshold = param[5].data.d_int32;
 
-	  /* make sure there are legal values */
-	  if ((unsharp_params.radius < 0.0) ||
-	      (unsharp_params.amount < 0.0))
-	    status = GIMP_PDB_CALLING_ERROR;
-	}
+          /* make sure there are legal values */
+          if ((unsharp_params.radius < 0.0) ||
+              (unsharp_params.amount < 0.0))
+            status = GIMP_PDB_CALLING_ERROR;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -233,7 +234,6 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       drawable = gimp_drawable_get (param[2].data.d_drawable);
-      gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
 
       /* here we go */
       unsharp_mask (drawable, unsharp_params.radius, unsharp_params.amount);
@@ -243,7 +243,7 @@ run (const gchar      *name,
 
       /* set data for next use of filter */
       gimp_set_data ("plug_in_unsharp_mask", &unsharp_params,
-		     sizeof (UnsharpMaskParams));
+                     sizeof (UnsharpMaskParams));
 
       /*fprintf(stderr, "%f %f\n", unsharp_params.radius, unsharp_params.amount);*/
 
@@ -259,8 +259,8 @@ run (const gchar      *name,
 
 static void
 unsharp_mask (GimpDrawable *drawable,
-	      gdouble       radius,
-	      gdouble       amount)
+              gdouble       radius,
+              gdouble       amount)
 {
   GimpPixelRgn srcPR, destPR;
   glong width, height;
@@ -281,7 +281,7 @@ unsharp_mask (GimpDrawable *drawable,
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
   unsharp_region (srcPR, destPR, width, height, bytes, radius, amount,
-		  x1, x2, y1, y2);
+                  x1, x2, y1, y2);
 
   gimp_drawable_flush(drawable);
   gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
@@ -294,16 +294,16 @@ unsharp_mask (GimpDrawable *drawable,
 */
 static void
 unsharp_region (GimpPixelRgn srcPR,
-		GimpPixelRgn destPR,
-		gint         width,
-		gint         height,
-		gint         bytes,
-		gdouble      radius,
-		gdouble      amount,
-		gint         x1,
-		gint         x2,
-		gint         y1,
-		gint         y2)
+                GimpPixelRgn destPR,
+                gint         width,
+                gint         height,
+                gint         bytes,
+                gdouble      radius,
+                gdouble      amount,
+                gint         x1,
+                gint         x2,
+                gint         y1,
+                gint         y2)
 {
   guchar  *cur_col;
   guchar  *dest_col;
@@ -357,7 +357,7 @@ unsharp_region (GimpPixelRgn srcPR,
       gimp_pixel_rgn_set_row(&destPR, dest_row, x1, y1+row, x);
 
       if (row%5 == 0)
-	gimp_progress_update ((gdouble)row/(3*y));
+        gimp_progress_update ((gdouble)row/(3*y));
     }
 
   /* allocate column buffers */
@@ -373,7 +373,7 @@ unsharp_region (GimpPixelRgn srcPR,
       gimp_pixel_rgn_set_col(&destPR, dest_col, x1+col, y1, y);
 
       if (col%5 == 0)
-	gimp_progress_update ((gdouble)col/(3*x) + 0.33);
+        gimp_progress_update ((gdouble)col/(3*x) + 0.33);
     }
 
   if ((run_mode != GIMP_RUN_NONINTERACTIVE))
@@ -393,21 +393,21 @@ unsharp_region (GimpPixelRgn srcPR,
       gimp_pixel_rgn_get_row(&destPR, dest_row, x1, y1+row, x);
       /* combine the two */
       for (u = 0; u < x; u++)
-	{
-	  for (v = 0; v < bytes; v++)
-	    {
-	      diff = (cur_row[u*bytes+v] - dest_row[u*bytes+v]);
-	      /* do tresholding */
-	      if (abs (2 * diff) < threshold)
-		diff = 0;
+        {
+          for (v = 0; v < bytes; v++)
+            {
+              diff = (cur_row[u*bytes+v] - dest_row[u*bytes+v]);
+              /* do tresholding */
+              if (abs (2 * diff) < threshold)
+                diff = 0;
 
-	      value = cur_row[u*bytes+v] + amount * diff;
+              value = cur_row[u*bytes+v] + amount * diff;
 
-	      if (value < 0) dest_row[u*bytes+v] =0;
-	      else if (value > 255) dest_row[u*bytes+v] = 255;
-	      else  dest_row[u*bytes+v] = value;
-	    }
-	}
+              if (value < 0) dest_row[u*bytes+v] =0;
+              else if (value > 255) dest_row[u*bytes+v] = 255;
+              else  dest_row[u*bytes+v] = value;
+            }
+        }
       /* update progress bar every five rows */
       if (row%5 == 0)
         gimp_progress_update ((gdouble)row/(3*y) + 0.67);
@@ -430,12 +430,12 @@ unsharp_region (GimpPixelRgn srcPR,
    in the processing of the lines, at least to the blur_line function. */
 static inline void
 blur_line (gdouble *ctable,
-	   gdouble *cmatrix,
-	   gint     cmatrix_length,
-	   guchar  *cur_col,
-	   guchar  *dest_col,
-	   gint     y,
-	   glong    bytes)
+           gdouble *cmatrix,
+           gint     cmatrix_length,
+           guchar  *cur_col,
+           guchar  *dest_col,
+           gint     y,
+           glong    bytes)
 {
   gdouble scale;
   gdouble sum;
@@ -456,87 +456,87 @@ blur_line (gdouble *ctable,
   if (cmatrix_length > y)
     {
       for (row = 0; row < y ; row++)
-	{
-	  scale=0;
-	  /* find the scale factor */
-	  for (j = 0; j < y ; j++)
-	    {
-	      /* if the index is in bounds, add it to the scale counter */
-	      if ((j + cmatrix_length/2 - row >= 0) &&
-		  (j + cmatrix_length/2 - row < cmatrix_length))
-		scale += cmatrix[j + cmatrix_length/2 - row];
-	    }
-	  for (i = 0; i<bytes; i++)
-	    {
-	      sum = 0;
-	      for (j = 0; j < y; j++)
-		{
-		  if ((j >= row - cmatrix_length/2) &&
-		      (j <= row + cmatrix_length/2))
-		    sum += cur_col[j*bytes + i] * cmatrix[j];
-		}
-	      dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
-	    }
-	}
+        {
+          scale=0;
+          /* find the scale factor */
+          for (j = 0; j < y ; j++)
+            {
+              /* if the index is in bounds, add it to the scale counter */
+              if ((j + cmatrix_length/2 - row >= 0) &&
+                  (j + cmatrix_length/2 - row < cmatrix_length))
+                scale += cmatrix[j + cmatrix_length/2 - row];
+            }
+          for (i = 0; i<bytes; i++)
+            {
+              sum = 0;
+              for (j = 0; j < y; j++)
+                {
+                  if ((j >= row - cmatrix_length/2) &&
+                      (j <= row + cmatrix_length/2))
+                    sum += cur_col[j*bytes + i] * cmatrix[j];
+                }
+              dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
+            }
+        }
     }
   else
     {
       /* for the edge condition, we only use available info and scale to one */
       for (row = 0; row < cmatrix_middle; row++)
-	{
-	  /* find scale factor */
-	  scale=0;
-	  for (j = cmatrix_middle - row; j<cmatrix_length; j++)
-	    scale += cmatrix[j];
-	  for (i = 0; i<bytes; i++)
-	    {
-	      sum = 0;
-	      for (j = cmatrix_middle - row; j<cmatrix_length; j++)
-		{
-		  sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
-		}
-	      dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
-	    }
-	}
+        {
+          /* find scale factor */
+          scale=0;
+          for (j = cmatrix_middle - row; j<cmatrix_length; j++)
+            scale += cmatrix[j];
+          for (i = 0; i<bytes; i++)
+            {
+              sum = 0;
+              for (j = cmatrix_middle - row; j<cmatrix_length; j++)
+                {
+                  sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
+                }
+              dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
+            }
+        }
       /* go through each pixel in each col */
       dest_col_p = dest_col + row*bytes;
       for (; row < y-cmatrix_middle; row++)
-	{
-	  cur_col_p = (row - cmatrix_middle) * bytes + cur_col;
-	  for (i = 0; i<bytes; i++)
-	    {
-	      sum = 0;
-	      cmatrix_p = cmatrix;
-	      cur_col_p1 = cur_col_p;
-	      ctable_p = ctable;
-	      for (j = cmatrix_length; j>0; j--)
-		{
-		  sum += *(ctable_p + *cur_col_p1);
-		  cur_col_p1 += bytes;
-		  ctable_p += 256;
-		}
-	      cur_col_p++;
-	      *(dest_col_p++) = ROUND (sum);
-	    }
-	}
+        {
+          cur_col_p = (row - cmatrix_middle) * bytes + cur_col;
+          for (i = 0; i<bytes; i++)
+            {
+              sum = 0;
+              cmatrix_p = cmatrix;
+              cur_col_p1 = cur_col_p;
+              ctable_p = ctable;
+              for (j = cmatrix_length; j>0; j--)
+                {
+                  sum += *(ctable_p + *cur_col_p1);
+                  cur_col_p1 += bytes;
+                  ctable_p += 256;
+                }
+              cur_col_p++;
+              *(dest_col_p++) = ROUND (sum);
+            }
+        }
 
       /* for the edge condition , we only use available info, and scale to one */
       for (; row < y; row++)
-	{
-	  /* find scale factor */
-	  scale=0;
-	  for (j = 0; j< y-row + cmatrix_middle; j++)
-	    scale += cmatrix[j];
-	  for (i = 0; i<bytes; i++)
-	    {
-	      sum = 0;
-	      for (j = 0; j<y-row + cmatrix_middle; j++)
-		{
-		  sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
-		}
-	      dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
-	    }
-	}
+        {
+          /* find scale factor */
+          scale=0;
+          for (j = 0; j< y-row + cmatrix_middle; j++)
+            scale += cmatrix[j];
+          for (i = 0; i<bytes; i++)
+            {
+              sum = 0;
+              for (j = 0; j<y-row + cmatrix_middle; j++)
+                {
+                  sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
+                }
+              dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
+            }
+        }
     }
 }
 
@@ -545,7 +545,7 @@ blur_line (gdouble *ctable,
  */
 static gint
 gen_convolve_matrix (gdouble   radius,
-		     gdouble **cmatrix_p)
+                     gdouble **cmatrix_p)
 {
   gint matrix_length;
   gint matrix_midpoint;
@@ -589,11 +589,11 @@ gen_convolve_matrix (gdouble   radius,
       double base_x = i - floor(matrix_length/2) - 0.5;
       sum = 0;
       for (j = 1; j <= 50; j++)
-	{
-	  if ( base_x+0.02*j <= radius )
-	    sum += exp (-(base_x+0.02*j)*(base_x+0.02*j) /
-			(2*std_dev*std_dev));
-	}
+        {
+          if ( base_x+0.02*j <= radius )
+            sum += exp (-(base_x+0.02*j)*(base_x+0.02*j) /
+                        (2*std_dev*std_dev));
+        }
       cmatrix[i] = sum/50;
     }
 
@@ -608,7 +608,7 @@ gen_convolve_matrix (gdouble   radius,
   for (j=0; j<=50; j++)
     {
       sum += exp (-(0.5+0.02*j)*(0.5+0.02*j) /
-		  (2*std_dev*std_dev));
+                  (2*std_dev*std_dev));
     }
   cmatrix[matrix_length/2] = sum/51;
 
@@ -628,7 +628,7 @@ gen_convolve_matrix (gdouble   radius,
 */
 static gdouble *
 gen_lookup_table (gdouble *cmatrix,
-		  gint     cmatrix_length)
+                  gint     cmatrix_length)
 {
   int i, j;
   gdouble* lookup_table = g_new (gdouble, cmatrix_length * 256);
@@ -638,9 +638,9 @@ gen_lookup_table (gdouble *cmatrix,
   for (i=0; i<cmatrix_length; i++)
     {
       for (j=0; j<256; j++)
-	{
-	  *(lookup_table_p++) = *cmatrix_p * (gdouble)j;
-	}
+        {
+          *(lookup_table_p++) = *cmatrix_p * (gdouble)j;
+        }
       cmatrix_p++;
     }
 
@@ -731,7 +731,7 @@ unsharp_mask_dialog (void)
 
   dialog = gimp_dialog_new (_("Unsharp Mask"), "unsharp",
                             NULL, 0,
-			    gimp_standard_help_func, "plug-in-unsharp-mask",
+                            gimp_standard_help_func, "plug-in-unsharp-mask",
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -759,10 +759,10 @@ unsharp_mask_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Radius:"), SCALE_WIDTH, ENTRY_WIDTH,
-			      unsharp_params.radius, 0.1, 120.0, 0.1, 1.0, 1,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Radius:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              unsharp_params.radius, 0.1, 120.0, 0.1, 1.0, 1,
+                              TRUE, 0, 0,
+                              NULL, NULL);
 
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -776,10 +776,10 @@ unsharp_mask_dialog (void)
                                GTK_UPDATE_DISCONTINUOUS);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Amount:"), SCALE_WIDTH, ENTRY_WIDTH,
-			      unsharp_params.amount, 0.0, 5.0, 0.01, 0.1, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Amount:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              unsharp_params.amount, 0.0, 5.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   scrollbar = GIMP_SCALE_ENTRY_SCALE(adj);
   gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_DISCONTINUOUS);
 
@@ -792,10 +792,10 @@ unsharp_mask_dialog (void)
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_Threshold:"), SCALE_WIDTH, ENTRY_WIDTH,
-			      unsharp_params.threshold, 0.0, 255.0, 1.0, 10.0, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Threshold:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              unsharp_params.threshold, 0.0, 255.0, 1.0, 10.0, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   scrollbar = GIMP_SCALE_ENTRY_SCALE(adj);
   gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_DISCONTINUOUS);
 
@@ -886,7 +886,7 @@ preview_update (void)
   /* render image */
   unsharp_region (srcPR, destPR, preview_buf_width, preview_buf_height, bytes,
                   unsharp_params.radius, unsharp_params.amount,
-           preview_buf_x1, preview_buf_x2, preview_buf_y1, preview_buf_y2);
+                  preview_buf_x1, preview_buf_x2, preview_buf_y1, preview_buf_y2);
   render_buffer = g_new (guchar, preview_buf_width * preview_buf_height * bytes);
   gimp_pixel_rgn_get_rect(&destPR,render_buffer,
                           preview_buf_x1, preview_buf_y1,
@@ -903,7 +903,7 @@ preview_update (void)
       offset = (x*bytes)+(y*preview_buf_width*bytes);
       gtk_preview_draw_row(GTK_PREVIEW (preview), render_buffer+offset, 0, row++, preview_width);
     }
-    gtk_widget_queue_draw (preview);
-    g_free(render_buffer);
+  gtk_widget_queue_draw (preview);
+  g_free(render_buffer);
 }
 
