@@ -19,6 +19,8 @@ libappplug_in_a_SOURCES = \
 	plug-in.h		\
 	plug-ins.c		\
 	plug-ins.h		\
+	plug-in-debug.c		\
+	plug-in-debug.h		\
 	plug-in-def.c		\
 	plug-in-def.h		\
 	plug-in-message.c	\

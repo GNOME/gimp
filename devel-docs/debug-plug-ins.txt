@@ -65,3 +65,18 @@ GIMP_PLUGIN_DEBUG=blur,query
 GIMP_PLUGIN_DEBUG=blur,init
 
     Same as above, but in the init phase of startup.
+
+
+Hmm, but what about memory debuggers such as valgrind or purify? For those
+you can set the following:
+
+GIMP_PLUGIN_DEBUG_WRAP=name<,options>
+
+    This is similar to GIMP_PLUGIN_DEBUG. Only "query", "init", and "run"
+    are valid, and "on" defaults to simply "run"
+
+GIMP_PLUGIN_DEBUG_WRAPPER=debugger
+
+    debugger refers to the debugger program, such as valgrind. You can
+    put command line options here too, they will be parsed like they do
+    in the shell.

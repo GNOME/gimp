@@ -200,7 +200,9 @@ gimp_init (Gimp *gimp)
 
   gimp_modules_init (gimp);
  
-  gimp->environ_table = gimp_environ_table_new (); 
+  gimp->environ_table       = gimp_environ_table_new (); 
+
+  gimp->plug_in_debug       = NULL;
 
   gimp->images              = gimp_list_new (GIMP_TYPE_IMAGE,
 					     GIMP_CONTAINER_POLICY_WEAK);

@@ -39,8 +39,10 @@ struct _PlugIn
   guint         recurse : 1;      /*  Do we have an own GMainLoop?            */
   guint         in_temp_proc : 1; /*  Is the plug-in busy with a temp proc?   */
   guint         starting_ext : 1; /*  Does the plug-in wait for extension_ack?*/
-  pid_t         pid;              /*  Plug-ins process id                     */
-  gchar        *args[7];          /*  Plug-ins command line arguments         */
+  pid_t         pid;              /*  Plug-in's process id                    */
+
+  gchar        *name;             /*  Plug-in's name                          */
+  gchar        *prog;             /*  Plug-in's full path name                */
 
   GIOChannel   *my_read;          /*  App's read and write channels           */
   GIOChannel   *my_write;
@@ -64,29 +66,29 @@ struct _PlugIn
 };
 
 
-void       plug_in_init           (Gimp      *gimp);
-void       plug_in_exit           (Gimp      *gimp);
+void       plug_in_init           (Gimp        *gimp);
+void       plug_in_exit           (Gimp        *gimp);
 
-void       plug_in_call_query     (Gimp      *gimp,
-                                   PlugInDef *plug_in_def);
-void       plug_in_call_init      (Gimp      *gimp,
-                                   PlugInDef *plug_in_def);
+void       plug_in_call_query     (Gimp        *gimp,
+                                   PlugInDef   *plug_in_def);
+void       plug_in_call_init      (Gimp        *gimp,
+                                   PlugInDef   *plug_in_def);
 
-PlugIn   * plug_in_new            (Gimp      *gimp,
-                                   gchar     *name);
+PlugIn   * plug_in_new            (Gimp        *gimp,
+                                   const gchar *prog);
 
-void       plug_in_ref            (PlugIn    *plug_in);
-void       plug_in_unref          (PlugIn    *plug_in);
+void       plug_in_ref            (PlugIn      *plug_in);
+void       plug_in_unref          (PlugIn      *plug_in);
 
-gboolean   plug_in_open           (PlugIn    *plug_in);
-void       plug_in_close          (PlugIn    *plug_in,
-                                   gboolean   kill_it);
+gboolean   plug_in_open           (PlugIn      *plug_in);
+void       plug_in_close          (PlugIn      *plug_in,
+                                   gboolean     kill_it);
 
-void       plug_in_push           (PlugIn    *plug_in);
+void       plug_in_push           (PlugIn      *plug_in);
 void       plug_in_pop            (void);
 
-void       plug_in_main_loop      (PlugIn    *plug_in);
-void       plug_in_main_loop_quit (PlugIn    *plug_in);
+void       plug_in_main_loop      (PlugIn      *plug_in);
+void       plug_in_main_loop_quit (PlugIn      *plug_in);
 
 
 extern PlugIn *current_plug_in;

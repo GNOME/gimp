@@ -96,7 +96,7 @@ plug_in_proc_def_get_progname (PlugInProcDef *proc_def)
       return proc_def->prog;
 
     case GIMP_TEMPORARY:
-      return ((PlugIn *) proc_def->db_info.exec_method.temporary.plug_in)->args[0];
+      return ((PlugIn *) proc_def->db_info.exec_method.temporary.plug_in)->prog;
 
     default:
       break;

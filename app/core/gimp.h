@@ -44,91 +44,93 @@ typedef struct _GimpClass GimpClass;
 
 struct _Gimp
 {
-  GimpObject             parent_instance;
+  GimpObject              parent_instance;
 
-  GimpCoreConfig        *config;
-  GimpCoreConfig        *edit_config; /* don't use this one, it's just
+  GimpCoreConfig         *config;
+  GimpCoreConfig         *edit_config; /* don't use this one, it's just
                                        * for the preferences dialog
                                        */
 
-  gboolean               be_verbose;
-  gboolean               no_data;
-  gboolean               no_interface;
-  gboolean               use_shm;
-  GimpMessageHandlerType message_handler;
-  GimpStackTraceMode     stack_trace_mode;
+  gboolean                be_verbose;
+  gboolean                no_data;
+  gboolean                no_interface;
+  gboolean                use_shm;
+  GimpMessageHandlerType  message_handler;
+  GimpStackTraceMode      stack_trace_mode;
 
-  GimpThreadFunc         gui_threads_enter_func;
-  GimpThreadFunc         gui_threads_leave_func;
-  GimpCreateDisplayFunc  gui_create_display_func;
-  GimpSetBusyFunc        gui_set_busy_func;
-  GimpUnsetBusyFunc      gui_unset_busy_func;
-  GimpMessageFunc        gui_message_func;
+  GimpThreadFunc          gui_threads_enter_func;
+  GimpThreadFunc          gui_threads_leave_func;
+  GimpCreateDisplayFunc   gui_create_display_func;
+  GimpSetBusyFunc         gui_set_busy_func;
+  GimpUnsetBusyFunc       gui_unset_busy_func;
+  GimpMessageFunc         gui_message_func;
 
-  gint                   busy;
-  guint                  busy_idle_id;
+  gint                    busy;
+  guint                   busy_idle_id;
 
-  GList                 *user_units;
-  gint                   n_user_units;
+  GList                  *user_units;
+  gint                    n_user_units;
 
-  GimpParasiteList      *parasites;
+  GimpParasiteList       *parasites;
 
-  GimpContainer         *paint_info_list;
+  GimpContainer          *paint_info_list;
 
-  GimpModuleDB          *module_db;
-  gboolean               write_modulerc;
+  GimpModuleDB           *module_db;
+  gboolean                write_modulerc;
 
-  GimpEnvironTable      *environ_table;
+  GimpEnvironTable       *environ_table;
 
-  GimpContainer         *images;
-  gint                   next_image_ID;
-  guint32                next_guide_ID;
-  GHashTable            *image_table;
+  GimpPlugInDebug        *plug_in_debug;
 
-  gint                   next_item_ID;
-  GHashTable            *item_table;
+  GimpContainer          *images;
+  gint                    next_image_ID;
+  guint32                 next_guide_ID;
+  GHashTable             *image_table;
 
-  GimpContainer         *displays;
-  gint                   next_display_ID;
+  gint                    next_item_ID;
+  GHashTable             *item_table;
 
-  GimpBuffer            *global_buffer;
-  GimpContainer         *named_buffers;
+  GimpContainer          *displays;
+  gint                    next_display_ID;
 
-  GimpDataFactory       *brush_factory;
-  GimpDataFactory       *pattern_factory;
-  GimpDataFactory       *gradient_factory;
-  GimpDataFactory       *palette_factory;
+  GimpBuffer             *global_buffer;
+  GimpContainer          *named_buffers;
+ 
+  GimpDataFactory        *brush_factory;
+  GimpDataFactory        *pattern_factory;
+  GimpDataFactory        *gradient_factory;
+  GimpDataFactory        *palette_factory;
+ 
+  GHashTable             *procedural_ht;
+  GList                  *procedural_db_data_list;
 
-  GHashTable            *procedural_ht;
-  GList                 *procedural_db_data_list;
+  GSList                 *load_procs;
+  GSList                 *save_procs;
 
-  GSList                *load_procs;
-  GSList                *save_procs;
-
-  GimpContainer         *tool_info_list;
-  GimpToolInfo          *standard_tool_info;
-
+  GimpContainer          *tool_info_list;
+  GimpToolInfo           *standard_tool_info;
+ 
   /*  the opened and saved images in MRU order  */
-  GimpContainer         *documents;
+  GimpContainer          *documents;
 
   /*  image_new values  */
-  GimpImageNewValues     image_new_last_values;
-  gboolean               have_current_cut_buffer;
+  GimpImageNewValues      image_new_last_values;
+  gboolean                have_current_cut_buffer;
 
   /*  the list of all contexts  */
-  GList                 *context_list;
+  GList                  *context_list;
 
   /*  the hardcoded standard context  */
-  GimpContext           *standard_context;
+  GimpContext            *standard_context;
 
   /*  the default context which is initialized from gimprc  */
-  GimpContext           *default_context;
+  GimpContext            *default_context;
 
   /*  the context used by the interface  */
-  GimpContext           *user_context;
+  GimpContext            *user_context;
 
   /*  the currently active context  */
-  GimpContext           *current_context;
+  GimpContext            *current_context;
 };
 
 struct _GimpClass

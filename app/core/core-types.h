@@ -169,6 +169,8 @@ typedef         guint32             GimpTattoo;
 
 typedef struct _GimpPaletteEntry    GimpPaletteEntry;
 
+typedef struct _GimpPlugInDebug     GimpPlugInDebug;
+
 
 /*  EEK stuff  */
 

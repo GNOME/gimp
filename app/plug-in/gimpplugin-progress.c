@@ -54,7 +54,7 @@ plug_in_progress_start (PlugIn      *plug_in,
   g_return_if_fail (plug_in != NULL);
 
   if (! message)
-    message = plug_in->args[0];
+    message = plug_in->prog;
 
   if (gdisp_ID > 0)
     gdisp = gimp_display_get_by_ID (plug_in->gimp, gdisp_ID);

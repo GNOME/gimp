@@ -95,6 +95,7 @@
 
 #include "plug-in.h"
 #include "plug-ins.h"
+#include "plug-in-debug.h"
 #include "plug-in-def.h"
 #include "plug-in-message.h"
 #include "plug-in-params.h"
@@ -150,6 +151,8 @@ plug_in_init (Gimp *gimp)
    */
   if (gimp->use_shm)
     plug_in_shm_init (gimp);
+
+  plug_in_debug_init (gimp);
 }
 
 void
@@ -158,6 +161,8 @@ plug_in_exit (Gimp *gimp)
   GSList *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  plug_in_debug_exit (gimp);
 
   if (gimp->use_shm)
     plug_in_shm_exit (gimp);
@@ -257,14 +262,14 @@ plug_in_call_init (Gimp      *gimp,
 }
 
 PlugIn *
-plug_in_new (Gimp  *gimp,
-             gchar *name)
+plug_in_new (Gimp        *gimp,
+             const gchar *prog)
 {
   PlugIn *plug_in;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (name), NULL);
+  g_return_val_if_fail (prog != NULL, NULL);
+  g_return_val_if_fail (g_path_is_absolute (prog), NULL);
 
   plug_in = g_new0 (PlugIn, 1);
 
@@ -281,13 +286,8 @@ plug_in_new (Gimp  *gimp,
   plug_in->starting_ext       = FALSE;
   plug_in->pid                = 0;
 
-  plug_in->args[0]            = g_strdup (name);
-  plug_in->args[1]            = g_strdup ("-gimp");
-  plug_in->args[2]            = NULL;
-  plug_in->args[3]            = NULL;
-  plug_in->args[4]            = NULL;
-  plug_in->args[5]            = NULL;
-  plug_in->args[6]            = NULL;
+  plug_in->name               = g_path_get_basename (prog);
+  plug_in->prog               = g_strdup (prog);
 
   plug_in->my_read            = NULL;
   plug_in->my_write           = NULL;
@@ -329,18 +329,8 @@ plug_in_unref (PlugIn *plug_in)
       if (plug_in->open)
         plug_in_close (plug_in, TRUE);
 
-      if (plug_in->args[0])
-        g_free (plug_in->args[0]);
-      if (plug_in->args[1])
-        g_free (plug_in->args[1]);
-      if (plug_in->args[2])
-        g_free (plug_in->args[2]);
-      if (plug_in->args[3])
-        g_free (plug_in->args[3]);
-      if (plug_in->args[4])
-        g_free (plug_in->args[4]);
-      if (plug_in->args[5])
-        g_free (plug_in->args[5]);
+      g_free (plug_in->name);
+      g_free (plug_in->prog);
 
       if (plug_in->progress)
         plug_in_progress_end (plug_in);
@@ -366,20 +356,29 @@ plug_in_prep_for_exec (gpointer data)
 gboolean
 plug_in_open (PlugIn *plug_in)
 {
-  gint    my_read[2];
-  gint    my_write[2];
-  gchar **envp;
-  GError *error = NULL;
+  gint       my_read[2];
+  gint       my_write[2];
+  gchar    **envp;
+  gchar     *args[7], **argv, **debug_argv;
+  gchar     *read_fd, *write_fd;
+  gchar     *mode, *stm;
+  GError    *error = NULL;
+  Gimp      *gimp;
+  gboolean   debug;
+  guint      debug_flag;
+  guint      spawn_flags;
 
   g_return_val_if_fail (plug_in != NULL, FALSE);
+
+  gimp = plug_in->gimp;
 
   /* Open two pipes. (Bidirectional communication).
    */
   if ((pipe (my_read) == -1) || (pipe (my_write) == -1))
     {
       g_message ("pipe() failed: Unable to start Plug-In \"%s\"\n(%s)",
-                 g_path_get_basename (plug_in->args[0]),
-                 plug_in->args[0]);
+                 plug_in->name,
+                 plug_in->prog);
       return FALSE;
     }
 
@@ -413,9 +412,9 @@ plug_in_open (PlugIn *plug_in)
 
   /* Remember the file descriptors for the pipes.
    */
-  plug_in->args[2] =
+  read_fd =
     g_strdup_printf ("%d", g_io_channel_unix_get_fd (plug_in->his_read));
-  plug_in->args[3] =
+  write_fd =
     g_strdup_printf ("%d", g_io_channel_unix_get_fd (plug_in->his_write));
 
   /* Set the rest of the command line arguments.
@@ -423,41 +422,67 @@ plug_in_open (PlugIn *plug_in)
    */
   if (plug_in->query)
     {
-      plug_in->args[4] = g_strdup ("-query");
+      mode = "-query";
+      debug_flag = GIMP_DEBUG_WRAP_QUERY;
     }
   else if (plug_in->init)
     {
-      plug_in->args[4] = g_strdup ("-init");
+      mode = "-init";
+      debug_flag = GIMP_DEBUG_WRAP_INIT;
     }
   else  
     {
-      plug_in->args[4] = g_strdup ("-run");
+      mode = "-run";
+      debug_flag = GIMP_DEBUG_WRAP_RUN;
     }
 
-  plug_in->args[5] = g_strdup_printf ("%d", plug_in->gimp->stack_trace_mode);
+  stm = g_strdup_printf ("%d", plug_in->gimp->stack_trace_mode);
 
 #ifdef __EMX__
   fcntl (my_read[0], F_SETFD, 1);
   fcntl (my_write[1], F_SETFD, 1);
 #endif
 
+  args[0] = plug_in->prog;
+  args[1] = "-gimp";
+  args[2] = read_fd;
+  args[3] = write_fd;
+  args[4] = mode;
+  args[5] = stm;
+  args[6] = NULL;
+
+  argv = args;
+  envp = gimp_environ_table_get_envp (plug_in->gimp->environ_table);
+  spawn_flags = G_SPAWN_LEAVE_DESCRIPTORS_OPEN | G_SPAWN_DO_NOT_REAP_CHILD;
+
+  debug = FALSE;
+
+  if (gimp->plug_in_debug)
+    {
+      debug_argv = plug_in_debug_argv (gimp, plug_in->name, debug_flag, args);
+
+      if (debug_argv)
+	{
+	  debug = TRUE;
+	  argv = debug_argv;
+	  spawn_flags |= G_SPAWN_SEARCH_PATH;
+	}
+    }
+
   /* Fork another process. We'll remember the process id so that we
    * can later use it to kill the filter if necessary.
    */
-  envp = gimp_environ_table_get_envp (plug_in->gimp->environ_table);
-  if (! g_spawn_async (NULL, plug_in->args, envp,
-                       G_SPAWN_LEAVE_DESCRIPTORS_OPEN |
-                       G_SPAWN_DO_NOT_REAP_CHILD,
+  if (! g_spawn_async (NULL, argv, envp, spawn_flags,
                        plug_in_prep_for_exec, plug_in,
                        &plug_in->pid,
                        &error))
     {
       g_message ("Unable to run Plug-In: \"%s\"\n(%s)\n%s",
-                 g_path_get_basename (plug_in->args[0]),
-                 plug_in->args[0],
+                 plug_in->name,
+                 plug_in->prog,
                  error->message);
       g_error_free (error);
-      return FALSE;
+      goto cleanup;
     }
 
   g_io_channel_unref (plug_in->his_read);
@@ -478,7 +503,17 @@ plug_in_open (PlugIn *plug_in)
     }
 
   plug_in->open = TRUE;
-  return TRUE;
+
+cleanup:
+
+  if (debug)
+    g_free (argv);
+
+  g_free (read_fd);
+  g_free (write_fd);
+  g_free (stm);
+
+  return plug_in->open;
 }
 
 void
@@ -541,7 +576,7 @@ plug_in_close (PlugIn   *plug_in,
 	}
       if (STILL_ACTIVE == dwExitCode)
 	{
-	  g_warning ("Terminating %s ...", plug_in->args[0]);
+	  g_warning ("Terminating %s ...", plug_in->prog);
 	  TerminateProcess ((HANDLE) plug_in->pid, 0);
 	}
     }
@@ -662,8 +697,8 @@ plug_in_recv_message (GIOChannel   *channel,
 		 "The dying Plug-In may have messed up GIMP's internal state.\n"
 		 "You may want to save your images and restart GIMP\n"
 		 "to be on the safe side."),
-	       g_path_get_basename (plug_in->args[0]),
-	       plug_in->args[0]);
+	       plug_in->name,
+	       plug_in->prog);
 
   if (! plug_in->open)
     plug_in_unref (plug_in);

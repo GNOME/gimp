@@ -495,8 +495,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
-			 g_path_get_basename (plug_in->args[0]),
-			 plug_in->args[0],
+			 plug_in->name,
+			 plug_in->prog,
 			 proc_install->name);
 	      return;
 	    }
@@ -511,8 +511,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
-			 g_path_get_basename (plug_in->args[0]),
-			 plug_in->args[0],
+			 plug_in->name,
+			 plug_in->prog,
 			 proc_install->name);
 	      return;
 	    }
@@ -527,8 +527,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
-			 g_path_get_basename (plug_in->args[0]),
-			 plug_in->args[0],
+			 plug_in->name,
+			 plug_in->prog,
 			 proc_install->name);
 	      return;
 	    }
@@ -545,8 +545,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
-			 g_path_get_basename (plug_in->args[0]),
-			 plug_in->args[0],
+			 plug_in->name,
+			 plug_in->prog,
 			 proc_install->name);
 	      return;
 	    }
@@ -558,8 +558,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 		     "in an invalid menu location.\n"
 		     "Use either \"<Toolbox>\", \"<Image>\", "
 		     "\"<Load>\", or \"<Save>\".",
-		     g_path_get_basename (plug_in->args[0]),
-		     plug_in->args[0],
+		     plug_in->name,
+		     plug_in->prog,
 		     proc_install->name);
 	  return;
 	}
@@ -580,8 +580,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 		     "attempted to install procedure \"%s\"\n"
 		     "which fails to comply with the array parameter\n"
 		     "passing standard.  Argument %d is noncompliant.", 
-		     g_path_get_basename (plug_in->args[0]),
-		     plug_in->args[0],
+		     plug_in->name,
+		     plug_in->prog,
 		     proc_install->name, i);
 	  return;
 	}
@@ -626,8 +626,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     {
       g_message ("Plug-In \"%s\"\n(%s)\n"
                  "attempted to install a procedure with invalid UTF-8 strings.\n", 
-                 g_path_get_basename (plug_in->args[0]),
-                 plug_in->args[0]);
+                 plug_in->name,
+                 plug_in->prog);
       return;
     }
 
@@ -739,10 +739,10 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
       plug_ins_temp_proc_def_add (plug_in->gimp, proc_def,
                                   plug_ins_locale_domain (plug_in->gimp,
-                                                          plug_in->args[0],
+                                                          plug_in->prog,
                                                           NULL),
                                   plug_ins_help_path (plug_in->gimp,
-                                                      plug_in->args[0]));
+                                                      plug_in->prog));
       break;
     }
 }

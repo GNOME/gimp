@@ -1,3 +1,24 @@
+2003-02-10  Manish Singh  <yosh@gimp.org>
+
+	* app/plug-in/plug-in.[ch]: added hooks for running plug-ins under
+	a memory debugger. Also, removed the args array from the PlugIn
+	structure, replacing with simply a variable for the path to the
+	plug-in (and one for a precalculated basename).
+
+	* app/plug-in/plug-in-debug.[ch]: helper routines for the above
+
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-proc.c
+	* app/plug-in/plug-in-progress.c: reflect new and renamed args members
+
+	* app/plug-in/Makefile.am: added plug-in-debug.[ch]
+
+	* app/core/core-types.h: added forward declaration for GimpPlugInDebug
+
+	* app/core/gimp.[ch]: added structure member for GimpPlugInDebug
+
+	* devel-docs/debug-plug-ins.txt: documented new feature
+
 2003-02-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/uniteditor.c: use the "cell-background-gdk"
@@ -122,7 +143,7 @@
 	* libgimp/gimp.c: implemented plug-in debugging hooks. Also, use
 	G_LOG_DOMAIN instead of hardcoding "LibGimp" for g_log_set_handler.
 
-	* devel-docs/debug-plug-ins.txt: documenyed here
+	* devel-docs/debug-plug-ins.txt: documented here
 
 	* devel-docs/Makefile.am: add new file
 
