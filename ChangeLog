@@ -1,5 +1,10 @@
 2004-01-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/dialogs-commands.c: show the image menu in newly created
+	layers, channels & paths docks.
+
+2004-01-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptool.[ch]: added boolean return value to
 	GimpTool::initialize(). Returning FALSE means the tool could not
 	be initialized and doesn't want to receive button events.

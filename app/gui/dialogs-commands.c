@@ -41,6 +41,7 @@
 /*  local function prototypes  */
 
 static void   dialogs_create_dock (GdkScreen   *screen,
+                                   gboolean     show_image_menu,
                                    const gchar *tabs[],
                                    gint         n_tabs);
 
@@ -417,7 +418,7 @@ dialogs_create_lc_cmd_callback (GtkWidget *widget,
     "gimp-indexed-palette"
   };
 
-  dialogs_create_dock (gtk_widget_get_screen (widget),
+  dialogs_create_dock (gtk_widget_get_screen (widget), TRUE,
                        tabs, G_N_ELEMENTS (tabs));
 }
 
@@ -435,7 +436,7 @@ dialogs_create_data_cmd_callback (GtkWidget *widget,
     "gimp-font-list"
   };
 
-  dialogs_create_dock (gtk_widget_get_screen (widget),
+  dialogs_create_dock (gtk_widget_get_screen (widget), FALSE,
                        tabs, G_N_ELEMENTS (tabs));
 }
 
@@ -452,7 +453,7 @@ dialogs_create_stuff_cmd_callback (GtkWidget *widget,
     "gimp-template-list"
   };
 
-  dialogs_create_dock (gtk_widget_get_screen (widget),
+  dialogs_create_dock (gtk_widget_get_screen (widget), FALSE,
                        tabs, G_N_ELEMENTS (tabs));
 }
 
@@ -490,6 +491,7 @@ dialogs_show_toolbox (void)
 
 static void
 dialogs_create_dock (GdkScreen   *screen,
+                     gboolean     show_image_menu,
                      const gchar *tabs[],
                      gint         n_tabs)
 {
@@ -499,6 +501,8 @@ dialogs_create_dock (GdkScreen   *screen,
   gint       i;
 
   dock = gimp_dialog_factory_dock_new (global_dock_factory, screen);
+
+  gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock), show_image_menu);
 
   dockbook = gimp_dockbook_new (global_dock_factory->menu_factory);
 
