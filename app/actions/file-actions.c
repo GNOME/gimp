@@ -60,7 +60,7 @@ static GimpActionEntry file_actions[] =
 {
   { "file-menu", NULL, N_("_File") },
 
-  { "file-open-recent-menu", GTK_STOCK_OPEN,
+  { "file-open-recent-menu", NULL,
     N_("Open _Recent"), "", NULL },
 
   { "file-acquire-menu", NULL,
@@ -75,6 +75,11 @@ static GimpActionEntry file_actions[] =
     N_("_Open..."), "<control>O", NULL,
     G_CALLBACK (file_open_from_image_cmd_callback),
     GIMP_HELP_FILE_OPEN },
+
+  { "file-open-location", NULL,
+    N_("_Open Location..."), NULL, NULL,
+    G_CALLBACK (file_open_location_cmd_callback),
+    GIMP_HELP_FILE_OPEN_LOCATION },
 
   { "file-save", GTK_STOCK_SAVE,
     N_("_Save"), "<control>S", NULL,

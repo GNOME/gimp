@@ -140,6 +140,7 @@ app/gui/convert-dialog.c
 app/gui/dialogs-constructors.c
 app/gui/file-new-dialog.c
 app/gui/file-open-dialog.c
+app/gui/file-open-location-dialog.c
 app/gui/file-save-dialog.c
 app/gui/font-select.c
 app/gui/gradient-select.c

@@ -46,6 +46,7 @@
 #include "menus/menus.h"
 
 #include "gui/file-open-dialog.h"
+#include "gui/file-open-location-dialog.h"
 #include "gui/file-save-dialog.h"
 
 #include "actions.h"
@@ -92,6 +93,18 @@ file_open_from_image_cmd_callback (GtkAction *action,
 
   file_open_dialog_show (gimp, action_data_get_image (data),
                          NULL, global_menu_factory, widget);
+}
+
+void
+file_open_location_cmd_callback (GtkAction *action,
+                                 gpointer   data)
+{
+  Gimp      *gimp;
+  GtkWidget *widget;
+  return_if_no_gimp (gimp, data);
+  return_if_no_widget (widget, data);
+
+  file_open_location_dialog_show (gimp, widget);
 }
 
 void

@@ -1,5 +1,17 @@
 2004-05-31  Sven Neumann  <sven@gimp.org>
 
+	* app/Makefile.am
+	* app/actions/file-actions.c
+	* app/actions/file-commands.[ch]
+	* app/gui/Makefile.am
+	* app/gui/file-open-location-dialog.[ch]
+	* app/widgets/gimphelp-ids.h
+	* menus/image-menu.xml.in	
+	* menus/toolbox-menu.xml.in: added a rudimentary "Open Location"
+	dialog.
+
+2004-05-31  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mblur.c (mblur_zoom): push pixels outwards not
 	to the center as suggested by Chad Daelhousen (bug #142968).
 

@@ -92,6 +92,7 @@ gimp_2_1_LDFLAGS = \
 	-u $(SYMPREFIX)resize_dialog_new		\
 	-u $(SYMPREFIX)stroke_dialog_new		\
 	-u $(SYMPREFIX)file_open_dialog_show		\
+	-u $(SYMPREFIX)file_open_location_dialog_show	\
 	-u $(SYMPREFIX)file_save_dialog_show		\
 	-u $(SYMPREFIX)color_notebook_new
 

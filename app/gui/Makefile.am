@@ -21,6 +21,8 @@ dialogs_sources = \
 	file-new-dialog.h		\
 	file-open-dialog.c		\
 	file-open-dialog.h		\
+	file-open-location-dialog.c	\
+	file-open-location-dialog.h	\
 	file-save-dialog.c		\
 	file-save-dialog.h		\
 	font-select.c			\

@@ -28,6 +28,7 @@
 #define GIMP_HELP_FILE_NEW                        "gimp-file-new"
 #define GIMP_HELP_FILE_NEW_CONFIRM                "gimp-file-new-confirm"
 #define GIMP_HELP_FILE_OPEN                       "gimp-file-open"
+#define GIMP_HELP_FILE_OPEN_LOCATION              "gimp-file-open-location"
 #define GIMP_HELP_FILE_OPEN_BY_EXTENSION          "gimp-file-open-by-extension"
 #define GIMP_HELP_FILE_OPEN_XCF                   "gimp-file-open-xcf"
 #define GIMP_HELP_FILE_OPEN_RECENT                "gimp-file-open-recent"

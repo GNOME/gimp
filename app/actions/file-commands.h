@@ -22,6 +22,8 @@
 
 void   file_open_cmd_callback            (GtkAction   *action,
                                           gpointer     data);
+void   file_open_location_cmd_callback   (GtkAction   *action,
+                                          gpointer     data);
 void   file_open_from_image_cmd_callback (GtkAction   *action,
                                           gpointer     data);
 void   file_last_opened_cmd_callback     (GtkAction   *action,
