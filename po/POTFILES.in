@@ -273,7 +273,6 @@ app/widgets/gimpcoloreditor.c
 app/widgets/gimpcolorframe.c
 app/widgets/gimpcolormapeditor.c
 app/widgets/gimpcontainergridview.c
-app/widgets/gimpcontainermenuimpl.c
 app/widgets/gimpcontainerpopup.c
 app/widgets/gimpdataeditor.c
 app/widgets/gimpdatafactoryview.c
@@ -307,6 +306,7 @@ app/widgets/gimptoolbox-color-area.c
 app/widgets/gimptoolbox-indicator-area.c
 app/widgets/gimptoolbox.c
 app/widgets/gimptooloptionseditor.c
+app/widgets/gimptoolview.c
 app/widgets/gimpundoeditor.c
 app/widgets/gimpvectorstreeview.c
 app/widgets/gimpwidgets-constructors.c
