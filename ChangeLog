@@ -1,5 +1,10 @@
 2003-07-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/psd.c: use the new CMYK->RGB conversion routine to
+	handle CMYK in PSD files.
+
+2003-07-15  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/tiff.c: applied GIMP coding style. UTF8-validate
 	the image description before accepting it as a comment. Check for
 	ASCII-only comment before saving it as an image description.
