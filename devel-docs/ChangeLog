@@ -1,5 +1,9 @@
 2003-12-16  Dave Neary  <bolsh@gimp.org>
 
+	* */Makefile.am: Fixed syntax errors in makefiles. Oops.
+
+2003-12-16  Dave Neary  <bolsh@gimp.org>
+
 	* */Makefile.am: Fixed long-standing gtk-doc 
 	problem caused by a problem with docbook-xml installations, 
 	dodgy debian packages and suspect Makefile checks which 

@@ -144,8 +144,8 @@ maintainer-clean-local: clean
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(TARGET_DIR)
 	(installfiles=`echo $(srcdir)/html/*`; \
-	if test -f '$(srcdir)/html/index.sgml'; \
-	then
+	if test -f "$(srcdir)/html/index.sgml"; \
+	then \
 	  for i in $$installfiles; do \
 	    echo '-- Installing '$$i ; \
 	    $(INSTALL_DATA) $$i $(DESTDIR)$(TARGET_DIR); \
