@@ -20,6 +20,7 @@ olof
 
   * improve PDB explorer
   * input image arguments
+  * find_next_guide is a lousy interface. => just do num_guides
 
 bugs
 

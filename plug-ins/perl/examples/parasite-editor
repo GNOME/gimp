@@ -219,9 +219,9 @@ sub create_main {
       $item = new Gtk::MenuItem "Global";
       my $act_global = sub {
          $list_func   = sub { Gimp->parasite_list   };
-         $find_func   = sub { shift; Gimp->find_parasite   (shift) };
-         $attach_func = sub { shift; Gimp->attach_parasite (shift) };
-         $detach_func = sub { shift; Gimp->detach_parasite (shift) };
+         $find_func   = sub { shift; Gimp->parasite_find   (shift) };
+         $attach_func = sub { shift; Gimp->parasite_attach (shift) };
+         $detach_func = sub { shift; Gimp->parasite_detach (shift) };
          &$set_submenu();
       };
       $item->signal_connect("activate", $act_global);
@@ -230,22 +230,22 @@ sub create_main {
       $item = new Gtk::MenuItem "Image";
       $item->signal_connect("activate", sub {
          $list_func   = sub { $_[0] ? shift->parasite_list : () };
-         $find_func   = sub { shift->find_parasite   (shift) };
-         $attach_func = sub { shift->attach_parasite (shift) };
-         $detach_func = sub { shift->detach_parasite (shift) };
-         &$set_submenu(map [$_,"$$_: ".$_->get_filename],Gimp->list_images);
+         $find_func   = sub { shift->parasite_find   (shift) };
+         $attach_func = sub { shift->parasite_attach (shift) };
+         $detach_func = sub { shift->parasite_detach (shift) };
+         &$set_submenu(map [$_,"$$_: ".$_->get_filename],Gimp->image_list);
       });
       $menu->append($item);
 
       $item = new Gtk::MenuItem "Drawable";
       $item->signal_connect("activate", sub {
          $list_func   = sub { $_[0] ? shift->parasite_list : () };
-         $find_func   = sub { shift->find_parasite   (shift) };
-         $attach_func = sub { shift->attach_parasite (shift) };
-         $detach_func = sub { shift->detach_parasite (shift) };
+         $find_func   = sub { shift->parasite_find   (shift) };
+         $attach_func = sub { shift->parasite_attach (shift) };
+         $detach_func = sub { shift->parasite_detach (shift) };
          &$set_submenu(map [$_,$_->image->get_filename." / "
                                .($_->layer ? $_->layer_get_name : $_->channel_get_name)],
-                           map (($_->get_layers,$_->get_channels),Gimp->list_images));
+                           map (($_->get_layers,$_->get_channels),Gimp->image_list));
       });
       $menu->append($item);
 

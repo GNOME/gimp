@@ -37,8 +37,8 @@ bootstrap Gimp::Lib $VERSION;
 # functions to "autobless" where the autobless mechanism
 # does not work.
 
-sub gimp_list_images {
-   map _autobless($_,&Gimp::PARAM_IMAGE),gimp_call_procedure "gimp_list_images";
+sub gimp_image_list {
+   map _autobless($_,&Gimp::PARAM_IMAGE),gimp_call_procedure "gimp_image_list";
 }
 
 sub gimp_image_get_layers {
