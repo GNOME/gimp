@@ -159,8 +159,6 @@ HELP
     $author = $copyright = 'Joao S.O. Bueno, Shawn Willden';
     $date = '2003';
 
-    &std_pdb_misc;
-
     @inargs = ( &drawable_arg );
 
     %invoke = (
