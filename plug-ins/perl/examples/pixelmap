@@ -8,7 +8,7 @@ use PDL;
 
 register "pixelmap",
          "Maps Pixel values and coordinates through general Perl exprtessions",
-         "=pod(*)",
+         "=pod",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
          "19990528",
@@ -58,6 +58,10 @@ register "pixelmap",
 };
 
 exit main;
+
+=head1 DESCRIPTION
+
+Not yet written yet, sorry...
 
 
 
