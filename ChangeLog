@@ -6,6 +6,9 @@
 	* po-plug-ins/POTFILES.in: added missing
 	plug-ins/gap/gap_frontends_main.c.
 
+	* plug-ins/borderaverage/borderaverage.c: added missing _()
+	for progress bar description.
+
 Thu Jan 27 14:55:00 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/print/*: updated to version 3.0.5

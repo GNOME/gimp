@@ -163,7 +163,7 @@ run (gchar   *name,
       /*  Make sure that the drawable is RGB color  */
       if (gimp_drawable_is_rgb (drawable->id))
 	{
-	  gimp_progress_init ("Border Average...");
+	  gimp_progress_init ( _("Border Average..."));
 	  borderaverage (drawable,
 			 &result_color[0], &result_color[1], &result_color[2]);
 
