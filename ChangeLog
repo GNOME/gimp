@@ -1,3 +1,8 @@
+2005-01-29  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* libgimpbase/gimpbase.def: added gimp_path_parse 
+	* libgimpmath/gimpmath.def: added gimp_param_spec_matrix2
+
 2005-01-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimpconfig/gimpconfig-deserialize.c
