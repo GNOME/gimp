@@ -42,42 +42,6 @@ gimp_coordinates_new()
 <!-- ##### FUNCTION gimp_unit_menu_new ##### -->
 <para>
 
-<informaltable pgwide="1" frame="none" role="enum">
-<tgroup cols="2"><colspec colwidth="1*"/><colspec colwidth="8*"/>
-<tbody>
-
-<row>
-<entry>% f</entry>
-<entry>Factor (how many units make up an inch)</entry>
-</row>
-
-<row>
-<entry>% y</entry>
-<entry>Symbol (e.g. "''" for GIMP_UNIT_INCH)</entry>
-</row>
-
-<row>
-<entry>% a</entry>
-<entry>Abbreviation</entry>
-</row>
-
-<row>
-<entry>% s</entry>
-<entry>Singular</entry>
-</row>
-
-<row>
-<entry>% p</entry>
-<entry>Plural</entry>
-</row>
-
-<row>
-<entry>%%</entry>
-<entry>Literal percent</entry>
-</row>
-
-</tbody></tgroup></informaltable>
-
 </para>
 
 @format: 
@@ -95,8 +59,6 @@ gimp_coordinates_new()
 
 @menu: 
 @unit: 
-<!-- # Unused Parameters # -->
-@gum: 
 
 
 <!-- ##### FUNCTION gimp_unit_menu_get_unit ##### -->
@@ -106,8 +68,6 @@ gimp_coordinates_new()
 
 @menu: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@gum: 
 
 
 <!-- ##### FUNCTION gimp_unit_menu_get_pixel_digits ##### -->

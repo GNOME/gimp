@@ -22,10 +22,6 @@ Functions for setting colors in the palette.
 
 @foreground: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@red: 
-@green: 
-@blue: 
 
 
 <!-- ##### FUNCTION gimp_palette_get_background ##### -->
@@ -35,10 +31,6 @@ Functions for setting colors in the palette.
 
 @background: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@red: 
-@green: 
-@blue: 
 
 
 <!-- ##### FUNCTION gimp_palette_set_foreground ##### -->
@@ -48,10 +40,6 @@ Functions for setting colors in the palette.
 
 @foreground: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@red: 
-@green: 
-@blue: 
 
 
 <!-- ##### FUNCTION gimp_palette_set_background ##### -->
@@ -61,10 +49,6 @@ Functions for setting colors in the palette.
 
 @background: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@red: 
-@green: 
-@blue: 
 
 
 <!-- ##### FUNCTION gimp_palette_set_default_colors ##### -->

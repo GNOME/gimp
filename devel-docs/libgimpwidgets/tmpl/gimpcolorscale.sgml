@@ -28,9 +28,6 @@ Fancy colored sliders.
 @orientation: 
 @channel: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@rgb: 
-@hsv: 
 
 
 <!-- ##### FUNCTION gimp_color_scale_set_channel ##### -->

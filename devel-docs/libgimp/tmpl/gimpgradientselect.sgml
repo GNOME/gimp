@@ -24,8 +24,6 @@ gimpgradientselect
 @grad_data: 
 @dialog_closing: 
 @user_data: 
-<!-- # Unused Parameters # -->
-@name: 
 
 
 <!-- ##### FUNCTION gimp_gradient_select_new ##### -->
@@ -59,8 +57,6 @@ gimpgradientselect
 @initial_gradient: 
 @sample_size: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@gradients_callback: 
 
 
 <!-- ##### FUNCTION gimp_gradients_close_popup ##### -->
@@ -70,8 +66,6 @@ gimpgradientselect
 
 @gradient_callback: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@gradients_callback: 
 
 
 <!-- ##### FUNCTION gimp_gradients_set_popup ##### -->
@@ -82,7 +76,4 @@ gimpgradientselect
 @gradient_callback: 
 @gradient_name: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@gradients_callback: 
-
 

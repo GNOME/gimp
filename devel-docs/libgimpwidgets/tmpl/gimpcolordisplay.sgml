@@ -83,11 +83,6 @@ display color correction modules.
 
 @display: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@ok_func: 
-@ok_data: 
-@cancel_func: 
-@cancel_data: 
 
 
 <!-- ##### FUNCTION gimp_color_display_configure_reset ##### -->

@@ -72,9 +72,6 @@ Operations on single layers.
 @offx: 
 @offy: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@offset_x: 
-@offset_y: 
 
 
 <!-- ##### FUNCTION gimp_layer_resize_to_image_size ##### -->
@@ -104,9 +101,6 @@ Operations on single layers.
 @offx: 
 @offy: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@offset_x: 
-@offset_y: 
 
 
 <!-- ##### FUNCTION gimp_layer_add_alpha ##### -->
@@ -127,9 +121,6 @@ Operations on single layers.
 @offx: 
 @offy: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@offset_x: 
-@offset_y: 
 
 
 <!-- ##### FUNCTION gimp_layer_mask ##### -->
@@ -347,8 +338,6 @@ Operations on single layers.
 </para>
 
 @Returns: 
-<!-- # Unused Parameters # -->
-@layer_ID: 
 
 
 <!-- ##### MACRO gimp_layer_get_image_id ##### -->
@@ -357,8 +346,6 @@ Operations on single layers.
 </para>
 
 @Returns: 
-<!-- # Unused Parameters # -->
-@layer_ID: 
 
 
 <!-- ##### FUNCTION gimp_layer_is_floating_sel ##### -->
@@ -376,8 +363,6 @@ Operations on single layers.
 </para>
 
 @Returns: 
-<!-- # Unused Parameters # -->
-@layer_ID: 
 
 
 <!-- ##### MACRO gimp_layer_get_preserve_transparency ##### -->
@@ -386,17 +371,9 @@ Operations on single layers.
 </para>
 
 @Returns: 
-<!-- # Unused Parameters # -->
-@layer_ID: 
 
 
 <!-- ##### MACRO gimp_layer_set_preserve_transparency ##### -->
 <para>
 
 </para>
-
-<!-- # Unused Parameters # -->
-@layer_ID: 
-@preserve_transparency: 
-
-

@@ -31,8 +31,6 @@ The #GimpSizeEntry struct is considered private.
 @lower: 
 @upper: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@adjustment: 
 
 
 <!-- ##### FUNCTION gimp_memsize_entry_set_value ##### -->

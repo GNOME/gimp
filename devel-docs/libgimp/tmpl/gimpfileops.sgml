@@ -58,8 +58,6 @@ File operations (load, save, etc.)
 @prefixes: 
 @magics: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@name: 
 
 
 <!-- ##### FUNCTION gimp_register_load_handler ##### -->
@@ -71,8 +69,6 @@ File operations (load, save, etc.)
 @extensions: 
 @prefixes: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@name: 
 
 
 <!-- ##### FUNCTION gimp_register_save_handler ##### -->
@@ -84,7 +80,5 @@ File operations (load, save, etc.)
 @extensions: 
 @prefixes: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@name: 
 
 

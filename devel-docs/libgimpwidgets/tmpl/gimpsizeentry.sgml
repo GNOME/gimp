@@ -77,8 +77,6 @@ gimp_coordinates_new()
 @spinbutton_width: 
 @update_policy: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@spinbutton_usize: 
 
 
 <!-- ##### FUNCTION gimp_size_entry_add_field ##### -->

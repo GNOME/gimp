@@ -27,8 +27,6 @@ Functions for manipulating selections.
 @x2: 
 @y2: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@none_empty: 
 
 
 <!-- ##### FUNCTION gimp_selection_all ##### -->
@@ -77,9 +75,6 @@ Functions for manipulating selections.
 @offx: 
 @offy: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@x_offset: 
-@y_offset: 
 
 
 <!-- ##### FUNCTION gimp_selection_load ##### -->

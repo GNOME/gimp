@@ -28,8 +28,6 @@ gimpbrushselect
 @mask_data: 
 @dialog_closing: 
 @user_data: 
-<!-- # Unused Parameters # -->
-@name: 
 
 
 <!-- ##### FUNCTION gimp_brush_select_new ##### -->

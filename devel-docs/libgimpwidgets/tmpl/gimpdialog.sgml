@@ -34,13 +34,6 @@ dialog-related stuff.
 @help_id: 
 @Varargs: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@wmclass_name: 
-@position: 
-@allow_shrink: 
-@allow_grow: 
-@auto_shrink: 
-@help_data: 
 
 
 <!-- ##### FUNCTION gimp_dialog_new_valist ##### -->

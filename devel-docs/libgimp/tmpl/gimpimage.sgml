@@ -57,9 +57,6 @@ and operations involving multiple layers.
 @offx: 
 @offy: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@offset_x: 
-@offset_y: 
 
 
 <!-- ##### FUNCTION gimp_image_scale ##### -->
@@ -112,8 +109,6 @@ and operations involving multiple layers.
 @image_ID: 
 @num_layers: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@nlayers: 
 
 
 <!-- ##### FUNCTION gimp_image_get_channels ##### -->
@@ -124,8 +119,6 @@ and operations involving multiple layers.
 @image_ID: 
 @num_channels: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@nchannels: 
 
 
 <!-- ##### FUNCTION gimp_image_unset_active_channel ##### -->
@@ -279,8 +272,6 @@ and operations involving multiple layers.
 @image_ID: 
 @layer_ID: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@channel_ID: 
 
 
 <!-- ##### FUNCTION gimp_image_add_channel ##### -->
@@ -457,8 +448,6 @@ and operations involving multiple layers.
 @image_ID: 
 @active_layer_ID: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@layer_ID: 
 
 
 <!-- ##### FUNCTION gimp_image_get_active_channel ##### -->
@@ -478,8 +467,6 @@ and operations involving multiple layers.
 @image_ID: 
 @active_channel_ID: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@channel_ID: 
 
 
 <!-- ##### FUNCTION gimp_image_get_selection ##### -->
@@ -550,8 +537,6 @@ and operations involving multiple layers.
 @image_ID: 
 @filename: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@name: 
 
 
 <!-- ##### FUNCTION gimp_image_get_name ##### -->
@@ -632,8 +617,6 @@ and operations involving multiple layers.
 @image_ID: 
 @num_colors: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@ncolors: 
 
 
 <!-- ##### FUNCTION gimp_image_set_cmap ##### -->
@@ -645,8 +628,6 @@ and operations involving multiple layers.
 @cmap: 
 @num_colors: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@ncolors: 
 
 
 <!-- ##### FUNCTION gimp_image_get_thumbnail_data ##### -->
@@ -659,8 +640,6 @@ and operations involving multiple layers.
 @height: 
 @bpp: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@bytes: 
 
 
 <!-- ##### MACRO gimp_image_convert_rgb ##### -->
@@ -668,32 +647,17 @@ and operations involving multiple layers.
 
 </para>
 
-<!-- # Unused Parameters # -->
-@image_ID: 
-
 
 <!-- ##### MACRO gimp_image_convert_grayscale ##### -->
 <para>
 
 </para>
 
-<!-- # Unused Parameters # -->
-@image_ID: 
-
 
 <!-- ##### MACRO gimp_image_convert_indexed ##### -->
 <para>
 
 </para>
-
-<!-- # Unused Parameters # -->
-@image_ID: 
-@dither_type: 
-@palette_type: 
-@num_colors: 
-@alpha_dither: 
-@remove_unused: 
-@palette: 
 
 
 <!-- ##### FUNCTION gimp_image_duplicate ##### -->

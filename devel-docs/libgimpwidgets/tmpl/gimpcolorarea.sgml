@@ -47,8 +47,6 @@ Displays a GimpRGB color, optionally with alpha-channel.
 
 @area: 
 @color: 
-<!-- # Unused Parameters # -->
-@gca: 
 
 
 <!-- ##### FUNCTION gimp_color_area_get_color ##### -->
@@ -58,8 +56,6 @@ Displays a GimpRGB color, optionally with alpha-channel.
 
 @area: 
 @color: 
-<!-- # Unused Parameters # -->
-@gca: 
 
 
 <!-- ##### FUNCTION gimp_color_area_has_alpha ##### -->
@@ -69,8 +65,6 @@ Displays a GimpRGB color, optionally with alpha-channel.
 
 @area: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@gca: 
 
 
 <!-- ##### FUNCTION gimp_color_area_set_type ##### -->
@@ -80,8 +74,6 @@ Displays a GimpRGB color, optionally with alpha-channel.
 
 @area: 
 @type: 
-<!-- # Unused Parameters # -->
-@gca: 
 
 
 <!-- ##### FUNCTION gimp_color_area_set_draw_border ##### -->

@@ -56,8 +56,6 @@ will be emitted.
 
 @selection: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@gfs: 
 
 
 <!-- ##### FUNCTION gimp_file_selection_set_filename ##### -->
@@ -67,8 +65,6 @@ will be emitted.
 
 @selection: 
 @filename: 
-<!-- # Unused Parameters # -->
-@gfs: 
 
 
 <!-- ##### SIGNAL GimpFileSelection::filename-changed ##### -->

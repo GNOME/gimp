@@ -26,8 +26,6 @@ gimppatternselect
 @mask_data: 
 @dialog_closing: 
 @user_data: 
-<!-- # Unused Parameters # -->
-@name: 
 
 
 <!-- ##### FUNCTION gimp_pattern_select_new ##### -->

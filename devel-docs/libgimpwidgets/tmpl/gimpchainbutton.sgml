@@ -58,9 +58,6 @@ up two GimpSizeEntries (see #GimpSizeEntry) linked with a #GimpChainButton.
 
 @button: 
 @active: 
-<!-- # Unused Parameters # -->
-@gcb: 
-@is_active: 
 
 
 <!-- ##### FUNCTION gimp_chain_button_get_active ##### -->
@@ -70,8 +67,6 @@ up two GimpSizeEntries (see #GimpSizeEntry) linked with a #GimpChainButton.
 
 @button: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@gcb: 
 
 
 <!-- ##### SIGNAL GimpChainButton::toggled ##### -->

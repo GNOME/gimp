@@ -35,8 +35,6 @@ gimppaths
 @num_path_point_details: 
 @points_pairs: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@pathname: 
 
 
 <!-- ##### FUNCTION gimp_path_get_current ##### -->
@@ -56,8 +54,6 @@ gimppaths
 @image_ID: 
 @name: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@set_current_path_name: 
 
 
 <!-- ##### FUNCTION gimp_path_set_points ##### -->
@@ -71,8 +67,6 @@ gimppaths
 @num_path_points: 
 @points_pairs: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@pathname: 
 
 
 <!-- ##### FUNCTION gimp_path_stroke_current ##### -->
@@ -104,8 +98,6 @@ gimppaths
 @image_ID: 
 @name: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@pathname: 
 
 
 <!-- ##### FUNCTION gimp_get_path_by_tattoo ##### -->
@@ -126,8 +118,6 @@ gimppaths
 @image_ID: 
 @name: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@path_name_to_del: 
 
 
 <!-- ##### FUNCTION gimp_path_get_locked ##### -->
@@ -138,8 +128,6 @@ gimppaths
 @image_ID: 
 @name: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@pathname: 
 
 
 <!-- ##### FUNCTION gimp_path_set_locked ##### -->
@@ -151,8 +139,6 @@ gimppaths
 @name: 
 @lockstatus: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@pathname: 
 
 
 <!-- ##### FUNCTION gimp_path_set_tattoo ##### -->
@@ -164,8 +150,6 @@ gimppaths
 @name: 
 @tattovalue: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@pathname: 
 
 
 <!-- ##### FUNCTION gimp_path_to_selection ##### -->
@@ -181,8 +165,6 @@ gimppaths
 @feather_radius_x: 
 @feather_radius_y: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@pathname: 
 
 
 <!-- ##### FUNCTION gimp_path_import ##### -->

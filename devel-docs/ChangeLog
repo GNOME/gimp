@@ -1,5 +1,9 @@
 2003-11-15  Sven Neumann  <sven@gimp.org>
 
+	* */tmpl/*.sgml: removed unused parameters.
+
+2003-11-15  Sven Neumann  <sven@gimp.org>
+
 	* app/Makefile.am (unused_symbols): use $SYMPREFIX as defined by
 	the configure script.
 

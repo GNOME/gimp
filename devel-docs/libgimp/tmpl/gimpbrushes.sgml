@@ -117,9 +117,5 @@ Functions related to getting and setting brushes.
 @length: 
 @mask_data: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@brush_name: 
-@mask_data_size: 
-@pname: 
 
 

@@ -22,9 +22,4 @@ Loading help pages using gimp_help.
 
 @prog_name: 
 @help_id: 
-@Returns: 
-<!-- # Unused Parameters # -->
-@help_page: 
-@help_data: 
-
-
+@Returns:

@@ -2,7 +2,7 @@
 GimpHelpUI
 
 <!-- ##### SECTION Short_Description ##### -->
-Functions for setting #GtkTooltips and HTML links into the GIMP help
+Functions for setting #GtkTooltips and help identifier used by GIMP help
 system.
 
 <!-- ##### SECTION Long_Description ##### -->
@@ -44,8 +44,6 @@ the help.
 
 @help_id: 
 @data: 
-<!-- # Unused Parameters # -->
-@help_data: A string containing the path to a HTML page.
 
 
 <!-- ##### FUNCTION gimp_help_enable_tooltips ##### -->
@@ -80,7 +78,7 @@ See #GimpHelpFunc for the naming conventions of HTML help files.
 </para>
 
 @help_id: 
-@help_data: A string containing the path to a HTML page.
+@help_data: A unique help identifier.
 
 
 <!-- ##### FUNCTION gimp_help_connect ##### -->
@@ -102,8 +100,6 @@ See #GimpHelpFunc for the naming conventions of HTML help files.
 @widget: 
 @tooltip: 
 @help_id: 
-<!-- # Unused Parameters # -->
-@help_data: 
 
 
 <!-- ##### FUNCTION gimp_context_help ##### -->

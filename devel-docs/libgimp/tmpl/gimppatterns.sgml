@@ -64,7 +64,5 @@ Functions relating to patterns.
 @length: 
 @mask_data: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@mask_data_size: 
 
 

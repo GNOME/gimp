@@ -22,8 +22,6 @@ gimpfonts
 @font_name: 
 @dialog_closing: 
 @user_data: 
-<!-- # Unused Parameters # -->
-@name: 
 
 
 <!-- ##### FUNCTION gimp_font_select_new ##### -->

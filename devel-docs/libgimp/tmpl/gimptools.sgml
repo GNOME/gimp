@@ -92,10 +92,6 @@ Functions giving access to common toolbox tools.
 @feather_radius: 
 @sample_merged: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@red: 
-@green: 
-@blue: 
 
 
 <!-- ##### FUNCTION gimp_clone ##### -->
@@ -138,11 +134,6 @@ Functions giving access to common toolbox tools.
 @average_radius: 
 @color: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@save_color: 
-@red: 
-@green: 
-@blue: 
 
 
 <!-- ##### FUNCTION gimp_convolve ##### -->

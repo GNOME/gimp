@@ -132,8 +132,6 @@ Functions to manipulate drawables.
 @height: 
 @bpp: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@bytes: 
 
 
 <!-- ##### FUNCTION gimp_drawable_merge_shadow ##### -->
@@ -144,8 +142,6 @@ Functions to manipulate drawables.
 @drawable_ID: 
 @undo: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@undoable: 
 
 
 <!-- ##### FUNCTION gimp_drawable_fill ##### -->
@@ -331,8 +327,6 @@ Functions to manipulate drawables.
 </para>
 
 @Returns: 
-<!-- # Unused Parameters # -->
-@drawable_ID: 
 
 
 <!-- ##### MACRO gimp_drawable_bpp ##### -->
@@ -341,8 +335,6 @@ Functions to manipulate drawables.
 </para>
 
 @Returns: 
-<!-- # Unused Parameters # -->
-@drawable_ID: 
 
 
 <!-- ##### FUNCTION gimp_drawable_parasite_find ##### -->
