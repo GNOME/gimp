@@ -191,6 +191,11 @@ void gimp_set_data (gchar *  id,
 void gimp_get_data (gchar *  id,
 		    gpointer data);
 
+/* Get the size in bytes of the data stored by a gimp_get_data
+ * id. As size of zero may indicate that there is no such
+ * identifier in the database.
+ */
+guint32 gimp_get_data_size (gchar * id);
 
 /* Initialize the progress bar with "message". If "message"
  *  is NULL, the message displayed in the progress window will

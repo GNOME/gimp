@@ -1,3 +1,9 @@
+Fri Jun 26 17:22:00 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* libgimp/gimp.[ch]
+	* app/procedural_db.c: add procedural_db_get_data_size and
+	gimp_get_data_Size functions from Nick Lamb
+
 Fri Jun 26 11:00:35 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/script-fu/scripts.c: define DIVIDE here too (auf,

@@ -20,13 +20,14 @@
 #include <stdarg.h>
 #include <string.h>
 #include <sys/types.h>
-#include "regex.h"
 #include "appenv.h"
 #include "app_procs.h"
 #include "general.h"
 #include "gdisplay.h"
 #include "plug_in.h"
 #include "procedural_db.h"
+#include "config.h"
+#include "regex.h"
 
 /*  Query structure  */
 typedef struct _PDBQuery PDBQuery;
@@ -62,6 +63,7 @@ static Argument * procedural_db_proc_info (Argument *);
 static Argument * procedural_db_proc_arg (Argument *);
 static Argument * procedural_db_proc_val (Argument *);
 static Argument * procedural_db_get_data (Argument *);
+static Argument * procedural_db_get_data_size (Argument *);
 static Argument * procedural_db_set_data (Argument *);
 static Argument * procedural_db_query (Argument *);
 static void       procedural_db_query_entry (gpointer, gpointer, gpointer);
@@ -319,6 +321,47 @@ ProcRecord procedural_db_proc_val_proc =
   { { procedural_db_proc_val } },
 };
 
+
+/*********************************/
+/*  PROCEDURAL_DB_GET_DATA_SIZE  */
+
+static ProcArg procedural_db_get_data_size_args[] =
+{
+  { PDB_STRING,
+    "identifier",
+    "the identifier associated with data"
+  },
+};
+
+static ProcArg procedural_db_get_data_size_out_args[] =
+{
+  { PDB_INT32,
+    "bytes",
+    "the number of bytes in the data"
+  }
+};
+
+ProcRecord procedural_db_get_data_size_proc =
+{
+  "gimp_procedural_db_get_data_size",
+  "Returns size of data associated with the specified identifier",
+  "This procedure returns the size of any data which may have been associated with the specified identifier. If no data has been associated with the identifier, an error is returned.",
+  "Nick Lamb",
+  "Nick Lamb",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  1,
+  procedural_db_get_data_size_args,
+
+  /*  Output arguments  */
+  2,
+  procedural_db_get_data_size_out_args,
+
+  /*  Exec method  */
+  { { procedural_db_get_data_size } },
+};
 
 /****************************/
 /*  PROCEDURAL_DB_GET_DATA  */
@@ -1004,6 +1047,33 @@ procedural_db_get_data (Argument *args)
 	  memcpy (data_copy, data->data, data->bytes);
 	  return_args[2].value.pdb_pointer = data_copy;
 
+	  return return_args;
+	}
+    }
+
+  return_args = procedural_db_return_args (&procedural_db_proc_val_proc, FALSE);
+  return return_args;
+}
+
+static Argument *
+procedural_db_get_data_size (Argument *args)
+{
+  Argument *return_args;
+  PDBData *data;
+  char *identifier;
+  GList *list;
+
+  identifier = args[0].value.pdb_pointer;
+  list = data_list;
+  while (list)
+    {
+      data = (PDBData *) list->data;
+      list = list->next;
+
+      if (strcmp (data->identifier, identifier) == 0)
+	{
+	  return_args = procedural_db_return_args (&procedural_db_get_data_size_proc, TRUE);
+	  return_args[1].value.pdb_int = data->bytes;
 	  return return_args;
 	}
     }

@@ -150,6 +150,28 @@ gimp_set_data (gchar *  id,
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
+guint32
+gimp_get_data_size (gchar *  id)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  guint32 length;
+
+  return_vals = gimp_run_procedure ("gimp_procedural_db_get_data_size",
+                                    &nreturn_vals,
+                                    PARAM_STRING, id,
+                                    PARAM_END);
+
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+      length= return_vals[1].data.d_int32;
+  else
+      length= 0;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+  return length;
+}
+
+
 void
 gimp_get_data (gchar *  id,
 	       gpointer data)
