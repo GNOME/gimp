@@ -164,7 +164,7 @@ main (int   argc,
           return EXIT_FAILURE;
         }
 
-      g_print ("OK (%d bytes)\n", result ? strlen (result) : 0);
+      g_print ("OK (%u bytes)\n", result ? (guint) strlen (result) : 0);
     }
 
   g_free (result);

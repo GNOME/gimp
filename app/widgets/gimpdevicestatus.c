@@ -130,12 +130,15 @@ gimp_device_status_class_init (GimpDeviceStatusClass *klass)
 static void
 gimp_device_status_init (GimpDeviceStatus *status)
 {
-  GList *list;
-  gint   i;
+  GdkDisplay *display;
+  GList      *list;
+  gint        i;
+
+  display = gtk_widget_get_display (GTK_WIDGET (status));
 
   status->gimp           = NULL;
   status->current_device = NULL;
-  status->num_devices    = g_list_length (gdk_devices_list ());
+  status->num_devices    = g_list_length (gdk_display_list_devices (display));
   status->entries        = g_new0 (GimpDeviceStatusEntry,
                                    status->num_devices);
 
@@ -149,9 +152,9 @@ gimp_device_status_init (GimpDeviceStatus *status)
   gtk_container_add (GTK_CONTAINER (status), status->table);
   gtk_widget_show (status->table);
 
-  for (list = gdk_devices_list (), i = 0;
+  for (list = gdk_display_list_devices (display), i = 0;
        list;
-       list = g_list_next (list), i++)
+       list = list->next, i++)
     {
       GimpDeviceInfo        *device_info;
       GimpContext           *context;

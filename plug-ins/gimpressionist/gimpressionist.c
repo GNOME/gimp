@@ -422,6 +422,8 @@ static int create_dialog(void)
 
   if (standalone)
     {
+      GdkScreen *screen;
+
       argc = 1;
       argv = g_new(char *, 1);
       argv[0] = "gimpressionist";
@@ -429,7 +431,8 @@ static int create_dialog(void)
       gtk_init(&argc, &argv);
       gtk_rc_parse (gimp_gtkrc ());
 
-      gtk_widget_set_default_colormap (gdk_rgb_get_colormap());
+      screen = gdk_screen_get_default ();
+      gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap(screen));
     }
   else
     {

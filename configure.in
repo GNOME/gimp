@@ -325,6 +325,8 @@ AC_PATH_XTRA
 AM_PATH_GTK_2_0($GTK_REQUIRED_VERSION,,
     AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.))
 
+PKG_CHECK_MODULES(GTK23, gtk+-2.0 >= 2.3.0, have_gtk_2_3=yes, have_gtk_2_3=no)
+
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= $GDKPIXBUF_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_CFLAGS)
 AC_SUBST(GDK_PIXBUF_LIBS)
@@ -1206,11 +1208,18 @@ GIMP_MKENUMS="\$(top_srcdir)/tools/gimp-mkenums"
 AC_SUBST(GIMP_MKENUMS)
 
 
-##########################################
-# Default to disable deprecated GTK+ stuff
-##########################################
+####################################################
+# Default to disable deprecated GTK+ stuff for 2.2.x
+####################################################
 
-CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
+if test "x$have_gtk_2_3" != "xyes"; then
+  CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
+fi
+
+############################
+# Require multihead safe API
+############################
+CPPFLAGS="${CPPFLAGS} -DGDK_MULTIHEAD_SAFE"
 
 
 ##################

@@ -1,3 +1,40 @@
+2003-11-01  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: Only add FOO_DISABLE_DEPRECATED flags with GTK+ 2.2.x.
+	Add -DGDK_MULTIHEAD_SAFE.
+
+	* app/config/test-config.c: use guints for strlen()
+
+	* app/gui/gui.c
+	* app/gui/info-window.c
+	* app/gui/menus.c
+	* app/widgets/gimpcontainerview.c
+	* app/widgets/gimpcursor.c
+	* app/widgets/gimpdevices.c
+	* app/widgets/gimpdevicestatus.c
+	* app/widgets/gimpimagedock.c
+	* app/widgets/gimpitemfactory.c
+	* app/widgets/gimpnavigationpreview.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimptooloptionseditor.c
+	* app/widgets/gimpwidgets-utils.c
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimppatternmenu.c
+	* libgimp/gimpui.c
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/gimpressionist/gimpressionist.c: more GDK_MULTIHEAD_SAFE
+	fixes.
+
+	* plug-ins/common/wmf.c: #undef GDK_MULTIHEAD_SAFE.. this plug-in
+	is going away anyway.
+
+	* app/widgets/gimpcursor.h: add #warning about needing a proper
+	multihead safe API.
+
+	* app/gui/vectors-commands.c: s/clipoard/clipboard/
+
 2003-11-01  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/Makefile.am (EXTRA_PROGRAMS): removed

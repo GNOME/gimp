@@ -67,11 +67,13 @@ gimp_devices_init (Gimp                   *gimp,
   GdkDevice         *device;
   GimpDeviceInfo    *device_info;
   GList             *list;
+  GdkDisplay        *display;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   g_return_if_fail (gimp_device_manager_get (gimp) == NULL);
 
+  display = gdk_display_get_default ();
   manager = g_new0 (GimpDeviceManager, 1);
 
   g_object_set_data_full (G_OBJECT (gimp),
@@ -80,11 +82,11 @@ gimp_devices_init (Gimp                   *gimp,
 
   manager->device_info_list = gimp_list_new (GIMP_TYPE_DEVICE_INFO,
                                              GIMP_CONTAINER_POLICY_STRONG);
-  manager->current_device   = gdk_display_get_core_pointer (gdk_display_get_default ());
+  manager->current_device   = gdk_display_get_core_pointer (display);
   manager->change_notify    = change_notify;
 
   /*  create device info structures for present devices */
-  for (list = gdk_devices_list (); list; list = g_list_next (list))
+  for (list = gdk_display_list_devices (display); list; list = list->next)
     {
       device = (GdkDevice *) list->data;
 

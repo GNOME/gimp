@@ -63,6 +63,8 @@ gimp_ui_init (const gchar *prog_name,
   gchar **argv;
   gchar  *user_gtkrc;
 
+  GdkScreen *screen;
+
   g_return_if_fail (prog_name != NULL);
 
   if (initialized)
@@ -82,7 +84,8 @@ gimp_ui_init (const gchar *prog_name,
   gdk_rgb_set_min_colors (gimp_min_colors ());
   gdk_rgb_set_install (gimp_install_cmap ());
 
-  gtk_widget_set_default_colormap (gdk_rgb_get_colormap ());
+  screen = gdk_screen_get_default ();
+  gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap (screen));
 
   /*  Set the gamma after installing the colormap because
    *  gtk_preview_set_gamma() initializes GdkRGB if not already done

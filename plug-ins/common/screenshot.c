@@ -433,14 +433,20 @@ shoot (void)
     }
   else
     {
+      GdkDisplay *display;
+
+      display = gdk_screen_get_display (cur_screen);
+
       /* single window */
       if (shootvals.window_id)
         {
-          window = gdk_window_foreign_new (shootvals.window_id);
+          window = gdk_window_foreign_new_for_display (display,
+                                                       shootvals.window_id);
         }
       else
         {
-          window = gdk_window_foreign_new (selected_native);
+          window = gdk_window_foreign_new_for_display (display,
+                                                       selected_native);
         }
     }
 

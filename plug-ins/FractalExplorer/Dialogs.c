@@ -376,6 +376,8 @@ static gboolean
 preview_leave_notify_event (GtkWidget      *widget,
 			    GdkEventButton *event)
 {
+  GdkDisplay *display;
+
   if (oldypos != -1)
     {
       preview_draw_crosshair (oldxpos, oldypos);
@@ -385,7 +387,8 @@ preview_leave_notify_event (GtkWidget      *widget,
 
   preview_redraw ();
 
-  MyCursor = gdk_cursor_new (GDK_TOP_LEFT_ARROW);
+  display = gtk_widget_get_display (maindlg);
+  MyCursor = gdk_cursor_new_for_display (display, GDK_TOP_LEFT_ARROW);
   gdk_window_set_cursor (maindlg->window, MyCursor);
 
   return TRUE;
@@ -395,7 +398,10 @@ static gboolean
 preview_enter_notify_event (GtkWidget      *widget,
 			    GdkEventButton *event)
 {
-  MyCursor = gdk_cursor_new (GDK_TCROSS);
+  GdkDisplay *display;
+
+  display = gtk_widget_get_display (maindlg);
+  MyCursor = gdk_cursor_new_for_display (display, GDK_TCROSS);
   gdk_window_set_cursor (maindlg->window, MyCursor);
 
   return TRUE;

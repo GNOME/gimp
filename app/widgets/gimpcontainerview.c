@@ -786,6 +786,7 @@ gimp_container_view_get_preview (GimpDocked   *docked,
 {
   GimpContainerView *view = GIMP_CONTAINER_VIEW (docked);
   GtkWidget         *preview;
+  GdkScreen         *screen;
   gint               width;
   gint               height;
   gint               border_width = 1;
@@ -793,7 +794,9 @@ gimp_container_view_get_preview (GimpDocked   *docked,
 
   g_return_val_if_fail (view->container != NULL, NULL);
 
-  gtk_icon_size_lookup (size, &width, &height);
+  screen = gtk_widget_get_screen (GTK_WIDGET (view));
+  gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
+                                     size, &width, &height);
 
   prop_name = gimp_context_type_to_prop_name (view->container->children_type);
 

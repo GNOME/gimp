@@ -196,7 +196,7 @@ vectors_copy_cmd_callback (GtkWidget *widget,
   return_if_no_vectors (gimage, active_vectors, data);
 
 #ifdef __GNUC__
-#warning FIXME: need vectors clipoard
+#warning FIXME: need vectors clipboard
 #endif
 }
 
@@ -208,7 +208,7 @@ vectors_paste_cmd_callback (GtkWidget *widget,
   return_if_no_image (gimage, data);
 
 #ifdef __GNUC__
-#warning FIXME: need vectors clipoard
+#warning FIXME: need vectors clipboard
 #endif
 }
 

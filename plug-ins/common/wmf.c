@@ -31,9 +31,11 @@
 
 #ifdef __GNUC__
 #warning FIXME: GDK_DISABLE_DEPRECATED
+#warning FIXME: GDK_MULTIHEAD_SAFE
 #endif
 
 #undef GDK_DISABLE_DEPRECATED
+#undef GDK_MULTIHEAD_SAFE
 
 #include <gtk/gtk.h>
 

@@ -528,6 +528,7 @@ gimp_item_factory_set_color (GtkItemFactory *factory,
   GtkWidget *widget;
   GtkWidget *area  = NULL;
   GtkWidget *label = NULL;
+  GdkScreen *screen;
 
   g_return_if_fail (GTK_IS_ITEM_FACTORY (factory));
   g_return_if_fail (path != NULL);
@@ -568,7 +569,9 @@ gimp_item_factory_set_color (GtkItemFactory *factory,
       area = gimp_color_area_new (color, GIMP_COLOR_AREA_SMALL_CHECKS, 0);
       gimp_color_area_set_draw_border (GIMP_COLOR_AREA (area), TRUE);
 
-      gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
+      screen = gtk_widget_get_screen (area);
+      gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
+                                         GTK_ICON_SIZE_MENU, &width, &height);
 
       gtk_widget_set_size_request (area, width, height);
       gtk_box_pack_start (GTK_BOX (hbox), area, FALSE, FALSE, 0);

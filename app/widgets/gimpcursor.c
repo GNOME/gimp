@@ -440,7 +440,7 @@ gimp_cursor_new (GimpCursorType      cursor_type,
   g_return_val_if_fail (cursor_type < GIMP_LAST_CURSOR_ENTRY, NULL);
 
   if (cursor_type <= GDK_LAST_CURSOR)
-    return gdk_cursor_new (cursor_type);
+    return gdk_cursor_new_for_display (gdk_display_get_default (), cursor_type);
 
   g_return_val_if_fail (cursor_type >= GIMP_MOUSE_CURSOR, NULL);
 

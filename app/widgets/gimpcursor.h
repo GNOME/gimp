@@ -19,6 +19,9 @@
 #ifndef __GIMP_CURSOR_H__
 #define __GIMP_CURSOR_H__
 
+#ifdef __GNUC__
+#warning FIXME: need a new API that passes a display for gimp_cursor_new()
+#endif
 
 GdkCursor * gimp_cursor_new (GimpCursorType      curtype,
 			     GimpToolCursorType  tool_cursor,

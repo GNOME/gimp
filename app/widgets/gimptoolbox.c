@@ -428,6 +428,7 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
 {
   GimpContext *context;
   GimpToolbox *toolbox;
+  GdkDisplay  *display;
   GList       *list;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
@@ -449,7 +450,8 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
    * device would change to that and not change back. So we check
    * manually that all devices have a cursor, before establishing the check.
    */
-  for (list = gdk_devices_list (); list; list = g_list_next (list))
+  display = gtk_widget_get_display (GTK_WIDGET (toolbox));
+  for (list = gdk_display_list_devices (display); list; list = list->next)
     {
       if (! ((GdkDevice *) (list->data))->has_cursor)
 	break;

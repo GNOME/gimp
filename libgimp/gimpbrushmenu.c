@@ -472,6 +472,7 @@ gimp_brush_select_popup_open (BrushSelect  *brush_sel,
   guchar       *b;
   gint          x_org;
   gint          y_org;
+  GdkScreen    *screen;
   gint          scr_w;
   gint          scr_h;
 
@@ -496,8 +497,10 @@ gimp_brush_select_popup_open (BrushSelect  *brush_sel,
 
   /* decide where to put the popup */
   gdk_window_get_origin (brush_sel->preview->window, &x_org, &y_org);
-  scr_w = gdk_screen_width ();
-  scr_h = gdk_screen_height ();
+
+  screen = gtk_widget_get_screen (brush_sel->popup);
+  scr_w = gdk_screen_get_width (screen);
+  scr_h = gdk_screen_get_height (screen);
 
   x = x_org + x - (brush_sel->width  / 2);
   y = y_org + y - (brush_sel->height / 2);

@@ -535,7 +535,11 @@ info_window_update (GimpDisplay *gdisp)
     }
 
   {
-    GdkVisual *visual = gdk_rgb_get_visual ();
+    GdkScreen *screen;
+    GdkVisual *visual;
+   
+    screen = gtk_widget_get_screen (GTK_WIDGET (shell));
+    visual = gdk_screen_get_rgb_visual (screen);
 
     /*  visual class  */
     g_snprintf (iwd->visual_class_str, MAX_BUF, "%s",

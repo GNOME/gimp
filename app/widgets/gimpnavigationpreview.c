@@ -290,9 +290,10 @@ gimp_navigation_preview_move_to (GimpNavigationPreview *nav_preview,
 void
 gimp_navigation_preview_grab_pointer (GimpNavigationPreview *nav_preview)
 {
-  GtkWidget *widget;
-  GdkCursor *cursor;
-  GdkWindow *window;
+  GtkWidget  *widget;
+  GdkDisplay *display;
+  GdkCursor  *cursor;
+  GdkWindow  *window;
 
   widget = GTK_WIDGET (nav_preview);
 
@@ -300,7 +301,8 @@ gimp_navigation_preview_grab_pointer (GimpNavigationPreview *nav_preview)
 
   gtk_grab_add (widget);
 
-  cursor = gdk_cursor_new (GDK_FLEUR);
+  display = gtk_widget_get_display (widget);
+  cursor = gdk_cursor_new_for_display (display, GDK_FLEUR);
 
   window = GIMP_PREVIEW (nav_preview)->event_window;
 
@@ -320,6 +322,7 @@ gimp_navigation_preview_button_press (GtkWidget      *widget,
 {
   GimpNavigationPreview *nav_preview;
   gint                   tx, ty;
+  GdkDisplay            *display;
 
   nav_preview = GIMP_NAVIGATION_PREVIEW (widget);
 
@@ -344,7 +347,8 @@ gimp_navigation_preview_button_press (GtkWidget      *widget,
 
 	  gimp_navigation_preview_move_to (nav_preview, tx, ty);
 
-          cursor = gdk_cursor_new (GDK_FLEUR);
+          display = gtk_widget_get_display (widget);
+          cursor = gdk_cursor_new_for_display (display, GDK_FLEUR);
           gdk_window_set_cursor (GIMP_PREVIEW (widget)->event_window, cursor);
           gdk_cursor_unref (cursor);
 	}
@@ -444,7 +448,10 @@ gimp_navigation_preview_motion_notify (GtkWidget      *widget,
 
   if (! nav_preview->has_grab)
     {
-      GdkCursor *cursor;
+      GdkCursor  *cursor;
+      GdkDisplay *display;
+
+      display = gtk_widget_get_display (widget);
 
       if (nav_preview->p_x == 0 &&
           nav_preview->p_y == 0 &&
@@ -459,11 +466,11 @@ gimp_navigation_preview_motion_notify (GtkWidget      *widget,
                mevent->x <  nav_preview->p_x + nav_preview->p_width &&
                mevent->y <  nav_preview->p_y + nav_preview->p_height)
         {
-          cursor = gdk_cursor_new (GDK_FLEUR);
+          cursor = gdk_cursor_new_for_display (display, GDK_FLEUR);
         }
       else
         {
-          cursor = gdk_cursor_new (GDK_HAND2);
+          cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
         }
 
       gdk_window_set_cursor (preview->event_window, cursor);

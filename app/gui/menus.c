@@ -516,7 +516,7 @@ menus_last_opened_reorder (GimpContainer   *container,
 static void
 menu_can_change_accels (GimpGuiConfig *config)
 {
-  g_object_set (gtk_settings_get_default (),
+  g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
                 "gtk-can-change-accels", config->can_change_accels,
                 NULL);
 }

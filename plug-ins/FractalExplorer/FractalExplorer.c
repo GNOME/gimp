@@ -1019,7 +1019,7 @@ fractalexplorer_new_pixmap (GtkWidget  *list,
   GdkBitmap *mask = NULL;
   GdkColormap *colormap;
 
-  colormap = gtk_widget_get_default_colormap ();
+  colormap = gdk_screen_get_default_colormap (gtk_widget_get_screen (list));
 
   pixmap = gdk_pixmap_colormap_create_from_xpm_d (list->window,
 						  colormap,

@@ -422,6 +422,8 @@ gimp_get_icon_size (GtkWidget   *widget,
   gint          max_width;
   gint          max_height;
   GtkIconSize   icon_size = GTK_ICON_SIZE_MENU;
+  GdkScreen    *screen;
+  GtkSettings  *settings;
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), icon_size);
   g_return_val_if_fail (stock_id != NULL, icon_size);
@@ -433,7 +435,11 @@ gimp_get_icon_size (GtkWidget   *widget,
   if (! icon_set)
     return GTK_ICON_SIZE_INVALID;
 
-  if (! gtk_icon_size_lookup (max_size, &max_width, &max_height))
+  screen = gtk_widget_get_screen (widget);
+  settings = gtk_settings_get_for_screen (screen);
+
+  if (! gtk_icon_size_lookup_for_settings (settings, max_size,
+                                           &max_width, &max_height))
     {
       max_width  = 1024;
       max_height = 1024;
@@ -446,7 +452,8 @@ gimp_get_icon_size (GtkWidget   *widget,
       gint icon_width;
       gint icon_height;
 
-      if (gtk_icon_size_lookup (sizes[i], &icon_width, &icon_height))
+      if (gtk_icon_size_lookup_for_settings (settings, sizes[i],
+                                             &icon_width, &icon_height))
         {
           if (icon_width  <= width      &&
               icon_height <= height     &&
