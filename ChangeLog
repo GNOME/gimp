@@ -2,6 +2,14 @@
 
 	Merged from HEAD branch:
 
+	* app/dialogs/print-size-dialog.c
+	* app/dialogs/resize-dialog.c
+	* app/dialogs/scale-dialog.c: moved "Reset" buttons left of "Cancel".
+
+2005-02-03  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD branch:
+
 	* app/dialogs/image-scale-dialog.c (image_scale_dialog_new): use
 	the passed parent widget instead of display->shell.
 
