@@ -1301,7 +1301,7 @@ gdisplay_display_area (GDisplay *gdisp,
   if (y1 < gdisp->disp_yoffset)
     {
       gdk_draw_rectangle (gdisp->canvas->window,
-			  gdisp->canvas->style->bg_gc[GTK_STATE_NORMAL], 1,
+			  gdisp->canvas->style->bg_gc[GTK_STATE_NORMAL], TRUE,
 			  x, y, w, gdisp->disp_yoffset - y);
       /* X X X
          . # .
@@ -1313,7 +1313,7 @@ gdisplay_display_area (GDisplay *gdisp,
   if (x1 < gdisp->disp_xoffset)
     {
       gdk_draw_rectangle (gdisp->canvas->window,
-			  gdisp->canvas->style->bg_gc[GTK_STATE_NORMAL], 1,
+			  gdisp->canvas->style->bg_gc[GTK_STATE_NORMAL], TRUE,
 			  x, y1, gdisp->disp_xoffset - x, h);
       /* . . .
          X # .
@@ -1325,7 +1325,7 @@ gdisplay_display_area (GDisplay *gdisp,
   if (x2 > (gdisp->disp_xoffset + sx))
     {
       gdk_draw_rectangle (gdisp->canvas->window,
-			  gdisp->canvas->style->bg_gc[GTK_STATE_NORMAL], 1,
+			  gdisp->canvas->style->bg_gc[GTK_STATE_NORMAL], TRUE,
 			  gdisp->disp_xoffset + sx, y1,
 			  x2 - (gdisp->disp_xoffset + sx), h - (y1-y));
       /* . . .
@@ -1338,7 +1338,7 @@ gdisplay_display_area (GDisplay *gdisp,
   if (y2 > (gdisp->disp_yoffset + sy))
     {
       gdk_draw_rectangle (gdisp->canvas->window,
-			  gdisp->canvas->style->bg_gc[GTK_STATE_NORMAL], 1,
+			  gdisp->canvas->style->bg_gc[GTK_STATE_NORMAL], TRUE,
 			  x1, gdisp->disp_yoffset + sy,
 			  x2-x1,
 			  y2 - (gdisp->disp_yoffset + sy));
@@ -1390,7 +1390,7 @@ gdisplay_mask_value (GDisplay *gdisp,
 		     gint      y)
 {
   /*  move the coordinates from screen space to image space  */
-  gdisplay_untransform_coords (gdisp, x, y, &x, &y, FALSE, 0);
+  gdisplay_untransform_coords (gdisp, x, y, &x, &y, FALSE, FALSE);
 
   return gimage_mask_value (gdisp->gimage, x, y);
 }
@@ -1429,8 +1429,8 @@ gdisplay_mask_bounds (GDisplay *gdisp,
   else if (! channel_bounds (gimage_get_mask (gdisp->gimage), x1, y1, x2, y2))
     return FALSE;
 
-  gdisplay_transform_coords (gdisp, *x1, *y1, x1, y1, 0);
-  gdisplay_transform_coords (gdisp, *x2, *y2, x2, y2, 0);
+  gdisplay_transform_coords (gdisp, *x1, *y1, x1, y1, FALSE);
+  gdisplay_transform_coords (gdisp, *x2, *y2, x2, y2, FALSE);
 
   /*  Make sure the extents are within bounds  */
   *x1 = CLAMP (*x1, 0, gdisp->disp_width);

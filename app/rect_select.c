@@ -124,7 +124,8 @@ rect_select_button_press (Tool           *tool,
   gdisp = (GDisplay *) gdisp_ptr;
   rect_sel = (RectSelect *) tool->private;
 
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
+  gdisplay_untransform_coords (gdisp, 
+                               bevent->x, bevent->y, &x, &y, TRUE, FALSE);
 
   rect_sel->x = x;
   rect_sel->y = y;
@@ -339,7 +340,9 @@ rect_select_motion (Tool           *tool,
       oy = rect_sel->y;
     }
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
+  gdisplay_untransform_coords (gdisp, 
+                               mevent->x, mevent->y, &x, &y, TRUE, FALSE);
+
   if (rect_sel->fixed_size)
     {
       if (mevent->state & GDK_SHIFT_MASK)
@@ -480,12 +483,13 @@ rect_select_draw (Tool *tool)
   x2 = MAX (rect_sel->x, rect_sel->x + rect_sel->w);
   y2 = MAX (rect_sel->y, rect_sel->y + rect_sel->h);
 
-  gdisplay_transform_coords (gdisp, x1, y1, &x1, &y1, 0);
-  gdisplay_transform_coords (gdisp, x2, y2, &x2, &y2, 0);
+  gdisplay_transform_coords (gdisp, x1, y1, &x1, &y1, FALSE);
+  gdisplay_transform_coords (gdisp, x2, y2, &x2, &y2, FALSE);
 
   gdk_draw_rectangle (rect_sel->core->win,
-		      rect_sel->core->gc, 0,
-		      x1, y1, (x2 - x1), (y2 - y1));
+                      rect_sel->core->gc, FALSE,
+                      x1, y1, 
+                      x2 - x1, y2 - y1);
 }
 
 static void

@@ -392,7 +392,7 @@ by_color_select_button_release (Tool           *tool,
   gint           x, y;
   GimpDrawable  *drawable;
   guchar        *color;
-  gint           use_offsets;
+  gboolean       use_offsets;
 
   gdisp = (GDisplay *) gdisp_ptr;
   by_color_sel = (ByColorSelect *) tool->private;

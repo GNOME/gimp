@@ -561,7 +561,7 @@ edit_selection_draw (Tool *tool)
 				 edit_select.x2, edit_select.y2, 
 				 &x2, &y2, TRUE);
       gdk_draw_rectangle (edit_select.core->win,
-			  edit_select.core->gc, 0,
+			  edit_select.core->gc, FALSE,
 			  x1, y1,
 			  x2 - x1 + 1, y2 - y1 + 1);
       break;
@@ -599,7 +599,7 @@ edit_selection_draw (Tool *tool)
 	}
 
       gdk_draw_rectangle (edit_select.core->win,
-			  edit_select.core->gc, 0,
+			  edit_select.core->gc, FALSE,
 			  x1, y1,
 			  x2 - x1, y2 - y1);
       break;

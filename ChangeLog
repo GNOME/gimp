@@ -1,3 +1,28 @@
+2001-10-10  Sven Neumann  <sven@gimp.org>
+
+	* app/blend.c
+	* app/by_color_select.c
+	* app/channel_ops.c
+	* app/clone.c
+	* app/color_panel.c
+	* app/color_picker.c
+	* app/edit_selection.c
+	* app/ellipse_select.c
+	* app/free_select.c
+	* app/gdisplay.c
+	* app/magnify.c
+	* app/measure.c
+	* app/move.c
+	* app/paint_core.c
+	* app/path_bezier.c
+	* app/path_tool.c
+	* app/rect_select.c
+	* app/selection.c
+	* app/text_tool.c
+	* app/transform_core.c: small cleanups (use TRUE/FALSE instead of 1/0)
+	I did while trying to fix bug #17904. I will commit the real changes
+	separately.
+
 2001-10-08  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: some new Makefiles in help/.

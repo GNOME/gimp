@@ -680,9 +680,9 @@ paint_core_draw (Tool *tool)
       gdisp = (GDisplay *) tool->gdisp_ptr;
 
       gdisplay_transform_coords (gdisp, paint_core->lastx, paint_core->lasty,
-				 &tx1, &ty1, 1);
+				 &tx1, &ty1, TRUE);
       gdisplay_transform_coords (gdisp, paint_core->curx, paint_core->cury,
-				 &tx2, &ty2, 1);
+				 &tx2, &ty2, TRUE);
 
       /*  Only draw line if it's in the visible area
        *  thus preventing from drawing rubbish

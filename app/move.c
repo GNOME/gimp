@@ -86,7 +86,8 @@ move_tool_button_press (Tool           *tool,
   move->guide = NULL;
   move->disp  = NULL;
 
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
+  gdisplay_untransform_coords (gdisp, 
+                               bevent->x, bevent->y, &x, &y, FALSE, FALSE);
 
   if (bevent->state & GDK_MOD1_MASK &&
       !gimage_mask_is_empty (gdisp->gimage))
@@ -218,7 +219,8 @@ move_tool_button_release (Tool           *tool,
 
       delete_guide = FALSE;
       gdisplay_untransform_coords (gdisp, 0, 0, &x1, &y1, FALSE, FALSE);
-      gdisplay_untransform_coords (gdisp, gdisp->disp_width, gdisp->disp_height,
+      gdisplay_untransform_coords (gdisp, 
+                                   gdisp->disp_width, gdisp->disp_height,
 				   &x2, &y2, FALSE, FALSE);
 
       if (x1 < 0) x1 = 0;

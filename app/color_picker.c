@@ -308,7 +308,8 @@ color_picker_button_press (Tool           *tool,
 
   /*  Keep the coordinates of the target  */
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
-			       &cp_tool->centerx, &cp_tool->centery, FALSE, 1);
+			       &cp_tool->centerx, &cp_tool->centery, 
+                               FALSE, TRUE);
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
 		    (GDK_POINTER_MOTION_HINT_MASK |

@@ -311,7 +311,7 @@ text_button_press (Tool           *tool,
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
 			       &text_tool->click_x, &text_tool->click_y,
-			       TRUE, 0);
+			       TRUE, FALSE);
 
   if ((layer = gimage_pick_correlate_layer (gdisp->gimage,
 					    text_tool->click_x,
@@ -709,7 +709,7 @@ text_render (GimpImage    *gimage,
     {
       /* erase the pixmap */
       gdk_gc_set_foreground (gc, &white);
-      gdk_draw_rectangle (pixmap, gc, 1, 0, 0, pixmap_width, pixmap_height);
+      gdk_draw_rectangle (pixmap, gc, TRUE, 0, 0, pixmap_width, pixmap_height);
       gdk_gc_set_foreground (gc, &black);
 
       /* adjust the x and y values */

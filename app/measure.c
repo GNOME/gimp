@@ -204,7 +204,8 @@ measure_tool_button_press (Tool           *tool,
 	  the new function will be moving or adding a new point or guide */
       for (i=0; i < measure_tool->num_points; i++)
 	{
-	  gdisplay_transform_coords (gdisp, measure_tool->x[i], measure_tool->y[i], 
+	  gdisplay_transform_coords (gdisp, 
+                                     measure_tool->x[i], measure_tool->y[i], 
 				     &x[i], &y[i], FALSE);      
 	  if (bevent->x == CLAMP (bevent->x, x[i] - TARGET, x[i] + TARGET) &&
 	      bevent->y == CLAMP (bevent->y, y[i] - TARGET, y[i] + TARGET))
@@ -268,8 +269,11 @@ measure_tool_button_press (Tool           *tool,
 	  if (measure_tool->num_points > 1 && bevent->state & GDK_MOD1_MASK)
 	    {
 	      measure_tool->function = MOVING_ALL;
-	      gdisplay_untransform_coords (gdisp,  bevent->x, bevent->y, 
-					   &measure_tool->last_x, &measure_tool->last_y, 
+	      gdisplay_untransform_coords (gdisp,  
+                                           bevent->x, 
+                                           bevent->y, 
+					   &measure_tool->last_x, 
+                                           &measure_tool->last_y, 
 					   TRUE, FALSE);
 	    }
 	}
@@ -299,7 +303,8 @@ measure_tool_button_press (Tool           *tool,
       
       /*  set the first point and go into ADDING mode  */
       gdisplay_untransform_coords (gdisp,  bevent->x, bevent->y, 
-				   &measure_tool->x[0], &measure_tool->y[0], TRUE, FALSE);
+				   &measure_tool->x[0], &measure_tool->y[0], 
+                                   TRUE, FALSE);
       measure_tool->point = 0;
       measure_tool->num_points = 1;
       measure_tool->function = ADDING;
@@ -386,7 +391,8 @@ measure_tool_motion (Tool           *tool,
   draw_core_pause (measure_tool->core, tool);
 
   /*  get the coordinates  */
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, FALSE);
+  gdisplay_untransform_coords (gdisp, 
+                               mevent->x, mevent->y, &x, &y, TRUE, FALSE);
   
   /*  
    *  A few comments here, because this routine looks quite weird at first ...
@@ -592,7 +598,8 @@ measure_tool_cursor_update (Tool           *tool,
     {
       for (i = 0; i < measure_tool->num_points; i++)
 	{
-	  gdisplay_transform_coords (gdisp, measure_tool->x[i], measure_tool->y[i], 
+	  gdisplay_transform_coords (gdisp, 
+                                     measure_tool->x[i], measure_tool->y[i], 
 				     &x[i], &y[i], FALSE);      
 	  
 	  if (mevent->x == CLAMP (mevent->x, x[i] - TARGET, x[i] + TARGET) &&

@@ -198,7 +198,8 @@ color_panel_draw (ColorPanel *color_panel)
 		        color_panel->color[2]);
 
   gdk_gc_set_foreground (private->gc, &fg);
-  gdk_draw_rectangle (widget->window, private->gc, 1, 0, 0,
+  gdk_draw_rectangle (widget->window, private->gc, TRUE, 
+                      0, 0,
 		      widget->allocation.width, widget->allocation.height);
 }
 

@@ -200,7 +200,8 @@ magnify_button_press (Tool           *tool,
   gdisp = (GDisplay *) gdisp_ptr;
   magnify = (Magnify *) tool->private;
 
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
+  gdisplay_untransform_coords (gdisp, 
+                               bevent->x, bevent->y, &x, &y, TRUE, FALSE);
 
   magnify->x = x;
   magnify->y = y;
@@ -309,7 +310,8 @@ magnify_motion (Tool           *tool,
 
   draw_core_pause (magnify->core, tool);
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
+  gdisplay_untransform_coords (gdisp, 
+                               mevent->x, mevent->y, &x, &y, TRUE, FALSE);
   magnify->w = (x - magnify->x);
   magnify->h = (y - magnify->y);
 
@@ -380,10 +382,10 @@ magnify_draw (Tool *tool)
   x2 = MAX (magnify->x, magnify->x + magnify->w);
   y2 = MAX (magnify->y, magnify->y + magnify->h);
 
-  gdisplay_transform_coords (gdisp, x1, y1, &x1, &y1, 0);
-  gdisplay_transform_coords (gdisp, x2, y2, &x2, &y2, 0);
+  gdisplay_transform_coords (gdisp, x1, y1, &x1, &y1, FALSE);
+  gdisplay_transform_coords (gdisp, x2, y2, &x2, &y2, FALSE);
 
-  gdk_draw_rectangle (magnify->core->win, magnify->core->gc, 0,
+  gdk_draw_rectangle (magnify->core->win, magnify->core->gc, FALSE,
 		      x1, y1, (x2 - x1), (y2 - y1));
 }
 

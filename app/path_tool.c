@@ -771,7 +771,8 @@ path_tool_button_press (Tool           *tool,
    tool->gdisp_ptr = gdisp_ptr;
   
    /* Transform window-coordinates to canvas-coordinates */
-   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
+   gdisplay_untransform_coords (gdisp, 
+                                bevent->x, bevent->y, &x, &y, TRUE, FALSE);
 #ifdef PATH_TOOL_DEBUG
    fprintf(stderr, "Clickcoordinates %d, %d\n",x,y);
 #endif PATH_TOOL_DEBUG
@@ -779,7 +780,9 @@ path_tool_button_press (Tool           *tool,
    path_tool->click_y = y;
    path_tool->click_modifier = bevent->state;
    /* get halfwidth in image coord */
-   gdisplay_untransform_coords (gdisp, bevent->x + PATH_TOOL_HALFWIDTH, 0, &halfwidth, &dummy, TRUE, 0);
+   gdisplay_untransform_coords (gdisp, 
+                                bevent->x + PATH_TOOL_HALFWIDTH, 0, 
+                                &halfwidth, &dummy, TRUE, FALSE);
    halfwidth -= x;
    path_tool->click_halfwidth = halfwidth;
    
@@ -1178,7 +1181,8 @@ path_tool_motion_anchor (Tool           *tool,
       dysum = 0;
    }
 
-   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
+   gdisplay_untransform_coords (gdisp, 
+                                mevent->x, mevent->y, &x, &y, TRUE, FALSE);
    
    dx = x - path_tool->click_x - dxsum;
    dy = y - path_tool->click_y - dysum;
@@ -1249,7 +1253,8 @@ path_tool_motion_handle (Tool           *tool,
       dysum = 0;
    }
 
-   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
+   gdisplay_untransform_coords (gdisp, 
+                                mevent->x, mevent->y, &x, &y, TRUE, FALSE);
    
    dx = x - path_tool->click_x - dxsum;
    dy = y - path_tool->click_y - dysum;
@@ -1290,7 +1295,8 @@ path_tool_motion_curve (Tool           *tool,
       dysum = 0;
    }
 
-   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
+   gdisplay_untransform_coords (gdisp, 
+                                mevent->x, mevent->y, &x, &y, TRUE, FALSE);
    
    dx = x - path_tool->click_x - dxsum;
    dy = y - path_tool->click_y - dysum;
@@ -1328,9 +1334,12 @@ path_tool_cursor_update (Tool           *tool,
    gdisp = (GDisplay *) gdisp_ptr;
    path_tool = (PathTool *) tool->private;
 
-   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
+   gdisplay_untransform_coords (gdisp, 
+                                mevent->x, mevent->y, &x, &y, TRUE, FALSE);
    /* get halfwidth in image coord */
-   gdisplay_untransform_coords (gdisp, mevent->x + PATH_TOOL_HALFWIDTH, 0, &halfwidth, &dummy, TRUE, 0);
+   gdisplay_untransform_coords (gdisp, 
+                                mevent->x + PATH_TOOL_HALFWIDTH, 0, 
+                                &halfwidth, &dummy, TRUE, FALSE);
    halfwidth -= x;
 
    cursor_location = path_tool_cursor_position (tool, x, y, halfwidth, NULL, NULL, NULL, NULL, NULL);
@@ -1860,7 +1869,10 @@ path_tool_draw_helper (Path *path,
 
    if (segment && draw) 
    {
-      gdisplay_transform_coords (gdisp, (gint) segment->x, (gint) segment->y, &x1, &y1, FALSE);
+      gdisplay_transform_coords (gdisp, 
+                                 (gint) segment->x, (gint) segment->y, 
+                                 &x1, &y1, FALSE);
+
       if (segment->flags & SEGMENT_ACTIVE)
          gdk_draw_arc (core->win, core->gc, 0,
 	               x1 - PATH_TOOL_HALFWIDTH, y1 - PATH_TOOL_HALFWIDTH,

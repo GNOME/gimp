@@ -92,14 +92,15 @@ path_bezier_draw_handles (Tool *tool,
 	 gdk_draw_line (path_tool->core->win,
 	       path_tool->core->gc, hx, hy, sx, sy);
 
-	 gdk_draw_rectangle (path_tool->core->win, path_tool->core->gc, 0,
+	 gdk_draw_rectangle (path_tool->core->win, path_tool->core->gc, FALSE,
 	       hx - HANDLE_HALFWIDTH, hy - HANDLE_HALFWIDTH,
 	       HANDLE_WIDTH, HANDLE_WIDTH);
       }
 
       if (segment->next->flags & SEGMENT_ACTIVE) { 
 	 gdisplay_transform_coords (gdisp,
-	       (gint) (segment->next->x), (gint) (segment->next->y), &sx, &sy, FALSE);
+	       (gint) (segment->next->x), (gint) (segment->next->y), 
+               &sx, &sy, FALSE);
 	 gdisplay_transform_coords (gdisp,
 	       (gint) (segment->next->x + data->x2),
 	       (gint) (segment->next->y + data->y2), &hx, &hy, FALSE);
@@ -107,7 +108,7 @@ path_bezier_draw_handles (Tool *tool,
 	 gdk_draw_line (path_tool->core->win,
 	       path_tool->core->gc, hx, hy, sx, sy);
 
-	 gdk_draw_rectangle (path_tool->core->win, path_tool->core->gc, 0,
+	 gdk_draw_rectangle (path_tool->core->win, path_tool->core->gc, FALSE,
 	       hx - HANDLE_HALFWIDTH, hy - HANDLE_HALFWIDTH,
 	       HANDLE_WIDTH, HANDLE_WIDTH);
       }

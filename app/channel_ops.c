@@ -777,7 +777,8 @@ duplicate_projection (GimpImage *oldgimage, GimpImage *newgimage,
 	fprintf (stderr, " [pointers: %p, %p ] ", oldgimage, gdisp->gimage);
 
 	gdisplay_untransform_coords (gdisp, 0, 0, &x1, &y1, FALSE, FALSE);
-	gdisplay_untransform_coords (gdisp, gdisp->disp_width, gdisp->disp_height,
+	gdisplay_untransform_coords (gdisp, 
+                                     gdisp->disp_width, gdisp->disp_height,
 				     &x2, &y2, FALSE, FALSE);
 
 	fprintf(stderr," <%dx%d %dx%d %d,%d->%d,%d> ",

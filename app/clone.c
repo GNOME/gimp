@@ -304,7 +304,7 @@ clone_paint_func (PaintCore    *paint_core,
     {
       /*  Find the target cursor's location onscreen  */
       gdisplay_transform_coords (src_gdisp, src_x, src_y,
-				 &trans_tx, &trans_ty, 1);
+				 &trans_tx, &trans_ty, TRUE);
       draw_core_resume (paint_core->core, active_tool);      
     }
   return NULL;

@@ -447,7 +447,8 @@ blend_button_press (Tool           *tool,
 
   /*  Keep the coordinates of the target  */
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
-			       &blend_tool->startx, &blend_tool->starty, FALSE, 1);
+			       &blend_tool->startx, &blend_tool->starty, 
+                               FALSE, TRUE);
 
   blend_tool->endx = blend_tool->startx;
   blend_tool->endy = blend_tool->starty;
@@ -576,7 +577,8 @@ blend_motion (Tool           *tool,
 
   /*  Get the current coordinates  */
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
-			       &blend_tool->endx, &blend_tool->endy, FALSE, 1);
+			       &blend_tool->endx, &blend_tool->endy, 
+                               FALSE, TRUE);
 
 
   /* Restrict to multiples of 15 degrees if ctrl is pressed */
@@ -671,9 +673,9 @@ blend_draw (Tool *tool)
   blend_tool = (BlendTool *) tool->private;
 
   gdisplay_transform_coords (gdisp, blend_tool->startx, blend_tool->starty,
-			     &tx1, &ty1, 1);
+			     &tx1, &ty1, TRUE);
   gdisplay_transform_coords (gdisp, blend_tool->endx, blend_tool->endy,
-			     &tx2, &ty2, 1);
+			     &tx2, &ty2, TRUE);
 
   /*  Draw start target  */
   gdk_draw_line (blend_tool->core->win, blend_tool->core->gc,

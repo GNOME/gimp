@@ -102,12 +102,14 @@ ellipse_select_draw (Tool *tool)
   x2 = MAX (ellipse_sel->x, ellipse_sel->x + ellipse_sel->w);
   y2 = MAX (ellipse_sel->y, ellipse_sel->y + ellipse_sel->h);
 
-  gdisplay_transform_coords (gdisp, x1, y1, &x1, &y1, 0);
-  gdisplay_transform_coords (gdisp, x2, y2, &x2, &y2, 0);
+  gdisplay_transform_coords (gdisp, x1, y1, &x1, &y1, FALSE);
+  gdisplay_transform_coords (gdisp, x2, y2, &x2, &y2, FALSE);
 
   gdk_draw_arc (ellipse_sel->core->win,
-		ellipse_sel->core->gc, 0,
-		x1, y1, (x2 - x1), (y2 - y1), 0, 23040);
+		ellipse_sel->core->gc, FALSE,
+		x1, y1, 
+                x2 - x1, y2 - y1, 
+                0, 23040);
 }
 
 static void

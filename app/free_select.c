@@ -233,7 +233,8 @@ free_select_button_release (Tool           *tool,
 
       for (i = 0; i < free_sel->num_pts; i++)
 	{
-	  gdisplay_untransform_coords_f (gdisp, global_pts[i].x, global_pts[i].y,
+	  gdisplay_untransform_coords_f (gdisp, 
+                                         global_pts[i].x, global_pts[i].y,
 					 &pts[i].x, &pts[i].y, FALSE);
 	}
 

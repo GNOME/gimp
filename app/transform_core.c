@@ -331,7 +331,7 @@ transform_core_button_press (Tool           *tool,
       /*  Save the current pointer position  */
       gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
 				   &transform_core->startx,
-				   &transform_core->starty, TRUE, 0);
+				   &transform_core->starty, TRUE, FALSE);
       transform_core->lastx = transform_core->startx;
       transform_core->lasty = transform_core->starty;
 
@@ -634,7 +634,7 @@ transform_core_motion (Tool           *tool,
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &transform_core->curx,
-			       &transform_core->cury, TRUE, 0);
+			       &transform_core->cury, TRUE, FALSE);
   transform_core->state = mevent->state;
 
   /*  recalculate the tool's transformation matrix  */
