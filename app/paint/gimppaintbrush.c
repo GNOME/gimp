@@ -58,12 +58,12 @@ static void   gimp_paintbrush_tool_paint      (GimpPaintTool        *paint_core,
 
 static void   gimp_paintbrush_tool_motion     (GimpPaintTool        *paint_tool,
 					       GimpDrawable         *drawable,
-					       PaintPressureOptions *pressure,
-					       PaintGradientOptions *gradient,
-					       gdouble               ,
-					       gdouble               ,
-					       PaintApplicationMode  ,
-					       GradientPaintMode     );
+					       PaintPressureOptions *pressure_options,
+					       PaintGradientOptions *gradient_options,
+					       gdouble               fade_out,
+					       gdouble               gradient_length,
+					       gboolean              incremental,
+					       GradientPaintMode     gradient_type);
 
 
 /*  local variables  */
@@ -146,7 +146,7 @@ gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
 
   tool->tool_cursor = GIMP_PAINTBRUSH_TOOL_CURSOR;
 
-  paint_tool->pick_colors =  TRUE;
+  paint_tool->pick_colors  = TRUE;
   paint_tool->flags       |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 }
 
@@ -245,25 +245,24 @@ gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
 			     GimpDrawable         *drawable,
 			     PaintPressureOptions *pressure_options,
 			     PaintGradientOptions *gradient_options,
-			     double                fade_out,
-			     double                gradient_length,
-			     PaintApplicationMode  incremental,
+			     gdouble               fade_out,
+			     gdouble               gradient_length,
+			     gboolean              incremental,
 			     GradientPaintMode     gradient_type)
 {
-  GimpImage  *gimage;
-  TempBuf    *area;
-  gdouble     x, paint_left;
-  gdouble     position;
-  guchar      local_blend = OPAQUE_OPACITY;
-  guchar      temp_blend = OPAQUE_OPACITY;
-  guchar      col[MAX_CHANNELS];
-  GimpRGB     color;
-  gint        mode;
-  gint        opacity;
-  gdouble     scale;
-  PaintApplicationMode paint_appl_mode = incremental ? INCREMENTAL : CONSTANT;
+  GimpImage            *gimage;
+  TempBuf              *area;
+  gdouble               x, paint_left;
+  gdouble               position    = 0.0;
+  guchar                local_blend = OPAQUE_OPACITY;
+  guchar                temp_blend  = OPAQUE_OPACITY;
+  guchar                col[MAX_CHANNELS];
+  GimpRGB               color;
+  gint                  mode;
+  gint                  opacity;
+  gdouble               scale;
+  PaintApplicationMode  paint_appl_mode = incremental ? INCREMENTAL : CONSTANT;
 
-  position = 0.0;
   if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
@@ -318,7 +317,8 @@ gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
 			area->width * area->height, area->bytes);
 	}
       /* we check to see if this is a pixmap, if so composite the
-	 pixmap image into the are instead of the color */
+       * pixmap image into the area instead of the color
+       */
       else if (paint_tool->brush && paint_tool->brush->pixmap)
 	{
 	  gimp_paint_tool_color_area_with_pixmap (paint_tool, gimage, drawable,
@@ -356,7 +356,7 @@ static GimpPaintbrushTool *non_gui_paintbrush = NULL;
 gboolean
 gimp_paintbrush_tool_non_gui_default (GimpDrawable *drawable,
 				      gint          num_strokes,
-				      double       *stroke_array)
+				      gdouble      *stroke_array)
 {
   GimpPaintTool *paint_tool;
   gint           i;
@@ -430,8 +430,7 @@ gimp_paintbrush_tool_non_gui (GimpDrawable *drawable,
       paint_tool->startx = paint_tool->lastx = stroke_array[0];
       paint_tool->starty = paint_tool->lasty = stroke_array[1];
 
-      if (num_strokes == 1)
-	gimp_paint_tool_paint (paint_tool, drawable, MOTION_PAINT);
+      gimp_paint_tool_paint (paint_tool, drawable, MOTION_PAINT);
 
       for (i = 1; i < num_strokes; i++)
        {
@@ -444,7 +443,6 @@ gimp_paintbrush_tool_non_gui (GimpDrawable *drawable,
          paint_tool->lasty = paint_tool->cury;
        }
 
-      /* Finish the painting */
       gimp_paint_tool_finish (paint_tool, drawable);
 
       return TRUE;

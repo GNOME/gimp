@@ -1487,7 +1487,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimpdodgeburntool.h") ],
 	code => <<'CODE'
-success = dodgeburn_non_gui (drawable, exposure, dodgeburn_type, dodgeburn_mode, num_strokes, strokes);
+success = gimp_dodgeburn_tool_non_gui (drawable, exposure, dodgeburn_type, dodgeburn_mode, num_strokes, strokes);
 CODE
     );
 }
@@ -1514,7 +1514,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimpdodgeburntool.h") ],
 	code => <<'CODE'
-success = dodgeburn_non_gui_default (drawable, num_strokes, strokes);
+success = gimp_dodgeburn_tool_non_gui_default (drawable, num_strokes, strokes);
 CODE
     );
 }

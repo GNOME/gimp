@@ -48,8 +48,8 @@
 
 /*  Default values  */
 
-#define DODGEBURN_DEFAULT_TYPE     DODGE
 #define DODGEBURN_DEFAULT_EXPOSURE 50.0
+#define DODGEBURN_DEFAULT_TYPE     DODGE
 #define DODGEBURN_DEFAULT_MODE     DODGEBURN_HIGHLIGHTS
 
 /*  the dodgeburn structures  */
@@ -97,6 +97,12 @@ static void     gimp_dodgeburn_tool_paint         (GimpPaintTool  *paint_tool,
 						   GimpDrawable   *drawable,
 						   PaintState      state);
 
+static void     gimp_dodgeburn_tool_motion        (GimpPaintTool        *paint_tool,
+						   GimpDrawable         *drawable,
+						   PaintPressureOptions *pressure_options,
+						   gdouble               dodgeburn_exposure,
+						   GimpLut              *lut);
+
 static gfloat   gimp_dodgeburn_tool_highlights_lut_func (gpointer       user_data,
 					                 gint           nchannels,
 					                 gint           channel,
@@ -110,27 +116,17 @@ static gfloat   gimp_dodgeburn_tool_shadows_lut_func    (gpointer       user_dat
 					                 gint           channel,
 					                 gfloat         value);
 
-static void     gimp_dodgeburn_tool_motion     (GimpPaintTool        *paint_tool,
-						PaintPressureOptions *pressure_options,
-						gdouble               dodgeburn_exposure,
-						GimpLut              *lut,
-						GimpDrawable         *drawable);
-static void 	gimp_dodgeburn_tool_init       (GimpDodgeBurnTool    *tool);
-static void     gimp_dodgeburn_tool_finish     (GimpPaintTool        *paint_tool,
-					        GimpDrawable         *drawable);
+static DodgeBurnOptions * gimp_dodgeburn_tool_options_new   (void);
+static void               gimp_dodgeburn_tool_options_reset (ToolOptions *tool_options);
 
 
-/*  the dodgeburn tool options  */
+static gdouble  non_gui_exposure;
+static GimpLut *non_gui_lut;
+
 static DodgeBurnOptions * dodgeburn_options = NULL;
 
 static GimpPaintToolClass *parent_class = NULL;
 
-/* Non gui function */
-/* FIXME: non-gui 
- * static gdouble  non_gui_exposure;
- * static GimpLut *non_gui_lut;
- * static gint     non_gui_dodeburn;
- */
 
 /* functions  */
 
@@ -167,156 +163,9 @@ gimp_dodgeburn_tool_get_type (void)
 	};
 
       tool_type = gtk_type_unique (GIMP_TYPE_PAINT_TOOL, &tool_info);
-      
     }
 
   return tool_type;
-}
-
-static void
-gimp_dodgeburn_tool_options_reset (ToolOptions *tool_options)
-{
-  DodgeBurnOptions *options;
-
-  options = (DodgeBurnOptions *) tool_options;
-
-  paint_options_reset (tool_options);
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->exposure_w),
-			    options->exposure_d);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->mode_w[options->mode_d]), TRUE);
-}
-
-static DodgeBurnOptions *
-gimp_dodgeburn_tool_options_new (void)
-{
-  DodgeBurnOptions *options;
-
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *scale;
-  GtkWidget *frame;
-
-  options = g_new0 (DodgeBurnOptions, 1);
-  paint_options_init ((PaintOptions *) options,
-		      GIMP_TYPE_DODGEBURN_TOOL,
-		      gimp_dodgeburn_tool_options_reset);
-
-  options->type     = options->type_d     = DODGEBURN_DEFAULT_TYPE;
-  options->exposure = options->exposure_d = DODGEBURN_DEFAULT_EXPOSURE;
-  options->mode     = options->mode_d     = DODGEBURN_DEFAULT_MODE;
-
-  /*  the main vbox  */
-  vbox = ((ToolOptions *) options)->main_vbox;
-
-  /*  the exposure scale  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  label = gtk_label_new (_("Exposure:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  options->exposure_w =
-    gtk_adjustment_new (options->exposure_d, 0.0, 100.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->exposure_w));
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-
-  gtk_signal_connect (GTK_OBJECT (options->exposure_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->exposure);
-
-  gtk_widget_show (scale);
-  gtk_widget_show (hbox);
-
-  /* the type (dodge or burn) */
-  frame = gimp_radio_group_new2 (TRUE, _("Type"),
-				 gimp_radio_button_update,
-				 &options->type, (gpointer) options->type,
-
-				 _("Dodge"), (gpointer) DODGE,
-				 &options->type_w[0],
-				 _("Burn"), (gpointer) BURN,
-				 &options->type_w[1],
-
-				 NULL);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  /*  mode (highlights, midtones, or shadows)  */
-  frame =
-    gimp_radio_group_new2 (TRUE, _("Mode"),
-			   gimp_radio_button_update,
-			   &options->mode, (gpointer) options->mode,
-
-			   _("Highlights"), (gpointer) DODGEBURN_HIGHLIGHTS, 
-			   &options->mode_w[0],
-			   _("Midtones"), (gpointer) DODGEBURN_MIDTONES,
-			   &options->mode_w[1],
-			   _("Shadows"), (gpointer) DODGEBURN_SHADOWS,
-			   &options->mode_w[2],
-
-			   NULL);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  return options;
-}
-
-static void
-gimp_dodgeburn_tool_paint (GimpPaintTool    *paint_tool,
-		           GimpDrawable     *drawable,
-		           PaintState        state)
-{
-  switch (state)
-    {
-    case INIT_PAINT:
-      /*      gimp_dodgeburn_tool_init (paint_tool); */
-      dodgeburn_options->lut = gimp_lut_new ();
-      gimp_dodgeburn_tool_make_luts (paint_tool,
-				     dodgeburn_options->exposure,
-				     dodgeburn_options->type,
-				     dodgeburn_options->mode,
-				     dodgeburn_options->lut,
-				     drawable);
-      break;
-
-    case MOTION_PAINT:
-      gimp_dodgeburn_tool_motion (paint_tool, 
-			          dodgeburn_options->paint_options.pressure_options,
-			          dodgeburn_options->exposure, 
-				  dodgeburn_options->lut,
-				  drawable);
-      break;
-
-    case FINISH_PAINT:
-      gimp_dodgeburn_tool_finish (paint_tool, drawable);
-      break;
-
-    default:
-      break;
-    }
-}
-
-static void
-gimp_dodgeburn_tool_finish (GimpPaintTool *paint_tool,
-			    GimpDrawable  *drawable)
-{
-  /* Here we destroy the luts to do the painting with.*/
-  if (dodgeburn_options->lut)
-    {
-      gimp_lut_free (dodgeburn_options->lut);
-      dodgeburn_options->lut = NULL;
-    }
 }
 
 static void
@@ -353,18 +202,6 @@ gimp_dodgeburn_tool_init (GimpDodgeBurnTool *dodgeburn)
 	                                  (ToolOptions *) dodgeburn_options);
     }
 
-
-  /* Here we create the luts to do the painting with.*/
-
-  /* 
-   * gimp_dodgeburn_tool_make_luts (paint_tool, 
-		                 dodgeburn_options->exposure,
-		       		 dodgeburn_options->type,
-		       		 dodgeburn_options->mode,
-		        	 dodgeburn_options->lut,
-		         	 drawable);
-   */
-
   tool->tool_cursor   = GIMP_DODGE_TOOL_CURSOR;
   tool->toggle_cursor = GIMP_BURN_TOOL_CURSOR;
 
@@ -387,7 +224,7 @@ gimp_dodgeburn_tool_make_luts (GimpPaintTool *paint_tool,
 
   /* make the exposure negative if burn for luts*/
   if (type == BURN)
-    exposure = -exposure; 
+    exposure = -exposure;
 
   switch (mode)
     {
@@ -477,11 +314,71 @@ gimp_dodgeburn_tool_cursor_update (GimpTool       *tool,
 }
 
 static void
+gimp_dodgeburn_tool_paint (GimpPaintTool    *paint_tool,
+		           GimpDrawable     *drawable,
+		           PaintState        state)
+{
+  PaintPressureOptions *pressure_options;
+  gdouble               exposure;
+  GimpLut              *lut;
+
+  if (dodgeburn_options)
+    {
+      pressure_options = dodgeburn_options->paint_options.pressure_options;
+      exposure         = dodgeburn_options->exposure;
+      lut              = dodgeburn_options->lut;
+    }
+  else
+    {
+      pressure_options = &non_gui_pressure_options;
+      exposure         = non_gui_exposure;
+      lut              = non_gui_lut;
+    }
+
+  switch (state)
+    {
+    case INIT_PAINT:
+      if (dodgeburn_options)
+	{
+	  dodgeburn_options->lut = gimp_lut_new ();
+	  gimp_dodgeburn_tool_make_luts (paint_tool,
+					 dodgeburn_options->exposure,
+					 dodgeburn_options->type,
+					 dodgeburn_options->mode,
+					 dodgeburn_options->lut,
+					 drawable);
+
+	  lut = dodgeburn_options->lut;
+	}
+      break;
+
+    case MOTION_PAINT:
+      gimp_dodgeburn_tool_motion (paint_tool,
+				  drawable,
+			          pressure_options,
+			          exposure, 
+				  lut);
+      break;
+
+    case FINISH_PAINT:
+      if (dodgeburn_options && dodgeburn_options->lut)
+	{
+	  gimp_lut_free (dodgeburn_options->lut);
+	  dodgeburn_options->lut = NULL;
+	}
+      break;
+
+    default:
+      break;
+    }
+}
+
+static void
 gimp_dodgeburn_tool_motion (GimpPaintTool        *paint_tool,
+			    GimpDrawable         *drawable,
  		            PaintPressureOptions *pressure_options,
 		            double                dodgeburn_exposure,
-		            GimpLut              *lut,
-		            GimpDrawable         *drawable)
+		            GimpLut              *lut)
 {
   GimpImage   *gimage;
   TempBuf     *area;
@@ -575,105 +472,6 @@ gimp_dodgeburn_tool_motion (GimpPaintTool        *paint_tool,
   g_free (temp_data);
 }
 
-/* FIXME: non-gui */
-
-#if 0
-
-static gpointer
-gimp_dodgeburn_tool_non_gui_paint (GimpPaintTool    *paint_tool,
-            		           GimpDrawable     *drawable,
- 			           PaintState        state)
-{
-  gimp_dodgeburn_tool_motion (paint_tool, &non_gui_pressure_options,
-  		              non_gui_exposure, non_gui_lut, drawable);
-
-  return NULL;
-}
-
-gboolean
-gimp_dodgeburn_tool_non_gui_default (GimpDrawable *drawable,
-			             gint          num_strokes,
-			             gdouble      *stroke_array)
-{
-  gdouble           exposure = DODGEBURN_DEFAULT_TYPE;
-  DodgeBurnType     type     = DODGEBURN_DEFAULT_TYPE;
-  DodgeBurnMode     mode     = DODGEBURN_DEFAULT_MODE;
-  DodgeBurnOptions *options  = dodgeburn_options;
-
-  if (options)
-    {
-      exposure = dodgeburn_options->exposure;
-      type     = dodgeburn_options->type;
-      mode     = dodgeburn_options->mode;
-    }
-
-  return gimp_dodgeburn_tool_non_gui (drawable, exposure, type, mode,
-			              num_strokes, stroke_array);
-}
-
-gboolean
-gimp_dodgeburn_tool_non_gui (GimpDrawable  *drawable,
-		             gdouble        exposure,
-		             DodgeBurnType  type,
-		             DodgeBurnMode  mode,
-		             gint           num_strokes,
-		             gdouble       *stroke_array)
-{
-  GimpPaintTool *paint_tool;
-  gint i;
-
-  if (! non_gui_dodgeburn)
-    {
-      non_gui_dodgeburn = gtk_type_new (GIMP_TYPE_DODGEBURN_TOOL);
-    }
-
-  paint_tool = GIMP_PAINT_TOOL (non_gui_dodgeburn);
-  
-  if (gimp_paint_tool_init (paint_tool, drawable,
-		            stroke_array[0], 
-			    stroke_array[1]))
-    {
-      /* Set the paint core's paint func */
-      paint_tool->paint_func = gimp_dodgeburn_tool_non_gui_paint;
-
-      non_gui_exposure = exposure;
-      non_gui_lut = gimp_lut_new();
-      gimp_dodgeburn_tool_make_luts (paint_tool, 
-			             exposure,
-			             type,
-			             mode,
-			             non_gui_lut,
-			             drawable);
-
-      paint_tool->startx = paint_tool->lastx = stroke_array[0];
-      paint_tool->starty = paint_tool->lasty = stroke_array[1];
-
-      gimp_dodgeburn_tool_non_gui_paint (paint_tool, drawable, 0);
-
-      for (i = 1; i < num_strokes; i++)
-	{
-	  paint_tool->curx = stroke_array[i * 2 + 0];
-	  paint_tool->cury = stroke_array[i * 2 + 1];
-
-	  gimp_paint_tool_interpolate (paint_tool, drawable);
-
-	  paint_tool->lastx = paint_tool->curx;
-	  paint_tool->lasty = paint_tool->cury;
-	}
-
-      /* Finish the painting */
-      gimp_paint_tool_finish (paint_tool, drawable, -1);
-      
-      gimp_lut_free (non_gui_lut);
-
-      return TRUE;
-    }
-  else
-    return FALSE;
-}
-
-#endif /* 0 */
-
 static gfloat 
 gimp_dodgeburn_tool_highlights_lut_func (gpointer  user_data, 
 			                 gint      nchannels, 
@@ -745,27 +543,188 @@ gimp_dodgeburn_tool_shadows_lut_func (gpointer  user_data,
   return new_value; 
 }
 
-/* FIXME: do someting usefule here */
+
+/*  non-gui stuff  */
 
 gboolean
-dodgeburn_non_gui (GimpDrawable  *drawable,
-		   gdouble        exposure,
-		   DodgeBurnType  type, 
-		   DodgeBurnMode  mode, 
-		   gint           num_strokes, 
-		   gdouble       *stroke_array)
+gimp_dodgeburn_tool_non_gui_default (GimpDrawable *drawable,
+			             gint          num_strokes,
+			             gdouble      *stroke_array)
 {
-  g_message ("gimp_dodgeburn_tool_non_gui not implemented yet\n");
+  gdouble           exposure = DODGEBURN_DEFAULT_EXPOSURE;
+  DodgeBurnType     type     = DODGEBURN_DEFAULT_TYPE;
+  DodgeBurnMode     mode     = DODGEBURN_DEFAULT_MODE;
+  DodgeBurnOptions *options  = dodgeburn_options;
+
+  if (options)
+    {
+      exposure = dodgeburn_options->exposure;
+      type     = dodgeburn_options->type;
+      mode     = dodgeburn_options->mode;
+    }
+
+  return gimp_dodgeburn_tool_non_gui (drawable, exposure, type, mode,
+			              num_strokes, stroke_array);
+}
+
+gboolean
+gimp_dodgeburn_tool_non_gui (GimpDrawable  *drawable,
+		             gdouble        exposure,
+		             DodgeBurnType  type,
+		             DodgeBurnMode  mode,
+		             gint           num_strokes,
+		             gdouble       *stroke_array)
+{
+  static GimpDodgeBurnTool *non_gui_dodgeburn = NULL;
+
+  GimpPaintTool *paint_tool;
+  gint           i;
+
+  if (! non_gui_dodgeburn)
+    {
+      non_gui_dodgeburn = gtk_type_new (GIMP_TYPE_DODGEBURN_TOOL);
+    }
+
+  paint_tool = GIMP_PAINT_TOOL (non_gui_dodgeburn);
+  
+  if (gimp_paint_tool_start (paint_tool, drawable,
+			     stroke_array[0], 
+			     stroke_array[1]))
+    {
+      non_gui_exposure = exposure;
+      non_gui_lut      = gimp_lut_new ();
+      gimp_dodgeburn_tool_make_luts (paint_tool, 
+			             exposure,
+			             type,
+			             mode,
+			             non_gui_lut,
+			             drawable);
+
+      paint_tool->startx = paint_tool->lastx = stroke_array[0];
+      paint_tool->starty = paint_tool->lasty = stroke_array[1];
+
+      gimp_dodgeburn_tool_paint (paint_tool, drawable, MOTION_PAINT);
+
+      for (i = 1; i < num_strokes; i++)
+	{
+	  paint_tool->curx = stroke_array[i * 2 + 0];
+	  paint_tool->cury = stroke_array[i * 2 + 1];
+
+	  gimp_paint_tool_interpolate (paint_tool, drawable);
+
+	  paint_tool->lastx = paint_tool->curx;
+	  paint_tool->lasty = paint_tool->cury;
+	}
+
+      gimp_paint_tool_finish (paint_tool, drawable);
+
+      gimp_lut_free (non_gui_lut);
+      non_gui_lut = NULL;
+
+      return TRUE;
+    }
 
   return FALSE;
 }
 
-gboolean
-dodgeburn_non_gui_default (GimpDrawable  *drawable,
-			   gint           num_strokes, 
-			   gdouble       *stroke_array)
-{
-  g_message ("gimp_dodgeburn_tool_non_gui not implemented yet\n");
 
-  return FALSE;
+/*  tool options stuff  */
+
+static DodgeBurnOptions *
+gimp_dodgeburn_tool_options_new (void)
+{
+  DodgeBurnOptions *options;
+
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *scale;
+  GtkWidget *frame;
+
+  options = g_new0 (DodgeBurnOptions, 1);
+  paint_options_init ((PaintOptions *) options,
+		      GIMP_TYPE_DODGEBURN_TOOL,
+		      gimp_dodgeburn_tool_options_reset);
+
+  options->type     = options->type_d     = DODGEBURN_DEFAULT_TYPE;
+  options->exposure = options->exposure_d = DODGEBURN_DEFAULT_EXPOSURE;
+  options->mode     = options->mode_d     = DODGEBURN_DEFAULT_MODE;
+
+  /*  the main vbox  */
+  vbox = ((ToolOptions *) options)->main_vbox;
+
+  /*  the exposure scale  */
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+
+  label = gtk_label_new (_("Exposure:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  options->exposure_w =
+    gtk_adjustment_new (options->exposure_d, 0.0, 100.0, 1.0, 1.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->exposure_w));
+  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+
+  gtk_signal_connect (GTK_OBJECT (options->exposure_w), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &options->exposure);
+
+  gtk_widget_show (scale);
+  gtk_widget_show (hbox);
+
+  /* the type (dodge or burn) */
+  frame = gimp_radio_group_new2 (TRUE, _("Type"),
+				 gimp_radio_button_update,
+				 &options->type, (gpointer) options->type,
+
+				 _("Dodge"), (gpointer) DODGE,
+				 &options->type_w[0],
+				 _("Burn"), (gpointer) BURN,
+				 &options->type_w[1],
+
+				 NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  /*  mode (highlights, midtones, or shadows)  */
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Mode"),
+			   gimp_radio_button_update,
+			   &options->mode, (gpointer) options->mode,
+
+			   _("Highlights"), (gpointer) DODGEBURN_HIGHLIGHTS, 
+			   &options->mode_w[0],
+			   _("Midtones"), (gpointer) DODGEBURN_MIDTONES,
+			   &options->mode_w[1],
+			   _("Shadows"), (gpointer) DODGEBURN_SHADOWS,
+			   &options->mode_w[2],
+
+			   NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  return options;
+}
+
+static void
+gimp_dodgeburn_tool_options_reset (ToolOptions *tool_options)
+{
+  DodgeBurnOptions *options;
+
+  options = (DodgeBurnOptions *) tool_options;
+
+  paint_options_reset (tool_options);
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->exposure_w),
+			    options->exposure_d);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->mode_w[options->mode_d]), TRUE);
 }

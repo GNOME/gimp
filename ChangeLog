@@ -1,3 +1,15 @@
+2001-04-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpdodgeburntool.[ch]
+	* app/tools/gimperasertool.c
+	* app/tools/gimppaintbrushtool.[ch]
+	* app/tools/gimppenciltool.c
+	* app/pdb/tools_cmds.c
+	* tools/pdbgen/pdb/tools.pdb: general cleanup of all paint tools we
+	have so far: reordered/renamed functions to make them look the same,
+	minor fixes in all files.
+
 2001-04-06  Stanislav Brabec  <utx@penguin.cz> 
 
         On request of Martin Weber <martweb@gmx.net>:

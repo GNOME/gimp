@@ -44,13 +44,9 @@ struct _GimpPaintbrushToolClass
 };
 
 
-void       gimp_paintbrush_tool_register (void);
+void       gimp_paintbrush_tool_register        (void);
 
-GtkType    gimp_paintbrush_tool_get_type (void);
-
-
-
-/* FIXME: this antique code doesn't follow the coding style */
+GtkType    gimp_paintbrush_tool_get_type        (void);
 
 gboolean   gimp_paintbrush_tool_non_gui         (GimpDrawable *drawable,
 						 gint          num_srokes,

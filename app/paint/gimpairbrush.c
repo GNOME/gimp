@@ -49,9 +49,9 @@
 #define MAX_PRESSURE  0.075
 
 /* Default pressure setting */
-#define AIRBRUSH_RATE_DEFAULT        0.0
-#define AIRBRUSH_PRESSURE_DEFAULT    10.0
-#define AIRBRUSH_INCREMENTAL_DEFAULT FALSE
+#define AIRBRUSH_DEFAULT_RATE        0.0
+#define AIRBRUSH_DEFAULT_PRESSURE    10.0
+#define AIRBRUSH_DEFAULT_INCREMENTAL FALSE
 
 #define OFF 0
 #define ON  1
@@ -96,7 +96,7 @@ static void   gimp_airbrush_tool_motion     (GimpPaintTool         *paint_tool,
 					     GimpDrawable          *drawable,
 					     PaintPressureOptions  *pressure_options,
 					     gdouble                pressure,
-					     PaintApplicationMode   mode);
+					     gboolean               incremental);
 static gint   airbrush_time_out             (gpointer               data);
 
 static AirbrushOptions * airbrush_options_new   (void);
@@ -258,10 +258,11 @@ gimp_airbrush_tool_paint (GimpPaintTool *paint_tool,
 	  timer_state = OFF;
 	}
 
-      gimp_airbrush_tool_motion (paint_tool, drawable,
+      gimp_airbrush_tool_motion (paint_tool,
+				 drawable,
 				 pressure_options,
 				 pressure,
-				 incremental ? INCREMENTAL : CONSTANT);
+				 incremental);
 
       if (rate != 0.0)
 	{
@@ -319,7 +320,7 @@ airbrush_time_out (gpointer client_data)
 			     airbrush_timeout.drawable,
 			     pressure_options,
 			     pressure,
-			     incremental ? INCREMENTAL : CONSTANT);
+			     incremental);
   gdisplays_flush ();
 
   /*  restart the timer  */
@@ -344,12 +345,13 @@ gimp_airbrush_tool_motion (GimpPaintTool        *paint_tool,
 			   GimpDrawable	        *drawable,
 			   PaintPressureOptions *pressure_options,
 			   gdouble               pressure,
-			   PaintApplicationMode  mode)
+			   gboolean              incremental)
 {
-  GimpImage *gimage;
-  TempBuf   *area;
-  guchar     col[MAX_CHANNELS];
-  gdouble    scale;
+  GimpImage            *gimage;
+  TempBuf              *area;
+  guchar                col[MAX_CHANNELS];
+  gdouble               scale;
+  PaintApplicationMode  paint_appl_mode = incremental ? INCREMENTAL : CONSTANT;
 
   if (!drawable) 
     return;
@@ -379,13 +381,15 @@ gimp_airbrush_tool_motion (GimpPaintTool        *paint_tool,
 			   &col[BLUE_PIX],
 			   &col[ALPHA_PIX]);
 
-      mode = INCREMENTAL;
+      paint_appl_mode = INCREMENTAL;
+
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height, area->bytes);
     }
   else if (paint_tool->brush && paint_tool->brush->pixmap)
     {
-      mode = INCREMENTAL;
+      paint_appl_mode = INCREMENTAL;
+
       gimp_paint_tool_color_area_with_pixmap (paint_tool, gimage,
 					      drawable, area, 
 					      scale, SOFT);
@@ -406,7 +410,7 @@ gimp_airbrush_tool_motion (GimpPaintTool        *paint_tool,
 				MIN (pressure, 255),
 				(gint) (gimp_context_get_opacity (NULL) * 255),
 				gimp_context_get_paint_mode (NULL),
-				SOFT, scale, mode);
+				SOFT, scale, paint_appl_mode);
 }
 
 gboolean
@@ -416,7 +420,7 @@ airbrush_non_gui_default (GimpDrawable *drawable,
 {
   AirbrushOptions *options = airbrush_options;
 
-  gdouble pressure = AIRBRUSH_PRESSURE_DEFAULT;
+  gdouble pressure = AIRBRUSH_DEFAULT_PRESSURE;
 
   if (options)
     pressure = options->pressure;
@@ -446,9 +450,9 @@ airbrush_non_gui (GimpDrawable *drawable,
                              stroke_array[0],
                              stroke_array[1]))
     {
-      non_gui_rate        = AIRBRUSH_RATE_DEFAULT;
+      non_gui_rate        = AIRBRUSH_DEFAULT_RATE;
       non_gui_pressure    = pressure;
-      non_gui_incremental = AIRBRUSH_INCREMENTAL_DEFAULT;
+      non_gui_incremental = AIRBRUSH_DEFAULT_INCREMENTAL;
 
       paint_tool->startx = paint_tool->lastx = stroke_array[0];
       paint_tool->starty = paint_tool->lasty = stroke_array[1];
@@ -488,7 +492,7 @@ airbrush_options_new (void)
 		      airbrush_options_reset);
 
   options->rate     = options->rate_d     = 80.0;
-  options->pressure = options->pressure_d = AIRBRUSH_PRESSURE_DEFAULT;
+  options->pressure = options->pressure_d = AIRBRUSH_DEFAULT_PRESSURE;
 
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;

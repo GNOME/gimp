@@ -58,23 +58,20 @@ struct _GimpDodgeBurnToolClass
 };
 
 
-void       gimp_dodgeburn_tool_register (void);
+void       gimp_dodgeburn_tool_register        (void);
 
-GtkType    gimp_dodgeburn_tool_get_type (void);
+GtkType    gimp_dodgeburn_tool_get_type        (void);
 
-/* FIXME: Get rid of this non_gui stuff someday.  Preferably make
- *        everything use it interally for ease of macro recording.
- */
-gboolean   dodgeburn_non_gui            (GimpDrawable  *drawable,
-					 gdouble        exposure,
-					 DodgeBurnType  type, 
-					 DodgeBurnMode  mode, 
-					 gint           num_strokes, 
-					 gdouble       *stroke_array);
+gboolean   gimp_dodgeburn_tool_non_gui         (GimpDrawable  *drawable,
+						gdouble        exposure,
+						DodgeBurnType  type, 
+						DodgeBurnMode  mode, 
+						gint           num_strokes, 
+						gdouble       *stroke_array);
 
-gboolean   dodgeburn_non_gui_default    (GimpDrawable  *drawable,
-					 gint           num_strokes,
-					 gdouble       *stroke_array);
+gboolean   gimp_dodgeburn_tool_non_gui_default (GimpDrawable  *drawable,
+						gint           num_strokes,
+						gdouble       *stroke_array);
 
 
 #endif  /*  __GIMP_DODGEBURN_TOOL_H__  */

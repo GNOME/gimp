@@ -1198,7 +1198,7 @@ dodgeburn_invoker (Argument *args)
   strokes = (gdouble *) args[5].value.pdb_pointer;
 
   if (success)
-    success = dodgeburn_non_gui (drawable, exposure, dodgeburn_type, dodgeburn_mode, num_strokes, strokes);
+    success = gimp_dodgeburn_tool_non_gui (drawable, exposure, dodgeburn_type, dodgeburn_mode, num_strokes, strokes);
 
   return procedural_db_return_args (&dodgeburn_proc, success);
 }
@@ -1274,7 +1274,7 @@ dodgeburn_default_invoker (Argument *args)
   strokes = (gdouble *) args[2].value.pdb_pointer;
 
   if (success)
-    success = dodgeburn_non_gui_default (drawable, num_strokes, strokes);
+    success = gimp_dodgeburn_tool_non_gui_default (drawable, num_strokes, strokes);
 
   return procedural_db_return_args (&dodgeburn_default_proc, success);
 }

@@ -87,7 +87,6 @@ static EraserOptions * gimp_eraser_tool_options_new   (void);
 static void            gimp_eraser_tool_options_reset (ToolOptions *tool_options);
 
 
-
 /*  local variables  */
 static gboolean   non_gui_hard        = ERASER_DEFAULT_HARD;
 static gboolean   non_gui_incremental = ERASER_DEFAULT_INCREMENTAL;

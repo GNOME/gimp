@@ -51,13 +51,13 @@
 static void   gimp_pencil_tool_class_init (GimpPencilToolClass *klass);
 static void   gimp_pencil_tool_init       (GimpPencilTool      *pancil);
 
-static void   gimp_pencil_tool_paint  (GimpPaintTool        *paint_tool,
-                                       GimpDrawable         *drawable,
-                                       PaintState            state);
-static void   gimp_pencil_tool_motion (GimpPaintTool        *paint_tool,
-                                       GimpDrawable         *drawable,
-                                       PaintPressureOptions *pressure_options,
-                                       gboolean              incremental);
+static void   gimp_pencil_tool_paint      (GimpPaintTool        *paint_tool,
+					   GimpDrawable         *drawable,
+					   PaintState            state);
+static void   gimp_pencil_tool_motion     (GimpPaintTool        *paint_tool,
+					   GimpDrawable         *drawable,
+					   PaintPressureOptions *pressure_options,
+					   gboolean              incremental);
 
 
 /*  private variables  */
@@ -256,8 +256,8 @@ gimp_pencil_tool_motion (GimpPaintTool        *paint_tool,
 
 gboolean
 pencil_non_gui (GimpDrawable *drawable,
-		int           num_strokes,
-		double       *stroke_array)
+		gint          num_strokes,
+		gdouble      *stroke_array)
 {
   static GimpPencilTool *non_gui_pencil = NULL;
 
@@ -281,15 +281,15 @@ pencil_non_gui (GimpDrawable *drawable,
       gimp_pencil_tool_paint (paint_tool, drawable, MOTION_PAINT);
 
       for (i = 1; i < num_strokes; i++)
-       {
-         paint_tool->curx = stroke_array[i * 2 + 0];
-         paint_tool->cury = stroke_array[i * 2 + 1];
+	{
+	  paint_tool->curx = stroke_array[i * 2 + 0];
+	  paint_tool->cury = stroke_array[i * 2 + 1];
 
-         gimp_paint_tool_interpolate (paint_tool, drawable);
+	  gimp_paint_tool_interpolate (paint_tool, drawable);
 
-         paint_tool->lastx = paint_tool->curx;
-         paint_tool->lasty = paint_tool->cury;
-       }
+	  paint_tool->lastx = paint_tool->curx;
+	  paint_tool->lasty = paint_tool->cury;
+	}
 
       gimp_paint_tool_finish (paint_tool, drawable);
 
