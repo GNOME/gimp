@@ -29,9 +29,9 @@ GType gimp_color_pick_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_COLOR_PICK_MODE_NONE,       /*< desc="Pick Only" >*/
-  GIMP_COLOR_PICK_MODE_FOREGROUND, /*< desc="Set Foreground Color" >*/
-  GIMP_COLOR_PICK_MODE_BACKGROUND  /*< desc="Set Background Color" >*/
+  GIMP_COLOR_PICK_MODE_NONE,       /*< desc="Pick only" >*/
+  GIMP_COLOR_PICK_MODE_FOREGROUND, /*< desc="Set foreground color" >*/
+  GIMP_COLOR_PICK_MODE_BACKGROUND  /*< desc="Set background color" >*/
 } GimpColorPickMode;
 
 
@@ -52,9 +52,9 @@ GType gimp_rect_select_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_RECT_SELECT_MODE_FREE,        /*< desc="Free Select"        >*/
-  GIMP_RECT_SELECT_MODE_FIXED_SIZE,  /*< desc="Fixed Size"         >*/
-  GIMP_RECT_SELECT_MODE_FIXED_RATIO  /*< desc="Fixed Aspect Ratio" >*/
+  GIMP_RECT_SELECT_MODE_FREE,        /*< desc="Free select"        >*/
+  GIMP_RECT_SELECT_MODE_FIXED_SIZE,  /*< desc="Fixed size"         >*/
+  GIMP_RECT_SELECT_MODE_FIXED_RATIO  /*< desc="Fixed aspect ratio" >*/
 } GimpRectSelectMode;
 
 
@@ -64,9 +64,9 @@ GType gimp_transform_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TRANSFORM_TYPE_LAYER,     /*< desc="Transform Layer"     >*/
-  GIMP_TRANSFORM_TYPE_SELECTION, /*< desc="Transform Selection" >*/
-  GIMP_TRANSFORM_TYPE_PATH       /*< desc="Transform Path"      >*/
+  GIMP_TRANSFORM_TYPE_LAYER,     /*< desc="Transform layer"     >*/
+  GIMP_TRANSFORM_TYPE_SELECTION, /*< desc="Transform selection" >*/
+  GIMP_TRANSFORM_TYPE_PATH       /*< desc="Transform path"      >*/
 } GimpTransformType;
 
 
@@ -88,9 +88,9 @@ GType gimp_transform_grid_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TRANSFORM_GRID_TYPE_NONE,     /*< desc="Don't Show Grid"      >*/
-  GIMP_TRANSFORM_GRID_TYPE_N_LINES,  /*< desc="Number of Grid Lines" >*/
-  GIMP_TRANSFORM_GRID_TYPE_SPACING   /*< desc="Grid Line Spacing"    >*/
+  GIMP_TRANSFORM_GRID_TYPE_NONE,     /*< desc="Don't show grid"      >*/
+  GIMP_TRANSFORM_GRID_TYPE_N_LINES,  /*< desc="Number of grid lines" >*/
+  GIMP_TRANSFORM_GRID_TYPE_SPACING   /*< desc="Grid line spacing"    >*/
 } GimpTransformGridType;
 
 

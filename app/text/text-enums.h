@@ -37,8 +37,8 @@ GType gimp_text_direction_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TEXT_DIRECTION_LTR,   /*< desc="From Left to Right" >*/
-  GIMP_TEXT_DIRECTION_RTL    /*< desc="From Right to Left" >*/
+  GIMP_TEXT_DIRECTION_LTR,   /*< desc="From left to right" >*/
+  GIMP_TEXT_DIRECTION_RTL    /*< desc="From right to left" >*/
 } GimpTextDirection;
 
 
@@ -48,8 +48,8 @@ GType gimp_text_justification_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TEXT_JUSTIFY_LEFT,    /*< desc="Left Justified"  >*/
-  GIMP_TEXT_JUSTIFY_RIGHT,   /*< desc="Right Justified" >*/
+  GIMP_TEXT_JUSTIFY_LEFT,    /*< desc="Left justified"  >*/
+  GIMP_TEXT_JUSTIFY_RIGHT,   /*< desc="Right justified" >*/
   GIMP_TEXT_JUSTIFY_CENTER,  /*< desc="Centered"        >*/
   GIMP_TEXT_JUSTIFY_FILL     /*< desc="Filled"          >*/
 } GimpTextJustification;

@@ -26,8 +26,8 @@ GType gimp_cursor_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CURSOR_MODE_TOOL_ICON,       /*< desc="Tool Icon"                >*/
-  GIMP_CURSOR_MODE_TOOL_CROSSHAIR,  /*< desc="Tool Icon with Crosshair" >*/
+  GIMP_CURSOR_MODE_TOOL_ICON,       /*< desc="Tool icon"                >*/
+  GIMP_CURSOR_MODE_TOOL_CROSSHAIR,  /*< desc="Tool icon with crosshair" >*/
   GIMP_CURSOR_MODE_CROSSHAIR        /*< desc="Crosshair only"           >*/
 } GimpCursorMode;
 
@@ -38,10 +38,10 @@ GType gimp_canvas_padding_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CANVAS_PADDING_MODE_DEFAULT,      /*< desc="From Theme"        >*/
-  GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK,  /*< desc="Light Check Color" >*/
-  GIMP_CANVAS_PADDING_MODE_DARK_CHECK,   /*< desc="Dark Check Color"  >*/
-  GIMP_CANVAS_PADDING_MODE_CUSTOM,       /*< desc="Custom Color"      >*/
+  GIMP_CANVAS_PADDING_MODE_DEFAULT,      /*< desc="From theme"        >*/
+  GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK,  /*< desc="Light check color" >*/
+  GIMP_CANVAS_PADDING_MODE_DARK_CHECK,   /*< desc="Dark check color"  >*/
+  GIMP_CANVAS_PADDING_MODE_CUSTOM,       /*< desc="Custom color"      >*/
   GIMP_CANVAS_PADDING_MODE_RESET = -1    /*< skip >*/
 } GimpCanvasPaddingMode;
 

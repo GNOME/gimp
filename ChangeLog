@@ -1,3 +1,8 @@
+2004-06-30  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/*/*-enums.h: did HIG-compliant capitalization in the right
+	place, instead of the auto-generated *-enums.c files.
+	
 2004-06-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdnd.[ch]

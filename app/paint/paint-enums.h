@@ -41,8 +41,8 @@ GType gimp_clone_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_IMAGE_CLONE,   /*< desc="Image Source"   >*/
-  GIMP_PATTERN_CLONE  /*< desc="Pattern Source" >*/
+  GIMP_IMAGE_CLONE,   /*< desc="Image source"   >*/
+  GIMP_PATTERN_CLONE  /*< desc="Pattern source" >*/
 } GimpCloneType;
 
 
@@ -52,7 +52,7 @@ GType gimp_clone_align_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum /*< pdb-skip >*/
 {
-  GIMP_CLONE_ALIGN_NO,         /*< desc="Non Aligned" >*/
+  GIMP_CLONE_ALIGN_NO,         /*< desc="Non-aligned" >*/
   GIMP_CLONE_ALIGN_YES,        /*< desc="Aligned"     >*/
   GIMP_CLONE_ALIGN_REGISTERED  /*< desc="Registered"  >*/
 } GimpCloneAlignMode;

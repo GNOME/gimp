@@ -53,7 +53,7 @@ GType gimp_color_frame_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_COLOR_FRAME_MODE_PIXEL,  /*< desc="Pixel Values" >*/
+  GIMP_COLOR_FRAME_MODE_PIXEL,  /*< desc="Pixel values" >*/
   GIMP_COLOR_FRAME_MODE_RGB,    /*< desc="RGB"          >*/
   GIMP_COLOR_FRAME_MODE_HSV,    /*< desc="HSV"          >*/
   GIMP_COLOR_FRAME_MODE_CMYK    /*< desc="CMYK"         >*/
@@ -77,7 +77,7 @@ GType gimp_cursor_format_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CURSOR_FORMAT_BITMAP, /*< desc="Black & White" >*/
+  GIMP_CURSOR_FORMAT_BITMAP, /*< desc="Black & white" >*/
   GIMP_CURSOR_FORMAT_PIXBUF  /*< desc="Fancy"         >*/
 } GimpCursorFormat;
 
@@ -89,7 +89,7 @@ GType gimp_help_browser_type_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_HELP_BROWSER_GIMP,        /*< desc="Internal"    >*/
-  GIMP_HELP_BROWSER_WEB_BROWSER  /*< desc="Web Browser" >*/
+  GIMP_HELP_BROWSER_WEB_BROWSER  /*< desc="Web browser" >*/
 } GimpHelpBrowserType;
 
 
@@ -111,13 +111,13 @@ GType gimp_tab_style_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_TAB_STYLE_ICON,          /*< desc="Icon"           >*/
-  GIMP_TAB_STYLE_PREVIEW,       /*< desc="Current Status" >*/
+  GIMP_TAB_STYLE_PREVIEW,       /*< desc="Current status" >*/
   GIMP_TAB_STYLE_NAME,          /*< desc="Text"           >*/
   GIMP_TAB_STYLE_BLURB,         /*< desc="Description"    >*/
-  GIMP_TAB_STYLE_ICON_NAME,     /*< desc="Icon & Text"    >*/
-  GIMP_TAB_STYLE_ICON_BLURB,    /*< desc="Icon & Desc"    >*/
-  GIMP_TAB_STYLE_PREVIEW_NAME,  /*< desc="Status & Text"  >*/
-  GIMP_TAB_STYLE_PREVIEW_BLURB  /*< desc="Status & Desc"  >*/
+  GIMP_TAB_STYLE_ICON_NAME,     /*< desc="Icon & text"    >*/
+  GIMP_TAB_STYLE_ICON_BLURB,    /*< desc="Icon & desc"    >*/
+  GIMP_TAB_STYLE_PREVIEW_NAME,  /*< desc="Status & text"  >*/
+  GIMP_TAB_STYLE_PREVIEW_BLURB  /*< desc="Status & desc"  >*/
 } GimpTabStyle;
 
 
@@ -127,8 +127,8 @@ GType gimp_view_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_VIEW_TYPE_LIST,  /*< desc="View as List" >*/
-  GIMP_VIEW_TYPE_GRID   /*< desc="View as Grid" >*/
+  GIMP_VIEW_TYPE_LIST,  /*< desc="View as list" >*/
+  GIMP_VIEW_TYPE_GRID   /*< desc="View as grid" >*/
 } GimpViewType;
 
 
@@ -138,9 +138,9 @@ GType gimp_window_hint_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_WINDOW_HINT_NORMAL,     /*< desc="Normal Window"  >*/
-  GIMP_WINDOW_HINT_UTILITY,    /*< desc="Utility Window" >*/
-  GIMP_WINDOW_HINT_KEEP_ABOVE  /*< desc="Keep Above"     >*/
+  GIMP_WINDOW_HINT_NORMAL,     /*< desc="Normal window"  >*/
+  GIMP_WINDOW_HINT_UTILITY,    /*< desc="Utility window" >*/
+  GIMP_WINDOW_HINT_KEEP_ABOVE  /*< desc="Keep above"     >*/
 } GimpWindowHint;
 
 
