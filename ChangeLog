@@ -1,3 +1,14 @@
+2003-07-23  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpmenu.h: changed the return value of
+	GimpConstraintFunc from gint to gboolean.
+
+	* libgimp/gimpmenu.c: fixed bug introduced by my latest cleanup:
+	Don't free the drawable arrays after creating the menus since they
+	are used in the callbacks. Instead, free them using a GWeakNotify
+	on the menu. Factored menu and item creation out to utility
+	functions to reduce code duplication. Cleanup.
+
 2003-07-22  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptext-bitmap.c

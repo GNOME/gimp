@@ -25,11 +25,11 @@
 G_BEGIN_DECLS
 
 
-typedef gint (* GimpConstraintFunc) (gint32   image_id,
-				     gint32   drawable_id,
-				     gpointer data);
-typedef void (* GimpMenuCallback)   (gint32   any_id,
-				     gpointer data);
+typedef gboolean (* GimpConstraintFunc) (gint32   image_id,
+                                         gint32   drawable_id,
+                                         gpointer data);
+typedef void     (* GimpMenuCallback)   (gint32   any_id,
+                                         gpointer data);
 
 
 GtkWidget * gimp_image_menu_new    (GimpConstraintFunc constraint,
