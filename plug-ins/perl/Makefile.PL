@@ -199,7 +199,7 @@ install ::
 	   fi \
 	done ; \
 	$(MAKE) UNINST=1 really-install install-plugins'."
-	$dont_embed || (cd embed && \$(MAKE) install)
+	$main::dont_embed || (cd embed && \$(MAKE) install)
 
 ".$install;
 }

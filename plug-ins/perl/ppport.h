@@ -173,6 +173,7 @@ __DATA__
 #	define PL_curstash	curstash
 #	define PL_copline	copline
 #	define PL_Sv		Sv
+#	define PL_perl_destruct_level perl_destruct_level
 /* Replace: 0 */
 #endif
 
