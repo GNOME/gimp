@@ -1,3 +1,9 @@
+Thur Jun 3 9:06:00 CST 1999 Seth Burgess <sjburges@gimp.org>
+
+	* plug-ins/script-fu/scripts/drop-shadow.scm: you can't
+	use gimp-edit-fill until you've attached the drawable to 
+	an image.
+	
 Thur Jun 3 1:43:00 CST 1999 Seth Burgess <sjburges@gimp.org>
 
 	* app/indicator_area.[ch]

@@ -16,12 +16,13 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; drop-shadow.scm   version 1.02   12/13/97
+; drop-shadow.scm   version 1.03   06/03/99 
 ;
 ; CHANGE-LOG:
 ; 1.00 - initial release
 ; 1.01 - fixed the problem with a remaining copy of the selection
 ; 1.02 - some code cleanup, no real changes
+; 1.03 - can't call gimp-edit-fill until layer is added to image!
 ;
 ;
 ; Copyright (C) 1997 Sven Neumann (neumanns@uni-duesseldorf.de)
@@ -120,6 +121,7 @@
 					    "Drop-Shadow"
 					    shadow-opacity
 					    NORMAL)))
+   (gimp-image-add-layer image shadow-layer -1)
     (gimp-layer-set-offsets shadow-layer
 			    shadow-offset-x
 			    shadow-offset-y))
@@ -135,7 +137,6 @@
 					   shadow-blur
 					   TRUE
 					   TRUE))
-  (gimp-image-add-layer image shadow-layer -1)
   (gimp-layer-translate shadow-layer shadow-transl-x shadow-transl-y)
 
   (if (= from-selection TRUE)
