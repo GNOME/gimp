@@ -1,3 +1,8 @@
+2003-09-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/tools.c (tools_init): moved the path tool after the
+	selection tools.
+
 2003-09-17  Manish Singh  <yosh@gimp.org>
 
 	* app/Makefile.am: special case windows for leading underscores in

@@ -115,10 +115,13 @@ tools_init (Gimp *gimp)
     gimp_histogram_tool_register,
     gimp_color_picker_tool_register,
 
+    /*  path tool */
+
+    gimp_vector_tool_register,
+
     /*  selection tools */
 
     gimp_iscissors_tool_register,
-    gimp_vector_tool_register,
     gimp_by_color_select_tool_register,
     gimp_fuzzy_select_tool_register,
     gimp_free_select_tool_register,
