@@ -2512,6 +2512,7 @@ plug_in_make_menu_entry (gpointer         foo,
   entry.entry.callback        = plug_in_callback;
   entry.entry.callback_action = 0;
   entry.entry.item_type       = NULL;
+  entry.quark_string          = NULL;
   entry.help_page             = help_page;
   entry.description           = NULL;
 
