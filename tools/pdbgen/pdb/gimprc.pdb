@@ -52,7 +52,6 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gimprc.h") ],
 	vars => [ 'gchar *value = NULL' ],
 	code => <<'CODE'
 {
@@ -90,13 +89,44 @@ HELP
     );
 
     %invoke = ( 
-	headers => [ qw("gimprc.h") ],
 	code => 'save_gimprc_strings(token, value);'
     );
 }
 
+sub get_monitor_resolution {
+    $blurb = 'Get the monitor resolution as specified in the Preferences.';
 
-@procs = qw(gimprc_query gimprc_set);
+    $help = <<'HELP';
+Returns the resolution of the monitor in pixels/inch. This value
+is taken from the Preferences (or the X-Server if this is set in the
+Preferences) and there's no guarantee for the value to be reasonable.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( );
+
+    @outargs = (
+	{  name => 'xres', type => 'float',
+	   desc => 'X resolution', alias => 'xres' },
+	{  name => 'yres', type => 'float',
+	   desc => 'Y resolution', alias => 'yres' },	   
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  xres = monitor_xres;
+  yres = monitor_yres;
+  success = TRUE;
+}
+CODE
+    );
+}
+
+@headers = qw("gimprc.h");
+
+@procs = qw(gimprc_query gimprc_set get_monitor_resolution);
 %exports = (app => [@procs]);
 
 $desc = 'Gimprc procedures';

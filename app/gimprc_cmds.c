@@ -24,12 +24,14 @@
 
 static ProcRecord gimprc_query_proc;
 static ProcRecord gimprc_set_proc;
+static ProcRecord get_monitor_resolution_proc;
 
 void
 register_gimprc_procs (void)
 {
   procedural_db_register (&gimprc_query_proc);
   procedural_db_register (&gimprc_set_proc);
+  procedural_db_register (&get_monitor_resolution_proc);
 }
 
 static Argument *
@@ -143,4 +145,57 @@ static ProcRecord gimprc_set_proc =
   0,
   NULL,
   { { gimprc_set_invoker } }
+};
+
+static Argument *
+get_monitor_resolution_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gdouble xres;
+  gdouble yres;
+
+  xres = monitor_xres;
+  yres = monitor_yres;
+  success = TRUE;
+
+  return_args = procedural_db_return_args (&get_monitor_resolution_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_float = xres;
+      return_args[2].value.pdb_float = yres;
+    }
+
+  return return_args;
+}
+
+static ProcArg get_monitor_resolution_outargs[] =
+{
+  {
+    PDB_FLOAT,
+    "xres",
+    "X resolution"
+  },
+  {
+    PDB_FLOAT,
+    "yres",
+    "Y resolution"
+  }
+};
+
+static ProcRecord get_monitor_resolution_proc =
+{
+  "gimp_get_monitor_resolution",
+  "Get the monitor resolution as specified in the Preferences.",
+  "Returns the resolution of the monitor in pixels/inch. This value is taken from the Preferences (or the X-Server if this is set in the Preferences) and there's no guarantee for the value to be reasonable.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  0,
+  NULL,
+  2,
+  get_monitor_resolution_outargs,
+  { { get_monitor_resolution_invoker } }
 };

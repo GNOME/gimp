@@ -1,7 +1,7 @@
 /*  
- *  ScreenShot plug-in v0.9 
+ *  ScreenShot plug-in v0.9.1 
  *  Sven Neumann, neumanns@uni-duesseldorf.de  
- *  1998/06/06
+ *  1999/08/12
  *
  *  Any suggestions, bug-reports or patches are very welcome.
  * 
@@ -40,6 +40,8 @@
  *  (98/05/28)  v0.7   use g_message for error output
  *  (98/06/04)  v0.8   added delay-time for root window shot
  *  (98/06/06)  v0.9   fixed a stupid bug in the dialog
+ *  (99/08/12)  v0.9.1 somebody changed the dialog,
+ *                     unset the image name and set the resolution
  */
 
 #include <stdio.h>
@@ -55,7 +57,7 @@
 /* Defines */
 #define PLUG_IN_NAME        "extension_screenshot"
 #define PLUG_IN_PRINT_NAME  "Screen Shot"
-#define PLUG_IN_VERSION     "v0.9 (98/06/06)"
+#define PLUG_IN_VERSION     "v0.9.1 (99/08/12)"
 #define PLUG_IN_MENU_PATH   "<Toolbox>/Xtns/Screen Shot"
 #define PLUG_IN_AUTHOR      "Sven Neumann (neumanns@uni-duesseldorf.de)"
 #define PLUG_IN_COPYRIGHT   "Sven Neumann"
@@ -254,6 +256,7 @@ shoot (void)
   gint retvals;
   char *tmpname;
   char *xwdargv[7]; /* only need a maximum of 7 arguments to xwd */
+  gdouble xres, yres;
   gint pid;
   gint status;
   gint i = 0;
@@ -324,9 +327,31 @@ shoot (void)
 			       PARAM_STRING, tmpname,
 			       PARAM_END);
   image_ID = params[1].data.d_image;
-
+  gimp_destroy_params (params, retvals);
+ 
   /* get rid of the tmpfile */
   unlink (tmpname);
+
+  /* figure out the monitor resolution and set the image to it */
+  params = gimp_run_procedure ("gimp_get_monitor_resolution",
+			       &retvals,
+			       PARAM_END);
+  if (params[0].data.d_status == STATUS_SUCCESS)
+    {
+      xres = params[1].data.d_float;
+      yres = params[2].data.d_float;
+    }
+  else
+    { 
+      xres = 72.0;
+      yres = 72.0;
+    }
+  gimp_destroy_params (params, retvals);
+
+  gimp_image_set_resolution (image_ID, xres, yres);
+
+  /* unset the image filename */
+  gimp_image_set_filename (image_ID, "");
 
   return;
 }
