@@ -238,7 +238,7 @@
     SF-ADJUSTMENT _"Buffer amount (% height of text)" '(35 0 100 1 10 0 0)
 )
 
-(script-fu-register "tiny-fu-asc-2-img-layer"
+(script-fu-register "script-fu-asc-2-img-layer"
     _"<Image>/Script-Fu/Utils/_ASCII to Layer..."
     "Create a new layer of text from a simple text file"
     "Chris Gutteridge: cjg@ecs.soton.ac.uk"
