@@ -165,6 +165,9 @@ paths, and better beziers would be a nice touch:
 
 	Probably integrate the paths into the Layers&Channels dialog?
 
+	Code for this is there, but the interface is considered by many
+	to be poor -- Yosh
+
 Macro recording and better scripting support:
 
 	This pretty much is going to require the aforementioned
@@ -183,6 +186,8 @@ A "Revert To" menu options:
 	Open a image, munge it around a whole bunch, decide you dont
 	like the results, and you dont have enough undo
 	steps. File->revert would easily reload the file from disk.
+
+	Implemented now, needs testing -- Yosh
 
 Redesign of the Blend Tool dialog? (it's rather large...)
 
@@ -215,6 +220,9 @@ progress bars on long proccesses:
 
 	(Maybe run core image ops from the idle loop?  We already do
 	this for curves et al. --sg)
+
+	We have some of this in place thanks to Aspirin and Austin now.
+	--Yosh
 
 status bars on image window: 
 
@@ -422,8 +430,8 @@ Have a possibility to add a text as selection:
 option to create New Indexed image (with the choice of pattern foo) ?
 
 Integrate gimp-16 stuff?
-	Would be difficult, but possibly very useful.
-	see http://www.netrover.com/~rayl/gimp/
+	Eventually will happen.
+	see http://film.gimp.org/
 
 A way to define a default comment
 
