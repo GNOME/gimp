@@ -1,5 +1,5 @@
 /*
- * PSD Plugin version 1.9.9.9b (BETA)
+ * PSD Plugin version 1.9.9.9e (BETA)
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
@@ -35,6 +35,10 @@
 
 /*
  * Revision history:
+ *
+ *  98.07.31 / v1.9.9.9e / Adam D. Moss
+ *       Worked around some buggy PSD savers (suspect PS4 on Mac) - ugh.
+ *       Fixed a bug when loading layer masks of certain dimensions.
  *
  *  98.05.04 / v1.9.9.9b / Adam D. Moss
  *       Changed the Pascal-style string-reading stuff.  That fixed
@@ -282,10 +286,11 @@ static glong getglong(FILE *fd, gchar *why);
 static void xfread(FILE *fd, void *buf, long len, gchar *why);
 static void xfread_interlaced(FILE *fd, guchar *buf, long len, gchar *why,
 			      gint step);
-static void *xmalloc(size_t n);
+static void* xmalloc(size_t n);
 static void read_whole_file(FILE *fd);
 static void reshuffle_cmap(guchar *map256);
-static guchar *getpascalstring(FILE *fd, gchar *why);
+static guchar* getpascalstring(FILE *fd, gchar *why);
+static gchar* getstring(size_t n, FILE * fd, gchar *why);
 void throwchunk(size_t n, FILE * fd, gchar *why);
 void dumpchunk(size_t n, FILE * fd, gchar *why);
 
@@ -518,10 +523,42 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 	    {
 	      do
 		{
-		  psd_image.aux_channel[psd_image.num_aux_channels].name =
-		    getpascalstring(fd, "alpha channel name");
+		  guchar slen;
+		  gchar* sname;
+
+		  slen = getguchar (fd, "alpha channel name length");
 		  (*offset)++;
 		  remaining--;
+
+		  /* Check for (Mac?) Photoshop (4?) file-writing bug */
+		  if (slen > remaining)
+		    {
+		      IFDBG {printf("\nYay, a file bug.  "
+				    "Nice one Adobe(tm).  "
+				    "I'll work around you.\n");fflush(stdout);}
+		      break;
+		    }
+
+		  if (slen)
+		    {
+		      sname = getstring(slen, fd, "alpha channel name");
+
+		      psd_image.aux_channel[psd_image.num_aux_channels].name =
+			sname;
+		    }
+		  else
+		    {
+		      psd_image.aux_channel[psd_image.num_aux_channels].name =
+			NULL;
+		    }
+
+		  if (psd_image.aux_channel[psd_image.num_aux_channels].name
+		      == NULL)
+		    {
+		      IFDBG
+			{printf("\t\t\tNull channel name %d.\n",
+				psd_image.num_aux_channels);fflush(stdout);}
+		    }
 
 		  if (psd_image.aux_channel[psd_image.num_aux_channels].name)
 		    {
@@ -541,7 +578,8 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 
 		  if (psd_image.num_aux_channels > MAX_CHANNELS)
 		    {
-		      printf("\nPSD: Sorry - this image has too many aux channels.  Tell Adam!\n");
+		      printf("\nPSD: Sorry - this image has too many "
+			     "aux channels.  Tell Adam!\n");
 		      gimp_quit();
 		    }
 		}
@@ -549,7 +587,11 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 	    }
 
 	  if (remaining)
-	    throwchunk(remaining, fd, "alphaname padding 0 throw");
+	    {
+	      dumpchunk(remaining, fd, "alphaname padding 0 throw");
+	      (*offset) += remaining;
+	      remaining = 0;
+	    }
 	}
 	break;
       case 0x03ef:
@@ -672,7 +714,7 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 	
       default:
 	IFDBG printf ("\t\t<Undocumented field.>\n");
-	throwchunk(Size, fd, "dispatch_res");
+	dumpchunk(Size, fd, "dispatch_res");
 	(*offset) += Size;
 	break;
       }
@@ -904,8 +946,6 @@ do_layer_pixeldata(FILE *fd, guint32 *offset)
 
   for (layeri=0; layeri<psd_image.num_layers; layeri++)
     {
-      tmpline = xmalloc(psd_image.layer[layeri].width + 1);
-
       for (channeli=0;
 	   channeli<psd_image.layer[layeri].num_channels;
 	   channeli++)
@@ -923,19 +963,24 @@ do_layer_pixeldata(FILE *fd, guint32 *offset)
 	      height = psd_image.layer[layeri].height;
 	    }
 
+	  tmpline = xmalloc(width + 1);
+
 	  compression = getgshort(fd, "layer channel compression type");
 	  (*offset)+=2;
 	      
 	  IFDBG
-	    printf("\t\t\tLayer (%d) Channel (%d:%d) Compression: %d (%s)\n",
-		   layeri,
-		   channeli,
-		   psd_image.layer[layeri].channel[channeli].type,
-		   compression,
-		   compression==0?"raw":(compression==1?"RLE":"UNKNOWN!"));
-	  
-	  IFDBG printf("\t\t\t\tLoading channel data (%d bytes)...\n",
-		 width*height);
+	    {
+	      printf("\t\t\tLayer (%d) Channel (%d:%d) Compression: %d (%s)\n",
+		     layeri,
+		     channeli,
+		     psd_image.layer[layeri].channel[channeli].type,
+		     compression,
+		     compression==0?"raw":(compression==1?"RLE":"UNKNOWN!"));
+	      fflush(stdout);
+	    }
+	    
+	  IFDBG {printf("\t\t\t\tLoading channel data (%d bytes)...\n",
+			width*height);fflush(stdout);}
 	      
 	  psd_image.layer[layeri].channel[channeli].data =
 	    xmalloc (width * height);
@@ -977,12 +1022,15 @@ do_layer_pixeldata(FILE *fd, guint32 *offset)
 		    
 		/* we throw this away because in theory we can trust the
 		   data to unpack to the right length... hmm... */
-		throwchunk(height * 2,
+		dumpchunk(height * 2,
 			   fd, "widthlist");
 		(*offset) += height * 2;
 
 		blockread = (*offset);
 		    
+		IFDBG {printf("\nHere comes the guitar solo...\n");
+		fflush(stdout);}
+
 		for (linei=0;
 		     linei<height;
 		     linei++)
@@ -990,7 +1038,7 @@ do_layer_pixeldata(FILE *fd, guint32 *offset)
 		    /*printf(" %d ", *offset);*/
 		    unpack_pb_channel(fd, tmpline,
 				      width 
-				      /*(width&1)*/,
+				      /*+ (width&1)*/,
 				      offset);
 		    memcpy((psd_image.layer[layeri].channel[channeli].data+
 			    linei * width),
@@ -998,18 +1046,22 @@ do_layer_pixeldata(FILE *fd, guint32 *offset)
 			   width);
 		  }
 		    
-		IFDBG printf("\t\t\t\t\tActual compressed size was %d bytes\n",
-		       (*offset)-blockread);
+		IFDBG {printf("\t\t\t\t\tActual compressed size was %d bytes\n"
+			      , (*offset)-blockread);fflush(stdout);}
 	      }
 	      break;
 	    default: /* *unknown* */
+	      IFDBG {printf("\nEEP!\n");fflush(stdout);}
 	      g_message ("*** Unknown compression type in channel.\n");
 	      gimp_quit();
 	      break;
 	    }
-	}
 	  
-      g_free(tmpline);
+	  if (tmpline)
+	    g_free(tmpline);
+	  else
+	    IFDBG {printf("\nTRIED TO FREE NULL!");fflush(stdout);}
+	}
     }
 
   /*  printf("\n[[%ld]]\n", getglong(fd, "uhhhh"));
@@ -1052,6 +1104,7 @@ do_layer_and_mask(FILE *fd)
 
   do_layers(fd, &offset);
 
+  IFDBG {printf("And...?\n");fflush(stdout);}
 
   if (offset < Size)
     {
@@ -1963,7 +2016,7 @@ decode(long clen, long uclen, char * src, char * dst, int step)
     for (i = 0; i < PSDheader.rows*PSDheader.channels; ++i)
 	l -= PSDheader.rowlength[i];
     if (l)
-	printf("*** %ld should be zero\n", (long)l);
+	g_warning("decode: %ld should be zero\n", (long)l);
 
     w = PSDheader.rowlength;
     
@@ -2201,17 +2254,17 @@ throwchunk(size_t n, FILE * fd, gchar *why)
 }
 
 
-#if 0
-static guchar *
-getchunk(size_t n, FILE * fd, gchar *why)
+static gchar *
+getstring(size_t n, FILE * fd, gchar *why)
 {
-  guchar *tmpchunk;
+  gchar *tmpchunk;
 
-  tmpchunk = xmalloc(n);
+  tmpchunk = xmalloc(n+1);
   xfread(fd, tmpchunk, n, why);
+  tmpchunk[n]=0;
+
   return(tmpchunk);  /* caller should free memory */
 }
-#endif
 
 
 static guchar *
@@ -2225,9 +2278,6 @@ getpascalstring(FILE *fd, gchar *why)
   if (len==0)
     {
       return (NULL);
-
-      /*      tmpchunk[0]=0;
-      return (tmpchunk);*/
     }
 
   tmpchunk = xmalloc(len+1);
@@ -2330,21 +2380,23 @@ xfread_interlaced(FILE* fd, guchar* buf, long len, gchar *why, gint step)
 static void *
 xmalloc(size_t n)
 {
-    void *p;
-
-    if (n == 0)
-      {
+  void *p;
+  
+  if (n == 0)
+    {
+      IFDBG
 	printf("PSD: WARNING: %s: xmalloc asked for zero-sized chunk\n",
 	       prog_name);
-	return (NULL);
-      }
-
-    if ((p = g_malloc(n)) != NULL)
-	return p;
-
-    printf("%s: out of memory\n", prog_name);
-    gimp_quit();
-    return NULL;
+      
+      return (NULL);
+    }
+  
+  if ((p = g_malloc(n)) != NULL)
+    return p;
+  
+  printf("%s: out of memory\n", prog_name);
+  gimp_quit();
+  return NULL;
 }
 
 
