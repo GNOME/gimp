@@ -81,7 +81,7 @@ static void sv2net (int deobjectify, SV *s, SV *sv)
         {
           char *name = HvNAME (SvSTASH (rv));
 
-          sv_catpvf (s, "b%x:%s", strlen (name), ame);
+          sv_catpvf (s, "b%x:%s", strlen (name), name);
 
           if (is_dynamic (sv))
             {
