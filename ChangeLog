@@ -1,3 +1,8 @@
+2002-01-31  Manish Singh  <yosh@gimp.org>
+
+	* app/gui/file-open-dialog.c: fixed up so it works with the patch
+	I posted to gtk-devel-list. Real fix pending discussion there.
+
 2002-01-30  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/about-dialog.c: GDK_RGB_DITHER_NORMAL should be good enough.

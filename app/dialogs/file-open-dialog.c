@@ -556,14 +556,29 @@ set_preview (Gimp        *gimp,
 }
 
 static void
+selchanged_foreach (GtkTreeModel *model,
+		    GtkTreePath  *path,
+		    GtkTreeIter  *iter,
+		    gpointer      data)
+{
+  gboolean *selected = data;
+
+  *selected = TRUE;
+}
+
+static void
 file_open_selchanged_callback (GtkTreeSelection *sel,
 			       gpointer          data)
 {
   GtkFileSelection *fileload;
   Gimp             *gimp;
   const gchar      *fullfname;
+  gboolean          selected = FALSE;
 
-  if (gtk_tree_selection_get_selected (sel, NULL, NULL))
+  gtk_tree_selection_selected_foreach (sel,
+				       selchanged_foreach,
+				       &selected);
+  if (selected)
     {
       fileload = GTK_FILE_SELECTION (data);
 
