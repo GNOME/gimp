@@ -1519,7 +1519,9 @@ gimp_paint_core_scale_mask (GimpPaintCore *core,
 
   core->scale_brush = brush_scale_mask (brush_mask,
                                         dest_width, dest_height);
-  core->cache_invalid = TRUE;
+
+  core->cache_invalid       = TRUE;
+  core->solid_cache_invalid = TRUE;
 
   return core->scale_brush;
 }

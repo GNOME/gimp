@@ -1,3 +1,8 @@
+2003-11-25  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintcore.c (gimp_paint_core_scale_mask):
+	invalidate the solid brush cache as well. Should fix #127681.
+
 2003-11-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-enums.[ch]: added GIMP_UNDO_EVENT_UNDO_FREEZE
