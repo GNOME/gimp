@@ -1,3 +1,10 @@
+Sun Apr 26 17:50:36 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* updated engrave plug-in
+
+	* updated oilify plug-in
+	* changed the call to plug-in-oilify in circuit.scm and lava.scm 
+
 Sun Apr 26 03:06:16 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* oh goodie, the PSD plugin doesn't relay on endian junk anymore

@@ -114,12 +114,12 @@ query()
 
     gimp_install_procedure("plug_in_engrave",
 			   "Engrave the contents of the specified drawable",
-			   "More help",
+    "Creates a black-and-white 'engraved' version of an image as seen in old illustrations",
     "Spencer Kimball & Peter Mattis, Eiichi Takamori, Torsten Martinsen",
     "Spencer Kimball & Peter Mattis, Eiichi Takamori, Torsten Martinsen",
 			   "1995,1996,1997",
 			   "<Image>/Filters/Distorts/Engrave",
-			   "RGB, GRAY",
+			   "RGBA, GRAYA",
 			   PROC_PLUG_IN,
 			   nargs, nreturn_vals,
 			   args, return_vals);

@@ -82,7 +82,7 @@
     
     (plug-in-solid-noise 1 image active-layer FALSE TRUE seed 2 2 2)
     (plug-in-cubism 1 image active-layer tile_size 2.5 0)
-    (plug-in-oilify 1 image active-layer mask_size)
+    (plug-in-oilify 1 image active-layer mask_size 0)
     (plug-in-edge 1 image active-layer 2 0)
     (plug-in-gauss-rle 1 image active-layer 2 TRUE TRUE)
     (plug-in-gradmap 1 image active-layer)
