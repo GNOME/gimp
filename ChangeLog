@@ -1,3 +1,8 @@
+1999-12-20  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* plug-ins/print/print.c (get_printers): os2 patch.
+	use v.output_to ,,
+
 1999-12-20  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/common/blinds.c
