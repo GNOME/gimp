@@ -1,7 +1,7 @@
 /*
- * Animation Optimizer plug-in version 1.0.4
+ * Animation Optimizer plug-in version 1.1.0 [ALPHA]
  *
- * (c) Adam D. Moss, 1997-2000
+ * (c) Adam D. Moss, 1997-2001
  *     adam@gimp.org
  *     adam@foxbox.org
  *
@@ -10,6 +10,13 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 2001-04-28 : version 1.1.0 [ALPHA]
+ *              Support automated background (or foreground) removal.
+ *              It's half-broken.
+ *              Eliminated special optimized frame alignment cases --
+ *              we're not trying to be real-time like animationplay
+ *              and it complicates the code.
  *
  * 2000-08-30 : version 1.0.4
  *              Change default frame duration from 125ms to 100ms for
@@ -83,6 +90,14 @@ typedef enum
 } DisposeType;
 
 
+typedef enum
+{
+  OPOPTIMIZE   = 0L,
+  OPUNOPTIMIZE = 1L,
+  OPFOREGROUND = 2L,
+  OPBACKGROUND = 3L
+} operatingMode;
+
 
 /* Declare local functions. */
 static void query (void);
@@ -131,7 +146,7 @@ static GimpImageType  drawabletype_alpha;
 static guchar         pixelstep;
 static guchar        *palette;
 static gint           ncolours;
-static gboolean       optimize;
+static operatingMode  opmode;
 
 
 MAIN ()
@@ -153,12 +168,13 @@ query (void)
   static gint nreturn_args = sizeof (return_args) / sizeof (return_args[0]);
 
   gimp_install_procedure ("plug_in_animationoptimize",
-			  "This plugin applies various optimizations to"
-			  " a GIMP layer-based animation.",
+			  "This procedure applies various optimizations to"
+			  " a GIMP layer-based animation in an attempt to"
+			  " reduce the final file size.",
 			  "",
 			  "Adam D. Moss <adam@gimp.org>",
 			  "Adam D. Moss <adam@gimp.org>",
-			  "1997-98",
+			  "1997-2001",
 			  N_("<Image>/Filters/Animation/Animation Optimize"),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
@@ -166,7 +182,7 @@ query (void)
 			  args, return_args);
 
   gimp_install_procedure ("plug_in_animationunoptimize",
-			  "This plugin 'simplifies' a GIMP layer-based"
+			  "This procedure 'simplifies' a GIMP layer-based"
 			  " animation that has been AnimationOptimized.  This"
 			  " makes the animation much easier to work with if,"
 			  " for example, the optimized version is all you"
@@ -174,8 +190,37 @@ query (void)
 			  "",
 			  "Adam D. Moss <adam@gimp.org>",
 			  "Adam D. Moss <adam@gimp.org>",
-			  "1997-98",
+			  "1997-2001",
 			  N_("<Image>/Filters/Animation/Animation UnOptimize"),
+			  "RGB*, INDEXED*, GRAY*",
+			  GIMP_PLUGIN,
+			  nargs, nreturn_args,
+			  args, return_args);
+
+  gimp_install_procedure ("plug_in_animation_remove_backdrop",
+			  "This procedure attempts to remove the backdrop"
+			  " from a GIMP layer-based animation, leaving"
+			  " the foreground animation over transparency.",
+			  "",
+			  "Adam D. Moss <adam@gimp.org>",
+			  "Adam D. Moss <adam@gimp.org>",
+			  "2001",
+			  N_("<Image>/Filters/Animation/Animation: Remove Backdrop"),
+			  "RGB*, INDEXED*, GRAY*",
+			  GIMP_PLUGIN,
+			  nargs, nreturn_args,
+			  args, return_args);
+
+  gimp_install_procedure ("plug_in_animation_find_backdrop",
+			  "This procedure attempts to remove the foreground"
+			  " from a GIMP layer-based animation, leaving"
+			  " a one-layered image containing only the"
+			  " constant backdrop image.",
+			  "",
+			  "Adam D. Moss <adam@gimp.org>",
+			  "Adam D. Moss <adam@gimp.org>",
+			  "2001",
+			  N_("<Image>/Filters/Animation/Animation: Find Backdrop"),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
 			  nargs, nreturn_args,
@@ -205,19 +250,25 @@ run (gchar   *name,
 	  status = GIMP_PDB_CALLING_ERROR;
 	}
     }
-    INIT_I18N();
-
+  INIT_I18N();
+  
   /* Check the procedure name we were called with, to decide
      what needs to be done. */
   if (strcmp(name,"plug_in_animationoptimize")==0)
-    optimize = TRUE;
+    opmode = OPOPTIMIZE;
+  else if (strcmp(name,"plug_in_animationunoptimize")==0)
+    opmode = OPUNOPTIMIZE;
+  else if (strcmp(name,"plug_in_animation_find_backdrop")==0)
+    opmode = OPBACKGROUND;
+  else if (strcmp(name,"plug_in_animation_remove_backdrop")==0)
+    opmode = OPFOREGROUND;
   else
-    optimize = FALSE; /* UnOptimize */
-
+    g_error("GAH!!!");
+  
   if (status == GIMP_PDB_SUCCESS)
     {
       image_id = param[1].data.d_image;
-      
+
       new_image_id = do_optimizations(run_mode);
       
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -244,22 +295,114 @@ total_alpha(guchar* imdata, guint32 numpix, guchar bytespp)
   memset(imdata, 0, numpix*bytespp);
 }
 
+
+static void
+compose_row(int frame_num,
+	    DisposeType dispose,
+	    int row_num,
+	    unsigned char *dest,
+	    int dest_width,
+	    GimpDrawable *drawable,
+	    const gboolean cleanup)
+{
+  static unsigned char *line_buf = NULL;
+  guchar *srcptr;
+  GimpPixelRgn pixel_rgn;
+  gint rawx, rawy, rawbpp, rawwidth, rawheight;
+  int i;
+  gboolean has_alpha;
+
+  if (cleanup)
+    {
+      if (line_buf)
+	{
+	  g_free(line_buf);
+	  line_buf = NULL;
+	}
+
+      return;
+    }
+
+  if (dispose == DISPOSE_REPLACE)
+    {
+      total_alpha (dest, dest_width, pixelstep);
+    }
+
+  gimp_drawable_offsets (drawable->id,
+			 &rawx,
+			 &rawy);
+
+  rawheight = gimp_drawable_height (drawable->id);
+
+  /* this frame has nothing to give us for this row; return */
+  if (row_num >= rawheight + rawy ||
+      row_num < rawy)
+    return;
+
+  rawbpp = gimp_drawable_bpp (drawable->id);
+  rawwidth = gimp_drawable_width (drawable->id);
+  has_alpha = gimp_drawable_has_alpha (drawable->id);
+
+  if (line_buf)
+    {
+      g_free(line_buf);
+      line_buf = NULL;
+    }
+  line_buf = g_malloc(rawwidth * rawbpp);
+
+  /* Initialise and fetch the raw new frame row */
+
+  gimp_pixel_rgn_init (&pixel_rgn,
+		       drawable,
+		       0, row_num - rawy,
+		       rawwidth, 1,
+		       FALSE,
+		       FALSE);
+  gimp_pixel_rgn_get_rect (&pixel_rgn,
+			   line_buf,
+			   0, row_num - rawy,
+			   rawwidth, 1);
+
+  /* render... */
+
+  srcptr = line_buf;
+  
+  for (i=rawx; i<rawwidth+rawx; i++)
+    {
+      if (i>=0 && i<dest_width)
+	{
+	  if ((!has_alpha) || ((*(srcptr+rawbpp-1))&128))
+	    {
+	      int pi;
+	      for (pi = 0; pi < pixelstep-1; pi++)
+		{
+		  dest[i*pixelstep +pi] = *(srcptr + pi);
+		}
+	      dest[i*pixelstep + pixelstep - 1] = 255;
+	    }
+	}
+      
+      srcptr += rawbpp;
+    }
+  
+}
+
+
 static gint32
 do_optimizations(GimpRunModeType run_mode)
 {
   GimpPixelRgn pixel_rgn;
   static guchar* rawframe = NULL;
-  static gint rawwidth=0, rawheight=0, rawbpp=0;
-  gint rawx=0, rawy=0;
   guchar* srcptr;
   guchar* destptr;
-  gint i,j,this_frame_num;
+  gint row,this_frame_num;
   guint32 frame_sizebytes;
   gint32 new_layer_id;
   DisposeType dispose;
   guchar* this_frame = NULL;
   guchar* last_frame = NULL;
   guchar* opti_frame = NULL;
+  guchar* back_frame = NULL;
 
   int this_delay;
   int cumulated_delay = 0;
@@ -274,16 +417,31 @@ do_optimizations(GimpRunModeType run_mode)
   gint32 bbox_top, bbox_bottom, bbox_left, bbox_right;
   gint32 rbox_top, rbox_bottom, rbox_left, rbox_right;
 
-  if (optimize)
-    gimp_progress_init (_("Optimizing Animation..."));
-  else
-    gimp_progress_init (_("UnOptimizing Animation..."));
+  switch (opmode)
+    {
+    case OPUNOPTIMIZE:
+      gimp_progress_init (_("UnOptimizing Animation..."));
+      break;
+    case OPFOREGROUND:
+      gimp_progress_init (_("Removing Animation Background..."));
+      break;
+    case OPBACKGROUND:
+      gimp_progress_init (_("Finding Animation Background..."));
+      break;
+    case OPOPTIMIZE:
+    default:
+      gimp_progress_init (_("Optimizing Animation..."));
+      break;
+    }
 
   width     = gimp_image_width(image_id);
   height    = gimp_image_height(image_id);
   layers    = gimp_image_get_layers (image_id, &total_frames);
   imagetype = gimp_image_base_type(image_id);
   pixelstep = (imagetype == GIMP_RGB) ? 4 : 2;
+
+  /*  gimp_tile_cache_ntiles(total_frames * (width / gimp_tile_width() + 1) );*/
+  
 
   drawabletype_alpha = (imagetype == GIMP_RGB) ? GIMP_RGBA_IMAGE :
     ((imagetype == GIMP_INDEXED) ? GIMP_INDEXEDA_IMAGE : GIMP_GRAYA_IMAGE);
@@ -293,6 +451,9 @@ do_optimizations(GimpRunModeType run_mode)
   this_frame = g_malloc (frame_sizebytes);
   last_frame = g_malloc (frame_sizebytes);
   opti_frame = g_malloc (frame_sizebytes);
+  if (opmode == OPBACKGROUND ||
+      opmode == OPFOREGROUND)
+    back_frame = g_malloc (frame_sizebytes);
 
   total_alpha (this_frame, width*height, pixelstep);
   total_alpha (last_frame, width*height, pixelstep);
@@ -308,563 +469,543 @@ do_optimizations(GimpRunModeType run_mode)
   if ((this_frame == NULL) || (last_frame == NULL) || (opti_frame == NULL))
     g_error(_("Not enough memory to allocate buffers for optimization.\n"));
 
-  for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
+#if 1
+  if (opmode == OPBACKGROUND ||
+      opmode == OPFOREGROUND)
     {
-      /*
-       * We actually unoptimize the animation before re-optimizing it,
-       *  otherwise the logic can get a bit too hard... for me.
-       */
+      /* iterate through all rows of all frames, find statistical
+	 mode for each pixel position. */
+      int i,j;
+      guchar **these_rows;
+      guchar **red;
+      guchar **green;
+      guchar **blue;
+      guint **count;
 
-      /*
-       *
-       * BUILD THIS FRAME
-       *
-       */
+      guint *num_colours;
+      
+      these_rows = g_malloc(total_frames * sizeof(guchar *));
+      red =        g_malloc(total_frames * sizeof(guchar *));
+      green =      g_malloc(total_frames * sizeof(guchar *));
+      blue =       g_malloc(total_frames * sizeof(guchar *));
+      count =      g_malloc(total_frames * sizeof(guint *));
 
-      drawable = gimp_drawable_get (layers[total_frames-(this_frame_num+1)]);
+      num_colours = g_malloc(width * sizeof(guint));
 
-      /* Image has been closed/etc since we got the layer list? */
-      /* FIXME - How do we tell if a gimp_drawable_get() fails? */
-      if (gimp_drawable_width (drawable->id) == 0)
+g_warning("stat fun");
+
+      for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
 	{
-	  gimp_quit ();
+	  these_rows[this_frame_num] = g_malloc(width * pixelstep);
+
+	  red[this_frame_num] = g_malloc(width * sizeof(guchar));
+	  green[this_frame_num] = g_malloc(width * sizeof(guchar));
+	  blue[this_frame_num] = g_malloc(width * sizeof(guchar));
+
+	  count[this_frame_num] = g_malloc0(width * sizeof(guint));
 	}
-
-      this_delay = get_frame_duration (this_frame_num);
-      dispose    = get_frame_disposal (this_frame_num);
-
-      if (dispose == DISPOSE_REPLACE)
+      
+      for (row = 0; row < height; row++)
 	{
-	  total_alpha (this_frame, width * height, pixelstep);
+	  memset(num_colours, 0, width * sizeof(guint));
+
+	  for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
+	    {
+	      /*g_warning("stat fun : %d / %d", row, this_frame_num);*/
+
+	      drawable =
+		gimp_drawable_get (layers[total_frames-(this_frame_num+1)]);
+	      
+	      dispose = get_frame_disposal (this_frame_num);
+	      
+	      compose_row(this_frame_num,
+			  dispose,
+			  row,
+			  these_rows[this_frame_num],
+			  width,
+			  drawable,
+			  FALSE
+			  );
+
+	      gimp_drawable_detach(drawable);
+	    }
+	  
+	  /*	  g_warning("eh2."); */
+
+	  for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
+	    {
+	      for (i=0; i<width; i++)
+		{
+		  /*		  g_warning("eh4(%d).", i); */
+		  if (these_rows[this_frame_num][i * pixelstep + pixelstep -1]
+		      >= 128)
+		    {
+		      /*		      fprintf(stderr, "%d ", */
+		      /*			      these_rows[this_frame_num][i * pixelstep + pixelstep -1]); */
+		      for (j=0; j<num_colours[i]; j++)
+			{
+			  /*		      g_warning("eh3(%d,%d).", i,j); */
+
+			  switch (pixelstep)
+			    {
+			    case 4:
+			      if (these_rows[this_frame_num][i * 4 +0] ==
+				  red[j][i] &&
+				  these_rows[this_frame_num][i * 4 +1] ==
+				  green[j][i] &&
+				  these_rows[this_frame_num][i * 4 +2] ==
+				  blue[j][i])
+				{
+				  (count[j][i])++;
+				  goto same;
+				}
+			      break;
+			    case 2:
+			      if (these_rows[this_frame_num][i * 2 +0] ==
+				  red[j][i])
+				{
+				  (count[j][i])++;
+				  goto same;
+				}
+			      break;
+			    default:
+			      g_error ("Eeep!");
+			      break;
+			    }
+			}
+
+		      count[num_colours[i]][i] = 1;
+		      red[num_colours[i]][i] =
+			these_rows[this_frame_num][i * pixelstep];
+		      if (pixelstep == 4)
+			{
+			  green[num_colours[i]][i] =
+			    these_rows[this_frame_num][i * 4 +1];
+			  blue[num_colours[i]][i] =
+			    these_rows[this_frame_num][i * 4 +2];
+			}
+		      num_colours[i]++;
+		    }
+		  /*		  else
+				  g_warning("OOH!");*/
+		same:
+		}
+	    }
+
+	  /*	  g_warning("eh."); */
+	  
+	  for (i=0; i<width; i++)
+	    {
+	      guint best_count = 0;
+	      guchar best_r=255, best_g=0, best_b=255;
+
+	      for (j=0; j<num_colours[i]; j++)
+		{
+		  if (count[j][i] > best_count)
+		    {
+		      best_count = count[j][i];
+		      best_r = red[j][i];
+		      best_g = green[j][i];
+		      best_b = blue[j][i];
+		    }
+		}
+
+	      back_frame[width * pixelstep * row +i*pixelstep + 0] = best_r;
+	      if (pixelstep == 4)
+		{
+		  back_frame[width * pixelstep * row +i*pixelstep + 1] =
+		    best_g;
+		  back_frame[width * pixelstep * row +i*pixelstep + 2] =
+		    best_b;
+		}
+	      back_frame[width * pixelstep * row +i*pixelstep +pixelstep-1] =
+		(best_count == 0) ? 0 : 255;
+
+	      if (best_count == 0)
+		g_warning("yayyyy!");
+	    }
+	  /*	  memcpy(&back_frame[width * pixelstep * row],
+		  these_rows[0],
+		  width * pixelstep);*/
 	}
-
-      /* only get a new 'raw' drawable-data buffer if this and
-	 the previous raw buffer were different sizes*/
-
-      if ((rawwidth*rawheight*rawbpp)
-	  !=
-	  ((gimp_drawable_width (drawable->id)*
-	    gimp_drawable_height (drawable->id)*
-	    gimp_drawable_bpp (drawable->id))))
+      
+      g_warning("stat fun over");
+      
+      for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
 	{
-	  if (rawframe != NULL) g_free (rawframe);
-	  rawframe = g_malloc ((gimp_drawable_width (drawable->id)) *
-			       (gimp_drawable_height (drawable->id)) *
-			       (gimp_drawable_bpp (drawable->id)));
+	  g_free(these_rows[this_frame_num]);
+	  g_free(red[this_frame_num]);
+	  g_free(green[this_frame_num]);
+	  g_free(blue[this_frame_num]);
+	  g_free(count[this_frame_num]);
 	}
+      g_free(these_rows);
+      g_free(red);
+      g_free(green);
+      g_free(blue);
+      g_free(count);
+      g_free(num_colours);
+    }
+#endif
 
-      rawwidth = gimp_drawable_width (drawable->id);
-      rawheight = gimp_drawable_height (drawable->id);
-      rawbpp = gimp_drawable_bpp (drawable->id);
-
-      /* Initialise and fetch the whole raw new frame */
-
-      gimp_pixel_rgn_init (&pixel_rgn,
-			   drawable,
+  if (opmode == OPBACKGROUND)
+    {      
+      new_layer_id = gimp_layer_new(new_image_id,
+				    "Backgroundx",
+				    width, height,
+				    drawabletype_alpha,
+				    100.0,
+				    GIMP_NORMAL_MODE);
+      
+      gimp_image_add_layer (new_image_id, new_layer_id, 0);
+      
+      drawable = gimp_drawable_get (new_layer_id);
+      
+      gimp_pixel_rgn_init (&pixel_rgn, drawable,
 			   0, 0,
-			   drawable->width, drawable->height,
-			   FALSE,
-			   FALSE);
-      gimp_pixel_rgn_get_rect (&pixel_rgn,
-			       rawframe,
+			   width, height,
+			   TRUE, FALSE);
+      gimp_pixel_rgn_set_rect (&pixel_rgn, back_frame,
 			       0, 0,
-			       drawable->width, drawable->height);
-      /*  gimp_pixel_rgns_register (1, &pixel_rgn);*/
-
-      gimp_drawable_offsets (drawable->id,
-			     &rawx,
-			     &rawy);
-
-
-      /* render... */
-
-      switch (imagetype)
+			       width, height);
+      gimp_drawable_flush (drawable);
+      gimp_drawable_detach (drawable);
+    }
+  else
+    {
+      for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
 	{
-	case GIMP_RGB:
-	  if ((rawwidth==width) &&
-	      (rawheight==height) &&
-	      (rawx==0) &&
-	      (rawy==0))
-	    {
-	      /* --- These cases are for the best cases,  in        --- */
-	      /* --- which this frame is the same size and position --- */
-	      /* --- as the preview buffer itself                   --- */
-	  
-	      if (gimp_drawable_has_alpha (drawable->id))
-		{ /* alpha RGB, same size */
-		  destptr = this_frame;
-		  srcptr  = rawframe;
-	      
-		  i = rawwidth*rawheight;
-		  while (i--)
-		    {
-		      if (!((*(srcptr+3))&128))
-			{
-			  srcptr  += 4;
-			  destptr += 4;
-			  continue;
-			}
-		      *(destptr++) = *(srcptr++);
-		      *(destptr++) = *(srcptr++);
-		      *(destptr++) = *(srcptr++);
-		      *(destptr++) = 255;
-		      srcptr++;
-		    }
-		}
-	      else /* RGB no alpha, same size */
-		{
-		  destptr = this_frame;
-		  srcptr  = rawframe;
-	      
-		  i = rawwidth*rawheight;
-		  while (i--)
-		    {
-		      *(destptr++) = *(srcptr++);
-		      *(destptr++) = *(srcptr++);
-		      *(destptr++) = *(srcptr++);
-		      *(destptr++) = 255;
-		    }		  
-		}
-	    }
-	  else
-	    {
-	      /* --- These are suboptimal catch-all cases for when  --- */
-	      /* --- this frame is bigger/smaller than the preview  --- */
-	      /* --- buffer, and/or offset within it.               --- */
-	  
-	      /* FIXME: FINISH ME! [done?] */
-	  
-	      if (gimp_drawable_has_alpha (drawable->id))
-		{ /* RGB alpha, diff size */
-	      
-		  destptr = this_frame;
-		  srcptr = rawframe;
-	      
-		  for (j=rawy; j<rawheight+rawy; j++)
-		    {
-		      for (i=rawx; i<rawwidth+rawx; i++)
-			{
-			  if ((i>=0 && i<width) &&
-			      (j>=0 && j<height))
-			    {
-			      if ((*(srcptr+3))&128)
-				{
-				  this_frame[(j*width+i)*4   ] = *(srcptr);
-				  this_frame[(j*width+i)*4 +1] = *(srcptr+1);
-				  this_frame[(j*width+i)*4 +2] = *(srcptr+2);
-				  this_frame[(j*width+i)*4 +3] = 255;
-				}
-			    }
-		      
-			  srcptr += 4;
-			}
-		    }
-		}
-	      else
-		{
-		  /* RGB no alpha, diff size */
-	      
-		  destptr = this_frame;
-		  srcptr = rawframe;
-	      
-		  for (j=rawy; j<rawheight+rawy; j++)
-		    {
-		      for (i=rawx; i<rawwidth+rawx; i++)
-			{
-			  if ((i>=0 && i<width) &&
-			      (j>=0 && j<height))
-			    {
-			      this_frame[(j*width+i)*4   ] = *(srcptr);
-			      this_frame[(j*width+i)*4 +1] = *(srcptr+1);
-			      this_frame[(j*width+i)*4 +2] = *(srcptr+2);
-			      this_frame[(j*width+i)*4 +3] = 255;
-			    }
-		      
-			  srcptr += 3;
-			}
-		    }
-		}
-	    }
-	  break; /* case RGB */
-
-	case GIMP_GRAY:
-	case GIMP_INDEXED:
-	  if ((rawwidth==width) &&
-	      (rawheight==height) &&
-	      (rawx==0) &&
-	      (rawy==0))
-	    {
-	      /* --- These cases are for the best cases,  in        --- */
-	      /* --- which this frame is the same size and position --- */
-	      /* --- as the preview buffer itself                   --- */
-	  
-	      if (gimp_drawable_has_alpha (drawable->id))
-		{ /* I alpha, same size */
-		  destptr = this_frame;
-		  srcptr  = rawframe;
-	      
-		  i = rawwidth*rawheight;
-		  while (i--)
-		    {
-		      if (!(*(srcptr+1)))
-			{
-			  srcptr  += 2;
-			  destptr += 2;
-			  continue;
-			}
-		      *(destptr++) = *(srcptr);
-			  *(destptr++) = 255;
-			  srcptr+=2;
-		    }
-		}
-	      else /* I, no alpha, same size */
-		{
-		  destptr = this_frame;
-		  srcptr  = rawframe;
-	      
-		  i = rawwidth*rawheight;
-		  while (i--)
-		    {
-		      *(destptr++) = *(srcptr);
-		      *(destptr++) = 255;
-		      srcptr++;
-		    }
-		}
-	    }
-	  else
-	    {
-	      /* --- These are suboptimal catch-all cases for when  --- */
-	      /* --- this frame is bigger/smaller than the preview  --- */
-	      /* --- buffer, and/or offset within it.               --- */
-	  
-	      /* FIXME: FINISH ME! */
-	  
-	      if (gimp_drawable_has_alpha (drawable->id))
-		{ /* I alpha, diff size */
-	      
-		  srcptr = rawframe;
-	      
-		  for (j=rawy; j<rawheight+rawy; j++)
-		    {
-		      for (i=rawx; i<rawwidth+rawx; i++)
-			{
-			  if ((i>=0 && i<width) &&
-			      (j>=0 && j<height))
-			    {
-			      if (*(srcptr+1))
-				{
-				  this_frame[(j*width+i)*pixelstep] =
-				    *srcptr;
-				  this_frame[(j*width+i)*pixelstep
-					    + pixelstep - 1] =
-				    255;
-				}
-			    }
-		      
-			  srcptr += 2;
-			}
-		    }
-		}
-	      else
-		{
-		  /* I, no alpha, diff size */
-	      
-		  srcptr = rawframe;
-	      
-		  for (j=rawy; j<rawheight+rawy; j++)
-		    {
-		      for (i=rawx; i<rawwidth+rawx; i++)
-			{
-			  if ((i>=0 && i<width) &&
-			      (j>=0 && j<height))
-			    {
-			      this_frame[(j*width+i)*pixelstep]
-				= *srcptr;
-			      this_frame[(j*width+i)*pixelstep
-					+ pixelstep - 1] = 255;
-			    }
-		      
-			  srcptr ++;
-			}
-		    }
-		}
-	    }
-	  break; /* case INDEXED/GRAY */
-
-	}
-  
-      /* clean up */
-      gimp_drawable_detach(drawable);
-
-
-      can_combine = FALSE;
-      bbox_left = 0;
-      bbox_top = 0;
-      bbox_right = width;
-      bbox_bottom = height;
-      rbox_left = 0;
-      rbox_top = 0;
-      rbox_right = width;
-      rbox_bottom = height;
-      /* copy 'this' frame into a buffer which we can safely molest */
-      memcpy(opti_frame, this_frame, frame_sizebytes);
-      /*
-       *
-       * OPTIMIZE HERE!
-       *
-       */
-      if (
-	  (this_frame_num != 0) /* Can't delta bottom frame! */
-	  && (optimize)
-	  )
-	{
-	  int xit, yit, byteit;
-
-	  can_combine = TRUE;
-
 	  /*
-	   * SEARCH FOR BOUNDING BOX
+	   * BUILD THIS FRAME into our 'this_frame' buffer.
 	   */
-	  bbox_left = width;
-	  bbox_top = height;
-	  bbox_right = 0;
-	  bbox_bottom = 0;
-	  rbox_left = width;
-	  rbox_top = height;
-	  rbox_right = 0;
-	  rbox_bottom = 0;
-	  
-	  for (yit=0; yit<height; yit++)
+
+	  drawable =
+	    gimp_drawable_get (layers[total_frames-(this_frame_num+1)]);
+
+	  /* Image has been closed/etc since we got the layer list? */
+	  /* FIXME - How do we tell if a gimp_drawable_get() fails? */
+	  if (gimp_drawable_width (drawable->id) == 0)
 	    {
-	      for (xit=0; xit<width; xit++)
+	      gimp_quit ();
+	    }
+
+	  this_delay = get_frame_duration (this_frame_num);
+	  dispose    = get_frame_disposal (this_frame_num);
+      
+	  for (row = 0; row < height; row++)
+	    {
+	      compose_row(this_frame_num,
+			  dispose,
+			  row,
+			  &this_frame[pixelstep*width * row],
+			  width,
+			  drawable,
+			  FALSE
+			  );
+	    }
+
+	  /* clean up */
+	  gimp_drawable_detach(drawable);
+
+
+	  if (opmode == OPFOREGROUND)
+	    {
+	      int xit, yit, byteit;
+
+	      g_warning("matcher");
+
+	      for (yit=0; yit<height; yit++)
 		{
-		  gboolean keep_pix;
-		  gboolean opaq_pix;
-		  /* Check if 'this' and 'last' are transparent */
-		  if (!(this_frame[yit*width*pixelstep + xit*pixelstep
-				  + pixelstep-1]&128)
-		      &&
-		      !(last_frame[yit*width*pixelstep + xit*pixelstep
-				  + pixelstep-1]&128))
+		  for (xit=0; xit<width; xit++)
 		    {
-		      keep_pix = FALSE;
-		      opaq_pix = FALSE;
-		      goto decided;
+		      for (byteit=0; byteit<pixelstep-1; byteit++)
+			{
+			  if (back_frame[yit*width*pixelstep + xit*pixelstep
+					+ byteit]
+			      !=
+			      this_frame[yit*width*pixelstep + xit*pixelstep
+					+ byteit])
+			    {
+			      goto enough;
+			    }		    
+			}
+		      this_frame[yit*width*pixelstep + xit*pixelstep
+				+ pixelstep - 1] = 0;
+		    enough:
 		    }
-		  /* Check if just 'this' is transparent */
-		  if ((last_frame[yit*width*pixelstep + xit*pixelstep
-				 + pixelstep-1]&128)
-		      &&
-		      !(this_frame[yit*width*pixelstep + xit*pixelstep
-				  + pixelstep-1]&128))
+		}
+	    }
+
+	  can_combine = FALSE;
+	  bbox_left = 0;
+	  bbox_top = 0;
+	  bbox_right = width;
+	  bbox_bottom = height;
+	  rbox_left = 0;
+	  rbox_top = 0;
+	  rbox_right = width;
+	  rbox_bottom = height;
+	  /* copy 'this' frame into a buffer which we can safely molest */
+	  memcpy(opti_frame, this_frame, frame_sizebytes);
+	  /*
+	   *
+	   * OPTIMIZE HERE!
+	   *
+	   */
+	  if (
+	      (this_frame_num != 0) /* Can't delta bottom frame! */
+	      && (opmode == OPOPTIMIZE)
+	      )
+	    {
+	      int xit, yit, byteit;
+
+	      can_combine = TRUE;
+
+	      /*
+	       * SEARCH FOR BOUNDING BOX
+	       */
+	      bbox_left = width;
+	      bbox_top = height;
+	      bbox_right = 0;
+	      bbox_bottom = 0;
+	      rbox_left = width;
+	      rbox_top = height;
+	      rbox_right = 0;
+	      rbox_bottom = 0;
+	  
+	      for (yit=0; yit<height; yit++)
+		{
+		  for (xit=0; xit<width; xit++)
 		    {
-		      keep_pix = TRUE;
-		      opaq_pix = FALSE;
-		      can_combine = FALSE;
-		      goto decided;
-		    }
-		  /* Check if just 'last' is transparent */
-		  if (!(last_frame[yit*width*pixelstep + xit*pixelstep
-				  + pixelstep-1]&128)
-		      &&
-		      (this_frame[yit*width*pixelstep + xit*pixelstep
-				 + pixelstep-1]&128))
-		    {
-		      keep_pix = TRUE;
-		      opaq_pix = TRUE;
-		      goto decided;
-		    }
-		  /* If 'last' and 'this' are opaque, we have
-		   *  to check if they're the same colour - we
-		   *  only have to keep the pixel if 'last' or
-		   *  'this' are opaque and different.
-		   */
-		  keep_pix = FALSE;
-		  opaq_pix = TRUE;
-		  for (byteit=0; byteit<pixelstep-1; byteit++)
-		    {
-		      if (last_frame[yit*width*pixelstep + xit*pixelstep
-				    + byteit]
-			  !=
-			  this_frame[yit*width*pixelstep + xit*pixelstep
-				    + byteit])
+		      gboolean keep_pix;
+		      gboolean opaq_pix;
+		      /* Check if 'this' and 'last' are transparent */
+		      if (!(this_frame[yit*width*pixelstep + xit*pixelstep
+				      + pixelstep-1]&128)
+			  &&
+			  !(last_frame[yit*width*pixelstep + xit*pixelstep
+				      + pixelstep-1]&128))
+			{
+			  keep_pix = FALSE;
+			  opaq_pix = FALSE;
+			  goto decided;
+			}
+		      /* Check if just 'this' is transparent */
+		      if ((last_frame[yit*width*pixelstep + xit*pixelstep
+				     + pixelstep-1]&128)
+			  &&
+			  !(this_frame[yit*width*pixelstep + xit*pixelstep
+				      + pixelstep-1]&128))
 			{
 			  keep_pix = TRUE;
+			  opaq_pix = FALSE;
+			  can_combine = FALSE;
 			  goto decided;
-			}			    
-		    }
-		decided:
-		  if (opaq_pix)
-		    {
-		      if (xit<rbox_left) rbox_left=xit;
-		      if (xit>rbox_right) rbox_right=xit;
-		      if (yit<rbox_top) rbox_top=yit;
-		      if (yit>rbox_bottom) rbox_bottom=yit;
-		    }
-		  if (keep_pix)
-		    {
-		      if (xit<bbox_left) bbox_left=xit;
-		      if (xit>bbox_right) bbox_right=xit;
-		      if (yit<bbox_top) bbox_top=yit;
-		      if (yit>bbox_bottom) bbox_bottom=yit;
-		    }
-		  else
-		    {
-		      /* pixel didn't change this frame - make
-		       *  it transparent in our optimized buffer!
+			}
+		      /* Check if just 'last' is transparent */
+		      if (!(last_frame[yit*width*pixelstep + xit*pixelstep
+				      + pixelstep-1]&128)
+			  &&
+			  (this_frame[yit*width*pixelstep + xit*pixelstep
+				     + pixelstep-1]&128))
+			{
+			  keep_pix = TRUE;
+			  opaq_pix = TRUE;
+			  goto decided;
+			}
+		      /* If 'last' and 'this' are opaque, we have
+		       *  to check if they're the same colour - we
+		       *  only have to keep the pixel if 'last' or
+		       *  'this' are opaque and different.
 		       */
-		      opti_frame[yit*width*pixelstep + xit*pixelstep
-				+ pixelstep-1] = 0;
-		    }
-		} /* xit */
-	    } /* yit */
+		      keep_pix = FALSE;
+		      opaq_pix = TRUE;
+		      for (byteit=0; byteit<pixelstep-1; byteit++)
+			{
+			  if ((last_frame[yit*width*pixelstep + xit*pixelstep
+					 + byteit]
+			       !=
+			       this_frame[yit*width*pixelstep + xit*pixelstep
+					 + byteit])
+			      )
+			    {
+			      keep_pix = TRUE;
+			      goto decided;
+			    }			    
+			}
+		    decided:
+		      if (opaq_pix)
+			{
+			  if (xit<rbox_left) rbox_left=xit;
+			  if (xit>rbox_right) rbox_right=xit;
+			  if (yit<rbox_top) rbox_top=yit;
+			  if (yit>rbox_bottom) rbox_bottom=yit;
+			}
+		      if (keep_pix)
+			{
+			  if (xit<bbox_left) bbox_left=xit;
+			  if (xit>bbox_right) bbox_right=xit;
+			  if (yit<bbox_top) bbox_top=yit;
+			  if (yit>bbox_bottom) bbox_bottom=yit;
+			}
+		      else
+			{
+			  /* pixel didn't change this frame - make
+			   *  it transparent in our optimized buffer!
+			   */
+			  opti_frame[yit*width*pixelstep + xit*pixelstep
+				    + pixelstep-1] = 0;
+			}
+		    } /* xit */
+		} /* yit */
 
-	  if (!can_combine)
-	    {
-	      bbox_left = rbox_left;
-	      bbox_top = rbox_top;
-	      bbox_right = rbox_right;
-	      bbox_bottom = rbox_bottom;
-	    }
-
-	  bbox_right++;
-	  bbox_bottom++;
-
-	  /*
-	   * Collapse opti_frame data down such that the data
-	   *  which occupies the bounding box sits at the start
-	   *  of the data (for convenience with ..set_rect()).
-	   */
-	  destptr = opti_frame;
-	  /*
-	   * If can_combine, then it's safe to use our optimized
-	   *  alpha information.  Otherwise, an opaque pixel became
-	   *  transparent this frame, and we'll have to use the
-	   *  actual true frame's alpha.
-	   */
-	  if (can_combine)
-	    srcptr = opti_frame;
-	  else
-	    srcptr = this_frame;
-	  for (yit=bbox_top; yit<bbox_bottom; yit++)
-	    {
-	      for (xit=bbox_left; xit<bbox_right; xit++)
+	      if (!can_combine)
 		{
-		  for (byteit=0; byteit<pixelstep; byteit++)
+		  bbox_left = rbox_left;
+		  bbox_top = rbox_top;
+		  bbox_right = rbox_right;
+		  bbox_bottom = rbox_bottom;
+		}
+
+	      bbox_right++;
+	      bbox_bottom++;
+
+	      /*
+	       * Collapse opti_frame data down such that the data
+	       *  which occupies the bounding box sits at the start
+	       *  of the data (for convenience with ..set_rect()).
+	       */
+	      destptr = opti_frame;
+	      /*
+	       * If can_combine, then it's safe to use our optimized
+	       *  alpha information.  Otherwise, an opaque pixel became
+	       *  transparent this frame, and we'll have to use the
+	       *  actual true frame's alpha.
+	       */
+	      if (can_combine)
+		srcptr = opti_frame;
+	      else
+		srcptr = this_frame;
+	      for (yit=bbox_top; yit<bbox_bottom; yit++)
+		{
+		  for (xit=bbox_left; xit<bbox_right; xit++)
 		    {
-		      *(destptr++) = srcptr[yit*pixelstep*width +
-					   pixelstep*xit + byteit];
+		      for (byteit=0; byteit<pixelstep; byteit++)
+			{
+			  *(destptr++) = srcptr[yit*pixelstep*width +
+					       pixelstep*xit + byteit];
+			}
 		    }
 		}
+	    } /* !bot frame? */
+	  else
+	    {
+	      memcpy(opti_frame, this_frame, frame_sizebytes);
 	    }
-	} /* !bot frame? */
-      else
-	{
-	  memcpy(opti_frame, this_frame, frame_sizebytes);
-	}
 
-      /*
-       *
-       * REMEMBER THE ANIMATION STATUS TO DELTA AGAINST NEXT TIME
-       *
-       */
-      memcpy(last_frame, this_frame, frame_sizebytes);
+	  /*
+	   *
+	   * REMEMBER THE ANIMATION STATUS TO DELTA AGAINST NEXT TIME
+	   *
+	   */
+	  memcpy(last_frame, this_frame, frame_sizebytes);
 
       
-      /*
-       *
-       * PUT THIS FRAME INTO A NEW LAYER IN THE NEW IMAGE
-       *
-       */
-
-      oldlayer_name =
-	gimp_layer_get_name(layers[total_frames-(this_frame_num+1)]);
-
-      buflen = strlen(oldlayer_name) + 40;
-
-      newlayer_name = g_malloc(buflen);
-
-      remove_disposal_tag(newlayer_name, oldlayer_name);
-      g_free(oldlayer_name);
-
-      oldlayer_name = g_malloc(buflen);
-
-      remove_ms_tag(oldlayer_name, newlayer_name);
-
-      g_snprintf(newlayer_name, buflen, "%s(%dms)%s",
-		 oldlayer_name, this_delay,
-		 (this_frame_num ==  0) ? "" :
-		 can_combine ? "(combine)" : "(replace)");
-
-      g_free(oldlayer_name);
-
-      /* Empty frame! */
-      if (bbox_right <= bbox_left ||
-	  bbox_bottom <= bbox_top)
-	{
-	  cumulated_delay += this_delay;
-
-	  g_free (newlayer_name);
+	  /*
+	   *
+	   * PUT THIS FRAME INTO A NEW LAYER IN THE NEW IMAGE
+	   *
+	   */
 
 	  oldlayer_name =
-	    gimp_layer_get_name(last_true_frame);
-	  
+	    gimp_layer_get_name(layers[total_frames-(this_frame_num+1)]);
+
 	  buflen = strlen(oldlayer_name) + 40;
-	  
+
 	  newlayer_name = g_malloc(buflen);
-	  
+
 	  remove_disposal_tag(newlayer_name, oldlayer_name);
 	  g_free(oldlayer_name);
-	  
+
 	  oldlayer_name = g_malloc(buflen);
-	  
+
 	  remove_ms_tag(oldlayer_name, newlayer_name);
-	  
+
 	  g_snprintf(newlayer_name, buflen, "%s(%dms)%s",
-		     oldlayer_name, cumulated_delay,
+		     oldlayer_name, this_delay,
 		     (this_frame_num ==  0) ? "" :
 		     can_combine ? "(combine)" : "(replace)");
 
-	  gimp_layer_set_name(last_true_frame, newlayer_name);
+	  g_free(oldlayer_name);
 
-	  g_free (newlayer_name);
-	}
-      else
-	{
-	  cumulated_delay = this_delay;
+	  /* Empty frame! */
+	  if (bbox_right <= bbox_left ||
+	      bbox_bottom <= bbox_top)
+	    {
+	      cumulated_delay += this_delay;
 
-	  last_true_frame =
-	    new_layer_id = gimp_layer_new(new_image_id,
-					  newlayer_name,
-					  bbox_right-bbox_left,
-					  bbox_bottom-bbox_top,
-					  drawabletype_alpha,
-					  100.0,
-					  GIMP_NORMAL_MODE);
-	  g_free(newlayer_name);
+	      g_free (newlayer_name);
+
+	      oldlayer_name =
+		gimp_layer_get_name(last_true_frame);
 	  
-	  gimp_image_add_layer (new_image_id, new_layer_id, 0);
+	      buflen = strlen(oldlayer_name) + 40;
 	  
-	  drawable = gimp_drawable_get (new_layer_id);
+	      newlayer_name = g_malloc(buflen);
 	  
-	  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-			       bbox_right-bbox_left,
-			       bbox_bottom-bbox_top,
-			       TRUE, FALSE);
-	  gimp_pixel_rgn_set_rect (&pixel_rgn, opti_frame, 0, 0,
+	      remove_disposal_tag(newlayer_name, oldlayer_name);
+	      g_free(oldlayer_name);
+	  
+	      oldlayer_name = g_malloc(buflen);
+	  
+	      remove_ms_tag(oldlayer_name, newlayer_name);
+	  
+	      g_snprintf(newlayer_name, buflen, "%s(%dms)%s",
+			 oldlayer_name, cumulated_delay,
+			 (this_frame_num ==  0) ? "" :
+			 can_combine ? "(combine)" : "(replace)");
+
+	      gimp_layer_set_name(last_true_frame, newlayer_name);
+
+	      g_free (newlayer_name);
+	    }
+	  else
+	    {
+	      cumulated_delay = this_delay;
+
+	      last_true_frame =
+		new_layer_id = gimp_layer_new(new_image_id,
+					      newlayer_name,
+					      bbox_right-bbox_left,
+					      bbox_bottom-bbox_top,
+					      drawabletype_alpha,
+					      100.0,
+					      GIMP_NORMAL_MODE);
+	      g_free(newlayer_name);
+	  
+	      gimp_image_add_layer (new_image_id, new_layer_id, 0);
+	  
+	      drawable = gimp_drawable_get (new_layer_id);
+	  
+	      gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
 				   bbox_right-bbox_left,
-				   bbox_bottom-bbox_top);
-	  gimp_drawable_flush (drawable);
-	  gimp_drawable_detach (drawable);     
-	  gimp_layer_translate (new_layer_id, (gint)bbox_left, (gint)bbox_top);
+				   bbox_bottom-bbox_top,
+				   TRUE, FALSE);
+	      gimp_pixel_rgn_set_rect (&pixel_rgn, opti_frame, 0, 0,
+				       bbox_right-bbox_left,
+				       bbox_bottom-bbox_top);
+	      gimp_drawable_flush (drawable);
+	      gimp_drawable_detach (drawable);     
+	      gimp_layer_translate (new_layer_id, (gint)bbox_left, (gint)bbox_top);
+	    }
+
+	  gimp_progress_update (((double)this_frame_num+1.0) /
+				((double)total_frames));
 	}
-
-      gimp_progress_update (((double)this_frame_num+1.0) /
-			    ((double)total_frames));
     }
-
-    if (run_mode != GIMP_RUN_NONINTERACTIVE)
-       gimp_display_new (new_image_id);
+  
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+    gimp_display_new (new_image_id);
 
   g_free(rawframe);
   rawframe = NULL;
@@ -874,6 +1015,11 @@ do_optimizations(GimpRunModeType run_mode)
   this_frame = NULL;
   g_free(opti_frame);
   opti_frame = NULL;
+  if (back_frame)
+    {
+      g_free(opti_frame);
+      opti_frame = NULL;
+    }
 
   return new_image_id;
 }

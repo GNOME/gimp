@@ -1,3 +1,12 @@
+2001-05-12  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/animoptimize.c: Cunningly decrease
+	the efficiency of the plugin.  Add semi-broken code
+	to find or remove the statistical mode pixels across
+	all frames (ie. the animation background).  Checked in
+	mainly to avoid tree-drift until I have time to finish
+	this.
+
 2001-05-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
