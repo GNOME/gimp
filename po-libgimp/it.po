@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 02:35+0100\n"
-"PO-Revision-Date: 2004-11-05 11:29+0100\n"
+"POT-Creation-Date: 2004-11-30 23:46+0100\n"
+"PO-Revision-Date: 2004-11-30 23:47+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -134,28 +134,28 @@ msgstr "%s è necessario un canale alpha"
 msgid "Add Alpha Channel"
 msgstr "Aggiungi canale alpha"
 
-#: libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:381
 msgid "Confirm Save"
 msgstr "Conferma salvataggio"
 
-#: libgimp/gimpexport.c:388
+#: libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr "Conferma"
 
-#: libgimp/gimpexport.c:457
+#: libgimp/gimpexport.c:454
 msgid "Export File"
 msgstr "Esporta File"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:458
 msgid "_Ignore"
 msgstr "_Ignora"
 
-#: libgimp/gimpexport.c:463
+#: libgimp/gimpexport.c:460
 msgid "_Export"
 msgstr "_Esporta"
 
 #. the headline
-#: libgimp/gimpexport.c:485
+#: libgimp/gimpexport.c:482
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -164,11 +164,12 @@ msgstr ""
 "L'immagine dovrebbe essere esportata come %s prima di salvarla per le "
 "seguenti ragioni:"
 
-#: libgimp/gimpexport.c:563
+#. the footline
+#: libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
 msgstr "L'esportazione non modificherà l'immagine originale."
 
-#: libgimp/gimpexport.c:665
+#: libgimp/gimpexport.c:653
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -177,7 +178,7 @@ msgstr ""
 "Si è in procinto di salvare una maschera di livello con nome %s.\n"
 "Non verranno salvati i livelli visibili."
 
-#: libgimp/gimpexport.c:671
+#: libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -328,7 +329,7 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
 
@@ -370,7 +371,7 @@ msgstr "Non caricato"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Fallita la creazione della cartella miniature '%s'."
 
-#: libgimpthumb/gimpthumbnail.c:917
+#: libgimpthumb/gimpthumbnail.c:919
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Fallita la creazione delle miniature per %s: %s"
@@ -523,7 +524,7 @@ msgstr "Àncora"
 
 #: libgimpwidgets/gimpstock.c:114
 msgid "C_enter"
-msgstr ""
+msgstr "C_entra"
 
 #: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"

@@ -1,3 +1,7 @@
+2004-11-30 Marco Ciampa <ciampix@libero.it>
+
+	* it.po: updated italian translation.
+
 2004-11-26  Sven Neumann  <sven@gimp.org>
 
 	* sk.po: reverted last commit, it only contained binary gibberish.
