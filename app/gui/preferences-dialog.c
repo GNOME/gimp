@@ -1069,9 +1069,9 @@ prefs_default_size_callback (GtkWidget *widget,
 				  gpointer   data)
 {
   default_width =
-    (gint) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0) + 0.5);
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
   default_height =
-    (gint) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1) + 0.5);
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
   default_units = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 }
 
@@ -1117,13 +1117,16 @@ prefs_default_resolution_callback (GtkWidget *widget,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_sizeentry),
 				  1, yres, FALSE);
 
-  default_width = (gint)
-    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size_sizeentry), 0) + 0.5);
-  default_height = (gint)
-    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size_sizeentry), 1) + 0.5);
+  default_width =
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size_sizeentry), 0));
+  default_height =
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size_sizeentry), 1));
+
   default_xresolution = xres;
   default_yresolution = yres;
-  default_resolution_units = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
+
+  default_resolution_units = 
+    gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 }
 
 static void

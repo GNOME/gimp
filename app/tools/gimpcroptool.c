@@ -15,6 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include <string.h>
 
 #include <gdk/gdkkeysyms.h>
@@ -32,8 +35,8 @@
 #include "info_dialog.h"
 #include "undo.h"
 
-#include "config.h"
 #include "libgimp/gimpsizeentry.h"
+#include "libgimp/gimpmath.h"
 #include "libgimp/gimpintl.h"
 
 #define STATUSBAR_SIZE 128
@@ -1512,8 +1515,8 @@ crop_orig_changed (GtkWidget *widget,
     {
       gdisp = (GDisplay *) tool->gdisp_ptr;
       crop = (Crop *) tool->private;
-      ox = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
-      oy = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
+      ox = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
+      oy = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
 
       if ((ox != crop->tx1) ||
 	  (oy != crop->ty1))

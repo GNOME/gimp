@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <gdk/gdkkeysyms.h>
@@ -39,6 +40,7 @@
 #include "undo.h"
 
 #include "libgimp/gimplimits.h"
+#include "libgimp/gimpmath.h"
 #include "libgimp/gimpsizeentry.h"
 
 #include "libgimp/gimpintl.h"
@@ -56,6 +58,7 @@
 #include "pixmaps/anchor.xpm"
 
 #include "layer_pvt.h"
+
 
 #define LAYER_PREVIEW 0
 #define MASK_PREVIEW  1
@@ -3420,10 +3423,10 @@ new_layer_query_ok_callback (GtkWidget *widget,
     g_free (layer_name);
   layer_name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
 
-  options->xsize = (gint)
-    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se), 0) + 0.5);
-  options->ysize = (gint)
-    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se), 1) + 0.5);
+  options->xsize = 
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se), 0));
+  options->ysize =
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se), 1));
 
   fill_type = options->fill_type;
 

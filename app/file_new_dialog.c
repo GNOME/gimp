@@ -15,13 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include "file_new_dialog.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "gdisplay.h"
 
-#include "config.h"
 #include "libgimp/gimpchainbutton.h"
+#include "libgimp/gimpmath.h"
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpintl.h"
@@ -65,10 +68,10 @@ file_new_ok_callback (GtkWidget *widget,
   values = info->values;
 
   /* get the image size in pixels */
-  values->width = (int)
-    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 0) + 0.5);
-  values->height = (int)
-    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 1) + 0.5);
+  values->width = 
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 0));
+  values->height = 
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 1));
 
   /* get the resolution in dpi */
   values->xresolution =
@@ -279,10 +282,10 @@ file_new_image_size_callback (GtkWidget *widget,
 
   info = (NewImageInfo*) data;
 
-  info->values->width = (gdouble) (gint)
-    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 0) + 0.5);
-  info->values->height = (gdouble) (gint)
-    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 1) + 0.5);
+  info->values->width = 
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 0));
+  info->values->height =
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 1));
 
   info->size = image_new_calculate_size (info->values);
 

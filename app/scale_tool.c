@@ -15,6 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
@@ -27,9 +30,10 @@
 
 #include "tile_manager_pvt.h"
 
-#include "config.h"
+#include "libgimp/gimpmath.h"
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpintl.h"
+
 
 /*  storage for information dialog fields  */
 static gchar      orig_width_buf[MAX_INFO_BUF];
@@ -284,10 +288,8 @@ scale_size_changed (GtkWidget *widget,
       gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
-      width =
-	(int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0) + 0.5);
-      height =
-	(int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1) + 0.5);
+      width = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
+      height = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
 
       if ((width != (transform_core->trans_info[X1] -
 		     transform_core->trans_info[X0])) ||

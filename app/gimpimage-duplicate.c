@@ -228,6 +228,12 @@ offset (GimpImage         *gimage,
 
   if (wrap_around)
     {
+      /*  avoid modulo operation on negative values  */
+      while (offset_x < 0)
+	offset_x += width;
+      while (offset_y < 0)
+	offset_y += height;
+      
       offset_x %= width;
       offset_y %= height;
     }
@@ -464,9 +470,9 @@ offset_ok_callback (GtkWidget *widget,
       drawable = gimage_active_drawable (gimage);
 
       offset_x = (gint)
-	(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (off_d->off_se), 0) + 0.5);
+	RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (off_d->off_se), 0));
       offset_y = (gint)
-	(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (off_d->off_se), 1) + 0.5);
+	RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (off_d->off_se), 1));
 
       offset (gimage, drawable, off_d->wrap_around, off_d->fill_type,
 	      offset_x, offset_y);

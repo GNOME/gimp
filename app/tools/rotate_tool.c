@@ -273,10 +273,8 @@ rotate_center_changed (GtkWidget *widget,
       gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
-      cx =
-	(int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0) + 0.5);
-      cy =
-	(int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1) + 0.5);
+      cx = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
+      cy = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
 
       if ((cx != transform_core->cx) ||
 	  (cy != transform_core->cy))
