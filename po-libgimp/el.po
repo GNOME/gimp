@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.0\n"
-"POT-Creation-Date: 2002-01-23 13:03+0000\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2001-12-27 15:07+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -187,7 +187,7 @@ msgstr ""
 #
 #: libgimpwidgets/gimpfileselection.c:352
 #, fuzzy
-msgid "Select Directory"
+msgid "Select Folder"
 msgstr "Επιλογή Αρχείου"
 
 #
@@ -244,6 +244,11 @@ msgstr "Kbyte"
 #, fuzzy
 msgid "MegaBytes"
 msgstr "Byte"
+
+#
+#, fuzzy
+#~ msgid "Select Directory"
+#~ msgstr "Επιλογή Αρχείου"
 
 #
 #~ msgid "OK"

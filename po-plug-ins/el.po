@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins 1.0\n"
-"POT-Creation-Date: 2002-01-23 13:05+0000\n"
+"POT-Creation-Date: 2002-02-10 19:38+0100\n"
 "PO-Revision-Date: 2001-12-27 17:06+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -14,92 +14,92 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #
-#: plug-ins/FractalExplorer/Dialogs.c:283
-#: plug-ins/FractalExplorer/Dialogs.c:1381 plug-ins/common/AlienMap.c:1396
-#: plug-ins/common/AlienMap2.c:1388 plug-ins/gfig/gfig.c:3388
+#: plug-ins/FractalExplorer/Dialogs.c:291
+#: plug-ins/FractalExplorer/Dialogs.c:1388 plug-ins/common/AlienMap.c:1401
+#: plug-ins/common/AlienMap2.c:1393 plug-ins/gfig/gfig.c:3388
 #: plug-ins/imagemap/imap_about.c:43 plug-ins/webbrowser/webbrowser.c:278
 msgid "About"
 msgstr "Περί"
 
 #
 #. Preview
-#: plug-ins/FractalExplorer/Dialogs.c:309 plug-ins/Lighting/lighting_ui.c:1158
-#: plug-ins/MapObject/mapobject_ui.c:1437 plug-ins/common/CML_explorer.c:1201
-#: plug-ins/common/blinds.c:342 plug-ins/common/curve_bend.c:1502
-#: plug-ins/common/destripe.c:575 plug-ins/common/emboss.c:738
-#: plug-ins/common/fractaltrace.c:745 plug-ins/common/glasstile.c:275
-#: plug-ins/common/grid.c:681 plug-ins/common/illusion.c:591
-#: plug-ins/common/iwarp.c:1183 plug-ins/common/jigsaw.c:2510
-#: plug-ins/common/mapcolor.c:573 plug-ins/common/max_rgb.c:363
-#: plug-ins/common/nlfilt.c:575 plug-ins/common/noisify.c:506
-#: plug-ins/common/plasma.c:329 plug-ins/common/polar.c:938
-#: plug-ins/common/ps.c:2942 plug-ins/common/sharpen.c:553
-#: plug-ins/common/sinus.c:2119 plug-ins/common/tileit.c:407
-#: plug-ins/common/waves.c:577 plug-ins/common/whirlpinch.c:822
-#: plug-ins/common/wind.c:1032 plug-ins/flame/flame.c:948
-#: plug-ins/gfig/gfig.c:3970 plug-ins/gflare/gflare.c:2565
-#: plug-ins/gflare/gflare.c:3579 plug-ins/gimpressionist/orientmap.c:511
+#: plug-ins/FractalExplorer/Dialogs.c:316 plug-ins/Lighting/lighting_ui.c:1159
+#: plug-ins/MapObject/mapobject_ui.c:1438 plug-ins/common/CML_explorer.c:1206
+#: plug-ins/common/blinds.c:347 plug-ins/common/curve_bend.c:1507
+#: plug-ins/common/destripe.c:578 plug-ins/common/emboss.c:741
+#: plug-ins/common/fractaltrace.c:750 plug-ins/common/glasstile.c:280
+#: plug-ins/common/grid.c:686 plug-ins/common/illusion.c:596
+#: plug-ins/common/iwarp.c:1188 plug-ins/common/jigsaw.c:2515
+#: plug-ins/common/mapcolor.c:578 plug-ins/common/max_rgb.c:368
+#: plug-ins/common/nlfilt.c:580 plug-ins/common/noisify.c:511
+#: plug-ins/common/plasma.c:334 plug-ins/common/polar.c:943
+#: plug-ins/common/ps.c:2942 plug-ins/common/sharpen.c:558
+#: plug-ins/common/sinus.c:2122 plug-ins/common/tileit.c:412
+#: plug-ins/common/waves.c:582 plug-ins/common/whirlpinch.c:827
+#: plug-ins/common/wind.c:1037 plug-ins/flame/flame.c:954
+#: plug-ins/gfig/gfig.c:3975 plug-ins/gflare/gflare.c:2566
+#: plug-ins/gflare/gflare.c:3582 plug-ins/gimpressionist/orientmap.c:511
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:412
-#: plug-ins/ifscompose/ifscompose.c:908
+#: plug-ins/ifscompose/ifscompose.c:912
 #: plug-ins/imagemap/imap_edit_area_info.c:296
 #: plug-ins/imagemap/imap_grid.c:238 plug-ins/print/gimp_main_window.c:295
-#: plug-ins/rcm/rcm_dialog.c:119 plug-ins/rcm/rcm_dialog.c:669
+#: plug-ins/rcm/rcm_dialog.c:124 plug-ins/rcm/rcm_dialog.c:674
 msgid "Preview"
 msgstr "Προεπισκόπηση"
 
-#: plug-ins/FractalExplorer/Dialogs.c:355
+#: plug-ins/FractalExplorer/Dialogs.c:362
 #, fuzzy
 msgid "Realtime Preview"
 msgstr "Ανανέωση Προεπισκόπησης"
 
-#: plug-ins/FractalExplorer/Dialogs.c:362
+#: plug-ins/FractalExplorer/Dialogs.c:369
 msgid "If you enable this option the preview will be redrawn automatically"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:365
+#: plug-ins/FractalExplorer/Dialogs.c:372
 #, fuzzy
 msgid "Redraw"
 msgstr "Κόκκινο"
 
-#: plug-ins/FractalExplorer/Dialogs.c:371
+#: plug-ins/FractalExplorer/Dialogs.c:378
 #, fuzzy
 msgid "Redraw preview"
 msgstr "Προεπισκόπιση εκτύπωσης"
 
 #. Zoom Options
-#: plug-ins/FractalExplorer/Dialogs.c:374
+#: plug-ins/FractalExplorer/Dialogs.c:381
 #, fuzzy
 msgid "Zoom Options"
 msgstr "Επιλογές C"
 
 #
-#: plug-ins/FractalExplorer/Dialogs.c:384
+#: plug-ins/FractalExplorer/Dialogs.c:391
 #, fuzzy
 msgid "Undo Zoom"
 msgstr "_Ακύρωση κίνησης"
 
-#: plug-ins/FractalExplorer/Dialogs.c:390
+#: plug-ins/FractalExplorer/Dialogs.c:397
 #, fuzzy
 msgid "Undo last zoom"
 msgstr "Ακύρωση τελευταίας λειτουργίας"
 
 #
-#: plug-ins/FractalExplorer/Dialogs.c:392
+#: plug-ins/FractalExplorer/Dialogs.c:399
 #, fuzzy
 msgid "Redo Zoom"
 msgstr "_Επανάληψη κίνησης"
 
-#: plug-ins/FractalExplorer/Dialogs.c:398
+#: plug-ins/FractalExplorer/Dialogs.c:405
 #, fuzzy
 msgid "Redo last zoom"
 msgstr "Επανεκτέλεση τελευταίας λειτουργίας"
 
-#: plug-ins/FractalExplorer/Dialogs.c:400
+#: plug-ins/FractalExplorer/Dialogs.c:407
 #, fuzzy
 msgid "Step In"
 msgstr "Αυξ. Βήματος:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:407
+#: plug-ins/FractalExplorer/Dialogs.c:414
 #, fuzzy
 msgid "Step Out"
 msgstr "Byte Εξερχόμενα"
@@ -107,196 +107,196 @@ msgstr "Byte Εξερχόμενα"
 #.
 #. *  Scales
 #.
-#: plug-ins/FractalExplorer/Dialogs.c:424 plug-ins/gflare/gflare.c:2974
-#: plug-ins/gflare/gflare.c:3815 plug-ins/gflare/gflare.c:3925
-#: plug-ins/gflare/gflare.c:4067
+#: plug-ins/FractalExplorer/Dialogs.c:431 plug-ins/gflare/gflare.c:2975
+#: plug-ins/gflare/gflare.c:3818 plug-ins/gflare/gflare.c:3928
+#: plug-ins/gflare/gflare.c:4070
 msgid "Parameters"
 msgstr "Παράμετροι"
 
-#: plug-ins/FractalExplorer/Dialogs.c:427
+#: plug-ins/FractalExplorer/Dialogs.c:434
 #, fuzzy
 msgid "Fractal Parameters"
 msgstr "Παράμετροι Γραφημάτων"
 
-#: plug-ins/FractalExplorer/Dialogs.c:441
+#: plug-ins/FractalExplorer/Dialogs.c:448
 #, fuzzy
 msgid "XMIN:"
 msgstr "UIN:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:444
+#: plug-ins/FractalExplorer/Dialogs.c:451
 msgid "Change the first (minimal) x-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:452
+#: plug-ins/FractalExplorer/Dialogs.c:459
 msgid "XMAX:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:455
+#: plug-ins/FractalExplorer/Dialogs.c:462
 msgid "Change the second (maximal) x-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:463
+#: plug-ins/FractalExplorer/Dialogs.c:470
 #, fuzzy
 msgid "YMIN:"
 msgstr "UIN:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:466
+#: plug-ins/FractalExplorer/Dialogs.c:473
 msgid "Change the first (minimal) y-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:474
+#: plug-ins/FractalExplorer/Dialogs.c:481
 msgid "YMAX:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:477
+#: plug-ins/FractalExplorer/Dialogs.c:484
 msgid "Change the second (maximal) y-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:485
+#: plug-ins/FractalExplorer/Dialogs.c:492
 #, fuzzy
 msgid "ITER:"
 msgstr "SIGTERM"
 
-#: plug-ins/FractalExplorer/Dialogs.c:488
+#: plug-ins/FractalExplorer/Dialogs.c:495
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:497
+#: plug-ins/FractalExplorer/Dialogs.c:504
 msgid "CX:"
 msgstr "ΚΧ:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:500
+#: plug-ins/FractalExplorer/Dialogs.c:507
 msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:509
+#: plug-ins/FractalExplorer/Dialogs.c:516
 msgid "CY:"
 msgstr "ΚΨ:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:512
+#: plug-ins/FractalExplorer/Dialogs.c:519
 msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
 
 #
-#: plug-ins/FractalExplorer/Dialogs.c:523 plug-ins/common/CML_explorer.c:1229
+#: plug-ins/FractalExplorer/Dialogs.c:530 plug-ins/common/CML_explorer.c:1234
 #: plug-ins/gfig/gfig.c:3562
 msgid "Load"
 msgstr "Φόρτωση"
 
-#: plug-ins/FractalExplorer/Dialogs.c:529
+#: plug-ins/FractalExplorer/Dialogs.c:536
 #, fuzzy
 msgid "Load a fractal from file"
 msgstr "Λήψη πληροφοριών πακέτου από το αρχείο %s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:531 plug-ins/common/convmatrix.c:855
-#: plug-ins/common/curve_bend.c:1358 plug-ins/common/iwarp.c:1165
-#: plug-ins/common/sample_colorize.c:1366 plug-ins/common/tileit.c:470
-#: plug-ins/fp/fp_gtk.c:917 plug-ins/gimpressionist/preview.c:129
+#: plug-ins/FractalExplorer/Dialogs.c:538 plug-ins/common/convmatrix.c:855
+#: plug-ins/common/curve_bend.c:1363 plug-ins/common/iwarp.c:1170
+#: plug-ins/common/sample_colorize.c:1371 plug-ins/common/tileit.c:475
+#: plug-ins/fp/fp_gtk.c:923 plug-ins/gimpressionist/preview.c:129
 #: plug-ins/ifscompose/ifscompose.c:799 plug-ins/sel2path/sel2path.c:334
 msgid "Reset"
 msgstr "Αρχικοποίηση"
 
-#: plug-ins/FractalExplorer/Dialogs.c:537
+#: plug-ins/FractalExplorer/Dialogs.c:544
 #, fuzzy
 msgid "Reset parameters to default values"
 msgstr "Αρχικοποίηση όλων των αλλαγών χρώματος στις κανονικές τιμές"
 
 #
-#: plug-ins/FractalExplorer/Dialogs.c:540 plug-ins/common/CML_explorer.c:1221
-#: plug-ins/gfig/gfig.c:5269 plug-ins/imagemap/imap_menu.c:226
+#: plug-ins/FractalExplorer/Dialogs.c:547 plug-ins/common/CML_explorer.c:1226
+#: plug-ins/gfig/gfig.c:5276 plug-ins/imagemap/imap_menu.c:226
 #: plug-ins/imagemap/imap_toolbar.c:118
 msgid "Save"
 msgstr "Αποθήκευση"
 
 #
-#: plug-ins/FractalExplorer/Dialogs.c:546
+#: plug-ins/FractalExplorer/Dialogs.c:553
 #, fuzzy
 msgid "Save active fractal to file"
 msgstr "Αποθήκευση της αναφοράς σε αρχείο"
 
 #. Fractal type toggle box
-#: plug-ins/FractalExplorer/Dialogs.c:549
+#: plug-ins/FractalExplorer/Dialogs.c:556
 #, fuzzy
 msgid "Fractal Type"
 msgstr "Τύπος Δεδομένων"
 
-#: plug-ins/FractalExplorer/Dialogs.c:562
+#: plug-ins/FractalExplorer/Dialogs.c:569
 msgid "Mandelbrot"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:564
+#: plug-ins/FractalExplorer/Dialogs.c:571
 msgid "Julia"
 msgstr "Τζούλια"
 
-#: plug-ins/FractalExplorer/Dialogs.c:566
+#: plug-ins/FractalExplorer/Dialogs.c:573
 msgid "Barnsley 1"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:568
+#: plug-ins/FractalExplorer/Dialogs.c:575
 msgid "Barnsley 2"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:570
+#: plug-ins/FractalExplorer/Dialogs.c:577
 msgid "Barnsley 3"
 msgstr ""
 
 #
-#: plug-ins/FractalExplorer/Dialogs.c:572
+#: plug-ins/FractalExplorer/Dialogs.c:579
 #, fuzzy
 msgid "Spider"
 msgstr "Διαφάνεια"
 
-#: plug-ins/FractalExplorer/Dialogs.c:574
+#: plug-ins/FractalExplorer/Dialogs.c:581
 #, fuzzy
 msgid "Man'o'war"
 msgstr "Διευθυντής"
 
-#: plug-ins/FractalExplorer/Dialogs.c:576
+#: plug-ins/FractalExplorer/Dialogs.c:583
 msgid "Lambda"
 msgstr "Λάμδα"
 
-#: plug-ins/FractalExplorer/Dialogs.c:578
+#: plug-ins/FractalExplorer/Dialogs.c:585
 msgid "Sierpinski"
 msgstr ""
 
 #
-#: plug-ins/FractalExplorer/Dialogs.c:628 plug-ins/common/sinus.c:1853
-#: plug-ins/common/sinus.c:1871 plug-ins/common/sinus.c:1959
+#: plug-ins/FractalExplorer/Dialogs.c:635 plug-ins/common/sinus.c:1856
+#: plug-ins/common/sinus.c:1874 plug-ins/common/sinus.c:1962
 #: plug-ins/imagemap/imap_preferences.c:551
 msgid "Colors"
 msgstr "Χρώματα"
 
 #. Number of Colors frame
-#: plug-ins/FractalExplorer/Dialogs.c:632 plug-ins/common/borderaverage.c:413
+#: plug-ins/FractalExplorer/Dialogs.c:639 plug-ins/common/borderaverage.c:413
 msgid "Number of Colors"
 msgstr "Αριθμός Χρωμάτων"
 
-#: plug-ins/FractalExplorer/Dialogs.c:645
+#: plug-ins/FractalExplorer/Dialogs.c:652
 #, fuzzy
 msgid "Number of Colors:"
 msgstr "Αριθμός Χρωμάτων"
 
-#: plug-ins/FractalExplorer/Dialogs.c:648
+#: plug-ins/FractalExplorer/Dialogs.c:655
 #, fuzzy
 msgid "Change the number of colors in the mapping"
 msgstr "Αλλαγή του μεγέθους σελίδας"
 
-#: plug-ins/FractalExplorer/Dialogs.c:655
+#: plug-ins/FractalExplorer/Dialogs.c:662
 msgid "Use loglog Smoothing"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:662
+#: plug-ins/FractalExplorer/Dialogs.c:669
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
 
 #. Color Density frame
-#: plug-ins/FractalExplorer/Dialogs.c:666
+#: plug-ins/FractalExplorer/Dialogs.c:673
 #, fuzzy
 msgid "Color Density"
 msgstr "Πυκνότητα Δισκέτας:"
@@ -305,193 +305,193 @@ msgstr "Πυκνότητα Δισκέτας:"
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: plug-ins/FractalExplorer/Dialogs.c:680 plug-ins/common/AlienMap.c:1441
+#: plug-ins/FractalExplorer/Dialogs.c:687 plug-ins/common/AlienMap.c:1446
 #: plug-ins/common/compose.c:120 plug-ins/common/compose.c:124
-#: plug-ins/common/diffraction.c:600 plug-ins/common/diffraction.c:639
-#: plug-ins/common/diffraction.c:678 plug-ins/common/exchange.c:415
-#: plug-ins/common/noisify.c:597 plug-ins/common/noisify.c:642
-#: plug-ins/fp/fp_gtk.c:20
+#: plug-ins/common/diffraction.c:605 plug-ins/common/diffraction.c:644
+#: plug-ins/common/diffraction.c:683 plug-ins/common/exchange.c:420
+#: plug-ins/common/noisify.c:602 plug-ins/common/noisify.c:647
+#: plug-ins/fp/fp_gtk.c:25
 msgid "Red:"
 msgstr "Κόκκινο:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:683
+#: plug-ins/FractalExplorer/Dialogs.c:690
 #, fuzzy
 msgid "Change the intensity of the red channel"
 msgstr "Αλλαγή του μεγέθους σελίδας"
 
 #
-#: plug-ins/FractalExplorer/Dialogs.c:690 plug-ins/common/AlienMap.c:1450
+#: plug-ins/FractalExplorer/Dialogs.c:697 plug-ins/common/AlienMap.c:1455
 #: plug-ins/common/compose.c:121 plug-ins/common/compose.c:125
-#: plug-ins/common/diffraction.c:609 plug-ins/common/diffraction.c:648
-#: plug-ins/common/diffraction.c:687 plug-ins/common/exchange.c:459
-#: plug-ins/common/noisify.c:611 plug-ins/common/noisify.c:656
-#: plug-ins/fp/fp_gtk.c:21
+#: plug-ins/common/diffraction.c:614 plug-ins/common/diffraction.c:653
+#: plug-ins/common/diffraction.c:692 plug-ins/common/exchange.c:464
+#: plug-ins/common/noisify.c:616 plug-ins/common/noisify.c:661
+#: plug-ins/fp/fp_gtk.c:26
 msgid "Green:"
 msgstr "Πράσινο:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:693
+#: plug-ins/FractalExplorer/Dialogs.c:700
 #, fuzzy
 msgid "Change the intensity of the green channel"
 msgstr "Αλλαγή του μεγέθους σελίδας"
 
 #
-#: plug-ins/FractalExplorer/Dialogs.c:700 plug-ins/common/AlienMap.c:1459
+#: plug-ins/FractalExplorer/Dialogs.c:707 plug-ins/common/AlienMap.c:1464
 #: plug-ins/common/compose.c:122 plug-ins/common/compose.c:126
-#: plug-ins/common/diffraction.c:618 plug-ins/common/diffraction.c:657
-#: plug-ins/common/diffraction.c:696 plug-ins/common/exchange.c:503
-#: plug-ins/common/noisify.c:625 plug-ins/common/noisify.c:670
-#: plug-ins/fp/fp_gtk.c:22
+#: plug-ins/common/diffraction.c:623 plug-ins/common/diffraction.c:662
+#: plug-ins/common/diffraction.c:701 plug-ins/common/exchange.c:508
+#: plug-ins/common/noisify.c:630 plug-ins/common/noisify.c:675
+#: plug-ins/fp/fp_gtk.c:27
 msgid "Blue:"
 msgstr "Μπλε:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:703
+#: plug-ins/FractalExplorer/Dialogs.c:710
 #, fuzzy
 msgid "Change the intensity of the blue channel"
 msgstr "Αλλαγή του μεγέθους σελίδας"
 
 #
 #. Color Function frame
-#: plug-ins/FractalExplorer/Dialogs.c:709
+#: plug-ins/FractalExplorer/Dialogs.c:716
 #, fuzzy
 msgid "Color Function"
 msgstr "Επιλογή χρώματος"
 
 #. Redmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:720 plug-ins/common/AlienMap.c:1468
+#: plug-ins/FractalExplorer/Dialogs.c:727 plug-ins/common/AlienMap.c:1473
 #: plug-ins/common/convmatrix.c:86 plug-ins/common/decompose.c:116
-#: plug-ins/common/newsprint.c:401
+#: plug-ins/common/newsprint.c:406
 msgid "Red"
 msgstr "Κόκκινο"
 
-#: plug-ins/FractalExplorer/Dialogs.c:724
-#: plug-ins/FractalExplorer/Dialogs.c:765
-#: plug-ins/FractalExplorer/Dialogs.c:806 plug-ins/common/AlienMap.c:1472
-#: plug-ins/common/AlienMap.c:1495 plug-ins/common/AlienMap.c:1518
+#: plug-ins/FractalExplorer/Dialogs.c:731
+#: plug-ins/FractalExplorer/Dialogs.c:772
+#: plug-ins/FractalExplorer/Dialogs.c:813 plug-ins/common/AlienMap.c:1477
+#: plug-ins/common/AlienMap.c:1500 plug-ins/common/AlienMap.c:1523
 #: plug-ins/common/ripple.c:671
 #, fuzzy
 msgid "Sine"
 msgstr "Μονή"
 
 #
-#: plug-ins/FractalExplorer/Dialogs.c:726
-#: plug-ins/FractalExplorer/Dialogs.c:767
-#: plug-ins/FractalExplorer/Dialogs.c:808 plug-ins/common/AlienMap.c:1473
-#: plug-ins/common/AlienMap.c:1496 plug-ins/common/AlienMap.c:1519
+#: plug-ins/FractalExplorer/Dialogs.c:733
+#: plug-ins/FractalExplorer/Dialogs.c:774
+#: plug-ins/FractalExplorer/Dialogs.c:815 plug-ins/common/AlienMap.c:1478
+#: plug-ins/common/AlienMap.c:1501 plug-ins/common/AlienMap.c:1524
 #, fuzzy
 msgid "Cosine"
 msgstr "Κλείσιμο"
 
 #
-#: plug-ins/FractalExplorer/Dialogs.c:728
-#: plug-ins/FractalExplorer/Dialogs.c:769
-#: plug-ins/FractalExplorer/Dialogs.c:810 plug-ins/Lighting/lighting_ui.c:571
-#: plug-ins/common/AlienMap.c:1474 plug-ins/common/AlienMap.c:1497
-#: plug-ins/common/AlienMap.c:1520 plug-ins/common/CML_explorer.c:167
+#: plug-ins/FractalExplorer/Dialogs.c:735
+#: plug-ins/FractalExplorer/Dialogs.c:776
+#: plug-ins/FractalExplorer/Dialogs.c:817 plug-ins/Lighting/lighting_ui.c:571
+#: plug-ins/common/AlienMap.c:1479 plug-ins/common/AlienMap.c:1502
+#: plug-ins/common/AlienMap.c:1525 plug-ins/common/CML_explorer.c:172
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2714 plug-ins/common/ps.c:2727
-#: plug-ins/common/psp.c:444 plug-ins/common/tiff.c:1580
+#: plug-ins/common/psp.c:444 plug-ins/common/tiff.c:1584
 #: plug-ins/fits/fits.c:1030
 msgid "None"
 msgstr "Κανένα"
 
-#: plug-ins/FractalExplorer/Dialogs.c:733
-#: plug-ins/FractalExplorer/Dialogs.c:774
-#: plug-ins/FractalExplorer/Dialogs.c:815
+#: plug-ins/FractalExplorer/Dialogs.c:740
+#: plug-ins/FractalExplorer/Dialogs.c:781
+#: plug-ins/FractalExplorer/Dialogs.c:822
 #, fuzzy
 msgid "Use sine-function for this color component"
 msgstr "Δημιουργία νέας συνάρτησης στο παρόν γράφημα"
 
-#: plug-ins/FractalExplorer/Dialogs.c:736
-#: plug-ins/FractalExplorer/Dialogs.c:777
-#: plug-ins/FractalExplorer/Dialogs.c:818
+#: plug-ins/FractalExplorer/Dialogs.c:743
+#: plug-ins/FractalExplorer/Dialogs.c:784
+#: plug-ins/FractalExplorer/Dialogs.c:825
 msgid "Use cosine-function for this color component"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:739
-#: plug-ins/FractalExplorer/Dialogs.c:780
-#: plug-ins/FractalExplorer/Dialogs.c:821
+#: plug-ins/FractalExplorer/Dialogs.c:746
+#: plug-ins/FractalExplorer/Dialogs.c:787
+#: plug-ins/FractalExplorer/Dialogs.c:828
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:748
-#: plug-ins/FractalExplorer/Dialogs.c:789
-#: plug-ins/FractalExplorer/Dialogs.c:830
+#: plug-ins/FractalExplorer/Dialogs.c:755
+#: plug-ins/FractalExplorer/Dialogs.c:796
+#: plug-ins/FractalExplorer/Dialogs.c:837
 #, fuzzy
 msgid "Inversion"
 msgstr "Μετατροπή"
 
-#: plug-ins/FractalExplorer/Dialogs.c:756
-#: plug-ins/FractalExplorer/Dialogs.c:797
-#: plug-ins/FractalExplorer/Dialogs.c:838
+#: plug-ins/FractalExplorer/Dialogs.c:763
+#: plug-ins/FractalExplorer/Dialogs.c:804
+#: plug-ins/FractalExplorer/Dialogs.c:845
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
 
 #. Greenmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:761 plug-ins/common/AlienMap.c:1491
+#: plug-ins/FractalExplorer/Dialogs.c:768 plug-ins/common/AlienMap.c:1496
 #: plug-ins/common/convmatrix.c:87 plug-ins/common/decompose.c:117
-#: plug-ins/common/newsprint.c:409
+#: plug-ins/common/newsprint.c:414
 msgid "Green"
 msgstr "Πράσινο"
 
 #. Bluemode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:802 plug-ins/common/AlienMap.c:1514
+#: plug-ins/FractalExplorer/Dialogs.c:809 plug-ins/common/AlienMap.c:1519
 #: plug-ins/common/convmatrix.c:88 plug-ins/common/decompose.c:118
-#: plug-ins/common/newsprint.c:417
+#: plug-ins/common/newsprint.c:422
 msgid "Blue"
 msgstr "Μπλε"
 
 #
 #. Colormode toggle box
-#: plug-ins/FractalExplorer/Dialogs.c:843
+#: plug-ins/FractalExplorer/Dialogs.c:850
 #, fuzzy
 msgid "Color Mode"
 msgstr "Χρώμα %d"
 
-#: plug-ins/FractalExplorer/Dialogs.c:854
+#: plug-ins/FractalExplorer/Dialogs.c:861
 #, fuzzy
 msgid "As Specified above"
 msgstr "Μη ορισμένο"
 
-#: plug-ins/FractalExplorer/Dialogs.c:866
+#: plug-ins/FractalExplorer/Dialogs.c:873
 msgid ""
-"Create a color-map with the options you specified above (color "
-"density/function). The result is visible in the preview image"
+"Create a color-map with the options you specified above (color density/"
+"function). The result is visible in the preview image"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:876
+#: plug-ins/FractalExplorer/Dialogs.c:883
 msgid "Apply Active Gradient to Final Image"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:888
+#: plug-ins/FractalExplorer/Dialogs.c:895
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:893
+#: plug-ins/FractalExplorer/Dialogs.c:900
 #, fuzzy
 msgid "FractalExplorer Gradient"
 msgstr "Κάθετη Διαβάθμιση"
 
-#: plug-ins/FractalExplorer/Dialogs.c:925
+#: plug-ins/FractalExplorer/Dialogs.c:932
 #, fuzzy
 msgid "Fractals"
 msgstr "Μορφές"
 
 # gconf/gconftool.c:982 gconf/gconftool.c:1084
-#: plug-ins/FractalExplorer/Dialogs.c:1576 plug-ins/gfig/gfig.c:1466
+#: plug-ins/FractalExplorer/Dialogs.c:1583 plug-ins/gfig/gfig.c:1466
 #, fuzzy, c-format
 msgid "Error opening: %s"
 msgstr "Σφάλμα στο συγχρονισμό: %s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1578 plug-ins/gfig/gfig.c:1468
+#: plug-ins/FractalExplorer/Dialogs.c:1585 plug-ins/gfig/gfig.c:1468
 #, fuzzy
 msgid "Could not save."
 msgstr "Αποθήκευση αρχείο ανεπιτυχής!"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1594
+#: plug-ins/FractalExplorer/Dialogs.c:1601
 #, fuzzy
 msgid "Failed to write file\n"
 msgstr ""
@@ -499,73 +499,73 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1616
+#: plug-ins/FractalExplorer/Dialogs.c:1623
 #, fuzzy
 msgid "Save: No filename given"
 msgstr "Χωρίς όνομα αρχείου"
 
 #. Can't save to directory
-#: plug-ins/FractalExplorer/Dialogs.c:1626
+#: plug-ins/FractalExplorer/Dialogs.c:1633
 #, fuzzy
-msgid "Save: Can't save to a directory"
+msgid "Save: Can't save to a folder."
 msgstr "Αδυναμία εγγραφής στον κατάλογο αποθήκευσης:\n"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1675
+#: plug-ins/FractalExplorer/Dialogs.c:1682
 #, fuzzy
 msgid "Load Fractal Parameters"
 msgstr "Παράμετροι Γραφημάτων"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1687
+#: plug-ins/FractalExplorer/Dialogs.c:1694
 #, fuzzy
 msgid "Click here to load your file"
 msgstr "Κάντε κλικ εδώ για να προσθέσετε έναν παρευρισκόμενο"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1694
+#: plug-ins/FractalExplorer/Dialogs.c:1701
 #, fuzzy
 msgid "Click here to cancel load procedure"
 msgstr "Κάντε κλικ εδώ για να αλλάξετε (απαιτείται επανεκκίνηση)"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1712
+#: plug-ins/FractalExplorer/Dialogs.c:1719
 #, fuzzy
 msgid "Save Fractal Parameters"
 msgstr "Παράμετροι Γραφημάτων"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1724
+#: plug-ins/FractalExplorer/Dialogs.c:1731
 #, fuzzy
 msgid "Click here to save your file"
 msgstr "<κάντε κλικ εδώ για να επιλέξετε φάκελο>"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1731
+#: plug-ins/FractalExplorer/Dialogs.c:1738
 #, fuzzy
 msgid "Click here to cancel save procedure"
 msgstr "Κάντε κλικ εδώ για να αλλάξετε (απαιτείται επανεκκίνηση)"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1997
-#: plug-ins/FractalExplorer/FractalExplorer.c:1262
+#: plug-ins/FractalExplorer/Dialogs.c:2004
+#: plug-ins/FractalExplorer/FractalExplorer.c:1265
 #, fuzzy, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Το αρχείο %s δεν είναι έγκυρο αρχείο XML"
 
-#: plug-ins/FractalExplorer/Dialogs.c:2002
-#: plug-ins/FractalExplorer/FractalExplorer.c:1270
+#: plug-ins/FractalExplorer/Dialogs.c:2009
+#: plug-ins/FractalExplorer/FractalExplorer.c:1273
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:218
+#: plug-ins/FractalExplorer/FractalExplorer.c:221
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/Fractal Explorer..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:358
+#: plug-ins/FractalExplorer/FractalExplorer.c:361
 #, fuzzy
 msgid "Rendering Fractal..."
 msgstr "Αποτυχία Δημιουργίας Νέου Ευρετηρίου"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:738 plug-ins/gfig/gfig.c:5026
-#: plug-ins/gflare/gflare.c:3446
+#: plug-ins/FractalExplorer/FractalExplorer.c:741 plug-ins/gfig/gfig.c:5033
+#: plug-ins/gflare/gflare.c:3447
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -574,26 +574,26 @@ msgstr ""
 "Είσαστε βέβαιοι ότι θέλετε να διαγράψετε οριστικά το \"%s\" από τα "
 "Απορρίμματα;"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:742
+#: plug-ins/FractalExplorer/FractalExplorer.c:745
 #, fuzzy
 msgid "Delete Fractal"
 msgstr "_Διαγραφή όλων"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:832
+#: plug-ins/FractalExplorer/FractalExplorer.c:835
 msgid "Edit fractal name"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:843
+#: plug-ins/FractalExplorer/FractalExplorer.c:846
 #, fuzzy
 msgid "Fractal name:"
 msgstr "Όνομα Αρχείου:"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:884
+#: plug-ins/FractalExplorer/FractalExplorer.c:887
 #, fuzzy
 msgid "New Fractal"
 msgstr "Νέα Επαφή"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1158
+#: plug-ins/FractalExplorer/FractalExplorer.c:1161
 #, c-format
 msgid ""
 "No fractalexplorer-path in gimprc:\n"
@@ -602,50 +602,50 @@ msgid ""
 "to your %s file."
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1175
+#: plug-ins/FractalExplorer/FractalExplorer.c:1178
 msgid ""
-"fractalexplorer-path misconfigured - the following directories were not found"
+"fractalexplorer-path misconfigured - the following folders were not found:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1348
+#: plug-ins/FractalExplorer/FractalExplorer.c:1351
 msgid "My first fractal"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1365
+#: plug-ins/FractalExplorer/FractalExplorer.c:1368
 msgid "Choose Fractal by double-clicking on it"
 msgstr ""
 
 #
 #. Put buttons in
-#: plug-ins/FractalExplorer/FractalExplorer.c:1396 plug-ins/gfig/gfig.c:3551
+#: plug-ins/FractalExplorer/FractalExplorer.c:1399 plug-ins/gfig/gfig.c:3551
 msgid "Rescan"
 msgstr "Σάρωση Ξανά"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1403
+#: plug-ins/FractalExplorer/FractalExplorer.c:1406
 #, fuzzy
-msgid "Select directory and rescan collection"
+msgid "Select folder and rescan collection"
 msgstr "Επιλογή και μετακίνηση αντικειμένου"
 
 #
-#: plug-ins/FractalExplorer/FractalExplorer.c:1406 plug-ins/gfig/gfig.c:3582
-#: plug-ins/gflare/gflare.c:3179 plug-ins/gimpressionist/presets.c:681
-#: plug-ins/ifscompose/ifscompose.c:797 plug-ins/imagemap/imap_cmd_delete.c:58
+#: plug-ins/FractalExplorer/FractalExplorer.c:1409 plug-ins/gfig/gfig.c:3582
+#: plug-ins/gflare/gflare.c:3180 plug-ins/gimpressionist/presets.c:681
+#: plug-ins/ifscompose/ifscompose.c:796 plug-ins/imagemap/imap_cmd_delete.c:58
 #: plug-ins/imagemap/imap_selection.c:187 plug-ins/imagemap/imap_tools.c:160
 msgid "Delete"
 msgstr "Διαγραφή"
 
 #
-#: plug-ins/FractalExplorer/FractalExplorer.c:1414
+#: plug-ins/FractalExplorer/FractalExplorer.c:1417
 #, fuzzy
 msgid "Delete currently selected fractal"
 msgstr "Διαγραφή επιλεγμένου γραμματοκιβωτίου"
 
 #. the dialog
-#: plug-ins/FractalExplorer/FractalExplorer.c:1466
+#: plug-ins/FractalExplorer/FractalExplorer.c:1469
 msgid "Rescan for Fractals"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1484
+#: plug-ins/FractalExplorer/FractalExplorer.c:1488
 msgid "Add FractalExplorer Path"
 msgstr ""
 
@@ -731,8 +731,8 @@ msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:499 plug-ins/MapObject/mapobject_ui.c:669
-#: plug-ins/common/bumpmap.c:1058 plug-ins/common/emboss.c:588
-#: plug-ins/common/fractaltrace.c:830 plug-ins/common/struc.c:1330
+#: plug-ins/common/bumpmap.c:1058 plug-ins/common/emboss.c:591
+#: plug-ins/common/fractaltrace.c:835 plug-ins/common/struc.c:1330
 #, fuzzy
 msgid "Depth:"
 msgstr "Τμήμ."
@@ -742,9 +742,9 @@ msgid "Antialiasing quality. Higher is better, but slower"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:509 plug-ins/MapObject/mapobject_ui.c:681
-#: plug-ins/common/iwarp.c:1130 plug-ins/common/threshold_alpha.c:295
-#: plug-ins/common/unsharp.c:830 plug-ins/common/wind.c:1159
-#: plug-ins/gflare/gflare.c:3101
+#: plug-ins/common/iwarp.c:1135 plug-ins/common/threshold_alpha.c:295
+#: plug-ins/common/unsharp.c:830 plug-ins/common/wind.c:1164
+#: plug-ins/gflare/gflare.c:3102
 #, fuzzy
 msgid "Threshold:"
 msgstr "Κατώφλι"
@@ -807,9 +807,9 @@ msgstr "Θέση"
 #: plug-ins/Lighting/lighting_ui.c:618 plug-ins/Lighting/lighting_ui.c:670
 #: plug-ins/MapObject/mapobject_ui.c:776 plug-ins/MapObject/mapobject_ui.c:831
 #: plug-ins/MapObject/mapobject_ui.c:1080
-#: plug-ins/MapObject/mapobject_ui.c:1127 plug-ins/common/flarefx.c:789
-#: plug-ins/common/nova.c:632 plug-ins/common/papertile.c:285
-#: plug-ins/flame/flame.c:1207 plug-ins/gflare/gflare.c:2953
+#: plug-ins/MapObject/mapobject_ui.c:1127 plug-ins/common/flarefx.c:794
+#: plug-ins/common/nova.c:637 plug-ins/common/papertile.c:285
+#: plug-ins/flame/flame.c:1213 plug-ins/gflare/gflare.c:2954
 #: plug-ins/ifscompose/ifscompose.c:536
 msgid "X:"
 msgstr "Χ:"
@@ -823,10 +823,10 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:790 plug-ins/MapObject/mapobject_ui.c:844
 #: plug-ins/MapObject/mapobject_ui.c:1092
 #: plug-ins/MapObject/mapobject_ui.c:1137
-#: plug-ins/MapObject/mapobject_ui.c:1236 plug-ins/common/flarefx.c:809
-#: plug-ins/common/nova.c:652 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1244 plug-ins/flame/flame.c:1221
-#: plug-ins/gflare/gflare.c:2957 plug-ins/ifscompose/ifscompose.c:550
+#: plug-ins/MapObject/mapobject_ui.c:1236 plug-ins/common/flarefx.c:814
+#: plug-ins/common/nova.c:657 plug-ins/common/papertile.c:294
+#: plug-ins/common/xbm.c:1244 plug-ins/flame/flame.c:1227
+#: plug-ins/gflare/gflare.c:2958 plug-ins/ifscompose/ifscompose.c:550
 msgid "Y:"
 msgstr "Ψ:"
 
@@ -908,7 +908,7 @@ msgid "Controls how intense the highlights will be"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:858 plug-ins/MapObject/mapobject_ui.c:1026
-#: plug-ins/common/jigsaw.c:2597
+#: plug-ins/common/jigsaw.c:2602
 #, fuzzy
 msgid "Highlight:"
 msgstr "Επιλεγμένο"
@@ -938,7 +938,7 @@ msgid "Bumpmap Image:"
 msgstr "Εικόνα:"
 
 #: plug-ins/Lighting/lighting_ui.c:946 plug-ins/common/mblur.c:783
-#: plug-ins/common/sinus.c:1984 plug-ins/flame/flame.c:727
+#: plug-ins/common/sinus.c:1987 plug-ins/flame/flame.c:733
 msgid "Linear"
 msgstr "Γραμμικό"
 
@@ -946,13 +946,13 @@ msgstr "Γραμμικό"
 msgid "Logarithmic"
 msgstr "Λογαριθμικό"
 
-#: plug-ins/Lighting/lighting_ui.c:948 plug-ins/common/sinus.c:1986
-#: plug-ins/flame/flame.c:728
+#: plug-ins/Lighting/lighting_ui.c:948 plug-ins/common/sinus.c:1989
+#: plug-ins/flame/flame.c:734
 #, fuzzy
 msgid "Sinusoidal"
 msgstr "Διωνυμική"
 
-#: plug-ins/Lighting/lighting_ui.c:949 plug-ins/flame/flame.c:729
+#: plug-ins/Lighting/lighting_ui.c:949 plug-ins/flame/flame.c:735
 #, fuzzy
 msgid "Spherical"
 msgstr "Σειριακό"
@@ -1018,7 +1018,7 @@ msgstr "Περιβάλλοντα"
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1365
 #: plug-ins/common/lic.c:1036 plug-ins/common/ripple.c:603
-#: plug-ins/gfig/gfig.c:4024 plug-ins/mosaic/mosaic.c:596
+#: plug-ins/gfig/gfig.c:4029 plug-ins/mosaic/mosaic.c:602
 msgid "Options"
 msgstr "Επιλογές"
 
@@ -1046,11 +1046,11 @@ msgstr "Περιβάλλον"
 msgid "Lighting Effects"
 msgstr "Φωτεινά τετραγωνίδια"
 
-#: plug-ins/Lighting/lighting_ui.c:1193 plug-ins/common/grid.c:710
+#: plug-ins/Lighting/lighting_ui.c:1194 plug-ins/common/grid.c:715
 msgid "Update Preview"
 msgstr "Ανανέωση Προεπισκόπησης"
 
-#: plug-ins/Lighting/lighting_ui.c:1201 plug-ins/MapObject/mapobject_ui.c:1480
+#: plug-ins/Lighting/lighting_ui.c:1202 plug-ins/MapObject/mapobject_ui.c:1481
 msgid "Recompute preview image"
 msgstr ""
 
@@ -1242,10 +1242,10 @@ msgstr ""
 msgid "Size"
 msgstr "Μέγεθος"
 
-#: plug-ins/MapObject/mapobject_ui.c:1321 plug-ins/common/despeckle.c:748
-#: plug-ins/common/nlfilt.c:429 plug-ins/common/nova.c:525
-#: plug-ins/common/unsharp.c:812 plug-ins/common/whirlpinch.c:874
-#: plug-ins/gfig/gfig.c:3189 plug-ins/gflare/gflare.c:2988
+#: plug-ins/MapObject/mapobject_ui.c:1321 plug-ins/common/despeckle.c:753
+#: plug-ins/common/nlfilt.c:434 plug-ins/common/nova.c:530
+#: plug-ins/common/unsharp.c:812 plug-ins/common/whirlpinch.c:879
+#: plug-ins/gfig/gfig.c:3189 plug-ins/gflare/gflare.c:2989
 #: plug-ins/imagemap/imap_circle.c:282
 #, fuzzy
 msgid "Radius:"
@@ -1267,7 +1267,7 @@ msgid "Cylinder length"
 msgstr "_Απόσταση & μήκος"
 
 #. Orientation toggle box
-#: plug-ins/MapObject/mapobject_ui.c:1377 plug-ins/common/blinds.c:368
+#: plug-ins/MapObject/mapobject_ui.c:1377 plug-ins/common/blinds.c:373
 #: plug-ins/common/ripple.c:634 plug-ins/gimpressionist/orientation.c:60
 #: plug-ins/gimpressionist/orientation.c:65
 msgid "Orientation"
@@ -1279,25 +1279,25 @@ msgid "Map to Object"
 msgstr "Μετακίνηση αντικειμέν_ου"
 
 #
-#: plug-ins/MapObject/mapobject_ui.c:1471 plug-ins/common/diffraction.c:574
+#: plug-ins/MapObject/mapobject_ui.c:1472 plug-ins/common/diffraction.c:579
 #, fuzzy
 msgid "Preview!"
 msgstr "Προεπισκόπηση"
 
-#: plug-ins/MapObject/mapobject_ui.c:1494
+#: plug-ins/MapObject/mapobject_ui.c:1495
 msgid "Zoom out (make image smaller)"
 msgstr ""
 
-#: plug-ins/MapObject/mapobject_ui.c:1508
+#: plug-ins/MapObject/mapobject_ui.c:1509
 msgid "Zoom in (make image bigger)"
 msgstr ""
 
-#: plug-ins/MapObject/mapobject_ui.c:1510
+#: plug-ins/MapObject/mapobject_ui.c:1511
 #, fuzzy
 msgid "Show Preview Wireframe"
 msgstr "Εμφάνιση της πλευρικής μπάρας όψης"
 
-#: plug-ins/MapObject/mapobject_ui.c:1519
+#: plug-ins/MapObject/mapobject_ui.c:1520
 #, fuzzy
 msgid "Show/hide preview wireframe"
 msgstr "Εμφάνιση της πλευρικής μπάρας όψης"
@@ -1311,7 +1311,7 @@ msgstr "Εμφάνιση της πλευρικής μπάρας όψης"
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:323
 #: plug-ins/common/png.c:424 plug-ins/common/png.c:426
 #: plug-ins/common/pnm.c:408 plug-ins/common/psd.c:1732
-#: plug-ins/common/sunras.c:439 plug-ins/common/tga.c:426
+#: plug-ins/common/sunras.c:439 plug-ins/common/tga.c:429
 #: plug-ins/common/tiff.c:443 plug-ins/common/xbm.c:734
 #: plug-ins/common/xpm.c:332 plug-ins/common/xwd.c:436
 #: plug-ins/faxg3/faxg3.c:195 plug-ins/gfli/gfli.c:455 plug-ins/sgi/sgi.c:325
@@ -1349,16 +1349,16 @@ msgstr "Εγκατάσταση χάρτη χρωμάτων"
 #. Create an indexed-alpha layer to hold the image...
 #: plug-ins/bmp/bmpread.c:319 plug-ins/bmp/bmpread.c:326
 #: plug-ins/bmp/bmpread.c:333 plug-ins/common/CEL.c:301
-#: plug-ins/common/blinds.c:379 plug-ins/common/compose.c:544
-#: plug-ins/common/decompose.c:464 plug-ins/common/film.c:996
+#: plug-ins/common/blinds.c:384 plug-ins/common/compose.c:544
+#: plug-ins/common/decompose.c:464 plug-ins/common/film.c:995
 #: plug-ins/common/gifload.c:845 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:889 plug-ins/common/lic.c:903
 #: plug-ins/common/papertile.c:316 plug-ins/common/pat.c:338
 #: plug-ins/common/pcx.c:329 plug-ins/common/pcx.c:335
 #: plug-ins/common/pix.c:367 plug-ins/common/png.c:545
 #: plug-ins/common/pnm.c:496 plug-ins/common/psd.c:2115
-#: plug-ins/common/smooth_palette.c:240 plug-ins/common/sunras.c:929
-#: plug-ins/common/tga.c:912 plug-ins/common/tiff.c:660
+#: plug-ins/common/smooth_palette.c:244 plug-ins/common/sunras.c:929
+#: plug-ins/common/tga.c:915 plug-ins/common/tiff.c:660
 #: plug-ins/common/tile.c:279 plug-ins/common/winclipboard.c:556
 #: plug-ins/common/wmf.c:2144 plug-ins/common/xbm.c:872
 #: plug-ins/faxg3/faxg3.c:447 plug-ins/fits/fits.c:518
@@ -1385,7 +1385,7 @@ msgstr "Αδύνατο το άνοιγμα του %s"
 #: plug-ins/common/pix.c:529 plug-ins/common/png.c:773
 #: plug-ins/common/png.c:775 plug-ins/common/pnm.c:780
 #: plug-ins/common/ps.c:993 plug-ins/common/sunras.c:522
-#: plug-ins/common/tga.c:1011 plug-ins/common/tiff.c:1317
+#: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1321
 #: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:651
 #: plug-ins/common/xwd.c:540 plug-ins/fits/fits.c:469 plug-ins/gfli/gfli.c:677
 #: plug-ins/sgi/sgi.c:543 plug-ins/sgi/sgi.c:545 plug-ins/xjt/xjt.c:1629
@@ -1409,193 +1409,193 @@ msgstr "Αποθήκευση Επιλογών"
 msgid "RLE encoded"
 msgstr "Πηγαίος κώδικας SQL"
 
-#: plug-ins/common/AlienMap.c:963
+#: plug-ins/common/AlienMap.c:968
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/AlienMap.c:1162
+#: plug-ins/common/AlienMap.c:1167
 msgid "AlienMap: Transforming..."
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1391
+#: plug-ins/common/AlienMap.c:1396
 #, fuzzy
 msgid "AlienMap"
 msgstr "Ψευδ/μο"
 
-#: plug-ins/common/AlienMap.c:1444
+#: plug-ins/common/AlienMap.c:1449
 #, fuzzy
 msgid "Change intensity of the red channel"
 msgstr "Αλλαγή του μεγέθους σελίδας"
 
-#: plug-ins/common/AlienMap.c:1453
+#: plug-ins/common/AlienMap.c:1458
 #, fuzzy
 msgid "Change intensity of the green channel"
 msgstr "Αλλαγή του μεγέθους σελίδας"
 
-#: plug-ins/common/AlienMap.c:1462
+#: plug-ins/common/AlienMap.c:1467
 #, fuzzy
 msgid "Change intensity of the blue channel"
 msgstr "Αλλαγή του μεγέθους σελίδας"
 
-#: plug-ins/common/AlienMap.c:1479
+#: plug-ins/common/AlienMap.c:1484
 #, fuzzy
 msgid "Use sine-function for red component."
 msgstr "Συστατικό όψης απογραφής συστήματος"
 
-#: plug-ins/common/AlienMap.c:1481
+#: plug-ins/common/AlienMap.c:1486
 #, fuzzy
 msgid "Use cosine-function for red component."
 msgstr "Συστατικό όψης απογραφής συστήματος"
 
-#: plug-ins/common/AlienMap.c:1483
+#: plug-ins/common/AlienMap.c:1488
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1502
+#: plug-ins/common/AlienMap.c:1507
 #, fuzzy
 msgid "Use sine-function for green component."
 msgstr "Συστατικό όψης απογραφής συστήματος"
 
-#: plug-ins/common/AlienMap.c:1504
+#: plug-ins/common/AlienMap.c:1509
 #, fuzzy
 msgid "Use cosine-function for green component."
 msgstr "Συστατικό όψης απογραφής συστήματος"
 
-#: plug-ins/common/AlienMap.c:1506
+#: plug-ins/common/AlienMap.c:1511
 msgid ""
 "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1525
+#: plug-ins/common/AlienMap.c:1530
 #, fuzzy
 msgid "Use sine-function for blue component."
 msgstr "Συστατικό όψης απογραφής συστήματος"
 
-#: plug-ins/common/AlienMap.c:1527
+#: plug-ins/common/AlienMap.c:1532
 #, fuzzy
 msgid "Use cosine-function for blue component."
 msgstr "Συστατικό όψης απογραφής συστήματος"
 
-#: plug-ins/common/AlienMap.c:1529
+#: plug-ins/common/AlienMap.c:1534
 msgid ""
 "Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1659
+#: plug-ins/common/AlienMap.c:1664
 msgid "About AlienMap"
 msgstr "Περί του AlienMap"
 
-#: plug-ins/common/AlienMap2.c:987
+#: plug-ins/common/AlienMap2.c:992
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/AlienMap2.c:1161
+#: plug-ins/common/AlienMap2.c:1166
 msgid "AlienMap2: Transforming..."
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1383
+#: plug-ins/common/AlienMap2.c:1388
 msgid "AlienMap2"
 msgstr ""
 
 # sysdeps/names/proctime.c:48
-#: plug-ins/common/AlienMap2.c:1434
+#: plug-ins/common/AlienMap2.c:1439
 #, fuzzy
 msgid "R/H-Frequency:"
 msgstr "Συχνότητα"
 
-#: plug-ins/common/AlienMap2.c:1437
+#: plug-ins/common/AlienMap2.c:1442
 msgid "Change frequency of the red/hue channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1444
+#: plug-ins/common/AlienMap2.c:1449
 msgid "R/H-Phaseshift:"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1447
+#: plug-ins/common/AlienMap2.c:1452
 msgid "Change angle of the red/hue channel"
 msgstr ""
 
 # sysdeps/names/proctime.c:48
-#: plug-ins/common/AlienMap2.c:1454
+#: plug-ins/common/AlienMap2.c:1459
 #, fuzzy
 msgid "G/S-Frequency:"
 msgstr "Συχνότητα"
 
-#: plug-ins/common/AlienMap2.c:1457
+#: plug-ins/common/AlienMap2.c:1462
 msgid "Change frequency of the green/saturation channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1464
+#: plug-ins/common/AlienMap2.c:1469
 msgid "G/S-Phaseshift:"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1467
+#: plug-ins/common/AlienMap2.c:1472
 msgid "Change angle of the green/saturation channel"
 msgstr ""
 
 # sysdeps/names/proctime.c:48
-#: plug-ins/common/AlienMap2.c:1474
+#: plug-ins/common/AlienMap2.c:1479
 #, fuzzy
 msgid "B/L-Frequency:"
 msgstr "Συχνότητα"
 
-#: plug-ins/common/AlienMap2.c:1477
+#: plug-ins/common/AlienMap2.c:1482
 msgid "Change frequency of the blue/luminance channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1484
+#: plug-ins/common/AlienMap2.c:1489
 msgid "B/L-Phaseshift:"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1487
+#: plug-ins/common/AlienMap2.c:1492
 msgid "Change angle of the blue/luminance channel"
 msgstr ""
 
 #. * Gray: Operation-Mode *
-#: plug-ins/common/AlienMap2.c:1495 plug-ins/common/deinterlace.c:286
-#: plug-ins/common/hot.c:618 plug-ins/common/waves.c:374
-#: plug-ins/rcm/rcm_dialog.c:498
+#: plug-ins/common/AlienMap2.c:1500 plug-ins/common/deinterlace.c:286
+#: plug-ins/common/hot.c:618 plug-ins/common/waves.c:379
+#: plug-ins/rcm/rcm_dialog.c:503
 msgid "Mode"
 msgstr "Κατάσταση"
 
-#: plug-ins/common/AlienMap2.c:1499
+#: plug-ins/common/AlienMap2.c:1504
 #, fuzzy
 msgid "RGB Color Model"
 msgstr "GColorsel"
 
 #
-#: plug-ins/common/AlienMap2.c:1500
+#: plug-ins/common/AlienMap2.c:1505
 #, fuzzy
 msgid "HSL Color Model"
 msgstr "Χρώμα %d"
 
-#: plug-ins/common/AlienMap2.c:1512
+#: plug-ins/common/AlienMap2.c:1517
 msgid "Modify Red/Hue Channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1517
+#: plug-ins/common/AlienMap2.c:1522
 msgid "Use function for red/hue component"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1524
+#: plug-ins/common/AlienMap2.c:1529
 msgid "Modify Green/Saturation Channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1530
+#: plug-ins/common/AlienMap2.c:1535
 msgid "Use function for green/saturation component"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1537
+#: plug-ins/common/AlienMap2.c:1542
 msgid "Modify Blue/Luminance Channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1543
+#: plug-ins/common/AlienMap2.c:1548
 msgid "Use function for blue/luminance component"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1679
+#: plug-ins/common/AlienMap2.c:1684
 msgid "About AlienMap2"
 msgstr "Περί του AlienMap2"
 
@@ -1633,331 +1633,331 @@ msgid ""
 "%s"
 msgstr "Αδύνατη η εγγραφή του αρχείου %s"
 
-#: plug-ins/common/CML_explorer.c:131
+#: plug-ins/common/CML_explorer.c:136
 #, fuzzy
 msgid "Keep image's values"
 msgstr "Επιλογή αρχείου εικόνας"
 
-#: plug-ins/common/CML_explorer.c:132
+#: plug-ins/common/CML_explorer.c:137
 #, fuzzy
 msgid "Keep the first value"
 msgstr "Εμφάνιση της πρώτης σελίδας"
 
-#: plug-ins/common/CML_explorer.c:133
+#: plug-ins/common/CML_explorer.c:138
 #, fuzzy
 msgid "Fill with parameter k"
 msgstr "Επιλογή παραμέτρων εισόδου"
 
-#: plug-ins/common/CML_explorer.c:134
+#: plug-ins/common/CML_explorer.c:139
 msgid "k{x(1-x)}^p"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:135
+#: plug-ins/common/CML_explorer.c:140
 msgid "k{x(1-x)}^p stepped"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:136
+#: plug-ins/common/CML_explorer.c:141
 msgid "kx^p"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:137
+#: plug-ins/common/CML_explorer.c:142
 msgid "kx^p stepped"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:138
+#: plug-ins/common/CML_explorer.c:143
 msgid "k(1-x^p)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:139
+#: plug-ins/common/CML_explorer.c:144
 msgid "k(1-x^p) stepped"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:140
+#: plug-ins/common/CML_explorer.c:145
 #, fuzzy
 msgid "Delta function"
 msgstr "Συνάρτηση χρήστη"
 
-#: plug-ins/common/CML_explorer.c:141
+#: plug-ins/common/CML_explorer.c:146
 #, fuzzy
 msgid "Delta function stepped"
 msgstr "Η λειτουργία διακόπηκε"
 
 # # FIX whatis "wish function" ??  verbatim (and probably wrong?) translation...
-#: plug-ins/common/CML_explorer.c:142
+#: plug-ins/common/CML_explorer.c:147
 #, fuzzy
 msgid "sin^p-based function"
 msgstr "Συνάρτηση ευχής"
 
-#: plug-ins/common/CML_explorer.c:143
+#: plug-ins/common/CML_explorer.c:148
 msgid "sin^p, stepped"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:168
+#: plug-ins/common/CML_explorer.c:173
 msgid "Max (x, -)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:169
+#: plug-ins/common/CML_explorer.c:174
 msgid "Max (x+d, -)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:170
+#: plug-ins/common/CML_explorer.c:175
 msgid "Max (x-d, -)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:171
+#: plug-ins/common/CML_explorer.c:176
 msgid "Min (x, -)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:172
+#: plug-ins/common/CML_explorer.c:177
 msgid "Min (x+d, -)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:173
+#: plug-ins/common/CML_explorer.c:178
 msgid "Min (x-d, -)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:174
+#: plug-ins/common/CML_explorer.c:179
 msgid "Max (x+d, -), (x < 0.5)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:175
+#: plug-ins/common/CML_explorer.c:180
 msgid "Max (x+d, -), (0.5 < x)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:176
+#: plug-ins/common/CML_explorer.c:181
 msgid "Max (x-d, -), (x < 0.5)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:177
+#: plug-ins/common/CML_explorer.c:182
 msgid "Max (x-d, -), (0.5 < x)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:178
+#: plug-ins/common/CML_explorer.c:183
 msgid "Min (x+d, -), (x < 0.5)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:179
+#: plug-ins/common/CML_explorer.c:184
 msgid "Min (x+d, -), (0.5 < x)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:180
+#: plug-ins/common/CML_explorer.c:185
 msgid "Min (x-d, -), (x < 0.5)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:181
+#: plug-ins/common/CML_explorer.c:186
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:200 plug-ins/common/sunras.c:1608
+#: plug-ins/common/CML_explorer.c:205 plug-ins/common/sunras.c:1608
 #: plug-ins/print/gimp_main_window.c:1093
 msgid "Standard"
 msgstr "Κανονικό"
 
-#: plug-ins/common/CML_explorer.c:201
+#: plug-ins/common/CML_explorer.c:206
 #, fuzzy
 msgid "Use average value"
 msgstr "Εισάγετε τιμή"
 
 #
-#: plug-ins/common/CML_explorer.c:202
+#: plug-ins/common/CML_explorer.c:207
 #, fuzzy
 msgid "Use reverse value"
 msgstr "ανάποδα λοξά"
 
-#: plug-ins/common/CML_explorer.c:203
+#: plug-ins/common/CML_explorer.c:208
 msgid "With random power (0,10)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:204
+#: plug-ins/common/CML_explorer.c:209
 msgid "With random power (0,1)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:205
+#: plug-ins/common/CML_explorer.c:210
 msgid "With gradient power (0,1)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:206
+#: plug-ins/common/CML_explorer.c:211
 msgid "Multiply rand. value (0,1)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:207
+#: plug-ins/common/CML_explorer.c:212
 msgid "Multiply rand. value (0,2)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:208
+#: plug-ins/common/CML_explorer.c:213
 msgid "Multiply gradient (0,1)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:209
+#: plug-ins/common/CML_explorer.c:214
 msgid "With p and random (0,1)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:222
+#: plug-ins/common/CML_explorer.c:227
 #, fuzzy
 msgid "All black"
 msgstr "μαύρο"
 
-#: plug-ins/common/CML_explorer.c:223
+#: plug-ins/common/CML_explorer.c:228
 #, fuzzy
 msgid "All gray"
 msgstr "Αλγερία"
 
-#: plug-ins/common/CML_explorer.c:224
+#: plug-ins/common/CML_explorer.c:229
 #, fuzzy
 msgid "All white"
 msgstr "λευκό"
 
-#: plug-ins/common/CML_explorer.c:225
+#: plug-ins/common/CML_explorer.c:230
 #, fuzzy
 msgid "The first row of the image"
 msgstr "Το πλάτος του μαραφετιού"
 
-#: plug-ins/common/CML_explorer.c:226
+#: plug-ins/common/CML_explorer.c:231
 #, fuzzy
 msgid "Continuous gradient"
 msgstr "&Συνεχόμενα"
 
-#: plug-ins/common/CML_explorer.c:227
+#: plug-ins/common/CML_explorer.c:232
 msgid "Continuous grad. w/o gap"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:228
+#: plug-ins/common/CML_explorer.c:233
 msgid "Random, ch. independent"
 msgstr ""
 
 #
-#: plug-ins/common/CML_explorer.c:229
+#: plug-ins/common/CML_explorer.c:234
 #, fuzzy
 msgid "Random shared"
 msgstr "διαμοιραζόμενη κύρια μνήμη"
 
-#: plug-ins/common/CML_explorer.c:230
+#: plug-ins/common/CML_explorer.c:235
 msgid "Randoms from seed"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:231
+#: plug-ins/common/CML_explorer.c:236
 msgid "Randoms from seed (shared)"
 msgstr ""
 
 #
-#: plug-ins/common/CML_explorer.c:299 plug-ins/common/CML_explorer.c:1286
+#: plug-ins/common/CML_explorer.c:304 plug-ins/common/CML_explorer.c:1291
 #: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1057
-#: plug-ins/fp/fp_gtk.c:287 plug-ins/fp/fp_gtk.c:421
+#: plug-ins/fp/fp_gtk.c:292 plug-ins/fp/fp_gtk.c:426
 #: plug-ins/gimpressionist/orientation.c:196
 #: plug-ins/gimpressionist/size.c:190
 #, fuzzy
 msgid "Hue"
 msgstr "Απόχρωση:"
 
-#: plug-ins/common/CML_explorer.c:300 plug-ins/common/CML_explorer.c:1291
+#: plug-ins/common/CML_explorer.c:305 plug-ins/common/CML_explorer.c:1296
 #: plug-ins/common/decompose.c:123 plug-ins/common/lic.c:1058
-#: plug-ins/fp/fp_gtk.c:291 plug-ins/fp/fp_gtk.c:425 plug-ins/fp/fp_gtk.c:489
-#: plug-ins/rcm/rcm_dialog.c:540
+#: plug-ins/fp/fp_gtk.c:296 plug-ins/fp/fp_gtk.c:430 plug-ins/fp/fp_gtk.c:494
+#: plug-ins/rcm/rcm_dialog.c:545
 msgid "Saturation"
 msgstr "Κορεσμός"
 
 #
-#: plug-ins/common/CML_explorer.c:301 plug-ins/common/CML_explorer.c:1296
-#: plug-ins/common/decompose.c:124 plug-ins/fp/fp_gtk.c:295
-#: plug-ins/fp/fp_gtk.c:429 plug-ins/gimpressionist/orientation.c:139
+#: plug-ins/common/CML_explorer.c:306 plug-ins/common/CML_explorer.c:1301
+#: plug-ins/common/decompose.c:124 plug-ins/fp/fp_gtk.c:300
+#: plug-ins/fp/fp_gtk.c:434 plug-ins/gimpressionist/orientation.c:139
 #: plug-ins/gimpressionist/size.c:134
 msgid "Value"
 msgstr "Τιμή"
 
-#: plug-ins/common/CML_explorer.c:472
+#: plug-ins/common/CML_explorer.c:477
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/CML Explorer..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/CML_explorer.c:766
+#: plug-ins/common/CML_explorer.c:771
 msgid "CML_explorer: evoluting..."
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:1170
+#: plug-ins/common/CML_explorer.c:1175
 msgid "Coupled-Map-Lattice Explorer"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:1241
+#: plug-ins/common/CML_explorer.c:1246
 #, fuzzy
 msgid "Random Seed"
 msgstr "Τυχαίο"
 
-#: plug-ins/common/CML_explorer.c:1252
+#: plug-ins/common/CML_explorer.c:1257
 #, fuzzy
 msgid "Fix Seed"
 msgstr "Σπόρος"
 
-#: plug-ins/common/CML_explorer.c:1263
+#: plug-ins/common/CML_explorer.c:1268
 #, fuzzy
 msgid "New Seed"
 msgstr "Τροφοδοσία Ειδήσεων"
 
-#: plug-ins/common/CML_explorer.c:1283
+#: plug-ins/common/CML_explorer.c:1288
 #, fuzzy
 msgid "Hue Settings"
 msgstr "Ρυθμίσεις Ποντικιού"
 
 #
-#: plug-ins/common/CML_explorer.c:1288
+#: plug-ins/common/CML_explorer.c:1293
 #, fuzzy
 msgid "Saturation Settings"
 msgstr "Ρυθμίσεις Διαμέρισης"
 
-#: plug-ins/common/CML_explorer.c:1293
+#: plug-ins/common/CML_explorer.c:1298
 #, fuzzy
 msgid "Value (Gray Image) Settings"
 msgstr "Αποθήκευση Ρυθμίσεων Εικόνας"
 
 #
-#: plug-ins/common/CML_explorer.c:1298
+#: plug-ins/common/CML_explorer.c:1303
 #, fuzzy
 msgid "Advanced Settings"
 msgstr "Προχωρημένες ρυθμίσεις"
 
 #
-#: plug-ins/common/CML_explorer.c:1300 plug-ins/fp/fp_gtk.c:299
+#: plug-ins/common/CML_explorer.c:1305 plug-ins/fp/fp_gtk.c:304
 msgid "Advanced"
 msgstr "Προχωρημένος"
 
-#: plug-ins/common/CML_explorer.c:1310
+#: plug-ins/common/CML_explorer.c:1315
 #, fuzzy
 msgid "Other Parameter Settings"
 msgstr "Ρυθμίσεις Γεωμετρίας"
 
-#: plug-ins/common/CML_explorer.c:1319
+#: plug-ins/common/CML_explorer.c:1324
 #, fuzzy
 msgid "Channel Independed Parameters"
 msgstr "Διαγραφή Παραμέτρου"
 
-#: plug-ins/common/CML_explorer.c:1370
+#: plug-ins/common/CML_explorer.c:1375
 #, fuzzy
 msgid "Initial Value:"
 msgstr "Η αρχική τιμή"
 
-#: plug-ins/common/CML_explorer.c:1374
+#: plug-ins/common/CML_explorer.c:1379
 #, fuzzy
 msgid "Zoom Scale:"
 msgstr "Κλίμακα Χ:"
 
-#: plug-ins/common/CML_explorer.c:1382
+#: plug-ins/common/CML_explorer.c:1387
 #, fuzzy
 msgid "Start Offset:"
 msgstr "Εκκίνηση Στο:"
 
-#: plug-ins/common/CML_explorer.c:1390
+#: plug-ins/common/CML_explorer.c:1395
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:1402 plug-ins/maze/maze_face.c:297
+#: plug-ins/common/CML_explorer.c:1407 plug-ins/maze/maze_face.c:299
 #, fuzzy
 msgid "Seed:"
 msgstr "Ταχύτητα:"
 
-#: plug-ins/common/CML_explorer.c:1414
+#: plug-ins/common/CML_explorer.c:1419
 msgid "Switch to \"From Seed\" with the last Seed"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:1426
+#: plug-ins/common/CML_explorer.c:1431
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -1966,202 +1966,202 @@ msgid ""
 msgstr ""
 
 #
-#: plug-ins/common/CML_explorer.c:1434
+#: plug-ins/common/CML_explorer.c:1439
 #, fuzzy
 msgid "Others"
 msgstr "Άλλοι:"
 
-#: plug-ins/common/CML_explorer.c:1443
+#: plug-ins/common/CML_explorer.c:1448
 #, fuzzy
 msgid "Misc Operations"
 msgstr "Λειτουργίες"
 
-#: plug-ins/common/CML_explorer.c:1452
+#: plug-ins/common/CML_explorer.c:1457
 #, fuzzy
 msgid "Copy Settings"
 msgstr "Ρυθμίσεις Χρώματος"
 
-#: plug-ins/common/CML_explorer.c:1476
+#: plug-ins/common/CML_explorer.c:1481
 #, fuzzy
 msgid "Source Channel:"
 msgstr "Ασφαλές κανάλι"
 
-#: plug-ins/common/CML_explorer.c:1493 plug-ins/common/CML_explorer.c:1551
+#: plug-ins/common/CML_explorer.c:1498 plug-ins/common/CML_explorer.c:1556
 #, fuzzy
 msgid "Destination Channel:"
 msgstr "Προορισμός"
 
-#: plug-ins/common/CML_explorer.c:1496
+#: plug-ins/common/CML_explorer.c:1501
 #, fuzzy
 msgid "Copy Parameters"
 msgstr "Παράμετροι"
 
-#: plug-ins/common/CML_explorer.c:1505
+#: plug-ins/common/CML_explorer.c:1510
 #, fuzzy
 msgid "Selective Load Settings"
 msgstr "Επαναφόρτωση Ρυθμίσεων"
 
-#: plug-ins/common/CML_explorer.c:1521 plug-ins/common/CML_explorer.c:1540
+#: plug-ins/common/CML_explorer.c:1526 plug-ins/common/CML_explorer.c:1545
 #, fuzzy
 msgid "NULL"
 msgstr "#NULL!"
 
-#: plug-ins/common/CML_explorer.c:1532
+#: plug-ins/common/CML_explorer.c:1537
 #, fuzzy
 msgid "Source Channel in File:"
 msgstr "Αρχείο Πηγαίου Κώδικα:"
 
-#: plug-ins/common/CML_explorer.c:1555
+#: plug-ins/common/CML_explorer.c:1560
 #, fuzzy
 msgid "Misc Ops."
 msgstr "Διάφορα"
 
-#: plug-ins/common/CML_explorer.c:1649
+#: plug-ins/common/CML_explorer.c:1654
 #, fuzzy
 msgid "Function Type:"
 msgstr "Συνάρτηση"
 
-#: plug-ins/common/CML_explorer.c:1706
+#: plug-ins/common/CML_explorer.c:1711
 #, fuzzy
 msgid "Composition:"
 msgstr "Σύνθεση"
 
-#: plug-ins/common/CML_explorer.c:1748
+#: plug-ins/common/CML_explorer.c:1753
 #, fuzzy
 msgid "Misc Arrange:"
 msgstr "Σελίδα Διαφόρων"
 
-#: plug-ins/common/CML_explorer.c:1752
+#: plug-ins/common/CML_explorer.c:1757
 msgid "Use Cyclic Range"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:1762
+#: plug-ins/common/CML_explorer.c:1767
 #, fuzzy
 msgid "Mod. Rate:"
 msgstr "Κατάσταση:"
 
-#: plug-ins/common/CML_explorer.c:1771
+#: plug-ins/common/CML_explorer.c:1776
 #, fuzzy
 msgid "Env. Sensitivity:"
 msgstr "Ευαισ_θησία"
 
-#: plug-ins/common/CML_explorer.c:1780
+#: plug-ins/common/CML_explorer.c:1785
 #, fuzzy
 msgid "Diffusion Dist.:"
 msgstr "Μετακινούμενη καταχνιά"
 
-#: plug-ins/common/CML_explorer.c:1789
+#: plug-ins/common/CML_explorer.c:1794
 msgid "# of Subranges:"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:1798
+#: plug-ins/common/CML_explorer.c:1803
 #, fuzzy
 msgid "P(ower Factor):"
 msgstr "Power Share"
 
-#: plug-ins/common/CML_explorer.c:1807
+#: plug-ins/common/CML_explorer.c:1812
 #, fuzzy
 msgid "Parameter k:"
 msgstr "Παράμετροι:"
 
-#: plug-ins/common/CML_explorer.c:1816
+#: plug-ins/common/CML_explorer.c:1821
 #, fuzzy
 msgid "Range Low:"
 msgstr "Αλλαγή &Σε:"
 
-#: plug-ins/common/CML_explorer.c:1825
+#: plug-ins/common/CML_explorer.c:1830
 #, fuzzy
 msgid "Range High:"
 msgstr "Διάστημα"
 
-#: plug-ins/common/CML_explorer.c:1837
+#: plug-ins/common/CML_explorer.c:1842
 #, fuzzy
 msgid "Plot the Graph of the Settings"
 msgstr "Ρυθμίσεις Μεταφοράς Αρχείων"
 
-#: plug-ins/common/CML_explorer.c:1892
+#: plug-ins/common/CML_explorer.c:1897
 #, fuzzy
 msgid "Ch. Sensitivity:"
 msgstr "Ευαισ_θησία"
 
-#: plug-ins/common/CML_explorer.c:1902
+#: plug-ins/common/CML_explorer.c:1907
 #, fuzzy
 msgid "Mutation Rate:"
 msgstr "Είδος κουμπιού: "
 
-#: plug-ins/common/CML_explorer.c:1912
+#: plug-ins/common/CML_explorer.c:1917
 #, fuzzy
 msgid "Mutation Dist.:"
 msgstr "Επαναλήψεις:"
 
-#: plug-ins/common/CML_explorer.c:1941
+#: plug-ins/common/CML_explorer.c:1946
 #, fuzzy
 msgid "Graph of the current settings"
 msgstr "Αποθήκευση τρέχοντων ρυθμίσεων"
 
 #
-#: plug-ins/common/CML_explorer.c:1955
+#: plug-ins/common/CML_explorer.c:1960
 #, fuzzy
 msgid "The Graph"
 msgstr "Γράφημα"
 
-#: plug-ins/common/CML_explorer.c:2061
+#: plug-ins/common/CML_explorer.c:2066
 msgid "Warning: the source and the destination are the same channel."
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:2129
+#: plug-ins/common/CML_explorer.c:2134
 #, fuzzy
 msgid "Save Parameters to"
 msgstr "Παράμετροι"
 
-#: plug-ins/common/CML_explorer.c:2201 plug-ins/common/CML_explorer.c:2402
+#: plug-ins/common/CML_explorer.c:2206 plug-ins/common/CML_explorer.c:2407
 #, fuzzy, c-format
 msgid "Error: could not open \"%s\""
 msgstr "Αδύνατο το άνοιγμα του %s."
 
-#: plug-ins/common/CML_explorer.c:2242
+#: plug-ins/common/CML_explorer.c:2247
 #, c-format
 msgid ""
 "Parameters were Saved to\n"
 "\"%s\""
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:2260
+#: plug-ins/common/CML_explorer.c:2265
 msgid "CML File Operation Warning"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:2280
+#: plug-ins/common/CML_explorer.c:2285
 #, fuzzy, c-format
 msgid ""
 "%s\n"
 "exists, Overwrite?"
 msgstr " υπάρχει ήδη. Αντικατάσταση;"
 
-#: plug-ins/common/CML_explorer.c:2317
+#: plug-ins/common/CML_explorer.c:2322
 #, fuzzy
 msgid "Load Parameters from"
 msgstr "Προσθήκη Παραμέτρου Μετά"
 
 #
-#: plug-ins/common/CML_explorer.c:2319
+#: plug-ins/common/CML_explorer.c:2324
 #, fuzzy
 msgid "Selective Load from"
 msgstr "Επιλογή όλων των γραμμών"
 
-#: plug-ins/common/CML_explorer.c:2423
+#: plug-ins/common/CML_explorer.c:2428
 #, fuzzy
 msgid "Error: it's not CML parameter file."
 msgstr "Το %s δεν είναι κανονικό αρχείο."
 
-#: plug-ins/common/CML_explorer.c:2430
+#: plug-ins/common/CML_explorer.c:2435
 msgid "Warning: it's an old format file."
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:2432
+#: plug-ins/common/CML_explorer.c:2437
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:2493
+#: plug-ins/common/CML_explorer.c:2498
 msgid "Error: failed to load parameters"
 msgstr ""
 
@@ -2198,30 +2198,30 @@ msgstr "Στον Κατάλογο Εμφάνισης"
 #. *  First set up the basic containers, label them, etc.
 #.
 #: plug-ins/common/align_layers.c:436 plug-ins/common/apply_lens.c:407
-#: plug-ins/common/blinds.c:404 plug-ins/common/blur.c:630
+#: plug-ins/common/blinds.c:409 plug-ins/common/blur.c:630
 #: plug-ins/common/bumpmap.c:999 plug-ins/common/checkerboard.c:372
-#: plug-ins/common/cubism.c:332 plug-ins/common/despeckle.c:732
-#: plug-ins/common/destripe.c:636 plug-ins/common/edge.c:661
-#: plug-ins/common/emboss.c:558 plug-ins/common/engrave.c:235
+#: plug-ins/common/cubism.c:332 plug-ins/common/despeckle.c:737
+#: plug-ins/common/destripe.c:639 plug-ins/common/edge.c:661
+#: plug-ins/common/emboss.c:561 plug-ins/common/engrave.c:235
 #: plug-ins/common/gauss_iir.c:377 plug-ins/common/gauss_rle.c:372
-#: plug-ins/common/glasstile.c:293 plug-ins/common/grid.c:724
-#: plug-ins/common/illusion.c:611 plug-ins/common/jpeg.c:1627
-#: plug-ins/common/lic.c:1089 plug-ins/common/max_rgb.c:380
-#: plug-ins/common/nlfilt.c:408 plug-ins/common/noisify.c:524
-#: plug-ins/common/nova.c:495 plug-ins/common/oilify.c:469
-#: plug-ins/common/pixelize.c:338 plug-ins/common/plasma.c:347
-#: plug-ins/common/png.c:1061 plug-ins/common/polar.c:958
+#: plug-ins/common/glasstile.c:298 plug-ins/common/grid.c:729
+#: plug-ins/common/illusion.c:616 plug-ins/common/jpeg.c:1627
+#: plug-ins/common/lic.c:1089 plug-ins/common/max_rgb.c:385
+#: plug-ins/common/nlfilt.c:413 plug-ins/common/noisify.c:529
+#: plug-ins/common/nova.c:500 plug-ins/common/oilify.c:469
+#: plug-ins/common/pixelize.c:338 plug-ins/common/plasma.c:352
+#: plug-ins/common/png.c:1061 plug-ins/common/polar.c:963
 #: plug-ins/common/randomize.c:721 plug-ins/common/ripple.c:681
-#: plug-ins/common/scatter_hsv.c:428 plug-ins/common/sel_gauss.c:254
-#: plug-ins/common/sharpen.c:613 plug-ins/common/shift.c:387
-#: plug-ins/common/smooth_palette.c:414 plug-ins/common/snoise.c:527
+#: plug-ins/common/scatter_hsv.c:433 plug-ins/common/sel_gauss.c:254
+#: plug-ins/common/sharpen.c:618 plug-ins/common/shift.c:387
+#: plug-ins/common/smooth_palette.c:418 plug-ins/common/snoise.c:527
 #: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:364
 #: plug-ins/common/struc.c:1292 plug-ins/common/threshold_alpha.c:283
-#: plug-ins/common/unsharp.c:798 plug-ins/common/video.c:2166
-#: plug-ins/common/vpropagate.c:1054 plug-ins/common/waves.c:400
-#: plug-ins/common/whirlpinch.c:844 plug-ins/common/wind.c:1049
-#: plug-ins/common/xpm.c:810 plug-ins/maze/maze_face.c:204
-#: plug-ins/mosaic/mosaic.c:676 plug-ins/xjt/xjt.c:802
+#: plug-ins/common/unsharp.c:798 plug-ins/common/video.c:2170
+#: plug-ins/common/vpropagate.c:1054 plug-ins/common/waves.c:405
+#: plug-ins/common/whirlpinch.c:849 plug-ins/common/wind.c:1054
+#: plug-ins/common/xpm.c:810 plug-ins/maze/maze_face.c:206
+#: plug-ins/mosaic/mosaic.c:682 plug-ins/xjt/xjt.c:802
 #, fuzzy
 msgid "Parameter Settings"
 msgstr "Ρυθμίσεις Σελίδας"
@@ -2259,7 +2259,7 @@ msgid "Left Edge"
 msgstr "Αριστερόχειρας"
 
 #: plug-ins/common/align_layers.c:473 plug-ins/common/align_layers.c:506
-#: plug-ins/gflare/gflare.c:2941
+#: plug-ins/gflare/gflare.c:2942
 msgid "Center"
 msgstr "Κέντρο"
 
@@ -2445,47 +2445,47 @@ msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 msgid "Auto-Stretching HSV..."
 msgstr "Αυτόματη σύνδεση..."
 
-#: plug-ins/common/blinds.c:181
+#: plug-ins/common/blinds.c:186
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Blinds..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/blinds.c:277
+#: plug-ins/common/blinds.c:282
 #, fuzzy
 msgid "Adding Blinds..."
 msgstr "Ανάγνωση επικεφαλίδων..."
 
 #. Get the preview image and store it also set has_alpha
-#: plug-ins/common/blinds.c:317
+#: plug-ins/common/blinds.c:322
 #, fuzzy
 msgid "Blinds"
 msgstr "Αναλαμπή"
 
 #. attach labels
-#: plug-ins/common/blinds.c:372 plug-ins/common/grid.c:774
-#: plug-ins/common/ripple.c:639 plug-ins/common/tileit.c:450
+#: plug-ins/common/blinds.c:377 plug-ins/common/grid.c:779
+#: plug-ins/common/ripple.c:639 plug-ins/common/tileit.c:455
 #: plug-ins/pagecurl/pagecurl.c:613
 msgid "Horizontal"
 msgstr "Οριζόντιο"
 
-#: plug-ins/common/blinds.c:373 plug-ins/common/grid.c:775
-#: plug-ins/common/ripple.c:642 plug-ins/common/tileit.c:460
+#: plug-ins/common/blinds.c:378 plug-ins/common/grid.c:780
+#: plug-ins/common/ripple.c:642 plug-ins/common/tileit.c:465
 #: plug-ins/pagecurl/pagecurl.c:614
 msgid "Vertical"
 msgstr "Κατακόρυφο"
 
-#: plug-ins/common/blinds.c:388 plug-ins/common/fractaltrace.c:771
+#: plug-ins/common/blinds.c:393 plug-ins/common/fractaltrace.c:776
 #: plug-ins/common/papertile.c:382 plug-ins/gfig/gfig.c:2845
 #: plug-ins/gimpressionist/general.c:244
 msgid "Transparent"
 msgstr "Διαφανές"
 
-#: plug-ins/common/blinds.c:417
+#: plug-ins/common/blinds.c:422
 #, fuzzy
 msgid "Displacement:"
 msgstr "Τοποθέτηση"
 
-#: plug-ins/common/blinds.c:426
+#: plug-ins/common/blinds.c:431
 #, fuzzy
 msgid "Num Segments:"
 msgstr "Τμήματα:"
@@ -2495,9 +2495,9 @@ msgstr "Τμήματα:"
 msgid "<Image>/Filters/Blur/Blur..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/blur.c:647 plug-ins/common/plasma.c:362
-#: plug-ins/common/randomize.c:738 plug-ins/common/sinus.c:1800
-#: plug-ins/common/snoise.c:544 plug-ins/gflare/gflare.c:4179
+#: plug-ins/common/blur.c:647 plug-ins/common/plasma.c:367
+#: plug-ins/common/randomize.c:738 plug-ins/common/sinus.c:1803
+#: plug-ins/common/snoise.c:544 plug-ins/gflare/gflare.c:4182
 #, fuzzy
 msgid "Random Seed:"
 msgstr "Τυχαίες Τηλεμεταφορές:"
@@ -2611,13 +2611,13 @@ msgstr ""
 msgid "Bump Map:"
 msgstr ""
 
-#: plug-ins/common/bumpmap.c:1040 plug-ins/common/emboss.c:570
+#: plug-ins/common/bumpmap.c:1040 plug-ins/common/emboss.c:573
 #, fuzzy
 msgid "Azimuth:"
 msgstr "Έγκριση:"
 
 #
-#: plug-ins/common/bumpmap.c:1049 plug-ins/common/emboss.c:579
+#: plug-ins/common/bumpmap.c:1049 plug-ins/common/emboss.c:582
 #, fuzzy
 msgid "Elevation:"
 msgstr "Επιλογή:"
@@ -2732,8 +2732,8 @@ msgid "Color to Alpha"
 msgstr "Χρώμα προς χρήση:"
 
 #
-#: plug-ins/common/colortoalpha.c:443 plug-ins/common/mapcolor.c:641
-#: plug-ins/gfli/gfli.c:845 plug-ins/gfli/gfli.c:914
+#: plug-ins/common/colortoalpha.c:443 plug-ins/common/mapcolor.c:646
+#: plug-ins/gfli/gfli.c:846 plug-ins/gfli/gfli.c:916
 msgid "From:"
 msgstr "Από:"
 
@@ -2747,7 +2747,7 @@ msgid "to Alpha"
 msgstr "Άλφα"
 
 #: plug-ins/common/compose.c:120 plug-ins/common/decompose.c:113
-#: plug-ins/common/newsprint.c:1363
+#: plug-ins/common/newsprint.c:1368
 #, fuzzy
 msgid "RGB"
 msgstr "GKB"
@@ -2762,8 +2762,8 @@ msgstr "Σύνθεση"
 msgid "RGBA"
 msgstr ""
 
-#: plug-ins/common/compose.c:127 plug-ins/common/nlfilt.c:420
-#: plug-ins/common/noisify.c:580 plug-ins/common/noisify.c:684
+#: plug-ins/common/compose.c:127 plug-ins/common/nlfilt.c:425
+#: plug-ins/common/noisify.c:585 plug-ins/common/noisify.c:689
 msgid "Alpha:"
 msgstr "Άλφα:"
 
@@ -2779,20 +2779,20 @@ msgstr ""
 
 #
 #. Gray: Circle: Spinbutton 1
-#: plug-ins/common/compose.c:128 plug-ins/common/scatter_hsv.c:450
-#: plug-ins/rcm/rcm_dialog.c:451
+#: plug-ins/common/compose.c:128 plug-ins/common/scatter_hsv.c:455
+#: plug-ins/rcm/rcm_dialog.c:456
 msgid "Hue:"
 msgstr "Απόχρωση:"
 
 #
 #. Gray: Circle: Spinbutton 2
-#: plug-ins/common/compose.c:129 plug-ins/common/scatter_hsv.c:459
-#: plug-ins/print/gimp_color_window.c:253 plug-ins/rcm/rcm_dialog.c:478
+#: plug-ins/common/compose.c:129 plug-ins/common/scatter_hsv.c:464
+#: plug-ins/print/gimp_color_window.c:253 plug-ins/rcm/rcm_dialog.c:483
 msgid "Saturation:"
 msgstr "Κορεσμός:"
 
 #
-#: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:468
+#: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:473
 msgid "Value:"
 msgstr "Τιμή:"
 
@@ -2808,18 +2808,18 @@ msgid "CMY"
 msgstr "PCM"
 
 #: plug-ins/common/compose.c:132 plug-ins/common/compose.c:136
-#: plug-ins/fp/fp_gtk.c:23 plug-ins/print/gimp_color_window.c:208
+#: plug-ins/fp/fp_gtk.c:28 plug-ins/print/gimp_color_window.c:208
 #, fuzzy
 msgid "Cyan:"
 msgstr "Κυανό"
 
 #: plug-ins/common/compose.c:133 plug-ins/common/compose.c:137
-#: plug-ins/fp/fp_gtk.c:25 plug-ins/print/gimp_color_window.c:223
+#: plug-ins/fp/fp_gtk.c:30 plug-ins/print/gimp_color_window.c:223
 msgid "Magenta:"
 msgstr "Μωβ:"
 
 #: plug-ins/common/compose.c:134 plug-ins/common/compose.c:138
-#: plug-ins/fp/fp_gtk.c:24 plug-ins/print/gimp_color_window.c:238
+#: plug-ins/fp/fp_gtk.c:29 plug-ins/print/gimp_color_window.c:238
 #, fuzzy
 msgid "Yellow:"
 msgstr "Κίτρινο"
@@ -2831,7 +2831,7 @@ msgid "cmy-compose"
 msgstr "Σύνθεση"
 
 #: plug-ins/common/compose.c:136 plug-ins/common/decompose.c:131
-#: plug-ins/common/newsprint.c:1376
+#: plug-ins/common/newsprint.c:1381
 msgid "CMYK"
 msgstr ""
 
@@ -2897,7 +2897,7 @@ msgstr "Συγγραφή νέου μηνύματος"
 msgid "Channel Representations"
 msgstr "Αλλαγή ρυθμίσεων"
 
-#: plug-ins/common/convmatrix.c:85 plug-ins/common/newsprint.c:388
+#: plug-ins/common/convmatrix.c:85 plug-ins/common/newsprint.c:393
 #: plug-ins/gfig/gfig.c:3336
 #, fuzzy
 msgid "Grey"
@@ -2954,7 +2954,7 @@ msgstr "πίνακας"
 msgid "Divisor:"
 msgstr "Διαίρεση"
 
-#: plug-ins/common/convmatrix.c:933 plug-ins/common/depthmerge.c:775
+#: plug-ins/common/convmatrix.c:933 plug-ins/common/depthmerge.c:780
 #, fuzzy
 msgid "Offset:"
 msgstr "Μετατόπιση"
@@ -2989,7 +2989,7 @@ msgstr "Ορισμός Ονόματος"
 
 #
 #: plug-ins/common/csource.c:692 plug-ins/common/mail.c:529
-#: plug-ins/common/tiff.c:1605 plug-ins/common/xbm.c:1205
+#: plug-ins/common/tiff.c:1609 plug-ins/common/xbm.c:1205
 msgid "Comment:"
 msgstr "Σχόλιο:"
 
@@ -3028,8 +3028,8 @@ msgstr ""
 
 #
 #: plug-ins/common/csource.c:765 plug-ins/common/sparkle.c:444
-#: plug-ins/common/tileit.c:605 plug-ins/gflare/gflare.c:3681
-#: plug-ins/gflare/gflare.c:3711 plug-ins/gflare/gflare.c:3741
+#: plug-ins/common/tileit.c:610 plug-ins/gflare/gflare.c:3684
+#: plug-ins/gflare/gflare.c:3714 plug-ins/gflare/gflare.c:3744
 msgid "Opacity:"
 msgstr "Διαφάνεια:"
 
@@ -3054,7 +3054,7 @@ msgstr "Ορισμένο από το χρήστη"
 msgid "Use Background Color"
 msgstr "Καθορισμός χρώματος φόντου"
 
-#: plug-ins/common/cubism.c:357 plug-ins/mosaic/mosaic.c:687
+#: plug-ins/common/cubism.c:357 plug-ins/mosaic/mosaic.c:693
 #, fuzzy
 msgid "Tile Size:"
 msgstr "Μέγεθος Αρχείου:"
@@ -3066,42 +3066,42 @@ msgid "Tile Saturation:"
 msgstr "Κορεσμός:"
 
 #
-#: plug-ins/common/curve_bend.c:351
+#: plug-ins/common/curve_bend.c:356
 #, fuzzy
 msgid "Upper"
 msgstr "Χρήστης"
 
-#: plug-ins/common/curve_bend.c:352
+#: plug-ins/common/curve_bend.c:357
 msgid "Lower"
 msgstr "Χαμηλά"
 
-#: plug-ins/common/curve_bend.c:358
+#: plug-ins/common/curve_bend.c:363
 msgid "Smooth"
 msgstr "Ομαλό"
 
 #
-#: plug-ins/common/curve_bend.c:359
+#: plug-ins/common/curve_bend.c:364
 msgid "Free"
 msgstr "Ελεύθερο"
 
-#: plug-ins/common/curve_bend.c:676
+#: plug-ins/common/curve_bend.c:681
 #, fuzzy
 msgid "<Image>/Filters/Distorts/CurveBend..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/curve_bend.c:810
+#: plug-ins/common/curve_bend.c:815
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
 msgstr ""
 
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1353
+#: plug-ins/common/curve_bend.c:1358
 #, fuzzy
 msgid "Curve Bend"
 msgstr "Καμπύλη"
 
 #
-#: plug-ins/common/curve_bend.c:1360 plug-ins/gfig/gfig.c:2849
-#: plug-ins/gfig/gfig.c:5296 plug-ins/gflare/gflare.c:3178
+#: plug-ins/common/curve_bend.c:1365 plug-ins/gfig/gfig.c:2849
+#: plug-ins/gfig/gfig.c:5303 plug-ins/gflare/gflare.c:3179
 #: plug-ins/imagemap/imap_cmd_copy.c:59
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_menu.c:297 plug-ins/imagemap/imap_toolbar.c:138
@@ -3109,84 +3109,84 @@ msgid "Copy"
 msgstr "Αντιγραφή"
 
 #
-#: plug-ins/common/curve_bend.c:1362
+#: plug-ins/common/curve_bend.c:1367
 #, fuzzy
 msgid "CopyInv"
 msgstr "Αντιγραφή"
 
-#: plug-ins/common/curve_bend.c:1364
+#: plug-ins/common/curve_bend.c:1369
 msgid "Swap"
 msgstr "Εναλλαγή"
 
 #. The Load button
-#: plug-ins/common/curve_bend.c:1383
+#: plug-ins/common/curve_bend.c:1388
 #, fuzzy
 msgid "LoadCurve"
 msgstr "Καμπύλη"
 
 #. The Save button
-#: plug-ins/common/curve_bend.c:1392
+#: plug-ins/common/curve_bend.c:1397
 #, fuzzy
 msgid "SaveCurve"
 msgstr "Καμπύλη"
 
 #. Rotate label & spinbutton
-#: plug-ins/common/curve_bend.c:1401
+#: plug-ins/common/curve_bend.c:1406
 #, fuzzy
 msgid "Rotate: "
 msgstr "Περιστροφή"
 
-#: plug-ins/common/curve_bend.c:1417
+#: plug-ins/common/curve_bend.c:1422
 #, fuzzy
 msgid "Curve for Border: "
 msgstr "Μεταφορά στον κατάλογο:"
 
 #. The option menu for selecting the drawing method
-#: plug-ins/common/curve_bend.c:1430
+#: plug-ins/common/curve_bend.c:1435
 #, fuzzy
 msgid "Curve Type: "
 msgstr "Είδος Διακομιστή: "
 
 #
 #. The preview button
-#: plug-ins/common/curve_bend.c:1493
+#: plug-ins/common/curve_bend.c:1498
 #, fuzzy
 msgid "PreviewOnce"
 msgstr "Φύλλο προεπισκόπισης"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1512
+#: plug-ins/common/curve_bend.c:1517
 #, fuzzy
 msgid "Smoothing"
 msgstr "Ομαλό"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1522 plug-ins/common/gqbist.c:852
-#: plug-ins/common/newsprint.c:1443 plug-ins/common/ripple.c:612
-#: plug-ins/gfig/gfig.c:3162 plug-ins/mosaic/mosaic.c:604
+#: plug-ins/common/curve_bend.c:1527 plug-ins/common/gqbist.c:857
+#: plug-ins/common/newsprint.c:1448 plug-ins/common/ripple.c:612
+#: plug-ins/gfig/gfig.c:3162 plug-ins/mosaic/mosaic.c:610
 msgid "Antialiasing"
 msgstr "Εξομάλυνση"
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1532
+#: plug-ins/common/curve_bend.c:1537
 #, fuzzy
 msgid "Work on Copy"
 msgstr "Αφύπνηση σε %s"
 
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2163
+#: plug-ins/common/curve_bend.c:2168
 #, fuzzy
 msgid "Load Curve Points from file"
 msgstr "Λήψη πληροφοριών πακέτου από το αρχείο %s"
 
 #
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2196
+#: plug-ins/common/curve_bend.c:2201
 #, fuzzy
 msgid "Save Curve Points to file"
 msgstr "Αποθήκευση της αναφοράς σε αρχείο"
 
-#: plug-ins/common/curve_bend.c:3336
+#: plug-ins/common/curve_bend.c:3341
 msgid "Curve Bend..."
 msgstr ""
 
@@ -3230,15 +3230,15 @@ msgstr "μωβ"
 msgid "yellow"
 msgstr "κίτρινο"
 
-#: plug-ins/common/decompose.c:128 plug-ins/common/newsprint.c:430
+#: plug-ins/common/decompose.c:128 plug-ins/common/newsprint.c:435
 msgid "Cyan"
 msgstr "Κυανό"
 
-#: plug-ins/common/decompose.c:129 plug-ins/common/newsprint.c:438
+#: plug-ins/common/decompose.c:129 plug-ins/common/newsprint.c:443
 msgid "Magenta"
 msgstr "Μωβ"
 
-#: plug-ins/common/decompose.c:130 plug-ins/common/newsprint.c:446
+#: plug-ins/common/decompose.c:130 plug-ins/common/newsprint.c:451
 msgid "Yellow"
 msgstr "Κίτρινο"
 
@@ -3325,51 +3325,51 @@ msgstr ""
 msgid "Keep Even Fields"
 msgstr ""
 
-#: plug-ins/common/depthmerge.c:197
+#: plug-ins/common/depthmerge.c:202
 #, fuzzy
 msgid "<Image>/Filters/Combine/Depth Merge..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/depthmerge.c:387
+#: plug-ins/common/depthmerge.c:392
 msgid "Depth-merging..."
 msgstr ""
 
-#: plug-ins/common/depthmerge.c:638
+#: plug-ins/common/depthmerge.c:643
 #, fuzzy
 msgid "Depth Merge"
 msgstr "Ντεθ Μέταλ"
 
-#: plug-ins/common/depthmerge.c:688
+#: plug-ins/common/depthmerge.c:693
 #, fuzzy
 msgid "Source 1:"
 msgstr "Πηγαίος Κώδικας:"
 
-#: plug-ins/common/depthmerge.c:705 plug-ins/common/depthmerge.c:739
+#: plug-ins/common/depthmerge.c:710 plug-ins/common/depthmerge.c:744
 #, fuzzy
 msgid "Depth Map:"
 msgstr "Επιλογή Χάρτη:"
 
-#: plug-ins/common/depthmerge.c:722
+#: plug-ins/common/depthmerge.c:727
 #, fuzzy
 msgid "Source 2:"
 msgstr "Πηγαίος Κώδικας:"
 
-#: plug-ins/common/depthmerge.c:765
+#: plug-ins/common/depthmerge.c:770
 #, fuzzy
 msgid "Overlap:"
 msgstr "Επιγράμμηση"
 
-#: plug-ins/common/depthmerge.c:785
+#: plug-ins/common/depthmerge.c:790
 #, fuzzy
 msgid "Scale 1:"
 msgstr "Κλίμακα Χ:"
 
-#: plug-ins/common/depthmerge.c:795
+#: plug-ins/common/depthmerge.c:800
 #, fuzzy
 msgid "Scale 2:"
 msgstr "Κλίμακα Χ:"
 
-#: plug-ins/common/despeckle.c:181
+#: plug-ins/common/despeckle.c:186
 #, fuzzy
 msgid "<Image>/Filters/Enhance/Despeckle..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
@@ -3400,12 +3400,12 @@ msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 #.
 #. * Let the user know what we're doing...
 #.
-#: plug-ins/common/despeckle.c:404
+#: plug-ins/common/despeckle.c:409
 #, fuzzy
 msgid "Despeckling..."
 msgstr "Έλεγχος ορθογραφίας..."
 
-#: plug-ins/common/despeckle.c:614
+#: plug-ins/common/despeckle.c:619
 #, fuzzy
 msgid "Despeckle"
 msgstr "Εξάρτηση"
@@ -3414,104 +3414,104 @@ msgstr "Εξάρτηση"
 #.
 #. * Filter type controls...
 #.
-#: plug-ins/common/despeckle.c:703
+#: plug-ins/common/despeckle.c:708
 msgid "Type"
 msgstr "Τύπος"
 
-#: plug-ins/common/despeckle.c:712 plug-ins/gimpressionist/orientation.c:206
+#: plug-ins/common/despeckle.c:717 plug-ins/gimpressionist/orientation.c:206
 #: plug-ins/gimpressionist/size.c:200
 #, fuzzy
 msgid "Adaptive"
 msgstr "Προσθετικό"
 
-#: plug-ins/common/despeckle.c:722
+#: plug-ins/common/despeckle.c:727
 msgid "Recursive"
 msgstr "Αναδρομικό"
 
-#: plug-ins/common/despeckle.c:761
+#: plug-ins/common/despeckle.c:766
 #, fuzzy
 msgid "Black Level:"
 msgstr "Μπλακ Μέταλ"
 
-#: plug-ins/common/despeckle.c:774
+#: plug-ins/common/despeckle.c:779
 #, fuzzy
 msgid "White Level:"
 msgstr "Επίπεδο:"
 
-#: plug-ins/common/destripe.c:146
+#: plug-ins/common/destripe.c:149
 #, fuzzy
 msgid "<Image>/Filters/Enhance/Destripe..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/destripe.c:345
+#: plug-ins/common/destripe.c:348
 #, fuzzy
 msgid "Destriping..."
 msgstr "εκκίνηση..."
 
-#: plug-ins/common/destripe.c:545
+#: plug-ins/common/destripe.c:548
 #, fuzzy
 msgid "Destripe"
 msgstr "Διαγραφή"
 
-#: plug-ins/common/destripe.c:647
+#: plug-ins/common/destripe.c:650
 #, fuzzy
 msgid "Create Histogram"
 msgstr "Ιστόγραμμα"
 
-#: plug-ins/common/destripe.c:671 plug-ins/common/gtm.c:566
+#: plug-ins/common/destripe.c:674 plug-ins/common/gtm.c:566
 #: plug-ins/common/ps.c:2654 plug-ins/common/ps.c:2832
-#: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:427
+#: plug-ins/common/smooth_palette.c:434 plug-ins/common/tile.c:427
 #: plug-ins/imagemap/imap_rectangle.c:397
 #: plug-ins/print/gimp_main_window.c:638
 msgid "Width:"
 msgstr "Πλάτος:"
 
-#: plug-ins/common/diffraction.c:184
+#: plug-ins/common/diffraction.c:189
 msgid "<Image>/Filters/Render/Pattern/Diffraction Patterns..."
 msgstr ""
 
-#: plug-ins/common/diffraction.c:330
+#: plug-ins/common/diffraction.c:335
 msgid "Creating diffraction pattern..."
 msgstr ""
 
-#: plug-ins/common/diffraction.c:528
+#: plug-ins/common/diffraction.c:533
 msgid "Diffraction Patterns"
 msgstr ""
 
 # sysdeps/names/proctime.c:48
-#: plug-ins/common/diffraction.c:626
+#: plug-ins/common/diffraction.c:631
 #, fuzzy
 msgid "Frequencies"
 msgstr "Συχνότητα"
 
-#: plug-ins/common/diffraction.c:665
+#: plug-ins/common/diffraction.c:670
 #, fuzzy
 msgid "Contours"
 msgstr "Χρώματα"
 
-#: plug-ins/common/diffraction.c:704
+#: plug-ins/common/diffraction.c:709
 #, fuzzy
 msgid "Sharp edges"
 msgstr "Διαμοιραζόμενα"
 
-#: plug-ins/common/diffraction.c:717 plug-ins/flame/flame.c:1022
+#: plug-ins/common/diffraction.c:722 plug-ins/flame/flame.c:1028
 #: plug-ins/print/gimp_color_window.c:178
 #, fuzzy
 msgid "Brightness:"
 msgstr "Εργασία"
 
-#: plug-ins/common/diffraction.c:726
+#: plug-ins/common/diffraction.c:731
 #, fuzzy
 msgid "Scattering:"
 msgstr "Υπόδειγμα:"
 
-#: plug-ins/common/diffraction.c:735
+#: plug-ins/common/diffraction.c:740
 #, fuzzy
 msgid "Polatization:"
 msgstr "Θέση:"
 
 #
-#: plug-ins/common/diffraction.c:743
+#: plug-ins/common/diffraction.c:748
 msgid "Other options"
 msgstr "Λοιπές επιλογές"
 
@@ -3558,15 +3558,15 @@ msgstr "Ακμή"
 
 #: plug-ins/common/displace.c:423 plug-ins/common/edge.c:700
 #: plug-ins/common/ripple.c:657 plug-ins/common/warp.c:519
-#: plug-ins/common/waves.c:378
+#: plug-ins/common/waves.c:383
 #, fuzzy
 msgid "Smear"
 msgstr "Έξυπνη"
 
 #: plug-ins/common/displace.c:437 plug-ins/common/edge.c:710
-#: plug-ins/common/fractaltrace.c:773 plug-ins/common/newsprint.c:454
+#: plug-ins/common/fractaltrace.c:778 plug-ins/common/newsprint.c:459
 #: plug-ins/common/ripple.c:658 plug-ins/common/warp.c:534
-#: plug-ins/fits/fits.c:1006 plug-ins/flame/flame.c:1124
+#: plug-ins/fits/fits.c:1006 plug-ins/flame/flame.c:1130
 #: plug-ins/gfig/gfig.c:3334
 msgid "Black"
 msgstr "Μαύρο"
@@ -3591,30 +3591,30 @@ msgstr "Ανίχνευση"
 msgid "Amount:"
 msgstr "Μετρητής:"
 
-#: plug-ins/common/emboss.c:166
+#: plug-ins/common/emboss.c:169
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Emboss..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/emboss.c:413 plug-ins/common/emboss.c:516
-#: plug-ins/common/emboss.c:551
+#: plug-ins/common/emboss.c:416 plug-ins/common/emboss.c:519
+#: plug-ins/common/emboss.c:554
 #, fuzzy
 msgid "Emboss"
 msgstr "Δημιουργία ανάγλυφης εικόνας"
 
-#: plug-ins/common/emboss.c:546
+#: plug-ins/common/emboss.c:549
 msgid "Function"
 msgstr "Συνάρτηση"
 
 #
-#: plug-ins/common/emboss.c:550
+#: plug-ins/common/emboss.c:553
 #, fuzzy
 msgid "Bumpmap"
 msgstr "Πλέγμα κουκίδων"
 
 #
-#: plug-ins/common/emboss.c:758 plug-ins/common/nlfilt.c:595
-#: plug-ins/common/sinus.c:2139 plug-ins/common/waves.c:597
+#: plug-ins/common/emboss.c:761 plug-ins/common/nlfilt.c:600
+#: plug-ins/common/sinus.c:2142 plug-ins/common/waves.c:602
 #, fuzzy
 msgid "Do Preview"
 msgstr "Προεπισκόπηση"
@@ -3641,298 +3641,298 @@ msgstr "σημαντικό"
 msgid "Limit Line Width"
 msgstr "Πλάτος γραμμής:"
 
-#: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1236
+#: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1235
 #: plug-ins/common/gtm.c:582 plug-ins/common/ps.c:2663
-#: plug-ins/common/ps.c:2841 plug-ins/common/smooth_palette.c:439
+#: plug-ins/common/ps.c:2841 plug-ins/common/smooth_palette.c:443
 #: plug-ins/common/tile.c:431 plug-ins/imagemap/imap_rectangle.c:403
 #: plug-ins/print/gimp_main_window.c:652
 msgid "Height:"
 msgstr "Ύψος:"
 
-#: plug-ins/common/exchange.c:135
+#: plug-ins/common/exchange.c:140
 msgid "<Image>/Filters/Colors/Map/Color Exchange..."
 msgstr ""
 
-#: plug-ins/common/exchange.c:238
+#: plug-ins/common/exchange.c:243
 #, fuzzy
 msgid "Color Exchange..."
 msgstr "Αλλαγή..."
 
 #. set up the dialog
-#: plug-ins/common/exchange.c:316
+#: plug-ins/common/exchange.c:321
 #, fuzzy
 msgid "Color Exchange"
 msgstr "Συνδυασμός χρωμάτων:"
 
-#: plug-ins/common/exchange.c:338
+#: plug-ins/common/exchange.c:343
 msgid "Preview: Click Inside to Pick \"From Color\""
 msgstr ""
 
-#: plug-ins/common/exchange.c:381
+#: plug-ins/common/exchange.c:386
 #, fuzzy
 msgid "To Color"
 msgstr "Κα_νένα"
 
-#: plug-ins/common/exchange.c:381
+#: plug-ins/common/exchange.c:386
 #, fuzzy
 msgid "From Color"
 msgstr "Κα_νένα"
 
-#: plug-ins/common/exchange.c:394
+#: plug-ins/common/exchange.c:399
 #, fuzzy
 msgid "Color Exchange: To Color"
 msgstr "Αλλαγή Χρώμα κειμένου"
 
-#: plug-ins/common/exchange.c:395
+#: plug-ins/common/exchange.c:400
 #, fuzzy
 msgid "Color Exchange: From Color"
 msgstr "Αλλαγή Χρώματος Φόντου"
 
-#: plug-ins/common/exchange.c:437
+#: plug-ins/common/exchange.c:442
 #, fuzzy
 msgid "Red Threshold:"
 msgstr "Κατώφλι"
 
-#: plug-ins/common/exchange.c:481
+#: plug-ins/common/exchange.c:486
 #, fuzzy
 msgid "Green Threshold:"
 msgstr "Κατώφλι"
 
-#: plug-ins/common/exchange.c:525
+#: plug-ins/common/exchange.c:530
 #, fuzzy
 msgid "Blue Threshold:"
 msgstr "Κατώφλι"
 
-#: plug-ins/common/exchange.c:549
+#: plug-ins/common/exchange.c:554
 #, fuzzy
 msgid "Lock Thresholds"
 msgstr "Κατώφλι"
 
-#: plug-ins/common/film.c:257
+#: plug-ins/common/film.c:256
 #, fuzzy
 msgid "<Image>/Filters/Combine/Film..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/film.c:343
+#: plug-ins/common/film.c:342
 #, fuzzy
 msgid "Composing Images..."
 msgstr "Ανάγνωση εικόνων..."
 
-#: plug-ins/common/film.c:456
+#: plug-ins/common/film.c:455
 msgid "Untitled"
 msgstr "Χωρίς τίτλο"
 
 #. ** Get a RGB copy of the source region **
-#: plug-ins/common/film.c:730
+#: plug-ins/common/film.c:729
 #, fuzzy
 msgid "Temporary"
 msgstr "Θερμοκρασία:"
 
-#: plug-ins/common/film.c:1110
+#: plug-ins/common/film.c:1109
 #, fuzzy
 msgid "Available Images:"
 msgstr "Διαθέσιμα θέματα"
 
 #
-#: plug-ins/common/film.c:1111
+#: plug-ins/common/film.c:1110
 #, fuzzy
 msgid "On Film:"
 msgstr "Άνοιγμα Αρχείου"
 
-#: plug-ins/common/film.c:1139
+#: plug-ins/common/film.c:1138
 #, fuzzy
 msgid "Add >>"
 msgstr "Προσθήκη >"
 
 #
-#: plug-ins/common/film.c:1139 plug-ins/common/iwarp.c:1052
+#: plug-ins/common/film.c:1138 plug-ins/common/iwarp.c:1057
 #: plug-ins/imagemap/imap_polygon.c:473
 msgid "Remove"
 msgstr "Αφαίρεση"
 
 #
 #. Film height/colour
-#: plug-ins/common/film.c:1176 plug-ins/common/film.c:1209
+#: plug-ins/common/film.c:1175 plug-ins/common/film.c:1208
 #, fuzzy
 msgid "Film"
 msgstr "Αρχείο"
 
 #. Keep maximum image height
-#: plug-ins/common/film.c:1218
+#: plug-ins/common/film.c:1217
 msgid "Fit Height to Images"
 msgstr ""
 
 #
 #. Film color
-#: plug-ins/common/film.c:1252
+#: plug-ins/common/film.c:1251
 #, fuzzy
 msgid "Select Film Color"
 msgstr "Επιλέξτε Χρώμα"
 
-#: plug-ins/common/film.c:1257 plug-ins/common/film.c:1307
-#: plug-ins/common/nova.c:514 plug-ins/gimpressionist/color.c:79
+#: plug-ins/common/film.c:1256 plug-ins/common/film.c:1306
+#: plug-ins/common/nova.c:519 plug-ins/gimpressionist/color.c:79
 msgid "Color:"
 msgstr "Χρώμα:"
 
 #. Film numbering: Startindex/Font/colour
-#: plug-ins/common/film.c:1268
+#: plug-ins/common/film.c:1267
 msgid "Numbering"
 msgstr "Αρίθμηση"
 
-#: plug-ins/common/film.c:1286
+#: plug-ins/common/film.c:1285
 #, fuzzy
 msgid "Start Index:"
 msgstr "Ημερομηνία έναρξης:"
 
 #
-#: plug-ins/common/film.c:1298
+#: plug-ins/common/film.c:1297
 msgid "Font:"
 msgstr "Γραμματοσειρά:"
 
 #
 #. Numbering color
-#: plug-ins/common/film.c:1302
+#: plug-ins/common/film.c:1301
 #, fuzzy
 msgid "Select Number Color"
 msgstr "Επιλέξτε Χρώμα"
 
 #
-#: plug-ins/common/film.c:1317
+#: plug-ins/common/film.c:1316
 #, fuzzy
 msgid "At Bottom"
 msgstr "Κάτω"
 
 #
-#: plug-ins/common/film.c:1317
+#: plug-ins/common/film.c:1316
 #, fuzzy
 msgid "At Top"
 msgstr "Επάνω"
 
 #. ** The right frame keeps the image selection **
-#: plug-ins/common/film.c:1333
+#: plug-ins/common/film.c:1332
 #, fuzzy
 msgid "Image Selection"
 msgstr "Αντιστροφή Επιλογής"
 
-#: plug-ins/common/film.c:1350
+#: plug-ins/common/film.c:1349
 msgid "Advanced Settings (All Values are Fractions of the Film Height)"
 msgstr ""
 
-#: plug-ins/common/film.c:1366
+#: plug-ins/common/film.c:1365
 #, fuzzy
 msgid "Image Height:"
 msgstr "Ύψος:"
 
-#: plug-ins/common/film.c:1380
+#: plug-ins/common/film.c:1379
 #, fuzzy
 msgid "Image Spacing:"
 msgstr "Διάκενο Κειμένου:"
 
-#: plug-ins/common/film.c:1401
+#: plug-ins/common/film.c:1400
 #, fuzzy
 msgid "Hole Offset:"
 msgstr "Μετατόπιση"
 
 #
-#: plug-ins/common/film.c:1415
+#: plug-ins/common/film.c:1414
 #, fuzzy
 msgid "Hole Width:"
 msgstr "Καθορισμός Πλάτους:"
 
-#: plug-ins/common/film.c:1429
+#: plug-ins/common/film.c:1428
 #, fuzzy
 msgid "Hole Height:"
 msgstr "Ύψος εφαρμογιδίου:"
 
-#: plug-ins/common/film.c:1443
+#: plug-ins/common/film.c:1442
 #, fuzzy
 msgid "Hole Spacing:"
 msgstr "Διάκενο Κειμένου:"
 
-#: plug-ins/common/film.c:1464
+#: plug-ins/common/film.c:1463
 #, fuzzy
 msgid "Number Height:"
 msgstr "Αρίθμηση"
 
-#: plug-ins/common/film.c:1489
+#: plug-ins/common/film.c:1488
 #, fuzzy
 msgid "Reset to Defaults"
 msgstr "Επαναφορά εξ' ορισμού ρυθμίσεων"
 
 #. don't translate '<Image>' entry,
 #. * it is keyword for the gtk toolkit
-#: plug-ins/common/flarefx.c:219
+#: plug-ins/common/flarefx.c:224
 #, fuzzy
 msgid "<Image>/Filters/Light Effects/FlareFX..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
 #
-#: plug-ins/common/flarefx.c:292
+#: plug-ins/common/flarefx.c:297
 #, fuzzy
 msgid "Render Flare..."
 msgstr "Συμπερί_ληψη αρχείου"
 
-#: plug-ins/common/flarefx.c:328
+#: plug-ins/common/flarefx.c:333
 msgid "FlareFX"
 msgstr ""
 
 #. to avoid side effects while initialization
-#: plug-ins/common/flarefx.c:774
+#: plug-ins/common/flarefx.c:779
 #, fuzzy
 msgid "Center of FlareFX"
 msgstr "Κεντράρισμα στη σελίδα"
 
 #. show / hide cursor
-#: plug-ins/common/flarefx.c:855 plug-ins/common/nova.c:698
+#: plug-ins/common/flarefx.c:860 plug-ins/common/nova.c:703
 #, fuzzy
 msgid "Show Cursor"
 msgstr "Εμφάνιση _Χαράκων"
 
-#: plug-ins/common/fractaltrace.c:125
+#: plug-ins/common/fractaltrace.c:130
 #, fuzzy
 msgid "<Image>/Filters/Map/Fractal Trace..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/fractaltrace.c:450 plug-ins/common/fractaltrace.c:719
+#: plug-ins/common/fractaltrace.c:455 plug-ins/common/fractaltrace.c:724
 #, fuzzy
 msgid "Fractal Trace"
 msgstr "Παρακολούθηση Στοίβας"
 
 #. Settings
-#: plug-ins/common/fractaltrace.c:764
+#: plug-ins/common/fractaltrace.c:769
 #, fuzzy
 msgid "Outside Type"
 msgstr "Είδος MIME"
 
 #
-#: plug-ins/common/fractaltrace.c:769 plug-ins/common/warp.c:424
+#: plug-ins/common/fractaltrace.c:774 plug-ins/common/warp.c:424
 #, fuzzy
 msgid "Warp"
 msgstr "Αλλα_γή σειράς"
 
-#: plug-ins/common/fractaltrace.c:775 plug-ins/fits/fits.c:1007
+#: plug-ins/common/fractaltrace.c:780 plug-ins/fits/fits.c:1007
 #: plug-ins/gfig/gfig.c:2848 plug-ins/gfig/gfig.c:3335
 msgid "White"
 msgstr "Λευκά"
 
-#: plug-ins/common/fractaltrace.c:782
+#: plug-ins/common/fractaltrace.c:787
 #, fuzzy
 msgid "Mandelbrot Parameters"
 msgstr "Διαγραφή Παραμέτρου"
 
-#: plug-ins/common/fractaltrace.c:794
+#: plug-ins/common/fractaltrace.c:799
 msgid "X1:"
 msgstr "Χ1:"
 
-#: plug-ins/common/fractaltrace.c:803
+#: plug-ins/common/fractaltrace.c:808
 msgid "X2:"
 msgstr "Χ2:"
 
-#: plug-ins/common/fractaltrace.c:812
+#: plug-ins/common/fractaltrace.c:817
 msgid "Y1:"
 msgstr "Ψ1:"
 
-#: plug-ins/common/fractaltrace.c:821
+#: plug-ins/common/fractaltrace.c:826
 msgid "Y2:"
 msgstr "Ψ2:"
 
@@ -3972,12 +3972,12 @@ msgid "Blur Radius"
 msgstr "Μπλούγκρας"
 
 #: plug-ins/common/gauss_iir.c:479 plug-ins/common/gauss_rle.c:474
-#: plug-ins/common/jigsaw.c:2544 plug-ins/common/spread.c:409
+#: plug-ins/common/jigsaw.c:2549 plug-ins/common/spread.c:409
 msgid "Horizontal:"
 msgstr "Οριζόντια:"
 
 #: plug-ins/common/gauss_iir.c:483 plug-ins/common/gauss_rle.c:478
-#: plug-ins/common/jigsaw.c:2557 plug-ins/common/spread.c:413
+#: plug-ins/common/jigsaw.c:2562 plug-ins/common/spread.c:413
 msgid "Vertical:"
 msgstr "Κατακόρυφη:"
 
@@ -4215,7 +4215,7 @@ msgid "Pixels"
 msgstr "Εικονοστοιχεία"
 
 #
-#: plug-ins/common/gih.c:949 plug-ins/common/newsprint.c:1300
+#: plug-ins/common/gih.c:949 plug-ins/common/newsprint.c:1305
 #, fuzzy
 msgid "Cell Size:"
 msgstr "Μέγεθος σε Εικ/χεία:"
@@ -4270,8 +4270,8 @@ msgstr "Επιλογή:"
 msgid "Background (%dms)"
 msgstr "Φόντο"
 
-#: plug-ins/common/gifload.c:895 plug-ins/common/iwarp.c:740
-#: plug-ins/common/iwarp.c:764 plug-ins/common/mpeg.c:301
+#: plug-ins/common/gifload.c:895 plug-ins/common/iwarp.c:745
+#: plug-ins/common/iwarp.c:769 plug-ins/common/mpeg.c:301
 #, fuzzy, c-format
 msgid "Frame %d"
 msgstr "Πλαίσιο"
@@ -4281,115 +4281,115 @@ msgstr "Πλαίσιο"
 msgid "Frame %d (%dms)"
 msgstr "Πάχος πλαισίου (σε εικονοστοιχεία)"
 
-#: plug-ins/common/glasstile.c:137
+#: plug-ins/common/glasstile.c:142
 #, fuzzy
 msgid "<Image>/Filters/Glass Effects/Glass Tile..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/glasstile.c:214
+#: plug-ins/common/glasstile.c:219
 #, fuzzy
 msgid "Glass Tile..."
 msgstr "Επιλογή αρχείου..."
 
 #
-#: plug-ins/common/glasstile.c:254
+#: plug-ins/common/glasstile.c:259
 #, fuzzy
 msgid "Glass Tile"
 msgstr "Κλασσική Μουσική"
 
 #
-#: plug-ins/common/glasstile.c:306
+#: plug-ins/common/glasstile.c:311
 #, fuzzy
 msgid "Tile Width:"
 msgstr "Καθορισμός Πλάτους:"
 
-#: plug-ins/common/glasstile.c:320 plug-ins/mosaic/mosaic.c:696
+#: plug-ins/common/glasstile.c:325 plug-ins/mosaic/mosaic.c:702
 #, fuzzy
 msgid "Tile Height:"
 msgstr "Ύψος εφαρμογιδίου:"
 
-#: plug-ins/common/gqbist.c:422
+#: plug-ins/common/gqbist.c:427
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/Qbist..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/gqbist.c:526
+#: plug-ins/common/gqbist.c:531
 #, fuzzy
 msgid "Qbist ..."
 msgstr "Διόρθωση..."
 
-#: plug-ins/common/gqbist.c:734
+#: plug-ins/common/gqbist.c:739
 #, fuzzy
 msgid "Load QBE file..."
 msgstr "Άνοιγμα αρχείου GEL"
 
-#: plug-ins/common/gqbist.c:761
+#: plug-ins/common/gqbist.c:766
 msgid "Save (middle transform) as QBE file..."
 msgstr ""
 
-#: plug-ins/common/gqbist.c:803
+#: plug-ins/common/gqbist.c:808
 #, fuzzy
 msgid "G-Qbist 1.12"
 msgstr "Διόρθωση..."
 
-#: plug-ins/common/gradmap.c:117
+#: plug-ins/common/gradmap.c:122
 msgid "<Image>/Filters/Colors/Map/Gradient Map"
 msgstr ""
 
-#: plug-ins/common/gradmap.c:153
+#: plug-ins/common/gradmap.c:158
 #, fuzzy
 msgid "Gradient Map..."
 msgstr "Βαθμίδα"
 
-#: plug-ins/common/grid.c:159
+#: plug-ins/common/grid.c:164
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/Grid..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/grid.c:246
+#: plug-ins/common/grid.c:251
 #, fuzzy
 msgid "Drawing Grid..."
 msgstr "Επιλογές Πλέγματος..."
 
-#: plug-ins/common/grid.c:655 plug-ins/gfig/gfig.c:3410
+#: plug-ins/common/grid.c:660 plug-ins/gfig/gfig.c:3410
 #: plug-ins/imagemap/imap_menu.c:410 plug-ins/imagemap/imap_popup.c:151
 #: plug-ins/imagemap/imap_toolbar.c:169
 msgid "Grid"
 msgstr "Πλέγμα"
 
-#: plug-ins/common/grid.c:776
+#: plug-ins/common/grid.c:781
 #, fuzzy
 msgid "Intersection"
 msgstr "_Τομή"
 
-#: plug-ins/common/grid.c:777
+#: plug-ins/common/grid.c:782
 msgid "Width: "
 msgstr "Πλάτος: "
 
 #
 #. attach labels
-#: plug-ins/common/grid.c:836
+#: plug-ins/common/grid.c:841
 #, fuzzy
 msgid "Spacing: "
 msgstr "Διάστιχο:"
 
 #. attach labels
-#: plug-ins/common/grid.c:900
+#: plug-ins/common/grid.c:905
 #, fuzzy
 msgid "Offset: "
 msgstr "Μετατόπιση: %s"
 
-#: plug-ins/common/grid.c:938
+#: plug-ins/common/grid.c:943
 #, fuzzy
 msgid "Horizontal Color"
 msgstr "Οριζόντιο"
 
-#: plug-ins/common/grid.c:957
+#: plug-ins/common/grid.c:962
 #, fuzzy
 msgid "Vertical Color"
 msgstr "Κατακόρυφο"
 
-#: plug-ins/common/grid.c:975
+#: plug-ins/common/grid.c:980
 #, fuzzy
 msgid "Intersection Color"
 msgstr "_Τομή"
@@ -4399,7 +4399,7 @@ msgid "GIMP Table Magic"
 msgstr ""
 
 #
-#: plug-ins/common/gtm.c:400 plug-ins/gfig/gfig.c:4089
+#: plug-ins/common/gtm.c:400 plug-ins/gfig/gfig.c:4094
 msgid "Warning"
 msgstr "Προειδοποιήση"
 
@@ -4569,220 +4569,220 @@ msgstr ""
 msgid "Reduce Saturation"
 msgstr "Κορεσμός"
 
-#: plug-ins/common/hot.c:642 plug-ins/common/waves.c:379
+#: plug-ins/common/hot.c:642 plug-ins/common/waves.c:384
 #, fuzzy
 msgid "Blacken"
 msgstr "Μαύρο"
 
-#: plug-ins/common/illusion.c:117
+#: plug-ins/common/illusion.c:122
 #, fuzzy
 msgid "<Image>/Filters/Map/Illusion..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/illusion.c:190
+#: plug-ins/common/illusion.c:195
 #, fuzzy
 msgid "Illusion..."
 msgstr "Plugin.."
 
-#: plug-ins/common/illusion.c:565
+#: plug-ins/common/illusion.c:570
 #, fuzzy
 msgid "Illusion"
 msgstr "Φιούζιον"
 
-#: plug-ins/common/illusion.c:626
+#: plug-ins/common/illusion.c:631
 #, fuzzy
 msgid "Division:"
 msgstr "Διαίρεση"
 
 #
-#: plug-ins/common/illusion.c:636
+#: plug-ins/common/illusion.c:641
 #, fuzzy
 msgid "Mode 1"
 msgstr "Κατάσταση λειτουργίας: "
 
 #
-#: plug-ins/common/illusion.c:651
+#: plug-ins/common/illusion.c:656
 #, fuzzy
 msgid "Mode 2"
 msgstr "Κατάσταση λειτουργίας: "
 
-#: plug-ins/common/iwarp.c:254
+#: plug-ins/common/iwarp.c:259
 #, fuzzy
 msgid "<Image>/Filters/Distorts/IWarp..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/iwarp.c:650
+#: plug-ins/common/iwarp.c:655
 #, fuzzy
 msgid "Warping..."
 msgstr "Αναμονή..."
 
-#: plug-ins/common/iwarp.c:745 plug-ins/common/iwarp.c:756
+#: plug-ins/common/iwarp.c:750 plug-ins/common/iwarp.c:761
 #, c-format
 msgid "Warping Frame Nr %d ..."
 msgstr ""
 
-#: plug-ins/common/iwarp.c:757 plug-ins/common/iwarp.c:969
+#: plug-ins/common/iwarp.c:762 plug-ins/common/iwarp.c:974
 #, fuzzy
 msgid "Ping Pong"
 msgstr "Χονγκ Κονγκ"
 
 #
-#: plug-ins/common/iwarp.c:927 plug-ins/common/iwarp.c:982
+#: plug-ins/common/iwarp.c:932 plug-ins/common/iwarp.c:987
 #, fuzzy
 msgid "Animate"
 msgstr "Άνιμι"
 
-#: plug-ins/common/iwarp.c:951
+#: plug-ins/common/iwarp.c:956
 #, fuzzy
 msgid "Number of Frames:"
 msgstr "Αριθμός ναρκών:"
 
-#: plug-ins/common/iwarp.c:960
+#: plug-ins/common/iwarp.c:965
 msgid "Reverse"
 msgstr "Αντιστροφή"
 
-#: plug-ins/common/iwarp.c:1010
+#: plug-ins/common/iwarp.c:1015
 msgid "Deform Radius:"
 msgstr ""
 
-#: plug-ins/common/iwarp.c:1020
+#: plug-ins/common/iwarp.c:1025
 #, fuzzy
 msgid "Deform Amount:"
 msgstr "Συστατικό κυμματομορφής"
 
-#: plug-ins/common/iwarp.c:1029
+#: plug-ins/common/iwarp.c:1034
 #, fuzzy
 msgid "Deform Mode"
 msgstr "Κατάσταση Καταλόγου"
 
-#: plug-ins/common/iwarp.c:1043 plug-ins/ifscompose/ifscompose.c:863
-#: plug-ins/ifscompose/ifscompose.c:1130 plug-ins/imagemap/imap_cmd_move.c:87
+#: plug-ins/common/iwarp.c:1048 plug-ins/ifscompose/ifscompose.c:867
+#: plug-ins/ifscompose/ifscompose.c:1134 plug-ins/imagemap/imap_cmd_move.c:87
 #: plug-ins/imagemap/imap_cmd_object_move.c:58
 msgid "Move"
 msgstr "Μετακίνηση"
 
-#: plug-ins/common/iwarp.c:1046
+#: plug-ins/common/iwarp.c:1051
 #, fuzzy
 msgid "Grow"
 msgstr "σειρές"
 
-#: plug-ins/common/iwarp.c:1049
+#: plug-ins/common/iwarp.c:1054
 msgid "Swirl CCW"
 msgstr ""
 
-#: plug-ins/common/iwarp.c:1055
+#: plug-ins/common/iwarp.c:1060
 #, fuzzy
 msgid "Shrink"
 msgstr "_Σμίκρυνση"
 
-#: plug-ins/common/iwarp.c:1058
+#: plug-ins/common/iwarp.c:1063
 msgid "Swirl CW"
 msgstr ""
 
-#: plug-ins/common/iwarp.c:1081 plug-ins/common/sinus.c:1985
+#: plug-ins/common/iwarp.c:1086 plug-ins/common/sinus.c:1988
 #, fuzzy
 msgid "Bilinear"
 msgstr "Δυαδικό"
 
-#: plug-ins/common/iwarp.c:1100
+#: plug-ins/common/iwarp.c:1105
 msgid "Adaptive Supersample"
 msgstr ""
 
-#: plug-ins/common/iwarp.c:1120 plug-ins/gflare/gflare.c:3089
+#: plug-ins/common/iwarp.c:1125 plug-ins/gflare/gflare.c:3090
 #, fuzzy
 msgid "Max Depth:"
 msgstr "Μέγιστη Γωνιακή Απόσταση"
 
 #
 #. parameter settings
-#: plug-ins/common/iwarp.c:1143 plug-ins/common/sample_colorize.c:1380
-#: plug-ins/common/sinus.c:1841 plug-ins/gfig/gfig.c:3981
-#: plug-ins/gflare/gflare.c:3118
+#: plug-ins/common/iwarp.c:1148 plug-ins/common/sample_colorize.c:1385
+#: plug-ins/common/sinus.c:1844 plug-ins/gfig/gfig.c:3986
+#: plug-ins/gflare/gflare.c:3119
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
 #
-#: plug-ins/common/iwarp.c:1160
+#: plug-ins/common/iwarp.c:1165
 #, fuzzy
 msgid "IWarp"
 msgstr "Αλλα_γή σειράς"
 
-#: plug-ins/common/jigsaw.c:393
+#: plug-ins/common/jigsaw.c:398
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/Jigsaw..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/jigsaw.c:449
+#: plug-ins/common/jigsaw.c:454
 msgid "Assembling Jigsaw"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2480
+#: plug-ins/common/jigsaw.c:2485
 msgid "Jigsaw"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2532
+#: plug-ins/common/jigsaw.c:2537
 #, fuzzy
 msgid "Number of Tiles"
 msgstr "Αριθμός αρχείων"
 
-#: plug-ins/common/jigsaw.c:2547
+#: plug-ins/common/jigsaw.c:2552
 #, fuzzy
 msgid "Number of pieces going across"
 msgstr "Αριθμός εικονοστοιχείων προς χρήση."
 
-#: plug-ins/common/jigsaw.c:2560
+#: plug-ins/common/jigsaw.c:2565
 #, fuzzy
 msgid "Number of pieces going down"
 msgstr "Αριθμός εικονοστοιχείων προς χρήση."
 
-#: plug-ins/common/jigsaw.c:2571
+#: plug-ins/common/jigsaw.c:2576
 #, fuzzy
 msgid "Bevel Edges"
 msgstr "Πρώτο επίπεδο"
 
 #
-#: plug-ins/common/jigsaw.c:2583
+#: plug-ins/common/jigsaw.c:2588
 #, fuzzy
 msgid "Bevel Width:"
 msgstr "Καθορισμός Πλάτους:"
 
-#: plug-ins/common/jigsaw.c:2587
+#: plug-ins/common/jigsaw.c:2592
 msgid "Degree of slope of each piece's edge"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2601
+#: plug-ins/common/jigsaw.c:2606
 msgid "The amount of highlighting on the edges of each piece"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2618
+#: plug-ins/common/jigsaw.c:2623
 #, fuzzy
 msgid "Jigsaw Style"
 msgstr "Νέο Στυλ"
 
-#: plug-ins/common/jigsaw.c:2623
+#: plug-ins/common/jigsaw.c:2628
 msgid "Square"
 msgstr "Τετράγωνο"
 
-#: plug-ins/common/jigsaw.c:2626
+#: plug-ins/common/jigsaw.c:2631
 #, fuzzy
 msgid "Curved"
 msgstr "Καμπύλη"
 
-#: plug-ins/common/jigsaw.c:2631
+#: plug-ins/common/jigsaw.c:2636
 msgid "Each piece has straight sides"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2632
+#: plug-ins/common/jigsaw.c:2637
 msgid "Each piece has curved sides"
 msgstr ""
 
 #
-#: plug-ins/common/jigsaw.c:2640
+#: plug-ins/common/jigsaw.c:2645
 #, fuzzy
 msgid "Disable Tooltips"
 msgstr "Ενεργοποίηση υποδείξεων"
 
-#: plug-ins/common/jigsaw.c:2646
+#: plug-ins/common/jigsaw.c:2651
 msgid "Toggle Tooltips on/off"
 msgstr ""
 
@@ -4943,7 +4943,7 @@ msgstr "Μη αναμενόμενος τελεστής!"
 msgid "Derivative"
 msgstr "Ιδιωτικό"
 
-#: plug-ins/common/lic.c:1071 plug-ins/common/sinus.c:1980
+#: plug-ins/common/lic.c:1071 plug-ins/common/sinus.c:1983
 msgid "Gradient"
 msgstr "Βαθμίδα"
 
@@ -5044,93 +5044,93 @@ msgstr "ΕΙΚΟΝΑ"
 msgid "mail: some sort of error with the file extension or lack thereof \n"
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:142
+#: plug-ins/common/mapcolor.c:147
 #, fuzzy
 msgid "First Source Color"
 msgstr "Εγγραφή Πηγαίου Κώδικα"
 
-#: plug-ins/common/mapcolor.c:143
+#: plug-ins/common/mapcolor.c:148
 #, fuzzy
 msgid "Second Source Color"
 msgstr "Δευτερέβοντα Χρώματα"
 
-#: plug-ins/common/mapcolor.c:144
+#: plug-ins/common/mapcolor.c:149
 #, fuzzy
 msgid "First Destination Color"
 msgstr "Εύρεση καταλόγου προορισμού"
 
-#: plug-ins/common/mapcolor.c:145
+#: plug-ins/common/mapcolor.c:150
 #, fuzzy
 msgid "Second Destination Color"
 msgstr "Εύρεση καταλόγου προορισμού"
 
-#: plug-ins/common/mapcolor.c:349
+#: plug-ins/common/mapcolor.c:354
 msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:364
+#: plug-ins/common/mapcolor.c:369
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:411 plug-ins/common/mapcolor.c:745
+#: plug-ins/common/mapcolor.c:416 plug-ins/common/mapcolor.c:750
 msgid ""
 "Color Mapping / Adjust FG/BG:\n"
 "Cannot operate on gray/indexed images"
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:433
+#: plug-ins/common/mapcolor.c:438
 msgid "Adjusting Foreground/Background"
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:476
+#: plug-ins/common/mapcolor.c:481
 #, fuzzy
 msgid "Mapping colors"
 msgstr "Αντιστοίχηση"
 
-#: plug-ins/common/mapcolor.c:550
+#: plug-ins/common/mapcolor.c:555
 #, fuzzy
 msgid "Map Color Range"
 msgstr "Εύρος Θυρών TCP"
 
-#: plug-ins/common/mapcolor.c:601
+#: plug-ins/common/mapcolor.c:606
 #, fuzzy
 msgid "Source color range"
 msgstr "SourceXchange"
 
-#: plug-ins/common/mapcolor.c:602
+#: plug-ins/common/mapcolor.c:607
 #, fuzzy
 msgid "Destination color range"
 msgstr "Εύρεση καταλόγου προορισμού"
 
 #
-#: plug-ins/common/mapcolor.c:641 plug-ins/gfli/gfli.c:854
-#: plug-ins/gfli/gfli.c:923
+#: plug-ins/common/mapcolor.c:646 plug-ins/gfli/gfli.c:855
+#: plug-ins/gfli/gfli.c:925
 msgid "To:"
 msgstr "Προς:"
 
-#: plug-ins/common/max_rgb.c:128
+#: plug-ins/common/max_rgb.c:133
 #, fuzzy
 msgid "<Image>/Filters/Colors/Max RGB..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/max_rgb.c:164
+#: plug-ins/common/max_rgb.c:169
 msgid "Max RGB: Can only operate on RGB drawables."
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:224
+#: plug-ins/common/max_rgb.c:229
 msgid "Max RGB: Scanning..."
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:341
+#: plug-ins/common/max_rgb.c:346
 #, fuzzy
 msgid "Max RGB"
 msgstr "Μεγ"
 
-#: plug-ins/common/max_rgb.c:385
+#: plug-ins/common/max_rgb.c:390
 msgid "Hold the Maximal Channels"
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:388
+#: plug-ins/common/max_rgb.c:393
 msgid "Hold the Minimal Channels"
 msgstr ""
 
@@ -5170,7 +5170,7 @@ msgid "Blur Parameters"
 msgstr "Παράμετροι"
 
 #. Angle
-#: plug-ins/common/mblur.c:818 plug-ins/common/newsprint.c:1054
+#: plug-ins/common/mblur.c:818 plug-ins/common/newsprint.c:1059
 #: plug-ins/common/warp.c:696 plug-ins/gimpressionist/orientmap.c:560
 #: plug-ins/ifscompose/ifscompose.c:578
 #, fuzzy
@@ -5182,155 +5182,155 @@ msgstr "_Γωνία"
 msgid "Loading MPEG movie..."
 msgstr "Ανάγνωση εικόνων..."
 
-#: plug-ins/common/newsprint.c:172
+#: plug-ins/common/newsprint.c:177
 #, fuzzy
 msgid "Round"
 msgstr "Ιδιότητες του Ήχου"
 
-#: plug-ins/common/newsprint.c:181
+#: plug-ins/common/newsprint.c:186
 msgid "Line"
 msgstr "Γραμμή"
 
-#: plug-ins/common/newsprint.c:190
+#: plug-ins/common/newsprint.c:195
 msgid "Diamond"
 msgstr "Ρόμβος"
 
-#: plug-ins/common/newsprint.c:198
+#: plug-ins/common/newsprint.c:203
 msgid "PS Square (Euclidean Dot)"
 msgstr ""
 
-#: plug-ins/common/newsprint.c:207
+#: plug-ins/common/newsprint.c:212
 #, fuzzy
 msgid "PS Diamond"
 msgstr "Ρόμβος"
 
-#: plug-ins/common/newsprint.c:467 plug-ins/common/newsprint.c:1389
+#: plug-ins/common/newsprint.c:472 plug-ins/common/newsprint.c:1394
 #, fuzzy
 msgid "Intensity"
 msgstr "Πυκνότητα"
 
-#: plug-ins/common/newsprint.c:583
+#: plug-ins/common/newsprint.c:588
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Newsprint..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/newsprint.c:683
+#: plug-ins/common/newsprint.c:688
 #, fuzzy
 msgid "Newsprintifing..."
 msgstr "Εκτυπώνεται .."
 
-#: plug-ins/common/newsprint.c:1078
+#: plug-ins/common/newsprint.c:1083
 #, fuzzy
 msgid "Spot Function:"
 msgstr "Συναρτήσεις Υποστήριξης:"
 
-#: plug-ins/common/newsprint.c:1237
+#: plug-ins/common/newsprint.c:1242
 #, fuzzy
 msgid "Newsprint"
 msgstr "Επίπεδο πάχνης:"
 
 #. resolution settings
-#: plug-ins/common/newsprint.c:1260
+#: plug-ins/common/newsprint.c:1265
 msgid "Resolution"
 msgstr "Ανάλυση"
 
-#: plug-ins/common/newsprint.c:1279
+#: plug-ins/common/newsprint.c:1284
 #, fuzzy
 msgid "Input SPI:"
 msgstr "Είσοδος:"
 
-#: plug-ins/common/newsprint.c:1290
+#: plug-ins/common/newsprint.c:1295
 #, fuzzy
 msgid "Output LPI:"
 msgstr "Έξοδος"
 
 #
 #. screen settings
-#: plug-ins/common/newsprint.c:1313 plug-ins/gflare/gflare.c:597
+#: plug-ins/common/newsprint.c:1318 plug-ins/gflare/gflare.c:597
 msgid "Screen"
 msgstr "Οθόνη"
 
-#: plug-ins/common/newsprint.c:1336
+#: plug-ins/common/newsprint.c:1341
 msgid "Black Pullout (%):"
 msgstr ""
 
-#: plug-ins/common/newsprint.c:1359
+#: plug-ins/common/newsprint.c:1364
 #, fuzzy
 msgid "Separate to:"
 msgstr "Ξεχωριστό Αρχείο:"
 
-#: plug-ins/common/newsprint.c:1410
+#: plug-ins/common/newsprint.c:1415
 #, fuzzy
 msgid "Lock Channels"
 msgstr "Κανάλια"
 
-#: plug-ins/common/newsprint.c:1420
+#: plug-ins/common/newsprint.c:1425
 #, fuzzy
 msgid "Factory Defaults"
 msgstr "Εξ' ορισμού ρυθμίσεις"
 
-#: plug-ins/common/newsprint.c:1453
+#: plug-ins/common/newsprint.c:1458
 #, fuzzy
 msgid "Oversample:"
 msgstr "Επιγράμμηση"
 
-#: plug-ins/common/nlfilt.c:158
+#: plug-ins/common/nlfilt.c:163
 #, fuzzy
 msgid "<Image>/Filters/Enhance/NL Filter..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
 #
-#: plug-ins/common/nlfilt.c:276 plug-ins/common/nlfilt.c:362
+#: plug-ins/common/nlfilt.c:281 plug-ins/common/nlfilt.c:367
 #, fuzzy
 msgid "NL Filter"
 msgstr "Φίλτρο"
 
 #
-#: plug-ins/common/nlfilt.c:392
+#: plug-ins/common/nlfilt.c:397
 msgid "Filter"
 msgstr "Φίλτρο"
 
-#: plug-ins/common/nlfilt.c:396
+#: plug-ins/common/nlfilt.c:401
 msgid "Alpha Trimmed Mean"
 msgstr ""
 
-#: plug-ins/common/nlfilt.c:398
+#: plug-ins/common/nlfilt.c:403
 #, fuzzy
 msgid "Optimal Estimation"
 msgstr "Προαιρετικές Πληροφορίες"
 
-#: plug-ins/common/nlfilt.c:400
+#: plug-ins/common/nlfilt.c:405
 #, fuzzy
 msgid "Edge Enhancement"
 msgstr "Βελτιώσεις Χαρακτηριστικών"
 
-#: plug-ins/common/noisify.c:141
+#: plug-ins/common/noisify.c:146
 #, fuzzy
 msgid "<Image>/Filters/Noise/Noisify..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/noisify.c:217
+#: plug-ins/common/noisify.c:222
 #, fuzzy
 msgid "Adding Noise..."
 msgstr "Προσθήκη αρχείων..."
 
-#: plug-ins/common/noisify.c:484
+#: plug-ins/common/noisify.c:489
 #, fuzzy
 msgid "Noisify"
 msgstr "Θόρυβος"
 
 #
-#: plug-ins/common/noisify.c:536
+#: plug-ins/common/noisify.c:541
 #, fuzzy
 msgid "Independent"
 msgstr "Εσοχή"
 
-#: plug-ins/common/noisify.c:550 plug-ins/common/noisify.c:566
+#: plug-ins/common/noisify.c:555 plug-ins/common/noisify.c:571
 #, fuzzy
 msgid "Gray:"
 msgstr "Γκρί"
 
-#: plug-ins/common/noisify.c:701
+#: plug-ins/common/noisify.c:706
 #, fuzzy, c-format
 msgid "Channel #%d:"
 msgstr "Κανάλι"
@@ -5348,35 +5348,35 @@ msgstr "Ανάγνωση..."
 
 #. don't translate '<Image>', it's a keyword
 #. * of the gtk toolkit
-#: plug-ins/common/nova.c:228
+#: plug-ins/common/nova.c:233
 #, fuzzy
 msgid "<Image>/Filters/Light Effects/SuperNova..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/nova.c:308
+#: plug-ins/common/nova.c:313
 msgid "Rendering SuperNova..."
 msgstr ""
 
-#: plug-ins/common/nova.c:478
+#: plug-ins/common/nova.c:483
 msgid "SuperNova"
 msgstr ""
 
-#: plug-ins/common/nova.c:510
+#: plug-ins/common/nova.c:515
 msgid "SuperNova Color Picker"
 msgstr ""
 
-#: plug-ins/common/nova.c:537
+#: plug-ins/common/nova.c:542
 #, fuzzy
 msgid "Spokes:"
 msgstr "Καπνός"
 
-#: plug-ins/common/nova.c:549 plug-ins/common/sparkle.c:454
+#: plug-ins/common/nova.c:554 plug-ins/common/sparkle.c:454
 #, fuzzy
 msgid "Random Hue:"
 msgstr "Τυχαίο"
 
 #. to avoid side effects while initialization
-#: plug-ins/common/nova.c:617
+#: plug-ins/common/nova.c:622
 #, fuzzy
 msgid "Center of SuperNova"
 msgstr "Κεντράρισμα στη σελίδα"
@@ -5529,105 +5529,105 @@ msgstr "Ύψος εφαρμογιδίου:"
 
 #. don't translate '<Image>', it's a special
 #. * keyword of the gtk toolkit
-#: plug-ins/common/plasma.c:189
+#: plug-ins/common/plasma.c:194
 msgid "<Image>/Filters/Render/Clouds/Plasma..."
 msgstr ""
 
-#: plug-ins/common/plasma.c:268
+#: plug-ins/common/plasma.c:273
 #, fuzzy
 msgid "Plasma..."
 msgstr "Παρακαλώ περιμένετε..."
 
-#: plug-ins/common/plasma.c:305
+#: plug-ins/common/plasma.c:310
 #, fuzzy
 msgid "Plasma"
 msgstr "Παναμάς"
 
-#: plug-ins/common/plasma.c:374
+#: plug-ins/common/plasma.c:379
 #, fuzzy
 msgid "Turbulence:"
 msgstr "Ανοχή :"
 
-#: plug-ins/common/plugindetails.c:52
+#: plug-ins/common/plugindetails.c:50
 #, fuzzy
 msgid "Internal GIMP procedure"
 msgstr "Εσωτερικό σφάλμα"
 
-#: plug-ins/common/plugindetails.c:53
+#: plug-ins/common/plugindetails.c:51
 msgid "GIMP Plug-In"
 msgstr ""
 
-#: plug-ins/common/plugindetails.c:54
+#: plug-ins/common/plugindetails.c:52
 #, fuzzy
 msgid "GIMP Extension"
 msgstr "Επέκταση"
 
 #
-#: plug-ins/common/plugindetails.c:55
+#: plug-ins/common/plugindetails.c:53
 #, fuzzy
 msgid "Temporary Procedure"
 msgstr "Αποθηκευμένες Διαδικασίες"
 
-#: plug-ins/common/plugindetails.c:110
+#: plug-ins/common/plugindetails.c:108
 #, fuzzy
 msgid "<Toolbox>/Xtns/Plugin Details..."
 msgstr "Λεπτομέρειες Βύσματος"
 
-#: plug-ins/common/plugindetails.c:224
+#: plug-ins/common/plugindetails.c:222
 msgid "Details <<"
 msgstr "Λεπτομέρειες <<"
 
-#: plug-ins/common/plugindetails.c:234 plug-ins/common/plugindetails.c:1117
+#: plug-ins/common/plugindetails.c:232 plug-ins/common/plugindetails.c:1115
 msgid "Details >>"
 msgstr "Λεπτομέρειες >>"
 
 #. Number of plugins
-#: plug-ins/common/plugindetails.c:320
+#: plug-ins/common/plugindetails.c:318
 #, fuzzy, c-format
 msgid "Number of Plugin Interfaces: %d"
 msgstr "Αριθμός επιπέδων ακύρωσης:"
 
 #. menu path
-#: plug-ins/common/plugindetails.c:338
+#: plug-ins/common/plugindetails.c:336
 #, fuzzy
 msgid "Menu Path:"
 msgstr "Διαδρομή μενού"
 
 #
 #. show the name
-#: plug-ins/common/plugindetails.c:359
-#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+#: plug-ins/common/plugindetails.c:357
+#: plug-ins/dbbrowser/dbbrowser_utils.c:346
 msgid "Name:"
 msgstr "Όνομα:"
 
 #
 #. show the description
-#: plug-ins/common/plugindetails.c:381
-#: plug-ins/dbbrowser/dbbrowser_utils.c:353
+#: plug-ins/common/plugindetails.c:379
+#: plug-ins/dbbrowser/dbbrowser_utils.c:355
 #, fuzzy
 msgid "Blurb:"
 msgstr "Μπλέ:"
 
 #
-#: plug-ins/common/plugindetails.c:403
-#: plug-ins/dbbrowser/dbbrowser_utils.c:467
+#: plug-ins/common/plugindetails.c:401
+#: plug-ins/dbbrowser/dbbrowser_utils.c:469
 #, fuzzy
 msgid "Help:"
 msgstr "Βοήθεια"
 
 #
 #. show the type
-#: plug-ins/common/plugindetails.c:443 plug-ins/gimpressionist/orientmap.c:589
+#: plug-ins/common/plugindetails.c:441 plug-ins/gimpressionist/orientmap.c:589
 msgid "Type:"
 msgstr "Τύπος:"
 
 #
-#: plug-ins/common/plugindetails.c:1002
+#: plug-ins/common/plugindetails.c:1000
 #, fuzzy
 msgid "Plugin Descriptions"
 msgstr "Περιγραφή Σφάλματος"
 
-#: plug-ins/common/plugindetails.c:1009
+#: plug-ins/common/plugindetails.c:1007
 #: plug-ins/dbbrowser/dbbrowser_utils.c:130
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
 #, fuzzy
@@ -5636,42 +5636,42 @@ msgstr "Βάση αναζήτησης:"
 
 #
 #. list : list in a scrolled_win
-#: plug-ins/common/plugindetails.c:1041
+#: plug-ins/common/plugindetails.c:1039
 msgid "Name"
 msgstr "Όνομα"
 
-#: plug-ins/common/plugindetails.c:1042 plug-ins/common/plugindetails.c:1070
+#: plug-ins/common/plugindetails.c:1040 plug-ins/common/plugindetails.c:1068
 #, fuzzy
 msgid "Ins Date"
 msgstr "Ημ/νία Εγκατάστασης:"
 
-#: plug-ins/common/plugindetails.c:1043
+#: plug-ins/common/plugindetails.c:1041
 #, fuzzy
 msgid "Menu Path"
 msgstr "Διαδρομή μενού"
 
-#: plug-ins/common/plugindetails.c:1044 plug-ins/common/plugindetails.c:1071
+#: plug-ins/common/plugindetails.c:1042 plug-ins/common/plugindetails.c:1069
 #, fuzzy
 msgid "Image Types"
 msgstr "Είδος MIME"
 
-#: plug-ins/common/plugindetails.c:1062
+#: plug-ins/common/plugindetails.c:1060
 #, fuzzy
 msgid "List View"
 msgstr "Προβολή Λίστας"
 
 #. notebook->ctree
-#: plug-ins/common/plugindetails.c:1069
+#: plug-ins/common/plugindetails.c:1067
 #, fuzzy
 msgid "Menu Path/Name"
 msgstr "Διαδρομή μενού"
 
-#: plug-ins/common/plugindetails.c:1086
+#: plug-ins/common/plugindetails.c:1084
 #, fuzzy
 msgid "Tree View"
 msgstr "Προβολή Εβδομάδας"
 
-#: plug-ins/common/plugindetails.c:1106
+#: plug-ins/common/plugindetails.c:1104
 #: plug-ins/dbbrowser/dbbrowser_utils.c:215
 #, fuzzy
 msgid "Search:"
@@ -5806,58 +5806,58 @@ msgstr "Γραμμή"
 msgid "Ascii"
 msgstr "ASCII"
 
-#: plug-ins/common/polar.c:214
+#: plug-ins/common/polar.c:219
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Polar Coords..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/polar.c:401
+#: plug-ins/common/polar.c:406
 #, fuzzy
 msgid "Polarizing..."
 msgstr "Σε αναπαραγωγή..."
 
-#: plug-ins/common/polar.c:912
+#: plug-ins/common/polar.c:917
 #, fuzzy
 msgid "Polarize"
 msgstr "Διαστάσεις χαρτιού"
 
-#: plug-ins/common/polar.c:974
+#: plug-ins/common/polar.c:979
 msgid "Circle Depth in Percent:"
 msgstr ""
 
-#: plug-ins/common/polar.c:983
+#: plug-ins/common/polar.c:988
 #, fuzzy
 msgid "Offset Angle:"
 msgstr "Μετατόπιση"
 
-#: plug-ins/common/polar.c:995
+#: plug-ins/common/polar.c:1000
 #, fuzzy
 msgid "Map Backwards"
 msgstr " Πρός τα πίσω"
 
-#: plug-ins/common/polar.c:1001
+#: plug-ins/common/polar.c:1006
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr ""
 
-#: plug-ins/common/polar.c:1009
+#: plug-ins/common/polar.c:1014
 #, fuzzy
 msgid "Map from Top"
 msgstr "Μήνυμα από τον/την %s"
 
-#: plug-ins/common/polar.c:1015
+#: plug-ins/common/polar.c:1020
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
 msgstr ""
 
-#: plug-ins/common/polar.c:1024
+#: plug-ins/common/polar.c:1029
 #, fuzzy
 msgid "To Polar"
 msgstr "Γραμμή εργαλείων"
 
-#: plug-ins/common/polar.c:1030
+#: plug-ins/common/polar.c:1035
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
@@ -5905,7 +5905,7 @@ msgid "Load PostScript"
 msgstr "Άνοιγμα ενός Python Script.."
 
 #. Rendering
-#: plug-ins/common/ps.c:2627 plug-ins/flame/flame.c:1005
+#: plug-ins/common/ps.c:2627 plug-ins/flame/flame.c:1011
 #, fuzzy
 msgid "Rendering"
 msgstr "3D Rendering"
@@ -5936,7 +5936,7 @@ msgid "B/W"
 msgstr ""
 
 #. * Gray *
-#: plug-ins/common/ps.c:2697 plug-ins/rcm/rcm_dialog.c:413
+#: plug-ins/common/ps.c:2697 plug-ins/rcm/rcm_dialog.c:418
 msgid "Gray"
 msgstr "Γκρι"
 
@@ -6127,7 +6127,7 @@ msgstr "Ομαλό"
 msgid "Period:"
 msgstr "Περίοδος:"
 
-#: plug-ins/common/ripple.c:703 plug-ins/common/waves.c:412
+#: plug-ins/common/ripple.c:703 plug-ins/common/waves.c:417
 #, fuzzy
 msgid "Amplitude:"
 msgstr "Κατάσταση λειτουργίας εφαρμογιδίου"
@@ -6173,128 +6173,128 @@ msgstr ""
 msgid "Rotating..."
 msgstr "εκκίνηση..."
 
-#: plug-ins/common/sample_colorize.c:305
+#: plug-ins/common/sample_colorize.c:310
 msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
 msgstr ""
 
 #
-#: plug-ins/common/sample_colorize.c:1359
+#: plug-ins/common/sample_colorize.c:1364
 #, fuzzy
 msgid "Sample Colorize"
 msgstr "Επιλέξτε Χρώμα"
 
 #
-#: plug-ins/common/sample_colorize.c:1364
+#: plug-ins/common/sample_colorize.c:1369
 #, fuzzy
 msgid "Get Sample Colors"
 msgstr "Χρώματα Γραφήματος"
 
 #
 #. gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
-#: plug-ins/common/sample_colorize.c:1370 plug-ins/common/tileit.c:580
+#: plug-ins/common/sample_colorize.c:1375 plug-ins/common/tileit.c:585
 #: plug-ins/gimpressionist/presets.c:673 plug-ins/gimpressionist/sizemap.c:502
 #: plug-ins/imagemap/imap_default_dialog.c:129
 msgid "Apply"
 msgstr "Εφαρμογή"
 
 #. layer optionmenu (Dst)
-#: plug-ins/common/sample_colorize.c:1400
+#: plug-ins/common/sample_colorize.c:1405
 #, fuzzy
 msgid "Destination:"
 msgstr "Προορισμός"
 
 #. layer optionmenu (Sample)
-#: plug-ins/common/sample_colorize.c:1419
+#: plug-ins/common/sample_colorize.c:1424
 #, fuzzy
 msgid "Sample:"
 msgstr "Δείγμα"
 
 #. Add extra menu items for Gradient
-#: plug-ins/common/sample_colorize.c:1438
+#: plug-ins/common/sample_colorize.c:1443
 msgid "** From GRADIENT **"
 msgstr ""
 
 #. Add extra menu items for Inverted Gradient
-#: plug-ins/common/sample_colorize.c:1447
+#: plug-ins/common/sample_colorize.c:1452
 msgid "** From INVERSE GRADIENT **"
 msgstr ""
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1463
-#: plug-ins/common/sample_colorize.c:1490
+#: plug-ins/common/sample_colorize.c:1468
+#: plug-ins/common/sample_colorize.c:1495
 #, fuzzy
 msgid "Show Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1474
-#: plug-ins/common/sample_colorize.c:1501
+#: plug-ins/common/sample_colorize.c:1479
+#: plug-ins/common/sample_colorize.c:1506
 #, fuzzy
 msgid "Show Color"
 msgstr "Εμφάνιση Προχείρου"
 
-#: plug-ins/common/sample_colorize.c:1612
+#: plug-ins/common/sample_colorize.c:1617
 #, fuzzy
 msgid "In Level:"
 msgstr "Επίπεδο:"
 
-#: plug-ins/common/sample_colorize.c:1665
+#: plug-ins/common/sample_colorize.c:1670
 #, fuzzy
 msgid "Out Level:"
 msgstr "Επίπεδο:"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1707
+#: plug-ins/common/sample_colorize.c:1712
 msgid "Hold Intensity"
 msgstr ""
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1718
+#: plug-ins/common/sample_colorize.c:1723
 #, fuzzy
 msgid "Original Intensity"
 msgstr "Αρχικό κείμενο:"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1736
+#: plug-ins/common/sample_colorize.c:1741
 #, fuzzy
 msgid "Use Subcolors"
 msgstr "Χρώματα Χρήστη"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1747
+#: plug-ins/common/sample_colorize.c:1752
 #, fuzzy
 msgid "Smooth Samplecolors"
 msgstr "Ομαλά Γραφικά"
 
-#: plug-ins/common/sample_colorize.c:2747
+#: plug-ins/common/sample_colorize.c:2752
 #, fuzzy
 msgid "Sample Analyze..."
 msgstr "Δειγματοληψία"
 
-#: plug-ins/common/sample_colorize.c:3112
+#: plug-ins/common/sample_colorize.c:3117
 #, fuzzy
 msgid "Remap Colorized..."
 msgstr "Εκτέλεση GColorsel..."
 
-#: plug-ins/common/scatter_hsv.c:142
+#: plug-ins/common/scatter_hsv.c:147
 #, fuzzy
 msgid "<Image>/Filters/Noise/Scatter HSV..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/scatter_hsv.c:229
+#: plug-ins/common/scatter_hsv.c:234
 msgid "Scatter HSV: Scattering..."
 msgstr ""
 
-#: plug-ins/common/scatter_hsv.c:369
+#: plug-ins/common/scatter_hsv.c:374
 #, fuzzy
 msgid "Scatter HSV"
 msgstr "Εκκίνηση μετά από"
 
-#: plug-ins/common/scatter_hsv.c:389
+#: plug-ins/common/scatter_hsv.c:394
 msgid "Preview (1:4) - Right Click to Jump"
 msgstr ""
 
-#: plug-ins/common/scatter_hsv.c:441
+#: plug-ins/common/scatter_hsv.c:446
 #, fuzzy
 msgid "Holdness:"
 msgstr "Συμπαγείς γραμμές:"
@@ -6330,11 +6330,11 @@ msgstr "Επαναλήψεις:"
 msgid "Whole Screen"
 msgstr "Πλήρης Οθόνη"
 
-#: plug-ins/common/screenshot.c:450 plug-ins/winsnap/winsnap.c:1011
+#: plug-ins/common/screenshot.c:451 plug-ins/winsnap/winsnap.c:1011
 msgid "after"
 msgstr "μετά"
 
-#: plug-ins/common/screenshot.c:463 plug-ins/winsnap/winsnap.c:1020
+#: plug-ins/common/screenshot.c:464 plug-ins/winsnap/winsnap.c:1020
 #, fuzzy
 msgid "Seconds Delay"
 msgstr "Δευτερόλεπτα"
@@ -6366,7 +6366,7 @@ msgstr ""
 msgid "Semi-Flatten..."
 msgstr "Ρυθμίσεις..."
 
-#: plug-ins/common/sharpen.c:166
+#: plug-ins/common/sharpen.c:171
 #, fuzzy
 msgid "<Image>/Filters/Enhance/Sharpen..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
@@ -6374,17 +6374,17 @@ msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 #.
 #. * Let the user know what we're doing...
 #.
-#: plug-ins/common/sharpen.c:348
+#: plug-ins/common/sharpen.c:353
 #, fuzzy
 msgid "Sharpening..."
 msgstr "Σε αποθήκευση..."
 
-#: plug-ins/common/sharpen.c:519
+#: plug-ins/common/sharpen.c:524
 #, fuzzy, c-format
 msgid "Sharpen - %s"
 msgstr "Διαμοιραζόμενα"
 
-#: plug-ins/common/sharpen.c:624
+#: plug-ins/common/sharpen.c:629
 #, fuzzy
 msgid "Sharpness:"
 msgstr "Διαμοιραζόμενα"
@@ -6417,143 +6417,143 @@ msgstr "Κατακόρυ_φα"
 msgid "Shift Amount:"
 msgstr ""
 
-#: plug-ins/common/sinus.c:1156
+#: plug-ins/common/sinus.c:1159
 #, fuzzy
 msgid "<Image>/Filters/Render/Sinus..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/sinus.c:1244
+#: plug-ins/common/sinus.c:1247
 #, fuzzy
 msgid "Sinus: rendering..."
 msgstr "Αποθήκευση πληροφ. χρήστη..."
 
 #. Create Main window with a vbox
 #. ==============================
-#: plug-ins/common/sinus.c:1688
+#: plug-ins/common/sinus.c:1691
 #, fuzzy
 msgid "Sinus"
 msgstr "λεπτά"
 
-#: plug-ins/common/sinus.c:1746
+#: plug-ins/common/sinus.c:1749
 #, fuzzy
 msgid "Drawing Settings"
 msgstr "Ρυθμίσεις Σελίδας"
 
 #
-#: plug-ins/common/sinus.c:1758
+#: plug-ins/common/sinus.c:1761
 #, fuzzy
 msgid "X Scale:"
 msgstr "Κλιμάκωση"
 
 #
-#: plug-ins/common/sinus.c:1767
+#: plug-ins/common/sinus.c:1770
 #, fuzzy
 msgid "Y Scale:"
 msgstr "Κλιμάκωση"
 
-#: plug-ins/common/sinus.c:1776
+#: plug-ins/common/sinus.c:1779
 #, fuzzy
 msgid "Complexity:"
 msgstr "Πολυπλοκότητα"
 
-#: plug-ins/common/sinus.c:1786
+#: plug-ins/common/sinus.c:1789
 #, fuzzy
 msgid "Calculation Settings"
 msgstr "Ρυθμίσεις Σύνδεσης"
 
 #
-#: plug-ins/common/sinus.c:1815
+#: plug-ins/common/sinus.c:1818
 #, fuzzy
 msgid "Force Tiling?"
 msgstr "Για εκτύπωση"
 
 #
-#: plug-ins/common/sinus.c:1829
+#: plug-ins/common/sinus.c:1832
 #, fuzzy
 msgid "Ideal"
 msgstr "Αδρανής"
 
-#: plug-ins/common/sinus.c:1832
+#: plug-ins/common/sinus.c:1835
 #, fuzzy
 msgid "Distorted"
 msgstr "Κατανομή"
 
 #. if in grey scale, the colors are necessarily black and white
-#: plug-ins/common/sinus.c:1864
+#: plug-ins/common/sinus.c:1867
 msgid "The colors are white and black."
 msgstr ""
 
-#: plug-ins/common/sinus.c:1875
+#: plug-ins/common/sinus.c:1878
 msgid "Black & White"
 msgstr "Άσπρο & Μαύρο"
 
-#: plug-ins/common/sinus.c:1877
+#: plug-ins/common/sinus.c:1880
 #, fuzzy
 msgid "Foreground & Background"
 msgstr "Χρώμα Προσκηνίου"
 
-#: plug-ins/common/sinus.c:1879
+#: plug-ins/common/sinus.c:1882
 #, fuzzy
 msgid "Choose here:"
 msgstr "Επιλογέας"
 
-#: plug-ins/common/sinus.c:1893
+#: plug-ins/common/sinus.c:1896
 #, fuzzy
 msgid "First Color"
 msgstr "Πρώτη γραμμή"
 
-#: plug-ins/common/sinus.c:1903
+#: plug-ins/common/sinus.c:1906
 #, fuzzy
 msgid "Second Color"
 msgstr "Δευτερέβοντα Χρώματα"
 
-#: plug-ins/common/sinus.c:1916
+#: plug-ins/common/sinus.c:1919
 #, fuzzy
 msgid "Alpha Channels"
 msgstr "κανάλι άλφα"
 
-#: plug-ins/common/sinus.c:1928
+#: plug-ins/common/sinus.c:1931
 #, fuzzy
 msgid "First Color:"
 msgstr "Ειδικό Χρώμα:"
 
-#: plug-ins/common/sinus.c:1943
+#: plug-ins/common/sinus.c:1946
 #, fuzzy
 msgid "Second Color:"
 msgstr "Δευτερέβοντα Χρώματα"
 
-#: plug-ins/common/sinus.c:1969
+#: plug-ins/common/sinus.c:1972
 #, fuzzy
 msgid "Blend Settings"
 msgstr "Ρυθμίσεις τυχαίου"
 
-#: plug-ins/common/sinus.c:1998
+#: plug-ins/common/sinus.c:2001
 #, fuzzy
 msgid "Exponent:"
 msgstr "Εκθετική"
 
 #
-#: plug-ins/common/sinus.c:2008
+#: plug-ins/common/sinus.c:2011
 #, fuzzy
 msgid "Blend"
 msgstr "Έντονη Γραφή"
 
-#: plug-ins/common/smooth_palette.c:83
+#: plug-ins/common/smooth_palette.c:89
 #, fuzzy
 msgid "<Image>/Filters/Colors/Smooth Palette..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/smooth_palette.c:172
+#: plug-ins/common/smooth_palette.c:178
 #, fuzzy
 msgid "Deriving smooth palette..."
 msgstr "Ανάκτηση λίστας mp3..."
 
-#: plug-ins/common/smooth_palette.c:397
+#: plug-ins/common/smooth_palette.c:401
 #, fuzzy
 msgid "Smooth Palette"
 msgstr "Εμφάνιση Παλέττας"
 
-#: plug-ins/common/smooth_palette.c:448
+#: plug-ins/common/smooth_palette.c:452
 #, fuzzy
 msgid "Search Time:"
 msgstr "Βάση αναζήτησης:"
@@ -6803,7 +6803,7 @@ msgstr "Σχέδιο"
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
-#: plug-ins/common/struc.c:1302 plug-ins/common/wind.c:1096
+#: plug-ins/common/struc.c:1302 plug-ins/common/wind.c:1101
 msgid "Direction"
 msgstr "Κατεύθυνση"
 
@@ -6898,37 +6898,43 @@ msgstr " Αποθήκευση ως"
 msgid "RunLength Encoded"
 msgstr ""
 
-#: plug-ins/common/tga.c:422
+#: plug-ins/common/tga.c:425
 #, fuzzy, c-format
 msgid "TGA: can't open \"%s\"\n"
 msgstr "Αδύνατο το άνοιγμα του %s"
 
-#: plug-ins/common/tga.c:432
+#: plug-ins/common/tga.c:435
 #, c-format
 msgid "TGA: Cannot read footer from \"%s\"\n"
 msgstr ""
 
-#: plug-ins/common/tga.c:444
+#: plug-ins/common/tga.c:447
 #, fuzzy, c-format
 msgid "TGA: Cannot read extension from \"%s\"\n"
 msgstr "Δε μπορεί να βρεθεί το εκτελέσιμο \"%s\""
 
-#: plug-ins/common/tga.c:1167
+#: plug-ins/common/tga.c:1178
 #, fuzzy
 msgid "Save as TGA"
 msgstr " Αποθήκευση ως"
 
 #. regular tga parameter settings
-#: plug-ins/common/tga.c:1184
+#: plug-ins/common/tga.c:1195
 #, fuzzy
 msgid "Targa Options"
 msgstr "Επιλογές Αρπαγής"
 
 #. rle
-#: plug-ins/common/tga.c:1194
+#: plug-ins/common/tga.c:1205
 #, fuzzy
 msgid "RLE compression"
 msgstr "Συμπίεση"
+
+#. origin
+#: plug-ins/common/tga.c:1215
+#, fuzzy
+msgid "Origin at bottom left"
+msgstr "Υπογράμμιση"
 
 #: plug-ins/common/threshold_alpha.c:105
 #, fuzzy
@@ -6958,32 +6964,32 @@ msgstr "Κατώφλι"
 msgid "TIFF Channel"
 msgstr "Κανάλι"
 
-#: plug-ins/common/tiff.c:1554
+#: plug-ins/common/tiff.c:1558
 #, fuzzy
 msgid "Save as TIFF"
 msgstr " Αποθήκευση ως"
 
 #. compression
-#: plug-ins/common/tiff.c:1575
+#: plug-ins/common/tiff.c:1579
 msgid "Compression"
 msgstr "Συμπίεση"
 
-#: plug-ins/common/tiff.c:1583
+#: plug-ins/common/tiff.c:1587
 msgid "LZW"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1586
+#: plug-ins/common/tiff.c:1590
 #, fuzzy
 msgid "Pack Bits"
 msgstr "Πακέτα"
 
 #
-#: plug-ins/common/tiff.c:1589
+#: plug-ins/common/tiff.c:1593
 #, fuzzy
 msgid "Deflate"
 msgstr "Διαγραφή"
 
-#: plug-ins/common/tiff.c:1592
+#: plug-ins/common/tiff.c:1596
 msgid "JPEG"
 msgstr ""
 
@@ -6992,7 +6998,7 @@ msgstr ""
 msgid "<Image>/Filters/Map/Tile..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/tile.c:206 plug-ins/common/tileit.c:333
+#: plug-ins/common/tile.c:206 plug-ins/common/tileit.c:338
 #, fuzzy
 msgid "Tiling..."
 msgstr "Αναμονή..."
@@ -7007,55 +7013,55 @@ msgstr "Παράθεση"
 msgid "Tile to New Size"
 msgstr "Μέγεθος Κειμένου"
 
-#: plug-ins/common/tileit.c:234
+#: plug-ins/common/tileit.c:239
 #, fuzzy
 msgid "<Image>/Filters/Map/Small Tiles..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
 #. Get the preview image and store it also set has_alpha
 #. Start buildng the dialog up
-#: plug-ins/common/tileit.c:381
+#: plug-ins/common/tileit.c:386
 #, fuzzy
 msgid "TileIt"
 msgstr "Παράθεση"
 
 #. Area for buttons etc
-#: plug-ins/common/tileit.c:436
+#: plug-ins/common/tileit.c:441
 #, fuzzy
 msgid "Flipping"
 msgstr "Τίναγμα Άκρης"
 
-#: plug-ins/common/tileit.c:478
+#: plug-ins/common/tileit.c:483
 #, fuzzy
 msgid "Applied to Tile"
 msgstr "Μέγεθος εφαρμογιδίου "
 
-#: plug-ins/common/tileit.c:491
+#: plug-ins/common/tileit.c:496
 #, fuzzy
 msgid "All Tiles"
 msgstr "Όλα τα αρχεία"
 
 #
-#: plug-ins/common/tileit.c:505
+#: plug-ins/common/tileit.c:510
 #, fuzzy
 msgid "Alternate Tiles"
 msgstr "Ενναλακτικές:"
 
-#: plug-ins/common/tileit.c:519
+#: plug-ins/common/tileit.c:524
 #, fuzzy
 msgid "Explicit Tile"
 msgstr "Ρητή απόκρυψη"
 
-#: plug-ins/common/tileit.c:525
+#: plug-ins/common/tileit.c:530
 msgid "Row:"
 msgstr "Σειρά:"
 
-#: plug-ins/common/tileit.c:549
+#: plug-ins/common/tileit.c:554
 msgid "Column:"
 msgstr "Στήλες:"
 
 #. Lower frame saying howmany segments
-#: plug-ins/common/tileit.c:616
+#: plug-ins/common/tileit.c:621
 #, fuzzy
 msgid "Segment Setting"
 msgstr "Ρυθμίσεις Γεωμετρίας"
@@ -7263,72 +7269,72 @@ msgid "Unsharp Mask"
 msgstr ""
 
 #
-#: plug-ins/common/video.c:44
+#: plug-ins/common/video.c:49
 #, fuzzy
 msgid "Staggered"
 msgstr "Κοινό"
 
-#: plug-ins/common/video.c:45
+#: plug-ins/common/video.c:50
 #, fuzzy
 msgid "Large staggered"
 msgstr "/απαιτούνται από"
 
-#: plug-ins/common/video.c:46
+#: plug-ins/common/video.c:51
 #, fuzzy
 msgid "Striped"
 msgstr "Τερματισμός"
 
-#: plug-ins/common/video.c:47
+#: plug-ins/common/video.c:52
 msgid "Wide-striped"
 msgstr ""
 
-#: plug-ins/common/video.c:48
+#: plug-ins/common/video.c:53
 #, fuzzy
 msgid "Long-staggered"
 msgstr "Μακρύτερα"
 
-#: plug-ins/common/video.c:49
+#: plug-ins/common/video.c:54
 msgid "3x3"
 msgstr "3x3"
 
-#: plug-ins/common/video.c:50
+#: plug-ins/common/video.c:55
 #, fuzzy
 msgid "Large 3x3"
 msgstr "Μεγάλο"
 
-#: plug-ins/common/video.c:51
+#: plug-ins/common/video.c:56
 msgid "Hex"
 msgstr "Δεκαεξαδικό"
 
-#: plug-ins/common/video.c:52
+#: plug-ins/common/video.c:57
 msgid "Dots"
 msgstr "Κουκκίδες"
 
-#: plug-ins/common/video.c:1835
+#: plug-ins/common/video.c:1840
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Video..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/video.c:1906
+#: plug-ins/common/video.c:1911
 #, fuzzy
 msgid "Video/RGB..."
 msgstr "Προβολή...."
 
-#: plug-ins/common/video.c:2149
+#: plug-ins/common/video.c:2153
 msgid "Video"
 msgstr "Βίντεο"
 
 #. frame for the radio buttons
-#: plug-ins/common/video.c:2176
+#: plug-ins/common/video.c:2180
 #, fuzzy
 msgid "RGB Pattern Type"
 msgstr "Υπόδειγμα URL"
 
-#: plug-ins/common/video.c:2187
+#: plug-ins/common/video.c:2191
 msgid "Additive"
 msgstr "Προσθετικό"
 
-#: plug-ins/common/video.c:2197 plug-ins/rcm/rcm_dialog.c:122
+#: plug-ins/common/video.c:2201 plug-ins/rcm/rcm_dialog.c:127
 #, fuzzy
 msgid "Rotated"
 msgstr "Περιστροφή"
@@ -7474,7 +7480,7 @@ msgstr "Επιλογές Μηνυμάτων"
 msgid "Step Size:"
 msgstr "Ρύθμιση Μεγέθους"
 
-#: plug-ins/common/warp.c:471 plug-ins/ifscompose/ifscompose.c:1273
+#: plug-ins/common/warp.c:471 plug-ins/ifscompose/ifscompose.c:1277
 msgid "Iterations:"
 msgstr "Επαναλήψεις:"
 
@@ -7570,55 +7576,55 @@ msgstr "Προετοιμασία γραφικών..."
 msgid "Flow Step %d..."
 msgstr ""
 
-#: plug-ins/common/waves.c:157
+#: plug-ins/common/waves.c:162
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Waves..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/common/waves.c:344
+#: plug-ins/common/waves.c:349
 #, fuzzy
 msgid "Waves"
 msgstr "Σπηλιές"
 
-#: plug-ins/common/waves.c:391
+#: plug-ins/common/waves.c:396
 #, fuzzy
 msgid "Reflective"
 msgstr "Συγγενείς"
 
 #
-#: plug-ins/common/waves.c:421
+#: plug-ins/common/waves.c:426
 #, fuzzy
 msgid "Phase:"
 msgstr "Επικόλληση"
 
-#: plug-ins/common/waves.c:430
+#: plug-ins/common/waves.c:435
 #, fuzzy
 msgid "Wavelength:"
 msgstr "Μήκος παύλας: "
 
-#: plug-ins/common/waves.c:651
+#: plug-ins/common/waves.c:656
 #, fuzzy
 msgid "Waving..."
 msgstr "Σε αποθήκευση..."
 
-#: plug-ins/common/whirlpinch.c:203
+#: plug-ins/common/whirlpinch.c:208
 msgid "<Image>/Filters/Distorts/Whirl and Pinch..."
 msgstr ""
 
-#: plug-ins/common/whirlpinch.c:392
+#: plug-ins/common/whirlpinch.c:397
 msgid "Whirling and pinching..."
 msgstr ""
 
-#: plug-ins/common/whirlpinch.c:799
+#: plug-ins/common/whirlpinch.c:804
 msgid "Whirl and Pinch"
 msgstr ""
 
-#: plug-ins/common/whirlpinch.c:856
+#: plug-ins/common/whirlpinch.c:861
 #, fuzzy
 msgid "Whirl Angle:"
 msgstr "Γωνία στρέβλωσης:"
 
-#: plug-ins/common/whirlpinch.c:865
+#: plug-ins/common/whirlpinch.c:870
 #, fuzzy
 msgid "Pinch Amount:"
 msgstr "Επιλογή Γραμματοσειράς"
@@ -7666,28 +7672,28 @@ msgstr "Επικόλληση"
 msgid "Pasting..."
 msgstr "Αναμονή..."
 
-#: plug-ins/common/wind.c:204
+#: plug-ins/common/wind.c:209
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Wind..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
 #
-#: plug-ins/common/wind.c:417
+#: plug-ins/common/wind.c:422
 #, fuzzy
 msgid "Rendering Blast..."
 msgstr "Ανάγνωση του %s..."
 
 #
-#: plug-ins/common/wind.c:548
+#: plug-ins/common/wind.c:553
 #, fuzzy
 msgid "Rendering Wind..."
 msgstr "Ανάγνωση του %s..."
 
-#: plug-ins/common/wind.c:962
+#: plug-ins/common/wind.c:967
 msgid "Wind Strength must be greater than 0."
 msgstr ""
 
-#: plug-ins/common/wind.c:1008 plug-ins/common/wind.c:1077
+#: plug-ins/common/wind.c:1013 plug-ins/common/wind.c:1082
 #, fuzzy
 msgid "Wind"
 msgstr "Άνεμος:"
@@ -7695,59 +7701,59 @@ msgstr "Άνεμος:"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: plug-ins/common/wind.c:1072 plug-ins/maze/maze_face.c:302
+#: plug-ins/common/wind.c:1077 plug-ins/maze/maze_face.c:304
 msgid "Style"
 msgstr "Στύλ"
 
-#: plug-ins/common/wind.c:1080
+#: plug-ins/common/wind.c:1085
 #, fuzzy
 msgid "Blast"
 msgstr "τελευταίο"
 
 #
-#: plug-ins/common/wind.c:1101
+#: plug-ins/common/wind.c:1106
 msgid "Left"
 msgstr "Αριστερά"
 
 #
-#: plug-ins/common/wind.c:1104
+#: plug-ins/common/wind.c:1109
 msgid "Right"
 msgstr "Δεξιά"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
-#: plug-ins/common/wind.c:1120
+#: plug-ins/common/wind.c:1125
 #, fuzzy
 msgid "Edge Affected"
 msgstr "Εφφέ"
 
-#: plug-ins/common/wind.c:1125
+#: plug-ins/common/wind.c:1130
 #, fuzzy
 msgid "Leading"
 msgstr "Ανάγνωση"
 
-#: plug-ins/common/wind.c:1128
+#: plug-ins/common/wind.c:1133
 #, fuzzy
 msgid "Trailing"
 msgstr "Χρονισμός"
 
 #
-#: plug-ins/common/wind.c:1131
+#: plug-ins/common/wind.c:1136
 msgid "Both"
 msgstr "Και τα δύο"
 
-#: plug-ins/common/wind.c:1163
+#: plug-ins/common/wind.c:1168
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 
-#: plug-ins/common/wind.c:1178 plug-ins/gimpressionist/orientmap.c:574
+#: plug-ins/common/wind.c:1183 plug-ins/gimpressionist/orientmap.c:574
 #: plug-ins/gimpressionist/sizemap.c:475
 #, fuzzy
 msgid "Strength:"
 msgstr "Οδός:"
 
-#: plug-ins/common/wind.c:1182
+#: plug-ins/common/wind.c:1187
 msgid "Higher values increase the magnitude of the effect"
 msgstr ""
 
@@ -8023,46 +8029,46 @@ msgid "Search by Blurb"
 msgstr "Εύρεση στη Μνήμη.."
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:365
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "In:"
 msgstr "Μέσα:"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:413
+#: plug-ins/dbbrowser/dbbrowser_utils.c:415
 #, fuzzy
 msgid "Out:"
 msgstr "Έξω"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:485
+#: plug-ins/dbbrowser/dbbrowser_utils.c:487
 #: plug-ins/imagemap/imap_settings.c:103
 msgid "Author:"
 msgstr "Συγγραφέας:"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:493
+#: plug-ins/dbbrowser/dbbrowser_utils.c:495
 msgid "Date:"
 msgstr "Ημ/νία:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:501
+#: plug-ins/dbbrowser/dbbrowser_utils.c:503
 #, fuzzy
 msgid "Copyright:"
 msgstr "Πνευματικά Δικαιώματα"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:570
+#: plug-ins/dbbrowser/dbbrowser_utils.c:572
 msgid "DB Browser (by name - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:594
+#: plug-ins/dbbrowser/dbbrowser_utils.c:596
 msgid "DB Browser (by blurb - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:604
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 msgid "DB Browser (please wait)"
 msgstr ""
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:630
+#: plug-ins/dbbrowser/dbbrowser_utils.c:632
 #, fuzzy
 msgid "DB Browser"
 msgstr "Εξερεύνηση"
@@ -8107,144 +8113,144 @@ msgstr ""
 msgid "Image Composing"
 msgstr "Πληροφορίες Εικόνας"
 
-#: plug-ins/flame/flame.c:143
+#: plug-ins/flame/flame.c:148
 #, fuzzy
 msgid "<Image>/Filters/Render/Nature/Flame..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
-#: plug-ins/flame/flame.c:229
+#: plug-ins/flame/flame.c:234
 #, fuzzy
 msgid "Drawing Flame..."
 msgstr "Μοίρασμα..."
 
-#: plug-ins/flame/flame.c:308
+#: plug-ins/flame/flame.c:313
 #, fuzzy
 msgid "Flame works only on RGB drawables."
 msgstr "Δείκτες επιτρέπονται μόνο σε πίνακες"
 
-#: plug-ins/flame/flame.c:426
+#: plug-ins/flame/flame.c:431
 #, fuzzy, c-format
 msgid "%s: Is not a regular file"
 msgstr "Το %s δεν είναι κανονικό αρχείο."
 
-#: plug-ins/flame/flame.c:629 plug-ins/flame/flame.c:980
+#: plug-ins/flame/flame.c:634 plug-ins/flame/flame.c:986
 #, fuzzy
 msgid "Edit Flame"
 msgstr "Πλήρης Επεξεργασία"
 
-#: plug-ins/flame/flame.c:648
+#: plug-ins/flame/flame.c:654
 #, fuzzy
 msgid "Directions"
 msgstr "Κατεύθυνση"
 
 # FIX check against sourcecode
-#: plug-ins/flame/flame.c:679
+#: plug-ins/flame/flame.c:685
 #, fuzzy
 msgid "Controls"
 msgstr "Έλεγχος"
 
-#: plug-ins/flame/flame.c:694
+#: plug-ins/flame/flame.c:700
 msgid "Speed:"
 msgstr "Ταχύτητα:"
 
-#: plug-ins/flame/flame.c:711
+#: plug-ins/flame/flame.c:717
 msgid "Randomize"
 msgstr "Επιλογή Τυχαίου"
 
-#: plug-ins/flame/flame.c:725
+#: plug-ins/flame/flame.c:731
 #, fuzzy
 msgid "Same"
 msgstr "Δείγμα"
 
-#: plug-ins/flame/flame.c:726 plug-ins/gimpressionist/orientation.c:159
+#: plug-ins/flame/flame.c:732 plug-ins/gimpressionist/orientation.c:159
 #: plug-ins/gimpressionist/size.c:154
 msgid "Random"
 msgstr "Τυχαίο"
 
-#: plug-ins/flame/flame.c:730
+#: plug-ins/flame/flame.c:736
 #, fuzzy
 msgid "Swirl"
 msgstr "Ελβετία"
 
-#: plug-ins/flame/flame.c:731
+#: plug-ins/flame/flame.c:737
 #, fuzzy
 msgid "Horseshoe"
 msgstr "Τηλέφωνο Οικίας"
 
-#: plug-ins/flame/flame.c:732 plug-ins/gfig/gfig.c:3319
+#: plug-ins/flame/flame.c:738 plug-ins/gfig/gfig.c:3319
 #, fuzzy
 msgid "Polar"
 msgstr "πόλκα"
 
 # # FIX?
-#: plug-ins/flame/flame.c:733
+#: plug-ins/flame/flame.c:739
 #, fuzzy
 msgid "Bent"
 msgstr "Απεσταλμένα"
 
 #
-#: plug-ins/flame/flame.c:739
+#: plug-ins/flame/flame.c:745
 #, fuzzy
 msgid "Variation:"
 msgstr "Κορεσμός:"
 
-#: plug-ins/flame/flame.c:772 plug-ins/flame/flame.c:988
+#: plug-ins/flame/flame.c:778 plug-ins/flame/flame.c:994
 #, fuzzy
 msgid "Load Flame"
 msgstr "Ανάγνωση αρχείου"
 
-#: plug-ins/flame/flame.c:794 plug-ins/flame/flame.c:996
+#: plug-ins/flame/flame.c:800 plug-ins/flame/flame.c:1002
 #, fuzzy
 msgid "Save Flame"
 msgstr "Αποθήκευση αρχείου"
 
-#: plug-ins/flame/flame.c:921 plug-ins/flame/flame.c:962
+#: plug-ins/flame/flame.c:927 plug-ins/flame/flame.c:968
 #, fuzzy
 msgid "Flame"
 msgstr "Πλαίσιο"
 
-#: plug-ins/flame/flame.c:1036 plug-ins/print/gimp_color_window.c:193
+#: plug-ins/flame/flame.c:1042 plug-ins/print/gimp_color_window.c:193
 #, fuzzy
 msgid "Contrast:"
 msgstr "Αντίθεση"
 
 #
-#: plug-ins/flame/flame.c:1050 plug-ins/gimpressionist/brush.c:412
+#: plug-ins/flame/flame.c:1056 plug-ins/gimpressionist/brush.c:416
 #: plug-ins/print/gimp_color_window.c:285
 #, fuzzy
 msgid "Gamma:"
 msgstr "Γάμμα"
 
-#: plug-ins/flame/flame.c:1064
+#: plug-ins/flame/flame.c:1070
 #, fuzzy
 msgid "Sample Density:"
 msgstr "Δειγματοληψία:"
 
-#: plug-ins/flame/flame.c:1075
+#: plug-ins/flame/flame.c:1081
 msgid "Spatial Oversample:"
 msgstr ""
 
-#: plug-ins/flame/flame.c:1086
+#: plug-ins/flame/flame.c:1092
 #, fuzzy
 msgid "Spatial Filter Radius:"
 msgstr "Ειδικά Αρχεία"
 
-#: plug-ins/flame/flame.c:1113
+#: plug-ins/flame/flame.c:1119
 #, fuzzy
 msgid "Colormap:"
 msgstr "Χρώμα:"
 
-#: plug-ins/flame/flame.c:1161
+#: plug-ins/flame/flame.c:1167
 #, fuzzy
 msgid "Custom Gradient"
 msgstr "Βαθμίδα"
 
-#: plug-ins/flame/flame.c:1181
+#: plug-ins/flame/flame.c:1187
 #, fuzzy
 msgid "Camera"
 msgstr "Caldera"
 
-#: plug-ins/flame/flame.c:1193
+#: plug-ins/flame/flame.c:1199
 #, fuzzy
 msgid "Zoom:"
 msgstr "Εστίαση"
@@ -8264,171 +8270,171 @@ msgstr "Όχι κλιμάκωση εικόνας για ταίριασμα"
 msgid "Applying the Filter Pack..."
 msgstr "Αντιγραφή στον πιλότο..."
 
-#: plug-ins/fp/fp_gtk.c:27
+#: plug-ins/fp/fp_gtk.c:32
 #, fuzzy
 msgid "Darker:"
 msgstr "Μαύρα:"
 
-#: plug-ins/fp/fp_gtk.c:28
+#: plug-ins/fp/fp_gtk.c:33
 #, fuzzy
 msgid "Lighter:"
 msgstr "Λευκά:"
 
-#: plug-ins/fp/fp_gtk.c:30
+#: plug-ins/fp/fp_gtk.c:35
 #, fuzzy
 msgid "More Sat:"
 msgstr "Αγνόηση αρχής:"
 
 #
-#: plug-ins/fp/fp_gtk.c:31
+#: plug-ins/fp/fp_gtk.c:36
 #, fuzzy
 msgid "Less Sat:"
 msgstr "Κατάσταση Διεργασίας:"
 
 #
 #. All the previews
-#: plug-ins/fp/fp_gtk.c:33 plug-ins/fp/fp_gtk.c:91
+#: plug-ins/fp/fp_gtk.c:38 plug-ins/fp/fp_gtk.c:96
 #, fuzzy
 msgid "Current:"
 msgstr "Ένταση"
 
-#: plug-ins/fp/fp_gtk.c:87
+#: plug-ins/fp/fp_gtk.c:92
 #, fuzzy
 msgid "Before and After"
 msgstr "Πριν από κάθε ενημέρωση:"
 
-#: plug-ins/fp/fp_gtk.c:95
+#: plug-ins/fp/fp_gtk.c:100
 #, fuzzy
 msgid "Original:"
 msgstr "Προέλευση:"
 
-#: plug-ins/fp/fp_gtk.c:199
+#: plug-ins/fp/fp_gtk.c:204
 #, fuzzy
 msgid "Hue Variations"
 msgstr "Λειτουργίες"
 
-#: plug-ins/fp/fp_gtk.c:215
+#: plug-ins/fp/fp_gtk.c:220
 #, fuzzy
 msgid "Roughness"
 msgstr "Σκληρό Χαρτί"
 
-#: plug-ins/fp/fp_gtk.c:246
+#: plug-ins/fp/fp_gtk.c:251
 #, fuzzy
 msgid "Affected Range"
 msgstr "Αναμενόμενο εύρος τιμών"
 
-#: plug-ins/fp/fp_gtk.c:256
+#: plug-ins/fp/fp_gtk.c:261
 #, fuzzy
 msgid "Shadows"
 msgstr "Σκιά:"
 
-#: plug-ins/fp/fp_gtk.c:260
+#: plug-ins/fp/fp_gtk.c:265
 #, fuzzy
 msgid "Midtones"
 msgstr "Ημιφωτεινά τετραγωνίδια"
 
-#: plug-ins/fp/fp_gtk.c:264
+#: plug-ins/fp/fp_gtk.c:269
 #, fuzzy
 msgid "Highlights"
 msgstr "Επιλεγμένο"
 
 #
-#: plug-ins/fp/fp_gtk.c:277
+#: plug-ins/fp/fp_gtk.c:282
 msgid "Windows"
 msgstr "Παράθυρα"
 
-#: plug-ins/fp/fp_gtk.c:347
+#: plug-ins/fp/fp_gtk.c:352
 #, fuzzy
 msgid "Value Variations"
 msgstr "Ενεργοποίηση κινούμενων σχεδίων"
 
-#: plug-ins/fp/fp_gtk.c:396
+#: plug-ins/fp/fp_gtk.c:401
 #, fuzzy
 msgid "Saturation Variations"
 msgstr "Παραβίαση τμηματοποίησης"
 
-#: plug-ins/fp/fp_gtk.c:412
+#: plug-ins/fp/fp_gtk.c:417
 #, fuzzy
 msgid "Select Pixels by"
 msgstr "Επιλογή εικονοστοιχείων"
 
-#: plug-ins/fp/fp_gtk.c:442
+#: plug-ins/fp/fp_gtk.c:447
 msgid "Show"
 msgstr "Εμφάνιση"
 
-#: plug-ins/fp/fp_gtk.c:450 plug-ins/rcm/rcm_dialog.c:698
+#: plug-ins/fp/fp_gtk.c:455 plug-ins/rcm/rcm_dialog.c:703
 #, fuzzy
 msgid "Entire Image"
 msgstr "Ολόκληρο το μενού"
 
-#: plug-ins/fp/fp_gtk.c:455
+#: plug-ins/fp/fp_gtk.c:460
 #, fuzzy
 msgid "Selection Only"
 msgstr "Μόνον επιλογή"
 
-#: plug-ins/fp/fp_gtk.c:460
+#: plug-ins/fp/fp_gtk.c:465
 #, fuzzy
 msgid "Selection In Context"
 msgstr "Μόνον επιλογή"
 
 #
-#: plug-ins/fp/fp_gtk.c:474
+#: plug-ins/fp/fp_gtk.c:479
 msgid "Display"
 msgstr "Εμφάνιση"
 
-#: plug-ins/fp/fp_gtk.c:483
+#: plug-ins/fp/fp_gtk.c:488
 #, fuzzy
 msgid "CirclePalette"
 msgstr "Παλέττα"
 
-#: plug-ins/fp/fp_gtk.c:486
+#: plug-ins/fp/fp_gtk.c:491
 msgid "Lighter And Darker"
 msgstr ""
 
 #. ******************************************************************
 #. ************************ All the Standard Stuff ******************
-#: plug-ins/fp/fp_gtk.c:910
+#: plug-ins/fp/fp_gtk.c:915
 #, fuzzy
 msgid "Filter Pack Simulation"
 msgstr "Προσομοιώσεις"
 
-#: plug-ins/fp/fp_gtk.c:1031
+#: plug-ins/fp/fp_gtk.c:1038
 #, fuzzy
 msgid "Shadows:"
 msgstr "Σκιά:"
 
-#: plug-ins/fp/fp_gtk.c:1031
+#: plug-ins/fp/fp_gtk.c:1038
 #, fuzzy
 msgid "Midtones:"
 msgstr "Ημιφωτεινά τετραγωνίδια"
 
-#: plug-ins/fp/fp_gtk.c:1031
+#: plug-ins/fp/fp_gtk.c:1038
 #, fuzzy
 msgid "Highlights:"
 msgstr "Επιλεγμένο"
 
-#: plug-ins/fp/fp_gtk.c:1045
+#: plug-ins/fp/fp_gtk.c:1052
 #, fuzzy
 msgid "Advanced Filter Pack Options"
 msgstr "Προχωρημένες Επιλογές Ταξινόμισης"
 
-#: plug-ins/fp/fp_gtk.c:1056
+#: plug-ins/fp/fp_gtk.c:1063
 msgid "Smoothness of Aliasing"
 msgstr ""
 
 #. ****************** MISC OPTIONS **************************
-#: plug-ins/fp/fp_gtk.c:1145
+#: plug-ins/fp/fp_gtk.c:1152
 #, fuzzy
 msgid "Miscellaneous Options"
 msgstr "Διάφορα"
 
-#: plug-ins/fp/fp_gtk.c:1156
+#: plug-ins/fp/fp_gtk.c:1163
 #, fuzzy
 msgid "Preview as You Drag"
 msgstr "Προηγ. σελίδα"
 
 #
-#: plug-ins/fp/fp_gtk.c:1160
+#: plug-ins/fp/fp_gtk.c:1167
 #, fuzzy
 msgid "Preview Size"
 msgstr "Φύλλο προεπισκόπισης"
@@ -8448,7 +8454,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:842
-msgid "gfig-path misconfigured - the following directories were not found"
+msgid "gfig-path misconfigured - the following folders were not found:"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:1063
@@ -8468,8 +8474,8 @@ msgstr "Προηγ"
 
 #
 #. More Buttons
-#: plug-ins/gfig/gfig.c:1922 plug-ins/gfig/gfig.c:5309
-#: plug-ins/gflare/gflare.c:3177 plug-ins/imagemap/imap_menu.c:287
+#: plug-ins/gfig/gfig.c:1922 plug-ins/gfig/gfig.c:5316
+#: plug-ins/gflare/gflare.c:3178 plug-ins/imagemap/imap_menu.c:287
 #: plug-ins/imagemap/imap_selection.c:183 plug-ins/imagemap/imap_tools.c:155
 msgid "Edit"
 msgstr "Επεξεργασία"
@@ -8618,8 +8624,8 @@ msgid "Delete an object"
 msgstr "_Διαγραφή αντικειμένου"
 
 #: plug-ins/gfig/gfig.c:2362 plug-ins/gfig/gfig.c:2803
-#: plug-ins/gfig/gfig.c:4011 plug-ins/gimpressionist/brush.c:362
-#: plug-ins/gimpressionist/brush.c:367
+#: plug-ins/gfig/gfig.c:4016 plug-ins/gimpressionist/brush.c:366
+#: plug-ins/gimpressionist/brush.c:371
 #, fuzzy
 msgid "Brush"
 msgstr "Εργ."
@@ -8641,18 +8647,18 @@ msgstr "Υπόδειγμα"
 #: plug-ins/gfig/gfig.c:2372
 msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
-"paints with currently selected brush with a pattern. Only applies to "
-"circles/ellipses if Approx. Circles/Ellipses toggle is set."
+"paints with currently selected brush with a pattern. Only applies to circles/"
+"ellipses if Approx. Circles/Ellipses toggle is set."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2784 plug-ins/rcm/rcm_dialog.c:125
+#: plug-ins/gfig/gfig.c:2784 plug-ins/rcm/rcm_dialog.c:130
 #, fuzzy
 msgid "Original"
 msgstr "Σημείο αναφοράς"
 
 #
 #: plug-ins/gfig/gfig.c:2785 plug-ins/gfig/gfig.c:3572
-#: plug-ins/gflare/gflare.c:3176 plug-ins/ifscompose/ifscompose.c:795
+#: plug-ins/gflare/gflare.c:3177 plug-ins/ifscompose/ifscompose.c:802
 #: plug-ins/webbrowser/webbrowser.c:320
 msgid "New"
 msgstr "Νέο"
@@ -8672,7 +8678,7 @@ msgstr "Εικονίδιο συρταριών"
 
 #. Create selection
 #: plug-ins/gfig/gfig.c:2805 plug-ins/imagemap/imap_selection.c:370
-#: plug-ins/rcm/rcm_dialog.c:707
+#: plug-ins/rcm/rcm_dialog.c:712
 msgid "Selection"
 msgstr "Επιλογή"
 
@@ -8941,8 +8947,9 @@ msgid "Object"
 msgstr "Αντικείμενο"
 
 #: plug-ins/gfig/gfig.c:3556
-msgid "Select directory and rescan Gfig object collection"
-msgstr ""
+#, fuzzy
+msgid "Select folder and rescan Gfig object collection"
+msgstr "Επιλογή και μετακίνηση αντικειμένου"
 
 #: plug-ins/gfig/gfig.c:3567
 msgid "Load a single Gfig object collection"
@@ -8987,125 +8994,125 @@ msgstr "(κενό)"
 msgid "GFig"
 msgstr "Εικόνα GIF"
 
-#: plug-ins/gfig/gfig.c:3937
-msgid "Done"
-msgstr "Τέλος"
-
-#: plug-ins/gfig/gfig.c:3939 plug-ins/gfig/gfig.c:4006
+#: plug-ins/gfig/gfig.c:3949 plug-ins/gfig/gfig.c:4011
 #, fuzzy
 msgid "Paint"
 msgstr "XPaint"
 
+#: plug-ins/gfig/gfig.c:3952
+msgid "Done"
+msgstr "Τέλος"
+
 #
-#: plug-ins/gfig/gfig.c:4019 plug-ins/imagemap/imap_cmd_select.c:54
+#: plug-ins/gfig/gfig.c:4024 plug-ins/imagemap/imap_cmd_select.c:54
 #: plug-ins/imagemap/imap_tools.c:135
 msgid "Select"
 msgstr "Επιλογή"
 
-#: plug-ins/gfig/gfig.c:4087
+#: plug-ins/gfig/gfig.c:4092
 #, c-format
 msgid ""
 "%d unsaved Gfig objects.\n"
 "Continue with exiting?"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4434
+#: plug-ins/gfig/gfig.c:4439
 #, fuzzy
 msgid "Enter Gfig Entry Name"
 msgstr "Εισαγωγή ονόματος:"
 
 #
-#: plug-ins/gfig/gfig.c:4458
+#: plug-ins/gfig/gfig.c:4464
 #, fuzzy
 msgid "Gfig Object Name:"
 msgstr "Όνομα Αντικειμένου"
 
 #. the dialog
-#: plug-ins/gfig/gfig.c:4517
+#: plug-ins/gfig/gfig.c:4523
 msgid "Rescan for Gfig Objects"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4535
+#: plug-ins/gfig/gfig.c:4542
 msgid "Add Gfig Path"
 msgstr ""
 
 #. Load a single object
-#: plug-ins/gfig/gfig.c:4613
+#: plug-ins/gfig/gfig.c:4620
 #, fuzzy
 msgid "Load Gfig obj"
 msgstr "Ανάγνωση αρχείου"
 
-#: plug-ins/gfig/gfig.c:4638
+#: plug-ins/gfig/gfig.c:4645
 msgid "Error in copy layer for onlayers"
 msgstr ""
 
 #. RGBA or GRAYA type
 #. opacity
 #. mode
-#: plug-ins/gfig/gfig.c:4670
+#: plug-ins/gfig/gfig.c:4677
 #, fuzzy
 msgid "Error in creating layer"
 msgstr "Σφάλμα δημιουργίας νέου φακέλου"
 
-#: plug-ins/gfig/gfig.c:4749
+#: plug-ins/gfig/gfig.c:4756
 #, c-format
 msgid "Gfig Layer %d"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4822
+#: plug-ins/gfig/gfig.c:4829
 msgid "About GFig"
 msgstr "Περί του GFig"
 
-#: plug-ins/gfig/gfig.c:4846
+#: plug-ins/gfig/gfig.c:4853
 msgid "Gfig - GIMP plug-in"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4851
+#: plug-ins/gfig/gfig.c:4858
 #, fuzzy
 msgid "Release 1.3"
 msgstr "Έκδοση"
 
-#: plug-ins/gfig/gfig.c:4861
+#: plug-ins/gfig/gfig.c:4868
 msgid "Email alt@picnic.demon.co.uk"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4871
+#: plug-ins/gfig/gfig.c:4878
 msgid "Isometric grid By Rob Saunders"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4904
+#: plug-ins/gfig/gfig.c:4911
 msgid "New gfig obj"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:5030
+#: plug-ins/gfig/gfig.c:5037
 #, fuzzy
 msgid "Delete Gfig Drawing"
 msgstr "Δια_γραφή μορφοποίησης"
 
-#: plug-ins/gfig/gfig.c:5058 plug-ins/gfig/gfig.c:5097
+#: plug-ins/gfig/gfig.c:5065 plug-ins/gfig/gfig.c:5104
 msgid "<NONE>"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:5135
+#: plug-ins/gfig/gfig.c:5142
 msgid "Editing read-only object - you will not be able to save it"
 msgstr ""
 
 #. Create new entry with name + copy at end & copy object into it
-#: plug-ins/gfig/gfig.c:5238
+#: plug-ins/gfig/gfig.c:5245
 #, fuzzy, c-format
 msgid "%s copy"
 msgstr "το αντίγραφο)"
 
 #
-#: plug-ins/gfig/gfig.c:5283
+#: plug-ins/gfig/gfig.c:5290
 msgid "Save as..."
 msgstr "Αποθήκευση ως..."
 
-#: plug-ins/gfig/gfig.c:6166
+#: plug-ins/gfig/gfig.c:6173
 msgid "Error reading file"
 msgstr "Σφάλμα ανάγνωσης αρχείου"
 
-#: plug-ins/gfig/gfig.c:6523
+#: plug-ins/gfig/gfig.c:6530
 msgid "Hey where has the object gone ?"
 msgstr ""
 
@@ -9144,7 +9151,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gflare/gflare.c:1055
-msgid "gflare-path misconfigured - the following directories were not found"
+msgid "gflare-path misconfigured - the following folders were not found:"
 msgstr ""
 
 #: plug-ins/gflare/gflare.c:1421
@@ -9163,8 +9170,8 @@ msgid ""
 "GFlare `%s' is not saved.\n"
 "If you add a new entry in %s, like:\n"
 "(gflare-path \"%s\")\n"
-"and make a directory %s,\n"
-"then you can save your own GFlare's into that directory."
+"and make a folder %s,\n"
+"then you can save your own GFlare's into that folder."
 msgstr ""
 
 #: plug-ins/gflare/gflare.c:1630
@@ -9174,7 +9181,7 @@ msgstr "Αδύνατο το άνοιγμα του %s."
 
 #: plug-ins/gflare/gflare.c:1833
 #, fuzzy, c-format
-msgid "error reading GFlare directory \"%s\""
+msgid "error reading GFlare folder \"%s\""
 msgstr "Δημιουργία καταλόγου χρήστη: %s\n"
 
 #: plug-ins/gflare/gflare.c:2533
@@ -9182,139 +9189,139 @@ msgstr "Δημιουργία καταλόγου χρήστη: %s\n"
 msgid "GFlare"
 msgstr "Glade"
 
-#: plug-ins/gflare/gflare.c:2650
+#: plug-ins/gflare/gflare.c:2651
 #, fuzzy
 msgid "`Default' is created."
 msgstr "Εξ' ορισμού στρατηγική:"
 
-#: plug-ins/gflare/gflare.c:2651
+#: plug-ins/gflare/gflare.c:2652
 msgid "Default"
 msgstr "Εξ' ορισμού"
 
-#: plug-ins/gflare/gflare.c:3001 plug-ins/gflare/gflare.c:3840
-#: plug-ins/gflare/gflare.c:3950 plug-ins/gflare/gflare.c:4092
+#: plug-ins/gflare/gflare.c:3002 plug-ins/gflare/gflare.c:3843
+#: plug-ins/gflare/gflare.c:3953 plug-ins/gflare/gflare.c:4095
 msgid "Rotation:"
 msgstr "Περιστροφή:"
 
-#: plug-ins/gflare/gflare.c:3013 plug-ins/gflare/gflare.c:3852
-#: plug-ins/gflare/gflare.c:3963 plug-ins/gflare/gflare.c:4105
+#: plug-ins/gflare/gflare.c:3014 plug-ins/gflare/gflare.c:3855
+#: plug-ins/gflare/gflare.c:3966 plug-ins/gflare/gflare.c:4108
 #, fuzzy
 msgid "Hue Rotation:"
 msgstr "Περιστροφή:"
 
 #
-#: plug-ins/gflare/gflare.c:3025
+#: plug-ins/gflare/gflare.c:3026
 #, fuzzy
 msgid "Vector Angle:"
 msgstr "Όνομα καταλόγου:"
 
-#: plug-ins/gflare/gflare.c:3037
+#: plug-ins/gflare/gflare.c:3038
 #, fuzzy
 msgid "Vector Length:"
 msgstr "Μήκος: "
 
 #
-#: plug-ins/gflare/gflare.c:3063
+#: plug-ins/gflare/gflare.c:3064
 #, fuzzy
 msgid "Adaptive Supersampling"
 msgstr "Αρχή/Τέλος δειγματοληψίας"
 
-#: plug-ins/gflare/gflare.c:3106
+#: plug-ins/gflare/gflare.c:3107
 #, fuzzy
 msgid "Auto Update Preview"
 msgstr "Ανανέωση Προεπισκόπησης"
 
-#: plug-ins/gflare/gflare.c:3230
+#: plug-ins/gflare/gflare.c:3231
 msgid "Selector"
 msgstr "Επιλογέας"
 
-#: plug-ins/gflare/gflare.c:3319
+#: plug-ins/gflare/gflare.c:3320
 #, fuzzy
 msgid "New GFlare"
 msgstr "Νέο Παιγνίδι"
 
-#: plug-ins/gflare/gflare.c:3322
+#: plug-ins/gflare/gflare.c:3323
 #, fuzzy
 msgid "Enter a Name for the New GFlare:"
 msgstr "Ομοίως για τα υπόλοιπα"
 
-#: plug-ins/gflare/gflare.c:3323
+#: plug-ins/gflare/gflare.c:3324
 msgid "untitled"
 msgstr "ανώνυμο"
 
-#: plug-ins/gflare/gflare.c:3341
+#: plug-ins/gflare/gflare.c:3342
 #, fuzzy, c-format
 msgid "The name '%s' is used already!"
 msgstr "Αυτό το όνομα στυλ χρησιμοποιείτε ήδη"
 
 # # NOTE: Translation of "Create" as "New" to
 # #       keep msg length relatively short...
-#: plug-ins/gflare/gflare.c:3390
+#: plug-ins/gflare/gflare.c:3391
 #, fuzzy
 msgid "Copy GFlare"
 msgstr "_Αντιγραφή Αρχείου"
 
-#: plug-ins/gflare/gflare.c:3393
+#: plug-ins/gflare/gflare.c:3394
 msgid "Enter a Name for the Copied GFlare:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3414
+#: plug-ins/gflare/gflare.c:3415
 #, fuzzy, c-format
 msgid "The name `%s' is used already!"
 msgstr "Αυτό το όνομα στυλ χρησιμοποιείτε ήδη"
 
-#: plug-ins/gflare/gflare.c:3440
+#: plug-ins/gflare/gflare.c:3441
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr ""
 
 #
-#: plug-ins/gflare/gflare.c:3450
+#: plug-ins/gflare/gflare.c:3451
 #, fuzzy
 msgid "Delete GFlare"
 msgstr "Διαγραφή Aρχείου"
 
-#: plug-ins/gflare/gflare.c:3507
+#: plug-ins/gflare/gflare.c:3508
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3547
+#: plug-ins/gflare/gflare.c:3548
 #, fuzzy
 msgid "GFlare Editor"
 msgstr "Επεξεργαστής Αναζήτησης"
 
-#: plug-ins/gflare/gflare.c:3552
+#: plug-ins/gflare/gflare.c:3556
 #, fuzzy
 msgid "Rescan Gradients"
 msgstr "Κάθετη Διαβάθμιση"
 
 #
 #. Glow
-#: plug-ins/gflare/gflare.c:3669
+#: plug-ins/gflare/gflare.c:3672
 #, fuzzy
 msgid "Glow Paint Options"
 msgstr "Επιλογές Μηνυμάτων"
 
-#: plug-ins/gflare/gflare.c:3694 plug-ins/gflare/gflare.c:3724
-#: plug-ins/gflare/gflare.c:3754
+#: plug-ins/gflare/gflare.c:3697 plug-ins/gflare/gflare.c:3727
+#: plug-ins/gflare/gflare.c:3757
 #, fuzzy
 msgid "Paint Mode:"
 msgstr "Εκτύπωση στο: "
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3699
+#: plug-ins/gflare/gflare.c:3702
 #, fuzzy
 msgid "Rays Paint Options"
 msgstr "Βασικές Επιλογές:"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3729
+#: plug-ins/gflare/gflare.c:3732
 #, fuzzy
 msgid "Second Flares Paint Options"
 msgstr "Επιλογές Συνεδρίας"
 
 #
-#: plug-ins/gflare/gflare.c:3761 plug-ins/gimpressionist/general.c:138
+#: plug-ins/gflare/gflare.c:3764 plug-ins/gimpressionist/general.c:138
 #: plug-ins/gimpressionist/general.c:143
 #: plug-ins/imagemap/imap_preferences.c:476
 msgid "General"
@@ -9323,58 +9330,58 @@ msgstr "Γενικά"
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gflare/gflare.c:3787 plug-ins/gflare/gflare.c:3895
-#: plug-ins/gflare/gflare.c:4039
+#: plug-ins/gflare/gflare.c:3790 plug-ins/gflare/gflare.c:3898
+#: plug-ins/gflare/gflare.c:4042
 #, fuzzy
 msgid "Gradients"
 msgstr "Βαθμίδα"
 
-#: plug-ins/gflare/gflare.c:3799 plug-ins/gflare/gflare.c:3909
-#: plug-ins/gflare/gflare.c:4051
+#: plug-ins/gflare/gflare.c:3802 plug-ins/gflare/gflare.c:3912
+#: plug-ins/gflare/gflare.c:4054
 #, fuzzy
 msgid "Radial Gradient:"
 msgstr "Κάθετη Διαβάθμιση"
 
-#: plug-ins/gflare/gflare.c:3803 plug-ins/gflare/gflare.c:3913
+#: plug-ins/gflare/gflare.c:3806 plug-ins/gflare/gflare.c:3916
 #, fuzzy
 msgid "Angular Gradient:"
 msgstr "Βαθμίδα"
 
-#: plug-ins/gflare/gflare.c:3807 plug-ins/gflare/gflare.c:3917
+#: plug-ins/gflare/gflare.c:3810 plug-ins/gflare/gflare.c:3920
 msgid "Angular Size Gradient:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3828 plug-ins/gflare/gflare.c:3938
-#: plug-ins/gflare/gflare.c:4080
+#: plug-ins/gflare/gflare.c:3831 plug-ins/gflare/gflare.c:3941
+#: plug-ins/gflare/gflare.c:4083
 #, fuzzy
 msgid "Size (%):"
 msgstr "Μέγεθος (kB)"
 
-#: plug-ins/gflare/gflare.c:3869
+#: plug-ins/gflare/gflare.c:3872
 #, fuzzy
 msgid "Glow"
 msgstr "Αργή"
 
-#: plug-ins/gflare/gflare.c:3975
+#: plug-ins/gflare/gflare.c:3978
 #, fuzzy
 msgid "# of Spikes:"
 msgstr "Αριθμός φορών:"
 
-#: plug-ins/gflare/gflare.c:3987
+#: plug-ins/gflare/gflare.c:3990
 msgid "Spike Thickness:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:4004
+#: plug-ins/gflare/gflare.c:4007
 #, fuzzy
 msgid "Rays"
 msgstr "ημέρες"
 
-#: plug-ins/gflare/gflare.c:4055
+#: plug-ins/gflare/gflare.c:4058
 #, fuzzy
 msgid "Size Factor Gradient:"
 msgstr "Οριζόντια Διαβάθμιση"
 
-#: plug-ins/gflare/gflare.c:4059
+#: plug-ins/gflare/gflare.c:4062
 #, fuzzy
 msgid "Probability Gradient:"
 msgstr "Οριζόντια Διαβάθμιση"
@@ -9382,34 +9389,34 @@ msgstr "Οριζόντια Διαβάθμιση"
 #.
 #. *	Shape Radio Button Frame
 #.
-#: plug-ins/gflare/gflare.c:4122
+#: plug-ins/gflare/gflare.c:4125
 #, fuzzy
 msgid "Shape of Second Flares"
 msgstr "Εμφάνιση Δευτερολέπτων"
 
-#: plug-ins/gflare/gflare.c:4131 plug-ins/imagemap/imap_circle.c:69
+#: plug-ins/gflare/gflare.c:4134 plug-ins/imagemap/imap_circle.c:69
 #: plug-ins/imagemap/imap_menu.c:397 plug-ins/imagemap/imap_popup.c:138
 #: plug-ins/imagemap/imap_tools.c:145
 msgid "Circle"
 msgstr "Κύκλος"
 
-#: plug-ins/gflare/gflare.c:4147 plug-ins/imagemap/imap_menu.c:399
+#: plug-ins/gflare/gflare.c:4150 plug-ins/imagemap/imap_menu.c:399
 #: plug-ins/imagemap/imap_polygon.c:78 plug-ins/imagemap/imap_popup.c:141
 #: plug-ins/imagemap/imap_tools.c:150
 msgid "Polygon"
 msgstr "Πολύγωνο"
 
-#: plug-ins/gflare/gflare.c:4206
+#: plug-ins/gflare/gflare.c:4209
 #, fuzzy
 msgid "Second Flares"
 msgstr "Δευτερόλεπτα"
 
 #
-#: plug-ins/gflare/gflare.c:4819
+#: plug-ins/gflare/gflare.c:4822
 msgid "none"
 msgstr "κανένα"
 
-#: plug-ins/gflare/gflare.c:4832
+#: plug-ins/gflare/gflare.c:4835
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr ""
@@ -9432,63 +9439,63 @@ msgstr ""
 msgid "GFLI 1.3 - Load framestack"
 msgstr ""
 
-#: plug-ins/gfli/gfli.c:883
+#: plug-ins/gfli/gfli.c:884
 msgid "GFLI 1.3 - Save framestack"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:189
+#: plug-ins/gimpressionist/brush.c:193
 msgid "GIMPressionist: Can only save drawables!\n"
 msgstr ""
 
 #
-#: plug-ins/gimpressionist/brush.c:195
+#: plug-ins/gimpressionist/brush.c:199
 #, fuzzy
 msgid "Save brush"
 msgstr "Αποθήκευση Ως"
 
 #
-#: plug-ins/gimpressionist/brush.c:403
+#: plug-ins/gimpressionist/brush.c:407
 #, fuzzy
 msgid "Brush Preview:"
 msgstr "Προεπισκόπηση:"
 
 #
-#: plug-ins/gimpressionist/brush.c:426
+#: plug-ins/gimpressionist/brush.c:430
 #, fuzzy
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Αλλαγή της γραμματοσειράς για το επιλεγμένο στοιχείο"
 
 #
-#: plug-ins/gimpressionist/brush.c:438
+#: plug-ins/gimpressionist/brush.c:442
 #, fuzzy
 msgid "Select:"
 msgstr "Επιλογή"
 
-#: plug-ins/gimpressionist/brush.c:443
+#: plug-ins/gimpressionist/brush.c:447
 #, fuzzy
 msgid "Aspect ratio:"
 msgstr "Διατήρηση αναλογιών:"
 
-#: plug-ins/gimpressionist/brush.c:447 plug-ins/gimpressionist/paper.c:177
+#: plug-ins/gimpressionist/brush.c:451 plug-ins/gimpressionist/paper.c:177
 #, fuzzy
 msgid "Relief:"
 msgstr "Ρόλος:"
 
-#: plug-ins/gimpressionist/brush.c:462
+#: plug-ins/gimpressionist/brush.c:466
 msgid "(None)"
 msgstr "(Κενό)"
 
-#: plug-ins/gimpressionist/brush.c:476
+#: plug-ins/gimpressionist/brush.c:480
 #, fuzzy
 msgid "Save..."
 msgstr "_Αποθήκευση..."
 
-#: plug-ins/gimpressionist/brush.c:491
+#: plug-ins/gimpressionist/brush.c:495
 #, fuzzy
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Καθορίστε τη θέση X στο μετρητή."
 
-#: plug-ins/gimpressionist/brush.c:503
+#: plug-ins/gimpressionist/brush.c:507
 msgid "Specifies the amount of embossing to apply to each brush stroke"
 msgstr ""
 
@@ -9579,7 +9586,7 @@ msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr ""
 
 #. Tileable checkbox
-#: plug-ins/gimpressionist/general.c:273 plug-ins/maze/maze_face.c:282
+#: plug-ins/gimpressionist/general.c:273 plug-ins/maze/maze_face.c:284
 #, fuzzy
 msgid "Tileable"
 msgstr "Πίνακας"
@@ -10001,7 +10008,7 @@ msgstr "Ανανέωση"
 
 #: plug-ins/gimpressionist/presets.c:695
 #, fuzzy
-msgid "Reread the directory of Presets"
+msgid "Reread the folder of Presets"
 msgstr "Δημιουργημένο θέμα στο κατάλογο `%s'"
 
 #: plug-ins/gimpressionist/presets.c:697
@@ -10231,87 +10238,87 @@ msgstr ""
 msgid "IfsCompose"
 msgstr "Σύνθεση"
 
-#: plug-ins/ifscompose/ifscompose.c:872 plug-ins/ifscompose/ifscompose.c:1142
+#: plug-ins/ifscompose/ifscompose.c:876 plug-ins/ifscompose/ifscompose.c:1146
 #, fuzzy
 msgid "Rotate/Scale"
 msgstr "Περιστροφή εικόνας"
 
-#: plug-ins/ifscompose/ifscompose.c:881 plug-ins/ifscompose/ifscompose.c:1154
+#: plug-ins/ifscompose/ifscompose.c:885 plug-ins/ifscompose/ifscompose.c:1158
 #, fuzzy
 msgid "Stretch"
 msgstr "Τέντωμα Εικονιδίου"
 
-#: plug-ins/ifscompose/ifscompose.c:901
+#: plug-ins/ifscompose/ifscompose.c:905
 #, fuzzy
 msgid "Render Options"
 msgstr "Λιγότερες Επιλογές"
 
-#: plug-ins/ifscompose/ifscompose.c:915 plug-ins/print/gimp_main_window.c:452
+#: plug-ins/ifscompose/ifscompose.c:919 plug-ins/print/gimp_main_window.c:452
 msgid "Auto"
 msgstr "Αυτόματο"
 
-#: plug-ins/ifscompose/ifscompose.c:948
+#: plug-ins/ifscompose/ifscompose.c:952
 #, fuzzy
 msgid "Spatial Transformation"
 msgstr "Μετασχηματισμός"
 
-#: plug-ins/ifscompose/ifscompose.c:954
+#: plug-ins/ifscompose/ifscompose.c:958
 #, fuzzy
 msgid "Color Transformation"
 msgstr "Μετασχηματισμός"
 
-#: plug-ins/ifscompose/ifscompose.c:964
+#: plug-ins/ifscompose/ifscompose.c:968
 msgid "Relative Probability:"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:1171
+#: plug-ins/ifscompose/ifscompose.c:1175
 #: plug-ins/imagemap/imap_cmd_select_all.c:55
 #: plug-ins/imagemap/imap_menu.c:304
 msgid "Select All"
 msgstr "Επιλογή Όλων"
 
-#: plug-ins/ifscompose/ifscompose.c:1183
+#: plug-ins/ifscompose/ifscompose.c:1187
 #, fuzzy
 msgid "Recompute Center"
 msgstr "Πληροφορική"
 
 #
-#: plug-ins/ifscompose/ifscompose.c:1195 plug-ins/imagemap/imap_toolbar.c:126
+#: plug-ins/ifscompose/ifscompose.c:1199 plug-ins/imagemap/imap_toolbar.c:126
 msgid "Undo"
 msgstr "Ακύρωση"
 
 #
-#: plug-ins/ifscompose/ifscompose.c:1207 plug-ins/imagemap/imap_toolbar.c:129
+#: plug-ins/ifscompose/ifscompose.c:1211 plug-ins/imagemap/imap_toolbar.c:129
 msgid "Redo"
 msgstr "Εκτέλεση Ξανά"
 
-#: plug-ins/ifscompose/ifscompose.c:1240
+#: plug-ins/ifscompose/ifscompose.c:1244
 #, fuzzy
 msgid "IfsCompose Options"
 msgstr "Σύνθεση"
 
-#: plug-ins/ifscompose/ifscompose.c:1260
+#: plug-ins/ifscompose/ifscompose.c:1264
 #, fuzzy
 msgid "Max. Memory:"
 msgstr "Πραγματική Μνήμη:"
 
-#: plug-ins/ifscompose/ifscompose.c:1287
+#: plug-ins/ifscompose/ifscompose.c:1291
 #, fuzzy
 msgid "Subdivide:"
 msgstr "Υποκατάλογοι:"
 
-#: plug-ins/ifscompose/ifscompose.c:1300
+#: plug-ins/ifscompose/ifscompose.c:1304
 #, fuzzy
 msgid "Spot Radius:"
 msgstr "Κατάσταση:"
 
-#: plug-ins/ifscompose/ifscompose.c:1373
+#: plug-ins/ifscompose/ifscompose.c:1377
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr ""
 
 #. transfer the image to the drawable
-#: plug-ins/ifscompose/ifscompose.c:1392
+#: plug-ins/ifscompose/ifscompose.c:1396
 #, fuzzy, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Αντιγραφή στον πιλότο..."
@@ -10868,7 +10875,7 @@ msgid "Create Guides..."
 msgstr "Δημιουργία όψεων"
 
 #
-#: plug-ins/imagemap/imap_menu.c:420 plug-ins/maze/maze_face.c:193
+#: plug-ins/imagemap/imap_menu.c:420 plug-ins/maze/maze_face.c:194
 msgid "Help"
 msgstr "Βοήθεια"
 
@@ -11127,144 +11134,144 @@ msgid "Drawing Maze..."
 msgstr "Μοίρασμα..."
 
 #. entscale == Entry and Scale pair function found in pixelize.c
-#: plug-ins/maze/maze_face.c:220
+#: plug-ins/maze/maze_face.c:222
 #, fuzzy
 msgid "Width (Pixels):"
 msgstr "Πάχος πλαισίου (σε εικονοστοιχεία)"
 
-#: plug-ins/maze/maze_face.c:232 plug-ins/maze/maze_face.c:248
+#: plug-ins/maze/maze_face.c:234 plug-ins/maze/maze_face.c:250
 #, fuzzy
 msgid "Pieces:"
 msgstr "Άδεια Χρήσης:"
 
-#: plug-ins/maze/maze_face.c:237
+#: plug-ins/maze/maze_face.c:239
 #, fuzzy
 msgid "Height (Pixels):"
 msgstr "Τεράστιο (80 εικονοστοιχεία)"
 
-#: plug-ins/maze/maze_face.c:260
+#: plug-ins/maze/maze_face.c:262
 #, fuzzy
 msgid "Multiple (57):"
 msgstr "Πολλαπλά"
 
-#: plug-ins/maze/maze_face.c:273
+#: plug-ins/maze/maze_face.c:275
 #, fuzzy
 msgid "Offset (1):"
 msgstr "Μετατόπιση"
 
-#: plug-ins/maze/maze_face.c:304
+#: plug-ins/maze/maze_face.c:306
 #, fuzzy
 msgid "Depth First"
 msgstr "Πρώτο"
 
-#: plug-ins/maze/maze_face.c:311
+#: plug-ins/maze/maze_face.c:313
 msgid "Prim's Algorithm"
 msgstr ""
 
-#: plug-ins/maze/maze_face.c:330
+#: plug-ins/maze/maze_face.c:332
 #, fuzzy, c-format
 msgid "Selection is %dx%d"
 msgstr "Η επιλογή έχει"
 
-#: plug-ins/maze/maze_face.c:436
+#: plug-ins/maze/maze_face.c:438
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
 msgstr ""
 
 #. open URL for help
-#: plug-ins/maze/maze_face.c:605
+#: plug-ins/maze/maze_face.c:607
 #, fuzzy, c-format
 msgid "Opening %s"
 msgstr "Άνοιγμα του \"%s\""
 
-#: plug-ins/maze/maze_face.c:616
+#: plug-ins/maze/maze_face.c:618
 #, fuzzy, c-format
 msgid "See %s"
 msgstr "Σπόρια"
 
-#: plug-ins/mosaic/mosaic.c:327
+#: plug-ins/mosaic/mosaic.c:332
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/Mosaic..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
 #. progress bar for gradient finding
-#: plug-ins/mosaic/mosaic.c:452
+#: plug-ins/mosaic/mosaic.c:457
 #, fuzzy
 msgid "Finding Edges..."
 msgstr "Εύρεση του καλύτερου εξυπηρετητή..."
 
 #. Progress bar for rendering tiles
-#: plug-ins/mosaic/mosaic.c:516
+#: plug-ins/mosaic/mosaic.c:521
 #, fuzzy
 msgid "Rendering Tiles..."
 msgstr "Μετατροπή αρχείου..."
 
-#: plug-ins/mosaic/mosaic.c:545
+#: plug-ins/mosaic/mosaic.c:550
 #, fuzzy
 msgid "Mosaic"
 msgstr "Μουσική"
 
-#: plug-ins/mosaic/mosaic.c:613
+#: plug-ins/mosaic/mosaic.c:619
 #, fuzzy
 msgid "Color Averaging"
 msgstr "Ρυθμίσεις Χρώματος"
 
-#: plug-ins/mosaic/mosaic.c:623
+#: plug-ins/mosaic/mosaic.c:629
 #, fuzzy
 msgid "Allow Tile splitting"
 msgstr "Όλα τα αρχεία"
 
-#: plug-ins/mosaic/mosaic.c:633
+#: plug-ins/mosaic/mosaic.c:639
 #, fuzzy
 msgid "Pitted Surfaces"
 msgstr "Ηνωμένες Πολιτείες"
 
-#: plug-ins/mosaic/mosaic.c:643
+#: plug-ins/mosaic/mosaic.c:649
 #, fuzzy
 msgid "FG/BG Lighting"
 msgstr "Μάχης"
 
 #. tiling primitive
-#: plug-ins/mosaic/mosaic.c:658
+#: plug-ins/mosaic/mosaic.c:664
 msgid "Tiling Primitives"
 msgstr ""
 
-#: plug-ins/mosaic/mosaic.c:662
+#: plug-ins/mosaic/mosaic.c:668
 #, fuzzy
 msgid "Squares"
 msgstr "Τετράγωνο"
 
-#: plug-ins/mosaic/mosaic.c:664
+#: plug-ins/mosaic/mosaic.c:670
 #, fuzzy
 msgid "Hexagons"
 msgstr "Περιοχές"
 
-#: plug-ins/mosaic/mosaic.c:666
+#: plug-ins/mosaic/mosaic.c:672
 msgid "Octagons & Squares"
 msgstr ""
 
-#: plug-ins/mosaic/mosaic.c:705
+#: plug-ins/mosaic/mosaic.c:711
 #, fuzzy
 msgid "Tile Spacing:"
 msgstr "Διάκενο Κειμένου:"
 
-#: plug-ins/mosaic/mosaic.c:714
+#: plug-ins/mosaic/mosaic.c:720
 #, fuzzy
 msgid "Tile Neatness:"
 msgstr "Πούλια:"
 
-#: plug-ins/mosaic/mosaic.c:724
+#: plug-ins/mosaic/mosaic.c:730
 #, fuzzy
 msgid "Light Direction:"
 msgstr "Δεξί τμήμα:"
 
-#: plug-ins/mosaic/mosaic.c:733
+#: plug-ins/mosaic/mosaic.c:739
 #, fuzzy
 msgid "Color Variation:"
 msgstr "Τροποποιήσεις Χρώματος:"
 
-#: plug-ins/mosaic/mosaic.c:2502
+#: plug-ins/mosaic/mosaic.c:2508
 #, fuzzy
 msgid "Unable to add additional point.\n"
 msgstr "Ανεπιτυχής σύνδεση στο πιλότο"
@@ -11598,102 +11605,102 @@ msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 msgid "Rotating the colormap..."
 msgstr "MΕπαλήθευση της μορφοποίησης..."
 
-#: plug-ins/rcm/rcm_callback.c:163 plug-ins/rcm/rcm_dialog.c:272
+#: plug-ins/rcm/rcm_callback.c:162 plug-ins/rcm/rcm_dialog.c:277
 #, fuzzy
 msgid "Switch to clockwise"
 msgstr "Αλλαγή καταγραφής"
 
-#: plug-ins/rcm/rcm_callback.c:163 plug-ins/rcm/rcm_dialog.c:272
+#: plug-ins/rcm/rcm_callback.c:162 plug-ins/rcm/rcm_dialog.c:277
 msgid "Switch to c/clockwise"
 msgstr ""
 
-#: plug-ins/rcm/rcm_dialog.c:281
+#: plug-ins/rcm/rcm_dialog.c:286
 msgid "Change order of arrows"
 msgstr ""
 
 #
-#: plug-ins/rcm/rcm_dialog.c:288
+#: plug-ins/rcm/rcm_dialog.c:293
 msgid "Select all"
 msgstr "Επιλογή όλων"
 
 #
 #. spinbutton 1
-#: plug-ins/rcm/rcm_dialog.c:298 plug-ins/rcm/rcm_dialog.c:375
+#: plug-ins/rcm/rcm_dialog.c:303 plug-ins/rcm/rcm_dialog.c:380
 msgid "From"
 msgstr "Από"
 
 #
 #. spinbutton 2
-#: plug-ins/rcm/rcm_dialog.c:323 plug-ins/rcm/rcm_dialog.c:376
+#: plug-ins/rcm/rcm_dialog.c:328 plug-ins/rcm/rcm_dialog.c:381
 msgid "To"
 msgstr "Πρoς"
 
 #. Gray: Operation-Mode: two radio buttons
-#: plug-ins/rcm/rcm_dialog.c:507
+#: plug-ins/rcm/rcm_dialog.c:512
 #, fuzzy
 msgid "Treat as this"
 msgstr "πραγματική διαδρομή"
 
-#: plug-ins/rcm/rcm_dialog.c:519
+#: plug-ins/rcm/rcm_dialog.c:524
 #, fuzzy
 msgid "Change to this"
 msgstr "Αλλαγή ρυθμίσεων"
 
 #. * Gray: What is gray? *
-#: plug-ins/rcm/rcm_dialog.c:532
+#: plug-ins/rcm/rcm_dialog.c:537
 #, fuzzy
 msgid "What is Gray?"
 msgstr "Ορίστε ;"
 
 #. * Misc: Used unit selection *
-#: plug-ins/rcm/rcm_dialog.c:622
+#: plug-ins/rcm/rcm_dialog.c:627
 #, fuzzy
 msgid "Units"
 msgstr "&Μονάδες:"
 
 #. Misc: Used unit selection: 3 radio buttons
-#: plug-ins/rcm/rcm_dialog.c:631
+#: plug-ins/rcm/rcm_dialog.c:636
 #, fuzzy
 msgid "Radians"
 msgstr "Βροχή"
 
-#: plug-ins/rcm/rcm_dialog.c:643
+#: plug-ins/rcm/rcm_dialog.c:648
 msgid "Radians/Pi"
 msgstr ""
 
-#: plug-ins/rcm/rcm_dialog.c:655
+#: plug-ins/rcm/rcm_dialog.c:660
 #, fuzzy
 msgid "Degrees"
 msgstr "Μείωση"
 
-#: plug-ins/rcm/rcm_dialog.c:677
+#: plug-ins/rcm/rcm_dialog.c:682
 #, fuzzy
 msgid "Continuous update"
 msgstr "&Συνεχόμενα"
 
-#: plug-ins/rcm/rcm_dialog.c:691
+#: plug-ins/rcm/rcm_dialog.c:696
 #, fuzzy
 msgid "Area:"
 msgstr "Αρμενία"
 
-#: plug-ins/rcm/rcm_dialog.c:716
+#: plug-ins/rcm/rcm_dialog.c:721
 #, fuzzy
 msgid "Context"
 msgstr "Περιεχόμενα:"
 
 #. Create dialog
-#: plug-ins/rcm/rcm_dialog.c:769
+#: plug-ins/rcm/rcm_dialog.c:774
 #, fuzzy
 msgid "Colormap Rotation"
 msgstr "Συνεργασία"
 
-#: plug-ins/rcm/rcm_dialog.c:820
+#: plug-ins/rcm/rcm_dialog.c:826
 #, fuzzy
 msgid "Main"
 msgstr "Διευθ"
 
 #
-#: plug-ins/rcm/rcm_dialog.c:823
+#: plug-ins/rcm/rcm_dialog.c:829
 msgid "Misc"
 msgstr "Διάφορα"
 
@@ -12859,10 +12866,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "GDynText: Messages Window"
 #~ msgstr "Το ίδιο παράθυρο"
-
-#, fuzzy
-#~ msgid "bottom-left"
-#~ msgstr "Υπογράμμιση"
 
 #, fuzzy
 #~ msgid "bottom-center"

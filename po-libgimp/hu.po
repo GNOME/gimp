@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2001-12-29 18:03+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2000-12-22 13:29+0100\n"
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
@@ -151,50 +151,7 @@ msgstr ""
 msgid "a channel (saved selection)"
 msgstr ""
 
-#. pseudo unit
-#: libgimp/gimpunit.c:52
-msgid "pixel"
-msgstr "képpont"
-
-#: libgimp/gimpunit.c:52
-msgid "pixels"
-msgstr "képpont"
-
-#. standard units
-#: libgimp/gimpunit.c:55
-msgid "inch"
-msgstr "hüvelyk"
-
-#: libgimp/gimpunit.c:55
-msgid "inches"
-msgstr "hüvelyk"
-
 #: libgimp/gimpunit.c:56
-msgid "millimeter"
-msgstr "milliméter"
-
-#: libgimp/gimpunit.c:56
-msgid "millimeters"
-msgstr "milliméter"
-
-#. professional units
-#: libgimp/gimpunit.c:59
-msgid "point"
-msgstr "pont"
-
-#: libgimp/gimpunit.c:59
-msgid "points"
-msgstr "pont"
-
-#: libgimp/gimpunit.c:60
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:60
-msgid "picas"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "százalék"
 
@@ -218,7 +175,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpfileselection.c:352
 #, fuzzy
-msgid "Select Directory"
+msgid "Select Folder"
 msgstr "Fájl kijelölése"
 
 #: libgimpwidgets/gimpfileselection.c:366
@@ -273,6 +230,40 @@ msgstr "kilobájt"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "megabájt"
+
+#~ msgid "pixel"
+#~ msgstr "képpont"
+
+#~ msgid "pixels"
+#~ msgstr "képpont"
+
+#~ msgid "inch"
+#~ msgstr "hüvelyk"
+
+#~ msgid "inches"
+#~ msgstr "hüvelyk"
+
+#~ msgid "millimeter"
+#~ msgstr "milliméter"
+
+#~ msgid "millimeters"
+#~ msgstr "milliméter"
+
+#~ msgid "point"
+#~ msgstr "pont"
+
+#~ msgid "points"
+#~ msgstr "pont"
+
+#~ msgid "pica"
+#~ msgstr "pica"
+
+#~ msgid "picas"
+#~ msgstr "pica"
+
+#, fuzzy
+#~ msgid "Select Directory"
+#~ msgstr "Fájl kijelölése"
 
 #~ msgid "OK"
 #~ msgstr "OK"

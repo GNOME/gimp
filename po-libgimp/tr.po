@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2001-12-29 18:03+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2001-07-16 06:51+0300\n"
 "Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -150,50 +150,7 @@ msgstr ""
 msgid "a channel (saved selection)"
 msgstr ""
 
-#. pseudo unit
-#: libgimp/gimpunit.c:52
-msgid "pixel"
-msgstr "piksel"
-
-#: libgimp/gimpunit.c:52
-msgid "pixels"
-msgstr "piksel"
-
-#. standard units
-#: libgimp/gimpunit.c:55
-msgid "inch"
-msgstr "inç"
-
-#: libgimp/gimpunit.c:55
-msgid "inches"
-msgstr "inç"
-
 #: libgimp/gimpunit.c:56
-msgid "millimeter"
-msgstr "milimetre"
-
-#: libgimp/gimpunit.c:56
-msgid "millimeters"
-msgstr "milimetre"
-
-#. professional units
-#: libgimp/gimpunit.c:59
-msgid "point"
-msgstr "punto"
-
-#: libgimp/gimpunit.c:59
-msgid "points"
-msgstr "punto"
-
-#: libgimp/gimpunit.c:60
-msgid "pica"
-msgstr "pika"
-
-#: libgimp/gimpunit.c:60
-msgid "picas"
-msgstr "pika"
-
-#: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "yüzdelik"
 
@@ -217,7 +174,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpfileselection.c:352
 #, fuzzy
-msgid "Select Directory"
+msgid "Select Folder"
 msgstr "Dosya Seç"
 
 #: libgimpwidgets/gimpfileselection.c:366
@@ -271,6 +228,40 @@ msgstr "Kilobayt"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "Megabayt"
+
+#~ msgid "pixel"
+#~ msgstr "piksel"
+
+#~ msgid "pixels"
+#~ msgstr "piksel"
+
+#~ msgid "inch"
+#~ msgstr "inç"
+
+#~ msgid "inches"
+#~ msgstr "inç"
+
+#~ msgid "millimeter"
+#~ msgstr "milimetre"
+
+#~ msgid "millimeters"
+#~ msgstr "milimetre"
+
+#~ msgid "point"
+#~ msgstr "punto"
+
+#~ msgid "points"
+#~ msgstr "punto"
+
+#~ msgid "pica"
+#~ msgstr "pika"
+
+#~ msgid "picas"
+#~ msgstr "pika"
+
+#, fuzzy
+#~ msgid "Select Directory"
+#~ msgstr "Dosya Seç"
 
 #~ msgid "OK"
 #~ msgstr "Tamam"

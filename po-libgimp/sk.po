@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2001-12-19 07:28-0500\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2002-01-26 15:15GMT+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -137,7 +137,8 @@ msgstr "Ignorova»"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "Vá¹ obrázok by mal by» pred ulo¾ením exportovaný z nasledovných dôvodov:"
+msgstr ""
+"Vá¹ obrázok by mal by» pred ulo¾ením exportovaný z nasledovných dôvodov:"
 
 #. the footline
 #: libgimp/gimpexport.c:503
@@ -152,72 +153,30 @@ msgstr "maska vrstvy"
 msgid "a channel (saved selection)"
 msgstr "kanál (ulo¾ený výber)"
 
-#. pseudo unit
-#: libgimp/gimpunit.c:52
-msgid "pixel"
-msgstr "pixelov"
-
-#: libgimp/gimpunit.c:52
-msgid "pixels"
-msgstr "pixelov"
-
-#. standard units
-#: libgimp/gimpunit.c:55
-msgid "inch"
-msgstr "palcov"
-
-#: libgimp/gimpunit.c:55
-msgid "inches"
-msgstr "palcov"
-
 #: libgimp/gimpunit.c:56
-msgid "millimeter"
-msgstr "milimeter"
-
-#: libgimp/gimpunit.c:56
-msgid "millimeters"
-msgstr "milimetre"
-
-#. professional units
-#: libgimp/gimpunit.c:59
-msgid "point"
-msgstr "bod"
-
-#: libgimp/gimpunit.c:59
-msgid "points"
-msgstr "body"
-
-#: libgimp/gimpunit.c:60
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:60
-msgid "picas"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "percent"
 
-#: libgimpwidgets/gimpcolorbutton.c:81
+#: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
 msgstr "/Farba popredia"
 
-#: libgimpwidgets/gimpcolorbutton.c:83
+#: libgimpwidgets/gimpcolorbutton.c:87
 msgid "/Background Color"
 msgstr "/Farba pozadia"
 
-#: libgimpwidgets/gimpcolorbutton.c:86
+#: libgimpwidgets/gimpcolorbutton.c:90
 msgid "/Black"
 msgstr "/Èierna"
 
-#: libgimpwidgets/gimpcolorbutton.c:88
+#: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
 msgstr "/Biela"
 
 #: libgimpwidgets/gimpfileselection.c:352
-msgid "Select Directory"
-msgstr "Zvoµte prieèinok"
+#, fuzzy
+msgid "Select Folder"
+msgstr "Výber súboru"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
@@ -256,8 +215,7 @@ msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
-"Hniezdo náhodného generátoru z aktuálneho èasu - zaruèuje "
-"primeranú náhodnos»"
+"Hniezdo náhodného generátoru z aktuálneho èasu - zaruèuje primeranú náhodnos»"
 
 #: libgimpwidgets/gimpwidgets.c:1129
 msgid "Bytes"
@@ -271,3 +229,35 @@ msgstr "v kilobytoch"
 msgid "MegaBytes"
 msgstr "v megabytoch"
 
+#~ msgid "pixel"
+#~ msgstr "pixelov"
+
+#~ msgid "pixels"
+#~ msgstr "pixelov"
+
+#~ msgid "inch"
+#~ msgstr "palcov"
+
+#~ msgid "inches"
+#~ msgstr "palcov"
+
+#~ msgid "millimeter"
+#~ msgstr "milimeter"
+
+#~ msgid "millimeters"
+#~ msgstr "milimetre"
+
+#~ msgid "point"
+#~ msgstr "bod"
+
+#~ msgid "points"
+#~ msgstr "body"
+
+#~ msgid "pica"
+#~ msgstr "pica"
+
+#~ msgid "picas"
+#~ msgstr "pica"
+
+#~ msgid "Select Directory"
+#~ msgstr "Zvoµte prieèinok"

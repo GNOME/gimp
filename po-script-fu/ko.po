@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu VERSION\n"
-"POT-Creation-Date: 2001-12-29 18:05+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2000-12-18 23:30-0800\n"
 "Last-Translator: Unknown :-(\n"
 "Language-Team: Korean\n"
@@ -81,7 +81,7 @@ msgstr "Script-Fu 파일 셀렉션"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1376
 #, fuzzy
-msgid "Script-Fu Directory Selection"
+msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 파일 셀렉션"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1411
@@ -113,19 +113,19 @@ msgstr ""
 "적어도 당신이 선택한 한 글꼴이 잘못되었다\n"
 "설정을 검사해보세요\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:510
+#: plug-ins/dbbrowser/dbbrowser_utils.c:487
 #: plug-ins/script-fu/script-fu-scripts.c:1997
 #, fuzzy
 msgid "Author:"
 msgstr "저자 :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:526
+#: plug-ins/dbbrowser/dbbrowser_utils.c:503
 #: plug-ins/script-fu/script-fu-scripts.c:2003
 #, fuzzy
 msgid "Copyright:"
 msgstr "저작권 :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/dbbrowser/dbbrowser_utils.c:495
 #: plug-ins/script-fu/script-fu-scripts.c:2009
 #, fuzzy
 msgid "Date:"
@@ -179,60 +179,60 @@ msgstr ""
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:149
-#: plug-ins/dbbrowser/dbbrowser_utils.c:168
+#: plug-ins/dbbrowser/dbbrowser_utils.c:125
+#: plug-ins/dbbrowser/dbbrowser_utils.c:144
 #, fuzzy
 msgid "DB Browser (init...)"
 msgstr "찾아보기..."
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:154
-#: plug-ins/dbbrowser/dbbrowser_utils.c:173
+#: plug-ins/dbbrowser/dbbrowser_utils.c:130
+#: plug-ins/dbbrowser/dbbrowser_utils.c:149
 msgid "Search by Name"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:156
-#: plug-ins/dbbrowser/dbbrowser_utils.c:175
+#: plug-ins/dbbrowser/dbbrowser_utils.c:132
+#: plug-ins/dbbrowser/dbbrowser_utils.c:151
 msgid "Search by Blurb"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:227
+#: plug-ins/dbbrowser/dbbrowser_utils.c:215
 msgid "Search:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:358
+#: plug-ins/dbbrowser/dbbrowser_utils.c:346
 #, fuzzy
 msgid "Name:"
 msgstr "날짜 :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:355
 msgid "Blurb:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:379
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "In:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:426
+#: plug-ins/dbbrowser/dbbrowser_utils.c:415
 msgid "Out:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:480
+#: plug-ins/dbbrowser/dbbrowser_utils.c:469
 msgid "Help:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:601
+#: plug-ins/dbbrowser/dbbrowser_utils.c:572
 msgid "DB Browser (by name - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:625
+#: plug-ins/dbbrowser/dbbrowser_utils.c:596
 msgid "DB Browser (by blurb - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:635
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 msgid "DB Browser (please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:701
+#: plug-ins/dbbrowser/dbbrowser_utils.c:632
 #, fuzzy
 msgid "DB Browser"
 msgstr "찾아보기..."
@@ -2429,6 +2429,10 @@ msgstr "이미지 유형: "
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Script-Fu Directory Selection"
+#~ msgstr "Script-Fu 파일 셀렉션"
 
 #~ msgid "NOT SET"
 #~ msgstr "결정않됨"

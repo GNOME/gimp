@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.29\n"
-"POT-Creation-Date: 2001-12-29 18:05+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2000-12-27 16:46+01:00\n"
 "Last-Translator: Óscar Cebellán Ramos <cebaman@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -85,7 +85,7 @@ msgstr "Selección de Ficheros de Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1376
 #, fuzzy
-msgid "Script-Fu Directory Selection"
+msgid "Script-Fu Folder Selection"
 msgstr "Selección de Ficheros de Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1411
@@ -116,17 +116,17 @@ msgstr ""
 "Al menos una de las fuentes que ha elegido no es válida.\n"
 "Por favor compruebe sus ajustes.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:510
+#: plug-ins/dbbrowser/dbbrowser_utils.c:487
 #: plug-ins/script-fu/script-fu-scripts.c:1997
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:526
+#: plug-ins/dbbrowser/dbbrowser_utils.c:503
 #: plug-ins/script-fu/script-fu-scripts.c:2003
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/dbbrowser/dbbrowser_utils.c:495
 #: plug-ins/script-fu/script-fu-scripts.c:2009
 msgid "Date:"
 msgstr "Fecha:"
@@ -178,61 +178,61 @@ msgstr "Releer todos los guiones disponibles"
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Exts/Script-Fu/Refrescar"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:149
-#: plug-ins/dbbrowser/dbbrowser_utils.c:168
+#: plug-ins/dbbrowser/dbbrowser_utils.c:125
+#: plug-ins/dbbrowser/dbbrowser_utils.c:144
 #, fuzzy
 msgid "DB Browser (init...)"
 msgstr "Ojear..."
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:154
-#: plug-ins/dbbrowser/dbbrowser_utils.c:173
+#: plug-ins/dbbrowser/dbbrowser_utils.c:130
+#: plug-ins/dbbrowser/dbbrowser_utils.c:149
 msgid "Search by Name"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:156
-#: plug-ins/dbbrowser/dbbrowser_utils.c:175
+#: plug-ins/dbbrowser/dbbrowser_utils.c:132
+#: plug-ins/dbbrowser/dbbrowser_utils.c:151
 msgid "Search by Blurb"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:227
+#: plug-ins/dbbrowser/dbbrowser_utils.c:215
 msgid "Search:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:358
+#: plug-ins/dbbrowser/dbbrowser_utils.c:346
 #, fuzzy
 msgid "Name:"
 msgstr "Fecha:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:355
 #, fuzzy
 msgid "Blurb:"
 msgstr "Desenfoque en Y"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:379
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "In:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:426
+#: plug-ins/dbbrowser/dbbrowser_utils.c:415
 msgid "Out:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:480
+#: plug-ins/dbbrowser/dbbrowser_utils.c:469
 msgid "Help:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:601
+#: plug-ins/dbbrowser/dbbrowser_utils.c:572
 msgid "DB Browser (by name - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:625
+#: plug-ins/dbbrowser/dbbrowser_utils.c:596
 msgid "DB Browser (by blurb - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:635
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 msgid "DB Browser (please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:701
+#: plug-ins/dbbrowser/dbbrowser_utils.c:632
 #, fuzzy
 msgid "DB Browser"
 msgstr "Ojear..."
@@ -2321,6 +2321,10 @@ msgstr "Anchura"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Trabajar en copia"
+
+#, fuzzy
+#~ msgid "Script-Fu Directory Selection"
+#~ msgstr "Selección de Ficheros de Script-Fu"
 
 #~ msgid "NOT SET"
 #~ msgstr "NO PUESTO"

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.3.0\n"
-"POT-Creation-Date: 2001-12-29 18:05+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2001-11-08 12:55+0200\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -81,7 +81,7 @@ msgstr "Script-Fu 檔案選擇"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1376
 #, fuzzy
-msgid "Script-Fu Directory Selection"
+msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 檔案選擇"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1411
@@ -112,17 +112,17 @@ msgstr ""
 "你選的字型中最少有一款是無效的。\n"
 "請檢查你的設定。\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:510
+#: plug-ins/dbbrowser/dbbrowser_utils.c:487
 #: plug-ins/script-fu/script-fu-scripts.c:1997
 msgid "Author:"
 msgstr "作者："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:526
+#: plug-ins/dbbrowser/dbbrowser_utils.c:503
 #: plug-ins/script-fu/script-fu-scripts.c:2003
 msgid "Copyright:"
 msgstr "版權："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/dbbrowser/dbbrowser_utils.c:495
 #: plug-ins/script-fu/script-fu-scripts.c:2009
 msgid "Date:"
 msgstr "日期："
@@ -174,58 +174,58 @@ msgstr "重新讀入所有可用的 script"
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/擴展/Script-Fu/重新整理"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:149
-#: plug-ins/dbbrowser/dbbrowser_utils.c:168
+#: plug-ins/dbbrowser/dbbrowser_utils.c:125
+#: plug-ins/dbbrowser/dbbrowser_utils.c:144
 msgid "DB Browser (init...)"
 msgstr "資料庫瀏覽器（初始化...）"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:154
-#: plug-ins/dbbrowser/dbbrowser_utils.c:173
+#: plug-ins/dbbrowser/dbbrowser_utils.c:130
+#: plug-ins/dbbrowser/dbbrowser_utils.c:149
 msgid "Search by Name"
 msgstr "依名稱搜尋"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:156
-#: plug-ins/dbbrowser/dbbrowser_utils.c:175
+#: plug-ins/dbbrowser/dbbrowser_utils.c:132
+#: plug-ins/dbbrowser/dbbrowser_utils.c:151
 msgid "Search by Blurb"
 msgstr "依簡介搜尋"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:227
+#: plug-ins/dbbrowser/dbbrowser_utils.c:215
 msgid "Search:"
 msgstr "搜尋："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:358
+#: plug-ins/dbbrowser/dbbrowser_utils.c:346
 msgid "Name:"
 msgstr "名稱："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:355
 msgid "Blurb:"
 msgstr "簡介："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:379
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "In:"
 msgstr "輸入參數："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:426
+#: plug-ins/dbbrowser/dbbrowser_utils.c:415
 msgid "Out:"
 msgstr "輸出參數："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:480
+#: plug-ins/dbbrowser/dbbrowser_utils.c:469
 msgid "Help:"
 msgstr "說明："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:601
+#: plug-ins/dbbrowser/dbbrowser_utils.c:572
 msgid "DB Browser (by name - please wait)"
 msgstr "資料庫瀏覽器（依名稱搜尋 - 請稍等）"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:625
+#: plug-ins/dbbrowser/dbbrowser_utils.c:596
 msgid "DB Browser (by blurb - please wait)"
 msgstr "資料庫瀏覽器（依簡介搜尋 - 請稍等）"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:635
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 msgid "DB Browser (please wait)"
 msgstr "資料庫瀏覽器（請稍等）"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:701
+#: plug-ins/dbbrowser/dbbrowser_utils.c:632
 msgid "DB Browser"
 msgstr "資料庫瀏覽器"
 
@@ -2252,6 +2252,10 @@ msgstr "寬度"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "作用於複製本"
+
+#, fuzzy
+#~ msgid "Script-Fu Directory Selection"
+#~ msgstr "Script-Fu 檔案選擇"
 
 #~ msgid "NOT SET"
 #~ msgstr "未設定"

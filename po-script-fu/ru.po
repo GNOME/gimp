@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: po-script-fu-1.3\n"
-"POT-Creation-Date: 2001-12-29 18:05+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2001-12-15 21:12+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -76,8 +76,9 @@ msgid "Script-Fu File Selection"
 msgstr "Скрипт-Фу: Выбор файла"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1376
-msgid "Script-Fu Directory Selection"
-msgstr "Скрипт-Фу: Выбор каталога"
+#, fuzzy
+msgid "Script-Fu Folder Selection"
+msgstr "Скрипт-Фу: Выбор файла"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1411
 msgid "Script-fu Pattern Selection"
@@ -107,17 +108,17 @@ msgstr ""
 "По крайней мере один из выбранных вами шрифтов неисправен.\n"
 "Пожалуйста проверьте ваши настройки.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:510
+#: plug-ins/dbbrowser/dbbrowser_utils.c:487
 #: plug-ins/script-fu/script-fu-scripts.c:1997
 msgid "Author:"
 msgstr "Автор:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:526
+#: plug-ins/dbbrowser/dbbrowser_utils.c:503
 #: plug-ins/script-fu/script-fu-scripts.c:2003
 msgid "Copyright:"
 msgstr "Авторское право:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/dbbrowser/dbbrowser_utils.c:495
 #: plug-ins/script-fu/script-fu-scripts.c:2009
 msgid "Date:"
 msgstr "Дата:"
@@ -169,58 +170,58 @@ msgstr "Перечитать все доступные скрипты"
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Обновить..."
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:149
-#: plug-ins/dbbrowser/dbbrowser_utils.c:168
+#: plug-ins/dbbrowser/dbbrowser_utils.c:125
+#: plug-ins/dbbrowser/dbbrowser_utils.c:144
 msgid "DB Browser (init...)"
 msgstr "Просмотр базы данных (инициализация...)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:154
-#: plug-ins/dbbrowser/dbbrowser_utils.c:173
+#: plug-ins/dbbrowser/dbbrowser_utils.c:130
+#: plug-ins/dbbrowser/dbbrowser_utils.c:149
 msgid "Search by Name"
 msgstr "Поиск по названию"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:156
-#: plug-ins/dbbrowser/dbbrowser_utils.c:175
+#: plug-ins/dbbrowser/dbbrowser_utils.c:132
+#: plug-ins/dbbrowser/dbbrowser_utils.c:151
 msgid "Search by Blurb"
 msgstr "Поиск по обложке"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:227
+#: plug-ins/dbbrowser/dbbrowser_utils.c:215
 msgid "Search:"
 msgstr "Поиск:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:358
+#: plug-ins/dbbrowser/dbbrowser_utils.c:346
 msgid "Name:"
 msgstr "Название:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:355
 msgid "Blurb:"
 msgstr "Обложка:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:379
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "In:"
 msgstr "В:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:426
+#: plug-ins/dbbrowser/dbbrowser_utils.c:415
 msgid "Out:"
 msgstr "Из:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:480
+#: plug-ins/dbbrowser/dbbrowser_utils.c:469
 msgid "Help:"
 msgstr "Справка:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:601
+#: plug-ins/dbbrowser/dbbrowser_utils.c:572
 msgid "DB Browser (by name - please wait)"
 msgstr "Просмотр базы данных (по имени -- подождите пожалуйста)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:625
+#: plug-ins/dbbrowser/dbbrowser_utils.c:596
 msgid "DB Browser (by blurb - please wait)"
 msgstr "Просмотр базы данных (по обложке -- подождите пожалуйста)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:635
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 msgid "DB Browser (please wait)"
 msgstr "Просмотр базы данных (подождите пожалуйста)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:701
+#: plug-ins/dbbrowser/dbbrowser_utils.c:632
 msgid "DB Browser"
 msgstr "Просмотр базы данных"
 
@@ -2260,6 +2261,9 @@ msgstr "Ширина"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Работать с копией"
+
+#~ msgid "Script-Fu Directory Selection"
+#~ msgstr "Скрипт-Фу: Выбор каталога"
 
 #~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
 #~ msgstr "<Image>/Скрипт-Фу/Аниматоры/Выделение в аним.изображение"

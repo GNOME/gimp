@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2001-12-29 18:03+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2000-11-25 22:01+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -150,50 +150,7 @@ msgstr ""
 msgid "a channel (saved selection)"
 msgstr ""
 
-#. pseudo unit
-#: libgimp/gimpunit.c:52
-msgid "pixel"
-msgstr "ピクセル"
-
-#: libgimp/gimpunit.c:52
-msgid "pixels"
-msgstr "ピクセル"
-
-#. standard units
-#: libgimp/gimpunit.c:55
-msgid "inch"
-msgstr "インチ"
-
-#: libgimp/gimpunit.c:55
-msgid "inches"
-msgstr "インチ"
-
 #: libgimp/gimpunit.c:56
-msgid "millimeter"
-msgstr "ミリメートル"
-
-#: libgimp/gimpunit.c:56
-msgid "millimeters"
-msgstr "ミリメートル"
-
-#. professional units
-#: libgimp/gimpunit.c:59
-msgid "point"
-msgstr "ポイント"
-
-#: libgimp/gimpunit.c:59
-msgid "points"
-msgstr "ポイント"
-
-#: libgimp/gimpunit.c:60
-msgid "pica"
-msgstr "パイカ"
-
-#: libgimp/gimpunit.c:60
-msgid "picas"
-msgstr "パイカ"
-
-#: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "パーセント"
 
@@ -217,7 +174,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpfileselection.c:352
 #, fuzzy
-msgid "Select Directory"
+msgid "Select Folder"
 msgstr "ファイル選択"
 
 #: libgimpwidgets/gimpfileselection.c:366
@@ -271,6 +228,40 @@ msgstr "KiloBytes"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "MegaBytes"
+
+#~ msgid "pixel"
+#~ msgstr "ピクセル"
+
+#~ msgid "pixels"
+#~ msgstr "ピクセル"
+
+#~ msgid "inch"
+#~ msgstr "インチ"
+
+#~ msgid "inches"
+#~ msgstr "インチ"
+
+#~ msgid "millimeter"
+#~ msgstr "ミリメートル"
+
+#~ msgid "millimeters"
+#~ msgstr "ミリメートル"
+
+#~ msgid "point"
+#~ msgstr "ポイント"
+
+#~ msgid "points"
+#~ msgstr "ポイント"
+
+#~ msgid "pica"
+#~ msgstr "パイカ"
+
+#~ msgid "picas"
+#~ msgstr "パイカ"
+
+#, fuzzy
+#~ msgid "Select Directory"
+#~ msgstr "ファイル選択"
 
 #~ msgid "OK"
 #~ msgstr "了解"

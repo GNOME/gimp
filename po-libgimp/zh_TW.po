@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.3.0\n"
-"POT-Creation-Date: 2001-12-29 18:03+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2001-11-25 05:26+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -153,50 +153,7 @@ msgstr "圖層遮罩"
 msgid "a channel (saved selection)"
 msgstr "色版（已儲存的選擇區域）"
 
-#. pseudo unit
-#: libgimp/gimpunit.c:52
-msgid "pixel"
-msgstr "像素"
-
-#: libgimp/gimpunit.c:52
-msgid "pixels"
-msgstr "像素"
-
-#. standard units
-#: libgimp/gimpunit.c:55
-msgid "inch"
-msgstr "英吋"
-
-#: libgimp/gimpunit.c:55
-msgid "inches"
-msgstr "英吋"
-
 #: libgimp/gimpunit.c:56
-msgid "millimeter"
-msgstr "毫米"
-
-#: libgimp/gimpunit.c:56
-msgid "millimeters"
-msgstr "毫米"
-
-#. professional units
-#: libgimp/gimpunit.c:59
-msgid "point"
-msgstr "點"
-
-#: libgimp/gimpunit.c:59
-msgid "points"
-msgstr "點"
-
-#: libgimp/gimpunit.c:60
-msgid "pica"
-msgstr "pica（鉛點）"
-
-#: libgimp/gimpunit.c:60
-msgid "picas"
-msgstr "pica（鉛點）"
-
-#: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "百分比"
 
@@ -217,8 +174,9 @@ msgid "/White"
 msgstr "/白"
 
 #: libgimpwidgets/gimpfileselection.c:352
-msgid "Select Directory"
-msgstr "選擇目錄"
+#, fuzzy
+msgid "Select Folder"
+msgstr "選擇檔案"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
@@ -269,6 +227,39 @@ msgstr "千位元組"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "百萬位元組"
+
+#~ msgid "pixel"
+#~ msgstr "像素"
+
+#~ msgid "pixels"
+#~ msgstr "像素"
+
+#~ msgid "inch"
+#~ msgstr "英吋"
+
+#~ msgid "inches"
+#~ msgstr "英吋"
+
+#~ msgid "millimeter"
+#~ msgstr "毫米"
+
+#~ msgid "millimeters"
+#~ msgstr "毫米"
+
+#~ msgid "point"
+#~ msgstr "點"
+
+#~ msgid "points"
+#~ msgstr "點"
+
+#~ msgid "pica"
+#~ msgstr "pica（鉛點）"
+
+#~ msgid "picas"
+#~ msgstr "pica（鉛點）"
+
+#~ msgid "Select Directory"
+#~ msgstr "選擇目錄"
 
 #~ msgid "OK"
 #~ msgstr "確定"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2002-01-28 23:36+0800\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2002-01-28 23:39+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -79,7 +79,7 @@ msgstr "Script-Fu 文件选择"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1376
 #, fuzzy
-msgid "Script-Fu Directory Selection"
+msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 文件选择"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1411
@@ -110,17 +110,17 @@ msgstr ""
 "你所选的字体中至少有一种是无效的。\n"
 "请检查你的设置。\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:485
+#: plug-ins/dbbrowser/dbbrowser_utils.c:487
 #: plug-ins/script-fu/script-fu-scripts.c:1997
 msgid "Author:"
 msgstr "作者："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:501
+#: plug-ins/dbbrowser/dbbrowser_utils.c:503
 #: plug-ins/script-fu/script-fu-scripts.c:2003
 msgid "Copyright:"
 msgstr "版权所有："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:493
+#: plug-ins/dbbrowser/dbbrowser_utils.c:495
 #: plug-ins/script-fu/script-fu-scripts.c:2009
 msgid "Date:"
 msgstr "日期："
@@ -191,39 +191,39 @@ msgstr "按描述搜索"
 msgid "Search:"
 msgstr "搜索："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+#: plug-ins/dbbrowser/dbbrowser_utils.c:346
 msgid "Name:"
 msgstr "名字"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:353
+#: plug-ins/dbbrowser/dbbrowser_utils.c:355
 msgid "Blurb:"
 msgstr "描述："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:365
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "In:"
 msgstr "输入："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:413
+#: plug-ins/dbbrowser/dbbrowser_utils.c:415
 msgid "Out:"
 msgstr "输出："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:467
+#: plug-ins/dbbrowser/dbbrowser_utils.c:469
 msgid "Help:"
 msgstr "帮助："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:570
+#: plug-ins/dbbrowser/dbbrowser_utils.c:572
 msgid "DB Browser (by name - please wait)"
 msgstr "DB 浏览器 (按名字 - 请等待)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:594
+#: plug-ins/dbbrowser/dbbrowser_utils.c:596
 msgid "DB Browser (by blurb - please wait)"
 msgstr "DB 浏览器 (按描述 - 请等待)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:604
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 msgid "DB Browser (please wait)"
 msgstr "DB 浏览器 (请等待)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:630
+#: plug-ins/dbbrowser/dbbrowser_utils.c:632
 msgid "DB Browser"
 msgstr "DB 浏览器"
 
@@ -356,11 +356,6 @@ msgstr "<Image>/Script-Fu/动画/混和..."
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
 msgstr "<Image>/Script-Fu/动画/荡漾..."
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-#, fuzzy
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-msgstr "<Image>/Script-Fu/动画/旋转球..."
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
@@ -822,10 +817,6 @@ msgstr "振幅"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Angle"
 msgstr "角度"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Anim-Filter for all Copies"
-msgstr ""
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Antialias"
@@ -1320,11 +1311,6 @@ msgstr "填充角度"
 msgid "Fill BG with Pattern"
 msgstr "以图案填充背景"
 
-#: plug-ins/gap/sel-to-anim-img.scm:0
-#, fuzzy
-msgid "Fill with BG Color"
-msgstr "以背景填充"
-
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Fill with BG"
 msgstr "以背景填充"
@@ -1681,11 +1667,6 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
 msgstr "颜色数量"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-#, fuzzy
-msgid "Number of Copies"
-msgstr "线的数量"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
@@ -2272,3 +2253,19 @@ msgstr "宽度"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "在副本中操作"
+
+#, fuzzy
+#~ msgid "Script-Fu Directory Selection"
+#~ msgstr "Script-Fu 文件选择"
+
+#, fuzzy
+#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+#~ msgstr "<Image>/Script-Fu/动画/旋转球..."
+
+#, fuzzy
+#~ msgid "Fill with BG Color"
+#~ msgstr "以背景填充"
+
+#, fuzzy
+#~ msgid "Number of Copies"
+#~ msgstr "线的数量"

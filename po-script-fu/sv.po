@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2002-01-28 02:37+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2002-01-28 02:38+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -80,8 +80,9 @@ msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filväljare"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1376
-msgid "Script-Fu Directory Selection"
-msgstr "Script-Fu-katalogväljare"
+#, fuzzy
+msgid "Script-Fu Folder Selection"
+msgstr "Script-Fu-filväljare"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1411
 msgid "Script-fu Pattern Selection"
@@ -111,17 +112,17 @@ msgstr ""
 "Åtminstone en av typsnitten du angett är ogiltigt.\n"
 "Var vänlig och kontrollera dina inställningar.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:485
+#: plug-ins/dbbrowser/dbbrowser_utils.c:487
 #: plug-ins/script-fu/script-fu-scripts.c:1997
 msgid "Author:"
 msgstr "Författare:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:501
+#: plug-ins/dbbrowser/dbbrowser_utils.c:503
 #: plug-ins/script-fu/script-fu-scripts.c:2003
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:493
+#: plug-ins/dbbrowser/dbbrowser_utils.c:495
 #: plug-ins/script-fu/script-fu-scripts.c:2009
 msgid "Date:"
 msgstr "Datum:"
@@ -192,39 +193,39 @@ msgstr "Sök efter blurb"
 msgid "Search:"
 msgstr "Sök:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+#: plug-ins/dbbrowser/dbbrowser_utils.c:346
 msgid "Name:"
 msgstr "Namn:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:353
+#: plug-ins/dbbrowser/dbbrowser_utils.c:355
 msgid "Blurb:"
 msgstr "Blurb:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:365
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "In:"
 msgstr "In:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:413
+#: plug-ins/dbbrowser/dbbrowser_utils.c:415
 msgid "Out:"
 msgstr "Ut:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:467
+#: plug-ins/dbbrowser/dbbrowser_utils.c:469
 msgid "Help:"
 msgstr "Hjälp:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:570
+#: plug-ins/dbbrowser/dbbrowser_utils.c:572
 msgid "DB Browser (by name - please wait)"
 msgstr "DB-bläddrare (efter namn - var vänlig vänta)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:594
+#: plug-ins/dbbrowser/dbbrowser_utils.c:596
 msgid "DB Browser (by blurb - please wait)"
 msgstr "DB-bläddrare (efter blurb - var vänlig vänta)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:604
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 msgid "DB Browser (please wait)"
 msgstr "DB-bläddrare (var vänlig vänta)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:630
+#: plug-ins/dbbrowser/dbbrowser_utils.c:632
 msgid "DB Browser"
 msgstr "DB-bläddrare"
 
@@ -358,10 +359,6 @@ msgstr "<Image>/Script-Fu/Animatörer/Färgtoning..."
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
 msgstr "<Image>/Script-Fu/Animatörer/Krusning..."
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-msgstr "<Image>/Script-Fu/Animatörer/Markering till AnimeraBild..."
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
@@ -833,10 +830,6 @@ msgstr "Amplitud"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Angle"
 msgstr "Vinkel"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Anim-Filter for all Copies"
-msgstr "Animeringsfilter för alla kopior"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Antialias"
@@ -1331,10 +1324,6 @@ msgstr "Fyllningsvinkel"
 msgid "Fill BG with Pattern"
 msgstr "Fyll bakgrund med mönster"
 
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Fill with BG Color"
-msgstr "Fyll med bakgrundsfärg"
-
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Fill with BG"
 msgstr "Fyll med bakgrund"
@@ -1691,10 +1680,6 @@ msgstr "Antal band"
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
 msgstr "Antal färger"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Number of Copies"
-msgstr "Antal kopior"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
@@ -2281,6 +2266,21 @@ msgstr "Bredd"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Arbeta på kopia"
+
+#~ msgid "Script-Fu Directory Selection"
+#~ msgstr "Script-Fu-katalogväljare"
+
+#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+#~ msgstr "<Image>/Script-Fu/Animatörer/Markering till AnimeraBild..."
+
+#~ msgid "Anim-Filter for all Copies"
+#~ msgstr "Animeringsfilter för alla kopior"
+
+#~ msgid "Fill with BG Color"
+#~ msgstr "Fyll med bakgrundsfärg"
+
+#~ msgid "Number of Copies"
+#~ msgstr "Antal kopior"
 
 #~ msgid "NOT SET"
 #~ msgstr "INTE SATT"

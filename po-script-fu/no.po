@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
-"POT-Creation-Date: 2002-01-27 11:54+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2002-01-27 11:56+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -77,8 +77,9 @@ msgid "Script-Fu File Selection"
 msgstr "Script-Fu filvalg"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1376
-msgid "Script-Fu Directory Selection"
-msgstr "Script-Fu katalogvalg"
+#, fuzzy
+msgid "Script-Fu Folder Selection"
+msgstr "Script-Fu filvalg"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1411
 msgid "Script-fu Pattern Selection"
@@ -108,17 +109,17 @@ msgstr ""
 "Minst en skrifttype du har valgt er ugyldig.\n"
 "Vennligst sjekk dine instillinger.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:485
+#: plug-ins/dbbrowser/dbbrowser_utils.c:487
 #: plug-ins/script-fu/script-fu-scripts.c:1997
 msgid "Author:"
 msgstr "Forfatter:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:501
+#: plug-ins/dbbrowser/dbbrowser_utils.c:503
 #: plug-ins/script-fu/script-fu-scripts.c:2003
 msgid "Copyright:"
 msgstr "Kopirettighet:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:493
+#: plug-ins/dbbrowser/dbbrowser_utils.c:495
 #: plug-ins/script-fu/script-fu-scripts.c:2009
 msgid "Date:"
 msgstr "Dato:"
@@ -189,39 +190,39 @@ msgstr "Søk etter blurb"
 msgid "Search:"
 msgstr "Søk:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+#: plug-ins/dbbrowser/dbbrowser_utils.c:346
 msgid "Name:"
 msgstr "Navn:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:353
+#: plug-ins/dbbrowser/dbbrowser_utils.c:355
 msgid "Blurb:"
 msgstr "Blurb:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:365
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "In:"
 msgstr "Inn:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:413
+#: plug-ins/dbbrowser/dbbrowser_utils.c:415
 msgid "Out:"
 msgstr "Ut:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:467
+#: plug-ins/dbbrowser/dbbrowser_utils.c:469
 msgid "Help:"
 msgstr "Hjelp:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:570
+#: plug-ins/dbbrowser/dbbrowser_utils.c:572
 msgid "DB Browser (by name - please wait)"
 msgstr "DB-leser (etter navn - vennligst vent)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:594
+#: plug-ins/dbbrowser/dbbrowser_utils.c:596
 msgid "DB Browser (by blurb - please wait)"
 msgstr "DB-leser (etter blurb - vennligst vent)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:604
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 msgid "DB Browser (please wait)"
 msgstr "DB-leser (vennligst vent)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:630
+#: plug-ins/dbbrowser/dbbrowser_utils.c:632
 msgid "DB Browser"
 msgstr "DB-leser"
 
@@ -351,10 +352,6 @@ msgstr ""
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
 msgstr ""
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-msgstr "<Image>/Script-Fu/Animatorer/Utvalg til AnimImage..."
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
@@ -817,10 +814,6 @@ msgstr "Amplityde"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Angle"
 msgstr "Vinkel"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Anim-Filter for all Copies"
-msgstr "Anim-filter for alle kopier"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Antialias"
@@ -1313,10 +1306,6 @@ msgstr "Fyllvinkel"
 msgid "Fill BG with Pattern"
 msgstr "Fyll BG med mønster"
 
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Fill with BG Color"
-msgstr "Fyll med BG-farge"
-
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Fill with BG"
 msgstr "Fyll med BG"
@@ -1673,10 +1662,6 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
 msgstr "Antall farger"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Number of Copies"
-msgstr "Antall kopier"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
@@ -2263,6 +2248,21 @@ msgstr "Bredde"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Jobb med kopi"
+
+#~ msgid "Script-Fu Directory Selection"
+#~ msgstr "Script-Fu katalogvalg"
+
+#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+#~ msgstr "<Image>/Script-Fu/Animatorer/Utvalg til AnimImage..."
+
+#~ msgid "Anim-Filter for all Copies"
+#~ msgstr "Anim-filter for alle kopier"
+
+#~ msgid "Fill with BG Color"
+#~ msgstr "Fyll med BG-farge"
+
+#~ msgid "Number of Copies"
+#~ msgstr "Antall kopier"
 
 #~ msgid "Close"
 #~ msgstr "Lukk"

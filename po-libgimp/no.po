@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2001-12-29 18:03+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2001-12-17 16:59+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -152,50 +152,7 @@ msgstr "en lagmaske"
 msgid "a channel (saved selection)"
 msgstr "en kanal (lagret utvalg)"
 
-#. pseudo unit
-#: libgimp/gimpunit.c:52
-msgid "pixel"
-msgstr "piksel"
-
-#: libgimp/gimpunit.c:52
-msgid "pixels"
-msgstr "piksler"
-
-#. standard units
-#: libgimp/gimpunit.c:55
-msgid "inch"
-msgstr "tomme"
-
-#: libgimp/gimpunit.c:55
-msgid "inches"
-msgstr "tommer"
-
 #: libgimp/gimpunit.c:56
-msgid "millimeter"
-msgstr "millimeter"
-
-#: libgimp/gimpunit.c:56
-msgid "millimeters"
-msgstr "millimetre"
-
-#. professional units
-#: libgimp/gimpunit.c:59
-msgid "point"
-msgstr "punkt"
-
-#: libgimp/gimpunit.c:59
-msgid "points"
-msgstr "punkter"
-
-#: libgimp/gimpunit.c:60
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:60
-msgid "picas"
-msgstr "picas"
-
-#: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "prosent"
 
@@ -216,8 +173,9 @@ msgid "/White"
 msgstr "/Hvit"
 
 #: libgimpwidgets/gimpfileselection.c:352
-msgid "Select Directory"
-msgstr "Velg katalog"
+#, fuzzy
+msgid "Select Folder"
+msgstr "Velg fil"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
@@ -271,3 +229,36 @@ msgstr "KiloBytes"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "MegaBytes"
+
+#~ msgid "pixel"
+#~ msgstr "piksel"
+
+#~ msgid "pixels"
+#~ msgstr "piksler"
+
+#~ msgid "inch"
+#~ msgstr "tomme"
+
+#~ msgid "inches"
+#~ msgstr "tommer"
+
+#~ msgid "millimeter"
+#~ msgstr "millimeter"
+
+#~ msgid "millimeters"
+#~ msgstr "millimetre"
+
+#~ msgid "point"
+#~ msgstr "punkt"
+
+#~ msgid "points"
+#~ msgstr "punkter"
+
+#~ msgid "pica"
+#~ msgstr "pica"
+
+#~ msgid "picas"
+#~ msgstr "picas"
+
+#~ msgid "Select Directory"
+#~ msgstr "Velg katalog"

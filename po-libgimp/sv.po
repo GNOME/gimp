@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2002-01-28 02:46+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2002-01-28 02:47+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -175,8 +175,9 @@ msgid "/White"
 msgstr "/Vit"
 
 #: libgimpwidgets/gimpfileselection.c:352
-msgid "Select Directory"
-msgstr "Välj katalog"
+#, fuzzy
+msgid "Select Folder"
+msgstr "Välj fil"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
@@ -229,6 +230,9 @@ msgstr "kilobyte"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "megabyte"
+
+#~ msgid "Select Directory"
+#~ msgstr "Välj katalog"
 
 #~ msgid "pixel"
 #~ msgstr "bildpunkt"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.0\n"
-"POT-Creation-Date: 2002-01-23 13:06+0000\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2001-12-27 17:09+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -92,7 +92,7 @@ msgstr "Κλάδεμα Επιλεγμένου"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1376
 #, fuzzy
-msgid "Script-Fu Directory Selection"
+msgid "Script-Fu Folder Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1411
@@ -127,19 +127,19 @@ msgid ""
 msgstr ""
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:485
+#: plug-ins/dbbrowser/dbbrowser_utils.c:487
 #: plug-ins/script-fu/script-fu-scripts.c:1997
 msgid "Author:"
 msgstr "Συγγραφέας:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:501
+#: plug-ins/dbbrowser/dbbrowser_utils.c:503
 #: plug-ins/script-fu/script-fu-scripts.c:2003
 #, fuzzy
 msgid "Copyright:"
 msgstr "Πνευματικά Δικαιώματα"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:493
+#: plug-ins/dbbrowser/dbbrowser_utils.c:495
 #: plug-ins/script-fu/script-fu-scripts.c:2009
 msgid "Date:"
 msgstr "Ημ/νία:"
@@ -222,48 +222,48 @@ msgid "Search:"
 msgstr "Αναζήτηση: "
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+#: plug-ins/dbbrowser/dbbrowser_utils.c:346
 msgid "Name:"
 msgstr "Όνομα:"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:353
+#: plug-ins/dbbrowser/dbbrowser_utils.c:355
 #, fuzzy
 msgid "Blurb:"
 msgstr "Μπλέ:"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:365
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 #, fuzzy
 msgid "In:"
 msgstr "Μέσα"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:413
+#: plug-ins/dbbrowser/dbbrowser_utils.c:415
 #, fuzzy
 msgid "Out:"
 msgstr "Έξω"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:467
+#: plug-ins/dbbrowser/dbbrowser_utils.c:469
 #, fuzzy
 msgid "Help:"
 msgstr "Βοήθεια"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:570
+#: plug-ins/dbbrowser/dbbrowser_utils.c:572
 msgid "DB Browser (by name - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:594
+#: plug-ins/dbbrowser/dbbrowser_utils.c:596
 msgid "DB Browser (by blurb - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:604
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 msgid "DB Browser (please wait)"
 msgstr ""
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:630
+#: plug-ins/dbbrowser/dbbrowser_utils.c:632
 #, fuzzy
 msgid "DB Browser"
 msgstr "Εξερεύνηση"
@@ -394,10 +394,6 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr ""
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
@@ -865,10 +861,6 @@ msgstr ""
 #, fuzzy
 msgid "Angle"
 msgstr "_Γωνία"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Anim-Filter for all Copies"
-msgstr ""
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Antialias"
@@ -1451,11 +1443,6 @@ msgstr "Γεμισμένο Τρίγωνο"
 msgid "Fill BG with Pattern"
 msgstr ""
 
-#: plug-ins/gap/sel-to-anim-img.scm:0
-#, fuzzy
-msgid "Fill with BG Color"
-msgstr "Με Χρώμα"
-
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 #, fuzzy
 msgid "Fill with BG"
@@ -1863,11 +1850,6 @@ msgstr "Αριθμός Σελίδων"
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
 msgstr "Αριθμός Χρωμάτων"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-#, fuzzy
-msgid "Number of Copies"
-msgstr "Α_ριθμός αντιγράφων:"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
@@ -2557,6 +2539,18 @@ msgstr "Πλάτος"
 #, fuzzy
 msgid "Work on Copy"
 msgstr "Αφύπνηση σε %s"
+
+#, fuzzy
+#~ msgid "Script-Fu Directory Selection"
+#~ msgstr "Κλάδεμα Επιλεγμένου"
+
+#, fuzzy
+#~ msgid "Fill with BG Color"
+#~ msgstr "Με Χρώμα"
+
+#, fuzzy
+#~ msgid "Number of Copies"
+#~ msgstr "Α_ριθμός αντιγράφων:"
 
 #
 #~ msgid "Close"

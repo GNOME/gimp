@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2001-12-29 18:03+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Românã <ro@li.org>\n"
@@ -166,50 +166,7 @@ msgstr "adauga strat mascã"
 msgid "a channel (saved selection)"
 msgstr "/Canal -> Selecþie"
 
-#. pseudo unit
-#: libgimp/gimpunit.c:52
-msgid "pixel"
-msgstr "punct ecran"
-
-#: libgimp/gimpunit.c:52
-msgid "pixels"
-msgstr "puncte ecran"
-
-#. standard units
-#: libgimp/gimpunit.c:55
-msgid "inch"
-msgstr "inch"
-
-#: libgimp/gimpunit.c:55
-msgid "inches"
-msgstr "inches"
-
 #: libgimp/gimpunit.c:56
-msgid "millimeter"
-msgstr "milimetru"
-
-#: libgimp/gimpunit.c:56
-msgid "millimeters"
-msgstr "milimetri"
-
-#. professional units
-#: libgimp/gimpunit.c:59
-msgid "point"
-msgstr "punct"
-
-#: libgimp/gimpunit.c:59
-msgid "points"
-msgstr "puncte"
-
-#: libgimp/gimpunit.c:60
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:60
-msgid "picas"
-msgstr "picas"
-
-#: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "procent"
 
@@ -235,8 +192,8 @@ msgstr "Alb"
 
 #: libgimpwidgets/gimpfileselection.c:352
 #, fuzzy
-msgid "Select Directory"
-msgstr "Directorul de swap:"
+msgid "Select Folder"
+msgstr "Selecteazã"
 
 #: libgimpwidgets/gimpfileselection.c:366
 #, fuzzy
@@ -291,6 +248,40 @@ msgstr ""
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr ""
+
+#~ msgid "pixel"
+#~ msgstr "punct ecran"
+
+#~ msgid "pixels"
+#~ msgstr "puncte ecran"
+
+#~ msgid "inch"
+#~ msgstr "inch"
+
+#~ msgid "inches"
+#~ msgstr "inches"
+
+#~ msgid "millimeter"
+#~ msgstr "milimetru"
+
+#~ msgid "millimeters"
+#~ msgstr "milimetri"
+
+#~ msgid "point"
+#~ msgstr "punct"
+
+#~ msgid "points"
+#~ msgstr "puncte"
+
+#~ msgid "pica"
+#~ msgstr "pica"
+
+#~ msgid "picas"
+#~ msgstr "picas"
+
+#, fuzzy
+#~ msgid "Select Directory"
+#~ msgstr "Directorul de swap:"
 
 #~ msgid "OK"
 #~ msgstr "De acord"

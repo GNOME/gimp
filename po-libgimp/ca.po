@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.3.0\n"
-"POT-Creation-Date: 2001-12-29 18:03+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2001-08-21 14:04+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -150,50 +150,7 @@ msgstr ""
 msgid "a channel (saved selection)"
 msgstr ""
 
-#. pseudo unit
-#: libgimp/gimpunit.c:52
-msgid "pixel"
-msgstr "píxel"
-
-#: libgimp/gimpunit.c:52
-msgid "pixels"
-msgstr "píxels"
-
-#. standard units
-#: libgimp/gimpunit.c:55
-msgid "inch"
-msgstr "polzada"
-
-#: libgimp/gimpunit.c:55
-msgid "inches"
-msgstr "polzades"
-
 #: libgimp/gimpunit.c:56
-msgid "millimeter"
-msgstr "mil·límetre"
-
-#: libgimp/gimpunit.c:56
-msgid "millimeters"
-msgstr "mil·límetres"
-
-#. professional units
-#: libgimp/gimpunit.c:59
-msgid "point"
-msgstr "punt"
-
-#: libgimp/gimpunit.c:59
-msgid "points"
-msgstr "punts"
-
-#: libgimp/gimpunit.c:60
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:60
-msgid "picas"
-msgstr "picas"
-
-#: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "percentatge"
 
@@ -217,7 +174,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpfileselection.c:352
 #, fuzzy
-msgid "Select Directory"
+msgid "Select Folder"
 msgstr "Seleccioneu un fitxer"
 
 #: libgimpwidgets/gimpfileselection.c:366
@@ -272,6 +229,40 @@ msgstr "Quilooctets"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "Megaoctets"
+
+#~ msgid "pixel"
+#~ msgstr "píxel"
+
+#~ msgid "pixels"
+#~ msgstr "píxels"
+
+#~ msgid "inch"
+#~ msgstr "polzada"
+
+#~ msgid "inches"
+#~ msgstr "polzades"
+
+#~ msgid "millimeter"
+#~ msgstr "mil·límetre"
+
+#~ msgid "millimeters"
+#~ msgstr "mil·límetres"
+
+#~ msgid "point"
+#~ msgstr "punt"
+
+#~ msgid "points"
+#~ msgstr "punts"
+
+#~ msgid "pica"
+#~ msgstr "pica"
+
+#~ msgid "picas"
+#~ msgstr "picas"
+
+#, fuzzy
+#~ msgid "Select Directory"
+#~ msgstr "Seleccioneu un fitxer"
 
 #~ msgid "OK"
 #~ msgstr "D'acord"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2001-12-29 18:03+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2000-04-08 00:26+0300\n"
 "Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -151,50 +151,7 @@ msgstr ""
 msgid "a channel (saved selection)"
 msgstr ""
 
-#. pseudo unit
-#: libgimp/gimpunit.c:52
-msgid "pixel"
-msgstr "pikseli"
-
-#: libgimp/gimpunit.c:52
-msgid "pixels"
-msgstr "pikseliä"
-
-#. standard units
-#: libgimp/gimpunit.c:55
-msgid "inch"
-msgstr "tuuma"
-
-#: libgimp/gimpunit.c:55
-msgid "inches"
-msgstr "tuumaa"
-
 #: libgimp/gimpunit.c:56
-msgid "millimeter"
-msgstr "millimetri"
-
-#: libgimp/gimpunit.c:56
-msgid "millimeters"
-msgstr "millimetriä"
-
-#. professional units
-#: libgimp/gimpunit.c:59
-msgid "point"
-msgstr "piste"
-
-#: libgimp/gimpunit.c:59
-msgid "points"
-msgstr "pistettä"
-
-#: libgimp/gimpunit.c:60
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:60
-msgid "picas"
-msgstr "picaa"
-
-#: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "prosenttia"
 
@@ -218,7 +175,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpfileselection.c:352
 #, fuzzy
-msgid "Select Directory"
+msgid "Select Folder"
 msgstr "Valitse tiedosto"
 
 #: libgimpwidgets/gimpfileselection.c:366
@@ -273,6 +230,40 @@ msgstr "kitotavuja"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "megatavuja"
+
+#~ msgid "pixel"
+#~ msgstr "pikseli"
+
+#~ msgid "pixels"
+#~ msgstr "pikseliä"
+
+#~ msgid "inch"
+#~ msgstr "tuuma"
+
+#~ msgid "inches"
+#~ msgstr "tuumaa"
+
+#~ msgid "millimeter"
+#~ msgstr "millimetri"
+
+#~ msgid "millimeters"
+#~ msgstr "millimetriä"
+
+#~ msgid "point"
+#~ msgstr "piste"
+
+#~ msgid "points"
+#~ msgstr "pistettä"
+
+#~ msgid "pica"
+#~ msgstr "pica"
+
+#~ msgid "picas"
+#~ msgstr "picaa"
+
+#, fuzzy
+#~ msgid "Select Directory"
+#~ msgstr "Valitse tiedosto"
 
 #~ msgid "OK"
 #~ msgstr "OK"

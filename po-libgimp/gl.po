@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp cvs\n"
-"POT-Creation-Date: 2001-12-29 18:03+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2000-07-07 16:33+0200\n"
 "Last-Translator: Francisco Xosé Vázquez Grandal <grandal@mundivia.es>\n"
 "Language-Team: Galician <trasno@ceu.fi.udc.es>\n"
@@ -151,50 +151,7 @@ msgstr ""
 msgid "a channel (saved selection)"
 msgstr ""
 
-#. pseudo unit
-#: libgimp/gimpunit.c:52
-msgid "pixel"
-msgstr "pixel"
-
-#: libgimp/gimpunit.c:52
-msgid "pixels"
-msgstr "pixeles"
-
-#. standard units
-#: libgimp/gimpunit.c:55
-msgid "inch"
-msgstr "polgada"
-
-#: libgimp/gimpunit.c:55
-msgid "inches"
-msgstr "polgadas"
-
 #: libgimp/gimpunit.c:56
-msgid "millimeter"
-msgstr "milímetro"
-
-#: libgimp/gimpunit.c:56
-msgid "millimeters"
-msgstr "milímetros"
-
-#. professional units
-#: libgimp/gimpunit.c:59
-msgid "point"
-msgstr "punto"
-
-#: libgimp/gimpunit.c:59
-msgid "points"
-msgstr "puntos"
-
-#: libgimp/gimpunit.c:60
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:60
-msgid "picas"
-msgstr "picas"
-
-#: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "porcentaxe"
 
@@ -218,7 +175,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpfileselection.c:352
 #, fuzzy
-msgid "Select Directory"
+msgid "Select Folder"
 msgstr "Seleccionar ficheiro"
 
 #: libgimpwidgets/gimpfileselection.c:366
@@ -273,6 +230,40 @@ msgstr "Kilobytes"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "MegaBytes"
+
+#~ msgid "pixel"
+#~ msgstr "pixel"
+
+#~ msgid "pixels"
+#~ msgstr "pixeles"
+
+#~ msgid "inch"
+#~ msgstr "polgada"
+
+#~ msgid "inches"
+#~ msgstr "polgadas"
+
+#~ msgid "millimeter"
+#~ msgstr "milímetro"
+
+#~ msgid "millimeters"
+#~ msgstr "milímetros"
+
+#~ msgid "point"
+#~ msgstr "punto"
+
+#~ msgid "points"
+#~ msgstr "puntos"
+
+#~ msgid "pica"
+#~ msgstr "pica"
+
+#~ msgid "picas"
+#~ msgstr "picas"
+
+#, fuzzy
+#~ msgid "Select Directory"
+#~ msgstr "Seleccionar ficheiro"
 
 #~ msgid "OK"
 #~ msgstr "OK"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2001-12-29 18:03+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2000-02-08 15:45+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -152,50 +152,7 @@ msgstr ""
 msgid "a channel (saved selection)"
 msgstr ""
 
-#. pseudo unit
-#: libgimp/gimpunit.c:52
-msgid "pixel"
-msgstr "п╕ксел"
-
-#: libgimp/gimpunit.c:52
-msgid "pixels"
-msgstr "п╕ксел╕"
-
-#. standard units
-#: libgimp/gimpunit.c:55
-msgid "inch"
-msgstr "дюйм"
-
-#: libgimp/gimpunit.c:55
-msgid "inches"
-msgstr "дюйми"
-
 #: libgimp/gimpunit.c:56
-msgid "millimeter"
-msgstr "м╕л╕метр"
-
-#: libgimp/gimpunit.c:56
-msgid "millimeters"
-msgstr "м╕л╕метри"
-
-#. professional units
-#: libgimp/gimpunit.c:59
-msgid "point"
-msgstr "пункт"
-
-#: libgimp/gimpunit.c:59
-msgid "points"
-msgstr "пункти"
-
-#: libgimp/gimpunit.c:60
-msgid "pica"
-msgstr "п╕ка"
-
-#: libgimp/gimpunit.c:60
-msgid "picas"
-msgstr "п╕ки"
-
-#: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "в╕дсток"
 
@@ -219,7 +176,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpfileselection.c:352
 #, fuzzy
-msgid "Select Directory"
+msgid "Select Folder"
 msgstr "Виб╕р файлу"
 
 #: libgimpwidgets/gimpfileselection.c:366
@@ -274,6 +231,40 @@ msgstr "к╕лобайт╕в"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "магабайт╕в"
+
+#~ msgid "pixel"
+#~ msgstr "п╕ксел"
+
+#~ msgid "pixels"
+#~ msgstr "п╕ксел╕"
+
+#~ msgid "inch"
+#~ msgstr "дюйм"
+
+#~ msgid "inches"
+#~ msgstr "дюйми"
+
+#~ msgid "millimeter"
+#~ msgstr "м╕л╕метр"
+
+#~ msgid "millimeters"
+#~ msgstr "м╕л╕метри"
+
+#~ msgid "point"
+#~ msgstr "пункт"
+
+#~ msgid "points"
+#~ msgstr "пункти"
+
+#~ msgid "pica"
+#~ msgstr "п╕ка"
+
+#~ msgid "picas"
+#~ msgstr "п╕ки"
+
+#, fuzzy
+#~ msgid "Select Directory"
+#~ msgstr "Виб╕р файлу"
 
 #~ msgid "OK"
 #~ msgstr "Гаразд"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
-"POT-Creation-Date: 2001-12-29 18:03+0100\n"
+"POT-Creation-Date: 2002-02-08 17:29+0100\n"
 "PO-Revision-Date: 2000-11-03:33+0100\n"
 "Last-Translator: ®eljan Rikalo <zeljko@linuxfreak.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -150,50 +150,7 @@ msgstr ""
 msgid "a channel (saved selection)"
 msgstr ""
 
-#. pseudo unit
-#: libgimp/gimpunit.c:52
-msgid "pixel"
-msgstr "piksel"
-
-#: libgimp/gimpunit.c:52
-msgid "pixels"
-msgstr "piksela"
-
-#. standard units
-#: libgimp/gimpunit.c:55
-msgid "inch"
-msgstr "palac"
-
-#: libgimp/gimpunit.c:55
-msgid "inches"
-msgstr "palaca"
-
 #: libgimp/gimpunit.c:56
-msgid "millimeter"
-msgstr "milimetar"
-
-#: libgimp/gimpunit.c:56
-msgid "millimeters"
-msgstr "milimetara"
-
-#. professional units
-#: libgimp/gimpunit.c:59
-msgid "point"
-msgstr "toèka"
-
-#: libgimp/gimpunit.c:59
-msgid "points"
-msgstr "toèaka"
-
-#: libgimp/gimpunit.c:60
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:60
-msgid "picas"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "postotak"
 
@@ -217,7 +174,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpfileselection.c:352
 #, fuzzy
-msgid "Select Directory"
+msgid "Select Folder"
 msgstr "Odaberi Datoteku"
 
 #: libgimpwidgets/gimpfileselection.c:366
@@ -271,6 +228,40 @@ msgstr "Kilobajta"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "Megabajta"
+
+#~ msgid "pixel"
+#~ msgstr "piksel"
+
+#~ msgid "pixels"
+#~ msgstr "piksela"
+
+#~ msgid "inch"
+#~ msgstr "palac"
+
+#~ msgid "inches"
+#~ msgstr "palaca"
+
+#~ msgid "millimeter"
+#~ msgstr "milimetar"
+
+#~ msgid "millimeters"
+#~ msgstr "milimetara"
+
+#~ msgid "point"
+#~ msgstr "toèka"
+
+#~ msgid "points"
+#~ msgstr "toèaka"
+
+#~ msgid "pica"
+#~ msgstr "pica"
+
+#~ msgid "picas"
+#~ msgstr "pica"
+
+#, fuzzy
+#~ msgid "Select Directory"
+#~ msgstr "Odaberi Datoteku"
 
 #~ msgid "OK"
 #~ msgstr "OK"
