@@ -25,6 +25,7 @@ app/actions/drawable-commands.c
 app/actions/edit-actions.c
 app/actions/edit-commands.c
 app/actions/error-console-actions.c
+app/actions/error-console-commands.c
 app/actions/file-actions.c
 app/actions/file-commands.c
 app/actions/fonts-actions.c
