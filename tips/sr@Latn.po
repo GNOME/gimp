@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-tips 1.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-07-21 00:18+0200\n"
-"PO-Revision-Date: 2003-10-18 04:37+0200\n"
+"PO-Revision-Date: 2003-11-07 23:47+0100\n"
 "Last-Translator: Aleksandar Urošević <urke@users.sourceforge.net>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,13 +46,10 @@ msgstr ""
 "boje crtanja."
 
 #: tips/gimp-tips.xml.in.h:5
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
 "the rotation to 15 degree angles."
-msgstr ""
-"<tt>Ctrl</tt>-prevlačenje sa alatom za rotaciju će ograničiti rotaciju na "
-"uglove koji su umnožak 15 stepeni."
+msgstr "<tt>Ctrl</tt>-prevlačenje sa alatom za transformacije će ograničiti rotaciju na uglove koji su umnožak 15 stepeni."
 
 #: tips/gimp-tips.xml.in.h:6
 msgid ""
@@ -76,17 +73,12 @@ msgstr ""
 "meni za obavljanje ovih akcija."
 
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
 "menu item, and pressing the desired key combination. This is saved when you "
 "exit GIMP."
-msgstr ""
-"Nakon što omogućite dinamičke prečice sa tastature u prozorčetu za postavke, "
-"možete sami odrediti prečice. To radite tako što prikažete meni, izaberete "
-"stavku menija, i pritisnete novu kombinaciju tastera. Ukoliko je uključeno "
-"čuvanje prečica, izmene će biti sačuvane kada zatvorite GIMP."
+msgstr "Nakon što omogućite dinamičke prečice sa tastature u prozorčetu za postavke, možete sami odrediti prečice. To radite tako što prikažete meni, izaberete stavku menija, i pritisnete novu kombinaciju tastera. Izmene će biti sačuvane kada zatvorite GIMP."
 
 #: tips/gimp-tips.xml.in.h:9
 msgid ""
@@ -112,15 +104,11 @@ msgstr ""
 "Krivulje)."
 
 #: tips/gimp-tips.xml.in.h:11
-#, fuzzy
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
 "settings are used. You can use the Paintbrush in gradient mode, the Clone "
 "tool with a pattern or even the Eraser or the Smudge tool."
-msgstr ""
-"Ukoliko iscrtate putanju (Uređivanje-&gt;Iscrtaj izbor), alati za slikanje "
-"se mogu koristiti sa tekućim podešavanjima. Možete koristiti četkicu sa "
-"režimom pretapanja ili čak gumicu za brisanje ili alat za razmazivanje."
+msgstr "Ukoliko iscrtate putanju (Uređivanje-&gt;Iscrtaj), koristi se tekući alat za crtanje i njegova podešavanja.Možete koristiti četkicu u režimu pretapanja ili čak gumicu za brisanje ili alat za razmazivanje."
 
 #: tips/gimp-tips.xml.in.h:12
 msgid ""
@@ -129,19 +117,14 @@ msgid ""
 msgstr ""
 "Ako Vam se čini da je raspored dijaloga na ekranu neuredan, možete "
 "pritisnuti taster <tt>Tab</tt> nekoliko puta u okviru prozora neke slike "
-"kako bi omogućili sakrivanje ili prikazivanje palete alata i ostalih "
-"dijaloga."
+"kako bi omogućili sakrivanje ili prikazivanje palete alata i ostalih dijaloga."
 
 #: tips/gimp-tips.xml.in.h:13
-#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Layers-&gt;Flatten Image) if you want the "
 "plug-in to work on the whole image."
-msgstr ""
-"Većina dodataka vrši izmene na aktivnom sloju slike koja se uređuje. U nekim "
-"slučajevima ćete morati da spojite sve slojeve (Slojevi-&gt;Izravnaj sliku) "
-"ukoliko želite da se dodatak primeni na celu sliku."
+msgstr "Većina dodataka vrši izmene na tekućem sloju slike koja se uređuje. U nekim slučajevima ćete morati da spojite sve slojeve (Slojevi-&gt;Izravnaj sliku) ukoliko želite da se dodatak primeni na celu sliku."
 
 #: tips/gimp-tips.xml.in.h:14
 msgid ""
@@ -153,17 +136,12 @@ msgstr ""
 "greška se može opozvati..."
 
 #: tips/gimp-tips.xml.in.h:15
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
 "&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Add Alpha Channel) or "
 "flatten it (Layers-&gt;Flatten Image)."
-msgstr ""
-"Ne mogu se svi efekti primeniti na sve vrste slika. Ovo stanje se označava "
-"onemogućenom opcijom stavke menija. Verovatno je potrebno promeniti vrstu "
-"slike na RGB (Slika-&gt;Vrsta-&gt;RGB), i alfa kanal (Slojevi-&gt;Dodaj alfa "
-"kanal) ili ravnanjem slike (Slojevi-&gt;Izravnaj sliku)."
+msgstr "Ne mogu se svi efekti primeniti na sve vrste slika. Ovo se označava onemogućenom stavkom menija. Možda je potrebno promeniti vrstu slike na RGB (Slika-&gt;Vrsta-&gt;RGB), dodati alfa kanal (Slojevi-&gt;Dodaj alfa kanal) ili je izravnati (Slojevi-&gt;Izravnaj sliku)."
 
 #: tips/gimp-tips.xml.in.h:16
 msgid ""
@@ -235,15 +213,11 @@ msgstr ""
 "dobijena selekcija automatski dodirnuti vođice."
 
 #: tips/gimp-tips.xml.in.h:22
-#, fuzzy
 msgid ""
 "Using Edit-&gt;Stroke allows you to draw simple squares or circles by "
 "painting the edge of your current selection with the active brush. More "
 "complex shapes can be drawn with Filters-&gt;Render-&gt;Gfig."
-msgstr ""
-"Upotrebom Uređivanje-&gt;Iscrtaj izbor možete crtati jednostavne kvadrate i "
-"krugove. Ovo iscrtava ivice tekućeg izbora. Složeniji oblici se mogu crtati "
-"pomoću alata za putanje ili Filteri-&gt;Iscrtavanje-&gt;Gfig."
+msgstr "Upotrebom Uređivanje-&gt;Iscrtaj možete crtati jednostavne kvadrate i krugove. Ovo iscrtava ivice tekućeg izbora pomoću aktivne četkice. Složeniji oblici se mogu crtati Filteri-&gt;Iscrtavanje-&gt;Gfig."
 
 #: tips/gimp-tips.xml.in.h:23
 msgid ""
@@ -252,8 +226,8 @@ msgid ""
 "cursor position. If you also press <tt>Ctrl</tt>, the line will be "
 "constrained to 15 degree angles."
 msgstr ""
-"Kada koristite alat za crtanje (Četkica, Mlaznicu ili Olovku), <tt>Shift</"
-"tt>-klik će iscrtati pravu liniju od poslednje iscrtane tačke do trenutne "
+"Kada koristite alat za crtanje (Četkica, Mlaznicu ili Olovku), <tt>Shift</tt>-"
+"klik će iscrtati pravu liniju od poslednje iscrtane tačke do trenutne "
 "pozicije kursora. Ako pritisnete <tt>Ctrl</tt>, moći ćete da liniju rotirate "
 "pod uglom od 15°."
 
@@ -284,15 +258,11 @@ msgstr ""
 "prevlačite kursor levo i desno."
 
 #: tips/gimp-tips.xml.in.h:27
-#, fuzzy
 msgid ""
 "You can create and edit complex selections using the Bezier tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
-msgstr ""
-"Možete napraviti i uređivati složene izbore pomoću alata za putanje. "
-"Prozorče za putanje dozvoljava rad sa više putanja i pretvaranje istih u "
-"izbore."
+msgstr "Možete napraviti i uređivati složene izbore pomoću Bezijerovog alata. Prozorče za putanje dozvoljava rad sa više putanja i pretvaranje istih u izbore."
 
 #: tips/gimp-tips.xml.in.h:28
 msgid ""
@@ -309,9 +279,9 @@ msgid ""
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current image or selection with that color."
 msgstr ""
-"Možete prevući i pustiti puno stvari u Gimpu. Na primer, prevlačenjem boje "
-"sa palete alata ili sa palete boja i puštanjem na sliku, učinićete da se "
-"slika ili selekcija oboje odabranom bojom."
+"Možete prevući i pustiti puno stvari u Gimpu. Na primer, prevlačenjem boje sa "
+"palete alata ili sa palete boja i puštanjem na sliku, učinićete da se slika "
+"ili selekcija oboje odabranom bojom."
 
 #: tips/gimp-tips.xml.in.h:30
 msgid ""
@@ -336,8 +306,8 @@ msgid ""
 "circle, or to have it centered on its starting point."
 msgstr ""
 "Možete pritisnuti i otpustiti tastere <tt>Shift</tt> i <tt>Ctrl</tt> kada "
-"kreirate selekciju u cilju iscrtavanja savršenog kvadrate ili kruga, ili "
-"radi njihovog centriranja u odnosu na početnu njihovu tačku."
+"kreirate selekciju u cilju iscrtavanja savršenog kvadrate ili kruga, ili radi "
+"njihovog centriranja u odnosu na početnu njihovu tačku."
 
 #: tips/gimp-tips.xml.in.h:33
 msgid ""
@@ -347,9 +317,9 @@ msgid ""
 "selection."
 msgstr ""
 "Možete sačuvati izbor u kanal (Izbori-&gt;Sačuvaj u kanal) i potom menjati "
-"taj kanal bilo kojim alatom za bojenje. Upotrebom dugmadi na kartici "
-"„Kanali“ u prozorčetu „Slojevi, kanali i putanje“, možete odrediti "
-"vidljivost tog novog kanala ili ga pretvoriti u izbor."
+"taj kanal bilo kojim alatom za bojenje. Upotrebom dugmadi na kartici „Kanali“ "
+"u prozorčetu „Slojevi, kanali i putanje“, možete odrediti vidljivost tog novog "
+"kanala ili ga pretvoriti u izbor."
 
 #: tips/gimp-tips.xml.in.h:34
 msgid ""
@@ -365,8 +335,8 @@ msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
 msgstr ""
-"Možete koristiti srednji taster miša za pomeranje vidljivog dela slike, ako "
-"je veća od prozora u kome je prikazana."
+"Možete koristiti srednji taster miša za pomeranje vidljivog dela slike, ako je "
+"veća od prozora u kome je prikazana."
 
 #: tips/gimp-tips.xml.in.h:36
 msgid ""
