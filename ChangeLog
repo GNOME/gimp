@@ -1,3 +1,8 @@
+2003-12-01  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-blend.c: some code cleanup I've done while
+	looking at bug #128146.
+
 2003-12-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.c: added a default implementation of
