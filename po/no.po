@@ -1,10 +1,10 @@
-# Norwegian translation of the GIMP.
+# Norwegian translation of the GIMP (bokmål dialect).
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Kjartan Maraas <kmaraas@online.no>, 1999.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.1\n"
+"Project-Id-Version: gimp 1.1.9\n"
 "POT-Creation-Date: 1999-08-23 22:04+0200\n"
 "PO-Revision-Date: 1999-08-23 22:57+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"

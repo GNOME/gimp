@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.1\n"
-"POT-Creation-Date: 1999-08-14 00:08+0200\n"
-"PO-Revision-Date: 1999-08-14 01:09+02:00\n"
+"Project-Id-Version: GIMP 1.1.9\n"
+"POT-Creation-Date: 1999-08-23 23:07+0200\n"
+"PO-Revision-Date: 1999-08-23 23:29+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -451,8 +451,8 @@ msgstr "Graf av aktive instillinger"
 #: plug-ins/common/compose.c:816 plug-ins/common/convmatrix.c:706
 #: plug-ins/common/cubism.c:338 plug-ins/common/decompose.c:914
 #: plug-ins/common/depthmerge.c:746 plug-ins/common/destripe.c:695
-#: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1000
-#: plug-ins/common/mail.c:491 plug-ins/common/oilify.c:460
+#: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1466
+#: plug-ins/common/mail.c:485 plug-ins/common/oilify.c:460
 #: plug-ins/common/png.c:827 plug-ins/common/ps.c:2023
 #: plug-ins/common/ps.c:2290 plug-ins/common/xbm.c:959
 #: plug-ins/common/xpm.c:763 plug-ins/print/print.c:1104
@@ -516,7 +516,8 @@ msgstr "Advarsel: det er en fil i gammelt format."
 
 #: plug-ins/common/CML_explorer.c:2333
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
-msgstr "Advarsel: Hmmm, dette er en parameterfil for en nyere CML_explorer enn meg."
+msgstr ""
+"Advarsel: Hmmm, dette er en parameterfil for en nyere CML_explorer enn meg."
 
 #. cancel button
 #: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/bmp/bmpwrite.c:437
@@ -526,8 +527,8 @@ msgstr "Advarsel: Hmmm, dette er en parameterfil for en nyere CML_explorer enn m
 #: plug-ins/common/compose.c:825 plug-ins/common/convmatrix.c:723
 #: plug-ins/common/cubism.c:347 plug-ins/common/decompose.c:924
 #: plug-ins/common/depthmerge.c:756 plug-ins/common/destripe.c:704
-#: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1009
-#: plug-ins/common/mail.c:502 plug-ins/common/oilify.c:469
+#: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1475
+#: plug-ins/common/mail.c:496 plug-ins/common/oilify.c:469
 #: plug-ins/common/png.c:836 plug-ins/common/ps.c:2033
 #: plug-ins/common/ps.c:2300 plug-ins/common/xbm.c:707
 #: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
@@ -748,11 +749,13 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:797
 msgid "Amount of original color to show where no direct light falls"
-msgstr "Mengden opprinnelig farge som skal vises hvor det ikke faller direkte lys"
+msgstr ""
+"Mengden opprinnelig farge som skal vises hvor det ikke faller direkte lys"
 
 #: plug-ins/Lighting/lighting_ui.c:798
 msgid "Intensity of original color when lit by a light source"
-msgstr "Intensiteten for den opprinnelige fargen når den treffes av en lyskilde"
+msgstr ""
+"Intensiteten for den opprinnelige fargen når den treffes av en lyskilde"
 
 #: plug-ins/Lighting/lighting_ui.c:803
 msgid "Reflectivity"
@@ -870,7 +873,9 @@ msgstr "Bruk en linseeffekt"
 
 #: plug-ins/common/apply_lens.c:137
 msgid "This plug-in uses Snell's law to draw an ellipsoid lens over the image"
-msgstr "Dette tillegget bruker Snells lov til å tegne en elipseformet linse over bildet"
+msgstr ""
+"Dette tillegget bruker Snells lov til å tegne en elipseformet linse over "
+"bildet"
 
 #: plug-ins/common/apply_lens.c:141
 msgid "<Image>/Filters/Glass Effects/Apply Lens"
@@ -891,7 +896,7 @@ msgstr "Linseeffekt"
 #.
 #: plug-ins/common/apply_lens.c:439 plug-ins/common/blur.c:607
 #: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:356
-#: plug-ins/common/jpeg.c:1018 plug-ins/common/oilify.c:478
+#: plug-ins/common/jpeg.c:1510 plug-ins/common/oilify.c:478
 #: plug-ins/common/png.c:847 plug-ins/common/xpm.c:781
 msgid "Parameter Settings"
 msgstr "Innstillinger for parametere"
@@ -921,8 +926,8 @@ msgid ""
 "Automatically stretch the contrast of the specified drawable to cover all "
 "possible ranges."
 msgstr ""
-"Strekk kontrasten automatisk for spesifisert tegnet objekt til å omfatte alle "
-"mulige områder."
+"Strekk kontrasten automatisk for spesifisert tegnet objekt til å omfatte "
+"alle mulige områder."
 
 #: plug-ins/common/autostretch_hsv.c:83
 msgid ""
@@ -1033,7 +1038,7 @@ msgid "Saves files in Windows BMP file format"
 msgstr ""
 
 #: plug-ins/bmp/bmpread.c:27 plug-ins/common/gifload.c:287
-#: plug-ins/common/jpeg.c:494 plug-ins/common/png.c:345
+#: plug-ins/common/jpeg.c:668 plug-ins/common/png.c:345
 #: plug-ins/common/png.c:347 plug-ins/common/xbm.c:523
 #: plug-ins/common/xpm.c:300
 #, c-format
@@ -1076,7 +1081,7 @@ msgstr ""
 #: plug-ins/bmp/bmpread.c:210 plug-ins/bmp/bmpread.c:218
 #: plug-ins/bmp/bmpread.c:224 plug-ins/common/compose.c:562
 #: plug-ins/common/decompose.c:472 plug-ins/common/gifload.c:828
-#: plug-ins/common/jpeg.c:611 plug-ins/common/png.c:455
+#: plug-ins/common/jpeg.c:810 plug-ins/common/png.c:455
 #: plug-ins/common/xbm.c:612
 msgid "Background"
 msgstr ""
@@ -1090,7 +1095,7 @@ msgstr ""
 msgid "can't open %s\n"
 msgstr ""
 
-#: plug-ins/bmp/bmpwrite.c:154 plug-ins/common/jpeg.c:759
+#: plug-ins/bmp/bmpwrite.c:154 plug-ins/common/jpeg.c:1088
 #: plug-ins/common/png.c:595 plug-ins/common/png.c:597
 #: plug-ins/common/ps.c:673 plug-ins/common/xbm.c:777
 #: plug-ins/common/xpm.c:611 plug-ins/common/xwd.c:507
@@ -2019,50 +2024,126 @@ msgstr ""
 msgid "GIF: too much input data, ignoring extra...\n"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:176
-msgid "loads files of the jpeg file format"
-msgstr ""
+#: plug-ins/common/jpeg.c:305 plug-ins/common/jpeg.c:306
+msgid "loads files in the JPEG file format"
+msgstr "laster filer i JPEG filformat"
 
-#: plug-ins/common/jpeg.c:487
+#: plug-ins/common/jpeg.c:317
+msgid "saves files in the JPEG file format"
+msgstr "lagrer filer i JPEG filformat"
+
+#: plug-ins/common/jpeg.c:318
+msgid "saves files in the lossy, widely supported JPEG format"
+msgstr "lagrer bilder i det lite detaljerte, vidt støttede JPEG filformatet"
+
+#: plug-ins/common/jpeg.c:661
 #, c-format
 msgid "can't open \"%s\"\n"
-msgstr ""
+msgstr "kan ikke åpne \"%s\"\n"
 
-#: plug-ins/common/jpeg.c:603
+#: plug-ins/common/jpeg.c:792
 #, c-format
 msgid ""
 "don't know how to load JPEGs\n"
 "with %d color channels"
 msgstr ""
+"kan ikke laste JPEG bilder\n"
+"med %d fargekanaler"
 
-#: plug-ins/common/jpeg.c:648
+#: plug-ins/common/jpeg.c:805
+msgid "JPEG preview"
+msgstr "JPEG forhåndsvisning"
+
+#: plug-ins/common/jpeg.c:849
 #, c-format
 msgid ""
 "unknown density unit %d\n"
 "assuming dots per inch"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:993
+#: plug-ins/common/jpeg.c:1012
+#, c-format
+msgid "Size: %lu bytes (%02.01f kB)"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:1380 plug-ins/common/jpeg.c:1499
+msgid "Size: unknown"
+msgstr "Størrelse: ukjent"
+
+#: plug-ins/common/jpeg.c:1459
 msgid "Save as Jpeg"
 msgstr "Lagre som Jpeg"
 
-#: plug-ins/common/jpeg.c:1026
+#. sg - preview
+#: plug-ins/common/jpeg.c:1484
+msgid "Image Preview"
+msgstr "Forhåndsvisning av bilde"
+
+#: plug-ins/common/jpeg.c:1492
+msgid "Preview (in image window)"
+msgstr "Forhåndsvisning (i bildevinduet)"
+
+#: plug-ins/common/jpeg.c:1518
 msgid "Quality"
 msgstr "Kvalitet"
 
-#: plug-ins/common/jpeg.c:1042
+#: plug-ins/common/jpeg.c:1534
 msgid "Smoothing"
 msgstr "Utjevning"
 
-#: plug-ins/common/jpeg.c:1058
+#: plug-ins/common/jpeg.c:1554
+msgid "Restart markers"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:1560
+msgid "Restart frequency (rows)"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:1580
 msgid "Optimize"
 msgstr "Optimer"
 
-#: plug-ins/common/jpeg.c:1066
+#: plug-ins/common/jpeg.c:1588
 msgid "Progressive"
 msgstr "Progressiv"
 
-#: plug-ins/common/jpeg.c:1079
+#: plug-ins/common/jpeg.c:1601
+msgid "Force baseline JPEG (readable by all decoders)"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:1613
+msgid "2x2,1x1,1x1"
+msgstr "2x2,1x1,1x1"
+
+#: plug-ins/common/jpeg.c:1614
+msgid "2x1,1x1,1x1 (4:2:2)"
+msgstr "2x1,1x1,1x1 (4:2:2)"
+
+#: plug-ins/common/jpeg.c:1615
+msgid "1x1,1x1,1x1"
+msgstr "1x1,1x1,1x1"
+
+#: plug-ins/common/jpeg.c:1619
+msgid "Subsampling"
+msgstr "Undersampling"
+
+#: plug-ins/common/jpeg.c:1630
+msgid "Integer"
+msgstr "Heltall"
+
+#: plug-ins/common/jpeg.c:1631
+msgid "Fast integer"
+msgstr "Raskt heltall"
+
+#: plug-ins/common/jpeg.c:1632
+msgid "Floating-point"
+msgstr "Flyttall"
+
+#: plug-ins/common/jpeg.c:1636
+msgid "DCT method (speed/quality tradeoff)"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:1649
 msgid "Image Comments"
 msgstr "Bildekommentarer"
 
@@ -2078,30 +2159,30 @@ msgstr ""
 msgid "<Image>/File/Mail image"
 msgstr ""
 
-#: plug-ins/common/mail.c:486
+#: plug-ins/common/mail.c:480
 msgid "Send to mail"
 msgstr "Send som e-post"
 
 #. filename label
-#: plug-ins/common/mail.c:620
+#: plug-ins/common/mail.c:614
 msgid "Filename:"
 msgstr "Filnavn:"
 
 #. Encapsulation label
-#: plug-ins/common/mail.c:674
+#: plug-ins/common/mail.c:668
 msgid "Encapsulation:"
 msgstr "Innkapsling:"
 
 #. Encapsulation radiobutton
-#: plug-ins/common/mail.c:683
+#: plug-ins/common/mail.c:677
 msgid "Uuencode"
 msgstr "Uuencode"
 
-#: plug-ins/common/mail.c:685
+#: plug-ins/common/mail.c:679
 msgid "MIME"
 msgstr "MIME"
 
-#: plug-ins/common/mail.c:799
+#: plug-ins/common/mail.c:793
 msgid "mail: some sort of error with the file extension or lack thereof \n"
 msgstr ""
 
