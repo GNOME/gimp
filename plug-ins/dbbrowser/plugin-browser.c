@@ -47,10 +47,8 @@ typedef struct
   GtkWidget   *dlg;
   GtkWidget   *search_entry;
   GtkWidget   *descr_scroll;
-  GtkWidget   *name_button;
   GtkWidget   *info_table;
   GtkWidget   *paned;
-  GtkWidget   *left_paned;
   GtkWidget   *info_align;
   gint         num_plugins;
   gboolean     details_showing;
@@ -279,6 +277,19 @@ procedure_general_select_callback (PDesc *pdesc,
   GtkWidget       *old_align;
   gint             table_row = 0;
   gchar           *str;
+  GtkWidget       *separator;
+  GtkWidget       *entry;
+
+#define ADD_SEPARATOR                                                         \
+G_STMT_START                                                                  \
+{                                                                             \
+  separator = gtk_hseparator_new ();                                          \
+  gtk_table_attach (GTK_TABLE (pdesc->info_table), separator,                 \
+                    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);  \
+  gtk_widget_show (separator);                                                \
+  table_row++;                                                                \
+}                                                                             \
+G_STMT_END
 
   g_return_if_fail (pdesc != NULL);
   g_return_if_fail (pinfo != NULL);
@@ -313,7 +324,8 @@ procedure_general_select_callback (PDesc *pdesc,
   pdesc->info_table = gtk_table_new (10, 5, FALSE);
   pdesc->info_align = gtk_alignment_new (0.5, 0.5, 0, 0);
 
-  gtk_table_set_col_spacings (GTK_TABLE (pdesc->info_table), 3);
+  gtk_table_set_col_spacings (GTK_TABLE (pdesc->info_table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (pdesc->info_table), 0, 2);
 
   /* Number of plugins */
 
@@ -327,92 +339,51 @@ procedure_general_select_callback (PDesc *pdesc,
   gtk_widget_show (label);
   table_row++;
 
-  label = gtk_hseparator_new (); /* ok, not really a label ... :) */
-  gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
-  gtk_widget_show (label);
-  table_row++;
+  ADD_SEPARATOR;
 
   /* menu path */
 
-  label = gtk_label_new (_("Menu Path:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                    0, 1, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 0);
-  gtk_widget_show(label);
-
   label = gtk_label_new (format_menu_path (pinfo->menu));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                    1, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
+                             _("Menu Path:"), 1.0, 0.5,
+                             label, 3, FALSE);
   table_row++;
 
-  label = gtk_hseparator_new (); /* ok, not really a label ... :) */
-  gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
-  gtk_widget_show (label);
-  table_row++;
+  ADD_SEPARATOR;
 
   /* show the name */
 
-  label = gtk_label_new (_("Name:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                    0, 1, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
-  gtk_widget_show (label);
-
-  label = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (label), pinfo->realname);
-  gtk_editable_set_editable (GTK_EDITABLE (label), FALSE);
-  gtk_table_attach (GTK_TABLE(pdesc->info_table), label,
-                    1, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  entry = gtk_entry_new ();
+  gtk_entry_set_text (GTK_ENTRY (entry), pinfo->realname);
+  gtk_editable_set_editable (GTK_EDITABLE (entry), FALSE);
+  gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
+                             _("Name:"), 1.0, 0.5,
+                             entry, 3, FALSE);
   table_row++;
 
-  label = gtk_hseparator_new (); /* ok, not really a label ... :) */
-  gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
-  gtk_widget_show (label);
-  table_row++;
+  ADD_SEPARATOR;
 
   /* show the description */
 
-  label = gtk_label_new (_("Blurb:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                    0, 1, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 0);
-  gtk_widget_show (label);
-
   label = gtk_label_new (selected_proc_blurb);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                    1, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
+                             _("Blurb:"), 1.0, 0.5,
+                             label, 3, FALSE);
   table_row++;
 
-  label = gtk_hseparator_new (); /* ok, not really a label ... :) */
-  gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
-  gtk_widget_show (label);
-  table_row++;
+  ADD_SEPARATOR;
 
   /* show the help */
   if (selected_proc_help && (strlen (selected_proc_help) > 1))
     {
-      label = gtk_label_new (_("Help:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-      gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                        0, 1, table_row, table_row+1,
-                        GTK_FILL, GTK_FILL, 3, 0);
-      gtk_widget_show (label);
-
       help = gtk_table_new (2, 2, FALSE);
       gtk_table_set_row_spacing (GTK_TABLE (help), 0, 2);
       gtk_table_set_col_spacing (GTK_TABLE (help), 0, 2);
-      gtk_table_attach (GTK_TABLE (pdesc->info_table), help,
-                        1, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 0);
-      gtk_widget_show (help);
+      gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
+                                 _("Help:"), 1.0, 0.5,
+                                 help, 3, FALSE);
       table_row++;
 
       text_buffer = gtk_text_buffer_new  (NULL);
@@ -430,34 +401,19 @@ procedure_general_select_callback (PDesc *pdesc,
                         GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (text_view);
 
-      label = gtk_hseparator_new (); /* ok, not really a label ... :) */
-      gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                        0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
-      gtk_widget_show (label);
-
-      table_row++;
+      ADD_SEPARATOR;
     }
 
   /* show the type */
 
-  label = gtk_label_new (_("Type:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                    0, 1, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
-  gtk_widget_show (label);
-
   label = gtk_label_new (gettext (proc_type_str[selected_proc_type]));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                    1, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
+                             _("Type:"), 1.0, 0.5,
+                             label, 3, FALSE);
   table_row++;
 
-  label = gtk_hseparator_new (); /* ok, not really a label ... :) */
-  gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
-  gtk_widget_show (label);
-  table_row++;
+  ADD_SEPARATOR;
 
   /* Remove old and replace with new */
 
@@ -578,10 +534,10 @@ tree_store_select_callback (GtkTreeSelection *selection,
                           LIST_PATH_COLUMN, &picked_mpath,
                           -1);
       if (picked_mpath && !strcmp (mpath, picked_mpath))
-      {
-        found = TRUE;
-        break;
-      }
+        {
+          found = TRUE;
+          break;
+        }
       g_free (picked_mpath);
       valid = gtk_tree_model_iter_next (model, &iter);
     }
@@ -1034,7 +990,7 @@ gimp_plugin_desc (void)
 
   /* left = vbox : the list and the search entry */
 
-  plugindesc->left_paned = vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 3);
   gtk_paned_pack1 (GTK_PANED (hbox), vbox, FALSE, FALSE);
   gtk_widget_show (vbox);

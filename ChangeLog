@@ -1,3 +1,11 @@
+2004-01-15  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/plugindetails.c: clean up the code (use
+	gimp_table_attach_aligned() where needed).
+
+	* plug-ins/dbbrowser/dbbrowser.c:
+	* plug-ins/dbbrowser/dbbrowser_utils.c: changed tabs to spaces.
+
 2004-01-14  Dave Neary  <bolsh@gimp.org>
 
 	* app/core/gimpimage.c: get the type of the drawable, not the 

@@ -56,10 +56,10 @@
 
 static void   query (void);
 static void   run   (const gchar      *name,
-		     gint              nparams,
-		     const GimpParam  *param,
-		     gint             *nreturn_vals,
-		     GimpParam       **return_vals);
+                     gint              nparams,
+                     const GimpParam  *param,
+                     gint             *nreturn_vals,
+                     GimpParam       **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -87,9 +87,9 @@ query (void)
                           "Thomas Noel",
                           "23th june 1997",
                           N_("<Toolbox>/Xtns/_DB Browser"),
-			  "",
+                          "",
                           GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
+                          G_N_ELEMENTS (args), 0,
                           args, NULL);
 }
 
@@ -116,12 +116,12 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE: 
       {
-	gimp_ui_init ("dbbrowser", FALSE);
+        gimp_ui_init ("dbbrowser", FALSE);
 
-	gtk_quit_add_destroy (1, (GtkObject *) gimp_db_browser (NULL));
+        gtk_quit_add_destroy (1, (GtkObject *) gimp_db_browser (NULL));
 
-	gtk_main ();
-	gdk_flush ();
+        gtk_main ();
+        gdk_flush ();
       }
       break;
       
