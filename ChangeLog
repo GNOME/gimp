@@ -1,3 +1,22 @@
+Sun Jan 23 14:33:57 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gdisplay.c
+	* app/gdisplay_ops.c
+	* app/gimage.c
+	* app/gimpimage.c
+	* app/gimpimageP.h: Renamed gimage->ref_count to disp_count and 
+	slightly changed the way it is used. As the new name suggests it
+	is only used to count the number of displays associated with an
+	image. It is now impossible to delete an image that has an
+	associated display. You have to delete the display instead. Before
+	this change it was possible to delete an image through the PDB that
+	was created through the UI and bad things happened soon...
+
+	* app/gimage_cmds.c
+	* tools/pdbgen/pdb/gimage.pdb: Changed the help for gimp_image_delete
+	so it explains better what actually happens. The old help was quite
+	misleading.
+
 Sat Jan 22 22:14:18 GMT 2000  Austin Donnelly  <austin@gimp.org>
 
 	* MAINTAINERS: update my entry.

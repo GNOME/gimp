@@ -161,17 +161,17 @@ gdisplay_new (GimpImage    *gimage,
   /*  set the current tool cursor  */
   gdisplay_install_tool_cursor (gdisp, default_gdisplay_cursor);
 
-  gimage->instance_count++;
-  gimage->ref_count++;
+  gimage->instance_count++;   /* this is obsolete */
+  gimage->disp_count++;
 
   lc_dialog_preview_update(gimage);
 
   /* We're interested in clean and dirty signals so we can update the
    * title if need be. */
   gtk_signal_connect (GTK_OBJECT (gimage), "dirty",
-		      GTK_SIGNAL_FUNC(gdisplay_cleandirty_handler), gdisp);
+		      GTK_SIGNAL_FUNC (gdisplay_cleandirty_handler), gdisp);
   gtk_signal_connect (GTK_OBJECT (gimage), "clean",
-		      GTK_SIGNAL_FUNC(gdisplay_cleandirty_handler), gdisp);
+		      GTK_SIGNAL_FUNC (gdisplay_cleandirty_handler), gdisp);
 
   return gdisp;
 }
@@ -363,13 +363,14 @@ gdisplay_delete (GDisplay *gdisp)
   info_window_free (gdisp->window_info_dialog);
 
   /* Remove navigation dialog */
-  nav_window_free(gdisp,gdisp->window_nav_dialog);
+  nav_window_free (gdisp, gdisp->window_nav_dialog);
 
   /*  free the gimage  */
+  gdisp->gimage->disp_count--;
   gimage_delete (gdisp->gimage);
 
   if (gdisp->nav_popup)
-    nav_popup_free(gdisp->nav_popup);
+    nav_popup_free (gdisp->nav_popup);
 
   gtk_widget_unref (gdisp->shell);
 
@@ -2176,9 +2177,9 @@ gdisplays_check_valid (GDisplay  *gtest,
   while (list)
     {
       gdisp = (GDisplay *) list->data;
-      if(gdisp == gtest)
+      if (gdisp == gtest)
 	return (gtest);
-      if(!gdisp_found && gdisp->gimage == gimage)
+      if (!gdisp_found && gdisp->gimage == gimage)
 	gdisp_found = gdisp;
       list = g_slist_next (list);
     }
@@ -2250,11 +2251,12 @@ gdisplay_reconnect (GDisplay  *gdisp,
     }
 
   gtk_signal_disconnect_by_data (GTK_OBJECT (gdisp->gimage), gdisp);
+  gdisp->gimage->disp_count--;
   gimage_delete (gdisp->gimage);
 
   instance = gimage->instance_count;
   gimage->instance_count++;
-  gimage->ref_count++;
+  gimage->disp_count++;
 
   gdisp->gimage = gimage;
   gdisp->instance = instance;

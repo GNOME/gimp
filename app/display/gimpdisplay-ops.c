@@ -113,9 +113,9 @@ gdisplay_close_window (GDisplay *gdisp,
 {
   /*  If the image has been modified, give the user a chance to save
    *  it before nuking it--this only applies if its the last view
-   *  to an image canvas.  (a gimage with ref_count = 1)
+   *  to an image canvas.  (a gimage with disp_count = 1)
    */
-  if (!kill_it && (gdisp->gimage->ref_count == 1) &&
+  if (!kill_it && (gdisp->gimage->disp_count == 1) &&
       gdisp->gimage->dirty && confirm_on_close)
     {
       gdisplay_close_warning_dialog

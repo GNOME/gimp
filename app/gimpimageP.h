@@ -53,7 +53,7 @@ struct _GimpImage
   gboolean  undo_on;                  /*  Is undo enabled?             */
 
   gint instance_count;                /*  number of instances          */
-  gint ref_count;                     /*  number of references         */
+  gint disp_count;                    /*  number of displays           */
 
   Tattoo tattoo_state;                /*  the next unique tattoo to use*/
 

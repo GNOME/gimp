@@ -165,10 +165,10 @@ gimp_image_init (GimpImage *gimage)
   gimage->has_filename          = FALSE;
   gimage->num_cols              = 0;
   gimage->cmap                  = NULL;
-  /* ID and ref_count handled in gimage.c */
+  gimage->disp_count            = 0;
   gimage->instance_count        = 0;
   gimage->shadow                = NULL;
-  gimage->dirty                 = 1;
+  gimage->dirty                 = 1;     /* Why is that? I doubt this is correct. --Sven */
   gimage->undo_on               = TRUE;
   gimage->construct_flag        = -1;
   gimage->tattoo_state          = 0;
@@ -2868,7 +2868,7 @@ gimp_image_remove_layer_mask (GimpImage     *gimage,
 
   /*  Push the undo--Important to do it here, AFTER the call
    *   to layer_apply_mask, in case the undo push fails and the
-   *   mask is delete : NULL)d
+   *   mask is deleted
    */
   undo_push_layer_mask (gimage, LAYER_MASK_REMOVE_UNDO, lmu);
 

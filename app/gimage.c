@@ -69,15 +69,19 @@ gimage_get_ID (gint ID)
 }
 
 
-/* Ack! GImages have their own ref counts! This is going to cause
+/* Ack, GImages have their own ref counts! This is going to cause
    trouble.. It should be pretty easy to convert to proper GtkObject
    ref counting, though. */
+
+/* This caused trouble indeed. The ref_count was only used by the
+   displays showing the image, so I renamed it to disp_count to 
+   make clear that it should only be used for display references.
+                                               (Sven, 23.01.2000) */ 
 
 void
 gimage_delete (GImage *gimage)
 {
-  gimage->ref_count--;
-  if (gimage->ref_count <= 0)
+  if (gimage->disp_count <= 0)
     gtk_object_unref (GTK_OBJECT (gimage));
 }
 
