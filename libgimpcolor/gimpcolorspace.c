@@ -72,6 +72,8 @@ gimp_rgb_to_hsv (const GimpRGB *rgb,
       if (rgb->r == max)
         {
           hsv->h = (rgb->g - rgb->b) / delta;
+	  if (hsv->h < 0.0)
+	    hsv->h += 6.0;
         }
       else if (rgb->g == max)
         {
@@ -83,11 +85,6 @@ gimp_rgb_to_hsv (const GimpRGB *rgb,
         }
 
       hsv->h /= 6.0;
-
-      if (hsv->h < 0.0)
-        hsv->h += 1.0;
-      else if (hsv->h > 1.0)
-	hsv->h -= 1.0;
     }
   else
     {

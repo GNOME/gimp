@@ -1,5 +1,10 @@
 2004-04-15  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/gimpcolorspace.c (gimp_rgb_to_hsv): applied patch
+	from Marco Munari that removes a redundant "if" (bug #133540).
+
+2004-04-15  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/ifscompose/ifscompose.c: applied patch from Yeti that
 	adds spinbuttons instead of simple text entries (bug #138132).
 
