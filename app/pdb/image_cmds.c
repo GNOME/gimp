@@ -67,7 +67,7 @@ static ProcRecord image_crop_proc;
 static ProcRecord image_flip_proc;
 static ProcRecord image_get_layers_proc;
 static ProcRecord image_get_channels_proc;
-static ProcRecord image_active_drawable_proc;
+static ProcRecord image_get_active_drawable_proc;
 static ProcRecord image_unset_active_channel_proc;
 static ProcRecord image_get_floating_sel_proc;
 static ProcRecord image_floating_sel_attached_to_proc;
@@ -130,7 +130,7 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_flip_proc);
   procedural_db_register (gimp, &image_get_layers_proc);
   procedural_db_register (gimp, &image_get_channels_proc);
-  procedural_db_register (gimp, &image_active_drawable_proc);
+  procedural_db_register (gimp, &image_get_active_drawable_proc);
   procedural_db_register (gimp, &image_unset_active_channel_proc);
   procedural_db_register (gimp, &image_get_floating_sel_proc);
   procedural_db_register (gimp, &image_floating_sel_attached_to_proc);
@@ -1101,8 +1101,8 @@ static ProcRecord image_get_channels_proc =
 };
 
 static Argument *
-image_active_drawable_invoker (Gimp     *gimp,
-                               Argument *args)
+image_get_active_drawable_invoker (Gimp     *gimp,
+                                   Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1116,7 +1116,7 @@ image_active_drawable_invoker (Gimp     *gimp,
   if (success)
     success = (drawable = gimp_image_active_drawable (gimage)) != NULL;
 
-  return_args = procedural_db_return_args (&image_active_drawable_proc, success);
+  return_args = procedural_db_return_args (&image_get_active_drawable_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
@@ -1124,7 +1124,7 @@ image_active_drawable_invoker (Gimp     *gimp,
   return return_args;
 }
 
-static ProcArg image_active_drawable_inargs[] =
+static ProcArg image_get_active_drawable_inargs[] =
 {
   {
     GIMP_PDB_IMAGE,
@@ -1133,7 +1133,7 @@ static ProcArg image_active_drawable_inargs[] =
   }
 };
 
-static ProcArg image_active_drawable_outargs[] =
+static ProcArg image_get_active_drawable_outargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -1142,9 +1142,9 @@ static ProcArg image_active_drawable_outargs[] =
   }
 };
 
-static ProcRecord image_active_drawable_proc =
+static ProcRecord image_get_active_drawable_proc =
 {
-  "gimp_image_active_drawable",
+  "gimp_image_get_active_drawable",
   "Get the image's active drawable",
   "This procedure returns the ID of the image's active drawable. This can be either a layer, a channel, or a layer mask. The active drawable is specified by the active image channel. If that is -1, then by the active image layer. If the active image layer has a layer mask and the layer mask is in edit mode, then the layer mask is the active drawable.",
   "Spencer Kimball & Peter Mattis",
@@ -1152,10 +1152,10 @@ static ProcRecord image_active_drawable_proc =
   "1995-1996",
   GIMP_INTERNAL,
   1,
-  image_active_drawable_inargs,
+  image_get_active_drawable_inargs,
   1,
-  image_active_drawable_outargs,
-  { { image_active_drawable_invoker } }
+  image_get_active_drawable_outargs,
+  { { image_get_active_drawable_invoker } }
 };
 
 static Argument *

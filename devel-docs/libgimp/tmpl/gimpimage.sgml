@@ -36,6 +36,60 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_duplicate ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_delete ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_base_type ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_width ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_height ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_free_shadow ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_flip ##### -->
 <para>
 
@@ -83,24 +137,6 @@ and operations involving multiple layers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_image_delete ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_free_shadow ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_image_get_layers ##### -->
 <para>
 
@@ -121,7 +157,34 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_get_active_drawable ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_unset_active_channel ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_get_floating_sel ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_floating_sel_attached_to ##### -->
 <para>
 
 </para>
@@ -138,6 +201,27 @@ and operations involving multiple layers.
 @image_ID: 
 @x: 
 @y: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_add_layer ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@layer_ID: 
+@position: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_remove_layer ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@layer_ID: 
 @Returns: 
 
 
@@ -181,6 +265,56 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_add_channel ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@channel_ID: 
+@position: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_remove_channel ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@channel_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_raise_channel ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@channel_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_lower_channel ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_flatten ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_merge_visible_layers ##### -->
 <para>
 
@@ -199,36 +333,6 @@ and operations involving multiple layers.
 @image_ID: 
 @merge_layer_ID: 
 @merge_type: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_flatten ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_add_layer ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@layer_ID: 
-@position: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_remove_layer ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@layer_ID: 
 @Returns: 
 
 
@@ -254,65 +358,6 @@ and operations involving multiple layers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_image_raise_channel ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@channel_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_lower_channel ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_add_channel ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@channel_ID: 
-@position: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_remove_channel ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@channel_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_active_drawable ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_base_type ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_image_clean_all ##### -->
 <para>
 
@@ -323,61 +368,6 @@ and operations involving multiple layers.
 
 
 <!-- ##### FUNCTION gimp_image_is_dirty ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_floating_sel ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_floating_sel_attached_to ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_set_tattoo_state ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@tattoo: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_tattoo_state ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_width ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_height ##### -->
 <para>
 
 </para>
@@ -544,6 +534,27 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_set_tattoo_state ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@tattoo_state: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@tattoo: 
+
+
+<!-- ##### FUNCTION gimp_image_get_tattoo_state ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_get_layer_by_tattoo ##### -->
 <para>
 
@@ -594,15 +605,6 @@ and operations involving multiple layers.
 @width: 
 @height: 
 @bpp: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_duplicate ##### -->
-<para>
-
-</para>
-
-@image_ID: 
 @Returns: 
 
 

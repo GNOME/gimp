@@ -57,7 +57,7 @@
 		       (car (gimp-image-duplicate img)))
 		      ((= work-on-copy FALSE)
 		       img)))
-	 (pic-layer (car (gimp-image-active-drawable image))))
+	 (pic-layer (car (gimp-image-get-active-drawable image))))
 
   (gimp-image-undo-disable image)
 

@@ -76,7 +76,7 @@
 	 (thickness (abs thickness))
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image (if (= work-on-copy TRUE) (car (gimp-image-duplicate img)) img))
-	 (pic-layer (car (gimp-image-active-drawable image)))
+	 (pic-layer (car (gimp-image-get-active-drawable image)))
 	 (width (car (gimp-drawable-width pic-layer)))
 	 (height (car (gimp-drawable-height pic-layer)))
 	 (old-bg (car (gimp-palette-get-background)))

@@ -563,7 +563,7 @@ img_set_active_channel(PyGimpImage *self, PyObject *value, void *closure)
 static PyObject *
 img_get_active_drawable(PyGimpImage *self, void *closure)
 {
-    gint32 id = gimp_image_active_drawable(self->ID);
+    gint32 id = gimp_image_get_active_drawable(self->ID);
 
     if (id == -1) {
 	Py_INCREF(Py_None);

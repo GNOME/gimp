@@ -544,7 +544,7 @@ gimp_image_get_channels (gint32  image_ID,
 }
 
 /**
- * gimp_image_active_drawable:
+ * gimp_image_get_active_drawable:
  * @image_ID: The image.
  *
  * Get the image's active drawable
@@ -559,13 +559,13 @@ gimp_image_get_channels (gint32  image_ID,
  * Returns: The active drawable.
  */
 gint32
-gimp_image_active_drawable (gint32 image_ID)
+gimp_image_get_active_drawable (gint32 image_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_active_drawable",
+  return_vals = gimp_run_procedure ("gimp_image_get_active_drawable",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);

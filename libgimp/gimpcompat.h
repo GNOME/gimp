@@ -77,6 +77,7 @@ G_BEGIN_DECLS
 #define gimp_drawable_visible                   gimp_drawable_get_visible
 #define gimp_drawable_bytes                     gimp_drawable_bpp
 
+#define gimp_image_active_drawable              gimp_image_get_active_drawable
 #define gimp_image_floating_selection           gimp_image_get_floating_sel
 
 #define gimp_gradients_get_active               gimp_gradients_get_gradient

@@ -30,7 +30,7 @@
 	 (feather (carve-scale size 0.3))
 	 (brush-size (carve-scale size 0.3))
 	 (b-size (+ (carve-scale size 0.5) padding))
-	 (layer1 (car (gimp-image-active-drawable img)))
+	 (layer1 (car (gimp-image-get-active-drawable img)))
 	 (mask-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width mask-layer)))
 	 (height (car (gimp-drawable-height mask-layer)))

@@ -816,7 +816,7 @@ HELP
     %invoke = ( code => 'gimp_image_remove_channel (gimage, channel);' );
 }
 
-sub image_active_drawable {
+sub image_get_active_drawable {
     $blurb = "Get the image's active drawable";
 
     $help = <<'HELP';
@@ -1457,7 +1457,7 @@ unshift @procs, qw(image_list image_new image_duplicate image_delete
 		   image_free_shadow
                    image_resize image_scale image_crop image_flip
                    image_get_layers image_get_channels
-		   image_active_drawable
+		   image_get_active_drawable
                    image_unset_active_channel
                    image_get_floating_sel image_floating_sel_attached_to
                    image_pick_correlate_layer

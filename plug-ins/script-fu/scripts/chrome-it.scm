@@ -64,7 +64,7 @@
 (define (script-fu-sota-chrome-it mask-img mask-drawable chrome-saturation
 				  chrome-lightness chrome-factor env-map hc cc carve-white)
   (let* ((banding-img (car (gimp-file-load 1 env-map env-map)))
-	 (banding-layer (car (gimp-image-active-drawable banding-img)))
+	 (banding-layer (car (gimp-image-get-active-drawable banding-img)))
 	 (banding-height (car (gimp-drawable-height banding-layer)))
 	 (banding-width (car (gimp-drawable-width banding-layer)))
 	 (banding-type (car (gimp-drawable-type banding-layer)))

@@ -1,5 +1,26 @@
 2003-12-08  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/image.pdb: renamed PDB function
+	gimp_image_active_drawable() to gimp_image_get_active_drawable()
+	so it's consistent with all other drawable getters.
+
+	* app/pdb/procedural_db.c
+	* libgimp/gimpcompat.h: added compat stuff.
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.[ch]: regenerated.
+
+	* plug-ins/pygimp/pygimp-image.c
+	* plug-ins/script-fu/scripts/add-bevel.scm
+	* plug-ins/script-fu/scripts/carved-logo.scm
+	* plug-ins/script-fu/scripts/chrome-it.scm
+	* plug-ins/script-fu/scripts/crystal-logo.scm
+	* plug-ins/script-fu/scripts/round-corners.scm
+	* plug-ins/script-fu/scripts/slide.scm
+	* plug-ins/script-fu/scripts/sota-chrome-logo.scm: changed accordingly.
+
+2003-12-08  Michael Natterer  <mitch@gimp.org>
+
 	Some PDB fixes/cosmetics before doing real changes again:
 
 	* tools/pdbgen/pdb/drawable.pdb

@@ -88,7 +88,7 @@
 					"Background"
 					100
 					NORMAL-MODE)))
-	 (pic-layer (car (gimp-image-active-drawable image)))
+	 (pic-layer (car (gimp-image-get-active-drawable image)))
 	 (numbera (string-append number "A")))
 
 
