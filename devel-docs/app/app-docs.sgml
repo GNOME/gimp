@@ -227,6 +227,7 @@
       <xi:include href="xml/gimpimage-snap.xml"/>
       <xi:include href="xml/gimpimage-undo-push.xml"/>
       <xi:include href="xml/gimpimage-undo.xml"/>
+      <xi:include href="xml/gimpimage-unit.xml"/>
     </chapter>
 
     <chapter id="app-core-undo">

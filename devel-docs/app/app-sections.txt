@@ -635,6 +635,7 @@ gimp_drawable_bytes_with_alpha
 gimp_drawable_alpha_changed
 gimp_drawable_cmap
 gimp_drawable_get_color_at
+gimp_drawable_stroke_boundary
 gimp_drawable_stroke_vectors
 <SUBSECTION Standard>
 GimpDrawableClass
@@ -4594,6 +4595,7 @@ BoundaryType
 BoundSeg
 find_mask_boundary
 sort_boundary
+simplify_boundary
 </SECTION>
 
 <SECTION>
@@ -5486,6 +5488,17 @@ gimp_image_undo_push_item
 </SECTION>
 
 <SECTION>
+<FILE>gimpimage-unit</FILE>
+gimp_image_unit_get_factor
+gimp_image_unit_get_digits
+gimp_image_unit_get_identifier
+gimp_image_unit_get_symbol
+gimp_image_unit_get_abbreviation
+gimp_image_unit_get_singular
+gimp_image_unit_get_plural
+</SECTION>
+
+<SECTION>
 <FILE>gimpitem-linked</FILE>
 <TITLE>GimpItem-linked</TITLE>
 GimpItemLinkedMask
@@ -5533,16 +5546,16 @@ gimp_preview_cache_get
 gimp_preview_cache_add
 gimp_preview_cache_invalidate
 gimp_preview_cache_get_memsize
-</SECTION>
+</SECTION>2
 
 <SECTION>
 <FILE>gimpscanconvert</FILE>
 GimpScanConvert
 gimp_scan_convert_new
 gimp_scan_convert_free
+gimp_scan_convert_set_pixel_ratio
 gimp_scan_convert_add_points
 gimp_scan_convert_add_polyline
-gimp_scan_convert_to_channel
 gimp_scan_convert_render
 gimp_scan_convert_stroke
 </SECTION>
@@ -5861,6 +5874,7 @@ edit_named_paste_cmd_callback
 edit_clear_cmd_callback
 edit_fill_cmd_callback
 edit_stroke_cmd_callback
+edit_stroke_selection 
 </SECTION>
 
 <SECTION>
@@ -6328,6 +6342,7 @@ n_tool_options_menu_entries
 <FILE>tool-options-commands</FILE>
 tool_options_save_to_cmd_callback
 tool_options_save_new_cmd_callback
+tool_options_rename_saved_cmd_callback
 tool_options_restore_from_cmd_callback
 tool_options_delete_saved_cmd_callback
 tool_options_reset_cmd_callback
@@ -6908,7 +6923,8 @@ gimp_prop_font_selection_new
 gimp_prop_file_entry_new
 gimp_prop_path_editor_new
 gimp_prop_coordinates_new
-gimp_prop_size_entry_connect
+gimp_prop_size_entry_new
+gimp_prop_coordinates_connect
 gimp_prop_color_area_new
 gimp_prop_color_button_new
 gimp_prop_unit_menu_new
