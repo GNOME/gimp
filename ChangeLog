@@ -1,3 +1,11 @@
+2004-01-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/xcf/xcf-save.c (xcf_save_channel): store the correct offset
+	of the floating selection's drawable. This bug has been around
+	since 1.2 (!!!) and made it impossible to save images correctly
+	where the floating selection's drawable was a channel or layer
+	mask.
+
 2004-01-26  Sven Neumann  <sven@gimp.org>
 
 	* autogen.sh: prefer automake-1.7 over 1.8 since there are issues

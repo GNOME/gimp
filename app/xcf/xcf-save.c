@@ -1111,7 +1111,7 @@ xcf_save_channel (XcfInfo      *info,
     {
       saved_pos = info->cp;
       xcf_check_error (xcf_seek_pos (info, info->floating_sel_offset, error));
-      xcf_write_int32_check_error (info, (guint32 *) &info->cp, 1);
+      xcf_write_int32_check_error (info, &saved_pos, 1);
       xcf_check_error (xcf_seek_pos (info, saved_pos, error));
     }
 
