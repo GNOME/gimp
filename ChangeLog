@@ -11,7 +11,8 @@
 2000-10-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpdrawable.[ch]
-	* libgimp/gimpsizeentry.c
+	* libgimp/gimpsizeentry.c: did some code review: s/0/NULL/,
+	s/sprintf/g_snprintf/, spacing.
 
 2000-10-27  Michael Natterer  <mitch@gimp.org>
 
