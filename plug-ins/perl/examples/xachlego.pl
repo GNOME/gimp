@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/app/bin/perl
 # This is (hopefully) a demonstration of how pathetically easy it is to script
 # a neato effect you've come up with.  This lil' effect was created by xach,
 # and translated by sjburges (me).  You can consider it released under the GPL
@@ -25,8 +25,7 @@
 #            1.2:   Fixed buggy selection handling - oops ;)  
 #            1.3:   Added undo capability by Marc Lehman <pcg@goof.com>
 #            1.4:   Marc Lehman <pcg@goof.com>, changed function name
-#            1.5:   Seth Burgess <sjburges@gimp.org> added my email, put it
-#                   in a directory more suitable than the lame "Misc"
+
 # Here's the boring start of every script...
 
 use Gimp;
@@ -37,9 +36,9 @@ register "xach_blocks",
          "Turn your picture into something that resembles a certain trademarked
           building block creation",
          "Seth Burgess",
-         "Seth Burgess <sjburges\@gimp.org>",
-         "2-15-98",
-         "<Image>/Filters/Map/Xach Blocks",
+         "Seth Burgess",
+         "1.4",
+         "<Image>/Filters/Misc/Xach Blocks",
          "*",
          [
           [PF_SLIDER,	"Block size",	"The size of the blocks...", 10, [0, 255, 1]],
