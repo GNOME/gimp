@@ -33,6 +33,7 @@
 #include <io.h>         /*  for _unlink()  */
 #endif
 
+#include "libgimpbase/gimpversion.h"
 #include "base-types.h"
 
 #include "config/gimpbaseconfig.h"
@@ -72,6 +73,14 @@ base_init (GimpBaseConfig *config,
 
   base_config = config;
 
+#if (GIMP_MINOR_VERSION%2)==1
+  g_printerr ("This is a development version of the GIMP\n"
+	      "Debug messages may appear here.\n");
+
+#ifdef G_OS_WIN32
+  g_printerr ("You can minimize this window, but don't close it.\n");
+#endif
+
   if (use_mmx)
     {
       g_printerr ("Testing CPU features...\n");
@@ -93,6 +102,7 @@ base_init (GimpBaseConfig *config,
 #endif
       g_printerr ("\n");
     }
+#endif /* odd minor version */
 
   tile_cache_init (config->tile_cache_size);
 

@@ -1,3 +1,11 @@
+2003-08-14  Tor Lillqvist  <tml@iki.fi>
+
+	* app/base/base.c (base_init): If a development version (odd
+	GIMP_MINOR_VERSION), print a warning that debug messages may
+	appear. Only print the CPU acceleration messages on development
+	versions. On Win32, tell people not to close the console
+	window. (#119786)
+
 2003-08-14  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-mmx-installer.c
