@@ -1,5 +1,11 @@
 2004-05-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/CEL.c
+	* plug-ins/common/CML_explorer.c: ported to GtkFileChooser and
+	HIG-ified.
+
+2004-05-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/AlienMap2.c: HIG-ified (more or less).
 
 2004-05-17  Michael Natterer  <mitch@gimp.org>

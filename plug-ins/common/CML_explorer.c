@@ -381,7 +381,7 @@ static void    CML_initial_value_sensitives_update (void);
 
 static void    CML_save_to_file_callback   (GtkWidget        *widget,
                                             gpointer          data);
-static void    CML_save_to_file_response   (GtkFileSelection *fs,
+static void    CML_save_to_file_response   (GtkWidget        *dialog,
                                             gint              response_id,
                                             gpointer          data);
 static gboolean force_overwrite            (const gchar      *filename,
@@ -393,7 +393,7 @@ static void    CML_load_from_file_callback (GtkWidget        *widget,
 					    gpointer          data);
 static gboolean CML_load_parameter_file     (const gchar     *filename,
 					     gboolean         interactive_mode);
-static void    CML_load_from_file_response (GtkFileSelection *fs,
+static void    CML_load_from_file_response (GtkWidget        *dialog,
                                             gint              response_id,
                                             gpointer          data);
 static gint    parse_line_to_gint          (FILE             *file,
@@ -1180,8 +1180,7 @@ CML_explorer_dialog (void)
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *abox;
-  GtkWidget *pframe;
-  GtkWidget *hseparator;
+  GtkWidget *bbox;
   GtkWidget *button;
   gboolean   run;
 
@@ -1198,68 +1197,47 @@ CML_explorer_dialog (void)
 
   CML_preview_defer = TRUE;
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), pframe);
-  gtk_widget_show (pframe);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_widget_show (frame);
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview),
 		    PREVIEW_WIDTH, PREVIEW_HEIGHT);
-  gtk_container_add (GTK_CONTAINER (pframe), preview);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
-  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  bbox = gtk_vbutton_box_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
+  gtk_widget_show (bbox);
+
+  button = gtk_button_new_with_label (_("New Seed"));
+  gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (CML_save_to_file_callback),
+                    G_CALLBACK (CML_preview_update_callback),
                     &VALS);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
-  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (CML_load_from_file_callback),
-                    &VALS);
-
-  hseparator = gtk_hseparator_new ();
-  gtk_box_pack_end (GTK_BOX (vbox), hseparator, FALSE, FALSE, 4);
-  gtk_widget_show (hseparator);
-
-  button = gtk_button_new_with_label (_("Random Seed"));
-  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (CML_set_or_randomize_seed_callback),
-                    &VALS);
-
-  random_sensitives[2].widget = button;
-  random_sensitives[2].logic  = FALSE;
+  random_sensitives[0].widget = button;
+  random_sensitives[0].logic  = TRUE;
 
   button = gtk_button_new_with_label (_("Fix Seed"));
-  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
@@ -1269,16 +1247,36 @@ CML_explorer_dialog (void)
   random_sensitives[1].widget = button;
   random_sensitives[1].logic  = TRUE;
 
-  button = gtk_button_new_with_label (_("New Seed"));
-  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  button = gtk_button_new_with_label (_("Random Seed"));
+  gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (CML_preview_update_callback),
+                    G_CALLBACK (CML_set_or_randomize_seed_callback),
                     &VALS);
 
-  random_sensitives[0].widget = button;
-  random_sensitives[0].logic  = TRUE;
+  random_sensitives[2].widget = button;
+  random_sensitives[2].logic  = FALSE;
+
+  bbox = gtk_vbutton_box_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
+  gtk_widget_show (bbox);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (CML_load_from_file_callback),
+                    &VALS);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (CML_save_to_file_callback),
+                    &VALS);
 
   {
     GtkWidget *notebook;
@@ -1312,18 +1310,17 @@ CML_explorer_dialog (void)
       GtkWidget *vbox;
       GtkObject *adj;
 
-      vbox = gtk_vbox_new (FALSE, 4);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+      vbox = gtk_vbox_new (FALSE, 12);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
       gtk_widget_show (vbox);
 
-      frame = gtk_frame_new (_("Channel Independed Parameters"));
+      frame = gimp_frame_new (_("Channel Independed Parameters"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
       table = gtk_table_new (3, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
@@ -1339,7 +1336,7 @@ CML_explorer_dialog (void)
       CML_explorer_menu_entry_init (&widget_pointers[3][0],
 				    combo, &VALS.initial_value);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				 _("Initial Value:"), 1.0, 0.5,
+				 _("Initial Value:"), 0.0, 0.5,
 				 combo, 2, FALSE);
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -1359,14 +1356,13 @@ CML_explorer_dialog (void)
 				   adj, &VALS.start_offset);
 
       frame =
-	gtk_frame_new (_("Seed of Random (only for \"From Seed\" Modes)"));
+	gimp_frame_new (_("Seed of Random (only for \"From Seed\" Modes)"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
       table = gtk_table_new (2, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
@@ -1412,18 +1408,17 @@ CML_explorer_dialog (void)
       GtkWidget *combo;
       GtkWidget *vbox;
 
-      vbox = gtk_vbox_new (FALSE, 4);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+      vbox = gtk_vbox_new (FALSE, 12);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
       gtk_widget_show (vbox);
 
-      frame = gtk_frame_new (_("Copy Settings"));
+      frame = gimp_frame_new (_("Copy Settings"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
       table = gtk_table_new (3, 2, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
@@ -1436,8 +1431,8 @@ CML_explorer_dialog (void)
                         &copy_source);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				 _("Source Channel:"), 1.0, 0.5,
-				 combo, 1, TRUE);
+				 _("Source Channel:"), 0.0, 0.5,
+				 combo, 1, FALSE);
 
       combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (channel_names),
                                             channel_names);
@@ -1449,8 +1444,8 @@ CML_explorer_dialog (void)
                         &copy_destination);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-				 _("Destination Channel:"), 1.0, 0.5,
-				 combo, 1, TRUE);
+				 _("Destination Channel:"), 0.0, 0.5,
+				 combo, 1, FALSE);
 
       button = gtk_button_new_with_label (_("Copy Parameters"));
       gtk_table_attach (GTK_TABLE (table), button, 0, 2, 2, 3,
@@ -1461,14 +1456,13 @@ CML_explorer_dialog (void)
                         G_CALLBACK (CML_copy_parameters_callback),
                         &VALS);
 
-      frame = gtk_frame_new (_("Selective Load Settings"));
+      frame = gimp_frame_new (_("Selective Load Settings"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
       table = gtk_table_new (2, 2, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
@@ -1482,8 +1476,8 @@ CML_explorer_dialog (void)
                         &selective_load_source);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				 _("Source Channel in File:"), 1.0, 0.5,
-				 combo, 1, TRUE);
+				 _("Source Channel in File:"), 0.0, 0.5,
+				 combo, 1, FALSE);
 
       combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (load_channel_names),
                                             load_channel_names);
@@ -1495,8 +1489,8 @@ CML_explorer_dialog (void)
                         &selective_load_destination);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-				 _("Destination Channel:"), 1.0, 0.5,
-				 combo, 1, TRUE);
+				 _("Destination Channel:"), 0.0, 0.5,
+				 combo, 1, FALSE);
 
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 				gtk_label_new_with_mnemonic (_("_Misc Ops.")));
@@ -1533,9 +1527,9 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   gint       index = 0;
 
   table = gtk_table_new (13, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_widget_show (table);
 
   combo = gimp_int_combo_box_new_array (CML_NUM_VALUES, function_names);
@@ -1548,7 +1542,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
 				combo, &param->function);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
-			     _("Function Type:"), 1.0, 0.5,
+			     _("Function Type:"), 0.0, 0.5,
 			     combo, 2, FALSE);
   index++;
 
@@ -1564,7 +1558,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
 				combo, &param->composition);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
-			     _("Composition:"), 1.0, 0.5,
+			     _("Composition:"), 0.0, 0.5,
 			     combo, 2, FALSE);
   index++;
 
@@ -1578,7 +1572,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
 				combo, &param->arrange);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
-			     _("Misc Arrange:"), 1.0, 0.5,
+			     _("Misc Arrange:"), 0.0, 0.5,
 			     combo, 2, FALSE);
   index++;
 
@@ -1691,22 +1685,21 @@ CML_dialog_advanced_panel_new (void)
   gint       channel_id;
   CML_PARAM *param;
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_widget_show (vbox);
 
   for (channel_id = 0; channel_id < 3; channel_id++)
     {
       param = (CML_PARAM *)&VALS + channel_id;
 
-      subframe = gtk_frame_new (gettext (channel_names[channel_id]));
+      subframe = gimp_frame_new (gettext (channel_names[channel_id]));
       gtk_box_pack_start (GTK_BOX (vbox), subframe, FALSE, FALSE, 0);
       gtk_widget_show (subframe);
 
       table = gtk_table_new (3, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
       gtk_container_add (GTK_CONTAINER (subframe), table);
       gtk_widget_show (table);
 
@@ -1757,32 +1750,30 @@ function_graph_new (GtkWidget *widget,
 {
   GtkWidget *dlg;
   GtkWidget *frame;
-  GtkWidget *abox;
   GtkWidget *preview;
   gint	     channel_id = GPOINTER_TO_INT (data[0]);
-  CML_PARAM *param = data[1];
+  CML_PARAM *param      = data[1];
 
   dlg = gimp_dialog_new (_("Graph of the current settings"), "cml_explorer",
                          gtk_widget_get_toplevel (widget), 0,
 			 gimp_standard_help_func, HELP_ID,
 
-			 GTK_STOCK_OK, GTK_RESPONSE_OK,
+			 GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
 			 NULL);
 
-  frame = gtk_frame_new (_("The Graph"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
-  gtk_widget_show (abox);
+
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), 256, 256);
-  gtk_container_add (GTK_CONTAINER (abox), preview);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  gtk_widget_show (preview);
 
   {
     gint   x, y, last_y, yy;
@@ -1826,7 +1817,6 @@ function_graph_new (GtkWidget *widget,
       }
   }
 
-  gtk_widget_show (preview);
   gtk_widget_show (dlg);
 
   gimp_dialog_run (GIMP_DIALOG (dlg));
@@ -1930,67 +1920,59 @@ static void
 CML_save_to_file_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  static GtkWidget *filesel;
+  static GtkWidget *dialog = NULL;
 
-  if (!filesel)
+  if (! dialog)
     {
-      filesel = gtk_file_selection_new (_("Save Parameters to"));
+      dialog =
+        gtk_file_chooser_dialog_new (_("Save Parameters to"),
+                                     GTK_WINDOW (gtk_widget_get_toplevel (widget)),
+                                     GTK_FILE_CHOOSER_ACTION_SAVE,
 
-      gtk_window_set_transient_for (GTK_WINDOW (filesel),
-                                    GTK_WINDOW (gtk_widget_get_toplevel (widget)));
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-      gimp_help_connect (filesel, gimp_standard_help_func, HELP_ID, NULL);
+                                     NULL);
 
-      g_signal_connect (filesel, "response",
+      gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
+
+      g_signal_connect (dialog, "response",
 			G_CALLBACK (CML_save_to_file_response),
 			NULL);
-      g_signal_connect (filesel, "delete_event",
+      g_signal_connect (dialog, "delete_event",
                         G_CALLBACK (gtk_true),
                         NULL);
     }
 
-  if (strlen (VALS.last_file_name) > 0)
-    gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
-				     VALS.last_file_name);
+  if (strlen (VALS.last_file_name))
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
+                                   VALS.last_file_name);
 
-  gtk_window_present (GTK_WINDOW (filesel));
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 static void
-CML_save_to_file_response (GtkFileSelection *fs,
-                           gint              response_id,
-                           gpointer          data)
+CML_save_to_file_response (GtkWidget *dialog,
+                           gint       response_id,
+                           gpointer   data)
 {
-  const gchar *filename;
-  FILE        *file = NULL;
-  gint         channel_id;
+  gchar *filename;
+  FILE  *file;
+  gint   channel_id;
 
   if (response_id != GTK_RESPONSE_OK)
     {
-      gtk_widget_hide (GTK_WIDGET (fs));
+      gtk_widget_hide (dialog);
       return;
     }
 
-  filename = gtk_file_selection_get_filename (fs);
+  filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
   if (! filename)
     return;
 
-  if (g_file_test (filename, G_FILE_TEST_EXISTS))
-    {
-      if (g_file_test (filename, G_FILE_TEST_IS_DIR))
-        {
-          gchar *path = g_build_filename (filename, G_DIR_SEPARATOR_S, NULL);
-
-          gtk_file_selection_set_filename (fs, path);
-
-          g_free (path);
-
-          return;
-        }
-
-      if (! force_overwrite (filename, GTK_WIDGET (fs)))
-        return;
-    }
+  if (g_file_test (filename, G_FILE_TEST_EXISTS) &&
+      ! force_overwrite (filename, dialog))
+    return;
 
   file = fopen (filename, "w");
 
@@ -1998,6 +1980,7 @@ CML_save_to_file_response (GtkFileSelection *fs,
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_free (filename);
       return;
     }
 
@@ -2050,13 +2033,15 @@ CML_save_to_file_response (GtkFileSelection *fs,
   fprintf (file, "Random seed    : %d\n", VALS.seed);
   fclose(file);
 
-  g_message (_("Parameters were Saved to '%s'"),
+  g_message (_("Parameters were saved to '%s'"),
              gimp_filename_to_utf8 (filename));
 
   strncpy (VALS.last_file_name, filename,
            sizeof (VALS.last_file_name) - 1);
 
-  gtk_widget_hide (GTK_WIDGET (fs));
+  g_free (filename);
+
+  gtk_widget_hide (dialog);
 }
 
 static gboolean
@@ -2069,7 +2054,7 @@ force_overwrite (const gchar *filename,
   gchar     *buffer;
   gboolean   overwrite;
 
-  dlg = gimp_dialog_new (_("CML File Operation Warning"), "cml_explorer",
+  dlg = gimp_dialog_new (_("CML Explorer: Overwrite File?"), "cml_explorer",
                          parent, GTK_DIALOG_MODAL,
 			 gimp_standard_help_func, HELP_ID,
 
@@ -2079,7 +2064,8 @@ force_overwrite (const gchar *filename,
 			 NULL);
 
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
+                      hbox, FALSE, FALSE, 12);
   gtk_widget_show (hbox);
 
   buffer = g_strdup_printf (_("File '%s' exists.\n"
@@ -2088,7 +2074,7 @@ force_overwrite (const gchar *filename,
   g_free (buffer);
 
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 12);
   gtk_widget_show (label);
 
   gtk_widget_show (dlg);
@@ -2106,57 +2092,64 @@ static void
 CML_load_from_file_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  static GtkWidget *filesel;
+  static GtkWidget *dialog = NULL;
 
-  if (!filesel)
+  if (! dialog)
     {
-      filesel = gtk_file_selection_new ("");
+      dialog =
+        gtk_file_chooser_dialog_new ("",
+                                     GTK_WINDOW (gtk_widget_get_toplevel (widget)),
+                                     GTK_FILE_CHOOSER_ACTION_OPEN,
 
-      gtk_window_set_transient_for (GTK_WINDOW (filesel),
-                                    GTK_WINDOW (gtk_widget_get_toplevel (widget)));
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
-      gimp_help_connect (filesel, gimp_standard_help_func, HELP_ID, NULL);
+                                     NULL);
 
-      g_signal_connect (filesel, "response",
+      gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
+
+      g_signal_connect (dialog, "response",
 			G_CALLBACK (CML_load_from_file_response),
 			NULL);
-      g_signal_connect (filesel, "delete_event",
+      g_signal_connect (dialog, "delete_event",
                         G_CALLBACK (gtk_true),
                         NULL);
     }
 
   if ((selective_load_source == 0) || (selective_load_destination == 0))
-    gtk_window_set_title (GTK_WINDOW (filesel), _("Load Parameters from"));
+    gtk_window_set_title (GTK_WINDOW (dialog), _("Load Parameters from"));
   else
-    gtk_window_set_title (GTK_WINDOW (filesel), _("Selective Load from"));
+    gtk_window_set_title (GTK_WINDOW (dialog), _("Selective Load from"));
 
   if (strlen (VALS.last_file_name) > 0)
-    gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
-				     VALS.last_file_name);
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
+                                   VALS.last_file_name);
 
-  gtk_window_present (GTK_WINDOW (filesel));
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 static void
-CML_load_from_file_response (GtkFileSelection *fs,
-                             gint              response_id,
-                             gpointer          data)
+CML_load_from_file_response (GtkWidget *dialog,
+                             gint      response_id,
+                             gpointer  data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *filename;
-      gint         channel_id;
-      gint         flag = TRUE;
+      gchar    *filename;
+      gint      channel_id;
+      gboolean  flag = TRUE;
 
-      filename = gtk_file_selection_get_filename (fs);
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
+      gtk_widget_set_sensitive (dialog, FALSE);
       flag = CML_load_parameter_file (filename, TRUE);
+
+      g_free (filename);
 
       if (flag)
         {
-          gint index;
           WidgetEntry *widgets;
+          gint         index;
 
           CML_preview_defer = TRUE;
 
@@ -2179,7 +2172,7 @@ CML_load_from_file_response (GtkFileSelection *fs,
         }
     }
 
-  gtk_widget_hide (GTK_WIDGET (fs));
+  gtk_widget_hide (GTK_WIDGET (dialog));
 }
 
 static gboolean

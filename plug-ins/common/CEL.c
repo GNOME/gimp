@@ -689,10 +689,17 @@ palette_dialog (const gchar *title)
 
   gimp_ui_init ("CEL", FALSE);
 
-  dialog = gtk_file_selection_new (title);
-  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (dialog), palette_file);
+  dialog = gtk_file_chooser_dialog_new (title, NULL,
+                                        GTK_FILE_CHOOSER_ACTION_OPEN,
 
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+
+                                        NULL);
+
+  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), palette_file);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
   gimp_help_connect (dialog, gimp_standard_help_func, "file-cel-load", NULL);
 
   gtk_widget_show (dialog);
@@ -700,8 +707,7 @@ palette_dialog (const gchar *title)
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
       g_free (palette_file);
-      palette_file =
-        g_strdup (gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog)));
+      palette_file = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
       data_length = strlen (palette_file) + 1;
     }
 
