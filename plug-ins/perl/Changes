@@ -4,6 +4,8 @@ Revision history for Gimp-Perl extension.
 	- region functions (except data) wrongly returned transposed matrices.
           Now the order of dimensions is bpp <- width <- height.
         - implemented and added examples/gouge.
+        - fixed warnings in case no pod documentation is found.
+        - added examples/logulator.
 
 1.098 Wed Jul 21 20:57:12 CEST 1999
 	- do not try to compile gimp_personal_rc_file without gimp-1.1.

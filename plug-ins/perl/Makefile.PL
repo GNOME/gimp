@@ -13,6 +13,7 @@ $|=1;
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel
       repdup centerguide stampify goldenmean triangle billboard mirrorsplit
       oneliners randomart1 pixelmap glowing_steel frame_reshuffle frame_filter
+      logulator
    );
 @shebang = (map("examples/$_",@examples),
    qw(Perl-Server examples/example-net.pl examples/homepage-logo.pl
@@ -139,7 +140,7 @@ install ::
 	      exit ; \
 	   fi \
 	done ; \
-	$(MAKE) UNINST=0 really-install install-plugins'."
+	$(MAKE) UNINST=1 really-install install-plugins'."
 	$main::dont_embed || (cd embed && \$(MAKE) install)
 
 ".$install;

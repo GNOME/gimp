@@ -1,7 +1,9 @@
 #!/usr/bin/perl
 
-# implements some algorithms described in
+# implements some algorithms described in (the otherwise very bad)
 # http://www.biocomputer.com/Thesis.html
+
+# these are all simple 2x2 kernels, fast but relatively effective
 
 use Gimp::Feature 'pdl';
 use Gimp 1.098;
@@ -28,12 +30,15 @@ sub iterate {
       my $area = $bounds[2]*$bounds[3];
       my $progress = 0;
 
+      use Time::HiRes 'time';
+      $s=time;
       do {
          my ($x,$y,$w,$h)=($dst->x,$dst->y,$dst->w,$dst->h);
          $dst->data($kernel->($bpp,$src->get_rect($x,$y,$w+1,$h+1)->convert(short)));
          $progress += $w*$h/$area;
          Gimp->progress_update ($progress);
       } while (Gimp->pixel_rgns_process ($iter));
+      print time-$s;
    }
    Gimp->progress_update (1);
 
@@ -43,20 +48,20 @@ sub iterate {
    ();
 }
 
-register "gouge_smooth",
-         "smooth (low pass filter) an image using the gouge algorithm",
-         "Low-Pass filtering (smoothing) using a fast algorithm found in a paper by James O. Gouge.",
+register "blur_2x2",
+         "smooth (low pass filter) an image using a fast 2x2 kernel",
+         "Low-pass filtering (smoothing) using a fast 2x2 kernel",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
-         "19990723",
-         "<Image>/Filters/Blur/Gouge",
+         "19990725",
+         "<Image>/Filters/Blur/2x2 Blur",
          "RGB*, GRAY*",	
          [],
          sub {
    my($image,$drawable)=@_;
 
    iterate $drawable,
-           "Gouge smoothing...",
+           "2x2 smoothing...",
            sub {
               ($_[1]->slice("$_[0]0:-2,0:-2")+
                $_[1]->slice("$_[0]1:-1,0:-2")+
@@ -65,20 +70,20 @@ register "gouge_smooth",
            };
 };
 
-register "gouge_contrast",
-         "contrast enhance an image using the gouge algorithm",
-         "Contrast Enhance an image using a fast algorithm found in a paper by James O. Gouge.",
+register "contrast_enhance_2x2",
+         "contrast enhance an image using a fast 2x2 kernel",
+         "Contrast Enhance an image using a fast 2x2 kernel",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
-         "19990723",
-         "<Image>/Filters/Enhance/Contrast",
+         "19990725",
+         "<Image>/Filters/Enhance/2x2 Contrast Enhance",
          "RGB*, GRAY*",	
          [],
          sub {
    my($image,$drawable)=@_;
 
    iterate $drawable,
-           "Gouge contrast enhancing...",
+           "2x2 contrast enhancing...",
            sub {
               my $T = $_[1]->slice("$_[0]0:-2,0:-2");
               my $D = $_[1]->slice("$_[0]1:-1,1:-1");
@@ -87,13 +92,13 @@ register "gouge_contrast",
            };
 };
 
-register "gouge_edge",
-         "detect edges in an image using the gouge algorithm",
-         "Detect edges in the image using a fast algorithm found in a paper by James O. Gouge. It is similar to Sobel, yet sharper.",
+register "edge_detect_2x2",
+         "detects edges in an image using a fast 2x2 kernel",
+         "Detect edges in the image using a 2x2 kernel. It is similar to Sobel, yet sharper (and lower qwuality).",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
-         "19990723",
-         "<Image>/Filters/Edge-Detect/Gouge",
+         "19990725",
+         "<Image>/Filters/Edge-Detect/2x2 Edge Detect",
          "RGB*, GRAY*",	
          [],
          sub {
@@ -101,7 +106,7 @@ register "gouge_edge",
    my $bpp = 3-!!($drawable->gray);
 
    iterate $drawable,
-           "Gouge edge detection...",
+           "2x2 cross gradient...",
            sub {
               my $T = $_[1]->slice("$_[0]0:-2,0:-2");
               my $R = $_[1]->slice("$_[0]1:-1,0:-2");

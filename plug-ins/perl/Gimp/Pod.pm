@@ -40,8 +40,8 @@ sub new {
 sub _cache {
    my $self = shift;
    my $fmt = shift;
-   local $^W = 0;
    if (!$self->{doc}{$fmt} && $converter{$fmt}) {
+      local $^W = 0;
       my $doc = $converter{$fmt}->($self->{path});
       undef $doc if $?>>8;
       undef $doc if $doc=~/^[ \t\r\n]*$/;
@@ -66,10 +66,12 @@ sub section {
    my $self = shift;
    my $doc = $self->_cache('text');
    ($doc) = $$doc =~ /^$_[0]$(.*?)^[A-Z]/sm;
-   $doc =~ y/\r//d;
-   $doc =~ s/^\s*\n//;
-   $doc =~ s/[ \t\r\n]+$/\n/;
-   $doc =~ s/^    //mg;
+   if ($doc) {
+      $doc =~ y/\r//d;
+      $doc =~ s/^\s*\n//;
+      $doc =~ s/[ \t\r\n]+$/\n/;
+      $doc =~ s/^    //mg;
+   }
    $doc;
 }
 

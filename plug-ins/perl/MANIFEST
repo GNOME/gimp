@@ -105,4 +105,4 @@ logo.xpm
 examples/frame_reshuffle
 examples/frame_filter
 examples/gouge
-
+examples/logulator
