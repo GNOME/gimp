@@ -82,7 +82,7 @@ static double  non_gui_incremental;
 
 
 /*  forward function declarations  */
-static void paintbrush_motion (PaintCore *, GimpDrawable *,
+static void paintbrush_motion (PaintCore *, GimpDrawable *, PaintPressureOptions *,
 			       double, double, PaintApplicationMode, GradientPaintMode);
 
 
@@ -170,6 +170,7 @@ paintbrush_options_new (void)
   paint_options_init ((PaintOptions *) options,
 		      PAINTBRUSH,
 		      paintbrush_options_reset);
+
   options->fade_out        = 
                   options->fade_out_d        = PAINTBRUSH_DEFAULT_FADE_OUT;
   options->use_gradient    = 
@@ -302,6 +303,7 @@ paintbrush_paint_func (PaintCore    *paint_core,
 
     case MOTION_PAINT :
       paintbrush_motion (paint_core, drawable, 
+			 paintbrush_options->paint_options.pressure_options,
 			 paintbrush_options->fade_out, 
 			 paintbrush_options->use_gradient ? 
 			 exp(paintbrush_options->gradient_length/10) : 0,
@@ -367,6 +369,7 @@ tools_free_paintbrush (Tool *tool)
 static void
 paintbrush_motion (PaintCore            *paint_core,
 		   GimpDrawable         *drawable,
+		   PaintPressureOptions *pressure_options,
 		   double                fade_out,
 		   double                gradient_length,
 		   PaintApplicationMode  incremental,
@@ -374,27 +377,31 @@ paintbrush_motion (PaintCore            *paint_core,
 {
   GImage *gimage;
   TempBuf * area;
-  double x, paint_left;
-  double position;
-  unsigned char local_blend = OPAQUE_OPACITY;
-  unsigned char temp_blend = OPAQUE_OPACITY;
-  unsigned char col[MAX_CHANNELS];
-  double r,g,b,a;
-  int mode;
+  gdouble x, paint_left;
+  gdouble position;
+  guchar local_blend = OPAQUE_OPACITY;
+  guchar temp_blend = OPAQUE_OPACITY;
+  guchar col[MAX_CHANNELS];
+  gdouble r,g,b,a;
+  gint mode;
+  gint opacity;
+  gdouble scale;
   PaintApplicationMode paint_appl_mode = incremental ? INCREMENTAL : CONSTANT;
 
   position = 0.0;
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
-  gimage_get_foreground (gimage, drawable, col);
-
   /* silly hack to be removed later */
   /* paint_core->brush = gimp_brush_list_get_brush_by_index(brush_list,(rand()% gimp_brush_list_length(brush_list))); */
 
+  if (pressure_options->size)
+    scale = paint_core->curpressure;
+  else
+    scale = 1.0;
 
   /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
+  if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
   /*  factor in the fade out value  */
@@ -410,16 +417,13 @@ paintbrush_motion (PaintCore            *paint_core,
   if (local_blend)
     {
       /*  set the alpha channel  */
-      col[area->bytes - 1] = OPAQUE_OPACITY;
       temp_blend = local_blend;
-      
-      /* hard core to mode LOOP_TRIANGLE */
-      /* need to make a gui to handle this */
       mode = gradient_type;
 
       if (gradient_length)
 	{
-	  paint_core_get_color_from_gradient (paint_core, gradient_length, &r,&g,&b,&a,mode);
+	  paint_core_get_color_from_gradient (paint_core, gradient_length, 
+					      &r, &g, &b, &a, mode);
 	  r = r * 255.0;
 	  g = g * 255.0;
 	  b = b * 255.0;
@@ -428,6 +432,7 @@ paintbrush_motion (PaintCore            *paint_core,
 	  col[0] = (gint)r;
 	  col[1] = (gint)g;
 	  col[2] = (gint)b;
+	  col[3] = OPAQUE_OPACITY;
 	  /* always use incremental mode with gradients */
 	  /* make the gui cool later */
 	  paint_appl_mode = INCREMENTAL;
@@ -435,9 +440,7 @@ paintbrush_motion (PaintCore            *paint_core,
       /* just leave this because I know as soon as i delete it i'll find a bug */
       /*          printf("temp_blend: %u grad_len: %f distance: %f \n",temp_blend, gradient_length, distance); */ 
 	
-      /*  color the pixels  */
-
-
+ 
       /* we check to see if this is a pixmap, if so composite the
 	 pixmap image into the are instead of the color */
       if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush) && !gradient_length)
@@ -447,16 +450,35 @@ paintbrush_motion (PaintCore            *paint_core,
 	}
       else
 	{
-	  /*  color the pixels  */
+	  if (!fade_out && pressure_options->color)
+	    {
+	      grad_get_color_at (paint_core->curpressure, &r, &g, &b, &a);
+	      col[0] = r * 255.0;
+	      col[1] = g * 255.0;
+	      col[2] = b * 255.0;
+	      col[3] = a * 255.0;
+	      paint_appl_mode = INCREMENTAL;
+	    }
+	  else
+	    {
+	      gimage_get_foreground (gimage, drawable, col);
+	      col[area->bytes - 1] = OPAQUE_OPACITY;
+	    }
+
 	  color_pixels (temp_buf_data (area), col,
 			area->width * area->height, area->bytes);
 	}
-      
-      paint_core_paste_canvas (paint_core, drawable, temp_blend,
-			       (int) (gimp_context_get_opacity (NULL) * 255),
+
+
+      opacity = (gdouble)temp_blend * gimp_context_get_opacity (NULL);
+      if (pressure_options->opacity)
+	opacity = opacity * 2.0 * paint_core->curpressure;
+
+      paint_core_paste_canvas (paint_core, drawable, temp_blend, 
+			       gimp_context_get_opacity (NULL) * 255,
 			       gimp_context_get_paint_mode (NULL),
-			       PRESSURE,
-			       paint_appl_mode);
+			       pressure_options->pressure ? PRESSURE : SOFT,
+			       scale, paint_appl_mode);
     }
 }
 
@@ -467,8 +489,9 @@ paintbrush_non_gui_paint_func (PaintCore    *paint_core,
 			       int           state)
 {	
   paintbrush_motion (paint_core,drawable, 
+		     &non_gui_pressure_options,
 		     non_gui_fade_out,
-		     (non_gui_gradient_length)?exp(non_gui_gradient_length/10):0,
+		     (non_gui_gradient_length) ? exp (non_gui_gradient_length / 10) : 0,
 		     non_gui_incremental, 
 		     non_gui_gradient_type);
 

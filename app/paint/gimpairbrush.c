@@ -19,6 +19,7 @@
 #include "appenv.h"
 #include "gimpbrushlist.h"
 #include "gimpbrushpipe.h"
+#include "gradient.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -80,7 +81,8 @@ static double           non_gui_pressure;
 static gboolean         non_gui_incremental;
 
 /*  forward function declarations  */
-static void         airbrush_motion   (PaintCore *, GimpDrawable *, double, PaintApplicationMode);
+static void         airbrush_motion   (PaintCore *, GimpDrawable *, PaintPressureOptions *,
+				       double, PaintApplicationMode);
 static gint         airbrush_time_out (gpointer);
 
 
@@ -217,7 +219,9 @@ airbrush_paint_func (PaintCore    *paint_core,
 	gtk_timeout_remove (timer);
       timer_state = OFF;
 
-      airbrush_motion (paint_core, drawable, airbrush_options->pressure,
+      airbrush_motion (paint_core, drawable,
+		       airbrush_options->paint_options.pressure_options,
+		       airbrush_options->pressure,
 		       airbrush_options->paint_options.incremental ?
 		       INCREMENTAL : CONSTANT);
 
@@ -262,6 +266,7 @@ airbrush_time_out (gpointer client_data)
   /*  service the timer  */
   airbrush_motion (airbrush_timeout.paint_core,
 		   airbrush_timeout.drawable,
+		   airbrush_options->paint_options.pressure_options,
 		   airbrush_options->pressure,
 		   airbrush_options->paint_options.incremental ?
 		   INCREMENTAL : CONSTANT);
@@ -276,15 +281,16 @@ airbrush_time_out (gpointer client_data)
 
 
 static void
-airbrush_motion (PaintCore	     *paint_core,
-		 GimpDrawable	     *drawable,
-		 double		      pressure,
-		 PaintApplicationMode mode)
+airbrush_motion (PaintCore	      *paint_core,
+		 GimpDrawable	      *drawable,
+		 PaintPressureOptions *pressure_options,
+		 double		       pressure,
+		 PaintApplicationMode  mode)
 {
-  gint opacity;
   GImage *gimage;
   TempBuf * area;
   unsigned char col[MAX_CHANNELS];
+  gdouble scale;
 
   if (!drawable) 
     return;
@@ -292,7 +298,12 @@ airbrush_motion (PaintCore	     *paint_core,
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
-  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
+  if (pressure_options->size)
+    scale = paint_core->curpressure;
+  else
+    scale = 1.0;
+
+  if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
   if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
@@ -303,31 +314,44 @@ airbrush_motion (PaintCore	     *paint_core,
   else
     {
       /*  color the pixels  */
-      gimage_get_foreground (gimage, drawable, col);
-      col[area->bytes - 1] = OPAQUE_OPACITY;
+      if (pressure_options->color)
+	{
+	  gdouble r, g, b, a;
+
+	  grad_get_color_at (paint_core->curpressure, &r, &g, &b, &a);
+	  col[0] = r * 255.0;
+	  col[1] = g * 255.0;
+	  col[2] = b * 255.0;
+	  col[3] = a * 255.0;
+	  mode = INCREMENTAL;
+	}
+      else
+	{      
+	  gimage_get_foreground (gimage, drawable, col);
+	  col[area->bytes - 1] = OPAQUE_OPACITY;
+	}
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height, area->bytes);
     }
 
-  opacity = pressure * (paint_core->curpressure / 0.5);
-  if (opacity > 255)
-    opacity = 255;
+  if (pressure_options->pressure)
+    pressure = pressure * 2.0 * paint_core->curpressure;
 
   /*  paste the newly painted area to the image  */
   paint_core_paste_canvas (paint_core, drawable,
-			   opacity,
+			   MIN (pressure, 255),
 			   (gint) (gimp_context_get_opacity (NULL) * 255),
 			   gimp_context_get_paint_mode (NULL),
-			   SOFT, mode);
+			   SOFT, scale, mode);
 }
-
 
 static void *
 airbrush_non_gui_paint_func (PaintCore    *paint_core,
 			     GimpDrawable *drawable,
 			     int           state)
 {
-  airbrush_motion (paint_core, drawable, non_gui_pressure, non_gui_incremental);
+  airbrush_motion (paint_core, drawable, &non_gui_pressure_options, 
+		   non_gui_pressure, non_gui_incremental);
 
   return NULL;
 }
@@ -343,7 +367,7 @@ airbrush_non_gui_default (GimpDrawable *drawable,
   if(options)
     pressure = options->pressure;
 
-  return airbrush_non_gui(drawable,pressure,num_strokes,stroke_array);
+  return airbrush_non_gui (drawable, pressure, num_strokes, stroke_array);
 }
 
 gboolean

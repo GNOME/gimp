@@ -1,3 +1,25 @@
+Thu Sep  9 03:45:39 MEST 1999  Sven Neumann <sven@gimp.org>
+
+ 	* app/airbrush.c
+ 	* app/clone.c
+ 	* app/convolve.c
+ 	* app/dodgeburn.c
+ 	* app/eraser.c
+ 	* app/gimage_mask.c
+ 	* app/paint_core.c
+ 	* app/paint_core.h
+ 	* app/paint_options.h
+ 	* app/paintbrush.c
+ 	* app/pencil.c
+ 	* app/smudge.c
+ 	* app/tool_options.c: Enhanced pressure sensitivity for all paint 
+	tools. I could have checked this in yesterday, but you wouldn't have 
+	liked it...
+	Users without a tablet shouldn't notice a different behaviour (despite
+	the options, that I'm planning to hide for non-xinput devices).
+	This still needs some work, especially the brush spacing sucks for
+	scaled brushes ...
+
 Thu Sep  9 00:56:42 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* configure.in: Fixed typoe (fasle => false).

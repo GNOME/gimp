@@ -22,6 +22,28 @@
 #include "tools.h"
 #include "tool_options.h"
 
+/*  the paint options structures  */
+typedef struct _PaintPressureOptions PaintPressureOptions;
+struct _PaintPressureOptions
+{
+  GtkWidget   *frame;
+
+  gboolean     opacity;
+  gboolean     opacity_d;
+  GtkWidget   *opacity_w;
+
+  gboolean     pressure;
+  gboolean     pressure_d;
+  GtkWidget   *pressure_w;
+
+  gboolean     size;
+  gboolean     size_d;
+  GtkWidget   *size_w;
+  
+  gboolean     color;
+  gboolean     color_d;
+  GtkWidget   *color_w;
+};
 
 /*  the paint options structures  */
 typedef struct _PaintOptions PaintOptions;
@@ -43,10 +65,24 @@ struct _PaintOptions
   gboolean     incremental;
   gboolean     incremental_d;
   GtkWidget   *incremental_w;
+
+  /*  the pressure-sensitivity options  */
+  PaintPressureOptions *pressure_options;
 };
 
 
+/*  the default pressure_options for non_gui use  */
+static PaintPressureOptions non_gui_pressure_options =
+{
+  NULL,
+  FALSE, FALSE, NULL,
+  FALSE, FALSE, NULL,
+  FALSE, FALSE, NULL,
+  FALSE, FALSE, NULL
+};
+
 /*  paint tool options functions  */
+
 PaintOptions *paint_options_new    (ToolType              tool_type,
 				    ToolOptionsResetFunc  reset_func);
 

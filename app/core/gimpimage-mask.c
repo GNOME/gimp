@@ -629,7 +629,7 @@ gimage_mask_stroke_paint_func (PaintCore    *paint_core,
   gimage_get_foreground (gimage, drawable, col);
 
   /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
+  if (! (area = paint_core_get_paint_area (paint_core, drawable, 1.0)))
     return NULL;
 
   /*  set the alpha channel  */
@@ -649,7 +649,7 @@ gimage_mask_stroke_paint_func (PaintCore    *paint_core,
   paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
 			   (int) (gimp_context_get_opacity (context) * 255),
 			   gimp_context_get_paint_mode (context),
-			   SOFT, CONSTANT);
+			   SOFT, 1.0, CONSTANT);
 
   return NULL;
 }

@@ -66,7 +66,8 @@ static SmudgeOptions * smudge_options = NULL;
 /* Loca varibles */
 static double non_gui_pressure;
 
-static void         smudge_motion 	(PaintCore *, double, GimpDrawable *);
+static void         smudge_motion 	(PaintCore *, PaintPressureOptions *,
+					 double, GimpDrawable *);
 static void 	    smudge_init   	(PaintCore *, GimpDrawable *);
 static void 	    smudge_finish   	(PaintCore *, GimpDrawable *);
 
@@ -146,7 +147,8 @@ smudge_paint_func (PaintCore    *paint_core,
       smudge_init (paint_core, drawable);
       break;
     case MOTION_PAINT:
-      smudge_motion (paint_core, smudge_options->pressure, drawable);
+      smudge_motion (paint_core, smudge_options->paint_options.pressure_options,
+		     smudge_options->pressure, drawable);
       break;
     case FINISH_PAINT:
       smudge_finish (paint_core, drawable);
@@ -199,7 +201,7 @@ smudge_init ( PaintCore *paint_core,
       (drawable_type (drawable) == INDEXEDA_GIMAGE))
     return;
 
-  area = paint_core_get_paint_area (paint_core, drawable);
+  area = paint_core_get_paint_area (paint_core, drawable, 1.0);
 
   if (!area)
     was_clipped = TRUE;
@@ -237,12 +239,10 @@ smudge_init ( PaintCore *paint_core,
 }
 
 static void
-smudge_allocate_accum_buffer (
-				gint w, 
-				gint h, 
-				gint bytes, 
-				gint do_fill
-				)
+smudge_allocate_accum_buffer (gint w, 
+			      gint h, 
+			      gint bytes, 
+			      gint do_fill)
 { 
   /*  Allocate the accumulation buffer */
   accumPR.bytes = bytes;
@@ -293,15 +293,16 @@ tools_free_smudge (Tool *tool)
 }
 
 static void
-smudge_motion (PaintCore    *paint_core,
-	       double        smudge_pressure,
-	       GimpDrawable *drawable)
+smudge_motion (PaintCore            *paint_core,
+	       PaintPressureOptions *pressure_options,
+	       double                smudge_pressure,
+	       GimpDrawable         *drawable)
 {
   GImage *gimage;
   TempBuf * area;
   PixelRegion srcPR, destPR, tempPR;
   gfloat pressure;
-  gfloat brush_opacity;
+  gint opacity;
   gint x,y,w,h;
 
   if (! (gimage = drawable_gimage (drawable)))
@@ -315,7 +316,8 @@ smudge_motion (PaintCore    *paint_core,
   smudge_nonclipped_painthit_coords (paint_core, &x, &y, &w, &h);
 
   /*  Get the paint area */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
+  /*  Smudge won't scale!  */
+  if (! (area = paint_core_get_paint_area (paint_core, drawable, 1.0)))
     return;
 
   /* srcPR will be the pixels under the current painthit from 
@@ -324,11 +326,12 @@ smudge_motion (PaintCore    *paint_core,
   pixel_region_init (&srcPR, drawable_data (drawable), 
 	area->x, area->y, area->width, area->height, FALSE);
 
-  brush_opacity = gimp_context_get_opacity (NULL);
-
   /* Enable pressure sensitive pressure */
-  pressure = ((smudge_pressure)/100.0 * (paint_core->curpressure)/0.5);
- 
+  if (pressure_options->pressure)
+    pressure = ((smudge_pressure) / 100.0 * (paint_core->curpressure) / 0.5);
+  else
+    pressure = smudge_pressure / 100.0;
+
   /* The tempPR will be the built up buffer (for smudge) */ 
   tempPR.bytes = accumPR.bytes;
   tempPR.rowstride = accumPR.rowstride;
@@ -377,10 +380,16 @@ smudge_motion (PaintCore    *paint_core,
   else                                                            
     copy_region(&tempPR, &destPR);
 
+  opacity = 255 * gimp_context_get_opacity (NULL);
+  if (pressure_options->opacity)
+    opacity = opacity * 2.0 * paint_core->curpressure;
+
   /*Replace the newly made paint area to the gimage*/ 
-  paint_core_replace_canvas (paint_core, drawable, ROUND(brush_opacity * 255.0),
-				OPAQUE_OPACITY, PRESSURE, INCREMENTAL);
- 
+  paint_core_replace_canvas (paint_core, drawable, 
+			     MIN (opacity, 255),
+			     OPAQUE_OPACITY, 
+			     pressure_options->pressure ? PRESSURE : SOFT,
+			     1.0, INCREMENTAL);
 }
 
 static void *
@@ -388,7 +397,7 @@ smudge_non_gui_paint_func (PaintCore *paint_core,
 			     GimpDrawable *drawable,
 			     int        state)
 {
-  smudge_motion (paint_core, non_gui_pressure, drawable);
+  smudge_motion (paint_core, &non_gui_pressure_options, non_gui_pressure, drawable);
 
   return NULL;
 }

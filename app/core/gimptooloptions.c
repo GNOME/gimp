@@ -30,6 +30,9 @@
 /*  a list of all PaintOptions  */
 static GSList  *paint_options_list = NULL;
 
+static PaintPressureOptions * paint_pressure_options_new   (ToolType);
+static void                   paint_pressure_options_reset (PaintPressureOptions *);
+
 
 /*  ui helper functions  ******************************************************/
 
@@ -577,12 +580,13 @@ paint_options_init (PaintOptions         *options,
 		     reset_func);
 
   /*  initialize the paint options structure  */
-  options->incremental = options->incremental_d = FALSE;
-
   options->global        = NULL;
   options->opacity_w     = NULL;
   options->paint_mode_w  = NULL;
   options->incremental_w = NULL;
+  options->incremental = options->incremental_d = FALSE;
+
+  options->pressure_options = paint_pressure_options_new (tool_type);
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -706,15 +710,6 @@ paint_options_init (PaintOptions         *options,
 				    options->incremental_d);
       gtk_widget_show (options->incremental_w);
 
-      /*  a separator after the common paint options which can't be global  */
-      if (tool_type != PENCIL)
-	{
-	  separator = gtk_hseparator_new ();
-	  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
-			      separator, FALSE, FALSE, 0);
-	  gtk_widget_show (separator);
-	}
-      break;
     case BUCKET_FILL:
     case BLEND:
     case CLONE:
@@ -724,6 +719,14 @@ paint_options_init (PaintOptions         *options,
       break;
     default:
       break;
+    }
+
+  options->pressure_options = paint_pressure_options_new (tool_type);
+  if (options->pressure_options->frame)
+    {
+      gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
+			  options->pressure_options->frame, FALSE, FALSE, 0);
+      gtk_widget_show (options->pressure_options->frame);
     }
 
   /*  register this Paintoptions structure  */
@@ -773,7 +776,164 @@ paint_options_reset (PaintOptions *options)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(options->incremental_w),
 				    options->incremental_d);
     }
+
+  paint_pressure_options_reset (options->pressure_options);
 }
+
+static PaintPressureOptions *
+paint_pressure_options_new (ToolType tool_type)
+{
+  PaintPressureOptions *pressure;
+  GtkWidget *frame = NULL;
+  GtkWidget *hbox = NULL;
+
+  pressure = g_new (PaintPressureOptions, 1);
+    
+  pressure->opacity_w = NULL;
+  pressure->opacity = pressure->opacity_d =TRUE;
+  pressure->pressure_w = NULL;
+  pressure->pressure = pressure->pressure_d = TRUE;
+  pressure->size_w = NULL;
+  pressure->size = pressure->size_d = FALSE;
+  pressure->color_w = NULL;
+  pressure->color = pressure->color_d = FALSE;
+
+  switch (tool_type)
+    {
+    case CLONE:
+    case CONVOLVE:
+    case DODGEBURN:
+    case SMUDGE:
+    case AIRBRUSH:
+    case ERASER:
+    case PAINTBRUSH:
+    case PENCIL:
+      frame = gtk_frame_new (_("Pressure sensitivity"));
+      hbox = gtk_hbox_new (FALSE, 2);
+      gtk_container_add (GTK_CONTAINER (frame), hbox);
+      gtk_widget_show (hbox);
+      break;
+    default:
+      break;
+    }
+
+  /*  the opacity toggle  */
+  switch (tool_type)
+    {
+    case AIRBRUSH:
+    case CLONE:
+    case ERASER:
+    case PAINTBRUSH:
+    case PENCIL:
+      pressure->opacity_w =
+	gtk_check_button_new_with_label (_("Opacity"));
+      gtk_container_add (GTK_CONTAINER (hbox), pressure->opacity_w);
+      gtk_signal_connect (GTK_OBJECT (pressure->opacity_w), "toggled",
+			  (GtkSignalFunc) tool_options_toggle_update,
+			  &pressure->opacity);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->opacity_w),
+				    pressure->opacity_d);
+      gtk_widget_show (pressure->opacity_w);
+      break;
+    default:
+      break;
+    }
+
+  /*  the pressure toggle  */
+  switch (tool_type)
+    {
+    case CLONE:
+    case DODGEBURN:
+    case SMUDGE:
+    case ERASER:
+    case PAINTBRUSH:
+      pressure->pressure_w =
+	gtk_check_button_new_with_label (_("Pressure"));
+      gtk_container_add (GTK_CONTAINER (hbox), pressure->pressure_w);
+      gtk_signal_connect (GTK_OBJECT (pressure->pressure_w), "toggled",
+			  (GtkSignalFunc) tool_options_toggle_update,
+			  &pressure->pressure);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->pressure_w),
+				    pressure->pressure_d);
+      gtk_widget_show (pressure->pressure_w);
+      break;
+    default:
+      break;
+    }
+
+  /*  the size toggle  */
+  switch (tool_type)
+    {
+    case AIRBRUSH:
+    case CLONE:
+    case CONVOLVE:
+    case DODGEBURN:
+    case ERASER:
+    case PAINTBRUSH:
+    case PENCIL:
+      pressure->size_w =
+	gtk_check_button_new_with_label (_("Size"));
+      gtk_container_add (GTK_CONTAINER (hbox), pressure->size_w);
+      gtk_signal_connect (GTK_OBJECT (pressure->size_w), "toggled",
+			  (GtkSignalFunc) tool_options_toggle_update,
+			  &pressure->size);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->size_w),
+				    pressure->size_d);
+      gtk_widget_show (pressure->size_w);
+      break;
+    default:
+      break;
+    }
+
+  /*  the color toggle  */
+  switch (tool_type)
+    {
+    case AIRBRUSH:
+    case PAINTBRUSH:
+    case PENCIL:
+      pressure->color_w =
+	gtk_check_button_new_with_label (_("Color"));
+      gtk_container_add (GTK_CONTAINER (hbox), pressure->color_w);
+      gtk_signal_connect (GTK_OBJECT (pressure->color_w), "toggled",
+			  (GtkSignalFunc) tool_options_toggle_update,
+			  &pressure->color);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->color_w),
+				    pressure->color_d);
+      gtk_widget_show (pressure->color_w);
+      break;
+    default:
+      break;
+    }
+  pressure->frame = frame;
+
+  return (pressure);
+}
+
+static void
+paint_pressure_options_reset (PaintPressureOptions *pressure)
+{
+  if (pressure->opacity_w)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->opacity_w),
+				    pressure->opacity_d);
+    }
+  if (pressure->pressure_w)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->pressure_w),
+				    pressure->pressure_d);
+    }
+  if (pressure->size_w)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->size_w),
+				    pressure->size_d);
+    }
+  if (pressure->color_w)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->color_w),
+				    pressure->color_d);
+    }
+}
+
 
 
 /*  global paint options functions  *******************************************/

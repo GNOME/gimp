@@ -22,11 +22,13 @@
 #include <string.h>
 
 #include "appenv.h"
-#include "gimpbrushlist.h"
+#include "brush_scale.h"
+#include "devices.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpbrushlist.h"
 #include "gimprc.h"
 #include "gradient.h"  /* for grad_get_color_at() */
 #include "paint_funcs.h"
@@ -54,10 +56,12 @@
 PaintCore  non_gui_paint_core;
 
 /*  local function prototypes  */
+static void      paint_core_calculate_brush_size (MaskBuf *, double, int *, int *);
 static MaskBuf * paint_core_subsample_mask  (MaskBuf *, double, double);
 static MaskBuf * paint_core_pressurize_mask (MaskBuf *, double, double, double);
 static MaskBuf * paint_core_solidify_mask   (MaskBuf *);
-static MaskBuf * paint_core_get_brush_mask  (PaintCore *, BrushApplicationMode);
+static MaskBuf * paint_core_scale_mask      (MaskBuf *, gdouble);
+static MaskBuf * paint_core_get_brush_mask  (PaintCore *, BrushApplicationMode, gdouble);
 static void      paint_core_paste           (PaintCore *, MaskBuf *,
 					     GimpDrawable *, int, int,
 					     LayerModeEffects,
@@ -91,6 +95,7 @@ static TempBuf *  canvas_buf = NULL;
 /*  brush buffers  */
 static MaskBuf *  pressure_brush;
 static MaskBuf *  solid_brush;
+static MaskBuf *  scale_brush = NULL;
 static MaskBuf *  kernel_brushes[5][5];
 
 
@@ -710,8 +715,8 @@ paint_core_get_color_from_gradient (PaintCore *paint_core,
 				    int mode)
 {
   double y;
-  double distance;    /* distance in current brush stroke */
-  double position;    /* position in the gradient to ge the color from */
+  double distance;      /* distance in current brush stroke */
+  double position;      /* position in the gradient to ge the color from */
   double temp_opacity;  /* so i can blank out stuff */
 
   distance = paint_core->distance;
@@ -790,6 +795,8 @@ paint_core_interpolate (PaintCore    *paint_core,
 #else /* !GTK_HAVE_SIX_VALUATORS */
   double dpressure, dxtilt, dytilt;
 #endif /* GTK_HAVE_SIX_VALUATORS */
+  double spacing;
+  double lastscale, curscale;
   double left;
   double t;
   double initial;
@@ -825,6 +832,13 @@ paint_core_interpolate (PaintCore    *paint_core,
 
   total = dist + paint_core->distance;
   initial = paint_core->distance;
+
+  /*  FIXME: the adaptive spacing is pretty dumb !!  */
+  lastscale = 
+    paint_core->lastpressure > 1/256 ? paint_core->lastpressure : 1/256;
+  curscale = 
+    paint_core->curpressure > 1/256 ? paint_core->curpressure : 1/256;   
+  spacing = paint_core->spacing * sqrt (0.5 * (lastscale + curscale));
 
   while (paint_core->distance < total)
     {
@@ -941,29 +955,32 @@ paint_core_cleanup ()
 
 TempBuf *
 paint_core_get_paint_area (PaintCore    *paint_core, 
-			   GimpDrawable *drawable)
+			   GimpDrawable *drawable,
+			   gdouble       scale)
 {
   int x, y;
   int x1, y1, x2, y2;
   int bytes;
   int dwidth, dheight;
+  int bwidth, bheight;
 
   bytes = drawable_has_alpha (drawable) ?
     drawable_bytes (drawable) : drawable_bytes (drawable) + 1;
 
+  paint_core_calculate_brush_size (paint_core->brush->mask, scale,
+				   &bwidth, &bheight);
+
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
-  x = (int) paint_core->curx - (paint_core->brush->mask->width >> 1);
-  y = (int) paint_core->cury - (paint_core->brush->mask->height >> 1);
+  x = (int) paint_core->curx - (bwidth >> 1);
+  y = (int) paint_core->cury - (bheight >> 1);
 
   dwidth = drawable_width (drawable);
   dheight = drawable_height (drawable);
 
   x1 = BOUNDS (x - 1, 0, dwidth);
   y1 = BOUNDS (y - 1, 0, dheight);
-  x2 = BOUNDS (x + paint_core->brush->mask->width + 1,
-	       0, dwidth);
-  y2 = BOUNDS (y + paint_core->brush->mask->height + 1,
-	       0, dheight);
+  x2 = BOUNDS (x + bwidth + 1, 0, dwidth);
+  y2 = BOUNDS (y + bheight + 1, 0, dheight);
 
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))
@@ -1055,13 +1072,14 @@ paint_core_paste_canvas (PaintCore	     *paint_core,
 			 int		      brush_opacity, 
 			 int		      image_opacity, 
 			 LayerModeEffects     paint_mode,
-			 BrushApplicationMode brush_hardness, 
+			 BrushApplicationMode brush_hardness,
+			 gdouble              brush_scale,
 			 PaintApplicationMode mode)
 {
   MaskBuf *brush_mask;
 
   /*  get the brush mask  */
-  brush_mask = paint_core_get_brush_mask (paint_core, brush_hardness);
+  brush_mask = paint_core_get_brush_mask (paint_core, brush_hardness, brush_scale);
 
   /*  paste the canvas buf  */
   paint_core_paste (paint_core, brush_mask, drawable,
@@ -1076,13 +1094,14 @@ paint_core_replace_canvas (PaintCore	       *paint_core,
 			   GimpDrawable	       *drawable, 
 			   int			brush_opacity, 
 			   int			image_opacity, 
-			   BrushApplicationMode brush_hardness, 
+			   BrushApplicationMode brush_hardness,
+			   gdouble              brush_scale,
 			   PaintApplicationMode mode)
 {
   MaskBuf *brush_mask;
 
   /*  get the brush mask  */
-  brush_mask = paint_core_get_brush_mask (paint_core, brush_hardness);
+  brush_mask = paint_core_get_brush_mask (paint_core, brush_hardness, brush_scale);
 
   /*  paste the canvas buf  */
   paint_core_replace (paint_core, brush_mask, drawable,
@@ -1106,6 +1125,31 @@ static int paint_core_invalidate_cache(GimpBrush *brush, gpointer *blah)
 /************************************************************
  *             LOCAL FUNCTION DEFINITIONS                   *
  ************************************************************/
+
+static void
+paint_core_calculate_brush_size (MaskBuf   *mask,
+				 double     scale,
+				 int       *width,
+				 int       *height)
+{
+  if (current_device == GDK_CORE_POINTER)
+    {
+      *width  = mask->width;
+      *height = mask->height;
+    }
+  else
+    {
+      double ratio;
+
+      if (scale < 1/256)
+	ratio = 1/16;
+      else
+	ratio = sqrt (scale);
+      
+      *width  = MAX ((int)(mask->width  * ratio + 0.5), 1);
+      *height = MAX ((int)(mask->height * ratio + 0.5), 1);
+    }
+}  
 
 static MaskBuf *
 paint_core_subsample_mask (MaskBuf *mask, 
@@ -1192,7 +1236,7 @@ paint_core_pressurize_mask (MaskBuf *brush_mask,
 #endif
 
   /* Get the raw subsampled mask */
-  subsample_mask = paint_core_subsample_mask(brush_mask, x, y);
+  subsample_mask = paint_core_subsample_mask (brush_mask, x, y);
 
   /* Special case pressure = 0.5 */
   if ((int)(pressure*100+0.5) == 50)
@@ -1285,10 +1329,10 @@ paint_core_solidify_mask (MaskBuf *brush_mask)
   int i, j;
   unsigned char * data, * src;
 
-  if (brush_mask == last_brush)
+  if (brush_mask == last_brush && !cache_invalid)
     return solid_brush;
-
   last_brush = brush_mask;
+
   if (solid_brush)
     mask_buf_free (solid_brush);
 
@@ -1312,28 +1356,69 @@ paint_core_solidify_mask (MaskBuf *brush_mask)
 }
 
 static MaskBuf *
-paint_core_get_brush_mask (PaintCore	       *paint_core, 
-			   BrushApplicationMode brush_hardness)
+paint_core_scale_mask (MaskBuf *brush_mask, 
+		       gdouble  scale)
 {
-  MaskBuf * bm;
+  static MaskBuf *last_brush = NULL;
+  static gint last_width  = 0.0; 
+  static gint last_height = 0.0; 
+  gint dest_width, dest_height;
 
+  if (scale == 0.0) 
+    return NULL;
+
+  if (scale == 1.0)
+    return brush_mask;
+  
+  paint_core_calculate_brush_size (brush_mask, scale, 
+				   &dest_width, &dest_height);
+
+  if (brush_mask == last_brush && 
+      dest_width == last_width && dest_height == last_height)
+    return scale_brush;
+
+  if (scale_brush)
+    mask_buf_free (scale_brush);
+
+  last_brush  = brush_mask;
+  last_width  = dest_width;
+  last_height = dest_height;
+ 
+  scale_brush = brush_scale_mask (brush_mask, dest_width, dest_height);
+  cache_invalid = TRUE;
+
+  return scale_brush;
+}
+
+static MaskBuf *
+paint_core_get_brush_mask (PaintCore	       *paint_core, 
+			   BrushApplicationMode brush_hardness,
+			   gdouble              scale)
+{
+  MaskBuf * mask;
+
+  if (current_device == GDK_CORE_POINTER)
+    mask = paint_core->brush->mask;
+  else
+    mask = paint_core_scale_mask (paint_core->brush->mask, scale);
+  
   switch (brush_hardness)
     {
     case SOFT:
-      bm = paint_core_subsample_mask (paint_core->brush->mask, paint_core->curx, paint_core->cury);
+      mask = paint_core_subsample_mask (mask, paint_core->curx, paint_core->cury);
       break;
     case HARD:
-      bm = paint_core_solidify_mask (paint_core->brush->mask);
+      mask = paint_core_solidify_mask (mask);
       break;
     case PRESSURE:
-      bm = paint_core_pressurize_mask (paint_core->brush->mask, paint_core->curx, paint_core->cury, paint_core->curpressure);
+      mask = paint_core_pressurize_mask (mask, paint_core->curx, paint_core->cury, 
+					 paint_core->curpressure);
       break;
     default:
-      bm = NULL;
       break;
     }
 
-  return bm;
+  return mask;
 }
 
 static void
@@ -1522,11 +1607,9 @@ canvas_tiles_to_canvas_buf(PaintCore *paint_core)
 }
 
 static void
-brush_to_canvas_tiles ( 
-                        PaintCore *paint_core, 
-                        MaskBuf *brush_mask, 
-                        int brush_opacity
-                       )
+brush_to_canvas_tiles (PaintCore *paint_core, 
+		       MaskBuf   *brush_mask, 
+		       int        brush_opacity)
 {
   PixelRegion srcPR, maskPR;
   int x, y;
@@ -1554,11 +1637,9 @@ brush_to_canvas_tiles (
 }
 
 static void
-brush_to_canvas_buf (
-                      PaintCore *paint_core,
-                      MaskBuf *brush_mask,
-                      int brush_opacity
-                     )
+brush_to_canvas_buf (PaintCore *paint_core,
+		     MaskBuf   *brush_mask,
+		     int        brush_opacity)
 {
   PixelRegion srcPR, maskPR;
   int x, y;

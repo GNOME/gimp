@@ -105,7 +105,8 @@ static void         integer_matrix       (float *, int *, int);
 static void         copy_matrix          (float *, float *, int);
 static int          sum_matrix           (int *, int);
 
-static void         convolve_motion      (PaintCore *, GimpDrawable *, ConvolveType, double);
+static void         convolve_motion      (PaintCore *, GimpDrawable *, PaintPressureOptions *,
+					  ConvolveType, double);
 
 /* functions  */
 
@@ -188,7 +189,9 @@ convolve_paint_func (PaintCore    *paint_core,
   switch (state)
     {
     case MOTION_PAINT:
-      convolve_motion (paint_core, drawable,convolve_options->type, convolve_options->pressure);
+      convolve_motion (paint_core, drawable, 
+		       convolve_options->paint_options.pressure_options,
+		       convolve_options->type, convolve_options->pressure);
       break;
     }
 
@@ -254,15 +257,17 @@ tools_free_convolve (Tool *tool)
 }
 
 static void
-convolve_motion (PaintCore    *paint_core,
-		 GimpDrawable *drawable,
-		 ConvolveType  type,
-		 double        pressure)
+convolve_motion (PaintCore            *paint_core,
+		 GimpDrawable         *drawable,
+		 PaintPressureOptions *pressure_options,
+		 ConvolveType          type,
+		 double                pressure)
 {
   GImage *gimage;
   TempBuf * area;
   unsigned char *temp_data;
   PixelRegion srcPR, destPR, tempPR;
+  gdouble scale;
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
@@ -272,8 +277,13 @@ convolve_motion (PaintCore    *paint_core,
       (drawable_type (drawable) == INDEXEDA_GIMAGE))
     return;
 
+  if (pressure_options->size)
+    scale = paint_core->curpressure;
+  else
+    scale = 1.0;
+
   /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
+  if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
   /*  configure the pixel regions correctly  */
@@ -357,7 +367,7 @@ convolve_motion (PaintCore    *paint_core,
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_replace_canvas (paint_core, drawable, OPAQUE_OPACITY,
 			     (int) (gimp_context_get_opacity (NULL) * 255),
-			     SOFT, INCREMENTAL);
+			     SOFT, scale, INCREMENTAL);
 }
 
 static void
@@ -441,7 +451,8 @@ convolve_non_gui_paint_func (PaintCore *paint_core,
 			     GimpDrawable *drawable,
 			     int        state)
 {
-  convolve_motion (paint_core, drawable,non_gui_type,non_gui_pressure);
+  convolve_motion (paint_core, drawable, &non_gui_pressure_options,
+		   non_gui_type, non_gui_pressure);
 
   return NULL;
 }

@@ -66,6 +66,7 @@ static gboolean	      non_gui_anti_erase;
 
 /*  forward function declarations  */
 static void       eraser_motion            (PaintCore *, GimpDrawable *,
+					    PaintPressureOptions *,
 					    gboolean, gboolean, gboolean);
 
 
@@ -156,6 +157,7 @@ eraser_paint_func (PaintCore    *paint_core,
     case MOTION_PAINT :
       eraser_motion (paint_core,
 		     drawable,
+		     eraser_options->paint_options.pressure_options,
 		     eraser_options->hard,
 		     eraser_options->paint_options.incremental,
 		     eraser_options->anti_erase);
@@ -241,24 +243,31 @@ tools_free_eraser (tool)
 
 
 static void
-eraser_motion (PaintCore    *paint_core,
-	       GimpDrawable *drawable,
-	       gboolean      hard,
-	       gboolean      incremental,
-	       gboolean	     anti_erase)
+eraser_motion (PaintCore            *paint_core,
+	       GimpDrawable         *drawable,
+	       PaintPressureOptions *pressure_options,
+	       gboolean              hard,
+	       gboolean              incremental,
+	       gboolean	             anti_erase)
 {
   GImage *gimage;
   gint opacity;
   TempBuf * area;
   unsigned char col[MAX_CHANNELS];
+  gdouble scale;
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
   gimage_get_background (gimage, drawable, col);
 
+  if (pressure_options->size)
+    scale = paint_core->curpressure;
+  else
+    scale = 1.0;
+
   /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
+  if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
   /*  set the alpha channel  */
@@ -267,13 +276,18 @@ eraser_motion (PaintCore    *paint_core,
   /*  color the pixels  */
   color_pixels (temp_buf_data (area), col,
 		area->width * area->height, area->bytes);
-  opacity = 255 * gimp_context_get_opacity (NULL) * (paint_core->curpressure / 0.5);
-  if(opacity > OPAQUE_OPACITY) opacity=OPAQUE_OPACITY;
+
+  opacity = 255 * gimp_context_get_opacity (NULL);
+  if (pressure_options->opacity)
+    opacity = opacity * 2.0 * paint_core->curpressure;
+
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable, opacity,
+  paint_core_paste_canvas (paint_core, drawable, 
+			   MIN (opacity, 255),
 			   (int) (gimp_context_get_opacity (NULL) * 255),
 			   anti_erase ? ANTI_ERASE_MODE : ERASE_MODE,
-			   hard ? HARD : SOFT,
+			   hard ? HARD : (pressure_options->pressure ? PRESSURE : SOFT),
+			   scale,
 			   incremental ? INCREMENTAL : CONSTANT);
 }
 
@@ -283,7 +297,9 @@ eraser_non_gui_paint_func (PaintCore    *paint_core,
 			   GimpDrawable *drawable,
 			   int           state)
 {
-  eraser_motion (paint_core, drawable, non_gui_hard, non_gui_incremental, non_gui_anti_erase);
+  eraser_motion (paint_core, drawable,
+		 &non_gui_pressure_options,
+		 non_gui_hard, non_gui_incremental, non_gui_anti_erase);
 
   return NULL;
 }

@@ -44,29 +44,30 @@
 typedef struct _DodgeBurnOptions DodgeBurnOptions;
 struct _DodgeBurnOptions
 {
-  PaintOptions  paint_options;
+  PaintOptions   paint_options;
 
   DodgeBurnType  type;
   DodgeBurnType  type_d;
-  GtkWidget    *type_w[2];
+  GtkWidget     *type_w[2];
 
   DodgeBurnMode  mode;     /*highlights,midtones,shadows*/
   DodgeBurnMode  mode_d;
-  GtkWidget      *mode_w[3];
+  GtkWidget     *mode_w[3];
 
-  double        exposure;
-  double        exposure_d;
-  GtkObject    *exposure_w;
+  double         exposure;
+  double         exposure_d;
+  GtkObject     *exposure_w;
 
-  GimpLut      *lut;
+  GimpLut       *lut;
 };
 
 static void 
-dodgeburn_make_luts ( PaintCore *, double, DodgeBurnType, DodgeBurnMode, GimpLut *, GimpDrawable *);
+dodgeburn_make_luts (PaintCore *, double, DodgeBurnType, DodgeBurnMode, 
+		     GimpLut *, GimpDrawable *);
 
-static gfloat dodgeburn_highlights_lut_func(void *, int, int, gfloat);
-static gfloat dodgeburn_midtones_lut_func(void *, int, int, gfloat);
-static gfloat dodgeburn_shadows_lut_func(void *, int, int, gfloat);
+static gfloat dodgeburn_highlights_lut_func (void *, int, int, gfloat);
+static gfloat dodgeburn_midtones_lut_func   (void *, int, int, gfloat);
+static gfloat dodgeburn_shadows_lut_func    (void *, int, int, gfloat);
 
 /* The dodge burn lookup tables */
 gfloat dodgeburn_highlights(void *, int, int, gfloat);
@@ -85,7 +86,9 @@ static GimpLut *non_gui_lut;
 #define DODGEBURN_DEFAULT_EXPOSURE 50.0
 #define DODGEBURN_DEFAULT_MODE     DODGEBURN_HIGHLIGHTS
 
-static void         dodgeburn_motion 	(PaintCore *, double, GimpLut *, GimpDrawable *);
+static void         dodgeburn_motion 	(PaintCore *, 
+					 PaintPressureOptions *,
+					 double, GimpLut *, GimpDrawable *);
 static void 	    dodgeburn_init   	(PaintCore *, GimpDrawable *);
 static void         dodgeburn_finish    (PaintCore *, GimpDrawable *);
 
@@ -200,7 +203,9 @@ dodgeburn_paint_func (PaintCore    *paint_core,
       dodgeburn_init (paint_core, drawable);
       break;
     case MOTION_PAINT:
-      dodgeburn_motion (paint_core, dodgeburn_options->exposure, dodgeburn_options->lut, drawable);
+      dodgeburn_motion (paint_core, 
+			dodgeburn_options->paint_options.pressure_options,
+			dodgeburn_options->exposure, dodgeburn_options->lut, drawable);
       break;
     case FINISH_PAINT:
       dodgeburn_finish (paint_core, drawable);
@@ -337,10 +342,11 @@ tools_free_dodgeburn (Tool *tool)
 }
 
 static void
-dodgeburn_motion (PaintCore    *paint_core,
-		  double        dodgeburn_exposure,
-		  GimpLut      *lut,
-		  GimpDrawable *drawable)
+dodgeburn_motion (PaintCore            *paint_core,
+		  PaintPressureOptions *pressure_options,
+		  double                dodgeburn_exposure,
+		  GimpLut              *lut,
+		  GimpDrawable         *drawable)
 {
   GImage *gimage;
   TempBuf * area;
@@ -348,7 +354,8 @@ dodgeburn_motion (PaintCore    *paint_core,
   PixelRegion srcPR, destPR, tempPR;
   guchar *temp_data;
   gfloat exposure;
-  gfloat brush_opacity;
+  gint opacity;
+  gdouble scale;
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
@@ -358,8 +365,13 @@ dodgeburn_motion (PaintCore    *paint_core,
       (drawable_type (drawable) == INDEXEDA_GIMAGE))
     return;
 
+  if (pressure_options->size)
+    scale = paint_core->curpressure;
+  else
+    scale = 1.0;
+
   /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
+  if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
   /* Constant painting --get a copy of the orig drawable (with
@@ -396,8 +408,6 @@ dodgeburn_motion (PaintCore    *paint_core,
   temp_data = g_malloc (tempPR.h * tempPR.rowstride);
   tempPR.data = temp_data;
 
-  brush_opacity = gimp_context_get_opacity (NULL);
-
   /* Enable pressure sensitive exposure */
   exposure = ((dodgeburn_exposure)/100.0 * (paint_core->curpressure)/0.5);
 
@@ -419,10 +429,16 @@ dodgeburn_motion (PaintCore    *paint_core,
   else
     copy_region(&tempPR, &destPR);
 
-  /*Replace the newly dodgedburned area (canvas_buf) to the gimage*/ 
-  
-  paint_core_replace_canvas (paint_core, drawable, ROUND(brush_opacity * 255.0),
-				OPAQUE_OPACITY, PRESSURE, CONSTANT);
+  opacity = 255 * gimp_context_get_opacity (NULL);
+  if (pressure_options->opacity)
+    opacity = opacity * 2.0 * paint_core->curpressure;
+
+  /*Replace the newly dodgedburned area (canvas_buf) to the gimage*/   
+  paint_core_replace_canvas (paint_core, drawable, 
+			     MIN (opacity, 255),
+			     OPAQUE_OPACITY, 
+			     pressure_options->pressure ? PRESSURE : SOFT,
+			     scale, CONSTANT);
  
   g_free (temp_data);
 }
@@ -432,7 +448,8 @@ dodgeburn_non_gui_paint_func (PaintCore *paint_core,
 			     GimpDrawable *drawable,
 			     int        state)
 {
-  dodgeburn_motion (paint_core, non_gui_exposure, non_gui_lut, drawable);
+  dodgeburn_motion (paint_core, &non_gui_pressure_options,
+		    non_gui_exposure, non_gui_lut, drawable);
 
   return NULL;
 }
@@ -454,7 +471,7 @@ dodgeburn_non_gui_default (GimpDrawable *drawable,
       mode     = dodgeburn_options->mode;
     }
 
-  return dodgeburn_non_gui(drawable,exposure,type,mode,num_strokes,stroke_array);
+  return dodgeburn_non_gui (drawable, exposure, type, mode, num_strokes, stroke_array);
 }
 
 gboolean

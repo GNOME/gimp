@@ -90,7 +90,7 @@ static CloneType     non_gui_type;
 
 static void   clone_draw         (Tool *);
 static void   clone_motion       (PaintCore *, GimpDrawable *, GimpDrawable *,
-				  CloneType, int, int);
+				  PaintPressureOptions *, CloneType, int, int);
 static void   clone_line_image   (GImage *, GImage *, GimpDrawable *,
 				  GimpDrawable *, unsigned char *,
 				  unsigned char *, int, int, int, int);
@@ -294,7 +294,9 @@ clone_paint_func (PaintCore    *paint_core,
 	  src_x = dest_x + offset_x;
 	  src_y = dest_y + offset_y;
 
-	  clone_motion (paint_core, drawable, src_drawable_, clone_options->type, offset_x, offset_y);
+	  clone_motion (paint_core, drawable, src_drawable_, 
+			clone_options->paint_options.pressure_options, 
+			clone_options->type, offset_x, offset_y);
 	}
 
       draw_core_pause (paint_core->core, active_tool);
@@ -455,12 +457,13 @@ clone_draw (Tool *tool)
 }
 
 static void
-clone_motion (PaintCore    *paint_core,
-	      GimpDrawable *drawable,
-	      GimpDrawable *src_drawable,
-	      CloneType     type,
-	      int           offset_x,
-	      int           offset_y)
+clone_motion (PaintCore            *paint_core,
+	      GimpDrawable         *drawable,
+	      GimpDrawable         *src_drawable,
+	      PaintPressureOptions *pressure_options,
+	      CloneType             type,
+	      int                   offset_x,
+	      int                   offset_y)
 {
   GImage *gimage;
   GImage *src_gimage = NULL;
@@ -475,6 +478,7 @@ clone_motion (PaintCore    *paint_core,
   PixelRegion srcPR, destPR;
   GPatternP pattern;
   gint opacity;
+  gdouble scale;
 
   pr      = NULL;
   pattern = NULL;
@@ -494,8 +498,13 @@ clone_motion (PaintCore    *paint_core,
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
+  if (pressure_options->size)
+    scale = paint_core->curpressure;
+  else
+    scale = 1.0;
+
   /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
+  if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
   switch (type)
@@ -603,19 +612,17 @@ clone_motion (PaintCore    *paint_core,
 	}
     }
 
-  /*Make the clone tool pressure sencitive */
-
-  opacity = 255 * gimp_context_get_opacity (NULL) * (paint_core->curpressure / 0.5);
-  if (opacity > 255)
-    opacity = 255;    
-
-
+  opacity = 255.0 * gimp_context_get_opacity (NULL);
+  if (pressure_options->opacity)
+    opacity = opacity * 2.0 * paint_core->curpressure;
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable, opacity,
+  paint_core_paste_canvas (paint_core, drawable, 
+			   MIN (opacity, 255),
 			   (int) (gimp_context_get_opacity (NULL) * 255),
 			   gimp_context_get_paint_mode (NULL),
-			   SOFT, CONSTANT);
+			   pressure_options->pressure ? PRESSURE : SOFT, 
+			   scale, CONSTANT);
 }
 
 
@@ -696,7 +703,7 @@ clone_non_gui_paint_func (PaintCore *paint_core,
 			  GimpDrawable *drawable,
 			  int        state)
 {
-  clone_motion (paint_core, drawable, non_gui_src_drawable,
+  clone_motion (paint_core, drawable, non_gui_src_drawable, &non_gui_pressure_options,
 		non_gui_type, non_gui_offset_x, non_gui_offset_y);
 
   return NULL;

@@ -127,7 +127,8 @@ void          paint_core_cleanup      (void);
 
 /*  paint tool painting functions  */
 TempBuf *     paint_core_get_paint_area    (PaintCore *,
-					    GimpDrawable *);
+					    GimpDrawable *,
+					    gdouble);
 TempBuf *     paint_core_get_orig_image    (PaintCore *,
 					    GimpDrawable *,
 					    int, int, int, int);
@@ -135,10 +136,12 @@ void          paint_core_paste_canvas      (PaintCore *,
 					    GimpDrawable *, int, int,
 					    LayerModeEffects,
 					    BrushApplicationMode,
+					    gdouble,
 					    PaintApplicationMode);
 void          paint_core_replace_canvas    (PaintCore *,
 					    GimpDrawable *, int, int,
 					    BrushApplicationMode,
+					    gdouble,
 					    PaintApplicationMode);
 
 #endif  /*  __PAINT_CORE_H__  */

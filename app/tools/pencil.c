@@ -21,6 +21,7 @@
 #include "errors.h"
 #include "gdisplay.h"
 #include "gimpbrushpipe.h"
+#include "gradient.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
@@ -33,25 +34,20 @@
 
 #include "libgimp/gimpintl.h"
 
-
 /*  the pencil tool options  */
 typedef struct _PencilOptions PencilOptions;
 struct _PencilOptions
 {
   PaintOptions  paint_options;
-
-  int           use_pressure;
-  int           use_pressure_d;
-  GtkWidget    *use_pressure_w;
-
 };
+
 static PencilOptions *pencil_options = NULL; 
 
 /*  forward function declarations  */
-static void      pencil_motion (PaintCore *, GimpDrawable *, gboolean, gboolean);
+static void      pencil_motion (PaintCore *, GimpDrawable *, 
+				PaintPressureOptions *, gboolean);
 
 static gboolean  non_gui_incremental = FALSE;
-static gboolean  non_gui_pressure = TRUE;
 static void      pencil_options_reset (void);
 
 #define PENCIL_INCREMENTAL_DEFAULT FALSE
@@ -69,8 +65,9 @@ pencil_paint_func (PaintCore    *paint_core,
       break;
 
     case MOTION_PAINT :
-      pencil_motion (paint_core, drawable, pencil_options->paint_options.incremental,
-		     pencil_options->use_pressure);
+      pencil_motion (paint_core, drawable, 
+		     pencil_options->paint_options.pressure_options, 
+		     pencil_options->paint_options.incremental);
       break;
 
     case FINISH_PAINT :
@@ -83,51 +80,22 @@ pencil_paint_func (PaintCore    *paint_core,
   return NULL;
 }
 
-static void
-pencil_pressure_toggle_callback (GtkWidget *widget,
-				 gpointer data)
-{
-  tool_options_toggle_update (widget, data);
-}
-
 static PencilOptions *
 pencil_options_new (void)
 {
   PencilOptions *options;
 
-  GtkWidget *vbox;
-
-  options = (PencilOptions *) g_malloc (sizeof (PencilOptions));
-  
+  options = (PencilOptions *) g_malloc (sizeof (PencilOptions));  
   paint_options_init ((PaintOptions *) options,
 		      PENCIL,
 		      pencil_options_reset);
-  options->use_pressure  =
-    options->use_pressure_d = TRUE;
-
-  vbox = ((ToolOptions *) options)->main_vbox;
-  
-  
-  options->use_pressure_w =
-    gtk_check_button_new_with_label (_("Use Pressure"));
-  gtk_box_pack_start (GTK_BOX (vbox), options->use_pressure_w, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (options->use_pressure_w), "toggled",
-		      (GtkSignalFunc) pencil_pressure_toggle_callback,
-		      &options->use_pressure);
-  gtk_widget_show (options->use_pressure_w);
-
   return options;
 }
 
 static void
 pencil_options_reset (void)
 {
-  PencilOptions *options = pencil_options;
   paint_options_reset ((PaintOptions *) pencil_options);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_pressure_w),
-				options->use_pressure_d);
-  
 }
 
 Tool *
@@ -161,64 +129,69 @@ tools_free_pencil (Tool *tool)
 }
 
 static void
-pencil_motion (PaintCore    *paint_core,
-	       GimpDrawable *drawable,
-	       gboolean	     increment,
-	       gboolean      pressure)
+pencil_motion (PaintCore            *paint_core,
+	       GimpDrawable         *drawable,
+	       PaintPressureOptions *pressure_options,
+	       gboolean	             increment)
 {
   GImage *gimage;
-  TempBuf * area;
+  TempBuf *area;
   unsigned char col[MAX_CHANNELS];
   gint opacity;
+  gdouble scale;
   PaintApplicationMode paint_appl_mode = increment ? INCREMENTAL : CONSTANT;
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
+  if (pressure_options->size)
+    scale = paint_core->curpressure;
+  else
+    scale = 1.0;
+
   /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
+  if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
   if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
     {
-      /* if its a pixmap, do pixmap stuff */
-      
-      color_area_with_pixmap (paint_core, gimage, drawable, area,HARD );
+      /* if its a pixmap, do pixmap stuff */      
+      color_area_with_pixmap (paint_core, gimage, drawable, area, HARD);
       paint_appl_mode = INCREMENTAL;
     }
   else
     {
       /*  color the pixels  */
-      gimage_get_foreground (gimage, drawable, col);
-      col[area->bytes - 1] = OPAQUE_OPACITY;
+      if (pressure_options->color)
+	{
+	  gdouble r, g, b, a;
+
+	  grad_get_color_at (paint_core->curpressure, &r, &g, &b, &a);
+	  col[0] = r * 255.0;
+	  col[1] = g * 255.0;
+	  col[2] = b * 255.0;
+	  col[3] = a * 255.0;
+	  paint_appl_mode = INCREMENTAL;
+	}
+      else
+	{
+	  gimage_get_foreground (gimage, drawable, col);
+	  col[area->bytes - 1] = OPAQUE_OPACITY;
+	}
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height, area->bytes);
     }
 
-  /*Make the opacity dependent on the current pressure 
-    This makes a more natural pencil since light pressure
-    on a graphite pen will give transparent line */
-
-  if(pressure)
-    {
-      opacity = 255 * gimp_context_get_opacity (NULL) * (paint_core->curpressure / 0.5);
-      if (opacity > 255)
-	opacity = 255; 
-    }
-  else
-    {
-      opacity = 255 * gimp_context_get_opacity (NULL);
-      if (opacity > 255)
-	opacity = 255; 
-     }
-
-
+  opacity = 255 * gimp_context_get_opacity (NULL);
+  if (pressure_options->opacity)
+    opacity = opacity * 2.0 * paint_core->curpressure;
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable, opacity,
+  paint_core_paste_canvas (paint_core, drawable, 
+			   MIN (opacity, 255),
 			   (int) (gimp_context_get_opacity (NULL) * 255),
 			   gimp_context_get_paint_mode (NULL),
-			   HARD, paint_appl_mode);
+			   HARD, scale, paint_appl_mode);
 }
 
 static void *
@@ -226,7 +199,8 @@ pencil_non_gui_paint_func (PaintCore    *paint_core,
 			   GimpDrawable *drawable,
 			   int           state)
 {
-  pencil_motion (paint_core, drawable, non_gui_incremental, non_gui_pressure);
+  pencil_motion (paint_core, drawable, &non_gui_pressure_options, 
+		 non_gui_incremental);
 
   return NULL;
 }
