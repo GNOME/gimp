@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-01-25 19:55+0100\n"
-"PO-Revision-Date: 2005-01-09 15:26+0100\n"
+"PO-Revision-Date: 2005-02-19 02:49+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -6961,7 +6961,7 @@ msgstr ""
 
 #: app/dialogs/quit-dialog.c:164
 msgid "There is one image with unsaved changes:"
-msgstr "Il n'y a pas d'images avec des modifications non enregistrées :"
+msgstr "Il y a une image avec des modifications non enregistrées :"
 
 #: app/dialogs/quit-dialog.c:167
 #, c-format
