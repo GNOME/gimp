@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2002-12-17 09:07+0100\n"
-"PO-Revision-Date: 2002-12-17 09:07+0100\n"
+"POT-Creation-Date: 2002-12-21 20:37+0100\n"
+"PO-Revision-Date: 2002-12-21 20:37+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -215,6 +215,10 @@ msgstr "/Svart"
 #: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
 msgstr "/Vit"
+
+#: libgimpwidgets/gimpcolorscales.c:141
+msgid "Scales"
+msgstr "Skalor"
 
 #: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
@@ -475,6 +479,9 @@ msgstr "_Vattenfärg"
 #: modules/colorsel_water.c:250
 msgid "Pressure"
 msgstr "Tryck"
+
+#~ msgid "Scale"
+#~ msgstr "Skala"
 
 #~ msgid "_Time"
 #~ msgstr "_Tid"
