@@ -32,6 +32,7 @@
  * 1.7 added patch from Art Haas to make it compile with HP-UX, a small clean-up
  * 1.8 Dscho added transform file load/save, bug-fixes 
  * 1.9 rewrote renderloop.
+ * 1.9a fixed a bug.
  */
                  
 #include <stdio.h>
@@ -258,7 +259,6 @@ void run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 	gint sel_x1, sel_y1, sel_x2, sel_y2;
 	gint img_height, img_width, img_bpp, img_has_alpha;
 
-        GParam		values[1];
 	GDrawable 	*drawable;
         GRunModeType	run_mode;
         GStatusType	status;

@@ -20,6 +20,17 @@
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 
+
+/*
+
+  revision history
+
+  Fri Nov 28 1997 - added template image
+
+  Sun Nov 16 1997 - listbox to select multiple inputs
+
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -27,14 +38,14 @@
 #include <string.h>
 #include <time.h>
 #include <math.h>
+#include <assert.h>
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpmenu.h"
-#include "libgimp/gimpwire.h"
+#include "gck/gck.h"
 
 
-/* Declare local functions. */
 static void query(void);
 static void run(char *name,
 		int nparams,
@@ -65,25 +76,36 @@ int run_flag = 0;
 
 
 GtkWidget *dlg;
+GckListBox *listbox;
 
-#define preview_size 200
+
+#define preview_size 150
 GtkWidget *preview;
 
+GDrawable *drawable;
+
+#define max_inputs 100
 
 struct {
-  gint32 input_image_id;
+  int ninputs;
+  gint32 input_image_ids[max_inputs];
   int tile_size;
   int overlap;
   int order;
   int acceleration;
   int search_time;
+  int use_template;
+  double template_weight; /* in [0,10] */
 } config = {
-  -1,
+  0,
+  {0},
   25,
   8,
   0,
   0,
-  10
+  10,
+  0,
+  0.5,
 };
 
 
@@ -107,7 +129,7 @@ static void query()
 			 "uhm, image dissociation",
 			 "Scott Draves",
 			 "Scott Draves",
-			 "1997",
+			 "Nov 1997",
 			 "<Image>/Filters/Transforms/Fuse",
 			 "RGB*",
 			 PROC_PLUG_IN,
@@ -115,11 +137,11 @@ static void query()
 			 args, return_vals);
 }
 
-static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
-		GParam ** return_vals)
+static void
+run(char *name, int n_params, GParam * param, int *nreturn_vals,
+    GParam ** return_vals)
 {
   static GParam values[1];
-  GDrawable *drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
 
@@ -148,14 +170,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
   if (status == STATUS_SUCCESS) {
 
     if (gimp_drawable_color(drawable->id)) {
-      gimp_progress_init("Fusing...");
-      gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
-
-      doit(drawable);
-
-      if (run_mode != RUN_NONINTERACTIVE)
-	gimp_displays_flush();
-      gimp_set_data("plug_in_fuse", &config, sizeof(config));
+      ;
     } else {
       status = STATUS_EXECUTION_ERROR;
     }
@@ -177,19 +192,20 @@ compare(image *in, image *out) {
     pixel *q = out->pixels + y * out->stride;
     for (x = 0; x < in->width; x++) {
       double rr, z;
-      guchar *i = (guchar *) p;
-      guchar *o = (guchar *) q;
-      int d = i[0] - (int) o[0];
-      z = i[3] * o[3];
+      guchar *i = (guchar *) (&p[x]);
+      guchar *o = (guchar *) (&q[x]);
+      int d;
       if (0 == i[3] || 0 == o[3])
 	continue;
+      d = i[0] - (int) o[0];
       rr = d * d;
-      d = i[1] - o[1];
+      d = i[1] - (int) o[1];
       rr += d * d;
-      d = i[2] - o[2];
+      d = i[2] - (int) o[2];
       rr += d * d;
+      z = i[3] * (double) o[3];
       r += rr * z;
-      t += z;
+      t += z * z; /* z * 255? */
     }
   }
 
@@ -207,8 +223,8 @@ blit(image *dst, image *src) {
     pixel *p = dst->pixels + y * dst->stride;
     pixel *q = src->pixels + y * src->stride;
     for (x = 0; x < src->width; x++) {
-      guchar *o = (guchar *) p;
-      guchar *i = (guchar *) q;
+      guchar *o = (guchar *) (&p[x]);
+      guchar *i = (guchar *) (&q[x]);
       int s = i[3];
       if (255 == s)
 	p[x] = q[x];
@@ -221,11 +237,13 @@ blit(image *dst, image *src) {
   }
 }
 
+/* find tile somewhere in IN that matches OUT and TEMPLATE */
 void
-source_match(image *in, image *out) {
+source_match(image *in, image *out, image *template) {
   int i;
   double best_d = HUGE;
   image best_tile;
+  double w = exp(-0.3 * (10-config.template_weight));
 
   if (0 == out->width || 0 == out->height)
     return;
@@ -237,15 +255,25 @@ source_match(image *in, image *out) {
     tile.pixels =
       in->pixels + (random() % (in->width - out->width)) +
       in->stride * (random() % (in->height - out->height));
+
     tile.stride = in->stride;
     tile.width = out->width;
     tile.height = out->height;
 
     d = compare(&tile, out);
     if (d < 0.0) {
+      /* should really only happen with null overlap */
       best_tile = tile;
       break;
     }
+    if (template) {
+      double e = compare(&tile, template);
+      if (e < 0.0)
+	printf("e less than zero\n");
+      else
+	d = (d * (1.0 - w) + e * w);
+    }
+      
     if (d < best_d) {
       best_d = d;
       best_tile = tile;
@@ -256,7 +284,7 @@ source_match(image *in, image *out) {
 
 
 void
-do_fuse(image *in, image *out) {
+do_fuse(int nin, image *ins, image *out, image *template) {
   int i, parity = 0;
   double r, rad;
   double bo;
@@ -264,9 +292,12 @@ do_fuse(image *in, image *out) {
 
   bo = config.tile_size - config.overlap;
 
-  if (config.tile_size >= in->width ||
-      config.tile_size >= in->height)
-    return;
+  for (i = 0; i < nin; i++)
+    if (config.tile_size >= ins[i].width ||
+	config.tile_size >= ins[i].height) {
+      printf("input smaller than tile - bailing\n");
+      return;
+    }
 
   rad = sqrt(out->width * out->width +
 	     out->height * out->height) / 2;
@@ -286,7 +317,7 @@ do_fuse(image *in, image *out) {
     }
     parity++;
     for (i = 0; i < n; i++) {
-      image tile;
+      image tile, template_tile;
       int x, y, w, h;
       double theta = 2.0 * M_PI * prmute[i] / n;
       if (parity&1)
@@ -302,18 +333,55 @@ do_fuse(image *in, image *out) {
       if (x > out->width - w) w = out->width - x;
       if (y > out->height - h) h = out->height - y;
 
+      if (w <= 0 || h <= 0)
+	continue;
+
       tile.pixels = out->pixels + y * out->stride + x;
       tile.stride = out->stride;
       tile.width = w;
       tile.height = h;
 
-      source_match(in, &tile);
-      if (0) {
-	int y;
-	for (y = 0; y < preview_size; y++)
+      if (template) {
+	template_tile.pixels = template->pixels + y * template->stride + x;
+	template_tile.stride = template->stride;
+	template_tile.width = w;
+	template_tile.height = h;
+      }
+
+      source_match(ins + (random()%nin), &tile,
+		   template ? &template_tile : NULL);
+      if ((parity < 4) || ((i&7) == 0)) {
+	int xx, yy;
+	int cx, cy;
+	guchar *buf = (guchar *) malloc(3 * preview_size);
+	int p2 = preview_size/2;
+	if (r < p2) {
+	  cx = out->width/2;
+	  cy = out->height/2;
+	} else {
+	  cx = x;
+	  cy = y;
+	}
+	for (yy = cy-p2; yy < cy+p2; yy++) {
+	  for (xx = cx-p2; xx < cx+p2; xx++) {
+	    guchar *p = &buf[3*(xx-(cx-p2))];
+	    guchar *q = (guchar *)(out->pixels+yy*out->stride+xx);
+	    if ((xx < out->width) &&
+		(xx >= 0) &&
+		(yy < out->height) &&
+		(yy >= 0)) {
+	      p[0] = q[0];
+	      p[1] = q[1];
+	      p[2] = q[2];
+	    } else {
+	      p[0] = p[1] = p[2] = 0;
+	    }
+	  }
 	  gtk_preview_draw_row(GTK_PREVIEW (preview),
-			       (guchar *)(out->pixels+y*out->stride),
-			       0, y, preview_size);
+			       buf, 0, (yy-(cy-p2)), preview_size);
+	}
+	free(buf);
+	gtk_widget_draw (preview, NULL);  
       }
       gimp_progress_update((1-i/(double)n) * r * r / (rad * rad) +
 			   i/(double)n * (r + bo) * (r + bo) / (rad * rad));
@@ -324,57 +392,151 @@ do_fuse(image *in, image *out) {
 
 static void
 doit(GDrawable * target_drawable) {
-  image in, out;
+  image *in, out, template;
   gint bytes;
   GPixelRgn pr;
   GDrawable *input_drawable;
+  int i;
 
-  in.width = gimp_image_width(config.input_image_id);
-  in.height = gimp_image_height(config.input_image_id);
-  in.stride = in.width;
-
-
-#if 0
-  if (4 == bytes) {
-    printf("using 4 channel image\n");
-  }
-  if (3 != bytes && 4 != bytes) {
-    fprintf(stderr, "only works with three or four channels, not %d.\n", bytes);
+  if (0 == config.ninputs) {
+    printf("fuse needs at least one input\n");
     return;
   }
-#endif
 
-  /* allocate and initialize input buffer */
+  in = (image *) malloc(sizeof(image) * config.ninputs);
 
-  in.pixels = (pixel *) malloc(in.width * in.height * 4);
-  if (in.pixels == NULL) {
-    fprintf(stderr, "cannot malloc %d bytes for input.\n", in.width * in.height * 4);
-    return;
+  for (i = 0; i < config.ninputs; i++) {
+    image *inp = &in[i];
+
+    inp->width = gimp_image_width(config.input_image_ids[i]);
+    inp->height = gimp_image_height(config.input_image_ids[i]);
+    inp->stride = inp->width;
+
+    /* allocate and initialize input buffer */
+
+    inp->pixels = (pixel *) malloc(inp->width * inp->height * 4);
+    if (inp->pixels == NULL) {
+      fprintf(stderr, "cannot malloc %d bytes for input.\n", inp->width * inp->height * 4);
+      return;
+    }
+
+    {
+      int nlayers;
+      gint32 *layer_ids;
+      layer_ids = gimp_image_get_layers (config.input_image_ids[i], &nlayers);
+      if ((NULL == layer_ids) || (nlayers <= 0)) {
+	fprintf(stderr, "fuse: error getting layer IDs\n");
+	return;
+      }
+      input_drawable = gimp_drawable_get(layer_ids[nlayers-1]);
+      bytes = input_drawable->bpp;
+
+      gimp_pixel_rgn_init(&pr, input_drawable,
+			  0, 0, inp->width, inp->height, FALSE, FALSE);
+      if (4 == bytes) {
+	printf("4 channel image, using alpha\n");
+	gimp_pixel_rgn_get_rect(&pr, (guchar *)inp->pixels, 0, 0, inp->width, inp->height);
+      } else if (3 == bytes) {
+	int i;
+	guchar *tb = malloc (inp->width * bytes);
+	for (i = 0; i < inp->height; i++) {
+	  int j;
+	  gimp_pixel_rgn_get_rect(&pr, tb, 0, i, inp->width, 1);
+	  for (j = 0; j < inp->width; j++) {
+	    guchar *d = (guchar *) (inp->pixels + (inp->width * i) + j);
+	    guchar *s = tb + j * bytes;
+	    d[0] = s[0];
+	    d[1] = s[1];
+	    d[2] = s[2];
+	    d[3] = 255;
+	  }
+	}
+	free(tb);
+      } else if (1 == bytes) {
+	int i;
+	guchar *tb = malloc (inp->width * bytes);
+	for (i = 0; i < inp->height; i++) {
+	  int j;
+	  gimp_pixel_rgn_get_rect(&pr, tb, 0, i, inp->width, 1);
+	  for (j = 0; j < inp->width; j++) {
+	    guchar *d = (guchar *) (inp->pixels + (inp->width * i) + j);
+	    guchar *s = tb + j * bytes;
+	    d[0] = d[1] = d[2] = s[0];
+	    d[3] = 255;
+	  }
+	}
+	free(tb);
+      } else {
+	printf("cannot handle image with %d bytes per pixel\n", bytes);
+      }
+	
+
+      if (nlayers > 1) {
+	input_drawable = gimp_drawable_get(layer_ids[0]);
+	bytes = input_drawable->bpp;
+
+	gimp_pixel_rgn_init(&pr, input_drawable,
+			    0, 0, inp->width, inp->height, FALSE, FALSE);
+	printf("looking for alpha\n");
+	if (1 == bytes) {
+	  int i;
+	  guchar *tb = malloc (inp->width * bytes);
+	  printf("got alpha\n");
+	  for (i = 0; i < inp->height; i++) {
+	    int j;
+	    gimp_pixel_rgn_get_rect(&pr, tb, 0, i, inp->width, 1);
+	    for (j = 0; j < inp->width; j++) {
+	      guchar *d = (guchar *) (inp->pixels + (inp->width * i) + j);
+	      guchar *s = tb + j * bytes;
+	      d[3] = s[0];
+	    }
+	  }
+	  free(tb);
+	}
+	
+      }
+    }
   }
 
   {
-    int nlayers;
-    gint32 *layer_ids;
-    layer_ids = gimp_image_get_layers (config.input_image_id, &nlayers);
-    if ((NULL == layer_ids) || (nlayers <= 0)) {
-      fprintf(stderr, "fuse: error getting layer IDs\n");
+    out.width = target_drawable->width;
+    out.height = target_drawable->height;
+    out.stride = out.width;
+
+    out.pixels = (pixel *) malloc(out.width * out.height * 4);
+    if (out.pixels == NULL) {
+      fprintf(stderr, "cannot malloc %d bytes for output.\n",
+	      out.width * out.height * 4);
       return;
     }
-    input_drawable = gimp_drawable_get(layer_ids[0]);
-    bytes = input_drawable->bpp;
+  }
+  
+  if (config.use_template) {
+    template.width = target_drawable->width;
+    template.height = target_drawable->height;
+    template.stride = template.width;
+    template.pixels = (pixel *) malloc(template.width * template.height * 4);
+    if (template.pixels == NULL) {
+      fprintf(stderr, "cannot malloc %d bytes for output.\n",
+	      template.width * template.height * 4);
+      return;
+    }
+    
+    bytes = target_drawable->bpp;
 
-    gimp_pixel_rgn_init(&pr, input_drawable,
-			0, 0, in.width, in.height, FALSE, FALSE);
-    if (4 == bytes)
-      gimp_pixel_rgn_get_rect(&pr, (guchar *)in.pixels, 0, 0, in.width, in.height);
-    else if (3 == bytes) {
+    gimp_pixel_rgn_init(&pr, target_drawable,
+			0, 0, template.width, template.height, FALSE, FALSE);
+    if (4 == bytes) {
+      printf("4 channel image, using alpha\n");
+      gimp_pixel_rgn_get_rect(&pr, (guchar *)template.pixels, 0, 0, template.width, template.height);
+    } else if (3 == bytes) {
       int i;
-      guchar *tb = malloc (in.width * bytes);
-      for (i = 0; i < in.height; i++) {
+      guchar *tb = malloc (template.width * bytes);
+      for (i = 0; i < template.height; i++) {
 	int j;
-	gimp_pixel_rgn_get_rect(&pr, tb, 0, i, in.width, 1);
-	for (j = 0; j < in.width; j++) {
-	  guchar *d = (guchar *) (in.pixels + (in.width * i) + j);
+	gimp_pixel_rgn_get_rect(&pr, tb, 0, i, template.width, 1);
+	for (j = 0; j < template.width; j++) {
+	  guchar *d = (guchar *) (template.pixels + (template.width * i) + j);
 	  guchar *s = tb + j * bytes;
 	  d[0] = s[0];
 	  d[1] = s[1];
@@ -383,49 +545,20 @@ doit(GDrawable * target_drawable) {
 	}
       }
       free(tb);
-    } else if (1 == bytes) {
-      int i;
-      guchar *tb = malloc (in.width * bytes);
-      for (i = 0; i < in.height; i++) {
-	int j;
-	gimp_pixel_rgn_get_rect(&pr, tb, 0, i, in.width, 1);
-	for (j = 0; j < in.width; j++) {
-	  guchar *d = (guchar *) (in.pixels + (in.width * i) + j);
-	  guchar *s = tb + j * bytes;
-	  d[0] = d[1] = d[2] = s[0];
-	  d[3] = 255;
-	}
-      }
-      free(tb);
     }
   }
 
-  out.width = target_drawable->width;
-  out.height = target_drawable->height;
-  out.stride = out.width;
-
-  out.pixels = (pixel *) malloc(out.width * out.height * 4);
-  if (out.pixels == NULL) {
-    fprintf(stderr, "cannot malloc %d bytes for output.\n",
-	    out.width * out.height * 4);
-    return;
-  }
-
-  if (1)
-    do_fuse(&in, &out);
-  else {
-    int i, j;
-    for (i = 0; i < out.height; i++)
-      for (j = 0; j < out.width; j++)
-	out.pixels[i * out.stride + j] = random();
-  }
-  
+  do_fuse(config.ninputs, in, &out,
+	  config.use_template ? &template : NULL);
 
   gimp_pixel_rgn_init(&pr, target_drawable,
 		      0, 0, out.width, out.height, FALSE, FALSE);
 
+  bytes = target_drawable->bpp;
+
+
   if (4 == bytes) {
-    gimp_pixel_rgn_set_rect(&pr, (guchar *)out.pixels, 0, 0, out.width, out.height);
+    gimp_pixel_rgn_set_rect(&pr, (guchar *) out.pixels, 0, 0, out.width, out.height);
   } else {
     int i;
     guchar *tb = malloc (out.width * bytes);
@@ -448,6 +581,16 @@ doit(GDrawable * target_drawable) {
   */
   gimp_drawable_update(target_drawable->id, 0, 0,
 		       target_drawable->width, target_drawable->height);
+
+
+
+  for (i = 0; i < config.ninputs; i++)
+    free(in[i].pixels);
+  free(in);
+  
+  free(out.pixels);
+  if (config.use_template)
+    free(template.pixels);
 }
 
 
@@ -458,8 +601,34 @@ static void close_callback(GtkWidget * widget, gpointer data)
 
 static void ok_callback(GtkWidget * widget, gpointer data)
 {
+  GList *sel;
+  int n;
   run_flag = 1;
-  gtk_widget_destroy(GTK_WIDGET(data));
+
+  if (gimp_drawable_color(drawable->id)) {
+ 
+    sel = gck_listbox_get_current_selection(listbox);
+
+    n = 0;
+    while (sel != NULL && n < max_inputs) {
+    
+      config.input_image_ids[n] =
+	((GckListBoxItem *) sel->data)->user_data;
+      sel = sel->next;
+      n++;
+    }
+    config.ninputs = n;
+
+    gimp_progress_init("Fusing...");
+    gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
+
+    doit(drawable);
+
+    gtk_widget_destroy(dlg);
+
+    gimp_displays_flush();
+    gimp_set_data("plug_in_fuse", &config, sizeof(config));
+  }
 }
 
 static gint
@@ -471,13 +640,6 @@ not_indexed_constrain (gint32 image_id, gint32 drawable_id, gpointer data) {
     
   return INDEXED != gimp_image_base_type (image_id);
 }
-
-
-static void
-input_callback(gint32 id, gpointer data) {
-  config.input_image_id = id;
-}
-
 
 static void
 overlap_callback (GtkWidget *widget, gpointer   data)
@@ -505,12 +667,42 @@ search_time_callback (GtkWidget *widget, gpointer   data)
 }
 
 
+static void
+toggle_callback (GtkWidget *widget, gpointer data)
+{
+  int *toggle_val;
+
+  toggle_val = (int *) data;
+
+  if (GTK_TOGGLE_BUTTON (widget)->active)
+    *toggle_val = TRUE;
+  else
+    *toggle_val = FALSE;
+}
+
+static void
+scale_callback (GtkAdjustment *adjustment, gpointer data)
+{
+  * (double *) data = adjustment->value;
+}
+
+static char*
+gimp_base_name (char *str)
+{
+  char *t;
+
+  t = strrchr (str, '/');
+  if (!t)
+    return str;
+  return t+1;
+}
+
 static gint dialog() {
+  GtkWidget *frame;
   GtkWidget *button;
   GtkWidget *table;
   GtkWidget *box;
   GtkWidget *w;
-  GtkWidget *frame;
   gchar **argv;
   gint argc;
   int row;
@@ -557,28 +749,55 @@ static gint dialog() {
 
   box = GTK_DIALOG(dlg)->vbox;
 
+
   {
-    GtkWidget *menu;
-    GtkWidget *menuitem;
-    GtkWidget *hbox;
-    GtkWidget *option_menu = gtk_option_menu_new ();
+    gint32 *images;
+    int i, k, nimages;
+    
+    frame = gtk_frame_new("Source Images");
+    gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
+    gtk_container_border_width(GTK_CONTAINER(frame), 10);
+    gtk_box_pack_start(GTK_BOX(box), frame, FALSE, FALSE, 10);
+    gtk_widget_show(frame);
 
-    hbox = gtk_hbox_new (FALSE, 5);
-    gtk_box_pack_start(GTK_BOX(box), hbox, FALSE, FALSE, 10);
-    gtk_widget_show(hbox);
+    listbox = gck_listbox_new(frame, TRUE, TRUE, 10, 150, 150,
+			      GTK_SELECTION_MULTIPLE, NULL,
+			      NULL /* event_handler */);
 
-    w = gtk_label_new("Tile Source:");
-    gtk_misc_set_alignment(GTK_MISC(w), 0.0, 0.5);
-    gtk_box_pack_start(GTK_BOX(hbox), w, TRUE, TRUE, 10);
-    gtk_widget_show(w);
+    
+    images = gimp_query_images (&nimages);
+    for (i = 0, k = 0; i < nimages; i++) {
+      if (not_indexed_constrain(images[i], 0, 0)) {
+	int j;
+	GckListBoxItem item;
+	char *filename;
+	filename = gimp_image_get_filename (images[i]);
+	item.label = g_new (char, strlen (filename) + 16);
+	sprintf (item.label, "%s-%d", gimp_base_name (filename), images[i]);
+	g_free (filename);
 
-    gtk_box_pack_start(GTK_BOX(hbox), option_menu, TRUE, TRUE, 10);
-    menu = gimp_image_menu_new(not_indexed_constrain, input_callback,
-			       0, config.input_image_id);
-
-    gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
-    gtk_widget_show (option_menu);
+	item.widget = NULL;
+	item.user_data = (gpointer) images[i];
+	item.listbox = NULL;
+	gck_listbox_insert_item(listbox, &item, k);
+	g_free(item.label);
+	for (j = 0; j < config.ninputs; j++)
+	  if (images[i] == config.input_image_ids[j])
+	    (void) gck_listbox_select_item_by_position(listbox, k);
+	k++;
+      }
+    }
   }
+
+  frame = gtk_frame_new("Parameters");
+  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_border_width(GTK_CONTAINER(frame), 10);
+  gtk_box_pack_start(GTK_BOX(box), frame, FALSE, FALSE, 10);
+  gtk_widget_show(frame);
+
+  box = gtk_vbox_new (FALSE, 5);
+  gtk_container_add(GTK_CONTAINER(frame), box);
+  gtk_widget_show (box);
 
   {
     GtkWidget *label;
@@ -652,6 +871,63 @@ static gint dialog() {
     gtk_widget_show (entry);
 
     gtk_widget_show (hbox);
+  }
+
+  {
+    GtkWidget *toggle;
+    toggle = gtk_check_button_new_with_label ("use target as template");
+    gtk_box_pack_start(GTK_BOX(box), toggle, FALSE, FALSE, 0);
+    gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			(GtkSignalFunc) toggle_callback,
+			&config.use_template);
+    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), (config.use_template));
+    gtk_widget_show (toggle);
+  }
+
+  {
+    GtkWidget *label;
+    GtkWidget *scale;
+    GtkObject *scale_data;
+    GtkWidget *hbox;
+    char buffer[20];
+    hbox = gtk_hbox_new (FALSE, 5);
+    gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
+
+    label = gtk_label_new ("Template weight: ");
+    gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+    gtk_widget_show (label);
+
+    scale_data = gtk_adjustment_new (config.template_weight, 0.0, 10.0,
+				     0.01, 0.01, 0.0);
+    scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+    gtk_widget_set_usize (scale, 150, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
+    gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+    gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+    gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
+			(GtkSignalFunc) scale_callback,
+			&config.template_weight);
+    gtk_widget_show (scale);
+
+    gtk_widget_show (hbox);
+  }
+
+  box = GTK_DIALOG(dlg)->vbox;
+
+  {
+    frame = gtk_frame_new("Preview");
+    gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
+    gtk_container_border_width(GTK_CONTAINER(frame), 10);
+    gtk_box_pack_start(GTK_BOX(box), frame, FALSE, FALSE, 10);
+    gtk_widget_show(frame);
+
+    
+    preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+    gtk_preview_size (GTK_PREVIEW (preview), preview_size, preview_size);
+    
+    gtk_container_add(GTK_CONTAINER(frame), preview);
+
+    gtk_widget_show (preview);
   }
 
   gtk_widget_show(dlg);

@@ -1,3 +1,9 @@
+Mon Dec  8 16:30:29 EST 1997  Adrian Likins <adrian@gimp.org>
+
+	* udpdate gqbist, warp, randomize, fuse, gfig plugins
+
+	* removed gflare-tar.gz from the plugins dir
+
 Mon Dec  8 11:43:17 EST 1997 Adrian Likins <adrian@gimp.org>
 
 	* updated iwarp to latest version
