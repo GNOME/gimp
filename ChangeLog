@@ -1,3 +1,7 @@
+2000-12-12  Vidar Madsen  <vidar@gimp.org>
+
+	* plug-ins/common/spheredesigner.c: Nicer bumpmapping.
+
 2000-12-12  Kelly Martin  <kmartin@kiva.net>
 
 	* plug-ins/perl/Gimp/Fu.pm: fixed default JPEG quality (0.75

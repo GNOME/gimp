@@ -1084,59 +1084,51 @@ void objnormal(vector *res, common *obj, vector *p)
   vnorm(res, 1.0);
 
   for(i = 0; i < obj->numnormal; i++) {
-    vector tmpcol[3];
-    vector q[3], rot = {90,90,90};
+    int k;
+    vector tmpcol[6];
+    vector q[6], nres;
     texture *t = &obj->normal[i];
     double nstep = 0.1;
 
-    vcopy(&q[0], p);
-    vcopy(&q[1], res); vvrotate(&q[1], &rot);
-    vcross(&q[1], &q[1], res);
-    vnorm(&q[1], nstep);
-    vcross(&q[2], &q[1], res);
-    vnorm(&q[2], nstep);
+    vset(&nres, 0,0,0);
+    for(k = 0; k < 6; k++) {
+      vcopy(&q[k], p);
+    }
+    q[0].x += nstep;
+    q[1].x -= nstep;
+    q[2].y += nstep;
+    q[3].y -= nstep;
+    q[4].z += nstep;
+    q[5].z -= nstep;
 
-    vadd(&q[1], p);
-    vadd(&q[2], p);
-
-    vset(&tmpcol[0], 0,0,0);
-    vset(&tmpcol[1], 0,0,0);
-    vset(&tmpcol[2], 0,0,0);
     switch(t->type) {
     case MARBLE:
-      marble(&q[0], &tmpcol[0], t);
-      marble(&q[1], &tmpcol[1], t);
-      marble(&q[2], &tmpcol[2], t);
+      for(k = 0; k < 6; k++)
+	marble(&q[k], &tmpcol[k], t);
       break;
     case LIZARD:
-      lizard(&q[0], &tmpcol[0], t);
-      lizard(&q[1], &tmpcol[1], t);
-      lizard(&q[2], &tmpcol[2], t);
+      for(k = 0; k < 6; k++)
+	lizard(&q[k], &tmpcol[k], t);
       break;
     case PERLIN:
-      perlin(&q[0], &tmpcol[0], t);
-      perlin(&q[1], &tmpcol[1], t);
-      perlin(&q[2], &tmpcol[2], t);
+      for(k = 0; k < 6; k++)
+	perlin(&q[k], &tmpcol[k], t);
       break;
     case WOOD:
-      wood(&q[0], &tmpcol[0], t);
-      wood(&q[1], &tmpcol[1], t);
-      wood(&q[2], &tmpcol[2], t);
+      for(k = 0; k < 6; k++)
+	wood(&q[k], &tmpcol[k], t);
       break;
     case SPIRAL:
-      spiral(&q[0], &tmpcol[0], t);
-      spiral(&q[1], &tmpcol[1], t);
-      spiral(&q[2], &tmpcol[2], t);
+      for(k = 0; k < 6; k++)
+	spiral(&q[k], &tmpcol[k], t);
       break;
     case SPOTS:
-      spots(&q[0], &tmpcol[0], t);
-      spots(&q[1], &tmpcol[1], t);
-      spots(&q[2], &tmpcol[2], t);
+      for(k = 0; k < 6; k++)
+	spots(&q[k], &tmpcol[k], t);
       break;
     case IMAGE:
-      imagepixel(&q[0], &tmpcol[0], t);
-      imagepixel(&q[1], &tmpcol[1], t);
-      imagepixel(&q[2], &tmpcol[2], t);
+      for(k = 0; k < 6; k++)
+	imagepixel(&q[k], &tmpcol[k], t);
       break;
     case CHECKER:
     case SOLID:
@@ -1151,19 +1143,14 @@ void objnormal(vector *res, common *obj, vector *p)
       fprintf(stderr, "Warning: unknown texture %d\n", t->type);
       break;
     }
-    vavg(&tmpcol[0]);
-    vavg(&tmpcol[1]);
-    vavg(&tmpcol[2]);
-    vsub(&tmpcol[1], &tmpcol[0]);
-    vsub(&tmpcol[2], &tmpcol[0]);
-    vsub(&q[1], &q[0]);
-    vsub(&q[2], &q[0]);
-    vadd(&q[1], &tmpcol[1]);
-    vadd(&q[2], &tmpcol[2]);
-    vcross(&q[0], &q[1], &q[2]);
-    vnorm(&q[0], 1.0);
-    vmul(&q[0], t->amount);
-    vadd(res, &q[0]);
+
+    nres.x = tmpcol[0].x - tmpcol[1].x;
+    nres.y = tmpcol[2].x - tmpcol[3].x;
+    nres.z = tmpcol[4].x - tmpcol[5].x;
+    vadd(&nres, res);
+    vnorm(&nres, 1.0);
+    vmul(&nres, t->amount);
+    vadd(res, &nres);
     vnorm(res, 1.0);
   }
 }
