@@ -189,11 +189,18 @@ file_save_as (GimpImage      *gimage,
 
       if (save_a_copy)
         {
-          g_object_set_data_full (G_OBJECT (gimage), "gimp-image-save-a-copy",
-                                  g_strdup (uri), (GDestroyNotify) g_free);
+          /*  remember the "save-a-copy" filename for the next invocation  */
+          g_object_set_data_full (G_OBJECT (gimage),
+                                  "gimp-image-save-a-copy", g_strdup (uri),
+                                  (GDestroyNotify) g_free);
         }
       else
 	{
+          /*  reset the "save-a-copy" filename when the image URI changes  */
+          if (uri && strcmp (uri, gimp_image_get_uri (gimage)))
+            g_object_set_data (G_OBJECT (gimage),
+                               "gimp-image-save-a-copy", NULL);
+
 	  gimp_image_set_uri (gimage, uri);
           gimp_image_set_save_proc (gimage, file_proc);
           gimp_image_clean_all (gimage);

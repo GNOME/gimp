@@ -1,5 +1,10 @@
 2004-11-29  Sven Neumann  <sven@gimp.org>
 
+	* app/file/file-save.c (file_save_as): when the image filename
+	changes, forget the filename that was last used with "save-a-copy".
+
+2004-11-29  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppreview.c (gimp_preview_toggle_callback):
 	change the "update" property and notify listeners (in particular
 	GimpDrawablePreview) before invalidating the preview. Plug-ins
