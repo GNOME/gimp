@@ -120,7 +120,7 @@ script_fu_console_run (gchar      *name,
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunModeType   run_mode;
+  GimpRunMode   run_mode;
 
   run_mode = params[0].data.d_int32;
 
@@ -624,7 +624,7 @@ script_fu_eval_run (gchar      *name,
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunModeType   run_mode;
+  GimpRunMode   run_mode;
 
   run_mode = params[0].data.d_int32;
 

@@ -24,7 +24,7 @@ GimpPDBStatusType   file_save (GimpImage     *gimage,
                                const gchar   *filename,
                                const gchar   *raw_filename,
                                PlugInProcDef *file_proc,
-                               RunModeType    run_mode,
+                               GimpRunMode    run_mode,
                                gboolean       set_filename);
 
 

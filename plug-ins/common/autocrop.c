@@ -88,7 +88,7 @@ run (gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
-  GimpRunModeType    run_mode;
+  GimpRunMode    run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             image_id;
   gboolean           interactive;

@@ -438,7 +438,7 @@ run (gchar      *name,
   gint img_height, img_width, img_bpp, img_has_alpha;
 
   GimpDrawable      *drawable;
-  GimpRunModeType    run_mode;
+  GimpRunMode    run_mode;
   GimpPDBStatusType  status;
 
   *nreturn_vals = 1;

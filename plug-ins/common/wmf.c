@@ -897,7 +897,7 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-static GimpRunModeType l_run_mode;
+static GimpRunMode l_run_mode;
 
 static int pixs_per_in;
 

@@ -227,7 +227,7 @@ p_strdup_del_underscore(char *name)
  * ============================================================================
  */
 
-void p_msg_win(GimpRunModeType run_mode, char *msg)
+void p_msg_win(GimpRunMode run_mode, char *msg)
 {
   static t_but_arg  l_argv[1];
   int               l_argc;  
@@ -622,7 +622,7 @@ char*  p_alloc_fname(char *basename, long nr, char *extension)
  * allocate and init an ainfo structure from the given image.
  * ============================================================================
  */
-t_anim_info *p_alloc_ainfo(gint32 image_id, GimpRunModeType run_mode)
+t_anim_info *p_alloc_ainfo(gint32 image_id, GimpRunMode run_mode)
 {
    t_anim_info   *l_ainfo_ptr;
 
@@ -1015,7 +1015,7 @@ int p_decide_save_as(gint32 image_id, char *sav_name)
   static t_but_arg  l_argv[3];
   int               l_argc;  
   int               l_save_as_mode;
-  GimpRunModeType      l_run_mode;  
+  GimpRunMode      l_run_mode;  
 
   l_msg = _("You are using a file format != xcf\n"
 	    "Save Operations may result\n"
@@ -1068,7 +1068,7 @@ int p_decide_save_as(gint32 image_id, char *sav_name)
  * p_save_named_image
  * ============================================================================
  */
-gint32 p_save_named_image(gint32 image_id, char *sav_name, GimpRunModeType run_mode)
+gint32 p_save_named_image(gint32 image_id, char *sav_name, GimpRunMode run_mode)
 {
   GimpDrawable  *l_drawable;
   gint        l_nlayers;
@@ -1871,7 +1871,7 @@ p_shift(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
  * and load it from the next/prev anim Frame on disk.
  * ============================================================================
  */
-int gap_next(GimpRunModeType run_mode, gint32 image_id)
+int gap_next(GimpRunMode run_mode, gint32 image_id)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -1889,7 +1889,7 @@ int gap_next(GimpRunModeType run_mode, gint32 image_id)
   return(rc);    
 }	/* end gap_next */
 
-int gap_prev(GimpRunModeType run_mode, gint32 image_id)
+int gap_prev(GimpRunMode run_mode, gint32 image_id)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -1915,7 +1915,7 @@ int gap_prev(GimpRunModeType run_mode, gint32 image_id)
  * ============================================================================
  */
 
-int gap_first(GimpRunModeType run_mode, gint32 image_id)
+int gap_first(GimpRunMode run_mode, gint32 image_id)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -1935,7 +1935,7 @@ int gap_first(GimpRunModeType run_mode, gint32 image_id)
   return(rc);    
 }	/* end gap_first */
 
-int gap_last(GimpRunModeType run_mode, gint32 image_id)
+int gap_last(GimpRunMode run_mode, gint32 image_id)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -1965,7 +1965,7 @@ int gap_last(GimpRunModeType run_mode, gint32 image_id)
  * ============================================================================
  */
 
-int gap_goto(GimpRunModeType run_mode, gint32 image_id, int nr)
+int gap_goto(GimpRunMode run_mode, gint32 image_id, int nr)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -2032,7 +2032,7 @@ int gap_goto(GimpRunModeType run_mode, gint32 image_id, int nr)
  * gap_del
  * ============================================================================
  */
-int gap_del(GimpRunModeType run_mode, gint32 image_id, int nr)
+int gap_del(GimpRunMode run_mode, gint32 image_id, int nr)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -2170,7 +2170,7 @@ int p_dup_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
  * gap_dup
  * ============================================================================
  */
-int gap_dup(GimpRunModeType run_mode, gint32 image_id, int nr,
+int gap_dup(GimpRunMode run_mode, gint32 image_id, int nr,
             long range_from, long range_to)
 {
   int rc;
@@ -2239,7 +2239,7 @@ int gap_dup(GimpRunModeType run_mode, gint32 image_id, int nr,
  * ============================================================================
  */
 
-int gap_exchg(GimpRunModeType run_mode, gint32 image_id, int nr)
+int gap_exchg(GimpRunMode run_mode, gint32 image_id, int nr)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -2362,7 +2362,7 @@ int p_shift_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
  * gap_shift
  * ============================================================================
  */
-int gap_shift(GimpRunModeType run_mode, gint32 image_id, int nr,
+int gap_shift(GimpRunMode run_mode, gint32 image_id, int nr,
             long range_from, long range_to)
 {
   int rc;
@@ -2554,7 +2554,7 @@ p_vid_edit_framecount()
  * ============================================================================
  */
 gint
-gap_vid_edit_copy(GimpRunModeType run_mode, gint32 image_id, long range_from, long range_to)
+gap_vid_edit_copy(GimpRunMode run_mode, gint32 image_id, long range_from, long range_to)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -2659,7 +2659,7 @@ static gint p_custom_palette_file(char *filename, guchar *rgb, gint count)
  * ============================================================================
  */
 gint
-gap_vid_edit_paste(GimpRunModeType run_mode, gint32 image_id, long paste_mode)
+gap_vid_edit_paste(GimpRunMode run_mode, gint32 image_id, long paste_mode)
 {
 #define CUSTOM_PALETTE_NAME "gap_cmap"
   int rc;
@@ -2930,7 +2930,7 @@ p_gap_lock_build_lockkey(t_gap_lockdata *lock,  gint32 image_id)
 }
 
 gint
-p_gap_lock_is_locked(gint32 image_id, GimpRunModeType run_mode)
+p_gap_lock_is_locked(gint32 image_id, GimpRunMode run_mode)
 {
   gint32          l_pid;
   t_gap_lockdata  l_lock;

@@ -155,7 +155,7 @@ run(char *name, int n_params, GimpParam *param, int *nreturn_vals,
 {
    static GimpParam values[1];
    GimpDrawable *drawable;
-   GimpRunModeType run_mode;
+   GimpRunMode run_mode;
    GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
    INIT_I18N_UI();
@@ -171,7 +171,7 @@ run(char *name, int n_params, GimpParam *param, int *nreturn_vals,
 
    _map_info.color = gimp_drawable_is_rgb(drawable->drawable_id);
 
-   run_mode = (GimpRunModeType) param[0].data.d_int32;
+   run_mode = (GimpRunMode) param[0].data.d_int32;
    
    if (run_mode == GIMP_RUN_INTERACTIVE) {
       if (!dialog(drawable)) {

@@ -127,7 +127,7 @@ run (char    *name,
 
   char l_plugin_name[MAX_PLUGIN_NAME_LEN];
   static GimpParam values[1];
-  GimpRunModeType run_mode;
+  GimpRunMode run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32     image_id;
   gint32  len_struct;

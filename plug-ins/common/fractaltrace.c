@@ -164,7 +164,7 @@ run (gchar   *name,
      GimpParam **rets)
 {
   GimpDrawable     *drawable;
-  GimpRunModeType   run_mode;
+  GimpRunMode   run_mode;
   GimpPDBStatusType    status;
   static GimpParam  returns[1];
 

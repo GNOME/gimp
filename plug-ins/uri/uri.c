@@ -48,7 +48,7 @@ static void   run   (gchar      *name,
 		     GimpParam **return_vals);
 
 static gint32   load_image (gchar             *filename,
-			    GimpRunModeType    run_mode,
+			    GimpRunMode    run_mode,
 			    GimpPDBStatusType *status /* return value */);
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -102,7 +102,7 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam  values[2];
-  GimpRunModeType   run_mode;
+  GimpRunMode   run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32            image_ID;
 
@@ -137,7 +137,7 @@ run (gchar      *name,
 
 static gint32
 load_image (gchar             *filename,
-	    GimpRunModeType    run_mode,
+	    GimpRunMode    run_mode,
 	    GimpPDBStatusType *status)
 {
   gint32  image_ID;

@@ -78,7 +78,7 @@ helper_run (gchar * name,
      GimpParam * param, gint * nreturn_vals, GimpParam ** return_vals)
 {
   static GimpParam values[2];
-  GimpRunModeType run_mode;
+  GimpRunMode run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   g_message ("run called %s", name);

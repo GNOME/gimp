@@ -19,16 +19,25 @@
 #ifndef __PLUG_IN_TYPES_H__
 #define __PLUG_IN_TYPES_H__
 
-
 #include "core/core-types.h"
 
 
 typedef enum
 {
-  RUN_INTERACTIVE    = 0,
-  RUN_NONINTERACTIVE = 1,
-  RUN_WITH_LAST_VALS = 2
-} RunModeType;
+  GIMP_RUN_INTERACTIVE,
+  GIMP_RUN_NONINTERACTIVE,
+  GIMP_RUN_WITH_LAST_VALS
+} GimpRunMode;
+
+typedef enum
+{
+  PLUG_IN_RGB_IMAGE      = 1 << 0,
+  PLUG_IN_GRAY_IMAGE     = 1 << 1,
+  PLUG_IN_INDEXED_IMAGE  = 1 << 2,
+  PLUG_IN_RGBA_IMAGE     = 1 << 3,
+  PLUG_IN_GRAYA_IMAGE    = 1 << 4,
+  PLUG_IN_INDEXEDA_IMAGE = 1 << 5
+} PlugInImageType;
 
 
 typedef struct _PlugIn        PlugIn;

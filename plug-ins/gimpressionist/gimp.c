@@ -123,7 +123,7 @@ run(char *name, int nparams, GimpParam *param, int *nreturn_vals, GimpParam **re
 {
   static GimpParam values[1];
 
-  GimpRunModeType run_mode;
+  GimpRunMode run_mode;
   GimpPDBStatusType  status;
 
   status = GIMP_PDB_SUCCESS;

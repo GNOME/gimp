@@ -927,7 +927,7 @@ error:
  * gap_range_to_multilayer
  * ============================================================================
  */
-gint32 gap_range_to_multilayer(GimpRunModeType run_mode, gint32 image_id,
+gint32 gap_range_to_multilayer(GimpRunMode run_mode, gint32 image_id,
                              long range_from, long range_to,
                              long flatten_mode, long bg_visible,
                              long   framerate,
@@ -1089,7 +1089,7 @@ p_frames_convert(t_anim_info *ainfo_ptr,
                  GimpImageBaseType dest_type, gint32 dest_colors, gint32 dest_dither,
 		 gint32  palette_type, gint32  alpha_dither, gint32  remove_unused,  char   *palette)
 {
-  GimpRunModeType l_run_mode;
+  GimpRunMode l_run_mode;
   gint32  l_tmp_image_id;
   long    l_cur_frame_nr;
   long    l_step, l_begin, l_end;
@@ -1442,7 +1442,7 @@ gint32 p_anim_sizechange(t_anim_info *ainfo_ptr,
  * gap_range_flatten
  * ============================================================================
  */
-int    gap_range_flatten(GimpRunModeType run_mode, gint32 image_id,
+int    gap_range_flatten(GimpRunMode run_mode, gint32 image_id,
                          long range_from, long range_to)
 {
   int    l_rc;
@@ -1613,7 +1613,7 @@ p_frames_layer_del(t_anim_info *ainfo_ptr,
  * gap_range_layer_del
  * ============================================================================
  */
-int gap_range_layer_del(GimpRunModeType run_mode, gint32 image_id,
+int gap_range_layer_del(GimpRunMode run_mode, gint32 image_id,
                          long range_from, long range_to, long position)
 {
   int    l_rc;
@@ -1666,7 +1666,7 @@ int gap_range_layer_del(GimpRunModeType run_mode, gint32 image_id,
  *   convert frame range to any gimp supported fileformat
  * ============================================================================
  */
-gint32 gap_range_conv(GimpRunModeType run_mode, gint32 image_id,
+gint32 gap_range_conv(GimpRunMode run_mode, gint32 image_id,
                       long range_from, long range_to,
                       long       flatten,
                       GimpImageBaseType dest_type,
@@ -1789,7 +1789,7 @@ gint32 gap_range_conv(GimpRunModeType run_mode, gint32 image_id,
  *    (depending on asiz_mode)
  * ============================================================================
  */
-int gap_anim_sizechange(GimpRunModeType run_mode, t_gap_asiz asiz_mode, gint32 image_id,
+int gap_anim_sizechange(GimpRunMode run_mode, t_gap_asiz asiz_mode, gint32 image_id,
                   long size_x, long size_y, long offs_x, long offs_y)
 {
   int    l_rc;

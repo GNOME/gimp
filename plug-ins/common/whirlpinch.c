@@ -216,7 +216,7 @@ run (gchar   *name,
 {
   static GimpParam values[1];
 
-  GimpRunModeType run_mode;
+  GimpRunMode run_mode;
   GimpPDBStatusType  status;
   double       xhsiz, yhsiz;
   int          pwidth, pheight;

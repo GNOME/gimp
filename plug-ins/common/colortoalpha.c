@@ -74,7 +74,7 @@ static void      colortoalpha_ok_callback (GtkWidget     *widget,
 					   gpointer       data);
 
 
-static GimpRunModeType run_mode;
+static GimpRunMode run_mode;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {

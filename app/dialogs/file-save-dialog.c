@@ -341,7 +341,7 @@ file_save_ok_callback (GtkWidget *widget,
 
 	  args = g_new (Argument, 3);
 	  args[0].arg_type      = GIMP_PDB_INT32;
-	  args[0].value.pdb_int = RUN_INTERACTIVE;
+	  args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
 	  args[1].arg_type      = GIMP_PDB_IMAGE;
 	  args[1].value.pdb_int = gimp_image_get_ID (the_gimage);
 	  args[2].arg_type      = GIMP_PDB_DRAWABLE;
@@ -388,7 +388,7 @@ file_save_ok_callback (GtkWidget *widget,
                           filename,
                           raw_filename,
                           save_file_proc,
-                          RUN_INTERACTIVE,
+                          GIMP_RUN_INTERACTIVE,
                           set_filename);
 
       if (status != GIMP_PDB_SUCCESS &&
@@ -453,7 +453,7 @@ file_overwrite_callback (GtkWidget *widget,
                           overwrite_data->full_filename,
                           overwrite_data->raw_filename,
                           save_file_proc,
-                          RUN_INTERACTIVE,
+                          GIMP_RUN_INTERACTIVE,
                           set_filename);
 
       if (status != GIMP_PDB_SUCCESS &&

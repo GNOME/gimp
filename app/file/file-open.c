@@ -44,6 +44,7 @@
 #include "pdb/procedural_db.h"
 
 #include "plug-in/plug-in.h"
+#include "plug-in/plug-in-proc.h"
 
 #include "file-open.h"
 #include "file-utils.h"
@@ -61,7 +62,7 @@ file_open_image (Gimp              *gimp,
 		 const gchar       *raw_filename,
 		 const gchar       *open_mode,
 		 PlugInProcDef     *file_proc,
-		 RunModeType        run_mode,
+		 GimpRunMode        run_mode,
 		 GimpPDBStatusType *status)
 {
   ProcRecord    *proc;
@@ -82,7 +83,7 @@ file_open_image (Gimp              *gimp,
   if (! file_proc)
     {
       /*  no errors when making thumbnails  */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	g_message (_("%s failed.\n"
 		     "%s: Unknown file type."),
 		   open_mode, filename);
@@ -96,7 +97,7 @@ file_open_image (Gimp              *gimp,
       if (! (statbuf.st_mode & S_IFREG))
 	{
 	  /*  no errors when making thumbnails  */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    g_message (_("%s failed.\n"
 			 "%s is not a regular file."),
 		       open_mode, filename);
@@ -107,7 +108,7 @@ file_open_image (Gimp              *gimp,
       if (access (filename, R_OK) != 0)
 	{
 	  /*  no errors when making thumbnails  */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    g_message (_("%s failed.\n"
 			 "%s: %s."),
 		       open_mode, filename, g_strerror (errno));
@@ -116,7 +117,7 @@ file_open_image (Gimp              *gimp,
 	}
     }
 
-  proc = &file_proc->db_info;
+  proc = plug_in_proc_def_get_proc (file_proc);
 
   args = g_new0 (Argument, proc->num_args);
 
@@ -169,7 +170,7 @@ file_open_with_proc_and_display (Gimp          *gimp,
 				 raw_filename,
 				 _("Open"),
 				 file_proc,
-				 RUN_INTERACTIVE,
+				 GIMP_RUN_INTERACTIVE,
 				 &status)) != NULL)
     {
       /* enable & clear all undo steps */

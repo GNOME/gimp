@@ -140,7 +140,7 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam  values[3];
-  GimpRunModeType   run_mode;
+  GimpRunMode   run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32  new_layer;
   gint    width;

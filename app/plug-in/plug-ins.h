@@ -20,23 +20,14 @@
 #define __PLUG_IN_H__
 
 
-#include <time.h>      /* time_t */
 #include <sys/types.h> /* pid_t  */
 
 #include "pdb/procedural_db.h"  /* ProcRecord */
 
+#include "plug-in-proc.h" /* to be removed */
+
 
 #define WRITE_BUFFER_SIZE  512
-
-typedef enum /*< pdb-skip> */ /*< skip> */
-{
-  PLUG_IN_RGB_IMAGE      = 0x1 << 0,
-  PLUG_IN_GRAY_IMAGE     = 0x1 << 1,
-  PLUG_IN_INDEXED_IMAGE  = 0x1 << 2,
-  PLUG_IN_RGBA_IMAGE     = 0x1 << 3,
-  PLUG_IN_GRAYA_IMAGE    = 0x1 << 4,
-  PLUG_IN_INDEXEDA_IMAGE = 0x1 << 5
-} PlugInImageType;
 
 
 struct _PlugIn
@@ -68,23 +59,6 @@ struct _PlugIn
   GimpProgress *progress;         /* Progress dialog */
 
   PlugInDef    *user_data;        /* DON'T USE!! */
-};
-
-struct _PlugInProcDef
-{
-  gchar           *prog;
-  gchar           *menu_path;
-  gchar           *accelerator;
-  gchar           *extensions;
-  gchar           *prefixes;
-  gchar           *magics;
-  gchar           *image_types;
-  PlugInImageType  image_types_val;
-  ProcRecord       db_info;
-  GSList          *extensions_list;
-  GSList          *prefixes_list;
-  GSList          *magics_list;
-  time_t           mtime;
 };
 
 

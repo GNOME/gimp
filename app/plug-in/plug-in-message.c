@@ -107,6 +107,7 @@
 #include "gui/pattern-select.h"
 
 #include "plug-in.h"
+#include "plug-in-proc.h"
 
 #include "app_procs.h"
 #include "gimpprogress.h"
@@ -1374,7 +1375,8 @@ plug_in_repeat (gboolean with_interface)
 	args[i].arg_type = last_plug_in->args[i].arg_type;
 
       /* initialize the first three plug-in arguments  */
-      args[0].value.pdb_int = (with_interface ? RUN_INTERACTIVE : RUN_WITH_LAST_VALS);
+      args[0].value.pdb_int = (with_interface ? 
+                               GIMP_RUN_INTERACTIVE : GIMP_RUN_WITH_LAST_VALS);
       args[1].value.pdb_int = gimp_image_get_ID (gdisplay->gimage);
       args[2].value.pdb_int = gimp_drawable_get_ID (gimp_image_active_drawable (gdisplay->gimage));
 
@@ -2777,7 +2779,7 @@ plug_in_callback (GtkWidget *widget,
     {
     case GIMP_EXTENSION:
       /* initialize the first argument  */
-      args[0].value.pdb_int = RUN_INTERACTIVE;
+      args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
       argc = 1;
       break;
 
@@ -2787,7 +2789,7 @@ plug_in_callback (GtkWidget *widget,
 	  gdisp_ID = gdisplay->ID;
 
 	  /* initialize the first 3 plug-in arguments  */
-	  args[0].value.pdb_int = RUN_INTERACTIVE;
+	  args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
 	  args[1].value.pdb_int = gimp_image_get_ID (gdisplay->gimage);
 	  args[2].value.pdb_int = gimp_drawable_get_ID (gimp_image_active_drawable (gdisplay->gimage));
 	  argc = 3;
@@ -2801,7 +2803,7 @@ plug_in_callback (GtkWidget *widget,
       break;
 
     case GIMP_TEMPORARY:
-      args[0].value.pdb_int = RUN_INTERACTIVE;
+      args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
       argc = 1;
       if (proc_rec->num_args >= 3 &&
 	  proc_rec->args[1].arg_type == GIMP_PDB_IMAGE &&

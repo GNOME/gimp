@@ -1047,7 +1047,7 @@ run (char       *name,
   static GimpParam values[1];
 /*   GDrawable *drawable; */
 /*   gint32 image_ID; */
-  GimpRunModeType   run_mode;
+  GimpRunMode   run_mode;
   double            xhsiz, yhsiz;
   int   	    pwidth, pheight;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;

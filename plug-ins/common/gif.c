@@ -340,7 +340,7 @@ static void   comment_entry_callback   (GtkTextBuffer  *buffer);
 static gboolean comment_was_edited = FALSE;
 
 static gboolean can_crop = FALSE;
-static GimpRunModeType run_mode;
+static GimpRunMode run_mode;
 #ifdef FACEHUGGERS
 GimpParasite * comment_parasite = NULL;
 #endif

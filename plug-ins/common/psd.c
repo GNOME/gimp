@@ -423,7 +423,7 @@ run (char    *name,
      GimpParam **return_vals)
 {
   static GimpParam values[2];
-  GimpRunModeType run_mode;
+  GimpRunMode run_mode;
   /*  GimpPDBStatusType status = GIMP_PDB_SUCCESS;*/
   gint32 image_ID;
 

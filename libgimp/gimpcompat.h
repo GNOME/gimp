@@ -1,0 +1,40 @@
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * gimpcompat.h
+ * Compatibility defines to ease migration from the GIMP-1.2 API
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ */
+
+#ifndef __GIMP_COMPAT_H__
+#define __GIMP_COMPAT_H__
+
+G_BEGIN_DECLS
+
+/* This file contains aliases that are kept for historical
+ * reasons, because a wide code base depends on them.
+ *
+ * These defines will be removed in the next development cycle. 
+ */
+
+
+#define GimpRunModeType  GimpRunMode
+
+
+G_END_DECLS
+
+#endif  /* __GIMP_COMPAT_H__ */

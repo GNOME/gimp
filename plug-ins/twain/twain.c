@@ -558,7 +558,7 @@ run(gchar *name,		/* name of plugin */
     gint *nreturn_vals,	        /* number of out-parameters */
     GimpParam **return_vals)	/* out-parameters */
 {
-  GimpRunModeType run_mode;
+  GimpRunMode run_mode;
 
   /* Initialize the return values
    * Always return at least the status to the caller. 

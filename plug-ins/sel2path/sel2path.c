@@ -175,7 +175,7 @@ run (gchar    *name,
   GimpDrawable *   drawable;
   gint32        drawable_ID;
   gint32        image_ID;
-  GimpRunModeType  run_mode;
+  GimpRunMode  run_mode;
   GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gboolean      no_dialog = FALSE;
 

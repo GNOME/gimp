@@ -164,7 +164,7 @@ run (gchar      *name,
 {
   static GimpParam values[1];
   GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
-  GimpRunModeType   run_mode;
+  GimpRunMode   run_mode;
   gint              image_id, layer_num;
   
   run_mode = param[0].data.d_int32;

@@ -148,7 +148,7 @@ run (gchar   *name,
      GimpParam **return_vals)
 {
   static GimpParam	values[1];
-  GimpRunModeType	runmode;
+  GimpRunMode	runmode;
   GimpPDBStatusType 	status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;

@@ -227,7 +227,7 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   /* Get the runmode from the in-parameters */
-  GimpRunModeType run_mode = param[0].data.d_int32;	
+  GimpRunMode run_mode = param[0].data.d_int32;	
   
   /* status variable, use it to check for errors in invocation usualy only 
      during non-interactive calling */	

@@ -363,14 +363,27 @@ package Gimp::CodeGen::enums;
 		       GIMP_MIDTONES => '1',
 		       GIMP_HIGHLIGHTS => '2' }
 	},
-    RunModeType =>
+    GimpRunMode =>
 	{ contig => 1,
 	  header => 'plug-in/plug-in-types.h',
-	  symbols => [ qw(RUN_INTERACTIVE RUN_NONINTERACTIVE
-			  RUN_WITH_LAST_VALS) ],
-	  mapping => { RUN_INTERACTIVE => '0',
-		       RUN_NONINTERACTIVE => '1',
-		       RUN_WITH_LAST_VALS => '2' }
+	  symbols => [ qw(GIMP_RUN_INTERACTIVE GIMP_RUN_NONINTERACTIVE
+			  GIMP_RUN_WITH_LAST_VALS) ],
+	  mapping => { GIMP_RUN_INTERACTIVE => '0',
+		       GIMP_RUN_NONINTERACTIVE => '1',
+		       GIMP_RUN_WITH_LAST_VALS => '2' }
+	},
+    PlugInImageType =>
+	{ contig => 0,
+	  header => 'plug-in/plug-in-types.h',
+	  symbols => [ qw(PLUG_IN_RGB_IMAGE PLUG_IN_GRAY_IMAGE
+			  PLUG_IN_INDEXED_IMAGE PLUG_IN_RGBA_IMAGE
+			  PLUG_IN_GRAYA_IMAGE PLUG_IN_INDEXEDA_IMAGE) ],
+	  mapping => { PLUG_IN_RGB_IMAGE => '1 << 0',
+		       PLUG_IN_GRAY_IMAGE => '1 << 1',
+		       PLUG_IN_INDEXED_IMAGE => '1 << 2',
+		       PLUG_IN_RGBA_IMAGE => '1 << 3',
+		       PLUG_IN_GRAYA_IMAGE => '1 << 4',
+		       PLUG_IN_INDEXEDA_IMAGE => '1 << 5' }
 	},
     BrushApplicationMode =>
 	{ contig => 1,

@@ -1501,7 +1501,7 @@ p_check_move_path_params(t_mov_data *mov_data)
  * ============================================================================
  */
 int
-gap_move_path(GimpRunModeType run_mode, gint32 image_id, t_mov_values *pvals, gchar *pointfile
+gap_move_path(GimpRunMode run_mode, gint32 image_id, t_mov_values *pvals, gchar *pointfile
              , gint rotation_follow , gint32 startangle)
 {
   int l_rc;

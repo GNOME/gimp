@@ -78,7 +78,7 @@ p_split_image(t_anim_info *ainfo_ptr,
 {
   GimpImageBaseType l_type;
   guint   l_width, l_height;
-  GimpRunModeType l_run_mode;
+  GimpRunMode l_run_mode;
   gint32  l_new_image_id;
   gint    l_nlayers;
   gint32 *l_layers_list;
@@ -269,7 +269,7 @@ p_split_dialog(t_anim_info *ainfo_ptr, gint *inverse_order, gint *no_alpha, char
  *    one frame per layer.
  * ============================================================================
  */
-int gap_split_image(GimpRunModeType run_mode,
+int gap_split_image(GimpRunMode run_mode,
                       gint32     image_id,
                       gint32     inverse_order,
                       gint32     no_alpha,

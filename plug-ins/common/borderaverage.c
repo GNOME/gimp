@@ -115,7 +115,7 @@ run (gchar      *name,
 {
   static GimpParam   values[3];
   GimpDrawable      *drawable;
-  GimpRunModeType    run_mode;
+  GimpRunMode    run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRGB            result_color;
 

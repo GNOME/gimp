@@ -181,7 +181,7 @@ run (char    *name,
   
   char        l_extension[32];
   static GimpParam values[2];
-  GimpRunModeType run_mode;
+  GimpRunMode run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32     image_id;
   gint32     lock_image_id;

@@ -72,7 +72,7 @@ static gint32 g_current_image_id;
 
 
 
-gint p_call_plugin(char *plugin_name, gint32 image_id, gint32 layer_id, GimpRunModeType run_mode)
+gint p_call_plugin(char *plugin_name, gint32 image_id, gint32 layer_id, GimpRunMode run_mode)
 {
   GimpDrawable    *l_drawable;
   GimpParam       *l_ret_params;

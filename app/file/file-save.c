@@ -46,6 +46,7 @@
 #include "pdb/procedural_db.h"
 
 #include "plug-in/plug-in.h"
+#include "plug-in/plug-in-proc.h"
 
 #include "file-save.h"
 #include "file-utils.h"
@@ -62,7 +63,7 @@ file_save (GimpImage     *gimage,
 	   const gchar   *filename,
 	   const gchar   *raw_filename,
            PlugInProcDef *file_proc,
-           RunModeType    run_mode,
+           GimpRunMode    run_mode,
 	   gboolean       set_filename)
 {
   ProcRecord        *proc;
@@ -127,7 +128,7 @@ file_save (GimpImage     *gimage,
   /* ref the image, so it can't get deleted during save */
   g_object_ref (G_OBJECT (gimage));
 
-  proc = &file_proc->db_info;
+  proc = plug_in_proc_def_get_proc (file_proc);
 
   args = g_new0 (Argument, proc->num_args);
 

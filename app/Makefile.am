@@ -133,10 +133,10 @@ gimp_1_3_LDADD = @STRIP_BEGIN@ \
 	tools/libapptools.a						\
 	display/libappdisplay.a						\
 	widgets/libappwidgets.a						\
-	plug-in/libappplug-in.a						\
 	core/libappcore.a						\
 	xcf/libappxcf.a							\
 	file/libappfile.a						\
+	plug-in/libappplug-in.a						\
 	pdb/libapppdb.a							\
 	config/libappconfig.a						\
 	paint-funcs/libapppaint-funcs.a					\

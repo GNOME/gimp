@@ -197,7 +197,7 @@ run (gchar   *name,		/* I - Name of filter program. */
      gint    *nreturn_vals,	/* O - Number of return values */
      GimpParam **return_vals)	/* O - Return values */
 {
-  GimpRunModeType	run_mode;	/* Current run mode */
+  GimpRunMode	run_mode;	/* Current run mode */
   GimpPDBStatusType	status;		/* Return status */
   GimpParam	*values;	/* Return values */
 

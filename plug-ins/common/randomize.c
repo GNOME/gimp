@@ -284,7 +284,7 @@ run (gchar   *name,
      GimpParam **return_vals)
 {
   GimpDrawable *drawable;
-  GimpRunModeType run_mode;
+  GimpRunMode run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;        /* assume the best! */
   gchar *rndm_type_str = '\0';
   gchar prog_label[32];

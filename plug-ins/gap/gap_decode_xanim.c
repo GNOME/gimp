@@ -972,7 +972,7 @@ p_start_xanim_process_exec(gint32 first_frame, gint32 last_frame,
  */
 
 gint32
-gap_xanim_decode(GimpRunModeType run_mode)
+gap_xanim_decode(GimpRunMode run_mode)
 {
   gint32 l_rc;
   gint32 first_frame;

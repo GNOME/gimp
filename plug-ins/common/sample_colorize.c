@@ -318,7 +318,7 @@ run (gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *dst_drawable;
-  GimpRunModeType    run_mode;
+  GimpRunMode    run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   const gchar       *l_env;
 

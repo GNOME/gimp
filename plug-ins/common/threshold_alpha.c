@@ -118,7 +118,7 @@ run (gchar      *name,
 {
   static GimpParam   values[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRunModeType    run_mode;
+  GimpRunMode    run_mode;
   gint               drawable_id;
   
   run_mode    = param[0].data.d_int32;

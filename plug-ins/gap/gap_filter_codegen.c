@@ -208,7 +208,7 @@ gint p_gen_code_iter_ALT(char  *proc_name)
        fprintf(l_fp, " * p_%s_iter_ALT \n", l_clean_proc_name);
        fprintf(l_fp, " * ----------------------------------------------------------------------\n");
        fprintf(l_fp, " */\n");            
-       fprintf(l_fp, "gint p_%s_iter_ALT(GimpRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct) \n", l_clean_proc_name);
+       fprintf(l_fp, "gint p_%s_iter_ALT(GimpRunMode run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct) \n", l_clean_proc_name);
        fprintf(l_fp, "{\n");               
        fprintf(l_fp, "    typedef struct t_%s_Vals \n", l_clean_proc_name);
        fprintf(l_fp, "    {\n");       
@@ -312,7 +312,7 @@ gint p_gen_forward_iter_ALT(char  *proc_name)
   l_fp = fopen(GEN_FORWARDFILE_NAME, "a");
   if(l_fp != NULL)
   {
-    fprintf(l_fp, "static gint p_%s_iter_ALT (GimpRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct);\n",
+    fprintf(l_fp, "static gint p_%s_iter_ALT (GimpRunMode run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct);\n",
                    l_clean_proc_name);
     fclose(l_fp);
   }
@@ -569,7 +569,7 @@ gint p_gen_code_iter(char  *proc_name)
        fprintf(l_fp, " * p_%s_iter \n", l_clean_proc_name);
        fprintf(l_fp, " * ----------------------------------------------------------------------\n");
        fprintf(l_fp, " */\n");            
-       fprintf(l_fp, "gint p_%s_iter(GimpRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct) \n", l_clean_proc_name);
+       fprintf(l_fp, "gint p_%s_iter(GimpRunMode run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct) \n", l_clean_proc_name);
        fprintf(l_fp, "{\n");               
        fprintf(l_fp, "    typedef struct t_%s_Vals \n", l_clean_proc_name);
        fprintf(l_fp, "    {\n");       
@@ -691,7 +691,7 @@ gint p_gen_code_iter(char  *proc_name)
        fprintf(l_fp, "     GimpParam **return_vals)\n");
        fprintf(l_fp, "{\n");
        fprintf(l_fp, "  static GimpParam values[1];\n");
-       fprintf(l_fp, "  GimpRunModeType run_mode;\n");
+       fprintf(l_fp, "  GimpRunMode run_mode;\n");
        fprintf(l_fp, "  GimpPDBStatusType status = GIMP_PDB_SUCCESS;\n");
        fprintf(l_fp, "  gint32     image_id;\n");
        fprintf(l_fp, "  gint32  len_struct;\n");

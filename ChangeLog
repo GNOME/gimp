@@ -1,3 +1,36 @@
+2001-12-19  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/Makefile.am
+	* app/plug-in-proc/plug-in-proc.[ch]: new files. Started to split
+	plug-in.c into smaller pieces.
+	
+	* app/plug-in/plug-in-types.h: namespacified GimpRunModeType enum and
+	renamed it to GimpRunMode.
+	
+	* app/plug-in/plug-in.[ch]
+	* app/gimphelp.c
+	* app/file/file-open.[ch]
+	* app/file/file-save.[ch]
+	* app/file/file-utils.c
+	* app/gui/file-commands.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/paths-dialog.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/fileops.pdb: changed accordingly.
+	
+	* app/pdb/fileops_cmds.c
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* libgimp/gimpfileops_pdb.[ch]
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* libgimp/Makefile.am
+	* libgimp/gimpcompat.h: added gimpcompat.h mostly as a place to 
+	document plug-in API changes.
+
+	* plug-ins/*: changed all occurences of GimpRunModeType to GimpRunMode.
+	
 2001-12-18  Sven Neumann  <sven@gimp.org>
 
 	* docs/gimptool-1.3.1.in

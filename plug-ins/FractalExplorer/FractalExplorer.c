@@ -229,7 +229,7 @@ run (gchar   *name,
 {
   static GimpParam values[1];
   gint32        image_ID;
-  GimpRunModeType  run_mode;
+  GimpRunMode  run_mode;
   gdouble       xhsiz;
   gdouble       yhsiz;
   gint          pwidth;

@@ -53,6 +53,7 @@
 #include "pdb/procedural_db.h"
 
 #include "plug-in/plug-in.h"
+#include "plug-in/plug-in-proc.h"
 
 #include "file-utils.h"
 

@@ -106,7 +106,7 @@ gdt_run (gchar       *name,
 	 GimpParam  **return_vals)
 {
   static GimpParam values[2];
-  GimpRunModeType run_mode;
+  GimpRunMode run_mode;
   GdtVals oldvals;
   
  

@@ -177,7 +177,7 @@ run (gchar   *name,
      gint    *nreturn_vals,
      GimpParam **return_vals)
 {
-  GimpRunModeType	run_mode;	/* Current run mode */
+  GimpRunMode	run_mode;	/* Current run mode */
   GimpPDBStatusType	status;		/* Return status */
   GimpParam	*values;	/* Return values */
 

@@ -818,7 +818,7 @@ script_fu_script_proc (gchar       *name,
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunModeType   run_mode;
+  GimpRunMode   run_mode;
   SFScript         *script;
   gint              min_args;
   gchar            *escaped;

@@ -479,7 +479,7 @@ run (char    *name,
   const gchar *l_env;
   
   static GimpParam values[2];
-  GimpRunModeType run_mode;
+  GimpRunMode run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32     nr;
   pid_t  l_navid_pid;

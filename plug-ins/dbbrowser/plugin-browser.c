@@ -115,7 +115,7 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam  values[2];
-  GimpRunModeType   run_mode;
+  GimpRunMode   run_mode;
   GtkWidget        *plugin_dialog;
 
   run_mode = param[0].data.d_int32;

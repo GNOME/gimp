@@ -182,7 +182,7 @@ static SUNRASSaveInterface psint =
 
 
 /* The run mode */
-static GimpRunModeType l_run_mode;
+static GimpRunMode l_run_mode;
 
 MAIN ()
 
@@ -256,7 +256,7 @@ run (gchar   *name,
      GimpParam **return_vals)
 {
   static GimpParam values[2];
-  GimpRunModeType  run_mode;
+  GimpRunMode  run_mode;
   GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image_ID;
   gint32        drawable_ID;

@@ -171,7 +171,7 @@ static DecoInterface decoint =
   FALSE     /*  run  */
 };
 
-static GimpRunModeType run_mode;
+static GimpRunMode run_mode;
 
 
 MAIN ()

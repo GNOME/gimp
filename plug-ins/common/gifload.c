@@ -102,7 +102,7 @@ static gint32 load_image (gchar   *filename);
 
 
 static guchar   used_cmap[3][256];
-static GimpRunModeType run_mode;
+static GimpRunMode run_mode;
 static guchar   highest_used_index;
 static gboolean promote_to_rgb   = FALSE;
 static guchar   gimp_cmap[768];

@@ -1317,7 +1317,7 @@ paths_dialog_advanced_to_path_callback (GtkWidget *widget,
   args = g_new (Argument, 3);
 
   args[0].arg_type      = GIMP_PDB_INT32;
-  args[0].value.pdb_int = RUN_INTERACTIVE;
+  args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
   args[1].arg_type      = GIMP_PDB_IMAGE;
   args[1].value.pdb_int = (gint32) gimp_image_get_ID (gimage);
   args[2].arg_type      = GIMP_PDB_DRAWABLE;
@@ -1353,7 +1353,7 @@ paths_dialog_sel_to_path_callback (GtkWidget *widget,
   args = g_new (Argument, 3);
 
   args[0].arg_type      = GIMP_PDB_INT32;
-  args[0].value.pdb_int = RUN_INTERACTIVE;
+  args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
   args[1].arg_type      = GIMP_PDB_IMAGE;
   args[1].value.pdb_int = (gint32) gimp_image_get_ID (gimage);
   args[2].arg_type      = GIMP_PDB_DRAWABLE;

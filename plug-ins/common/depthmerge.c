@@ -209,13 +209,13 @@ run (gchar   *name,
      GimpParam **returnVals)
 {
   static GimpParam    values[1];
-  GimpRunModeType     runMode;
+  GimpRunMode     runMode;
   GimpPDBStatusType      status;
   DepthMerge       dm;
 
   INIT_I18N_UI();
 
-  runMode = (GimpRunModeType) param[0].data.d_int32;
+  runMode = (GimpRunMode) param[0].data.d_int32;
   status = GIMP_PDB_SUCCESS;
   *numReturnVals = 1;
   *returnVals    = values;

@@ -1042,7 +1042,7 @@ run (char       *name,
      GimpParam **return_vals)
 {
   static GimpParam values[1];
-  GimpRunModeType run_mode;
+  GimpRunMode run_mode;
   double          xhsiz, yhsiz;
   int   	  pwidth, pheight;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;

@@ -214,7 +214,7 @@ run (gchar   *name,
      GimpParam **return_vals)
 {
   GimpDrawable    *drawable;
-  GimpRunModeType	run_mode;
+  GimpRunMode	run_mode;
   GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   GimpParam       *values;
   GimpPixelRgn	rgn;

@@ -107,7 +107,7 @@ void p_gdisplays_update_full(gint32 image_id)
 /* pitstop dialog
  *   return -1 on cancel, 0 .. on continue, 1 .. on skip
  */
-static gint p_pitstop(GimpRunModeType run_mode, char *plugin_name, gint text_flag,
+static gint p_pitstop(GimpRunMode run_mode, char *plugin_name, gint text_flag,
                       char *step_backup_file, gint len_step_backup_file,
 		      gint32 layer_idx)
 {
@@ -232,7 +232,7 @@ static gint32 p_get_indexed_layerid(gint32 image_id, gint *nlayers, gint32 idx, 
  * ============================================================================
  */
 
-int p_foreach_multilayer(GimpRunModeType run_mode, gint32 image_id,
+int p_foreach_multilayer(GimpRunMode run_mode, gint32 image_id,
                          char *plugin_name, t_apply_mode apply_mode)
 {
   static char l_key_from[512];
@@ -538,7 +538,7 @@ int p_foreach_multilayer(GimpRunModeType run_mode, gint32 image_id,
  * ============================================================================
  */
 
-gint gap_proc_anim_apply(GimpRunModeType run_mode, gint32 image_id, char *plugin_name)
+gint gap_proc_anim_apply(GimpRunMode run_mode, gint32 image_id, char *plugin_name)
 {
   t_gap_db_browse_result  l_browser_result;
   t_apply_mode            l_apply_mode;

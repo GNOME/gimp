@@ -174,7 +174,7 @@ file_save_cmd_callback (GtkWidget *widget,
 			      filename,
 			      basename,
                               NULL,
-			      RUN_WITH_LAST_VALS,
+			      GIMP_RUN_WITH_LAST_VALS,
 			      TRUE);
 
 	  g_free (basename);
@@ -313,7 +313,7 @@ file_revert_confirm_callback (GtkWidget *widget,
                                     filename,
 				    _("Revert"),
 				    NULL,
-				    RUN_INTERACTIVE,
+				    GIMP_RUN_INTERACTIVE,
 				    &status);
 
       if (new_gimage != NULL)

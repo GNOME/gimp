@@ -202,7 +202,7 @@ run (char    *name,
      GimpParam **return_vals)
 {
   static GimpParam values[2];
-  GimpRunModeType run_mode;
+  GimpRunMode run_mode;
   gint32 image_ID;
   gint32 first_frame, last_frame;
   gint32 autoload;

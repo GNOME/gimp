@@ -232,7 +232,7 @@ static WarpInterface dint =
 /* static gint         display_diff_map = TRUE;   show 16-bit diff. vectormap */
 static gint         progress = 0;              /* progress indicator bar      */
 static guint        tile_width, tile_height;   /* size of an image tile       */
-static GimpRunModeType run_mode;                  /* interactive, non-, etc.     */
+static GimpRunMode run_mode;                  /* interactive, non-, etc.     */
 static guchar       color_pixel[4] = {0, 0, 0, 255};  /* current fg color     */
 
 /* -------------------------------------------------------------------------- */

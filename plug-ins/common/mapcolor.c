@@ -135,7 +135,7 @@ static void   color_mapping           (GimpDrawable *drawable);
 
 
 /* The run mode */
-static GimpRunModeType l_run_mode;
+static GimpRunMode l_run_mode;
 
 static gchar *csel_title[4] =
 {
@@ -378,7 +378,7 @@ run (gchar      *name,
 
 {
   static GimpParam   values[1];
-  GimpRunModeType    run_mode;
+  GimpRunMode    run_mode;
   GimpDrawable      *drawable = NULL;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   guchar *c;

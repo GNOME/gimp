@@ -702,7 +702,7 @@ void gap_query_iterators_ALT()
  * ---------------------------------------------------------------------- 
  */
 
-gint gap_run_iterators_ALT(char *name, GimpRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct)
+gint gap_run_iterators_ALT(char *name, GimpRunMode run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct)
 {
   gint l_rc;
   int l_idx;

@@ -41,9 +41,9 @@
  * Returns: The output image.
  */
 gint32
-gimp_file_load (GimpRunModeType  run_mode,
-		gchar           *filename,
-		gchar           *raw_filename)
+gimp_file_load (GimpRunMode  run_mode,
+		gchar       *filename,
+		gchar       *raw_filename)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -84,11 +84,11 @@ gimp_file_load (GimpRunModeType  run_mode,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_file_save (GimpRunModeType  run_mode,
-		gint32           image_ID,
-		gint32           drawable_ID,
-		gchar           *filename,
-		gchar           *raw_filename)
+gimp_file_save (GimpRunMode  run_mode,
+		gint32       image_ID,
+		gint32       drawable_ID,
+		gchar       *filename,
+		gchar       *raw_filename)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

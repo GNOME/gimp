@@ -1147,7 +1147,7 @@ error:
  * ============================================================================
  */
 
-gint gap_mod_layer(GimpRunModeType run_mode, gint32 image_id,
+gint gap_mod_layer(GimpRunMode run_mode, gint32 image_id,
                    gint32 range_from,  gint32 range_to,
                    gint32 action_mode, gint32 sel_mode,
                    gint32 sel_case, gint32 sel_invert,

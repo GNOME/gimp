@@ -101,6 +101,7 @@ PDB_WRAPPERS_H = \
 libgimp_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimp.c				\
 	gimp.h				\
+	gimpcompat.h			\
 	gimptypes.h			\
 	${PDB_WRAPPERS_C}		\
 	${PDB_WRAPPERS_H}		\

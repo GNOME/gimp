@@ -33,6 +33,7 @@
 #include "pdb/procedural_db.h"
 
 #include "plug-in/plug-in.h"
+#include "plug-in/plug-in-proc.h"
 
 #include "xcf.h"
 #include "xcf-private.h"

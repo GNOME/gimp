@@ -150,7 +150,7 @@ run (gchar      *name,
      gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  GimpRunModeType    run_mode;
+  GimpRunMode    run_mode;
   GimpPDBStatusType  status;
   static GimpParam   values[1];
   GimpDrawable      *drawable;

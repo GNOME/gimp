@@ -48,7 +48,8 @@
 #include "core/gimpdocuments.h"
 #include "core/gimpimage.h"
 
-#include "plug-in/plug-in.h"
+#include "plug-in/plug-in-types.h"
+#include "plug-in/plug-in-proc.h"
 
 #include "file/file-open.h"
 #include "file/file-utils.h"
@@ -629,7 +630,7 @@ file_open_genbutton_callback (GtkWidget *widget,
                                                   list->data,
                                                   NULL,
                                                   NULL,
-                                                  RUN_NONINTERACTIVE,
+                                                  GIMP_RUN_NONINTERACTIVE,
                                                   &dummy);
           
           if (gimage_to_be_thumbed)

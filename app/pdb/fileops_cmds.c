@@ -81,7 +81,7 @@ file_load_invoker (Gimp     *gimp,
   if (! file_proc)
     return procedural_db_return_args (&file_load_proc, FALSE);
 
-  proc = &file_proc->db_info;
+  proc = plug_in_proc_def_get_proc (file_proc);
 
   return procedural_db_execute (gimp, proc->name, args);
 }
@@ -91,7 +91,7 @@ static ProcArg file_load_inargs[] =
   {
     GIMP_PDB_INT32,
     "run_mode",
-    "The run mode: RUN_INTERACTIVE (0) or RUN_NONINTERACTIVE (1)"
+    "The run mode: GIMP_RUN_INTERACTIVE (0) or GIMP_RUN_NONINTERACTIVE (1)"
   },
   {
     GIMP_PDB_STRING,
@@ -145,7 +145,7 @@ file_save_invoker (Gimp     *gimp,
   if (! file_proc) 
     return procedural_db_return_args (&file_save_proc, FALSE);
 
-  proc = &file_proc->db_info;
+  proc = plug_in_proc_def_get_proc (file_proc);
 
   new_args = g_new (Argument, proc->num_args);
   memset (new_args, 0, sizeof (Argument) * proc->num_args);
@@ -169,7 +169,7 @@ static ProcArg file_save_inargs[] =
   {
     GIMP_PDB_INT32,
     "run_mode",
-    "The run mode: RUN_INTERACTIVE (0) or RUN_NONINTERACTIVE (1)"
+    "The run mode: GIMP_RUN_INTERACTIVE (0) or GIMP_RUN_NONINTERACTIVE (1)"
   },
   {
     GIMP_PDB_IMAGE,

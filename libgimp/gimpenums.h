@@ -213,6 +213,13 @@ typedef enum
 
 typedef enum
 {
+  GIMP_RUN_INTERACTIVE,
+  GIMP_RUN_NONINTERACTIVE,
+  GIMP_RUN_WITH_LAST_VALS
+} GimpRunMode;
+
+typedef enum
+{
   GIMP_SHADOWS,
   GIMP_MIDTONES,
   GIMP_HIGHLIGHTS
@@ -267,10 +274,13 @@ typedef enum
 
 typedef enum
 {
-  GIMP_RUN_INTERACTIVE,
-  GIMP_RUN_NONINTERACTIVE,
-  GIMP_RUN_WITH_LAST_VALS
-} GimpRunModeType;
+  GIMP_PLUG_IN_RGB_IMAGE = 1 << 0,
+  GIMP_PLUG_IN_GRAY_IMAGE = 1 << 1,
+  GIMP_PLUG_IN_INDEXED_IMAGE = 1 << 2,
+  GIMP_PLUG_IN_RGBA_IMAGE = 1 << 3,
+  GIMP_PLUG_IN_GRAYA_IMAGE = 1 << 4,
+  GIMP_PLUG_IN_INDEXEDA_IMAGE = 1 << 5
+} GimpPlugInImageType;
 
 typedef enum
 {

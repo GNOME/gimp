@@ -77,7 +77,7 @@ typedef struct t_anim_info {
    char        *extension;
    char        *new_filename;
    char        *old_filename;
-   GimpRunModeType run_mode;
+   GimpRunMode run_mode;
    long         width;       
    long         height;      
    long         type;    
@@ -93,7 +93,7 @@ int          p_file_copy(char *fname, char *fname_copy);
 void         p_free_ainfo(t_anim_info **ainfo);
 char*        p_alloc_basename(char *imagename, long *number);
 char*        p_alloc_extension(char *imagename);
-t_anim_info* p_alloc_ainfo(gint32 image_id, GimpRunModeType run_mode);
+t_anim_info* p_alloc_ainfo(gint32 image_id, GimpRunMode run_mode);
 int          p_dir_ainfo(t_anim_info *ainfo_ptr);
 int          p_chk_framerange(t_anim_info *ainfo_ptr);
 int          p_chk_framechange(t_anim_info *ainfo_ptr);
@@ -101,7 +101,7 @@ int          p_chk_framechange(t_anim_info *ainfo_ptr);
 int    p_save_named_frame (gint32 image_id, char *sav_name);
 int    p_load_named_frame (gint32 image_id, char *lod_name);
 gint32 p_load_image (char *lod_name);
-gint32 p_save_named_image(gint32 image_id, char *sav_name, GimpRunModeType run_mode);
+gint32 p_save_named_image(gint32 image_id, char *sav_name, GimpRunMode run_mode);
 char*  p_alloc_fname(char *basename, long nr, char *extension);
 char*  p_gzip (char *orig_name, char *new_name, char *zip);
 char*  p_strdup_add_underscore(char *name);
@@ -114,27 +114,27 @@ int   p_image_file_copy(char *fname, char *fname_copy);
 
 /* animation menu fuctions provided by gap_lib.c */
 
-int gap_next(GimpRunModeType run_mode, gint32 image_id);
-int gap_prev(GimpRunModeType run_mode, gint32 image_id);
-int gap_first(GimpRunModeType run_mode, gint32 image_id);
-int gap_last(GimpRunModeType run_mode, gint32 image_id);
-int gap_goto(GimpRunModeType run_mode, gint32 image_id, int nr);
+int gap_next(GimpRunMode run_mode, gint32 image_id);
+int gap_prev(GimpRunMode run_mode, gint32 image_id);
+int gap_first(GimpRunMode run_mode, gint32 image_id);
+int gap_last(GimpRunMode run_mode, gint32 image_id);
+int gap_goto(GimpRunMode run_mode, gint32 image_id, int nr);
 
-int gap_dup(GimpRunModeType run_mode, gint32 image_id, int nr, long range_from, long range_to);
-int gap_del(GimpRunModeType run_mode, gint32 image_id, int nr);
-int gap_exchg(GimpRunModeType run_mode, gint32 image_id, int nr);
-int gap_shift(GimpRunModeType run_mode, gint32 image_id, int nr, long range_from, long range_to);
+int gap_dup(GimpRunMode run_mode, gint32 image_id, int nr, long range_from, long range_to);
+int gap_del(GimpRunMode run_mode, gint32 image_id, int nr);
+int gap_exchg(GimpRunMode run_mode, gint32 image_id, int nr);
+int gap_shift(GimpRunMode run_mode, gint32 image_id, int nr, long range_from, long range_to);
 
-void p_msg_win(GimpRunModeType run_mode, char *msg);
+void p_msg_win(GimpRunMode run_mode, char *msg);
 gchar *p_get_video_paste_name(void);
 gint32 p_vid_edit_clear(void);
 gint32 p_vid_edit_framecount(void);
-gint   gap_vid_edit_copy(GimpRunModeType run_mode, gint32 image_id, long range_from, long range_to);
-gint   gap_vid_edit_paste(GimpRunModeType run_mode, gint32 image_id, long paste_mode);
+gint   gap_vid_edit_copy(GimpRunMode run_mode, gint32 image_id, long range_from, long range_to);
+gint   gap_vid_edit_paste(GimpRunMode run_mode, gint32 image_id, long paste_mode);
 gint32 p_getpid(void);
 gint   p_pid_is_alive(gint32 pid);
 
-gint   p_gap_lock_is_locked(gint32 image_id, GimpRunModeType run_mode);
+gint   p_gap_lock_is_locked(gint32 image_id, GimpRunMode run_mode);
 void   p_gap_lock_set(gint32 image_id);
 void   p_gap_lock_remove(gint32 image_id);
 

@@ -273,7 +273,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 
 /* The run mode */
-static GimpRunModeType l_run_mode;
+static GimpRunMode l_run_mode;
 
 static void compress_packbits (int nin,
                                unsigned char *src,
@@ -640,7 +640,7 @@ run (gchar   *name,
      GimpParam **return_vals)
 {
   static GimpParam values[2];
-  GimpRunModeType  run_mode;
+  GimpRunMode  run_mode;
   GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image_ID = -1;
   gint32        drawable_ID = -1;

@@ -107,7 +107,7 @@ static void run   (gchar   *name,
 		   gint    *nreturn_vals,
 		   GimpParam **return_vals);
 
-static      gint32 do_optimizations   (GimpRunModeType run_mode);
+static      gint32 do_optimizations   (GimpRunMode run_mode);
 
 
 /* tag util functions*/
@@ -237,7 +237,7 @@ run (gchar   *name,
      GimpParam **return_vals)
 {
   static GimpParam values[2];
-  GimpRunModeType run_mode;
+  GimpRunMode run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 2;
@@ -391,7 +391,7 @@ compose_row(int frame_num,
 
 
 static gint32
-do_optimizations(GimpRunModeType run_mode)
+do_optimizations(GimpRunMode run_mode)
 {
   GimpPixelRgn pixel_rgn;
   static guchar* rawframe = NULL;

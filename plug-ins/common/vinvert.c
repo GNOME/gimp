@@ -52,7 +52,7 @@ static void      vinvert_render_row (const guchar *src_row,
 				     const gint    bytes);
 
 
-static GimpRunModeType run_mode;
+static GimpRunMode run_mode;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {

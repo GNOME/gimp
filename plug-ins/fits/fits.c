@@ -131,7 +131,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 /* The run mode */
-static GimpRunModeType l_run_mode;
+static GimpRunMode l_run_mode;
 
 
 MAIN ()
@@ -206,13 +206,13 @@ run (gchar   *name,
      GimpParam **return_vals)
 {
   static GimpParam values[2];
-  GimpRunModeType  run_mode;
+  GimpRunMode  run_mode;
   GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image_ID;
   gint32        drawable_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
-  l_run_mode = run_mode = (GimpRunModeType)param[0].data.d_int32;
+  l_run_mode = run_mode = (GimpRunMode)param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;

@@ -210,7 +210,7 @@ gimp_help_internal (const gchar *help_path,
 
       args = g_new (Argument, 4);
       args[0].arg_type          = GIMP_PDB_INT32;
-      args[0].value.pdb_int     = RUN_INTERACTIVE;
+      args[0].value.pdb_int     = GIMP_RUN_INTERACTIVE;
       args[1].arg_type          = GIMP_PDB_STRING;
       args[1].value.pdb_pointer = (gpointer) help_path;
       args[2].arg_type          = GIMP_PDB_STRING;
@@ -282,7 +282,7 @@ gimp_help_netscape (const gchar *help_path,
     procedural_db_run_proc (the_gimp,
 			    "extension_web_browser",
 			    &nreturn_vals,
-			    GIMP_PDB_INT32,  RUN_NONINTERACTIVE,
+			    GIMP_PDB_INT32,  GIMP_RUN_NONINTERACTIVE,
 			    GIMP_PDB_STRING, url,
 			    GIMP_PDB_INT32,  FALSE,
 			    GIMP_PDB_END);

@@ -94,7 +94,7 @@ static struct
     gint        height;
   } selection;
   
-  GimpRunModeType  run_mode;
+  GimpRunMode  run_mode;
   gboolean         run;
 } p =
 {

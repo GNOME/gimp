@@ -186,6 +186,10 @@ init_generated_constants (void)
   setvar (cintern ("REPEAT-SAWTOOTH"), flocons (1), NIL);
   setvar (cintern ("REPEAT-TRIANGULAR"), flocons (2), NIL);
 
+  setvar (cintern ("RUN-INTERACTIVE"), flocons (0), NIL);
+  setvar (cintern ("RUN-NONINTERACTIVE"), flocons (1), NIL);
+  setvar (cintern ("RUN-WITH-LAST-VALS"), flocons (2), NIL);
+
   setvar (cintern ("STACK-TRACE-NEVER"), flocons (0), NIL);
   setvar (cintern ("STACK-TRACE-QUERY"), flocons (1), NIL);
   setvar (cintern ("STACK-TRACE-ALWAYS"), flocons (2), NIL);
@@ -230,9 +234,12 @@ init_generated_constants (void)
   setvar (cintern ("CONTINUOUS"), flocons (0), NIL);
   setvar (cintern ("INCREMENTAL"), flocons (1), NIL);
 
-  setvar (cintern ("RUN-INTERACTIVE"), flocons (0), NIL);
-  setvar (cintern ("RUN-NONINTERACTIVE"), flocons (1), NIL);
-  setvar (cintern ("RUN-WITH-LAST-VALS"), flocons (2), NIL);
+  setvar (cintern ("PLUG-IN-RGB-IMAGE"), flocons (1 << 0), NIL);
+  setvar (cintern ("PLUG-IN-GRAY-IMAGE"), flocons (1 << 1), NIL);
+  setvar (cintern ("PLUG-IN-INDEXED-IMAGE"), flocons (1 << 2), NIL);
+  setvar (cintern ("PLUG-IN-RGBA-IMAGE"), flocons (1 << 3), NIL);
+  setvar (cintern ("PLUG-IN-GRAYA-IMAGE"), flocons (1 << 4), NIL);
+  setvar (cintern ("PLUG-IN-INDEXEDA-IMAGE"), flocons (1 << 5), NIL);
 
   setvar (cintern ("PIXELS"), flocons (0), NIL);
   setvar (cintern ("POINTS"), flocons (1), NIL);

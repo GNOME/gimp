@@ -64,7 +64,7 @@ HELP
 
     @inargs = (
 	{ name => 'run_mode',
-	  type => 'enum RunModeType (no RUN_WITH_LAST_VALS)',
+	  type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
 	  desc => 'The run mode: %%desc%%' },
 	{ name => 'filename', type => 'string',
 	  desc => 'The name of the file to load' },
@@ -85,7 +85,7 @@ HELP
   if (! file_proc)
     return %%fail%%;
 
-  proc = &file_proc->db_info;
+  proc = plug_in_proc_def_get_proc (file_proc);
 
   return %%exec%%;
 }
@@ -109,7 +109,7 @@ HELP
 
     @inargs = (
 	{ name => 'run_mode',
-	  type => 'enum RunModeType (no RUN_WITH_LAST_VALS)',
+	  type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
 	  desc => 'The run mode: %%desc%%' },
 	{ name => 'image', type => 'image',
 	  desc => 'Input image' },
@@ -134,7 +134,7 @@ HELP
   if (! file_proc) 
     return %%fail%%;
 
-  proc = &file_proc->db_info;
+  proc = plug_in_proc_def_get_proc (file_proc);
 
   new_args = g_new (%%argtype%%, proc->num_args);
   memset (new_args, 0, sizeof (%%argtype%%) * proc->num_args);

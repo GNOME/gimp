@@ -1169,7 +1169,7 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam  values[1];
-  GimpRunModeType   run_mode;
+  GimpRunMode   run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gchar *env_root_dir = NULL;
   gchar *help_path    = NULL;

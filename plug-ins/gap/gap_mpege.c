@@ -935,7 +935,7 @@ int p_mpege_gen_parfile(t_anim_info *ainfo_ptr, t_mpg_par *mp_ptr, t_gap_mpeg_en
  * ============================================================================
  */
 
-int gap_mpeg_encode(GimpRunModeType run_mode,
+int gap_mpeg_encode(GimpRunMode run_mode,
                              gint32 image_id,
                              t_gap_mpeg_encoder encoder
                              )

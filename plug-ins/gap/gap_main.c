@@ -867,8 +867,8 @@ run (char    *name,
   char       *l_basename_ptr;
   char       *l_palette_ptr;
   static GimpParam values[10];
-  GimpRunModeType run_mode;
-  GimpRunModeType lock_run_mode;
+  GimpRunMode run_mode;
+  GimpRunMode lock_run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32     image_id;
   gint32     lock_image_id;

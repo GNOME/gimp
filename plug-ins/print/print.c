@@ -277,7 +277,7 @@ run (char   *name,		/* I - Name of print program. */
      GimpParam **return_vals)	/* O - Return values */
 {
   GimpDrawable	*drawable;	/* Drawable for image */
-  GimpRunModeType	 run_mode;	/* Current run mode */
+  GimpRunMode	 run_mode;	/* Current run mode */
   FILE		*prn;		/* Print file/command */
   int		 ncolors;	/* Number of colors in colormap */
   GimpParam	*values;	/* Return values */
@@ -309,7 +309,7 @@ run (char   *name,		/* I - Name of print program. */
    */
 
   current_printer = get_printer_by_index (0);
-  run_mode = (GimpRunModeType)param[0].data.d_int32;
+  run_mode = (GimpRunMode)param[0].data.d_int32;
 
   values = g_new (GimpParam, 1);
 

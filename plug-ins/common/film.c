@@ -213,7 +213,7 @@ static FilmInterface filmint =
 };
 
 
-static GimpRunModeType run_mode;
+static GimpRunMode run_mode;
 
 
 MAIN ()
