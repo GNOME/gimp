@@ -63,7 +63,6 @@ struct _GimpSizeBoxPrivate
   GimpChainButton *size_chain;
   GtkWidget       *pixel_label;
   GtkWidget       *res_label;
-  GimpSizeEntry   *res_entry;
   gdouble          aspect;
 };
 
@@ -367,11 +366,6 @@ gimp_size_box_constructor (GType                  type,
       gtk_table_attach_defaults (GTK_TABLE (entry), xres, 0, 1, 0, 1);
       gtk_widget_show (xres);
 
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0,
-                                      box->xresolution, FALSE);
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1,
-                                      box->yresolution, FALSE);
-
       /*  the resolution chainbutton  */
       chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
       gtk_table_attach_defaults (GTK_TABLE (entry), chain, 1, 2, 0, 2);
@@ -382,8 +376,6 @@ gimp_size_box_constructor (GType                  type,
                                      "resolution-unit",
                                      entry, chain,
                                      1.0, 1.0);
-
-      priv->res_entry = GIMP_SIZE_ENTRY (entry);
      }
   else
     {

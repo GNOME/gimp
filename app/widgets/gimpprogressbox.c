@@ -34,8 +34,6 @@
 #include "gimp-intl.h"
 
 
-static void     gimp_progress_box_class_init (GimpProgressBoxClass *klass);
-static void     gimp_progress_box_init       (GimpProgressBox      *box);
 static void     gimp_progress_box_progress_iface_init (GimpProgressInterface *progress_iface);
 
 static GimpProgress *
@@ -51,8 +49,6 @@ static void     gimp_progress_box_progress_set_value (GimpProgress *progress,
 static gdouble  gimp_progress_box_progress_get_value (GimpProgress *progress);
 
 
-static GtkVBoxClass *parent_class = NULL;
-
 
 GType
 gimp_progress_box_get_type (void)
@@ -66,12 +62,12 @@ gimp_progress_box_get_type (void)
         sizeof (GimpProgressBoxClass),
         (GBaseInitFunc) NULL,
         (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_progress_box_class_init,
+        NULL,           /* class_init     */
         NULL,           /* class_finalize */
         NULL,           /* class_data     */
         sizeof (GimpProgressBox),
         0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_progress_box_init,
+        NULL            /* instance_init  */
       };
 
       static const GInterfaceInfo progress_iface_info =
@@ -90,17 +86,6 @@ gimp_progress_box_get_type (void)
     }
 
   return box_type;
-}
-
-static void
-gimp_progress_box_class_init (GimpProgressBoxClass *klass)
-{
-  parent_class = g_type_class_peek_parent (klass);
-}
-
-static void
-gimp_progress_box_init (GimpProgressBox *box)
-{
 }
 
 static void

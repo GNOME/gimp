@@ -1,3 +1,15 @@
+2004-11-15  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/print-size-dialog.c: started to redo this dialog
+	without using a GimpSizeBox. The widgets aren't connected, so it
+	isn't usable yet.
+	
+	* app/widgets/gimpprogressbox.c
+	* app/widgets/gimpprogressdialog.c
+	* app/widgets/gimpsizebox.c: trivial cleanups.
+
+	* data/images/gimp-splash.png: splash for 2.2-pre2, done by Jimmac.
+
 2004-11-14  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/image-commands.c: converted error messages that should
