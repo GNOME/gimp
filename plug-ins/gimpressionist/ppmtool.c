@@ -290,7 +290,7 @@ void loadppm(char *fn, ppm_t *p)
 void fill(ppm_t *p, guchar *c)
 {
   int x, y;
- 
+
   if((c[0] == c[1]) && (c[0] == c[2])) {
     guchar col = c[0];
     for(y = 0; y < p->height; y++) {
@@ -497,7 +497,7 @@ void saveppm(ppm_t *p, const char *fn)
   if (!f)
     {
       g_message (_("Failed to save PPM file '%s': %s"),
-                 fn, g_strerror (errno));
+                  gimp_filename_to_utf8 (fn), g_strerror (errno));
       return;
     }
 
@@ -518,7 +518,7 @@ void edgepad(ppm_t *p, int left,int right, int top, int bottom)
 
   srowstride = p->width * 3;
   drowstride = tmp.width * 3;
-  
+
   for(y = 0; y < top; y++) {
     memcpy(&tmp.col[y*drowstride+left*3], p->col, srowstride);
   }
@@ -570,7 +570,7 @@ void ppmbrightness(ppm_t *p, float e, int r, int g, int b)
   guchar xlat[256], *pix;
   for(x = 0; x < 256; x++) {
     xlat[x] = x*e;
-  } 
+  }
 
   pix = p->col;
   if(r) for(x = 0; x < l; x += 3) pix[x] = xlat[pix[x]];
@@ -649,7 +649,7 @@ void putrgb(ppm_t *s, float xo, float yo, guchar *d)
   s->col[k+0] *= (1.0-aa);
   s->col[k+1] *= (1.0-aa);
   s->col[k+2] *= (1.0-aa);
-  
+
   s->col[k+3] *= (1.0-ab);
   s->col[k+4] *= (1.0-ab);
   s->col[k+5] *= (1.0-ab);

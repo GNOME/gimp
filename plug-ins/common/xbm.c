@@ -716,11 +716,12 @@ load_image (const gchar *filename)
   if (!fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
-  name_buf = g_strdup_printf (_("Opening '%s'..."), filename);
+  name_buf = g_strdup_printf (_("Opening '%s'..."),
+                              gimp_filename_to_utf8 (filename));
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
@@ -800,25 +801,28 @@ load_image (const gchar *filename)
   if (c == EOF)
     {
       g_message (_("'%s':\nCould not read header (ftell == %ld)"),
-                 filename, ftell (fp));
+                 gimp_filename_to_utf8 (filename), ftell (fp));
       return -1;
     }
 
   if (width == 0)
     {
-      g_message (_("'%s':\nNo image width specified"), filename);
+      g_message (_("'%s':\nNo image width specified"),
+                 gimp_filename_to_utf8 (filename));
       return -1;
     }
 
   if (height == 0)
     {
-      g_message (_("'%s':\nNo image height specified"), filename);
+      g_message (_("'%s':\nNo image height specified"),
+                 gimp_filename_to_utf8 (filename));
       return -1;
     }
 
   if (intbits == 0)
     {
-      g_message (_("'%s':\nNo image data type specified"), filename);
+      g_message (_("'%s':\nNo image data type specified"),
+                 gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -989,11 +993,12 @@ save_image (const gchar *filename,
   if (!fp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
-  name_buf = g_strdup_printf (_("Saving '%s'..."), filename);
+  name_buf = g_strdup_printf (_("Saving '%s'..."),
+                              gimp_filename_to_utf8 (filename));
   gimp_progress_init (name_buf);
   g_free (name_buf);
 

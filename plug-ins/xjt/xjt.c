@@ -1270,7 +1270,7 @@ p_write_parasite(const gchar  *dirname,
      if(l_fp_pte == NULL)
      {
        g_message (_("Could not open '%s' for writing: %s"),
-                  l_parasite_file, g_strerror (errno));
+                   gimp_filename_to_utf8 (l_parasite_file), g_strerror (errno));
        g_free(l_parasite_file);
        return -1;
      }
@@ -1699,7 +1699,7 @@ save_xjt_image (const gchar *filename,
    if(mkdir(l_dirname, l_mode_dir) != 0)
    {
      g_message (_("Could not create working folder '%s': %s"),
-                l_dirname, g_strerror (errno));
+                 gimp_filename_to_utf8 (l_dirname), g_strerror (errno));
      goto cleanup;
    }
 
@@ -1709,7 +1709,7 @@ save_xjt_image (const gchar *filename,
    if(l_fp_prp == NULL)
    {
      g_message (_("Could not open '%s' for writing: %s"),
-                l_prop_file, g_strerror (errno));
+                 gimp_filename_to_utf8 (l_prop_file), g_strerror (errno));
      goto cleanup;
    }
 
@@ -2531,7 +2531,7 @@ p_create_and_attach_parasite (gint32            gimp_obj_id,
   {
      /* stat error (file does not exist) */
      g_message (_("Could not open '%s' for reading: %s"),
-                l_parasite_file, g_strerror (errno));
+                 gimp_filename_to_utf8 (l_parasite_file), g_strerror (errno));
      return(-1);
   }
 
@@ -2539,7 +2539,7 @@ p_create_and_attach_parasite (gint32            gimp_obj_id,
   if(l_fp_pte == NULL)
   {
      g_message (_("Could not open '%s' for reading: %s"),
-                l_parasite_file, g_strerror (errno));
+                 gimp_filename_to_utf8 (l_parasite_file), g_strerror (errno));
      return(-1);
   }
 
@@ -3193,12 +3193,14 @@ t_image_props * p_load_prop_file(const gchar *prop_filename)
   l_file_buff = p_load_linefile(prop_filename, &l_filesize);
   if(l_file_buff == NULL)
   {
-    g_message(_("Error: Could not read XJT property file '%s'."), prop_filename);
+    g_message(_("Error: Could not read XJT property file '%s'."),
+               gimp_filename_to_utf8 (prop_filename));
     goto cleanup;
   }
   if(l_filesize == 0)
   {
-    g_message(_("Error: XJT property file '%s' is empty."), prop_filename);
+    g_message(_("Error: XJT property file '%s' is empty."),
+               gimp_filename_to_utf8 (prop_filename));
     goto cleanup;
   }
 
@@ -3325,7 +3327,7 @@ load_xjt_image (const gchar *filename)
   if(mkdir(l_dirname, l_mode_dir) != 0)
     {
       g_message (_("Could not create working folder '%s': %s"),
-                 l_dirname, g_strerror (errno));
+                  gimp_filename_to_utf8 (l_dirname), g_strerror (errno));
       goto cleanup;
     }
 

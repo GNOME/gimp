@@ -411,41 +411,48 @@ load_image (const gchar *filename)
   if (!fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
-  name_buf = g_strdup_printf (_("Opening '%s'..."), filename);
+  name_buf = g_strdup_printf (_("Opening '%s'..."),
+                              gimp_filename_to_utf8 (filename));
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
   if (!fseek (fp, -26L, SEEK_END)) { /* Is file big enough for a footer? */
-    if (fread (footer, sizeof (footer), 1, fp) != 1) {
-      g_message (_("Cannot read footer from\n'%s'"), filename);
-      return -1;
-    } else if (memcmp (footer + 8, magic, sizeof (magic)) == 0) {
-
-       /* Check the signature. */
-
-      offset= footer[0] + (footer[1] * 256) + (footer[2] * 65536)
-                        + (footer[3] * 16777216);
-
-      if (offset != 0) {
-        if (fseek (fp, offset, SEEK_SET) ||
-            fread (extension, sizeof (extension), 1, fp) != 1) {
-          g_message (_("Cannot read extension from\n'%s'"), filename);
-          return -1;
-        }
-        /* Eventually actually handle version 2 TGA here */
+    if (fread (footer, sizeof (footer), 1, fp) != 1)
+      {
+        g_message (_("Cannot read footer from '%s'"),
+                   gimp_filename_to_utf8 (filename));
+        return -1;
       }
+    else if (memcmp (footer + 8, magic, sizeof (magic)) == 0)
+      {
+        /* Check the signature. */
 
-    }
+        offset= footer[0] + (footer[1] * 256) + (footer[2] * 65536)
+                          + (footer[3] * 16777216);
+
+        if (offset != 0)
+          {
+            if (fseek (fp, offset, SEEK_SET) ||
+                fread (extension, sizeof (extension), 1, fp) != 1)
+              {
+                g_message (_("Cannot read extension from '%s'"),
+                           gimp_filename_to_utf8 (filename));
+                return -1;
+              }
+            /* Eventually actually handle version 2 TGA here */
+          }
+      }
   }
 
   if (fseek (fp, 0, SEEK_SET) ||
       fread (header, sizeof (header), 1, fp) != 1)
     {
-      g_message ("Cannot read header from\n'%s'", filename);
+      g_message ("Cannot read header from '%s'",
+                 gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -504,7 +511,8 @@ load_image (const gchar *filename)
       case TGA_TYPE_MAPPED:
         if (info.bpp != 8)
           {
-            g_message ("Unhandled sub-format in\n'%s'", filename);
+            g_message ("Unhandled sub-format in '%s'",
+                       gimp_filename_to_utf8 (filename));
             return -1;
           }
         break;
@@ -512,20 +520,23 @@ load_image (const gchar *filename)
         if (info.bpp != 15 && info.bpp != 16 && info.bpp != 24
                      && info.bpp != 32)
           {
-            g_message ("Unhandled sub-format in\n'%s'", filename);
+            g_message ("Unhandled sub-format in '%s'",
+                       gimp_filename_to_utf8 (filename));
             return -1;
           }
         break;
       case TGA_TYPE_GRAY:
         if (info.bpp != 8 && (info.alphaBits != 8 || (info.bpp != 16 || info.bpp != 15)))
           {
-            g_message ("Unhandled sub-format in\n'%s'", filename);
+            g_message ("Unhandled sub-format in '%s'",
+                       gimp_filename_to_utf8 (filename));
             return -1;
           }
         break;
 
       default:
-        g_message ("Unknown image type for\n'%s'", filename);
+        g_message ("Unknown image type for '%s'",
+                   gimp_filename_to_utf8 (filename));
         return -1;
     }
 
@@ -553,7 +564,8 @@ load_image (const gchar *filename)
   /* Skip the image ID field. */
   if (info.idLength && fseek (fp, info.idLength, SEEK_CUR))
     {
-      g_message ("File '%s'\nis truncated or corrupted", filename);
+      g_message ("File '%s' is truncated or corrupted",
+                 gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -899,7 +911,8 @@ ReadImage (FILE        *fp,
         }
       else
         {
-          g_message ("File '%s'\nis truncated or corrupted", filename);
+          g_message ("File '%s' is truncated or corrupted",
+                     gimp_filename_to_utf8 (filename));
           return -1;
         }
     }
@@ -1012,12 +1025,13 @@ save_image (const gchar *filename,
 
   if ((fp = fopen (filename, "wb")) == NULL)
     {
-      g_message ("Could not open '%s' for writing: %s",
-                 filename, g_strerror (errno));
+      g_message (_("Could not open '%s' for writing: %s"),
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
-  name_buf = g_strdup_printf (_("Saving '%s'..."), filename);
+  name_buf = g_strdup_printf (_("Saving '%s'..."),
+                              gimp_filename_to_utf8 (filename));
   gimp_progress_init (name_buf);
   g_free (name_buf);
 

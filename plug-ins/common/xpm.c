@@ -337,7 +337,8 @@ load_image (const gchar *filename)
       break;
 
     case XpmOpenFailed:
-      g_message (_("Error opening file '%s'"), filename);
+      g_message (_("Error opening file '%s'"),
+                 gimp_filename_to_utf8 (filename));
       return -1;
 
     case XpmFileInvalid:

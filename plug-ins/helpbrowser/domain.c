@@ -30,6 +30,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "domain.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -252,7 +254,8 @@ domain_parse (HelpDomain  *domain,
         msg = _("The requested help files are not installed.");
 
       msg2 = g_strdup_printf (_("Could not open '%s' for reading: %s"),
-                              filename, g_strerror (errno));
+                              gimp_filename_to_utf8 (filename),
+                              g_strerror (errno));
 
       g_set_error (error, 0, 0, "%s\n\n%s\n\n%s",
                    msg, msg2, _("Please check your installation."));

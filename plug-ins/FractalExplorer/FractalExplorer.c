@@ -82,7 +82,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 /**********************************************************************
-  Global variables  
+  Global variables
  *********************************************************************/
 
 gdouble             xmin = -2;
@@ -1168,7 +1168,8 @@ fractalexplorer_load (const gchar *filename,
 
   if (strncmp (fractalexplorer_HEADER, load_buf, strlen (load_buf)))
     {
-      g_message (_("File '%s' is not a FractalExplorer file"), filename);
+      g_message (_("File '%s' is not a FractalExplorer file"),
+                 gimp_filename_to_utf8 (filename));
       fclose (fp);
 
       return NULL;
@@ -1176,7 +1177,8 @@ fractalexplorer_load (const gchar *filename,
 
   if (load_options (fractalexplorer, fp))
     {
-      g_message (_("File '%s' is corrupt.\nLine %d Option section incorrect"), filename, line_no);
+      g_message (_("File '%s' is corrupt.\nLine %d Option section incorrect"),
+                 gimp_filename_to_utf8 (filename), line_no);
       fclose (fp);
 
       return NULL;

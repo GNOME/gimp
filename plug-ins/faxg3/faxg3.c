@@ -199,7 +199,8 @@ load_image (const gchar *filename)
   gint	 max_rows;		/* max. rows allocated */
   gint 	 col, hcol;		/* column, highest column ever used */
 
-  name = g_strdup_printf (_("Opening '%s'..."), filename);
+  name = g_strdup_printf (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (name);
   g_free (name);
 
@@ -216,7 +217,7 @@ load_image (const gchar *filename)
   if (fd < 0)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 

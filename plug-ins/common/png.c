@@ -647,7 +647,8 @@ load_image (const gchar *filename,
 
   if (setjmp (pp->jmpbuf))
     {
-      g_message (_("Error while reading '%s'. File corrupted?"), filename);
+      g_message (_("Error while reading '%s'. File corrupted?"),
+                 gimp_filename_to_utf8 (filename));
       return image;
     }
 
@@ -664,13 +665,14 @@ load_image (const gchar *filename,
   if (fp == NULL)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       gimp_quit ();
     }
 
   png_init_io (pp, fp);
 
-  progress = g_strdup_printf (_("Opening '%s'..."), filename);
+  progress = g_strdup_printf (_("Opening '%s'..."),
+                              gimp_filename_to_utf8 (filename));
   gimp_progress_init (progress);
   g_free (progress);
 
@@ -779,14 +781,16 @@ load_image (const gchar *filename,
       layer_type = GIMP_INDEXED_IMAGE;
       break;
     default:                   /* Aie! Unknown type */
-      g_message (_("Unknown color model in PNG file '%s'."), filename);
+      g_message (_("Unknown color model in PNG file '%s'."),
+                 gimp_filename_to_utf8 (filename));
       return -1;
     };
 
   image = gimp_image_new (info->width, info->height, image_type);
   if (image == -1)
     {
-      g_message ("Could not create new image for '%s'", filename);
+      g_message ("Could not create new image for '%s'",
+                 gimp_filename_to_utf8 (filename));
       gimp_quit ();
     };
 
@@ -1146,7 +1150,8 @@ save_image (const gchar *filename,
 
   if (setjmp (pp->jmpbuf))
     {
-      g_message (_("Error while saving '%s'. Could not save image."), filename);
+      g_message (_("Error while saving '%s'. Could not save image."),
+                 gimp_filename_to_utf8 (filename));
       return 0;
     }
 
@@ -1161,13 +1166,14 @@ save_image (const gchar *filename,
   if (fp == NULL)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return 0;
     }
 
   png_init_io (pp, fp);
 
-  progress = g_strdup_printf (_("Saving '%s'..."), filename);
+  progress = g_strdup_printf (_("Saving '%s'..."),
+                              gimp_filename_to_utf8 (filename));
   gimp_progress_init (progress);
   g_free (progress);
 

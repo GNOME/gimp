@@ -381,14 +381,15 @@ load_image (const gchar *filename)
   if (!ifp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
   read_xwd_header (ifp, &xwdhdr);
   if (xwdhdr.l_file_version != 7)
     {
-      g_message (_("Could not read XWD header from '%s'"), filename);
+      g_message (_("Could not read XWD header from '%s'"),
+                 gimp_filename_to_utf8 (filename));
       fclose (ifp);
       return -1;
     }
@@ -430,7 +431,8 @@ load_image (const gchar *filename)
         }
     }
 
-  temp = g_strdup_printf (_("Opening '%s'..."), filename);
+  temp = g_strdup_printf (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (temp);
   g_free (temp);
 
@@ -482,7 +484,8 @@ load_image (const gchar *filename)
   {
     temp = g_strdup_printf (_("load_image (xwd): XWD-file %s has format %d, depth %d\n\
 and bits per pixel %d.\nCurrently this is not supported.\n"),
-			    filename, (int)xwdhdr.l_pixmap_format, depth, bpp);
+			    gimp_filename_to_utf8 (filename),
+                            (int) xwdhdr.l_pixmap_format, depth, bpp);
     g_message (temp);
     g_free (temp);
     return (-1);
@@ -528,11 +531,12 @@ save_image (const gchar *filename,
   if (!ofp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
-  temp = g_strdup_printf (_("Saving '%s'..."), filename);
+  temp = g_strdup_printf (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (temp);
   g_free (temp);
 

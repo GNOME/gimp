@@ -1553,15 +1553,17 @@ save_image (const gchar *filename,
   if (fd == NULL)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
-  name_buf = g_strdup_printf (_("Saving '%s'..."), filename);
+  name_buf = g_strdup_printf (_("Saving '%s'..."),
+                              gimp_filename_to_utf8 (filename));
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
-  IFDBG printf ("      File \"%s\" has been opened\n", filename);
+  IFDBG g_print ("      File \"%s\" has been opened\n",
+                 gimp_filename_to_utf8 (filename));
 
   get_image_data (fd, image_id);
   save_header (fd, image_id);
@@ -1584,5 +1586,3 @@ save_image (const gchar *filename,
   fclose (fd);
   return TRUE;
 }
-
-

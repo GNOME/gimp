@@ -314,11 +314,13 @@ load_image (const gchar *filename)	/* I - File to load */
   sgip = sgiOpen ((char *) filename, SGI_READ, 0, 0, 0, 0, 0);
   if (sgip == NULL)
     {
-      g_message ("Could not open '%s' for reading.", filename);
+      g_message ("Could not open '%s' for reading.",
+                  gimp_filename_to_utf8 (filename));
       return -1;
     };
 
-  progress = g_strdup_printf (_("Opening '%s'..."), filename);
+  progress = g_strdup_printf (_("Opening '%s'..."),
+                               gimp_filename_to_utf8 (filename));
   gimp_progress_init (progress);
   g_free (progress);
 
@@ -527,11 +529,13 @@ save_image (const gchar *filename,
 		  drawable->width, drawable->height, zsize);
   if (sgip == NULL)
     {
-      g_message (_("Could not open '%s' for writing."), filename);
+      g_message (_("Could not open '%s' for writing."),
+                  gimp_filename_to_utf8 (filename));
       return FALSE;
     };
 
-  progress = g_strdup_printf (_("Saving '%s'..."), filename);
+  progress = g_strdup_printf (_("Saving '%s'..."),
+                               gimp_filename_to_utf8 (filename));
   gimp_progress_init (progress);
   g_free (progress);
 

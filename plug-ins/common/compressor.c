@@ -328,7 +328,8 @@ save_image (const gchar *filename,
 	  || !WIFEXITED (process_status)
 	  || (WEXITSTATUS (process_status) != 0))
 	{
-	  g_message ("gzip exited abnormally on file '%s'", tmpname);
+	  g_message ("gzip exited abnormally on file '%s'",
+                     gimp_filename_to_utf8 (tmpname));
 	  g_free (tmpname);
 	  return 0;
 	}
@@ -437,7 +438,8 @@ load_image (const gchar       *filename,
 	  || !WIFEXITED (process_status)
 	  || (WEXITSTATUS (process_status) != 0))
 	{
-	  g_message ("gzip exited abnormally on file '%s'", filename);
+	  g_message ("gzip exited abnormally on file '%s'",
+                     gimp_filename_to_utf8 (filename));
 	  g_free (tmpname);
 	  *status = GIMP_PDB_EXECUTION_ERROR;
 	  return -1;

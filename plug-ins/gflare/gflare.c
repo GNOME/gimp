@@ -1269,14 +1269,15 @@ gflare_load (const gchar *filename,
   if (!fp)
     {
       g_message (_("Failed to open GFlare file '%s': %s"),
-                 filename, g_strerror (errno));
+                  gimp_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
 
   if (fgets (header, sizeof(header), fp) == NULL
       || strcmp (header, GFLARE_FILE_HEADER) != 0)
     {
-      g_warning (_("'%s' is not a valid GFlare file."), filename);
+      g_warning (_("'%s' is not a valid GFlare file."),
+                  gimp_filename_to_utf8 (filename));
       fclose (fp);
       return NULL;
     }
@@ -1459,7 +1460,8 @@ gflare_save (GFlare *gflare)
 			   "(gflare-path \"%s\")\n"
 			   "and make a folder '%s', then you can save "
                            "your own GFlares into that folder."),
-			 gflare->name, gimprc, gflare_dir, dir);
+			 gflare->name, gimprc, gflare_dir,
+                         gimp_filename_to_utf8 (dir));
 
 	      g_free (gimprc);
 	      g_free (gflare_dir);
@@ -1487,7 +1489,7 @@ gflare_save (GFlare *gflare)
   if (!fp)
     {
       g_message (_("Failed to write GFlare file '%s': %s"),
-                 gflare->filename, g_strerror (errno));
+                  gimp_filename_to_utf8 (gflare->filename), g_strerror (errno));
       return;
     }
 

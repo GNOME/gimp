@@ -281,19 +281,20 @@ load_image (const gchar *filename)
   guint8         *pix_buf           = NULL;
   gboolean        toggle_endian     = FALSE;
 
-  temp = g_strdup_printf (_("Opening '%s'..."), filename);
-  gimp_progress_init (temp);
-  g_free (temp);
-
   /* open the file */
   DICOM = fopen (filename, "rb");
 
   if (!DICOM)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
+
+  temp = g_strdup_printf (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init (temp);
+  g_free (temp);
 
   /* allocate the necessary structures */
   dicominfo = g_new0 (DicomInfo, 1);
@@ -305,14 +306,16 @@ load_image (const gchar *filename)
   if (g_ascii_strncasecmp (buf, "PAPYRUS", 7) == 0)
     {
       g_message ("'%s' is a PAPYRUS DICOM file.\n"
-                 "This plug-in does not support this type yet.", filename);
+                 "This plug-in does not support this type yet.",
+                 gimp_filename_to_utf8 (filename));
       return -1;
     }
 
   fread (buf, 1, 4, DICOM); /* This should be dicom */
   if (g_ascii_strncasecmp (buf,"DICM",4) != 0)
     {
-      g_message (_("'%s' is not a DICOM file."), filename);
+      g_message (_("'%s' is not a DICOM file."),
+                 gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -641,7 +644,7 @@ save_image (const gchar  *filename,
   if (!DICOM)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       gimp_drawable_detach (drawable);
       return FALSE;
     }

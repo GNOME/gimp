@@ -832,7 +832,7 @@ p_save_pointfile (BenderDialog *cd,
   if (!l_fp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-		 filename, g_strerror (errno));
+		 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -884,7 +884,7 @@ p_load_pointfile (BenderDialog *cd,
   if (!l_fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-		 filename, g_strerror (errno));
+		 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 

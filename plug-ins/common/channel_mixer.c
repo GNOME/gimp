@@ -1151,7 +1151,7 @@ cm_load_file_response_callback (GtkFileSelection *fs,
       else
         {
           g_message (_("Could not open '%s' for reading: %s"),
-                     mix->filename, g_strerror (errno));
+                     gimp_filename_to_utf8 (mix->filename), g_strerror (errno));
         }
     }
 
@@ -1236,7 +1236,7 @@ cm_save_file_response_callback (GtkFileSelection *fs,
   if (! file)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return;
     }
 
@@ -1245,7 +1245,8 @@ cm_save_file_response_callback (GtkFileSelection *fs,
 
   cm_save_file (mix, file);
 
-  g_message (_("Parameters were Saved to '%s'"), filename);
+  g_message (_("Parameters were Saved to '%s'"),
+             gimp_filename_to_utf8 (filename));
 
   gtk_widget_hide (GTK_WIDGET (fs));
 }

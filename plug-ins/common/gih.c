@@ -627,11 +627,12 @@ gih_load_image (const gchar *filename)
   if (fd == -1)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
-  temp = g_strdup_printf (_("Opening '%s'..."), filename);
+  temp = g_strdup_printf (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (temp);
   g_free (temp);
 
@@ -649,8 +650,8 @@ gih_load_image (const gchar *filename)
 
   if (!name)
     {
-      g_message ("Couldn't read name for brush pipe\nfrom '%s'",
-		 filename);
+      g_message ("Couldn't read name for brush pipe from '%s'",
+		 gimp_filename_to_utf8 (filename));
       close (fd);
       return -1;
     }
@@ -1215,11 +1216,12 @@ gih_save_image (const gchar *filename,
   if (fd == -1)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
-  msg = g_strdup_printf (_("Saving '%s'..."), filename);
+  msg = g_strdup_printf (_("Saving '%s'..."),
+                         gimp_filename_to_utf8 (filename));
   gimp_progress_init (msg);
   g_free (msg);
 

@@ -293,11 +293,12 @@ load_image (const gchar *filename)
   if (!fd)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
-  name_buf = g_strdup_printf (_("Opening '%s'..."), filename);
+  name_buf = g_strdup_printf (_("Opening '%s'..."),
+                              gimp_filename_to_utf8 (filename));
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
@@ -979,8 +980,8 @@ ReadImage (FILE        *fd,
       /* I don't see how one would easily construct a GIF in which
  	 this could happen, but it's a mad mad world. */
       g_message ("Ouch!  Can't handle non-alpha RGB frames.\n"
- 		 "Please file a bug report in GIMP's bugzilla.");
-      gimp_quit();
+                 "Please file a bug report in GIMP's bugzilla.");
+      gimp_quit ();
     }
 
   while ((v = LZWReadByte (fd, FALSE, c)) >= 0)

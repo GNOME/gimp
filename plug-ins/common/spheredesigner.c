@@ -1988,7 +1988,7 @@ loadit (const gchar * fn)
   if (!f)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 fn, g_strerror (errno));
+                 gimp_filename_to_utf8 (fn), g_strerror (errno));
       return;
     }
 
@@ -2080,7 +2080,7 @@ saveit (const gchar *fn)
   if (!f)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 fn, g_strerror (errno));
+                 gimp_filename_to_utf8 (fn), g_strerror (errno));
       return;
     }
 

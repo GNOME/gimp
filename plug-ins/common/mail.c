@@ -376,7 +376,8 @@ save_image (const gchar *filename,
 	      || !WIFEXITED (process_status)
 	      || (WEXITSTATUS (process_status) != 0))
 	    {
-	      g_message ("mail didnt work or something on file\n'%s'", tmpname);
+	      g_message ("mail didnt work or something on file\n'%s'",
+                         gimp_filename_to_utf8 (tmpname));
 	      g_free (tmpname);
 	      return GIMP_PDB_EXECUTION_ERROR;
 	    }

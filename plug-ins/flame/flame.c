@@ -390,7 +390,8 @@ file_response_callback (GtkFileSelection *fs,
 
           if (!g_file_test (filename, G_FILE_TEST_IS_REGULAR))
             {
-              g_message (_("'%s' is not a regular file"), filename);
+              g_message (_("'%s' is not a regular file"),
+                         gimp_filename_to_utf8 (filename));
               return;
             }
 
@@ -399,7 +400,7 @@ file_response_callback (GtkFileSelection *fs,
           if (f == NULL)
             {
               g_message (_("Could not open '%s' for reading: %s"),
-                         filename, g_strerror (errno));
+                         gimp_filename_to_utf8 (filename), g_strerror (errno));
               return;
             }
 
@@ -429,7 +430,7 @@ file_response_callback (GtkFileSelection *fs,
           if (NULL == f)
             {
               g_message (_("Could not open '%s' for writing: %s"),
-                         filename, g_strerror (errno));
+                         gimp_filename_to_utf8 (filename), g_strerror (errno));
               return;
             }
 

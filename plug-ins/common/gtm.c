@@ -224,7 +224,7 @@ save_image (const gchar  *filename,
   if (! fp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
@@ -243,7 +243,8 @@ save_image (const gchar  *filename,
     fprintf (fp, "<CAPTION>%s</CAPTION>\n",
              gtmvals.captiontxt);
 
-  name = g_strdup_printf (_("Saving '%s'..."), filename);
+  name = g_strdup_printf (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (name);
   g_free (name);
 

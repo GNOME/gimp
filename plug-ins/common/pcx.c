@@ -299,23 +299,26 @@ load_image (const gchar *filename)
   if (!fd)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
-  message = g_strdup_printf (_("Opening '%s'..."), filename);
+  message = g_strdup_printf (_("Opening '%s'..."),
+                             gimp_filename_to_utf8 (filename));
   gimp_progress_init (message);
   g_free (message);
 
   if (fread (&pcx_header, 128, 1, fd) == 0)
     {
-      g_message (_("Could not read header from '%s'"), filename);
+      g_message (_("Could not read header from '%s'"),
+                 gimp_filename_to_utf8 (filename));
       return -1;
     }
 
   if (pcx_header.manufacturer != 10)
     {
-      g_message (_("'%s' is not a PCX file"), filename);
+      g_message (_("'%s' is not a PCX file"),
+                 gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -578,7 +581,7 @@ save_image (const gchar *filename,
   if ((fp = fopen (filename, "wb")) == NULL)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 

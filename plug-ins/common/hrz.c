@@ -333,11 +333,12 @@ load_image (const gchar *filename)
   if (filedes == -1)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
-  temp = g_strdup_printf (_("Opening '%s'..."), filename);
+  temp = g_strdup_printf (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (temp);
   g_free (temp);
 
@@ -345,7 +346,8 @@ load_image (const gchar *filename)
   fstat (filedes, &statbuf);
   if (statbuf.st_size != 256*240*3)
     {
-      g_message (_("'%s' is not a HRZ file"), filename);
+      g_message (_("'%s' is not a HRZ file"),
+                 gimp_filename_to_utf8 (filename));
       return -1;
     }
 #ifdef HAVE_MMAP
@@ -448,7 +450,7 @@ save_image (const gchar *filename,
   if (fp == NULL)
     {
       g_message ("Could not open '%s' for writing: %s",
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
@@ -466,7 +468,8 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  temp = g_strdup_printf (_("Saving '%s'..."), filename);
+  temp = g_strdup_printf (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (temp);
   g_free (temp);
 

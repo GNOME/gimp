@@ -2135,7 +2135,7 @@ CML_save_to_file_response (GtkFileSelection *fs,
   if (! file)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return;
     }
 
@@ -2188,7 +2188,8 @@ CML_save_to_file_response (GtkFileSelection *fs,
   fprintf (file, "Random seed    : %d\n", VALS.seed);
   fclose(file);
 
-  g_message (_("Parameters were Saved to '%s'"), filename);
+  g_message (_("Parameters were Saved to '%s'"),
+             gimp_filename_to_utf8 (filename));
 
   strncpy (VALS.last_file_name, filename,
            sizeof (VALS.last_file_name) - 1);
@@ -2339,7 +2340,7 @@ CML_load_parameter_file (const gchar *filename,
   if (!file)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
   else
@@ -2367,10 +2368,12 @@ CML_load_parameter_file (const gchar *filename,
       if (interactive_mode)
 	{
 	  if (version < PARAM_FILE_FORMAT_VERSION)
-	    g_message (_("Warning: '%s' is an old format file."), filename);
+	    g_message (_("Warning: '%s' is an old format file."),
+                       gimp_filename_to_utf8 (filename));
 	  if (PARAM_FILE_FORMAT_VERSION < version)
 	    g_message (_("Warning: '%s' is a parameter file for newer "
-                         "CML_explorer than me."), filename);
+                         "CML_explorer than me."),
+                       gimp_filename_to_utf8 (filename));
 	}
       for (channel_id = 0; flag && (channel_id < 3); channel_id++)
 	{

@@ -853,19 +853,21 @@ load_image (const gchar *filename)
   if (ifp == NULL)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
   fclose (ifp);
 
-  temp = g_strdup_printf (_("Opening '%s'..."), filename);
+  temp = g_strdup_printf (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (temp);
   g_free (temp);
 
   ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury, &is_epsf);
   if (!ifp)
     {
-      g_message (_("Could not interpret '%s'"), filename);
+      g_message (_("Could not interpret '%s'"),
+                 gimp_filename_to_utf8 (filename));
       return (-1);
     }
 
@@ -973,11 +975,12 @@ save_image (const gchar *filename,
   if (!ofp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return (FALSE);
     }
 
-  temp = g_strdup_printf (_("Saving '%s'..."), filename);
+  temp = g_strdup_printf (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (temp);
   g_free (temp);
 

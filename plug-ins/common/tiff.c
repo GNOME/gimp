@@ -484,11 +484,12 @@ load_image (const gchar *filename)
   if (!tif)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       gimp_quit ();
     }
 
-  name = g_strdup_printf (_("Opening '%s'..."), filename);
+  name = g_strdup_printf (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (name);
   g_free (name);
 
@@ -509,13 +510,15 @@ load_image (const gchar *filename)
 
       if (!TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols))
         {
-          g_message ("Could not get image width from '%s'", filename);
+          g_message ("Could not get image width from '%s'",
+                     gimp_filename_to_utf8 (filename));
           gimp_quit ();
         }
 
       if (!TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows))
         {
-          g_message ("Could not get image length from '%s'", filename);
+          g_message ("Could not get image length from '%s'",
+                     gimp_filename_to_utf8 (filename));
           gimp_quit ();
         }
 
@@ -523,7 +526,7 @@ load_image (const gchar *filename)
         {
           g_message ("Could not get photometric from '%s'. "
                      "Assuming min-is-black",
-                     filename);
+                     gimp_filename_to_utf8 (filename));
           /* old AppleScan software misses out the photometric tag (and
            * incidentally assumes min-is-white, but xv assumes min-is-black,
            * so we follow xv's lead.  It's not much hardship to invert the
@@ -549,7 +552,7 @@ load_image (const gchar *filename)
           /* assuming unassociated alpha if unspecified */
           g_message ("alpha channel type not defined for file %s. "
                      "Assuming alpha is not premultiplied",
-                     filename);
+                     gimp_filename_to_utf8 (filename));
           alpha = TRUE;
           tsvals.save_transp_pixels = TRUE;
           --extra;
@@ -745,7 +748,8 @@ load_image (const gchar *filename)
           if (!TIFFGetField (tif, TIFFTAG_COLORMAP,
                              &redmap, &greenmap, &bluemap))
             {
-              g_message ("Could not get colormaps from '%s'", filename);
+              g_message ("Could not get colormaps from '%s'",
+                         gimp_filename_to_utf8 (filename));
               gimp_quit ();
             }
 
@@ -1726,11 +1730,12 @@ save_image (const gchar *filename,
   if (!tif)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
-  name = g_strdup_printf (_("Saving '%s'..."), filename);
+  name = g_strdup_printf (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (name);
   g_free (name);
 

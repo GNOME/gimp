@@ -1,5 +1,57 @@
 2004-01-19  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/bmp/bmpread.c
+	* plug-ins/bmp/bmpwrite.c
+	* plug-ins/common/CEL.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/bz2.c
+	* plug-ins/common/channel_mixer.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/dicom.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/gifload.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/gtm.c
+	* plug-ins/common/gz.c
+	* plug-ins/common/hrz.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/pcx.c
+	* plug-ins/common/png.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/psd.c
+	* plug-ins/common/psd_save.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/svg.c
+	* plug-ins/common/tga.c
+	* plug-ins/common/tiff.c
+	* plug-ins/common/wmf.c
+	* plug-ins/common/xbm.c
+	* plug-ins/common/xpm.c
+	* plug-ins/common/xwd.c
+	* plug-ins/faxg3/faxg3.c
+	* plug-ins/fits/fits.c
+	* plug-ins/flame/flame.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/gimpressionist/ppmtool.c
+	* plug-ins/helpbrowser/domain.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/sgi/sgi.c
+	* plug-ins/xjt/xjt.c: use gimp_filename_to_utf8() for filenames
+	passed to g_message() and gimp_progress_init(). Definitely missed
+	lots of other places but it's a start...
+
+2004-01-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/file/file-utils.h: removed inclusion of <stdio.h> and
 	"plug-in/plug-in-types.h".
 

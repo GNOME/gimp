@@ -196,7 +196,7 @@ WriteBMP (const gchar *filename,
   if (!outfile)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                  gimp_filename_to_utf8 (filename), g_strerror (errno));
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -206,7 +206,8 @@ WriteBMP (const gchar *filename,
 			   0, 0, drawable->width, drawable->height);
 
   /* And let's begin the progress */
-  temp_buf = g_strdup_printf (_("Saving '%s'..."), filename);
+  temp_buf = g_strdup_printf (_("Saving '%s'..."),
+                               gimp_filename_to_utf8 (filename));
   gimp_progress_init (temp_buf);
   g_free (temp_buf);
 

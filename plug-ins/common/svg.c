@@ -239,7 +239,8 @@ load_image (const gchar *filename)
     {
       /*  Do not rely on librsvg setting GError on failure!  */
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, error ? error->message : _("Unknown reason"));
+                 gimp_filename_to_utf8 (filename),
+                 error ? error->message : _("Unknown reason"));
       gimp_quit ();
     }
 
@@ -621,7 +622,8 @@ load_dialog (const gchar *filename)
     {
       /*  Do not rely on librsvg setting GError on failure!  */
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, error ? error->message : _("Unknown reason"));
+                 gimp_filename_to_utf8 (filename),
+                 error ? error->message : _("Unknown reason"));
       return FALSE;
     }
 

@@ -423,7 +423,7 @@ get_info (const gchar *filename,
   if (!file)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                  gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
   fli_read_header (file, &fli_header);
@@ -459,11 +459,12 @@ load_image (const gchar *filename,
   if (!file)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                  gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
-  name_buf = g_strdup_printf (_("Opening '%s'..."), filename);
+  name_buf = g_strdup_printf (_("Opening '%s'..."),
+                               gimp_filename_to_utf8 (filename));
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
@@ -679,7 +680,8 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  name_buf = g_strdup_printf (_("Saving '%s'..."), filename);
+  name_buf = g_strdup_printf (_("Saving '%s'..."),
+                               gimp_filename_to_utf8 (filename));
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
@@ -712,7 +714,7 @@ save_image (const gchar *filename,
   if (!file)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                  gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
   fseek (file, 128, SEEK_SET);

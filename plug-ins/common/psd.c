@@ -1736,11 +1736,12 @@ load_image (const gchar *name)
   if (! fd)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 name, g_strerror (errno));
+                 gimp_filename_to_utf8 (name), g_strerror (errno));
       return -1;
     }
 
-  name_buf = g_strdup_printf (_("Opening '%s'..."), name);
+  name_buf = g_strdup_printf (_("Opening '%s'..."),
+                              gimp_filename_to_utf8 (name));
   gimp_progress_init (name_buf);
   g_free (name_buf);
 

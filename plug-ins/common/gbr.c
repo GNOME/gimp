@@ -292,11 +292,12 @@ load_image (const gchar *filename)
   if (fd == -1)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
-  temp = g_strdup_printf (_("Opening '%s'..."), filename);
+  temp = g_strdup_printf (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (temp);
   g_free (temp);
 
@@ -353,7 +354,8 @@ load_image (const gchar *filename)
       name = g_new (gchar, bn_size);
       if ((read (fd, name, bn_size)) < bn_size)
 	{
-	  g_message (_("Error in GIMP brush file '%s'"), filename);
+	  g_message (_("Error in GIMP brush file '%s'"),
+                     gimp_filename_to_utf8 (filename));
 	  close (fd);
 	  g_free (name);
 	  return -1;
@@ -530,7 +532,7 @@ save_image (const gchar *filename,
   if (gimp_drawable_type (drawable_ID) != GIMP_GRAY_IMAGE &&
       gimp_drawable_type (drawable_ID) != GIMP_RGBA_IMAGE)
     {
-      g_message (_("GIMP brushes are either GRAYSCALE or RGBA\n"));
+      g_message (_("GIMP brushes are either GRAYSCALE or RGBA"));
       return FALSE;
     }
 
@@ -539,11 +541,12 @@ save_image (const gchar *filename,
   if (fd == -1)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
-  temp = g_strdup_printf (_("Saving '%s'..."), filename);
+  temp = g_strdup_printf (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (temp);
   g_free (temp);
 

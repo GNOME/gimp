@@ -1825,7 +1825,7 @@ save_callback (void)
   if (!fp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 savename, g_strerror (errno));
+                 gimp_filename_to_utf8 (savename), g_strerror (errno));
       return;
     }
 
@@ -1839,7 +1839,7 @@ save_callback (void)
 
   if (ferror (fp))
     g_message (_("Could not write '%s': %s"),
-               savename, g_strerror (ferror (fp)));
+               gimp_filename_to_utf8 (savename), g_strerror (ferror (fp)));
 
   fclose (fp);
 }
@@ -2126,20 +2126,21 @@ explorer_load (void)
   if (!fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return;
     }
   get_line (load_buf, MAX_LOAD_LINE, fp, 1);
 
   if (strncmp (FRACTAL_HEADER, load_buf, strlen (load_buf)))
     {
-      g_message (_("'%s' is not a FractalExplorer file"), filename);
+      g_message (_("'%s' is not a FractalExplorer file"),
+                 gimp_filename_to_utf8 (filename));
       return;
     }
   if (load_options (current_obj,fp))
     {
       g_message (_("'%s' is corrupt. Line %d Option section incorrect"),
-                 filename, line_no);
+                 gimp_filename_to_utf8 (filename), line_no);
       return;
     }
 

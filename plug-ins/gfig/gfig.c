@@ -714,7 +714,7 @@ gfig_load (const gchar *filename,
   if (!fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                  gimp_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
 
@@ -734,7 +734,8 @@ gfig_load (const gchar *filename,
 
   if (strncmp (GFIG_HEADER, load_buf, strlen (load_buf)))
     {
-      g_message ("File '%s' is not a gfig file", gfig->filename);
+      g_message ("File '%s' is not a gfig file",
+                  gimp_filename_to_utf8 (gfig->filename));
       return NULL;
     }
 
@@ -753,7 +754,7 @@ gfig_load (const gchar *filename,
   if (load_options (gfig, fp))
     {
       g_message ("File '%s' corrupt file - Line %d Option section incorrect",
-                 filename, line_no);
+                  gimp_filename_to_utf8 (filename), line_no);
       return NULL;
     }
 
@@ -768,7 +769,7 @@ gfig_load (const gchar *filename,
   if (chk_count != load_count)
     {
       g_message ("File '%s' corrupt file - Line %d Object count to small",
-                 filename, line_no);
+                  gimp_filename_to_utf8 (filename), line_no);
       return NULL;
     }
 
@@ -1012,7 +1013,6 @@ gfig_save_callbk (void)
   DAllObjs *objs;
   gint      count = 0;
   gchar    *savename;
-  gchar    *message;
   gchar     buf[G_ASCII_DTOSTR_BUF_SIZE];
   gchar     conv_buf[MAX_LOAD_LINE*3 +1];
 
@@ -1022,10 +1022,8 @@ gfig_save_callbk (void)
 
   if (!fp)
     {
-      message = g_strdup_printf (_("Could not open '%s' for writing: %s"),
-                                   savename, g_strerror (errno));
-      g_message (message);
-      g_free (message);
+      g_message (_("Could not open '%s' for writing: %s"),
+                 gimp_filename_to_utf8 (savename), g_strerror (errno));
       return;
     }
 
@@ -1042,7 +1040,8 @@ gfig_save_callbk (void)
   gfig_name_encode (conv_buf, current_obj->draw_name);
   fprintf (fp, "Name: %s\n", conv_buf);
   fprintf (fp, "Version: %s\n",
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", current_obj->version));
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                            current_obj->version));
   objs = current_obj->obj_list;
 
   count = gfig_obj_counts (objs);
@@ -2905,7 +2904,8 @@ gfig_dialog (void)
                    "You need to add an entry like\n"
                    "(%s \"%s\")\n"
                    "to your %s file."),
-                 "gfig-path", "gfig-path", esc_path, gimprc);
+                 "gfig-path", "gfig-path", esc_path,
+                 gimp_filename_to_utf8 (gimprc));
 
       g_free (gimprc);
       g_free (esc_path);

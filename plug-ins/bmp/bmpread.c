@@ -116,7 +116,7 @@ ReadBMP (const gchar *name)
   if (!fd)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -131,7 +131,8 @@ ReadBMP (const gchar *name)
      !strncmp (magick,"PI",2) || !strncmp (magick,"CI",2)   ||
      !strncmp (magick,"CP",2)))
     {
-      g_message (_("'%s' is not a valid BMP file"), filename);
+      g_message (_("'%s' is not a valid BMP file"),
+                 gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -139,19 +140,22 @@ ReadBMP (const gchar *name)
     {
       if (!ReadOK (fd, buffer, 12))
 	{
-          g_message (_("'%s' is not a valid BMP file"), filename);
+          g_message (_("'%s' is not a valid BMP file"),
+                      gimp_filename_to_utf8 (filename));
           return -1;
         }
       if (!ReadOK (fd, magick, 2))
 	{
-          g_message (_("'%s' is not a valid BMP file"), filename);
+          g_message (_("'%s' is not a valid BMP file"),
+                      gimp_filename_to_utf8 (filename));
           return -1;
         }
     }
 
   if (!ReadOK (fd, buffer, 12))
     {
-      g_message (_("'%s' is not a valid BMP file"), filename);
+      g_message (_("'%s' is not a valid BMP file"),
+                  gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -164,7 +168,8 @@ ReadBMP (const gchar *name)
 
   if (!ReadOK (fd, buffer, 4))
     {
-      g_message (_("'%s' is not a valid BMP file"), filename);
+      g_message (_("'%s' is not a valid BMP file"),
+                  gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -176,7 +181,8 @@ ReadBMP (const gchar *name)
     {
       if (!ReadOK (fd, buffer, 8))
         {
-          g_message (_("Error reading BMP file header from '%s'"), filename);
+          g_message (_("Error reading BMP file header from '%s'"),
+                      gimp_filename_to_utf8 (filename));
           return -1;
         }
 
@@ -194,7 +200,8 @@ ReadBMP (const gchar *name)
     {
       if (!ReadOK (fd, buffer, Bitmap_File_Head.biSize - 4))
         {
-          g_message (_("Error reading BMP file header from '%s'"), filename);
+          g_message (_("Error reading BMP file header from '%s'"),
+                      gimp_filename_to_utf8 (filename));
           return -1;
         }
       Bitmap_Head.biWidth   = ToL (&buffer[0x00]);	/* 12 */
@@ -214,7 +221,8 @@ ReadBMP (const gchar *name)
     {
       if (!ReadOK (fd, buffer, Bitmap_File_Head.biSize - 4))
         {
-          g_message (_("Error reading BMP file header from '%s'"), filename);
+          g_message (_("Error reading BMP file header from '%s'"),
+                      gimp_filename_to_utf8 (filename));
           return -1;
         }
       Bitmap_Head.biWidth   =ToL (&buffer[0x00]);       /* 12 */
@@ -232,7 +240,8 @@ ReadBMP (const gchar *name)
     }
   else
     {
-      g_message (_("Error reading BMP file header from '%s'"), filename);
+      g_message (_("Error reading BMP file header from '%s'"),
+                  gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -250,17 +259,20 @@ ReadBMP (const gchar *name)
   /* Sanity checks */
 
   if (Bitmap_Head.biHeight == 0 || Bitmap_Head.biWidth == 0) {
-      g_message (_("Error reading BMP file header from '%s'"), filename);
+      g_message (_("Error reading BMP file header from '%s'"),
+                  gimp_filename_to_utf8 (filename));
       return -1;
   }
 
   if (Bitmap_Head.biPlanes != 1) {
-      g_message (_("Error reading BMP file header from '%s'"), filename);
+      g_message (_("Error reading BMP file header from '%s'"),
+                  gimp_filename_to_utf8 (filename));
       return -1;
   }
 
   if (ColormapSize > 256 || Bitmap_Head.biClrUsed > 256) {
-      g_message (_("Error reading BMP file header from '%s'"), filename);
+      g_message (_("Error reading BMP file header from '%s'"),
+                  gimp_filename_to_utf8 (filename));
       return -1;
   }
 
@@ -291,7 +303,8 @@ ReadBMP (const gchar *name)
 
       if (!ReadOK (fd, tmp, 3 * sizeof (gint32)))
 	{
-          g_message (_("'%s' is not a valid BMP file"), filename);
+          g_message (_("'%s' is not a valid BMP file"),
+                      gimp_filename_to_utf8 (filename));
           return -1;
         }
 

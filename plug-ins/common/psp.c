@@ -1457,7 +1457,7 @@ load_image (const gchar *filename)
   if (f == NULL)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 

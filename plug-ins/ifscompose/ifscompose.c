@@ -2589,7 +2589,8 @@ ifsfile_save_response (GtkFileSelection *file_select,
         {
           gchar *message =
             g_strdup_printf (_("Could not open '%s' for writing: %s"),
-                             filename, g_strerror (errno));
+                             gimp_filename_to_utf8 (filename),
+                             g_strerror (errno));
           ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (file_select),
                                      "Save failed", message);
           g_free (message);
@@ -2679,7 +2680,7 @@ ifsfile_load_response (GtkFileSelection *file_select,
         {
           gchar *message = g_strdup_printf (_("File '%s' doesn't seem to be "
                                               "an IFS Compose file."),
-                                            filename);
+                                            gimp_filename_to_utf8 (filename));
           ifscompose_message_dialog (GTK_MESSAGE_ERROR,
                                      GTK_WINDOW (file_select),
                                      _("Open failed"), message);

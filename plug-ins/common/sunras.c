@@ -379,7 +379,7 @@ load_image (const gchar *filename)
   if (!ifp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -388,7 +388,8 @@ load_image (const gchar *filename)
   read_sun_header (ifp, &sunhdr);
   if (sunhdr.l_ras_magic != RAS_MAGIC)
     {
-      g_message (_("Could not open '%s' as SUN-raster-file"), filename);
+      g_message (_("Could not open '%s' as SUN-raster-file"),
+                 gimp_filename_to_utf8 (filename));
       fclose (ifp);
       return (-1);
     }
@@ -419,7 +420,7 @@ load_image (const gchar *filename)
       if (sunhdr.l_ras_magic != RAS_MAGIC)
 	{
 	  g_message (_("Could not read color entries from '%s'"),
-                     filename);
+                     gimp_filename_to_utf8 (filename));
 	  fclose (ifp);
 	  return (-1);
 	}
@@ -508,11 +509,12 @@ save_image (const gchar *filename,
   if (!ofp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
-  temp = g_strdup_printf (_("Saving '%s'..."), filename);
+  temp = g_strdup_printf (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (temp);
   g_free (temp);
 
