@@ -517,7 +517,7 @@ duplicate (GimpImage *gimage)
   Channel *active_channel = NULL;
   GimpDrawable *new_floating_sel_drawable = NULL;
   GimpDrawable *floating_sel_drawable = NULL;
-
+  PathsList *paths;
   gint count;
 
   gimp_add_busy_cursors_until_idle ();
@@ -606,8 +606,10 @@ duplicate (GimpImage *gimage)
     }
 
   /*  Copy the selection mask  */
-  pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE(gimage->selection_mask)), 0, 0, gimage->width, gimage->height, FALSE);
-  pixel_region_init (&destPR, drawable_data (GIMP_DRAWABLE(new_gimage->selection_mask)), 0, 0, gimage->width, gimage->height, TRUE);
+  pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE(gimage->selection_mask)), 
+		     0, 0, gimage->width, gimage->height, FALSE);
+  pixel_region_init (&destPR, drawable_data (GIMP_DRAWABLE(new_gimage->selection_mask)), 
+		     0, 0, gimage->width, gimage->height, TRUE);
   copy_region (&srcPR, &destPR);
   new_gimage->selection_mask->bounds_known = FALSE;
   new_gimage->selection_mask->boundary_known = FALSE;
@@ -658,6 +660,25 @@ duplicate (GimpImage *gimage)
   for (count=0;count<3;count++)
     new_gimage->qmask_color[count] = gimage->qmask_color[count];
   new_gimage->qmask_opacity = gimage->qmask_opacity;
+
+  /* Copy paths */
+  paths = gimp_image_get_paths (gimage);
+#ifdef 0  /* we need a path_duplicate() function */
+  if (paths)
+    {
+      GSList *plist = NULL;
+      PATHP path;
+      
+      for (plist = paths->bz_paths; plist; plist = plist->next)
+	{
+	  path = plist->data;
+	  plist = g_slist_append (plist, path_duplicate (new_gimage, path));
+	}
+      
+      new_paths = pathsList_new (new_gimage, paths->last_selected_row, plist);
+      gimp_image_set_paths (new_gimage, new_paths);
+    }
+#endif
 
   gimage_enable_undo (new_gimage);
 

@@ -120,9 +120,10 @@ static gint        new_button_press  (GtkWidget *widget,
 				      GdkEventButton *bevent,
 				      gpointer   data);
 
-static gint        delete_fractal_callback              (GtkWidget *widget,
+static void        delete_dialog_callback               (GtkWidget *widget,
+							 gboolean   value,
 						         gpointer   data);
-static gint        delete_button_press_ok               (GtkWidget *widget,
+static gint        delete_fractal_callback              (GtkWidget *widget,
 						         gpointer   data);
 static void        fractalexplorer_list_ok_callback     (GtkWidget *widget,
 						         gpointer   data);
@@ -648,15 +649,72 @@ explorer_render_row (const guchar *src_row,
     }
 }
 
-static gint
-delete_button_press_cancel (GtkWidget *widget,
-			    gpointer   data)
+static void
+delete_dialog_callback (GtkWidget *widget,
+			gboolean   delete,
+			gpointer   data)
 {
-  gtk_widget_destroy (delete_dialog);
+  gint pos;
+  GList * sellist;
+  fractalexplorerOBJ * sel_obj;
+  GtkWidget *list = (GtkWidget *)data;
+
+  if (delete)
+    {
+      /* Must update which object we are editing */
+      /* Get the list and which item is selected */
+      /* Only allow single selections */
+      
+      sellist = GTK_LIST(list)->selection; 
+      
+      g_print ("list: %i\n", g_list_length (sellist));
+      
+      sel_obj = (fractalexplorerOBJ *)gtk_object_get_user_data(GTK_OBJECT((GtkWidget *)(sellist->data)));
+      
+      pos = gtk_list_child_position(GTK_LIST(fractalexplorer_gtk_list),sellist->data);
+      
+      /* Delete the current  item + asssociated file */
+      gtk_list_clear_items(GTK_LIST (fractalexplorer_gtk_list),pos,pos+1);
+      /* Shadow copy for ordering info */
+      fractalexplorer_list = g_list_remove(fractalexplorer_list,sel_obj);
+      /*
+	if(sel_obj == current_obj)
+	{
+	clear_undo();
+	}
+      */  
+      /* Free current obj */
+      fractalexplorer_free_everything(sel_obj);
+      
+      /* Select previous one */
+      if (pos > 0)
+	pos--;
+      
+      if((pos == 0) && (g_list_length(fractalexplorer_list) == 0))
+	{      
+	  /* Warning - we have a problem here
+	   * since we are not really "creating an entry"
+	   * why call fractalexplorer_new?
+	   */
+	  new_button_press(NULL,NULL,NULL);
+	}
+
+      gtk_list_select_item(GTK_LIST(fractalexplorer_gtk_list), pos);
+
+      current_obj = g_list_nth_data(fractalexplorer_list,pos);
+
+      /*
+	draw xxxxxxxxxxxxxxxx 
+	update_draw_area(fractalexplorer_preview,NULL);
+      */
+      
+      list_button_update(current_obj);
+    }
+  
   gtk_widget_set_sensitive (delete_frame_to_freeze, TRUE);
   delete_dialog = NULL;
-
-  return FALSE;
+  
+  return;
 }
 
 static gint
@@ -677,57 +735,21 @@ delete_fractal_callback (GtkWidget *widget,
   if(delete_dialog)
     return(FALSE);
 
-  delete_dialog = gtk_dialog_new ();
-  gtk_window_set_title(GTK_WINDOW(delete_dialog), _("Delete fractal"));
-  gtk_window_position(GTK_WINDOW(delete_dialog), GTK_WIN_POS_MOUSE);
-  gtk_container_set_border_width(GTK_CONTAINER(delete_dialog), 0);
-  
-  vbox = gtk_vbox_new(FALSE, 0);
-  gtk_container_set_border_width(GTK_CONTAINER(vbox), 8);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(delete_dialog)->vbox), vbox,
-		     FALSE, FALSE, 0);
-  gtk_widget_show(vbox);
-  
-  /* Question */
-  
-  label = gtk_label_new(_("Are you sure you want to delete"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
-  gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show(label);
-  
-  str = g_strdup_printf (_("\"%s\" from the list and from disk?"), 
+  str = g_strdup_printf (_("Are you sure you want to delete\n"
+			   "\"%s\" from the list and from disk?"), 
 			 sel_obj->draw_name);
   
-  label = gtk_label_new(str);
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
-  gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show(label);
-  
+  delete_dialog = gimp_query_boolean_box (_("Delete Fractal"),
+					  gimp_plugin_help_func, 
+					  "filters/fractalexplorer.html", 
+					  FALSE,
+					  str, 
+					  _("Delete"), _("Cancel"),
+					  GTK_OBJECT (widget), "destroy",
+					  (GimpQueryBooleanCallback)delete_dialog_callback,
+					  data);				  
   g_free(str);
-  
-  /* Buttons */
-  button = gtk_button_new_with_label (_("Delete"));
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) delete_button_press_ok,
-                      data);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (delete_dialog)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_object_set_user_data(GTK_OBJECT(button),widget);
-  gtk_widget_show (button);
-  
-  button = gtk_button_new_with_label (_("Cancel"));
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) delete_button_press_cancel,
-                      data);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (delete_dialog)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_object_set_user_data(GTK_OBJECT(button),widget);
-  gtk_widget_show (button);
-  
-  /* Show! */
-  
+
   gtk_widget_set_sensitive (GTK_WIDGET (delete_frame_to_freeze), FALSE);
   gtk_widget_show (delete_dialog);
 
@@ -781,7 +803,7 @@ fractalexplorer_list_cancel_callback (GtkWidget *widget,
       /* We are creating an entry so if cancelled
        * must del the list item as well
        */
-      delete_button_press_ok (widget, fractalexplorer_gtk_list);
+      delete_dialog_callback (widget, TRUE, fractalexplorer_gtk_list);
     }
 
   gtk_widget_destroy (options->query_box);
@@ -1603,68 +1625,3 @@ fractalexplorer_rescan_list (void)
   gtk_widget_show (dlg);
 }
 
-static gint
-delete_button_press_ok(GtkWidget *widget,
-		       gpointer   data)
-{
-  gint pos;
-  GList * sellist;
-  fractalexplorerOBJ * sel_obj;
-  GtkWidget *list = (GtkWidget *)data;
-
-  /* Must update which object we are editing */
-  /* Get the list and which item is selected */
-  /* Only allow single selections */
-
-  sellist = GTK_LIST(list)->selection; 
-
-  g_print ("list: %i\n", g_list_length (sellist));
-
-  sel_obj = (fractalexplorerOBJ *)gtk_object_get_user_data(GTK_OBJECT((GtkWidget *)(sellist->data)));
-
-  pos = gtk_list_child_position(GTK_LIST(fractalexplorer_gtk_list),sellist->data);
-
-  /* Delete the current  item + asssociated file */
-  gtk_list_clear_items(GTK_LIST (fractalexplorer_gtk_list),pos,pos+1);
-  /* Shadow copy for ordering info */
-  fractalexplorer_list = g_list_remove(fractalexplorer_list,sel_obj);
-/*
-  if(sel_obj == current_obj)
-    {
-      clear_undo();
-    }
-*/  
-  /* Free current obj */
-  fractalexplorer_free_everything(sel_obj);
-
-  /* Select previous one */
-  if (pos > 0)
-    pos--;
-
-  if((pos == 0) && (g_list_length(fractalexplorer_list) == 0))
-    {      
-      /* Warning - we have a problem here
-       * since we are not really "creating an entry"
-       * why call fractalexplorer_new?
-       */
-      new_button_press(NULL,NULL,NULL);
-    }
-
-  gtk_widget_destroy(delete_dialog);
-  gtk_widget_set_sensitive(delete_frame_to_freeze,TRUE);
-
-  delete_dialog = NULL;
-
-  gtk_list_select_item(GTK_LIST(fractalexplorer_gtk_list), pos);
-
-  current_obj = g_list_nth_data(fractalexplorer_list,pos);
-
-  /*
-  draw xxxxxxxxxxxxxxxx 
-  update_draw_area(fractalexplorer_preview,NULL);
-  */
-
-  list_button_update(current_obj);
-
-  return FALSE;
-}

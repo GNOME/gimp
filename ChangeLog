@@ -1,3 +1,9 @@
+Mon Feb 14 12:22:06 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/channel_ops.c: nothing yet
+	* plug-ins/FractalExplorer/FractalExplorer.c: use a 
+	gimp_query_boolean_box and the same message that GFlare uses
+
 2000-02-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/color_area.c
