@@ -31,6 +31,7 @@
     <xi:include href="xml/gimpbrushes.xml" />
     <xi:include href="xml/gimpchannel.xml" />
     <xi:include href="xml/gimpcolor.xml" />
+    <xi:include href="xml/gimpcontext.xml" />
     <xi:include href="xml/gimpconvert.xml" />
     <xi:include href="xml/gimpdisplay.xml" />
     <xi:include href="xml/gimpdrawable.xml" />

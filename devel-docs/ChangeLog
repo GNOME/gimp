@@ -1,3 +1,12 @@
+2004-09-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpbrushes.sgml
+	* libgimp/tmpl/gimpcontext.sgml
+	* libgimp/tmpl/gimppalettes.sgml
+	* libgimp/tmpl/gimppatterns.sgml: updated for new context API.
+
 2004-09-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am (GTKDOC_LIBS): removed same linker hacks
