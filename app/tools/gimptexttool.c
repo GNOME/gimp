@@ -592,8 +592,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
 
-  pango_context = pango_ft2_get_context (gimprc.monitor_xres,
-                                         gimprc.monitor_yres);
+  pango_context = pango_ft2_get_context ();
 
   options->font_selection = gimp_font_selection_new (pango_context);
 

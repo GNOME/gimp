@@ -1,5 +1,10 @@
 2001-11-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptexttool.c: seems I've comitted something which
+	should only be in RELEASE-TO-CVS.patch. Sorry...
+
+2001-11-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c: key press and release
 	events were sent swapped to tools.
 
