@@ -124,11 +124,17 @@ gimp_build_dither_combo (void)
 void
 gimp_redraw_color_swatch (void)
 {
+  if (swatch == NULL)
+    return;
+
+  gtk_widget_queue_draw (swatch);
+}
+
+static gboolean
+gimp_color_swatch_expose (void)
+{
   static GdkGC *gc = NULL;
   static GdkColormap *cmap;
-
-  if (swatch == NULL || swatch->window == NULL)
-    return;
 
   if (gc == NULL)
     {
@@ -144,6 +150,8 @@ gimp_redraw_color_swatch (void)
 			  thumbnail_w, thumbnail_h, GDK_RGB_DITHER_NORMAL,
 			  adjusted_thumbnail_data,
 			  adjusted_thumbnail_bpp * thumbnail_w);
+
+  return FALSE;
 }
 
 /*
@@ -221,7 +229,7 @@ gimp_create_color_adjust_window (void)
 
   gimp_help_set_help_data (event_box, _("Image Preview"), NULL);
   g_signal_connect (swatch, "expose_event",
-                    G_CALLBACK (gimp_redraw_color_swatch),
+                    G_CALLBACK (gimp_color_swatch_expose),
                     NULL);
 
   /*
