@@ -164,6 +164,14 @@ Global data follows no strict rules.
 	manager exists to use this parasite, and it will be used
 	for interchange between TIFF and PNG (identical profiles)
 
+"decompose-data" (IMAGE, NONPERSISTENT) 
+        Starting with GIMP 2.3, this is added to images produced by
+        the decompose plug-in, and contains information necessary to
+        recompose the original source RGB layer from the resulting
+        grayscale layers.  It is ascii; a typical example would be
+        "source=2 type=RGBA 4 5 6 7".  This means that layer 2 was
+        decomposed in RGBA mode, giving rise to layers 4, 5, 6, and 7.
+
 "gfig" (LAYER, PERSISTENT)
         As of GIMP 2.2, the gfig plug-in creates its own layers, and
         stores a representation of the figure as a layer parasite.

@@ -1,3 +1,8 @@
+2004-12-28  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* parasites.txt:  added information about "decompose-data"
+	parasite now added by the decompose plug-in.
+
 2004-12-23  Sven Neumann  <sven@gimp.org>
 
 	* app/app-sections.txt: updated.
