@@ -1498,7 +1498,7 @@ DIALOG ()
 	random_sensitives[4].logic = TRUE;
 
 	tooltips = gtkW_tooltips_new (frame);
-	gtk_tooltips_set_tips (tooltips, button, "\"Fix seed\" button is an alias of me.\nThe same seed produces the same image, if (1) the widths of images are same (this is the reason why image on drawable is different from preview), and (2) all mutation rates equal to zero.");
+	gtk_tooltips_set_tip  (tooltips, button, "\"Fix seed\" button is an alias of me.\nThe same seed produces the same image, if (1) the widths of images are same (this is the reason why image on drawable is different from preview), and (2) all mutation rates equal to zero.",NULL);
 	gtk_tooltips_enable (tooltips);
       }
       gtk_table_attach (GTK_TABLE (table), subframe, 0, 1, index, index + 1,

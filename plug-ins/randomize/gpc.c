@@ -135,7 +135,7 @@ void
 gpc_set_tooltip(GtkWidget *widget, const char *tip)
 {
     if (tip && tip[0])
-        gtk_tooltips_set_tips(tips, widget, (char *) tip);
+        gtk_tooltips_set_tip (tips, widget, (char *) tip,NULL);
 }
 
 void
