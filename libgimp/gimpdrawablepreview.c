@@ -32,7 +32,6 @@
 #include "gimpdrawablepreview.h"
 
 
-#define DEFAULT_SIZE      150
 #define SELECTION_BORDER  2
 
 
@@ -85,13 +84,6 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
   widget_class->style_set = gimp_drawable_preview_style_set;
 
   preview_class->draw     = gimp_drawable_preview_draw_original;
-
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("size",
-                                                             NULL, NULL,
-                                                             1, 1024,
-                                                             DEFAULT_SIZE,
-                                                             G_PARAM_READABLE));
 }
 
 static void
@@ -173,18 +165,34 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
   preview->ymax = MIN (y2 + SELECTION_BORDER, height);
 }
 
+static void
+gimp_drawable_preview_notify_update (GimpPreview *preview,
+                                     GParamSpec  *pspec,
+                                     gboolean    *toggle)
+{
+  *toggle = gimp_preview_get_update (preview);
+}
+
+
 /**
  * gimp_drawable_preview_new:
  * @drawable: a #GimpDrawable
+ * @toggle:   pointer to a #gboolean variable to sync with the "Preview"
+ *            check-button or %NULL
  *
- * Creates a new #GimpDrawablePreview widget for @drawable.
+ * Creates a new #GimpDrawablePreview widget for @drawable. If
+ * updating the preview takes considerable time, you will want to
+ * store the state of the "Preview" check-button in the plug-in
+ * data. For convenience you can pass a pointer to the #gboolean as
+ * @toggle.
  *
  * Returns: A pointer to the new #GimpDrawablePreview widget.
  *
  * Since: GIMP 2.2
  **/
 GtkWidget *
-gimp_drawable_preview_new (GimpDrawable *drawable)
+gimp_drawable_preview_new (GimpDrawable *drawable,
+                           gboolean     *toggle)
 {
   GimpDrawablePreview *preview;
 
@@ -192,35 +200,14 @@ gimp_drawable_preview_new (GimpDrawable *drawable)
 
   preview = g_object_new (GIMP_TYPE_DRAWABLE_PREVIEW, NULL);
 
-  gimp_drawable_preview_set_drawable (preview, drawable);
+  if (toggle)
+    {
+      gimp_preview_set_update (GIMP_PREVIEW (preview), *toggle);
 
-  return GTK_WIDGET (preview);
-}
-
-/**
- * gimp_drawable_preview_new_with_toggle:
- * @drawable: a #GimpDrawable
- * @toggle:
- *
- * Creates a new #GimpDrawablePreview widget for @drawable.
- *
- * Returns: A pointer to the new #GimpDrawablePreview widget.
- *
- * Since: GIMP 2.2
- **/
-GtkWidget *
-gimp_drawable_preview_new_with_toggle (GimpDrawable *drawable,
-                                       gboolean     *toggle)
-{
-  GimpDrawablePreview *preview;
-
-  g_return_val_if_fail (drawable != NULL, NULL);
-  g_return_val_if_fail (toggle != NULL, NULL);
-
-  preview = g_object_new (GIMP_TYPE_DRAWABLE_PREVIEW,
-                          "show_update_toggle", TRUE,
-                          "update",             *toggle,
-                          NULL);
+      g_signal_connect (preview, "notify::update",
+                        G_CALLBACK (gimp_drawable_preview_notify_update),
+                        toggle);
+    }
 
   gimp_drawable_preview_set_drawable (preview, drawable);
 

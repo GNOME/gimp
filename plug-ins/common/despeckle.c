@@ -267,7 +267,7 @@ run (const gchar      *name,
       INIT_I18N();
       gimp_get_data (PLUG_IN_NAME, despeckle_vals);
         break;
-        
+
     default:
       status = GIMP_PDB_CALLING_ERROR;
       break;
@@ -597,8 +597,8 @@ despeckle_dialog (void)
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-  
-  preview = gimp_drawable_preview_new (drawable);
+
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
   g_signal_connect (preview, "invalidated",

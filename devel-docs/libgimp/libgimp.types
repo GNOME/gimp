@@ -3,3 +3,4 @@
 #include <libgimp/gimpui.h>
 
 gimp_drawable_preview_get_type
+gimp_progress_bar_get_type

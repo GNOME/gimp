@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-GimpDrawablePreview
+GimpProgressBar
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -14,28 +14,17 @@ GimpDrawablePreview
 
 </para>
 
-<!-- ##### STRUCT GimpDrawablePreview ##### -->
+<!-- ##### STRUCT GimpProgressBar ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### FUNCTION gimp_drawable_preview_new ##### -->
+<!-- ##### FUNCTION gimp_progress_bar_new ##### -->
 <para>
 
 </para>
 
-@drawable: 
-@toggle: 
 @Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_preview_draw ##### -->
-<para>
-
-</para>
-
-@preview: 
-@buf: 
 
 

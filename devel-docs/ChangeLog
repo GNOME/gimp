@@ -1,3 +1,14 @@
+2004-09-01  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/tmpl/gimpprogressbar.sgml
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/libgimp.types
+	* libgimp/tmpl/gimpdrawablepreview.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimppreview.sgml: updated for GimpProgressBar
+	and GimpPreview API changes.
+
 2004-08-31  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/Makefile.am

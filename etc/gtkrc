@@ -30,14 +30,14 @@ binding "gimp-help-binding"
 
 
 #
-# Adjust the size of drawable previews in plug-in dialogs:
+# Adjust the size of previews in plug-in dialogs:
 #
 style "gimp-large-preview"
 {
-  GimpDrawablePreview::size = 256
+  GimpPreview::size = 256
 }
 
-# class "GimpDrawablePreview" style "gimp-large-preview"
+# class "GimpPreview" style "gimp-large-preview"
 
 
 #

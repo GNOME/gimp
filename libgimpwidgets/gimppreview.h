@@ -44,23 +44,26 @@ struct _GimpPreview
 {
   GtkTable      parent_instance;
 
+  gboolean      update_preview;
+
+  /*< protected >*/
+  GtkWidget    *area;
+  GtkWidget    *hscr;
+  GtkWidget    *vscr;
+  GtkWidget    *toggle;
+  GdkCursor    *cursor_move;
+  GdkCursor    *cursor_busy;
+
+  /*< private >*/
   gint          xoff, yoff;
   gint          xmin, xmax, ymin, ymax;
   gint          drag_x, drag_y;
   gint          drag_xoff, drag_yoff;
-
   gint          width, height;
-  GtkObject    *hadj, *vadj;
-  GtkWidget    *hscr, *vscr;
-  gboolean      in_drag;
-  GtkWidget    *area;
-  GtkWidget    *toggle_update;
-  gboolean      update_preview;
-  guint         timeout_id;
-  GdkCursor    *cursor_move;
-  GdkCursor    *cursor_busy;
-};
 
+  gboolean      in_drag;
+  guint         timeout_id;
+};
 struct _GimpPreviewClass
 {
   GtkTableClass parent_class;
@@ -73,20 +76,21 @@ struct _GimpPreviewClass
 };
 
 
-GType   gimp_preview_get_type           (void) G_GNUC_CONST;
+GType     gimp_preview_get_type     (void) G_GNUC_CONST;
 
-void    gimp_preview_get_size           (GimpPreview *preview,
-                                         gint        *width,
-                                         gint        *height);
+void      gimp_preview_set_update   (GimpPreview *preview,
+                                     gboolean     update);
+gboolean  gimp_preview_get_update   (GimpPreview *preview);
 
-void    gimp_preview_get_position       (GimpPreview *preview,
-                                         gint        *x,
-                                         gint        *y);
+void      gimp_preview_get_size     (GimpPreview *preview,
+                                     gint        *width,
+                                     gint        *height);
+void      gimp_preview_get_position (GimpPreview *preview,
+                                     gint        *x,
+                                     gint        *y);
 
-void    gimp_preview_show_update_toggle (GimpPreview *preview,
-                                         gboolean     show_update);
+void      gimp_preview_invalidate   (GimpPreview *preview);
 
-void    gimp_preview_invalidate         (GimpPreview *preview);
 
 G_END_DECLS
 

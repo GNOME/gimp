@@ -442,8 +442,8 @@ softglow (GimpDrawable *drawable,
            pr = gimp_pixel_rgns_process (pr))
         {
           guchar *src_ptr  = src_rgn.data;
-          guchar *dest_ptr = preview_buffer + 
-                               bytes * 
+          guchar *dest_ptr = preview_buffer +
+                               bytes *
                                ((src_rgn.y - y1) * width + (src_rgn.x - x1));
           guchar *blur_ptr = dest + (src_rgn.y - y1) * width + (src_rgn.x - x1);
 
@@ -471,7 +471,8 @@ softglow (GimpDrawable *drawable,
     }
   else
     {
-      gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, width, height, TRUE, TRUE);
+      gimp_pixel_rgn_init (&dest_rgn,
+                           drawable, x1, y1, width, height, TRUE, TRUE);
 
       for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
            pr != NULL;
@@ -674,7 +675,7 @@ softglow_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  preview = gimp_drawable_preview_new (drawable);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

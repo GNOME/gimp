@@ -1,3 +1,20 @@
+2004-09-01  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpdrawablepreview.[ch]
+	* libgimpwidgets/gimppreview.[ch]: always show the "Preview" check
+	button. Simplified the preview APIs, moved the "size" style
+	property to the GimpPreview class.
+
+	* etc/gtkrc: changed the example accordingly.
+
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/gauss.c
+	* plug-ins/common/neon.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/softglow.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/unsharp.c: follow change in GimpDrawablePreview API.
+
 2004-09-01  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/script-fu-types.h (struct SFOptions): changed

@@ -27,15 +27,33 @@ GimpPreview
 
 @gimppreview: the object which received the signal.
 
-<!-- ##### ARG GimpPreview:show-update-toggle ##### -->
-<para>
-
-</para>
-
 <!-- ##### ARG GimpPreview:update ##### -->
 <para>
 
 </para>
+
+<!-- ##### ARG GimpPreview:size ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_preview_get_update ##### -->
+<para>
+
+</para>
+
+@preview: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_preview_set_update ##### -->
+<para>
+
+</para>
+
+@preview: 
+@update: 
+
 
 <!-- ##### FUNCTION gimp_preview_get_size ##### -->
 <para>
@@ -55,15 +73,6 @@ GimpPreview
 @preview: 
 @x: 
 @y: 
-
-
-<!-- ##### FUNCTION gimp_preview_show_update_toggle ##### -->
-<para>
-
-</para>
-
-@preview: 
-@show_update: 
 
 
 <!-- ##### FUNCTION gimp_preview_invalidate ##### -->

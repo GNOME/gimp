@@ -230,10 +230,10 @@ typedef struct {
 */
 
 static void
-spread_func (gint      x, 
-             gint      y, 
-             guchar   *dest, 
-             gint      bpp, 
+spread_func (gint      x,
+             gint      y,
+             guchar   *dest,
+             gint      bpp,
              gpointer  data)
 {
   SpreadParam_t *param = (SpreadParam_t*) data;
@@ -242,11 +242,11 @@ spread_func (gint      x,
   gint     xi, yi;
 
   /* get random angle, x distance, and y distance */
-  xdist = (param->x_amount > 0 
-           ? g_rand_int_range (param->gr, -param->x_amount, param->x_amount) 
+  xdist = (param->x_amount > 0
+           ? g_rand_int_range (param->gr, -param->x_amount, param->x_amount)
            : 0);
-  ydist = (param->y_amount > 0 
-           ? g_rand_int_range (param->gr, -param->y_amount, param->y_amount) 
+  ydist = (param->y_amount > 0
+           ? g_rand_int_range (param->gr, -param->y_amount, param->y_amount)
            : 0);
   angle = g_rand_double_range (param->gr, -G_PI, G_PI);
 
@@ -284,7 +284,8 @@ spread (GimpDrawable *drawable)
 }
 
 static void
-spread_updating_preview (GimpPreview *preview, GtkWidget *size)
+spread_updating_preview (GimpPreview *preview,
+                         GtkWidget   *size)
 {
   SpreadParam_t  param;
   gint           x, y, bpp;
@@ -295,9 +296,9 @@ spread_updating_preview (GimpPreview *preview, GtkWidget *size)
 
   param.pft      = gimp_pixel_fetcher_new (drawable_preview->drawable, FALSE);
   param.gr       = g_rand_new ();
-  param.x_amount = 
+  param.x_amount =
         (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 0) + 1) / 2;
-  param.y_amount = 
+  param.y_amount =
         (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 1) + 1) / 2;
   param.width    = drawable_preview->drawable->width;
   param.height   = drawable_preview->drawable->height;
@@ -355,8 +356,8 @@ spread_dialog (gint32        image_ID,
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-  
-  preview = gimp_drawable_preview_new (drawable);
+
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
 

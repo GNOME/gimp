@@ -118,7 +118,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 static  GimpRunMode   run_mode;
 
 MAIN ()
-     
+
 static void
 query (void)
 {
@@ -131,7 +131,7 @@ query (void)
       { GIMP_PDB_FLOAT,    "amount",    "Strength of effect" },
       { GIMP_PDB_FLOAT,    "threshold", "Threshold" }
     };
-  
+
   gimp_install_procedure ("plug_in_unsharp_mask",
                           "An unsharp mask filter",
                           "The unsharp mask is a sharpening filter that works "
@@ -148,7 +148,7 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
-  
+
   gimp_plugin_menu_register ("plug_in_unsharp_mask",
                              N_("<Image>/Filters/Enhance"));
 }
@@ -166,35 +166,35 @@ run (const gchar      *name,
 #ifdef TIMER
   GTimer *timer = g_timer_new ();
 #endif
-  
+
   run_mode = param[0].data.d_int32;
-  
+
   *return_vals  = values;
   *nreturn_vals = 1;
-  
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-  
+
   INIT_I18N ();
-  
+
   /*
    * Get drawable information...
    */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
-  
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_unsharp_mask", &unsharp_params);
       /* Reset default values show preview unmodified */
-      
+
       /* initialize pixel regions and buffer */
       if (! unsharp_mask_dialog (drawable))
         return;
-      
+
       break;
-      
+
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 6)
         {
@@ -676,9 +676,8 @@ unsharp_mask_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  preview =
-    gimp_drawable_preview_new_with_toggle (drawable,
-                                           &unsharp_params.update_preview);
+  preview = gimp_drawable_preview_new (drawable,
+                                       &unsharp_params.update_preview);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
   g_signal_connect (preview, "invalidated",

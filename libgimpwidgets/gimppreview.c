@@ -30,6 +30,7 @@
 #include "libgimp/libgimp-intl.h"
 
 
+#define DEFAULT_SIZE     150
 #define PREVIEW_TIMEOUT  200
 
 
@@ -42,8 +43,7 @@ enum
 enum
 {
   PROP_0,
-  PROP_UPDATE,
-  PROP_SHOW_UPDATE_TOGGLE
+  PROP_UPDATE
 };
 
 
@@ -115,7 +115,8 @@ gimp_preview_get_type (void)
 static void
 gimp_preview_class_init (GimpPreviewClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -140,16 +141,14 @@ gimp_preview_class_init (GimpPreviewClass *klass)
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class,
-                                   PROP_SHOW_UPDATE_TOGGLE,
-                                   g_param_spec_boolean ("show_update_toggle",
-                                                         NULL, NULL,
-                                                         FALSE,
-                                                         G_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
-
-
   klass->draw = NULL;
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_int ("size",
+                                                             NULL, NULL,
+                                                             1, 1024,
+                                                             DEFAULT_SIZE,
+                                                             G_PARAM_READABLE));
 }
 
 static void
@@ -157,6 +156,7 @@ gimp_preview_init (GimpPreview *preview)
 {
   GtkTable  *table = GTK_TABLE (preview);
   GtkWidget *frame;
+  GtkObject *adj;
 
   gtk_table_resize (table, 3, 2);
   gtk_table_set_homogeneous (table, FALSE);
@@ -172,27 +172,27 @@ gimp_preview_init (GimpPreview *preview)
   preview->width  = preview->xmax - preview->xmin;
   preview->height = preview->ymax - preview->ymin;
 
-  preview->hadj = gtk_adjustment_new (0, 0, preview->width - 1, 1.0,
-                                      preview->width, preview->width);
+  adj = gtk_adjustment_new (0, 0, preview->width - 1, 1.0,
+                            preview->width, preview->width);
 
-  g_signal_connect (preview->hadj, "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_preview_h_scroll),
                     preview);
 
-  preview->hscr = gtk_hscrollbar_new (GTK_ADJUSTMENT (preview->hadj));
+  preview->hscr = gtk_hscrollbar_new (GTK_ADJUSTMENT (adj));
   gtk_range_set_update_policy (GTK_RANGE (preview->hscr),
                                GTK_UPDATE_CONTINUOUS);
   gtk_table_attach (table, preview->hscr, 0,1, 1,2,
                     GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
 
-  preview->vadj = gtk_adjustment_new (0, 0, preview->height - 1, 1.0,
-                                      preview->height, preview->height);
+  adj = gtk_adjustment_new (0, 0, preview->height - 1, 1.0,
+                            preview->height, preview->height);
 
-  g_signal_connect (preview->vadj, "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_preview_v_scroll),
                     preview);
 
-  preview->vscr = gtk_vscrollbar_new (GTK_ADJUSTMENT (preview->vadj));
+  preview->vscr = gtk_vscrollbar_new (GTK_ADJUSTMENT (adj));
   gtk_range_set_update_policy (GTK_RANGE (preview->vscr),
                                GTK_UPDATE_CONTINUOUS);
   gtk_table_attach (table, preview->vscr, 1,2, 0,1,
@@ -231,15 +231,16 @@ gimp_preview_init (GimpPreview *preview)
 
   /* a toggle button to (des)activate the instant preview */
 
-  preview->toggle_update = gtk_check_button_new_with_mnemonic (_("_Preview"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview->toggle_update),
+  preview->toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview->toggle),
                                 preview->update_preview);
 
   gtk_table_set_row_spacing (GTK_TABLE (preview), 1, 6);
-  gtk_table_attach (table, preview->toggle_update,
+  gtk_table_attach (table, preview->toggle,
                     0, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (preview->toggle);
 
-  g_signal_connect (preview->toggle_update, "toggled",
+  g_signal_connect (preview->toggle, "toggled",
                     G_CALLBACK (gimp_preview_toggle_callback),
                     preview);
 }
@@ -272,10 +273,6 @@ gimp_preview_get_property (GObject    *object,
       g_value_set_boolean (value, preview->update_preview);
       break;
 
-    case PROP_SHOW_UPDATE_TOGGLE:
-      g_value_set_boolean (value, GTK_WIDGET_VISIBLE (preview->toggle_update));
-      break;
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -293,15 +290,8 @@ gimp_preview_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_UPDATE:
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview->toggle_update),
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview->toggle),
                                     g_value_get_boolean (value));
-      break;
-
-    case PROP_SHOW_UPDATE_TOGGLE:
-      if (g_value_get_boolean (value))
-        gtk_widget_show (preview->toggle_update);
-      else
-        gtk_widget_hide (preview->toggle_update);
       break;
 
     default:
@@ -467,8 +457,8 @@ gimp_preview_area_event (GtkWidget   *area,
 
           if (preview->xoff != xoff || preview->yoff != yoff)
             {
-              gtk_adjustment_set_value (GTK_ADJUSTMENT (preview->hadj), xoff);
-              gtk_adjustment_set_value (GTK_ADJUSTMENT (preview->vadj), yoff);
+              gtk_range_set_value (GTK_RANGE (preview->hscr), xoff);
+              gtk_range_set_value (GTK_RANGE (preview->vscr), yoff);
 
               gimp_preview_draw (preview);
               gimp_preview_invalidate (preview);
@@ -570,6 +560,40 @@ gimp_preview_invalidate_now (GimpPreview *preview)
 }
 
 /**
+ * gimp_preview_set_update:
+ * @preview: a #GimpPreview widget
+ * @update:
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_preview_set_update (GimpPreview *preview,
+                         gboolean     update)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+
+  g_object_set (preview,
+                "update", update,
+                NULL);
+}
+
+/**
+ * gimp_preview_get_update:
+ * @preview: a #GimpPreview widget
+ *
+ * Return value: the state of the "Preview" check button.
+ *
+ * Since: GIMP 2.2
+ **/
+gboolean
+gimp_preview_get_update (GimpPreview *preview)
+{
+  g_return_val_if_fail (GIMP_IS_PREVIEW (preview), FALSE);
+
+  return preview->update_preview;
+}
+
+/**
  * gimp_preview_get_size:
  * @preview: a #GimpPreview widget
  * @width:   return location for the preview area width
@@ -611,24 +635,6 @@ gimp_preview_get_position (GimpPreview  *preview,
 
   if (y)
     *y = preview->yoff + preview->ymin;
-}
-
-/**
- * gimp_preview_show_update_toggle:
- * @preview:     a #GimpPreview widget
- * @show_update: whether to show the "Update Preview" toggle button
- *
- * Since: GIMP 2.2
- **/
-void
-gimp_preview_show_update_toggle (GimpPreview *preview,
-                                 gboolean     show_update)
-{
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
-
-  g_object_set (preview,
-                "show_update_toggle", show_update,
-                NULL);
 }
 
 /*

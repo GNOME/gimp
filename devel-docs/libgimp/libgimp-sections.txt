@@ -687,7 +687,6 @@ gimp_drawable_get_thumbnail
 <TITLE>GimpDrawablePreview</TITLE>
 GimpDrawablePreview
 gimp_drawable_preview_new
-gimp_drawable_preview_new_with_toggle
 gimp_drawable_preview_draw
 <SUBSECTION Standard>
 GimpDrawablePreviewClass
@@ -712,6 +711,22 @@ gimp_layer_combo_box_new
 <FILE>gimpimagecombobox</FILE>
 GimpImageConstraintFunc
 gimp_image_combo_box_new
+</SECTION>
+
+<SECTION>
+<FILE>gimpprogressbar</FILE>
+<TITLE>GimpProgressBar</TITLE>
+GimpProgressBar
+gimp_progress_bar_new
+<SUBSECTION Standard>
+GimpProgressBarClass
+GIMP_PROGRESS_BAR
+GIMP_IS_PROGRESS_BAR
+GIMP_TYPE_PROGRESS_BAR
+gimp_progress_bar_get_type
+GIMP_PROGRESS_BAR_CLASS
+GIMP_IS_PROGRESS_BAR_CLASS
+GIMP_PROGRESS_BAR_GET_CLASS
 </SECTION>
 
 <SECTION>
