@@ -1,3 +1,12 @@
+2004-12-15  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/text_tool.pdb: let gimp_text() and
+	gimp_text_fontname() succeed but return -1 if no layer was created.
+	Fixes bug #161272.
+
+	* app/pdb/text_tool_cmds.c
+	* libgimp/gimptexttool_pdb.c: regenerated.
+
 2004-12-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-preview.[ch]: added utility function

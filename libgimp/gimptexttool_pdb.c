@@ -52,7 +52,7 @@
  * Finally, a border can be specified around the final rendered text.
  * The border is measured in pixels.
  *
- * Returns: The new text layer.
+ * Returns: The new text layer or -1 if no layer was created.
  */
 gint32
 gimp_text_fontname (gint32        image_ID,
@@ -175,7 +175,7 @@ gimp_text_get_extents_fontname (const gchar  *text,
  *
  * This procedure is deprecated! Use gimp_text_fontname() instead.
  *
- * Returns: The new text layer.
+ * Returns: The new text layer or -1 if no layer was created.
  */
 gint32
 gimp_text (gint32        image_ID,

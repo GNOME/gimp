@@ -111,8 +111,6 @@ text_fontname_invoker (Gimp         *gimp,
           text_layer = text_render (gimage, drawable, context,
                                     x, y, real_fontname, text,
                                     border, antialias);
-          if (text_layer == NULL)
-            success = FALSE;
 
           g_free (real_fontname);
         }
@@ -121,7 +119,7 @@ text_fontname_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&text_fontname_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (text_layer));
+    return_args[1].value.pdb_int = text_layer ? gimp_item_get_ID (GIMP_ITEM (text_layer)) : -1;
 
   return return_args;
 }
@@ -185,7 +183,7 @@ static ProcArg text_fontname_outargs[] =
   {
     GIMP_PDB_LAYER,
     "text_layer",
-    "The new text layer"
+    "The new text layer or -1 if no layer was created."
   }
 };
 
@@ -428,8 +426,6 @@ text_invoker (Gimp         *gimp,
           text_layer = text_render (gimage, drawable, context,
                                     x, y, real_fontname, text,
                                     border, antialias);
-          if (text_layer == NULL)
-            success = FALSE;
 
           g_free (real_fontname);
         }
@@ -438,7 +434,7 @@ text_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&text_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (text_layer));
+    return_args[1].value.pdb_int = text_layer ? gimp_item_get_ID (GIMP_ITEM (text_layer)) : -1;
 
   return return_args;
 }
@@ -537,7 +533,7 @@ static ProcArg text_outargs[] =
   {
     GIMP_PDB_LAYER,
     "text_layer",
-    "The new text layer"
+    "The new text layer or -1 if no layer was created."
   }
 };
 

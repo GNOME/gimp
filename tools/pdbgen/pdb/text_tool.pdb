@@ -75,7 +75,8 @@ sub font_prop_args {
 sub render_outargs {
    @outargs = (
 	{ name => 'text_layer', type => 'layer',
-	  desc => 'The new text layer', init => 1 }
+	  desc => 'The new text layer or -1 if no layer was created.',
+	  init => 1, return_fail => -1 }
    );
 }
 
@@ -128,8 +129,6 @@ HELP
       text_layer = text_render (gimage, drawable, context,
                                 x, y, real_fontname, text,
                                 border, antialias);
-      if (text_layer == NULL)
-        success = FALSE;
 
       g_free (real_fontname);
     }
@@ -199,8 +198,6 @@ sub text {
       text_layer = text_render (gimage, drawable, context,
                                 x, y, real_fontname, text,
                                 border, antialias);
-      if (text_layer == NULL)
-        success = FALSE;
 
       g_free (real_fontname);
     }
