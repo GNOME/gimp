@@ -88,6 +88,39 @@ gimp_progress_update (gdouble percentage)
 }
 
 /**
+ * gimp_progress_pulse:
+ *
+ * Pulses the progress bar for the current plug-in.
+ *
+ * Updates the progress bar for the current plug-in. It is only valid
+ * to call this procedure from a plug-in. Use this function instead of
+ * gimp_progress_update() if you cannot tell how much progress has been
+ * made. This usually causes the the progress bar to enter \"activity
+ * mode\", where a block bounces back and forth.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_progress_pulse (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_progress_pulse",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * _gimp_progress_install:
  * @progress_callback: The callback PDB proc to call.
  *

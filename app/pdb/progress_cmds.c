@@ -32,6 +32,7 @@
 
 static ProcRecord progress_init_proc;
 static ProcRecord progress_update_proc;
+static ProcRecord progress_pulse_proc;
 static ProcRecord progress_install_proc;
 static ProcRecord progress_uninstall_proc;
 static ProcRecord progress_cancel_proc;
@@ -41,6 +42,7 @@ register_progress_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &progress_init_proc);
   procedural_db_register (gimp, &progress_update_proc);
+  procedural_db_register (gimp, &progress_pulse_proc);
   procedural_db_register (gimp, &progress_install_proc);
   procedural_db_register (gimp, &progress_uninstall_proc);
   procedural_db_register (gimp, &progress_cancel_proc);
@@ -153,6 +155,40 @@ static ProcRecord progress_update_proc =
   0,
   NULL,
   { { progress_update_invoker } }
+};
+
+static Argument *
+progress_pulse_invoker (Gimp         *gimp,
+                        GimpContext  *context,
+                        GimpProgress *progress,
+                        Argument     *args)
+{
+  gboolean success = TRUE;
+  if (gimp->current_plug_in && gimp->current_plug_in->open)
+    {
+      if (! gimp->no_interface)
+        plug_in_progress_pulse (gimp->current_plug_in);
+    }
+  else
+    success = FALSE;
+  return procedural_db_return_args (&progress_pulse_proc, success);
+}
+
+static ProcRecord progress_pulse_proc =
+{
+  "gimp_progress_pulse",
+  "Pulses the progress bar for the current plug-in.",
+  "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in. Use this function instead of gimp_progress_update() if you cannot tell how much progress has been made. This usually causes the the progress bar to enter \"activity mode\", where a block bounces back and forth.",
+  "Sven Neumann <sven@gimp.org>",
+  "Sven Neumann",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  0,
+  NULL,
+  { { progress_pulse_invoker } }
 };
 
 static Argument *

@@ -75,6 +75,7 @@ static void     gimp_display_progress_set_text  (GimpProgress  *progress,
 static void     gimp_display_progress_set_value (GimpProgress  *progress,
                                                  gdouble        percentage);
 static gdouble  gimp_display_progress_get_value (GimpProgress  *progress);
+static void     gimp_display_progress_pulse     (GimpProgress  *progress);
 static void     gimp_display_progress_canceled  (GimpProgress  *progress,
                                                  GimpDisplay   *display);
 
@@ -174,6 +175,7 @@ gimp_display_progress_iface_init (GimpProgressInterface *progress_iface)
   progress_iface->set_text  = gimp_display_progress_set_text;
   progress_iface->set_value = gimp_display_progress_set_value;
   progress_iface->get_value = gimp_display_progress_get_value;
+  progress_iface->pulse     = gimp_display_progress_pulse;
 }
 
 static void
@@ -307,6 +309,20 @@ gimp_display_progress_get_value (GimpProgress *progress)
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
   return gimp_progress_get_value (GIMP_PROGRESS (shell->statusbar));
+}
+
+static void
+gimp_display_progress_pulse (GimpProgress *progress)
+{
+  GimpDisplay      *display = GIMP_DISPLAY (progress);
+  GimpDisplayShell *shell;
+
+  if (! display->shell)
+    return;
+
+  shell = GIMP_DISPLAY_SHELL (display->shell);
+
+  gimp_progress_pulse (GIMP_PROGRESS (shell->statusbar));
 }
 
 static void

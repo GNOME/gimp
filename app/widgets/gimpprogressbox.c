@@ -47,6 +47,7 @@ static void     gimp_progress_box_progress_set_text  (GimpProgress *progress,
 static void     gimp_progress_box_progress_set_value (GimpProgress *progress,
                                                       gdouble       percentage);
 static gdouble  gimp_progress_box_progress_get_value (GimpProgress *progress);
+static void     gimp_progress_box_progress_pulse     (GimpProgress *progress);
 
 
 
@@ -97,6 +98,7 @@ gimp_progress_box_progress_iface_init (GimpProgressInterface *progress_iface)
   progress_iface->set_text  = gimp_progress_box_progress_set_text;
   progress_iface->set_value = gimp_progress_box_progress_set_value;
   progress_iface->get_value = gimp_progress_box_progress_get_value;
+  progress_iface->pulse     = gimp_progress_box_progress_pulse;
 }
 
 static GimpProgress *
@@ -189,6 +191,22 @@ gimp_progress_box_progress_get_value (GimpProgress *progress)
     }
 
   return 0.0;
+}
+
+static void
+gimp_progress_box_progress_pulse (GimpProgress *progress)
+{
+  GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
+
+  if (box->active)
+    {
+      GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
+
+      gtk_progress_bar_pulse (bar);
+
+      if (GTK_WIDGET_DRAWABLE (box->progress))
+        gdk_window_process_updates (box->progress->window, TRUE);
+    }
 }
 
 GtkWidget *

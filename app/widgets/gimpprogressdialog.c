@@ -53,6 +53,7 @@ static void     gimp_progress_dialog_progress_set_text  (GimpProgress *progress,
 static void     gimp_progress_dialog_progress_set_value (GimpProgress *progress,
                                                          gdouble       percentage);
 static gdouble  gimp_progress_dialog_progress_get_value (GimpProgress *progress);
+static void     gimp_progress_dialog_progress_pulse     (GimpProgress *progress);
 
 
 static GimpDialogClass *parent_class = NULL;
@@ -132,6 +133,7 @@ gimp_progress_dialog_progress_iface_init (GimpProgressInterface *progress_iface)
   progress_iface->set_text  = gimp_progress_dialog_progress_set_text;
   progress_iface->set_value = gimp_progress_dialog_progress_set_value;
   progress_iface->get_value = gimp_progress_dialog_progress_get_value;
+  progress_iface->pulse     = gimp_progress_dialog_progress_pulse;
 }
 
 static void
@@ -230,6 +232,17 @@ gimp_progress_dialog_progress_get_value (GimpProgress *progress)
     return 0.0;
 
   return gimp_progress_get_value (GIMP_PROGRESS (dialog->box));
+}
+
+static void
+gimp_progress_dialog_progress_pulse (GimpProgress *progress)
+{
+  GimpProgressDialog *dialog = GIMP_PROGRESS_DIALOG (progress);
+
+  if (! dialog->box)
+    return;
+
+  gimp_progress_pulse (GIMP_PROGRESS (dialog->box));
 }
 
 GtkWidget *

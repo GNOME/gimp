@@ -88,6 +88,37 @@ CODE
     );
 }
 
+sub progress_pulse {
+    $blurb = 'Pulses the progress bar for the current plug-in.';
+
+    $help = <<'HELP';
+Updates the progress bar for the current plug-in. It is only valid to
+call this procedure from a plug-in. Use this function instead of
+gimp_progress_update() if you cannot tell how much progress has been
+made. This usually causes the the progress bar to enter "activity
+mode", where a block bounces back and forth.
+HELP
+
+    $author = 'Sven Neumann  <sven@gimp.org>';
+    $copyright = 'Sven Neumann';
+    $date = '2005';
+    $since = '2.4';
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->current_plug_in && gimp->current_plug_in->open)
+    {
+      if (! gimp->no_interface)
+	plug_in_progress_pulse (gimp->current_plug_in);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub progress_install {
     $blurb = 'Installs a progress callback for the current plug-in.';
 
@@ -176,7 +207,7 @@ CODE
 
 @headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-in-progress.h");
 
-@procs = qw(progress_init progress_update
+@procs = qw(progress_init progress_update progress_pulse
             progress_install progress_uninstall progress_cancel);
 %exports = (app => [@procs], lib => [@procs]);
 

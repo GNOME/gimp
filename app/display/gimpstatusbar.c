@@ -73,6 +73,7 @@ static void     gimp_statusbar_progress_set_text  (GimpProgress      *progress,
 static void     gimp_statusbar_progress_set_value (GimpProgress      *progress,
                                                    gdouble            percentage);
 static gdouble  gimp_statusbar_progress_get_value (GimpProgress      *progress);
+static void     gimp_statusbar_progress_pulse     (GimpProgress      *progress);
 static void     gimp_statusbar_progress_canceled  (GtkWidget         *button,
                                                    GimpStatusbar     *statusbar);
 
@@ -251,6 +252,7 @@ gimp_statusbar_progress_iface_init (GimpProgressInterface *progress_iface)
   progress_iface->set_text  = gimp_statusbar_progress_set_text;
   progress_iface->set_value = gimp_statusbar_progress_set_value;
   progress_iface->get_value = gimp_statusbar_progress_get_value;
+  progress_iface->pulse     = gimp_statusbar_progress_pulse;
 }
 
 static void
@@ -377,6 +379,22 @@ gimp_statusbar_progress_get_value (GimpProgress *progress)
     }
 
   return 0.0;
+}
+
+static void
+gimp_statusbar_progress_pulse (GimpProgress *progress)
+{
+  GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
+
+  if (statusbar->progress_active)
+    {
+      GtkWidget *bar = statusbar->progressbar;
+
+      gtk_progress_bar_pulse (GTK_PROGRESS_BAR (bar));
+
+      if (GTK_WIDGET_DRAWABLE (bar))
+        gdk_window_process_updates (bar->window, TRUE);
+    }
 }
 
 static void

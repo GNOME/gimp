@@ -190,6 +190,18 @@ gimp_progress_get_value (GimpProgress *progress)
   return 0.0;
 }
 
+void
+gimp_progress_pulse (GimpProgress *progress)
+{
+  GimpProgressInterface *progress_iface;
+
+  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+
+  progress_iface = GIMP_PROGRESS_GET_INTERFACE (progress);
+
+  if (progress_iface->pulse)
+    progress_iface->pulse (progress);
+}
 
 void
 gimp_progress_message (GimpProgress *progress,

@@ -66,6 +66,7 @@ static gboolean gimp_thumb_box_progress_is_active (GimpProgress      *progress);
 static void     gimp_thumb_box_progress_set_value (GimpProgress      *progress,
                                                    gdouble            percentage);
 static gdouble  gimp_thumb_box_progress_get_value (GimpProgress      *progress);
+static void     gimp_thumb_box_progress_pulse     (GimpProgress      *progress);
 
 static void     gimp_thumb_box_progress_message   (GimpProgress      *progress,
                                                    Gimp              *gimp,
@@ -165,7 +166,7 @@ gimp_thumb_box_progress_iface_init (GimpProgressInterface *progress_iface)
   progress_iface->is_active = gimp_thumb_box_progress_is_active;
   progress_iface->set_value = gimp_thumb_box_progress_set_value;
   progress_iface->get_value = gimp_thumb_box_progress_get_value;
-
+  progress_iface->pulse     = gimp_thumb_box_progress_pulse;
   progress_iface->message   = gimp_thumb_box_progress_message;
 }
 
@@ -292,6 +293,19 @@ gimp_thumb_box_progress_get_value (GimpProgress *progress)
     }
 
   return 0.0;
+}
+
+static void
+gimp_thumb_box_progress_pulse (GimpProgress *progress)
+{
+  GimpThumbBox *box = GIMP_THUMB_BOX (progress);
+
+  if (box->progress_active)
+    {
+      GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
+
+      gtk_progress_bar_pulse (bar);
+    }
 }
 
 static void

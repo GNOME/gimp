@@ -47,6 +47,7 @@ struct _GimpProgressInterface
   void           (* set_value) (GimpProgress *progress,
                                 gdouble       percentage);
   gdouble        (* get_value) (GimpProgress *progress);
+  void           (* pulse)     (GimpProgress *progress);
 
   void           (* message)   (GimpProgress *progress,
                                 Gimp         *gimp,
@@ -71,6 +72,7 @@ void           gimp_progress_set_text           (GimpProgress *progress,
 void           gimp_progress_set_value          (GimpProgress *progress,
                                                  gdouble       percentage);
 gdouble        gimp_progress_get_value          (GimpProgress *progress);
+void           gimp_progress_pulse              (GimpProgress *progress);
 
 void           gimp_progress_message            (GimpProgress *progress,
                                                  Gimp         *gimp,

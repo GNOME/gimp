@@ -27,6 +27,7 @@ void       plug_in_progress_start     (PlugIn      *plug_in,
                                        gint         display_ID);
 void       plug_in_progress_update    (PlugIn      *plug_in,
                                        gdouble      percentage);
+void       plug_in_progress_pulse     (PlugIn      *plug_in);
 void       plug_in_progress_end       (PlugIn      *plug_in);
 
 gboolean   plug_in_progress_install   (PlugIn      *plug_in,

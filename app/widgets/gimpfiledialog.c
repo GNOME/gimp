@@ -70,6 +70,7 @@ static void     gimp_file_dialog_progress_set_text  (GimpProgress     *progress,
 static void     gimp_file_dialog_progress_set_value (GimpProgress     *progress,
                                                      gdouble           percentage);
 static gdouble  gimp_file_dialog_progress_get_value (GimpProgress     *progress);
+static void     gimp_file_dialog_progress_pulse     (GimpProgress     *progress);
 
 static void     gimp_file_dialog_add_preview        (GimpFileDialog   *dialog,
                                                      Gimp             *gimp);
@@ -156,6 +157,7 @@ gimp_file_dialog_progress_iface_init (GimpProgressInterface *progress_iface)
   progress_iface->set_text  = gimp_file_dialog_progress_set_text;
   progress_iface->set_value = gimp_file_dialog_progress_set_value;
   progress_iface->get_value = gimp_file_dialog_progress_get_value;
+  progress_iface->pulse     = gimp_file_dialog_progress_pulse;
 }
 
 static gboolean
@@ -273,6 +275,19 @@ gimp_file_dialog_progress_get_value (GimpProgress *progress)
     }
 
   return 0.0;
+}
+
+static void
+gimp_file_dialog_progress_pulse (GimpProgress *progress)
+{
+  GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
+
+  if (dialog->progress_active)
+    {
+      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progress);
+
+      gtk_progress_bar_pulse (bar);
+    }
 }
 
 

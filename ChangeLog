@@ -1,3 +1,27 @@
+2005-02-12  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpprogress.[ch]: added GimpProgress::pulse.
+
+	* app/display/gimpdisplay.c
+	* app/display/gimpstatusbar.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpprogressbox.c
+	* app/widgets/gimpprogressdialog.c
+	* app/widgets/gimpthumbbox.c: implement it in the classes that
+	implement the GimpProgress interface.
+
+	* app/plug-in/plug-in-progress.[ch]: allow plug-ins to pulse their
+	progress.
+
+	* tools/pdbgen/pdb/progress.pdb: added a procedure for the new
+	functionality.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/progress_cmds.c
+	* libgimp/gimpprogress_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
 2005-02-11  Sven Neumann  <sven@gimp.org>
 
 	* app/base/pixel-processor.[ch]: code cleanup. Removed unused code,

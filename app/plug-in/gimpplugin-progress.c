@@ -110,6 +110,26 @@ plug_in_progress_update (PlugIn  *plug_in,
 }
 
 void
+plug_in_progress_pulse (PlugIn  *plug_in)
+{
+  PlugInProcFrame *proc_frame;
+
+  g_return_if_fail (plug_in != NULL);
+
+  proc_frame = plug_in_get_proc_frame (plug_in);
+
+  if (! proc_frame->progress                           ||
+      ! gimp_progress_is_active (proc_frame->progress) ||
+      ! proc_frame->progress_cancel_id)
+    {
+      plug_in_progress_start (plug_in, NULL, -1);
+    }
+
+  if (proc_frame->progress && gimp_progress_is_active (proc_frame->progress))
+    gimp_progress_pulse (proc_frame->progress);
+}
+
+void
 plug_in_progress_end (PlugIn *plug_in)
 {
   PlugInProcFrame *proc_frame;
