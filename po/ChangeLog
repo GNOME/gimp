@@ -1,3 +1,7 @@
+2003-07-14  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: added app/paint/gimppencil.c again.
+
 2003-07-14  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: updated.

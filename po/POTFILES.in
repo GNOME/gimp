@@ -153,6 +153,7 @@ app/paint/gimpdodgeburn.c
 app/paint/gimperaser.c
 app/paint/gimppaintbrush.c
 app/paint/gimppaintcore.c
+app/paint/gimppencil.c
 app/paint/gimpsmudge.c
 app/paint/paint-enums.c
 
