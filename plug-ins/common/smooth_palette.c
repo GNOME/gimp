@@ -75,6 +75,13 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
+  static GimpParamDef return_vals[] =
+  {
+    { GIMP_PDB_IMAGE, "new_image", "Output image" },
+    { GIMP_PDB_LAYER, "new_layer", "Output layer" }
+  };
+  static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
+
   gimp_install_procedure ("plug_in_smooth_palette",
 			  "derive smooth palette from image",
 			  "help!",
@@ -84,8 +91,8 @@ query (void)
 			  N_("<Image>/Filters/Colors/Smooth Palette..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
-			  args, NULL);
+			  nargs, nreturn_vals,
+			  args, return_vals);
 }
 
 static struct
@@ -187,8 +194,6 @@ run (gchar   *name,
   values[0].data.d_status = status;
 }
 
-#define R (rand())
-
 static long
 pix_diff (guchar *pal,
 	  gint    bpp,
@@ -256,8 +261,8 @@ doit (GimpDrawable *drawable,
   /* get initial palette */
   for (i = 0; i < psize; i++)
     {
-      gint x = R % drawable->width;
-      gint y = R % drawable->height;
+      gint x = rand() % drawable->width;
+      gint y = rand() % drawable->height;
 
       gimp_pixel_rgn_get_pixel (&pr, pal + bpp * i, x, y);
     }
@@ -283,7 +288,7 @@ doit (GimpDrawable *drawable,
 
 	  /* scramble */
 	  for (i = 1; i < psize; i++)
-	    pix_swap (pal, bpp, i, R % psize);
+	    pix_swap (pal, bpp, i, rand() % psize);
 
 	  /* measure */
 	  len = 0.0;
@@ -293,8 +298,8 @@ doit (GimpDrawable *drawable,
 	  /* improve */
 	  for (i = 0; i < config.try_size; i++)
 	    {
-	      gint  i0 = 1 + (R % (psize-2));
-	      gint  i1 = 1 + (R % (psize-2));
+	      gint  i0 = 1 + (rand() % (psize-2));
+	      gint  i1 = 1 + (rand() % (psize-2));
 	      glong as_is, swapd;
 
 	      if (1 == (i0 - i1))
@@ -342,7 +347,7 @@ doit (GimpDrawable *drawable,
       for (i = 1; i < 4 * psize; i++)
 	{
 	  glong as_is, swapd;
-	  gint i0 = 1 + R % (psize - 2);
+	  gint i0 = 1 + rand() % (psize - 2);
 	  gint i1 = i0 + 1;
 
 	  as_is = (pix_diff (pal, bpp, i0 - 1, i0) +
