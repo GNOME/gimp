@@ -1671,6 +1671,7 @@ image_menu_set_zoom (GtkItemFactory   *item_factory,
 {
   const gchar *menu = NULL;
   guint        scale;
+  gchar        buf[16];
   gchar       *label;
 
   scale = ROUND (shell->scale * 1000);
@@ -1689,14 +1690,15 @@ image_menu_set_zoom (GtkItemFactory   *item_factory,
     case    62:  menu = "/View/Zoom/1:16";  break;
     }
 
+  g_snprintf (buf, sizeof (buf),
+              shell->scale >= 0.15 ? "%.0f%%" : "%.2f%%",
+              shell->scale * 100.0);
+
   if (!menu)
     {
       menu = "/View/Zoom/Other...";
 
-      label = g_strdup_printf (shell->scale >= 0.15 ?
-                                  _("Other (%.0f%%) ..."):
-                                  _("Other (%.2f%%) ..."),
-                               shell->scale * 100.0);
+      label = g_strdup_printf (_("Other (%s) ..."), buf);
       gimp_item_factory_set_label (item_factory, menu, label);
       g_free (label);
 
@@ -1705,10 +1707,7 @@ image_menu_set_zoom (GtkItemFactory   *item_factory,
 
   gimp_item_factory_set_active (item_factory, menu, TRUE);
 
-  label = g_strdup_printf (shell->scale >= 0.15 ?
-                              _("_Zoom (%.0f%%)") :
-                              _("_Zoom (%.2f%%)"),
-                           shell->scale * 100.0);
+  label = g_strdup_printf (_("_Zoom (%s)"), buf);
   gimp_item_factory_set_label (item_factory, "/View/Zoom", label);
   g_free (label);
 

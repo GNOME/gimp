@@ -1,6 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
-_Name=@GIMP_VISIBLE_NAME@
+_Name=The GIMP
 _Comment=Create and edit images or photographs
 Exec=gimp-remote-@GIMP_APP_VERSION@ %U
 TryExec=gimp-@GIMP_APP_VERSION@

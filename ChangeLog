@@ -1,3 +1,14 @@
+2004-02-03  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/image-menu.c (image_menu_set_zoom): don't mark weird
+	format strings as translatable.
+
+	* data/misc/gimp.desktop.in.in (_Name): use "The GIMP" without an
+	"(unstable)" suffix. Should give translators the chance to update
+	their translations before the final 2.0 release.
+
+	* configure.in: removed now unused GIMP_VISIBLE_NAME variable.
+
 2004-02-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-ins.c (plug_ins_init): use g_clear_error()
