@@ -37,6 +37,8 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gimpeditselectiontool.h"
 #include "gimpmovetool.h"
 #include "tool_options.h"
@@ -674,6 +676,7 @@ move_options_new (GimpToolInfo *tool_info)
   MoveOptions *options;
   GtkWidget   *vbox;
   GtkWidget   *frame;
+  gchar       *str;
  
   options = g_new0 (MoveOptions, 1);
 
@@ -688,7 +691,9 @@ move_options_new (GimpToolInfo *tool_info)
   vbox = options->tool_options.main_vbox;
 
   /*  tool toggle  */
-  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle (<Ctrl>)"),
+  str = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_control ());
+
+  frame = gimp_radio_group_new2 (TRUE, str,
                                  G_CALLBACK (gimp_radio_button_update),
                                  &options->move_current,
                                  GINT_TO_POINTER (options->move_current),
@@ -702,12 +707,15 @@ move_options_new (GimpToolInfo *tool_info)
                                  &options->move_current_w[1],
 
                                  NULL);
-
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  g_free (str);
+
   /*  move mask  */
-  frame = gimp_radio_group_new2 (TRUE, _("Move Mode (<Alt>)"),
+  str = g_strdup_printf (_("Move Mode  %s"), gimp_get_mod_name_alt ());
+
+  frame = gimp_radio_group_new2 (TRUE, str,
                                  G_CALLBACK (gimp_radio_button_update),
                                  &options->move_mask,
                                  GINT_TO_POINTER (options->move_mask),
@@ -721,9 +729,10 @@ move_options_new (GimpToolInfo *tool_info)
                                  &options->move_mask_w[1],
 
                                  NULL);
-
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  g_free (str);
 
   return (GimpToolOptions *) options;
 }

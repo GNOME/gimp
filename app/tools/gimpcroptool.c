@@ -41,6 +41,7 @@
 
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimpviewabledialog.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcroptool.h"
 #include "tool_manager.h"
@@ -1280,6 +1281,7 @@ crop_options_new (GimpToolInfo *tool_info)
   CropOptions *options;
   GtkWidget   *vbox;
   GtkWidget   *frame;
+  gchar       *str;
 
   options = g_new0 (CropOptions, 1);
 
@@ -1295,41 +1297,49 @@ crop_options_new (GimpToolInfo *tool_info)
   vbox = options->tool_options.main_vbox;
 
   /*  tool toggle  */
+  str = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_control ());
+
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_CROP_TYPE,
-                                     gtk_label_new (_("Tool Toggle (<Ctrl>)")),
+                                     gtk_label_new (str),
                                      2,
                                      G_CALLBACK (gimp_radio_button_update),
                                      &options->type,
                                      &options->type_w);
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                GINT_TO_POINTER (options->type));
-
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  g_free (str);
 
   /*  layer toggle  */
   options->layer_only_w =
     gtk_check_button_new_with_label (_("Current Layer only"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->layer_only_w),
+				options->layer_only);
   gtk_box_pack_start (GTK_BOX (vbox), options->layer_only_w,
 		      FALSE, FALSE, 0);
+  gtk_widget_show (options->layer_only_w);
+
   g_signal_connect (G_OBJECT (options->layer_only_w), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->layer_only);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->layer_only_w),
-				options->layer_only);
-  gtk_widget_show (options->layer_only_w);
 
   /*  enlarge toggle  */
-  options->allow_enlarge_w =
-    gtk_check_button_new_with_label (_("Allow Enlarging (<Alt>)"));
+  str = g_strdup_printf (_("Allow Enlarging  %s"), gimp_get_mod_name_alt ());
+
+  options->allow_enlarge_w = gtk_check_button_new_with_label (str);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_enlarge_w),
+				options->allow_enlarge);
   gtk_box_pack_start (GTK_BOX (vbox), options->allow_enlarge_w,
 		      FALSE, FALSE, 0);
+  gtk_widget_show (options->allow_enlarge_w);
+
+  g_free (str);
+
   g_signal_connect (G_OBJECT (options->allow_enlarge_w), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->allow_enlarge);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_enlarge_w),
-				options->allow_enlarge);
-  gtk_widget_show (options->allow_enlarge_w);
 
   return (GimpToolOptions *) options;
 }

@@ -28,6 +28,8 @@
 
 #include "paint/gimperaser.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gimperasertool.h"
 #include "paint_options.h"
 
@@ -172,6 +174,7 @@ gimp_eraser_tool_options_new (GimpToolInfo *tool_info)
 {
   GimpEraserOptions *options;
   GtkWidget         *vbox;
+  gchar             *str;
 
   options = gimp_eraser_options_new (tool_info->context);
 
@@ -183,12 +186,15 @@ gimp_eraser_tool_options_new (GimpToolInfo *tool_info)
   vbox = ((GimpToolOptions *) options)->main_vbox;
 
   /* the anti_erase toggle */
-  options->anti_erase_w =
-    gtk_check_button_new_with_label (_("Anti Erase (<Ctrl>)"));
+  str = g_strdup_printf (_("Anti Erase  %s"), gimp_get_mod_name_control ());
+
+  options->anti_erase_w = gtk_check_button_new_with_label (str);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
 				options->anti_erase);
   gtk_box_pack_start (GTK_BOX (vbox), options->anti_erase_w, FALSE, FALSE, 0);
   gtk_widget_show (options->anti_erase_w);
+
+  g_free (str);
 
   g_signal_connect (G_OBJECT (options->anti_erase_w), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),

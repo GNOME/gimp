@@ -40,6 +40,7 @@
 #include "gimpdnd.h"
 #include "gimpimagepreview.h"
 #include "gimplistitem.h"
+#include "gimpwidgets-utils.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -114,26 +115,32 @@ static void
 gimp_vectors_list_view_init (GimpVectorsListView *view)
 {
   GimpEditor *editor;
+  gchar      *str;
 
   editor = GIMP_EDITOR (view);
 
-  /*  To Selection button  */
+  str = g_strdup_printf (_("Path to Selection\n"
+                           "%s  Add\n"
+                           "%s  Subtract\n"
+                           "%s%s%s  Intersect"),
+                         gimp_get_mod_name_shift (),
+                         gimp_get_mod_name_control (),
+                         gimp_get_mod_name_shift (),
+                         gimp_get_mod_separator (),
+                         gimp_get_mod_name_control ());
 
   view->toselection_button =
     gimp_editor_add_button (editor,
-                            GIMP_STOCK_SELECTION_REPLACE,
-                            _("Path to Selection\n"
-                              "<Shift> Add\n"
-                              "<Ctrl> Subtract\n"
-                              "<Shift><Ctrl> Intersect"), NULL,
+                            GIMP_STOCK_SELECTION_REPLACE, str, NULL,
                             G_CALLBACK (gimp_vectors_list_view_toselection_clicked),
                             G_CALLBACK (gimp_vectors_list_view_toselection_extended_clicked),
                             view);
 
+  g_free (str);
+
   view->stroke_button =
     gimp_editor_add_button (editor,
-                            GIMP_STOCK_PATH_STROKE,
-                            _("Stroke Path"), NULL,
+                            GIMP_STOCK_PATH_STROKE, _("Stroke Path"), NULL,
                             G_CALLBACK (gimp_vectors_list_view_stroke_clicked),
                             NULL,
                             view);

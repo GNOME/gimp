@@ -51,4 +51,10 @@ void     gimp_table_attach_stock           (GtkTable       *table,
                                             const gchar    *stock_id,
                                             GtkWidget      *widget);
 
+const gchar * gimp_get_mod_name_shift      (void);
+const gchar * gimp_get_mod_name_control    (void);
+const gchar * gimp_get_mod_name_alt        (void);
+const gchar * gimp_get_mod_separator       (void);
+
+
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

@@ -49,6 +49,7 @@
 #include "gimplistitem.h"
 #include "gimppreview.h"
 #include "gimpvectorslistview.h"
+#include "gimpwidgets-utils.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -176,6 +177,7 @@ static void
 gimp_item_list_view_init (GimpItemListView *view)
 {
   GimpEditor *editor;
+  gchar      *str;
 
   editor = GIMP_EDITOR (view);
 
@@ -185,50 +187,54 @@ gimp_item_list_view_init (GimpItemListView *view)
 
   view->new_button =
     gimp_editor_add_button (editor,
-                            GTK_STOCK_NEW,
-                            _("New"), NULL,
+                            GTK_STOCK_NEW, _("New"), NULL,
                             G_CALLBACK (gimp_item_list_view_new_clicked),
                             NULL,
                             view);
 
+  str = g_strdup_printf (_("Raise\n"
+                           "%s  To Top"),
+                         gimp_get_mod_name_shift ());
+
   view->raise_button =
     gimp_editor_add_button (editor,
-                            GTK_STOCK_GO_UP,
-                            _("Raise\n"
-                              "<Shift> To Top"), NULL,
+                            GTK_STOCK_GO_UP, str, NULL,
                             G_CALLBACK (gimp_item_list_view_raise_clicked),
                             G_CALLBACK (gimp_item_list_view_raise_extended_clicked),
                             view);
 
+  g_free (str);
+
+  str = g_strdup_printf (_("Lower\n"
+                           "%s  To Bottom"),
+                         gimp_get_mod_name_shift ());
+
   view->lower_button =
     gimp_editor_add_button (editor,
-                            GTK_STOCK_GO_DOWN,
-                            _("Lower\n"
-                              "<Shift> To Bottom"), NULL,
+                            GTK_STOCK_GO_DOWN, str, NULL,
                             G_CALLBACK (gimp_item_list_view_lower_clicked),
                             G_CALLBACK (gimp_item_list_view_lower_extended_clicked),
                             view);
 
+  g_free (str);
+
   view->duplicate_button =
     gimp_editor_add_button (editor,
-                            GIMP_STOCK_DUPLICATE,
-                            _("Duplicate"), NULL,
+                            GIMP_STOCK_DUPLICATE, _("Duplicate"), NULL,
                             G_CALLBACK (gimp_item_list_view_duplicate_clicked),
                             NULL,
                             view);
 
   view->edit_button =
     gimp_editor_add_button (editor,
-                            GIMP_STOCK_EDIT,
-                            _("Edit"), NULL,
+                            GIMP_STOCK_EDIT, _("Edit"), NULL,
                             G_CALLBACK (gimp_item_list_view_edit_clicked),
                             NULL,
                             view);
 
   view->delete_button =
     gimp_editor_add_button (editor,
-                            GTK_STOCK_DELETE,
-                            _("Delete"), NULL,
+                            GTK_STOCK_DELETE, _("Delete"), NULL,
                             G_CALLBACK (gimp_item_list_view_delete_clicked),
                             NULL,
                             view);

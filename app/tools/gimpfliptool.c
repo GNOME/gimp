@@ -33,6 +33,8 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "display/gimpdisplay.h"
 
 #include "gimpfliptool.h"
@@ -271,6 +273,7 @@ flip_options_new (GimpToolInfo *tool_info)
   FlipOptions *options;
   GtkWidget   *vbox;
   GtkWidget   *frame;
+  gchar       *str;
  
   options = g_new0 (FlipOptions, 1);
 
@@ -284,7 +287,9 @@ flip_options_new (GimpToolInfo *tool_info)
   vbox = options->tool_options.main_vbox;
 
   /*  tool toggle  */
-  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle (<Ctrl>)"),
+  str = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_control ());
+
+  frame = gimp_radio_group_new2 (TRUE, str,
                                  G_CALLBACK (gimp_radio_button_update),
                                  &options->type,
                                  GINT_TO_POINTER (options->type),
@@ -298,9 +303,10 @@ flip_options_new (GimpToolInfo *tool_info)
                                  &options->type_w[1],
 
                                  NULL);
-
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  g_free (str);
 
   return (GimpToolOptions *) options;
 }

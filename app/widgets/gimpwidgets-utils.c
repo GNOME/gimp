@@ -392,3 +392,79 @@ gimp_table_attach_stock (GtkTable    *table,
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), widget);
 }
+
+
+/*  The format string which is used to display modifier names
+ *  <Shift>, <Ctrl> and <Alt>
+ */
+#define GIMP_MOD_NAME_FORMAT_STRING N_("<%s>")
+
+const gchar *
+gimp_get_mod_name_shift (void)
+{
+  static gchar *mod_name_shift = NULL;
+
+  if (! mod_name_shift)
+    {
+      GtkAccelLabelClass *accel_label_class;
+
+      accel_label_class = g_type_class_ref (GTK_TYPE_ACCEL_LABEL);
+      mod_name_shift = g_strdup_printf (gettext (GIMP_MOD_NAME_FORMAT_STRING),
+                                        accel_label_class->mod_name_shift);
+      g_type_class_unref (accel_label_class);
+    }
+
+  return (const gchar *) mod_name_shift;
+}
+
+const gchar *
+gimp_get_mod_name_control (void)
+{
+  static gchar *mod_name_control = NULL;
+
+  if (! mod_name_control)
+    {
+      GtkAccelLabelClass *accel_label_class;
+
+      accel_label_class = g_type_class_ref (GTK_TYPE_ACCEL_LABEL);
+      mod_name_control = g_strdup_printf (gettext (GIMP_MOD_NAME_FORMAT_STRING),
+                                          accel_label_class->mod_name_control);
+      g_type_class_unref (accel_label_class);
+    }
+
+  return (const gchar *) mod_name_control;
+}
+
+const gchar *
+gimp_get_mod_name_alt (void)
+{
+  static gchar *mod_name_alt = NULL;
+
+  if (! mod_name_alt)
+    {
+      GtkAccelLabelClass *accel_label_class;
+
+      accel_label_class = g_type_class_ref (GTK_TYPE_ACCEL_LABEL);
+      mod_name_alt = g_strdup_printf (gettext (GIMP_MOD_NAME_FORMAT_STRING),
+                                      accel_label_class->mod_name_alt);
+      g_type_class_unref (accel_label_class);
+    }
+
+  return (const gchar *) mod_name_alt;
+}
+const gchar *
+gimp_get_mod_separator (void)
+{
+  static gchar *mod_separator = NULL;
+
+  if (! mod_separator)
+    {
+      GtkAccelLabelClass *accel_label_class;
+
+      accel_label_class = g_type_class_ref (GTK_TYPE_ACCEL_LABEL);
+      mod_separator = g_strdup (accel_label_class->mod_separator);
+      g_type_class_unref (accel_label_class);
+    }
+
+  return (const gchar *) mod_separator;
+}

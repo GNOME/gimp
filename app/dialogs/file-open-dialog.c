@@ -56,6 +56,7 @@
 
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimppreview.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "file-dialog-utils.h"
 #include "file-open-dialog.h"
@@ -250,6 +251,7 @@ file_open_dialog_create (Gimp *gimp)
       GtkWidget *label;
       GtkWidget *progress;
       GtkStyle  *style;
+      gchar     *str;
       
       /* Catch file-list clicks so we can update the preview thumbnail */
       g_signal_connect (G_OBJECT (tree_sel), "changed",
@@ -276,9 +278,14 @@ file_open_dialog_create (Gimp *gimp)
                         G_CALLBACK (file_open_thumbnail_button_press),
                         open_dialog);
 
-      gimp_help_set_help_data (ebox, _("Click to update preview\n"
-                                       "<Ctrl> Click to force update even "
-                                       "if preview is up-to-date"), NULL);
+      str = g_strdup_printf (_("Click to update preview\n"
+                               "%s  Click to force update even "
+                               "if preview is up-to-date"),
+                             gimp_get_mod_name_control ());
+
+      gimp_help_set_help_data (ebox, str, NULL);
+
+      g_free (str);
 
       vbox = gtk_vbox_new (FALSE, 0);
       gtk_container_add (GTK_CONTAINER (ebox), vbox);

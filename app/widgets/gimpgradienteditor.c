@@ -74,6 +74,7 @@
 #include "gimpdnd.h"
 #include "gimpgradienteditor.h"
 #include "gimpitemfactory.h"
+#include "gimpwidgets-utils.h"
 
 #include "gui/color-notebook.h"
 
@@ -1187,7 +1188,8 @@ control_do_hint (GimpGradientEditor *editor,
   GimpGradientSegment    *seg;
   GradientEditorDragMode  handle;
   gboolean                in_handle;
-  double                  pos;
+  gdouble                 pos;
+  gchar                  *str;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
@@ -1209,30 +1211,54 @@ control_do_hint (GimpGradientEditor *editor,
 	  if (seg != NULL)
 	    {
 	      if (seg->prev != NULL)
-		gradient_editor_set_hint (editor,
-                                          "",
-                                          _("Drag: move"),
-                                          _("<Shift>+Drag: move & compress"));
+                {
+                  str = g_strdup_printf (_("%s%sDrag: move & compress"),
+                                         gimp_get_mod_name_shift (),
+                                         gimp_get_mod_separator ());
+
+                  gradient_editor_set_hint (editor,
+                                            "",
+                                            _("Drag: move"),
+                                            str);
+                  g_free (str);
+                }
 	      else
-		gradient_editor_set_hint (editor,
-                                          "",
-                                          _("Click: select"),
-                                          _("<Shift>+Click: extend selection"));
+                {
+                  str = g_strdup_printf (_("%s%sClick: extend selection"),
+                                         gimp_get_mod_name_shift (),
+                                         gimp_get_mod_separator ());
+
+                  gradient_editor_set_hint (editor,
+                                            "",
+                                            _("Click: select"),
+                                            str);
+                  g_free (str);
+                }
 	    }
 	  else
 	    {
+              str = g_strdup_printf (_("%s%sClick: extend selection"),
+                                     gimp_get_mod_name_shift (),
+                                     gimp_get_mod_separator ());
+
 	      gradient_editor_set_hint (editor,
                                         "",
                                         _("Click: select"),
-                                        _("<Shift>+Click: extend selection"));
+                                        str);
+              g_free (str);
 	    }
 	  break;
 
 	case GRAD_DRAG_MIDDLE:
+          str = g_strdup_printf (_("%s%sClick: extend selection"),
+                                 gimp_get_mod_name_shift (),
+                                 gimp_get_mod_separator ());
+
 	  gradient_editor_set_hint (editor,
                                     "",
                                     _("Click: select    Drag: move"),
-                                    _("<Shift>+Click: extend selection"));
+                                    str);
+          g_free (str);
 	  break;
 
 	default:
@@ -1243,10 +1269,21 @@ control_do_hint (GimpGradientEditor *editor,
     }
   else
     {
+      gchar *str2;
+
+      str  = g_strdup_printf (_("%s%sClick: extend selection"),
+                              gimp_get_mod_name_shift (),
+                              gimp_get_mod_separator ());
+      str2 = g_strdup_printf (_("%s%sDrag: move & compress"),
+                              gimp_get_mod_name_shift (),
+                              gimp_get_mod_separator ());
+
       gradient_editor_set_hint (editor,
                                 _("Click: select    Drag: move"),
-                                _("<Shift>+Click: extend selection"),
-                                _("<Shift>+Drag: move & compress"));
+                                str,
+                                str2);
+      g_free (str);
+      g_free (str2);
     }
 }
 

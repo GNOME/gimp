@@ -40,6 +40,7 @@
 #include "display/gimpdisplay.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpbucketfilltool.h"
 #include "paint_options.h"
@@ -331,11 +332,11 @@ static GimpToolOptions *
 bucket_options_new (GimpToolInfo *tool_info)
 {
   BucketOptions *options;
-
-  GtkWidget *vbox;
-  GtkWidget *vbox2;
-  GtkWidget *table;
-  GtkWidget *frame;
+  GtkWidget     *vbox;
+  GtkWidget     *vbox2;
+  GtkWidget     *table;
+  GtkWidget     *frame;
+  gchar         *str;
 
   options = g_new0 (BucketOptions, 1);
 
@@ -354,18 +355,21 @@ bucket_options_new (GimpToolInfo *tool_info)
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
 
+  str = g_strdup_printf (_("Fill Type  %s"), gimp_get_mod_name_control ());
+
   /*  fill type  */
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_BUCKET_FILL_MODE,
-                                     gtk_label_new (_("Fill Type (<Ctrl>)")),
+                                     gtk_label_new (str),
                                      2,
                                      G_CALLBACK (gimp_radio_button_update),
                                      &options->fill_mode,
                                      &options->fill_mode_w);
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->fill_mode_w),
                                GINT_TO_POINTER (options->fill_mode));
-
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  g_free (str);
 
   frame = gtk_frame_new (_("Finding Similar Colors"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);

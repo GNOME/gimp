@@ -50,6 +50,7 @@
 #include "gimpcontainerview.h"
 #include "gimpdocumentview.h"
 #include "gimpdnd.h"
+#include "gimpwidgets-utils.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -139,6 +140,7 @@ gimp_document_view_new (GimpViewType     view_type,
 {
   GimpDocumentView    *document_view;
   GimpContainerEditor *editor;
+  gchar               *str;
 
   document_view = g_object_new (GIMP_TYPE_DOCUMENT_VIEW, NULL);
 
@@ -158,16 +160,20 @@ gimp_document_view_new (GimpViewType     view_type,
 
   editor = GIMP_CONTAINER_EDITOR (document_view);
 
+  str = g_strdup_printf (_("Open the selected entry\n"
+                           "%s  Raise window if already open\n"
+                           "%s  Open image dialog"),
+                         gimp_get_mod_name_shift (),
+                         gimp_get_mod_name_control ());
+
   document_view->open_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_OPEN,
-                            _("Open the selected entry\n"
-                              "<Shift> Raise window if already open\n"
-                              "<Ctrl> Open image dialog"),
-                            NULL,
+                            GTK_STOCK_OPEN, str, NULL,
                             G_CALLBACK (gimp_document_view_open_clicked),
                             G_CALLBACK (gimp_document_view_open_extended_clicked),
                             editor);
+
+  g_free (str);
 
   document_view->remove_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
@@ -177,16 +183,20 @@ gimp_document_view_new (GimpViewType     view_type,
                             NULL,
                             editor);
 
+  str = g_strdup_printf (_("Recreate preview\n"
+                           "%s  Reload all previews\n"
+                           "%s  Remove Dangling Entries"),
+                         gimp_get_mod_name_shift (),
+                         gimp_get_mod_name_control ());
+
   document_view->refresh_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_REFRESH,
-                            _("Recreate preview\n"
-                              "<Shift> Reload all previews\n"
-                              "<Ctrl> Remove Dangling Entries"),
-                            NULL,
+                            GTK_STOCK_REFRESH, str, NULL,
                             G_CALLBACK (gimp_document_view_refresh_clicked),
                             G_CALLBACK (gimp_document_view_refresh_extended_clicked),
                             editor);
+
+  g_free (str);
 
   /*  set button sensitivity  */
   if (GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item)

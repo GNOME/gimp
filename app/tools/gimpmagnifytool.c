@@ -38,6 +38,7 @@
 #include "display/gimpdisplayshell-scale.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpmagnifytool.h"
 #include "tool_options.h"
@@ -433,6 +434,7 @@ magnify_options_new (GimpToolInfo *tool_info)
   GtkWidget      *vbox;
   GtkWidget      *frame;
   GtkWidget      *table;
+  gchar          *str;
 
   options = g_new0 (MagnifyOptions, 1);
 
@@ -462,17 +464,20 @@ magnify_options_new (GimpToolInfo *tool_info)
                     &options->allow_resize);
 
   /*  tool toggle  */
+  str = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_control ());
+
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_ZOOM_TYPE,
-                                     gtk_label_new (_("Tool Toggle (<Ctrl>)")),
+                                     gtk_label_new (str),
                                      2,
                                      G_CALLBACK (gimp_radio_button_update),
                                      &options->type,
                                      &options->type_w);
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                GINT_TO_POINTER (options->type));
-
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  g_free (str);
 
   /*  window threshold */
   table = gtk_table_new (1, 3, FALSE);

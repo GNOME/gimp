@@ -40,6 +40,7 @@
 #include "paint/gimpconvolve.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpconvolvetool.h"
 #include "paint_options.h"
@@ -210,6 +211,7 @@ convolve_options_new (GimpToolInfo *tool_info)
   GtkWidget           *vbox;
   GtkWidget           *table;
   GtkWidget           *frame;
+  gchar               *str;
 
   options = gimp_convolve_options_new (tool_info->context);
 
@@ -220,17 +222,21 @@ convolve_options_new (GimpToolInfo *tool_info)
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
 
+  str = g_strdup_printf (_("Convolve Type  %s"),
+                         gimp_get_mod_name_control ());
+
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_CONVOLVE_TYPE,
-                                     gtk_label_new (_("Convolve Type (<Ctrl>)")),
+                                     gtk_label_new (str),
                                      2,
                                      G_CALLBACK (gimp_radio_button_update),
                                      &options->type,
                                      &options->type_w);
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                GINT_TO_POINTER (options->type));
-
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  g_free (str);
 
   /*  the rate scale  */
   table = gtk_table_new (1, 3, FALSE);

@@ -31,6 +31,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimprotatetool.h"
 #include "gimpscaletool.h"
@@ -73,7 +74,7 @@ transform_options_init (TransformOptions *options,
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *frame;
-  GtkWidget *vbox2;
+  GtkWidget *table;
   GtkWidget *grid_density;
 
   tool_options_init ((GimpToolOptions *) options, tool_info);
@@ -137,11 +138,6 @@ transform_options_init (TransformOptions *options,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox2 = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
-
   /*  the grid type menu  */
   options->grid_type_w =
     gimp_option_menu_new2 (FALSE,
@@ -162,22 +158,20 @@ transform_options_init (TransformOptions *options,
   gtk_frame_set_label_widget (GTK_FRAME (frame), options->grid_type_w);
   gtk_widget_show (options->grid_type_w);
   
-  /*  the grid density entry  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  /*  the grid density scale  */
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
-  label = gtk_label_new (_("Density:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  options->grid_size_w =
-    gtk_adjustment_new (options->grid_size, 1, 128, 1.0, 1.0, 0.0);
-  grid_density =
-    gtk_spin_button_new (GTK_ADJUSTMENT (options->grid_size_w), 0, 0);
-  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (grid_density), TRUE);
-  gtk_box_pack_start (GTK_BOX (hbox), grid_density, FALSE, FALSE, 0);
-  gtk_widget_show (grid_density);
+  options->grid_size_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                                               _("Density:"), -1, -1,
+                                               options->grid_size,
+                                               1.0, 128.0, 1.0, 8.0, 0,
+                                               TRUE, 0.0, 0.0,
+                                               NULL, NULL);
+  grid_density = GIMP_SCALE_ENTRY_SPINBUTTON (options->grid_size_w);
 
   g_signal_connect (G_OBJECT (options->grid_size_w), "value_changed",
                     G_CALLBACK (gimp_transform_tool_grid_density_update),
@@ -195,6 +189,9 @@ transform_options_init (TransformOptions *options,
   if (tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL ||
       tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
     {
+      GtkWidget *vbox2;
+      gchar     *str;
+
       /*  the constraints frame  */
       frame = gtk_frame_new (_("Constraints"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -207,11 +204,15 @@ transform_options_init (TransformOptions *options,
 
       if (tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL)
         {
-          options->constrain_1_w =
-            gtk_check_button_new_with_label (_("15 Degrees (<Ctrl>)"));
+          str = g_strdup_printf (_("15 Degrees  %s"),
+                                 gimp_get_mod_name_control ());
+
+          options->constrain_1_w = gtk_check_button_new_with_label (str);
           gtk_box_pack_start (GTK_BOX (vbox2), options->constrain_1_w,
                               FALSE, FALSE, 0);
           gtk_widget_show (options->constrain_1_w);
+
+          g_free (str);
 
           g_signal_connect (G_OBJECT (options->constrain_1_w), "toggled",
                             G_CALLBACK (gimp_toggle_button_update),
@@ -219,11 +220,15 @@ transform_options_init (TransformOptions *options,
         }
       else if (tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
         {
-          options->constrain_1_w =
-            gtk_check_button_new_with_label (_("Keep Height (<Ctrl>)"));
+          str = g_strdup_printf (_("Keep Height  %s"),
+                                 gimp_get_mod_name_control ());
+
+          options->constrain_1_w = gtk_check_button_new_with_label (str);
           gtk_box_pack_start (GTK_BOX (vbox2), options->constrain_1_w,
                               FALSE, FALSE, 0);
           gtk_widget_show (options->constrain_1_w);
+
+          g_free (str);
 
           gimp_help_set_help_data (options->constrain_1_w,
                                    _("Activate both the \"Keep Height\" and\n"
@@ -234,11 +239,15 @@ transform_options_init (TransformOptions *options,
                             G_CALLBACK (gimp_toggle_button_update),
                             &options->constrain_1);
 
-          options->constrain_2_w =
-            gtk_check_button_new_with_label (_("Keep Width (<Alt>)"));
+          str = g_strdup_printf (_("Keep Width  %s"),
+                                 gimp_get_mod_name_alt ());
+
+          options->constrain_2_w = gtk_check_button_new_with_label (str);
           gtk_box_pack_start (GTK_BOX (vbox2), options->constrain_2_w,
                               FALSE, FALSE, 0);
           gtk_widget_show (options->constrain_2_w);
+
+          g_free (str);
 
           gimp_help_set_help_data (options->constrain_2_w,
                                    _("Activate both the \"Keep Height\" and\n"

@@ -29,6 +29,7 @@
 #include "paint/gimpdodgeburn.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdodgeburntool.h"
 #include "paint_options.h"
@@ -188,6 +189,7 @@ gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
   GtkWidget            *vbox;
   GtkWidget            *table;
   GtkWidget            *frame;
+  gchar                *str;
 
   options = gimp_dodgeburn_options_new (tool_info->context);
 
@@ -199,17 +201,20 @@ gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
   vbox = ((GimpToolOptions *) options)->main_vbox;
 
   /* the type (dodge or burn) */
+  str = g_strdup_printf (_("Type  %s"), gimp_get_mod_name_control ());
+
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_DODGE_BURN_TYPE,
-                                     gtk_label_new (_("Type (<Ctrl>)")),
+                                     gtk_label_new (str),
                                      2,
                                      G_CALLBACK (gimp_radio_button_update),
                                      &options->type,
                                      &options->type_w);
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                GINT_TO_POINTER (options->type));
-
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  g_free (str);
 
   /*  mode (highlights, midtones, or shadows)  */
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_TRANSFER_MODE,

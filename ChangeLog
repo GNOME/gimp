@@ -1,5 +1,35 @@
 2002-12-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpwidgets-utils.[ch]: added utility functions
+	gimp_get_mod_name_[shift|control|alt]() and gimp_get_mod_separator()
+	which get the translated strings for "Shift", "Ctrl", "Alt" and "+"
+	from GtkAccelLabelClass to force consistency between menu
+	accelerators and other modifiers displayed in the GUI.
+	Made the format string to display the modifier ("<%s>")
+	translatable separately.
+
+	* app/gui/file-open-dialog.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/transform_options.c
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpitemlistview.c
+	* app/widgets/gimpvectorslistview.c: use the new functions instead
+	of hardcoding the modifier names over and over again.
+
+	* app/tools/transform_options.c: made a scale_entry out of the
+	grid density spinbutton.
+
+2002-12-19  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpcolordisplay.c (gimp_color_display_class_init):
 	initialize all class members with default values.
 

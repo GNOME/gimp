@@ -43,6 +43,7 @@
 #include "gimpdnd.h"
 #include "gimpimagepreview.h"
 #include "gimplistitem.h"
+#include "gimpwidgets-utils.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -130,6 +131,7 @@ gimp_channel_list_view_init (GimpChannelListView *view)
 {
   GimpDrawableListView *drawable_view;
   GimpContainerView    *container_view;
+  gchar                *str;
 
   drawable_view  = GIMP_DRAWABLE_LIST_VIEW (view);
   container_view = GIMP_CONTAINER_VIEW (view);
@@ -156,17 +158,25 @@ gimp_channel_list_view_init (GimpChannelListView *view)
 		     view->component_list);
   gtk_widget_show (view->component_list);
 
+  str = g_strdup_printf (_("Channel to Selection\n"
+                           "%s  Add\n"
+                           "%s  Subtract\n"
+                           "%s%s%s  Intersect"),
+                         gimp_get_mod_name_shift (),
+                         gimp_get_mod_name_control (),
+                         gimp_get_mod_name_shift (),
+                         gimp_get_mod_separator (),
+                         gimp_get_mod_name_control ());
+
   /*  To Selection button  */
   view->toselection_button =
     gimp_editor_add_button (GIMP_EDITOR (container_view),
-                            GIMP_STOCK_SELECTION_REPLACE,
-                            _("Channel to Selection\n"
-                              "<Shift> Add\n"
-                              "<Ctrl> Subtract\n"
-                              "<Shift><Ctrl> Intersect"), NULL,
+                            GIMP_STOCK_SELECTION_REPLACE, str, NULL,
                             G_CALLBACK (gimp_channel_list_view_toselection_clicked),
                             G_CALLBACK (gimp_channel_list_view_toselection_extended_clicked),
                             view);
+
+  g_free (str);
 
   gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (container_view)->button_box),
 			 view->toselection_button, 5);
