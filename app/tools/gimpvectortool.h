@@ -78,8 +78,6 @@ struct _GimpVectorTool
   GimpAnchor           *sel_anchor;     /* currently selected anchor, NULL   */
                                         /* if multiple anchors are selected  */
   GimpStroke           *sel_stroke;     /* selected stroke                   */
-
-  GimpVectors          *select_vectors; /* used for VECTORS_SELECT_VECTOR    */
 };
 
 struct _GimpVectorToolClass

@@ -26,6 +26,9 @@
 
 #include "base/boundary.h"
 
+#include "core/gimpimage.h"
+#include "core/gimplist.h"
+
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
@@ -986,7 +989,7 @@ gimp_draw_tool_on_vectors_curve (GimpDrawTool  *draw_tool,
   g_return_val_if_fail (coord != NULL, FALSE);
 
   if (ret_coords)        *ret_coords        = *coord;
-  if (ret_pos)           *ret_pos           = 0.0;
+  if (ret_pos)           *ret_pos           = -1.0;
   if (ret_segment_start) *ret_segment_start = NULL;
   if (ret_stroke)        *ret_stroke        = NULL;
 
@@ -1028,6 +1031,68 @@ gimp_draw_tool_on_vectors_curve (GimpDrawTool  *draw_tool,
   return FALSE;
 }
 
+gboolean
+gimp_draw_tool_on_vectors (GimpDrawTool *draw_tool,
+                           GimpDisplay  *gdisp,
+                           GimpCoords   *coords,
+                           gint          width,
+                           gint          height,
+                           GimpCoords   *ret_coords,
+                           gdouble      *ret_pos,
+                           GimpAnchor  **ret_anchor,
+                           GimpStroke  **ret_stroke,
+                           GimpVectors **ret_vectors)
+{
+  GList *list;
+  GimpVectors *vectors;
+  gboolean on_handle, on_curve;
+
+  if (ret_coords)  *ret_coords  = *coords;
+  if (ret_pos)     *ret_pos     = -1.0;
+  if (ret_anchor)  *ret_anchor  = NULL;
+  if (ret_stroke)  *ret_stroke  = NULL;
+  if (ret_vectors) *ret_vectors = NULL;
+
+  for (list = GIMP_LIST (gdisp->gimage->vectors)->list;
+       list;
+       list = g_list_next (list))
+    {
+      vectors = list->data;
+
+      if (! gimp_item_get_visible (GIMP_ITEM (vectors)))
+        continue;
+
+      on_handle = gimp_draw_tool_on_vectors_handle (draw_tool,
+                                                    gdisp,
+                                                    vectors, coords,
+                                                    width, height,
+                                                    GIMP_ANCHOR_ANCHOR,
+                                                    ret_anchor,
+                                                    ret_stroke);
+
+      if (! on_handle)
+        on_curve = gimp_draw_tool_on_vectors_curve (draw_tool,
+                                                    gdisp,
+                                                    vectors, coords,
+                                                    width, height,
+                                                    ret_coords,
+                                                    ret_pos,
+                                                    ret_anchor,
+                                                    ret_stroke);
+
+      if (on_handle || on_curve)
+        {
+          if (ret_vectors)
+            *ret_vectors = vectors;
+
+          return TRUE;
+        }
+    }
+
+  return FALSE;
+}
+
+                          
 void
 gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
 			   gdouble      *points,

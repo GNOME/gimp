@@ -198,6 +198,17 @@ gboolean   gimp_draw_tool_on_vectors_curve         (GimpDrawTool   *draw_tool,
                                                     GimpAnchor    **ret_segment_start,
                                                     GimpStroke    **ret_stroke);
 
+gboolean   gimp_draw_tool_on_vectors               (GimpDrawTool   *draw_tool,
+                                                    GimpDisplay    *gdisp,
+                                                    GimpCoords     *coord,
+                                                    gint            width,
+                                                    gint            height,
+                                                    GimpCoords     *ret_coords,
+                                                    gdouble        *ret_pos,
+                                                    GimpAnchor    **ret_anchor,
+                                                    GimpStroke    **ret_stroke,
+                                                    GimpVectors   **ret_vectors);
+
 void       gimp_draw_tool_draw_lines               (GimpDrawTool   *draw_tool,
                                                     gdouble        *points,
                                                     gint            n_points,

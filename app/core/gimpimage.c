@@ -3193,8 +3193,6 @@ gimp_image_remove_vectors (GimpImage   *gimage,
 
   gimp_container_remove (gimage->vectors, GIMP_OBJECT (vectors));
 
-  gimp_item_set_image (GIMP_ITEM (vectors), NULL);
-
   /* Send out REMOVED signal from vectors */
   gimp_item_removed (GIMP_ITEM (vectors));
 

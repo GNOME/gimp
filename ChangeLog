@@ -1,3 +1,20 @@
+2003-09-15  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpimage.c: fixed bogus
+	gimp_item_set_image (GIMP_ITEM (vectors), NULL);
+
+	* app/tools/gimpdrawtool.[ch]: added gimp_draw_tool_on_vectors:
+	checks if the given coordinate is on any vectors object of the image.
+
+	* app/tools/gimpvectortool.[ch]: Changed the tool modes.
+	VECTORS_SELECT_VECTORS now is active when the tool does not
+	have a current vectors object or the gdisplay is different
+	than the one the tool is drawing on. Also the Move mode now
+	uses it, when clicking outside the current vectors object.
+
+	Factored out the sanity check of the internal state
+	(gimp_vector_tool_verify_state).
+
 2003-09-15  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-transform-utils.[ch]: removed...
