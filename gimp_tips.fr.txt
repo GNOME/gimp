@@ -1,0 +1,159 @@
+# This is a list of tips for the GIMP.  Every time the GIMP is
+# started, one tip will be selected from this file and will be
+# displayed in the "Tip of the day" dialog.
+#
+# - Lines starting with '#' are comments.
+# - Blank lines or comments separate two tips (they are not ignored).
+#   Multiple blank lines are treated as one.  If you want to have a
+#   blank line in a tip, put a space or tab in it.
+# - Text will appear in the dialog as it is in this file.  This is
+#   done on purpose in order to have more freedom in the layout of the
+#   tips than with automatic word-wrapping, but this also means that
+#   you have to avoid excessively long lines in this file.
+# - Tips should be concise: 3 lines or less.
+#
+# Tips in this file have been contributed by Zachary Beane, Mo Oishi,
+# Raphael Quinet, Sven Neumann and other people on the gimp mailing 
+# lists.
+# French translation by Vincent Renardias <vincent@ldsol.com>
+# --------------------------------------------------------------------
+
+# The first tip should be a welcome message, because this is the
+# first thing that a new user will see.
+#
+
+# FIXME: re-write this welcome message:
+
+                            Bienvenue dans The GIMP !
+      
+Presques toutes les opérations sur les images peuvent être réalisées
+en cliquant avec le bouton droit sur l'image. Et ne vous inquiétez pas,
+vous pouvez annuler la plupart des erreurs...
+
+# Tips for beginners start here
+#
+
+The GIMP utilise des calques pour vous permettre d'organiser votre image.
+Vous pouvez les considérer comme une pile de transparents ou de filtres,
+de sorte qu'en regardant à travers vous voyez la composition de leurs contenus.
+
+Vous pouvez effectuer la plupart des opérations sur les calques en cliquant
+avec le bouton droit sur le label texte du calque dans le dialogue Calques
+(Dialogues->Calques & Canaux).
+
+Si vous voulez enregistrer votre image en GIF, XPM ou n'importe quel autre
+format indexé sur les couleurs, vous devrez auparavant convertir l'image
+en couleurs indexées à partir du menu Image.
+
+Vous pouvez ouvrir le menu Options des Outils en double-cliquant sur n'importe
+quel bouton de la barre d'outil.
+
+Vous pouvez changer le nom d'un calque en double-cliquant sur son nom dans la
+boîte de dialogue 'Calques'.
+
+La couche nommée "Fond" est spéciale. Vous ne pouvez pas y ajouter de transparence
+ou de masque de couche. Pour ajouter une transparence, vous devez d'abord
+"ajouter alpha" au calque en cliquant avec le bouton droit dans le dialogue Calques
+et en sélectionnant "Ajouter Canal Alpha".
+
+Lorsque vous utilisez un outil de dessin (Brosse, Aérossol ou Crayon),
+Shift-click dessinera en ligne droite entre votre dernier point de dessin
+et la position courante de votre curseur.
+
+La plupart des plug-ins agissent sur le calque courant de l'image. Dans certains
+cas, vous aurez a fusionner tous les calques (Calques->Applanir l'Image) si vous
+désirez que le plug-in agisse sur l'image entière.
+
+La plupart des formats de fichiers ne peuvent gérer les calques et pour cette
+raison, seul le calque actif est enregistré. Utilisez XCF, le format de fichier
+natif GIMP pour conserver les calques, canaux et guides lors de l'enregistrement.
+
+Tous les effets ne peuvent pas être appliqués a toutes les sortes d'images. Cela
+est indiqué par une entré de menu grisée. Vous devrez soit passer l'image en RVB
+ou ajouter un canal alpha ou l'applanir.
+
+# Tips for intermediate users start here
+#
+
+La boîte de sélection de fichiers comporte une complétion avec la touche Tab,
+exactement comme le shell. Tapez le début du nom de fichier, tapez Tab et Voila!
+C'est complété.
+
+Vous pouvez reassigner de nouveaux raccourcis clavier sur n'importe quel menu en
+cliquant sur le menu, sélectionnant un élément de menu, et pressant le nouveau
+racourcis à utiliser. Cela est dynamique et est enregistré automatiquement lorsque
+vous quittez GIMP.
+
+Toutes les anciennes opérations sur les canaux ont été remplacées avec les puissantes
+et extensibles opérations sur Calques et Modes de Calques. Elles peuvent nécessiter
+quelques temps pour s'y habituer, mais elles en vallent la peine.
+
+Vous pouvez utiliser le bouton du milieu pour vous déplacer dans l'image si elle
+est plus grande que la fenêtre dans laquelle elle est affichée.
+
+Cliquez et tirez sur une régle pour place un Guide sur votre image. Toutes les
+sélections déplacées auront tendance a coller aux guides. Vous pouvez enlever
+les guides en les tirant en dehors de l'image avec l'outil Déplacement.
+
+The GIMP supporte la compression gzip à la volée. Ajoutez simplement
+'.gz' (ou '.bz2, si vous avez bzip2 installé) au nom du fichier et votre
+image sera enregistrée compressée. Bien sur, le chargement d'images compressées
+est également supporté.
+
+Pressez et conservez la touche Shift enfoncée avant de faire une sélection permet
+d'ajouter à la sélection courante au lieu de la remplacer. L'utilisation de Ctrl
+avant de faire une sélection la soustrait de la sélection courante.
+
+Vous pouvez presser et relacher les touches Shift et Ctrl pendant que vous êtes
+en train de faire une sélection pour la contraindre en un carré ou un cercle,
+ou pour l'avoir centré sur son point d'origine.
+
+# Tips for advanced users start here
+#
+
+You can adjust the selection range for fuzzy select 
+by clicking and dragging left and right.
+
+Shift-cliquez sur l'icone Oeil dans le dialogue Calques pour cacher tous les calques
+sauf celui-la. Shift-clic a nouveau pour afficher tous les calques à nouveau.
+
+Ctrl-click on the layer mask's preview in the Layers dialog 
+toggles the effect of the layer mask.
+
+Alt-click on the layer mask's preview in the Layers dialog 
+toggles viewing the mask directly.
+
+Vous pouvez utiliser Alt-Tab pour cycler à travers tous les calques d'une image
+(si votre gestionnaire de fenêtres n'intercepte pas cette combinaison de touches...).
+
+Shift-click with the Bucket Fill tool to have it use 
+the background color instead of the foreground color.
+
+Control-glisser avec l'outil Transformation en mode rotation contraindra la rotation
+a s'effectuer par pas de 15 degrés.
+
+Vous pouvez ajuster et re-placer une sélection en utilisant Alt-glisser.
+
+If your fonts turn out blocky, that's because they're not scalable
+fonts.  Most X servers support scalable Type 1 Postscript fonts.
+Download and install them.
+
+# FIXME: The next tip should disappear once we have solved the
+#        problems of stale pluginrc files and plug-in directories.
+#        All other files in ~/.gimp can be kept after an upgrade.
+#        In particular, we should try to preserve gimprc.  --Raphael
+
+Lorsque vous installez une nouvelle version, pensez d'abord a effacer
+votre répertoire ~/.gimp.
+
+Using Edit->Stroke allows you to draw simple squares or circles by
+painting the edge of your current selection with the active brush.
+More complex shapes can be drawn with Filters->Render->Gfig.
+
+To create a perfect circle, hold Shift while doing an ellipse select. To 
+place a circle precisely, drag horizontal and vertical guides tangent to 
+the circle you want to select, place your cursor at the intersection
+of the guides, and the resulting selection will just touch the guides.
+
+# (end of tips)
+
