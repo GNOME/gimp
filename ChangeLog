@@ -1,3 +1,9 @@
+2000-12-14  Sven Neumann  <sven@gimp.org>
+
+	* app/commands.c (image_resize_callback): 
+	call lc_dialog_update_image_list() when resizing the image so the
+	image preview is updated in the l&c dialog.
+
 2000-12-14  Vidar Madsen  <vidar@gimp.org>
 
 	* plug-ins/gimpressionist/brush.c: Fix to avoid a warning when
