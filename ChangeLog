@@ -1,3 +1,8 @@
+1999-09-11  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
+
+	* app/menus.c (menus_last_opened_cmd_callback): Applied patch
+	provided by Zach Beane to close bug #2145.
+
 Sat Sep 11 17:46:37 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/palette.c

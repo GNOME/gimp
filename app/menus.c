@@ -610,7 +610,7 @@ menus_last_opened_cmd_callback (GtkWidget *widget,
   raw_filename = ((GString *) g_slist_nth_data (last_opened_raw_filenames, num))->str;
   filename = g_basename (raw_filename);
 
-  if (!file_open (raw_filename, filename))
+  if (!file_open (raw_filename, raw_filename))
     g_message (_("Error opening file: %s\n"), raw_filename);
 }
 
