@@ -265,8 +265,7 @@ query (void)
   /* gimp_plugin_menu_register (PLUG_IN_NAME, N_("<Image>/File/Acquire")); */
 
   gimp_plugin_icon_register (PLUG_IN_NAME,
-                             GIMP_ICON_TYPE_INLINE_PIXBUF,
-                             sizeof (screenshot_icon) - 1, screenshot_icon);
+                             GIMP_ICON_TYPE_INLINE_PIXBUF, screenshot_icon);
 }
 
 static void

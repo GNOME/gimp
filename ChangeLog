@@ -1,3 +1,23 @@
+2004-05-19  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/plug_in.pdb: made plugin_icon_register() an
+	underscore-prefixed function which needs to be wrapped.
+
+	* libgimp/gimpplugin_pdb.[ch]: regenerated.
+
+	* libgimp/Makefile.am
+	* libgimp/gimp.h
+	* libgimp/gimpplugin.[ch]: new files containing
+	gimp_plugin_icon_register() which has no "icon_data_length"
+	parameter and determines it from the passed icon data.
+
+	* libgimp/gimp.def: added gimp_plugin_icon_register.
+
+	* plug-ins/common/plugindetails.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/print/print.c: don't pass the icon_data_length.
+
 2004-05-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/checkerboard.c

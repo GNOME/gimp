@@ -159,9 +159,7 @@ query (void)
   gimp_plugin_menu_register ("plug_in_plug_in_details",
                              N_("<Toolbox>/Xtns/Extensions"));
   gimp_plugin_icon_register ("plug_in_plug_in_details",
-                             GIMP_ICON_TYPE_STOCK_ID,
-                             strlen (GIMP_STOCK_PLUGIN) + 1,
-                             GIMP_STOCK_PLUGIN);
+                             GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_PLUGIN);
 }
 
 static void

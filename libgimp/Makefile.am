@@ -179,6 +179,8 @@ libgimp_2_0_la_SOURCES = \
 	gimppixelfetcher.h	\
 	gimppixelrgn.c		\
 	gimppixelrgn.h		\
+	gimpplugin.c		\
+	gimpplugin.h		\
 	gimpproceduraldb.c	\
 	gimpproceduraldb.h	\
 	gimpregioniterator.c	\
@@ -231,6 +233,7 @@ gimpinclude_HEADERS = \
 	gimppatternselect.h	\
 	gimppixelfetcher.h	\
 	gimppixelrgn.h		\
+	gimpplugin.h		\
 	gimpproceduraldb.h	\
 	gimpregioniterator.h	\
 	gimpselection.h		\

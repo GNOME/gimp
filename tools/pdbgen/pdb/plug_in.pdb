@@ -401,7 +401,7 @@ HELP
     $since = '2.2';
 
     @inargs = (
-	{ name => 'procedure_name', type => 'string',
+	{ name => 'procedure_name', type => 'string', wrap => 1,
 	  desc => 'The procedure for which to install the icon' },
         { name => 'icon_type', type => 'enum GimpIconType',
           desc => 'The type of the icon' },

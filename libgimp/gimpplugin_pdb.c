@@ -196,7 +196,7 @@ gimp_plugin_menu_register (const gchar *procedure_name,
 }
 
 /**
- * gimp_plugin_icon_register:
+ * _gimp_plugin_icon_register:
  * @procedure_name: The procedure for which to install the icon.
  * @icon_type: The type of the icon.
  * @icon_data_length: The length of 'icon_data'.
@@ -211,10 +211,10 @@ gimp_plugin_menu_register (const gchar *procedure_name,
  * Since: GIMP 2.2
  */
 gboolean
-gimp_plugin_icon_register (const gchar  *procedure_name,
-			   GimpIconType  icon_type,
-			   gint          icon_data_length,
-			   const guint8 *icon_data)
+_gimp_plugin_icon_register (const gchar  *procedure_name,
+			    GimpIconType  icon_type,
+			    gint          icon_data_length,
+			    const guint8 *icon_data)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
