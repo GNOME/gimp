@@ -61,13 +61,13 @@ struct _BucketOptions
   double       threshold_d;
   GtkObject   *threshold_w;
 
-  FillMode     fill_mode;
-  FillMode     fill_mode_d;
-  GtkWidget   *fill_mode_w;
-
   int          sample_merged;
   int          sample_merged_d;
   GtkWidget   *sample_merged_w;
+
+  FillMode     fill_mode;
+  FillMode     fill_mode_d;
+  GtkWidget   *fill_mode_w[2];  /* 2 radio buttons */
 };
 
 
@@ -128,7 +128,10 @@ bucket_options_reset (void)
 				options->sample_merged_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
 			    options->threshold_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_mode_w), TRUE);
+  gtk_toggle_button_set_active (((options->fill_mode_d == FgColorFill) ?
+				 GTK_TOGGLE_BUTTON (options->fill_mode_w[0]) :
+				 GTK_TOGGLE_BUTTON (options->fill_mode_w[1])),
+				TRUE);
 }
 
 static BucketOptions *
@@ -247,8 +250,6 @@ bucket_options_new (void)
   gtk_signal_connect (GTK_OBJECT (options->sample_merged_w), "toggled",
 		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->sample_merged);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
-				options->sample_merged_d);
   gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
   gtk_widget_show (options->sample_merged_w);
 
@@ -272,8 +273,7 @@ bucket_options_new (void)
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
       gtk_widget_show (radio_button);
 
-      if (i == 0)
-	options->fill_mode_w = radio_button;
+      options->fill_mode_w[i] = radio_button;
     }
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
@@ -687,6 +687,9 @@ tools_new_bucket_fill (void)
     {
       bucket_options = bucket_options_new ();
       tools_register (BUCKET_FILL, (ToolOptions *) bucket_options);
+
+      /*  press all default buttons  */
+      bucket_options_reset ();
     }
 
   tool = (Tool *) g_malloc (sizeof (Tool));

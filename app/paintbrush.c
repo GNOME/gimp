@@ -58,7 +58,7 @@ struct _PaintOptions
 
   int          gradient_type;
   int          gradient_type_d;
-  GtkWidget   *gradient_type_w;
+  GtkWidget   *gradient_type_w[4];  /* 4 radio buttons */
 
   gboolean     incremental;
   gboolean     incremental_d;
@@ -129,7 +129,7 @@ paintbrush_options_reset (void)
 				options->use_gradient_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->gradient_length_w),
 			    options->gradient_length_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->gradient_type_w),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->gradient_type_w[options->gradient_type_d]),
 				TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
 				options->incremental_d);
@@ -202,8 +202,6 @@ paintbrush_options_new (void)
     gtk_check_button_new_with_label (_("Gradient"));
   gtk_table_attach (GTK_TABLE (table), options->use_gradient_w, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_gradient_w),
-				options->use_gradient_d);
   gtk_signal_connect (GTK_OBJECT (options->use_gradient_w), "toggled",
 		      (GtkSignalFunc) paintbrush_gradient_toggle_callback,
 		      &options->use_gradient);
@@ -238,9 +236,6 @@ paintbrush_options_new (void)
   gtk_table_attach_defaults (GTK_TABLE (table), radio_frame, 0, 2, 3, 4);
 
   /*  automatically set the sensitive state of the gradient stuff  */
-  gtk_widget_set_sensitive (scale, options->use_gradient_d);
-  gtk_widget_set_sensitive (label, options->use_gradient_d);
-  gtk_widget_set_sensitive (radio_frame, options->use_gradient_d);
   gtk_object_set_data (GTK_OBJECT (options->use_gradient_w), "set_sensitive",
 		       scale);
   gtk_object_set_data (GTK_OBJECT (scale), "set_sensitive",
@@ -264,11 +259,9 @@ paintbrush_options_new (void)
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
       gtk_widget_show (radio_button);
 
-      if (i == options->gradient_type_d)
-	options->gradient_type_w = radio_button;
+      options->gradient_type_w[i] = radio_button;
     }
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->gradient_type_w),
-				TRUE);
+
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
 
@@ -278,8 +271,6 @@ paintbrush_options_new (void)
   gtk_signal_connect (GTK_OBJECT (options->incremental_w), "toggled",
 		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->incremental);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
-				options->incremental_d);
   gtk_widget_show (options->incremental_w);
   
   return options;
@@ -352,6 +343,9 @@ tools_new_paintbrush ()
     {
       paintbrush_options = paintbrush_options_new ();
       tools_register (PAINTBRUSH, (ToolOptions *) paintbrush_options);
+
+      /*  press all default buttons  */
+      paintbrush_options_reset ();
     }
 
   tool = paint_core_new (PAINTBRUSH);

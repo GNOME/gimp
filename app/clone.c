@@ -52,11 +52,11 @@ struct _CloneOptions
 
   CloneType    type;
   CloneType    type_d;
-  GtkWidget   *type_w;
+  GtkWidget   *type_w[2];  /* 2 radio buttons */
 
   AlignType    aligned;
   AlignType    aligned_d;
-  GtkWidget   *aligned_w;
+  GtkWidget   *aligned_w[3];  /* 3 radio buttons */
 };
 
 
@@ -113,8 +113,8 @@ clone_options_reset (void)
 {
   CloneOptions *options = clone_options;
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w), TRUE);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->aligned_w), TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->aligned_w[options->aligned_d]), TRUE);
 }
 
 static CloneOptions *
@@ -172,8 +172,7 @@ clone_options_new (void)
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
       gtk_widget_show (radio_button);
 
-      if (i == options->type_d)
-	options->type_w = radio_button;
+      options->type_w[i] = radio_button;
     }
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
@@ -198,8 +197,7 @@ clone_options_new (void)
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
       gtk_widget_show (radio_button);
 
-      if (i == options->aligned_d)
-	options->aligned_w = radio_button;
+      options->aligned_w[i] = radio_button;
     }
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
@@ -357,6 +355,9 @@ tools_new_clone ()
     {
       clone_options = clone_options_new ();
       tools_register (CLONE, (ToolOptions *) clone_options);
+
+      /*  press all default buttons  */
+      clone_options_reset ();
     }
 
   tool = paint_core_new (CLONE);

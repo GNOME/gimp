@@ -1,3 +1,15 @@
+1999-04-18  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/bucket_fill.c
+	* app/clone.c
+	* app/convolve.c
+	* app/flip_tool.c
+	* app/ink.c
+	* app/paintbrush.c
+	* app/transform_tool.c: remember all radio buttons in the
+	ToolOptions structures. This enables arbitrary default values and
+	gui feedback for the "toggle key" feature.
+
 Sat Apr 17 11:15:35 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/text_tool_cmds.c: doh, decipoints not decipixels

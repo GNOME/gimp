@@ -41,7 +41,7 @@ struct _FlipOptions
 
   ToolType     type;
   ToolType     type_d;
-  GtkWidget   *type_w;
+  GtkWidget   *type_w[2];  /* 2 radio buttons */
 };
 
 
@@ -63,7 +63,7 @@ static Argument    * flip_invoker         (Argument *);
 /*  functions  */
 
 static void
-flip_type_callback (GtkWidget *w,
+flip_type_callback (GtkWidget *widget,
 		    gpointer   client_data)
 {
   flip_change_type ((long) client_data);
@@ -74,7 +74,10 @@ flip_options_reset (void)
 {
   FlipOptions *options = flip_options;
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w), TRUE);
+  gtk_toggle_button_set_active (((options->type_d == FLIP_HORZ) ?
+				 GTK_TOGGLE_BUTTON (options->type_w[0]) : 
+				 GTK_TOGGLE_BUTTON (options->type_w[1])),
+				TRUE);
 }
 
 static FlipOptions *
@@ -85,7 +88,6 @@ flip_options_new (void)
   GtkWidget *vbox;
   GSList    *group = NULL;
   GtkWidget *radio_box;
-  GtkWidget *radio_button;
 
   /*  the new flip tool options structure  */
   options = (FlipOptions *) g_malloc (sizeof (FlipOptions));
@@ -101,22 +103,22 @@ flip_options_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), radio_box, FALSE, FALSE, 0);
 
   /*  the radio buttons  */
-  options->type_w =
+  options->type_w[0] =
     gtk_radio_button_new_with_label (group, _("Horizontal"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (options->type_w));
-  gtk_box_pack_start (GTK_BOX (radio_box), options->type_w, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (options->type_w), "toggled",
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (options->type_w[0]));
+  gtk_box_pack_start (GTK_BOX (radio_box), options->type_w[0], FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (options->type_w[0]), "toggled",
 		      (GtkSignalFunc) flip_type_callback,
 		      (gpointer) ((long) (FLIP_HORZ)));
-  gtk_widget_show (options->type_w);
+  gtk_widget_show (options->type_w[0]);
 
-  radio_button = gtk_radio_button_new_with_label (group, _("Vertical"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-  gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
+  options->type_w[1] = gtk_radio_button_new_with_label (group, _("Vertical"));
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (options->type_w[1]));
+  gtk_box_pack_start (GTK_BOX (radio_box), options->type_w[1], FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (options->type_w[1]), "toggled",
 		      (GtkSignalFunc) flip_type_callback,
 		      (gpointer) ((long) (FLIP_VERT)));
-  gtk_widget_show (radio_button);
+  gtk_widget_show (options->type_w[1]);
 
   gtk_widget_show (radio_box);
 
@@ -198,6 +200,9 @@ tools_new_flip ()
       flip_options = flip_options_new ();
       tools_register (FLIP_HORZ, (ToolOptions *) flip_options);
       tools_register (FLIP_VERT, (ToolOptions *) flip_options);
+
+      /*  press all default buttons  */
+      flip_options_reset ();
     }
 
   switch (flip_options->type)

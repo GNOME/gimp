@@ -104,7 +104,7 @@ struct _InkOptions
 
   BlobFunc     function;
   BlobFunc     function_d;
-  GtkWidget   *function_w;
+  GtkWidget   *function_w[3];  /* 3 radio buttons */
 
   double       aspect;
   double       aspect_d;
@@ -236,8 +236,12 @@ ink_options_reset (void)
 			    options->vel_sensitivity_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->tilt_angle_w),
 			    options->tilt_angle_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->function_w), TRUE);
-
+  gtk_toggle_button_set_active (((options->function_d == blob_ellipse) ?
+				 GTK_TOGGLE_BUTTON (options->function_w[0]) :
+				 ((options->function_d == blob_square) ?
+				  GTK_TOGGLE_BUTTON (options->function_w[1]) :
+				  GTK_TOGGLE_BUTTON (options->function_w[2]))),
+				TRUE);
   options->aspect = options->aspect_d;
   options->angle  = options->angle_d;
   gtk_widget_queue_draw (options->brush_w->widget);
@@ -434,7 +438,7 @@ ink_options_new (void)
   gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
   gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
 
-  options->function_w = radio_button;
+  options->function_w[0] = radio_button;
 
   pixmap = blob_pixmap (gtk_widget_get_colormap (vbox),
 			gtk_widget_get_visual (vbox),
@@ -452,6 +456,8 @@ ink_options_new (void)
   gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
   gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
 
+  options->function_w[1] = radio_button;
+
   pixmap = blob_pixmap (gtk_widget_get_colormap (vbox),
 			gtk_widget_get_visual (vbox),
 			blob_diamond);
@@ -468,6 +474,8 @@ ink_options_new (void)
   gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
   gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
 
+  options->function_w[2] = radio_button;
+
   /* Brush shape widget */
   frame = gtk_frame_new (_("Shape"));
   gtk_table_attach_defaults (GTK_TABLE (table), frame, 1, 2, 8, 9);
@@ -480,17 +488,17 @@ ink_options_new (void)
 
   options->brush_w = g_new (BrushWidget, 1);
   options->brush_w->state = FALSE;
-  
+
   frame = gtk_aspect_frame_new (NULL, 0.5, 0.5, 1.0, FALSE);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
   darea = gtk_drawing_area_new();
   options->brush_w->widget = darea;
-  
+
   gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 60, 60);
   gtk_container_add (GTK_CONTAINER (frame), darea);
-  
+
   gtk_widget_set_events (darea, 
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
 			 | GDK_POINTER_MOTION_MASK | GDK_EXPOSURE_MASK);
@@ -1531,6 +1539,9 @@ tools_new_ink ()
     {
       ink_options = ink_options_new ();
       tools_register (INK, (ToolOptions *) ink_options);
+
+      /*  press all default buttons  */
+      ink_options_reset ();
     }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
@@ -1635,4 +1646,3 @@ ink_invoker (args)
   /* Fix me */
   return NULL;
 }
-

@@ -38,29 +38,29 @@ struct _TransformOptions
 {
   ToolOptions  tool_options;
 
-  int	       direction;
-  int          direction_d;
-  GtkWidget   *direction_w;
+  ToolType     type;
+  ToolType     type_d;
+  GtkWidget   *type_w[4];  /* 4 radio buttons */
 
   int          smoothing;
   int          smoothing_d;
   GtkWidget   *smoothing_w;
 
-  int	       clip;
-  int          clip_d;
-  GtkWidget   *clip_w;
-
-  int	       grid_size;
-  int          grid_size_d;
-  GtkObject   *grid_size_w;
+  int	       direction;
+  int          direction_d;
+  GtkWidget   *direction_w[2];  /* 2 radio buttons */
 
   int          show_grid;
   int          show_grid_d;
   GtkWidget   *show_grid_w;
 
-  ToolType     type;
-  ToolType     type_d;
-  GtkWidget   *type_w;
+  int	       grid_size;
+  int          grid_size_d;
+  GtkObject   *grid_size_w;
+
+  int	       clip;
+  int          clip_d;
+  GtkWidget   *clip_w;
 };
 
 
@@ -78,6 +78,14 @@ static void
 transform_show_grid_update (GtkWidget *widget,
 			    gpointer   data)
 {
+  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfult */
+
+  if (first_call)
+    {
+      first_call = FALSE;
+      return;
+    }
+
   tool_options_toggle_update (widget, data);
   transform_core_grid_density_changed ();
 }
@@ -115,11 +123,20 @@ transform_options_reset (void)
 {
   TransformOptions *options = transform_options;
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w),
-				options->type_d);
+  gtk_toggle_button_set_active (((options->type_d == ROTATE) ?
+				 GTK_TOGGLE_BUTTON (options->type_w[0]) :
+				 ((options->type_d == SCALE) ?
+				  GTK_TOGGLE_BUTTON (options->type_w[1]) :
+				  ((options->type_d == SHEAR) ?
+				   GTK_TOGGLE_BUTTON (options->type_w[2]) :
+				   GTK_TOGGLE_BUTTON (options->type_w[3])))),
+				TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->smoothing_w),
 				options->smoothing_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->direction_w), TRUE);
+  gtk_toggle_button_set_active (((options->direction_d == TRANSFORM_TRADITIONAL) ?
+				 GTK_TOGGLE_BUTTON (options->direction_w[0]) :
+				 GTK_TOGGLE_BUTTON (options->direction_w[1])),
+				TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->show_grid_w),
 				options->show_grid_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->grid_size_w),
@@ -200,16 +217,13 @@ transform_options_new (void)
 			  (gpointer) ((long) ROTATE + i));
       gtk_widget_show (radio_button);
 
-      if (i == 0)
-	options->type_w = radio_button;
+      options->type_w[i] = radio_button;
     }
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
 
   /*  the smoothing toggle button  */
   options->smoothing_w = gtk_check_button_new_with_label (_("Smoothing"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->smoothing_w),
-				options->smoothing);
   gtk_signal_connect (GTK_OBJECT (options->smoothing_w), "toggled",
 		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->smoothing);
@@ -244,18 +258,13 @@ transform_options_new (void)
 			  (gpointer) ((long) i));
       gtk_widget_show (radio_button);
 
-      if (i == 0)
-	options->direction_w = radio_button;
+      options->direction_w[i] = radio_button;
     }
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
 
   /* the show grid toggle button */
   options->show_grid_w = gtk_check_button_new_with_label (_("Show grid"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->show_grid_w),
-				options->show_grid);
-  /* important: connect the signal after setting the state, because calling
-     transform_show_grid_update before the tool is created will fail */
   gtk_signal_connect (GTK_OBJECT (options->show_grid_w), "toggled",
 		      (GtkSignalFunc) transform_show_grid_update,
 		      &options->show_grid);
@@ -271,7 +280,7 @@ transform_options_new (void)
   gtk_widget_show (label);
 
   options->grid_size_w =
-    gtk_adjustment_new (7.0 - log (options->grid_size) / log (2.0), 0.0, 5.0,
+    gtk_adjustment_new (7.0 - log (options->grid_size_d) / log (2.0), 0.0, 5.0,
 			1.0, 1.0, 0.0);
   grid_density =
     gtk_spin_button_new (GTK_ADJUSTMENT (options->grid_size_w), 0, 0);
@@ -284,8 +293,6 @@ transform_options_new (void)
 
   /*  the clip resulting image toggle button  */
   options->clip_w = gtk_check_button_new_with_label (_("Clip result"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->clip_w),
-				options->clip);
   gtk_signal_connect (GTK_OBJECT (options->clip_w), "toggled",
 		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->clip);
@@ -309,6 +316,9 @@ tools_new_transform_tool (void)
       tools_register (SCALE, (ToolOptions *) transform_options);
       tools_register (SHEAR, (ToolOptions *) transform_options);
       tools_register (PERSPECTIVE, (ToolOptions *) transform_options);
+
+      /*  press all default buttons  */
+      transform_options_reset ();
     }
 
   switch (transform_options->type)

@@ -47,7 +47,7 @@ struct _ConvolveOptions
 
   ConvolveType  type;
   ConvolveType  type_d;
-  GtkWidget    *type_w;
+  GtkWidget    *type_w[2];  /* 2 radio buttons */
 
   double        pressure;
   double        pressure_d;
@@ -117,7 +117,7 @@ convolve_options_reset (void)
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->pressure_w),
 			    options->pressure_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w), TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
 }
 
 static ConvolveOptions *
@@ -194,8 +194,7 @@ convolve_options_new (void)
 			  (gpointer) ((long) i));
       gtk_widget_show (radio_button);
 
-      if (i == options->type_d)
-	options->type_w = radio_button;
+      options->type_w[i] = radio_button;
     }
   gtk_widget_show (radio_box);
 
@@ -228,6 +227,9 @@ tools_new_convolve ()
     {
       convolve_options = convolve_options_new ();
       tools_register (CONVOLVE, (ToolOptions *) convolve_options);
+
+      /*  press all default buttons  */
+      convolve_options_reset ();
     }
 
   tool = paint_core_new (CONVOLVE);
