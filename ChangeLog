@@ -1,4 +1,4 @@
-2005-01-24  Michael Natterer  <mitch@gimp.org>
+2005-01-24  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpenumcombobox.c
 	* libgimpwidgets/gimpenumstore.[ch]: improved API docs.
