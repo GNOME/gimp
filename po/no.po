@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.14\n"
-"POT-Creation-Date: 2000-04-04 17:59+0200\n"
-"PO-Revision-Date: 2000-04-04 22:01+02:00\n"
+"POT-Creation-Date: 2000-04-11 10:38+0200\n"
+"PO-Revision-Date: 2000-04-06 11:04+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,12 +22,12 @@ msgstr "Om GIMP"
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:252
+#: app/about_dialog.c:253
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Versjon %s brakt til deg av"
 
-#: app/about_dialog.c:292
+#: app/about_dialog.c:293
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Vennligst se http://www.gimp.org/ for mer informasjon"
 
@@ -44,62 +44,62 @@ msgstr "Trykk:"
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/app_procs.c:273 app/app_procs.c:275 app/interface.c:531
+#: app/app_procs.c:278 app/app_procs.c:280 app/interface.c:531
 msgid "The GIMP"
 msgstr "GIMP"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/app_procs.c:279
+#: app/app_procs.c:285
 msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 
-#: app/app_procs.c:289 app/app_procs.c:291
+#: app/app_procs.c:302 app/app_procs.c:304
 msgid "brought to you by"
 msgstr "brakt til deg av"
 
-#: app/app_procs.c:360
+#: app/app_procs.c:373
 msgid "GIMP Startup"
 msgstr "GIMP oppstart"
 
-#: app/app_procs.c:479 app/gimprc.c:448
+#: app/app_procs.c:492 app/gimprc.c:448
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "fortolker \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:541
+#: app/app_procs.c:554
 msgid "Looking for data files"
 msgstr "Ser etter datafiler"
 
-#: app/app_procs.c:541
+#: app/app_procs.c:554
 msgid "Parasites"
 msgstr "Parasitter"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:543 app/internal_procs.c:71 app/preferences_dialog.c:2397
+#: app/app_procs.c:556 app/internal_procs.c:71 app/preferences_dialog.c:2397
 msgid "Brushes"
 msgstr "Pensler"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:545 app/internal_procs.c:143 app/preferences_dialog.c:2405
+#: app/app_procs.c:558 app/internal_procs.c:143 app/preferences_dialog.c:2405
 msgid "Patterns"
 msgstr "Mønstre"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:547 app/preferences_dialog.c:2409
+#: app/app_procs.c:560 app/preferences_dialog.c:2409
 msgid "Palettes"
 msgstr "Paletter"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:549 app/internal_procs.c:113 app/preferences_dialog.c:2413
+#: app/app_procs.c:562 app/internal_procs.c:113 app/preferences_dialog.c:2413
 msgid "Gradients"
 msgstr "Gradienter"
 
-#: app/app_procs.c:739
+#: app/app_procs.c:752
 msgid "Really Quit?"
 msgstr "Virkelig avslutte?"
 
-#: app/app_procs.c:743
+#: app/app_procs.c:756
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -109,23 +109,23 @@ msgstr ""
 "\n"
 "Avslutt GIMP?"
 
-#: app/app_procs.c:744
+#: app/app_procs.c:757
 msgid "Quit"
 msgstr "Avslutt"
 
 #. the cancel button
-#: app/app_procs.c:744 app/brightness_contrast.c:218 app/channel_ops.c:93
+#: app/app_procs.c:757 app/brightness_contrast.c:218 app/channel_ops.c:93
 #: app/channels_dialog.c:2504 app/channels_dialog.c:2667
 #: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
 #: app/curves.c:559 app/file_new_dialog.c:207 app/file_new_dialog.c:357
-#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:345 app/gimpprogress.c:112
+#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:370 app/gimpprogress.c:112
 #: app/global_edit.c:772 app/gradient.c:1769 app/gradient.c:4841
-#: app/gradient.c:5402 app/hue_saturation.c:377 app/install.c:533
-#: app/install.c:1167 app/interface.c:1022 app/layers_dialog.c:3434
-#: app/layers_dialog.c:3616 app/layers_dialog.c:3708 app/layers_dialog.c:3972
-#: app/levels.c:341 app/palette.c:1826 app/posterize.c:201
-#: app/preferences_dialog.c:1434 app/qmask.c:281 app/resize.c:195
-#: app/resize.c:1345 app/threshold.c:275 modules/cdisplay_gamma.c:358
+#: app/gradient.c:5402 app/hue_saturation.c:377 app/interface.c:1022
+#: app/layers_dialog.c:3438 app/layers_dialog.c:3620 app/layers_dialog.c:3712
+#: app/layers_dialog.c:3964 app/levels.c:341 app/palette.c:1826
+#: app/posterize.c:201 app/preferences_dialog.c:1434 app/qmask.c:281
+#: app/resize.c:195 app/resize.c:1341 app/threshold.c:275
+#: app/user_install.c:533 app/user_install.c:1173 modules/cdisplay_gamma.c:358
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -278,11 +278,11 @@ msgstr "Lysstyrke-kontrast opererer ikke på indekserte tegneobjekter."
 #: app/color_balance.c:271 app/color_notebook.c:122 app/convert.c:504
 #: app/curves.c:555 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:127 app/gimpui.c:122 app/hue_saturation.c:373
-#: app/install.c:1165 app/layers_dialog.c:3432 app/layers_dialog.c:3614
-#: app/layers_dialog.c:3706 app/layers_dialog.c:3970 app/levels.c:337
-#: app/module_db.c:281 app/posterize.c:197 app/preferences_dialog.c:1430
-#: app/qmask.c:279 app/resize.c:193 app/resize.c:1345 app/threshold.c:271
-#: modules/cdisplay_gamma.c:351
+#: app/layers_dialog.c:3436 app/layers_dialog.c:3618 app/layers_dialog.c:3710
+#: app/layers_dialog.c:3962 app/levels.c:337 app/module_db.c:281
+#: app/posterize.c:197 app/preferences_dialog.c:1430 app/qmask.c:279
+#: app/resize.c:193 app/resize.c:1341 app/threshold.c:271
+#: app/user_install.c:1171 modules/cdisplay_gamma.c:351
 msgid "OK"
 msgstr "OK"
 
@@ -306,7 +306,7 @@ msgstr "Kontrast"
 
 #. The preview toggle
 #: app/brightness_contrast.c:300 app/color_balance.c:441 app/curves.c:679
-#: app/fileops.c:374 app/hue_saturation.c:565 app/levels.c:570
+#: app/fileops.c:377 app/hue_saturation.c:565 app/levels.c:570
 #: app/palette.c:3236 app/posterize.c:238 app/threshold.c:348
 msgid "Preview"
 msgstr "Forhåndsvis"
@@ -319,12 +319,12 @@ msgstr "Penseleditor"
 #: app/brush_edit.c:216 app/brush_select.c:278 app/by_color_select.c:690
 #: app/color_notebook.c:122 app/color_picker.c:297 app/colormap_dialog.i.c:170
 #: app/crop.c:1054 app/devices.c:755 app/docindexif.c:105
-#: app/errorconsole.c:281 app/gdisplay_ops.c:345 app/gradient.c:801
+#: app/errorconsole.c:281 app/gdisplay_ops.c:370 app/gradient.c:801
 #: app/gradient_select.c:153 app/histogram_tool.c:276 app/info_window.c:255
 #: app/lc_dialog.c:195 app/measure.c:286 app/nav_window.c:1345
 #: app/palette.c:2072 app/palette.c:2088 app/palette.c:3118
 #: app/palette_select.c:66 app/pattern_select.c:172
-#: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:1088
+#: app/preferences_dialog.c:359 app/tips_dialog.c:153 app/tools.c:1088
 #: app/undo_history.c:752
 msgid "Close"
 msgstr "Lukk"
@@ -475,7 +475,7 @@ msgstr "%s kopier"
 msgid "Selection Mask"
 msgstr "Utvalgsmaske"
 
-#: app/channel_ops.c:85 app/resize.c:394
+#: app/channel_ops.c:85 app/resize.c:406
 msgid "Offset"
 msgstr "Forskyvning"
 
@@ -485,8 +485,8 @@ msgid "Offset X:"
 msgstr "Forskyvning X:"
 
 #: app/channel_ops.c:115 app/crop.c:1063 app/file_new_dialog.c:530
-#: app/install.c:1368 app/resize.c:332 app/resize.c:417 app/resize.c:575
-#: app/rotate_tool.c:106 app/scale_tool.c:100 app/shear_tool.c:82
+#: app/resize.c:344 app/resize.c:429 app/resize.c:587 app/rotate_tool.c:106
+#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1374
 msgid "Y:"
 msgstr "Y:"
 
@@ -496,11 +496,11 @@ msgid "Wrap Around"
 msgstr "Bryt rundt"
 
 #: app/channel_ops.c:174 app/image_new.c:70 app/image_new.c:234
-#: app/layers_dialog.c:3534
+#: app/layers_dialog.c:3538
 msgid "Background"
 msgstr "Bakgrunn"
 
-#: app/channel_ops.c:175 app/image_new.c:80 app/layers_dialog.c:3536
+#: app/channel_ops.c:175 app/image_new.c:80 app/layers_dialog.c:3540
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -735,43 +735,43 @@ msgstr "Bilde:"
 msgid "none"
 msgstr "ingen"
 
-#: app/commands.c:333
+#: app/commands.c:332
 msgid "Feather Selection"
 msgstr "Fjærvalg"
 
-#: app/commands.c:336
+#: app/commands.c:335
 msgid "Feather Selection by:"
 msgstr "Fjærvalg etter:"
 
-#: app/commands.c:369
+#: app/commands.c:368
 msgid "Shrink Selection"
 msgstr "Krymp utvalg"
 
-#: app/commands.c:372
+#: app/commands.c:371
 msgid "Shrink Selection by:"
 msgstr "Krymp utvalget med:"
 
-#: app/commands.c:381
+#: app/commands.c:380
 msgid "Shrink from image border"
 msgstr "Krymp fra bildekanten"
 
-#: app/commands.c:403
+#: app/commands.c:402
 msgid "Grow Selection"
 msgstr "Øk utvalg"
 
-#: app/commands.c:406
+#: app/commands.c:405
 msgid "Grow Selection by:"
 msgstr "Øk utvalget med:"
 
-#: app/commands.c:426
+#: app/commands.c:425
 msgid "Border Selection"
 msgstr "Kantvalg"
 
-#: app/commands.c:429
+#: app/commands.c:428
 msgid "Border Selection by:"
 msgstr "Kantvalg etter:"
 
-#: app/commands.c:1304
+#: app/commands.c:1315
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 "Feil under endring av størrelse: Både bredde og høyde må være større enn "
@@ -920,7 +920,7 @@ msgid "Width:"
 msgstr "Bredde:"
 
 #: app/crop.c:1079 app/file_new_dialog.c:395 app/file_new_dialog.c:413
-#: app/layers_dialog.c:3475 app/resize.c:242 app/resize.c:267 app/resize.c:512
+#: app/layers_dialog.c:3479 app/resize.c:254 app/resize.c:279 app/resize.c:524
 #: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:349
 msgid "Height:"
 msgstr "Høyde:"
@@ -1184,17 +1184,17 @@ msgstr "Bildestørrelse: %s"
 msgid "New Image"
 msgstr "Nytt bilde"
 
-#: app/file_new_dialog.c:453 app/install.c:1355 app/preferences_dialog.c:1505
-#: app/preferences_dialog.c:1542
+#: app/file_new_dialog.c:453 app/preferences_dialog.c:1505
+#: app/preferences_dialog.c:1542 app/user_install.c:1361
 msgid "Pixels"
 msgstr "Piksler"
 
 #. the resolution labels
-#: app/file_new_dialog.c:524 app/resize.c:569
+#: app/file_new_dialog.c:524 app/resize.c:581
 msgid "Resolution X:"
 msgstr "Oppløsning X:"
 
-#: app/file_new_dialog.c:545 app/resize.c:590
+#: app/file_new_dialog.c:545 app/resize.c:602
 msgid "pixels/%a"
 msgstr "Piksler/%a"
 
@@ -1203,16 +1203,16 @@ msgstr "Piksler/%a"
 msgid "Image Type"
 msgstr "Bildetype"
 
-#: app/fileops.c:223 app/fileops.c:268
+#: app/fileops.c:225 app/fileops.c:271
 msgid "Load Image"
 msgstr "Last bilde"
 
 #. format-chooser frame
-#: app/fileops.c:283
+#: app/fileops.c:286
 msgid "Determine File Type"
 msgstr "Bestem filtype"
 
-#: app/fileops.c:356
+#: app/fileops.c:359
 msgid ""
 "Generate\n"
 "Preview"
@@ -1220,87 +1220,87 @@ msgstr ""
 "Generer\n"
 "forhåndsvisning"
 
-#: app/fileops.c:375
+#: app/fileops.c:378
 msgid "No Selection."
 msgstr "Ingen utvalg."
 
-#: app/fileops.c:418 app/fileops.c:1629 app/fileops.c:1736
+#: app/fileops.c:421 app/fileops.c:1640 app/fileops.c:1747
 #, c-format
 msgid "Save failed: %s"
 msgstr "Feil under lagring: %s"
 
-#: app/fileops.c:438 app/fileops.c:469
+#: app/fileops.c:441 app/fileops.c:473
 msgid "Save Image"
 msgstr "Lagre bilde"
 
-#: app/fileops.c:486
+#: app/fileops.c:490
 msgid "Save Options"
 msgstr "Alternativer for lagring"
 
-#: app/fileops.c:495
+#: app/fileops.c:499
 msgid "Determine File Type:"
 msgstr "Bestem filtype:"
 
-#: app/fileops.c:555
+#: app/fileops.c:559
 msgid "Can't revert. No filename associated with this image"
 msgstr "Kan ikke forkaste. Ingen filnavn assosiert med dette bildet"
 
-#: app/fileops.c:571
+#: app/fileops.c:575
 msgid "Revert failed."
 msgstr "Forkast feilet."
 
-#: app/fileops.c:1245
+#: app/fileops.c:1256
 msgid "(This thumbnail may be out of date)"
 msgstr "(Denne miniatyren kan være gammel)"
 
-#: app/fileops.c:1246
+#: app/fileops.c:1257
 msgid "(No Information)"
 msgstr "(Ingen informasjon)"
 
-#: app/fileops.c:1256
+#: app/fileops.c:1267
 msgid "(Thumbnail saving is disabled)"
 msgstr "(Lagring av miniatyrer er slått av)"
 
-#: app/fileops.c:1260
+#: app/fileops.c:1271
 msgid "(Could not write thumbnail file)"
 msgstr "(Kunne ikke skrive miniatyrfil)"
 
-#: app/fileops.c:1264
+#: app/fileops.c:1275
 msgid "(Thumbnail file not written)"
 msgstr "(Miniatyr ikke skrevet)"
 
-#: app/fileops.c:1281
+#: app/fileops.c:1292
 msgid "No preview available"
 msgstr "Ingen forhåndsvisning tilgjengelig"
 
-#: app/fileops.c:1399
+#: app/fileops.c:1410
 msgid "(could not make preview)"
 msgstr "(kunne ikke lage forhåndsvisning)"
 
-#: app/fileops.c:1472 app/fileops.c:1551
+#: app/fileops.c:1483 app/fileops.c:1562
 #, c-format
 msgid "Open failed: %s"
 msgstr "Feil under åpning: %s"
 
-#: app/fileops.c:1607
+#: app/fileops.c:1618
 #, c-format
 msgid "%s is an irregular file (%s)"
 msgstr "%s er en uvanlig fil (%s)"
 
-#: app/fileops.c:1675
+#: app/fileops.c:1686
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s eksisterer, overskriv?"
 
-#: app/fileops.c:1679
+#: app/fileops.c:1690
 msgid "File Exists!"
 msgstr "Filen eksisterer!"
 
-#: app/fileops.c:1685
+#: app/fileops.c:1696
 msgid "Yes"
 msgstr "Ja"
 
-#: app/fileops.c:1687
+#: app/fileops.c:1698
 msgid "No"
 msgstr "Nei"
 
@@ -1376,7 +1376,7 @@ msgstr "Tilgjengelige filtre"
 msgid "Active Filters"
 msgstr "Aktive filtre"
 
-#: app/gdisplay_ops.c:337
+#: app/gdisplay_ops.c:362
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1384,6 +1384,14 @@ msgid ""
 msgstr ""
 "Endringer er gjort i %s.\n"
 "Lukk likevel?"
+
+#: app/gimage_cmds.c:3463
+msgid ""
+"Image resolution is out of bounds,\n"
+"using the default resolution instead."
+msgstr ""
+"Bildeoppløsningen er utenfor grensene,\n"
+"bruker standard oppløsning istedet."
 
 #: app/gimage_mask.c:211
 msgid ""
@@ -2192,11 +2200,11 @@ msgstr "Metning"
 msgid "Grayscale"
 msgstr "Gråtone"
 
-#: app/image_new.c:65 app/layers_dialog.c:3533
+#: app/image_new.c:65 app/layers_dialog.c:3537
 msgid "Foreground"
 msgstr "Forgrunn"
 
-#: app/image_new.c:75 app/layers_dialog.c:3535
+#: app/image_new.c:75 app/layers_dialog.c:3539
 msgid "White"
 msgstr "Hvit"
 
@@ -2387,551 +2395,6 @@ msgstr "Juster:"
 msgid "Shape"
 msgstr "Form"
 
-#: app/install.c:100
-msgid "The GIMP is not properly installed for the current user\n"
-msgstr "GIMP er ikke riktig installert for denne brukeren\n"
-
-#: app/install.c:101
-msgid ""
-"User installation was skipped because the '--nointerface' flag was "
-"encountered\n"
-msgstr ""
-"Brukerinstallasjon ble utsatt fordi '--nointerface' flagget ble brukt\n"
-
-#: app/install.c:102
-msgid ""
-"To perform user installation, run the GIMP without the '--nointerface' flag\n"
-msgstr ""
-"For å utføre brukerinstallasjon, kjør GIMP uten '--nointerface' flagget\n"
-
-#: app/install.c:151
-msgid ""
-"The gimprc is used to store personal preferences\n"
-"that affect GIMP's default behavior.\n"
-"Paths to search for brushes, palettes, gradients,\n"
-"patterns, plug-ins and modules can also configured\n"
-"here."
-msgstr ""
-"Gimprc brukes til å lagre personlige preferanser\n"
-"som virker inn på GIMP's standard oppførsel.\n"
-"Stier til søk etter pensler, paletter, gradienter, \n"
-"mønstre, tillegg og moduler kan også konfigureres\n"
-"her."
-
-#: app/install.c:159
-msgid ""
-"GIMP uses an additional gtkrc file so you can\n"
-"configure it to look differently than other GTK apps."
-msgstr ""
-"GIMP bruker en gtkrc fil slik at du kan konfigurere\n"
-"den til å ha forskjellig utseende fra andre GTP applikasjoner."
-
-#: app/install.c:164
-msgid ""
-"Plug-ins and extensions are external programs run\n"
-"by the GIMP which provide additional functionality.\n"
-"These programs are searched for at run-time and\n"
-"information about their functionality and mod-times\n"
-"is cached in this file.  This file is intended to\n"
-"be GIMP-readable only, and should not be edited."
-msgstr ""
-"Tillegg og utvidelser er eksterne programmer som kjøres\n"
-"av GIMP, og gir ekstra funksjonalitet. Disse programmene\n"
-"søkes det etter ved oppstart og informasjon om deres\n"
-"funksjonalitet og endringstider mellomlagres i denne\n"
-"filen. Denne filen er ment å være lesbar kun for GIMP,\n"
-"og bør ikke redigeres."
-
-#: app/install.c:173
-msgid ""
-"Key shortcuts can be dynamically redefined in The GIMP.\n"
-"The menurc is a dump of your configuration so it can.\n"
-"be remembered for the next session.  You may edit this\n"
-"file if you wish, but it is much easier to define the\n"
-"keys from within The GIMP.  Deleting this file will\n"
-"restore the default shortcuts."
-msgstr ""
-"Tastatursnarveier kan omdefineres dynamisk i GIMP.\n"
-"menurc er et dump av din konfigurasjon som gjør deg i stand\n"
-"til å \"huske\" denne til neste sesjon. Du kan redigere denne\n"
-"filen hvis du ønsker, men det er mye lettere å definere\n"
-"tastene fra GIMP. Sletting av denne filen vil gjenopprette\n"
-"standard tastatursnarveier."
-
-#: app/install.c:182
-msgid ""
-"The sessionrc is used to store what dialog windows were\n"
-"open the last time you quit The GIMP.  You can configure\n"
-"The GIMP to reopen these dialogs at the saved position."
-msgstr ""
-"sessionrc brukes til å lagre informasjon om åpne dialogvinduer\n"
-"ved siste avslutning av GIMP. Du kan konfigurere GIMP til å\n"
-"gjenåpne disse dialogene i lagret posisjon."
-
-#: app/install.c:188
-msgid ""
-"The unitrc is used to store your user units database.\n"
-"You can define additional units and use them just\n"
-"like you use the built-in units inches, millimeters,\n"
-"points and picas.  This file is overwritten each time\n"
-"you quit the GIMP."
-msgstr ""
-"Unitrc brukes til å lagre din brukerenhetsdatabase.\n"
-"Du kan definere ekstra enheter og bruke dem akkurat\n"
-"som du bruker de innebygde enhetene tommer, millimeter,\n"
-"punkter og picas. Denne filen overskrives hver gang\n"
-"du avslutter GIMP."
-
-#: app/install.c:196
-msgid ""
-"This is a subdirectory which can be used to store\n"
-"user defined brushes.  The default gimprc file\n"
-"checks this subdirectory in addition to the system-\n"
-"wide GIMP brushes installation when searching for\n"
-"brushes."
-msgstr ""
-"Dette er en underkatalog som kan brukes til å lagre\n"
-"brukerdefinerte pensler. Med standard gimprc sjekkes\n"
-"denne underkatalogen i tillegg til systemkatalogen\n"
-"for GIMP pensler når det skal søkes etter disse."
-
-#: app/install.c:204
-msgid ""
-"This is a subdirectory which is used to store brushes\n"
-"that are created with the brush editor.  The default\n"
-"gimprc file checks this subdirectory when searching\n"
-"for generated brushes."
-msgstr ""
-"Dette er en underkatalog som brukes til å lagre pensler\n"
-"som er laget med penseleditoren. Standard gimprc sjekker\n"
-"denne underkatalogen når det skal søkes etter disse."
-
-#: app/install.c:211
-msgid ""
-"This is a subdirectory which can be used to store\n"
-"user defined gradients.  The default gimprc file\n"
-"checks this subdirectory in addition to the system-\n"
-"wide GIMP gradients installation when searching\n"
-"for gradients."
-msgstr ""
-"Dette er en underkatalog som kan brukes til å lagre\n"
-"brukerdefinerte gradienter. Med standard gimprc\n"
-"sjekkes denne underkatalogen i tillegg til system-\n"
-"katalogen for gradienter når det søkes etter disse."
-
-#: app/install.c:219
-msgid ""
-"This is a subdirectory which can be used to store\n"
-"user defined palettes.  The default gimprc file\n"
-"checks only this subdirectory (not the system-wide\n"
-"installation) when searching for palettes.  During\n"
-"installation, the system palettes will be copied\n"
-"here.  This is done to allow modifications made to\n"
-"palettes during GIMP execution to persist across\n"
-"sessions."
-msgstr ""
-"Dette er en underkatalog som kan brukes til å lagre\n"
-"brukerdefinerte paletter. Med standard gimprc sjekkes\n"
-"kun denne katalogen (ikke systemkatalogen) når det\n"
-"søkes etter paletter. Under installasjonen kopieres\n"
-"palettene hit fra systemkatalogen. Dette gjøres for at\n"
-"endringer som gjøres i palettene skal gjelde i kommende\n"
-"sesjoner."
-
-#: app/install.c:230
-msgid ""
-"This is a subdirectory which can be used to store\n"
-"user defined patterns.  The default gimprc file\n"
-"checks this subdirectory in addition to the system-\n"
-"wide GIMP patterns installation when searching for\n"
-"patterns."
-msgstr ""
-"Dette er en underkatalog som kan brukes til å lagre\n"
-"brukerdefinerte mønstre. Med standard gimprc sjekkes\n"
-"denne underkatalogen i tillegg til systemkatalogen\n"
-"for mønstre når det søkes etter disse."
-
-#: app/install.c:238
-msgid ""
-"This is a subdirectory which can be used to store\n"
-"user created, temporary, or otherwise non-system-\n"
-"supported plug-ins.  The default gimprc file checks\n"
-"this subdirectory in addition to the systemwide\n"
-"GIMP plug-in directories when searching for plug-ins."
-msgstr ""
-"Dette er en underkatalog som kan brukes til å lagre\n"
-"brukeropprettede, midlertidige, eller andre ustøttede\n"
-"tillegg. Med standard gimprc sjekkes denne underkatalogen\n"
-"i tillegg til systemkatalogen for tillegg når det søkes\n"
-"etter disse."
-
-#: app/install.c:246
-msgid ""
-"This subdirectory can be used to store user created,\n"
-"temporary, or otherwise non-system-supported DLL\n"
-"modules.  The default gimprc file checks this subdirectory\n"
-"in addition to the system-wide GIMP module directory\n"
-"when searching for modules to load when initializing."
-msgstr ""
-"Denne underkatalogen kan brukes til å lagre brukeropprettede,\n"
-"midlertidige, eller ustøttede DLL-moduler. Med standard\n"
-"gimprc sjekkes denne underkatalogen i tillegg til system-\n"
-"katalogen for moduler når det søkes etter moduler under\n"
-"oppstart."
-
-#: app/install.c:254
-msgid ""
-"This subdirectory is used by the GIMP to store user\n"
-"created and installed scripts.  The default gimprc file\n"
-"checks this subdirectory in addition to the systemwide\n"
-"GIMP scripts subdirectory when searching for scripts"
-msgstr ""
-"Denne underkatalogen brukes av GIMP for å lagre \n"
-"brukeropprettede og installerte skript. Med standard gimprc\n"
-"sjekkes denne underkatalogen i tillegg til systemkatalogen\n"
-"for skript når det søkes etter disse."
-
-#: app/install.c:261
-msgid ""
-"This subdirectory is used by the GIMP to temporarily\n"
-"store undo buffers to reduce memory usage.  If GIMP is\n"
-"unceremoniously killed, files may persist in this directory\n"
-"of the form: gimp<#>.<#>.  These files are useless across\n"
-"GIMP sessions and can be destroyed with impunity."
-msgstr ""
-"Denne underkatalogen brukes av GIMP for å mellomlagre\n"
-"angreinformasjon for å redusere minnebruken. Hvis GIMP\n"
-"drepes, kan filer bli liggende i denne katalogen; de har\n"
-"formen: gimp<#>.<#>. Disse filene er ubrukelige mellom\n"
-"sesjoner og kan slettes uten omtanke."
-
-#: app/install.c:269
-msgid ""
-"This subdirectory is used to store parameter files for\n"
-"the Curves tool."
-msgstr ""
-"Denne underkatalogen brukes til å lagre parameterfiler for\n"
-"kurveverktøyet."
-
-#: app/install.c:274
-msgid ""
-"This subdirectory is used to store parameter files for\n"
-"the Levels tool."
-msgstr ""
-"Denne underkatalogen brukes til å lagre parameterfiler for\n"
-"nivåverktøyet."
-
-#: app/install.c:279
-msgid ""
-"This is a subdirectory which can be used to store\n"
-"user defined fractals to be used by the FractalExplorer\n"
-"plug-in.  The default gimprc file checks this subdirectory\n"
-"in addition to the systemwide GIMP FractalExplorer\n"
-"installation when searching for fractals."
-msgstr ""
-"Dette er en underkatalog som kan brukes til å lagre\n"
-"brukerdefinerte fraktaler som skal brukes med FractalExplorer\n"
-"tillegget. Med standard gimprc sjekkes denne underkatalogen i\n"
-"tillegg til systemkatalogen for FractalExplorer når det søkes\n"
-"etter disse."
-
-#: app/install.c:287
-msgid ""
-"This is a subdirectory which can be used to store\n"
-"user defined figures to be used by the GFig plug-in.\n"
-"The default gimprc file checks this subdirectory in\n"
-"addition to the systemwide GIMP GFig installation\n"
-"when searching for gfig figures."
-msgstr ""
-"Dette er en underkatalog som kan brukes til å lagre\n"
-"brukerdefinerte figurer for bruk med gfig tillegget.\n"
-"Med standard gimprc sjekkes denne underkatalogen i\n"
-"tillegg til systemkatalogen for gfig figurer når det\n"
-"søkes etter disse."
-
-#: app/install.c:295
-msgid ""
-"This is a subdirectory which can be used to store\n"
-"user defined gflares to be used by the GFlare plug-in.\n"
-"The default gimprc file checks this subdirectory in\n"
-"addition to the systemwide GIMP GFlares installation\n"
-"when searching for gflares."
-msgstr ""
-"Dette er en underkatalog som kan brukes til å lagre\n"
-"brukerdefinerte gflares for bruk med gflare tillegget.\n"
-"Med standard gimprc sjekkes denne underkatalogen i\n"
-"tillegg til systemkatalogen for gflares når det søkes\n"
-"etter disse."
-
-#: app/install.c:303
-msgid ""
-"This is a subdirectory which can be used to store\n"
-"user defined data to be used by the Gimpressionist\n"
-"plug-in.  The default gimprc file checks this subdirectory\n"
-"in addition to the systemwide GIMP Gimpressionist\n"
-"installation when searching for data."
-msgstr ""
-"Dette er en underkatalog som kan brukes til å lagre\n"
-"brukerdefinerte gflares for bruk med gflare tillegget.\n"
-"Med standard gimprc sjekkes denne underkatalogen i\n"
-"tillegg til systemkatalogen for gflares når det søkes\n"
-"etter disse."
-
-#: app/install.c:526
-msgid "GIMP User Installation"
-msgstr "GIMP bruker-installasjon"
-
-#: app/install.c:531
-msgid "Continue"
-msgstr "Fortsett"
-
-#. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/install.c:571
-msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
-msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
-
-#: app/install.c:663
-msgid ""
-"Welcome to\n"
-"The GIMP User Installation"
-msgstr ""
-"Velkommen til\n"
-"GIMP bruker-installasjon"
-
-#: app/install.c:665
-msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Klikk \"Fortsett\" for å gå videre i GIMP bruker-installasjon."
-
-#: app/install.c:668
-msgid ""
-"The GIMP - GNU Image Manipulation Program\n"
-"Copyright (C) 1995-2000\n"
-"Spencer Kimball, Peter Mattis and the GIMP Development Team."
-msgstr ""
-"GIMP - GNU Image Manipulation Program\n"
-"Copyright (C) 1995-2000\n"
-"Spencer Kimball, Peter Mattis og GIMP utviklingslaget."
-
-#: app/install.c:677
-msgid ""
-"This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version."
-msgstr ""
-"Dette programmet er fri programvare; du kan redistribuere det og/eller\n"
-"endre det under betingelsene gitt i GNU General Public License som er\n"
-"utgitt av Free Software Foundation; enten versjon 2 av lisensen, eller\n"
-"(hvis du velger det) enhver senere versjon."
-
-#: app/install.c:682
-msgid ""
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
-"See the GNU General Public License for more details."
-msgstr ""
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
-"See the GNU General Public License for more details."
-
-#: app/install.c:687
-msgid ""
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA."
-msgstr ""
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA."
-
-#: app/install.c:713
-msgid "Personal GIMP Directory"
-msgstr "Personlig GIMP katalog"
-
-#: app/install.c:714
-msgid "Click \"Continue\" to create your personal GIMP directory."
-msgstr "Klikk fortsett for å opprette din personlige GIMP katalog."
-
-#: app/install.c:731
-#, c-format
-msgid ""
-"For a proper GIMP installation, a subdirectory named\n"
-"%s needs to be created."
-msgstr ""
-"I en fullstendig GIMP installasjon, vil en underkatalog kalt\n"
-"%s bli opprettet."
-
-#: app/install.c:737
-msgid ""
-"This subdirectory will contain a number of important files.\n"
-"Click on one of the files or subdirectories in the tree\n"
-"to get more information about the selected item."
-msgstr ""
-"Denne underkatalogen vil inneholde et antall viktige filer.\n"
-"Klikk på en av filene eller underkatalogene i treet\n"
-"for å få mer informasjon om det valgte objektet."
-
-#: app/install.c:821
-msgid "User Installation Log"
-msgstr "Brukerinstallasjonslogg"
-
-#: app/install.c:827
-msgid "GIMP Performance Tuning"
-msgstr "GIMP ytelsesjustering"
-
-#: app/install.c:828
-msgid "Click \"Continue\" to accept the settings above."
-msgstr "Klikk \"Fortsett\" for å akseptere innstillingene over."
-
-#: app/install.c:831
-msgid "For optimal GIMP performance, some settings may have to be adjusted."
-msgstr ""
-"For optimal ytelse i GIMP, er det nødvendig med justering av noen "
-"innstillinger."
-
-#: app/install.c:840
-msgid "Monitor Resolution"
-msgstr "Oppløsning for monitor"
-
-#: app/install.c:841
-msgid "Click \"Continue\" to start The GIMP."
-msgstr "Klikk \"Fortsett\" for å starte GIMP."
-
-#: app/install.c:844
-msgid ""
-"To display images in their natural size, GIMP needs to know your monitor "
-"resolution."
-msgstr ""
-"For å vise bilder i sin naturlige størrelse må GIMO vite oppløsningen for "
-"din skjerm."
-
-#: app/install.c:853
-msgid "Aborting Installation..."
-msgstr "Avbryter installasjonen..."
-
-#: app/install.c:923
-msgid "does not exist.  Cannot install."
-msgstr " eksisterer ikke.  Kan ikke installere."
-
-#: app/install.c:935
-msgid "has invalid permissions.  Cannot install."
-msgstr "har ugyldige rettigheter. Kan ikke installere."
-
-#: app/install.c:973
-msgid ""
-"Did you notice any error messages in the console window?\n"
-"If not, installation was successful!\n"
-"Otherwise, quit and investigate the possible reason..."
-msgstr ""
-"La du merke til noen feilmeldinger i konsollvinduet? \n"
-"Hvis ikke var installasjonen vellykket! \n"
-"Ellers, avslutt og prøv å finne den mulige grunnen..."
-
-#: app/install.c:1029
-msgid ""
-"Did you notice any error messages in the lines above?\n"
-"If not, installation was successful!\n"
-"Otherwise, quit and investigate the possible reason..."
-msgstr ""
-"La du merke til noen feilmeldinger i linjene over? \n"
-"Hvis ikke var installasjonen vellykket! \n"
-"Ellers, avslutt og prøv å finne den mulige grunnen..."
-
-#: app/install.c:1041
-msgid "Click \"Continue\" to complete GIMP installation."
-msgstr "Klikk \"Fortsett\" for å fullføre GIMP installasjonen."
-
-#: app/install.c:1046
-msgid "Installation failed.  Contact system administrator."
-msgstr "Installasjonen feilet.  Kontakt systemadministratoren."
-
-#: app/install.c:1067
-msgid ""
-"GIMP uses a limited amount of memory to store image data, the so-called\n"
-"\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
-"the amount of memory used by other running processes."
-msgstr ""
-"GIMP bruker en begrenset mengde med minne for å lagre bildedata, den såkalte\n"
-"\"Tile cachen\". Du bør justere størrelsen på denne så den passer i minnet.\n"
-"Ta i betraktning mengden minne som brukes av andre prosesser."
-
-#: app/install.c:1081 app/preferences_dialog.c:2102
-msgid "Tile Cache Size:"
-msgstr "Størrelse på flisbuffer:"
-
-#: app/install.c:1092
-msgid ""
-"All image and undo data which doesn't fit into the Tile Cache will be\n"
-"written to a swap file. This file should be located on a local filesystem\n"
-"with enough free space (several hundred MB). On a UNIX system, you\n"
-"may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
-msgstr ""
-"Alle bilde- og angredata som ikke passer i \"Tile cachen\" vil bli skrevet\n"
-"til en swap-fil. Denne filen bør plasseres på et lokalt filsystem med\n"
-"tilstrekkelig plass (flere hundre MB). På et UNIX system, vil du \n"
-"kanskje bruke systemets temp katalog. (\"/tmp\" eller \"/var/tmp\")."
-
-#: app/install.c:1101 app/preferences_dialog.c:2361
-msgid "Select Swap Dir"
-msgstr "Velg swap-katalog"
-
-#: app/install.c:1106
-msgid "Swap Directory:"
-msgstr "Swap-katalog:"
-
-#: app/install.c:1159
-msgid "Calibrate Monitor Resolution"
-msgstr "Kalibrer oppløsning for skjerm"
-
-#: app/install.c:1267
-msgid "Measure the rulers and enter their lengths below."
-msgstr "Mål linjalene og skriv inn lengdene under."
-
-#: app/install.c:1282
-msgid "Horizontal:"
-msgstr "Horisontal:"
-
-#: app/install.c:1287
-msgid "Vertical:"
-msgstr "Vertikal:"
-
-#: app/install.c:1328
-msgid ""
-"GIMP can obtain this information from your X-server.\n"
-"However, most X-servers do not return useful values."
-msgstr ""
-"GIMP kan hente denne informasjonen fra din X-tjener.\n"
-"De fleste X-tjenere returnerer ikke nyttige verdier, likevel."
-
-#: app/install.c:1335
-#, c-format
-msgid "Get Resolution from X-server (Currently %d x %d dpi)"
-msgstr "Hent oppløsning fra X-tjener (Den er nå %d x %d dpi)"
-
-#: app/install.c:1349
-msgid "Alternatively, you can set the monitor resolution manually."
-msgstr "Alternativt kan du sette monitoroppløsninen manuelt."
-
-#: app/install.c:1362
-msgid "Monitor Resolution X:"
-msgstr "Oppløsning for skjerm X:"
-
-#: app/install.c:1398
-msgid ""
-"You can also press the \"Calibrate\" button to open a window\n"
-"which lets you determine your monitor resolution interactively."
-msgstr ""
-"Du kan også trykke på \"Kalibrer\" knappen for å åpne et vindu\n"
-"som lar deg bestemme din skjermoppløsning interaktivt."
-
-#: app/install.c:1405
-msgid "Calibrate"
-msgstr "Kalibrer"
-
 #: app/interface.c:313
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
@@ -3085,7 +2548,7 @@ msgstr "%s maske"
 msgid "Layer Select"
 msgstr "Velg lag"
 
-#: app/layers_dialog.c:263 app/layers_dialog.c:3465
+#: app/layers_dialog.c:263 app/layers_dialog.c:3469
 msgid "New Layer"
 msgstr "Nytt lag"
 
@@ -3165,58 +2628,58 @@ msgstr "Behold trans."
 msgid "Empty Layer Copy"
 msgstr "Kopiering av lag uten innhold"
 
-#: app/layers_dialog.c:2146 app/layers_dialog.c:3276 app/layers_dialog.c:3643
+#: app/layers_dialog.c:2146 app/layers_dialog.c:3280 app/layers_dialog.c:3647
 msgid "Floating Selection"
 msgstr "Flytende utvalg"
 
-#: app/layers_dialog.c:3426
+#: app/layers_dialog.c:3430
 msgid "New Layer Options"
 msgstr "Alternativer for nytt lag"
 
 #. The name label and entry
-#: app/layers_dialog.c:3455
+#: app/layers_dialog.c:3459
 msgid "Layer Name:"
 msgstr "Navn på lag:"
 
 #. The size labels
-#: app/layers_dialog.c:3469
+#: app/layers_dialog.c:3473
 msgid "Layer Width:"
 msgstr "Bredde på lag:"
 
-#: app/layers_dialog.c:3529
+#: app/layers_dialog.c:3533
 msgid "Layer Fill Type"
 msgstr "Fylltype for lag"
 
-#: app/layers_dialog.c:3608
+#: app/layers_dialog.c:3612
 msgid "Edit Layer Attributes"
 msgstr "Rediger lagets attributter"
 
-#: app/layers_dialog.c:3635
+#: app/layers_dialog.c:3639
 msgid "Layer name:"
 msgstr "Navn på lag:"
 
-#: app/layers_dialog.c:3700
+#: app/layers_dialog.c:3704
 msgid "Add Mask Options"
 msgstr "Legg til alternativer for maske"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3718
+#: app/layers_dialog.c:3722
 msgid "Initialize Layer Mask to:"
 msgstr "Initialiser lagets maske til:"
 
-#: app/layers_dialog.c:3723
+#: app/layers_dialog.c:3727
 msgid "White (Full Opacity)"
 msgstr "Hvitt (Helt ugjennomsiktig)"
 
-#: app/layers_dialog.c:3725
+#: app/layers_dialog.c:3729
 msgid "Black (Full Transparency)"
 msgstr "Sort (Helt gjennomsiktig)"
 
-#: app/layers_dialog.c:3727
+#: app/layers_dialog.c:3731
 msgid "Layer's Alpha Channel"
 msgstr "Lagets alfakanal"
 
-#: app/layers_dialog.c:3786 app/layers_dialog.c:3874
+#: app/layers_dialog.c:3789 app/layers_dialog.c:3871
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -3224,27 +2687,27 @@ msgstr ""
 "Ugyldig bredde eller høyde.\n"
 "Begge må være positive."
 
-#: app/layers_dialog.c:3964
+#: app/layers_dialog.c:3956
 msgid "Layer Merge Options"
 msgstr "Alternativer for fletting av lag"
 
-#: app/layers_dialog.c:3989
+#: app/layers_dialog.c:3981
 msgid "Final, Merged Layer should be:"
 msgstr "Endelig, flettet lag skal være:"
 
-#: app/layers_dialog.c:3990
+#: app/layers_dialog.c:3982
 msgid "Final, Anchored Layer should be:"
 msgstr "Endelig, forankret lag skal være:"
 
-#: app/layers_dialog.c:3995
+#: app/layers_dialog.c:3987
 msgid "Expanded as necessary"
 msgstr "Utvides etter behov"
 
-#: app/layers_dialog.c:3997
+#: app/layers_dialog.c:3989
 msgid "Clipped to image"
 msgstr "Klippes til bildet"
 
-#: app/layers_dialog.c:3999
+#: app/layers_dialog.c:3991
 msgid "Clipped to bottom layer"
 msgstr "Klippes til bunnlag"
 
@@ -5004,6 +4467,10 @@ msgstr "Konservativt minnebruk"
 msgid "Levels of Undo:"
 msgstr "Angrenivåer:"
 
+#: app/preferences_dialog.c:2102 app/user_install.c:1087
+msgid "Tile Cache Size:"
+msgstr "Størrelse på flisbuffer:"
+
 #: app/preferences_dialog.c:2113
 msgid "Number of Processors to Use:"
 msgstr "Antall prosessorer som skal brukes:"
@@ -5116,6 +4583,10 @@ msgstr "Velg temp-katalog"
 #: app/preferences_dialog.c:2361
 msgid "Swap Dir:"
 msgstr "Swap-katalog:"
+
+#: app/preferences_dialog.c:2361 app/user_install.c:1107
+msgid "Select Swap Dir"
+msgstr "Velg swap-katalog"
 
 #: app/preferences_dialog.c:2397
 msgid "Brushes Directories"
@@ -5278,34 +4749,38 @@ msgid "Set Canvas Size"
 msgstr "Sett størrelse på kanvas"
 
 #. the original width & height labels
-#: app/resize.c:236 app/scale_tool.c:77
+#: app/resize.c:248 app/scale_tool.c:77
 msgid "Original Width:"
 msgstr "Original bredde:"
 
 #. the new size labels
-#: app/resize.c:261 app/resize.c:506
+#: app/resize.c:273 app/resize.c:518
 msgid "New Width:"
 msgstr "Ny bredde:"
 
 #. the scale ratio labels
-#: app/resize.c:326
+#: app/resize.c:338
 msgid "Ratio X:"
 msgstr "X-rate:"
 
 #. the x and y offset labels
-#: app/resize.c:411
+#: app/resize.c:423
 msgid "X:"
 msgstr "X:"
 
-#: app/resize.c:492
+#: app/resize.c:504
 msgid "Print Size & Display Unit"
 msgstr "Skriv ut størrelse og vis enhet"
 
-#: app/resize.c:1254
+#: app/resize.c:1253
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Skaleringsfeil: Både bredde og høyde må være større enn null."
 
-#: app/resize.c:1336
+#: app/resize.c:1334
+msgid "Layer Too Small"
+msgstr "Laget er ikke stort nok"
+
+#: app/resize.c:1338
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -5314,10 +4789,6 @@ msgstr ""
 "Den valgte bildestørrelsen vil krympe\n"
 "noen lag helt bort.\n"
 "Vil du gjøre dette?"
-
-#: app/resize.c:1340
-msgid "Layer Too Small"
-msgstr "Laget er ikke stort nok"
 
 #: app/rotate_tool.c:83
 msgid "Rotation Information"
@@ -5376,17 +4847,17 @@ msgstr "Kant:"
 msgid "Use Dynamic Text"
 msgstr "Bruk dynamisk tekst"
 
-#: app/text_tool.c:601
+#: app/text_tool.c:602
 #, c-format
 msgid "Font '%s' not found."
 msgstr "Skrifttype '%s' ikke funnet."
 
-#: app/text_tool.c:620
+#: app/text_tool.c:621
 #, c-format
 msgid "Font '%s' not found.%s"
 msgstr "Skrifttype '%s' ikke funnet.%s"
 
-#: app/text_tool.c:623
+#: app/text_tool.c:624
 msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
@@ -5396,7 +4867,7 @@ msgstr ""
 "Hvis du ikke har skalerbare skrifttyper, prøv å slå av antialiasing i "
 "alternativene for verktøy."
 
-#: app/text_tool.c:734
+#: app/text_tool.c:735
 msgid "Text Layer"
 msgstr "Tekstlag"
 
@@ -5412,27 +4883,27 @@ msgstr "Terskel opererer ikke på indekserte tegnede objekter."
 msgid "Threshold Range:"
 msgstr "Terskelområde:"
 
-#: app/tips_dialog.c:78
+#: app/tips_dialog.c:69
 msgid "gimp_tips.txt"
 msgstr "gimp_tips.txt"
 
-#: app/tips_dialog.c:90
+#: app/tips_dialog.c:81
 msgid "GIMP Tip of the Day"
 msgstr "GIMP Dagens tips"
 
-#: app/tips_dialog.c:155
-msgid "Previous Tip"
-msgstr "Forrige tips"
-
-#: app/tips_dialog.c:163
-msgid "Next Tip"
-msgstr "Neste tips"
-
-#: app/tips_dialog.c:184
+#: app/tips_dialog.c:138
 msgid "Show tip next time"
 msgstr "Vis tips neste gang"
 
-#: app/tips_dialog.c:299
+#: app/tips_dialog.c:168
+msgid "Previous Tip"
+msgstr "Forrige tips"
+
+#: app/tips_dialog.c:176
+msgid "Next Tip"
+msgstr "Neste tips"
+
+#: app/tips_dialog.c:278
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in the\n"
@@ -6161,6 +5632,544 @@ msgstr "[ basisbilde ]"
 #: app/undo_history.c:843
 msgid "Redo"
 msgstr "Gjenopprett"
+
+#: app/user_install.c:100
+msgid "The GIMP is not properly installed for the current user\n"
+msgstr "GIMP er ikke riktig installert for denne brukeren\n"
+
+#: app/user_install.c:101
+msgid ""
+"User installation was skipped because the '--nointerface' flag was "
+"encountered\n"
+msgstr ""
+"Brukerinstallasjon ble utsatt fordi '--nointerface' flagget ble brukt\n"
+
+#: app/user_install.c:102
+msgid ""
+"To perform user installation, run the GIMP without the '--nointerface' flag\n"
+msgstr ""
+"For å utføre brukerinstallasjon, kjør GIMP uten '--nointerface' flagget\n"
+
+#: app/user_install.c:150
+msgid ""
+"The gimprc is used to store personal preferences\n"
+"that affect GIMP's default behavior.\n"
+"Paths to search for brushes, palettes, gradients,\n"
+"patterns, plug-ins and modules can also configured\n"
+"here."
+msgstr ""
+"Gimprc brukes til å lagre personlige preferanser\n"
+"som virker inn på GIMP's standard oppførsel.\n"
+"Stier til søk etter pensler, paletter, gradienter, \n"
+"mønstre, tillegg og moduler kan også konfigureres\n"
+"her."
+
+#: app/user_install.c:158
+msgid ""
+"GIMP uses an additional gtkrc file so you can\n"
+"configure it to look differently than other GTK apps."
+msgstr ""
+"GIMP bruker en gtkrc fil slik at du kan konfigurere\n"
+"den til å ha forskjellig utseende fra andre GTP applikasjoner."
+
+#: app/user_install.c:163
+msgid ""
+"Plug-ins and extensions are external programs run\n"
+"by the GIMP which provide additional functionality.\n"
+"These programs are searched for at run-time and\n"
+"information about their functionality and mod-times\n"
+"is cached in this file.  This file is intended to\n"
+"be GIMP-readable only, and should not be edited."
+msgstr ""
+"Tillegg og utvidelser er eksterne programmer som kjøres\n"
+"av GIMP, og gir ekstra funksjonalitet. Disse programmene\n"
+"søkes det etter ved oppstart og informasjon om deres\n"
+"funksjonalitet og endringstider mellomlagres i denne\n"
+"filen. Denne filen er ment å være lesbar kun for GIMP,\n"
+"og bør ikke redigeres."
+
+#: app/user_install.c:172
+msgid ""
+"Key shortcuts can be dynamically redefined in The GIMP.\n"
+"The menurc is a dump of your configuration so it can.\n"
+"be remembered for the next session.  You may edit this\n"
+"file if you wish, but it is much easier to define the\n"
+"keys from within The GIMP.  Deleting this file will\n"
+"restore the default shortcuts."
+msgstr ""
+"Tastatursnarveier kan omdefineres dynamisk i GIMP.\n"
+"menurc er et dump av din konfigurasjon som gjør deg i stand\n"
+"til å \"huske\" denne til neste sesjon. Du kan redigere denne\n"
+"filen hvis du ønsker, men det er mye lettere å definere\n"
+"tastene fra GIMP. Sletting av denne filen vil gjenopprette\n"
+"standard tastatursnarveier."
+
+#: app/user_install.c:181
+msgid ""
+"The sessionrc is used to store what dialog windows were\n"
+"open the last time you quit The GIMP.  You can configure\n"
+"The GIMP to reopen these dialogs at the saved position."
+msgstr ""
+"sessionrc brukes til å lagre informasjon om åpne dialogvinduer\n"
+"ved siste avslutning av GIMP. Du kan konfigurere GIMP til å\n"
+"gjenåpne disse dialogene i lagret posisjon."
+
+#: app/user_install.c:187
+msgid ""
+"The unitrc is used to store your user units database.\n"
+"You can define additional units and use them just\n"
+"like you use the built-in units inches, millimeters,\n"
+"points and picas.  This file is overwritten each time\n"
+"you quit the GIMP."
+msgstr ""
+"Unitrc brukes til å lagre din brukerenhetsdatabase.\n"
+"Du kan definere ekstra enheter og bruke dem akkurat\n"
+"som du bruker de innebygde enhetene tommer, millimeter,\n"
+"punkter og picas. Denne filen overskrives hver gang\n"
+"du avslutter GIMP."
+
+#: app/user_install.c:195
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined brushes.  The default gimprc file\n"
+"checks this subdirectory in addition to the system-\n"
+"wide GIMP brushes installation when searching for\n"
+"brushes."
+msgstr ""
+"Dette er en underkatalog som kan brukes til å lagre\n"
+"brukerdefinerte pensler. Med standard gimprc sjekkes\n"
+"denne underkatalogen i tillegg til systemkatalogen\n"
+"for GIMP pensler når det skal søkes etter disse."
+
+#: app/user_install.c:203
+msgid ""
+"This is a subdirectory which is used to store brushes\n"
+"that are created with the brush editor.  The default\n"
+"gimprc file checks this subdirectory when searching\n"
+"for generated brushes."
+msgstr ""
+"Dette er en underkatalog som brukes til å lagre pensler\n"
+"som er laget med penseleditoren. Standard gimprc sjekker\n"
+"denne underkatalogen når det skal søkes etter disse."
+
+#: app/user_install.c:210
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined gradients.  The default gimprc file\n"
+"checks this subdirectory in addition to the system-\n"
+"wide GIMP gradients installation when searching\n"
+"for gradients."
+msgstr ""
+"Dette er en underkatalog som kan brukes til å lagre\n"
+"brukerdefinerte gradienter. Med standard gimprc\n"
+"sjekkes denne underkatalogen i tillegg til system-\n"
+"katalogen for gradienter når det søkes etter disse."
+
+#: app/user_install.c:218
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined palettes.  The default gimprc file\n"
+"checks only this subdirectory (not the system-wide\n"
+"installation) when searching for palettes.  During\n"
+"installation, the system palettes will be copied\n"
+"here.  This is done to allow modifications made to\n"
+"palettes during GIMP execution to persist across\n"
+"sessions."
+msgstr ""
+"Dette er en underkatalog som kan brukes til å lagre\n"
+"brukerdefinerte paletter. Med standard gimprc sjekkes\n"
+"kun denne katalogen (ikke systemkatalogen) når det\n"
+"søkes etter paletter. Under installasjonen kopieres\n"
+"palettene hit fra systemkatalogen. Dette gjøres for at\n"
+"endringer som gjøres i palettene skal gjelde i kommende\n"
+"sesjoner."
+
+#: app/user_install.c:229
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined patterns.  The default gimprc file\n"
+"checks this subdirectory in addition to the system-\n"
+"wide GIMP patterns installation when searching for\n"
+"patterns."
+msgstr ""
+"Dette er en underkatalog som kan brukes til å lagre\n"
+"brukerdefinerte mønstre. Med standard gimprc sjekkes\n"
+"denne underkatalogen i tillegg til systemkatalogen\n"
+"for mønstre når det søkes etter disse."
+
+#: app/user_install.c:237
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user created, temporary, or otherwise non-system-\n"
+"supported plug-ins.  The default gimprc file checks\n"
+"this subdirectory in addition to the systemwide\n"
+"GIMP plug-in directories when searching for plug-ins."
+msgstr ""
+"Dette er en underkatalog som kan brukes til å lagre\n"
+"brukeropprettede, midlertidige, eller andre ustøttede\n"
+"tillegg. Med standard gimprc sjekkes denne underkatalogen\n"
+"i tillegg til systemkatalogen for tillegg når det søkes\n"
+"etter disse."
+
+#: app/user_install.c:245
+msgid ""
+"This subdirectory can be used to store user created,\n"
+"temporary, or otherwise non-system-supported DLL\n"
+"modules.  The default gimprc file checks this subdirectory\n"
+"in addition to the system-wide GIMP module directory\n"
+"when searching for modules to load when initializing."
+msgstr ""
+"Denne underkatalogen kan brukes til å lagre brukeropprettede,\n"
+"midlertidige, eller ustøttede DLL-moduler. Med standard\n"
+"gimprc sjekkes denne underkatalogen i tillegg til system-\n"
+"katalogen for moduler når det søkes etter moduler under\n"
+"oppstart."
+
+#: app/user_install.c:253
+msgid ""
+"This subdirectory is used by the GIMP to store user\n"
+"created and installed scripts.  The default gimprc file\n"
+"checks this subdirectory in addition to the systemwide\n"
+"GIMP scripts subdirectory when searching for scripts"
+msgstr ""
+"Denne underkatalogen brukes av GIMP for å lagre \n"
+"brukeropprettede og installerte skript. Med standard gimprc\n"
+"sjekkes denne underkatalogen i tillegg til systemkatalogen\n"
+"for skript når det søkes etter disse."
+
+#: app/user_install.c:260
+msgid ""
+"This subdirectory is used by the GIMP to temporarily\n"
+"store undo buffers to reduce memory usage.  If GIMP is\n"
+"unceremoniously killed, files may persist in this directory\n"
+"of the form: gimp<#>.<#>.  These files are useless across\n"
+"GIMP sessions and can be destroyed with impunity."
+msgstr ""
+"Denne underkatalogen brukes av GIMP for å mellomlagre\n"
+"angreinformasjon for å redusere minnebruken. Hvis GIMP\n"
+"drepes, kan filer bli liggende i denne katalogen; de har\n"
+"formen: gimp<#>.<#>. Disse filene er ubrukelige mellom\n"
+"sesjoner og kan slettes uten omtanke."
+
+#: app/user_install.c:268
+msgid ""
+"This subdirectory is used to store parameter files for\n"
+"the Curves tool."
+msgstr ""
+"Denne underkatalogen brukes til å lagre parameterfiler for\n"
+"kurveverktøyet."
+
+#: app/user_install.c:273
+msgid ""
+"This subdirectory is used to store parameter files for\n"
+"the Levels tool."
+msgstr ""
+"Denne underkatalogen brukes til å lagre parameterfiler for\n"
+"nivåverktøyet."
+
+#: app/user_install.c:278
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined fractals to be used by the FractalExplorer\n"
+"plug-in.  The default gimprc file checks this subdirectory\n"
+"in addition to the systemwide GIMP FractalExplorer\n"
+"installation when searching for fractals."
+msgstr ""
+"Dette er en underkatalog som kan brukes til å lagre\n"
+"brukerdefinerte fraktaler som skal brukes med FractalExplorer\n"
+"tillegget. Med standard gimprc sjekkes denne underkatalogen i\n"
+"tillegg til systemkatalogen for FractalExplorer når det søkes\n"
+"etter disse."
+
+#: app/user_install.c:286
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined figures to be used by the GFig plug-in.\n"
+"The default gimprc file checks this subdirectory in\n"
+"addition to the systemwide GIMP GFig installation\n"
+"when searching for gfig figures."
+msgstr ""
+"Dette er en underkatalog som kan brukes til å lagre\n"
+"brukerdefinerte figurer for bruk med gfig tillegget.\n"
+"Med standard gimprc sjekkes denne underkatalogen i\n"
+"tillegg til systemkatalogen for gfig figurer når det\n"
+"søkes etter disse."
+
+#: app/user_install.c:294
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined gflares to be used by the GFlare plug-in.\n"
+"The default gimprc file checks this subdirectory in\n"
+"addition to the systemwide GIMP GFlares installation\n"
+"when searching for gflares."
+msgstr ""
+"Dette er en underkatalog som kan brukes til å lagre\n"
+"brukerdefinerte gflares for bruk med gflare tillegget.\n"
+"Med standard gimprc sjekkes denne underkatalogen i\n"
+"tillegg til systemkatalogen for gflares når det søkes\n"
+"etter disse."
+
+#: app/user_install.c:302
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined data to be used by the Gimpressionist\n"
+"plug-in.  The default gimprc file checks this subdirectory\n"
+"in addition to the systemwide GIMP Gimpressionist\n"
+"installation when searching for data."
+msgstr ""
+"Dette er en underkatalog som kan brukes til å lagre\n"
+"brukerdefinerte gflares for bruk med gflare tillegget.\n"
+"Med standard gimprc sjekkes denne underkatalogen i\n"
+"tillegg til systemkatalogen for gflares når det søkes\n"
+"etter disse."
+
+#: app/user_install.c:526
+msgid "GIMP User Installation"
+msgstr "GIMP bruker-installasjon"
+
+#: app/user_install.c:531
+msgid "Continue"
+msgstr "Fortsett"
+
+#. this is a fontset, e.g. multiple comma-separated font definitions
+#: app/user_install.c:572
+msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
+
+#: app/user_install.c:669
+msgid ""
+"Welcome to\n"
+"The GIMP User Installation"
+msgstr ""
+"Velkommen til\n"
+"GIMP bruker-installasjon"
+
+#: app/user_install.c:671
+msgid "Click \"Continue\" to enter the GIMP user installation."
+msgstr "Klikk \"Fortsett\" for å gå videre i GIMP bruker-installasjon."
+
+#: app/user_install.c:674
+msgid ""
+"The GIMP - GNU Image Manipulation Program\n"
+"Copyright (C) 1995-2000\n"
+"Spencer Kimball, Peter Mattis and the GIMP Development Team."
+msgstr ""
+"GIMP - GNU Image Manipulation Program\n"
+"Copyright (C) 1995-2000\n"
+"Spencer Kimball, Peter Mattis og GIMP utviklingslaget."
+
+#: app/user_install.c:683
+msgid ""
+"This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version."
+msgstr ""
+"Dette programmet er fri programvare; du kan redistribuere det og/eller\n"
+"endre det under betingelsene gitt i GNU General Public License som er\n"
+"utgitt av Free Software Foundation; enten versjon 2 av lisensen, eller\n"
+"(hvis du velger det) enhver senere versjon."
+
+#: app/user_install.c:688
+msgid ""
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+"See the GNU General Public License for more details."
+msgstr ""
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+"See the GNU General Public License for more details."
+
+#: app/user_install.c:693
+msgid ""
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+"MA 02111-1307, USA."
+msgstr ""
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+"MA 02111-1307, USA."
+
+#: app/user_install.c:719
+msgid "Personal GIMP Directory"
+msgstr "Personlig GIMP katalog"
+
+#: app/user_install.c:720
+msgid "Click \"Continue\" to create your personal GIMP directory."
+msgstr "Klikk fortsett for å opprette din personlige GIMP katalog."
+
+#: app/user_install.c:737
+#, c-format
+msgid ""
+"For a proper GIMP installation, a subdirectory named\n"
+"%s needs to be created."
+msgstr ""
+"I en fullstendig GIMP installasjon, vil en underkatalog kalt\n"
+"%s bli opprettet."
+
+#: app/user_install.c:743
+msgid ""
+"This subdirectory will contain a number of important files.\n"
+"Click on one of the files or subdirectories in the tree\n"
+"to get more information about the selected item."
+msgstr ""
+"Denne underkatalogen vil inneholde et antall viktige filer.\n"
+"Klikk på en av filene eller underkatalogene i treet\n"
+"for å få mer informasjon om det valgte objektet."
+
+#: app/user_install.c:827
+msgid "User Installation Log"
+msgstr "Brukerinstallasjonslogg"
+
+#: app/user_install.c:833
+msgid "GIMP Performance Tuning"
+msgstr "GIMP ytelsesjustering"
+
+#: app/user_install.c:834
+msgid "Click \"Continue\" to accept the settings above."
+msgstr "Klikk \"Fortsett\" for å akseptere innstillingene over."
+
+#: app/user_install.c:837
+msgid "For optimal GIMP performance, some settings may have to be adjusted."
+msgstr ""
+"For optimal ytelse i GIMP, er det nødvendig med justering av noen "
+"innstillinger."
+
+#: app/user_install.c:846
+msgid "Monitor Resolution"
+msgstr "Oppløsning for monitor"
+
+#: app/user_install.c:847
+msgid "Click \"Continue\" to start The GIMP."
+msgstr "Klikk \"Fortsett\" for å starte GIMP."
+
+#: app/user_install.c:850
+msgid ""
+"To display images in their natural size, GIMP needs to know your monitor "
+"resolution."
+msgstr ""
+"For å vise bilder i sin naturlige størrelse må GIMO vite oppløsningen for "
+"din skjerm."
+
+#: app/user_install.c:859
+msgid "Aborting Installation..."
+msgstr "Avbryter installasjonen..."
+
+#: app/user_install.c:929
+msgid "does not exist.  Cannot install."
+msgstr " eksisterer ikke.  Kan ikke installere."
+
+#: app/user_install.c:941
+msgid "has invalid permissions.  Cannot install."
+msgstr "har ugyldige rettigheter. Kan ikke installere."
+
+#: app/user_install.c:979
+msgid ""
+"Did you notice any error messages in the console window?\n"
+"If not, installation was successful!\n"
+"Otherwise, quit and investigate the possible reason..."
+msgstr ""
+"La du merke til noen feilmeldinger i konsollvinduet? \n"
+"Hvis ikke var installasjonen vellykket! \n"
+"Ellers, avslutt og prøv å finne den mulige grunnen..."
+
+#: app/user_install.c:1035
+msgid ""
+"Did you notice any error messages in the lines above?\n"
+"If not, installation was successful!\n"
+"Otherwise, quit and investigate the possible reason..."
+msgstr ""
+"La du merke til noen feilmeldinger i linjene over? \n"
+"Hvis ikke var installasjonen vellykket! \n"
+"Ellers, avslutt og prøv å finne den mulige grunnen..."
+
+#: app/user_install.c:1047
+msgid "Click \"Continue\" to complete GIMP installation."
+msgstr "Klikk \"Fortsett\" for å fullføre GIMP installasjonen."
+
+#: app/user_install.c:1052
+msgid "Installation failed.  Contact system administrator."
+msgstr "Installasjonen feilet.  Kontakt systemadministratoren."
+
+#: app/user_install.c:1073
+msgid ""
+"GIMP uses a limited amount of memory to store image data, the so-called\n"
+"\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
+"the amount of memory used by other running processes."
+msgstr ""
+"GIMP bruker en begrenset mengde med minne for å lagre bildedata, den "
+"såkalte\n"
+"\"Tile cachen\". Du bør justere størrelsen på denne så den passer i minnet.\n"
+"Ta i betraktning mengden minne som brukes av andre prosesser."
+
+#: app/user_install.c:1098
+msgid ""
+"All image and undo data which doesn't fit into the Tile Cache will be\n"
+"written to a swap file. This file should be located on a local filesystem\n"
+"with enough free space (several hundred MB). On a UNIX system, you\n"
+"may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
+msgstr ""
+"Alle bilde- og angredata som ikke passer i \"Tile cachen\" vil bli skrevet\n"
+"til en swap-fil. Denne filen bør plasseres på et lokalt filsystem med\n"
+"tilstrekkelig plass (flere hundre MB). På et UNIX system, vil du \n"
+"kanskje bruke systemets temp katalog. (\"/tmp\" eller \"/var/tmp\")."
+
+#: app/user_install.c:1112
+msgid "Swap Directory:"
+msgstr "Swap-katalog:"
+
+#: app/user_install.c:1165
+msgid "Calibrate Monitor Resolution"
+msgstr "Kalibrer oppløsning for skjerm"
+
+#: app/user_install.c:1273
+msgid "Measure the rulers and enter their lengths below."
+msgstr "Mål linjalene og skriv inn lengdene under."
+
+#: app/user_install.c:1288
+msgid "Horizontal:"
+msgstr "Horisontal:"
+
+#: app/user_install.c:1293
+msgid "Vertical:"
+msgstr "Vertikal:"
+
+#: app/user_install.c:1334
+msgid ""
+"GIMP can obtain this information from your X-server.\n"
+"However, most X-servers do not return useful values."
+msgstr ""
+"GIMP kan hente denne informasjonen fra din X-tjener.\n"
+"De fleste X-tjenere returnerer ikke nyttige verdier, likevel."
+
+#: app/user_install.c:1341
+#, c-format
+msgid "Get Resolution from X-server (Currently %d x %d dpi)"
+msgstr "Hent oppløsning fra X-tjener (Den er nå %d x %d dpi)"
+
+#: app/user_install.c:1355
+msgid "Alternatively, you can set the monitor resolution manually."
+msgstr "Alternativt kan du sette monitoroppløsninen manuelt."
+
+#: app/user_install.c:1368
+msgid "Monitor Resolution X:"
+msgstr "Oppløsning for skjerm X:"
+
+#: app/user_install.c:1404
+msgid ""
+"You can also press the \"Calibrate\" button to open a window\n"
+"which lets you determine your monitor resolution interactively."
+msgstr ""
+"Du kan også trykke på \"Kalibrer\" knappen for å åpne et vindu\n"
+"som lar deg bestemme din skjermoppløsning interaktivt."
+
+#: app/user_install.c:1411
+msgid "Calibrate"
+msgstr "Kalibrer"
 
 #: app/xcf.c:383
 #, c-format
