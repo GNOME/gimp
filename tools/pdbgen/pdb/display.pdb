@@ -36,7 +36,7 @@ HELP
 
     @outargs = (
 	{ name => 'display', type => 'display',
-	  desc => 'The new display', alias => 'gdisp' }
+	  desc => 'The new display', alias => 'gdisp', init => 1 }
     );
 
     %invoke = (

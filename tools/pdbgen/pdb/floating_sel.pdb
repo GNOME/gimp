@@ -31,7 +31,7 @@ sub invoke {
 	headers => [ qw("layer.h" "floating_sel.h") ],
 	code => <<CODE
 {
-  if (! layer_is_floating_sel (floating_sel))
+  if (!layer_is_floating_sel (floating_sel))
     success = FALSE;
   else
     $cmd (floating_sel);
@@ -89,7 +89,64 @@ HELP
     &invoke;
 }
 
-@procs = qw(floating_sel_remove floating_sel_anchor floating_sel_to_layer);
+sub floating_sel_attach {
+    $blurb = <<'BLURB';
+Attach the specified layer as floating to the specified drawable.
+BLURB
+
+    $help = <<'HELP';
+This procedure attaches the layer as floating selection to the drawable.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer (is attached as floating selection)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable (where to attach the floating selection)' }
+    );
+
+    %invoke = (
+	headers => [ qw("floating_sel.h") ],
+	code => 'floating_sel_attach (layer, drawable);'
+    );
+}
+
+sub floating_sel_rigor {
+    $blurb = 'Rigor the floating selection.';
+
+    $help = <<'HELP';
+This procedure rigors the floating selection.
+HELP
+
+    &std_pdb_misc;
+
+    &inargs;
+    push @inargs, { name => 'undo', type => 'boolean', desc => '$desc' };
+
+    &invoke;
+    $invoke{code} =~ s/\(floating_sel\);/(floating_sel, undo);/;
+}
+
+sub floating_sel_relax {
+    $blurb = 'Relax the floating selection.';
+
+    $help = <<'HELP';
+This procedure relaxes the floating selection.
+HELP
+
+    &std_pdb_misc;
+
+    &inargs;
+    push @inargs, { name => 'undo', type => 'boolean', desc => '$desc' };
+
+    &invoke;
+    $invoke{code} =~ s/\(floating_sel\);/(floating_sel, undo);/;
+}
+
+@procs = qw(floating_sel_remove floating_sel_anchor floating_sel_to_layer
+	    floating_sel_attach floating_sel_rigor floating_sel_relax);
 %exports = (app => [@procs]);
 
 $desc = 'Floating selections';

@@ -97,7 +97,7 @@ HELP
 
     @outargs = (
 	{ name  => 'floating_sel', type  => 'layer',
-	  desc  => 'The new floating selection', alias => 'layer' }
+	  desc  => 'The new floating selection', alias => 'layer', init => 1 }
     );
 
     &invoke('layer != NULL');

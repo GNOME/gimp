@@ -175,11 +175,13 @@ while ((undef, $entry) = each %pdb) {
     &nicetext(\$entry->{copyright});
     &nicetext(\$entry->{date});
 
-    &arrayexpand(\$entry->{inargs}) if exists $entry->{inargs};
-    &arrayexpand(\$entry->{outargs}) if exists $entry->{outargs};
-
-    &niceargs($entry->{inargs}) if exists $entry->{inargs};
-    &niceargs($entry->{outargs}) if exists $entry->{outargs};
+    foreach (qw(in out)) {
+	my $args = $_ . 'args';
+	if (exists $entry->{$args}) {
+	    &arrayexpand(\$entry->{$args});
+    	    &niceargs($entry->{$args});
+	}
+    }
 
     &nicelist($entry->{invoke}{headers}) if exists $entry->{invoke}{headers};
     &nicelist($entry->{globals}) if exists $entry->{globals};
