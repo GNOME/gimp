@@ -42,6 +42,7 @@
 #include "gimppreviewrenderer.h"
 #include "gimppropwidgets.h"
 #include "gimptooloptionseditor.h"
+#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -317,15 +318,25 @@ gimp_tool_options_editor_menu_popup (GimpToolOptionsEditor *editor,
                                      GtkWidget             *button,
                                      const gchar           *path)
 {
-  GtkItemFactory *item_factory;
-  GtkWidget      *menu;
+  GimpEditor *gimp_editor = GIMP_EDITOR (editor);
+  GtkWidget  *menu;
 
-  item_factory = GTK_ITEM_FACTORY (GIMP_EDITOR (editor)->item_factory);
+#if 0
+  gimp_ui_manager_update (gimp_editor->ui_manager,
+                          gimp_editor->popup_data);
+  gimp_ui_manager_ui_popup (gimp_editor->ui_manager,
+                            gimp_editor->ui_identifier,
+                            gimp_editor->popup_data,
+                            GTK_WIDGET (button),
+                            foo, foo, foo);
+#else
+  gimp_item_factory_update (gimp_editor->item_factory,
+                            gimp_editor->popup_data);
+#endif
 
-  gimp_item_factory_update (GIMP_EDITOR (editor)->item_factory,
-                            GIMP_EDITOR (editor)->item_factory_data);
-
-  menu = gtk_item_factory_get_widget (item_factory, path);
+  menu =
+    gtk_item_factory_get_widget (GTK_ITEM_FACTORY (gimp_editor->item_factory),
+                                 path);
 
   if (menu)
     gtk_menu_popup (GTK_MENU (menu), NULL, NULL,

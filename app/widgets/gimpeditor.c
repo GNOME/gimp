@@ -48,7 +48,9 @@ static void        gimp_editor_style_set         (GtkWidget       *widget,
                                                   GtkStyle        *prev_style);
 
 static GimpItemFactory * gimp_editor_get_menu    (GimpDocked      *docked,
-                                                  gpointer        *item_factory_data);
+                                                  gpointer        *popup_data,
+                                                  GimpUIManager  **manager,
+                                                  const gchar    **ui_identifier);
 
 static GtkIconSize gimp_editor_ensure_button_box (GimpEditor      *editor);
 
@@ -135,11 +137,12 @@ gimp_editor_class_init (GimpEditorClass *klass)
 static void
 gimp_editor_init (GimpEditor *editor)
 {
-  editor->menu_factory      = NULL;
-  editor->item_factory      = NULL;
-  editor->ui_manager        = NULL;
-  editor->item_factory_data = NULL;
-  editor->button_box        = NULL;
+  editor->menu_factory  = NULL;
+  editor->item_factory  = NULL;
+  editor->ui_manager    = NULL;
+  editor->ui_identifier = NULL;
+  editor->popup_data    = NULL;
+  editor->button_box    = NULL;
 }
 
 static void
@@ -165,6 +168,12 @@ gimp_editor_destroy (GtkObject *object)
       editor->ui_manager = NULL;
     }
 
+  if (editor->ui_identifier)
+    {
+      g_free (editor->ui_identifier);
+      editor->ui_identifier = NULL;
+    }
+
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
@@ -187,12 +196,16 @@ gimp_editor_style_set (GtkWidget *widget,
 }
 
 static GimpItemFactory *
-gimp_editor_get_menu (GimpDocked *docked,
-                      gpointer   *item_factory_data)
+gimp_editor_get_menu (GimpDocked     *docked,
+                      gpointer       *popup_data,
+                      GimpUIManager **ui_manager,
+                      const gchar   **ui_identifier)
 {
   GimpEditor *editor = GIMP_EDITOR (docked);
 
-  *item_factory_data = editor->item_factory_data;
+  *ui_manager    = editor->ui_manager;
+  *ui_identifier = editor->ui_identifier;
+  *popup_data    = editor->popup_data;
 
   return editor->item_factory;
 }
@@ -228,8 +241,6 @@ gimp_editor_create_menu (GimpEditor      *editor,
                                                      GTK_TYPE_MENU,
                                                      callback_data,
                                                      FALSE);
-  editor->item_factory_data = callback_data;
-
   if (editor->ui_manager)
     g_object_unref (editor->ui_manager);
 
@@ -237,6 +248,13 @@ gimp_editor_create_menu (GimpEditor      *editor,
                                                       menu_identifier,
                                                       callback_data,
                                                       FALSE);
+
+  if (editor->ui_identifier)
+    g_free (editor->ui_identifier);
+
+  editor->ui_identifier = g_strdup (ui_identifier);
+
+  editor->popup_data = callback_data;
 }
 
 GtkWidget *

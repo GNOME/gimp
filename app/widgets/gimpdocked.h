@@ -45,7 +45,9 @@ struct _GimpDockedInterface
                                        GimpContext  *context,
                                        GtkIconSize   size);
   GimpItemFactory * (* get_menu)      (GimpDocked   *docked,
-                                       gpointer     *item_factory_data);
+                                       gpointer     *popup_data,
+                                       GimpUIManager **manager,
+                                       const gchar   **ui_identifier);
   gchar           * (* get_title)     (GimpDocked   *docked);
 
   void              (* set_context)   (GimpDocked   *docked,
@@ -66,7 +68,9 @@ GtkWidget       * gimp_docked_get_preview        (GimpDocked   *docked,
                                                   GimpContext  *context,
                                                   GtkIconSize   size);
 GimpItemFactory * gimp_docked_get_menu           (GimpDocked   *docked,
-                                                  gpointer     *item_factory_data);
+                                                  gpointer     *popup_data,
+                                                  GimpUIManager **manager,
+                                                  const gchar   **ui_idenfier);
 gchar           * gimp_docked_get_title          (GimpDocked   *docked);
 
 void              gimp_docked_set_context        (GimpDocked   *docked,

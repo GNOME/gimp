@@ -100,6 +100,7 @@ gimp_menu_factory_finalize (GObject *object)
   for (list = factory->registered_menus; list; list = g_list_next (list))
     {
       GimpMenuFactoryEntry *entry = list->data;
+      GList                *uis;
 
       g_free (entry->identifier);
       g_free (entry->title);
@@ -107,6 +108,17 @@ gimp_menu_factory_finalize (GObject *object)
 
       g_list_foreach (entry->action_groups, (GFunc) g_free, NULL);
       g_list_free (entry->action_groups);
+
+      for (uis = entry->managed_uis; uis; uis = g_list_next (uis))
+        {
+          GimpUIManagerUIEntry *ui_entry = uis->data;
+
+          g_free (ui_entry->identifier);
+          g_free (ui_entry->basename);
+          g_free (ui_entry);
+        }
+
+      g_list_free (entry->managed_uis);
 
       g_free (entry);
     }
@@ -262,6 +274,8 @@ gimp_menu_factory_manager_register (GimpMenuFactory *factory,
 
               ui_entry->identifier = g_strdup (ui_identifier);
               ui_entry->basename   = g_strdup (ui_basename);
+              ui_entry->merge_id   = 0;
+              ui_entry->widget     = NULL;
 
               entry->managed_uis = g_list_prepend (entry->managed_uis,
                                                    ui_entry);

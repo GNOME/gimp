@@ -29,9 +29,10 @@ typedef struct _GimpUIManagerUIEntry GimpUIManagerUIEntry;
 
 struct _GimpUIManagerUIEntry
 {
-  gchar *identifier;
-  gchar *basename;
-  guint  merge_id;
+  gchar     *identifier;
+  gchar     *basename;
+  guint      merge_id;
+  GtkWidget *widget;
 };
 
 
@@ -68,8 +69,16 @@ void            gimp_ui_manager_update      (GimpUIManager *manager,
 void            gimp_ui_manager_ui_register (GimpUIManager *manager,
                                              const gchar   *identifier,
                                              const gchar   *basename);
-GtkWidget     * gimp_ui_manager_ui_create   (GimpUIManager *manager,
+GtkWidget     * gimp_ui_manager_ui_get      (GimpUIManager *manager,
                                              const gchar   *identifier);
+
+void            gimp_ui_manager_ui_popup    (GimpUIManager        *manager,
+                                             const gchar          *ui_path,
+                                             gpointer              popup_data,
+                                             GtkWidget            *parent,
+                                             GimpMenuPositionFunc  position_func,
+                                             gpointer              position_data,
+                                             GtkDestroyNotify      popdown_func);
 
 
 #endif  /* __GIMP_UI_MANAGER_H__ */

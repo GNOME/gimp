@@ -42,6 +42,7 @@ struct _GimpDockbook
 
   GimpDock        *dock;
   GimpItemFactory *item_factory;
+  GimpUIManager   *ui_manager;
 };
 
 struct _GimpDockbookClass

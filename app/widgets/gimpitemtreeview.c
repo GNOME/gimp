@@ -50,6 +50,7 @@
 #include "gimplayertreeview.h"
 #include "gimpmenufactory.h"
 #include "gimppreviewrenderer.h"
+#include "gimpuimanager.h"
 #include "gimpvectorstreeview.h"
 #include "gimpwidgets-utils.h"
 
@@ -893,11 +894,24 @@ gimp_item_tree_view_context_item (GimpContainerView *view,
 
   editor = GIMP_EDITOR (view);
 
+#if 0
+  if (editor->ui_manager)
+    {
+      gimp_ui_manager_update (editor->ui_manager,
+                              editor->popup_data);
+      gimp_ui_manager_ui_popup (editor->ui_manager,
+                                editor->ui_identifier,
+                                editor->popup_data,
+                                GTK_WIDGET (editor),
+                                NULL, NULL, NULL);
+    }
+#else
   if (editor->item_factory)
     gimp_item_factory_popup_with_data (editor->item_factory,
-                                       editor->item_factory_data,
+                                       editor->popup_data,
                                        GTK_WIDGET (editor),
                                        NULL, NULL, NULL);
+#endif
 }
 
 static gboolean

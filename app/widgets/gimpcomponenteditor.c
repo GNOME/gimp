@@ -36,6 +36,7 @@
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimppreviewrendererimage.h"
+#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -520,10 +521,20 @@ gimp_component_editor_button_press (GtkWidget           *widget,
           break;
 
         case 3:
+#if 0
+          gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                                  GIMP_EDITOR (editor)->popup_data);
+          gimp_ui_manager_ui_popup (GIMP_EDITOR (editor)->ui_manager,
+                                    GIMP_EDITOR (editor)->ui_identifier,
+                                    GIMP_EDITOR (editor)->popup_data,
+                                    GTK_WIDGET (editor),
+                                    NULL, NULL, NULL);
+#else
           gimp_item_factory_popup_with_data (GIMP_EDITOR (editor)->item_factory,
-                                             GIMP_EDITOR (editor)->item_factory_data,
+                                             GIMP_EDITOR (editor)->popup_data,
                                              GTK_WIDGET (editor),
                                              NULL, NULL, NULL);
+#endif
           break;
 
         default:

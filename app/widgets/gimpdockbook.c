@@ -201,6 +201,7 @@ gimp_dockbook_init (GimpDockbook *dockbook)
 {
   dockbook->dock         = NULL;
   dockbook->item_factory = NULL;
+  dockbook->ui_manager   = NULL;
 
   gtk_notebook_popup_enable (GTK_NOTEBOOK (dockbook));
   gtk_notebook_set_scrollable (GTK_NOTEBOOK (dockbook), TRUE);
@@ -220,6 +221,12 @@ gimp_dockbook_finalize (GObject *object)
     {
       g_object_unref (dockbook->item_factory);
       dockbook->item_factory = NULL;
+    }
+
+  if (dockbook->ui_manager)
+    {
+      g_object_unref (dockbook->ui_manager);
+      dockbook->ui_manager = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -320,6 +327,11 @@ gimp_dockbook_new (GimpMenuFactory *menu_factory)
                                                        GTK_TYPE_MENU,
                                                        dockbook,
                                                        FALSE);
+
+  dockbook->ui_manager = gimp_menu_factory_manager_new (menu_factory,
+                                                        "<Dialogs>",
+                                                        dockbook,
+                                                        FALSE);
 
   gimp_help_connect (GTK_WIDGET (dockbook), gimp_dockbook_help_func,
                      GIMP_HELP_DOCK, dockbook);

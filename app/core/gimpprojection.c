@@ -512,7 +512,9 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
       GimpContext *user_context;
 
       gimp_item_factory_update (shell->menubar_factory, shell);
+#if 0
       gimp_ui_manager_update (shell->menubar_manager, shell);
+#endif
 
       user_context = gimp_get_user_context (gdisp->gimage->gimp);
 

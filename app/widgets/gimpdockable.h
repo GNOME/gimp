@@ -80,7 +80,12 @@ GtkWidget       * gimp_dockable_get_tab_widget (GimpDockable   *dockable,
 void              gimp_dockable_set_context    (GimpDockable   *dockable,
                                                 GimpContext    *context);
 GimpItemFactory * gimp_dockable_get_menu       (GimpDockable   *dockable,
-                                                gpointer       *item_factory_data);
+                                                gpointer       *popup_data,
+                                                GimpUIManager **manager,
+                                                const gchar   **ui_identifier);
+GimpUIManager   * gimp_dockable_get_manager    (GimpDockable   *dockable,
+                                                gpointer       *manager_data,
+                                                const gchar   **ui_identifier);
 
 void              gimp_dockable_detach         (GimpDockable   *dockable);
 

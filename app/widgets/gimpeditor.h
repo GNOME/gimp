@@ -43,7 +43,8 @@ struct _GimpEditor
   GimpMenuFactory *menu_factory;
   GimpItemFactory *item_factory;
   GimpUIManager   *ui_manager;
-  gpointer         item_factory_data;
+  gchar           *ui_identifier;
+  gpointer         popup_data;
 
   GtkWidget       *button_box;
 };

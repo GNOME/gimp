@@ -1,3 +1,37 @@
+2004-04-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpuimanager.[ch]: remember and ref the created
+	widgets.  Added gimp_ui_manager_ui_popup() which pops up a GtkMenu
+	with a custom GimpMenuPositionFunc and a GtkDestroyNotify which is
+	called on popdown.
+
+	* app/widgets/gimpmenufactory.c (gimp_menu_factory_finalize):
+	don't forget to free the list of managed UIs.
+
+	* app/widgets/gimpdockable.[ch]
+	* app/widgets/gimpdockbook.[ch]
+	* app/widgets/gimpdocked.[ch]
+	* app/widgets/gimpeditor.[ch]: added GimpUIManager stuff parallel
+	to the to-be-removed GtkItemFactory stuff.
+
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimperrorconsole.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimptooloptionseditor.c: changed accordingly and added
+	#if 0'ed code which actually uses all the UI managers.
+
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/gui-vtable.c: disabled some gimp_ui_manager_update()
+	calls because they were invoking toggle and radio callbacks
+	which still have the wrong signature.
+
 2004-04-22  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gflare/gflare.c: ported the last plug-in from

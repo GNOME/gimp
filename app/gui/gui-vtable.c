@@ -199,8 +199,11 @@ gui_display_new (GimpImage *gimage,
 
   gimp_context_set_display (gimp_get_user_context (gimage->gimp), gdisp);
 
-  gimp_item_factory_update (shell->menubar_factory, shell);
+#if 0
   gimp_ui_manager_update (shell->menubar_manager, shell);
+#else
+  gimp_item_factory_update (shell->menubar_factory, shell);
+#endif
 
   return GIMP_OBJECT (gdisp);
 }
