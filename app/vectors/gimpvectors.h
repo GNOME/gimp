@@ -42,7 +42,7 @@ struct _GimpVectors
   gboolean          visible;            /* controls visibility            */
   gboolean          locked;             /* transformation locking         */
 
-  GList           * strokes;            /* The vectors components         */
+  GimpStroke      * strokes;            /* The first stroke               */
 
   /* Stuff missing */
 };
@@ -68,20 +68,10 @@ struct _GimpVectorsClass
               
   gdouble       (* stroke_get_length)    (const GimpVectors *vectors,
                                           const GimpStroke  *stroke);
-              
 
   GimpAnchor  * (* anchor_get)           (const GimpVectors *vectors,
-                                          const GimpCoords  *coord);
-              
-  void          (* anchor_move_relative) (GimpVectors       *vectors,
-                                          GimpAnchor        *anchor,
-                                          const GimpCoords  *deltacoord,
-                                          const gint         type);
-              
-  void          (* anchor_move_absolute) (GimpVectors       *vectors,
-                                          GimpAnchor        *anchor,
                                           const GimpCoords  *coord,
-                                          const gint         type);
+                                          GimpStroke       **ret_stroke);
               
   void          (* anchor_delete)        (GimpVectors       *vectors,
                                           GimpAnchor        *anchor);
@@ -98,13 +88,6 @@ struct _GimpVectorsClass
                                           const gint         max_points,
                                           GimpCoords        *ret_coords);
               
-              
-  GimpAnchor  * (* temp_anchor_get)      (const GimpVectors *vectors);
-              
-  GimpAnchor  * (* temp_anchor_set)      (GimpVectors       *vectors,
-                                          const GimpCoords  *coord);
-              
-  gboolean      (* temp_anchor_fix)      (GimpVectors       *vectors);
   GimpVectors * (* make_bezier)          (const GimpVectors *vectors);
 
 };
@@ -121,8 +104,9 @@ GimpImage     * gimp_vectors_get_image          (const GimpVectors  *vectors);
 
 /* accessing / modifying the anchors */
 
-GimpAnchor    * gimp_vectors_anchor_get         (const GimpVectors  *vectors,
-                                                 const GimpCoords   *coord);
+GimpAnchor    * gimp_vectors_anchor_get         (const GimpVectors *vectors,
+                                                 const GimpCoords  *coord,
+                                                 GimpStroke       **ret_stroke);
                                                                     
 /* prev == NULL: "first" anchor */                                  
 GimpAnchor    * gimp_vectors_anchor_get_next    (const GimpVectors  *vectors,

@@ -102,17 +102,10 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   klass->stroke_get_length	     = NULL;
 
   klass->anchor_get		     = NULL;
-  klass->anchor_move_relative	     = NULL;
-  klass->anchor_move_absolute	     = NULL;
-  klass->anchor_delete		     = NULL;
 
   klass->get_length		     = NULL;
   klass->get_distance		     = NULL;
   klass->interpolate		     = NULL;
-
-  klass->temp_anchor_get	     = NULL;
-  klass->temp_anchor_set	     = NULL;
-  klass->temp_anchor_fix	     = NULL;
 
   klass->make_bezier		     = NULL;
 }
@@ -152,7 +145,8 @@ gimp_vectors_get_image (const GimpVectors *vectors)
 
 GimpAnchor *
 gimp_vectors_anchor_get (const GimpVectors *vectors,
-                         const GimpCoords  *coord)
+                         const GimpCoords  *coord,
+                         GimpStroke       **ret_stroke)
 {
   GimpVectorsClass *vectors_class;
 
@@ -161,18 +155,18 @@ gimp_vectors_anchor_get (const GimpVectors *vectors,
   vectors_class = GIMP_VECTORS_GET_CLASS (vectors);
 
   if (vectors_class->anchor_get)
-    return vectors_class->anchor_get (vectors, coord);
+    return vectors_class->anchor_get (vectors, coord, ret_stroke);
   else
     {
       gdouble     dx, dy, mindist;
-      GList      *list;
+      GimpStroke *stroke;
       GimpAnchor *anchor = NULL, *minanchor = NULL;
 
       mindist = -1;
 
-      for (list = vectors->strokes; list; list = g_list_next (list))
+      for (stroke = vectors->strokes; stroke; stroke = stroke->next)
         {
-          anchor = gimp_stroke_anchor_get (GIMP_STROKE (list->data), coord);
+          anchor = gimp_stroke_anchor_get (stroke, coord);
           if (anchor)
             {
               dx = coord->x - anchor->position.x;
@@ -181,6 +175,8 @@ gimp_vectors_anchor_get (const GimpVectors *vectors,
                 {
                   mindist = dx * dx + dy * dy;
                   minanchor = anchor;
+                  if (ret_stroke)
+                    *ret_stroke = stroke;
                 }
             }
         }
@@ -189,69 +185,6 @@ gimp_vectors_anchor_get (const GimpVectors *vectors,
 
   return NULL;
 }
-
-
-
-void
-gimp_vectors_anchor_move_relative (GimpVectors       *vectors,
-                                   GimpAnchor        *anchor,
-                                   const GimpCoords  *deltacoord,
-                                   const gint         type)
-{
-  GimpVectorsClass *vectors_class;
-
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-
-  vectors_class = GIMP_VECTORS_GET_CLASS (vectors);
-
-  if (vectors_class->anchor_move_relative)
-    vectors_class->anchor_move_relative (vectors, anchor, deltacoord, type);
-  else
-    g_printerr ("gimp_vectors_anchor_move_relative: default implementation\n");
-
-  return;
-}
-
-
-void
-gimp_vectors_anchor_move_absolute (GimpVectors       *vectors,
-                                   GimpAnchor        *anchor,
-                                   const GimpCoords  *coord,
-                                   const gint         type)
-{
-  GimpVectorsClass *vectors_class;
-
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-
-  vectors_class = GIMP_VECTORS_GET_CLASS (vectors);
-
-  if (vectors_class->anchor_move_absolute)
-    vectors_class->anchor_move_absolute (vectors, anchor, coord, type);
-  else
-    g_printerr ("gimp_vectors_anchor_move_absolute: default implementation\n");
-
-  return;
-}
-
-
-void
-gimp_vectors_anchor_delete (GimpVectors     *vectors,
-                            GimpAnchor      *anchor)
-{
-  GimpVectorsClass *vectors_class;
-
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-
-  vectors_class = GIMP_VECTORS_GET_CLASS (vectors);
-
-  if (vectors_class->anchor_delete)
-    vectors_class->anchor_delete (vectors, anchor);
-  else
-    g_printerr ("gimp_vectors_anchor_delete: default implementation\n");
-
-  return;
-}
-
 
 
 void
@@ -266,15 +199,15 @@ gimp_vectors_stroke_add (GimpVectors *vectors,
   vectors_class = GIMP_VECTORS_GET_CLASS (vectors);
 
   if (vectors_class->stroke_add)
-    vectors_class->stroke_add (vectors, stroke);
+    {
+      vectors_class->stroke_add (vectors, stroke);
+    }
   else
     {
-      vectors->strokes = g_list_append (vectors->strokes, stroke);
+      stroke->next = vectors->strokes;
+      vectors->strokes = stroke;
       g_object_ref (G_OBJECT (stroke));
-      g_printerr ("gimp_vectors_stroke_add: default implementation\n");
     }
-
-  return;
 }
 
 
@@ -293,16 +226,16 @@ gimp_vectors_stroke_get (const GimpVectors *vectors,
   else
     {
       gdouble     dx, dy, mindist;
-      GList      *list;
+      GimpStroke *stroke;
       GimpStroke *minstroke = NULL;
       GimpAnchor *anchor = NULL;
 
       mindist = -1;
-      list = vectors->strokes;
+      stroke = GIMP_STROKE (vectors->strokes);
 
-      while (list)
+      while (stroke)
         {
-          anchor = gimp_stroke_anchor_get (GIMP_STROKE (list->data), coord);
+          anchor = gimp_stroke_anchor_get (stroke, coord);
           if (anchor)
             {
               dx = coord->x - anchor->position.x;
@@ -310,10 +243,10 @@ gimp_vectors_stroke_get (const GimpVectors *vectors,
               if (mindist > dx * dx + dy * dy || mindist < 0)
                 {
                   mindist = dx * dx + dy * dy;
-                  minstroke = GIMP_STROKE (list->data);
+                  minstroke = stroke;
                 }
             }
-          list = list->next;
+          stroke = stroke->next;
         }
       return minstroke;
     }
@@ -327,7 +260,6 @@ gimp_vectors_stroke_get_next (const GimpVectors *vectors,
                               const GimpStroke  *prev)
 {
   GimpVectorsClass *vectors_class;
-  static GList *last_shown = NULL;
 
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
 
@@ -337,20 +269,15 @@ gimp_vectors_stroke_get_next (const GimpVectors *vectors,
     return vectors_class->stroke_get_next (vectors, prev);
   else
     {
-      g_printerr ("gimp_vectors_stroke_get_next: default implementation\n");
-
-      if (!prev) {
-        last_shown = vectors->strokes;
-      } else {
-        if (last_shown != NULL && last_shown->data != prev) {
-          last_shown = g_list_find (vectors->strokes, prev);
+      if (!prev)
+        {
+          return vectors->strokes;
         }
-        if (last_shown != NULL)
-          last_shown = last_shown->next;
-      }
-
-      if (last_shown)
-        return GIMP_STROKE (last_shown->data);
+      else
+        {
+          g_return_val_if_fail (GIMP_IS_STROKE  (prev), NULL);
+          return prev->next;
+        }
     }
 
   return NULL;
@@ -436,61 +363,6 @@ gimp_vectors_interpolate (const GimpVectors *vectors,
 }
 
 
-GimpAnchor *
-gimp_vectors_temp_anchor_get (const GimpVectors *vectors)
-{
-  GimpVectorsClass *vectors_class;
-
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
-
-  vectors_class = GIMP_VECTORS_GET_CLASS (vectors);
-
-  if (vectors_class->temp_anchor_get)
-    return vectors_class->temp_anchor_get (vectors);
-  else
-    g_printerr ("gimp_vectors_temp_anchor_get: default implementation\n");
-
-  return NULL;
-}
-
-
-GimpAnchor *
-gimp_vectors_temp_anchor_set (GimpVectors *vectors,
-			      const GimpCoords  *coord)
-{
-  GimpVectorsClass *vectors_class;
-
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
-
-  vectors_class = GIMP_VECTORS_GET_CLASS (vectors);
-
-  if (vectors_class->temp_anchor_set)
-    return vectors_class->temp_anchor_set (vectors, coord);
-  else
-    g_printerr ("gimp_vectors_temp_anchor_set: default implementation\n");
-
-  return NULL;
-}
-
-
-gboolean
-gimp_vectors_temp_anchor_fix (GimpVectors *vectors)
-{
-  GimpVectorsClass *vectors_class;
-
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-
-  vectors_class = GIMP_VECTORS_GET_CLASS (vectors);
-
-  if (vectors_class->temp_anchor_fix)
-    return vectors_class->temp_anchor_fix (vectors);
-  else
-    g_printerr ("gimp_vectors_temp_anchor_fix: default implementation\n");
-
-  return FALSE;
-}
-
-
 GimpVectors *
 gimp_vectors_make_bezier (const GimpVectors *vectors)
 {
@@ -507,7 +379,4 @@ gimp_vectors_make_bezier (const GimpVectors *vectors)
 
   return NULL;
 }
-
-
-
 

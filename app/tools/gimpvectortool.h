@@ -59,7 +59,8 @@ struct _GimpVectorTool
   gdouble          angle1;      /*  first angle                */
   gdouble          angle2;      /*  second angle               */
 
-  GimpAnchor      *cur_anchor;      /*  The current Anchor         */
+  GimpAnchor      *cur_anchor;  /*  The current Anchor         */
+  GimpStroke      *cur_stroke;  /*  The current Stroke         */
   GimpVectors     *vectors;     /*  The current Vector data    */
 };
 

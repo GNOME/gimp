@@ -33,17 +33,18 @@
 
 struct _GimpStroke
 {
-  GObject    parent_instance;
+  GObject     parent_instance;
+           
+  GList      *anchors;
 
-  GList     *anchors;
-
+  GimpStroke *next;
   /* Stuff missing */
 };
 
 
 struct _GimpStrokeClass
 {
-  GObject       parent_class;
+  GObjectClass  parent_class;
 
   void          (* changed)              (GimpStroke        *stroke);
                                                             

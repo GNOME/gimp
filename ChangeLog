@@ -1,3 +1,11 @@
+2002-02-25  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpbezierstroke.c
+	* app/tools/gimpvectortool.[ch]
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpvectors.[ch]: Fixed various bugs, *including*
+	the nasty one from this morning (thanks Mitch).
+
 2002-02-25  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/tips-parser.[ch]: strip newlines, tabs and adjacent spaces

@@ -234,8 +234,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   GimpDisplayShell *shell;
   gint              i;
   GimpCoords        cur_point;
-  GimpAnchor       *anchor;
-  GimpStroke       *stroke;
+  GimpAnchor       *anchor = NULL;
+  GimpStroke       *stroke = NULL;
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
 
@@ -257,7 +257,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
        *  the new function will be moving or adding a new point or guide
        */
 
-      anchor = gimp_vectors_anchor_get (vector_tool->vectors, coords);
+
+      anchor = gimp_vectors_anchor_get (vector_tool->vectors, coords, &stroke);
 
       if (anchor && gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), gdisp,
                                               coords->x,
@@ -270,6 +271,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                               FALSE))
         {
           vector_tool->function = VMOVING;
+          vector_tool->cur_stroke = stroke;
           vector_tool->cur_anchor = anchor;
         }
 
@@ -288,6 +290,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
       gimp_vectors_stroke_add (vector_tool->vectors, stroke);
 
+      vector_tool->cur_stroke = stroke;
       vector_tool->cur_anchor = anchor;
       vector_tool->function = VMOVING;
 
@@ -346,9 +349,9 @@ gimp_vector_tool_motion (GimpTool        *tool,
       anchor = vector_tool->cur_anchor;
 
       if (anchor)
-        gimp_vectors_anchor_move_absolute (vector_tool->vectors,
-                                           vector_tool->cur_anchor,
-                                           coords, 0);
+        gimp_stroke_anchor_move_absolute (vector_tool->cur_stroke,
+                                          vector_tool->cur_anchor,
+                                          coords, 0);
 
     default:
       break;
@@ -374,7 +377,7 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
 
   if (tool->state == ACTIVE && tool->gdisp == gdisp)
     {
-      anchor = gimp_vectors_anchor_get (vector_tool->vectors, coords);
+      anchor = gimp_vectors_anchor_get (vector_tool->vectors, coords, NULL);
 
       if (anchor && gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), gdisp,
                                               coords->x,
@@ -417,7 +420,6 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
   while ((cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))) {
     cur_anchor = NULL;
     while ((cur_anchor = gimp_stroke_anchor_get_next (cur_stroke, cur_anchor))) {
-      g_printerr ("drawing %p\n", cur_anchor);
       gimp_draw_tool_draw_handle (draw_tool,
                                   GIMP_HANDLE_CIRCLE,
                                   cur_anchor->position.x,
@@ -426,7 +428,6 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
                                   TARGET,
                                   GTK_ANCHOR_CENTER,
                                   FALSE);
-      G_BREAKPOINT();
     }
   }
 

@@ -37,10 +37,10 @@
 static GimpStrokeClass *parent_class = NULL;
 
 
-static void    gimp_bezier_stroke_class_init (GimpStrokeClass *klass);
-static void    gimp_bezier_stroke_init       (GimpBezierStroke *bezier_stroke);
+static void gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass);
+static void gimp_bezier_stroke_init       (GimpBezierStroke      *bezier_stroke);
 
-static void    gimp_bezier_stroke_finalize (GObject *object);
+static void gimp_bezier_stroke_finalize   (GObject               *object);
 
 
 GType
@@ -72,11 +72,11 @@ gimp_bezier_stroke_get_type (void)
 }
 
 static void
-gimp_bezier_stroke_class_init (GimpStrokeClass *klass)
+gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
 {
   GObjectClass      *object_class;
 
-  object_class      = G_OBJECT_CLASS (klass);
+  object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

@@ -120,6 +120,7 @@ static void
 gimp_stroke_init (GimpStroke *stroke)
 {
   stroke->anchors = NULL;
+  stroke->next    = NULL;
 };
 
 static void
@@ -134,18 +135,9 @@ GimpAnchor *
 gimp_stroke_anchor_get (const GimpStroke *stroke,
 			const GimpCoords *coord)
 {
-  GimpStrokeClass *stroke_class;
-
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
-  stroke_class = GIMP_STROKE_GET_CLASS (stroke);
-
-  if (stroke_class->anchor_get)
-    return stroke_class->anchor_get (stroke, coord);
-  else
-    g_printerr ("gimp_stroke_anchor_get: default implementation\n");
-
-  return NULL;
+  return (GIMP_STROKE_GET_CLASS (stroke))->anchor_get (stroke, coord);
 }
 
 
@@ -192,18 +184,9 @@ gimp_stroke_anchor_get_next (const GimpStroke *stroke,
   GimpStrokeClass *stroke_class;
 
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
-
   stroke_class = GIMP_STROKE_GET_CLASS (stroke);
 
-  if (stroke_class->anchor_get_next)
-    {
-      g_printerr ("gimp_stroke_anchor_get_next: calling alien: Intended: %p, actually %p\n", gimp_stroke_real_anchor_get_next, stroke_class->anchor_get_next);
-      return stroke_class->anchor_get_next (stroke, prev);
-    }
-  else
-    g_printerr ("gimp_stroke_anchor_get_next: default implementation\n");
-
-  return NULL;
+  return stroke_class->anchor_get_next (stroke, prev);
 }
 
 
@@ -211,24 +194,21 @@ static GimpAnchor *
 gimp_stroke_real_anchor_get_next (const GimpStroke *stroke,
                                   const GimpAnchor *prev)
 {
-  static GList *last_shown = NULL;
+  GList      *listitem;
 
-  g_printerr ("gimp_stroke_real_anchor_get_next 1\n");
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
-  g_printerr ("gimp_stroke_real_anchor_get_next 2\n");
-  if (!prev) {
-    last_shown = stroke->anchors;
-  } else {
-    if (last_shown != NULL && last_shown->data != prev) {
-      last_shown = g_list_find (stroke->anchors, prev);
+  if (prev)
+    {
+      listitem = g_list_find (stroke->anchors, prev);
+      if (listitem)
+        listitem = g_list_next (listitem);
     }
-    if (last_shown != NULL)
-      last_shown = last_shown->next;
-  }
+  else
+    listitem = stroke->anchors;
 
-  if (last_shown)
-    return (GimpAnchor *) last_shown->data;
+  if (listitem)
+    return (GimpAnchor *) listitem->data;
  
   return NULL;
 }
@@ -246,12 +226,7 @@ gimp_stroke_anchor_move_relative (GimpStroke        *stroke,
 
   stroke_class = GIMP_STROKE_GET_CLASS (stroke);
 
-  if (stroke_class->anchor_move_relative)
-    stroke_class->anchor_move_relative (stroke, anchor, deltacoord, type);
-  else
-    g_printerr ("gimp_stroke_anchor_move_relative: default implementation\n");
-
-  return;
+  stroke_class->anchor_move_relative (stroke, anchor, deltacoord, type);
 }
 
 
@@ -284,12 +259,7 @@ gimp_stroke_anchor_move_absolute (GimpStroke       *stroke,
 
   stroke_class = GIMP_STROKE_GET_CLASS (stroke);
 
-  if (stroke_class->anchor_move_absolute)
-    stroke_class->anchor_move_absolute (stroke, anchor, coord, type);
-  else
-    g_printerr ("gimp_stroke_anchor_move_absolute: default implementation\n");
-
-  return;
+  stroke_class->anchor_move_absolute (stroke, anchor, coord, type);
 }
 
 
