@@ -1,3 +1,10 @@
+2003-11-08  Dave Neary  <bolsh@gimp.org>
+
+	* libgimpcolor/gimpcolorspace.c: Finished gtk-docs. The docs for
+	these could perhaps include formulae, but for most of the 
+	colorspaces that would be the same thing as copying the code 
+	into a comment, which seems pointless.
+
 2003-11-08  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptemplateeditor.c: don't show a radio button for
