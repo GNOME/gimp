@@ -44,7 +44,7 @@
 #define TEXT_WIDTH           100
 #define COLOR_SAMPLE_WIDTH   100
 #define COLOR_SAMPLE_HEIGHT   15
-#define SLIDER_WIDTH         100
+#define SLIDER_WIDTH          80
 
 #define MAX_STRING_LENGTH   4096
 
@@ -1225,9 +1225,10 @@ script_fu_interface (SFScript *script)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 
   /*  The argument table  */
-  table = gtk_table_new (script->num_args + 1, 2, FALSE);
+  table = gtk_table_new (script->num_args + 1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 0);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
@@ -1322,30 +1323,29 @@ script_fu_interface (SFScript *script)
 	  break;
 
 	case SF_ADJUSTMENT:
-	  script->arg_values[i].sfa_adjustment.adj = (GtkAdjustment *)
-	    gtk_adjustment_new (script->arg_values[i].sfa_adjustment.value, 
-				script->arg_defaults[i].sfa_adjustment.lower, 
-				script->arg_defaults[i].sfa_adjustment.upper, 
-				script->arg_defaults[i].sfa_adjustment.step, 
-				script->arg_defaults[i].sfa_adjustment.page, 0);
 	  switch (script->arg_defaults[i].sfa_adjustment.type)
 	    {
 	    case SF_SLIDER:
-	      label_yalign = 1.0;
-	      widget_leftalign = FALSE;
-
-	      sf_interface->args_widgets[i] =
-		gtk_hscale_new (script->arg_values[i].sfa_adjustment.adj);
-	      gtk_widget_set_size_request (GTK_WIDGET (sf_interface->args_widgets[i]), 
-                                           SLIDER_WIDTH, -1);
-	      gtk_scale_set_digits (GTK_SCALE (sf_interface->args_widgets[i]), 
-				    script->arg_defaults[i].sfa_adjustment.digits);
-	      gtk_scale_set_draw_value (GTK_SCALE (sf_interface->args_widgets[i]), TRUE);
-	      gtk_range_set_update_policy (GTK_RANGE (sf_interface->args_widgets[i]), 
-					   GTK_UPDATE_DELAYED);
+	      script->arg_values[i].sfa_adjustment.adj = (GtkAdjustment *)
+		gimp_scale_entry_new (GTK_TABLE (table), 0, i,
+				      label_text, SLIDER_WIDTH, -1, 
+				      script->arg_values[i].sfa_adjustment.value,
+				      script->arg_defaults[i].sfa_adjustment.lower, 
+				      script->arg_defaults[i].sfa_adjustment.upper, 
+				      script->arg_defaults[i].sfa_adjustment.step, 
+				      script->arg_defaults[i].sfa_adjustment.page,
+				      script->arg_defaults[i].sfa_adjustment.digits,
+				      TRUE, 0.0, 0.0,
+				      NULL, NULL);
 	      break;
 
 	    case SF_SPINNER:
+	      script->arg_values[i].sfa_adjustment.adj = (GtkAdjustment *)
+		gtk_adjustment_new (script->arg_values[i].sfa_adjustment.value, 
+				    script->arg_defaults[i].sfa_adjustment.lower, 
+				    script->arg_defaults[i].sfa_adjustment.upper, 
+				    script->arg_defaults[i].sfa_adjustment.step, 
+				    script->arg_defaults[i].sfa_adjustment.page, 0);
               sf_interface->args_widgets[i] =
                 gtk_spin_button_new (script->arg_values[i].sfa_adjustment.adj,
                                      0,
@@ -1444,10 +1444,11 @@ script_fu_interface (SFScript *script)
 	  break;
 	}
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
-				 label_text, 1.0, label_yalign,
-				 sf_interface->args_widgets[i], 1, 
-				 widget_leftalign);
+      if (sf_interface->args_widgets[i])
+	gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
+				   label_text, 1.0, label_yalign,
+				   sf_interface->args_widgets[i], 2, 
+				   widget_leftalign);
       g_free (label_text);
     }
 
@@ -1728,22 +1729,19 @@ script_fu_ok_callback (GtkWidget *widget,
             {
             case SF_SLIDER:
               script->arg_values[i].sfa_adjustment.value =
-                script->arg_values[i].sfa_adjustment.adj->value;
-              
-              text = g_ascii_dtostr (buffer, sizeof (buffer),
-                                     script->arg_values[i].sfa_adjustment.value);
+                script->arg_values[i].sfa_adjustment.adj->value;      
 	      break;
 
 	    case SF_SPINNER:
 	      script->arg_values[i].sfa_adjustment.value = 
 		gtk_spin_button_get_value (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]));
-              text = g_ascii_dtostr (buffer, sizeof (buffer),
-                                     script->arg_values[i].sfa_adjustment.value);
 	      break;
 
 	    default:
 	      break;
 	    }
+	  text = g_ascii_dtostr (buffer, sizeof (buffer),
+				 script->arg_values[i].sfa_adjustment.value);
 	  break;
 
 	case SF_FILENAME:
