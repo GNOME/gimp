@@ -20,10 +20,10 @@
 #define __PALETTES_COMMANDS_H__
 
 
-void   palettes_import_palette_cmd_callback (GtkAction *action,
-					     gpointer   data);
-void   palettes_merge_palettes_cmd_callback (GtkAction *action,
-					     gpointer   data);
+void   palettes_import_cmd_callback (GtkAction *action,
+                                     gpointer   data);
+void   palettes_merge_cmd_callback  (GtkAction *action,
+                                     gpointer   data);
 
 
 #endif /* __PALETTES_COMMANDS_H__ */

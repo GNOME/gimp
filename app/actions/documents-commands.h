@@ -20,20 +20,20 @@
 #define __DOCUMENTS_COMMANDS_H__
 
 
-void   documents_open_document_cmd_callback             (GtkAction *action,
-                                                         gpointer   data);
-void   documents_raise_or_open_document_cmd_callback    (GtkAction *action,
-                                                         gpointer   data);
-void   documents_file_open_dialog_cmd_callback          (GtkAction *action,
-                                                         gpointer   data);
-void   documents_remove_document_cmd_callback           (GtkAction *action,
-                                                         gpointer   data);
-void   documents_recreate_preview_cmd_callback          (GtkAction *action,
-                                                         gpointer   data);
-void   documents_reload_previews_cmd_callback           (GtkAction *action,
-                                                         gpointer   data);
-void   documents_delete_dangling_documents_cmd_callback (GtkAction *action,
-                                                         gpointer   data);
+void   documents_open_cmd_callback             (GtkAction *action,
+                                                gpointer   data);
+void   documents_raise_or_open_cmd_callback    (GtkAction *action,
+                                                gpointer   data);
+void   documents_file_open_dialog_cmd_callback (GtkAction *action,
+                                                gpointer   data);
+void   documents_remove_cmd_callback           (GtkAction *action,
+                                                gpointer   data);
+void   documents_recreate_preview_cmd_callback (GtkAction *action,
+                                                gpointer   data);
+void   documents_reload_previews_cmd_callback  (GtkAction *action,
+                                                gpointer   data);
+void   documents_remove_dangling_cmd_callback  (GtkAction *action,
+                                                gpointer   data);
 
 
 #endif /* __DOCUMENTS_COMMANDS_H__ */

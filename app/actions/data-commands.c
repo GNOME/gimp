@@ -110,8 +110,8 @@ data_open_as_image_cmd_callback (GtkAction *action,
 }
 
 void
-data_new_data_cmd_callback (GtkAction *action,
-			    gpointer   user_data)
+data_new_cmd_callback (GtkAction *action,
+                       gpointer   user_data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
 
@@ -137,8 +137,8 @@ data_new_data_cmd_callback (GtkAction *action,
 }
 
 void
-data_duplicate_data_cmd_callback (GtkAction *action,
-				  gpointer   user_data)
+data_duplicate_cmd_callback (GtkAction *action,
+                             gpointer   user_data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
   GimpContext         *context;
@@ -169,8 +169,8 @@ data_duplicate_data_cmd_callback (GtkAction *action,
 }
 
 void
-data_delete_data_cmd_callback (GtkAction *action,
-			       gpointer   user_data)
+data_delete_cmd_callback (GtkAction *action,
+                          gpointer   user_data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
   GimpContext         *context;
@@ -219,8 +219,8 @@ data_delete_data_cmd_callback (GtkAction *action,
 }
 
 void
-data_refresh_data_cmd_callback (GtkAction *action,
-				gpointer   user_data)
+data_refresh_cmd_callback (GtkAction *action,
+                           gpointer   user_data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
 
@@ -229,9 +229,9 @@ data_refresh_data_cmd_callback (GtkAction *action,
 }
 
 void
-data_edit_data_cmd_callback (GtkAction   *action,
-                             const gchar *value,
-			     gpointer     user_data)
+data_edit_cmd_callback (GtkAction   *action,
+                        const gchar *value,
+                        gpointer     user_data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
   GimpContext         *context;

@@ -48,22 +48,22 @@ static void   buffers_paste (GimpBufferView *view,
 /*  public functionss */
 
 void
-buffers_paste_buffer_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+buffers_paste_cmd_callback (GtkAction *action,
+                            gpointer   data)
 {
   buffers_paste (GIMP_BUFFER_VIEW (data), FALSE);
 }
 
 void
-buffers_paste_buffer_into_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+buffers_paste_into_cmd_callback (GtkAction *action,
+                                 gpointer   data)
 {
   buffers_paste (GIMP_BUFFER_VIEW (data), TRUE);
 }
 
 void
-buffers_paste_buffer_as_new_cmd_callback (GtkAction *action,
-                                          gpointer   data)
+buffers_paste_as_new_cmd_callback (GtkAction *action,
+                                   gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;
@@ -85,8 +85,8 @@ buffers_paste_buffer_as_new_cmd_callback (GtkAction *action,
 }
 
 void
-buffers_delete_buffer_cmd_callback (GtkAction *action,
-                                    gpointer   data)
+buffers_delete_cmd_callback (GtkAction *action,
+                             gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;

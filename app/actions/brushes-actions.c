@@ -52,25 +52,25 @@ static GimpActionEntry brushes_actions[] =
   { "brushes-new", GTK_STOCK_NEW,
     N_("_New Brush"), "",
     N_("New brush"),
-    G_CALLBACK (data_new_data_cmd_callback),
+    G_CALLBACK (data_new_cmd_callback),
     GIMP_HELP_BRUSH_NEW },
 
   { "brushes-duplicate", GIMP_STOCK_DUPLICATE,
     N_("D_uplicate Brush"), NULL,
     N_("Duplicate brush"),
-    G_CALLBACK (data_duplicate_data_cmd_callback),
+    G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_BRUSH_DUPLICATE },
 
   { "brushes-delete", GTK_STOCK_DELETE,
     N_("_Delete Brush"), "",
     N_("Delete brush"),
-    G_CALLBACK (data_delete_data_cmd_callback),
+    G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_BRUSH_DELETE },
 
   { "brushes-refresh", GTK_STOCK_REFRESH,
     N_("_Refresh Brushes"), "",
     N_("Refresh brushes"),
-    G_CALLBACK (data_refresh_data_cmd_callback),
+    G_CALLBACK (data_refresh_cmd_callback),
     GIMP_HELP_BRUSH_REFRESH }
 };
 
@@ -94,7 +94,7 @@ brushes_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_string_actions (group,
                                         brushes_edit_actions,
                                         G_N_ELEMENTS (brushes_edit_actions),
-                                        G_CALLBACK (data_edit_data_cmd_callback));
+                                        G_CALLBACK (data_edit_cmd_callback));
 }
 
 void

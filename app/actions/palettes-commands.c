@@ -43,16 +43,16 @@
 
 /*  local function prototypes  */
 
-static void   palettes_merge_palettes_callback (GtkWidget   *widget,
-						const gchar *palette_name,
-						gpointer     data);
+static void   palettes_merge_callback (GtkWidget   *widget,
+                                       const gchar *palette_name,
+                                       gpointer     data);
 
 
 /*  public functionss */
 
 void
-palettes_import_palette_cmd_callback (GtkAction *action,
-				      gpointer   data)
+palettes_import_cmd_callback (GtkAction *action,
+                              gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;
@@ -63,8 +63,8 @@ palettes_import_palette_cmd_callback (GtkAction *action,
 }
 
 void
-palettes_merge_palettes_cmd_callback (GtkAction *action,
-				      gpointer   data)
+palettes_merge_cmd_callback (GtkAction *action,
+                             gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GtkWidget           *dialog;
@@ -76,7 +76,7 @@ palettes_merge_palettes_cmd_callback (GtkAction *action,
                                   _("Enter a name for the merged palette"),
                                   NULL,
                                   G_OBJECT (editor), "destroy",
-                                  palettes_merge_palettes_callback,
+                                  palettes_merge_callback,
                                   editor);
   gtk_widget_show (dialog);
 }
@@ -85,12 +85,12 @@ palettes_merge_palettes_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-palettes_merge_palettes_callback (GtkWidget   *widget,
-				  const gchar *palette_name,
-				  gpointer     data)
+palettes_merge_callback (GtkWidget   *widget,
+                         const gchar *palette_name,
+                         gpointer     data)
 {
 #ifdef __GNUC__
-#warning FIXME: reimplement palettes_merge_palettes_callback()
+#warning FIXME: reimplement palettes_merge_callback()
 #endif
 #if 0
   GimpContainerEditor *editor;

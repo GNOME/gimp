@@ -47,37 +47,37 @@ static GimpActionEntry palettes_actions[] =
   { "palettes-new", GTK_STOCK_NEW,
     N_("_New Palette"), "",
     N_("New palette"),
-    G_CALLBACK (data_new_data_cmd_callback),
+    G_CALLBACK (data_new_cmd_callback),
     GIMP_HELP_PALETTE_NEW },
 
   { "palettes-import", GTK_STOCK_CONVERT,
     N_("_Import Palette..."), "",
     N_("Import palette"),
-    G_CALLBACK (palettes_import_palette_cmd_callback),
+    G_CALLBACK (palettes_import_cmd_callback),
     GIMP_HELP_PALETTE_IMPORT },
 
   { "palettes-duplicate", GIMP_STOCK_DUPLICATE,
     N_("D_uplicate Palette"), NULL,
     N_("Duplicate palette"),
-    G_CALLBACK (data_duplicate_data_cmd_callback),
+    G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_PALETTE_DUPLICATE },
 
   { "palettes-merge", NULL,
     N_("_Merge Palettes..."), NULL,
     N_("Merge palettes"),
-    G_CALLBACK (palettes_merge_palettes_cmd_callback),
+    G_CALLBACK (palettes_merge_cmd_callback),
     GIMP_HELP_PALETTE_MERGE },
 
   { "palettes-delete", GTK_STOCK_DELETE,
     N_("_Delete Palette"), "",
     N_("Delete palette"),
-    G_CALLBACK (data_delete_data_cmd_callback),
+    G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_PALETTE_DELETE },
 
   { "palettes-refresh", GTK_STOCK_REFRESH,
     N_("_Refresh Palettes"), "",
     N_("Refresh palettes"),
-    G_CALLBACK (data_refresh_data_cmd_callback),
+    G_CALLBACK (data_refresh_cmd_callback),
     GIMP_HELP_PALETTE_REFRESH }
 };
 
@@ -101,7 +101,7 @@ palettes_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_string_actions (group,
                                         palettes_edit_actions,
                                         G_N_ELEMENTS (palettes_edit_actions),
-                                        G_CALLBACK (data_edit_data_cmd_callback));
+                                        G_CALLBACK (data_edit_cmd_callback));
 }
 
 void

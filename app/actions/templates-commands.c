@@ -61,15 +61,15 @@ struct _TemplateDeleteData
 
 /*  local function prototypes  */
 
-static void templates_new_template_response   (GtkWidget             *dialog,
-                                               gint                   response_id,
-                                               TemplateOptionsDialog *options);
-static void templates_edit_template_response  (GtkWidget             *widget,
-                                               gint                   response_id,
-                                               TemplateOptionsDialog *options);
-static void templates_delete_template_response (GtkWidget            *dialog,
-                                                gint                  response_id,
-                                                TemplateDeleteData   *delete_data);
+static void   templates_new_response   (GtkWidget             *dialog,
+                                        gint                   response_id,
+                                        TemplateOptionsDialog *options);
+static void   templates_edit_response  (GtkWidget             *widget,
+                                        gint                   response_id,
+                                        TemplateOptionsDialog *options);
+static void   templates_delete_response (GtkWidget            *dialog,
+                                         gint                  response_id,
+                                         TemplateDeleteData   *delete_data);
 
 
 /*  public functions */
@@ -109,8 +109,8 @@ templates_create_image_cmd_callback (GtkAction *action,
 }
 
 void
-templates_new_template_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+templates_new_cmd_callback (GtkAction *action,
+                            gpointer   data)
 {
   GimpContainerEditor   *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext           *context;
@@ -127,15 +127,15 @@ templates_new_template_cmd_callback (GtkAction *action,
                                          GIMP_HELP_TEMPLATE_NEW);
 
   g_signal_connect (options->dialog, "response",
-                    G_CALLBACK (templates_new_template_response),
+                    G_CALLBACK (templates_new_response),
                     options);
 
   gtk_widget_show (options->dialog);
 }
 
 void
-templates_duplicate_template_cmd_callback (GtkAction *action,
-                                           gpointer   data)
+templates_duplicate_cmd_callback (GtkAction *action,
+                                  gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;
@@ -158,13 +158,13 @@ templates_duplicate_template_cmd_callback (GtkAction *action,
                                 GIMP_OBJECT (new_template));
       g_object_unref (new_template);
 
-      templates_edit_template_cmd_callback (action, data);
+      templates_edit_cmd_callback (action, data);
     }
 }
 
 void
-templates_edit_template_cmd_callback (GtkAction *action,
-                                      gpointer   data)
+templates_edit_cmd_callback (GtkAction *action,
+                             gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;
@@ -189,7 +189,7 @@ templates_edit_template_cmd_callback (GtkAction *action,
                                              GIMP_HELP_TEMPLATE_EDIT);
 
       g_signal_connect (options->dialog, "response",
-                        G_CALLBACK (templates_edit_template_response),
+                        G_CALLBACK (templates_edit_response),
                         options);
 
       gtk_widget_show (options->dialog);
@@ -197,8 +197,8 @@ templates_edit_template_cmd_callback (GtkAction *action,
 }
 
 void
-templates_delete_template_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+templates_delete_cmd_callback (GtkAction *action,
+                               gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;
@@ -236,7 +236,7 @@ templates_delete_template_cmd_callback (GtkAction *action,
                                dialog, G_CONNECT_SWAPPED);
 
       g_signal_connect (dialog, "response",
-                        G_CALLBACK (templates_delete_template_response),
+                        G_CALLBACK (templates_delete_response),
                         delete_data);
 
       gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
@@ -252,9 +252,9 @@ templates_delete_template_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-templates_new_template_response (GtkWidget             *dialog,
-                                 gint                   response_id,
-                                 TemplateOptionsDialog *options)
+templates_new_response (GtkWidget             *dialog,
+                        gint                   response_id,
+                        TemplateOptionsDialog *options)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -270,9 +270,9 @@ templates_new_template_response (GtkWidget             *dialog,
 }
 
 static void
-templates_edit_template_response (GtkWidget             *dialog,
-                                  gint                   response_id,
-                                  TemplateOptionsDialog *options)
+templates_edit_response (GtkWidget             *dialog,
+                         gint                   response_id,
+                         TemplateOptionsDialog *options)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -286,9 +286,9 @@ templates_edit_template_response (GtkWidget             *dialog,
 }
 
 static void
-templates_delete_template_response (GtkWidget          *dialog,
-                                    gint                response_id,
-                                    TemplateDeleteData *delete_data)
+templates_delete_response (GtkWidget          *dialog,
+                           gint                response_id,
+                           TemplateDeleteData *delete_data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {

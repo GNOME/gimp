@@ -1,3 +1,22 @@
+2005-01-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/buffers-commands.[ch]
+	* app/actions/data-commands.[ch]
+	* app/actions/documents-commands.[ch]
+	* app/actions/palettes-commands.[ch]
+	* app/actions/templates-commands.[ch]: changed the remaining
+	callbacks to follow a consistent naming scheme
+	(e.g. buffers_delete_buffer_cmd_callback ->
+	buffers_delete_cmd_callback).
+
+	* app/actions/brushes-actions.c
+	* app/actions/buffers-actions.c
+	* app/actions/documents-actions.c
+	* app/actions/gradients-actions.c
+	* app/actions/palettes-actions.c
+	* app/actions/patterns-actions.c
+	* app/actions/templates-actions.c: changed accordingly.
+
 2005-01-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/retinex.c (run): fixed check for number of

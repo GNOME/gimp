@@ -20,16 +20,16 @@
 #define __TEMPLATES_COMMANDS_H__
 
 
-void   templates_create_image_cmd_callback       (GtkAction    *action,
-                                                  gpointer      data);
-void   templates_new_template_cmd_callback       (GtkAction    *action,
-                                                  gpointer      data);
-void   templates_duplicate_template_cmd_callback (GtkAction    *action,
-                                                  gpointer      data);
-void   templates_edit_template_cmd_callback      (GtkAction    *action,
-                                                  gpointer      data);
-void   templates_delete_template_cmd_callback    (GtkAction    *action,
-                                                  gpointer      data);
+void   templates_create_image_cmd_callback (GtkAction    *action,
+                                            gpointer      data);
+void   templates_new_cmd_callback          (GtkAction    *action,
+                                            gpointer      data);
+void   templates_duplicate_cmd_callback    (GtkAction    *action,
+                                            gpointer      data);
+void   templates_edit_cmd_callback         (GtkAction    *action,
+                                            gpointer      data);
+void   templates_delete_cmd_callback       (GtkAction    *action,
+                                            gpointer      data);
 
 
 #endif /* __TEMPLATES_COMMANDS_H__ */

@@ -69,8 +69,8 @@ static void   documents_raise_display (gpointer       data,
 /*  public functions */
 
 void
-documents_open_document_cmd_callback (GtkAction *action,
-                                      gpointer   data)
+documents_open_cmd_callback (GtkAction *action,
+                             gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;
@@ -93,8 +93,8 @@ documents_open_document_cmd_callback (GtkAction *action,
 }
 
 void
-documents_raise_or_open_document_cmd_callback (GtkAction *action,
-                                               gpointer   data)
+documents_raise_or_open_cmd_callback (GtkAction *action,
+                                      gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;
@@ -145,8 +145,8 @@ documents_file_open_dialog_cmd_callback (GtkAction *action,
 }
 
 void
-documents_remove_document_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+documents_remove_cmd_callback (GtkAction *action,
+                               gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;
@@ -202,7 +202,7 @@ documents_reload_previews_cmd_callback (GtkAction *action,
 }
 
 static void
-documents_delete_dangling_foreach (GimpImagefile *imagefile,
+documents_remove_dangling_foreach (GimpImagefile *imagefile,
                                    GimpContainer *container)
 {
   if (gimp_thumbnail_peek_image (imagefile->thumbnail) ==
@@ -213,8 +213,8 @@ documents_delete_dangling_foreach (GimpImagefile *imagefile,
 }
 
 void
-documents_delete_dangling_documents_cmd_callback (GtkAction *action,
-                                                  gpointer   data)
+documents_remove_dangling_cmd_callback (GtkAction *action,
+                                        gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;
@@ -222,7 +222,7 @@ documents_delete_dangling_documents_cmd_callback (GtkAction *action,
   container = gimp_container_view_get_container (editor->view);
 
   gimp_container_foreach (container,
-                          (GFunc) documents_delete_dangling_foreach,
+                          (GFunc) documents_remove_dangling_foreach,
                           container);
 }
 

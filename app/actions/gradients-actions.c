@@ -47,13 +47,13 @@ static GimpActionEntry gradients_actions[] =
   { "gradients-new", GTK_STOCK_NEW,
     N_("_New Gradient"), "",
     N_("New gradient"),
-    G_CALLBACK (data_new_data_cmd_callback),
+    G_CALLBACK (data_new_cmd_callback),
     GIMP_HELP_GRADIENT_NEW },
 
   { "gradients-duplicate", GIMP_STOCK_DUPLICATE,
     N_("D_uplicate Gradient"), NULL,
     N_("Duplicate gradient"),
-    G_CALLBACK (data_duplicate_data_cmd_callback),
+    G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_GRADIENT_DUPLICATE },
 
   { "gradients-save-as-pov", GTK_STOCK_SAVE_AS,
@@ -65,13 +65,13 @@ static GimpActionEntry gradients_actions[] =
   { "gradients-delete", GTK_STOCK_DELETE,
     N_("_Delete Gradient..."), "",
     N_("Delete gradient"),
-    G_CALLBACK (data_delete_data_cmd_callback),
+    G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_GRADIENT_DELETE },
 
   { "gradients-refresh", GTK_STOCK_REFRESH,
     N_("_Refresh Gradients"), "",
     N_("Refresh gradients"),
-    G_CALLBACK (data_refresh_data_cmd_callback),
+    G_CALLBACK (data_refresh_cmd_callback),
     GIMP_HELP_GRADIENT_REFRESH }
 };
 
@@ -95,7 +95,7 @@ gradients_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_string_actions (group,
                                         gradients_edit_actions,
                                         G_N_ELEMENTS (gradients_edit_actions),
-                                        G_CALLBACK (data_edit_data_cmd_callback));
+                                        G_CALLBACK (data_edit_cmd_callback));
 }
 
 void

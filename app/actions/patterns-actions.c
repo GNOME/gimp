@@ -52,25 +52,25 @@ static GimpActionEntry patterns_actions[] =
   { "patterns-new", GTK_STOCK_NEW,
     N_("_New Pattern"), "",
     N_("New pattern"),
-    G_CALLBACK (data_new_data_cmd_callback),
+    G_CALLBACK (data_new_cmd_callback),
     GIMP_HELP_PATTERN_NEW },
 
   { "patterns-duplicate", GIMP_STOCK_DUPLICATE,
     N_("D_uplicate Pattern"), NULL,
     N_("Duplicate pattern"),
-    G_CALLBACK (data_duplicate_data_cmd_callback),
+    G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_PATTERN_DUPLICATE },
 
   { "patterns-delete", GTK_STOCK_DELETE,
     N_("_Delete Pattern..."), "",
     N_("Delete pattern"),
-    G_CALLBACK (data_delete_data_cmd_callback),
+    G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_PATTERN_DELETE },
 
   { "patterns-refresh", GTK_STOCK_REFRESH,
     N_("_Refresh Patterns"), "",
     N_("Refresh patterns"),
-    G_CALLBACK (data_refresh_data_cmd_callback),
+    G_CALLBACK (data_refresh_cmd_callback),
     GIMP_HELP_PATTERN_REFRESH }
 };
 
@@ -94,7 +94,7 @@ patterns_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_string_actions (group,
                                         patterns_edit_actions,
                                         G_N_ELEMENTS (patterns_edit_actions),
-                                        G_CALLBACK (data_edit_data_cmd_callback));
+                                        G_CALLBACK (data_edit_cmd_callback));
 }
 
 void

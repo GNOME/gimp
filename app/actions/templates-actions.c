@@ -51,25 +51,25 @@ static GimpActionEntry templates_actions[] =
   { "templates-new", GTK_STOCK_NEW,
     N_("_New Template..."), "",
     N_("Create a new template"),
-    G_CALLBACK (templates_new_template_cmd_callback),
+    G_CALLBACK (templates_new_cmd_callback),
     GIMP_HELP_TEMPLATE_NEW },
 
   { "templates-duplicate", GIMP_STOCK_DUPLICATE,
     N_("D_uplicate Template..."), "",
     N_("Duplicate the selected template"),
-    G_CALLBACK (templates_duplicate_template_cmd_callback),
+    G_CALLBACK (templates_duplicate_cmd_callback),
     GIMP_HELP_TEMPLATE_DUPLICATE },
 
   { "templates-edit", GIMP_STOCK_EDIT,
     N_("_Edit Template..."), "",
     N_("Edit the selected template"),
-    G_CALLBACK (templates_edit_template_cmd_callback),
+    G_CALLBACK (templates_edit_cmd_callback),
     GIMP_HELP_TEMPLATE_EDIT },
 
   { "templates-delete", GTK_STOCK_DELETE,
     N_("_Delete Template"), "",
     N_("Delete the selected template"),
-    G_CALLBACK (templates_delete_template_cmd_callback),
+    G_CALLBACK (templates_delete_cmd_callback),
     GIMP_HELP_TEMPLATE_DELETE }
 };
 
