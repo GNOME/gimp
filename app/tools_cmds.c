@@ -1566,7 +1566,7 @@ flip_invoker (Argument *args)
   GimpImage *gimage;
   TileManager *float_tiles, *new_tiles;
   Layer *layer;
-  int new_layer;
+  gboolean new_layer;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
   if (drawable == NULL)
@@ -2108,7 +2108,7 @@ perspective_invoker (Argument *args)
   GimpImage *gimage;
   TileManager *float_tiles, *new_tiles;
   Layer *layer;
-  int new_layer;
+  gboolean new_layer;
   double cx, cy;
   double scalex, scaley;
   double trans_info[8];
@@ -2389,7 +2389,7 @@ rotate_invoker (Argument *args)
   GimpImage *gimage;
   TileManager *float_tiles, *new_tiles;
   Layer *layer;
-  int new_layer;
+  gboolean new_layer;
   double cx, cy;
   GimpMatrix matrix;
 
@@ -2501,7 +2501,7 @@ scale_invoker (Argument *args)
   GimpImage *gimage;
   TileManager *float_tiles, *new_tiles;
   Layer *layer;
-  int new_layer;
+  gboolean new_layer;
   double scalex, scaley;
   double trans_info[4];
   GimpMatrix matrix;
@@ -2648,7 +2648,7 @@ shear_invoker (Argument *args)
   GimpImage *gimage;
   TileManager *float_tiles, *new_tiles;
   Layer *layer;
-  int new_layer;
+  gboolean new_layer;
   double cx, cy;
   GimpMatrix matrix;
 

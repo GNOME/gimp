@@ -74,7 +74,7 @@ static TransformOptions *transform_options = NULL;
 
 
 /*  local functions  */
-static void   transform_change_type (int);
+static void   transform_change_type (ToolType new_type);
 
 
 /*  functions  */
@@ -381,18 +381,23 @@ tools_free_transform_tool (Tool *tool)
 }
 
 static void
-transform_change_type (gint new_type)
+transform_change_type (ToolType new_type)
 {
   if (transform_options->type != new_type)
     {
       /*  change the type, free the old tool, create the new tool  */
       transform_options->type = new_type;
 
-      gimp_context_set_tool (gimp_context_get_user (), transform_options->type);
+      if (gimp_context_get_tool (gimp_context_get_user ()) != new_type)
+	gimp_context_set_tool (gimp_context_get_user (), new_type);
+      else
+	gtk_signal_emit_by_name (GTK_OBJECT (gimp_context_get_user ()),
+				 "tool_changed",
+				 new_type);
     }
 }
 
-int
+gboolean
 transform_tool_smoothing (void)
 {
   if (!transform_options)
@@ -401,7 +406,7 @@ transform_tool_smoothing (void)
     return transform_options->smoothing;
 }
 
-int
+gboolean
 transform_tool_showpath (void)
 {
   if (!transform_options)
@@ -410,7 +415,7 @@ transform_tool_showpath (void)
     return transform_options->showpath;
 }
 
-int
+gboolean
 transform_tool_clip (void)
 {
   if (!transform_options)
@@ -419,7 +424,7 @@ transform_tool_clip (void)
     return transform_options->clip;
 }
 
-int
+gint
 transform_tool_direction (void)
 {
   if (!transform_options)
@@ -428,7 +433,7 @@ transform_tool_direction (void)
     return transform_options->direction;
 }
 
-int
+gint
 transform_tool_grid_size (void)
 {
   if (!transform_options)
@@ -437,7 +442,7 @@ transform_tool_grid_size (void)
     return transform_options->grid_size;
 }
 
-int
+gboolean
 transform_tool_show_grid (void)
 {
   if (!transform_options)

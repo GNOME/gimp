@@ -688,7 +688,7 @@ HELP
     %invoke = (
 	headers => [ qw("flip_tool.h" "transform_core.h" "undo.h") ],
 	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
-		   'Layer *layer', 'int new_layer' ],
+		   'Layer *layer', 'gboolean new_layer' ],
 	code => <<'CODE'
 {
   gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
@@ -982,7 +982,7 @@ HELP
 	headers => [ qw("perspective_tool.h" "transform_core.h"
 			"tile_manager_pvt.h") ],
 	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
-		  'Layer *layer', 'int new_layer', 'double cx, cy',
+		  'Layer *layer', 'gboolean new_layer', 'double cx, cy',
 		  'double scalex, scaley', 'double trans_info[8]',
 		  'GimpMatrix m, matrix' ],
 	code => <<'CODE'
@@ -1105,7 +1105,7 @@ HELP
     %invoke = (
 	headers => [ qw("rotate_tool.h" "transform_core.h") ],
 	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
-		  'Layer *layer', 'int new_layer', 'double cx, cy',
+		  'Layer *layer', 'gboolean new_layer', 'double cx, cy',
 		  'GimpMatrix matrix' ],
 	code => <<'CODE'
 {
@@ -1188,7 +1188,7 @@ HELP
 	headers => [ qw("scale_tool.h" "transform_core.h"
 			"tile_manager_pvt.h") ],
 	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
-		  'Layer *layer', 'int new_layer', 'double scalex, scaley',
+		  'Layer *layer', 'gboolean new_layer', 'double scalex, scaley',
 		  'double trans_info[4]', 'GimpMatrix matrix' ],
 	code => <<'CODE'
 {
@@ -1279,7 +1279,7 @@ HELP
 	headers => [ qw("shear_tool.h" "transform_core.h"
 			"tile_manager_pvt.h") ],
 	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
-		  'Layer *layer', 'int new_layer', 'double cx, cy',
+		  'Layer *layer', 'gboolean new_layer', 'double cx, cy',
 		  'GimpMatrix matrix' ],
 	code => <<'CODE'
 {

@@ -19,12 +19,20 @@
 #define __ROTATE_TOOL_H__
 
 #include "tools.h"
+#include "transform_core.h"
 
-void *        rotate_tool_transform (Tool *, gpointer, int);
-void *        rotate_tool_rotate    (GimpImage *, GimpDrawable *, GDisplay *,
-				     double, TileManager *, int, GimpMatrix);
+TileManager * rotate_tool_transform (Tool           *tool,
+				     gpointer        gdisp_ptr,
+				     TransformState  state);
+TileManager * rotate_tool_rotate    (GimpImage      *gimage,
+				     GimpDrawable   *drawable,
+				     GDisplay       *gdisp,
+				     gdouble         angle,
+				     TileManager    *float_tiles,
+				     gboolean        interpolation,
+				     GimpMatrix      matrix);
 
-Tool *        tools_new_rotate_tool    (void);
-void          tools_free_rotate_tool   (Tool *);
+Tool * tools_new_rotate_tool  (void);
+void   tools_free_rotate_tool (Tool *tool);
 
 #endif  /*  __ROTATE_TOOL_H__  */

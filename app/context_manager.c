@@ -59,6 +59,13 @@ context_manager_tool_changed (GimpContext *context,
 	}
     }
 
+  tools_select (tool_type);
+
+  if (tool_type == SCALE ||
+      tool_type == SHEAR ||
+      tool_type == PERSPECTIVE)
+    tool_type = ROTATE;
+
   if (! GTK_TOGGLE_BUTTON (tool_info[tool_type].tool_widget)->active)
     {
       gtk_signal_handler_block_by_data
@@ -69,8 +76,6 @@ context_manager_tool_changed (GimpContext *context,
       gtk_signal_handler_unblock_by_data
 	(GTK_OBJECT (tool_info[tool_type].tool_widget), (gpointer) tool_type);
     }
-
-  tools_select (tool_type);
 }
 
 static void

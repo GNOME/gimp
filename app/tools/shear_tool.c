@@ -15,8 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <math.h>
-
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
@@ -24,40 +22,39 @@
 #include "info_dialog.h"
 #include "shear_tool.h"
 #include "selection.h"
-#include "tools.h"
-#include "transform_core.h"
 #include "transform_tool.h"
 #include "undo.h"
 
 #include "tile_manager_pvt.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 /*  index into trans_info array  */
-#define HORZ_OR_VERT   0
-#define XSHEAR         1
-#define YSHEAR         2
+#define HORZ_OR_VERT 0
+#define XSHEAR       1
+#define YSHEAR       2
 
 /*  the minimum movement before direction of shear can be determined (pixels) */
-#define MIN_MOVE       5
+#define MIN_MOVE     5
 
 /*  variables local to this file  */
-static gdouble     xshear_val;
-static gdouble     yshear_val;
+static gdouble  xshear_val;
+static gdouble  yshear_val;
 
 /*  forward function declarations  */
-static void *      shear_tool_recalc  (Tool *, void *);
-static void        shear_tool_motion  (Tool *, void *);
-static void        shear_info_update  (Tool *);
+static void   shear_tool_recalc  (Tool *, void *);
+static void   shear_tool_motion  (Tool *, void *);
+static void   shear_info_update  (Tool *);
 
 /*  Info dialog callback funtions  */
-static void        shear_x_mag_changed (GtkWidget *, gpointer);
-static void        shear_y_mag_changed (GtkWidget *, gpointer);
+static void   shear_x_mag_changed (GtkWidget *widget, gpointer data);
+static void   shear_y_mag_changed (GtkWidget *widget, gpointer data);
 
-void *
-shear_tool_transform (Tool     *tool,
-		      gpointer  gdisp_ptr,
-		      int       state)
+TileManager *
+shear_tool_transform (Tool           *tool,
+		      gpointer        gdisp_ptr,
+		      TransformState  state)
 {
   TransformCore *transform_core;
   GDisplay       *gdisp;
@@ -67,11 +64,12 @@ shear_tool_transform (Tool     *tool,
 
   switch (state)
     {
-    case INIT :
+    case INIT:
       if (!transform_info)
 	{
 	  transform_info = info_dialog_new (_("Shear Information"),
-					    tools_help_func, NULL);
+					    gimp_standard_help_func,
+					    "tools/transform_shear.html");
 
 	  info_dialog_add_spinbutton (transform_info,
 				      _("Shear Magnitude X:"),
@@ -93,17 +91,16 @@ shear_tool_transform (Tool     *tool,
       return NULL;
       break;
 
-    case MOTION :
+    case MOTION:
       shear_tool_motion (tool, gdisp_ptr);
-
-      return (shear_tool_recalc (tool, gdisp_ptr));
+      shear_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case RECALC :
-      return (shear_tool_recalc (tool, gdisp_ptr));
+    case RECALC:
+      shear_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case FINISH :
+    case FINISH:
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
       return shear_tool_shear (gdisp->gimage,
 			       gimage_active_drawable (gdisp->gimage),
@@ -117,14 +114,13 @@ shear_tool_transform (Tool     *tool,
   return NULL;
 }
 
-
 Tool *
 tools_new_shear_tool (void)
 {
-  Tool * tool;
-  TransformCore * private;
+  Tool          *tool;
+  TransformCore *private;
 
-  tool = transform_core_new (SHEAR, INTERACTIVE);
+  tool = transform_core_new (SHEAR, TRUE);
 
   private = tool->private;
 
@@ -137,7 +133,6 @@ tools_new_shear_tool (void)
   return tool;
 }
 
-
 void
 tools_free_shear_tool (Tool *tool)
 {
@@ -147,7 +142,7 @@ tools_free_shear_tool (Tool *tool)
 static void
 shear_info_update (Tool *tool)
 {
-  TransformCore * transform_core;
+  TransformCore *transform_core;
 
   transform_core = (TransformCore *) tool->private;
 
@@ -159,22 +154,22 @@ shear_info_update (Tool *tool)
 }
 
 static void
-shear_x_mag_changed (GtkWidget *w,
+shear_x_mag_changed (GtkWidget *widget,
 		     gpointer   data)
 {
   Tool          *tool;
   TransformCore *transform_core;
   GDisplay      *gdisp;
-  int            value;
+  gint           value;
 
-  tool = (Tool *)data;
+  tool = (Tool *) data;
 
   if (tool)
     {
       gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
-      value = GTK_ADJUSTMENT (w)->value;
+      value = GTK_ADJUSTMENT (widget)->value;
 
       if (value != transform_core->trans_info[XSHEAR])
 	{
@@ -187,22 +182,22 @@ shear_x_mag_changed (GtkWidget *w,
 }
 
 static void
-shear_y_mag_changed (GtkWidget *w,
+shear_y_mag_changed (GtkWidget *widget,
 		     gpointer   data)
 {
   Tool          *tool;
   TransformCore *transform_core;
   GDisplay      *gdisp;
-  int            value;
+  gint           value;
 
-  tool = (Tool *)data;
+  tool = (Tool *) data;
 
   if (tool)
     {
       gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
-      value = GTK_ADJUSTMENT (w)->value;
+      value = GTK_ADJUSTMENT (widget)->value;
 
       if (value != transform_core->trans_info[YSHEAR])
 	{
@@ -218,9 +213,9 @@ static void
 shear_tool_motion (Tool *tool,
 		   void *gdisp_ptr)
 {
-  TransformCore * transform_core;
-  int diffx, diffy;
-  int dir;
+  TransformCore *transform_core;
+  gint           diffx, diffy;
+  gint           dir;
 
   transform_core = (TransformCore *) tool->private;
 
@@ -233,9 +228,9 @@ shear_tool_motion (Tool *tool,
 
   if (transform_core->trans_info[HORZ_OR_VERT] == ORIENTATION_UNKNOWN)
     {
-      if (abs(diffx) > MIN_MOVE || abs(diffy) > MIN_MOVE)
+      if (abs (diffx) > MIN_MOVE || abs (diffy) > MIN_MOVE)
 	{
-	  if (abs(diffx) > abs(diffy))
+	  if (abs (diffx) > abs (diffy))
 	    {
 	      transform_core->trans_info[HORZ_OR_VERT] = ORIENTATION_HORIZONTAL;
 	      transform_core->trans_info[ORIENTATION_VERTICAL] = 0.0;
@@ -245,7 +240,6 @@ shear_tool_motion (Tool *tool,
 	      transform_core->trans_info[HORZ_OR_VERT] = ORIENTATION_VERTICAL;
 	      transform_core->trans_info[ORIENTATION_HORIZONTAL] = 0.0;
 	    }
-
 	}
       /*  set the current coords to the last ones  */
       else
@@ -261,45 +255,44 @@ shear_tool_motion (Tool *tool,
       dir = transform_core->trans_info[HORZ_OR_VERT];
       switch (transform_core->function)
 	{
-	case HANDLE_1 :
+	case HANDLE_1:
 	  if (dir == ORIENTATION_HORIZONTAL)
 	    transform_core->trans_info[XSHEAR] -= diffx;
 	  else
 	    transform_core->trans_info[YSHEAR] -= diffy;
 	  break;
-	case HANDLE_2 :
+	case HANDLE_2:
 	  if (dir == ORIENTATION_HORIZONTAL)
 	    transform_core->trans_info[XSHEAR] -= diffx;
 	  else
 	    transform_core->trans_info[YSHEAR] += diffy;
 	  break;
-	case HANDLE_3 :
+	case HANDLE_3:
 	  if (dir == ORIENTATION_HORIZONTAL)
 	    transform_core->trans_info[XSHEAR] += diffx;
 	  else
 	    transform_core->trans_info[YSHEAR] -= diffy;
 	  break;
-	case HANDLE_4 :
+	case HANDLE_4:
 	  if (dir == ORIENTATION_HORIZONTAL)
 	    transform_core->trans_info[XSHEAR] += diffx;
 	  else
 	    transform_core->trans_info[YSHEAR] += diffy;
 	  break;
-	default :
-	  return;
+	default:
+	  break;
 	}
     }
 }
 
-
-static void *
+static void
 shear_tool_recalc (Tool *tool,
 		   void *gdisp_ptr)
 {
-  TransformCore * transform_core;
-  GDisplay * gdisp;
-  float width, height;
-  float cx, cy;
+  TransformCore *transform_core;
+  GDisplay      *gdisp;
+  gfloat         width, height;
+  gfloat         cx, cy;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -322,39 +315,38 @@ shear_tool_recalc (Tool *tool,
   /*  shear matrix  */
   if (transform_core->trans_info[HORZ_OR_VERT] == ORIENTATION_HORIZONTAL)
     gimp_matrix_xshear (transform_core->transform,
-		   (float) transform_core->trans_info [XSHEAR] / height);
+			(float) transform_core->trans_info [XSHEAR] / height);
   else
     gimp_matrix_yshear (transform_core->transform,
-		   (float) transform_core->trans_info [YSHEAR] / width);
+			(float) transform_core->trans_info [YSHEAR] / width);
 
   gimp_matrix_translate (transform_core->transform, +cx, +cy);
 
   /*  transform the bounding box  */
-  transform_bounding_box (tool);
+  transform_core_transform_bounding_box (tool);
 
   /*  update the information dialog  */
   shear_info_update (tool);
-
-  return (void *) 1;
 }
 
-
-void *
+TileManager *
 shear_tool_shear (GimpImage    *gimage,
 		  GimpDrawable *drawable,
 		  GDisplay     *gdisp,
 		  TileManager  *float_tiles,
-		  int           interpolation,
+		  gboolean      interpolation,
 		  GimpMatrix    matrix)
 {
-  void *ret;
   gimp_progress *progress;
+  TileManager   *ret;
 
   progress = progress_start (gdisp, _("Shearing..."), FALSE, NULL, NULL);
 
   ret = transform_core_do (gimage, drawable, float_tiles,
 			   interpolation, matrix,
-			   progress? progress_update_and_flush:NULL, progress);
+			   progress ? progress_update_and_flush : NULL,
+			   progress);
+
   if (progress)
     progress_end (progress);
 

@@ -24,8 +24,6 @@
 #include "info_dialog.h"
 #include "rotate_tool.h"
 #include "selection.h"
-#include "tools.h"
-#include "transform_core.h"
 #include "transform_tool.h"
 #include "undo.h"
 
@@ -52,7 +50,7 @@ static gdouble    center_vals[2];
 static GtkWidget *sizeentry;
 
 /*  forward function declarations  */
-static void * rotate_tool_recalc  (Tool *, void *);
+static void   rotate_tool_recalc  (Tool *, void *);
 static void   rotate_tool_motion  (Tool *, void *);
 static void   rotate_info_update  (Tool *);
 
@@ -60,10 +58,10 @@ static void   rotate_info_update  (Tool *);
 static void   rotate_angle_changed  (GtkWidget *entry, gpointer data);
 static void   rotate_center_changed (GtkWidget *entry, gpointer data);
 
-void *
-rotate_tool_transform (Tool     *tool,
-		       gpointer  gdisp_ptr,
-		       int       state)
+TileManager *
+rotate_tool_transform (Tool           *tool,
+		       gpointer        gdisp_ptr,
+		       TransformState  state)
 {
   TransformCore *transform_core;
   GDisplay      *gdisp;
@@ -75,7 +73,7 @@ rotate_tool_transform (Tool     *tool,
 
   switch (state)
     {
-    case INIT :
+    case INIT:
       angle_val = 0.0;
       center_vals[0] = transform_core->cx;
       center_vals[1] = transform_core->cy;
@@ -83,7 +81,8 @@ rotate_tool_transform (Tool     *tool,
       if (!transform_info)
 	{
 	  transform_info = info_dialog_new (_("Rotation Information"),
-					    tools_help_func, NULL);
+					    gimp_standard_help_func,
+					    "tools/transform_rotate.html");
 
 	  widget =
 	    info_dialog_add_spinbutton (transform_info, _("Angle:"),
@@ -161,17 +160,16 @@ rotate_tool_transform (Tool     *tool,
       return NULL;
       break;
 
-    case MOTION :
+    case MOTION:
       rotate_tool_motion (tool, gdisp_ptr);
-
-      return rotate_tool_recalc (tool, gdisp_ptr);
+      rotate_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case RECALC :
-      return rotate_tool_recalc (tool, gdisp_ptr);
+    case RECALC:
+      rotate_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case FINISH :
+    case FINISH:
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
       return rotate_tool_rotate (gdisp->gimage,
 				 gimage_active_drawable (gdisp->gimage),
@@ -187,12 +185,12 @@ rotate_tool_transform (Tool     *tool,
 }
 
 Tool *
-tools_new_rotate_tool ()
+tools_new_rotate_tool (void)
 {
-  Tool * tool;
-  TransformCore * private;
+  Tool          *tool;
+  TransformCore *private;
 
-  tool = transform_core_new (ROTATE, INTERACTIVE);
+  tool = transform_core_new (ROTATE, TRUE);
 
   private = tool->private;
 
@@ -218,7 +216,7 @@ tools_free_rotate_tool (Tool *tool)
 static void
 rotate_info_update (Tool *tool)
 {
-  TransformCore * transform_core;
+  TransformCore *transform_core;
 
   transform_core = (TransformCore *) tool->private;
 
@@ -231,13 +229,13 @@ rotate_info_update (Tool *tool)
 }
 
 static void
-rotate_angle_changed (GtkWidget *w,
+rotate_angle_changed (GtkWidget *widget,
 		      gpointer   data)
 {
   Tool          *tool;
   GDisplay      *gdisp;
   TransformCore *transform_core;
-  double         value;
+  gdouble        value;
 
   tool = (Tool *) data;
 
@@ -246,7 +244,7 @@ rotate_angle_changed (GtkWidget *w,
       gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
-      value = GTK_ADJUSTMENT (w)->value * G_PI / 180.0;
+      value = GTK_ADJUSTMENT (widget)->value * G_PI / 180.0;
 
       if (value != transform_core->trans_info[ANGLE])
 	{
@@ -259,14 +257,14 @@ rotate_angle_changed (GtkWidget *w,
 }
 
 static void
-rotate_center_changed (GtkWidget *w,
+rotate_center_changed (GtkWidget *widget,
 		       gpointer   data)
 {
   Tool          *tool;
   GDisplay      *gdisp;
   TransformCore *transform_core;
-  int            cx;
-  int            cy;
+  gint           cx;
+  gint           cy;
 
   tool = (Tool *) data;
 
@@ -275,8 +273,10 @@ rotate_center_changed (GtkWidget *w,
       gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
-      cx = (int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 0) + 0.5);
-      cy = (int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 1) + 0.5);
+      cx =
+	(int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0) + 0.5);
+      cy =
+	(int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1) + 0.5);
 
       if ((cx != transform_core->cx) ||
 	  (cy != transform_core->cy))
@@ -294,10 +294,10 @@ static void
 rotate_tool_motion (Tool *tool,
 		    void *gdisp_ptr)
 {
-  TransformCore * transform_core;
-  double angle1, angle2, angle;
-  double cx, cy;
-  double x1, y1, x2, y2;
+  TransformCore *transform_core;
+  gdouble        angle1, angle2, angle;
+  gdouble        cx, cy;
+  gdouble        x1, y1, x2, y2;
 
   transform_core = (TransformCore *) tool->private;
 
@@ -349,13 +349,13 @@ rotate_tool_motion (Tool *tool,
     transform_core->trans_info[ANGLE] = transform_core->trans_info[REAL_ANGLE];
 }
 
-static void *
+static void
 rotate_tool_recalc (Tool *tool,
 		    void *gdisp_ptr)
 {
-  TransformCore * transform_core;
-  GDisplay * gdisp;
-  double cx, cy;
+  TransformCore *transform_core;
+  GDisplay      *gdisp;
+  gdouble        cx, cy;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -371,36 +371,31 @@ rotate_tool_recalc (Tool *tool,
   gimp_matrix_translate (transform_core->transform, +cx, +cy);
 
   /*  transform the bounding box  */
-  transform_bounding_box (tool);
+  transform_core_transform_bounding_box (tool);
 
   /*  update the information dialog  */
   rotate_info_update (tool);
-
-  return (void *) 1;
 }
 
-
-/*  This procedure returns a valid pointer to a new selection if the
- *  requested angle is a multiple of 90 degrees...
- */
-
-void *
+TileManager *
 rotate_tool_rotate (GImage       *gimage,
 		    GimpDrawable *drawable,
 		    GDisplay     *gdisp,
-		    double        angle,
+		    gdouble       angle,
 		    TileManager  *float_tiles,
-		    int           interpolation,
+		    gboolean      interpolation,
 		    GimpMatrix    matrix)
 {
-  void *ret;
   gimp_progress *progress;
+  TileManager   *ret;
 
   progress = progress_start (gdisp, _("Rotating..."), FALSE, NULL, NULL);
 
   ret = transform_core_do (gimage, drawable, float_tiles,
 			   interpolation, matrix,
-			   progress? progress_update_and_flush:NULL, progress);
+			   progress ? progress_update_and_flush : NULL,
+			   progress);
+
   if (progress)
     progress_end (progress);
 

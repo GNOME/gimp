@@ -18,107 +18,115 @@
 #ifndef __TRANSFORM_CORE_H__
 #define __TRANSFORM_CORE_H__
 
-#include "info_dialog.h"
 #include "draw_core.h"
-#include "temp_buf.h"
-#include "libgimp/gimpmatrix.h"
 #include "gimpprogress.h"
+#include "info_dialog.h"
+#include "temp_buf.h"
 
-/* possible scaling functions */
-#define CREATING        0
-#define HANDLE_1        1
-#define HANDLE_2        2
-#define HANDLE_3        3
-#define HANDLE_4        4
-#define HANDLE_CENTER	5
+#include "libgimp/gimpmatrix.h"
 
-/* the different states that the transformation function can be called with  */
-#define INIT            0
-#define MOTION          1
-#define RECALC          2
-#define FINISH          3
+/* possible transform functions */
+typedef enum
+{
+  CREATING,
+  HANDLE_1,
+  HANDLE_2,
+  HANDLE_3,
+  HANDLE_4,
+  HANDLE_CENTER
+} TransformAction;
+
+/* the different states that the transformation function can be called with */
+typedef enum
+{
+  INIT,
+  MOTION,
+  RECALC,
+  FINISH
+} TransformState;
 
 /* buffer sizes for scaling information strings (for the info dialog) */
 #define MAX_INFO_BUF   40
 #define TRAN_INFO_SIZE  8
-
-/* control whether the transform tool draws a bounding box */
-#define NON_INTERACTIVE 0
-#define INTERACTIVE     1
 
 enum BoundingBox
 {
   X0, Y0, X1, Y1, X2, Y2, X3, Y3
 };
 
-typedef double  TranInfo[TRAN_INFO_SIZE];
+typedef gdouble TranInfo[TRAN_INFO_SIZE];
 
-typedef void * (* TransformFunc)   (Tool *, void *, int);
+typedef TileManager * (* TransformFunc) (Tool *, void *, TransformState);
+
 
 typedef struct _TransformCore TransformCore;
+
 struct _TransformCore
 {
-  DrawCore *      core;         /*  Core select object          */
+  DrawCore       *core;         /*  Core select object          */
 
-  int             startx;       /*  starting x coord            */
-  int             starty;       /*  starting y coord            */
+  gint            startx;       /*  starting x coord            */
+  gint            starty;       /*  starting y coord            */
 
-  int             curx;         /*  current x coord             */
-  int             cury;         /*  current y coord             */
+  gint            curx;         /*  current x coord             */
+  gint            cury;         /*  current y coord             */
 
-  int             lastx;        /*  last x coord                */
-  int             lasty;        /*  last y coord                */
+  gint            lastx;        /*  last x coord                */
+  gint            lasty;        /*  last y coord                */
 
-  int             state;        /*  state of buttons and keys   */
+  gint            state;        /*  state of buttons and keys   */
 
-  int             x1, y1;       /*  upper left hand coordinate  */
-  int             x2, y2;       /*  lower right hand coords     */
-  int		  cx, cy;	/*  center point (for rotation) */
+  gint            x1, y1;       /*  upper left hand coordinate  */
+  gint            x2, y2;       /*  lower right hand coords     */
+  gint		  cx, cy;	/*  center point (for rotation) */
 
-  double          tx1, ty1;     /*  transformed coords          */
-  double          tx2, ty2;     /*                              */
-  double          tx3, ty3;     /*                              */
-  double          tx4, ty4;     /*                              */
-  double	  tcx, tcy;	/*                              */
+  gdouble         tx1, ty1;     /*  transformed coords          */
+  gdouble         tx2, ty2;     /*                              */
+  gdouble         tx3, ty3;     /*                              */
+  gdouble         tx4, ty4;     /*                              */
+  gdouble	  tcx, tcy;	/*                              */
 
-  int             sx1, sy1;     /*  transformed screen coords   */
-  int             sx2, sy2;     /*  position of four handles    */
-  int             sx3, sy3;     /*                              */
-  int             sx4, sy4;     /*                              */
-  int             scx, scy;     /*  and center for rotation     */
+  gint            sx1, sy1;     /*  transformed screen coords   */
+  gint            sx2, sy2;     /*  position of four handles    */
+  gint            sx3, sy3;     /*                              */
+  gint            sx4, sy4;     /*                              */
+  gint            scx, scy;     /*  and center for rotation     */
 
   GimpMatrix      transform;    /*  transformation matrix       */
   TranInfo        trans_info;   /*  transformation info         */
 
-  TileManager *   original;     /*  pointer to original tiles   */
+  TileManager    *original;     /*  pointer to original tiles   */
 
   TransformFunc   trans_func;   /*  transformation function     */
 
-  int             function;     /*  current tool activity       */
+  TransformAction function;     /*  current tool activity       */
 
-  int             interactive;  /*  tool is interactive         */
-  int             bpressed;     /* Bug work around make sure we have 
-				 * a button pressed before we deal with
-				 * motion events. ALT.
+  gboolean        interactive;  /*  tool is interactive         */
+  gboolean        bpressed;     /*  Bug work around make sure we have 
+				 *  a button pressed before we deal with
+				 *  motion events. ALT.
 				 */
-  int		  ngx, ngy;	/*  number of grid lines in original
-				    x and y directions  */
-  double	  *grid_coords;	/*  x and y coordinates of the grid
-				    endpoints (a total of (ngx+ngy)*2
-				    coordinate pairs)  */
-  double	  *tgrid_coords; /* transformed grid_coords  */
+  gint		  ngx, ngy;	/*  number of grid lines in original
+				 *  x and y directions
+				 */
+  gdouble	 *grid_coords;	/*  x and y coordinates of the grid
+				 *  endpoints (a total of (ngx+ngy)*2
+				 *  coordinate pairs)
+				 */
+  gdouble	 *tgrid_coords; /*  transformed grid_coords     */
 };
 
 
 /*  Special undo type  */
 typedef struct _TransformUndo TransformUndo;
+
 struct _TransformUndo
 {
-  int             tool_ID;
-  int             tool_type;
-  TranInfo        trans_info;
-  TileManager *   original;
-  void        *   path_undo;
+  gint         tool_ID;
+  gint         tool_type;
+  TranInfo     trans_info;
+  TileManager *original;
+  void        *path_undo;
 };
 
 
@@ -133,21 +141,31 @@ void          transform_core_cursor_update  (Tool *, GdkEventMotion *, gpointer)
 void          transform_core_control        (Tool *, ToolAction,       gpointer);
 
 /*  transform tool functions  */
-void          transform_core_draw                 (Tool *);
-void          transform_core_no_draw              (Tool *);
-Tool *        transform_core_new                  (ToolType, int);
-void          transform_core_free                 (Tool *);
-void          transform_core_reset                (Tool *, void *);
-void	      transform_core_grid_density_changed (void);
-void	      transform_core_showpath_changed     (gint);
+Tool        * transform_core_new                    (ToolType  tool_type,
+						     gboolean  interactive);
+void          transform_core_free                   (Tool     *tool);
+void          transform_core_draw                   (Tool     *tool);
+void          transform_core_no_draw                (Tool     *tool);
+void          transform_core_transform_bounding_box (Tool     *tool);
+void          transform_core_reset                  (Tool     *tool,
+						     void     *gdisp_ptr);
+void	      transform_core_grid_density_changed   (void);
+void	      transform_core_showpath_changed       (gint      type);
 
 /*  transform functions  */
-TileManager * transform_core_do      (GImage *, GimpDrawable *, TileManager *,
-				      int, GimpMatrix, progress_func_t,
-				      gpointer);
-TileManager * transform_core_cut     (GImage *, GimpDrawable *, int *);
-Layer *       transform_core_paste   (GImage *, GimpDrawable *, TileManager *,
-				      int);
-void          transform_bounding_box (Tool*);
+TileManager * transform_core_do    (GImage          *gimage,
+				    GimpDrawable    *drawable,
+				    TileManager     *float_tiles,
+				    gboolean         interpolation,
+				    GimpMatrix       matrix,
+				    progress_func_t  progress_callback,
+				    gpointer         progress_data);
+TileManager * transform_core_cut   (GImage          *gimage,
+				    GimpDrawable    *drawable,
+				    gboolean        *new_layer);
+Layer       * transform_core_paste (GImage          *gimage,
+				    GimpDrawable    *drawable,
+				    TileManager     *tiles,
+				    gboolean         new_layer);
 
 #endif  /*  __TRANSFORM_CORE_H__  */

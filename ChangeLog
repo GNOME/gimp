@@ -1,3 +1,32 @@
+2000-01-05  Michael Natterer  <mitch@gimp.org>
+
+	* PLUGIN_MAINTAINERS: I'm maintaining the helpbrowser (Sven, I
+	dared to add your name, too :-)
+
+	* app/context_manager.c
+	* app/flip_tool.[ch]
+	* app/perspective_tool.[ch]
+	* app/rotate_tool.[ch]
+	* app/scale_tool.[ch]
+	* app/shear_tool.[ch]
+	* app/transform_core.[ch]
+	* app/transform_tool.[ch]
+	* app/tools_cmds.c
+	* tools/pdbgen/pdb/tools.pdb
+
+	- Show the correct help pages in the transform tools' dialogs.
+	- The transform tool button of the toolbox is now always pressed
+	  if a transform tool is active (not only for "rotate").
+	- Replaced the transform action (CREATING, HANDLE_1, ...) and the
+	  transform state (INIT, MOTION, ...) #define's with typed enums.
+	- Changed the return type of the *_recalc functions to "void"
+	  instead of "void *" and the return type of the *_transform
+	  functions to "TileManager *" instead of "void *".
+	  (I probably removed an artefact here because all *_recalc
+	   functions returned "(void *) 1").
+	- Use gboolean instead of int where appropriate.
+	- Code cleanup, indentation.
+
 Wed Jan  5 11:35:10 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gimpimage.c: In gimp_image_merge_visible_layers and 

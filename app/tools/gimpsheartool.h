@@ -19,12 +19,19 @@
 #define __SHEAR_TOOL_H__
 
 #include "tools.h"
+#include "transform_core.h"
 
-void *        shear_tool_transform (Tool *, gpointer, int);
-void *        shear_tool_shear     (GimpImage *, GimpDrawable *, GDisplay *,
-				    TileManager *, int, GimpMatrix);
+TileManager * shear_tool_transform (Tool           *tool,
+				    gpointer        gdisp_ptr,
+				    TransformState  state);
+TileManager * shear_tool_shear     (GimpImage      *gimage,
+				    GimpDrawable   *drawable,
+				    GDisplay       *gdisp,
+				    TileManager    *float_tiles,
+				    gboolean        interpolation,
+				    GimpMatrix      matrix);
 
-Tool *        tools_new_shear_tool  (void);
-void          tools_free_shear_tool (Tool *);
+Tool * tools_new_shear_tool  (void);
+void   tools_free_shear_tool (Tool *matrix);
 
 #endif  /*  __SHEAR_TOOL_H__  */

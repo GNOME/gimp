@@ -19,15 +19,21 @@
 #define __PERSPECTIVE_TOOL_H__
 
 #include "tools.h"
+#include "transform_core.h"
 
-void *        perspective_tool_transform   (Tool *, gpointer, int);
-void *        perspective_tool_perspective (GimpImage *, GimpDrawable *,
-                                            GDisplay *, TileManager *,
-                                            int, GimpMatrix);
-void          perspective_find_transform   (double *, GimpMatrix);
+TileManager * perspective_tool_transform   (Tool           *tool,
+					    gpointer        gdisp_ptr,
+					    TransformState  state);
+TileManager * perspective_tool_perspective (GimpImage      *gimage,
+					    GimpDrawable   *drawable,
+					    GDisplay       *gdisp,
+					    TileManager    *float_tiles,
+					    gboolean        interpolation,
+					    GimpMatrix      matrix);
+void          perspective_find_transform   (gdouble        *coords,
+					    GimpMatrix      matrix);
 
-
-Tool *        tools_new_perspective_tool  (void);
-void          tools_free_perspective_tool (Tool *);
+Tool * tools_new_perspective_tool  (void);
+void   tools_free_perspective_tool (Tool *tool);
 
 #endif  /*  __PERSPECTIVE_TOOL_H__  */

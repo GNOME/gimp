@@ -459,8 +459,8 @@ SIZE       :   7.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : helpbrowser
-AUTHOR     : Sven Neumann <sven@gimp.org>, Michael Natterer <mitschel@cs.tu-berlin.de>
-MAINTAINER : 
+AUTHOR     : Sven Neumann <sven@gimp.org>, Michael Natterer <mitch@gimp.org>
+MAINTAINER : Sven Neumann <sven@gimp.org>, Michael Natterer <mitch@gimp.org>
 SIZE       :  32.7 kB  in  2 files (only C files counted)
 COMMENT    : 
 -----------

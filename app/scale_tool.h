@@ -19,12 +19,20 @@
 #define __SCALE_TOOL_H__
 
 #include "tools.h"
+#include "transform_core.h"
 
-void *        scale_tool_transform (Tool *, gpointer, int);
-void *        scale_tool_scale     (GimpImage *, GimpDrawable *, GDisplay *,
-				    double *, TileManager *, int, GimpMatrix);
+TileManager * scale_tool_transform (Tool           *tool,
+				    gpointer        gdisp_ptr,
+				    TransformState  state);
+TileManager * scale_tool_scale     (GimpImage      *gimage,
+				    GimpDrawable   *drawable,
+				    GDisplay       *gdisp,
+				    gdouble        *trans_info,
+				    TileManager    *float_tiles,
+				    gboolean        interpolation,
+				    GimpMatrix      matrix);
 
-Tool *        tools_new_scale_tool  (void);
-void          tools_free_scale_tool (Tool *);
+Tool * tools_new_scale_tool  (void);
+void   tools_free_scale_tool (Tool *tool);
 
 #endif  /*  __SCALE_TOOL_H__  */

@@ -19,17 +19,21 @@
 #define __FLIP_TOOL_H__
 
 #include "tools.h"
+#include "transform_core.h"
 
 /*  Flip tool functions  */
 
-#include "gimpimage.h"
+TileManager * flip_tool_transform  (Tool                    *tool,
+				    gpointer                 gdisp_ptr,
+				    TransformState           state);
 
-void *        flip_tool_transform (Tool *, gpointer, int);
+TileManager * flip_tool_flip       (GimpImage               *gimage,
+				    GimpDrawable            *drawable,
+				    TileManager             *orig,
+				    gint                     flip,
+				    InternalOrientationType  type);
 
-TileManager * flip_tool_flip (GimpImage *, GimpDrawable *,
-			      TileManager *, int, InternalOrientationType);
-Tool *        tools_new_flip         (void);
-void          tools_free_flip_tool   (Tool *);
+Tool        * tools_new_flip       (void);
+void          tools_free_flip_tool (Tool                    *tool);
 
 #endif  /*  __FLIP_TOOL_H__  */
-

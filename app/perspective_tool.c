@@ -22,8 +22,6 @@
 #include "info_dialog.h"
 #include "perspective_tool.h"
 #include "selection.h"
-#include "tools.h"
-#include "transform_core.h"
 #include "transform_tool.h"
 #include "undo.h"
 
@@ -33,32 +31,33 @@
 
 
 /*  storage for information dialog fields  */
-static char        matrix_row_buf [3][MAX_INFO_BUF];
+static gchar  matrix_row_buf [3][MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      perspective_tool_recalc      (Tool *, void *);
-static void        perspective_tool_motion      (Tool *, void *);
-static void        perspective_info_update      (Tool *);
+static void   perspective_tool_recalc (Tool *, void *);
+static void   perspective_tool_motion (Tool *, void *);
+static void   perspective_info_update (Tool *);
 
-void *
-perspective_tool_transform (Tool     *tool,
-			    gpointer  gdisp_ptr,
-			    int       state)
+TileManager *
+perspective_tool_transform (Tool           *tool,
+			    gpointer        gdisp_ptr,
+			    TransformState  state)
 {
-  GDisplay * gdisp;
-  TransformCore * transform_core;
+  GDisplay      *gdisp;
+  TransformCore *transform_core;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   switch (state)
     {
-    case INIT :
+    case INIT:
       if (!transform_info)
 	{
 	  transform_info =
 	    info_dialog_new (_("Perspective Transform Information"),
-			     tools_help_func, NULL);
+			     gimp_standard_help_func,
+			     "tools/transform_perspective.html");
 	  info_dialog_add_label (transform_info, _("Matrix:"),
 				 matrix_row_buf[0]);
 	  info_dialog_add_label (transform_info, "", matrix_row_buf[1]);
@@ -78,17 +77,16 @@ perspective_tool_transform (Tool     *tool,
       return NULL;
       break;
 
-    case MOTION :
+    case MOTION:
       perspective_tool_motion (tool, gdisp_ptr);
-
-      return (perspective_tool_recalc (tool, gdisp_ptr));
+      perspective_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case RECALC :
-      return (perspective_tool_recalc (tool, gdisp_ptr));
+    case RECALC:
+      perspective_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case FINISH :
+    case FINISH:
       /*  Let the transform core handle the inverse mapping  */
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
       return
@@ -104,14 +102,13 @@ perspective_tool_transform (Tool     *tool,
   return NULL;
 }
 
-
 Tool *
-tools_new_perspective_tool ()
+tools_new_perspective_tool (void)
 {
-  Tool * tool;
-  TransformCore * private;
+  Tool          *tool;
+  TransformCore *private;
 
-  tool = transform_core_new (PERSPECTIVE, INTERACTIVE);
+  tool = transform_core_new (PERSPECTIVE, TRUE);
 
   private = tool->private;
 
@@ -132,26 +129,24 @@ tools_new_perspective_tool ()
   return tool;
 }
 
-
 void
 tools_free_perspective_tool (Tool *tool)
 {
   transform_core_free (tool);
 }
 
-
 static void
 perspective_info_update (Tool *tool)
 {
-  TransformCore * transform_core;
-  int i;
+  TransformCore *transform_core;
+  gint           i;
   
   transform_core = (TransformCore *) tool->private;
 
   for (i = 0; i < 3; i++)
     {
-      char *p = matrix_row_buf[i];
-      int j;
+      gchar *p = matrix_row_buf[i];
+      gint   j;
       
       for (j = 0; j < 3; j++)
 	{
@@ -162,18 +157,17 @@ perspective_info_update (Tool *tool)
 
   info_dialog_update (transform_info);
   info_dialog_popup (transform_info);
-  
+
   return;
 }
-
 
 static void
 perspective_tool_motion (Tool *tool,
 			 void *gdisp_ptr)
 {
-  GDisplay * gdisp;
-  TransformCore * transform_core;
-  int diff_x, diff_y;
+  GDisplay      *gdisp;
+  TransformCore *transform_core;
+  gint            diff_x, diff_y;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -183,36 +177,36 @@ perspective_tool_motion (Tool *tool,
 
   switch (transform_core->function)
     {
-    case HANDLE_1 :
+    case HANDLE_1:
       transform_core->trans_info [X0] += diff_x;
       transform_core->trans_info [Y0] += diff_y;
       break;
-    case HANDLE_2 :
+    case HANDLE_2:
       transform_core->trans_info [X1] += diff_x;
       transform_core->trans_info [Y1] += diff_y;
       break;
-    case HANDLE_3 :
+    case HANDLE_3:
       transform_core->trans_info [X2] += diff_x;
       transform_core->trans_info [Y2] += diff_y;
       break;
-    case HANDLE_4 :
+    case HANDLE_4:
       transform_core->trans_info [X3] += diff_x;
       transform_core->trans_info [Y3] += diff_y;
       break;
-    default :
-      return;
+    default:
+      break;
     }
 }
 
-static void *
+static void
 perspective_tool_recalc (Tool *tool,
 			 void *gdisp_ptr)
 {
-  TransformCore * transform_core;
-  GDisplay * gdisp;
-  GimpMatrix m;
-  double cx, cy;
-  double scalex, scaley;
+  TransformCore *transform_core;
+  GDisplay      *gdisp;
+  GimpMatrix     m;
+  gdouble        cx, cy;
+  gdouble        scalex, scaley;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -226,6 +220,7 @@ perspective_tool_recalc (Tool *tool,
   cy     = transform_core->y1;
   scalex = 1.0;
   scaley = 1.0;
+
   if (transform_core->x2 - transform_core->x1)
     scalex = 1.0 / (transform_core->x2 - transform_core->x1);
   if (transform_core->y2 - transform_core->y1)
@@ -238,21 +233,18 @@ perspective_tool_recalc (Tool *tool,
   gimp_matrix_mult      (m, transform_core->transform);
 
   /*  transform the bounding box  */
-  transform_bounding_box (tool);
+  transform_core_transform_bounding_box (tool);
 
   /*  update the information dialog  */
   perspective_info_update (tool);
-
-  return (void *) 1;
 }
 
-
 void
-perspective_find_transform (double     *coords,
-			    GimpMatrix  m)
+perspective_find_transform (gdouble    *coords,
+			    GimpMatrix  matrix)
 {
-  double dx1, dx2, dx3, dy1, dy2, dy3;
-  double det1, det2;
+  gdouble dx1, dx2, dx3, dy1, dy2, dy3;
+  gdouble det1, det2;
 
   dx1 = coords[X1] - coords[X3];
   dx2 = coords[X2] - coords[X3];
@@ -265,53 +257,54 @@ perspective_find_transform (double     *coords,
   /*  Is the mapping affine?  */
   if ((dx3 == 0.0) && (dy3 == 0.0))
     {
-      m[0][0] = coords[X1] - coords[X0];
-      m[0][1] = coords[X3] - coords[X1];
-      m[0][2] = coords[X0];
-      m[1][0] = coords[Y1] - coords[Y0];
-      m[1][1] = coords[Y3] - coords[Y1];
-      m[1][2] = coords[Y0];
-      m[2][0] = 0.0;
-      m[2][1] = 0.0;
+      matrix[0][0] = coords[X1] - coords[X0];
+      matrix[0][1] = coords[X3] - coords[X1];
+      matrix[0][2] = coords[X0];
+      matrix[1][0] = coords[Y1] - coords[Y0];
+      matrix[1][1] = coords[Y3] - coords[Y1];
+      matrix[1][2] = coords[Y0];
+      matrix[2][0] = 0.0;
+      matrix[2][1] = 0.0;
     }
   else
     {
       det1 = dx3 * dy2 - dy3 * dx2;
       det2 = dx1 * dy2 - dy1 * dx2;
-      m[2][0] = det1 / det2;
+      matrix[2][0] = det1 / det2;
       det1 = dx1 * dy3 - dy1 * dx3;
       det2 = dx1 * dy2 - dy1 * dx2;
-      m[2][1] = det1 / det2;
+      matrix[2][1] = det1 / det2;
 
-      m[0][0] = coords[X1] - coords[X0] + m[2][0] * coords[X1];
-      m[0][1] = coords[X2] - coords[X0] + m[2][1] * coords[X2];
-      m[0][2] = coords[X0];
+      matrix[0][0] = coords[X1] - coords[X0] + matrix[2][0] * coords[X1];
+      matrix[0][1] = coords[X2] - coords[X0] + matrix[2][1] * coords[X2];
+      matrix[0][2] = coords[X0];
 
-      m[1][0] = coords[Y1] - coords[Y0] + m[2][0] * coords[Y1];
-      m[1][1] = coords[Y2] - coords[Y0] + m[2][1] * coords[Y2];
-      m[1][2] = coords[Y0];
+      matrix[1][0] = coords[Y1] - coords[Y0] + matrix[2][0] * coords[Y1];
+      matrix[1][1] = coords[Y2] - coords[Y0] + matrix[2][1] * coords[Y2];
+      matrix[1][2] = coords[Y0];
     }
 
-  m[2][2] = 1.0;
+  matrix[2][2] = 1.0;
 }
 
-
-void *
+TileManager *
 perspective_tool_perspective (GImage       *gimage,
 			      GimpDrawable *drawable,
 			      GDisplay     *gdisp,
 			      TileManager  *float_tiles,
-			      int           interpolation,
+			      gboolean      interpolation,
 			      GimpMatrix    matrix)
 {
-  void *ret;
   gimp_progress *progress;
+  TileManager   *ret;
 
   progress = progress_start (gdisp, _("Perspective..."), FALSE, NULL, NULL);
 
   ret = transform_core_do (gimage, drawable, float_tiles,
 			   interpolation, matrix,
-			   progress? progress_update_and_flush:NULL, progress);
+			   progress ? progress_update_and_flush : NULL,
+			   progress);
+
   if (progress)
     progress_end (progress);
 

@@ -25,7 +25,6 @@
 #include "gimage_mask.h"
 #include "temp_buf.h"
 #include "tool_options_ui.h"
-#include "transform_core.h"
 #include "paths_dialogP.h"
 
 #include "undo.h"
@@ -40,13 +39,14 @@
 /*  the flip structures  */
 
 typedef struct _FlipOptions FlipOptions;
+
 struct _FlipOptions
 {
-  ToolOptions  tool_options;
+  ToolOptions              tool_options;
 
-  ToolType     type;
-  ToolType     type_d;
-  GtkWidget   *type_w[2];
+  InternalOrientationType  type;
+  InternalOrientationType  type_d;
+  GtkWidget               *type_w[2];
 };
 
 static FlipOptions *flip_options = NULL;
@@ -76,7 +76,7 @@ flip_options_new (void)
   gint   type_value[2] = { ORIENTATION_HORIZONTAL, ORIENTATION_VERTICAL };
  
   /*  the new flip tool options structure  */
-  options = (FlipOptions *) g_malloc (sizeof (FlipOptions));
+  options = g_new (FlipOptions, 1);
   tool_options_init ((ToolOptions *) options,
 		     _("Flip Tool Options"),
 		     flip_options_reset);
@@ -119,35 +119,35 @@ flip_modifier_key_func (Tool        *tool,
     }
 }
   
-void *
-flip_tool_transform (Tool     *tool,
-                     gpointer  gdisp_ptr,
-                     int       state)
+TileManager *
+flip_tool_transform (Tool           *tool,
+                     gpointer        gdisp_ptr,
+                     TransformState  state)
 {
-  TransformCore * transform_core;
-  GDisplay *gdisp;
+  TransformCore *transform_core;
+  GDisplay      *gdisp;
 
   transform_core = (TransformCore *) tool->private;
   gdisp = (GDisplay *) gdisp_ptr;
 
   switch (state)
     {
-    case INIT :
+    case INIT:
       transform_info = NULL;
       break;
 
-    case MOTION :
+    case MOTION:
       break;
 
-    case RECALC :
+    case RECALC:
       break;
 
-    case FINISH :
+    case FINISH:
       /*      transform_core->trans_info[FLIP] *= -1.0;*/
       return flip_tool_flip (gdisp->gimage,
 	  		     gimage_active_drawable (gdisp->gimage),
 			     transform_core->original, 
-			     (int)transform_core->trans_info[FLIP_INFO],
+			     (int) transform_core->trans_info[FLIP_INFO],
 			     flip_options->type);
       break;
     }
@@ -160,9 +160,9 @@ flip_cursor_update (Tool           *tool,
 		    GdkEventMotion *mevent,
 		    gpointer        gdisp_ptr)
 {
-  GDisplay *gdisp;
-  Layer *layer;
-  GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
+  GDisplay      *gdisp;
+  Layer         *layer;
+  GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
 
   gdisp = (GDisplay *) gdisp_ptr;
   
@@ -196,7 +196,7 @@ flip_cursor_update (Tool           *tool,
 Tool *
 tools_new_flip (void)
 {
-  Tool * tool;
+  Tool          * tool;
   TransformCore * private;
 
   /*  The tool options  */
@@ -206,13 +206,13 @@ tools_new_flip (void)
       tools_register (FLIP, (ToolOptions *) flip_options);
     }
 
-  tool = transform_core_new (FLIP, NON_INTERACTIVE);
+  tool = transform_core_new (FLIP, FALSE);
   private = tool->private;
 
-  private->trans_func   = flip_tool_transform;
+  private->trans_func = flip_tool_transform;
   private->trans_info[FLIP_INFO] = -1.0;
 
-  tool->modifier_key_func = flip_modifier_key_func;
+  tool->modifier_key_func  = flip_modifier_key_func;
   tool->cursor_update_func = flip_cursor_update;
 
   return tool;
@@ -232,8 +232,8 @@ flip_tool_flip (GimpImage               *gimage,
 		InternalOrientationType  type)
 {
   TileManager *new;
-  PixelRegion srcPR, destPR;
-  int i;
+  PixelRegion  srcPR, destPR;
+  gint i;
 
   if (!orig)
     return NULL;
@@ -258,14 +258,16 @@ flip_tool_flip (GimpImage               *gimage,
 	for (i = 0; i < orig->width; i++)
 	  {
 	    pixel_region_init (&srcPR, orig, i, 0, 1, orig->height, FALSE);
-	    pixel_region_init (&destPR, new, (orig->width - i - 1), 0, 1, orig->height, TRUE);
+	    pixel_region_init (&destPR, new,
+			       (orig->width - i - 1), 0, 1, orig->height, TRUE);
 	    copy_region (&srcPR, &destPR); 
 	  }
       else
 	for (i = 0; i < orig->height; i++)
 	  {
 	    pixel_region_init (&srcPR, orig, 0, i, orig->width, 1, FALSE);
-	    pixel_region_init (&destPR, new, 0, (orig->height - i - 1), orig->width, 1, TRUE);
+	    pixel_region_init (&destPR, new,
+			       0, (orig->height - i - 1), orig->width, 1, TRUE);
 	    copy_region (&srcPR, &destPR);
 	  }
 
@@ -273,10 +275,10 @@ flip_tool_flip (GimpImage               *gimage,
       /* Note that the undo structures etc are setup before we enter this
        * function.
        */
-      if(type == ORIENTATION_HORIZONTAL)
-	paths_transform_flip_horz(gimage);
+      if (type == ORIENTATION_HORIZONTAL)
+	paths_transform_flip_horz (gimage);
       else
-	paths_transform_flip_vert(gimage);
+	paths_transform_flip_vert (gimage);
     }
 
   return new;

@@ -48,20 +48,20 @@
                     dy  * (jk1 + dx * (j1k1 - jk1)))
 
 /*  variables  */
-static TranInfo    old_trans_info;
-InfoDialog *       transform_info = NULL;
-static gboolean    transform_info_inited = FALSE;
+static TranInfo  old_trans_info;
+InfoDialog      *transform_info = NULL;
+static gboolean  transform_info_inited = FALSE;
 
 /*  forward function declarations  */
-static int         transform_core_bounds      (Tool *, void *);
-static void *      transform_core_recalc      (Tool *, void *);
-static void        transform_core_doit        (Tool *, gpointer);
-static double      cubic                      (double, int, int, int, int);
-static void        transform_core_setup_grid  (Tool *);
-static void        transform_core_grid_recalc (TransformCore *);
+static void      transform_core_bounds      (Tool *, void *);
+static void      transform_core_recalc      (Tool *, void *);
+static void      transform_core_doit        (Tool *, gpointer);
+static gdouble   cubic                      (gdouble, gint, gint, gint, gint);
+static void      transform_core_setup_grid  (Tool *);
+static void      transform_core_grid_recalc (TransformCore *);
 
 /* Hmmm... Should be in a headerfile but which? */
-void          paths_draw_current(GDisplay *,DrawCore *,GimpMatrix);
+void             paths_draw_current         (GDisplay *, DrawCore *, GimpMatrix);
 
 #define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
                 ((1-dy) * (jk + dx * (j1k - jk)) + \
@@ -76,11 +76,9 @@ void          paths_draw_current(GDisplay *,DrawCore *,GimpMatrix);
             (row)[step+step]* (row)[step+step + i], \
             (row)[step+step+step] * (row)[step+step+step + i])
 
-
 #define REF_TILE(i,x,y) \
      tile[i] = tile_manager_get_tile (float_tiles, x, y, TRUE, FALSE); \
      src[i] = tile_data_pointer (tile[i], (x) % TILE_WIDTH, (y) % TILE_HEIGHT);
-
 
 /* This should be migrated to pixel_region or similar... */
 /* PixelSurround describes a (read-only)
@@ -103,22 +101,24 @@ typedef struct _PixelSurround
 static void
 pixel_surround_init (PixelSurround *ps,
 		     TileManager   *t,
-		     int            w,
-		     int            h,
+		     gint           w,
+		     gint           h,
 		     guchar         bg[MAX_CHANNELS])
 {
-  int i;
-  for (i = 0; i < MAX_CHANNELS; ++i) {
-    ps->bg[i] = bg[i];
-  }
+  gint i;
+
+  for (i = 0; i < MAX_CHANNELS; ++i)
+    {
+      ps->bg[i] = bg[i];
+    }
   ps->tile = 0;
   ps->mgr = t;
-  ps->bpp = tile_manager_level_bpp(t);
+  ps->bpp = tile_manager_level_bpp (t);
   ps->w = w;
   ps->h = h;
   /* make sure buffer is big enough */
   ps->buff_size = w * h * ps->bpp;
-  ps->buff = g_malloc(ps->buff_size);
+  ps->buff = g_malloc (ps->buff_size);
   ps->row_stride = 0;
 }
 
@@ -128,52 +128,64 @@ pixel_surround_init (PixelSurround *ps,
 
 static guchar *
 pixel_surround_lock (PixelSurround *ps,
-		     int            x,
-		     int            y)
+		     gint           x,
+		     gint           y)
 {
-  int i, j;
-  unsigned char* k;
-  unsigned char* ptr;
+  gint    i, j;
+  guchar *k;
+  guchar *ptr;
 
-  ps->tile = tile_manager_get_tile(ps->mgr, x, y, TRUE, FALSE);
+  ps->tile = tile_manager_get_tile (ps->mgr, x, y, TRUE, FALSE);
 
   i = x % TILE_WIDTH;
   j = y % TILE_HEIGHT;
 
   /* do we have the whole region? */
-  if (ps->tile && (i < (tile_ewidth(ps->tile) - ps->w)) &&
-                  (j < (tile_eheight(ps->tile) - ps->h))) {
-    ps->row_stride = tile_ewidth(ps->tile) * ps->bpp;
-    /* is this really the correct way? */
-    return tile_data_pointer(ps->tile, i, j);
-  }
+  if (ps->tile &&
+      (i < (tile_ewidth(ps->tile) - ps->w)) &&
+      (j < (tile_eheight(ps->tile) - ps->h)))
+    {
+      ps->row_stride = tile_ewidth (ps->tile) * ps->bpp;
+      /* is this really the correct way? */
+      return tile_data_pointer (ps->tile, i, j);
+    }
 
   /* nope, do this the hard way (for now) */
-  if (ps->tile) {
-    tile_release(ps->tile, FALSE);
-    ps->tile = 0;
-  }
+  if (ps->tile)
+    {
+      tile_release (ps->tile, FALSE);
+      ps->tile = 0;
+    }
 
   /* copy pixels, one by one */
   /* no, this is not the best way, but it's much better than before */
   ptr = ps->buff;
-  for (j = y; j < y+ps->h; ++j) {
-    for (i = x; i < x+ps->w; ++i) {
-      Tile* tile = tile_manager_get_tile (ps->mgr, i, j, TRUE, FALSE);
-      if (tile) {
-        unsigned char* buff = tile_data_pointer (tile, i % TILE_WIDTH, j % TILE_HEIGHT);
-        for (k = buff; k < buff+ps->bpp; ++k, ++ptr) {
-          *ptr = *k;
+  for (j = y; j < y+ps->h; ++j)
+    {
+      for (i = x; i < x+ps->w; ++i)
+	{
+	  Tile *tile = tile_manager_get_tile (ps->mgr, i, j, TRUE, FALSE);
+
+	  if (tile)
+	    {
+	      guchar* buff = tile_data_pointer (tile, i % TILE_WIDTH, j % TILE_HEIGHT);
+	      for (k = buff; k < buff+ps->bpp; ++k, ++ptr)
+		{
+		  *ptr = *k;
+		}
+	      tile_release (tile, FALSE);
+	    }
+	  else
+	    {
+	      for (k = ps->bg; k < ps->bg+ps->bpp; ++k, ++ptr)
+		{
+		  *ptr = *k;
+		}
+	    }
 	}
-        tile_release(tile, FALSE);
-      } else {
-	for (k = ps->bg; k < ps->bg+ps->bpp; ++k, ++ptr) {
-          *ptr = *k;
-	}
-      }
     }
-  }
   ps->row_stride = ps->w * ps->bpp;
+
   return ps->buff;
 }
 
@@ -189,7 +201,7 @@ pixel_surround_release (PixelSurround *ps)
   /* always get new tile (for now), so release the old one */
   if (ps->tile)
     {
-      tile_release(ps->tile, FALSE);
+      tile_release (ps->tile, FALSE);
       ps->tile = 0;
     }
 }
@@ -206,24 +218,24 @@ pixel_surround_clear (PixelSurround *ps)
 }
 
 static void
-transform_ok_callback (GtkWidget *w,
-		       gpointer   client_data)
+transform_ok_callback (GtkWidget *widget,
+		       gpointer   data)
 {
   Tool *tool;
 
-  tool = (Tool *) client_data;
+  tool = (Tool *) data;
   transform_core_doit (tool, tool->gdisp_ptr);
 }
 
 static void
-transform_reset_callback (GtkWidget *w,
-			  gpointer   client_data)
+transform_reset_callback (GtkWidget *widget,
+			  gpointer   data)
 {
-  Tool *tool;
+  Tool          *tool;
   TransformCore *transform_core;
-  int i;
+  gint           i;
 
-  tool = (Tool *) client_data;
+  tool = (Tool *) data;
   transform_core = (TransformCore *) tool->private;
 
   /*  stop the current tool drawing process  */
@@ -232,6 +244,7 @@ transform_reset_callback (GtkWidget *w,
   /*  Restore the previous transformation info  */
   for (i = 0; i < TRAN_INFO_SIZE; i++)
     transform_core->trans_info [i] = old_trans_info [i];
+
   /*  recalculate the tool's transformation matrix  */
   transform_core_recalc (tool, tool->gdisp_ptr);
   
@@ -252,15 +265,15 @@ transform_core_button_press (Tool           *tool,
 			     GdkEventButton *bevent,
 			     gpointer        gdisp_ptr)
 {
-  TransformCore * transform_core;
-  GDisplay * gdisp;
-  Layer * layer;
-  GimpDrawable * drawable;
-  int dist;
-  int closest_dist;
-  int x, y;
-  int i;
-  int off_x, off_y;
+  GDisplay      *gdisp;
+  TransformCore *transform_core;
+  Layer         *layer;
+  GimpDrawable  *drawable;
+  gint           dist;
+  gint           closest_dist;
+  gint           x, y;
+  gint           i;
+  gint           off_x, off_y;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -327,7 +340,9 @@ transform_core_button_press (Tool           *tool,
       transform_core->lasty = transform_core->starty;
 
       gdk_pointer_grab (gdisp->canvas->window, FALSE,
-			GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+			GDK_POINTER_MOTION_HINT_MASK |
+			GDK_BUTTON1_MOTION_MASK |
+			GDK_BUTTON_RELEASE_MASK,
 			NULL, NULL, bevent->time);
 
       tool->state = ACTIVE;
@@ -335,8 +350,9 @@ transform_core_button_press (Tool           *tool,
     }
 
 
-  /* Initialisation stuff: if the cursor is clicked inside the current
-   * selection, show the bounding box and handles...  */
+  /*  Initialisation stuff: if the cursor is clicked inside the current
+   *  selection, show the bounding box and handles...
+   */
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
   if ((layer = gimage_get_active_layer (gdisp->gimage))) 
     {
@@ -354,8 +370,9 @@ transform_core_button_press (Tool           *tool,
 		return;
 	      }
 
-	    /* If the tool is already active, clear the current state
-             * and reset */
+	    /*  If the tool is already active, clear the current state
+             *  and reset
+	     */
 	    if (tool->state == ACTIVE)
 	      transform_core_reset (tool, gdisp_ptr);
 
@@ -372,9 +389,10 @@ transform_core_button_press (Tool           *tool,
 				 GDK_BUTTON_RELEASE_MASK),
 				NULL, NULL, bevent->time);
 
-	    /* Find the transform bounds for some tools (like scale,
-	     * perspective) that actually need the bounds for
-	     * initializing */
+	    /*  Find the transform bounds for some tools (like scale,
+	     *  perspective) that actually need the bounds for
+	     *  initializing
+	     */
 	    transform_core_bounds (tool, gdisp_ptr);
 
 	    /*  Calculate the grid line endpoints  */
@@ -384,7 +402,7 @@ transform_core_button_press (Tool           *tool,
 	    /*  Initialize the transform tool  */
 	    (* transform_core->trans_func) (tool, gdisp_ptr, INIT);
 
-	    if (transform_info != NULL && !transform_info_inited)
+	    if (transform_info && !transform_info_inited)
 	      {
 		gimp_dialog_create_action_area
 		  (GTK_DIALOG (transform_info->shell),
@@ -415,9 +433,9 @@ transform_core_button_release (Tool           *tool,
 			       GdkEventButton *bevent,
 			       gpointer        gdisp_ptr)
 {
-  GDisplay *gdisp;
+  GDisplay      *gdisp;
   TransformCore *transform_core;
-  int i;
+  gint           i;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -443,7 +461,8 @@ transform_core_button_release (Tool           *tool,
       else
 	{
 	  /*  Only update the paths preview */
-	  paths_transform_current_path(gdisp->gimage,transform_core->transform,TRUE);
+	  paths_transform_current_path (gdisp->gimage,
+					transform_core->transform, TRUE);
 	}
     }
   else
@@ -454,6 +473,7 @@ transform_core_button_release (Tool           *tool,
       /*  Restore the previous transformation info  */
       for (i = 0; i < TRAN_INFO_SIZE; i++)
 	transform_core->trans_info [i] = old_trans_info [i];
+
       /*  recalculate the tool's transformation matrix  */
       transform_core_recalc (tool, gdisp_ptr);
 
@@ -461,7 +481,8 @@ transform_core_button_release (Tool           *tool,
       draw_core_resume (transform_core->core, tool);
 
       /* Update the paths preview */
-      paths_transform_current_path(gdisp->gimage,transform_core->transform,TRUE);
+      paths_transform_current_path (gdisp->gimage,
+				    transform_core->transform, TRUE);
     }
 
   /*  if this tool is non-interactive, make it inactive after use  */
@@ -473,15 +494,15 @@ void
 transform_core_doit (Tool     *tool,
 		     gpointer  gdisp_ptr)
 {
-  GDisplay *gdisp;
-  void *pundo;
+  GDisplay      *gdisp;
   TransformCore *transform_core;
-  TileManager *new_tiles;
+  TileManager   *new_tiles;
   TransformUndo *tu;
-  int new_layer;
-  int i, x, y;
+  void          *pundo;
+  gboolean       new_layer;
+  gint           i, x, y;
 
-  gimp_add_busy_cursors();
+  gimp_add_busy_cursors ();
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -531,7 +552,7 @@ transform_core_doit (Tool     *tool,
 			    new_tiles, new_layer);
 
       /*  create and initialize the transform_undo structure  */
-      tu = (TransformUndo *) g_malloc (sizeof (TransformUndo));
+      tu = g_new (TransformUndo, 1);
       tu->tool_ID = tool->ID;
       tu->tool_type = tool->type;
       for (i = 0; i < TRAN_INFO_SIZE; i++)
@@ -575,7 +596,7 @@ transform_core_doit (Tool     *tool,
 	}
     }
 
-  gimp_remove_busy_cursors(NULL);
+  gimp_remove_busy_cursors (NULL);
 
   gdisplays_flush ();
 
@@ -586,19 +607,18 @@ transform_core_doit (Tool     *tool,
     tool->state = INACTIVE;
 }
 
-
 void
 transform_core_motion (Tool           *tool,
 		       GdkEventMotion *mevent,
 		       gpointer        gdisp_ptr)
 {
-  GDisplay *gdisp;
+  GDisplay      *gdisp;
   TransformCore *transform_core;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
-  if(transform_core->bpressed == FALSE)
+  if (transform_core->bpressed == FALSE)
   {
     /*  hey we have not got the button press yet
      *  so go away.
@@ -615,7 +635,8 @@ transform_core_motion (Tool           *tool,
   /*  stop the current tool drawing process  */
   draw_core_pause (transform_core->core, tool);
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &transform_core->curx,
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
+			       &transform_core->curx,
 			       &transform_core->cury, TRUE, 0);
   transform_core->state = mevent->state;
 
@@ -629,27 +650,27 @@ transform_core_motion (Tool           *tool,
   draw_core_resume (transform_core->core, tool);
 }
 
-
 void
 transform_core_cursor_update (Tool           *tool,
 			      GdkEventMotion *mevent,
 			      gpointer        gdisp_ptr)
 {
-  GDisplay *gdisp;
+  GDisplay      *gdisp;
   TransformCore *transform_core;
-  Layer *layer;
-  int use_transform_cursor = FALSE;
-  GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
-  int x, y;
+  Layer         *layer;
+  gboolean       use_transform_cursor = FALSE;
+  GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
+  gint           x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
   if ((layer = gimage_get_active_layer (gdisp->gimage)))
-    if (x >= GIMP_DRAWABLE(layer)->offset_x && y >= GIMP_DRAWABLE(layer)->offset_y &&
-	x < (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width) &&
-	y < (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height))
+    if (x >= GIMP_DRAWABLE (layer)->offset_x &&
+	y >= GIMP_DRAWABLE (layer)->offset_y &&
+	x < (GIMP_DRAWABLE (layer)->offset_x + GIMP_DRAWABLE (layer)->width) &&
+	y < (GIMP_DRAWABLE (layer)->offset_y + GIMP_DRAWABLE (layer)->height))
       {
 	if (gimage_mask_is_empty (gdisp->gimage) ||
 	    gimage_mask_value (gdisp->gimage, x, y))
@@ -660,23 +681,22 @@ transform_core_cursor_update (Tool           *tool,
     /*  ctype based on transform tool type  */
     switch (tool->type)
       {
-      case ROTATE: ctype = GDK_EXCHANGE; break;
-      case SCALE: ctype = GDK_SIZING; break;
-      case SHEAR: ctype = GDK_TCROSS; break;
-      case PERSPECTIVE: ctype = GDK_TCROSS; break;
+      case ROTATE:      ctype = GDK_EXCHANGE; break;
+      case SCALE:       ctype = GDK_SIZING;   break;
+      case SHEAR:       ctype = GDK_TCROSS;   break;
+      case PERSPECTIVE: ctype = GDK_TCROSS;   break;
       default: break;
       }
 
   gdisplay_install_tool_cursor (gdisp, ctype);
 }
 
-
 void
 transform_core_control (Tool       *tool,
 			ToolAction  action,
 			gpointer    gdisp_ptr)
 {
-  TransformCore * transform_core;
+  TransformCore *transform_core;
 
   transform_core = (TransformCore *) tool->private;
 
@@ -687,13 +707,8 @@ transform_core_control (Tool       *tool,
       break;
 
     case RESUME:
-      if (transform_core_recalc (tool, gdisp_ptr))
-	draw_core_resume (transform_core->core, tool);
-      else
-	{
-	  info_dialog_popdown (transform_info);
-	  tool->state = INACTIVE;
-	}
+      transform_core_recalc (tool, gdisp_ptr);
+      draw_core_resume (transform_core->core, tool);
       break;
 
     case HALT:
@@ -714,12 +729,12 @@ transform_core_no_draw (Tool *tool)
 void
 transform_core_draw (Tool *tool)
 {
-  int x1, y1, x2, y2, x3, y3, x4, y4;
-  TransformCore * transform_core;
-  GDisplay * gdisp;
-  int srw, srh;
-  int i, k, gci;
-  int xa, ya, xb, yb;
+  GDisplay      *gdisp;
+  TransformCore *transform_core;
+  gint           x1, y1, x2, y2, x3, y3, x4, y4;
+  gint           srw, srh;
+  gint           i, k, gci;
+  gint           xa, ya, xb, yb;
 
   gdisp = tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -800,29 +815,30 @@ transform_core_draw (Tool *tool)
 		    srw, srh, 0, 23040);
     }
 
-  if(transform_tool_showpath())
+  if (transform_tool_showpath ())
     {
       GimpMatrix tmp_matrix;
+
       if (transform_tool_direction () == TRANSFORM_CORRECTIVE)
 	{
-	  gimp_matrix_invert (transform_core->transform,tmp_matrix);
+	  gimp_matrix_invert (transform_core->transform, tmp_matrix);
 	}
       else
 	{
-	  gimp_matrix_duplicate(transform_core->transform,tmp_matrix);
+	  gimp_matrix_duplicate (transform_core->transform, tmp_matrix);
 	}
 
-      paths_draw_current(gdisp,transform_core->core,tmp_matrix);
+      paths_draw_current (gdisp, transform_core->core, tmp_matrix);
     }
 }
 
 Tool *
 transform_core_new (ToolType type,
-		    int      interactive)
+		    gint     interactive)
 {
-  Tool * tool;
-  TransformCore * private;
-  int i;
+  Tool          *tool;
+  TransformCore *private;
+  gint           i;
 
   tool = tools_new_tool (type);
   private = g_new (TransformCore, 1);
@@ -861,7 +877,7 @@ transform_core_new (ToolType type,
 void
 transform_core_free (Tool *tool)
 {
-  TransformCore * transform_core;
+  TransformCore *transform_core;
 
   transform_core = (TransformCore *) tool->private;
 
@@ -879,12 +895,14 @@ transform_core_free (Tool *tool)
   /*  If there is an information dialog, free it up  */
   if (transform_info)
     info_dialog_free (transform_info);
-  transform_info = NULL;
+
+  transform_info        = NULL;
   transform_info_inited = FALSE;
 
   /*  Free the grid line endpoint arrays if they exist */ 
   if (transform_core->grid_coords != NULL)
     g_free (transform_core->grid_coords);
+
   if (transform_core->tgrid_coords != NULL)
     g_free (transform_core->tgrid_coords);
 
@@ -893,12 +911,11 @@ transform_core_free (Tool *tool)
 }
 
 void
-transform_bounding_box (Tool *tool)
+transform_core_transform_bounding_box (Tool *tool)
 {
-  TransformCore * transform_core;
-  int i, k;
-  int gci;
-  GDisplay * gdisp;
+  TransformCore *transform_core;
+  gint           i, k;
+  gint           gci;
 
   transform_core = (TransformCore *) tool->private;
 
@@ -935,16 +952,14 @@ transform_bounding_box (Tool *tool)
 	  gci += 2;
 	}
     }
-
-  gdisp = (GDisplay *) tool->gdisp_ptr;
 }
 
 void
 transform_core_reset (Tool *tool,
 		      void *gdisp_ptr)
 {
-  TransformCore * transform_core;
-  GDisplay * gdisp;
+  TransformCore *transform_core;
+  GDisplay      *gdisp;
 
   transform_core = (TransformCore *) tool->private;
   gdisp = (GDisplay *) gdisp_ptr;
@@ -963,15 +978,15 @@ transform_core_reset (Tool *tool,
   tool->drawable = NULL;
 }
 
-static int
+static void
 transform_core_bounds (Tool *tool,
 		       void *gdisp_ptr)
 {
-  GDisplay * gdisp;
-  TransformCore * transform_core;
-  TileManager * tiles;
-  GimpDrawable *drawable;
-  int offset_x, offset_y;
+  GDisplay      *gdisp;
+  TransformCore *transform_core;
+  TileManager   *tiles;
+  GimpDrawable  *drawable;
+  gint           offset_x, offset_y;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -1002,15 +1017,13 @@ transform_core_bounds (Tool *tool,
 
   /*  changing the bounds invalidates any grid we may have  */
   transform_core_grid_recalc (transform_core);
-
-  return TRUE;
 }
 
 void
-transform_core_grid_density_changed ()
+transform_core_grid_density_changed (void)
 {
-  TransformCore * transform_core;
-  
+  TransformCore *transform_core;
+
   transform_core = (TransformCore *) active_tool->private;
 
   if (transform_core->function == CREATING)
@@ -1018,14 +1031,14 @@ transform_core_grid_density_changed ()
 
   draw_core_pause (transform_core->core, active_tool);
   transform_core_grid_recalc (transform_core);
-  transform_bounding_box (active_tool);
+  transform_core_transform_bounding_box (active_tool);
   draw_core_resume (transform_core->core, active_tool);
 }
 
 void
 transform_core_showpath_changed (gint type)
 {
-  TransformCore * transform_core;
+  TransformCore *transform_core;
 
   transform_core = (TransformCore *) active_tool->private;
 
@@ -1051,16 +1064,16 @@ transform_core_grid_recalc (TransformCore *transform_core)
       g_free (transform_core->tgrid_coords);
       transform_core->tgrid_coords = NULL;
     }
-  if (transform_tool_show_grid())
+  if (transform_tool_show_grid ())
     transform_core_setup_grid (active_tool);
 }
 
 static void
 transform_core_setup_grid (Tool *tool)
 {
-  TransformCore * transform_core;
-  int i, gci;
-  double *coords;
+  TransformCore *transform_core;
+  gint           i, gci;
+  gdouble       *coords;
 
   transform_core = (TransformCore *) tool->private;
       
@@ -1072,17 +1085,18 @@ transform_core_setup_grid (Tool *tool)
     (transform_core->x2 - transform_core->x1) / transform_tool_grid_size ();
   if (transform_core->ngx > 0)
     transform_core->ngx--;
-  transform_core->ngy =
+ 
+ transform_core->ngy =
     (transform_core->y2 - transform_core->y1) / transform_tool_grid_size ();
   if (transform_core->ngy > 0)
     transform_core->ngy--;
-  transform_core->grid_coords = coords = (double *)
-    g_malloc ((transform_core->ngx + transform_core->ngy) * 4
-	      * sizeof(double));
-  transform_core->tgrid_coords = (double *)
-    g_malloc ((transform_core->ngx + transform_core->ngy) * 4
-	      * sizeof(double));
-  
+
+  transform_core->grid_coords = coords =
+    g_new (double, (transform_core->ngx + transform_core->ngy) * 4);
+
+  transform_core->tgrid_coords =
+    g_new (double, (transform_core->ngx + transform_core->ngy) * 4);
+
   gci = 0;
   for (i = 1; i <= transform_core->ngx; i++)
     {
@@ -1106,16 +1120,17 @@ transform_core_setup_grid (Tool *tool)
     }
 }
 
-static void *
+static void
 transform_core_recalc (Tool *tool,
 		       void *gdisp_ptr)
 {
-  TransformCore * transform_core;
+  TransformCore *transform_core;
 
   transform_core = (TransformCore *) tool->private;
 
   transform_core_bounds (tool, gdisp_ptr);
-  return (* transform_core->trans_func) (tool, gdisp_ptr, RECALC);
+
+  (* transform_core->trans_func) (tool, gdisp_ptr, RECALC);
 }
 
 /*  Actually carry out a transformation  */
@@ -1123,33 +1138,34 @@ TileManager *
 transform_core_do (GImage          *gimage,
                    GimpDrawable    *drawable,
                    TileManager     *float_tiles,
-                   int              interpolation,
+                   gboolean         interpolation,
                    GimpMatrix       matrix,
                    progress_func_t  progress_callback,
                    gpointer         progress_data)
 {
-  PixelRegion destPR;
+  PixelRegion  destPR;
   TileManager *tiles;
-  GimpMatrix m;
-  GimpMatrix im;
-  int itx, ity;
-  int tx1, ty1, tx2, ty2;
-  int width, height;
-  int alpha;
-  int bytes, b;
-  int x, y;
-  int sx, sy;
-  int x1, y1, x2, y2;
-  double xinc, yinc, winc;
-  double tx, ty, tw;
-  double ttx = 0.0, tty = 0.0;
-  unsigned char * dest, * d;
-  unsigned char * src[16];
-  Tile *tile[16];
-  unsigned char bg_col[MAX_CHANNELS];
-  int i;
-  double a_val, a_recip;
-  int newval;
+  GimpMatrix   m;
+  GimpMatrix   im;
+  gint         itx, ity;
+  gint         tx1, ty1, tx2, ty2;
+  gint         width, height;
+  gint         alpha;
+  gint         bytes, b;
+  gint         x, y;
+  gint         sx, sy;
+  gint         x1, y1, x2, y2;
+  gdouble      xinc, yinc, winc;
+  gdouble      tx, ty, tw;
+  gdouble      ttx = 0.0, tty = 0.0;
+  guchar      *dest;
+  guchar      *d;
+  guchar      *src[16];
+  Tile        *tile[16];
+  guchar       bg_col[MAX_CHANNELS];
+  gint         i;
+  gdouble      a_val, a_recip;
+  gint         newval;
 
   PixelSurround surround;
 
@@ -1195,7 +1211,7 @@ transform_core_do (GImage          *gimage,
       gimp_matrix_invert (matrix, m);
     }
 
-  paths_transform_current_path(gimage,matrix,FALSE);
+  paths_transform_current_path (gimage, matrix, FALSE);
 
   x1 = float_tiles->x;
   y1 = float_tiles->y;
@@ -1212,25 +1228,25 @@ transform_core_do (GImage          *gimage,
     }
   else
     {
-      double dx1, dy1, dx2, dy2, dx3, dy3, dx4, dy4;
+      gdouble dx1, dy1, dx2, dy2, dx3, dy3, dx4, dy4;
 
       gimp_matrix_transform_point (matrix, x1, y1, &dx1, &dy1);
       gimp_matrix_transform_point (matrix, x2, y1, &dx2, &dy2);
       gimp_matrix_transform_point (matrix, x1, y2, &dx3, &dy3);
       gimp_matrix_transform_point (matrix, x2, y2, &dx4, &dy4);
 
-      tx1 = MINIMUM (dx1, dx2);
-      tx1 = MINIMUM (tx1, dx3);
-      tx1 = MINIMUM (tx1, dx4);
-      ty1 = MINIMUM (dy1, dy2);
-      ty1 = MINIMUM (ty1, dy3);
-      ty1 = MINIMUM (ty1, dy4);
-      tx2 = MAXIMUM (dx1, dx2);
-      tx2 = MAXIMUM (tx2, dx3);
-      tx2 = MAXIMUM (tx2, dx4);
-      ty2 = MAXIMUM (dy1, dy2);
-      ty2 = MAXIMUM (ty2, dy3);
-      ty2 = MAXIMUM (ty2, dy4);
+      tx1 = MIN (dx1, dx2);
+      tx1 = MIN (tx1, dx3);
+      tx1 = MIN (tx1, dx4);
+      ty1 = MIN (dy1, dy2);
+      ty1 = MIN (ty1, dy3);
+      ty1 = MIN (ty1, dy4);
+      tx2 = MAX (dx1, dx2);
+      tx2 = MAX (tx2, dx3);
+      tx2 = MAX (tx2, dx4);
+      ty2 = MAX (dy1, dy2);
+      ty2 = MAX (ty2, dy3);
+      ty2 = MAX (ty2, dy4);
     }
 
   /*  Get the new temporary buffer for the transformed result  */
@@ -1240,22 +1256,28 @@ transform_core_do (GImage          *gimage,
   tiles->y = ty1;
 
   /* initialise the pixel_surround accessor */
-  if (interpolation) {
-    if (interpolation_type == CUBIC_INTERPOLATION) {
-      pixel_surround_init(&surround, float_tiles, 4, 4, bg_col);
-    } else {
-      pixel_surround_init(&surround, float_tiles, 2, 2, bg_col);
+  if (interpolation)
+    {
+      if (interpolation_type == CUBIC_INTERPOLATION)
+	{
+	  pixel_surround_init (&surround, float_tiles, 4, 4, bg_col);
+	}
+      else
+	{
+	  pixel_surround_init (&surround, float_tiles, 2, 2, bg_col);
+	}
     }
-  } else {
-    /* not actually useful, keeps the code cleaner */
-    pixel_surround_init(&surround, float_tiles, 1, 1, bg_col);
-  }
+  else
+    {
+      /* not actually useful, keeps the code cleaner */
+      pixel_surround_init (&surround, float_tiles, 1, 1, bg_col);
+    }
 
   width = tiles->width;
   height = tiles->height;
   bytes = tiles->bpp;
 
-  dest = (unsigned char *) g_malloc (width * bytes);
+  dest = g_new (guchar, width * bytes);
 
   xinc = m[0][0];
   yinc = m[1][0];
@@ -1268,7 +1290,7 @@ transform_core_do (GImage          *gimage,
   for (y = ty1; y < ty2; y++)
     {
       if (progress_callback && !(y & 0xf))
-	(*progress_callback)(ty1, ty2, y, progress_data);
+	(* progress_callback) (ty1, ty2, y, progress_data);
 
       /* set up inverse transform steps */
       tx = xinc * tx1 + m[0][1] * y + m[0][2];
@@ -1280,7 +1302,9 @@ transform_core_do (GImage          *gimage,
 	{
 	  /*  normalize homogeneous coords  */
 	  if (tw == 0.0)
-	    g_message (_("homogeneous coordinate = 0...\n"));
+	    {
+	      g_message (_("homogeneous coordinate = 0...\n"));
+	    }
 	  else if (tw != 1.0)
 	    {
 	      ttx = tx / tw;
@@ -1300,27 +1324,29 @@ transform_core_do (GImage          *gimage,
               if (interpolation_type == CUBIC_INTERPOLATION)
        	        {
 
-                  /*  ttx & tty are the subpixel coordinates of the point in the original
-                   *  selection's floating buffer.  We need the four integer pixel coords
-	           *  around them: itx to itx + 3, ity to ity + 3
+                  /*  ttx & tty are the subpixel coordinates of the point in
+		   *  the original selection's floating buffer.
+		   *  We need the four integer pixel coords around them:
+		   *  itx to itx + 3, ity to ity + 3
                    */
-                  itx = floor(ttx);
-                  ity = floor(tty);
+                  itx = floor (ttx);
+                  ity = floor (tty);
 
 		  /* check if any part of our region overlaps the buffer */
 
                   if ((itx + 2) >= x1 && (itx - 1) < x2 &&
                       (ity + 2) >= y1 && (ity - 1) < y2 )
                     {
-                      unsigned char* data;
-                      int row;
-                      double dx, dy;
-                      unsigned char* start;
+                      guchar  *data;
+                      gint     row;
+                      gdouble  dx, dy;
+                      guchar  *start;
 
 		      /* lock the pixel surround */
-                      data = pixel_surround_lock(&surround, itx - 1 - x1, ity - 1 - y1);
+                      data = pixel_surround_lock (&surround,
+						  itx - 1 - x1, ity - 1 - y1);
 
-                      row = pixel_surround_rowstride(&surround);
+                      row = pixel_surround_rowstride (&surround);
 
                       /* the fractional error */
                       dx = ttx - itx;
@@ -1350,28 +1376,36 @@ transform_core_do (GImage          *gimage,
                           d[alpha] = RINT(a_val);
 			}
 
-                      /* for colour channels c, 
-                       * result = bicubic(c * alpha) / bicubic(alpha)
+                      /* for colour channels c,
+                       * result = bicubic (c * alpha) / bicubic (alpha)
 	               */
-                      for (i = -alpha; i < 0; ++i) {
-                        start = &data[alpha];
-                        newval = RINT(a_recip * cubic (dy,
-	                             CUBIC_SCALED_ROW (dx, start, bytes, i),
-		                     CUBIC_SCALED_ROW (dx, start + row, bytes, i),
-		                     CUBIC_SCALED_ROW (dx, start + row + row, bytes, i),
-		     	             CUBIC_SCALED_ROW (dx, start + row + row + row, bytes, i)));
-                        if (newval <= 0) {
-                          *d++ = 0;
-                        } else if (newval > 255) {
-                          *d++ = 255;
-		        } else {
-                          *d++ = newval;
-		        }
-		      }
+                      for (i = -alpha; i < 0; ++i)
+			{
+			  start = &data[alpha];
+			  newval =
+			    RINT (a_recip *
+				  cubic (dy,
+					 CUBIC_SCALED_ROW (dx, start, bytes, i),
+					 CUBIC_SCALED_ROW (dx, start + row, bytes, i),
+					 CUBIC_SCALED_ROW (dx, start + row + row, bytes, i),
+					 CUBIC_SCALED_ROW (dx, start + row + row + row, bytes, i)));
+                        if (newval <= 0)
+			  {
+			    *d++ = 0;
+			  }
+			else if (newval > 255)
+			  {
+			    *d++ = 255;
+			  }
+			else
+			  {
+			    *d++ = newval;
+			  }
+			}
 
 		      d++;
 
-                      pixel_surround_release(&surround);
+                      pixel_surround_release (&surround);
 
 		    }
                   else /* not in source range */
@@ -1380,29 +1414,28 @@ transform_core_do (GImage          *gimage,
                       for (b = 0; b < bytes; b++)
                         *d++ = bg_col[b];
                     }
-
                 }
 
        	      else  /*  linear  */
                 {
+                  itx = floor (ttx);
+                  ity = floor (tty);
 
-                  itx = floor(ttx);
-                  ity = floor(tty);
-
-		  /* expand source area to cover interpolation region */
-		  /* (which runs from itx to itx + 1, same in y) */
+		  /*  expand source area to cover interpolation region
+		   *  (which runs from itx to itx + 1, same in y)
+		   */
                   if ((itx + 1) >= x1 && itx < x2 &&
                       (ity + 1) >= y1 && ity < y2 )
                     {
-                      unsigned char* data;
-                      int row;
-                      double dx, dy;
-                      unsigned char* chan;
+                      guchar  *data;
+                      gint     row;
+                      double   dx, dy;
+                      guchar  *chan;
 
 		      /* lock the pixel surround */
-                      data = pixel_surround_lock(&surround, itx - x1, ity - y1);
+                      data = pixel_surround_lock (&surround, itx - x1, ity - y1);
 
-                      row = pixel_surround_rowstride(&surround);
+                      row = pixel_surround_rowstride (&surround);
 
                       /* the fractional error */
                       dx = ttx - itx;
@@ -1410,40 +1443,54 @@ transform_core_do (GImage          *gimage,
 
 		      /* calculate alpha value of result pixel */
                       chan = &data[alpha];
-                      a_val = BILINEAR (chan[0], chan[bytes], chan[row], chan[row+bytes], dx, dy);
-                      if (a_val <= 0.0) {
-                        a_recip = 0.0;
-                        d[alpha] = 0.0;
-		      } else if (a_val >= 255.0) {
-                        a_recip = 1.0 / a_val;
-                        d[alpha] = 255;
-		      } else {
-                        a_recip = 1.0 / a_val;
-                        d[alpha] = RINT(a_val);
-		      }
-
-		      /* for colour channels c,
-		       * result = bilinear(c * alpha) / bilinear(alpha)
-		       */
-                      for (i = -alpha; i < 0; ++i) {
-                        chan = &data[alpha];
-                        newval = RINT(a_recip * 
-                          BILINEAR (chan[0] * chan[i],
-                                    chan[bytes] * chan[bytes+i],
-                                    chan[row] * chan[row+i],
-                                    chan[row+bytes] * chan[row+bytes+i], dx, dy));
-                        if (newval <= 0) {
-                          *d++ = 0;
-			} else if (newval > 255) {
-                          *d++ = 255;
-			} else {
-                          *d++ = newval;
+                      a_val = BILINEAR (chan[0], chan[bytes], chan[row],
+					chan[row+bytes], dx, dy);
+                      if (a_val <= 0.0)
+			{
+			  a_recip = 0.0;
+			  d[alpha] = 0.0;
 			}
-		      }
+		      else if (a_val >= 255.0)
+			{
+			  a_recip = 1.0 / a_val;
+			  d[alpha] = 255;
+			}
+		      else
+			{
+			  a_recip = 1.0 / a_val;
+			  d[alpha] = RINT (a_val);
+			}
+
+		      /*  for colour channels c,
+		       *  result = bilinear (c * alpha) / bilinear (alpha)
+		       */
+                      for (i = -alpha; i < 0; ++i)
+			{
+			  chan = &data[alpha];
+			  newval =
+			    RINT (a_recip * 
+				  BILINEAR (chan[0] * chan[i],
+					    chan[bytes] * chan[bytes+i],
+					    chan[row] * chan[row+i],
+					    chan[row+bytes] * chan[row+bytes+i],
+					    dx, dy));
+                        if (newval <= 0)
+			  {
+			    *d++ = 0;
+			  }
+			else if (newval > 255)
+			  {
+			    *d++ = 255;
+			  }
+			else
+			  {
+			    *d++ = newval;
+			  }
+			}
 		      /* already set alpha */
                       d++;
 
-                      pixel_surround_release(&surround);
+                      pixel_surround_release (&surround);
 		    }
 
                   else /* not in source range */
@@ -1456,8 +1503,8 @@ transform_core_do (GImage          *gimage,
 	    }
           else  /*  no interpolation  */
             {
-              itx = RINT(ttx);
-              ity = RINT(tty);
+              itx = RINT (ttx);
+              ity = RINT (tty);
 
               if (itx >= x1 && itx < x2 &&
                   ity >= y1 && ity < y2 )
@@ -1490,17 +1537,16 @@ transform_core_do (GImage          *gimage,
       pixel_region_set_row (&destPR, 0, (y - ty1), width, dest);
     }
 
-  pixel_surround_clear(&surround);
+  pixel_surround_clear (&surround);
 
   g_free (dest);
   return tiles;
 }
 
-
 TileManager *
 transform_core_cut (GImage       *gimage,
 		    GimpDrawable *drawable,
-		    int          *new_layer)
+		    gboolean     *new_layer)
 {
   TileManager *tiles;
 
@@ -1526,17 +1572,17 @@ Layer *
 transform_core_paste (GImage       *gimage,
 		      GimpDrawable *drawable,
 		      TileManager  *tiles,
-		      int           new_layer)
+		      gboolean      new_layer)
 {
-  Layer * layer;
-  Layer * floating_layer;
+  Layer *layer;
+  Layer *floating_layer;
 
   if (new_layer)
     {
-      layer = layer_new_from_tiles (gimage, tiles, 
-				    _("Transformation"), OPAQUE_OPACITY, NORMAL_MODE);
-      GIMP_DRAWABLE(layer)->offset_x = tiles->x;
-      GIMP_DRAWABLE(layer)->offset_y = tiles->y;
+      layer = layer_new_from_tiles (gimage, tiles, _("Transformation"),
+				    OPAQUE_OPACITY, NORMAL_MODE);
+      GIMP_DRAWABLE (layer)->offset_x = tiles->x;
+      GIMP_DRAWABLE (layer)->offset_y = tiles->y;
 
       /*  Start a group undo  */
       undo_push_group_start (gimage, EDIT_PASTE_UNDO);
@@ -1553,8 +1599,8 @@ transform_core_paste (GImage       *gimage,
     }
   else
     {
-      if (GIMP_IS_LAYER(drawable))
-	layer=GIMP_LAYER(drawable);
+      if (GIMP_IS_LAYER (drawable))
+	layer = GIMP_LAYER (drawable);
       else
 	return NULL;
 
@@ -1565,8 +1611,10 @@ transform_core_paste (GImage       *gimage,
 	floating_sel_relax (floating_layer, TRUE);
 
       gdisplays_update_area (gimage,
-			     GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y,
-			     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+			     GIMP_DRAWABLE (layer)->offset_x,
+			     GIMP_DRAWABLE (layer)->offset_y,
+			     GIMP_DRAWABLE (layer)->width,
+			     GIMP_DRAWABLE (layer)->height);
 
       /*  Push an undo  */
       undo_push_layer_mod (gimage, layer);
@@ -1575,19 +1623,23 @@ transform_core_paste (GImage       *gimage,
       GIMP_DRAWABLE(layer)->tiles = tiles;
 
       /*  Fill in the new layer's attributes  */
-      GIMP_DRAWABLE(layer)->width = tiles->width;
-      GIMP_DRAWABLE(layer)->height = tiles->height;
-      GIMP_DRAWABLE(layer)->bytes = tiles->bpp;
-      GIMP_DRAWABLE(layer)->offset_x = tiles->x;
-      GIMP_DRAWABLE(layer)->offset_y = tiles->y;
+      GIMP_DRAWABLE (layer)->width    = tiles->width;
+      GIMP_DRAWABLE (layer)->height   = tiles->height;
+      GIMP_DRAWABLE (layer)->bytes    = tiles->bpp;
+      GIMP_DRAWABLE (layer)->offset_x = tiles->x;
+      GIMP_DRAWABLE (layer)->offset_y = tiles->y;
 
       if (floating_layer)
 	floating_sel_rigor (floating_layer, TRUE);
 
-      drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+      drawable_update (GIMP_DRAWABLE (layer),
+		       0, 0,
+		       GIMP_DRAWABLE (layer)->width,
+		       GIMP_DRAWABLE (layer)->height);
 
-      /* if we were operating on the floating selection, then it's boundary 
-       * and previews need invalidating */
+      /*  if we were operating on the floating selection, then it's boundary 
+       *  and previews need invalidating
+       */
       if (layer == floating_layer)
 	floating_sel_invalidate (floating_layer);
 
@@ -1596,14 +1648,14 @@ transform_core_paste (GImage       *gimage,
 }
 
 /* Note: cubic function no longer clips result */
-static double
-cubic (double dx,
-       int    jm1,
-       int    j,
-       int    jp1,
-       int    jp2)
+static gdouble
+cubic (gdouble dx,
+       gint    jm1,
+       gint    j,
+       gint    jp1,
+       gint    jp2)
 {
-  double result;
+  gdouble result;
 
 #if 0
   /* Equivalent to Gimp 1.1.1 and earlier - some ringing */

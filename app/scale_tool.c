@@ -22,8 +22,6 @@
 #include "info_dialog.h"
 #include "scale_tool.h"
 #include "selection.h"
-#include "tools.h"
-#include "transform_core.h"
 #include "transform_tool.h"
 #include "undo.h"
 
@@ -43,18 +41,18 @@ static gchar      y_ratio_buf[MAX_INFO_BUF];
 static GtkWidget *sizeentry;
 
 /*  forward function declarations  */
-static void *     scale_tool_recalc  (Tool *, void *);
-static void       scale_tool_motion  (Tool *, void *);
-static void       scale_info_update  (Tool *);
+static void   scale_tool_recalc  (Tool *, void *);
+static void   scale_tool_motion  (Tool *, void *);
+static void   scale_info_update  (Tool *);
 
 /*  callback functions for the info dialog fields  */
-static void       scale_size_changed (GtkWidget *w, gpointer data);
-static void       scale_unit_changed (GtkWidget *w, gpointer data);
+static void   scale_size_changed (GtkWidget *widget, gpointer data);
+static void   scale_unit_changed (GtkWidget *widget, gpointer data);
 
-void *
-scale_tool_transform (Tool     *tool,
-		      gpointer  gdisp_ptr,
-		      int       state)
+TileManager *
+scale_tool_transform (Tool           *tool,
+		      gpointer        gdisp_ptr,
+		      TransformState  state)
 {
   GDisplay      *gdisp;
   TransformCore *transform_core;
@@ -65,14 +63,15 @@ scale_tool_transform (Tool     *tool,
 
   switch (state)
     {
-    case INIT :
+    case INIT:
       size_vals[0] = transform_core->x2 - transform_core->x1;
       size_vals[1] = transform_core->y2 - transform_core->y1;
 
       if (!transform_info)
 	{
 	  transform_info = info_dialog_new (_("Scaling Information"),
-					    tools_help_func, NULL);
+					    gimp_standard_help_func,
+					    "tools/transform_scale.html");
 
 	  info_dialog_add_label (transform_info, _("Original Width:"),
 				 orig_width_buf);
@@ -147,17 +146,16 @@ scale_tool_transform (Tool     *tool,
       return NULL;
       break;
 
-    case MOTION :
+    case MOTION:
       scale_tool_motion (tool, gdisp_ptr);
-
-      return (scale_tool_recalc (tool, gdisp_ptr));
+      scale_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case RECALC :
-      return (scale_tool_recalc (tool, gdisp_ptr));
+    case RECALC:
+      scale_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case FINISH :
+    case FINISH:
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
       return scale_tool_scale (gdisp->gimage,
 			       gimage_active_drawable (gdisp->gimage),
@@ -173,12 +171,12 @@ scale_tool_transform (Tool     *tool,
 }
 
 Tool *
-tools_new_scale_tool ()
+tools_new_scale_tool (void)
 {
-  Tool * tool;
-  TransformCore * private;
+  Tool          *tool;
+  TransformCore *private;
 
-  tool = transform_core_new (SCALE, INTERACTIVE);
+  tool = transform_core_new (SCALE, TRUE);
 
   private = tool->private;
 
@@ -204,15 +202,15 @@ tools_free_scale_tool (Tool *tool)
 static void
 scale_info_update (Tool *tool)
 {
-  GDisplay      * gdisp;
-  TransformCore * transform_core;
-  double          ratio_x, ratio_y;
-  int             x1, y1, x2, y2, x3, y3, x4, y4;
-  GUnit           unit;
-  double          unit_factor;
-  gchar           format_buf[16];
+  GDisplay      *gdisp;
+  TransformCore *transform_core;
+  gdouble        ratio_x, ratio_y;
+  gint           x1, y1, x2, y2, x3, y3, x4, y4;
+  GUnit          unit;
+  gdouble        unit_factor;
+  gchar          format_buf[16];
 
-  static GUnit    label_unit = UNIT_PIXEL;
+  static GUnit   label_unit = UNIT_PIXEL;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -269,14 +267,14 @@ scale_info_update (Tool *tool)
 }
 
 static void
-scale_size_changed (GtkWidget *w,
+scale_size_changed (GtkWidget *widget,
 		    gpointer   data)
 {
   Tool          *tool;
   TransformCore *transform_core;
   GDisplay      *gdisp;
-  int            width;
-  int            height;
+  gint           width;
+  gint           height;
 
   tool = (Tool *)data;
 
@@ -285,8 +283,10 @@ scale_size_changed (GtkWidget *w,
       gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
-      width = (int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 0) + 0.5);
-      height = (int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 1) + 0.5);
+      width =
+	(int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0) + 0.5);
+      height =
+	(int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1) + 0.5);
 
       if ((width != (transform_core->trans_info[X1] -
 		     transform_core->trans_info[X0])) ||
@@ -305,24 +305,26 @@ scale_size_changed (GtkWidget *w,
 }
 
 static void
-scale_unit_changed (GtkWidget *w,
+scale_unit_changed (GtkWidget *widget,
 		    gpointer   data)
 {
-  scale_info_update ((Tool*) data);
+  scale_info_update ((Tool *) data);
 }
 
 static void
 scale_tool_motion (Tool *tool,
 		   void *gdisp_ptr)
 {
-  GDisplay * gdisp;
-  TransformCore * transform_core;
-  double ratio;
-  double *x1, *y1;
-  double *x2, *y2;
-  int w, h;
-  int dir_x, dir_y;
-  int diff_x, diff_y;
+  GDisplay      *gdisp;
+  TransformCore *transform_core;
+  gdouble        ratio;
+  gdouble       *x1;
+  gdouble       *y1;
+  gdouble       *x2;
+  gdouble       *y2;
+  gint           w, h;
+  gint           dir_x, dir_y;
+  gint           diff_x, diff_y;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -332,14 +334,14 @@ scale_tool_motion (Tool *tool,
 
   switch (transform_core->function)
     {
-    case HANDLE_1 :
+    case HANDLE_1:
       x1 = &transform_core->trans_info [X0];
       y1 = &transform_core->trans_info [Y0];
       x2 = &transform_core->trans_info [X1];
       y2 = &transform_core->trans_info [Y1];
       dir_x = dir_y = 1;
       break;
-    case HANDLE_2 :
+    case HANDLE_2:
       x1 = &transform_core->trans_info [X1];
       y1 = &transform_core->trans_info [Y0];
       x2 = &transform_core->trans_info [X0];
@@ -347,7 +349,7 @@ scale_tool_motion (Tool *tool,
       dir_x = -1;
       dir_y = 1;
       break;
-    case HANDLE_3 :
+    case HANDLE_3:
       x1 = &transform_core->trans_info [X0];
       y1 = &transform_core->trans_info [Y1];
       x2 = &transform_core->trans_info [X1];
@@ -355,7 +357,7 @@ scale_tool_motion (Tool *tool,
       dir_x = 1;
       dir_y = -1;
       break;
-    case HANDLE_4 :
+    case HANDLE_4:
       x1 = &transform_core->trans_info [X1];
       y1 = &transform_core->trans_info [Y1];
       x2 = &transform_core->trans_info [X0];
@@ -367,10 +369,12 @@ scale_tool_motion (Tool *tool,
     }
 
   /*  if just the mod1 key is down, affect only the height  */
-  if (transform_core->state & GDK_MOD1_MASK && ! (transform_core->state & GDK_CONTROL_MASK))
+  if (transform_core->state & GDK_MOD1_MASK &&
+      ! (transform_core->state & GDK_CONTROL_MASK))
     diff_x = 0;
   /*  if just the control key is down, affect only the width  */
-  else if (transform_core->state & GDK_CONTROL_MASK && ! (transform_core->state & GDK_MOD1_MASK))
+  else if (transform_core->state & GDK_CONTROL_MASK &&
+	   ! (transform_core->state & GDK_MOD1_MASK))
     diff_y = 0;
 
   *x1 += diff_x;
@@ -394,8 +398,11 @@ scale_tool_motion (Tool *tool,
       if (*y1 <= *y2) *y1 = *y2 + 1;
     }
 
-  /*  if both the control key & mod1 keys are down, keep the aspect ratio intact  */
-  if (transform_core->state & GDK_CONTROL_MASK && transform_core->state & GDK_MOD1_MASK)
+  /*  if both the control key & mod1 keys are down,
+   *  keep the aspect ratio intact 
+   */
+  if (transform_core->state & GDK_CONTROL_MASK &&
+      transform_core->state & GDK_MOD1_MASK)
     {
       ratio = (double) (transform_core->x2 - transform_core->x1) /
         (double) (transform_core->y2 - transform_core->y1);
@@ -413,19 +420,20 @@ scale_tool_motion (Tool *tool,
     }
 }
 
-static void *
+static void
 scale_tool_recalc (Tool *tool,
 		   void *gdisp_ptr)
 {
-  TransformCore * transform_core;
-  GDisplay * gdisp;
-  int x1, y1, x2, y2;
-  int diffx, diffy;
-  int cx, cy;
-  double scalex, scaley;
+  TransformCore *transform_core;
+  GDisplay      *gdisp;
+  gint           x1, y1, x2, y2;
+  gint           diffx, diffy;
+  gint           cx, cy;
+  gdouble        scalex, scaley;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
+
   x1 = (int) transform_core->trans_info [X0];
   y1 = (int) transform_core->trans_info [Y0];
   x2 = (int) transform_core->trans_info [X1];
@@ -439,22 +447,22 @@ scale_tool_recalc (Tool *tool,
 
   switch (transform_core->function)
     {
-    case HANDLE_1 :
+    case HANDLE_1:
       cx = x2;  cy = y2;
       diffx = x2 - transform_core->x2;
       diffy = y2 - transform_core->y2;
       break;
-    case HANDLE_2 :
+    case HANDLE_2:
       cx = x1;  cy = y2;
       diffx = x1 - transform_core->x1;
       diffy = y2 - transform_core->y2;
       break;
-    case HANDLE_3 :
+    case HANDLE_3:
       cx = x2;  cy = y1;
       diffx = x2 - transform_core->x2;
       diffy = y1 - transform_core->y1;
       break;
-    case HANDLE_4 :
+    case HANDLE_4:
       cx = x1;  cy = y1;
       diffx = x1 - transform_core->x1;
       diffy = y1 - transform_core->y1;
@@ -472,31 +480,31 @@ scale_tool_recalc (Tool *tool,
   gimp_matrix_translate (transform_core->transform, (double) cx, (double) cy);
 
   /*  transform the bounding box  */
-  transform_bounding_box (tool);
+  transform_core_transform_bounding_box (tool);
 
   /*  update the information dialog  */
   scale_info_update (tool);
-
-  return (void *) 1;
 }
 
-void *
+TileManager *
 scale_tool_scale (GImage       *gimage,
 		  GimpDrawable *drawable,
 		  GDisplay     *gdisp,
-		  double       *trans_info,
+		  gdouble      *trans_info,
 		  TileManager  *float_tiles,
-		  int           interpolation,
+		  gboolean      interpolation,
 		  GimpMatrix    matrix)
 {
-  void *ret;
   gimp_progress *progress;
+  TileManager   *ret;
 
   progress = progress_start (gdisp, _("Scaling..."), FALSE, NULL, NULL);
 
   ret = transform_core_do (gimage, drawable, float_tiles,
 			   interpolation, matrix,
-			   progress? progress_update_and_flush:NULL, progress);
+			   progress ? progress_update_and_flush : NULL,
+			   progress);
+
   if (progress)
     progress_end (progress);
 

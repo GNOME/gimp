@@ -18,18 +18,19 @@
 #ifndef __TRANSFORM_TOOL_H__
 #define __TRANSFORM_TOOL_H__
 
-/*  tool functions  */
-Tool *        tools_new_transform_tool      (void);
-void          tools_free_transform_tool     (Tool *);
-int           transform_tool_smoothing      (void);
-int           transform_tool_showpath       (void);
-int	      transform_tool_clip	    (void);
-int	      transform_tool_direction      (void);
-int	      transform_tool_grid_size	    (void);
-int           transform_tool_show_grid      (void);
-
 /*  transform directions  */
 #define TRANSFORM_TRADITIONAL 0
-#define TRANSFORM_CORRECTIVE 1
+#define TRANSFORM_CORRECTIVE  1
+
+/*  tool functions  */
+Tool     * tools_new_transform_tool  (void);
+void       tools_free_transform_tool (Tool *tool);
+
+gboolean   transform_tool_smoothing  (void);
+gboolean   transform_tool_showpath   (void);
+gboolean   transform_tool_clip	     (void);
+gint	   transform_tool_direction  (void);
+gint	   transform_tool_grid_size  (void);
+gboolean   transform_tool_show_grid  (void);
 
 #endif  /*  __TRANSFORM_TOOL_H__  */
