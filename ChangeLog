@@ -1,5 +1,14 @@
 2005-02-10  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/uri/uri-backend-gnomevfs.c: use gimp_memsize_to_string()
+	instead of always showing bytes with a translatable %llu format
+	string. Increased BUFSIZE to 4096.
+
+	* plug-ins/uri/uri-backend-wget.c (uri_backend_load_image): don't
+	leak the memsize string. Use sizeof(buf) instead of BUFSIZE.
+
+2005-02-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpcroptool.c
 	* app/tools/gimptransformtool.c: alternative button order for
 	the info dialogs (bug #166678).

@@ -25,7 +25,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define BUFSIZE 1024
+#define BUFSIZE 4096
 
 
 /*  local function prototypes  */
@@ -92,8 +92,8 @@ uri_backend_load_image (const gchar  *uri,
 
   dest_uri = g_filename_to_uri (tmpname, NULL, NULL);
   success = copy_uri (uri, dest_uri,
-                      _("Downloading %llu bytes of image data..."),
-                      _("Downloaded %llu bytes of image data"),
+                      _("Downloading %s of image data..."),
+                      _("Downloaded %s of image data"),
                       error);
   g_free (dest_uri);
 
@@ -111,8 +111,8 @@ uri_backend_save_image (const gchar  *uri,
 
   src_uri = g_filename_to_uri (tmpname, NULL, NULL);
   success = copy_uri (src_uri, uri,
-                      _("Uploading %llu bytes of image data..."),
-                      _("Uploaded %llu bytes of image data"),
+                      _("Uploading %s of image data..."),
+                      _("Uploaded %s of image data"),
                       error);
   g_free (src_uri);
 
@@ -178,6 +178,7 @@ copy_uri (const gchar  *src_uri,
   GnomeVFSFileSize  bytes_read = 0;
   guchar            buffer[BUFSIZE];
   GnomeVFSResult    result;
+  gchar            *memsize;
   gchar            *message;
 
   gimp_progress_init (_("Connecting to server..."));
@@ -216,10 +217,14 @@ copy_uri (const gchar  *src_uri,
       return FALSE;
     }
 
+  memsize = gimp_memsize_to_string (file_size);
+
   if (file_size > 0)
-    message = g_strdup_printf (copying_format_str, file_size);
+    message = g_strdup_printf (copying_format_str, memsize);
   else
-    message = g_strdup_printf (copied_format_str, (GnomeVFSFileSize) 0);
+    message = g_strdup_printf (copied_format_str, memsize);
+
+  g_free (memsize);
 
   gimp_progress_init (message);
   g_free (message);
@@ -236,10 +241,13 @@ copy_uri (const gchar  *src_uri,
         {
           if (result != GNOME_VFS_ERROR_EOF)
             {
+              memsize = gimp_memsize_to_string (sizeof (buffer));
               g_set_error (error, 0, 0,
-                           _("Failed to read %d bytes from '%s': %s"),
-                           sizeof (buffer), src_uri,
+                           _("Failed to read %s from '%s': %s"),
+                           memsize, src_uri,
                            gnome_vfs_result_to_string (result));
+              g_free (memsize);
+
               gnome_vfs_close (read_handle);
               gnome_vfs_close (write_handle);
               return FALSE;
@@ -259,7 +267,10 @@ copy_uri (const gchar  *src_uri,
         }
       else
         {
-          message = g_strdup_printf (copied_format_str, bytes_read);
+          memsize = gimp_memsize_to_string (bytes_read);
+          message = g_strdup_printf (copied_format_str, memsize);
+          g_free (memsize);
+
           gimp_progress_init (message);
           g_free (message);
         }
@@ -269,10 +280,13 @@ copy_uri (const gchar  *src_uri,
 
       if (chunk_written < chunk_read)
         {
+          memsize = gimp_memsize_to_string (chunk_read);
           g_set_error (error, 0, 0,
-                       _("Failed to write %llu bytes to '%s': %s"),
-                       chunk_read, dest_uri,
+                       _("Failed to write %s to '%s': %s"),
+                       memsize, dest_uri,
                        gnome_vfs_result_to_string (result));
+          g_free (memsize);
+
           gnome_vfs_close (read_handle);
           gnome_vfs_close (write_handle);
           return FALSE;

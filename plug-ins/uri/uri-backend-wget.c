@@ -116,6 +116,7 @@ uri_backend_load_image (const gchar  *uri,
       gint      kilobytes    = 0;
       gboolean  finished     = FALSE;
       gboolean  debug        = FALSE;
+      gchar    *memsize;
       gchar    *message;
       gchar    *timeout_msg;
       gchar    *progress;
@@ -128,7 +129,7 @@ uri_backend_load_image (const gchar  *uri,
 
       /*  hardcoded and not-really-foolproof scanning of wget putput  */
 
-      if (fgets (buf, BUFSIZE, input) == NULL)
+      if (fgets (buf, sizeof (buf), input) == NULL)
         {
           /*  no message here because failing on the first line means
            *  that wget was not found
@@ -139,7 +140,7 @@ uri_backend_load_image (const gchar  *uri,
       DEBUG (buf);
 
       /*  The second line is the local copy of the file  */
-      if (fgets (buf, BUFSIZE, input) == NULL)
+      if (fgets (buf, sizeof (buf), input) == NULL)
         {
           g_set_error (error, 0, 0,
                        _("wget exited abnormally on URI '%s'"), uri);
@@ -158,7 +159,7 @@ uri_backend_load_image (const gchar  *uri,
       g_free (progress);
 
     read_connect:
-      if (fgets (buf, BUFSIZE, input) == NULL)
+      if (fgets (buf, sizeof (buf), input) == NULL)
         {
           g_set_error (error, 0, 0,
                        _("wget exited abnormally on URI '%s'"), uri);
@@ -183,7 +184,7 @@ uri_backend_load_image (const gchar  *uri,
       gimp_progress_init (progress);
       g_free (progress);
 
-      if (fgets (buf, BUFSIZE, input) == NULL)
+      if (fgets (buf, sizeof (buf), input) == NULL)
         {
           g_set_error (error, 0, 0,
                        _("wget exited abnormally on URI '%s'"), uri);
@@ -202,7 +203,7 @@ uri_backend_load_image (const gchar  *uri,
       DEBUG (buf);
 
       /*  The fifth line is either the length of the file or an error  */
-      if (fgets (buf, BUFSIZE, input) == NULL)
+      if (fgets (buf, sizeof (buf), input) == NULL)
         {
           g_set_error (error, 0, 0,
                        _("wget exited abnormally on URI '%s'"), uri);
@@ -246,14 +247,16 @@ uri_backend_load_image (const gchar  *uri,
       size = atoi (sizestr);
 
       /*  Start the actual download...  */
-      message = g_strdup_printf (_("Downloading %s of image data... "),
-                                 gimp_memsize_to_string (size));
+      memsize = gimp_memsize_to_string (size);
+      message = g_strdup_printf (_("Downloading %s of image data..."),
+                                 memsize);
 
       progress = g_strdup_printf ("%s %s", message, timeout_msg);
       gimp_progress_init (progress);
       g_free (progress);
 
       g_free (message);
+      g_free (memsize);
 
       /*  Switch to byte parsing wget's output...  */
 
@@ -278,7 +281,7 @@ uri_backend_load_image (const gchar  *uri,
             }
           else if (dot == ':')  /* the time string contains a ':' */
             {
-              fgets (buf, BUFSIZE, input);
+              fgets (buf, sizeof (buf), input);
 
               DEBUG (buf);
 
