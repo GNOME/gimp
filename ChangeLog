@@ -1,3 +1,12 @@
+2004-02-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-draw.c
+	(gimp_display_shell_draw_area): intersect the passed in area with
+	the real area of the image in display coordinates and render the
+	projection only if there actually is an intersection.
+	Use gimp_rectangle_intersect() instead of handmade CLAMP()
+	constructs. Fixes bug #113142.
+
 2004-02-07  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/plug-in-shm.c (plug_in_shm_get_ID): don't

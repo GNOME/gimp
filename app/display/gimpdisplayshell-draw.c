@@ -22,6 +22,7 @@
 
 #include "display-types.h"
 
+#include "core/gimp-utils.h"
 #include "core/gimpgrid.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
@@ -324,49 +325,59 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
                               gint              w,
                               gint              h)
 {
-  gint  sx, sy;
-  gint  x1, y1;
-  gint  x2, y2;
-  gint  dx, dy;
-  gint  i, j;
+  gint sx, sy;
+  gint sw, sh;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  sx = SCALEX (shell, shell->gdisp->gimage->width);
-  sy = SCALEY (shell, shell->gdisp->gimage->height);
+  /*  the image's size in display coordinates  */
+  sx = shell->disp_xoffset > 0 ? shell->disp_xoffset : - shell->offset_x;
+  sy = shell->disp_yoffset > 0 ? shell->disp_yoffset : - shell->offset_y;
+  sw = SCALEX (shell, shell->gdisp->gimage->width);
+  sh = SCALEY (shell, shell->gdisp->gimage->height);
 
-  /*  Bounds checks  */
-  x1 = CLAMP (x,     0, shell->disp_width);
-  y1 = CLAMP (y,     0, shell->disp_height);
-  x2 = CLAMP (x + w, 0, shell->disp_width);
-  y2 = CLAMP (y + h, 0, shell->disp_height);
-
-  x1 = MAX (x1, shell->disp_xoffset);
-  y1 = MAX (y1, shell->disp_yoffset);
-  x2 = MIN (x2, shell->disp_xoffset + sx);
-  y2 = MIN (y2, shell->disp_yoffset + sy);
-
-  /*  display the image in RENDER_BUF_WIDTH x RENDER_BUF_HEIGHT sized chunks */
-  for (i = y1; i < y2; i += GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT)
+  /*  check if the passed in area intersects with
+   *  both the display and the image
+   */
+  if (gimp_rectangle_intersect (x, y, w, h,
+                                0, 0, shell->disp_width,  shell->disp_height,
+                                &x, &y, &w, &h) &&
+      gimp_rectangle_intersect (x, y, w, h,
+                                sx, sy, sw, sh,
+                                &x, &y, &w, &h))
     {
-      for (j = x1; j < x2; j += GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH)
-        {
-          dx = MIN (x2 - j, GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH);
-          dy = MIN (y2 - i, GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT);
+      gint x2, y2;
+      gint i, j;
 
-          gimp_display_shell_render (shell,
-                                     j - shell->disp_xoffset,
-                                     i - shell->disp_yoffset,
-                                     dx, dy);
+      x2 = x + w;
+      y2 = y + h;
+
+      /*  display the image in RENDER_BUF_WIDTH x RENDER_BUF_HEIGHT
+       *  sized chunks
+       */
+      for (i = y; i < y2; i += GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT)
+        {
+          for (j = x; j < x2; j += GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH)
+            {
+              gint dx, dy;
+
+              dx = MIN (x2 - j, GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH);
+              dy = MIN (y2 - i, GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT);
+
+              gimp_display_shell_render (shell,
+                                         j - shell->disp_xoffset,
+                                         i - shell->disp_yoffset,
+                                         dx, dy);
 
 #ifdef STRESS_TEST
-          /* Invalidate the projection just after we render it! */
-          gimp_image_invalidate_without_render (shell->gdisp->gimage,
-                                                j - shell->disp_xoffset,
-                                                i - shell->disp_yoffset,
-                                                dx, dy,
-                                                0, 0, 0, 0);
+              /* Invalidate the projection just after we render it! */
+              gimp_image_invalidate_without_render (shell->gdisp->gimage,
+                                                    j - shell->disp_xoffset,
+                                                    i - shell->disp_yoffset,
+                                                    dx, dy,
+                                                    0, 0, 0, 0);
 #endif
+            }
         }
     }
 }
