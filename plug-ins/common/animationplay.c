@@ -102,11 +102,22 @@
 #include <string.h>
 #include <ctype.h>
 
-#define WinMain WinMain_foo	/* Kludge for Win32*/
-#include <gdk/gdkx.h>
+#include <glib.h>
+
+#if defined (G_OS_WIN32)
+/* This just to be able to include windows.h and undef RGB */
+#define WinMain WinMain_foo
+#include <windows.h>
 #undef WinMain
-#undef RGB			/* On Windows from <windows.h> */
+#undef RGB
+#endif
+
 #include <gtk/gtk.h>
+#ifndef GDK_WINDOWING_WIN32
+#include <gdk/gdkx.h>
+#else
+#include <gdk/win32/gdkwin32.h>
+#endif
 
 #include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"

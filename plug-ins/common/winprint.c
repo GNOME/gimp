@@ -235,6 +235,7 @@ run (char    *name,
   int		y;
   double	devY, devYstep;
   int		iDevY, iDevYstep;
+  int		iDevLeftMargin, iDevTopMargin;
   guchar       *inRow;
   guchar       *bgrRow;
   HGLOBAL	hDevMode, hDevNames;
@@ -270,29 +271,30 @@ run (char    *name,
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
-	  vars.devmodeSize = 0;
-	  vars.prDlg.lStructSize = 0;
-	  gimp_get_data (NAME_PRINT, &vars);
-	  if (vars.devmodeSize > 0)
+	  if (gimp_get_data_size (NAME_PRINT) > 0)
 	    {
-	      /* Restore saved DEVMODE. */
-	      hDevMode = GlobalAlloc (GMEM_MOVEABLE, vars.devmodeSize);
-	      g_assert (hDevMode != NULL);
-	      dmp = GlobalLock (hDevMode);
-	      g_assert (dmp != NULL);
-	      gimp_get_data (NAME_PRINT "devmode", dmp);
-	      GlobalUnlock (hDevMode);
-	      vars.prDlg.hDevMode = hDevMode;
+	      g_assert (gimp_get_data_size (NAME_PRINT) == sizeof (vars));
+	      gimp_get_data (NAME_PRINT, &vars);
+	      if (vars.devmodeSize > 0)
+		{
+		  /* Restore saved DEVMODE. */
+		  g_assert (gimp_get_data_size (NAME_PRINT "devmode")
+			    == vars.devmodeSize);
+		  hDevMode = GlobalAlloc (GMEM_MOVEABLE, vars.devmodeSize);
+		  g_assert (hDevMode != NULL);
+		  dmp = GlobalLock (hDevMode);
+		  g_assert (dmp != NULL);
+		  gimp_get_data (NAME_PRINT "devmode", dmp);
+		  GlobalUnlock (hDevMode);
+		  vars.prDlg.hDevMode = hDevMode;
+		}
+	      else
+		{
+		  vars.prDlg.hDevMode = NULL;
+		}
 	    }
 	  else
-	    {
-	      vars.prDlg.hDevMode = NULL;
-	    }
-	  if (vars.prDlg.lStructSize == 0)
-	    {
-	      vars.prDlg.lStructSize = sizeof (PRINTDLG);
-	      vars.prDlg.Flags = 0;
-	    }
+	    vars.prDlg.Flags = 0;
 	  vars.prDlg.hwndOwner = NULL;
 	  vars.prDlg.hDevNames = NULL;
 	  vars.prDlg.Flags |=
@@ -300,6 +302,7 @@ run (char    *name,
 	    | PD_NOSELECTION;
 	  vars.prDlg.nMinPage = vars.prDlg.nMaxPage = 0;
 	  vars.prDlg.nCopies = 1;
+	  vars.prDlg.lStructSize = sizeof (PRINTDLG);
 	  if (!PrintDlg (&vars.prDlg))
 	    {
 	      if (CommDlgExtendedError ())
@@ -333,7 +336,6 @@ run (char    *name,
        * Print the image.
        */
 
-      /* Check if support for BitBlt */
       if (status == STATUS_SUCCESS)
 	{
 	  /* Check if support for BitBlt */
@@ -462,6 +464,22 @@ run (char    *name,
 
 	  oldBm = SelectObject (hdcMem, hBitmap);
 	  
+	  if (vars.psDlg.Flags & PSD_MARGINS)
+	    if (vars.psDlg.Flags & PSD_INHUNDREDTHSOFMILLIMETERS)
+	      {
+		/* Hundreths of millimeters */
+		iDevLeftMargin = vars.psDlg.rtMargin.left / 2540.0 * devResX;
+		iDevTopMargin = vars.psDlg.rtMargin.top / 2540.0 * devResY;
+	      }
+	    else
+	      {
+		/* Thousandths of inches */
+		iDevLeftMargin = vars.psDlg.rtMargin.left / 1000.0 * devResX;
+		iDevTopMargin = vars.psDlg.rtMargin.top / 1000.0 * devResY;
+	      }
+	  else
+	    iDevLeftMargin = iDevTopMargin = 0;
+
 	  devY = 0.0;
 	  iDevY = 0;
 	  for (y = 0; y < height; y++)
@@ -498,7 +516,9 @@ run (char    *name,
 			devW = devWidth - iDevX;
 		      else
 			devW = iDevXstep;
-		      if (!StretchBlt (vars.prDlg.hDC, iDevX, iDevY,
+		      if (!StretchBlt (vars.prDlg.hDC,
+				       iDevX + iDevLeftMargin,
+				       iDevY + iDevTopMargin,
 				       devW, iDevYstep,
 				       hdcMem, x, 0, w, 1, SRCCOPY))
 			{
@@ -549,32 +569,33 @@ run (char    *name,
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
-	  vars.devmodeSize = 0;
-	  vars.psDlg.lStructSize = 0;
-	  gimp_get_data (NAME_PRINT, &vars);
-	  if (vars.devmodeSize > 0)
+	  if (gimp_get_data_size (NAME_PRINT) > 0)
 	    {
-	      /* Restore saved DEVMODE. */
-	      hDevMode = GlobalAlloc (GMEM_MOVEABLE, vars.devmodeSize);
-	      g_assert (hDevMode != NULL);
-	      dmp = GlobalLock (hDevMode);
-	      g_assert (dmp != NULL);
-	      gimp_get_data (NAME_PRINT "devmode", dmp);
-	      GlobalUnlock (hDevMode);
-	      vars.psDlg.hDevMode = hDevMode;
+	      g_assert (gimp_get_data_size (NAME_PRINT) == sizeof (vars));
+	      gimp_get_data (NAME_PRINT, &vars);
+	      if (vars.devmodeSize > 0)
+		{
+		  /* Restore saved DEVMODE. */
+		  g_assert (gimp_get_data_size (NAME_PRINT "devmode")
+			    == vars.devmodeSize);
+		  hDevMode = GlobalAlloc (GMEM_MOVEABLE, vars.devmodeSize);
+		  g_assert (hDevMode != NULL);
+		  dmp = GlobalLock (hDevMode);
+		  g_assert (dmp != NULL);
+		  gimp_get_data (NAME_PRINT "devmode", dmp);
+		  GlobalUnlock (hDevMode);
+		  vars.psDlg.hDevMode = hDevMode;
+		}
+	      else
+		{
+		  vars.psDlg.hDevMode = NULL;
+		}
 	    }
 	  else
-	    {
-	      vars.psDlg.hDevMode = NULL;
-	    }
-
-	  if (vars.psDlg.lStructSize == 0)
-	    {
-	      vars.psDlg.lStructSize = sizeof (PAGESETUPDLG);
-	    }
+	    vars.psDlg.Flags = 0;
 	  vars.psDlg.hwndOwner = NULL;
 	  vars.psDlg.hDevNames = NULL;
-	  vars.psDlg.Flags = 0;
+	  vars.psDlg.lStructSize = sizeof (PAGESETUPDLG);
 	  if (!PageSetupDlg (&vars.psDlg))
 	    {
 	      if (CommDlgExtendedError ())
@@ -583,6 +604,7 @@ run (char    *name,
 	      status = STATUS_EXECUTION_ERROR;
 	      break;
 	    }
+	  vars.psDlg.Flags |= PSD_MARGINS;
 	  hDevMode = vars.psDlg.hDevMode;
 	  hDevNames = vars.psDlg.hDevNames;
 	  break;
@@ -592,20 +614,22 @@ run (char    *name,
 	  break;
 	}
     }
+  else
+    status = STATUS_CALLING_ERROR;
 
 
   /* Store data. */
-  
   if (status == STATUS_SUCCESS && run_mode == RUN_INTERACTIVE)
     {
       /* Save DEVMODE */
       dmp = GlobalLock (hDevMode);
       vars.devmodeSize = dmp->dmSize + dmp->dmDriverExtra;
 #if 0
-      g_message("DeviceName = %.*s, Orientation = %s, PaperSize = %s, "
+      g_message("vars.devmodeSize = %d, DeviceName = %.*s, Orientation = %s, PaperSize = %s, "
 		"Scale = %d%%, Copies = %d, PrintQuality = %s, "
 		"%s, ICMMethod = %s, ICMIntent = %s, MediaType = %s, "
 		"DitherType = %s",
+		vars.devmodeSize,
 		CCHDEVICENAME, dmp->dmDeviceName,
 		(dmp->dmOrientation == DMORIENT_PORTRAIT ? "PORTRAIT" :
 		 (dmp->dmOrientation == DMORIENT_LANDSCAPE ? "LANDSCAPE" :
@@ -630,11 +654,9 @@ run (char    *name,
 		  (dmp->dmICMMethod == DMICMMETHOD_DRIVER ? "DRIVER" :
 		   (dmp->dmICMMethod == DMICMMETHOD_DEVICE ? "DEVICE" :
 		    "?")))),
-		(dmp->dmICMIntent == DMICM_ABS_COLORIMETRIC ? "ABS_COLORIMETRIC" :
-		 (dmp->dmICMIntent == DMICM_COLORIMETRIC ? "COLORIMETRIC" :
-		  (dmp->dmICMIntent == DMICM_CONTRAST ? "CONTRAST" :
-		   (dmp->dmICMIntent == DMICM_SATURATE ? "SATURATE" :
-		    "?")))),
+		(dmp->dmICMIntent == DMICM_CONTRAST ? "CONTRAST" :
+		 (dmp->dmICMIntent == DMICM_SATURATE ? "SATURATE" :
+		  "?")),
 		(dmp->dmMediaType == DMMEDIA_STANDARD ? "STANDARD" :
 		 (dmp->dmMediaType == DMMEDIA_GLOSSY ? "GLOSSY" :
 		  (dmp->dmMediaType == DMMEDIA_TRANSPARENCY ? "TRANSPARENCY" :

@@ -143,7 +143,7 @@ gimpui_OBJECTS = \
 	gimpunitmenu.o
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
-	$(GLIB)/build-dll gimpui $(GIMP_VER) gimpui.def -s $(gimpui_OBJECTS) -L . -lgimp-$(GIMP_VER) -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER)
+	$(GLIB)/build-dll gimpui $(GIMP_VER) gimpui.def -s $(gimpui_OBJECTS) -L . -lgimp-$(GIMP_VER) -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER)
 
 .SUFFIXES: .c .o .i
 

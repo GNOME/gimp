@@ -557,7 +557,7 @@ RESOURCE = ../../app/gimpres.o
 endif
 
 $(PLUGIN).exe : $(OBJECTS) $(RESOURCE)
-	$(CC) $(CFLAGS) -mwindows -s -o $(PLUGIN).exe $(OBJECTS) $(RESOURCE) -L $(PLUGINDIR)/megawidget -lmegawidget -L $(PLUGINDIR)/gpc -lgpc  -L $(PLUGINDIR)/libgck/gck -lgck -L ../../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) $(EXTRALIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -mwindows -s -o $(PLUGIN).exe $(OBJECTS) $(RESOURCE) -L $(PLUGINDIR)/megawidget -lmegawidget -L $(PLUGINDIR)/gpc -lgpc  -L $(PLUGINDIR)/libgck/gck -lgck -L ../../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) $(EXTRALIBS) $(LDFLAGS)
 
 # Kludge to get the path to the win32 headers
 WIN32APIHEADERS = $(shell echo "\#include <winver.h>" | $(CC) -M -E - | tail -1 | sed -e 's!/winver.h!!')

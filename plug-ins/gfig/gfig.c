@@ -48,8 +48,8 @@
 
 #include "config.h"
 
-#include <glib.h>		/* Include early for obscure Win32
-				   build reasons */
+#include <glib.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -76,6 +76,16 @@
 #  ifndef S_ISREG
 #    define S_ISREG(m) ((m) & _S_IFREG)
 #  endif
+#endif
+
+#if defined (GTK_CHECK_VERSION) && GTK_CHECK_VERSION (1,3,0)
+#define gdk_root_parent gdk_parent_root
+#endif
+
+#ifdef G_OS_WIN32
+extern __declspec(dllimport) void *gdk_root_parent;
+#else
+extern void * gdk_root_parent;
 #endif
 
 #include "libgimp/gimp.h"
@@ -1789,7 +1799,6 @@ my_gdk_pixmap_create_from_xpm_d (GdkWindow  *window,
   gchar *buffer, *color_name = NULL, pixel_str[32];
   _GdkPixmapColor *colors = NULL, *color = NULL;
   gulong index;
-  extern void * gdk_root_parent;
 
   if (!window)
     window = (GdkWindow*) &gdk_root_parent;

@@ -1,3 +1,19 @@
+1999-12-08  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/winprint.c: Fix the handling of stored
+	state. Actually use the margins from the Page Setup dialog (just
+	the left and top margins currently).
+
+	* plug-ins/common/animationplay.c: Weird include hackery to be
+	compilable with current CVS GTk+ (on Win32).
+
+	* plug-ins/gfig/gfig.c: With current CVS GTk+, use gdk_parent_root
+	instead of gdk_root_parent (Win32).
+
+	* app/makefile.cygwin
+	* libgimp/makefile.cygwin
+	* plug-ins/makefile.cygwin: Get GDK library from new place.
+	
 1999-12-07  Michael Natterer  <mitch@gimp.org>
 
 	* pixmaps/yes.xpm: Resize it to the same size as "no.xpm" because
