@@ -337,8 +337,12 @@ gimp_template_editor_constructor (GType                  type,
                                         editor,
                                         &editor->aspect_button);
   gtk_widget_hide (editor->aspect_button); /* hide "square" */
-  gtk_table_attach (GTK_TABLE (table2), aspect_box, 2, 3, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table2), hbox, 2, 3, 0, 1);
+  gtk_widget_show (hbox);
+
+  gtk_box_pack_end (GTK_BOX (hbox), aspect_box, FALSE, FALSE, 0);
   gtk_widget_show (aspect_box);
 
   /*  register the width spinbuttons with the sizeentry  */
