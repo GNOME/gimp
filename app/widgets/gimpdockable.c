@@ -131,13 +131,9 @@ gimp_dockable_get_type (void)
 static void
 gimp_dockable_class_init (GimpDockableClass *klass)
 {
-  GtkObjectClass    *object_class;
-  GtkWidgetClass    *widget_class;
-  GtkContainerClass *container_class;
-
-  object_class    = GTK_OBJECT_CLASS (klass);
-  widget_class    = GTK_WIDGET_CLASS (klass);
-  container_class = GTK_CONTAINER_CLASS (klass);
+  GtkObjectClass    *object_class    = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass    *widget_class    = GTK_WIDGET_CLASS (klass);
+  GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -292,14 +288,11 @@ static void
 gimp_dockable_size_request (GtkWidget      *widget,
                             GtkRequisition *requisition)
 {
-  GtkContainer   *container;
-  GtkBin         *bin;
-  GimpDockable   *dockable;
-  GtkRequisition  child_requisition;
+  GtkContainer   *container = GTK_CONTAINER (widget);
+  GtkBin         *bin       = GTK_BIN (widget);
+  GimpDockable   *dockable  = GIMP_DOCKABLE (widget);
 
-  container = GTK_CONTAINER (widget);
-  bin       = GTK_BIN (widget);
-  dockable  = GIMP_DOCKABLE (widget);
+  GtkRequisition  child_requisition;
 
   requisition->width  = container->border_width * 2;
   requisition->height = container->border_width * 2;
@@ -327,9 +320,10 @@ static void
 gimp_dockable_size_allocate (GtkWidget     *widget,
                              GtkAllocation *allocation)
 {
-  GtkContainer   *container;
-  GtkBin         *bin;
-  GimpDockable   *dockable;
+  GtkContainer   *container = GTK_CONTAINER (widget);
+  GtkBin         *bin       = GTK_BIN (widget);
+  GimpDockable   *dockable  = GIMP_DOCKABLE (widget);
+
   GtkRequisition  button_requisition = { 0, };
   GtkAllocation   child_allocation;
 
@@ -496,14 +490,14 @@ gimp_dockable_drag_drop (GtkWidget      *widget,
 
 static void
 gimp_dockable_style_set (GtkWidget *widget,
-			 GtkStyle  *prev_style)
+                         GtkStyle  *prev_style)
 {
   GimpDockable *dockable;
   gint          content_border;
 
   gtk_widget_style_get (widget,
                         "content_border", &content_border,
-			NULL);
+                        NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (widget), content_border);
 
@@ -525,13 +519,9 @@ gimp_dockable_expose_event (GtkWidget      *widget,
 {
   if (GTK_WIDGET_DRAWABLE (widget))
     {
-      GimpDockable *dockable;
-      GtkContainer *container;
+      GimpDockable *dockable  = GIMP_DOCKABLE (widget);
       GdkRectangle  title_area;
       GdkRectangle  expose_area;
-
-      dockable  = GIMP_DOCKABLE (widget);
-      container = GTK_CONTAINER (widget);
 
       gimp_dockable_get_title_area (dockable, &title_area);
 
@@ -655,7 +645,7 @@ gimp_dockable_forall (GtkContainer *container,
 
 GtkWidget *
 gimp_dockable_new (const gchar *name,
-		   const gchar *blurb,
+                   const gchar *blurb,
                    const gchar *stock_id,
                    const gchar *help_id)
 {
@@ -960,14 +950,12 @@ gimp_dockable_menu_end (GimpDockable *dockable)
 static gboolean
 gimp_dockable_show_menu (GimpDockable *dockable)
 {
-  GimpUIManager *dockbook_ui_manager;
+  GimpUIManager *dockbook_ui_manager = dockable->dockbook->ui_manager;
   GimpUIManager *dialog_ui_manager;
   const gchar   *dialog_ui_path;
   gpointer       dialog_popup_data;
   GtkWidget     *parent_menu_widget;
   GtkAction     *parent_menu_action;
-
-  dockbook_ui_manager = dockable->dockbook->ui_manager;
 
   if (! dockbook_ui_manager)
     return FALSE;
@@ -1016,10 +1004,9 @@ gimp_dockable_show_menu (GimpDockable *dockable)
 
       /* FIXME */
       {
-        GtkWidget *image;
+        GtkWidget *image = gtk_image_new_from_stock (dockable->stock_id,
+                                                     GTK_ICON_SIZE_MENU);
 
-        image = gtk_image_new_from_stock (dockable->stock_id,
-                                          GTK_ICON_SIZE_MENU);
         gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (parent_menu_widget),
                                        image);
         gtk_widget_show (image);

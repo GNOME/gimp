@@ -1,5 +1,10 @@
 2004-08-31  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdockable.c
+	* libgimp/gimpdrawablepreview.c: converted tabs to spaces.
+
+2004-08-31  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpdrawablepreview.c: added a style property for the
 	minimum size.
 

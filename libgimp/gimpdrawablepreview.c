@@ -107,7 +107,7 @@ gimp_drawable_preview_style_set (GtkWidget *widget,
 
   gtk_widget_style_get (widget,
                         "size", &size,
-			NULL);
+                        NULL);
 
   gtk_widget_set_size_request (GIMP_PREVIEW (preview)->area,
                                MIN (width, size), MIN (height, size));
@@ -242,4 +242,3 @@ gimp_drawable_preview_draw (GimpDrawablePreview *preview,
                           buf,
                           gimp_preview->width * drawable->bpp);
 }
-
