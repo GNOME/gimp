@@ -5,6 +5,16 @@ This is the stable branch of GIMP 2.0. Only bug-fixes are applied
 here. New features are being added in the HEAD branch that is supposed
 to be released as GIMP version 2.2 in a not too distant future.
 
+Bugs fixed in GIMP 2.0.6
+========================
+- fixed gimp_file_load_thumbnail()
+- fixed gimp_displays_reconnect() (#154638)
+- initialize tool options with default values before deserializiation (#120832)
+- let the BMP loader deal better with broken BMP files (#15540)
+- fixed help-browser crashes on missing images (#138275)
+- fixed opacity handling in grid plug-in (#156750)
+- fixed text tool crashes with Pango 1.2 (#154144)
+
 
 Bugs fixed in GIMP 2.0.5
 ========================
