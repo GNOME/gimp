@@ -365,7 +365,7 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 
   drawable->tiles = tile_manager_new (width, height, bpp);
 
-  gimp_drawable_set_visible (drawable, TRUE);
+  drawable->visible = TRUE;
 
   if (gimage)
     gimp_drawable_set_gimage (drawable, gimage);

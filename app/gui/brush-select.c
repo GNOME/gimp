@@ -202,7 +202,8 @@ brush_select_new (gchar   *title,
 					   title ? FALSE : TRUE,
 					   MIN_CELL_SIZE,
 					   STD_BRUSH_COLUMNS,
-					   STD_BRUSH_ROWS);
+					   STD_BRUSH_ROWS,
+					   NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), bsp->view, TRUE, TRUE, 0);
   gtk_widget_show (bsp->view);
 

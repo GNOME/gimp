@@ -160,12 +160,13 @@ gimp_buffer_view_destroy (GtkObject *object)
 }
 
 GtkWidget *
-gimp_buffer_view_new (GimpViewType   view_type,
-		      GimpContainer *container,
-		      GimpContext   *context,
-		      gint           preview_size,
-		      gint           min_items_x,
-		      gint           min_items_y)
+gimp_buffer_view_new (GimpViewType              view_type,
+		      GimpContainer            *container,
+		      GimpContext              *context,
+		      gint                      preview_size,
+		      gint                      min_items_x,
+		      gint                      min_items_y,
+		      GimpContainerContextFunc  context_func)
 {
   GimpBufferView      *buffer_view;
   GimpContainerEditor *editor;
@@ -178,7 +179,8 @@ gimp_buffer_view_new (GimpViewType   view_type,
 					 context,
 					 preview_size,
 					 min_items_x,
-					 min_items_y))
+					 min_items_y,
+					 context_func))
     {
       gtk_object_unref (GTK_OBJECT (buffer_view));
       return NULL;

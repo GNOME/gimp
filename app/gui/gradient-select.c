@@ -161,7 +161,8 @@ gradient_select_new (gchar *title,
 					  dialogs_edit_gradient_func,
 					  gsp->context,
 					  16,
-					  10, 10);
+					  10, 10,
+					  NULL);
   gtk_box_pack_start (GTK_BOX (vbox), gsp->view, TRUE, TRUE, 0);
   gtk_widget_show (gsp->view);
 

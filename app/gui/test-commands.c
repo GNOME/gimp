@@ -205,7 +205,8 @@ data_factory_view_new (GimpViewType      view_type,
 				     edit_func,
 				     context,
 				     preview_size,
-				     5, 5);
+				     5, 5,
+				     NULL);
 
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
   gtk_widget_show (view);

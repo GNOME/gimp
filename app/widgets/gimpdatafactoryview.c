@@ -42,6 +42,7 @@
 #include "gimpcontainergridview.h"
 #include "gimpcontainerlistview.h"
 #include "gimpdnd.h"
+#include "gimpwidgets-utils.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -172,13 +173,14 @@ gimp_data_factory_view_destroy (GtkObject *object)
 }
 
 GtkWidget *
-gimp_data_factory_view_new (GimpViewType      view_type,
-			    GimpDataFactory  *factory,
-			    GimpDataEditFunc  edit_func,
-			    GimpContext      *context,
-			    gint              preview_size,
-			    gint              min_items_x,
-			    gint              min_items_y)
+gimp_data_factory_view_new (GimpViewType              view_type,
+			    GimpDataFactory          *factory,
+			    GimpDataEditFunc          edit_func,
+			    GimpContext              *context,
+			    gint                      preview_size,
+			    gint                      min_items_x,
+			    gint                      min_items_y,
+			    GimpContainerContextFunc  context_func)
 {
   GimpDataFactoryView *factory_view;
 
@@ -191,7 +193,8 @@ gimp_data_factory_view_new (GimpViewType      view_type,
 					  context,
 					  preview_size,
 					  min_items_x,
-					  min_items_y))
+					  min_items_y,
+					  context_func))
     {
       gtk_object_unref (GTK_OBJECT (factory_view));
       return NULL;
@@ -201,14 +204,15 @@ gimp_data_factory_view_new (GimpViewType      view_type,
 }
 
 gboolean
-gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
-				  GimpViewType         view_type,
-				  GimpDataFactory     *factory,
-				  GimpDataEditFunc     edit_func,
-				  GimpContext         *context,
-				  gint                 preview_size,
-				  gint                 min_items_x,
-				  gint                 min_items_y)
+gimp_data_factory_view_construct (GimpDataFactoryView      *factory_view,
+				  GimpViewType              view_type,
+				  GimpDataFactory          *factory,
+				  GimpDataEditFunc          edit_func,
+				  GimpContext              *context,
+				  gint                      preview_size,
+				  gint                      min_items_x,
+				  gint                      min_items_y,
+				  GimpContainerContextFunc  context_func)
 {
   GimpContainerEditor *editor;
 
@@ -229,7 +233,8 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 					 context,
 					 preview_size,
 					 min_items_x,
-					 min_items_y))
+					 min_items_y,
+					 context_func))
     {
       return FALSE;
     }
@@ -435,7 +440,6 @@ gimp_data_factory_view_select_item (GimpContainerEditor *editor,
 				    GimpViewable        *viewable)
 {
   GimpDataFactoryView *view;
-  GimpData            *data;
 
   gboolean  duplicate_sensitive = FALSE;
   gboolean  edit_sensitive      = FALSE;
@@ -445,13 +449,12 @@ gimp_data_factory_view_select_item (GimpContainerEditor *editor,
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
 
   view = GIMP_DATA_FACTORY_VIEW (editor);
-  data = GIMP_DATA (viewable);
 
-  if (data && gimp_container_have (view->factory->container,
-				   GIMP_OBJECT (data)))
+  if (viewable && gimp_container_have (view->factory->container,
+				       GIMP_OBJECT (viewable)))
     {
       duplicate_sensitive =
-	(GIMP_DATA_CLASS (GTK_OBJECT (data)->klass)->duplicate != NULL);
+	(GIMP_DATA_CLASS (GTK_OBJECT (viewable)->klass)->duplicate != NULL);
 
       edit_sensitive   = (view->data_edit_func != NULL);
       delete_sensitive = TRUE;  /* TODO: check permissions */

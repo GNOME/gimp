@@ -231,20 +231,19 @@ gdisplay_canvas_events (GtkWidget *canvas,
     {
     case GDK_EXPOSE:
       eevent = (GdkEventExpose *) event;
-      /*printf(" EXP:%d,%d(%dx%d) ",eevent->area.x, eevent->area.y,
-	eevent->area.width, eevent->area.height);fflush(stdout);*/
+
       gdisplay_redraw (gdisp,
 		       eevent->area.x, eevent->area.y,
 		       eevent->area.width, eevent->area.height);
       break;
 
     case GDK_CONFIGURE:
-      /*printf(" CNF ");fflush(stdout);*/
-      if ((gdisp->disp_width != gdisp->canvas->allocation.width) ||
+      if ((gdisp->disp_width  != gdisp->canvas->allocation.width) ||
 	  (gdisp->disp_height != gdisp->canvas->allocation.height))
 	{
-	  gdisp->disp_width = gdisp->canvas->allocation.width;
+	  gdisp->disp_width  = gdisp->canvas->allocation.width;
 	  gdisp->disp_height = gdisp->canvas->allocation.height;
+
 	  resize_display (gdisp, FALSE, FALSE);
 	}
       break;
@@ -288,8 +287,6 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	   * guaranteed to work in future versions of GTK.
 	   * -Yosh
 	   */
-
-	   
 	  if (key_signal_id == 0)
 	    key_signal_id = gtk_signal_connect (GTK_OBJECT (canvas),
 						"key_press_event",
@@ -443,7 +440,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		      bevent->y = ty;
 		      update_cursor = TRUE;
 		    }
-		  
+
 		  gimp_tool_button_release (active_tool, bevent, gdisp);
 		}
 	    }
@@ -544,16 +541,16 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  grab_and_scroll (gdisp, mevent);
 	}
 
-      /* Operator update support: Bug #XXXX */
-
-      if (/* Should we have a tool...      */
+      if (/* Should we have a tool... */
 	  active_tool && 
-	  /* and this event is NOT driving */
-	  /* button press handlers ...     */
+	  /* and this event is NOT driving
+	   * button press handlers ...
+	   */
 	  !(state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
         {
-          /* ...then preconditions to modify a tool */ 
-          /* operator state have been met.          */
+          /* ...then preconditions to modify a tool
+	   * operator state have been met.
+	   */
           gimp_tool_oper_update (active_tool, mevent, gdisp);
         }
 
@@ -587,8 +584,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	    layer_select_init (gdisp->gimage, -1, kevent->time);
 
 	  /* Hide or show all dialogs */
-	  if (!kevent->state)
-	    dialog_toggle();
+	  if (! kevent->state)
+	    dialog_toggle ();
 
 	  return_val = TRUE;
 	  break;
@@ -653,6 +650,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
  
   if (gimprc.no_cursor_updating == 0)
     {
+      active_tool = tool_manager_get_active (gdisp->gimage->gimp);
+
       if (active_tool && !gimp_image_is_empty (gdisp->gimage) &&
 	  !(state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
 	{

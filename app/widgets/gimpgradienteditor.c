@@ -259,16 +259,6 @@ static void      ed_initialize_saved_colors       (GradientEditor  *gradient_edi
 
 /* Main dialog button callbacks & functions */
 
-static void      ed_save_pov_callback             (GtkWidget       *widget,
-						   GradientEditor  *gradient_editor);
-static void      ed_do_save_pov_callback          (GtkWidget       *widget,
-						   GradientEditor  *gradient_editor);
-static void      ed_cancel_save_pov_callback      (GtkWidget       *widget,
-						   GradientEditor  *gradient_editor);
-static gint      ed_delete_save_pov_callback      (GtkWidget       *widget,
-						   GdkEvent        *event,
-						   GradientEditor  *gradient_editor);
-
 static void      ed_close_callback                (GtkWidget       *widget,
 						   GradientEditor  *gradient_editor);
 
@@ -710,20 +700,6 @@ gradient_editor_new (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  /* Save as POV-Ray button */
-  button = gtk_button_new_with_label (_("Save as POV-Ray"));
-  gimp_help_set_help_data (button, NULL,
-			   "dialogs/gradient_editor/save_as_povray.html");
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button); 
-
-  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
-
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (ed_save_pov_callback),
-		      gradient_editor);
-
   /*  + and - buttons  */
   gtk_widget_realize (gradient_editor->shell);
 
@@ -994,134 +970,6 @@ ed_initialize_saved_colors (GradientEditor *gradient_editor)
 
 /***** Main gradient editor dialog callbacks *****/
 
-
-/***** The "save as pov" dialog functions *****/
-
-static void
-ed_save_pov_callback (GtkWidget      *widget,
-		      GradientEditor *gradient_editor)
-{
-  GimpGradient *gradient;
-  GtkWidget    *window;
-
-  gradient = gimp_context_get_gradient (gradient_editor->context);
-
-  if (! gradient)
-    return;
-
-  window = gtk_file_selection_new (_("Save as POV-Ray"));
-  gtk_window_set_wmclass (GTK_WINDOW (window), "save_gradient", "Gimp");
-  gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
-
-  gtk_container_set_border_width (GTK_CONTAINER (window), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (window)->button_area), 2);
-
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (window)->ok_button),
-		      "clicked",
-		      GTK_SIGNAL_FUNC (ed_do_save_pov_callback),
-		      gradient_editor);
-
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (window)->cancel_button),
-		      "clicked",
-		      GTK_SIGNAL_FUNC (ed_cancel_save_pov_callback),
-		      gradient_editor);
-
-  gtk_signal_connect (GTK_OBJECT (window), "delete_event",
-		      GTK_SIGNAL_FUNC (ed_delete_save_pov_callback),
-		      gradient_editor);
-
-  /*  Connect the "F1" help key  */
-  gimp_help_connect_help_accel (window, gimp_standard_help_func,
-				"dialogs/gradient_editor/save_as_povray.html");
-
-  gtk_widget_show (window);
-  gtk_widget_set_sensitive (gradient_editor->shell, FALSE);
-}
-
-static void
-ed_do_save_pov_callback (GtkWidget      *widget,
-			 GradientEditor *gradient_editor)
-{
-  GimpGradient        *gradient;
-  gchar               *filename;
-  FILE                *file;
-  GimpGradientSegment *seg;
-
-  gradient = gimp_context_get_gradient (gradient_editor->context);
-
-  if (! gradient)
-    return;
-
-  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (gtk_widget_get_toplevel (widget)));
-
-  file = fopen (filename, "wb");
-
-  if (!file)
-    {
-      g_message ("Could not open \"%s\"", filename);
-    }
-  else
-    {
-      fprintf (file, "/* color_map file created by the GIMP */\n");
-      fprintf (file, "/* http://www.gimp.org/               */\n");
-
-      fprintf (file, "color_map {\n");
-
-      for (seg = gradient->segments; seg; seg = seg->next)
-	{
-	  /* Left */
-	  fprintf (file, "\t[%f color rgbt <%f, %f, %f, %f>]\n",
-		   seg->left,
-		   seg->left_color.r,
-		   seg->left_color.g,
-		   seg->left_color.b,
-		   1.0 - seg->left_color.a);
-
-	  /* Middle */
-	  fprintf (file, "\t[%f color rgbt <%f, %f, %f, %f>]\n",
-		   seg->middle,
-		   (seg->left_color.r + seg->right_color.r) / 2.0,
-		   (seg->left_color.g + seg->right_color.g) / 2.0,
-		   (seg->left_color.b + seg->right_color.b) / 2.0,
-		   1.0 - (seg->left_color.a + seg->right_color.a) / 2.0);
-
-	  /* Right */
-	  fprintf (file, "\t[%f color rgbt <%f, %f, %f, %f>]\n",
-		   seg->right,
-		   seg->right_color.r,
-		   seg->right_color.g,
-		   seg->right_color.b,
-		   1.0 - seg->right_color.a);
-	}
-
-      fprintf (file, "} /* color_map */\n");
-      fclose (file);
-    }
-
-  gtk_widget_destroy (gtk_widget_get_toplevel (widget));
-  gtk_widget_set_sensitive (gradient_editor->shell, TRUE);
-}
-
-static void
-ed_cancel_save_pov_callback (GtkWidget      *widget,
-			     GradientEditor *gradient_editor)
-{
-  gtk_widget_destroy (gtk_widget_get_toplevel (widget));
-  gtk_widget_set_sensitive (gradient_editor->shell, TRUE);
-}
-
-static gint
-ed_delete_save_pov_callback (GtkWidget      *widget,
-			     GdkEvent       *event,
-			     GradientEditor *gradient_editor)
-{
-  ed_cancel_save_pov_callback (widget, gradient_editor);
-
-  return TRUE;
-}
-
-/***** The main dialog action area button callbacks *****/
-
 static void
 ed_close_callback (GtkWidget      *widget,
 		   GradientEditor *gradient_editor)
@@ -1129,6 +977,7 @@ ed_close_callback (GtkWidget      *widget,
   if (GTK_WIDGET_VISIBLE (gradient_editor->shell))
     gtk_widget_hide (gradient_editor->shell);
 }
+
 
 /***** Zoom, scrollbar & instant update callbacks *****/
 

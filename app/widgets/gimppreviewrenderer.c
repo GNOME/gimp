@@ -70,6 +70,7 @@ enum
   CLICKED,
   DOUBLE_CLICKED,
   EXTENDED_CLICKED,
+  CONTEXT,
   RENDER,
   GET_SIZE,
   NEEDS_POPUP,
@@ -187,6 +188,15 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 		    GTK_TYPE_NONE, 1,
 		    GTK_TYPE_UINT);
 
+  preview_signals[CONTEXT] = 
+    gtk_signal_new ("context",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpPreviewClass,
+				       context),
+                    gtk_signal_default_marshaller,
+		    GTK_TYPE_NONE, 0);
+
   preview_signals[RENDER] = 
     gtk_signal_new ("render",
                     GTK_RUN_LAST,
@@ -239,6 +249,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   klass->clicked                     = NULL;
   klass->double_clicked              = NULL;
   klass->extended_clicked            = NULL;
+  klass->context                     = NULL;
   klass->render                      = gimp_preview_real_render;
   klass->get_size                    = gimp_preview_real_get_size;
   klass->needs_popup                 = gimp_preview_real_needs_popup;
@@ -590,6 +601,10 @@ gimp_preview_button_press_event (GtkWidget      *widget,
 				       bevent->x,
 				       bevent->y);
 	    }
+	}
+      else if (bevent->button == 3)
+	{
+	  gtk_signal_emit (GTK_OBJECT (widget), preview_signals[CONTEXT]);
 	}
       else
 	{

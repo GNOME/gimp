@@ -10,6 +10,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	brush-editor.h			\
 	brush-select.c			\
 	brush-select.h			\
+	brushes-commands.c		\
+	brushes-commands.h		\
 	channels-commands.c		\
 	channels-commands.h		\
 	color-area.c			\
@@ -24,6 +26,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	commands.h			\
 	convert-dialog.c		\
 	convert-dialog.h		\
+	data-commands.c			\
+	data-commands.h			\
 	dialogs.c			\
 	dialogs.h			\
 	dialogs-commands.c		\
@@ -46,6 +50,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	gradient-editor.h		\
 	gradient-select.h		\
 	gradient-select.c		\
+	gradients-commands.c		\
+	gradients-commands.h		\
 	gui.c				\
 	gui.h				\
 	image-commands.c		\
@@ -70,10 +76,14 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	palette-import-dialog.h		\
 	palette-select.c		\
 	palette-select.h		\
+	palettes-commands.c		\
+	palettes-commands.h		\
 	paths-dialog.c			\
 	paths-dialog.h			\
 	pattern-select.c		\
 	pattern-select.h		\
+	patterns-commands.c		\
+	patterns-commands.h		\
 	preferences-dialog.c		\
 	preferences-dialog.h		\
 	resize-dialog.c			\

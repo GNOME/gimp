@@ -45,15 +45,18 @@
 
 #include "channels-commands.h"
 #include "commands.h"
+#include "data-commands.h"
 #include "dialog_handler.h"
 #include "dialogs-commands.h"
 #include "edit-commands.h"
 #include "file-commands.h"
 #include "file-open-dialog.h"
 #include "file-save-dialog.h"
+#include "gradients-commands.h"
 #include "image-commands.h"
 #include "layers-commands.h"
 #include "menus.h"
+#include "palettes-commands.h"
 #include "paths-dialog.h"
 #include "select-commands.h"
 #include "test-commands.h"
@@ -1267,6 +1270,156 @@ static guint n_dialogs_entries = (sizeof (dialogs_entries) /
 static GtkItemFactory *dialogs_factory = NULL;
 
 
+/*****  <Brushes>  *****/
+
+static GimpItemFactoryEntry brushes_entries[] =
+{
+  { { N_("/New Brush"), NULL,
+      data_new_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Duplicate Brush"), NULL,
+      data_duplicate_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Edit Brush..."), NULL,
+      data_edit_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Delete Brush..."), NULL,
+      data_delete_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+
+  SEPARATOR ("/---"),
+
+  { { N_("/Refresh Brushes"), NULL,
+      data_refresh_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL }
+};
+static guint n_brushes_entries = (sizeof (brushes_entries) /
+				  sizeof (brushes_entries[0]));
+static GtkItemFactory *brushes_factory = NULL;
+
+
+/*****  <Patterns>  *****/
+
+static GimpItemFactoryEntry patterns_entries[] =
+{
+  { { N_("/New Pattern"), NULL,
+      data_new_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Duplicate Pattern"), NULL,
+      data_duplicate_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Edit Pattern..."), NULL,
+      data_edit_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Delete Pattern..."), NULL,
+      data_delete_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+
+  SEPARATOR ("/---"),
+
+  { { N_("/Refresh Patterns"), NULL,
+      data_refresh_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL }
+};
+static guint n_patterns_entries = (sizeof (patterns_entries) /
+				   sizeof (patterns_entries[0]));
+static GtkItemFactory *patterns_factory = NULL;
+
+
+/*****  <Gradients>  *****/
+
+static GimpItemFactoryEntry gradients_entries[] =
+{
+  { { N_("/New Gradient"), NULL,
+      data_new_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Duplicate Gradient"), NULL,
+      data_duplicate_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Edit Gradient..."), NULL,
+      data_edit_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Delete Gradient..."), NULL,
+      data_delete_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+
+  SEPARATOR ("/---"),
+
+  { { N_("/Refresh Gradients"), NULL,
+      data_refresh_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+
+  SEPARATOR ("/---"),
+
+  { { N_("/Save as POV-Ray..."), NULL,
+      gradients_save_as_pov_ray_cmd_callback, 0 },
+    NULL,
+    NULL, NULL }
+};
+static guint n_gradients_entries = (sizeof (gradients_entries) /
+				    sizeof (gradients_entries[0]));
+static GtkItemFactory *gradients_factory = NULL;
+
+
+/*****  <Palettes>  *****/
+
+static GimpItemFactoryEntry palettes_entries[] =
+{
+  { { N_("/New Palette"), NULL,
+      data_new_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Duplicate Palette"), NULL,
+      data_duplicate_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Edit Palette..."), NULL,
+      data_edit_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Delete Palette..."), NULL,
+      data_delete_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+
+  SEPARATOR ("/---"),
+
+  { { N_("/Refresh Palettes"), NULL,
+      data_refresh_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+
+  SEPARATOR ("/---"),
+
+  { { N_("/Import Palette..."), NULL,
+      palettes_import_palette_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/Merge Palettes..."), NULL,
+      palettes_merge_palettes_cmd_callback, 0 },
+    NULL,
+    NULL, NULL }
+};
+static guint n_palettes_entries = (sizeof (palettes_entries) /
+				   sizeof (palettes_entries[0]));
+static GtkItemFactory *palettes_factory = NULL;
+
+
 static gboolean menus_initialized = FALSE;
 
 
@@ -1340,6 +1493,42 @@ menus_get_dialogs_factory (void)
     menus_init ();
 
   return dialogs_factory;
+}
+
+GtkItemFactory *
+menus_get_brushes_factory (void)
+{
+  if (! menus_initialized)
+    menus_init ();
+
+  return brushes_factory;
+}
+
+GtkItemFactory *
+menus_get_patterns_factory (void)
+{
+  if (! menus_initialized)
+    menus_init ();
+
+  return patterns_factory;
+}
+
+GtkItemFactory *
+menus_get_gradients_factory (void)
+{
+  if (! menus_initialized)
+    menus_init ();
+
+  return gradients_factory;
+}
+
+GtkItemFactory *
+menus_get_palettes_factory (void)
+{
+  if (! menus_initialized)
+    menus_init ();
+
+  return palettes_factory;
 }
 
 
@@ -2239,6 +2428,54 @@ menus_init (void)
   menus_create_items (dialogs_factory,
 		      n_dialogs_entries,
 		      dialogs_entries,
+		      NULL, 2,
+		      FALSE,
+		      TRUE);
+
+  brushes_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Brushes>", NULL);
+  gtk_object_set_data (GTK_OBJECT (brushes_factory), "factory_path",
+		       "brushes");
+  gtk_item_factory_set_translate_func (dialogs_factory, menu_translate,
+				       "<Brushes>", NULL);
+  menus_create_items (brushes_factory,
+		      n_brushes_entries,
+		      brushes_entries,
+		      NULL, 2,
+		      FALSE,
+		      TRUE);
+
+  patterns_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Patterns>", NULL);
+  gtk_object_set_data (GTK_OBJECT (patterns_factory), "factory_path",
+		       "patterns");
+  gtk_item_factory_set_translate_func (dialogs_factory, menu_translate,
+				       "<Patterns>", NULL);
+  menus_create_items (patterns_factory,
+		      n_patterns_entries,
+		      patterns_entries,
+		      NULL, 2,
+		      FALSE,
+		      TRUE);
+
+  gradients_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Gradients>", NULL);
+  gtk_object_set_data (GTK_OBJECT (gradients_factory), "factory_path",
+		       "gradients");
+  gtk_item_factory_set_translate_func (dialogs_factory, menu_translate,
+				       "<Gradients>", NULL);
+  menus_create_items (gradients_factory,
+		      n_gradients_entries,
+		      gradients_entries,
+		      NULL, 2,
+		      FALSE,
+		      TRUE);
+
+  palettes_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Palettes>", NULL);
+  gtk_object_set_data (GTK_OBJECT (palettes_factory), "factory_path",
+		       "palettes");
+  gtk_item_factory_set_translate_func (dialogs_factory, menu_translate,
+				       "<Palettes>", NULL);
+  menus_create_items (palettes_factory,
+		      n_palettes_entries,
+		      palettes_entries,
 		      NULL, 2,
 		      FALSE,
 		      TRUE);

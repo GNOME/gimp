@@ -53,12 +53,13 @@ struct _GimpBufferViewClass
 
 GtkType     gimp_buffer_view_get_type (void);
 
-GtkWidget * gimp_buffer_view_new      (GimpViewType   view_type,
-				       GimpContainer *container,
-				       GimpContext   *context,
-				       gint           preview_size,
-				       gint           min_items_x,
-				       gint           min_items_y);
+GtkWidget * gimp_buffer_view_new      (GimpViewType              view_type,
+				       GimpContainer            *container,
+				       GimpContext              *context,
+				       gint                      preview_size,
+				       gint                      min_items_x,
+				       gint                      min_items_y,
+				       GimpContainerContextFunc  context_func);
 
 
 #endif  /*  __GIMP_BUFFER_VIEW_H__  */

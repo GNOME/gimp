@@ -147,7 +147,8 @@ palette_select_new (const gchar *title,
 					  dialogs_edit_palette_func,
 					  psp->context,
 					  32,
-					  5, 3);
+					  5, 3,
+					  NULL);
   gtk_box_pack_start (GTK_BOX (vbox), psp->view, TRUE, TRUE, 0);
   gtk_widget_show (psp->view);
 

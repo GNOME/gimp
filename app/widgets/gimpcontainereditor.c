@@ -56,6 +56,8 @@ static void   gimp_container_editor_context_item     (GtkWidget           *widge
 						      GimpViewable        *viewable,
 						      gpointer             insert_data,
 						      GimpContainerEditor *editor);
+static void   gimp_container_editor_real_context_item(GimpContainerEditor *editor,
+						      GimpViewable        *viewable);
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -99,13 +101,14 @@ gimp_container_editor_class_init (GimpContainerEditorClass *klass)
 
   klass->select_item    = NULL;
   klass->activate_item  = NULL;
-  klass->context_item   = NULL;
+  klass->context_item   = gimp_container_editor_real_context_item;
 }
 
 static void
 gimp_container_editor_init (GimpContainerEditor *view)
 {
-  view->view = NULL;
+  view->context_func = NULL;
+  view->view         = NULL;
 
   gtk_box_set_spacing (GTK_BOX (view), 2);
 
@@ -126,13 +129,14 @@ gimp_container_editor_destroy (GtkObject *object)
 }
 
 gboolean
-gimp_container_editor_construct (GimpContainerEditor *editor,
-				 GimpViewType         view_type,
-				 GimpContainer       *container,
-				 GimpContext         *context,
-				 gint                 preview_size,
-				 gint                 min_items_x,
-				 gint                 min_items_y)
+gimp_container_editor_construct (GimpContainerEditor      *editor,
+				 GimpViewType              view_type,
+				 GimpContainer            *container,
+				 GimpContext              *context,
+				 gint                      preview_size,
+				 gint                      min_items_x,
+				 gint                      min_items_y,
+				 GimpContainerContextFunc  context_func)
 {
   g_return_val_if_fail (editor != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_CONTAINER_EDITOR (editor), FALSE);
@@ -144,6 +148,8 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   g_return_val_if_fail (preview_size > 0 && preview_size <= 64, FALSE);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, FALSE);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, FALSE);
+
+  editor->context_func = context_func;
 
   switch (view_type)
     {
@@ -321,4 +327,16 @@ gimp_container_editor_context_item (GtkWidget           *widget,
 
   if (klass->context_item)
     klass->context_item (editor, viewable);
+}
+
+static void
+gimp_container_editor_real_context_item (GimpContainerEditor *editor,
+					 GimpViewable        *viewable)
+{
+  if (viewable && gimp_container_have (editor->view->container,
+				       GIMP_OBJECT (viewable)))
+    {
+      if (editor->context_func)
+	editor->context_func (editor);
+    }
 }

@@ -41,7 +41,6 @@
 #include "color-area.h"
 #include "color-notebook.h"
 #include "palette-editor.h"
-#include "palette-import-dialog.h"
 #include "palette-select.h"
 
 #include "app_procs.h"
@@ -138,13 +137,6 @@ static void   palette_dialog_zoomin_callback    (GtkWidget      *widget,
 static void   palette_dialog_zoomout_callback   (GtkWidget      *widget,
 						 gpointer        data);
 static void   palette_dialog_redraw_zoom        (PaletteDialog  *palette_dialog);
-static void   palette_dialog_import_callback    (GtkWidget      *widget,
-						 gpointer        data);
-static void   palette_dialog_merge_callback     (GtkWidget      *widget,
-						 gpointer        data);
-static void   palette_dialog_do_merge_callback  (GtkWidget      *widget,
-						 gchar          *palette_name,
-						 gpointer        data);
 static void   palette_dialog_close_callback     (GtkWidget      *widget,
 						 gpointer        data);
 static void   palette_dialog_palette_changed    (GimpContext    *context,
@@ -193,8 +185,6 @@ palette_dialog_free (void)
 {
   if (top_level_edit_palette)
     {
-      palette_import_dialog_destroy ();
-
       if (top_level_edit_palette->color_notebook) 
 	color_notebook_free (top_level_edit_palette->color_notebook);
 
@@ -321,7 +311,6 @@ palette_dialog_new (gboolean editor)
   GtkWidget     *entry;
   GtkWidget     *eventbox;
   GtkWidget     *alignment;
-  GtkWidget     *frame;
   GtkWidget     *button;
 
   palette_dialog = g_new0 (PaletteDialog, 1);
@@ -475,7 +464,8 @@ palette_dialog_new (gboolean editor)
 				editor ? NULL : palette_dialog_edit_palette,
 				palette_dialog->context,
 				SM_PREVIEW_HEIGHT,
-				2, 4);
+				2, 4,
+				NULL);
 
   if (! editor)
     {
@@ -505,40 +495,6 @@ palette_dialog_new (gboolean editor)
 				palette_dialog);
 
   gtk_widget_show (palette_dialog->view);
-  
-  if (editor)
-    {
-      frame = gtk_frame_new (_("Palette Ops"));
-      gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame); 
-
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-      gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_widget_show (vbox);
-
-      button = gtk_button_new_with_label (_("Import"));
-      GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
-      gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  GTK_SIGNAL_FUNC (palette_dialog_import_callback),
-			  palette_dialog);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gimp_help_set_help_data (button, NULL,
-			       "dialogs/palette_editor/import_palette.html");
-      gtk_widget_show (button);
-
-      button = gtk_button_new_with_label (_("Merge"));
-      GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
-      gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  GTK_SIGNAL_FUNC (palette_dialog_merge_callback),
-			  palette_dialog);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gimp_help_set_help_data (button, NULL,
-			       "dialogs/palette_editor/merge_palette.html");
-      gtk_widget_show (button);
-    }
 
   gtk_widget_realize (palette_dialog->shell);
 
@@ -1275,77 +1231,6 @@ palette_dialog_redraw_zoom (PaletteDialog *palette_dialog)
 /*  the palette dialog action callbacks  **************************************/
 
 static void
-palette_dialog_import_callback (GtkWidget *widget,
-				gpointer   data)
-{
-  palette_import_dialog_show ();
-}
-
-static void
-palette_dialog_merge_callback (GtkWidget *widget,
-			       gpointer   data)
-{
-  GtkWidget *qbox;
-
-  qbox = gimp_query_string_box (_("Merge Palette"),
-				gimp_standard_help_func,
-				"dialogs/palette_editor/merge_palette.html",
-				_("Enter a name for merged palette"),
-				NULL,
-				NULL, NULL,
-				palette_dialog_do_merge_callback,
-				data);
-  gtk_widget_show (qbox);
-}
-
-static void
-palette_dialog_do_merge_callback (GtkWidget *widget,
-				  gchar     *palette_name,
-				  gpointer   data)
-{
-  PaletteDialog    *palette_dialog;
-  GimpPalette      *palette;
-  GimpPalette      *new_palette;
-  GimpPaletteEntry *entry;
-  GList            *sel_list;
-
-  new_palette = GIMP_PALETTE (gimp_palette_new (palette_name));
-
-  palette_dialog = (PaletteDialog *) data;
-
-  sel_list = GTK_LIST (GIMP_CONTAINER_LIST_VIEW (GIMP_CONTAINER_EDITOR (palette_dialog->view)->view)->gtk_list)->selection;
-
-  while (sel_list)
-    {
-      GtkWidget *list_item;
-      GList     *cols;
-
-      list_item = GTK_WIDGET (sel_list->data);
-
-      palette = (GimpPalette *)
-	GIMP_PREVIEW (gtk_object_get_data (GTK_OBJECT (list_item),
-					   "preview"))->viewable;
-
-      if (palette)
-	{
-	  for (cols = palette->colors; cols; cols = g_list_next (cols))
-	    {
-	      entry = (GimpPaletteEntry *) cols->data;
-
-	      gimp_palette_add_entry (new_palette,
-				      entry->name,
-				      &entry->color);
-	    }
-	}
-
-      sel_list = sel_list->next;
-    }
-
-  gimp_container_add (the_gimp->palette_factory->container,
-		      GIMP_OBJECT (new_palette));
-}
-
-static void
 palette_dialog_close_callback (GtkWidget *widget,
 			       gpointer   data)
 {
@@ -1359,11 +1244,6 @@ palette_dialog_close_callback (GtkWidget *widget,
 	{
 	  color_notebook_hide (palette_dialog->color_notebook);
 	  palette_dialog->color_notebook_active = FALSE;
-	}
-
-      if (palette_dialog == top_level_edit_palette)
-	{
-	  palette_import_dialog_destroy ();
 	}
 
       if (GTK_WIDGET_VISIBLE (palette_dialog->shell))

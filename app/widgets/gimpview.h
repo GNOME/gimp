@@ -75,6 +75,8 @@ struct _GimpPreviewClass
   void        (* double_clicked)   (GimpPreview *preview);
   void        (* extended_clicked) (GimpPreview *preview,
 				    guint        modifier_state);
+  void        (* context)          (GimpPreview *preview);
+
   void        (* render)           (GimpPreview *preview);
   void        (* get_size)         (GimpPreview *preview,
 				    gint         size,

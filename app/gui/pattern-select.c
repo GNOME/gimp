@@ -172,7 +172,8 @@ pattern_select_new (gchar *title,
 					  psp->context,
 					  MIN_CELL_SIZE,
 					  STD_PATTERN_COLUMNS,
-					  STD_PATTERN_ROWS);
+					  STD_PATTERN_ROWS,
+					  NULL);
   gtk_box_pack_start (GTK_BOX (vbox), psp->view, TRUE, TRUE, 0);
   gtk_widget_show (psp->view);
 

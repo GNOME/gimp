@@ -1,5 +1,54 @@
 2001-07-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/disp_callbacks.c: the active_tool may change in the middle
+	of gdisplay_canvas_events(), so re-get it after using it for
+	cursor_update.
+
+	* app/base/boundary.c: made some global variables local.
+
+	* app/core/gimpdrawable.c: don't call gimp_drawable_set_visible()
+	in gimp_drawable_configure() because we don't want signal
+	emissions while configuring the drawable.
+
+	* app/gui/Makefile.am
+	* app/gui/brushes-commands.[ch]
+	* app/gui/data-commands.[ch]
+	* app/gui/gradients-commands.[ch]
+	* app/gui/palettes-commands.[ch]
+	* app/gui/patterns-commands.[ch]: new files for new new item
+	factories' callbacks.
+
+	* app/gui/menus.[ch]: added context menus for brushes, patterns, ...
+
+	* app/gui/gradient-editor.c
+	* app/gui/palette-editor.c: removed the "Save as POV", "Import
+	Palette" and "Merge Palattes" buttons as they are item factory
+	callbacks now.
+
+	* app/widgets/gimpbrushfactoryview.[ch]
+	* app/widgets/gimpbufferview.[ch]
+	* app/widgets/gimpcontainereditor.[ch]
+	* app/widgets/gimpdatafactoryview.[ch]: pass a
+	"GimpContainerContextFunc" pointer to all GimpContainerEditor
+	subclasses' constructors. Use the function to show the context
+	menu.
+
+	* app/widgets/gimpcontainergridview.c: dispatch the previews'
+	"context" signal.
+
+	* app/widgets/gimppreview.[ch]: new signal "context" which is
+	emitted on right-click.
+
+	* app/gui/brush-select.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/gradient-select.c
+	* app/gui/layers-commands.c
+	* app/gui/palette-select.c
+	* app/gui/pattern-select.c
+	* app/gui/test-commands.c: changed accordingly.
+
+2001-07-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/drawable.[ch]: removed.
 

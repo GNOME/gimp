@@ -47,15 +47,9 @@ static gint       max_segs       = 0;
 
 /* static empty segment arrays */
 static gint      *empty_segs_n   = NULL;
-static gint       num_empty_n    = 0;
 static gint      *empty_segs_c   = NULL;
-static gint       num_empty_c    = 0;
 static gint      *empty_segs_l   = NULL;
-static gint       num_empty_l    = 0;
 static gint       max_empty_segs = 0;
-
-/* global state variables--improve parameter efficiency */
-static PixelRegion *cur_PR       = NULL;
 
 
 /*  local function prototypes  */
@@ -74,8 +68,8 @@ static void make_seg            (gint          x1,
 				 gint          x2,
 				 gint          y2,
 				 gboolean      open);
-static void allocate_vert_segs  (void);
-static void allocate_empty_segs (void);
+static void allocate_vert_segs  (PixelRegion  *PR);
+static void allocate_empty_segs (PixelRegion  *PR);
 static void process_horiz_seg   (gint          x1,
 				 gint          y1,
 				 gint          x2,
@@ -87,7 +81,8 @@ static void make_horiz_segs     (gint          start,
 				 gint          empty[],
 				 gint          num_empty,
 				 gint          top);
-static void generate_boundary   (BoundaryType  type,
+static void generate_boundary   (PixelRegion  *PR,
+				 BoundaryType  type,
 				 gint          x1,
 				 gint          y1,
 				 gint          x2,
@@ -248,26 +243,26 @@ make_seg (gint     x1,
 
 
 static void
-allocate_vert_segs (void)
+allocate_vert_segs (PixelRegion *PR)
 {
   gint i;
 
   /*  allocate and initialize the vert_segs array  */
   vert_segs = (gint *) g_realloc ((void *) vert_segs, 
-				  (cur_PR->w + cur_PR->x + 1) * sizeof (gint));
+				  (PR->w + PR->x + 1) * sizeof (gint));
 
-  for (i = 0; i <= (cur_PR->w + cur_PR->x); i++)
+  for (i = 0; i <= (PR->w + PR->x); i++)
     vert_segs[i] = -1;
 }
 
 
 static void
-allocate_empty_segs (void)
+allocate_empty_segs (PixelRegion *PR)
 {
   gint need_num_segs;
 
   /*  find the maximum possible number of empty segments given the current mask  */
-  need_num_segs = cur_PR->w + 3;
+  need_num_segs = PR->w + 3;
 
   if (need_num_segs > max_empty_segs)
     {
@@ -336,7 +331,8 @@ make_horiz_segs (gint start,
 
 
 static void
-generate_boundary (BoundaryType type,
+generate_boundary (PixelRegion  *PR,
+		   BoundaryType  type,
 		   gint          x1,
 		   gint          y1,
 		   gint          x2,
@@ -347,14 +343,18 @@ generate_boundary (BoundaryType type,
   gint  start, end;
   gint *tmp_segs;
 
+  gint  num_empty_n = 0;
+  gint  num_empty_c = 0;
+  gint  num_empty_l = 0;
+
   start = 0;
   end   = 0;
 
   /*  array for determining the vertical line segments which must be drawn  */
-  allocate_vert_segs ();
+  allocate_vert_segs (PR);
 
   /*  make sure there is enough space for the empty segment array  */
-  allocate_empty_segs ();
+  allocate_empty_segs (PR);
 
   num_segs = 0;
 
@@ -365,22 +365,22 @@ generate_boundary (BoundaryType type,
     }
   else if (type == IgnoreBounds)
     {
-      start = cur_PR->y;
-      end = cur_PR->y + cur_PR->h;
+      start = PR->y;
+      end   = PR->y + PR->h;
     }
 
   /*  Find the empty segments for the previous and current scanlines  */
-  find_empty_segs (cur_PR, start - 1, empty_segs_l,
+  find_empty_segs (PR, start - 1, empty_segs_l,
 		   max_empty_segs, &num_empty_l,
 		   type, x1, y1, x2, y2);
-  find_empty_segs (cur_PR, start, empty_segs_c,
+  find_empty_segs (PR, start, empty_segs_c,
 		   max_empty_segs, &num_empty_c,
 		   type, x1, y1, x2, y2);
 
   for (scanline = start; scanline < end; scanline++)
     {
       /*  find the empty segment list for the next scanline  */
-      find_empty_segs (cur_PR, scanline + 1, empty_segs_n,
+      find_empty_segs (PR, scanline + 1, empty_segs_n,
 		       max_empty_segs, &num_empty_n,
 		       type, x1, y1, x2, y2);
 
@@ -413,16 +413,15 @@ find_mask_boundary (PixelRegion  *maskPR,
 		    int           x2,
 		    int           y2)
 {
-  BoundSeg * new_segs = NULL;
+  BoundSeg *new_segs = NULL;
 
   /*  The mask paramater can be any PixelRegion.  If the region
    *  has more than 1 bytes/pixel, the last byte of each pixel is
    *  used to determine the boundary outline.
    */
-  cur_PR = maskPR;
 
   /*  Calculate the boundary  */
-  generate_boundary (type, x1, y1, x2, y2);
+  generate_boundary (maskPR, type, x1, y1, x2, y2);
 
   /*  Set the number of X segments  */
   *num_elems = num_segs;
@@ -466,11 +465,11 @@ sort_boundary (BoundSeg *segs,
 	       gint      ns,
 	       gint     *num_groups)
 {
-  gint i;
-  gint index;
-  gint x, y;
-  gint startx, starty;
-  gint empty = (num_segs == 0);
+  gint      i;
+  gint      index;
+  gint      x, y;
+  gint      startx, starty;
+  gint      empty = (num_segs == 0);
   BoundSeg *new_segs;
 
   index = 0;

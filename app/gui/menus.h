@@ -36,14 +36,18 @@ struct _GimpItemFactoryEntry
 extern GSList *last_opened_raw_filenames;
 
 
-GtkItemFactory * menus_get_toolbox_factory  (void);
-GtkItemFactory * menus_get_image_factory    (void);
-GtkItemFactory * menus_get_load_factory     (void);
-GtkItemFactory * menus_get_save_factory     (void);
-GtkItemFactory * menus_get_layers_factory   (void);
-GtkItemFactory * menus_get_channels_factory (void);
-GtkItemFactory * menus_get_paths_factory    (void);
-GtkItemFactory * menus_get_dialogs_factory  (void);
+GtkItemFactory * menus_get_toolbox_factory   (void);
+GtkItemFactory * menus_get_image_factory     (void);
+GtkItemFactory * menus_get_load_factory      (void);
+GtkItemFactory * menus_get_save_factory      (void);
+GtkItemFactory * menus_get_layers_factory    (void);
+GtkItemFactory * menus_get_channels_factory  (void);
+GtkItemFactory * menus_get_paths_factory     (void);
+GtkItemFactory * menus_get_dialogs_factory   (void);
+GtkItemFactory * menus_get_brushes_factory   (void);
+GtkItemFactory * menus_get_patterns_factory  (void);
+GtkItemFactory * menus_get_gradients_factory (void);
+GtkItemFactory * menus_get_palettes_factory  (void);
 
 
 void   menus_create_item_from_full_path (GimpItemFactoryEntry  *entry,

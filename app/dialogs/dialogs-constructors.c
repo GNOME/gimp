@@ -51,6 +51,7 @@
 #include "about-dialog.h"
 #include "brush-editor.h"
 #include "brush-select.h"
+#include "brushes-commands.h"
 #include "channels-commands.h"
 #include "color-area.h"
 #include "colormap-dialog.h"
@@ -61,10 +62,14 @@
 #include "gdisplay.h"
 #include "gradient-editor.h"
 #include "gradient-select.h"
+#include "gradients-commands.h"
 #include "layers-commands.h"
+#include "menus.h"
 #include "palette-editor.h"
+#include "palettes-commands.h"
 #include "paths-dialog.h"
 #include "pattern-select.h"
+#include "patterns-commands.h"
 #include "preferences-dialog.h"
 #include "tips-dialog.h"
 #include "tool-options-dialog.h"
@@ -321,7 +326,8 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory,
 				      context,
 				      TRUE,
 				      32,
-				      5, 3);
+				      5, 3,
+				      brushes_show_context_menu);
 
   return dialogs_dockable_new (view,
 			       "Brush List", "Brushes",
@@ -340,7 +346,8 @@ dialogs_pattern_list_view_new (GimpDialogFactory *factory,
 				     NULL,
 				     context,
 				     32,
-				     5, 3);
+				     5, 3,
+				     patterns_show_context_menu);
 
   return dialogs_dockable_new (view,
 			       "Pattern List", "Patterns",
@@ -359,7 +366,8 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
 				     dialogs_edit_gradient_func,
 				     context,
 				     32 / 2,
-				     5, 3);
+				     5, 3,
+				     gradients_show_context_menu);
 
   return dialogs_dockable_new (view,
 			       "Gradient List", "Gradients",
@@ -378,7 +386,8 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
 				     dialogs_edit_palette_func,
 				     context,
 				     32,
-				     5, 3);
+				     5, 3,
+				     palettes_show_context_menu);
 
   return dialogs_dockable_new (view,
 			       "Palette List", "Palettes",
@@ -413,7 +422,8 @@ dialogs_buffer_list_view_new (GimpDialogFactory *factory,
 			       context->gimp->named_buffers,
 			       context,
 			       32,
-			       5, 3);
+			       5, 3,
+			       NULL);
 
   return dialogs_dockable_new (view,
 			       "Buffer List", "Buffers",
@@ -453,7 +463,8 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
 				      context,
 				      TRUE,
 				      32,
-				      5, 3);
+				      5, 3,
+				      brushes_show_context_menu);
 
   return dialogs_dockable_new (view,
 			       "Brush Grid", "Brushes",
@@ -472,7 +483,8 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
 				     NULL,
 				     context,
 				     32,
-				     5, 3);
+				     5, 3,
+				     patterns_show_context_menu);
 
   return dialogs_dockable_new (view,
 			       "Pattern Grid", "Patterns",
@@ -491,7 +503,8 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
 				     dialogs_edit_gradient_func,
 				     context,
 				     32,
-				     5, 3);
+				     5, 3,
+				     gradients_show_context_menu);
 
   return dialogs_dockable_new (view,
 			       "Gradient Grid", "Gradients",
@@ -510,7 +523,8 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
 				     dialogs_edit_palette_func,
 				     context,
 				     32,
-				     5, 3);
+				     5, 3,
+				     palettes_show_context_menu);
 
   return dialogs_dockable_new (view,
 			       "Palette Grid", "Palettes",
@@ -545,7 +559,8 @@ dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
 			       context->gimp->named_buffers,
 			       context,
 			       32,
-			       5, 3);
+			       5, 3,
+			       NULL);
 
   return dialogs_dockable_new (view,
 			       "Buffer Grid", "Buffers",

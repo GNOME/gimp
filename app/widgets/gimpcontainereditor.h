@@ -26,7 +26,7 @@
 #include <gtk/gtkvbox.h>
 
 
-typedef void (* GimpContainerEditFunc) (GimpContainer *container);
+typedef void (* GimpContainerContextFunc) (GimpContainerEditor *editor);
 
 
 typedef enum
@@ -47,11 +47,12 @@ typedef struct _GimpContainerEditorClass  GimpContainerEditorClass;
 
 struct _GimpContainerEditor
 {
-  GtkVBox            parent_instance;
+  GtkVBox                   parent_instance;
 
-  GimpContainerView *view;
+  GimpContainerContextFunc  context_func;
 
-  GtkWidget         *button_box;
+  GimpContainerView        *view;
+  GtkWidget                *button_box;
 };
 
 struct _GimpContainerEditorClass
@@ -78,7 +79,8 @@ gboolean    gimp_container_editor_construct  (GimpContainerEditor  *editor,
 					      GimpContext          *context,
 					      gint                  preview_size,
 					      gint                  min_items_x,
-					      gint                  min_items_y);
+					      gint                  min_items_y,
+					      GimpContainerContextFunc  context_func);
 
 GtkWidget * gimp_container_editor_add_button (GimpContainerEditor  *editor,
 					      gchar               **xpm_data,
