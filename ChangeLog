@@ -1,3 +1,10 @@
+2000-11-21  Sven Neumann  <sven@gimp.org>
+
+	* app/gdisplay_color.c
+	* app/gdisplay_color_ui.c: applied patches proposed by 
+	David Odin <David.Odin@bigfoot.com>. Fixes segfault when removing
+	a display filter twice.
+
 2000-11-21  Austin Donnelly  <austin@gimp.org>
 
 	* plug-ins/common/exchange.c: fixed buffer overrun when previewing
