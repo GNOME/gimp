@@ -53,6 +53,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <jpeglib.h>
+#include <jerror.h>
 #include "config.h"    /* configure cares about HAVE_PROGRESSIVE_JPEG */
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
@@ -362,6 +363,60 @@ run (char    *name,
 }
 
 
+
+
+/* Read next byte */
+static unsigned int
+jpeg_getc (j_decompress_ptr cinfo)
+{
+  struct jpeg_source_mgr * datasrc = cinfo->src;
+
+  if (datasrc->bytes_in_buffer == 0) {
+    if (! (*datasrc->fill_input_buffer) (cinfo))
+      ERREXIT(cinfo, JERR_CANT_SUSPEND);
+  }
+  datasrc->bytes_in_buffer--;
+  return *datasrc->next_input_byte++;
+}
+
+/* We need our own marker parser, since early versions of libjpeg
+ * don't keep a conventient list of the marker's that have been
+ * seen. */
+
+/*
+ * Marker processor for COM markers.
+ * This replaces the library's built-in processor, which just skips the marker.
+ * Note this code relies on a non-suspending data source.
+ */
+static GString *local_image_comments=NULL;
+
+static boolean
+COM_handler (j_decompress_ptr cinfo)
+{
+  int length;
+  unsigned int ch;
+
+  length = jpeg_getc (cinfo) << 8;
+  length += jpeg_getc (cinfo);
+  if (length < 2)
+    return FALSE;
+  length -= 2;			/* discount the length word itself */
+
+  if (!local_image_comments)
+    local_image_comments = g_string_new (NULL);
+  else
+    g_string_append_c (local_image_comments, '\n');
+
+  while (length-- > 0)
+  {
+    ch = jpeg_getc (cinfo);
+    g_string_append_c (local_image_comments, ch);
+  }
+
+  return TRUE;
+}
+
+
 typedef struct my_error_mgr {
   struct jpeg_error_mgr pub;	/* "public" fields */
 
@@ -406,15 +461,11 @@ load_image (char *filename)
   int scanlines;
   int i, start, end;
 
-  
-  
 #ifdef GIMP_HAVE_PARASITES
   JpegSaveVals local_save_vals;
-  jpeg_saved_marker_ptr curr_marker;
   Parasite *comment_parasite;
   Parasite *vals_parasite;
-  GString *local_image_comments=NULL;
-#endif GIMP_HAVE_PARASITES
+#endif /* GIMP_HAVE_PARASITES */
 
   
   /* We set up the normal JPEG error routines. */
@@ -454,8 +505,8 @@ load_image (char *filename)
   jpeg_stdio_src (&cinfo, infile);
 
   /* pw - step 2.1 let the lib know we want the comments. */
-  
-  jpeg_save_markers(&cinfo,JPEG_COM,0xFFFF);
+
+  jpeg_set_marker_processor (&cinfo, JPEG_COM, COM_handler);
 
   /* Step 3: read file parameters with jpeg_read_header() */
 
@@ -468,30 +519,7 @@ load_image (char *filename)
 
 #ifdef GIMP_HAVE_PARASITES
 
-  /* pw - Walk the marker list looking for comments (that is the only
-   * thing that should be in there - but be explicit.)  If there are
-   * multiple comments, merge them into one with a /n between each. */
-  
-  for(curr_marker=cinfo.marker_list;
-      curr_marker!=NULL;
-      curr_marker=curr_marker->next) {
-    
-    if(curr_marker->marker==JPEG_COM) {
-      int len=curr_marker->data_length;
-      char *string=g_strndup(curr_marker->data,len);
-      if(len != curr_marker->original_length) {
-	g_warning("*** Warning *** comment truncated\n");
-      }
-      if(image_comment) {
-	g_string_append_c(local_image_comments,'\n');
-	g_string_append(local_image_comments,string);
-      } else {
-	local_image_comments=g_string_new(string);
-      }
-      g_free(string);
-    }
-  }
-
+  /* if we had any comments then make a parasite for them */
   if(local_image_comments) {
     char *string=local_image_comments->str;
     g_string_free(local_image_comments,FALSE);
@@ -559,6 +587,8 @@ load_image (char *filename)
       layer_type = RGB_IMAGE;
       break;
     default:
+      g_message ("don't know how to load JPEGs\nwith %d color channels",
+		 cinfo.output_components);
       gimp_quit ();
     }
 
@@ -573,6 +603,45 @@ load_image (char *filename)
 
   drawable = gimp_drawable_get (layer_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, TRUE, FALSE);
+
+  /* Step 5.1: if the file had resolution information, set it on the
+   * image */
+#ifdef GIMP_HAVE_RESOLUTION_INFO
+  if (cinfo.saw_JFIF_marker)
+  {
+    float xresolution;
+    float yresolution;
+    float asymmetry;
+
+    xresolution = cinfo.X_density;
+    yresolution = cinfo.Y_density;
+
+    switch (cinfo.density_unit) {
+    case 0: /* unknown */
+	asymmetry = xresolution / yresolution;
+	xresolution = 72 * asymmetry;
+	yresolution = 72;
+	break;
+
+    case 1: /* dots per inch */
+	break;
+
+    case 2: /* dots per cm */
+	xresolution *= 2.54;
+	yresolution *= 2.54;
+	break;
+
+    default:
+	g_message ("unknown density unit %d\nassuming dots per inch",
+		   cinfo.density_unit);
+	break;
+      }
+
+    if (xresolution > 1e-5 && yresolution > 1e-5)
+      gimp_image_set_resolution (image_ID, xresolution, yresolution);
+  }
+#endif /* GIMP_HAVE_RESOLUTION_INFO */
+
 
   /* Step 6: while (scan lines remain to be read) */
   /*           jpeg_read_scanlines(...); */
@@ -774,7 +843,23 @@ save_image (char   *filename,
   if(jsvals.progressive) {
     jpeg_simple_progression(&cinfo);
   }
-#endif HAVE_PROGRESSIVE_JPEG
+#endif /* HAVE_PROGRESSIVE_JPEG */
+
+#ifdef GIMP_HAVE_RESOLUTION_INFO
+  {
+    float xresolution;
+    float yresolution;
+
+    gimp_image_get_resolution (image_ID, &xresolution, &yresolution);
+
+    if (xresolution > 1e-5 && yresolution > 1e-5)
+    {
+      cinfo.density_unit = 1;  /* dots per inch */
+      cinfo.X_density = xresolution;
+      cinfo.Y_density = yresolution;
+    }
+  }
+#endif /* GIMP_HAVE_RESOLUTION_INFO */
   
   /* Step 4: Start compressor */
 

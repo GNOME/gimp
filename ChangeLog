@@ -1,3 +1,10 @@
+Sat Jan 16 18:21:58 GMT 1999  Austin Donnelly  <austin@greenend.org.uk>
+
+	* plug-ins/jpeg/jpeg.c: re-wrote the gimp-comment stuff so it
+ 	works with older libjpeg libraries without cinfo.marker_list
+ 	support.  While there, added support for loading and saving
+ 	resolution info.
+
 1999-01-15  Federico Mena Quintero  <federico@nuclecu.unam.mx>
 
 	* Updated gtk_toggle_button_set_state() to
