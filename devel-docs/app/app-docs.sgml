@@ -592,6 +592,8 @@
 
     <chapter id="app-tools-misc">
       <title>Text and Vector Tools</title>
+      <xi:include href="xml/gimprectangletool.xml" />
+      <xi:include href="xml/gimprectangleoptions.xml" />
       <xi:include href="xml/gimptexttool.xml" />
       <xi:include href="xml/gimptextoptions.xml" />
       <xi:include href="xml/gimpvectortool.xml" />

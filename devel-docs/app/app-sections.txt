@@ -3173,6 +3173,35 @@ GIMP_POSTERIZE_TOOL_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimprectangleoptions</FILE>
+GimpRectangleOptions
+gimp_rectangle_options_gui
+<SUBSECTION Standard>
+GimpRectangleOptionsClass
+GIMP_RECTANGLE_OPTIONS
+GIMP_IS_RECTANGLE_OPTIONS
+GIMP_TYPE_RECTANGLE_OPTIONS
+gimp_rectangle_options_get_type
+GIMP_RECTANGLE_OPTIONS_CLASS
+GIMP_IS_RECTANGLE_OPTIONS_CLASS
+GIMP_RECTANGLE_OPTIONS_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimprectangletool</FILE>
+<TITLE>GimpRectangleTool</TITLE>
+GimpRectangleTool
+<SUBSECTION Standard>
+GimpRectangleToolClass
+GIMP_RECTANGLE_TOOL
+GIMP_IS_RECTANGLE_TOOL
+GIMP_TYPE_RECTANGLE_TOOL
+gimp_rectangle_tool_get_type
+GIMP_RECTANGLE_TOOL_CLASS
+GIMP_RECTANGLE_TOOL_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimprectselecttool</FILE>
 <TITLE>GimpRectSelectTool</TITLE>
 GimpRectSelectTool
@@ -7435,6 +7464,8 @@ GimpCropMode
 SelectOps
 GimpToolAction
 GimpMotionMode
+GIMP_TYPE_RECTANGLE_MODE
+GimpRectangleMode
 GIMP_TYPE_RECT_SELECT_MODE
 GimpRectSelectMode
 GIMP_TYPE_TRANSFORM_TYPE
@@ -7449,6 +7480,7 @@ TransformAction
 <SUBSECTION Standard>
 gimp_color_pick_mode_get_type
 gimp_crop_mode_get_type
+gimp_rectangle_mode_get_type
 gimp_rect_select_mode_get_type
 gimp_transform_type_get_type
 gimp_vector_mode_get_type
