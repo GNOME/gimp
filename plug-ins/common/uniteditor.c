@@ -403,28 +403,27 @@ static void
 new_callback (GtkWidget   *widget,
 	      GtkTreeView *tv)
 {
-  GtkListStore     *list_store;
-  GtkTreeSelection *sel;
-  GimpUnit          unit;
-
-  list_store = GTK_LIST_STORE (gtk_tree_view_get_model (tv));
-  sel        = gtk_tree_view_get_selection (tv);
+  GimpUnit  unit;
 
   unit = new_unit (gtk_widget_get_toplevel (widget), GIMP_UNIT_PIXEL);
 
   if (unit != GIMP_UNIT_PIXEL)
     {
-      GtkTreeIter iter;
+      GtkTreeModel *model;
+      GtkTreeIter   iter;
 
       list_init (tv);
 
-      if (gtk_tree_model_get_iter_root (GTK_TREE_MODEL (list_store), &iter) &&
-          gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (list_store), &iter,
+      model = gtk_tree_view_get_model (tv);
+
+      if (gtk_tree_model_get_iter_root (model, &iter) &&
+          gtk_tree_model_iter_nth_child (model, &iter,
                                          NULL, unit - GIMP_UNIT_INCH))
         {
           GtkAdjustment *adj;
 
-          gtk_tree_selection_select_iter (sel, &iter);
+          gtk_tree_selection_select_iter (gtk_tree_view_get_selection (tv),
+                                          &iter);
 
           adj = gtk_tree_view_get_vadjustment (tv);
           gtk_adjustment_set_value (adj, adj->upper);
@@ -436,18 +435,18 @@ static void
 duplicate_callback (GtkWidget   *widget,
 		    GtkTreeView *tv)
 {
-  GtkListStore     *list_store;
+  GtkTreeModel     *model;
   GtkTreeSelection *sel;
   GtkTreeIter       iter;
 
-  list_store = GTK_LIST_STORE (gtk_tree_view_get_model (tv));
-  sel        = gtk_tree_view_get_selection (tv);
+  model = gtk_tree_view_get_model (tv);
+  sel   = gtk_tree_view_get_selection (tv);
 
   if (gtk_tree_selection_get_selected (sel, NULL, &iter))
     {
       GimpUnit unit;
 
-      gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+      gtk_tree_model_get (model, &iter,
                           UNIT, &unit,
                           -1);
 
@@ -459,9 +458,8 @@ duplicate_callback (GtkWidget   *widget,
 
           list_init (tv);
 
-          if (gtk_tree_model_get_iter_root (GTK_TREE_MODEL (list_store),
-                                            &iter) &&
-              gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (list_store), &iter,
+          if (gtk_tree_model_get_iter_root (model, &iter) &&
+              gtk_tree_model_iter_nth_child (model, &iter,
                                              NULL, unit - GIMP_UNIT_INCH))
             {
               GtkAdjustment *adj;

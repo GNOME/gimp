@@ -33,11 +33,6 @@
 #include <unistd.h>
 #endif
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -112,6 +107,14 @@ enum
 {
   FOG
 };
+
+enum
+{
+  TYPE,
+  TEXTURE,
+  NUM_COLUMNS
+};
+
 
 /* World-flags */
 #define SMARTAMBIENT 0x00000001
@@ -310,7 +313,7 @@ static gdouble turbulence    (gdouble *point, gdouble lofreq, gdouble hifreq);
 #define COLORBUTTONWIDTH  30
 #define COLORBUTTONHEIGHT 20
 
-static GtkWidget *texturelist = NULL;
+static GtkTreeView *texturelist = NULL;
 
 static GtkObject *scalexscale, *scaleyscale, *scalezscale;
 static GtkObject *rotxscale, *rotyscale, *rotzscale;
@@ -1785,42 +1788,46 @@ mklabel (texture * t)
   return tmps;
 }
 
-static GtkWidget *
-currentitem (GtkWidget *list)
-{
-  GList     *h;
-  GtkWidget *tmpw;
-
-  h = GTK_LIST (list)->selection;
-  if (!h)
-    return NULL;
-  tmpw = h->data;
-  return tmpw;
-}
-
 static texture *
 currenttexture (void)
 {
-  GtkWidget *tmpw;
-  texture   *t;
+  GtkTreeSelection *sel;
+  GtkTreeIter       iter;
+  texture          *t = NULL;
 
-  tmpw = currentitem (texturelist);
-  if (!tmpw)
-    return NULL;
-  t = g_object_get_data (G_OBJECT (tmpw), "texture");
+  sel = gtk_tree_view_get_selection (texturelist);
+
+  if (gtk_tree_selection_get_selected (sel, NULL, &iter))
+    {
+      gtk_tree_model_get (gtk_tree_view_get_model (texturelist), &iter,
+                          TEXTURE, &t,
+                          -1);
+    }
+
   return t;
 }
 
 static void
 relabel (void)
 {
-  GtkWidget *tmpw = currentitem (texturelist);
-  texture   *t    = currenttexture ();
+  GtkTreeModel     *model;
+  GtkTreeSelection *sel;
+  GtkTreeIter       iter;
+  texture          *t = NULL;
 
-  if (!tmpw || !t)
-    return;
-  tmpw = GTK_BIN (tmpw)->child;
-  gtk_label_set_text (GTK_LABEL (tmpw), mklabel (t));
+  sel = gtk_tree_view_get_selection (texturelist);
+
+  if (gtk_tree_selection_get_selected (sel, NULL, &iter))
+    {
+      model = gtk_tree_view_get_model (texturelist);
+
+      gtk_tree_model_get (model, &iter,
+                          TEXTURE, &t,
+                          -1);
+      gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                          TYPE, mklabel (t),
+                          -1);
+    }
 }
 
 static gboolean noupdate = FALSE;
@@ -1875,8 +1882,8 @@ setvals (texture * t)
 
 
 static void
-selectitem (GtkWidget *widget,
-            gpointer   data)
+selectitem (GtkTreeSelection *treeselection,
+            gpointer          data)
 {
   setvals (currenttexture ());
 }
@@ -1884,20 +1891,24 @@ selectitem (GtkWidget *widget,
 static void
 addtexture (void)
 {
-  GtkWidget *item;
-  gint       n = s.com.numtexture;
+  GtkListStore *list_store;
+  GtkTreeIter   iter;
+  gint          n = s.com.numtexture;
 
   if (n == MAXTEXTUREPEROBJ - 1)
     return;
 
   setdefaults (&s.com.texture[n]);
 
-  item = gtk_list_item_new_with_label (mklabel (&s.com.texture[n]));
-  g_object_set_data (G_OBJECT (item), "texture", &s.com.texture[n]);
-  gtk_container_add (GTK_CONTAINER (texturelist), item);
-  gtk_widget_show (item);
+  list_store = GTK_LIST_STORE (gtk_tree_view_get_model (texturelist));
 
-  gtk_list_select_child (GTK_LIST (texturelist), item);
+  gtk_list_store_append (list_store, &iter);
+  gtk_list_store_set (list_store, &iter,
+                      TYPE,    mklabel (&s.com.texture[n]),
+                      TEXTURE, &s.com.texture[n],
+                      -1);
+  gtk_tree_selection_select_iter (gtk_tree_view_get_selection (texturelist),
+                                  &iter);
 
   s.com.numtexture++;
   restartrender ();
@@ -1906,9 +1917,10 @@ addtexture (void)
 static void
 duptexture (void)
 {
-  GtkWidget *item;
-  texture   *t = currenttexture ();
-  gint       n = s.com.numtexture;
+  GtkListStore *list_store;
+  GtkTreeIter   iter;
+  texture      *t = currenttexture ();
+  gint          n = s.com.numtexture;
 
   if (n == MAXTEXTUREPEROBJ - 1)
     return;
@@ -1917,12 +1929,15 @@ duptexture (void)
 
   s.com.texture[n] = *t;
 
-  item = gtk_list_item_new_with_label (mklabel (&s.com.texture[n]));
-  g_object_set_data (G_OBJECT (item), "texture", &s.com.texture[n]);
-  gtk_container_add (GTK_CONTAINER (texturelist), item);
-  gtk_widget_show (item);
+  list_store = GTK_LIST_STORE (gtk_tree_view_get_model (texturelist));
 
-  gtk_list_select_child (GTK_LIST (texturelist), item);
+  gtk_list_store_append (list_store, &iter);
+  gtk_list_store_set (list_store, &iter,
+                      TYPE,    mklabel (&s.com.texture[n]),
+                      TEXTURE, &s.com.texture[n],
+                      -1);
+  gtk_tree_selection_select_iter (gtk_tree_view_get_selection (texturelist),
+                                  &iter);
 
   s.com.numtexture++;
   restartrender ();
@@ -1931,27 +1946,33 @@ duptexture (void)
 static void
 rebuildlist (void)
 {
-  GtkWidget *item;
-  gint       n;
+  GtkListStore *list_store;
+  GtkTreeIter   iter;
+  gint          n;
 
   for (n = 0; n < s.com.numtexture; n++)
     {
       if (s.com.numtexture && (s.com.texture[n].majtype < 0))
 	{
-	  int i;
+	  gint i;
+
 	  for (i = n; i < s.com.numtexture - 1; i++)
 	    s.com.texture[i] = s.com.texture[i + 1];
+
 	  s.com.numtexture--;
 	  n--;
 	}
     }
 
+  list_store = GTK_LIST_STORE (gtk_tree_view_get_model (texturelist));
+
   for (n = 0; n < s.com.numtexture; n++)
     {
-      item = gtk_list_item_new_with_label (mklabel (&s.com.texture[n]));
-      g_object_set_data (G_OBJECT (item), "texture", &s.com.texture[n]);
-      gtk_container_add (GTK_CONTAINER (texturelist), item);
-      gtk_widget_show (item);
+      gtk_list_store_append (list_store, &iter);
+      gtk_list_store_set (list_store, &iter,
+                          TYPE,    mklabel (&s.com.texture[n]),
+                          TEXTURE, &s.com.texture[n],
+                          -1);
     }
   restartrender ();
 }
@@ -1973,25 +1994,30 @@ sphere_reset (void)
   vset (&s.com.texture[2].color1, 0, 0.4, 0.4);
   vset (&s.com.texture[2].translate, 15, 15, -15);
 
-  gtk_list_clear_items (GTK_LIST (texturelist), 0, -1);
-  rebuildlist ();
+  gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (texturelist)));
   restartrender ();
 }
 
 static void
 deltexture (void)
 {
-  texture   *t;
-  GtkWidget *tmpw;
+  GtkTreeSelection *sel;
+  GtkTreeModel     *model;
+  GtkTreeIter       iter;
+  texture          *t = NULL;
 
-  tmpw = currentitem (texturelist);
-  if (!tmpw)
-    return;
-  t = currenttexture ();
-  if (!t)
-    return;
-  t->majtype = -1;
-  gtk_widget_destroy (tmpw);
+  sel = gtk_tree_view_get_selection (texturelist);
+
+  if (gtk_tree_selection_get_selected (sel, NULL, &iter))
+    {
+      model = gtk_tree_view_get_model (texturelist);
+
+      gtk_tree_model_get (model, &iter,
+                          TEXTURE, &t,
+                          -1);
+      t->majtype = -1;
+      gtk_list_store_remove (GTK_LIST_STORE (model), &iter);
+    }
 }
 
 static void
@@ -2078,7 +2104,7 @@ loadpreset_ok (GtkWidget        *widget,
   const gchar *fn = gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs));
 
   gtk_widget_hide (GTK_WIDGET (fs));
-  gtk_list_clear_items (GTK_LIST (texturelist), 0, -1);
+  gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (texturelist)));
   loadit (fn);
   rebuildlist ();
   restartrender ();
@@ -2360,7 +2386,7 @@ mktexturemenu (GtkWidget *texturemenu_menu)
     {
       item = gtk_menu_item_new_with_label (gettext (t->s));
       gtk_widget_show (item);
-      gtk_menu_append (GTK_MENU (texturemenu_menu), item);
+      gtk_menu_shell_append (GTK_MENU_SHELL (texturemenu_menu), item);
       g_signal_connect (item, "activate",
 			G_CALLBACK (selecttexture), GINT_TO_POINTER (t->n));
       t++;
@@ -2453,20 +2479,23 @@ sphere_cancel (GtkWidget *widget,
 GtkWidget *
 makewindow (void)
 {
-  GtkWidget *window;
-  GtkWidget *table;
-  GtkWidget *frame;
-  GtkWidget *viewport;
-  GtkWidget *hbox;
-  GtkWidget *button;
-  GtkWidget *label;
-  GtkWidget *item;
-  GtkWidget *_scalescale;
-  GtkWidget *_rotscale;
-  GtkWidget *_turbulencescale;
-  GtkWidget *_amountscale;
-  GtkWidget *_expscale;
-  GimpRGB    rgb;
+  GtkListStore      *list_store;
+  GtkTreeViewColumn *col;
+  GtkWidget  *window;
+  GtkWidget  *table;
+  GtkWidget  *frame;
+  GtkWidget  *scrolled;
+  GtkWidget  *hbox;
+  GtkWidget  *button;
+  GtkWidget  *label;
+  GtkWidget  *list;
+  GtkWidget  *item;
+  GtkWidget  *_scalescale;
+  GtkWidget  *_rotscale;
+  GtkWidget  *_turbulencescale;
+  GtkWidget  *_amountscale;
+  GtkWidget  *_expscale;
+  GimpRGB     rgb;
 
   window = gimp_dialog_new (_("Sphere Designer"), "spheredesigner",
 			    gimp_standard_help_func,
@@ -2513,26 +2542,39 @@ makewindow (void)
   g_signal_connect (button, "clicked",
 		    G_CALLBACK (restartrender), NULL);
 
-
-  frame = gtk_frame_new (_("Textures"));
-  gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 2,
+  scrolled = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
+				       GTK_SHADOW_IN);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+                                  GTK_POLICY_NEVER,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_table_attach (GTK_TABLE (table), scrolled, 1, 2, 0, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (frame);
+  gtk_widget_show (scrolled);
 
-  viewport = gtk_viewport_new (NULL, NULL);
-  gtk_widget_set_size_request (viewport, 150, -1);
-  gtk_container_add (GTK_CONTAINER (frame), viewport);
-  gtk_widget_show (viewport);
+  list_store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, G_TYPE_POINTER);
+  list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
+  g_object_unref (list_store);
 
-  texturelist = gtk_list_new ();
-  gtk_container_add (GTK_CONTAINER (viewport), texturelist);
-  g_signal_connect (texturelist, "selection_changed",
-		    G_CALLBACK (selectitem), texturelist);
-  gtk_widget_show (texturelist);
+  texturelist = GTK_TREE_VIEW (list);
+
+  g_signal_connect (gtk_tree_view_get_selection (texturelist), "changed",
+		    G_CALLBACK (selectitem),
+                    NULL);
+
+  gtk_widget_set_size_request (list, -1, 150);
+  gtk_container_add (GTK_CONTAINER (scrolled), list);
+  gtk_widget_show (list);
+
+  col = gtk_tree_view_column_new_with_attributes (_("Textures"),
+                                                  gtk_cell_renderer_text_new (),
+                                                  "text", TYPE,
+                                                  NULL);
+  gtk_tree_view_append_column (texturelist, col);
 
   hbox = gtk_hbox_new (TRUE, 0);
   gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (hbox);
 
   button = gtk_button_new_from_stock (GTK_STOCK_NEW);
@@ -2555,7 +2597,7 @@ makewindow (void)
 
   hbox = gtk_hbox_new (TRUE, 0);
   gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (hbox);
 
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
@@ -2828,21 +2870,21 @@ makewindow (void)
   item = gtk_menu_item_new_with_label (_("Texture"));
   gtk_widget_show (item);
   g_signal_connect (item, "activate", G_CALLBACK (selecttype), NULL);
-  gtk_menu_append (GTK_MENU (typemenu_menu), item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (typemenu_menu), item);
 
   item = gtk_menu_item_new_with_label (_("Bump"));
   gtk_widget_show (item);
   g_signal_connect (item, "activate",
 		    G_CALLBACK (selecttype),
 		    GINT_TO_POINTER (1));
-  gtk_menu_append (GTK_MENU (typemenu_menu), item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (typemenu_menu), item);
 
   item = gtk_menu_item_new_with_label (_("Light"));
   gtk_widget_show (item);
   g_signal_connect (item, "activate",
 		    G_CALLBACK (selecttype),
 		    GINT_TO_POINTER (2));
-  gtk_menu_append (GTK_MENU (typemenu_menu), item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (typemenu_menu), item);
 
   gtk_option_menu_set_menu (GTK_OPTION_MENU (typemenu), typemenu_menu);
 
@@ -3106,8 +3148,8 @@ sphere_main (GimpDrawable *drawable)
 
   if (!s.com.numtexture)
     sphere_reset ();
-  else
-    rebuildlist ();
+
+  rebuildlist ();
 
   gtk_main ();
 
