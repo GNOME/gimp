@@ -1,5 +1,7 @@
 2004-05-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/exchange.c: fixed minor dialog layout issues.
+
 	* plug-ins/common/screenshot.c: added the camera icon to the dialog.
 
 	* plug-ins/common/film.c
