@@ -38,7 +38,6 @@
 #include "gui/menus.h"
 #include "nav_window.h"
 
-#include "gimphelp.h"
 #include "gimprc.h"
 #include "qmask.h"
 

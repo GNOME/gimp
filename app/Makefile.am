@@ -96,7 +96,6 @@ gimp_SOURCES = \
 	appenums.h		\
 	appenv.h		\
 	apptypes.h		\
-	authors.h		\
 	batch.c			\
 	batch.h			\
 	color_transfer.c	\

@@ -57,7 +57,6 @@
 #include "context_manager.h"
 #include "floating_sel.h"
 #include "gdisplay_ops.h"
-#include "gimphelp.h"
 #include "gimprc.h"
 #include "global_edit.h"
 #include "image_render.h"

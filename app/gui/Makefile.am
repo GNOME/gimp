@@ -5,6 +5,7 @@ noinst_LTLIBRARIES = libappgui.la
 libappgui_la_SOURCES = \
 	about-dialog.c			\
 	about-dialog.h			\
+	authors.h			\
 	brush-editor.c			\
 	brush-editor.h			\
 	brush-select.c			\

@@ -37,10 +37,9 @@
 #include "widgets/gimpdnd.h"
 
 #include "about-dialog.h"
+#include "authors.h"
 
 #include "appenv.h"
-#include "authors.h"
-#include "gimphelp.h"
 
 #include "libgimp/gimpintl.h"
 

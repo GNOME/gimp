@@ -1,6 +1,20 @@
 2001-06-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
+	* app/authors.h: removed.
+
+	* app/gui/Makefile.am
+	* app/gui/authors.h: added.
+
+	* tools/authorsgen/authorsgen.pl: generate it in the new place.
+
+	* app/gui/about-dialog.c
+	* app/gui/commands.c
+	* app/interface.c: don't #include "gimphelp.h"
+
+2001-06-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
 	* app/resize.[ch]: removed.
 
 	* app/gui/Makefile.am
