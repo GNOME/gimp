@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
 "POT-Creation-Date: 2000-05-09 20:27-0700\n"
-"PO-Revision-Date: 2000-05-18 11:41+01:00\n"
+"PO-Revision-Date: 2000-05-27 23:41+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -637,6 +637,14 @@ msgstr "<Toolbox>/Xtns/Webbrowser/gimp.org/Resurser"
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
 msgstr "<Toolbox>/Xtns/Webbrowser/gimp.org/Gimp"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+msgstr "<Toolbox>/Xtns/Webbrowser/Gimp-Savvy.com"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+msgstr "<Toolbox>/Xtns/Webbrowser/Grokker GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
