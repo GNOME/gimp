@@ -45,19 +45,11 @@
 
 
 static void  gimp_histogram_editor_class_init     (GimpHistogramEditorClass *klass);
-static void  gimp_histogram_editor_init           (GimpHistogramEditor *histogram_editor);
+static void  gimp_histogram_editor_init           (GimpHistogramEditor *editor);
 
 static void  gimp_histogram_editor_set_image      (GimpImageEditor     *editor,
                                                    GimpImage           *gimage);
 
-static void  gimp_histogram_editor_layer_changed  (GimpImage           *gimage,
-                                                   GimpHistogramEditor *editor);
-static void gimp_histogram_editor_drawable_update (GimpDrawable        *drawable,
-                                                   gint                 x,
-                                                   gint                 y,
-                                                   gint                 width,
-                                                   gint                 height,
-                                                   GimpHistogramEditor *editor);static gboolean gimp_histogram_editor_idle_update (GimpHistogramEditor *editor);
 static void  gimp_histogram_editor_range_changed  (GimpHistogramView   *view,
                                                    gint                 start,
                                                    gint                 end,
@@ -65,6 +57,12 @@ static void  gimp_histogram_editor_range_changed  (GimpHistogramView   *view,
 static void  gimp_histogram_editor_channel_notify (GimpHistogramView   *view,
                                                    GParamSpec          *pspec,
                                                    GimpHistogramEditor *editor);
+static void  gimp_histogram_editor_layer_changed  (GimpImage           *gimage,
+                                                   GimpHistogramEditor *editor);
+
+static void  gimp_histogram_editor_update         (GimpHistogramEditor *editor);
+static gboolean gimp_histogram_editor_idle_update (GimpHistogramEditor *editor);
+static void  gimp_histogram_editor_menu_update    (GimpHistogramEditor *editor);
 static void  gimp_histogram_editor_info_update    (GimpHistogramEditor *editor);
 
 
@@ -136,7 +134,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   editor->idle_id   = 0;
   editor->box       = gimp_histogram_box_new (_("Intensity Range:"));
 
-  editor->name = label = gtk_label_new ("");
+  editor->name = label = gtk_label_new (_("(None)"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (editor), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -194,8 +192,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
 
       editor->labels[i] = label = gtk_label_new (NULL);
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label,
-                        x + 1, x + 2, y, y + 1,
+      gtk_table_attach (GTK_TABLE (table), label, x + 1, x + 2, y, y + 1,
                         GTK_FILL, GTK_FILL, 2, 2);
       gtk_widget_show (label);
     }
@@ -224,6 +221,9 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
       g_signal_handlers_disconnect_by_func (image_editor->gimage,
                                             gimp_histogram_editor_layer_changed,
                                             editor);
+      g_signal_handlers_disconnect_by_func (image_editor->gimage,
+                                            gimp_histogram_editor_menu_update,
+                                            editor);
 
       if (editor->histogram)
         {
@@ -232,7 +232,6 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
         }
 
       gimp_histogram_view_set_histogram (view, NULL);
-      gimp_histogram_view_set_range (view, 0, 255);
     }
 
   GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, gimage);
@@ -242,14 +241,16 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
       editor->histogram =
         gimp_histogram_new (GIMP_BASE_CONFIG (gimage->gimp->config));
 
-      g_signal_connect (gimage, "active_layer_changed",
-                        G_CALLBACK (gimp_histogram_editor_layer_changed),
-                        editor);
+      gimp_histogram_view_set_histogram (view, editor->histogram);
+
+      g_signal_connect_object (gimage, "mode_changed",
+                               G_CALLBACK (gimp_histogram_editor_menu_update),
+                               editor, G_CONNECT_SWAPPED);
+      g_signal_connect_object (gimage, "active_layer_changed",
+                               G_CALLBACK (gimp_histogram_editor_layer_changed),
+                               editor, 0);
 
       gimp_histogram_editor_layer_changed (gimage, editor);
-
-      gimp_histogram_view_set_histogram (view, editor->histogram);
-      gimp_histogram_view_set_range (view, 0, 255);
     }
 }
 
@@ -268,9 +269,107 @@ gimp_histogram_editor_new (GimpImage *gimage)
   return GTK_WIDGET (editor);
 }
 
+static void
+gimp_histogram_editor_range_changed (GimpHistogramView   *view,
+                                     gint                 start,
+                                     gint                 end,
+                                     GimpHistogramEditor *editor)
+{
+  gimp_histogram_editor_info_update (editor);
+}
+
+static void
+gimp_histogram_editor_channel_notify (GimpHistogramView   *view,
+                                      GParamSpec          *pspec,
+                                      GimpHistogramEditor *editor)
+{
+  gimp_histogram_editor_info_update (editor);
+}
+
+static void
+gimp_histogram_editor_layer_changed (GimpImage           *gimage,
+                                     GimpHistogramEditor *editor)
+{
+  const gchar *name;
+
+  if (editor->drawable)
+    {
+      g_signal_handlers_disconnect_by_func (editor->drawable,
+                                            G_CALLBACK (gimp_histogram_editor_update),
+                                            editor);
+      g_signal_handlers_disconnect_by_func (editor->drawable,
+                                            G_CALLBACK (gimp_histogram_editor_menu_update),
+                                            editor);
+      editor->drawable = NULL;
+    }
+
+  editor->drawable = (GimpDrawable *) gimp_image_get_active_layer (gimage);
+
+  gimp_histogram_editor_menu_update (editor);
+
+  if (editor->drawable)
+    {
+      name = gimp_object_get_name (GIMP_OBJECT (editor->drawable));
+
+      g_signal_connect_object (editor->drawable, "alpha_changed",
+                               G_CALLBACK (gimp_histogram_editor_menu_update),
+                               editor, G_CONNECT_SWAPPED);
+      g_signal_connect_object (editor->drawable, "update",
+                               G_CALLBACK (gimp_histogram_editor_update),
+                               editor, G_CONNECT_SWAPPED);
+
+      gimp_histogram_editor_update (editor);
+    }
+  else
+    {
+      name = _("(None)");
+
+      gimp_histogram_calculate (editor->histogram, NULL, NULL);
+      gtk_widget_queue_draw GTK_WIDGET (editor->box);
+      gimp_histogram_editor_info_update (editor);
+    }
+
+  gtk_label_set_text (GTK_LABEL (editor->name), name);
+}
+
+static void
+gimp_histogram_editor_update (GimpHistogramEditor *editor)
+{
+  if (editor->idle_id)
+    g_source_remove (editor->idle_id);
+
+  editor->idle_id = g_idle_add_full (G_PRIORITY_LOW,
+                                     (GSourceFunc) gimp_histogram_editor_idle_update,
+                                     editor,
+                                     (GDestroyNotify) NULL);
+}
+
 static gboolean
-gimp_histogram_editor_set_sensitive (gpointer      item_data,
-                                     GimpDrawable *drawable)
+gimp_histogram_editor_idle_update (GimpHistogramEditor *editor)
+{
+  editor->idle_id = 0;
+
+  if (editor->drawable && editor->histogram)
+    {
+      PixelRegion  region;
+
+      pixel_region_init (&region, gimp_drawable_data (editor->drawable),
+                         0, 0,
+                         gimp_item_width  (GIMP_ITEM (editor->drawable)),
+                         gimp_item_height (GIMP_ITEM (editor->drawable)),
+                         FALSE);
+
+      gimp_histogram_calculate (editor->histogram, &region, NULL);
+      gtk_widget_queue_draw GTK_WIDGET (editor->box);
+      gimp_histogram_editor_info_update (editor);
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_histogram_editor_item_sensitive (gpointer      item_data,
+                                      GimpDrawable *drawable)
 {
   GimpHistogramChannel  channel = GPOINTER_TO_INT (item_data);
 
@@ -295,111 +394,20 @@ gimp_histogram_editor_set_sensitive (gpointer      item_data,
 }
 
 static void
-gimp_histogram_editor_layer_changed (GimpImage           *gimage,
-                                     GimpHistogramEditor *editor)
+gimp_histogram_editor_menu_update (GimpHistogramEditor *editor)
 {
-  GimpDrawable *drawable;
-  const gchar  *name;
+  GimpHistogramView    *view    = GIMP_HISTOGRAM_BOX (editor->box)->view;
+  GimpHistogramChannel  channel = gimp_histogram_view_get_channel (view);
 
-  if (editor->drawable)
+  if (! gimp_histogram_editor_item_sensitive (GINT_TO_POINTER (channel),
+                                              editor->drawable))
     {
-      g_signal_handlers_disconnect_by_func (editor->drawable,
-                                            G_CALLBACK (gimp_histogram_editor_drawable_update),
-                                            editor);
-      editor->drawable = NULL;
+      gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
     }
 
-  drawable = (GimpDrawable *) gimp_image_get_active_layer (gimage);
-
-  /* FIXME: also need to do this on
-   *        "GimpDrawable::alpha_changed" and "GimpImage::mode_changed"
-   */
   gimp_option_menu_set_sensitive (GTK_OPTION_MENU (editor->menu),
-                                  (GimpOptionMenuSensitivityCallback) gimp_histogram_editor_set_sensitive,
-                                  drawable);
-
-  if (drawable)
-    {
-      name = gimp_object_get_name (GIMP_OBJECT (drawable));
-
-      editor->drawable = drawable;
-
-      g_object_add_weak_pointer (G_OBJECT (drawable),
-                                 (gpointer *) &editor->drawable);
-
-      g_signal_connect (drawable, "update",
-                        G_CALLBACK (gimp_histogram_editor_drawable_update),
-                        editor);
-
-      gimp_histogram_editor_drawable_update (drawable, 0, 0, 0, 0, editor);
-    }
-  else
-    {
-      name = _("(None)");
-
-      gimp_histogram_calculate (editor->histogram, NULL, NULL);
-      gtk_widget_queue_draw GTK_WIDGET (editor->box);
-      gimp_histogram_editor_info_update (editor);
-    }
-
-  gtk_label_set_text (GTK_LABEL (editor->name), name);
-}
-
-static void
-gimp_histogram_editor_drawable_update (GimpDrawable        *drawable,
-                                       gint                 x,
-                                       gint                 y,
-                                       gint                 width,
-                                       gint                 height,
-                                       GimpHistogramEditor *editor)
-{
-  if (editor->idle_id)
-    g_source_remove (editor->idle_id);
-
-  editor->idle_id = g_idle_add_full (G_PRIORITY_LOW,
-                                     (GSourceFunc) gimp_histogram_editor_idle_update,
-                                     editor,
-                                     (GDestroyNotify) NULL);
-}
-
-static gboolean
-gimp_histogram_editor_idle_update (GimpHistogramEditor *editor)
-{
-  editor->idle_id = 0;
-
-  if (editor->drawable)
-    {
-      PixelRegion  region;
-
-      pixel_region_init (&region, gimp_drawable_data (editor->drawable),
-                         0, 0,
-                         gimp_item_width  (GIMP_ITEM (editor->drawable)),
-                         gimp_item_height (GIMP_ITEM (editor->drawable)),
-                         FALSE);
-
-      gimp_histogram_calculate (editor->histogram, &region, NULL);
-      gtk_widget_queue_draw GTK_WIDGET (editor->box);
-      gimp_histogram_editor_info_update (editor);
-    }
-
-  return FALSE;
-}
-
-static void
-gimp_histogram_editor_range_changed (GimpHistogramView   *view,
-                                     gint                 start,
-                                     gint                 end,
-                                     GimpHistogramEditor *editor)
-{
-  gimp_histogram_editor_info_update (editor);
-}
-
-static void
-gimp_histogram_editor_channel_notify (GimpHistogramView   *view,
-                                      GParamSpec          *pspec,
-                                      GimpHistogramEditor *editor)
-{
-  gimp_histogram_editor_info_update (editor);
+                                  (GimpOptionMenuSensitivityCallback) gimp_histogram_editor_item_sensitive,
+                                  editor->drawable);
 }
 
 static void
@@ -439,10 +447,10 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
                                                         view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[2]), text);
 
-      g_snprintf (text, sizeof (text), "%8.1f", pixels);
+      g_snprintf (text, sizeof (text), "%8d", (gint) pixels);
       gtk_label_set_text (GTK_LABEL (editor->labels[3]), text);
 
-      g_snprintf (text, sizeof (text), "%8.1f", count);
+      g_snprintf (text, sizeof (text), "%8d", (gint) count);
       gtk_label_set_text (GTK_LABEL (editor->labels[4]), text);
 
       g_snprintf (text, sizeof (text), "%4.1f", (pixels > 0 ?
