@@ -1,3 +1,7 @@
+2004-04-15  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed plug-ins/common/gicon.c.
+
 2004-04-13  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
 
 	* ru.po: Updated Russian translation

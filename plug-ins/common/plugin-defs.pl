@@ -47,7 +47,6 @@
     'gbr' => { libdep => 'gtk', ui => 1 },
     'gee' => { libdep => 'gtk', ui => 1 },
     'gee_zoom' => { libdep => 'gtk', ui => 1 },
-    'gicon' => { libdep => 'gtk', ui => 1 },
     'gif' => { libdep => 'gtk', ui => 1 },
     'gifload' => { libdep => 'gtk' },
     'gih' => { libdep => 'gtk', ui => 1 },

@@ -76,7 +76,6 @@ libexec_PROGRAMS = \
 	gbr \
 	gee \
 	gee_zoom \
-	gicon \
 	gif \
 	gifload \
 	gih \
@@ -803,19 +802,6 @@ gee_zoom_SOURCES = \
 	gee_zoom.c
 
 gee_zoom_LDADD = \
-	$(libgimpui)							\
-	$(libgimpwidgets)						\
-	$(libgimp)							\
-	$(libgimpcolor)							\
-	$(libgimpbase)							\
-	$(GTK_LIBS)							\
-	$(RT_LIBS)							\
-	$(INTLLIBS)
-
-gicon_SOURCES = \
-	gicon.c
-
-gicon_LDADD = \
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\

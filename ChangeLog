@@ -1,3 +1,10 @@
+2004-04-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/gicon.c: removed the GIcon plug-in (addresses
+	one aspect of bug #139160).
+
 2004-04-15  Michael Natterer  <mitch@gimp.org>
 
 	Context cleanup continued:
