@@ -1,3 +1,13 @@
+2003-01-11  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am: reverted my latest change since it broke
+	the build in a fresh CVS checkout. Instead added make targets to
+	create a man-page and a default gimprc that take care of building
+	gimpconfig-dump.
+
+	* app/config/gimpconfig-dump.c: started to work on the man-page
+	dump functionality.
+
 2003-01-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdialogfactory.c

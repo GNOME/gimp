@@ -57,25 +57,37 @@ gimpconfig_libs = \
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la
 
 
+
+EXTRA_PROGRAMS = gimpconfig-dump test-config
+
+
 #
 # GimpConfig dump utility that generates a system gimprc and the manpage
 #
 
-noinst_PROGRAMS = gimpconfig-dump
-
 gimpconfig_dump_SOURCES = gimpconfig-dump.c
 
 gimpconfig_dump_LDADD = $(GLIB_LIBS) $(gimpconfig_libs)
+
+dump: gimpconfig-dump
+	./$<
+
+gimprc: gimpconfig-dump
+	./$< --system-gimprc > gimprc  2>/dev/null
+
+man: gimpconfig-dump
+	./$< --man-page > gimprc.5  2>/dev/null
 
 
 #
 # unit tests for the GimpConfig system
 #
 
-EXTRA_PROGRAMS = test-config
-
 TESTS = test-config
 
 test_config_DEPENDENCIES = $(gimpconfig_dependencies)
 
 test_config_LDADD =  $(GLIB_LIBS) $(gimpconfig_libs)
+
+
+CLEANFILES = $(EXTRA_PROGRAMS) foorc gimprc gimprc.5
