@@ -1,3 +1,11 @@
+2004-12-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_clear_items): clear all viewable cell
+	renderers so they don't keep pointers to layers/masks which don't
+	exist any more. Fixes the additional problem in bug #148852 but
+	not the bug itself.
+
 2004-12-09  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpbrushpipe.c (gimp_brush_pipe_select_brush):

@@ -694,6 +694,20 @@ gimp_container_tree_view_clear_items (GimpContainerView *view)
 
   gtk_list_store_clear (GTK_LIST_STORE (tree_view->model));
 
+#ifdef __GNUC__
+#warning FIXME: remove this hack as soon as bug #149906 is fixed
+#endif
+  /*  clear out renderers from all cells so they don't keep refing the
+   *  viewables
+   */
+  if (! gtk_tree_model_iter_n_children (tree_view->model, NULL))
+    {
+      GList *list;
+
+      for (list = tree_view->renderer_cells; list; list = g_list_next (list))
+        g_object_set (list->data, "renderer", NULL, NULL);
+    }
+
   parent_view_iface->clear_items (view);
 }
 
