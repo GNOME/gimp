@@ -18,6 +18,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
@@ -26,11 +32,16 @@
 #include "plug_in.h"
 #include "procedural_db.h"
 
+#include "libgimp/gimpenv.h"
 #include "libgimp/gimpintl.h"
 
 #define DEBUG_HELP
 
 /*  local function prototypes  */
+static void gimp_help_internal                   (gchar          *current_locale,
+						  gchar          *help_data);
+static void gimp_help_netscape                   (gchar          *current_locale,
+						  gchar          *help_data);
 static void gimp_help_callback                   (GtkWidget      *widget,
 						  gpointer        data);
 static gint gimp_help_tips_query_idle_show_help  (gpointer        data);
@@ -180,13 +191,46 @@ gimp_help_set_help_data (GtkWidget *widget,
 void
 gimp_help (gchar *help_data)
 {
-  ProcRecord *proc_rec;
-
   static gchar *current_locale = "C";
+
+  if (help_data == NULL && help_browser != HELP_BROWSER_GIMP)
+    help_data = "welcome.html";
 
 #ifdef DEBUG_HELP
   g_print ("Help Page: %s\n", help_data);
 #endif  /*  DEBUG_HELP  */
+
+  switch (help_browser)
+    {
+    case HELP_BROWSER_GIMP:
+      gimp_help_internal (current_locale, help_data);
+      break;
+
+    case HELP_BROWSER_NETSCAPE:
+      gimp_help_netscape (current_locale, help_data);
+      break;
+
+    default:
+      break;
+    }
+}
+
+void
+gimp_context_help (void)
+{
+  if (tips_query)
+    gimp_help_tips_query_start (NULL, tips_query);
+}
+
+/*********************/
+/*  local functions  */
+/*********************/
+
+void
+gimp_help_internal (gchar *current_locale,
+		    gchar *help_data)
+{
+  ProcRecord *proc_rec;
 
   /*  Check if a help browser is already running  */
   proc_rec = procedural_db_lookup ("extension_gimp_help_browser_temp");
@@ -234,15 +278,32 @@ gimp_help (gchar *help_data)
 }
 
 void
-gimp_context_help (void)
+gimp_help_netscape (gchar *current_locale,
+		    gchar *help_data)
 {
-  if (tips_query)
-    gimp_help_tips_query_start (NULL, tips_query);
-}
+  Argument *return_vals;
+  gint      nreturn_vals;
+  gchar    *url;
 
-/*********************/
-/*  local functions  */
-/*********************/
+  url = g_strconcat ("file:",
+		     gimp_data_directory (),
+		     "/help/",
+		     current_locale, "/",
+		     help_data,
+		     NULL);
+
+  return_vals =
+    procedural_db_run_proc ("extension_web_browser",
+			    &nreturn_vals,
+			    PDB_INT32,  RUN_NONINTERACTIVE,
+			    PDB_STRING, url,
+			    PDB_INT32,  FALSE,
+			    PDB_END);
+
+  procedural_db_destroy_args (return_vals, nreturn_vals);
+
+  g_free (url);
+}
 
 static void
 gimp_help_callback (GtkWidget *widget,

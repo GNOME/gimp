@@ -38,13 +38,14 @@
 #include "errors.h"
 #include "fileops.h"
 #include "general.h"
+#include "gimpparasite.h"
+#include "gimphelp.h"
 #include "gimprc.h"
 #include "menus.h"
 #include "plug_in.h"
 #include "gimage.h"
 #include "session.h"
 #include "tools.h"
-#include "gimpparasite.h"
 
 #include "libgimp/parasite.h"
 #include "libgimp/gimpintl.h"
@@ -75,7 +76,8 @@ typedef enum {
   TT_XSESSIONINFO,
   TT_XUNITINFO,
   TT_XPARASITE,
-  TT_XNAVPREVSIZE
+  TT_XNAVPREVSIZE,
+  TT_XHELPBROWSER
 } TokenType;
 
 typedef struct _ParseFunc ParseFunc;
@@ -161,62 +163,65 @@ int	  trust_dirty_flag = FALSE;
 int       use_help = TRUE;
 int       nav_window_per_display = FALSE;
 int       info_window_follows_mouse = FALSE;
+int       help_browser = HELP_BROWSER_GIMP;
 
 extern char * module_db_load_inhibit;
 
-static int get_next_token (void);
+static int get_next_token  (void);
 static int peek_next_token (void);
 static int parse_statement (void);
 
-static int parse_string (gpointer val1p, gpointer val2p);
-static int parse_path (gpointer val1p, gpointer val2p);
-static int parse_double (gpointer val1p, gpointer val2p);
-static int parse_float (gpointer val1p, gpointer val2p);
-static int parse_int (gpointer val1p, gpointer val2p);
-static int parse_boolean (gpointer val1p, gpointer val2p);
-static int parse_position (gpointer val1p, gpointer val2p);
-static int parse_mem_size (gpointer val1p, gpointer val2p);
-static int parse_image_type (gpointer val1p, gpointer val2p);
+static int parse_string             (gpointer val1p, gpointer val2p);
+static int parse_path               (gpointer val1p, gpointer val2p);
+static int parse_double             (gpointer val1p, gpointer val2p);
+static int parse_float              (gpointer val1p, gpointer val2p);
+static int parse_int                (gpointer val1p, gpointer val2p);
+static int parse_boolean            (gpointer val1p, gpointer val2p);
+static int parse_position           (gpointer val1p, gpointer val2p);
+static int parse_mem_size           (gpointer val1p, gpointer val2p);
+static int parse_image_type         (gpointer val1p, gpointer val2p);
 static int parse_interpolation_type (gpointer val1p, gpointer val2p);
-static int parse_color_cube (gpointer val1p, gpointer val2p);
-static int parse_preview_size (gpointer val1p, gpointer val2p);
-static int parse_nav_preview_size (gpointer val1p, gpointer val2p);
-static int parse_units (gpointer val1p, gpointer val2p);
-static int parse_plug_in (gpointer val1p, gpointer val2p);
-static int parse_plug_in_def (gpointer val1p, gpointer val2p);
-static int parse_device (gpointer val1p, gpointer val2p);
-static int parse_menu_path (gpointer val1p, gpointer val2p);
-static int parse_session_info (gpointer val1p, gpointer val2p);
-static int parse_unit_info (gpointer val1p, gpointer val2p);
-static int parse_parasite (gpointer val1p, gpointer val2p);
+static int parse_color_cube         (gpointer val1p, gpointer val2p);
+static int parse_preview_size       (gpointer val1p, gpointer val2p);
+static int parse_nav_preview_size   (gpointer val1p, gpointer val2p);
+static int parse_units              (gpointer val1p, gpointer val2p);
+static int parse_plug_in            (gpointer val1p, gpointer val2p);
+static int parse_plug_in_def        (gpointer val1p, gpointer val2p);
+static int parse_device             (gpointer val1p, gpointer val2p);
+static int parse_menu_path          (gpointer val1p, gpointer val2p);
+static int parse_session_info       (gpointer val1p, gpointer val2p);
+static int parse_unit_info          (gpointer val1p, gpointer val2p);
+static int parse_parasite           (gpointer val1p, gpointer val2p);
+static int parse_help_broswer       (gpointer val1p, gpointer val2p);
 
 static int parse_proc_def (PlugInProcDef **proc_def);
 static int parse_proc_arg (ProcArg *arg);
-static int parse_unknown (char *token_sym);
+static int parse_unknown  (char *token_sym);
 
 char* gimprc_value_to_str (char *name);
 static char* value_to_str (char *name);
 
-static inline char* string_to_str (gpointer val1p, gpointer val2p);
-static inline char* path_to_str (gpointer val1p, gpointer val2p);
-static inline char* double_to_str (gpointer val1p, gpointer val2p);
-static inline char* float_to_str (gpointer val1p, gpointer val2p);
-static inline char* int_to_str (gpointer val1p, gpointer val2p);
-static inline char* boolean_to_str (gpointer val1p, gpointer val2p);
-static inline char* position_to_str (gpointer val1p, gpointer val2p);
-static inline char* mem_size_to_str (gpointer val1p, gpointer val2p);
-static inline char* image_type_to_str (gpointer val1p, gpointer val2p);
-static inline char* interpolation_type_to_str (gpointer val1p, gpointer val2p);
-static inline char* color_cube_to_str (gpointer val1p, gpointer val2p);
-static inline char* preview_size_to_str (gpointer val1p, gpointer val2p);
-static inline char* nav_preview_size_to_str (gpointer val1p, gpointer val2p);
-static inline char* units_to_str (gpointer val1p, gpointer val2p);
+static inline char * string_to_str             (gpointer val1p, gpointer val2p);
+static inline char * path_to_str               (gpointer val1p, gpointer val2p);
+static inline char * double_to_str             (gpointer val1p, gpointer val2p);
+static inline char * float_to_str              (gpointer val1p, gpointer val2p);
+static inline char * int_to_str                (gpointer val1p, gpointer val2p);
+static inline char * boolean_to_str            (gpointer val1p, gpointer val2p);
+static inline char * position_to_str           (gpointer val1p, gpointer val2p);
+static inline char * mem_size_to_str           (gpointer val1p, gpointer val2p);
+static inline char * image_type_to_str         (gpointer val1p, gpointer val2p);
+static inline char * interpolation_type_to_str (gpointer val1p, gpointer val2p);
+static inline char * color_cube_to_str         (gpointer val1p, gpointer val2p);
+static inline char * preview_size_to_str       (gpointer val1p, gpointer val2p);
+static inline char * nav_preview_size_to_str   (gpointer val1p, gpointer val2p);
+static inline char * units_to_str              (gpointer val1p, gpointer val2p);
+static inline char * help_browser_to_str       (gpointer val1p, gpointer val2p);
 
-static char* transform_path (char *path, int destroy);
-static void gimprc_set_token (char *token, char *value);
+static char* transform_path          (char *path, int destroy);
+static void gimprc_set_token         (char *token, char *value);
 static void add_gimp_directory_token (char *gimp_dir);
 #ifdef __EMX__
-static void add_x11root_token (char *x11root);
+static void add_x11root_token        (char *x11root);
 #endif
 static char* open_backup_file (char *filename,
 			       char *secondary_filename,
@@ -315,9 +320,10 @@ static ParseFunc funcs[] =
   { "use-help",                  TT_BOOLEAN,    &use_help, NULL },
   { "dont-use-help",             TT_BOOLEAN,    NULL, &use_help },
   { "nav-window-per-display",    TT_BOOLEAN,    &nav_window_per_display, NULL },
-  { "nav-window-follows-auto",    TT_BOOLEAN,    NULL, &nav_window_per_display },
-  { "info-window-follows-mouse",    TT_BOOLEAN,    &info_window_follows_mouse, NULL },
-  { "info-window-per-display",    TT_BOOLEAN,    NULL, &info_window_follows_mouse }
+  { "nav-window-follows-auto",   TT_BOOLEAN,    NULL, &nav_window_per_display },
+  { "info-window-follows-mouse", TT_BOOLEAN,    &info_window_follows_mouse, NULL },
+  { "info-window-per-display",   TT_BOOLEAN,    NULL, &info_window_follows_mouse },
+  { "help-browser",              TT_XHELPBROWSER, &help_browser, NULL }
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 
@@ -844,6 +850,8 @@ parse_statement (void)
 	  return parse_unit_info (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPARASITE:
 	  return parse_parasite (funcs[i].val1p, funcs[i].val2p);
+	case TT_XHELPBROWSER:
+	  return parse_help_browser (funcs[i].val1p, funcs[i].val2p);
 	}
 
   return parse_unknown (token_sym);
@@ -2341,8 +2349,8 @@ parse_unit_info (gpointer val1p,
 }
 
 static int
-parse_parasite  (gpointer val1p, 
-		 gpointer val2p)
+parse_parasite (gpointer val1p, 
+		gpointer val2p)
 {
   int token;
   int res = ERROR;
@@ -2376,6 +2384,30 @@ parse_parasite  (gpointer val1p,
 error:
   g_free (identifier);
   return res;
+}
+
+static int
+parse_help_browser (gpointer val1p,
+		    gpointer val2p)
+{
+  int token;
+
+  token = peek_next_token ();
+  if (!token || token != TOKEN_SYMBOL)
+    return ERROR;
+  token = get_next_token ();
+
+  if (strcmp (token_sym, "gimp") == 0)
+    help_browser = HELP_BROWSER_GIMP;
+  else if (strcmp (token_sym, "netscape") == 0)
+    help_browser = HELP_BROWSER_NETSCAPE;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_RIGHT_PAREN))
+    return ERROR;
+  token = get_next_token ();
+
+  return OK;
 }
 
 static int
@@ -2474,6 +2506,8 @@ value_to_str (char *name)
 	  return nav_preview_size_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XUNIT:
 	  return units_to_str (funcs[i].val1p, funcs[i].val2p);
+	case TT_XHELPBROWSER:
+	  return help_browser_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPLUGIN:
 	case TT_XPLUGINDEF:
 	case TT_XMENUPATH:
@@ -2649,6 +2683,16 @@ units_to_str (gpointer val1p,
 	      gpointer val2p)
 {
   return g_strdup (gimp_unit_get_identifier (*((GUnit*)val1p)));
+}
+
+static inline char *
+help_browser_to_str (gpointer val1p,
+		     gpointer val2p)
+{
+  if (help_browser == HELP_BROWSER_NETSCAPE)
+    return g_strdup ("netscape");
+  else
+    return g_strdup ("gimp");
 }
 
 static void

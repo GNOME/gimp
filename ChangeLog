@@ -1,5 +1,15 @@
 1999-12-19  Michael Natterer  <mitch@gimp.org>
 
+	* gimprc.in
+	* app/gimprc.[ch]
+	* app/preferences_dialog.c: new gimprc variable "help-browser"
+	which can be either "gimp", or "netscape".
+
+	* app/gimphelp.[ch]: depending on the value of help_browser, show
+	the help page with the webbrowser plugin.
+
+1999-12-19  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/helpbrowser/helpbrowser.c: immediately return from
 	the wheel mouse callback if no vertical scrollbar is visible.
 

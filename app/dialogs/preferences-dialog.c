@@ -110,6 +110,7 @@ static int	  old_trust_dirty_flag;
 static int        old_use_help;
 static int        old_nav_window_per_display;
 static int        old_info_window_follows_mouse;
+static int        old_help_browser;
 
 /*  variables which can't be changed on the fly  */
 static int        edit_stingy_memory_use;
@@ -560,6 +561,8 @@ file_prefs_save_callback (GtkWidget *widget,
       info_window_follows_mouse = edit_info_window_follows_mouse;
       restart_notification = TRUE;
     }
+  if (help_browser != old_help_browser)
+    update = g_list_append (update, "help-browser");
 
   save_gimprc (&update, &remove);
 
@@ -631,6 +634,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   use_help = old_use_help;
   nav_window_per_display = old_nav_window_per_display;
   info_window_follows_mouse = old_info_window_follows_mouse;
+  help_browser = old_help_browser;
 
   if (preview_size != old_preview_size)
     {
@@ -733,8 +737,10 @@ file_prefs_toggle_callback (GtkWidget *widget,
     context_manager_set_global_paint_options (GTK_TOGGLE_BUTTON (widget)->active);
   else if (data == &show_indicators)
     show_indicators = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &thumbnail_mode || data == &interpolation_type ||
-           data == &trust_dirty_flag)
+  else if (data == &thumbnail_mode ||
+	   data == &interpolation_type ||
+           data == &trust_dirty_flag ||
+	   data == &help_browser)
     {
       val = data;
       *val = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
@@ -1232,6 +1238,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_use_help = use_help;
   old_nav_window_per_display = nav_window_per_display;
   old_info_window_follows_mouse = info_window_follows_mouse;
+  old_help_browser = help_browser;
 
   file_prefs_strset (&old_image_title_format, image_title_format);	
   file_prefs_strset (&old_temp_path, edit_temp_path);
@@ -1644,6 +1651,26 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
 		      &use_help);
   gtk_widget_show (button);
+
+  vbox2 = file_prefs_frame_new (_("Help Browser"), GTK_BOX (vbox));
+
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  optionmenu =
+    gimp_option_menu_new (file_prefs_toggle_callback,
+			  (gpointer) help_browser,
+			  _("Internal"), &help_browser,
+			  (gpointer) HELP_BROWSER_GIMP,
+			  _("Netscape"), &help_browser,
+			  (gpointer) HELP_BROWSER_NETSCAPE,
+			  NULL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Help Browser to Use:"), 1.0, 0.5,
+			     optionmenu, TRUE);
 
   /* Interface / Image Windows */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),

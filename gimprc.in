@@ -292,6 +292,13 @@
 #  Just uncomment the following line if you trust the dirty flag.
 # (trust-dirty-flag)
 
+# Help browser
+#  Determines which program to use as browser for the GIMP help pages.
+#  Possible values are "gimp" which means the built-in help browser
+#  which comes with GIMP as a plug-in and "netscape" which will show
+#  the help pages using the "netscape-remote" command.
+(help-browser gimp)
+
 # Gfig search path
 #  This path will be searched for Gfig figures when you use the Gfig plug-in.
 (gfig-path "${gimp_dir}/gfig:${gimp_data_dir}/gfig")
