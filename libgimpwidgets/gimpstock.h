@@ -92,6 +92,11 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_SCALE                "gimp-scale"
 #define GIMP_STOCK_SELECTION_TO_CHANNEL "gimp-selection-to-channel"
 
+#define GIMP_STOCK_IMAGES               "gimp-images"
+#define GIMP_STOCK_LAYERS               "gimp-layers"
+#define GIMP_STOCK_CHANNELS             "gimp-channels"
+#define GIMP_STOCK_PATHS                "gimp-paths"
+
 #define GIMP_STOCK_NAVIGATION           "gimp-navigation"
 #define GIMP_STOCK_QMASK_OFF            "gimp-qmask-off"
 #define GIMP_STOCK_QMASK_ON             "gimp-qmask-on"
@@ -100,6 +105,8 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_SWAP_COLORS          "gimp-swap-colors"
 
 #define GIMP_STOCK_TOOL_OPTIONS         "gimp-tool-options"
+#define GIMP_STOCK_DEVICE_STATUS        "gimp-device-status"
+
 #define GIMP_STOCK_INFO                 "gimp-info"
 #define GIMP_STOCK_WARNING              "gimp-warning"
 #define GIMP_STOCK_WILBER               "gimp-wilber"

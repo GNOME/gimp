@@ -205,10 +205,35 @@ style "gimp-icons"
       { "images/stock-tool-options-16.png", *, *, "gtk-menu" },
       { "images/stock-tool-options-16.png", *, *, * }
     }
+  stock["gimp-device-status"] =
+    {
+      { "images/stock-device-status-16.png", *, *, "gtk-menu" },
+      { "images/stock-device-status-16.png", *, *, * }
+    }
   stock["gimp-layer-to-imagesize"] =
     {
       { "images/stock-layer-to-imagesize-16.png", *, *, "gtk-menu" },
       { "images/stock-layer-to-imagesize-16.png", *, *, * }
+    }
+  stock["gimp-images"] =
+    {
+      { "images/stock-images-16.png", *, *, "gtk-menu" },
+      { "images/stock-images-16.png", *, *, * }
+    }
+  stock["gimp-layers"] =
+    {
+      { "images/stock-layers-16.png", *, *, "gtk-menu" },
+      { "images/stock-layers-16.png", *, *, * }
+    }
+  stock["gimp-channes"] =
+    {
+      { "images/stock-channels-16.png", *, *, "gtk-menu" },
+      { "images/stock-channels-16.png", *, *, * }
+    }
+  stock["gimp-paths"] =
+    {
+      { "images/stock-paths-16.png", *, *, "gtk-menu" },
+      { "images/stock-paths-16.png", *, *, * }
     }
 
   # Image window icons

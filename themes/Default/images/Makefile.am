@@ -93,6 +93,10 @@ STOCK_MENU_IMAGES = \
 	stock-rotate-90-16.png			\
 	stock-resize-16.png			\
 	stock-scale-16.png			\
+	stock-images-16.png			\
+	stock-layers-16.png			\
+	stock-channels-16.png			\
+	stock-paths-16.png			\
 	stock-selection-all-16.png		\
 	stock-selection-none-16.png		\
 	stock-selection-grow-16.png		\
@@ -103,6 +107,7 @@ STOCK_MENU_IMAGES = \
 	stock-default-colors-12.png		\
 	stock-swap-colors-12.png		\
 	stock-tool-options-16.png		\
+	stock-device-status-16.png		\
 	stock-info-16.png			\
 	stock-warning-16.png			\
 	stock-wilber-16.png

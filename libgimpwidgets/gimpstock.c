@@ -149,12 +149,18 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_LETTER_SPACING, N_("L_etter Spacing"), 0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LINE_SPACING,   N_("L_ine Spacing"),   0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_STOCK_IMAGES,                   NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_LAYERS,                   NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CHANNELS,                 NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_PATHS,                    NULL,        0, 0, LIBGIMP_DOMAIN },
+
   { GIMP_STOCK_NAVIGATION,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QMASK_OFF,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QMASK_ON,                 NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_TOOL_OPTIONS,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_INFO,                     NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_DEVICE_STATUS,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_WARNING,                  NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_WILBER,                   NULL,        0, 0, LIBGIMP_DOMAIN },
 
@@ -310,6 +316,11 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_RESIZE,               stock_resize_16               },
   { GIMP_STOCK_SCALE,                stock_scale_16                },
 
+  { GIMP_STOCK_IMAGES,               stock_images_16               },
+  { GIMP_STOCK_LAYERS,               stock_layers_16               },
+  { GIMP_STOCK_CHANNELS,             stock_channels_16             },
+  { GIMP_STOCK_PATHS,                stock_paths_16                },
+
   { GIMP_STOCK_SELECTION_ALL,        stock_selection_all_16        },
   { GIMP_STOCK_SELECTION_NONE,       stock_selection_none_16       },
   { GIMP_STOCK_SELECTION_GROW,       stock_selection_grow_16       },
@@ -323,6 +334,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_SWAP_COLORS,          stock_swap_colors_12          },
 
   { GIMP_STOCK_TOOL_OPTIONS,         stock_tool_options_16         },
+  { GIMP_STOCK_DEVICE_STATUS,        stock_device_status_16        },
 
   { GIMP_STOCK_INFO,                 stock_info_16                 },
   { GIMP_STOCK_WARNING,              stock_warning_16              },

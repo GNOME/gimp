@@ -1,5 +1,21 @@
 2003-03-05  Michael Natterer  <mitch@gimp.org>
 
+	* themes/Default/images/stock-channels-16.png
+	* themes/Default/images/stock-device-status-16.png
+	* themes/Default/images/stock-images-16.png
+	* themes/Default/images/stock-layers-16.png
+	* themes/Default/images/stock-paths-16.png: new icons from Jimmac.
+
+	* themes/Default/imagerc
+	* themes/Default/images/Makefile.am
+	* libgimpwidgets/gimpstock.[ch]: add them to the stock system.
+
+	* app/gui/dialogs-menu.c
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: use them.
+
+2003-03-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpbrusheditor.[ch]: undeprecated and simplified a
 	lot by using GimpPreview instead of handmade preview stuff.
 

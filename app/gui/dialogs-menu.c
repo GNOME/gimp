@@ -58,9 +58,12 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
 
   MENU_SEPARATOR ("/Add Tab/---"),
 
-  ADD_TAB (N_("/Add Tab/Layers..."),           "gimp-layer-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Channels..."),         "gimp-channel-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Paths..."),            "gimp-vectors-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Layers..."),           "gimp-layer-list",
+           "<StockItem>",                      GIMP_STOCK_LAYERS),
+  ADD_TAB (N_("/Add Tab/Channels..."),         "gimp-channel-list",
+           "<StockItem>",                      GIMP_STOCK_CHANNELS),
+  ADD_TAB (N_("/Add Tab/Paths..."),            "gimp-vectors-list",
+           "<StockItem>",                      GIMP_STOCK_PATHS),
   ADD_TAB (N_("/Add Tab/Indexed Palette..."),  "gimp-indexed-palette",
            "<StockItem>",                      GTK_STOCK_SELECT_COLOR),
   ADD_TAB (N_("/Add Tab/Selection Editor..."), "gimp-selection-editor",
@@ -87,7 +90,8 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
 
   MENU_SEPARATOR ("/Add Tab/---"),
 
-  ADD_TAB (N_("/Add Tab/Images..."),           "gimp-image-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Images..."),           "gimp-image-list",
+           "<StockItem>",                      GIMP_STOCK_IMAGES),
   ADD_TAB (N_("/Add Tab/Document History..."), "gimp-document-list",
            "<StockItem>",                      GTK_STOCK_OPEN),
   ADD_TAB (N_("/Add Tab/Error Console..."),    "gimp-error-console",
@@ -165,7 +169,7 @@ dialogs_menu_update (GtkItemFactory *factory,
       gboolean                list_view_available = FALSE;
       gboolean                grid_view_available = FALSE;
       gboolean                tree_view_available = FALSE;
-      GimpPreviewSize         preview_size        = GIMP_PREVIEW_SIZE_NONE;
+      GimpPreviewSize         preview_size        = -1;
 
       page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
 
@@ -223,11 +227,11 @@ dialogs_menu_update (GtkItemFactory *factory,
         gimp_item_factory_set_sensitive (factory, (path), (sensitive))
 
       SET_VISIBLE ("/view-type-separator",
-                   preview_size != GIMP_PREVIEW_SIZE_NONE || view_type != -1);
+                   preview_size != -1 || view_type != -1);
 
-      SET_VISIBLE ("/Preview Size", preview_size != GIMP_PREVIEW_SIZE_NONE);
+      SET_VISIBLE ("/Preview Size", preview_size != -1);
 
-      if (preview_size != GIMP_PREVIEW_SIZE_NONE)
+      if (preview_size != -1)
         {
           if (preview_size >= GIMP_PREVIEW_SIZE_GIGANTIC)
             {
