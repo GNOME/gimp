@@ -39,8 +39,8 @@ do_about_dialog(void)
       default_dialog_hide_help_button(dialog);
       default_dialog_set_label(
 	 dialog,
-	 _("Imagemap plug-in 1.3\n\n"
-	   "Copyright(c) 1999 by Maurits Rijk\n"
+	 _("Imagemap plug-in 1.4\n\n"
+	   "Copyright(c) 1999-2002 by Maurits Rijk\n"
 	   "lpeek.mrijk@consunet.nl \n\n"
 	   "  Released under the GNU General Public License  "));
    }

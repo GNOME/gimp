@@ -1,7 +1,19 @@
 2002-07-09  Sven Neumann  <sven@gimp.org>
 
-	* configure.in
-	* plug-ins/common/mail.c: merged changes from HEAD branch (bug #83208).
+	* plug-ins/imagemap/imap_about.c
+	* plug-ins/imagemap/imap_circle.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_object.c
+	* plug-ins/imagemap/imap_polygon.c
+	* plug-ins/imagemap/imap_rectangle.c: applied patches from Raphael
+	Quinet that make the ImageMap plug-in produce output that is
+	compatible with HTML up to 4.01 and XHTML 1.0 basically by using
+	lowercase tags (bug #87687).
+
+2002-07-09  Sven Neumann  <sven@gimp.org>
+
+	* configure.in * plug-ins/common/mail.c: merged changes from HEAD
+	branch (bug #83208).
 
 2002-07-09  Sven Neumann  <sven@gimp.org>
 
