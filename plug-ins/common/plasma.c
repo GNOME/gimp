@@ -540,14 +540,18 @@ add_random (GRand  *gr,
             guchar *pixel,
 	    gint    amount)
 {
-  gint i, tmp;
-
   amount /= 2;
 
-  for (i = 0; i < alpha; i++)
+  if (amount > 0)
     {
-      tmp = pixel[i] + g_rand_int_range (gr, - amount, amount);
-      pixel[i] = CLAMP0255 (tmp);
+      gint i, tmp;
+
+      for (i = 0; i < alpha; i++)
+        {
+          tmp = pixel[i] + g_rand_int_range (gr, - amount, amount);
+
+          pixel[i] = CLAMP0255 (tmp);
+        }
     }
 }
 

@@ -1,5 +1,10 @@
 2004-03-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/plasma.c (add_random): check random range before
+	calling g_rand_int_range(). Fixes bug #136321.
+
+2004-03-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/libgimpoldpreview/gimpoldpreview.c: include
 	stdplugins-intl.h so that "Preview" ends up in the plug-in
 	translation domain (bug #136303).
