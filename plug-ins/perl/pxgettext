@@ -6,7 +6,7 @@
 # 5.005_02 in particular seems to have a BIG BUG
 # resulting in an endless loop and a memory leak in the 
 # regex machinery :(
-exit 0 unless $] >= 5.005_03;
+exit 0 unless ( $] >= 5.005_03 || $] <= 5.005 );
 
 undef $/;
 

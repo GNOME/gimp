@@ -81,3 +81,5 @@ Examples:
 
  -i        # reverse the order of layers
  (i+5)%n   # shift the order of frames by 5
+
+=cut

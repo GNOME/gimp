@@ -113,3 +113,4 @@ though ;).
 Although the original colour of the image does not matter, supplying a
 greyscale drawable (though working) does not look very cool.
 
+=cut

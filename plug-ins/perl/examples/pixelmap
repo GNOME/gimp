@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
 use Gimp::Feature 'pdl';
 use Gimp 1.099;
@@ -133,13 +133,4 @@ The bytes per pixel value of the destination area.
 
 =back
 
-
-
-
-
-
-
-
-
-
-
+=cut

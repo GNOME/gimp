@@ -11,6 +11,9 @@ Revision history for Gimp-Perl extension.
         - trimmed examples/logulator down by two thirds.
         - installing map_to_gradient again, as it is needed by firetext,
           until fire has been re-written.
+        - applied patch by Ar't <artie@kmfms.com> that fixes a lot of
+          perl5.004 compatibility issues and even identifies the
+          buggy perl version that causes pxgettext to not work!
 
 1.2   Thu May 11 18:55:13 CEST 2000
 	- image types updated to reflect gimp's reality.
