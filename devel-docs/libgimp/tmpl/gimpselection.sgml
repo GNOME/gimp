@@ -35,14 +35,14 @@ gimpselection
 </para>
 
 @image_ID: 
-@none_empty: 
+@non_empty: 
 @x1: 
 @y1: 
 @x2: 
 @y2: 
-@Returns: 
 <!-- # Unused Parameters # -->
-@non_empty: 
+@none_empty: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_selection_is_empty ##### -->

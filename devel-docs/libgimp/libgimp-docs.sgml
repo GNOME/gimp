@@ -19,6 +19,7 @@
 <!entity libgimp-gimpmessage SYSTEM "sgml/gimpmessage.sgml">
 <!entity libgimp-gimpmisc SYSTEM "sgml/gimpmisc.sgml">
 <!entity libgimp-gimppalette SYSTEM "sgml/gimppalette.sgml">
+<!entity libgimp-gimppatterns SYSTEM "sgml/gimppatterns.sgml">
 <!entity libgimp-gimppixelrgn SYSTEM "sgml/gimppixelrgn.sgml">
 <!entity libgimp-gimpplugin SYSTEM "sgml/gimpplugin.sgml">
 <!entity libgimp-gimpproceduraldb SYSTEM "sgml/gimpproceduraldb.sgml">
@@ -100,6 +101,7 @@
     &libgimp-gimpmessage;
     &libgimp-gimpmisc;
     &libgimp-gimppalette;
+    &libgimp-gimppatterns;
     &libgimp-gimpparasite;
     &libgimp-gimpparasiteio;
     &libgimp-gimppixelrgn;

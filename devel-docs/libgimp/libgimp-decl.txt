@@ -2309,11 +2309,11 @@ gint32                 *image_ID,gint32                 *drawable_ID,gchar      
 </MACRO>
 <MACRO>
 <NAME>GIMP_MICRO_VERSION</NAME>
-#define GIMP_MICRO_VERSION				(23)
+#define GIMP_MICRO_VERSION				(24)
 </MACRO>
 <MACRO>
 <NAME>GIMP_VERSION</NAME>
-#define GIMP_VERSION					"1.1.23"
+#define GIMP_VERSION					"1.1.24"
 </MACRO>
 <MACRO>
 <NAME>GIMP_CHECK_VERSION</NAME>
@@ -3823,92 +3823,92 @@ gint32        drawable_ID,gint         *width,gint         *height,gint         
 <FUNCTION>
 <NAME>gimp_drawable_merge_shadow</NAME>
 <RETURNS>void  </RETURNS>
-gint32        drawable_ID,gboolean      undo
+gint32         drawable_ID,gboolean       undo
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_fill</NAME>
 <RETURNS>void  </RETURNS>
-gint32        drawable_ID,GimpFillType  fill_type
+gint32         drawable_ID,GimpFillType   fill_type
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_update</NAME>
 <RETURNS>void  </RETURNS>
-gint32        drawable_ID,gint          x,gint          y,gint          width,gint          height
+gint32         drawable_ID,gint           x,gint           y,gint           width,gint           height
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_mask_bounds</NAME>
 <RETURNS>gboolean  </RETURNS>
-gint32        drawable_ID,gint         *x1,gint         *y1,gint         *x2,gint         *y2
+gint32         drawable_ID,gint          *x1,gint          *y1,gint          *x2,gint          *y2
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_image</NAME>
 <RETURNS>gint32  </RETURNS>
-gint32        drawable_ID
+gint32         drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_type</NAME>
 <RETURNS>GimpImageType  </RETURNS>
-gint32        drawable_ID
+gint32         drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_has_alpha</NAME>
 <RETURNS>gboolean  </RETURNS>
-gint32        drawable_ID
+gint32         drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_type_with_alpha</NAME>
 <RETURNS>GimpImageType  </RETURNS>
-gint32        drawable_ID
+gint32         drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_is_rgb</NAME>
 <RETURNS>gboolean  </RETURNS>
-gint32        drawable_ID
+gint32         drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_is_gray</NAME>
 <RETURNS>gboolean  </RETURNS>
-gint32        drawable_ID
+gint32         drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_is_indexed</NAME>
 <RETURNS>gboolean  </RETURNS>
-gint32        drawable_ID
+gint32         drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_bytes</NAME>
 <RETURNS>gint  </RETURNS>
-gint32        drawable_ID
+gint32         drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_width</NAME>
 <RETURNS>gint  </RETURNS>
-gint32        drawable_ID
+gint32         drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_height</NAME>
 <RETURNS>gint  </RETURNS>
-gint32        drawable_ID
+gint32         drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_offsets</NAME>
 <RETURNS>void  </RETURNS>
-gint32        drawable_ID,gint         *offset_x,gint         *offset_y
+gint32         drawable_ID,gint          *offset_x,gint          *offset_y
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_is_layer</NAME>
 <RETURNS>gboolean  </RETURNS>
-gint32        drawable_ID
+gint32         drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_is_layer_mask</NAME>
 <RETURNS>gboolean  </RETURNS>
-gint32        drawable_ID
+gint32         drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_is_channel</NAME>
 <RETURNS>gboolean  </RETURNS>
-gint32        drawable_ID
+gint32         drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_edit_cut</NAME>
@@ -4848,8 +4848,8 @@ gint32 image_ID,gint32 drawable_ID,gint   offx,gint   offy
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_selection_bounds</NAME>
-<RETURNS>gboolean  </RETURNS>
-gint32    image_ID,gboolean *none_empty,gint     *x1,gint     *y1,gint     *x2,gint     *y2
+<RETURNS>void  </RETURNS>
+gint32    image_ID,gboolean *non_empty,gint     *x1,gint     *y1,gint     *x2,gint     *y2
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_selection_is_empty</NAME>
@@ -5133,7 +5133,7 @@ gint32    image_ID,gint     *num_paths
 <FUNCTION>
 <NAME>gimp_path_get_points</NAME>
 <RETURNS>gint  </RETURNS>
-gint32    image_ID,gchar    *pathname,gint     *num_path_point_details,gint     *path_closed,gdouble **points_pairs
+gint32    image_ID,gchar    *pathname,gint     *path_closed,gint     *num_path_point_details,gdouble **points_pairs
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_path_get_current</NAME>
