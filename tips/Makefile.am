@@ -16,6 +16,7 @@ tips_POFILES = \
 	eu.po		\
 	fr.po		\
 	he.po		\
+	hu.po		\
 	hr.po		\
 	id.po		\
 	it.po		\

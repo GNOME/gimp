@@ -1,3 +1,8 @@
+2004-05-28  Andras Timar  <timar@gnome.hu>
+
+	* Makefile.am (tips_POFILES): added hu.po (Hungarian).
+	* hu.po: Added Hungarian translation
+
 2004-05-25  Sven Neumann  <sven@gimp.org>
 
 	* gimp-tips.xml.in: applied a patch graciously provided by "biroa"
