@@ -40,6 +40,7 @@ libexec_PROGRAMS = \
 	$(BZ2) \
 	c_astretch \
 	ccanalyze \
+	channel_mixer \
 	checkerboard \
 	color_enhance \
 	colorify \
@@ -385,6 +386,18 @@ ccanalyze_SOURCES = \
 	ccanalyze.c
 
 ccanalyze_LDADD = \
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	@GTK_LIBS@							\
+	@INTLLIBS@
+
+channel_mixer_SOURCES = \
+	channel_mixer.c
+
+channel_mixer_LDADD = \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\

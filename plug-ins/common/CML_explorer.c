@@ -373,7 +373,7 @@ static void    CML_save_to_file_callback   (GtkWidget        *widget,
 static void    CML_save_to_file_response   (GtkFileSelection *fs,
                                             gint              response_id,
                                             gpointer          data);
-static gint    force_overwrite             (const gchar      *filename,
+static gboolean force_overwrite            (const gchar      *filename,
                                             GtkWidget        *parent);
 
 static void    CML_preview_update_callback (GtkWidget        *widget,
@@ -2065,7 +2065,6 @@ CML_save_to_file_callback (GtkWidget *widget,
       g_signal_connect (filesel, "delete_event",
                         G_CALLBACK (gtk_true),
                         NULL);
-
     }
 
   if (strlen (VALS.last_file_name) > 0)
@@ -2186,7 +2185,7 @@ CML_save_to_file_response (GtkFileSelection *fs,
   gtk_widget_hide (GTK_WIDGET (fs));
 }
 
-static gint
+static gboolean
 force_overwrite (const gchar *filename,
                  GtkWidget   *parent)
 {
@@ -2247,6 +2246,9 @@ CML_load_from_file_callback (GtkWidget *widget,
       g_signal_connect (filesel, "response",
 			G_CALLBACK (CML_load_from_file_response),
 			NULL);
+      g_signal_connect (filesel, "delete_event",
+                        G_CALLBACK (gtk_true),
+                        NULL);
     }
 
   if ((selective_load_source == 0) || (selective_load_destination == 0))
@@ -2303,7 +2305,7 @@ CML_load_from_file_response (GtkFileSelection *fs,
         }
     }
 
-  gtk_widget_destroy (GTK_WIDGET (fs));
+  gtk_widget_hide (GTK_WIDGET (fs));
 }
 
 static gint

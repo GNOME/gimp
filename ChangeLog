@@ -1,3 +1,11 @@
+2003-12-02  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/channel_mixer.c: Added channel mixer plugin.
+	Needs some work still, notably the settings load/save handling.
+	Addresses bug #113901.
+
 2003-12-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/tiff.c: applied a modified version of a patch
