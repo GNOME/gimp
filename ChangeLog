@@ -1,3 +1,9 @@
+2003-03-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintcore-stroke.c
+	* app/paint/gimppaintcore.c:
+	s/paint_options != NULL/GIMP_IS_PAINT_OPTIONS (paint_options)/g
+
 2003-03-03  Hans Breuer  <hans@breuer.org>
 
 	* app/text/makefile.msc (new file)

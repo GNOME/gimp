@@ -29,6 +29,7 @@
 
 #include "gimppaintcore.h"
 #include "gimppaintcore-stroke.h"
+#include "gimppaintoptions.h"
 
 
 gboolean
@@ -40,7 +41,7 @@ gimp_paint_core_stroke (GimpPaintCore    *core,
 {
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (paint_options != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
   g_return_val_if_fail (strokes != NULL, FALSE);
   g_return_val_if_fail (n_strokes > 0, FALSE);
 
@@ -88,7 +89,7 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (paint_options != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
 
   /*  gimp_stroke_interpolate() may return NULL, so iterate over the

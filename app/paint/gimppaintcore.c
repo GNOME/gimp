@@ -303,7 +303,7 @@ gimp_paint_core_paint (GimpPaintCore      *core,
 {
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (paint_options != NULL);
+  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
 
   if (paint_state == MOTION_PAINT)
     {
@@ -349,7 +349,7 @@ gimp_paint_core_start (GimpPaintCore    *core,
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (paint_options != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -576,7 +576,7 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
 
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (paint_options != NULL);
+  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
 
   gimp_avoid_exact_integer (&core->last_coords.x);
   gimp_avoid_exact_integer (&core->last_coords.y);
