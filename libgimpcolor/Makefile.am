@@ -2,19 +2,21 @@
 
 libgimpcolorincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpcolor
 
-AM_CPPFLAGS = \
+AM_CPPFLAGS = @STRIP_BEGIN@ \
 	-DGIMPDIR=\""$(gimpdir)"\"		\
 	-DDATADIR=\""$(gimpdatadir)"\"		\
 	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
 	-DG_LOG_DOMAIN=\"LibGimpColor\"		\
-	@GIMP_THREAD_FLAGS@
+	@GIMP_THREAD_FLAGS@			\
+@STRIP_END@
 
-INCLUDES = \
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/intl	\
 	-I../intl		\
 	$(GTK_CFLAGS)		\
-	-I$(includedir)
+	-I$(includedir)		\
+@STRIP_END@
 
 EXTRA_DIST = \
 	makefile.mingw		\
@@ -24,7 +26,7 @@ EXTRA_DIST = \
 
 lib_LTLIBRARIES = libgimpcolor-1.3.la
 
-libgimpcolor_1_3_la_SOURCES = \
+libgimpcolor_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimpcolor.h			\
 	gimpcolortypes.h		\
 	gimpadaptivesupersample.c	\
@@ -36,19 +38,24 @@ libgimpcolor_1_3_la_SOURCES = \
 	gimphsv.c			\
 	gimphsv.h			\
 	gimprgb.c			\
-	gimprgb.h
+	gimprgb.h			\
+@STRIP_END@
 
-libgimpcolorinclude_HEADERS = \
+libgimpcolorinclude_HEADERS = @STRIP_BEGIN@ \
 	gimpcolor.h			\
 	gimpcolortypes.h		\
 	gimpadaptivesupersample.h	\
 	gimpbilinear.h			\
 	gimpcolorspace.h		\
 	gimphsv.h			\
-	gimprgb.h
+	gimprgb.h			\
+@STRIP_END@
 
-libgimpcolor_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+EXTRA_HEADERS +=
+
+libgimpcolor_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
+@STRIP_END@
 
 libgimpcolor_1_3_la_LIBADD = $(GLIB_LIBS) -lm
 

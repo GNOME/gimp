@@ -4,7 +4,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = rcm
 
-rcm_SOURCES = \
+rcm_SOURCES = @STRIP_BEGIN@ \
 	rcm.c		\
 	rcm.h		\
 	rcm_callback.c	\
@@ -14,30 +14,35 @@ rcm_SOURCES = \
 	rcm_gdk.c	\
 	rcm_gdk.h	\
 	rcm_misc.c	\
-	rcm_misc.h
+	rcm_misc.h	\
+@STRIP_END@
 
-EXTRA_DIST = \
+EXTRA_DIST = @STRIP_BEGIN@ \
 	pixmaps/rcm_360.xpm	\
 	pixmaps/rcm_a_b.xpm	\
 	pixmaps/rcm_ccw.xpm	\
-	pixmaps/rcm_cw.xpm
+	pixmaps/rcm_cw.xpm	\
+@STRIP_END@
 
-AM_CPPFLAGS = \
-	-DLOCALEDIR=\""$(localedir)"\"
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DLOCALEDIR=\""$(localedir)"\"	\
+@STRIP_END@
 
-INCLUDES = \
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
-LDADD = \
+LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
 .PHONY: files
 

@@ -21,7 +21,7 @@ endif
 
 bin_PROGRAMS = gimp
 
-gimp_SOURCES = \
+gimp_SOURCES = @STRIP_BEGIN@ \
 ##
 ## gui stuff that needs to go to libgimp/, gui/ or /dev/null
 ##
@@ -145,7 +145,8 @@ gimp_SOURCES = \
 	xcf.c			\
 	xcf.h			\
 	$(regex_sources)	\
-	$(mmx_sources)
+	$(mmx_sources)		\
+@STRIP_END@
 
 EXTRA_DIST = \
 	makefile.mingw			\
@@ -162,21 +163,23 @@ EXTRA_DIST = \
 
 gimp_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym
 
-AM_CPPFLAGS = \
+AM_CPPFLAGS = @STRIP_BEGIN@ \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DLOCALEDIR=\""$(localedir)"\"	\
 	-DREGEX_MALLOC			\
 	-DG_LOG_DOMAIN=\"Gimp\"		\
 	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@
+	@GIMP_MP_FLAGS@			\
+@STRIP_END@
 
-INCLUDES = \
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	-I$(top_srcdir)/intl		\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
-gimp_LDADD = \
+gimp_LDADD = @STRIP_BEGIN@ \
 	paint-funcs/libapppaint-funcs.a					\
 	pdb/libapppdb.a							\
 	tools/libapptools.a						\
@@ -191,7 +194,8 @@ gimp_LDADD = \
 	$(GTK_LIBS)							\
 	$(GIMP_THREAD_LIBS)						\
 	$(GIMP_MP_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
 .PHONY: files
 

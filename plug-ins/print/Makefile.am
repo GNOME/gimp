@@ -8,13 +8,11 @@
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-EXTRA_DIST = print-printers.c
-
 libexec_PROGRAMS = print
 
 bin_PROGRAMS = escputil
 
-print_SOURCES = \
+print_SOURCES = @STRIP_BEGIN@ \
 	print-canon.c		\
 	print-dither.c		\
 	print-escp2.c		\
@@ -30,30 +28,36 @@ print_SOURCES = \
 	print.c			\
 	gimp_color_window.c	\
 	gimp_main_window.c	\
-	print_gimp.h
+	print_gimp.h		\
+@STRIP_END@
 
 escputil_SOURCES = escputil.c
 
 man_MANS = escputil.1
 
-INCLUDES = \
-	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)
+EXTRA_DIST = print-printers.c
 
-AM_CPPFLAGS = \
-        -DLOCALEDIR=\""$(localedir)"\"		\
-	-DVERSION=\"$(GIMP_PRINT_VERSION)\"	\
-	-DRELEASE_DATE=\"$(GIMP_PRINT_RELEASE_DATE)\"
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+        -DLOCALEDIR=\""$(localedir)"\"			\
+	-DVERSION=\"$(GIMP_PRINT_VERSION)\"		\
+	-DRELEASE_DATE=\"$(GIMP_PRINT_RELEASE_DATE)\"	\
+@STRIP_END@
 
-LDADD = \
+INCLUDES = @STRIP_BEGIN@ \
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)		\
+@STRIP_END@
+
+LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
 escputil_LDADD =
 

@@ -2,7 +2,7 @@
 
 noinst_LIBRARIES = libapptools.a
 
-libapptools_a_SOURCES = \
+libapptools_a_SOURCES = @STRIP_BEGIN@ \
 	tools.c				\
 	tools.h				\
 	tools-types.h			\
@@ -114,16 +114,21 @@ libapptools_a_SOURCES = \
 	tool_manager.h			\
 	path_tool.h			\
 	path_tool.c			\
-	path_toolP.h
+	path_toolP.h			\
+@STRIP_END@
 
-AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Tools\"
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DG_LOG_DOMAIN=\"Gimp-Tools\"	\
+	@GIMP_THREAD_FLAGS@ 		\
+	@GIMP_MP_FLAGS@			\
+@STRIP_END@
 
-INCLUDES = \
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	-I$(top_srcdir)/app		\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
 .PHONY: files
 

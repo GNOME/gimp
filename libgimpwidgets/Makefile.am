@@ -2,19 +2,21 @@
 
 libgimpwidgetsincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpwidgets
 
-AM_CPPFLAGS = \
+AM_CPPFLAGS = @STRIP_BEGIN@ \
 	-DGIMPDIR=\""$(gimpdir)"\"		\
 	-DDATADIR=\""$(gimpdatadir)"\"		\
 	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
 	-DG_LOG_DOMAIN=\"LibGimpWidgets\"	\
-	@GIMP_THREAD_FLAGS@
+	@GIMP_THREAD_FLAGS@			\
+@STRIP_END@
 
-INCLUDES = \
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/intl	\
 	-I../intl		\
 	$(GTK_CFLAGS)		\
-	-I$(includedir)
+	-I$(includedir)		\
+@STRIP_END@
 
 EXTRA_DIST = \
 	makefile.mingw		\
@@ -24,7 +26,7 @@ EXTRA_DIST = \
 
 lib_LTLIBRARIES = libgimpwidgets-1.3.la
 
-libgimpwidgets_1_3_la_SOURCES = \
+libgimpwidgets_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimpwidgets.c		\
 	gimpwidgets.h		\
 	gimpwidgetstypes.h	\
@@ -53,9 +55,10 @@ libgimpwidgets_1_3_la_SOURCES = \
 	gimpsizeentry.c		\
 	gimpsizeentry.h		\
 	gimpunitmenu.c		\
-	gimpunitmenu.h
+	gimpunitmenu.h		\
+@STRIP_END@
 
-libgimpwidgetsinclude_HEADERS = \
+libgimpwidgetsinclude_HEADERS = @STRIP_BEGIN@ \
 	gimpwidgets.h		\
 	gimpwidgetstypes.h	\
 	gimpbutton.h		\
@@ -70,10 +73,14 @@ libgimpwidgetsinclude_HEADERS = \
 	gimppixmap.h		\
 	gimpquerybox.h		\
 	gimpsizeentry.h		\
-	gimpunitmenu.h
+	gimpunitmenu.h		\
+@STRIP_END@
 
-libgimpwidgets_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+EXTRA_HEADERS +=
+
+libgimpwidgets_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
+@STRIP_END@
 
 libgimpwidgets_1_3_la_LIBADD = $(GLIB_LIBS) -lm
 

@@ -2,7 +2,7 @@
 
 noinst_LIBRARIES = libappbase.a
 
-libappbase_a_SOURCES = \
+libappbase_a_SOURCES = @STRIP_BEGIN@ \
 	base.c			\
 	base.h			\
 	base-types.h		\
@@ -35,19 +35,24 @@ libappbase_a_SOURCES = \
 	tile-manager.h		\
 	tile-manager-private.h	\
 	tile-swap.c		\
-	tile-swap.h
+	tile-swap.h		\
+@STRIP_END@
 
 EXTRA_DIST = \
 	makefile.msc
 
-AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Base\"
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DG_LOG_DOMAIN=\"Gimp-Base\"	\
+	@GIMP_THREAD_FLAGS@ 		\
+	@GIMP_MP_FLAGS@			\
+@STRIP_END@
 
-INCLUDES = \
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	-I$(top_srcdir)/app		\
 	$(GLIB_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
 .PHONY: files
 

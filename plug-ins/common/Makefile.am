@@ -2,21 +2,24 @@
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-EXTRA_DIST = \
+EXTRA_DIST = @STRIP_BEGIN@ \
 	mkgen.pl	\
 	plugin-defs.pl	\
 	winclipboard.c	\
-	winprint.c
+	winprint.c	\
+@STRIP_END@
 
-AM_CPPFLAGS = \
-	-DLOCALEDIR=\""$(localedir)"\"
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DLOCALEDIR=\""$(localedir)"\"	\
+@STRIP_END@
 
-INCLUDES = \
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)		\
 	$(GTK_CFLAGS)		\
-	-I$(includedir)
+	-I$(includedir)		\
+@STRIP_END@
 
-libexec_PROGRAMS = \
+libexec_PROGRAMS = @STRIP_BEGIN@ \
 	AlienMap \
 	AlienMap2 \
 	CEL \
@@ -144,7 +147,8 @@ libexec_PROGRAMS = \
 	xbm \
 	$(XPM) \
 	xwd \
-	zealouscrop
+	zealouscrop \
+@STRIP_END@
 
 EXTRA_PROGRAMS = \
 	aa \
@@ -163,58 +167,67 @@ install-%: %
 	  $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $< $(DESTDIR)$(libexecdir)/`echo $<|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`; \
 	else :; fi
 
-AlienMap_SOURCES = \
-	AlienMap.c
+AlienMap_SOURCES = @STRIP_BEGIN@ \
+	AlienMap.c	\
+@STRIP_END@
 
-AlienMap_LDADD = \
+AlienMap_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-AlienMap2_SOURCES = \
-	AlienMap2.c
+AlienMap2_SOURCES = @STRIP_BEGIN@ \
+	AlienMap2.c	\
+@STRIP_END@
 
-AlienMap2_LDADD = \
+AlienMap2_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-CEL_SOURCES = \
-	CEL.c
+CEL_SOURCES = @STRIP_BEGIN@ \
+	CEL.c	\
+@STRIP_END@
 
-CEL_LDADD = \
+CEL_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-CML_explorer_SOURCES = \
-	CML_explorer.c
+CML_explorer_SOURCES = @STRIP_BEGIN@ \
+	CML_explorer.c	\
+@STRIP_END@
 
-CML_explorer_LDADD = \
+CML_explorer_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-aa_SOURCES = \
-	aa.c
+aa_SOURCES = @STRIP_BEGIN@ \
+	aa.c	\
+@STRIP_END@
 
-aa_LDADD = \
+aa_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
@@ -222,680 +235,796 @@ aa_LDADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBAA)							\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-align_layers_SOURCES = \
-	align_layers.c
+align_layers_SOURCES = @STRIP_BEGIN@ \
+	align_layers.c	\
+@STRIP_END@
 
-align_layers_LDADD = \
+align_layers_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-animationplay_SOURCES = \
-	animationplay.c
+animationplay_SOURCES = @STRIP_BEGIN@ \
+	animationplay.c	\
+@STRIP_END@
 
-animationplay_LDADD = \
+animationplay_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-animoptimize_SOURCES = \
-	animoptimize.c
+animoptimize_SOURCES = @STRIP_BEGIN@ \
+	animoptimize.c	\
+@STRIP_END@
 
-animoptimize_LDADD = \
+animoptimize_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-apply_lens_SOURCES = \
-	apply_lens.c
+apply_lens_SOURCES = @STRIP_BEGIN@ \
+	apply_lens.c	\
+@STRIP_END@
 
-apply_lens_LDADD = \
+apply_lens_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-autocrop_SOURCES = \
-	autocrop.c
+autocrop_SOURCES = @STRIP_BEGIN@ \
+	autocrop.c	\
+@STRIP_END@
 
-autocrop_LDADD = \
+autocrop_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-autostretch_hsv_SOURCES = \
-	autostretch_hsv.c
+autostretch_hsv_SOURCES = @STRIP_BEGIN@ \
+	autostretch_hsv.c	\
+@STRIP_END@
 
-autostretch_hsv_LDADD = \
+autostretch_hsv_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-blinds_SOURCES = \
-	blinds.c
+blinds_SOURCES = @STRIP_BEGIN@ \
+	blinds.c	\
+@STRIP_END@
 
-blinds_LDADD = \
+blinds_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-blur_SOURCES = \
-	blur.c
+blur_SOURCES = @STRIP_BEGIN@ \
+	blur.c	\
+@STRIP_END@
 
-blur_LDADD = \
+blur_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-borderaverage_SOURCES = \
-	borderaverage.c
+borderaverage_SOURCES = @STRIP_BEGIN@ \
+	borderaverage.c	\
+@STRIP_END@
 
-borderaverage_LDADD = \
+borderaverage_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-bumpmap_SOURCES = \
-	bumpmap.c
+bumpmap_SOURCES = @STRIP_BEGIN@ \
+	bumpmap.c	\
+@STRIP_END@
 
-bumpmap_LDADD = \
+bumpmap_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-bz2_SOURCES = \
-	bz2.c
+bz2_SOURCES = @STRIP_BEGIN@ \
+	bz2.c	\
+@STRIP_END@
 
-bz2_LDADD = \
+bz2_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-c_astretch_SOURCES = \
-	c_astretch.c
+c_astretch_SOURCES = @STRIP_BEGIN@ \
+	c_astretch.c	\
+@STRIP_END@
 
-c_astretch_LDADD = \
+c_astretch_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-checkerboard_SOURCES = \
-	checkerboard.c
+checkerboard_SOURCES = @STRIP_BEGIN@ \
+	checkerboard.c	\
+@STRIP_END@
 
-checkerboard_LDADD = \
+checkerboard_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-color_enhance_SOURCES = \
-	color_enhance.c
+color_enhance_SOURCES = @STRIP_BEGIN@ \
+	color_enhance.c	\
+@STRIP_END@
 
-color_enhance_LDADD = \
+color_enhance_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-colorify_SOURCES = \
-	colorify.c
+colorify_SOURCES = @STRIP_BEGIN@ \
+	colorify.c	\
+@STRIP_END@
 
-colorify_LDADD = \
+colorify_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-colortoalpha_SOURCES = \
-	colortoalpha.c
+colortoalpha_SOURCES = @STRIP_BEGIN@ \
+	colortoalpha.c	\
+@STRIP_END@
 
-colortoalpha_LDADD = \
+colortoalpha_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-compose_SOURCES = \
-	compose.c
+compose_SOURCES = @STRIP_BEGIN@ \
+	compose.c	\
+@STRIP_END@
 
-compose_LDADD = \
+compose_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-convmatrix_SOURCES = \
-	convmatrix.c
+convmatrix_SOURCES = @STRIP_BEGIN@ \
+	convmatrix.c	\
+@STRIP_END@
 
-convmatrix_LDADD = \
+convmatrix_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-csource_SOURCES = \
-	csource.c
+csource_SOURCES = @STRIP_BEGIN@ \
+	csource.c	\
+@STRIP_END@
 
-csource_LDADD = \
+csource_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-cubism_SOURCES = \
-	cubism.c
+cubism_SOURCES = @STRIP_BEGIN@ \
+	cubism.c	\
+@STRIP_END@
 
-cubism_LDADD = \
+cubism_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-curve_bend_SOURCES = \
-	curve_bend.c
+curve_bend_SOURCES = @STRIP_BEGIN@ \
+	curve_bend.c	\
+@STRIP_END@
 
-curve_bend_LDADD = \
+curve_bend_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-decompose_SOURCES = \
-	decompose.c
+decompose_SOURCES = @STRIP_BEGIN@ \
+	decompose.c	\
+@STRIP_END@
 
-decompose_LDADD = \
+decompose_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-deinterlace_SOURCES = \
-	deinterlace.c
+deinterlace_SOURCES = @STRIP_BEGIN@ \
+	deinterlace.c	\
+@STRIP_END@
 
-deinterlace_LDADD = \
+deinterlace_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-depthmerge_SOURCES = \
-	depthmerge.c
+depthmerge_SOURCES = @STRIP_BEGIN@ \
+	depthmerge.c	\
+@STRIP_END@
 
-depthmerge_LDADD = \
+depthmerge_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-despeckle_SOURCES = \
-	despeckle.c
+despeckle_SOURCES = @STRIP_BEGIN@ \
+	despeckle.c	\
+@STRIP_END@
 
-despeckle_LDADD = \
+despeckle_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-destripe_SOURCES = \
-	destripe.c
+destripe_SOURCES = @STRIP_BEGIN@ \
+	destripe.c	\
+@STRIP_END@
 
-destripe_LDADD = \
+destripe_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-diffraction_SOURCES = \
-	diffraction.c
+diffraction_SOURCES = @STRIP_BEGIN@ \
+	diffraction.c	\
+@STRIP_END@
 
-diffraction_LDADD = \
+diffraction_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-displace_SOURCES = \
-	displace.c
+displace_SOURCES = @STRIP_BEGIN@ \
+	displace.c	\
+@STRIP_END@
 
-displace_LDADD = \
+displace_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-edge_SOURCES = \
-	edge.c
+edge_SOURCES = @STRIP_BEGIN@ \
+	edge.c	\
+@STRIP_END@
 
-edge_LDADD = \
+edge_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-emboss_SOURCES = \
-	emboss.c
+emboss_SOURCES = @STRIP_BEGIN@ \
+	emboss.c	\
+@STRIP_END@
 
-emboss_LDADD = \
+emboss_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-engrave_SOURCES = \
-	engrave.c
+engrave_SOURCES = @STRIP_BEGIN@ \
+	engrave.c	\
+@STRIP_END@
 
-engrave_LDADD = \
+engrave_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-exchange_SOURCES = \
-	exchange.c
+exchange_SOURCES = @STRIP_BEGIN@ \
+	exchange.c	\
+@STRIP_END@
 
-exchange_LDADD = \
+exchange_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-film_SOURCES = \
-	film.c
+film_SOURCES = @STRIP_BEGIN@ \
+	film.c	\
+@STRIP_END@
 
-film_LDADD = \
+film_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-flarefx_SOURCES = \
-	flarefx.c
+flarefx_SOURCES = @STRIP_BEGIN@ \
+	flarefx.c	\
+@STRIP_END@
 
-flarefx_LDADD = \
+flarefx_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-fractaltrace_SOURCES = \
-	fractaltrace.c
+fractaltrace_SOURCES = @STRIP_BEGIN@ \
+	fractaltrace.c	\
+@STRIP_END@
 
-fractaltrace_LDADD = \
+fractaltrace_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-gauss_iir_SOURCES = \
-	gauss_iir.c
+gauss_iir_SOURCES = @STRIP_BEGIN@ \
+	gauss_iir.c	\
+@STRIP_END@
 
-gauss_iir_LDADD = \
+gauss_iir_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-gauss_rle_SOURCES = \
-	gauss_rle.c
+gauss_rle_SOURCES = @STRIP_BEGIN@ \
+	gauss_rle.c	\
+@STRIP_END@
 
-gauss_rle_LDADD = \
+gauss_rle_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-gbr_SOURCES = \
-	gbr.c
+gbr_SOURCES = @STRIP_BEGIN@ \
+	gbr.c	\
+@STRIP_END@
 
-gbr_LDADD = \
+gbr_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-gee_SOURCES = \
-	gee.c
+gee_SOURCES = @STRIP_BEGIN@ \
+	gee.c	\
+@STRIP_END@
 
-gee_LDADD = \
+gee_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-gee_zoom_SOURCES = \
-	gee_zoom.c
+gee_zoom_SOURCES = @STRIP_BEGIN@ \
+	gee_zoom.c	\
+@STRIP_END@
 
-gee_zoom_LDADD = \
+gee_zoom_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-gicon_SOURCES = \
-	gicon.c
+gicon_SOURCES = @STRIP_BEGIN@ \
+	gicon.c	\
+@STRIP_END@
 
-gicon_LDADD = \
+gicon_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-gif_SOURCES = \
-	gif.c
+gif_SOURCES = @STRIP_BEGIN@ \
+	gif.c	\
+@STRIP_END@
 
-gif_LDADD = \
+gif_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-gifload_SOURCES = \
-	gifload.c
+gifload_SOURCES = @STRIP_BEGIN@ \
+	gifload.c	\
+@STRIP_END@
 
-gifload_LDADD = \
+gifload_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-gih_SOURCES = \
-	gih.c
+gih_SOURCES = @STRIP_BEGIN@ \
+	gih.c	\
+@STRIP_END@
 
-gih_LDADD = \
+gih_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-glasstile_SOURCES = \
-	glasstile.c
+glasstile_SOURCES = @STRIP_BEGIN@ \
+	glasstile.c	\
+@STRIP_END@
 
-glasstile_LDADD = \
+glasstile_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-gqbist_SOURCES = \
-	gqbist.c
+gqbist_SOURCES = @STRIP_BEGIN@ \
+	gqbist.c	\
+@STRIP_END@
 
-gqbist_LDADD = \
+gqbist_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-gradmap_SOURCES = \
-	gradmap.c
+gradmap_SOURCES = @STRIP_BEGIN@ \
+	gradmap.c	\
+@STRIP_END@
 
-gradmap_LDADD = \
+gradmap_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-grid_SOURCES = \
-	grid.c
+grid_SOURCES = @STRIP_BEGIN@ \
+	grid.c	\
+@STRIP_END@
 
-grid_LDADD = \
+grid_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-gtm_SOURCES = \
-	gtm.c
+gtm_SOURCES = @STRIP_BEGIN@ \
+	gtm.c	\
+@STRIP_END@
 
-gtm_LDADD = \
+gtm_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-guillotine_SOURCES = \
-	guillotine.c
+guillotine_SOURCES = @STRIP_BEGIN@ \
+	guillotine.c	\
+@STRIP_END@
 
-guillotine_LDADD = \
+guillotine_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-gz_SOURCES = \
-	gz.c
+gz_SOURCES = @STRIP_BEGIN@ \
+	gz.c	\
+@STRIP_END@
 
-gz_LDADD = \
+gz_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-header_SOURCES = \
-	header.c
+header_SOURCES = @STRIP_BEGIN@ \
+	header.c	\
+@STRIP_END@
 
-header_LDADD = \
+header_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-hot_SOURCES = \
-	hot.c
+hot_SOURCES = @STRIP_BEGIN@ \
+	hot.c	\
+@STRIP_END@
 
-hot_LDADD = \
+hot_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-hrz_SOURCES = \
-	hrz.c
+hrz_SOURCES = @STRIP_BEGIN@ \
+	hrz.c	\
+@STRIP_END@
 
-hrz_LDADD = \
+hrz_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-illusion_SOURCES = \
-	illusion.c
+illusion_SOURCES = @STRIP_BEGIN@ \
+	illusion.c	\
+@STRIP_END@
 
-illusion_LDADD = \
+illusion_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-iwarp_SOURCES = \
-	iwarp.c
+iwarp_SOURCES = @STRIP_BEGIN@ \
+	iwarp.c	\
+@STRIP_END@
 
-iwarp_LDADD = \
+iwarp_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-jigsaw_SOURCES = \
-	jigsaw.c
+jigsaw_SOURCES = @STRIP_BEGIN@ \
+	jigsaw.c	\
+@STRIP_END@
 
-jigsaw_LDADD = \
+jigsaw_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-jpeg_SOURCES = \
-	jpeg.c
+jpeg_SOURCES = @STRIP_BEGIN@ \
+	jpeg.c	\
+@STRIP_END@
 
-jpeg_LDADD = \
+jpeg_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
@@ -903,249 +1032,291 @@ jpeg_LDADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBJPEG)							\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-laplace_SOURCES = \
-	laplace.c
+laplace_SOURCES = @STRIP_BEGIN@ \
+	laplace.c	\
+@STRIP_END@
 
-laplace_LDADD = \
+laplace_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-lic_SOURCES = \
-	lic.c
+lic_SOURCES = @STRIP_BEGIN@ \
+	lic.c	\
+@STRIP_END@
 
-lic_LDADD = \
+lic_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-mail_SOURCES = \
-	mail.c
+mail_SOURCES = @STRIP_BEGIN@ \
+	mail.c	\
+@STRIP_END@
 
-mail_LDADD = \
+mail_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-mapcolor_SOURCES = \
-	mapcolor.c
+mapcolor_SOURCES = @STRIP_BEGIN@ \
+	mapcolor.c	\
+@STRIP_END@
 
-mapcolor_LDADD = \
+mapcolor_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-max_rgb_SOURCES = \
-	max_rgb.c
+max_rgb_SOURCES = @STRIP_BEGIN@ \
+	max_rgb.c	\
+@STRIP_END@
 
-max_rgb_LDADD = \
+max_rgb_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-mblur_SOURCES = \
-	mblur.c
+mblur_SOURCES = @STRIP_BEGIN@ \
+	mblur.c	\
+@STRIP_END@
 
-mblur_LDADD = \
+mblur_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-mpeg_SOURCES = \
-	mpeg.c
+mpeg_SOURCES = @STRIP_BEGIN@ \
+	mpeg.c	\
+@STRIP_END@
 
-mpeg_LDADD = \
+mpeg_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBMPEG)							\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-newsprint_SOURCES = \
-	newsprint.c
+newsprint_SOURCES = @STRIP_BEGIN@ \
+	newsprint.c	\
+@STRIP_END@
 
-newsprint_LDADD = \
+newsprint_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-nlfilt_SOURCES = \
-	nlfilt.c
+nlfilt_SOURCES = @STRIP_BEGIN@ \
+	nlfilt.c	\
+@STRIP_END@
 
-nlfilt_LDADD = \
+nlfilt_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-noisify_SOURCES = \
-	noisify.c
+noisify_SOURCES = @STRIP_BEGIN@ \
+	noisify.c	\
+@STRIP_END@
 
-noisify_LDADD = \
+noisify_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-normalize_SOURCES = \
-	normalize.c
+normalize_SOURCES = @STRIP_BEGIN@ \
+	normalize.c	\
+@STRIP_END@
 
-normalize_LDADD = \
+normalize_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-nova_SOURCES = \
-	nova.c
+nova_SOURCES = @STRIP_BEGIN@ \
+	nova.c	\
+@STRIP_END@
 
-nova_LDADD = \
+nova_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-oilify_SOURCES = \
-	oilify.c
+oilify_SOURCES = @STRIP_BEGIN@ \
+	oilify.c	\
+@STRIP_END@
 
-oilify_LDADD = \
+oilify_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-papertile_SOURCES = \
-	papertile.c
+papertile_SOURCES = @STRIP_BEGIN@ \
+	papertile.c	\
+@STRIP_END@
 
-papertile_LDADD = \
+papertile_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-pat_SOURCES = \
-	pat.c
+pat_SOURCES = @STRIP_BEGIN@ \
+	pat.c	\
+@STRIP_END@
 
-pat_LDADD = \
+pat_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-pcx_SOURCES = \
-	pcx.c
+pcx_SOURCES = @STRIP_BEGIN@ \
+	pcx.c	\
+@STRIP_END@
 
-pcx_LDADD = \
+pcx_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-pix_SOURCES = \
-	pix.c
+pix_SOURCES = @STRIP_BEGIN@ \
+	pix.c	\
+@STRIP_END@
 
-pix_LDADD = \
+pix_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-pixelize_SOURCES = \
-	pixelize.c
+pixelize_SOURCES = @STRIP_BEGIN@ \
+	pixelize.c	\
+@STRIP_END@
 
-pixelize_LDADD = \
+pixelize_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-plasma_SOURCES = \
-	plasma.c
+plasma_SOURCES = @STRIP_BEGIN@ \
+	plasma.c	\
+@STRIP_END@
 
-plasma_LDADD = \
+plasma_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-plugindetails_SOURCES = \
-	plugindetails.c
+plugindetails_SOURCES = @STRIP_BEGIN@ \
+	plugindetails.c	\
+@STRIP_END@
 
-plugindetails_LDADD = \
+plugindetails_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-png_SOURCES = \
-	png.c
+png_SOURCES = @STRIP_BEGIN@ \
+	png.c	\
+@STRIP_END@
 
-png_LDADD = \
+png_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
@@ -1153,58 +1324,68 @@ png_LDADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBPNG)							\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-pnm_SOURCES = \
-	pnm.c
+pnm_SOURCES = @STRIP_BEGIN@ \
+	pnm.c	\
+@STRIP_END@
 
-pnm_LDADD = \
+pnm_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-polar_SOURCES = \
-	polar.c
+polar_SOURCES = @STRIP_BEGIN@ \
+	polar.c	\
+@STRIP_END@
 
-polar_LDADD = \
+polar_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-ps_SOURCES = \
-	ps.c
+ps_SOURCES = @STRIP_BEGIN@ \
+	ps.c	\
+@STRIP_END@
 
-ps_LDADD = \
+ps_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-psd_SOURCES = \
-	psd.c
+psd_SOURCES = @STRIP_BEGIN@ \
+	psd.c	\
+@STRIP_END@
 
-psd_LDADD = \
+psd_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-psp_SOURCES = \
-	psp.c
+psp_SOURCES = @STRIP_BEGIN@ \
+	psp.c	\
+@STRIP_END@
 
-psp_LDADD = \
+psp_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
@@ -1212,248 +1393,290 @@ psp_LDADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBZ)							\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-randomize_SOURCES = \
-	randomize.c
+randomize_SOURCES = @STRIP_BEGIN@ \
+	randomize.c	\
+@STRIP_END@
 
-randomize_LDADD = \
+randomize_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-ripple_SOURCES = \
-	ripple.c
+ripple_SOURCES = @STRIP_BEGIN@ \
+	ripple.c	\
+@STRIP_END@
 
-ripple_LDADD = \
+ripple_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-rotate_SOURCES = \
-	rotate.c
+rotate_SOURCES = @STRIP_BEGIN@ \
+	rotate.c	\
+@STRIP_END@
 
-rotate_LDADD = \
+rotate_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-sample_colorize_SOURCES = \
-	sample_colorize.c
+sample_colorize_SOURCES = @STRIP_BEGIN@ \
+	sample_colorize.c	\
+@STRIP_END@
 
-sample_colorize_LDADD = \
+sample_colorize_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-scatter_hsv_SOURCES = \
-	scatter_hsv.c
+scatter_hsv_SOURCES = @STRIP_BEGIN@ \
+	scatter_hsv.c	\
+@STRIP_END@
 
-scatter_hsv_LDADD = \
+scatter_hsv_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-screenshot_SOURCES = \
-	screenshot.c
+screenshot_SOURCES = @STRIP_BEGIN@ \
+	screenshot.c	\
+@STRIP_END@
 
-screenshot_LDADD = \
+screenshot_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-sel_gauss_SOURCES = \
-	sel_gauss.c
+sel_gauss_SOURCES = @STRIP_BEGIN@ \
+	sel_gauss.c	\
+@STRIP_END@
 
-sel_gauss_LDADD = \
+sel_gauss_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-semiflatten_SOURCES = \
-	semiflatten.c
+semiflatten_SOURCES = @STRIP_BEGIN@ \
+	semiflatten.c	\
+@STRIP_END@
 
-semiflatten_LDADD = \
+semiflatten_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-sharpen_SOURCES = \
-	sharpen.c
+sharpen_SOURCES = @STRIP_BEGIN@ \
+	sharpen.c	\
+@STRIP_END@
 
-sharpen_LDADD = \
+sharpen_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-shift_SOURCES = \
-	shift.c
+shift_SOURCES = @STRIP_BEGIN@ \
+	shift.c	\
+@STRIP_END@
 
-shift_LDADD = \
+shift_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-sinus_SOURCES = \
-	sinus.c
+sinus_SOURCES = @STRIP_BEGIN@ \
+	sinus.c	\
+@STRIP_END@
 
-sinus_LDADD = \
+sinus_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-smooth_palette_SOURCES = \
-	smooth_palette.c
+smooth_palette_SOURCES = @STRIP_BEGIN@ \
+	smooth_palette.c	\
+@STRIP_END@
 
-smooth_palette_LDADD = \
+smooth_palette_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-snoise_SOURCES = \
-	snoise.c
+snoise_SOURCES = @STRIP_BEGIN@ \
+	snoise.c	\
+@STRIP_END@
 
-snoise_LDADD = \
+snoise_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-sobel_SOURCES = \
-	sobel.c
+sobel_SOURCES = @STRIP_BEGIN@ \
+	sobel.c	\
+@STRIP_END@
 
-sobel_LDADD = \
+sobel_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-sparkle_SOURCES = \
-	sparkle.c
+sparkle_SOURCES = @STRIP_BEGIN@ \
+	sparkle.c	\
+@STRIP_END@
 
-sparkle_LDADD = \
+sparkle_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-spread_SOURCES = \
-	spread.c
+spread_SOURCES = @STRIP_BEGIN@ \
+	spread.c	\
+@STRIP_END@
 
-spread_LDADD = \
+spread_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-struc_SOURCES = \
-	struc.c
+struc_SOURCES = @STRIP_BEGIN@ \
+	struc.c	\
+@STRIP_END@
 
-struc_LDADD = \
+struc_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-sunras_SOURCES = \
-	sunras.c
+sunras_SOURCES = @STRIP_BEGIN@ \
+	sunras.c	\
+@STRIP_END@
 
-sunras_LDADD = \
+sunras_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-tga_SOURCES = \
-	tga.c
+tga_SOURCES = @STRIP_BEGIN@ \
+	tga.c	\
+@STRIP_END@
 
-tga_LDADD = \
+tga_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-threshold_alpha_SOURCES = \
-	threshold_alpha.c
+threshold_alpha_SOURCES = @STRIP_BEGIN@ \
+	threshold_alpha.c	\
+@STRIP_END@
 
-threshold_alpha_LDADD = \
+threshold_alpha_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-tiff_SOURCES = \
-	tiff.c
+tiff_SOURCES = @STRIP_BEGIN@ \
+	tiff.c	\
+@STRIP_END@
 
-tiff_LDADD = \
+tiff_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
@@ -1461,186 +1684,218 @@ tiff_LDADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBTIFF)							\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-tile_SOURCES = \
-	tile.c
+tile_SOURCES = @STRIP_BEGIN@ \
+	tile.c	\
+@STRIP_END@
 
-tile_LDADD = \
+tile_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-tileit_SOURCES = \
-	tileit.c
+tileit_SOURCES = @STRIP_BEGIN@ \
+	tileit.c	\
+@STRIP_END@
 
-tileit_LDADD = \
+tileit_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-tiler_SOURCES = \
-	tiler.c
+tiler_SOURCES = @STRIP_BEGIN@ \
+	tiler.c	\
+@STRIP_END@
 
-tiler_LDADD = \
+tiler_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-uniteditor_SOURCES = \
-	uniteditor.c
+uniteditor_SOURCES = @STRIP_BEGIN@ \
+	uniteditor.c	\
+@STRIP_END@
 
-uniteditor_LDADD = \
+uniteditor_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-unsharp_SOURCES = \
-	unsharp.c
+unsharp_SOURCES = @STRIP_BEGIN@ \
+	unsharp.c	\
+@STRIP_END@
 
-unsharp_LDADD = \
+unsharp_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-url_SOURCES = \
-	url.c
+url_SOURCES = @STRIP_BEGIN@ \
+	url.c	\
+@STRIP_END@
 
-url_LDADD = \
+url_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-video_SOURCES = \
-	video.c
+video_SOURCES = @STRIP_BEGIN@ \
+	video.c	\
+@STRIP_END@
 
-video_LDADD = \
+video_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-vinvert_SOURCES = \
-	vinvert.c
+vinvert_SOURCES = @STRIP_BEGIN@ \
+	vinvert.c	\
+@STRIP_END@
 
-vinvert_LDADD = \
+vinvert_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-vpropagate_SOURCES = \
-	vpropagate.c
+vpropagate_SOURCES = @STRIP_BEGIN@ \
+	vpropagate.c	\
+@STRIP_END@
 
-vpropagate_LDADD = \
+vpropagate_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-warp_SOURCES = \
-	warp.c
+warp_SOURCES = @STRIP_BEGIN@ \
+	warp.c	\
+@STRIP_END@
 
-warp_LDADD = \
+warp_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-waves_SOURCES = \
-	waves.c
+waves_SOURCES = @STRIP_BEGIN@ \
+	waves.c	\
+@STRIP_END@
 
-waves_LDADD = \
+waves_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-whirlpinch_SOURCES = \
-	whirlpinch.c
+whirlpinch_SOURCES = @STRIP_BEGIN@ \
+	whirlpinch.c	\
+@STRIP_END@
 
-whirlpinch_LDADD = \
+whirlpinch_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-wind_SOURCES = \
-	wind.c
+wind_SOURCES = @STRIP_BEGIN@ \
+	wind.c	\
+@STRIP_END@
 
-wind_LDADD = \
+wind_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-wmf_SOURCES = \
-	wmf.c
+wmf_SOURCES = @STRIP_BEGIN@ \
+	wmf.c	\
+@STRIP_END@
 
-wmf_LDADD = \
+wmf_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-xbm_SOURCES = \
-	xbm.c
+xbm_SOURCES = @STRIP_BEGIN@ \
+	xbm.c	\
+@STRIP_END@
 
-xbm_LDADD = \
+xbm_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-xpm_SOURCES = \
-	xpm.c
+xpm_SOURCES = @STRIP_BEGIN@ \
+	xpm.c	\
+@STRIP_END@
 
-xpm_LDADD = \
+xpm_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
@@ -1648,26 +1903,31 @@ xpm_LDADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBXPM)							\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-xwd_SOURCES = \
-	xwd.c
+xwd_SOURCES = @STRIP_BEGIN@ \
+	xwd.c	\
+@STRIP_END@
 
-xwd_LDADD = \
+xwd_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-zealouscrop_SOURCES = \
-	zealouscrop.c
+zealouscrop_SOURCES = @STRIP_BEGIN@ \
+	zealouscrop.c	\
+@STRIP_END@
 
-zealouscrop_LDADD = \
+zealouscrop_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@

@@ -2,19 +2,21 @@
 
 libgimpmathincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpmath
 
-AM_CPPFLAGS = \
+AM_CPPFLAGS = @STRIP_BEGIN@ \
 	-DGIMPDIR=\""$(gimpdir)"\"		\
 	-DDATADIR=\""$(gimpdatadir)"\"		\
 	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
 	-DG_LOG_DOMAIN=\"LibGimpMath\"		\
-	@GIMP_THREAD_FLAGS@
+	@GIMP_THREAD_FLAGS@			\
+@STRIP_END@
 
-INCLUDES = \
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/intl	\
 	-I../intl		\
 	$(GTK_CFLAGS)		\
-	-I$(includedir)
+	-I$(includedir)		\
+@STRIP_END@
 
 EXTRA_DIST = \
 	makefile.mingw		\
@@ -24,22 +26,27 @@ EXTRA_DIST = \
 
 lib_LTLIBRARIES = libgimpmath-1.3.la
 
-libgimpmath_1_3_la_SOURCES = \
+libgimpmath_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimpmath.h	\
 	gimpmathtypes.h	\
 	gimpmatrix.c	\
 	gimpmatrix.h	\
 	gimpvector.c	\
-	gimpvector.h
+	gimpvector.h	\
+@STRIP_END@
 
-libgimpmathinclude_HEADERS = \
+libgimpmathinclude_HEADERS = @STRIP_BEGIN@ \
 	gimpmath.h	\
 	gimpmathtypes.h	\
 	gimpmatrix.h	\
-	gimpvector.h
+	gimpvector.h	\
+@STRIP_END@
 
-libgimpmath_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+EXTRA_HEADERS +=
+
+libgimpmath_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
+@STRIP_END@
 
 libgimpmath_1_3_la_LIBADD = $(GLIB_LIBS) -lm
 

@@ -1,5 +1,5 @@
 # Makefile for program source directory in GNU NLS utilities package.
-# Copyright (C) 1995, 1996, 1997 by Ulrich Drepper <drepper@gnu.ai.mit.edu>
+# Copyright (C) 1995-1997, 2000, 2001 by Ulrich Drepper <drepper@gnu.ai.mit.edu>
 #
 # This file file be copied and used freely without restrictions.  It can
 # be used in projects which are not available under the GNU Public License
@@ -14,26 +14,27 @@ SHELL = /bin/sh
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
+top_builddir = ../../..
 VPATH = @srcdir@
 
 prefix = @prefix@
 exec_prefix = @exec_prefix@
-datadir = $(prefix)/@DATADIRNAME@
+datadir = @datadir@
 localedir = $(datadir)/locale
-gnulocaledir = $(prefix)/share/locale
-gettextsrcdir = $(prefix)/share/gettext/po
+gettextsrcdir = $(datadir)/gettext/po
 subdir = plug-ins/perl/po
 
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
-MKINSTALLDIRS = $(top_srcdir)/@MKINSTALLDIRS@
+MKINSTALLDIRS = @MKINSTALLDIRS@
+mkinstalldirs = $(SHELL) `case "$(MKINSTALLDIRS)" in /*) echo "$(MKINSTALLDIRS)" ;; *) echo "$(top_builddir)/$(MKINSTALLDIRS)" ;; esac`
 
 CC = @CC@
-GENCAT = @GENCAT@
-GMSGFMT = PATH=../src:$$PATH @GMSGFMT@
+GMSGFMT = @GMSGFMT@
 MSGFMT = @MSGFMT@
+XGETTEXT = @XGETTEXT@
 PXGETTEXT = perl $(srcdir)/pxgettext
-MSGMERGE = PATH=../src:$$PATH msgmerge
+MSGMERGE = msgmerge
 
 DEFS = @DEFS@
 CFLAGS = @CFLAGS@
@@ -43,20 +44,17 @@ INCLUDES = -I.. -I$(top_srcdir)/intl
 
 COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS) $(XCFLAGS)
 
-SOURCES = cat-id-tbl.c
 POFILES = @POFILES@
 GMOFILES = @GMOFILES@
 DISTFILES = ChangeLog Makefile.in.in POTFILES.in $(PACKAGE).pot \
-stamp-cat-id $(POFILES) $(GMOFILES) $(SOURCES) $(srcdir)/pxgettext
+$(POFILES) $(GMOFILES)
 
 POTFILES = \
 
 CATALOGS = @CATALOGS@
-CATOBJEXT = @CATOBJEXT@
-INSTOBJEXT = @INSTOBJEXT@
 
 .SUFFIXES:
-.SUFFIXES: .c .o .po .pox .gmo .mo .msg .cat
+.SUFFIXES: .c .o .po .pox .gmo .mo
 
 .c.o:
 	$(COMPILE) $<
@@ -70,96 +68,55 @@ INSTOBJEXT = @INSTOBJEXT@
 
 .po.gmo:
 	file=$(srcdir)/`echo $* | sed 's,.*/,,'`.gmo \
-	  && rm -f $$file && $(GMSGFMT) -o $$file $<
-
-.po.cat:
-	sed -f ../../../intl/po2msg.sed < $< > $*.msg \
-	  && rm -f $@ && $(GENCAT) $@ $*.msg
+	  && rm -f $$file && $(GMSGFMT) --statistics -o $$file $<
 
 
 all: all-@USE_NLS@
 
-all-yes: cat-id-tbl.c $(CATALOGS)
+all-yes: $(CATALOGS)
 all-no:
 
-$(srcdir)/$(PACKAGE).pot: $(POTFILES)
-	$(PXGETTEXT) $(POTFILES) > $(PACKAGE).po \
+# Note: Target 'all' must not depend on target '$(srcdir)/$(PACKAGE).pot',
+# otherwise packages like GCC can not be built if only parts of the source
+# have been downloaded.
+
+$(srcdir)/$(PACKAGE).pot: $(POTFILES) $(srcdir)/POTFILES.in
+	$(PXGETTEXT) --default-domain=$(PACKAGE) --directory=$(top_srcdir) \
+	  --add-comments --keyword=_ --keyword=N_ \
+	  --files-from=$(srcdir)/POTFILES.in \
 	&& test ! -f $(PACKAGE).po \
 	   || ( rm -f $(srcdir)/$(PACKAGE).pot \
 		&& mv $(PACKAGE).po $(srcdir)/$(PACKAGE).pot )
-
-$(srcdir)/cat-id-tbl.c: stamp-cat-id; @:
-$(srcdir)/stamp-cat-id: $(PACKAGE).pot
-	rm -f cat-id-tbl.tmp
-	sed -f ../../../intl/po2tbl.sed $(srcdir)/$(PACKAGE).pot \
-		| sed -e "s/@PACKAGE NAME@/$(PACKAGE)/" > cat-id-tbl.tmp
-	if cmp -s cat-id-tbl.tmp $(srcdir)/cat-id-tbl.c; then \
-	  rm cat-id-tbl.tmp; \
-	else \
-	  echo cat-id-tbl.c changed; \
-	  rm -f $(srcdir)/cat-id-tbl.c; \
-	  mv cat-id-tbl.tmp $(srcdir)/cat-id-tbl.c; \
-	fi
-	cd $(srcdir) && rm -f stamp-cat-id && echo timestamp > stamp-cat-id
 
 
 install: install-exec install-data
 install-exec:
 install-data: install-data-@USE_NLS@
-install-data-no: all
-install-data-yes: all
-	if test -r "$(MKINSTALLDIRS)"; then \
-	  $(MKINSTALLDIRS) $(datadir); \
-	else \
-	  $(SHELL) $(top_srcdir)/mkinstalldirs $(datadir); \
-	fi
-	@catalogs='$(CATALOGS)'; \
-	for cat in $$catalogs; do \
-	  cat=`basename $$cat`; \
-	  case "$$cat" in \
-	    *.gmo) destdir=$(gnulocaledir);; \
-	    *)     destdir=$(localedir);; \
-	  esac; \
-	  lang=`echo $$cat | sed 's/\$(CATOBJEXT)$$//'`; \
-	  dir=$$destdir/$$lang/LC_MESSAGES; \
-	  if test -r "$(MKINSTALLDIRS)"; then \
-	    $(MKINSTALLDIRS) $$dir; \
-	  else \
-	    $(SHELL) $(top_srcdir)/mkinstalldirs $$dir; \
-	  fi; \
-	  if test -r $$cat; then \
-	    $(INSTALL_DATA) $$cat $$dir/$(PACKAGE)$(INSTOBJEXT); \
-	    echo "installing $$cat as $$dir/$(PACKAGE)$(INSTOBJEXT)"; \
-	  else \
-	    $(INSTALL_DATA) $(srcdir)/$$cat $$dir/$(PACKAGE)$(INSTOBJEXT); \
-	    echo "installing $(srcdir)/$$cat as" \
-		 "$$dir/$(PACKAGE)$(INSTOBJEXT)"; \
-	  fi; \
-	  if test -r $$cat.m; then \
-	    $(INSTALL_DATA) $$cat.m $$dir/$(PACKAGE)$(INSTOBJEXT).m; \
-	    echo "installing $$cat.m as $$dir/$(PACKAGE)$(INSTOBJEXT).m"; \
-	  else \
-	    if test -r $(srcdir)/$$cat.m ; then \
-	      $(INSTALL_DATA) $(srcdir)/$$cat.m \
-		$$dir/$(PACKAGE)$(INSTOBJEXT).m; \
-	      echo "installing $(srcdir)/$$cat as" \
-		   "$$dir/$(PACKAGE)$(INSTOBJEXT).m"; \
-	    else \
-	      true; \
-	    fi; \
-	  fi; \
-	done
 	if test "$(PACKAGE)" = "gettext"; then \
-	  if test -r "$(MKINSTALLDIRS)"; then \
-	    $(MKINSTALLDIRS) $(gettextsrcdir); \
-	  else \
-	    $(SHELL) $(top_srcdir)/mkinstalldirs $(gettextsrcdir); \
-	  fi; \
+	  $(mkinstalldirs) $(DESTDIR)$(gettextsrcdir); \
 	  $(INSTALL_DATA) $(srcdir)/Makefile.in.in \
-			  $(gettextsrcdir)/Makefile.in.in; \
+			  $(DESTDIR)$(gettextsrcdir)/Makefile.in.in; \
 	else \
 	  : ; \
 	fi
+install-data-no: all
+install-data-yes: all
+	$(mkinstalldirs) $(DESTDIR)$(datadir)
+	@catalogs='$(CATALOGS)'; \
+	for cat in $$catalogs; do \
+	  cat=`basename $$cat`; \
+	  lang=`echo $$cat | sed 's/\.gmo$$//'`; \
+	  dir=$(localedir)/$$lang/LC_MESSAGES; \
+	  $(mkinstalldirs) $(DESTDIR)$$dir; \
+	  if test -r $$cat; then \
+	    $(INSTALL_DATA) $$cat $(DESTDIR)$$dir/$(PACKAGE).mo; \
+	    echo "installing $$cat as $(DESTDIR)$$dir/$(PACKAGE).mo"; \
+	  else \
+	    $(INSTALL_DATA) $(srcdir)/$$cat $(DESTDIR)$$dir/$(PACKAGE).mo; \
+	    echo "installing $(srcdir)/$$cat as" \
+		 "$(DESTDIR)$$dir/$(PACKAGE).mo"; \
+	  fi; \
+	done
 
 # Define this as empty until I found a useful application.
 installcheck:
@@ -168,28 +125,27 @@ uninstall:
 	catalogs='$(CATALOGS)'; \
 	for cat in $$catalogs; do \
 	  cat=`basename $$cat`; \
-	  lang=`echo $$cat | sed 's/\$(CATOBJEXT)$$//'`; \
-	  rm -f $(localedir)/$$lang/LC_MESSAGES/$(PACKAGE)$(INSTOBJEXT); \
-	  rm -f $(localedir)/$$lang/LC_MESSAGES/$(PACKAGE)$(INSTOBJEXT).m; \
-	  rm -f $(gnulocaledir)/$$lang/LC_MESSAGES/$(PACKAGE)$(INSTOBJEXT); \
-	  rm -f $(gnulocaledir)/$$lang/LC_MESSAGES/$(PACKAGE)$(INSTOBJEXT).m; \
+	  lang=`echo $$cat | sed 's/\.gmo$$//'`; \
+	  rm -f $(DESTDIR)$(localedir)/$$lang/LC_MESSAGES/$(PACKAGE).mo; \
 	done
-	rm -f $(gettextsrcdir)/po-Makefile.in.in
+	if test "$(PACKAGE)" = "gettext"; then \
+	  rm -f $(DESTDIR)$(gettextsrcdir)/Makefile.in.in; \
+	else \
+	  : ; \
+	fi
 
 check: all
-
-cat-id-tbl.o: ../../../intl/libgettext.h
 
 dvi info tags TAGS ID:
 
 mostlyclean:
-	rm -f core core.* *.pox $(PACKAGE).po *.old.po cat-id-tbl.tmp
+	rm -f core core.* *.pox $(PACKAGE).po *.new.po
 	rm -fr *.o
 
 clean: mostlyclean
 
 distclean: clean
-	rm -f Makefile Makefile.in POTFILES *.mo *.msg *.cat *.cat.m
+	rm -f Makefile Makefile.in POTFILES *.mo
 
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use;"
@@ -197,31 +153,36 @@ maintainer-clean: distclean
 	rm -f $(GMOFILES)
 
 distdir = ../../../$(PACKAGE)-$(VERSION)/$(subdir)
-dist distdir: update-po $(DISTFILES)
+dist distdir:
+	$(MAKE) update-po
+	@$(MAKE) dist2
+# This is a separate target because 'update-po' must be executed before.
+dist2: $(DISTFILES)
 	dists="$(DISTFILES)"; \
 	for file in $$dists; do \
-	  ln $(srcdir)/$$file ../../$(distdir) 2> /dev/null \
-	    || cp -p $(srcdir)/$$file $(distdir); \
+	  cp -p $(srcdir)/$$file ../../$(distdir); \
 	done
 
 update-po: Makefile
 	$(MAKE) $(PACKAGE).pot
-	PATH=`pwd`/../src:$$PATH; \
+	if test "$(PACKAGE)" = "gettext"; then PATH=`pwd`/../src:$$PATH; fi; \
 	cd $(srcdir); \
-	catalogs='$(CATALOGS)'; \
+	catalogs='$(GMOFILES)'; \
 	for cat in $$catalogs; do \
 	  cat=`basename $$cat`; \
-	  lang=`echo $$cat | sed 's/\$(CATOBJEXT)$$//'`; \
-	  mv $$lang.po $$lang.old.po; \
+	  lang=`echo $$cat | sed 's/\.gmo$$//'`; \
 	  echo "$$lang:"; \
-	  if $(MSGMERGE) $$lang.old.po $(PACKAGE).pot -o $$lang.po; then \
-	    rm -f $$lang.old.po; \
+	  if $(MSGMERGE) $$lang.po $(PACKAGE).pot -o $$lang.new.po; then \
+	    mv -f $$lang.new.po $$lang.po; \
 	  else \
 	    echo "msgmerge for $$cat failed!"; \
-	    rm -f $$lang.po; \
-	    mv $$lang.old.po $$lang.po; \
+	    rm -f $$lang.new.po; \
 	  fi; \
 	done
+	$(MAKE) update-gmo
+
+update-gmo: Makefile $(GMOFILES)
+	@:
 
 POTFILES: POTFILES.in
 	( if test 'x$(srcdir)' != 'x.'; then \

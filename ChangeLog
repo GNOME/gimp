@@ -1,3 +1,15 @@
+2001-06-07  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: added zh_TW.Big5 to ALL_LINGUAS. Added the
+	STRIP_BEGIN and STRIP_END macros from gtk+.
+
+	* app/base/makefile.msc: unmodified copy of app/core/makefile.msc
+	(just to make "make dist" work).
+
+	* */Makefile.am: use @STRIP_BEGIN@ and @STRIP_END@ all over the
+	place. The Makefiles are a bit uglier now but it makes compiling
+	output much more readable.
+
 2001-06-06  Adam D. Moss  <adam@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb: gimp_image_list(),

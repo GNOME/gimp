@@ -1,34 +1,38 @@
 ## Process this file with automake to produce Makefile.in
 
-AM_CPPFLAGS = \
-	-DLOCALEDIR=\""$(localedir)"\"
-
 SUBDIRS = gflares
 
 libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = gflare
 
-gflare_SOURCES = \
+gflare_SOURCES = @STRIP_BEGIN@ \
 	asupsample.h		\
 	asupsample.c		\
 	gtkmultioptionmenu.h	\
 	gtkmultioptionmenu.c	\
-	gflare.c
+	gflare.c		\
+@STRIP_END@
 
-INCLUDES = \
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DLOCALEDIR=\""$(localedir)"\"	\
+@STRIP_END@
+
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
-LDADD = \
+LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
 .PHONY: files
 

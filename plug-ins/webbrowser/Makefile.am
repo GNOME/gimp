@@ -8,18 +8,23 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = webbrowser
 
-webbrowser_SOURCES = \
-	webbrowser.c   
+webbrowser_SOURCES = @STRIP_BEGIN@ \
+	webbrowser.c	\
+@STRIP_END@
 
-AM_CPPFLAGS = \
-	-DLOCALEDIR=\""$(localedir)"\"
+EXTRA_DIST = $(scriptdata_DATA)
 
-INCLUDES = \
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DLOCALEDIR=\""$(localedir)"\"	\
+@STRIP_END@
+
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
-LDADD = \
+LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
@@ -27,9 +32,8 @@ LDADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(LIBXMU)							\
-	$(INTLLIBS)
-
-EXTRA_DIST = $(scriptdata_DATA)
+	$(INTLLIBS)							\
+@STRIP_END@
 
 .PHONY: files
 

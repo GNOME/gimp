@@ -4,26 +4,30 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = mosaic
 
-mosaic_SOURCES = \
+mosaic_SOURCES = @STRIP_BEGIN@ \
 	mosaic.c	\
-	mosaic_logo.h   
+	mosaic_logo.h   \
+@STRIP_END@
 
-AM_CPPFLAGS = \
-        -DLOCALEDIR=\""$(localedir)"\"
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+        -DLOCALEDIR=\""$(localedir)"\"	\
+@STRIP_END@
 
-INCLUDES = \
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
-LDADD = \
+LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
 .PHONY: files
 

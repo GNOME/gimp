@@ -2,49 +2,54 @@
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-EXTRA_DIST = README \
-	README.limn
-
 libexec_PROGRAMS = sel2path
 
-sel2path_SOURCES = \
-	bitmap.h	\
-	bounding-box.h	\
-	curve.c		\
-	curve.h		\
-	edge.c		\
-	edge.h		\
-	fit.c		\
-	fit.h		\
-	global.h	\
-	math.c		\
-	pxl-outline.c	\
-	pxl-outline.h	\
-	sel2path.c	\
+sel2path_SOURCES = @STRIP_BEGIN@ \
+	bitmap.h		\
+	bounding-box.h		\
+	curve.c			\
+	curve.h			\
+	edge.c			\
+	edge.h			\
+	fit.c			\
+	fit.h			\
+	global.h		\
+	math.c			\
+	pxl-outline.c		\
+	pxl-outline.h		\
+	sel2path.c		\
 	sel2path_adv_dialog.c	\
-	sel2path.h	\
-	spline.c	\
-	spline.h	\
-	types.h		\
-	vector.c	\
-	vector.h
+	sel2path.h		\
+	spline.c		\
+	spline.h		\
+	types.h			\
+	vector.c		\
+	vector.h		\
+@STRIP_END@
 
-INCLUDES = \
+EXTRA_DIST = \
+	README		\
+	README.limn
+
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DLOCALEDIR=\""$(localedir)"\"	\
+@STRIP_END@
+
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
-AM_CPPFLAGS = \
-	-DLOCALEDIR=\""$(localedir)"\"
-
-LDADD = \
+LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
 .PHONY: files
 

@@ -4,20 +4,26 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = helpbrowser
 
-helpbrowser_SOURCES = \
+helpbrowser_SOURCES = @STRIP_BEGIN@ \
 	back.xpm		\
 	forward.xpm		\
 	helpbrowser.c		\
 	queue.c			\
-	queue.h
+	queue.h			\
+@STRIP_END@
 
-INCLUDES = \
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DLOCALEDIR=\""$(localedir)"\"	\
+@STRIP_END@
+
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)		\
 	$(GTK_CFLAGS)		\
 	$(GTKXMHTML_CFLAGS)	\
-	-I$(includedir)
+	-I$(includedir)		\
+@STRIP_END@
 
-LDADD = \
+LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
@@ -25,10 +31,8 @@ LDADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(GTKXMHTML_LIBS)						\
-	$(INTLLIBS)
-
-AM_CPPFLAGS = \
-	-DLOCALEDIR=\""$(localedir)"\"
+	$(INTLLIBS)							\
+@STRIP_END@
 
 .PHONY: files
 

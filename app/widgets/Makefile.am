@@ -2,7 +2,7 @@
 
 noinst_LIBRARIES = libappwidgets.a
 
-libappwidgets_a_SOURCES = \
+libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
 	widgets-types.h			\
 	gimpbrushpreview.c		\
 	gimpbrushpreview.h		\
@@ -81,16 +81,21 @@ libappwidgets_a_SOURCES = \
 	gtkvwrapbox.c			\
 	gtkvwrapbox.h			\
 	gimpconstrainedhwrapbox.c	\
-	gimpconstrainedhwrapbox.h
+	gimpconstrainedhwrapbox.h	\
+@STRIP_END@
 
-AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Widgets\"
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DG_LOG_DOMAIN=\"Gimp-Widgets\"	\
+	@GIMP_THREAD_FLAGS@ 		\
+	@GIMP_MP_FLAGS@			\
+@STRIP_END@
 
-INCLUDES = \
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	-I$(top_srcdir)/app		\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
 .PHONY: files
 

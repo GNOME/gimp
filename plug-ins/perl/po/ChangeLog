@@ -1,3 +1,9 @@
+2001-06-07  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.in.in: some build fixes.
+
+	* zh_TW.Big5.po: new dummy file.
+
 2001-05-25  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.

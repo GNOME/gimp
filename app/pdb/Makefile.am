@@ -2,7 +2,7 @@
 
 noinst_LIBRARIES = libapppdb.a
 
-libapppdb_a_SOURCES = \
+libapppdb_a_SOURCES = @STRIP_BEGIN@ \
 	pdb_glue.h		\
 	internal_procs.c	\
 	internal_procs.h	\
@@ -38,17 +38,21 @@ libapppdb_a_SOURCES = \
 	text_tool_cmds.c	\
 	tools_cmds.c		\
 	undo_cmds.c		\
-	unit_cmds.c
+	unit_cmds.c		\
+@STRIP_END@
 
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DG_LOG_DOMAIN=\"Gimp-PDB\"	\
+	@GIMP_THREAD_FLAGS@ 		\
+	@GIMP_MP_FLAGS@			\
+@STRIP_END@
 
-AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-PDB\"
-
-INCLUDES = \
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	-I$(top_srcdir)/app		\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
 .PHONY: files
 

@@ -2,31 +2,35 @@
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-EXTRA_DIST = README
-
 libexec_PROGRAMS = dbbrowser
 
-dbbrowser_SOURCES = \
-	dbbrowser.c		\
-	dbbrowser_utils.c	\
-	dbbrowser_utils.h
+dbbrowser_SOURCES = @STRIP_BEGIN@ \
+	dbbrowser.c			\
+	dbbrowser_utils.c		\
+	dbbrowser_utils.h		\
+@STRIP_END@
 
-AM_CPPFLAGS = \
-	-DLOCALEDIR=\""$(localedir)"\"
+EXTRA_DIST = README
 
-INCLUDES = \
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DLOCALEDIR=\""$(localedir)"\"	\
+@STRIP_END@
+
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
-LDADD = \
+LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
 .PHONY: files
 

@@ -2,19 +2,21 @@
 
 gimpincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimp
 
-AM_CPPFLAGS = \
-	-DGIMPDIR=\""$(gimpdir)"\"	\
-	-DDATADIR=\""$(gimpdatadir)"\"	\
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DGIMPDIR=\""$(gimpdir)"\"		\
+	-DDATADIR=\""$(gimpdatadir)"\"		\
 	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
-	-DG_LOG_DOMAIN=\"LibGimp\"	\
-	@GIMP_THREAD_FLAGS@
+	-DG_LOG_DOMAIN=\"LibGimp\"		\
+	@GIMP_THREAD_FLAGS@			\
+@STRIP_END@
 
-INCLUDES = \
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/intl	\
 	-I../intl		\
 	$(GTK_CFLAGS)		\
-	-I$(includedir)
+	-I$(includedir)		\
+@STRIP_END@
 
 EXTRA_DIST = \
 	makefile.mingw		\
@@ -92,7 +94,7 @@ PDB_WRAPPERS_H = \
 	gimpundo_pdb.h			\
 	gimpunit_pdb.h
 
-libgimp_1_3_la_SOURCES = \
+libgimp_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimp.c				\
 	gimp.h				\
 	gimptypes.h			\
@@ -121,9 +123,10 @@ libgimp_1_3_la_SOURCES = \
 	\
 	gimpintl.h			\
 	stdplugins-intl.h		\
-	libgimp-intl.h
+	libgimp-intl.h			\
+@STRIP_END@
 
-libgimpui_1_3_la_SOURCES = \
+libgimpui_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimpui.c		\
 	gimpui.h		\
 	gimpuitypes.h		\
@@ -135,9 +138,10 @@ libgimpui_1_3_la_SOURCES = \
 	gimppatternmenu.c	\
 	\
 	gimpexport.c		\
-	gimpexport.h
+	gimpexport.h		\
+@STRIP_END@
 
-gimpinclude_HEADERS = \
+gimpinclude_HEADERS = @STRIP_BEGIN@ \
 	gimpcolordisplay.h		\
 	gimpcolorselector.h		\
 	\
@@ -163,15 +167,20 @@ gimpinclude_HEADERS = \
 	gimpui.h			\
 	gimpuitypes.h			\
 	\
-	gimpmenu.h
+	gimpmenu.h			\
+@STRIP_END@
 
-libgimp_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+EXTRA_HEADERS +=
+
+libgimp_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
+@STRIP_END@
 
 libgimp_1_3_la_LIBADD = $(GLIB_LIBS)
 
-libgimpui_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+libgimpui_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
+@STRIP_END@
 
 libgimpui_1_3_la_LIBADD = $(GTK_LIBS)
 

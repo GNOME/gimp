@@ -97,17 +97,18 @@ EXTRA_DIST = \
 	iter_ALT/old/plug_in_warp_iter_ALT.inc			\
 	$(scriptdata_DATA)
 
-libexec_PROGRAMS = \
+libexec_PROGRAMS = @STRIP_BEGIN@ \
 	gap_plugins		\
 	gap_filter		\
 	gap_frontends		\
 	gap_navigator_dialog	\
-	$(GAP_DECODE_MPEG)
+	$(GAP_DECODE_MPEG)	\
+@STRIP_END@
 
 EXTRA_PROGRAMS = \
 	gap_decode_mpeg
 
-gap_plugins_SOURCES = \
+gap_plugins_SOURCES = @STRIP_BEGIN@ \
 	gap_main.c		\
 	gap_mov_exec.c		\
 	gap_mov_exec.h		\
@@ -139,10 +140,11 @@ gap_plugins_SOURCES = \
 	gap_pdb_calls.c		\
 	gap_pdb_calls.h		\
 	resize.c		\
-	resize.h
+	resize.h		\
+@STRIP_END@
 
 
-gap_filter_SOURCES = \
+gap_filter_SOURCES = @STRIP_BEGIN@ \
 	gap_filter_main.c	\
 	gap_dbbrowser_utils.c	\
 	gap_dbbrowser_utils.h	\
@@ -156,9 +158,10 @@ gap_filter_SOURCES = \
 	gap_arr_dialog.h	\
 	gap_pdb_calls.c		\
 	gap_pdb_calls.h		\
-	gap_filter.h
+	gap_filter.h		\
+@STRIP_END@
 
-gap_frontends_SOURCES = \
+gap_frontends_SOURCES = @STRIP_BEGIN@ \
 	gap_frontends_main.c	\
 	gap_arr_dialog.c	\
 	gap_arr_dialog.h	\
@@ -175,18 +178,20 @@ gap_frontends_SOURCES = \
 	gap_mpege.c		\
 	gap_mpege.h		\
 	gap_decode_xanim.c	\
-	gap_decode_xanim.h
+	gap_decode_xanim.h	\
+@STRIP_END@
 
 
-gap_decode_mpeg_SOURCES = \
+gap_decode_mpeg_SOURCES = @STRIP_BEGIN@ \
 	gap_decode_mpeg_main.c	\
 	gap_arr_dialog.c	\
 	gap_arr_dialog.h	\
 	gap_pdb_calls.c		\
-	gap_pdb_calls.h
+	gap_pdb_calls.h		\
+@STRIP_END@
 
 
-gap_navigator_dialog_SOURCES = \
+gap_navigator_dialog_SOURCES = @STRIP_BEGIN@ \
 	gap_navigator_dialog.c	\
 	gap_lib.c		\
 	gap_lib.h		\
@@ -197,27 +202,31 @@ gap_navigator_dialog_SOURCES = \
 	gap_layer_copy.c        \
 	gap_layer_copy.h        \
 	gap_exchange_image.c    \
-	gap_exchange_image.h
+	gap_exchange_image.h	\
+@STRIP_END@
 
 
-AM_CPPFLAGS = \
-        -DLOCALEDIR=\""$(localedir)"\"
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+        -DLOCALEDIR=\""$(localedir)"\"	\
+@STRIP_END@
 
-INCLUDES = \
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
-LDADD = \
+LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
-gap_decode_mpeg_LDADD = \
+gap_decode_mpeg_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
@@ -225,7 +234,8 @@ gap_decode_mpeg_LDADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBMPEG)							\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)							\
+@STRIP_END@
 
 files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \

@@ -12,7 +12,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = script-fu
 
-script_fu_SOURCES = \
+script_fu_SOURCES = @STRIP_BEGIN@ \
 	interp_regex.c		\
 	interp_slib.c		\
 	interp_sliba.c		\
@@ -30,18 +30,26 @@ script_fu_SOURCES = \
 	script-fu-enums.h	\
 	siod.h			\
 	siodp.h			\
-	$(regex_sources)
+	$(regex_sources)	\
+@STRIP_END@
 
-EXTRA_DIST = \
+EXTRA_DIST = @STRIP_BEGIN@ \
 	regexrepl.c		\
-	regexrepl.h
+	regexrepl.h		\
+@STRIP_END@
 
-INCLUDES = \
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DREGEX_MALLOC			\
+	-DLOCALEDIR=\""$(localedir)"\"	\
+@STRIP_END@
+
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
-LDADD = \
+LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/plug-ins/dbbrowser/dbbrowser_utils.o		\
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
@@ -49,11 +57,8 @@ LDADD = \
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
-
-AM_CPPFLAGS = \
-	-DREGEX_MALLOC			\
-	-DLOCALEDIR=\""$(localedir)"\"
+	$(INTLLIBS)							\
+@STRIP_END@
 
 .PHONY: files
 

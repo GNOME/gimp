@@ -4,27 +4,31 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = gfli
 
-gfli_SOURCES = \
+gfli_SOURCES = @STRIP_BEGIN@ \
 	fli.h		\
 	fli.c		\
-	gfli.c
+	gfli.c		\
+@STRIP_END@
 
-INCLUDES = \
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DLOCALEDIR=\""$(localedir)"\"	\
+@STRIP_END@
+
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
-LDADD = \
+LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
-
-AM_CPPFLAGS = \
-	-DLOCALEDIR=\""$(localedir)"\"
+	$(INTLLIBS)							\
+@STRIP_END@
 
 .PHONY: files
 

@@ -6,7 +6,7 @@
 # but which still want to provide support for the GNU gettext functionality.
 # Please note that the actual code is *not* freely available.
 
-PACKAGE = @PACKAGE@
+PACKAGE = gimp-script-fu
 VERSION = @VERSION@
 
 SHELL = /bin/sh
@@ -22,7 +22,7 @@ exec_prefix = @exec_prefix@
 datadir = @datadir@
 localedir = $(datadir)/locale
 gettextsrcdir = $(datadir)/gettext/po
-subdir = po
+subdir = po-script-fu
 
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
@@ -33,6 +33,7 @@ CC = @CC@
 GMSGFMT = @GMSGFMT@
 MSGFMT = @MSGFMT@
 XGETTEXT = @XGETTEXT@
+SXGETTEXT = $(srcdir)/script-fu-xgettext
 MSGMERGE = msgmerge
 
 DEFS = @DEFS@
@@ -80,7 +81,7 @@ all-no:
 # have been downloaded.
 
 $(srcdir)/$(PACKAGE).pot: $(POTFILES) $(srcdir)/POTFILES.in
-	$(XGETTEXT) --default-domain=$(PACKAGE) --directory=$(top_srcdir) \
+	$(SXGETTEXT) --default-domain=$(PACKAGE) --directory=$(top_srcdir) \
 	  --add-comments --keyword=_ --keyword=N_ \
 	  --files-from=$(srcdir)/POTFILES.in \
 	&& test ! -f $(PACKAGE).po \

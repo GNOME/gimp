@@ -2,7 +2,7 @@
 
 noinst_LIBRARIES = libappgui.a
 
-libappgui_a_SOURCES = \
+libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	about-dialog.c			\
 	about-dialog.h			\
 	authors.h			\
@@ -85,19 +85,25 @@ libappgui_a_SOURCES = \
 	tool-options-dialog.c		\
 	tool-options-dialog.h		\
 	toolbox.c			\
-	toolbox.h
+	toolbox.h			\
+@STRIP_END@
 
-EXTRA_DIST = \
-	makefile.msc
+EXTRA_DIST = @STRIP_BEGIN@ \
+	makefile.msc			\
+@STRIP_END@
 
-AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-GUI\"
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DG_LOG_DOMAIN=\"Gimp-GUI\"	\
+	@GIMP_THREAD_FLAGS@ 		\
+	@GIMP_MP_FLAGS@			\
+@STRIP_END@
 
-INCLUDES = \
-	-I$(top_srcdir)		\
-	-I$(top_srcdir)/app	\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)
+INCLUDES = @STRIP_BEGIN@ \
+	-I$(top_srcdir)			\
+	-I$(top_srcdir)/app		\
+	$(GTK_CFLAGS)			\
+	-I$(includedir)			\
+@STRIP_END@
 
 .PHONY: files
 

@@ -4,21 +4,29 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = xjt
 
-EXTRA_DIST = README README_xjt_fileformat.txt
+EXTRA_DIST = \
+	README				\
+	README_xjt_fileformat.txt
 
-xjt_SOURCES = \
+xjt_SOURCES = @STRIP_BEGIN@ \
 	xjt.c		\
 	xjpeg.c		\
 	xjpeg.h		\
 	xpdb_calls.c	\
-	xpdb_calls.h
+	xpdb_calls.h	\
+@STRIP_END@
 
-INCLUDES = \
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DLOCALEDIR=\""$(localedir)"\"	\
+@STRIP_END@
+
+INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+@STRIP_END@
 
-LDADD = \
+LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
@@ -26,10 +34,8 @@ LDADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(LIBJPEG)							\
-	$(INTLLIBS)
-
-AM_CPPFLAGS = \
-	-DLOCALEDIR=\""$(localedir)"\"
+	$(INTLLIBS)							\
+@STRIP_END@
 
 .PHONY: files
 
