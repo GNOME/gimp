@@ -152,6 +152,20 @@ run (gchar   *name,
   xargs.drawable = param[2].data.d_drawable;
   drw = gimp_drawable_get (xargs.drawable);
 
+  /* initialize misc. things */
+  gimp_drawable_mask_bounds (drw->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  sel_width = sel_x2 - sel_x1;
+  sel_height = sel_y2 - sel_y1;
+  if (sel_width > PREVIEW_SIZE)
+    prev_width = PREVIEW_SIZE;
+  else
+    prev_width = sel_width;
+  if (sel_height > PREVIEW_SIZE)
+    prev_height = PREVIEW_SIZE;
+  else
+    prev_height = sel_height;
+  has_alpha = gimp_drawable_has_alpha (drw->id);
+
   switch (runmode)
     {
     case GIMP_RUN_INTERACTIVE:
@@ -162,19 +176,6 @@ run (gchar   *name,
       gimp_palette_get_foreground (&xargs.fromred,
 				   &xargs.fromgreen,
 				   &xargs.fromblue);
-      /* and initialize some other things */
-      gimp_drawable_mask_bounds (drw->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-      sel_width = sel_x2 - sel_x1;
-      sel_height = sel_y2 - sel_y1;
-      if (sel_width > PREVIEW_SIZE)
-	prev_width = PREVIEW_SIZE;
-      else
-	prev_width = sel_width;
-      if (sel_height > PREVIEW_SIZE)
-	prev_height = PREVIEW_SIZE;
-      else
-	prev_height = sel_height;
-      has_alpha = gimp_drawable_has_alpha (drw->id);
       if (!doDialog ())
 	return;
       break;
@@ -194,7 +195,7 @@ run (gchar   *name,
 
     case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
-      if (nparams != 10)
+      if (nparams != 12)
 	{
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
