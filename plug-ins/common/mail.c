@@ -44,10 +44,10 @@
  *          3) click ok and it should be on its way
  *
  *
- * NOTE: You probabaly need sendmail installed. If your sendmail is in an odd spot
- *       you can change the #define below. If you use qmail or other MTA's, and this
- *       works after changing the MAILER, let me know how well or what changes were
- *       needed.
+ * NOTE: You probably need sendmail installed. If your sendmail is in
+ * an odd spot you can change the #define below. If you use qmail or
+ * other MTA's, and this works after changing the SENDMAIL, let me know
+ * how well or what changes were needed.
  *
  * NOTE: Uuencode is needed. If it is in the path, it should work fine as is. Other-
  *       wise just change the UUENCODE.
@@ -88,11 +88,7 @@
  *                       "gump-from" token and use it. Also made "run with last 
  *                        values" work.
  * As always: The utility of this plugin is left as an exercise for the reader
- *
- */
-#ifndef MAILER
-#define MAILER "/usr/lib/sendmail"
-#endif
+ * */
 
 #ifndef UUENCODE
 #define UUENCODE "uuencode"
@@ -104,6 +100,10 @@
 #define BUFFER_SIZE            256
 
 #include "config.h"
+
+#ifndef SENDMAIL
+#define SENDMAIL "/usr/lib/sendmail"
+#endif
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -325,7 +325,7 @@ save_image (gchar  *filename,
   tmpname = gimp_temp_name (ext + 1);
 
   /* construct the "sendmail user@location" line */
-  strcpy (mailcmdline, MAILER);
+  strcpy (mailcmdline, SENDMAIL);
   strcat (mailcmdline, " ");
   strcat (mailcmdline, mail_info.receipt);
 

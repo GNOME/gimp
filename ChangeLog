@@ -1,5 +1,10 @@
 2002-07-09  Sven Neumann  <sven@gimp.org>
 
+	* configure.in
+	* plug-ins/common/mail.c: merged changes from HEAD branch (bug #83208).
+
+2002-07-09  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/papertile.c: fixed behaviour when run with
 	GIMP_RUN_WITH_LAST_VALS. Based on a patch from
 	<thlsmith@iprimus.com.au> (bug #86868).
