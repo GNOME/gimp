@@ -6,12 +6,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2000-12-22 13:43+0100\n"
-"PO-Revision-Date: 2000-12-22 14:22+0100\n"
+"PO-Revision-Date: 2000-12-22 14:55+0100\n"
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO 8859-2\n"
+"Content-Type: text/plain; charset=iso-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 0.7.1\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:282
 #: plug-ins/FractalExplorer/Dialogs.c:1372 plug-ins/common/AlienMap.c:1396
@@ -2548,11 +2549,11 @@ msgstr ""
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
 #: plug-ins/print/gimp_main_window.c:758
 msgid "Color"
-msgstr ""
+msgstr "Szín"
 
 #: plug-ins/common/colorify.c:351
 msgid "Custom Color:"
-msgstr ""
+msgstr "Egyéni szín:"
 
 #: plug-ins/common/colorify.c:356
 msgid "Colorify Custom Color"
@@ -2585,7 +2586,7 @@ msgstr ""
 #: plug-ins/common/compose.c:120 plug-ins/common/decompose.c:113
 #: plug-ins/common/newsprint.c:1337
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: plug-ins/common/compose.c:123
 msgid "rgb-compose"
@@ -2593,12 +2594,12 @@ msgstr ""
 
 #: plug-ins/common/compose.c:124
 msgid "RGBA"
-msgstr ""
+msgstr "RGBA"
 
 #: plug-ins/common/compose.c:127 plug-ins/common/nlfilt.c:421
 #: plug-ins/common/noisify.c:574 plug-ins/common/noisify.c:657
 msgid "Alpha:"
-msgstr ""
+msgstr "Alfa:"
 
 #: plug-ins/common/compose.c:127
 msgid "rgba-compose"
@@ -2606,24 +2607,24 @@ msgstr ""
 
 #: plug-ins/common/compose.c:128 plug-ins/common/decompose.c:119
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
 #. Gray: Circle: Spinbutton 1
 #: plug-ins/common/compose.c:128 plug-ins/common/scatter_hsv.c:450
 #: plug-ins/rcm/rcm_dialog.c:432
 msgid "Hue:"
-msgstr ""
+msgstr "Színezet:"
 
 #. Gray: Circle: Spinbutton 2
 #: plug-ins/common/compose.c:129 plug-ins/common/scatter_hsv.c:459
 #: plug-ins/print/gimp_color_window.c:253 plug-ins/rcm/rcm_dialog.c:457
 msgid "Saturation:"
-msgstr ""
+msgstr "Telítettség:"
 
 #: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:468
 #: plug-ins/gap/gap_arr_dialog.c:813
 msgid "Value:"
-msgstr ""
+msgstr "Érték:"
 
 #: plug-ins/common/compose.c:131
 msgid "hsv-compose"
@@ -2631,12 +2632,12 @@ msgstr ""
 
 #: plug-ins/common/compose.c:132 plug-ins/common/decompose.c:125
 msgid "CMY"
-msgstr ""
+msgstr "CMY"
 
 #: plug-ins/common/compose.c:132 plug-ins/common/compose.c:136
 #: plug-ins/fp/fp_gtk.c:23 plug-ins/print/gimp_color_window.c:208
 msgid "Cyan:"
-msgstr ""
+msgstr "Cián:"
 
 #: plug-ins/common/compose.c:133 plug-ins/common/compose.c:137
 #: plug-ins/fp/fp_gtk.c:25 plug-ins/print/gimp_color_window.c:223
@@ -2646,7 +2647,7 @@ msgstr ""
 #: plug-ins/common/compose.c:134 plug-ins/common/compose.c:138
 #: plug-ins/fp/fp_gtk.c:24 plug-ins/print/gimp_color_window.c:238
 msgid "Yellow:"
-msgstr ""
+msgstr "Sárga:"
 
 #: plug-ins/common/compose.c:135
 msgid "cmy-compose"
@@ -2655,11 +2656,11 @@ msgstr ""
 #: plug-ins/common/compose.c:136 plug-ins/common/decompose.c:131
 #: plug-ins/common/newsprint.c:1348
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
 #: plug-ins/common/compose.c:139
 msgid "Black:"
-msgstr ""
+msgstr "Fekete:"
 
 #: plug-ins/common/compose.c:139
 msgid "cmyk-compose"
@@ -2715,11 +2716,11 @@ msgstr ""
 #: plug-ins/common/convmatrix.c:85 plug-ins/common/newsprint.c:383
 #: plug-ins/gfig/gfig.c:3322
 msgid "Grey"
-msgstr ""
+msgstr "Szürke"
 
 #: plug-ins/common/convmatrix.c:89 plug-ins/common/decompose.c:138
 msgid "Alpha"
-msgstr ""
+msgstr "Alfa"
 
 #: plug-ins/common/convmatrix.c:94
 msgid "Extend"
@@ -2860,11 +2861,11 @@ msgstr ""
 
 #: plug-ins/common/curve_bend.c:351
 msgid "Upper"
-msgstr ""
+msgstr "Felsõ"
 
 #: plug-ins/common/curve_bend.c:352
 msgid "Lower"
-msgstr ""
+msgstr "Alsó"
 
 #: plug-ins/common/curve_bend.c:358
 msgid "Smooth"
@@ -2894,7 +2895,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_cmd_copy_object.c:50
 #: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:132
 msgid "Copy"
-msgstr ""
+msgstr "Másolás"
 
 #: plug-ins/common/curve_bend.c:1365
 msgid "CopyInv"
@@ -2917,7 +2918,7 @@ msgstr ""
 #. Rotate label & spinbutton
 #: plug-ins/common/curve_bend.c:1402
 msgid "Rotate: "
-msgstr ""
+msgstr "Forgatás:"
 
 #: plug-ins/common/curve_bend.c:1420
 msgid "Curve for Border: "
@@ -2936,14 +2937,14 @@ msgstr ""
 #. The smoothing toggle
 #: plug-ins/common/curve_bend.c:1513
 msgid "Smoothing"
-msgstr ""
+msgstr "Simítás"
 
 #. The antialiasing toggle
 #: plug-ins/common/curve_bend.c:1523 plug-ins/common/newsprint.c:1410
 #: plug-ins/common/ripple.c:613 plug-ins/gfig/gfig.c:3148
 #: plug-ins/mosaic/mosaic.c:585
 msgid "Antialiasing"
-msgstr ""
+msgstr "Élsimítás"
 
 #. The wor_on_copy toggle
 #: plug-ins/common/curve_bend.c:1533
@@ -2966,15 +2967,15 @@ msgstr ""
 
 #: plug-ins/common/decompose.c:113 plug-ins/common/decompose.c:116
 msgid "red"
-msgstr ""
+msgstr "piros"
 
 #: plug-ins/common/decompose.c:114 plug-ins/common/decompose.c:117
 msgid "green"
-msgstr ""
+msgstr "zöld"
 
 #: plug-ins/common/decompose.c:115 plug-ins/common/decompose.c:118
 msgid "blue"
-msgstr ""
+msgstr "kék"
 
 #: plug-ins/common/decompose.c:119 plug-ins/common/decompose.c:122
 msgid "hue"
