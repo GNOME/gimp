@@ -265,7 +265,7 @@ run (gchar   *name,
 /* 
  * Description:
  *     Reads a 16-bit integer from a file in such a way that the machine's
- *     bit ordering should not matter 
+ *     byte order should not matter.
  */
 
 static guint16
@@ -274,13 +274,14 @@ get_short (FILE *file)
   guchar buf[2];
 
   fread (buf, 2, 1, file);
-  return (buf[0] << 8) + (buf[1] << 0);
+
+  return (buf[0] << 8) + buf[1];
 }
 	
 /* 
  * Description:
- *     Reads a 16-bit integer from a file in such a way that the machine's
- *     bit ordering should not matter 
+ *     Writes a 16-bit integer to a file in such a way that the machine's
+ *     byte order should not matter.
  */
 
 static void
@@ -288,8 +289,8 @@ put_short (guint16  value,
 	   FILE    *file)
 {
   guchar buf[2];
-  buf[0] = (guchar) (value >> 8);
-  buf[1] = (guchar) (value % 256);
+  buf[0] = (value >> 8) & 0xFF;
+  buf[1] = value & 0xFF;
 
   fwrite (buf, 2, 1, file);
 }
