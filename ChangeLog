@@ -1,3 +1,10 @@
+2005-03-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/widgets/gimpviewrenderergradient.c: 
+	(gimp_view_renderer_gradient_render): Make sure specified
+	point lies within specified gradient segment; should
+	fix bug #167604.
+
 2005-03-08  Sven Neumann  <sven@gimp.org>
 
 	* app/file/file-open.c (file_open_layer): open images interactively.

@@ -169,8 +169,10 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
     {
       guchar r, g, b, a;
 
-      seg = gimp_gradient_get_color_at (gradient, seg,
-                                        cur_x, rendergrad->reverse, &color);
+      seg = gimp_gradient_get_segment_at (gradient, cur_x);
+
+      gimp_gradient_get_color_at (gradient, seg,
+                                  cur_x, rendergrad->reverse, &color);
       cur_x += dx;
 
       gimp_rgba_get_uchar (&color, &r, &g, &b, &a);
