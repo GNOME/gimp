@@ -769,6 +769,68 @@ gimp_drawable_set_visible (gint32   drawable_ID,
 }
 
 /**
+ * gimp_drawable_get_linked:
+ * @drawable_ID: The drawable.
+ *
+ * Get the linked state of the specified drawable.
+ *
+ * This procedure returns the specified drawable's linked state.
+ *
+ * Returns: The drawable linked state (for moves).
+ */
+gboolean
+gimp_drawable_get_linked (gint32 drawable_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean linked = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_get_linked",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    linked = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return linked;
+}
+
+/**
+ * gimp_drawable_set_linked:
+ * @drawable_ID: The drawable.
+ * @linked: The new drawable linked state.
+ *
+ * Set the linked state of the specified drawable.
+ *
+ * This procedure sets the specified drawable's linked state.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_drawable_set_linked (gint32   drawable_ID,
+			  gboolean linked)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_set_linked",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, linked,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_drawable_get_tattoo:
  * @drawable_ID: The drawable.
  *

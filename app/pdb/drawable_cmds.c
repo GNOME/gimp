@@ -63,6 +63,8 @@ static ProcRecord drawable_get_name_proc;
 static ProcRecord drawable_set_name_proc;
 static ProcRecord drawable_get_visible_proc;
 static ProcRecord drawable_set_visible_proc;
+static ProcRecord drawable_get_linked_proc;
+static ProcRecord drawable_set_linked_proc;
 static ProcRecord drawable_get_tattoo_proc;
 static ProcRecord drawable_set_tattoo_proc;
 static ProcRecord drawable_get_pixel_proc;
@@ -97,6 +99,8 @@ register_drawable_procs (Gimp *gimp)
   procedural_db_register (gimp, &drawable_set_name_proc);
   procedural_db_register (gimp, &drawable_get_visible_proc);
   procedural_db_register (gimp, &drawable_set_visible_proc);
+  procedural_db_register (gimp, &drawable_get_linked_proc);
+  procedural_db_register (gimp, &drawable_set_linked_proc);
   procedural_db_register (gimp, &drawable_get_tattoo_proc);
   procedural_db_register (gimp, &drawable_set_tattoo_proc);
   procedural_db_register (gimp, &drawable_get_pixel_proc);
@@ -1363,6 +1367,110 @@ static ProcRecord drawable_set_visible_proc =
   0,
   NULL,
   { { drawable_set_visible_invoker } }
+};
+
+static Argument *
+drawable_get_linked_invoker (Gimp     *gimp,
+                             Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&drawable_get_linked_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_item_get_linked (GIMP_ITEM (drawable));
+
+  return return_args;
+}
+
+static ProcArg drawable_get_linked_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  }
+};
+
+static ProcArg drawable_get_linked_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "linked",
+    "The drawable linked state (for moves)"
+  }
+};
+
+static ProcRecord drawable_get_linked_proc =
+{
+  "gimp_drawable_get_linked",
+  "Get the linked state of the specified drawable.",
+  "This procedure returns the specified drawable's linked state.",
+  "Wolfgang Hofer",
+  "Wolfgang Hofer",
+  "1998",
+  GIMP_INTERNAL,
+  1,
+  drawable_get_linked_inargs,
+  1,
+  drawable_get_linked_outargs,
+  { { drawable_get_linked_invoker } }
+};
+
+static Argument *
+drawable_set_linked_invoker (Gimp     *gimp,
+                             Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gboolean linked;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  linked = args[1].value.pdb_int ? TRUE : FALSE;
+
+  if (success)
+    gimp_item_set_linked (GIMP_ITEM (drawable), linked, TRUE);
+
+  return procedural_db_return_args (&drawable_set_linked_proc, success);
+}
+
+static ProcArg drawable_set_linked_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  },
+  {
+    GIMP_PDB_INT32,
+    "linked",
+    "The new drawable linked state"
+  }
+};
+
+static ProcRecord drawable_set_linked_proc =
+{
+  "gimp_drawable_set_linked",
+  "Set the linked state of the specified drawable.",
+  "This procedure sets the specified drawable's linked state.",
+  "Wolfgang Hofer",
+  "Wolfgang Hofer",
+  "1998",
+  GIMP_INTERNAL,
+  2,
+  drawable_set_linked_inargs,
+  0,
+  NULL,
+  { { drawable_set_linked_invoker } }
 };
 
 static Argument *

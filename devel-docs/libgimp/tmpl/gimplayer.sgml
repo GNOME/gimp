@@ -247,25 +247,6 @@ Operations on single layers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_layer_get_linked ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_set_linked ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@linked: 
-@Returns: 
-
-
 <!-- ##### MACRO gimp_layer_get_mask_id ##### -->
 <para>
 

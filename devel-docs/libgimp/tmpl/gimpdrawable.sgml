@@ -103,6 +103,25 @@ Functions to manipulate drawables.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_drawable_get_linked ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_set_linked ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@linked: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_drawable_get_tattoo ##### -->
 <para>
 

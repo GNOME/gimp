@@ -79,9 +79,6 @@ gboolean             gimp_layer_set_opacity          (gint32                laye
 GimpLayerModeEffects gimp_layer_get_mode             (gint32                layer_ID);
 gboolean             gimp_layer_set_mode             (gint32                layer_ID,
 						      GimpLayerModeEffects  mode);
-gboolean             gimp_layer_get_linked           (gint32                layer_ID);
-gboolean             gimp_layer_set_linked           (gint32                layer_ID,
-						      gboolean              linked);
 
 
 G_END_DECLS

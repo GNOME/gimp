@@ -1440,7 +1440,7 @@ p_write_layer_prp(const gchar *dirname,
   l_param.int_val1 = p_invert(gimp_drawable_get_visible(layer_id));
   p_write_prop (fp, PROP_VISIBLE, &l_param, wr_all_prp);
 
-  l_param.int_val1 = gimp_layer_get_linked (layer_id);
+  l_param.int_val1 = gimp_drawable_get_linked (layer_id);
   p_write_prop (fp, PROP_LINKED, &l_param, wr_all_prp);
 
   l_param.int_val1 = gimp_layer_get_preserve_transparency(layer_id);
@@ -3467,11 +3467,11 @@ load_xjt_image (const gchar *filename)
       /* adjust offsets and other layerproperties */
       gimp_layer_set_offsets(l_layer_id, l_layer_prp_ptr->offx, l_layer_prp_ptr->offy);
       gimp_drawable_set_visible (l_layer_id, l_layer_prp_ptr->visible);
-      gimp_layer_set_linked (l_layer_id, l_layer_prp_ptr->linked);
+      gimp_drawable_set_linked (l_layer_id, l_layer_prp_ptr->linked);
       gimp_layer_set_preserve_transparency (l_layer_id, l_layer_prp_ptr->preserve_transparency);
       if (l_layer_prp_ptr->tattoo >= 0)
 	{
-	 gimp_drawable_set_tattoo(l_layer_id, l_layer_prp_ptr->tattoo);
+	 gimp_drawable_set_tattoo (l_layer_id, l_layer_prp_ptr->tattoo);
 	}
 
       if (l_layer_prp_ptr->active_layer)
@@ -3480,25 +3480,25 @@ load_xjt_image (const gchar *filename)
 	}
 
       /* Handle layer parasites */
-      p_check_and_add_parasite(l_layer_id,
-			       l_dirname,
-			       l_image_prp_ptr->parasite_props,
-			       l_layer_prp_ptr->layer_pos,
-			       XJT_LAYER_PARASITE);
+      p_check_and_add_parasite (l_layer_id,
+                                l_dirname,
+                                l_image_prp_ptr->parasite_props,
+                                l_layer_prp_ptr->layer_pos,
+                                XJT_LAYER_PARASITE);
 
 
       /* search for the properties of the layermask */
-      for(l_channel_prp_ptr = l_image_prp_ptr->mask_props;
-	  l_channel_prp_ptr != NULL;
-	  l_channel_prp_ptr = (t_channel_props *)l_channel_prp_ptr->next)
+      for (l_channel_prp_ptr = l_image_prp_ptr->mask_props;
+           l_channel_prp_ptr != NULL;
+           l_channel_prp_ptr = (t_channel_props *) l_channel_prp_ptr->next)
 	{
-	  if(l_channel_prp_ptr->channel_pos == l_layer_prp_ptr->layer_pos)
+	  if (l_channel_prp_ptr->channel_pos == l_layer_prp_ptr->layer_pos)
 	    {
 	      /* layermask properties found: load the layermask */
-	      l_jpg_file = g_strdup_printf("%s%clm%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
+	      l_jpg_file = g_strdup_printf ("%s%clm%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
 	      if(xjt_debug) printf("XJT-DEBUG: loading layer-mask from file %s\n", l_jpg_file);
 
-	      l_channel_id = gimp_layer_create_mask(l_layer_id, 0 /* mask_type 0 = WHITE_MASK */ );
+	      l_channel_id = gimp_layer_create_mask (l_layer_id, 0 /* mask_type 0 = WHITE_MASK */ );
 
 	      /* load should overwrite the layer_mask with data from jpeg file */
 

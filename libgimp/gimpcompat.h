@@ -57,6 +57,8 @@ G_BEGIN_DECLS
 #define gimp_layer_set_name                     gimp_drawable_set_name
 #define gimp_layer_get_visible                  gimp_drawable_get_visible
 #define gimp_layer_set_visible                  gimp_drawable_set_visible
+#define gimp_layer_get_linked                   gimp_drawable_get_linked
+#define gimp_layer_set_linked                   gimp_drawable_set_linked
 #define gimp_layer_get_tattoo                   gimp_drawable_get_tattoo
 #define gimp_layer_set_tattoo                   gimp_drawable_set_tattoo
 

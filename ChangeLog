@@ -1,3 +1,18 @@
+2003-12-04  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/layer.pdb: removed "linked" API...
+	* tools/pdbgen/pdb/drawable.pdb: ...and added it here.
+
+	* app/pdb/drawable_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/layer_cmds.c
+	* libgimp/gimpdrawable_pdb.[ch]
+	* libgimp/gimplayer_pdb.[ch]: regenerated.
+
+	* libgimp/gimpcompat.h: added gimp_layer_*_linked compat #defines.
+
+	* plug-ins/xjt/xjt.c: changed accordingly.
+
 2003-12-03  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpmodule.c
