@@ -1,5 +1,14 @@
 2004-05-06  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/resize-dialog.[ch]: cleaned up variable names and
+	external API. Still quite a mess.
+
+	* app/Makefile.am
+	* app/actions/image-commands.c
+	* app/actions/layers-commands.c: changed accordingly.
+
+2004-05-06  Sven Neumann  <sven@gimp.org>
+
 	* app/menus/menus.c: no need for including gimp-intl.h.
 
 2004-05-06  Michael Natterer  <mitch@gimp.org>

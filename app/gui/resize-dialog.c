@@ -43,83 +43,84 @@
 
 
 #define RESIZE_RESPONSE_RESET 1
-#define SB_WIDTH              10
+#define SB_WIDTH              8
 
 
 typedef struct _ResizePrivate ResizePrivate;
 
 struct _ResizePrivate
 {
-  Resize     resize;
+  ResizeDialog   dialog;
 
-  GtkCallback  ok_callback;
-  gpointer     ok_data;
+  GtkCallback    ok_callback;
+  gpointer       ok_data;
 
   /*  size frame  */
-  GtkWidget *orig_width_label;
-  GtkWidget *orig_height_label;
+  GtkWidget     *orig_width_label;
+  GtkWidget     *orig_height_label;
 
-  GtkWidget *size_se;
+  GtkWidget     *size_se;
 
-  GtkObject *ratio_x_adj;
-  GtkObject *ratio_y_adj;
-  GtkWidget *constrain;
+  GtkObject     *ratio_x_adj;
+  GtkObject     *ratio_y_adj;
+  GtkWidget     *constrain;
 
   /*  offset frame  */
-  GtkWidget *offset_se;
-  GtkWidget *offset_area;
+  GtkWidget     *offset_se;
+  GtkWidget     *offset_area;
 
   /*  resolution frame  */
-  GtkWidget *printsize_se;
-  GtkWidget *resolution_se;
-  GtkWidget *equal_res;
+  GtkWidget     *printsize_se;
+  GtkWidget     *resolution_se;
+  GtkWidget     *equal_res;
 
   /*  interpolation menu  */
-  GtkWidget *interpolation_menu;
+  GtkWidget     *interpolation_menu;
 
-  gint       old_width, old_height;
-  gdouble    old_res_x, old_res_y;
+  gint           old_width, old_height;
+  gdouble        old_res_x, old_res_y;
 };
 
-static void  unit_update                 (GtkWidget *widget,
-					  gpointer   data);
-static gint  resize_bound_off_x          (Resize    *resize,
-					  gint       off_x);
-static gint  resize_bound_off_y          (Resize    *resize,
-					  gint       off_y);
-static void  orig_labels_update          (GtkWidget *widget,
-					  gpointer   data);
-static void  response_callback           (GtkWidget *widget,
-                                          gint       response_id,
-					  Resize    *resize);
-static void  size_callback               (GtkWidget *widget,
-					  Resize    *resize);
-static void  ratio_callback              (GtkWidget *widget,
-					  Resize    *resize);
-static void  size_update                 (Resize    *widget,
-					  gdouble    width,
-					  gdouble    height,
-					  gdouble    ratio_x,
-					  gdouble    ratio_y);
-static void  offset_area_offsets_changed (GtkWidget *offset_area,
-                                          gint       offset_x,
-                                          gint       offset_y,
-                                          gpointer   data);
-static void  offset_update               (GtkWidget *widget,
-					  gpointer   data);
-static void  offset_center_clicked       (GtkWidget *widget,
-                                          gpointer   data);
-static void  printsize_update            (GtkWidget *widget,
-					  gpointer   data);
-static void  resolution_callback         (GtkWidget *widget,
-					  gpointer   data);
-static void  resolution_update           (Resize    *resize,
-					  gdouble    res_x,
-					  gdouble    res_y);
+
+static void  unit_update                 (GtkWidget    *widget,
+					  gpointer      data);
+static gint  resize_bound_off_x          (ResizeDialog *dialog,
+					  gint          off_x);
+static gint  resize_bound_off_y          (ResizeDialog *dialog,
+					  gint          off_y);
+static void  orig_labels_update          (GtkWidget    *widget,
+					  gpointer      data);
+static void  response_callback           (GtkWidget    *widget,
+                                          gint          response_id,
+					  ResizeDialog *dialog);
+static void  size_callback               (GtkWidget    *widget,
+					  ResizeDialog *dialog);
+static void  ratio_callback              (GtkWidget *   widget,
+					  ResizeDialog *dialog);
+static void  size_update                 (ResizeDialog *dialog,
+					  gdouble       width,
+					  gdouble       height,
+					  gdouble       ratio_x,
+					  gdouble       ratio_y);
+static void  offset_area_offsets_changed (GtkWidget    *offset_area,
+                                          gint          offset_x,
+                                          gint          offset_y,
+                                          gpointer      data);
+static void  offset_update               (GtkWidget    *widget,
+					  gpointer      data);
+static void  offset_center_clicked       (GtkWidget    *widget,
+                                          gpointer      data);
+static void  printsize_update            (GtkWidget    *widget,
+					  gpointer      data);
+static void  resolution_callback         (GtkWidget    *widget,
+					  gpointer      data);
+static void  resolution_update           (ResizeDialog *dialog,
+					  gdouble       res_x,
+					  gdouble       res_y);
 
 
-Resize *
-resize_widget_new (GimpViewable *viewable,
+ResizeDialog *
+resize_dialog_new (GimpViewable *viewable,
                    GtkWidget    *parent,
                    ResizeType    type,
 		   gint          width,
@@ -131,7 +132,7 @@ resize_widget_new (GimpViewable *viewable,
 		   GCallback     ok_cb,
 		   gpointer      user_data)
 {
-  Resize         *resize;
+  ResizeDialog   *dialog;
   ResizePrivate  *private;
   GimpCoreConfig *config;
   GtkWidget      *main_vbox;
@@ -157,32 +158,32 @@ resize_widget_new (GimpViewable *viewable,
   private->old_res_x   = resolution_x;
   private->old_res_y   = resolution_y;
 
-  resize = (Resize *) private;
+  dialog = (ResizeDialog *) private;
 
   if (GIMP_IS_IMAGE (viewable))
     {
-      resize->gimage = GIMP_IMAGE (viewable);
-      resize->target = ResizeImage;
+      dialog->gimage = GIMP_IMAGE (viewable);
+      dialog->target = RESIZE_IMAGE;
     }
   else
     {
-      resize->gimage = gimp_item_get_image (GIMP_ITEM (viewable));
-      resize->target = ResizeLayer;
+      dialog->gimage = gimp_item_get_image (GIMP_ITEM (viewable));
+      dialog->target = RESIZE_LAYER;
     }
 
-  config = resize->gimage->gimp->config;
+  config = dialog->gimage->gimp->config;
 
-  resize->type          = type;
-  resize->width         = width;
-  resize->height        = height;
-  resize->resolution_x  = resolution_x;
-  resize->resolution_y  = resolution_y;
-  resize->unit          = unit;
-  resize->ratio_x       = 1.0;
-  resize->ratio_y       = 1.0;
-  resize->offset_x      = 0;
-  resize->offset_y      = 0;
-  resize->interpolation = config->interpolation_type;
+  dialog->type          = type;
+  dialog->width         = width;
+  dialog->height        = height;
+  dialog->resolution_x  = resolution_x;
+  dialog->resolution_y  = resolution_y;
+  dialog->unit          = unit;
+  dialog->ratio_x       = 1.0;
+  dialog->ratio_y       = 1.0;
+  dialog->offset_x      = 0;
+  dialog->offset_y      = 0;
+  dialog->interpolation = config->interpolation_type;
 
   /*  dialog box  */
   {
@@ -194,12 +195,12 @@ resize_widget_new (GimpViewable *viewable,
 
     switch (type)
       {
-      case ScaleWidget:
+      case SCALE_DIALOG:
         stock_id = GIMP_STOCK_SCALE;
 
-	switch (resize->target)
+	switch (dialog->target)
 	  {
-	  case ResizeLayer:
+	  case RESIZE_LAYER:
 	    role         = "gimp-layer-scale";
 	    window_title = _("Scale Layer");
             window_desc  = _("Scale Layer Options");
@@ -207,7 +208,7 @@ resize_widget_new (GimpViewable *viewable,
 	    frame        = gimp_frame_new (_("Size"));
 	    break;
 
-	  case ResizeImage:
+	  case RESIZE_IMAGE:
 	    role         = "gimp-image-scale";
 	    window_title = _("Scale Image");
             window_desc  = _("Scale Image Options");
@@ -217,19 +218,19 @@ resize_widget_new (GimpViewable *viewable,
 	  }
 	break;
 
-      case ResizeWidget:
+      case RESIZE_DIALOG:
         stock_id = GIMP_STOCK_RESIZE;
 
-	switch (resize->target)
+	switch (dialog->target)
 	  {
-	  case ResizeLayer:
+	  case RESIZE_LAYER:
 	    role         = "gimp-layer-resize";
 	    window_title = _("Layer Boundary Size");
             window_desc  = _("Set Layer Boundary Size");
 	    help_page    = GIMP_HELP_LAYER_RESIZE;
 	    break;
 
-	  case ResizeImage:
+	  case RESIZE_IMAGE:
 	    role         = "gimp-image-resize";
 	    window_title = _("Canvas Size");
             window_desc  = _("Set Image Canvas Size");
@@ -240,7 +241,7 @@ resize_widget_new (GimpViewable *viewable,
 	break;
       }
 
-    resize->resize_shell =
+    dialog->shell =
       gimp_viewable_dialog_new (viewable,
                                 window_title, role,
                                 stock_id, window_desc,
@@ -253,21 +254,21 @@ resize_widget_new (GimpViewable *viewable,
 
                                 NULL);
 
-    g_signal_connect (resize->resize_shell, "response",
+    g_signal_connect (dialog->shell, "response",
                       G_CALLBACK (response_callback),
-                      resize);
+                      dialog);
 
-    g_object_weak_ref (G_OBJECT (resize->resize_shell),
+    g_object_weak_ref (G_OBJECT (dialog->shell),
 		       (GWeakNotify) g_free,
 		       private);
 
-    gtk_window_set_resizable (GTK_WINDOW (resize->resize_shell), FALSE);
+    gtk_window_set_resizable (GTK_WINDOW (dialog->shell), FALSE);
   }
 
   /*  the main vbox  */
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (resize->resize_shell)->vbox),
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog->shell)->vbox),
 		     main_vbox);
 
   /*  the pixel dimensions frame  */
@@ -371,13 +372,13 @@ resize_widget_new (GimpViewable *viewable,
 
   g_signal_connect (private->size_se, "value_changed",
 		    G_CALLBACK (size_callback),
-		    resize);
+		    dialog);
   g_signal_connect (private->size_se, "unit_changed",
 		    G_CALLBACK (orig_labels_update),
-		    resize);
+		    dialog);
 
   /*  initialize the original width & height labels  */
-  orig_labels_update (private->size_se, resize);
+  orig_labels_update (private->size_se, dialog);
 
   /*  the scale ratio labels  */
   label = gtk_label_new (_("Ratio X:"));
@@ -407,9 +408,9 @@ resize_widget_new (GimpViewable *viewable,
   /*  the scale ratio spinbuttons  */
   spinbutton =
     gimp_spin_button_new (&private->ratio_x_adj,
-                          resize->ratio_x,
-                          (double) GIMP_MIN_IMAGE_SIZE / (double) resize->width,
-                          (double) GIMP_MAX_IMAGE_SIZE / (double) resize->width,
+                          dialog->ratio_x,
+                          (double) GIMP_MIN_IMAGE_SIZE / (double) dialog->width,
+                          (double) GIMP_MAX_IMAGE_SIZE / (double) dialog->width,
                           0.01, 0.1, 1,
                           0.01, 4);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
@@ -418,13 +419,13 @@ resize_widget_new (GimpViewable *viewable,
 
   g_signal_connect (private->ratio_x_adj, "value_changed",
 		    G_CALLBACK (ratio_callback),
-		    resize);
+		    dialog);
 
   spinbutton =
     gimp_spin_button_new (&private->ratio_y_adj,
-                          resize->ratio_y,
-                          (double) GIMP_MIN_IMAGE_SIZE / (double) resize->height,
-                          (double) GIMP_MAX_IMAGE_SIZE / (double) resize->height,
+                          dialog->ratio_y,
+                          (double) GIMP_MIN_IMAGE_SIZE / (double) dialog->height,
+                          (double) GIMP_MAX_IMAGE_SIZE / (double) dialog->height,
                           0.01, 0.1, 1,
                           0.01, 4);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
@@ -433,7 +434,7 @@ resize_widget_new (GimpViewable *viewable,
 
   g_signal_connect (private->ratio_y_adj, "value_changed",
 		    G_CALLBACK (ratio_callback),
-		    resize);
+		    dialog);
 
   /*  the constrain ratio chainbutton  */
   private->constrain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
@@ -448,7 +449,7 @@ resize_widget_new (GimpViewable *viewable,
   gtk_widget_show (vbox);
 
   /*  the offset frame  */
-  if (type == ResizeWidget)
+  if (type == RESIZE_DIALOG)
     {
       GtkWidget *button;
       GtkWidget *abox;
@@ -507,7 +508,7 @@ resize_widget_new (GimpViewable *viewable,
 
       g_signal_connect (private->offset_se, "value_changed",
 			G_CALLBACK (offset_update),
-			resize);
+			dialog);
 
       button = gtk_button_new_with_mnemonic (_("C_enter"));
       gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 4, 0);
@@ -517,7 +518,7 @@ resize_widget_new (GimpViewable *viewable,
 
       g_signal_connect (button, "clicked",
 			G_CALLBACK (offset_center_clicked),
-			resize);
+			dialog);
 
       /*  frame to hold GimpOffsetArea  */
       abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
@@ -546,13 +547,13 @@ resize_widget_new (GimpViewable *viewable,
 
       g_signal_connect (private->offset_area, "offsets_changed",
 			G_CALLBACK (offset_area_offsets_changed),
-			resize);
+			dialog);
 
       gtk_widget_show (frame);
     }
 
   /*  the resolution stuff  */
-  if ((type == ScaleWidget) && (resize->target == ResizeImage))
+  if ((type == SCALE_DIALOG) && (dialog->target == RESIZE_IMAGE))
     {
       frame = gimp_frame_new (_("Print Size & Display Unit"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -623,16 +624,16 @@ resize_widget_new (GimpViewable *viewable,
 	 1, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->printsize_se),
-				  0, resize->width);
+				  0, dialog->width);
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->printsize_se),
-				  1, resize->height);
+				  1, dialog->height);
 
       g_signal_connect (private->printsize_se, "value_changed",
 			G_CALLBACK (printsize_update),
-			resize);
+			dialog);
       g_signal_connect (private->printsize_se, "unit_changed",
 			G_CALLBACK (unit_update),
-			resize);
+			dialog);
 
       /*  the resolution labels  */
       label = gtk_label_new (_("Resolution X:"));
@@ -680,19 +681,19 @@ resize_widget_new (GimpViewable *viewable,
 	 1, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
 
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->resolution_se),
-				  0, resize->resolution_x);
+				  0, dialog->resolution_x);
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->resolution_se),
-				  1, resize->resolution_y);
+				  1, dialog->resolution_y);
 
       g_signal_connect (private->resolution_se, "value_changed",
 			G_CALLBACK (resolution_callback),
-			resize);
+			dialog);
 
       /*  the resolution chainbutton  */
       private->equal_res = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
       gimp_chain_button_set_active
 	(GIMP_CHAIN_BUTTON (private->equal_res),
-	 ABS (resize->resolution_x - resize->resolution_y) < 1e-5);
+	 ABS (dialog->resolution_x - dialog->resolution_y) < 1e-5);
       gtk_table_attach_defaults (GTK_TABLE (private->resolution_se),
 				 private->equal_res, 2, 3, 0, 2);
       gtk_widget_show (private->equal_res);
@@ -702,7 +703,7 @@ resize_widget_new (GimpViewable *viewable,
     }
 
   /*  the interpolation menu  */
-  if (type == ScaleWidget)
+  if (type == SCALE_DIALOG)
     {
       GtkWidget *hbox;
       GtkWidget *combo;
@@ -717,18 +718,18 @@ resize_widget_new (GimpViewable *viewable,
 
       combo = gimp_enum_combo_box_new (GIMP_TYPE_INTERPOLATION_TYPE);
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                     resize->interpolation);
+                                     dialog->interpolation);
 
       g_signal_connect (combo, "changed",
                         G_CALLBACK (gimp_int_combo_box_get_active),
-                        &resize->interpolation);
+                        &dialog->interpolation);
 
       gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
       gtk_widget_show (combo);
 
       private->interpolation_menu = combo;
 
-      if (gimp_image_base_type (resize->gimage) == GIMP_INDEXED)
+      if (gimp_image_base_type (dialog->gimage) == GIMP_INDEXED)
         {
           label = gtk_label_new (_("Indexed color layers are always scaled "
                                    "without interpolation. The chosen "
@@ -747,37 +748,33 @@ resize_widget_new (GimpViewable *viewable,
   /*  finally, activate the first entry  */
   gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (private->size_se));
 
-  return resize;
+  return dialog;
 }
 
 static gint
-resize_bound_off_x (Resize *resize,
-		    gint    off_x)
+resize_bound_off_x (ResizeDialog *dialog,
+		    gint          off_x)
 {
-  ResizePrivate *private;
+  ResizePrivate *private = (ResizePrivate *) dialog;
 
-  private = (ResizePrivate *) resize;
-
-  if (private->old_width <= resize->width)
-    off_x = CLAMP (off_x, 0, (resize->width - private->old_width));
+  if (private->old_width <= dialog->width)
+    off_x = CLAMP (off_x, 0, (dialog->width - private->old_width));
   else
-    off_x = CLAMP (off_x, (resize->width - private->old_width), 0);
+    off_x = CLAMP (off_x, (dialog->width - private->old_width), 0);
 
   return off_x;
 }
 
 static gint
-resize_bound_off_y (Resize *resize,
-		    gint    off_y)
+resize_bound_off_y (ResizeDialog *dialog,
+		    gint          off_y)
 {
-  ResizePrivate *private;
+  ResizePrivate *private = (ResizePrivate *) dialog;
 
-  private = (ResizePrivate *) resize;
-
-  if (private->old_height <= resize->height)
-    off_y = CLAMP (off_y, 0, (resize->height - private->old_height));
+  if (private->old_height <= dialog->height)
+    off_y = CLAMP (off_y, 0, (dialog->height - private->old_height));
   else
-    off_y = CLAMP (off_y, (resize->height - private->old_height), 0);
+    off_y = CLAMP (off_y, (dialog->height - private->old_height), 0);
 
   return off_y;
 }
@@ -786,16 +783,13 @@ static void
 orig_labels_update (GtkWidget *widget,
 		    gpointer   data)
 {
-  Resize        *resize;
-  ResizePrivate *private;
+  ResizeDialog  *dialog  = data;
+  ResizePrivate *private = (ResizePrivate *) dialog;
   GimpUnit       unit;
   gchar          format_buf[16];
   gchar          buf[32];
 
   static GimpUnit label_unit = GIMP_UNIT_PIXEL;
-
-  resize  = (Resize *) data;
-  private = (ResizePrivate *) resize;
 
   unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 
@@ -829,48 +823,41 @@ static void
 unit_update (GtkWidget *widget,
 	     gpointer   data)
 {
-  Resize *resize;
+  ResizeDialog *dialog = data;
 
-  resize = (Resize *) data;
-  resize->unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
+  dialog->unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 }
 
 static void
 offset_update (GtkWidget *widget,
 	       gpointer   data)
 {
-  Resize        *resize;
-  ResizePrivate *private;
+  ResizeDialog  *dialog  = data;
+  ResizePrivate *private = (ResizePrivate *) dialog;
 
-  resize  = (Resize *) data;
-  private = (ResizePrivate *) resize;
-
-  resize->offset_x = resize_bound_off_x (resize,
+  dialog->offset_x = resize_bound_off_x (dialog,
                                          RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 0)));
 
-  resize->offset_y = resize_bound_off_y (resize,
+  dialog->offset_y = resize_bound_off_y (dialog,
                                          RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 1)));
 
   gimp_offset_area_set_offsets (GIMP_OFFSET_AREA (private->offset_area),
-                                resize->offset_x, resize->offset_y);
+                                dialog->offset_x, dialog->offset_y);
 }
 
 static void
 offset_center_clicked (GtkWidget *widget,
                        gpointer   data)
 {
-  Resize        *resize;
-  ResizePrivate *private;
+  ResizeDialog  *dialog  = data;
+  ResizePrivate *private = (ResizePrivate *) dialog;
   gint           off_x, off_y;
 
-  resize  = (Resize *) data;
-  private = (ResizePrivate *) resize;
+  off_x = resize_bound_off_x (dialog,
+                              (dialog->width - private->old_width)  / 2);
 
-  off_x = resize_bound_off_x (resize,
-                              (resize->width - private->old_width)  / 2);
-
-  off_y = resize_bound_off_y (resize,
-                              (resize->height - private->old_height) / 2);
+  off_y = resize_bound_off_y (dialog,
+                              (dialog->height - private->old_height) / 2);
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0, off_x);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1, off_y);
@@ -879,31 +866,31 @@ offset_center_clicked (GtkWidget *widget,
 }
 
 static void
-response_callback (GtkWidget *widget,
-                   gint       response_id,
-                   Resize    *resize)
+response_callback (GtkWidget    *widget,
+                   gint          response_id,
+                   ResizeDialog *dialog)
 {
-  ResizePrivate *private = (ResizePrivate *) resize;
+  ResizePrivate *private = (ResizePrivate *) dialog;
 
   switch (response_id)
     {
     case RESIZE_RESPONSE_RESET:
       /* restore size and ratio settings */
-      size_update (resize, private->old_width, private->old_height, 1.0, 1.0);
+      size_update (dialog, private->old_width, private->old_height, 1.0, 1.0);
 
-      if ((resize->type == ScaleWidget) && (resize->target == ResizeImage))
+      if ((dialog->type == SCALE_DIALOG) && (dialog->target == RESIZE_IMAGE))
         {
           /* restore resolution settings */
-          resolution_update (resize, private->old_res_x, private->old_res_y);
+          resolution_update (dialog, private->old_res_x, private->old_res_y);
         }
 
-      if (resize->type == ScaleWidget)
+      if (dialog->type == SCALE_DIALOG)
         {
-          resize->interpolation =
-            resize->gimage->gimp->config->interpolation_type;
+          dialog->interpolation =
+            dialog->gimage->gimp->config->interpolation_type;
 
           gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->interpolation_menu),
-                                         resize->interpolation);
+                                         dialog->interpolation);
         }
       break;
 
@@ -918,10 +905,10 @@ response_callback (GtkWidget *widget,
 }
 
 static void
-size_callback (GtkWidget *widget,
-               Resize    *resize)
+size_callback (GtkWidget    *widget,
+               ResizeDialog *dialog)
 {
-  ResizePrivate *private = (ResizePrivate *) resize;
+  ResizePrivate *private = (ResizePrivate *) dialog;
   gdouble        width;
   gdouble        height;
   gdouble        ratio_x;
@@ -935,7 +922,7 @@ size_callback (GtkWidget *widget,
 
   if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (private->constrain)))
     {
-      if (ratio_x != resize->ratio_x)
+      if (ratio_x != dialog->ratio_x)
 	{
 	  ratio_y = ratio_x;
 	  height = (gdouble) private->old_height * ratio_y;
@@ -949,14 +936,14 @@ size_callback (GtkWidget *widget,
 	}
     }
 
-  size_update (resize, width, height, ratio_x, ratio_y);
+  size_update (dialog, width, height, ratio_x, ratio_y);
 }
 
 static void
-ratio_callback (GtkWidget *widget,
-                Resize    *resize)
+ratio_callback (GtkWidget    *widget,
+                ResizeDialog *dialog)
 {
-  ResizePrivate *private = (ResizePrivate *) resize;
+  ResizePrivate *private = (ResizePrivate *) dialog;
   gdouble        width;
   gdouble        height;
   gdouble        ratio_x;
@@ -967,7 +954,7 @@ ratio_callback (GtkWidget *widget,
 
   if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (private->constrain)))
     {
-      if (ratio_x != resize->ratio_x)
+      if (ratio_x != dialog->ratio_x)
 	{
 	  ratio_y = ratio_x;
 	}
@@ -982,33 +969,30 @@ ratio_callback (GtkWidget *widget,
   height = CLAMP (private->old_height * ratio_y,
 		  GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 
-  size_update (resize, width, height, ratio_x, ratio_y);
+  size_update (dialog, width, height, ratio_x, ratio_y);
 }
 
 static void
-size_update (Resize *resize,
-	     double  width,
-	     double  height,
-	     double  ratio_x,
-	     double  ratio_y)
+size_update (ResizeDialog *dialog,
+	     double        width,
+	     double        height,
+	     double        ratio_x,
+	     double        ratio_y)
 {
-  ResizePrivate *private;
+  ResizePrivate *private = (ResizePrivate *) dialog;
 
-  private = (ResizePrivate *) resize;
+  dialog->width  = (gint) (width  + 0.5);
+  dialog->height = (gint) (height + 0.5);
 
-  resize->width  = (gint) (width  + 0.5);
-  resize->height = (gint) (height + 0.5);
-
-  resize->ratio_x = ratio_x;
-  resize->ratio_y = ratio_y;
+  dialog->ratio_x = ratio_x;
+  dialog->ratio_y = ratio_y;
 
   if (private->offset_area)
     gimp_offset_area_set_size (GIMP_OFFSET_AREA (private->offset_area),
-			       resize->width, resize->height);
+			       dialog->width, dialog->height);
 
   g_signal_handlers_block_by_func (private->size_se,
-                                   size_callback,
-                                   resize);
+                                   size_callback, dialog);
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se),
 			      0, width);
@@ -1016,43 +1000,37 @@ size_update (Resize *resize,
 			      1, height);
 
   g_signal_handlers_unblock_by_func (private->size_se,
-                                     size_callback,
-                                     resize);
+                                     size_callback, dialog);
 
   g_signal_handlers_block_by_func (private->ratio_x_adj,
-                                   ratio_callback,
-                                   resize);
+                                   ratio_callback, dialog);
   g_signal_handlers_block_by_func (private->ratio_y_adj,
-                                   ratio_callback,
-                                   resize);
+                                   ratio_callback, dialog);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (private->ratio_x_adj), ratio_x);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (private->ratio_y_adj), ratio_y);
 
   g_signal_handlers_unblock_by_func (private->ratio_x_adj,
-                                     ratio_callback,
-                                     resize);
+                                     ratio_callback, dialog);
   g_signal_handlers_unblock_by_func (private->ratio_y_adj,
-                                     ratio_callback,
-                                     resize);
+                                     ratio_callback, dialog);
 
-  if (resize->type == ResizeWidget)
+  if (dialog->type == RESIZE_DIALOG)
     {
       gimp_size_entry_set_refval_boundaries
         (GIMP_SIZE_ENTRY (private->offset_se), 0,
-         MIN (0, resize->width - private->old_width),
-         MAX (0, resize->width - private->old_width));
+         MIN (0, dialog->width - private->old_width),
+         MAX (0, dialog->width - private->old_width));
       gimp_size_entry_set_refval_boundaries
         (GIMP_SIZE_ENTRY (private->offset_se), 1,
-         MIN (0, resize->height - private->old_height),
-         MAX (0, resize->height - private->old_height));
+         MIN (0, dialog->height - private->old_height),
+         MAX (0, dialog->height - private->old_height));
     }
 
-  if ((resize->type == ScaleWidget) && (resize->target == ResizeImage))
+  if ((dialog->type == SCALE_DIALOG) && (dialog->target == RESIZE_IMAGE))
     {
       g_signal_handlers_block_by_func (private->printsize_se,
-                                       printsize_update,
-                                       resize);
+                                       printsize_update, dialog);
 
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->printsize_se),
 				  0, width);
@@ -1060,8 +1038,7 @@ size_update (Resize *resize,
 				  1, height);
 
       g_signal_handlers_unblock_by_func (private->printsize_se,
-                                         printsize_update,
-                                         resize);
+                                         printsize_update, dialog);
     }
 }
 
@@ -1071,19 +1048,16 @@ offset_area_offsets_changed (GtkWidget *offset_area,
                              gint       offset_y,
                              gpointer   data)
 {
-  Resize        *resize;
-  ResizePrivate *private;
+  ResizeDialog  *dialog  = data;
+  ResizePrivate *private = (ResizePrivate *) dialog;
 
-  resize  = (Resize *) data;
-  private = (ResizePrivate *) resize;
-
-  resize->offset_x = offset_x;
-  resize->offset_y = offset_y;
+  dialog->offset_x = offset_x;
+  dialog->offset_y = offset_y;
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se),
-                              0, resize->offset_x);
+                              0, dialog->offset_x);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se),
-                              1, resize->offset_y);
+                              1, dialog->offset_y);
 }
 
 
@@ -1091,17 +1065,14 @@ static void
 printsize_update (GtkWidget *widget,
 		  gpointer   data)
 {
-  Resize        *resize;
-  ResizePrivate *private;
+  ResizeDialog  *dialog  = data;
+  ResizePrivate *private = (ResizePrivate *) dialog;
   gdouble        width;
   gdouble        height;
   gdouble        print_width;
   gdouble        print_height;
   gdouble        res_x;
   gdouble        res_y;
-
-  resize  = (Resize *) data;
-  private = (ResizePrivate *) resize;
 
   width  = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 0);
   height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 1);
@@ -1115,14 +1086,14 @@ printsize_update (GtkWidget *widget,
    *  meaningless for the "print size" widgets) to calculate the new
    *  resolution.
    */
-  res_x = CLAMP (resize->resolution_x * width / print_width,
+  res_x = CLAMP (dialog->resolution_x * width / print_width,
 		 GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
-  res_y = CLAMP (resize->resolution_y * height / print_height,
+  res_y = CLAMP (dialog->resolution_y * height / print_height,
 		 GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
 
   if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (private->equal_res)))
     {
-      if (res_x != resize->resolution_x)
+      if (res_x != dialog->resolution_x)
 	{
 	  res_y = res_x;
 	}
@@ -1132,12 +1103,12 @@ printsize_update (GtkWidget *widget,
 	}
     }
 
-  resize->resolution_x = res_x;
-  resize->resolution_y = res_y;
+  dialog->resolution_x = res_x;
+  dialog->resolution_y = res_y;
 
   g_signal_handlers_block_by_func (private->resolution_se,
                                    resolution_callback,
-                                   resize);
+                                   dialog);
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->resolution_se),
 			      0, res_x);
@@ -1145,12 +1116,10 @@ printsize_update (GtkWidget *widget,
 			      1, res_y);
 
   g_signal_handlers_unblock_by_func (private->resolution_se,
-                                     resolution_callback,
-                                     resize);
+                                     resolution_callback, dialog);
 
   g_signal_handlers_block_by_func (private->size_se,
-                                   size_callback,
-                                   resize);
+                                   size_callback, dialog);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se),
 				  0, res_x, TRUE);
@@ -1162,12 +1131,10 @@ printsize_update (GtkWidget *widget,
 			      1, height);
 
   g_signal_handlers_unblock_by_func (private->size_se,
-                                     size_callback,
-                                     resize);
+                                     size_callback, dialog);
 
   g_signal_handlers_block_by_func (private->printsize_se,
-                                   printsize_update,
-                                   resize);
+                                   printsize_update, dialog);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->printsize_se),
 				  0, res_x, TRUE);
@@ -1179,8 +1146,7 @@ printsize_update (GtkWidget *widget,
 			      1, height);
 
   g_signal_handlers_unblock_by_func (private->printsize_se,
-                                     printsize_update,
-                                     resize);
+                                     printsize_update, dialog);
 }
 
 /* Callback for resolution change. */
@@ -1188,13 +1154,10 @@ static void
 resolution_callback (GtkWidget *widget,
 		     gpointer   data)
 {
-  Resize        *resize;
-  ResizePrivate *private;
+  ResizeDialog  *dialog  = data;
+  ResizePrivate *private = (ResizePrivate *) dialog;
   gdouble        res_x;
   gdouble        res_y;
-
-  resize  = (Resize *) data;
-  private = (ResizePrivate *) resize;
 
   res_x =
     gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->resolution_se), 0);
@@ -1203,7 +1166,7 @@ resolution_callback (GtkWidget *widget,
 
   if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (private->equal_res)))
     {
-      if (res_x != resize->resolution_x)
+      if (res_x != dialog->resolution_x)
 	{
 	  res_y = res_x;
 	}
@@ -1213,25 +1176,22 @@ resolution_callback (GtkWidget *widget,
 	}
     }
 
-  resolution_update (resize, res_x, res_y);
+  resolution_update (dialog, res_x, res_y);
 }
 
 /* Update widgets with resolution settings found in given Resize struct. */
 static void
-resolution_update (Resize  *resize,
-		   gdouble  res_x,
-		   gdouble  res_y)
+resolution_update (ResizeDialog *dialog,
+		   gdouble       res_x,
+		   gdouble       res_y)
 {
-  ResizePrivate *private;
+  ResizePrivate *private = (ResizePrivate *) dialog;
 
-  private = (ResizePrivate *) resize;
-
-  resize->resolution_x = res_x;
-  resize->resolution_y = res_y;
+  dialog->resolution_x = res_x;
+  dialog->resolution_y = res_y;
 
   g_signal_handlers_block_by_func (private->resolution_se,
-                                   resolution_callback,
-                                   resize);
+                                   resolution_callback, dialog);
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->resolution_se),
 			      0, res_x);
@@ -1239,12 +1199,10 @@ resolution_update (Resize  *resize,
 			      1, res_y);
 
   g_signal_handlers_unblock_by_func (private->resolution_se,
-                                     resolution_callback,
-                                     resize);
+                                     resolution_callback, dialog);
 
   g_signal_handlers_block_by_func (private->size_se,
-                                   size_callback,
-                                   resize);
+                                   size_callback, dialog);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se),
 				  0, res_x, TRUE);
@@ -1252,12 +1210,10 @@ resolution_update (Resize  *resize,
 				  1, res_y, TRUE);
 
   g_signal_handlers_unblock_by_func (private->size_se,
-                                     size_callback,
-                                     resize);
+                                     size_callback, dialog);
 
   g_signal_handlers_block_by_func (private->printsize_se,
-                                   printsize_update,
-                                   resize);
+                                   printsize_update, dialog);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->printsize_se),
 				  0, res_x, TRUE);
@@ -1265,6 +1221,5 @@ resolution_update (Resize  *resize,
 				  1, res_y, TRUE);
 
   g_signal_handlers_unblock_by_func (private->printsize_se,
-                                     printsize_update,
-                                     resize);
+                                     printsize_update, dialog);
 }

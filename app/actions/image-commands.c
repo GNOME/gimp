@@ -62,9 +62,9 @@
 
 typedef struct
 {
-  Resize      *resize;
-  GimpDisplay *gdisp;
-  GimpImage   *gimage;
+  ResizeDialog *dialog;
+  GimpDisplay  *gdisp;
+  GimpImage    *gimage;
 } ImageResize;
 
 
@@ -137,9 +137,9 @@ image_resize_cmd_callback (GtkAction *action,
   image_resize->gdisp  = gdisp;
   image_resize->gimage = gimage;
 
-  image_resize->resize =
-    resize_widget_new (GIMP_VIEWABLE (gimage), gdisp->shell,
-                       ResizeWidget,
+  image_resize->dialog =
+    resize_dialog_new (GIMP_VIEWABLE (gimage), gdisp->shell,
+                       RESIZE_DIALOG,
                        gimage->width,
                        gimage->height,
                        gimage->xresolution,
@@ -151,14 +151,14 @@ image_resize_cmd_callback (GtkAction *action,
 
   g_signal_connect_object (gdisp, "disconnect",
                            G_CALLBACK (gtk_widget_destroy),
-                           image_resize->resize->resize_shell,
+                           image_resize->dialog->shell,
                            G_CONNECT_SWAPPED);
 
-  g_object_weak_ref (G_OBJECT (image_resize->resize->resize_shell),
+  g_object_weak_ref (G_OBJECT (image_resize->dialog->shell),
 		     (GWeakNotify) g_free,
 		     image_resize);
 
-  gtk_widget_show (image_resize->resize->resize_shell);
+  gtk_widget_show (image_resize->dialog->shell);
 }
 
 void
@@ -177,9 +177,9 @@ image_scale_cmd_callback (GtkAction *action,
   image_scale->gdisp  = gdisp;
   image_scale->gimage = gimage;
 
-  image_scale->resize =
-    resize_widget_new (GIMP_VIEWABLE (gimage), gdisp->shell,
-                       ScaleWidget,
+  image_scale->dialog =
+    resize_dialog_new (GIMP_VIEWABLE (gimage), gdisp->shell,
+                       SCALE_DIALOG,
                        gimage->width,
                        gimage->height,
                        gimage->xresolution,
@@ -191,14 +191,14 @@ image_scale_cmd_callback (GtkAction *action,
 
   g_signal_connect_object (gdisp, "disconnect",
                            G_CALLBACK (gtk_widget_destroy),
-                           image_scale->resize->resize_shell,
+                           image_scale->dialog->shell,
                            G_CONNECT_SWAPPED);
 
-  g_object_weak_ref (G_OBJECT (image_scale->resize->resize_shell),
+  g_object_weak_ref (G_OBJECT (image_scale->dialog->shell),
 		     (GWeakNotify) g_free,
 		     image_scale);
 
-  gtk_widget_show (image_scale->resize->resize_shell);
+  gtk_widget_show (image_scale->dialog->shell);
 }
 
 void
@@ -437,17 +437,15 @@ static void
 image_resize_callback (GtkWidget *widget,
 		       gpointer   data)
 {
-  ImageResize *image_resize;
-
-  image_resize = (ImageResize *) data;
+  ImageResize *image_resize = data;
 
   g_assert (image_resize != NULL);
   g_assert (image_resize->gimage != NULL);
 
-  gtk_widget_set_sensitive (image_resize->resize->resize_shell, FALSE);
+  gtk_widget_set_sensitive (image_resize->dialog->shell, FALSE);
 
-  if (image_resize->resize->width  > 0 &&
-      image_resize->resize->height > 0)
+  if (image_resize->dialog->width  > 0 &&
+      image_resize->dialog->height > 0)
     {
       GimpProgress *progress;
 
@@ -457,10 +455,10 @@ image_resize_callback (GtkWidget *widget,
 
       gimp_image_resize (image_resize->gimage,
                          gimp_get_user_context (image_resize->gimage->gimp),
-			 image_resize->resize->width,
-			 image_resize->resize->height,
-			 image_resize->resize->offset_x,
-			 image_resize->resize->offset_y,
+			 image_resize->dialog->width,
+			 image_resize->dialog->height,
+			 image_resize->dialog->offset_x,
+			 image_resize->dialog->offset_y,
                          gimp_progress_update_and_flush, progress);
 
       gimp_progress_end (progress);
@@ -473,7 +471,7 @@ image_resize_callback (GtkWidget *widget,
 		   "greater than zero."));
     }
 
-  gtk_widget_destroy (image_resize->resize->resize_shell);
+  gtk_widget_destroy (image_resize->dialog->dialog_shell);
 }
 
 static void
@@ -488,11 +486,11 @@ image_scale_callback (GtkWidget *widget,
   g_assert (image_scale != NULL);
   g_assert (image_scale->gimage != NULL);
 
-  gtk_widget_set_sensitive (image_scale->resize->resize_shell, FALSE);
+  gtk_widget_set_sensitive (image_scale->dialog->shell, FALSE);
 
   scale_check = gimp_image_scale_check (image_scale->gimage,
-                                        image_scale->resize->width,
-                                        image_scale->resize->height,
+                                        image_scale->dialog->width,
+                                        image_scale->dialog->height,
                                         &new_memsize);
   switch (scale_check)
     {
@@ -537,7 +535,7 @@ image_scale_callback (GtkWidget *widget,
     case GIMP_IMAGE_SCALE_OK:
       /* If all is well, return directly after scaling image. */
       image_scale_implement (image_scale);
-      gtk_widget_destroy (image_scale->resize->resize_shell);
+      gtk_widget_destroy (image_scale->dialog->shell);
       break;
     }
 }
@@ -550,13 +548,13 @@ image_scale_warn (ImageResize *image_scale,
   GtkWidget *dialog;
 
   dialog = gimp_query_boolean_box (warning_title,
-                                   image_scale->resize->resize_shell,
+                                   image_scale->dialog->shell,
                                    gimp_standard_help_func,
                                    GIMP_HELP_IMAGE_SCALE_WARNING,
                                    GTK_STOCK_DIALOG_QUESTION,
                                    warning_message,
                                    GTK_STOCK_OK, GTK_STOCK_CANCEL,
-                                   G_OBJECT (image_scale->resize->resize_shell),
+                                   G_OBJECT (image_scale->dialog->shell),
                                    "destroy",
                                    image_scale_warn_callback,
                                    image_scale);
@@ -574,11 +572,11 @@ image_scale_warn_callback (GtkWidget *widget,
                  * creating huge image... */
     {
       image_scale_implement (image_scale);
-      gtk_widget_destroy (image_scale->resize->resize_shell);
+      gtk_widget_destroy (image_scale->dialog->shell);
     }
   else
     {
-      gtk_widget_set_sensitive (image_scale->resize->resize_shell, TRUE);
+      gtk_widget_set_sensitive (image_scale->dialog->shell, TRUE);
     }
 }
 
@@ -592,26 +590,26 @@ image_scale_implement (ImageResize *image_scale)
 
   gimage = image_scale->gimage;
 
-  if (image_scale->resize->resolution_x == gimage->xresolution &&
-      image_scale->resize->resolution_y == gimage->yresolution &&
-      image_scale->resize->unit         == gimage->unit        &&
-      image_scale->resize->width        == gimage->width       &&
-      image_scale->resize->height       == gimage->height)
+  if (image_scale->dialog->resolution_x == gimage->xresolution &&
+      image_scale->dialog->resolution_y == gimage->yresolution &&
+      image_scale->dialog->unit         == gimage->unit        &&
+      image_scale->dialog->width        == gimage->width       &&
+      image_scale->dialog->height       == gimage->height)
     return;
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_SCALE,
                                _("Scale Image"));
 
   gimp_image_set_resolution (gimage,
-                             image_scale->resize->resolution_x,
-                             image_scale->resize->resolution_y);
-  gimp_image_set_unit (gimage, image_scale->resize->unit);
+                             image_scale->dialog->resolution_x,
+                             image_scale->dialog->resolution_y);
+  gimp_image_set_unit (gimage, image_scale->dialog->unit);
 
-  if (image_scale->resize->width  != gimage->width ||
-      image_scale->resize->height != gimage->height)
+  if (image_scale->dialog->width  != gimage->width ||
+      image_scale->dialog->height != gimage->height)
     {
-      if (image_scale->resize->width  > 0 &&
-	  image_scale->resize->height > 0)
+      if (image_scale->dialog->width  > 0 &&
+	  image_scale->dialog->height > 0)
 	{
           GimpProgress *progress;
 
@@ -620,9 +618,9 @@ image_scale_implement (ImageResize *image_scale)
                                           TRUE, NULL, NULL);
 
 	  gimp_image_scale (gimage,
-			    image_scale->resize->width,
-			    image_scale->resize->height,
-                            image_scale->resize->interpolation,
+			    image_scale->dialog->width,
+			    image_scale->dialog->height,
+                            image_scale->dialog->interpolation,
                             gimp_progress_update_and_flush, progress);
 
           gimp_progress_end (progress);

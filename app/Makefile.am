@@ -88,7 +88,7 @@ gimp_2_1_LDFLAGS = \
 	-u $(SYMPREFIX)info_window_create		\
 	-u $(SYMPREFIX)offset_dialog_new		\
 	-u $(SYMPREFIX)palette_import_dialog_show	\
-	-u $(SYMPREFIX)resize_widget_new		\
+	-u $(SYMPREFIX)resize_dialog_new		\
 	-u $(SYMPREFIX)stroke_dialog_new		\
 	-u $(SYMPREFIX)file_open_dialog_show		\
 	-u $(SYMPREFIX)file_save_dialog_show		\

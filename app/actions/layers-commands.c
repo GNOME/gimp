@@ -1144,36 +1144,34 @@ typedef struct _ScaleLayerOptions ScaleLayerOptions;
 
 struct _ScaleLayerOptions
 {
-  Resize      *resize;
-  GimpDisplay *gdisp;
-  GimpLayer   *layer;
+  ResizeDialog *dialog;
+  GimpDisplay  *gdisp;
+  GimpLayer    *layer;
 };
 
 static void
 scale_layer_query_ok_callback (GtkWidget *widget,
 			       gpointer   data)
 {
-  ScaleLayerOptions *options;
+  ScaleLayerOptions *options = data;
   GimpLayer         *layer;
 
-  options = (ScaleLayerOptions *) data;
-
-  if (options->resize->width > 0 && options->resize->height > 0 &&
+  if (options->dialog->width > 0 && options->dialog->height > 0 &&
       (layer =  (options->layer)))
     {
       GimpImage    *gimage = gimp_item_get_image (GIMP_ITEM (layer));
       GimpProgress *progress;
 
-      gtk_widget_set_sensitive (options->resize->resize_shell, FALSE);
+      gtk_widget_set_sensitive (options->dialog->shell, FALSE);
 
       progress = gimp_progress_start (options->gdisp,
                                       _("Scaling..."),
                                       TRUE, NULL, NULL);
 
       gimp_item_scale_by_origin (GIMP_ITEM (layer),
-                                 options->resize->width,
-                                 options->resize->height,
-                                 options->resize->interpolation,
+                                 options->dialog->width,
+                                 options->dialog->height,
+                                 options->dialog->interpolation,
                                  gimp_progress_update_and_flush, progress,
                                  TRUE);
 
@@ -1181,7 +1179,7 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 
       gimp_image_flush (gimage);
 
-      gtk_widget_destroy (options->resize->resize_shell);
+      gtk_widget_destroy (options->dialog->shell);
     }
   else
     {
@@ -1202,9 +1200,9 @@ layers_scale_layer_query (GimpDisplay *gdisp,
   options->gdisp = gdisp;
   options->layer = layer;
 
-  options->resize =
-    resize_widget_new (GIMP_VIEWABLE (layer), parent,
-                       ScaleWidget,
+  options->dialog =
+    resize_dialog_new (GIMP_VIEWABLE (layer), parent,
+                       SCALE_DIALOG,
 		       gimp_item_width  (GIMP_ITEM (layer)),
 		       gimp_item_height (GIMP_ITEM (layer)),
 		       gimage->xresolution,
@@ -1214,11 +1212,11 @@ layers_scale_layer_query (GimpDisplay *gdisp,
 		       G_CALLBACK (scale_layer_query_ok_callback),
                        options);
 
-  g_object_weak_ref (G_OBJECT (options->resize->resize_shell),
+  g_object_weak_ref (G_OBJECT (options->dialog->shell),
 		     (GWeakNotify) g_free,
 		     options);
 
-  gtk_widget_show (options->resize->resize_shell);
+  gtk_widget_show (options->dialog->shell);
 }
 
 /*****************************/
@@ -1230,35 +1228,33 @@ typedef struct _ResizeLayerOptions ResizeLayerOptions;
 struct _ResizeLayerOptions
 {
   GimpLayer *layer;
-  Resize    *resize;
+  Resize    *dialog;
 };
 
 static void
 resize_layer_query_ok_callback (GtkWidget *widget,
 				gpointer   data)
 {
-  ResizeLayerOptions *options;
+  ResizeLayerOptions *options = data;
   GimpLayer          *layer;
 
-  options = (ResizeLayerOptions *) data;
-
-  if (options->resize->width > 0 && options->resize->height > 0 &&
+  if (options->dialog->width > 0 && options->dialog->height > 0 &&
       (layer = (options->layer)))
     {
       GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
-      gtk_widget_set_sensitive (options->resize->resize_shell, FALSE);
+      gtk_widget_set_sensitive (options->dialog->shell, FALSE);
 
       gimp_item_resize (GIMP_ITEM (layer),
                         gimp_get_user_context (gimage->gimp),
-                        options->resize->width,
-                        options->resize->height,
-                        options->resize->offset_x,
-                        options->resize->offset_y);
+                        options->dialog->width,
+                        options->dialog->height,
+                        options->dialog->offset_x,
+                        options->dialog->offset_y);
 
       gimp_image_flush (gimage);
 
-      gtk_widget_destroy (options->resize->resize_shell);
+      gtk_widget_destroy (options->dialog->shell);
     }
   else
     {
@@ -1277,9 +1273,9 @@ layers_resize_layer_query (GimpImage *gimage,
 
   options->layer = layer;
 
-  options->resize =
-    resize_widget_new (GIMP_VIEWABLE (layer), parent,
-                       ResizeWidget,
+  options->dialog =
+    resize_dialog_new (GIMP_VIEWABLE (layer), parent,
+                       RESIZE_DIALOG,
 		       gimp_item_width  (GIMP_ITEM (layer)),
 		       gimp_item_height (GIMP_ITEM (layer)),
 		       gimage->xresolution,
@@ -1289,9 +1285,9 @@ layers_resize_layer_query (GimpImage *gimage,
 		       G_CALLBACK (resize_layer_query_ok_callback),
                        options);
 
-  g_object_weak_ref (G_OBJECT (options->resize->resize_shell),
+  g_object_weak_ref (G_OBJECT (options->dialog->shell),
 		     (GWeakNotify) g_free,
 		     options);
 
-  gtk_widget_show (options->resize->resize_shell);
+  gtk_widget_show (options->dialog->shell);
 }

@@ -22,22 +22,22 @@
 
 typedef enum
 {
-  ScaleWidget,
-  ResizeWidget
+  SCALE_DIALOG,
+  RESIZE_DIALOG
 } ResizeType;
 
 typedef enum
 {
-  ResizeImage,
-  ResizeLayer
+  RESIZE_IMAGE,
+  RESIZE_LAYER
 } ResizeTarget;
 
 
-typedef struct _Resize Resize;
+typedef struct _ResizeDialog ResizeDialog;
 
-struct _Resize
+struct _ResizeDialog
 {
-  GtkWidget             *resize_shell;
+  GtkWidget             *shell;
 
   GimpImage             *gimage;
 
@@ -64,22 +64,24 @@ struct _Resize
 /*  If resolution_x is zero, then don't show resolution modification
  *  parts of the dialog.
  *
- *  If object and signal are non-NULL, then attach the cancel callback to signal.
+ *  If object and signal are non-NULL, then attach the cancel callback
+ *  to signal.
  *
- *  If cancel_callback is NULL, then the dialog will be destroyed on "Cancel".
+ *  If cancel_callback is NULL, then the dialog will be destroyed on
+ *  "Cancel".
  */
 
-Resize * resize_widget_new (GimpViewable *viewable,
-                            GtkWidget    *parent,
-                            ResizeType    type,
-			    gint          width,
-			    gint          height,
-			    gdouble       resolution_x,
-			    gdouble       resolution_y,
-			    GimpUnit      unit,
-			    gboolean      dot_for_dot,
-			    GCallback     ok_cb,
-			    gpointer      user_data);
+ResizeDialog * resize_dialog_new (GimpViewable *viewable,
+                                  GtkWidget    *parent,
+                                  ResizeType    type,
+                                  gint          width,
+                                  gint          height,
+                                  gdouble       resolution_x,
+                                  gdouble       resolution_y,
+                                  GimpUnit      unit,
+                                  gboolean      dot_for_dot,
+                                  GCallback     ok_cb,
+                                  gpointer      user_data);
 
 
 #endif  /*  __RESIZE_DIALOG_H__  */
