@@ -23,7 +23,15 @@
 ; 2000-03-08 Adapted the script to my gimp-edit-fill changes.
 ; 
 
-(define (script-alien-neon-logo text size fontname fg-color bg-color band-size gap-size num-bands do-fade)
+(define (script-fu-alien-neon-logo text 
+				   size 
+				   fontname 
+				   fg-color 
+				   bg-color 
+				   band-size 
+				   gap-size 
+				   num-bands 
+				   do-fade)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (fade-size (- (* (+ band-size gap-size) num-bands) 1))
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text (+ fade-size 10) TRUE size PIXELS fontname)))
@@ -99,9 +107,9 @@
     )
   )
 
-(script-fu-register "script-alien-neon-logo"
+(script-fu-register "script-fu-alien-neon-logo"
 		    "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
-		    "Creates a psychedelic effect with outlines\nof the specified color around the letters"
+		    "Creates a psychedelic effect with outlines of the specified color around the letters"
 		    "Raphael Quinet (quinet@gamers.org)"
 		    "Raphael Quinet"
 		    "1999-2000"
