@@ -581,34 +581,6 @@ gimp_cursor_new (GdkDisplay         *display,
                               0.0, 0.0, 1.0, 1.0,
                               GDK_INTERP_NEAREST, 200);
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as we depend on GTK+ 2.4.4
-#endif
-      /*  premultiply the cursor pixels manually for GTK+ < 2.4.4  */
-      if (gtk_check_version (2, 4, 4))
-        {
-          guint   rowstride;
-          guchar *pixels, *p;
-          gint    x, y;
-
-          rowstride = gdk_pixbuf_get_rowstride (pixbuf);
-          pixels    = gdk_pixbuf_get_pixels (pixbuf);
-
-          for (y = 0; y < height; y++)
-            {
-              p = pixels + y * rowstride;
-
-              for (x = 0; x < width; x++)
-                {
-                  p[0] = (p[0] * p[3]) >> 8;
-                  p[1] = (p[1] * p[3]) >> 8;
-                  p[2] = (p[2] * p[3]) >> 8;
-
-                  p += 4;
-                }
-            }
-        }
-
       cursor = gdk_cursor_new_from_pixbuf (display, pixbuf,
                                            bmcursor->x_hot,
                                            bmcursor->y_hot);

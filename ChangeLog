@@ -1,5 +1,22 @@
 2004-09-16  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: depend on GLib >= 2.4.5 and GTK+ >= 2.4.4.
+
+	* app/gui/gui.c: changed accordingly.
+
+	* app/sanity.c: ditto. Added check for GLib and put each check
+	into its own utility function. Enabled #if 0'ed check for
+	FreeType >= 6.2.7.
+
+	* app/widgets/gimpactiongroup.c
+	* app/widgets/gimpcursor.c
+	* app/widgets/gimpselectiondata.c
+	* app/widgets/gimpuimanager.c
+	* app/widgets/gimpwidgets-utils.c: removed workarounds for library
+	versions we refuse to start with.
+
+2004-09-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdnd.c (gimp_dnd_uri_list_dest_add): reverse
 	order of DND dests so "text/uri-list" is preferred again after my
 	DND change of 2004-06-29. Fixes dropping of multiple files.

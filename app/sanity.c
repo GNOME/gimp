@@ -24,19 +24,79 @@
 
 #include "libgimpbase/gimpenv.h"
 
+#include "core/gimp-utils.h"
+
 #include "sanity.h"
 
 #include "gimp-intl.h"
 
 
-static gchar *  sanity_check_filename_encoding (void);
+static gchar * sanity_check_glib              (void);
+static gchar * sanity_check_fontconfig        (void);
+static gchar * sanity_check_freetype          (void);
+static gchar * sanity_check_filename_encoding (void);
 
+
+/*  public functions  */
 
 const gchar *
 sanity_check (void)
 {
-  gchar *abort_message    = NULL;
+  gchar *abort_message = sanity_check_glib ();
 
+  if (! abort_message)
+    abort_message = sanity_check_fontconfig ();
+
+  if (! abort_message)
+    abort_message = sanity_check_freetype ();
+
+  if (! abort_message)
+    abort_message = sanity_check_filename_encoding ();
+
+  return abort_message;
+}
+
+
+/*  private functions  */
+
+static gchar *
+sanity_check_glib (void)
+{
+  const gchar *mismatch;
+
+#define GLIB_REQUIRED_MAJOR 2
+#define GLIB_REQUIRED_MINOR 4
+#define GLIB_REQUIRED_MICRO 5
+
+  mismatch = gimp_check_glib_version (GLIB_REQUIRED_MAJOR,
+                                      GLIB_REQUIRED_MINOR,
+                                      GLIB_REQUIRED_MICRO);
+
+  if (mismatch)
+    {
+      return g_strdup_printf
+        ("%s\n\n"
+         "The GIMP requires GLib+ version %d.%d.%d or later.\n"
+         "Installed GLib+ version is %d.%d.%d.\n\n"
+         "Somehow you or your software packager managed\n"
+         "to install The GIMP with an older GLib+ version.\n\n"
+         "Please upgrade to GLib+ version %d.%d.%d or later.",
+         mismatch,
+         GLIB_REQUIRED_MAJOR, GLIB_REQUIRED_MINOR, GLIB_REQUIRED_MICRO,
+         glib_major_version, glib_minor_version, glib_micro_version,
+         GLIB_REQUIRED_MAJOR, GLIB_REQUIRED_MINOR, GLIB_REQUIRED_MICRO);
+    }
+
+#undef GLIB_REQUIRED_MAJOR
+#undef GLIB_REQUIRED_MINOR
+#undef GLIB_REQUIRED_MICRO
+
+  return NULL;
+}
+
+static gchar *
+sanity_check_fontconfig (void)
+{
   gint   fc_version       = FcGetVersion ();
   gint   fc_major_version = fc_version / 100 / 100;
   gint   fc_minor_version = fc_version / 100 % 100;
@@ -50,8 +110,7 @@ sanity_check (void)
                     (FC_REQUIRED_MINOR *   100) +
                     (FC_REQUIRED_MICRO *     1)))
     {
-      abort_message =
-        g_strdup_printf
+      return g_strdup_printf
         ("The Fontconfig version being used is too old!\n\n"
          "The GIMP requires Fontconfig version %d.%d.%d or later.\n"
          "The Fontconfig version loaded by The GIMP is %d.%d.%d.\n\n"
@@ -66,18 +125,17 @@ sanity_check (void)
 #undef FC_REQUIRED_MINOR
 #undef FC_REQUIRED_MICRO
 
+  return NULL;
+}
 
-#if 0
-  /*  disabled until we definitely figured if and how freetype causes
-   *  some of these windows dll hell bugs
-   */
-  if (! abort_message)
-    {
-      FT_Library ft_library;
-      FT_Int     ft_major_version;
-      FT_Int     ft_minor_version;
-      FT_Int     ft_micro_version;
-      FT_Int     ft_version;
+static gchar *
+sanity_check_freetype (void)
+{
+  FT_Library ft_library;
+  FT_Int     ft_major_version;
+  FT_Int     ft_minor_version;
+  FT_Int     ft_micro_version;
+  FT_Int     ft_version;
 
 #ifdef G_OS_WIN32
 #define FT_REQUIRED_MAJOR 2
@@ -89,51 +147,43 @@ sanity_check (void)
 #define FT_REQUIRED_MICRO 7
 #endif
 
-      if (FT_Init_FreeType (&ft_library) != 0)
-        g_error ("FT_Init_FreeType() failed");
+  if (FT_Init_FreeType (&ft_library) != 0)
+    g_error ("FT_Init_FreeType() failed");
 
-      FT_Library_Version (ft_library,
-                          &ft_major_version,
-                          &ft_minor_version,
-                          &ft_micro_version);
+  FT_Library_Version (ft_library,
+                      &ft_major_version,
+                      &ft_minor_version,
+                      &ft_micro_version);
 
-      if (FT_Done_FreeType (ft_library) != 0)
-        g_error ("FT_Done_FreeType() failed");
+  if (FT_Done_FreeType (ft_library) != 0)
+    g_error ("FT_Done_FreeType() failed");
 
-      ft_version = (ft_major_version * 10000 +
-                    ft_minor_version *   100 +
-                    ft_micro_version *     1);
+  ft_version = (ft_major_version * 10000 +
+                ft_minor_version *   100 +
+                ft_micro_version *     1);
 
-      if (ft_version < ((FT_REQUIRED_MAJOR * 10000) +
-                        (FT_REQUIRED_MINOR *   100) +
-                        (FT_REQUIRED_MICRO *     1)))
-        {
-          abort_message =
-            g_strdup_printf
-            ("FreeType version too old!\n\n"
-             "The GIMP requires FreeType version %d.%d.%d or later.\n"
-             "Installed FreeType version is %d.%d.%d.\n\n"
-             "Somehow you or your software packager managed\n"
-             "to install The GIMP with an older FreeType version.\n\n"
-             "Please upgrade to FreeType version %d.%d.%d or later.",
-             FT_REQUIRED_MAJOR, FT_REQUIRED_MINOR, FT_REQUIRED_MICRO,
-             ft_major_version, ft_minor_version, ft_micro_version,
-             FT_REQUIRED_MAJOR, FT_REQUIRED_MINOR, FT_REQUIRED_MICRO);
-        }
-
+  if (ft_version < ((FT_REQUIRED_MAJOR * 10000) +
+                    (FT_REQUIRED_MINOR *   100) +
+                    (FT_REQUIRED_MICRO *     1)))
+    {
+      return g_strdup_printf
+        ("FreeType version too old!\n\n"
+         "The GIMP requires FreeType version %d.%d.%d or later.\n"
+         "Installed FreeType version is %d.%d.%d.\n\n"
+         "Somehow you or your software packager managed\n"
+         "to install The GIMP with an older FreeType version.\n\n"
+         "Please upgrade to FreeType version %d.%d.%d or later.",
+         FT_REQUIRED_MAJOR, FT_REQUIRED_MINOR, FT_REQUIRED_MICRO,
+         ft_major_version, ft_minor_version, ft_micro_version,
+         FT_REQUIRED_MAJOR, FT_REQUIRED_MINOR, FT_REQUIRED_MICRO);
+    }
 
 #undef FT_REQUIRED_MAJOR
 #undef FT_REQUIRED_MINOR
 #undef FT_REQUIRED_MICRO
-    }
-#endif
 
-  if (! abort_message)
-    abort_message = sanity_check_filename_encoding ();
-
-  return abort_message;
+  return NULL;
 }
-
 
 static gchar *
 sanity_check_filename_encoding (void)

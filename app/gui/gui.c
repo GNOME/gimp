@@ -31,7 +31,6 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimp-utils.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpenvirontable.h"
@@ -235,18 +234,6 @@ gui_post_init (Gimp *gimp)
     gimp_dialog_factory_dialog_new (global_dialog_factory,
                                     gdk_screen_get_default (),
                                     "gimp-tips-dialog", -1, TRUE);
-
-  if (gimp_check_glib_version (2, 4, 4) == NULL &&
-      gimp_check_glib_version (2, 4, 5) != NULL)
-    {
-      g_message ("You are using GLib version 2.4.4.\n\n"
-                 "This version of GLib contains a bug "
-                 "affecting filename conversions. "
-                 "The GIMP won't be able to open any file "
-                 "with non-ASCII characters (e.g. umlauts) "
-                 "in its filename.\n\n"
-                 "Please upgrade to GLib 2.4.5 or newer.");
-    }
 }
 
 
@@ -259,7 +246,7 @@ gui_sanity_check (void)
 
 #define GTK_REQUIRED_MAJOR 2
 #define GTK_REQUIRED_MINOR 4
-#define GTK_REQUIRED_MICRO 1
+#define GTK_REQUIRED_MICRO 4
 
   mismatch = gtk_check_version (GTK_REQUIRED_MAJOR,
                                 GTK_REQUIRED_MINOR,

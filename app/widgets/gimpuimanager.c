@@ -147,11 +147,7 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
   object_class->set_property   = gimp_ui_manager_set_property;
   object_class->get_property   = gimp_ui_manager_get_property;
 
-#ifdef __GNUC__
-#warning FIXME: remove version check as soon as we depend on GTK+ 2.4.2
-#endif
-  if (! gtk_check_version (2, 4, 2))
-    manager_class->connect_proxy = gimp_ui_manager_connect_proxy;
+  manager_class->connect_proxy = gimp_ui_manager_connect_proxy;
 
   klass->update                = gimp_ui_manager_real_update;
 
@@ -188,14 +184,6 @@ gimp_ui_manager_init (GimpUIManager *manager)
 {
   manager->name = NULL;
   manager->gimp = NULL;
-
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as we depend on GTK+ 2.4.2
-#endif
-  if (gtk_check_version (2, 4, 2))
-    g_signal_connect (manager, "connect-proxy",
-                      G_CALLBACK (gimp_ui_manager_connect_proxy),
-                      NULL);
 }
 
 static GObject *

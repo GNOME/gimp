@@ -395,17 +395,9 @@ gimp_action_group_add_actions (GimpActionGroup *group,
                           entries[i].callback,
                           group->user_data);
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as we depend on GTK+ 2.4.3
-#endif
-      if (entries[i].accelerator && ! entries[i].accelerator[0] &&
-          gtk_check_version (2, 4, 3))
-        gtk_action_group_add_action (GTK_ACTION_GROUP (group),
-                                     GTK_ACTION (action));
-      else
-        gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                                GTK_ACTION (action),
-                                                entries[i].accelerator);
+      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                              GTK_ACTION (action),
+                                              entries[i].accelerator);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -450,17 +442,9 @@ gimp_action_group_add_toggle_actions (GimpActionGroup       *group,
                           entries[i].callback,
                           group->user_data);
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as we depend on GTK+ 2.4.3
-#endif
-      if (entries[i].accelerator && ! entries[i].accelerator[0] &&
-          gtk_check_version (2, 4, 3))
-        gtk_action_group_add_action (GTK_ACTION_GROUP (group),
-                                     GTK_ACTION (action));
-      else
-        gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                                GTK_ACTION (action),
-                                                entries[i].accelerator);
+      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                              GTK_ACTION (action),
+                                              entries[i].accelerator);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -512,17 +496,9 @@ gimp_action_group_add_radio_actions (GimpActionGroup      *group,
       if (value == entries[i].value)
 	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), TRUE);
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as we depend on GTK+ 2.4.3
-#endif
-      if (entries[i].accelerator && ! entries[i].accelerator[0] &&
-          gtk_check_version (2, 4, 3))
-        gtk_action_group_add_action (GTK_ACTION_GROUP (group),
-                                     GTK_ACTION (action));
-      else
-        gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                                GTK_ACTION (action),
-                                                entries[i].accelerator);
+      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                              GTK_ACTION (action),
+                                              entries[i].accelerator);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -572,17 +548,9 @@ gimp_action_group_add_enum_actions (GimpActionGroup     *group,
                           callback,
                           group->user_data);
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as we depend on GTK+ 2.4.3
-#endif
-      if (entries[i].accelerator && ! entries[i].accelerator[0] &&
-          gtk_check_version (2, 4, 3))
-        gtk_action_group_add_action (GTK_ACTION_GROUP (group),
-                                     GTK_ACTION (action));
-      else
-        gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                                GTK_ACTION (action),
-                                                entries[i].accelerator);
+      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                              GTK_ACTION (action),
+                                              entries[i].accelerator);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -627,17 +595,9 @@ gimp_action_group_add_string_actions (GimpActionGroup       *group,
                           callback,
                           group->user_data);
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as we depend on GTK+ 2.4.3
-#endif
-      if (entries[i].accelerator && ! entries[i].accelerator[0] &&
-          gtk_check_version (2, 4, 3))
-        gtk_action_group_add_action (GTK_ACTION_GROUP (group),
-                                     GTK_ACTION (action));
-      else
-        gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                                GTK_ACTION (action),
-                                                entries[i].accelerator);
+      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                              GTK_ACTION (action),
+                                              entries[i].accelerator);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -682,17 +642,9 @@ gimp_action_group_add_plug_in_actions (GimpActionGroup       *group,
                           callback,
                           group->user_data);
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as we depend on GTK+ 2.4.3
-#endif
-      if (entries[i].accelerator && ! entries[i].accelerator[0] &&
-          gtk_check_version (2, 4, 3))
-        gtk_action_group_add_action (GTK_ACTION_GROUP (group),
-                                     GTK_ACTION (action));
-      else
-        gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                                GTK_ACTION (action),
-                                                entries[i].accelerator);
+      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                              GTK_ACTION (action),
+                                              entries[i].accelerator);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,

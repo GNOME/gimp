@@ -28,7 +28,6 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimp-utils.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
@@ -182,7 +181,6 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
   GList    *uri_list  = NULL;
   GList    *list;
   gchar    *buffer;
-  gboolean  file_uris_are_utf8;
 
   g_return_val_if_fail (selection != NULL, NULL);
 
@@ -225,9 +223,6 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
 
   if (! crap_list)
     return NULL;
-
-  file_uris_are_utf8 = (gimp_check_glib_version (2, 4, 0) == NULL &&
-                        gimp_check_glib_version (2, 4, 4) != NULL);
 
   /*  do various checks because file drag sources send all kinds of
    *  arbitrary crap...
@@ -288,26 +283,23 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
 
               if (strstr (dnd_crap, "%"))
                 {
+                  gchar *local_filename;
+
                   unescaped_filename = gimp_unescape_uri_string (start, -1,
                                                                  "/", FALSE);
 
-                  if (! file_uris_are_utf8)
+                  /*  check if we got a drop from an application that
+                   *  encodes file: URIs as UTF-8 (apps linked against
+                   *  GLib < 2.4.4)
+                   */
+                  local_filename = g_filename_from_utf8 (unescaped_filename,
+                                                         -1, NULL, NULL,
+                                                         NULL);
+
+                  if (local_filename)
                     {
-                      /*  if we run with a GLib that correctly encodes
-                       *  file: URIs, we still may get a drop from an
-                       *  application that encodes file: URIs as UTF-8
-                       */
-                      gchar *local_filename;
-
-                      local_filename = g_filename_from_utf8 (unescaped_filename,
-                                                             -1, NULL, NULL,
-                                                             NULL);
-
-                      if (local_filename)
-                        {
-                          g_free (unescaped_filename);
-                          unescaped_filename = local_filename;
-                        }
+                      g_free (unescaped_filename);
+                      unescaped_filename = local_filename;
                     }
                 }
               else
