@@ -1,3 +1,10 @@
+2001-10-15  Sven Neumann  <sven@gimp.org>
+
+	* app/fileops.c: 
+	applied a patch from Raphael Quinet <quinet@gamers.org> that makes
+	the "File exists!" dialog box transient for the save dialog. Addresses
+	bug #61092.
+
 2001-10-15  Zbigniew Chyla  <cyba@gnome.pl>
 
 	* tips/gimp_tips.pl.txt: Updated Polish translation.

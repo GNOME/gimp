@@ -98,7 +98,8 @@ struct _OverwriteData
 };
 
 
-static void    file_overwrite               (gchar         *filename,
+static void    file_overwrite               (GtkWidget     *parent,
+					     gchar         *filename,
 					     gchar         *raw_filename);
 static void    file_overwrite_callback      (GtkWidget     *widget,
 					     gboolean       overwrite,
@@ -492,8 +493,8 @@ file_save_as_callback (GtkWidget *widget,
   if (!filesave)
     {
       filesave = gtk_file_selection_new (_("Save Image"));
-      gtk_window_set_wmclass (GTK_WINDOW (filesave), "save_image", "Gimp");
       gtk_window_set_position (GTK_WINDOW (filesave), GTK_WIN_POS_MOUSE);
+      gtk_window_set_wmclass (GTK_WINDOW (filesave), "save_image", "Gimp");
 
       gtk_container_set_border_width (GTK_CONTAINER (filesave), 2);
       gtk_container_set_border_width 
@@ -1857,7 +1858,8 @@ file_save_ok_callback (GtkWidget *widget,
       else
 	{
 	  gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
-	  file_overwrite (g_strdup (filename), g_strdup (raw_filename));
+	  file_overwrite (GTK_WIDGET (fs),
+			  g_strdup (filename), g_strdup (raw_filename));
 	}
     }
   else
@@ -1900,8 +1902,9 @@ file_dialog_hide (GtkWidget *filesel)
 }
 
 static void
-file_overwrite (gchar *filename,
-		gchar *raw_filename)
+file_overwrite (GtkWidget *parent,
+		gchar     *filename,
+		gchar     *raw_filename)
 {
   OverwriteData *overwrite_data;
   GtkWidget *query_box;
@@ -1922,6 +1925,8 @@ file_overwrite (gchar *filename,
 				      NULL, NULL,
 				      file_overwrite_callback,
 				      overwrite_data);
+
+  gtk_window_set_transient_for (GTK_WINDOW (query_box), GTK_WINDOW (parent));
 
   g_free (overwrite_text);
 
