@@ -1,3 +1,19 @@
+Sat Sep  4 16:31:50 CEST 1999 Olof S Kylander <olof@frozenriver.com>
+	
+	* patch_xinput_airbrush (newfile)
+	* README.patch_xinput_airbrush (newfile)
+	* app/devices.c
+	* app/disp_callbacks.c
+	* app/gimprc.c
+	* app/paint_core.[ch]
+	* app/scroll.c
+
+	- Added support for the sixth valuator in the xf86Wacom driver
+	  please read the README file.
+
+	- Support will only be enabled if the patch is applied
+	  (i.e it is done with "ifdef")
+
 Fri Sep  3 23:26:38 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/gtkwrapbox.[ch]

@@ -1,0 +1,347 @@
+--- gdk/gdk.h	Wed Feb 24 11:14:55 1999
++++ gdk/gdk.h	Tue Jul  6 17:45:19 1999
+@@ -840,6 +840,7 @@
+ 				       gdouble	       *pressure,
+ 				       gdouble	       *xtilt,
+ 				       gdouble	       *ytilt,
++				       gdouble         *wheel,	
+ 				       GdkModifierType *mask);
+ 
+ GdkTimeCoord *gdk_input_motion_events (GdkWindow *window,
+--- gdk/gdkinput.c	Wed Feb 24 11:14:55 1999
++++ gdk/gdkinput.c	Tue Jul  6 18:09:49 1999
+@@ -153,6 +153,7 @@
+ 	      coords[i].pressure = 0.5;
+ 	      coords[i].xtilt = 0.0;
+ 	      coords[i].ytilt = 0.0;
++	      coords[i].wheel = 0.5;
+ 	    }
+ 
+ 	  XFree (xcoords);
+@@ -345,9 +346,10 @@
+ 			      gdouble         *pressure,
+ 			      gdouble         *xtilt,
+ 			      gdouble         *ytilt,
++			      gdouble         *wheel,
+ 			      GdkModifierType *mask)
+ {
+   if (gdk_input_vtable.get_pointer)
+     gdk_input_vtable.get_pointer (window, deviceid, x, y, pressure,
+-				  xtilt, ytilt, mask);
++				  xtilt, ytilt, wheel, mask);
+ }
+--- gdk/gdkinput.h	Wed Feb 24 11:14:56 1999
++++ gdk/gdkinput.h	Tue Jul  6 17:57:32 1999
+@@ -56,6 +56,7 @@
+ 			 gdouble         *pressure,
+ 			 gdouble         *xtilt,
+ 			 gdouble         *ytilt,
++                         gdouble	 *wheel,
+ 			 GdkModifierType *mask);
+   gint (*grab_pointer) (GdkWindow *     window,
+ 			gint            owner_events,
+--- gdk/gdkinputcommon.h	Wed Feb 24 11:14:56 1999
++++ gdk/gdkinputcommon.h	Tue Jul  6 18:22:13 1999
+@@ -45,7 +45,8 @@
+ 					    gint *axis_data,
+ 					    gdouble *x, gdouble *y,
+ 					    gdouble *pressure,
+-					    gdouble *xtilt, gdouble *ytilt);
++					    gdouble *xtilt, gdouble *ytilt,
++					    gdouble *wheel);
+ static guint gdk_input_translate_state(guint state, guint device_state);
+ static gint gdk_input_common_init(gint include_core);
+ static gint  gdk_input_common_other_event (GdkEvent *event, 
+@@ -65,6 +66,7 @@
+ 					       gdouble         *pressure,
+ 					       gdouble         *xtilt,
+ 					       gdouble         *ytilt,
++					       gdouble	       *wheel,
+ 					       GdkModifierType *mask);
+ 
+ #define GDK_MAX_DEVICE_CLASSES 13
+@@ -237,6 +239,8 @@
+ 	    gdkdev->info.axes[j++] = GDK_AXIS_XTILT;
+ 	  if (j<xvi->num_axes)
+ 	    gdkdev->info.axes[j++] = GDK_AXIS_YTILT;
++	  if (j<xvi->num_axes)
++	    gdkdev->info.axes[j++] = GDK_AXIS_WHEEL;	  
+ 	  
+ 	  /* set up reverse lookup on axis use */
+ 	  for (j=GDK_AXIS_IGNORE;j<GDK_AXIS_LAST;j++)
+@@ -470,11 +474,11 @@
+ 				 GdkInputWindow *input_window,
+ 				 gint *axis_data,
+ 				 gdouble *x, gdouble *y, gdouble *pressure,
+-				 gdouble *xtilt, gdouble *ytilt)
++				 gdouble *xtilt, gdouble *ytilt, gdouble *wheel)
+ {
+   GdkWindowPrivate *win_priv;
+ 
+-  int x_axis, y_axis, pressure_axis, xtilt_axis, ytilt_axis;
++  int x_axis, y_axis, pressure_axis, xtilt_axis, ytilt_axis, wheel_axis;
+ 
+   double device_width, device_height;
+   double x_offset, y_offset, x_scale, y_scale;
+@@ -486,6 +490,7 @@
+   pressure_axis = gdkdev->axis_for_use[GDK_AXIS_PRESSURE];
+   xtilt_axis = gdkdev->axis_for_use[GDK_AXIS_XTILT];
+   ytilt_axis = gdkdev->axis_for_use[GDK_AXIS_YTILT];
++  wheel_axis = gdkdev->axis_for_use[GDK_AXIS_WHEEL];
+ 
+   device_width = gdkdev->axes[x_axis].max_value - 
+ 		   gdkdev->axes[x_axis].min_value;
+@@ -568,6 +573,16 @@
+       else
+ 	*ytilt = 0;
+     }
++  if (wheel)
++    {
++      if (wheel_axis != -1)
++        *wheel = ((double)axis_data[wheel_axis]
++                     - gdkdev->axes[wheel_axis].min_value)
++          / (gdkdev->axes[wheel_axis].max_value
++             - gdkdev->axes[wheel_axis].min_value);
++      else
++        *wheel = 0.5;
++    }                 
+ }
+ 
+ /* combine the state of the core device and the device state
+@@ -611,7 +626,8 @@
+ 				       &event->button.x,&event->button.y,
+ 				       &event->button.pressure,
+ 				       &event->button.xtilt, 
+-				       &event->button.ytilt);
++				       &event->button.ytilt,
++				       &event->button.wheel);
+       event->button.state = gdk_input_translate_state(xdbe->state,xdbe->device_state);
+       event->button.button = xdbe->button;
+ 
+@@ -694,7 +710,8 @@
+ 				      &event->motion.x,&event->motion.y,
+ 				      &event->motion.pressure,
+ 				      &event->motion.xtilt, 
+-				      &event->motion.ytilt);
++				      &event->motion.ytilt,
++				      &event->motion.wheel);
+ 
+       event->motion.type = GDK_MOTION_NOTIFY;
+       event->motion.window = input_window->window;
+@@ -809,7 +826,8 @@
+ 					   device_coords[i].data,
+ 					   &coords[i].x, &coords[i].y,
+ 					   &coords[i].pressure,
+-					   &coords[i].xtilt, &coords[i].ytilt);
++					   &coords[i].xtilt, &coords[i].ytilt,
++                                           &coords[i].wheel);
+ 	}
+       XFreeDeviceMotionEvents (device_coords);
+ 
+@@ -827,6 +845,7 @@
+ 				  gdouble         *pressure,
+ 				  gdouble         *xtilt,
+ 				  gdouble         *ytilt,
++				  gdouble         *wheel,
+ 				  GdkModifierType *mask)
+ {
+   GdkDevicePrivate *gdkdev;
+@@ -846,6 +865,7 @@
+       if (pressure) *pressure = 0.5;
+       if (xtilt) *xtilt = 0;
+       if (ytilt) *ytilt = 0;
++      if (wheel) *wheel = 0.5;
+     }
+   else
+     {
+@@ -868,8 +888,10 @@
+ 	    case ValuatorClass:
+ 	      gdk_input_translate_coordinates (gdkdev, input_window,
+ 					       ((XValuatorState *)input_class)->valuators,
+-					       x, y, pressure,
+-					       xtilt, ytilt);
++					       x, y, 
++					       pressure,
++					       xtilt, ytilt,
++					       wheel);
+ 						       
+ 						       
+ 		break;
+--- gdk/gdkinputgxi.h	Wed Feb 24 11:14:56 1999
++++ gdk/gdkinputgxi.h	Tue Jul  6 18:03:42 1999
+@@ -64,6 +64,7 @@
+ 				       gdouble         *pressure,
+ 				       gdouble         *xtilt,
+ 				       gdouble         *ytilt,
++				       gdouble         *wheel,	 
+ 				       GdkModifierType *mask);
+ static gint gdk_input_gxi_grab_pointer (GdkWindow *     window,
+ 					gint            owner_events,
+@@ -554,6 +555,7 @@
+ 			       gdouble         *pressure,
+ 			       gdouble         *xtilt,
+ 			       gdouble         *ytilt,
++			       gdouble	       *wheel,
+ 			       GdkModifierType *mask)
+ {
+   GdkDevicePrivate *gdkdev;
+@@ -563,10 +565,10 @@
+ 
+   if (gdkdev == gdk_input_core_pointer)
+     gdk_input_common_get_pointer (window, GDK_CORE_POINTER, x, y,
+-				  pressure, xtilt, ytilt, mask);
++				  pressure, xtilt, ytilt, wheel, mask);
+   else
+     gdk_input_common_get_pointer (window, deviceid, x, y,
+-				  pressure, xtilt, ytilt, mask);
++				  pressure, xtilt, ytilt, wheel, mask);
+ }
+ 
+ static GdkTimeCoord *
+--- gdk/gdkinputnone.h	Wed Feb 24 11:14:56 1999
++++ gdk/gdkinputnone.h	Tue Jul  6 18:02:14 1999
+@@ -33,6 +33,7 @@
+ 					gdouble         *pressure,
+ 					gdouble         *xtilt,
+ 					gdouble         *ytilt,
++					gdouble		*wheel,
+ 					GdkModifierType *mask);
+ 
+ void
+@@ -65,6 +66,7 @@
+ 			    gdouble         *pressure,
+ 			    gdouble         *xtilt,
+ 			    gdouble         *ytilt,
++			    gdouble	    *wheel,
+ 			    GdkModifierType *mask)
+ {
+   gint x_int, y_int;
+@@ -76,6 +78,7 @@
+   if (pressure) *pressure = 0.5;
+   if (xtilt) *xtilt = 0;
+   if (ytilt) *ytilt = 0;
++  if (wheel) *wheel = 0.5;
+ }
+ 
+ #endif /* XINPUT_NONE */
+--- gdk/gdktypes.h	Wed Feb 24 11:14:56 1999
++++ gdk/gdktypes.h	Tue Jul  6 18:11:37 1999
+@@ -577,6 +577,7 @@
+   GDK_AXIS_PRESSURE,
+   GDK_AXIS_XTILT,
+   GDK_AXIS_YTILT,
++  GDK_AXIS_WHEEL,
+   GDK_AXIS_LAST
+ } GdkAxisUse;
+ 
+@@ -1001,6 +1002,7 @@
+   gdouble pressure;
+   gdouble xtilt;
+   gdouble ytilt;
++  gdouble wheel;
+ };
+ 
+ /* Structure that holds information about a drag in progress.
+@@ -1073,6 +1075,7 @@
+   gdouble pressure;
+   gdouble xtilt;
+   gdouble ytilt;
++  gdouble wheel;
+   guint state;
+   gint16 is_hint;
+   GdkInputSource source;
+@@ -1091,6 +1094,7 @@
+   gdouble pressure;
+   gdouble xtilt;
+   gdouble ytilt;
++  gdouble wheel;
+   guint state;
+   guint button;
+   GdkInputSource source;
+--- gtk/gtkinputdialog.c	Wed Feb 24 11:15:09 1999
++++ gtk/gtkinputdialog.c	Tue Jul  6 18:37:59 1999
+@@ -70,10 +70,10 @@
+ 
+ 
+ #define AXIS_LIST_WIDTH 160
+-#define AXIS_LIST_HEIGHT 175
++#define AXIS_LIST_HEIGHT 195
+ 
+ #define KEYS_LIST_WIDTH 200
+-#define KEYS_LIST_HEIGHT 175
++#define KEYS_LIST_HEIGHT 195
+ 
+ /* Forward declarations */
+ 
+@@ -501,7 +501,8 @@
+     N_("Y"),
+     N_("Pressure"),
+     N_("X Tilt"),
+-    N_("Y Tilt")
++    N_("Y Tilt"),
++    N_("Wheel")
+   };
+ 
+   int i,j;
+--- gtk/testinput.c	Wed Feb 24 11:15:18 1999
++++ gtk/testinput.c	Tue Jul  6 19:13:50 1999
+@@ -236,7 +236,7 @@
+ 	{
+ 	  if (event->is_hint)
+ 	    gdk_input_window_get_pointer (event->window, event->deviceid,
+-					  NULL, NULL, NULL, NULL, NULL, NULL);
++					  NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+ 	  draw_brush (widget,  event->source, event->x, event->y,
+ 		      event->pressure);
+ 	}
+@@ -245,7 +245,7 @@
+     {
+       gdk_input_window_get_pointer (event->window, event->deviceid,
+ 				    &event->x, &event->y,
+-				    NULL, NULL, NULL, NULL);
++				    NULL, NULL, NULL, NULL, NULL);
+     }
+ 
+   update_cursor (widget, event->x, event->y);
+--- gtk/gtkfeatures.h	Sat Sep  4 11:13:32 1999
++++ gtk/gtkfeatures.h	Sat Sep  4 11:35:21 1999
+@@ -115,6 +115,13 @@
+  */
+ #define GTK_HAVE_FEATURES_1_1_14			1-1-14
+ 
++/* Gtk+ patched to enable the
++ * sixth valuator present in
++ * the new xf86Wacom driver.
++ */
++
++#define GTK_HAVE_SIX_VALUATORS				1
++
+ #ifdef __cplusplus
+ }
+ #endif /* __cplusplus */
+--- ../../gtk+-1.2.4/gdk/gdkevents.c	Mon Aug 23 21:40:31 1999
++++ gdk/gdkevents.c	Sat Sep  4 11:44:28 1999
+@@ -1213,6 +1213,7 @@
+       event->button.pressure = 0.5;
+       event->button.xtilt = 0;
+       event->button.ytilt = 0;
++      event->button.wheel = 0.5;
+       event->button.state = (GdkModifierType) xevent->xbutton.state;
+       event->button.button = xevent->xbutton.button;
+       event->button.source = GDK_SOURCE_MOUSE;
+@@ -1283,6 +1284,7 @@
+       event->button.pressure = 0.5;
+       event->button.xtilt = 0;
+       event->button.ytilt = 0;
++      event->button.wheel = 0.5;
+       event->button.state = (GdkModifierType) xevent->xbutton.state;
+       event->button.button = xevent->xbutton.button;
+       event->button.source = GDK_SOURCE_MOUSE;
+@@ -1317,6 +1319,7 @@
+       event->motion.pressure = 0.5;
+       event->motion.xtilt = 0;
+       event->motion.ytilt = 0;
++      event->button.wheel = 0.5;
+       event->motion.state = (GdkModifierType) xevent->xmotion.state;
+       event->motion.is_hint = xevent->xmotion.is_hint;
+       event->motion.source = GDK_SOURCE_MOUSE;

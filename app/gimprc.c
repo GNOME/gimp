@@ -1900,6 +1900,10 @@ parse_device (gpointer val1p,
 		axes[i] = GDK_AXIS_XTILT;
 	      else if (!strcmp ("ytilt", token_sym))
 		axes[i] = GDK_AXIS_YTILT;
+#ifdef GTK_HAVE_SIX_VALUATORS
+              else if (!strcmp ("wheel", token_sym))
+               axes[i] = GDK_AXIS_WHEEL;
+#endif /* GTK_HAVE_SIX_VALUATORS */
 	      else
 		goto error;
 	    }

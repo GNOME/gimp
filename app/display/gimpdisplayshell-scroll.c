@@ -116,7 +116,11 @@ scroll_to_pointer_position (GDisplay       *gdisp,
     {
       gdk_input_window_get_pointer (gdisp->canvas->window, mevent->deviceid,
 				    &child_x, &child_y, 
+#ifdef GTK_HAVE_SIX_VALUATORS
+                                    NULL, NULL, NULL, NULL, NULL);
+#else /* !GTK_HAVE_SIX_VALUATORS */
 				    NULL, NULL, NULL, NULL);
+#endif /* GTK_HAVE_SIX_VALUATORS */
 
       if (child_x == mevent->x && child_y == mevent->y)
 	/*  Put this event back on the queue -- so it keeps scrolling */

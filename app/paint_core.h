@@ -46,21 +46,30 @@ struct _paint_core
 
   double          startx;        /*  starting x coord           */
   double          starty;        /*  starting y coord           */
-  double          startpressure; /* starting pressure           */
-  double          startxtilt;    /* starting xtilt              */
-  double          startytilt;    /* starting ytilt              */
+  double          startpressure; /*  starting pressure          */
+  double          startxtilt;    /*  starting xtilt             */
+  double          startytilt;    /*  starting ytilt             */
+#ifdef GTK_HAVE_SIX_VALUATORS
+  double          startwheel;    /*  starting wheel             */ 
+#endif /* GTK_HAVE_SIX_VALUATORS */
 
   double          curx;          /*  current x coord            */
   double          cury;          /*  current y coord            */
   double          curpressure;   /*  current pressure           */
   double          curxtilt;      /*  current xtilt              */
   double          curytilt;      /*  current ytilt              */
+#ifdef GTK_HAVE_SIX_VALUATORS
+  double          curwheel;      /*  current wheel              */
+#endif /* GTK_HAVE_SIX_VALUATORS */
 
   double          lastx;         /*  last x coord               */
   double          lasty;         /*  last y coord               */
   double          lastpressure;  /*  last pressure              */
   double          lastxtilt;     /*  last xtilt                 */
-  double          lastytilt;     /*  last ytilt                 */ 
+  double          lastytilt;     /*  last ytilt                 */
+#ifdef GTK_HAVE_SIX_VALUATORS
+  double          lastwheel;     /*  last wheel                 */ 
+#endif /* GTK_HAVE_SIX_VALUATORS */ 
 
   int             state;         /*  state of buttons and keys  */
 
@@ -94,6 +103,9 @@ struct _paint_undo
   double	  lastpressure;
   double          lastxtilt;
   double          lastytilt;
+#ifdef GTK_HAVE_SIX_VALUATORS
+  double         lastwheel;
+#endif /* GTK_HAVE_SIX_VALUATORS */
 };
 
 /*  paint tool action functions  */

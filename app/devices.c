@@ -593,6 +593,11 @@ devices_write_rc_device (DeviceInfo *device_info,
 	case GDK_AXIS_YTILT:
 	  axis_type = "ytilt";
 	  break;
+#ifdef GTK_HAVE_SIX_VALUATORS
+	case GDK_AXIS_WHEEL:
+	  axis_type = "wheel";
+	  break;
+#endif /* GTK_HAVE_SIX_VALUATORS */
 	}
       fprintf(fp, " %s",axis_type);
     }

@@ -405,7 +405,11 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
       if (mevent->is_hint)
 	gdk_input_window_get_pointer (canvas->window, current_device, &tx, &ty,
+#ifdef GTK_HAVE_SIX_VALUATORS
+				      NULL, NULL, NULL, NULL, NULL);
+#else /* !GTK_HAVE_SIX_VALUATORS */	
 				      NULL, NULL, NULL, NULL);
+#endif /* GTK_HAVE_SIX_VALUATORS */
       else
 	{
 	  tx = mevent->x;
@@ -487,8 +491,12 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  /* For all modifier keys: call the tools modifier_key_func */
 	  if (active_tool && !gimage_is_empty (gdisp->gimage))
 	    {
-	      gdk_input_window_get_pointer (canvas->window, current_device, 
+	      gdk_input_window_get_pointer (canvas->window, current_device,
+#ifdef GTK_HAVE_SIX_VALUATORS 
+					    &tx, &ty, NULL, NULL, NULL, NULL, NULL);
+#else /* !GTK_HAVE_SIX_VALUATORS */
 					    &tx, &ty, NULL, NULL, NULL, NULL);
+#endif /* GTK_HAVE_SIX_VALUATORS */
 	      (* active_tool->modifier_key_func) (active_tool, kevent, gdisp);
 	      return_val = TRUE;
 	    }
@@ -509,8 +517,12 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  /* For all modifier keys: call the tools modifier_key_func */
 	  if (active_tool && !gimage_is_empty (gdisp->gimage))
 	    {
-	      gdk_input_window_get_pointer (canvas->window, current_device, 
-					    &tx, &ty, NULL, NULL, NULL, NULL);
+	      gdk_input_window_get_pointer (canvas->window, current_device,
+#ifdef GTK_HAVE_SIX_VALUATORS
+                                            &tx, &ty, NULL, NULL, NULL, NULL, NULL);
+#else /* !GTK_HAVE_SIX_VALUATORS */
+                                            &tx, &ty, NULL, NULL, NULL, NULL);
+#endif /* GTK_HAVE_SIX_VALUATORS */ 
 	      (* active_tool->modifier_key_func) (active_tool, kevent, gdisp);
 	      return_val = TRUE;
 	    }

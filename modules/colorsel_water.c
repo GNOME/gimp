@@ -396,7 +396,11 @@ motion_notify_event (GtkWidget *widget, GdkEventMotion *event)
 	{
 	  if (event->is_hint)
 	    gdk_input_window_get_pointer (event->window, event->deviceid,
+#ifdef GTK_HAVE_SIX_VALUATORS
+                                          NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+#else /* !GTK_HAVE_SIX_VALUATORS */
 					  NULL, NULL, NULL, NULL, NULL, NULL);
+#endif /* GTK_HAVE_SIX_VALUATORS */
 	  draw_brush (widget, erase, event->x, event->y,
 		      event->pressure);
 	}
@@ -405,7 +409,11 @@ motion_notify_event (GtkWidget *widget, GdkEventMotion *event)
     {
       gdk_input_window_get_pointer (event->window, event->deviceid,
 				    &event->x, &event->y,
+#ifdef GTK_HAVE_SIX_VALUATORS
+                                    NULL, NULL, NULL, NULL, NULL);
+#else /* !GTK_HAVE_SIX_VALUATORS */
 				    NULL, NULL, NULL, NULL);
+#endif /* GTK_HAVE_SIX_VALUATORS */
     }
 
   return TRUE;

@@ -187,6 +187,9 @@ paint_core_button_press (Tool           *tool,
   paint_core->curpressure = bevent->pressure;
   paint_core->curxtilt = bevent->xtilt;
   paint_core->curytilt = bevent->ytilt;
+#ifdef GTK_HAVE_SIX_VALUATORS
+  paint_core->curwheel = bevent->wheel;
+#endif /* GTK_HAVE_SIX_VALUATORS */ 
   paint_core->state = bevent->state;
   
   if (gdisp_ptr != tool->gdisp_ptr)
@@ -204,6 +207,9 @@ paint_core_button_press (Tool           *tool,
       paint_core->startpressure = paint_core->lastpressure = paint_core->curpressure;
       paint_core->startytilt = paint_core->lastytilt = paint_core->curytilt;
       paint_core->startxtilt = paint_core->lastxtilt = paint_core->curxtilt;
+#ifdef GTK_HAVE_SIX_VALUATORS
+      paint_core->startwheel = paint_core->lastwheel = paint_core->curwheel;
+#endif /* GTK_HAVE_SIX_VALUATORS */
     }
 
   /*  If shift is down and this is not the first paint
@@ -217,6 +223,9 @@ paint_core_button_press (Tool           *tool,
       paint_core->startpressure = paint_core->lastpressure;
       paint_core->startxtilt = paint_core->lastxtilt;
       paint_core->startytilt = paint_core->lastytilt;
+#ifdef GTK_HAVE_SIX_VALUATORS
+      paint_core->startwheel = paint_core->lastwheel;
+#endif /* GTK_HAVE_SIX_VALUATORS */
 
       /* restrict to horizontal/vertical lines, if modifiers are pressed */
       if (bevent->state & GDK_MOD1_MASK)
@@ -281,6 +290,9 @@ paint_core_button_press (Tool           *tool,
       paint_core->lastpressure = paint_core->curpressure;
       paint_core->lastxtilt = paint_core->curxtilt;
       paint_core->lastytilt = paint_core->curytilt;
+#ifdef GTK_HAVE_SIX_VALUATORS
+      paint_core->lastwheel = paint_core->curwheel;
+#endif /* GTK_HAVE_SIX_VALUATORS */
     }
   else
     {
@@ -361,6 +373,9 @@ paint_core_motion (Tool           *tool,
   paint_core->curpressure = mevent->pressure;
   paint_core->curxtilt = mevent->xtilt;
   paint_core->curytilt = mevent->ytilt;
+#ifdef GTK_HAVE_SIX_VALUATORS
+  paint_core->curwheel = mevent->wheel;
+#endif /* GTK_HAVE_SIX_VALUATORS */
   paint_core->state = mevent->state;
 
   paint_core_interpolate (paint_core, gimage_active_drawable (gdisp->gimage));
@@ -372,6 +387,9 @@ paint_core_motion (Tool           *tool,
   paint_core->lastpressure = paint_core->curpressure;
   paint_core->lastxtilt = paint_core->curxtilt;
   paint_core->lastytilt = paint_core->curytilt;
+#ifdef GTK_HAVE_SIX_VALUATORS
+  paint_core->lastwheel = paint_core->curwheel;
+#endif /* GTK_HAVE_SIX_VALUATORS */
 }
 
 void
@@ -635,6 +653,7 @@ paint_core_init (PaintCore    *paint_core,
       paint_core->startpressure = paint_core->lastpressure = paint_core->curpressure = 0.5;
       paint_core->startxtilt = paint_core->lastxtilt = paint_core->curxtilt = 0;
       paint_core->startytilt = paint_core->lastytilt = paint_core->curytilt = 0;
+      paint_core->startwheel = paint_core->lastwheel = paint_core->curwheel = 0.5;
     }
 
   /*  Each buffer is the same size as the maximum bounds of the active brush... */
@@ -764,7 +783,11 @@ paint_core_interpolate (PaintCore    *paint_core,
 {
   double n;
   vector2d delta;
+#ifdef GTK_HAVE_SIX_VALUATORS
+  double dpressure, dxtilt, dytilt, dwheel;
+#else /* !GTK_HAVE_SIX_VALUATORS */
   double dpressure, dxtilt, dytilt;
+#endif /* GTK_HAVE_SIX_VALUATORS */
   double left;
   double t;
   double initial;
@@ -777,9 +800,16 @@ paint_core_interpolate (PaintCore    *paint_core,
   dpressure = paint_core->curpressure - paint_core->lastpressure;
   dxtilt = paint_core->curxtilt - paint_core->lastxtilt;
   dytilt = paint_core->curytilt - paint_core->lastytilt;
+#ifdef GTK_HAVE_SIX_VALUATORS
+  dwheel = paint_core->curwheel - paint_core->lastwheel;
+#endif /* GTK_HAVE_SIX_VALUATORS */
 
 /* return if there has been no motion */
+#ifdef GTK_HAVE_SIX_VALUATORS
+  if (!delta.x && !delta.y && !dpressure && !dxtilt && !dytilt && !dwheel)
+#else /* !GTK_HAVE_SIX_VALUATORS */
   if (!delta.x && !delta.y && !dpressure && !dxtilt && !dytilt)
+#endif /* GTK_HAVE_SIX_VALUATORS */
     return;
 
 /* calculate the distance traveled in the coordinate space of the brush */
@@ -810,6 +840,9 @@ paint_core_interpolate (PaintCore    *paint_core,
 	  paint_core->curpressure = paint_core->lastpressure + dpressure * t;
 	  paint_core->curxtilt = paint_core->lastxtilt + dxtilt * t;
 	  paint_core->curytilt = paint_core->lastytilt + dytilt * t;
+#ifdef GTK_HAVE_SIX_VALUATORS
+          paint_core->curwheel = paint_core->lastwheel + dwheel * t;
+#endif /* GTK_HAVE_SIX_VALUATORS */
 	  if (paint_core->flags & TOOL_CAN_HANDLE_CHANGING_BRUSH)
 	    paint_core->brush =
 	      (* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_core->brush)
@@ -824,6 +857,9 @@ paint_core_interpolate (PaintCore    *paint_core,
   paint_core->curpressure = paint_core->lastpressure + dpressure;
   paint_core->curxtilt = paint_core->lastxtilt + dxtilt;
   paint_core->curytilt = paint_core->lastytilt + dytilt;
+#ifdef GTK_HAVE_SIX_VALUATORS
+  paint_core->curwheel = paint_core->lastwheel + dwheel;
+#endif /* GTK_HAVE_SIX_VALUATORS */
 }
 
 void
@@ -853,6 +889,9 @@ paint_core_finish (PaintCore    *paint_core,
   pu->lastpressure = paint_core->startpressure;
   pu->lastxtilt = paint_core->startxtilt;
   pu->lastytilt = paint_core->startytilt;
+#ifdef GTK_HAVE_SIX_VALUATORS
+  pu->lastwheel = paint_core->startwheel;
+#endif /* GTK_HAVE_SIX_VALUATORS */
 
   /*  Push a paint undo  */
   undo_push_paint (gimage, pu);

@@ -1,0 +1,74 @@
+This patch enables support of the sixth valuator present in the xf86Wacom 
+driver. The driver with support of six valuators are included in XFree86 
+3.3.4 and newer.
+
+The purpose of this patch is to enable the airbrush wheel on the Wacom Intous
+airbrush device. The wheel is used in the upcoming new airbrush tool in Gimp
+to regulate the virtual altitude of your airbrush. 
+
+The patch is tested with Gtk+-1.2.4 (not the CVS version) and should apply
+without problems. The patch is totally unsupported in both Gtk and GIMP.  
+
+A good advice it to install a the patched version of Gtk+ and Gimp in a special
+directory because of the binary incompatible (See notes below).
+
+Here is how to make it work, 
+
+cd gtk+-1.2.4
+pacth -p0 ../patch_xinput_airbrush
+./configure --prefix=/opt/gimp --with-xinput=xfree
+make 
+make install
+cd ../gimp
+export LD_LIBRARY_PATH=/opt/gimp/lib:$LD_LIBRARY_PATH
+export PATH=/opt/gimp/bin:$PATH
+./configure --prefix=/opt/gimp --enable-gimpdir=.gimpairbrush 
+make
+make install
+
+Now make a special gimp startup script that you install in a directory
+that is in your path.
+
+Here is an example
+
+#!/bin/sh
+PREFIX=/opt/gimp
+LD_LIBRARY_PATH=$PREFIX/lib:$LD_LIBRARY_PATH
+exec $PREFIX/bin/gimp "$@"
+
+OBSERVE that the patch makes Gtk+ binary and source incompatible, i.e you can't
+run your old compiled Gtk+ apps (which includes GNOME apps) with Gtk+ patched
+with this patch.
+
+This is because the gdk_input_window_get_pointer is changed and now has nine
+parameters instead of eight. The added parameter is gdouble *wheel see below,
+
+void gdk_input_window_get_pointer     (GdkWindow       *window,
+                                       guint32         deviceid,
+                                       gdouble         *x,
+                                       gdouble         *y,
+                                       gdouble         *pressure,
+                                       gdouble         *xtilt,
+                                       gdouble         *ytilt,
+                                       gdouble         *wheel,
+                                       GdkModifierType *mask);   
+
+gtkfeatures.h has a new define to enable you to check for the presence of this
+patch in your program. You can e.g use it as below
+
+#ifdef GTK_HAVE_SIX_VALUATORS
+
+gdk_input_window_get_pointer (event->window, event->deviceid,
+			      NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+#else /* !GTK_HAVE_SIX_VALUATORS */
+
+gdk_input_window_get_pointer (event->window, event->deviceid,
+			      NULL, NULL, NULL, NULL, NULL, NULL);
+
+#endif /* GTK_HAVE_SIX_VALUATORS */
+
+Happy Gimping 
+
+Olof S Kylander
+ 
