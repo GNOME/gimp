@@ -1,3 +1,7 @@
+2004-04-12  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
+
+	* es.po: Updated Spanish translation.
+
 2004-04-07  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am (tips_POFILES): added eu.po (Basque).

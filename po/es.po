@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-04-12 19:43+0200\n"
-"PO-Revision-Date: 2004-04-12 20:12+0200\n"
+"PO-Revision-Date: 2004-04-12 20:19+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -114,7 +114,7 @@ msgid ""
 "plugins.\n"
 msgstr ""
 "  --no-shm                 No compartir la memoria entre El GIMP y las "
-"extensiones.\n"
+"complementos.\n"
 
 #: app/main.c:519
 msgid "  --no-cpu-accel           Do not use special CPU accelerations.\n"
@@ -6083,15 +6083,15 @@ msgstr "Seleccionar las carpetas de tipografías"
 
 #: app/gui/preferences-dialog.c:2133
 msgid "Plug-Ins"
-msgstr "Extensiones"
+msgstr "Complementos"
 
 #: app/gui/preferences-dialog.c:2133
 msgid "Plug-In Folders"
-msgstr "Carpetas de extensiones"
+msgstr "Carpetas de complementos"
 
 #: app/gui/preferences-dialog.c:2135
 msgid "Select Plug-In Folders"
-msgstr "Seleccionar las carpetas de extensiones"
+msgstr "Seleccionar las carpetas de complementos"
 
 #: app/gui/preferences-dialog.c:2137
 msgid "Scripts"
@@ -6115,11 +6115,11 @@ msgstr "Seleccionar las carpetas de módulos"
 
 #: app/gui/preferences-dialog.c:2145
 msgid "Environment Folders"
-msgstr "Carpetas de ambientes"
+msgstr "Carpetas de entorno"
 
 #: app/gui/preferences-dialog.c:2147
 msgid "Select Environment Folders"
-msgstr "Seleccionar las carpetas de ambientes"
+msgstr "Seleccionar las carpetas de entorno"
 
 #: app/gui/preferences-dialog.c:2149
 msgid "Themes"
@@ -6620,7 +6620,7 @@ msgid ""
 msgstr ""
 "«gimprc» se utiliza para almacenar las preferencias personales que afectan "
 "al comportamiento predeterminado de El GIMP. Las rutas de búsqueda para las "
-"brochas, paletas, degradados, patrones, extensiones y módulos también pueden "
+"brochas, paletas, degradados, patrones, complementos y módulos también pueden "
 "configurarse aquí."
 
 #: app/gui/user-install-dialog.c:141
@@ -6638,7 +6638,7 @@ msgid ""
 "information about their functionality and mod-times is cached in this file.  "
 "This file is intended to be GIMP-readable only, and should not be edited."
 msgstr ""
-"Las extensiones y los añadidos son programas externos ejecutados por El GIMP "
+"Los complementos y los añadidos son programas externos ejecutados por El GIMP "
 "que proporcionan funcionalidades adicionales. Estos programas se buscan en "
 "tiempo de ejecución, y se almacena la información acerca de su función y "
 "fechas de modificación en este archivo para conseguir un inicio de El GIMP "
@@ -6748,10 +6748,10 @@ msgid ""
 "system-supported plug-ins.  The GIMP checks this folder in addition to the "
 "system-wide GIMP plug-in folder when searching for plug-ins."
 msgstr ""
-"Esta carpeta se utiliza para almacenar las extensiones temporales o no "
+"Esta carpeta se utiliza para almacenar los complementos temporales o no "
 "soportadas por el sistema, creadas por el usuario. El GIMP revisa esta "
-"carpeta junto con la carpeta global de extensiones de El GIMP cuando está "
-"buscando extensiones."
+"carpeta junto con la carpeta global de complementos de El GIMP cuando está "
+"buscando complementos."
 
 #: app/gui/user-install-dialog.c:236
 msgid ""
@@ -6773,10 +6773,10 @@ msgid ""
 "for plug-in environment modification files."
 msgstr ""
 "Esta carpeta se utiliza para almacenar las adiciones al entorno de "
-"extensiones, creadas por el usuario, temporales o no soportadas por el "
+"complementos, creadas por el usuario, temporales o no soportadas por el "
 "sistema. El GIMP revisa esta carpeta además de la carpeta global de entorno "
 "del sistema cuando está buscando archivos de modificación del entorno de "
-"extensiones."
+"complementos."
 
 #: app/gui/user-install-dialog.c:255
 msgid ""
@@ -6806,7 +6806,7 @@ msgid ""
 "sessions and can be destroyed with impunity."
 msgstr ""
 "Esta carpeta se utiliza para almacenar temporalmente los búferes de deshacer "
-"para reducir el uso de memoria.  Si El GIMP  es cerrado de forma anormal los "
+"para reducir el uso de memoria.  Si El GIMP  se cierra de forma anormal los "
 "archivos del tipo gimp<#>.<#> pueden quedar guardados en esta carpeta.  "
 "Estos archivos son inútiles en distintas sesiones de El GIMP y pueden ser "
 "destruidos sin problemas."
@@ -6819,7 +6819,7 @@ msgstr "Esta carpeta se utiliza para guardar las opciones de las herramientas."
 msgid "This folder is used to store parameter files for the Curves tool."
 msgstr ""
 "Esta carpeta se utiliza para almacenar los archivos de parámetros para la "
-"herramienta de curvas."
+"«Herramienta de Curvas»."
 
 #: app/gui/user-install-dialog.c:292
 msgid "This folder is used to store parameter files for the Levels tool."
@@ -7435,7 +7435,7 @@ msgstr "Configuración de recursos"
 #.
 #: app/plug-in/plug-ins.c:145
 msgid "Querying new Plug-ins"
-msgstr "Verificando si hay nuevas extensiones"
+msgstr "Verificando si hay complementos nuevos"
 
 #: app/plug-in/plug-ins.c:164
 #, c-format
@@ -7445,7 +7445,7 @@ msgstr "Consultando el complemento: «%s»\n"
 #. initial the plug-ins
 #: app/plug-in/plug-ins.c:300
 msgid "Initializing Plug-ins"
-msgstr "Inicializando las extensiones"
+msgstr "Inicializando los complementos"
 
 #: app/plug-in/plug-ins.c:316
 #, c-format
