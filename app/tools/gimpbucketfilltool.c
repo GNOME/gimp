@@ -657,7 +657,7 @@ bucket_fill_region (fill_mode, bufPR, maskPR, col, pattern, off_x, off_y, has_al
 
 
 Tool *
-tools_new_bucket_fill ()
+tools_new_bucket_fill (void)
 {
   Tool * tool;
   BucketTool * private;
@@ -838,8 +838,8 @@ bucket_fill_invoker (args)
   /*  x, y  */
   if (success)
     {
-      x = args[7].value.pdb_float;
-      y = args[8].value.pdb_float;
+      x = args[6].value.pdb_float;
+      y = args[7].value.pdb_float;
     }
 
   /*  call the blend procedure  */
