@@ -22,7 +22,7 @@
 #ifndef __GIMP_GUI_CONFIG_H__
 #define __GIMP_GUI_CONFIG_H__
 
-#include "gimpcoreconfig.h"
+#include "gimpdisplayconfig.h"
 
 
 #define GIMP_TYPE_GUI_CONFIG            (gimp_gui_config_get_type ())
@@ -37,50 +37,30 @@ typedef struct _GimpGuiConfigClass GimpGuiConfigClass;
 
 struct _GimpGuiConfig
 {
-  GimpCoreConfig       parent_instance;
-
-  gint                 marching_ants_speed;
-  gboolean             colormap_cycling;
+  GimpDisplayConfig    parent_instance;
 
   gint                 last_opened_size;
 
   GimpCheckSize        transparency_size;
   GimpCheckType        transparency_type;
 
-  gdouble              gamma_val;
-
   gboolean             perfect_mouse;
-
-  gboolean             install_cmap;
-  gint                 min_colors;
-
   gint                 default_threshold;
 
-  gboolean             resize_windows_on_zoom;
-  gboolean             resize_windows_on_resize;
-  GimpPreviewSize      preview_size;
   GimpPreviewSize      nav_preview_size;
-  gchar               *image_title_format;
-  gboolean             show_rulers;
-  gboolean             show_statusbar;
-  gboolean             show_tool_tips;
-  gboolean             default_dot_for_dot;
   gboolean             nav_window_per_display;
   gboolean             info_window_per_display;
-
   gboolean             global_paint_options;
-  gboolean             confirm_on_close;
   gboolean             trust_dirty_flag;
+
   gboolean             save_device_status;
   gboolean             save_session_info;
   gboolean             restore_session;
 
   gboolean             show_tips;
-  gboolean             tearoff_menus;
 
-  gdouble              monitor_xres;
-  gdouble              monitor_yres;
-  gboolean             monitor_res_from_gdk;
+  gboolean             show_tool_tips;
+  gboolean             tearoff_menus;
 
   guint                max_new_image_size;
 
@@ -93,14 +73,11 @@ struct _GimpGuiConfig
 
   gboolean             use_help;
   gint                 help_browser;
-
-  gint                 cursor_mode;
-  gboolean             no_cursor_updating;
 };
 
 struct _GimpGuiConfigClass
 {
-  GimpCoreConfigClass  parent_class;
+  GimpDisplayConfigClass  parent_class;
 };
 
 

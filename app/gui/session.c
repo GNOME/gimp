@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * Session-managment stuff
+ * Copyright (C) 1998 Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,26 +19,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* Session-managment stuff   Copyright (C) 1998 Sven Neumann <sven@gimp.org>
-
-   I include a short description here on what is done and what problems 
-   are left:
-
-   Since everything saved in sessionrc changes often (with each session?) 
-   the whole file is rewritten each time the gimp exits. I don't see any
-   use in implementing a more flexible scheme like it is used for gimprc.
-
-   Right now session-managment is limited to window geometry. Restoring 
-   openend images is planned, but I'm still not sure how to deal with dirty
-   images.
-
-   Dialogs are now reopened if the gimp is called with the command-line-option
-   --restore-session or if the related entry is set in gimprc.
-   Probably there should alternatively be a list of dialogs in the preferences 
-   that should always be opened on start-up. 
-
-   Please point me into the right direction to make this work with Gnome-SM.
- */
 
 #include "config.h"
 

@@ -101,11 +101,12 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
   object_class->get_property = gimp_base_config_get_property;
 
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_TEMP_PATH,
-                                 "temp-path",
-                                 "${gimp_dir}" G_DIR_SEPARATOR_S "tmp");
+                                 "temp-path", 
+                                 g_build_filename (gimp_directory (), 
+                                                   "tmp", NULL));
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_SWAP_PATH,
-                                 "swap-path",
-                                 "${gimp_dir}");
+                                 "swap-path", 
+                                 g_strdup (gimp_directory ()));
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
                                     "stingy-memory-use",
                                     FALSE);

@@ -16,10 +16,14 @@ libappconfig_a_SOURCES = @STRIP_BEGIN@ 	\
 	gimpconfig-serialize.h		\
 	gimpconfig-types.c		\
 	gimpconfig-types.h		\
+	gimpconfig-utils.c		\
+	gimpconfig-utils.h		\
 	gimpbaseconfig.c		\
 	gimpbaseconfig.h		\
 	gimpcoreconfig.c		\
 	gimpcoreconfig.h		\
+	gimpdisplayconfig.c		\
+	gimpdisplayconfig.h		\
 	gimpguiconfig.c			\
 	gimpguiconfig.h			\
 @STRIP_END@

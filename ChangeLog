@@ -1,3 +1,19 @@
+2001-12-18  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am
+	* app/config/gimpconfig-utils.[ch]: new files with utility functions.
+
+	* app/config/gimpdisplayconfig.[ch]: new class with display config
+	properties so GimpGuiConfig doesn't get too large.
+
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpcoreconfig.[ch]
+	* app/config/gimpguiconfig.[ch]: install path properties with
+	useable defaults (substituted gimpdir and friends). Moved properties
+	around.
+
+	* app/gui/session.c: removed outdated comment.
+
 2001-12-18  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: added -DGDK_PIXBUF_DISABLE_DEPRECATED to CPPFLAGS.

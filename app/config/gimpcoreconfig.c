@@ -31,16 +31,9 @@
 #include "gimpconfig.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"
+#include "gimpconfig-utils.h"
 
 #include "gimpcoreconfig.h"
-
-
-#define BUILD_PLUG_IN_PATH(name)\
-  ("${gimp_dir}" G_DIR_SEPARATOR_S name G_SEARCHPATH_SEPARATOR_S \
-   "${gimp_plugin_dir}" G_DIR_SEPARATOR_S name)
-#define BUILD_DATA_PATH(name)\
-  ("${gimp_dir}" G_DIR_SEPARATOR_S name G_SEARCHPATH_SEPARATOR_S \
-   "${gimp_datadir}" G_DIR_SEPARATOR_S name)
 
 
 static void  gimp_core_config_class_init   (GimpCoreConfigClass *klass);
@@ -77,7 +70,11 @@ enum
   PROP_UNDO_LEVELS,
   PROP_PLUGINRC_PATH,
   PROP_MODULE_LOAD_INHIBIT,
-  PROP_WRITE_THUMBNAILS
+  PROP_PREVIEW_SIZE,
+  PROP_WRITE_THUMBNAILS,
+  PROP_GAMMA_CORRECTION,
+  PROP_INSTALL_COLORMAP,
+  PROP_MIN_COLORS
 };
 
 
@@ -121,22 +118,22 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUG_IN_PATH,
                                  "plug-in-path",
-                                 BUILD_PLUG_IN_PATH ("plug-ins"));
+                                 gimp_config_build_plug_in_path ("plug-ins"));
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MODULE_PATH,
                                  "module-path",
-                                  BUILD_PLUG_IN_PATH ("modules"));
+                                 gimp_config_build_plug_in_path ("modules"));
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_BRUSH_PATH,
                                  "brush-path",
-                                  BUILD_DATA_PATH ("brushes"));
+                                 gimp_config_build_data_path ("brushes"));
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PATTERN_PATH,
                                  "pattern-path",
-                                  BUILD_DATA_PATH ("patterns"));
+                                 gimp_config_build_data_path ("patterns"));
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PALETTE_PATH,
                                  "palette-path",
-                                  BUILD_DATA_PATH ("palettes"));
+                                 gimp_config_build_data_path ("palettes"));
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRADIENT_PATH,
                                  "gradient-path",
-                                  BUILD_DATA_PATH ("gradients"));
+                                 gimp_config_build_data_path ("gradients"));
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_BRUSH,
                                    "default-brush",
                                    NULL);
@@ -178,13 +175,26 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                 0, G_MAXINT, 5);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUGINRC_PATH,
                                  "pluginrc-path",
-                                 "${gimp_dir}" G_DIR_SEPARATOR_S "pluginrc");
+                                 g_build_filename (gimp_directory (), 
+                                                   "pluginrc", NULL));
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_MODULE_LOAD_INHIBIT,
                                    "module-load-inhibit",
                                    NULL);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PREVIEW_SIZE,
+                                 "preview-size",
+                                 GIMP_TYPE_PREVIEW_SIZE, GIMP_PREVIEW_SIZE_SMALL);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_WRITE_THUMBNAILS,
                                     "write-thumbnails",
                                     TRUE);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GAMMA_CORRECTION,
+                                   "gamma-correction",
+                                   0.0, 100.0, 1.0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
+                                    "install-colormap",
+                                    FALSE);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_MIN_COLORS,
+                                "min-colors",
+                                27, 256, 144);
 }
 
 static void
@@ -275,8 +285,20 @@ gimp_core_config_set_property (GObject      *object,
       g_free (core_config->module_load_inhibit);
       core_config->module_load_inhibit = g_value_dup_string (value);
       break;
+    case PROP_PREVIEW_SIZE:
+      core_config->preview_size = g_value_get_enum (value);
+      break;
     case PROP_WRITE_THUMBNAILS:
       core_config->write_thumbnails = g_value_get_boolean (value);
+      break;
+    case PROP_GAMMA_CORRECTION:
+      core_config->gamma_val = g_value_get_double (value);
+      break;
+    case PROP_INSTALL_COLORMAP:
+      core_config->install_cmap = g_value_get_boolean (value);
+      break;
+    case PROP_MIN_COLORS:
+      core_config->min_colors = g_value_get_int (value);
       break;
 
     default:
@@ -360,8 +382,20 @@ gimp_core_config_get_property (GObject    *object,
     case PROP_MODULE_LOAD_INHIBIT:
       g_value_set_string (value, core_config->module_load_inhibit);
       break;
+    case PROP_PREVIEW_SIZE:
+      g_value_set_enum (value, core_config->preview_size);
+      break;
     case PROP_WRITE_THUMBNAILS:
       g_value_set_boolean (value, core_config->write_thumbnails);
+      break;
+    case PROP_GAMMA_CORRECTION:
+      g_value_set_double (value, core_config->gamma_val);
+      break;
+    case PROP_INSTALL_COLORMAP:
+      g_value_set_boolean (value, core_config->install_cmap);
+      break;
+    case PROP_MIN_COLORS:
+      g_value_set_int (value, core_config->min_colors);
       break;
 
     default:
