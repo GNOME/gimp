@@ -204,7 +204,9 @@ gimp_text_layout_new (GimpText  *text,
       alignment = PANGO_ALIGN_CENTER;
       break;
     case GIMP_TEXT_JUSTIFY_FILL:
-      /* FIXME: This just doesn't work to do this */
+      /* FIXME: This doesn't work since the implementation is missing
+         at the Pango level.
+       */
       alignment = PANGO_ALIGN_LEFT;
       pango_layout_set_justify (layout->layout, TRUE);
       break;

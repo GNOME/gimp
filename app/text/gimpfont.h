@@ -37,16 +37,6 @@
 
 typedef struct _GimpFontClass GimpFontClass;
 
-struct _GimpFont
-{
-  GimpViewable  parent_instance;
-};
-
-struct _GimpFontClass
-{
-  GimpViewableClass  parent_class;
-};
-
 
 GType      gimp_font_get_type     (void) G_GNUC_CONST;
 

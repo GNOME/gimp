@@ -23,18 +23,46 @@
 #include "config.h"
 
 #include <glib-object.h>
+#include <pango/pangoft2.h>
 
 #include "text-types.h"
+
+#include "base/temp-buf.h"
 
 #include "gimpfont.h"
 
 
-static void    gimp_font_class_init   (GimpFontClass *klass);
-static void    gimp_font_init         (GimpFont      *font);
+struct _GimpFont
+{
+  GimpViewable  parent_instance;
+};
 
-static void    gimp_font_finalize     (GObject       *object);
+struct _GimpFontClass
+{
+  GimpViewableClass   parent_class;
 
-static gsize   gimp_font_get_memsize  (GimpObject    *object);
+  PangoContext       *pango_context;
+};
+
+
+static void      gimp_font_class_init       (GimpFontClass *klass);
+static void      gimp_font_init             (GimpFont      *font);
+
+static void      gimp_font_get_preview_size (GimpViewable  *viewable,
+                                             gint           size,
+                                             gboolean       popup,
+                                             gboolean       dot_for_dot,
+                                             gint          *width,
+                                             gint          *height);
+static gboolean  gimp_font_get_popup_size   (GimpViewable  *viewable,
+                                             gint           width,
+                                             gint           height,
+                                             gboolean       dot_for_dot,
+                                             gint          *popup_width,
+                                             gint          *popup_height);
+static TempBuf * gimp_font_get_new_preview  (GimpViewable  *viewable,
+                                             gint           width,
+                                             gint           height);
 
 
 static GimpViewableClass *parent_class = NULL;
@@ -71,17 +99,17 @@ gimp_font_get_type (void)
 static void
 gimp_font_class_init (GimpFontClass *klass)
 {
-  GObjectClass    *object_class;
-  GimpObjectClass *gimp_object_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class;
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize          = gimp_font_finalize;
+  viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  gimp_object_class->get_memsize  = gimp_font_get_memsize;
+  viewable_class->get_preview_size = gimp_font_get_preview_size;
+  viewable_class->get_popup_size   = gimp_font_get_popup_size;
+  viewable_class->get_new_preview  = gimp_font_get_new_preview;
+
+  klass->pango_context = pango_ft2_get_context (72, 72);
 }
 
 static void
@@ -90,24 +118,78 @@ gimp_font_init (GimpFont *font)
 }
 
 static void
-gimp_font_finalize (GObject *object)
+gimp_font_get_preview_size (GimpViewable *viewable,
+                            gint          size,
+                            gboolean      popup,
+                            gboolean      dot_for_dot,
+                            gint         *width,
+                            gint         *height)
 {
-  GimpFont *font;
-
-  font = GIMP_FONT (object);
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  *width  = size;
+  *height = size;
 }
 
-static gsize
-gimp_font_get_memsize (GimpObject *object)
+static gboolean
+gimp_font_get_popup_size (GimpViewable *viewable,
+                          gint          width,
+                          gint          height,
+                          gboolean      dot_for_dot,
+                          gint         *popup_width,
+                          gint         *popup_height)
 {
-  GimpFont *font;
-  gsize     memsize = 0;
+  return FALSE;
+}
 
-  font = GIMP_FONT (object);
+static TempBuf *
+gimp_font_get_new_preview (GimpViewable *viewable,
+                           gint          width,
+                           gint          height)
+{
+  GimpFont             *font;
+  GimpFontClass        *font_class;
+  PangoFontDescription *font_desc;
+  PangoLayout          *layout;
+  const gchar          *name;
+  TempBuf              *temp_buf;
+  FT_Bitmap             bitmap;
+  guchar               *p;
+  guchar                black = 0;
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  font       = GIMP_FONT (viewable);
+  font_class = GIMP_FONT_GET_CLASS (font);
+
+  name = gimp_object_get_name (GIMP_OBJECT (font));
+
+  font_desc = pango_font_description_from_string (name);
+  g_return_val_if_fail (font_desc != NULL, NULL);
+  if (!font_desc)
+    return NULL;
+
+  pango_font_description_set_size (font_desc, PANGO_SCALE * height);
+
+  layout = pango_layout_new (font_class->pango_context);
+  pango_font_description_free (font_desc);
+
+  pango_layout_set_text (layout, "Aa", -1);
+
+  temp_buf = temp_buf_new (width, height, 1, 0, 0, &black);
+
+  bitmap.width  = temp_buf->width;
+  bitmap.rows   = temp_buf->height;
+  bitmap.pitch  = temp_buf->width;
+  bitmap.buffer = temp_buf_data (temp_buf);
+  
+  pango_ft2_render_layout (&bitmap, layout, 0, 0);
+  
+  g_object_unref (layout);
+
+  p = temp_buf_data (temp_buf);
+
+  for (height = temp_buf->width; height; height--)
+    for (width = temp_buf->width; width; width--, p++)
+      *p = 255 - *p;
+
+  return temp_buf;
 }
 
 GimpFont *
