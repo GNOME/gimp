@@ -1,3 +1,13 @@
+2000-10-17  Tor Lillqvist  <tml@iki.fi>
+
+	* app/makefile.mingw.in (gimp_OBJECTS): Add
+	resolution_calibrate.o.
+
+	* app/user_install.c (user_install_run): Add missing semicolon.
+
+	* tips/makefile.mingw (install): Copy gimp_tips.txt separately. We
+	used to get gimp_tips.txt.txt because of `basename $f .utf8`.
+
 Tue Oct 17 03:55:44 CEST 2000  Marc Lehmann <pcg@goof.com>
 	Applied patch by Robert L Krawitz <rlk@alum.mit.edu>.
 

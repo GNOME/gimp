@@ -5,7 +5,8 @@ UTF8TXT = $(addsuffix .utf8,$(basename $(wildcard *.*.txt)))
 all : $(UTF8TXT)
 
 install : all
-	for f in gimp_tips.txt $(UTF8TXT); do cp $$f $(DEST)/tips/`basename $$f .utf8`.txt; done
+	for f in $(UTF8TXT); do cp $$f $(DEST)/tips/`basename $$f .utf8`.txt; done
+	cp gimp_tips.txt $(DEST)/tips
 
 .SUFFIXES: .utf8
 

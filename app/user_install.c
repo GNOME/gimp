@@ -975,7 +975,7 @@ user_install_run (void)
        */
       quoted_data_dir = quote_spaces (gimp_data_directory ());
       quoted_user_dir = quote_spaces (gimp_directory ());
-      quoted_sysconf_dir = quote_spaces (gimp_sysconf_directory ())
+      quoted_sysconf_dir = quote_spaces (gimp_sysconf_directory ());
 
       /* The Microsoft _popen doesn't work in Windows applications, sigh.
        * Do the installation by calling system(). The user_install.bat

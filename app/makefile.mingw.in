@@ -209,6 +209,7 @@ gimp_OBJECTS =					\
 	rect_select.o				\
 	regex.o					\
 	resize.o				\
+	resolution_calibrate.o			\
 	rotate_tool.o				\
 	scale.o					\
 	scale_tool.o				\
