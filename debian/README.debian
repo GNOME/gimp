@@ -1,0 +1,43 @@
+gimp for DEBIAN
+----------------------
+
+The GNU Image Manipulation Program lets you draw, edit images, and
+manipulate them any way you want!
+
+This is the developers' release of Gimp. It's a full featured, freely
+available, non-Motif version of The Gimp.
+
+Version 0.99 (soon to be 1) has full layers support, tile-based memory
+allocation, and a whole bunch of other nifty features.
+
+                 *************** NOTE ****************
+   If you've ever used an older version of The GIMP on your system,
+   you may have to delete the ~/.gimp directory, as different versions
+   are not always compatible.
+                 *************************************
+
+WARNING:
+
+GIMP is not finished yet. Most of the functionality that will be in
+the final program is there, but please be aware that this is still a
+developers' release.
+
+In other words, don't run it as root and then scream when it blows up
+your computer.
+
+COMPILING PLUGINS:
+-----------------
+
+If you wish to compile your own plug-ins, the easiest way is to:
+
+gcc -o plug-in plug-in.c -L/usr/X11R6/lib -lgimp -lgimpui -lgtk -lgdk \
+-lglib -lm
+
+Some plug-ins may require more -l flags, but this should be pretty
+standard for most of them. Once you've compiled it, copy your new
+plug-in to ~/.gimp/plug-ins, and restart GIMP! 
+
+Ben Gertzfield <che@debian.org>, Tue, 22 Jul 1997 20:53:20 -0500
+
+
+

@@ -1,0 +1,66 @@
+Source: gimp
+Priority: optional
+Section: graphics
+Maintainer: Ben Gertzfield <che@debian.org>
+Standards-Version: 2.4.0.0
+
+Package: libgimp1
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}
+Description: Libraries necessary to run the GIMP
+ This package includes the libgimp and libgimpui libraries, necessary
+ to run The GIMP.
+ .
+ It has been split off from the main gimp package in order to 
+ facilitate easy development for packages that use libgimp and libgimpui,
+ like SANE, the Scanner Access package for GIMP.
+
+Package: gimp
+Architecture: any
+Section: graphics
+Conflicts: gimp-smotif, gimp-dmotif, gimp099, gimp-data-min
+Replaces: gimp-smotif, gimp-dmotif, gimp099, gimp-data-min
+Provides: gimp-data-min
+Depends: ${shlibs:Depends}, xfnt75, xfnt100
+Suggests: freefont, sharefont, gimp-nonfree, gimp-data-extras (>= 1:0.99)
+Description: The layers-based, non-Motif GNU Image Manipulation Program
+ The GIMP lets you draw, paint, edit images, and much more! GIMP
+ includes the functionality and plug-ins of other famous image
+ editing and processing programs.
+ .
+ This version is beta software. Most of the functionality of the GIMP
+ 1.0 is here, but please be aware there that this is still a 
+ developers' release.
+ . 
+ Version 0.99 of The GIMP is a total re-write of the old 0.54 code.
+ It's fully layers-based, making it easy to use and more powerful.
+ .
+ This version is not based on Motif code, so it is entirely free!
+ However, GIF and TIFF support have been moved to a separate package
+ (gimp-nonfree) because of the UNISYS patent. 
+
+Package: gimp-nonfree
+Architecture: any
+Section: non-free/graphics
+Depends: ${shlibs:Depends}
+Description: GIF and TIFF support for the GNU Image Manipulation Program
+ This package includes the gif and tiff support for The GNU Image
+ Manipulation Program. These files are not freely available; their
+ use is disallowed by the UNISYS patent on LZW compression.
+ .
+ Use at your own legal risk.
+
+Package: libgimp-dev
+Architecture: any
+Section: devel
+Depends: ${shlibs:Depends}
+Conflicts: gimp-dev
+Replaces: gimp-dev
+Description: Header files for compiling plugins for The GIMP
+ This package contains the header files for the GNU Image Manipulation
+ Program, along with the static versions of libgimp and libgimpui.
+ .
+ Install this package if you wish to compile your own plugins,
+ or if you wish to develop packages that use libgimp or libgimpui. 
+

@@ -1,0 +1,151 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper. GNU copyright 1997 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+	# Add here commands to compile the pacckage.
+	./configure --prefix=/usr
+	$(MAKE)
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	-rm -f build-stamp install-stamp
+	# Add here commands to clean up after the build process.
+	-$(MAKE) distclean
+	rm -rf debian/{gimp,gimp-nonfree,libgimp1,libgimp-dev}
+	find . -name '*.o' -o -name '_libs' -o -name '*.lo' -o -name '*.a' -o -name '*.P' -o -name 'Makefile' | xargs rm -rf
+	-rm app/gimp
+	dh_clean
+
+# Build architecture-independent files here.
+binary-indep: build
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install gimp-nonfree gimp libgimp-dev libgimp1
+
+install: install-stamp
+install-stamp: build
+	dh_testdir
+	dh_testroot
+	dh_clean
+	dh_installdirs usr/X11R6/bin
+	$(MAKE) prefix=`pwd`/debian/tmp/usr install
+	mv debian/tmp/usr/bin/gimp debian/tmp/usr/X11R6/bin
+	touch install-stamp
+
+libgimp1: build install
+	dh_testdir -plibgimp1 
+	dh_testroot -plibgimp1
+#	dh_clean -k -plibgimp1 
+	dh_installdirs -plibgimp1
+	rm -rf debian/tmp/usr/bin debian/tmp/usr/X11R6 debian/tmp/usr/include \
+	  debian/tmp/usr/share
+#	$(MAKE) prefix=`pwd`/debian/tmp/usr install
+#	dh_movefiles -plibgimp1
+#	rm debian/tmp/usr/lib/*.{so,la,a}
+#	rm -rf debian/tmp/usr/{include,info,share}
+#	rm -rf debian/tmp/usr/lib/gimp
+#	rm -rf debian/tmp/usr/bin
+	dh_installdocs -plibgimp1
+	dh_installchangelogs -plibgimp1
+	dh_strip -plibgimp1
+	dh_compress -plibgimp1
+	dh_fixperms -plibgimp1
+	dh_installdeb -plibgimp1
+	dh_shlibdeps -plibgimp1
+	dh_gencontrol -plibgimp1
+	dh_makeshlibs -plibgimp1
+	dh_md5sums -plibgimp1
+	dh_builddeb -plibgimp1
+
+gimp: build install
+	dh_testdir -pgimp 
+	dh_testroot -pgimp
+	dh_clean -k -pgimp 
+	dh_installdirs -pgimp usr/X11R6/man/man1
+	# Add here commands to install the files into debian/tmp
+	dh_movefiles -pgimp
+	-rm -f install-stamp
+	cp docs/gimp.1 debian/gimp/usr/X11R6/man/man1
+#	$(MAKE) prefix=`pwd`/debian/gimp/usr install
+#	install -d debian/gimp/usr/X11R6/bin
+#	mv debian/gimp/usr/bin/gimp debian/gimp/usr/X11R6/bin/gimp
+#	install -d debian/gimp-nonfree/usr/lib/gimp/0.99/plug-ins
+#	rm -rf debian/gimp/usr/{include,info}
+#	find debian/gimp/usr/lib -maxdepth 1 \( -type f -or -type l \) \
+#	  | xargs rm
+#	mv debian/gimp/usr/lib/gimp/0.99/plug-ins/{gif,tiff} \
+#	  debian/gimp-nonfree/usr/lib/gimp/0.99/plug-ins
+	dh_installdocs -pgimp debian/README.debian docs/*.txt ChangeLog \
+	  README NOTES
+	dh_installchangelogs -pgimp
+	dh_strip -pgimp
+	dh_compress -pgimp
+	dh_fixperms -pgimp
+	dh_installmenu -pgimp
+	dh_installdeb -pgimp
+	LD_LIBRARY_PATH=$(shell pwd)/debian/tmp/usr/lib dh_shlibdeps -pgimp
+	dh_gencontrol -pgimp
+	dh_makeshlibs -pgimp
+	dh_md5sums -pgimp
+	dh_builddeb -pgimp
+
+
+gimp-nonfree: build install
+	dh_testdir -pgimp-nonfree
+	dh_testroot -pgimp-nonfree
+	dh_clean -k -pgimp-nonfree
+	dh_movefiles -pgimp-nonfree
+	-rm -f install-stamp
+#	-rm debian/gimp-nonfree.substvars
+#	-find debian/gimp-nonfree -not -type d -and -not \( -name 'gif' -or \
+#	  -name 'tiff' \) | xargs rm
+	dh_installdirs -pgimp-nonfree
+	dh_installdocs -pgimp-nonfree
+	dh_installchangelogs -pgimp-nonfree
+	dh_strip -pgimp-nonfree
+	dh_compress -pgimp-nonfree
+	dh_fixperms -pgimp-nonfree
+	dh_installdeb -pgimp-nonfree
+	LD_LIBRARY_PATH=$(shell pwd)/debian/tmp/usr/lib dh_shlibdeps -pgimp-nonfree
+	dh_gencontrol -pgimp-nonfree
+	dh_makeshlibs -pgimp-nonfree
+	dh_md5sums -pgimp-nonfree
+	dh_builddeb -pgimp-nonfree
+
+libgimp-dev: build install
+	dh_testdir -plibgimp-dev
+	dh_testroot -plibgimp-dev
+	dh_clean -plibgimp-dev -k
+	dh_installdirs -plibgimp-dev
+	dh_movefiles -plibgimp-dev
+	-rm -f install-stamp
+	# Add here commands to install the files into debian/tmp
+#	$(MAKE) prefix=`pwd`/debian/libgimp-dev/usr install
+#	rm -rf debian/libgimp-dev/usr/lib/gimp
+#	find debian/libgimp-dev/usr/lib \( -type f -or -type l \) -and ! \( -name \*.so -or -name \*.a \) | xargs rm
+#	rm -rf debian/libgimp-dev/usr/{bin,share}
+	dh_installdocs -plibgimp-dev
+	dh_installchangelogs -plibgimp-dev
+	dh_strip -plibgimp-dev
+	dh_compress -plibgimp-dev
+	dh_fixperms -plibgimp-dev
+	dh_installdeb -plibgimp-dev
+	dh_shlibdeps -plibgimp-dev
+	dh_gencontrol -plibgimp-dev
+	dh_makeshlibs -plibgimp-dev
+	dh_md5sums -plibgimp-dev
+	dh_builddeb -plibgimp-dev
+
+source diff:                                                                  
+	@echo >&2 'source and diff are obsolete - use dpkg-source -b'; false
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary

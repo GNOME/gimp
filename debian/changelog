@@ -1,0 +1,179 @@
+gimp (0.99.22-2) frozen unstable; urgency=low
+
+  * /usr/share/gimp/gfig/ directory was accidentally left out of -1,
+    re-added it.
+  * /usr/include/gck/ was accidentally left out of -1's -dev package,
+    re-added it.
+
+ -- Ben Gertzfield <che@debian.org>  Mon, 23 Mar 1998 18:32:14 -0800
+
+gimp (0.99.22-1) unstable; urgency=low
+
+  * New upstream version.
+  * Replaced libtool with Debian native libtool.
+
+ -- Ben Gertzfield <che@debian.org>  Thu, 19 Mar 1998 23:43:57 -0800
+
+gimp (0.99.21-2) frozen unstable; urgency=medium
+  
+  * Somehow GIMP didn't get linked with libXi, which MAJORLY broke things.
+    Fixed.
+
+ -- Ben Gertzfield <che@debian.org>  Mon, 16 Mar 1998 22:40:36 -0800
+
+gimp (0.99.21-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Ben Gertzfield <che@debian.org>  Sun, 15 Mar 1998 10:53:05 -0800
+
+gimp (0.99.20-1) unstable; urgency=low
+
+  * New upstream version.
+  * Manpage is now included with upstream source, and included ChangeLog,
+    README, and NOTES in /usr/doc/gimp.
+  * Patched print plugin to call /usr/sbin/lpc directly instead of
+    just lpc.
+
+ -- Ben Gertzfield <che@debian.org>  Fri, 13 Mar 1998 23:20:26 -0800
+
+gimp (0.99.19-2) unstable; urgency=low
+
+  * Rebuild with gtk+-0.99.4-2 to fix shlib dependancies.
+
+ -- Ben Gertzfield <che@debian.org>  Sun,  8 Mar 1998 00:07:11 -0800
+
+gimp (0.99.19-1) unstable; urgency=low
+
+  * New upstream version.
+  * Removed dh_du calls to remove lintian errors on du control files.
+  * gimp-data-min has been merged in with the main gimp package and
+    so is now obsolete.
+  * Upgraded Standards-Version to 2.4.0.0.
+  * Made copyrights correct for libgimp and gimp-nonfree.
+
+ -- Ben Gertzfield <che@debian.org>  Mon,  2 Mar 1998 13:38:09 -0800
+
+gimp (0.99.18-2) unstable; urgency=low
+
+  * Moved gimp binary back into /usr/X11R6/bin, made menu entry
+    properly reflect this change. Fixes bug #17554.
+
+ -- Ben Gertzfield <che@debian.org>  Tue, 27 Jan 1998 16:28:54 -0800
+
+gimp (0.99.18-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Ben Gertzfield <che@debian.org>  Mon, 26 Jan 1998 11:15:12 -0800
+
+gimp (0.99.17-3) unstable; urgency=low
+
+  * The menu file was accidentally left out of the package; fixed.
+  * The /usr/doc/gimp/README.debian was also added back into the package.
+
+ -- Ben Gertzfield <che@debian.org>  Tue,  6 Jan 1998 15:27:36 -0800
+
+gimp (0.99.17-2) unstable; urgency=low
+
+  * Recompiled because of shlibs file error in libgtk1 0.99.2-1,
+    now depends on libgtk1 (>=1:0.99.2) instead of just libgtk1.
+
+ -- Ben Gertzfield <che@debian.org>  Mon,  5 Jan 1998 12:38:11 -0800
+
+gimp (0.99.17-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Ben Gertzfield <che@debian.org>  Sun,  4 Jan 1998 00:36:42 -0800
+
+gimp (0.99.16-2) unstable; urgency=low
+
+  * libgimp-dev did not conflict with and replace gimp-dev; fixed.
+  * Really used pristine upstream source.
+
+ -- Ben Gertzfield <che@debian.org>  Mon, 29 Dec 1997 13:14:59 -0800
+
+gimp (0.99.16-1) unstable; urgency=low
+
+  * New upstream version.
+  * Converted to use debhelper.
+  * Split off libgimp package.
+
+ -- Ben Gertzfield <che@debian.org>  Mon, 15 Dec 1997 14:00:19 -0800
+
+gimp (0.99.14-1) unstable; urgency=low
+
+  * New upstream version.
+  * Linked with all libc6 libraries, fixes bug #13505.
+  * Fixed dumb dependancy error. Fixes bug #13324.
+  * Put header files in the absolutely proper place. Fixes bug #13247.
+  * Split off libgtk1 et al from the source package.
+  * Upgraded to Standards-Version 2.3.0.0.
+
+ -- Ben Gertzfield <che@debian.org>  Wed, 15 Oct 1997 15:49:03 -0700
+
+gimp (0.99.10pre11-1) unstable; urgency=low
+
+  * New upstream version.
+  * Recompiled with libc6 X libraries.
+  * Removed XInput support, because it depends on XFree86 3.1.1,
+    which hasn't been made into a Debian package yet.
+
+ -- Ben Gertzfield <che@debian.org>  Sat, 13 Sep 1997 16:28:38 -0700
+
+gimp (0.99.10-3) unstable; urgency=low
+
+  * Applied more patches. GIMP now has XInput (tablet pressure/tilt)
+    extensions! 
+
+ -- Ben Gertzfield <che@debian.org>  Sat, 16 Aug 1997 17:55:10 -0500
+
+gimp (0.99.10-2) unstable; urgency=low
+
+  * Removed empty documentation files; fixes bug #11491.
+  * Fixed symbolic links for shared libraries (added links to libname.so in
+    -dev packages)
+  * Changed shlibs for libgtk to use = instead of >=; fixes bug #11492
+  * Applied patches from http://copper.ucs.indiana.edu/~sgoehrin/gimp/patches/
+  
+ -- Ben Gertzfield <che@imsa.edu>  Tue, 29 Jul 1997 19:33:41 -0500
+
+gimp (0.99.10-1) unstable; urgency=low
+
+  * New maintainer.
+  * New upstream version.
+  * Uses the new gtk and gdk libraries instead of Motif.
+  * Split into gimp, gimp-dev, libgtk, libgtk-dev, gimp-data, and gimp-nonfree.
+
+ -- Ben Gertzfield <che@imsa.edu>  Tue, 22 Jul 1997 20:53:20 -0500
+
+gimp (0.54.1-6) unstable; urgency=low
+
+  * Fixed menu problem.
+  * Fixed problem with simultaneous gimp-plugins install.
+  * Added minimal man page.
+  * Killed README.debian (copyright already had the info).
+
+ -- Rob Browning <osiris@cs.utexas.edu>  Sun, 13 Apr 1997 20:49:59 -0500
+
+gimp (0.54.1-5) unstable; urgency=low
+
+  * added new gimprc parsing.
+  * moved /etc/gimprc to /etc/gimp/gimprc 
+
+ -- Rob Browning <osiris@cs.utexas.edu>  Sun, 2 Feb 1997 03:08:03 -0600
+
+gimp (0.54.1-4) unstable; urgency=low
+
+  * Change to new packaging standards.
+  * Added X menu entry.
+  * Fixed config file placement and loading (bug #4303)
+  * Fixed dependencies (bug #6691)
+
+ -- Rob Browning <osiris@cs.utexas.edu>  Mon, 27 Jan 1997 01:04:31 -0600
+
+Local variables:
+mode: debian-changelog
+add-log-mailing-address: "che@debian.org"
+End:

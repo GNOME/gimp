@@ -1,0 +1,6 @@
+usr/lib/libgimp.so
+usr/lib/libgimp.a
+usr/lib/libgimpui.so
+usr/lib/libgimpui.a
+usr/include/libgimp/
+usr/include/gck/
