@@ -169,6 +169,8 @@ gdisplay_new (GimpImage *gimage,
   gdisp->draw_cursor           = FALSE;
   gdisp->proximity             = FALSE;
   gdisp->have_cursor           = FALSE;
+  gdisp->cursor_x              = 0;
+  gdisp->cursor_y              = 0;
   gdisp->using_override_cursor = FALSE;
 
   gdisp->progressid = FALSE;

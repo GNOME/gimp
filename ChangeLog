@@ -1,3 +1,10 @@
+2001-06-15  Austin Donnelly  <austin@gimp.org>
+
+	* app/gdisplay.c: initialise gdisp->cursor_x and gdisp->cursor_y
+	    to 0 in gdisplay_new() so that we don't get floating point
+	    exceptions when attempting to translate to screen co-ords in
+	    gdisplay_update_cursor().  Fixes critical Bug #56237.
+
 2001-06-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/gdisplay.c: fixed a FIXME: set the sensitivity of the
