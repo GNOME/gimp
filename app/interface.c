@@ -115,13 +115,15 @@ static GtkWidget * toolbox_shell = NULL;
 enum {
   TARGET_URI_LIST,
   TARGET_TEXT_PLAIN,
+  TARGET_URL
 } TargetType;
 
 static
 GtkTargetEntry dnd_target_table[] =
 {
   { "text/uri-list", 0, TARGET_URI_LIST },
-  { "text/plain", 0, TARGET_TEXT_PLAIN }
+  { "text/plain", 0, TARGET_TEXT_PLAIN },
+  { "_NETSCAPE_URL",0, TARGET_URL }
 };
 
 static guint

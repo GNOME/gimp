@@ -1,3 +1,8 @@
+Thu Jul  8 00:08:50 EDT 1999  Adrian Likins <alikins@redhat.com>
+
+	*app/interface.c: added type for _NETSCAPE_URL to the DnD stuff
+	so you can now drag image urls from netscape
+
 Wed Jul  7 20:33:24 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* Makefile.am
