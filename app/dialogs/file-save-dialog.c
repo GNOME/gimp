@@ -129,7 +129,8 @@ file_save_dialog_response (GtkWidget *save_dialog,
 
   if (uri && strlen (uri))
     {
-      gchar *filename = g_filename_from_uri (uri, NULL, NULL);
+      gchar *filename = file_utils_filename_from_uri (uri);
+
       g_return_if_fail (filename != NULL);
 
       if (g_file_test (filename, G_FILE_TEST_EXISTS))

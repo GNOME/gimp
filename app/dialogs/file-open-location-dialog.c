@@ -158,14 +158,16 @@ file_open_location_response (GtkDialog *dialog,
       GimpImage         *image;
       gchar             *uri;
       gchar             *filename;
+      gchar             *hostname;
       GError            *error = NULL;
       GimpPDBStatusType  status;
 
-      filename = g_filename_from_uri (text, NULL, NULL);
+      filename = g_filename_from_uri (text, &hostname, NULL);
 
       if (filename)
         {
-          uri = g_filename_to_uri (filename, NULL, NULL);
+          uri = g_filename_to_uri (filename, hostname, NULL);
+          g_free (hostname);
           g_free (filename);
         }
       else

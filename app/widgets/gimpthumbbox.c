@@ -673,7 +673,7 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
                                  GimpThumbnailSize  size,
                                  gboolean           force)
 {
-  gchar *filename = g_filename_from_uri (uri, NULL, NULL);
+  gchar *filename = file_utils_filename_from_uri (uri);
 
   if (filename && g_file_test (filename, G_FILE_TEST_IS_REGULAR))
     {

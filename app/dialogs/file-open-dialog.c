@@ -117,7 +117,7 @@ file_open_dialog_response (GtkWidget *open_dialog,
 
   for (list = uris; list; list = g_slist_next (list))
     {
-      gchar *filename = g_filename_from_uri (list->data, NULL, NULL);
+      gchar *filename = file_utils_filename_from_uri (list->data);
 
       if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
         {

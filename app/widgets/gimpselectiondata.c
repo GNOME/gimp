@@ -231,13 +231,14 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
     {
       const gchar *dnd_crap = list->data;
       gchar       *filename;
+      gchar       *hostname;
       gchar       *uri   = NULL;
       GError      *error = NULL;
 
       D (g_print ("%s: trying to convert \"%s\" to an uri.\n",
                   G_STRFUNC, dnd_crap));
 
-      filename = g_filename_from_uri (dnd_crap, NULL, NULL);
+      filename = g_filename_from_uri (dnd_crap, &hostname, NULL);
 
       if (filename)
         {
@@ -247,8 +248,9 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
            *   for GLib > 2.4.4, this is escaped local filename encoding)
            */
 
-          uri = g_filename_to_uri (filename, NULL, NULL);
+          uri = g_filename_to_uri (filename, hostname, NULL);
 
+          g_free (hostname);
           g_free (filename);
         }
       else if (g_file_test (dnd_crap, G_FILE_TEST_EXISTS))

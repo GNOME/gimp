@@ -105,6 +105,8 @@ static void       history_add        (GtkComboBox      *combo,
 static gboolean   has_case_prefix    (const gchar      *haystack,
                                       const gchar      *needle);
 
+static gchar    * filename_from_uri  (const gchar      *uri);
+
 
 /*  private variables  */
 
@@ -548,7 +550,7 @@ request_url (HtmlDocument *doc,
   if (! abs)
     return TRUE;
 
-  filename = g_filename_from_uri (abs, NULL, NULL);
+  filename = filename_from_uri (abs);
   g_free (abs);
 
   if (filename)
@@ -701,4 +703,39 @@ has_case_prefix (const gchar *haystack, const gchar *needle)
     }
 
   return (*n == '\0');
+}
+
+static gchar *
+filename_from_uri (const gchar *uri)
+{
+  gchar *filename;
+  gchar *hostname;
+
+  g_return_val_if_fail (uri != NULL, NULL);
+
+  filename = g_filename_from_uri (uri, &hostname, NULL);
+
+  if (!filename)
+    return NULL;
+
+  if (hostname)
+    {
+      /*  we have a file: URI with a hostname                           */
+#ifdef G_OS_WIN32
+      /*  on Win32, create a valid UNC path and use it as the filename  */
+
+      gchar *tmp = g_build_filename ("//", hostname, filename, NULL);
+
+      g_free (filename);
+      filename = tmp;
+#else
+      /*  otherwise return NULL, caller should use URI then             */
+      g_free (filename);
+      filename = NULL;
+#endif
+
+      g_free (hostname);
+    }
+
+  return filename;
 }

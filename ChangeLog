@@ -1,8 +1,24 @@
-2005-02-09  Manish Singh  <yosh@gimp.org>
+2005-02-12  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD:
+
+	* app/dialogs/file-open-dialog.c
+	* app/dialogs/file-open-location-dialog.c
+	* app/dialogs/file-save-dialog.c
+	* app/widgets/gimpselectiondata.c
+	* app/widgets/gimpthumbbox.c
+	* libgimpthumb/gimpthumb-utils.c
+	* libgimpthumb/gimpthumb-utils.h
+	* libgimpthumb/gimpthumbnail.c
+	* plug-ins/help/domain.c
+	* plug-ins/helpbrowser/dialog.c: use file_utils_filename_from_uri()
+	or similar code to deal better with UNC paths.
+
+2005-02-09  *anish Singh  <yosh@gimp.org>
 
 	* gimptext-xlfd.c (launder_font_name): simplify a bit.
 
-2005-02-08  Manish Singh  <yosh@gimp.org>
+2005-02-08  *anish Singh  <yosh@gimp.org>
 
 	* app/text/gimpfont-utils.[ch]: new function to workaround pango
 	bug #166540, by tacking on a ',' to font names that end in numbers,

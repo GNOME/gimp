@@ -639,8 +639,8 @@ gimp_thumbnail_update_image (GimpThumbnail *thumbnail)
     case GIMP_THUMB_STATE_UNKNOWN:
       g_return_if_fail (thumbnail->image_filename == NULL);
 
-      thumbnail->image_filename = g_filename_from_uri (thumbnail->image_uri,
-                                                       NULL, NULL);
+      thumbnail->image_filename =
+        _gimp_thumb_filename_from_uri (thumbnail->image_uri);
 
       if (! thumbnail->image_filename)
         state = GIMP_THUMB_STATE_REMOTE;
@@ -1212,7 +1212,7 @@ gimp_thumbnail_save_thumb_local (GimpThumbnail  *thumbnail,
   if (size < 1)
     return TRUE;
 
-  filename = g_filename_from_uri (thumbnail->image_uri, NULL, NULL);
+  filename = _gimp_thumb_filename_from_uri (thumbnail->image_uri);
   if (! filename)
     return TRUE;
 
