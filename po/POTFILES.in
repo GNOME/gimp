@@ -126,7 +126,6 @@ app/tools/gimphuesaturationtool.c
 app/tools/gimplevelstool.c
 app/tools/gimpthresholdtool.c
 app/tools/paint_options.c
-app/tools/posterize.c
 app/tools/selection_options.c
 app/tools/tool_options.c
 app/tools/tool_options_dialog.c
