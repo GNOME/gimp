@@ -483,6 +483,8 @@ file_open_callback (GtkWidget *w,
       gtk_signal_connect (GTK_OBJECT (fileload), "delete_event",
 			  (GtkSignalFunc) file_delete_callback, fileload);
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->ok_button), "clicked", (GtkSignalFunc) file_open_ok_callback, fileload);
+      /* hide the help button because we have nothing to connect to it */
+      gtk_widget_hide ( GTK_FILE_SELECTION(fileload)->help_button);
 
     }
   else
@@ -569,7 +571,8 @@ file_save_as_callback (GtkWidget *w,
       gtk_signal_connect (GTK_OBJECT (filesave), "delete_event",
 			  (GtkSignalFunc) file_delete_callback, filesave);
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->ok_button), "clicked", (GtkSignalFunc) file_save_ok_callback, filesave);
-
+      /* hide the help button because we have nothing to connect to it */
+      gtk_widget_hide ( GTK_FILE_SELECTION(filesave)->help_button);
     }
   else
     {

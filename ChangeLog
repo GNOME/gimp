@@ -1,3 +1,8 @@
+Tue Feb 17 21:23:20 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/fileops.c: hide the help buttons since we have no 
+	help (yet)
+
 Tue Feb 17 20:55:12 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* gimp_splash.ppm: added the splash-screen image drawn 
