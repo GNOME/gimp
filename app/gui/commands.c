@@ -36,6 +36,7 @@
 #include "channel_ops.h"
 #include "drawable.h"
 #include "equalize.h"
+#include "errorconsole.h"
 #include "fileops.h"
 #include "floating_sel.h"
 #include "gdisplay_ops.h"

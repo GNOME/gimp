@@ -113,6 +113,7 @@ int       auto_save = TRUE;
 int       cubic_interpolation = FALSE;
 int       confirm_on_close = TRUE;
 int       save_session_info = TRUE;
+int       save_device_status = FALSE;
 int       always_restore_session = FALSE;
 int       default_width = 256;
 int       default_height = 256;
@@ -224,6 +225,8 @@ static ParseFunc funcs[] =
   { "dont-confirm-on-close", TT_BOOLEAN,    NULL, &confirm_on_close },
   { "save-session-info",     TT_BOOLEAN,    &save_session_info, NULL },
   { "dont-save-session-info", TT_BOOLEAN,   NULL, &save_session_info},
+  { "save-device-status",     TT_BOOLEAN,    &save_device_status, NULL },
+  { "dont-save-device-status", TT_BOOLEAN,   NULL, &save_device_status},
   { "always-restore-session", TT_BOOLEAN,   &always_restore_session, NULL },
   { "show-tips",             TT_BOOLEAN,    &show_tips, NULL },
   { "dont-show-tips",        TT_BOOLEAN,    NULL, &show_tips },

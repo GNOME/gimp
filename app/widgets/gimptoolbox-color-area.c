@@ -83,8 +83,9 @@ color_area_draw (void)
   int def_width, def_height;
   int swap_width, swap_height;
 
-  if (!color_area_pixmap)     /* we haven't gotten initial expose yet,
-                               * no point in drawing anything */
+  /* Check we haven't gotten initial expose yet,
+   * no point in drawing anything */
+  if (!color_area_pixmap || !color_area_gc)
     return;
 
   gdk_window_get_size (color_area_pixmap, &width, &height);

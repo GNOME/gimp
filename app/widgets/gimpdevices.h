@@ -59,6 +59,9 @@ void devices_rc_update (gchar *name, DeviceValues values,
 /* Free device status (only for session-managment) */
 void device_status_free (void);
 
+/* Restores device settings from rc file */
+void devices_restore();
+
 /* Current device id */
 extern int current_device;
 

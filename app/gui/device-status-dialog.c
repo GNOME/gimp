@@ -17,6 +17,7 @@
  */
 #include <string.h>
 #include <stdio.h>
+#include <sys/param.h>
 
 #include "appenv.h"
 #include "actionarea.h"
@@ -78,6 +79,7 @@ struct _DeviceInfoDialog {
   GtkWidget **colors;
   GtkWidget **brushes;
   GtkWidget **patterns;
+  GtkWidget **eventboxes;
 
 };
 
@@ -168,8 +170,6 @@ void
 devices_init (void)
 {
   GList *tmp_list;
-  char *gimp_dir;
-  char filename[512];
 
   /* Create device info structures for present devices */
 
@@ -201,7 +201,16 @@ devices_init (void)
 	       
       tmp_list = tmp_list->next;
     }
-  
+}
+
+void
+devices_restore()
+{  
+  char *gimp_dir;
+  char filename[MAXPATHLEN];
+  GList *tmp_list;
+  DeviceInfo *device_info;
+
   /* Augment with information from rc file */
 
   gimp_dir = gimp_directory ();
@@ -211,6 +220,36 @@ devices_init (void)
       sprintf (filename, "%s/devicerc", gimp_dir);
       parse_gimprc_file (filename);
     }
+
+  tmp_list = devices_info;
+  device_info = NULL;
+  while (tmp_list)
+    {
+      if (((DeviceInfo *)tmp_list->data)->device == current_device)
+	{
+	  device_info = (DeviceInfo *)tmp_list->data;
+	  break;
+	}
+      tmp_list = tmp_list->next;
+    }
+
+  suppress_update = TRUE;
+
+  if (device_info->is_init)
+    {
+      if (device_info->brush)
+	select_brush (device_info->brush);
+      gtk_widget_activate (tool_info[(int) device_info->tool].tool_widget);
+      
+      palette_set_foreground (device_info->foreground[0], 
+			      device_info->foreground[1], 
+			      device_info->foreground[2]);
+      
+      if (device_info->pattern)
+	select_pattern(device_info->pattern);
+    }
+  
+  suppress_update = FALSE;
 }
 
 void
@@ -634,6 +673,7 @@ create_device_status (void)
       deviceD->colors = g_new (GtkWidget *, deviceD->num_devices);
       deviceD->brushes = g_new (GtkWidget *, deviceD->num_devices);
       deviceD->patterns = g_new (GtkWidget *, deviceD->num_devices);
+      deviceD->eventboxes = g_new (GtkWidget *, deviceD->num_devices);
 
       tmp_list = devices_info;
       i=0;
@@ -662,14 +702,20 @@ create_device_status (void)
 	  gtk_container_add (GTK_CONTAINER(deviceD->frames[i]), label);
 	  gtk_widget_show(label);
 
+	  deviceD->eventboxes[i] = gtk_event_box_new();
+
 	  deviceD->tools[i] = gtk_pixmap_new (create_tool_pixmap(deviceD->table,
 								 RECT_SELECT),
 					      NULL);
-	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->tools[i],
+
+	  gtk_container_add (GTK_CONTAINER (deviceD->eventboxes[i]),deviceD->tools[i]);
+
+	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->eventboxes[i],
 			    1, 2, i, i+1,
 			    0, 0, 2, 2);
 
 	  deviceD->colors[i] = gtk_preview_new (GTK_PREVIEW_COLOR);
+	  gtk_widget_set_events (deviceD->colors[i], PREVIEW_EVENT_MASK);
 	  gtk_preview_size (GTK_PREVIEW (deviceD->colors[i]), CELL_SIZE, CELL_SIZE);
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->colors[i],
 			    2, 3, i, i+1,
@@ -734,6 +780,7 @@ device_status_destroy_callback (void)
   g_free(deviceD->ids);
   g_free(deviceD->frames);
   g_free(deviceD->tools);
+  g_free(deviceD->eventboxes);
   g_free(deviceD->colors);
   g_free(deviceD->brushes);
   g_free(deviceD->patterns);
@@ -752,6 +799,10 @@ devices_close_callback (GtkWidget *w,
 void
 device_status_free (void)
 {                                     
+  /* Save device status on exit */
+  if(save_device_status)
+    devices_write_rc();
+
   if (deviceD)
     {
       session_get_window_info (deviceD->shell, &device_status_session_info);
@@ -985,7 +1036,7 @@ device_preview_events (GtkWidget    *widget,
 	    {
 	      pattern = device_info->pattern;
 	      
-	      /*  Show the brush popup window if the brush is too large  */
+	      /*  Show the pattern popup window if the pattern is too large  */
 	      if (pattern->mask->width > CELL_SIZE ||
 		  pattern->mask->height > CELL_SIZE)
 		pattern_popup_open (deviceid, bevent->x, bevent->y, pattern);
@@ -1165,6 +1216,7 @@ device_status_update (guint32 deviceid)
 {
   int i, j;
   guchar buffer[CELL_SIZE*3];
+  gchar ttbuf[20]; /* [xxx,xxx,xxx] + null */
   GList *tmp_list;
   DeviceInfo *device_info;
   GdkDeviceInfo *gdk_info;
@@ -1214,6 +1266,7 @@ device_status_update (guint32 deviceid)
 	{
 	  gtk_widget_hide (deviceD->frames[i]);
 	  gtk_widget_hide (deviceD->tools[i]);
+	  gtk_widget_hide (deviceD->eventboxes[i]);
 	  gtk_widget_hide (deviceD->colors[i]);
 	  gtk_widget_hide (deviceD->brushes[i]);
 	  gtk_widget_hide (deviceD->patterns[i]);
@@ -1226,9 +1279,18 @@ device_status_update (guint32 deviceid)
 			  create_tool_pixmap (deviceD->table, 
 					      device_info->tool),
 			  NULL);
+	  
 	  gtk_widget_draw (deviceD->tools[i], NULL);
 	  gtk_widget_show (deviceD->tools[i]);
+	  gtk_widget_show (deviceD->eventboxes[i]);
 	  
+	  gtk_tooltips_set_tip(tool_tips,deviceD->eventboxes[i],
+			       tool_info[(int) device_info->tool].tool_desc,
+			       NULL);
+
+	  if(!device_info->is_init)
+	    return; /* None of the entries have been set */
+
 	  for (j=0;j<CELL_SIZE*3;j+=3)
 	    {
 	      buffer[j] = device_info->foreground[0];
@@ -1241,6 +1303,15 @@ device_status_update (guint32 deviceid)
 				  0, j, CELL_SIZE);
 	  gtk_widget_draw (deviceD->colors[i], NULL);
 	  gtk_widget_show (deviceD->colors[i]);
+
+	  /* Set the tip to be the RGB value */
+	  sprintf(ttbuf,"[%3d,%3d,%3d]",
+		  device_info->foreground[0],
+		  device_info->foreground[1],
+		  device_info->foreground[2]);
+		  
+	  gtk_tooltips_set_tip(tool_tips,deviceD->colors[i],ttbuf,NULL);
+
 
 	  device_update_brush(device_info->brush,i);
 	  gtk_widget_draw (deviceD->brushes[i],NULL);

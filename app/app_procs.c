@@ -545,7 +545,12 @@ app_init (void)
   paint_funcs_setup ();
 
   if (no_interface == FALSE)
-    session_restore();
+    {
+      devices_restore(); /* Must be done AFTER get_active_{brush|pattern} 
+			 * because these functions set the brush/pattern.
+			 */
+      session_restore();
+    }
 }
 
 int
@@ -564,6 +569,7 @@ app_exit_finish (void)
   message_handler = CONSOLE;
   we_are_exiting = TRUE;
 
+  device_status_free ();
   lc_dialog_free ();
   gdisplays_delete ();
   global_edit_free ();
@@ -583,7 +589,6 @@ app_exit_finish (void)
   paint_funcs_free ();
   plug_in_kill ();
   procedural_db_free ();
-  device_status_free ();
   error_console_free ();
   menus_quit ();
   tile_swap_exit ();

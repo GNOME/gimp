@@ -1,3 +1,20 @@
+Thu Aug 13 11:32:04 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/app_procs.c
+	* app/color_area.c
+	* app/devices.[ch]
+	* app/gimprc.[ch]
+	* app/preferences_dialog.c: applied gimp-alt-980812-0.patch:
+	Device status is now restored on startup. 
+	Tooltips added to items in device status dialog box.
+	Fixed problem with multiple input devices & new dialog.
+	Added option to preferences (under session) that allows user to 
+	always store device status on exit from gimp (default off). 
+	Fixed problem in color area of toolbar to do the possibility of GC not 
+	existing when the dialog is refreshed.
+
+	* app/commands.c: include errorconsole.h 
+
 Tue Aug 11 23:17:20 CST 1998 Seth Burgess <sjburges@gimp.org>
 	
 	* app/transform_core.c: Fixed the flip tool so it would operate

@@ -61,6 +61,7 @@ extern int       default_type;
 extern int       default_resolution;
 extern int       default_resolution_units;
 extern int       save_session_info;
+extern int       save_device_status;
 extern int       always_restore_session;
 extern int       show_tips;
 extern int       last_tip;

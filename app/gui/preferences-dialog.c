@@ -87,6 +87,7 @@ static   int          old_show_statusbar;
 static   int          old_cubic_interpolation;
 static   int          old_confirm_on_close;
 static   int          old_save_session_info;
+static   int          old_save_device_status;
 static   int          old_always_restore_session;
 static   int          old_default_width;
 static   int          old_default_height;
@@ -320,6 +321,11 @@ file_prefs_save_callback (GtkWidget *widget,
       update = g_list_append (update, "save-session-info");
       remove = g_list_append (remove, "dont-save-session-info");
     }
+  if (save_device_status!= old_save_device_status)
+    {
+      update = g_list_append (update, "save-device-status");
+      remove = g_list_append (remove, "dont-save-device-status");
+    }
   if (always_restore_session != old_always_restore_session)
     update = g_list_append (update, "always-restore-session");
   if (default_width != old_default_width ||
@@ -460,6 +466,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   cubic_interpolation = old_cubic_interpolation;
   confirm_on_close = old_confirm_on_close;
   save_session_info = old_save_session_info;
+  save_device_status = old_save_device_status;
   default_width = old_default_width;
   default_height = old_default_height;
   default_type = old_default_type;
@@ -523,6 +530,8 @@ file_prefs_toggle_callback (GtkWidget *widget,
     confirm_on_close = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &save_session_info)
     save_session_info = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data == &save_device_status)
+    save_device_status = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &always_restore_session)
     always_restore_session = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &edit_stingy_memory_use)
@@ -736,6 +745,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       old_cubic_interpolation = cubic_interpolation;
       old_confirm_on_close = confirm_on_close;
       old_save_session_info = save_session_info;
+      old_save_device_status = save_device_status;
       old_always_restore_session = always_restore_session;
       old_default_width = default_width;
       old_default_height = default_height;
@@ -1255,6 +1265,15 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
                           &always_restore_session);
+      gtk_widget_show (button);
+
+      button = gtk_check_button_new_with_label ("Save device status on exit");
+      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
+                                   save_device_status);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                          (GtkSignalFunc) file_prefs_toggle_callback,
+                          &save_device_status);
       gtk_widget_show (button);
       
       label = gtk_label_new ("Session");
