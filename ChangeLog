@@ -1,4 +1,10 @@
 2000-12-16  Sven Neumann  <sven@gimp.org>
+	    Jens Lautenbacher <jtl@gimp.org>
+
+	* Makefile.am
+	* docs/Wilber_Construction_Kit.xcf.gz: added an example XCF file
+
+2000-12-16  Sven Neumann  <sven@gimp.org>
 
 	* app/fileops.c: fixed a warning
 	* app/menus.c: since gee is no longer hidden, I put the old code

@@ -123,6 +123,7 @@ EXTRA_DIST = \
 	docs/Wilber.svg				\
 	docs/Wilber.xcf.gz			\
 	docs/Wilber.xcf.gz.README		\
+	docs/Wilber_Construction_kit.xcf.gz	\
 	docs/cheat_sheet.txt			\
 	docs/gimp.txt				\
 	docs/keybindings.txt 			\
