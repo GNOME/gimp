@@ -1,3 +1,9 @@
+2003-03-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/text/Makefile.am
+	* app/text/text-types.h
+	* app/text/gimpfont.[ch]: new object. Does nothing yet.
+
 2003-03-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimptool/Makefile.am
