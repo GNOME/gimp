@@ -1,0 +1,3 @@
+PACKAGE = gimp-libgimp
+INSTALLSUBDIR = gimp
+include ../../gtk+/po/makefile.cygwin

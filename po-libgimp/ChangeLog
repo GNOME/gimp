@@ -1,3 +1,7 @@
+2000-05-04  Tor Lillqvist  <tml@iki.fi>
+
+	* makefile.cygwin: New file.
+
 Sun Apr 23 21:26:40 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.
