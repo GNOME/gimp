@@ -1,3 +1,12 @@
+2002-05-07  Sven Neumann  <sven@gimp.org>
+
+	Moved slovenian translation to the stable branch where they should
+	have been added in the first place.
+
+	* configure.in: removed sl from LINGUAS.
+
+	* gimp.spec.in: updated a bit, still broken.
+
 2002-05-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.c: reverted my last change. I changed the

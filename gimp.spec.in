@@ -11,13 +11,13 @@ Release: 	1
 Copyright: 	GPL, LGPL
 Group: 		Applications/Graphics
 URL: 		http://www.gimp.org/
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-root
+BuildRoot: 	%{_tmppath}/%{name}-%{ver}-root
 Docdir:		%{prefix}/doc
 Prefix:		%{prefix}
 Obsoletes: 	gimp-data-min
 Obsoletes:	gimp-libgimp
-Requires: 	gtk+ >= 1.2.0
-Source: 	ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
+Requires: 	gtk+ >= 2.0.0
+Source: 	ftp://ftp.gimp.org/pub/gimp/v%{subver}/%{name}-%{ver}.tar.bz2
 
 %description
 The GIMP (GNU Image Manipulation Program) is a powerful image
@@ -202,14 +202,12 @@ cat gimp-perl gimp-perl-plugin-files > gimp-perl-files
 %{prefix}/bin/gimp
 %{prefix}/bin/gimp-remote
 %{prefix}/bin/embedxpm
-%{prefix}/bin/escputil
 %{prefix}/bin/gimpdoc
 %{prefix}/bin/xcftopnm
 
 %defattr (0444, bin, man)
 %{prefix}/man/man1/gimp.1*
 %{prefix}/man/man1/gimp-remote.1*
-%{prefix}/man/man1/escputil.1.*
 %{prefix}/man/man5/gimprc.5*
 %{prefix}/man/man1/
 
