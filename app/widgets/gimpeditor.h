@@ -75,5 +75,8 @@ GtkWidget * gimp_editor_add_stock_box (GimpEditor      *editor,
                                        GCallback        callback,
                                        gpointer         callback_data);
 
+void        gimp_editor_set_box_style (GimpEditor      *editor,
+                                       GtkBox          *box);
+
 
 #endif  /*  __GIMP_EDITOR_H__  */

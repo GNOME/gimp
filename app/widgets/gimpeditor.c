@@ -167,48 +167,18 @@ static void
 gimp_editor_style_set (GtkWidget *widget,
                        GtkStyle  *prev_style)
 {
-  GimpEditor  *editor;
-  GtkIconSize  button_icon_size;
-  gint         button_spacing;
+  GimpEditor  *editor = GIMP_EDITOR (widget);
   gint         content_spacing;
 
-  editor = GIMP_EDITOR (widget);
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  gtk_widget_style_get (widget,
-                        "button_icon_size", &button_icon_size,
-			"button_spacing",   &button_spacing,
-                        "content_spacing",  &content_spacing,
-			NULL);
+  gtk_widget_style_get (widget, "content_spacing",  &content_spacing, NULL);
 
   gtk_box_set_spacing (GTK_BOX (widget), content_spacing);
 
   if (editor->button_box)
-    {
-      GList  *children;
-      GList  *list;
-
-      gtk_box_set_spacing (GTK_BOX (editor->button_box), button_spacing);
-
-      children = gtk_container_get_children (GTK_CONTAINER (editor->button_box));
-
-      for (list = children; list; list = g_list_next (list))
-        {
-          GtkBin *bin;
-          gchar  *stock_id;
-
-          bin = GTK_BIN (list->data);
-
-          gtk_image_get_stock (GTK_IMAGE (bin->child), &stock_id, NULL);
-          gtk_image_set_from_stock (GTK_IMAGE (bin->child),
-                                    stock_id,
-                                    button_icon_size);
-        }
-
-      g_list_free (children);
-    }
-
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+    gimp_editor_set_box_style (editor, GTK_BOX (editor->button_box));
 }
 
 static GimpItemFactory *
@@ -339,6 +309,52 @@ gimp_editor_add_stock_box (GimpEditor  *editor,
 
   return first_button;
 }
+
+void
+gimp_editor_set_box_style (GimpEditor *editor,
+                           GtkBox     *box)
+{
+  GtkIconSize  button_icon_size;
+  gint         button_spacing;
+  GList       *children;
+  GList       *list;
+
+  g_return_if_fail (GIMP_IS_EDITOR (editor));
+  g_return_if_fail (GTK_IS_BOX (box));
+
+  gtk_widget_style_get (GTK_WIDGET (editor),
+                        "button_icon_size", &button_icon_size,
+			"button_spacing",   &button_spacing,
+			NULL);
+
+  gtk_box_set_spacing (box, button_spacing);
+
+  children = gtk_container_get_children (GTK_CONTAINER (box));
+
+  for (list = children; list; list = g_list_next (list))
+    {
+      if (GTK_IS_BUTTON (list->data))
+        {
+          GtkWidget *child;
+
+          child = gtk_bin_get_child (GTK_BIN (list->data));
+
+          if (GTK_IS_IMAGE (child))
+            {
+              gchar *stock_id;
+
+              gtk_image_get_stock (GTK_IMAGE (child), &stock_id, NULL);
+              gtk_image_set_from_stock (GTK_IMAGE (child),
+                                        stock_id, button_icon_size);
+            }
+        }
+    }
+
+  g_list_free (children);
+}
+
+
+/*  private functions  */
 
 static GtkIconSize
 gimp_editor_ensure_button_box (GimpEditor *editor)

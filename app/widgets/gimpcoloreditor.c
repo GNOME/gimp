@@ -410,44 +410,13 @@ static void
 gimp_color_editor_style_set (GtkWidget *widget,
                              GtkStyle  *prev_style)
 {
-  GimpColorEditor *editor;
-  GtkIconSize      button_icon_size;
-  gint             button_spacing;
+  GimpColorEditor *editor = GIMP_COLOR_EDITOR (widget);
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  editor = GIMP_COLOR_EDITOR (widget);
-
-  gtk_widget_style_get (widget,
-                        "button_icon_size", &button_icon_size,
-			"button_spacing",   &button_spacing,
-			NULL);
-
   if (editor->hbox)
-    {
-      GList  *children;
-      GList  *list;
-
-      gtk_box_set_spacing (GTK_BOX (editor->hbox), button_spacing);
-
-      children = gtk_container_get_children (GTK_CONTAINER (editor->hbox));
-
-      for (list = children; list; list = g_list_next (list))
-        {
-          GtkBin *bin;
-          gchar  *stock_id;
-
-          bin = GTK_BIN (list->data);
-
-          gtk_image_get_stock (GTK_IMAGE (bin->child), &stock_id, NULL);
-          gtk_image_set_from_stock (GTK_IMAGE (bin->child),
-                                    stock_id,
-                                    button_icon_size);
-        }
-
-      g_list_free (children);
-    }
+    gimp_editor_set_box_style (GIMP_EDITOR (editor), GTK_BOX (editor->hbox));
 }
 
 void

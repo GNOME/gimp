@@ -1,5 +1,14 @@
 2003-11-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpeditor.[ch] (gimp_editor_set_box_style): new
+	utility function which sets a button box' style according to a
+	GimpEditor's style properties.
+
+	* app/widgets/gimpcoloreditor.c (gimp_color_editor_style_set)
+	* app/widgets/gimpeditor.c (gimp_editor_style_set): use it.
+
+2003-11-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcoloreditor.c: implement GtkWidget::style_set()
 	and update the button box spacing and icons sizes accordingly.
 
