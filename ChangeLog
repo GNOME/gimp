@@ -1,9 +1,14 @@
+1999-11-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/menus.c: move all sub-sub-menus of <Image>/Filters to the
+	top of their menu shells and add a separator after them.
+
 Mon Nov 22 11:19:05 GMT 1999  Adam D. Moss <adam@gimp.org>
 
 	* app/convert.c: Removed erroneous spin-button limit, bumped
 	up RGB->INDEXED precision a little.
 
-1999-11-22  Michael Natterer  <mitschel@cs.tu-berlin.de>
+1999-11-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/brightness_contrast.[ch]
 	* app/by_color_select.[ch]

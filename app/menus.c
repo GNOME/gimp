@@ -893,6 +893,37 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
     }
 }
 
+static void
+menus_filters_subdirs_to_top (GtkMenu *menu)
+{
+  GtkMenuItem *menu_item;
+  GList *list;
+  gint pos;
+
+  pos = 1;
+
+  for (list = GTK_MENU_SHELL (menu)->children; list; list = g_list_next (list))
+    {
+      menu_item = GTK_MENU_ITEM (list->data);
+
+      if (menu_item->submenu)
+	{
+	  menus_filters_subdirs_to_top (GTK_MENU (menu_item->submenu));
+	  gtk_menu_reorder_child (menu, GTK_WIDGET (menu_item), pos);
+	  pos++;
+	}
+    }
+
+  if (pos > 1)
+    {
+      GtkWidget *separator;
+
+      separator = gtk_menu_item_new ();
+      gtk_menu_insert (menu, separator, pos);
+      gtk_widget_show (separator);
+    }
+}
+
 void
 menus_reorder_plugins (void)
 {
@@ -903,11 +934,13 @@ menus_reorder_plugins (void)
   static gint n_xtns_plugins = (sizeof (xtns_plugins) /
 				sizeof (xtns_plugins[0]));
 
+  GtkWidget *menu;
   GtkWidget *menu_item;
+  GList *list;
   gint i, pos;
 
+  /*  Beautify <Toolbox>/Xtns  */
   pos = 2;
-
   for (i = 0; i < n_xtns_plugins; i++)
     {
       menu_item = gtk_item_factory_get_widget (toolbox_factory,
@@ -919,10 +952,27 @@ menus_reorder_plugins (void)
 	}
     }
 
+  /*  Move "Filter all Layers..." before the separator  */
   menu_item = gtk_item_factory_get_widget (image_factory,
 					   "/Filters/Filter all Layers...");
   if (menu_item && menu_item->parent)
     gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, 3);
+
+  /*  Find the <Image>/Filters menu...  */
+  menu_item = gtk_item_factory_get_widget (image_factory,
+					   "/Filters/Repeat last");
+  if (!menu_item || !menu_item->parent)
+    return;
+  menu = menu_item->parent;
+
+  /*  ...and reorder all submenus of it's submenus  */
+  for (list = GTK_MENU_SHELL (menu)->children; list; list = g_list_next (list))
+    {
+      GtkMenuItem *menu_item = GTK_MENU_ITEM (list->data);
+
+      if (menu_item->submenu)
+	menus_filters_subdirs_to_top (GTK_MENU (menu_item->submenu));
+    }
 }
 
 static void
