@@ -101,9 +101,9 @@ static void
 gimp_image_dock_init (GimpImageDock *dock)
 {
   GtkWidget *hbox;
-  GtkWidget *toggle;
 
   dock->image_container    = NULL;
+  dock->show_image_menu    = TRUE;
   dock->auto_follow_active = TRUE;
 
   hbox = gtk_hbox_new (FALSE, 2);
@@ -116,13 +116,13 @@ gimp_image_dock_init (GimpImageDock *dock)
   gtk_box_pack_start (GTK_BOX (hbox), dock->option_menu, TRUE, TRUE, 0);
   gtk_widget_show (dock->option_menu);
 
-  toggle = gtk_toggle_button_new_with_label (_("Auto"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+  dock->auto_button = gtk_toggle_button_new_with_label (_("Auto"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dock->auto_button),
 				dock->auto_follow_active);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
+  gtk_box_pack_start (GTK_BOX (hbox), dock->auto_button, FALSE, FALSE, 0);
+  gtk_widget_show (dock->auto_button);
 
-  gtk_signal_connect (GTK_OBJECT (toggle), "clicked",
+  gtk_signal_connect (GTK_OBJECT (dock->auto_button), "clicked",
 		      GTK_SIGNAL_FUNC (gimp_image_dock_auto_clicked),
 		      dock);
 }
@@ -199,6 +199,17 @@ gimp_image_dock_new (GimpDialogFactory *factory,
 }
 
 void
+gimp_image_dock_set_auto_follow_active (GimpImageDock *image_dock,
+					gboolean       auto_follow_active)
+{
+  g_return_if_fail (image_dock != NULL);
+  g_return_if_fail (GIMP_IS_IMAGE_DOCK (image_dock));
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_dock->auto_button),
+				auto_follow_active ? TRUE : FALSE);
+}
+
+void
 gimp_image_dock_set_show_image_menu (GimpImageDock *image_dock,
 				     gboolean       show)
 {
@@ -213,6 +224,8 @@ gimp_image_dock_set_show_image_menu (GimpImageDock *image_dock,
     {
       gtk_widget_hide (image_dock->option_menu->parent);
     }
+
+  image_dock->show_image_menu = show ? TRUE : FALSE;
 }
 
 static void

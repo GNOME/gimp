@@ -1254,6 +1254,10 @@ static GimpItemFactoryEntry dialogs_entries[] =
       dialogs_toggle_image_menu_cmd_callback, 0, "<ToggleItem>" },
     NULL,
     NULL, NULL },
+  { { N_("/Auto Follow Active Image"), NULL,
+      dialogs_toggle_auto_cmd_callback, 0, "<ToggleItem>" },
+    NULL,
+    NULL, NULL }
 
 };
 static guint n_dialogs_entries = (sizeof (dialogs_entries) /

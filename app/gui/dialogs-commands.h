@@ -33,6 +33,9 @@ void   dialogs_remove_tab_cmd_callback        (GtkWidget *widget,
 void   dialogs_toggle_image_menu_cmd_callback (GtkWidget *widget,
 					       gpointer   data,
 					       guint      action);
+void   dialogs_toggle_auto_cmd_callback       (GtkWidget *widget,
+					       gpointer   data,
+					       guint      action);
 
 void   dialogs_create_lc_cmd_callback         (GtkWidget *widget,
 					       gpointer   data,

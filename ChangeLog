@@ -1,3 +1,23 @@
+2001-07-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/dialogs-commands.[ch]
+	* app/gui/menus.c: added dialogs_toggle_auto_cmd_callback() which
+	toggles GimpImageDock's "Auto" button.
+
+	* app/gui/dialogs.c: ref/sink the global dialog factories.
+
+	* app/widgets/gimpdialogfactory.[ch]: added some comments, some
+	cleanups and additional checks. Factored out the "aux-info" stuff
+	to separate functions.
+
+	* app/widgets/gimpdockbook.c: set the state of the "Auto Follow
+	Active Image" menu item.
+
+	* app/widgets/gimpimagedock.[ch]: added a gboolean for
+	"show_image_menu" so we don't need to fiddle around with the
+	widgets to get this info. Added
+	gimp_image_dock_set_auto_follow_active().
+
 2001-07-01  Sven Neumann  <sven@gimp.org>
 
 	* acconfig.h: add HAVE_FINITE and HAVE_ISFINITE 

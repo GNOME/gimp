@@ -70,7 +70,11 @@ dialogs_add_tab_cmd_callback (GtkWidget *widget,
 						       dockbook->dock,
 						       identifier);
 
-	  if (dockable)
+	  /*  Maybe gimp_dialog_factory_dockable_new() returned an already
+	   *  existing singleton dockable, so check if it already is
+	   *  attached to a dockbook.
+	   */
+	  if (dockable && ! GIMP_DOCKABLE (dockable)->dockbook)
 	    gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), -1);
 	}
     }
@@ -113,6 +117,22 @@ dialogs_toggle_image_menu_cmd_callback (GtkWidget *widget,
     {
       gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dockbook->dock),
 					   GTK_CHECK_MENU_ITEM (widget)->active);
+    }
+}
+
+void
+dialogs_toggle_auto_cmd_callback (GtkWidget *widget,
+				  gpointer   data,
+				  guint      action)
+{
+  GimpDockbook *dockbook;
+
+  dockbook = (GimpDockbook *) gtk_item_factory_popup_data_from_widget (widget);
+
+  if (dockbook)
+    {
+      gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dockbook->dock),
+					      GTK_CHECK_MENU_ITEM (widget)->active);
     }
 }
 

@@ -98,27 +98,33 @@ dialogs_init (void)
 			     NULL,
 			     NULL);
 
+  gtk_object_ref (GTK_OBJECT (global_dialog_factory));
+  gtk_object_sink (GTK_OBJECT (global_dialog_factory));
+
   global_dock_factory =
     gimp_dialog_factory_new ("dock",
 			     gimp_context_get_user (),
 			     menus_get_dialogs_factory (),
 			     dialogs_dock_new);
 
+  gtk_object_ref (GTK_OBJECT (global_dock_factory));
+  gtk_object_sink (GTK_OBJECT (global_dock_factory));
+
   for (i = 0; i < n_toplevel_entries; i++)
-    gimp_dialog_factory_register (global_dialog_factory,
-				  toplevel_entries[i].identifier,
-				  toplevel_entries[i].new_func,
-				  toplevel_entries[i].singleton,
-				  toplevel_entries[i].session_managed,
-				  toplevel_entries[i].remember_size);
+    gimp_dialog_factory_register_entry (global_dialog_factory,
+					toplevel_entries[i].identifier,
+					toplevel_entries[i].new_func,
+					toplevel_entries[i].singleton,
+					toplevel_entries[i].session_managed,
+					toplevel_entries[i].remember_size);
 
   for (i = 0; i < n_dock_entries; i++)
-    gimp_dialog_factory_register (global_dock_factory,
-				  dock_entries[i].identifier,
-				  dock_entries[i].new_func,
-				  dock_entries[i].singleton,
-				  dock_entries[i].session_managed,
-				  dock_entries[i].remember_size);
+    gimp_dialog_factory_register_entry (global_dock_factory,
+					dock_entries[i].identifier,
+					dock_entries[i].new_func,
+					dock_entries[i].singleton,
+					dock_entries[i].session_managed,
+					dock_entries[i].remember_size);
 }
 
 void

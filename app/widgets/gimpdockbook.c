@@ -420,14 +420,19 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
       GtkItemFactory *ifactory;
       GtkWidget      *add_widget;
       GtkWidget      *toggle_widget;
+      GtkWidget      *auto_widget;
       GtkWidget      *notebook_menu;
       gint            origin_x;
       gint            origin_y;
       gint            x, y;
 
       ifactory      = GTK_ITEM_FACTORY (dockbook->dock->factory->item_factory);
-      add_widget    = gtk_item_factory_get_widget (ifactory, "/Select Tab");
-      toggle_widget = gtk_item_factory_get_widget (ifactory, "/Show Image Menu");
+      add_widget    = gtk_item_factory_get_widget (ifactory,
+						   "/Select Tab");
+      toggle_widget = gtk_item_factory_get_widget (ifactory,
+						   "/Show Image Menu");
+      auto_widget   = gtk_item_factory_get_widget (ifactory, 
+						   "/Auto Follow Active Image");
       notebook_menu = GTK_NOTEBOOK (dockbook)->menu;
 
       gtk_object_ref (GTK_OBJECT (notebook_menu));
@@ -457,7 +462,11 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
 
       gtk_check_menu_item_set_active
 	(GTK_CHECK_MENU_ITEM (toggle_widget),
-	 GTK_WIDGET_VISIBLE (GIMP_IMAGE_DOCK (dockbook->dock)->option_menu->parent));
+	 GIMP_IMAGE_DOCK (dockbook->dock)->show_image_menu);
+
+      gtk_check_menu_item_set_active
+	(GTK_CHECK_MENU_ITEM (auto_widget),
+	 GIMP_IMAGE_DOCK (dockbook->dock)->auto_follow_active);
 
       gtk_item_factory_popup_with_data (ifactory,
 					dockbook,
