@@ -1784,7 +1784,9 @@ gdisplay_update_title (GDisplay *gdisp)
 
   /* format the title */
   gdisplay_format_title (gdisp, title, MAX_TITLE_BUF);
-  gdk_window_set_title (gdisp->shell->window, title);
+
+  if (!gdisp->is_embeddable)
+      gtk_window_set_title (gdisp->shell, title);
 
   /* update the statusbar */
   context_id =

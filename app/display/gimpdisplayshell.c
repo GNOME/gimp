@@ -742,7 +742,7 @@ create_display_shell (GDisplay* gdisp,
 
   /*  The toplevel shell */
   if(gdisp->is_embeddable) {
-    gdisp->shell = gtk_vbox_new(FALSE, 0);
+    gdisp->shell = gtk_event_box_new();
   } else {
     gdisp->shell = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title (GTK_WINDOW (gdisp->shell), title);
@@ -759,6 +759,7 @@ create_display_shell (GDisplay* gdisp,
 			 | GDK_BUTTON_PRESS_MASK
 			 | GDK_KEY_PRESS_MASK
 			 | GDK_KEY_RELEASE_MASK);
+
   gtk_object_set_user_data (GTK_OBJECT (gdisp->shell), (gpointer) gdisp);
   gtk_widget_ref (gdisp->shell);
 

@@ -101,13 +101,13 @@ gimp_object_factory (GnomeEmbeddableFactory *this, void *data)
   bonobo_object_data = g_new0 (bonobo_object_data_t, 1);
 
   bonobo_object = gnome_embeddable_new (gimp_view_factory, bonobo_object_data);
-  if (bonobo_object == NULL)
+  if (!bonobo_object)
     goto out;
 
   stream = gnome_persist_stream_new (gimp_stream_load_image,
 				     gimp_stream_save_image,
 				     bonobo_object_data);
-  if (stream == NULL)
+  if (!stream)
     goto out;
 
   bonobo_object_data->bonobo_object = bonobo_object;
@@ -117,6 +117,8 @@ gimp_object_factory (GnomeEmbeddableFactory *this, void *data)
 
   /* Make a basic blank image */
   bonobo_object_data->gimp_image = gimage = gimp_image_new(320, 200, RGB);
+  bonobo_object_data->gimp_image->ref_count++;
+
   gimp_image_set_resolution (gimage, 72.0, 72.0);
   gimp_image_set_unit (gimage, UNIT_INCH);
   gimage_disable_undo(bonobo_object_data->gimp_image);
@@ -224,12 +226,15 @@ gimp_stream_load_image (GnomePersistStream *ps, GNOME_Stream stream, void *data)
   }
 
   if(bonobo_object_data->gimp_image)
-    gtk_object_unref(GTK_OBJECT(bonobo_object_data->gimp_image));
+    gimage_delete(bonobo_object_data->gimp_image);
 
   bonobo_object_data->gimp_image = new_image;
   gtk_object_ref(GTK_OBJECT(new_image));
   gtk_object_sink(GTK_OBJECT(new_image));
-  g_free(bonobo_object_data->tmpfile);
+  if(bonobo_object_data->tmpfile) {
+    unlink(bonobo_object_data->tmpfile);
+    g_free(bonobo_object_data->tmpfile);
+  }
   bonobo_object_data->tmpfile = new_tmpfile;
 
   CORBA_exception_free(&ev);
