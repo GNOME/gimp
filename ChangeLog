@@ -1,3 +1,8 @@
+Sat May  2 16:10:05 EDT 1998  EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* app/channels_dialog.c: removed my broken fix, put in a fix
+	that works
+	
 Sat May  2 15:20:54 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/channels_dialog.c: check to be sure that the gimage still

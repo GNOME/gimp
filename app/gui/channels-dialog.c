@@ -1872,6 +1872,7 @@ struct _EditChannelOptions {
   GtkWidget *name_entry;
 
   ChannelWidget *channel_widget;
+  int gimage_id;
   ColorPanel *color_panel;
   double opacity;
 };
@@ -1891,7 +1892,7 @@ edit_channel_query_ok_callback (GtkWidget *w,
   opacity = (int) (255 * options->opacity) / 100;
 
 
-  if (gimage_get_ID (options->channel_widget->ID)) {
+  if (gimage_get_ID (options->gimage_id)) {
     
     /*  Set the new channel name  */
     if (GIMP_DRAWABLE(channel)->name)
@@ -1965,6 +1966,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   /*  the new options structure  */
   options = (EditChannelOptions *) g_malloc (sizeof (EditChannelOptions));
   options->channel_widget = channel_widget;
+  options->gimage_id = channel_widget->gimage->ID;
   options->opacity = (double) channel_widget->channel->opacity / 2.55;
   for (i = 0; i < 3; i++) 
     channel_color[i] =  channel_widget->channel->col[i];
