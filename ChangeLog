@@ -1,3 +1,14 @@
+Sat Feb 26 23:58:27 GMT 2000 Andy Thomas <alt@gimp.org>
+
+         * gimp/app/nav_window.c
+
+	Now takes note of the users set preview size when close to the
+	edge of the screen. 
+	If the user selected < MAX size of preview the popup would appear
+	in the incorrect location of the screen. This is a slight change	
+	to the checkin of Sat Feb 19 13:53:34 CET 2000  by 
+	Sven Neumann <sven@gimp.org>
+
 Sat Feb 26 19:56:35 CET 2000  Sven Neumann <sven@gimp.org>
 			      Daniel Egger <Daniel.Egger@suse.de>
 

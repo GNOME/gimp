@@ -1618,8 +1618,8 @@ nav_popup_click_handler (GtkWidget      *widget,
    */
   x = (x < 0) ? 0 : x;
   y = (y < 0) ? 0 : y;
-  x = (x + NAV_PREVIEW_WIDTH > scr_w) ? scr_w - NAV_PREVIEW_WIDTH : x;
-  y = (y + NAV_PREVIEW_HEIGHT > scr_h) ? scr_h - NAV_PREVIEW_HEIGHT : y;
+  x = (x + iwp->pwidth > scr_w) ? scr_w - iwp->pwidth - 2: x;
+  y = (y + iwp->pheight > scr_h) ? scr_h - iwp->pheight - 2: y;
 
   gtk_widget_popup (gdisp->nav_popup, x, y);
   gdk_flush();
