@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:20+0100\n"
-"PO-Revision-Date: 2004-10-17 22:42+0200\n"
+"POT-Creation-Date: 2004-11-05 13:24+0100\n"
+"PO-Revision-Date: 2004-11-05 13:26+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -41,86 +41,95 @@ msgstr ""
 "La modalità di valutazione Script-Fu permette solo invocazioni non "
 "interattive"
 
+#: plug-ins/script-fu/script-fu-interface.c:177
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr "Script-Fu non può elaborare due o più script contemporaneamente."
+
+#: plug-ins/script-fu/script-fu-interface.c:179
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr "Lo script \"%s\" è già in esecuzione."
+
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-interface.c:191
-#: plug-ins/script-fu/script-fu-interface.c:193
+#: plug-ins/script-fu/script-fu-interface.c:202
+#: plug-ins/script-fu/script-fu-interface.c:204
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-interface.c:207
+#: plug-ins/script-fu/script-fu-interface.c:217
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-interface.c:244
+#: plug-ins/script-fu/script-fu-interface.c:254
 msgid "Script Arguments"
 msgstr "Argomenti dello script"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-interface.c:275
+#: plug-ins/script-fu/script-fu-interface.c:285
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-interface.c:318
+#: plug-ins/script-fu/script-fu-interface.c:328
 msgid "Script-Fu Color Selection"
 msgstr "Selezione colore Script-fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:424
+#: plug-ins/script-fu/script-fu-interface.c:434
 msgid "Script-Fu File Selection"
 msgstr "Selezione file Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:428
+#: plug-ins/script-fu/script-fu-interface.c:438
 msgid "Script-Fu Folder Selection"
 msgstr "Selezione cartella Script-fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:440
+#: plug-ins/script-fu/script-fu-interface.c:450
 msgid "Script-Fu Font Selection"
 msgstr "Selezione carattere Script-fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:447
+#: plug-ins/script-fu/script-fu-interface.c:457
 msgid "Script-Fu Palette Selection"
 msgstr "Selezione tavolozza Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:455
+#: plug-ins/script-fu/script-fu-interface.c:465
 msgid "Script-fu Pattern Selection"
 msgstr "Selezione motivo Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:462
+#: plug-ins/script-fu/script-fu-interface.c:472
 msgid "Script-Fu Gradient Selection"
 msgstr "Selezione gradiente Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:470
+#: plug-ins/script-fu/script-fu-interface.c:480
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:529
+#: plug-ins/script-fu/script-fu-interface.c:539
 msgid "Script Progress"
 msgstr "Avanzamento dello script"
 
-#: plug-ins/script-fu/script-fu-interface.c:537
+#: plug-ins/script-fu/script-fu-interface.c:547
 msgid "(none)"
 msgstr "(nessuno)"
 
-#: plug-ins/script-fu/script-fu-interface.c:1057
+#: plug-ins/script-fu/script-fu-interface.c:1068
 #: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Autore:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1064
+#: plug-ins/script-fu/script-fu-interface.c:1075
 #: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1071
+#: plug-ins/script-fu/script-fu-interface.c:1082
 #: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1080
+#: plug-ins/script-fu/script-fu-interface.c:1091
 msgid "Image Types:"
 msgstr "Tipi di immagini:"
 
@@ -195,9 +204,8 @@ msgid "Searching - please wait"
 msgstr "Ricerca - attendere"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:425
-#, fuzzy
 msgid "1 Procedure"
-msgstr "%d procedure"
+msgstr "1 procedura"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:427
 #, c-format
@@ -1230,7 +1238,7 @@ msgid "Offset Y"
 msgstr "Spostamento in Y"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
 msgid "Opacity"
 msgstr "Opacità"
 
@@ -1869,14 +1877,26 @@ msgid "Angle"
 msgstr "Angolo"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
-msgid "Interpolate"
+msgid "Cubic"
+msgstr "Cubico"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+msgid "Interpolation"
 msgstr "Interpolazione"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+msgid "Linear"
+msgstr "Lineare"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+msgid "None"
+msgstr "Nessuno"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:11
 msgid "Relative distance of horizon"
 msgstr "Distanza relativa dell'orizzonte"
 
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:12
 msgid "Relative length of shadow"
 msgstr "Lunghezza relativa dell'ombra"
 
@@ -2479,6 +2499,3 @@ msgstr "Spostamento illuminazione in Y"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Opacità illuminazione"
-
-#~ msgid "Re-read all available scripts"
-#~ msgstr "Ri-leggi script disponibili"
