@@ -549,6 +549,8 @@ msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
+"Використовувати л╕н╕йне в╕дображення зам╕сть будь-яко╖ тригонометрично╖ функц╕╖ "
+"для цього каналу кольору"
 
 #: plug-ins/FractalExplorer/Dialogs.c:741
 #: plug-ins/FractalExplorer/Dialogs.c:782
@@ -1216,15 +1218,15 @@ msgstr "Обертання"
 
 #: plug-ins/MapObject/mapobject_ui.c:1087
 msgid "Rotation angle about X axis"
-msgstr ""
+msgstr "Кут обертання навколо ос╕ X"
 
 #: plug-ins/MapObject/mapobject_ui.c:1096
 msgid "Rotation angle about Y axis"
-msgstr ""
+msgstr "Кут обертання навколо ос╕ Y"
 
 #: plug-ins/MapObject/mapobject_ui.c:1105
 msgid "Rotation angle about Z axis"
-msgstr ""
+msgstr "Кут обертання навколо ос╕ Z"
 
 #: plug-ins/MapObject/mapobject_ui.c:1129
 msgid "Front:"
