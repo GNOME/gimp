@@ -535,6 +535,7 @@ gradient_editor_new (void)
   GtkWidget      *main_vbox;
   GtkWidget      *hbox;
   GtkWidget      *vbox;
+  GtkWidget      *vbox2;
   GtkWidget      *button;
   GtkWidget      *frame;
   gint            i;
@@ -560,19 +561,19 @@ gradient_editor_new (void)
 
 		     NULL);
 
-  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_DIALOG (gradient_editor->shell)->vbox)), 0)));
-
-  gtk_widget_hide (GTK_DIALOG (gradient_editor->shell)->action_area);
-
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (gradient_editor->shell)->vbox),
 		     main_vbox);
   gtk_widget_show (main_vbox);
 
+  vbox = gtk_vbox_new (FALSE, 1);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
   /* Gradient's name */
   gradient_editor->name = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (main_vbox), gradient_editor->name, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), gradient_editor->name, TRUE, TRUE, 0);
   gtk_widget_show (gradient_editor->name);
 
   gtk_signal_connect (GTK_OBJECT (gradient_editor->name), "activate",
@@ -582,99 +583,15 @@ gradient_editor_new (void)
 		      GTK_SIGNAL_FUNC (gradient_editor_name_focus_out),
 		      gradient_editor);
 
-  /*  Horizontal box for zoom controls, scrollbar and instant update toggle  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  /* Save as POV-Ray button */
-  button = gtk_button_new_with_label (_("Save as POV-Ray"));
-  gimp_help_set_help_data (button, NULL,
-			   "dialogs/gradient_editor/save_as_povray.html");
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button); 
-
-  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
-
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (ed_save_pov_callback),
-		      gradient_editor);
-
-  /*  Zoom all button */
-  button = gtk_button_new_with_label (_("Zoom all"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button); 
-
-  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
-
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (ed_zoom_all_callback),
-		      gradient_editor);
-
-  /*  + and - buttons  */
-  gtk_widget_realize (gradient_editor->shell);
-
-  button = gimp_pixmap_button_new (zoom_in_xpm, NULL);
-  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (ed_zoom_in_callback),
-		      gradient_editor);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = gimp_pixmap_button_new (zoom_out_xpm, NULL);
-  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (ed_zoom_out_callback),
-		      gradient_editor);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  /*  Scrollbar  */
-  gradient_editor->zoom_factor = 1;
-
-  gradient_editor->scroll_data = gtk_adjustment_new (0.0, 0.0, 1.0,
-					      1.0 * GRAD_SCROLLBAR_STEP_SIZE,
-					      1.0 * GRAD_SCROLLBAR_PAGE_SIZE,
-					      1.0);
-
-  gtk_signal_connect (gradient_editor->scroll_data, "value_changed",
-		      GTK_SIGNAL_FUNC (ed_scrollbar_update),
-		      gradient_editor);
-  gtk_signal_connect (gradient_editor->scroll_data, "changed",
-		      GTK_SIGNAL_FUNC (ed_scrollbar_update),
-		      gradient_editor);
-
-  gradient_editor->scrollbar =
-    gtk_hscrollbar_new (GTK_ADJUSTMENT (gradient_editor->scroll_data));
-  gtk_range_set_update_policy (GTK_RANGE (gradient_editor->scrollbar),
-			       GTK_UPDATE_CONTINUOUS);
-  gtk_box_pack_start (GTK_BOX (hbox), gradient_editor->scrollbar, TRUE, TRUE, 0);
-  gtk_widget_hide (gradient_editor->scrollbar);
-
-  /* Instant update toggle */
-  gradient_editor->instant_update = TRUE;
-
-  button = gtk_check_button_new_with_label (_("Instant update"));
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (ed_instant_update_update),
-		      gradient_editor);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-  gtk_widget_show (button);
-
   /* Frame for gradient preview and gradient control */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), vbox); 
-  gtk_widget_show (vbox);
+  vbox2 = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
 
   /* Gradient preview */
   gradient_editor->preview_rows[0]     = NULL;
@@ -706,7 +623,7 @@ gradient_editor_new (void)
                               gradient_editor_drop_gradient,
                               gradient_editor);
 
-  gtk_box_pack_start (GTK_BOX (vbox), gradient_editor->preview, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), gradient_editor->preview, TRUE, TRUE, 0);
   gtk_widget_show (gradient_editor->preview);
 
   /* Gradient control */
@@ -762,13 +679,106 @@ gradient_editor_new (void)
   gtk_signal_connect (GTK_OBJECT (gradient_editor->control), "event",
 		      GTK_SIGNAL_FUNC (control_events),
 		      gradient_editor);
-  gtk_box_pack_start (GTK_BOX (vbox), gradient_editor->control, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), gradient_editor->control,
+		      FALSE, FALSE, 0);
   gtk_widget_show (gradient_editor->control);
 
-  /* Hint bar and close button */
+  /*  Scrollbar  */
+  gradient_editor->zoom_factor = 1;
+
+  gradient_editor->scroll_data =
+    gtk_adjustment_new (0.0, 0.0, 1.0,
+			1.0 * GRAD_SCROLLBAR_STEP_SIZE,
+			1.0 * GRAD_SCROLLBAR_PAGE_SIZE,
+			1.0);
+
+  gtk_signal_connect (gradient_editor->scroll_data, "value_changed",
+		      GTK_SIGNAL_FUNC (ed_scrollbar_update),
+		      gradient_editor);
+  gtk_signal_connect (gradient_editor->scroll_data, "changed",
+		      GTK_SIGNAL_FUNC (ed_scrollbar_update),
+		      gradient_editor);
+
+  gradient_editor->scrollbar =
+    gtk_hscrollbar_new (GTK_ADJUSTMENT (gradient_editor->scroll_data));
+  gtk_range_set_update_policy (GTK_RANGE (gradient_editor->scrollbar),
+			       GTK_UPDATE_CONTINUOUS);
+  gtk_box_pack_start (GTK_BOX (vbox), gradient_editor->scrollbar,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (gradient_editor->scrollbar);
+
+  /*  Horizontal box for name, zoom controls and instant update toggle  */
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  /* Save as POV-Ray button */
+  button = gtk_button_new_with_label (_("Save as POV-Ray"));
+  gimp_help_set_help_data (button, NULL,
+			   "dialogs/gradient_editor/save_as_povray.html");
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button); 
+
+  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
+
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (ed_save_pov_callback),
+		      gradient_editor);
+
+  /*  + and - buttons  */
+  gtk_widget_realize (gradient_editor->shell);
+
+  button = gimp_pixmap_button_new (zoom_out_xpm, NULL);
+  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (ed_zoom_out_callback),
+		      gradient_editor);
+
+  button = gimp_pixmap_button_new (zoom_in_xpm, NULL);
+  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (ed_zoom_in_callback),
+		      gradient_editor);
+
+  /*  Zoom all button */
+  button = gtk_button_new_with_label (_("Zoom all"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button); 
+
+  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
+
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (ed_zoom_all_callback),
+		      gradient_editor);
+
+  /* Instant update toggle */
+  gradient_editor->instant_update = TRUE;
+
+  button = gtk_check_button_new_with_label (_("Instant update"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (ed_instant_update_update),
+		      gradient_editor);
+
+  /* Hint bar */
+  hbox = GTK_DIALOG (gradient_editor->shell)->action_area;
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), FALSE);
+
   gradient_editor->hint_label = gtk_label_new ("");
   gtk_misc_set_alignment (GTK_MISC (gradient_editor->hint_label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (main_vbox), gradient_editor->hint_label,
+  gtk_box_pack_start (GTK_BOX (hbox), gradient_editor->hint_label,
 		      FALSE, FALSE, 0);
   gtk_widget_show (gradient_editor->hint_label);
 
@@ -1150,8 +1160,6 @@ ed_zoom_all_callback (GtkWidget      *widget,
 
   gradient_editor->zoom_factor = 1;
 
-  gtk_widget_hide (gradient_editor->scrollbar);
-
   adjustment->value     	   = 0.0;
   adjustment->page_size 	   = 1.0;
   adjustment->step_increment = 1.0 * GRAD_SCROLLBAR_STEP_SIZE;
@@ -1179,11 +1187,6 @@ ed_zoom_out_callback (GtkWidget      *widget,
   old_page_size = adjustment->page_size;
 
   gradient_editor->zoom_factor--;
-
-  if (gradient_editor->zoom_factor==1)
-    gtk_widget_hide (gradient_editor->scrollbar);
-  else
-    gtk_widget_show (gradient_editor->scrollbar);
 
   page_size = 1.0 / gradient_editor->zoom_factor;
   value     = old_value - (page_size - old_page_size) / 2.0;
@@ -1225,7 +1228,6 @@ ed_zoom_in_callback (GtkWidget      *widget,
   adjustment->page_increment = page_size * GRAD_SCROLLBAR_PAGE_SIZE;
 
   gtk_adjustment_changed (GTK_ADJUSTMENT (gradient_editor->scroll_data));
-  gtk_widget_show (gradient_editor->scrollbar);
 }
 
 static void
@@ -1631,6 +1633,9 @@ control_events (GtkWidget      *widget,
 
 	  if ((time - gradient_editor->control_click_time) >= GRAD_MOVE_TIME)
 	    {
+	      if (! gradient_editor->instant_update)
+		gimp_data_dirty (GIMP_DATA (gradient));
+
 	      ed_update_editor (gradient_editor,
 				GRAD_UPDATE_GRADIENT); /* Possible move */
 	    }
@@ -2040,13 +2045,17 @@ control_motion (GradientEditor *gradient_editor,
   if (str)
     g_free (str);
 
-  gimp_data_dirty (GIMP_DATA (gradient));
-
   if (gradient_editor->instant_update)
-    ed_update_editor (gradient_editor,
-		      GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
+    {
+      gimp_data_dirty (GIMP_DATA (gradient));
+
+      ed_update_editor (gradient_editor,
+			GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
+    }
   else
-    ed_update_editor (gradient_editor, GRAD_UPDATE_CONTROL);
+    {
+      ed_update_editor (gradient_editor, GRAD_UPDATE_CONTROL);
+    }
 }
 
 static void

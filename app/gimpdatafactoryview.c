@@ -18,8 +18,12 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
@@ -377,13 +381,33 @@ gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
 
       if (new_data)
 	{
-	  gchar *name;
+	  const gchar *name;
+	  gchar       *ext;
+	  gint         copy_len;
+	  gint         number;
+	  gchar       *new_name;
 
-	  name = g_strdup_printf (_("%s copy"), GIMP_OBJECT (data)->name);
+	  name = gimp_object_get_name (GIMP_OBJECT (data));
 
-	  gimp_object_set_name (GIMP_OBJECT (new_data), name);
+	  ext      = strrchr (name, '#');
+	  copy_len = strlen (_("copy"));
 
-	  g_free (name);
+	  if ((strlen (name) >= copy_len                                 &&
+	       strcmp (&name[strlen (name) - copy_len], _("copy")) == 0) ||
+	      (ext && (number = atoi (ext + 1)) > 0                      &&
+	       ((gint) (log10 (number) + 1)) == strlen (ext + 1)))
+	    {
+	      /* don't have redundant "copy"s */
+	      new_name = g_strdup (name);
+	    }
+	  else
+	    {
+	      new_name = g_strdup_printf (_("%s copy"), name);
+	    }
+
+	  gimp_object_set_name (GIMP_OBJECT (new_data), new_name);
+
+	  g_free (new_name);
 
 	  gimp_container_add (view->factory->container, GIMP_OBJECT (new_data));
 

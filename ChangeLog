@@ -1,3 +1,31 @@
+2001-02-19  Michael Natterer  <mitch@gimp.org>
+
+	* gimp.m4
+	* gimptool.in: removed.
+
+	* gimp-1.4.m4
+	* gimptool-1.4.in: added modified versions. gimp-1.4.m4 is untested.
+	The m4 macro is now called AM_PATH_GIMP_1_4()
+
+	* .cvsignore
+	* Makefile.am
+	* configure.in: changed accordingly.
+
+	* libgimp/Makefile.am
+	* libgimpcolor/Makefile.am
+	* libgimpmath/Makefile.am
+	* libgimpwidgets/Makefile.am: install the header files in
+	$includedir/gimp-MAJOR.MINOR/<libname>
+
+	* app/brush_edit.c: increased toplevel container border size to 4.
+
+	* app/gimpdatafactoryview.c: don't generate multiple "copy"s when
+	duplicating data objects.
+
+	* app/gradient_editor.c: cleaned up the GUI.
+
+	* app/lc_dialog.c: removed the "Close" button.
+
 2001-02-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpdnd.[ch]: added DND source functions which work by

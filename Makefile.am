@@ -24,7 +24,7 @@ SUBDIRS = \
 	devel-docs	\
 	build
 
-bin_SCRIPTS = gimptool @GIMPINSTALL@
+bin_SCRIPTS = gimptool-1.4 @GIMPINSTALL@
 
 EXTRA_SCRIPTS = gimpinstall
 
@@ -46,7 +46,7 @@ EXTRA_DIST = \
 	user_install		\
 	user_install.bat	\
 	ps-menurc		\
-	gimp.m4			\
+	gimp-1.4.m4		\
 	gimprc.win32		\
 	config.h.win32
 
@@ -67,7 +67,7 @@ gimpdata_SCRIPTS = user_install
 man_MANS = gimp.1 gimptool.1 gimp-remote.1 gimprc.5
 
 m4datadir = $(datadir)/aclocal
-m4data_DATA = gimp.m4
+m4data_DATA = gimp-1.4.m4
 
 scriptdata =
 
@@ -76,11 +76,11 @@ gimpinstall:
 
 install-exec-local:
 	cd $(DESTDIR)$(bindir) \
-	&& rm -f gimp-config \
-	&& $(LN_S) gimptool gimp-config
+	&& rm -f gimp-config-1.4 \
+	&& $(LN_S) gimptool-1.4 gimp-config-1.4
 
 uninstall-local:
-	rm -f $(DESTDIR)$(bindir)/gimp-config
+	rm -f $(DESTDIR)$(bindir)/gimp-config-1.4
 
 .PHONY: files populate checkin release
 

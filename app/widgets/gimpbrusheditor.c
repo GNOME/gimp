@@ -104,7 +104,7 @@ brush_edit_generated_new (void)
   gtk_widget_hide (GTK_DIALOG (begw->shell)->action_area);
 
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (begw->shell)->vbox), vbox);
 
   /* Brush's name */

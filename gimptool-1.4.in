@@ -179,14 +179,7 @@ while test $# -gt 0; do
         --cflags-noui)
           my_gtk_cflags=`echo $gtk_cflags | sed 's/^.*\(-I[^ ]*glib[^ ]*  *-I[^ ]*\).*$/\1/'` ;;
       esac
-      if test @includedir@ != /usr/include ; then
-        includes=-I@includedir@
-        for i in $my_gtk_cflags ; do
-          if test $i = -I@includedir@ ; then
-             includes=""
-          fi
-        done
-      fi
+      includes=-I@includedir@/gimp-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@
       echo $includes $my_gtk_cflags
       ;;
     --libs | --libs-nogimpui)

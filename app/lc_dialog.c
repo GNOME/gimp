@@ -97,7 +97,6 @@ lc_dialog_create (GimpImage *gimage)
 {
   GtkWidget *util_box;
   GtkWidget *auto_button;
-  GtkWidget *button;
   GtkWidget *label;
   GtkWidget *separator;
   gint       default_index;
@@ -121,24 +120,30 @@ lc_dialog_create (GimpImage *gimage)
       return;
     }
 
-  lc_dialog = g_new (LCDialog, 1);
-  lc_dialog->shell =
-    gimp_dialog_new (_("Layers, Channels & Paths"), "layers_channels_paths",
-		     lc_dialog_help_func,
-		     "dialogs/layers_and_channels.html",
-		     GTK_WIN_POS_NONE,
-		     FALSE, TRUE, FALSE,
-		     NULL);
-  lc_dialog->gimage = NULL;
+  lc_dialog = g_new0 (LCDialog, 1);
+
+  lc_dialog->gimage             = NULL;
   lc_dialog->auto_follow_active = TRUE;
+
+  lc_dialog->shell = gimp_dialog_new (_("Layers, Channels & Paths"),
+				      "layers_channels_paths",
+				      lc_dialog_help_func,
+				      "dialogs/layers_and_channels.html",
+				      GTK_WIN_POS_NONE,
+				      FALSE, TRUE, FALSE,
+
+				      "_delete_event_", lc_dialog_close_callback,
+				      lc_dialog, NULL, NULL, TRUE, TRUE,
+
+				      NULL);
+
+  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_DIALOG (lc_dialog->shell)->vbox)), 0)));
+
+  gtk_widget_hide (GTK_DIALOG (lc_dialog->shell)->action_area);
 
   /*  Register the dialog  */
   dialog_register (lc_dialog->shell);
   session_set_window_geometry (lc_dialog->shell, &lc_dialog_session_info, TRUE);
-
-  /*  Handle the WM delete event  */
-  gtk_signal_connect (GTK_OBJECT (lc_dialog->shell), "delete_event", 
-		      GTK_SIGNAL_FUNC (lc_dialog_close_callback), NULL);
 
   /*  The toplevel vbox  */
   lc_dialog->subshell = gtk_vbox_new (FALSE, 1);
@@ -217,15 +222,6 @@ lc_dialog_create (GimpImage *gimage)
   /*  The action area  */
   gtk_container_set_border_width
     (GTK_CONTAINER (GTK_DIALOG (lc_dialog->shell)->action_area), 1);
-
-  /*  The close button  */
-  button = gtk_button_new_with_label (_("Close"));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (lc_dialog->shell)->action_area),
-		      button, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) lc_dialog_close_callback,
-		      lc_dialog->shell);
-  gtk_widget_show (button);
 
   /*  Make sure the channels page is realized  */
   gtk_notebook_set_page (GTK_NOTEBOOK (lc_dialog->notebook), 1);

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpmathincludedir = $(includedir)/libgimpmath
+libgimpmathincludedir = $(includedir)/gimp-$(GIMP_MAJOR_VERSION).$(GIMP_MINOR_VERSION)/libgimpmath
 
 AM_CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"		\

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpcolorincludedir = $(includedir)/libgimpcolor
+libgimpcolorincludedir = $(includedir)/gimp-$(GIMP_MAJOR_VERSION).$(GIMP_MINOR_VERSION)/libgimpcolor
 
 AM_CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"		\

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpwidgetsincludedir = $(includedir)/libgimpwidgets
+libgimpwidgetsincludedir = $(includedir)/gimp-$(GIMP_MAJOR_VERSION).$(GIMP_MINOR_VERSION)/libgimpwidgets
 
 AM_CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"		\
