@@ -102,7 +102,7 @@ static GimpActionEntry file_actions[] =
     GIMP_HELP_FILE_SAVE_AS_TEMPLATE },
 
   { "file-revert", GTK_STOCK_REVERT_TO_SAVED,
-    N_("Re_vert"), NULL, NULL,
+    N_("Re_vert..."), NULL, NULL,
     G_CALLBACK (file_revert_cmd_callback),
     GIMP_HELP_FILE_REVERT },
 
