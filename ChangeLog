@@ -1,3 +1,10 @@
+2002-12-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/imap_csim.l
+	* plug-ins/imagemap/imap_csim.y
+	* plug-ins/imagemap/imap_csim_parse.[ch]: merged fix for bug #97776
+	from HEAD branch.
+
 2002-12-28  Garry R. Osgood <grosgood@rcn.com>
 
 	* app/brightness_contrast.c
