@@ -336,3 +336,53 @@ option to create New Indexed image (with the choice of pattern foo) ?
 Integrate gimp-16 stuff?
 	Would be difficult, but possibly very useful.
 	see http://www.netrover.com/~rayl/gimp/
+
+A way to define a defualt comment
+
+	larry is working on named data attachments for images. More
+	or less a generic way to define image comments and other
+	embedded info. 
+
+Better use of wm hints.
+
+	Not sure where the line between dialogs and windows
+	lies, but it's something to look into. 
+
+Make file load/save errors not worthy of existence.
+
+	Right now the errors from the file plugins pop
+	up in weird places, at weird times, and are often
+	basically useless. This is bad.
+
+Image pager/explorer
+
+	Basically similar in idea to a pager on a virtual desktop
+	wm, except a large image is the pager. Pop up a small preview 
+	of the image, with a higlighted rectangle indicaing the currently
+	viewable area. User can then move around in the preview and the
+	highlighted area becomes the on screen viewable part. May
+	also be useful in file loading, where one could see a preview of a
+	large image and then jsut select a subset toa ctually load into
+	mem.
+
+Code to set built in icons or icon path?
+
+	Is this the wm's job or soemthing internal?
+
+
+Action/active/Procedural Layers
+
+	People seem to want them. For some ops it would be painfully
+	easy. For alot of stuff i havent a clue. Anyone have a good plan
+	on how to potentialy implement this?
+
+generic preview code in libgimp for use by plugins
+
+	All plugins should have a preview. it would be nice if there
+	were code in libgimp to make this easier. Possibly just
+	generalize a good exmaple of preview code (quartics?) and
+	slap it in libgimp. Maybe throw some of the gck stuff in there
+	too. Or possibly make a new plugin helper lib combining
+	gck, megawidget, preview code, etc.
+
+
