@@ -163,6 +163,24 @@ Returns the #GtkAdjustment of the scale_entry's #GtkSpinButton.
 @sensitive: 
 
 
+<!-- ##### FUNCTION gimp_scale_entry_set_logarithmic ##### -->
+<para>
+
+</para>
+
+@adjustment: 
+@logarithmic: 
+
+
+<!-- ##### FUNCTION gimp_scale_entry_get_logarithmic ##### -->
+<para>
+
+</para>
+
+@adjustment: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_color_scale_entry_new ##### -->
 <para>
 

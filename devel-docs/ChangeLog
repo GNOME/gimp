@@ -1,3 +1,9 @@
+2004-08-28  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpwidgets.sgml:
+	added gimp_scale_entry_[get|set]_logarithmic().
+
 2004-08-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/app-docs.sgml
