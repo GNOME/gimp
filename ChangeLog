@@ -1,5 +1,12 @@
 2001-06-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gdyntext/ChangeLog
+	* plug-ins/gdyntext/gdyntext.[ch]: merged changes done by plug-in 
+	author into our source, thus upgrading GDynText to version 1.5.4.
+	This should fix bug #55341 (dynamic text layer renames itself).
+
+2001-06-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/Lighting/lighting_apply.c
 	* plug-ins/common/colortoalpha.c
 	* plug-ins/common/papertile.c

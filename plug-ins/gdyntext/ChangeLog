@@ -1,3 +1,9 @@
+Jun 21 2001
+  * updated to 1.5.4 release by Sven Neumann <sven@gimp.org>:
+     * Better placement for text lines by using -1 for the border value when 
+       using gimp_text_fontname.
+     * It doesn't smash anymore the layer's name back to "GDynText Layer" 
+       when you re-edit a layer's text.
 Aug 14 2000
   * MADE 1.5.2 RELEASE
   * Merged with 1.5.0 from gimp CVS.
