@@ -7,14 +7,14 @@
     (mapping
         (map "scroll-up-alt"                 "context-opacity-increase-skip")
         (map "scroll-down-alt"               "context-opacity-decrease-skip")
-        (map "scroll-up-control-alt"         "context-gradient-next")
-        (map "scroll-down-control-alt"       "context-gradient-previous")
-        (map "scroll-up-shift-alt"           "context-pattern-next")
-        (map "scroll-down-shift-alt"         "context-pattern-previous")
-        (map "scroll-up-shift-control"       "context-brush-next")
-        (map "scroll-down-shift-control"     "context-brush-previous")
-        (map "scroll-up-shift-control-alt"   "context-font-next")
-        (map "scroll-down-shift-control-alt" "context-font-previous")))
+        (map "scroll-up-control-alt"         "context-gradient-select-next")
+        (map "scroll-down-control-alt"       "context-gradient-select-previous")
+        (map "scroll-up-shift-alt"           "context-pattern-select-next")
+        (map "scroll-down-shift-alt"         "context-pattern-select-previous")
+        (map "scroll-up-shift-control"       "context-brush-select-next")
+        (map "scroll-down-shift-control"     "context-brush-select-previous")
+        (map "scroll-up-shift-control-alt"   "context-font-select-next")
+        (map "scroll-down-shift-control-alt" "context-font-select-previous")))
 
 (GimpControllerInfo "Main Keyboard"
     (enabled yes)
