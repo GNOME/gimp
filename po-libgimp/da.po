@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-03-28 14:51+0100\n"
-"PO-Revision-Date: 2002-03-02 17:09+0100\n"
+"POT-Creation-Date: 2002-05-28 12:52+0200\n"
+"PO-Revision-Date: 2002-05-28 12:53+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -156,6 +156,11 @@ msgstr "en lagmaske"
 msgid "a channel (saved selection)"
 msgstr "en kanal (gemt markering)"
 
+#: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
+#: libgimp/gimpmenu.c:580
+msgid "None"
+msgstr "Ingen"
+
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "procent"
@@ -216,19 +221,19 @@ msgstr "_Nulstil"
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:155
+#: libgimpwidgets/gimpstock.c:160
 msgid "Transform"
 msgstr "Transformér"
 
-#: libgimpwidgets/gimpstock.c:158
+#: libgimpwidgets/gimpstock.c:163
 msgid "Rotate"
 msgstr "Rotér"
 
-#: libgimpwidgets/gimpstock.c:159
+#: libgimpwidgets/gimpstock.c:164
 msgid "Scale"
 msgstr "Skalér"
 
-#: libgimpwidgets/gimpstock.c:160
+#: libgimpwidgets/gimpstock.c:165
 msgid "Shear"
 msgstr "Trapezér"
 
@@ -248,7 +253,7 @@ msgstr "Enhed"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:842
+#: libgimpwidgets/gimpwidgets.c:845
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -257,11 +262,11 @@ msgstr ""
 "generatoren af tilfældige tal - dette tillader dig at gentage en given "
 "\"tilfældig\" operation"
 
-#: libgimpwidgets/gimpwidgets.c:847
-msgid "Time"
-msgstr "Tid"
+#: libgimpwidgets/gimpwidgets.c:850
+msgid "_Time"
+msgstr "_Tid"
 
-#: libgimpwidgets/gimpwidgets.c:856
+#: libgimpwidgets/gimpwidgets.c:859
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -269,15 +274,15 @@ msgstr ""
 "Start generatoren af tilfældige tal med den aktuelle tid - dette garanterer "
 "en god tilfældighed"
 
-#: libgimpwidgets/gimpwidgets.c:1170
+#: libgimpwidgets/gimpwidgets.c:1173
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimpwidgets/gimpwidgets.c:1171
+#: libgimpwidgets/gimpwidgets.c:1174
 msgid "KiloBytes"
 msgstr "Kilobyte"
 
-#: libgimpwidgets/gimpwidgets.c:1172
+#: libgimpwidgets/gimpwidgets.c:1175
 msgid "MegaBytes"
 msgstr "Megabyte"
 
