@@ -438,6 +438,7 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
   gdouble    r, g, b, a;
   gdouble    c0, c1;
   guchar    *p0, *p1, *even, *odd;
+  gdouble    ratio;
   
   bpp = 0; /* Only returned */
 
@@ -447,14 +448,18 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
   /* Get right aspect ratio */  
   if (dwidth > dheight)
     {
-      height = RINT (((gdouble)width * (gdouble)dheight) / (gdouble)dwidth);
-      width  = RINT (((gdouble)dwidth * (gdouble)height) / (gdouble)dheight);
+      ratio = MIN (1.0, (gdouble) width / (gdouble) dwidth);
     }
   else
     {
-      width  = RINT (((gdouble)height * (gdouble)dwidth) / (gdouble)dheight);
-      height = RINT (((gdouble)dheight * (gdouble)width) / (gdouble)dwidth);
+      ratio = MIN (1.0, (gdouble) height / (gdouble) dheight);
     }
+
+  width  = RINT (ratio * (gdouble) dwidth);
+  height = RINT (ratio * (gdouble) dheight);
+
+  if (width  < 1) width  = 1;
+  if (height < 1) height = 1;
 
   buf = gimp_image_construct_composite_preview (gimage, width, height);
   drawable_data = temp_buf_data (buf);

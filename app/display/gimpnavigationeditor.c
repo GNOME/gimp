@@ -251,19 +251,27 @@ nav_window_draw_sqr (NavWinData *iwd,
 
   gdk_gc_set_function (iwd->gc, GDK_INVERT);
 
-  if(undraw)
+  if (undraw)
     {
-      /* first undraw from last co-ords */
-      gdk_draw_rectangle (iwd->preview->window, iwd->gc, FALSE, 
-			  iwd->dispx, iwd->dispy, 
-			  iwd->dispwidth-BORDER_PEN_WIDTH+1, 
-			  iwd->dispheight-BORDER_PEN_WIDTH+1);
+      if (iwd->dispx != 0 || iwd->dispy != 0 ||
+	  iwd->pwidth != iwd->dispwidth || iwd->pheight != iwd->dispheight)
+	{
+	  /* first undraw from last co-ords */
+	  gdk_draw_rectangle (iwd->preview->window, iwd->gc, FALSE, 
+			      iwd->dispx, iwd->dispy, 
+			      iwd->dispwidth - BORDER_PEN_WIDTH + 1, 
+			      iwd->dispheight - BORDER_PEN_WIDTH + 1);
+	}
     }
 
-  gdk_draw_rectangle (iwd->preview->window, iwd->gc, FALSE, 
-		      x,y, 
-		      w-BORDER_PEN_WIDTH+1,
-		      h-BORDER_PEN_WIDTH+1);
+  if (x != 0 || y != 0 ||
+      w != iwd->pwidth || h != iwd->pheight)
+    {
+      gdk_draw_rectangle (iwd->preview->window, iwd->gc, FALSE, 
+			  x, y, 
+			  w - BORDER_PEN_WIDTH + 1,
+			  h - BORDER_PEN_WIDTH + 1);
+    }
 
   iwd->dispx      = x;
   iwd->dispy      = y;
@@ -299,7 +307,7 @@ set_size_data (NavWinData *iwd)
   sel_width = gimage->width;
   sel_height = gimage->height;
 
-  if(!gdisp->dot_for_dot)
+  if (!gdisp->dot_for_dot)
     sel_width = 
       (sel_width * gdisp->gimage->yresolution) / gdisp->gimage->xresolution;
 
@@ -307,20 +315,17 @@ set_size_data (NavWinData *iwd)
     {
       pwidth  = iwd->nav_preview_width;
       /*     pheight  = sel_height * pwidth / sel_width; */
-      iwd->ratio = (gdouble) pwidth / ((gdouble) sel_width);
-      pheight = sel_height * iwd->ratio + 0.5;
-      iwd->ratio = (gdouble) pheight / (gdouble) sel_height;
-      pwidth  = sel_width * iwd->ratio + 0.5;
+      iwd->ratio = MIN (1.0, (gdouble) pwidth / (gdouble) sel_width);
     } 
   else 
     {
       pheight = iwd->nav_preview_height;
       /*     pwidth  = sel_width * pheight / sel_height; */
-      iwd->ratio = (gdouble) pheight / ((gdouble) sel_height);
-      pwidth = sel_width * iwd->ratio + 0.5;
-      iwd->ratio = (gdouble) pwidth / (gdouble) sel_width;
-      pheight = sel_height * iwd->ratio + 0.5;
+      iwd->ratio = MIN (1.0, (gdouble) pheight / (gdouble) sel_height);
     }
+
+  pwidth  = sel_width * iwd->ratio + 0.5;
+  pheight = sel_height * iwd->ratio + 0.5;
 
   iwd->pwidth  = pwidth;
   iwd->pheight = pheight;
@@ -616,7 +621,7 @@ nav_window_update_preview_blank (NavWinData *iwd)
 	}
       
       gtk_preview_draw_row (GTK_PREVIEW (iwd->preview),
-			    (guchar *)buf, 
+			    (guchar *) buf, 
 			    0, y, iwd->pwidth);
     }
 

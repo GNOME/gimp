@@ -324,8 +324,9 @@ void
 gimp_image_set_filename (GimpImage *gimage, 
 			 gchar     *filename)
 {
-  gchar *new_filename, *old_filename;
-  gboolean free_old;
+  gchar    *new_filename;
+  gchar    *old_filename;
+  gboolean  free_old;
 
   /* 
    * WARNING: this function will free the current filename even if you are 
@@ -764,15 +765,20 @@ gimp_image_apply_image (GimpImage	 *gimage,
    *  If an alternative to using the drawable's data as src1 was provided...
    */
   if (src1_tiles)
-    pixel_region_init (&src1PR, src1_tiles, x1, y1, (x2 - x1), (y2 - y1), FALSE);
+    pixel_region_init (&src1PR, src1_tiles, 
+		       x1, y1, (x2 - x1), (y2 - y1), FALSE);
   else
-    pixel_region_init (&src1PR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-  pixel_region_resize (src2PR, src2PR->x + (x1 - x), src2PR->y + (y1 - y), (x2 - x1), (y2 - y1));
+    pixel_region_init (&src1PR, drawable_data (drawable), 
+		       x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&destPR, drawable_data (drawable), 
+		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  pixel_region_resize (src2PR, 
+		       src2PR->x + (x1 - x), src2PR->y + (y1 - y), 
+		       (x2 - x1), (y2 - y1));
 
   if (mask)
     {
-      int mx, my;
+      gint mx, my;
 
       /*  configure the mask pixel region
        *  don't use x1 and y1 because they are in layer

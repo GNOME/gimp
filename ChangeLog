@@ -1,5 +1,14 @@
 2000-12-14  Sven Neumann  <sven@gimp.org>
 
+	* app/layers_dialog.c
+	* app/lc_dialog.c
+	* app/nav_window.c: another try on bug #31098. This time limited the
+	preview scale ratio in the calling functions. Please test!
+	
+	* app/gimpimage.c: small cleanup
+
+2000-12-14  Sven Neumann  <sven@gimp.org>
+
 	* app/menus.c: modified debug function to help to find missing 
 	help files.
 
