@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
-"POT-Creation-Date: 2002-03-01 02:25+0000\n"
+"POT-Creation-Date: 2002-03-07 01:15+0000\n"
 "PO-Revision-Date: 2002-03-01 02:30+0000\n"
 "Last-Translator: Filipe Maia <fmaia@gmx.net>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"

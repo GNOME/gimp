@@ -1,3 +1,7 @@
+2002-03-07  Duarte Loreto <happyguy_pt@hotmail.com>
+
+        * configure.in: Added Portuguese locale (pt) to ALL_LINGUAS.
+
 2002-03-06  Duarte Loreto <happyguy_pt@hotmail.com>
 
         * tips/gimp_tips.pt.txt: Finnished Portuguese translation.
