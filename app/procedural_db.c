@@ -231,8 +231,10 @@ procedural_db_run_proc (gchar *name,
   if ((proc = procedural_db_lookup (name)) == NULL)
     {
       return_vals = g_new (Argument, 1);
-      return_vals->arg_type = PDB_STATUS;
+      return_vals->arg_type      = PDB_STATUS;
       return_vals->value.pdb_int = PDB_CALLING_ERROR;
+
+      *nreturn_vals = 1;
       return return_vals;
     }
 
@@ -250,7 +252,10 @@ procedural_db_run_proc (gchar *name,
 		     i+1, proc->name,
 		     pdb_type_name (proc->args[i].arg_type),
 		     pdb_type_name (params[i].arg_type));
+
 	  g_free (params);
+
+          *nreturn_vals = 0;
 	  return NULL;
 	}
 
