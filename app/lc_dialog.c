@@ -430,13 +430,13 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
   /* Get right aspect ratio */  
   if (dwidth > dheight)
     {
-      height = (width * dheight) / dwidth;
-      width = (dwidth * height) / dheight;
+      height = (gint)(((gdouble)width * (gdouble)dheight) / (gdouble)dwidth + 0.5);
+      width = (gint)(((gdouble)dwidth * (gdouble)height) / (gdouble)dheight + 0.5);
     }
   else
     {
-      width = (height * dwidth) / dheight;
-      height = (dheight * width) / dwidth;
+      width = (gint)(((gdouble)height * (gdouble)dwidth) / (gdouble)dheight + 0.5);
+      height = (gint)(((gdouble)dheight * (gdouble)width) / (gdouble)dwidth + 0.5);
     }
 
   buf = gimp_image_construct_composite_preview (gimage, width, height);

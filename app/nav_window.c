@@ -284,16 +284,16 @@ set_size_data (NavWinData *iwd)
     pwidth  = MIN(sel_width, iwd->nav_preview_width);
     /*     pheight  = sel_height * pwidth / sel_width; */
     iwd->ratio = (gdouble)pwidth / ((gdouble)sel_width);
-    pheight = sel_height * iwd->ratio;
+    pheight = sel_height * iwd->ratio + 0.5;
     iwd->ratio = (gdouble)pheight/(gdouble)sel_height;
-    pwidth  = sel_width * iwd->ratio;
+    pwidth  = sel_width * iwd->ratio + 0.5;
   } else {
     pheight = MIN(sel_height, iwd->nav_preview_height);
 /*     pwidth  = sel_width * pheight / sel_height; */
     iwd->ratio = (gdouble)pheight / ((gdouble)sel_height);
-    pwidth = sel_width * iwd->ratio;
+    pwidth = sel_width * iwd->ratio + 0.5;
     iwd->ratio = (gdouble)pwidth/(gdouble)sel_width;
-    pheight = sel_height * iwd->ratio;
+    pheight = sel_height * iwd->ratio + 0.5;
   }
 
   if (gdisp->dot_for_dot)

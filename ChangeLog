@@ -1,3 +1,11 @@
+Tue Nov  9 21:15:26 GMT 1999 Andy Thomas <alt@gimp.org>
+
+	* app/lc_dialog.c
+	* app/nav_window.c 
+	* app/undo_history.c
+
+	Fixed some rounding errors in the preview images.
+
 Tue Nov  9 11:33:03 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/drawable.pdb: fix {get,set}_pixel typo reported

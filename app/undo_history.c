@@ -262,13 +262,13 @@ undo_history_set_pixmap_idle (gpointer data)
   /* Get right aspect ratio */  
   if (width > height)
     { 
-      height = (idle->size * height) / width;
-      width  = (width * height )/ idle->gimage->height;
+      height = (gint)(((gdouble)idle->size * (gdouble)height) / (gdouble)width + 0.5);
+      width  = (gint)(((gdouble)width * (gdouble)height)/ (gdouble)idle->gimage->height + 0.5);
     }
   else
     {
-      width  = (idle->size * width) / height;
-      height = (height * width ) / idle->gimage->width;
+      width  = (gint)(((gdouble)idle->size * (gdouble)width) / (gdouble)height + 0.5);
+      height = (gint)(((gdouble)height * (gdouble)width ) /(gdouble) idle->gimage->width + 0.5);
     }
 
   utype = undo_get_undo_top_type(idle->gimage);
