@@ -1,5 +1,10 @@
 2003-02-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplayer.c: s/"Add Mask to Layer"/"Add Layer Mask"/
+	to match an already existing string,
+
+2003-02-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpedit.c (gimp_edit_fill): pass more detailed
 	undo_desc strings instead of always "Fill".
 

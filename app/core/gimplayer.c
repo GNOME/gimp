@@ -607,7 +607,7 @@ gimp_layer_add_mask (GimpLayer     *layer,
 			GIMP_DRAWABLE (layer)->height);
 
   if (push_undo)
-    gimp_image_undo_push_layer_mask_add (gimage, _("Add Mask to Layer"),
+    gimp_image_undo_push_layer_mask_add (gimage, _("Add Layer Mask"),
                                          layer, mask);
 
   g_signal_emit (layer, layer_signals[MASK_CHANGED], 0);
