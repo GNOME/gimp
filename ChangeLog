@@ -1,5 +1,14 @@
 2004-09-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimppickable.[ch]: added new vitrual function
+	GimpPickableInterface::get_image()
+
+	* app/core/gimpdrawable.c
+	* app/core/gimpimagemap.c
+	* app/core/gimpprojection.[ch]: implement it.
+
+2004-09-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcolormapeditor.[ch]
 	* app/widgets/gimphistogrameditor.[ch]
 	* app/widgets/gimpselectioneditor.[ch]: removed redundant "gimage"

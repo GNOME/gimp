@@ -56,6 +56,21 @@ gimp_pickable_interface_get_type (void)
   return pickable_iface_type;
 }
 
+GimpImage *
+gimp_pickable_get_image (GimpPickable *pickable)
+{
+  GimpPickableInterface *pickable_iface;
+
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+
+  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+
+  if (pickable_iface->get_image)
+    return pickable_iface->get_image (pickable);
+
+  return NULL;
+}
+
 GimpImageType
 gimp_pickable_get_image_type (GimpPickable *pickable)
 {

@@ -265,6 +265,7 @@ gimp_drawable_init (GimpDrawable *drawable)
 static void
 gimp_drawable_pickable_iface_init (GimpPickableInterface *pickable_iface)
 {
+  pickable_iface->get_image      = gimp_item_get_image;
   pickable_iface->get_image_type = gimp_drawable_type;
   pickable_iface->get_tiles      = gimp_drawable_data;
   pickable_iface->get_color_at   = gimp_drawable_get_color_at;

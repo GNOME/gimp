@@ -67,6 +67,7 @@ static void   gimp_image_map_pickable_iface_init (GimpPickableInterface *pickabl
 
 static void            gimp_image_map_finalize       (GObject      *object);
 
+static GimpImage     * gimp_image_map_get_image      (GimpPickable *pickable);
 static GimpImageType   gimp_image_map_get_image_type (GimpPickable *pickable);
 static TileManager   * gimp_image_map_get_tiles      (GimpPickable *pickable);
 static guchar        * gimp_image_map_get_color_at   (GimpPickable *pickable,
@@ -154,6 +155,7 @@ gimp_image_map_init (GimpImageMap *image_map)
 static void
 gimp_image_map_pickable_iface_init (GimpPickableInterface *pickable_iface)
 {
+  pickable_iface->get_image      = gimp_image_map_get_image;
   pickable_iface->get_image_type = gimp_image_map_get_image_type;
   pickable_iface->get_tiles      = gimp_image_map_get_tiles;
   pickable_iface->get_color_at   = gimp_image_map_get_color_at;
@@ -171,6 +173,14 @@ gimp_image_map_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static GimpImage *
+gimp_image_map_get_image (GimpPickable *pickable)
+{
+  GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
+
+  return gimp_pickable_get_image (GIMP_PICKABLE (image_map->drawable));
 }
 
 static GimpImageType

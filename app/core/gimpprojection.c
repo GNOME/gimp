@@ -185,6 +185,7 @@ gimp_projection_init (GimpProjection *proj)
 static void
 gimp_projection_pickable_iface_init (GimpPickableInterface *pickable_iface)
 {
+  pickable_iface->get_image      = gimp_projection_get_image;
   pickable_iface->get_image_type = gimp_projection_get_image_type;
   pickable_iface->get_tiles      = gimp_projection_get_tiles;
   pickable_iface->get_color_at   = gimp_projection_get_color_at;
@@ -296,6 +297,14 @@ gimp_projection_get_tiles (GimpProjection *proj)
     }
 
   return proj->tiles;
+}
+
+GimpImage *
+gimp_projection_get_image (const GimpProjection *proj)
+{
+  g_return_val_if_fail (GIMP_IS_PROJECTION (proj), NULL);
+
+  return proj->gimage;
 }
 
 GimpImageType

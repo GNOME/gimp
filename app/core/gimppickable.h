@@ -36,6 +36,7 @@ struct _GimpPickableInterface
   GTypeInterface base_iface;
 
   /*  virtual functions  */
+  GimpImage     * (* get_image)      (GimpPickable *pickable);
   GimpImageType   (* get_image_type) (GimpPickable *pickable);
   TileManager   * (* get_tiles)      (GimpPickable *pickable);
   guchar        * (* get_color_at)   (GimpPickable *pickable,
@@ -46,6 +47,7 @@ struct _GimpPickableInterface
 
 GType           gimp_pickable_interface_get_type (void) G_GNUC_CONST;
 
+GimpImage     * gimp_pickable_get_image          (GimpPickable *pickable);
 GimpImageType   gimp_pickable_get_image_type     (GimpPickable *pickable);
 TileManager   * gimp_pickable_get_tiles          (GimpPickable *pickable);
 guchar        * gimp_pickable_get_color_at       (GimpPickable *pickable,

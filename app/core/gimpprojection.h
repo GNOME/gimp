@@ -82,6 +82,7 @@ GType            gimp_projection_get_type       (void) G_GNUC_CONST;
 GimpProjection * gimp_projection_new            (GimpImage            *gimage);
 
 TileManager    * gimp_projection_get_tiles      (GimpProjection       *proj);
+GimpImage      * gimp_projection_get_image      (const GimpProjection *proj);
 GimpImageType	 gimp_projection_get_image_type (const GimpProjection *proj);
 gint             gimp_projection_get_bytes      (const GimpProjection *proj);
 gdouble          gimp_projection_get_opacity    (const GimpProjection *proj);
