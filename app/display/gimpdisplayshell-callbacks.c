@@ -23,6 +23,9 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "display-types.h"
 
 #include "core/gimp.h"
@@ -49,6 +52,7 @@
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
 
+#include "colormaps.h"
 #include "devices.h"
 #include "gimprc.h"
 
@@ -163,10 +167,42 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
                                    GimpDisplayShell *shell)
 {
   GimpDisplay *gdisp;
+  GdkColor     color;
+  guchar       r, g, b;
 
   gdisp = shell->gdisp;
 
   gtk_widget_grab_focus (shell->canvas);
+
+  if (TRUE /* gimprc.use_style_padding_color */)
+    {
+      r = shell->canvas->style->bg[GTK_STATE_NORMAL].red   >> 8;
+      g = shell->canvas->style->bg[GTK_STATE_NORMAL].green >> 8;
+      b = shell->canvas->style->bg[GTK_STATE_NORMAL].blue  >> 8;
+
+      gimp_rgb_set_uchar (&shell->padding_color, r, g, b);
+
+      g_signal_handlers_block_by_func (G_OBJECT (shell->padding_button),
+                                       gimp_display_shell_color_changed,
+                                       shell);
+
+      gimp_color_button_set_color (GIMP_COLOR_BUTTON (shell->padding_button),
+                                   &shell->padding_color);
+
+      g_signal_handlers_unblock_by_func (G_OBJECT (shell->padding_button),
+                                         gimp_display_shell_color_changed,
+                                         shell);
+    }
+
+  gimp_rgb_get_uchar (&shell->padding_color, &r, &g, &b);
+
+  shell->padding_gc = gdk_gc_new (canvas->window);
+
+  color.red   = (r << 8) | r;
+  color.green = (g << 8) | g;
+  color.blue  = (b << 8) | b;
+
+  gdk_gc_set_rgb_fg_color (shell->padding_gc, &color);
 
   gdk_window_set_back_pixmap (shell->canvas->window, NULL, FALSE);
 
@@ -1078,4 +1114,26 @@ gimp_display_shell_origin_button_press (GtkWidget        *widget,
    * pointer away from us.
    */
   return TRUE;
+}
+
+void
+gimp_display_shell_color_changed (GtkWidget        *widget,
+                                  GimpDisplayShell *shell)
+{
+  GdkColor color;
+  guchar   r, g, b;
+
+  gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget),
+                               &shell->padding_color);
+
+  gimp_rgb_get_uchar (&shell->padding_color, &r, &g, &b);
+
+  color.red   = r + r * 256;
+  color.green = g + g * 256;
+  color.blue  = b + b * 256;
+
+  gdk_gc_set_rgb_fg_color (shell->padding_gc, &color);
+
+  gimp_display_shell_expose_full (shell);
+  gimp_display_shell_flush (shell);
 }

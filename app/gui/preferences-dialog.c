@@ -110,7 +110,8 @@ static gint               old_transparency_type;
 static gint               old_transparency_size;
 static gint               old_levels_of_undo;
 static gint               old_marching_speed;
-static gboolean           old_allow_resize_windows;
+static gboolean           old_resize_windows_on_zoom;
+static gboolean           old_resize_windows_on_resize;
 static gboolean           old_auto_save;
 static gint               old_preview_size;
 static gint               old_nav_preview_size;
@@ -560,10 +561,15 @@ prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "marching-ants-speed");
     }
-  if (gimprc.allow_resize_windows != old_allow_resize_windows)
+  if (gimprc.resize_windows_on_zoom != old_resize_windows_on_zoom)
     {
-      update = g_list_append (update, "allow-resize-windows");
-      remove = g_list_append (remove, "dont-allow-resize-windows");
+      update = g_list_append (update, "resize-windows-on-zoom");
+      remove = g_list_append (remove, "dont-resize-windows-on-zoom");
+    }
+  if (gimprc.resize_windows_on_resize != old_resize_windows_on_resize)
+    {
+      update = g_list_append (update, "resize-windows-on-resize");
+      remove = g_list_append (remove, "dont-resize-windows-on-resize");
     }
   if (gimprc.auto_save != old_auto_save)
     {
@@ -892,7 +898,8 @@ prefs_cancel_callback (GtkWidget *widget,
   gimp->config->thumbnail_mode           = old_thumbnail_mode;
 
   gimprc.marching_speed                  = old_marching_speed;
-  gimprc.allow_resize_windows            = old_allow_resize_windows;
+  gimprc.resize_windows_on_zoom          = old_resize_windows_on_zoom;
+  gimprc.resize_windows_on_resize        = old_resize_windows_on_resize;
   gimprc.auto_save                       = old_auto_save;
   gimprc.no_cursor_updating              = old_no_cursor_updating;
   gimprc.perfectmouse                    = old_perfectmouse;
@@ -994,26 +1001,27 @@ prefs_toggle_callback (GtkWidget *widget,
   val = (gint *) data;
 
   /*  toggle buttos  */
-  if (data == &gimprc.allow_resize_windows    ||
-      data == &gimprc.auto_save               ||
-      data == &gimprc.no_cursor_updating      ||
-      data == &gimprc.perfectmouse            ||
-      data == &gimprc.show_tool_tips          ||
-      data == &gimprc.show_rulers             ||
-      data == &gimprc.show_statusbar          ||
-      data == &gimprc.confirm_on_close        ||
-      data == &gimprc.save_session_info       ||
-      data == &gimprc.save_device_status      ||
-      data == &gimprc.always_restore_session  ||
-      data == &gimprc.default_dot_for_dot     ||
-      data == &gimprc.use_help                ||
+  if (data == &gimprc.resize_windows_on_zoom   ||
+      data == &gimprc.resize_windows_on_resize ||
+      data == &gimprc.auto_save                ||
+      data == &gimprc.no_cursor_updating       ||
+      data == &gimprc.perfectmouse             ||
+      data == &gimprc.show_tool_tips           ||
+      data == &gimprc.show_rulers              ||
+      data == &gimprc.show_statusbar           ||
+      data == &gimprc.confirm_on_close         ||
+      data == &gimprc.save_session_info        ||
+      data == &gimprc.save_device_status       ||
+      data == &gimprc.always_restore_session   ||
+      data == &gimprc.default_dot_for_dot      ||
+      data == &gimprc.use_help                 ||
 
-      data == &edit_stingy_memory_use         ||
-      data == &edit_install_cmap              ||
-      data == &edit_cycled_marching_ants      ||
-      data == &edit_show_indicators           ||
-      data == &edit_nav_window_per_display    ||
-      data == &edit_info_window_follows_mouse ||
+      data == &edit_stingy_memory_use          ||
+      data == &edit_install_cmap               ||
+      data == &edit_cycled_marching_ants       ||
+      data == &edit_show_indicators            ||
+      data == &edit_nav_window_per_display     ||
+      data == &edit_info_window_follows_mouse  ||
       data == &edit_disable_tearoff_menus)
     {
       *val = GTK_TOGGLE_BUTTON (widget)->active;
@@ -1528,7 +1536,8 @@ preferences_dialog_create (Gimp *gimp)
   old_transparency_type        = gimprc.transparency_type;
   old_transparency_size        = gimprc.transparency_size;
   old_marching_speed           = gimprc.marching_speed;
-  old_allow_resize_windows     = gimprc.allow_resize_windows;
+  old_resize_windows_on_zoom   = gimprc.resize_windows_on_zoom;
+  old_resize_windows_on_resize = gimprc.resize_windows_on_resize;
   old_auto_save                = gimprc.auto_save;
   old_preview_size             = gimprc.preview_size;
   old_nav_preview_size         = gimprc.nav_preview_size;
@@ -2159,13 +2168,23 @@ preferences_dialog_create (Gimp *gimp)
 
   button = gtk_check_button_new_with_label(_("Resize Window on Zoom"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				gimprc.allow_resize_windows);
+				gimprc.resize_windows_on_zoom);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "toggled",
 		    G_CALLBACK (prefs_toggle_callback),
-		    &gimprc.allow_resize_windows);
+		    &gimprc.resize_windows_on_zoom);
+
+  button = gtk_check_button_new_with_label(_("Resize Window on Image Size Change"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				gimprc.resize_windows_on_resize);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &gimprc.resize_windows_on_resize);
 
   button = gtk_check_button_new_with_label(_("Show Rulers"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),

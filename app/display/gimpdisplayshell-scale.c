@@ -178,7 +178,7 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 
       gimp_display_shell_resize_cursor_label (shell);
       gimp_display_shell_scale_resize (shell,
-                                       gimprc.allow_resize_windows, TRUE);
+                                       gimprc.resize_windows_on_zoom, TRUE);
     }
 }
 
@@ -256,7 +256,8 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
       shell->offset_y = (gint) (offset_y - (shell->disp_height / 2));
 
       /*  resize the display  */
-      gimp_display_shell_scale_resize (shell, gimprc.allow_resize_windows, TRUE);
+      gimp_display_shell_scale_resize (shell, gimprc.resize_windows_on_zoom,
+                                       TRUE);
     }
 }
 

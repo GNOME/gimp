@@ -124,6 +124,7 @@ gimp_display_shell_selection_create (GdkWindow        *win,
   new->recalc         = TRUE;
   new->speed          = speed;
   new->hidden         = FALSE;
+  new->layer_hidden   = FALSE;
 
   for (i = 0; i < 8; i++)
     new->points_in[i] = NULL;
@@ -348,6 +349,18 @@ gimp_display_shell_selection_toggle (Selection *select)
   gimp_display_shell_selection_start (select, TRUE);
 }
 
+void
+gimp_display_shell_selection_toggle_layer (Selection *select)
+{
+  gimp_display_shell_selection_invis (select);
+  gimp_display_shell_selection_layer_invis (select);
+
+  /*  toggle the visibility  */
+  select->layer_hidden = select->layer_hidden ? FALSE : TRUE;
+
+  gimp_display_shell_selection_start (select, TRUE);
+}
+
 
 /*  private functions  */
 
@@ -514,12 +527,16 @@ selection_render_points (Selection *select)
 static void
 selection_draw (Selection *select)
 {
+  if (! select->layer_hidden)
+    {
+      if (select->segs_layer && select->index_layer == 0)
+        gdk_draw_segments (select->win, select->gc_layer,
+                           select->segs_layer, select->num_segs_layer);
+    }
+
   if (select->hidden)
     return;
 
-  if (select->segs_layer && select->index_layer == 0)
-    gdk_draw_segments (select->win, select->gc_layer,
-		       select->segs_layer, select->num_segs_layer);
 #ifdef USE_XDRAWPOINTS
 #ifdef VERBOSE
   {

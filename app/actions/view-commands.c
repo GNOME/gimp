@@ -164,7 +164,29 @@ view_toggle_selection_cmd_callback (GtkWidget *widget,
     {
       gimp_display_shell_selection_toggle (shell->select);
 
-      gdisplays_flush ();
+      gimp_display_shell_flush (shell);
+    }
+}
+
+void
+view_toggle_layer_boundary_cmd_callback (GtkWidget *widget,
+                                         gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  gint              new_val;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  new_val = GTK_CHECK_MENU_ITEM (widget)->active;
+
+  /*  hidden == TRUE corresponds to the menu toggle being FALSE  */
+  if (new_val == shell->select->layer_hidden)
+    {
+      gimp_display_shell_selection_toggle_layer (shell->select);
+
+      gimp_display_shell_flush (shell);
     }
 }
 

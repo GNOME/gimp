@@ -1102,6 +1102,7 @@ color_notebook_update_scales (ColorNotebook *cnp,
 					   cnp);
       }
 
+#if 0
   g_print ("RGB: %d %d %d HSV: %d %d %d ALPHA: %d\n", 
 	   values[GIMP_COLOR_SELECTOR_RED],
 	   values[GIMP_COLOR_SELECTOR_GREEN],
@@ -1110,6 +1111,7 @@ color_notebook_update_scales (ColorNotebook *cnp,
 	   values[GIMP_COLOR_SELECTOR_SATURATION],
 	   values[GIMP_COLOR_SELECTOR_VALUE],
 	   values[GIMP_COLOR_SELECTOR_ALPHA]);
+#endif
 
   g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x",
               values[GIMP_COLOR_SELECTOR_RED],

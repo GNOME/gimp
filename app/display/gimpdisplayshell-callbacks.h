@@ -53,5 +53,8 @@ gboolean   gimp_display_shell_origin_button_press (GtkWidget        *widget,
                                                    GdkEventButton   *bevent,
                                                    GimpDisplayShell *shell);
 
+void       gimp_display_shell_color_changed       (GtkWidget        *widget,
+                                                   GimpDisplayShell *shell);
+
 
 #endif /* __GIMP_DISPLAY_SHELL_CALLBACKS_H__ */

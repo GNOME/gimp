@@ -90,33 +90,37 @@ struct _GimpDisplayShell
 
   GdkGC            *scroll_gc;         /*  GC for scrolling    */
 
-  GdkPixmap        *icon;              /*  Pixmap for the icon               */
-  GdkBitmap        *iconmask;          /*  Bitmap for the icon mask          */
-  guint             iconsize;          /*  size of the icon pixmap           */
-  gboolean          icon_needs_update; /*  Do we need to render a new icon?  */
-  guint             icon_timeout_id;   /*  ID of the timeout-function        */
-  guint             icon_idle_id;      /*  ID of the idle-function           */
+  GdkPixmap        *icon;              /*  Pixmap for the icon                */
+  GdkBitmap        *iconmask;          /*  Bitmap for the icon mask           */
+  guint             iconsize;          /*  size of the icon pixmap            */
+  gboolean          icon_needs_update; /*  Do we need to render a new icon?   */
+  guint             icon_timeout_id;   /*  ID of the timeout-function         */
+  guint             icon_idle_id;      /*  ID of the idle-function            */
 
   GdkCursorType       current_cursor;  /*  Currently installed main cursor    */
   GimpToolCursorType  tool_cursor;     /*  Current Tool cursor                */
   GimpCursorModifier  cursor_modifier; /*  Cursor modifier (plus, minus, ...) */
 
-  GdkCursorType     override_cursor;   /*  Overriding cursor                 */
-  gboolean          using_override_cursor; /*  is the cursor overridden?     */
+  GdkCursorType     override_cursor;   /*  Overriding cursor                  */
+  gboolean          using_override_cursor; /*  is the cursor overridden?      */
 
-  gboolean          draw_cursor;       /* should we draw software cursor ?   */
-  gint              cursor_x;          /* software cursor X value            */
-  gint              cursor_y;          /* software cursor Y value            */
-  gboolean          have_cursor;       /* is cursor currently drawn ?        */
+  gboolean          draw_cursor;       /* should we draw software cursor ?    */
+  gboolean          have_cursor;       /* is cursor currently drawn ?         */
+  gint              cursor_x;          /* software cursor X value             */
+  gint              cursor_y;          /* software cursor Y value             */
 
-  GtkWidget        *warning_dialog;    /*  close warning dialog              */
-  InfoDialog       *info_dialog;       /*  image information dialog          */
-  NavigationDialog *nav_dialog;        /*  image navigation dialog           */
-  NavigationDialog *nav_popup;         /*  navigation popup                  */
+  GtkWidget        *padding_button;    /* GimpColorPanel in the NE corner     */
+  GimpRGB           padding_color;     /* color of the empty around the image */
+  GdkGC            *padding_gc;        /* GC with padding_color as BG         */
+
+  GtkWidget        *warning_dialog;    /*  close warning dialog               */
+  InfoDialog       *info_dialog;       /*  image information dialog           */
+  NavigationDialog *nav_dialog;        /*  image navigation dialog            */
+  NavigationDialog *nav_popup;         /*  navigation popup                   */
 
 #ifdef DISPLAY_FILTERS
-  GList            *cd_list;           /* color display conversion stuff     */
-  GtkWidget        *cd_ui;             /* color display filter dialog        */
+  GList            *cd_list;           /* color display conversion stuff      */
+  GtkWidget        *cd_ui;             /* color display filter dialog         */
 #endif /* DISPLAY_FILTERS */
 };
 

@@ -1,3 +1,41 @@
+2001-11-16  Michael Natterer  <mitch@gimp.org>
+
+	Wishlist item #57669:
+
+	* app/gimprc.[ch]: replaced gimprc option "allow-resize-windows"
+	by "resize-windows-on-zoom" and "resize-windows-on-resize".
+
+	* app/gui/preferences-dialog.c: added a toggle for
+	"resize-windows-on-resize".
+
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/tools/gimpmagnifytool.c
+	* docs/gimprc.5.in
+	* etc/gimprc.in
+	* etc/gimprc.win32: changed accordingly.
+
+	* app/display/gimpdisplay-area.[ch]: added gimp_area_new().
+
+	* app/display/gimpdisplay.c: cleanup usage of GimpArea.
+
+	* app/display/gimpdisplayshell.[ch]: added configurable canvas
+	padding color and a small color_panel to change it in the upper
+	right corner of the window.
+
+	* app/display/gimpdisplayshell-callbacks.[ch]: added a callback
+	for the color_panel, initialize the color in the "realize"
+	callback.
+
+	Wishlist item #51548.
+
+	* app/display/gimpdisplayshell-selection.[ch]
+	* app/gui/menus.c
+	* app/gui/view-commands.[ch]: made the layer boundary toggleable
+	separately from the selection.
+
+	* app/gui/color-notebook.c: #if 0'ed a debugging g_print().
+
 2001-11-16  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorbutton.[ch]: added Black and White to popup

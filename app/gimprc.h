@@ -35,7 +35,8 @@ struct _GimpRc
   gboolean           install_cmap;
   gboolean           cycled_marching_ants;
   gint               default_threshold;
-  gboolean           allow_resize_windows;
+  gboolean           resize_windows_on_zoom;
+  gboolean           resize_windows_on_resize;
   gboolean           no_cursor_updating;
   gint               preview_size;
   gint               nav_preview_size;

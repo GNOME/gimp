@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
@@ -37,6 +38,7 @@
 #include "core/gimplayermask.h"
 #include "core/gimppattern.h"
 
+#include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -228,6 +230,10 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->cursor_x              = 0;
   shell->cursor_y              = 0;
 
+  shell->padding_button        = NULL;
+  gimp_rgb_set (&shell->padding_color, 1.0, 1.0, 1.0);
+  shell->padding_gc            = NULL;
+
   shell->warning_dialog        = NULL;
   shell->info_dialog           = NULL;
   shell->nav_dialog            = NULL;
@@ -294,6 +300,12 @@ gimp_display_shell_destroy (GtkObject *object)
       shell->iconmask = NULL;
     }
 
+  if (shell->padding_gc)
+    {
+      g_object_unref (G_OBJECT (shell->padding_gc));
+      shell->padding_gc = NULL;
+    }
+
   if (shell->info_dialog)
     {
       info_window_free (shell->info_dialog);
@@ -337,6 +349,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   GtkWidget        *main_vbox;
   GtkWidget        *disp_vbox;
   GtkWidget        *upper_hbox;
+  GtkWidget        *right_vbox;
   GtkWidget        *lower_hbox;
   GtkWidget        *inner_table;
   GtkWidget        *status_hbox;
@@ -468,7 +481,10 @@ gimp_display_shell_new (GimpDisplay *gdisp)
    *     |      |      |      +-- vruler
    *     |      |      |      +-- canvas
    *     |      |      |     
-   *     |      |      +-- vscrollbar
+   *     |      |      +-- right_vbox
+   *     |      |             |
+   *     |      |             +-- padding_button
+   *     |      |             +-- vscrollbar
    *     |      |    
    *     |      +-- lower_hbox
    *     |             |
@@ -508,6 +524,11 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   gtk_table_set_row_spacing (GTK_TABLE (inner_table), 0, 1);
   gtk_box_pack_start (GTK_BOX (upper_hbox), inner_table, TRUE, TRUE, 0);
   gtk_widget_show (inner_table);
+
+  /*  the vbox containing the color button and the vertical scrollbar  */
+  right_vbox = gtk_vbox_new (FALSE, 1);
+  gtk_box_pack_start (GTK_BOX (upper_hbox), right_vbox, FALSE, FALSE, 0);
+  gtk_widget_show (right_vbox);
 
   /*  the hbox containing qmask buttons, vertical scrollbar and nav button  */
   lower_hbox = gtk_hbox_new (FALSE, 1);
@@ -609,6 +630,20 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 		    G_CALLBACK (gimp_display_shell_canvas_events),
 		    shell);
 
+  /*  create the contents of the right_vbox  *********************************/
+  shell->padding_button = gimp_color_panel_new (_("Set Canvas Padding Color"),
+                                                &shell->padding_color,
+                                                GIMP_COLOR_AREA_FLAT,
+                                                15, 15);
+  GTK_WIDGET_UNSET_FLAGS (shell->padding_button, GTK_CAN_FOCUS);
+
+  gimp_help_set_help_data (shell->padding_button,
+                           _("Set canvas padding color"), "#padding_button");
+
+  g_signal_connect (G_OBJECT (shell->padding_button), "color_changed",
+                    G_CALLBACK (gimp_display_shell_color_changed),
+                    shell);
+
   /*  create the contents of the lower_hbox  *********************************/
 
   /*  the qmask buttons  */
@@ -706,9 +741,6 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 
   /*  pack all the widgets  **************************************************/
 
-  /*  fill the upper_hbox  */
-  gtk_box_pack_start (GTK_BOX (upper_hbox), shell->vsb, FALSE, FALSE, 0);
-
   /*  fill the inner_table  */
   gtk_table_attach (GTK_TABLE (inner_table), shell->origin, 0, 1, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -719,6 +751,11 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   gtk_table_attach (GTK_TABLE (inner_table), shell->canvas, 1, 2, 1, 2,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+
+  /*  fill the right_vbox  */
+  gtk_box_pack_start (GTK_BOX (right_vbox), shell->padding_button,
+                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (right_vbox), shell->vsb, TRUE, TRUE, 0);
 
   /*  fill the lower_hbox  */
   gtk_box_pack_start (GTK_BOX (lower_hbox), shell->qmaskoff, FALSE, FALSE, 0);
@@ -744,6 +781,8 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 
   gtk_widget_show (shell->vsb);
   gtk_widget_show (shell->hsb);
+
+  gtk_widget_show (shell->padding_button);
 
   gtk_widget_show (shell->qmaskoff);
   gtk_widget_show (shell->qmaskon);
@@ -958,6 +997,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   if (gdisp)
     {
       SET_STATE ("View/Toggle Selection", ! shell->select->hidden);
+      SET_STATE ("View/Toggle Layer Boundary", ! shell->select->layer_hidden);
       SET_STATE ("View/Toggle Rulers",
                  GTK_WIDGET_VISIBLE (shell->origin) ? 1 : 0);
       SET_STATE ("View/Toggle Guides", gdisp->draw_guides);
@@ -1226,12 +1266,10 @@ gimp_display_shell_add_expose_area (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  area = g_new (GimpArea, 1);
-
-  area->x1 = CLAMP (x,     0, shell->disp_width);
-  area->y1 = CLAMP (y,     0, shell->disp_height);
-  area->x2 = CLAMP (x + w, 0, shell->disp_width);
-  area->y2 = CLAMP (y + h, 0, shell->disp_height);
+  area = gimp_area_new (CLAMP (x,     0, shell->disp_width),
+                        CLAMP (y,     0, shell->disp_height),
+                        CLAMP (x + w, 0, shell->disp_width),
+                        CLAMP (y + h, 0, shell->disp_height));
 
   shell->display_areas = gimp_display_area_list_process (shell->display_areas,
                                                          area);
@@ -1290,7 +1328,7 @@ gimp_display_shell_flush (GimpDisplayShell *shell)
   if (shell->display_areas)
     {
       GSList   *list;
-      GimpArea *ga;
+      GimpArea *area;
 
       /*  stop the currently active tool  */
       tool_manager_control_active (shell->gdisp->gimage->gimp, PAUSE,
@@ -1299,11 +1337,14 @@ gimp_display_shell_flush (GimpDisplayShell *shell)
       for (list = shell->display_areas; list; list = g_slist_next (list))
 	{
 	  /*  Paint the area specified by the GimpArea  */
-	  ga = (GimpArea *) list->data;
+
+	  area = (GimpArea *) list->data;
 
 	  gimp_display_shell_display_area (shell,
-                                           ga->x1, ga->y1,
-                                           (ga->x2 - ga->x1), (ga->y2 - ga->y1));
+                                           area->x1,
+                                           area->y1,
+                                           (area->x2 - area->x1),
+                                           (area->y2 - area->y1));
 	}
 
       /*  Free the update lists  */
@@ -1949,7 +1990,7 @@ gimp_display_shell_display_area (GimpDisplayShell *shell,
   if (y1 < shell->disp_yoffset)
     {
       gdk_draw_rectangle (shell->canvas->window,
-			  shell->canvas->style->bg_gc[GTK_STATE_NORMAL],
+			  shell->padding_gc,
                           TRUE,
 			  x, y,
                           w, shell->disp_yoffset - y);
@@ -1963,7 +2004,7 @@ gimp_display_shell_display_area (GimpDisplayShell *shell,
   if (x1 < shell->disp_xoffset)
     {
       gdk_draw_rectangle (shell->canvas->window,
-			  shell->canvas->style->bg_gc[GTK_STATE_NORMAL],
+			  shell->padding_gc,
                           TRUE,
 			  x, y1,
                           shell->disp_xoffset - x, h);
@@ -1977,7 +2018,7 @@ gimp_display_shell_display_area (GimpDisplayShell *shell,
   if (x2 > (shell->disp_xoffset + sx))
     {
       gdk_draw_rectangle (shell->canvas->window,
-			  shell->canvas->style->bg_gc[GTK_STATE_NORMAL],
+			  shell->padding_gc,
                           TRUE,
 			  shell->disp_xoffset + sx, y1,
 			  x2 - (shell->disp_xoffset + sx), h - (y1 - y));
@@ -1991,7 +2032,7 @@ gimp_display_shell_display_area (GimpDisplayShell *shell,
   if (y2 > (shell->disp_yoffset + sy))
     {
       gdk_draw_rectangle (shell->canvas->window,
-			  shell->canvas->style->bg_gc[GTK_STATE_NORMAL],
+			  shell->padding_gc,
                           TRUE,
 			  x1, shell->disp_yoffset + sy,
 			  x2 - x1, y2 - (shell->disp_yoffset + sy));

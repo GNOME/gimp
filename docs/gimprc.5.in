@@ -260,12 +260,19 @@ There is always a tradeoff between memory usage and speed.  In most
 cases, the GIMP opts for speed over memory.  However, if memory is a
 big issue, set stingy-memory-use.
 .TP
-.I allow-resize-windows BOOLEAN
+.I resize-windows-on-zoom BOOLEAN
 When zooming into and out of images, this option enables the automatic
 resizing of windows.
 .TP
-.I dont-allow-resize-windows BOOLEAN
-Negated version of allow-resize-windows.
+.I dont-resize-windows-on-zoom BOOLEAN
+Negated version of resize-windows-on-zoom.
+.TP
+.I resize-windows-on-resize BOOLEAN
+When the physical image size changes, this option enables the automatic
+resizing of windows.
+.TP
+.I dont-resize-windows-on-zoom BOOLEAN
+Negated version of resize-windows-on-resize.
 .TP
 .I cursor-updating BOOLEAN
 Context-dependent cursors are cool.  They are enabled by default.

@@ -20,35 +20,37 @@
 #define __VIEW_COMMANDS_H__
 
 
-void   view_zoom_in_cmd_callback          (GtkWidget *widget,
-					   gpointer   data);
-void   view_zoom_out_cmd_callback         (GtkWidget *widget,
-					   gpointer   data);
-void   view_zoom_fit_cmd_callback         (GtkWidget *widget,
-					   gpointer   data);
-void   view_zoom_cmd_callback             (GtkWidget *widget,
-					   gpointer   data,
-					   guint      action);
-void   view_dot_for_dot_cmd_callback      (GtkWidget *widget,
-					   gpointer   data);
-void   view_info_window_cmd_callback      (GtkWidget *widget,
-					   gpointer   data);
-void   view_nav_window_cmd_callback       (GtkWidget *widget,
-					   gpointer   data);
-void   view_toggle_selection_cmd_callback (GtkWidget *widget,
-					   gpointer   data);
-void   view_toggle_rulers_cmd_callback    (GtkWidget *widget,
-					   gpointer   data);
-void   view_toggle_statusbar_cmd_callback (GtkWidget *widget,
-					   gpointer   data);
-void   view_toggle_guides_cmd_callback    (GtkWidget *widget,
-					   gpointer   data);
-void   view_snap_to_guides_cmd_callback   (GtkWidget *widget,
-					   gpointer   data);
-void   view_new_view_cmd_callback         (GtkWidget *widget,
-					   gpointer   data);
-void   view_shrink_wrap_cmd_callback      (GtkWidget *widget,
-					   gpointer   data);
+void   view_zoom_in_cmd_callback               (GtkWidget *widget,
+                                                gpointer   data);
+void   view_zoom_out_cmd_callback              (GtkWidget *widget,
+                                                gpointer   data);
+void   view_zoom_fit_cmd_callback              (GtkWidget *widget,
+                                                gpointer   data);
+void   view_zoom_cmd_callback                  (GtkWidget *widget,
+                                                gpointer   data,
+                                                guint      action);
+void   view_dot_for_dot_cmd_callback           (GtkWidget *widget,
+                                                gpointer   data);
+void   view_info_window_cmd_callback           (GtkWidget *widget,
+                                                gpointer   data);
+void   view_nav_window_cmd_callback            (GtkWidget *widget,
+                                                gpointer   data);
+void   view_toggle_selection_cmd_callback      (GtkWidget *widget,
+                                                gpointer   data);
+void   view_toggle_layer_boundary_cmd_callback (GtkWidget *widget,
+                                                gpointer   data);
+void   view_toggle_rulers_cmd_callback         (GtkWidget *widget,
+                                                gpointer   data);
+void   view_toggle_statusbar_cmd_callback      (GtkWidget *widget,
+                                                gpointer   data);
+void   view_toggle_guides_cmd_callback         (GtkWidget *widget,
+                                                gpointer   data);
+void   view_snap_to_guides_cmd_callback        (GtkWidget *widget,
+                                                gpointer   data);
+void   view_new_view_cmd_callback              (GtkWidget *widget,
+                                                gpointer   data);
+void   view_shrink_wrap_cmd_callback           (GtkWidget *widget,
+                                                gpointer   data);
 
 
 #endif /* __VIEW_COMMANDS_H__ */

@@ -45,6 +45,7 @@ struct _Selection
   gboolean          recalc;           /*  flag to recalculate the selection */
   gint              speed;            /*  speed of marching ants            */
   gboolean          hidden;           /*  is the selection hidden?          */
+  gboolean          layer_hidden;     /*  is the layer boundary hidden?     */
   guint             timeout_id;       /*  timer for successive draws        */
   gint              cycle;            /*  color cycling turned on           */
   GdkPixmap        *cycle_pix;        /*  cycling pixmap                    */
@@ -57,22 +58,23 @@ struct _Selection
 };
 
 
-Selection * gimp_display_shell_selection_create      (GdkWindow        *window,
-                                                      GimpDisplayShell *gdisp,
-                                                      gint              size,
-                                                      gint              width,
-                                                      gint              speed);
-void        gimp_display_shell_selection_free        (Selection        *select);
+Selection * gimp_display_shell_selection_create       (GdkWindow    *window,
+                                                       GimpDisplayShell *gdisp,
+                                                       gint          size,
+                                                       gint          width,
+                                                       gint          speed);
+void        gimp_display_shell_selection_free         (Selection    *select);
 
-void        gimp_display_shell_selection_pause       (Selection        *select);
-void        gimp_display_shell_selection_resume      (Selection        *select);
+void        gimp_display_shell_selection_pause        (Selection    *select);
+void        gimp_display_shell_selection_resume       (Selection    *select);
 
-void        gimp_display_shell_selection_start       (Selection        *select,
-                                                      gboolean          recalc);
-void        gimp_display_shell_selection_invis       (Selection        *select);
-void        gimp_display_shell_selection_layer_invis (Selection        *select);
+void        gimp_display_shell_selection_start        (Selection    *select,
+                                                       gboolean      recalc);
+void        gimp_display_shell_selection_invis        (Selection    *select);
+void        gimp_display_shell_selection_layer_invis  (Selection    *select);
 
-void        gimp_display_shell_selection_toggle      (Selection         *select);
+void        gimp_display_shell_selection_toggle       (Selection     *select);
+void        gimp_display_shell_selection_toggle_layer (Selection     *select);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SELECTION_H__  */

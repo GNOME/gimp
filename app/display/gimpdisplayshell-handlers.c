@@ -154,7 +154,7 @@ gimp_display_shell_size_changed_handler (GimpImage        *gimage,
                                          GimpDisplayShell *shell)
 {
   gimp_display_shell_resize_cursor_label (shell);
-  gimp_display_shell_scale_resize (shell, gimprc.allow_resize_windows, TRUE);
+  gimp_display_shell_scale_resize (shell, gimprc.resize_windows_on_resize, TRUE);
 }
 
 static void

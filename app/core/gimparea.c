@@ -28,6 +28,24 @@
 #define OVERHEAD 25  /*  in units of pixel area  */
 
 
+GimpArea *
+gimp_area_new (gint x1,
+               gint y1,
+               gint x2,
+               gint y2)
+{
+  GimpArea *area;
+
+  area = g_new (GimpArea, 1);
+
+  area->x1 = x1;
+  area->y1 = y1;
+  area->x2 = x2;
+  area->y2 = y2;
+
+  return area;
+}
+
 /*
  *  As far as I can tell, this function takes a GimpArea and unifies it with
  *  an existing list of GimpAreas, trying to avoid overdraw.  [adam]

@@ -46,7 +46,7 @@ struct _MagnifyOptions
 {
   GimpToolOptions   tool_options;
 
-  /* gint       allow_resize_windows; (from gimprc) */
+  /* gint       resize_windows_on_zoom; (from gimprc) */
   gint          allow_resize_d;
   GtkWidget    *allow_resize_w;
 
@@ -224,7 +224,7 @@ magnify_options_new (void)
   tool_options_init ((GimpToolOptions *) options,
 		     magnify_options_reset);
 
-  options->allow_resize_d = gimprc.allow_resize_windows;
+  options->allow_resize_d = gimprc.resize_windows_on_zoom;
   options->type_d         = options->type = GIMP_ZOOM_IN;
 
   /*  the main vbox  */
@@ -235,9 +235,9 @@ magnify_options_new (void)
     gtk_check_button_new_with_label (_("Allow Window Resizing"));
   g_signal_connect (G_OBJECT (options->allow_resize_w), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &(gimprc.allow_resize_windows));
+                    &(gimprc.resize_windows_on_zoom));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
-				gimprc.allow_resize_windows);
+				gimprc.resize_windows_on_zoom);
   gtk_box_pack_start (GTK_BOX (vbox), 
                       options->allow_resize_w, FALSE, FALSE, 0);
   gtk_widget_show (options->allow_resize_w);
@@ -401,7 +401,8 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
                          (win_height / 2));
 
       /*  resize the image  */
-      gimp_display_shell_scale_resize (shell, gimprc.allow_resize_windows, TRUE);
+      gimp_display_shell_scale_resize (shell, gimprc.resize_windows_on_zoom,
+                                       TRUE);
     }
 }
 

@@ -28,9 +28,14 @@ struct _GimpArea
 };
 
 
-GSList * gimp_display_area_list_process (GSList   *list,
-                                         GimpArea *area);
-GSList * gimp_display_area_list_free    (GSList   *list);
+GimpArea * gimp_area_new                  (gint      x1,
+                                           gint      y1,
+                                           gint      x2,
+                                           gint      y2);
+
+GSList   * gimp_display_area_list_process (GSList   *list,
+                                           GimpArea *area);
+GSList   * gimp_display_area_list_free    (GSList   *list);
 
 
 #endif /*  __GIMP_DISPLAY_AREA_H__  */

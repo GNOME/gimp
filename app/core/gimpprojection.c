@@ -288,18 +288,17 @@ gimp_display_add_update_area (GimpDisplay *gdisp,
                               gint         w,
                               gint         h)
 {
-  GimpArea *ga;
+  GimpArea *area;
 
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  ga = g_new (GimpArea, 1);
+  area = gimp_area_new (CLAMP (x, 0, gdisp->gimage->width),
+                        CLAMP (y, 0, gdisp->gimage->height),
+                        CLAMP (x + w, 0, gdisp->gimage->width),
+                        CLAMP (y + h, 0, gdisp->gimage->height));
 
-  ga->x1 = CLAMP (x, 0, gdisp->gimage->width);
-  ga->y1 = CLAMP (y, 0, gdisp->gimage->height);
-  ga->x2 = CLAMP (x + w, 0, gdisp->gimage->width);
-  ga->y2 = CLAMP (y + h, 0, gdisp->gimage->height);
-
-  gdisp->update_areas = gimp_display_area_list_process (gdisp->update_areas, ga);
+  gdisp->update_areas = gimp_display_area_list_process (gdisp->update_areas,
+                                                        area);
 }
 
 void
@@ -518,9 +517,6 @@ static void
 gimp_display_flush_whenever (GimpDisplay *gdisp, 
                              gboolean     now)
 {
-  GSList   *list;
-  GimpArea *ga;
-
   /*  Flush the items in the displays and updates lists -
    *  but only if gdisplay has been mapped and exposed
    */
@@ -535,22 +531,22 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
     {
       /* Synchronous */
 
-      list = gdisp->update_areas;
-      while (list)
+      GSList   *list;
+      GimpArea *area;
+
+      for (list = gdisp->update_areas; list; list = g_slist_next (list))
 	{
 	  /*  Paint the area specified by the GimpArea  */
-	  ga = (GimpArea *) list->data;
-	  
-	  if ((ga->x1 != ga->x2) && (ga->y1 != ga->y2))
+	  area = (GimpArea *) list->data;
+
+	  if ((area->x1 != area->x2) && (area->y1 != area->y2))
 	    {
 	      gimp_display_paint_area (gdisp,
-                                       ga->x1,
-                                       ga->y1,
-                                       (ga->x2 - ga->x1),
-                                       (ga->y2 - ga->y1));
+                                       area->x1,
+                                       area->y1,
+                                       (area->x2 - area->x1),
+                                       (area->y2 - area->y1));
 	    }
-	  
-	  list = g_slist_next (list);
 	}
     }
   else
@@ -582,26 +578,23 @@ static void
 gimp_display_idlerender_init (GimpDisplay *gdisp)
 {
   GSList    *list;
-  GimpArea  *ga, *new_ga;
+  GimpArea  *area, *new_area;
 
   /* We need to merge the IdleRender's and the GimpDisplay's update_areas list
    * to keep track of which of the updates have been flushed and hence need
    * to be drawn. 
    */
-  list = gdisp->update_areas;
-
-  while (list)
+  for (list = gdisp->update_areas; list; list = g_slist_next (list))
     {
-      ga = (GimpArea *) list->data;
+      area = (GimpArea *) list->data;
 
-      new_ga = g_new (GimpArea, 1);
+      new_area = g_new (GimpArea, 1);
 
-      memcpy (new_ga, ga, sizeof (GimpArea));
+      memcpy (new_area, area, sizeof (GimpArea));
 
       gdisp->idle_render.update_areas =
-	gimp_display_area_list_process (gdisp->idle_render.update_areas, new_ga);
-
-      list = g_slist_next (list);
+	gimp_display_area_list_process (gdisp->idle_render.update_areas,
+                                        new_area);
     }
 
   /* If an idlerender was already running, merge the remainder of its
@@ -610,17 +603,17 @@ gimp_display_idlerender_init (GimpDisplay *gdisp)
    */
   if (gdisp->idle_render.idle_id)
     {
-      new_ga = g_new (GimpArea, 1);
-
-      new_ga->x1 = gdisp->idle_render.basex;
-      new_ga->y1 = gdisp->idle_render.y;
-      new_ga->x2 = gdisp->idle_render.basex + gdisp->idle_render.width;
-      new_ga->y2 = gdisp->idle_render.y + (gdisp->idle_render.height -
-                                           (gdisp->idle_render.y -
-                                            gdisp->idle_render.basey));
+      new_area =
+        gimp_area_new (gdisp->idle_render.basex,
+                       gdisp->idle_render.y,
+                       gdisp->idle_render.basex + gdisp->idle_render.width,
+                       gdisp->idle_render.y + (gdisp->idle_render.height -
+                                               (gdisp->idle_render.y -
+                                                gdisp->idle_render.basey)));
 
       gdisp->idle_render.update_areas =
-	gimp_display_area_list_process (gdisp->idle_render.update_areas, new_ga);
+	gimp_display_area_list_process (gdisp->idle_render.update_areas,
+                                        new_area);
 
       gimp_display_idle_render_next_area (gdisp);
     }
@@ -667,7 +660,7 @@ gimp_display_idlerender_callback (gpointer data)
       workw = gdisp->idle_render.basex + gdisp->idle_render.width - workx;
     }
 
-  if (worky+workh > gdisp->idle_render.basey+gdisp->idle_render.height)
+  if (worky + workh > gdisp->idle_render.basey + gdisp->idle_render.height)
     {
       workh = gdisp->idle_render.basey + gdisp->idle_render.height - worky;
     }  
@@ -704,27 +697,22 @@ gimp_display_idlerender_callback (gpointer data)
 static gboolean
 gimp_display_idle_render_next_area (GimpDisplay *gdisp)
 {
-  GimpArea *ga;
-  GSList   *list;
-  
-  list = gdisp->idle_render.update_areas;
+  GimpArea *area;
 
-  if (list == NULL)
-    {
-      return FALSE;
-    }
+  if (! gdisp->idle_render.update_areas)
+    return FALSE;
 
-  ga = (GimpArea *) list->data;
+  area = (GimpArea *) gdisp->idle_render.update_areas->data;
 
   gdisp->idle_render.update_areas =
-    g_slist_remove (gdisp->idle_render.update_areas, ga);
+    g_slist_remove (gdisp->idle_render.update_areas, area);
 
-  gdisp->idle_render.x = gdisp->idle_render.basex = ga->x1;
-  gdisp->idle_render.y = gdisp->idle_render.basey = ga->y1;
-  gdisp->idle_render.width = ga->x2 - ga->x1;
-  gdisp->idle_render.height = ga->y2 - ga->y1;
+  gdisp->idle_render.x      = gdisp->idle_render.basex = area->x1;
+  gdisp->idle_render.y      = gdisp->idle_render.basey = area->y1;
+  gdisp->idle_render.width  = area->x2 - area->x1;
+  gdisp->idle_render.height = area->y2 - area->y1;
 
-  g_free (ga);
+  g_free (area);
 
   return TRUE;
 }

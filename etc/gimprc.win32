@@ -149,7 +149,11 @@
 
 # When zooming into and out of images, this option enables the
 #  automatic resizing of windows
-# (allow-resize-windows)
+# (resize-windows-on-zoom)
+
+# When the physical size of the image changes, this option enables the
+#  automatic resizing of windows
+# (resize-windows-on-resize)
 
 # Context-dependent cursors are cool.  They are enabled by default.
 #  However, they require overhead that you may want to do without.
