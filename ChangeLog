@@ -1,5 +1,10 @@
 2004-05-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/data-commands.c (data_delete_callback): eek, delete
+	the data only if "OK" was pressed.
+
+2004-05-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimperrorconsole.c
 	(gimp_error_console_save_ext_clicked): use
 	gtk_widget_get_screen(), not window_get_screen() on a button.
