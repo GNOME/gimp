@@ -161,6 +161,8 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   gimp_enum_combo_box_set_visible (GIMP_ENUM_COMBO_BOX (editor->menu),
                                    gimp_histogram_editor_item_visible,
                                    editor);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (editor->menu),
+                                 view->channel);
   gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 

@@ -1,3 +1,9 @@
+2004-06-12  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphistogrameditor.c (gimp_histogram_editor_init):
+	set the initially selected channel on the histogram combobox.
+	Fixes bug #144225.
+
 2004-06-12  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/paint/gimppaintoptions.[ch]: renamed all "pressure-pressure"
