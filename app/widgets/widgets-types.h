@@ -41,6 +41,7 @@ typedef struct _GimpStringAction             GimpStringAction;
 typedef struct _GimpUIManager                GimpUIManager;
 
 typedef struct _GimpEnumStore                GimpEnumStore;
+typedef struct _GimpUnitStore                GimpUnitStore;
 
 typedef struct _GimpCellRendererToggle       GimpCellRendererToggle;
 typedef struct _GimpCellRendererViewable     GimpCellRendererViewable;
@@ -66,6 +67,7 @@ typedef struct _GimpContainerMenuImpl   GimpContainerMenuImpl;
 typedef struct _GimpMenuItem            GimpMenuItem;
 
 typedef struct _GimpEnumComboBox        GimpEnumComboBox;
+typedef struct _GimpUnitComboBox        GimpUnitComboBox;
 
 typedef struct _GimpEditor              GimpEditor;
 typedef struct _GimpDeviceStatus        GimpDeviceStatus;

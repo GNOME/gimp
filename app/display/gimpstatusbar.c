@@ -25,6 +25,9 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-unit.h"
 
+#include "widgets/gimpunitstore.h"
+#include "widgets/gimpunitcombobox.h"
+
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpstatusbar.h"
@@ -38,12 +41,17 @@
 #define CURSOR_STR_LENGTH 256
 
 
-static void   gimp_statusbar_class_init (GimpStatusbarClass *klass);
-static void   gimp_statusbar_init       (GimpStatusbar      *statusbar);
+static void   gimp_statusbar_class_init   (GimpStatusbarClass *klass);
+static void   gimp_statusbar_init         (GimpStatusbar      *statusbar);
 
-static void   gimp_statusbar_update     (GtkStatusbar       *gtk_statusbar,
-                                         guint               context_id,
-                                         const gchar        *text);
+static void   gimp_statusbar_update       (GtkStatusbar       *gtk_statusbar,
+                                           guint               context_id,
+                                           const gchar        *text);
+static void   gimp_statusbar_set_cursor   (GimpStatusbar      *statusbar,
+                                           gdouble             x,
+                                           gdouble             y);
+static void   gimp_statusbar_unit_changed (GtkWidget          *combo,
+                                           GimpStatusbar      *statusbar);
 
 
 static GtkStatusbarClass *parent_class = NULL;
@@ -95,6 +103,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 {
   GtkStatusbar  *gtk_statusbar;
   GtkBox        *box;
+  GimpUnitStore *store;
   GtkShadowType  shadow_type;
 
   gtk_statusbar = GTK_STATUSBAR (statusbar);
@@ -121,6 +130,17 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_container_add (GTK_CONTAINER (statusbar->cursor_frame),
                      statusbar->cursor_label);
   gtk_widget_show (statusbar->cursor_label);
+
+  store = gimp_unit_store_new (2);
+  statusbar->combo = gimp_unit_combo_box_new_with_model (store);
+  g_object_unref (store);
+
+  gtk_box_pack_start (box, statusbar->combo, FALSE, FALSE, 0);
+  gtk_widget_show (statusbar->combo);
+
+  g_signal_connect (statusbar->combo, "changed",
+                    G_CALLBACK (gimp_statusbar_unit_changed),
+                    statusbar);
 
   statusbar->progressbar = gtk_progress_bar_new ();
   gtk_box_pack_start (box, statusbar->progressbar, TRUE, TRUE, 0);
@@ -264,31 +284,7 @@ gimp_statusbar_update_cursor (GimpStatusbar *statusbar,
     }
   else
     {
-      GimpImage *gimage;
-      gchar      buffer[CURSOR_STR_LENGTH];
-
-      gimage = statusbar->shell->gdisp->gimage;
-
-      if (gimage->unit == GIMP_UNIT_PIXEL)
-	{
-	  g_snprintf (buffer, sizeof (buffer), statusbar->cursor_format_str,
-                      "",
-                      ROUND (x),
-                      ", ",
-                      ROUND (y));
-	}
-      else /* show real world units */
-	{
-	  gdouble  unit_factor = gimp_image_unit_get_factor (gimage);
-
-	  g_snprintf (buffer, sizeof (buffer), statusbar->cursor_format_str,
-                      "",
-                      x * unit_factor / gimage->xresolution,
-                      ", ",
-                      y * unit_factor / gimage->yresolution);
-	}
-
-      gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), buffer);
+      gimp_statusbar_set_cursor (statusbar, x, y);
     }
 }
 
@@ -299,48 +295,50 @@ gimp_statusbar_resize_cursor (GimpStatusbar *statusbar)
 
   GimpDisplayShell *shell;
   GimpImage        *gimage;
-  gchar             buffer[CURSOR_STR_LENGTH];
+  GtkTreeModel     *model;
+  const gchar      *text;
   gint              cursor_label_width;
   gint              label_frame_size_difference;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
 
-  shell = statusbar->shell;
+  shell  = statusbar->shell;
   gimage = shell->gdisp->gimage;
+
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->combo));
+  gimp_unit_store_set_resolutions (GIMP_UNIT_STORE (model),
+                                   gimage->xresolution, gimage->yresolution);
+
+  g_signal_handlers_block_by_func (statusbar->combo,
+                                   gimp_statusbar_unit_changed, statusbar);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (statusbar->combo), gimage->unit);
+  g_signal_handlers_unblock_by_func (statusbar->combo,
+                                     gimp_statusbar_unit_changed, statusbar);
 
   if (gimage->unit == GIMP_UNIT_PIXEL)
     {
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
 		  "%%s%%d%%s%%d");
-
-      g_snprintf (buffer, sizeof (buffer), statusbar->cursor_format_str,
-		  "",   shell->gdisp->gimage->width,
-                  ", ", shell->gdisp->gimage->height);
     }
   else /* show real world units */
     {
-      gdouble  unit_factor = gimp_image_unit_get_factor (gimage);
-
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
-		  "%%s%%.%df%%s%%.%df %s",
-		  gimp_image_unit_get_digits (gimage),
-		  gimp_image_unit_get_digits (gimage),
-		  gimp_image_unit_get_symbol (gimage));
-
-      g_snprintf (buffer, sizeof (buffer), statusbar->cursor_format_str,
-		  "",
-		  (gdouble) gimage->width  * unit_factor / gimage->xresolution,
-		  ", ",
-		  (gdouble) gimage->height * unit_factor / gimage->yresolution);
+		  "%%s%%.%df%%s%%.%df",
+                  gimp_image_unit_get_digits (gimage),
+                  gimp_image_unit_get_digits (gimage));
     }
+
+  gimp_statusbar_set_cursor (statusbar, gimage->width, gimage->height);
+
+  text = gtk_label_get_text (GTK_LABEL (statusbar->cursor_label));
 
   /* one static layout for all displays should be fine */
   if (! layout)
-    layout = gtk_widget_create_pango_layout (statusbar->cursor_label, buffer);
+    layout = gtk_widget_create_pango_layout (statusbar->cursor_label, text);
   else
-    pango_layout_set_text (layout, buffer, -1);
+    pango_layout_set_text (layout, text, -1);
 
   pango_layout_get_pixel_size (layout, &cursor_label_width, NULL);
 
@@ -359,3 +357,43 @@ gimp_statusbar_resize_cursor (GimpStatusbar *statusbar)
                                  label_frame_size_difference,
                                  -1);
 }
+
+static void
+gimp_statusbar_set_cursor (GimpStatusbar *statusbar,
+                           gdouble        x,
+                           gdouble        y)
+{
+  GimpImage     *image = statusbar->shell->gdisp->gimage;
+  GtkTreeModel  *model;
+  GimpUnitStore *store;
+  gchar          buffer[CURSOR_STR_LENGTH];
+
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->combo));
+  store = GIMP_UNIT_STORE (model);
+
+  gimp_unit_store_set_pixel_values (store, x, y);
+
+  if (image->unit == GIMP_UNIT_PIXEL)
+    {
+      g_snprintf (buffer, sizeof (buffer), statusbar->cursor_format_str,
+		  "", ROUND (x), ", ", ROUND (y));
+    }
+  else /* show real world units */
+    {
+      gimp_unit_store_get_values (store, image->unit, &x, &y);
+
+      g_snprintf (buffer, sizeof (buffer), statusbar->cursor_format_str,
+		  "", x, ", ", y);
+    }
+
+  gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), buffer);
+}
+
+static void
+gimp_statusbar_unit_changed (GtkWidget     *combo,
+                             GimpStatusbar *statusbar)
+{
+  gimp_image_set_unit (statusbar->shell->gdisp->gimage,
+                       gtk_combo_box_get_active (GTK_COMBO_BOX (combo)));
+}
+

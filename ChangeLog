@@ -1,3 +1,18 @@
+2004-05-08  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpunitcombobox.[ch]
+	* app/widgets/gimpunitstore.[ch]: added a prototype of a unit menu
+	based on GtkComboBox. Will move this to libgimpwidgets later...
+
+	* app/display/gimpstatusbar.[ch]: use the new GimpUnitComboBox and
+	GimpUnitStore.
+
+	* themes/Default/gtkrc
+	* themes/Small/gtkrc: hardcode the appearance of the
+	GimpUnitComboBox. It uses a hack that doesn't work in list mode.
+
 2004-05-07  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-colormap.[ch]: added a const qualifier.

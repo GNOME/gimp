@@ -36,24 +36,25 @@ style "gimp-default-style"
       { "images/stock-warning-64.png", *, *, "gtk-dialog" }
     }
 
-  GtkPaned::handle_size            = 6
-  GimpDock::separator_height       = 6
-  GimpDock::default_height         = 300
-  GimpImageDock::minimal_width     = 250
-  GimpImageDock::menu_preview_size = button
-  GimpToolbox::tool_icon_size      = button
-  GimpToolbox::button_relief       = none
-  GimpDockbook::tab_border         = 0
-  GimpDockbook::tab_icon_size      = button
-  GimpColorNotebook::tab_border    = 0
-  GimpColorNotebook::tab_icon_size = button
-  GimpDockable::content_border     = 2
-  GimpEditor::content_spacing      = 2
-  GimpEditor::button_spacing       = 2
-  GimpEditor::button_icon_size     = menu
-  GtkDialog::content_area_border   = 0
-  GtkDialog::button_spacing        = 6
-  GtkDialog::action_area_border    = 12
+  GtkPaned::handle_size             = 6
+  GimpDock::separator_height        = 6
+  GimpDock::default_height          = 300
+  GimpImageDock::minimal_width      = 250
+  GimpImageDock::menu_preview_size  = button
+  GimpToolbox::tool_icon_size       = button
+  GimpToolbox::button_relief        = none
+  GimpDockbook::tab_border          = 0
+  GimpDockbook::tab_icon_size       = button
+  GimpColorNotebook::tab_border     = 0
+  GimpColorNotebook::tab_icon_size  = button
+  GimpDockable::content_border      = 2
+  GimpEditor::content_spacing       = 2
+  GimpEditor::button_spacing        = 2
+  GimpEditor::button_icon_size      = menu
+  GtkDialog::content_area_border    = 0
+  GtkDialog::button_spacing         = 6
+  GtkDialog::action_area_border     = 12
+  GimpUnitComboBox::appears_as_list = 0
 }
 
 class "GtkWidget" style "gimp-default-style"
