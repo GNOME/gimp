@@ -226,7 +226,7 @@ msgstr ""
 "W oknie, które służy do wybierania plików przy ich otwieraniu lub "
 "zapisywaniu, możliwe jest automatycznie uzupełnianie nazw plików. Operacja "
 "ta wygląda podobnie, jak w powłoce uniksowej: wystarczy wpisać początek "
-"nazwy pliku i przycisnąć klawisz <tt>Tab</tab>, a jej pozostała część "
+"nazwy pliku i przycisnąć klawisz <tt>Tab</tt>, a jej pozostała część "
 "zostanie dopisana przez program."
 
 #: tips/gimp-tips.xml.in.h:20

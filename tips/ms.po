@@ -264,7 +264,7 @@ msgid ""
 msgstr ""
 "Anda boleh selaraskan dan gantikan pemilihan menggunakan <tt>ALt</tt>. Jika "
 "ini membuatkan tetingkap beralih, pengurus tetingkap anda telah menggunakan "
-"kekunci <tt>Alt</tt>. Cuba tekan <tt>Shift</t> pada masa yang sama."
+"kekunci <tt>Alt</tt>. Cuba tekan <tt>Shift</tt> pada masa yang sama."
 
 #: tips/gimp-tips.xml.in.h:25
 msgid ""
