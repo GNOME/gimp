@@ -42,12 +42,8 @@ Precision      canvas_precision      (Canvas *);
 Format         canvas_format         (Canvas *);
 Alpha          canvas_alpha          (Canvas *);
 Storage        canvas_storage        (Canvas *);
-int            canvas_autoalloc      (Canvas *);
 
-Precision      canvas_set_precision  (Canvas *, Precision);
-Format         canvas_set_format     (Canvas *, Format);
-Alpha          canvas_set_alpha      (Canvas *, Alpha);
-Storage        canvas_set_storage    (Canvas *, Storage);
+int            canvas_autoalloc      (Canvas *);
 int            canvas_set_autoalloc  (Canvas *, int);
 
 int            canvas_width          (Canvas *);

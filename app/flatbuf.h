@@ -34,10 +34,6 @@ Precision      flatbuf_precision      (FlatBuf *);
 Format         flatbuf_format         (FlatBuf *);
 Alpha          flatbuf_alpha          (FlatBuf *);
 
-Precision      flatbuf_set_precision  (FlatBuf *, Precision);
-Format         flatbuf_set_format     (FlatBuf *, Format);
-Alpha          flatbuf_set_alpha      (FlatBuf *, Alpha);
-
 guint          flatbuf_width          (FlatBuf *);
 guint          flatbuf_height         (FlatBuf *);
 

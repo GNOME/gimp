@@ -676,9 +676,9 @@ paint_core_16_area_original  (
          pag = pixelarea_process (pag))
       {
         if (pixelarea_data (&undoPR))
-          ray_copy_area (&undoPR, &destPR);
+          copy_area (&undoPR, &destPR);
         else
-          ray_copy_area (&srcPR, &destPR);
+          copy_area (&srcPR, &destPR);
       }
   }
   canvas_set_autoalloc (undo_tiles, TRUE);
@@ -929,9 +929,7 @@ painthit_apply (
 {
   GImage * gimage = drawable_gimage (drawable);
   gimage_apply_painthit (gimage, drawable,
-                         (orig_tiles
-                          ? orig_tiles
-                          : drawable_data_canvas (drawable)),
+                         orig_tiles,
                          canvas_buf,
                          FALSE, image_opacity, paint_mode,
                          paint_core->x, paint_core->y);

@@ -196,50 +196,6 @@ canvas_autoalloc (
 }
 
 
-Precision 
-canvas_set_precision  (
-                       Canvas * c,
-                       Precision p
-                       )
-{
-  g_warning ("finish writing ()");
-  return canvas_precision (c);
-}
-
-
-Format 
-canvas_set_format  (
-                    Canvas * c,
-                    Format f
-                    )
-{
-  g_warning ("finish writing canvas_set_format()");
-  return canvas_format (c);
-}
-
-
-Alpha 
-canvas_set_alpha  (
-                   Canvas * c,
-                   Alpha a
-                   )
-{
-  g_warning ("finish writing canvas_set_alpha()");
-  return canvas_alpha (c);
-}
-
-
-Storage 
-canvas_set_storage  (
-                     Canvas * c,
-                     Storage t
-                     )
-{
-  g_warning ("finish writing canvas_set_storage()");
-  return canvas_storage (c);
-}
-
-
 int
 canvas_set_autoalloc (
                       Canvas * c,

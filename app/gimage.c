@@ -649,7 +649,10 @@ gimage_apply_painthit  (
     [tag_num_channels (canvas_tag (src2))];
 
   if (operation == -1)
-    return;
+    {
+      g_warning ("invalid op in gimage_apply_painthit()");
+      return;
+    }
   
   {
     PixelArea src1PR, src2PR, destPR, maskPR;
@@ -659,6 +662,10 @@ gimage_apply_painthit  (
     mask = (gimage_mask_is_empty (gimage))
       ? NULL : gimage_get_mask (gimage);
 
+    /* init src1 if necessary */
+    if (src1 == NULL)
+      src1 = drawable_data_canvas (drawable);
+    
     {
       int offset_x, offset_y;
       int x1, y1, x2, y2;

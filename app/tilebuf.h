@@ -34,10 +34,6 @@ Precision        tilebuf_precision      (TileBuf *);
 Format           tilebuf_format         (TileBuf *);
 Alpha            tilebuf_alpha          (TileBuf *);
 
-Precision        tilebuf_set_precision  (TileBuf *, Precision);
-Format           tilebuf_set_format     (TileBuf *, Format);
-Alpha            tilebuf_set_alpha      (TileBuf *, Alpha);
-
 guint            tilebuf_width          (TileBuf *);
 guint            tilebuf_height         (TileBuf *);
 

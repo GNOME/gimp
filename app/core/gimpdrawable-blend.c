@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+
 #include "appenv.h"
 #include "asupsample.h"
 #include "blend.h"
@@ -26,16 +27,22 @@
 #include "draw_core.h"
 #include "drawable.h"
 #include "errors.h"
-#include "fuzzy_select.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gradient.h"
 #include "interface.h"
-#include "paint_funcs.h"
 #include "palette.h"
 #include "selection.h"
 #include "tools.h"
 #include "undo.h"
+
+#include "pixelarea.h"
+#include "pixelrow.h"
+#include "canvas.h"
+#include "paint.h"
+#include "paint_funcs_area.h"
+#include "paint_funcs_row.h"
+
 
 /*  target size  */
 #define  TARGET_HEIGHT     15
@@ -113,12 +120,14 @@ typedef struct {
   RepeatFunc   repeat_func;
 } RenderBlendData;
 
+#if 0
 typedef struct {
-  PixelRegion   *PR;
+  PixelArea     *PR;
   unsigned char *row_data;
   int            bytes;
   int            width;
 } PutPixelData;
+#endif
 
 /*  local function prototypes  */
 static void   blend_scale_update        (GtkAdjustment *, double *);
@@ -165,12 +174,13 @@ static double gradient_repeat_none(double val);
 static double gradient_repeat_sawtooth(double val);
 static double gradient_repeat_triangular(double val);
 
-static void   gradient_precalc_shapeburst   (GImage *gimage, GimpDrawable *drawable, PixelRegion *PR, double dist);
+static void   gradient_precalc_shapeburst   (GImage *gimage, GimpDrawable *drawable, PixelArea *PR, double dist);
 
-static void   gradient_render_pixel(double x, double y, color_t *color, void *render_data);
+static void   gradient_render_pixel(double x, double y, PixelRow *color, int xoffset, void *render_data);
+#if 0
 static void   gradient_put_pixel(int x, int y, color_t color, void *put_pixel_data);
-
-static void   gradient_fill_region          (GImage *gimage, GimpDrawable *drawable, PixelRegion *PR,
+#endif
+static void   gradient_fill_region          (GImage *gimage, GimpDrawable *drawable, PixelArea *PR,
 					     int width, int height,
 					     BlendMode blend_mode, GradientType gradient_type,
 					     double offset, RepeatMode repeat,
@@ -183,17 +193,10 @@ static void calc_hsv_to_rgb(double *h, double *s, double *v);
 static BlendOptions *create_blend_options   (void);
 static Argument *blend_invoker              (Argument *);
 
+
 /*  variables for the shapeburst algs  */
-static PixelRegion distR =
-{
-  NULL,  /* data */
-  NULL,  /* tiles */
-  0,     /* rowstride */
-  0, 0,  /* w, h */
-  0, 0,  /* x, y */
-  4,     /* bytes */
-  0      /* process count */
-};
+static Canvas * distance_canvas;
+
 
 /*  the blend option menu items -- the blend modes  */
 static MenuItem blend_option_items[] =
@@ -721,47 +724,44 @@ blend_control (Tool     *tool,
 }
 
 
-/*****/
+
+
 
 /*  The actual blending procedure  */
-static void
-blend (GImage       *gimage,
-       GimpDrawable *drawable,
-       BlendMode     blend_mode,
-       int           paint_mode,
-       GradientType  gradient_type,
-       double        opacity,
-       double        offset,
-       RepeatMode    repeat,
-       int           supersample,
-       int           max_depth,
-       double        threshold,
-       double        startx,
-       double        starty,
-       double        endx,
-       double        endy)
+static void 
+blend  (
+        GImage * gimage,
+        GimpDrawable * drawable,
+        BlendMode blend_mode,
+        int paint_mode,
+        GradientType gradient_type,
+        double opacity,
+        double offset,
+        RepeatMode repeat,
+        int supersample,
+        int max_depth,
+        double threshold,
+        double startx,
+        double starty,
+        double endx,
+        double endy
+        )
 {
-  TileManager *buf_tiles;
-  PixelRegion bufPR;
-  int has_alpha;
-  int has_selection;
-  int bytes;
+  Canvas * buf;
+  PixelArea bufPR;
   int x1, y1, x2, y2;
+  
+  (void) drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-  has_selection = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-  has_alpha = drawable_has_alpha (drawable);
-  bytes = drawable_bytes (drawable);
-
-  /*  Always create an alpha temp buf (for generality) */
-  if (! has_alpha)
-    {
-      has_alpha = TRUE;
-      bytes += 1;
-    }
-
-  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
+  {
+    /* add alpha channel so we can do transparent blends */
+    Tag buftag = drawable_tag (drawable);
+    buftag = tag_set_alpha (buftag, ALPHA_YES);
+    buf = canvas_new (buftag, (x2 - x1), (y2 - y1), STORAGE_TILED);
+  }
+  
+  pixelarea_init (&bufPR, buf, NULL,
+                  0, 0, (x2 - x1), (y2 - y1), TRUE);
 
   gradient_fill_region (gimage, drawable,
 			&bufPR, (x2 - x1), (y2 - y1),
@@ -770,116 +770,121 @@ blend (GImage       *gimage,
 			(startx - x1), (starty - y1),
 			(endx - x1), (endy - y1));
 
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &bufPR, TRUE,
-		      (opacity * 255) / 100, paint_mode, NULL, x1, y1);
-
-  /*  update the image  */
+  gimage_apply_painthit (gimage, drawable, NULL, buf,
+                         TRUE, opacity / 100, paint_mode, x1, y1);
+  
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 
-  /*  free the temporary buffer  */
-  tile_manager_destroy (buf_tiles);
+  canvas_delete (buf);
 }
 
 
-static double
-gradient_calc_conical_sym_factor (double  dist,
-				  double *axis,
-				  double  offset,
-				  double  x,
-				  double  y)
+static double 
+gradient_calc_conical_sym_factor  (
+                                   double dist,
+                                   double * axis,
+                                   double offset,
+                                   double x,
+                                   double y
+                                   )
 {
   double vec[2];
   double r;
   double rat;
 
   if (dist == 0.0)
-    rat = 0.0;
+    {
+      rat = 0.0;
+    }
+  else if ((x != 0) || (y != 0))
+    {
+      /* Calculate offset from the start in pixels */
+      
+      r = sqrt(x * x + y * y);
+      
+      vec[0] = x / r;
+      vec[1] = y / r;
+      
+      rat = axis[0] * vec[0] + axis[1] * vec[1]; /* Dot product */
+      
+      if (rat > 1.0)
+        rat = 1.0;
+      else if (rat < -1.0)
+        rat = -1.0;
+      
+      /* This cool idea is courtesy Josh MacDonald,
+       * Ali Rahimi --- two more XCF losers.  */
+      
+      rat = acos(rat) / M_PI;
+      rat = pow(rat, (offset / 10) + 1);
+      
+      rat = BOUNDS(rat, 0.0, 1.0);
+    }
   else
-    if ((x != 0) || (y != 0))
-      {
-	/* Calculate offset from the start in pixels */
-
-	r = sqrt(x * x + y * y);
-
-	vec[0] = x / r;
-	vec[1] = y / r;
-
-	rat = axis[0] * vec[0] + axis[1] * vec[1]; /* Dot product */
-
-	if (rat > 1.0)
-	  rat = 1.0;
-	else if (rat < -1.0)
-	  rat = -1.0;
-
-	/* This cool idea is courtesy Josh MacDonald,
-	 * Ali Rahimi --- two more XCF losers.  */
-
-	rat = acos(rat) / M_PI;
-	rat = pow(rat, (offset / 10) + 1);
-
-	rat = BOUNDS(rat, 0.0, 1.0);
-      }
-    else
+    {
       rat = 0.5;
+    }
 
   return rat;
-} /* gradient_calc_conical_sym_factor */
+}
 
 
-/*****/
-
-static double
-gradient_calc_conical_asym_factor (double  dist,
-				   double *axis,
-				   double  offset,
-				   double  x,
-				   double  y)
+static double 
+gradient_calc_conical_asym_factor  (
+                                    double dist,
+                                    double * axis,
+                                    double offset,
+                                    double x,
+                                    double y
+                                    )
 {
   double ang0, ang1;
   double ang;
   double rat;
 
   if (dist == 0.0)
-    rat = 0.0;
+    {
+      rat = 0.0;
+    }
+  else if ((x != 0) || (y != 0))
+    {
+      ang0 = atan2(axis[0], axis[1]) + M_PI;
+      ang1 = atan2(x, y) + M_PI;
+      
+      ang = ang1 - ang0;
+      
+      if (ang < 0.0)
+        ang += (2.0 * M_PI);
+      
+      rat = ang / (2.0 * M_PI);
+      rat = pow(rat, (offset / 10) + 1);
+      
+      rat = BOUNDS(rat, 0.0, 1.0);
+    }
   else
     {
-      if ((x != 0) || (y != 0))
-	{
-	  ang0 = atan2(axis[0], axis[1]) + M_PI;
-	  ang1 = atan2(x, y) + M_PI;
-
-	  ang = ang1 - ang0;
-
-	  if (ang < 0.0)
-	    ang += (2.0 * M_PI);
-
-	  rat = ang / (2.0 * M_PI);
-	  rat = pow(rat, (offset / 10) + 1);
-
-	  rat = BOUNDS(rat, 0.0, 1.0);
-	}
-      else
-	rat = 0.5; /* We are on middle point */
-    } /* else */
+      rat = 0.5; /* We are on middle point */
+    }
 
   return rat;
-} /* gradient_calc_conical_asym_factor */
+}
 
 
-/*****/
-
-static double
-gradient_calc_square_factor (double dist,
-			     double offset,
-			     double x,
-			     double y)
+static double 
+gradient_calc_square_factor  (
+                              double dist,
+                              double offset,
+                              double x,
+                              double y
+                              )
 {
   double r;
   double rat;
 
   if (dist == 0.0)
-    rat = 0.0;
+    {
+      rat = 0.0;
+    }
   else
     {
       /* Calculate offset from start as a value in [0, 1] */
@@ -895,25 +900,27 @@ gradient_calc_square_factor (double dist,
         rat = (rat>=1) ? 1 : 0;
       else
 	rat = (rat - offset) / (1.0 - offset);
-    } /* else */
+    }
 
   return rat;
-} /* gradient_calc_square_factor */
+}
 
 
-/*****/
-
-static double
-gradient_calc_radial_factor (double dist,
-			     double offset,
-			     double x,
-			     double y)
+static double 
+gradient_calc_radial_factor  (
+                              double dist,
+                              double offset,
+                              double x,
+                              double y
+                              )
 {
   double r;
   double rat;
 
   if (dist == 0.0)
-    rat = 0.0;
+    {
+      rat = 0.0;
+    }
   else
     {
       /* Calculate radial offset from start as a value in [0, 1] */
@@ -929,49 +936,53 @@ gradient_calc_radial_factor (double dist,
         rat = (rat>=1) ? 1 : 0;
       else
 	rat = (rat - offset) / (1.0 - offset);
-    } /* else */
+    }
 
   return rat;
-} /* gradient_calc_radial_factor */
+}
 
 
-/*****/
-
-static double
-gradient_calc_linear_factor (double  dist,
-			     double *vec,
-			     double  x,
-			     double  y)
+static double 
+gradient_calc_linear_factor  (
+                              double dist,
+                              double * vec,
+                              double x,
+                              double y
+                              )
 {
   double r;
   double rat;
 
   if (dist == 0.0)
-    rat = 0.0;
+    {
+      rat = 0.0;
+    }
   else
     {
       r   = vec[0] * x + vec[1] * y;
       rat = r / dist;
-    } /* else */
+    }
 
   return rat;
-} /* gradient_calc_linear_factor */
+}
 
 
-/*****/
-
-static double
-gradient_calc_bilinear_factor (double  dist,
-			       double *vec,
-			       double  offset,
-			       double  x,
-			       double  y)
+static double 
+gradient_calc_bilinear_factor  (
+                                double dist,
+                                double * vec,
+                                double offset,
+                                double x,
+                                double y
+                                )
 {
   double r;
   double rat;
 
   if (dist == 0.0)
-    rat = 0.0;
+    {
+      rat = 0.0;
+    }
   else
     {
       /* Calculate linear offset from the start line outward */
@@ -987,26 +998,25 @@ gradient_calc_bilinear_factor (double  dist,
         rat = (rat>=1) ? 1 : 0;
       else
 	rat = (fabs(rat) - offset) / (1.0 - offset);
-    } /* else */
+    }
 
   return rat;
-} /* gradient_calc_bilinear_factor */
+}
 
 
-static double
-gradient_calc_shapeburst_angular_factor (double x,
-					 double y)
+static double 
+gradient_calc_shapeburst_angular_factor  (
+                                          double x,
+                                          double y
+                                          )
 {
-  int ix, iy;
-  Tile *tile;
-  float value;
-
-  ix = (int) BOUNDS (x, 0, distR.w);
-  iy = (int) BOUNDS (y, 0, distR.h);
-  tile = tile_manager_get_tile (distR.tiles, ix, iy, 0);
-  tile_ref (tile);
-  value = 1.0 - *(((float *) tile->data) + ((iy % TILE_HEIGHT) * tile->ewidth + (ix % TILE_WIDTH)));
-  tile_unref (tile, FALSE);
+  float value = 0;
+  gfloat * data;
+  
+  (void) canvas_portion_ref (distance_canvas, x, y);
+  if ((data = (gfloat*) canvas_portion_data (distance_canvas, x, y)) != NULL)
+    value = 1.0 - *data;
+  canvas_portion_unref (distance_canvas, x, y);
 
   return value;
 }
@@ -1016,49 +1026,49 @@ static double
 gradient_calc_shapeburst_spherical_factor (double x,
 					   double y)
 {
-  int ix, iy;
-  Tile *tile;
-  float value;
-
-  ix = (int) BOUNDS (x, 0, distR.w);
-  iy = (int) BOUNDS (y, 0, distR.h);
-  tile = tile_manager_get_tile (distR.tiles, ix, iy, 0);
-  tile_ref (tile);
-  value = *(((float *) tile->data) + ((iy % TILE_HEIGHT) * tile->ewidth + (ix % TILE_WIDTH)));
-  value = 1.0 - sin (0.5 * M_PI * value);
-  tile_unref (tile, FALSE);
+  float value = 0;
+  gfloat * data;
+  
+  (void) canvas_portion_ref (distance_canvas, x, y);
+  if ((data = (gfloat*) canvas_portion_data (distance_canvas, x, y)) != NULL)
+    value = 1.0 - sin (0.5 * M_PI * (*data));
+  canvas_portion_unref (distance_canvas, x, y);
 
   return value;
 }
 
 
-static double
-gradient_calc_shapeburst_dimpled_factor (double x,
-					 double y)
+static double 
+gradient_calc_shapeburst_dimpled_factor  (
+                                          double x,
+                                          double y
+                                          )
 {
-  int ix, iy;
-  Tile *tile;
-  float value;
-
-  ix = (int) BOUNDS (x, 0, distR.w);
-  iy = (int) BOUNDS (y, 0, distR.h);
-  tile = tile_manager_get_tile (distR.tiles, ix, iy, 0);
-  tile_ref (tile);
-  value = *(((float *) tile->data) + ((iy % TILE_HEIGHT) * tile->ewidth + (ix % TILE_WIDTH)));
-  value = cos (0.5 * M_PI * value);
-  tile_unref (tile, FALSE);
+  float value = 0;
+  gfloat * data;
+  
+  (void) canvas_portion_ref (distance_canvas, x, y);
+  if ((data = (gfloat*) canvas_portion_data (distance_canvas, x, y)) != NULL)
+    value = cos (0.5 * M_PI * (*data));
+  canvas_portion_unref (distance_canvas, x, y);
 
   return value;
 }
 
-static double
-gradient_repeat_none(double val)
+
+static double 
+gradient_repeat_none  (
+                       double val
+                       )
 {
   return BOUNDS(val, 0.0, 1.0);
 }
 
-static double
-gradient_repeat_sawtooth(double val)
+
+static double 
+gradient_repeat_sawtooth  (
+                           double val
+                           )
 {
   if (val >= 0.0)
     return fmod(val, 1.0);
@@ -1066,8 +1076,11 @@ gradient_repeat_sawtooth(double val)
     return 1.0 - fmod(-val, 1.0);
 }
 
-static double
-gradient_repeat_triangular(double val)
+
+static double 
+gradient_repeat_triangular  (
+                             double val
+                             )
 {
   int ival;
 
@@ -1082,34 +1095,34 @@ gradient_repeat_triangular(double val)
     return fmod(val, 1.0);
 }
 
-/*****/
-static void
-gradient_precalc_shapeburst (GImage      *gimage,
-			     GimpDrawable *drawable,
-			     PixelRegion *PR,
-			     double       dist)
+
+static void 
+gradient_precalc_shapeburst  (
+                              GImage * gimage,
+                              GimpDrawable * drawable,
+                              PixelArea * PR,
+                              double dist
+                              )
 {
-  Channel *mask;
-  PixelRegion tempR;
-  float max_iteration;
-  float *distp;
-  int size;
-  void * pr;
-  unsigned char white[1] = { OPAQUE_OPACITY };
+  Canvas * tempRbuf;
+  PixelArea tempR;
 
   /*  allocate the distance map  */
-  if (distR.tiles)
-    tile_manager_destroy (distR.tiles);
-  distR.tiles = tile_manager_new (PR->w, PR->h, sizeof (float));
+  if (distance_canvas)
+    canvas_delete (distance_canvas);
+  distance_canvas = canvas_new (tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
+                                PR->w, PR->h, STORAGE_TILED);
 
   /*  allocate the selection mask copy  */
-  tempR.tiles = tile_manager_new (PR->w, PR->h, 1);
-  pixel_region_init (&tempR, tempR.tiles, 0, 0, PR->w, PR->h, TRUE);
+  tempRbuf = canvas_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
+                         PR->w, PR->h, STORAGE_TILED);
+  pixelarea_init (&tempR, tempRbuf, NULL, 0, 0, PR->w, PR->h, TRUE);
 
   /*  If the gimage mask is not empty, use it as the shape burst source  */
   if (! gimage_mask_is_empty (gimage))
     {
-      PixelRegion maskR;
+      Channel * mask;
+      PixelArea maskR;
       int x1, y1, x2, y2;
       int offx, offy;
 
@@ -1118,11 +1131,11 @@ gradient_precalc_shapeburst (GImage      *gimage,
 
       /*  the selection mask  */
       mask = gimage_get_mask (gimage);
-      pixel_region_init (&maskR, drawable_data (GIMP_DRAWABLE(mask)), 
-			 x1 + offx, y1 + offy, (x2 - x1), (y2 - y1), FALSE);
+      pixelarea_init (&maskR, drawable_data_canvas (GIMP_DRAWABLE(mask)), NULL, 
+                      x1 + offx, y1 + offy, (x2 - x1), (y2 - y1), FALSE);
 
       /*  copy the mask to the temp mask  */
-      copy_region (&maskR, &tempR);
+      copy_area (&maskR, &tempR);
     }
   /*  otherwise...  */
   else
@@ -1130,44 +1143,79 @@ gradient_precalc_shapeburst (GImage      *gimage,
       /*  If the intended drawable has an alpha channel, use that  */
       if (drawable_has_alpha (drawable))
 	{
-	  PixelRegion drawableR;
+	  PixelArea drawableR;
 
-	  pixel_region_init (&drawableR, drawable_data (drawable), PR->x, PR->y, PR->w, PR->h, FALSE);
+	  pixelarea_init (&drawableR, drawable_data_canvas (drawable), NULL,
+                          PR->x, PR->y, PR->w, PR->h, FALSE);
 
-	  extract_alpha_region (&drawableR, NULL, &tempR);
+	  extract_alpha_area (&drawableR, NULL, &tempR);
 	}
       /*  Otherwise, just fill the shapeburst to white  */
       else
-	color_region (&tempR, white);
+        {
+          Paint * white;
+          gfloat e = 1;
+          white = paint_new (tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO), NULL);
+          paint_load (white,
+                      tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
+                      (guchar *)&e);
+          color_area (&tempR, white);
+          paint_delete (white);
+        }
     }
 
-  pixel_region_init (&tempR, tempR.tiles, 0, 0, PR->w, PR->h, TRUE);
-  pixel_region_init (&distR, distR.tiles, 0, 0, PR->w, PR->h, TRUE);
-  max_iteration = shapeburst_region (&tempR, &distR);
+  {
+    gfloat max_iteration;
+    PixelArea distR;
+    
+    pixelarea_init (&tempR, tempRbuf, NULL,
+                    0, 0, PR->w, PR->h, TRUE);
+    pixelarea_init (&distR, distance_canvas, NULL,
+                    0, 0, PR->w, PR->h, TRUE);
 
-  /*  normalize the shapeburst with the max iteration  */
-  if (max_iteration > 0)
-    {
-      pixel_region_init (&distR, distR.tiles, 0, 0, PR->w, PR->h, TRUE);
+    max_iteration = shapeburst_area (&tempR, &distR);
 
-      for (pr = pixel_regions_register (1, &distR); pr != NULL; pr = pixel_regions_process (pr))
-	{
-	  distp = (float *) distR.data;
-	  size = distR.w * distR.h;
+    /*  normalize the shapeburst with the max iteration  */
+    if (max_iteration > 0)
+      {
+        void * pr;
 
-	  while (size--)
-	    *distp++ /= max_iteration;
-	}
+        pixelarea_init (&distR, distance_canvas, NULL,
+                        0, 0, PR->w, PR->h, TRUE);
 
-      pixel_region_init (&distR, distR.tiles, 0, 0, PR->w, PR->h, FALSE);
-    }
-
-  tile_manager_destroy (tempR.tiles);
+        for (pr = pixelarea_register (1, &distR);
+             pr != NULL;
+             pr = pixelarea_process (pr))
+          {
+            gint w, h;
+            PixelRow row;
+            gfloat * distp;
+            
+            h = pixelarea_height (&distR);
+            while (h--)
+              {
+                pixelarea_getdata (&distR, &row, h);
+                distp = (gfloat *) pixelrow_data (&row);
+                w = pixelrow_width (&row);
+                while (w--)
+                  *distp++ /= max_iteration;
+              }
+          }
+      }
+  }
+  
+  canvas_delete (tempRbuf);
 }
 
 
-static void
-gradient_render_pixel(double x, double y, color_t *color, void *render_data)
+static void 
+gradient_render_pixel  (
+                        double x,
+                        double y,
+                        PixelRow * color,
+                        int xoffset,
+                        void * render_data
+                        )
 {
   RenderBlendData *rbd;
   double           factor;
@@ -1231,24 +1279,39 @@ gradient_render_pixel(double x, double y, color_t *color, void *render_data)
   factor = (*rbd->repeat_func)(factor);
 
   /* Blend the colors */
+  {
+    PixelRow src, dst;
+    gfloat e[4];
+    color_t c;
+    
+    if (rbd->blend_mode == CUSTOM_MODE)
+      grad_get_color_at(factor, &c.r, &c.g, &c.b, &c.a);
+    else
+      {
+        /* Blend values */
+        
+        c.r = rbd->fg.r + (rbd->bg.r - rbd->fg.r) * factor;
+        c.g = rbd->fg.g + (rbd->bg.g - rbd->fg.g) * factor;
+        c.b = rbd->fg.b + (rbd->bg.b - rbd->fg.b) * factor;
+        c.a = rbd->fg.a + (rbd->bg.a - rbd->fg.a) * factor;
+        
+        if (rbd->blend_mode == FG_BG_HSV_MODE)
+          calc_hsv_to_rgb(&c.r, &c.g, &c.b);
+      }
 
-  if (rbd->blend_mode == CUSTOM_MODE)
-    grad_get_color_at(factor, &color->r, &color->g, &color->b, &color->a);
-  else
-    {
-      /* Blend values */
-
-      color->r = rbd->fg.r + (rbd->bg.r - rbd->fg.r) * factor;
-      color->g = rbd->fg.g + (rbd->bg.g - rbd->fg.g) * factor;
-      color->b = rbd->fg.b + (rbd->bg.b - rbd->fg.b) * factor;
-      color->a = rbd->fg.a + (rbd->bg.a - rbd->fg.a) * factor;
-
-      if (rbd->blend_mode == FG_BG_HSV_MODE)
-	calc_hsv_to_rgb(&color->r, &color->g, &color->b);
-    }
+    e[0] = c.r;
+    e[1] = c.g;
+    e[2] = c.b;
+    e[3] = c.a;
+    
+    pixelrow_init (&src, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_YES), (guchar *)e, 1);
+    pixelrow_init (&dst, pixelrow_tag (color), pixelrow_getdata (color, xoffset), 1);
+    copy_row (&src, &dst);
+  }
 }
 
 
+#if 0
 static void
 gradient_put_pixel(int x, int y, color_t color, void *put_pixel_data)
 {
@@ -1281,14 +1344,14 @@ gradient_put_pixel(int x, int y, color_t color, void *put_pixel_data)
   /* Paint whole row if we are on the rightmost pixel */
 
   if (x == (ppd->width - 1))
-    pixel_region_set_row(ppd->PR, 0, y, ppd->width, ppd->row_data);
+    pixel_region_set_row (ppd->PR, 0, y, ppd->width, ppd->row_data);
 }
-
+#endif
 
 static void
 gradient_fill_region (GImage       *gimage,
 		      GimpDrawable *drawable,
-		      PixelRegion  *PR,
+		      PixelArea    *PR,
 		      int           width,
 		      int           height,
 		      BlendMode     blend_mode,
@@ -1304,13 +1367,10 @@ gradient_fill_region (GImage       *gimage,
 		      double        ey)
 {
   RenderBlendData  rbd;
+#if 0
   PutPixelData     ppd;
+#endif
   unsigned char    r, g, b;
-  int              x, y;
-  int              endx, endy;
-  void            *pr;
-  unsigned char   *data;
-  color_t          color;
 
   /* Get foreground and background colors, normalized */
 
@@ -1388,7 +1448,7 @@ gradient_fill_region (GImage       *gimage,
     case ShapeburstSpherical:
     case ShapeburstDimpled:
       rbd.dist = sqrt(SQR(ex - sx) + SQR(ey - sy));
-      gradient_precalc_shapeburst(gimage, drawable, PR, rbd.dist);
+      gradient_precalc_shapeburst (gimage, drawable, PR, rbd.dist);
       break;
 
     default:
@@ -1428,14 +1488,14 @@ gradient_fill_region (GImage       *gimage,
   rbd.gradient_type = gradient_type;
 
   /* Render the gradient! */
-
   if (supersample)
     {
+#if 0
       /* Initialize put pixel data */
 
       ppd.PR       = PR;
-      ppd.row_data = g_malloc(width * PR->bytes);
-      ppd.bytes    = PR->bytes;
+      ppd.row_data = g_malloc(width * tag_bytes (pixelarea_tag (PR)));
+      ppd.bytes    = tag_bytes (pixelarea_tag (PR));
       ppd.width    = width;
 
       /* Render! */
@@ -1449,40 +1509,38 @@ gradient_fill_region (GImage       *gimage,
       /* Clean up */
 
       g_free(ppd.row_data);
+#endif
     }
   else
     {
-      for (pr = pixel_regions_register(1, PR); pr != NULL; pr = pixel_regions_process(pr))
+      PixelRow row;
+      void *pr;
+      
+      for (pr = pixelarea_register(1, PR);
+           pr != NULL;
+           pr = pixelarea_process(pr))
 	{
-	  data = PR->data;
-	  endx = PR->x + PR->w;
-	  endy = PR->y + PR->h;
+          gint y;
+          gint h = pixelarea_height (PR);
 
-	  for (y = PR->y; y < endy; y++)
-	    for (x = PR->x; x < endx; x++)
-	      {
-		gradient_render_pixel(x, y, &color, &rbd);
+          for (y = 0; h--; y++)
+            {
+              gint x;
+              gint w = pixelarea_width (PR);
+              
+              pixelarea_getdata (PR, &row, y);
 
-		if (PR->bytes >= 3)
-		  {
-		    *data++ = color.r * 255.0;
-		    *data++ = color.g * 255.0;
-		    *data++ = color.b * 255.0;
-		    *data++ = color.a * 255.0;
-		  }
-		else
-		  {
-		    /* Convert to grayscale */
-
-		    *data++ = 255.0 * (0.30 * color.r +
-				       0.59 * color.g +
-				       0.11 * color.b);
-		    *data++ = color.a * 255.0;
-		  }
-	      }
-	}
+              for (x = 0; w--; x++)
+                {
+                  gradient_render_pixel (pixelarea_x (PR) + x,
+                                         pixelarea_y (PR) + y,
+                                         &row, x, &rbd);
+                }
+            }
+        }
     }
 }
+
 
 static void
 calc_rgb_to_hsv(double *r, double *g, double *b)
@@ -1670,9 +1728,9 @@ tools_free_blend (Tool *tool)
   draw_core_free (blend_tool->core);
 
   /*  free the distance map data if it exists  */
-  if (distR.tiles)
-    tile_manager_destroy (distR.tiles);
-  distR.tiles = NULL;
+  if (distance_canvas)
+    canvas_delete (distance_canvas);
+  distance_canvas = NULL;
 
   g_free (blend_tool);
 }

@@ -151,39 +151,6 @@ flatbuf_alpha (
 }
 
 
-Precision
-flatbuf_set_precision (
-                       FlatBuf * f,
-                       Precision x
-                       )
-{
-  g_warning ("finish writing flatbuf_set_precision()");
-  return flatbuf_precision (f);
-}
-
-
-Format
-flatbuf_set_format (
-                    FlatBuf * f,
-                    Format    x
-                    )
-{
-  g_warning ("finish writing flatbuf_set_format()");
-  return flatbuf_format (f);
-}
-
-
-Alpha
-flatbuf_set_alpha (
-                   FlatBuf * f,
-                   Alpha     x
-                   )
-{
-  g_warning ("finish writing flatbuf_set_alpha()");
-  return flatbuf_alpha (f);
-}
-
-
 guint 
 flatbuf_width  (
                 FlatBuf * f

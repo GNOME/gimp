@@ -267,71 +267,33 @@ shade_area  (
     }
 }
 
-#if 0
+
 void 
 copy_area  (
             PixelArea * src_area,
             PixelArea * dest_area
             )
 {
-  void *  pag;
-  Tag src_tag = pixelarea_tag (src_area); 
-  Tag dest_tag = pixelarea_tag (dest_area); 
-
-  /*put in tags check*/
-  
-  /* just copy the generic data across -- no PixelRows */ 
-  for (pag = pixelarea_register (2, src_area, dest_area);
-       pag != NULL;
-       pag = pixelarea_process (pag))
-    {
-      gint rowstride =  pixelarea_rowstride (src_area);  
-      guchar * src = pixelarea_data (src_area );
-      guchar * dest = pixelarea_data (dest_area );
-      gint h = pixelarea_height (src_area);
-      
-      while (h--)
-        {
-	  memcpy (dest, src, rowstride);
-          dest += rowstride;
-          src += rowstride;
-        }
-    }
-}
-#else
-void 
-copy_area  (
-            PixelArea * src_area,
-            PixelArea * dest_area
-            )
-{
-  void *  pag;
-  Tag src_tag = pixelarea_tag (src_area); 
-  Tag dest_tag = pixelarea_tag (dest_area); 
-
-  /*put in tags check*/
+  PixelRow srow;
+  PixelRow drow;
+  void * pag;
   
   for (pag = pixelarea_register (2, src_area, dest_area);
        pag != NULL;
        pag = pixelarea_process (pag))
     {
-      guchar * src  = pixelarea_data (src_area );
-      guchar * dest = pixelarea_data (dest_area );
-      gint s_stride = pixelarea_rowstride (src_area);  
-      gint d_stride = pixelarea_rowstride (dest_area);  
-      gint w = pixelarea_width (src_area) *
-        tag_bytes (pixelarea_tag (src_area));
-      
-      gint h = pixelarea_height (src_area);
+      int h = pixelarea_height (src_area);
       while (h--)
         {
-	  memcpy (dest, src, w);
-          dest += d_stride;
-          src += s_stride;
+          pixelarea_getdata (src_area, &srow, h);
+          pixelarea_getdata (dest_area, &drow, h);
+          copy_row (&srow, &drow);
         }
     }
 }
-#endif
+
+
+
 
 void 
 add_alpha_area  (
@@ -2555,11 +2517,11 @@ subsample_row_float (
     }
 }
 
-float
-shapeburst_area (
-                 PixelArea *srcPR,
-                 PixelArea *distPR
-                 )
+float 
+shapeburst_area  (
+                  PixelArea * srcPR,
+                  PixelArea * distPR
+                  )
 {
 #if 0
   Tile *tile;

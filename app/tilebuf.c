@@ -199,39 +199,6 @@ tilebuf_alpha  (
 }
 
 
-Precision 
-tilebuf_set_precision  (
-                        TileBuf * t,
-                        Precision x
-                        )
-{
-  g_warning ("finish writing tilebuf_set_precision()");
-  return tilebuf_precision (t);
-}
-
-
-Format 
-tilebuf_set_format  (
-                     TileBuf * t,
-                     Format x
-                     )
-{
-  g_warning ("finish writing tilebuf_set_format()");
-  return tilebuf_format (t);
-}
-
-
-Alpha 
-tilebuf_set_alpha  (
-                    TileBuf * t,
-                    Alpha x
-                    )
-{
-  g_warning ("finish writing tilebuf_set_alpha()");
-  return tilebuf_alpha (t);
-}
-
-
 guint 
 tilebuf_width  (
                 TileBuf * t

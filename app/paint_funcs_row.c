@@ -124,6 +124,28 @@ shade_row (
       break;	
     }
 }
+void 
+copy_row  (
+           PixelRow * src_row,
+           PixelRow * dest_row
+           )
+{
+  switch (tag_precision (pixelrow_tag (src_row)))
+    {
+    case PRECISION_U8:
+      copy_row_u8 (src_row, dest_row);
+      break;
+    case PRECISION_U16:
+      copy_row_u16 (src_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      copy_row_float (src_row, dest_row);
+      break;
+    case PRECISION_NONE:
+      g_warning ("doh in copy_row()");
+      break;	
+    }
+}
 void
 extract_alpha_row (
 		      PixelRow *src_row,

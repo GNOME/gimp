@@ -46,6 +46,11 @@ shade_row (
 		 struct _Paint    *blend
 	         );
 void
+copy_row (
+          struct _PixelRow *src_row,
+          struct _PixelRow *dest_row
+          );
+void
 extract_alpha_row (
 		      struct _PixelRow *src_row,
 		      struct _PixelRow *mask_row,
