@@ -520,7 +520,7 @@ prefs_notebook_append_page (Gimp          *gimp,
 
   gimp_help_set_help_data (event_box, NULL, help_data);
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (event_box), vbox);
   gtk_widget_show (vbox);
@@ -633,6 +633,29 @@ prefs_frame_new (gchar        *label,
   GtkWidget *vbox;
 
   frame = gtk_frame_new (label);
+
+  if (FALSE)
+    {
+      PangoAttrList  *attrs;
+      PangoAttribute *attr;
+
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_NONE);
+
+      attrs = pango_attr_list_new ();
+
+      attr = pango_attr_scale_new (PANGO_SCALE_LARGE);
+      attr->start_index = 0;
+      attr->end_index   = -1;
+      pango_attr_list_insert (attrs, attr);
+
+      attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+      attr->start_index = 0;
+      attr->end_index   = -1;
+      pango_attr_list_insert (attrs, attr);
+
+      gtk_label_set_attributes (GTK_LABEL (gtk_frame_get_label_widget (GTK_FRAME (frame))), attrs);
+      pango_attr_list_unref (attrs);
+    }
 
   if (GTK_IS_BOX (parent))
     gtk_box_pack_start (GTK_BOX (parent), frame, expand, expand, 0);
@@ -1046,13 +1069,12 @@ prefs_dialog_new (Gimp    *gimp,
   /* select this page in the tree */
   gtk_tree_selection_select_iter (sel, &top_iter);
 
-  frame = gtk_frame_new (_("Default Image Size and Unit")); 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  /*  Default Image Size and Unit  */
+  vbox2 = prefs_frame_new (_("Default Image Size and Unit"),
+                           GTK_CONTAINER (vbox), FALSE);
 
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_container_add (GTK_CONTAINER (vbox2), hbox);
   gtk_widget_show (hbox);
 
   sizeentry = gimp_prop_coordinates_new (config,
@@ -1077,13 +1099,12 @@ prefs_dialog_new (Gimp    *gimp,
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
   gtk_widget_show (sizeentry);
 
-  frame = gtk_frame_new (_("Default Image Resolution and Resolution Unit"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  /*  Default Image Resolution and Resolution Unit  */
+  vbox2 = prefs_frame_new (_("Default Image Resolution and Resolution Unit"),
+                           GTK_CONTAINER (vbox), FALSE);
 
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_container_add (GTK_CONTAINER (vbox2), hbox);
   gtk_widget_show (hbox);
 
   pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
@@ -1142,16 +1163,16 @@ prefs_dialog_new (Gimp    *gimp,
 				     &child_iter,
 				     page_index++);
 
-  frame = gtk_frame_new (_("Comment Used for New Images"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  /*  Comment  */
+  vbox2 = prefs_frame_new (_("Comment Used for New Images"),
+                           GTK_CONTAINER (vbox), TRUE);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_AUTOMATIC);
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
-  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
+  gtk_container_add (GTK_CONTAINER (vbox2), scrolled_window);
   gtk_widget_show (scrolled_window);
 
   text_buffer = gimp_prop_text_buffer_new (config, "default-comment",
@@ -1179,8 +1200,8 @@ prefs_dialog_new (Gimp    *gimp,
 				     &top_iter,
 				     page_index++);
 
+  /*  General  */
   vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
-
   table = prefs_table_new (4, GTK_CONTAINER (vbox2), FALSE);
 
   prefs_enum_option_menu_add (config, "preview-size", 0, 0,
@@ -1246,6 +1267,7 @@ prefs_dialog_new (Gimp    *gimp,
 				     &child_iter,
 				     page_index++);
 
+  /*  General  */
   vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "show-tool-tips",
@@ -1258,8 +1280,8 @@ prefs_dialog_new (Gimp    *gimp,
                           _("Show Tips on _Startup"),
                           GTK_BOX (vbox2));
 
+  /*  Help Browser  */
   vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox), FALSE);
-
   table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
   prefs_enum_option_menu_add (config, "help-browser", 0, 0,
@@ -1281,21 +1303,18 @@ prefs_dialog_new (Gimp    *gimp,
 				     &child_iter,
 				     page_index++);
 
+  /*  Contiguous Regions  */
   vbox2 = prefs_frame_new (_("Finding Contiguous Regions"),
                            GTK_CONTAINER (vbox), FALSE);
-
   table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
-  /*  Default threshold  */
   prefs_spin_button_add (config, "default-threshold", 1.0, 5.0, 0,
                          _("Default _Threshold:"),
                          GTK_TABLE (table), 0);
 
-  frame = gtk_frame_new (_("Scaling")); 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  table = prefs_table_new (1, GTK_CONTAINER (frame), TRUE);
+  /*  Scaling  */
+  vbox2 = prefs_frame_new (_("Scaling"), GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), TRUE);
 
   prefs_enum_option_menu_add (config, "interpolation-type", 0, 0,
                               _("Default _Interpolation:"),
@@ -1316,6 +1335,7 @@ prefs_dialog_new (Gimp    *gimp,
 				     &child_iter,
 				     page_index++);
 
+  /*  Input Device Settings  */
   vbox2 = prefs_frame_new (_("Input Device Settings"),
                            GTK_CONTAINER (vbox), FALSE);
 
@@ -1385,6 +1405,7 @@ prefs_dialog_new (Gimp    *gimp,
 				     &child_iter,
 				     page_index++);
 
+  /*  Appearance  */
   vbox2 = prefs_frame_new (_("Appearance"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "default-dot-for-dot",
@@ -1403,19 +1424,26 @@ prefs_dialog_new (Gimp    *gimp,
                           _("Show S_tatusbar"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (3, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
   prefs_spin_button_add (config, "marching-ants-speed", 10.0, 100.0, 0,
                          _("Marching _Ants Speed:"),
                          GTK_TABLE (table), 0);
-  prefs_enum_option_menu_add (config, "canvas-padding-mode", 0, 0,
-                              _("Canvas Padding Mode:"),
-                              GTK_TABLE (table), 1);
-  prefs_color_button_add (config, "canvas-padding-color",
-                          _("Custom Canvas _Padding Color:"),
-                          _("Select Custom Canvas Padding Color"),
-                          GTK_TABLE (table), 2);
 
+  /*  Canvas Padding Color  */
+  vbox2 = prefs_frame_new (_("Canvas Padding Color"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
+
+  prefs_enum_option_menu_add (config, "canvas-padding-mode", 0, 0,
+                              _("Padding Mode:"),
+                              GTK_TABLE (table), 0);
+  prefs_color_button_add (config, "canvas-padding-color",
+                          _("Custom Color:"),
+                          _("Select Custom Canvas Padding Color"),
+                          GTK_TABLE (table), 1);
+
+  /*  Pointer Movement Feedback  */
   vbox2 = prefs_frame_new (_("Pointer Movement Feedback"),
                            GTK_CONTAINER (vbox), FALSE);
 
@@ -1439,7 +1467,7 @@ prefs_dialog_new (Gimp    *gimp,
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
 				     _("Image Title & Statusbar Format"),
-                                     "image-windows.png",
+                                     "image-title.png",
 				     GTK_TREE_STORE (tree),
 				     _("Title & Status"),
 				     "dialogs/preferences/image_windows.html",
@@ -1577,11 +1605,9 @@ prefs_dialog_new (Gimp    *gimp,
 				     &child_iter,
 				     page_index++);
 
-  frame = gtk_frame_new (_("Transparency")); 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  table = prefs_table_new (2, GTK_CONTAINER (frame), TRUE);
+  /*  Transparency  */
+  vbox2 = prefs_frame_new (_("Transparency"), GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2), TRUE);
 
   prefs_enum_option_menu_add (config, "transparency-type", 0, 0,
                               _("Transparency _Type:"),
@@ -1590,6 +1616,7 @@ prefs_dialog_new (Gimp    *gimp,
                               _("Check _Size:"),
                               GTK_TABLE (table), 1);
 
+  /*  8-Bit Displays  */
   vbox2 = prefs_frame_new (_("8-Bit Displays"), GTK_CONTAINER (vbox), FALSE);
 
   if (gdk_rgb_get_visual ()->depth != 8)
@@ -1736,6 +1763,7 @@ prefs_dialog_new (Gimp    *gimp,
 				     &top_iter,
 				     page_index++);
 
+  /*  Resource Consumption  */
   vbox2 = prefs_frame_new (_("Resource Consumption"),
                            GTK_CONTAINER (vbox), FALSE);
 
@@ -1762,8 +1790,8 @@ prefs_dialog_new (Gimp    *gimp,
                          GTK_TABLE (table), 2);
 #endif /* ENABLE_MP */
 
+  /*  File Saving  */
   vbox2 = prefs_frame_new (_("File Saving"), GTK_CONTAINER (vbox), FALSE);
-
   table = prefs_table_new (2, GTK_CONTAINER (vbox2), TRUE);
 
   prefs_boolean_option_menu_add (config, "trust-dirty-flag",

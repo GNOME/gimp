@@ -17,6 +17,7 @@ PREFS_IMAGES = \
 	folders-themes.png		\
 	folders-tool-plug-ins.png	\
 	help-system.png			\
+	image-title.png			\
 	image-windows.png		\
 	input-devices.png		\
 	interface.png			\

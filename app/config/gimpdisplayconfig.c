@@ -124,7 +124,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_MARCHING_ANTS_SPEED,
                                 "marching-ants-speed",
                                 50, G_MAXINT, 300,
-                                GIMP_PARAM_RESTART);
+                                0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_COLORMAP_CYCLING,
                                     "colormap-cycling",
                                     FALSE,

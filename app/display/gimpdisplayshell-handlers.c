@@ -34,6 +34,7 @@
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-scale.h"
+#include "gimpdisplayshell-selection.h"
 #include "gimpstatusbar.h"
 
 
@@ -76,6 +77,9 @@ static void   gimp_display_shell_monitor_res_notify_handler (GObject          *c
                                                              GParamSpec       *param_spec,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_padding_notify_handler     (GObject          *config,
+                                                             GParamSpec       *param_spec,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_ants_speed_notify_handler  (GObject          *config,
                                                              GParamSpec       *param_spec,
                                                              GimpDisplayShell *shell);
 
@@ -173,6 +177,10 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     "notify::canvas-padding-color",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
+  g_signal_connect (G_OBJECT (gimage->gimp->config),
+                    "notify::marching-ants-speed",
+                    G_CALLBACK (gimp_display_shell_ants_speed_notify_handler),
+                    shell);
 
   gimp_display_shell_invalidate_preview_handler (gimage, shell);
   gimp_display_shell_qmask_changed_handler (gimage, shell);
@@ -195,6 +203,9 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
       shell->icon_idle_id = 0;
     }
 
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
+                                        gimp_display_shell_ants_speed_notify_handler,
+                                        shell);
   g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
                                         gimp_display_shell_padding_notify_handler,
                                         shell);
@@ -432,6 +443,15 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
       gimp_display_shell_expose_full (shell);
       gimp_display_shell_flush (shell);
     }
+}
+
+static void
+gimp_display_shell_ants_speed_notify_handler (GObject          *config,
+                                              GParamSpec       *param_spec,
+                                              GimpDisplayShell *shell)
+{
+  gimp_display_shell_selection_pause (shell->select);
+  gimp_display_shell_selection_resume (shell->select);
 }
 
 static gboolean

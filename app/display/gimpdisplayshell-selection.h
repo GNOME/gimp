@@ -43,7 +43,6 @@ struct _Selection
   gint              state;            /*  internal drawing state            */
   gint              paused;           /*  count of pause requests           */
   gboolean          recalc;           /*  flag to recalculate the selection */
-  gint              speed;            /*  speed of marching ants            */
   gboolean          hidden;           /*  is the selection hidden?          */
   gboolean          layer_hidden;     /*  is the layer boundary hidden?     */
   guint             timeout_id;       /*  timer for successive draws        */
@@ -61,8 +60,7 @@ struct _Selection
 Selection * gimp_display_shell_selection_create       (GdkWindow    *window,
                                                        GimpDisplayShell *gdisp,
                                                        gint          size,
-                                                       gint          width,
-                                                       gint          speed);
+                                                       gint          width);
 void        gimp_display_shell_selection_free         (Selection    *select);
 
 void        gimp_display_shell_selection_pause        (Selection    *select);

@@ -68,10 +68,10 @@ static gboolean    selection_start_marching  (gpointer    data);
 static gboolean    selection_march_ants      (gpointer    data);
 
 
-static GdkColor    marching_ants_colors[8];
+static GdkColor   marching_ants_colors[8];
 
-static GdkPixmap * marching_ants[9]  = { NULL };
-static GdkPixmap * cycled_ants_pixmap = NULL;
+static GdkPixmap *marching_ants[9]   = { NULL };
+static GdkPixmap *cycled_ants_pixmap = NULL;
 
 
 /*  public functions  */
@@ -80,8 +80,7 @@ Selection *
 gimp_display_shell_selection_create (GdkWindow        *win,
                                      GimpDisplayShell *shell,
                                      gint              size,
-                                     gint              width,
-                                     gint              speed)
+                                     gint              width)
 {
   GdkColor   fg, bg;
   Selection *new;
@@ -90,7 +89,7 @@ gimp_display_shell_selection_create (GdkWindow        *win,
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
-  new = g_new (Selection, 1);
+  new = g_new0 (Selection, 1);
   base_type = gimp_image_base_type (shell->gdisp->gimage);
 
   if (GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config)->colormap_cycling)
@@ -133,7 +132,6 @@ gimp_display_shell_selection_create (GdkWindow        *win,
   new->state          = INVISIBLE;
   new->paused         = 0;
   new->recalc         = TRUE;
-  new->speed          = speed;
   new->hidden         = FALSE;
   new->layer_hidden   = FALSE;
 
@@ -215,7 +213,7 @@ gimp_display_shell_selection_create (GdkWindow        *win,
 void
 gimp_display_shell_selection_free (Selection *select)
 {
-  if (select->state != INVISIBLE)
+  if (select->timeout_id)
     g_source_remove (select->timeout_id);
 
   if (select->gc_in)
@@ -238,15 +236,15 @@ gimp_display_shell_selection_free (Selection *select)
 void
 gimp_display_shell_selection_pause (Selection *select)
 {
-  if (select->state != INVISIBLE)
+  if (select->timeout_id)
     {
       g_source_remove (select->timeout_id);
       select->timeout_id = 0;
-
-      select->state = INVISIBLE;
     }
 
-  select->paused ++;
+  select->state = INVISIBLE;
+
+  select->paused++;
 }
 
 
@@ -282,10 +280,11 @@ gimp_display_shell_selection_start (Selection *select,
   if (select->paused > 0)
     return;
 
-  if (select->state != INVISIBLE)
+  select->state = INTRO;  /*  The state before the first draw  */
+
+  if (select->timeout_id)
     g_source_remove (select->timeout_id);
 
-  select->state      = INTRO;  /*  The state before the first draw  */
   select->timeout_id = g_timeout_add (INITIAL_DELAY,
 				      selection_start_marching,
 				      select);
@@ -297,13 +296,13 @@ gimp_display_shell_selection_invis (Selection *select)
 {
   gint x1, y1, x2, y2;
 
-  if (select->state != INVISIBLE)
+  if (select->timeout_id)
     {
       g_source_remove (select->timeout_id);
       select->timeout_id = 0;
-
-      select->state = INVISIBLE;
     }
+
+  select->state = INVISIBLE;
 
   /*  Find the bounds of the selection  */
   if (gimp_display_shell_mask_bounds (select->shell, &x1, &y1, &x2, &y2))
@@ -327,13 +326,13 @@ gimp_display_shell_selection_layer_invis (Selection *select)
   gint x3, y3;
   gint x4, y4;
 
-  if (select->state != INVISIBLE)
+  if (select->timeout_id)
     {
       g_source_remove (select->timeout_id);
       select->timeout_id = 0;
-
-      select->state = INVISIBLE;
     }
+
+  select->state = INVISIBLE;
 
   if (select->segs_layer != NULL && select->num_segs_layer == 4)
     {
@@ -760,9 +759,12 @@ selection_free_segs (Selection *select)
 static gboolean
 selection_start_marching (gpointer data)
 {
-  Selection *select;
+  Selection         *select;
+  GimpDisplayConfig *config;
 
   select = (Selection *) data;
+
+  config = GIMP_DISPLAY_CONFIG (select->shell->gdisp->gimage->gimp->config);
 
   /*  if the RECALC bit is set, reprocess the boundaries  */
   if (select->recalc)
@@ -796,7 +798,7 @@ selection_start_marching (gpointer data)
   selection_draw (select);
 
   /*  Reset the timer  */
-  select->timeout_id = g_timeout_add (select->speed,
+  select->timeout_id = g_timeout_add (config->marching_ants_speed,
 				      selection_march_ants,
 				      select);
 

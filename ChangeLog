@@ -1,3 +1,24 @@
+2002-11-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpdisplayconfig.c: removed GIMP_PARAM_RESTART from
+	"marching-ants-speed".
+
+	* app/display/gimpdisplayshell-selection.[ch]: removed the "speed"
+	parameter from the constructor and get the speed from
+	GimpDisplayConfig when starting the ants.
+
+	* app/display/gimpdisplayshell-callbacks.c: changed accordingly.
+
+	* app/display/gimpdisplayshell-handlers.c: connect to
+	notify::marching-ants-speed and restart the ants in the handler.
+
+	* app/gui/preferences-dialog.c: Added an own frame for the
+	canvas padding color. Even more cleanup.
+
+	* themes/Default/images/preferences/Makefile.am
+	* themes/Default/images/preferences/image-title.png: new image
+	for the new page. copied image-windows.png
+
 2002-11-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpconfig-utils.[ch]: removed
