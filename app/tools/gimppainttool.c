@@ -639,7 +639,7 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
     gimp_draw_tool_stop (draw_tool);
 
   gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar),
-                      g_type_name (G_TYPE_FROM_INSTANCE (tool)));
+                      G_OBJECT_TYPE_NAME (tool));
 
   if (tool->gdisp          &&
       tool->gdisp != gdisp &&
@@ -708,13 +708,17 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
             }
 
           gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
-                               g_type_name (G_TYPE_FROM_INSTANCE (tool)),
-                               status_str);
+                               G_OBJECT_TYPE_NAME (tool), status_str);
 
           paint_tool->draw_line = TRUE;
         }
       else
         {
+          if (gdisp == tool->gdisp)
+            gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
+                                 G_OBJECT_TYPE_NAME (tool),
+                                 _("Press Shift to draw a straight line."));
+
           paint_tool->draw_line = FALSE;
         }
 
