@@ -30,7 +30,7 @@
 
 
 GtkWidget *
-gimp_paint_mode_menu_new (GtkSignalFunc        callback,
+gimp_paint_mode_menu_new (GCallback            callback,
 			  gpointer             data,
 			  gboolean             with_behind_mode,
 			  GimpLayerModeEffects initial)

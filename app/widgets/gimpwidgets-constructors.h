@@ -20,7 +20,7 @@
 #define __GIMP_WIDGETS_CONSTRUCTORS_H__
 
 
-GtkWidget * gimp_paint_mode_menu_new (GtkSignalFunc         callback,
+GtkWidget * gimp_paint_mode_menu_new (GCallback             callback,
 				      gpointer              data,
 				      gboolean              with_behind_mode,
 				      GimpLayerModeEffects  initial);
