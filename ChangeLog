@@ -1,3 +1,10 @@
+Fri Feb 11 17:15:00 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* Makefile.am
+	* pixmaps/dropper.xpm: removed
+
+	* app/info_window.c: reuse the colorpicker pixmap in the toolbox
+
 Fri Feb 11 15:07:04 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* gimp1_1_splash.ppm: sweet new splash created by Raphael Quinet

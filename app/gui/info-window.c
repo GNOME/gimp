@@ -28,10 +28,10 @@
 #include "info_window.h"
 #include "interface.h"
 #include "scroll.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpunit.h"
-#include "pixmaps/dropper.xpm"
 
 #define MAX_BUF 256
 
@@ -135,10 +135,7 @@ info_window_image_preview_book (InfoDialog *info_win)
   GtkWidget *labelG;
   GtkWidget *labelR;
   GtkWidget *labelA;
-  GtkWidget *pixmapwid;
-  GdkPixmap *pixmap;
-  GdkBitmap *mask;
-  GtkStyle  *style;
+  GtkWidget *pixmap;
 
   InfoWinData *iwd;
 
@@ -200,19 +197,10 @@ info_window_image_preview_book (InfoDialog *info_win)
   gtk_table_attach (GTK_TABLE (table2), labelR, 0, 1, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-  gtk_widget_realize(info_win->shell);
-  style = gtk_widget_get_style (info_win->shell);
-
-  pixmap = gdk_pixmap_create_from_xpm_d (info_win->shell->window, &mask,
-					 &style->bg[GTK_STATE_NORMAL], 
-					 dropper_xpm);
-  pixmapwid = gtk_pixmap_new (pixmap, mask);
-  gdk_pixmap_unref (pixmap);
-  gdk_bitmap_unref (mask);
-
-  gtk_table_attach (GTK_TABLE (table2), pixmapwid, 0, 2, 0, 1,
+  pixmap = gtk_pixmap_new (tool_get_pixmap (COLOR_PICKER), NULL);
+  gtk_table_attach (GTK_TABLE (table2), pixmap, 0, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (pixmapwid);
+  gtk_widget_show (pixmap);
 
   gtk_notebook_append_page(GTK_NOTEBOOK(info_win->info_notebook),
 			   hbox1,
