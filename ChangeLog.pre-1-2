@@ -9625,7 +9625,7 @@ Sun Jan 30 21:54:42 CET 2000  Sven Neumann <sven@gimp.org>
 2000-01-30  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/FractalExplorer/Dialogs.c: the "blue" variable should
-	not be connected to the "red" adjustment (Thanks to Peter Kämpf
+	not be connected to the "red" adjustment (Thanks to Peter KÃ¤mpf
 	<pkaempf@box.echo.ch>), fixed the initial size of the "number of
 	colors" preview.
 
