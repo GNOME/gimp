@@ -778,8 +778,8 @@ ink_pen_ellipse (gdouble x_center, gdouble y_center,
      both as affine transforms would make the most sense. -RLL */
 
   tscale = ink_options->tilt_sensitivity * 10.0;
-  tscale_c = tscale * cos (ink_options->tilt_angle * G_PI / 180);
-  tscale_s = tscale * sin (ink_options->tilt_angle * G_PI / 180);
+  tscale_c = tscale * cos (gimp_deg_to_rad (ink_options->tilt_angle));
+  tscale_s = tscale * sin (gimp_deg_to_rad (ink_options->tilt_angle));
   x = ink_options->aspect*cos(ink_options->angle) +
     xtilt * tscale_c - ytilt * tscale_s;
   y = ink_options->aspect*sin(ink_options->angle) +

@@ -1,3 +1,13 @@
+Fri Feb 18 19:16:26 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/Makefile.am: forgot to exclude airbrush_blob.[ch] from the
+	build
+
+	* app/gimpbrushgenerated.c
+	* app/ink.c
+	* app/measure.c
+	* app/rotate_tool.c: use gimp_rad_to_deg and gimp_deg_to_rad macros
+
 2000-02-18  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpchainbutton.c

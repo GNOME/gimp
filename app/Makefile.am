@@ -32,8 +32,6 @@ gimp_SOURCES = \
 	about_dialog.h		\
 	airbrush.c		\
 	airbrush.h		\
-	airbrush_blob.c		\
-	airbrush_blob.h		\
 	app_procs.c		\
 	app_procs.h		\
 	appenv.h		\

@@ -145,7 +145,7 @@ measure_get_angle (int    dx,
   double angle;
 
   if (dx)
-    angle = 180.0 / G_PI * atan (((double)(dy) / yres) / ((double)(dx) / xres));
+    angle = gimp_rad_to_deg (atan (((double)(dy) / yres) / ((double)(dx) / xres)));
   else if (dy)
     angle = dy > 0 ? 270.0 : 90.0;
   else
