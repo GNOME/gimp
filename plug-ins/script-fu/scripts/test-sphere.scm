@@ -123,6 +123,7 @@
 			       gradient-reverse
 			       font
 			       size
+			       unused-palette
 			       unused-filename
 			       unused-orientation
 			       unused-dirname

@@ -1,3 +1,8 @@
+2004-10-25 Kevin Cozens <kcozens@cvs.gimp.org>
+
+	* plug-ins/script-fu/scripts/test-sphere.scm: Added parameter
+	missing from argument list.
+
 2004-10-25  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/enumcode.pl
