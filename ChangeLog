@@ -1,3 +1,15 @@
+Tue Aug 22 03:35:46 CEST 2000 Daniel Egger  <egger@suse.de>
+
+	* plug-ins/common/AlienMap.c: Cleaned up AlienMap 
+	and moved to common.
+	
+	* plug-ins/common/AlienMap2.c: Cleaned up AlienMap2,
+	removed COMPAT_CRUFT and moved to common.
+	
+	* plug-ins/Makefile.am: Removed AlienMap and AlienMap2.
+	* plug-ins/common/Makefile.am: Added AlienMap and 
+	AlienMap2.
+
 2000-08-22  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/*.c: removed COMPAT_CRUFT.
@@ -11,11 +23,11 @@ Tue Aug 22 02:12:36 CEST 2000 Daniel Egger  <egger@suse.de>
 
 Tue Aug 22 01:02:41 CEST 2000 Daniel Egger  <egger@suse.de>
 	
-	* plugins/AlienMap/AlienMap.c: removed COMPAT_CRUFT. 
+	* plug-ins/AlienMap/AlienMap.c: removed COMPAT_CRUFT. 
 
 Tue Aug 22 00:41:06 CEST 2000 Daniel Egger  <egger@suse.de>
 
-	* plugins/dbbrowser/*.c: removed COMPAT_CRUFT and added
+	* plug-ins/dbbrowser/*.c: removed COMPAT_CRUFT and added
 	missing include.
 
 2000-08-21  Piers Cornwell  <piers.cornwell@bigfoot.com>
