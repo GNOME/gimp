@@ -51,7 +51,7 @@
 
 #include "interface.h"
 #include "xmp-model.h"
-#include "xmp-gen.h"
+#include "xmp-encode.h"
 
 
 #define RESPONSE_IMPORT   1
@@ -418,7 +418,7 @@ file_import_dialog (GtkWidget   *parent,
 
                                          NULL);
 
-      gtk_dialog_set_alternative_button_order (dlg,
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -472,8 +472,10 @@ export_dialog_response (GtkWidget *dlg,
           return;
         }
 
+      /*
       fprintf (stderr, "\nwriting %d bytes to %s...\n",
                strlen (buffer), filename);
+      */
 
       if (write (fd, buffer, strlen (buffer)) < 0)
         {
@@ -520,7 +522,7 @@ file_export_dialog (GtkWidget   *parent,
 
                                          NULL);
 
-      gtk_dialog_set_alternative_button_order (dlg,
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -588,7 +590,7 @@ metadata_dialog (gint32    image_ID,
 
                               NULL);
 
-  gtk_dialog_set_alternative_button_order (mgui.dlg,
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (mgui.dlg),
                                            RESPONSE_IMPORT,
                                            RESPONSE_EXPORT,
                                            GTK_RESPONSE_OK,

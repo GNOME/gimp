@@ -24,14 +24,14 @@ metadata_SOURCES = \
 	xmp-model.c	\
 	xmp-parse.h	\
 	xmp-parse.c	\
-	xmp-gen.h	\
-	xmp-gen.c	
-#	exif-parse.h	\
-#	exif-parse.c	\
-#	exif-gen.h	\
-#	exif-gen.c	\
-#	iptc-parse.h	\
-#	iptc-parse.c	
+	xmp-encode.h	\
+	xmp-encode.c	
+#	exif-decode.h	\
+#	exif-decode.c	\
+#	exif-encode.h	\
+#	exif-encode.c	\
+#	iptc-decode.h	\
+#	iptc-decode.c	
 
 noinst_PROGRAMS = xmpdump
 xmpdump_SOURCES = \

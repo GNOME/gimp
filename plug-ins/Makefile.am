@@ -52,6 +52,7 @@ SUBDIRS = \
 	imagemap		\
 	jpeg                    \
 	maze			\
+	metadata		\
 	pagecurl		\
 	$(print)		\
 	$(pygimp)		\

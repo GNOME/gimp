@@ -1656,6 +1656,7 @@ plug-ins/imagemap/Makefile
 plug-ins/imagemap/images/Makefile
 plug-ins/jpeg/Makefile
 plug-ins/maze/Makefile
+plug-ins/metadata/Makefile
 plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
 plug-ins/pygimp/Makefile

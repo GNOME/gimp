@@ -30,10 +30,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 #include "interface.h"
-#include "xmp-gen.h"
+#include "xmp-encode.h"
 /* FIXME: uncomment when these are working
-#include "exif-parse.h"
-#include "exif-gen.h"
+#include "exif-decode.h"
+#include "exif-encode.h"
 #include "iptc-parse.h"
 */
 

@@ -29,7 +29,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "xmp-gen.h"
+#include "xmp-encode.h"
 #include "xmp-model.h"
 
 static gssize
