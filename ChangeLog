@@ -1,3 +1,8 @@
+2004-09-16  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.c (gimp_scale_entry_set_logarithmic):
+	applied a patch by Joao S. O. Bueno that fixes bug #152820.
+
 2004-09-16  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/script-fu/scripts/burn-in-anim.scm: patch from Kevin 

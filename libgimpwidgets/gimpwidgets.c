@@ -836,9 +836,9 @@ gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
            g_signal_handlers_disconnect_by_func (adj,
                                                  G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
                                                  scale_adj);
-           g_signal_handlers_disconnect_by_func (adj,
+           g_signal_handlers_disconnect_by_func (scale_adj,
                                                  G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
-                                                 adjustment);
+                                                 adj);
          }
 
        scale_adj->value          = log_value;
@@ -854,6 +854,9 @@ gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
        g_signal_connect (adj, "value_changed",
                          G_CALLBACK (gimp_scale_entry_log_adjustment_callback),
                          scale_adj);
+
+       g_object_set_data (G_OBJECT (adjustment),
+                          "logarithmic", GINT_TO_POINTER (TRUE));
     }
   else
     {
@@ -871,6 +874,7 @@ gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
 
       lower = exp (scale_adj->lower);
       upper = exp (scale_adj->upper);
+
       if (adj->lower <= 0.0)
         {
           lower += - 0.1  + adj->lower;
@@ -890,6 +894,9 @@ gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
       g_signal_connect (adj, "value_changed",
                         G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
                         scale_adj);
+
+      g_object_set_data (G_OBJECT (adjustment),
+                         "logarithmic", GINT_TO_POINTER (FALSE));
     }
 }
 
