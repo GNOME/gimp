@@ -1,5 +1,15 @@
 2003-05-31  Tor Lillqvist  <tml@iki.fi>
 
+	* plug-ins/Makefile.am: Handle twain and winsnap subdirs normally.
+
+	* configure.in: Set TWAIN and WINSNAP on Win32. Expand
+	Makefiles in these dirs.
+
+	* plug-ins/twain/Makefile.am
+	* plug-ins/winsnap/Makefile.am: New files, from stable branch.
+	
+	* plug-ins/winsnap/winsnap.c: Make it build with GTK2.
+
 	* README.win32: Update.
 
 	* plug-ins/makefile.cygwin

@@ -85,8 +85,6 @@ static HCURSOR			selectCursor = 0;
 static ICONINFO			iconInfo;
 
 /* Forward declarations */
-static void init(void);
-static void quit(void);
 static void query(void);
 static void run(char *, int, GimpParam *, int *, GimpParam **);
 static void sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect);
@@ -894,7 +892,7 @@ snap_dialog(void)
   /* Main Dialog */
   dialog = gtk_dialog_new ();
   gtk_window_set_title(GTK_WINDOW(dialog), PLUG_IN_PRINT_NAME);
-  gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (snap_close_callback),
                     NULL);
@@ -934,7 +932,7 @@ snap_dialog(void)
   gtk_box_pack_start (GTK_BOX (vbox),
 		      hbox, TRUE, TRUE, 0);
   winsnapintf.single_button = gtk_radio_button_new ( radio_group );
-  radio_group = gtk_radio_button_group ( GTK_RADIO_BUTTON (winsnapintf.single_button) );
+  radio_group = gtk_radio_button_get_group ( GTK_RADIO_BUTTON (winsnapintf.single_button) );
   gtk_box_pack_start (GTK_BOX (hbox),
 		      winsnapintf.single_button, TRUE, TRUE, 0);
   g_signal_connect (winsnapintf.single_button, "toggled",
@@ -981,7 +979,7 @@ snap_dialog(void)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   winsnapintf.root_button = gtk_radio_button_new ( radio_group );
-  radio_group = gtk_radio_button_group ( GTK_RADIO_BUTTON (winsnapintf.root_button) );
+  radio_group = gtk_radio_button_get_group ( GTK_RADIO_BUTTON (winsnapintf.root_button) );
   gtk_box_pack_start (GTK_BOX (hbox),  winsnapintf.root_button, TRUE, TRUE, 0);
   g_signal_connect (winsnapintf.root_button, "toggled",
                     G_CALLBACK (snap_toggle_update),

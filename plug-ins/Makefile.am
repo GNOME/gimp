@@ -1,24 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 EXTRA_DIST = \
-	makefile.msc		\
-	twain/README		\
-	twain/tw_dump.c		\
-	twain/tw_dump.h		\
-	twain/tw_func.c		\
-	twain/tw_func.h		\
-	twain/tw_sess.c		\
-	twain/tw_util.c		\
-	twain/tw_util.h		\
-	twain/twain.c		\
-	twain/twain.h		\
-	winsnap/resource.h	\
-	winsnap/select.cur	\
-	winsnap/small.ico	\
-	winsnap/winsnap.c	\
-	winsnap/winsnap.h	\
-	winsnap/winsnap.ico	\
-	winsnap/winsnap.rc
+	makefile.msc
 
 if BUILD_PYTHON
 pygimp=pygimp
@@ -51,6 +34,8 @@ SUBDIRS = 			\
 	rcm			\
 	sgi			\
 	sel2path		\
+	$(TWAIN)		\
 	$(WEBBROWSER)		\
+	$(WINSNAP)		\
 	$(XJT)			\
 	common

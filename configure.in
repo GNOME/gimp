@@ -904,8 +904,10 @@ AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 ###########################################################
 
 if test x"$os_win32" = xyes; then
+  TWAIN='twain'
   WINCLIPBOARD='winclipboard'
   WINPRINT='winprint'
+  WINSNAP='winsnap'
   dnl webbrowser has ifdefs for Win32
   WEBBROWSER='webbrowser'
   dnl xjt does build, but it isn't more confusing than useful on Win32,
@@ -921,9 +923,11 @@ fi
 AC_SUBST(BZ2)
 AC_SUBST(MAIL)
 AC_SUBST(SCREENSHOT)
+AC_SUBST(TWAIN)
 AC_SUBST(URL)
 AC_SUBST(WINCLIPBOARD)
 AC_SUBST(WINPRINT)
+AC_SUBST(WINSNAP)
 AC_SUBST(XJT)
 
 #################################################################
@@ -1038,7 +1042,7 @@ AC_SUBST(GIMPINSTALL)
 dnl FIXME: Do we need to do this?
 if test -n "$DISTMAKE"; then
   TIFF=tiff JPEG=jpeg PNG=png MNG=mng AA=aa PRINT=print
-  WEBBROWSER=webbrowser HELPBROWSER=helpbrowser 
+  TWAIN=twain WEBBROWSER=webbrowser WINSNAP=winsnap HELPBROWSER=helpbrowser 
   XJT=xjt XPM=xpm
 fi
 
@@ -1135,6 +1139,8 @@ plug-ins/pygimp/plug-ins/Makefile
 plug-ins/rcm/Makefile
 plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile
+plug-ins/twain/Makefile
+plug-ins/winsnap/Makefile
 modules/Makefile
 devel-docs/Makefile
 devel-docs/libgimp/Makefile
