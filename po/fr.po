@@ -472,7 +472,6 @@ msgstr "Y :"
 
 #. The wrap around option
 #: app/channel_ops.c:165
-#, fuzzy
 msgid "Wrap Around"
 msgstr "Espace enroulé"
 
@@ -1583,7 +1582,7 @@ msgstr "Je ne puis écrire dans %s; %s"
 
 #: app/gimpui.c:627
 msgid "GIMP Message"
-msgstr ""
+msgstr "Message de Gimp"
 
 #. pseudo unit
 #: app/gimpunit.c:58
@@ -2443,6 +2442,13 @@ msgid ""
 "\t\tkeys from within The GIMP. Deleting this file will\n"
 "\t\trestore the default shortcuts.\n"
 msgstr ""
+"\t\tLes raccourcis clavier peuvent être redéfinis dynamiquement\n"
+"\t\tdans Gimp. Le fichier menurc est un enregistrement de votre\n"
+"\t\tconfiguration, afin que celle-ci puisse être reprise de\n"
+"\t\tsession en session. Vous pouvez éditer ce fichier à la main\n"
+"\t\tsi vous le désirez, mais il est bien plus facile de définir\n"
+"\t\tles touches depuis Gimp. Effacer ce fichier redonne les\n"
+"\t\traccourcis clavier par défaut."
 
 #: app/install.c:163
 msgid ""
@@ -2450,6 +2456,10 @@ msgid ""
 "\t\topen the last time you quit The GIMP. You can configure\n"
 "\t\tThe GIMP to reopen these dialogs at the saved position.\n"
 msgstr ""
+"\t\tLe fichier sessionrc est utilisé pour sauvegarder la\n"
+"\t\tposition des fenêtres de dialogue au moment de quitter\n"
+"\t\tGimp. Vous pouvez configurer Gimp pour qu'il rouvre\n"
+"\t\tau lancement ces dialogues à leur positions sauvegardée.\n"
 
 #: app/install.c:168
 msgid ""
@@ -3467,11 +3477,11 @@ msgstr "/Fichier/Quitter"
 #. <Toolbox>/Xtns
 #: app/menus.c:201
 msgid "/Xtns"
-msgstr "/Xtns"
+msgstr "/Extensions"
 
 #: app/menus.c:203
 msgid "/Xtns/Module Browser..."
-msgstr "/Xtns/Explorateur de Modules..."
+msgstr "/Extensions/Explorateur de Modules..."
 
 #. <Toolbox>/Help
 #: app/menus.c:211
@@ -4075,9 +4085,8 @@ msgid "/Layer Boundary Size..."
 msgstr "/Taille des bord du calque..."
 
 #: app/menus.c:716
-#, fuzzy
 msgid "/Layer to Imagesize"
-msgstr "/Calques/Mettre aux dimensions de l'image"
+msgstr "/Mettre aux dimensions de l'image"
 
 #: app/menus.c:718
 msgid "/Scale Layer..."
@@ -4733,6 +4742,14 @@ msgid ""
 "and the critical parts of your changes will not\n"
 "be applied."
 msgstr ""
+"Au moins un des changements que vous avez effectué\n"
+"ne prendra effet que si vous relancez Gimp.\n"
+"\n"
+"Vous pouvez choisir « Enregistrer » maintenant\n"
+"pour rendre vos changements permanents (ils prendront\n"
+"effet au prochain lancement de Gimp) ou choisir\n"
+"« Fermer » et les parties critiques de vos changements\n"
+"ne seront pas appliquées."
 
 #: app/preferences_dialog.c:465
 msgid "You will need to restart GIMP for these changes to take effect."
@@ -4995,7 +5012,7 @@ msgstr "Désactive la mise à jour du curseur"
 
 #: app/preferences_dialog.c:1892
 msgid "Use \"Dot for Dot\" by default"
-msgstr ""
+msgstr "Utiliser « Point pour point » par défaut"
 
 #: app/preferences_dialog.c:1903
 msgid "Tool Options Settings"
@@ -6029,9 +6046,8 @@ msgstr "Perspective"
 
 #. the second radio frame and box, for transform direction
 #: app/transform_tool.c:233
-#, fuzzy
 msgid "Tool Paradigm"
-msgstr "Action de l'Outil"
+msgstr "Action de l'outil"
 
 #: app/transform_tool.c:235
 msgid "Traditional"
@@ -6283,15 +6299,13 @@ msgstr ""
 
 #. flow slider
 #: app/xinput_airbrush.c:322
-#, fuzzy
 msgid "Flow Relation:"
-msgstr "Agrandir"
+msgstr "Relation du débit :"
 
 #. flow sens slider
 #: app/xinput_airbrush.c:341
-#, fuzzy
 msgid "Flow Sensitivity:"
-msgstr "Sensibilité :"
+msgstr "Sensibilité du débit :"
 
 #. base tilt slider
 #: app/xinput_airbrush.c:361
@@ -6305,9 +6319,8 @@ msgstr "Sensibilité de la base :"
 
 #. velocity sens slider
 #: app/xinput_airbrush.c:410
-#, fuzzy
 msgid "Speed Sensitivity:"
-msgstr "Sensibilité :"
+msgstr "Sensibilité de la vitesse :"
 
 #. min height slider
 #: app/xinput_airbrush.c:437
