@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
 "POT-Creation-Date: 2000-03-17 11:44+0100\n"
-"PO-Revision-Date: 2000-03-17 11:51+01:00\n"
+"PO-Revision-Date: 2000-03-17 12:55+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1675,7 +1675,7 @@ msgstr "pixel"
 
 #: app/gimpunit.c:59 app/measure.c:454 app/measure.c:458 app/paint_core.c:511
 msgid "pixels"
-msgstr "pixely"
+msgstr "pixelù"
 
 #. standard units
 #: app/gimpunit.c:62
@@ -1684,7 +1684,7 @@ msgstr "palec"
 
 #: app/gimpunit.c:62
 msgid "inches"
-msgstr "palce"
+msgstr "palcù"
 
 #: app/gimpunit.c:63
 msgid "millimeter"
@@ -1692,7 +1692,7 @@ msgstr "milimetr"
 
 #: app/gimpunit.c:63
 msgid "millimeters"
-msgstr "milimetry"
+msgstr "milimetrù"
 
 #. professional units
 #: app/gimpunit.c:66
@@ -1701,15 +1701,15 @@ msgstr "bod"
 
 #: app/gimpunit.c:66
 msgid "points"
-msgstr "body"
+msgstr "bodù"
 
 #: app/gimpunit.c:67
 msgid "pica"
-msgstr "piku"
+msgstr "pika"
 
 #: app/gimpunit.c:67
 msgid "picas"
-msgstr "piky"
+msgstr "pik"
 
 #: app/gimpunit.c:74
 msgid "percent"

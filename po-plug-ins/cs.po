@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.18\n"
 "POT-Creation-Date: 2000-03-12 23:53+0100\n"
-"PO-Revision-Date: 2000-03-12 23:58+01:00\n"
+"PO-Revision-Date: 2000-03-18 10:24+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3344,7 +3344,7 @@ msgstr "Práh modré:"
 
 #: plug-ins/common/exchange.c:462
 msgid "Lock Thresholds"
-msgstr "Zamknout prahy"
+msgstr "Spøáhnout prahy"
 
 #: plug-ins/common/film.c:254
 msgid "<Image>/Filters/Combine/Film..."
@@ -4604,7 +4604,7 @@ msgstr "Separovat do:"
 
 #: plug-ins/common/newsprint.c:1397
 msgid "Lock Channels"
-msgstr "Zamknout kanály"
+msgstr "Spøáhnout kanály"
 
 #: plug-ins/common/newsprint.c:1407
 msgid "Factory Defaults"
