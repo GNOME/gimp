@@ -1,3 +1,8 @@
+2002-03-18  Manish Singh  <yosh@gimp.org>
+
+	* app/gui/preferences-dialog.c: slight cosmetic fix to make the
+	treeview look nicer.
+
 2002-03-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintoptions.h

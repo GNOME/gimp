@@ -1590,38 +1590,40 @@ prefs_help_func (const gchar *help_data)
 GtkWidget *
 preferences_dialog_create (Gimp *gimp)
 {
-  GtkWidget        *tv;
-  GtkTreeStore     *tree;
-  GtkTreeSelection *sel;
-  GtkTreeIter       top_iter;
-  GtkTreeIter       child_iter;
-  gint              page_index;
+  GtkWidget         *tv;
+  GtkTreeStore      *tree;
+  GtkTreeViewColumn *column;
+  GtkCellRenderer   *cell;
+  GtkTreeSelection  *sel;
+  GtkTreeIter        top_iter;
+  GtkTreeIter        child_iter;
+  gint               page_index;
 
-  GtkWidget        *frame;
-  GtkWidget        *notebook;
-  GtkWidget        *vbox;
-  GtkWidget        *vbox2;
-  GtkWidget        *hbox;
-  GtkWidget        *abox;
-  GtkWidget        *button;
-  GtkWidget        *fileselection;
-  GtkWidget        *patheditor;
-  GtkWidget        *spinbutton;
-  GtkWidget        *optionmenu;
-  GtkWidget        *table;
-  GtkWidget        *label;
-  GtkWidget        *image;
-  GtkObject        *adjustment;
-  GtkWidget        *sizeentry;
-  GtkWidget        *sizeentry2;
-  GtkWidget        *separator;
-  GtkWidget        *calibrate_button;
-  GtkWidget        *scrolled_window;
-  GtkWidget        *text_view;
-  GtkTextBuffer    *text_buffer;
-  PangoAttrList    *attrs;
-  PangoAttribute   *attr;
-  GSList           *group;
+  GtkWidget         *frame;
+  GtkWidget         *notebook;
+  GtkWidget         *vbox;
+  GtkWidget         *vbox2;
+  GtkWidget         *hbox;
+  GtkWidget         *abox;
+  GtkWidget         *button;
+  GtkWidget         *fileselection;
+  GtkWidget         *patheditor;
+  GtkWidget         *spinbutton;
+  GtkWidget         *optionmenu;
+  GtkWidget         *table;
+  GtkWidget         *label;
+  GtkWidget         *image;
+  GtkObject         *adjustment;
+  GtkWidget         *sizeentry;
+  GtkWidget         *sizeentry2;
+  GtkWidget         *separator;
+  GtkWidget         *calibrate_button;
+  GtkWidget         *scrolled_window;
+  GtkWidget         *text_view;
+  GtkTextBuffer     *text_buffer;
+  PangoAttrList     *attrs;
+  PangoAttribute    *attr;
+  GSList            *group;
 
   gint   i;
   gchar *pixels_per_unit;
@@ -1777,15 +1779,17 @@ preferences_dialog_create (Gimp *gimp)
 
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tv), FALSE);
 
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
-                                               0, NULL,
-                                               gtk_cell_renderer_pixbuf_new (),
-                                               "pixbuf", 0, NULL);
+  column = gtk_tree_view_column_new ();
 
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
-					       1, NULL,
-					       gtk_cell_renderer_text_new (),
-					       "text", 1, NULL);
+  cell = gtk_cell_renderer_pixbuf_new ();
+  gtk_tree_view_column_pack_start (column, cell, FALSE);
+  gtk_tree_view_column_set_attributes (column, cell, "pixbuf", 0, NULL);
+
+  cell = gtk_cell_renderer_text_new ();
+  gtk_tree_view_column_pack_start (column, cell, TRUE);
+  gtk_tree_view_column_set_attributes (column, cell, "text", 1, NULL);
+
+  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), column);
 
   gtk_container_add (GTK_CONTAINER (frame), tv);
 
