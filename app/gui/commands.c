@@ -1212,7 +1212,19 @@ void
 dialogs_display_filters_cmd_callback (GtkWidget *widget,
 				      gpointer   client_data)
 {
-  gdisplay_color_ui (gdisplay_active ());
+  GDisplay * gdisp;
+
+  gdisp = gdisplay_active ();
+  if (!gdisp)
+    gdisp = color_area_gdisp;
+
+  if (!gdisp->cd_ui)
+    gdisplay_color_ui_new (gdisp);
+
+  if (!GTK_WIDGET_VISIBLE (gdisp->cd_ui))
+    gtk_widget_show (gdisp->cd_ui);
+  else
+    gdk_window_raise (gdisp->cd_ui->window);
 }
 
 void

@@ -183,6 +183,40 @@ gdisplay_color_attach (GDisplay   *gdisp,
   return NULL;
 }
 
+ColorDisplayNode *
+gdisplay_color_attach_clone (GDisplay         *gdisp,
+			     ColorDisplayNode *node)
+{
+  ColorDisplayInfo *info;
+  ColorDisplayNode *clone;
+
+  g_return_val_if_fail (gdisp != NULL, NULL);
+  g_return_val_if_fail (node != NULL, NULL);
+
+  if ((info = g_hash_table_lookup (color_display_table, node->cd_name)))
+    {
+      clone = g_new (ColorDisplayNode, 1);
+
+      clone->cd_name = g_strdup (node->cd_name);
+      clone->cd_ID = NULL;
+
+      info->refs = g_slist_append (info->refs, gdisp);
+
+      if (info->methods.clone)
+	node->cd_ID = info->methods.clone (node->cd_ID);
+
+      node->cd_convert = info->methods.convert;
+
+      gdisp->cd_list = g_list_append (gdisp->cd_list, node);
+
+      return node;
+    }
+  else
+    g_warning ("Tried to clone a nonexistant color display");
+
+  return NULL;
+}
+
 void
 gdisplay_color_detach (GDisplay         *gdisp,
 		       ColorDisplayNode *node)
@@ -285,4 +319,44 @@ node_name_compare (ColorDisplayNode *node,
   return strcmp (node->cd_name, name);
 }
 
+void
+gdisplay_color_configure (ColorDisplayNode *node,
+			  GFunc             ok_func,
+			  gpointer          ok_data,
+			  GFunc             cancel_func,
+			  gpointer          cancel_data)
+{
+  ColorDisplayInfo *info;
 
+  g_return_if_fail (node != NULL);
+
+  if ((info = g_hash_table_lookup (color_display_table, node->cd_name)))
+    {
+      if (info->methods.configure)
+	info->methods.configure (node->cd_ID,
+	    			 ok_func, ok_data,
+				 cancel_func, cancel_data);
+    }
+  else
+    g_warning ("Tried to configure a nonexistant color display");
+
+  return;
+}
+
+void
+gdisplay_color_configure_cancel (ColorDisplayNode *node)
+{
+  ColorDisplayInfo *info;
+
+  g_return_if_fail (node != NULL);
+
+  if ((info = g_hash_table_lookup (color_display_table, node->cd_name)))
+    {
+      if (info->methods.cancel)
+	info->methods.cancel (node->cd_ID);
+    }
+  else
+    g_warning ("Tried to configure cancel a nonexistant color display");
+
+  return;
+}

@@ -32,7 +32,12 @@ typedef struct _GammaContext GammaContext;
 
 struct _GammaContext
 {
-  double gamma;
+  GFunc    ok_func;
+  gpointer ok_data;
+  GFunc    cancel_func;
+  gpointer cancel_data;
+
+  double  gamma;
   guchar *lookup;
 
   GtkWidget *shell;
@@ -59,7 +64,11 @@ static void       gamma_configure_cancel_callback (GtkWidget    *widget,
 static gint       gamma_configure_delete_callback (GtkWidget    *widget,
 						   GdkEvent     *event,
 						   gpointer      data);
-static void       gamma_configure                 (gpointer      cd_ID);
+static void       gamma_configure                 (gpointer      cd_ID,
+    						   GFunc         ok_func,
+						   gpointer      ok_data,
+						   GFunc         cancel_func,
+						   gpointer      cancel_data);
 static void       gamma_configure_cancel          (gpointer      cd_ID);
 
 static GimpColorDisplayMethods methods = {
@@ -109,13 +118,11 @@ static gpointer
 gamma_new (int type)
 {
   int i;
-  GammaContext *context = NULL;
+  GammaContext *context;
 
-  context = g_new (GammaContext, 1);
+  context = g_new0 (GammaContext, 1);
   context->gamma = 1.0;
   context->lookup = g_new (guchar, 256);
-  context->shell = NULL;
-  context->spinner = NULL;
 
   for (i = 0; i < 256; i++)
     context->lookup[i] = i;
@@ -126,8 +133,8 @@ gamma_new (int type)
 static gpointer
 gamma_clone (gpointer cd_ID)
 {
-  GammaContext *context = NULL;
-  GammaContext *src_context = (GammaContext *) cd_ID;
+  GammaContext *src_context = cd_ID;
+  GammaContext *context;
 
   context = gamma_new (0);
   context->gamma = src_context->gamma;
@@ -159,7 +166,7 @@ gamma_create_lookup_table (GammaContext *context)
 static void
 gamma_destroy (gpointer cd_ID)
 {
-  GammaContext *context = (GammaContext *) cd_ID;
+  GammaContext *context = cd_ID;
 
   if (context->shell)
     gtk_widget_destroy (context->shell);
@@ -209,7 +216,7 @@ static void
 gamma_load (gpointer  cd_ID,
             Parasite *state)
 {
-  GammaContext *context = (GammaContext *) cd_ID;
+  GammaContext *context = cd_ID;
 
 #if G_BYTE_ORDER == G_BIG_ENDIAN
   memcpy (&context->gamma, parasite_data (state), sizeof (double));
@@ -228,7 +235,7 @@ gamma_load (gpointer  cd_ID,
 static Parasite *
 gamma_save (gpointer cd_ID)
 {
-  GammaContext *context = (GammaContext *) cd_ID;
+  GammaContext *context = cd_ID;
   guint32 buf[2];
 
   memcpy (buf, &context->gamma, sizeof (double));
@@ -249,19 +256,29 @@ static void
 gamma_configure_ok_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  GammaContext *context = (GammaContext *) data;
+  GammaContext *context = data;
 
   context->gamma = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (context->spinner));
   gamma_create_lookup_table (context);
 
-  gtk_widget_hide (widget);
+  gtk_widget_destroy (GTK_WIDGET (context->shell));
+  context->shell = NULL;
+
+  if (context->ok_func)
+    context->ok_func (context, context->ok_data);
 }
 
 static void
 gamma_configure_cancel_callback (GtkWidget *widget,
 				 gpointer   data)
 {
-  gtk_widget_hide (widget);
+  GammaContext *context = data;
+
+  gtk_widget_destroy (GTK_WIDGET (context->shell));
+  context->shell = NULL;
+
+  if (context->cancel_func)
+    context->cancel_func (context, context->cancel_data);
 }
 
 static gint
@@ -274,9 +291,13 @@ gamma_configure_delete_callback (GtkWidget *widget,
 }
 
 static void
-gamma_configure (gpointer cd_ID)
+gamma_configure (gpointer cd_ID,
+		 GFunc    ok_func,
+		 gpointer ok_data,
+		 GFunc    cancel_func,
+		 gpointer cancel_data)
 {
-  GammaContext *context = (GammaContext *) cd_ID;
+  GammaContext *context = cd_ID;
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *hbbox;
@@ -285,6 +306,11 @@ gamma_configure (gpointer cd_ID)
 
   if (!context->shell)
     {
+      context->ok_func = ok_func;
+      context->ok_data = ok_data;
+      context->cancel_func = cancel_func;
+      context->cancel_data = cancel_data;
+
       context->shell = gtk_dialog_new ();
       gtk_window_set_wmclass (GTK_WINDOW (context->shell), "gamma", "Gimp");
       gtk_window_set_title (GTK_WINDOW (context->shell), "Gamma");
@@ -305,7 +331,7 @@ gamma_configure (gpointer cd_ID)
       context->spinner = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment),
 					      0.1, 3);
       gtk_widget_set_usize (context->spinner, 100, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), context->spinner, TRUE, FALSE, 0);
  
       hbbox = gtk_hbutton_box_new ();
       gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
@@ -326,17 +352,20 @@ gamma_configure (gpointer cd_ID)
 			  GTK_SIGNAL_FUNC (gamma_configure_cancel_callback),
 			  cd_ID);
 
-      gtk_widget_show_all (hbox);
+      gtk_widget_show_all (context->shell);
     }
-
-  gtk_widget_show (context->shell);
 }
 
 static void
 gamma_configure_cancel (gpointer cd_ID)
 {
-  GammaContext *context = (GammaContext *) cd_ID;
+  GammaContext *context = cd_ID;
  
   if (context->shell)
-    gtk_widget_hide (context->shell);
+    gtk_widget_destroy (context->shell);
+
+  context->shell = NULL;
+
+  if (context->cancel_func)
+    context->cancel_func (context, context->cancel_data);
 }

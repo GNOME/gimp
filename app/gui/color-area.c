@@ -25,6 +25,7 @@
 #include "gdisplay_color.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
+#include "gimpimageP.h"
 
 typedef enum
 {
@@ -46,7 +47,7 @@ static void color_area_color_changed (GimpContext *,
 /*  Global variables  */
 gint active_color = FOREGROUND;
 
-GDisplay color_area_gdisp;
+GDisplay *color_area_gdisp = NULL;
 
 /*  Static variables  */
 static GdkGC          *color_area_gc = NULL;
@@ -136,7 +137,7 @@ color_area_draw_rect (GdkDrawable *drawable,
 
   bp = color_area_rgb_buf;
 
-  list = color_area_gdisp.cd_list;
+  list = color_area_gdisp->cd_list;
   while (list)
     {
       ColorDisplayNode *node = (ColorDisplayNode *) list->data;
@@ -443,7 +444,11 @@ color_area_create (gint       width,
 		      color_area);
 
   /* display filter dummy gdisplay */
-  color_area_gdisp.cd_list = NULL;
+  color_area_gdisp = g_new (GDisplay, 1);
+  color_area_gdisp->cd_list = NULL;
+  color_area_gdisp->cd_ui   = NULL;
+  color_area_gdisp->gimage = g_new (GimpImage, 1);
+  color_area_gdisp->gimage->base_type = RGB;
 
   return color_area;
 }

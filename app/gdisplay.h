@@ -18,7 +18,7 @@
 #ifndef __GDISPLAY_H__
 #define __GDISPLAY_H__
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "gimage.h"
 #include "info_dialog.h"
@@ -156,6 +156,7 @@ struct _GDisplay
   IdleRenderStruct idle_render;   /* state of this gdisplay's render thread   */
   
   GList *cd_list;                 /* color display conversion stuff           */
+  GtkWidget *cd_ui;		  /* color display filter dialog              */
 };
 
 
@@ -217,7 +218,5 @@ void       gdisplays_flush_now             (void);
 void       gdisplay_flush_displays_only    (GDisplay *gdisp); /* no rerender! */
 void       gdisplays_nav_preview_resized   (void);
 void       gdisplays_foreach               (GFunc func, gpointer user_data);
-void       gdisplays_notify_add            (GFunc func, gpointer user_data);
-void       gdisplays_notify_remove         (GFunc func, gpointer user_data);
 
 #endif /*  __GDISPLAY_H__  */

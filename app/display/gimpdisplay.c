@@ -80,11 +80,7 @@ static void       gdisplay_cleandirty_handler (GimpImage *, void *);
 
 static GHashTable *display_ht = NULL;
 
-/* FIXME: ick ick ick, GDisplays really need to be GtkObjects */
-GFunc notify_add_func = NULL;
-gpointer notify_add_user_data = NULL;
-GFunc notify_remove_func = NULL;
-gpointer notify_remove_user_data = NULL;
+/* FIXME: GDisplays really need to be GtkObjects */
 
 GDisplay*
 gdisplay_new (GimpImage    *gimage,
@@ -134,6 +130,7 @@ gdisplay_new (GimpImage    *gimage,
   gdisp->idle_render.active = FALSE;
 
   gdisp->cd_list = NULL;
+  gdisp->cd_ui   = NULL;
 
   /* format the title */
   gdisplay_format_title (gdisp, title, MAX_TITLE_BUF);
@@ -175,9 +172,6 @@ gdisplay_new (GimpImage    *gimage,
 		      GTK_SIGNAL_FUNC(gdisplay_cleandirty_handler), gdisp);
   gtk_signal_connect (GTK_OBJECT (gimage), "clean",
 		      GTK_SIGNAL_FUNC(gdisplay_cleandirty_handler), gdisp);
-
-  if (notify_add_func)
-    notify_add_func (gdisp, notify_add_user_data);
 
   return gdisp;
 }
@@ -378,9 +372,6 @@ gdisplay_delete (GDisplay *gdisp)
     nav_popup_free(gdisp->nav_popup);
 
   gtk_widget_unref (gdisp->shell);
-
-  if (notify_remove_func)
-    notify_remove_func (gdisp, notify_remove_user_data);
 
   g_free (gdisp);
 }
@@ -2278,18 +2269,4 @@ void
 gdisplays_foreach (GFunc func, gpointer user_data)
 {
   g_slist_foreach (display_list, func, user_data);
-}
-
-void
-gdisplays_notify_add (GFunc func, gpointer user_data)
-{
-  notify_add_func = func;
-  notify_add_user_data = user_data;
-}
-
-void
-gdisplays_notify_remove (GFunc func, gpointer user_data)
-{
-  notify_remove_func = func;
-  notify_remove_user_data = user_data;
 }

@@ -37,8 +37,12 @@ typedef void       (*GimpColorDisplayFinalize)        (void);
 typedef void       (*GimpColorDisplayLoadState)       (gpointer   cd_ID,
 						       Parasite  *state);
 typedef Parasite * (*GimpColorDisplaySaveState)       (gpointer   cd_ID);
-typedef void       (*GimpColorDisplayConfigure)       (gpointer   cd_ID);
-typedef void       (*GimpColorDisplayConfigureCancel) (gpointer cd_ID);
+typedef void       (*GimpColorDisplayConfigure)       (gpointer   cd_ID,
+    						       GFunc      ok_func,
+						       gpointer   ok_data,
+						       GFunc      cancel_func,
+						       gpointer   cancel_data);
+typedef void       (*GimpColorDisplayConfigureCancel) (gpointer   cd_ID);
 
 typedef struct _GimpColorDisplayMethods GimpColorDisplayMethods;
 

@@ -28,8 +28,8 @@
 /*
  *  Global variables
  */
-extern gint     active_color;     /* foreground (= 0) or background (= 1) */
-extern GDisplay color_area_gdisp; /* hack for color displays */
+extern gint      active_color;     /* foreground (= 0) or background (= 1) */
+extern GDisplay *color_area_gdisp; /* hack for color displays */
 
 /*
  *  Functions

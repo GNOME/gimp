@@ -1,3 +1,27 @@
+Sun Jan  2 23:29:05 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* app/color_area.[ch]: fill dummy gimage->base_type as well
+
+	* app/gdisplay_color.[ch]: add attach_clone, configure, and
+	configure_cancel functions.
+
+	* app/gdisplay.[ch]: remove notify hacks, don't need them anymore.
+	Add cd_ui field for cdisplay ui.
+
+	* app/commands.c: make display filter dialog per display instead of
+	global
+
+	* libgimp/color_display.h: ok/cancel notification callbacks
+
+	* modules/cdisplay_gamma.c
+	* app/gdisplay_color_ui.[ch]: changes for above, enabled configuration
+	dialog and color_area dummy handling
+
+	* app/color_balance.c
+	* app/paint_funcs.c: #include "libgimp/gimpcolorspace.h"
+
+	* plug-ins/webbrowser/web-browser.scm: updated urls
+
 Mon Jan  3 02:49:37 CET 2000  Sven Neumann <sven@gimp.org>
 	
 	* libgimp/gimpcolorspace.c

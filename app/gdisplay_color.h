@@ -32,12 +32,14 @@ struct _ColorDisplayNode {
 typedef void (*GimpCDFunc) (const char *name,
 			    gpointer    user_data);
 
-void   color_display_init      (void);
-void   color_display_foreach   (GimpCDFunc func,
-			        gpointer   user_data);
+void color_display_init    (void);
+void color_display_foreach (GimpCDFunc func,
+			    gpointer   user_data);
 
 ColorDisplayNode * gdisplay_color_attach         (GDisplay         *gdisp,
 						  const char       *name);
+ColorDisplayNode * gdisplay_color_attach_clone   (GDisplay         *gdisp,
+						  ColorDisplayNode *node);
 void               gdisplay_color_detach         (GDisplay         *gdisp,
 						  ColorDisplayNode *node);
 void               gdisplay_color_detach_destroy (GDisplay         *gdisp,
@@ -47,5 +49,12 @@ void               gdisplay_color_reorder_up     (GDisplay         *gdisp,
 						  ColorDisplayNode *node);
 void               gdisplay_color_reorder_down   (GDisplay         *gdisp,
 						  ColorDisplayNode *node);
+
+void gdisplay_color_configure        (ColorDisplayNode *node,
+				      GFunc             ok_func,
+				      gpointer          ok_data,
+				      GFunc             cancel_func,
+				      gpointer          cancel_data);
+void gdisplay_color_configure_cancel (ColorDisplayNode *node);
 
 #endif /* __GDISPLAY_COLOR_H__ */

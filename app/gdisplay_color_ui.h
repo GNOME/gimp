@@ -18,8 +18,8 @@
 #ifndef __GDISPLAY_COLOR_UI_H__
 #define __GDISPLAY_COLOR_UI_H__
 
-#include <gdisplayF.h>
+#include "gdisplayF.h"
 
-void gdisplay_color_ui (GDisplay *gdisp);
+void gdisplay_color_ui_new (GDisplay *gdisp);
 
 #endif /* __GDISPLAY_COLOR_UI_H__ */
