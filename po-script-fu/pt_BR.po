@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: script-fu\n"
-"POT-Creation-Date: 2002-11-30 06:36+0100\n"
+"POT-Creation-Date: 2002-12-29 23:01+0100\n"
 "PO-Revision-Date: 2002-11-30 17:45-0300\n"
 "Last-Translator: Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
 "Language-Team: GNOME-BR <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -47,55 +47,55 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "O modo de avaliação Script-Fu permite apenas invocação não interativa"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1190
-#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1186
+#: plug-ins/script-fu/script-fu-scripts.c:1188
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1200
+#: plug-ins/script-fu/script-fu-scripts.c:1196
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1234
+#: plug-ins/script-fu/script-fu-scripts.c:1230
 msgid "About"
 msgstr "Sobre"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1244
+#: plug-ins/script-fu/script-fu-scripts.c:1240
 msgid "Script Arguments"
 msgstr "Parâmetro de script"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1267
+#: plug-ins/script-fu/script-fu-scripts.c:1263
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1314
+#: plug-ins/script-fu/script-fu-scripts.c:1310
 msgid "Script-Fu Color Selection"
 msgstr "Seleção de cores do Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1395
+#: plug-ins/script-fu/script-fu-scripts.c:1391
 msgid "Script-Fu File Selection"
 msgstr "Seleção de arquivo Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1400
+#: plug-ins/script-fu/script-fu-scripts.c:1396
 msgid "Script-Fu Folder Selection"
 msgstr "Seleção de Pasta Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1435
+#: plug-ins/script-fu/script-fu-scripts.c:1431
 msgid "Script-fu Pattern Selection"
 msgstr "Seleção de padrão Script-fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1442
+#: plug-ins/script-fu/script-fu-scripts.c:1438
 msgid "Script-Fu Gradient Selection"
 msgstr "Seleção de gradiente Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1450
+#: plug-ins/script-fu/script-fu-scripts.c:1446
 msgid "Script-Fu Brush Selection"
 msgstr "Seleção de pincel Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1658
+#: plug-ins/script-fu/script-fu-scripts.c:1654
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -103,30 +103,30 @@ msgstr ""
 "Pelo menos uma fonte escolhida não é válida.\n"
 "Favor verificar suas configurações.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1964
 #: plug-ins/dbbrowser/dbbrowser_utils.c:484
+#: plug-ins/script-fu/script-fu-scripts.c:1960
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1970
 #: plug-ins/dbbrowser/dbbrowser_utils.c:500
+#: plug-ins/script-fu/script-fu-scripts.c:1966
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1976
 #: plug-ins/dbbrowser/dbbrowser_utils.c:492
+#: plug-ins/script-fu/script-fu-scripts.c:1972
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1984
+#: plug-ins/script-fu/script-fu-scripts.c:1980
 msgid "Image Types:"
 msgstr "Tipos de imagens:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2125
+#: plug-ins/script-fu/script-fu-scripts.c:2121
 msgid "Script-Fu Font Selection"
 msgstr "Seleção de fonte de Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2195
+#: plug-ins/script-fu/script-fu-scripts.c:2191
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -1824,13 +1824,31 @@ msgid "<Image>/Script-Fu/Animators/Rippling..."
 msgstr "<Image>/Script-Fu/Animadores/Ondulando..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+msgid "Black"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+#, fuzzy
+msgid "Edge Behaviour"
+msgstr "Comportamento"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
 msgid "Number of Frames"
 msgstr "Número de quadros"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling Strength"
 msgstr "Força da onda"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
+#, fuzzy
+msgid "Smear"
+msgstr "Bu_scar:"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
+msgid "Warp"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Round Corners..."

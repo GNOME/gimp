@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.11\n"
-"POT-Creation-Date: 2002-12-30 20:09+0100\n"
+"POT-Creation-Date: 2002-12-30 20:53+0100\n"
 "PO-Revision-Date: 2002-12-30 20:10+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"

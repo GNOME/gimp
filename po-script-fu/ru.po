@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: po-script-fu-1.3\n"
-"POT-Creation-Date: 2002-10-10 23:19+0200\n"
+"POT-Creation-Date: 2002-12-29 23:01+0100\n"
 "PO-Revision-Date: 2002-03-05 18:27+0300\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -46,55 +46,55 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Режим выполнения Скрипт-Фу допускает только неинтерактивную работу"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1190
-#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1186
+#: plug-ins/script-fu/script-fu-scripts.c:1188
 msgid "/Script-Fu/"
 msgstr "/Скрипт-Фу/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1200
+#: plug-ins/script-fu/script-fu-scripts.c:1196
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Скрипт-Фу: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1238
+#: plug-ins/script-fu/script-fu-scripts.c:1230
 msgid "About"
 msgstr "О программе"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1248
+#: plug-ins/script-fu/script-fu-scripts.c:1240
 msgid "Script Arguments"
 msgstr "Аргументы скрипта"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1271
+#: plug-ins/script-fu/script-fu-scripts.c:1263
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1318
+#: plug-ins/script-fu/script-fu-scripts.c:1310
 msgid "Script-Fu Color Selection"
 msgstr "Скрипт-Фу: Выбор цвета"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1399
+#: plug-ins/script-fu/script-fu-scripts.c:1391
 msgid "Script-Fu File Selection"
 msgstr "Скрипт-Фу: Выбор файла"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1404
+#: plug-ins/script-fu/script-fu-scripts.c:1396
 msgid "Script-Fu Folder Selection"
 msgstr "Скрипт-Фу: Выбор каталога"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1439
+#: plug-ins/script-fu/script-fu-scripts.c:1431
 msgid "Script-fu Pattern Selection"
 msgstr "Скрипт-Фу: Выбор шаблона"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1446
+#: plug-ins/script-fu/script-fu-scripts.c:1438
 msgid "Script-Fu Gradient Selection"
 msgstr "Скрипт-Фу: Выбор градиента"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1454
+#: plug-ins/script-fu/script-fu-scripts.c:1446
 msgid "Script-Fu Brush Selection"
 msgstr "Скрипт-Фу: Выбор кисти"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1662
+#: plug-ins/script-fu/script-fu-scripts.c:1654
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -103,29 +103,29 @@ msgstr ""
 "Пожалуйста проверьте ваши настройки.\n"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:484
-#: plug-ins/script-fu/script-fu-scripts.c:1962
+#: plug-ins/script-fu/script-fu-scripts.c:1960
 msgid "Author:"
 msgstr "Автор:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:500
-#: plug-ins/script-fu/script-fu-scripts.c:1968
+#: plug-ins/script-fu/script-fu-scripts.c:1966
 msgid "Copyright:"
 msgstr "Авторское право:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:492
-#: plug-ins/script-fu/script-fu-scripts.c:1974
+#: plug-ins/script-fu/script-fu-scripts.c:1972
 msgid "Date:"
 msgstr "Дата:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1982
+#: plug-ins/script-fu/script-fu-scripts.c:1980
 msgid "Image Types:"
 msgstr "Типы изображений:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2123
+#: plug-ins/script-fu/script-fu-scripts.c:2121
 msgid "Script-Fu Font Selection"
 msgstr "Скрипт-Фу: Выбор шрифта"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2193
+#: plug-ins/script-fu/script-fu-scripts.c:2191
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -1836,13 +1836,31 @@ msgid "<Image>/Script-Fu/Animators/Rippling..."
 msgstr "<Image>/Скрипт-Фу/Аниматоры/Рябь..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+msgid "Black"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+#, fuzzy
+msgid "Edge Behaviour"
+msgstr "Поведение"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
 msgid "Number of Frames"
 msgstr "Число кадров"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling Strength"
 msgstr "Сила ряби"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
+#, fuzzy
+msgid "Smear"
+msgstr "Поиск:"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
+msgid "Warp"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Round Corners..."

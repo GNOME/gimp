@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2002-10-10 23:19+0200\n"
+"POT-Creation-Date: 2002-12-29 23:01+0100\n"
 "PO-Revision-Date: 2002-10-17 22:00+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -48,55 +48,55 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1190
-#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1186
+#: plug-ins/script-fu/script-fu-scripts.c:1188
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1200
+#: plug-ins/script-fu/script-fu-scripts.c:1196
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu：%s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1238
+#: plug-ins/script-fu/script-fu-scripts.c:1230
 msgid "About"
 msgstr "关于"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1248
+#: plug-ins/script-fu/script-fu-scripts.c:1240
 msgid "Script Arguments"
 msgstr "脚本参数"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1271
+#: plug-ins/script-fu/script-fu-scripts.c:1263
 #, c-format
 msgid "%s:"
 msgstr "%s："
 
-#: plug-ins/script-fu/script-fu-scripts.c:1318
+#: plug-ins/script-fu/script-fu-scripts.c:1310
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 颜色选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1399
+#: plug-ins/script-fu/script-fu-scripts.c:1391
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 文件选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1404
+#: plug-ins/script-fu/script-fu-scripts.c:1396
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 文件夹选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1439
+#: plug-ins/script-fu/script-fu-scripts.c:1431
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu 图案选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1446
+#: plug-ins/script-fu/script-fu-scripts.c:1438
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu 渐变选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1454
+#: plug-ins/script-fu/script-fu-scripts.c:1446
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 画笔选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1662
+#: plug-ins/script-fu/script-fu-scripts.c:1654
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -105,29 +105,29 @@ msgstr ""
 "请检查你的设置。\n"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:484
-#: plug-ins/script-fu/script-fu-scripts.c:1962
+#: plug-ins/script-fu/script-fu-scripts.c:1960
 msgid "Author:"
 msgstr "作者："
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:500
-#: plug-ins/script-fu/script-fu-scripts.c:1968
+#: plug-ins/script-fu/script-fu-scripts.c:1966
 msgid "Copyright:"
 msgstr "版权所有："
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:492
-#: plug-ins/script-fu/script-fu-scripts.c:1974
+#: plug-ins/script-fu/script-fu-scripts.c:1972
 msgid "Date:"
 msgstr "日期："
 
-#: plug-ins/script-fu/script-fu-scripts.c:1982
+#: plug-ins/script-fu/script-fu-scripts.c:1980
 msgid "Image Types:"
 msgstr "图像类型："
 
-#: plug-ins/script-fu/script-fu-scripts.c:2123
+#: plug-ins/script-fu/script-fu-scripts.c:2121
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu 字体选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2193
+#: plug-ins/script-fu/script-fu-scripts.c:2191
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -1824,13 +1824,31 @@ msgid "<Image>/Script-Fu/Animators/Rippling..."
 msgstr "<Image>/Script-Fu/动画/荡漾..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+msgid "Black"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+#, fuzzy
+msgid "Edge Behaviour"
+msgstr "表现"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
 msgid "Number of Frames"
 msgstr "帧数"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling Strength"
 msgstr "荡漾强度"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
+#, fuzzy
+msgid "Smear"
+msgstr "搜索(_S)："
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
+msgid "Warp"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Round Corners..."

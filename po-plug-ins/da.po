@@ -30,7 +30,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2002-12-27 16:50+0100\n"
+"POT-Creation-Date: 2002-12-29 23:00+0100\n"
 "PO-Revision-Date: 2002-12-27 16:50+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -1183,8 +1183,8 @@ msgstr "Vis/skjul en gitterramme i eksemplet"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:263
-#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:630
-#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:332
+#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
+#: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
 #: plug-ins/common/jpeg.c:729 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:328
 #: plug-ins/common/png.c:473 plug-ins/common/png.c:475
@@ -1233,7 +1233,7 @@ msgstr "%s: ugyldig farvekortlægning"
 #: plug-ins/common/pat.c:338 plug-ins/common/pcx.c:329
 #: plug-ins/common/pcx.c:335 plug-ins/common/pix.c:372
 #: plug-ins/common/png.c:600 plug-ins/common/pnm.c:496
-#: plug-ins/common/psd.c:2115 plug-ins/common/smooth_palette.c:247
+#: plug-ins/common/psd.c:2115 plug-ins/common/smooth_palette.c:248
 #: plug-ins/common/sunras.c:929 plug-ins/common/tga.c:915
 #: plug-ins/common/tiff.c:664 plug-ins/common/tile.c:279
 #: plug-ins/common/winclipboard.c:556 plug-ins/common/wmf.c:2144
@@ -2034,7 +2034,7 @@ msgstr "Justér synlige lag"
 #: plug-ins/common/randomize.c:722 plug-ins/common/ripple.c:602
 #: plug-ins/common/scatter_hsv.c:402 plug-ins/common/sel_gauss.c:255
 #: plug-ins/common/sharpen.c:618 plug-ins/common/shift.c:345
-#: plug-ins/common/smooth_palette.c:426 plug-ins/common/snoise.c:521
+#: plug-ins/common/smooth_palette.c:435 plug-ins/common/snoise.c:521
 #: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:366
 #: plug-ins/common/struc.c:1292 plug-ins/common/threshold_alpha.c:252
 #: plug-ins/common/unsharp.c:660 plug-ins/common/video.c:2170
@@ -3252,7 +3252,7 @@ msgstr "Fjern striber"
 msgid "Create _Histogram"
 msgstr "Opret _histogram"
 
-#: plug-ins/common/destripe.c:674 plug-ins/common/smooth_palette.c:442
+#: plug-ins/common/destripe.c:674 plug-ins/common/smooth_palette.c:448
 #: plug-ins/common/tile.c:427 plug-ins/imagemap/imap_cmd_guides.c:163
 #: plug-ins/imagemap/imap_rectangle.c:401
 msgid "_Width:"
@@ -6065,21 +6065,21 @@ msgstr "_Blanding"
 msgid "<Image>/Filters/Colors/Smooth Palette..."
 msgstr "<Image>/Filtre/Farver/Jævn palet..."
 
-#: plug-ins/common/smooth_palette.c:178
+#: plug-ins/common/smooth_palette.c:179
 msgid "Deriving smooth palette..."
 msgstr "Afleder jævn palet..."
 
-#: plug-ins/common/smooth_palette.c:409
+#: plug-ins/common/smooth_palette.c:418
 msgid "Smooth Palette"
 msgstr "Jævn palet"
 
-#: plug-ins/common/smooth_palette.c:451 plug-ins/common/tile.c:431
+#: plug-ins/common/smooth_palette.c:453 plug-ins/common/tile.c:431
 #: plug-ins/imagemap/imap_cmd_guides.c:173
 #: plug-ins/imagemap/imap_rectangle.c:408
 msgid "_Height:"
 msgstr "_Højde:"
 
-#: plug-ins/common/smooth_palette.c:460
+#: plug-ins/common/smooth_palette.c:463
 msgid "_Search Depth:"
 msgstr "_Søgedybde:"
 

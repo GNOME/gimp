@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-1.1.21\n"
-"POT-Creation-Date: 2002-11-06 22:59+0100\n"
+"POT-Creation-Date: 2002-12-29 23:00+0100\n"
 "PO-Revision-Date: 2000-04-03 15:38-03:00\n"
 "Last-Translator: Marcia Norie Nakaza <norie@conectiva.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -213,67 +213,71 @@ msgstr ""
 msgid "/White"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:162 libgimpwidgets/gimpcolorselect.c:353
-msgid "_H"
+#: libgimpwidgets/gimpcolorscales.c:141
+msgid "Scales"
 msgstr ""
 
 #: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
-msgid "_S"
+msgid "_H"
 msgstr ""
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
-msgid "_V"
+msgid "_S"
 msgstr ""
 
 #: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
-msgid "_R"
+msgid "_V"
 msgstr ""
 
 #: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
-msgid "_G"
+msgid "_R"
 msgstr ""
 
 #: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
+msgid "_G"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
 msgid "_B"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:168
+#: libgimpwidgets/gimpcolorscales.c:169
 msgid "_A"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:172 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Saturation"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Red"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:252
+#: libgimpwidgets/gimpcolorscales.c:253
 msgid "Hexadecimal color notation as used in HTML"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:266
+#: libgimpwidgets/gimpcolorscales.c:267
 msgid "He_x Triplet:"
 msgstr ""
 
@@ -374,44 +378,67 @@ msgstr "Unidade"
 msgid "Factor"
 msgstr "Fator"
 
-#: libgimpwidgets/gimpwidgets.c:976
+#: libgimpwidgets/gimpwidgets.c:960
+#, fuzzy
 msgid ""
-"If the \"Time\" button is not pressed, use this value for random number "
-"generator seed - this allows you to repeat a given \"random\" operation"
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
 msgstr ""
 "Se o botão \"Tempo\" é pressionado, use este valor para a fonte do gerador "
 "de número\n"
 "aleatório - isso permite a repetição de uma dada operação \"aleatória\""
 
-#: libgimpwidgets/gimpwidgets.c:981
-#, fuzzy
-msgid "_Time"
-msgstr "Tempo"
+#: libgimpwidgets/gimpwidgets.c:964
+msgid "_Randomize"
+msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:990
-msgid ""
-"Seed random number generator from the current time - this guarantees a "
-"reasonable randomization"
+#: libgimpwidgets/gimpwidgets.c:975
+#, fuzzy
+msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Produz gerador de número aleatório do tempo atual - isso garante uma "
 "eventualidade razoável"
 
-#: libgimpwidgets/gimpwidgets.c:1316
+#: libgimpwidgets/gimpwidgets.c:1289
 msgid "Bytes"
 msgstr "Bytes"
 
-#: libgimpwidgets/gimpwidgets.c:1317
+#: libgimpwidgets/gimpwidgets.c:1290
 msgid "KiloBytes"
 msgstr "KiloBytes"
 
-#: libgimpwidgets/gimpwidgets.c:1318
+#: libgimpwidgets/gimpwidgets.c:1291
 msgid "MegaBytes"
 msgstr "MegaBytes"
 
-#: libgimpwidgets/gimpwidgets.c:1319
+#: libgimpwidgets/gimpwidgets.c:1292
 #, fuzzy
 msgid "GigaBytes"
 msgstr "MegaBytes"
+
+#: modules/cdisplay_colorblind.c:100
+msgid "Colorblind display filter"
+msgstr ""
+
+#: modules/cdisplay_colorblind.c:166
+msgid "Color Deficient Vision"
+msgstr ""
+
+#: modules/cdisplay_colorblind.c:326
+msgid "Color Deficiency Type:"
+msgstr ""
+
+#: modules/cdisplay_colorblind.c:336
+msgid "Protonopia (insensitivity to red)"
+msgstr ""
+
+#: modules/cdisplay_colorblind.c:340
+msgid "Deuteranopia (insensitivity to green)"
+msgstr ""
+
+#: modules/cdisplay_colorblind.c:344
+msgid "Tritanopia (insensitivity to blue)"
+msgstr ""
 
 #: modules/cdisplay_gamma.c:89
 msgid "Gamma color display filter"
@@ -456,6 +483,10 @@ msgstr ""
 #: modules/colorsel_water.c:250
 msgid "Pressure"
 msgstr ""
+
+#, fuzzy
+#~ msgid "_Time"
+#~ msgstr "Tempo"
 
 #~ msgid "pixel"
 #~ msgstr "pixel"
