@@ -1,3 +1,21 @@
+2001-05-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c: removed more GUI initialisation code.
+
+	* app/color_transfer.c: removed useless includes.
+
+	* app/gui/brush-editor.[ch]
+	* app/gui/dialogs-constructors.c:
+	s/BrushEditGeneratedWindow/BrushEditor/, s/begw/brush_editor/, made
+	the brush preview of the editor autoresizing.
+
+	* app/gui/dialogs.h: removed "extern" declaration of non-existant
+	variable.
+
+	* app/gui/gui.[ch]
+	* app/gui/tips-dialog.c
+	* app/gui/toolbox.[ch]
+
 2001-04-30  Dave Neary  <dneary@eircom.net>
 
 	* app/tools/tool_options.c: Ensure that option widgets are set to

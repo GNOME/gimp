@@ -31,12 +31,14 @@
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimppreview.h"
 #include "widgets/gtkhwrapbox.h"
 
 #include "color-area.h"
 #include "devices.h"
 #include "dialog_handler.h"
+#include "dialogs.h"
 #include "dialogs-commands.h"
 #include "gdisplay.h"
 #include "gimpdnd.h"
@@ -126,8 +128,8 @@ toolbox_tool_button_press (GtkWidget      *widget,
 {
   if ((event->type == GDK_2BUTTON_PRESS) && (event->button == 1))
     {
-      dialogs_create_toplevel_cmd_callback (NULL, NULL,
-					    GPOINTER_TO_UINT ("gimp:tool-options-dialog"));
+      gimp_dialog_factory_dialog_new (global_dialog_factory,
+				      "gimp:tool-options-dialog");
     }
 
   return FALSE;
@@ -263,27 +265,19 @@ toolbox_tool_changed (GimpContext  *context,
 }
 
 static void
-create_tools (GtkWidget   *parent,
+create_tools (GtkWidget   *wbox,
 	      GimpContext *context)
 {
-  GtkWidget     *wbox;
-  GtkWidget     *button;
-  GtkWidget     *alignment;
-  GList         *list;
-  GSList        *group;
-
-  wbox = parent;
-
-  if (! GTK_WIDGET_REALIZED (gtk_widget_get_toplevel (wbox)))
-    gtk_widget_realize (gtk_widget_get_toplevel (wbox));
-
-  group = NULL;
+  GList  *list;
+  GSList *group = NULL;
 
   for (list = GIMP_LIST (global_tool_info_list)->list;
        list;
        list = g_list_next (list))
     {
       GimpToolInfo *tool_info;
+      GtkWidget    *alignment;
+      GtkWidget    *button;
       GtkWidget    *preview;
 
       tool_info = (GimpToolInfo *) list->data;
@@ -334,11 +328,12 @@ toolbox_create (void)
   GtkWidget      *window;
   GtkWidget      *main_vbox;
   GtkWidget      *wbox;
-  GtkWidget      *menubar;
   GList          *list;
-  GtkAccelGroup  *table;
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
+  gtk_window_set_title (GTK_WINDOW (window), _("The GIMP"));
+  gtk_window_set_policy (GTK_WINDOW (window), TRUE, TRUE, FALSE);
 
   /* Register dialog */
   dialog_register_toolbox (window);
@@ -349,6 +344,10 @@ toolbox_create (void)
 
   gtk_signal_connect (GTK_OBJECT (window), "destroy",
 		      GTK_SIGNAL_FUNC (toolbox_destroy),
+		      NULL);
+
+  gtk_signal_connect (GTK_OBJECT (window), "style_set",
+		      GTK_SIGNAL_FUNC (toolbox_style_set_callback),
 		      NULL);
 
   /* We need to know when the current device changes, so we can update
@@ -373,39 +372,19 @@ toolbox_create (void)
       gtk_widget_set_events (window, GDK_POINTER_MOTION_MASK);
       gtk_widget_set_extension_events (window, GDK_EXTENSION_EVENTS_CURSOR);
     }
-  
-  /* set up the window geometry after the events have been set, 
-     since we need to realize the widget */
-  gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (window), _("The GIMP"));
-  gtk_window_set_policy (GTK_WINDOW (window), TRUE, TRUE, FALSE);
 
-  gtk_signal_connect (GTK_OBJECT (window), "style_set",
-		      GTK_SIGNAL_FUNC (toolbox_style_set_callback),
-		      NULL);
+  toolbox_factory = menus_get_toolbox_factory ();
 
   main_vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 1);
   gtk_container_add (GTK_CONTAINER (window), main_vbox);
   gtk_widget_show (main_vbox);
 
-  /*  tooltips  */
-  gimp_help_init ();
+  gtk_box_pack_start (GTK_BOX (main_vbox), toolbox_factory->widget,
+		      FALSE, TRUE, 0);
+  gtk_widget_show (toolbox_factory->widget);
 
-  if (!show_tool_tips)
-    gimp_help_disable_tooltips ();
-
-  /*  Build the menu bar with menus  */
-  toolbox_factory = menus_get_toolbox_factory ();
-
-  menubar = toolbox_factory->widget;
-  table   = toolbox_factory->accel_group;
-
-  gtk_box_pack_start (GTK_BOX (main_vbox), menubar, FALSE, TRUE, 0);
-  gtk_widget_show (menubar);
-
-  /*  Install the accelerator table in the main window  */
-  gtk_window_add_accel_group (GTK_WINDOW (window), table);
+  gtk_window_add_accel_group (GTK_WINDOW (window), toolbox_factory->accel_group);
 
   /*  Connect the "F1" help key  */
   gimp_help_connect_help_accel (window,
@@ -459,14 +438,6 @@ void
 toolbox_free (void)
 {
   gtk_widget_destroy (toolbox_shell);
-
-  gimp_help_free ();
-}
-
-void
-toolbox_raise (void)
-{
-  gdk_window_raise (toolbox_shell->window);
 }
 
 static void

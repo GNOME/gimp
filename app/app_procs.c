@@ -59,7 +59,6 @@
 #include "gui/file-open-dialog.h"
 #include "gui/gui.h"
 #include "gui/splash.h"
-#include "gui/tips-dialog.h"
 
 #include "appenv.h"
 #include "app_procs.h"
@@ -121,9 +120,10 @@ gimp_init (gint    gimp_argc,
 
   batch_init ();
 
-  /* Handle showing dialogs with gdk_quit_adds here  */
-  if (!no_interface && show_tips)
-    tips_dialog_create ();
+  if (! no_interface)
+    {
+      gui_post_init ();
+    }
 }
 
 void
@@ -265,9 +265,6 @@ app_init (void)
 
   color_transfer_init ();
   paint_funcs_setup ();
-
-  /* register internal color selectors */
-  color_select_init ();
 
   if (! no_interface)
     {

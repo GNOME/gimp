@@ -31,6 +31,7 @@
 #include "widgets/gimpdialogfactory.h"
 
 #include "brush-select.h"
+#include "color-select.h"
 #include "devices.h"
 #include "dialogs.h"
 #include "docindex.h"
@@ -77,6 +78,12 @@ gui_init (void)
   devices_init ();
   session_init ();
 
+  /*  tooltips  */
+  gimp_help_init ();
+
+  if (! show_tool_tips)
+    gimp_help_disable_tooltips ();
+
   gimp_dialog_factory_dialog_new (global_dialog_factory, "gimp:toolbox");
 
   /*  Fill the "last opened" menu items with the first last_opened_size
@@ -111,8 +118,19 @@ gui_init (void)
 void
 gui_restore (void)
 {
+  color_select_init ();
+
   devices_restore ();
   session_restore ();
+}
+
+void
+gui_post_init (void)
+{
+  if (show_tips)
+    {
+      gimp_dialog_factory_dialog_new (global_dialog_factory, "gimp:tips-dialog");
+    }
 }
 
 void
@@ -142,6 +160,8 @@ gui_exit (void)
   error_console_free ();
   tool_options_dialog_free ();
   toolbox_free ();
+
+  gimp_help_free ();
 }
 
 void

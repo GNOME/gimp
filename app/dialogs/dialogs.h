@@ -22,7 +22,6 @@
 
 extern GimpDialogFactory *global_dialog_factory;
 extern GimpDialogFactory *global_dock_factory;
-extern GimpDialogFactory *global_image_dock_factory;
 
 
 void   dialogs_init (void);

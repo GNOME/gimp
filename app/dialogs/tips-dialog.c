@@ -96,11 +96,12 @@ tips_dialog_create (void)
   gtk_window_set_policy (GTK_WINDOW (tips_dialog), FALSE, TRUE, FALSE);
 
   gtk_signal_connect (GTK_OBJECT (tips_dialog), "delete_event",
+		      GTK_SIGNAL_FUNC (gtk_widget_destroy),
+		      NULL);
+
+  gtk_signal_connect (GTK_OBJECT (tips_dialog), "destroy",
 		      GTK_SIGNAL_FUNC (tips_dialog_destroy),
 		      NULL);
-  gtk_signal_connect (GTK_OBJECT (tips_dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-		      &tips_dialog);
 
   /* destroy the tips window if the mainlevel gtk_main() function is left */
   gtk_quit_add_destroy (1, GTK_OBJECT (tips_dialog));
@@ -155,9 +156,9 @@ tips_dialog_create (void)
   button = gtk_button_new_with_label (_("Close"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_window_set_default (GTK_WINDOW (tips_dialog), button);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (tips_dialog_destroy),
-		      NULL);
+  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
+			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
+			     GTK_OBJECT (tips_dialog));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
@@ -198,7 +199,7 @@ tips_dialog_destroy (GtkWidget *widget,
   GList *update = NULL; /* options that should be updated in .gimprc */
   GList *remove = NULL; /* options that should be commented out */
 
-  gtk_widget_destroy (tips_dialog);
+  tips_dialog = NULL;
 
   /* the last-shown-tip is now saved in sessionrc */
 

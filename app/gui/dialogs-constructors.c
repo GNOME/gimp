@@ -598,7 +598,7 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
 void
 dialogs_edit_brush_func (GimpData *data)
 {
-  static BrushEditGeneratedWindow *brush_editor_dialog = NULL;
+  static BrushEditor *brush_editor_dialog = NULL;
 
   GimpBrush *brush;
 
@@ -608,10 +608,10 @@ dialogs_edit_brush_func (GimpData *data)
     {
       if (! brush_editor_dialog)
 	{
-	  brush_editor_dialog = brush_edit_generated_new ();
+	  brush_editor_dialog = brush_editor_new ();
 	}
 
-      brush_edit_generated_set_brush (brush_editor_dialog, brush);
+      brush_editor_set_brush (brush_editor_dialog, brush);
     }
   else
     {

@@ -1,7 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * brush_edit module Copyright 1998 Jay Cox <jaycox@earthlink.net>
+ * brush-editor.h
+ * Copyright 1998 Jay Cox <jaycox@earthlink.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,18 +19,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef  __BRUSH_EDIT_H__
-#define  __BRUSH_EDIT_H__
+#ifndef  __BRUSH_EDITOR_H__
+#define  __BRUSH_EDITOR_H__
 
 
-typedef struct _BrushEditGeneratedWindow BrushEditGeneratedWindow;
+typedef struct _BrushEditor BrushEditor;
 
 
-BrushEditGeneratedWindow * brush_edit_generated_new (void);
+BrushEditor * brush_editor_new       (void);
 
-void   brush_edit_generated_set_brush (BrushEditGeneratedWindow *begw,
-				       GimpBrush                *brush);
-void   brush_edit_generated_free      (BrushEditGeneratedWindow *begw);
+void          brush_editor_set_brush (BrushEditor *brush_editor,
+				      GimpBrush   *brush);
+void          brush_editor_free      (BrushEditor *brush_editor);
 
 
-#endif  /*  __BRUSH_EDIT_H__  */
+#endif  /*  __BRUSH_EDITOR_H__  */

@@ -22,6 +22,8 @@
 
 void   gui_init           (void);
 void   gui_restore        (void);
+void   gui_post_init      (void);
+
 void   gui_shutdown       (void);
 void   gui_exit           (void);
 

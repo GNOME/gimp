@@ -23,7 +23,5 @@
 GtkWidget * toolbox_create  (void);
 void        toolbox_free    (void);
 
-void        toolbox_raise   (void);
-
 
 #endif /* __TOOLBOX_H__ */
