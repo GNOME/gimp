@@ -1,3 +1,8 @@
+Thu Nov 11 21:19:39 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/common/gifload.c: Fixed the oldest inherited
+	bug in the long long ancestry of this plugin.  =)
+
 Wed Nov 10 23:03:33 GMT 1999 Andy Thomas <alt@gimp.org>
 
 	* app/nav_window.c 

@@ -7,7 +7,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 1.0.0 - 99/03/20
+ * Version 1.0.1 - 99/11/11
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
@@ -22,6 +22,11 @@
 
 /*
  * REVISION HISTORY
+ *
+ * 99/11/11
+ * 1.00.01 - Fixed an uninitialized variable which has been around
+ *     forever... thanks to jrb@redhat.com for noticing that there
+ *     was a problem somewhere!
  *
  * 99/03/20
  * 1.00.00 - GIF load-only code split from main GIF plugin.
@@ -207,7 +212,7 @@ run (char    *name,
 #define CM_GREEN         1
 #define CM_BLUE          2
 
-#define MAX_LWZ_BITS     12
+#define MAX_LZW_BITS     12
 
 #define INTERLACE          0x40
 #define LOCALCOLORMAP      0x80
@@ -253,7 +258,7 @@ static int ReadColorMap (FILE *, int, CMap, int *);
 static int DoExtension (FILE *, int);
 static int GetDataBlock (FILE *, unsigned char *);
 static int GetCode (FILE *, int, int);
-static int LWZReadByte (FILE *, int, int);
+static int LZWReadByte (FILE *, int, int);
 static gint32 ReadImage (FILE *, char *, int, int, CMap, int, int, int, int,
 			 guint, guint, guint, guint);
 
@@ -595,6 +600,7 @@ GetCode (FILE *fd,
       curbit = 0;
       lastbit = 0;
       done = FALSE;
+      last_byte = 0;
       return 0;
     }
 
@@ -604,11 +610,12 @@ GetCode (FILE *fd,
 	{
 	  if (curbit >= lastbit)
 	    {
-	      g_message (_("GIF: ran off the end of by bits\n"));
+	      g_message (_("GIF: ran off the end of my bits\n"));
 	      gimp_quit ();
 	    }
 	  return -1;
 	}
+
       buf[0] = buf[last_byte - 2];
       buf[1] = buf[last_byte - 1];
 
@@ -630,7 +637,7 @@ GetCode (FILE *fd,
 }
 
 static int
-LWZReadByte (FILE *fd,
+LZWReadByte (FILE *fd,
 	     int   flag,
 	     int   input_code_size)
 {
@@ -640,8 +647,8 @@ LWZReadByte (FILE *fd,
   static int max_code, max_code_size;
   static int firstcode, oldcode;
   static int clear_code, end_code;
-  static int table[2][(1 << MAX_LWZ_BITS)];
-  static int stack[(1 << (MAX_LWZ_BITS)) * 2], *sp;
+  static int table[2][(1 << MAX_LZW_BITS)];
+  static int stack[(1 << (MAX_LZW_BITS)) * 2], *sp;
   register int i;
 
   if (flag)
@@ -662,7 +669,7 @@ LWZReadByte (FILE *fd,
 	  table[0][i] = 0;
 	  table[1][i] = i;
 	}
-      for (; i < (1 << MAX_LWZ_BITS); ++i)
+      for (; i < (1 << MAX_LZW_BITS); ++i)
 	table[0][i] = table[1][0] = 0;
 
       sp = stack;
@@ -693,7 +700,7 @@ LWZReadByte (FILE *fd,
 	      table[0][i] = 0;
 	      table[1][i] = i;
 	    }
-	  for (; i < (1 << MAX_LWZ_BITS); ++i)
+	  for (; i < (1 << MAX_LZW_BITS); ++i)
 	    table[0][i] = table[1][i] = 0;
 	  code_size = set_code_size + 1;
 	  max_code_size = 2 * clear_code;
@@ -740,13 +747,13 @@ LWZReadByte (FILE *fd,
 
       *sp++ = firstcode = table[1][code];
 
-      if ((code = max_code) < (1 << MAX_LWZ_BITS))
+      if ((code = max_code) < (1 << MAX_LZW_BITS))
 	{
 	  table[0][code] = oldcode;
 	  table[1][code] = firstcode;
 	  ++max_code;
 	  if ((max_code >= max_code_size) &&
-	      (max_code_size < (1 << MAX_LWZ_BITS)))
+	      (max_code_size < (1 << MAX_LZW_BITS)))
 	    {
 	      max_code_size *= 2;
 	      ++code_size;
@@ -804,7 +811,7 @@ ReadImage (FILE *fd,
       return -1;
     }
 
-  if (LWZReadByte (fd, TRUE, c) < 0)
+  if (LZWReadByte (fd, TRUE, c) < 0)
     {
       g_message (_("GIF: error while reading\n"));
       return -1;
@@ -931,7 +938,7 @@ ReadImage (FILE *fd,
       exit(-1);
     }
 
-  while ((v = LWZReadByte (fd, FALSE, c)) >= 0)
+  while ((v = LZWReadByte (fd, FALSE, c)) >= 0)
     {
       if (alpha_frame)
 	{
@@ -1018,7 +1025,7 @@ ReadImage (FILE *fd,
     }
 
 fini:
-  if (LWZReadByte (fd, FALSE, c) >= 0)
+  if (LZWReadByte (fd, FALSE, c) >= 0)
     g_print (_("GIF: too much input data, ignoring extra...\n"));
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, TRUE, FALSE);
