@@ -24,9 +24,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*-----------------------------------------------------------------------------------
+/*----------------------------------------------------------------------------
  * Change log:
- * 
+ *
  * Version 2.0, 04 April 1999.
  *  Nearly complete rewrite, made plug-in stable.
  *  (Works with GIMP 1.1 and GTK+ 1.2)
@@ -34,24 +34,25 @@
  * Version 1.0, 27 March 1997.
  *  Initial (unstable) release by Pavel Grinfeld
  *
- *-----------------------------------------------------------------------------------*/
-
-#include <stdio.h>
-#include <math.h>
+ *----------------------------------------------------------------------------*/
 
 #include "config.h"
+
+#include <stdio.h>
+
 #include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
-#include "libgimp/stdplugins-intl.h"
 
 #include "rcm.h"
 #include "rcm_misc.h"
 #include "rcm_dialog.h"
 #include "rcm_callback.h"
 
-/*-----------------------------------------------------------------------------------*/
+#include "libgimp/stdplugins-intl.h"
+
+
 /* Forward declarations */
-/*-----------------------------------------------------------------------------------*/
 
 static void  query (void);
 static void  run   (const gchar      *name,
@@ -60,9 +61,8 @@ static void  run   (const gchar      *name,
 		    gint             *nreturn_vals,
 		    GimpParam       **return_vals);
 
-/*-----------------------------------------------------------------------------------*/
+
 /* Global variables */
-/*-----------------------------------------------------------------------------------*/
 
 RcmParams Current =
 {
@@ -72,10 +72,6 @@ RcmParams Current =
   GRAY_TO
 };
 
-/*-----------------------------------------------------------------------------------*/
-/* Local variables */
-/*-----------------------------------------------------------------------------------*/
-
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
@@ -84,17 +80,12 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-/*-----------------------------------------------------------------------------------*/
-/* Dummy function */
-/*-----------------------------------------------------------------------------------*/
-
 MAIN()
 
-/*-----------------------------------------------------------------------------------*/
-/* Query plug-in */
-/*-----------------------------------------------------------------------------------*/
 
-static void 
+/* Query plug-in */
+
+static void
 query (void)
 {
   GimpParamDef args[] =
@@ -119,95 +110,95 @@ query (void)
 			  args, NULL);
 }
 
-/*-----------------------------------------------------------------------------------*/
-/* Rotate colormap of a single row */
-/*-----------------------------------------------------------------------------------*/
 
-void 
-rcm_row (const guchar *src_row, 
+/* Rotate colormap of a single row */
+
+void
+rcm_row (const guchar *src_row,
 	 guchar       *dest_row,
-	 gint          row, 
-	 gint          row_width, 
+	 gint          row,
+	 gint          row_width,
 	 gint          bytes)
 {
-  gint col, bytenum, skip;
-  gdouble H,S,V;
-  guchar rgb[3];
-  
-  for (col=0; col < row_width; col++)
-  {
-    skip = 0;
-      
-    rgb[0] = src_row[col*bytes + 0];
-    rgb[1] = src_row[col*bytes + 1];
-    rgb[2] = src_row[col*bytes + 2];
-      
-    gimp_rgb_to_hsv4 (rgb, &H, &S, &V);
-      
-    if (rcm_is_gray(S))
-    {
-      if (Current.Gray_to_from == GRAY_FROM)
-      {
-	if (rcm_angle_inside_slice(Current.Gray->hue,Current.From->angle) <= 1)
-	{
-	  H = Current.Gray->hue / TP;
-	  S = Current.Gray->satur;
-	}
-	else 
-	{
-	  skip = 1;
-	}
-      }
-      else
-      {
-	skip = 1;
-	gimp_hsv_to_rgb4 (rgb, Current.Gray->hue/TP, Current.Gray->satur, V);
-      }
-    }
-      
-    if (!skip)
-    {
-      H = rcm_linear(rcm_left_end(Current.From->angle),
-		     rcm_right_end(Current.From->angle),
-		     rcm_left_end(Current.To->angle),
-		     rcm_right_end(Current.To->angle),
-		     H*TP);    
+  gint    col, bytenum, skip;
+  gdouble H, S, V;
+  guchar  rgb[3];
 
-      H = angle_mod_2PI(H) / TP;
-      gimp_hsv_to_rgb4 (rgb, H, S, V);
-    }
-      
-    dest_row[col * bytes + 0] = rgb[0];
-    dest_row[col * bytes + 1] = rgb[1];
-    dest_row[col * bytes + 2] = rgb[2];
-      
-    if (bytes > 3)
+  for (col = 0; col < row_width; col++)
     {
-      for (bytenum=3; bytenum<bytes; bytenum++)
-	dest_row[col*bytes+bytenum] = src_row[col*bytes+bytenum];
+      skip = 0;
+
+      rgb[0] = src_row[col * bytes + 0];
+      rgb[1] = src_row[col * bytes + 1];
+      rgb[2] = src_row[col * bytes + 2];
+
+      gimp_rgb_to_hsv4 (rgb, &H, &S, &V);
+
+      if (rcm_is_gray (S))
+        {
+          if (Current.Gray_to_from == GRAY_FROM)
+            {
+              if (rcm_angle_inside_slice (Current.Gray->hue,
+                                          Current.From->angle) <= 1)
+                {
+                  H = Current.Gray->hue / TP;
+                  S = Current.Gray->satur;
+                }
+              else
+                {
+                  skip = 1;
+                }
+            }
+          else
+            {
+              skip = 1;
+              gimp_hsv_to_rgb4 (rgb, Current.Gray->hue / TP,
+                                Current.Gray->satur, V);
+            }
+        }
+
+      if (! skip)
+        {
+          H = rcm_linear( rcm_left_end (Current.From->angle),
+                          rcm_right_end (Current.From->angle),
+                          rcm_left_end (Current.To->angle),
+                          rcm_right_end (Current.To->angle),
+                          H * TP);
+
+          H = angle_mod_2PI (H) / TP;
+          gimp_hsv_to_rgb4 (rgb, H, S, V);
+        }
+
+      dest_row[col * bytes + 0] = rgb[0];
+      dest_row[col * bytes + 1] = rgb[1];
+      dest_row[col * bytes + 2] = rgb[2];
+
+      if (bytes > 3)
+        {
+          for (bytenum = 3; bytenum < bytes; bytenum++)
+            dest_row[col * bytes + bytenum] = src_row[col * bytes + bytenum];
+        }
     }
-  }
 }
 
-/*-----------------------------------------------------------------------------------*/
-/* Rotate colormap row by row ... */
-/*-----------------------------------------------------------------------------------*/
 
-void 
+/* Rotate colormap row by row ... */
+
+void
 rcm (GimpDrawable *drawable)
 {
   GimpPixelRgn srcPR, destPR;
-  gint width, height;
-  gint bytes;
-  guchar *src_row, *dest_row;
-  gint row;
-  gint x1, y1, x2, y2;
-  
+  gint         width, height;
+  gint         bytes;
+  guchar      *src_row, *dest_row;
+  gint         row;
+  gint         x1, y1, x2, y2;
+
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  width = drawable->width;
+  width  = drawable->width;
   height = drawable->height;
-  bytes = drawable->bpp;
+  bytes  = drawable->bpp;
 
   src_row  = g_new (guchar, (x2 - x1) * bytes);
   dest_row = g_new (guchar, (x2 - x1) * bytes);
@@ -215,31 +206,30 @@ rcm (GimpDrawable *drawable)
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
-  for (row=y1; row < y2; row++)
-  {
-    gimp_pixel_rgn_get_row(&srcPR, src_row, x1, row, (x2 - x1));
+  for (row = y1; row < y2; row++)
+    {
+      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, (x2 - x1));
 
-    rcm_row(src_row, dest_row, row, (x2 - x1), bytes);
-      
-    gimp_pixel_rgn_set_row(&destPR, dest_row, x1, row, (x2 - x1));
-      
-    if ((row % 10) == 0)
-      gimp_progress_update((double) row / (double) (y2 - y1));
-  }
+      rcm_row (src_row, dest_row, row, (x2 - x1), bytes);
+
+      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, (x2 - x1));
+
+      if ((row % 10) == 0)
+        gimp_progress_update ((double) row / (double) (y2 - y1));
+    }
 
   /*  update the processed region  */
 
-  gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
-  gimp_drawable_update(drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
-  
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+
   g_free (src_row);
   g_free (dest_row);
 }
 
-/*-----------------------------------------------------------------------------------*/
+
 /* STANDARD RUN */
-/*-----------------------------------------------------------------------------------*/
 
 static void
 run (const gchar      *name,
@@ -248,43 +238,45 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  GimpParam values[1];
+  GimpParam         values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  
+
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
   INIT_I18N ();
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   Current.drawable = gimp_drawable_get (param[2].data.d_drawable);
   Current.mask = gimp_drawable_get (gimp_image_get_selection (param[1].data.d_image));
 
-  /* works not on INDEXED images */     
+  /* works not on INDEXED images */
 
   if (gimp_drawable_is_indexed (Current.drawable->drawable_id) ||
       gimp_drawable_is_gray (Current.drawable->drawable_id) )
-  {
-    status = GIMP_PDB_EXECUTION_ERROR;
-  }
-  else
-  {
-    /* call dialog and rotate the colormap */
-    if (gimp_drawable_is_rgb(Current.drawable->drawable_id) && rcm_dialog())
     {
-      gimp_progress_init(_("Rotating the colormap..."));
-
-      gimp_tile_cache_ntiles(2 * (Current.drawable->width / gimp_tile_width() + 1));
-      rcm(Current.drawable);
-      gimp_displays_flush();
-    }
-    else
       status = GIMP_PDB_EXECUTION_ERROR;
-  }
-  
+    }
+  else
+    {
+      /* call dialog and rotate the colormap */
+      if (gimp_drawable_is_rgb (Current.drawable->drawable_id) && rcm_dialog ())
+        {
+          gimp_progress_init (_("Rotating the colormap..."));
+
+          gimp_tile_cache_ntiles (2 * (Current.drawable->width /
+                                       gimp_tile_width () + 1));
+          rcm (Current.drawable);
+          gimp_displays_flush ();
+        }
+      else
+        status = GIMP_PDB_EXECUTION_ERROR;
+    }
+
   values[0].data.d_status = status;
+
   if (status == GIMP_PDB_SUCCESS)
-    gimp_drawable_detach(Current.drawable);
+    gimp_drawable_detach (Current.drawable);
 }

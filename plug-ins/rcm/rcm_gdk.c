@@ -24,9 +24,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*-----------------------------------------------------------------------------------
+/*----------------------------------------------------------------------------
  * Change log:
- * 
+ *
  * Version 2.0, 04 April 1999.
  *  Nearly complete rewrite, made plug-in stable.
  *  (Works with GIMP 1.1 and GTK+ 1.2)
@@ -34,135 +34,130 @@
  * Version 1.0, 27 March 1997.
  *  Initial (unstable) release by Pavel Grinfeld
  *
- *-----------------------------------------------------------------------------------*/
+ *----------------------------------------------------------------------------*/
 
 #include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
-#include <gtk/gtk.h>
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "rcm.h"
 #include "rcm_misc.h"
 #include "rcm_dialog.h"
 #include "rcm_gdk.h"
 
-/*-----------------------------------------------------------------------------------*/
+
 /* Global variables */
-/*-----------------------------------------------------------------------------------*/
 
 GdkGC *xor_gc;
 
 
-/*-----------------------------------------------------------------------------------*/
 /* Drawing routines */
-/*-----------------------------------------------------------------------------------*/
 
-void 
-rcm_draw_little_circle (GdkWindow *window, 
-			GdkGC     *color, 
-			float      hue, 
-			float      satur)
+void
+rcm_draw_little_circle (GdkWindow *window,
+			GdkGC     *color,
+			gfloat     hue,
+			gfloat     satur)
 {
-  int x,y;
+  gint x,y;
 
   x = GRAY_CENTER + GRAY_RADIUS * satur * cos(hue);
   y = GRAY_CENTER - GRAY_RADIUS * satur * sin(hue);
 
-  gdk_draw_arc(window, color, 0, x-LITTLE_RADIUS, y-LITTLE_RADIUS,
-	       2*LITTLE_RADIUS, 2*LITTLE_RADIUS, 0, 360*64);
+  gdk_draw_arc (window, color, 0, x-LITTLE_RADIUS, y-LITTLE_RADIUS,
+                2*LITTLE_RADIUS, 2*LITTLE_RADIUS, 0, 360*64);
 }
 
-/*-----------------------------------------------------------------------------------*/
-
-void 
-rcm_draw_large_circle (GdkWindow *window, 
-		       GdkGC     *color, 
-		       float      gray_sat)
+void
+rcm_draw_large_circle (GdkWindow *window,
+		       GdkGC     *color,
+		       gfloat     gray_sat)
 {
-  int x, y;
+  gint x, y;
 
   x = GRAY_CENTER;
   y = GRAY_CENTER;
 
-  gdk_draw_arc(window, color, 0,
-	       ROUND (x - GRAY_RADIUS * gray_sat),
-	       ROUND (y - GRAY_RADIUS * gray_sat),
-	       ROUND (2 * GRAY_RADIUS * gray_sat),
-	       ROUND (2 * GRAY_RADIUS * gray_sat),
-	       0, 360 * 64);
+  gdk_draw_arc (window, color, 0,
+                ROUND (x - GRAY_RADIUS * gray_sat),
+                ROUND (y - GRAY_RADIUS * gray_sat),
+                ROUND (2 * GRAY_RADIUS * gray_sat),
+                ROUND (2 * GRAY_RADIUS * gray_sat),
+                0, 360 * 64);
 }
 
-/*-----------------------------------------------------------------------------------*/
 
 #define REL .8
 #define DEL .1
 #define TICK 10
 
-void 
-rcm_draw_arrows (GdkWindow *window, 
-		 GdkGC     *color, 
+void
+rcm_draw_arrows (GdkWindow *window,
+		 GdkGC     *color,
 		 RcmAngle  *angle)
 {
-  int dist;
-  float alpha, beta, cw_ccw, delta;
-   
-  alpha = angle->alpha;
-  beta = angle->beta;
+  gint   dist;
+  gfloat alpha, beta, cw_ccw, delta;
+
+  alpha  = angle->alpha;
+  beta   = angle->beta;
   cw_ccw = angle->cw_ccw;
-  delta = angle_mod_2PI(beta - alpha);
-  if (cw_ccw == -1) delta = delta - TP;
+  delta  = angle_mod_2PI(beta - alpha);
 
-  gdk_draw_line(window,color,
-		CENTER,
-		CENTER,
-		ROUND (CENTER + RADIUS * cos(alpha)),
-		ROUND (CENTER - RADIUS * sin(alpha)));
+  if (cw_ccw == -1)
+    delta = delta - TP;
 
-  gdk_draw_line(window,color,
-		CENTER + RADIUS * cos(alpha),
-		CENTER - RADIUS * sin(alpha),
-		ROUND (CENTER + RADIUS * REL * cos(alpha - DEL)),
-		ROUND (CENTER - RADIUS * REL * sin(alpha - DEL)));
+  gdk_draw_line (window,color,
+                 CENTER,
+                 CENTER,
+                 ROUND (CENTER + RADIUS * cos(alpha)),
+                 ROUND (CENTER - RADIUS * sin(alpha)));
 
-  gdk_draw_line(window,color,
-		CENTER + RADIUS * cos(alpha),
-		CENTER - RADIUS * sin(alpha),
-		ROUND (CENTER + RADIUS * REL * cos(alpha + DEL)),
-		ROUND (CENTER - RADIUS * REL * sin(alpha + DEL)));
+  gdk_draw_line( window,color,
+                 CENTER + RADIUS * cos(alpha),
+                 CENTER - RADIUS * sin(alpha),
+                 ROUND (CENTER + RADIUS * REL * cos(alpha - DEL)),
+                 ROUND (CENTER - RADIUS * REL * sin(alpha - DEL)));
 
-  gdk_draw_line(window,color,
-		CENTER,
-		CENTER,
-		ROUND (CENTER + RADIUS * cos(beta)),
-		ROUND (CENTER - RADIUS * sin(beta)));
+  gdk_draw_line (window,color,
+                 CENTER + RADIUS * cos(alpha),
+                 CENTER - RADIUS * sin(alpha),
+                 ROUND (CENTER + RADIUS * REL * cos(alpha + DEL)),
+                 ROUND (CENTER - RADIUS * REL * sin(alpha + DEL)));
 
-  gdk_draw_line(window,color,
-		CENTER + RADIUS * cos(beta),
-		CENTER - RADIUS * sin(beta),
-		ROUND (CENTER + RADIUS * REL * cos(beta - DEL)),
-		ROUND (CENTER - RADIUS * REL * sin(beta - DEL)));
+  gdk_draw_line (window,color,
+                 CENTER,
+                 CENTER,
+                 ROUND (CENTER + RADIUS * cos(beta)),
+                 ROUND (CENTER - RADIUS * sin(beta)));
 
-  gdk_draw_line(window,color,
-		CENTER + RADIUS * cos(beta),
-		CENTER - RADIUS * sin(beta),
-		ROUND (CENTER + RADIUS * REL * cos(beta + DEL)),
-		ROUND (CENTER - RADIUS * REL * sin(beta + DEL)));
+  gdk_draw_line (window,color,
+                 CENTER + RADIUS * cos(beta),
+                 CENTER - RADIUS * sin(beta),
+                 ROUND (CENTER + RADIUS * REL * cos(beta - DEL)),
+                 ROUND (CENTER - RADIUS * REL * sin(beta - DEL)));
+
+  gdk_draw_line (window,color,
+                 CENTER + RADIUS * cos(beta),
+                 CENTER - RADIUS * sin(beta),
+                 ROUND (CENTER + RADIUS * REL * cos(beta + DEL)),
+                 ROUND (CENTER - RADIUS * REL * sin(beta + DEL)));
 
   dist   = RADIUS * EACH_OR_BOTH;
 
-  gdk_draw_line(window,color,
-		CENTER + dist * cos(beta),
-		CENTER - dist * sin(beta),
-		ROUND (CENTER + dist * cos(beta) + cw_ccw * TICK * sin(beta)),
-		ROUND (CENTER - dist * sin(beta) + cw_ccw * TICK * cos(beta)));
+  gdk_draw_line (window,color,
+                 CENTER + dist * cos(beta),
+                 CENTER - dist * sin(beta),
+                 ROUND (CENTER + dist * cos(beta) + cw_ccw * TICK * sin(beta)),
+                 ROUND (CENTER - dist * sin(beta) + cw_ccw * TICK * cos(beta)));
 
   alpha *= 180 * 64 / G_PI;
   delta *= 180 * 64 / G_PI;
 
-  gdk_draw_arc(window, color, 0, CENTER - dist, CENTER - dist,
+  gdk_draw_arc (window, color, 0, CENTER - dist, CENTER - dist,
 		2*dist, 2*dist,	alpha, delta);
 }

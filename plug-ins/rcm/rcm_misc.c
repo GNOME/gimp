@@ -24,7 +24,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*-----------------------------------------------------------------------------------
+/*----------------------------------------------------------------------------
  * Change log:
  *
  * Version 2.0, 04 April 1999.
@@ -34,13 +34,12 @@
  * Version 1.0, 27 March 1997.
  *  Initial (unstable) release by Pavel Grinfeld
  *
- *-----------------------------------------------------------------------------------*/
+ *----------------------------------------------------------------------------*/
 
 #include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -68,10 +67,10 @@ min_prox (float alpha,
 	  float beta,
 	  float angle)
 {
-  gfloat temp1 = MIN(angle_mod_2PI(alpha - angle),
-		   TP-angle_mod_2PI(alpha - angle));
-  gfloat temp2 = MIN(angle_mod_2PI(beta - angle),
-		   TP-angle_mod_2PI(beta - angle));
+  gfloat temp1 = MIN (angle_mod_2PI (alpha - angle),
+                      TP - angle_mod_2PI (alpha - angle));
+  gfloat temp2 = MIN (angle_mod_2PI (beta - angle),
+                      TP - angle_mod_2PI (beta - angle));
 
   return MIN(temp1, temp2);
 }
@@ -81,13 +80,13 @@ closest (float *alpha,
 	 float *beta,
 	 float  angle)
 {
-  float temp_alpha = MIN(angle_mod_2PI(*alpha-angle),
-			 TP-angle_mod_2PI(*alpha-angle));
+  gfloat temp_alpha = MIN (angle_mod_2PI (*alpha-angle),
+                           TP - angle_mod_2PI (*alpha-angle));
 
-  float temp_beta  = MIN(angle_mod_2PI(*beta -angle),
-			 TP-angle_mod_2PI(*beta -angle));
+  gfloat temp_beta  = MIN (angle_mod_2PI (*beta -angle),
+                           TP - angle_mod_2PI (*beta -angle));
 
-  if (temp_alpha-temp_beta<0)
+  if (temp_alpha-temp_beta < 0)
     return alpha;
   else
     return beta;
@@ -104,9 +103,8 @@ angle_mod_2PI (float angle)
     return angle;
 }
 
-/*-----------------------------------------------------------------------------------*/
+
 /* supporting routines  */
-/*-----------------------------------------------------------------------------------*/
 
 float
 rcm_linear (float A,
@@ -116,19 +114,23 @@ rcm_linear (float A,
 	    float x)
 {
   if (B > A)
-    if (A<=x && x<=B)
-      return C+(D-C)/(B-A)*(x-A);
-    else if (A<=x+TP && x+TP<=B)
-      return C+(D-C)/(B-A)*(x+TP-A);
-    else
-      return x;
+    {
+      if (A<=x && x<=B)
+        return C+(D-C)/(B-A)*(x-A);
+      else if (A<=x+TP && x+TP<=B)
+        return C+(D-C)/(B-A)*(x+TP-A);
+      else
+        return x;
+    }
   else
-    if (B<=x && x<=A)
-      return C+(D-C)/(B-A)*(x-A);
-    else if (B<=x+TP && x+TP<=A)
-      return C+(D-C)/(B-A)*(x+TP-A);
-    else
-      return x;
+    {
+      if (B<=x && x<=A)
+        return C+(D-C)/(B-A)*(x-A);
+      else if (B<=x+TP && x+TP<=A)
+        return C+(D-C)/(B-A)*(x+TP-A);
+      else
+        return x;
+    }
 }
 
 float
@@ -139,10 +141,13 @@ rcm_left_end (RcmAngle *angle)
   gint   cw_ccw = angle->cw_ccw;
 
   switch (cw_ccw)
-  {
-    case (-1): if (alpha < beta) return alpha + TP;
-    default: return alpha; /* 1 */
-  }
+    {
+    case (-1):
+      if (alpha < beta) return alpha + TP;
+
+    default:
+      return alpha; /* 1 */
+    }
 }
 
 float
@@ -153,18 +158,21 @@ rcm_right_end (RcmAngle *angle)
   gint   cw_ccw = angle->cw_ccw;
 
   switch (cw_ccw)
-  {
-    case 1: if (beta < alpha) return beta + TP;
-    default: return beta; /* -1 */
-  }
+    {
+    case 1:
+      if (beta < alpha) return beta + TP;
+
+    default:
+      return beta; /* -1 */
+    }
 }
 
 float
 rcm_angle_inside_slice (float     angle,
 			RcmAngle *slice)
 {
-  return angle_mod_2PI(slice->cw_ccw * (slice->beta-angle)) /
-         angle_mod_2PI(slice->cw_ccw * (slice->beta-slice->alpha));
+  return angle_mod_2PI (slice->cw_ccw * (slice->beta-angle)) /
+         angle_mod_2PI (slice->cw_ccw * (slice->beta-slice->alpha));
 }
 
 gboolean
@@ -173,9 +181,8 @@ rcm_is_gray (float s)
   return (s <= Current.Gray->gray_sat);
 }
 
-/*-----------------------------------------------------------------------------------*/
+
 /* reduce image/selection for preview */
-/*-----------------------------------------------------------------------------------*/
 
 ReducedImage*
 rcm_reduce_image (GimpDrawable *drawable,
@@ -183,22 +190,22 @@ rcm_reduce_image (GimpDrawable *drawable,
 		  gint          LongerSize,
 		  gint          Slctn)
 {
-  guint32 gimage;
-  GimpPixelRgn srcPR, srcMask;
+  guint32       gimage;
+  GimpPixelRgn  srcPR, srcMask;
   ReducedImage *temp;
-  guchar *tempRGB, *src_row, *tempmask, *src_mask_row;
-  gint i, j, whichcol, whichrow, x1, x2, y1, y2;
-  gint RH, RW, width, height, bytes;
-  gint NoSelectionMade;
-  gint offx, offy;
-  gdouble *tempHSV, H, S, V;
+  guchar       *tempRGB, *src_row, *tempmask, *src_mask_row;
+  gint          i, j, whichcol, whichrow, x1, x2, y1, y2;
+  gint          RH, RW, width, height, bytes;
+  gint          NoSelectionMade;
+  gint          offx, offy;
+  gdouble      *tempHSV, H, S, V;
 
   bytes = drawable->bpp;
   temp = g_new0 (ReducedImage, 1);
 
   /* get bounds of image or selection */
 
-  gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   if (((x2-x1) != drawable->width) || ((y2-y1) != drawable->height))
     NoSelectionMade = FALSE;
@@ -206,7 +213,7 @@ rcm_reduce_image (GimpDrawable *drawable,
     NoSelectionMade = TRUE;
 
   switch (Slctn)
-  {
+    {
     case ENTIRE_IMAGE:
       x1 = 0;
       x2 = drawable->width;
@@ -223,7 +230,7 @@ rcm_reduce_image (GimpDrawable *drawable,
 
     default:
       break; /* take selection dimensions */
-  }
+    }
 
   /* clamp to image size since this is the size of the mask */
 
@@ -244,15 +251,15 @@ rcm_reduce_image (GimpDrawable *drawable,
     return temp;
 
   if (width > height)
-  {
-    RW = LongerSize;
-    RH = (float) height * (float) LongerSize / (float) width;
-  }
+    {
+      RW = LongerSize;
+      RH = (float) height * (float) LongerSize / (float) width;
+    }
   else
-  {
-    RH = LongerSize;
-    RW = (float)width * (float) LongerSize / (float) height;
-  }
+    {
+      RH = LongerSize;
+      RW = (float)width * (float) LongerSize / (float) height;
+    }
 
   /* allocate memory */
 
@@ -269,52 +276,50 @@ rcm_reduce_image (GimpDrawable *drawable,
 
   /* reduce image */
 
-  for (i=0; i<RH; i++)
-  {
-    whichrow = (float)i * (float)height / (float)RH;
-    gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y1 + whichrow, width);
-    gimp_pixel_rgn_get_row (&srcMask, src_mask_row,
-                            x1 + offx, y1 + offy + whichrow, width);
-
-    for (j=0; j<RW; j++)
+  for (i = 0; i < RH; i++)
     {
-      whichcol = (float)j * (float)width / (float)RW;
+      whichrow = (float)i * (float)height / (float)RH;
+      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y1 + whichrow, width);
+      gimp_pixel_rgn_get_row (&srcMask, src_mask_row,
+                              x1 + offx, y1 + offy + whichrow, width);
 
-      if (NoSelectionMade)
-	tempmask[i*RW+j] = 255;
-      else
-	tempmask[i*RW+j] = src_mask_row[whichcol];
+      for (j = 0; j < RW; j++)
+        {
+          whichcol = (float)j * (float)width / (float)RW;
 
-      gimp_rgb_to_hsv4 (&src_row[whichcol*bytes], &H, &S, &V);
+          if (NoSelectionMade)
+            tempmask[i*RW+j] = 255;
+          else
+            tempmask[i*RW+j] = src_mask_row[whichcol];
 
-      tempRGB[i*RW*bytes+j*bytes+0] = src_row[whichcol*bytes+0];
-      tempRGB[i*RW*bytes+j*bytes+1] = src_row[whichcol*bytes+1];
-      tempRGB[i*RW*bytes+j*bytes+2] = src_row[whichcol*bytes+2];
+          gimp_rgb_to_hsv4 (&src_row[whichcol*bytes], &H, &S, &V);
 
-      tempHSV[i*RW*bytes+j*bytes+0] = H;
-      tempHSV[i*RW*bytes+j*bytes+1] = S;
-      tempHSV[i*RW*bytes+j*bytes+2] = V;
+          tempRGB[i*RW*bytes+j*bytes+0] = src_row[whichcol*bytes+0];
+          tempRGB[i*RW*bytes+j*bytes+1] = src_row[whichcol*bytes+1];
+          tempRGB[i*RW*bytes+j*bytes+2] = src_row[whichcol*bytes+2];
 
-      if (bytes == 4)
-	tempRGB[i*RW*bytes+j*bytes+3] = src_row[whichcol*bytes+3];
+          tempHSV[i*RW*bytes+j*bytes+0] = H;
+          tempHSV[i*RW*bytes+j*bytes+1] = S;
+          tempHSV[i*RW*bytes+j*bytes+2] = V;
 
-    } /* for j */
-  } /* for i */
+          if (bytes == 4)
+            tempRGB[i*RW*bytes+j*bytes+3] = src_row[whichcol*bytes+3];
+        }
+    }
 
   /* return values */
 
-  temp->width = RW;
+  temp->width  = RW;
   temp->height = RH;
-  temp->rgb = tempRGB;
-  temp->hsv = tempHSV;
-  temp->mask = tempmask;
+  temp->rgb    = tempRGB;
+  temp->hsv    = tempHSV;
+  temp->mask   = tempmask;
 
   return temp;
 }
 
-/*-----------------------------------------------------------------------------------*/
+
 /* render before/after preview */
-/*-----------------------------------------------------------------------------------*/
 
 static gint
 rcm_fake_transparency (gint i,
@@ -331,12 +336,12 @@ rcm_render_preview (GtkWidget *preview,
 		    gint       version)
 {
   ReducedImage *reduced;
-  gint RW, RH, bytes, i, j, k, unchanged, skip;
-  guchar *rgb_array, *a;
-  gdouble H, S, V;
-  gdouble *hsv_array;
-  guchar rgb[3];
-  float degree, transp;
+  gint          RW, RH, bytes, i, j, k, unchanged, skip;
+  guchar       *rgb_array, *a;
+  gdouble       H, S, V;
+  gdouble      *hsv_array;
+  guchar        rgb[3];
+  gfloat        degree, transp;
 
   /* init some variables */
 
@@ -352,114 +357,111 @@ rcm_render_preview (GtkWidget *preview,
   a = g_new (guchar, bytes * RW);
 
   if (version == CURRENT)
-  {
-    for (i=0; i<RH; i++)
     {
-      for (j=0; j<RW; j++)
-      {
-	unchanged = 1; /* TRUE */
-	skip = 0; /* FALSE */
+      for (i = 0; i < RH; i++)
+        {
+          for (j = 0; j < RW; j++)
+            {
+              unchanged = 1; /* TRUE */
+              skip = 0; /* FALSE */
 
-	H = hsv_array[i*RW*bytes + j*bytes + 0];
-	S = hsv_array[i*RW*bytes + j*bytes + 1];
-	V = hsv_array[i*RW*bytes + j*bytes + 2];
+              H = hsv_array[i*RW*bytes + j*bytes + 0];
+              S = hsv_array[i*RW*bytes + j*bytes + 1];
+              V = hsv_array[i*RW*bytes + j*bytes + 2];
 
-	if (rcm_is_gray(S) && (reduced->mask[i*RW+j] != 0))
-	{
-	  switch (Current.Gray_to_from)
-	  {
-	    case GRAY_FROM:
-	      if (rcm_angle_inside_slice(Current.Gray->hue, Current.From->angle) <= 1)
-	      {
-		H = Current.Gray->hue/TP;
-		S = Current.Gray->satur;
-	      }
-	      else
-		skip = 1;
-	      break;
+              if (rcm_is_gray(S) && (reduced->mask[i*RW+j] != 0))
+                {
+                  switch (Current.Gray_to_from)
+                    {
+                    case GRAY_FROM:
+                      if (rcm_angle_inside_slice (Current.Gray->hue,
+                                                  Current.From->angle) <= 1)
+                        {
+                          H = Current.Gray->hue/TP;
+                          S = Current.Gray->satur;
+                        }
+                      else
+                        skip = 1;
+                      break;
 
-	    case GRAY_TO:
-	      unchanged = 0;
-	      skip = 1;
-	      gimp_hsv_to_rgb4 (rgb, Current.Gray->hue/TP, Current.Gray->satur, V);
-	    break;
+                    case GRAY_TO:
+                      unchanged = 0;
+                      skip = 1;
+                      gimp_hsv_to_rgb4 (rgb, Current.Gray->hue/TP, Current.Gray->satur, V);
+                      break;
 
-	    default: break;
-	  } /* switch */
-	} /* if */
+                    default:
+                      break;
+                    }
+                }
 
-	if (!skip)
-	{
-	  unchanged = 0;
-	  H = rcm_linear(rcm_left_end(Current.From->angle),
-			 rcm_right_end(Current.From->angle),
-			 rcm_left_end(Current.To->angle),
-			 rcm_right_end(Current.To->angle),
-			 H*TP);
+              if (!skip)
+                {
+                  unchanged = 0;
+                  H = rcm_linear (rcm_left_end (Current.From->angle),
+                                  rcm_right_end (Current.From->angle),
+                                  rcm_left_end (Current.To->angle),
+                                  rcm_right_end (Current.To->angle),
+                                  H * TP);
 
-	  H = angle_mod_2PI(H) / TP;
-	  gimp_hsv_to_rgb4 (rgb, H,S,V);
-	} /* if (!skip) */
+                  H = angle_mod_2PI(H) / TP;
+                  gimp_hsv_to_rgb4 (rgb, H,S,V);
+                }
 
-	if (unchanged)degree = 0;
-	else
-	  degree = reduced->mask[i*RW+j] / 255.0;
+              if (unchanged)
+                degree = 0;
+              else
+                degree = reduced->mask[i*RW+j] / 255.0;
 
-	a[j*3+0] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 0] + degree * rgb[0];
-	a[j*3+1] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 1] + degree * rgb[1];
-	a[j*3+2] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 2] + degree * rgb[2];
+              a[j*3+0] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 0] + degree * rgb[0];
+              a[j*3+1] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 1] + degree * rgb[1];
+              a[j*3+2] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 2] + degree * rgb[2];
 
-	/* apply transparency */
-	if (bytes == 4)
-	{
-	  for (k=0; k<3; k++)
-	  {
-	    /*	    transp = reduced->mask[i*RW*bytes+j*bytes+3] / 255.0; */
-	    transp = rgb_array[i*RW*bytes+j*bytes+3] / 255.0;
-	    a[3*j+k] = transp * a[3*j+k] + (1-transp) * rcm_fake_transparency(i,j);
-	  }
+              /* apply transparency */
+              if (bytes == 4)
+                {
+                  for (k = 0; k < 3; k++)
+                    {
+                      /*	    transp = reduced->mask[i*RW*bytes+j*bytes+3] / 255.0; */
+                      transp = rgb_array[i*RW*bytes+j*bytes+3] / 255.0;
+                      a[3*j+k] = transp * a[3*j+k] + (1-transp) * rcm_fake_transparency(i,j);
+                    }
+                }
+            }
 
-	} /* if */
-
-      } /* for j */
-
-      gtk_preview_draw_row(GTK_PREVIEW(preview), a, 0, i, RW);
-
-    } /* for i */
-  }
+          gtk_preview_draw_row (GTK_PREVIEW (preview), a, 0, i, RW);
+        }
+    }
   else /* ORIGINAL */
-  {
-    for (i=0; i<RH; i++)
     {
-      for (j=0; j<RW; j++)
-      {
-	a[j*3+0] = rgb_array[i*RW*bytes + j*bytes + 0];
-	a[j*3+1] = rgb_array[i*RW*bytes + j*bytes + 1];
-	a[j*3+2] = rgb_array[i*RW*bytes + j*bytes + 2];
+      for (i = 0; i < RH; i++)
+        {
+          for (j = 0; j < RW; j++)
+            {
+              a[j*3+0] = rgb_array[i*RW*bytes + j*bytes + 0];
+              a[j*3+1] = rgb_array[i*RW*bytes + j*bytes + 1];
+              a[j*3+2] = rgb_array[i*RW*bytes + j*bytes + 2];
 
-	if (bytes == 4)
-	{
-	  for (k=0; k<3; k++)
-	  {
-	    transp = rgb_array[i*RW*bytes+j*bytes+3] / 255.0;
-	    a[3*j+k] = transp * a[3*j+k] + (1-transp) * rcm_fake_transparency(i,j);
-	  }
-	} /* if */
+              if (bytes == 4)
+                {
+                  for (k = 0; k < 3; k++)
+                    {
+                      transp = rgb_array[i*RW*bytes+j*bytes+3] / 255.0;
+                      a[3*j+k] = transp * a[3*j+k] + (1-transp) * rcm_fake_transparency(i,j);
+                    }
+                }
+            }
 
-      } /* for j */
-
-      gtk_preview_draw_row(GTK_PREVIEW(preview), a, 0, i, RW);
-
-    } /* for i */
-  }
+          gtk_preview_draw_row (GTK_PREVIEW (preview), a, 0, i, RW);
+        }
+    }
 
   g_free (a);
   gtk_widget_queue_draw (preview);
 }
 
-/*-----------------------------------------------------------------------------------*/
+
 /* render circle */
-/*-----------------------------------------------------------------------------------*/
 
 void
 rcm_render_circle (GtkWidget *preview,
@@ -475,25 +477,26 @@ rcm_render_circle (GtkWidget *preview,
   a = g_new (guchar, 3*sum);
 
   for (j = 0; j < sum; j++)
-  {
-    for (i = 0; i < sum; i++)
     {
-      s = sqrt ((SQR (i - sum / 2.0) + SQR (j - sum / 2.0)) / (float) SQR (sum / 2.0 - margin));
-      if (s > 1)
-      {
-	a[i*3+0] = 255;
-	a[i*3+1] = 255;
-	a[i*3+2] = 255;
-      }
-      else
-      {
-	h = arctg (sum / 2.0 - j, i - sum / 2.0) / (2 * G_PI);
-	v = 1 - sqrt (s) / 4;
-	gimp_hsv_to_rgb4 (&a[i*3], h, s, v);
-      }
+      for (i = 0; i < sum; i++)
+        {
+          s = sqrt ((SQR (i - sum / 2.0) + SQR (j - sum / 2.0)) / (float) SQR (sum / 2.0 - margin));
+          if (s > 1)
+            {
+              a[i*3+0] = 255;
+              a[i*3+1] = 255;
+              a[i*3+2] = 255;
+            }
+          else
+            {
+              h = arctg (sum / 2.0 - j, i - sum / 2.0) / (2 * G_PI);
+              v = 1 - sqrt (s) / 4;
+              gimp_hsv_to_rgb4 (&a[i*3], h, s, v);
+            }
+        }
+
+      gtk_preview_draw_row (GTK_PREVIEW (preview), a, 0, j, sum);
     }
-    gtk_preview_draw_row(GTK_PREVIEW(preview), a, 0, j, sum);
-  }
 
   g_free (a);
   gtk_widget_queue_draw (preview);

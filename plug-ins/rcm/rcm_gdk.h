@@ -24,9 +24,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*-----------------------------------------------------------------------------------
+/*----------------------------------------------------------------------------
  * Change log:
- * 
+ *
  * Version 2.0, 04 April 1999.
  *  Nearly complete rewrite, made plug-in stable.
  *  (Works with GIMP 1.1 and GTK+ 1.2)
@@ -34,11 +34,10 @@
  * Version 1.0, 27 March 1997.
  *  Initial (unstable) release by Pavel Grinfeld
  *
- *-----------------------------------------------------------------------------------*/
+ *----------------------------------------------------------------------------*/
 
-/*-----------------------------------------------------------------------------------*/
+
 /* Global defines */
-/*-----------------------------------------------------------------------------------*/
 
 #define RADIUS  60
 #define MARGIN  4
@@ -54,18 +53,19 @@
 #define EACH_OR_BOTH  0.3
 
 
-/*-----------------------------------------------------------------------------------*/
+
 /* Global variables */
-/*-----------------------------------------------------------------------------------*/
 
 extern GdkGC *xor_gc;
 
-/*-----------------------------------------------------------------------------------*/
 
-void rcm_draw_little_circle(GdkWindow *window, GdkGC *color, float hue, float satur);
-
-void rcm_draw_large_circle(GdkWindow *window, GdkGC *color, float gray_sat);
-
-void rcm_draw_arrows(GdkWindow *window, GdkGC *color, RcmAngle *angle);
-
-/*-----------------------------------------------------------------------------------*/
+void rcm_draw_little_circle (GdkWindow *window,
+                             GdkGC     *color,
+                             gfloat     hue,
+                             gfloat     satur);
+void rcm_draw_large_circle  (GdkWindow *window,
+                             GdkGC     *color,
+                             gfloat     gray_sat);
+void rcm_draw_arrows        (GdkWindow *window,
+                             GdkGC     *color,
+                             RcmAngle  *angle);

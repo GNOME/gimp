@@ -1,3 +1,14 @@
+2004-01-30  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/rcm/rcm_dialog.c (rcm_dialog): fixed help ID.
+
+	* plug-ins/rcm/rcm.[ch]
+	* plug-ins/rcm/rcm_callback.[ch]
+	* plug-ins/rcm/rcm_dialog.[ch]
+	* plug-ins/rcm/rcm_gdk.[ch]
+	* plug-ins/rcm/rcm_misc.[ch]: completely reindented, removed
+	overly long /*---...---*/ comment lines, fixed spacing.
+
 2004-01-30  Michael Schumacher <schumaml@cvs.gnome.org>
 
 	* libgimpwidgets/gimpwidgets.def: added missing symbols.

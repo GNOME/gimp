@@ -24,9 +24,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*-----------------------------------------------------------------------------------
+/*----------------------------------------------------------------------------
  * Change log:
- * 
+ *
  * Version 2.0, 04 April 1999.
  *  Nearly complete rewrite, made plug-in stable.
  *  (Works with GIMP 1.1 and GTK+ 1.2)
@@ -34,44 +34,45 @@
  * Version 1.0, 27 March 1997.
  *  Initial (unstable) release by Pavel Grinfeld
  *
- *-----------------------------------------------------------------------------------*/
+ *----------------------------------------------------------------------------*/
 
-/*-----------------------------------------------------------------------------------*/
+
 /* Global defines */
-/*-----------------------------------------------------------------------------------*/
 
 #define SWAP(X,Y) {float t=X; X=Y; Y=t;}
 
-/*-----------------------------------------------------------------------------------*/
+
 /* used in 'rcm_callback.c' and 'rcm_dialog.c' */
-/*-----------------------------------------------------------------------------------*/
 
-float arctg(float y, float x);
+float         arctg              (gfloat        y,
+                                  gfloat        x);
+float         min_prox           (gfloat        alpha,
+                                  gfloat        beta,
+                                  gfloat        angle);
+float        *closest            (gfloat       *alpha,
+                                  gfloat       *beta,
+                                  gfloat        angle);
+float         angle_mod_2PI      (gfloat        angle);
+ReducedImage *rcm_reduce_image   (GimpDrawable *,
+                                  GimpDrawable *,
+                                  gint          ,
+                                  gint          );
+void          rcm_render_preview (GtkWidget    *,
+                                  gint);
+void          rcm_render_circle  (GtkWidget    *preview,
+                                  gint          sum,
+                                  gint          margin);
 
-float min_prox(float alpha, float beta, float angle);
 
-float *closest(float *alpha, float *beta, float  angle);
-
-float angle_mod_2PI(float angle);
-
-ReducedImage *rcm_reduce_image(GimpDrawable *, GimpDrawable *, gint, gint);
-
-void rcm_render_preview(GtkWidget *, gint);
-
-void rcm_render_circle(GtkWidget *preview, int sum, int margin);
-
-/*-----------------------------------------------------------------------------------*/
 /* only used in 'rcm.c' (or local) */
-/*-----------------------------------------------------------------------------------*/
 
-float rcm_angle_inside_slice(float angle, RcmAngle *slice);
-
-gint rcm_is_gray(float s);
-
-float rcm_linear(float, float, float, float, float);
-
-float rcm_left_end(RcmAngle *angle);
-
-float rcm_right_end(RcmAngle *angle);
-
-/*-----------------------------------------------------------------------------------*/
+float rcm_angle_inside_slice (float     angle,
+                              RcmAngle *slice);
+gint  rcm_is_gray            (float     s);
+float rcm_linear             (float,
+                              float,
+                              float,
+                              float,
+                              float);
+float rcm_left_end           (RcmAngle *angle);
+float rcm_right_end          (RcmAngle *angle);

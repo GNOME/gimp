@@ -46,12 +46,8 @@
 #endif
 #undef GTK_DISABLE_DEPRECATED
 
-#include <gtk/gtk.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-
-#include "libgimp/stdplugins-intl.h"
 
 #include "rcm.h"
 #include "rcm_misc.h"
@@ -63,10 +59,10 @@
 #include "pixmaps/rcm_a_b.xpm"
 #include "pixmaps/rcm_cw.xpm"
 
+#include "libgimp/stdplugins-intl.h"
 
-/*---------------------------------------------------------------------------*/
+
 /* Defines */
-/*---------------------------------------------------------------------------*/
 
 #define INITIAL_ALPHA      0
 #define INITIAL_BETA       G_PI_2
@@ -81,9 +77,8 @@
                           GDK_BUTTON1_MOTION_MASK | \
                           GDK_POINTER_MOTION_HINT_MASK
 
-/*---------------------------------------------------------------------------*/
+
 /* Previews: create one preview */
-/*---------------------------------------------------------------------------*/
 
 static void
 rcm_create_one_preview (GtkWidget **preview,
@@ -91,21 +86,19 @@ rcm_create_one_preview (GtkWidget **preview,
 			gint        previewWidth,
 			gint        previewHeight)
 {
-  *frame = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME(*frame), GTK_SHADOW_IN);
-  gtk_container_set_border_width(GTK_CONTAINER(*frame), 0);
-  gtk_widget_show(*frame);
+  *frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (*frame), GTK_SHADOW_IN);
+  gtk_widget_show (*frame);
 
-  *preview = gtk_preview_new(GTK_PREVIEW_COLOR);
+  *preview = gtk_preview_new (GTK_PREVIEW_COLOR);
 
-  gtk_preview_size(GTK_PREVIEW(*preview), previewWidth, previewHeight);
-  gtk_widget_show(*preview);
-  gtk_container_add(GTK_CONTAINER(*frame), *preview);
+  gtk_preview_size (GTK_PREVIEW (*preview), previewWidth, previewHeight);
+  gtk_container_add (GTK_CONTAINER (*frame), *preview);
+  gtk_widget_show (*preview);
 }
 
-/*---------------------------------------------------------------------------*/
+
 /* Previews */
-/*---------------------------------------------------------------------------*/
 
 static GtkWidget*
 rcm_create_previews (void)
@@ -153,9 +146,8 @@ rcm_create_previews (void)
   return frame;
 }
 
-/*---------------------------------------------------------------------------*/
+
 /* Main: Create one pixmap button */
-/*---------------------------------------------------------------------------*/
 
 static void
 rcm_create_pixmap_button (GtkWidget  **label,
@@ -168,84 +160,84 @@ rcm_create_pixmap_button (GtkWidget  **label,
 			  gint         pos)
 {
   /* create button */
-  *xpm_button = gtk_button_new();
+  *xpm_button = gtk_button_new ();
   g_signal_connect (*xpm_button, "clicked",
                     callback,
                     data);
-  gtk_widget_show(*xpm_button);
+  gtk_widget_show (*xpm_button);
 
-  gtk_table_attach(GTK_TABLE(parent), *xpm_button,
-		   0, 1, pos, pos+1, GTK_EXPAND|GTK_FILL, GTK_FILL, 4, 2);
+  gtk_table_attach (GTK_TABLE (parent), *xpm_button,
+                    0, 1, pos, pos + 1,
+                    GTK_EXPAND | GTK_FILL, GTK_FILL, 4, 2);
 
   /* create hbox */
-  *label_box = gtk_hbox_new(FALSE, 0);
-  gtk_widget_show(*label_box);
+  *label_box = gtk_hbox_new (FALSE, 0);
+  gtk_widget_show (*label_box);
 
   /* create label */
-  *label = gtk_label_new(text);
-  gtk_widget_show(*label);
+  *label = gtk_label_new (text);
+  gtk_widget_show (*label);
 
   /* put label and pixmap in hbox */
-  gtk_box_pack_end(GTK_BOX(*label_box), *label, TRUE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (*label_box), *label, TRUE, FALSE, 0);
 
   /* create hbox in button */
-  gtk_container_add(GTK_CONTAINER(*xpm_button), *label_box);
+  gtk_container_add (GTK_CONTAINER (*xpm_button), *label_box);
 }
 
-/*---------------------------------------------------------------------------*/
+
 /* Set buttons pixmaps */
-/*---------------------------------------------------------------------------*/
 
 static void
 rcm_set_pixmaps (RcmCircle *circle)
 {
-  rcm_set_pixmap(&circle->cw_ccw_pixmap, circle->cw_ccw_button->parent, circle->cw_ccw_box, rcm_cw_xpm);
-  rcm_set_pixmap(&circle->a_b_pixmap, circle->a_b_button->parent, circle->a_b_box, rcm_a_b_xpm);
-  rcm_set_pixmap(&circle->f360_pixmap, circle->f360_button->parent, circle->f360_box, rcm_360_xpm);
+  rcm_set_pixmap (&circle->cw_ccw_pixmap, circle->cw_ccw_button->parent,
+                  circle->cw_ccw_box, rcm_cw_xpm);
+  rcm_set_pixmap (&circle->a_b_pixmap, circle->a_b_button->parent,
+                  circle->a_b_box, rcm_a_b_xpm);
+  rcm_set_pixmap (&circle->f360_pixmap, circle->f360_button->parent,
+                  circle->f360_box, rcm_360_xpm);
 }
 
-/*---------------------------------------------------------------------------*/
+
 /* Main: One circles with values and buttons */
-/*---------------------------------------------------------------------------*/
 
 static RcmCircle*
 rcm_create_one_circle (gint   height,
 		       gchar *label_content)
 {
-  GtkWidget *frame, *button_table, *legend_table;
-  GtkWidget *label, *label_box, *xpm_button, *entry;
+  GtkWidget     *frame, *button_table, *legend_table;
+  GtkWidget     *label, *label_box, *xpm_button, *entry;
   GtkAdjustment *adj;
-  RcmCircle *st;
+  RcmCircle     *st;
 
-  st = g_new(RcmCircle, 1);
+  st = g_new (RcmCircle, 1);
 
-  st->action_flag = VIRGIN;
-  st->angle = g_new(RcmAngle, 1);
-  st->angle->alpha = INITIAL_ALPHA;
-  st->angle->beta = INITIAL_BETA;
+  st->action_flag   = VIRGIN;
+  st->angle         = g_new (RcmAngle, 1);
+  st->angle->alpha  = INITIAL_ALPHA;
+  st->angle->beta   = INITIAL_BETA;
   st->angle->cw_ccw = 1;
 
   /** Main: Circle: create (main) frame **/
-  st->frame = gtk_frame_new(label_content);
-  gtk_container_set_border_width(GTK_CONTAINER(st->frame), 0);
-  gtk_widget_show(st->frame);
+  st->frame = gtk_frame_new (label_content);
+  gtk_widget_show (st->frame);
 
   /** Main: Circle: create frame & preview **/
 
   /* create frame */
-  frame = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
-  gtk_container_set_border_width(GTK_CONTAINER(frame), 0);
-  gtk_widget_show(frame);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_widget_show (frame);
 
   /* create preview */
-  st->preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW(st->preview), height, height);
-  gtk_widget_show(st->preview);
-  gtk_container_add(GTK_CONTAINER(frame), st->preview);
+  st->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (st->preview), height, height);
+  gtk_container_add (GTK_CONTAINER (frame), st->preview);
+  gtk_widget_show (st->preview);
 
   /* set signals */
-  gtk_widget_set_events(st->preview, RANGE_ADJUST_MASK);
+  gtk_widget_set_events (st->preview, RANGE_ADJUST_MASK);
 
   g_signal_connect_after (st->preview, "expose_event",
                           G_CALLBACK (rcm_expose_event),
@@ -263,46 +255,48 @@ rcm_create_one_circle (gint   height,
                     G_CALLBACK (rcm_motion_notify_event),
                     st);
 
-  rcm_render_circle(st->preview, SUM, MARGIN);
+  rcm_render_circle (st->preview, SUM, MARGIN);
 
   /** Main: Circle: create table for buttons **/
-  button_table = gtk_table_new(3, 1, FALSE);
-  gtk_widget_show(button_table);
+  button_table = gtk_table_new (3, 1, FALSE);
+  gtk_widget_show (button_table);
 
   /** Main: Circle: Buttons **/
-  rcm_create_pixmap_button(&label, &xpm_button, &label_box,
-                           G_CALLBACK (rcm_cw_ccw), st,
-			   (st->angle->cw_ccw>0) ?
-			   _("Switch to clockwise") : _("Switch to c/clockwise"),
-			   button_table, 0);
+  rcm_create_pixmap_button (&label, &xpm_button, &label_box,
+                            G_CALLBACK (rcm_cw_ccw), st,
+                            (st->angle->cw_ccw>0) ?
+                            _("Switch to clockwise") : _("Switch to c/clockwise"),
+                            button_table, 0);
+
   st->cw_ccw_pixmap = NULL;
   st->cw_ccw_button = xpm_button;
-  st->cw_ccw_box = label_box;
-  st->cw_ccw_label = label;
+  st->cw_ccw_box    = label_box;
+  st->cw_ccw_label  = label;
 
-  rcm_create_pixmap_button(&label, &xpm_button, &label_box,
-                           G_CALLBACK (rcm_a_to_b), st,
-			   _("Change order of arrows"), button_table, 1);
+  rcm_create_pixmap_button (&label, &xpm_button, &label_box,
+                            G_CALLBACK (rcm_a_to_b), st,
+                            _("Change order of arrows"), button_table, 1);
   st->a_b_pixmap = NULL;
-  st->a_b_box = label_box;
+  st->a_b_box    = label_box;
   st->a_b_button = xpm_button;
 
-  rcm_create_pixmap_button(&label, &xpm_button, &label_box,
-                           G_CALLBACK (rcm_360_degrees), st,
-			   _("Select all"), button_table, 2);
+  rcm_create_pixmap_button (&label, &xpm_button, &label_box,
+                            G_CALLBACK (rcm_360_degrees), st,
+                            _("Select all"), button_table, 2);
+
   st->f360_pixmap = NULL;
-  st->f360_box = label_box;
+  st->f360_box    = label_box;
   st->f360_button = xpm_button;
 
   /** Main: Circle: Legend **/
-  legend_table = gtk_table_new(1, 6, FALSE);
-  gtk_widget_show(legend_table);
+  legend_table = gtk_table_new (1, 6, FALSE);
+  gtk_widget_show (legend_table);
 
   /* spinbutton 1 */
-  label = gtk_label_new(_("From"));
-  gtk_widget_show(label);
-  gtk_table_attach(GTK_TABLE(legend_table), label, 0,1, 0,1,
-		   0, GTK_EXPAND, 5, 5);
+  label = gtk_label_new (_("From"));
+  gtk_widget_show (label);
+  gtk_table_attach (GTK_TABLE (legend_table), label, 0, 1, 0, 1,
+                    0, GTK_EXPAND, 5, 5);
 
   st->angle->alpha = INITIAL_ALPHA;
   adj = (GtkAdjustment *) gtk_adjustment_new(st->angle->alpha, 0.0, 2.0, 0.0001, 0.001, 0.0);
@@ -318,58 +312,57 @@ rcm_create_one_circle (gint   height,
 
   /* label */
   st->alpha_units_label = gtk_label_new(rcm_units_string(Current.Units));
-  gtk_widget_show(st->alpha_units_label);
+  gtk_widget_show (st->alpha_units_label);
 
-  gtk_table_attach(GTK_TABLE(legend_table), st->alpha_units_label, 2, 3, 0, 1,
-		   0, GTK_EXPAND, 4, 4);
+  gtk_table_attach (GTK_TABLE (legend_table), st->alpha_units_label, 2, 3, 0, 1,
+                    0, GTK_EXPAND, 4, 4);
 
   /* spinbutton 2 */
-  label = gtk_label_new(_("To"));
-  gtk_widget_show(label);
-  gtk_table_attach(GTK_TABLE(legend_table), label, 3,4, 0,1,
-		   0, GTK_EXPAND, 4, 4);
+  label = gtk_label_new (_("To"));
+  gtk_widget_show (label);
+  gtk_table_attach (GTK_TABLE (legend_table), label, 3,4, 0,1,
+                    0, GTK_EXPAND, 4, 4);
 
   st->angle->beta = INITIAL_BETA;
   adj = (GtkAdjustment *) gtk_adjustment_new(st->angle->beta, 0.0, 2.0, 0.0001, 0.001, 0.0);
-  st->beta_entry = entry = gtk_spin_button_new(adj, 0.01, 4);
-  gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(entry), TRUE);
-  gtk_table_attach(GTK_TABLE(legend_table), entry, 4,5, 0,1,
-		   GTK_EXPAND|GTK_FILL, GTK_EXPAND, 2, 4);
-  gtk_widget_show(entry);
+  st->beta_entry = entry = gtk_spin_button_new (adj, 0.01, 4);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (entry), TRUE);
+  gtk_table_attach (GTK_TABLE (legend_table), entry, 4,5, 0,1,
+                    GTK_EXPAND|GTK_FILL, GTK_EXPAND, 2, 4);
+  gtk_widget_show (entry);
 
   g_signal_connect (entry, "changed",
                     G_CALLBACK (rcm_set_beta),
                     st);
 
   /* label */
-  st->beta_units_label = gtk_label_new(rcm_units_string(Current.Units));
-  gtk_widget_show(st->beta_units_label);
+  st->beta_units_label = gtk_label_new (rcm_units_string (Current.Units));
+  gtk_widget_show (st->beta_units_label);
 
-  gtk_table_attach(GTK_TABLE(legend_table), st->beta_units_label, 5,6, 0,1,
-		   0, GTK_EXPAND, 4, 4);
+  gtk_table_attach (GTK_TABLE (legend_table), st->beta_units_label, 5,6, 0,1,
+                    0, GTK_EXPAND, 4, 4);
 
   /* Main: Circle: create table for Preview / Buttons / Legend */
-  st->table= gtk_table_new(2, 2, FALSE);
-  gtk_widget_show(st->table);
+  st->table= gtk_table_new (2, 2, FALSE);
+  gtk_widget_show (st->table);
 
-  gtk_table_attach(GTK_TABLE(st->table), frame, 0, 1, 0, 1,
-  		   0, GTK_EXPAND, 4, 0);
+  gtk_table_attach (GTK_TABLE (st->table), frame, 0, 1, 0, 1,
+                    0, GTK_EXPAND, 4, 0);
 
-  gtk_table_attach(GTK_TABLE(st->table), button_table, 1, 2, 0, 1,
-		   0, GTK_EXPAND, 2, 0);
+  gtk_table_attach (GTK_TABLE (st->table), button_table, 1, 2, 0, 1,
+                    0, GTK_EXPAND, 2, 0);
 
-  gtk_table_attach(GTK_TABLE(st->table), legend_table, 0, 2, 1, 2,
-		   GTK_EXPAND|GTK_FILL, GTK_EXPAND, 0, 2);
+  gtk_table_attach (GTK_TABLE (st->table), legend_table, 0, 2, 1, 2,
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 2);
 
   /* add table to (main) frame */
-  gtk_container_add(GTK_CONTAINER(st->frame), st->table);
+  gtk_container_add (GTK_CONTAINER (st->frame), st->table);
 
   return st;
 }
 
-/*---------------------------------------------------------------------------*/
+
 /* Main */
-/*---------------------------------------------------------------------------*/
 
 static GtkWidget*
 rcm_create_main (void)
@@ -391,9 +384,8 @@ rcm_create_main (void)
   return vbox;
 }
 
-/*---------------------------------------------------------------------------*/
+
 /* Misc: Gray */
-/*---------------------------------------------------------------------------*/
 
 static RcmGray*
 rcm_create_gray (void)
@@ -404,8 +396,8 @@ rcm_create_gray (void)
   GtkWidget *label, *entry;
   GtkWidget *gray_sat_frame;
   GtkWidget *radio_box, *button;
-  GSList *group = NULL;
-  RcmGray *st;
+  GSList    *group = NULL;
+  RcmGray   *st;
   GtkAdjustment *adj;
 
   st = g_new (RcmGray, 1);
@@ -531,7 +523,7 @@ rcm_create_gray (void)
                     &(Current.Gray_to_from));
 
   /** Gray: What is gray? **/
-  gray_sat_frame = gtk_frame_new(_("What is Gray?"));
+  gray_sat_frame = gtk_frame_new (_("What is Gray?"));
   gtk_widget_show (gray_sat_frame);
 
   table = gtk_table_new (1, 3, FALSE);
@@ -539,7 +531,7 @@ rcm_create_gray (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_widget_show (table);
 
-  label = gtk_label_new(_("Saturation"));
+  label = gtk_label_new (_("Saturation"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
@@ -600,9 +592,8 @@ rcm_create_gray (void)
   return st;
 }
 
-/*----------------------------------------------------------------------------*/
+
 /* Misc */
-/*----------------------------------------------------------------------------*/
 
 static GtkWidget *
 rcm_create_misc (void)
@@ -751,9 +742,8 @@ rcm_create_misc (void)
   return table;
 }
 
-/*---------------------------------------------------------------------------*/
+
 /* create and call main dialog */
-/*---------------------------------------------------------------------------*/
 
 gint
 rcm_dialog (void)
@@ -770,7 +760,7 @@ rcm_dialog (void)
   /* Create dialog */
   dlg = gimp_dialog_new (_("Colormap Rotation"), "rcm",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/rcm.html",
+			 gimp_standard_help_func, "plug-in-rotate-colormap",
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
