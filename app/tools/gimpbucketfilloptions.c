@@ -217,7 +217,7 @@ gimp_bucket_fill_options_reset (GimpToolOptions *tool_options)
   GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
-void
+GtkWidget *
 gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 {
   GObject    *config;
@@ -230,9 +230,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 
   config = G_OBJECT (tool_options);
 
-  gimp_paint_options_gui (tool_options);
-
-  vbox = tool_options->main_vbox;
+  vbox = gimp_paint_options_gui (tool_options);
 
   /*  fill type  */
   str = g_strdup_printf (_("Fill Type  %s"), gimp_get_mod_name_control ());
@@ -278,4 +276,6 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
                              FALSE, 0.0, 0.0);
 
   gimp_bucket_fill_options_reset (tool_options);
+
+  return vbox;
 }

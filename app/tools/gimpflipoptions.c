@@ -153,7 +153,7 @@ gimp_flip_options_get_property (GObject    *object,
     }
 }
 
-void
+GtkWidget *
 gimp_flip_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config;
@@ -163,7 +163,7 @@ gimp_flip_options_gui (GimpToolOptions *tool_options)
 
   config = G_OBJECT (tool_options);
 
-  vbox = tool_options->main_vbox;
+  vbox = gimp_tool_options_gui (tool_options);
 
   /*  tool toggle  */
   str = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_control ());
@@ -176,4 +176,6 @@ gimp_flip_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   g_free (str);
+
+  return vbox;
 }

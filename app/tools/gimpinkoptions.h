@@ -51,9 +51,9 @@ struct _GimpInkOptions
 };
 
 
-GType   gimp_ink_options_get_type (void) G_GNUC_CONST;
+GType       gimp_ink_options_get_type (void) G_GNUC_CONST;
 
-void    gimp_ink_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * gimp_ink_options_gui      (GimpToolOptions *tool_options);
 
 
 #endif  /*  __GIMP_INK_OPTIONS_H__  */

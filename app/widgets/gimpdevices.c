@@ -220,7 +220,7 @@ gimp_devices_select_device (Gimp      *gimp,
   g_return_if_fail (GIMP_IS_DEVICE_INFO (current_device_info));
   g_return_if_fail (GIMP_IS_DEVICE_INFO (new_device_info));
 
-  gimp_context_unset_parent (GIMP_CONTEXT (current_device_info));
+  gimp_context_set_parent (GIMP_CONTEXT (current_device_info), NULL);
 
   manager->current_device = new_device;
 

@@ -39,10 +39,10 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_airbrush_tool_class_init (GimpAirbrushToolClass *klass);
-static void   gimp_airbrush_tool_init       (GimpAirbrushTool      *airbrush);
+static void   gimp_airbrush_tool_class_init  (GimpAirbrushToolClass *klass);
+static void   gimp_airbrush_tool_init        (GimpAirbrushTool      *airbrush);
 
-static void   gimp_airbrush_options_gui     (GimpToolOptions *tool_options);
+static GtkWidget * gimp_airbrush_options_gui (GimpToolOptions *tool_options);
 
 
 static GimpPaintToolClass *parent_class = NULL;
@@ -123,7 +123,7 @@ gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
 
 /*  tool options stuff  */
 
-static void
+static GtkWidget *
 gimp_airbrush_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config;
@@ -132,9 +132,7 @@ gimp_airbrush_options_gui (GimpToolOptions *tool_options)
 
   config = G_OBJECT (tool_options);
 
-  gimp_paint_options_gui (tool_options);
-
-  vbox = tool_options->main_vbox;
+  vbox = gimp_paint_options_gui (tool_options);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
@@ -152,4 +150,6 @@ gimp_airbrush_options_gui (GimpToolOptions *tool_options)
                              _("Pressure:"),
                              1.0, 1.0, 1,
                              FALSE, 0.0, 0.0);
+
+  return vbox;
 }

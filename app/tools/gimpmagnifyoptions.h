@@ -44,9 +44,9 @@ struct _GimpMagnifyOptions
 };
 
 
-GType   gimp_magnify_options_get_type (void) G_GNUC_CONST;
+GType       gimp_magnify_options_get_type (void) G_GNUC_CONST;
 
-void    gimp_magnify_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * gimp_magnify_options_gui      (GimpToolOptions *tool_options);
 
 
 #endif  /*  __GIMP_MAGNIFY_OPTIONS_H__  */

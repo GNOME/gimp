@@ -1,3 +1,59 @@
+2003-02-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontext.[ch]: simplified everything a lot by
+	merging the public GimpContextPropType enum with the internal
+	anonymous object property id enum. Removed the internal copy_prop
+	functions and handle property copying in a big switch() in
+	gimp_context_copy_property(). Removed the separate signal
+	connections for each property of the parent context and do the
+	same using a single "notify" handler. Emit "notify" signals all
+	over the place.  Removed internal arrays which are no longer
+	needed due to enum merge and copy_property simplification.
+	Removed the array of signal names and use g_signal_name().
+	Removed gimp_context_unset_parent() and allow "parent" being NULL
+	in gimp_context_set_parent().
+
+	* app/tools/tool_manager.c
+	* app/widgets/gimpdevices.c: changed accordingly.
+
+	* libgimptool/gimptooltypes.h: changed GimpToolOptionsGUIFunc to
+	return a GtkWidget (the created tool options widget).
+
+	* libgimptool/gimptoolmodule.c: #include <gtk/gtk.h>
+
+	* app/tools/tool_options.[ch]: removed the "main_vbox" from the
+	GimpToolOptions struct. Changed gimp_tool_options_gui() to create
+	and return the main_vbox.
+
+	* app/tools/tool_manager.c: create the "This Tool has no Options"
+	label here if NULL was passed as "options_gui_func". Attach the
+	options widget to the tool_options object using
+	g_object_set_data().
+
+	* app/gui/tool-options-dialog.c: changed accordingly.
+
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpblendoptions.[ch]
+	* app/tools/gimpbucketfilloptions.[ch]
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorpickeroptions.[ch]
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcropoptions.[ch]
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpflipoptions.[ch]
+	* app/tools/gimpinkoptions.[ch]
+	* app/tools/gimpmagnifyoptions.[ch]
+	* app/tools/gimpmeasureoptions.[ch]
+	* app/tools/gimpmoveoptions.[ch]
+	* app/tools/gimpselectionoptions.[ch]
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptextoptions.[ch]
+	* app/tools/gimptransformoptions.[ch]
+	* app/tools/gimpvectoroptions.[ch]
+	* app/tools/paint_options.[ch]: return the options vbox from
+	all tool_options_gui functions.
+
 2003-02-08  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptext.c

@@ -366,7 +366,7 @@ gimp_selection_options_reset (GimpToolOptions *tool_options)
   GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
-void
+GtkWidget *
 gimp_selection_options_gui (GimpToolOptions *tool_options)
 {
   GObject              *config;
@@ -377,7 +377,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
   config  = G_OBJECT (tool_options);
   options = GIMP_SELECTION_OPTIONS (tool_options);
 
-  vbox = tool_options->main_vbox;
+  vbox = gimp_tool_options_gui (tool_options);
 
   /*  the selection operation radio buttons  */
   {
@@ -593,6 +593,8 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     }
 
   gimp_selection_options_reset (tool_options);
+
+  return vbox;
 }
 
 

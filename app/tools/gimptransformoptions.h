@@ -49,9 +49,9 @@ struct _GimpTransformOptions
 };
 
 
-GType   gimp_transform_options_get_type (void) G_GNUC_CONST;
+GType       gimp_transform_options_get_type (void) G_GNUC_CONST;
 
-void    gimp_transform_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * gimp_transform_options_gui      (GimpToolOptions *tool_options);
 
 
 #endif /* __GIMP_TRANSFORM_OPTIONS_H__ */

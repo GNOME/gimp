@@ -200,7 +200,7 @@ gimp_magnify_options_reset (GimpToolOptions *tool_options)
   GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
-void
+GtkWidget *
 gimp_magnify_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config;
@@ -212,7 +212,7 @@ gimp_magnify_options_gui (GimpToolOptions *tool_options)
 
   config = G_OBJECT (tool_options);
 
-  vbox = tool_options->main_vbox;
+  vbox = gimp_tool_options_gui (tool_options);
 
   /*  the allow_resize toggle button  */
   button = gimp_prop_check_button_new (config, "allow-resize",
@@ -243,4 +243,6 @@ gimp_magnify_options_gui (GimpToolOptions *tool_options)
                              FALSE, 0.0, 0.0);
 
   gimp_magnify_options_reset (tool_options);
+
+  return vbox;
 }

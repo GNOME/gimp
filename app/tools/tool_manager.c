@@ -169,7 +169,8 @@ tool_manager_restore (Gimp *gimp)
        list;
        list = g_list_next (list))
     {
-      GimpToolOptionsGUIFunc options_gui_func;
+      GimpToolOptionsGUIFunc  options_gui_func;
+      GtkWidget              *options_gui;
 
       tool_info = GIMP_TOOL_INFO (list->data);
 
@@ -177,7 +178,22 @@ tool_manager_restore (Gimp *gimp)
                                             "gimp-tool-options-gui-func");
 
       if (options_gui_func)
-        options_gui_func (tool_info->tool_options);
+        {
+          options_gui = options_gui_func (tool_info->tool_options);
+        }
+      else
+        {
+          GtkWidget *label;
+
+          options_gui = gimp_tool_options_gui (tool_info->tool_options);
+
+          label = gtk_label_new (_("This tool has no options."));
+          gtk_box_pack_start (GTK_BOX (options_gui), label, FALSE, FALSE, 6);
+          gtk_widget_show (label);
+        }
+
+      g_object_set_data (G_OBJECT (tool_info->tool_options),
+                         "gimp-tool-options-gui", options_gui);
     }
 }
 
@@ -506,11 +522,8 @@ tool_manager_register_tool (GType                   tool_type,
   g_return_if_fail (tool_options_type == G_TYPE_NONE ||
                     g_type_is_a (tool_options_type, GIMP_TYPE_TOOL_OPTIONS));
 
-  if (tool_options_type == G_TYPE_NONE && options_gui_func == NULL)
-    {
-      tool_options_type = GIMP_TYPE_TOOL_OPTIONS;
-      options_gui_func  = gimp_tool_options_gui;
-    }
+  if (tool_options_type == G_TYPE_NONE)
+    tool_options_type = GIMP_TYPE_TOOL_OPTIONS;
 
   if (tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
@@ -731,7 +744,7 @@ tool_manager_tool_changed (GimpContext  *user_context,
 
       old_tool_info = tool_manager->active_tool->tool_info;
 
-      gimp_context_unset_parent (GIMP_CONTEXT (old_tool_info->tool_options));
+      gimp_context_set_parent (GIMP_CONTEXT (old_tool_info->tool_options), NULL);
     }
 
   /*  connect the new tool's context  */

@@ -269,7 +269,7 @@ gimp_transform_options_reset (GimpToolOptions *tool_options)
   GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
-void
+GtkWidget *
 gimp_transform_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config;
@@ -285,7 +285,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   config = G_OBJECT (tool_options);
   options = GIMP_TRANSFORM_OPTIONS (tool_options);
 
-  vbox = tool_options->main_vbox;
+  vbox = gimp_tool_options_gui (tool_options);
 
   frame = gimp_prop_enum_radio_frame_new (config, "direction",
                                           _("Transform Direction"), 0, 0);
@@ -402,6 +402,8 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
     }
 
   gimp_transform_options_reset (tool_options);
+
+  return vbox;
 }
 
 

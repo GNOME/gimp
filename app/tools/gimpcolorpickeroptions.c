@@ -182,7 +182,7 @@ gimp_color_picker_options_get_property (GObject    *object,
     }
 }
 
-void
+GtkWidget *
 gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config;
@@ -193,7 +193,7 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 
   config = G_OBJECT (tool_options);
 
-  vbox = tool_options->main_vbox;
+  vbox = gimp_tool_options_gui (tool_options);
 
   /*  the sample merged toggle button  */
   button = gimp_prop_check_button_new (config, "sample-merged",
@@ -233,4 +233,6 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
                                        _("Update Active Color"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  return vbox;
 }

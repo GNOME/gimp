@@ -113,7 +113,6 @@ static void
 gimp_tool_options_init (GimpToolOptions *options)
 {
   options->tool_info = NULL;
-  options->main_vbox = gtk_vbox_new (FALSE, 2);
 }
 
 static void
@@ -226,13 +225,12 @@ gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
   return retval;
 }
 
-void
+gpointer
 gimp_tool_options_gui (GimpToolOptions *tool_options)
 {
-  GtkWidget *label;
+  GtkWidget *vbox;
 
-  label = gtk_label_new (_("This tool has no options."));
-  gtk_box_pack_start (GTK_BOX (tool_options->main_vbox), label,
-                      FALSE, FALSE, 6);
-  gtk_widget_show (label);
+  vbox = gtk_vbox_new (FALSE, 2);
+
+  return vbox;
 }

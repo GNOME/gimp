@@ -240,7 +240,7 @@ gimp_ink_options_get_property (GObject    *object,
     }
 }
 
-void
+GtkWidget *
 gimp_ink_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config;
@@ -252,9 +252,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
 
   config = G_OBJECT (tool_options);
 
-  gimp_paint_options_gui (tool_options);
-
-  vbox = tool_options->main_vbox;
+  vbox = gimp_paint_options_gui (tool_options);
 
   /* adjust sliders */
   frame = gtk_frame_new (_("Adjustment"));
@@ -371,6 +369,8 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   brush = brush_widget_new (GIMP_INK_OPTIONS (tool_options));
   gtk_container_add (GTK_CONTAINER (frame), brush);
   gtk_widget_show (brush);
+
+  return vbox;
 }
 
 

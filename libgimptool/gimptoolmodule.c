@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gtk/gtk.h>
 
 #include "libgimpproxy/gimpproxytypes.h"
 #include "gimptooltypes.h"

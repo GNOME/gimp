@@ -232,7 +232,7 @@ gimp_blend_options_get_property (GObject    *object,
     }
 }
 
-void
+GtkWidget *
 gimp_blend_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config;
@@ -244,9 +244,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 
   config = G_OBJECT (tool_options);
 
-  gimp_paint_options_gui (tool_options);
-
-  vbox = tool_options->main_vbox;
+  vbox = gimp_paint_options_gui (tool_options);
 
   gimp_dnd_viewable_dest_add (vbox,
                               GIMP_TYPE_GRADIENT,
@@ -350,6 +348,8 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
                              _("Threshold:"),
                              0.01, 0.1, 2,
                              FALSE, 0.0, 0.0);
+
+  return vbox;
 }
 
 static void

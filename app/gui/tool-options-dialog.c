@@ -186,22 +186,30 @@ tool_options_dialog_tool_changed (GimpContext  *context,
 				  GimpToolInfo *tool_info,
 				  gpointer      data)
 {
+  GtkWidget *options_gui;
+
   if (visible_tool_options &&
       (! tool_info || tool_info->tool_options != visible_tool_options))
     {
-      gtk_widget_hide (visible_tool_options->main_vbox);
+      options_gui = g_object_get_data (G_OBJECT (visible_tool_options),
+                                       "gimp-tool-options-gui");
+
+      if (options_gui)
+        gtk_widget_hide (options_gui);
 
       visible_tool_options = NULL;
     }
 
   if (tool_info && tool_info->tool_options)
     {
-      if (! GTK_WIDGET (tool_info->tool_options->main_vbox)->parent)
-        gtk_box_pack_start (GTK_BOX (options_vbox),
-                            tool_info->tool_options->main_vbox,
+      options_gui = g_object_get_data (G_OBJECT (tool_info->tool_options),
+                                       "gimp-tool-options-gui");
+
+      if (! options_gui->parent)
+        gtk_box_pack_start (GTK_BOX (options_vbox), options_gui,
                             FALSE, FALSE, 0);
 
-      gtk_widget_show (tool_info->tool_options->main_vbox);
+      gtk_widget_show (options_gui);
 
       visible_tool_options = tool_info->tool_options;
 

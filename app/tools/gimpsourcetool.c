@@ -76,7 +76,7 @@ static void   gimp_clone_pretrace_callback     (GimpClone       *clone,
 static void   gimp_clone_posttrace_callback    (GimpClone       *clone,
                                                 gpointer         data);
 
-static void   gimp_clone_options_gui           (GimpToolOptions *tool_options);
+static GtkWidget * gimp_clone_options_gui      (GimpToolOptions *tool_options);
 
 
 static GimpPaintToolClass *parent_class;
@@ -362,7 +362,7 @@ gimp_clone_posttrace_callback (GimpClone *clone,
 
 /*  tool options stuff  */
 
-static void
+static GtkWidget *
 gimp_clone_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config;
@@ -371,9 +371,7 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
 
   config = G_OBJECT (tool_options);
 
-  gimp_paint_options_gui (tool_options);
-
-  vbox = tool_options->main_vbox;
+  vbox = gimp_paint_options_gui (tool_options);
 
   frame = gimp_prop_enum_radio_frame_new (config, "clone-type",
                                           _("Source"),
@@ -386,4 +384,6 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  return vbox;
 }

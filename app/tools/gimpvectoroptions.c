@@ -76,7 +76,7 @@ gimp_vector_options_init (GimpVectorOptions *options)
 {
 }
 
-void
+GtkWidget *
 gimp_vector_options_gui (GimpToolOptions *tool_options)
 {
   GimpVectorOptions *options;
@@ -84,7 +84,7 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
 
   options = GIMP_VECTOR_OPTIONS (tool_options);
 
-  gimp_selection_options_gui (tool_options);
+  vbox = gimp_selection_options_gui (tool_options);
 
-  vbox = tool_options->main_vbox;
+  return vbox;
 }

@@ -44,9 +44,9 @@ struct _GimpCropOptions
 };
 
 
-GType   gimp_crop_options_get_type (void) G_GNUC_CONST;
+GType       gimp_crop_options_get_type (void) G_GNUC_CONST;
 
-void    gimp_crop_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * gimp_crop_options_gui      (GimpToolOptions *tool_options);
 
 
 #endif  /*  __GIMP_CROP_OPTIONS_H__  */

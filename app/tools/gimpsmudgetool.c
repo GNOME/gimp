@@ -37,10 +37,10 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_smudge_tool_class_init (GimpSmudgeToolClass *klass);
-static void   gimp_smudge_tool_init       (GimpSmudgeTool      *tool);
+static void   gimp_smudge_tool_class_init  (GimpSmudgeToolClass *klass);
+static void   gimp_smudge_tool_init        (GimpSmudgeTool      *tool);
 
-static void   gimp_smudge_options_gui     (GimpToolOptions     *tool_options);
+static GtkWidget * gimp_smudge_options_gui (GimpToolOptions     *tool_options);
 
 
 static GimpPaintToolClass *parent_class = NULL;
@@ -121,7 +121,7 @@ gimp_smudge_tool_init (GimpSmudgeTool *smudge)
 
 /*  tool options stuff  */
 
-static void
+static GtkWidget *
 gimp_smudge_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config;
@@ -130,9 +130,7 @@ gimp_smudge_options_gui (GimpToolOptions *tool_options)
 
   config = G_OBJECT (tool_options);
 
-  gimp_paint_options_gui (tool_options);
-
-  vbox = tool_options->main_vbox;
+  vbox = gimp_paint_options_gui (tool_options);
 
   /*  the rate scale  */
   table = gtk_table_new (1, 3, FALSE);
@@ -145,4 +143,6 @@ gimp_smudge_options_gui (GimpToolOptions *tool_options)
                              _("Rate:"),
                              1.0, 10.0, 1,
                              FALSE, 0.0, 0.0);
+
+  return vbox;
 }

@@ -115,7 +115,7 @@ gimp_text_options_reset (GimpToolOptions *tool_options)
   GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
-void
+GtkWidget *
 gimp_text_options_gui (GimpToolOptions *tool_options)
 {
   GimpTextOptions *options;
@@ -130,7 +130,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   options = GIMP_TEXT_OPTIONS (tool_options);
 
-  vbox = tool_options->main_vbox;
+  vbox = gimp_tool_options_gui (tool_options);
 
   table = gtk_table_new (4, 6, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
@@ -184,4 +184,6 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gimp_table_attach_stock (GTK_TABLE (table), 5,
                            _("Line\nSpacing:"), 0.0, spinbutton,
 			   GIMP_STOCK_LINE_SPACING);
+
+  return vbox;
 }

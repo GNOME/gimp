@@ -51,7 +51,7 @@ static void   gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
                                                  GdkModifierType  state,
                                                  GimpDisplay     *gdisp);
 
-static void   gimp_dodge_burn_options_gui       (GimpToolOptions *tool_options);
+static GtkWidget * gimp_dodge_burn_options_gui  (GimpToolOptions *tool_options);
 
 
 static GimpPaintToolClass *parent_class = NULL;
@@ -183,7 +183,7 @@ gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
 
 /*  tool options stuff  */
 
-static void
+static GtkWidget *
 gimp_dodge_burn_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config;
@@ -194,9 +194,7 @@ gimp_dodge_burn_options_gui (GimpToolOptions *tool_options)
 
   config = G_OBJECT (tool_options);
 
-  gimp_paint_options_gui (tool_options);
-
-  vbox = tool_options->main_vbox;
+  vbox = gimp_paint_options_gui (tool_options);
 
   /* the type (dodge or burn) */
   str = g_strdup_printf (_("Type  %s"), gimp_get_mod_name_control ());
@@ -225,4 +223,6 @@ gimp_dodge_burn_options_gui (GimpToolOptions *tool_options)
                              _("Exposure:"),
                              1.0, 10.0, 1,
                              FALSE, 0.0, 0.0);
+
+  return vbox;
 }

@@ -69,7 +69,7 @@ static void   gimp_convolve_tool_cursor_update  (GimpTool              *tool,
                                                  GdkModifierType        state,
                                                  GimpDisplay           *gdisp);
 
-static void    gimp_convolve_options_gui        (GimpToolOptions       *options);
+static GtkWidget * gimp_convolve_options_gui    (GimpToolOptions       *options);
 
 
 static GimpPaintToolClass *parent_class;
@@ -210,7 +210,7 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
 
 /*  tool options stuff  */
 
-static void
+static GtkWidget *
 gimp_convolve_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config;
@@ -221,9 +221,7 @@ gimp_convolve_options_gui (GimpToolOptions *tool_options)
 
   config = G_OBJECT (tool_options);
 
-  gimp_paint_options_gui (tool_options);
-
-  vbox = tool_options->main_vbox;
+  vbox = gimp_paint_options_gui (tool_options);
 
   /*  the type radio box  */
   str = g_strdup_printf (_("Convolve Type  %s"),
@@ -247,4 +245,6 @@ gimp_convolve_options_gui (GimpToolOptions *tool_options)
                              _("Rate:"),
                              1.0, 10.0, 1,
                              FALSE, 0.0, 0.0);
+
+  return vbox;
 }

@@ -74,7 +74,7 @@ static void   paint_options_brush_clicked (GtkWidget        *widget,
                                            gpointer          data);
 
 
-void
+GtkWidget *
 gimp_paint_options_gui (GimpToolOptions *tool_options)
 {
   GimpPaintOptions *options;
@@ -91,7 +91,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   context = GIMP_CONTEXT (tool_options);
   config  = G_OBJECT (tool_options);
 
-  vbox = tool_options->main_vbox;
+  vbox = gimp_tool_options_gui (tool_options);
 
   /*  the main table  */
   table = gtk_table_new (3, 3, FALSE);
@@ -203,6 +203,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
     }
+
+  return vbox;
 }
 
 
