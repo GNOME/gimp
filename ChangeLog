@@ -1,3 +1,7 @@
+2001-04-23  Mel Boyce  <syngin@gimp.org>
+
+	* plug-ins/perl/examples/terral_text: Fixed typo.
+
 Sat Apr 21 17:04:34 PDT 2001 Manish Singh <yosh@gimp.org>
 
 	* acinclude.m4: updated libtool stuff
