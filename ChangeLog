@@ -1,3 +1,8 @@
+2004-10-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/glasstile.c: applied patch from Yeti, updated by
+	Kevin Cozens and modified by me. Fixes bug #85261.
+
 2004-10-29  Øyvind Kolås  <pippin@gimp.org>
 
 	* tools/pdbgen/pdb/color.pdb: moved body of code from here.

@@ -55,19 +55,34 @@ typedef struct
   gint     xblock;
   gint     yblock;
   gboolean preview;
+  /* interface only */
+  gint     constrain;
 } GlassValues;
 
-/* --- Declare local functions --- */
-static void      query            (void);
-static void      run              (const gchar      *name,
-                                   gint              nparams,
-                                   const GimpParam  *param,
-                                   gint             *nreturn_vals,
-                                   GimpParam       **return_vals);
+typedef struct
+{
+  GlassValues *gval;
+  GtkObject   *xadj;
+  GtkObject   *yadj;
+} GlassChainedValues;
 
-static gboolean  glasstile_dialog (GimpDrawable     *drawable);
-static void      glasstile        (GimpDrawable     *drawable,
-                                   GimpPreview      *preview);
+/* --- Declare local functions --- */
+static void      query                   (void);
+static void      run                     (const gchar      *name,
+                                          gint              nparams,
+                                          const GimpParam  *param,
+                                          gint             *nreturn_vals,
+                                          GimpParam       **return_vals);
+
+static gboolean  glasstile_dialog        (GimpDrawable     *drawable);
+
+static void      glasstile_size_changed  (GtkObject        *adj,
+                                          gpointer          data);
+static void      glasstile_chain_toggled (GtkWidget        *widget,
+                                          gboolean         *value);
+
+static void      glasstile                (GimpDrawable    *drawable,
+                                           GimpPreview     *preview);
 
 
 /* --- Variables --- */
@@ -83,7 +98,9 @@ static GlassValues gtvals =
 {
   20,    /* tile width  */
   20,    /* tile height */
-  TRUE   /* preview     */
+  TRUE,  /* preview     */
+  /* interface only */
+  TRUE   /* constrained */
 };
 
 /* --- Functions --- */
@@ -217,12 +234,17 @@ run (const gchar      *name,
 static gboolean
 glasstile_dialog (GimpDrawable *drawable)
 {
+  GlassChainedValues *gv;
   GtkWidget *dialog;
   GtkWidget *main_vbox;
   GtkWidget *preview;
   GtkWidget *table;
-  GtkObject *adj;
+  GtkWidget *chainbutton;
   gboolean   run;
+
+  gv = g_new (GlassChainedValues, 1);
+  gv->gval = &gtvals;
+  gtvals.constrain = TRUE;
 
   gimp_ui_init ("glasstile", TRUE);
 
@@ -248,39 +270,49 @@ glasstile_dialog (GimpDrawable *drawable)
                             drawable);
 
   /*  Parameter settings  */
-  table = gtk_table_new (2, 3, FALSE);
+  table = gtk_table_new (2, 4, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 2, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /* Horizontal scale - Width */
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("Tile _width:"), 150, 0,
-                              gtvals.xblock, 10, 50, 2, 10, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  gv->xadj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                                   _("Tile _width:"), 150, 0,
+                                   gtvals.xblock, 10, 50, 2, 10, 0,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &gtvals.xblock);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect (G_OBJECT (gv->xadj), "value_changed",
+                    G_CALLBACK (glasstile_size_changed),
+                    gv);
+  g_signal_connect_swapped (G_OBJECT (gv->xadj), "value_changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
   /* Horizontal scale - Height */
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                              _("Tile _height:"), 150, 0,
-                              gtvals.yblock, 10, 50, 2, 10, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  gv->yadj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+                                   _("Tile _height:"), 150, 0,
+                                   gtvals.yblock, 10, 50, 2, 10, 0,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &gtvals.yblock);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect (G_OBJECT (gv->yadj), "value_changed",
+                    G_CALLBACK (glasstile_size_changed),
+                    gv);
+  g_signal_connect_swapped (G_OBJECT (gv->yadj), "value_changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
+
+  chainbutton = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+  gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainbutton),
+                                gtvals.constrain);
+  gtk_table_attach_defaults (GTK_TABLE(table), chainbutton, 3, 4, 0, 2);
+  g_signal_connect (G_OBJECT (chainbutton), "toggled",
+                    G_CALLBACK (glasstile_chain_toggled),
+                    &gtvals.constrain);
+  gtk_widget_show (chainbutton);
 
   gtk_widget_show (dialog);
 
@@ -289,6 +321,35 @@ glasstile_dialog (GimpDrawable *drawable)
   gtk_widget_destroy (dialog);
 
   return run;
+}
+
+static void
+glasstile_size_changed (GtkObject *adj,
+                        gpointer   data)
+{
+  GlassChainedValues *gv = data;
+
+  if (adj == gv->xadj)
+    {
+      gimp_int_adjustment_update(GTK_ADJUSTMENT (gv->xadj), &gv->gval->xblock);
+      if (gv->gval->constrain)
+        gtk_adjustment_set_value(GTK_ADJUSTMENT (gv->yadj),
+                                 (gdouble) gv->gval->xblock);
+    }
+  else if (adj == gv->yadj)
+    {
+      gimp_int_adjustment_update(GTK_ADJUSTMENT (gv->yadj), &gv->gval->yblock);
+      if (gv->gval->constrain)
+        gtk_adjustment_set_value(GTK_ADJUSTMENT (gv->xadj),
+                                 (gdouble) gv->gval->yblock);
+    }
+}
+
+static void
+glasstile_chain_toggled (GtkWidget *widget,
+                         gboolean  *value)
+{
+  *value = gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (widget));
 }
 
 /*  -  Filter function  -  I wish all filter functions had a pmode :) */
