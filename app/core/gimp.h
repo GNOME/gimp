@@ -220,8 +220,7 @@ Gimp        * gimp_new                  (const gchar        *name,
 
 void          gimp_load_config          (Gimp               *gimp,
                                          const gchar        *alternate_system_gimprc,
-                                         const gchar        *alternate_gimprc,
-                                         gboolean            use_cpu_accel);
+                                         const gchar        *alternate_gimprc);
 void          gimp_initialize           (Gimp               *gimp,
                                          GimpInitStatusFunc  status_callback);
 void          gimp_restore              (Gimp               *gimp,

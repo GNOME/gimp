@@ -1,3 +1,22 @@
+2003-11-17  Sven Neumann  <sven@gimp.org>
+
+	* app/main.c: unref the gimp object after dumping the
+	configuration as a test for Gimp::finalize.
+
+	* app/base/base.[ch]: keep a reference on the config object.
+	Renamed parameter "use_mmx" to "use_cpu_accel".
+
+	* app/core/gimp.[ch]: call base_init() and base_exit() from
+	app_procs.c, not from the Gimp object.
+
+	* app/app_procs.[ch]: renamed app_init() to app_run() since here's
+	where the main loop is run. Actually quit the main loop in
+	app_exit_after_callback() instead of just calling exit().
+
+	* app/errors.[ch]: declared fatal error handlers as G_GNUC_NORETURN.
+
+	* libgimp/gimp.h: fixed usage of G_GNUC_NORETURN.
+	
 2003-11-16  Henrik Brix Andersen  <brix@gimp.org>
 
 	* app/config/gimpguiconfig.c (DEFAULT_WEB_BROWSER): changed

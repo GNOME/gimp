@@ -38,6 +38,8 @@
 
 #include "config/gimprc.h"
 
+#include "base/base.h"
+
 #include "core/gimp.h"
 
 #include "file/file-open.h"
@@ -67,7 +69,9 @@ static gboolean   app_exit_after_callback (Gimp        *gimp,
 
 /*  private variables  */
 
-static Gimp *the_gimp = NULL;
+static  Gimp      *the_gimp = NULL;
+static  GMainLoop *loop     = NULL;
+
 
 
 /*  public functions  */
@@ -80,23 +84,23 @@ app_gui_libs_init (gint    *argc,
 }
 
 void
-app_init (const gchar         *full_prog_name,
-          gint                 gimp_argc,
-          gchar              **gimp_argv,
-          const gchar         *alternate_system_gimprc,
-          const gchar         *alternate_gimprc,
-          const gchar         *session_name,
-          const gchar        **batch_cmds,
-          gboolean             no_interface,
-          gboolean             no_data,
-          gboolean             no_fonts,
-          gboolean             no_splash,
-          gboolean             no_splash_image,
-          gboolean             be_verbose,
-          gboolean             use_shm,
-          gboolean             use_mmx,
-          gboolean             console_messages,
-          GimpStackTraceMode   stack_trace_mode)
+app_run (const gchar         *full_prog_name,
+         gint                 gimp_argc,
+         gchar              **gimp_argv,
+         const gchar         *alternate_system_gimprc,
+         const gchar         *alternate_gimprc,
+         const gchar         *session_name,
+         const gchar        **batch_cmds,
+         gboolean             no_interface,
+         gboolean             no_data,
+         gboolean             no_fonts,
+         gboolean             no_splash,
+         gboolean             no_splash_image,
+         gboolean             be_verbose,
+         gboolean             use_shm,
+         gboolean             use_cpu_accel,
+         gboolean             console_messages,
+         GimpStackTraceMode   stack_trace_mode)
 {
   GimpInitStatusFunc update_status_func = NULL;
 
@@ -201,10 +205,10 @@ app_init (const gchar         *full_prog_name,
 	}
     }
 
-  gimp_load_config (the_gimp,
-                    alternate_system_gimprc,
-                    alternate_gimprc,
-                    use_mmx);
+  gimp_load_config (the_gimp, alternate_system_gimprc, alternate_gimprc);
+
+  /*  initialize lowlevel stuff  */
+  base_init (GIMP_BASE_CONFIG (the_gimp->config), use_cpu_accel);
 
   if (! no_interface)
     update_status_func = gui_init (the_gimp, no_splash, no_splash_image);
@@ -297,8 +301,6 @@ app_init (const gchar         *full_prog_name,
 
   if (no_interface)
     {
-      GMainLoop *loop;
-
       loop = g_main_loop_new (NULL, FALSE);
 
       gimp_threads_leave (the_gimp);
@@ -313,6 +315,9 @@ app_init (const gchar         *full_prog_name,
 
       gtk_main ();
     }
+
+  g_object_unref (the_gimp);
+  base_exit ();
 }
 
 
@@ -332,13 +337,10 @@ app_exit_after_callback (Gimp     *gimp,
   if (gimp->be_verbose)
     g_print ("EXIT: app_exit_after_callback\n");
 
-  g_object_unref (gimp);
-  the_gimp = NULL;
-
-  /*  There used to be foo_main_quit() here, but there's a chance
-   *  that foo_main() was never called before we reach this point. --Sven
-   */
-  exit (0);
+  if (loop)
+    g_main_loop_quit (loop);
+  else
+    gtk_main_quit ();
 
   return FALSE;
 }

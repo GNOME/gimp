@@ -28,7 +28,7 @@
 gboolean  app_gui_libs_init (gint      *gimp_argc,
                              gchar   ***gimp_argv);
 
-void      app_init          (const gchar         *full_prog_name,
+void      app_run           (const gchar         *full_prog_name,
                              gint                 gimp_argc,
                              gchar              **gimp_argv,
                              const gchar         *alternate_system_gimprc,
@@ -42,7 +42,7 @@ void      app_init          (const gchar         *full_prog_name,
                              gboolean             no_splash_image,
                              gboolean             be_verbose,
                              gboolean             use_shm,
-                             gboolean             use_mmx,
+                             gboolean             use_cpu_accel,
                              gboolean             console_messages,
                              GimpStackTraceMode   stack_trace_mode);
 

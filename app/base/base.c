@@ -60,7 +60,7 @@ static void   base_tile_cache_size_notify (GObject        *config,
 
 void
 base_init (GimpBaseConfig *config,
-           gboolean        use_mmx)
+           gboolean        use_cpu_accel)
 {
   gchar *swapfile;
   gchar *swapdir;
@@ -69,7 +69,7 @@ base_init (GimpBaseConfig *config,
   g_return_if_fail (GIMP_IS_BASE_CONFIG (config));
   g_return_if_fail (base_config == NULL);
 
-  base_config = config;
+  base_config = g_object_ref (config);
 
   tile_cache_init (config->tile_cache_size);
 
@@ -95,14 +95,17 @@ base_init (GimpBaseConfig *config,
 
   g_free (path);
 
+  /*  FIXME: pass use_cpu_accel to GimpComposite  */
   gimp_composite_init ();
 
-  paint_funcs_setup (use_mmx);
+  paint_funcs_setup (use_cpu_accel);
 }
 
 void
 base_exit (void)
 {
+  g_return_if_fail (base_config != NULL);
+
   swapping_free ();
   paint_funcs_free ();
   tile_swap_exit ();
@@ -112,6 +115,7 @@ base_exit (void)
                                         base_tile_cache_size_notify,
                                         NULL);
 
+  g_object_unref (base_config);
   base_config = NULL;
 }
 

@@ -172,6 +172,13 @@ all other GIMP Library headers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_quit ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### FUNCTION gimp_install_procedure ##### -->
 <para>
 

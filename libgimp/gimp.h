@@ -212,7 +212,7 @@ gint          gimp_main                (const GimpPlugInInfo *info,
 /* Forcefully causes the gimp library to exit and
  *  close down its connection to main gimp application.
  */
-void G_GNUC_NORETURN gimp_quit         (void);
+void          gimp_quit                (void) G_GNUC_NORETURN;
 
 
 /* Install a procedure in the procedure database.

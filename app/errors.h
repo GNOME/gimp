@@ -24,23 +24,23 @@
 #endif
 
 
-void  gimp_errors_init      (const gchar        *full_prog_name,
-                             gboolean            use_debug_handler,
-                             GimpStackTraceMode  stack_trace_mode);
+void   gimp_errors_init      (const gchar        *full_prog_name,
+                              gboolean            use_debug_handler,
+                              GimpStackTraceMode  stack_trace_mode);
 
-void  gimp_message_log_func (const gchar        *log_domain,
-			     GLogLevelFlags      flags,
-			     const gchar        *message,
-			     gpointer            data);
-void  gimp_error_log_func   (const gchar        *domain,
-			     GLogLevelFlags      flags,
-			     const gchar        *message,
-			     gpointer            data);
+void   gimp_message_log_func (const gchar        *log_domain,
+                              GLogLevelFlags      flags,
+                              const gchar        *message,
+                              gpointer            data);
+void   gimp_error_log_func   (const gchar        *domain,
+                              GLogLevelFlags      flags,
+                              const gchar        *message,
+                              gpointer            data) G_GNUC_NORETURN;
 
-void  gimp_fatal_error      (const gchar        *message,
-                             ...);
-void  gimp_terminate        (const gchar        *message,
-                             ...);
+void   gimp_fatal_error      (const gchar        *message,
+                              ...) G_GNUC_NORETURN ;
+void   gimp_terminate        (const gchar        *message,
+                              ...) G_GNUC_NORETURN;
 
 
 #endif /* __ERRORS_H__ */

@@ -50,9 +50,9 @@ static gchar               *full_prog_name    = NULL;
 
 /*  local function prototypes  */
 
-static void   gimp_eek (const gchar *reason,
-                        const gchar *message,
-                        gboolean     use_handler);
+static G_GNUC_NORETURN void  gimp_eek (const gchar *reason,
+                                       const gchar *message,
+                                       gboolean     use_handler);
 
 
 /*  public functions  */

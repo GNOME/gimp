@@ -57,14 +57,14 @@
 #ifdef G_OS_WIN32
 #include <windows.h>
 #else
-static void   gimp_sigfatal_handler  (gint         sig_num);
-static void   gimp_sigchld_handler   (gint         sig_num);
+static void  gimp_sigfatal_handler  (gint         sig_num) G_GNUC_NORETURN;
+static void  gimp_sigchld_handler   (gint         sig_num);
 #endif
 
 
-static void   gimp_show_version      (void);
-static void   gimp_show_help         (const gchar *progname);
-static void   gimp_text_console_exit (gint         status);
+static void  gimp_show_version      (void);
+static void  gimp_show_help         (const gchar *progname);
+static void  gimp_text_console_exit (gint         status) G_GNUC_NORETURN;
 
 
 /*
@@ -176,7 +176,8 @@ main (int    argc,
 
           if (format)
             {
-              Gimp *gimp;
+              Gimp     *gimp;
+              gboolean  success;
 
               g_type_init ();
 
@@ -184,8 +185,11 @@ main (int    argc,
 
               units_init (gimp);
 
-              gimp_text_console_exit (gimp_config_dump (format) ?
-                                      EXIT_SUCCESS : EXIT_FAILURE);
+              success = gimp_config_dump (format);
+
+              g_object_unref (gimp);
+
+              gimp_text_console_exit (success ? EXIT_SUCCESS : EXIT_FAILURE);
             }
         }
     }
@@ -436,23 +440,23 @@ main (int    argc,
                     use_debug_handler,
                     stack_trace_mode);
 
-  app_init (full_prog_name,
-            argc - 1,
-	    argv + 1,
-            alternate_system_gimprc,
-            alternate_gimprc,
-            session_name,
-            (const gchar **) batch_cmds,
-            no_interface,
-            no_data,
-            no_fonts,
-            no_splash,
-            no_splash_image,
-            be_verbose,
-            use_shm,
-            use_mmx,
-            console_messages,
-            stack_trace_mode);
+  app_run (full_prog_name,
+           argc - 1,
+           argv + 1,
+           alternate_system_gimprc,
+           alternate_gimprc,
+           session_name,
+           (const gchar **) batch_cmds,
+           no_interface,
+           no_data,
+           no_fonts,
+           no_splash,
+           no_splash_image,
+           be_verbose,
+           use_shm,
+           use_mmx,
+           console_messages,
+           stack_trace_mode);
 
   g_free (batch_cmds);
 

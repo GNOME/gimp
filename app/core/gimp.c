@@ -31,8 +31,6 @@
 #include "config/gimpconfig-path.h"
 #include "config/gimprc.h"
 
-#include "base/base.h"
-
 #include "pdb/procedural_db.h"
 #include "pdb/internal_procs.h"
 
@@ -479,8 +477,6 @@ gimp_finalize (GObject *object)
   if (gimp->user_units)
     gimp_units_exit (gimp);
 
-  base_exit ();
-
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -819,8 +815,7 @@ gimp_edit_config_notify (GObject    *edit_config,
 void
 gimp_load_config (Gimp        *gimp,
                   const gchar *alternate_system_gimprc,
-                  const gchar *alternate_gimprc,
-                  gboolean     use_cpu_accel)
+                  const gchar *alternate_gimprc)
 {
   GimpRc *gimprc;
 
@@ -839,9 +834,6 @@ gimp_load_config (Gimp        *gimp,
   gimprc = gimp_rc_new (alternate_system_gimprc,
                         alternate_gimprc,
                         gimp->be_verbose);
-
-  /*  initialize lowlevel stuff  */
-  base_init (GIMP_BASE_CONFIG (gimprc), use_cpu_accel);
 
   gimp->config = GIMP_CORE_CONFIG (gimprc);
 
