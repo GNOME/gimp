@@ -73,11 +73,10 @@ WARNING: I've detected another installation of the Gimp-Perl extension.
 	 The already installed version uses the prefix '$old_prefix'.
 
 	 They don't match, which indicates that installing Gimp-Perl might
-	 overwrite an old but still used installation. Gimp-Perl will
-	 therefore be disabled, and not be installed.
+	 overwrite an old but still used installation. The Gimp-Perl
+         installation _might_ therefore be broken.
 
 EOF
-	 not_halt("prefix mismatch");
       }
    }
 }
