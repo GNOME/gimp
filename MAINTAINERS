@@ -142,11 +142,10 @@ cvs commit access: yes
 
 Name: Seth Burgess
 Email: sjburges@gimp.org
-url: http://students.ou.edu/B/Seth.J.Burgess-1/
+url: http://www.gimp.org/~sjburges/
 ircnick: sjburges
-expertise: replying to bug reports, a little plug-in debugging, script
-	   writing, gimp-perl scripts
-current projects: mostly just bug replies, gimp-perl scripts
+expertise: gimp-perl, core hackery (tools,etc), plug-ins
+current projects: bringing tools back to life, hoping to add to them
 commit access: yes
 
 Name:  Tuomas Kuosmanen
