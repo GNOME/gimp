@@ -51,7 +51,7 @@ static TempBuf * gimp_drawable_preview_private (GimpDrawable      *drawable,
 						gint               width,
 						gint               height);
 static void      gimp_drawable_preview_scale   (GimpImageBaseType  type,
-						guchar            *cmap,
+						const guchar      *cmap,
 						PixelRegion       *srcPR,
 						PixelRegion       *destPR,
 						gint               subsample);
@@ -195,7 +195,7 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
 
 static void
 gimp_drawable_preview_scale (GimpImageBaseType  type,
-			     guchar            *cmap,
+			     const guchar      *cmap,
 			     PixelRegion       *srcPR,
 			     PixelRegion       *destPR,
 			     gint               subsample)
@@ -216,6 +216,8 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
   gint     i, j;
   gint     frac;
   gboolean advance_dest;
+
+  g_return_if_fail (type != GIMP_INDEXED || cmap != NULL);
 
   orig_width  = srcPR->w / subsample;
   orig_height = srcPR->h / subsample;

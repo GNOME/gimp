@@ -717,6 +717,8 @@ project_indexed (GimpImage   *gimage,
 		 PixelRegion *src,
 		 PixelRegion *dest)
 {
+  g_return_if_fail (gimage->cmap != NULL);
+
   if (! gimage->construct_flag)
     initial_region (src, dest, NULL, gimage->cmap,
                     layer->opacity * 255.999,
@@ -734,6 +736,8 @@ project_indexed_alpha (GimpImage   *gimage,
 		       PixelRegion *dest,
 		       PixelRegion *mask)
 {
+  g_return_if_fail (gimage->cmap != NULL);
+
   if (! gimage->construct_flag)
     initial_region (src, dest, mask, gimage->cmap,
                     layer->opacity * 255.999,

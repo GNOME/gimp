@@ -894,8 +894,11 @@ load_image (const gchar *filename,
 #if PNG_LIBPNG_VER > 99
       if (png_get_valid (pp, info, PNG_INFO_tRNS))
         {
-          for (empty = 0; empty < 256 && alpha[empty] == 0; ++empty);
-          /* Calculates number of fully transparent "empty" entries */
+          for (empty = 0; empty < 256 && alpha[empty] == 0; ++empty)
+            /* Calculates number of fully transparent "empty" entries */;
+
+          /*  keep at least one entry  */
+          empty = MIN (empty, info->num_palette - 1);
 
           gimp_image_set_cmap (image, (guchar *) (info->palette + empty),
                                info->num_palette - empty);
