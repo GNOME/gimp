@@ -8,47 +8,6 @@
 
 /* enumerations from "./base-enums.h" */
 GType
-gimp_check_size_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_SMALL_CHECKS, N_("Small"), "small-checks" },
-    { GIMP_MEDIUM_CHECKS, N_("Medium"), "medium-checks" },
-    { GIMP_LARGE_CHECKS, N_("Large"), "large-checks" },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    type = g_enum_register_static ("GimpCheckSize", values);
-
-  return type;
-}
-
-GType
-gimp_check_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_LIGHT_CHECKS, N_("Light Checks"), "light-checks" },
-    { GIMP_GRAY_CHECKS, N_("Mid-Tone Checks"), "gray-checks" },
-    { GIMP_DARK_CHECKS, N_("Dark Checks"), "dark-checks" },
-    { GIMP_WHITE_ONLY, N_("White Only"), "white-only" },
-    { GIMP_GRAY_ONLY, N_("Gray Only"), "gray-only" },
-    { GIMP_BLACK_ONLY, N_("Black Only"), "black-only" },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    type = g_enum_register_static ("GimpCheckType", values);
-
-  return type;
-}
-
-GType
 gimp_curve_type_get_type (void)
 {
   static const GEnumValue values[] =

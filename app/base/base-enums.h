@@ -35,33 +35,6 @@
  * these enums that are registered with the type system
  */
 
-#define GIMP_TYPE_CHECK_SIZE (gimp_check_size_get_type ())
-
-GType gimp_check_size_get_type (void) G_GNUC_CONST;
-
-typedef enum  /*< pdb-skip >*/
-{
-  GIMP_SMALL_CHECKS  = 0,  /*< desc="Small"  >*/
-  GIMP_MEDIUM_CHECKS = 1,  /*< desc="Medium" >*/
-  GIMP_LARGE_CHECKS  = 2   /*< desc="Large"  >*/
-} GimpCheckSize;
-
-
-#define GIMP_TYPE_CHECK_TYPE (gimp_check_type_get_type ())
-
-GType gimp_check_type_get_type (void) G_GNUC_CONST;
-
-typedef enum  /*< pdb-skip >*/
-{
-  GIMP_LIGHT_CHECKS = 0,  /*< desc="Light Checks"    >*/
-  GIMP_GRAY_CHECKS  = 1,  /*< desc="Mid-Tone Checks" >*/
-  GIMP_DARK_CHECKS  = 2,  /*< desc="Dark Checks"     >*/
-  GIMP_WHITE_ONLY   = 3,  /*< desc="White Only"      >*/
-  GIMP_GRAY_ONLY    = 4,  /*< desc="Gray Only"       >*/
-  GIMP_BLACK_ONLY   = 5   /*< desc="Black Only"      >*/
-} GimpCheckType;
-
-
 #define GIMP_TYPE_CURVE_TYPE (gimp_curve_type_get_type ())
 
 GType gimp_curve_type_get_type (void) G_GNUC_CONST;

@@ -84,17 +84,18 @@ guchar *render_blend_white       = NULL;
 
 
 static guchar *tile_buf           = NULL;
+static guint   tile_shift         = 0;
 static guint   check_mod          = 0;
 static guint   check_shift        = 0;
-static guint   tile_shift         = 0;
+
 static guchar  check_combos[6][2] =
 {
-  { 204, 255 },
-  { 102, 153 },
-  {   0,  51 },
-  { 255, 255 },
-  { 127, 127 },
-  {   0,   0 }
+  { 204, 255 },  /*  LIGHT_CHECKS  */
+  { 102, 153 },  /*  GRAY_CHECKS   */
+  {   0,  51 },  /*  DARK_CHECKS   */
+  { 255, 255 },  /*  WHITE_ONLY    */
+  { 127, 127 },  /*  GRAY_ONLY     */
+  {   0,   0 }   /*  BACK_ONLY     */
 };
 
 
@@ -219,15 +220,15 @@ render_setup_notify (gpointer    config,
 
   switch (check_size)
     {
-    case GIMP_SMALL_CHECKS:
+    case GIMP_CHECK_SIZE_SMALL_CHECKS:
       check_mod   = 0x3;
       check_shift = 2;
       break;
-    case GIMP_MEDIUM_CHECKS:
+    case GIMP_CHECK_SIZE_MEDIUM_CHECKS:
       check_mod   = 0x7;
       check_shift = 3;
       break;
-    case GIMP_LARGE_CHECKS:
+    case GIMP_CHECK_SIZE_LARGE_CHECKS:
       check_mod   = 0xf;
       check_shift = 4;
       break;

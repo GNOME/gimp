@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-31 00:44+0200\n"
-"PO-Revision-Date: 2004-08-31 00:47+0200\n"
+"POT-Creation-Date: 2004-09-02 16:21+0200\n"
+"PO-Revision-Date: 2004-09-02 16:23+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -206,34 +206,70 @@ msgid "percent"
 msgstr "Prozent"
 
 #: libgimpbase/gimpbaseenums.c:15
+msgid "Small"
+msgstr "Klein"
+
+#: libgimpbase/gimpbaseenums.c:16
+msgid "Medium"
+msgstr "Mittel"
+
+#: libgimpbase/gimpbaseenums.c:17
+msgid "Large"
+msgstr "Groß"
+
+#: libgimpbase/gimpbaseenums.c:37
+msgid "Light Checks"
+msgstr "Helle Quadrate"
+
+#: libgimpbase/gimpbaseenums.c:38
+msgid "Mid-Tone Checks"
+msgstr "Halbhelle Quadrate"
+
+#: libgimpbase/gimpbaseenums.c:39
+msgid "Dark Checks"
+msgstr "Dunkle Quadrate"
+
+#: libgimpbase/gimpbaseenums.c:40
+msgid "White Only"
+msgstr "Nur Weiß"
+
+#: libgimpbase/gimpbaseenums.c:41
+msgid "Gray Only"
+msgstr "Nur Grau"
+
+#: libgimpbase/gimpbaseenums.c:42
+msgid "Black Only"
+msgstr "Nur Schwarz"
+
+#: libgimpbase/gimpbaseenums.c:62
 msgid "RGB color"
 msgstr "RGB Farben"
 
-#: libgimpbase/gimpbaseenums.c:16 libgimpbase/gimpbaseenums.c:39
+#: libgimpbase/gimpbaseenums.c:63 libgimpbase/gimpbaseenums.c:86
 msgid "Grayscale"
 msgstr "Graustufen"
 
-#: libgimpbase/gimpbaseenums.c:17
+#: libgimpbase/gimpbaseenums.c:64
 msgid "Indexed color"
 msgstr "Indizierte Farben"
 
-#: libgimpbase/gimpbaseenums.c:37
+#: libgimpbase/gimpbaseenums.c:84
 msgid "RGB"
 msgstr "RGB"
 
-#: libgimpbase/gimpbaseenums.c:38
+#: libgimpbase/gimpbaseenums.c:85
 msgid "RGB-alpha"
 msgstr "RGB-Alpha"
 
-#: libgimpbase/gimpbaseenums.c:40
+#: libgimpbase/gimpbaseenums.c:87
 msgid "Grayscale-alpha"
 msgstr "Graustufen-Alpha"
 
-#: libgimpbase/gimpbaseenums.c:41
+#: libgimpbase/gimpbaseenums.c:88
 msgid "Indexed"
 msgstr "Indiziert"
 
-#: libgimpbase/gimpbaseenums.c:42
+#: libgimpbase/gimpbaseenums.c:89
 msgid "Indexed-alpha"
 msgstr "Indiziert-Alpha"
 
@@ -459,7 +495,7 @@ msgstr ""
 "dessen Farbe auszuwählen."
 
 #. a toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:236
+#: libgimpwidgets/gimppreview.c:235
 msgid "_Preview"
 msgstr "_Vorschau"
 
@@ -694,7 +730,8 @@ msgstr "Schwarzauszug:"
 
 #: modules/colorsel_cmyk.c:208
 msgid "The percentage of black to pull out of the colored inks."
-msgstr "Der Prozentsatz an Schwarz, der aus den farbigen Tinten gezogen werden soll."
+msgstr ""
+"Der Prozentsatz an Schwarz, der aus den farbigen Tinten gezogen werden soll."
 
 #: modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"

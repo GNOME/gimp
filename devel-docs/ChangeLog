@@ -1,3 +1,9 @@
+2004-09-02  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimpbaseenums.sgml: added GimpCheck[Size|Type]
+	enums.
+
 2004-09-01  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/tmpl/gimpprogressbar.sgml

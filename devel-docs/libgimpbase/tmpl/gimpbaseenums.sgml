@@ -14,6 +14,27 @@ gimpbaseenums
 
 </para>
 
+<!-- ##### ENUM GimpCheckSize ##### -->
+<para>
+
+</para>
+
+@GIMP_CHECK_SIZE_SMALL_CHECKS: 
+@GIMP_CHECK_SIZE_MEDIUM_CHECKS: 
+@GIMP_CHECK_SIZE_LARGE_CHECKS: 
+
+<!-- ##### ENUM GimpCheckType ##### -->
+<para>
+
+</para>
+
+@GIMP_CHECK_TYPE_LIGHT_CHECKS: 
+@GIMP_CHECK_TYPE_GRAY_CHECKS: 
+@GIMP_CHECK_TYPE_DARK_CHECKS: 
+@GIMP_CHECK_TYPE_WHITE_ONLY: 
+@GIMP_CHECK_TYPE_GRAY_ONLY: 
+@GIMP_CHECK_TYPE_BLACK_ONLY: 
+
 <!-- ##### ENUM GimpImageBaseType ##### -->
 <para>
 

@@ -252,15 +252,15 @@ temp_buf_new_check (gint           width,
 
   switch (check_size)
     {
-    case GIMP_SMALL_CHECKS:
+    case GIMP_CHECK_SIZE_SMALL_CHECKS:
       check_mod   = 0x3;
       check_shift = 2;
       break;
-    case GIMP_MEDIUM_CHECKS:
+    case GIMP_CHECK_SIZE_MEDIUM_CHECKS:
       check_mod   = 0x7;
       check_shift = 3;
       break;
-    case GIMP_LARGE_CHECKS:
+    case GIMP_CHECK_SIZE_LARGE_CHECKS:
       check_mod   = 0xf;
       check_shift = 4;
       break;
@@ -268,27 +268,27 @@ temp_buf_new_check (gint           width,
 
   switch (check_type)
     {
-    case GIMP_LIGHT_CHECKS:
+    case GIMP_CHECK_TYPE_LIGHT_CHECKS:
       fg_color = 204;
       bg_color = 255;
       break;
-    case GIMP_GRAY_CHECKS:
+    case GIMP_CHECK_TYPE_GRAY_CHECKS:
       fg_color = 102;
       bg_color = 153;
       break;
-    case GIMP_DARK_CHECKS:
+    case GIMP_CHECK_TYPE_DARK_CHECKS:
       fg_color = 0;
       bg_color = 51;
       break;
-    case GIMP_WHITE_ONLY:
+    case GIMP_CHECK_TYPE_WHITE_ONLY:
       fg_color = 255;
       bg_color = 255;
       break;
-    case GIMP_GRAY_ONLY:
+    case GIMP_CHECK_TYPE_GRAY_ONLY:
       fg_color = 127;
       bg_color = 127;
       break;
-    case GIMP_BLACK_ONLY:
+    case GIMP_CHECK_TYPE_BLACK_ONLY:
       fg_color = 0;
       bg_color = 0;
     }

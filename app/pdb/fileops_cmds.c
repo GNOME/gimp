@@ -301,7 +301,7 @@ file_load_thumbnail_invoker (Gimp         *gimp,
               gdk_pixbuf_composite_color (pixbuf, tmp,
                                           0, 0, width, height, 0, 0, 1.0, 1.0,
                                           GDK_INTERP_NEAREST, 255,
-                                          0, 0, GIMP_SMALL_CHECKS,
+                                          0, 0, GIMP_CHECK_SIZE_SMALL_CHECKS,
                                           0x66666666, 0x99999999);
 
               g_object_unref (pixbuf);

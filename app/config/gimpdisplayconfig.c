@@ -145,11 +145,13 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSPARENCY_SIZE,
                                  "transparency-size", TRANSPARENCY_SIZE_BLURB,
-                                 GIMP_TYPE_CHECK_SIZE, GIMP_MEDIUM_CHECKS,
+                                 GIMP_TYPE_CHECK_SIZE,
+                                 GIMP_CHECK_SIZE_MEDIUM_CHECKS,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSPARENCY_TYPE,
                                  "transparency-type", TRANSPARENCY_TYPE_BLURB,
-                                 GIMP_TYPE_CHECK_TYPE, GIMP_GRAY_CHECKS,
+                                 GIMP_TYPE_CHECK_TYPE,
+                                 GIMP_CHECK_TYPE_GRAY_CHECKS,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SNAP_DISTANCE,
                                 "snap-distance", DEFAULT_SNAP_DISTANCE_BLURB,
