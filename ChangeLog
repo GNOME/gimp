@@ -1,3 +1,7 @@
+2002-04-10  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/url.c: merges from gimp-1-2 branch
+
 2002-04-06  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpscanconvert.c: include libart.h instead of a selection
