@@ -2,6 +2,15 @@
 
 	Merged from HEAD branch:
 
+	* plug-ins/bmp/bmp.h (Bitmap_Head_Struct)
+	* plug-ins/bmp/bmpread.c: use a signed long for width and height
+	and check that width is > 0 (negative height is allowed and
+	handled by our code). Fixes bug #171453.
+
+2005-03-24  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
 	* plug-ins/bmp/bmpread.c: applied a patch from David Costanzo that
 	fixes handling of odd-length pixel encodings in "absolute mode" of
 	RLE4 compressed data (bug #171306).
