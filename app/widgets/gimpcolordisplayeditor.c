@@ -129,9 +129,7 @@ gimp_color_display_editor_get_type (void)
 static void
 gimp_color_display_editor_class_init (GimpColorDisplayEditorClass *klass)
 {
-  GtkObjectClass *object_class;
-
-  object_class = GTK_OBJECT_CLASS (klass);
+  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -723,9 +721,7 @@ gimp_color_display_editor_enabled (GimpColorDisplay       *display,
 
       if (display == display2)
         {
-          gboolean enabled;
-
-          enabled = gimp_color_display_get_enabled (display);
+          gboolean enabled = gimp_color_display_get_enabled (display);
 
           gtk_list_store_set (editor->dest, &iter,
                               DEST_COLUMN_ENABLED, enabled,
@@ -741,10 +737,8 @@ gimp_color_display_editor_enable_toggled (GtkCellRendererToggle  *toggle,
                                           const gchar            *path_str,
                                           GimpColorDisplayEditor *editor)
 {
-  GtkTreePath *path;
+  GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
   GtkTreeIter  iter;
-
-  path = gtk_tree_path_new_from_string (path_str);
 
   if (gtk_tree_model_get_iter (GTK_TREE_MODEL (editor->dest), &iter, path))
     {
@@ -774,11 +768,8 @@ gimp_color_display_editor_update_buttons (GimpColorDisplayEditor *editor)
 
   if (gtk_tree_selection_get_selected (editor->dest_sel, &model, &iter))
     {
-      GtkTreePath *path;
-      gint        *indices;
-
-      path    = gtk_tree_model_get_path (model, &iter);
-      indices = gtk_tree_path_get_indices (path);
+      GtkTreePath *path    = gtk_tree_model_get_path (model, &iter);
+      gint        *indices = gtk_tree_path_get_indices (path);
 
       up_sensitive   = indices[0] > 0;
       down_sensitive = indices[0] < (g_list_length (editor->stack->filters) - 1);

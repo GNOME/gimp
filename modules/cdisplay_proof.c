@@ -71,6 +71,7 @@ static GType              cdisplay_proof_get_type   (GTypeModule     *module);
 static void               cdisplay_proof_class_init (CdisplayProofClass *klass);
 static void               cdisplay_proof_init       (CdisplayProof   *proof);
 
+static void               cdisplay_proof_dispose    (GObject         *object);
 static void               cdisplay_proof_finalize   (GObject         *object);
 
 static GimpColorDisplay * cdisplay_proof_clone      (GimpColorDisplay *display);
@@ -153,15 +154,13 @@ cdisplay_proof_get_type (GTypeModule *module)
 static void
 cdisplay_proof_class_init (CdisplayProofClass *klass)
 {
-  GObjectClass          *object_class;
-  GimpColorDisplayClass *display_class;
-
-  object_class  = G_OBJECT_CLASS (klass);
-  display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
+  GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
+  GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = cdisplay_proof_finalize;
+  object_class->dispose          = cdisplay_proof_dispose;
+  object_class->finalize         = cdisplay_proof_finalize;
 
   display_class->name            = _("Color Proof");
   display_class->help_id         = "gimp-colordisplay-proof";
@@ -189,12 +188,20 @@ cdisplay_proof_init (CdisplayProof *proof)
 }
 
 static void
-cdisplay_proof_finalize (GObject *object)
+cdisplay_proof_dispose (GObject *object)
 {
   CdisplayProof *proof = CDISPLAY_PROOF (object);
 
   if (proof->table)
     gtk_widget_destroy (proof->table);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+cdisplay_proof_finalize (GObject *object)
+{
+  CdisplayProof *proof = CDISPLAY_PROOF (object);
 
   if (proof->filename)
     {

@@ -97,7 +97,7 @@ static GType   cdisplay_colorblind_get_type   (GTypeModule             *module);
 static void    cdisplay_colorblind_class_init (CdisplayColorblindClass *klass);
 static void    cdisplay_colorblind_init       (CdisplayColorblind      *colorblind);
 
-static void    cdisplay_colorblind_finalize   (GObject                 *object);
+static void    cdisplay_colorblind_dispose    (GObject                 *object);
 
 static GimpColorDisplay * cdisplay_colorblind_clone  (GimpColorDisplay   *display);
 static void    cdisplay_colorblind_convert           (GimpColorDisplay   *display,
@@ -177,15 +177,12 @@ cdisplay_colorblind_get_type (GTypeModule *module)
 static void
 cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
 {
-  GObjectClass          *object_class;
-  GimpColorDisplayClass *display_class;
-
-  object_class  = G_OBJECT_CLASS (klass);
-  display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
+  GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
+  GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize         = cdisplay_colorblind_finalize;
+  object_class->dispose          = cdisplay_colorblind_dispose;
 
   display_class->name            = _("Color Deficient Vision");
   display_class->help_id         = "gimp-colordisplay-colorblind";
@@ -255,14 +252,14 @@ cdisplay_colorblind_init (CdisplayColorblind *colorblind)
 }
 
 static void
-cdisplay_colorblind_finalize (GObject *object)
+cdisplay_colorblind_dispose (GObject *object)
 {
   CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (object);
 
   if (colorblind->hbox)
     gtk_widget_destroy (colorblind->hbox);
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 
@@ -287,7 +284,7 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
                              gint              bpp,
                              gint              bpl)
 {
-  CdisplayColorblind *colorblind;
+  CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (display);
   guchar             *b;
   gfloat              rgb2lms[9],lms2rgb[9];
   gfloat              a1, b1, c1, a2, b2, c2;
@@ -298,8 +295,6 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
   /* Require 3 bytes per pixel (assume RGB) */
   if (bpp != 3)
     return;
-
-  colorblind = CDISPLAY_COLORBLIND (display);
 
   /* to improve readability, copy the parameters into local variables */
   memcpy (rgb2lms, colorblind->rgb2lms, sizeof (rgb2lms));

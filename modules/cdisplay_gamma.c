@@ -48,7 +48,7 @@ struct _CdisplayGamma
   GimpColorDisplay  parent_instance;
 
   gdouble           gamma;
-  guchar           *lookup;
+  guchar            lookup[256];
 
   GtkWidget        *hbox;
   GtkObject        *adjustment;
@@ -60,11 +60,25 @@ struct _CdisplayGammaClass
 };
 
 
-static GType   cdisplay_gamma_get_type   (GTypeModule        *module);
-static void    cdisplay_gamma_class_init (CdisplayGammaClass *klass);
-static void    cdisplay_gamma_init       (CdisplayGamma      *gamma);
+enum
+{
+  PROP_0,
+  PROP_GAMMA
+};
 
-static void    cdisplay_gamma_finalize          (GObject           *object);
+
+static GType   cdisplay_gamma_get_type     (GTypeModule        *module);
+static void    cdisplay_gamma_class_init   (CdisplayGammaClass *klass);
+
+static void    cdisplay_gamma_dispose      (GObject            *object);
+static void    cdisplay_gamma_set_property (GObject            *object,
+                                            guint               property_id,
+                                            const GValue       *value,
+                                            GParamSpec         *pspec);
+static void    cdisplay_gamma_get_property (GObject            *object,
+                                            guint               property_id,
+                                            GValue             *value,
+                                            GParamSpec         *pspec);
 
 static GimpColorDisplay * cdisplay_gamma_clone  (GimpColorDisplay *display);
 static void    cdisplay_gamma_convert           (GimpColorDisplay *display,
@@ -79,8 +93,9 @@ static GimpParasite * cdisplay_gamma_save_state (GimpColorDisplay *display);
 static GtkWidget    * cdisplay_gamma_configure  (GimpColorDisplay *display);
 static void    cdisplay_gamma_configure_reset   (GimpColorDisplay *display);
 
-static void    gamma_create_lookup_table        (CdisplayGamma    *gamma);
-static void    gamma_configure_adj_callback     (GtkAdjustment    *adj,
+static void    cdisplay_gamma_set_gamma         (CdisplayGamma    *gamma,
+                                                 gdouble           value);
+static void    cdisplay_gamma_adj_callback      (GtkAdjustment    *adj,
                                                  CdisplayGamma    *gamma);
 
 
@@ -120,14 +135,14 @@ cdisplay_gamma_get_type (GTypeModule *module)
       static const GTypeInfo display_info =
       {
         sizeof (CdisplayGammaClass),
-	(GBaseInitFunc) NULL,
+	(GBaseInitFunc)     NULL,
 	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) cdisplay_gamma_class_init,
+	(GClassInitFunc)    cdisplay_gamma_class_init,
 	NULL,           /* class_finalize */
 	NULL,           /* class_data     */
 	sizeof (CdisplayGamma),
 	0,              /* n_preallocs    */
-	(GInstanceInitFunc) cdisplay_gamma_init,
+	NULL            /* instance_init  */
       };
 
       cdisplay_gamma_type =
@@ -143,15 +158,21 @@ cdisplay_gamma_get_type (GTypeModule *module)
 static void
 cdisplay_gamma_class_init (CdisplayGammaClass *klass)
 {
-  GObjectClass          *object_class;
-  GimpColorDisplayClass *display_class;
-
-  object_class  = G_OBJECT_CLASS (klass);
-  display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
+  GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
+  GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize         = cdisplay_gamma_finalize;
+  object_class->dispose          = cdisplay_gamma_dispose;
+  object_class->get_property     = cdisplay_gamma_get_property;
+  object_class->set_property     = cdisplay_gamma_set_property;
+
+  g_object_class_install_property (object_class, PROP_GAMMA,
+                                   g_param_spec_double ("gamma", NULL, NULL,
+                                                        0.01, 10.0,
+                                                        DEFAULT_GAMMA,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 
   display_class->name            = _("Gamma");
   display_class->help_id         = "gimp-colordisplay-gamma";
@@ -164,34 +185,53 @@ cdisplay_gamma_class_init (CdisplayGammaClass *klass)
 }
 
 static void
-cdisplay_gamma_init (CdisplayGamma *gamma)
-{
-  gint i;
-
-  gamma->gamma  = DEFAULT_GAMMA;
-  gamma->lookup = g_new (guchar, 256);
-
-  for (i = 0; i < 256; i++)
-    gamma->lookup[i] = i;
-}
-
-static void
-cdisplay_gamma_finalize (GObject *object)
+cdisplay_gamma_dispose (GObject *object)
 {
   CdisplayGamma *gamma = CDISPLAY_GAMMA (object);
 
   if (gamma->hbox)
     gtk_widget_destroy (gamma->hbox);
 
-  if (gamma->lookup)
-    {
-      g_free (gamma->lookup);
-      gamma->lookup = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
+static void
+cdisplay_gamma_get_property (GObject    *object,
+                             guint       property_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
+{
+  CdisplayGamma *gamma = CDISPLAY_GAMMA (object);
+
+  switch (property_id)
+    {
+    case PROP_GAMMA:
+      g_value_set_double (value, gamma->gamma);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+cdisplay_gamma_set_property (GObject      *object,
+                             guint         property_id,
+                             const GValue *value,
+                             GParamSpec   *pspec)
+{
+  CdisplayGamma *gamma = CDISPLAY_GAMMA (object);
+
+  switch (property_id)
+    {
+    case PROP_GAMMA:
+      cdisplay_gamma_set_gamma (gamma, g_value_get_double (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
 
 static GimpColorDisplay *
 cdisplay_gamma_clone (GimpColorDisplay *display)
@@ -249,10 +289,10 @@ static void
 cdisplay_gamma_load_state (GimpColorDisplay *display,
                            GimpParasite     *state)
 {
-  CdisplayGamma *gamma = CDISPLAY_GAMMA (display);
+  gdouble  value;
 
 #if G_BYTE_ORDER == G_BIG_ENDIAN
-  memcpy (&gamma->gamma, gimp_parasite_data (state), sizeof (gdouble));
+  memcpy (&value, gimp_parasite_data (state), sizeof (gdouble));
 #else
   {
     guint32        buf[2];
@@ -263,11 +303,11 @@ cdisplay_gamma_load_state (GimpColorDisplay *display,
     buf[0] = g_ntohl (data[1]);
     buf[1] = g_ntohl (data[0]);
 
-    memcpy (&gamma->gamma, buf, sizeof (gdouble));
+    memcpy (&value, buf, sizeof (gdouble));
   }
 #endif
 
-  gamma_create_lookup_table (gamma);
+  cdisplay_gamma_set_gamma (CDISPLAY_GAMMA (display), value);
 }
 
 static GimpParasite *
@@ -321,7 +361,7 @@ cdisplay_gamma_configure (GimpColorDisplay *display)
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   g_signal_connect (gamma->adjustment, "value_changed",
-                    G_CALLBACK (gamma_configure_adj_callback),
+                    G_CALLBACK (cdisplay_gamma_adj_callback),
                     gamma);
 
   return gamma->hbox;
@@ -333,35 +373,39 @@ cdisplay_gamma_configure_reset (GimpColorDisplay *display)
   CdisplayGamma *gamma = CDISPLAY_GAMMA (display);
 
   if (gamma->adjustment)
-    gtk_adjustment_set_value (GTK_ADJUSTMENT (gamma->adjustment), DEFAULT_GAMMA);
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (gamma->adjustment),
+                              DEFAULT_GAMMA);
 }
 
 static void
-gamma_create_lookup_table (CdisplayGamma *gamma)
+cdisplay_gamma_set_gamma (CdisplayGamma *gamma,
+                          gdouble        value)
 {
-  gdouble one_over_gamma;
-  gdouble ind;
-  gint    i;
+  if (value <= 0.0)
+    value = 1.0;
 
-  if (gamma->gamma == 0.0)
-    gamma->gamma = 1.0;
-
-  one_over_gamma = 1.0 / gamma->gamma;
-
-  for (i = 0; i < 256; i++)
+  if (value != gamma->gamma)
     {
-      ind = (gdouble) i / 255.0;
-      gamma->lookup[i] = (guchar) (gint) (255 * pow (ind, one_over_gamma));
+      gdouble one_over_gamma = 1.0 / value;
+      gint    i;
+
+      gamma->gamma = value;
+
+      for (i = 0; i < 256; i++)
+        {
+          gdouble ind = (gdouble) i / 255.0;
+
+          gamma->lookup[i] = (guchar) (gint) (255 * pow (ind, one_over_gamma));
+        }
+
+      g_object_notify (G_OBJECT (gamma), "gamma");
+      gimp_color_display_changed (GIMP_COLOR_DISPLAY (gamma));
     }
 }
 
 static void
-gamma_configure_adj_callback (GtkAdjustment *adj,
-                              CdisplayGamma *gamma)
+cdisplay_gamma_adj_callback (GtkAdjustment *adj,
+                             CdisplayGamma *gamma)
 {
-  gamma->gamma = adj->value;
-
-  gamma_create_lookup_table (gamma);
-
-  gimp_color_display_changed (GIMP_COLOR_DISPLAY (gamma));
+  cdisplay_gamma_set_gamma (gamma, adj->value);
 }

@@ -1,3 +1,14 @@
+2004-07-04  Sven Neumann  <sven@gimp.org>
+
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c: added object properties for
+	configurable values.
+
+	* app/widgets/gimpcolordisplayeditor.c
+	* libgimpwidgets/gimpcolordisplaystack.c
+	* modules/cdisplay_colorblind.c
+	* modules/cdisplay_proof.c: cosmetic changes.
+
 2004-07-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcontext.[ch]: added context->serialize_props mask

@@ -91,9 +91,7 @@ gimp_color_display_stack_get_type (void)
 static void
 gimp_color_display_stack_class_init (GimpColorDisplayStackClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -170,11 +168,7 @@ gimp_color_display_stack_finalize (GObject *object)
 GimpColorDisplayStack *
 gimp_color_display_stack_new (void)
 {
-  GimpColorDisplayStack *stack;
-
-  stack = g_object_new (GIMP_TYPE_COLOR_DISPLAY_STACK, NULL);
-
-  return stack;
+  return g_object_new (GIMP_TYPE_COLOR_DISPLAY_STACK, NULL);
 }
 
 GimpColorDisplayStack *
