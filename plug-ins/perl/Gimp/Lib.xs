@@ -18,8 +18,6 @@
 #if HAVE_PDL
 #define PDL_clean_namespace
 #include <pdlcore.h>
-#undef croak
-#define croak Perl_croak
 #endif
 
 /* various functions allocate static buffers, STILL.  */

@@ -313,7 +313,7 @@ WriteMakefile(
 	           },
     'PREREQ_PM'	=> {
     		    Gtk			=> 0.5,
-                    PDL			=> 1.99,
+                    PDL			=> 2.2.1,
     		    Data::Dumper	=> 2.0,
                     Parse::RecDescent	=> 1.6,
 		   },

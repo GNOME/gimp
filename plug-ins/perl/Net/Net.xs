@@ -26,8 +26,6 @@
 #if HAVE_PDL
 
 # include <pdlcore.h>
-# undef croak
-# define croak Perl_croak
 
 #if 0
 /* hack, undocumented, argh! */
