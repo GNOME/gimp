@@ -1838,7 +1838,7 @@ static void
 script_fu_about_callback (GtkWidget *widget,
                           SFScript  *script)
 {
-  GtkWidget     *dialog;
+  GtkWidget     *dialog = sf_interface->about_dialog;
   GtkWidget     *frame;
   GtkWidget     *vbox;
   GtkWidget     *label;
@@ -1848,7 +1848,7 @@ script_fu_about_callback (GtkWidget *widget,
   GtkTextBuffer *text_buffer;
   gchar         *text;
 
-  if (! sf_interface->about_dialog)
+  if (! dialog)
     {
       sf_interface->about_dialog = dialog =
         gimp_dialog_new (sf_interface->title, "script-fu-about",
@@ -1949,7 +1949,7 @@ script_fu_about_callback (GtkWidget *widget,
 	}
     }
 
-  gtk_window_present (GTK_WINDOW (sf_interface->about_dialog));
+  gtk_window_present (GTK_WINDOW (dialog));
 
   /*  move focus from the text view to the Close button  */
   gtk_widget_child_focus (dialog, GTK_DIR_TAB_FORWARD);
