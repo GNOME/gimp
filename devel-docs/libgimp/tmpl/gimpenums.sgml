@@ -141,6 +141,26 @@ Enums and definitions.
 @GIMP_TRANSPARENT_FILL: 
 @GIMP_PATTERN_FILL: 
 
+<!-- ##### ENUM GimpGradientSegmentColor ##### -->
+<para>
+
+</para>
+
+@GIMP_GRADIENT_SEGMENT_RGB: 
+@GIMP_GRADIENT_SEGMENT_HSV_CCW: 
+@GIMP_GRADIENT_SEGMENT_HSV_CW: 
+
+<!-- ##### ENUM GimpGradientSegmentType ##### -->
+<para>
+
+</para>
+
+@GIMP_GRADIENT_SEGMENT_LINEAR: 
+@GIMP_GRADIENT_SEGMENT_CURVED: 
+@GIMP_GRADIENT_SEGMENT_SINE: 
+@GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING: 
+@GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING: 
+
 <!-- ##### ENUM GimpHistogramChannel ##### -->
 <para>
 
@@ -151,6 +171,15 @@ Enums and definitions.
 @GIMP_HISTOGRAM_GREEN: 
 @GIMP_HISTOGRAM_BLUE: 
 @GIMP_HISTOGRAM_ALPHA: 
+
+<!-- ##### ENUM GimpIconType ##### -->
+<para>
+
+</para>
+
+@GIMP_ICON_TYPE_STOCK_ID: 
+@GIMP_ICON_TYPE_INLINE_PIXBUF: 
+@GIMP_ICON_TYPE_IMAGE_FILE: 
 
 <!-- ##### ENUM GimpImageBaseType ##### -->
 <para>

@@ -1,3 +1,14 @@
+2004-06-02  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-docs.sgml
+	* libgimp/tmpl/gimpgradientedit.sgml: added section for the new
+	gradient editing API.
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpenums.sgml
+	* libgimp/tmpl/gimpgradients.sgml
+	* libgimp/tmpl/gimpplugin.sgml: updated.
+
 2004-05-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

@@ -15,6 +15,43 @@ Operations related to gradients.
 
 </para>
 
+<!-- ##### FUNCTION gimp_gradients_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradients_delete ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradients_duplicate ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradients_rename ##### -->
+<para>
+
+</para>
+
+@name: 
+@new_name: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_gradients_refresh ##### -->
 <para>
 

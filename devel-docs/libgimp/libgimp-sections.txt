@@ -65,7 +65,10 @@ GimpConvolutionType
 GimpConvolveType
 GimpDodgeBurnType
 GimpFillType
+GimpGradientSegmentColor
+GimpGradientSegmentType
 GimpHistogramChannel
+GimpIconType
 GimpImageBaseType
 GimpImageType
 GimpOffsetType
@@ -274,6 +277,10 @@ gimp_get_theme_dir
 
 <SECTION>
 <FILE>gimpgradients</FILE>
+gimp_gradients_new
+gimp_gradients_delete
+gimp_gradients_duplicate
+gimp_gradients_rename
 gimp_gradients_refresh
 gimp_gradients_get_list
 gimp_gradients_get_gradient
@@ -281,6 +288,33 @@ gimp_gradients_set_gradient
 gimp_gradients_sample_uniform
 gimp_gradients_sample_custom
 gimp_gradients_get_gradient_data
+</SECTION>
+
+<SECTION>
+<FILE>gimpgradientedit</FILE>
+gimp_gradient_segment_get_left_color
+gimp_gradient_segment_set_left_color
+gimp_gradient_segment_get_right_color
+gimp_gradient_segment_set_right_color
+gimp_gradient_segment_get_left_pos
+gimp_gradient_segment_set_left_pos
+gimp_gradient_segment_get_middle_pos
+gimp_gradient_segment_set_middle_pos
+gimp_gradient_segment_get_right_pos
+gimp_gradient_segment_set_right_pos
+gimp_gradient_segment_get_blending_function
+gimp_gradient_segment_set_blending_function
+gimp_gradient_segment_get_coloring_type
+gimp_gradient_segment_set_coloring_type
+gimp_gradient_segment_range_flip
+gimp_gradient_segment_range_replicate
+gimp_gradient_segment_range_split_midpoint
+gimp_gradient_segment_range_split_uniform
+gimp_gradient_segment_range_delete
+gimp_gradient_segment_range_redistribute_handles
+gimp_gradient_segment_range_blend_colors
+gimp_gradient_segment_range_blend_opacity
+gimp_gradient_segment_range_move
 </SECTION>
 
 <SECTION>
@@ -526,6 +560,7 @@ gimp_progress_init
 gimp_progress_update
 gimp_plugin_domain_register
 gimp_plugin_help_register
+gimp_plugin_icon_register
 gimp_plugin_menu_register
 </SECTION>
 
