@@ -43,21 +43,22 @@ typedef enum
 
 #define MAXNUMCOLORS 256
 
+
 /*  convert functions  */
-void   convert_to_rgb        (GimpImage         *gimage);
-void   convert_to_grayscale  (GimpImage         *gimage);
-void   convert_to_indexed    (GimpImage         *gimage);
+void   convert_to_rgb        (GimpImage          *gimage);
+void   convert_to_grayscale  (GimpImage          *gimage);
+void   convert_to_indexed    (GimpImage          *gimage);
 
-void   convert_image        (GimpImage          *gimage,
-			     GimpImageBaseType   ,
-			     gint                num_cols,
-			     ConvertDitherType   ,
-			     gint                alpha_dither,
-			     gint                remdups,
-			     ConvertPaletteType  );
+void   convert_image         (GimpImage          *gimage,
+			      GimpImageBaseType   ,
+			      gint                num_cols,
+			      ConvertDitherType   ,
+			      gint                alpha_dither,
+			      gint                remdups,
+			      ConvertPaletteType  );
 
 
-extern PaletteEntries *theCustomPalette;
+extern GimpPalette *theCustomPalette;
 
 
 #endif  /*  __CONVERT_H__  */

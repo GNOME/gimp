@@ -38,4 +38,7 @@ void   palette_set_active_color (gint     r,
 				 gint     state);
 
 
+extern GSList * palettes_list;
+
+
 #endif /* __PALETTE_H__ */

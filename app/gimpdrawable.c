@@ -131,6 +131,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 
   gimp_object_class->name_changed = gimp_drawable_name_changed;
 
+  klass->removed            = NULL;
   klass->invalidate_preview = NULL;
 }
 

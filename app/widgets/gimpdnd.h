@@ -154,11 +154,11 @@ void  gimp_dnd_gradient_dest_set   (GtkWidget               *widget,
 
 /*  palette dnd functions  */
 
-typedef void             (* GimpDndDropPaletteFunc) (GtkWidget      *widget,
-						     PaletteEntries *palette,
-						     gpointer        data);
-typedef PaletteEntries * (* GimpDndDragPaletteFunc) (GtkWidget      *widget,
-						     gpointer        data);
+typedef void          (* GimpDndDropPaletteFunc) (GtkWidget   *widget,
+						  GimpPalette *palette,
+						  gpointer     data);
+typedef GimpPalette * (* GimpDndDragPaletteFunc) (GtkWidget   *widget,
+						  gpointer     data);
 
 void  gimp_dnd_palette_source_set  (GtkWidget              *widget,
 				    GimpDndDragPaletteFunc  get_palette_func,

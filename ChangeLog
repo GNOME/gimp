@@ -1,5 +1,25 @@
 2001-01-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/palette_entries.h: removed.
+	* app/gimppalette.[ch]: new object derived from GimpObject. Just
+	used as a container at the moment (no signals or stuff used).
+
+	* app/palette.[ch]: changed almost every line except in the
+	import_dialog part.
+
+	* app/Makefile.am
+	* app/apptypes.h
+	* app/convert.[ch]
+	* app/gimpdnd.h
+	* app/paletteP.h
+	* app/palette_select.[ch]
+	* app/convert_cmds.c
+	* tools/pdbgen/pdb/convert.pdb: changed accordingly.
+
+	* app/gimpdrawable.c: set klass->removed to NULL.
+
+2001-01-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/color_notebook.[ch]: added a "title" parameter to the
 	constructor. Pass a pointer to the ColorNotebook to the callback.
 	Added a _get_color() function.

@@ -63,6 +63,8 @@ typedef struct _GimpBrushList       GimpBrushList;
 typedef struct _GimpBrushGenerated  GimpBrushGenerated;
 typedef struct _GimpBrushPipe       GimpBrushPipe;
 
+typedef struct _GimpPalette         GimpPalette;
+
 
 /*  widgets  */
 
@@ -107,9 +109,6 @@ typedef         gpointer            ImageMap;
 typedef struct _InfoDialog          InfoDialog;
 
 typedef struct _PaintCore           PaintCore;
-
-typedef struct _PaletteEntries      PaletteEntries;
-typedef struct _PaletteEntry        PaletteEntry;
 
 typedef struct _Path                Path;
 typedef struct _PathPoint           PathPoint;

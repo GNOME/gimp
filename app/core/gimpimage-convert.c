@@ -110,7 +110,7 @@
 #include "levels.h"
 #include "undo.h"
 #include "palette.h"
-#include "palette_entries.h"
+#include "gimppalette.h"
 #include "palette_select.h"
 #include "pixel_region.h"
 #include "posterize.h"
@@ -443,7 +443,7 @@ static GtkWidget *build_palette_button (void);
 
 static gboolean UserHasWebPal = FALSE;
 
-PaletteEntries *theCustomPalette = NULL;
+GimpPalette *theCustomPalette = NULL;
 
 
 /* Defaults */
@@ -795,49 +795,50 @@ convert_to_indexed (GimpImage *gimage)
 static GtkWidget *
 build_palette_button (void)
 {
-  GSList *list;
-  PaletteEntries *entries;
-  PaletteEntries *theWebPalette = NULL;
-  int i, default_palette;
+  GSList      *list;
+  GimpPalette *palette;
+  GimpPalette *theWebPalette = NULL;
+  gint         i;
+  gint         default_palette;
 
   UserHasWebPal = FALSE;
 
-  if (!palette_entries_list)
+  if (!palettes_list)
     {
       palettes_init (FALSE);
     }
 
-  list = palette_entries_list;
+  list = palettes_list;
 
   if (!list)
     {
       return NULL;
     }
 
-  for (i = 0, list = palette_entries_list, default_palette = -1;
+  for (i = 0, list = palettes_list, default_palette = -1;
        list;
        i++, list = g_slist_next (list))
     {
-      entries = (PaletteEntries *) list->data;
+      palette = (GimpPalette *) list->data;
       
       /* Preferentially, the initial default is 'Web' if available */
       if (theWebPalette == NULL &&
-	  g_strcasecmp (entries->name, "Web") == 0)
+	  g_strcasecmp (GIMP_OBJECT (palette)->name, "Web") == 0)
 	{
-	  theWebPalette = entries;
+	  theWebPalette = palette;
 	  UserHasWebPal = TRUE;
 	}
       
       /* We can't dither to > 256 colors */
-      if (entries->n_colors <= 256)
+      if (palette->n_colors <= 256)
 	{
-	  if (theCustomPalette == entries)
+	  if (theCustomPalette == palette)
 	    {
 	      default_palette = i;
 	    }
 	}
     }
-      
+
   /* default to first one with <= 256 colors 
      (only used if 'web' palette not available) */
    if (default_palette == -1)
@@ -849,15 +850,15 @@ build_palette_button (void)
 	 }
        else
 	 {
-	   for (i = 0, list = palette_entries_list;
+	   for (i = 0, list = palettes_list;
 		list && default_palette == -1;
 		i++, list = g_slist_next (list))
 	     {
-	       entries = (PaletteEntries *) list->data;
-	       
-	       if (entries->n_colors <= 256)
+	       palette = (GimpPalette *) list->data;
+
+	       if (palette->n_colors <= 256)
 		 {
-		   theCustomPalette = entries;
+		   theCustomPalette = palette;
 		   default_palette = i;
 		 }
 	     }
@@ -867,7 +868,7 @@ build_palette_button (void)
    if (default_palette == -1)
      return NULL;
    else
-     return gtk_button_new_with_label (theCustomPalette->name);
+     return gtk_button_new_with_label (GIMP_OBJECT (theCustomPalette)->name);
 }
 
 
@@ -970,22 +971,24 @@ indexed_palette_select_row_callback (GtkCList       *clist,
 				     gpointer        data)
 {
   IndexedDialog *dialog = (IndexedDialog *)data;
-  PaletteEntries *p_entries;
+  GimpPalette   *palette;
 
-  p_entries = (PaletteEntries *) gtk_clist_get_row_data (clist, row);
-  if (p_entries)
+  palette = (GimpPalette *) gtk_clist_get_row_data (clist, row);
+
+  if (palette)
     {
-      if (p_entries->n_colors <= 256)
+      if (palette->n_colors <= 256)
 	{
-	  theCustomPalette = p_entries;
-	  gtk_label_set_text (GTK_LABEL (GTK_BIN(dialog->custom_palette_button)->child),
-			      theCustomPalette->name);
+	  theCustomPalette = palette;
+	  gtk_label_set_text (GTK_LABEL (GTK_BIN (dialog->custom_palette_button)->child),
+			      GIMP_OBJECT (theCustomPalette)->name);
 	}
       else
 	{
 	  gtk_clist_unselect_row (clist, row, column);
 	}
     }
+
   return FALSE;
 }
 
@@ -998,8 +1001,9 @@ indexed_custom_palette_button_callback (GtkWidget *widget,
 
   if (dialog->palette_select == NULL)
     {
-      dialog->palette_select = palette_select_new (_("Select Custom Palette"), 
-						   theCustomPalette->name);
+      dialog->palette_select =
+	palette_select_new (_("Select Custom Palette"), 
+			    GIMP_OBJECT (theCustomPalette)->name);
 
       gtk_signal_connect (GTK_OBJECT (dialog->palette_select->shell), "destroy", 
 			  GTK_SIGNAL_FUNC (indexed_palette_select_destroy_callback), 
@@ -2960,19 +2964,19 @@ webpal_pass1 (QuantizeObj *quantobj)
 static void
 custompal_pass1 (QuantizeObj *quantobj)
 {
-  gint          i;
-  GSList       *list;
-  PaletteEntry *entry;
-  guchar        r, g, b;
+  gint              i;
+  GList            *list;
+  GimpPaletteEntry *entry;
+  guchar            r, g, b;
 
   /* fprintf(stderr, "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
 			 theCustomPalette->name, theCustomPalette->filename); */
 
-  for (i=0,list=theCustomPalette->colors;
+  for (i = 0, list = theCustomPalette->colors;
        list;
-       i++,list=g_slist_next(list))
+       i++, list = g_list_next (list))
     {
-      entry = (PaletteEntry *) list->data;
+      entry = (GimpPaletteEntry *) list->data;
 
       gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
 

@@ -19,7 +19,6 @@
 #ifndef __PALETTE_P_H__
 #define __PALETTE_P_H__
 
-#include "palette_entries.h"
 
 void   palette_clist_init           (GtkWidget      *clist,
 				     GtkWidget      *shell,
@@ -27,11 +26,11 @@ void   palette_clist_init           (GtkWidget      *clist,
 void   palette_clist_insert         (GtkWidget      *clist, 
 				     GtkWidget      *shell,
 				     GdkGC          *gc,
-				     PaletteEntries *entries,
+				     GimpPalette    *palette,
 				     gint            pos);
 
 void   palette_select_palette_init  (void);
-void   palette_create_edit          (PaletteEntries *entries);
+void   palette_create_edit          (GimpPalette    *palette);
 
 void   palette_import_image_renamed (GimpImage      *gimage);
 

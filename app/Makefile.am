@@ -191,6 +191,8 @@ gimp_SOURCES = \
 	gimplist.h		\
 	gimplut.c		\
 	gimplut.h		\
+	gimppalette.c		\
+	gimppalette.h		\
 	gimpparasite.c		\
 	gimpparasite.h		\
 	gimpprogress.c		\
@@ -284,7 +286,6 @@ gimp_SOURCES = \
 	ops_buttons.c		\
 	ops_buttons.h		\
 	palette.c		\
-	palette_entries.h	\
 	palette.h		\
 	palette_cmds.c		\
 	palette_select.c	\

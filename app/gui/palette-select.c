@@ -23,9 +23,10 @@
 
 #include "apptypes.h"
 
+#include "gimppalette.h"
 #include "gimpui.h"
-#include "palette_entries.h"
 #include "palette_select.h"
+#include "palette.h"
 #include "paletteP.h"
 
 #include "libgimp/gimpintl.h"
@@ -50,17 +51,17 @@ static GSList *active_dialogs = NULL;
 /*  public functions  */
 
 PaletteSelect *
-palette_select_new (gchar *title,
-		    gchar *initial_palette)
+palette_select_new (const gchar *title,
+		    const gchar *initial_palette)
 {
-  PaletteEntries *p_entries = NULL;
-  PaletteSelect  *psp;
-  GSList     *list;
-  GtkWidget  *vbox;
-  GtkWidget  *hbox;
-  GtkWidget  *scrolled_win;
-  gchar      *titles[3];
-  gint        select_pos;
+  GimpPalette   *p_entries = NULL;
+  PaletteSelect *psp;
+  GSList        *list;
+  GtkWidget     *vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *scrolled_win;
+  gchar         *titles[3];
+  gint           select_pos;
 
   palette_select_palette_init ();
 
@@ -114,11 +115,11 @@ palette_select_new (gchar *title,
   select_pos = -1;
   if (initial_palette && strlen (initial_palette))
     {
-      for (list = palette_entries_list; list; list = g_slist_next (list))
+      for (list = palettes_list; list; list = g_slist_next (list))
 	{
-	  p_entries = (PaletteEntries *) list->data;
+	  p_entries = (GimpPalette *) list->data;
 	  
-	  if (strcmp (p_entries->name, initial_palette) > 0)
+	  if (strcmp (GIMP_OBJECT (p_entries)->name, initial_palette) > 0)
 	    break;
 
 	  select_pos++;
@@ -151,22 +152,23 @@ palette_select_new (gchar *title,
 }
 
 void
-palette_select_clist_insert_all (PaletteEntries *p_entries)
+palette_select_clist_insert_all (GimpPalette *p_entries)
 {
-  PaletteEntries *chk_entries;
-  PaletteSelect  *psp; 
-  GSList         *list;
-  gint            pos = 0;
+  GimpPalette   *chk_entries;
+  PaletteSelect *psp; 
+  GSList        *list;
+  gint           pos = 0;
 
-  for (list = palette_entries_list; list; list = g_slist_next (list))
+  for (list = palettes_list; list; list = g_slist_next (list))
     {
-      chk_entries = (PaletteEntries *) list->data;
+      chk_entries = (GimpPalette *) list->data;
       
       /*  to make sure we get something!  */
       if (chk_entries == NULL)
 	return;
 
-      if (strcmp (p_entries->name, chk_entries->name) == 0)
+      if (strcmp (GIMP_OBJECT (p_entries)->name,
+		  GIMP_OBJECT (chk_entries)->name) == 0)
 	break;
 
       pos++;
@@ -183,17 +185,17 @@ palette_select_clist_insert_all (PaletteEntries *p_entries)
 }
 
 void
-palette_select_set_text_all (PaletteEntries *entries)
+palette_select_set_text_all (GimpPalette *entries)
 {
-  PaletteEntries *p_entries = NULL;
-  PaletteSelect  *psp; 
-  GSList         *list;
-  gchar          *num_buf;
-  gint            pos = 0;
+  GimpPalette   *p_entries = NULL;
+  PaletteSelect *psp; 
+  GSList        *list;
+  gchar         *num_buf;
+  gint           pos = 0;
 
-  for (list = palette_entries_list; list;  list = g_slist_next (list))
+  for (list = palettes_list; list;  list = g_slist_next (list))
     {
-      p_entries = (PaletteEntries *) list->data;
+      p_entries = (GimpPalette *) list->data;
       
       if (p_entries == entries)
 	break;
@@ -258,9 +260,9 @@ static void
 palette_select_edit_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  PaletteEntries *p_entries = NULL;
-  PaletteSelect  *psp;
-  GList          *sel_list;
+  GimpPalette   *p_entries = NULL;
+  PaletteSelect *psp;
+  GList         *sel_list;
 
   psp = (PaletteSelect *) data;
 
@@ -273,7 +275,7 @@ palette_select_edit_callback (GtkWidget *widget,
       row = GPOINTER_TO_INT (sel_list->data);
 
       p_entries = 
-	(PaletteEntries *) gtk_clist_get_row_data (GTK_CLIST (psp->clist), row);
+	(GimpPalette *) gtk_clist_get_row_data (GTK_CLIST (psp->clist), row);
 
       palette_create_edit (p_entries);
 
