@@ -1,7 +1,14 @@
+2003-11-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/dialogs-constructors.c
+	* app/gui/images-commands.[ch]
+	* app/widgets/gimpimageview.[ch]: implemented the "Raise Displays"
+	button's functionality. Fixes bug #127079.
+
 2003-11-15  Daniel Rogers  <daniel@phasevelocity.org>
+
 	* app/tools/gimpellipseselecttool.c
-	* app/tools/gimprectselectool.c
-	* app/tools/gimprectselect.h: Includes changes from Sven.
+	* app/tools/gimprectselecttool.[ch]: Includes changes from Sven.
         Fixes a bug with alt-draging ellipse and rect selections
         on small pixel areas.
 					

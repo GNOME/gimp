@@ -26,6 +26,9 @@
 #include "gimpcontainereditor.h"
 
 
+typedef void (* GimpRaiseDisplaysFunc) (GimpImage *gimage);
+
+
 #define GIMP_TYPE_IMAGE_VIEW            (gimp_image_view_get_type ())
 #define GIMP_IMAGE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_VIEW, GimpImageView))
 #define GIMP_IMAGE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_VIEW, GimpImageViewClass))
@@ -38,11 +41,13 @@ typedef struct _GimpImageViewClass  GimpImageViewClass;
 
 struct _GimpImageView
 {
-  GimpContainerEditor  parent_instance;
+  GimpContainerEditor    parent_instance;
 
-  GtkWidget           *raise_button;
-  GtkWidget           *new_button;
-  GtkWidget           *delete_button;
+  GimpRaiseDisplaysFunc  raise_displays_func;
+
+  GtkWidget             *raise_button;
+  GtkWidget             *new_button;
+  GtkWidget             *delete_button;
 };
 
 struct _GimpImageViewClass

@@ -22,7 +22,13 @@
 
 #include "gui-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpimage.h"
+#include "core/gimplist.h"
+
 #include "widgets/gimpimageview.h"
+
+#include "display/gimpdisplay.h"
 
 #include "images-commands.h"
 
@@ -35,7 +41,8 @@ images_raise_views_cmd_callback (GtkWidget *widget,
 {
   GimpImageView *view = GIMP_IMAGE_VIEW (data);
 
-  gtk_button_clicked (GTK_BUTTON (view->raise_button));
+  if (GTK_WIDGET_SENSITIVE (view->raise_button))
+    gtk_button_clicked (GTK_BUTTON (view->raise_button));
 }
 
 void
@@ -44,7 +51,8 @@ images_new_view_cmd_callback (GtkWidget *widget,
 {
   GimpImageView *view = GIMP_IMAGE_VIEW (data);
 
-  gtk_button_clicked (GTK_BUTTON (view->new_button));
+  if (GTK_WIDGET_SENSITIVE (view->new_button))
+    gtk_button_clicked (GTK_BUTTON (view->new_button));
 }
 
 void
@@ -53,5 +61,24 @@ images_delete_image_cmd_callback (GtkWidget *widget,
 {
   GimpImageView *view = GIMP_IMAGE_VIEW (data);
 
-  gtk_button_clicked (GTK_BUTTON (view->delete_button));
+  if (GTK_WIDGET_SENSITIVE (view->delete_button))
+    gtk_button_clicked (GTK_BUTTON (view->delete_button));
+}
+
+void
+images_raise_views (GimpImage *gimage)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  for (list = GIMP_LIST (gimage->gimp->displays)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpDisplay *display = list->data;
+
+      if (display->gimage == gimage)
+        gtk_window_present (GTK_WINDOW (display->shell));
+    }
 }

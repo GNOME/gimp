@@ -181,17 +181,16 @@ static void
 gimp_image_view_raise_clicked (GtkWidget     *widget,
                                GimpImageView *view)
 {
-  GimpContainerEditor *editor;
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
   GimpImage           *image;
-
-  editor = GIMP_CONTAINER_EDITOR (view);
 
   image = gimp_context_get_image (editor->view->context);
 
   if (image && gimp_container_have (editor->view->container,
                                     GIMP_OBJECT (image)))
     {
-      g_print ("TODO: implement image raise\n");
+      if (view->raise_displays_func)
+        view->raise_displays_func (image);
     }
 }
 
@@ -199,10 +198,8 @@ static void
 gimp_image_view_new_clicked (GtkWidget     *widget,
                              GimpImageView *view)
 {
-  GimpContainerEditor *editor;
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
   GimpImage           *image;
-
-  editor = GIMP_CONTAINER_EDITOR (view);
 
   image = gimp_context_get_image (editor->view->context);
 
@@ -217,10 +214,8 @@ static void
 gimp_image_view_delete_clicked (GtkWidget     *widget,
                                 GimpImageView *view)
 {
-  GimpContainerEditor *editor;
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
   GimpImage           *image;
-
-  editor = GIMP_CONTAINER_EDITOR (view);
 
   image = gimp_context_get_image (editor->view->context);
 
@@ -236,7 +231,7 @@ static void
 gimp_image_view_select_item (GimpContainerEditor *editor,
                              GimpViewable        *viewable)
 {
-  GimpImageView *view;
+  GimpImageView *view = GIMP_IMAGE_VIEW (editor);
 
   gboolean  raise_sensitive  = FALSE;
   gboolean  new_sensitive    = FALSE;
@@ -244,8 +239,6 @@ gimp_image_view_select_item (GimpContainerEditor *editor,
 
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
-
-  view = GIMP_IMAGE_VIEW (editor);
 
   if (viewable && gimp_container_have (editor->view->container,
                                        GIMP_OBJECT (viewable)))

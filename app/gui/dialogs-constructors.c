@@ -76,6 +76,7 @@
 #include "edit-commands.h"
 #include "file-commands.h"
 #include "file-new-dialog.h"
+#include "images-commands.h"
 #include "layers-commands.h"
 #include "module-browser.h"
 #include "preferences-dialog.h"
@@ -274,6 +275,8 @@ dialogs_image_list_view_new (GimpDialogFactory *factory,
                               context,
                               preview_size, 1,
                               factory->menu_factory);
+
+  GIMP_IMAGE_VIEW (view)->raise_displays_func = images_raise_views;
 
   return dialogs_dockable_new (view,
 			       _("Images"), NULL,
@@ -479,6 +482,8 @@ dialogs_image_grid_view_new (GimpDialogFactory *factory,
                               context,
                               preview_size, 1,
                               factory->menu_factory);
+
+  GIMP_IMAGE_VIEW (view)->raise_displays_func = images_raise_views;
 
   return dialogs_dockable_new (view,
 			       _("Images"), NULL,
