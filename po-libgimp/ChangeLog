@@ -1,3 +1,8 @@
+2002-03-02  Ole Laursen  <olau@hardworking.dk>
+
+	* da.po: Updated Danish translation from gimp-1-2 branch and
+	converted it to UTF-8.
+
 2002-02-28  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added missing file.

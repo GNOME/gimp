@@ -1,36 +1,38 @@
 # Translation of the GIMP lib-gimp.
-# Copyright (C) 1999 Free Software Foundation, Inc.
+# Copyright (C) 1999, 2000, 01, 02 Free Software Foundation, Inc.
 # Kenneth Christiansen <kenneth@ripen.dk>, 1999.
 # Birger Langkjer <birger.langkjer@image.dk>, 2000.
 # Keld Simonsen <keld@dkuug.dk>, 2000.
+# Ole Laursen <olau@hardworking.dk>, 2001, 02.
+#
+# Se ../po/da.po for en konventionsliste for hele Gimp'en.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
-"PO-Revision-Date: 2000-06-29 23:23+02:00\n"
-"Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
-"Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
+"POT-Creation-Date: 2002-03-02 17:07+0100\n"
+"PO-Revision-Date: 2002-03-02 17:09+0100\n"
+"Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
+"Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
 msgid "can't handle layers"
-msgstr "kan ikke hÂndtere lag"
+msgstr "kan ikke h√•ndtere lag"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Merge Visible Layers"
-msgstr "Sammenflet synlige lag"
+msgstr "For√©n synlige lag"
 
 #: libgimp/gimpexport.c:179
-#, fuzzy
 msgid "can't handle layer offsets, size or opacity"
-msgstr "kan ikke hÂndtere lag"
+msgstr "kan ikke h√•ndtere lagafs√¶t, -st√∏rrelse eller -uigennemsigtighed"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "can only handle layers as animation frames"
-msgstr "kan kun hÂndtere lag som animationsbilleder"
+msgstr "kan kun h√•ndtere lag som animationsbilleder"
 
 #: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
 msgid "Save as Animation"
@@ -38,59 +40,59 @@ msgstr "Gem som animation"
 
 #: libgimp/gimpexport.c:198 libgimp/gimpexport.c:207 libgimp/gimpexport.c:216
 msgid "Flatten Image"
-msgstr "Flad billede ud"
+msgstr "Fladg√∏r billede"
 
 #: libgimp/gimpexport.c:215
 msgid "can't handle transparency"
-msgstr "kan ikke hÂndtere gennemsigtighed"
+msgstr "kan ikke h√•ndtere gennemsigtighed"
 
 #: libgimp/gimpexport.c:224
 msgid "can only handle RGB images"
-msgstr "kan kun hÂndtere RGB-billeder"
+msgstr "kan kun h√•ndtere RGB-billeder"
 
 #: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
 msgid "Convert to RGB"
-msgstr "Lav om til RGB"
+msgstr "Omdan til RGB"
 
 #: libgimp/gimpexport.c:233
 msgid "can only handle grayscale images"
-msgstr "kan kun hÂndtere grÂtonebilleder"
+msgstr "kan kun h√•ndtere gr√•tonebilleder"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
 msgid "Convert to Grayscale"
-msgstr "Lav om til grÂtoner"
+msgstr "Omdan til gr√•toner"
 
 #: libgimp/gimpexport.c:242
 msgid "can only handle indexed images"
-msgstr "kan kun hÂndtere indekserede billeder"
+msgstr "kan kun h√•ndtere indekserede billeder"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Lav om til indekseret vha. standard indstillingerne\n"
-"(g¯r det manuelt for at fintune resultatet)"
+"Omdan til indekseret vha. standardindstillingerne\n"
+"(g√∏r det manuelt for at finindstille resultatet)"
 
 #: libgimp/gimpexport.c:252
 msgid "can only handle RGB or grayscale images"
-msgstr "kan kun hÂndtere RGB- eller grÂtonebilleder"
+msgstr "kan kun h√•ndtere RGB- eller gr√•tonebilleder"
 
 #: libgimp/gimpexport.c:261
 msgid "can only handle RGB or indexed images"
-msgstr "kan kun hÂndtere RGB- eller indekserede billeder"
+msgstr "kan kun h√•ndtere RGB- eller indekserede billeder"
 
 #: libgimp/gimpexport.c:271
 msgid "can only handle grayscale or indexed images"
-msgstr "kan kun hÂndtere grÂtone- eller indekserede billeder"
+msgstr "kan kun h√•ndtere gr√•tone- eller indekserede billeder"
 
 #: libgimp/gimpexport.c:282
 msgid "needs an alpha channel"
-msgstr "krÊver en alfakanel"
+msgstr "kr√¶ver en alfakanel"
 
 #: libgimp/gimpexport.c:283
 msgid "Add Alpha Channel"
-msgstr "Tilf¯j alfakanel"
+msgstr "Tilf√∏j alfakanel"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -99,15 +101,15 @@ msgstr "Tilf¯j alfakanel"
 #. the dialog
 #: libgimp/gimpexport.c:356
 msgid "Confirm Save"
-msgstr ""
+msgstr "Bekr√¶ft gemning"
 
 #: libgimp/gimpexport.c:360
 msgid "Confirm"
-msgstr ""
+msgstr "Bekr√¶ft"
 
 #: libgimp/gimpexport.c:362
 msgid "Cancel"
-msgstr "AnnullÈr"
+msgstr "Annull√©r"
 
 #: libgimp/gimpexport.c:376
 #, c-format
@@ -115,6 +117,8 @@ msgid ""
 "You are about to save %s as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Du er ved at gemme %s som %s.\n"
+"Dette vil ikke gemme de synlige lag."
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -123,65 +127,114 @@ msgstr ""
 #. the dialog
 #: libgimp/gimpexport.c:414
 msgid "Export File"
-msgstr "EksportÈr fil"
+msgstr "Eksport√©r fil"
 
 #: libgimp/gimpexport.c:419
 msgid "Export"
-msgstr "EksportÈr"
+msgstr "Eksport√©r"
 
 #: libgimp/gimpexport.c:421
 msgid "Ignore"
-msgstr "IgnorÈr"
+msgstr "Ignor√©r"
 
 #: libgimp/gimpexport.c:438
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "Af f¯lgende Ârsager skal billedet eksporteres f¯r det kan gemmes:"
+msgstr "Af f√∏lgende √•rsager skal billedet eksporteres f√∏r det kan gemmes:"
 
 #. the footline
 #: libgimp/gimpexport.c:503
 msgid "The export conversion won't modify your original image."
-msgstr "Eksportkonverteringen vil ikke Êndre det oprindelige billede."
+msgstr "Eksportkonverteringen vil ikke √¶ndre det oprindelige billede."
 
 #: libgimp/gimpexport.c:571
 msgid "a layer mask"
-msgstr ""
+msgstr "en lagmaske"
 
 #: libgimp/gimpexport.c:573
 msgid "a channel (saved selection)"
-msgstr ""
+msgstr "en kanal (gemt markering)"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "procent"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
-#, fuzzy
 msgid "/Foreground Color"
-msgstr "/Brug forgrundsfarve"
+msgstr "/Forgrundsfarve"
 
 #: libgimpwidgets/gimpcolorbutton.c:87
-#, fuzzy
 msgid "/Background Color"
-msgstr "/Brug baggrundsfarve"
+msgstr "/Baggrundsfarve"
 
 #: libgimpwidgets/gimpcolorbutton.c:90
 msgid "/Black"
-msgstr ""
+msgstr "/Sort"
 
 #: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
-msgstr ""
+msgstr "/Hvid"
 
 #: libgimpwidgets/gimpfileselection.c:352
-#, fuzzy
 msgid "Select Folder"
-msgstr "VÊlg fil"
+msgstr "V√¶lg mappe"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
-msgstr "VÊlg fil"
+msgstr "V√¶lg fil"
+
+#: libgimpwidgets/gimpstock.c:88
+msgid "Anchor"
+msgstr "Anker"
+
+#: libgimpwidgets/gimpstock.c:89
+msgid "Duplicate"
+msgstr "Kopi√©r"
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr "Redig√©r"
+
+#: libgimpwidgets/gimpstock.c:91
+msgid "Linked"
+msgstr "Sammenk√¶det"
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste"
+msgstr "Inds√¶t"
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste as New"
+msgstr "Inds√¶t som ny"
+
+#: libgimpwidgets/gimpstock.c:94
+msgid "Paste Into"
+msgstr "Inds√¶t i"
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "_Reset"
+msgstr "_Nulstil"
+
+#: libgimpwidgets/gimpstock.c:96
+msgid "Visible"
+msgstr "Synlig"
+
+#: libgimpwidgets/gimpstock.c:144
+msgid "Transform"
+msgstr "Transform√©r"
+
+#: libgimpwidgets/gimpstock.c:147
+msgid "Rotate"
+msgstr "Rot√©r"
+
+#: libgimpwidgets/gimpstock.c:148
+msgid "Scale"
+msgstr "Skal√©r"
+
+#: libgimpwidgets/gimpstock.c:149
+msgid "Shear"
+msgstr "Trapez√©r"
 
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
@@ -204,9 +257,9 @@ msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
-"Hvis \"Tid\" knappen ikke aktiveres, sÂ brug denne vÊrdi som "
-"tilfÊldighedstal generator startvÊrdi - dette tillader dig at gentage en "
-"given \"tilfÊldig\" operation"
+"Hvis \"Tid\"-knappen ikke aktiveres, s√• brug denne v√¶rdi som startv√¶rdi til "
+"generatoren af tilf√¶ldige tal - dette tillader dig at gentage en given "
+"\"tilf√¶ldig\" operation"
 
 #: libgimpwidgets/gimpwidgets.c:806
 msgid "Time"
@@ -217,8 +270,8 @@ msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
-"Start tilfÊldighedstalsgeneratoren fra  den aktuelle tid - dette garanterer "
-"en rimelig tilfÊldighed"
+"Start generatoren af tilf√¶ldige tal med den aktuelle tid - dette garanterer "
+"en god tilf√¶ldighed"
 
 #: libgimpwidgets/gimpwidgets.c:1129
 msgid "Bytes"
@@ -232,14 +285,14 @@ msgstr "Kilobyte"
 msgid "MegaBytes"
 msgstr "Megabyte"
 
+#~ msgid "OK"
+#~ msgstr "O.k."
+
 #~ msgid "pixel"
-#~ msgstr "pixel"
+#~ msgstr "sk√¶rmpunkt"
 
 #~ msgid "pixels"
-#~ msgstr "pixler"
-
-#~ msgid "inch"
-#~ msgstr "tomme"
+#~ msgstr "sk√¶rmpunkter"
 
 #~ msgid "inches"
 #~ msgstr "tommer"
@@ -248,7 +301,7 @@ msgstr "Megabyte"
 #~ msgstr "millimeter"
 
 #~ msgid "millimeters"
-#~ msgstr "millimetre"
+#~ msgstr "millimeter"
 
 #~ msgid "point"
 #~ msgstr "punkt"
@@ -256,15 +309,5 @@ msgstr "Megabyte"
 #~ msgid "points"
 #~ msgstr "punkter"
 
-#~ msgid "pica"
-#~ msgstr "pica"
-
 #~ msgid "picas"
 #~ msgstr "picaer"
-
-#, fuzzy
-#~ msgid "Select Directory"
-#~ msgstr "VÊlg fil"
-
-#~ msgid "OK"
-#~ msgstr "Ok"
