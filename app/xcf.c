@@ -480,7 +480,7 @@ xcf_save_image (XcfInfo *info,
   /* write out the tag information for the image */
   if (info->file_version > 0) 
     {
-      sprintf (version_tag, "gimp xcf v%03d", info->file_version);
+      snprintf (version_tag, sizeof (version_tag), "gimp xcf v%03d", info->file_version);
     } 
   else 
     {

@@ -1,3 +1,11 @@
+2001-11-07  Daniel Egger  <degger@fhm.edu>
+
+	* app/general.c
+	* app/levels.c
+	* app/text_tool_cmds.c
+	* app/xcf.c: Use snprintf instead of sprintf to protect the
+	GIMP from buffer overflow problems.
+
 2001-11-07  Abel Cheung  <maddog@linux.org.hk>
 
 	* tips/gimp_tips.zh_TW.txt: New traditional Chinese tips file.

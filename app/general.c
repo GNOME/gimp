@@ -50,7 +50,7 @@ search_in_path (char *search_path,
 
   while (token)
     {
-      sprintf (path, "%s", token);
+      snprintf (path, sizeof (path), "%s", token);
 
       if (token[strlen (token) - 1] != G_DIR_SEPARATOR)
 	strcat (path, G_DIR_SEPARATOR_S);
@@ -344,7 +344,7 @@ iso_8601_date_format (char *user_buf, int strict)
   clock = time (NULL);
   now = gmtime (&clock);
   /* date format derived from ISO 8601:1988 */
-  sprintf(buf, "%04d-%02d-%02d%c%02d:%02d:%02d%c",
+  snprintf(buf, sizeof (buf), "%04d-%02d-%02d%c%02d:%02d:%02d%c",
 	  now->tm_year + 1900, now->tm_mon + 1, now->tm_mday,
 	  (strict ? 'T' : ' '),
 	  now->tm_hour, now->tm_min, now->tm_sec,

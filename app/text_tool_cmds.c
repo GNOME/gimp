@@ -108,9 +108,9 @@ text_xlfd_insert_size (gchar    *fontname,
       xresolution = CLAMP (xresolution, 1.0, GIMP_MAX_RESOLUTION);
     }
 
-  sprintf (size_buffer, "%d", (int) size);
-  sprintf (xres_buffer, "%d", (int) xresolution);
-  sprintf (yres_buffer, "%d", (int) yresolution);
+  snprintf (size_buffer, sizeof (size_buffer), "%d", (int) size);
+  snprintf (xres_buffer, sizeof (xres_buffer), "%d", (int) xresolution);
+  snprintf (yres_buffer, sizeof (yres_buffer), "%d", (int) yresolution);
 
   newfont = workfont = g_new (char, strlen (fontname) + 32);
 
