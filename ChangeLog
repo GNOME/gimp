@@ -1,3 +1,8 @@
+2004-07-07  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpclipboard.c: sort the list of pixbuf formats so
+	that PNG is the preferred format and GIF and JPEG come last.
+
 2004-07-07  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/gfig/*.[ch]: Use single centralized functions to

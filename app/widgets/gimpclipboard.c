@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "widgets-types.h"
@@ -53,6 +55,9 @@ static void      gimp_clipboard_get              (GtkClipboard     *clipboard,
 static GdkAtom * gimp_clipboard_wait_for_targets (gint             *n_targets);
 static GdkAtom   gimp_clipboard_wait_for_buffer  (Gimp             *gimp);
 
+static gint      gimp_clipboard_format_compare   (GdkPixbufFormat  *a,
+                                                  GdkPixbufFormat  *b);
+
 
 void
 gimp_clipboard_init (Gimp *gimp)
@@ -67,7 +72,8 @@ gimp_clipboard_init (Gimp *gimp)
                            G_CALLBACK (gimp_clipboard_buffer_changed),
                            NULL, 0);
 
-  pixbuf_formats = gdk_pixbuf_get_formats ();
+  pixbuf_formats = g_slist_sort (gdk_pixbuf_get_formats (),
+                                 (GCompareFunc) gimp_clipboard_format_compare);
 
   g_object_set_data_full (G_OBJECT (gimp), GIMP_PIXBUF_FORMATS_KEY,
                           pixbuf_formats, (GDestroyNotify) g_slist_free);
@@ -363,4 +369,36 @@ gimp_clipboard_get (GtkClipboard     *clipboard,
     }
 
   gimp_unset_busy (gimp);
+}
+
+static gint
+gimp_clipboard_format_compare (GdkPixbufFormat *a,
+                               GdkPixbufFormat *b)
+{
+  gchar *a_name = gdk_pixbuf_format_get_name (a);
+  gchar *b_name = gdk_pixbuf_format_get_name (b);
+  gint   retval = 0;
+
+  /*  move PNG to the front of the list  */
+  if (strcmp (a_name, "png") == 0)
+    retval = -1;
+  else if (strcmp (b_name, "png") == 0)
+    retval = 1;
+
+  /*  move JPEG to the end of the list  */
+  else if (strcmp (a_name, "jpeg") == 0)
+    retval = 1;
+  else if (strcmp (b_name, "jpeg") == 0)
+    retval = -1;
+
+  /*  move GIF to the end of the list  */
+  else if (strcmp (a_name, "gif") == 0)
+    retval = 1;
+  else if (strcmp (b_name, "gif") == 0)
+    retval = -1;
+
+  g_free (a_name);
+  g_free (b_name);
+
+  return retval;
 }
