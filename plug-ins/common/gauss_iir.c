@@ -178,8 +178,7 @@ run (gchar   *name,
 	  bvals.horizontal = (param[4].data.d_int32) ? TRUE : FALSE;
 	  bvals.vertical = (param[5].data.d_int32) ? TRUE : FALSE;
 	}
-      if (status == STATUS_SUCCESS &&
-	  (bvals.radius < 1.0))
+      if (status == STATUS_SUCCESS && (bvals.radius < 1.0))
 	status = STATUS_CALLING_ERROR;
       break;
 
@@ -192,40 +191,50 @@ run (gchar   *name,
       break;
     }
 
-  /*  Get the specified drawable  */
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
-
-  /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
+  if (!(bvals.horizontal || bvals.vertical))
     {
-      gimp_progress_init ("IIR Gaussian Blur");
-
-      /*  set the tile cache size so that the gaussian blur works well  */
-      gimp_tile_cache_ntiles (2 * (MAX (drawable->width, drawable->height) /
-				   gimp_tile_width () + 1));
-
-      radius = fabs (bvals.radius) + 1.0;
-      std_dev = sqrt (-(radius * radius) / (2 * log (1.0 / 255.0)));
-
-      /*  run the gaussian blur  */
-      gauss_iir (drawable, bvals.horizontal, bvals.vertical, std_dev);
-
-      if (run_mode != RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
-
-      /*  Store data  */
-      if (run_mode == RUN_INTERACTIVE)
-	gimp_set_data ("plug_in_gauss_iir", &bvals, sizeof (BlurValues));
+      gimp_message ("gauss_iir: you must specify either horizontal or vertical (or both)");
+      status = STATUS_CALLING_ERROR;
     }
-  else
+
+  if (status == STATUS_SUCCESS)
     {
-      /* gimp_message ("gauss_iir: cannot operate on indexed color images"); */
-      status = STATUS_EXECUTION_ERROR;
+      /*  Get the specified drawable  */
+      drawable = gimp_drawable_get (param[2].data.d_drawable);
+
+      /*  Make sure that the drawable is gray or RGB color  */
+      if (gimp_drawable_color (drawable->id) ||
+          gimp_drawable_gray (drawable->id))
+        {
+          gimp_progress_init ("IIR Gaussian Blur");
+
+          /*  set the tile cache size so that the gaussian blur works well  */
+          gimp_tile_cache_ntiles (2 * (MAX (drawable->width, drawable->height) /
+				  gimp_tile_width () + 1));
+
+          radius = fabs (bvals.radius) + 1.0;
+          std_dev = sqrt (-(radius * radius) / (2 * log (1.0 / 255.0)));
+
+          /*  run the gaussian blur  */
+          gauss_iir (drawable, bvals.horizontal, bvals.vertical, std_dev);
+
+          if (run_mode != RUN_NONINTERACTIVE)
+	    gimp_displays_flush ();
+
+          /*  Store data  */
+          if (run_mode == RUN_INTERACTIVE)
+	    gimp_set_data ("plug_in_gauss_iir", &bvals, sizeof (BlurValues));
+        }
+      else
+        {
+          gimp_message ("gauss_iir: cannot operate on indexed color images");
+          status = STATUS_EXECUTION_ERROR;
+        }
+
+      gimp_drawable_detach (drawable);
     }
 
   values[0].data.d_status = status;
-
-  gimp_drawable_detach (drawable);
 }
 
 static gint

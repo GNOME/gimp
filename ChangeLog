@@ -1,3 +1,21 @@
+Mon Sep 21 02:11:27 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/text_tool.c: correct test for restoring old foundry in
+	callback (from Trent Piepho)
+
+	* plug-ins/gauss_iir/gauss_iir.c
+	* plug-ins/gauss_rle/gauss_rle.c: better test for bad values,
+	put fix in gauss_rle too
+
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/script-fu-console.[ch]: added an eval
+	PDB interface for running arbitrary scheme code
+        
+	* app/batch.c: redid batch mode to use script-fu-eval
+
+	* app/main.c: fixed command line parsing for batch mode and
+	image loading
+
 Tue Sep 15 21:27:10 BST 1998  Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/gif.c:

@@ -24,5 +24,10 @@ void  script_fu_console_run (char     *name,
 			     GParam   *params,
 			     int      *nreturn_vals,
 			     GParam  **return_vals);
+void  script_fu_eval_run    (char     *name,
+			     int       nparams,
+			     GParam   *params,
+			     int      *nreturn_vals,
+			     GParam  **return_vals);
 
 #endif /*  __SCRIPT_FU_CONSOLE__  */

@@ -554,3 +554,40 @@ script_fu_close_siod_console ()
   close (siod_output_pipe[0]);
   close (siod_output_pipe[1]);
 }
+
+void
+script_fu_eval_run (char     *name,
+		    int       nparams,
+		    GParam   *params,
+		    int      *nreturn_vals,
+		    GParam  **return_vals)
+{
+  static GParam values[1];
+  GStatusType status = STATUS_SUCCESS;
+  GRunModeType run_mode;
+
+  run_mode = params[0].data.d_int32;
+
+  switch (run_mode)
+    {
+    case RUN_NONINTERACTIVE:
+      if (repl_c_string (params[1].data.d_string, 0, 0, 1) != 0)
+	status = STATUS_EXECUTION_ERROR;
+      break;
+
+    case RUN_INTERACTIVE:
+    case RUN_WITH_LAST_VALS:
+      status = STATUS_CALLING_ERROR;
+      gimp_message ("Script-Fu evaluate mode allows only noninteractive invocation");
+      break;
+
+    default:
+      break;
+    }
+
+  *nreturn_vals = 1;
+  *return_vals = values;
+
+  values[0].type = PARAM_STATUS;
+  values[0].data.d_status = status;
+}

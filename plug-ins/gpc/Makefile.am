@@ -21,7 +21,7 @@ DEPS = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la
 
-libgpc_aDEPENDENCIES = $(DEPS)
+libgpc_a_DEPENDENCIES = $(DEPS)
 
 EXTRA_DIST=gpc.3 gpc.man
 
