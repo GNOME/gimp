@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-19 23:19+0100\n"
-"PO-Revision-Date: 2004-11-20 17:47+0800\n"
+"PO-Revision-Date: 2004-11-24 19:30+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -2047,7 +2047,7 @@ msgstr "正在自动拉伸 HSV..."
 
 #: plug-ins/common/autostretch_hsv.c:192
 msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
-msgstr "autostretch_hsv：cmap 为空！退出……\n"
+msgstr "autostretch_hsv：cmap 为空！退出\n"
 
 #: plug-ins/common/blinds.c:124
 msgid "_Blinds..."
@@ -2139,7 +2139,7 @@ msgstr "凹凸贴图(_B)："
 
 #: plug-ins/common/bumpmap.c:908
 msgid "_Map type:"
-msgstr "映射类型"
+msgstr "映射类型(_M)："
 
 #. Compensate darkening
 #: plug-ins/common/bumpmap.c:913
@@ -2196,7 +2196,7 @@ msgstr "正在自动拉伸对比度..."
 
 #: plug-ins/common/c_astretch.c:152
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
-msgstr "c_astretch：cmap 为空！退出……\n"
+msgstr "c_astretch：cmap 为空！退出...\n"
 
 #: plug-ins/common/cartoon.c:228 plug-ins/common/dog.c:245
 #: plug-ins/common/gauss.c:430 plug-ins/common/neon.c:222
@@ -4599,9 +4599,8 @@ msgid "Save EXIF data"
 msgstr "保存 EXIF 数据"
 
 #: plug-ins/common/jpeg.c:2056
-#, fuzzy
 msgid "Save thumbnail"
-msgstr "保存失败"
+msgstr "保存缩略图"
 
 #. Subsampling
 #: plug-ins/common/jpeg.c:2070
@@ -4630,9 +4629,9 @@ msgid "Comment"
 msgstr "注释"
 
 #: plug-ins/common/jpeg.c:2272
-#, fuzzy, c-format
+#, c-format
 msgid "Opening thumbnail for '%s'..."
-msgstr "正在打开“%s”..."
+msgstr "正在打开“%s”的缩略图..."
 
 #: plug-ins/common/laplace.c:95
 msgid "_Laplace"
@@ -5244,9 +5243,8 @@ msgid "Scatter RGB"
 msgstr "分散 RGB"
 
 #: plug-ins/common/noisify.c:477
-#, fuzzy
 msgid "Co_rrelated noise"
-msgstr "创建椭圆"
+msgstr "相关噪音(_R)"
 
 #: plug-ins/common/noisify.c:492
 msgid "_Independent RGB"
@@ -5399,7 +5397,7 @@ msgstr "1999 年 9 月 31 日"
 
 #: plug-ins/common/papertile.c:816
 msgid "_Paper Tile..."
-msgstr "纸片平铺(_R)..."
+msgstr "纸片平铺(_P)..."
 
 #: plug-ins/common/pat.c:104 plug-ins/common/pat.c:126
 msgid "GIMP pattern"
@@ -5746,7 +5744,7 @@ msgstr "页数："
 
 #: plug-ins/common/postscript.c:2983
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr ""
+msgstr "加载页码(例如：1-4 或者 1,3,5-7)"
 
 #: plug-ins/common/postscript.c:2985
 msgid "Try Bounding Box"
@@ -5913,7 +5911,7 @@ msgstr "糊(_S)..."
 
 #: plug-ins/common/randomize.c:741 plug-ins/common/snoise.c:614
 msgid "_Random seed:"
-msgstr "随机数种子(_S)："
+msgstr "随机数种子(_R)："
 
 #: plug-ins/common/randomize.c:750
 msgid "R_andomization (%):"
@@ -6652,7 +6650,7 @@ msgstr "应该要一个反转的效果吗？"
 
 #: plug-ins/common/sparkle.c:490
 msgid "A_dd border"
-msgstr "添加边框(_D)："
+msgstr "添加边框(_D)"
 
 #: plug-ins/common/sparkle.c:496
 msgid "Draw a Border of Spikes around the Image"
@@ -7188,7 +7186,7 @@ msgstr "不透明度(_P)："
 #. Lower frame saying howmany segments
 #: plug-ins/common/tileit.c:573
 msgid "Number of Segments"
-msgstr "块数(_N)："
+msgstr "块数"
 
 #: plug-ins/common/tiler.c:66
 msgid "_Make Seamless"
@@ -7405,7 +7403,7 @@ msgstr "添加(_A)"
 
 #: plug-ins/common/video.c:2089
 msgid "_Rotated"
-msgstr "旋转(_R)："
+msgstr "旋转(_R)"
 
 #: plug-ins/common/vinvert.c:84
 msgid "_Value Invert"
@@ -8192,7 +8190,7 @@ msgstr "加入日期"
 
 #: plug-ins/dbbrowser/plugin-browser.c:611
 msgid "Menu Path"
-msgstr "菜单路径："
+msgstr "菜单路径"
 
 #: plug-ins/dbbrowser/plugin-browser.c:619
 #: plug-ins/dbbrowser/plugin-browser.c:681
@@ -8262,7 +8260,7 @@ msgstr "图像合成"
 
 #: plug-ins/flame/flame.c:133
 msgid "_Flame..."
-msgstr "火焰(_F).."
+msgstr "火焰(_F)..."
 
 #: plug-ins/flame/flame.c:227
 msgid "Drawing Flame..."
@@ -8405,9 +8403,8 @@ msgid "Tool options"
 msgstr "工具选项"
 
 #: plug-ins/gfig/gfig-dialog.c:368
-#, fuzzy
 msgid "_Stroke"
-msgstr "勾画"
+msgstr "勾画(_S)"
 
 #. Fill frame on right side
 #: plug-ins/gfig/gfig-dialog.c:414
@@ -8680,7 +8677,7 @@ msgstr "星形的点的数量"
 
 #: plug-ins/gfig/gfig.c:132
 msgid "_Gfig..."
-msgstr "几何图形(Gfig)..."
+msgstr "几何图形(Gfig)(_G)..."
 
 #: plug-ins/gfig/gfig.c:731
 msgid ""
@@ -8782,7 +8779,7 @@ msgstr "最大深度(_M)："
 
 #: plug-ins/gflare/gflare.c:2785
 msgid "_Threshold"
-msgstr "阈值(_T)："
+msgstr "阈值(_T)"
 
 #: plug-ins/gflare/gflare.c:2923
 msgid "S_elector"
@@ -9650,11 +9647,11 @@ msgstr "IFS 分形：目标"
 
 #: plug-ins/ifscompose/ifscompose.c:674
 msgid "Scale Hue by:"
-msgstr "色调缩放为："
+msgstr "色调缩放："
 
 #: plug-ins/ifscompose/ifscompose.c:689
 msgid "Scale Value by:"
-msgstr "亮度缩放为："
+msgstr "亮度缩放："
 
 #. Full color control section
 #: plug-ins/ifscompose/ifscompose.c:706
@@ -9905,27 +9902,27 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:172
 msgid "_Left Start at:"
-msgstr "左端开始于(_L)"
+msgstr "左端开始于(_L)："
 
 #: plug-ins/imagemap/imap_cmd_guides.c:182
 msgid "_Top Start at:"
-msgstr "顶端开始于(_T)"
+msgstr "顶端开始于(_T)："
 
 #: plug-ins/imagemap/imap_cmd_guides.c:187
 msgid "_Horz. Spacing:"
-msgstr "水平间距(_H)"
+msgstr "水平间距(_H)："
 
 #: plug-ins/imagemap/imap_cmd_guides.c:193
 msgid "_No. Across:"
-msgstr "横向数量(_N)"
+msgstr "横向数量(_N)："
 
 #: plug-ins/imagemap/imap_cmd_guides.c:199
 msgid "_Vert. Spacing:"
-msgstr "垂直间距(_V)"
+msgstr "垂直间距(_V)："
 
 #: plug-ins/imagemap/imap_cmd_guides.c:205
 msgid "No. _Down:"
-msgstr "纵向数量(_D)"
+msgstr "纵向数量(_D)："
 
 #: plug-ins/imagemap/imap_cmd_guides.c:214
 msgid "Base _URL:"
@@ -10139,11 +10136,11 @@ msgstr "网格大小"
 
 #: plug-ins/imagemap/imap_grid.c:250
 msgid "_Width"
-msgstr "宽度(_W)："
+msgstr "宽度(_W)"
 
 #: plug-ins/imagemap/imap_grid.c:256
 msgid "_Height"
-msgstr "高度(_H)："
+msgstr "高度(_H)"
 
 #: plug-ins/imagemap/imap_grid.c:270
 msgid "Grid Offset"
@@ -11528,7 +11525,7 @@ msgstr "错误：XJT 属性文件“%s”为空。"
 #~ msgstr "请看 %s"
 
 #~ msgid "Color_Enhance: cmap was NULL!  Quitting...\n"
-#~ msgstr "颜色增强：cmap 为空！退出……\n"
+#~ msgstr "颜色增强：cmap 为空！退出...\n"
 
 #~ msgid "TIFF images"
 #~ msgstr "TIFF 图像"

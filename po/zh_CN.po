@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-19 23:18+0100\n"
-"PO-Revision-Date: 2004-11-20 00:40+0100\n"
+"PO-Revision-Date: 2004-11-24 19:30+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -867,7 +867,7 @@ msgstr "添加页签(_A)"
 
 #: app/actions/dockable-actions.c:54
 msgid "_Preview Size"
-msgstr "预览大小(_Z)"
+msgstr "预览大小(_P)"
 
 #: app/actions/dockable-actions.c:55
 msgid "_Tab Style"
@@ -1806,7 +1806,7 @@ msgstr "复制(_D)"
 
 #: app/actions/image-actions.c:105
 msgid "Merge Visible _Layers..."
-msgstr "合并可见图层(_V)..."
+msgstr "合并可见图层(_L)..."
 
 #: app/actions/image-actions.c:110 app/actions/layers-actions.c:138
 msgid "_Flatten Image"
@@ -2080,7 +2080,7 @@ msgstr "Alpha 到选区(_P)"
 
 #: app/actions/layers-actions.c:249
 msgid "A_dd to Selection"
-msgstr "添加到选区(_A)"
+msgstr "添加到选区(_D)"
 
 #: app/actions/layers-actions.c:267
 msgid "Select _Top Layer"
@@ -2363,7 +2363,7 @@ msgstr "云彩(_C)"
 
 #: app/actions/plug-in-actions.c:77
 msgid "_Nature"
-msgstr "自然(_N)："
+msgstr "自然(_N)"
 
 #: app/actions/plug-in-actions.c:79
 msgid "_Web"
@@ -5468,7 +5468,7 @@ msgstr "最大颜色数量(_M)："
 
 #: app/dialogs/convert-dialog.c:206
 msgid "_Remove unused colors from final palette"
-msgstr "从最终色板中删除没有被使用的颜色(_M)"
+msgstr "从最终色板中删除没有被使用的颜色(_R)"
 
 #. dithering
 #: app/dialogs/convert-dialog.c:221 app/tools/gimpblendoptions.c:268
@@ -5955,7 +5955,7 @@ msgstr "环绕(_W)"
 
 #: app/dialogs/offset-dialog.c:213
 msgid "Fill with _background color"
-msgstr "以背景色填充"
+msgstr "以背景色填充(_B)"
 
 #: app/dialogs/offset-dialog.c:216
 msgid "Make _transparent"
@@ -6208,7 +6208,7 @@ msgstr "选择 Web 浏览器"
 
 #: app/dialogs/preferences-dialog.c:1543
 msgid "_Web browser to use:"
-msgstr "要使用的 Web 浏览器："
+msgstr "要使用的 Web 浏览器(_W)："
 
 #. Snapping Distance
 #: app/dialogs/preferences-dialog.c:1568
@@ -6475,7 +6475,7 @@ msgstr "现在保存窗口位置(_N)"
 
 #: app/dialogs/preferences-dialog.c:2134
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr "重置已保存的窗口位置到默认值(_E)"
+msgstr "重置已保存的窗口位置到默认值(_R)"
 
 #: app/dialogs/preferences-dialog.c:2149 app/dialogs/preferences-dialog.c:2152
 #: app/dialogs/preferences-dialog.c:2300
@@ -7047,7 +7047,7 @@ msgstr "移植 GIMP 2.0 的用户设置(_M)"
 
 #: app/dialogs/user-install-dialog.c:823
 msgid "Do a _fresh user installation"
-msgstr "进行全新的用户安装"
+msgstr "进行全新的用户安装(_F)"
 
 #: app/dialogs/user-install-dialog.c:851
 msgid "Personal GIMP Folder"
@@ -10151,7 +10151,7 @@ msgstr "线宽："
 
 #: app/widgets/gimpstrokeeditor.c:209
 msgid "_Line Style"
-msgstr "线风格(_L)："
+msgstr "线风格(_L)"
 
 #: app/widgets/gimpstrokeeditor.c:228
 msgid "_Cap style:"
