@@ -1,3 +1,11 @@
+2000-01-06  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
+
+	* PLUGIN_MAINTAINERS (AUTHOR): added myself as maintainer of
+	whirlpinch and autostretch HSV
+
+	* user_install: added a warning in case a $HOME/.gtkrc is detected 
+	(see bug #2158).	
+
 2000-01-06  Tor Lillqvist  <tml@iki.fi>
 
 	* app/app_procs.c (make_initialization_status_window): Finetune

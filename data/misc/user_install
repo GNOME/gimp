@@ -60,3 +60,9 @@ echo "mkdir $2/gimpressionist/Presets"
 mkdir $2/gimpressionist/Presets
 echo "cp $1/palettes/* $2/palettes"
 cp $1/palettes/* $2/palettes
+
+if [ -r $HOME/.gtkrc ]
+then
+    echo "NOTICE: GIMP uses its own gtkrc file.  Your default .gtkrc will NOT"
+    echo "be used.  You may wish to edit GIMP's gtkrc (in $2/gtkrc)."
+fi
