@@ -1,3 +1,16 @@
+2004-11-01  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-types.h: new file to hold the types gfig uses.
+	This makes the sources easier to read.
+
+	* plug-ins/gfig/Makefile.am: added gfig-types.h
+
+	* plug-ins/gfig/gfig.h: removed some types definitions and put them
+	in gfig-types.h and ...
+
+	* plug-ins/gfig/gfig-dobject.h
+	* plug-ins/gfig/gfig-style.h: ...into these files.
+
 2004-10-31  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.2-pre1 release.

@@ -48,7 +48,8 @@ gfig_SOURCES = \
 	gfig-stock.c	\
 	gfig-stock.h	\
 	gfig-style.c	\
-	gfig-style.h
+	gfig-style.h    \
+	gfig-types.h
 
 EXTRA_DIST = README
 

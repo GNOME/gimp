@@ -26,6 +26,29 @@
 #ifndef __GFIG_STYLE_H__
 #define __GFIG_STYLE_H__
 
+#include <libgimp/gimpui.h>
+
+typedef struct
+{
+  gchar        *name;
+  gchar        *brush_name;
+  gint          brush_width;
+  gint          brush_height;
+  gint          brush_spacing;
+  BrushType     brush_type;
+  gdouble       brushfade;
+  gdouble       brushgradient;
+  gdouble       airbrushpressure;
+  FillType      fill_type;
+  gdouble       fill_opacity;
+  gchar        *pattern;
+  gchar        *gradient;
+  PaintType     paint_type;
+  GimpRGB       foreground;
+  GimpRGB       background;
+  gboolean      reverselines;
+} Style;
+
 void     set_foreground_callback           (GimpColorButton      *button,
                                             gpointer              data);
 
