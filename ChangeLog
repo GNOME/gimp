@@ -1,3 +1,12 @@
+Wed Sep 29 16:31:04 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/helpbrowser/helpbrowser.c: you can now drag the pages
+	from the helpbrowser to Netscape, error messages are more verbose 
+	and a history bug was fixed
+
+	* help/contents.html
+	* help/index.html: explain that these pages are bogus
+
 Wed Sep 29 13:34:26 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gap: updated iterator procedure for paper_tile

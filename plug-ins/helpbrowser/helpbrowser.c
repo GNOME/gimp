@@ -42,7 +42,6 @@
 #define chdir _chdir2
 #endif
 
-#define EEEK                    23
 #define GIMP_HELP_EXT_NAME      "extension_gimp_help_browser"
 #define GIMP_HELP_TEMP_EXT_NAME "extension_gimp_help_browser_temp"
 
@@ -91,9 +90,13 @@ static char *doc_not_found_format_string =
 "<center>"
 "<p>"
 "%s"
-"<h2>Couldn't find document</h2>"
-"%s"
+"<h3>Couldn't find document</h3>"
+"<tt>%s</tt>"
 "</center>"
+"<p>"
+"<small>This either means that the help for this topic has not been written yet "
+"or that something is wrong with your installation. Please check carefully "
+"before you report this as a bug.</small>" 
 "</body>"
 "</html>";
 
@@ -103,11 +106,20 @@ static char *dir_not_found_format_string =
 "<center>"
 "<p>"
 "%s"
-"<h2>Couldn't change to directory</h2>"
-"%s"
+"<h3>Couldn't change to directory</h3>"
+"<tt>%s</tt>"
+"<h3>while trying to access</h3>"
+"<tt>%s</tt>"
 "</center>"
+"<p>"
+"<small>This either means that the help for this topic has not been written yet "
+"or that something is wrong with your installation. Please check carefully "
+"before you report this as a bug.</small>" 
 "</body>"
 "</html>";
+
+static gchar *eek_png_tag = "<h1>Eeek!</h1>";
+
 
 /*  the three help notebook pages  */
 
@@ -141,6 +153,7 @@ static HelpPage pages[] =
   }
 };
 
+
 static HelpPage  *current_page = &pages[HELP];
 static GList     *history = NULL;
 
@@ -149,7 +162,12 @@ static GtkWidget *forward_button;
 static GtkWidget *notebook;
 static GtkWidget *combo;
 
-static gchar     *eek_png_tag = "<h1>Eeek!</h1>";
+static GtkTargetEntry help_dnd_target_table[] =
+{
+  { "_NETSCAPE_URL", 0, 0 },
+};
+static guint n_help_dnd_targets = (sizeof (help_dnd_target_table) /
+				   sizeof (help_dnd_target_table[0]));
 
 /*  GIMP plugin stuff  */
 
@@ -169,7 +187,7 @@ static gboolean temp_proc_installed = FALSE;
 
 /*  forward declaration  */
 
-static void load_page (HelpPage *source_page, HelpPage *dest_page,
+static gint load_page (HelpPage *source_page, HelpPage *dest_page,
 		       gchar *ref, gint pos, 
 		       gboolean add_to_queue, gboolean add_to_history);
 
@@ -383,15 +401,13 @@ html_source (HelpPage *page,
 					  combo);
 
       if (add_to_history)
-	{
-	  history_add (ref, title);
-	}
+	history_add (ref, title);
     }
       
   update_toolbar (page);
 }
 
-static void
+static gint
 load_page (HelpPage *source_page,
 	   HelpPage *dest_page,
 	   gchar    *ref,	  
@@ -407,12 +423,11 @@ load_page (HelpPage *source_page,
   gchar    *new_ref;
   gboolean  page_valid = FALSE;
 
-  g_return_if_fail (ref != NULL && source_page != NULL && dest_page != NULL);
+  g_return_val_if_fail (ref != NULL && source_page != NULL && dest_page != NULL, FALSE);
 
   old_dir  = g_dirname (source_page->current_ref);
   new_dir  = g_dirname (ref);
   new_base = g_basename (ref);
-
   
   /* return value is intentionally ignored */
   chdir (old_dir);
@@ -421,13 +436,13 @@ load_page (HelpPage *source_page,
 
   if (chdir (new_dir) == -1)
     {
-      g_string_sprintf (file_contents, dir_not_found_format_string,
-			eek_png_tag, new_dir);
       if (g_path_is_absolute (ref))
 	new_ref = g_strdup (ref);
       else
 	new_ref = g_strconcat (old_dir, G_DIR_SEPARATOR_S, ref, NULL);
 
+      g_string_sprintf (file_contents, dir_not_found_format_string,
+			eek_png_tag, new_dir, new_ref);
       html_source (dest_page, new_ref, 0, file_contents->str, add_to_queue, FALSE);
 
       goto FINISH;
@@ -461,6 +476,7 @@ load_page (HelpPage *source_page,
 	file_contents = g_string_append (file_contents, aline);
       fclose (afile);
     }
+
   if (strlen (file_contents->str) <= 0)
     {
       chdir (old_dir);
@@ -483,6 +499,8 @@ load_page (HelpPage *source_page,
   g_free (new_dir);
 
   gtk_notebook_set_page (GTK_NOTEBOOK (notebook), dest_page->index);
+
+  return (page_valid);
 }
 
 static void
@@ -603,12 +621,44 @@ notebook_switch_after_callback (GtkNotebook     *notebook,
   update_toolbar (current_page);
 }
 
-static void
-combo_button_press_callback (GtkWidget *widget,
-			     gpointer   data)
+
+static gint
+notebook_label_button_press_callback (GtkWidget *widget,
+				      GdkEvent  *event,
+				      gpointer   data)
 {
-  if (current_page != &pages[HELP])
-    gtk_notebook_set_page (GTK_NOTEBOOK (notebook), HELP);
+  guint i = GPOINTER_TO_UINT (data);
+
+  if (current_page != &pages[i])
+    gtk_notebook_set_page (GTK_NOTEBOOK (notebook), i);
+  
+  return (TRUE);
+}
+
+static void
+combo_drag_begin (GtkWidget *widget,
+		  gpointer   data)
+{ 
+}
+
+static void
+combo_drag_handle (GtkWidget        *widget, 
+		   GdkDragContext   *context,
+		   GtkSelectionData *selection_data,
+		   guint             info,
+		   guint             time,
+		   gpointer          data)
+{
+  HelpPage *page = (HelpPage*)data;
+
+  if (page->current_ref != NULL)
+    {
+      gtk_selection_data_set (selection_data,
+			      selection_data->target,
+			      8, 
+			      page->current_ref, 
+			      strlen (page->current_ref));
+    }
 }
 
 static void
@@ -634,10 +684,12 @@ page_down_callback (GtkWidget *widget,
 static gint
 set_initial_history (gpointer data)
 {
+  gint   add_to_history = GPOINTER_TO_INT (data);
   gchar *title;
 
   title = XmHTMLGetTitle (pages[HELP].html);
-  history_add (pages[HELP].current_ref, title);
+  if (add_to_history)
+    history_add (pages[HELP].current_ref, title);
 
   gtk_signal_handler_block_by_data (GTK_OBJECT (GTK_COMBO (combo)->entry), combo);
   gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (combo)->entry), title);
@@ -653,12 +705,15 @@ open_browser_dialog (gchar *path)
   GtkWidget *vbox, *hbox, *bbox, *html_box;
   GtkWidget *button;
   GtkWidget *title;
+  GtkWidget *drag_source;
+  GtkWidget *label;
 
   gchar  *initial_dir;
   gchar  *initial_ref;
   gchar  *root_dir;
   gchar  *eek_png_path;
-  gint    i;
+  gint    success;
+  guint   i;
   gint    argc;
   gchar **argv;
 
@@ -742,8 +797,8 @@ open_browser_dialog (gchar *path)
 
   for (i = 0; i < 3; i++)
     {
-      static gint page_up_signal = 0;
-      static gint page_down_signal = 0;
+      static guint page_up_signal = 0;
+      static guint page_down_signal = 0;
 
       pages[i].index = i;
       pages[i].html = gtk_xmhtml_new ();
@@ -751,8 +806,8 @@ open_browser_dialog (gchar *path)
       pages[i].current_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
 					  ".", NULL);
 
-      gtk_xmhtml_set_anchor_underline_type(GTK_XMHTML (pages[i].html),
-					   GTK_ANCHOR_SINGLE_LINE);
+      gtk_xmhtml_set_anchor_underline_type (GTK_XMHTML (pages[i].html),
+					    GTK_ANCHOR_SINGLE_LINE);
       gtk_xmhtml_set_anchor_buttons (GTK_XMHTML (pages[i].html), FALSE);
       gtk_widget_set_usize (GTK_WIDGET (pages[i].html), -1, 300);
 
@@ -760,21 +815,44 @@ open_browser_dialog (gchar *path)
 	{
 	case CONTENTS:
 	case INDEX:
-	  title = gtk_label_new (pages[i].label);
+	  title = drag_source = gtk_event_box_new ();
+	  label = gtk_label_new (pages[i].label);
+	  gtk_container_add (GTK_CONTAINER (title), label);
+	  gtk_widget_show (label);
 	  break;
 	case HELP:
 	  title = combo = gtk_combo_new ();
-	  gtk_widget_set_usize (GTK_WIDGET (title), 300, -1);
-	  gtk_entry_set_editable (GTK_ENTRY (GTK_COMBO (title)->entry), FALSE); 
-	  gtk_combo_set_use_arrows (GTK_COMBO (title), TRUE);
-	  gtk_signal_connect (GTK_OBJECT (title), "button_press_event",
-			      GTK_SIGNAL_FUNC (combo_button_press_callback), NULL);
-	  gtk_signal_connect (GTK_OBJECT (GTK_COMBO (combo)->entry), "changed",
-			      GTK_SIGNAL_FUNC (entry_changed_callback), combo);
+	  drag_source = GTK_COMBO (combo)->entry;
+	  gtk_widget_set_usize (GTK_WIDGET (combo), 300, -1);
+	  gtk_entry_set_editable (GTK_ENTRY (GTK_COMBO (combo)->entry), FALSE); 
+	  gtk_combo_set_use_arrows (GTK_COMBO (combo), TRUE);
+	  gtk_signal_connect (GTK_OBJECT (GTK_COMBO (combo)->entry), 
+			      "changed",
+			      GTK_SIGNAL_FUNC (entry_changed_callback), 
+			      combo);
+	  gtk_widget_show (combo);
 	  break;
 	default:
 	  break;
-	}
+	}	  
+
+      /*  connect to the button_press signal to make notebook switching working */ 
+      gtk_signal_connect (GTK_OBJECT (title), "button_press_event",
+			  GTK_SIGNAL_FUNC (notebook_label_button_press_callback), 
+			  GUINT_TO_POINTER (i));
+
+      /*  dnd source  */
+      gtk_drag_source_set (GTK_WIDGET (drag_source),
+			   GDK_BUTTON1_MASK,
+			   help_dnd_target_table, n_help_dnd_targets, 
+			   GDK_ACTION_MOVE | GDK_ACTION_COPY);
+      gtk_signal_connect (GTK_OBJECT (drag_source), "drag_begin",
+			  GTK_SIGNAL_FUNC (combo_drag_begin),
+			  &pages[i]);
+      gtk_signal_connect (GTK_OBJECT (drag_source), "drag_data_get",
+			  GTK_SIGNAL_FUNC (combo_drag_handle),
+			  &pages[i]);
+
       html_box = gtk_vbox_new (FALSE, 0);
       gtk_container_add (GTK_CONTAINER (html_box), pages[i].html);
 
@@ -793,7 +871,7 @@ open_browser_dialog (gchar *path)
 	initial_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
 				   pages[i].home, NULL);
 
-      load_page (&pages[i], &pages[i], initial_ref, 0, TRUE, FALSE);
+      success = load_page (&pages[i], &pages[i], initial_ref, 0, TRUE, FALSE);
       g_free (initial_ref);
 
       gtk_widget_show (pages[i].html);
@@ -836,9 +914,9 @@ open_browser_dialog (gchar *path)
   gtk_widget_show (vbox);
   gtk_widget_show (window);
 
-  g_free (initial_dir);
+  gtk_idle_add ((GtkFunction) set_initial_history, GINT_TO_POINTER (success));
 
-  gtk_idle_add ((GtkFunction) set_initial_history, (gpointer) EEEK);
+  g_free (initial_dir);
 
   return TRUE;
 }
@@ -850,7 +928,7 @@ idle_load_page (gpointer data)
 
   load_page (&pages[HELP], &pages[HELP], path, 0, TRUE, TRUE);
   g_free (path);
-
+	  
   return FALSE;
 }
 
