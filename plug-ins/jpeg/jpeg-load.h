@@ -503,21 +503,26 @@ run (gchar      *name,
 	    }
 	  else
 	    {
-	      jsvals.quality     = param[5].data.d_float;
-	      jsvals.smoothing   = param[6].data.d_float;
-	      jsvals.optimize    = param[7].data.d_int32;
+	      /* Once the PDB gets default parameters, remove this hack */
+	      if (param[5].data.d_float > 0.05)
+		{
+		  jsvals.quality     = param[5].data.d_float;
+		  jsvals.smoothing   = param[6].data.d_float;
+		  jsvals.optimize    = param[7].data.d_int32;
 #ifdef HAVE_PROGRESSIVE_JPEG
-	      jsvals.progressive = param[8].data.d_int32;
+		  jsvals.progressive = param[8].data.d_int32;
 #endif /* HAVE_PROGRESSIVE_JPEG */
-	      jsvals.baseline    = param[11].data.d_int32;
-	      jsvals.subsmp      = param[10].data.d_int32;
-	      jsvals.restart     = param[12].data.d_int32;
-	      jsvals.dct         = param[13].data.d_int32;
-	      jsvals.preview     = FALSE;
+		  jsvals.baseline    = param[11].data.d_int32;
+		  jsvals.subsmp      = param[10].data.d_int32;
+		  jsvals.restart     = param[12].data.d_int32;
+		  jsvals.dct         = param[13].data.d_int32;
 
-	      /* free up the default -- wasted some effort earlier */
-	      g_free (image_comment);
-	      image_comment = g_strdup (param[9].data.d_string);
+		  /* free up the default -- wasted some effort earlier */
+		  g_free (image_comment);
+		  image_comment = g_strdup (param[9].data.d_string);
+		}
+
+	      jsvals.preview = FALSE;
 
 	      if (jsvals.quality < 0.0 || jsvals.quality > 1.0)
 		status = GIMP_PDB_CALLING_ERROR;

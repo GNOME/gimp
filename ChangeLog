@@ -1,3 +1,10 @@
+2003-02-05  Manish Singh  <yosh@gimp.org>
+                                                                                
+	* plug-ins/common/jpeg.c (run): if the quality level is close to zero
+	in non-interactive mode, use default settings. This is hack until
+	the PDB gets default arguments, so gimp-file-save works sanely with
+	jpeg.
+
 2003-02-05  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpobject.c (gimp_object_set_name_safe): replaced with
