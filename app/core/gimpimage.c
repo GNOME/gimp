@@ -2327,6 +2327,7 @@ gimp_image_get_component_active (const GimpImage *gimage,
     case BLUE_CHANNEL:    return gimage->active[BLUE_PIX]; break;
     case GRAY_CHANNEL:    return gimage->active[GRAY_PIX]; break;
     case INDEXED_CHANNEL: return gimage->active[INDEXED_PIX]; break;
+    case ALPHA_CHANNEL:   return gimage->active[ALPHA_PIX]; break;
     default: return FALSE; break;
     }
 }
@@ -2343,6 +2344,7 @@ gimp_image_get_component_visible (const GimpImage *gimage,
     case BLUE_CHANNEL:    return gimage->visible[BLUE_PIX]; break;
     case GRAY_CHANNEL:    return gimage->visible[GRAY_PIX]; break;
     case INDEXED_CHANNEL: return gimage->visible[INDEXED_PIX]; break;
+    case ALPHA_CHANNEL:   return gimage->visible[ALPHA_PIX]; break;
     default: return FALSE; break;
     }
 }
@@ -2469,6 +2471,7 @@ gimp_image_set_component_active (GimpImage   *gimage,
     case BLUE_CHANNEL:      gimage->active[BLUE_PIX]    = active; break;
     case GRAY_CHANNEL:      gimage->active[GRAY_PIX]    = active; break;
     case INDEXED_CHANNEL:   gimage->active[INDEXED_PIX] = active; break;
+    case ALPHA_CHANNEL:     gimage->active[ALPHA_PIX]   = active; break;
     case AUXILLARY_CHANNEL: break;
     }
 
@@ -2492,6 +2495,7 @@ gimp_image_set_component_visible (GimpImage   *gimage,
     case BLUE_CHANNEL:    gimage->visible[BLUE_PIX]    = visible; break;
     case GRAY_CHANNEL:    gimage->visible[GRAY_PIX]    = visible; break;
     case INDEXED_CHANNEL: gimage->visible[INDEXED_PIX] = visible; break;
+    case ALPHA_CHANNEL:   gimage->visible[ALPHA_PIX]   = visible; break;
     default: break;
     }
 }

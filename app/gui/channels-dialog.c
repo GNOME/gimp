@@ -79,7 +79,7 @@ struct _ChannelsDialog
 
   gint         num_components;
   gint         base_type;
-  ChannelType  components[3];
+  ChannelType  components[MAX_CHANNELS];
 
   GimpChannel *active_channel;
   GimpLayer   *floating_sel;
@@ -513,6 +513,14 @@ channels_dialog_update (GimpImage* gimage)
       break;
     }
 
+/* EEEK */
+      cw = channel_widget_create (gimage, NULL, ALPHA_CHANNEL);
+      channelsD->channel_widgets = g_slist_append (channelsD->channel_widgets, cw);
+      item_list = g_list_append (item_list, cw->list_item);
+      channelsD->components[channelsD->num_components] = ALPHA_CHANNEL;
+
+      channelsD->num_components++;
+
   /*  The auxillary image channels  */
   for (list = gimage->channels; list; list = g_slist_next (list))
     {
@@ -767,6 +775,9 @@ channels_dialog_set_channel (ChannelWidget *channel_widget)
 	    case BLUE_CHANNEL:
 	      gtk_list_select_item (GTK_LIST (channelsD->channel_list), 2);
 	      break;
+	    case ALPHA_CHANNEL:
+	      gtk_list_select_item (GTK_LIST (channelsD->channel_list), 3);
+	      break;
 	    case AUXILLARY_CHANNEL:
 	      g_error ("error in %s at %d: this shouldn't happen.",
 		       __FILE__, __LINE__);
@@ -829,6 +840,9 @@ channels_dialog_unset_channel (ChannelWidget *channel_widget)
 	      break;
 	    case BLUE_CHANNEL:
 	      gtk_list_unselect_item (GTK_LIST (channelsD->channel_list), 2);
+	      break;
+	    case ALPHA_CHANNEL:
+	      gtk_list_unselect_item (GTK_LIST (channelsD->channel_list), 3);
 	      break;
 	    case AUXILLARY_CHANNEL:
 	      g_error ("error in %s at %d: this shouldn't happen.",
@@ -1461,6 +1475,10 @@ channel_widget_create (GimpImage   *gimage,
 
     case INDEXED_CHANNEL:
       channel_widget->label = gtk_label_new (_("Indexed"));
+      break;
+
+    case ALPHA_CHANNEL:
+      channel_widget->label = gtk_label_new (_("Alpha"));
       break;
 
     case AUXILLARY_CHANNEL:
@@ -2157,6 +2175,7 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
     case BLUE_CHANNEL:      channel = BLUE_PIX; break;
     case GRAY_CHANNEL:      channel = GRAY_PIX; break;
     case INDEXED_CHANNEL:   channel = INDEXED_PIX; break;
+    case ALPHA_CHANNEL:     channel = ALPHA_PIX; break;
     case AUXILLARY_CHANNEL: channel = -1; break;
     default:                channel = -1; break;
     }
