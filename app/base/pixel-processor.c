@@ -21,6 +21,7 @@
 #include "config.h"
 
 #ifdef ENABLE_MP
+#include <string.h>
 #include <pthread.h>
 #endif
 
@@ -85,7 +86,7 @@ do_parallel_regions (PixelProcessor *p_s)
   PixelRegion tr[4];
   gint        n_tiles = 0;
   gint        i;
-  gint        cont = 1;
+  gboolean    cont = TRUE;
 
   pthread_mutex_lock (&p_s->mutex);
 
@@ -105,7 +106,7 @@ do_parallel_regions (PixelProcessor *p_s)
       for (i = 0; i < p_s->n_regions; i++)
 	if (p_s->r[i])
 	  {
-	    memcpy(&tr[i], p_s->r[i], sizeof(PixelRegion));
+	    memcpy (&tr[i], p_s->r[i], sizeof (PixelRegion));
 	    if (tr[i].tiles)
 	      tile_lock(tr[i].curtile);
 	  }
@@ -156,13 +157,12 @@ do_parallel_regions (PixelProcessor *p_s)
 	    tile_release (tr[i].curtile, tr[i].dirty);
 	}
 
-    if (p_s->progress_report_func && 
+    if (p_s->progress_report_func &&
 	!p_s->progress_report_func (p_s->progress_report_data,
-                                    p_s->r[0]->x, p_s->r[0]->y, 
+                                    p_s->r[0]->x, p_s->r[0]->y,
                                     p_s->r[0]->w, p_s->r[0]->h))
-      cont = 0;
-
-    } 
+      cont = FALSE;
+    }
 
   while (cont && p_s->PRI &&
 	 (p_s->PRI = pixel_regions_process (p_s->PRI)));
@@ -175,7 +175,7 @@ do_parallel_regions (PixelProcessor *p_s)
 }
 #endif
 
-/*  do_parallel_regions_single is just like do_parallel_regions 
+/*  do_parallel_regions_single is just like do_parallel_regions
  *   except that all the mutex and tile locks have been removed
  *
  * If we are processing with only a single thread we don't need to do the
@@ -186,7 +186,7 @@ do_parallel_regions (PixelProcessor *p_s)
 static gpointer
 do_parallel_regions_single (PixelProcessor *p_s)
 {
-  gint cont = 1;
+  gboolean cont = TRUE;
 
   do
     {
@@ -196,7 +196,7 @@ do_parallel_regions_single (PixelProcessor *p_s)
           ((p1_func) p_s->f) (p_s->data,
                               p_s->r[0]);
           break;
-          
+
         case 2:
           ((p2_func) p_s->f) (p_s->data,
                               p_s->r[0],
@@ -209,7 +209,7 @@ do_parallel_regions_single (PixelProcessor *p_s)
                               p_s->r[1],
                               p_s->r[2]);
           break;
-          
+
         case 4:
           ((p4_func) p_s->f) (p_s->data,
                               p_s->r[0],
@@ -223,11 +223,11 @@ do_parallel_regions_single (PixelProcessor *p_s)
                      p_s->n_regions);
         }
 
-      if (p_s->progress_report_func && 
+      if (p_s->progress_report_func &&
           !p_s->progress_report_func (p_s->progress_report_data,
-                                      p_s->r[0]->x, p_s->r[0]->y, 
+                                      p_s->r[0]->x, p_s->r[0]->y,
                                       p_s->r[0]->w, p_s->r[0]->h))
-        cont = 0;
+        cont = FALSE;
     }
 
   while (cont && p_s->PRI &&
@@ -281,16 +281,17 @@ pixel_regions_do_parallel (PixelProcessor *p_s)
     }
   else
 #endif
-
-    do_parallel_regions_single (p_s);
+    {
+      do_parallel_regions_single (p_s);
+    }
 }
 
 static PixelProcessor *
-pixel_regions_real_process_parallel (p_func             f, 
+pixel_regions_real_process_parallel (p_func             f,
 				     gpointer           data,
 				     ProgressReportFunc report_func,
 				     gpointer           report_data,
-				     gint               num_regions, 
+				     gint               num_regions,
 				     va_list            ap)
 {
   gint            i;
@@ -367,9 +368,9 @@ pixel_regions_real_process_parallel (p_func             f,
 }
 
 void
-pixel_regions_process_parallel (p_func   f, 
-				gpointer data, 
-				gint     num_regions, 
+pixel_regions_process_parallel (p_func   f,
+				gpointer data,
+				gint     num_regions,
 				...)
 {
   va_list va;
@@ -382,10 +383,10 @@ pixel_regions_process_parallel (p_func   f,
 }
 
 PixelProcessor *
-pixel_regions_process_parallel_progress (p_func             f, 
+pixel_regions_process_parallel_progress (p_func             f,
 					 gpointer           data,
 					 ProgressReportFunc progress_func,
-					 gpointer           progress_data, 
+					 gpointer           progress_data,
 					 gint               num_regions,
 					 ...)
 {
