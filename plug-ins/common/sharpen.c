@@ -44,6 +44,9 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.9  1999/03/28 22:03:12  raph
+ *   Fixed a silly bug causing sharpen to not work in the non-rgb cases.
+ *
  *   Revision 1.8  1999/03/15 22:38:36  raph
  *   Improved the quality of the algorithm in the sharpen plugin.
  *
@@ -1167,6 +1170,7 @@ gray_filter(int    width,	/* I - Width of line in pixels */
     pixel = pos_lut[*src++] - neg0[-1] - neg0[0] - neg0[1] -
 	    neg1[-1] - neg1[1] -
 	    neg2[-1] - neg2[0] - neg2[1];
+    pixel = (pixel + 4) >> 3;
     if (pixel < 0)
       *dst++ = 0;
     else if (pixel < 255)
@@ -1208,6 +1212,7 @@ graya_filter(int    width,	/* I - Width of line in pixels */
     pixel = pos_lut[*src++] - neg0[-2] - neg0[0] - neg0[2] -
 	    neg1[-2] - neg1[2] -
 	    neg2[-2] - neg2[0] - neg2[2];
+    pixel = (pixel + 4) >> 3;
     if (pixel < 0)
       *dst++ = 0;
     else if (pixel < 255)
@@ -1320,6 +1325,7 @@ rgba_filter(int    width,	/* I - Width of line in pixels */
     pixel = pos_lut[*src++] - neg0[-4] - neg0[0] - neg0[4] -
 	    neg1[-4] - neg1[4] -
 	    neg2[-4] - neg2[0] - neg2[4];
+    pixel = (pixel + 4) >> 3;
     if (pixel < 0)
       *dst++ = 0;
     else if (pixel < 255)
@@ -1330,6 +1336,7 @@ rgba_filter(int    width,	/* I - Width of line in pixels */
     pixel = pos_lut[*src++] - neg0[-3] - neg0[1] - neg0[5] -
 	    neg1[-3] - neg1[5] -
 	    neg2[-3] - neg2[1] - neg2[5];
+    pixel = (pixel + 4) >> 3;
     if (pixel < 0)
       *dst++ = 0;
     else if (pixel < 255)
@@ -1340,6 +1347,7 @@ rgba_filter(int    width,	/* I - Width of line in pixels */
     pixel = pos_lut[*src++] - neg0[-2] - neg0[2] - neg0[6] -
 	    neg1[-2] - neg1[6] -
 	    neg2[-2] - neg2[2] - neg2[6];
+    pixel = (pixel + 4) >> 3;
     if (pixel < 0)
       *dst++ = 0;
     else if (pixel < 255)
