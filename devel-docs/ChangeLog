@@ -1,5 +1,17 @@
 2002-05-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/libgimpcolor-docs.sgml: removed GimpColorTypes section.
+
+	* libgimpcolor/libgimpcolor-sections.txt: updated.
+
+	* libgimpcolor/tmpl/gimpcolortypes.sgml: removed.
+
+	* libgimpcolor/tmpl/gimpadaptivesupersample.sgml
+	* libgimpcolor/tmpl/gimphsv.sgml
+	* libgimpcolor/tmpl/gimprgb.sgml: updated.
+
+2002-05-13  Sven Neumann  <sven@gimp.org>
+
 	* libgimpmath/libgimpmath-docs.sgml: added GimpMD5 section, removed
 	GimpMathTypes.
 

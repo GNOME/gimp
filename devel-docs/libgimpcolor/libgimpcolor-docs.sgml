@@ -1,10 +1,9 @@
 <!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
-<!entity libgimpcolor-gimpcolortypes SYSTEM "sgml/gimpcolortypes.sgml">
-<!entity libgimpcolor-gimpcolorspace SYSTEM "sgml/gimpcolorspace.sgml">
-<!entity libgimpcolor-gimprgb SYSTEM "sgml/gimprgb.sgml">
-<!entity libgimpcolor-gimphsv SYSTEM "sgml/gimphsv.sgml">
-<!entity libgimpcolor-gimpadaptivesupersample SYSTEM "sgml/gimpadaptivesupersample.sgml">
-<!entity libgimpcolor-gimpbilinear SYSTEM "sgml/gimpbilinear.sgml">
+<!entity GimpRGB SYSTEM "sgml/gimprgb.sgml">
+<!entity GimpHSV SYSTEM "sgml/gimphsv.sgml">
+<!entity GimpColorSpace SYSTEM "sgml/gimpcolorspace.sgml">
+<!entity GimpAdaptiveSupersample SYSTEM "sgml/gimpadaptivesupersample.sgml">
+<!entity GimpBilinear SYSTEM "sgml/gimpbilinear.sgml">
 ]>
 <book id="index">
   <bookinfo>
@@ -13,11 +12,10 @@
 
   <chapter id="libgimpcolor">
     <title>GIMP Color Library</title>
-    &libgimpcolor-gimpcolortypes;
-    &libgimpcolor-gimpcolorspace;
-    &libgimpcolor-gimprgb;
-    &libgimpcolor-gimphsv;
-    &libgimpcolor-gimpadaptivesupersample;
-    &libgimpcolor-gimpbilinear;
+    &GimpRGB;
+    &GimpHSV;
+    &GimpColorSpace;
+    &GimpAdaptiveSupersample;
+    &GimpBilinear;
   </chapter>
 </book>

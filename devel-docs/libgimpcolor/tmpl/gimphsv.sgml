@@ -14,6 +14,16 @@ gimphsv
 
 </para>
 
+<!-- ##### STRUCT GimpHSV ##### -->
+<para>
+
+</para>
+
+@h: 
+@s: 
+@v: 
+@a: 
+
 <!-- ##### FUNCTION gimp_hsv_set ##### -->
 <para>
 

@@ -1,8 +1,4 @@
 <SECTION>
-<FILE>gimpcolor</FILE>
-</SECTION>
-
-<SECTION>
 <FILE>gimpcolorspace</FILE>
 gimp_rgb_to_hsv
 gimp_rgb_to_hsl
@@ -22,16 +18,8 @@ gimp_hsv_to_rgb4
 </SECTION>
 
 <SECTION>
-<FILE>gimpcolortypes</FILE>
-GimpRGB
-GimpHSV
-GimpRenderFunc
-GimpPutPixelFunc
-GimpProgressFunc
-</SECTION>
-
-<SECTION>
 <FILE>gimphsv</FILE>
+GimpHSV
 gimp_hsv_set
 gimp_hsv_clamp
 gimp_hsva_set
@@ -39,6 +27,7 @@ gimp_hsva_set
 
 <SECTION>
 <FILE>gimprgb</FILE>
+GimpRGB
 GimpRGBCompositeMode
 gimp_rgb_set
 gimp_rgb_set_alpha
@@ -70,6 +59,9 @@ INTENSITY
 
 <SECTION>
 <FILE>gimpadaptivesupersample</FILE>
+GimpProgressFunc
+GimpPutPixelFunc
+GimpRenderFunc
 gimp_adaptive_supersample_area
 </SECTION>
 
