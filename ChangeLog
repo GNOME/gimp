@@ -1,5 +1,10 @@
 2004-10-06  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/plug-in-actions.c (plug_in_actions_update): an image
+	doesn't necessarily have a drawable. Handle the case when it doesn't.
+
+2004-10-06  Sven Neumann  <sven@gimp.org>
+
 	* app/app_procs.[ch]
 	* app/batch.[ch]
 	* app/main.c: added new command-line option "--batch-interpreter"

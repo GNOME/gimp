@@ -153,7 +153,8 @@ plug_in_actions_update (GimpActionGroup *group,
     {
       GimpDrawable *drawable = gimp_image_active_drawable (gimage);
 
-      type = gimp_drawable_type (drawable);
+      if (drawable)
+        type = gimp_drawable_type (drawable);
     }
 
   for (list = group->gimp->plug_in_proc_defs;
