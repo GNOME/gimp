@@ -83,7 +83,7 @@ HELP
 	  array => { name => 'num_path_point_details',
 		     desc => 'The number of points returned. Each point is
 			      made up of (x, y, pnt_type) of floats',
-		     alias => 'num_points', init => 1 } }
+		     alias => 'num_point_details', init => 1 } }
     );
 
     %invoke = (
@@ -95,18 +95,21 @@ HELP
   if (vectors)
     {
       GimpVectorsCompatPoint *points;
+      gint num_points;
 
       path_type = 1; /* BEZIER (1.2 compat) */
 
       points = gimp_vectors_compat_get_points (vectors, &num_points,
                                                &path_closed);
 
+      num_point_details = num_points * 3;
+
       if (points)
         {
           gdouble *curr_point;
           gint     i;
 
-          points_pairs = g_new0 (gdouble, num_points * 3);
+          points_pairs = g_new0 (gdouble, num_point_details);
 
           for (i = 0, curr_point = points_pairs;
                i < num_points;
