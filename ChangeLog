@@ -1,3 +1,12 @@
+2001-02-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpdnd.[ch]: removed all brush, pattern, gradient and palette
+	DND functions because there are generic GimpViewable DND functions
+	now.
+
+	* app/disp_callbacks.[ch]
+	* app/interface.c: changed accordingly.
+
 2001-02-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/commands.[ch]

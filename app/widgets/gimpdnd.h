@@ -140,107 +140,6 @@ void  gimp_dnd_viewable_dest_unset     (GtkWidget               *widget,
 					GtkType                  type);
 
 
-/*  drawable dnd functions  */
-
-typedef void           (* GimpDndDropDrawableFunc) (GtkWidget    *widget,
-						    GimpDrawable *drawable,
-						    gpointer      data);
-typedef GimpDrawable * (* GimpDndDragDrawableFunc) (GtkWidget    *widget,
-						    gpointer      data);
-
-void  gimp_dnd_layer_source_set      (GtkWidget               *widget,
-				      GimpDndDragDrawableFunc  get_drawable_func,
-				      gpointer                 data);
-void  gimp_dnd_layer_dest_set        (GtkWidget               *widget,
-				      GimpDndDropDrawableFunc  set_drawable_func,
-				      gpointer                 data);
-void  gimp_dnd_layer_dest_unset      (GtkWidget               *widget);
-
-void  gimp_dnd_channel_source_set    (GtkWidget               *widget,
-				      GimpDndDragDrawableFunc  get_drawable_func,
-				      gpointer                 data);
-void  gimp_dnd_channel_dest_set      (GtkWidget               *widget,
-				      GimpDndDropDrawableFunc  set_drawable_func,
-				      gpointer                 data);
-void  gimp_dnd_channel_dest_unset    (GtkWidget               *widget);
-
-void  gimp_dnd_layer_mask_source_set (GtkWidget               *widget,
-				      GimpDndDragDrawableFunc  get_drawable_func,
-				      gpointer                 data);
-void  gimp_dnd_layer_mask_dest_set   (GtkWidget               *widget,
-				      GimpDndDropDrawableFunc  set_drawable_func,
-				      gpointer                 data);
-void  gimp_dnd_layer_mask_dest_unset (GtkWidget               *widget);
-
-
-/*  brush dnd functions  */
-
-typedef void        (* GimpDndDropBrushFunc) (GtkWidget *widget,
-					      GimpBrush *brush,
-					      gpointer   data);
-typedef GimpBrush * (* GimpDndDragBrushFunc) (GtkWidget *widget,
-					      gpointer   data);
-
-void  gimp_dnd_brush_source_set    (GtkWidget            *widget,
-				    GimpDndDragBrushFunc  get_brush_func,
-				    gpointer              data);
-void  gimp_dnd_brush_dest_set      (GtkWidget            *widget,
-				    GimpDndDropBrushFunc  set_brush_func,
-				    gpointer              data);
-void  gimp_dnd_brush_dest_unset    (GtkWidget            *widget);
-
-
-/*  pattern dnd functions  */
-
-typedef void          (* GimpDndDropPatternFunc) (GtkWidget   *widget,
-						  GimpPattern *pattern,
-						  gpointer     data);
-typedef GimpPattern * (* GimpDndDragPatternFunc) (GtkWidget   *widget,
-						  gpointer     data);
-
-void  gimp_dnd_pattern_source_set  (GtkWidget              *widget,
-				    GimpDndDragPatternFunc  get_pattern_func,
-				    gpointer                data);
-void  gimp_dnd_pattern_dest_set    (GtkWidget              *widget,
-				    GimpDndDropPatternFunc  set_pattern_func,
-				    gpointer                data);
-void  gimp_dnd_pattern_dest_unset  (GtkWidget              *widget);
-
-
-/*  gradient dnd functions  */
-
-typedef void           (* GimpDndDropGradientFunc) (GtkWidget    *widget,
-						    GimpGradient *gradient,
-						    gpointer      data);
-typedef GimpGradient * (* GimpDndDragGradientFunc) (GtkWidget    *widget,
-						    gpointer      data);
-
-void  gimp_dnd_gradient_source_set (GtkWidget               *widget,
-				    GimpDndDragGradientFunc  get_gradient_func,
-				    gpointer                 data);
-void  gimp_dnd_gradient_dest_set   (GtkWidget               *widget,
-				    GimpDndDropGradientFunc  set_gradient_func,
-				    gpointer                 data);
-void  gimp_dnd_gradient_dest_unset (GtkWidget               *widget);
-
-
-/*  palette dnd functions  */
-
-typedef void          (* GimpDndDropPaletteFunc) (GtkWidget   *widget,
-						  GimpPalette *palette,
-						  gpointer     data);
-typedef GimpPalette * (* GimpDndDragPaletteFunc) (GtkWidget   *widget,
-						  gpointer     data);
-
-void  gimp_dnd_palette_source_set  (GtkWidget              *widget,
-				    GimpDndDragPaletteFunc  get_palette_func,
-				    gpointer                data);
-void  gimp_dnd_palette_dest_set    (GtkWidget              *widget,
-				    GimpDndDropPaletteFunc  set_palette_func,
-				    gpointer                data);
-void  gimp_dnd_palette_dest_unset  (GtkWidget              *widget);
-
-
 /*  tool dnd functions  */
 
 typedef void     (* GimpDndDropToolFunc) (GtkWidget *widget,
@@ -258,7 +157,7 @@ void  gimp_dnd_tool_dest_set       (GtkWidget           *widget,
 void  gimp_dnd_tool_dest_unset     (GtkWidget           *widget);
 
 
-/*  drawable dnd functions  */
+/*  OLD drawable dnd functions  */
 
 void  gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 					  GdkDragContext *context,

@@ -1024,9 +1024,13 @@ gdisplay_drop_color (GtkWidget     *widget,
 }
 
 void
-gdisplay_drop_pattern (GtkWidget   *widget,
-		       GimpPattern *pattern,
-		       gpointer     data)
+gdisplay_drop_viewable (GtkWidget    *widget,
+			GimpViewable *viewable,
+			gpointer      data)
 {
-  gdisplay_bucket_fill (widget, PATTERN_BUCKET_FILL, NULL, pattern->mask, data);
+  if (GIMP_IS_PATTERN (viewable))
+    {
+      gdisplay_bucket_fill (widget, PATTERN_BUCKET_FILL, NULL,
+			    GIMP_PATTERN (viewable)->mask, data);
+    }
 }

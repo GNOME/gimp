@@ -29,6 +29,7 @@
 #include "gimpdnd.h"
 #include "gimphelp.h"
 #include "gimpimage.h"
+#include "gimppattern.h"
 #include "gimprc.h"
 #include "interface.h"
 #include "menus.h"
@@ -178,7 +179,9 @@ create_display_shell (GDisplay *gdisp,
 		      GTK_SIGNAL_FUNC (gdisplay_drag_drop),
 		      gdisp);
   gimp_dnd_color_dest_set (gdisp->shell, gdisplay_drop_color, gdisp);
-  gimp_dnd_pattern_dest_set (gdisp->shell, gdisplay_drop_pattern, gdisp);
+  gimp_dnd_viewable_dest_set (gdisp->shell,
+			      GIMP_TYPE_PATTERN,
+			      gdisplay_drop_viewable, gdisp);
 
   if (! image_popup_menu)
     menus_get_image_menu (&image_popup_menu, &image_accel_group);
