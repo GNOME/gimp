@@ -1,4 +1,4 @@
-# Spanish translation for gimp-plug-ins
+# Spanish translation for gimp-plug-ins.
 # Copyright © 1998-2000,2003 Free Software Foundation, Inc.
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>, 2000-2002
 # Pablo Gonzalo del Campo <pablodc@bigfoot.com>, 2003
@@ -1235,7 +1235,7 @@ msgstr "Mapa alienigena"
 
 #: plug-ins/common/AlienMap.c:1158 plug-ins/common/AlienMap2.c:1143
 msgid "About..."
-msgstr "Acerca..."
+msgstr "Acerca de..."
 
 #: plug-ins/common/AlienMap.c:1201 plug-ins/common/diffraction.c:605
 #: plug-ins/common/diffraction.c:643 plug-ins/common/diffraction.c:681
@@ -1939,7 +1939,7 @@ msgstr "Formateado de datos"
 
 #: plug-ins/common/align_layers.c:151
 msgid "<Image>/Layer/Align Visible Layers..."
-msgstr "<Image>/Capas/Alinear las capas visibles..."
+msgstr "<Image>/Capa/Alinear las capas visibles..."
 
 #: plug-ins/common/align_layers.c:186
 msgid "Align Visible Layers: there are too few layers."
@@ -2088,19 +2088,19 @@ msgstr "Cuadro %d de %d"
 
 #: plug-ins/common/animoptimize.c:176
 msgid "<Image>/Filters/Animation/Animation Optimize"
-msgstr "<Image>/Filtros/Animación/Optimizar animación"
+msgstr "<Image>/Filtros/Animación/Optimizar la animación"
 
 #: plug-ins/common/animoptimize.c:193
 msgid "<Image>/Filters/Animation/Animation UnOptimize"
-msgstr "<Image>/Filtros/Animación/Desoptimizar Animación"
+msgstr "<Image>/Filtros/Animación/Desoptimizar la animación"
 
 #: plug-ins/common/animoptimize.c:208
 msgid "<Image>/Filters/Animation/Animation: Remove Backdrop"
-msgstr "<Image>/Filtros/Animación/Animación: Quitar retardo"
+msgstr "<Image>/Filtros/Animación/Animación: quitar telón de fondo"
 
 #: plug-ins/common/animoptimize.c:224
 msgid "<Image>/Filters/Animation/Animation: Find Backdrop"
-msgstr "<Image>/Filtros/Animación/Animación: Buscar retardo"
+msgstr "<Image>/Filtros/Animación/Animación: buscar telón de fondo"
 
 #: plug-ins/common/animoptimize.c:425
 msgid "UnOptimizing Animation..."
@@ -2108,15 +2108,15 @@ msgstr "Desoptimizando animación..."
 
 #: plug-ins/common/animoptimize.c:428
 msgid "Removing Animation Background..."
-msgstr "Quitando el fondo de la animación..."
+msgstr "Quitando el telón de fondo de la animación..."
 
 #: plug-ins/common/animoptimize.c:431
 msgid "Finding Animation Background..."
-msgstr "Buscando el fondo de la animación..."
+msgstr "Buscando el telón de fondo de la animación..."
 
 #: plug-ins/common/animoptimize.c:435
 msgid "Optimizing Animation..."
-msgstr "Optimizando animación..."
+msgstr "Optimizando la animación..."
 
 #: plug-ins/common/animoptimize.c:472
 msgid "Not enough memory to allocate buffers for optimization.\n"
@@ -2124,15 +2124,15 @@ msgstr "No hay memoria suficiente para alojar búferes para optimización.\n"
 
 #: plug-ins/common/apply_lens.c:131
 msgid "<Image>/Filters/Glass Effects/Apply Lens..."
-msgstr "<Image>/Filtros/Efectos de Cristal/Aplicar lente..."
+msgstr "<Image>/Filtros/Efectos de Cristal/Aplicar el lente..."
 
 #: plug-ins/common/apply_lens.c:195
 msgid "Applying lens..."
-msgstr "Aplicando lente..."
+msgstr "Aplicando el lente..."
 
 #: plug-ins/common/apply_lens.c:386
 msgid "Lens Effect"
-msgstr "Efecto Lente"
+msgstr "Efecto de lente"
 
 #: plug-ins/common/apply_lens.c:413
 msgid "_Keep Original Surroundings"
@@ -2164,7 +2164,7 @@ msgstr "Recortando..."
 
 #: plug-ins/common/autostretch_hsv.c:92
 msgid "<Image>/Layer/Colors/Auto/Stretch HSV"
-msgstr "<Image>/Capas/Colores/Auto/Estirar HSV"
+msgstr "<Image>/Capa/Colores/Auto/Estirar HSV"
 
 #: plug-ins/common/autostretch_hsv.c:124
 msgid "Auto-Stretching HSV..."
@@ -2279,7 +2279,7 @@ msgstr "256 (¿una tontería?)"
 
 #: plug-ins/common/bumpmap.c:371
 msgid "<Image>/Filters/Map/Bump Map..."
-msgstr "<Image>/Filtros/Mapa/Aplicación de relieve..."
+msgstr "<Image>/Filtros/Mapa/Mapa de relieve..."
 
 #: plug-ins/common/bumpmap.c:523
 msgid "Bump-mapping..."
@@ -2355,7 +2355,7 @@ msgstr "bz2: no se puede abrir un archivo comprimido con bzip2 sin una extensió
 
 #: plug-ins/common/c_astretch.c:88
 msgid "<Image>/Layer/Colors/Auto/Stretch Contrast"
-msgstr "<Image>/Capas/Colores/Auto/Estirar contraste"
+msgstr "<Image>/Capa/Colores/Auto/Estirar contraste"
 
 #: plug-ins/common/c_astretch.c:120
 msgid "Auto-Stretching Contrast..."
@@ -2385,7 +2385,7 @@ msgstr "T_amaño:"
 
 #: plug-ins/common/color_enhance.c:92
 msgid "<Image>/Layer/Colors/Auto/Color Enhance"
-msgstr "<Image>/Capas/Colores/Auto/Realce de color"
+msgstr "<Image>/Capa/Colores/Auto/Realce de color"
 
 #: plug-ins/common/color_enhance.c:124
 msgid "Color Enhance..."
@@ -4893,7 +4893,7 @@ msgstr "Canal nº %d:"
 
 #: plug-ins/common/normalize.c:90
 msgid "<Image>/Layer/Colors/Auto/Normalize"
-msgstr "<Image>/Capas/Colores/Auto/Normalizar"
+msgstr "<Image>/Capa/Colores/Auto/Normalizar"
 
 #: plug-ins/common/normalize.c:121
 msgid "Normalizing..."
@@ -5037,7 +5037,7 @@ msgstr "31 de Septiembre de 1999"
 
 #: plug-ins/common/papertile.c:838
 msgid "<Image>/Filters/Map/Paper Tile..."
-msgstr "<Image>/Filtros/Mapa/Mosaicos de papel..."
+msgstr "<Image>/Filtros/Mapa/Mosaico de papel..."
 
 #: plug-ins/common/pat.c:447
 msgid "Save as Pattern"
@@ -5612,15 +5612,15 @@ msgstr "A_mplitud:"
 
 #: plug-ins/common/rotate.c:159
 msgid "<Image>/Layer/Transform/Rotate 90 degrees"
-msgstr "<Image>/Capas/Transformaciones/Rotar 90 grados"
+msgstr "<Image>/Capa/Transformaciones/Rotar 90 grados"
 
 #: plug-ins/common/rotate.c:170
 msgid "<Image>/Layer/Transform/Rotate 180 degrees"
-msgstr "<Image>/Capas/Transformaciones/Rotar 180 grados"
+msgstr "<Image>/Capa/Transformaciones/Rotar 180 grados"
 
 #: plug-ins/common/rotate.c:181
 msgid "<Image>/Layer/Transform/Rotate 270 degrees"
-msgstr "<Image>/Capas/Transformaciones/Rotar 270 grados"
+msgstr "<Image>/Capa/Transformaciones/Rotar 270 grados"
 
 #: plug-ins/common/rotate.c:193
 msgid "<Image>/Image/Transform/Rotate 90 degrees"
@@ -6529,7 +6529,7 @@ msgstr "Or_igen en abajo a la izquierda"
 
 #: plug-ins/common/threshold_alpha.c:107
 msgid "<Image>/Layer/Transparency/Threshold Alpha..."
-msgstr "<Image>/Capas/Transparencia/Umbral de Alfa..."
+msgstr "<Image>/Capa/Transparencia/Umbral de Alfa..."
 
 #: plug-ins/common/threshold_alpha.c:149
 msgid "The layer preserves transparency."
@@ -7511,7 +7511,7 @@ msgstr "Error al escribir imagen rgb"
 
 #: plug-ins/common/zealouscrop.c:69
 msgid "<Image>/Layer/Transform/Zealous Crop"
-msgstr "<Image>/Capas/Transformaciones/Recorte celoso"
+msgstr "<Image>/Capa/Transformaciones/Recorte celoso"
 
 #: plug-ins/common/zealouscrop.c:115
 msgid "ZealousCropping(tm)..."
@@ -7748,7 +7748,7 @@ msgstr "A_cercamiento:"
 
 #: plug-ins/fp/fp.c:92
 msgid "<Image>/Layer/Colors/Filter Pack..."
-msgstr "<Image>/Capas/Colores/Paquete de filtros..."
+msgstr "<Image>/Capa/Colores/Paquete de filtros..."
 
 #: plug-ins/fp/fp.c:127
 msgid "Convert the image to RGB first!"
@@ -8010,19 +8010,19 @@ msgstr "Crear línea"
 
 #: plug-ins/gfig/gfig.c:2007
 msgid "Create circle"
-msgstr "Crear círculo"
+msgstr "Crear un círculo"
 
 #: plug-ins/gfig/gfig.c:2012
 msgid "Create ellipse"
-msgstr "Crear elipse"
+msgstr "Crear una elipse"
 
 #: plug-ins/gfig/gfig.c:2017
 msgid "Create arch"
-msgstr "Crear arco"
+msgstr "Crear un arco"
 
 #: plug-ins/gfig/gfig.c:2026
 msgid "Create reg polygon"
-msgstr "Crear polígono regular"
+msgstr "Crear un polígono regular"
 
 #: plug-ins/gfig/gfig.c:2034
 msgid "Create star"
@@ -8030,11 +8030,11 @@ msgstr "Crear una estrella"
 
 #: plug-ins/gfig/gfig.c:2043
 msgid "Create spiral"
-msgstr "Crear espiral"
+msgstr "Crear una espiral"
 
 #: plug-ins/gfig/gfig.c:2053
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr "Crear curva de Bezier. Mays+Botón termina la creación del objeto."
+msgstr "Crear una curva de Bezier. Mays + botón termina la creación del objeto."
 
 #: plug-ins/gfig/gfig.c:2059
 msgid "Move an object"
@@ -8149,7 +8149,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2738
 msgid "With BG of:"
-msgstr "Con Fondo de:"
+msgstr "Con fondo de:"
 
 #: plug-ins/gfig/gfig.c:2741
 msgid "Reverse Line"
@@ -11216,7 +11216,7 @@ msgstr "Archivo"
 
 #: plug-ins/rcm/rcm.c:113
 msgid "<Image>/Layer/Colors/Colormap Rotation..."
-msgstr "<Image>/Capas/Colores/Rotación del mapa de color..."
+msgstr "<Image>/Capa/Colores/Rotación del mapa de color..."
 
 #: plug-ins/rcm/rcm.c:276
 msgid "Rotating the colormap..."
