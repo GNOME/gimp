@@ -2,6 +2,7 @@
 
 	* gimpfu.py (RadioEntry): add PF_RADIO support to gimpfu based on
 	Yosh's patch.
+	(_interact): swap order of buttons to match other dialogs.
 
 2002-08-30  James Henstridge  <james@daa.com.au>
 

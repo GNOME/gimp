@@ -330,8 +330,8 @@ def _interact(func_name):
     tooltips = gtk.Tooltips()
 
     dialog = gtk.Dialog(func_name, None, 0,
-			(gtk.STOCK_OK, gtk.RESPONSE_OK,
-			 gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL))
+			(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+			 gtk.STOCK_OK, gtk.RESPONSE_OK))
     table = gtk.Table(len(params), 3, gtk.FALSE)
     table.set_border_width(5)
     table.set_row_spacings(2)
