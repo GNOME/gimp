@@ -83,6 +83,7 @@ GimpItemFactory * gimp_item_factory_from_path (const gchar      *path);
 
 void   gimp_item_factory_create_item          (GimpItemFactory       *factory,
                                                GimpItemFactoryEntry  *entry,
+                                               const gchar           *textdomain,
                                                gpointer               callback_data,
                                                guint                  callback_type,
                                                gboolean               create_tearoff,

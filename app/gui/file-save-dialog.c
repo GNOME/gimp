@@ -131,6 +131,7 @@ file_save_dialog_menu_init (Gimp            *gimp,
 
       gimp_item_factory_create_item (item_factory,
                                      &entry,
+                                     NULL,
                                      file_proc, 2,
                                      TRUE, FALSE);
 

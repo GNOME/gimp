@@ -52,7 +52,8 @@ static void     gimp_item_factory_init            (GimpItemFactory      *factory
 static void     gimp_item_factory_finalize        (GObject              *object);
 
 static void     gimp_item_factory_create_branches (GimpItemFactory      *factory,
-                                                   GimpItemFactoryEntry *entry);
+                                                   GimpItemFactoryEntry *entry,
+                                                   const gchar          *textdomain);
 static void     gimp_item_factory_item_realize    (GtkWidget            *widget,
                                                    gpointer              data);
 static gboolean gimp_item_factory_item_key_press  (GtkWidget            *widget,
@@ -238,6 +239,7 @@ gimp_item_factory_from_path (const gchar *path)
 void
 gimp_item_factory_create_item (GimpItemFactory       *item_factory,
                                GimpItemFactoryEntry  *entry,
+                               const gchar           *textdomain,
                                gpointer               callback_data,
                                guint                  callback_type,
                                gboolean               create_tearoff,
@@ -252,7 +254,7 @@ gimp_item_factory_create_item (GimpItemFactory       *item_factory,
     {
       if (! gimprc.disable_tearoff_menus && create_tearoff)
 	{
-	  gimp_item_factory_create_branches (item_factory, entry);
+	  gimp_item_factory_create_branches (item_factory, entry, textdomain);
 	}
     }
   else if (gimprc.disable_tearoff_menus || ! create_tearoff)
@@ -272,10 +274,17 @@ gimp_item_factory_create_item (GimpItemFactory       *item_factory,
       entry->entry.callback_action = (guint) quark;
     }
 
+  if (textdomain)
+    g_object_set_data (G_OBJECT (item_factory), "textdomain",
+                       (gpointer) textdomain);
+
   gtk_item_factory_create_item (GTK_ITEM_FACTORY (item_factory),
 				(GtkItemFactoryEntry *) entry,
 				callback_data,
 				callback_type);
+
+  if (textdomain)
+    g_object_set_data (G_OBJECT (item_factory), "textdomain", NULL);
 
   menu_item = gtk_item_factory_get_item (GTK_ITEM_FACTORY (item_factory),
 					 ((GtkItemFactoryEntry *) entry)->path);
@@ -314,6 +323,7 @@ gimp_item_factory_create_items (GimpItemFactory      *item_factory,
     {
       gimp_item_factory_create_item (item_factory,
                                      entries + i,
+                                     NULL,
                                      callback_data,
                                      callback_type,
                                      create_tearoff,
@@ -681,7 +691,8 @@ gimp_item_factory_tearoff_callback (GtkWidget *widget,
 
 static void
 gimp_item_factory_create_branches (GimpItemFactory      *factory,
-                                   GimpItemFactoryEntry *entry)
+                                   GimpItemFactoryEntry *entry,
+                                   const gchar          *textdomain)
 {
   GString *tearoff_path;
   gint     factory_length;
@@ -718,6 +729,7 @@ gimp_item_factory_create_branches (GimpItemFactory      *factory,
 
 	  gimp_item_factory_create_item (factory,
                                          &branch_entry,
+                                         textdomain,
                                          NULL, 2, TRUE, FALSE);
 
 	  g_object_set_data (G_OBJECT (factory), "complete", NULL);
@@ -738,6 +750,7 @@ gimp_item_factory_create_branches (GimpItemFactory      *factory,
 
 	  gimp_item_factory_create_item (factory,
                                          &tearoff_entry,
+                                         textdomain,
                                          NULL, 2, TRUE, FALSE);
 	}
 
@@ -753,16 +766,22 @@ gimp_item_factory_item_realize (GtkWidget *widget,
 {
   if (GTK_IS_MENU_SHELL (widget->parent))
     {
-      if (! g_object_get_data (G_OBJECT (widget->parent),
-                               "menus_key_press_connected"))
+      static GQuark quark_key_press_connected = 0;
+
+      if (! quark_key_press_connected)
+        quark_key_press_connected =
+          g_quark_from_static_string ("gimp-menu-item-key-press-connected");
+
+      if (! GPOINTER_TO_INT (g_object_get_qdata (G_OBJECT (widget->parent),
+                                                 quark_key_press_connected)))
 	{
 	  g_signal_connect (G_OBJECT (widget->parent), "key_press_event",
                             G_CALLBACK (gimp_item_factory_item_key_press),
                             data);
 
-	  g_object_set_data (G_OBJECT (widget->parent),
-                             "menus_key_press_connected",
-                             (gpointer) TRUE);
+	  g_object_set_qdata (G_OBJECT (widget->parent),
+                              quark_key_press_connected,
+                              GINT_TO_POINTER (TRUE));
 	}
     }
 }
@@ -787,6 +806,9 @@ gimp_item_factory_item_key_press (GtkWidget   *widget,
     {
       help_page = (gchar *) g_object_get_data (G_OBJECT (active_menu_item),
                                                "help_page");
+
+      if (help_page && ! *help_page)
+        help_page = NULL;
     }
 
   /*  For any key except F1, continue with the standard
@@ -796,8 +818,8 @@ gimp_item_factory_item_key_press (GtkWidget   *widget,
   if (kevent->keyval != GDK_F1)
     {
       if (help_page &&
-	  *help_page &&
-	  item_factory == (GtkItemFactory *) gimp_item_factory_from_path ("<Toolbox>") &&
+	  (item_factory ==
+           (GtkItemFactory *) gimp_item_factory_from_path ("<Toolbox>")) &&
 	  (strcmp (help_page, "help/dialogs/help.html") == 0 ||
 	   strcmp (help_page, "help/context_help.html") == 0))
 	{
@@ -814,8 +836,7 @@ gimp_item_factory_item_key_press (GtkWidget   *widget,
   factory_path = (gchar *) g_object_get_data (G_OBJECT (item_factory),
                                               "factory_path");
 
-  if (! help_page ||
-      ! *help_page)
+  if (! help_page)
     help_page = "index.html";
 
   if (factory_path && help_page)

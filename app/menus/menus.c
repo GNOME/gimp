@@ -2227,8 +2227,8 @@ menus_init (Gimp *gimp)
 
             gimp_item_factory_create_item (image_factory,
                                            &entry,
-                                           tool_info,
-                                           2,
+                                           NULL,
+                                           tool_info, 2,
                                            TRUE, FALSE);
           }
       }

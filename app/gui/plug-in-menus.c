@@ -223,11 +223,9 @@ plug_in_make_menu_entry (gpointer         foo,
     item_factory = 
       gimp_item_factory_from_path (menu_entry->proc_def->menu_path);
 
-    g_object_set_data (G_OBJECT (item_factory), "textdomain",
-                       (gpointer) menu_entry->domain);
-
     gimp_item_factory_create_item (item_factory,
-                                   &entry, 
+                                   &entry,
+                                   menu_entry->domain,
                                    &menu_entry->proc_def->db_info, 2,
                                    TRUE, FALSE);
   }

@@ -1,5 +1,20 @@
 2002-09-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpitemfactory.[ch] (gimp_item_factory_create_item):
+	added a "const gchar *textdomain" parameter so
+	g_object_[set|get]_data() hacks needed for translation are private
+	stuff of GimpItemFactory. Use more qdata instead of just data,
+	minor cleanup.
+
+	* app/gui/plug-in-menus.c: pass the textdomain as paramater
+	instead of g_object_setting it on the item_factory.
+
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/menus.c: pass NULL as textdomain.
+
+2002-09-25  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/Makefile.am: install gimpcompat.h
 
 2002-09-24  Michael Natterer  <mitch@gimp.org>
