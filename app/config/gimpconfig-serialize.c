@@ -27,6 +27,7 @@
 #include <glib-object.h>
 
 #include "gimpconfig-serialize.h"
+#include "gimpconfig-types.h"
 
 
 void
@@ -67,19 +68,6 @@ gimp_config_serialize_properties (GObject *object,
           bool = g_value_get_boolean (&value);
           cstr = bool ? "yes" : "no";
         }
-      else if (G_VALUE_HOLDS_STRING (&value))
-        {
-          cstr = g_value_get_string (&value);
-          
-          if (cstr)
-            {
-              gchar *s = g_strescape (cstr, NULL);
-              
-              str = g_strdup_printf ("\"%s\"", s);
-              g_free (s);
-              cstr = NULL;
-            }
-        }
       else if (G_VALUE_HOLDS_ENUM (&value))
         {
           GEnumClass *enum_class;
@@ -94,6 +82,19 @@ gimp_config_serialize_properties (GObject *object,
           else
             g_warning ("Couldn't get nick for enum_value of %s", 
                        G_ENUM_CLASS_TYPE_NAME (enum_class));
+        }
+      else if (G_VALUE_HOLDS_STRING (&value))
+        {
+          cstr = g_value_get_string (&value);
+          
+          if (cstr)
+            {
+              gchar *s = g_strescape (cstr, NULL);
+              
+              str = g_strdup_printf ("\"%s\"", s);
+              g_free (s);
+              cstr = NULL;
+            }
         }
       else if (g_value_type_transformable (prop_spec->value_type, 
                                            G_TYPE_STRING))
@@ -110,6 +111,11 @@ gimp_config_serialize_properties (GObject *object,
         {
           fprintf (file, "(%s %s)\n", prop_spec->name, cstr ? cstr : str);
           g_free (str);
+        }
+      else
+        {
+          /* FIXME: emit warning but try to continue */
+          g_assert_not_reached ();
         }
 
       g_value_unset (&value);

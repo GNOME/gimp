@@ -101,51 +101,25 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
   object_class->set_property = gimp_base_config_set_property;
   object_class->get_property = gimp_base_config_get_property;
 
-  g_object_class_install_property (object_class,
-                                   PROP_TEMP_PATH,
-                                   gimp_param_spec_path ("temp-path",
-                                                         NULL, NULL,
-                                                         "${gimp_dir}" G_DIR_SEPARATOR_S "tmp",
-                                                         G_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
-  g_object_class_install_property (object_class,
-                                   PROP_SWAP_PATH,
-                                   gimp_param_spec_path ("swap-path",
-                                                         NULL, NULL,
-                                                         "${gimp_dir}",
-                                                         G_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
-  g_object_class_install_property (object_class,
-                                   PROP_STINGY_MEMORY_USE,
-                                   g_param_spec_boolean ("stingy-memory-use",
-                                                         NULL, NULL,
-                                                         FALSE,
-                                                         G_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
-   g_object_class_install_property (object_class,
-                                    PROP_NUM_PROCESSORS,
-                                    g_param_spec_uint ("num-processors",
-                                                       NULL, NULL,
-                                                       1, 30, 
-                                                       1,
-                                                       G_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT));
-   g_object_class_install_property (object_class,
-                                    PROP_TILE_CACHE_SIZE,
-                                    gimp_param_spec_memsize ("tile-cache-size",
-                                                             NULL, NULL,
-                                                             0, G_MAXUINT, 
-                                                             1 << 25,
-                                                             G_PARAM_READWRITE |
-                                                             G_PARAM_CONSTRUCT));
-   g_object_class_install_property (object_class,
-                                    PROP_INTERPOLATION_TYPE,
-                                    g_param_spec_enum ("interpolation-type",
-                                                       NULL, NULL,
-                                                       GIMP_TYPE_INTERPOLATION_TYPE,
-                                                       GIMP_LINEAR_INTERPOLATION,
-                                                       G_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_TEMP_PATH,
+                                 "temp-path",
+                                 "${gimp_dir}" G_DIR_SEPARATOR_S "tmp");
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_SWAP_PATH,
+                                 "swap-path",
+                                 "${gimp_dir}");
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
+                                    "stingy-memory-use",
+                                    FALSE);
+  GIMP_CONFIG_INSTALL_PROP_UINT (object_class, PROP_NUM_PROCESSORS,
+                                 "num-processors",
+                                 1, 30, 1);
+  GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
+                                    "tile-cache-size",
+                                    0, G_MAXUINT, 1 << 25);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION_TYPE,
+                                 "interpolation-type",
+                                 GIMP_TYPE_INTERPOLATION_TYPE, 
+                                 GIMP_LINEAR_INTERPOLATION);
 }
 
 static void

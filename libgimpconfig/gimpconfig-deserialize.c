@@ -31,6 +31,7 @@
 
 #include "gimpconfig.h"
 #include "gimpconfig-deserialize.h"
+#include "gimpconfig-substitute.h"
 #include "gimpconfig-types.h"
 
 
@@ -55,11 +56,15 @@ static GTokenType  gimp_config_deserialize_memsize     (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_path        (GValue     *value,
+                                                        GObject    *object,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_any         (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
+
+static inline gboolean scanner_string_utf8_valid (GScanner    *scanner, 
+                                                  const gchar *token_name);
 
 
 gboolean
@@ -136,11 +141,11 @@ gimp_config_deserialize_properties (GObject  *object,
     }
   while (token != G_TOKEN_EOF);
 
-  if (token != G_TOKEN_LEFT_PAREN)
+  if (token != G_TOKEN_LEFT_PAREN && token != G_TOKEN_NONE)
     {
       g_scanner_get_next_token (scanner);
       g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
-                             "Fatal parse error; I'm giving up.", TRUE);
+                             "fatal parse error", TRUE);
     }
 
   if (property_specs)
@@ -164,10 +169,15 @@ gimp_config_deserialize_unknown (GObject  *object,
 
   g_scanner_get_next_token (scanner);
   
-  gimp_config_add_unknown_token (object, key, scanner->value.v_string);
+  if (!scanner_string_utf8_valid (scanner, key))
+    {
+      g_free (key);
+      return G_TOKEN_NONE;
+    }
 
+  gimp_config_add_unknown_token (object, key, scanner->value.v_string);
   g_free (key);
- 
+
   return G_TOKEN_RIGHT_PAREN;
 }
 
@@ -197,7 +207,8 @@ gimp_config_deserialize_property (GObject    *object,
     }
   else if (prop_spec->value_type == GIMP_TYPE_PATH)
     {
-      token = gimp_config_deserialize_path (&value, prop_spec, scanner);
+      token = gimp_config_deserialize_path (&value,
+                                            object, prop_spec, scanner);
     }
   else  /*  This fallback will only work for value_types that  */
     {   /*  can be transformed from a string value.            */
@@ -211,7 +222,7 @@ gimp_config_deserialize_property (GObject    *object,
     }
   else
     {
-      g_warning ("Couldn't deserialize property %s::%s of type %s.",
+      g_warning ("couldn't deserialize property %s::%s of type %s",
                  g_type_name (G_TYPE_FROM_INSTANCE (object)),
                  prop_spec->name, 
                  g_type_name (prop_spec->value_type));
@@ -265,7 +276,10 @@ gimp_config_deserialize_fundamental (GValue     *value,
   switch (G_TYPE_FUNDAMENTAL (prop_spec->value_type))
     {
     case G_TYPE_STRING:
-      g_value_set_string (value, scanner->value.v_string);
+      if (scanner_string_utf8_valid (scanner, prop_spec->name))
+        g_value_set_string (value, scanner->value.v_string);
+      else
+        return G_TOKEN_NONE;
       break;
       
     case G_TYPE_BOOLEAN:
@@ -279,7 +293,7 @@ gimp_config_deserialize_fundamental (GValue     *value,
         {
           g_scanner_warn 
             (scanner, 
-             "expected 'yes' or 'no' for boolean property %s, got '%s'", 
+             "expected 'yes' or 'no' for boolean token %s, got '%s'", 
              prop_spec->name, scanner->value.v_identifier);
           return G_TOKEN_NONE;
         }
@@ -372,17 +386,26 @@ gimp_config_deserialize_memsize (GValue     *value,
 
 static GTokenType
 gimp_config_deserialize_path (GValue     *value,
+                              GObject    *object,
                               GParamSpec *prop_spec,
                               GScanner   *scanner)
 {
+  gchar *path;
+
   if (g_scanner_peek_next_token (scanner) != G_TOKEN_STRING)
     return G_TOKEN_STRING;
 
   g_scanner_get_next_token (scanner);
 
-  /* FIXME: insert transform path voodoo from gimprc here */
+  if (!scanner_string_utf8_valid (scanner, prop_spec->name))
+    return G_TOKEN_NONE;
 
-  g_value_set_string (value, scanner->value.v_string);
+  path = gimp_config_substitute_path (object, scanner->value.v_string, TRUE);
+
+  if (!path)
+    return G_TOKEN_NONE;
+
+  g_value_set_string_take_ownership (value, path);
 
   return G_TOKEN_RIGHT_PAREN;
 }
@@ -412,4 +435,21 @@ gimp_config_deserialize_any (GValue     *value,
   g_value_transform (&src, value);
 
   return G_TOKEN_RIGHT_PAREN;
+}
+
+static inline gboolean
+scanner_string_utf8_valid (GScanner    *scanner, 
+                           const gchar *token_name)
+{
+  if (g_utf8_validate (scanner->value.v_string, -1, NULL))
+    {
+      return TRUE;
+    }
+  else
+    {
+      g_scanner_warn (scanner, 
+                      "value for token %s is not a valid UTF-8 string", 
+                      token_name);
+      return FALSE;
+    }
 }

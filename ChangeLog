@@ -1,3 +1,21 @@
+2001-12-10  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am
+	* app/config/gimpconfig-substitute.[ch]: new files with code to do
+	substitution magic on path strings. Similar to the code in gimprc.c
+	but UTF8 safe.
+
+	* app/config/gimpconfig-params.h
+	* app/config/gimpbaseconfig.c: added a bunch of convenience macros
+	to register config properties and use them for GimpBaseConfig.
+	
+	* app/config/gimpconfig-types.h: added missing GIMP_VALUE_HOLDS_FOO()
+	macros.
+
+	* app/config/gimpconfig-deserialize.c: UTF8-validate all strings.
+	
+	* app/config/gimpconfig-serialize.c: some code reorganisation.
+
 2001-12-10  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/screenshot.c: removed deprecated use of

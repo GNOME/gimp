@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * ValueTypes for config objects
+ * String substitution utilities for config files
  * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,20 +19,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CONFIG_TYPES_H__
-#define __GIMP_CONFIG_TYPES_H__
+#ifndef __GIMP_CONFIG_SUBSTITUTE_H__
+#define __GIMP_CONFIG_SUBSTITUTE_H__
 
 
-#define GIMP_TYPE_MEMSIZE               (gimp_memsize_get_type ())
-#define GIMP_VALUE_HOLDS_MEMSIZE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_MEMSIZE))
-
-GType   gimp_memsize_get_type           (void) G_GNUC_CONST;
-
-
-#define GIMP_TYPE_PATH                  (gimp_path_get_type ())
-#define GIMP_VALUE_HOLDS_PATH(value)    (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_PATH))
-
-GType   gimp_path_get_type              (void) G_GNUC_CONST;
+gchar * gimp_config_substitute_path (GObject     *object,
+                                     const gchar *string,
+                                     gboolean     use_env);
 
 
-#endif /* __GIMP_CONFIG_TYPES_H__ */
+#endif /* __GIMP_CONFIG_SUBSTITUTE_H__ */
