@@ -840,30 +840,25 @@ gimp_color_select_image_fill (GtkWidget           *preview,
                               const GimpRGB       *rgb)
 {
   ColorSelectFill csf;
-  gint            height;
-
-  csf.buffer = g_alloca (preview->allocation.width * 3);
 
   csf.update = update_procs[fill_type];
 
-  csf.y      = -1;
   csf.width  = preview->allocation.width;
   csf.height = preview->allocation.height;
   csf.hsv    = *hsv;
   csf.rgb    = *rgb;
 
-  height = csf.height;
-  if (height > 0)
-    {
-      do
-        {
-          if (csf.update)
-            (* csf.update) (&csf);
+  csf.buffer = g_alloca (csf.width * 3);
 
-          gtk_preview_draw_row (GTK_PREVIEW (preview),
-                                csf.buffer, 0, csf.y, csf.width);
-        }
-      while (--height);
+  for (csf.y = 0; csf.y < csf.height; csf.y++)
+    {
+      {
+        if (csf.update)
+          (* csf.update) (&csf);
+
+        gtk_preview_draw_row (GTK_PREVIEW (preview),
+                              csf.buffer, 0, csf.y, csf.width);
+      }
     }
 }
 
@@ -961,7 +956,6 @@ color_select_update_red (ColorSelectFill *csf)
 
   p = csf->buffer;
 
-  csf->y += 1;
   r = (csf->height - csf->y + 1) * 255 / csf->height;
 
   if (r < 0)
@@ -985,7 +979,6 @@ color_select_update_green (ColorSelectFill *csf)
 
   p = csf->buffer;
 
-  csf->y += 1;
   g = (csf->height - csf->y + 1) * 255 / csf->height;
 
   if (g < 0)
@@ -1009,7 +1002,6 @@ color_select_update_blue (ColorSelectFill *csf)
 
   p = csf->buffer;
 
-  csf->y += 1;
   b = (csf->height - csf->y + 1) * 255 / csf->height;
 
   if (b < 0)
@@ -1035,7 +1027,6 @@ color_select_update_hue (ColorSelectFill *csf)
 
   p = csf->buffer;
 
-  csf->y += 1;
   h = csf->y * 360.0 / csf->height;
 
   h = CLAMP (360 - h, 0, 360);
@@ -1096,7 +1087,6 @@ color_select_update_saturation (ColorSelectFill *csf)
 
   p = csf->buffer;
 
-  csf->y += 1;
   s = csf->y * 255 / csf->height;
 
   if (s < 0)
@@ -1123,7 +1113,6 @@ color_select_update_value (ColorSelectFill *csf)
 
   p = csf->buffer;
 
-  csf->y += 1;
   v = csf->y * 255 / csf->height;
 
   if (v < 0)
@@ -1150,7 +1139,6 @@ color_select_update_red_green (ColorSelectFill *csf)
 
   p = csf->buffer;
 
-  csf->y += 1;
   b = ROUND (csf->rgb.b * 255.0);
   r = (csf->height - csf->y + 1) * 255 / csf->height;
 
@@ -1181,7 +1169,6 @@ color_select_update_red_blue (ColorSelectFill *csf)
 
   p = csf->buffer;
 
-  csf->y += 1;
   g = ROUND (csf->rgb.g * 255.0);
   r = (csf->height - csf->y + 1) * 255 / csf->height;
 
@@ -1212,7 +1199,6 @@ color_select_update_green_blue (ColorSelectFill *csf)
 
   p = csf->buffer;
 
-  csf->y += 1;
   r = ROUND (csf->rgb.r * 255.0);
   g = (csf->height - csf->y + 1) * 255 / csf->height;
 
@@ -1244,7 +1230,6 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
 
   p = csf->buffer;
 
-  csf->y += 1;
   h = 360 - (csf->y * 360 / csf->height);
 
   if (h < 0)
@@ -1335,7 +1320,6 @@ color_select_update_hue_value (ColorSelectFill *csf)
 
   p = csf->buffer;
 
-  csf->y += 1;
   h = 360 - (csf->y * 360 / csf->height);
 
   if (h < 0)
@@ -1426,7 +1410,6 @@ color_select_update_saturation_value (ColorSelectFill *csf)
 
   p = csf->buffer;
 
-  csf->y += 1;
   s = (gfloat) csf->y / csf->height;
 
   if (s < 0)

@@ -1,5 +1,9 @@
 2004-07-31  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorselect.c: minor cleanup.	
+
+2004-07-31  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimppatternmenu.c: ported to GimpPreviewArea.
 
 	* libgimp/gimpbrushmenu.c: some small changes for consistency.
