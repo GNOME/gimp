@@ -168,7 +168,7 @@ do_file_save_as_dialog (void)
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
 
                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
                                      NULL);
 
