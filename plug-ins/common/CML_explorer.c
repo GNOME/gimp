@@ -472,7 +472,7 @@ query (void)
 			  "http://www.inetq.or.jp/~narazaki/TheGIMP/",
 			  "Shuji Narazaki",
 			  "1997",
-			  N_("<Image>/Filters/Render/Pattern/CML Explorer..."),
+			  N_("<Image>/Filters/Render/Pattern/CML _Explorer..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

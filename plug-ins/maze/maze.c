@@ -161,7 +161,7 @@ query ()
 			  "Kevin Turner <kevint@poboxes.com>",
 			  "Kevin Turner",
 			  "1997, 1998",
-			  N_("<Image>/Filters/Render/Pattern/Maze..."),
+			  N_("<Image>/Filters/Render/Pattern/_Maze..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), nreturn_vals,

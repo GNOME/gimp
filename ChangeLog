@@ -1,3 +1,18 @@
+2003-08-04  Henrik Brix Andersen  <brix@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/sphere.py
+	* plug-ins/pygimp/plug-ins/pdbbrowse.py
+	* plug-ins/pygimp/plug-ins/gimpcons.py
+	* plug-ins/maze/maze.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/flame/flame.c
+	* plug-ins/dbbrowser/dbbrowser.c
+	* plug-ins/common/CML_explorer.c
+	* app/gui/image-menu.c: added even more mnemonics to fix more of
+	#106991. Still more to follow...
+
 2003-08-02  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpstroke.[ch]: implemented gimp_stroke_close.

@@ -314,7 +314,7 @@ if __name__ == '__main__':
 	"James Henstridge",
 	"James Henstridge",
 	"1997-1999",
-	"<Toolbox>/Xtns/Python-Fu/PDB Browser",
+	"<Toolbox>/Xtns/Python-Fu/_PDB Browser",
 	"*",
 	[],
 	[],

@@ -138,7 +138,7 @@ query (void)
 			  "Scott Draves",
 			  "Scott Draves",
 			  "1997",
-			  N_("<Image>/Filters/Render/Nature/Flame..."),
+			  N_("<Image>/Filters/Render/Nature/_Flame..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -366,7 +366,7 @@ query (void)
 			  "Owen Taylor",
 			  "Owen Taylor",
 			  "1997",
-			  N_("<Image>/Filters/Render/Nature/IfsCompose..."),
+			  N_("<Image>/Filters/Render/Nature/Ifs_Compose..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), nreturn_vals,

@@ -84,7 +84,7 @@ register(
     "James Henstridge",
     "James Henstridge",
     "1997-1999",
-    "<Toolbox>/Xtns/Python-Fu/Console",
+    "<Toolbox>/Xtns/Python-Fu/_Console",
     "*",
     [],
     [],
