@@ -1595,6 +1595,7 @@ select_button_clicked (gint type)
     gfig_select_obj_by_number (obj_show_single);
 
   draw_grid_clear ();
+  gfig_paint_callback ();
 }
 
 static void

@@ -392,10 +392,9 @@ gfig_save_styles (GString *string)
 
 /*
  * set_foreground_callback() is the callback for the Foreground color select
- * widget.  It reads the color from the widget, and applies this color
- * to both the default style and the current style.  It then produces a
- * repaint (which will be suppressed if gfig_context->enable_repaint is
- * FALSE).
+ * widget.  It reads the color from the widget, and applies this color to the
+ * current style.  It then produces a repaint (which will be suppressed if
+ * gfig_context->enable_repaint is FALSE).
  */
 void
 set_foreground_callback (GimpColorButton *button,
@@ -454,10 +453,9 @@ set_paint_type_callback (GtkToggleButton *toggle,
 /*
  * gfig_brush_changed_callback() is the callback for the brush
  * selector widget.  It reads the brush name from the widget, and
- * applies this to both the default style and the current style,
- * as well as the gfig_context->bdesc values.  It then produces a
- * repaint (which will be suppressed if gfig_context->enable_repaint is
- * FALSE).
+ * applies this to the current style, as well as the gfig_context->bdesc
+ * values.  It then produces a repaint (which will be suppressed if
+ * gfig_context->enable_repaint is FALSE).
  */
 void
 gfig_brush_changed_callback (const gchar *brush_name,
@@ -472,14 +470,11 @@ gfig_brush_changed_callback (const gchar *brush_name,
 {
   Style *current_style;
 
-  if (!brush_name)
-    g_message ("Error: setting brush name to NULL in color selector callback.");
-
   current_style = gfig_context_get_current_style ();
-  current_style->brush_name = g_strdup (brush_name); /* DDX not sure if it should be strdup'ed */
+  current_style->brush_name = g_strdup (brush_name);
 
   /* this will soon be unneeded. How soon? */
-  gfig_context->bdesc.name = g_strdup (brush_name); /* idem */
+  gfig_context->bdesc.name = g_strdup (brush_name);
   gfig_context->bdesc.width = width;
   gfig_context->bdesc.height = height;
   gimp_context_set_brush (brush_name);
@@ -499,7 +494,7 @@ gfig_pattern_changed_callback (const gchar *pattern_name,
   Style *current_style;
 
   current_style = gfig_context_get_current_style ();
-  current_style->pattern = g_strdup (pattern_name); /* not sure if it should be strdup'ed */
+  current_style->pattern = g_strdup (pattern_name);
 
   gfig_paint_callback ();
 }
@@ -514,7 +509,7 @@ gfig_gradient_changed_callback (const gchar *gradient_name,
   Style *current_style;
 
   current_style = gfig_context_get_current_style ();
-  current_style->gradient = g_strdup (gradient_name); /* not sure if it should be strdup'ed */
+  current_style->gradient = g_strdup (gradient_name);
 
   gfig_paint_callback ();
 }

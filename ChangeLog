@@ -1,3 +1,10 @@
+2004-11-29  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.c: issue a repaint after the
+	"show previous", "show next" and "show all" callbacks.
+
+	* plug-ins/gfig/gfig-style.c: fixed some comments.
+
 2004-11-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_preview.c
