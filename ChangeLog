@@ -1,3 +1,8 @@
+2003-12-09  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/xpm.c (save_dialog): reverted Maurits' patch,
+	to get rid of gimp_parameter_settings_new (see #125141)
+
 2003-12-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-scale.c (gimp_image_scale_check): renamed
