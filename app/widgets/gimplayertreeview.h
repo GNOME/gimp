@@ -41,7 +41,6 @@ struct _GimpLayerTreeView
   GimpDrawableTreeView  parent_instance;
 
   GtkWidget            *options_box;
-
   GtkWidget            *paint_mode_menu;
   GtkWidget            *preserve_trans_toggle;
   GtkAdjustment        *opacity_adjustment;
@@ -52,7 +51,6 @@ struct _GimpLayerTreeView
   gint                  model_column_mask;
   gint                  model_column_mask_visible;
 
-  GtkTreeViewColumn    *chain_column;
   GtkCellRenderer      *chain_cell;
   GtkCellRenderer      *mask_cell;
 

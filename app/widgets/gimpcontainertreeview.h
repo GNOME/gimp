@@ -56,7 +56,6 @@ struct _GimpContainerTreeView
   GtkCellRenderer   *renderer_cell;
   GtkCellRenderer   *name_cell;
 
-  GList             *toggle_columns;
   GList             *toggle_cells;
   GList             *renderer_cells;
 

@@ -1,5 +1,25 @@
 2003-03-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainertreeview.[ch]: added utility function
+	gimp_container_tree_view_find_click_cell(). Don't select the
+	row if one of tree_view->toggle_cells was clicked. Removed
+	"GList *toggle_columns" from the struct.
+
+	* app/widgets/gimpdrawabletreeview.[ch]: added a
+	GtkTreeSelectionFunc which ensures that nothing but the floating
+	selection can be selected. Removed the "eye_column" from the
+	struct.
+
+	* app/widgets/gimpitemtreeview.[ch]: added virtual function
+	rename_item() and a default implementation.
+
+	* app/widgets/gimplayertreeview.[ch]: implement rename_item() and
+	special case floating selections. Added
+	gimp_layer_tree_view_mask_update() utility function to factor out
+	duplicated code. Removed "chain_column" from the struct. Cleanup.
+
+2003-03-16  Michael Natterer  <mitch@gimp.org>
+
 	Added GtkTreeView versions of layers/channels/vectors:
 
 	* app/core/core-enums.[ch]: renamed GIMP_UNDO_GROUP_LAYER_PROPERTIES

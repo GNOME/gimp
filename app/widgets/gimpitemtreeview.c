@@ -33,13 +33,9 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
-
-/* EEK */
-#include "core/gimplayer-floating-sel.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -84,6 +80,10 @@ static void   gimp_item_tree_view_activate_item     (GimpContainerView *view,
 static void   gimp_item_tree_view_context_item      (GimpContainerView *view,
                                                      GimpViewable      *item,
                                                      gpointer           insert_data);
+
+static void   gimp_item_tree_view_real_rename_item  (GimpItemTreeView  *view,
+                                                     GimpItem          *item,
+                                                     const gchar       *new_name);
 
 static void   gimp_item_tree_view_new_clicked       (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
@@ -195,6 +195,7 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->add_item                     = NULL;
   klass->remove_item                  = NULL;
   klass->convert_item                 = NULL;
+  klass->rename_item                  = gimp_item_tree_view_real_rename_item;
 
   klass->new_desc                     = NULL;
   klass->duplicate_desc               = NULL;
@@ -490,8 +491,6 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
 
   tree_view = GIMP_ITEM_TREE_VIEW (view);
 
-  g_print ("item: %p\n", item);
-
   GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view, item,
                                                          insert_data);
 
@@ -572,6 +571,30 @@ gimp_item_tree_view_context_item (GimpContainerView *view,
     gimp_item_factory_popup_with_data (item_view->item_factory,
                                        item_view,
                                        NULL);
+}
+
+
+/*  GimpItemTreeView methods  */
+
+static void
+gimp_item_tree_view_real_rename_item (GimpItemTreeView *view,
+                                      GimpItem         *item,
+                                      const gchar      *new_name)
+{
+  if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (item))))
+    {
+      GimpItemTreeViewClass *item_view_class;
+
+      item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
+
+      gimp_image_undo_push_item_rename (view->gimage,
+                                        item_view_class->rename_desc,
+                                        item);
+
+      gimp_object_set_name (GIMP_OBJECT (item), new_name);
+
+      gimp_image_flush (view->gimage);
+    }
 }
 
 
@@ -848,37 +871,8 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
 
       item = GIMP_ITEM (renderer->viewable);
 
-      if (strcmp (new_text, gimp_object_get_name (GIMP_OBJECT (item))))
-        {
-          GimpItemTreeViewClass *item_view_class;
-
-          item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
-
-          gimp_image_undo_group_start (view->gimage,
-                                       GIMP_UNDO_GROUP_ITEM_PROPERTIES,
-                                       item_view_class->rename_desc);
-
-#ifdef __GNUC__
-#warning need GimpItemTreeView::rename_item()
-#endif
-          if (GIMP_IS_LAYER (item) &&
-              gimp_layer_is_floating_sel (GIMP_LAYER (item)))
-            {
-              /*  If the layer is a floating selection, make it a layer  */
-
-              floating_sel_to_layer (GIMP_LAYER (item));
-            }
-
-          gimp_image_undo_push_item_rename (view->gimage,
-                                            item_view_class->rename_desc,
-                                            item);
-
-          gimp_object_set_name (GIMP_OBJECT (item), new_text);
-
-          gimp_image_undo_group_end (view->gimage);
-
-          gimp_image_flush (view->gimage);
-        }
+      GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->rename_item (view, item,
+                                                         new_text);
 
       g_object_unref (renderer);
     }

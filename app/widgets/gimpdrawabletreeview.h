@@ -42,7 +42,6 @@ struct _GimpDrawableTreeView
 
   gint               model_column_visible;
 
-  GtkTreeViewColumn *eye_column;
   GtkCellRenderer   *eye_cell;
 
   GQuark             visibility_changed_handler_id;

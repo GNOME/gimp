@@ -66,6 +66,12 @@ static gpointer gimp_drawable_tree_view_insert_item (GimpContainerView *view,
 static void   gimp_drawable_tree_view_set_image  (GimpItemTreeView     *view,
                                                   GimpImage            *gimage);
 
+static gboolean gimp_drawable_tree_view_select   (GtkTreeSelection     *selection,
+                                                  GtkTreeModel         *model,
+                                                  GtkTreePath          *path,
+                                                  gboolean              path_currently_selected,
+                                                  gpointer              data);
+
 static void   gimp_drawable_tree_view_floating_selection_changed
                                                  (GimpImage            *gimage,
                                                   GimpDrawableTreeView *view);
@@ -168,33 +174,33 @@ gimp_drawable_tree_view_constructor (GType                  type,
   GimpContainerTreeView *tree_view;
   GimpDrawableTreeView  *drawable_view;
   GObject               *object;
+  GtkTreeViewColumn     *column;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   tree_view     = GIMP_CONTAINER_TREE_VIEW (object);
   drawable_view = GIMP_DRAWABLE_TREE_VIEW (object);
 
-  drawable_view->eye_column = gtk_tree_view_column_new ();
-  gtk_tree_view_insert_column (tree_view->view, drawable_view->eye_column, 0);
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_insert_column (tree_view->view, column, 0);
 
   drawable_view->eye_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
-  gtk_tree_view_column_pack_start (drawable_view->eye_column,
-                                   drawable_view->eye_cell,
-                                   FALSE);
-  gtk_tree_view_column_set_attributes (drawable_view->eye_column,
-                                       drawable_view->eye_cell,
+  gtk_tree_view_column_pack_start (column, drawable_view->eye_cell, FALSE);
+  gtk_tree_view_column_set_attributes (column, drawable_view->eye_cell,
                                        "active",
                                        drawable_view->model_column_visible,
                                        NULL);
 
-  tree_view->toggle_columns = g_list_prepend (tree_view->toggle_columns,
-                                              drawable_view->eye_column);
-  tree_view->toggle_cells   = g_list_prepend (tree_view->toggle_cells,
-                                              drawable_view->eye_cell);
+  tree_view->toggle_cells = g_list_prepend (tree_view->toggle_cells,
+                                            drawable_view->eye_cell);
 
   g_signal_connect (drawable_view->eye_cell, "toggled",
                     G_CALLBACK (gimp_drawable_tree_view_eye_toggled),
                     drawable_view);
+
+  gtk_tree_selection_set_select_function (tree_view->selection,
+                                          gimp_drawable_tree_view_select,
+                                          drawable_view, NULL);
 
   return object;
 }
@@ -274,6 +280,52 @@ gimp_drawable_tree_view_set_image (GimpItemTreeView *item_view,
 	gimp_drawable_tree_view_floating_selection_changed (item_view->gimage,
                                                             view);
     }
+}
+
+static gboolean
+gimp_drawable_tree_view_select (GtkTreeSelection *selection,
+                                GtkTreeModel     *model,
+                                GtkTreePath      *path,
+                                gboolean          path_currently_selected,
+                                gpointer          data)
+{
+  GimpItemTreeView *item_view;
+  GtkTreeIter       iter;
+  gboolean          retval = TRUE;
+
+  item_view = GIMP_ITEM_TREE_VIEW (data);
+
+  if (gimp_image_floating_sel (item_view->gimage) &&
+      gtk_tree_model_get_iter (model, &iter, path))
+    {
+      GimpContainerTreeView *tree_view;
+      GimpPreviewRenderer   *renderer;
+
+      tree_view = GIMP_CONTAINER_TREE_VIEW (item_view);
+
+      gtk_tree_model_get (model, &iter,
+                          tree_view->model_column_renderer, &renderer,
+                          -1);
+
+      if (((GimpLayer *) renderer->viewable ==
+           gimp_image_floating_sel (item_view->gimage)))
+        {
+          if (path_currently_selected)
+            retval = FALSE;
+        }
+      else
+        {
+          if (! path_currently_selected)
+            retval = FALSE;
+        }
+
+      g_print ("gimp_drawable_tree_view_select: floating sel present (%d)\n",
+               retval);
+
+      g_object_unref (renderer);
+    }
+
+  return retval;
 }
 
 static void
