@@ -593,7 +593,7 @@ script_fu_add_script (LISP a)
 		  script->arg_values[i].sfa_adjustment.value = 
 		    script->arg_defaults[i].sfa_adjustment.value;
 
-		  args[i + 1].type = GIMP_PDB_STRING;
+		  args[i + 1].type = GIMP_PDB_FLOAT;
 		  args[i + 1].name = "value";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;

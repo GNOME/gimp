@@ -1,3 +1,21 @@
+2002-02-22  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* configure.in: cleaned up --with-sendmail, --enable-threads and
+	--enable-mp options. Added --with-gnome-desktop=PATH option.
+
+	* data/misc/Makefile.am
+	* data/misc/gimp.desktop.in.in: install a GNOME desktop file for
+	The GIMP and create a link so GNOME-2.0 should be able to find it.
+	Use --with-gnome-desktop=PATH to override the link location.
+
+	* data/images/Makefile.am
+	* data/images/wilber-icon.png: new file to serve as application icon.
+	
+	* plug-ins/script-fu/script-fu-scripts.c: register script-fu
+	SF_ADJUSTMENT parameters as GIMP_PDB_FLOAT (spotted by Masahiro
+	Sakai <zvm01052@nifty.ne.jp>).
+
 2002-02-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
