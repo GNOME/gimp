@@ -125,11 +125,11 @@ gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
                      GTK_WIN_POS_MOUSE,
                      FALSE, TRUE, TRUE,
                      
-                     GTK_STOCK_CANCEL, gtk_widget_hide,
-                     NULL, (gpointer) 1, NULL, FALSE, TRUE,
-                     
                      GTK_STOCK_APPLY, gimp_font_selection_dialog_apply,
                      dialog, NULL, NULL, TRUE, FALSE,
+                     
+                     GTK_STOCK_CANCEL, gtk_widget_hide,
+                     NULL, (gpointer) 1, NULL, FALSE, TRUE,
                      
                      GTK_STOCK_OK, gimp_font_selection_dialog_ok,
                      dialog, NULL, NULL, TRUE, FALSE,

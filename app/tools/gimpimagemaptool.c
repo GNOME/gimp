@@ -203,13 +203,13 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
                                   image_map_tool->shell_desc,
                                   tool_manager_help_func, NULL,
 
-                                  GTK_STOCK_CANCEL,
-                                  gimp_image_map_tool_cancel_clicked,
-                                  image_map_tool, NULL, NULL, FALSE, TRUE,
-
                                   GIMP_STOCK_RESET,
                                   gimp_image_map_tool_reset_clicked,
                                   image_map_tool, NULL, NULL, TRUE, FALSE,
+
+                                  GTK_STOCK_CANCEL,
+                                  gimp_image_map_tool_cancel_clicked,
+                                  image_map_tool, NULL, NULL, FALSE, TRUE,
 
                                   GTK_STOCK_OK,
                                   gimp_image_map_tool_ok_clicked,

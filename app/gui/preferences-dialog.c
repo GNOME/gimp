@@ -1736,11 +1736,11 @@ preferences_dialog_create (Gimp *gimp)
                                   GTK_WIN_POS_NONE,
                                   FALSE, TRUE, FALSE,
 
-                                  GTK_STOCK_CANCEL, prefs_cancel_callback,
-                                  NULL, NULL, NULL, FALSE, TRUE,
-
                                   GTK_STOCK_SAVE, prefs_save_callback,
                                   NULL, NULL, NULL, FALSE, FALSE,
+
+                                  GTK_STOCK_CANCEL, prefs_cancel_callback,
+                                  NULL, NULL, NULL, FALSE, TRUE,
 
                                   GTK_STOCK_OK, prefs_ok_callback,
                                   NULL, NULL, NULL, TRUE, FALSE,

@@ -234,11 +234,11 @@ resize_widget_new (GimpViewable *viewable,
                                 stock_id, window_desc,
                                 gimp_standard_help_func, help_page,
 
-                                GTK_STOCK_CANCEL, gtk_widget_destroy,
-                                NULL, 1, NULL, FALSE, TRUE,
-
                                 GIMP_STOCK_RESET, reset_callback,
                                 resize, NULL, NULL, FALSE, FALSE,
+
+                                GTK_STOCK_CANCEL, gtk_widget_destroy,
+                                NULL, 1, NULL, FALSE, TRUE,
 
                                 GTK_STOCK_OK, ok_cb,
                                 user_data, NULL, NULL, TRUE, FALSE,
