@@ -1,6 +1,15 @@
 2001-02-13  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am
+	* configure.in
+	* cursors/Makefile.am
+	* docs/Makefile.am
+	* pixmaps/Makefile.am: added Makefiles to cursors, docs and pixmaps
+	directories
+
+2001-02-13  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
 	* pixmaps/refresh.xpm: new icon
 
 2001-02-13  Michael Natterer  <mitch@gimp.org>

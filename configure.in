@@ -669,10 +669,9 @@ if test "$INSTALL" = "$ac_install_sh"; then
   GIMPINSTALL="gimpinstall"
 fi
 
-GIMPDOCS=
 if test -n "$DISTMAKE"; then
   WEBBROWSER=webbrowser TIFF=tiff JPEG=jpeg PNG=png AA=aa MPEG=mpeg
-  XJT=xjt XPM=xpm GIMPDOCS=docs
+  XJT=xjt XPM=xpm
 fi
 
 dnl eek, what a hack...
@@ -747,7 +746,6 @@ AC_SUBST(GIMP_MP_FLAGS)
 AC_SUBST(GIMP_MP_LIBS)
 AC_SUBST(GIMP_PERL)
 AC_SUBST(GIMP_PERL_PO)	
-AC_SUBST(GIMPDOCS)
 AC_SUBST(GIMPINSTALL)
 AC_SUBST(HELPBROWSER)
 AC_SUBST(GTKXMHTML_CFLAGS)
@@ -830,9 +828,12 @@ plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile
 modules/Makefile
 modules/makefile.mingw
+cursors/Makefile
 devel-docs/Makefile
 devel-docs/libgimp/Makefile
 devel-docs/pdb/Makefile
+docs/Makefile
+pixmaps/Makefile
 data/Makefile
 data/brushes/Makefile
 data/gradients/Makefile
