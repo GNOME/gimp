@@ -92,3 +92,13 @@ File operations (load, save, etc.)
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_register_thumbnail_loader ##### -->
+<para>
+
+</para>
+
+@load_proc: 
+@thumb_proc: 
+@Returns: 
+
+

@@ -57,7 +57,7 @@ static GTokenType plug_in_icon_deserialize       (GScanner      *scanner,
                                                   PlugInProcDef *proc_def);
 static GTokenType plug_in_proc_arg_deserialize   (GScanner      *scanner,
                                                   ProcArg       *arg);
-static GTokenType plug_in_mime_type_deserialize  (GScanner      *scanner,
+static GTokenType plug_in_extra_deserialize      (GScanner      *scanner,
                                                   PlugInProcDef *proc_def);
 static GTokenType plug_in_locale_def_deserialize (GScanner      *scanner,
                                                   PlugInDef     *plug_in_def);
@@ -78,7 +78,8 @@ enum
   PROC_ARG,
   MENU_PATH,
   ICON,
-  MIME_TYPE
+  MIME_TYPE,
+  THUMB_LOADER
 };
 
 
@@ -125,6 +126,8 @@ plug_in_rc_parse (Gimp         *gimp,
                               "icon", GINT_TO_POINTER (ICON));
   g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
                               "mime-type", GINT_TO_POINTER (MIME_TYPE));
+  g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
+                              "thumb-loader", GINT_TO_POINTER (THUMB_LOADER));
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -357,13 +360,10 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
         return token;
     }
 
-  if (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
-    {
-      token = plug_in_mime_type_deserialize (scanner, proc_def);
+  token = plug_in_extra_deserialize (scanner, proc_def);
 
-      if (token != G_TOKEN_LEFT_PAREN)
-        return token;
-    }
+  if (token != G_TOKEN_LEFT_PAREN)
+    return token;
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
@@ -490,29 +490,50 @@ plug_in_icon_deserialize (GScanner      *scanner,
   return G_TOKEN_LEFT_PAREN;
 }
 
+
+/*  Handle extra info such as mime-type and thumb-loader.  */
 static GTokenType
-plug_in_mime_type_deserialize (GScanner      *scanner,
-                               PlugInProcDef *proc_def)
+plug_in_extra_deserialize (GScanner      *scanner,
+                           PlugInProcDef *proc_def)
 {
-  gchar *mime_type;
+  GTokenType  token;
+  gchar      *value;
 
-  if (! gimp_scanner_parse_token (scanner, G_TOKEN_LEFT_PAREN))
-    return G_TOKEN_LEFT_PAREN;
+  while (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
+    {
+      token = token = g_scanner_get_next_token (scanner);
 
-  if (! gimp_scanner_parse_token (scanner, G_TOKEN_SYMBOL) ||
-      GPOINTER_TO_INT (scanner->value.v_symbol) != MIME_TYPE)
-    return G_TOKEN_SYMBOL;
+      if (token != G_TOKEN_LEFT_PAREN)
+        return token;
 
-  if (! gimp_scanner_parse_string (scanner, &mime_type))
-    return G_TOKEN_STRING;
+      if (! gimp_scanner_parse_token (scanner, G_TOKEN_SYMBOL))
+        return G_TOKEN_SYMBOL;
 
-  if (proc_def->mime_type)
-    g_free (proc_def->mime_type);
+      switch (GPOINTER_TO_INT (scanner->value.v_symbol))
+        {
+        case MIME_TYPE:
+          if (! gimp_scanner_parse_string (scanner, &value))
+            return G_TOKEN_STRING;
 
-  proc_def->mime_type = mime_type;
+          g_free (proc_def->mime_type);
+          proc_def->mime_type = value;
+          break;
 
-  if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
-    return G_TOKEN_RIGHT_PAREN;
+        case THUMB_LOADER:
+          if (! gimp_scanner_parse_string (scanner, &value))
+            return G_TOKEN_STRING;
+
+          g_free (proc_def->thumb_loader);
+          proc_def->thumb_loader = value;
+          break;
+
+        default:
+           return G_TOKEN_SYMBOL;
+        }
+
+      if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
+        return G_TOKEN_RIGHT_PAREN;
+    }
 
   return G_TOKEN_LEFT_PAREN;
 }
@@ -749,6 +770,13 @@ plug_in_rc_write (GSList       *plug_in_defs,
                 {
                   gimp_config_writer_open (writer, "mime-type");
 		  gimp_config_writer_string (writer, proc_def->mime_type);
+                  gimp_config_writer_close (writer);
+                }
+
+              if (proc_def->thumb_loader)
+                {
+                  gimp_config_writer_open (writer, "thumb-loader");
+		  gimp_config_writer_string (writer, proc_def->thumb_loader);
                   gimp_config_writer_close (writer);
                 }
 

@@ -33,6 +33,14 @@ GimpImage * file_open_image                 (Gimp               *gimp,
                                              const gchar       **mime_type,
                                              GError            **error);
 
+GimpImage * file_open_thumbnail             (Gimp               *gimp,
+                                             GimpContext        *context,
+                                             GimpProgress       *progress,
+                                             const gchar        *uri,
+                                             gint                size,
+                                             const gchar       **mime_type,
+                                             gint               *image_width,
+                                             gint               *image_height);
 GimpImage * file_open_with_display          (Gimp               *gimp,
                                              GimpContext        *context,
                                              GimpProgress       *progress,

@@ -100,6 +100,8 @@ plug_in_proc_def_free (PlugInProcDef *proc_def)
   g_slist_foreach (proc_def->magics_list, (GFunc) g_free, NULL);
   g_slist_free (proc_def->magics_list);
 
+  g_free (proc_def->thumb_loader);
+
   g_free (proc_def);
 }
 

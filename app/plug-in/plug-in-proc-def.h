@@ -51,6 +51,7 @@ struct _PlugInProcDef
   GSList          *extensions_list;
   GSList          *prefixes_list;
   GSList          *magics_list;
+  gchar           *thumb_loader;
 };
 
 

@@ -1,3 +1,24 @@
+2004-11-13  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/plug-in-proc-def.[ch]
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-ins.[ch]: allow to associate a procedure for
+	thumbnail loading with any file load procedure.
+
+	* tools/pdbgen/pdb/fileops.pdb: export this functionality to the
+	PDB as gimp_register_thumbnail_loader().
+
+	* app/pdb/fileops_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpfileops_pdb.[ch]: regenerated.
+
+	* app/core/gimpimagefile.c
+	* app/file/file-open.[ch]: when creating a thumbnail for an image
+	file, use a thumbnail load procedure if available.
+
+	* plug-ins/common/svg.c: added "file_svg_load_thumb", a procedure
+	that allows to load a small preview of the SVG image.
+
 2004-11-13  DindinX  <dindinx@gimp.org>
 
 	* app/actions/layers-actions.c: added back <control>H as a shortcut

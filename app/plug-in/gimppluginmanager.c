@@ -514,6 +514,39 @@ plug_ins_file_register_mime (Gimp        *gimp,
   return NULL;
 }
 
+PlugInProcDef *
+plug_ins_file_register_thumb_loader (Gimp        *gimp,
+                                     const gchar *load_proc,
+                                     const gchar *thumb_proc)
+{
+  GSList *list;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (load_proc, NULL);
+  g_return_val_if_fail (thumb_proc, NULL);
+
+  if (gimp->current_plug_in && gimp->current_plug_in->plug_in_def)
+    list = gimp->current_plug_in->plug_in_def->proc_defs;
+  else
+    list = gimp->plug_in_proc_defs;
+
+  for (; list; list = list->next)
+    {
+      PlugInProcDef *proc_def = list->data;
+
+      if (strcmp (proc_def->db_info.name, load_proc) == 0)
+        {
+          if (proc_def->thumb_loader)
+            g_free (proc_def->thumb_loader);
+          proc_def->thumb_loader = g_strdup (thumb_proc);
+
+          return proc_def;
+        }
+    }
+
+  return NULL;
+}
+
 void
 plug_ins_def_add_from_rc (Gimp      *gimp,
                           PlugInDef *plug_in_def)

@@ -63,6 +63,7 @@ static ProcRecord register_magic_load_handler_proc;
 static ProcRecord register_load_handler_proc;
 static ProcRecord register_save_handler_proc;
 static ProcRecord register_file_handler_mime_proc;
+static ProcRecord register_thumbnail_loader_proc;
 
 void
 register_fileops_procs (Gimp *gimp)
@@ -76,6 +77,7 @@ register_fileops_procs (Gimp *gimp)
   procedural_db_register (gimp, &register_load_handler_proc);
   procedural_db_register (gimp, &register_save_handler_proc);
   procedural_db_register (gimp, &register_file_handler_mime_proc);
+  procedural_db_register (gimp, &register_thumbnail_loader_proc);
 }
 
 static Argument *
@@ -860,4 +862,63 @@ static ProcRecord register_file_handler_mime_proc =
   0,
   NULL,
   { { register_file_handler_mime_invoker } }
+};
+
+static Argument *
+register_thumbnail_loader_invoker (Gimp         *gimp,
+                                   GimpContext  *context,
+                                   GimpProgress *progress,
+                                   Argument     *args)
+{
+  gboolean success = TRUE;
+  gchar *load_proc;
+  gchar *thumb_proc;
+
+  load_proc = (gchar *) args[0].value.pdb_pointer;
+  if (load_proc == NULL || !g_utf8_validate (load_proc, -1, NULL))
+    success = FALSE;
+
+  thumb_proc = (gchar *) args[1].value.pdb_pointer;
+  if (thumb_proc == NULL || !g_utf8_validate (thumb_proc, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      success = (plug_ins_file_register_thumb_loader (gimp,
+                                                      load_proc,
+                                                      thumb_proc) != NULL);
+    }
+
+  return procedural_db_return_args (&register_thumbnail_loader_proc, success);
+}
+
+static ProcArg register_thumbnail_loader_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "load_proc",
+    "The name of the procedure the thumbnail loader with."
+  },
+  {
+    GIMP_PDB_STRING,
+    "thumb_proc",
+    "The name of the thumbnail load procedure."
+  }
+};
+
+static ProcRecord register_thumbnail_loader_proc =
+{
+  "gimp_register_thumbnail_loader",
+  "Associates a thumbnail loader with a file load procedure.",
+  "Some file formats allow for embedded thumbnails, other file formats contain a scalable image or provide the image data in different resolutions. A file plug-in for such a format may register a special procedure that allows GIMP to load a thumbnail preview of the image. This procedure is then associated with the standard load procedure using this function.",
+  "Sven Neumann",
+  "Sven Neumann",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  register_thumbnail_loader_inargs,
+  0,
+  NULL,
+  { { register_thumbnail_loader_invoker } }
 };

@@ -69,14 +69,14 @@ static void  run   (const gchar      *name,
                     gint             *nreturn_vals,
                     GimpParam       **return_vals);
 
-static gint32      load_image         (const gchar  *filename);
-static GdkPixbuf * load_rsvg_pixbuf   (const gchar  *filename,
-                                       SvgLoadVals  *vals,
-                                       GError      **error);
-static gboolean    load_rsvg_size     (const gchar  *filename,
-                                       SvgLoadVals  *vals,
-                                       GError      **error);
-static gboolean    load_dialog        (const gchar  *filename);
+static gint32      load_image        (const gchar  *filename);
+static GdkPixbuf * load_rsvg_pixbuf  (const gchar  *filename,
+                                      SvgLoadVals  *vals,
+                                      GError      **error);
+static gboolean    load_rsvg_size    (const gchar  *filename,
+                                      SvgLoadVals  *vals,
+                                      GError      **error);
+static gboolean    load_dialog       (const gchar  *filename);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -115,6 +115,18 @@ query (void)
     { GIMP_PDB_IMAGE,  "image",        "Output image" }
   };
 
+  static GimpParamDef thumb_args[] =
+  {
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
+    { GIMP_PDB_INT32,  "thumb_size",   "Preferred thumbnail size"      }
+  };
+  static GimpParamDef thumb_return_vals[] =
+  {
+    { GIMP_PDB_IMAGE,  "image",        "Thumbnail image"               },
+    { GIMP_PDB_INT32,  "image_width",  "Width of full-sized image"     },
+    { GIMP_PDB_INT32,  "image_height", "Height of full-sized image"    }
+  };
+
   gimp_install_procedure ("file_svg_load",
                           "Loads files in the SVG file format",
                           "Renders SVG files to raster graphics using librsvg.",
@@ -132,6 +144,21 @@ query (void)
   gimp_register_magic_load_handler ("file_svg_load",
 				    "svg", "",
 				    "0,string,<?xml,0,string,<svg");
+
+  gimp_install_procedure ("file_svg_load_thumb",
+                          "Loads a small preview from an SVG image",
+                          "",
+                          "Dom Lachowicz, Sven Neumann",
+                          "Dom Lachowicz <cinamod@hotmail.com>",
+                          SVG_VERSION,
+			  N_("Scalable SVG image"),
+			  NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (thumb_args),
+                          G_N_ELEMENTS (thumb_return_vals),
+                          thumb_args, thumb_return_vals);
+
+  gimp_register_thumbnail_loader ("file_svg_load", "file_svg_load_thumb");
 }
 
 static void
@@ -192,14 +219,13 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  gint32  image_ID = load_image (param[1].data.d_string);
+	  const gchar *filename = param[1].data.d_string;
+          gint32       image_ID = load_image (filename);
 
 	  if (image_ID != -1)
 	    {
               if (load_vals.import)
-                gimp_path_import (image_ID,
-                                  param[1].data.d_string,
-                                  load_vals.merge, TRUE);
+                gimp_path_import (image_ID, filename, load_vals.merge, TRUE);
 
 	      *nreturn_vals = 2;
 	      values[1].type         = GIMP_PDB_IMAGE;
@@ -211,6 +237,47 @@ run (const gchar      *name,
             }
 
 	  gimp_set_data ("file_svg_load", &load_vals, sizeof (load_vals));
+        }
+    }
+  else if (strcmp (name, "file_svg_load_thumb") == 0)
+    {
+      if (nparams < 2)
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
+      else
+        {
+          const gchar *filename = param[0].data.d_string;
+          gint         width    = 0;
+          gint         height   = 0;
+          gint32       image_ID;
+
+          if (load_rsvg_size (filename, &load_vals, NULL))
+            {
+              width  = load_vals.width;
+              height = load_vals.height;
+            }
+
+          load_vals.resolution = SVG_DEFAULT_RESOLUTION;
+          load_vals.width      = - param[1].data.d_int32;
+          load_vals.height     = - param[1].data.d_int32;
+
+          image_ID = load_image (filename);
+
+          if (image_ID != -1)
+            {
+	      *nreturn_vals = 4;
+	      values[1].type         = GIMP_PDB_IMAGE;
+	      values[1].data.d_image = image_ID;
+	      values[2].type         = GIMP_PDB_INT32;
+	      values[2].data.d_int32 = width;
+	      values[3].type         = GIMP_PDB_INT32;
+	      values[3].data.d_int32 = height;
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
         }
     }
   else

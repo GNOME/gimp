@@ -78,6 +78,15 @@ static gboolean    gimp_imagefile_save_thumb       (GimpImagefile  *imagefile,
 static gchar     * gimp_imagefile_get_description  (GimpViewable   *viewable,
                                                     gchar         **tooltip);
 
+static void     gimp_thumbnail_set_info_from_image (GimpThumbnail  *thumbnail,
+                                                    const gchar    *mime_type,
+                                                    GimpImage      *image);
+static void     gimp_thumbnail_set_info            (GimpThumbnail  *thumbnail,
+                                                    const gchar    *mime_type,
+                                                    gint            width,
+                                                    gint            height);
+
+
 
 static guint gimp_imagefile_signals[LAST_SIGNAL] = { 0 };
 
@@ -253,34 +262,46 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
 
   if (gimp_thumbnail_peek_image (thumbnail) >= GIMP_THUMB_STATE_EXISTS)
     {
-      GimpImage         *gimage;
-      GimpPDBStatusType  dummy;
-      gboolean           success;
-      const gchar       *mime_type = NULL;
-      GError            *error     = NULL;
+      GimpImage    *image;
+      gboolean      success;
+      gint          width     = 0;
+      gint          height    = 0;
+      const gchar  *mime_type = NULL;
+      GError       *error     = NULL;
 
       g_object_ref (imagefile);
 
-      gimage = file_open_image (imagefile->gimp, context, progress,
-                                thumbnail->image_uri,
-                                thumbnail->image_uri,
-                                NULL,
-                                GIMP_RUN_NONINTERACTIVE,
-                                &dummy,
-                                &mime_type,
-                                NULL);
+      image = file_open_thumbnail (imagefile->gimp, context, progress,
+                                   thumbnail->image_uri, size,
+                                   &mime_type, &width, &height);
 
-      if (gimage)
+      if (image)
         {
-          if (mime_type)
-            g_object_set (thumbnail,
-                          "image-mimetype", mime_type,
-                          NULL);
+          gimp_thumbnail_set_info (imagefile->thumbnail,
+                                   mime_type, width, height);
 
+        }
+      else
+        {
+          GimpPDBStatusType  status;
+
+          image = file_open_image (imagefile->gimp, context, progress,
+                                   thumbnail->image_uri, thumbnail->image_uri,
+                                   NULL, GIMP_RUN_NONINTERACTIVE,
+                                   &status, &mime_type, NULL);
+
+          if (image)
+            gimp_thumbnail_set_info_from_image (imagefile->thumbnail,
+                                                mime_type, image);
+        }
+
+      if (image)
+        {
           success = gimp_imagefile_save_thumb (imagefile,
-                                               gimage, size, replace, &error);
+                                               image, size, replace,
+                                               &error);
 
-          g_object_unref (gimage);
+          g_object_unref (image);
         }
       else
         {
@@ -386,13 +407,11 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
 
   if (size > 0)
     {
-      /*  peek the thumbnail to make sure that mtime and filesize are set  */
-      gimp_thumbnail_peek_image (imagefile->thumbnail);
+      gimp_thumbnail_set_info_from_image (imagefile->thumbnail, NULL, gimage);
 
       success = gimp_imagefile_save_thumb (imagefile,
                                            gimage, size, FALSE,
                                            &error);
-
       if (! success)
         {
           g_message (error->message);
@@ -719,9 +738,6 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
 {
   GimpThumbnail *thumbnail = imagefile->thumbnail;
   GdkPixbuf     *pixbuf;
-  GimpEnumDesc  *enum_desc;
-  GimpImageType  type;
-  gint           num_layers;
   gint           width, height;
   gboolean       success = FALSE;
 
@@ -755,24 +771,6 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   if (! pixbuf)
     return TRUE;
 
-  type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (gimage));
-
-  if (gimp_image_has_alpha (gimage))
-    type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
-
-
-  enum_desc = gimp_enum_get_desc (g_type_class_peek (GIMP_TYPE_IMAGE_TYPE),
-                                  type);
-
-  num_layers = gimp_container_num_children (gimage->layers);
-
-  g_object_set (thumbnail,
-                "image-width",      gimage->width,
-                "image-height",     gimage->height,
-                "image-type",       enum_desc->value_desc,
-                "image-num-layers", num_layers,
-                NULL);
-
   success = gimp_thumbnail_save_thumb (thumbnail,
                                        pixbuf,
                                        "The GIMP " GIMP_VERSION,
@@ -791,4 +789,49 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
     }
 
   return success;
+}
+
+static void
+gimp_thumbnail_set_info_from_image (GimpThumbnail *thumbnail,
+                                    const gchar   *mime_type,
+                                    GimpImage     *image)
+{
+  GimpEnumDesc  *desc;
+  GimpImageType  type;
+
+  /*  peek the thumbnail to make sure that mtime and filesize are set  */
+  gimp_thumbnail_peek_image (thumbnail);
+
+  type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (image));
+
+  if (gimp_image_has_alpha (image))
+    type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
+
+  desc = gimp_enum_get_desc (g_type_class_peek (GIMP_TYPE_IMAGE_TYPE), type);
+
+  g_object_set (thumbnail,
+                "image-mimetype",   mime_type,
+                "image-width",      gimp_image_get_width (image),
+                "image-height",     gimp_image_get_height (image),
+                "image-type",       desc->value_desc,
+                "image-num-layers", gimp_container_num_children (image->layers),
+                NULL);
+}
+
+static void
+gimp_thumbnail_set_info (GimpThumbnail *thumbnail,
+                         const gchar   *mime_type,
+                         gint           width,
+                         gint           height)
+{
+  /*  peek the thumbnail to make sure that mtime and filesize are set  */
+  gimp_thumbnail_peek_image (thumbnail);
+
+  g_object_set (thumbnail,
+                "image-mimetype",   mime_type,
+                "image-width",      width,
+                "image-height",     height,
+                "image-type",       NULL,
+                "image-num-layers", NULL,
+                NULL);
 }

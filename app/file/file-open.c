@@ -64,6 +64,9 @@
 #include "gimp-intl.h"
 
 
+static void  file_open_sanitize_image (GimpImage *gimage);
+
+
 /*  public functions  */
 
 GimpImage *
@@ -81,7 +84,7 @@ file_open_image (Gimp               *gimp,
   const ProcRecord *proc;
   Argument         *args;
   Argument         *return_vals;
-  gint              gimage_id;
+  gint              image_id;
   gint              i;
   gchar            *filename;
 
@@ -89,7 +92,6 @@ file_open_image (Gimp               *gimp,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (status != NULL, NULL);
-  g_return_val_if_fail (mime_type == NULL || *mime_type == NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   *status = GIMP_PDB_EXECUTION_ERROR;
@@ -146,31 +148,19 @@ file_open_image (Gimp               *gimp,
   if (filename)
     g_free (filename);
 
-  *status   = return_vals[0].value.pdb_int;
-  gimage_id = return_vals[1].value.pdb_int;
+  *status  = return_vals[0].value.pdb_int;
+  image_id = return_vals[1].value.pdb_int;
 
   procedural_db_destroy_args (return_vals, proc->num_values);
   g_free (args);
 
   if (*status == GIMP_PDB_SUCCESS)
     {
-      if (gimage_id != -1)
+      if (image_id != -1)
         {
-          GimpImage *gimage = gimp_image_get_by_ID (gimp, gimage_id);
+          GimpImage *gimage = gimp_image_get_by_ID (gimp, image_id);
 
-          /* clear all undo steps */
-          gimp_image_undo_free (gimage);
-
-          /* make sure that undo is enabled */
-          while (gimage->undo_freeze_count)
-            gimp_image_undo_thaw (gimage);
-
-          /* set the image to clean  */
-          gimp_image_clean_all (gimage);
-
-          gimp_image_invalidate_layer_previews (gimage);
-          gimp_image_invalidate_channel_previews (gimage);
-          gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+          file_open_sanitize_image (gimage);
 
           if (mime_type)
             *mime_type = file_proc->mime_type;
@@ -189,6 +179,88 @@ file_open_image (Gimp               *gimp,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Plug-In could not open image"));
+    }
+
+  return NULL;
+}
+
+/*  Attempts to load a thumbnail by using a registered thumbnail loader.  */
+GimpImage *
+file_open_thumbnail (Gimp          *gimp,
+                     GimpContext   *context,
+                     GimpProgress  *progress,
+                     const gchar   *uri,
+                     gint           size,
+                     const gchar  **mime_type,
+                     gint          *image_width,
+                     gint          *image_height)
+{
+  PlugInProcDef     *file_proc;
+  const ProcRecord  *proc;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (mime_type != NULL, NULL);
+  g_return_val_if_fail (image_width != NULL, NULL);
+  g_return_val_if_fail (image_height != NULL, NULL);
+
+  *image_width  = 0;
+  *image_height = 0;
+
+  file_proc = file_utils_find_proc (gimp->load_procs, uri);
+
+  if (! file_proc || ! file_proc->thumb_loader)
+    return NULL;
+
+  proc = procedural_db_lookup (gimp, file_proc->thumb_loader);
+
+  if (proc && proc->num_args >= 2)
+    {
+      GimpPDBStatusType  status;
+      Argument          *args;
+      Argument          *return_vals;
+      gchar             *filename;
+      gint               image_id;
+      gint               i;
+
+      filename = g_filename_from_uri (uri, NULL, NULL);
+
+      args = g_new0 (Argument, proc->num_args);
+
+      for (i = 0; i < proc->num_args; i++)
+        args[i].arg_type = proc->args[i].arg_type;
+
+      args[0].value.pdb_pointer = filename ? filename : (gchar *) uri;
+      args[1].value.pdb_int     = size;
+
+      return_vals = procedural_db_execute (gimp, context, progress,
+                                           proc->name, args);
+
+      if (filename)
+        g_free (filename);
+
+      status        = return_vals[0].value.pdb_int;
+      image_id      = return_vals[1].value.pdb_int;
+      *image_width  = MAX (0, return_vals[2].value.pdb_int);
+      *image_height = MAX (0, return_vals[3].value.pdb_int);
+
+      procedural_db_destroy_args (return_vals, proc->num_values);
+      g_free (args);
+
+      if (status == GIMP_PDB_SUCCESS && image_id != -1)
+        {
+          GimpImage *image = gimp_image_get_by_ID (gimp, image_id);
+
+          file_open_sanitize_image (image);
+
+          *mime_type = file_proc->mime_type;
+
+          g_printerr ("opened thumbnail at %d x %d\n",
+                      image->width, image->height);
+
+          return image;
+        }
     }
 
   return NULL;
@@ -346,4 +418,25 @@ file_open_layer (Gimp               *gimp,
     }
 
   return new_layer;
+}
+
+
+/*  private functions  */
+
+static void
+file_open_sanitize_image (GimpImage *gimage)
+{
+  /* clear all undo steps */
+  gimp_image_undo_free (gimage);
+
+  /* make sure that undo is enabled */
+  while (gimage->undo_freeze_count)
+    gimp_image_undo_thaw (gimage);
+
+  /* set the image to clean  */
+  gimp_image_clean_all (gimage);
+
+  gimp_image_invalidate_layer_previews (gimage);
+  gimp_image_invalidate_channel_previews (gimage);
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 }

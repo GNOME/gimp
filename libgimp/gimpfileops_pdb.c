@@ -290,3 +290,42 @@ gimp_register_file_handler_mime (const gchar *procedure_name,
 
   return success;
 }
+
+/**
+ * gimp_register_thumbnail_loader:
+ * @load_proc: The name of the procedure the thumbnail loader with.
+ * @thumb_proc: The name of the thumbnail load procedure.
+ *
+ * Associates a thumbnail loader with a file load procedure.
+ *
+ * Some file formats allow for embedded thumbnails, other file formats
+ * contain a scalable image or provide the image data in different
+ * resolutions. A file plug-in for such a format may register a special
+ * procedure that allows GIMP to load a thumbnail preview of the image.
+ * This procedure is then associated with the standard load procedure
+ * using this function.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_register_thumbnail_loader (const gchar *load_proc,
+				const gchar *thumb_proc)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_register_thumbnail_loader",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, load_proc,
+				    GIMP_PDB_STRING, thumb_proc,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
