@@ -1,3 +1,9 @@
+2002-10-10  Sven Neumann  <sven@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimptext.[ch]: added first draft of a GimpText object.
+
 2002-10-09  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c

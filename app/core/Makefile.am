@@ -154,6 +154,8 @@ libappcore_a_sources = \
 	gimppreviewcache.h		\
 	gimpscanconvert.c		\
 	gimpscanconvert.h		\
+	gimptext.c			\
+	gimptext.h			\
 	gimptoolinfo.c			\
 	gimptoolinfo.h			\
 	gimpunit.c			\

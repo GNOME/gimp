@@ -127,7 +127,6 @@ typedef struct _GimpToolInfo        GimpToolInfo; /*< proxy-include >*/
 typedef struct _GimpImagefile       GimpImagefile;
 typedef struct _GimpList            GimpDocumentList;
 
-typedef struct _GimpImageMap        GimpImageMap;
 
 /*  drawable objects  */
 
@@ -154,6 +153,13 @@ typedef struct _GimpGradient        GimpGradient;
 typedef struct _GimpPattern         GimpPattern;
 
 typedef struct _GimpPalette         GimpPalette;
+
+
+/*  misc objects  */
+
+typedef struct _GimpImageMap        GimpImageMap;
+
+typedef struct _GimpText            GimpText;
 
 
 /*  undo objects  */
