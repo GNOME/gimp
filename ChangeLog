@@ -1,3 +1,11 @@
+2002-11-29  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.c (gimp_pixmap_button_new):
+	use gtk_label_new_with_mnemonic():
+
+	* plug-ins/common/uniteditor.c: Treeviewized and undeprecated.
+	Removed all static variables. Cleanup.
+
 2002-11-28  Sven Neumann  <sven@gimp.org>
 
 	* app/config/Makefile.am

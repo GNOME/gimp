@@ -1347,7 +1347,8 @@ gimp_pixmap_button_new (gchar       **xpm_data,
       gtk_box_pack_start (GTK_BOX (hbox), pixmap, FALSE, FALSE, 4);
       gtk_widget_show (pixmap);
 
-      label = gtk_label_new (text);
+      label = gtk_label_new_with_mnemonic (text);
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), button);
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
       gtk_widget_show (label);
     }
