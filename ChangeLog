@@ -1,3 +1,7 @@
+2001-07-02  Nick Lamb  <njl195@zepler.org.uk>
+
+        * plug-ins/common/png.c: Change PNG defaults (no 1.0 gamma chunk)
+
 2001-07-02  Sven Neumann  <sven@gimp.org>
 
 	* gimptool-1.4.in

@@ -123,7 +123,7 @@ PngSaveVals pngvals =
 {
   FALSE,
   6,
-  TRUE, TRUE, TRUE, TRUE, TRUE
+  TRUE, FALSE, FALSE, TRUE, TRUE
 };
 
 static gboolean runme = FALSE;
