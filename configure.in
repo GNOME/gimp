@@ -311,6 +311,9 @@ AC_CHECK_FUNC(random, [
 dnl check for difftime
 AC_CHECK_FUNC(difftime, , AC_DEFINE(NO_DIFFTIME))
 
+dnl check for putenv (because %#@&% NeXTStep doesn't have it)
+AC_CHECK_FUNC(putenv, AC_DEFINE(HAVE_PUTENV))
+
 dnl check for inline
 AC_MSG_CHECKING([for inline definition in glibconfig.h])
 AC_EGREP_CPP(glib_defines_inline,

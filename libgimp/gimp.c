@@ -25,11 +25,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
-#include <sys/ipc.h>
-#include <sys/shm.h>
 #include <sys/time.h>
 #include <sys/param.h>
 #include <unistd.h>
+
+#ifdef HAVE_IPC_H
+#include <sys/ipc.h>
+#endif
+
+#ifdef HAVE_SHM_H
+#include <sys/shm.h>
+#endif
 
 #ifdef HAVE_SYS_SELECT_H
 #include <sys/select.h>
@@ -129,8 +135,10 @@ gimp_quit ()
   if (PLUG_IN_INFO.quit_proc)
     (* PLUG_IN_INFO.quit_proc) ();
 
+#ifdef HAVE_SHM_H
   if ((_shm_ID != -1) && _shm_addr)
     shmdt ((char*) _shm_addr);
+#endif
 
   gp_quit_write (_writefd);
   exit (0);
@@ -1059,6 +1067,7 @@ gimp_config (GPConfig *config)
   _color_cube[3] = config->color_cube[3];
   _gdisp_ID = config->gdisp_ID;
 
+#ifdef HAVE_SHM_H
   if (_shm_ID != -1)
     {
       _shm_addr = (guchar*) shmat (_shm_ID, 0, 0);
@@ -1066,6 +1075,7 @@ gimp_config (GPConfig *config)
       if (_shm_addr == (guchar*) -1)
 	g_error ("could not attach to gimp shared memory segment\n");
     }
+#endif
 }
 
 static void

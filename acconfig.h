@@ -22,7 +22,9 @@
 #undef HAVE_IPC_H
 #undef HAVE_LC_MESSAGES
 #undef HAVE_NDIR_H
+#undef HAVE_PUTENV
 #undef HAVE_SHM_H
+#undef HAVE_STPCPY
 #undef HAVE_SYS_DIR_H
 #undef HAVE_SYS_NDIR_H
 #undef HAVE_SYS_SELECT_H

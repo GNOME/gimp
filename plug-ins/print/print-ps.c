@@ -32,6 +32,25 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.10  1998/08/28 23:01:46  yosh
+ *   * acconfig.h
+ *   * configure.in
+ *   * app/main.c: added check for putenv and #ifdefed it's usage since NeXTStep is
+ *   lame
+ *
+ *   * libgimp/gimp.c
+ *   * app/main.c
+ *   * app/plug_in.c: conditionally compile shared mem stuff so platforms without
+ *   it can still work
+ *
+ *   * plug-ins/CEL/CEL.c
+ *   * plug-ins/palette/palette.c
+ *   * plug-ins/print/print-escp2.c
+ *   * plug-ins/print/print-pcl.c
+ *   * plug-ins/print/print-ps.c: s/strdup/g_strdup/ for portability
+ *
+ *   -Yosh
+ *
  *   Revision 1.9  1998/05/17 07:16:47  yosh
  *   0.99.31 fun
  *
@@ -175,7 +194,7 @@ ps_parameters(int  model,	/* I - Printer model */
 
       valptrs = g_new(char *, 6);
       for (i = 0; i < 6; i ++)
-        valptrs[i] = strdup(media_sizes[i]);
+        valptrs[i] = g_strdup(media_sizes[i]);
 
       return (valptrs);
     }
@@ -198,7 +217,7 @@ ps_parameters(int  model,	/* I - Printer model */
 
     if (strcasecmp(lname, name) == 0)
     {
-      valptrs[*count] = strdup(loption);
+      valptrs[*count] = g_strdup(loption);
       (*count) ++;
     };
   };
@@ -532,28 +551,28 @@ ps_print(int       model,		/* I - Model (Level 1 or 2) */
 
   if ((command = ppd_find(ppd_file, "PageSize", media_size, &order)) != NULL)
   {
-    commands[num_commands].command = strdup(command);
+    commands[num_commands].command = g_strdup(command);
     commands[num_commands].order   = order;
     num_commands ++;
   };
 
   if ((command = ppd_find(ppd_file, "InputSlot", media_source, &order)) != NULL)
   {
-    commands[num_commands].command = strdup(command);
+    commands[num_commands].command = g_strdup(command);
     commands[num_commands].order   = order;
     num_commands ++;
   };
 
   if ((command = ppd_find(ppd_file, "MediaType", media_type, &order)) != NULL)
   {
-    commands[num_commands].command = strdup(command);
+    commands[num_commands].command = g_strdup(command);
     commands[num_commands].order   = order;
     num_commands ++;
   };
 
   if ((command = ppd_find(ppd_file, "Resolution", resolution, &order)) != NULL)
   {
-    commands[num_commands].command = strdup(command);
+    commands[num_commands].command = g_strdup(command);
     commands[num_commands].order   = order;
     num_commands ++;
   };

@@ -1,3 +1,21 @@
+Fri Aug 28 15:56:41 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* acconfig.h
+	* configure.in
+	* app/main.c: added check for putenv and #ifdefed it's usage since
+	NeXTStep is lame
+
+	* libgimp/gimp.c
+	* app/main.c
+	* app/plug_in.c: conditionally compile shared mem stuff so platforms
+	without it can still work
+
+	* plug-ins/CEL/CEL.c
+	* plug-ins/palette/palette.c
+	* plug-ins/print/print-escp2.c
+	* plug-ins/print/print-pcl.c
+	* plug-ins/print/print-ps.c: s/strdup/g_strdup/ for portability
+
 Wed Aug 26 16:30:36 1998  Raph Levien  <raph@gimp.org>
 
 	* app/gradient.c (grad_create_gradient_editor,

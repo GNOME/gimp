@@ -165,7 +165,7 @@ static void palette_close(GtkWidget *widget, GtkWidget **fs) {
 
 static void palette_ok(GtkWidget *widget, GtkWidget **fs) {
     g_free(filename);
-    filename= strdup( gtk_file_selection_get_filename(
+    filename= g_strdup( gtk_file_selection_get_filename(
                              GTK_FILE_SELECTION(fs)));
     running= TRUE;
     gtk_widget_destroy(GTK_WIDGET(fs));

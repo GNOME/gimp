@@ -34,6 +34,25 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.10  1998/08/28 23:01:45  yosh
+ *   * acconfig.h
+ *   * configure.in
+ *   * app/main.c: added check for putenv and #ifdefed it's usage since NeXTStep is
+ *   lame
+ *
+ *   * libgimp/gimp.c
+ *   * app/main.c
+ *   * app/plug_in.c: conditionally compile shared mem stuff so platforms without
+ *   it can still work
+ *
+ *   * plug-ins/CEL/CEL.c
+ *   * plug-ins/palette/palette.c
+ *   * plug-ins/print/print-escp2.c
+ *   * plug-ins/print/print-pcl.c
+ *   * plug-ins/print/print-ps.c: s/strdup/g_strdup/ for portability
+ *
+ *   -Yosh
+ *
  *   Revision 1.9  1998/05/17 07:16:46  yosh
  *   0.99.31 fun
  *
@@ -218,7 +237,7 @@ pcl_parameters(int  model,	/* I - Printer model */
 
   valptrs = g_new(char *, *count);
   for (i = 0; i < *count; i ++)
-    valptrs[i] = strdup(p[i]);
+    valptrs[i] = g_strdup(p[i]);
 
   return (valptrs);
 }

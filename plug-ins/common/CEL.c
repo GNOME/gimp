@@ -493,7 +493,7 @@ static gint palette_dialog(char *title) {
   GtkWidget *dialog;
 
   argv= g_malloc(sizeof(gchar *));
-  argv[0]= strdup("CEL file-filter");
+  argv[0]= g_strdup("CEL file-filter");
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
