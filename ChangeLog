@@ -1,3 +1,9 @@
+Sun May 23 13:37:53 BST 1999  Adam D. Moss  <adam@gimp.org>
+
+	* app/paint_funcs.c: Removed bogosity of previous fix and
+	optimized a little.  Cleaner, faster and hopefully more correct
+	now.
+
 Sun May 23 02:35:57 BST 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/paint_funcs.c: Fixed a preserve-transparency

@@ -72,30 +72,32 @@ typedef enum
 typedef struct _LayerMode LayerMode;
 struct _LayerMode
 {
-  int affect_alpha;   /*  does the layer mode affect the alpha channel  */
-  char *name;         /*  layer mode specification  */
+  int affect_alpha;     /*  does the layer mode affect the alpha channel  */
+  int increase_opacity; /*  layer mode can increase opacity */
+  int decrease_opacity; /*  layer mode can decrease opacity */
+  char *name;           /*  layer mode specification  */
 };
 
 LayerMode layer_modes[] =
 {
-  { 1, N_("Normal") },
-  { 1, N_("Dissolve") },
-  { 1, N_("Behind") },
-  { 0, N_("Multiply (Burn)") },
-  { 0, N_("Screen") },
-  { 0, N_("Overlay") },
-  { 0, N_("Difference") },
-  { 0, N_("Addition") },
-  { 0, N_("Subtraction") },
-  { 0, N_("Darken Only") },
-  { 0, N_("Lighten Only") },
-  { 0, N_("Hue") },
-  { 0, N_("Saturation") },
-  { 0, N_("Color") },
-  { 0, N_("Value") },
-  { 0, N_("Divide (Dodge)") },
-  { 1, N_("Erase") },
-  { 1, N_("Replace") }
+  { 1, 1, 0, N_("Normal") },
+  { 1, 1, 0, N_("Dissolve") },
+  { 1, 1, 0, N_("Behind") },
+  { 0, 0, 0, N_("Multiply (Burn)") },
+  { 0, 0, 0, N_("Screen") },
+  { 0, 0, 0, N_("Overlay") },
+  { 0, 0, 0, N_("Difference") },
+  { 0, 0, 0, N_("Addition") },
+  { 0, 0, 0, N_("Subtraction") },
+  { 0, 0, 0, N_("Darken Only") },
+  { 0, 0, 0, N_("Lighten Only") },
+  { 0, 0, 0, N_("Hue") },
+  { 0, 0, 0, N_("Saturation") },
+  { 0, 0, 0, N_("Color") },
+  { 0, 0, 0, N_("Value") },
+  { 0, 0, 0, N_("Divide (Dodge)") },
+  { 1, 0, 1, N_("Erase") },
+  { 1, 1, 1, N_("Replace") }
 };
 
 /*  ColorHash structure  */
@@ -5108,6 +5110,8 @@ struct combine_regions_struct
   int type;
   unsigned char *data;
   int has_alpha1, has_alpha2;
+  gboolean opacity_quickskip_possible;
+  gboolean transparency_quickskip_possible;
 };
 
 
@@ -5141,26 +5145,20 @@ combine_sub_region(struct combine_regions_struct *st,
   has_alpha1 = st->has_alpha1;
   has_alpha2 = st->has_alpha2;
 
+  opacity_quickskip_possible = (st->opacity_quickskip_possible &&
+				src2->tiles);
+  transparency_quickskip_possible = (st->transparency_quickskip_possible &&
+				     src2->tiles);
+
   s1 = src1->data;
   s2 = src2->data;
   d = dest->data;
   m = (mask) ? mask->data : NULL;
 
-
-  /* cheap and easy when the row of src2 is completely opaque/transparent */
-  opacity_quickskip_possible = ((!m) && (opacity==255) &&
-				     (mode_affect &&
-				      has_alpha1 &&
-				      affect[src1->bytes-1]));
-  transparency_quickskip_possible = ((src2->tiles) &&
-				     (mode != REPLACE_MODE));
-
-
   if (src1->w > 128)
     g_error("combine_sub_region::src1->w = %d\n", src1->w);
 
-  if ((transparency_quickskip_possible || opacity_quickskip_possible) &&
-      src2->tiles)
+  if (transparency_quickskip_possible || opacity_quickskip_possible)
     {
 #ifdef HINTS_SANITY
       if (src1->h != src2->h)
@@ -5209,7 +5207,8 @@ combine_sub_region(struct combine_regions_struct *st,
 	case COMBINE_INDEXED_INDEXED_A:
 	case COMBINE_INDEXED_A_INDEXED_A:
 	  /*  Now, apply the paint mode--for indexed images  */
-	  combine = apply_indexed_layer_mode (s1, s2, &s, mode, has_alpha1, has_alpha2);
+	  combine = apply_indexed_layer_mode (s1, s2, &s, mode,
+					      has_alpha1, has_alpha2);
 	  break;
 
 	case COMBINE_INTEN_INTEN_A:
@@ -5217,8 +5216,10 @@ combine_sub_region(struct combine_regions_struct *st,
 	case COMBINE_INTEN_INTEN:
 	case COMBINE_INTEN_A_INTEN_A:
 	  /*  Now, apply the paint mode  */
-	  combine = apply_layer_mode (s1, s2, &s, src1->x, src1->y + h, opacity, src1->w, mode,
-				      src1->bytes, src2->bytes, has_alpha1, has_alpha2, &mode_affect);
+	  combine = apply_layer_mode (s1, s2, &s, src1->x, src1->y + h,
+				      opacity, src1->w, mode,
+				      src1->bytes, src2->bytes,
+				      has_alpha1, has_alpha2, &mode_affect);
 	  break;
 
 	default:
@@ -5402,6 +5403,17 @@ combine_regions (PixelRegion   *src1,
   st.data = data;
   st.has_alpha1 = has_alpha1;
   st.has_alpha2 = has_alpha2;
+
+  /* cheap and easy when the row of src2 is completely opaque/transparent
+     and the wind is otherwise blowing in the right direction. */
+  st.opacity_quickskip_possible = ((!mask) && (opacity==255) &&
+				   (!layer_modes[mode].decrease_opacity) &&
+				   (layer_modes[mode].affect_alpha &&
+				    has_alpha1 &&
+				    affect[src1->bytes-1]) );
+  st.transparency_quickskip_possible = ((!layer_modes[mode].increase_opacity)
+					|| (opacity==0));
+  
   pixel_regions_process_parallel ((p_func)combine_sub_region, &st, 4,
 				    src1, src2, dest, mask);
 }
