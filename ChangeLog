@@ -1,3 +1,7 @@
+Sat Jan 16 19:58:55 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* plug-ins/common/shift.c: Typo fix.
+
 2000-01-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/layers_dialog.c: oops, the "Add Layer Mask" dialog contained

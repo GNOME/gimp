@@ -420,7 +420,7 @@ shift_dialog (void)
   gtk_widget_show (table);
 
   amount_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				      _("Shift Anount:"), SCALE_WIDTH, 0,
+				      _("Shift Amount:"), SCALE_WIDTH, 0,
 				      shvals.shift_amount, 0, 200, 1, 10, 0,
 				      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (amount_data), "value_changed",
