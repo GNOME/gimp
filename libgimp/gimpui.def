@@ -49,6 +49,7 @@ EXPORTS
 	gimp_radio_button_update
 	gimp_radio_group_new
 	gimp_radio_group_new2
+	gimp_random_seed_new
 	gimp_scale_entry_new
 	gimp_size_entry_add_field
 	gimp_size_entry_attach_label

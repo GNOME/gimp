@@ -1,3 +1,17 @@
+2000-01-27  Tor Lillqvist  <tml@iki.fi>
+
+	* app/main.c (on_signal): No need to use an #ifdef for G_OS_WIN32
+	as the whole function is already bypassed on Win32.
+
+	* libgimp/gimp.def
+	* libgimp/gimpui.def: Updates.
+
+	* plug-ins/makefile.cygwin
+	* plug-ins/makefile.msc: Goodbye to the megawidget library.
+
+	* plug-ins/common/papertile.c: MAIN() must be after PLUG_IN_INFO
+	definition.
+	
 2000-01-27  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/pagecurl/pagecurl.c: a little ui eye candy...

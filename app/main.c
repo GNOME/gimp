@@ -450,11 +450,7 @@ static RETSIGTYPE
 on_signal (int sig_num)
 {
   if (caught_fatal_sig)
-#ifdef G_OS_WIN32
-    raise (sig_num);
-#else
     kill (getpid (), sig_num);
-#endif
   caught_fatal_sig = 1;
 
   switch (sig_num)
@@ -524,9 +520,9 @@ on_sig_child (int sig_num)
 	break;
     }
 }
-#endif
+#endif /* SIGCHLD */
 
-#endif
+#endif /* !G_OS_WIN32 */
 
 typedef struct 
 {

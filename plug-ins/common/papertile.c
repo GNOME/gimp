@@ -838,8 +838,6 @@ filter (void)
 /* PLUGIN INTERFACES                                                          */
 /*============================================================================*/
 
-MAIN()
-
 static void
 plugin_query (void)
 {
@@ -977,3 +975,5 @@ GPlugInInfo PLUG_IN_INFO =
   plugin_query,
   plugin_run
 };
+
+MAIN()
