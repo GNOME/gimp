@@ -115,6 +115,7 @@ app/core/gimplayermask.c
 app/core/gimppalette-import.c
 app/core/gimppalette.c
 app/core/gimppattern.c
+app/core/gimpprogress.c
 app/core/gimpselection.c
 app/core/gimptemplate.c
 app/core/gimpunit.c
@@ -131,7 +132,6 @@ app/display/gimpdisplayshell-layer-select.c
 app/display/gimpdisplayshell-scale.c
 app/display/gimpdisplayshell-title.c
 app/display/gimpnavigationview.c
-app/display/gimpprogress.c
 app/display/gimpstatusbar.c
 
 app/file/file-open.c
@@ -309,6 +309,7 @@ app/widgets/gimpitemtreeview.c
 app/widgets/gimplayertreeview.c
 app/widgets/gimppaletteeditor.c
 app/widgets/gimppdbdialog.c
+app/widgets/gimpprogressdialog.c
 app/widgets/gimppropwidgets.c
 app/widgets/gimpselectiondata.c
 app/widgets/gimpselectioneditor.c
