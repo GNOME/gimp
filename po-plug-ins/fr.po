@@ -11141,7 +11141,7 @@ msgstr ""
 "ou des papiers peints), n'hésitez pas à\n"
 "les envoyer à l'auteur de GImpressioniste\n"
 "<vidar@prosalg.no> pour qu'ils soient inclus\n"
-"dans la prochaine version !"
+"dans la prochaine version !\n"
 
 #: plug-ins/gimpressionist/preview.c:122
 msgid "Refresh the Preview window"
