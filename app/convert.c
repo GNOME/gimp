@@ -102,6 +102,7 @@
 #include "palette.h"
 #include "palette_select.h"
 
+#include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
 
@@ -126,10 +127,10 @@
 #define G_SHIFT  (BITS_IN_SAMPLE-PRECISION_G)
 #define B_SHIFT  (BITS_IN_SAMPLE-PRECISION_B)
 
+/* this has to match the INTENSITY definition in libgimp/gimpcolorspace.h */
 #define R_SCALE 30               /*  scale R distances by this much  */
 #define G_SCALE 59               /*  scale G distances by this much  */
-#define B_SCALE 11               /*  and B by this much  */
-#define INTENSITY(r,g,b) (r * 0.30 + g * 0.59 + b * 0.11 + 0.001)
+#define B_SCALE 11               /*  and B by this much              */
 
 static const unsigned char webpal[] =
 {

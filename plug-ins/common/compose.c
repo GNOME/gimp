@@ -86,9 +86,6 @@ static void      compose_cmy  (unsigned char **src, int *incr, int numpix,
 static void      compose_cmyk (unsigned char **src, int *incr, int numpix,
                                unsigned char *dst);
 
-static void      hsv_to_rgb (unsigned char *h, unsigned char *s,
-                             unsigned char *v, unsigned char *rgb);
-
 static gint      compose_dialog (char *compose_type,
                                  gint32 drawable_ID);
 
@@ -670,7 +667,9 @@ compose_hsv (unsigned char **src,
   
   while (count-- > 0)
     {
-      hsv_to_rgb (hue_src, sat_src, val_src, rgb_dst);
+      gimp_hsv_to_rgb4 (rgb_dst, (double) *hue_src / 255.0, 
+			         (double) *sat_src / 255.0, 
+			         (double) *val_src / 255.0);
       rgb_dst += 3;
       hue_src += hue_incr;
       sat_src += sat_incr;
@@ -907,93 +906,6 @@ compose_dialog (char   *compose_type,
   gdk_flush ();
 
   return composeint.run;
-}
-
-
-/* hsv_to_rgb has been taken from the compose-plug-in of GIMP V 0.54
- * and hass been modified a little bit
- */
-static void
-hsv_to_rgb (unsigned char *h,
-            unsigned char *s,
-            unsigned char *v,
-            unsigned char *rgb)
-{
-  double hue, sat, val;
-  double f, p, q, t;
-  int red, green, blue;
-  
-  if (*s == 0)
-    {
-      rgb[0] = rgb[1] = rgb[2] = *v;
-    }
-  else
-    {
-      hue = *h * 6.0 / 255.0;
-      sat = *s / 255.0;
-      val = *v / 255.0;
-      
-      f = hue - (int) hue;
-      p = val * (1.0 - sat);
-      q = val * (1.0 - (sat * f));
-      t = val * (1.0 - (sat * (1.0 - f)));
-      
-      switch ((int) hue)
-	{
-	case 0:
-	  red = (int)(val * 255.0);
-	  green = (int)(t * 255.0);
-	  blue = (int)(p * 255.0);
-	  break;
-	case 1:
-	  red = (int)(q * 255.0);
-	  green = (int)(val * 255.0);
-	  blue = (int)(p * 255.0);
-	  break;
-	case 2:
-	  red = (int)(p * 255.0);
-	  green = (int)(val * 255.0);
-	  blue = (int)(t * 255.0);
-	  break;
-	case 3:
-	  red = (int)(p * 255.0);
-	  green = (int)(q * 255.0);
-	  blue = (int)(val * 255.0);
-	  break;
-	case 4:
-	  red = (int)(t * 255.0);
-	  green = (int)(p * 255.0);
-	  blue = (int)(val * 255.0);
-	  break;
-	case 5:
-	  red = (int)(val * 255.0);
-	  green = (int)(p * 255.0);
-	  blue = (int)(q * 255.0);
-	  break;
-	default:
-	  red = 0;
-	  green = 0;
-	  blue = 0;
-	  break;
-	}
-
-      if (red < 0) 
-	red = 0; 
-      else if (red > 255) 
-	red = 255;
-      if (green < 0) 
-	green = 0; 
-      else if (green > 255) 
-	green = 255;
-      if (blue < 0) 
-	blue = 0; 
-      else if (blue > 255) 
-	blue = 255;
-
-      rgb[0] = (unsigned char)red;
-      rgb[1] = (unsigned char)green;
-      rgb[2] = (unsigned char)blue;
-    }
 }
 
 /*  Compose interface functions  */

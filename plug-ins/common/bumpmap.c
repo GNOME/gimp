@@ -730,12 +730,11 @@ bumpmap_convert_row (guchar *row,
       {
 	if (has_alpha)
 	  *p++ = lut[(int) (bmvals.waterlevel +
-			    (((int)
-			      (0.30 * row[0] + 0.59 * row[1] + 0.11 * row[2] + 0.5) -
-			      bmvals.waterlevel) *
+			    (((int) (INTENSITY (row[0], row[1], row[2]) + 0.5) - 
+			      bmvals.waterlevel) * 
 			     row[3]) / 255.0)];
 	else
-	  *p++ = lut[(int) (0.30 * row[0] + 0.59 * row[1] + 0.11 * row[2] + 0.5)];
+	  *p++ = lut[(int) (INTENSITY (row[0], row[1], row[2]) + 0.5)];
 
 	row += 3 + has_alpha;
       }

@@ -40,8 +40,6 @@
 #define SCALE_WIDTH     125
 #define TILE_CACHE_SIZE  16
 
-#define INTENSITY(r,g,b) (r * 0.30 + g * 0.59 + b * 0.11)
-
 typedef struct
 {
   gint height;

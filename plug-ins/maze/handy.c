@@ -46,8 +46,11 @@ void      drawbox (GPixelRgn *dest_rgn,
 
 
 void 
-get_colors (GDrawable *drawable, guint8 *fg, guint8 *bg) 
+get_colors (GDrawable *drawable, 
+	    guint8    *fg, 
+	    guint8    *bg) 
 {
+  
   GParam *return_vals;
   gint nreturn_vals;
 
@@ -57,76 +60,18 @@ get_colors (GDrawable *drawable, guint8 *fg, guint8 *bg)
       fg[3] = 255;                 /* area to be fully opaque.       */
       bg[3] = 255;
     case RGB_IMAGE:
-
-      return_vals = gimp_run_procedure ("gimp_palette_get_foreground",
-					&nreturn_vals,
-					PARAM_END);
-
-      if (return_vals[0].data.d_status == STATUS_SUCCESS)
-	{
-	  fg[0] = return_vals[1].data.d_color.red;
-	  fg[1] = return_vals[1].data.d_color.green;
-	  fg[2] = return_vals[1].data.d_color.blue;
-	}
-      else
-	{
-	  fg[0] = 255;
-	  fg[1] = 255;
-	  fg[2] = 255;
-	}
-      return_vals = gimp_run_procedure ("gimp_palette_get_background",
-					&nreturn_vals,
-					PARAM_END);
-
-      if (return_vals[0].data.d_status == STATUS_SUCCESS)
-	{
-	  bg[0] = return_vals[1].data.d_color.red;
-	  bg[1] = return_vals[1].data.d_color.green;
-	  bg[2] = return_vals[1].data.d_color.blue;
-	}
-      else
-	{
-	  bg[0] = 0;
-	  bg[1] = 0;
-	  bg[2] = 0;
-	}
+      gimp_palette_get_foreground (&fg[0], &fg[1], &fg[2]);
+      gimp_palette_get_background (&bg[0], &bg[1], &bg[2]);
       break;
     case GRAYA_IMAGE:       /* and again */
       fg[1] = 255;
       bg[1] = 255;
-    case GRAY_IMAGE:       
-
-	return_vals = gimp_run_procedure ("gimp_palette_get_foreground",
-					&nreturn_vals,
-					PARAM_END);
-
-	if (return_vals[0].data.d_status == STATUS_SUCCESS)
-	    {
-		fg[0] = 0.30 * return_vals[1].data.d_color.red + 
-		    0.59 * return_vals[1].data.d_color.green + 
-		    0.11 * return_vals[1].data.d_color.blue;
-	    }
-	else
-	    {
-		fg[0] = 255;
-	    }
-
-	return_vals = gimp_run_procedure ("gimp_palette_get_background",
-					  &nreturn_vals,
-					  PARAM_END);
-	
-	if (return_vals[0].data.d_status == STATUS_SUCCESS)
-	    {
-		bg[0] = 0.30 * return_vals[1].data.d_color.red + 
-		    0.59 * return_vals[1].data.d_color.green + 
-		    0.11 * return_vals[1].data.d_color.blue;
-	    }
-	else
-	    {
-		bg[0] = 0;
-	    }
-	
-	break;
+    case GRAY_IMAGE:
+      gimp_palette_get_foreground (&fg[0], &fg[1], &fg[2]);
+      gimp_palette_get_background (&bg[0], &bg[1], &bg[2]);
+      fg[0] = INTENSITY (fg[0], fg[1], fg[2]);
+      bg[0] = INTENSITY (bg[0], bg[1], bg[2]);
+      break;
     case INDEXEDA_IMAGE:
     case INDEXED_IMAGE:     /* FIXME: Should use current fg/bg colors.  */
 	g_warning("maze: get_colors: Indexed image.  Using colors 15 and 0.\n");

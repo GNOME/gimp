@@ -37,241 +37,7 @@
  *
  * Revision History:
  *
- *   $Log$
- *   Revision 1.12  2000/01/26 16:00:48  neo
- *   updated print plug-in
- *
- *
- *   --Sven
- *
- *   Revision 1.49.2.1  2000/01/13 23:41:29  rlk
- *   Deal with null black pointer
- *
- *   Revision 1.49  2000/01/08 23:30:37  rlk
- *   Some tweaking
- *
- *   Revision 1.48  1999/12/30 23:58:07  rlk
- *   Silly little bug...
- *
- *   Revision 1.47  1999/12/26 19:02:46  rlk
- *   Performance stuff
- *
- *   Revision 1.46  1999/12/25 17:47:17  rlk
- *   Cleanup
- *
- *   Revision 1.45  1999/12/25 00:41:01  rlk
- *   some minor improvement
- *
- *   Revision 1.44  1999/12/24 12:57:38  rlk
- *   Reduce grain; improve red
- *
- *   Revision 1.43  1999/12/22 03:24:34  rlk
- *   round length up, not down
- *
- *   Revision 1.42  1999/12/22 03:12:17  rlk
- *   More constant fiddling
- *
- *   Revision 1.41  1999/12/22 01:34:28  rlk
- *   Reverse direction each pass
- *
- *   Revision 1.40  1999/12/18 23:45:07  rlk
- *   typo
- *
- *   Revision 1.39  1999/12/12 20:49:01  rlk
- *   Various changes
- *
- *   Revision 1.38  1999/12/11 23:12:06  rlk
- *   Better matching between cmy/k
- *
- *   Smoother dither!
- *
- *   Revision 1.37  1999/12/05 23:24:08  rlk
- *   don't want PRINT_LUT in release
- *
- *   Revision 1.36  1999/12/05 04:33:34  rlk
- *   Good results for the night.
- *
- *   Revision 1.35  1999/12/04 19:01:05  rlk
- *   better use of light colors
- *
- *   Revision 1.34  1999/12/02 02:09:45  rlk
- *   .
- *
- *   Revision 1.33  1999/11/25 00:02:03  rlk
- *   Revamped many controls
- *
- *   Revision 1.32  1999/11/23 02:11:37  rlk
- *   Rationalize variables, pass 3
- *
- *   Revision 1.31  1999/11/23 01:33:37  rlk
- *   First stage of simplifying the variable stuff
- *
- *   Revision 1.30  1999/11/16 00:59:00  rlk
- *   More fine tuning
- *
- *   Revision 1.29  1999/11/14 21:37:13  rlk
- *   Revamped contrast
- *
- *   Revision 1.28  1999/11/14 18:59:22  rlk
- *   Final preparations for release to Olof
- *
- *   Revision 1.27  1999/11/14 00:57:11  rlk
- *   Mix black in sooner gives better density.
- *
- *   Revision 1.26  1999/11/13 02:31:29  rlk
- *   Finally!  Good settings!
- *
- *   Revision 1.25  1999/11/12 03:34:40  rlk
- *   More tweaking
- *
- *   Revision 1.24  1999/11/12 02:18:32  rlk
- *   Stubs for dynamic memory allocation
- *
- *   Revision 1.23  1999/11/12 01:53:37  rlk
- *   Remove silly spurious stuff
- *
- *   Revision 1.22  1999/11/12 01:51:47  rlk
- *   Much better black
- *
- *   Revision 1.21  1999/11/10 01:13:06  rlk
- *   Support up to 2880 dpi
- *
- *   Revision 1.20  1999/11/07 22:16:42  rlk
- *   Bug fixes; try to improve dithering slightly
- *
- *   Revision 1.19  1999/10/29 01:01:16  rlk
- *   Smoother rendering of darker colors
- *
- *   Revision 1.18  1999/10/28 02:01:15  rlk
- *   One bug, two effects:
- *
- *   1) Handle 4-color correctly (it was treating the 4-color too much like the
- *   6-color).
- *
- *   2) An attempt to handle both cases with the same code path led to a
- *   discontinuity that depending upon the orientation of a color gradient would
- *   lead to either white or dark lines at the point that the dark version of
- *   the color would kick in.
- *
- *   Revision 1.17  1999/10/26 23:58:31  rlk
- *   indentation
- *
- *   Revision 1.16  1999/10/26 23:36:51  rlk
- *   Comment out all remaining 16-bit code, and rename 16-bit functions to "standard" names
- *
- *   Revision 1.15  1999/10/26 02:10:30  rlk
- *   Mostly fix save/load
- *
- *   Move all gimp, glib, gtk stuff into print.c (take it out of everything else).
- *   This should help port it to more general purposes later.
- *
- *   Revision 1.14  1999/10/25 23:31:59  rlk
- *   16-bit clean
- *
- *   Revision 1.13  1999/10/25 00:14:46  rlk
- *   Remove more of the 8-bit code, now that it is tested
- *
- *   Revision 1.12  1999/10/23 20:26:48  rlk
- *   Move LUT calculation to print-util
- *
- *   Revision 1.11  1999/10/21 01:27:37  rlk
- *   More progress toward full 16-bit rendering
- *
- *   Revision 1.10  1999/10/19 02:04:59  rlk
- *   Merge all of the single-level print_cmyk functions
- *
- *   Revision 1.9  1999/10/18 01:37:02  rlk
- *   Remove spurious stuff
- *
- *   Revision 1.8  1999/10/17 23:44:07  rlk
- *   16-bit everything (untested)
- *
- *   Revision 1.7  1999/10/17 23:01:01  rlk
- *   Move various dither functions into print-utils.c
- *
- *   Revision 1.6  1999/10/14 01:59:59  rlk
- *   Saturation
- *
- *   Revision 1.5  1999/10/03 23:57:20  rlk
- *   Various improvements
- *
- *   Revision 1.4  1999/09/18 15:18:47  rlk
- *   A bit more random
- *
- *   Revision 1.3  1999/09/14 21:43:43  rlk
- *   Some hoped-for improvements
- *
- *   Revision 1.2  1999/09/12 00:12:24  rlk
- *   Current best stuff
- *
- *   Revision 1.10  1998/05/17 07:16:49  yosh
- *   0.99.31 fun
- *
- *   updated print plugin
- *
- *   -Yosh
- *
- *   Revision 1.14  1998/05/16  18:27:59  mike
- *   Cleaned up dithering functions - unnecessary extra data in dither buffer.
- *
- *   Revision 1.13  1998/05/13  17:00:36  mike
- *   Minor change to CMYK generation code - now cube black difference value
- *   for better colors.
- *
- *   Revision 1.12  1998/05/08  19:20:50  mike
- *   Updated CMYK generation code to use new method.
- *   Updated dithering algorithm (slightly more uniform now, less speckling)
- *   Added default media size function.
- *
- *   Revision 1.11  1998/03/01  18:03:27  mike
- *   Whoops - need to add 255 - alpha to the output values (transparent to white
- *   and not transparent to black...)
- *
- *   Revision 1.10  1998/03/01  17:20:48  mike
- *   Updated alpha code to do alpha computation before gamma/brightness lut.
- *
- *   Revision 1.9  1998/03/01  17:13:46  mike
- *   Updated CMY/CMYK conversion code for dynamic BG and hue adjustment.
- *   Added alpha channel support to color conversion functions.
- *
- *   Revision 1.8  1998/01/21  21:33:47  mike
- *   Replaced Burkes dither with stochastic (random) dither.
- *
- *   Revision 1.7  1997/10/02  17:57:26  mike
- *   Replaced ordered dither with Burkes dither (error-diffusion).
- *   Now dither K separate from CMY.
- *
- *   Revision 1.6  1997/07/30  20:33:05  mike
- *   Final changes for 1.1 release.
- *
- *   Revision 1.5  1997/07/26  18:43:04  mike
- *   Fixed dither_black and dither_cmyk - wasn't clearing extra bits
- *   (caused problems with A3/A4 size output).
- *
- *   Revision 1.5  1997/07/26  18:43:04  mike
- *   Fixed dither_black and dither_cmyk - wasn't clearing extra bits
- *   (caused problems with A3/A4 size output).
- *
- *   Revision 1.4  1997/07/02  18:46:26  mike
- *   Fixed stupid bug in dither_black() - wasn't comparing against gray
- *   pixels (comparing against the first black byte - d'oh!)
- *   Changed 255 in dither matrix to 254 to shade correctly.
- *
- *   Revision 1.4  1997/07/02  18:46:26  mike
- *   Fixed stupid bug in dither_black() - wasn't comparing against gray
- *   pixels (comparing against the first black byte - d'oh!)
- *   Changed 255 in dither matrix to 254 to shade correctly.
- *
- *   Revision 1.3  1997/07/02  13:51:53  mike
- *   Added rgb_to_rgb and gray_to_gray conversion functions.
- *   Standardized calling args to conversion functions.
- *
- *   Revision 1.2  1997/07/01  19:28:44  mike
- *   Updated dither matrix.
- *   Fixed scaling bugs in dither_*() functions.
- *
- *   Revision 1.1  1997/06/19  02:18:15  mike
- *   Initial revision
+ *  See ChangeLog
  */
 
 /* #define PRINT_DEBUG */
@@ -1442,154 +1208,6 @@ dither_cmyk4(unsigned short     *rgb,		/* I - RGB pixels */
   }
 }
 
-/* rgb/hsv conversions taken from Gimp common/autostretch_hsv.c */
-
-
-static void
-calc_rgb_to_hsv(unsigned short *rgb, double *hue, double *sat, double *val)
-{
-  double red, green, blue;
-  double h, s, v;
-  double min, max;
-  double delta;
-
-  red   = rgb[0] / 65535.0;
-  green = rgb[1] / 65535.0;
-  blue  = rgb[2] / 65535.0;
-
-  h = 0.0; /* Shut up -Wall */
-
-  if (red > green)
-    {
-      if (red > blue)
-	max = red;
-      else
-	max = blue;
-
-      if (green < blue)
-	min = green;
-      else
-	min = blue;
-    }
-  else
-    {
-      if (green > blue)
-	max = green;
-      else
-	max = blue;
-
-      if (red < blue)
-	min = red;
-      else
-	min = blue;
-    }
-
-  v = max;
-
-  if (max != 0.0)
-    s = (max - min) / max;
-  else
-    s = 0.0;
-
-  if (s == 0.0)
-    h = 0.0;
-  else
-    {
-      delta = max - min;
-
-      if (red == max)
-	h = (green - blue) / delta;
-      else if (green == max)
-	h = 2 + (blue - red) / delta;
-      else if (blue == max)
-	h = 4 + (red - green) / delta;
-
-      h /= 6.0;
-
-      if (h < 0.0)
-	h += 1.0;
-      else if (h > 1.0)
-	h -= 1.0;
-    }
-
-  *hue = h;
-  *sat = s;
-  *val = v;
-}
-
-static void
-calc_hsv_to_rgb(unsigned short *rgb, double h, double s, double v)
-{
-  double hue, saturation, value;
-  double f, p, q, t;
-
-  if (s == 0.0)
-    {
-      h = v;
-      s = v;
-      v = v; /* heh */
-    }
-  else
-    {
-      hue        = h * 6.0;
-      saturation = s;
-      value      = v;
-
-      if (hue == 6.0)
-	hue = 0.0;
-
-      f = hue - (int) hue;
-      p = value * (1.0 - saturation);
-      q = value * (1.0 - saturation * f);
-      t = value * (1.0 - saturation * (1.0 - f));
-
-      switch ((int) hue)
-	{
-	case 0:
-	  h = value;
-	  s = t;
-	  v = p;
-	  break;
-
-	case 1:
-	  h = q;
-	  s = value;
-	  v = p;
-	  break;
-
-	case 2:
-	  h = p;
-	  s = value;
-	  v = t;
-	  break;
-
-	case 3:
-	  h = p;
-	  s = q;
-	  v = value;
-	  break;
-
-	case 4:
-	  h = t;
-	  s = p;
-	  v = value;
-	  break;
-
-	case 5:
-	  h = value;
-	  s = p;
-	  v = q;
-	  break;
-	}
-    }
-
-  rgb[0] = h*65535;
-  rgb[1] = s*65535;
-  rgb[2] = v*65535;
-  
-}
-
-
 /*
  * 'gray_to_gray()' - Convert grayscale image data to grayscale (brightness
  *                    adjusted).
@@ -1717,9 +1335,9 @@ indexed_to_rgb(unsigned char *indexed,	/* I - Indexed pixels */
       rgb[2] = lut->blue[cmap[*indexed * 3 + 2]];
       if (vars->saturation != 1.0)
 	{
-	  calc_rgb_to_hsv(rgb, &h, &s, &v);
+	  gimp_rgb_to_hsv4 (rgb, &h, &s, &v);
 	  s = pow(s, 1.0 / vars->saturation);
-	  calc_hsv_to_rgb(rgb, h, s, v);
+	  gimp_hsv_to_rgb (rgb, h, s, v);
 	}
       rgb += 3;
       indexed ++;
@@ -1743,9 +1361,9 @@ indexed_to_rgb(unsigned char *indexed,	/* I - Indexed pixels */
 			255 - indexed[1]];
       if (vars->saturation != 1.0)
 	{
-	  calc_rgb_to_hsv(rgb, &h, &s, &v);
+	  gimp_rgb_to_hsv4 (rgb, &h, &s, &v);
 	  s = pow(s, 1.0 / vars->saturation);
-	  calc_hsv_to_rgb(rgb, h, s, v);
+	  gimp_hsv_to_rgb4 (rgb, h, s, v);
 	}
       rgb += 3;
       indexed += bpp;
@@ -1833,7 +1451,7 @@ rgb_to_rgb(unsigned char	*rgbin,		/* I - RGB pixels */
       rgbout[2] = lut->blue[rgbin[2]];
       if (vars->saturation != 1.0 || vars->contrast != 100)
 	{
-	  calc_rgb_to_hsv(rgbout, &h, &s, &v);
+	  gimp_rgb_to_hsv4 (rgbout, &h, &s, &v);
 	  if (vars->saturation != 1.0)
 	    s = pow(s, 1.0 / vars->saturation);
 #if 0
@@ -1847,7 +1465,7 @@ rgb_to_rgb(unsigned char	*rgbin,		/* I - RGB pixels */
 	      v = (tv / 2.0) + .5;
 	    }
 #endif
-	  calc_hsv_to_rgb(rgbout, h, s, v);
+	  gimp_hsv_to_rgb4 (rgbout, h, s, v);
 	}
       if (vars->density != 1.0)
 	{
@@ -1882,7 +1500,7 @@ rgb_to_rgb(unsigned char	*rgbin,		/* I - RGB pixels */
       if (vars->saturation != 1.0 || vars->contrast != 100 ||
 	  vars->density != 1.0)
 	{
-	  calc_rgb_to_hsv(rgbout, &h, &s, &v);
+	  gimp_rgb_to_hsv4 (rgbout, &h, &s, &v);
 	  if (vars->saturation != 1.0)
 	    s = pow(s, 1.0 / vars->saturation);
 #if 0
@@ -1896,7 +1514,7 @@ rgb_to_rgb(unsigned char	*rgbin,		/* I - RGB pixels */
 	      v = (tv / 2.0) + .5;
 	    }
 #endif
-	  calc_hsv_to_rgb(rgbout, h, s, v);
+	  gimp_hsv_to_rgb4 (rgbout, h, s, v);
 	}
       if (vars->density != 1.0)
 	{

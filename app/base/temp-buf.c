@@ -42,6 +42,7 @@
 #include "paint_funcs.h"
 #include "temp_buf.h"
 
+#include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpintl.h"
 
 static unsigned char *   temp_buf_allocate (unsigned int);
@@ -106,10 +107,7 @@ temp_buf_to_gray (TempBuf *src_buf,
     {
       *dest++ = *src++;  /* alpha channel */
 
-      pix =  0.001;
-      pix += 0.30 * *src++;
-      pix += 0.59 * *src++;
-      pix += 0.11 * *src++;
+      pix = INTENSITY (*src++, *src++, *src++);
 
       *dest++ = (unsigned char) pix;
     }

@@ -615,8 +615,8 @@ gimp_hsv_to_rgb4 (guchar *rgb,
 	}
     }
 
-  rgb[0] = h*255;
-  rgb[1] = s*255;
-  rgb[2] = v*255;
+  rgb[0] = h * 255;
+  rgb[1] = s * 255;
+  rgb[2] = v * 255;
   
 }

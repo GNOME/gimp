@@ -60,7 +60,7 @@
 /*---------------------------------------------------------------------------*/
 
 #define INITIAL_ALPHA      0
-#define INITIAL_BETA       (PI/2.0)
+#define INITIAL_BETA       G_PI_2
 #define INITIAL_GRAY_SAT   0.0
 #define INITIAL_GRAY_RSAT  0.0
 #define INITIAL_GRAY_HUE   0.0

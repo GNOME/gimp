@@ -56,18 +56,20 @@
 /* Misc functions */
 /*---------------------------------------------------------------------------*/
 
-float rcm_units_factor(gint units)
+float 
+rcm_units_factor (gint units)
 {
   switch (units)
   {
-    case DEGREES:         return 180.0/PI;
+    case DEGREES:         return 180.0 / G_PI;
     case RADIANS:         return 1.0;
-    case RADIANS_OVER_PI: return 1.0/PI;
+    case RADIANS_OVER_PI: return 1.0 / G_PI;
     default:              return -1;
   }
 }
 
-gchar *rcm_units_string(gint units)
+gchar *
+rcm_units_string (gint units)
 {
   switch (units)
   {
@@ -78,8 +80,11 @@ gchar *rcm_units_string(gint units)
   }
 }
 
-void rcm_set_pixmap(GtkWidget **widget, GtkWidget *parent, 
-		    GtkWidget *label_box, char **pixmap_data)
+void 
+rcm_set_pixmap (GtkWidget **widget, 
+		GtkWidget  *parent, 
+		GtkWidget  *label_box, 
+		char      **pixmap_data)
 {
   GdkPixmap *pixmap;
   GdkBitmap *mask;
@@ -107,8 +112,9 @@ void rcm_set_pixmap(GtkWidget **widget, GtkWidget *parent,
 /* Ok Button */
 /*---------------------------------------------------------------------------*/
 
-void rcm_ok_callback (GtkWidget *widget,
-		      gpointer   data)
+void 
+rcm_ok_callback (GtkWidget *widget,
+		 gpointer   data)
 {
   Current.Success = 1;
 
@@ -119,7 +125,9 @@ void rcm_ok_callback (GtkWidget *widget,
 /* Circle buttons */
 /*---------------------------------------------------------------------------*/
 
-void rcm_360_degrees(GtkWidget *button, RcmCircle *circle)
+void 
+rcm_360_degrees (GtkWidget *button, 
+		 RcmCircle *circle)
 {
   circle->action_flag = DO_NOTHING;
   gtk_widget_draw(circle->preview, NULL);
@@ -129,7 +137,9 @@ void rcm_360_degrees(GtkWidget *button, RcmCircle *circle)
   rcm_render_preview(Current.Bna->after, CURRENT);
 }
 
-void rcm_cw_ccw(GtkWidget *button, RcmCircle *circle)
+void 
+rcm_cw_ccw (GtkWidget *button, 
+	    RcmCircle *circle)
 {
   circle->angle->cw_ccw *= -1;
 
@@ -142,7 +152,9 @@ void rcm_cw_ccw(GtkWidget *button, RcmCircle *circle)
   rcm_a_to_b(button, circle);
 }
 
-void rcm_a_to_b(GtkWidget *button, RcmCircle *circle)
+void 
+rcm_a_to_b (GtkWidget *button, 
+	    RcmCircle *circle)
 {
   circle->action_flag = DO_NOTHING;
   gtk_widget_draw(circle->preview, NULL);
@@ -160,7 +172,10 @@ void rcm_a_to_b(GtkWidget *button, RcmCircle *circle)
 /* Misc: units buttons */
 /*---------------------------------------------------------------------------*/
 
-static void rcm_spinbutton_to_degrees(GtkWidget *button, float value, GtkWidget *label)
+static void 
+rcm_spinbutton_to_degrees (GtkWidget *button, 
+			   float      value, 
+			   GtkWidget *label)
 {
   GtkAdjustment *adj;
 
@@ -174,7 +189,9 @@ static void rcm_spinbutton_to_degrees(GtkWidget *button, float value, GtkWidget 
   gtk_label_set(GTK_LABEL(label), rcm_units_string(Current.Units));
 }
 
-void rcm_switch_to_degrees(GtkWidget *button, gpointer *value)
+void 
+rcm_switch_to_degrees (GtkWidget *button, 
+		       gpointer  *value)
 {
   if (GTK_TOGGLE_BUTTON(button)->active)
   {
@@ -208,7 +225,10 @@ void rcm_switch_to_degrees(GtkWidget *button, gpointer *value)
 
 /*---------------------------------------------------------------------------*/
 
-static void rcm_spinbutton_to_radians(GtkWidget *button, float value, GtkWidget *label)
+static void 
+rcm_spinbutton_to_radians (GtkWidget *button, 
+			   float      value, 
+			   GtkWidget *label)
 {
   GtkAdjustment *adj;
 
@@ -222,7 +242,9 @@ static void rcm_spinbutton_to_radians(GtkWidget *button, float value, GtkWidget 
   gtk_label_set(GTK_LABEL(label), rcm_units_string(Current.Units));
 }
 
-void rcm_switch_to_radians(GtkWidget *button, gpointer *value)
+void 
+rcm_switch_to_radians (GtkWidget *button, 
+		       gpointer  *value)
 {
   if (GTK_TOGGLE_BUTTON(button)->active) 
   {
@@ -256,7 +278,10 @@ void rcm_switch_to_radians(GtkWidget *button, gpointer *value)
 
 /*---------------------------------------------------------------------------*/
 
-static void rcm_spinbutton_to_radians_over_PI(GtkWidget *button, float value, GtkWidget *label)
+static void 
+rcm_spinbutton_to_radians_over_PI (GtkWidget *button, 
+				   float      value, 
+				   GtkWidget *label)
 {
   GtkAdjustment *adj;
 
@@ -270,7 +295,9 @@ static void rcm_spinbutton_to_radians_over_PI(GtkWidget *button, float value, Gt
   gtk_label_set(GTK_LABEL(label), rcm_units_string(Current.Units));
 }
 
-void rcm_switch_to_radians_over_PI(GtkWidget *button, gpointer *value)
+void 
+rcm_switch_to_radians_over_PI (GtkWidget *button, 
+			       gpointer  *value)
 {
   if (GTK_TOGGLE_BUTTON(button)->active)
   { 
@@ -306,7 +333,9 @@ void rcm_switch_to_radians_over_PI(GtkWidget *button, gpointer *value)
 /* Misc: Gray: mode buttons */
 /*---------------------------------------------------------------------------*/
 
-void rcm_switch_to_gray_to(GtkWidget *button, gpointer *value)
+void 
+rcm_switch_to_gray_to (GtkWidget *button, 
+		       gpointer  *value)
 {
   if (!GTK_TOGGLE_BUTTON(button)->active) return;
 
@@ -314,7 +343,9 @@ void rcm_switch_to_gray_to(GtkWidget *button, gpointer *value)
   rcm_render_preview(Current.Bna->after, CURRENT);
 }
 
-void rcm_switch_to_gray_from(GtkWidget *button, gpointer *value)
+void 
+rcm_switch_to_gray_from (GtkWidget *button, 
+			 gpointer  *value)
 {
   if (!(GTK_TOGGLE_BUTTON(button)->active)) return;
 
@@ -326,7 +357,9 @@ void rcm_switch_to_gray_from(GtkWidget *button, gpointer *value)
 /* Misc: Preview buttons */
 /*---------------------------------------------------------------------------*/
 
-void rcm_preview_as_you_drag(GtkWidget *button, gpointer *value)
+void 
+rcm_preview_as_you_drag (GtkWidget *button, 
+			 gpointer  *value)
 {
   if (GTK_TOGGLE_BUTTON(button)->active) 
     Current.RealTime = TRUE;
@@ -336,7 +369,8 @@ void rcm_preview_as_you_drag(GtkWidget *button, gpointer *value)
 
 /*---------------------------------------------------------------------------*/
 
-static void rcm_change_preview(void)
+static void 
+rcm_change_preview (void)
 {
   /* must hide and show or resize would not work ... */
 
@@ -361,21 +395,27 @@ static void rcm_change_preview(void)
 
 /*---------------------------------------------------------------------------*/
 
-void rcm_selection_in_context(GtkWidget *button, gpointer  *value)
+void 
+rcm_selection_in_context (GtkWidget *button, 
+			  gpointer  *value)
 {
   Current.reduced = rcm_reduce_image(Current.drawable, Current.mask,
 				     MAX_PREVIEW_SIZE, SELECTION_IN_CONTEXT);
   rcm_change_preview();
 }
 
-void rcm_selection(GtkWidget *button, gpointer  *value)
+void 
+rcm_selection (GtkWidget *button, 
+	       gpointer  *value)
 {
   Current.reduced = rcm_reduce_image(Current.drawable, Current.mask,
 				     MAX_PREVIEW_SIZE, SELECTION);
   rcm_change_preview();
 }
 
-void rcm_entire_image(GtkWidget *button, gpointer *value)
+void 
+rcm_entire_image (GtkWidget *button, 
+		  gpointer  *value)
 {
   Current.reduced = rcm_reduce_image(Current.drawable, Current.mask,
 				     MAX_PREVIEW_SIZE, ENTIRE_IMAGE);
@@ -387,7 +427,10 @@ void rcm_entire_image(GtkWidget *button, gpointer *value)
 /* Circle events */
 /*---------------------------------------------------------------------------*/
 
-gint rcm_expose_event(GtkWidget *widget, GdkEvent *event, RcmCircle *circle)
+gint 
+rcm_expose_event (GtkWidget *widget, 
+		  GdkEvent  *event, 
+		  RcmCircle *circle)
 {
   switch (circle->action_flag)
   {
@@ -406,7 +449,10 @@ gint rcm_expose_event(GtkWidget *widget, GdkEvent *event, RcmCircle *circle)
 
 /*---------------------------------------------------------------------------*/
 
-gint rcm_button_press_event(GtkWidget *widget, GdkEvent *event, RcmCircle *circle)
+gint 
+rcm_button_press_event (GtkWidget *widget, 
+			GdkEvent  *event, 
+			RcmCircle *circle)
 {
   float clicked_angle;
   float *alpha;
@@ -421,8 +467,8 @@ gint rcm_button_press_event(GtkWidget *widget, GdkEvent *event, RcmCircle *circl
   clicked_angle = angle_mod_2PI(arctg(CENTER-bevent->y, bevent->x-CENTER));
   circle->prev_clicked = clicked_angle;
   
-  if ( (sqrt(sqr(bevent->y-CENTER) + sqr(bevent->x-CENTER)) > RADIUS * EACH_OR_BOTH) &&
-       (min_prox( *alpha, *beta, clicked_angle) < PI/12) )
+  if ((sqrt (SQR (bevent->y-CENTER) + SQR (bevent->x-CENTER)) > RADIUS * EACH_OR_BOTH) &&
+      (min_prox (*alpha, *beta, clicked_angle) < G_PI / 12))
   {
     circle->mode = EACH;
     circle->target = closest(alpha, beta, clicked_angle);
@@ -451,7 +497,10 @@ gint rcm_button_press_event(GtkWidget *widget, GdkEvent *event, RcmCircle *circl
 
 /*---------------------------------------------------------------------------*/
 
-gint rcm_release_event(GtkWidget *widget, GdkEvent *event,  RcmCircle *circle)
+gint 
+rcm_release_event (GtkWidget *widget, 
+		   GdkEvent  *event,  
+		   RcmCircle *circle)
 {
   if (circle->action_flag == DRAGING)
     rcm_draw_arrows(widget->window, widget->style->black_gc, circle->angle); 
@@ -465,7 +514,10 @@ gint rcm_release_event(GtkWidget *widget, GdkEvent *event,  RcmCircle *circle)
 
 /*---------------------------------------------------------------------------*/
 
-gint rcm_motion_notify_event(GtkWidget *widget, GdkEvent *event, RcmCircle *circle)
+gint 
+rcm_motion_notify_event (GtkWidget *widget, 
+			 GdkEvent  *event, 
+			 RcmCircle *circle)
 { 
   gint x, y;
   float clicked_angle, delta;
@@ -525,7 +577,9 @@ gint rcm_motion_notify_event(GtkWidget *widget, GdkEvent *event, RcmCircle *circ
 /* Gray circle events */
 /*---------------------------------------------------------------------------*/
 
-gint rcm_gray_expose_event(GtkWidget *widget, GdkEvent *event, RcmGray *circle)
+gint rcm_gray_expose_event (GtkWidget *widget, 
+			    GdkEvent  *event, 
+			    RcmGray   *circle)
 {
   if (circle->action_flag == VIRGIN)
   {
@@ -542,7 +596,10 @@ gint rcm_gray_expose_event(GtkWidget *widget, GdkEvent *event, RcmGray *circle)
 
 /*---------------------------------------------------------------------------*/
 
-gint rcm_gray_button_press_event(GtkWidget *widget, GdkEvent *event, RcmGray *circle)
+gint 
+rcm_gray_button_press_event (GtkWidget *widget, 
+			     GdkEvent  *event, 
+			     RcmGray   *circle)
 {
   GdkEventButton *bevent;
   int x, y;
@@ -553,7 +610,7 @@ gint rcm_gray_button_press_event(GtkWidget *widget, GdkEvent *event, RcmGray *ci
 
   circle->action_flag = DRAG_START;
   circle->hue = angle_mod_2PI(arctg(y, x));
-  circle->satur = sqrt(sqr(x)+sqr(y)) / GRAY_RADIUS;
+  circle->satur = sqrt (SQR (x) + SQR (y)) / GRAY_RADIUS;
   if (circle->satur > 1.0) circle->satur = 1;
 
   gtk_widget_draw(circle->preview, NULL);
@@ -576,7 +633,10 @@ gint rcm_gray_button_press_event(GtkWidget *widget, GdkEvent *event, RcmGray *ci
 
 /*---------------------------------------------------------------------------*/
 
-gint rcm_gray_release_event(GtkWidget *widget, GdkEvent *event, RcmGray *circle)
+gint 
+rcm_gray_release_event (GtkWidget *widget, 
+			GdkEvent  *event, 
+			RcmGray   *circle)
 {
   if (circle->action_flag == DRAGING)
     rcm_draw_little_circle(widget->window,
@@ -593,7 +653,10 @@ gint rcm_gray_release_event(GtkWidget *widget, GdkEvent *event, RcmGray *circle)
 
 /*---------------------------------------------------------------------------*/
 
-gint rcm_gray_motion_notify_event(GtkWidget *widget, GdkEvent *event, RcmGray *circle)
+gint 
+rcm_gray_motion_notify_event (GtkWidget *widget, 
+			      GdkEvent  *event, 
+			      RcmGray   *circle)
 { 
   gint x, y;
   GdkGCValues values;
@@ -620,8 +683,8 @@ gint rcm_gray_motion_notify_event(GtkWidget *widget, GdkEvent *event, RcmGray *c
   x = x - GRAY_CENTER - LITTLE_RADIUS;
   y = GRAY_CENTER - y + LITTLE_RADIUS;
 
-  circle->hue = angle_mod_2PI(arctg(y, x));
-  circle->satur = sqrt(sqr(x) + sqr(y)) / GRAY_RADIUS;
+  circle->hue = angle_mod_2PI (arctg (y, x));
+  circle->satur = sqrt (SQR (x) + SQR (y)) / GRAY_RADIUS;
   if (circle->satur > 1.0) circle->satur = 1;
 
   rcm_draw_little_circle(widget->window, xor_gc, circle->hue, circle->satur);
@@ -640,7 +703,9 @@ gint rcm_gray_motion_notify_event(GtkWidget *widget, GdkEvent *event, RcmGray *c
 /* Spinbuttons */
 /*---------------------------------------------------------------------------*/
 
-void rcm_set_alpha(GtkWidget *entry, gpointer data)
+void 
+rcm_set_alpha (GtkWidget *entry, 
+	       gpointer   data)
 {
   RcmCircle *circle;
 
@@ -660,7 +725,9 @@ void rcm_set_alpha(GtkWidget *entry, gpointer data)
 
 /*---------------------------------------------------------------------------*/
 
-void rcm_set_beta(GtkWidget *entry, gpointer data)
+void 
+rcm_set_beta (GtkWidget *entry, 
+	      gpointer   data)
 {
   RcmCircle *circle;
 
@@ -680,7 +747,9 @@ void rcm_set_beta(GtkWidget *entry, gpointer data)
 
 /*---------------------------------------------------------------------------*/
 
-void rcm_set_hue(GtkWidget *entry, gpointer data)
+void 
+rcm_set_hue (GtkWidget *entry, 
+	     gpointer   data)
 {
   RcmGray *circle;
 
@@ -703,7 +772,9 @@ void rcm_set_hue(GtkWidget *entry, gpointer data)
 
 /*---------------------------------------------------------------------------*/
 
-void rcm_set_satur(GtkWidget *entry, gpointer data)
+void 
+rcm_set_satur (GtkWidget *entry, 
+	       gpointer   data)
 {
   RcmGray *circle;
 
@@ -724,7 +795,9 @@ void rcm_set_satur(GtkWidget *entry, gpointer data)
 
 /*---------------------------------------------------------------------------*/
 
-void rcm_set_gray_sat(GtkWidget *entry, gpointer data)
+void 
+rcm_set_gray_sat (GtkWidget *entry, 
+		  gpointer   data)
 {
   RcmGray *circle;
 

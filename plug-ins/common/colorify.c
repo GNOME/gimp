@@ -246,12 +246,12 @@ colorify (GDrawable *drawable)
 
   for (i = 0; i < 256; i ++)
     {
-      lum_red_lookup[i] = i * 0.30;
-      lum_green_lookup[i] = i * 0.59;
-      lum_blue_lookup[i] = i * 0.11;
-      final_red_lookup[i] = i * cvals.color[0] / 255;
+      lum_red_lookup[i]     = i * INTENSITY_RED;
+      lum_green_lookup[i]   = i * INTENSITY_GREEN;
+      lum_blue_lookup[i]    = i * INTENSITY_BLUE;
+      final_red_lookup[i]   = i * cvals.color[0] / 255;
       final_green_lookup[i] = i * cvals.color[1] / 255;
-      final_blue_lookup[i] = i * cvals.color[2] / 255;
+      final_blue_lookup[i]  = i * cvals.color[2] / 255;
     }
 
   bpp = gimp_drawable_bpp (drawable->id);

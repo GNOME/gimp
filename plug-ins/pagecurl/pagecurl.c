@@ -73,11 +73,6 @@
 #define PLUG_IN_VERSION "May 1998, 0.9"
 #define NGRADSAMPLES    256
 
-/***** Macros *****/
-
-/* Convert color to Gray ala Gimp... */
-#define INTENSITY(r,g,b) (r * 0.30 + g * 0.59 + b * 0.11 + 0.001)
-
 
 /***** Types *****/
 

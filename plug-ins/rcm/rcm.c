@@ -134,17 +134,18 @@ rcm_row (const guchar *src_row,
 	 gint          bytes)
 {
   gint col, bytenum, skip;
-  hsv H,S,V,R,G,B;
+  gdouble H,S,V;
+  guchar rgb[3];
   
   for (col=0; col < row_width; col++)
   {
     skip = 0;
       
-    R = (float)src_row[col*bytes + 0]/255.0;
-    G = (float)src_row[col*bytes + 1]/255.0;
-    B = (float)src_row[col*bytes + 2]/255.0;
+    rgb[0] = src_row[col*bytes + 0];
+    rgb[1] = src_row[col*bytes + 1];
+    rgb[2] = src_row[col*bytes + 2];
       
-    rgb_to_hsv(R,G,B, &H,&S,&V);
+    gimp_rgb_to_hsv4 (rgb, &H, &S, &V);
       
     if (rcm_is_gray(S))
     {
@@ -163,7 +164,7 @@ rcm_row (const guchar *src_row,
       else
       {
 	skip = 1;
-	hsv_to_rgb(Current.Gray->hue/TP, Current.Gray->satur, V, &R, &G, &B);
+	gimp_hsv_to_rgb4 (rgb, Current.Gray->hue/TP, Current.Gray->satur, V);
       }
     }
       
@@ -176,12 +177,12 @@ rcm_row (const guchar *src_row,
 		     H*TP);    
 
       H = angle_mod_2PI(H) / TP;
-      hsv_to_rgb(H,S,V, &R,&G,&B);
+      gimp_hsv_to_rgb4 (rgb, H, S, V);
     }
       
-    dest_row[col*bytes +0] = R * 255;
-    dest_row[col*bytes +1] = G * 255;
-    dest_row[col*bytes +2] = B * 255;
+    dest_row[col * bytes + 0] = rgb[0];
+    dest_row[col * bytes + 1] = rgb[1];
+    dest_row[col * bytes + 2] = rgb[2];
       
     if (bytes > 3)
     {

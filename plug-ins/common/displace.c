@@ -659,7 +659,7 @@ displace_map_give_value (guchar *pt,
   gdouble ret, val_alpha;
   
   if (bytes >= 3)
-    ret =  0.30 * pt[0] + 0.59 * pt[1] + 0.11 * pt[2];
+    ret =  INTENSITY (pt[0], pt[1], pt[2]);
   else
     ret = (gdouble) *pt;
   

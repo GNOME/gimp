@@ -118,9 +118,6 @@ do {									 \
 #define VALID_BOOL(x)	((x) == TRUE || (x) == FALSE)
 #define CLAMPED_ADD(a, b) (((a)+(b) > 0xff)? 0xff : (a) + (b))
 
-/* Ideally, this would be in a common header file somewhere.  This was
- * nicked from app/convert.c */
-#define INTENSITY(r,g,b) (r * 0.30 + g * 0.59 + b * 0.11 + 0.001)
 
 /* Bartlett window supersampling weight function.  See table 4.1, page
  * 123 of Alan Watt and Mark Watt, Advanced Animation and Rendering

@@ -39,9 +39,9 @@
 
 #include "tile.h"
 
+#include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
-#include "libgimp/gimpcolorspace.h"
 
 
 /*  target size  */
@@ -1345,9 +1345,7 @@ gradient_put_pixel (int      x,
     {
       /* Convert to grayscale */
 
-      *data++ = 255.0 * (0.30 * color.r +
-			 0.59 * color.g +
-			 0.11 * color.b);
+      *data++ = 255.0 * INTENSITY (color.r, color.g, color.b);
       *data++ = color.a * 255.0;
     }
 
@@ -1553,9 +1551,7 @@ gradient_fill_region (GImage          *gimage,
 		  {
 		    /* Convert to grayscale */
 
-		    *data++ = 255.0 * (0.30 * color.r +
-				       0.59 * color.g +
-				       0.11 * color.b);
+		    *data++ = 255.0 * INTENSITY (color.r, color.g, color.b);
 		    *data++ = color.a * 255.0;
 		  }
 	      }

@@ -75,7 +75,7 @@ static char rcsid[] = "$Id$";
 #endif
 
 #define BOUNDS(a,x,y)	((a < x) ? x : ((a > y) ? y : a))
-#define LUMINOSITY(PIX) (PIX[0] * 0.30 + PIX[1] * 0.59 + PIX[2] * 0.11)
+#define LUMINOSITY(PIX) (INTENSITY (PIX[0], PIX[1], PIX[2]))
 #define OFFSETOF(t,f)	((int) ((char*) &((t*) 0)->f))
 
 #define GRADIENT_NAME_MAX 256
@@ -1126,7 +1126,7 @@ plugin_put_pixel_func (int ix, int iy, color_t color, gpointer data)
       dest[2] = color.b * 255;
     }
   else
-    dest[0] = (color.r * 0.30 + color.g * 0.59 + color.b * 0.11) * 255;
+    dest[0] = INTENSITY (color.r, color.g, color.b) * 255;
 
   if (dinfo.has_alpha)
     dest[drawable->bpp - 1] = color.a * 255;

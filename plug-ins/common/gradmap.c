@@ -61,7 +61,7 @@ static char rcsid[] = "$Id$";
 
 #define NSAMPLES	256
 #define TILE_CACHE_SIZE 32
-#define LUMINOSITY(X)	(X[0] * 0.30 + X[1] * 0.59 + X[2] * 0.11)
+#define LUMINOSITY(X)	(INTENSITY (X[0], X[1], X[2]))
 
 /* Declare a local function.
  */

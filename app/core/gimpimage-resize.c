@@ -33,6 +33,7 @@
 #include "pathsP.h"
 #include "gimprc.h"
 
+#include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimplimits.h"
 
@@ -967,7 +968,6 @@ gimp_image_transform_color (GimpImage         *gimage,
 			    guchar            *dest, 
 			    GimpImageBaseType  type)
 {
-#define INTENSITY(r,g,b) (r * 0.30 + g * 0.59 + b * 0.11 + 0.001)
   GimpImageType d_type;
 
   d_type = (drawable != NULL) ? drawable_type (drawable) :

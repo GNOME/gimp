@@ -1,3 +1,36 @@
+Mon Jan 31 22:43:48 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpcolorspace.c
+	* libgimp/gimpcolorspace.h: added INTENSITY() macro
+
+	* app/blend.c
+	* app/convert.c
+	* app/gimpimage.c
+	* app/temp_buf.c: use INTENSITY() from libgimp
+
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/decompose.c
+	* plug-ins/common/displace.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/gradmap.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/maze/handy.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/print/print-util.c
+	* plug-ins/rcm/rcm.c
+	* plug-ins/rcm/rcm.h
+	* plug-ins/rcm/rcm_callback.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/rcm/rcm_gdk.c
+	* plug-ins/rcm/rcm_misc.c
+	* plug-ins/rcm/rcm_misc.h: use INTENSITY() and other 
+	color_conversion_routines from libgimp. I'm not sure if I have 
+	tested all this properly (I tried to do), so if you are bored, 
+	please play around with the changed plug-ins.
+
 Mon Jan 31 21:52:27 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* plug-ins/common/vinvert.c: Typo fix.

@@ -40,11 +40,7 @@
 /* Global defines */
 /*-----------------------------------------------------------------------------------*/
 
-#ifndef PI
-#define PI 3.14159265358979323846
-#endif
-
-#define TP (2*PI)
+#define TP (2*G_PI)
 
 /*-----------------------------------------------------------------------------------*/
 /* Typedefs */
@@ -56,8 +52,6 @@ enum { EACH, BOTH, DEGREES, RADIANS, RADIANS_OVER_PI,
        GRAY_FROM, GRAY_TO, CURRENT, ORIGINAL };
 
 typedef enum { VIRGIN, DRAG_START, DRAGING, DO_NOTHING } RcmOp;
-
-typedef double hsv;
 
 typedef struct
 {
@@ -71,7 +65,7 @@ typedef struct
   gint    width;
   gint    height;
   guchar  *rgb;
-  hsv     *hsv;
+  gdouble *hsv;
   guchar  *mask;
 } ReducedImage;
 

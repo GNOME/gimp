@@ -65,9 +65,7 @@ static gint32 create_new_image (char *filename, guint width, guint height,
                 GPixelRgn *pixel_rgn);
 
 static void show_message (const char *msg);
-static int cmp_icase (char *s1, char *s2);
-static void rgb_to_hsv (unsigned char *r, unsigned char *g, unsigned char *b,
-                        unsigned char *h, unsigned char *s, unsigned char *v);
+static int  cmp_icase    (char *s1, char *s2);
 
 static void extract_rgb      (unsigned char *src, int bpp, int numpix,
                               unsigned char **dst);
@@ -407,15 +405,6 @@ decompose (gint32  image_ID,
 					  layer_ID_dst+j, drawable_dst+j, pixel_rgn_dst+j);
       dst[j] = (unsigned char *)g_malloc (tile_height * width);
     }
-  if (dst[num_images-1] == NULL)
-    {
-      show_message ("decompose: out of memory");
-      for (j = 0; j < num_images; j++)
-	{
-	  if (dst[j] != NULL) g_free (dst[j]);
-	}
-      return (-1);
-    }
   
   i = 0;
   while (i < height)
@@ -503,81 +492,6 @@ cmp_icase (char *s1,
       c1 = toupper (*(++s1));  c2 = toupper (*(++s2));
     }
   return (c2 - c1);
-}
-
-
-/* Convert RGB to HSV. This routine was taken from decompose plug-in
-   of GIMP V 0.54 and modified a little bit.
-*/
-static void 
-rgb_to_hsv (unsigned char *r, 
-	    unsigned char *g, 
-	    unsigned char *b,
-	    unsigned char *h, 
-	    unsigned char *s, 
-	    unsigned char *v)
-     
-{
-  int red = (int)*r, green = (int)*g, blue = (int)*b;
-  double hue;
-  int min, max, delta, sat_i;
-
-  if (red > green)
-    {
-      if (red > blue)
-        max = red;
-      else
-        max = blue;
-
-      if (green < blue)
-        min = green;
-      else
-        min = blue;
-    }
-  else
-    {
-      if (green > blue)
-        max = green;
-      else
-        max = blue;
-
-      if (red < blue)
-        min = red;
-      else
-        min = blue;
-    }
-
-  *v = (unsigned char)max;
-
-  if (max != 0)
-    sat_i = ((max - min) * 255) / max;
-  else
-    sat_i = 0;
-
-  *s = (unsigned char)sat_i;
-
-  if (sat_i == 0)
-  {
-    *h = 0;
-  }
-  else
-  {
-    delta = max - min;
-    if (red == max)
-      hue =       (green - blue) / (double)delta;
-    else if (green == max)
-      hue = 2.0 + (blue - red) / (double)delta;
-    else
-      hue = 4.0 + (red - green) / (double)delta;
-    hue *= 42.5;
-
-    if (hue < 0.0)
-      hue += 255.0;
-    if (hue > 255.0)
-      hue -= 255.0;
-
-    *h = (unsigned char)hue;
-  }
 }
 
 
@@ -710,10 +624,14 @@ extract_hsv (unsigned char  *src,
   register unsigned char *sat_dst = dst[1];
   register unsigned char *val_dst = dst[2];
   register int count = numpix, offset = bpp;
+  double hue, sat, val;
   
   while (count-- > 0)
     {
-      rgb_to_hsv (rgb_src, rgb_src+1, rgb_src+2, hue_dst++, sat_dst++, val_dst++);
+      gimp_rgb_to_hsv4 (rgb_src, &hue, &sat, &val);
+      *hue_dst++ = (unsigned char) (hue * 255.999);
+      *sat_dst++ = (unsigned char) (sat * 255.999);
+      *val_dst++ = (unsigned char) (val * 255.999);
       rgb_src += offset;
     }
 }
@@ -727,13 +645,13 @@ extract_hue (unsigned char  *src,
 {
   register unsigned char *rgb_src = src;
   register unsigned char *hue_dst = dst[0];
-  unsigned char dmy;
-  unsigned char *dummy = &dmy;
   register int count = numpix, offset = bpp;
+  double hue, dummy;
   
   while (count-- > 0)
     {
-      rgb_to_hsv (rgb_src, rgb_src+1, rgb_src+2, hue_dst++, dummy, dummy);
+      gimp_rgb_to_hsv4 (rgb_src, &hue, &dummy, &dummy);
+      *hue_dst++ = (unsigned char) (hue * 255.999);
       rgb_src += offset;
     }
 }
@@ -747,13 +665,13 @@ extract_sat (unsigned char  *src,
 {
   register unsigned char *rgb_src = src;
   register unsigned char *sat_dst = dst[0];
-  unsigned char dmy;
-  unsigned char *dummy = &dmy;
   register int count = numpix, offset = bpp;
+  double sat, dummy;
   
   while (count-- > 0)
     {
-      rgb_to_hsv (rgb_src, rgb_src+1, rgb_src+2, dummy, sat_dst++, dummy);
+      gimp_rgb_to_hsv4 (rgb_src, &dummy, &sat, &dummy);
+      *sat_dst++ = (unsigned char) (sat * 255.999);
       rgb_src += offset;
     }
 }
@@ -767,13 +685,13 @@ extract_val (unsigned char  *src,
 {
   register unsigned char *rgb_src = src;
   register unsigned char *val_dst = dst[0];
-  unsigned char dmy;
-  unsigned char *dummy = &dmy;
   register int count = numpix, offset = bpp;
+  double val, dummy;
   
   while (count-- > 0)
     {
-      rgb_to_hsv (rgb_src, rgb_src+1, rgb_src+2, dummy, dummy, val_dst++);
+      gimp_rgb_to_hsv4 (rgb_src, &dummy, &dummy, &val);
+      *val_dst++ = (unsigned char) (val * 255.999);
       rgb_src += offset;
     }
 }
