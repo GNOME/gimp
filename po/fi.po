@@ -1292,9 +1292,8 @@ msgid ""
 msgstr ""
 
 #: app/fileops.c:628
-#, fuzzy
 msgid "Revert Image?"
-msgstr "Tallenna kuva"
+msgstr "Palaa alkuperäiseen kuvaan?"
 
 #: app/fileops.c:633 app/fileops.c:1902
 msgid "Yes"
@@ -1551,28 +1550,28 @@ msgid "No selection to stroke!"
 msgstr "Ei valintaa jota pitkin voisi piirtää!"
 
 #: app/gimpbrush.c:294
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
-msgstr "Tuntematon formaatin versio #%d sivellintiedostossa \"%s\"\n"
+msgstr "Tuntematon formaatin versio #%d sivellintiedostossa \"%s\"."
 
 #: app/gimpbrush.c:314
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr "Virhe kuviotiedostossa \"%s\""
+msgstr "Virhe sivellintiedostossa \"%s\"."
 
 #: app/gimpbrush.c:321 app/patterns.c:232
 msgid "Unnamed"
 msgstr "Nimetön"
 
 #: app/gimpbrush.c:334 app/gimpbrush.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
-msgstr "Sivellintiedosto on liian lyhyt."
+msgstr "Sivellintiedosto \"%s\" on poikki."
 
 #: app/gimpbrush.c:359
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
-msgstr "Sivellintiedosto on liian lyhyt."
+msgstr "Sivellintiedosto \"%s\" on rikki."
 
 #: app/gimpbrushlist.c:200 app/gimpbrushlist.c:209
 #, c-format
@@ -1584,27 +1583,29 @@ msgstr ""
 "\"%s\""
 
 #: app/gimpbrushlist.c:218
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load brush pipe\n"
 "\"%s\""
 msgstr ""
-"Siveltimen lataus epäonnostui\n"
+"Sivellinletkun lataus epäonnostui\n"
 "\"%s\""
 
 #: app/gimpbrushpipe.c:292
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
 "\"%s\""
-msgstr "Sivellinputkessa pitäisi olla vähintään yksi sivellin."
+msgstr "Sivellinletkussa pitäisi olla vähintään yksi sivellin:\n"
+"\"%s\""
 
 #: app/gimpbrushpipe.c:383
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
 "\"%s\""
-msgstr "Yhtä sivellinputken siveltimistä ei voitu ladata."
+msgstr "Yhtä sivellinletkun siveltimistä ei voitu ladata\n"
+"\"%s\""
 
 #: app/gimpdrawable.c:176
 msgid "Can't fill unknown image type."
@@ -3134,9 +3135,8 @@ msgid "/File/Save As..."
 msgstr "/Tiedosto/Talleta nimellä..."
 
 #: app/menus.c:217
-#, fuzzy
 msgid "/File/Revert..."
-msgstr "/Tiedosto/Palauta"
+msgstr "/Tiedosto/Palauta..."
 
 #: app/menus.c:222
 msgid "/File/Close"
@@ -4177,19 +4177,19 @@ msgid "No Patterns available"
 msgstr "Ei kuvioita saatavilla"
 
 #: app/patterns.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
-msgstr "Tuntematon formaatin versio #%d sivellintiedostossa \"%s\"\n"
+msgstr "Tuntematon formaatin versio #%d kuviotiedostossa \"%s\"."
 
 #: app/patterns.c:225
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\"."
-msgstr "Virhe kuviotiedostossa \"%s\""
+msgstr "Virhe kuviotiedostossa \"%s\"."
 
 #: app/patterns.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
-msgstr "Kuviotiedostoa \"%s\" on katkaistu."
+msgstr "Kuviotiedosto \"%s\" on poikki."
 
 #: app/perspective_tool.c:65
 msgid "Perspective Transform Information"
@@ -4741,7 +4741,7 @@ msgstr "Kalibroi"
 
 #: app/preferences_dialog.c:2441
 msgid "From windowing system"
-msgstr "Ikkunointi järjestelmästä"
+msgstr "Ikkunointijärjestelmästä"
 
 #: app/preferences_dialog.c:2463
 msgid "Manually:"
@@ -4876,7 +4876,7 @@ msgstr "Tilapäinen proseduuri"
 
 #: app/qmask.c:274
 msgid "Edit Qmask Attributes"
-msgstr "Muuta Qmask ominaisuuksia"
+msgstr "Muuta Qmask-ominaisuuksia"
 
 #. The opacity scale
 #: app/qmask.c:302
@@ -4905,7 +4905,7 @@ msgstr "Valinta: "
 
 #: app/resize.c:182
 msgid "Scale Layer"
-msgstr "Skaalaa layeria"
+msgstr "Skaalaa tasoa"
 
 #: app/resize.c:184 app/resize.c:209 app/tool_options.c:801
 msgid "Size"
@@ -4965,7 +4965,7 @@ msgid ""
 "Is this what you want?"
 msgstr ""
 "Valittu kuvakoko tulee poistamaan jotkut\n"
-"layerit kokonaan pois.\n"
+"tasot kokonaan.\n"
 "Tätäkö haluat?"
 
 #: app/resolution_calibrate.c:108
