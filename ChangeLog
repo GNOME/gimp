@@ -1,5 +1,20 @@
 2005-03-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage-undo-push.[ch]
+	* app/core/gimplayermask.[ch]: eek, my fault... removed
+	GIMP_UNDO_LAYER_MASK_EDIT stuff again because that just determines
+	the active drawable, which must not affect undo.
+
+	* app/pdb/pdb_glue.h
+	* app/actions/layers-commands.c (layers_mask_edit_cmd_callback):
+	changed accordingly.
+
+	(layers_mask_disable_cmd_callback): reverted last change. the old
+	code was correct.
+
+2005-03-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-enums.[ch] (enum GimpUndoType) : reordered values
 	so layer and layer mask undos are grouped together.
 

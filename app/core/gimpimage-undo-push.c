@@ -2043,7 +2043,6 @@ typedef struct _LayerMaskPropertyUndo LayerMaskPropertyUndo;
 struct _LayerMaskPropertyUndo
 {
   gboolean old_apply;
-  gboolean old_edit;
   gboolean old_show;
 };
 
@@ -2063,15 +2062,6 @@ gimp_image_undo_push_layer_mask_apply (GimpImage     *gimage,
                                        GimpLayerMask *mask)
 {
   return undo_push_layer_mask_properties (gimage, GIMP_UNDO_LAYER_MASK_APPLY,
-                                          undo_desc, mask);
-}
-
-gboolean
-gimp_image_undo_push_layer_mask_edit (GimpImage     *gimage,
-                                      const gchar   *undo_desc,
-                                      GimpLayerMask *mask)
-{
-  return undo_push_layer_mask_properties (gimage, GIMP_UNDO_LAYER_MASK_EDIT,
                                           undo_desc, mask);
 }
 
@@ -2111,7 +2101,6 @@ undo_push_layer_mask_properties (GimpImage     *gimage,
       LayerMaskPropertyUndo *lmp_undo = new->data;
 
       lmp_undo->old_apply = gimp_layer_mask_get_apply (mask);
-      lmp_undo->old_edit  = gimp_layer_mask_get_edit (mask);
       lmp_undo->old_show  = gimp_layer_mask_get_show (mask);
 
       return TRUE;
@@ -2137,12 +2126,6 @@ undo_pop_layer_mask_properties (GimpUndo            *undo,
       val = gimp_layer_mask_get_apply (mask);
       gimp_layer_mask_set_apply (mask, lmp_undo->old_apply, FALSE);
       lmp_undo->old_apply = val;
-      break;
-
-    case GIMP_UNDO_LAYER_MASK_EDIT:
-      val = gimp_layer_mask_get_edit (mask);
-      gimp_layer_mask_set_edit (mask, lmp_undo->old_edit, FALSE);
-      lmp_undo->old_edit = val;
       break;
 
     case GIMP_UNDO_LAYER_MASK_SHOW:

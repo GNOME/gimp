@@ -290,19 +290,12 @@ gimp_layer_mask_get_apply (const GimpLayerMask *layer_mask)
 
 void
 gimp_layer_mask_set_edit (GimpLayerMask *layer_mask,
-                          gboolean       edit,
-                          gboolean       push_undo)
+                          gboolean       edit)
 {
   g_return_if_fail (GIMP_IS_LAYER_MASK (layer_mask));
 
   if (layer_mask->edit_mask != edit)
     {
-      GimpImage *gimage = GIMP_ITEM (layer_mask)->gimage;
-
-      if (push_undo)
-        gimp_image_undo_push_layer_mask_edit (gimage, _("Edit Layer Mask"),
-                                              layer_mask);
-
       layer_mask->edit_mask = edit ? TRUE : FALSE;
 
       g_signal_emit (layer_mask, layer_mask_signals[EDIT_CHANGED], 0);

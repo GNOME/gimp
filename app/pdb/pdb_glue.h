@@ -24,9 +24,9 @@
 #define gimp_layer_get_show_mask(l)    (l)->mask ? gimp_layer_mask_get_show((l)->mask) : FALSE;
 #define gimp_layer_get_edit_mask(l)    (l)->mask ? gimp_layer_mask_get_edit((l)->mask) : FALSE;
 
-#define gimp_layer_set_apply_mask(l,a) { if((l)->mask) gimp_layer_mask_set_apply((l)->mask,(a), TRUE); else success = FALSE; }
-#define gimp_layer_set_show_mask(l,s)  { if((l)->mask) gimp_layer_mask_set_show((l)->mask,(s), TRUE); else success = FALSE; }
-#define gimp_layer_set_edit_mask(l,e)  { if((l)->mask) gimp_layer_mask_set_edit((l)->mask,(e), TRUE); else success = FALSE; }
+#define gimp_layer_set_apply_mask(l,a) { if((l)->mask) gimp_layer_mask_set_apply((l)->mask,(a),TRUE); else success = FALSE; }
+#define gimp_layer_set_show_mask(l,s)  { if((l)->mask) gimp_layer_mask_set_show((l)->mask,(s),TRUE); else success = FALSE; }
+#define gimp_layer_set_edit_mask(l,e)  { if((l)->mask) gimp_layer_mask_set_edit((l)->mask,(e)); else success = FALSE; }
 
 
 #endif /* __PDB_GLUE_H__ */

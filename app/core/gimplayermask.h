@@ -74,8 +74,7 @@ void            gimp_layer_mask_set_apply   (GimpLayerMask       *layer_mask,
 gboolean        gimp_layer_mask_get_apply   (const GimpLayerMask *layer_mask);
 
 void            gimp_layer_mask_set_edit    (GimpLayerMask       *layer_mask,
-                                             gboolean             apply,
-                                             gboolean             push_undo);
+                                             gboolean             edit);
 gboolean        gimp_layer_mask_get_edit    (const GimpLayerMask *layer_mask);
 
 void            gimp_layer_mask_set_show    (GimpLayerMask       *layer_mask,

@@ -391,7 +391,6 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_LAYER_MASK_ADD,           /*< desc="Add layer mask"            >*/
   GIMP_UNDO_LAYER_MASK_REMOVE,        /*< desc="Delete layer mask"         >*/
   GIMP_UNDO_LAYER_MASK_APPLY,         /*< desc="Apply layer mask"          >*/
-  GIMP_UNDO_LAYER_MASK_EDIT,          /*< desc="Edit layer mask"           >*/
   GIMP_UNDO_LAYER_MASK_SHOW,          /*< desc="Show layer mask"           >*/
   GIMP_UNDO_CHANNEL_ADD,              /*< desc="New channel"               >*/
   GIMP_UNDO_CHANNEL_REMOVE,           /*< desc="Delete channel"            >*/
