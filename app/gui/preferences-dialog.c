@@ -287,7 +287,6 @@ file_prefs_ok_callback (GtkWidget *widget,
    * changed on the fly.  Currently it ignores these options if only OK is
    * pressed.
    */
-
 }
 
 static void
@@ -1164,7 +1163,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   prefs_dlg =
     gimp_dialog_new (_("Preferences"), "gimp_preferences",
 		     gimp_standard_help_func,
-		     "dialogs/preferences.html",
+		     "dialogs/preferences/preferences.html",
 		     GTK_WIN_POS_NONE,
 		     FALSE, FALSE, FALSE,
 

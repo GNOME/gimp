@@ -60,15 +60,18 @@ static void   tearoff_cmd_callback (GtkWidget            *widget,
 				    gpointer              callback_data,
 				    guint                 callback_action);
 
-static char* G_GNUC_UNUSED dummyMenus[] = { N_("/File/MRU00 "),
-                                            N_("/File"),
-                                            N_("/File/Dialogs"),
-                                            N_("/Image/Transforms"),
-                                            N_("/Layers"),
-                                            N_("/Tools"),
-                                            N_("/Dialogs"),
-                                            N_("/View/Zoom"),
-                                            N_("/Stack")};
+static gchar* G_GNUC_UNUSED dummyMenus[] =
+{
+  N_("/File/MRU00 "),
+  N_("/File"),
+  N_("/File/Dialogs"),
+  N_("/Image/Transforms"),
+  N_("/Layers"),
+  N_("/Tools"),
+  N_("/Dialogs"),
+  N_("/View/Zoom"),
+  N_("/Stack")
+};
 
 static GSList *last_opened_raw_filenames = NULL;
 
@@ -79,7 +82,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { N_("/File/New"), "<control>N", file_new_cmd_callback, 0 },
     "file/dialogs/file_new.html", NULL },
   { { N_("/File/Open"), "<control>O", file_open_cmd_callback, 0 },
-    "open/index.html", NULL },
+    "file/open/dialogs/file_open.html", NULL },
   { { N_("/File/Acquire/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
     NULL, NULL },
   { { N_("/File/About..."), NULL, about_dialog_cmd_callback, 0 },
@@ -87,7 +90,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { N_("/File/Help..."), NULL, gimp_help_cmd_callback, 0 },
     "file/dialogs/help.html", NULL },
   { { N_("/File/Preferences..."), NULL, file_pref_cmd_callback, 0 },
-    "file/dialogs/preferences.html", NULL },
+    "file/dialogs/preferences/preferences.html", NULL },
   { { N_("/File/Tip of the day"), NULL, tips_dialog_cmd_callback, 0 },
     "file/dialogs/tip_of_the_day.html", NULL },
 
@@ -112,12 +115,12 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { N_("/File/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
     "file/dialogs/error_console.html", NULL },
   { { N_("/File/Dialogs/Display Filters..."), NULL, dialogs_display_filters_cmd_callback, 0 },
-    "file/dialogs/display_filters.html", NULL },
+    "file/dialogs/display_filters/display_filters.html", NULL },
 
   { { N_("/Xtns/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
     NULL, NULL },
   { { N_("/Xtns/Module Browser"), NULL, dialogs_module_browser_cmd_callback, 0 },
-    "xtns/module_browser.html", NULL },
+    "dialogs/module_browser.html", NULL },
   { { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
   { { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
@@ -133,7 +136,7 @@ static GimpItemFactoryEntry file_menu_separator =
 
 static GimpItemFactoryEntry toolbox_end =
 { { N_("/File/Quit"), "<control>Q", file_quit_cmd_callback, 0 },
-  "file/dialogs/quit.html", NULL };
+  "file/quit.html", NULL };
 
 static GimpItemFactoryEntry image_entries[] =
 {
@@ -144,22 +147,22 @@ static GimpItemFactoryEntry image_entries[] =
   { { N_("/File/New"), "<control>N", file_new_cmd_callback, 1 },
     "file/dialogs/file_new.html", NULL },
   { { N_("/File/Open"), "<control>O", file_open_cmd_callback, 0 },
-    "open/index.html", NULL },
+    "file/open/dialogs/file_open.html", NULL },
   { { N_("/File/Save"), "<control>S", file_save_cmd_callback, 0 },
-    "save/index.html", NULL },
+    "file/save/dialogs/file_save.html", NULL },
   { { N_("/File/Save as"), NULL, file_save_as_cmd_callback, 0 },
-    "save/index.html", NULL },
+    "file/save/dialogs/file_save.html", NULL },
   { { N_("/File/Revert"), NULL, file_revert_cmd_callback, 0 },
     "file/revert.html", NULL },
   { { N_("/File/Preferences..."), NULL, file_pref_cmd_callback, 0 },
-    "file/dialogs/preferences.html", NULL },
+    "file/dialogs/preferences/preferences.html", NULL },
   { { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
 
-  { { N_("/File/Close"), "<control>W", file_close_cmd_callback, 0 },
+  { { N_( "/File/Close"), "<control>W", file_close_cmd_callback, 0 },
     "file/close.html", NULL },
   { { N_("/File/Quit"), "<control>Q", file_quit_cmd_callback, 0 },
-    "file/dialogs/quit.html", NULL },
+    "file/quit.html", NULL },
   { { N_("/File/---moved"), NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
 
@@ -326,27 +329,27 @@ static GimpItemFactoryEntry image_entries[] =
   { { N_("/Layers/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
     NULL, NULL },
   { { N_("/Layers/Layers & Channels..."), "<control>L", dialogs_lc_cmd_callback, 0 },
-    "layers/dialogs/layers_and_channels.html", NULL },
+    "dialogs/layers_and_channels.html", NULL },
   { { N_("/Layers/Stack/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
     NULL, NULL },
   { { N_("/Layers/Stack/Previous Layer"), "Prior", layers_previous_cmd_callback, 0 },
-    "layers/stack/index.html#previous_layer", NULL },
+    "layers/stack/stack.html#previous_layer", NULL },
   { { N_("/Layers/Stack/Next Layer"), "Next", layers_next_cmd_callback, 0 },
-    "layers/stack/index.html#next_layer", NULL },
+    "layers/stack/stack.html#next_layer", NULL },
   { { N_("/Layers/Stack/Raise Layer"), "<shift>Prior", layers_raise_cmd_callback, 0 },
-    "layers/stack/index.html#raise_layer", NULL },
+    "layers/stack/stack.html#raise_layer", NULL },
   { { N_("/Layers/Stack/Lower Layer"), "<shift>Next", layers_lower_cmd_callback, 0 },
-    "layers/stack/index.html#lower_layer", NULL },
+    "layers/stack/stack.html#lower_layer", NULL },
   { { N_("/Layers/Stack/Layer to Top"), "<control>Prior", layers_raise_to_top_cmd_callback, 0 },
-    "layers/stack/index.html#layer_to_top", NULL },
+    "layers/stack/stack.html#layer_to_top", NULL },
   { { N_("/Layers/Stack/Layer to Bottom"), "<control>Next", layers_lower_to_bottom_cmd_callback, 0 },
-    "layers/stack/index.html#layer_to_bottom", NULL },
+    "layers/stack/stack.html#layer_to_bottom", NULL },
   { { N_("/Layers/---"), NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
   { { N_("/Layers/Anchor Layer"), "<control>H", layers_anchor_cmd_callback, 0 },
     "layers/anchor_layer.html", NULL },
   { { N_("/Layers/Merge Visible Layers"), "<control>M", layers_merge_cmd_callback, 0 },
-    "layers/dialogs/layers/merge_visible_layers.html", NULL },
+    "layers/dialogs/merge_visible_layers.html", NULL },
   { { N_("/Layers/Flatten Image"), NULL, layers_flatten_cmd_callback, 0 },
     "layers/flatten_image.html", NULL },
   { { N_("/Layers/Alpha To Selection"), NULL, layers_alpha_select_cmd_callback, 0 },
@@ -357,15 +360,15 @@ static GimpItemFactoryEntry image_entries[] =
     "layers/add_alpha_channel.html", NULL },
   { { N_("/Layers/---"), NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  
+
   { { N_("/Tools/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
     NULL, NULL },
   { { N_("/Tools/Toolbox"), NULL, toolbox_raise_callback, 0 },
-    "toolbox/index.html", NULL },
+    "toolbox/toolbox.html", NULL },
   { { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
-    "toolbox/index.html#default_colors", NULL },
+    "toolbox/toolbox.html#default_colors", NULL },
   { { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 },
-    "toolbox/index.html#swap_colors", NULL },
+    "toolbox/toolbox.html#swap_colors", NULL },
   { { N_("/Tools/---"), NULL, NULL, 0, "<Separator>" },  
     NULL, NULL },
 
@@ -379,7 +382,7 @@ static GimpItemFactoryEntry image_entries[] =
     "filters/reshow_last.html", NULL },
   { { N_("/Filters/---"), NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  
+
   { { N_("/Script-Fu/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
     NULL, NULL },
   
@@ -404,7 +407,7 @@ static GimpItemFactoryEntry image_entries[] =
   { { N_("/Dialogs/Device Status..."), NULL, dialogs_device_status_cmd_callback, 0 },
     "dialogs/device_status.html", NULL },
   { { N_("/Dialogs/Display Filters..."), NULL, dialogs_display_filters_cmd_callback, 0 },
-    "dialogs/display_filters.html", NULL },
+    "dialogs/display_filters/display_filters.html", NULL },
 };
 static guint n_image_entries = (sizeof (image_entries) /
 				sizeof (image_entries[0]));
@@ -413,7 +416,7 @@ static GtkItemFactory *image_factory = NULL;
 static GimpItemFactoryEntry load_entries[] =
 {
   { { N_("/Automatic"), NULL, file_load_by_extension_callback, 0 },
-    NULL, NULL },
+    "open_by_extension.html", NULL },
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL }
 };
@@ -424,7 +427,7 @@ static GtkItemFactory *load_factory = NULL;
 static GimpItemFactoryEntry save_entries[] =
 {
   { { N_("/By extension"), NULL, file_save_by_extension_callback, 0 },
-    NULL, NULL },
+    "save_by_extension.html", NULL },
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
 };
@@ -435,19 +438,19 @@ static GtkItemFactory *save_factory = NULL;
 static GimpItemFactoryEntry layers_entries[] =
 {
   { { N_("/New Layer"), "<control>N", layers_dialog_new_layer_callback, 0 },
-    "dialogs/layers/new_layer.html", NULL },
+    "dialogs/new_layer.html", NULL },
   { { N_("/Stack/Previous Layer"), "Prior", layers_dialog_previous_layer_callback, 0 },
-    "stack/index.html#previous_layer", NULL },
+    "stack/stack.html#previous_layer", NULL },
   { { N_("/Stack/Next Layer"), "Next", layers_dialog_next_layer_callback, 0 },
-    "stack/index.html#next_layer", NULL },
+    "stack/stack.html#next_layer", NULL },
   { { N_("/Stack/Raise Layer"), "<shift>Prior", layers_dialog_raise_layer_callback, 0 },
-    "stack/index.html#raise_layer", NULL },
+    "stack/stack.html#raise_layer", NULL },
   { { N_("/Stack/Lower Layer"), "<shift>Next", layers_dialog_lower_layer_callback, 0 },
-    "stack/index.html#lower_layer", NULL },
+    "stack/stack.html#lower_layer", NULL },
   { { N_("/Stack/Layer to Top"), "<control>Prior", layers_dialog_raise_layer_to_top_callback, 0 },
-    "stack/index.html#later_to_top", NULL },
+    "stack/stack.html#later_to_top", NULL },
   { { N_("/Stack/Layer to Bottom"), "<control>Next", layers_dialog_lower_layer_to_bottom_callback, 0 },
-    "stack/index.html#layer_to_bottom", NULL },
+    "stack/stack.html#layer_to_bottom", NULL },
   { { N_("/Duplicate Layer"), "<control>C", layers_dialog_duplicate_layer_callback, 0 },
     "duplicate_layer.html", NULL },
   { { N_("/Anchor Layer"), "<control>H", layers_dialog_anchor_layer_callback, 0 },
@@ -457,13 +460,13 @@ static GimpItemFactoryEntry layers_entries[] =
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
   { { N_("/Scale Layer"), "<control>S", layers_dialog_scale_layer_callback, 0 },
-    "dialogs/layers/scale_layer.html", NULL },
+    "dialogs/scale_layer.html", NULL },
   { { N_("/Resize Layer"), "<control>R", layers_dialog_resize_layer_callback, 0 },
-    "dialogs/layers/resize_layer.html", NULL },
+    "dialogs/resize_layer.html", NULL },
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
   { { N_("/Merge Visible Layers"), "<control>M", layers_dialog_merge_layers_callback, 0 },
-    "dialogs/layers/merge_visible_layers.html", NULL },
+    "dialogs/merge_visible_layers.html", NULL },
   { { N_("/Merge Down"), "<control><shift>M", layers_dialog_merge_down_callback, 0 },
     "merge_down.html", NULL },
   { { N_("/Flatten Image"), NULL, layers_dialog_flatten_image_callback, 0 },
@@ -471,9 +474,9 @@ static GimpItemFactoryEntry layers_entries[] =
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
   { { N_("/Add Layer Mask"), NULL, layers_dialog_add_layer_mask_callback, 0 },
-    "dialogs/layers/add_mask.html", NULL },
+    "dialogs/add_mask.html", NULL },
   { { N_("/Apply Layer Mask"), NULL, layers_dialog_apply_layer_mask_callback, 0 },
-    "dialogs/layers/apply_mask.html", NULL },
+    "dialogs/apply_mask.html", NULL },
   { { N_("/Alpha to Selection"), NULL, layers_dialog_alpha_select_callback, 0 },
     "alpha_to_selection.html", NULL },
   { { N_("/Mask to Selection"), NULL, layers_dialog_mask_select_callback, 0 },
@@ -488,7 +491,7 @@ static GtkItemFactory *layers_factory = NULL;
 static GimpItemFactoryEntry channels_entries[] =
 {
   { { N_("/New Channel"), "<control>N", channels_dialog_new_channel_callback, 0 },
-    "/dialogs/channels/new_channel.html", NULL },
+    "dialogs/new_channel.html", NULL },
   { { N_("/Raise Channel"), "<control>F", channels_dialog_raise_channel_callback, 0 },
     "raise_channel.html", NULL },
   { { N_("/Lower Channel"), "<control>B", channels_dialog_lower_channel_callback, 0 },
@@ -508,7 +511,7 @@ static GimpItemFactoryEntry channels_entries[] =
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
   { { N_("/Delete Channel"), "<control>X", channels_dialog_delete_channel_callback, 0 },
-    "delete_layer.html", NULL }
+    "delete_channel.html", NULL }
 };
 static guint n_channels_entries = (sizeof (channels_entries) /
 				   sizeof (channels_entries[0]));
@@ -533,9 +536,9 @@ static GimpItemFactoryEntry paths_entries[] =
   { { N_("/Paste Path"), "<control>V", paths_dialog_paste_path_callback, 0 },
     "paste_path.html", NULL },
   { { N_("/Import Path"), "<control>I", paths_dialog_import_path_callback, 0 },
-    "import_path.html", NULL },
+    "dialogs/import_path.html", NULL },
   { { N_("/Export Path"), "<control>E", paths_dialog_export_path_callback, 0 },
-    "export_path.html", NULL }
+    "dialogs/export_path.html", NULL }
 };
 static guint n_paths_entries = (sizeof (paths_entries) /
 				sizeof (paths_entries[0]));

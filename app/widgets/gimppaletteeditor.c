@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <stdlib.h>
@@ -2025,7 +2024,7 @@ create_palette_dialog (gint vert)
       palette->shell =
 	gimp_dialog_new (_("Color Palette Edit"), "color_palette_edit",
 			 gimp_standard_help_func,
-			 "dialogs/palette_editor/index.html",
+			 "dialogs/palette_editor/palette_editor.html",
 			 GTK_WIN_POS_NONE,
 			 FALSE, TRUE, FALSE,
 

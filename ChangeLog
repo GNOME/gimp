@@ -1,3 +1,26 @@
+1999-10-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/channels_dialog.c
+	* app/docindexif.c
+	* app/fileops.c
+	* app/gdisplay_color_ui.c
+	* app/gimphelp.c
+	* app/gradient.c
+	* app/interface.c
+	* app/lc_dialog.c
+	* app/menus.c
+	* app/palette.c
+	* app/paths_dialog.c
+	* app/preferences_dialog.c
+	* app/resize.c
+	* app/tips_dialog.c
+	* app/undo_history.c: many small help system fixes.
+
+	* help/*
+	* configure.in: _LOTS_ of new files + Makefiles. Enjoy ;-)
+
+	* help/ChangeLog: new file. Please read it.
+
 Mon Oct  4 09:00:51 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/common/gz.c (load_image): BUG loading gz files
@@ -104,19 +127,19 @@ Sun Oct  3 19:21:00 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	Lots of stuff for the bezier-tool which will be also used for the
 	interface for the intelligent scissors. I started to factor out the
-	formulas for the actual curve type, so it is some kind of independant.
+	formulas for the actual curve type, so it is some kind of independent.
 	To try this out simply change the "#if 0" in app/path_curve.c to
 	a "#if 1" to handle straight lines instead of strange beziers with
 	fixed handles :-)
 	The functions in app/path_curves.c implement some kind of
-	default-action, where useful. To implement a new curve-tzpe it
+	default-action, where useful. To implement a new curve-type it
 	should be sufficient to overload the path_curve_get_point()
    	function. Of course, then the speed is not as performant... :-)
 
-	The API for other types is not yet completely fixed, esp. Im not
+	The API for other types is not yet completely fixed, esp. I'm not
 	clear about when to give a Tool* or PathTool* as a parameter.
-	But it shows the way, I want to implement this. In the next step
-	I'll fill the stubs in app/path_bezer.c.
+	But it shows the way I want to implement this. In the next step
+	I'll fill the stubs in app/path_bezier.c.
 
 	New handling functions: The Tool detects, when you are over an curve
 	and lets you split it there by shift clicking.
@@ -130,10 +153,10 @@ Sun Oct  3 19:21:00 PDT 1999 Manish Singh <yosh@gimp.org>
 	* libgimp/gimp.h: some wrappers for PDB functions
 
 	* libgimp/gimpexport.[ch]: new files
-	This fixes a longstanding bug and the MostFAQ: When saving a file, the
-	file-save plug-ins can use gimp_export_image() to get the file converted
-	to a format they can handle. The conversion is performed on a duplicate
-	of the image; the original image stays as is.
+	This fixes a longstanding bug and the MostFAQ: When saving a file,
+	the file-save plug-ins can use gimp_export_image() to get the file
+	converted to a format they can handle. The conversion is performed
+	on a duplicate of the image; the original image stays as is.
 
 	* libgimp/Makefile.am
 	* libgimp/gimpui.h
@@ -156,7 +179,6 @@ Sun Oct  3 19:21:00 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/fileops.c
 	* app/menus.[ch]
-	* app/menus.h
 	* app/plug_in.c: show a help page for all menu entries registered
 	by plugins.
 	Changed menus_create() to menus_create_item_from_full_path() which

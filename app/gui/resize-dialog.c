@@ -152,7 +152,7 @@ resize_widget_new (ResizeType    type,
 	  case ResizeLayer:
 	    wmclass = "scale_layer";
 	    window_title = _("Scale Layer");
-	    help_page = "dialogs/layers/dialogs/scale_layer.html";
+	    help_page = "layers/dialogs/scale_layer.html";
 	    frame = gtk_frame_new (_("Size"));
 	    break;
 	  case ResizeImage:
@@ -170,7 +170,7 @@ resize_widget_new (ResizeType    type,
 	  case ResizeLayer:
 	    wmclass = "resize_layer";
 	    window_title = _("Resize Layer");
-	    help_page = "dialogs/layers/dialogs/resize_layer.html";
+	    help_page = "layers/dialogs/resize_layer.html";
 	    break;
 	  case ResizeImage:
 	    wmclass = "image_resize";

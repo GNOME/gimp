@@ -77,7 +77,7 @@ make_dialog (void)
 
   cdd.shell = gimp_dialog_new (_("Color Display Filters"), "display_color",
 			       gimp_standard_help_func,
-			       "dialogs/display_filters.html",
+			       "dialogs/display_filters/display_filters.html",
 			       GTK_WIN_POS_NONE,
 			       FALSE, TRUE, FALSE,
 

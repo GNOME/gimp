@@ -19,6 +19,7 @@
 #include "docindexif.h"
 #include "fileops.h"
 #include "gimage.h"
+#include "gimphelp.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -260,4 +261,9 @@ make_idea_window (gint x,
   /* Set the position of the window if it was requested */
   if (x >= 0 && y >= 0)
     gtk_widget_set_uposition (ideas->window, x, y);
+
+  /*  Connect the "F1" help key  */
+  gimp_help_connect_help_accel (ideas->window,
+				gimp_standard_help_func,
+				"dialogs/document_index.html");
 }

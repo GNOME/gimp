@@ -683,20 +683,21 @@ grad_create_gradient_editor_init (gint need_show)
   g_editor = g_new (gradient_editor_t, 1);
 
   /* Shell and main vbox */
-  g_editor->shell = gimp_dialog_new (_("Gradient Editor"), "gradient_editor",
-				     gimp_standard_help_func,
-				     "dialogs/gradient_editor/index.html",
-				     GTK_WIN_POS_NONE,
-				     FALSE, TRUE, FALSE,
+  g_editor->shell =
+    gimp_dialog_new (_("Gradient Editor"), "gradient_editor",
+		     gimp_standard_help_func,
+		     "dialogs/gradient_editor/gradient_editor.html",
+		     GTK_WIN_POS_NONE,
+		     FALSE, TRUE, FALSE,
 
-				     _("Save"), ed_save_grads_callback,
-				     NULL, NULL, FALSE, FALSE,
-				     _("Refresh"), ed_refresh_grads_callback,
-				     NULL, NULL, FALSE, FALSE,
-				     _("Close"), ed_close_callback,
-				     NULL, NULL, TRUE, TRUE,
+		     _("Save"), ed_save_grads_callback,
+		     NULL, NULL, FALSE, FALSE,
+		     _("Refresh"), ed_refresh_grads_callback,
+		     NULL, NULL, FALSE, FALSE,
+		     _("Close"), ed_close_callback,
+		     NULL, NULL, TRUE, TRUE,
 
-				     NULL);
+		     NULL);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -1325,7 +1326,7 @@ ed_new_gradient_callback (GtkWidget *widget,
 
   qbox = gimp_query_string_box (_("New gradient"),
 				gimp_standard_help_func,
-				"dialogs/gradient_editor/dialogs/new_gradient.html",
+				"dialogs/gradient_editor/new_gradient.html",
 				_("Enter a name for the new gradient"),
 				_("untitled"),
 				NULL, NULL,
@@ -1388,7 +1389,7 @@ ed_copy_gradient_callback (GtkWidget *widget,
 
   qbox = gimp_query_string_box (_("Copy gradient"),
 				gimp_standard_help_func,
-				"dialogs/gradient_editor/dialogs/copy_gradient.html",
+				"dialogs/gradient_editor/copy_gradient.html",
 				_("Enter a name for the copied gradient"),
 				name,
 				NULL, NULL,
@@ -1474,7 +1475,7 @@ ed_rename_gradient_callback (GtkWidget *widget,
 
   qbox = gimp_query_string_box (_("Rename gradient"),
 				gimp_standard_help_func,
-				"dialogs/gradient_editor/dialogs/rename_gradient.html",
+				"dialogs/gradient_editor/rename_gradient.html",
 				_("Enter a new name for the gradient"),
 				curr_gradient->name,
 				NULL, NULL,
@@ -1556,7 +1557,7 @@ ed_delete_gradient_callback (GtkWidget *widget,
 
   dialog = gimp_dialog_new (_("Delete gradient"), "delete_gradient",
 			    gimp_standard_help_func,
-			    "dialogs/gradient_editor/dialogs/delete_gradient.html",
+			    "dialogs/gradient_editor/delete_gradient.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
@@ -1682,7 +1683,7 @@ ed_save_pov_callback (GtkWidget *widget,
 
   /*  Connect the "F1" help key  */
   gimp_help_connect_help_accel (window, gimp_standard_help_func,
-				"dialogs/gradient_editor/dialogs/save_as_pov_ray.html");
+				"dialogs/gradient_editor/save_as_pov_ray.html");
 
   gtk_widget_show (window);
   gtk_widget_set_sensitive (g_editor->shell, FALSE);
@@ -4612,7 +4613,7 @@ cpopup_split_uniform_callback (GtkWidget *widget,
 		     _("Split segments uniformly"),
 		     "gradient_segment_split_uniformly",
 		     gimp_standard_help_func,
-		     "dialogs/gradient_editor/dialogs/split_segments_uniformly.html",
+		     "dialogs/gradient_editor/split_segments_uniformly.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
@@ -5171,7 +5172,7 @@ cpopup_replicate_callback (GtkWidget *widget,
 		     _("Replicate selection"),
 		     "gradient_segment_replicate",
 		     gimp_standard_help_func,
-		     "dialogs/gradient_editor/dialogs/replicate_segment.html",
+		     "dialogs/gradient_editor/replicate_segment.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 

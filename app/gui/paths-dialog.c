@@ -1230,7 +1230,7 @@ paths_dialog_edit_path_query (GtkWidget *widget)
 
   qbox = gimp_query_string_box (_("Rename path"),
 				gimp_standard_help_func,
-				"dialogs/paths/rename_path.html",
+				"paths/dialogs/rename_path.html",
 				_("Enter a new name for the path"),
 				text,
 				NULL, NULL,
@@ -2156,8 +2156,9 @@ pathsList_new(GimpImage * gimage,
 static GtkWidget *file_dlg = 0;
 static int load_store;
 
-static void path_write_current_to_file(FILE *f,PATHP bzp)
-		
+static void
+path_write_current_to_file (FILE  *f,
+			    PATHP  bzp)
 {
   GSList *list = bzp->path_details;
   PATHPOINTP pdata;
@@ -2168,7 +2169,7 @@ static void path_write_current_to_file(FILE *f,PATHP bzp)
   fprintf(f, "DRAW: %d\n", 0);
   fprintf(f, "STATE: %d\n", bzp->state);
 
-  while(list)
+  while (list)
     {
       pdata = (PATHPOINTP)list->data;
       fprintf(f,"TYPE: %d X: %d Y: %d\n", pdata->type, (gint)pdata->x, (gint)pdata->y);
@@ -2176,8 +2177,9 @@ static void path_write_current_to_file(FILE *f,PATHP bzp)
     }
 }
 
-
-static void file_ok_callback(GtkWidget * widget, gpointer client_data) 
+static void
+file_ok_callback (GtkWidget *widget,
+		  gpointer   client_data) 
 {
   GtkFileSelection *fs;
   FILE *f; 
@@ -2328,79 +2330,110 @@ static void file_ok_callback(GtkWidget * widget, gpointer client_data)
 	}
 
       /* Write the current selection out. */
-      
-      path_write_current_to_file(f,bzp);
-      
-      fclose(f);
+      path_write_current_to_file (f,bzp);
+
+      fclose (f);
     }
   gtk_widget_hide (file_dlg);  
 }
 
-
-static void file_cancel_callback(GtkWidget * widget, gpointer data) 
+static void
+file_cancel_callback (GtkWidget *widget,
+		      gpointer   data) 
 {
   gtk_widget_hide (file_dlg);
 }
 
-static void make_file_dlg(gpointer data) 
+static void
+file_delete_callback (GtkWidget *widget,
+		      GdkEvent  *event,
+		      gpointer   data)
 {
-  file_dlg = gtk_file_selection_new (_("Load/Store Bezier Curves"));
-  gtk_window_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
-		     "clicked", (GtkSignalFunc) file_cancel_callback, data);
-  gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
-		     "clicked", (GtkSignalFunc) file_ok_callback, data);
+  file_cancel_callback (widget, data);
 }
 
+static void
+path_load_save_help_func (gpointer data)
+{
+  if (load_store)
+    gimp_help ("paths/dialogs/import_path.html");
+  else
+    gimp_help ("paths/dialogs/export_path.html");
+}
+
+static void
+make_file_dlg (gpointer data) 
+{
+  file_dlg = gtk_file_selection_new (_("Load/Store Bezier Curves"));
+
+  gtk_window_set_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
+  gtk_signal_connect
+    (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button), "clicked",
+     (GtkSignalFunc) file_cancel_callback,
+     data);
+  gtk_signal_connect
+    (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button), "clicked",
+     (GtkSignalFunc) file_ok_callback,
+     data);
+  gtk_signal_connect (GTK_OBJECT (file_dlg), "delete_event",
+		      (GtkSignalFunc) file_delete_callback,
+		      data);
+
+  /*  Connect the "F1" help key  */
+  gimp_help_connect_help_accel (file_dlg, path_load_save_help_func, NULL);
+}
 
 static void 
-path_load_callback()
+path_load_callback ()
 {
   if (!file_dlg) 
     {
-      make_file_dlg(NULL);
+      make_file_dlg (NULL);
     } 
   else 
     {
-      if (GTK_WIDGET_VISIBLE(file_dlg))
+      if (GTK_WIDGET_VISIBLE (file_dlg))
 	return;
     }
-  gtk_window_set_title(GTK_WINDOW (file_dlg), _("Load Path"));
+
+  gtk_window_set_title (GTK_WINDOW (file_dlg), _("Load Path"));
   load_store = 1;
   gtk_widget_show (file_dlg);
 }
 
 static void 
-path_store_callback()
+path_store_callback ()
 {
   if (!file_dlg) 
     {
-      make_file_dlg(NULL);
+      make_file_dlg (NULL);
     } 
   else 
     {
-      if (GTK_WIDGET_VISIBLE(file_dlg))
+      if (GTK_WIDGET_VISIBLE (file_dlg))
 	return;
     }
 
-  gtk_window_set_title(GTK_WINDOW (file_dlg), _("Store Path"));
+  gtk_window_set_title (GTK_WINDOW (file_dlg), _("Store Path"));
   load_store = 0;
   gtk_widget_show (file_dlg);
 }
 
 void 
-paths_dialog_import_path_callback (GtkWidget * widget, gpointer udata)
+paths_dialog_import_path_callback (GtkWidget *widget,
+				   gpointer   data)
 {
   /* Read and add at current position */
-  path_load_callback();
+  path_load_callback ();
 
 }
 
 void 
-paths_dialog_export_path_callback (GtkWidget * widget, gpointer udata)
+paths_dialog_export_path_callback (GtkWidget *widget,
+				   gpointer   data)
 {
   /* Export the path to a file */
-  path_store_callback();
+  path_store_callback ();
 }
 
 /*************************************/
@@ -2425,7 +2458,7 @@ paths_dialog_export_path_callback (GtkWidget * widget, gpointer udata)
  */
 
 void *
-paths_transform_start_undo(GimpImage  *gimage)
+paths_transform_start_undo (GimpImage *gimage)
 {
   /* Save only the locked paths away */
   PATHIMAGELISTP plp;

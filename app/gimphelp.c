@@ -116,9 +116,9 @@ gimp_help (gchar *help_page)
       proc_rec = procedural_db_lookup ("extension_gimp_help_browser");
       if (proc_rec == NULL)
 	{
-	  g_message (_("Could not find the GIMP Help Browser procedure\n"
-		       "Note that you still have to compile this plugin "
-		       "manually"));
+	  g_message (_("Could not find the GIMP Help Browser procedure.\n"
+		       "It probably was not compiled because\n"
+		       "you don't have GtkXmHTML installed."));
 	  return;
 	}
 

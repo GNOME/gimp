@@ -654,8 +654,8 @@ lc_dialog_auto_callback (GtkWidget *toggle_button,
 }
 
 static gint
-lc_dialog_close_callback (GtkWidget *w,
-			  gpointer   client_data)
+lc_dialog_close_callback (GtkWidget *widget,
+			  gpointer   data)
 {
   if (! lc_dialog)
     return TRUE;
@@ -720,12 +720,17 @@ lc_dialog_help_func (gpointer data)
   gchar *help_page;
   gint page_num;
 
+  static gchar* dialog_names[] = { "layers", "channels", "paths" };
+
   page_num =
     gtk_notebook_get_current_page (GTK_NOTEBOOK (lc_dialog->notebook));
 
-  help_page = g_strconcat ((page_num == 0) ? "layers" :
-			   ((page_num == 1) ? "channels" : "paths"),
-			   "/index.html",
+  if (page_num > 2)
+    return;
+
+  help_page = g_strconcat (dialog_names[page_num], "/",
+			   "dialogs/",
+			   dialog_names[page_num], ".html",
 			   NULL);
   gimp_help (help_page);
   g_free (help_page);

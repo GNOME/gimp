@@ -1,0 +1,16 @@
+1999-10-03  Michael Natterer  <mitch@gimp.org>
+
+	* ChangeLog: initial revision of a separate help system ChangeLog.
+
+	* dir-template.sh: creates dummy help files and an index.
+	* makefile-am.sh: creates guess what ;-)
+
+	* make-help-stubs.sh: re-create the whole help system including
+	Makefile.am's (Don't dare to use it and commit afterwards).
+
+	* makelinks.sh: run this script in your $(gimp_data_dir)/help/C
+	directory to create neccessary symbolic links for the help
+	system.
+
+	* C/*: tons and tons of stub files for the help system.
+	Try "F1" whereever you like and report inconsistencies !!--))

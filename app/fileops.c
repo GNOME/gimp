@@ -176,7 +176,8 @@ file_ops_post_init (void)
       file_proc = tmp->data;
       tmp = tmp->next;
 
-      help_page = g_strconcat (g_basename (file_proc->prog),
+      help_page = g_strconcat ("filters/",
+			       g_basename (file_proc->prog),
 			       ".html",
 			       NULL);
       g_strdown (help_page);
@@ -200,7 +201,8 @@ file_ops_post_init (void)
       file_proc = tmp->data;
       tmp = tmp->next;
 
-      help_page = g_strconcat (g_basename (file_proc->prog),
+      help_page = g_strconcat ("filters/",
+			       g_basename (file_proc->prog),
 			       ".html",
 			       NULL);
       g_strdown (help_page);
@@ -254,7 +256,7 @@ file_open_callback (GtkWidget *widget,
       /*  Connect the "F1" help key  */
       gimp_help_connect_help_accel (fileload,
 				    gimp_standard_help_func,
-				    "open/index.html");
+				    "open/dialogs/file_open.html");
     }
   else
     {
@@ -474,7 +476,7 @@ file_save_as_callback (GtkWidget *widget,
       /*  Connect the "F1" help key  */
       gimp_help_connect_help_accel (filesave,
 				    gimp_standard_help_func,
-				    "save/index.html");
+				    "save/dialogs/file_save.html");
     }
   else
     {

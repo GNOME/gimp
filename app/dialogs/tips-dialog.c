@@ -7,6 +7,7 @@
 #include "gtk/gtk.h"
 #include "tips_dialog.h"
 #include "gimprc.h"
+#include "gimphelp.h"
 #include "interface.h"
 #include "wilber.h"
 
@@ -165,6 +166,11 @@ tips_dialog_create ()
       gtk_widget_show (button_check);
 
       old_show_tips = show_tips;
+
+      /*  Connect the "F1" help key  */
+      gimp_help_connect_help_accel (tips_dialog,
+				    gimp_standard_help_func,
+				    "dialogs/tip_of_the_day.html");
     }
 
   if (!GTK_WIDGET_VISIBLE (tips_dialog))
