@@ -109,17 +109,23 @@ static void
 gimp_template_editor_init (GimpTemplateEditor *editor)
 {
   GtkWidget *hbox;
-  GtkWidget *hbox2;
+  GtkWidget *aspect_box;
   GtkWidget *vbox;
   GtkWidget *abox;
   GtkWidget *frame;
   GtkWidget *table;
+  GtkWidget *table2;
   GtkWidget *separator;
   GtkWidget *label;
   GtkObject *adjustment;
-  GtkWidget *spinbutton;
-  GtkWidget *spinbutton2;
+  GtkWidget *width_pixels;
+  GtkWidget *height_pixels;
+  GtkWidget *width_units;
+  GtkWidget *height_units;
+  GtkWidget *xres;
+  GtkWidget *yres;
   GtkWidget *chainbutton;
+  GList     *focus_chain = NULL;
 
   editor->template = gimp_template_new ("GimpTemplateEditor");
   editor->memsize  = 0;
@@ -188,78 +194,80 @@ gimp_template_editor_init (GimpTemplateEditor *editor)
   gtk_widget_show (editor->size_se);
 
   /*  height in units  */
-  spinbutton = gimp_spin_button_new (&adjustment,
-                                     1, 1, 1, 1, 10, 0,
-                                     1, 2);
-  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
+  height_units = gimp_spin_button_new (&adjustment,
+                                       1, 1, 1, 1, 10, 0,
+                                       1, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (height_units), SB_WIDTH);
   /*  add the "height in units" spinbutton to the sizeentry  */
-  gtk_table_attach_defaults (GTK_TABLE (editor->size_se), spinbutton,
+  gtk_table_attach_defaults (GTK_TABLE (editor->size_se), height_units,
 			     0, 1, 2, 3);
-  gtk_widget_show (spinbutton);
+  gtk_widget_show (height_units);
 
   /*  height in pixels  */
-  hbox = gtk_hbox_new (FALSE, 4);
+  table2 = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table2), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table2), 2);
+  gtk_table_attach_defaults (GTK_TABLE (table), table2, 1, 2, 0, 2);
+  gtk_widget_show (table2);
 
-  spinbutton2 = gimp_spin_button_new (&adjustment,
-                                      1, 1, 1, 1, 10, 0,
-                                      1, 0);
-  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton2), SB_WIDTH);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton2, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton2);
+  height_pixels = gimp_spin_button_new (&adjustment,
+                                        1, 1, 1, 1, 10, 0,
+                                        1, 0);
+  gtk_entry_set_width_chars (GTK_ENTRY (height_pixels), SB_WIDTH);
+  gtk_table_attach (GTK_TABLE (table2), height_pixels, 0, 1, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (height_pixels);
 
   label = gtk_label_new (_("Pixels"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table2), label, 1, 2, 1, 2,
+		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   editor->memsize_label = gtk_label_new (NULL);
-  gtk_box_pack_end (GTK_BOX (hbox), editor->memsize_label, FALSE, FALSE, 0);
+  gtk_misc_set_alignment (GTK_MISC (editor->memsize_label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table2), editor->memsize_label, 2, 3, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (editor->memsize_label);
-
-  /*  add the "height in pixels" spinbutton to the main table  */
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 1, 2);
-  gtk_widget_show (hbox);
 
   /*  register the height spinbuttons with the sizeentry  */
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->size_se),
-                             GTK_SPIN_BUTTON (spinbutton),
-			     GTK_SPIN_BUTTON (spinbutton2));
+                             GTK_SPIN_BUTTON (height_units),
+			     GTK_SPIN_BUTTON (height_pixels));
 
   /*  width in units  */
-  spinbutton = gimp_spin_button_new (&adjustment,
-                                     1, 1, 1, 1, 10, 0,
-                                     1, 2);
-  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
+  width_units = gimp_spin_button_new (&adjustment,
+                                      1, 1, 1, 1, 10, 0,
+                                      1, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (width_units), SB_WIDTH);
   /*  add the "width in units" spinbutton to the sizeentry  */
-  gtk_table_attach_defaults (GTK_TABLE (editor->size_se), spinbutton,
+  gtk_table_attach_defaults (GTK_TABLE (editor->size_se), width_units,
 			     0, 1, 1, 2);
-  gtk_widget_show (spinbutton);
+  gtk_widget_show (width_units);
 
   /*  width in pixels  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 1);
-  gtk_widget_show (hbox);
+  width_pixels = gimp_spin_button_new (&adjustment,
+                                       1, 1, 1, 1, 10, 0,
+                                       1, 0);
+  gtk_entry_set_width_chars (GTK_ENTRY (width_pixels), SB_WIDTH);
+  gtk_table_attach (GTK_TABLE (table2), width_pixels, 0, 1, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (width_pixels);
 
-  spinbutton2 = gimp_spin_button_new (&adjustment,
-                                     1, 1, 1, 1, 10, 0,
-                                     1, 0);
-  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton2), SB_WIDTH);
-  /*  add the "width in pixels" spinbutton to the main table  */
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton2, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton2);
-
-  hbox2 = gimp_enum_stock_box_new (GIMP_TYPE_ASPECT_TYPE,
-                                   "gimp", GTK_ICON_SIZE_MENU,
-                                   G_CALLBACK (gimp_template_editor_aspect_callback),
-                                   editor,
-                                   &editor->aspect_button);
+  aspect_box = gimp_enum_stock_box_new (GIMP_TYPE_ASPECT_TYPE,
+                                        "gimp", GTK_ICON_SIZE_MENU,
+                                        G_CALLBACK (gimp_template_editor_aspect_callback),
+                                        editor,
+                                        &editor->aspect_button);
   gtk_widget_hide (editor->aspect_button); /* hide "square" */
-  gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
-  gtk_widget_show (hbox2);
+  gtk_table_attach (GTK_TABLE (table2), aspect_box, 2, 3, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (aspect_box);
 
   /*  register the width spinbuttons with the sizeentry  */
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->size_se),
-                             GTK_SPIN_BUTTON (spinbutton),
-			     GTK_SPIN_BUTTON (spinbutton2));
+                             GTK_SPIN_BUTTON (width_units),
+			     GTK_SPIN_BUTTON (width_pixels));
 
   /*  initialize the sizeentry  */
   gimp_prop_size_entry_connect (G_OBJECT (editor->template),
@@ -267,6 +275,14 @@ gimp_template_editor_init (GimpTemplateEditor *editor)
                                 editor->size_se, NULL,
                                 editor->template->xresolution,
                                 editor->template->yresolution);
+
+  focus_chain = g_list_append (focus_chain, width_pixels);
+  focus_chain = g_list_append (focus_chain, height_pixels);
+  focus_chain = g_list_append (focus_chain, aspect_box);
+
+  gtk_container_set_focus_chain (GTK_CONTAINER (table2), focus_chain);
+  g_list_free (focus_chain);
+  focus_chain = NULL;
 
   /*  the resolution labels  */
   label = gtk_label_new (_("Resolution X:"));
@@ -286,24 +302,36 @@ gimp_template_editor_init (GimpTemplateEditor *editor)
   gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 5, 7);
   gtk_widget_show (abox);
 
-  spinbutton = gimp_spin_button_new (&adjustment,
-                                     1, 1, 1, 1, 10, 0,
-                                     1, 2);
-  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
+  xres = gimp_spin_button_new (&adjustment,
+                               1, 1, 1, 1, 10, 0,
+                               1, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (xres), SB_WIDTH);
 
-  editor->resolution_se = gimp_size_entry_new (1, editor->template->resolution_unit,
-                                             _("pixels/%a"),
-                                             FALSE, FALSE, FALSE, SB_WIDTH,
-                                             GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+  yres = gimp_spin_button_new (&adjustment,
+                               1, 1, 1, 1, 10, 0,
+                               1, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (yres), SB_WIDTH);
+
+  editor->resolution_se =
+    gimp_size_entry_new (0, editor->template->resolution_unit,
+                         _("pixels/%a"),
+                         FALSE, FALSE, FALSE, SB_WIDTH,
+                         GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gtk_table_set_col_spacing (GTK_TABLE (editor->resolution_se), 1, 2);
   gtk_table_set_col_spacing (GTK_TABLE (editor->resolution_se), 2, 2);
   gtk_table_set_row_spacing (GTK_TABLE (editor->resolution_se), 0, 2);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->resolution_se),
-			     GTK_SPIN_BUTTON (spinbutton), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (editor->resolution_se), spinbutton,
-			     1, 2, 0, 1);
-  gtk_widget_show (spinbutton);
+			     GTK_SPIN_BUTTON (yres), NULL);
+  gtk_table_attach_defaults (GTK_TABLE (editor->resolution_se), yres,
+			     0, 1, 1, 2);
+  gtk_widget_show (yres);
+
+  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->resolution_se),
+			     GTK_SPIN_BUTTON (xres), NULL);
+  gtk_table_attach_defaults (GTK_TABLE (editor->resolution_se), xres,
+			     0, 1, 0, 1);
+  gtk_widget_show (xres);
 
   gtk_container_add (GTK_CONTAINER (abox), editor->resolution_se);
   gtk_widget_show (editor->resolution_se);
@@ -311,7 +339,7 @@ gimp_template_editor_init (GimpTemplateEditor *editor)
   /*  the resolution chainbutton  */
   chainbutton = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
   gtk_table_attach_defaults (GTK_TABLE (editor->resolution_se), chainbutton,
-                             2, 3, 0, 2);
+                             1, 2, 0, 2);
   gtk_widget_show (chainbutton);
 
   gimp_prop_size_entry_connect (G_OBJECT (editor->template),
@@ -319,6 +347,17 @@ gimp_template_editor_init (GimpTemplateEditor *editor)
                                 "resolution-unit",
                                 editor->resolution_se, chainbutton,
                                 1.0, 1.0);
+
+  focus_chain = g_list_append (focus_chain, xres);
+  focus_chain = g_list_append (focus_chain, yres);
+  focus_chain = g_list_append (focus_chain, chainbutton);
+
+  focus_chain = g_list_append (focus_chain,
+                               GIMP_SIZE_ENTRY (editor->resolution_se)->unitmenu);
+
+  gtk_container_set_focus_chain (GTK_CONTAINER (editor->resolution_se),
+                                 focus_chain);
+  g_list_free (focus_chain);
 
   /*  hbox containing the Image type and fill type frames  */
   hbox = gtk_hbox_new (FALSE, 4);
