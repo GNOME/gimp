@@ -141,7 +141,8 @@ flip_tool_transform (Tool     *tool,
     case FINISH :
       /*      transform_core->trans_info[FLIP] *= -1.0;*/
       return flip_tool_flip (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
-			     transform_core->original, transform_core->trans_info[FLIP],
+			     transform_core->original, 
+			     (int)transform_core->trans_info[FLIP_INFO],
 			     flip_options->type);
       break;
     }
