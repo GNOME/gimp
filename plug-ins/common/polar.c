@@ -149,10 +149,10 @@ static void polar_toggle_callback (GtkWidget *widget, gpointer data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,   /* init_proc */
-  NULL,   /* quit_proc */
-  query,  /* query_proc */
-  run     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run    /* run_proc   */
 };
 
 static polarize_vals_t pcvals =
@@ -202,10 +202,7 @@ query (void)
     { PARAM_INT32,    "inverse",     "Map from top?" },
     { PARAM_INT32,    "polrec",     "Polar to rectangular?" },
   };
-
-  static GParamDef *return_vals  = NULL;
-  static int        nargs        = sizeof(args) / sizeof(args[0]);
-  static int        nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
 
@@ -218,10 +215,8 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Polar Coords..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs,
-			  nreturn_vals,
-			  args,
-			  return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -322,9 +317,10 @@ run (gchar   *name,
 
       /* Make sure all the arguments are present */
       if (nparams != 8)
-	status = STATUS_CALLING_ERROR;
-
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  pcvals.circle  = param[3].data.d_float;
 	  pcvals.angle  = param[4].data.d_float;
@@ -332,7 +328,6 @@ run (gchar   *name,
 	  pcvals.inverse  = param[6].data.d_int32;
 	  pcvals.polrec  = param[7].data.d_int32;
 	}
-
       break;
 
     case RUN_WITH_LAST_VALS:
@@ -1003,6 +998,7 @@ polarize_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Circle Depth in Percent:"), SCALE_WIDTH, 0,
 			      pcvals.circle, 0.0, 100.0, 1.0, 10.0, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_scale_update),
@@ -1011,6 +1007,7 @@ polarize_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Offset Angle:"), SCALE_WIDTH, 0,
 			      pcvals.angle, 0.0, 359.0, 1.0, 15.0, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_scale_update),

@@ -78,35 +78,32 @@ static char rcsid[] = "$Id$";
 #define DEBUG_PRINT(X)
 #endif
 
-#define BOUNDS(a,x,y)	((a < x) ? x : ((a > y) ? y : a))
 #define LUMINOSITY(PIX) (INTENSITY (PIX[0], PIX[1], PIX[2]))
 #define OFFSETOF(t,f)	((int) ((char*) &((t*) 0)->f))
 
-#define GRADIENT_NAME_MAX 256
+#define GRADIENT_NAME_MAX   256
 #define GRADIENT_RESOLUTION 360
 
-#define GFLARE_NAME_MAX 256
-#define GFLARE_FILE_HEADER   "GIMP GFlare 0.25\n"
-#define SFLARE_NUM	30
+#define GFLARE_NAME_MAX     256
+#define GFLARE_FILE_HEADER  "GIMP GFlare 0.25\n"
+#define SFLARE_NUM	     30
 
-#define DLG_PREVIEW_WIDTH 256
+#define DLG_PREVIEW_WIDTH  256
 #define DLG_PREVIEW_HEIGHT 256
 #define DLG_PREVIEW_MASK   GDK_EXPOSURE_MASK | \
 			   GDK_BUTTON_PRESS_MASK
-#define DLG_LISTBOX_WIDTH 80
+#define DLG_LISTBOX_WIDTH  80
 #define DLG_LISTBOX_HEIGHT 40
 
-#define ED_PREVIEW_WIDTH 256
+#define ED_PREVIEW_WIDTH  256
 #define ED_PREVIEW_HEIGHT 256
 
-#define GM_PREVIEW_WIDTH	80
-#define GM_PREVIEW_HEIGHT	16
-#define GM_MENU_MAX   20
+#define GM_PREVIEW_WIDTH  80
+#define GM_PREVIEW_HEIGHT 16
+#define GM_MENU_MAX       20
 
-#define ENTSCALE_SCALE_WIDTH 100
-#define ENTSCALE_ENTRY_WIDTH 50
-
-#define ENTRY_WIDTH 40
+#define SCALE_WIDTH 100
+#define ENTRY_WIDTH  40
 
 #ifndef OPAQUE
 #define OPAQUE	   255
@@ -116,11 +113,11 @@ static char rcsid[] = "$Id$";
 /* drawable coord to preview coord */
 #define DX2PX(DX)  ((double) PREVIEW_WIDTH * ((DX) - dinfo->win.x0) / (dinfo->win.x1 - dinfo->win.x0))
 #define DY2PY(DY)  ((double) PREVIEW_HEIGHT * ((DY) - dinfo->win.y0) / (dinfo->win.y1 - dinfo->win.y0))
-#define GRADIENT_CACHE_SIZE	32
+#define GRADIENT_CACHE_SIZE 32
 
-#define CALC_GLOW	0x01
-#define CALC_RAYS	0x02
-#define CALC_SFLARE	0x04
+#define CALC_GLOW   0x01
+#define CALC_RAYS   0x02
+#define CALC_SFLARE 0x04
 
 typedef struct _Preview Preview;
 
@@ -142,47 +139,51 @@ typedef enum
   GF_NUM_SHAPES
 } GFlareShape;
 
-typedef struct {
-  gchar		*name;
-  gchar		*filename;
-  gdouble	glow_opacity;
-  GFlareMode	glow_mode;
-  gdouble	rays_opacity;
-  GFlareMode	rays_mode;
-  gdouble	sflare_opacity;
-  GFlareMode	sflare_mode;
-  GradientName	glow_radial;
-  GradientName	glow_angular;
-  GradientName	glow_angular_size;
-  gdouble	glow_size;
-  gdouble	glow_rotation;
-  gdouble	glow_hue;
-  GradientName	rays_radial;
-  GradientName	rays_angular;
-  GradientName	rays_angular_size;
-  gdouble	rays_size;
-  gdouble	rays_rotation;
-  gdouble	rays_hue;
-  gint		rays_nspikes;
-  gdouble	rays_thickness;
-  GradientName	sflare_radial;
-  GradientName	sflare_sizefac;
-  GradientName	sflare_probability;
-  gdouble	sflare_size;
-  gdouble	sflare_rotation;
-  gdouble	sflare_hue;
-  GFlareShape	sflare_shape;
-  gint		sflare_nverts;
-  gint		sflare_seed;
+typedef struct
+{
+  gchar        *name;
+  gchar        *filename;
+  gdouble       glow_opacity;
+  GFlareMode    glow_mode;
+  gdouble       rays_opacity;
+  GFlareMode    rays_mode;
+  gdouble       sflare_opacity;
+  GFlareMode    sflare_mode;
+  GradientName  glow_radial;
+  GradientName  glow_angular;
+  GradientName  glow_angular_size;
+  gdouble       glow_size;
+  gdouble       glow_rotation;
+  gdouble       glow_hue;
+  GradientName  rays_radial;
+  GradientName  rays_angular;
+  GradientName  rays_angular_size;
+  gdouble       rays_size;
+  gdouble       rays_rotation;
+  gdouble       rays_hue;
+  gint          rays_nspikes;
+  gdouble       rays_thickness;
+  GradientName  sflare_radial;
+  GradientName  sflare_sizefac;
+  GradientName  sflare_probability;
+  gdouble       sflare_size;
+  gdouble       sflare_rotation;
+  gdouble       sflare_hue;
+  GFlareShape   sflare_shape;
+  gint          sflare_nverts;
+  gint          sflare_seed;
+  gint          sflare_seed_time;
 } GFlare;
 
-typedef struct {
-  FILE		*fp;
-  int		error;
+typedef struct
+{
+  FILE *fp;
+  gint  error;
 } GFlareFile;
 
 
-typedef enum {
+typedef enum
+{
   PAGE_SETTINGS,
   PAGE_SELECTOR,
   PAGE_GENERAL,
@@ -192,92 +193,92 @@ typedef enum {
 } PageNum;
 
 
-typedef struct {
-  gint		init;
-  GFlare	*gflare;
-  GtkWidget	*shell;
-  Preview	*preview;
-  struct {
+typedef struct
+{
+  gint       init;
+  GFlare    *gflare;
+  GtkWidget *shell;
+  Preview   *preview;
+  struct
+  {
     gdouble x0, y0, x1, y1;
-  }		pwin;
-  gint		update_preview;
-  GtkWidget	*notebook;
-  GtkWidget	*xentry;
-  gint		xentry_id;
-  GtkWidget	*yentry;
-  gint		yentry_id;
-  GtkWidget	*asupsample_frame;
-  GtkWidget	*selector_list;
-  gint		init_params_done;
+  } pwin;
+  gint       update_preview;
+  GtkWidget *notebook;
+  GtkWidget *sizeentry;
+  GtkWidget *asupsample_frame;
+  GtkWidget *selector_list;
+  gint       init_params_done;
 } GFlareDialog;
 
-typedef void	(*GFlareEditorCallback) (gint updated, gpointer data);
+typedef void (* GFlareEditorCallback) (gint updated, gpointer data);
 
-typedef struct {
-  gint		init;
-  gint		run;
-  GFlareEditorCallback	callback;
-  gpointer	calldata;
-  GFlare	*target_gflare;
-  GFlare	*gflare;
-  GtkWidget	*shell;
-  Preview	*preview;
-  GtkWidget	*notebook;
-  PageNum	cur_page;
-  GtkWidget	*polygon_entry;
-  GtkWidget	*polygon_toggle;
-  gint		init_params_done;
+typedef struct
+{
+  gint                  init;
+  gint                  run;
+  GFlareEditorCallback  callback;
+  gpointer              calldata;
+  GFlare               *target_gflare;
+  GFlare               *gflare;
+  GtkWidget            *shell;
+  Preview              *preview;
+  GtkWidget            *notebook;
+  PageNum               cur_page;
+  GtkWidget            *polygon_entry;
+  GtkWidget            *polygon_toggle;
+  gint                  init_params_done;
 } GFlareEditor;
 
 typedef struct
 {
-  gdouble	x0;
-  gdouble	y0;
-  gdouble	x1;
-  gdouble	y1;
+  gdouble x0;
+  gdouble y0;
+  gdouble x1;
+  gdouble y1;
 } CalcBounds;
 
 typedef struct
 {
-  gint		init;
-  gint		type;
-  GFlare *	gflare;
-  gdouble	xcenter;
-  gdouble	ycenter;
-  gdouble	radius;
-  gdouble	rotation;
-  gdouble	hue;
-  gdouble	vangle;
-  gdouble	vlength;
+  gint     init;
+  gint     type;
+  GFlare  *gflare;
+  gdouble  xcenter;
+  gdouble  ycenter;
+  gdouble  radius;
+  gdouble  rotation;
+  gdouble  hue;
+  gdouble  vangle;
+  gdouble  vlength;
 
-  gint		glow_opacity;
-  CalcBounds	glow_bounds;
-  guchar *	glow_radial;
-  guchar *	glow_angular;
-  guchar *	glow_angular_size;
-  gdouble	glow_radius;
-  gdouble	glow_rotation;
+  gint        glow_opacity;
+  CalcBounds  glow_bounds;
+  guchar     *glow_radial;
+  guchar     *glow_angular;
+  guchar     *glow_angular_size;
+  gdouble     glow_radius;
+  gdouble     glow_rotation;
 
-  gint		rays_opacity;
-  CalcBounds	rays_bounds;
-  guchar *	rays_radial;
-  guchar *	rays_angular;
-  guchar *	rays_angular_size;
-  gdouble	rays_radius;
-  gdouble	rays_rotation;
-  gdouble	rays_spike_mod;
-  gdouble	rays_thinness;
+  gint        rays_opacity;
+  CalcBounds  rays_bounds;
+  guchar     *rays_radial;
+  guchar     *rays_angular;
+  guchar     *rays_angular_size;
+  gdouble     rays_radius;
+  gdouble     rays_rotation;
+  gdouble     rays_spike_mod;
+  gdouble     rays_thinness;
 
-  gint		sflare_opacity;
-  GList *	sflare_list;
-  guchar *	sflare_radial;
-  guchar *	sflare_sizefac;
-  guchar *	sflare_probability;
-  gdouble	sflare_radius;
-  gdouble	sflare_rotation;
-  GFlareShape	sflare_shape;
-  gdouble	sflare_angle;
-  gdouble	sflare_factor;
+  gint         sflare_opacity;
+  GList       *sflare_list;
+  guchar      *sflare_radial;
+  guchar      *sflare_sizefac;
+  guchar      *sflare_probability;
+  gdouble      sflare_radius;
+  gdouble      sflare_rotation;
+  GFlareShape  sflare_shape;
+  gdouble      sflare_angle;
+  gdouble      sflare_factor;
 } CalcParams;
 
 /*
@@ -291,176 +292,211 @@ typedef struct
 
 typedef struct
 {
-  gdouble	xcenter;
-  gdouble	ycenter;
-  gdouble	radius;
-  CalcBounds	bounds;
+  gdouble    xcenter;
+  gdouble    ycenter;
+  gdouble    radius;
+  CalcBounds bounds;
 } CalcSFlare;
-
 
 typedef struct
 {
-  gint			is_color;
-  gint			has_alpha;
-  gint			x1, y1, x2, y2;		/* mask bounds */
-  gint			tile_width, tile_height;
-			/* these values don't belong to drawable, though. */
+  gint is_color;
+  gint has_alpha;
+  gint x1, y1, x2, y2;		/* mask bounds */
+  gint tile_width, tile_height;
+  /* these values don't belong to drawable, though. */
 } DrawableInfo;
 
 typedef struct
 {
-  GTile *	tile;
-  gint		col;
-  gint		row;
-  gint		shadow;
-  gint		dirty;
+  GTile *tile;
+  gint   col;
+  gint   row;
+  gint   shadow;
+  gint   dirty;
 } TileKeeper;
 
-typedef struct _GradientMenu	GradientMenu;
-typedef void (*GradientMenuCallback) ( gchar *gradient_name,
-				       gpointer data );
-struct _GradientMenu {
-  GtkWidget		*preview;
-  GtkWidget		*option_menu;
-  GradientMenuCallback	callback;
-  gpointer		callback_data;
-  GradientName		gradient_name;
+typedef struct _GradientMenu GradientMenu;
+typedef void (* GradientMenuCallback) (gchar    *gradient_name,
+				       gpointer  data);
+struct _GradientMenu
+{
+  GtkWidget            *preview;
+  GtkWidget            *option_menu;
+  GradientMenuCallback  callback;
+  gpointer              callback_data;
+  GradientName          gradient_name;
 };
 
-typedef gint (*PreviewInitFunc) (Preview *preview, gpointer data);
-typedef void (*PreviewRenderFunc) (Preview *preview, guchar *buffer, gint y, gpointer data);
-typedef void (*PreviewDeinitFunc) (Preview *preview, gpointer data);
+typedef gint (* PreviewInitFunc)   (Preview *preview, gpointer data);
+typedef void (* PreviewRenderFunc) (Preview *preview, guchar *buffer,
+				    gint y, gpointer data);
+typedef void (* PreviewDeinitFunc) (Preview *preview, gpointer data);
 
 struct _Preview
 {
-  GtkWidget		*widget;
-  gint			width;
-  gint			height;
-  PreviewInitFunc	init_func;
-  gpointer		init_data;
-  PreviewRenderFunc	render_func;
-  gpointer		render_data;
-  PreviewDeinitFunc	deinit_func;
-  gpointer		deinit_data;
-  guint			timeout_tag;
-  guint			idle_tag;
-  gint			init_done;
-  gint			current_y;
-  gint			drawn_y;
-  guchar		*buffer;
-}; /* Preview */
+  GtkWidget         *widget;
+  gint               width;
+  gint               height;
+  PreviewInitFunc    init_func;
+  gpointer           init_data;
+  PreviewRenderFunc  render_func;
+  gpointer           render_data;
+  PreviewDeinitFunc  deinit_func;
+  gpointer           deinit_data;
+  guint              timeout_tag;
+  guint              idle_tag;
+  gint               init_done;
+  gint               current_y;
+  gint               drawn_y;
+  guchar            *buffer;
+};
 
 typedef struct
 {
-  gint			tag;
-  gint			got_gradients;
-  gint			current_y;
-  gint			drawn_y;
-  PreviewRenderFunc	render_func;
-  guchar		*buffer;
+  gint               tag;
+  gint               got_gradients;
+  gint               current_y;
+  gint               drawn_y;
+  PreviewRenderFunc  render_func;
+  guchar            *buffer;
 } PreviewIdle;
 
 typedef struct _GradientCacheItem  GradientCacheItem;
+
 struct _GradientCacheItem
 {
-  GradientCacheItem	*next;
-  GradientCacheItem	*prev;
-  GradientName		name;
-  guchar		values[4*GRADIENT_RESOLUTION];
+  GradientCacheItem *next;
+  GradientCacheItem *prev;
+  GradientName       name;
+  guchar             values[4 * GRADIENT_RESOLUTION];
 };
 
-
-
-typedef enum {
-  ENTSCALE_INT,
-  ENTSCALE_DOUBLE
-} EntscaleType;
-
-typedef void (*EntscaleCallbackFunc) (gdouble new_val, gpointer data);
-
-typedef struct {
-  GtkObject		*adjustment;
-  GtkWidget		*entry;
-  EntscaleType		type;
-  gchar			fmt_string[16];
-  gint			constraint;
-  EntscaleCallbackFunc	callback;
-  gpointer		call_data;
-} Entscale;
-
-
-typedef struct {
-  gint		xcenter;
-  gint		ycenter;
-  gdouble	radius;
-  gdouble	rotation;
-  gdouble	hue;
-  gdouble	vangle;
-  gdouble	vlength;
-  gint		use_asupsample;
-  gint		asupsample_max_depth;
-  gdouble	asupsample_threshold;
-  gchar		gflare_name[GFLARE_NAME_MAX];
+typedef struct
+{
+  gint     xcenter;
+  gint     ycenter;
+  gdouble  radius;
+  gdouble  rotation;
+  gdouble  hue;
+  gdouble  vangle;
+  gdouble  vlength;
+  gint     use_asupsample;
+  gint     asupsample_max_depth;
+  gdouble  asupsample_threshold;
+  gchar    gflare_name[GFLARE_NAME_MAX];
 } PluginValues;
 
-typedef struct {
-  gint		run;
+typedef struct
+{
+  gint  run;
 } PluginInterface;
 
 typedef void (*QueryFunc) (GtkWidget *, gpointer, gpointer);
 
 /***
-***	Global Functions Prototypes
-**/
+ ***  Global Functions Prototypes
+ **/
 
-/* *** INSERT-FILE "proto/gflare.c.pro" *** */
-/* gflare.c */
-int main (int argc, char **argv);
-void plugin_query (void);
-void plugin_run (gchar *name, gint nparams, GParam *param, gint *nreturn_vals, GParam **return_vals);
-void plug_in_parse_gflare_path (void);
-GFlare *gflare_new_with_default (gchar *new_name);
-GFlare *gflare_dup (GFlare *src, gchar *new_name);
-void gflare_copy (GFlare *dest, GFlare *src);
-GFlare *gflare_load (char *filename, char *name);
-void gflare_save (GFlare *gflare);
-void gflare_name_copy (gchar *dest, gchar *src);
-gint gflares_list_insert (GFlare *gflare);
-GFlare *gflares_list_lookup (gchar *name);
-gint gflares_list_index (GFlare *gflare);
-gint gflares_list_remove (GFlare *gflare);
-void gflares_list_load_all (void);
-void gflares_list_free_all (void);
-void calc_init_params (GFlare *gflare, gint calc_type, gdouble xcenter, gdouble ycenter, gdouble radius, gdouble rotation, gdouble hue, gdouble vangle, gdouble vlength);
-int calc_init_progress (void);
-void calc_deinit (void);
-void calc_glow_pix (guchar *dest_pix, gdouble x, gdouble y);
-void calc_rays_pix (guchar *dest_pix, gdouble x, gdouble y);
-void calc_sflare_pix (guchar *dest_pix, gdouble x, gdouble y, guchar *src_pix);
-void calc_gflare_pix (guchar *dest_pix, gdouble x, gdouble y, guchar *src_pix);
-int dlg_run (void);
-void dlg_preview_calc_window (void);
-void ed_preview_calc_window (void);
-GtkWidget *ed_mode_menu_new (GFlareMode *mode_var);
-Preview *preview_new (gint width, gint height, PreviewInitFunc init_func, gpointer init_data, PreviewRenderFunc render_func, gpointer render_data, PreviewDeinitFunc deinit_func, gpointer deinit_data);
-void preview_free (Preview *preview);
-void preview_render_start (Preview *preview);
-void preview_render_end (Preview *preview);
-void preview_rgba_to_rgb (guchar *dest, gint x, gint y, guchar *src);
-void gradient_menu_init (void);
-void gradient_menu_rescan (void);
-GradientMenu *gradient_menu_new (GradientMenuCallback callback, gpointer callback_data, gchar *default_gradient_name);
-void gradient_menu_destroy (GradientMenu *gm);
-void gradient_name_copy (gchar *dest, gchar *src);
-void gradient_name_encode (guchar *dest, guchar *src);
-void gradient_name_decode (guchar *dest, guchar *src);
-void gradient_init (void);
-void gradient_free (void);
-char **gradient_get_list (gint *num_gradients);
-void gradient_get_values (gchar *gradient_name, guchar *values, gint nvalues);
-void gradient_cache_flush (void);
-void entscale_new (GtkWidget *table, gint x, gint y, gchar *caption, EntscaleType type, gpointer variable, gdouble min, gdouble max, gdouble step, gint constraint, EntscaleCallbackFunc callback, gpointer call_data);
-GtkWidget *query_string_box (char *title, char *message, char *initial, QueryFunc callback, gpointer data);
+static void    plugin_query (void);
+static void    plugin_run   (gchar   *name,
+			     gint     nparams,
+			     GParam  *param,
+			     gint    *nreturn_vals,
+			     GParam **return_vals);
+
+static void     plug_in_parse_gflare_path (void);
+
+static GFlare * gflare_new_with_default (gchar  *new_name);
+static GFlare * gflare_dup              (GFlare *src,
+                                         gchar  *new_name);
+static void     gflare_copy             (GFlare *dest,
+					 GFlare *src);
+static GFlare * gflare_load             (gchar  *filename,
+					 gchar  *name);
+static void     gflare_save             (GFlare *gflare);
+static void     gflare_name_copy        (gchar  *dest,
+					 gchar  *src);
+
+static gint     gflares_list_insert     (GFlare *gflare);
+static GFlare * gflares_list_lookup     (gchar *name);
+static gint     gflares_list_index      (GFlare *gflare);
+static gint     gflares_list_remove     (GFlare *gflare);
+static void     gflares_list_load_all   (void);
+static void     gflares_list_free_all   (void);
+
+static void     calc_init_params   (GFlare  *gflare,
+				    gint     calc_type,
+				    gdouble  xcenter,
+				    gdouble  ycenter,
+				    gdouble  radius,
+				    gdouble  rotation,
+				    gdouble  hue,
+				    gdouble  vangle,
+				    gdouble  vlength);
+static gint     calc_init_progress (void);
+static void     calc_deinit        (void);
+static void     calc_glow_pix      (guchar  *dest_pix,
+				    gdouble  x,
+				    gdouble  y);
+static void     calc_rays_pix      (guchar  *dest_pix,
+				    gdouble  x,
+				    gdouble  y);
+static void     calc_sflare_pix    (guchar  *dest_pix,
+				    gdouble  x,
+				    gdouble  y,
+				    guchar  *src_pix);
+static void     calc_gflare_pix    (guchar  *dest_pix,
+				    gdouble  x,
+				    gdouble  y,
+				    guchar  *src_pix);
+
+static gint        dlg_run                 (void);
+static void        dlg_preview_calc_window (void);
+static void        ed_preview_calc_window  (void);
+static GtkWidget * ed_mode_menu_new        (GFlareMode *mode_var);
+
+static Preview   * preview_new          (gint               width,
+					 gint               height,
+					 PreviewInitFunc    init_func,
+					 gpointer           init_data,
+					 PreviewRenderFunc  render_func,
+					 gpointer           render_data,
+					 PreviewDeinitFunc  deinit_func,
+					 gpointer           deinit_data);
+static void        preview_free         (Preview           *preview);
+static void        preview_render_start (Preview           *preview);
+static void        preview_render_end   (Preview           *preview);
+static void        preview_rgba_to_rgb  (guchar            *dest,
+					 gint               x,
+					 gint               y,
+					 guchar            *src);
+
+static void             gradient_menu_init    (void);
+static void             gradient_menu_rescan  (void);
+static GradientMenu   * gradient_menu_new     (GradientMenuCallback callback,
+					       gpointer  callback_data,
+					       gchar    *default_gradient_name);
+static void             gradient_menu_destroy (GradientMenu *gm);
+static void             gradient_name_copy    (gchar  *dest,
+					       gchar  *src);
+static void             gradient_name_encode  (guchar *dest,
+					       guchar *src);
+static void             gradient_name_decode  (guchar *dest,
+					       guchar *src);
+static void             gradient_init         (void);
+static void             gradient_free         (void);
+static gchar         ** gradient_get_list     (gint   *num_gradients);
+static void             gradient_get_values   (gchar  *gradient_name,
+					       guchar *values,
+					       gint    nvalues);
+static void             gradient_cache_flush  (void);
+
+static GtkWidget * query_string_box (gchar     *title,
+				     gchar     *message,
+				     gchar     *initial,
+				     QueryFunc  callback,
+				     gpointer   data);
 
 /* *** INSERT-FILE-END *** */
 
@@ -470,25 +506,25 @@ GtkWidget *query_string_box (char *title, char *message, char *initial, QueryFun
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,	   /* init_proc */
-  NULL,	   /* quit_proc */
-  plugin_query,	  /* query_proc */
-  plugin_run,	   /* run_proc */
+  NULL,	        /* init_proc  */
+  NULL,	        /* quit_proc  */
+  plugin_query,	/* query_proc */
+  plugin_run,   /* run_proc   */
 };
 
 PluginValues pvals =
 {
-  128,				/* xcenter */
-  128,				/* ycenter */
-  100.0,			/* radius */
-  0.0,				/* rotation */
-  0.0,				/* hue */
-  60.0,				/* vangle */
-  400.0,			/* vlength */
-  FALSE,			/* use_asupsample */
-  3,				/* asupsample_max_depth */
-  0.2,				/* asupsample_threshold */
-  "Default"			/* gflare_name */
+  128,		/* xcenter */
+  128,		/* ycenter */
+  100.0,	/* radius */
+  0.0,		/* rotation */
+  0.0,		/* hue */
+  60.0,		/* vangle */
+  400.0,	/* vlength */
+  FALSE,	/* use_asupsample */
+  3,		/* asupsample_max_depth */
+  0.2,		/* asupsample_threshold */
+  "Default"	/* gflare_name */
 };
 
 PluginInterface pint =
@@ -498,37 +534,38 @@ PluginInterface pint =
 
 GFlare default_gflare =
 {
-  NULL,				/* name */
-  NULL,				/* filename */
-  100,				/* glow_opacity */
-  GF_NORMAL,			/* glow_mode */
-  100,				/* rays_opacity */
-  GF_NORMAL,			/* rays_mode */
-  100,				/* sflare_opacity */
-  GF_NORMAL,			/* sflare_mode */
-  "%red_grad",			/* glow_radial */
-  "%white",			/* glow_angular */
-  "%white",			/* glow_angular_size */
-  100.0,			/* glow_size */
-  0.0,				/* glow_rotation */
-  0.0,				/* glow_hue */
-  "%white_grad",		/* rays_radial */
-  "%random",			/* rays_angular */
-  "%random",			/* rays_angular_size */
-  100.0,			/* rays_size */
-  0.0,				/* rays_rotation */
-  0.0,				/* rays_hue */
-  40,				/* rays_nspikes */
-  20.0,				/* rays_thickness */
-  "%white_grad",		/* sflare_radial */
-  "%random",			/* sflare_sizefac */
-  "%random",			/* sflare_probability */
-  40.0,				/* sflare_size */
-  0.0,				/* sflare_rotation */
-  0.0,				/* sflare_hue */
-  GF_CIRCLE,			/* sflare_shape */
-  6,				/* sflare_nverts */
-  1				/* sflare_seed */
+  NULL,		/* name */
+  NULL,		/* filename */
+  100,		/* glow_opacity */
+  GF_NORMAL,	/* glow_mode */
+  100,		/* rays_opacity */
+  GF_NORMAL,	/* rays_mode */
+  100,		/* sflare_opacity */
+  GF_NORMAL,	/* sflare_mode */
+  "%red_grad",	/* glow_radial */
+  "%white",	/* glow_angular */
+  "%white",	/* glow_angular_size */
+  100.0,	/* glow_size */
+  0.0,		/* glow_rotation */
+  0.0,		/* glow_hue */
+  "%white_grad",/* rays_radial */
+  "%random",	/* rays_angular */
+  "%random",	/* rays_angular_size */
+  100.0,	/* rays_size */
+  0.0,		/* rays_rotation */
+  0.0,		/* rays_hue */
+  40,		/* rays_nspikes */
+  20.0,		/* rays_thickness */
+  "%white_grad",/* sflare_radial */
+  "%random",	/* sflare_sizefac */
+  "%random",	/* sflare_probability */
+  40.0,		/* sflare_size */
+  0.0,		/* sflare_rotation */
+  0.0,		/* sflare_hue */
+  GF_CIRCLE,	/* sflare_shape */
+  6,		/* sflare_nverts */
+  1,		/* sflare_seed */
+  FALSE,        /* sflare_seed_time */
 };
 
 /* These are keywords to be written to disk files specifying flares. */
@@ -557,32 +594,34 @@ static gchar *gflare_menu_modes[] =
   N_("Screen")
 };
 
-static GDrawable *		drawable;
-static DrawableInfo		dinfo;
-static TileKeeper *		tk_read;
-static TileKeeper *		tk_write;
-static GFlareDialog *		dlg = NULL;
-static GFlareEditor *		ed = NULL;
-static GList *			gflares_list = NULL;
-static gint			num_gflares = 0;
-static GList *			gflare_path_list;
-static CalcParams		calc;
-GList *				gradient_menus;
-static char **			gradient_names = NULL;
-static int			num_gradient_names = 0;
-static GradientCacheItem *	gradient_cache_head  = NULL;
-static gint			gradient_cache_count = 0;
+static gint32              image_ID;
+static GDrawable          *drawable;
+static DrawableInfo        dinfo;
+static TileKeeper         *tk_read;
+static TileKeeper         *tk_write;
+static GFlareDialog       *dlg = NULL;
+static GFlareEditor       *ed = NULL;
+static GList              *gflares_list = NULL;
+static gint                num_gflares = 0;
+GList              *gflare_path_list;
+static CalcParams          calc;
+static GList              *gradient_menus;
+static gchar             **gradient_names = NULL;
+static gint                num_gradient_names = 0;
+static GradientCacheItem  *gradient_cache_head  = NULL;
+static gint                gradient_cache_count = 0;
 
 
-static char *internal_gradients[] =
+static gchar *internal_gradients[] =
 {
   "%white", "%white_grad", "%red_grad", "%blue_grad", "%yellow_grad", "%random"
 };
-static int internal_ngradients = sizeof (internal_gradients) / sizeof (internal_gradients[0]);
+static int internal_ngradients = (sizeof (internal_gradients) /
+				  sizeof (internal_gradients[0]));
 
 #ifdef DEBUG
-static int	get_values_external_count = 0;
-static clock_t	get_values_external_clock = 0;
+static gint     get_values_external_count = 0;
+static clock_t  get_values_external_clock = 0;
 #endif
 
 
@@ -590,109 +629,140 @@ static clock_t	get_values_external_clock = 0;
 ***	+++ Static Functions Prototypes
 **/
 
-/* *** INSERT-FILE "proto/gflare.c.prs" *** */
- static void plugin_do (void);
- static void plugin_do_non_asupsample (void);
- static void plugin_do_asupsample (void);
- static void plugin_render_func (double x, double y, color_t *color, gpointer data);
- static void plugin_put_pixel_func (int ix, int iy, color_t color, gpointer data);
- static void plugin_progress_func (int y1, int y2, int curr_y, gpointer data);
- static TileKeeper *tile_keeper_new (gint shadow);
- static guchar *tile_keeper_provide (TileKeeper *tk, gint ix, gint iy, gint dirty);
- static void tile_keeper_free (TileKeeper *tk);
- static GFlare *gflare_new (void);
- static void gflare_free (GFlare *gflare);
- static void gflare_read_int (gint *intvar, GFlareFile *gf);
- static void gflare_read_double (gdouble *dblvar, GFlareFile *gf);
- static void gflare_read_gradient_name (gchar *name, GFlareFile *gf);
- static void gflare_read_shape (GFlareShape *shape, GFlareFile *gf);
- static void gflare_read_mode (GFlareMode *mode, GFlareFile *gf);
- static void gflare_write_gradient_name (gchar *name, FILE *fp);
- static gint calc_sample_one_gradient (void);
- static void calc_place_sflare (void);
- static void calc_get_gradient (guchar *pix, guchar *gradient, gdouble pos);
- static gdouble fmod_positive (gdouble x, gdouble m);
- static void calc_paint_func (guchar *dest, guchar *src1, guchar *src2, gint opacity, GFlareMode mode);
- static void calc_combine (guchar *dest, guchar *src1, guchar *src2, gint opacity);
- static void calc_addition (guchar *dest, guchar *src1, guchar *src2);
- static void calc_screen (guchar *dest, guchar *src1, guchar *src2);
- static void calc_overlay (guchar *dest, guchar *src1, guchar *src2);
- static void dlg_ok_callback (GtkWidget *widget, gpointer data);
- static void dlg_close_callback (GtkWidget *widget, gpointer data);
- static void dlg_setup_gflare (void);
- static void dlg_page_map_callback (GtkWidget *widget, gpointer data);
- static gint dlg_preview_handle_event (GtkWidget *widget, GdkEvent *event);
- static gint ed_preview_handle_event (GtkWidget *widget, GdkEvent *event);
- static void dlg_preview_update (void);
- static gint dlg_preview_init_func (Preview *preview, gpointer data);
- static void dlg_preview_render_func (Preview *preview, guchar *dest, gint y, gpointer data);
- static void dlg_preview_deinit_func (Preview *preview, gpointer data);
- static void dlg_make_page_settings (GFlareDialog *dlg, GtkWidget *notebook);
- static void dlg_position_entry_callback (GtkWidget *widget, gpointer data);
- static void dlg_entscale_callback (gdouble new_val, gpointer data);
- static void dlg_use_asupsample_callback (GtkWidget *widget, gpointer data);
- static void dlg_iscale_callback (GtkAdjustment *adjustment, gpointer data);
- static void dlg_dscale_callback (GtkAdjustment *adjustment, gpointer data);
- static void dlg_update_preview_callback (GtkWidget *widget, gpointer data);
- static void dlg_make_page_selector (GFlareDialog *dlg, GtkWidget *notebook);
- static void dlg_selector_setup_listbox (void);
- static void dlg_selector_insert (GFlare *gflare, int pos, int select);
- static void dlg_selector_list_item_callback (GtkWidget *widget, gpointer data);
- static void dlg_selector_new_callback (GtkWidget *widget, gpointer data);
- static void dlg_selector_new_ok_callback (GtkWidget *widget, gpointer client_data, gpointer call_data);
- static void dlg_selector_edit_callback (GtkWidget *widget, gpointer data);
- static void dlg_selector_edit_done_callback (gint updated, gpointer data);
- static void dlg_selector_copy_callback (GtkWidget *widget, gpointer data);
- static void dlg_selector_copy_ok_callback (GtkWidget *widget, gpointer client_data, gpointer call_data);
- static void dlg_selector_delete_callback (GtkWidget *widget, gpointer data);
- static void dlg_selector_delete_ok_callback (GtkWidget *widget, gpointer client_data);
- static void dlg_selector_delete_cancel_callback (GtkWidget *widget, gpointer client_data);
- static void ed_run (GFlare *target_gflare, GFlareEditorCallback callback, gpointer calldata);
- static void ed_close_callback (GtkWidget *widget, gpointer data);
- static void ed_ok_callback (GtkWidget *widget, gpointer data);
- static void ed_rescan_callback (GtkWidget *widget, gpointer data);
- static void ed_make_page_general (GFlareEditor *ed, GtkWidget *notebook);
- static void ed_make_page_glow (GFlareEditor *ed, GtkWidget *notebook);
- static void ed_make_page_rays (GFlareEditor *ed, GtkWidget *notebook);
- static void ed_make_page_sflare (GFlareEditor *ed, GtkWidget *notebook);
- static void ed_put_mode_menu (GtkWidget *table, gint x, gint y, gchar *caption, GtkWidget *option_menu);
- static void ed_put_gradient_menu (GtkWidget *table, gint x, gint y, gchar *caption, GradientMenu *gm);
- static void ed_entscale_callback (gdouble new_val, gpointer data);
- static void ed_mode_menu_callback (GtkWidget *widget, gpointer data);
- static void ed_gradient_menu_callback (gchar *gradient_name, gpointer data);
- static void ed_shape_radio_callback (GtkWidget *widget, gpointer data);
- static void ed_ientry_callback (GtkWidget *widget, gpointer data);
- static void ed_page_map_callback (GtkWidget *widget, gpointer data);
- static void ed_preview_update (void);
- static gint ed_preview_init_func (Preview *preview, gpointer data);
- static void ed_preview_deinit_func (Preview *preview, gpointer data);
- static void ed_preview_render_func (Preview *preview, guchar *buffer, gint y, gpointer data);
- static void ed_preview_render_general (guchar *buffer, gint y);
- static void ed_preview_render_glow (guchar *buffer, gint y);
- static void ed_preview_render_rays (guchar *buffer, gint y);
- static void ed_preview_render_sflare (guchar *buffer, gint y);
- static gint preview_render_start_2 (Preview *preview);
- static gint preview_handle_idle (Preview *preview);
- static void gm_gradient_get_list (void);
- static GtkWidget *gm_menu_new (GradientMenu *gm, gchar *default_gradient_name);
- static GtkWidget *gm_menu_create_sub_menus (GradientMenu *gm, gint start_n, gchar **active_name_ptr, gchar *default_gradient_name);
- static void gm_menu_item_callback (GtkWidget *w, gpointer data);
- static void gm_preview_draw (GtkWidget *preview, gchar *gradient_name);
- static void gm_option_menu_destroy_callback (GtkWidget *w, gpointer data);
- static void gradient_get_values_internal (gchar *gradient_name, guchar *values, gint nvalues);
- static void gradient_get_blend (guchar *fg, guchar *bg, guchar *values, gint nvalues);
- static void gradient_get_random (gint seed, guchar *values, gint nvalues);
- static void gradient_get_default (gchar *name, guchar *values, gint nvalues);
- static void gradient_get_values_external (gchar *gradient_name, guchar *values, gint nvalues);
- static void gradient_get_values_real_external (gchar *gradient_name, guchar *values, gint nvalues);
- static GradientCacheItem *gradient_cache_lookup (gchar *name, gint *found);
- static void gradient_cache_zorch (void);
- static int entscale_get_precision (gdouble step);
- static void entscale_destroy_callback (GtkWidget *widget, gpointer data);
- static void entscale_scale_update (GtkAdjustment *adjustment, gpointer data);
- static void entscale_entry_update (GtkWidget *widget, gpointer data);
- static void query_box_cancel_callback (GtkWidget *w, gpointer client_data);
- static void query_box_ok_callback (GtkWidget *w, gpointer client_data);
+static void plugin_do                   (void);
+
+static void plugin_do_non_asupsample    (void);
+static void plugin_do_asupsample        (void);
+static void plugin_render_func          (double x, double y,
+					 color_t *color, gpointer data);
+static void plugin_put_pixel_func       (int ix, int iy, color_t color,
+					 gpointer data);
+static void plugin_progress_func        (int y1, int y2, int curr_y,
+					 gpointer data);
+
+static TileKeeper *tile_keeper_new      (gint shadow);
+static guchar *tile_keeper_provide      (TileKeeper *tk, gint ix, gint iy,
+					 gint dirty);
+static void tile_keeper_free            (TileKeeper *tk);
+
+static GFlare * gflare_new              (void);
+static void gflare_free                 (GFlare *gflare);
+static void gflare_read_int             (gint *intvar, GFlareFile *gf);
+static void gflare_read_double          (gdouble *dblvar, GFlareFile *gf);
+static void gflare_read_gradient_name   (gchar *name, GFlareFile *gf);
+static void gflare_read_shape           (GFlareShape *shape, GFlareFile *gf);
+static void gflare_read_mode            (GFlareMode *mode, GFlareFile *gf);
+static void gflare_write_gradient_name  (gchar *name, FILE *fp);
+
+static gint calc_sample_one_gradient    (void);
+static void calc_place_sflare           (void);
+static void calc_get_gradient           (guchar *pix, guchar *gradient,
+					 gdouble pos);
+static gdouble fmod_positive            (gdouble x, gdouble m);
+static void calc_paint_func             (guchar *dest,
+					 guchar *src1, guchar *src2,
+					 gint opacity, GFlareMode mode);
+static void calc_combine                (guchar *dest,
+					 guchar *src1, guchar *src2,
+					 gint opacity);
+static void calc_addition               (guchar *dest,
+					 guchar *src1, guchar *src2);
+static void calc_screen                 (guchar *dest,
+					 guchar *src1, guchar *src2);
+static void calc_overlay                (guchar *dest,
+				 	 guchar *src1, guchar *src2);
+
+static void dlg_ok_callback             (GtkWidget *widget, gpointer data);
+static void dlg_setup_gflare            (void);
+static void dlg_page_map_callback       (GtkWidget *widget, gpointer data);
+static gint dlg_preview_handle_event    (GtkWidget *widget, GdkEvent *event);
+static gint ed_preview_handle_event     (GtkWidget *widget, GdkEvent *event);
+static void dlg_preview_update          (void);
+static gint dlg_preview_init_func       (Preview *preview, gpointer data);
+static void dlg_preview_render_func     (Preview *preview,
+					 guchar *dest, gint y, gpointer data);
+static void dlg_preview_deinit_func     (Preview *preview, gpointer data);
+static void dlg_make_page_settings      (GFlareDialog *dlg, GtkWidget *notebook);
+static void dlg_position_entry_callback (GtkWidget *widget, gpointer data);
+static void dlg_update_preview_callback (GtkWidget *widget, gpointer data);
+static void dlg_make_page_selector      (GFlareDialog *dlg, GtkWidget *notebook);
+static void dlg_selector_setup_listbox  (void);
+static void dlg_selector_insert             (GFlare *gflare,
+					     int pos, int select);
+static void dlg_selector_list_item_callback (GtkWidget *widget, gpointer data);
+static void dlg_selector_new_callback       (GtkWidget *widget, gpointer data);
+static void dlg_selector_new_ok_callback    (GtkWidget *widget,
+					     gpointer client_data,
+					     gpointer call_data);
+static void dlg_selector_edit_callback      (GtkWidget *widget, gpointer data);
+static void dlg_selector_edit_done_callback (gint updated, gpointer data);
+static void dlg_selector_copy_callback      (GtkWidget *widget, gpointer data);
+static void dlg_selector_copy_ok_callback   (GtkWidget *widget,
+					     gpointer client_data, gpointer call_data);
+static void dlg_selector_delete_callback    (GtkWidget *widget, gpointer data);
+static void dlg_selector_delete_ok_callback (GtkWidget *widget, gpointer data);
+static void dlg_selector_delete_cancel_callback (GtkWidget *widget, gpointer data);
+
+static void ed_run                (GFlare *target_gflare,
+				   GFlareEditorCallback callback,
+				   gpointer calldata);
+static void ed_close_callback     (GtkWidget *widget, gpointer data);
+static void ed_ok_callback        (GtkWidget *widget, gpointer data);
+static void ed_rescan_callback    (GtkWidget *widget, gpointer data);
+static void ed_make_page_general  (GFlareEditor *ed, GtkWidget *notebook);
+static void ed_make_page_glow     (GFlareEditor *ed, GtkWidget *notebook);
+static void ed_make_page_rays     (GFlareEditor *ed, GtkWidget *notebook);
+static void ed_make_page_sflare   (GFlareEditor *ed, GtkWidget *notebook);
+static void ed_put_gradient_menu  (GtkWidget *table, gint x, gint y,
+				   gchar *caption, GradientMenu *gm);
+static void ed_mode_menu_callback (GtkWidget *widget, gpointer data);
+static void ed_gradient_menu_callback (gchar *gradient_name, gpointer data);
+static void ed_shape_radio_callback   (GtkWidget *widget, gpointer data);
+static void ed_ientry_callback        (GtkWidget *widget, gpointer data);
+static void ed_page_map_callback      (GtkWidget *widget, gpointer data);
+static void ed_preview_update         (void);
+static gint ed_preview_init_func      (Preview *preview, gpointer data);
+static void ed_preview_deinit_func    (Preview *preview, gpointer data);
+static void ed_preview_render_func    (Preview *preview,
+				       guchar *buffer, gint y, gpointer data);
+static void ed_preview_render_general (guchar *buffer, gint y);
+static void ed_preview_render_glow    (guchar *buffer, gint y);
+static void ed_preview_render_rays    (guchar *buffer, gint y);
+static void ed_preview_render_sflare  (guchar *buffer, gint y);
+
+static gint preview_render_start_2    (Preview *preview);
+static gint preview_handle_idle       (Preview *preview);
+
+static void gm_gradient_get_list            (void);
+static GtkWidget *gm_menu_new               (GradientMenu *gm,
+					     gchar *default_gradient_name);
+static GtkWidget *gm_menu_create_sub_menus  (GradientMenu *gm, gint start_n,
+					     gchar **active_name_ptr,
+					     gchar *default_gradient_name);
+static void gm_menu_item_callback           (GtkWidget *w, gpointer data);
+static void gm_preview_draw                 (GtkWidget *preview,
+					     gchar *gradient_name);
+static void gm_option_menu_destroy_callback (GtkWidget *w, gpointer data);
+
+static void gradient_get_values_internal    (gchar *gradient_name,
+					     guchar *values, gint nvalues);
+static void gradient_get_blend              (guchar *fg, guchar *bg,
+					     guchar *values, gint nvalues);
+static void gradient_get_random             (gint seed, guchar *values,
+					     gint nvalues);
+static void gradient_get_default            (gchar *name, guchar *values,
+					     gint nvalues);
+static void gradient_get_values_external    (gchar *gradient_name,
+					     guchar *values, gint nvalues);
+static void gradient_get_values_real_external   (gchar *gradient_name,
+						 guchar *values, gint nvalues);
+static GradientCacheItem *gradient_cache_lookup (gchar *name, gint *found);
+static void gradient_cache_zorch            (void);
+
+static void query_box_cancel_callback (GtkWidget *widget,
+				       gpointer   data);
+static void query_box_ok_callback     (GtkWidget *widget,
+				       gpointer   data);
 
 /* *** INSERT-FILE-END *** */
 
@@ -706,28 +776,27 @@ static clock_t	get_values_external_clock = 0;
 MAIN ();
 
 void
-plugin_query()
+plugin_query (void)
 {
   static GParamDef args[]=
-    {
-      { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-      { PARAM_IMAGE, "image", "Input image (unused)" },
-      { PARAM_DRAWABLE, "drawable", "Input drawable" },
-      { PARAM_STRING, "gflare_name", "The name of GFlare" },
-      { PARAM_INT32, "xcenter", "X coordinate of center of GFlare" },
-      { PARAM_INT32, "ycenter", "Y coordinate of center of GFlare" },
-      { PARAM_FLOAT, "radius",	"Radius of GFlare (pixel)" },
-      { PARAM_FLOAT, "rotation", "Rotation of GFlare (degree)" },
-      { PARAM_FLOAT, "hue", "Hue rotation of GFlare (degree)" },
-      { PARAM_FLOAT, "vangle", "Vector angle for second flares (degree)" },
-      { PARAM_FLOAT, "vlength", "Vector length for second flares (percentage to Radius)" },
-      { PARAM_INT32, "use_asupsample", "Whether it uses or not adaptive supersampling while rendering (boolean)" },
-      { PARAM_INT32, "asupsample_max_depth", "Max depth for adaptive supersampling"},
-      { PARAM_FLOAT, "asupsample_threshold", "Threshold for adaptive supersampling"}
-   };
-  static GParamDef *return_vals = NULL;
+  {
+    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE, "image", "Input image (unused)" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_STRING, "gflare_name", "The name of GFlare" },
+    { PARAM_INT32, "xcenter", "X coordinate of center of GFlare" },
+    { PARAM_INT32, "ycenter", "Y coordinate of center of GFlare" },
+    { PARAM_FLOAT, "radius",	"Radius of GFlare (pixel)" },
+    { PARAM_FLOAT, "rotation", "Rotation of GFlare (degree)" },
+    { PARAM_FLOAT, "hue", "Hue rotation of GFlare (degree)" },
+    { PARAM_FLOAT, "vangle", "Vector angle for second flares (degree)" },
+    { PARAM_FLOAT, "vlength", "Vector length for second flares (percentage to Radius)" },
+    { PARAM_INT32, "use_asupsample", "Whether it uses or not adaptive supersampling while rendering (boolean)" },
+    { PARAM_INT32, "asupsample_max_depth", "Max depth for adaptive supersampling"},
+    { PARAM_FLOAT, "asupsample_threshold", "Threshold for adaptive supersampling"}
+  };
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
+
   gchar	 *help_string =
     " This plug-in produces a lense flare effect using custom gradients."
     " In interactive call, the user can edit his/her own favorite lense flare"
@@ -745,16 +814,16 @@ plugin_query()
 			  N_("<Image>/Filters/Light Effects/GFlare..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 void
 plugin_run (gchar   *name,
-     gint    nparams,
-     GParam  *param,
-     gint    *nreturn_vals,
-     GParam  **return_vals)
+	    gint     nparams,
+	    GParam  *param,
+	    gint    *nreturn_vals,
+	    GParam **return_vals)
 {
   static GParam values[1];
   GRunModeType run_mode;
@@ -773,6 +842,7 @@ plugin_run (gchar   *name,
    *	Get the specified drawable and its info (global variable)
    */
 
+  image_ID = param[1].data.d_image;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   dinfo.is_color  = gimp_drawable_is_rgb (drawable->id);
   dinfo.has_alpha = gimp_drawable_has_alpha (drawable->id);
@@ -794,7 +864,7 @@ plugin_run (gchar   *name,
   plug_in_parse_gflare_path ();
   gflares_list_load_all ();
 
-  gimp_tile_cache_ntiles ( drawable->width / gimp_tile_width () + 2);
+  gimp_tile_cache_ntiles (drawable->width / gimp_tile_width () + 2);
 
 
   switch (run_mode)
@@ -820,8 +890,10 @@ plugin_run (gchar   *name,
       break;
 #endif
       if (nparams != 14)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  gflare_name_copy (pvals.gflare_name, param[3].data.d_string);
 	  pvals.xcenter		     = param[4].data.d_int32;
@@ -834,9 +906,10 @@ plugin_run (gchar   *name,
 	  pvals.use_asupsample	     = param[11].data.d_int32;
 	  pvals.asupsample_max_depth = param[12].data.d_int32;
 	  pvals.asupsample_threshold = param[13].data.d_float;
+
+	  if (pvals.radius <= 0)
+	    status = STATUS_CALLING_ERROR;
 	}
-      if (pvals.radius <= 0)
-	status = STATUS_CALLING_ERROR;
       break;
 
     case RUN_WITH_LAST_VALS:
@@ -851,7 +924,8 @@ plugin_run (gchar   *name,
   if (status == STATUS_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->id) ||
+	  gimp_drawable_is_gray (drawable->id))
 	{
 	  gimp_progress_init (_("Gradient Flare..."));
 	  plugin_do ();
@@ -865,7 +939,7 @@ plugin_run (gchar   *name,
 	}
       else
 	{
-	  /* gimp_message ("gflare: cannot operate on indexed color images"); */
+	  g_message (_("GFlare: cannot operate on indexed color images"));
 	  status = STATUS_EXECUTION_ERROR;
 	}
     }
@@ -884,7 +958,7 @@ plugin_run (gchar   *name,
  *	This code is based on script_fu_find_scripts ()
  */
 void
-plug_in_parse_gflare_path ()
+plug_in_parse_gflare_path (void)
 {
   GParam *return_vals;
   gint nreturn_vals;
@@ -905,7 +979,7 @@ plug_in_parse_gflare_path ()
 
   if (return_vals[0].data.d_status != STATUS_SUCCESS || return_vals[1].data.d_string == NULL)
     {
-      DEBUG_PRINT(("No gflare-path in gimprc: gflare_path_list is NULL\n"));
+      DEBUG_PRINT ("No gflare-path in gimprc: gflare_path_list is NULL\n");
       gimp_destroy_params (return_vals, nreturn_vals);
       return;
     }
@@ -963,9 +1037,9 @@ plug_in_parse_gflare_path ()
 
 
 static void
-plugin_do ()
+plugin_do (void)
 {
-  GFlare	*gflare;
+  GFlare *gflare;
 
   gflare = gflares_list_lookup (pvals.gflare_name);
   if (gflare == NULL)
@@ -999,7 +1073,7 @@ plugin_do ()
 /* these routines should be almost rewritten anyway */
 
 static void
-plugin_do_non_asupsample ()
+plugin_do_non_asupsample (void)
 {
   GPixelRgn	src_rgn, dest_rgn;
   gpointer	pr;
@@ -1023,12 +1097,12 @@ plugin_do_non_asupsample ()
       src_row  = src_rgn.data;
       dest_row = dest_rgn.data;
 
-      for ( row = 0, y = src_rgn.y; row < src_rgn.h; row++, y++)
+      for (row = 0, y = src_rgn.y; row < src_rgn.h; row++, y++)
 	{
 	  src = src_row;
 	  dest = dest_row;
 
-	  for ( col = 0, x = src_rgn.x; col < src_rgn.w; col++, x++)
+	  for (col = 0, x = src_rgn.x; col < src_rgn.w; col++, x++)
 	    {
 	      for (b = 0; b < 3; b++)
 		src_pix[b] = dinfo.is_color ? src[b] : src[0];
@@ -1343,6 +1417,16 @@ gflare_load (char *filename, char *name)
   gflare_read_int      (&gflare->sflare_nverts, gf);
   gflare_read_int      (&gflare->sflare_seed, gf);
 
+  if (gflare->sflare_seed == -1)
+    {
+      gflare->sflare_seed = 1;
+      gflare->sflare_seed_time = TRUE;
+    }
+  else
+    {
+      gflare->sflare_seed_time = FALSE;
+    }
+
   fclose (gf->fp);
 
   if (gf->error)
@@ -1498,7 +1582,7 @@ gflare_save (GFlare *gflare)
   gflare_write_gradient_name (gflare->sflare_sizefac, fp);
   gflare_write_gradient_name (gflare->sflare_probability, fp);
   fprintf (fp, "%f %f %f\n", gflare->sflare_size, gflare->sflare_rotation, gflare->sflare_hue);
-  fprintf (fp, "%s %d %d\n", gflare_shapes[gflare->sflare_shape], gflare->sflare_nverts, gflare->sflare_seed);
+  fprintf (fp, "%s %d %d\n", gflare_shapes[gflare->sflare_shape], gflare->sflare_nverts, gflare->sflare_seed_time ? -1 : gflare->sflare_seed);
 
   fclose (fp);
   DEBUG_PRINT (("Saved %s\n", gflare->filename));
@@ -1546,13 +1630,14 @@ gflares_list_insert (GFlare *gflare)
   n = 0;
   tmp = gflares_list;
 
-  while (tmp) {
-    g = tmp->data;
+  while (tmp)
+    {
+      g = tmp->data;
 
-    if (strcmp (gflare->name, g->name) <= 0)
-      break;
-    n++;
-    tmp = tmp->next;
+      if (strcmp (gflare->name, g->name) <= 0)
+	break;
+      n++;
+      tmp = tmp->next;
   }
 
   num_gflares++;
@@ -1634,7 +1719,7 @@ gflares_list_remove (GFlare *gflare)
   gflares-path-list must be initialized first. (plug_in_parse_gflare_path ())
  */
 void
-gflares_list_load_all ()
+gflares_list_load_all (void)
 {
   GFlare	*gflare;
   GList		*list;
@@ -1689,7 +1774,7 @@ gflares_list_load_all ()
 }
 
 void
-gflares_list_free_all ()
+gflares_list_free_all (void)
 {
   GList *list;
   GFlare *gflare;
@@ -1928,7 +2013,7 @@ calc_place_sflare ()
       prob[i] = sum2 / sum;
     }
 
-  if (gflare->sflare_seed == -1)
+  if (gflare->sflare_seed_time)
     srand (time (NULL));
   else
     srand (gflare->sflare_seed);
@@ -2061,14 +2146,14 @@ calc_glow_pix (guchar *dest_pix, gdouble x, gdouble y)
   x -= calc.xcenter;
   y -= calc.ycenter;
   radius = sqrt (x*x + y*y) / calc.glow_radius;
-  angle = (atan2 (-y, x) + calc.glow_rotation ) / (2*G_PI);
+  angle = (atan2 (-y, x) + calc.glow_rotation ) / (2 * G_PI);
   angle = fmod_positive (angle, 1.0);
 
   calc_get_gradient (size_pix, calc.glow_angular_size, angle);
   /* angular_size gradient was grayfied already */
   angular_size = size_pix[0] / 255.0;
   radius /= (angular_size+0.0001);	/* in case angular_size == 0.0 */
-  if( radius < 0 || radius > 1 )
+  if(radius < 0 || radius > 1)
     {
       memset (dest_pix, 0, 4);
       return;
@@ -2105,7 +2190,7 @@ calc_rays_pix (guchar *dest_pix, gdouble x, gdouble y)
   x -= calc.xcenter;
   y -= calc.ycenter;
   radius = sqrt (x*x + y*y) / calc.rays_radius;
-  angle = (atan2 (-y, x) + calc.rays_rotation ) / (2*G_PI);
+  angle = (atan2 (-y, x) + calc.rays_rotation ) / (2 * G_PI);
   angle = fmod_positive (angle, 1.0);	/* make sure 0 <= angle < 1.0 */
   spike_frac = fmod (angle, calc.rays_spike_mod * 2);
   spike_angle = angle - spike_frac + calc.rays_spike_mod;
@@ -2118,7 +2203,7 @@ calc_rays_pix (guchar *dest_pix, gdouble x, gdouble y)
   /* angular_size gradient was grayfied already */
   angular_size = size_pix[0] / 255.0;
   radius /= (angular_size+0.0001);	/* in case angular_size == 0.0 */
-  if( radius < 0 || radius > 1 )
+  if(radius < 0 || radius > 1)
     {
       memset (dest_pix, 0, 4);
       return;
@@ -2331,24 +2416,20 @@ calc_overlay (guchar *dest, guchar *src1, guchar *src2)
 	This is gflare main dialog, one which opens in first.
  */
 
-int
-dlg_run ()
+gint
+dlg_run (void)
 {
-  GtkWidget	*shell;
-  GtkWidget	*button;
-  GtkWidget	*table;
-  GtkWidget	*inner_prv_frame;
-  GtkWidget     *outer_prv_frame; 
-  GtkWidget	*notebook;
-  guchar	*color_cube;
-  gchar		**argv;
-  gint		argc;
+  GtkWidget *shell;
+  GtkWidget *hbox;
+  GtkWidget *frame;
+  GtkWidget *abox;
+  GtkWidget *notebook;
+  guchar  *color_cube;
+  gchar  **argv;
+  gint     argc;
 
-  /*
-   *	Init Gdk & Gtk stuff
-   */
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("gflare");
 
   gtk_init (&argc, &argv);
@@ -2392,51 +2473,63 @@ dlg_run ()
    *	Dialog Shell
    */
 
-  shell = dlg->shell = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (shell), _("GFlare"));
-  gtk_window_set_position (GTK_WINDOW (shell), GTK_WIN_POS_MOUSE);
+  shell = dlg->shell =
+    gimp_dialog_new (_("GFlare"), "gflare",
+		     gimp_plugin_help_func, "filters/gflare.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
+
+		     _("OK"), dlg_ok_callback,
+		     NULL, NULL, NULL, TRUE, FALSE,
+		     _("Cancel"), gtk_widget_destroy,
+		     NULL, 1, NULL, FALSE, TRUE,
+
+		     NULL);
+
   gtk_signal_connect (GTK_OBJECT (shell), "destroy",
-		      (GtkSignalFunc) dlg_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
+  gimp_help_init ();
+
   /*
-   *	Action area
+   *    main hbox
    */
 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) dlg_ok_callback,
-		      shell);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6); 
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), hbox,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   /*
    *	Preview
    */
 
+  frame = gtk_frame_new (_("Preview")); 
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame); 
+
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_widget_show (abox);
+
+  frame = gtk_frame_new (NULL); 
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN); 
+  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_widget_show (frame);
+
   dlg->preview = preview_new (DLG_PREVIEW_WIDTH, DLG_PREVIEW_HEIGHT,
 			      dlg_preview_init_func, NULL,
 			      dlg_preview_render_func, NULL,
 			      dlg_preview_deinit_func, NULL);
-
   gtk_widget_set_events (GTK_WIDGET (dlg->preview->widget), DLG_PREVIEW_MASK);
+  gtk_container_add (GTK_CONTAINER (frame), dlg->preview->widget);
   gtk_signal_connect (GTK_OBJECT(dlg->preview->widget), "event",
-		      (GtkSignalFunc) dlg_preview_handle_event,
+		      GTK_SIGNAL_FUNC (dlg_preview_handle_event),
 		      NULL);
   dlg_preview_calc_window ();
-
-  inner_prv_frame = gtk_frame_new (NULL); 
-  gtk_frame_set_shadow_type (GTK_FRAME (inner_prv_frame), GTK_SHADOW_IN); 
-  gtk_container_add (GTK_CONTAINER (inner_prv_frame), dlg->preview->widget); 
-  gtk_container_set_border_width (GTK_CONTAINER (inner_prv_frame), 4); 
-  gtk_widget_show (inner_prv_frame); 
- 
-  outer_prv_frame = gtk_frame_new (_("Preview")); 
-  gtk_frame_set_shadow_type (GTK_FRAME (outer_prv_frame), GTK_SHADOW_ETCHED_IN); 
-  gtk_container_add (GTK_CONTAINER (outer_prv_frame), inner_prv_frame); 
-  gtk_widget_show (outer_prv_frame); 
 
   /*
    *	Notebook
@@ -2444,38 +2537,21 @@ dlg_run ()
 
   notebook = dlg->notebook = gtk_notebook_new ();
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
+  gtk_box_pack_start (GTK_BOX (hbox), notebook, TRUE, TRUE, 0);
+  gtk_widget_show (notebook);
 
   dlg_make_page_settings (dlg, notebook);
   dlg_make_page_selector (dlg, notebook);
-  gtk_widget_show (notebook);
 
-  /*
-   *	pack them
-   */
-
-  table = gtk_table_new (1, 2, TRUE); 
-  gtk_container_set_border_width (GTK_CONTAINER (table), 8); 
-  gtk_table_attach (GTK_TABLE (table), outer_prv_frame, 0, 1, 0, 1, 
-                   GTK_EXPAND|GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0); 
-  gtk_table_attach (GTK_TABLE (table), notebook, 1, 2, 0, 1, 
-                   GTK_EXPAND|GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0); 
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 8); 
-  gtk_widget_show (table); 
-
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), table, TRUE, TRUE, 0);
   DEBUG_PRINT (("shell is shown\n"));
-
   gtk_widget_show (shell);
 
   /*
    *	Make sure the selector page is realized
    *	This idea is from app/layers_dialog.c
    */
-  DEBUG_PRINT (("pages are shown\n"));
-
   gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 1);
   gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
-
 
   /*
    *	Initialization done
@@ -2486,6 +2562,7 @@ dlg_run ()
   DEBUG_PRINT (("dlg init done\n"));
 
   gtk_main ();
+  gimp_help_free ();
   gdk_flush ();
 
   return pint.run;
@@ -2496,22 +2573,14 @@ dlg_ok_callback (GtkWidget *widget,
 		 gpointer   data)
 {
   /* @GFLARE_NAME */
-  gflare_name_copy(pvals.gflare_name, dlg->gflare->name);
+  gflare_name_copy (pvals.gflare_name, dlg->gflare->name);
 
   pint.run = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-
 static void
-dlg_close_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-static void
-dlg_setup_gflare ()
+dlg_setup_gflare (void)
 {
   dlg->gflare = gflares_list_lookup (pvals.gflare_name);
 
@@ -2545,10 +2614,10 @@ dlg_page_map_callback (GtkWidget *widget, gpointer data)
  *	corner of preview widget, etc.
  */
 void
-dlg_preview_calc_window ()
+dlg_preview_calc_window (void)
 {
-  int			is_wide;
-  gdouble		offx, offy;
+  gint     is_wide;
+  gdouble  offx, offy;
 
   is_wide = ((double) DLG_PREVIEW_HEIGHT * drawable->width
 	     >= (double) DLG_PREVIEW_WIDTH * drawable->height);
@@ -2573,10 +2642,10 @@ dlg_preview_calc_window ()
 }
 
 void
-ed_preview_calc_window ()
+ed_preview_calc_window (void)
 {
-  int			is_wide;
-  gdouble		offx, offy;
+  gint     is_wide;
+  gdouble  offx, offy;
 
   is_wide = ((double) DLG_PREVIEW_HEIGHT * drawable->width
 	     >= (double) DLG_PREVIEW_WIDTH * drawable->height);
@@ -2605,7 +2674,6 @@ dlg_preview_handle_event (GtkWidget *widget, GdkEvent *event)
 {
   GdkEventButton *bevent;
   gint		 bx, by, x, y;
-  gchar		 buf[256];
 
   switch (event->type)
     {
@@ -2627,18 +2695,14 @@ dlg_preview_handle_event (GtkWidget *widget, GdkEvent *event)
 	  if (x != pvals.xcenter)
 	    {
 	      pvals.xcenter = x;
-	      gtk_signal_handler_block (GTK_OBJECT (dlg->xentry), dlg->xentry_id);
-	      sprintf (buf, "%d", x);
-	      gtk_entry_set_text (GTK_ENTRY (dlg->xentry), buf);
-	      gtk_signal_handler_unblock (GTK_OBJECT (dlg->xentry), dlg->xentry_id);
+	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dlg->sizeentry),
+					  0, x);
 	    }
 	  if (y != pvals.ycenter)
 	    {
 	      pvals.ycenter = y;
-	      gtk_signal_handler_block (GTK_OBJECT (dlg->yentry), dlg->yentry_id);
-	      sprintf (buf, "%d", y);
-	      gtk_entry_set_text (GTK_ENTRY (dlg->yentry), buf);
-	      gtk_signal_handler_unblock (GTK_OBJECT (dlg->yentry), dlg->yentry_id);
+	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dlg->sizeentry),
+					  1, y);
 	    }
 	  dlg_preview_update ();
 	}
@@ -2650,11 +2714,11 @@ dlg_preview_handle_event (GtkWidget *widget, GdkEvent *event)
 }
 
 gint
-ed_preview_handle_event (GtkWidget *widget, GdkEvent *event)
+ed_preview_handle_event (GtkWidget *widget,
+			 GdkEvent  *event)
 {
   GdkEventButton *bevent;
   gint		 bx, by, x, y;
-  gchar		 buf[256];
 
   switch (event->type)
     {
@@ -2676,18 +2740,14 @@ ed_preview_handle_event (GtkWidget *widget, GdkEvent *event)
 	  if (x != pvals.xcenter)
 	    {
 	      pvals.xcenter = x;
-	      gtk_signal_handler_block (GTK_OBJECT (dlg->xentry), dlg->xentry_id);
-	      sprintf (buf, "%d", x);
-	      gtk_entry_set_text (GTK_ENTRY (dlg->xentry), buf);
-	      gtk_signal_handler_unblock (GTK_OBJECT (dlg->xentry), dlg->xentry_id);
+	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dlg->sizeentry),
+					  0, x);
 	    }
 	  if (y != pvals.ycenter)
 	    {
 	      pvals.ycenter = y;
-	      gtk_signal_handler_block (GTK_OBJECT (dlg->yentry), dlg->yentry_id);
-	      sprintf (buf, "%d", y);
-	      gtk_entry_set_text (GTK_ENTRY (dlg->yentry), buf);
-	      gtk_signal_handler_unblock (GTK_OBJECT (dlg->yentry), dlg->yentry_id);
+	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dlg->sizeentry),
+					  1, y);
 	    }
 	  dlg_preview_update ();
 	}
@@ -2797,229 +2857,232 @@ dlg_preview_deinit_func (Preview *preview, gpointer data)
 /*****************************************/
 
 static void
-dlg_make_page_settings (GFlareDialog *dlg, GtkWidget *notebook)
+dlg_make_page_settings (GFlareDialog *dlg,
+			GtkWidget    *notebook)
 {
-  GtkWidget	*table;
-  GtkWidget	*note_label;
-  GtkWidget	*button;
-  GtkWidget	*asup_frame;
-  GtkWidget	*asup_table;
-  GtkWidget	*label;
-  GtkWidget	*scale;
-  GtkObject	*scale_data;
-  GtkWidget	*entry;
-  gchar		buffer[256];
+  GtkWidget *main_vbox;
+  GtkWidget *frame;
+  GtkWidget *center;
+  GtkWidget *chain;
+  GtkWidget *table;
+  GtkWidget *button;
+  GtkWidget *vbox;
+  GtkWidget *asup_table;
+  GtkWidget *scale;
+  GtkObject *adj;
+  gdouble    xres, yres;
+  gint       row;
 
-  table = gtk_table_new (10, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 10);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 10);
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
 
-  label = gtk_label_new (_("Center X:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE(table), label, 0, 1, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-  entry = dlg->xentry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf( buffer, "%d", pvals.xcenter );
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  dlg->xentry_id =
-    gtk_signal_connect (GTK_OBJECT (entry), "changed",
-			(GtkSignalFunc) &dlg_position_entry_callback,
-			&pvals.xcenter );
-  gtk_table_attach (GTK_TABLE(table), entry, 1, 2, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (entry);
+  frame = gtk_frame_new (_("Center"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  label = gtk_label_new (_("Center Y:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE(table), label, 0, 1, 1, 2,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-  entry = dlg->yentry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf( buffer, "%d", pvals.ycenter );
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  dlg->yentry_id =
-    gtk_signal_connect (GTK_OBJECT (entry), "changed",
-			(GtkSignalFunc) &dlg_position_entry_callback,
-			&pvals.ycenter );
-  gtk_table_attach (GTK_TABLE(table), entry, 1, 2, 1, 2,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (entry);
+  gimp_image_get_resolution (image_ID, &xres, &yres);
 
-  entscale_new (table, 0, 2, _("Radius:"),
-		ENTSCALE_DOUBLE, &pvals.radius,
-		0.0, drawable->width/2, 1.0, FALSE,
-		&dlg_entscale_callback, (gpointer) PAGE_SETTINGS);
-  entscale_new (table, 0, 3, _("Rotation:"),
-		ENTSCALE_DOUBLE, &pvals.rotation,
-		-180.0, 180.0, 1.0, FALSE,
-		&dlg_entscale_callback, (gpointer) PAGE_SETTINGS);
-  entscale_new (table, 0, 4, _("Hue Rotation:"),
-		ENTSCALE_DOUBLE, &pvals.hue,
-		-180.0, 180.0, 1.0, FALSE,
-		&dlg_entscale_callback, (gpointer) PAGE_SETTINGS);
-  entscale_new (table, 0, 5, _("Vector Angle:"),
-		ENTSCALE_DOUBLE, &pvals.vangle,
-		0.0, 359.0, 1.0, FALSE,
-		&dlg_entscale_callback, (gpointer) PAGE_SETTINGS);
-  entscale_new (table, 0, 6, _("Vector Length:"),
-		ENTSCALE_DOUBLE, &pvals.vlength,
-		1, 1000, 1.0, FALSE,
-		&dlg_entscale_callback, (gpointer) PAGE_SETTINGS);
+  center = dlg->sizeentry =
+    gimp_coordinates_new (gimp_image_get_unit (image_ID), "%a",
+			  TRUE, TRUE, 75, GIMP_SIZE_ENTRY_UPDATE_SIZE,
+
+			  FALSE, FALSE, &chain,
+
+			  _("X:"), pvals.xcenter, xres,
+			  -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
+			  0, gimp_drawable_width (drawable->id),
+
+			  _("Y:"), pvals.ycenter, yres,
+			  -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
+			  0, gimp_drawable_height (drawable->id));
+  gtk_container_set_border_width (GTK_CONTAINER (center), 4);
+  gtk_container_add (GTK_CONTAINER (frame), center);
+  gtk_signal_connect (GTK_OBJECT (center), "value_changed",
+		      GTK_SIGNAL_FUNC (dlg_position_entry_callback),
+		      NULL);
+  gtk_signal_connect (GTK_OBJECT (center), "refval_changed",
+		      GTK_SIGNAL_FUNC (dlg_position_entry_callback),
+		      NULL);
+  gtk_widget_hide (chain);
+  gtk_widget_show (center);
+
+  frame = gtk_frame_new (_("Parameters"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (5, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  row = 0;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Radius:"), SCALE_WIDTH, 0,
+			      pvals.radius, 0.0, drawable->width / 2,
+			      1.0, 10.0, 1,
+			      FALSE, 0.0, GIMP_MAX_IMAGE_SIZE,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &pvals.radius);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dlg_preview_update),
+		      NULL);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Rotation:"), SCALE_WIDTH, 0,
+			      pvals.rotation, -180.0, 180.0, 1.0, 15.0, 1,
+			      TRUE, 0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &pvals.rotation);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dlg_preview_update),
+		      NULL);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Hue Rotation:"), SCALE_WIDTH, 0,
+			      pvals.hue, -180.0, 180.0, 1.0, 15.0, 1,
+			      TRUE, 0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &pvals.hue);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dlg_preview_update),
+		      NULL);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Vector Angle:"), SCALE_WIDTH, 0,
+			      pvals.vangle, 0.0, 359.0, 1.0, 15.0, 1,
+			      TRUE, 0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &pvals.vangle);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dlg_preview_update),
+		      NULL);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Vector Length:"), SCALE_WIDTH, 0,
+			      pvals.vlength, 1, 1000, 1.0, 10.0, 1,
+			      FALSE, 1, GIMP_MAX_IMAGE_SIZE,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &pvals.vlength);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dlg_preview_update),
+		      NULL);
+
   /**
   ***	Asupsample settings
   ***	This code is stolen from gimp-0.99.x/app/blend.c
   **/
 
+  /*  asupsample frame */
+  frame = dlg->asupsample_frame = gtk_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
   button = gtk_check_button_new_with_label (_("Adaptive Supersampling"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), pvals.use_asupsample );
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      (GtkSignalFunc) dlg_use_asupsample_callback,
-		      &pvals.use_asupsample );
-  gtk_table_attach (GTK_TABLE(table), button, 0, 2, 7, 8,
-		    GTK_FILL, 0, 0, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				pvals.use_asupsample);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  /*  asupsample frame */
-  asup_frame = dlg->asupsample_frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (asup_frame), GTK_SHADOW_ETCHED_IN);
-  gtk_widget_set_sensitive (asup_frame, pvals.use_asupsample);
-
   asup_table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (asup_table), 5);
-  gtk_container_add (GTK_CONTAINER (asup_frame), asup_table);
+  gtk_table_set_col_spacings (GTK_TABLE (asup_table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (asup_table), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), asup_table, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Max depth:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
-  gtk_table_attach (GTK_TABLE (asup_table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
-  gtk_widget_show (label);
+  gtk_widget_set_sensitive (asup_table, pvals.use_asupsample);
+  gtk_object_set_data (GTK_OBJECT (button), "set_sensitive", asup_table);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &pvals.use_asupsample);
 
-  scale_data = gtk_adjustment_new (pvals.asupsample_max_depth,
-				   1.0, 10.0, 1.0, 1.0, 1.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+  adj = gtk_adjustment_new (pvals.asupsample_max_depth,
+			    1.0, 10.0, 1.0, 1.0, 1.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (adj));
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) dlg_iscale_callback,
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &pvals.asupsample_max_depth);
-  gtk_table_attach (GTK_TABLE (asup_table), scale, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 4, 2);
-  gtk_widget_show (scale);
+  gimp_table_attach_aligned (GTK_TABLE (asup_table), 0, 0,
+			     _("Max Depth:"), 1.0, 1.0,
+			     scale, 1, FALSE);
 
-  label = gtk_label_new (_("Threshold:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
-  gtk_table_attach (GTK_TABLE (asup_table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (pvals.asupsample_threshold,
-				   0.0, 4.0, 0.01, 0.01, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+  adj = gtk_adjustment_new (pvals.asupsample_threshold,
+			    0.0, 4.0, 0.01, 0.01, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (adj));
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) dlg_dscale_callback,
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &pvals.asupsample_threshold);
-  gtk_table_attach (GTK_TABLE (asup_table), scale, 1, 2, 1, 2,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 4, 2);
-  gtk_widget_show (scale);
+  gimp_table_attach_aligned (GTK_TABLE (asup_table), 0, 1,
+			     _("Threshold:"), 1.0, 1.0,
+			     scale, 1, FALSE);
 
   gtk_widget_show (asup_table);
-  gtk_table_attach (GTK_TABLE(table), asup_frame, 0, 2, 8, 9,
-		    GTK_FILL, 0, 0, 0);
-  gtk_widget_show (asup_frame);
 
-  button = gtk_check_button_new_with_label (_("Auto update preview"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), dlg->update_preview );
+  button = gtk_check_button_new_with_label (_("Auto Update Preview"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), dlg->update_preview);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      (GtkSignalFunc) dlg_update_preview_callback,
-		      &dlg->update_preview );
-  gtk_table_attach (GTK_TABLE(table), button, 0, 2, 9, 10,
-		    GTK_FILL, 0, 0, 0);
+		      GTK_SIGNAL_FUNC (dlg_update_preview_callback),
+		      &dlg->update_preview);
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*
    *	Create Page
    */
-  note_label = gtk_label_new (_("Settings"));
-  gtk_misc_set_alignment (GTK_MISC (note_label), 0.5, 0.5);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, note_label);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), main_vbox,
+			    gtk_label_new (_("Settings")));
   gtk_signal_connect (GTK_OBJECT (table), "map",
-		      (GtkSignalFunc) dlg_page_map_callback,
+		      GTK_SIGNAL_FUNC (dlg_page_map_callback),
 		      (gpointer) PAGE_SETTINGS);
-  gtk_widget_show (note_label);
-  gtk_widget_show (table);
+  gtk_widget_show (main_vbox);
 }
 
 
 static void
 dlg_position_entry_callback (GtkWidget *widget, gpointer data)
 {
-  gint *var = data;
-  gint new_val;
+  gint x, y;
+
+  x = ROUND (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
+  y = ROUND (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
 
   DEBUG_PRINT (("dlg_position_entry_callback\n"));
 
-  new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-  if (*var != new_val)
+  if (pvals.xcenter != x ||
+      pvals.ycenter != y)
     {
-      *var = new_val;
+      pvals.xcenter = x;
+      pvals.ycenter = y;
+
       dlg_preview_update ();
     }
 }
 
 static void
-dlg_entscale_callback (gdouble new_val, gpointer data)
+dlg_update_preview_callback (GtkWidget *widget,
+			     gpointer   data)
 {
-  DEBUG_PRINT (("dlg_entscale_callback\n"));
-
-  dlg_preview_update ();
-}
-
-
-static void
-dlg_use_asupsample_callback (GtkWidget *widget, gpointer data)
-{
-  gint			*toggle_val = (gint *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-
-  if (!dlg->init)
-    gtk_widget_set_sensitive (dlg->asupsample_frame, *toggle_val);
-}
-
-static void
-dlg_iscale_callback (GtkAdjustment *adjustment, gpointer data)
-{
-  *(gint*) data = (gint) adjustment->value;
-
-  /* dlg_preview_update (); */
-}
-
-static void
-dlg_dscale_callback (GtkAdjustment *adjustment, gpointer data)
-{
-  *(gdouble*) data = adjustment->value;
-
-  /* dlg_preview_update (); */
-}
-
-static void
-dlg_update_preview_callback (GtkWidget *widget, gpointer data)
-{
-  gint	*toggle_val = (gint *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
+  gimp_toggle_button_update (widget, data);
 
   dlg_preview_update ();
 }
@@ -3029,41 +3092,47 @@ dlg_update_preview_callback (GtkWidget *widget, gpointer data)
 /*****************************************/
 
 static void
-dlg_make_page_selector (GFlareDialog *dlg, GtkWidget *notebook)
+dlg_make_page_selector (GFlareDialog *dlg,
+			GtkWidget    *notebook)
 {
-  GtkWidget	*vbox;
-  GtkWidget	*hbox;
-  GtkWidget	*listbox;
-  GtkWidget	*list;
-  GtkWidget	*button;
-  GtkWidget	*note_label;
-  int		i;
-  static struct {
-    char		*label;
-    GtkSignalFunc	callback;
-  } buttons[] = {
-    { "New",	(GtkSignalFunc) &dlg_selector_new_callback},
-    { "Edit",	(GtkSignalFunc) &dlg_selector_edit_callback},
-    { "Copy",	(GtkSignalFunc) &dlg_selector_copy_callback},
-    { "Delete", (GtkSignalFunc) &dlg_selector_delete_callback}
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *listbox;
+  GtkWidget *list;
+  GtkWidget *button;
+  gint       i;
+  static struct
+  {
+    gchar         *label;
+    GtkSignalFunc  callback;
+  }
+  buttons[] =
+  {
+    { N_("New"),    (GtkSignalFunc) &dlg_selector_new_callback },
+    { N_("Edit"),   (GtkSignalFunc) &dlg_selector_edit_callback },
+    { N_("Copy"),   (GtkSignalFunc) &dlg_selector_copy_callback },
+    { N_("Delete"), (GtkSignalFunc) &dlg_selector_delete_callback }
   };
 
   DEBUG_PRINT (("dlg_make_page_selector\n"));
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
 
   /*
    *	List Box
    */
 
   listbox = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (listbox),
+				  GTK_POLICY_AUTOMATIC,
+				  GTK_POLICY_AUTOMATIC);
 
   gtk_widget_set_usize (listbox, DLG_LISTBOX_WIDTH, DLG_LISTBOX_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox), listbox, TRUE, TRUE, 0);
 
   list = dlg->selector_list = gtk_list_new ();
-  gtk_scrolled_window_add_with_viewport (
-             GTK_SCROLLED_WINDOW (listbox), list);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (listbox), list);
   gtk_widget_show (listbox);
   gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_BROWSE);
   gtk_widget_show (list);
@@ -3074,16 +3143,17 @@ dlg_make_page_selector (GFlareDialog *dlg, GtkWidget *notebook)
    *	The buttons for the possible listbox operations
    */
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 4);
   for (i = 0; i < sizeof (buttons) / sizeof (buttons[0]); i++)
     {
-      button = gtk_button_new_with_label (gettext(buttons[i].label));
+      button = gtk_button_new_with_label (gettext (buttons[i].label));
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  buttons[i].callback, button);
-      gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 2);
+			  buttons[i].callback,
+			  button);
+      gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
       gtk_widget_show (button);
     }
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 3);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   gtk_widget_show (vbox);
@@ -3091,14 +3161,11 @@ dlg_make_page_selector (GFlareDialog *dlg, GtkWidget *notebook)
   /*
    *	Create Page
    */
-  note_label = gtk_label_new (_("Selector"));
-  gtk_widget_show (note_label);
-  gtk_misc_set_alignment (GTK_MISC (note_label), 0.5, 0.5);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, note_label);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
+			    gtk_label_new (_("Selector")));
   gtk_signal_connect (GTK_OBJECT (vbox), "map",
-		      (GtkSignalFunc) dlg_page_map_callback,
+		      GTK_SIGNAL_FUNC (dlg_page_map_callback),
 		      (gpointer) PAGE_SELECTOR);
-  gtk_widget_show (note_label);
   gtk_widget_show (vbox);
 }
 
@@ -3107,11 +3174,11 @@ dlg_make_page_selector (GFlareDialog *dlg, GtkWidget *notebook)
  *	Set up selector's listbox, according to gflares_list
  */
 static void
-dlg_selector_setup_listbox ()
+dlg_selector_setup_listbox (void)
 {
-  GList		*list;
-  GFlare	*gflare;
-  int		n;
+  GList  *list;
+  GFlare *gflare;
+  gint    n;
 
   DEBUG_PRINT (("dlg_selector_setup_listbox\n"));
 
@@ -3139,17 +3206,19 @@ dlg_selector_setup_listbox ()
  *	Insert new list_item to selector's listbox
  */
 static void
-dlg_selector_insert (GFlare *gflare, int pos, int select)
+dlg_selector_insert (GFlare *gflare,
+		     gint    pos,
+		     gint    select)
 {
-  GtkWidget	*list_item;
-  GList		*list;
+  GtkWidget *list_item;
+  GList     *list;
 
   DEBUG_PRINT (("dlg_selector_insert %s %d\n", gflare->name, pos));
 
   list_item = gtk_list_item_new_with_label (gflare->name);
   /* gflare->list_item = list_item; */
   gtk_signal_connect (GTK_OBJECT (list_item), "select",
-		      (GtkSignalFunc) dlg_selector_list_item_callback,
+		      GTK_SIGNAL_FUNC (dlg_selector_list_item_callback),
 		      (gpointer) gflare);
   gtk_widget_show (list_item);
 
@@ -3161,7 +3230,8 @@ dlg_selector_insert (GFlare *gflare, int pos, int select)
 }
 
 static void
-dlg_selector_list_item_callback (GtkWidget *widget, gpointer data)
+dlg_selector_list_item_callback (GtkWidget *widget,
+				 gpointer   data)
 {
   if (widget->state != GTK_STATE_SELECTED)
     return;
@@ -3179,24 +3249,25 @@ static void
 dlg_selector_new_callback (GtkWidget *widget,
 			   gpointer data)
 {
-  query_string_box ( _("New GFlare"),
-		     _("Enter a name for the new GFlare"),
+  query_string_box (_("New GFlare"),
+		     _("Enter a Name for the New GFlare:"),
 		     _("untitled"),
 		     dlg_selector_new_ok_callback, dlg);
 }
 
 static void
-dlg_selector_new_ok_callback (GtkWidget *widget, gpointer client_data, gpointer call_data)
+dlg_selector_new_ok_callback (GtkWidget *widget,
+			      gpointer   client_data,
+			      gpointer   call_data)
 {
-  char		*new_name = call_data;
-  GFlare	*gflare;
-  gint		pos;
+  gchar  *new_name = call_data;
+  GFlare *gflare;
+  gint    pos;
 
   g_assert (new_name != NULL);
 
   if (gflares_list_lookup (new_name))
     {
-      /* message_box (); */
       g_warning (_("The name `%s' is used already!"), new_name);
       return;
     }
@@ -3215,7 +3286,7 @@ dlg_selector_new_ok_callback (GtkWidget *widget, gpointer client_data, gpointer 
  */
 static void
 dlg_selector_edit_callback (GtkWidget *widget,
-			   gpointer data)
+			    gpointer   data)
 {
   preview_render_end (dlg->preview);
   gtk_widget_set_sensitive (dlg->shell, FALSE);
@@ -3223,7 +3294,8 @@ dlg_selector_edit_callback (GtkWidget *widget,
 }
 
 static void
-dlg_selector_edit_done_callback (gint updated, gpointer data)
+dlg_selector_edit_done_callback (gint     updated,
+				 gpointer data)
 {
   gtk_widget_set_sensitive (dlg->shell, TRUE);
   if (updated)
@@ -3233,38 +3305,38 @@ dlg_selector_edit_done_callback (gint updated, gpointer data)
   dlg_preview_update ();
 }
 
-
 /*
  *	"Copy" button in Selector page
  */
 static void
 dlg_selector_copy_callback (GtkWidget *widget,
-			    gpointer data)
+			    gpointer   data)
 {
-  char *name;
+  gchar *name;
 
-  name = g_new (gchar, strlen (dlg->gflare->name) + 6);
-  sprintf (name, "%s copy", dlg->gflare->name);
+  name = g_strdup_printf ("%s copy", dlg->gflare->name);
 
-  query_string_box ( _("Copy GFlare"),
-		     _("Enter a name for the copied GFlare"),
+  query_string_box (_("Copy GFlare"),
+		     _("Enter a Name for the Copied GFlare:"),
 		     name,
 		     dlg_selector_copy_ok_callback, dlg);
+
+  g_free (name);
 }
 
-
 static void
-dlg_selector_copy_ok_callback (GtkWidget *widget, gpointer client_data, gpointer call_data)
+dlg_selector_copy_ok_callback (GtkWidget *widget,
+			       gpointer   client_data,
+			       gpointer   call_data)
 {
-  char		*copy_name = call_data;
-  GFlare	*gflare;
-  gint		pos;
+  gchar  *copy_name = call_data;
+  GFlare *gflare;
+  gint    pos;
 
   g_assert (copy_name != NULL);
 
   if (gflares_list_lookup (copy_name))
     {
-      /* message_box (); */
       g_warning (_("The name `%s' is used already!"), copy_name);
       return;
     }
@@ -3284,12 +3356,11 @@ dlg_selector_copy_ok_callback (GtkWidget *widget, gpointer client_data, gpointer
  */
 static void
 dlg_selector_delete_callback (GtkWidget *widget,
-			      gpointer data)
+			      gpointer   data)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *label;
-  GtkWidget *button;
   gchar	    *str;
 
   if (num_gflares <= 1)
@@ -3299,63 +3370,50 @@ dlg_selector_delete_callback (GtkWidget *widget,
       return;
     }
 
-  dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dialog), _("Delete GFlare"));
-  gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-  gtk_container_set_border_width(GTK_CONTAINER(dialog), 0);
+  dialog = gimp_dialog_new (_("Delete GFlare"), "gflare",
+			    gimp_plugin_help_func, "filters/gflare.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, FALSE, FALSE,
 
-  vbox = gtk_vbox_new(FALSE, 0);
-  gtk_container_set_border_width(GTK_CONTAINER(vbox), 8);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), vbox,
-		     FALSE, FALSE, 0);
-  gtk_widget_show(vbox);
+			    _("Delete"), dlg_selector_delete_ok_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Cancel"), dlg_selector_delete_cancel_callback,
+			    NULL, NULL, NULL, FALSE, TRUE,
+
+			    NULL);
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
   /* Question */
 
   str = g_strdup_printf(_("Are you sure you want to delete "
-    "\"%s\" from the list and from disk?"), dlg->gflare->name);
-  label = gtk_label_new(str);
-  g_free(str);
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
-  gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show(label);
+			  "\"%s\" from the list and from disk?"),
+			dlg->gflare->name);
+  label = gtk_label_new (str);
+  g_free (str);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-  /* Buttons */
+  gtk_widget_show (dialog);
 
-  button = gtk_button_new_with_label (_("Delete"));
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) dlg_selector_delete_ok_callback,
-		      (gpointer) dialog);
-  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
-		     button, TRUE, TRUE, 0);
-  gtk_widget_grab_default(button);
-  gtk_widget_show(button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT); 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) dlg_selector_delete_cancel_callback,
-		      (gpointer) dialog);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
-		     button, TRUE, TRUE, 0);
-  gtk_widget_show(button);
-
-  /* Show! */
-
-  gtk_widget_show(dialog);
-  gtk_widget_set_sensitive(dlg->shell, FALSE);
+  gtk_widget_set_sensitive (dlg->shell, FALSE);
 }
 
 static void
-dlg_selector_delete_ok_callback(GtkWidget *widget, gpointer client_data)
+dlg_selector_delete_ok_callback (GtkWidget *widget,
+				 gpointer   data)
 {
-  GFlare	*old_gflare;
-  GList		*tmp;
-  int		i, new_i;
+  GFlare *old_gflare;
+  GList  *tmp;
+  gint    i, new_i;
 
-  gtk_widget_destroy(GTK_WIDGET(client_data));
-  gtk_widget_set_sensitive(dlg->shell, TRUE);
+  gtk_widget_destroy (GTK_WIDGET (data));
+  gtk_widget_set_sensitive (dlg->shell, TRUE);
 
   i = gflares_list_index (dlg->gflare);
 
@@ -3388,10 +3446,11 @@ dlg_selector_delete_ok_callback(GtkWidget *widget, gpointer client_data)
 }
 
 static void
-dlg_selector_delete_cancel_callback (GtkWidget *widget, gpointer client_data)
+dlg_selector_delete_cancel_callback (GtkWidget *widget,
+				     gpointer   data)
 {
-  gtk_widget_destroy(GTK_WIDGET(client_data));
-  gtk_widget_set_sensitive(dlg->shell, TRUE);
+  gtk_widget_destroy (GTK_WIDGET (data));
+  gtk_widget_set_sensitive (dlg->shell, TRUE);
 }
 
 /*************************************************************************/
@@ -3408,121 +3467,98 @@ dlg_selector_delete_cancel_callback (GtkWidget *widget, gpointer client_data)
 
 static void
 ed_run (GFlare		     *target_gflare,
-	GFlareEditorCallback callback,
-	gpointer	     calldata)
+	GFlareEditorCallback  callback,
+	gpointer	      calldata)
 {
-  GtkWidget	*shell;
-  GtkWidget	*table;
-  GtkWidget     *inner_prv_frame; 
-  GtkWidget     *outer_prv_frame; 
-  GtkWidget	*notebook;
-  GtkWidget	*button;
+  GtkWidget *shell;
+  GtkWidget *hbox;
+  GtkWidget *frame; 
+  GtkWidget *abox;
+  GtkWidget *notebook;
 
   if (!ed)
     ed = g_new0 (GFlareEditor, 1);
-  ed->init = TRUE;
-  ed->run  = FALSE;
+  ed->init          = TRUE;
+  ed->run           = FALSE;
   ed->target_gflare = target_gflare;
-  ed->gflare = gflare_dup (target_gflare, target_gflare->name);
-  ed->callback = callback;
-  ed->calldata = calldata;
+  ed->gflare        = gflare_dup (target_gflare, target_gflare->name);
+  ed->callback      = callback;
+  ed->calldata      = calldata;
 
   /*
    *	Dialog Shell
    */
-  shell = ed->shell = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (shell), _("GFlare Editor"));
-  gtk_window_set_position (GTK_WINDOW (shell), GTK_WIN_POS_MOUSE);
+  shell = ed->shell =
+    gimp_dialog_new (_("GFlare Editor"), "gflare",
+		     gimp_plugin_help_func, "filters/gflare.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
+
+		     _("Rescan Gradients"), ed_rescan_callback,
+		     NULL, NULL, NULL, FALSE, FALSE,
+		     _("OK"), ed_ok_callback,
+		     NULL, NULL, NULL, TRUE, FALSE,
+		     _("Cancel"), gtk_widget_destroy,
+		     NULL, 1, NULL, FALSE, TRUE,
+
+		     NULL);
+
   gtk_signal_connect (GTK_OBJECT (shell), "destroy",
-		      (GtkSignalFunc) ed_close_callback,
+		      GTK_SIGNAL_FUNC (ed_close_callback),
 		      NULL);
 
   /*
-   *	Action area
+   *    main hbox
    */
 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) ed_ok_callback,
-		      shell);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->action_area),
-		      button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (shell));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->action_area),
-		      button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Rescan Gradients"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) ed_rescan_callback,
-		      NULL);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->action_area),
-		      button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6); 
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), hbox,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   /*
    *	Preview
    */
 
+  frame = gtk_frame_new (_("Preview")); 
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame); 
+
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_widget_show (abox);
+
+  frame = gtk_frame_new (NULL); 
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN); 
+  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_widget_show (frame);
+
   ed->preview = preview_new (ED_PREVIEW_WIDTH, ED_PREVIEW_HEIGHT,
 			     ed_preview_init_func, NULL,
 			     ed_preview_render_func, NULL,
 			     ed_preview_deinit_func, NULL);
-
   gtk_widget_set_events (GTK_WIDGET (ed->preview->widget), DLG_PREVIEW_MASK);
+  gtk_container_add (GTK_CONTAINER (frame), ed->preview->widget); 
   gtk_signal_connect (GTK_OBJECT(ed->preview->widget), "event",
-		      (GtkSignalFunc) ed_preview_handle_event,
+		      GTK_SIGNAL_FUNC (ed_preview_handle_event),
 		      NULL);
   ed_preview_calc_window ();
-
-  inner_prv_frame = gtk_frame_new (NULL); 
-  gtk_frame_set_shadow_type (GTK_FRAME (inner_prv_frame), GTK_SHADOW_IN); 
-  gtk_container_add (GTK_CONTAINER (inner_prv_frame), ed->preview->widget); 
-  gtk_container_set_border_width (GTK_CONTAINER (inner_prv_frame), 4); 
-  gtk_widget_show (inner_prv_frame); 
- 
-  outer_prv_frame = gtk_frame_new (_("Preview")); 
-  gtk_frame_set_shadow_type (GTK_FRAME (outer_prv_frame), GTK_SHADOW_ETCHED_IN); 
-  gtk_container_add (GTK_CONTAINER (outer_prv_frame), inner_prv_frame); 
-  gtk_widget_show (outer_prv_frame); 
-
 
   /*
    *	Notebook
    */
   notebook = ed->notebook = gtk_notebook_new ();
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
+  gtk_box_pack_start (GTK_BOX (hbox), notebook, TRUE, TRUE, 0);
+  gtk_widget_show (notebook);
 
   ed_make_page_general (ed, notebook);
   ed_make_page_glow (ed, notebook);
   ed_make_page_rays (ed, notebook);
   ed_make_page_sflare (ed, notebook);
-  gtk_widget_show (notebook);
 
-  /*
-   *	pack them
-   */
-
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 8); 
-  gtk_table_attach (GTK_TABLE (table), outer_prv_frame, 0, 1, 0, 1, 
-                   GTK_EXPAND|GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0); 
-  gtk_table_attach (GTK_TABLE (table), notebook, 1, 2, 0, 1, 
-                   GTK_EXPAND|GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0); 
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 8); 
- 
-  gtk_widget_show (table);
-
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (shell);
 
   ed->init = FALSE;
@@ -3541,7 +3577,7 @@ ed_close_callback (GtkWidget *widget,
 
 static void
 ed_ok_callback (GtkWidget *widget,
-		 gpointer   data)
+		gpointer   data)
 {
   ed->run = TRUE;
   gflare_copy (ed->target_gflare, ed->gflare);
@@ -3549,7 +3585,8 @@ ed_ok_callback (GtkWidget *widget,
 }
 
 static void
-ed_rescan_callback (GtkWidget *widget, gpointer data)
+ed_rescan_callback (GtkWidget *widget,
+		    gpointer   data)
 {
   ed->init = TRUE;
   gradient_menu_rescan ();
@@ -3558,15 +3595,17 @@ ed_rescan_callback (GtkWidget *widget, gpointer data)
   gtk_widget_draw (ed->notebook, NULL);
 }
 
-
 static void
-ed_make_page_general (GFlareEditor *ed, GtkWidget *notebook)
+ed_make_page_general (GFlareEditor *ed,
+		      GtkWidget    *notebook)
 {
-  GFlare	*gflare = ed->gflare;
-  GtkWidget	*vbox;
-  GtkWidget	*table;
-  GtkWidget	*note_label;
-  GtkWidget	*option_menu;
+  GFlare    *gflare = ed->gflare;
+  GtkWidget *vbox;
+  GtkWidget *table;
+  GtkWidget *option_menu;
+  GtkWidget *sep;
+  GtkObject *adj;
+  gint       row;
 
   vbox = gtk_vbox_new (FALSE, 0);
 
@@ -3574,300 +3613,476 @@ ed_make_page_general (GFlareEditor *ed, GtkWidget *notebook)
    *	Scales
    */
 
-  table = gtk_table_new (6, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 10);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 10);
+  table = gtk_table_new (8, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
-  entscale_new (table, 0, 0, _("Glow Opacity (%):"),
-		ENTSCALE_DOUBLE, &gflare->glow_opacity,
-		0.0, 100.0, 1.0, TRUE,
-		&ed_entscale_callback, (gpointer) PAGE_GENERAL);
+  row = 0;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Glow Opacity (%):"), SCALE_WIDTH, 0,
+			      gflare->glow_opacity, 0.0, 100.0, 1.0, 10.0, 1,
+			      TRUE, 0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &gflare->glow_opacity);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
 
   option_menu = ed_mode_menu_new (&gflare->glow_mode);
-  ed_put_mode_menu (table, 0, 1, _("Glow Mode:"), option_menu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+			     _("Glow Mode:"), 1.0, 0.5,
+			     option_menu, 1, TRUE);
 
-  entscale_new (table, 0, 2, _("Rays Opacity (%):"),
-		ENTSCALE_DOUBLE, &gflare->rays_opacity,
-		0.0, 100.0, 1.0, TRUE,
-		&ed_entscale_callback, (gpointer) PAGE_GENERAL);
+  sep = gtk_hseparator_new ();
+  gtk_table_attach_defaults (GTK_TABLE (table), sep, 0, 4, row, row + 1);
+  gtk_widget_show (sep);
+  row++;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Rays Opacity (%):"), SCALE_WIDTH, 0,
+			      gflare->rays_opacity, 0.0, 100.0, 1.0, 10.0, 1,
+			      TRUE, 0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &gflare->rays_opacity);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
 
   option_menu = ed_mode_menu_new (&gflare->rays_mode);
-  ed_put_mode_menu (table, 0, 3, _("Rays Mode:"), option_menu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+			     _("Rays Mode:"), 1.0, 0.5,
+			     option_menu, 1, TRUE);
 
-  entscale_new (table, 0, 4, _("Second Flares Opacity (%):"),
-		ENTSCALE_DOUBLE, &gflare->sflare_opacity,
-		0.0, 100.0, 1.0, TRUE,
-		&ed_entscale_callback, (gpointer) PAGE_GENERAL);
+  sep = gtk_hseparator_new ();
+  gtk_table_attach_defaults (GTK_TABLE (table), sep, 0, 4, row, row + 1);
+  gtk_widget_show (sep);
+  row++;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Second Flares Opacity (%):"), SCALE_WIDTH, 0,
+			      gflare->sflare_opacity, 0.0, 100.0, 1.0, 10.0, 1,
+			      TRUE, 0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &gflare->sflare_opacity);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
 
   option_menu = ed_mode_menu_new (&gflare->sflare_mode);
-  ed_put_mode_menu (table, 0, 5, _("Second Flares Mode:"), option_menu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+			     _("Second Flares Mode:"), 1.0, 0.5,
+			     option_menu, 1, TRUE);
 
   gtk_widget_show (table);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*
    *	Create Page
    */
-  note_label = gtk_label_new (_("General"));
-  gtk_misc_set_alignment (GTK_MISC (note_label), 0.5, 0.5);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, note_label);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
+			    gtk_label_new (_("General")));
   gtk_signal_connect (GTK_OBJECT (vbox), "map",
-		      (GtkSignalFunc) ed_page_map_callback,
+		      GTK_SIGNAL_FUNC (ed_page_map_callback),
 		      (gpointer) PAGE_GENERAL);
-  gtk_widget_show (note_label);
   gtk_widget_show (vbox);
 }
 
 static void
-ed_make_page_glow (GFlareEditor *ed, GtkWidget *notebook)
+ed_make_page_glow (GFlareEditor *ed,
+		   GtkWidget    *notebook)
 {
-  GFlare	*gflare = ed->gflare;
-  GradientMenu	*gm;
-  GtkWidget	*vbox;
-  GtkWidget	*table;
-  GtkWidget	*note_label;
-
-  vbox = gtk_vbox_new (FALSE, 0);
+  GFlare       *gflare = ed->gflare;
+  GradientMenu *gm;
+  GtkWidget    *vbox;
+  GtkWidget    *frame;
+  GtkWidget    *table;
+  GtkObject    *adj;
+  gint          row;
+  
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 
   /*
-   *	Gradient Menus
+   *  Gradient Menus
    */
 
+  frame = gtk_frame_new (_("Gradients"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   table = gtk_table_new (3, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 10);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 10);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
-			  gflare->glow_radial, gflare->glow_radial );
+			  gflare->glow_radial, gflare->glow_radial);
   ed_put_gradient_menu (table, 0, 0, _("Radial Gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
-			  gflare->glow_angular, gflare->glow_angular );
+			  gflare->glow_angular, gflare->glow_angular);
   ed_put_gradient_menu (table, 0, 1, _("Angular Gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
-			  gflare->glow_angular_size, gflare->glow_angular_size );
+			  gflare->glow_angular_size, gflare->glow_angular_size);
   ed_put_gradient_menu (table, 0, 2, _("Angular Size Gradient:"), gm);
 
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /*
-   *	Scales
+   *  Scales
    */
 
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 10);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 10);
-  entscale_new (table, 0, 0, _("Size (%):"),
-		ENTSCALE_DOUBLE, &gflare->glow_size,
-		0.0, 200.0, 1.0, FALSE,
-		&ed_entscale_callback, (gpointer) PAGE_GLOW);
+  frame = gtk_frame_new (_("Parameters"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  entscale_new (table, 0, 1, _("Rotation:"),
-		ENTSCALE_DOUBLE, &gflare->glow_rotation,
-		-180.0, 180.0, 1.0, FALSE,
-		&ed_entscale_callback, (gpointer) PAGE_GLOW);
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
-  entscale_new (table, 0, 2, _("Hue Rotation:"),
-		ENTSCALE_DOUBLE, &gflare->glow_hue,
-		-180.0, 180.0, 1.0, FALSE,
-		&ed_entscale_callback, (gpointer) PAGE_GLOW);
+  row = 0;
 
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Size (%):"), SCALE_WIDTH, 0,
+			      gflare->glow_size, 0.0, 200.0, 1.0, 10.0, 1,
+			      FALSE, 0, G_MAXINT,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &gflare->glow_size);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Rotation:"), SCALE_WIDTH, 0,
+			      gflare->glow_rotation, -180.0, 180.0, 1.0, 15.0, 1,
+			      TRUE, 0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &gflare->glow_rotation);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Hue Rotation:"), SCALE_WIDTH, 0,
+			      gflare->glow_hue, -180.0, 180.0, 1.0, 15.0, 1,
+			      TRUE, 0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &gflare->glow_hue);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
+
   gtk_widget_show (table);
 
   /*
-   *	Create Page
+   *  Create Page
    */
-  note_label = gtk_label_new (_("Glow"));
-  gtk_misc_set_alignment (GTK_MISC (note_label), 0.5, 0.5);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, note_label );
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
+			    gtk_label_new (_("Glow")));
   gtk_signal_connect (GTK_OBJECT (vbox), "map",
-		      (GtkSignalFunc) ed_page_map_callback,
+		      GTK_SIGNAL_FUNC (ed_page_map_callback),
 		      (gpointer) PAGE_GLOW);
-  gtk_widget_show (note_label);
   gtk_widget_show (vbox);
 }
 
 static void
-ed_make_page_rays (GFlareEditor *ed, GtkWidget *notebook)
+ed_make_page_rays (GFlareEditor *ed,
+		   GtkWidget    *notebook)
 {
-  GFlare	*gflare = ed->gflare;
-  GradientMenu	*gm;
-  GtkWidget	*vbox;
-  GtkWidget	*table;
-  GtkWidget	*note_label;
+  GFlare       *gflare = ed->gflare;
+  GradientMenu *gm;
+  GtkWidget    *vbox;
+  GtkWidget    *frame;
+  GtkWidget    *table;
+  GtkObject    *adj;
+  gint          row;
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 
   /*
-   *	Gradient Menus
+   *  Gradient Menus
    */
 
+  frame = gtk_frame_new (_("Gradients"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   table = gtk_table_new (3, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 10);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 10);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+
+  row = 0;
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
-			  gflare->rays_radial, gflare->rays_radial );
-  ed_put_gradient_menu (table, 0, 0, _("Radial Gradient:"), gm);
+			  gflare->rays_radial, gflare->rays_radial);
+  ed_put_gradient_menu (table, 0, row++, _("Radial Gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
-			  gflare->rays_angular, gflare->rays_angular );
-  ed_put_gradient_menu (table, 0, 1, _("Angular Gradient:"), gm);
+			  gflare->rays_angular, gflare->rays_angular);
+  ed_put_gradient_menu (table, 0, row++, _("Angular Gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
-			  gflare->rays_angular_size, gflare->rays_angular_size );
-  ed_put_gradient_menu (table, 0, 2, _("Angular Size Gradient:"), gm);
+			  gflare->rays_angular_size, gflare->rays_angular_size);
+  ed_put_gradient_menu (table, 0, row++, _("Angular Size Gradient:"), gm);
 
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /*
    *	Scales
    */
 
-  table = gtk_table_new (5, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 10);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 10);
+  frame = gtk_frame_new (_("Parameters"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  entscale_new (table, 0, 0, _("Size (%):"),
-		ENTSCALE_DOUBLE, &gflare->rays_size,
-		0.0, 200.0, 1.0, FALSE,
-		&ed_entscale_callback, (gpointer) PAGE_RAYS);
-  entscale_new (table, 0, 1, _("Rotation:"),
-		ENTSCALE_DOUBLE, &gflare->rays_rotation,
-		-180.0, 180.0, 1.0, FALSE,
-		&ed_entscale_callback, (gpointer) PAGE_RAYS);
-  entscale_new (table, 0, 2, _("Hue Rotation:"),
-		ENTSCALE_DOUBLE, &gflare->rays_hue,
-		-180.0, 180.0, 1.0, FALSE,
-		&ed_entscale_callback, (gpointer) PAGE_RAYS);
-  entscale_new (table, 0, 3, _("# of Spikes:"),
-		ENTSCALE_INT, &gflare->rays_nspikes,
-		1, 300, 1, FALSE,
-		&ed_entscale_callback, (gpointer) PAGE_RAYS);
-  entscale_new (table, 0, 4, _("Spike Thickness:"),
-		ENTSCALE_DOUBLE, &gflare->rays_thickness,
-		1.0, 100.0, 1.0, FALSE,
-		&ed_entscale_callback, (gpointer) PAGE_RAYS);
+  table = gtk_table_new (5, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  row = 0;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Size (%):"), SCALE_WIDTH, 0,
+			      gflare->rays_size, 0.0, 200.0, 1.0, 10.0, 1,
+			      FALSE, 0, G_MAXINT,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &gflare->rays_size);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Rotation:"), SCALE_WIDTH, 0,
+			      gflare->rays_rotation,
+			      -180.0, 180.0, 1.0, 15.0, 1,
+			      TRUE, 0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &gflare->rays_rotation);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Hue Rotation:"), SCALE_WIDTH, 0,
+			      gflare->rays_hue, -180.0, 180.0, 1.0, 15.0, 1,
+			      TRUE, 0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &gflare->rays_hue);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("# of Spikes:"), SCALE_WIDTH, 0,
+			      gflare->rays_nspikes, 1, 300, 1.0, 10.0, 0,
+			      FALSE, 0, G_MAXINT,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &gflare->rays_nspikes);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Spike Thikness:"), SCALE_WIDTH, 0,
+			      gflare->rays_thickness, 1.0, 100.0, 1.0, 10.0, 1,
+			      FALSE, 0, GIMP_MAX_IMAGE_SIZE,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &gflare->rays_thickness);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
+
   gtk_widget_show (table);
 
   /*
    *	Create Pages
    */
-
-  note_label = gtk_label_new (_("Rays"));
-  gtk_misc_set_alignment (GTK_MISC (note_label), 0.5, 0.5);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, note_label );
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
+			    gtk_label_new (_("Rays")));
   gtk_signal_connect (GTK_OBJECT (vbox), "map",
-		      (GtkSignalFunc) ed_page_map_callback,
+		      GTK_SIGNAL_FUNC (ed_page_map_callback),
 		      (gpointer) PAGE_RAYS);
-  gtk_widget_show (note_label);
   gtk_widget_show (vbox);
 }
 
 static void
-ed_make_page_sflare (GFlareEditor *ed, GtkWidget *notebook)
+ed_make_page_sflare (GFlareEditor *ed,
+		     GtkWidget    *notebook)
 {
-  GFlare	*gflare = ed->gflare;
-  GradientMenu	*gm;
-  GtkWidget	*note_label;
-  GtkWidget	*vbox;
-  GtkWidget	*table;
-  GtkWidget	*shape_frame;
-  GtkWidget	*shape_vbox;
-  GSList	*shape_group = NULL;
-  GtkWidget	*polygon_hbox;
-  GtkWidget	*seed_hbox;
-  GtkWidget	*toggle;
-  GtkWidget	*label;
-  GtkWidget	*entry;
-  char		buf[256];
+  GFlare       *gflare = ed->gflare;
+  GradientMenu *gm;
+  GtkWidget    *vbox;
+  GtkWidget    *table;
+  GtkWidget    *frame;
+  GtkWidget    *shape_vbox;
+  GSList       *shape_group = NULL;
+  GtkWidget    *polygon_hbox;
+  GtkWidget    *seed_hbox;
+  GtkWidget    *toggle;
+  GtkWidget    *label;
+  GtkWidget    *seed;
+  GtkWidget    *entry;
+  GtkObject    *adj;
+  gchar         buf[256];
+  gint          row;
 
-
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 
   /*
-   *	Gradient Menus
+   *  Gradient Menus
    */
 
+  frame = gtk_frame_new (_("Gradients"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   table = gtk_table_new (3, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 10);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
-			  gflare->sflare_radial, gflare->sflare_radial );
+			  gflare->sflare_radial, gflare->sflare_radial);
   ed_put_gradient_menu (table, 0, 0, _("Radial Gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
-			  gflare->sflare_sizefac, gflare->sflare_sizefac );
+			  gflare->sflare_sizefac, gflare->sflare_sizefac);
   ed_put_gradient_menu (table, 0, 1, _("Size Factor Gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
-			  gflare->sflare_probability, gflare->sflare_probability );
+			  gflare->sflare_probability, gflare->sflare_probability);
   ed_put_gradient_menu (table, 0, 2, _("Probability Gradient:"), gm);
 
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /*
    *	Scales
    */
 
-  table = gtk_table_new (4, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 10);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 10);
+  frame = gtk_frame_new (_("Parameters"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  entscale_new (table, 0, 0, _("Size (%):"),
-		ENTSCALE_DOUBLE, &gflare->sflare_size,
-		0.0, 200.0, 1.0, FALSE,
-		&ed_entscale_callback, (gpointer) PAGE_SFLARE);
-  entscale_new (table, 0, 1, _("Rotation:"),
-		ENTSCALE_DOUBLE, &gflare->sflare_rotation,
-		-180.0, 180.0, 1.0, FALSE,
-		&ed_entscale_callback, (gpointer) PAGE_SFLARE);
-  entscale_new (table, 0, 2, _("Hue Rotation:"),
-		ENTSCALE_DOUBLE, &gflare->sflare_hue,
-		-180.0, 180.0, 1.0, FALSE,
-		&ed_entscale_callback, (gpointer) PAGE_SFLARE);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+
+  row = 0;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Size (%):"), SCALE_WIDTH, 0,
+			      gflare->sflare_size, 0.0, 200.0, 1.0, 10.0, 1,
+			      FALSE, 0, G_MAXINT,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &gflare->sflare_size);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Rotation:"), SCALE_WIDTH, 0,
+			      gflare->sflare_rotation,
+			      -180.0, 180.0, 1.0, 15.0, 1,
+			      TRUE, 0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &gflare->sflare_rotation);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			      _("Hue Rotation:"), SCALE_WIDTH, 0,
+			      gflare->sflare_hue, -180.0, 180.0, 1.0, 15.0, 1,
+			      TRUE, 0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &gflare->sflare_hue);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
+
   gtk_widget_show (table);
 
   /*
    *	Shape Radio Button Frame
    */
 
-  shape_vbox = gtk_vbox_new (FALSE, 5);
+  frame = gtk_frame_new (_("Shape of Second Flares"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  shape_vbox = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (shape_vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), shape_vbox);
+  gtk_widget_show (shape_vbox);
 
   toggle = gtk_radio_button_new_with_label (shape_group, _("Circle"));
   shape_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) GF_CIRCLE);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) ed_shape_radio_callback,
-		      (gpointer) GF_CIRCLE);
+		      GTK_SIGNAL_FUNC (ed_shape_radio_callback),
+		      &gflare->sflare_shape);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-			       gflare->sflare_shape == GF_CIRCLE);
-  gtk_widget_show (toggle);
+				gflare->sflare_shape == GF_CIRCLE);
   gtk_box_pack_start (GTK_BOX (shape_vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+ 
+  polygon_hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (shape_vbox), polygon_hbox, FALSE, FALSE, 0);
+  gtk_widget_show (polygon_hbox);
 
   toggle = ed->polygon_toggle =
     gtk_radio_button_new_with_label (shape_group, _("Polygon"));
   shape_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) GF_POLYGON);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) ed_shape_radio_callback,
-		      (gpointer) GF_POLYGON);
+		      GTK_SIGNAL_FUNC (ed_shape_radio_callback),
+		      &gflare->sflare_shape);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-			       gflare->sflare_shape == GF_POLYGON);
+				gflare->sflare_shape == GF_POLYGON);
+  gtk_box_pack_start (GTK_BOX (polygon_hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   entry = ed->polygon_entry = gtk_entry_new ();
@@ -3877,54 +4092,47 @@ ed_make_page_sflare (GFlareEditor *ed, GtkWidget *notebook)
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) ed_ientry_callback,
 		      &gflare->sflare_nverts);
+  gtk_box_pack_start (GTK_BOX (polygon_hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
-  polygon_hbox = gtk_hbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (polygon_hbox), toggle, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (polygon_hbox), entry, FALSE, FALSE, 0);
-  gtk_widget_show (polygon_hbox);
-
-  gtk_box_pack_start (GTK_BOX (shape_vbox), polygon_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (shape_vbox);
-
-  shape_frame = gtk_frame_new (_("Shape of Second Flares"));
-  gtk_frame_set_shadow_type (GTK_FRAME (shape_frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_add (GTK_CONTAINER (shape_frame), shape_vbox);
-  gtk_widget_show (shape_frame);
-  gtk_box_pack_start (GTK_BOX (vbox), shape_frame, FALSE, FALSE, 0);
+  gtk_widget_set_sensitive (entry, gflare->sflare_shape == GF_POLYGON);
+  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", entry);
 
   /*
    *	Random Seed Entry
    */
 
-  seed_hbox = gtk_hbox_new (FALSE, 5);
-  label = gtk_label_new (_("Random Seed (-1 means current time):"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_widget_show (label);
-  gtk_box_pack_start (GTK_BOX (seed_hbox), label, FALSE, FALSE, 0);
-  entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buf, "%d", gflare->sflare_seed);
-  gtk_entry_set_text (GTK_ENTRY (entry), buf);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) ed_ientry_callback,
-		      &gflare->sflare_seed);
-  gtk_widget_show (entry);
-  gtk_box_pack_start (GTK_BOX (seed_hbox), entry, FALSE, TRUE, 0);
+  seed_hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), seed_hbox, FALSE, FALSE, 0);
   gtk_widget_show (seed_hbox);
 
-  gtk_box_pack_start (GTK_BOX (vbox), seed_hbox, FALSE, FALSE, 0);
+  label = gtk_label_new (_("Random Seed:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (seed_hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  seed = gimp_random_seed_new (&gflare->sflare_seed, &entry,
+			       &gflare->sflare_seed_time, &toggle,
+			       TRUE, FALSE);
+  gtk_box_pack_start (GTK_BOX (seed_hbox), seed, FALSE, TRUE, 0);
+  gtk_widget_show (seed);
+
+  gtk_signal_connect (GTK_OBJECT (GTK_SPIN_BUTTON (entry)->adjustment),
+		      "value_changed",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (ed_preview_update),
+		      NULL);
 
   /*
    *	Create Pages
    */
-  note_label = gtk_label_new (_("Second Flares"));
-  gtk_misc_set_alignment (GTK_MISC (note_label), 0.5, 0.5);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, note_label );
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
+			    gtk_label_new (_("Second Flares")));
   gtk_signal_connect (GTK_OBJECT (vbox), "map",
-		      (GtkSignalFunc) ed_page_map_callback,
+		      GTK_SIGNAL_FUNC (ed_page_map_callback),
 		      (gpointer) PAGE_SFLARE);
-  gtk_widget_show (note_label);
   gtk_widget_show (vbox);
 }
 
@@ -3961,36 +4169,21 @@ ed_mode_menu_new (GFlareMode *mode_var)
   return option_menu;
 }
 
-static void
-ed_put_mode_menu (GtkWidget *table, gint x, gint y,
-		  gchar *caption, GtkWidget *option_menu)
-{
-  GtkWidget	*label;
-
-  label = gtk_label_new (caption);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_widget_show (label);
-
-  gtk_table_attach (GTK_TABLE (table), label,
-		    x	 , x + 1, y, y + 1,
-		    GTK_FILL, 0, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), option_menu,
-		    x + 1, x + 2, y, y + 1,
-		    0, 0, 0, 0);
-}
-
 /*
   puts gradient menu with caption into table
   occupies 1 row and 3 cols in table
  */
 static void
-ed_put_gradient_menu (GtkWidget *table, gint x, gint y,
-		      gchar *caption, GradientMenu *gm)
+ed_put_gradient_menu (GtkWidget    *table,
+		      gint          x,
+		      gint          y,
+		      gchar        *caption,
+		      GradientMenu *gm)
 {
   GtkWidget	*label;
 
   label = gtk_label_new (caption);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_widget_show (label);
 
   gtk_object_set_user_data (GTK_OBJECT (gm->option_menu), ed);
@@ -4003,13 +4196,6 @@ ed_put_gradient_menu (GtkWidget *table, gint x, gint y,
   gtk_table_attach (GTK_TABLE (table), gm->option_menu,
 		    x + 2, x + 3, y, y + 1,
 		    0, 0, 0, 0);
-}
-
-static void
-ed_entscale_callback (gdouble new_val, gpointer data)
-{
-  DEBUG_PRINT (("ed_entscale_callback\n"));
-  ed_preview_update ();
 }
 
 static void
@@ -4034,17 +4220,10 @@ ed_gradient_menu_callback (gchar *gradient_name, gpointer data)
 }
 
 static void
-ed_shape_radio_callback (GtkWidget *widget, gpointer data)
+ed_shape_radio_callback (GtkWidget *widget,
+			 gpointer   data)
 {
-  gint		state;
-
-  state = GTK_TOGGLE_BUTTON (widget)->active;
-  if (state)
-    {
-      ed->gflare->sflare_shape = (GFlareShape) data;
-    }
-  if (!ed->init && widget == ed->polygon_toggle)
-    gtk_widget_set_sensitive (ed->polygon_entry, state);
+  gimp_radio_button_update (widget, data);
 
   ed_preview_update ();
 }
@@ -4059,7 +4238,6 @@ ed_ientry_callback (GtkWidget *widget, gpointer data)
 
   ed_preview_update ();
 }
-
 
 /*
   NOTE: This is hack, because this code depends on internal "map"
@@ -4244,7 +4422,7 @@ preview_new (gint		   width,
 	     PreviewDeinitFunc	   deinit_func,
 	     gpointer		   deinit_data)
 {
-  Preview	*preview;
+  Preview *preview;
 
   preview = g_new0 (Preview, 1);
 
@@ -4493,9 +4671,9 @@ gradient_menu_new (GradientMenuCallback callback,
   gm->callback_data = callback_data;
 
   gm->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size( GTK_PREVIEW (gm->preview),
+  gtk_preview_size(GTK_PREVIEW (gm->preview),
 		    GM_PREVIEW_WIDTH,
-		    GM_PREVIEW_HEIGHT );
+		    GM_PREVIEW_HEIGHT);
 
   gm->option_menu = gtk_multi_option_menu_new ();
 
@@ -4545,7 +4723,7 @@ gm_gradient_get_list ()
  */
 
 static GtkWidget *
-gm_menu_new (GradientMenu *gm, gchar *default_gradient_name )
+gm_menu_new (GradientMenu *gm, gchar *default_gradient_name)
 {
   GtkWidget	*menu;
   GtkWidget	*menuitem;
@@ -4574,13 +4752,13 @@ gm_menu_new (GradientMenu *gm, gchar *default_gradient_name )
 
       gradient_name_copy (gm->gradient_name, active_name);
       gm_preview_draw (gm->preview, active_name);
-      if ( GTK_WIDGET_VISIBLE (gm->preview) && GTK_WIDGET_MAPPED(gm->preview))
+      if (GTK_WIDGET_VISIBLE (gm->preview) && GTK_WIDGET_MAPPED(gm->preview))
 	{
 	  DEBUG_PRINT (("gm_menu_new: preview is visible and mapped\n"));
 	  gtk_widget_draw (gm->preview, NULL);
 	}
       if (gm->callback)
-	(* gm->callback) ( active_name, gm->callback_data );
+	(* gm->callback) (active_name, gm->callback_data);
 
     } /* num_gradient_names == 0 */
 
@@ -4673,7 +4851,7 @@ gm_menu_item_callback (GtkWidget *w, gpointer data)
     }
 
   if (gm->callback)
-    (* gm->callback) ( gradient_name, gm->callback_data );
+    (* gm->callback) (gradient_name, gm->callback_data);
 }
 
 static void
@@ -4689,46 +4867,46 @@ gm_preview_draw (GtkWidget *preview, gchar *gradient_name)
 
   gradient_get_values (gradient_name, (guchar *)values, nvalues);
 
-  for( row = 0; row < GM_PREVIEW_HEIGHT; row += GIMP_CHECK_SIZE_SM )
+  for(row = 0; row < GM_PREVIEW_HEIGHT; row += GIMP_CHECK_SIZE_SM)
     {
-      for( col = 0; col < GM_PREVIEW_WIDTH; col++ )
+      for(col = 0; col < GM_PREVIEW_WIDTH; col++)
 	{
 	  dest = dest_row[col];
 	  src = values[col];
 
-	  if( src[alpha] == OPAQUE )
+	  if(src[alpha] == OPAQUE)
 	    {
 	      /* no alpha channel or opaque -- simple way */
-	      for ( b = 0; b < alpha; b++ )
+	      for (b = 0; b < alpha; b++)
 		dest[b] = src[b];
 	    }
 	  else
 	    {
 	      /* more or less transparent */
-	      if( ( col % (GIMP_CHECK_SIZE) < GIMP_CHECK_SIZE_SM ) ^
-		  ( row % (GIMP_CHECK_SIZE) < GIMP_CHECK_SIZE_SM ) )
+	      if((col % (GIMP_CHECK_SIZE) < GIMP_CHECK_SIZE_SM) ^
+		  (row % (GIMP_CHECK_SIZE) < GIMP_CHECK_SIZE_SM))
 		check = GIMP_CHECK_LIGHT * 255;
 	      else
 		check = GIMP_CHECK_DARK * 255;
 
-	      if ( src[alpha] == 0 )
+	      if (src[alpha] == 0)
 		{
 		  /* full transparent -- check */
-		  for ( b = 0; b < alpha; b++ )
+		  for (b = 0; b < alpha; b++)
 		    dest[b] = check;
 		}
 	      else
 		{
 		  /* middlemost transparent -- mix check and src */
-		  for ( b = 0; b < alpha; b++ )
-		    dest[b] = ( src[b]*src[alpha] + check*(OPAQUE-src[alpha]) ) / OPAQUE;
+		  for (b = 0; b < alpha; b++)
+		    dest[b] = (src[b]*src[alpha] + check*(OPAQUE-src[alpha])) / OPAQUE;
 		}
 	    }
 	}
-      for( irow = 0; irow < GIMP_CHECK_SIZE_SM && row + irow < GM_PREVIEW_HEIGHT; irow++ )
+      for(irow = 0; irow < GIMP_CHECK_SIZE_SM && row + irow < GM_PREVIEW_HEIGHT; irow++)
 	{
-	  gtk_preview_draw_row( GTK_PREVIEW (preview), (guchar*) dest_row,
-				0, row + irow, GM_PREVIEW_WIDTH );
+	  gtk_preview_draw_row(GTK_PREVIEW (preview), (guchar*) dest_row,
+				0, row + irow, GM_PREVIEW_WIDTH);
 	}
     }
 
@@ -4876,27 +5054,27 @@ gradient_get_values_internal (gchar *gradient_name, guchar *values, gint nvalues
     The internal gradients here are example --
     What kind of internals would be useful ?
    */
-  if( !strcmp(gradient_name, "%white"))
+  if(!strcmp(gradient_name, "%white"))
     {
       gradient_get_blend (white, white, values, nvalues);
     }
-  else if( !strcmp(gradient_name, "%white_grad"))
+  else if(!strcmp(gradient_name, "%white_grad"))
     {
       gradient_get_blend (white, white_trans, values, nvalues);
     }
-  else if (!strcmp (gradient_name, "%red_grad" ))
+  else if (!strcmp (gradient_name, "%red_grad"))
     {
       gradient_get_blend (white, red_trans, values, nvalues);
     }
-  else if (!strcmp (gradient_name, "%blue_grad" ))
+  else if (!strcmp (gradient_name, "%blue_grad"))
     {
       gradient_get_blend (white, blue_trans, values, nvalues);
     }
-  else if (!strcmp (gradient_name, "%yellow_grad" ))
+  else if (!strcmp (gradient_name, "%yellow_grad"))
     {
       gradient_get_blend (white, yellow_trans, values, nvalues);
     }
-  else if (!strcmp (gradient_name, "%random" ))
+  else if (!strcmp (gradient_name, "%random"))
     {
       gradient_get_random (1, values, nvalues);
     }
@@ -5134,274 +5312,12 @@ gradient_report ()
 {
   double total = (double) get_values_external_clock / CLOCKS_PER_SEC;
 
-  printf( "gradient_get_values_external %.2f sec. / %d times (ave %.2f sec.)\n",
+  printf("gradient_get_values_external %.2f sec. / %d times (ave %.2f sec.)\n",
 	  total,
 	  get_values_external_count,
-	  total / get_values_external_count );
+	  total / get_values_external_count);
 }
 #endif
-
-/*************************************************************************/
-/**									**/
-/**			+++ Entscale					**/
-/**									**/
-/*************************************************************************/
-
-/* these routines are taken from my private subroutine collection. */
-
-/* -*- mode:c -*- */
-/*
-  Entry and Scale pair (int and double integrated)
-
-  This is an attempt to combine entscale_int and double.
-  Never compiled yet.
-
-  TODO:
-  - Do the proper thing when the user changes value in entry,
-  so that callback should not be called when value is actually not changed.
-  - Update delay
- */
-
-/* $Id$ */
-
-
-static void   entscale_destroy_callback (GtkWidget *widget,
-					 gpointer data);
-static void   entscale_scale_update (GtkAdjustment *adjustment,
-				     gpointer	   data);
-static void   entscale_entry_update (GtkWidget *widget,
-				     gpointer	data);
-/*
- *  Create an entry, a scale and a label, then attach them to
- *  specified table.
- *  1 row and 2 cols of table are needed.
- *
- *  Input:
- *    table:	  table which entscale is attached to
- *    x, y:	  starting row and col in table
- *    caption:	  label string
- *    type:	  type of variable (ENTSCALE_INT or ENTSCALE_DOUBLE)
- *    variable:	  pointer to variable
- *    min, max:	  boundary of scale
- *    step:	  step of scale (ignored when (type == ENTSCALE_INT))
- *    constraint: (bool) true iff the value of *variable should be
- *		  constraint by min and max
- *    callback:	  called when the value is actually changed
- *		  (*variable is automatically changed, so there's no
- *		  need of callback func usually.)
- *    call_data:  data for callback func
- */
-
-void
-entscale_new (GtkWidget *table, gint x, gint y, gchar *caption,
-	      EntscaleType type, gpointer variable,
-	      gdouble min, gdouble max, gdouble step,
-	      gint constraint,
-	      EntscaleCallbackFunc callback,
-	      gpointer call_data)
-{
-  Entscale	*entscale;
-  GtkWidget	*hbox;
-  GtkWidget	*label;
-  GtkWidget	*entry;
-  GtkWidget	*scale;
-  GtkObject	*adjustment;
-  gchar		buffer[256];
-  gdouble	val;
-  gdouble	constraint_val;
-
-  entscale = g_new0 (Entscale, 1 );
-  entscale->type	= type;
-  entscale->constraint	= constraint;
-  entscale->callback	= callback;
-  entscale->call_data	= call_data;
-
-  switch (type)
-    {
-    case ENTSCALE_INT:
-      step = 1.0;
-      strcpy (entscale->fmt_string, "%.0f");
-      val = *(gint *)variable;
-      break;
-    case ENTSCALE_DOUBLE:
-      sprintf (entscale->fmt_string, "%%.%df", entscale_get_precision (step) + 1);
-      val = *(gdouble *)variable;
-      break;
-    default:
-      g_error ("TYPE must be either ENTSCALE_INT or ENTSCALE_DOUBLE");
-      val = 0;
-      break;
-    }
-
-  label = gtk_label_new (caption);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-
-  /*
-    If the first arg of gtk_adjustment_new() isn't between min and
-    max, it is automatically corrected by gtk later with
-    "value_changed" signal. I don't like this, since I want to leave
-    *variable untouched when `constraint' is false.
-    The lines below might look oppositely, but this is OK.
-   */
-  if (constraint)
-    constraint_val = val;
-  else
-    constraint_val = BOUNDS (val, min, max);
-
-  adjustment = entscale->adjustment =
-    gtk_adjustment_new (constraint_val, min, max, step, step, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (scale, ENTSCALE_SCALE_WIDTH, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-
-  entry = entscale->entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, ENTSCALE_ENTRY_WIDTH, 0);
-  sprintf (buffer, entscale->fmt_string, val);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-
-  /* entscale is done */
-  gtk_object_set_user_data (GTK_OBJECT(adjustment), entscale);
-  gtk_object_set_user_data (GTK_OBJECT(entry), entscale);
-
-  /* now ready for signals */
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entscale_entry_update,
-		      variable);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) entscale_scale_update,
-		      variable);
-  gtk_signal_connect (GTK_OBJECT (entry), "destroy",
-		      (GtkSignalFunc) entscale_destroy_callback,
-		      NULL );
-
-  /* start packing */
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, TRUE, 0);
-
-  gtk_table_attach (GTK_TABLE (table), label, x, x+1, y, y+1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, x+1, x+2, y, y+1,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-
-  gtk_widget_show (label);
-  gtk_widget_show (entry);
-  gtk_widget_show (scale);
-  gtk_widget_show (hbox);
-}
-
-static int
-entscale_get_precision (gdouble step)
-{
-  int precision;
-  if (step <= 0)
-    return 0;
-  for (precision = 0; pow (0.1, precision) > step; precision++) ;
-  return precision;
-}
-
-static void
-entscale_destroy_callback (GtkWidget *widget,
-			   gpointer data)
-{
-  Entscale *entscale;
-
-  entscale = gtk_object_get_user_data (GTK_OBJECT (widget));
-  g_free (entscale);
-}
-static void
-entscale_scale_update (GtkAdjustment *adjustment,
-		       gpointer	     data)
-{
-  Entscale	*entscale;
-  GtkEntry	*entry;
-  gchar		buffer[256];
-  gdouble	old_val, new_val;
-
-  entscale = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-
-  new_val = adjustment->value;
-  /* adjustmet->value is always constrainted */
-
-  switch (entscale->type)
-    {
-    case ENTSCALE_INT:
-      old_val = *(gint*) data;
-      *(gint*) data = (gint) new_val;
-      DEBUG_PRINT (("entscale_scale_update(int): fmt=\"%s\" old=%g new=%g\n",
-		    entscale->fmt_string, old_val, new_val));
-      break;
-    case ENTSCALE_DOUBLE:
-      old_val = *(gdouble*) data;
-      *(gdouble*) data = new_val;
-      DEBUG_PRINT (("entscale_scale_update(double): fmt=\"%s\" old=%g new=%g\n",
-		    entscale->fmt_string, old_val, new_val));
-      break;
-    default:
-      g_warning ("entscale_scale_update: invalid type");
-      return;
-    }
-
-  entry = GTK_ENTRY (entscale->entry);
-  sprintf (buffer, entscale->fmt_string, new_val);
-
-  /* avoid infinite loop (scale, entry, scale, entry ...) */
-  gtk_signal_handler_block_by_data (GTK_OBJECT(entry), data);
-  gtk_entry_set_text (entry, buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT(entry), data);
-
-  if (entscale->callback && (old_val != new_val))
-    (*entscale->callback) (new_val, entscale->call_data);
-}
-
-static void
-entscale_entry_update (GtkWidget *widget,
-		       gpointer	  data)
-{
-  Entscale	*entscale;
-  GtkAdjustment *adjustment;
-  gdouble	old_val, val, new_val, constraint_val;
-
-  entscale = gtk_object_get_user_data (GTK_OBJECT (widget));
-  adjustment = GTK_ADJUSTMENT (entscale->adjustment);
-
-  val = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  constraint_val = BOUNDS (val, adjustment->lower, adjustment->upper);
-
-  if (entscale->constraint)
-    new_val = constraint_val;
-  else
-    new_val = val;
-
-  switch (entscale->type)
-    {
-    case ENTSCALE_INT:
-      old_val = *(gint*) data;
-      *(gint*) data = (gint) new_val;
-      DEBUG_PRINT (("entscale_entry_update(int): old=%g new=%g const=%g\n",
-		    old_val, new_val, constraint_val));
-      break;
-    case ENTSCALE_DOUBLE:
-      old_val = *(gdouble*) data;
-      *(gdouble*) data = new_val;
-      DEBUG_PRINT (("entscale_entry_update(double): old=%g new=%g const=%g\n",
-		    old_val, new_val, constraint_val));
-      break;
-    default:
-      g_warning ("entscale_entry_update: invalid type");
-      return;
-    }
-
-  adjustment->value = constraint_val;
-  /* avoid infinite loop (scale, entry, scale, entry ...) */
-  gtk_signal_handler_block_by_data (GTK_OBJECT(adjustment), data );
-  gtk_signal_emit_by_name (GTK_OBJECT(adjustment), "value_changed");
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT(adjustment), data );
-
-  if (entscale->callback && (old_val != new_val))
-    (*entscale->callback) (new_val, entscale->call_data);
-}
 
 /*************************************************************************/
 /**									**/
@@ -5428,7 +5344,7 @@ struct _QueryBox
 };
 
 static void query_box_cancel_callback (GtkWidget *, gpointer);
-static void query_box_ok_callback (GtkWidget *, gpointer);
+static void query_box_ok_callback     (GtkWidget *, gpointer);
 
 GtkWidget *
 query_string_box (char	      *title,
@@ -5442,39 +5358,28 @@ query_string_box (char	      *title,
   GtkWidget *vbox;
   GtkWidget *label;
   GtkWidget *entry;
-  GtkWidget *button;
 
   query_box = g_new (QueryBox, 1);
 
-  qbox = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (qbox), title);
-  gtk_window_set_position (GTK_WINDOW (qbox), GTK_WIN_POS_MOUSE);
+  qbox = gimp_dialog_new (title, "gflare",
+			  gimp_plugin_help_func, "filters/gflare.html",
+			  GTK_WIN_POS_MOUSE,
+			  FALSE, TRUE, FALSE,
 
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (qbox)->action_area), 2);
+			  _("OK"), query_box_ok_callback,
+			  query_box, NULL, NULL, TRUE, FALSE,
+			  _("Cancel"), query_box_cancel_callback,
+			  query_box, NULL, NULL, FALSE, TRUE,
 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) query_box_ok_callback,
-		      query_box);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (qbox)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
+			  NULL);
 
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) query_box_cancel_callback,
-		      query_box);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (qbox)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (qbox)->vbox), vbox);
   gtk_widget_show (vbox);
 
   label = gtk_label_new (message);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -5495,12 +5400,12 @@ query_string_box (char	      *title,
 }
 
 static void
-query_box_cancel_callback (GtkWidget *w,
-			   gpointer   client_data)
+query_box_cancel_callback (GtkWidget *widget,
+			   gpointer   data)
 {
   QueryBox *query_box;
 
-  query_box = (QueryBox *) client_data;
+  query_box = (QueryBox *) data;
 
   /*  Destroy the box  */
   gtk_widget_destroy (query_box->qbox);
@@ -5509,19 +5414,19 @@ query_box_cancel_callback (GtkWidget *w,
 }
 
 static void
-query_box_ok_callback (GtkWidget *w,
-		       gpointer	  client_data)
+query_box_ok_callback (GtkWidget *widget,
+		       gpointer	  data)
 {
   QueryBox *query_box;
   char *string;
 
-  query_box = (QueryBox *) client_data;
+  query_box = (QueryBox *) data;
 
   /*  Get the entry data  */
   string = g_strdup (gtk_entry_get_text (GTK_ENTRY (query_box->entry)));
 
   /*  Call the user defined callback  */
-  (* query_box->callback) (w, query_box->data, (gpointer) string);
+  (* query_box->callback) (widget, query_box->data, (gpointer) string);
 
   /*  Destroy the box  */
   gtk_widget_destroy (query_box->qbox);

@@ -993,6 +993,7 @@ vpropagate_dialog (GImageType image_type)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Lower Threshold:"), SCALE_WIDTH, 0,
 			      vpvals.lower_limit, 0, 255, 1, 8, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -1001,6 +1002,7 @@ vpropagate_dialog (GImageType image_type)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Upper Threshold:"), SCALE_WIDTH, 0,
 			      vpvals.upper_limit, 0, 255, 1, 8, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -1009,6 +1011,7 @@ vpropagate_dialog (GImageType image_type)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Propagating Rate:"), SCALE_WIDTH, 0,
 			      vpvals.propagating_rate, 0, 1, 0.01, 0.1, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -1019,16 +1022,16 @@ vpropagate_dialog (GImageType image_type)
   gtk_widget_show (sep);
 
   gtk_table_add_toggle (table, _("To Left"), 0, 1, 5,
-			(GtkSignalFunc) gimp_toggle_button_update,
+			GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			&direction_mask_vec[Right2Left]);
   gtk_table_add_toggle (table, _("To Right"), 2, 3, 5,
-			(GtkSignalFunc) gimp_toggle_button_update,
+			GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			&direction_mask_vec[Left2Right]);
   gtk_table_add_toggle (table, _("To Top"), 1, 2, 4,
-			(GtkSignalFunc) gimp_toggle_button_update,
+			GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			&direction_mask_vec[Bottom2Top]);
   gtk_table_add_toggle (table, _("To Bottom"), 1, 2, 6,
-			(GtkSignalFunc) gimp_toggle_button_update,
+			GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			&direction_mask_vec[Top2Bottom]);
   if ((image_type == RGBA_IMAGE) | (image_type == GRAYA_IMAGE))
     {

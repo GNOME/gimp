@@ -674,6 +674,7 @@ alienmap_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Red:"), SCALE_WIDTH, 0,
 			      wvals.redstretch, 0, 128, 1, 8, 2,
+			      TRUE, 0, 0,
 			      _("Change intensity of the red channel"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_scale_update),
@@ -682,6 +683,7 @@ alienmap_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Green:"), SCALE_WIDTH, 0,
 			      wvals.greenstretch, 0, 128, 1, 8, 2,
+			      TRUE, 0, 0,
 			      _("Change intensity of the green channel"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_scale_update),
@@ -690,6 +692,7 @@ alienmap_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Blue:"), SCALE_WIDTH, 0,
 			      wvals.bluestretch, 0, 128, 1, 8, 2,
+			      TRUE, 0, 0,
 			      _("Change intensity of the blue channel"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_scale_update),

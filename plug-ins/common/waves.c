@@ -145,10 +145,7 @@ query (void)
     { PARAM_INT32, "type", "Type of waves, black/smeared" },
     { PARAM_INT32, "reflective", "Use Reflection" },
   };
-  static int nargs = 8;
-
-  static GParamDef *rets = NULL;
-  static int nrets = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
 
@@ -161,8 +158,8 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Waves..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nrets,
-			  args, rets);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -332,9 +329,11 @@ pluginCoreIA (struct piArgs *argp,
 {
   gint r=-1; /* default to error return */
   GtkWidget *dlg;
+  GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *vbox;
+  GtkWidget *sep;
   GtkWidget *table;
   GtkWidget *preview;
   GtkWidget *toggle;
@@ -365,18 +364,36 @@ pluginCoreIA (struct piArgs *argp,
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
+
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  preview = mw_preview_new (vbox, mwp);
+  preview = mw_preview_new (hbox, mwp);
   gtk_object_set_data (GTK_OBJECT (preview), "piArgs", argp);
   waves_do_preview (preview);
+
+  frame = gimp_radio_group_new2 (TRUE, _("Mode"),
+				 waves_radio_button_update,
+				 &argp->type, (gpointer) argp->type,
+
+				 _("Smear"),   (gpointer) MODE_SMEAR, NULL,
+				 _("Blacken"), (gpointer) MODE_BLACKEN, NULL,
+
+				 NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  vbox = GTK_BIN (frame)->child;
+
+  sep = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 2);
+  gtk_widget_show (sep);
 
   toggle = gtk_check_button_new_with_label ( _("Reflective"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), argp->reflective);
@@ -386,13 +403,9 @@ pluginCoreIA (struct piArgs *argp,
 		      &argp->reflective);
   gtk_widget_show (toggle);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  frame = gtk_frame_new ( _("Parameters"));
+  frame = gtk_frame_new ( _("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 3, FALSE);
@@ -404,6 +417,7 @@ pluginCoreIA (struct piArgs *argp,
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Amplitude:"), 140, 0,
 			      argp->amplitude, 0.0, 101.0, 1.0, 5.0, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (waves_double_adjustment_update),
@@ -412,6 +426,7 @@ pluginCoreIA (struct piArgs *argp,
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Phase:"), 140, 0,
 			      argp->phase, 0.0, 360.0, 2.0, 5.0, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (waves_double_adjustment_update),
@@ -420,24 +435,13 @@ pluginCoreIA (struct piArgs *argp,
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Wavelength:"), 140, 0,
 			      argp->wavelength, 0.1, 50.0, 1.0, 5.0, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (waves_double_adjustment_update),
 		      &argp->wavelength);
 
   gtk_widget_show (table);
-
-  frame = gimp_radio_group_new2 (TRUE, _("Mode"),
-				 waves_radio_button_update,
-				 &argp->type, (gpointer) argp->type,
-
-				 _("Smear"),   (gpointer) MODE_SMEAR, NULL,
-				 _("Blacken"), (gpointer) MODE_BLACKEN, NULL,
-
-				 NULL);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
 

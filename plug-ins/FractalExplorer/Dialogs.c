@@ -453,6 +453,7 @@ explorer_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			  _("XMIN:"), SCALE_WIDTH, 100,
 			  wvals.xmin, -3, 3, 0.001, 0.01, 5,
+			  TRUE, 0, 0,
 			  _("Change the first (minimal) x-coordinate "
 			    "delimitation"), NULL);
   gtk_signal_connect (GTK_OBJECT (elements->xmin), "value_changed",
@@ -463,6 +464,7 @@ explorer_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			  _("XMAX:"), SCALE_WIDTH, 100,
 			  wvals.xmax, -3, 3, 0.001, 0.01, 5,
+			  TRUE, 0, 0,
 			  _("Change the second (maximal) x-coordinate "
 			    "delimitation"), NULL);
   gtk_signal_connect (GTK_OBJECT (elements->xmax), "value_changed",
@@ -473,6 +475,7 @@ explorer_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			  _("YMIN:"), SCALE_WIDTH, 100,
 			  wvals.ymin, -3, 3, 0.001, 0.01, 5,
+			  TRUE, 0, 0,
 			  _("Change the first (minimal) y-coordinate "
 			    "delimitation"), NULL);
   gtk_signal_connect (GTK_OBJECT (elements->ymin), "value_changed",
@@ -483,6 +486,7 @@ explorer_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 			  _("YMAX:"), SCALE_WIDTH, 100,
 			  wvals.ymax, -3, 3, 0.001, 0.01, 5,
+			  TRUE, 0, 0,
 			  _("Change the second (maximal) y-coordinate "
 			    "delimitation"), NULL);
   gtk_signal_connect (GTK_OBJECT (elements->ymax), "value_changed",
@@ -493,6 +497,7 @@ explorer_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
 			  _("ITER:"), SCALE_WIDTH, 100,
 			  wvals.iter, 0, 1000, 1, 10, 5,
+			  TRUE, 0, 0,
 			  _("Change the iteration value. The higher it "
 			    "is, the more details will be calculated, "
 			    "which will take more time"), NULL);
@@ -504,6 +509,7 @@ explorer_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
 			  _("CX:"), SCALE_WIDTH, 100,
 			  wvals.cx, -2.5, 2.5, 0.001, 0.01, 5,
+			  TRUE, 0, 0,
 			  _("Change the CX value (changes aspect of "
 			    "fractal, active with every fractal but "
 			    "Mandelbrot and Sierpinski)"), NULL);
@@ -515,6 +521,7 @@ explorer_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
 			  _("CY:"), SCALE_WIDTH, 100,
 			  wvals.cy, -2.5, 2.5, 0.001, 0.01, 5,
+			  TRUE, 0, 0,
 			  _("Change the CY value (changes aspect of "
 			    "fractal, active with every fractal but "
 			    "Mandelbrot and Sierpinski)"), NULL);
@@ -646,6 +653,7 @@ explorer_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			  _("Number of Colors:"), SCALE_WIDTH, 0,
 			  wvals.ncolors, 2, MAXNCOLORS, 1, 10, 0,
+			  TRUE, 0, 0,
 			  _("Change the number of colors in the mapping"),
 			  NULL);
   gtk_signal_connect (GTK_OBJECT (elements->ncol), "value_changed",
@@ -680,6 +688,7 @@ explorer_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			  _("Red:"), SCALE_WIDTH, 0,
 			  wvals.redstretch, 0, 1, 0.01, 0.1, 2,
+			  TRUE, 0, 0,
 			  _("Change the intensity of the red channel"), NULL);
   gtk_signal_connect (GTK_OBJECT (elements->red), "value_changed",
 		      GTK_SIGNAL_FUNC (explorer_double_adjustment_update),
@@ -689,6 +698,7 @@ explorer_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			  _("Green:"), SCALE_WIDTH, 0,
 			  wvals.greenstretch, 0, 1, 0.01, 0.1, 2,
+			  TRUE, 0, 0,
 			  _("Change the intensity of the green channel"), NULL);
   gtk_signal_connect (GTK_OBJECT (elements->green), "value_changed",
 		      GTK_SIGNAL_FUNC (explorer_double_adjustment_update),
@@ -698,6 +708,7 @@ explorer_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			  _("Blue:"), SCALE_WIDTH, 0,
 			  wvals.bluestretch, 0, 1, 0.01, 0.1, 2,
+			  TRUE, 0, 0,
 			  _("Change the intensity of the blue channel"), NULL);
   gtk_signal_connect (GTK_OBJECT (elements->blue), "value_changed",
 		      GTK_SIGNAL_FUNC (explorer_double_adjustment_update),

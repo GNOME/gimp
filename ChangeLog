@@ -1,3 +1,27 @@
+2000-02-05  Michael Natterer  <mitch@gimp.org>
+
+	* gimprc.in
+	* user_install
+	* user_install.bat: renamed the "gflares" dir to "gflare" in all
+	places because this seems to be the naming convention of all the
+	other plug-in dirs.
+
+	* libgimp/gimpwidgets.[ch]:
+
+	- gimp_random_seed_new(): return the spinbutton and the time
+	  toggle as pointers.
+	- gimp_scale_entry_new(): allow the spinbutton to have a larger
+	  range of possible values than the scale.
+
+	* plugins/[all calls to the above two functions]: changed the
+	calls accordingly.
+	Did some more ui updates in some of these plugins (Frames saying
+	"Parameter Settings", spacing etc.)
+
+	* plug-ins/gflare/Makefile.am
+	* plug-ins/gflare/gflare.c: hacked it to match the plugin ui
+	standards. Didn't get rid of the gradient menus.
+
 Sat Feb  5 13:22:47 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/global_edit.c: Reverted Stanislavs change. While I think that 

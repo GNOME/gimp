@@ -300,9 +300,10 @@ run (gchar   *name,
       INIT_I18N();
       /* Make sure all the arguments are present */
       if (nparams != 6)
-	status = STATUS_CALLING_ERROR;
-
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  wpvals.whirl  = param[3].data.d_float;
 	  wpvals.pinch  = param[4].data.d_float;
@@ -878,6 +879,7 @@ whirl_pinch_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Whirl Angle:"), SCALE_WIDTH, 0,
 			      wpvals.whirl, -360.0, 360.0, 1.0, 15.0, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_scale_update),
@@ -886,6 +888,7 @@ whirl_pinch_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Pinch Amount:"), SCALE_WIDTH, 0,
 			      wpvals.pinch, -1.0, 1.0, 0.01, 0.1, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_scale_update),
@@ -894,6 +897,7 @@ whirl_pinch_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Radius:"), SCALE_WIDTH, 0,
 			      wpvals.radius, 0.0, 2.0, 0.01, 0.1, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_scale_update),

@@ -397,7 +397,7 @@ pluginCoreIA (struct piArgs *argp)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  frame = gtk_frame_new (_("Parameters"));
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -411,6 +411,7 @@ pluginCoreIA (struct piArgs *argp)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Alpha:"), 0, 0,
 			      argp->alpha, 0.0, 1.0, 0.05, 0.1, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (nlfilt_double_adjustment_update),
@@ -419,6 +420,7 @@ pluginCoreIA (struct piArgs *argp)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Radius:"), 0, 0,
 			      argp->radius, 1.0 / 3.0, 1.0, 0.05, 0.1, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (nlfilt_double_adjustment_update),

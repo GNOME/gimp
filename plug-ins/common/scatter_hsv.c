@@ -457,6 +457,7 @@ scatter_hsv_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Holdness:"), SCALE_WIDTH, 0,
 			      VALS.holdness, 1, 8, 1, 2, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (scatter_hsv_iscale_update),
@@ -465,6 +466,7 @@ scatter_hsv_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Hue:"), SCALE_WIDTH, 0,
 			      VALS.hue_distance, 0, 255, 1, 8, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (scatter_hsv_iscale_update),
@@ -473,6 +475,7 @@ scatter_hsv_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Saturation:"), SCALE_WIDTH, 0,
 			      VALS.saturation_distance, 0, 255, 1, 8, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (scatter_hsv_iscale_update),
@@ -481,6 +484,7 @@ scatter_hsv_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 			      _("Value:"), SCALE_WIDTH, 0,
 			      VALS.value_distance, 0, 255, 1, 8, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (scatter_hsv_iscale_update),

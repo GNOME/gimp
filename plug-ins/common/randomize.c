@@ -210,9 +210,7 @@ query (void)
     { PARAM_INT32, "seed_type", "Seed type (10 = current time, 11 = seed value)" },
     { PARAM_INT32, "rndm_seed", "Seed value (used only if seed type is 11)" },
   };
-  static GParamDef *return_vals = NULL;
   static gint nargs = sizeof(args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
 
   const gchar *hurl_blurb =
     "Add a random factor to the image by hurling random data at it.";
@@ -243,8 +241,8 @@ query (void)
 			  N_("<Image>/Filters/Noise/Hurl..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 
   gimp_install_procedure (PLUG_IN_NAME[1],
 			  (gchar *) pick_blurb,
@@ -255,8 +253,8 @@ query (void)
 			  N_("<Image>/Filters/Noise/Pick..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 
   gimp_install_procedure (PLUG_IN_NAME[2],
 			  (gchar *) slur_blurb,
@@ -267,8 +265,8 @@ query (void)
 			  N_("<Image>/Filters/Noise/Slur..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 /*********************************
@@ -742,7 +740,8 @@ randomize_dialog (void)
   gtk_widget_show(table);
 
   /*  Random Seed  */
-  seed_hbox = gimp_random_seed_new (&pivals.rndm_seed, &pivals.seed_type,
+  seed_hbox = gimp_random_seed_new (&pivals.rndm_seed, NULL,
+				    &pivals.seed_type, NULL,
 				    SEED_TIME, SEED_USER);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Random Seed:"), 1.0, 0.5,
@@ -754,6 +753,7 @@ randomize_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Randomization %:"), SCALE_WIDTH, 0,
 			      pivals.rndm_pct, 1.0, 100.0, 1.0, 10.0, 0,
+			      TRUE, 0, 0,
 			      _("Percentage of pixels to be filtered"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
                       GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -765,6 +765,7 @@ randomize_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Repeat:"), SCALE_WIDTH, 0,
 			      pivals.rndm_rcount, 1.0, 100.0, 1.0, 10.0, 0,
+			      TRUE, 0, 0,
 			      _("Number of times to apply filter"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
                       GTK_SIGNAL_FUNC (gimp_int_adjustment_update),

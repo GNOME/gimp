@@ -112,11 +112,16 @@ GtkObject * gimp_scale_entry_new   (GtkTable           *table,
 				    gfloat              step_increment,
 				    gfloat              page_increment,
 				    guint               digits,
+				    gboolean            constrain,
+				    gfloat              unconstrained_lower,
+				    gfloat              unconstrained_upper,
 				    gchar              *tooltip,
 				    gchar              *private_tip);
 
 GtkWidget * gimp_random_seed_new   (gint               *seed,
+				    GtkWidget         **seed_spinbutton,
 				    gint               *use_time,
+				    GtkWidget         **time_button,
 				    gint                time_true,
 				    gint                time_false);
 

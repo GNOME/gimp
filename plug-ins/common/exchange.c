@@ -376,7 +376,9 @@ doDialog (void)
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				  _("Red:"), SCALE_WIDTH, 0,
 				  framenumber ? xargs.tored : xargs.fromred,
-				  0, 255, 1, 8, 0, NULL, NULL);
+				  0, 255, 1, 8, 0,
+				  TRUE, 0, 0,
+				  NULL, NULL);
       gtk_object_set_user_data (GTK_OBJECT (adj), colorbutton);
       gtk_object_set_data (GTK_OBJECT (colorbutton), "red", adj);
       id = gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -389,7 +391,9 @@ doDialog (void)
 	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 				      _("Red Threshold:"), SCALE_WIDTH, 0,
 				      xargs.red_threshold,
-				      0, 255, 1, 8, 0, NULL, NULL);
+				      0, 255, 1, 8, 0,
+				      TRUE, 0, 0,
+				      NULL, NULL);
 	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 			      GTK_SIGNAL_FUNC (scale_callback),
 			      &xargs.red_threshold);
@@ -398,7 +402,9 @@ doDialog (void)
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, framenumber ? 2 : 3,
 				  _("Green:"), SCALE_WIDTH, 0,
 				  framenumber ? xargs.togreen : xargs.fromgreen,
-				  0, 255, 1, 8, 0, NULL, NULL);
+				  0, 255, 1, 8, 0,
+				  TRUE, 0, 0,
+				  NULL, NULL);
       gtk_object_set_user_data (GTK_OBJECT (adj), colorbutton);
       gtk_object_set_data (GTK_OBJECT (colorbutton), "green", adj);
       id = gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -411,7 +417,9 @@ doDialog (void)
 	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
 				      _("Green Threshold:"), SCALE_WIDTH, 0,
 				      xargs.green_threshold,
-				      0, 255, 1, 8, 0, NULL, NULL);
+				      0, 255, 1, 8, 0,
+				      TRUE, 0, 0,
+				      NULL, NULL);
 	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 			      GTK_SIGNAL_FUNC (scale_callback),
 			      &xargs.green_threshold);
@@ -420,7 +428,9 @@ doDialog (void)
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, framenumber ? 3 : 5,
 				  _("Blue:"), SCALE_WIDTH, 0,
 				  framenumber ? xargs.toblue : xargs.fromblue,
-				  0, 255, 1, 8, 0, NULL, NULL);
+				  0, 255, 1, 8, 0,
+				  TRUE, 0, 0,
+				  NULL, NULL);
       gtk_object_set_user_data (GTK_OBJECT (adj), colorbutton);
       gtk_object_set_data (GTK_OBJECT (colorbutton), "blue", adj);
       id = gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -433,7 +443,9 @@ doDialog (void)
 	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
 				      _("Blue Threshold:"), SCALE_WIDTH, 0,
 				      xargs.blue_threshold,
-				      0, 255, 1, 8, 0, NULL, NULL);
+				      0, 255, 1, 8, 0,
+				      TRUE, 0, 0,
+				      NULL, NULL);
 	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 			      GTK_SIGNAL_FUNC (scale_callback),
 			      &xargs.blue_threshold);

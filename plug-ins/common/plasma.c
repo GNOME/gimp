@@ -157,9 +157,7 @@ query (void)
     { PARAM_INT32, "seed", "Random seed" },
     { PARAM_FLOAT, "turbulence", "Turbulence of plasma" }
   };
-  static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
 
   INIT_I18N();
 
@@ -172,8 +170,8 @@ query (void)
 			  N_("<Image>/Filters/Render/Clouds/Plasma..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -319,7 +317,8 @@ plasma_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  seed_hbox = gimp_random_seed_new (&pvals.seed, &pvals.timeseed,
+  seed_hbox = gimp_random_seed_new (&pvals.seed, NULL,
+				    &pvals.timeseed, NULL,
 				    TRUE, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Random Seed:"), 1.0, 0.5,
@@ -328,6 +327,7 @@ plasma_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Turbulence:"), SCALE_WIDTH, 0,
 			      pvals.turbulence,
+			      TRUE, 0, 0,
 			      0.1, 7.0, 0.1, 1.0, 1,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",

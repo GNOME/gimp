@@ -180,9 +180,7 @@ query (void)
     { PARAM_FLOAT, "xsize", "Horizontal texture size" },
     { PARAM_FLOAT, "ysize", "Vertical texture size" }
   };
-  static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
 
   INIT_I18N();
   
@@ -195,10 +193,8 @@ query (void)
 			  N_("<Image>/Filters/Render/Clouds/Solid Noise..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs,
-                          nreturn_vals,
-			  args,
-                          return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 
@@ -243,7 +239,11 @@ run (gchar   *name,
     case RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Test number of arguments  */
-      if (nparams == 9)
+      if (nparams != 9)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  snvals.tilable   = param[3].data.d_int32;
 	  snvals.turbulent = param[4].data.d_int32;
@@ -252,14 +252,12 @@ run (gchar   *name,
 	  snvals.xsize     = param[7].data.d_float;
 	  snvals.ysize     = param[8].data.d_float;
 	}
-      else
-	status = STATUS_CALLING_ERROR;
       break;
 
     case RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
-      gimp_get_data("plug_in_solid_noise", &snvals);
+      gimp_get_data ("plug_in_solid_noise", &snvals);
       break;
 
     default:
@@ -271,17 +269,18 @@ run (gchar   *name,
 				     gimp_drawable_is_gray (drawable->id)))
     {
       /*  Set the tile cache size  */
-      gimp_tile_cache_ntiles((drawable->width + gimp_tile_width() - 1) / gimp_tile_width());
+      gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width () - 1) /
+			      gimp_tile_width ());
 
       /*  Run!  */
       solid_noise (drawable);
 
       /*  If run mode is interactive, flush displays  */
       if (run_mode != RUN_NONINTERACTIVE)
-        gimp_displays_flush();
+        gimp_displays_flush ();
 
       /*  Store data  */
-      if (run_mode==RUN_INTERACTIVE || run_mode==RUN_WITH_LAST_VALS)
+      if (run_mode == RUN_INTERACTIVE || run_mode == RUN_WITH_LAST_VALS)
         gimp_set_data ("plug_in_solid_noise", &snvals,
 		       sizeof (SolidNoiseValues));
     }
@@ -550,7 +549,8 @@ solid_noise_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   /*  Random Seed  */
-  seed_hbox = gimp_random_seed_new (&snvals.seed, &snvals.timeseed,
+  seed_hbox = gimp_random_seed_new (&snvals.seed, NULL,
+				    &snvals.timeseed, NULL,
 				    TRUE, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Random Seed:"), 1.0, 0.5,
@@ -590,6 +590,7 @@ solid_noise_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("X Size:"), SCALE_WIDTH, 0,
 			      snvals.xsize, 0.1, SCALE_MAX, 0.1, 1.0, 1,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -599,6 +600,7 @@ solid_noise_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 			      _("Y Size:"), SCALE_WIDTH, 0,
 			      snvals.ysize, 0.1, SCALE_MAX, 0.1, 1.0, 1,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),

@@ -51,6 +51,8 @@ typedef struct
 
 typedef struct
 {
+  gint       channels;
+  GtkObject *channel_adj[4];
   gint       run;
 } NoisifyInterface;
 
@@ -63,12 +65,14 @@ static void      run    (gchar     *name,
 			 gint      *nreturn_vals,
 			 GParam   **return_vals);
 
-static void      noisify        (GDrawable * drawable);
-static gint      noisify_dialog (gint        channels);
-static gdouble   gauss          (void);
+static void      noisify (GDrawable * drawable);
+static gdouble   gauss   (void);
 
-static void      noisify_ok_callback     (GtkWidget *widget,
-					  gpointer   data);
+static gint      noisify_dialog                   (gint           channels);
+static void      noisify_ok_callback              (GtkWidget     *widget,
+						   gpointer       data);
+static void      noisify_double_adjustment_update (GtkAdjustment *adjustment,
+						   gpointer       data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -86,6 +90,8 @@ static NoisifyVals nvals =
 
 static NoisifyInterface noise_int =
 {
+  0,
+  { NULL, NULL, NULL, NULL },
   FALSE     /* run */
 };
 
@@ -106,9 +112,7 @@ query (void)
     { PARAM_FLOAT, "noise_3", "Noise in the third channel (blue)" },
     { PARAM_FLOAT, "noise_4", "Noise in the fourth channel (alpha)" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
 
@@ -121,8 +125,8 @@ query (void)
 			  N_("<Image>/Filters/Noise/Noisify..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -167,14 +171,16 @@ run (gchar   *name,
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 8)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
 	{
-	  nvals.independent = (param[3].data.d_int32) ? TRUE : FALSE;
-	  nvals.noise[0] = param[4].data.d_float;
-	  nvals.noise[1] = param[5].data.d_float;
-	  nvals.noise[2] = param[6].data.d_float;
-	  nvals.noise[3] = param[7].data.d_float;
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
+	{
+	  nvals.independent = param[3].data.d_int32 ? TRUE : FALSE;
+	  nvals.noise[0]    = param[4].data.d_float;
+	  nvals.noise[1]    = param[5].data.d_float;
+	  nvals.noise[2]    = param[6].data.d_float;
+	  nvals.noise[3]    = param[7].data.d_float;
 	}
       break;
 
@@ -344,6 +350,7 @@ noisify_dialog (gint channels)
   table = gtk_table_new (channels + 1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 4);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
@@ -355,33 +362,41 @@ noisify_dialog (gint channels)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), nvals.independent);
   gtk_widget_show (toggle);
 
+  noise_int.channels = channels;
+
   if (channels == 1) 
     {
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				  _("Gray:"), SCALE_WIDTH, 0,
 				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
 			  &nvals.noise[0]);
+      noise_int.channel_adj[0] = adj;
     }
   else if (channels == 2)
     {
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				  _("Gray:"), SCALE_WIDTH, 0,
 				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
 			  &nvals.noise[0]);
+      noise_int.channel_adj[0] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 				  _("Alpha:"), SCALE_WIDTH, 0,
 				  nvals.noise[1], 0.0, 1.0, 0.01, 0.1, 2,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
 			  &nvals.noise[1]);
+      noise_int.channel_adj[1] = adj;
     }
   
   else if (channels == 3)
@@ -389,26 +404,32 @@ noisify_dialog (gint channels)
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				  _("Red:"), SCALE_WIDTH, 0,
 				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
 			  &nvals.noise[0]);
+      noise_int.channel_adj[0] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 				  _("Green:"), SCALE_WIDTH, 0,
 				  nvals.noise[1], 0.0, 1.0, 0.01, 0.1, 2,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
 			  &nvals.noise[1]);
+      noise_int.channel_adj[1] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 				  _("Blue:"), SCALE_WIDTH, 0,
 				  nvals.noise[2], 0.0, 1.0, 0.01, 0.1, 2,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
 			  &nvals.noise[2]);
+      noise_int.channel_adj[2] = adj;
     }
 
   else if (channels == 4)
@@ -416,34 +437,42 @@ noisify_dialog (gint channels)
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				  _("Red:"), SCALE_WIDTH, 0,
 				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
 			  &nvals.noise[0]);
+      noise_int.channel_adj[0] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 				  _("Green:"), SCALE_WIDTH, 0,
 				  nvals.noise[1], 0.0, 1.0, 0.01, 0.1, 2,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
 			  &nvals.noise[1]);
+      noise_int.channel_adj[1] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 				  _("Blue:"), SCALE_WIDTH, 0,
 				  nvals.noise[2], 0.0, 1.0, 0.01, 0.1, 2,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
 			  &nvals.noise[2]);
+      noise_int.channel_adj[2] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
 				  _("Alpha:"), SCALE_WIDTH, 0,
 				  nvals.noise[3], 0.0, 1.0, 0.01, 0.1, 2,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			  GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
 			  &nvals.noise[3]);
+      noise_int.channel_adj[3] = adj;
     }
   else
     {
@@ -454,10 +483,12 @@ noisify_dialog (gint channels)
 	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, i + 1,
 				      buffer, SCALE_WIDTH, 0,
 				      nvals.noise[i], 0.0, 1.0, 0.01, 0.1, 2,
+				      TRUE, 0, 0,
 				      NULL, NULL);
 	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			      GTK_SIGNAL_FUNC (noisify_double_adjustment_update),
 			      &nvals.noise[i]);
+	  noise_int.channel_adj[i] = adj;
 
 	  g_free (buffer);
 	}
@@ -501,4 +532,21 @@ noisify_ok_callback (GtkWidget *widget,
   noise_int.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
+}
+
+static void
+noisify_double_adjustment_update (GtkAdjustment *adjustment,
+				  gpointer       data)
+{
+  gimp_double_adjustment_update (adjustment, data);
+
+  if (! nvals.independent)
+    {
+      gint i;
+
+      for (i = 0; i < noise_int.channels; i++)
+	if (adjustment != GTK_ADJUSTMENT (noise_int.channel_adj[i]))
+	  gtk_adjustment_set_value (GTK_ADJUSTMENT (noise_int.channel_adj[i]),
+				    adjustment->value);
+    }
 }

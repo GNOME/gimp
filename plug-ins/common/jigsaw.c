@@ -2352,6 +2352,7 @@ dialog_box (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Horizontal:"), SCALE_WIDTH, 0,
 			      config.x, MIN_XTILES, MAX_XTILES, 1.0, 4.0, 0,
+			      TRUE, 0, 0,
 			      _("Number of pieces going across"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -2361,6 +2362,7 @@ dialog_box (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Vertical:"), SCALE_WIDTH, 0,
 			      config.y, MIN_YTILES, MAX_YTILES, 1.0, 4.0, 0,
+			      TRUE, 0, 0,
 			      _("Number of pieces going down"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -2384,6 +2386,7 @@ dialog_box (void)
 			      _("Bevel Width:"), SCALE_WIDTH, 0,
 			      config.blend_lines,
 			      MIN_BLEND_LINES, MAX_BLEND_LINES, 1.0, 2.0, 0,
+			      TRUE, 0, 0,
 			      _("Degree of slope of each piece's edge"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -2394,6 +2397,7 @@ dialog_box (void)
 			      _("Highlight:"), SCALE_WIDTH, 0,
 			      config.blend_amount,
 			      MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 0.05, 0.1, 2,
+			      TRUE, 0, 0,
 			      _("The amount of highlighting on the edges "
 				"of each piece"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",

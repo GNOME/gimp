@@ -46,8 +46,8 @@ echo "mkdir $2/curves"
 mkdir $2/curves
 echo "mkdir $2/gfig"
 mkdir $2/gfig
-echo "mkdir $2/gflares"
-mkdir $2/gflares
+echo "mkdir $2/gflare"
+mkdir $2/gflare
 echo "mkdir $2/fractalexplorer"
 mkdir $2/fractalexplorer
 echo "mkdir $2/gimpressionist"

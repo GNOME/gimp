@@ -312,6 +312,7 @@ pixelize_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			  _("Pixel Width:"), SCALE_WIDTH, ENTRY_WIDTH,
 			  pvals.pixelwidth, 1, 64, 1, 8, 0,
+			  TRUE, 0, 0,
 			  NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),

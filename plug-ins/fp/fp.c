@@ -56,25 +56,24 @@ FP_Params Current =
 GDrawable *drawable, *mask;
 
 void      query  (void);
-void      run    (char      *name,
-		  int        nparams,
+void      run    (gchar     *name,
+		  gint       nparams,
 		  GParam    *param,
-		  int       *nreturn_vals,
+		  gint      *nreturn_vals,
 		  GParam   **return_vals);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 MAIN()
 
-
 void
-query ()
+query (void)
 {
   GParamDef args[] =
   {
@@ -82,9 +81,7 @@ query ()
     { PARAM_IMAGE, "image", "Input image (used for indexed images)" },
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
   };
-  GParamDef *return_vals = NULL;
-  int nargs = sizeof (args) / sizeof (args[0]);
-  int nreturn_vals = 0;
+  gint nargs = sizeof (args) / sizeof (args[0]);
   
   INIT_I18N();
   gimp_install_procedure ("plug_in_filter_pack",
@@ -94,18 +91,19 @@ query ()
 			  "Pavel Grinfeld (pavel@ml.com)",
 			  "27th March 1997",
 			  N_("<Image>/Image/Colors/Filter Pack..."),
-			  "RGB*,INDEXED*,GRAY*",
+			  "RGB*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 /********************************STANDARD RUN*************************/
+
 void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   GParam values[1];
@@ -122,13 +120,14 @@ run (char    *name,
   initializeFilterPacks();
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-  mask=gimp_drawable_get(gimp_image_get_selection(param[1].data.d_image));
+  mask = gimp_drawable_get (gimp_image_get_selection (param[1].data.d_image));
 
-  if (gimp_drawable_is_indexed (drawable->id) ||gimp_drawable_is_gray (drawable->id) ) {
-    gimp_message (_("Convert the image to RGB first!"));
-    status = STATUS_EXECUTION_ERROR;
-  }
-  
+  if (gimp_drawable_is_indexed (drawable->id) ||
+      gimp_drawable_is_gray (drawable->id) )
+    {
+      gimp_message (_("Convert the image to RGB first!"));
+      status = STATUS_EXECUTION_ERROR;
+    }
   else if (gimp_drawable_is_rgb (drawable->id) && fp_dialog())
     {
       gimp_progress_init (_("Applying the Filter Pack...")); 

@@ -155,9 +155,7 @@ query (void)
     { PARAM_DRAWABLE,	"drawable",	"Input drawable" },
     { PARAM_INT32,	"percent",	"Percent sharpening (default = 10)" }
   };
-  static GParamDef	*return_vals = NULL;
-  static int		nargs        = sizeof(args) / sizeof(args[0]),
-			nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
 
@@ -170,8 +168,8 @@ query (void)
 			  N_("<Image>/Filters/Enhance/Sharpen..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -505,7 +503,9 @@ static gint
 sharpen_dialog (void)
 {
   GtkWidget *dialog;
+  GtkWidget *vbox;
   GtkWidget *table;
+  GtkWidget *abox;
   GtkWidget *ptable;
   GtkWidget *frame;
   GtkWidget *scrollbar;
@@ -554,20 +554,27 @@ sharpen_dialog (void)
    * Top-level table for dialog...
    */
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dialog)->vbox), table,
-		      FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
   /*
    * Preview window...
    */
 
+  frame = gtk_frame_new (_("Preview"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_widget_show (abox);
+
   ptable = gtk_table_new (2, 2, FALSE);
-  gtk_table_attach (GTK_TABLE (table), ptable, 0, 3, 0, 1, 0, 0, 0, 0);
+  gtk_container_add (GTK_CONTAINER (abox), ptable);
   gtk_widget_show (ptable);
 
   frame = gtk_frame_new (NULL);
@@ -617,9 +624,20 @@ sharpen_dialog (void)
    * Sharpness control...
    */
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Sharpness:"), SCALE_WIDTH, 0,
 			      sharpen_percent, 1, 99, 1, 10, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_iscale_update),
@@ -640,7 +658,7 @@ sharpen_dialog (void)
 /*  preview functions  */
 
 static void
-preview_init(void)
+preview_init (void)
 {
   int	width;		/* Byte width of the image */
 

@@ -265,6 +265,7 @@ engrave_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Height:"), SCALE_WIDTH, 0,
 			      pvals.height, 2.0, 16.0, 1.0, 4.0, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),

@@ -119,9 +119,7 @@ query (void)
     { PARAM_INT32, "shift_amount", "shift amount (0 <= shift_amount_x <= 200)" },
     { PARAM_INT32, "orientation", "vertical, horizontal orientation" },
   };
-  static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
 
   INIT_I18N();
 
@@ -134,8 +132,8 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Shift..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -177,15 +175,17 @@ run (gchar  *name,
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  shvals.shift_amount = param[3].data.d_int32;
           shvals.orientation = (param[4].data.d_int32) ? HORIZONTAL : VERTICAL;
-        }
-      if ((status == STATUS_SUCCESS) &&
-	  (shvals.shift_amount < 0 || shvals.shift_amount > 200))
-     	status = STATUS_CALLING_ERROR;
+
+	  if (shvals.shift_amount < 0 || shvals.shift_amount > 200)
+	    status = STATUS_CALLING_ERROR;
+	}
       break;
 
     case RUN_WITH_LAST_VALS:
@@ -418,6 +418,7 @@ shift_dialog (void)
   amount_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				      _("Shift Amount:"), SCALE_WIDTH, 0,
 				      shvals.shift_amount, 0, 200, 1, 10, 0,
+				      TRUE, 0, 0,
 				      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (amount_data), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),

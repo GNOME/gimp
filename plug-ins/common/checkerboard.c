@@ -393,6 +393,7 @@ check_dialog (void)
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				    _("Check Size:"), 200, 0,
 				    cvals.size, 1, 400, 1, 10, 0,
+				    TRUE, 0, 0,
 				    NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (size_data), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),

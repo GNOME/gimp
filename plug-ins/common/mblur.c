@@ -823,6 +823,7 @@ mblur_dialog (void)
   adjustment = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				     _("Length:"), 150, 0,
 				     mbvals.length, 0.0, 256.0, 1.0, 8.0, 0,
+				     TRUE, 0, 0,
 				     NULL, NULL);
   gtk_signal_connect (adjustment, "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -831,6 +832,7 @@ mblur_dialog (void)
   adjustment = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				     _("Angle:"), 150, 0,
 				     mbvals.angle, 0.0, 360.0, 1.0, 15.0, 0,
+				     TRUE, 0, 0,
 				     NULL, NULL);
   gtk_signal_connect (adjustment, "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),

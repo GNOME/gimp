@@ -681,6 +681,7 @@ edge_dialog (GDrawable *drawable)
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				     _("Amount:"), 100, 0,
 				     evals.amount, 1.0, 10.0, 0.1, 1.0, 1,
+				     TRUE, 0, 0,
 				     NULL, NULL);
 
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",

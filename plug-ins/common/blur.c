@@ -654,7 +654,8 @@ blur_dialog (void)
   gtk_widget_show (table);
 
   /*  Random Seed  */
-  seed_hbox = gimp_random_seed_new (&pivals.blur_seed, &pivals.seed_type,
+  seed_hbox = gimp_random_seed_new (&pivals.blur_seed, NULL,
+				    &pivals.seed_type, NULL,
 				    SEED_TIME, SEED_USER);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Random Seed:"), 1.0, 0.5,
@@ -666,6 +667,7 @@ blur_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Randomization %:"), SCALE_WIDTH, 0,
 			      pivals.blur_pct, 1.0, 100.0, 1.0, 10.0, 0,
+			      TRUE, 0, 0,
 			      _("Percentage of pixels to be filtered"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -677,6 +679,7 @@ blur_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Repeat:"), SCALE_WIDTH, 0,
 			      pivals.blur_rcount, 1.0, 100.0, 1.0, 10.0, 0,
+			      TRUE, 0, 0,
 			      _("Number of times to apply filter"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),

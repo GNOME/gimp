@@ -40,6 +40,7 @@
 #define MODE_RGB       0
 #define MODE_INTEN     1
 
+#undef INTENSITY
 #define INTENSITY(p)   ((guint) (p[0]*77+p[1]*150+p[2]*29) >> 8)
 
 typedef struct
@@ -103,9 +104,7 @@ query (void)
     { PARAM_INT32, "mask_size", "Oil paint mask size" },
     { PARAM_INT32, "mode", "Algorithm {RGB (0), INTENSITY (1)}" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
 
@@ -118,8 +117,8 @@ query (void)
 			  N_("<Image>/Filters/Artistic/Oilify..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -158,16 +157,19 @@ run (gchar   *name,
     case RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
-        status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
         {
           ovals.mask_size = (gdouble) param[3].data.d_int32;
           ovals.mode = (gint) param[4].data.d_int32;
-        }
-      if (status == STATUS_SUCCESS &&
-          ((ovals.mask_size < 1.0) ||
-           ((ovals.mode != MODE_INTEN) && (ovals.mode != MODE_RGB))))
-        status = STATUS_CALLING_ERROR;
+
+	  if ((ovals.mask_size < 1.0) ||
+	      ((ovals.mode != MODE_INTEN) &&
+	       (ovals.mode != MODE_RGB)))
+	    status = STATUS_CALLING_ERROR;
+	}
       break;
 
     case RUN_WITH_LAST_VALS:
@@ -491,6 +493,7 @@ oilify_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Mask Size:"), SCALE_WIDTH, 0,
 			      ovals.mask_size, 3.0, 50.0, 1.0, 5.0, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),

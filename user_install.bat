@@ -13,7 +13,7 @@ mkdir %2\plug-ins
 mkdir %2\modules
 mkdir %2\scripts
 mkdir %2\gfig
-mkdir %2\gflares
+mkdir %2\gflare
 mkdir %2\fractalexplorer
 mkdir %2\gimpressionist
 mkdir %2\gimpressionist\Brushes

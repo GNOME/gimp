@@ -397,6 +397,17 @@ gimp_spin_button_new (GtkObject **adjustment,  /* return value */
   return spinbutton;
 }
 
+static void
+gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
+						    GtkAdjustment *other_adj)
+{
+  gtk_signal_handler_block_by_data (GTK_OBJECT (other_adj), adjustment);
+
+  gtk_adjustment_set_value (other_adj, adjustment->value);
+
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (other_adj), adjustment);
+}
+
 GtkObject *
 gimp_scale_entry_new (GtkTable *table,
 		      gint      column,
@@ -410,6 +421,9 @@ gimp_scale_entry_new (GtkTable *table,
 		      gfloat    step_increment,
 		      gfloat    page_increment,
 		      guint     digits,
+		      gboolean  constrain,
+		      gfloat    unconstrained_lower,
+		      gfloat    unconstrained_upper,
 		      gchar    *tooltip,
 		      gchar    *private_tip)
 {
@@ -417,6 +431,7 @@ gimp_scale_entry_new (GtkTable *table,
   GtkWidget *scale;
   GtkWidget *spinbutton;
   GtkObject *adjustment;
+  GtkObject *return_adj;
 
   label = gtk_label_new (text);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
@@ -425,9 +440,45 @@ gimp_scale_entry_new (GtkTable *table,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  spinbutton = gimp_spin_button_new (&adjustment, value, lower, upper,
-				     step_increment, page_increment, 0.0,
-				     1.0, digits);
+  if (! constrain &&
+      unconstrained_lower <= lower &&
+      unconstrained_upper >= upper)
+    {
+      GtkObject *constrained_adj;
+
+      constrained_adj = gtk_adjustment_new (value, lower, upper,
+					    step_increment, page_increment,
+					    0.0);
+
+      spinbutton = gimp_spin_button_new (&adjustment, value,
+					 unconstrained_lower,
+					 unconstrained_upper,
+					 step_increment, page_increment, 0.0,
+					 1.0, digits);
+
+      gtk_signal_connect
+	(GTK_OBJECT (constrained_adj), "value_changed",
+	 GTK_SIGNAL_FUNC (gimp_scale_entry_unconstrained_adjustment_callback),
+	 adjustment);
+
+      gtk_signal_connect
+	(GTK_OBJECT (adjustment), "value_changed",
+	 GTK_SIGNAL_FUNC (gimp_scale_entry_unconstrained_adjustment_callback),
+	 constrained_adj);
+
+      return_adj = adjustment;
+
+      adjustment = constrained_adj;
+    }
+  else
+    {
+      spinbutton = gimp_spin_button_new (&adjustment, value, lower, upper,
+					 step_increment, page_increment, 0.0,
+					 1.0, digits);
+
+      return_adj = adjustment;
+    }
+    
   if (spinbutton_usize > 0)
     gtk_widget_set_usize (spinbutton, spinbutton_usize, -1);
 
@@ -438,12 +489,12 @@ gimp_scale_entry_new (GtkTable *table,
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gtk_table_attach (GTK_TABLE (table), scale,
 		    column + 1, column + 2, row, row + 1,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (scale);
 
   gtk_table_attach (GTK_TABLE (table), spinbutton,
 		    column + 2, column + 3, row, row + 1,
-		    GTK_SHRINK, GTK_FILL, 0, 0);
+		    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (spinbutton);
 
   if (tooltip || private_tip)
@@ -452,7 +503,7 @@ gimp_scale_entry_new (GtkTable *table,
       gimp_help_set_help_data (spinbutton, tooltip, private_tip);
     }
 
-  return adjustment;
+  return return_adj;
 }
 
 static void
@@ -474,15 +525,17 @@ gimp_random_seed_toggle_update (GtkWidget *widget,
 }
 
 GtkWidget *
-gimp_random_seed_new (gint *seed,
-		      gint *use_time,
-		      gint  time_true,
-		      gint  time_false)
+gimp_random_seed_new (gint       *seed,
+		      GtkWidget **seed_spinbutton,
+		      gint       *use_time,
+		      GtkWidget **time_button,
+		      gint        time_true,
+		      gint        time_false)
 {
   GtkWidget *hbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
-  GtkWidget *time_button;
+  GtkWidget *button;
 
   hbox = gtk_hbox_new (FALSE, 4);
 
@@ -494,34 +547,40 @@ gimp_random_seed_new (gint *seed,
                       seed);
   gtk_widget_show (spinbutton);
 
+  if (seed_spinbutton)
+    *seed_spinbutton = spinbutton;
+
   gimp_help_set_help_data (spinbutton,
                            _("If the \"Time\" button is not pressed, "
                              "use this value for random number generator "
                              "seed - this allows you to repeat a "
                              "given \"random\" operation"), NULL);
 
-  time_button = gtk_toggle_button_new_with_label (_("Time"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (time_button)->child), 2, 0);
-  gtk_signal_connect (GTK_OBJECT (time_button), "toggled",
+  button = gtk_toggle_button_new_with_label (_("Time"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
                       GTK_SIGNAL_FUNC (gimp_random_seed_toggle_update),
                       use_time);
-  gtk_box_pack_end (GTK_BOX (hbox), time_button, FALSE, FALSE, 0);
-  gtk_widget_show (time_button);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-  gimp_help_set_help_data (time_button,
+  if (time_button)
+    *time_button = button;
+
+  gimp_help_set_help_data (button,
                            _("Seed random number generator from the current "
                              "time - this guarantees a reasonable "
                              "randomization"), NULL);
 
-  gtk_object_set_data (GTK_OBJECT (time_button), "time_true",
+  gtk_object_set_data (GTK_OBJECT (button), "time_true",
 		       (gpointer) time_true);
-  gtk_object_set_data (GTK_OBJECT (time_button), "time_false",
+  gtk_object_set_data (GTK_OBJECT (button), "time_false",
 		       (gpointer) time_false);
 
-  gtk_object_set_data (GTK_OBJECT (time_button), "inverse_sensitive",
+  gtk_object_set_data (GTK_OBJECT (button), "inverse_sensitive",
 		       spinbutton);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (time_button),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 *use_time == time_true);
 
   return hbox;
@@ -852,7 +911,7 @@ gimp_table_attach_aligned (GtkTable  *table,
       gtk_table_attach (table, label,
 			column, column + 1,
 			row, row + 1,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+			GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
     }
 
@@ -861,19 +920,16 @@ gimp_table_attach_aligned (GtkTable  *table,
       GtkWidget *alignment;
 
       alignment = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-      gtk_table_attach (table, alignment,
-			column + 1, column + 1 + colspan,
-			row, row + 1,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (alignment);
       gtk_container_add (GTK_CONTAINER (alignment), widget);
+      gtk_widget_show (widget);
+
+      widget = alignment;
     }
-  else
-    {
-      gtk_table_attach_defaults (table, widget,
-				 column + 1, column + 1 + colspan,
-				 row, row + 1);
-    }
+
+  gtk_table_attach (table, widget,
+		    column + 1, column + 1 + colspan,
+		    row, row + 1,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_widget_show (widget);
 }

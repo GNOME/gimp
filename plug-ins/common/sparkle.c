@@ -387,6 +387,7 @@ sparkle_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			  _("Luminosity Threshold:"), SCALE_WIDTH, 0,
 			  svals.lum_threshold, 0.0, 0.1, 0.001, 0.01, 3,
+			  TRUE, 0, 0,
 			  _("Adjust the Luminosity Threshold"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -396,6 +397,7 @@ sparkle_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			  _("Flare Intensity:"), SCALE_WIDTH, 0,
 			  svals.flare_inten, 0.0, 1.0, 0.01, 0.1, 2,
+			  TRUE, 0, 0,
 			  _("Adjust the Flare Intensity"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -405,6 +407,7 @@ sparkle_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			  _("Spike Length:"), SCALE_WIDTH, 0,
 			  svals.spike_len, 1, 100, 1, 10, 0,
+			  TRUE, 0, 0,
 			  _("Adjust the Spike Length"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -414,6 +417,7 @@ sparkle_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 			  _("Spike Points:"), SCALE_WIDTH, 0,
 			  svals.spike_pts, 0, 16, 1, 4, 0,
+			  TRUE, 0, 0,
 			  _("Adjust the Number of Spikes"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -423,6 +427,7 @@ sparkle_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
 			  _("Spike Angle (-1: Random):"), SCALE_WIDTH, 0,
 			  svals.spike_angle, -1, 360, 1, 15, 0,
+			  TRUE, 0, 0,
 			  _("Adjust the Spike Angle "
 			    "(-1 means a Random Angle is choosen)"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
@@ -433,6 +438,7 @@ sparkle_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
 			  _("Spike Density:"), SCALE_WIDTH, 0,
 			  svals.density, 0.0, 1.0, 0.01, 0.1, 2,
+			  TRUE, 0, 0,
 			  _("Adjust the Spike Density"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -442,6 +448,7 @@ sparkle_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
 			  _("Opacity:"), SCALE_WIDTH, 0,
 			  svals.opacity, 0.0, 1.0, 0.01, 0.1, 2,
+			  TRUE, 0, 0,
 			  _("Adjust the Opacity of the Spikes"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -451,6 +458,7 @@ sparkle_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 7,
 			  _("Random Hue:"), SCALE_WIDTH, 0,
 			  svals.random_hue, 0.0, 1.0, 0.01, 0.1, 2,
+			  TRUE, 0, 0,
 			  _("Adjust the Value how much the Hue should "
 			    "be changed randomly"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
@@ -461,6 +469,7 @@ sparkle_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 8,
 			  _("Random Saturation:"), SCALE_WIDTH, 0,
 			  svals.random_saturation, 0.0, 1.0, 0.01, 0.1, 2,
+			  TRUE, 0, 0,
 			  _("Adjust the Value how much the Saturation should "
 			    "be changed randomly"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",

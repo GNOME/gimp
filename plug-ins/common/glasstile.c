@@ -261,6 +261,7 @@ glass_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Tile Width:"), 150, 0,
 			      gtvals.xblock, 10, 50, 1, 5, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -270,6 +271,7 @@ glass_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Tile Height:"), 150, 0,
 			      gtvals.yblock, 10, 50, 1, 5, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),

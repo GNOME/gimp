@@ -1025,6 +1025,7 @@ new_channel (const chan_tmpl *ct)
 					  _("Angle:"), SCALE_WIDTH, 0,
 					  *ct->angle,
 					  -90, 90, 1, 15, 1,
+					  TRUE, 0, 0,
 					  NULL, NULL);
   gtk_object_set_user_data (chst->angle_adj, ct->angle);
   gtk_signal_connect (GTK_OBJECT (chst->angle_adj), "value_changed",
@@ -1270,6 +1271,7 @@ newsprint_dialog (GDrawable *drawable)
 				       _("Input SPI:"), SCALE_WIDTH, 0,
 				       pvals_ui.input_spi,
 				       1.0, 1200.0, 1.0, 10.0, 0,
+				       TRUE, 0, 0,
 				       NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (st.input_spi), "value_changed",
 		      GTK_SIGNAL_FUNC (spi_callback),
@@ -1279,6 +1281,7 @@ newsprint_dialog (GDrawable *drawable)
 					_("Output LPI:"), SCALE_WIDTH, 0,
 					pvals_ui.output_lpi,
 					1.0, 1200.0, 1.0, 10.0, 1,
+					TRUE, 0, 0,
 					NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (st.output_lpi), "value_changed",
 		      GTK_SIGNAL_FUNC (lpi_callback),
@@ -1288,6 +1291,7 @@ newsprint_dialog (GDrawable *drawable)
 				      _("Cell Size:"), SCALE_WIDTH, 0,
 				      pvals.cell_width,
 				      3.0, 100.0, 1.0, 5.0, 0,
+				      TRUE, 0, 0,
 				      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (st.cellsize), "value_changed",
 		      GTK_SIGNAL_FUNC (cellsize_callback),
@@ -1323,6 +1327,7 @@ newsprint_dialog (GDrawable *drawable)
 				      _("Black Pullout (%):"), SCALE_WIDTH, 0,
 				      pvals.k_pullout,
 				      0, 100, 1, 10, 0,
+				      TRUE, 0, 0,
 				      NULL, NULL);
       gtk_signal_connect (GTK_OBJECT (st.pull), "value_changed",
 			  GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -1432,6 +1437,7 @@ newsprint_dialog (GDrawable *drawable)
 			      _("Oversample:"), SCALE_WIDTH, 0,
 			      pvals.oversample,
 			      1.0, 15.0, 1.0, 5.0, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),

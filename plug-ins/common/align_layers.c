@@ -530,6 +530,7 @@ align_layers_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
 			      _("Grid Size:"), SCALE_WIDTH, 0,
 			      VALS.grid_size, 0, 200, 1, 10, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),

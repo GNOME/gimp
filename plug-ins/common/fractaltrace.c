@@ -809,6 +809,7 @@ dialog_show (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      "X1:", 0, 0,
 			      parameters.x1, -50, 50, 0.1, 0.5, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_double_adjustment_update),
@@ -817,6 +818,7 @@ dialog_show (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      "X2:", 0, 0,
 			      parameters.x2, -50, 50, 0.1, 0.5, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_double_adjustment_update),
@@ -825,6 +827,7 @@ dialog_show (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      "Y1:", 0, 0,
 			      parameters.y1, -50, 50, 0.1, 0.5, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_double_adjustment_update),
@@ -833,6 +836,7 @@ dialog_show (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 			      "Y2:", 0, 0,
 			      parameters.y2, -50, 50, 0.1, 0.5, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_double_adjustment_update),
@@ -841,6 +845,7 @@ dialog_show (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
 			      "Depth:", 0, 0,
 			      parameters.depth, 1, 50, 1, 5, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_int_adjustment_update),

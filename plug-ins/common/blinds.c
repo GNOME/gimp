@@ -434,6 +434,7 @@ blinds_dialog (void)
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				    _("Displacement:"), SCALE_WIDTH, 0,
 				    bvals.angledsp, 1, 90, 1, 15, 0,
+				    TRUE, 0, 0,
 				    NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (size_data), "value_changed",
 		      GTK_SIGNAL_FUNC (blinds_scale_update),
@@ -442,6 +443,7 @@ blinds_dialog (void)
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				    _("Num Segments:"), SCALE_WIDTH, 0,
 				    bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
+				    TRUE, 0, 0,
 				    NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (size_data), "value_changed",
 		      GTK_SIGNAL_FUNC (blinds_scale_update),

@@ -784,6 +784,7 @@ DepthMerge_dialog (DepthMerge *dm)
   adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 0,
 			      _("Overlap:"), 0, 0,
 			      dm->params.overlap, 0, 2, 0.001, 0.01, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialogValueScaleUpdateCallback),
@@ -793,6 +794,7 @@ DepthMerge_dialog (DepthMerge *dm)
   adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 1,
 			      _("Offset:"), 0, 0,
 			      dm->params.offset, -1, 1, 0.001, 0.01, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialogValueScaleUpdateCallback),
@@ -802,6 +804,7 @@ DepthMerge_dialog (DepthMerge *dm)
   adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 2,
 			      _("Scale 1:"), 0, 0,
 			      dm->params.scale1, -1, 1, 0.001, 0.01, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialogValueScaleUpdateCallback),
@@ -811,6 +814,7 @@ DepthMerge_dialog (DepthMerge *dm)
   adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 3,
 			      _("Scale 2:"), 0, 0,
 			      dm->params.scale2, -1, 1, 0.001, 0.01, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialogValueScaleUpdateCallback),

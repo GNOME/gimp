@@ -350,6 +350,7 @@ cubism_dialog (void)
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				     _("Tile Size:"), SCALE_WIDTH, 0,
 				     cvals.tile_size, 0.0, 100.0, 1.0, 10.0, 1,
+				     TRUE, 0, 0,
 				     NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -359,6 +360,7 @@ cubism_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			  _("Tile Saturation:"), SCALE_WIDTH, 0,
 			  cvals.tile_saturation, 0.0, 10.0, 0.1, 1, 1,
+			  TRUE, 0, 0,
 			  NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),

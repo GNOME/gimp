@@ -630,6 +630,7 @@ diffraction_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Red:"), SCALE_WIDTH, 0,
 			      dvals.lam_r, 0.0, 20.0, 0.2, 1.0, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -638,6 +639,7 @@ diffraction_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Green:"), SCALE_WIDTH, 0,
 			      dvals.lam_g, 0.0, 20.0, 0.2, 1.0, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -646,6 +648,7 @@ diffraction_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Blue:"), SCALE_WIDTH, 0,
 			      dvals.lam_b, 0.0, 20.0, 0.2, 1.0, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -666,6 +669,7 @@ diffraction_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Red:"), SCALE_WIDTH, 0,
 			      dvals.contour_r, 0.0, 10.0, 0.1, 1.0, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -674,6 +678,7 @@ diffraction_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Green:"), SCALE_WIDTH, 0,
 			      dvals.contour_g, 0.0, 10.0, 0.1, 1.0, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -682,6 +687,7 @@ diffraction_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Blue:"), SCALE_WIDTH, 0,
 			      dvals.contour_b, 0.0, 10.0, 0.1, 1.0, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -702,6 +708,7 @@ diffraction_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Red:"), SCALE_WIDTH, 0,
 			      dvals.edges_r, 0.0, 1.0, 0.01, 0.1, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -710,6 +717,7 @@ diffraction_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Green:"), SCALE_WIDTH, 0,
 			      dvals.edges_g, 0.0, 1.0, 0.01, 0.1, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -718,6 +726,7 @@ diffraction_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Blue:"), SCALE_WIDTH, 0,
 			      dvals.edges_b, 0.0, 1.0, 0.01, 0.1, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -738,6 +747,7 @@ diffraction_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Brightness:"), SCALE_WIDTH, 0,
 			      dvals.brightness, 0.0, 1.0, 0.01, 0.1, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -746,6 +756,7 @@ diffraction_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Scattering:"), SCALE_WIDTH, 0,
 			      dvals.scattering, 0.0, 100.0, 1.0, 10.0, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -754,6 +765,7 @@ diffraction_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Polatization:"), SCALE_WIDTH, 0,
 			      dvals.polarization, -1.0, 1.0, 0.02, 0.2, 3,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),

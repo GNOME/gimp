@@ -156,26 +156,32 @@ run (gchar   *name,
       if (! threshold_alpha_dialog ())
 	return;
       break;
+
     case RUN_NONINTERACTIVE:
       if (nparams != 4)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  VALS.threshold = param[3].data.d_int32;
 	} 
       break;
+
     case RUN_WITH_LAST_VALS:
       gimp_get_data (PLUG_IN_NAME, &VALS);
       break;
     }
   
   if (status == STATUS_SUCCESS)
-    status = threshold_alpha (drawable_id);
+    {
+      status = threshold_alpha (drawable_id);
 
-  if (run_mode != RUN_NONINTERACTIVE)
-    gimp_displays_flush();
-  if (run_mode == RUN_INTERACTIVE && status == STATUS_SUCCESS )
-    gimp_set_data (PLUG_IN_NAME, &VALS, sizeof (ValueType));
+      if (run_mode != RUN_NONINTERACTIVE)
+	gimp_displays_flush ();
+      if (run_mode == RUN_INTERACTIVE && status == STATUS_SUCCESS)
+	gimp_set_data (PLUG_IN_NAME, &VALS, sizeof (ValueType));
+    }
 
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
@@ -290,6 +296,7 @@ threshold_alpha_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Threshold:"), SCALE_WIDTH, 0,
 			      VALS.threshold, 0, 255, 1, 8, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),

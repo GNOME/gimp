@@ -1383,6 +1383,7 @@ CML_explorer_dialog (void)
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				  _("Zoom Scale:"), SCALE_WIDTH, 0,
 				  VALS.scale, 1, 10, 1, 2, 0,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       CML_explorer_int_entry_init (&widget_pointers[3][1],
 				   adj, &VALS.scale);
@@ -1390,6 +1391,7 @@ CML_explorer_dialog (void)
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 				  _("Start Offset:"), SCALE_WIDTH, 0,
 				  VALS.start_offset, 0, 100, 1, 10, 0,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       CML_explorer_int_entry_init (&widget_pointers[3][2],
 				   adj, &VALS.start_offset);
@@ -1409,6 +1411,7 @@ CML_explorer_dialog (void)
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				  _("Seed:"), SCALE_WIDTH, 0,
 				  VALS.seed, 0, G_MAXRAND, 1, 10, 0,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       CML_explorer_int_entry_init (&widget_pointers[3][3],
 				   adj, &VALS.seed);
@@ -1762,6 +1765,7 @@ CML_dialog_channel_panel_new (gchar     *name,
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
 			      _("Mod. Rate:"), SCALE_WIDTH, 0,
 			      param->mod_rate, 0.0, 1.0, 0.01, 0.1, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
 				  adj, &param->mod_rate);
@@ -1770,6 +1774,7 @@ CML_dialog_channel_panel_new (gchar     *name,
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
 			      _("Env. Sensitivity:"), SCALE_WIDTH, 0,
 			      param->env_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
 				  adj, &param->env_sensitivity);
@@ -1778,6 +1783,7 @@ CML_dialog_channel_panel_new (gchar     *name,
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
 			      _("Diffusion Dist.:"), SCALE_WIDTH, 0,
 			      param->diffusion_dist, 2, 10, 1, 2, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   CML_explorer_int_entry_init (&widget_pointers[channel_id][index],
 			       adj, &param->diffusion_dist);
@@ -1786,6 +1792,7 @@ CML_dialog_channel_panel_new (gchar     *name,
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
 			      _("# of Subranges:"), SCALE_WIDTH, 0,
 			      param->range_num, 1, 10, 1, 2, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   CML_explorer_int_entry_init (&widget_pointers[channel_id][index],
 			       adj, &param->range_num);
@@ -1794,6 +1801,7 @@ CML_dialog_channel_panel_new (gchar     *name,
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
 			      _("P(ower Factor):"), SCALE_WIDTH, 0,
 			      param->power, 0.0, 10.0, 0.1, 1.0, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
 				  adj, &param->power);
@@ -1802,6 +1810,7 @@ CML_dialog_channel_panel_new (gchar     *name,
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
 			      _("Parameter k:"), SCALE_WIDTH, 0,
 			      param->parameter_k, 0.0, 10.0, 0.1, 1.0, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
 				  adj, &param->parameter_k);
@@ -1810,6 +1819,7 @@ CML_dialog_channel_panel_new (gchar     *name,
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
 			      _("Range Low:"), SCALE_WIDTH, 0,
 			      param->range_l, 0.0, 1.0, 0.01, 0.1, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
 				  adj, &param->range_l);
@@ -1818,6 +1828,7 @@ CML_dialog_channel_panel_new (gchar     *name,
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
 			      _("Range High:"), SCALE_WIDTH, 0,
 			      param->range_h, 0.0, 1.0, 0.01, 0.1, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
 				  adj, &param->range_h);
@@ -1882,6 +1893,7 @@ CML_dialog_advanced_panel_new (gchar *name)
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
 				  _("Ch. Sensitivity:"), SCALE_WIDTH, 0,
 				  param->ch_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
 								  widget_offset],
@@ -1891,6 +1903,7 @@ CML_dialog_advanced_panel_new (gchar *name)
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
 				  _("Mutation Rate:"), SCALE_WIDTH, 0,
 				  param->mutation_rate, 0.0, 1.0, 0.01, 0.1, 2,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
 								  widget_offset],
@@ -1900,6 +1913,7 @@ CML_dialog_advanced_panel_new (gchar *name)
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
 				  _("Mutation Dist.:"), SCALE_WIDTH, 0,
 				  param->mutation_dist, 0.0, 1.0, 0.01, 0.1, 2,
+				  TRUE, 0, 0,
 				  NULL, NULL);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
 								  widget_offset],

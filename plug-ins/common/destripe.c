@@ -241,8 +241,8 @@ run (gchar  *name,
 	  /*
 	   * Set the tile cache size...
 	   */
-	  gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width() - 1) /
-				  gimp_tile_width());
+	  gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width () - 1) /
+				  gimp_tile_width ());
 
 	  /*
 	   * Run!
@@ -532,9 +532,10 @@ static gint
 destripe_dialog (void)
 {
   GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *abox;
   GtkWidget *table;
   GtkWidget *ptable;
-  GtkWidget *ftable;
   GtkWidget *frame;
   GtkWidget *scrollbar;
   GtkWidget *button;
@@ -585,21 +586,27 @@ destripe_dialog (void)
    * Top-level table for dialog...
    */
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table,
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
 		      FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  gtk_widget_show (vbox);
 
   /*
    * Preview window...
    */
 
+  frame = gtk_frame_new (_("Preview"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_widget_show (abox);
+
   ptable = gtk_table_new (2, 2, FALSE);
-  gtk_table_attach (GTK_TABLE (table), ptable, 0, 2, 0, 1,
-		    0, 0, 0, 0);
+  gtk_container_add (GTK_CONTAINER (abox), ptable);
   gtk_widget_show (ptable);
 
   frame = gtk_frame_new (NULL);
@@ -650,14 +657,19 @@ destripe_dialog (void)
    * Filter type controls...
    */
 
-  ftable = gtk_table_new (4, 1, FALSE);
-  gtk_table_attach (GTK_TABLE (table), ftable, 2, 3, 0, 1,
-		    0, 0, 0, 0);
-  gtk_widget_show (ftable);
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  button = gtk_check_button_new_with_label (_("Histogram"));
-  gtk_table_attach (GTK_TABLE (ftable), button, 0, 1, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  button = gtk_check_button_new_with_label (_("Create Histogram"));
+  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 3, 0, 1);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				histogram ? TRUE : FALSE);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
@@ -666,22 +678,22 @@ destripe_dialog (void)
   gtk_widget_show (button);
 
 /*  button = gtk_check_button_new_with_label("Recursive");
-  gtk_table_attach(GTK_TABLE(ftable), button, 0, 1, 1, 2,
-		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button),
-                               (filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
-  gtk_signal_connect(GTK_OBJECT(button), "toggled",
-		     (GtkSignalFunc)dialog_recursive_callback,
-		     NULL);
-  gtk_widget_show(button);*/
+  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 1, 2);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                (filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (dialog_recursive_callback),
+		      NULL);
+  gtk_widget_show (button);*/
 
   /*
    * Box size (radius) control...
    */
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Width:"), SCALE_WIDTH, 0,
 			      avg_width, 2, MAX_AVG, 1, 10, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_iscale_update),

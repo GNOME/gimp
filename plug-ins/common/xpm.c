@@ -823,6 +823,7 @@ save_dialog (void)
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				     _("Alpha Threshold:"), SCALE_WIDTH, 0,
 				     xpmvals.threshold, 0.0, 1.0, 0.01, 0.1, 2,
+				     TRUE, 0, 0,
 				     NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),

@@ -168,9 +168,6 @@ query (void)
     { PARAM_FLOAT, "threshold", "Threshold" }
   };
   static gint nargs = sizeof(args) / sizeof(args[0]);
-  /* for return vals */
-  static GParamDef *return_vals = NULL;
-  static int nreturn_vals = 0;
 	
   INIT_I18N();
 
@@ -184,8 +181,8 @@ query (void)
 			  N_("<Image>/Filters/Enhance/Unsharp Mask..."),
 			  "GRAY*, RGB*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 /* this is the actual function */
@@ -223,9 +220,10 @@ run (gchar   *name,
 
     case RUN_NONINTERACTIVE:
       if (nparams != 6)
-	status = STATUS_CALLING_ERROR;
-      /* get the parameters */
-      else if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  unsharp_params.radius = param[3].data.d_float;
 	  unsharp_params.amount = param[4].data.d_float; 
@@ -822,6 +820,7 @@ unsharp_mask_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Radius:"), SCALE_WIDTH, 0,
 			      unsharp_params.radius, 1.0, 25.0, 0.1, 1.0, 1,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -830,6 +829,7 @@ unsharp_mask_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Amount:"), SCALE_WIDTH, 0,
 			      unsharp_params.amount, 0.0, 5.0, 0.01, 0.1, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -838,6 +838,7 @@ unsharp_mask_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Threshold:"), SCALE_WIDTH, 0,
 			      unsharp_params.threshold, 0.0, 255.0, 1.0, 10.0, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),

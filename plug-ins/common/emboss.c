@@ -569,7 +569,7 @@ pluginCoreIA (struct piArgs *argp)
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  frame = gtk_frame_new (_("Parameters"));
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -583,6 +583,7 @@ pluginCoreIA (struct piArgs *argp)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Azimuth:"), 100, 0,
 			      argp->azimuth, 0.0, 360.0, 1.0, 10.0, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (emboss_float_adjustment_callback),
@@ -591,6 +592,7 @@ pluginCoreIA (struct piArgs *argp)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Elevation:"), 100, 0,
 			      argp->elevation, 0.0, 180.0, 1.0, 10.0, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (emboss_float_adjustment_callback),
@@ -599,6 +601,7 @@ pluginCoreIA (struct piArgs *argp)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Depth:"), 100, 0,
 			      argp->depth, 1.0, 100.0, 1.0, 5.0, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (emboss_int_adjustment_callback),

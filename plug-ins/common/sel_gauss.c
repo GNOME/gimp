@@ -280,6 +280,7 @@ sel_gauss_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Max. Delta:"), 128, 0,
 			      bvals.maxdelta, 0, 255, 1, 8, 0,
+			      TRUE, 0, 0,
 			      FALSE, FALSE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -295,7 +296,16 @@ sel_gauss_dialog (void)
   return bint.run;
 }
 
-void
+static void
+sel_gauss_ok_callback (GtkWidget *widget,
+		       gpointer   data)
+{
+  bint.run = TRUE;
+
+  gtk_widget_destroy (GTK_WIDGET (data));
+}
+
+static void
 init_matrix (gdouble   radius,
 	     gdouble **mat,
 	     gint      num)
@@ -443,15 +453,4 @@ sel_gauss (GDrawable *drawable,
   for (i=0; i<numrad; i++)
     g_free (mat[i]);
   g_free (mat);
-}
-
-/*  Gauss interface functions  */
-
-static void
-sel_gauss_ok_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  bint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }

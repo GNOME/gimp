@@ -299,6 +299,7 @@ struc_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Depth:"), 100, 0,
 			      svals.depth, 1, 50, 1, 5, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (adj, "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),

@@ -107,7 +107,7 @@
 #define PLUG_IN_VERSION "August 1997, 2.04"
 
 #define PREVIEW_SIZE    128
-#define SCALE_WIDTH     200
+#define SCALE_WIDTH       0
 
 /***** Types *****/
 
@@ -760,6 +760,7 @@ bumpmap_dialog (void)
   GtkWidget *top_vbox;
   GtkWidget *hbox;
   GtkWidget *frame;
+  GtkWidget *vbox;
   GtkWidget *sep;
   GtkWidget *abox;
   GtkWidget *pframe;
@@ -773,6 +774,7 @@ bumpmap_dialog (void)
   gchar  **argv;
   guchar  *color_cube;
   gint     i;
+  gint     row;
 
 #if 0 
   g_print  ("bumpmap: waiting... (pid %d)\n", getpid ());
@@ -898,78 +900,104 @@ bumpmap_dialog (void)
 		      NULL);
   gtk_widget_show (button);
 
-  /* Table for bottom controls */
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_box_pack_start (GTK_BOX (top_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  table = gtk_table_new (8, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (top_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   /* Bump map menu */
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
   option_menu = gtk_option_menu_new ();
   menu = gimp_drawable_menu_new (dialog_constrain,
 				 dialog_bumpmap_callback,
 				 NULL,
 				 bmvals.bumpmap_id);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU(option_menu), menu);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Bump Map:"), 1.0, 0.5,
-			     option_menu, 2, FALSE);
+			     option_menu, 2, TRUE);
+
+  sep = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 0);
+  gtk_widget_show (sep);
+
+  /* Table for bottom controls */
+
+  table = gtk_table_new (7, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   /* Controls */
+  row = 0;
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Azimuth:"), SCALE_WIDTH, 0,
 			      bmvals.azimuth, 0.0, 360.0, 1.0, 15.0, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_dscale_update),
 		      &bmvals.azimuth);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Elevation:"), SCALE_WIDTH, 0,
 			      bmvals.elevation, 0.5, 90.0, 1.0, 5.0, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_dscale_update),
 		      &bmvals.elevation);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Depth:"), SCALE_WIDTH, 0,
 			      bmvals.depth, 1.0, 65.0, 1.0, 5.0, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),
 		      &bmvals.depth);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("X Offset:"), SCALE_WIDTH, 0,
 			      bmvals.xofs, -1000.0, 1001.0, 1.0, 10.0, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),
 		      &bmvals.xofs);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Y Offset:"), SCALE_WIDTH, 0,
 			      bmvals.yofs, -1000.0, 1001.0, 1.0, 10.0, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),
 		      &bmvals.yofs);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Waterlevel:"), SCALE_WIDTH, 0,
 			      bmvals.waterlevel, 0.0, 256.0, 1.0, 8.0, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_iscale_update_full),
 		      &bmvals.waterlevel);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 7,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Ambient:"), SCALE_WIDTH, 0,
 			      bmvals.ambient, 0.0, 256.0, 1.0, 8.0, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),

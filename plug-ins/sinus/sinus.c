@@ -820,6 +820,7 @@ sinus_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("X Scale:"), 140, 0,
 			      svals.scalex, 0.0001, 100.0, 0.0001, 5, 4,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (sinus_double_adjustment_update),
@@ -828,6 +829,7 @@ sinus_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Y Scale:"), 140, 0,
 			      svals.scaley, 0.0001, 100.0, 0.0001, 5, 4,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (sinus_double_adjustment_update),
@@ -836,6 +838,7 @@ sinus_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Complexity:"), 140, 0,
 			      svals.cmplx, 0.0, 15.0, 0.01, 5, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (sinus_double_adjustment_update),
@@ -972,6 +975,7 @@ sinus_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("First Color:"), 0, 0,
 			      svals.col1[3] / 255.0, 0.0, 1.0, 0.01, 0.1, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
 
   gtk_object_set_user_data (GTK_OBJECT (adj), push_col1);      
@@ -990,6 +994,7 @@ sinus_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Second Color:"), 0, 0,
 			      svals.col2[3] / 255.0, 0.0, 1.0, 0.01, 0.1, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
 
   gtk_object_set_user_data (GTK_OBJECT (adj), push_col2);
@@ -1048,6 +1053,7 @@ sinus_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Exponent:"), 0, 0,
 			      svals.blend_power, -7.5, 7.5, 0.01, 5.0, 2,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (sinus_double_adjustment_update),

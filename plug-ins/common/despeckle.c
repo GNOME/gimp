@@ -746,10 +746,15 @@ despeckle_dialog (void)
 		      NULL);
   gtk_widget_show (button);
 
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   /*
@@ -759,6 +764,7 @@ despeckle_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Radius:"), 100, 0,
 			      despeckle_radius, 1, MAX_RADIUS, 1, 5, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_iscale_update),
@@ -771,6 +777,7 @@ despeckle_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Black Level:"), 100, 0,
 			      black_level, 0, 256, 1, 8, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_iscale_update),
@@ -783,6 +790,7 @@ despeckle_dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("White Level:"), 100, 0,
 			      white_level, 0, 256, 1, 8, 0,
+			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_iscale_update),

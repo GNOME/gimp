@@ -789,6 +789,7 @@ save_dialog (void)
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 				     _("Quality:"), SCALE_WIDTH, 0,
 				     jsvals.quality, 0.0, 1.0, 0.01, 0.11, 2,
+				     TRUE, 0, 0,
 				     NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
@@ -797,6 +798,7 @@ save_dialog (void)
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 				     _("Smoothing:"), SCALE_WIDTH, 0,
 				     jsvals.smoothing, 0.0, 1.0, 0.01, 0.1, 2,
+				     TRUE, 0, 0,
 				     NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),

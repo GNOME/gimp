@@ -773,6 +773,7 @@ run_save_dialog	(Config *config)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Opacity:"), 100, 0,
 			      config->opacity, 0, 100, 1, 10, 1,
+			      TRUE, 0, 0,
 			      FALSE, FALSE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),

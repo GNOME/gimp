@@ -303,8 +303,10 @@ run (gchar    *name,
 
     case RUN_NONINTERACTIVE:
       if (nparams != 4)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  itvals.numtiles = param[3].data.d_int32;
 	}
@@ -602,6 +604,7 @@ tileit_dialog (void)
   op_data = gimp_scale_entry_new (GTK_TABLE (table2), 0, 0,
 				  _("Opacity:"), SCALE_WIDTH, ENTRY_WIDTH,
 				  opacity, 0, 100, 1, 10, 0,
+				  TRUE, 0, 0,
 				  NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (op_data), "value_changed",
 		      GTK_SIGNAL_FUNC (tileit_scale_update),
@@ -626,6 +629,7 @@ tileit_dialog (void)
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				    "1 / (2 ** n)", SCALE_WIDTH, ENTRY_WIDTH,
 				    itvals.numtiles, 2, MAX_SEGS, 1, 1, 0,
+				    TRUE, 0, 0,
 				    NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (size_data), "value_changed",
 		      GTK_SIGNAL_FUNC (tileit_scale_update),

@@ -150,9 +150,7 @@ query (void)
     {PARAM_INT32, "alg", "WIND, BLAST"},
     {PARAM_INT32, "edge", "LEADING, TRAILING, or BOTH"}
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof(args) / sizeof(args[0]);
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof(args) / sizeof(args[0]);
 
   INIT_I18N();
 
@@ -165,8 +163,8 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Wind..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -188,21 +186,20 @@ run (gchar   *name,
     {
     case RUN_NONINTERACTIVE:
       INIT_I18N();
-      if (nparams == 8)
+      if (nparams != 8)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  config.threshold = param[3].data.d_int32;
 	  config.direction = param[4].data.d_int32;
 	  config.strength = param[5].data.d_int32;
 	  config.alg = param[6].data.d_int32;
 	  config.edge = param[7].data.d_int32;
+
 	  if (render_effect(drawable) == -1)
-	    {
-	      status = STATUS_EXECUTION_ERROR;
-	    }
-	}
-      else
-	{
-	  status = STATUS_CALLING_ERROR;
+	    status = STATUS_EXECUTION_ERROR;
 	}
       break;
       
@@ -860,6 +857,7 @@ dialog_box (void)
 			      _("Threshold:"), SCALE_WIDTH, 0,
 			      config.threshold,
 			      MIN_THRESHOLD, MAX_THRESHOLD, 1.0, 10, 0,
+			      TRUE, 0, 0,
 			      _("Higher values restrict the effect to fewer areas of the image"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -873,6 +871,7 @@ dialog_box (void)
 			      _("Strength:"), SCALE_WIDTH, 0,
 			      config.strength,
 			      MIN_STRENGTH, MAX_STRENGTH, 1.0, 10.0, 0,
+			      TRUE, 0, 0,
 			      _("Higher values increase the magnitude of the effect"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
