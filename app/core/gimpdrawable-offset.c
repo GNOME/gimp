@@ -70,7 +70,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
 	offset_x += width;
       while (offset_y < 0)
 	offset_y += height;
-      
+
       offset_x %= width;
       offset_y %= height;
     }
@@ -321,9 +321,10 @@ gimp_drawable_offset (GimpDrawable   *drawable,
                            gimp_drawable_data (drawable),
                            FALSE);
 
-  /*  swap the tiles  */
-  tile_manager_unref (drawable->tiles);
-  drawable->tiles = new_tiles;
+  /*  set the tiles  */
+  gimp_drawable_set_tiles (drawable, FALSE, NULL,
+                           new_tiles, gimp_drawable_type (drawable));
+  tile_manager_unref (new_tiles);
 
   /*  update the drawable  */
   gimp_drawable_update (drawable,

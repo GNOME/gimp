@@ -373,8 +373,9 @@ gimp_drawable_scale (GimpItem              *item,
                 GIMP_INTERPOLATION_NONE : interpolation_type,
                 progress_callback, progress_data);
 
-  tile_manager_unref (drawable->tiles);
-  drawable->tiles = new_tiles;
+  gimp_drawable_set_tiles (drawable, FALSE, NULL,
+                           new_tiles, gimp_drawable_type (drawable));
+  tile_manager_unref (new_tiles);
 
   GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
                                          new_offset_x, new_offset_y,
@@ -454,8 +455,9 @@ gimp_drawable_resize (GimpItem *item,
       copy_region (&srcPR, &destPR);
     }
 
-  tile_manager_unref (drawable->tiles);
-  drawable->tiles = new_tiles;
+  gimp_drawable_set_tiles (drawable, FALSE, NULL,
+                           new_tiles, gimp_drawable_type (drawable));
+  tile_manager_unref (new_tiles);
 
   GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
                                           offset_x, offset_y);

@@ -1,3 +1,11 @@
+2004-03-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-offset.c (gimp_drawable_offset)
+	* app/core/gimpdrawable.c (gimp_drawable_scale) (gimp_drawable_resize)
+	* app/core/gimplayer.c (gimp_layer_convert) (gimp_layer_add_alpha):
+	use gimp_drawable_set_tiles() instead of fiddling with
+	drawable->tiles, ->bytes etc. manually.
+
 2004-03-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdialogfactory.[ch]: made enum

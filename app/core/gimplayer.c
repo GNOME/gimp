@@ -540,12 +540,8 @@ gimp_layer_convert (GimpItem  *item,
           break;
         }
 
-      tile_manager_unref (new_drawable->tiles);
-
-      new_drawable->tiles     = new_tiles;
-      new_drawable->type      = new_type;
-      new_drawable->bytes     = GIMP_IMAGE_TYPE_BYTES (new_type);
-      new_drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (new_type);
+      gimp_drawable_set_tiles (new_drawable, FALSE, NULL, new_tiles, new_type);
+      tile_manager_unref (new_tiles);
     }
 
   if (new_layer->mask && dest_image != item->gimage)
@@ -1403,16 +1399,11 @@ gimp_layer_add_alpha (GimpLayer *layer)
   /*  Add an alpha channel  */
   add_alpha_region (&srcPR, &destPR);
 
-  /*  Push the layer on the undo stack  */
-  gimp_image_undo_push_layer_mod (gimage, _("Add Alpha Channel"), layer);
+  /*  Set the new tiles  */
+  gimp_drawable_set_tiles (GIMP_DRAWABLE (layer), TRUE, _("Add Alpha Channel"),
+                           new_tiles, new_type);
+  tile_manager_unref (new_tiles);
 
-  /*  Configure the new layer  */
-  tile_manager_unref (GIMP_DRAWABLE (layer)->tiles);
-
-  GIMP_DRAWABLE (layer)->tiles         = new_tiles;
-  GIMP_DRAWABLE (layer)->type          = new_type;
-  GIMP_DRAWABLE (layer)->bytes         = GIMP_IMAGE_TYPE_BYTES (new_type);
-  GIMP_DRAWABLE (layer)->has_alpha     = TRUE;
   GIMP_DRAWABLE (layer)->preview_valid = FALSE;
 
   gimp_drawable_alpha_changed (GIMP_DRAWABLE (layer));
