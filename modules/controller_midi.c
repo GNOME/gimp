@@ -27,6 +27,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <time.h>
 
 #ifdef HAVE_ALSA
 #include <alsa/asoundlib.h>
