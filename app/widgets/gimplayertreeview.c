@@ -33,6 +33,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimplayer-floating-sel.h"
+#include "core/gimplist.h"
 #include "core/gimpimage.h"
 #include "core/gimpitemundo.h"
 #include "core/gimpundostack.h"
@@ -54,6 +55,8 @@ static void   gimp_layer_tree_view_init       (GimpLayerTreeView      *view);
 static GObject * gimp_layer_tree_view_constructor (GType                type,
                                                    guint                n_params,
                                                    GObjectConstructParam *params);
+static void   gimp_layer_tree_view_finalize       (GObject             *object);
+
 static void   gimp_layer_tree_view_style_set      (GtkWidget           *widget,
 						   GtkStyle            *prev_style);
 
@@ -73,8 +76,14 @@ static gboolean gimp_layer_tree_view_drop_possible(GimpContainerTreeView *view,
                                                    GtkTreeViewDropPosition drop_pos,
                                                    GdkDragAction       *drag_action);
 
+static void   gimp_layer_tree_view_set_image      (GimpItemTreeView    *view,
+                                                   GimpImage           *gimage);
 static void   gimp_layer_tree_view_remove_item    (GimpImage           *gimage,
                                                    GimpItem            *layer);
+
+static void   gimp_layer_tree_view_floating_selection_changed
+                                                  (GimpImage           *gimage,
+                                                   GimpLayerTreeView   *view);
 
 static void   gimp_layer_tree_view_anchor_clicked (GtkWidget           *widget,
 						   GimpLayerTreeView   *view);
@@ -177,6 +186,7 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor = gimp_layer_tree_view_constructor;
+  object_class->finalize    = gimp_layer_tree_view_finalize;
 
   widget_class->style_set   = gimp_layer_tree_view_style_set;
 
@@ -187,6 +197,7 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
 
   tree_view_class->drop_possible   = gimp_layer_tree_view_drop_possible;
 
+  item_view_class->set_image       = gimp_layer_tree_view_set_image;
   item_view_class->get_container   = gimp_image_get_layers;
   item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_layer;
   item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_layer;
@@ -225,6 +236,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   GimpDrawableTreeView  *drawable_view;
   GtkWidget             *abox;
   GtkWidget             *hbox;
+  PangoAttribute        *attr;
 
   tree_view     = GIMP_CONTAINER_TREE_VIEW (view);
   drawable_view = GIMP_DRAWABLE_TREE_VIEW (view);
@@ -311,6 +323,18 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   gtk_widget_set_sensitive (view->options_box,   FALSE);
   gtk_widget_set_sensitive (view->anchor_button, FALSE);
 
+  view->italic_attrs = pango_attr_list_new ();
+  attr = pango_attr_style_new (PANGO_STYLE_ITALIC);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (view->italic_attrs, attr);
+
+  view->bold_attrs = pango_attr_list_new ();
+  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (view->bold_attrs, attr);
+
   view->mode_changed_handler_id           = 0;
   view->opacity_changed_handler_id        = 0;
   view->preserve_trans_changed_handler_id = 0;
@@ -354,6 +378,26 @@ gimp_layer_tree_view_constructor (GType                  type,
                     layer_view);
 
   return object;
+}
+
+static void
+gimp_layer_tree_view_finalize (GObject *object)
+{
+  GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (object);
+
+  if (layer_view->italic_attrs)
+    {
+      pango_attr_list_unref (layer_view->italic_attrs);
+      layer_view->italic_attrs = NULL;
+    }
+
+  if (layer_view->bold_attrs)
+    {
+      pango_attr_list_unref (layer_view->bold_attrs);
+      layer_view->bold_attrs = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -589,6 +633,24 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
 /*  GimpItemTreeView methods  */
 
 static void
+gimp_layer_tree_view_set_image (GimpItemTreeView *view,
+                                GimpImage        *gimage)
+{
+  if (view->gimage)
+    g_signal_handlers_disconnect_by_func (view->gimage,
+                                          gimp_layer_tree_view_floating_selection_changed,
+                                          view);
+
+  GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (view, gimage);
+
+  if (view->gimage)
+    g_signal_connect (view->gimage,
+                      "floating_selection_changed",
+                      G_CALLBACK (gimp_layer_tree_view_floating_selection_changed),
+                      view);
+}
+
+static void
 gimp_layer_tree_view_remove_item (GimpImage *gimage,
                                   GimpItem  *item)
 {
@@ -599,7 +661,55 @@ gimp_layer_tree_view_remove_item (GimpImage *gimage,
 }
 
 
-/*  Anchor callback  */
+/*  callbacks  */
+
+static void
+gimp_layer_tree_view_floating_selection_changed (GimpImage         *gimage,
+                                                 GimpLayerTreeView *layer_view)
+{
+  GimpContainerView     *view;
+  GimpContainerTreeView *tree_view;
+  GimpLayer             *floating_sel;
+  GtkTreeIter           *iter;
+
+  view      = GIMP_CONTAINER_VIEW (layer_view);
+  tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
+
+  floating_sel = gimp_image_floating_sel (gimage);
+
+  if (floating_sel)
+    {
+      iter = g_hash_table_lookup (view->hash_table, floating_sel);
+
+      if (iter)
+        gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
+                            tree_view->model_column_name_attributes,
+                            layer_view->italic_attrs,
+                            -1);
+    }
+  else
+    {
+      GList *list;
+
+      for (list = GIMP_LIST (gimage->layers)->list;
+           list;
+           list = g_list_next (list))
+        {
+          GimpDrawable *drawable = list->data;
+
+          if (gimp_drawable_has_alpha (drawable))
+            {
+              iter = g_hash_table_lookup (view->hash_table, drawable);
+
+              if (iter)
+                gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
+                                    tree_view->model_column_name_attributes,
+                                    NULL,
+                                    -1);
+            }
+        }
+    }
+}
 
 static void
 gimp_layer_tree_view_anchor_clicked (GtkWidget         *widget,
@@ -1057,27 +1167,12 @@ gimp_layer_tree_view_alpha_update (GimpLayerTreeView *view,
                                    GtkTreeIter       *iter,
                                    GimpLayer         *layer)
 {
-  GimpContainerTreeView *tree_view;
-  static PangoAttrList  *attrs = NULL;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-
-  if (! attrs)
-    {
-      PangoAttribute *attr;
-
-      attrs = pango_attr_list_new ();
-
-      attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
-      attr->start_index = 0;
-      attr->end_index   = -1;
-      pango_attr_list_insert (attrs, attr);
-    }
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
   gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
                       tree_view->model_column_name_attributes,
                       gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)) ?
-                      NULL : attrs,
+                      NULL : view->bold_attrs,
                       -1);
 }
 
@@ -1094,9 +1189,7 @@ gimp_layer_tree_view_alpha_changed (GimpLayer         *layer,
 
   if (iter)
     {
-      GimpItemTreeView *item_view;
-
-      item_view = GIMP_ITEM_TREE_VIEW (view);
+      GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
 
       gimp_layer_tree_view_alpha_update (layer_view, iter, layer);
 

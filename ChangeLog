@@ -1,3 +1,13 @@
+2003-09-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimplayertreeview.[ch]: display the floating
+	selection's name in italic letters. Added the bold and italic
+	PangoAttrLists to the GimpLayerTreeView struct so we can unref
+	them properly.
+
+	* app/widgets/gimpdrawabletreeview.c: some cleanup while stealing
+	code.
+
 2003-09-06  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am

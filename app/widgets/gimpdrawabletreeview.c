@@ -278,29 +278,21 @@ gimp_drawable_tree_view_select_item (GimpContainerView *view,
 /*  GimpItemTreeView methods  */
 
 static void
-gimp_drawable_tree_view_set_image (GimpItemTreeView *item_view,
+gimp_drawable_tree_view_set_image (GimpItemTreeView *view,
                                    GimpImage        *gimage)
 {
-  GimpDrawableTreeView *view;
+  if (view->gimage)
+    g_signal_handlers_disconnect_by_func (view->gimage,
+                                          gimp_drawable_tree_view_floating_selection_changed,
+                                          view);
 
-  view = GIMP_DRAWABLE_TREE_VIEW (item_view);
+  GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (view, gimage);
 
-  if (item_view->gimage)
-    {
-      g_signal_handlers_disconnect_by_func (item_view->gimage,
-					    gimp_drawable_tree_view_floating_selection_changed,
-					    view);
-    }
-
-  GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (item_view, gimage);
-
-  if (item_view->gimage)
-    {
-      g_signal_connect (item_view->gimage,
-                        "floating_selection_changed",
-			G_CALLBACK (gimp_drawable_tree_view_floating_selection_changed),
-			view);
-    }
+  if (view->gimage)
+    g_signal_connect (view->gimage,
+                      "floating_selection_changed",
+                      G_CALLBACK (gimp_drawable_tree_view_floating_selection_changed),
+                      view);
 }
 
 

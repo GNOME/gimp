@@ -52,6 +52,9 @@ struct _GimpLayerTreeView
 
   GtkCellRenderer      *mask_cell;
 
+  PangoAttrList        *italic_attrs;
+  PangoAttrList        *bold_attrs;
+
   /*< private >*/
   GQuark                mode_changed_handler_id;
   GQuark                opacity_changed_handler_id;
