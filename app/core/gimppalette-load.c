@@ -364,7 +364,7 @@ gimp_palette_load (const gchar *filename)
 	  if (columns < 0 || columns > 256)
 	    {
 	      g_message (_("Loading palette '%s':\n"
-			   "Invalid number or columns in line %d."),
+			   "Invalid number of columns in line %d."),
 			 filename, linenum);
 
 	      columns = 0;

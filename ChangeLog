@@ -1,3 +1,8 @@
+2002-03-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpbrushpipe.c
+	* app/core/gimppalette.c: message fixes.
+
 2002-03-06  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/preferences/input-devices.png:

@@ -326,7 +326,7 @@ gimp_brush_pipe_load (const gchar *filename)
         }
       else
         {
-          g_message (_("Invalid UTF-8 string in GIMP brush file '%s'."), 
+          g_message (_("Invalid UTF-8 string in brush file '%s'."), 
                      filename);
           gimp_object_set_name (GIMP_OBJECT (pipe), _("Unnamed"));
         }
