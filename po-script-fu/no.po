@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-02 21:01+0100\n"
-"PO-Revision-Date: 2004-12-21 00:50+0100\n"
+"PO-Revision-Date: 2004-12-21 01:00+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1599,14 +1599,12 @@ msgid "Border Size (pixels)"
 msgstr "Kantstørrelse (piksler)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Verktøy/Egendefinert gradient..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Verktøy/Egendefinert _gradient..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Grid..."
-msgstr "<Image>/Script-Fu/Render/Krets..."
+msgstr "<Image>/Script-Fu/Render/_Rutenett..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X Divisions"
