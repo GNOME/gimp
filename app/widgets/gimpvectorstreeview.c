@@ -51,6 +51,8 @@ static void   gimp_vectors_tree_view_init       (GimpVectorsTreeView      *view)
 static gboolean gimp_vectors_tree_view_select_item  (GimpContainerView   *view,
 						     GimpViewable        *item,
 						     gpointer             insert_data);
+static void     gimp_vectors_tree_view_set_image    (GimpItemTreeView    *view,
+                                                     GimpImage           *gimage);
 static void   gimp_vectors_tree_view_toselection_clicked
                                                     (GtkWidget           *widget,
 						     GimpVectorsTreeView *view);
@@ -115,12 +117,14 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
 
   container_view_class->select_item = gimp_vectors_tree_view_select_item;
 
-  item_view_class->get_container   = gimp_image_get_vectors;
-  item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_vectors;
-  item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_vectors;
-  item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_position_vectors;
-  item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_vectors;
-  item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_vectors;
+  item_view_class->set_image        = gimp_vectors_tree_view_set_image;
+
+  item_view_class->get_container    = gimp_image_get_vectors;
+  item_view_class->get_active_item  = (GimpGetItemFunc) gimp_image_get_active_vectors;
+  item_view_class->set_active_item  = (GimpSetItemFunc) gimp_image_set_active_vectors;
+  item_view_class->reorder_item     = (GimpReorderItemFunc) gimp_image_position_vectors;
+  item_view_class->add_item         = (GimpAddItemFunc) gimp_image_add_vectors;
+  item_view_class->remove_item      = (GimpRemoveItemFunc) gimp_image_remove_vectors;
 
   item_view_class->edit_desc               = _("Edit Path Attributes");
   item_view_class->edit_help_id            = GIMP_HELP_PATH_EDIT;
@@ -206,6 +210,7 @@ gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
 				  GIMP_TYPE_VECTORS);
 
   gtk_widget_set_sensitive (view->toselection_button, FALSE);
+  gtk_widget_set_sensitive (view->tovectors_button,   FALSE);
   gtk_widget_set_sensitive (view->stroke_button,      FALSE);
 }
 
@@ -229,6 +234,16 @@ gimp_vectors_tree_view_select_item (GimpContainerView *view,
   gtk_widget_set_sensitive (tree_view->stroke_button,      item != NULL);
 
   return success;
+}
+
+static void
+gimp_vectors_tree_view_set_image (GimpItemTreeView *view,
+                                  GimpImage        *gimage)
+{
+  GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (view, gimage);
+
+  gtk_widget_set_sensitive (GIMP_VECTORS_TREE_VIEW (view)->tovectors_button,
+                            gimage != NULL);
 }
 
 static void
