@@ -2642,7 +2642,6 @@ load_dialog (void)
 
   /* Rendering */
   frame = gtk_frame_new (_("Rendering"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
 
   vbox = gtk_vbox_new (FALSE, 4);
@@ -2811,7 +2810,6 @@ save_dialog (void)
 
   /* Image Size */
   frame = gtk_frame_new (_("Image Size"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, TRUE, TRUE, 0);
 
   vbox = gtk_vbox_new (FALSE, 4);
@@ -2908,7 +2906,6 @@ save_dialog (void)
 
   /* Format */
   frame = gtk_frame_new (_("Output"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, TRUE, TRUE, 0);
 
   vbox = gtk_vbox_new (FALSE, 2);

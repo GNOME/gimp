@@ -388,7 +388,6 @@ tileit_dialog (void)
   gtk_widget_show (hbox);
 
   frame = gtk_frame_new ( _("Preview"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -417,7 +416,6 @@ tileit_dialog (void)
   /* Area for buttons etc */
 
   frame = gtk_frame_new (_("Flipping"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -459,7 +457,6 @@ tileit_dialog (void)
                     &res_call);
 
   xframe = gtk_frame_new (_("Applied to Tile"));
-  gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), xframe, FALSE, FALSE, 0);
   gtk_widget_show (xframe);
 
@@ -598,7 +595,6 @@ tileit_dialog (void)
 
   /* Lower frame saying howmany segments */
   frame = gtk_frame_new (_("Segment Setting"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

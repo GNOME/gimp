@@ -315,7 +315,6 @@ flare_dialog (GimpDrawable *drawable)
 
   frame = flare_center_create (drawable);
   center = g_object_get_data (G_OBJECT (frame), "center");
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
 
@@ -725,7 +724,6 @@ flare_center_create (GimpDrawable *drawable)
   center->in_call  = TRUE;  /* to avoid side effects while initialization */
 
   frame = gtk_frame_new (_("Center of FlareFX"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
 
   g_signal_connect (frame, "destroy",

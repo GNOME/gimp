@@ -2563,7 +2563,6 @@ dialog_box (void)
   gtk_widget_show (main_vbox);
 
   frame = gtk_frame_new (_("Number of Tiles"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (2, 3, FALSE);
@@ -2602,7 +2601,6 @@ dialog_box (void)
   gtk_widget_show (frame);
 
   frame = gtk_frame_new (_("Bevel Edges"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (2, 3, FALSE);

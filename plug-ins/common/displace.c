@@ -275,7 +275,6 @@ displace_dialog (GimpDrawable *drawable)
 
   /*  The main table  */
   frame = gtk_frame_new (_("Displace Options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 

@@ -545,7 +545,6 @@ explorer_dialog (void)
 
   /*  Preview  */
   frame = gtk_frame_new (_("Preview"));
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (left_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -610,7 +609,6 @@ explorer_dialog (void)
 
   /*  Zoom Options  */
   frame = gtk_frame_new (_("Zoom Options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_end (GTK_BOX (left_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -907,7 +905,6 @@ explorer_dialog (void)
 
   /*  Color Density frame  */
   frame = gtk_frame_new (_("Color Density"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -950,7 +947,6 @@ explorer_dialog (void)
 
   /*  Color Function frame  */
   frame = gtk_frame_new (_("Color Function"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -1084,7 +1080,6 @@ explorer_dialog (void)
 
   /*  Colormode toggle box  */
   frame = gtk_frame_new (_("Color Mode"));
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -1626,7 +1621,6 @@ explorer_logo_dialog (GtkWidget *parent)
                     &logodlg);
 
   xframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (xframe), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (xdlg)->vbox), xframe, TRUE, TRUE, 0);
 

@@ -677,7 +677,6 @@ sinus_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (page), 4);
 
   frame = gtk_frame_new (_("Drawing Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -717,7 +716,6 @@ sinus_dialog (void)
   gtk_widget_show (table);
 
   frame= gtk_frame_new (_("Calculation Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -774,7 +772,6 @@ sinus_dialog (void)
   if (drawable_is_grayscale)
     {
       frame = gtk_frame_new (_("Colors"));
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
       gtk_box_pack_start(GTK_BOX(page), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -837,7 +834,6 @@ sinus_dialog (void)
     }
 
   frame = gtk_frame_new (_("Alpha Channels"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -892,7 +888,6 @@ sinus_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (page), 4);
 
   frame = gtk_frame_new (_("Blend Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (page), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -1037,7 +1032,6 @@ mw_preview_new (GtkWidget *parent,
   GtkWidget *button;
 
   frame = gtk_frame_new (_("Preview"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

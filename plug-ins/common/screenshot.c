@@ -521,7 +521,6 @@ shoot_dialog (void)
 
   /*  single window  */
   frame = gtk_frame_new (_("Grab"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   vbox = gtk_vbox_new (FALSE, 2);

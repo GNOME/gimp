@@ -122,7 +122,6 @@ rcm_create_previews (void)
 
   /* Previews: frame */
   frame = gtk_frame_new (_("Preview"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
 
   alabel = gtk_label_new (_("Rotated"));
   gtk_widget_show (alabel);

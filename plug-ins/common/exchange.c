@@ -332,7 +332,6 @@ exchange_dialog (void)
 		      TRUE, TRUE, 0);
 
   frame = gtk_frame_new (_("Preview: Click Inside to Pick \"From Color\""));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (mainbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -375,7 +374,6 @@ exchange_dialog (void)
   for (framenumber = 0; framenumber < 2; framenumber++)
     {
       frame = gtk_frame_new (framenumber ? _("To Color") : _("From Color"));
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
       gtk_box_pack_start (GTK_BOX (mainbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 

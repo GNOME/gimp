@@ -1,5 +1,19 @@
 2003-12-12  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/gfig/gfig-preview.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/maze/maze_face.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/winsnap/winsnap.c
+	* plug-ins/xjt/xjt.c
+	* plug-ins/common/*.c: don't set GTK_SHADOW_ETCHED_IN on
+	GtkFrames, it's the default and just clutters the code.
+
+2003-12-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpblendoptions.c (gimp_blend_options_gui)
 	* app/tools/gimpcoloroptions.c (gimp_color_options_gui)
 	* app/tools/gimpinkoptions.c (gimp_ink_options_gui): removed calls

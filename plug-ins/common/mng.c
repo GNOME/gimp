@@ -1199,7 +1199,6 @@ mng_save_dialog (gint32 image_id)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), main_vbox);
 
   frame = gtk_frame_new (_("MNG Options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
 
   vbox = gtk_vbox_new (FALSE, 4);
@@ -1370,8 +1369,6 @@ mng_save_dialog (gint32 image_id)
   gtk_widget_show (frame);
 
   frame = gtk_frame_new (_("Animated MNG Options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
 
   vbox = gtk_vbox_new (FALSE, 4);

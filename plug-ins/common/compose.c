@@ -1102,7 +1102,6 @@ compose_dialog (const gchar *compose_type,
 
   /* The left frame keeps the compose type toggles */
   left_frame = gtk_frame_new (_("Compose Channels"));
-  gtk_frame_set_shadow_type (GTK_FRAME (left_frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), left_frame, FALSE, FALSE, 0);
 
   left_vbox = gtk_vbox_new (FALSE, 1);
@@ -1115,7 +1114,6 @@ compose_dialog (const gchar *compose_type,
   /* Otherwise it can occur, that a non-existing label might be changed. */
 
   right_frame = gtk_frame_new (_("Channel Representations"));
-  gtk_frame_set_shadow_type (GTK_FRAME (right_frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), right_frame, TRUE, TRUE, 0);
 
   right_vbox = gtk_vbox_new (FALSE, 0);

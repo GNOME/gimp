@@ -1407,8 +1407,7 @@ alienmap2_logo_dialog (GtkWidget *parent)
                     G_CALLBACK (gtk_widget_destroyed),
                     &logodlg);
 
-  xframe = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_ETCHED_IN);
+  xframe = gtk_frame_new (NULL);
   gtk_container_set_border_width (GTK_CONTAINER (xframe), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (logodlg)->vbox), xframe,
                       TRUE, TRUE, 0);

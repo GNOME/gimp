@@ -1374,7 +1374,6 @@ p_smp_dialog (void)
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
                       frame, TRUE, TRUE, 0);
@@ -1536,7 +1535,6 @@ p_smp_dialog (void)
 
   /*  The levels graylevel prevev  */
   pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_ETCHED_IN);
 
   vbox2 = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (pframe), vbox2);
@@ -1570,7 +1568,6 @@ p_smp_dialog (void)
 
   /*  The sample_colortable prevev  */
   pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_ETCHED_IN);
 
   vbox2 = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (pframe), vbox2);

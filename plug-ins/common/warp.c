@@ -414,7 +414,6 @@ warp_dialog (GimpDrawable *drawable)
   gtk_widget_show (vbox);
 
   frame = gtk_frame_new (_("Main Options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (3, 3, FALSE);
@@ -539,7 +538,6 @@ warp_dialog (GimpDrawable *drawable)
   /* ---------    The secondary table         --------------------------  */
 
   frame = gtk_frame_new (_("Secondary Options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (3, 3, FALSE);
@@ -613,7 +611,6 @@ warp_dialog (GimpDrawable *drawable)
   /* ---------    The "other" table         --------------------------  */
 
   frame = gtk_frame_new (_("Other Options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   otable = gtk_table_new (3, 3, FALSE);

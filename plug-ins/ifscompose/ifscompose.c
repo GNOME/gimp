@@ -1001,8 +1001,6 @@ ifs_compose_dialog (GimpDrawable *drawable)
   /* The current transformation frame */
 
   ifsD->current_frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (ifsD->current_frame),
-			     GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), ifsD->current_frame,
 		      FALSE, FALSE, 0);
 

@@ -526,7 +526,6 @@ mosaic_dialog (void)
 
   /*  the vertical box and its toggle buttons  */
   frame = gtk_frame_new (_("Options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   toggle_vbox = gtk_vbox_new (FALSE, 1);
@@ -602,7 +601,6 @@ mosaic_dialog (void)
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, TRUE, TRUE, 0);
 
   table = gtk_table_new (6, 3, FALSE);

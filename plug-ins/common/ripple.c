@@ -441,7 +441,6 @@ ripple_dialog (void)
 
   /*  Options section  */
   frame = gtk_frame_new ( _("Options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
@@ -515,7 +514,6 @@ ripple_dialog (void)
 
   /*  Parameter Settings  */
   frame = gtk_frame_new ( _("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (2, 3, FALSE);

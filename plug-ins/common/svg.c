@@ -641,9 +641,8 @@ load_dialog (const gchar *filename)
   /* Scalable Vector Graphics is SVG, should perhaps not be translated */
   frame = gtk_frame_new (_("Render Scalable Vector Graphics"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
-		      TRUE, TRUE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   hbox = gtk_hbox_new (FALSE, 12);

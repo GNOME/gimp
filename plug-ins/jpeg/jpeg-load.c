@@ -1684,7 +1684,6 @@ save_dialog (void)
 
   /* sg - preview */
   prv_frame = gtk_frame_new (_("Image Preview"));
-  gtk_frame_set_shadow_type (GTK_FRAME (prv_frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), prv_frame, FALSE, FALSE, 0);
 
   vbox = gtk_vbox_new (FALSE, 2);
@@ -1716,7 +1715,6 @@ save_dialog (void)
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -1903,7 +1901,7 @@ save_dialog (void)
 			      _("Fast Integer"),   1, NULL,
 			      _("Integer"),        0, NULL,
 			      _("Floating-Point"), 2, NULL,
-			      
+
 			      NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 1, 8,
@@ -1916,7 +1914,6 @@ save_dialog (void)
     gtk_widget_set_sensitive (menu, FALSE);
 
   com_frame = gtk_frame_new (_("Image comments"));
-  gtk_frame_set_shadow_type (GTK_FRAME (com_frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), com_frame, TRUE, TRUE, 0);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);

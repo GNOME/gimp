@@ -886,7 +886,6 @@ dialog (void)
   gtk_box_pack_start (GTK_BOX (main_hbox), yetanotherbox, FALSE, FALSE, 0);
 
   frame = gtk_frame_new (_("Matrix"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (yetanotherbox), frame, FALSE, FALSE, 0);
 
   inbox = gtk_vbox_new (FALSE, 6);
@@ -995,7 +994,6 @@ dialog (void)
   gtk_box_pack_start (GTK_BOX (main_hbox), inbox, FALSE, FALSE, 0);
 
   frame = gtk_frame_new (_("Border"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (inbox), frame, FALSE, FALSE, 0);
 
   box = gtk_vbox_new (FALSE, 1);
@@ -1021,7 +1019,6 @@ dialog (void)
   gtk_widget_show (frame);
 
   frame=gtk_frame_new (_("Channels"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (inbox), frame, FALSE, FALSE, 0);
 
   box = gtk_vbox_new (FALSE, 1);

@@ -438,7 +438,6 @@ save_dialog (gint32 image_ID)
 
   /* HTML Page Options */
   frame = gtk_frame_new (_("HTML Page Options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   vbox = gtk_vbox_new (FALSE, 2);
@@ -466,7 +465,6 @@ save_dialog (gint32 image_ID)
 
   /* HTML Table Creation Options */
   frame = gtk_frame_new (_("Table Creation Options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (4, 2, FALSE);
@@ -555,7 +553,6 @@ save_dialog (gint32 image_ID)
 
   /* HTML Table Options */
   frame = gtk_frame_new (_("Table Options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (5, 2, FALSE);

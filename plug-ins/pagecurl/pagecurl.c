@@ -560,7 +560,6 @@ do_dialog (void)
    gtk_widget_show (frame);
 
    frame = gtk_frame_new (_("Curl Orientation"));
-   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
    hbox = gtk_hbox_new (FALSE, 4);

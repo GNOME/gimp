@@ -85,7 +85,7 @@ make_preview (void)
   GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *ruler;
-  
+
   gfig_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_widget_set_events (GTK_WIDGET (gfig_preview), PREVIEW_MASK);
 
@@ -101,7 +101,7 @@ make_preview (void)
 			  G_CALLBACK (gfig_preview_expose),
 			  NULL);
 
-  gtk_preview_size (GTK_PREVIEW (gfig_preview), preview_width, 
+  gtk_preview_size (GTK_PREVIEW (gfig_preview), preview_width,
 		    preview_height);
 
   xframe = gtk_frame_new (NULL);
@@ -111,7 +111,7 @@ make_preview (void)
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_attach (GTK_TABLE (table), gfig_preview, 1, 2, 1, 2,
 		    GTK_FILL , GTK_FILL , 0, 0);
-  gtk_container_add (GTK_CONTAINER (xframe), table); 
+  gtk_container_add (GTK_CONTAINER (xframe), table);
 
   ruler = gtk_hruler_new ();
   gtk_ruler_set_range (GTK_RULER (ruler), 0, preview_width, 0, PREVIEW_SIZE);
@@ -155,7 +155,7 @@ make_preview (void)
 
 /* Given a row then srink it down a bit */
 static void
-do_gfig_preview (guchar *dest_row, 
+do_gfig_preview (guchar *dest_row,
 		 guchar *src_row,
 		 gint    width,
 		 gint    dh,
@@ -220,7 +220,7 @@ cache_preview (GimpDrawable *drawable)
   gimp_pixel_rgn_init (&src_rgn, drawable,
 		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
 
-  src_rows = g_new (guchar , sel_width * 4); 
+  src_rows = g_new (guchar , sel_width * 4);
   p = pv_cache = g_new (guchar , preview_width * preview_height * 4);
 
   bpp = gimp_drawable_bpp (drawable->drawable_id);
@@ -254,10 +254,10 @@ cache_preview (GimpDrawable *drawable)
           for (i = 0 ; i < 3; i++)
             p[x*img_bpp+i] =
               src_rows[((x*sel_width)/preview_width) * src_rgn.bpp +
-		       ((isgrey)?0:i)]; 
+		       ((isgrey)?0:i)];
           if (has_alpha)
             p[x*img_bpp+3] =
-              src_rows[((x*sel_width)/preview_width) * src_rgn.bpp + 
+              src_rows[((x*sel_width)/preview_width) * src_rgn.bpp +
 		       ((isgrey)?1:3)];
         }
       p += (preview_width*img_bpp);
@@ -274,7 +274,7 @@ dialog_update_preview (GimpDrawable *drawable)
 
   if (!selvals.showimage)
     {
-      memset (preview_row, -1, preview_width*4);      
+      memset (preview_row, -1, preview_width*4);
       for (y = 0; y < preview_height; y++)
 	{
 	  gtk_preview_draw_row (GTK_PREVIEW (gfig_preview), preview_row,
@@ -318,14 +318,14 @@ dialog_update_preview (GimpDrawable *drawable)
 		check = check_0;
 	      else
 		check = check_1;
-	    
+
 	      alphaval = preview_row[i + 3];
 
-	      preview_row[j] = 
+	      preview_row[j] =
 		check + (((preview_row[i] - check)*alphaval)/255);
-	      preview_row[j + 1] = 
+	      preview_row[j + 1] =
 		check + (((preview_row[i + 1] - check)*alphaval)/255);
-	      preview_row[j + 2] = 
+	      preview_row[j + 2] =
 		check + (((preview_row[i + 2] - check)*alphaval)/255);
 	    }
 	}
@@ -507,7 +507,7 @@ make_pos_info (void)
 
   hbox = gtk_hbox_new (TRUE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-  gtk_container_add (GTK_CONTAINER (xframe), hbox);  
+  gtk_container_add (GTK_CONTAINER (xframe), hbox);
 
   /* Add labels */
   label = gfig_pos_labels ();
@@ -534,7 +534,6 @@ make_status (void)
 
   xframe = gtk_frame_new (_("Collection Details"));
 
-  gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_ETCHED_IN);
   table = gtk_table_new (6, 6, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
@@ -563,7 +562,7 @@ make_status (void)
 		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
   gtk_widget_show (status_label_fname);
 
-  gtk_container_add (GTK_CONTAINER (xframe), table);  
+  gtk_container_add (GTK_CONTAINER (xframe), table);
 
   gtk_widget_show (table);
   gtk_widget_show (xframe);

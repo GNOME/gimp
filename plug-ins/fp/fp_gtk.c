@@ -93,7 +93,6 @@ fp_create_bna (void)
   Create_A_Preview (&curPreview, &aframe, reduced->width, reduced->height);
 
   frame = gtk_frame_new (_("Before and After"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
 
   /* All the previews */
   alabel = gtk_label_new (_("Current:"));
@@ -158,7 +157,6 @@ fp_create_circle_palette (void)
   GtkWidget *win;
 
   frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
   gtk_widget_show (frame);
 
@@ -222,7 +220,6 @@ fp_create_rough (void)
   GtkObject *data;
 
   frame = gtk_frame_new (_("Roughness"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_widget_show (frame);
 
   data = gtk_adjustment_new (Current.Rough, 0, 1.0, 0.05, 0.01, 0.0);
@@ -253,7 +250,6 @@ fp_create_range (void)
   GSList *group=NULL;
 
   frame = gtk_frame_new (_("Affected Range"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
 
   gtk_widget_show (frame);
 
@@ -284,7 +280,6 @@ fp_create_control (void)
   GtkWidget *frame, *box;
 
   frame = gtk_frame_new (_("Windows"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
 
   gtk_widget_show (frame);
 
@@ -332,7 +327,6 @@ fp_create_lnd (void)
   Create_A_Table_Entry (&darkerVbox, darkerFrame, val_darker);
 
   frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_widget_show (frame);
 
@@ -383,7 +377,6 @@ fp_create_msnls (void)
   Create_A_Table_Entry (&lessVbox, lessFrame, sat_less);
 
   frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
   gtk_widget_show (frame);
 
@@ -421,7 +414,6 @@ fp_create_pixels_select_by (void)
   GSList *group=NULL;
 
   frame = gtk_frame_new (_("Select Pixels by"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 2);

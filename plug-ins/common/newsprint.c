@@ -1207,7 +1207,6 @@ newsprint_dialog (GimpDrawable *drawable)
 
   /* resolution settings  */
   frame = gtk_frame_new (_("Resolution"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (3, 3, FALSE);
@@ -1260,7 +1259,6 @@ newsprint_dialog (GimpDrawable *drawable)
 
   /* screen settings */
   frame = gtk_frame_new (_("Screen"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   st.vbox = gtk_vbox_new (FALSE, 4);
@@ -1390,7 +1388,6 @@ newsprint_dialog (GimpDrawable *drawable)
 
   /* anti-alias control */
   frame = gtk_frame_new (_("Antialiasing"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (1, 3, FALSE);

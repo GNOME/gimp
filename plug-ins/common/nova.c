@@ -328,7 +328,6 @@ nova_dialog (GimpDrawable *drawable)
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
@@ -440,7 +439,6 @@ nova_center_create (GimpDrawable *drawable)
   center->in_call  = TRUE;  /* to avoid side effects while initialization */
 
   frame = gtk_frame_new (_("Center of SuperNova"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
 
   g_signal_connect (frame, "destroy",

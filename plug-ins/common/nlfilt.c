@@ -359,7 +359,6 @@ pluginCoreIA (piArgs *argp, GimpDrawable *drawable)
   gtk_widget_show (frame);
 
   frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -449,7 +448,6 @@ mw_preview_new (GtkWidget *parent, GimpDrawable *drawable)
   GtkWidget *button;
 
   frame = gtk_frame_new (_("Preview"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
