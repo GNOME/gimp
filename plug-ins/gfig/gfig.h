@@ -41,6 +41,7 @@ extern gint32        gfig_image;
 extern gint32        gfig_drawable;
 extern GdkGC  *gfig_gc;
 extern gdouble scale_x_factor, scale_y_factor;
+extern GdkPixbuf *back_pixbuf;
 
 extern GtkWidget    *gfig_preview;
 extern GtkWidget    *pic_preview;
@@ -170,6 +171,13 @@ typedef struct DFigObj
   GtkWidget *pixmap_widget;
 } GFigObj;
 
+typedef struct
+{
+  gboolean   show_background;
+} GFigContext;
+
+GFigContext *gfig_context;
+
 extern GFigObj  *current_obj;
 extern GFigObj  *pic_obj;
 
@@ -179,50 +187,52 @@ extern SelectItVals selvals;
 void       add_to_all_obj          (GFigObj * fobj, Dobject *obj);
 
 gchar *get_line (gchar *buf,
-		 gint   s,
-		 FILE  *from,
-		 gint   init);
+                 gint   s,
+                 FILE  *from,
+                 gint   init);
 
-void		scale_to_xy	(gdouble *list,
-				 gint     size);
-void		scale_to_original_xy (gdouble *list,
-				      gint     size);
+void            scale_to_xy     (gdouble *list,
+                                 gint     size);
+void            scale_to_original_xy (gdouble *list,
+                                      gint     size);
 
 void reverse_pairs_list (gdouble *list,
-			 gint     size);
+                         gint     size);
 
 void gfig_paint (BrushType brush_type,
-		 gint32    drawable_ID,
-		 gint      seg_count,
-		 gdouble   line_pnts[]);
+                 gint32    drawable_ID,
+                 gint      seg_count,
+                 gdouble   line_pnts[]);
 
 void draw_circle (GdkPoint *p);
 void draw_sqr (GdkPoint *p);
 
 void    list_button_update      (GFigObj *obj);
-void	num_sides_dialog 	(gchar *d_title,
-				 gint  *num_sides,
-				 gint  *which_way,
-				 gint   adj_min,
-				 gint   adj_max);
-void	toggle_obj_type		(GtkWidget *widget,
-				 gpointer   data);
+void    num_sides_dialog        (gchar *d_title,
+                                 gint  *num_sides,
+                                 gint  *which_way,
+                                 gint   adj_min,
+                                 gint   adj_max);
+void    toggle_obj_type         (GtkWidget *widget,
+                                 gpointer   data);
 
-void	setup_undo              (void);
-void	draw_grid_clear		(void);
-void	prepend_to_all_obj      (GFigObj *fobj,
-				 DAllObjs *nobj);
+void    setup_undo              (void);
+void    draw_grid_clear         (void);
+void    prepend_to_all_obj      (GFigObj *fobj,
+                                 DAllObjs *nobj);
 
-void	gfig_draw_arc		(gint x,
-				 gint y,
-				 gint width,
-				 gint height,
-				 gint angle1,
-				 gint angle2);
+void    gfig_draw_arc           (gint x,
+                                 gint y,
+                                 gint width,
+                                 gint height,
+                                 gint angle1,
+                                 gint angle2);
 
-void	gfig_draw_line		(gint x0,
-				 gint y0,
-				 gint x1,
-				 gint y1);
+void    gfig_draw_line          (gint x0,
+                                 gint y0,
+                                 gint x1,
+                                 gint y1);
 
+gboolean gfig_preview_expose    (GtkWidget *widget,
+                                 GdkEvent  *event);
 #endif /* __GFIG_H__ */

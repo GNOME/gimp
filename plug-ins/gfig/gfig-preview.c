@@ -44,12 +44,12 @@
 #include "libgimp/stdplugins-intl.h"
 
 #define PREVIEW_MASK  (GDK_EXPOSURE_MASK       | \
-		       GDK_POINTER_MOTION_MASK | \
+                       GDK_POINTER_MOTION_MASK | \
                        GDK_BUTTON_PRESS_MASK   | \
-		       GDK_BUTTON_RELEASE_MASK | \
-		       GDK_BUTTON_MOTION_MASK  | \
-		       GDK_KEY_PRESS_MASK      | \
-		       GDK_KEY_RELEASE_MASK)
+                       GDK_BUTTON_RELEASE_MASK | \
+                       GDK_BUTTON_MOTION_MASK  | \
+                       GDK_KEY_PRESS_MASK      | \
+                       GDK_KEY_RELEASE_MASK)
 
 static gint x_pos_val;
 static gint y_pos_val;
@@ -61,21 +61,19 @@ static guchar  preview_row[PREVIEW_SIZE * 4];
 static guchar *pv_cache;
 static gint    img_bpp;
 
-static gboolean  	gfig_preview_expose     (GtkWidget *widget,
-						 GdkEvent  *event);
-static void      	gfig_preview_realize    (GtkWidget *widget);
-static gboolean  	gfig_preview_events     (GtkWidget *widget,
-						 GdkEvent  *event);
-static void		cache_preview 		(GimpDrawable *drawable);
+static void             gfig_preview_realize    (GtkWidget *widget);
+static gboolean         gfig_preview_events     (GtkWidget *widget,
+                                                 GdkEvent  *event);
+static void             cache_preview           (GimpDrawable *drawable);
 
-static gint      	gfig_invscale_x         (gint x);
-static gint      	gfig_invscale_y         (gint y);
-static GtkWidget*	gfig_pos_labels 	(void);
-static GtkWidget* 	make_pos_info 		(void);
-static GtkWidget*	make_status 		(void);
+static gint             gfig_invscale_x         (gint x);
+static gint             gfig_invscale_y         (gint y);
+static GtkWidget*       gfig_pos_labels         (void);
+static GtkWidget*       make_pos_info           (void);
+static GtkWidget*       make_status             (void);
 
-static void		gfig_pos_update		(gint x,
-						 gint y);
+static void             gfig_pos_update         (gint x,
+                                                 gint y);
 
 GtkWidget *
 make_preview (void)
@@ -98,11 +96,11 @@ make_preview (void)
                     NULL);
 
   g_signal_connect_after (gfig_preview , "expose_event",
-			  G_CALLBACK (gfig_preview_expose),
-			  NULL);
+                          G_CALLBACK (gfig_preview_expose),
+                          NULL);
 
   gtk_preview_size (GTK_PREVIEW (gfig_preview), preview_width,
-		    preview_height);
+                    preview_height);
 
   frame = gtk_frame_new (NULL);
 
@@ -110,7 +108,7 @@ make_preview (void)
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_attach (GTK_TABLE (table), gfig_preview, 1, 2, 1, 2,
-		    GTK_FILL , GTK_FILL , 0, 0);
+                    GTK_FILL , GTK_FILL , 0, 0);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   ruler = gtk_hruler_new ();
@@ -119,16 +117,16 @@ make_preview (void)
                             G_CALLBACK (GTK_WIDGET_CLASS (G_OBJECT_GET_CLASS (ruler))->motion_notify_event),
                             ruler);
   gtk_table_attach (GTK_TABLE (table), ruler, 1, 2, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ruler);
 
   ruler = gtk_vruler_new ();
   gtk_ruler_set_range (GTK_RULER (ruler), 0, preview_height, 0, PREVIEW_SIZE);
   g_signal_connect_swapped (gfig_preview, "motion_notify_event",
                             G_CALLBACK (GTK_WIDGET_CLASS (G_OBJECT_GET_CLASS (ruler))->motion_notify_event),
-			    ruler);
+                            ruler);
   gtk_table_attach (GTK_TABLE (table), ruler, 0, 1, 1, 2,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ruler);
 
   gtk_widget_show (frame);
@@ -154,11 +152,11 @@ make_preview (void)
 /* Given a row then srink it down a bit */
 static void
 do_gfig_preview (guchar *dest_row,
-		 guchar *src_row,
-		 gint    width,
-		 gint    dh,
-		 gint    height,
-		 gint    bpp)
+                 guchar *src_row,
+                 gint    width,
+                 gint    dh,
+                 gint    height,
+                 gint    bpp)
 {
   memcpy (dest_row, src_row, width * bpp);
 }
@@ -205,18 +203,18 @@ cache_preview (GimpDrawable *drawable)
   guchar       *src_rows;
   guchar       *p;
   gboolean      isgrey, has_alpha;
-  gint		bpp, img_bpp;
-  gint		sel_x1, sel_y1, sel_x2, sel_y2;
-  gint    	sel_width, sel_height;
+  gint          bpp, img_bpp;
+  gint          sel_x1, sel_y1, sel_x2, sel_y2;
+  gint          sel_width, sel_height;
 
   gimp_drawable_mask_bounds (drawable->drawable_id,
-			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width  = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
-		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
+                       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
 
   src_rows = g_new (guchar , sel_width * 4);
   p = pv_cache = g_new (guchar , preview_width * preview_height * 4);
@@ -239,10 +237,10 @@ cache_preview (GimpDrawable *drawable)
   for (y = 0; y < preview_height; y++)
     {
       gimp_pixel_rgn_get_row (&src_rgn,
-			      src_rows,
-			      sel_x1,
-			      sel_y1 + (y*sel_height)/preview_height,
-			      sel_width);
+                              src_rows,
+                              sel_x1,
+                              sel_y1 + (y*sel_height)/preview_height,
+                              sel_width);
 
       for (x = 0; x < (preview_width); x ++)
         {
@@ -252,11 +250,11 @@ cache_preview (GimpDrawable *drawable)
           for (i = 0 ; i < 3; i++)
             p[x*img_bpp+i] =
               src_rows[((x*sel_width)/preview_width) * src_rgn.bpp +
-		       ((isgrey)?0:i)];
+                       ((isgrey)?0:i)];
           if (has_alpha)
             p[x*img_bpp+3] =
               src_rows[((x*sel_width)/preview_width) * src_rgn.bpp +
-		       ((isgrey)?1:3)];
+                       ((isgrey)?1:3)];
         }
       p += (preview_width*img_bpp);
     }
@@ -274,10 +272,10 @@ dialog_update_preview (GimpDrawable *drawable)
     {
       memset (preview_row, -1, preview_width*4);
       for (y = 0; y < preview_height; y++)
-	{
-	  gtk_preview_draw_row (GTK_PREVIEW (gfig_preview), preview_row,
-				0, y, preview_width);
-	}
+        {
+          gtk_preview_draw_row (GTK_PREVIEW (gfig_preview), preview_row,
+                                0, y, preview_width);
+        }
       return;
     }
 
@@ -289,47 +287,47 @@ dialog_update_preview (GimpDrawable *drawable)
   for (y = 0; y < preview_height; y++)
     {
       if ((y / GIMP_CHECK_SIZE) & 1)
-	{
-	  check_0 = GIMP_CHECK_DARK * 255;
-	  check_1 = GIMP_CHECK_LIGHT * 255;
-	}
+        {
+          check_0 = GIMP_CHECK_DARK * 255;
+          check_1 = GIMP_CHECK_LIGHT * 255;
+        }
       else
-	{
-	  check_0 = GIMP_CHECK_LIGHT * 255;
-	  check_1 = GIMP_CHECK_DARK * 255;
-	}
+        {
+          check_0 = GIMP_CHECK_LIGHT * 255;
+          check_1 = GIMP_CHECK_DARK * 255;
+        }
 
       do_gfig_preview (preview_row,
-		       pv_cache + y * preview_width * img_bpp,
-		       preview_width,
-		       y,
-		       preview_height,
-		       img_bpp);
+                       pv_cache + y * preview_width * img_bpp,
+                       preview_width,
+                       y,
+                       preview_height,
+                       img_bpp);
 
       if (img_bpp > 3)
-	{
-	  int i, j;
-	  for (i = 0, j = 0 ; i < sizeof (preview_row); i += 4, j += 3)
-	    {
-	      gint alphaval;
-	      if (((i/4) / GIMP_CHECK_SIZE) & 1)
-		check = check_0;
-	      else
-		check = check_1;
+        {
+          int i, j;
+          for (i = 0, j = 0 ; i < sizeof (preview_row); i += 4, j += 3)
+            {
+              gint alphaval;
+              if (((i/4) / GIMP_CHECK_SIZE) & 1)
+                check = check_0;
+              else
+                check = check_1;
 
-	      alphaval = preview_row[i + 3];
+              alphaval = preview_row[i + 3];
 
-	      preview_row[j] =
-		check + (((preview_row[i] - check)*alphaval)/255);
-	      preview_row[j + 1] =
-		check + (((preview_row[i + 1] - check)*alphaval)/255);
-	      preview_row[j + 2] =
-		check + (((preview_row[i + 2] - check)*alphaval)/255);
-	    }
-	}
+              preview_row[j] =
+                check + (((preview_row[i] - check)*alphaval)/255);
+              preview_row[j + 1] =
+                check + (((preview_row[i + 1] - check)*alphaval)/255);
+              preview_row[j + 2] =
+                check + (((preview_row[i + 2] - check)*alphaval)/255);
+            }
+        }
 
       gtk_preview_draw_row (GTK_PREVIEW (gfig_preview), preview_row,
-			    0, y, preview_width);
+                            0, y, preview_width);
     }
 }
 
@@ -339,13 +337,28 @@ gfig_preview_realize (GtkWidget *widget)
   GdkDisplay *display = gtk_widget_get_display (widget);
 
   gdk_window_set_cursor (gfig_preview->window,
-			 gdk_cursor_new_for_display (display, GDK_CROSSHAIR));
+                         gdk_cursor_new_for_display (display, GDK_CROSSHAIR));
 }
 
-static gboolean
-gfig_preview_expose (GtkWidget *widget,
-		     GdkEvent  *event)
+static void
+draw_background ()
 {
+  if (back_pixbuf)
+    gdk_draw_pixbuf (gfig_preview->window, 
+                     gfig_preview->style->fg_gc[GTK_STATE_NORMAL],
+                     back_pixbuf, 0, 0, 0, 0, -1, -1, 
+                     GDK_RGB_DITHER_NONE, 0, 0);
+}
+
+gboolean
+gfig_preview_expose (GtkWidget *widget,
+                     GdkEvent  *event)
+{
+  gdk_window_clear (gfig_preview->window);
+
+  if (gfig_context->show_background)
+    draw_background ();
+
   draw_grid ();
   draw_objects (pic_obj->obj_list, TRUE);
 
@@ -354,7 +367,7 @@ gfig_preview_expose (GtkWidget *widget,
 
 static gint
 gfig_preview_events (GtkWidget *widget,
-		     GdkEvent  *event)
+                     GdkEvent  *event)
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
@@ -375,39 +388,39 @@ gfig_preview_events (GtkWidget *widget,
 
       /* Start drawing of object */
       if (selvals.otype >= MOVE_OBJ)
-	{
-	  if (!selvals.scaletoimage)
-	    {
-	      point.x = gfig_invscale_x (point.x);
-	      point.y = gfig_invscale_y (point.y);
-	    }
-	  object_operation_start (&point, bevent->state & GDK_SHIFT_MASK);
+        {
+          if (!selvals.scaletoimage)
+            {
+              point.x = gfig_invscale_x (point.x);
+              point.y = gfig_invscale_y (point.y);
+            }
+          object_operation_start (&point, bevent->state & GDK_SHIFT_MASK);
 
-	  /* If constraining save start pnt */
-	  if (selvals.opts.snap2grid)
-	    {
-	      /* Save point to constained point ... if button 3 down */
-	      if (bevent->button == 3)
-		{
-		  find_grid_pos (&point, &point, FALSE);
-		}
-	    }
-	}
+          /* If constraining save start pnt */
+          if (selvals.opts.snap2grid)
+            {
+              /* Save point to constained point ... if button 3 down */
+              if (bevent->button == 3)
+                {
+                  find_grid_pos (&point, &point, FALSE);
+                }
+            }
+        }
       else
-	{
-	  if (selvals.opts.snap2grid)
-	    {
-	      if (bevent->button == 3)
-		{
-		  find_grid_pos (&point, &point, FALSE);
-		}
-	      else
-		{
-		  find_grid_pos (&point, &point, FALSE);
-		}
-	    }
-	  object_start (&point, bevent->state & GDK_SHIFT_MASK);
-	}
+        {
+          if (selvals.opts.snap2grid)
+            {
+              if (bevent->button == 3)
+                {
+                  find_grid_pos (&point, &point, FALSE);
+                }
+              else
+                {
+                  find_grid_pos (&point, &point, FALSE);
+                }
+            }
+          object_start (&point, bevent->state & GDK_SHIFT_MASK);
+        }
 
       break;
 
@@ -417,27 +430,27 @@ gfig_preview_events (GtkWidget *widget,
       point.y = bevent->y;
 
       if (selvals.opts.snap2grid)
-	find_grid_pos (&point, &point, bevent->button == 3);
+        find_grid_pos (&point, &point, bevent->button == 3);
 
       /* Still got shift down ?*/
       if (selvals.otype >= MOVE_OBJ)
-	{
-	  if (!selvals.scaletoimage)
-	    {
-	      point.x = gfig_invscale_x (point.x);
-	      point.y = gfig_invscale_y (point.y);
-	    }
-	  object_operation_end (&point, bevent->state & GDK_SHIFT_MASK);
-	}
+        {
+          if (!selvals.scaletoimage)
+            {
+              point.x = gfig_invscale_x (point.x);
+              point.y = gfig_invscale_y (point.y);
+            }
+          object_operation_end (&point, bevent->state & GDK_SHIFT_MASK);
+        }
       else
-	{
-	  if (obj_creating)
-	    {
-	      object_end (&point, bevent->state & GDK_SHIFT_MASK);
-	    }
-	  else
-	    break;
-	}
+        {
+          if (obj_creating)
+            {
+              object_end (&point, bevent->state & GDK_SHIFT_MASK);
+            }
+          else
+            break;
+        }
 
       /* make small preview reflect changes ?*/
       list_button_update (current_obj);
@@ -449,42 +462,42 @@ gfig_preview_events (GtkWidget *widget,
       point.y = mevent->y;
 
       if (selvals.opts.snap2grid)
-	find_grid_pos (&point, &point, mevent->state & GDK_BUTTON3_MASK);
+        find_grid_pos (&point, &point, mevent->state & GDK_BUTTON3_MASK);
 
       if (selvals.otype >= MOVE_OBJ)
-	{
-	  /* Moving objects around */
-	  if (!selvals.scaletoimage)
-	    {
-	      point.x = gfig_invscale_x (point.x);
-	      point.y = gfig_invscale_y (point.y);
-	    }
-	  object_operation (&point, mevent->state & GDK_SHIFT_MASK);
-	  gfig_pos_update (point.x, point.y);
-	  return FALSE;
-	}
+        {
+          /* Moving objects around */
+          if (!selvals.scaletoimage)
+            {
+              point.x = gfig_invscale_x (point.x);
+              point.y = gfig_invscale_y (point.y);
+            }
+          object_operation (&point, mevent->state & GDK_SHIFT_MASK);
+          gfig_pos_update (point.x, point.y);
+          return FALSE;
+        }
 
       if (obj_creating)
-	{
-	  object_update (&point);
-	}
+        {
+          object_update (&point);
+        }
       gfig_pos_update (point.x, point.y);
       break;
 
     case GDK_KEY_PRESS:
       if ((tmp_show_single = obj_show_single) != -1)
-	{
-	  obj_show_single = -1;
-	  draw_grid_clear ();
-	}
+        {
+          obj_show_single = -1;
+          draw_grid_clear ();
+        }
       break;
 
     case GDK_KEY_RELEASE:
       if (tmp_show_single != -1)
-	{
-	  obj_show_single = tmp_show_single;
-	  draw_grid_clear ();
-	}
+        {
+          obj_show_single = tmp_show_single;
+          draw_grid_clear ();
+        }
       break;
 
     default:
@@ -540,25 +553,25 @@ make_status (void)
   label = gtk_label_new (_("Draw name:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Filename:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   status_label_dname = gtk_label_new (_("(none)"));
   gtk_misc_set_alignment (GTK_MISC (status_label_dname), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), status_label_dname, 2, 4, 0, 1,
-		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
+                    GTK_FILL | GTK_EXPAND, 0, 0, 0);
   gtk_widget_show (status_label_dname);
 
   status_label_fname = gtk_label_new (_("(none)"));
   gtk_misc_set_alignment (GTK_MISC (status_label_fname), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), status_label_fname, 2, 4, 1, 2,
-		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
+                    GTK_FILL | GTK_EXPAND, 0, 0, 0);
   gtk_widget_show (status_label_fname);
 
   gtk_widget_show (frame);
@@ -590,13 +603,13 @@ gfig_update_stat_labels (void)
           strcat (dfn, &dfn[strlen (hm)]);
         }
       if ((slen = strlen (dfn)) > 40)
-	{
-	  strncpy (str, dfn, 19);
-	  str[19] = '\0';
-	  strcat (str, "...");
-	  strncat (str, &dfn[slen - 21], 19);
-	  str[40] ='\0';
-	}
+        {
+          strncpy (str, dfn, 19);
+          str[19] = '\0';
+          strcat (str, "...");
+          strncat (str, &dfn[slen - 21], 19);
+          str[40] ='\0';
+        }
       else
         {
           sprintf (str, "%.40s", dfn);
@@ -656,7 +669,7 @@ gfig_pos_labels (void)
 
 void
 gfig_pos_enable (GtkWidget *widget,
-		 gpointer   data)
+                 gpointer   data)
 {
   gboolean enable = selvals.showpos;
 
@@ -676,7 +689,7 @@ gfig_pos_update_labels (gpointer data)
 
 static void
 gfig_pos_update (gint x,
-		 gint y)
+                 gint y)
 {
   if ((x_pos_val !=x || y_pos_val != y) && pos_tag == -1 && selvals.showpos)
     {

@@ -50,7 +50,8 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk-pixbuf/gdk-pixdata.h>
 #include "libgimp/stdplugins-intl.h"
 
 #include "gfig.h"
@@ -152,10 +153,6 @@ static void      gfig_delete_gfig_callback (GtkWidget *widget,
 static void      edit_button_callback      (GtkWidget *widget,
                                             gpointer   data);
 static void      merge_button_callback     (GtkWidget *widget,
-                                            gpointer   data);
-static void      about_button_callback     (GtkWidget *widget,
-                                            gpointer   data);
-static void      reload_button_callback    (GtkWidget *widget,
                                             gpointer   data);
 
 static void      do_gfig                   (void);
@@ -324,6 +321,7 @@ static gint    sel_x1, sel_y1, sel_x2, sel_y2;
 static gint    sel_width, sel_height;
 gint    preview_width, preview_height;
 gdouble scale_x_factor, scale_y_factor;
+GdkPixbuf *back_pixbuf = NULL;
 static gdouble org_scale_x_factor, org_scale_y_factor;
 
 MAIN ()
@@ -366,7 +364,6 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-
   gint pwidth, pheight;
 
   INIT_I18N ();
@@ -381,6 +378,9 @@ run (const gchar      *name,
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
+  gfig_context = (GFigContext*)g_malloc (sizeof (GFigContext));
+  gfig_context->show_background = TRUE;
+
   gfig_select_drawable = drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /* TMP Hack - clear any selections */
@@ -392,6 +392,7 @@ run (const gchar      *name,
 
   sel_width  = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
+
 
   /* Calculate preview size */
 
@@ -405,6 +406,7 @@ run (const gchar      *name,
       pheight = MIN (sel_height, PREVIEW_SIZE);
       pwidth  = sel_width * pheight / sel_height;
     }
+  
 
   preview_width  = MAX (pwidth, 2);  /* Min size is 2 */
   preview_height = MAX (pheight, 2);
@@ -2521,7 +2523,6 @@ options_page (void)
   GtkWidget *table;
   GtkWidget *combo;
   GtkWidget *toggle;
-  GtkWidget *button;
   GtkWidget *vbox;
   GtkObject *size_data;
 
@@ -2536,24 +2537,17 @@ options_page (void)
 
   /* Put buttons in */
   toggle = gtk_check_button_new_with_label (_("Show image"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                gfig_context->show_background);
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &selvals.showimage);
+                    &gfig_context->show_background);
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (toggle_show_image),
+                    G_CALLBACK (gfig_preview_expose),
                     NULL);
   gtk_widget_show (toggle);
-
-  button = gtk_button_new_with_label (_("Reload image"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (reload_button_callback),
-                    NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             NULL, 0, 0,
-                             button, 1, TRUE);
 
   combo = gimp_int_combo_box_new (_("Rectangle"), RECT_GRID,
                                   _("Polar"),     POLAR_GRID,
@@ -2620,15 +2614,6 @@ options_page (void)
                     NULL);
   gtk_widget_show (toggle);
   gfig_opt_widget.showcontrol = toggle;
-
-  button = gtk_button_new_with_label (_("About"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 8, 0);
-  gtk_table_attach (GTK_TABLE (table), button, 1, 3, 5, 6,
-                    0, 0, 0, 0);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (about_button_callback),
-                    NULL);
-  gtk_widget_show (button);
 
   return vbox;
 }
@@ -2893,8 +2878,30 @@ gfig_dialog (void)
   GtkWidget *vbox;
   GtkWidget *notebook;
   GtkWidget *page;
+  gint tmpwidth, tmpheight;
+  gint bpp, rowstride;
+  guchar *back_data;
 
   gimp_ui_init ("gfig", TRUE);
+
+  tmpwidth = preview_width;
+  tmpheight = preview_height;
+
+  back_data = gimp_image_get_thumbnail_data (gfig_image,
+                                             &tmpwidth, &tmpheight, &bpp);
+
+  rowstride = tmpwidth * bpp;
+
+  /* we only handle RGB because GdkPixbuf doesn't do grayscale */
+  if (bpp == 3)
+    back_pixbuf = gdk_pixbuf_new_from_data (back_data, GDK_COLORSPACE_RGB, FALSE,
+                                            8, tmpwidth, tmpheight, rowstride, 
+                                            NULL, NULL);
+  else if (bpp == 4)
+    back_pixbuf = gdk_pixbuf_new_from_data (back_data, GDK_COLORSPACE_RGB, TRUE,
+                                            8, tmpwidth, tmpheight, rowstride, 
+                                            NULL, NULL);
+
   gfig_stock_init ();
 
   gfig_path = gimp_gimprc_query ("gfig-path");
@@ -3016,6 +3023,9 @@ gfig_dialog (void)
   gfig_grid_colours (gfig_preview);
   /* Popup for list area */
   gfig_op_menu_create (top_level_dlg);
+
+  /* clear anything that might be loaded at this point */
+  gfig_response (top_level_dlg, RESPONSE_CLEAR, NULL);
 
   gtk_main ();
 
@@ -3640,73 +3650,6 @@ gfig_paint_callback (void)
   gimp_image_undo_group_end (gfig_image);
 
   gimp_displays_flush ();
-}
-
-static void
-reload_button_callback (GtkWidget *widget,
-                        gpointer   data)
-{
-  refill_cache (gfig_select_drawable);
-  draw_grid_clear ();
-}
-
-static void
-about_button_callback (GtkWidget *widget,
-                       gpointer   data)
-{
-  GtkWidget *window;
-  GtkWidget *label;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *image;
-
-  window = gimp_dialog_new (_("About Gfig"), "gfig",
-                            NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
-
-                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-
-                            NULL);
-
-  g_signal_connect (window, "response",
-                    G_CALLBACK (gtk_widget_destroy),
-                    NULL);
-
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox),
-                      hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
-
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  image = gtk_image_new_from_stock (GFIG_STOCK_LOGO, GTK_ICON_SIZE_DIALOG);
-  gtk_box_pack_start (GTK_BOX (hbox), image, TRUE, TRUE, 0);
-  gtk_widget_show (image);
-
-  label = gtk_label_new (_("Gfig - GIMP plug-in"));
-  gtk_misc_set_padding (GTK_MISC (label), 2, 2);
-  gtk_widget_show (label);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-
-  label = gtk_label_new (_("Release 2.0"));
-  gtk_misc_set_padding (GTK_MISC (label), 2, 2);
-  gtk_widget_show (label);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-
-  label = gtk_label_new ("Andy Thomas");
-  gtk_misc_set_padding (GTK_MISC (label), 2, 2);
-  gtk_widget_show (label);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-
-  label = gtk_label_new ("Isometric grid By Rob Saunders");
-  gtk_misc_set_padding (GTK_MISC (label), 2, 2);
-  gtk_widget_show (label);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-
-  gtk_widget_show (window);
 }
 
 static void

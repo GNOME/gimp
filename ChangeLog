@@ -1,3 +1,11 @@
+2004-06-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/gfig/gfig.[ch]:
+	* plug-ins/gfig/gfig-preview.c: Let gfig use a thumbnail of the
+	image as background for its preview, if the image is RGB and "Show 
+	image" is checked in the Options tab.  (Next best thing to 
+	previewing in the image.)
+	
 2004-06-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontrollerinfo.[ch]: added a boolean property
