@@ -937,6 +937,7 @@ the ones in dialog size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_FLIP ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-flip-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-flip-16.png" format="png"></inlinegraphic>
 </para>
 
 
