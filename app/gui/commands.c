@@ -42,7 +42,6 @@
 #include "floating_sel.h"
 #include "gdisplay_ops.h"
 #include "general.h"
-#include "gimage_cmds.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
 #include "global_edit.h"

@@ -1207,17 +1207,17 @@ gimp_image_construct_layers (GimpImage *gimage, int x, int y, int w, int h)
   switch (gimp_image_base_type (gimage))
     {
     case RGB:
-      if (! gimp_image_get_component_visible (gimage, Red) &&
-	  ! gimp_image_get_component_visible (gimage, Green) &&
-	  ! gimp_image_get_component_visible (gimage, Blue))
+      if (! gimp_image_get_component_visible (gimage, RED_CHANNEL) &&
+	  ! gimp_image_get_component_visible (gimage, GREEN_CHANNEL) &&
+	  ! gimp_image_get_component_visible (gimage, BLUE_CHANNEL))
 	return;
       break;
     case GRAY:
-      if (! gimp_image_get_component_visible (gimage, Gray))
+      if (! gimp_image_get_component_visible (gimage, GRAY_CHANNEL))
 	return;
       break;
     case INDEXED:
-      if (! gimp_image_get_component_visible (gimage, Indexed))
+      if (! gimp_image_get_component_visible (gimage, INDEXED_CHANNEL))
 	return;
       break;
     }
@@ -1717,11 +1717,11 @@ gimp_image_get_component_active (GimpImage *gimage, ChannelType type)
   /*  No sanity checking here...  */
   switch (type)
     {
-    case Red:     return gimage->active[RED_PIX]; break;
-    case Green:   return gimage->active[GREEN_PIX]; break;
-    case Blue:    return gimage->active[BLUE_PIX]; break;
-    case Gray:    return gimage->active[GRAY_PIX]; break;
-    case Indexed: return gimage->active[INDEXED_PIX]; break;
+    case RED_CHANNEL:     return gimage->active[RED_PIX]; break;
+    case GREEN_CHANNEL:   return gimage->active[GREEN_PIX]; break;
+    case BLUE_CHANNEL:    return gimage->active[BLUE_PIX]; break;
+    case GRAY_CHANNEL:    return gimage->active[GRAY_PIX]; break;
+    case INDEXED_CHANNEL: return gimage->active[INDEXED_PIX]; break;
     default:      return 0; break;
     }
 }
@@ -1733,11 +1733,11 @@ gimp_image_get_component_visible (GimpImage *gimage, ChannelType type)
   /*  No sanity checking here...  */
   switch (type)
     {
-    case Red:     return gimage->visible[RED_PIX]; break;
-    case Green:   return gimage->visible[GREEN_PIX]; break;
-    case Blue:    return gimage->visible[BLUE_PIX]; break;
-    case Gray:    return gimage->visible[GRAY_PIX]; break;
-    case Indexed: return gimage->visible[INDEXED_PIX]; break;
+    case RED_CHANNEL:     return gimage->visible[RED_PIX]; break;
+    case GREEN_CHANNEL:   return gimage->visible[GREEN_PIX]; break;
+    case BLUE_CHANNEL:    return gimage->visible[BLUE_PIX]; break;
+    case GRAY_CHANNEL:    return gimage->visible[GRAY_PIX]; break;
+    case INDEXED_CHANNEL: return gimage->visible[INDEXED_PIX]; break;
     default:      return 0; break;
     }
 }
@@ -1856,18 +1856,18 @@ gimp_image_set_component_active (GimpImage *gimage, ChannelType type, int value)
   /*  No sanity checking here...  */
   switch (type)
     {
-    case Red:     gimage->active[RED_PIX] = value; break;
-    case Green:   gimage->active[GREEN_PIX] = value; break;
-    case Blue:    gimage->active[BLUE_PIX] = value; break;
-    case Gray:    gimage->active[GRAY_PIX] = value; break;
-    case Indexed: gimage->active[INDEXED_PIX] = value; break;
-    case Auxillary: break;
+    case RED_CHANNEL:     gimage->active[RED_PIX] = value; break;
+    case GREEN_CHANNEL:   gimage->active[GREEN_PIX] = value; break;
+    case BLUE_CHANNEL:    gimage->active[BLUE_PIX] = value; break;
+    case GRAY_CHANNEL:    gimage->active[GRAY_PIX] = value; break;
+    case INDEXED_CHANNEL: gimage->active[INDEXED_PIX] = value; break;
+    case AUXILLARY_CHANNEL: break;
     }
 
   /*  If there is an active channel and we mess with the components,
    *  the active channel gets unset...
    */
-  if (type != Auxillary)
+  if (type != AUXILLARY_CHANNEL)
     gimp_image_unset_active_channel (gimage);
 }
 
@@ -1878,11 +1878,11 @@ gimp_image_set_component_visible (GimpImage *gimage, ChannelType type, int value
   /*  No sanity checking here...  */
   switch (type)
     {
-    case Red:     gimage->visible[RED_PIX] = value; break;
-    case Green:   gimage->visible[GREEN_PIX] = value; break;
-    case Blue:    gimage->visible[BLUE_PIX] = value; break;
-    case Gray:    gimage->visible[GRAY_PIX] = value; break;
-    case Indexed: gimage->visible[INDEXED_PIX] = value; break;
+    case RED_CHANNEL:     gimage->visible[RED_PIX] = value; break;
+    case GREEN_CHANNEL:   gimage->visible[GREEN_PIX] = value; break;
+    case BLUE_CHANNEL:    gimage->visible[BLUE_PIX] = value; break;
+    case GRAY_CHANNEL:    gimage->visible[GRAY_PIX] = value; break;
+    case INDEXED_CHANNEL: gimage->visible[INDEXED_PIX] = value; break;
     default:      break;
     }
 }
@@ -2266,7 +2266,7 @@ gimp_image_flatten (GimpImage *gimage)
       layer_list = g_slist_next (layer_list);
     }
 
-  layer = gimp_image_merge_layers (gimage, merge_list, FlattenImage);
+  layer = gimp_image_merge_layers (gimage, merge_list, FLATTEN_IMAGE);
   g_slist_free (merge_list);
 
   gimp_remove_busy_cursors(NULL);
@@ -2357,8 +2357,8 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
 
       switch (merge_type)
 	{
-	case ExpandAsNecessary:
-	case ClipToImage:
+	case EXPAND_AS_NECESSARY:
+	case CLIP_TO_IMAGE:
 	  if (!count)
 	    {
 	      x1 = off_x;
@@ -2377,7 +2377,7 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
 	      if ((off_y + drawable_height (GIMP_DRAWABLE(layer))) > y2)
 		y2 = (off_y + drawable_height (GIMP_DRAWABLE(layer)));
 	    }
-	  if (merge_type == ClipToImage)
+	  if (merge_type == CLIP_TO_IMAGE)
 	    {
 	      x1 = CLAMP (x1, 0, gimage->width);
 	      y1 = CLAMP (y1, 0, gimage->height);
@@ -2385,7 +2385,7 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
 	      y2 = CLAMP (y2, 0, gimage->height);
 	    }
 	  break;
-	case ClipToBottomLayer:
+	case CLIP_TO_BOTTOM_LAYER:
 	  if (merge_list->next == NULL)
 	    {
 	      x1 = off_x;
@@ -2394,7 +2394,7 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
 	      y2 = off_y + drawable_height (GIMP_DRAWABLE(layer));
 	    }
 	  break;
-	case FlattenImage:
+	case FLATTEN_IMAGE:
 	  if (merge_list->next == NULL)
 	    {
 	      x1 = 0;
@@ -2416,7 +2416,7 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
   /*  Start a merge undo group  */
   undo_push_group_start (gimage, LAYER_MERGE_UNDO);
 
-  if (merge_type == FlattenImage ||
+  if (merge_type == FLATTEN_IMAGE ||
       drawable_type (GIMP_DRAWABLE (layer)) == INDEXED_GIMAGE)
     {
       switch (gimp_image_base_type (gimage))
@@ -2539,7 +2539,7 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
   g_slist_free (reverse_list);
 
   /*  if the type is flatten, remove all the remaining layers  */
-  if (merge_type == FlattenImage)
+  if (merge_type == FLATTEN_IMAGE)
     {
       merge_list = gimage->layers;
       while (merge_list)
@@ -3294,11 +3294,11 @@ gimp_image_composite_preview (GimpImage *gimage, ChannelType type,
 
   switch (type)
     {
-    case Red:     channel = RED_PIX; break;
-    case Green:   channel = GREEN_PIX; break;
-    case Blue:    channel = BLUE_PIX; break;
-    case Gray:    channel = GRAY_PIX; break;
-    case Indexed: channel = INDEXED_PIX; break;
+    case RED_CHANNEL:     channel = RED_PIX; break;
+    case GREEN_CHANNEL:   channel = GREEN_PIX; break;
+    case BLUE_CHANNEL:    channel = BLUE_PIX; break;
+    case GRAY_CHANNEL:    channel = GRAY_PIX; break;
+    case INDEXED_CHANNEL: channel = INDEXED_PIX; break;
     default: return NULL;
     }
 
@@ -3331,11 +3331,11 @@ gimp_image_preview_valid (gimage, type)
 {
   switch (type)
     {
-    case Red:     return gimage->comp_preview_valid [RED_PIX]; break;
-    case Green:   return gimage->comp_preview_valid [GREEN_PIX]; break;
-    case Blue:    return gimage->comp_preview_valid [BLUE_PIX]; break;
-    case Gray:    return gimage->comp_preview_valid [GRAY_PIX]; break;
-    case Indexed: return gimage->comp_preview_valid [INDEXED_PIX]; break;
+    case RED_CHANNEL:     return gimage->comp_preview_valid[RED_PIX]; break;
+    case GREEN_CHANNEL:   return gimage->comp_preview_valid[GREEN_PIX]; break;
+    case BLUE_CHANNEL:    return gimage->comp_preview_valid[BLUE_PIX]; break;
+    case GRAY_CHANNEL:    return gimage->comp_preview_valid[GRAY_PIX]; break;
+    case INDEXED_CHANNEL: return gimage->comp_preview_valid[INDEXED_PIX]; break;
     default: return TRUE;
     }
 }

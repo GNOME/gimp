@@ -49,33 +49,35 @@ typedef enum  /*< chop=_GIMAGE >*/
 
 typedef enum
 {
-        RGB,
-        GRAY,
-        INDEXED
+  RGB,
+  GRAY,
+  INDEXED
 } GimpImageBaseType;
 
 
 #define COLORMAP_SIZE    768
 
-#define HORIZONTAL_GUIDE 1
-#define VERTICAL_GUIDE   2
+typedef enum {  /*< chop=_GUIDE >*/
+  HORIZONTAL_GUIDE,
+  VERTICAL_GUIDE
+} GuideOrientation;
 
 typedef enum
 {
-  Red,
-  Green,
-  Blue,
-  Gray,
-  Indexed,
-  Auxillary
+  RED_CHANNEL,
+  GREEN_CHANNEL,
+  BLUE_CHANNEL,
+  GRAY_CHANNEL,
+  INDEXED_CHANNEL,
+  AUXILLARY_CHANNEL
 } ChannelType;
 
 typedef enum
 {
-  ExpandAsNecessary,
-  ClipToImage,
-  ClipToBottomLayer,
-  FlattenImage
+  EXPAND_AS_NECESSARY,
+  CLIP_TO_IMAGE,
+  CLIP_TO_BOTTOM_LAYER,
+  FLATTEN_IMAGE
 } MergeType;
 
 

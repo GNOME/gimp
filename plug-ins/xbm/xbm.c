@@ -119,7 +119,7 @@ GPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-MAIN ();
+MAIN ()
 
 #ifdef VERBOSE
 static int verbose = VERBOSE;

@@ -1,3 +1,40 @@
+Mon Apr 26 21:34:08 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/gimage_cmds.c
+	* app/guides_cmds.c: pdbgenned files
+
+	* app/parasite_cmds.c: added image parasite cmds
+
+	* app/gimpimage.h: capitalized ChannelType and MergeType enums,
+	made HORIZONTAL_GUIDE and VERTICAL_GUIDE an enum
+
+	* app/layer.h: made APPLY and DISCARD an enum
+
+	* app/internal_procs.[ch]: finally pdbgenned
+
+	* app/channels_dialog.c
+	* app/fileops.c
+	* app/gimpimage.c
+	* app/layers_dialog.c: ChannelType, MergeType enum changes
+
+	* app/commands.c: remove gimage_cmds.h #include
+
+	* app/cursorutil.h: #include <gdk/gdktypes.h>
+
+	* app/paint_funcs.h: cosmetic change for PDB help
+
+	* app/brush_select_cmds.c
+	* app/brushes_cmds.c
+	* app/layer_cmds.c
+	* app/tools_cmds.c: pdbgen updates
+
+	* app/Makefile.am: removed gimage_cmds.h, added guides_cmds.c
+
+	* plug-ins/Lighting/lighting_main.c
+	* plug-ins/MapObject/mapobject_main.c
+	* plug-ins/rcm/rcm.c
+	* plug-ins/xbm/xbm.c: removed trailing ";" from MAIN ()
+
 Tue Apr 27 04:16:55 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/tools_cmds.c: small fix (and updated the pdb file)

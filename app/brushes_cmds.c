@@ -367,7 +367,7 @@ static ProcArg brushes_get_paint_mode_outargs[] =
   {
     PDB_INT32,
     "paint_mode",
-    "The paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5), DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
+    "The paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5), DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN_ONLY (9), LIGHTEN_ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
   }
 };
 
@@ -408,7 +408,7 @@ static ProcArg brushes_set_paint_mode_inargs[] =
   {
     PDB_INT32,
     "paint_mode",
-    "The paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5), DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
+    "The paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5), DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN_ONLY (9), LIGHTEN_ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
   }
 };
 
@@ -580,7 +580,7 @@ static ProcArg brushes_get_brush_data_outargs[] =
   {
     PDB_INT32,
     "paint_mode",
-    "The paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5), DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
+    "The paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5), DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN_ONLY (9), LIGHTEN_ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
   },
   {
     PDB_INT32,

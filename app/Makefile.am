@@ -169,7 +169,6 @@ gimp_SOURCES = \
 	gimage.c		\
 	gimage.h		\
 	gimage_cmds.c		\
-	gimage_cmds.h		\
 	gimage_mask.c		\
 	gimage_mask.h		\
 	gimage_mask_cmds.c	\
@@ -209,6 +208,7 @@ gimp_SOURCES = \
 	gradient_select_cmds.c	\
 	gradient.h		\
 	gradient_cmds.c		\
+	guides_cmds.c		\
 	gximage.c		\
 	gximage.h		\
 	histogramwidget.c	\

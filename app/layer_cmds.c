@@ -189,7 +189,7 @@ static ProcArg layer_new_inargs[] =
   {
     PDB_INT32,
     "mode",
-    "The layer combination mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5), DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
+    "The layer combination mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5), DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN_ONLY (9), LIGHTEN_ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
   }
 };
 
@@ -807,13 +807,10 @@ layer_mask_invoker (Argument *args)
   if (layer == NULL)
     success = FALSE;
 
-  if (success)
-    success = layer->mask ? TRUE : FALSE;
-
   return_args = procedural_db_return_args (&layer_mask_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (layer->mask));
+    return_args[1].value.pdb_int = layer->mask ? drawable_ID (GIMP_DRAWABLE (layer->mask)) : -1;
 
   return return_args;
 }
@@ -840,7 +837,7 @@ static ProcRecord layer_mask_proc =
 {
   "gimp_layer_mask",
   "Get the specified layer's mask if it exists.",
-  "This procedure returns the specified layer's mask. If there is no layer mask, the procedure fails.",
+  "This procedure returns the specified layer's mask, or -1 if none exists.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

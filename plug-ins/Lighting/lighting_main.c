@@ -337,5 +337,5 @@ void lighting_noninteractive(GDrawable *drawable)
   printf("Noninteractive not yet implemented! Sorry.\n");
 }
 
-MAIN();
+MAIN ()
 

@@ -22,6 +22,7 @@
 
 #include "drawable.h"
 #include "gimpdrawable.h"
+#include "gimpimage.h"
 #include "gimpparasite.h"
 #include "libgimp/parasite.h"
 
@@ -34,6 +35,10 @@ static ProcRecord drawable_find_parasite_proc;
 static ProcRecord drawable_attach_parasite_proc;
 static ProcRecord drawable_detach_parasite_proc;
 static ProcRecord drawable_parasite_list_proc;
+static ProcRecord image_find_parasite_proc;
+static ProcRecord image_attach_parasite_proc;
+static ProcRecord image_detach_parasite_proc;
+static ProcRecord image_parasite_list_proc;
 
 void
 register_parasite_procs (void)
@@ -47,6 +52,10 @@ register_parasite_procs (void)
   procedural_db_register (&drawable_attach_parasite_proc);
   procedural_db_register (&drawable_detach_parasite_proc);
   procedural_db_register (&drawable_parasite_list_proc);
+  procedural_db_register (&image_find_parasite_proc);
+  procedural_db_register (&image_attach_parasite_proc);
+  procedural_db_register (&image_detach_parasite_proc);
+  procedural_db_register (&image_parasite_list_proc);
 }
 
 static Argument *
@@ -374,7 +383,7 @@ static ProcArg drawable_find_parasite_outargs[] =
 static ProcRecord drawable_find_parasite_proc =
 {
   "gimp_drawable_find_parasite",
-  "Finds the named parasitein a drawable.",
+  "Finds the named parasite in a drawable",
   "Finds and returns the named parasite that was previously attached to a drawable.",
   "Jay Cox",
   "Jay Cox",
@@ -553,4 +562,240 @@ static ProcRecord drawable_parasite_list_proc =
   2,
   drawable_parasite_list_outargs,
   { { drawable_parasite_list_invoker } }
+};
+
+static Argument *
+image_find_parasite_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gchar *name;
+  Parasite *parasite = NULL;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  name = (gchar *) args[1].value.pdb_pointer;
+
+  if (success)
+    {
+      parasite = parasite_copy (gimp_image_find_parasite (gimage, name));
+      success = parasite != NULL;
+    }
+
+  return_args = procedural_db_return_args (&image_find_parasite_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_pointer = parasite;
+
+  return return_args;
+}
+
+static ProcArg image_find_parasite_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    PDB_STRING,
+    "name",
+    "The name of the parasite to find"
+  }
+};
+
+static ProcArg image_find_parasite_outargs[] =
+{
+  {
+    PDB_PARASITE,
+    "parasite",
+    "The found parasite"
+  }
+};
+
+static ProcRecord image_find_parasite_proc =
+{
+  "gimp_image_find_parasite",
+  "Finds the named parasite in an image",
+  "Finds and returns the named parasite that was previously attached to an image.",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  PDB_INTERNAL,
+  2,
+  image_find_parasite_inargs,
+  1,
+  image_find_parasite_outargs,
+  { { image_find_parasite_invoker } }
+};
+
+static Argument *
+image_attach_parasite_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  Parasite *parasite;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  parasite = (Parasite *) args[1].value.pdb_pointer;
+  if (parasite == NULL)
+    success = FALSE;
+
+  if (success)
+    gimp_image_attach_parasite (gimage, parasite);
+
+  return procedural_db_return_args (&image_attach_parasite_proc, success);
+}
+
+static ProcArg image_attach_parasite_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    PDB_PARASITE,
+    "parasite",
+    "The parasite to attach to an image"
+  }
+};
+
+static ProcRecord image_attach_parasite_proc =
+{
+  "gimp_image_attach_parasite",
+  "Add a parasite to an image.",
+  "This procedure attaches a parasite to an image. It has no return values.",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  PDB_INTERNAL,
+  2,
+  image_attach_parasite_inargs,
+  0,
+  NULL,
+  { { image_attach_parasite_invoker } }
+};
+
+static Argument *
+image_detach_parasite_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gchar *name;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL)
+    success = FALSE;
+
+  if (success)
+    gimp_image_detach_parasite (gimage, name);
+
+  return procedural_db_return_args (&image_detach_parasite_proc, success);
+}
+
+static ProcArg image_detach_parasite_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    PDB_STRING,
+    "name",
+    "The name of the parasite to detach from an image."
+  }
+};
+
+static ProcRecord image_detach_parasite_proc =
+{
+  "gimp_image_detach_parasite",
+  "Removes a parasite from an image.",
+  "This procedure detaches a parasite from an image. It has no return values.",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  PDB_INTERNAL,
+  2,
+  image_detach_parasite_inargs,
+  0,
+  NULL,
+  { { image_detach_parasite_invoker } }
+};
+
+static Argument *
+image_parasite_list_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gint32 num_parasites;
+  gchar **parasites = NULL;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  if (success)
+    parasites = gimp_image_parasite_list (gimage, &num_parasites);
+
+  return_args = procedural_db_return_args (&image_parasite_list_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = num_parasites;
+      return_args[2].value.pdb_pointer = parasites;
+    }
+
+  return return_args;
+}
+
+static ProcArg image_parasite_list_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_parasite_list_outargs[] =
+{
+  {
+    PDB_INT32,
+    "num_parasites",
+    "The number of attached parasites"
+  },
+  {
+    PDB_STRINGARRAY,
+    "parasites",
+    "The names of currently attached parasites"
+  }
+};
+
+static ProcRecord image_parasite_list_proc =
+{
+  "gimp_image_parasite_list",
+  "List all parasites.",
+  "Returns a list of all currently attached parasites.",
+  "Marc Lehmann",
+  "Marc Lehmann",
+  "1999",
+  PDB_INTERNAL,
+  1,
+  image_parasite_list_inargs,
+  2,
+  image_parasite_list_outargs,
+  { { image_parasite_list_invoker } }
 };

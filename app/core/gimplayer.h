@@ -25,8 +25,10 @@
 #include "temp_buf.h"
 #include "tile_manager.h"
 
-#define APPLY   0
-#define DISCARD 1
+typedef enum {
+  APPLY,
+  DISCARD
+} MaskApplyMode;
 
 #include "layerF.h"
 

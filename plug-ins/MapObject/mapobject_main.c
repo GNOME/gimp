@@ -353,5 +353,5 @@ void mapobject_interactive(GDrawable *drawable)
   gdk_flush();
 }
 
-MAIN();
+MAIN ()
 

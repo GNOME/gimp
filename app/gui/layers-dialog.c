@@ -1901,7 +1901,7 @@ layers_dialog_merge_down_callback (GtkWidget *w, gpointer client_data)
   if (! (gimage = layersD->gimage))
     return;
   
-  gimp_image_merge_down (gimage, gimage->active_layer, ExpandAsNecessary);
+  gimp_image_merge_down (gimage, gimage->active_layer, EXPAND_AS_NECESSARY);
   gdisplays_flush ();
 }
 
@@ -3937,7 +3937,7 @@ expand_as_necessary_callback (GtkWidget *w,
   LayerMergeOptions *options;
 
   options = (LayerMergeOptions *) client_data;
-  options->merge_type = ExpandAsNecessary;
+  options->merge_type = EXPAND_AS_NECESSARY;
 }
 
 static void
@@ -3947,7 +3947,7 @@ clip_to_image_callback (GtkWidget *w,
   LayerMergeOptions *options;
 
   options = (LayerMergeOptions *) client_data;
-  options->merge_type = ClipToImage;
+  options->merge_type = CLIP_TO_IMAGE;
 }
 
 static void
@@ -3957,7 +3957,7 @@ clip_to_bottom_layer_callback (GtkWidget *w,
   LayerMergeOptions *options;
 
   options = (LayerMergeOptions *) client_data;
-  options->merge_type = ClipToBottomLayer;
+  options->merge_type = CLIP_TO_BOTTOM_LAYER;
 }
 
 void
@@ -3994,7 +3994,7 @@ layers_dialog_layer_merge_query (GImage *gimage,
   options = (LayerMergeOptions *) g_malloc (sizeof (LayerMergeOptions));
   options->gimage = gimage;
   options->merge_visible = merge_visible;
-  options->merge_type = ExpandAsNecessary;
+  options->merge_type = EXPAND_AS_NECESSARY;
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();

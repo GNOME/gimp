@@ -996,7 +996,7 @@ file_save_thumbnail (GimpImage* gimage,
       return FALSE;
     }
 
-  if (gimp_image_preview_valid (gimage, Gray))
+  if (gimp_image_preview_valid (gimage, GRAY_CHANNEL))
     {
       /* just for debugging */
       printf("(incidentally, gimage already has a valid preview - %dx%d)\n",
@@ -1040,7 +1040,7 @@ file_save_thumbnail (GimpImage* gimage,
 
   /*printf("tn: %d x %d -> ", w, h);fflush(stdout);*/
 
-  tempbuf = gimp_image_composite_preview (gimage, Gray, w, h);
+  tempbuf = gimp_image_composite_preview (gimage, GRAY_CHANNEL, w, h);
   tbd = temp_buf_data(tempbuf);
 
   w = tempbuf->width;
