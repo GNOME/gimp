@@ -1,5 +1,15 @@
 2004-08-03  Michael Natterer  <mitch@gimp.org>
 
+	Merged from HEAD:
+
+	* app/widgets/gimpcontainergridview.c
+	(gimp_container_grid_view_item_context): ref/unref the view around
+	the calls to gimp_container_view_item_selected() and _item_context()
+	because the former may destroy the view which leads to a crash
+	when trying the latter. Fixes bug #148955.
+
+2004-08-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpeditselectiontool.c
 	* app/tools/gimptexttool.c
 	* app/widgets/gimpitemtreeview.c
