@@ -443,7 +443,7 @@ gimp_path_get_user_writable_dir (GList *path)
       gchar *p = dir;
       gint pl;
 
-      if (g_path_is_absolute)
+      if (g_path_is_absolute (dir))
 	p = g_path_skip_root (dir);
       pl = strlen (p);
       if (pl > 0 && p[pl-1] == G_DIR_SEPARATOR)
