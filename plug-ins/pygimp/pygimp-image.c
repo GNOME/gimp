@@ -316,19 +316,21 @@ img_remove_layer(PyGimpImage *self, PyObject *args)
 }
 
 static PyObject *
-img_resize(PyGimpImage *self, PyObject *args)
+img_resize(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 {
     int new_w, new_h;
-    int offs_x, offs_y;
+    int offs_x = 0, offs_y = 0;
 
-    if (!PyArg_ParseTuple(args, "iiii:resize", &new_w, &new_h,
-			  &offs_x, &offs_y))
+    static char *kwlist[] = { "width", "height", "offset_x", "offset_y",
+			      NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ii|ii:resize", kwlist,
+				     &new_w, &new_h, &offs_x, &offs_y))
 	return NULL;
 
     if (!gimp_image_resize(self->ID, new_w, new_h, offs_x, offs_y)) {
 	PyErr_Format(pygimp_error,
-		     "could not resize image (ID %d): "
-		     "new dimensions: %d x %d, offsets x: %d, y: %d",
+		     "could not resize image (ID %d) to %dx%d, offset %d, %d",
 		     self->ID, new_w, new_h, offs_x, offs_y);
 	return NULL;
     }
@@ -338,16 +340,18 @@ img_resize(PyGimpImage *self, PyObject *args)
 }
 
 static PyObject *
-img_scale(PyGimpImage *self, PyObject *args)
+img_scale(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 {
     int new_width, new_height;
 
-    if (!PyArg_ParseTuple(args, "ii:scale", &new_width, &new_height))
+    static char *kwlist[] = { "width", "height", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ii:scale", kwlist,
+				     &new_width, &new_height))
 	return NULL;
 
     if (!gimp_image_scale(self->ID, new_width, new_height)) {
-	PyErr_Format(pygimp_error,
-		     "could not scale image (ID %d): new dimensions: %d x %d",
+	PyErr_Format(pygimp_error, "could not scale image (ID %d) to %dx%d",
 		     self->ID, new_width, new_height);
 	return NULL;
     }
@@ -357,19 +361,21 @@ img_scale(PyGimpImage *self, PyObject *args)
 }
 
 static PyObject *
-img_crop(PyGimpImage *self, PyObject *args)
+img_crop(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 {
     int new_w, new_h;
-    int offs_x, offs_y;
+    int offs_x = 0, offs_y = 0;
 
-    if (!PyArg_ParseTuple(args, "iiii:crop", &new_w, &new_h,
-			  &offs_x, &offs_y))
+    static char *kwlist[] = { "width", "height", "offset_x", "offset_y",
+			      NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ii|ii:crop", kwlist,
+				     &new_w, &new_h, &offs_x, &offs_y))
 	return NULL;
 
     if (!gimp_image_crop(self->ID, new_w, new_h, offs_x, offs_y)) {
 	PyErr_Format(pygimp_error,
-		     "could not crop image (ID %d): new dimensions: %d x %d, "
-		     "offsets x: %d, y: %d",
+		     "could not crop image (ID %d) to %dx%d, offset %d, %d",
 		     self->ID, new_w, new_h, offs_x, offs_y);
 	return NULL;
     }
@@ -499,16 +505,25 @@ img_parasite_attach(PyGimpImage *self, PyObject *args)
 }
 
 static PyObject *
-img_attach_new_parasite(PyGimpImage *self, PyObject *args)
+img_attach_new_parasite(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 {
-    char *name, *data;
+    char *name;
     int flags, size;
+    guint8 *data;
 
-    if (!PyArg_ParseTuple(args, "sis#:attach_new_parasite", &name, &flags,
-			  &data, &size))
+    static char *kwlist[] = { "name", "flags", "data", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "sis#:attach_new_parasite", kwlist,
+				     &name, &flags, &data, &size))
 	return NULL;
 
-    gimp_image_attach_new_parasite(self->ID, name, flags, size, data);
+    if (!gimp_image_attach_new_parasite(self->ID, name, flags, size, data)) {
+	PyErr_Format(pygimp_error,
+		     "could not attach new parasite '%s' to image (ID %d)",
+		     name, self->ID);
+	return NULL;
+    }
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -726,14 +741,14 @@ static PyMethodDef img_methods[] = {
     {"raise_layer_to_top",	(PyCFunction)img_raise_layer_to_top,	METH_VARARGS},
     {"remove_channel",	(PyCFunction)img_remove_channel,	METH_VARARGS},
     {"remove_layer",	(PyCFunction)img_remove_layer,	METH_VARARGS},
-    {"resize",	(PyCFunction)img_resize,	METH_VARARGS},
+    {"resize",	(PyCFunction)img_resize,	METH_VARARGS | METH_KEYWORDS},
     {"get_component_active",	(PyCFunction)img_get_component_active,	METH_VARARGS},
     {"get_component_visible",	(PyCFunction)img_get_component_visible,	METH_VARARGS},
     {"set_component_active",	(PyCFunction)img_set_component_active,	METH_VARARGS},
     {"set_component_visible",	(PyCFunction)img_set_component_visible,	METH_VARARGS},
     {"parasite_find",       (PyCFunction)img_parasite_find,      METH_VARARGS},
     {"parasite_attach",     (PyCFunction)img_parasite_attach,    METH_VARARGS},
-    {"attach_new_parasite", (PyCFunction)img_attach_new_parasite,METH_VARARGS},
+    {"attach_new_parasite", (PyCFunction)img_attach_new_parasite,	METH_VARARGS | METH_KEYWORDS},
     {"parasite_detach",     (PyCFunction)img_parasite_detach,    METH_VARARGS},
     {"parasite_list", (PyCFunction)img_parasite_list, METH_NOARGS},
     {"get_layer_by_tattoo",(PyCFunction)img_get_layer_by_tattoo,METH_VARARGS},
@@ -744,8 +759,8 @@ static PyMethodDef img_methods[] = {
     {"find_next_guide", (PyCFunction)img_find_next_guide, METH_VARARGS},
     {"get_guide_orientation",(PyCFunction)img_get_guide_orientation,METH_VARARGS},
     {"get_guide_position", (PyCFunction)img_get_guide_position, METH_VARARGS},
-    {"scale", (PyCFunction)img_scale, METH_VARARGS},
-    {"crop", (PyCFunction)img_crop, METH_VARARGS},
+    {"scale", (PyCFunction)img_scale, METH_VARARGS | METH_KEYWORDS},
+    {"crop", (PyCFunction)img_crop, METH_VARARGS | METH_KEYWORDS},
     {"free_shadow", (PyCFunction)img_free_shadow, METH_NOARGS},
     {"unset_active_channel", (PyCFunction)img_unset_active_channel, METH_NOARGS},
     {"undo_is_enabled", (PyCFunction)img_undo_is_enabled, METH_NOARGS},
@@ -923,6 +938,12 @@ img_set_colormap(PyGimpImage *self, PyObject *value, void *closure)
     }
 
     return 0;
+}
+
+static PyObject *
+img_get_is_dirty(PyGimpImage *self, void *closure)
+{
+    return PyBool_FromLong(gimp_image_is_dirty(self->ID));
 }
 
 static PyObject *
@@ -1144,6 +1165,7 @@ static PyGetSetDef img_getsets[] = {
     { "base_type", (getter)img_get_base_type, (setter)0 },
     { "channels", (getter)img_get_channels, (setter)0 },
     { "colormap", (getter)img_get_colormap, (setter)img_set_colormap },
+    { "dirty", (getter)img_get_is_dirty, (setter)0 },
     { "filename", (getter)img_get_filename, (setter)img_set_filename },
     { "floating_selection", (getter)img_get_floating_selection, (setter)0 },
     { "floating_sel_attached_to", (getter)img_get_floating_sel_attached_to,
@@ -1220,10 +1242,13 @@ static int
 img_init(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 {
     guint width, height;
-    GimpImageBaseType type;
+    GimpImageBaseType type = GIMP_RGB;
 
-    if (!PyArg_ParseTuple(args, "iii:gimp.Image.__init__",
-			  &width, &height, &type))
+    static char *kwlist[] = { "width", "height", "type", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "ii|i:gimp.Image.__init__", kwlist,
+				     &width, &height, &type))
         return -1;
 
     self->ID = gimp_image_new(width, height, type);

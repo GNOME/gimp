@@ -21,8 +21,9 @@
 # currently in the distribution, so keep it seperate for now.
 
 BEGIN {
-    $srcdir  = $ENV{srcdir}  || '.';
-    $destdir = $ENV{destdir} || '.';
+    $srcdir     = $ENV{srcdir}     || '.';
+    $top_srcdir = $ENV{top_srcdir} || '../..';
+    $destdir    = $ENV{destdir}    || '.';
 }
 
 use lib $srcdir;
@@ -76,7 +77,23 @@ del __builtin__
 
 FALSE = False
 TRUE = True
+
 CODE
+
+$parasitefile = "$top_srcdir/libgimpbase/gimpparasite.h";
+open PARASITEFILE, $parasitefile or die "Can't open $parasitefile: $!\n";
+
+print ENUMFILE "# Parasite Flags\n";
+
+while (<PARASITEFILE>) {
+    if (($sym, $val) = /^#define\s+(GIMP_PARASITE_\w+)\s+(.*)$/) {
+        $sym =~ s/GIMP_//;
+	$val =~ s/GIMP_//;
+	print ENUMFILE "$sym = $val\n";
+    }
+}
+
+close PARASITEFILE;
 
 foreach (sort keys %enums) {
     my $enum = $enums{$_}; my $body = ""; my $i=0;

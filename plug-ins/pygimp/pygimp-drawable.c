@@ -235,8 +235,9 @@ drw_parasite_attach(PyGimpDrawable *self, PyObject *args)
 static PyObject *
 drw_attach_new_parasite(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 {
-    char *name, *data;
+    char *name;
     int flags, size;
+    guint8 *data;
 
     static char *kwlist[] = { "name", "flags", "data", NULL };
 

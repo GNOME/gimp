@@ -1,5 +1,16 @@
 2005-03-04  Manish Singh  <yosh@gimp.org>
 
+	* tools/pdbgen/enumcode-py.pl: include Parasite flag values.
+
+	* plug-ins/pygimp/gimpenums.py: regenerated.
+
+	* plug-ins/pygimp/pygimp-drawable.c: minor change for type
+	consistency.
+
+	* plug-ins/pygimp/pygimp-image.c: add keyword args, is_dirty getter.
+
+2005-03-04  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/gimpmodule.c: wrap fonts_refresh and fonts_get_list,
 	clean up some of the other resource list plugins.
 
