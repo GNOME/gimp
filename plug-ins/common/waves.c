@@ -38,8 +38,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "gimpoldpreview.h"
-
 enum
 {
   MODE_SMEAR,
@@ -57,7 +55,12 @@ typedef struct
 
 /*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
 static gint            do_preview = TRUE;
-static GimpOldPreview *preview;
+#define PREVIEW_SIZE 128
+static GtkWidget *preview;
+static gint       preview_width, preview_height, preview_bpp;
+static guchar    *preview_cache;
+
+static GimpDrawable *drawable;
 
 static GtkWidget *mw_preview_new (GtkWidget    *parent,
                                   GimpDrawable *drawable);
@@ -140,7 +143,6 @@ run (const gchar      *name,
      GimpParam       **retvals)
 {
   static GimpParam  rvals[1];
-  GimpDrawable     *drawable;
 
   piArgs args;
 
@@ -314,7 +316,6 @@ pluginCoreIA (piArgs *argp,
 
   preview = mw_preview_new (hbox, drawable);
   g_object_set_data (G_OBJECT (preview), "piArgs", argp);
-  waves_do_preview ();
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
@@ -375,6 +376,8 @@ pluginCoreIA (piArgs *argp,
 
   gtk_widget_show (dlg);
 
+  waves_do_preview ();
+
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dlg);
@@ -387,27 +390,24 @@ waves_do_preview (void)
 {
   piArgs *argp;
   guchar *dst;
-  gint y;
 
   if (!do_preview)
     return;
 
-  argp = g_object_get_data (G_OBJECT (preview->widget), "piArgs");
-  dst = g_new (guchar, preview->width * preview->height * preview->bpp);
+  argp = g_object_get_data (G_OBJECT (preview), "piArgs");
+  dst = g_new (guchar, preview_width * preview_height * preview_bpp);
 
-  wave (preview->cache, dst, preview->width, preview->height, preview->bpp,
-        preview->bpp == 2 || preview->bpp == 4,
-        argp->amplitude * preview->scale_x,
-        argp->wavelength * preview->scale_x,
+  wave (preview_cache, dst, preview_width, preview_height, preview_bpp,
+        preview_bpp == 2 || preview_bpp == 4,
+        argp->amplitude * preview_width / drawable->width,
+        argp->wavelength * preview_height / drawable->height,
         argp->phase, argp->type == 0, argp->reflective, 0);
 
-  for (y = 0; y < preview->height; y++)
-    {
-      gimp_old_preview_do_row (preview, y, preview->width,
-                                 dst + y * preview->rowstride);
-    }
-
-  gtk_widget_queue_draw (preview->widget);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, preview_width, preview_height,
+                          gimp_drawable_type (drawable->drawable_id),
+                          dst,
+                          preview_width * preview_bpp);
 
   g_free (dst);
 }
@@ -432,11 +432,15 @@ mw_preview_new (GtkWidget    *parent,
   gtk_box_pack_start (GTK_BOX (parent), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  preview = gimp_old_preview_new (drawable);
-  /* FIXME: this forces gimp_old_preview to set its alpha correctly */
-  gimp_old_preview_fill_scaled (preview, drawable);
-  gtk_box_pack_start (GTK_BOX (vbox), preview->frame, FALSE, FALSE, 0);
-  gtk_widget_show (preview->frame);
+  preview = gimp_preview_area_new ();
+  preview_width = preview_height = PREVIEW_SIZE;
+  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                                    &preview_width,
+                                                    &preview_height,
+                                                    &preview_bpp);
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
+  gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
+  gtk_widget_show (preview);
 
   button = gtk_check_button_new_with_mnemonic (_("_Do preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
@@ -447,7 +451,7 @@ mw_preview_new (GtkWidget    *parent,
                     G_CALLBACK (mw_preview_toggle_callback),
                     &do_preview);
 
-  return preview->widget;
+  return preview;
 }
 
 /* Wave the image.  For each pixel in the destination image
@@ -643,3 +647,4 @@ wave (guchar  *src,
   if (verbose)
     gimp_progress_update (1.0);
 }
+
