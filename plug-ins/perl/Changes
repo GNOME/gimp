@@ -4,6 +4,7 @@ Revision history for Gimp-Perl extension.
         - POINTS really are decipoints: correct xlfd_size to create
           larger (& more correct) fonts.
         - small api changes for 1.2.
+        - (some) changes for the gimp api renaming.
 
 1.14  Mon Oct 11 03:23:13 CEST 1999
 	- set the version of all modules explicitly (for the benefit of CPAN).

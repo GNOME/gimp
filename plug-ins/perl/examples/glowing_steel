@@ -45,7 +45,7 @@ sub perl_fu_glowing_steel {
 
   my $old = gimp_palette_get_foreground();
   my $image = gimp_image_new(100, 100, RGB);
-  gimp_image_disable_undo($image);
+  gimp_image_undo_disable($image);
   my $textlayer = gimp_text_fontname($image, -1, $radius*2,
 				     $radius*2, $string, 0, $antialias,
 				     $size, $units, $font);
@@ -78,7 +78,7 @@ sub perl_fu_glowing_steel {
 
   gimp_palette_set_foreground($old);
 
-  gimp_image_enable_undo($image);
+  gimp_image_undo_enable($image);
   gimp_selection_none($image);
   gimp_image_set_active_layer($image,$backlayer);
 

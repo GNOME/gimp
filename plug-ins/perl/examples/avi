@@ -228,7 +228,7 @@ register "file_avi_load",
             ($width * $height * $depth) >> 3 == $image_size or die "strh(vids)/strf header format error\n";
             
             $image = new Image($width,$height,RGB);
-            $image->disable_undo;
+            $image->undo_disable;
             $image->set_filename($filename);
             $image->attach_parasite(new Parasite "gimp-interframe-delay", PARASITE_PERSISTENT, $us_frame);
             $image->attach_parasite(new Parasite "gimp-avi-depth", PARASITE_PERSISTENT, $depth == 16 ? 15 : $depth);
@@ -257,7 +257,7 @@ register "file_avi_load",
       }
    );
 
-   $image->enable_undo;
+   $image->undo_enable;
    return $image;
 };
 

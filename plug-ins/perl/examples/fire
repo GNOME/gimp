@@ -81,7 +81,7 @@ register "firetext",
    my ($w,$h) = Gimp->text_get_extents_fontname($text, xlfd_size $font, $font);
    my $image = new Image $w+40, $h+40, RGB;
 
-   $image->disable_undo;
+   $image->undo_disable;
    
    my $layer = new Layer $image, $w+40, $h+40, RGBA_IMAGE, "text layer", 100, NORMAL_MODE;
    $layer->fill(BG_IMAGE_FILL);
@@ -93,7 +93,7 @@ register "firetext",
    Palette->set_foreground('black');
    $image->text_fontname(-1,20-10*$displace,20-10*$displace, $text,0, 1, xlfd_size $font, $font);
 
-   $image->enable_undo;
+   $image->undo_enable;
    $image->clean_all;
 
    ($image);

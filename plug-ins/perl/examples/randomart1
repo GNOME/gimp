@@ -12,7 +12,7 @@ register "random_art_1",			# Funktionsname
          					# Hilfetext
          "Marc Lehmann",			# Autor
          "Marc Lehmann <pcg\@goof.com",		# Copyright
-         "0.3",					# Version/Datum
+         "0.3a",				# Version/Datum
          __"<Toolbox>/Xtns/Render/Random Art #1",	# Menüpfad
          "",					# Bildtypen
          # Eingabeparameter
@@ -33,7 +33,7 @@ register "random_art_1",			# Funktionsname
 
    # Erzeuge ein neues Bild
    my $image = new Image($w,$h,RGB);
-   $image->disable_undo;
+   $image->undo_disable;
 
    # Erzeuge die erste Ebene für das Bild
    my $layer = $image->layer_new($w,$h,RGB_IMAGE,
@@ -79,7 +79,7 @@ register "random_art_1",			# Funktionsname
       $layer->channel_ops_offset (1,0,(rand(0.8)+0.1)*$w,(rand(0.8)+0.1)*$h);
    }
 
-   $image->enable_undo;
+   $image->undo_enable;
 
    # Gib das neu erzeugte Bild zurück, damit es angezeigt wird.
    $image;

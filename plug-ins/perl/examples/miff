@@ -150,7 +150,7 @@ register "file_miff_load",
 
    my $img = new Image $w, $h, $d >= 3 ? RGB : GRAY;
    $img->set_filename($filename);
-   $img->disable_undo;
+   $img->undo_disable;
 
    if ($comment) {
       $comment =~ s/^\s+//s;
@@ -167,7 +167,7 @@ register "file_miff_load",
       update Progress tell()/$filesize*0.8 + 0.2;
    }
 
-   $img->enable_undo;
+   $img->undo_enable;
    $img;
 };
 

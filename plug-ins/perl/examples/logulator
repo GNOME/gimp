@@ -141,7 +141,7 @@ sub script_fu_3d_outline_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $pattern, 1);
       gimp_image_add_layer ($img, $bg_layer, 2);
@@ -174,7 +174,7 @@ sub script_fu_3d_outline_logo {
       my $final = gimp_image_flatten ($img);
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -216,7 +216,7 @@ sub script_fu_alien_glow_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $bg_layer, 1);
       gimp_image_add_layer ($img, $glow_layer, 1);
@@ -236,7 +236,7 @@ sub script_fu_alien_glow_logo {
       gimp_layer_set_name ($text_layer, $text);
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -269,7 +269,7 @@ sub script_fu_basic1_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $shadow_layer, 1);
       gimp_image_add_layer ($img, $bg_layer, 2);
@@ -290,7 +290,7 @@ sub script_fu_basic1_logo {
       gimp_layer_set_name ($text_layer, $text);
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -339,7 +339,7 @@ sub script_fu_basic2_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
 
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $bg_layer, 1);
       gimp_image_add_layer ($img, $shadow_layer, 1);
@@ -366,7 +366,7 @@ sub script_fu_basic2_logo {
       gimp_layer_set_name ($highlight_layer, "Highlight");
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -457,7 +457,7 @@ sub script_fu_carved_logo {
       my $old_bg = gimp_palette_get_background ();
       my $old_brush = gimp_brushes_get_brush ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_layer_set_preserve_trans ($mask_layer, 1);
       gimp_palette_set_background ([255, 255, 255]);
       gimp_edit_fill ($mask_layer);
@@ -537,7 +537,7 @@ sub script_fu_carved_logo {
       gimp_palette_set_background ($old_bg);
       gimp_brushes_set_brush ($old_brush);
       gimp_display_new ($img);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
    };
 }
 
@@ -570,7 +570,7 @@ sub script_fu_chalk_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $bg_layer, 1);
       gimp_palette_set_background ($bg_color);
@@ -592,7 +592,7 @@ sub script_fu_chalk_logo {
       gimp_layer_set_name ($text_layer, $text);
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -626,7 +626,7 @@ sub script_fu_logo_chip_away {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $bg_layer, 1);
       gimp_layer_set_preserve_trans ($text_layer, 1);
@@ -679,7 +679,7 @@ sub script_fu_logo_chip_away {
       }
       gimp_palette_set_foreground ($old_fg);
       gimp_palette_set_background ($old_bg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -729,7 +729,7 @@ sub script_fu_chrome_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $background, 1);
       gimp_image_add_layer ($img, $shadow, 1);
@@ -773,7 +773,7 @@ sub script_fu_chrome_logo {
       gimp_layer_set_name ($layer1, $text);
       gimp_palette_set_foreground ($old_fg);
       gimp_palette_set_background ($old_bg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -808,7 +808,7 @@ sub script_fu_comic_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $bg_layer, 1);
       gimp_image_add_layer ($img, $white_layer, 1);
@@ -848,7 +848,7 @@ sub script_fu_comic_logo {
       gimp_image_set_active_layer ($img, $text_layer);
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -895,7 +895,7 @@ sub script_fu_cool_metal_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $img_width, $img_height, 0, 0);
       gimp_image_add_layer ($img, $bg_layer, 1);
       gimp_image_add_layer ($img, $reflect_layer, 1);
@@ -952,7 +952,7 @@ sub script_fu_cool_metal_logo {
       gimp_gradients_set_active ($old_gradient);
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -1102,7 +1102,7 @@ sub script_fu_crystal_logo {
       my $old_brush = gimp_brushes_get_brush ();
       
       gimp_image_delete ($back_img);
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $layer3, 0);
       gimp_image_add_layer ($img, $layer2, 0);
@@ -1173,7 +1173,7 @@ sub script_fu_crystal_logo {
       gimp_palette_set_foreground ($old_fg);
       gimp_palette_set_background ($old_bg);
       gimp_brushes_set_brush ($old_brush);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -1215,7 +1215,7 @@ sub script_fu_frosty_logo {
       my $old_brush = gimp_brushes_get_brush ();
       my $old_paint_mode = gimp_brushes_get_paint_mode ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $sparkle_layer, 2);
       gimp_image_add_layer ($img, $matte_layer, 3);
@@ -1267,7 +1267,7 @@ sub script_fu_frosty_logo {
       gimp_brushes_set_brush ($old_brush);
       gimp_brushes_set_paint_mode ($old_paint_mode);
       gimp_layer_translate ($shadow_layer, $border, $border);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -1302,7 +1302,7 @@ sub script_fu_glossy_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_layer_set_name ($grow_me, "Grow-me");
       gimp_image_add_layer ($img, $grow_me, 1);
@@ -1369,7 +1369,7 @@ sub script_fu_glossy_logo {
       gimp_gradients_set_active ($old_gradient);
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -1421,7 +1421,7 @@ sub script_fu_glowing_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $bg_layer, 1);
       gimp_image_add_layer ($img, $glow_layer, 1);
@@ -1452,7 +1452,7 @@ sub script_fu_glowing_logo {
       gimp_layer_set_name ($glow_layer, "Glow Layer");
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -1488,7 +1488,7 @@ sub script_fu_gradient_bevel_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $bg_layer, 1);
       gimp_image_add_layer ($img, $blur_layer, 1);
@@ -1521,7 +1521,7 @@ sub script_fu_gradient_bevel_logo {
       gimp_image_set_active_layer ($img, $text_layer);
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -1562,8 +1562,8 @@ sub script_fu_i26_gunya2 {
       my $old_brush = gimp_brushes_get_brush ();
       my $old_paint_mode = gimp_brushes_get_paint_mode ();
       
-      gimp_image_disable_undo ($img);
-      gimp_image_disable_undo ($distortion_img);
+      gimp_image_undo_disable ($img);
+      gimp_image_undo_disable ($distortion_img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $dist_text_layer, -1);
       gimp_image_add_layer ($img, $dist_frame_layer, -1);
@@ -1599,7 +1599,7 @@ sub script_fu_i26_gunya2 {
       gimp_brushes_set_brush ($old_brush);
       gimp_brushes_set_paint_mode ($old_paint_mode);
       gimp_image_set_active_layer ($img, $dist_text_layer);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_image_delete ($distortion_img);
       gimp_display_new ($img);
    };
@@ -1721,7 +1721,7 @@ sub script_fu_neon_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $bg_layer, 1);
       if (not ($shadow == 0)) {
@@ -1792,7 +1792,7 @@ sub script_fu_neon_logo {
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
       gimp_image_remove_channel ($img, $selection);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -1828,7 +1828,7 @@ sub script_fu_newsprint_text {
       my $grey = $density * 255 / 100;
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_add_layer ($img, $bg_layer, 1);
       gimp_image_add_layer ($img, $text_layer, -1);
       gimp_edit_clear ($bg_layer);
@@ -1842,7 +1842,7 @@ sub script_fu_newsprint_text {
       plug_in_newsprint ($img, $text_mask, $cell_size, 0, 0, 45.0, 3, 45.0, 0, 45.0, 0, 45.0, 0, 3);
       gimp_image_remove_layer_mask ($img, $text_layer, APPLY);
       gimp_palette_set_background ($old_bg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -1988,7 +1988,7 @@ sub script_fu_sota_chrome_logo {
       my $old_brush = gimp_brushes_get_brush ();
       my $old_pattern = gimp_patterns_get_pattern ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $shadow, 0);
       gimp_image_add_layer ($img, $layer3, 0);
@@ -2063,7 +2063,7 @@ sub script_fu_sota_chrome_logo {
       gimp_palette_set_background ($old_bg);
       gimp_brushes_set_brush ($old_brush);
       gimp_patterns_set_pattern ($old_pattern);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -2105,7 +2105,7 @@ sub script_fu_speed_text {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_add_layer ($img, $bg_layer, 1);
       gimp_image_add_layer ($img, $text_layer, -1);
       gimp_edit_clear ($bg_layer);
@@ -2131,7 +2131,7 @@ sub script_fu_speed_text {
       gimp_image_remove_layer_mask ($img, $text_layer, APPLY);
       gimp_palette_set_foreground ($old_fg);
       gimp_palette_set_background ($old_bg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -2173,7 +2173,7 @@ sub script_fu_starburst_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $bg_layer, 1);
       gimp_image_add_layer ($img, $shadow_layer, 1);
@@ -2208,7 +2208,7 @@ sub script_fu_starburst_logo {
       gimp_patterns_set_pattern ($old_pattern);
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -2303,7 +2303,7 @@ sub script_fu_starscape_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $bg_layer, 1);
       gimp_image_add_layer ($img, $glow_layer, 1);
@@ -2339,7 +2339,7 @@ sub script_fu_starscape_logo {
       gimp_patterns_set_pattern ($old_pattern);
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -2379,7 +2379,7 @@ sub script_fu_t_o_p_logo {
       my $old_brush = gimp_brushes_get_brush ();
       my $old_paint_mode = gimp_brushes_get_paint_mode ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $sparkle_layer, 2);
       gimp_image_add_layer ($img, $shadow_layer, 3);
@@ -2436,7 +2436,7 @@ sub script_fu_t_o_p_logo {
       gimp_brushes_set_paint_mode ($old_paint_mode);
       gimp_layer_set_visible ($text_layer, 0);
       gimp_image_set_active_layer ($img, $sparkle_layer);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -2487,7 +2487,7 @@ sub script_fu_textured_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $shadow_layer, 1);
       gimp_image_add_layer ($img, $blend_layer, 1);
@@ -2534,7 +2534,7 @@ sub script_fu_textured_logo {
       gimp_layer_set_name ($text_layer, $text);
       gimp_palette_set_foreground ($old_fg);
       gimp_palette_set_background ($old_bg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -2572,7 +2572,7 @@ sub script_fu_bovinated_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $bg_layer, 1);
       gimp_image_add_layer ($img, $blur_layer, 1);
@@ -2605,7 +2605,7 @@ sub script_fu_bovinated_logo {
       gimp_image_set_active_layer ($img, $text_layer);
       gimp_palette_set_background ($old_bg);
       gimp_palette_set_foreground ($old_fg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
@@ -2651,7 +2651,7 @@ sub script_fu_blended_logo {
       my $old_fg = gimp_palette_get_foreground ();
       my $old_bg = gimp_palette_get_background ();
       
-      gimp_image_disable_undo ($img);
+      gimp_image_undo_disable ($img);
       gimp_image_resize ($img, $width, $height, 0, 0);
       gimp_image_add_layer ($img, $shadow_layer, 1);
       gimp_image_add_layer ($img, $blend_layer, 1);
@@ -2696,7 +2696,7 @@ sub script_fu_blended_logo {
       gimp_layer_set_name ($text_layer, $text);
       gimp_palette_set_foreground ($old_fg);
       gimp_palette_set_background ($old_bg);
-      gimp_image_enable_undo ($img);
+      gimp_image_undo_enable ($img);
       gimp_display_new ($img);
    };
 }
