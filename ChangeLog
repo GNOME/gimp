@@ -1,5 +1,10 @@
 2002-12-02  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-blurbs.h
+	* app/config/gimpconfig-dump.c: minor changes.
+
+2002-12-02  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-serialize.c: fixed serialization of empty
 	string properties that I broke yesterday.
 

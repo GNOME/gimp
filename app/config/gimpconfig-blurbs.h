@@ -208,7 +208,7 @@
 "%F  full path to file, or \"Untitled\"\n" \
 "%p  PDB image id\n" \
 "%i  view instance number\n" \
-"%t  image type (RGB, indexed, greyscale)\n" \
+"%t  image type (RGB, grayscale, indexed)\n" \
 "%z  zoom factor as a percentage\n" \
 "%s  source scale factor\n" \
 "%d  destination scale factor\n" \

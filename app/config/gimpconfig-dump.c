@@ -31,6 +31,7 @@
 
 #include "libgimpbase/gimplimits.h"
 #include "libgimpbase/gimpbasetypes.h"
+#include "libgimpbase/gimpversion.h"
 
 #include "config-types.h"
 
@@ -41,6 +42,7 @@
 #include "gimprc.h"
 
 
+static gint    dump_man_page      (void);
 static gint    dump_system_gimprc (void);
 static gchar * dump_get_comment   (GParamSpec *param_spec);
 
@@ -59,13 +61,30 @@ main (int   argc,
 	{
 	  return dump_system_gimprc ();
 	}
+      else if (strcmp (argv[1], "--man-page") == 0)
+	{
+	  return dump_man_page ();
+	}
+      else if (strcmp (argv[1], "--version") == 0)
+	{
+	  g_printerr ("gimpconfig-dump version %s\n",  GIMP_VERSION);
+	  return EXIT_SUCCESS;
+	}
       else
 	{
-	  g_printerr ("%s -- GimpConfig dump utility\n\n", argv[0]);
+	  g_printerr ("gimpconfig-dump version %s\n\n",  GIMP_VERSION);
+	  g_printerr ("Usage: %s [option ... ]\n\n", argv[0]);
 	  g_printerr ("Options:\n"
-		      "  --system-gimprc   create a commented system gimprc\n");
+		      "  --man-page        create a gimprc manual page\n"
+		      "  --system-gimprc   create a commented system gimprc\n"
+		      "  --help            output usage information\n"
+		      "  --version         output version information\n"
+		      "\n");
 
-	  return EXIT_FAILURE;
+	  if (strcmp (argv[1], "--help") == 0)
+	    return EXIT_SUCCESS;
+	  else
+	    return EXIT_FAILURE;
 	}
     }
 
@@ -80,6 +99,13 @@ main (int   argc,
   return EXIT_SUCCESS;
 }
 
+static gint
+dump_man_page (void)
+{
+  g_warning ("dump_man_page() is not yet implemented.");
+
+  return EXIT_FAILURE;
+}
 
 static gint
 dump_system_gimprc (void)
@@ -171,7 +197,9 @@ dump_get_comment (GParamSpec *param_spec)
 
   if (g_type_is_a (type, GIMP_TYPE_COLOR))
     {
-      values = "The color is specified as a list of doubles (r g b a).";
+      values =
+	"The color is specified in the form (color-rgba red green blue alpha) "
+	"with channel values as floats between 0.0 and 1.0.";
     }
   else if (g_type_is_a (type, GIMP_TYPE_MEMSIZE))
     {
@@ -183,7 +211,17 @@ dump_get_comment (GParamSpec *param_spec)
     }
   else if (g_type_is_a (type, GIMP_TYPE_PATH))
     {
-      values = "This is a colon-separated list of directories to search.";
+      switch (G_SEARCHPATH_SEPARATOR)
+	{
+	case ':':
+	  values = "This is a colon-separated list of directories to search.";
+	  break;
+	case ';':
+	  values = "This is a semicolon-separated list of directories to search.";
+	  break;
+	default:
+	  break;
+	}
     }
   else if (g_type_is_a (type, GIMP_TYPE_UNIT))
     {
