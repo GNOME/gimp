@@ -18,7 +18,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <stdarg.h>
 
 #include "appenv.h"
 #include "brushes.h"
@@ -70,6 +69,7 @@ static void      painthit_finish               (GimpDrawable *, PaintCore16 *,
 static Canvas *  brush_mask_get                (PaintCore16 *, int);
 static Canvas *  brush_mask_subsample          (Canvas *, double, double);
 static Canvas *  brush_mask_solidify           (Canvas *);
+static Canvas *  brush_mask_enlarge            (Canvas *);
 
 static void brush_solidify_mask_float ( Canvas *, Canvas *);
 static void brush_solidify_mask_u8 ( Canvas *, Canvas *);
@@ -85,87 +85,10 @@ static Canvas *  canvas_tiles = NULL;
 /* the paint hit to mask and apply */
 static Canvas *  canvas_buf = NULL;
 
+/* original image for clone tool */
+static Canvas *  orig_buf = NULL;
 
 
-/* temporary */
-static char indent[] = "                                                 ";
-static int level = 48;
-
-void 
-trace_enter  (
-              char * func
-              )
-{
-  printf ("%s%s () {\n", indent+level, func);
-  level -= 2;
-}
-
-
-void 
-trace_exit  (
-             void
-             )
-{
-  level += 2;
-  printf ("%s}\n", indent+level);
-}
-
-
-void 
-trace_begin  (
-              char * format,
-              ...
-              )
-{
-  va_list args, args2;
-  char *buf;
-
-  va_start (args, format);
-  va_start (args2, format);
-  buf = g_vsprintf (format, &args, &args2);
-  va_end (args);
-  va_end (args2);
-
-  fputs (indent+level, stdout);
-  fputs (buf, stdout);
-  fputs (": {\n", stdout);
-
-  level -= 2;
-}
-
-
-void 
-trace_end  (
-            void
-            )
-{
-  level += 2;
-  printf ("%s}\n", indent+level);
-}
-
-
-void 
-trace_printf  (
-               char * format,
-               ...
-               )
-{
-  va_list args, args2;
-  char *buf;
-
-  va_start (args, format);
-  va_start (args2, format);
-  buf = g_vsprintf (format, &args, &args2);
-  va_end (args);
-  va_end (args2);
-
-  fputs (indent+level, stdout);
-  fputs (buf, stdout);
-  fputc ('\n', stdout);
-}
-
-
-  
 
 /* ------------------------------------------------------------------------
 
@@ -248,7 +171,7 @@ paint_core_16_init  (
       return FALSE;
     }
  
- #define PAINT_CORE_16_C_2_cw 
+#define PAINT_CORE_16_C_2_cw 
   paint_core->spacing =
     (double) MAX (canvas_height (brush->mask_canvas), canvas_width (brush->mask_canvas)) *
     ((double) get_brush_spacing () / 100.0);
@@ -264,7 +187,7 @@ paint_core_16_init  (
   undo_tiles = canvas_new (drawable_tag (drawable),
                            drawable_width (drawable),
                            drawable_height (drawable),
-                           TILING_NEVER);
+                           STORAGE_FLAT);
 
 
   /*  Allocate the cumulative brush stroke mask  */
@@ -275,7 +198,7 @@ paint_core_16_init  (
                                       ALPHA_NO),
                              drawable_width (drawable),
                              drawable_height (drawable),
-                             TILING_NEVER);
+                             STORAGE_FLAT);
 
   /*  Get the initial undo extents  */
   paint_core->x1 = paint_core->x2 = paint_core->curx;
@@ -367,12 +290,15 @@ paint_core_16_finish  (
 
   /*  push an undo  */
   {
-    TileManager * tm = canvas_to_tm (undo_tiles);
+#if 0
+    /* assign ownership of undo_tiles to undo system */
     drawable_apply_image (drawable, paint_core->x1, paint_core->y1,
-                          paint_core->x2, paint_core->y2, tm, TRUE);
-    /* temp deleteion until drawable_apply_image handles Canvas directly */
+                          paint_core->x2, paint_core->y2, undo_tiles, TRUE);
+#else
+    /* destroy undo tiles immediately */
     canvas_delete (undo_tiles);
-    undo_tiles = NULL;
+#endif
+   undo_tiles = NULL;
   }
 
   /*  push the group end  */
@@ -408,6 +334,12 @@ paint_core_16_cleanup  (
     {
       canvas_delete (canvas_buf);
       canvas_buf = NULL;
+    }
+
+  if (orig_buf)
+    {
+      canvas_delete (orig_buf);
+      orig_buf = NULL;
     }
 }
 
@@ -695,7 +627,7 @@ paint_core_16_area  (
 
   if (canvas_buf)
     canvas_delete (canvas_buf);
-  canvas_buf = canvas_new (tag, (x2 - x1), (y2 - y1), TILING_NEVER);
+  canvas_buf = canvas_new (tag, (x2 - x1), (y2 - y1), STORAGE_FLAT);
   
   return canvas_buf;
 }
@@ -712,76 +644,45 @@ paint_core_16_area_original  (
                               int y2
                               )
 {
-  static Canvas * orig_buf = NULL;
-  Tag   tag;
+  PixelArea srcPR, destPR, undoPR;
+  Tag tag;
 
-  /*  configure the buffer  */
+  
   tag = tag_set_alpha (drawable_tag (drawable), ALPHA_YES);
   if (orig_buf)
     canvas_delete (orig_buf);
-  orig_buf = canvas_new (tag, (x2 - x1), (y2 - y1), TILING_NEVER);
-  
+  orig_buf = canvas_new (tag, (x2 - x1), (y2 - y1), STORAGE_FLAT);
+
   
   x1 = CLAMP (x1, 0, drawable_width (drawable));
   y1 = CLAMP (y1, 0, drawable_height (drawable));
   x2 = CLAMP (x2, 0, drawable_width (drawable));
   y2 = CLAMP (y2, 0, drawable_height (drawable));
 
-  g_warning ("finish writing paint_core_16_area_original()");
   
-#if 0
-  PixelArea srcPR, destPR;
-  Tag   tag;
-  Tile *undo_tile;
-  int h;
-  int pixelwidth;
-  int refd;
-  unsigned char * s, * d;
-  void * pr;
+  pixelarea_init (&srcPR, drawable_data_canvas (drawable), NULL,
+                  x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixelarea_init (&undoPR, undo_tiles, NULL,
+                  x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixelarea_init (&destPR, orig_buf, NULL,
+                  0, 0, (x2 - x1), (y2 - y1), TRUE);
 
-  /*  configure the pixel regions  */
-  pixelarea_init (&srcPR, drawable_data (drawable), NULL, x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  destPR.x = 0; destPR.y = 0;
-  destPR.w = (x2 - x1); destPR.h = (y2 - y1);
-  destPR.private.tag = tag_by_bytes (orig_buf->bytes);
-  destPR.rowstride = orig_buf->bytes * orig_buf->width;
-  destPR.data = temp_buf_data (orig_buf) +
-    (y1 - orig_buf->y) * destPR.rowstride +
-    (x1 - orig_buf->x) * pixelarea_bytes (&destPR);
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      /*  If the undo tile corresponding to this location is valid, use it  */
-      undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y, 0);
-      if (undo_tile->valid == TRUE)
-	{
-	  tile_ref (undo_tile);
-	  s = undo_tile->data + srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
-	    pixelarea_bytes (&srcPR) * (srcPR.x % TILE_WIDTH);
-	  refd = TRUE;
-	}
-      else
-	{
-	  s = srcPR.data;
-	  refd = FALSE;
-	}
-      d = destPR.data;
-      pixelwidth = srcPR.w * pixelarea_bytes (&srcPR);
-      h = srcPR.h;
-      while (h --)
-	{
-	  memcpy (d, s, pixelwidth);
-	  s += srcPR.rowstride;
-	  d += destPR.rowstride;
-	}
-
-      if (refd)
-	tile_unref (undo_tile, FALSE);
-    }
-#endif
-
+  canvas_set_autoalloc (undo_tiles, FALSE);  
+  {
+    void * pag;
+    for (pag = pixelarea_register (3, &srcPR, &undoPR, &destPR);
+         pag != NULL;
+         pag = pixelarea_process (pag))
+      {
+        if (pixelarea_data (&undoPR))
+          copy_area (&undoPR, &destPR);
+        else
+          copy_area (&srcPR, &destPR);
+      }
+  }
+  canvas_set_autoalloc (undo_tiles, TRUE);
+  
   return orig_buf;
 }
 
@@ -984,7 +885,6 @@ painthit_create_incremental (
 {
   PixelArea srcPR, maskPR;
 
-  
   /*  combine the canvas buf and the brush mask to the canvas buf  */
   pixelarea_init (&srcPR, canvas_buf, NULL,
                   0, 0,
@@ -1028,16 +928,13 @@ painthit_apply (
                 )
 {
   GImage * gimage = drawable_gimage (drawable);
-  PixelArea srcPR;
-  
-  pixelarea_init (&srcPR, canvas_buf, NULL,
-                  0, 0,
-                  canvas_width (canvas_buf), canvas_height (canvas_buf),
-                  TRUE);
-
-  gimage_apply_painthit (gimage, drawable, &srcPR,
+  gimage_apply_painthit (gimage, drawable,
+                         (orig_tiles
+                          ? orig_tiles
+                          : drawable_data_canvas (drawable)),
+                         canvas_buf,
                          FALSE, image_opacity, paint_mode,
-                         orig_tiles, paint_core->x, paint_core->y);
+                         paint_core->x, paint_core->y);
 }
 
 
@@ -1112,6 +1009,7 @@ brush_mask_get  (
 #ifdef BRUSH_WIDTH_BORDER 
       bm = brush_mask_subsample (paint_core->brush_mask,
                                  paint_core->curx, paint_core->cury);
+      /* bm = brush_mask_enlarge (paint_core->brush_mask); */
 #else
       bm = paint_core->brush_mask;
 #endif
@@ -1212,22 +1110,22 @@ brush_mask_subsample  (
   kernel_brushes[index2][index1] = canvas_new (canvas_tag (mask),
                                                canvas_width (mask) + 2,
                                                canvas_height (mask) + 2,
-                                               canvas_tiling (mask));
+                                               canvas_storage (mask));
   dest = kernel_brushes[index2][index1];
 
   /* temp hack */
-  canvas_ref (mask, 0, 0);
-  canvas_ref (dest, 0, 0);
+  canvas_portion_ref (mask, 0, 0);
+  canvas_portion_ref (dest, 0, 0);
 
   for (i = 0; i < canvas_height (mask); i++)
     {
       for (j = 0; j < canvas_width (mask); j++)
 	{
-          m = canvas_data (mask, j, i);
+          m = canvas_portion_data (mask, j, i);
 	  k = kernel;
 	  for (r = 0; r < KERNEL_HEIGHT; r++)
 	    {
-	      d = canvas_data (dest, j, i+r);
+	      d = canvas_portion_data (dest, j, i+r);
 	      s = KERNEL_WIDTH;
 	      while (s--)
 		{
@@ -1239,8 +1137,8 @@ brush_mask_subsample  (
     }
 
   /* temp hack */
-  canvas_unref (mask, 0, 0);
-  canvas_unref (dest, 0, 0);
+  canvas_portion_unref (mask, 0, 0);
+  canvas_portion_unref (dest, 0, 0);
 
   return dest;
 }
@@ -1275,23 +1173,24 @@ brush_mask_solidify  (
   solid_brush = canvas_new (canvas_tag (brush_mask),
                             canvas_width (brush_mask) + 2,
                             canvas_height (brush_mask) + 2,
-                            canvas_tiling (brush_mask));
+                            canvas_storage (brush_mask));
 #else 
   solid_brush = canvas_new (canvas_tag (brush_mask),
                             canvas_width (brush_mask) ,
                             canvas_height (brush_mask) ,
-                            canvas_tiling (brush_mask));
+                            canvas_storage (brush_mask));
 #endif
-  canvas_ref (solid_brush, 0, 0);
-  canvas_ref (brush_mask, 0, 0);
+  canvas_portion_ref (solid_brush, 0, 0);
+  canvas_portion_ref (brush_mask, 0, 0);
   
   /*  get the data and advance one line into it  */
-  data = canvas_data (solid_brush, 0, 1);
-  src = canvas_data (brush_mask, 0, 0);
+  data = canvas_portion_data (solid_brush, 0, 1);
+  src = canvas_portion_data (brush_mask, 0, 0);
   
   (*brush_solidify_mask_funcs [prec-1]) (brush_mask, solid_brush); 
-  canvas_unref (solid_brush, 0, 0);
-  canvas_unref (brush_mask, 0, 0);
+
+  canvas_portion_unref (solid_brush, 0, 0);
+  canvas_portion_unref (brush_mask, 0, 0);
   
   return solid_brush;
 }
@@ -1304,11 +1203,11 @@ static void brush_solidify_mask_u8 (
 {  
   /* get the data and advance one line into it  */
 #ifdef BRUSH_WITH_BORDER
-  guint8* data = (guint8*)canvas_data (solid_brush, 0, 1);
+  guint8* data = (guint8*)canvas_portion_data (solid_brush, 0, 1);
 #else
-  guint8* data = (guint8*)canvas_data (solid_brush, 0, 0);
+  guint8* data = (guint8*)canvas_portion_data (solid_brush, 0, 0);
 #endif
-  guint8* src = (guint8*)canvas_data (brush_mask, 0, 0);
+  guint8* src = (guint8*)canvas_portion_data (brush_mask, 0, 0);
   gint i, j;
 
   for (i = 0; i < canvas_height (brush_mask); i++)
@@ -1326,6 +1225,7 @@ static void brush_solidify_mask_u8 (
     }
 }
 
+
 static void brush_solidify_mask_u16 (
 			Canvas *brush_mask,
 			Canvas *solid_brush
@@ -1333,11 +1233,11 @@ static void brush_solidify_mask_u16 (
 {  
   /* get the data and advance one line into it  */
 #ifdef BRUSH_WITH_BORDER
-  guint16* data = (guint16*)canvas_data (solid_brush, 0, 1);
+  guint16* data = (guint16*)canvas_portion_data (solid_brush, 0, 1);
 #else
-  guint16* data = (guint16*)canvas_data (solid_brush, 0, 0);
+  guint16* data = (guint16*)canvas_portion_data (solid_brush, 0, 0);
 #endif
-  guint16* src = (guint16*)canvas_data (brush_mask, 0, 0);
+  guint16* src = (guint16*)canvas_portion_data (brush_mask, 0, 0);
   gint i, j;
 
   for (i = 0; i < canvas_height (brush_mask); i++)
@@ -1362,11 +1262,11 @@ static void brush_solidify_mask_float (
 {  
   /* get the data and advance one line into it  */
 #ifdef BRUSH_WITH_BORDER
-  gfloat* data =(gfloat*)canvas_data (solid_brush, 0, 1);
+  gfloat* data =(gfloat*)canvas_portion_data (solid_brush, 0, 1);
 #else
-  gfloat* data =(gfloat*)canvas_data (solid_brush, 0, 0);
+  gfloat* data =(gfloat*)canvas_portion_data (solid_brush, 0, 0);
 #endif
-  gfloat* src = (gfloat*)canvas_data (brush_mask, 0, 0);
+  gfloat* src = (gfloat*)canvas_portion_data (brush_mask, 0, 0);
   gint i, j;
 
   for (i = 0; i < canvas_height (brush_mask); i++)
@@ -1384,6 +1284,43 @@ static void brush_solidify_mask_float (
     }
 }
 
+
+static Canvas * 
+brush_mask_enlarge  (
+                     Canvas * brush_mask
+                     )
+{
+  static Canvas * solid_brush = NULL;
+  static Canvas * last_brush  = NULL;
+  
+  if (brush_mask == last_brush)
+    return solid_brush;
+
+  last_brush = brush_mask;
+  if (solid_brush)
+    canvas_delete (solid_brush);
+  solid_brush = canvas_new (canvas_tag (brush_mask),
+                            canvas_width (brush_mask) + 2,
+                            canvas_height (brush_mask) + 2,
+                            canvas_storage (brush_mask));
+  {
+    PixelArea src, dest;
+    pixelarea_init (&src, brush_mask, NULL,
+                    0, 0,
+                    0, 0,
+                    FALSE);
+    pixelarea_init (&dest, solid_brush, NULL,
+                    1, 1,
+                    canvas_width (brush_mask), canvas_height (brush_mask),
+                    TRUE);
+    copy_area (&src, &dest);
+  }
+  
+  canvas_portion_unref (solid_brush, 0, 0);
+  canvas_portion_unref (brush_mask, 0, 0);
+  
+  return solid_brush;
+}
 
 
 

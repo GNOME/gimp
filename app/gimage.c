@@ -45,6 +45,7 @@
 #include "paint.h"
 #include "canvas.h"
 #include "pixelarea.h"
+#include "trace.h"
 
 /*  Local function declarations  */
 static void     gimage_free_projection       (GImage *);
@@ -631,11 +632,11 @@ void
 gimage_apply_painthit  (
                         GImage * gimage,
                         GimpDrawable * drawable,
-                        PixelArea * src2PR,
+                        Canvas * src1,
+                        Canvas * src2,
                         int undo,
                         gfloat opacity,
                         int mode,
-                        Canvas * src1_tiles,
                         int x,
                         int y
                         )
@@ -645,22 +646,19 @@ gimage_apply_painthit  (
   /* make sure we're doing something legal */
   operation = valid_combinations
     [drawable_type (drawable)]
-    [tag_num_channels (pixelarea_tag (src2PR))];
+    [tag_num_channels (canvas_tag (src2))];
 
   if (operation == -1)
     return;
   
   {
+    PixelArea src1PR, src2PR, destPR, maskPR;
     Channel * mask;
-    PixelArea src1PR, destPR, maskPR;
-    Canvas *d = NULL;
-    Canvas *m = NULL;
-    
-    /*  get the selection mask if one exists  */
-    mask = (gimage_mask_is_empty (gimage)) ?
-      NULL : gimage_get_mask (gimage);
 
-    
+    /* get the mask (if any) */
+    mask = (gimage_mask_is_empty (gimage))
+      ? NULL : gimage_get_mask (gimage);
+
     {
       int offset_x, offset_y;
       int x1, y1, x2, y2;
@@ -672,8 +670,8 @@ gimage_apply_painthit  (
           gimage and mask bounds */
       x1 = CLAMP (x, 0, drawable_width (drawable));
       y1 = CLAMP (y, 0, drawable_height (drawable));
-      x2 = CLAMP (x + pixelarea_width (src2PR), 0, drawable_width (drawable));
-      y2 = CLAMP (y + pixelarea_height (src2PR), 0, drawable_height (drawable));
+      x2 = CLAMP (x + canvas_width (src2), 0, drawable_width (drawable));
+      y2 = CLAMP (y + canvas_height (src2), 0, drawable_height (drawable));
       
       if (mask)
         {
@@ -688,34 +686,30 @@ gimage_apply_painthit  (
       if (undo)
         drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
 
+      /* the underlying image */
+      pixelarea_init (&src1PR, src1, NULL,
+                      x1, y1,
+                      (x2 - x1), (y2 - y1),
+                      FALSE);
+      
+      /* the painthit */
+      pixelarea_init (&src2PR, src2, NULL,
+                      x1-x, y1-y,
+                      (x2 - (x1-x)), (y2 - (y1-y)),
+                      FALSE);
+      
+      pixelarea_init (&destPR, drawable_data_canvas (drawable), NULL,
+                      x1, y1,
+                      (x2 - x1), (y2 - y1),
+                      TRUE);
 
-      /* set up the pixel regions */
-      {
-        d = drawable_data_canvas (drawable);
-        
-        if (src1_tiles)
-          pixelarea_init (&src1PR, src1_tiles, NULL,
-                          x1, y1, (x2 - x1), (y2 - y1), FALSE);
-        else
-          pixelarea_init (&src1PR, d, NULL,
-                          x1, y1, (x2 - x1), (y2 - y1), FALSE);
-
-        /* evil.... */
-        src2PR->x = src2PR->startx = (src2PR->x + (x1 - x));
-        src2PR->y = src2PR->starty = (src2PR->y + (y1 - y));
-        src2PR->w = (x2 - x1);
-        src2PR->h = (y2 - y1);
-        
-        pixelarea_init (&destPR, d, NULL,
-                        x1, y1, (x2 - x1), (y2 - y1), TRUE);
-        
-        if (mask)
-          {
-            m = drawable_data_canvas (GIMP_DRAWABLE(mask));
-            pixelarea_init (&maskPR, m, NULL,
-                            x1 + offset_x, y1 + offset_y, (x2 - x1), (y2 - y1), FALSE);
-          }
-      }
+      if (mask)
+        {
+          pixelarea_init (&maskPR, drawable_data_canvas (GIMP_DRAWABLE (mask)), NULL,
+                          x1 + offset_x, y1 + offset_y,
+                          (x2 - x1), (y2 - y1),
+                          FALSE);
+        }
     }
     
     
@@ -743,17 +737,15 @@ gimage_apply_painthit  (
                     tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
                     &opacity);
         if (mask)
-          combine_areas (&src1PR, src2PR, &destPR, &maskPR, NULL,
+          combine_areas (&src1PR, &src2PR, &destPR, &maskPR, NULL,
                          p, mode, active, operation);
         else
-          combine_areas (&src1PR, src2PR, &destPR, NULL, NULL,
+          combine_areas (&src1PR, &src2PR, &destPR, NULL, NULL,
                          p, mode, active, operation);
       }
     }
   }
 }
-
-
 
 /* Similar to gimage_apply_image but works in "replace" mode (i.e.
    transparent pixels in src2 make the result transparent rather

@@ -1264,12 +1264,12 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 			tile_info->tile_num, i, j, x, y, ntile_rows, ntile_cols);*/
         
         /* Make sure there is some valid canvas data there on the gimp side */
-       canvas_ref (canvas, x, y);
-       if (!canvas_data( canvas, x, y))
+       canvas_portion_ref (canvas, x, y);
+       if (!canvas_portion_data( canvas, x, y))
 	{
 	  g_warning ("plug-in requested invalid tile data (killing)\n");
 	  plug_in_close (current_plug_in, TRUE);
-          canvas_unref (canvas, x, y);
+          canvas_portion_unref (canvas, x, y);
 	  return;
 	}
         
@@ -1291,7 +1291,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 	  plug_in_copyarea (&a, shm_addr, COPY_BUFFER_TO_AREA);  /* shm to gimp */
 	else
 	  plug_in_copyarea (&a, tile_info->data, COPY_BUFFER_TO_AREA); /* pipe buffer to gimp */
-        canvas_unref (canvas, x, y);
+        canvas_portion_unref (canvas, x, y);
       
       
       wire_destroy (&msg);
@@ -1330,12 +1330,12 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       /*printf ("Put tilenum: %d, (i,j)=(%d,%d) (x,y)=(%d,%d) (rows,cols)=(%d,%d)\n",
 			tile_req->tile_num, i, j, x, y, ntile_rows, ntile_cols);*/
       
-      canvas_ref (canvas, x, y);
-      if (!canvas_data( canvas, x, y))
+      canvas_portion_ref (canvas, x, y);
+      if (!canvas_portion_data( canvas, x, y))
 	{
 	  g_warning ("plug-in requested invalid tile data(killing)\n");
 	  plug_in_close (current_plug_in, TRUE);
-          canvas_unref (canvas, x, y);
+          canvas_portion_unref (canvas, x, y);
 	  return;
 	}
       
@@ -1367,7 +1367,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       else
 	plug_in_copyarea (&a, tile_data.data, COPY_AREA_TO_BUFFER); /* gimp to pipe buffer */
       
-      canvas_unref (canvas, x, y);
+      canvas_portion_unref (canvas, x, y);
       if (!gp_tile_data_write (current_writefd, &tile_data))
 	{
 	  g_warning ("plug_in_handle_tile_req: ERROR");

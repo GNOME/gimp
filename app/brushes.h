@@ -19,7 +19,6 @@
 #define __BRUSHES_H__
 
 #include <glib.h>
-#include "canvas.h"
 #include "procedural_db.h"
 #include "temp_buf.h"
 

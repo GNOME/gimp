@@ -12,8 +12,8 @@ gimp_SOURCES = \
 	paint.h                 \
 	canvas.c                \
 	canvas.h                \
-        lookup_tables.c         \
-        lookup_tables.h         \
+	lookup_tables.c         \
+	lookup_tables.h         \
 	pixelrow.c              \
 	pixelrow.h              \
 	pixelarea.c             \
@@ -34,6 +34,8 @@ gimp_SOURCES = \
 	flatbuf.h               \
 	paint_core_16.c         \
 	paint_core_16.h         \
+	trace.c                 \
+	trace.h                 \
 	\
 	about_dialog.c		\
 	about_dialog.h		\

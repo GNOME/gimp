@@ -35,6 +35,7 @@
 #include "undo.h"
 
 #include "drawable_pvt.h"
+#include "canvas.h"
 
 enum {
   INVALIDATE_PREVIEW,
@@ -728,7 +729,7 @@ gimp_drawable_configure_tag (GimpDrawable *drawable,
   
   if (drawable->canvas)
     canvas_delete (drawable->canvas);
-  drawable->canvas = canvas_new (drawable->tag, width, height, TILING_NEVER);
+  drawable->canvas = canvas_new (drawable->tag, width, height, STORAGE_FLAT);
 
   drawable->dirty = FALSE;
   drawable->visible = TRUE;

@@ -19,14 +19,13 @@
 #include "canvas.h"
 #include "flatbuf.h"
 #include "tilebuf.h"
-
-#include "temp_buf.h"  /* temporary */
-#include "tile_manager.h"  /* temporary */
+#include "trace.h"
 
 
 struct _Canvas
 {
-  Tiling     tiling;
+  Storage    storage;
+  int        autoalloc;
   TileBuf  * tile_data;
   FlatBuf  * flat_data;
 };
@@ -38,32 +37,23 @@ canvas_new (
             Tag tag,
             int w,
             int h,
-            Tiling tiling
+            Storage storage
             )
 {
   Canvas *c;
 
   c = (Canvas *) g_malloc (sizeof (Canvas));
 
-  c->tiling = tiling;
-
-  if (tiling == TILING_MAYBE)
-    {
-      if ((w * h * tag_bytes (tag)) < (1024 * 1024 * 4))
-        tiling = TILING_NO;
-      else
-        tiling = TILING_YES;
-    }
+  c->storage = storage;
+  c->autoalloc = TRUE;
   
-  switch (tiling)
+  switch (storage)
     {
-    case TILING_NO:
-    case TILING_NEVER:
+    case STORAGE_FLAT:
       c->tile_data = NULL;
       c->flat_data = flatbuf_new (tag, w, h);
       break;
-    case TILING_YES:
-    case TILING_ALWAYS:
+    case STORAGE_TILED:
       c->flat_data = NULL;
       c->tile_data = tilebuf_new (tag, w, h);
       break;
@@ -103,7 +93,8 @@ canvas_clone  (
 
       new_c = (Canvas *) g_malloc (sizeof (Canvas));
 
-      new_c->tiling = c->tiling;
+      new_c->storage = c->storage;
+      new_c->autoalloc = c->autoalloc;
       if (c->tile_data)
         new_c->tile_data = tilebuf_clone (c->tile_data);
       if (c->flat_data)
@@ -123,17 +114,15 @@ canvas_info (
   if (c)
     {
       trace_begin ("Canvas 0x%x", c);
-      switch (c->tiling)
+      trace_printf (c->autoalloc==TRUE ? "AutoAlloc" : "No AutoAlloc" );
+      switch (c->storage)
         {
-        case TILING_YES:
-        case TILING_ALWAYS:
+        case STORAGE_TILED:
           tilebuf_info (c->tile_data);
           break;
-        case TILING_NO:
-        case TILING_NEVER:
+        case STORAGE_FLAT:
           flatbuf_info (c->flat_data);
           break;
-        case TILING_MAYBE:
         default:
           trace_printf ("Unknown image data");
           break;
@@ -185,14 +174,25 @@ canvas_alpha  (
 }
 
 
-Tiling 
-canvas_tiling  (
-                Canvas * c
-                )
+Storage 
+canvas_storage  (
+                 Canvas * c
+                 )
 {
   if (c)
-    return c->tiling;
-  return TILING_NONE;
+    return c->storage;
+  return STORAGE_NONE;
+}
+
+
+int
+canvas_autoalloc (
+                  Canvas * c
+                  )
+{
+  if (c)
+    return c->autoalloc;
+  return TRUE;
 }
 
 
@@ -229,14 +229,32 @@ canvas_set_alpha  (
 }
 
 
-Tiling 
-canvas_set_tiling  (
-                    Canvas * c,
-                    Tiling t
-                    )
+Storage 
+canvas_set_storage  (
+                     Canvas * c,
+                     Storage t
+                     )
 {
-  g_warning ("finish writing canvas_set_tiling()");
-  return canvas_tiling (c);
+  g_warning ("finish writing canvas_set_storage()");
+  return canvas_storage (c);
+}
+
+
+int
+canvas_set_autoalloc (
+                      Canvas * c,
+                      int aa
+                      )
+{
+  if (c)
+    switch (aa)
+      {
+      case TRUE:
+      case FALSE:
+        c->autoalloc = aa;
+        break;
+      }
+  return canvas_autoalloc (c);
 }
 
 
@@ -270,91 +288,61 @@ canvas_height  (
 }
 
 
-guint
-canvas_ref  (
-             Canvas * c,
-             int x,
-             int y
-             )
+
+
+
+
+
+
+
+
+
+/* this routine provides a little bit of value add.  the return code
+   semantics are the same as the underlying ref operation.  ie: true
+   means that user action is required.  however, since almost everyone
+   will want to do a portion_alloc immediately, we have the autoalloc
+   option to streamline this.  the user still gets the TRUE return
+   code in case they want to do further initialization */
+guint 
+canvas_portion_ref  (
+                     Canvas * c,
+                     int x,
+                     int y
+                     )
 {
   guint rc = FALSE;
+
   if (c)
     if (c->tile_data)
-      rc = tilebuf_ref (c->tile_data, x, y);
+      rc = tilebuf_portion_ref (c->tile_data, x, y);
     else if (c->flat_data)
-      rc = flatbuf_ref (c->flat_data, x, y);
+      rc = flatbuf_portion_ref (c->flat_data, x, y);
+  
+  if ((rc == TRUE) &&
+      (c->autoalloc == TRUE) &&
+      (canvas_portion_alloc (c, x, y) == FALSE))
+    g_warning ("canvas failed to auto-alloc");
+
   return rc;
 }
 
 
 void 
-canvas_unref  (
-               Canvas * c,
-               int x,
-               int y
-               )
+canvas_portion_unref  (
+                       Canvas * c,
+                       int x,
+                       int y
+                       )
 {
   if (c)
     if (c->tile_data)
-      tilebuf_unref (c->tile_data, x, y);
+      tilebuf_portion_unref (c->tile_data, x, y);
     else if (c->flat_data)
-      flatbuf_unref (c->flat_data, x, y);
+      flatbuf_portion_unref (c->flat_data, x, y);
 }
 
 
-void
-canvas_init  (
-              Canvas * c,
-              Canvas * src,
-              int x,
-              int y
-              )
-{
-  if (c && src)
-    if ((c->tile_data) && (src->tile_data))
-      tilebuf_init (c->tile_data, src->tile_data, x, y);
-    else if ((c->flat_data) && (src->flat_data))
-      flatbuf_init (c->flat_data, src->flat_data, x, y);
-    else
-      g_warning ("canvas_init() failed to init");
-}
-
-
-guchar * 
-canvas_data  (
-              Canvas * c,
-              int x,
-              int y
-              )
-{
-  if (c)
-    if (c->tile_data)
-      return tilebuf_data (c->tile_data, x, y);
-    else if (c->flat_data)
-      return flatbuf_data (c->flat_data, x, y);
-
-  return NULL;
-}
-
-
-int 
-canvas_rowstride  (
-                   Canvas * c,
-                   int x,
-                   int y
-                   )
-{
-  if (c)
-    if (c->tile_data)
-      return tilebuf_rowstride (c->tile_data, x, y);
-    else if (c->flat_data)
-      return flatbuf_rowstride (c->flat_data, x, y);
-
-  return 0;
-}
-
-
-int 
+guint 
 canvas_portion_width  (
                        Canvas * c,
                        int x,
@@ -371,7 +359,7 @@ canvas_portion_width  (
 }
 
 
-int 
+guint 
 canvas_portion_height  (
                         Canvas * c,
                         int x,
@@ -388,96 +376,141 @@ canvas_portion_height  (
 }
 
 
-
-/* temporary conversion routines */
-Canvas *
-canvas_from_tb (
-                TempBuf *tb
-                )
-{
-  if (tb)
-    {
-      Canvas *c;
-      
-      c = canvas_new (tag_by_bytes (tb->bytes),
-                      tb->width,
-                      tb->height,
-                      TILING_NEVER);
-      
-      flatbuf_from_tb (c->flat_data, tb);
-      
-      return c;
-    }
-
-  return NULL;
-}
-
-
-TempBuf *
-canvas_to_tb (
-              Canvas *c
-              )
+guint 
+canvas_portion_top  (
+                     Canvas * c,
+                     int x,
+                     int y
+                     )
 {
   if (c)
-    {
-      TempBuf *tb;
+    if (c->tile_data)
+      return tilebuf_portion_top (c->tile_data, x, y);
+    else if (c->flat_data)
+      return flatbuf_portion_top (c->flat_data, x, y);
 
-      tb = temp_buf_new (canvas_width (c),
-                         canvas_height (c),
-                         tag_bytes (canvas_tag (c)),
-                         0, 0, NULL);
-  
-      flatbuf_to_tb (c->flat_data, tb);
-
-      return tb;
-    }
-
-  return NULL;
+  return 0;
 }
 
 
-Canvas *
-canvas_from_tm (
-                TileManager *tm
-                )
-{
-  if (tm)
-    {
-      Canvas *c;
-
-      c = canvas_new (tag_by_bytes (tm_bytes (tm)),
-                      tm_width (tm),
-                      tm_height (tm),
-                      TILING_ALWAYS);
-
-      tilebuf_from_tm (c->tile_data, tm);
-      
-      return c;
-    }
-
-  return NULL;
-}
-
-
-TileManager *
-canvas_to_tm (
-              Canvas *c
-              )
+guint 
+canvas_portion_left  (
+                      Canvas * c,
+                      int x,
+                      int y
+                      )
 {
   if (c)
-    {
-      TileManager *tm;
+    if (c->tile_data)
+      return tilebuf_portion_left (c->tile_data, x, y);
+    else if (c->flat_data)
+      return flatbuf_portion_left (c->flat_data, x, y);
 
-      tm = tile_manager_new (canvas_width (c),
-                             canvas_height (c),
-                             tag_bytes (canvas_tag (c)));
-  
-      tilebuf_to_tm (c->tile_data, tm);
+  return 0;
+}
 
-      return tm;
-    }
+
+guchar * 
+canvas_portion_data  (
+                      Canvas * c,
+                      int x,
+                      int y
+                      )
+{
+  if (c)
+    if (c->tile_data)
+      return tilebuf_portion_data (c->tile_data, x, y);
+    else if (c->flat_data)
+      return flatbuf_portion_data (c->flat_data, x, y);
 
   return NULL;
 }
 
 
+guint 
+canvas_portion_rowstride  (
+                           Canvas * c,
+                           int x,
+                           int y
+                           )
+{
+  if (c)
+    if (c->tile_data)
+      return tilebuf_portion_rowstride (c->tile_data, x, y);
+    else if (c->flat_data)
+      return flatbuf_portion_rowstride (c->flat_data, x, y);
+
+  return 0;
+}
+
+
+guint 
+canvas_portion_alloced  (
+                         Canvas * c,
+                         int x,
+                         int y
+                         )
+{
+  if (c)
+    if (c->tile_data)
+      return tilebuf_portion_alloced (c->tile_data, x, y);
+    else if (c->flat_data)
+      return flatbuf_portion_alloced (c->flat_data, x, y);
+
+  return 0;
+}
+
+
+guint 
+canvas_portion_alloc  (
+                       Canvas * c,
+                       int x,
+                       int y
+                       )
+{
+  if (c)
+    if (c->tile_data)
+      return tilebuf_portion_alloc (c->tile_data, x, y);
+    else if (c->flat_data)
+      return flatbuf_portion_alloc (c->flat_data, x, y);
+
+  return FALSE;
+}
+
+
+guint 
+canvas_portion_unalloc  (
+                         Canvas * c,
+                         int x,
+                         int y
+                         )
+{
+  if (c)
+    if (c->tile_data)
+      return tilebuf_portion_unalloc (c->tile_data, x, y);
+    else if (c->flat_data)
+      return flatbuf_portion_unalloc (c->flat_data, x, y);
+
+  return FALSE;
+}
+
+
+
+
+/* temporary evil */
+void
+canvas_init  (
+              Canvas * c,
+              Canvas * src,
+              int x,
+              int y
+              )
+{
+  if (c && src)
+    if ((c->tile_data) && (src->tile_data))
+      tilebuf_init (c->tile_data, src->tile_data, x, y);
+    else if ((c->flat_data) && (src->flat_data))
+      flatbuf_init (c->flat_data, src->flat_data, x, y);
+    else
+      g_warning ("canvas_init() failed to init");
+}

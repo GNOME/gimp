@@ -23,19 +23,16 @@
 
 typedef struct _Canvas Canvas;
 
-typedef enum _Tiling Tiling;
-enum _Tiling
+typedef enum _Storage Storage;
+enum _Storage
 {
-  TILING_NONE   = 0,
-  TILING_NEVER  = 1,
-  TILING_NO     = 2,
-  TILING_MAYBE  = 3,
-  TILING_YES    = 4,
-  TILING_ALWAYS = 5
+  STORAGE_NONE   = 0,
+  STORAGE_FLAT   = 1,
+  STORAGE_TILED  = 2,
 };
 
 
-Canvas *       canvas_new            (Tag, int w, int h, Tiling);
+Canvas *       canvas_new            (Tag, int w, int h, Storage);
 void           canvas_delete         (Canvas *);
 Canvas *       canvas_clone          (Canvas *);
 void           canvas_info           (Canvas *);
@@ -44,34 +41,43 @@ Tag            canvas_tag            (Canvas *);
 Precision      canvas_precision      (Canvas *);
 Format         canvas_format         (Canvas *);
 Alpha          canvas_alpha          (Canvas *);
-Tiling         canvas_tiling         (Canvas *);
+Storage        canvas_storage        (Canvas *);
+int            canvas_autoalloc      (Canvas *);
 
 Precision      canvas_set_precision  (Canvas *, Precision);
 Format         canvas_set_format     (Canvas *, Format);
 Alpha          canvas_set_alpha      (Canvas *, Alpha);
-Tiling         canvas_set_tiling     (Canvas *, Tiling);
+Storage        canvas_set_storage    (Canvas *, Storage);
+int            canvas_set_autoalloc  (Canvas *, int);
 
 int            canvas_width          (Canvas *);
 int            canvas_height         (Canvas *);
 
-guint          canvas_ref            (Canvas *, int x, int y);
-void           canvas_unref          (Canvas *, int x, int y);
-void           canvas_init           (Canvas *, Canvas *, int x, int y);
-guchar *       canvas_data           (Canvas *, int x, int y);
-int            canvas_rowstride      (Canvas *, int x, int y);
-int            canvas_portion_width  (Canvas *, int x, int y);
-int            canvas_portion_height (Canvas *, int x, int y);
+
+/* a portion is a rectangular area of a Canvas with identical
+   properties.  at the moment, the only defined property is the
+   backing store.  ie: a portion is a section of Canvas that all fits
+   on a single tile.  in the future, other properties like
+   'initialized' may be added */
+
+guint          canvas_portion_ref       (Canvas *, int x, int y);
+void           canvas_portion_unref     (Canvas *, int x, int y);
+
+guint          canvas_portion_width     (Canvas *, int x, int y);
+guint          canvas_portion_height    (Canvas *, int x, int y);
+guint          canvas_portion_top       (Canvas *, int x, int y);
+guint          canvas_portion_left      (Canvas *, int x, int y);
+
+guchar *       canvas_portion_data      (Canvas *, int x, int y);
+guint          canvas_portion_rowstride (Canvas *, int x, int y);
+
+guint          canvas_portion_alloced   (Canvas *, int x, int y);
+guint          canvas_portion_alloc     (Canvas *, int x, int y);
+guint          canvas_portion_unalloc   (Canvas *, int x, int y);
 
 
 
-
-/* temporary conversions */
-struct _temp_buf;
-struct _TileManager;
-Canvas *               canvas_from_tb (struct _temp_buf *);
-Canvas *               canvas_from_tm (struct _TileManager *);
-struct _temp_buf *     canvas_to_tb   (Canvas *);
-struct _TileManager *  canvas_to_tm   (Canvas *);
-
+/* temporary evil */
+void canvas_init (Canvas *, Canvas *, int x, int y);
 
 #endif /* __CANVAS_H__ */

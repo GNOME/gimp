@@ -19,6 +19,7 @@
 #include <string.h>
 
 #include "paint.h"
+#include "trace.h"
 
 /* cmap and num_cols should be removed from GImage and put into a
    distinct ColorMap */
@@ -78,6 +79,7 @@ paint_clone (
   if (p)
     {
       new_p = g_malloc (sizeof (Paint));
+      /* this is bad if drawables are refcounted */
       *new_p = *p;
     }
   
@@ -213,6 +215,7 @@ paint_set_drawable (
                     GimpDrawable * d
                     )
 {
+  /* should do something intelligent here if the paint is indexed */
   if (p)
     return (p->drawable = d);
   return NULL;
@@ -228,17 +231,6 @@ paint_data (
     return &p->data;
   return NULL;
 }
-
-
-guint
-paint_bytes (
-             Paint * p
-             )
-{
-  return tag_bytes (paint_tag (p));
-}
-
-
 
 
 

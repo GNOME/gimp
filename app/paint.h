@@ -36,24 +36,18 @@ Precision              paint_precision      (Paint *);
 Format                 paint_format         (Paint *);
 Alpha                  paint_alpha          (Paint *);
 
-/* WRITEME */
 Precision              paint_set_precision  (Paint *, Precision);
-/* WRITEME */
 Format                 paint_set_format     (Paint *, Format);
-/* WRITEME */
 Alpha                  paint_set_alpha      (Paint *, Alpha);
 
-/* WRITEME */
 void *                 paint_component      (Paint *, guint);
-/* WRITEME */
 guint                  paint_set_component  (Paint *, guint, void *);
-int                    paint_load           (Paint *, Tag, void *);
 
 struct _GimpDrawable * paint_drawable       (Paint *);
 struct _GimpDrawable * paint_set_drawable   (Paint  *, struct _GimpDrawable *);
 
+int                    paint_load           (Paint *, Tag, void *);
 void *                 paint_data           (Paint *);
-guint                  paint_bytes          (Paint *);
 
 void                   paint_setup          (void);
 void                   paint_free           (void);

@@ -267,7 +267,7 @@ shade_area  (
     }
 }
 
-
+#if 0
 void 
 copy_area  (
             PixelArea * src_area,
@@ -298,7 +298,40 @@ copy_area  (
         }
     }
 }
+#else
+void 
+copy_area  (
+            PixelArea * src_area,
+            PixelArea * dest_area
+            )
+{
+  void *  pag;
+  Tag src_tag = pixelarea_tag (src_area); 
+  Tag dest_tag = pixelarea_tag (dest_area); 
 
+  /*put in tags check*/
+  
+  for (pag = pixelarea_register (2, src_area, dest_area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      guchar * src  = pixelarea_data (src_area );
+      guchar * dest = pixelarea_data (dest_area );
+      gint s_stride = pixelarea_rowstride (src_area);  
+      gint d_stride = pixelarea_rowstride (dest_area);  
+      gint w = pixelarea_width (src_area) *
+        tag_bytes (pixelarea_tag (src_area));
+      
+      gint h = pixelarea_height (src_area);
+      while (h--)
+        {
+	  memcpy (dest, src, w);
+          dest += d_stride;
+          src += s_stride;
+        }
+    }
+}
+#endif
 
 void 
 add_alpha_area  (

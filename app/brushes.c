@@ -211,8 +211,8 @@ create_default_brush (gint width, gint height)
   
   /*brush->mask = temp_buf_new (1, 1, 1, 0, 0, filled);*/
   
-  brush->mask_canvas = canvas_new (brush_tag, width, height, TILING_NEVER);
-  canvas_ref (brush->mask_canvas,0,0);
+  brush->mask_canvas = canvas_new (brush_tag, width, height, STORAGE_FLAT);
+  canvas_portion_ref (brush->mask_canvas,0,0);
   
   /* Fill the default brush canvas with white */
   {
@@ -229,7 +229,7 @@ create_default_brush (gint width, gint height)
     color_area (&area, fill_color);
     paint_delete (fill_color);
   }
-  canvas_unref (brush->mask_canvas,0,0);
+  canvas_portion_unref (brush->mask_canvas,0,0);
   
   return brush; 
 }
@@ -370,7 +370,7 @@ load_brush(char *filename)
   brush->mask_canvas = canvas_new ( header.tag, 
 					header.width,
 					header.height,
-					TILING_NEVER );					
+					STORAGE_FLAT );					
   brush->spacing = header.spacing;
 
   /*  Read in the brush name  */
@@ -389,15 +389,15 @@ load_brush(char *filename)
     brush->name = g_strdup ("Unnamed");
   
   /* ref the canvas to allocate memory */
-  canvas_ref( brush->mask_canvas,0,0); 
+  canvas_portion_ref( brush->mask_canvas,0,0); 
   
   /*  Read the brush mask data  */
   bytes = tag_bytes (header.tag); 
-  if ((fread (canvas_data (brush->mask_canvas,0,0), 1, header.width * header.height * bytes, fp)) <
+  if ((fread (canvas_portion_data (brush->mask_canvas,0,0), 1, header.width * header.height * bytes, fp)) <
       header.width * header.height * bytes)
     warning ("GIMP brush file appears to be truncated.");
   
-  canvas_unref (brush->mask_canvas,0,0); 
+  canvas_portion_unref (brush->mask_canvas,0,0); 
   
   /*  Clean up  */
   fclose (fp);

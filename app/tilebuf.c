@@ -20,8 +20,7 @@
 #include <string.h>
 
 #include "tilebuf.h"
-
-#include "tile_manager.h" /* temporary */
+#include "trace.h"
 
 
 #define TILE16_WIDTH   64
@@ -47,9 +46,6 @@ struct _Tile16
   guchar  * data;
 };
 
-
-
-int tile16_ref_count = 0;
 
 
 static int  tile16_index       (TileBuf *, int, int);
@@ -258,23 +254,30 @@ tilebuf_height  (
 }
 
 
+
+
+
+
+
+
+
 guint 
-tilebuf_ref  (
-              TileBuf * t,
-              int x,
-              int y
-              )
+tilebuf_portion_ref  (
+                      TileBuf * t,
+                      int x,
+                      int y
+                      )
 {
   guint rc = FALSE;
+
   int i = tile16_index(t, x, y);
   if (i >= 0)
     {
       Tile16 * tile = &t->tiles[i];
       
       tile->ref_count++;
-      tile16_ref_count++;
       
-      if ((tile->ref_count == 1) && (tile->data == NULL))
+      if (tile->data == NULL)
         {
           if (tile->valid == TRUE)
             {
@@ -282,107 +285,35 @@ tilebuf_ref  (
             }
           else
             {
-              /* alloc tile */
-              int n =
-                TILE16_WIDTH *
-                TILE16_HEIGHT *
-                tag_bytes (tilebuf_tag (t));
-              tile->valid = TRUE;
-              tile->data = g_new (guchar, n);
-              memset (tile->data, 0, n);
+              /* user action required to alloc and init data buffer */
               rc = TRUE;
             }
         }
     }
+  
   return rc;
 }
 
 
 void 
-tilebuf_unref  (
-                TileBuf * t,
-                int x,
-                int y
-                )
+tilebuf_portion_unref  (
+                        TileBuf * t,
+                        int x,
+                        int y
+                        )
 {
   int i = tile16_index(t, x, y);
   if (i >= 0)
     {
       Tile16 * tile = &t->tiles[i];
-      
-      tile16_ref_count--;
+
       tile->ref_count--;
-
-      if (tile->ref_count <= 0)
+      if ((tile->ref_count == 0) &&
+          (tile->valid == TRUE))
         {
-          tile->ref_count = 0;
-
           /* swap tile out */
         }
     }
-}
-
-
-void 
-tilebuf_init  (
-               TileBuf * t,
-               TileBuf * src,
-               int x,
-               int y
-               )
-{
-  int src_index = tile16_index(src, x, y);
-  int dst_index = tile16_index(t, x, y);
-
-  if ((src_index >= 0) && (dst_index >= 0))
-    {
-      Tile16 * st = &src->tiles[src_index];
-      Tile16 * dt = &t->tiles[dst_index];
-
-      if (dt->data && st->data)
-        {
-          int len =
-            TILE16_WIDTH *
-            TILE16_HEIGHT *
-            tag_bytes (tilebuf_tag (t));
-          memcpy (dt->data, st->data, len);
-        }
-    }
-}
-
-
-
-
-guchar * 
-tilebuf_data  (
-               TileBuf * t,
-               int x,
-               int y
-               )
-{
-  int i = tile16_index(t, x, y);
-  if (i >= 0)
-    {
-      Tile16 * tile = &t->tiles[i];
-      if (tile->data)
-        {
-          return (tile->data + (tag_bytes (tilebuf_tag (t)) *
-                                ((tile16_yoffset (t, y) * TILE16_WIDTH) +
-                                 tile16_xoffset (t, x))));
-        }
-    }
-  return NULL;
-}
-
-
-int 
-tilebuf_rowstride  (
-                    TileBuf * t,
-                    int x,
-                    int y
-                    )
-{
-  return TILE16_WIDTH * tag_bytes (tilebuf_tag (t));
 }
 
 
@@ -393,7 +324,8 @@ tilebuf_portion_width  (
                         int y
                         )
 {
-  if (t)
+  int i = tile16_index(t, x, y);
+  if (i >= 0)
     {
       int offset = tile16_xoffset (t, x);
       int base = x - offset;
@@ -413,7 +345,8 @@ tilebuf_portion_height  (
                          int y
                          )
 {
-  if (t)
+  int i = tile16_index(t, x, y);
+  if (i >= 0)
     {
       int offset = tile16_yoffset (t, y);
       int base = y - offset;
@@ -423,6 +356,141 @@ tilebuf_portion_height  (
         return TILE16_HEIGHT - offset;
     }
   return 0;
+}
+
+
+guint 
+tilebuf_portion_top  (
+                      TileBuf * t,
+                      int x,
+                      int y
+                      )
+{
+  int i = tile16_index(t, x, y);
+  if (i >= 0)
+    {
+      return y - tile16_yoffset (t, y);
+    }
+  return 0;
+}
+
+
+guint 
+tilebuf_portion_left  (
+                       TileBuf * t,
+                       int x,
+                       int y
+                       )
+{
+  int i = tile16_index(t, x, y);
+  if (i >= 0)
+    {
+      return x - tile16_xoffset (t, x);
+    }
+  return 0;
+}
+
+
+guchar * 
+tilebuf_portion_data  (
+                       TileBuf * t,
+                       int x,
+                       int y
+                       )
+{
+  int i = tile16_index(t, x, y);
+  if (i >= 0)
+    {
+      Tile16 * tile = &t->tiles[i];
+      if (tile->data)
+        {
+          return (tile->data + (tag_bytes (tilebuf_tag (t)) *
+                                ((tile16_yoffset (t, y) * TILE16_WIDTH) +
+                                 tile16_xoffset (t, x))));
+        }
+    }
+  return NULL;
+}
+
+
+guint 
+tilebuf_portion_rowstride  (
+                            TileBuf * t,
+                            int x,
+                            int y
+                            )
+{
+  int i = tile16_index(t, x, y);
+  if (i >= 0)
+    return TILE16_WIDTH * tag_bytes (tilebuf_tag (t));
+  return 0;
+}
+
+
+guint
+tilebuf_portion_alloced (
+                         TileBuf * t,
+                         int x,
+                         int y
+                         )
+{
+  int i = tile16_index(t, x, y);
+  if (i >= 0)
+    {
+      Tile16 * tile = &t->tiles[i];
+      return tile->valid;
+    }
+  return FALSE;
+}
+
+
+guint 
+tilebuf_portion_alloc  (
+                        TileBuf * t,
+                        int x,
+                        int y
+                        )
+{
+  int i = tile16_index(t, x, y);
+  if (i >= 0)
+    {
+      Tile16 * tile = &t->tiles[i];
+      if (tile->valid == FALSE)
+        {
+          int n = TILE16_WIDTH * TILE16_HEIGHT * tag_bytes (tilebuf_tag (t));
+          tile->data = g_malloc (n);
+          if (tile->data)
+            {
+              tile->valid = TRUE;
+              memset (tile->data, 0, n);
+              return TRUE;
+            }
+        }
+    }
+  return FALSE;
+}
+
+
+guint 
+tilebuf_portion_unalloc  (
+                          TileBuf * t,
+                          int x,
+                          int y
+                          )
+{
+  int i = tile16_index(t, x, y);
+  if (i >= 0)
+    {
+      Tile16 * tile = &t->tiles[i];
+      if ((tile->valid == TRUE) && (tile->ref_count == 0))
+        {
+          g_free (tile->data);
+          tile->data = NULL;
+          tile->valid = FALSE;
+          return TRUE;
+        }
+    }
+  return FALSE;
 }
 
 
@@ -473,71 +541,33 @@ tile16_yoffset (
 
 
 
-/* temporary glue */
+/* temporary evil */
 void 
-tilebuf_to_tm  (
-                TileBuf * t,
-                TileManager * tm
-                )
+tilebuf_init  (
+               TileBuf * t,
+               TileBuf * src,
+               int x,
+               int y
+               )
 {
-  if (t && tm)
+  if (t && src
+      && (t->width == src->width)
+      && (t->height == src->height)
+      && (x < t->width)
+      && (y < t->height)
+      && tag_equal (t->tag, src->tag))
     {
-      int i = ( ( (t->width + TILE16_WIDTH - 1) / TILE16_WIDTH ) *
-                ( (t->height + TILE16_HEIGHT - 1) / TILE16_HEIGHT ) );
-
-      while (i--)
-        {
-          Tile * tile = tile_manager_get (tm, i, 0);
-          
-          if (t->tiles[i].valid == TRUE)
-            {
-              int n =
-                TILE16_WIDTH *
-                TILE16_HEIGHT *
-                tag_bytes (tilebuf_tag (t));
-              /* FIXME: ref tile16 */
-              tile_ref (tile);
-              memcpy (tile->data, t->tiles[i].data, n);
-              tile_unref (tile, TRUE);
-            }
-        }
+      tilebuf_portion_ref (t, x, y);
+      tilebuf_portion_ref (src, x, y);
+      {
+        Tile16 * st = &src->tiles[tile16_index(src, x, y)];
+        Tile16 * dt = &t->tiles[tile16_index(t, x, y)];
+        int len = TILE16_WIDTH * TILE16_HEIGHT * tag_bytes (tilebuf_tag (t));
+        memcpy (dt->data, st->data, len);
+      }
+      tilebuf_portion_unref (src, x, y);
+      tilebuf_portion_unref (t, x, y);
     }
 }
 
-
-void 
-tilebuf_from_tm  (
-                  TileBuf * t,
-                  TileManager * tm
-                  )
-{
-  if (t && tm)
-    {  
-      int i = tile16_index (t, t->width-1, t->height-1) + 1;
-
-      while (i--)
-        {
-          Tile * tile = tile_manager_get (tm, i, 0);
-          
-          t->tiles[i].valid = FALSE;
-          t->tiles[i].ref_count = 0;
-          if (t->tiles[i].data)
-            g_free (t->tiles[i].data);
-          t->tiles[i].data = NULL;
-          
-          if (tile->valid)
-            {
-              int n =
-                TILE16_WIDTH *
-                TILE16_HEIGHT *
-                tag_bytes (tilebuf_tag (t));
-              t->tiles[i].valid = TRUE;
-              t->tiles[i].data = g_new (guchar, n);
-              tile_ref (tile);
-              memcpy (t->tiles[i].data, tile->data, n);
-              tile_unref (tile, FALSE);
-            }
-        }
-    }
-}
 

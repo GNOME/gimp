@@ -5080,11 +5080,11 @@ render_image_canvas_fault (RenderInfo *info)
   y_portion = info->src_y;
   
   /* fault in the first portion */ 
-  canvas_ref( info->src_canvas, x_portion, y_portion); 
-  data = canvas_data (info->src_canvas, info->src_x, info->src_y);
+  canvas_portion_ref( info->src_canvas, x_portion, y_portion); 
+  data = canvas_portion_data (info->src_canvas, info->src_x, info->src_y);
   if (!data)
     {
-      canvas_unref( info->src_canvas, x_portion, y_portion); 
+      canvas_portion_unref( info->src_canvas, x_portion, y_portion); 
       return NULL;
     }
   scale = info->scale;
@@ -5093,8 +5093,8 @@ render_image_canvas_fault (RenderInfo *info)
   
   /* the first portions width */ 
   portion_width = canvas_portion_width ( info->src_canvas, 
-					  x_portion,
-					  y_portion );
+                                         x_portion,
+                                         y_portion );
   x = info->src_x;
   width = info->w;
 
@@ -5110,24 +5110,24 @@ render_image_canvas_fault (RenderInfo *info)
 
 	  if (x >= x_portion + portion_width)
 	    {
-	      canvas_unref (info->src_canvas, x_portion, y_portion);
+	      canvas_portion_unref (info->src_canvas, x_portion, y_portion);
               if (x >= canvas_width (info->src_canvas))
 		return tile_buf;
 	      x_portion += portion_width;
-              canvas_ref (info->src_canvas, x_portion, y_portion ); 
-              data = canvas_data (info->src_canvas, x_portion, y_portion );
+              canvas_portion_ref (info->src_canvas, x_portion, y_portion ); 
+              data = canvas_portion_data (info->src_canvas, x_portion, y_portion );
               if(!data)
                 {
-                  canvas_unref (info->src_canvas, x_portion, y_portion ); 
+                  canvas_portion_unref (info->src_canvas, x_portion, y_portion ); 
                   return NULL;
                 }
 	      portion_width = canvas_portion_width ( info->src_canvas, 
-					  x_portion,
-					  y_portion );
+                                              x_portion,
+                                              y_portion );
 	    }
 	}
     }
-  canvas_unref (info->src_canvas, x_portion, y_portion);
+  canvas_portion_unref (info->src_canvas, x_portion, y_portion);
   return tile_buf;
 }
 

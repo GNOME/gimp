@@ -395,8 +395,8 @@ brush_popup_open (BrushSelectP bsp,
   buf = g_new (gchar, brush_width);
   brush_tag = canvas_tag (brush->mask_canvas);
   brush_prec = tag_precision (brush_tag);
-  src = canvas_data (brush->mask_canvas,0,0);
-  rowbytes = canvas_rowstride (brush->mask_canvas,0,0);
+  src = canvas_portion_data (brush->mask_canvas,0,0);
+  rowbytes = canvas_portion_rowstride (brush->mask_canvas,0,0);
   for (y = 0; y < brush_height; y++)
     {
       (*display_brush_get_row_funcs [brush_prec-1]) (buf, src, brush_width); 
@@ -456,8 +456,8 @@ display_brush (BrushSelectP bsp,
   
   /*  Get a generic pointer into the brush mask data */
   {
-    gint rowbytes = canvas_rowstride (brush_buf_canvas,0,0);
-    guchar* src = canvas_data (brush_buf_canvas,0,0) + (ystart - offset_y) * rowbytes;
+    gint rowbytes = canvas_portion_rowstride (brush_buf_canvas,0,0);
+    guchar* src = canvas_portion_data (brush_buf_canvas,0,0) + (ystart - offset_y) * rowbytes;
     
     /*  Fill the brush display buffer and display it */ 
     for (i = ystart; i < yend; i++)

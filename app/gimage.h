@@ -174,9 +174,11 @@ void            gimage_apply_image            (GImage *, GimpDrawable *,
                                                PixelRegion *, int, int, int,
 					       TileManager *, int, int);
 void            gimage_apply_painthit         (GImage *, GimpDrawable *,
-                                               struct _PixelArea *, int undo,
+                                               struct _Canvas *,
+                                               struct _Canvas *,
+                                               int undo,
                                                gfloat, int mode,
-                                               struct _Canvas *, int x, int y);
+                                               int x, int y);
 void            gimage_replace_image          (GImage *, GimpDrawable *,
                                                PixelRegion *, int, int,
 					       PixelRegion *, int, int);
@@ -257,7 +259,7 @@ unsigned char * gimage_cmap                   (GImage *);
 /*  projection access functions  */
 
 TileManager *   gimage_projection             (GImage *);
-Canvas *        gimage_projection_canvas      (GImage *);
+struct _Canvas *gimage_projection_canvas      (GImage *);
 int             gimage_projection_type        (GImage *);
 int             gimage_projection_bytes       (GImage *);
 int             gimage_projection_opacity     (GImage *);

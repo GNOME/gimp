@@ -22,7 +22,7 @@
 #include "paint.h"
 #include "pixelrow.h"
 #include "pixelarea.h"
-
+#include "trace.h"
 
 
 typedef struct _PixelAreaGroup PixelAreaGroup;
@@ -360,7 +360,7 @@ pixelarea_data (
                 )
 {
   if (pa)
-    return canvas_data (pa->canvas, pa->x, pa->y);
+    return canvas_portion_data (pa->canvas, pa->x, pa->y);
   return NULL;
 }
 
@@ -371,7 +371,7 @@ pixelarea_rowstride (
                      )
 {
   if (pa)
-    return canvas_rowstride (pa->canvas, pa->x, pa->y);
+    return canvas_portion_rowstride (pa->canvas, pa->x, pa->y);
   return 0;
 }
 
@@ -468,8 +468,10 @@ pixelarea_ref (
                )
 {
   if (pa)
-    if (canvas_ref (pa->canvas, pa->x, pa->y) == TRUE)
-      canvas_init (pa->canvas, pa->init, pa->x, pa->y);
+    if (canvas_portion_ref (pa->canvas, pa->x, pa->y) == TRUE)
+      {
+        canvas_init (pa->canvas, pa->init, pa->x, pa->y);
+      }
 }
 
 
@@ -479,7 +481,7 @@ pixelarea_unref (
                  )
 {
   if (pa)
-    canvas_unref (pa->canvas, pa->x, pa->y);
+    canvas_portion_unref (pa->canvas, pa->x, pa->y);
 }
 
 

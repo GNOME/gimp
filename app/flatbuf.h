@@ -18,7 +18,6 @@
 #ifndef __FLATBUF_H__
 #define __FLATBUF_H__
 
-#include "glib.h"
 #include "tag.h"
 
 
@@ -42,19 +41,28 @@ Alpha          flatbuf_set_alpha      (FlatBuf *, Alpha);
 guint          flatbuf_width          (FlatBuf *);
 guint          flatbuf_height         (FlatBuf *);
 
-guint          flatbuf_ref            (FlatBuf *, int x, int y);
-void           flatbuf_unref          (FlatBuf *, int x, int y);
-void           flatbuf_init           (FlatBuf *, FlatBuf *, int x, int y);
-guchar *       flatbuf_data           (FlatBuf *, int x, int y);
-guint          flatbuf_rowstride      (FlatBuf *, int x, int y);
-guint          flatbuf_portion_width  (FlatBuf *, int x, int y);
-guint          flatbuf_portion_height (FlatBuf *, int x, int y);
 
 
 
-/* copy to and from TempBuf */
-struct _temp_buf;
-void           flatbuf_to_tb          (FlatBuf *, struct _temp_buf *);
-void           flatbuf_from_tb        (FlatBuf *, struct _temp_buf *);
+guint          flatbuf_portion_ref       (FlatBuf *, int x, int y);
+void           flatbuf_portion_unref     (FlatBuf *, int x, int y);
+
+guint          flatbuf_portion_width     (FlatBuf *, int x, int y);
+guint          flatbuf_portion_height    (FlatBuf *, int x, int y);
+guint          flatbuf_portion_top       (FlatBuf *, int x, int y);
+guint          flatbuf_portion_left      (FlatBuf *, int x, int y);
+
+guchar *       flatbuf_portion_data      (FlatBuf *, int x, int y);
+guint          flatbuf_portion_rowstride (FlatBuf *, int x, int y);
+
+guint          flatbuf_portion_alloced   (FlatBuf *, int x, int y);
+guint          flatbuf_portion_alloc     (FlatBuf *, int x, int y);
+guint          flatbuf_portion_unalloc   (FlatBuf *, int x, int y);
+
+
+
+/* temporary evil */
+void flatbuf_init (FlatBuf *, FlatBuf *, int x, int y);
+
 
 #endif /* __FLATBUF_H__ */

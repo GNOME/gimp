@@ -38,11 +38,11 @@ PaintCore16 non_gui_paint_core_16;
 
 
 /*  forward function declarations  */
-static void         paintbrush_motion      (PaintCore16 *, GimpDrawable *, double, gboolean);
+static void         paintbrush_motion      (PaintCore16 *, GimpDrawable *, double, gboolean, gboolean);
 static Argument *   paintbrush_invoker     (Argument *);
 static Argument *   paintbrush_extended_invoker     (Argument *);
 
-static double non_gui_fade_out, non_gui_incremental;
+static double non_gui_fade_out, non_gui_incremental, non_gui_hard;
 
 
 /* local types */
@@ -51,6 +51,7 @@ struct _PaintOptions
 {
   double fade_out;
   gboolean incremental;
+  gboolean hard;
 };
 
 
@@ -95,11 +96,13 @@ create_paint_options  (
   GtkWidget *fade_out_scale;
   GtkObject *fade_out_scale_data;
   GtkWidget *incremental_toggle;
+  GtkWidget *hard_toggle;
 
   /*  the new options structure  */
   options = (PaintOptions *) g_malloc (sizeof (PaintOptions));
   options->fade_out = 0.0;
   options->incremental = FALSE;
+  options->hard = FALSE;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
@@ -138,6 +141,15 @@ create_paint_options  (
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (incremental_toggle), options->incremental);
   gtk_widget_show (incremental_toggle);
   
+  /* the hard toggle */
+  hard_toggle = gtk_check_button_new_with_label ("Hard");
+  gtk_box_pack_start (GTK_BOX (vbox), hard_toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (hard_toggle), "toggled",
+		      (GtkSignalFunc) paintbrush_toggle_update,
+		      &options->hard);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (hard_toggle), options->hard);
+  gtk_widget_show (hard_toggle);
+  
   /*  Register this selection options widget with the main tools options dialog  */
   tools_register_options (PAINTBRUSH, vbox);
 
@@ -158,7 +170,10 @@ paintbrush_paint_func  (
       break;
 
     case MOTION_PAINT :
-      paintbrush_motion (paint_core, drawable, paint_options->fade_out, paint_options->incremental);
+      paintbrush_motion (paint_core, drawable,
+                         paint_options->fade_out,
+                         paint_options->incremental,
+                         paint_options->hard);
       break;
 
     case FINISH_PAINT :
@@ -201,28 +216,16 @@ tools_free_paintbrush  (
 }
 
 
-static Paint *
-arg_float (
-           Tag t,
-           GimpDrawable *d,
-           float f
-           )
-{
-  Paint *p = paint_new (t, d);
-  paint_load (p, tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO), &f);
-  return p;
-}
-
-
 static void 
 paintbrush_motion  (
                     PaintCore16 * paint_core,
                     GimpDrawable * drawable,
                     double fade_out,
-                    gboolean   incremental
+                    gboolean incremental,
+                    gboolean hard
                     )
 {
-  double     paint_left;
+  double paint_left;
 
   /* model the paint left on the brush as a gaussian curve */
   paint_left = 1;
@@ -235,16 +238,16 @@ paintbrush_motion  (
   /* apply the next bit of remaining paint */
   if (paint_left > 0.001)
     {
-      Canvas * area;
+      Canvas * painthit;
       PixelArea a;
       
       /* Get the working canvas */
-      area = paint_core_16_area (paint_core, drawable);
-      pixelarea_init (&a, area, NULL, 0, 0, 0, 0, TRUE);
+      painthit = paint_core_16_area (paint_core, drawable);
+      pixelarea_init (&a, painthit, NULL, 0, 0, 0, 0, TRUE);
 
       /* construct the paint hit */
       {
-        Paint * paint = paint_new (canvas_tag (area), drawable);
+        Paint * paint = paint_new (canvas_tag (painthit), drawable);
         gimp16_palette_get_foreground (paint);
         color_area (&a, paint);
         paint_delete (paint);
@@ -254,7 +257,7 @@ paintbrush_motion  (
       paint_core_16_area_paste (paint_core, drawable,
                                 (gfloat) paint_left,
                                 (gfloat) get_brush_opacity (),
-                                SOFT,
+                                hard ? HARD : SOFT,
                                 incremental ? INCREMENTAL : CONSTANT,
                                 get_brush_paint_mode ());
     }
@@ -268,7 +271,8 @@ paintbrush_non_gui_paint_func  (
                                 int state
                                 )
 {
-  paintbrush_motion (paint_core, drawable, non_gui_fade_out, non_gui_incremental);
+  paintbrush_motion (paint_core, drawable, non_gui_fade_out,
+                     non_gui_incremental, non_gui_hard);
 
   return NULL;
 }
@@ -437,6 +441,7 @@ paintbrush_invoker  (
   if (success)
     {
       non_gui_incremental = 0;
+      non_gui_hard = 0;
       /*  set the paint core's paint func  */
       non_gui_paint_core_16.paint_func = paintbrush_non_gui_paint_func;
 
@@ -528,6 +533,7 @@ paintbrush_extended_invoker (Argument *args)
   if (success)
     {
       non_gui_incremental = args[5].value.pdb_int;
+      non_gui_hard = 0;
       /*  set the paint core's paint func  */
       non_gui_paint_core_16.paint_func = paintbrush_non_gui_paint_func;
  
