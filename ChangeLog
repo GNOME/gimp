@@ -1,5 +1,11 @@
 2002-06-08  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimppaintcore.c (gimp_paint_core_get_brush_mask): applied
+	patch from Henning Makholm <henning@makholm.net> that fixes wrong
+	brush opacity (bug #84538).
+
+2002-06-08  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/animationplay.c: ported to the GTK+-2.0 API.
 
 2002-06-08  Sven Neumann  <sven@gimp.org>

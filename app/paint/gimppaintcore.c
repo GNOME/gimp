@@ -1203,15 +1203,10 @@ gimp_paint_core_get_brush_mask (GimpPaintCore            *core,
 {
   MaskBuf *mask;
 
-  if (! core->use_pressure)
-    {
-      mask = core->brush->mask;
-    }
+  if (core->use_pressure)
+    mask = gimp_paint_core_scale_mask (core, core->brush->mask, scale);
   else
-    {
-      mask = gimp_paint_core_scale_mask (core, core->brush->mask,
-                                         scale);
-    }
+    mask = core->brush->mask;
 
   switch (brush_hardness)
     {
@@ -1220,15 +1215,23 @@ gimp_paint_core_get_brush_mask (GimpPaintCore            *core,
 					     core->cur_coords.x,
                                              core->cur_coords.y);
       break;
+
     case GIMP_BRUSH_HARD:
       mask = gimp_paint_core_solidify_mask (core, mask);
       break;
+
     case GIMP_BRUSH_PRESSURE:
-      mask = gimp_paint_core_pressurize_mask (core, mask,
-					      core->cur_coords.x,
-                                              core->cur_coords.y,
-					      core->cur_coords.pressure);
+      if (core->use_pressure)
+        mask = gimp_paint_core_pressurize_mask (core, mask,
+                                                core->cur_coords.x,
+                                                core->cur_coords.y,
+                                                core->cur_coords.pressure);
+      else
+        mask = gimp_paint_core_subsample_mask (core, mask,
+                                               core->cur_coords.x,
+                                               core->cur_coords.y);
       break;
+
     default:
       break;
     }
