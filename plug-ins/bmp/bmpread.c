@@ -103,7 +103,7 @@ ReadChannelMasks (FILE *fd, Bitmap_Channel *masks, guint channels)
   guint32 tmp[3];
   guint32 mask;
   gint   i, nbits, offset, bit;
-  
+
   if (!ReadOK (fd, tmp, 3 * sizeof (guint32)))
     return FALSE;
 
@@ -374,7 +374,7 @@ ReadBMP (const gchar *name)
   /* Get the Image and return the ID or -1 on error*/
   image_ID = ReadImage (fd,
 			Bitmap_Head.biWidth,
-			Bitmap_Head.biHeight,
+			ABS (Bitmap_Head.biHeight),
 			ColorMap,
 			Bitmap_Head.biClrUsed,
 			Bitmap_Head.biBitCnt,
@@ -399,6 +399,9 @@ ReadBMP (const gchar *name)
 
       gimp_image_set_resolution (image_ID, xresolution, yresolution);
     }
+
+  if (Bitmap_Head.biHeight < 0)
+    gimp_image_flip (image_ID, GIMP_ORIENTATION_VERTICAL);
 
   return image_ID;
 }

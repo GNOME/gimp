@@ -1,3 +1,11 @@
+2005-01-14  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch (fix by Bill Skaggs):
+
+	* plug-ins/bmp/bmp.h
+	* plug-ins/bmp/bmpread.c: handle negative height values
+	as per spec, fixes bug #158033
+
 2005-01-13  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/Lighting/lighting_shade.c: remove artifacts
