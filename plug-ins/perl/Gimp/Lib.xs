@@ -1470,7 +1470,7 @@ gimp_query_procedure(proc_name)
 		    &proc_copyright, &proc_date, &proc_type, &nparams, &nreturn_vals,
 		    &params, &return_vals) == TRUE)
 		  {
-                    EXTEND (sp,8);
+                    EXTEND (SP,8);
                     PUSHs (newSVpv (proc_blurb,0));	g_free (proc_blurb);
 		    PUSHs (newSVpv (proc_help,0));	g_free (proc_help);
 		    PUSHs (newSVpv (proc_author,0));	g_free (proc_author);
@@ -1734,12 +1734,12 @@ char *
 gimp_directory()
 
 char *
-gimp_data_directory()
-
-char *
 gimp_gtkrc()
 
 #ifdef GIMP11
+char *
+gimp_data_directory()
+
 SV *
 gimp_personal_rc_file(basename)
 	char *	basename
