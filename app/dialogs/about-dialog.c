@@ -135,6 +135,7 @@ static gchar *scroll_text[] =
   "Erik Nygren",
   "Balazs Nagy",
   "Miles O'Neal",
+  "Garry R. Osgood",
   "Jay Painter",
   "Asbjorn Pettersen",
   "Mike Phillips",
@@ -524,7 +525,6 @@ about_dialog_timer (gpointer data)
 					scroll_area->allocation.width,
 					scroll_area->allocation.height,
 					-1);
-  
 
       switch (scroll_state)
 	{
