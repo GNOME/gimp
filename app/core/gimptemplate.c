@@ -432,21 +432,6 @@ gimp_template_create_image (Gimp         *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
 
-  switch (template->fill_type)
-    {
-    case GIMP_FOREGROUND_FILL:
-    case GIMP_BACKGROUND_FILL:
-    case GIMP_WHITE_FILL:
-      type = (template->image_type == GIMP_RGB) ? GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE;
-      break;
-    case GIMP_TRANSPARENT_FILL:
-      type = (template->image_type == GIMP_RGB) ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE;
-      break;
-    default:
-      type = GIMP_RGB_IMAGE;
-      break;
-    }
-
   gimage = gimp_create_image (gimp,
 			      template->width, template->height,
 			      template->image_type,
@@ -461,8 +446,18 @@ gimp_template_create_image (Gimp         *gimp,
   width  = gimp_image_get_width (gimage);
   height = gimp_image_get_height (gimage);
 
-  layer = gimp_layer_new (gimage, width, height,
-			  type, _("Background"),
+  switch (template->fill_type)
+    {
+    case GIMP_TRANSPARENT_FILL:
+      type = (template->image_type == GIMP_RGB) ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE;
+      break;
+    default:
+      type = (template->image_type == GIMP_RGB) ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE;
+      break;
+    }
+
+  layer = gimp_layer_new (gimage, width, height, type,
+                          _("Background"),
 			  GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   gimp_image_add_layer (gimage, layer, 0);
