@@ -124,7 +124,7 @@ gimp_image_mask_select_ellipse (GimpImage      *gimage,
   else
     {
       gimp_channel_combine_ellipse (gimp_image_get_mask (gimage), op,
-				    x, y, w, h, antialias);
+                                    x, y, w, h, antialias);
     }
 
   gimp_image_mask_changed (gimage);
@@ -159,7 +159,7 @@ gimp_image_mask_select_polygon (GimpImage      *gimage,
   scan_convert = gimp_scan_convert_new (gimage->width,
                                         gimage->height,
                                         antialias ? SUPERSAMPLE : 1);
-  gimp_scan_convert_add_points (scan_convert, n_points, points);
+  gimp_scan_convert_add_points (scan_convert, n_points, points, FALSE);
 
   mask = gimp_scan_convert_to_channel (scan_convert, gimage);
 
@@ -170,9 +170,9 @@ gimp_image_mask_select_polygon (GimpImage      *gimage,
   if (mask)
     {
       if (feather)
-	gimp_channel_feather (mask,
-			      feather_radius_x,
-			      feather_radius_y,
+        gimp_channel_feather (mask,
+                              feather_radius_x,
+                              feather_radius_y,
                               FALSE /* no undo */);
 
       gimp_channel_combine_mask (gimp_image_get_mask (gimage), mask, op, 0, 0);
@@ -194,46 +194,73 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
   GList    *stroke;
   GArray   *coords = NULL;
   gboolean  closed;
+  const gchar *undo_name = "Select Vectors"; /* this probably should be an
+                                                argument */
+
+  GimpScanConvert *scan_convert;
+  GimpChannel     *mask;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  /*  gimp_stroke_interpolate() may return NULL, so iterate over the
-   *  list of strokes until one returns coords
+  /*  if applicable, replace the current selection
+   *  or insure that a floating selection is anchored down...
    */
+  if (op == GIMP_CHANNEL_OP_REPLACE)
+    gimp_image_mask_clear (gimage, undo_name);
+  else
+    gimp_image_mask_push_undo (gimage, undo_name);
+
+#define SUPERSAMPLE 3
+
+  scan_convert = gimp_scan_convert_new (gimage->width,
+                                        gimage->height,
+                                        antialias ? SUPERSAMPLE : 1);
+
+#undef SUPERSAMPLE
+
   for (stroke = vectors->strokes; stroke; stroke = stroke->next)
     {
       coords = gimp_stroke_interpolate (GIMP_STROKE (stroke->data),
                                         1.0, &closed);
+
       if (coords)
-        break;
-    }
-
-  if (coords)
-    {
-      GimpVector2 *points;
-      gint         i;
-
-      points = g_new0 (GimpVector2, coords->len);
-
-      for (i = 0; i < coords->len; i++)
         {
-          points[i].x = g_array_index (coords, GimpCoords, i).x;
-          points[i].y = g_array_index (coords, GimpCoords, i).y;
+          GimpVector2 *points;
+          gint         i;
+
+          points = g_new0 (GimpVector2, coords->len);
+
+          for (i = 0; i < coords->len; i++)
+            {
+              points[i].x = g_array_index (coords, GimpCoords, i).x;
+              points[i].y = g_array_index (coords, GimpCoords, i).y;
+            }
+
+          gimp_scan_convert_add_points (scan_convert, coords->len,
+                                        points, TRUE);
+
+          g_array_free (coords, TRUE);
+          g_free (points);
         }
-
-      gimp_image_mask_select_polygon (GIMP_ITEM (vectors)->gimage,
-                                      _("Selection from Path"),
-                                      coords->len,
-                                      points,
-                                      op,
-                                      antialias,
-                                      feather,
-                                      feather_radius_x,
-                                      feather_radius_y);
-
-      g_array_free (coords, TRUE);
-      g_free (points);
     }
+
+  mask = gimp_scan_convert_to_channel (scan_convert, gimage);
+
+  gimp_scan_convert_free (scan_convert);
+
+  if (mask)
+    {
+      if (feather)
+        gimp_channel_feather (mask,
+                              feather_radius_x,
+                              feather_radius_y,
+                              FALSE /* no undo */);
+
+      gimp_channel_combine_mask (gimp_image_get_mask (gimage), mask, op, 0, 0);
+      g_object_unref (mask);
+    }
+
+  gimp_image_mask_changed (gimage);
 }
 
 void
@@ -258,8 +285,8 @@ gimp_image_mask_select_channel (GimpImage      *gimage,
 
   if (feather)
     gimp_channel_feather (channel,
-			  feather_radius_x,
-			  feather_radius_y,
+                          feather_radius_x,
+                          feather_radius_y,
                           FALSE /* no undo */);
 
   gimp_channel_combine_mask (gimp_image_get_mask (gimage), channel,

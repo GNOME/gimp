@@ -43,9 +43,10 @@ struct _GimpScanConvert
   guint        antialias;   /* how much to oversample by */
                             /* currently only used as boolean value */
 
-  /* record the first and last points so we can close the curve */
+  /* record the first and last points so we can close the current polygon. */
   gboolean     got_first;
   GimpVector2  first;
+  GimpVector2  prev;
   gboolean     got_last;
   GimpVector2  last;
 
@@ -58,8 +59,8 @@ struct _GimpScanConvert
 
 GimpScanConvert *
 gimp_scan_convert_new (guint width,
-		       guint height,
-		       guint antialias)
+                       guint height,
+                       guint antialias)
 {
   GimpScanConvert *sc;
 
@@ -91,33 +92,61 @@ gimp_scan_convert_free (GimpScanConvert *sc)
  */
 void
 gimp_scan_convert_add_points (GimpScanConvert *sc,
-			      guint            n_points,
-			      GimpVector2     *points)
+                              guint            n_points,
+                              GimpVector2     *points,
+                              gboolean         new_polygon)
 {
   gint  i;
-  guint antialias;
 
   g_return_if_fail (sc != NULL);
   g_return_if_fail (points != NULL);
 
-  antialias = sc->antialias;
+  /* We need up to three extra nodes later to close and finish the path */
+  sc->vpath = art_renew (sc->vpath, ArtVpath, sc->num_nodes + n_points + 3);
+
+  /* if we need to start a new polygon check, if we need to close the
+   * previous.
+   */
+  if (new_polygon)
+    {
+      /* close the last polygon if necessary */
+      if (sc->got_first && sc->got_last &&
+          (sc->first.x != sc->last.x || sc->first.y != sc->last.y))
+        {
+          sc->vpath[sc->num_nodes].code = ART_LINETO;
+          sc->vpath[sc->num_nodes].x    = sc->first.x;
+          sc->vpath[sc->num_nodes].y    = sc->first.y;
+          sc->num_nodes++;
+        }
+      sc->got_first = FALSE;
+      sc->got_last = FALSE;
+    }
 
   if (!sc->got_first && n_points > 0)
     {
       sc->got_first = TRUE;
       sc->first = points[0];
+      sc->vpath[sc->num_nodes].code =
+          (sc->num_nodes == 0 || new_polygon) ?
+                ART_MOVETO : ART_LINETO;
+      sc->vpath[sc->num_nodes].x = points[0].x;
+      sc->vpath[sc->num_nodes].y = points[0].y;
+      sc->num_nodes++;
+      sc->prev  = points[0];
     }
 
-  /* We need up to two extra nodes later to close and finish the path */
-  sc->vpath = art_renew (sc->vpath, ArtVpath, sc->num_nodes + n_points + 2);
-
-  for (i = 0; i < n_points; i++)
+  for (i = 1; i < n_points; i++)
     {
-      sc->vpath[sc->num_nodes + i].code = (sc->num_nodes + i) ? ART_LINETO : ART_MOVETO;
-      sc->vpath[sc->num_nodes + i].x = points[i].x;
-      sc->vpath[sc->num_nodes + i].y = points[i].y;
+      if (sc->prev.x != points[i].x || sc->prev.y != points[i].y)
+        {
+          sc->vpath[sc->num_nodes].code = ART_LINETO;
+          sc->vpath[sc->num_nodes].x = points[i].x;
+          sc->vpath[sc->num_nodes].y = points[i].y;
+          sc->num_nodes++;
+          sc->prev = points[i];
+        }
+
     }
-  sc->num_nodes += n_points;
 
   if (n_points > 0)
     {
@@ -135,7 +164,7 @@ gimp_scan_convert_add_points (GimpScanConvert *sc,
  */
 GimpChannel *
 gimp_scan_convert_to_channel (GimpScanConvert *sc,
-			      GimpImage       *gimage)
+                              GimpImage       *gimage)
 {
   GimpChannel *mask;
   PixelRegion  maskPR;
@@ -170,6 +199,15 @@ gimp_scan_convert_to_channel (GimpScanConvert *sc,
    * worst case scenarios. The slight perturbation should not have any
    * visible effect.
    */
+
+  /* Debug output of libart path
+  for (i=0; i < sc->num_nodes ; i++)
+    {
+      g_printerr ("X: %f, Y: %f, Type: %d\n", sc->vpath[i].x, sc->vpath[i].y,
+                                              sc->vpath[i].code );
+    }
+  */
+  
   pert_vpath = art_vpath_perturb (sc->vpath);
 
   svp  = art_svp_from_vpath (pert_vpath);
@@ -178,8 +216,8 @@ gimp_scan_convert_to_channel (GimpScanConvert *sc,
 
   pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
                      0, 0, 
-		     gimp_item_width (GIMP_ITEM (mask)), 
-		     gimp_item_height (GIMP_ITEM (mask)),
+                     gimp_item_width (GIMP_ITEM (mask)), 
+                     gimp_item_height (GIMP_ITEM (mask)),
                      TRUE);
 
   g_return_val_if_fail (maskPR.bytes == 1, NULL);

@@ -27,8 +27,8 @@ typedef struct _GimpScanConvert GimpScanConvert;
  * supersampling, or the amount to supersample by otherwise.
  */
 GimpScanConvert * gimp_scan_convert_new        (guint            width,
-						guint            height,
-						guint            antialias);
+                                                guint            height,
+                                                guint            antialias);
 
 void              gimp_scan_convert_free       (GimpScanConvert *scan_converter);
 
@@ -36,8 +36,9 @@ void              gimp_scan_convert_free       (GimpScanConvert *scan_converter)
  * described by "scan_converter".
  */
 void              gimp_scan_convert_add_points (GimpScanConvert *scan_converter,
-						guint            n_points,
-						GimpVector2     *points);
+                                                guint            n_points,
+                                                GimpVector2     *points,
+                                                gboolean         new_polygon);
 
 
 /* Scan convert the polygon described by the list of points passed to
@@ -47,7 +48,7 @@ void              gimp_scan_convert_add_points (GimpScanConvert *scan_converter,
  * joining the final point to the initial point.
  */
 GimpChannel     * gimp_scan_convert_to_channel (GimpScanConvert *scan_converter,
-						GimpImage       *gimage);
+                                                GimpImage       *gimage);
 
 
 #endif /* __GIMP_SCAN_CONVERT_H__ */

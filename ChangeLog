@@ -1,3 +1,13 @@
+2003-05-21  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpscanconvert.[ch]: Extended to be able to handle
+	multiple polygons in a sane way.
+
+	* app/core/gimpimage-mask-select.c: Use this to convert
+	multiple-stroke vectors objects to selections. Libart rocks!
+
+	* app/tools/gimpiscissorstool.c: Changed accordingly.
+
 2003-05-20  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpcolor/gimpcolorspace.[ch]: removed redundant functions
