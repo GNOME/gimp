@@ -593,6 +593,11 @@ text_tool_options_new (GimpToolInfo *tool_info)
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
 
+  table = gtk_table_new (4, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (table), FALSE, FALSE, 0);
+
   pango_context = pango_ft2_get_context (gimprc.monitor_xres,
                                          gimprc.monitor_yres);
 
@@ -602,51 +607,52 @@ text_tool_options_new (GimpToolInfo *tool_info)
 
   gimp_font_selection_set_fontname 
     (GIMP_FONT_SELECTION (options->font_selection), DEFAULT_FONT);
-  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (options->font_selection),
-                      FALSE, FALSE, 0);
-  gtk_widget_show (options->font_selection);
-  
-  /*  the size entries */
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (table), FALSE, FALSE, 0);
 
-  options->size_w = gtk_adjustment_new (options->size_d, 1e-5, 32767.0,
-                                        1.0, 50.0, 0.0);
-  size_spinbutton = 
-    gtk_spin_button_new (GTK_ADJUSTMENT (options->size_w), 1.0, 0.0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (size_spinbutton), TRUE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Font:"), 1.0, 0.5,
+                             options->font_selection, 2, FALSE);
+
+  options->size_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+                                          _("Size:"), -1, 50,
+                                          options->size_d,
+                                          1.0, 256.0, 1.0, 50.0, 1,
+                                          FALSE, 1e-5, 32767.0,
+                                          NULL, NULL);
+
+  size_spinbutton = GIMP_SCALE_ENTRY_SPINBUTTON (options->size_w);
+
   g_signal_connect (G_OBJECT (options->size_w), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->size);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Size:"), 1.0, 0.5,
-                             size_spinbutton, 1, FALSE);
 
-  options->border_w = gtk_adjustment_new (options->border_d, 1e-5, 32767.0,
-                                          1.0, 50.0, 0.0);
-  border_spinbutton =
-    gtk_spin_button_new (GTK_ADJUSTMENT (options->border_w), 1.0, 0.0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (border_spinbutton), TRUE);
+  options->border_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+                                            _("Border:"), -1, 50,
+                                            options->border_d,
+                                            0.0, 100.0, 1.0, 50.0, 1,
+                                            FALSE, 0.0, 32767.0,
+                                            NULL, NULL);
+
+  border_spinbutton = GIMP_SCALE_ENTRY_SPINBUTTON (options->border_w);
+
   g_signal_connect (G_OBJECT (options->border_w), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->border);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Border:"), 1.0, 0.5,
-                             border_spinbutton, 1, FALSE);
 
   options->unit_w =
     gimp_unit_menu_new ("%a", options->unit_d, TRUE, FALSE, TRUE);
-  g_signal_connect (G_OBJECT (options->unit_w), "unit_changed",
-                    G_CALLBACK (gimp_unit_menu_update),
-                    &options->unit);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+                             _("Unit:"), 1.0, 0.5,
+                             options->unit_w, 2, TRUE);
+
   g_object_set_data (G_OBJECT (options->unit_w), "set_digits",
                      size_spinbutton);
   g_object_set_data (G_OBJECT (size_spinbutton), "set_digits",
                      border_spinbutton);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Unit:"), 1.0, 0.5,
-                             options->unit_w, 1, FALSE);
+
+  g_signal_connect (G_OBJECT (options->unit_w), "unit_changed",
+                    G_CALLBACK (gimp_unit_menu_update),
+                    &options->unit);
 
   gtk_widget_show (table);
 

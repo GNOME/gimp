@@ -329,7 +329,6 @@ selection_options_init (SelectionOptions *options,
     {
       GtkWidget *frame;
       GtkWidget *vbox2;
-      GtkWidget *alignment;
       GtkWidget *table;
       GtkWidget *width_spinbutton;
       GtkWidget *height_spinbutton;
@@ -378,11 +377,6 @@ selection_options_init (SelectionOptions *options,
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-      gtk_container_set_border_width (GTK_CONTAINER (alignment), 2);
-      gtk_container_add (GTK_CONTAINER (frame), alignment);
-      gtk_widget_show (alignment);
-
       options->fixed_size_w =
 	gtk_check_button_new_with_label (_("Fixed Size / Aspect Ratio"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fixed_size_w),
@@ -394,40 +388,37 @@ selection_options_init (SelectionOptions *options,
                         G_CALLBACK (gimp_toggle_button_update),
                         &options->fixed_size);
 
-      gtk_widget_set_sensitive (alignment, options->fixed_size_d);
-      g_object_set_data (G_OBJECT (options->fixed_size_w), "set_sensitive",
-                         alignment);
-
-      table = gtk_table_new (3, 2, FALSE);
-      gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+      table = gtk_table_new (3, 3, FALSE);
+      gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
       gtk_table_set_row_spacings (GTK_TABLE (table), 1);
-      gtk_container_add (GTK_CONTAINER (alignment), table);
+      gtk_container_add (GTK_CONTAINER (frame), table);
 
-      options->fixed_width_w =
-	gtk_adjustment_new (options->fixed_width_d, 1e-5, 32767.0,
-			    1.0, 50.0, 0.0);
-      width_spinbutton =
-	gtk_spin_button_new (GTK_ADJUSTMENT (options->fixed_width_w), 1.0, 0.0);
-      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width_spinbutton), TRUE);
-      gtk_widget_set_size_request (width_spinbutton, 75, -1);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				 _("Width:"), 1.0, 0.5,
-				 width_spinbutton, 1, FALSE);
+      gtk_widget_set_sensitive (table, options->fixed_size_d);
+      g_object_set_data (G_OBJECT (options->fixed_size_w), "set_sensitive",
+                         table);
+
+      options->fixed_width_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                                                     _("Width:"), -1, 50,
+                                                     options->fixed_width_d,
+                                                     1.0, 100.0, 1.0, 50.0, 1,
+                                                     FALSE, 1e-5, 32767.0,
+                                                     NULL, NULL);
+
+      width_spinbutton = GIMP_SCALE_ENTRY_SPINBUTTON (options->fixed_width_w);
 
       g_signal_connect (G_OBJECT (options->fixed_width_w), "value_changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &options->fixed_width);
 
-      options->fixed_height_w =
-	gtk_adjustment_new (options->fixed_height_d, 1e-5, 32767.0,
-			    1.0, 50.0, 0.0);
-      height_spinbutton =
-	gtk_spin_button_new (GTK_ADJUSTMENT (options->fixed_height_w), 1.0, 0.0);
-      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height_spinbutton), TRUE);
-      gtk_widget_set_size_request (height_spinbutton, 75, -1);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-				 _("Height:"), 1.0, 0.5,
-				 height_spinbutton, 1, FALSE);
+      options->fixed_height_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+                                                      _("Height:"), -1, 50,
+                                                      options->fixed_height_d,
+                                                      1.0, 100.0, 1.0, 50.0, 1,
+                                                      FALSE, 1e-5, 32767.0,
+                                                      NULL, NULL);
+
+      height_spinbutton = GIMP_SCALE_ENTRY_SPINBUTTON (options->fixed_height_w);
 
       g_signal_connect (G_OBJECT (options->fixed_height_w), "value_changed",
                         G_CALLBACK (gimp_double_adjustment_update),
@@ -435,13 +426,14 @@ selection_options_init (SelectionOptions *options,
 
       options->fixed_unit_w =
 	gimp_unit_menu_new ("%a", options->fixed_unit_d, TRUE, TRUE, TRUE);
-      g_object_set_data (G_OBJECT (options->fixed_unit_w), "set_digits",
-			   width_spinbutton);
-      g_object_set_data (G_OBJECT (width_spinbutton), "set_digits",
-			   height_spinbutton);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 				 _("Unit:"), 1.0, 0.5,
-				 options->fixed_unit_w, 1, FALSE);
+				 options->fixed_unit_w, 2, TRUE);
+
+      g_object_set_data (G_OBJECT (options->fixed_unit_w), "set_digits",
+                         width_spinbutton);
+      g_object_set_data (G_OBJECT (width_spinbutton), "set_digits",
+                         height_spinbutton);
 
       g_signal_connect (G_OBJECT (options->fixed_unit_w), "unit_changed",
                         G_CALLBACK (gimp_unit_menu_update),

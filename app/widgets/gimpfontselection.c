@@ -99,9 +99,9 @@ gimp_font_selection_get_type (void)
 static void
 gimp_font_selection_class_init (GimpFontSelectionClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class;
 
-  object_class = (GObjectClass *) klass;
+  object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -133,24 +133,28 @@ gimp_font_selection_init (GimpFontSelection *fontsel)
   gtk_widget_show (fontsel->valid);
 
   fontsel->entry = gtk_entry_new ();
+  gtk_entry_set_width_chars (GTK_ENTRY (fontsel->entry), 16);
   gtk_box_pack_start (GTK_BOX (fontsel), fontsel->entry, TRUE, TRUE, 0);
+  gtk_widget_show (fontsel->entry);
+
   g_signal_connect (G_OBJECT (fontsel->entry), "activate",
                     G_CALLBACK (gimp_font_selection_entry_callback),
                     fontsel);
   g_signal_connect (G_OBJECT (fontsel->entry), "focus_out_event",
                     G_CALLBACK (gimp_font_selection_entry_focus_out),
                     fontsel);
-  gtk_widget_show (fontsel->entry);
 
   button = gtk_button_new ();
+  gtk_box_pack_end (GTK_BOX (fontsel), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   image = gtk_image_new_from_stock (GTK_STOCK_SELECT_FONT, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
-  gtk_box_pack_end (GTK_BOX (fontsel), button, FALSE, FALSE, 0);
+
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (gimp_font_selection_browse_callback),
                     fontsel);
-  gtk_widget_show (button);
 }
 
 static void

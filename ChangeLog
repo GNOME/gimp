@@ -1,5 +1,32 @@
 2002-03-10  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.h: removed type checking casts from
+	macros which return parts of pseudo-widgets.
+
+	* app/widgets/gimpbrushfactoryview.c: changed accordingly.
+
+	* app/widgets/gimpdialogfactory.c: added a "dispose"
+	implementation used to destroy all dialogs the factory has
+	created.
+
+	* app/gui/toolbox.[ch]: removed toolbox_free(), removed the static
+	"toolbox_shell" variable, set the active tool correctly on
+	creation, don't show the window here (fixes session menagement),
+	take the vbox' spacing into account when calculating the window's
+	resize hints.
+
+	* app/gui/gui.c: don't include "toolbox.h", don't call
+	toolbox_free().
+
+	* app/widgets/gimpfontselection.c: set the width of the entry to
+	16 chars on creation so it doesn't fall back to it's insanely
+	large default width, minor stuff.
+
+	* app/tools/gimptexttool.c
+	* app/tools/selection_options.c: some more scale_entries.
+
+2002-03-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/dialogs-constructors.[ch]
 	* app/gui/dialogs.c
 	* app/gui/tool-options-dialog.[ch]: made the tool options dialog

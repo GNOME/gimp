@@ -96,7 +96,6 @@ static void       toolbox_drop_buffer           (GtkWidget      *widget,
 
 
 /*  local variables  */
-static GtkWidget *toolbox_shell = NULL;
 
 static GtkTargetEntry toolbox_target_table[] =
 {
@@ -226,19 +225,7 @@ toolbox_create (Gimp *gimp)
 
   toolbox_style_set (window, NULL, gimp);
 
-  gtk_widget_show (window);
-
-  toolbox_shell = window;
-
-  return toolbox_shell;
-}
-
-void
-toolbox_free (Gimp *gimp)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  gtk_widget_destroy (toolbox_shell);
+  return window;
 }
 
 
@@ -248,8 +235,11 @@ static void
 toolbox_create_tools (GtkWidget   *wbox,
                       GimpContext *context)
 {
-  GList  *list;
-  GSList *group = NULL;
+  GimpToolInfo *active_tool;
+  GList        *list;
+  GSList       *group = NULL;
+
+  active_tool = gimp_context_get_tool (context);
 
   for (list = GIMP_LIST (context->gimp->tool_info_list)->list;
        list;
@@ -274,6 +264,9 @@ toolbox_create_tools (GtkWidget   *wbox,
 					GTK_ICON_SIZE_BUTTON);
       gtk_container_add (GTK_CONTAINER (button), image);
       gtk_widget_show (image);
+
+      if (tool_info == active_tool)
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
       g_signal_connect (G_OBJECT (button), "toggled",
 			G_CALLBACK (toolbox_tool_button_toggled),
@@ -380,8 +373,8 @@ toolbox_tool_changed (GimpContext  *context,
     {
       GtkWidget *toolbox_button;
 
-      toolbox_button =
-	g_object_get_data (G_OBJECT (tool_info), "toolbox-button");
+      toolbox_button = g_object_get_data (G_OBJECT (tool_info),
+                                          "toolbox-button");
 
       if (toolbox_button && ! GTK_TOGGLE_BUTTON (toolbox_button)->active)
 	{
@@ -389,7 +382,8 @@ toolbox_tool_changed (GimpContext  *context,
 					   toolbox_tool_button_toggled,
 					   tool_info);
 
-	  gtk_widget_activate (toolbox_button);
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toolbox_button),
+                                        TRUE);
 
 	  g_signal_handlers_unblock_by_func (G_OBJECT (toolbox_button),
 					     toolbox_tool_button_toggled,
@@ -468,6 +462,7 @@ toolbox_style_set (GtkWidget *window,
       GtkRequisition  indicator_requisition;
       GdkGeometry     geometry;
       gint            border_width;
+      gint            spacing;
       GList          *children;
 
       children =
@@ -491,9 +486,12 @@ toolbox_style_set (GtkWidget *window,
       border_width =
         gtk_container_get_border_width (GTK_CONTAINER (GTK_BIN (window)->child));
 
+      spacing = gtk_box_get_spacing (GTK_BOX (GTK_BIN (window)->child));
+
       geometry.min_width  = (2 * border_width +
                              2 * button_requisition.width);
       geometry.min_height = (2 * border_width +
+                             spacing +
                              button_requisition.height +
                              menubar_requisition.height +
                              MAX (color_requisition.height,

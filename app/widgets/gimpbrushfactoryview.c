@@ -116,8 +116,7 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  view->spacing_scale =
-    GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (view->spacing_adjustment));
+  view->spacing_scale = GIMP_SCALE_ENTRY_SCALE (view->spacing_adjustment);
 
   g_signal_connect (G_OBJECT (view->spacing_adjustment), "value_changed",
 		    G_CALLBACK (gimp_brush_factory_view_spacing_update),

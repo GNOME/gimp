@@ -127,16 +127,16 @@ GtkWidget * gimp_spin_button_new   (/* return value: */
 				    guint               digits);
 
 #define GIMP_SCALE_ENTRY_LABEL(adj) \
-        GTK_LABEL (g_object_get_data (G_OBJECT (adj), "label"))
+        (g_object_get_data (G_OBJECT (adj), "label"))
 
 #define GIMP_SCALE_ENTRY_SCALE(adj) \
-        GTK_HSCALE (g_object_get_data (G_OBJECT (adj), "scale"))
+        (g_object_get_data (G_OBJECT (adj), "scale"))
 #define GIMP_SCALE_ENTRY_SCALE_ADJ(adj) \
         gtk_range_get_adjustment \
         (GTK_RANGE (g_object_get_data (G_OBJECT (adj), "scale")))
 
 #define GIMP_SCALE_ENTRY_SPINBUTTON(adj) \
-        GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (adj), "spinbutton"))
+        (g_object_get_data (G_OBJECT (adj), "spinbutton"))
 #define GIMP_SCALE_ENTRY_SPINBUTTON_ADJ(adj) \
         gtk_spin_button_get_adjustment \
         (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (adj), "spinbutton")))
@@ -160,13 +160,13 @@ GtkObject * gimp_scale_entry_new   (GtkTable           *table,
 				    const gchar        *help_data);
 
 #define GIMP_RANDOM_SEED_SPINBUTTON(hbox) \
-        GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (hbox), "spinbutton"))
+        (g_object_get_data (G_OBJECT (hbox), "spinbutton"))
 #define GIMP_RANDOM_SEED_SPINBUTTON_ADJ(hbox) \
         gtk_spin_button_get_adjustment \
         (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (hbox), "spinbutton")))
 
 #define GIMP_RANDOM_SEED_TOGGLEBUTTON(hbox) \
-        GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT (hbox), "togglebutton"))
+        (g_object_get_data (G_OBJECT (hbox), "togglebutton"))
 
 GtkWidget * gimp_random_seed_new   (gint               *seed,
 				    gint               *use_time,
@@ -174,8 +174,7 @@ GtkWidget * gimp_random_seed_new   (gint               *seed,
 				    gint                time_false);
 
 #define GIMP_COORDINATES_CHAINBUTTON(sizeentry) \
-        GIMP_CHAIN_BUTTON (g_object_get_data (G_OBJECT (sizeentry), \
-                                              "chainbutton"))
+        (g_object_get_data (G_OBJECT (sizeentry), "chainbutton"))
 
 GtkWidget * gimp_coordinates_new   (GimpUnit            unit,
 				    const gchar        *unit_format,
@@ -204,12 +203,12 @@ GtkWidget * gimp_coordinates_new   (GimpUnit            unit,
 				    gdouble             ysize_100  /* % */);
 
 #define GIMP_MEM_SIZE_ENTRY_SPINBUTTON(memsize) \
-        GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (memsize), "spinbutton"))
+        (g_object_get_data (G_OBJECT (memsize), "spinbutton"))
 #define GIMP_MEM_SIZE_ENTRY_SPINBUTTON_ADJ(memsize) \
         gtk_spin_button_get_adjustment \
         (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (memsize), "spinbutton")))
 #define GIMP_MEM_SIZE_ENTRY_OPTIONMENU(memsize) \
-        GTK_OPTION_MENU (g_object_get_data (G_OBJECT (memsize), "optionmenu"))
+        (g_object_get_data (G_OBJECT (memsize), "optionmenu"))
 
 GtkWidget * gimp_mem_size_entry_new (GtkAdjustment      *adjustment);
   

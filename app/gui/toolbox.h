@@ -20,8 +20,7 @@
 #define __TOOLBOX_H__
 
 
-GtkWidget * toolbox_create  (Gimp *gimp);
-void        toolbox_free    (Gimp *gimp);
+GtkWidget * toolbox_create (Gimp *gimp);
 
 
 #endif /* __TOOLBOX_H__ */

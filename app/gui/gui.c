@@ -57,7 +57,6 @@
 #include "palette-select.h"
 #include "pattern-select.h"
 #include "session.h"
-#include "toolbox.h"
 
 #include "gimprc.h"
 
@@ -307,9 +306,6 @@ gui_exit (Gimp *gimp)
 
   dialogs_exit (gimp);
   gimp_devices_exit (gimp);
-
-  /*  handle this in the dialog factory:  */
-  toolbox_free (gimp);
 
   gimp_help_free ();
 

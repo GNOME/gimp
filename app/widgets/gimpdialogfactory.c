@@ -61,7 +61,8 @@ typedef enum
 static void   gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass);
 static void   gimp_dialog_factory_init       (GimpDialogFactory      *factory);
 
-static void   gimp_dialog_factory_finalize   (GObject                *object);
+static void   gimp_dialog_factory_dispose             (GObject           *object);
+static void   gimp_dialog_factory_finalize            (GObject           *object);
 
 static void   gimp_dialog_factories_save_foreach      (gchar             *name,
 						       GimpDialogFactory *factory,
@@ -131,6 +132,7 @@ gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class->dispose  = gimp_dialog_factory_dispose;
   object_class->finalize = gimp_dialog_factory_finalize;
 
   klass->factories = g_hash_table_new (g_str_hash, g_str_equal);
@@ -144,6 +146,36 @@ gimp_dialog_factory_init (GimpDialogFactory *factory)
   factory->registered_dialogs = NULL;
   factory->session_infos      = NULL;
   factory->open_dialogs       = NULL;
+}
+
+static void
+gimp_dialog_factory_dispose (GObject *object)
+{
+  GimpDialogFactory *factory;
+  GList             *list;
+
+  factory = GIMP_DIALOG_FACTORY (object);
+
+  while (factory->open_dialogs)
+    {
+      for (list = factory->open_dialogs; list; list = g_list_next (list))
+        {
+          if (GTK_WIDGET_TOPLEVEL (list->data))
+            {
+              gtk_widget_destroy (GTK_WIDGET (list->data));
+              break;
+            }
+        }
+
+      if (! list)
+        {
+          g_warning ("%s: stale entries in factory->open_dialogs",
+                     G_GNUC_FUNCTION);
+          break;
+        }
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -200,7 +232,7 @@ gimp_dialog_factory_new (const gchar       *name,
 
   if (g_hash_table_lookup (factory_class->factories, name))
     {
-      g_warning ("%s(): dialog factory \"%s\" already exists",
+      g_warning ("%s: dialog factory \"%s\" already exists",
 		 G_GNUC_FUNCTION, name);
       return NULL;
     }
@@ -332,14 +364,14 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 
   if (! entry)
     {
-      g_warning ("%s(): no entry entry registered for \"%s\"",
+      g_warning ("%s: no entry entry registered for \"%s\"",
 		 G_GNUC_FUNCTION, identifier);
       return NULL;
     }
 
   if (! entry->new_func)
     {
-      g_warning ("%s(): entry for \"%s\" has no constructor",
+      g_warning ("%s: entry for \"%s\" has no constructor",
 		 G_GNUC_FUNCTION, identifier);
       return NULL;
     }
@@ -419,7 +451,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 		}
 	      else
 		{
-		  g_warning ("%s(): GimpDialogFactory is a dockable factory "
+		  g_warning ("%s: GimpDialogFactory is a dockable factory "
 			     "but constructor for \"%s\" did not return a "
 			     "GimpDockable",
 			     G_GNUC_FUNCTION, identifier);
@@ -432,7 +464,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 	}
       else if (dock)
 	{
-	  g_warning ("%s(): constructor for \"%s\" returned NULL",
+	  g_warning ("%s: constructor for \"%s\" returned NULL",
 		     G_GNUC_FUNCTION, identifier);
 
 	  gtk_widget_destroy (dock);
@@ -626,7 +658,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
   if (g_list_find (factory->open_dialogs, dialog))
     {
-      g_warning ("%s(): dialog already registered", G_GNUC_FUNCTION);
+      g_warning ("%s: dialog already registered", G_GNUC_FUNCTION);
       return;
     }
 
@@ -636,14 +668,14 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
   if (! (dialog_factory && (entry || GIMP_IS_DOCK (dialog))))
     {
-      g_warning ("%s(): dialog was not created by a GimpDialogFactory",
+      g_warning ("%s: dialog was not created by a GimpDialogFactory",
 		 G_GNUC_FUNCTION);
       return;
     }
 
   if (dialog_factory != factory)
     {
-      g_warning ("%s(): dialog was created by a different GimpDialogFactory",
+      g_warning ("%s: dialog was created by a different GimpDialogFactory",
 		 G_GNUC_FUNCTION);
       return;
     }
@@ -670,7 +702,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 		{
 		  if (entry->singleton)
 		    {
-		      g_warning ("%s(): singleton dialog \"%s\" created twice",
+		      g_warning ("%s: singleton dialog \"%s\" created twice",
 				 G_GNUC_FUNCTION, entry->identifier);
 
                       g_print ("%s: corrupt session info: %p (widget %p)\n",
@@ -780,7 +812,7 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
 
   if (! g_list_find (factory->open_dialogs, dialog))
     {
-      g_warning ("%s(): dialog not registered", G_GNUC_FUNCTION);
+      g_warning ("%s: dialog not registered", G_GNUC_FUNCTION);
       return;
     }
 
@@ -792,14 +824,14 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
 
   if (! (dialog_factory && (entry || GIMP_IS_DOCK (dialog))))
     {
-      g_warning ("%s(): dialog was not created by a GimpDialogFactory",
+      g_warning ("%s: dialog was not created by a GimpDialogFactory",
 		 G_GNUC_FUNCTION);
       return;
     }
 
   if (dialog_factory != factory)
     {
-      g_warning ("%s(): dialog was created by a different GimpDialogFactory",
+      g_warning ("%s: dialog was created by a different GimpDialogFactory",
 		 G_GNUC_FUNCTION);
       return;
     }
