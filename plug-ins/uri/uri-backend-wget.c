@@ -58,6 +58,12 @@ uri_backend_get_load_protocols (void)
   return "http:,https:,ftp:";
 }
 
+const gchar *
+uri_backend_get_save_protocols (void)
+{
+  return NULL;
+}
+
 gboolean
 uri_backend_load_image (const gchar  *uri,
                         const gchar  *tmpname,
@@ -277,4 +283,15 @@ uri_backend_load_image (const gchar  *uri,
     }
 
   return TRUE;
+}
+
+gboolean
+uri_backend_save_image (const gchar  *uri,
+                        const gchar  *tmpname,
+                        GimpRunMode   run_mode,
+                        GError      **error)
+{
+  g_set_error (error, 0, 0, "EEK");
+
+  return FALSE;
 }

@@ -1,3 +1,16 @@
+2005-02-07  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/uri/uri-backend.h: added backend methods for saving to
+	URIs.
+
+	* plug-ins/uri/uri.c: register a save procecure if the save method
+	is available, using some code from compressor.c
+
+	* plug-ins/uri/uri-backend-gnomevfs.c: implement saving.
+
+	* plug-ins/uri/uri-backend-wget.c: added saving stubs which always
+	fail.
+
 2005-02-07  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_add_filters): add

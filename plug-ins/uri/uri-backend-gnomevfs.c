@@ -30,9 +30,12 @@
 
 /*  local function prototypes  */
 
-static gboolean   copy_uri (const gchar  *src_uri,
-                            const gchar  *dest_uri,
-                            GError      **error);
+static gchar    * get_protocols (void);
+static gboolean   copy_uri      (const gchar  *src_uri,
+                                 const gchar  *dest_uri,
+                                 const gchar  *copying_format_str,
+                                 const gchar  *copied_format_str,
+                                 GError      **error);
 
 
 /*  private variables  */
@@ -64,48 +67,18 @@ const gchar *
 uri_backend_get_load_protocols (void)
 {
   if (! supported_protocols)
-    {
-      static const gchar *protocols[] =
-      {
-        "http:",
-        "https:",
-        "ftp:",
-        "sftp:",
-        "ssh:",
-        "smb:",
-        "dav:",
-        "davs:"
-      };
+    supported_protocols = get_protocols ();
 
-      GString *string = g_string_new (NULL);
-      gint     i;
+  return supported_protocols;
+}
 
-      for (i = 0; i < G_N_ELEMENTS (protocols); i++)
-        {
-          gchar       *uri;
-          GnomeVFSURI *vfs_uri;
+const gchar *
+uri_backend_get_save_protocols (void)
+{
+  if (! supported_protocols)
+    supported_protocols = get_protocols ();
 
-          uri = g_strdup_printf ("%s//foo/bar.xcf", protocols[i]);
-
-          vfs_uri = gnome_vfs_uri_new (uri);
-
-          if (vfs_uri)
-            {
-              if (string->len > 0)
-                g_string_append_c (string, ',');
-
-              g_string_append (string, protocols[i]);
-
-              gnome_vfs_uri_unref (vfs_uri);
-            }
-
-          g_free (uri);
-        }
-
-      supported_protocols = g_string_free (string, FALSE);
-    }
-
-  return "http:,https:,ftp:,sftp:,ssh:,smb:,dav:,davs:";
+  return supported_protocols;
 }
 
 gboolean
@@ -118,18 +91,84 @@ uri_backend_load_image (const gchar  *uri,
   gboolean  success;
 
   dest_uri = g_filename_to_uri (tmpname, NULL, NULL);
-  success = copy_uri (uri, dest_uri, error);
+  success = copy_uri (uri, dest_uri,
+                      _("Downloading %llu bytes of image data..."),
+                      _("Downloaded %llu bytes of image data"),
+                      error);
   g_free (dest_uri);
 
   return success;
 }
 
+gboolean
+uri_backend_save_image (const gchar  *uri,
+                        const gchar  *tmpname,
+                        GimpRunMode   run_mode,
+                        GError      **error)
+{
+  gchar    *src_uri;
+  gboolean  success;
+
+  src_uri = g_filename_to_uri (tmpname, NULL, NULL);
+  success = copy_uri (src_uri, uri,
+                      _("Uploading %llu bytes of image data..."),
+                      _("Uploaded %llu bytes of image data"),
+                      error);
+  g_free (src_uri);
+
+  return success;
+}
 
 /*  private functions  */
+
+static gchar *
+get_protocols (void)
+{
+  static const gchar *protocols[] =
+  {
+    "http:",
+    "https:",
+    "ftp:",
+    "sftp:",
+    "ssh:",
+    "smb:",
+    "dav:",
+    "davs:"
+  };
+
+  GString *string = g_string_new (NULL);
+  gint     i;
+
+  for (i = 0; i < G_N_ELEMENTS (protocols); i++)
+    {
+      gchar       *uri;
+      GnomeVFSURI *vfs_uri;
+
+      uri = g_strdup_printf ("%s//foo/bar.xcf", protocols[i]);
+
+      vfs_uri = gnome_vfs_uri_new (uri);
+
+      if (vfs_uri)
+        {
+          if (string->len > 0)
+            g_string_append_c (string, ',');
+
+          g_string_append (string, protocols[i]);
+
+          gnome_vfs_uri_unref (vfs_uri);
+        }
+
+      g_free (uri);
+    }
+
+  return g_string_free (string, FALSE);
+}
 
 static gboolean
 copy_uri (const gchar  *src_uri,
           const gchar  *dest_uri,
+          const gchar  *copying_format_str,
+          const gchar  *copied_format_str,
           GError      **error)
 {
   GnomeVFSHandle   *read_handle;
@@ -166,7 +205,7 @@ copy_uri (const gchar  *src_uri,
     }
 
   result = gnome_vfs_create (&write_handle, dest_uri,
-                             GNOME_VFS_OPEN_WRITE, FALSE, 0777);
+                             GNOME_VFS_OPEN_WRITE, FALSE, 0644);
 
   if (result != GNOME_VFS_OK)
     {
@@ -178,11 +217,9 @@ copy_uri (const gchar  *src_uri,
     }
 
   if (file_size > 0)
-    message = g_strdup_printf (_("Downloading %llu bytes of image data..."),
-                               file_size);
+    message = g_strdup_printf (copying_format_str, file_size);
   else
-    message = g_strdup_printf (_("Downloaded %llu bytes of image data"),
-                               (GnomeVFSFileSize) 0);
+    message = g_strdup_printf (copied_format_str, (GnomeVFSFileSize) 0);
 
   gimp_progress_init (message);
   g_free (message);
@@ -222,8 +259,7 @@ copy_uri (const gchar  *src_uri,
         }
       else
         {
-          message = g_strdup_printf (_("Downloaded %llu bytes of image data"),
-                                     bytes_read);
+          message = g_strdup_printf (copied_format_str, bytes_read);
           gimp_progress_init (message);
           g_free (message);
         }

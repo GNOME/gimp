@@ -24,7 +24,13 @@ gboolean      uri_backend_init               (GError      **error);
 void          uri_backend_shutdown           (void);
 
 const gchar * uri_backend_get_load_protocols (void);
+const gchar * uri_backend_get_save_protocols (void);
+
 gboolean      uri_backend_load_image         (const gchar  *uri,
+                                              const gchar  *tmpname,
+                                              GimpRunMode   run_mode,
+                                              GError      **error);
+gboolean      uri_backend_save_image         (const gchar  *uri,
                                               const gchar  *tmpname,
                                               GimpRunMode   run_mode,
                                               GError      **error);
