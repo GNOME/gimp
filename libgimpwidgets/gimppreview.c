@@ -60,7 +60,9 @@ static gboolean gimp_preview_button_release     (GtkWidget        *hs,
                                                  GimpPreview      *preview);
 static void     gimp_preview_draw               (GimpPreview      *preview);
 static void     gimp_preview_area_realize       (GtkWidget        *widget);
-static void     gimp_preview_area_size_allocate (GimpPreview      *preview);
+static void     gimp_preview_area_size_allocate (GtkWidget        *widget,
+                                                 GtkAllocation    *allocation,
+                                                 GimpPreview      *preview);
 static void     gimp_preview_h_scroll           (GtkAdjustment    *hadj,
                                                  GimpPreview      *preview);
 static void     gimp_preview_v_scroll           (GtkAdjustment    *vadj,
@@ -149,6 +151,9 @@ gimp_preview_init (GimpPreview *preview)
 {
   GtkWidget *frame;
 
+  gtk_table_resize (GTK_TABLE (preview), 3, 2);
+  gtk_table_set_homogeneous (GTK_TABLE (preview), FALSE);
+
   preview->xoff           = 0;
   preview->yoff           = 0;
   preview->in_drag        = FALSE;
@@ -159,9 +164,6 @@ gimp_preview_init (GimpPreview *preview)
 
   preview->width  = preview->xmax - preview->xmin;
   preview->height = preview->ymax - preview->ymin;
-
-  gtk_table_resize (GTK_TABLE (preview), 3, 2);
-  gtk_table_set_homogeneous (GTK_TABLE (preview), FALSE);
 
   preview->hadj = gtk_adjustment_new (0, 0, preview->width - 1, 1.0,
                                       preview->width, preview->width);
@@ -175,7 +177,6 @@ gimp_preview_init (GimpPreview *preview)
                                GTK_UPDATE_CONTINUOUS);
   gtk_table_attach (GTK_TABLE (preview), preview->hscr, 0,1, 1,2,
                     GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (preview->hscr);
 
   g_signal_connect (preview->hscr, "button-release-event",
                     G_CALLBACK (gimp_preview_button_release), preview);
@@ -192,7 +193,6 @@ gimp_preview_init (GimpPreview *preview)
                                GTK_UPDATE_CONTINUOUS);
   gtk_table_attach (GTK_TABLE (preview), preview->vscr, 1,2, 0,1,
                     GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (preview->vscr);
 
   g_signal_connect (preview->vscr, "button-release-event",
                     G_CALLBACK (gimp_preview_button_release), preview);
@@ -206,7 +206,6 @@ gimp_preview_init (GimpPreview *preview)
   gtk_widget_show (frame);
 
   preview->area = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview->area, preview->width, preview->height);
   gtk_container_add (GTK_CONTAINER (frame), preview->area);
   gtk_widget_show (preview->area);
 
@@ -224,9 +223,9 @@ gimp_preview_init (GimpPreview *preview)
                     G_CALLBACK (gimp_preview_area_realize),
                     NULL);
 
-  g_signal_connect_swapped (preview->area, "size_allocate",
-                            G_CALLBACK (gimp_preview_area_size_allocate),
-                            preview);
+  g_signal_connect (preview->area, "size_allocate",
+                    G_CALLBACK (gimp_preview_area_size_allocate),
+                    preview);
 
   /* a toggle button to (des)activate the instant preview */
 
@@ -323,8 +322,44 @@ gimp_preview_area_realize (GtkWidget *widget)
 }
 
 static void
-gimp_preview_area_size_allocate (GimpPreview *preview)
+gimp_preview_area_size_allocate (GtkWidget     *widget,
+                                 GtkAllocation *allocation,
+                                 GimpPreview   *preview)
 {
+  gint  width  = preview->xmax - preview->xmin;
+  gint  height = preview->ymax - preview->ymin;
+
+  preview->width  = allocation->width;
+  preview->height = allocation->height;
+
+  if (width > preview->width)
+    {
+      gtk_widget_show (preview->hscr);
+
+      gtk_range_set_increments (GTK_RANGE (preview->hscr),
+                                1.0, MIN (preview->width, width));
+      gtk_range_set_range (GTK_RANGE (preview->hscr),
+                           0, width - preview->width - 1);
+    }
+  else
+    {
+      gtk_widget_hide (preview->hscr);
+    }
+
+  if (height > preview->height)
+    {
+      gtk_widget_show (preview->vscr);
+
+      gtk_range_set_increments (GTK_RANGE (preview->vscr),
+                                1.0, MIN (preview->height, height));
+      gtk_range_set_range (GTK_RANGE (preview->vscr),
+                           0, height - preview->height - 1);
+    }
+  else
+    {
+      gtk_widget_hide (preview->vscr);
+    }
+
   gimp_preview_draw (preview);
   gimp_preview_invalidate (preview);
 }
@@ -335,7 +370,7 @@ gimp_preview_h_scroll (GtkAdjustment *hadj,
 {
   preview->xoff = hadj->value;
 
-  if (!preview->in_drag)
+  if (! preview->in_drag)
     gimp_preview_draw (preview);
 }
 
@@ -345,7 +380,7 @@ gimp_preview_v_scroll (GtkAdjustment *vadj,
 {
   preview->yoff = vadj->value;
 
-  if (!preview->in_drag)
+  if (! preview->in_drag)
     gimp_preview_draw (preview);
 }
 
@@ -394,6 +429,7 @@ gimp_preview_area_event (GtkWidget   *area,
                         0, preview->xmax - preview->xmin - preview->width);
           yoff = CLAMP (preview->drag_yoff - dy,
                         0, preview->ymax - preview->ymin - preview->height);
+
           gtk_adjustment_set_value (GTK_ADJUSTMENT (preview->hadj), xoff);
           gtk_adjustment_set_value (GTK_ADJUSTMENT (preview->vadj), yoff);
 
