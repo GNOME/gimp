@@ -198,7 +198,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   menu = gimp_prop_unit_menu_new (config, "font-size-unit", "%a");
   g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
-  gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (menu);
 
@@ -212,19 +212,19 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 			     button, 1, FALSE);
 
   box = gimp_prop_enum_stock_box_new (config, "justify", "gtk-justify", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
                              _("Justify:"), 1.0, 0.5,
 			     box, 2, TRUE);
 
   spinbutton = gimp_prop_spin_button_new (config, "indent", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
                              _("Indent:"), 1.0, 0.5,
                              spinbutton, 1, FALSE);
 
   spinbutton = gimp_prop_spin_button_new (config, "line-spacing", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
-  gimp_table_attach_stock (GTK_TABLE (table), 5,
+  gimp_table_attach_stock (GTK_TABLE (table), 6,
                            _("Line\nSpacing:"), 0.0,
 			   spinbutton, 1, GIMP_STOCK_LINE_SPACING);
 
