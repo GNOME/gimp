@@ -185,7 +185,7 @@ package Gimp::CodeGen::enums;
 		       GRAY => '1',
 		       INDEXED => '2' }
 	},
-    OrientationType =>
+    InternalOrientationType =>
 	{ contig => 1,
 	  header => 'gimpimage.h',
 	  symbols => [ qw(ORIENTATION_UNKNOWN ORIENTATION_HORIZONTAL
@@ -193,6 +193,14 @@ package Gimp::CodeGen::enums;
 	  mapping => { ORIENTATION_UNKNOWN => '0',
 		       ORIENTATION_HORIZONTAL => '1',
 		       ORIENTATION_VERTICAL => '2' }
+	},
+    OrientationType =>
+	{ contig => 1,
+	  header => 'gimpimage.h',
+	  symbols => [ qw(HORIZONTAL VERTICAL UNKNOWN) ],
+	  mapping => { HORIZONTAL => '0',
+		       VERTICAL => '1',
+		       UNKNOWN => '2' }
 	},
     ChannelType =>
 	{ contig => 1,

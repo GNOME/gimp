@@ -36,6 +36,7 @@
 #include "flip_tool.h"
 #include "free_select.h"
 #include "fuzzy_select.h"
+#include "gimpimage.h"
 #include "paint_core.h"
 #include "paint_funcs.h"
 #include "paintbrush.h"
@@ -1573,7 +1574,7 @@ flip_invoker (Argument *args)
     success = FALSE;
 
   flip_type = args[1].value.pdb_int;
-  if (flip_type < 0 || flip_type > 1)
+  if (flip_type < VERTICAL || flip_type > UNKNOWN)
     success = FALSE;
 
   if (success)
@@ -1587,9 +1588,16 @@ flip_invoker (Argument *args)
       float_tiles = transform_core_cut (gimage, drawable, &new_layer);
     
       /* flip the buffer */
-      new_tiles = flip_tool_flip (gimage, drawable, float_tiles, -1,
-				  flip_type == 1 ? ORIENTATION_VERTICAL :
-						   ORIENTATION_HORIZONTAL);
+      switch (flip_type)
+	{
+	case ORIENTATION_HORIZONTAL:
+	case ORIENTATION_VERTICAL:
+	  new_tiles = flip_tool_flip (gimage, drawable, float_tiles, -1, flip_type);
+	  break;
+	default:
+	  new_tiles = NULL;
+	  break;
+	}
     
       /* free the cut/copied buffer */
       tile_manager_destroy (float_tiles);
@@ -1624,7 +1632,7 @@ static ProcArg flip_inargs[] =
   {
     PDB_INT32,
     "flip_type",
-    "Type of flip: HORIZONTAL (0) or VERTICAL (1)"
+    "Type of flip: HORIZONTAL (0), VERTICAL (1), UNKNOWN (2)"
   }
 };
 
@@ -2648,7 +2656,7 @@ shear_invoker (Argument *args)
   interpolation = args[1].value.pdb_int ? TRUE : FALSE;
 
   shear_type = args[2].value.pdb_int;
-  if (shear_type < 0 || shear_type > 1)
+  if (shear_type < VERTICAL || shear_type > UNKNOWN)
     success = FALSE;
 
   magnitude = args[3].value.pdb_float;
@@ -2669,9 +2677,9 @@ shear_invoker (Argument *args)
       gimp_matrix_identity  (matrix);
       gimp_matrix_translate (matrix, -cx, -cy);
       /* Shear matrix */
-      if (shear_type == 0)
+      if (shear_type == ORIENTATION_HORIZONTAL)
 	gimp_matrix_xshear (matrix, magnitude / float_tiles->height);
-      else if (shear_type == 1)
+      else if (shear_type == ORIENTATION_VERTICAL)
 	gimp_matrix_yshear (matrix, magnitude / float_tiles->width);
       gimp_matrix_translate (matrix, +cx, +cy);
     
@@ -2717,7 +2725,7 @@ static ProcArg shear_inargs[] =
   {
     PDB_INT32,
     "shear_type",
-    "Type of shear: HORIZONTAL (0) or VERTICAL (1)"
+    "Type of shear: HORIZONTAL (0), VERTICAL (1), UNKNOWN (2)"
   },
   {
     PDB_FLOAT,

@@ -649,8 +649,8 @@ HELP
 
     @inargs = (
 	&drawable_arg,
-	{ name => 'flip_type', type => '0 <= int32 <= 1',
-	  desc => 'Type of flip: HORIZONTAL (0) or VERTICAL (1)' }
+	{ name => 'flip_type', type => &std_orientation_enum,
+	  desc => 'Type of flip: %%desc%%' }
     );
 
     @outargs = ( &drawable_out_arg('flipped') );
@@ -670,9 +670,16 @@ HELP
   float_tiles = transform_core_cut (gimage, drawable, &new_layer);
 
   /* flip the buffer */
-  new_tiles = flip_tool_flip (gimage, drawable, float_tiles, -1,
-			      flip_type == 1 ? ORIENTATION_VERTICAL :
-					       ORIENTATION_HORIZONTAL);
+  switch (flip_type)
+    {
+    case ORIENTATION_HORIZONTAL:
+    case ORIENTATION_VERTICAL:
+      new_tiles = flip_tool_flip (gimage, drawable, float_tiles, -1, flip_type);
+      break;
+    default:
+      new_tiles = NULL;
+      break;
+    }
 
   /* free the cut/copied buffer */
   tile_manager_destroy (float_tiles);
@@ -1226,8 +1233,8 @@ HELP
 	&drawable_arg,
 	{ name => 'interpolation', type => 'boolean',
 	  desc => 'Whether to use interpolation' },
-	{ name => 'shear_type', type => '0 <= int32 <= 1',
-	  desc => 'Type of shear: HORIZONTAL (0) or VERTICAL (1)' },
+	{ name => 'shear_type', type => &std_orientation_enum,
+	  desc => 'Type of shear: %%desc%%' },
 	{ name => 'magnitude', type => 'float',
 	  desc => 'The magnitude of the shear' }
     );
@@ -1256,9 +1263,9 @@ HELP
   gimp_matrix_identity  (matrix);
   gimp_matrix_translate (matrix, -cx, -cy);
   /* Shear matrix */
-  if (shear_type == 0)
+  if (shear_type == ORIENTATION_HORIZONTAL)
     gimp_matrix_xshear (matrix, magnitude / float_tiles->height);
-  else if (shear_type == 1)
+  else if (shear_type == ORIENTATION_VERTICAL)
     gimp_matrix_yshear (matrix, magnitude / float_tiles->width);
   gimp_matrix_translate (matrix, +cx, +cy);
 

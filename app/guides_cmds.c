@@ -408,7 +408,7 @@ image_get_guide_orientation_invoker (Argument *args)
 	  if ((((Guide *) guides->data)->guide_ID == guide) &&
 	      (((Guide *) guides->data)->position >= 0))
 	    {
-	      orientation = ((Guide *) guides->data)->orientation;
+	      orientation = ((Guide *) guides->data)->orientation - 1;
 	      success = TRUE;
 	      break;
 	    }
@@ -444,7 +444,7 @@ static ProcArg image_get_guide_orientation_outargs[] =
   {
     PDB_INT32,
     "orientation",
-    "The guide's orientation: { ORIENTATION_HORIZONTAL (1), ORIENTATION_VERTICAL (2) }"
+    "The guide's orientation: { HORIZONTAL (0), VERTICAL (1), UNKNOWN (2) }"
   }
 };
 

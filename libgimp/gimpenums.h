@@ -29,9 +29,9 @@ typedef enum
 
 typedef enum
 {
-  ORIENTATION_UNKNOWN    = 0,
-  ORIENTATION_HORIZONTAL = 1,
-  ORIENTATION_VERTICAL   = 2
+  ORIENTATION_HORIZONTAL = 0,
+  ORIENTATION_VERTICAL   = 1,
+  ORIENTATION_UNKNOWN    = 2
 } GOrientation;
 
 typedef enum

@@ -61,6 +61,12 @@ typedef enum {
   ORIENTATION_UNKNOWN,
   ORIENTATION_HORIZONTAL,
   ORIENTATION_VERTICAL
+} InternalOrientationType;
+
+typedef enum {
+  HORIZONTAL,
+  VERTICAL,
+  UNKNOWN
 } OrientationType;
 
 typedef enum

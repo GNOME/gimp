@@ -1,3 +1,13 @@
+Thu Jul 29 22:06:41 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/tools.pdb: revert previous change
+
+	* tools/pdbgen/pdb/guides.pdb: perform orientation xform here
+
+	* app/gimpimage.h: use 2 enums, one for internal and for external
+
+	* libgimp/gimpenums.h: change around external enums here
+
 Fri Jul 30 02:34:43 CEST 1999  Marc Lehmann <pcg@goof.com>
 
         * app/gimpparasite.c: I escaped everything when writing out
