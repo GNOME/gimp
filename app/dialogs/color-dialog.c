@@ -19,6 +19,9 @@
  */
 
 #include "config.h"
+
+#include <gmodule/gmodule.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -373,7 +376,7 @@ color_notebook_page_switch (GtkWidget       *w,
 /**************************************************************/
 /* Registration functions */
 
-
+G_MODULE_EXPORT
 GimpColorSelectorID
 gimp_color_selector_register (const char *name,
 			      GimpColorSelectorMethods *methods)
@@ -403,6 +406,7 @@ gimp_color_selector_register (const char *name,
 }
 
 
+G_MODULE_EXPORT
 gboolean
 gimp_color_selector_unregister (GimpColorSelectorID id,
 				void (*callback)(void *data),

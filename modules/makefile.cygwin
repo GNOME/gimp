@@ -1,0 +1,54 @@
+## Makefile for building gimp modules with gcc -mno-cygwin
+## Use: make -f makefile.cygwin
+
+# Change this to wherever you install the gimp.
+GIMP = /gimp
+BIN = $(GIMP)/modules
+
+################################################################
+
+# Nothing much configurable below
+
+CC = gcc -mno-cygwin -mpentium
+
+INSTALL = install
+
+GIMP_VER = 1.1
+GTK_VER = 1.3
+GLIB_VER = 1.3
+
+GLIB = ../../glib
+GMODULE = $(GLIB)/gmodule
+GTK = ../../gtk+
+
+CFLAGS = -DHAVE_CONFIG_H -DMODULE_COMPILATION -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)/gdk/win32 -I$(GTK)
+LDFLAGS = -s
+
+MODULES = \
+	colorsel_gtk.dll	\
+	colorsel_triangle.dll
+
+
+all : \
+	$(MODULES)
+
+install : all
+	$(INSTALL) colorsel_gtk.dll $(BIN)
+	$(INSTALL) colorsel_triangle.dll $(BIN)
+
+../config.h : ../config.h.win32
+	cp ../config.h.win32 $@
+
+colorsel_gtk.dll : colorsel_gtk.o module.def
+	$(GLIB)/build-dll colorsel_gtk - module.def colorsel_gtk.o $(LDFLAGS) -L ../app -lgimp -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GLIB) -lgmodule-$(GLIB_VER) -lglib-$(GLIB_VER)
+
+colorsel_triangle.dll : colorsel_triangle.o module.def
+	$(GLIB)/build-dll colorsel_triangle - module.def colorsel_triangle.o $(LDFLAGS) -L ../app -lgimp -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GLIB) -lgmodule-$(GLIB_VER) -lglib-$(GLIB_VER)
+
+
+# General rule for building 
+.c.obj:
+	$(CC) $(CFLAGS) -c $<
+
+clean:
+	-rm *.exe *.a *.o *.exp *.base

@@ -175,6 +175,7 @@ gimp_main (int   argc,
   setmode(g_io_channel_unix_get_fd(_writechannel), O_BINARY);
 #endif
 #else
+  g_assert (PLUG_IN_INFO_PTR != NULL);
   _readchannel = g_io_channel_win32_new_pipe (atoi (argv[2]));
   peer = strchr (argv[3], ':') + 1;
   peer_fd = strchr (peer, ':') + 1;

@@ -1,0 +1,259 @@
+## Makefile for building gimp.exe with gcc
+## Use: make -f makefile.cygwin
+
+# Change this to wherever you want to install gimp.exe.
+BIN = /gimp/bin
+
+OPTIMIZE = -g -O
+
+################################################################
+
+# Nothing much configurable below
+
+CC = gcc -mno-cygwin -mpentium
+
+CP = cp
+LD = ld
+DLLTOOL = dlltool
+INSTALL = install
+
+GIMP_VER = 1.1
+GTK_VER = 1.3
+GLIB_VER = 1.3
+
+GTK = ../../gtk+
+GLIB = ../../glib
+GMODULE = $(GLIB)/gmodule
+GETTEXT = ../../gettext-0.10.35
+
+CFLAGS = $(OPTIMIZE) -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)/gdk/win32 -I$(GTK) -I$(GETTEXT)/intl
+
+GCG = ../tools/gcg/gcg -I. -I../tools/gcg/gh
+
+all : \
+	../config.h	\
+	libgimpim.a	\
+	colormap_dialog.c \
+	gimp.exe
+
+install : gimp.exe
+	$(INSTALL) gimp.exe $(BIN)
+
+../config.h : ../config.h.win32
+	$(CP) ../config.h.win32 ../config.h
+
+gimpim_OBJECTS = \
+	gimpdrawable.o	\
+	gimpimage.o	\
+	gimpobject.o	\
+	gimppreviewcache.o\
+	gimpset.o	\
+	gimpsignal.o
+
+libgimpim.a : $(gimpim_OBJECTS)
+	ar cr libgimpim.a $(gimpim_OBJECTS)
+	
+gimp_OBJECTS = \
+	about_dialog.o		\
+	actionarea.o		\
+	airbrush.o		\
+	app_procs.o		\
+	asupsample.o		\
+	batch.o			\
+	bezier_select.o		\
+	blend.o			\
+	blob.o        		\
+	boundary.o		\
+	brightness_contrast.o	\
+	brush_edit.o		\
+	brush_select.o		\
+	brush_select_cmds.o	\
+	brushes_cmds.o		\
+	bucket_fill.o		\
+	buildmenu.o		\
+	by_color_select.o	\
+	channel.o		\
+	channel_cmds.o		\
+	channels_dialog.o	\
+	channel_ops.o		\
+	channel_ops_cmds.o	\
+	clone.o			\
+	color_area.o		\
+	color_balance.o		\
+	color_cmds.o		\
+	color_notebook.o	\
+	color_panel.o		\
+	color_picker.o		\
+	color_select.o		\
+	color_transfer.o	\
+	colormaps.o		\
+	colormap_dialog.o	\
+	commands.o		\
+	context_manager.o	\
+	convert.o		\
+	convert_cmds.o		\
+	convolve.o		\
+	crop.o			\
+	cursorutil.o		\
+	curves.o		\
+	datafiles.o		\
+	desaturate.o		\
+	devices.o		\
+	dialog_handler.o	\
+	disp_callbacks.o	\
+	docindex.o		\
+	docindexif.o		\
+	dodgeburn.o		\
+	draw_core.o		\
+	drawable.o		\
+	drawable_cmds.o		\
+	edit_cmds.o		\
+	edit_selection.o	\
+	ellipse_select.o	\
+	eraser.o		\
+	errorconsole.o		\
+	errors.o		\
+	equalize.o		\
+	fileops.o		\
+	fileops_cmds.o		\
+	flip_tool.o		\
+	floating_sel.o		\
+	floating_sel_cmds.o	\
+	file_new_dialog.o	\
+	frac.o			\
+	free_select.o		\
+	fuzzy_select.o		\
+	gdisplay.o		\
+	gdisplay_cmds.o		\
+	gdisplay_ops.o		\
+	general.o		\
+	gimage.o		\
+	gimage_cmds.o		\
+	gimage_mask.o		\
+	gimage_mask_cmds.o	\
+	gimpbrush.o		\
+	gimpbrushgenerated.o	\
+	gimpbrushlist.o		\
+	gimpcontext.o		\
+	gimphistogram.o		\
+	gimplist.o		\
+	gimplut.o		\
+	gimpparasite.o		\
+	gimpprogress.o		\
+	gimprc.o		\
+	gimprc_cmds.o		\
+	gimpunit.o		\
+	global_edit.o		\
+	gradient.o		\
+	gradient_cmds.o		\
+	gradient_select.o	\
+	gradient_select_cmds.o	\
+	guides_cmds.o		\
+	gximage.o		\
+	histogramwidget.o 	\
+	histogram_tool.o	\
+	hue_saturation.o	\
+	image_map.o		\
+	image_render.o		\
+	indicator_area.o	\
+	info_dialog.o		\
+	info_window.o		\
+	ink.o         		\
+	install.o		\
+	interface.o		\
+	interface_cmds.o	\
+	internal_procs.o	\
+	invert.o		\
+	iscissors.o		\
+	layer.o			\
+	layer_cmds.o		\
+	layer_select.o		\
+	layers_dialog.o		\
+	lc_dialog.o		\
+	levels.o		\
+	lut_funcs.o		\
+	magnify.o		\
+	main.o			\
+	menus.o			\
+	misc_cmds.o		\
+	module_db.o		\
+	move.o			\
+	ops_buttons.o		\
+	palette.o		\
+	palette_cmds.o		\
+	palette_select.o	\
+	paint_core.o		\
+	paint_funcs.o		\
+	paintbrush.o		\
+	parasite_cmds.o		\
+	parasitelist.o		\
+	paths_cmds.o		\
+	paths_dialog.o		\
+	pattern_select.o	\
+	pattern_select_cmds.o	\
+	patterns.o		\
+	patterns_cmds.o		\
+	pencil.o		\
+	perspective_tool.o	\
+	pixel_processor.o	\
+	pixel_region.o		\
+	plug_in.o		\
+	plug_in_cmds.o		\
+	posterize.o		\
+	preferences_dialog.o	\
+	procedural_db.o		\
+	procedural_db_cmds.o	\
+	rect_select.o		\
+	regex.o			\
+	resize.o		\
+	rotate_tool.o		\
+	scale.o			\
+	scale_tool.o		\
+	scroll.o		\
+	selection.o		\
+	session.o		\
+	shear_tool.o		\
+	smudge.o		\
+	temp_buf.o		\
+	text_tool.o		\
+	text_tool_cmds.o	\
+	threshold.o		\
+	tile.o			\
+	tile_cache.o		\
+	tile_manager.o		\
+	tile_swap.o		\
+	tips_dialog.o		\
+	tool_options.o		\
+	tools.o			\
+	tools_cmds.o		\
+	transform_core.o	\
+	transform_tool.o	\
+	undo.o			\
+	undo_cmds.o		\
+	unit_cmds.o		\
+	vector2d.o		\
+	xcf.o
+
+.SUFFIXES: .gc
+
+.gc.c:
+	$(GCG) -o $@ $<
+
+gimpres.o : gimp.rc wilber.ico
+	windres gimp.rc gimpres.o
+
+gimp.exe : ../config.h $(gimp_OBJECTS) libgimpim.a gimp.def gimpres.o
+# This is sickening.
+	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base -mwindows -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L  ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER) -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -lgmodule-$(GLIB_VER) gimpres.o -lgdi32 -luser32
+	$(DLLTOOL) --base-file gimp.base --input-def gimp.def --output-exp gimp.exp
+	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base,gimp.exp -mwindows -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER) -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -lgmodule-$(GLIB_VER) gimpres.o -lgdi32 -luser32
+	$(DLLTOOL) --base-file gimp.base --input-def gimp.def --output-exp gimp.exp
+	$(CC) $(CFLAGS) -Wl,gimp.exp -mwindows -o gimp.exe $(gimp_OBJECTS) -L. -lgimpim -L ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER) -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -lgmodule-$(GLIB_VER) gimpres.o -lgdi32 -luser32
+	$(DLLTOOL) --dllname gimp.exe gimp.def --output-lib libgimp.a $(gimp_OBJECTS)
+	
+# General rule for building $(gimp_OBJECTS)
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+clean:
+	-rm *.exe *.a *.o *.base *.exp

@@ -9,12 +9,11 @@ BIN = $(GIMP)\modules
 
 # Nothing much configurable below
 
-# cl -? described the options
-CC = cl -GA -G5 -GF -Ox -W3 -MD -nologo
+# cl -? describes the options
+CC = cl -G5 -GF -Ox -W3 -MD -nologo
 
 LDFLAGS = /link /machine:ix86
 INSTALL = copy
-TOUCH = copy makefile.msc+nul
 
 GIMP_VER = 1.1
 GTK_VER = 1.3
@@ -26,18 +25,17 @@ GTK = ..\..\gtk+
 
 CFLAGS = -DHAVE_CONFIG_H -DMODULE_COMPILATION -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk\win32 -I$(GTK)
 
-MODULES = colorsel_gtk.dll	\
+MODULES = \
+	colorsel_gtk.dll	\
 	colorsel_triangle.dll
 
 
 all : \
 	$(MODULES)
-	$(TOUCH) all
 
 install : all
 	$(INSTALL) colorsel_gtk.dll $(BIN)
 	$(INSTALL) colorsel_triangle.dll $(BIN)
-	$(TOUCH) install
 
 ..\config.h : ..\config.h.win32
 	copy ..\config.h.win32 ..\config.h
@@ -50,7 +48,7 @@ colorsel_triangle.dll : colorsel_triangle.obj module.def
 
 # General rule for building 
 .c.obj:
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -GD -c $<
 
 clean:
 	del *.exe
@@ -60,7 +58,5 @@ clean:
 	del *.err
 	del *.map
 	del *.sym
-	del *.lk1
-	del *.mk1
 	del *.pdb
 	del *.ilk
