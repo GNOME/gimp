@@ -177,6 +177,7 @@ gboolean           nav_window_per_display = FALSE;
 gboolean           info_window_follows_mouse = TRUE;
 gint               help_browser = HELP_BROWSER_GIMP;
 gint               cursor_mode = CURSOR_MODE_TOOL_ICON;
+gboolean           disable_tearoff_menus = FALSE;
 
 extern char * module_db_load_inhibit;
 
@@ -342,9 +343,10 @@ static ParseFunc funcs[] =
   { "info-window-follows-mouse", TT_BOOLEAN,    &info_window_follows_mouse, NULL },
   { "info-window-per-display",   TT_BOOLEAN,    NULL, &info_window_follows_mouse },
   { "help-browser",              TT_XHELPBROWSER, &help_browser, NULL },
-  { "cursor-mode",               TT_XCURSORMODE, &cursor_mode, NULL }
+  { "cursor-mode",               TT_XCURSORMODE, &cursor_mode, NULL },
+  { "disable-tearoff-menus",     TT_BOOLEAN,     &disable_tearoff_menus, NULL }
 };
-static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
+static gint nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 
 static SessionInfo *session_infos[] =
 {

@@ -1,5 +1,14 @@
 2001-01-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimprc.[ch]
+	* app/menus.[ch]
+	* app/preferences_dialog.c: added a preferences option to disable
+	tearoff menus. Cleanup in preferences.
+
+	* TODO.xml: done.
+
+2001-01-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/commands.c: some nicer prototypes.
 
 	* app/fileops.c: oops, forgot to gtk_widget_show() the open_options.

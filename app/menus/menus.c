@@ -885,9 +885,9 @@ menus_create_branches (GtkItemFactory       *item_factory,
 		       GimpItemFactoryEntry *entry)
 {
   GString *tearoff_path;
-  gint factory_length;
-  gchar *p;
-  gchar *path;
+  gint     factory_length;
+  gchar   *p;
+  gchar   *path;
 
   tearoff_path = g_string_new ("");
 
@@ -1581,8 +1581,17 @@ menus_create_item (GtkItemFactory       *item_factory,
 {
   GtkWidget *menu_item;
 
-  if (!(strstr (entry->entry.path, "tearoff1")))
-    menus_create_branches (item_factory, entry);
+  if (! (strstr (entry->entry.path, "tearoff1")))
+    {
+      if (! disable_tearoff_menus)
+	{
+	  menus_create_branches (item_factory, entry);
+	}
+    }
+  else if (disable_tearoff_menus)
+    {
+      return;
+    }
 
   gtk_item_factory_create_item (item_factory,
 				(GtkItemFactoryEntry *) entry,
@@ -2058,7 +2067,7 @@ menus_debug_cmd_callback (GtkWidget *widget,
 			  gpointer   callback_data,
 			  guint      callback_action)
 {
-  gint  n_factories = 7;
+  gint                  n_factories = 7;
   GtkItemFactory       *factories[7];
   GimpItemFactoryEntry *entries[7];
 

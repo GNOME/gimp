@@ -99,24 +99,24 @@ static void  prefs_restart_notification          (void);
 
 
 /*  static variables  */
-static gint               old_perfectmouse;
+static gboolean           old_perfectmouse;
 static gint               old_transparency_type;
 static gint               old_transparency_size;
 static gint               old_levels_of_undo;
 static gint               old_marching_speed;
-static gint               old_allow_resize_windows;
-static gint               old_auto_save;
+static gboolean           old_allow_resize_windows;
+static gboolean           old_auto_save;
 static gint               old_preview_size;
 static gint               old_nav_preview_size;
-static gint               old_no_cursor_updating;
-static gint               old_show_tool_tips;
-static gint               old_show_rulers;
-static gint               old_show_statusbar;
+static gboolean           old_no_cursor_updating;
+static gboolean           old_show_tool_tips;
+static gboolean           old_show_rulers;
+static gboolean           old_show_statusbar;
 static InterpolationType  old_interpolation_type;
-static gint               old_confirm_on_close;
-static gint               old_save_session_info;
-static gint               old_save_device_status;
-static gint               old_always_restore_session;
+static gboolean           old_confirm_on_close;
+static gboolean           old_save_session_info;
+static gboolean           old_save_device_status;
+static gboolean           old_always_restore_session;
 static gint               old_default_width;
 static gint               old_default_height;
 static GimpUnit           old_default_units;
@@ -124,63 +124,65 @@ static gdouble            old_default_xresolution;
 static gdouble            old_default_yresolution;
 static GimpUnit           old_default_resolution_units;
 static gint               old_default_type;
-static gchar *            old_default_comment;
-static gint               old_default_dot_for_dot;
-static gint               old_stingy_memory_use;
+static gchar            * old_default_comment;
+static gboolean           old_default_dot_for_dot;
+static gboolean           old_stingy_memory_use;
 static guint              old_tile_cache_size;
 static gint               old_min_colors;
-static gint               old_install_cmap;
-static gint               old_cycled_marching_ants;
+static gboolean           old_install_cmap;
+static gboolean           old_cycled_marching_ants;
 static gint               old_last_opened_size;
-static gchar *            old_temp_path;
-static gchar *            old_swap_path;
-static gchar *            old_plug_in_path;
-static gchar *            old_module_path;
-static gchar *            old_brush_path;
-static gchar *            old_brush_vbr_path;
-static gchar *            old_pattern_path;
-static gchar *            old_palette_path;
-static gchar *            old_gradient_path;
+static gchar            * old_temp_path;
+static gchar            * old_swap_path;
+static gchar            * old_plug_in_path;
+static gchar            * old_module_path;
+static gchar            * old_brush_path;
+static gchar            * old_brush_vbr_path;
+static gchar            * old_pattern_path;
+static gchar            * old_palette_path;
+static gchar            * old_gradient_path;
 static gdouble            old_monitor_xres;
 static gdouble            old_monitor_yres;
-static gint               old_using_xserver_resolution;
+static gboolean           old_using_xserver_resolution;
 static gint               old_num_processors;
-static gchar *            old_image_title_format;
-static gint               old_global_paint_options;
+static gchar            * old_image_title_format;
+static gboolean           old_global_paint_options;
 static guint              old_max_new_image_size;
 static gint               old_thumbnail_mode;
-static gint 	          old_show_indicators;
-static gint	          old_trust_dirty_flag;
-static gint               old_use_help;
-static gint               old_nav_window_per_display;
-static gint               old_info_window_follows_mouse;
+static gboolean           old_show_indicators;
+static gboolean	          old_trust_dirty_flag;
+static gboolean           old_use_help;
+static gboolean           old_nav_window_per_display;
+static gboolean           old_info_window_follows_mouse;
 static gint               old_help_browser;
 static gint               old_cursor_mode;
 static gint               old_default_threshold;
+static gboolean           old_disable_tearoff_menus;
 
 /*  variables which can't be changed on the fly  */
-static gint               edit_stingy_memory_use;
+static gboolean           edit_stingy_memory_use;
 static gint               edit_min_colors;
-static gint               edit_install_cmap;
-static gint               edit_cycled_marching_ants;
+static gboolean           edit_install_cmap;
+static gboolean           edit_cycled_marching_ants;
 static gint               edit_last_opened_size;
-static gint               edit_show_indicators;
-static gint               edit_nav_window_per_display;
-static gint               edit_info_window_follows_mouse;
-static gchar *            edit_temp_path      = NULL;
-static gchar *            edit_swap_path      = NULL;
-static gchar *            edit_brush_path     = NULL;
-static gchar *            edit_brush_vbr_path = NULL;
-static gchar *            edit_pattern_path   = NULL;
-static gchar *            edit_palette_path   = NULL;
-static gchar *            edit_gradient_path  = NULL;
-static gchar *            edit_plug_in_path   = NULL;
-static gchar *            edit_module_path    = NULL;
+static gboolean           edit_show_indicators;
+static gboolean           edit_nav_window_per_display;
+static gboolean           edit_info_window_follows_mouse;
+static gchar            * edit_temp_path      = NULL;
+static gchar            * edit_swap_path      = NULL;
+static gchar            * edit_brush_path     = NULL;
+static gchar            * edit_brush_vbr_path = NULL;
+static gchar            * edit_pattern_path   = NULL;
+static gchar            * edit_palette_path   = NULL;
+static gchar            * edit_gradient_path  = NULL;
+static gchar            * edit_plug_in_path   = NULL;
+static gchar            * edit_module_path    = NULL;
+static gboolean           edit_disable_tearoff_menus;
 
 /*  variables which will be changed _after_ closing the dialog  */
 static guint              edit_tile_cache_size;
 
-static GtkWidget *        prefs_dlg = NULL;
+static GtkWidget        * prefs_dlg = NULL;
 
 
 /* Some information regarding preferences, compiled by Raph Levien 11/3/97.
@@ -238,7 +240,7 @@ static GtkWidget *        prefs_dlg = NULL;
  */
 static void
 prefs_strset (gchar **dst,
-		   gchar  *src)
+	      gchar  *src)
 {
   if (*dst)
     g_free (*dst);
@@ -256,7 +258,7 @@ prefs_strdup (gchar *src)
 /*  Compare two strings, but treat NULL as the empty string.  */
 static int
 prefs_strcmp (gchar *src1,
-		   gchar *src2)
+	      gchar *src2)
 {
   return strcmp (src1 == NULL ? "" : src1,
 		 src2 == NULL ? "" : src2);
@@ -343,6 +345,7 @@ prefs_check_settings (void)
       edit_show_indicators           != old_show_indicators           ||
       edit_nav_window_per_display    != old_nav_window_per_display    ||
       edit_info_window_follows_mouse != old_info_window_follows_mouse ||
+      edit_disable_tearoff_menus     != old_disable_tearoff_menus     ||
 
       prefs_strcmp (old_temp_path,      edit_temp_path)      ||
       prefs_strcmp (old_swap_path,      edit_swap_path)      ||
@@ -417,7 +420,7 @@ prefs_restart_notification (void)
 
 static void
 prefs_ok_callback (GtkWidget *widget,
-			GtkWidget *dlg)
+		   GtkWidget *dlg)
 {
   PrefsState state;
 
@@ -459,30 +462,30 @@ prefs_ok_callback (GtkWidget *widget,
 
 static void
 prefs_save_callback (GtkWidget *widget,
-			  GtkWidget *dlg)
+		     GtkWidget *dlg)
 {
   GList *update = NULL; /*  options that should be updated in .gimprc  */
   GList *remove = NULL; /*  options that should be commented out       */
 
   PrefsState state;
 
-  gint   save_stingy_memory_use;
-  gint   save_min_colors;
-  gint   save_install_cmap;
-  gint   save_cycled_marching_ants;
-  gint   save_last_opened_size;
-  gint   save_show_indicators;
-  gint   save_nav_window_per_display;
-  gint   save_info_window_follows_mouse;
-  gchar *save_temp_path;
-  gchar *save_swap_path;
-  gchar *save_plug_in_path;
-  gchar *save_module_path;
-  gchar *save_brush_path;
-  gchar *save_brush_vbr_path;
-  gchar *save_pattern_path;
-  gchar *save_palette_path;
-  gchar *save_gradient_path;
+  gboolean  save_stingy_memory_use;
+  gint      save_min_colors;
+  gboolean  save_install_cmap;
+  gboolean  save_cycled_marching_ants;
+  gint      save_last_opened_size;
+  gboolean  save_show_indicators;
+  gboolean  save_nav_window_per_display;
+  gboolean  save_info_window_follows_mouse;
+  gchar    *save_temp_path;
+  gchar    *save_swap_path;
+  gchar    *save_plug_in_path;
+  gchar    *save_module_path;
+  gchar    *save_brush_path;
+  gchar    *save_brush_vbr_path;
+  gchar    *save_pattern_path;
+  gchar    *save_palette_path;
+  gchar    *save_gradient_path;
 
   state = prefs_check_settings ();
   switch (state)
@@ -754,6 +757,10 @@ prefs_save_callback (GtkWidget *widget,
       update = g_list_append (update, "info-window-follows-mouse");
       remove = g_list_append (remove, "info-window-per-display");
     }
+  if (edit_disable_tearoff_menus != old_disable_tearoff_menus)
+    {
+      update = g_list_append (update, "disable-tearoff-menus");
+    }
 
   if (prefs_strcmp (old_temp_path, edit_temp_path))
     {
@@ -843,7 +850,7 @@ prefs_save_callback (GtkWidget *widget,
 
 static void
 prefs_cancel_callback (GtkWidget *widget,
-			    GtkWidget *dlg)
+		       GtkWidget *dlg)
 {
   gtk_widget_destroy (dlg);
   prefs_dlg = NULL;
@@ -920,6 +927,7 @@ prefs_cancel_callback (GtkWidget *widget,
   edit_show_indicators           = old_show_indicators;
   edit_nav_window_per_display    = old_nav_window_per_display;
   edit_info_window_follows_mouse = old_info_window_follows_mouse;
+  edit_disable_tearoff_menus     = old_disable_tearoff_menus;
 
   prefs_strset (&edit_temp_path,      old_temp_path);
   prefs_strset (&edit_swap_path,      old_swap_path);
@@ -936,7 +944,7 @@ prefs_cancel_callback (GtkWidget *widget,
 
 static void
 prefs_toggle_callback (GtkWidget *widget,
-			    gpointer   data)
+		       gpointer   data)
 {
   gint *val;
 
@@ -962,7 +970,8 @@ prefs_toggle_callback (GtkWidget *widget,
       data == &edit_cycled_marching_ants      ||
       data == &edit_show_indicators           ||
       data == &edit_nav_window_per_display    ||
-      data == &edit_info_window_follows_mouse)
+      data == &edit_info_window_follows_mouse ||
+      data == &edit_disable_tearoff_menus)
     {
       *val = GTK_TOGGLE_BUTTON (widget)->active;
     }
@@ -1009,7 +1018,7 @@ prefs_toggle_callback (GtkWidget *widget,
 
 static void
 prefs_preview_size_callback (GtkWidget *widget,
-                                  gpointer   data)
+			     gpointer   data)
 {
   lc_dialog_rebuild ((long) gtk_object_get_user_data (GTK_OBJECT (widget)));
   layer_select_update_preview_size ();
@@ -1017,7 +1026,7 @@ prefs_preview_size_callback (GtkWidget *widget,
 
 static void
 prefs_nav_preview_size_callback (GtkWidget *widget,
-				      gpointer   data)
+				 gpointer   data)
 {
   nav_preview_size = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));;
   gdisplays_nav_preview_resized ();
@@ -1025,7 +1034,7 @@ prefs_nav_preview_size_callback (GtkWidget *widget,
 
 static void
 prefs_string_callback (GtkWidget *widget,
-			    gpointer   data)
+		       gpointer   data)
 {
   gchar **val;
 
@@ -1035,7 +1044,7 @@ prefs_string_callback (GtkWidget *widget,
 
 static void
 prefs_text_callback (GtkWidget *widget,
-			  gpointer   data)
+		     gpointer   data)
 {
   gchar **val;
   gchar *text;
@@ -1056,7 +1065,7 @@ prefs_text_callback (GtkWidget *widget,
 
 static void
 prefs_filename_callback (GtkWidget *widget,
-			      gpointer   data)
+			 gpointer   data)
 {
   gchar **val;
   gchar *filename;
@@ -1069,7 +1078,7 @@ prefs_filename_callback (GtkWidget *widget,
 
 static void
 prefs_path_callback (GtkWidget *widget,
-			  gpointer   data)
+		     gpointer   data)
 {
   gchar **val;
   gchar  *path;
@@ -1082,7 +1091,7 @@ prefs_path_callback (GtkWidget *widget,
 
 static void
 prefs_clear_session_info_callback (GtkWidget *widget,
-					gpointer   data)
+				   gpointer   data)
 {
   g_list_free (session_info_updates);
   session_info_updates = NULL;
@@ -1090,7 +1099,7 @@ prefs_clear_session_info_callback (GtkWidget *widget,
 
 static void
 prefs_default_size_callback (GtkWidget *widget,
-				  gpointer   data)
+			     gpointer   data)
 {
   default_width =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
@@ -1101,13 +1110,13 @@ prefs_default_size_callback (GtkWidget *widget,
 
 static void
 prefs_default_resolution_callback (GtkWidget *widget,
-					gpointer   data)
+				   gpointer   data)
 {
-  GtkWidget *size_sizeentry;
-  static gdouble xres = 0.0;
-  static gdouble yres = 0.0;
-  gdouble new_xres;
-  gdouble new_yres;
+  GtkWidget      *size_sizeentry;
+  static gdouble  xres = 0.0;
+  static gdouble  yres = 0.0;
+  gdouble         new_xres;
+  gdouble         new_yres;
 
   new_xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
   new_yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
@@ -1155,7 +1164,7 @@ prefs_default_resolution_callback (GtkWidget *widget,
 
 static void
 prefs_res_source_callback (GtkWidget *widget,
-				gpointer   data)
+			   gpointer   data)
 {
   GtkWidget *monitor_resolution_sizeentry;
 
@@ -1184,12 +1193,12 @@ prefs_res_source_callback (GtkWidget *widget,
 
 static void
 prefs_monitor_resolution_callback (GtkWidget *widget,
-					gpointer   data)
+				   gpointer   data)
 {
   static gdouble xres = 0.0;
   static gdouble yres = 0.0;
-  gdouble new_xres;
-  gdouble new_yres;
+  gdouble        new_xres;
+  gdouble        new_yres;
 
   new_xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
   new_yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
@@ -1222,7 +1231,7 @@ prefs_monitor_resolution_callback (GtkWidget *widget,
 
 static void
 prefs_resolution_calibrate_callback (GtkWidget *widget,
-					 gpointer   data)
+				     gpointer   data)
 {
   resolution_calibrate_dialog (GTK_WIDGET (data), NULL, NULL, NULL);
 }
@@ -1230,13 +1239,13 @@ prefs_resolution_calibrate_callback (GtkWidget *widget,
 /*  create a new notebook page  */
 static GtkWidget *
 prefs_notebook_append_page (GtkNotebook   *notebook,
-				 gchar         *notebook_label,
-				 GtkCTree      *ctree,
-				 gchar         *tree_label,
-				 gchar         *help_data,
-				 GtkCTreeNode  *parent,
-				 GtkCTreeNode **new_node,
-				 gint           page_index)
+			    gchar         *notebook_label,
+			    GtkCTree      *ctree,
+			    gchar         *tree_label,
+			    gchar         *help_data,
+			    GtkCTreeNode  *parent,
+			    GtkCTreeNode **new_node,
+			    gint           page_index)
 {
   GtkWidget *event_box;
   GtkWidget *out_vbox;
@@ -1284,7 +1293,7 @@ prefs_notebook_append_page (GtkNotebook   *notebook,
 /*  select a notebook page  */
 static void
 prefs_tree_select_callback (GtkWidget    *widget,
-				GtkCTreeNode *node)
+			    GtkCTreeNode *node)
 {
   GtkNotebook *notebook;
   gint         page;
@@ -1301,7 +1310,7 @@ prefs_tree_select_callback (GtkWidget    *widget,
 /*  create a frame with title and a vbox  */
 static GtkWidget *
 prefs_frame_new (gchar  *label,
-		      GtkBox *vbox)
+		 GtkBox *vbox)
 {
   GtkWidget *frame;
   GtkWidget *vbox2;
@@ -1323,10 +1332,10 @@ prefs_help_func (const gchar *help_data)
 {
   GtkWidget *notebook;
   GtkWidget *event_box;
-  gint page_num;
+  gint       page_num;
 
-  notebook = gtk_object_get_user_data (GTK_OBJECT (prefs_dlg));
-  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
+  notebook  = gtk_object_get_user_data (GTK_OBJECT (prefs_dlg));
+  page_num  = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
   event_box = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
 
   help_data = gtk_object_get_data (GTK_OBJECT (event_box), "gimp_help_data");
@@ -1338,7 +1347,7 @@ prefs_help_func (const gchar *help_data)
  */
 void
 prefs_cmd_callback (GtkWidget *widget,
-			 gpointer   client_data)
+		    gpointer   client_data)
 {
   GtkWidget    *ctree;
   gchar        *titles[1];
@@ -1369,7 +1378,7 @@ prefs_cmd_callback (GtkWidget *widget,
   GtkWidget *text;
   GSList    *group;
 
-  gint i;
+  gint   i;
   gchar *pixels_per_unit;
 
   if (prefs_dlg)
@@ -1391,6 +1400,7 @@ prefs_cmd_callback (GtkWidget *widget,
       edit_show_indicators           = show_indicators;
       edit_nav_window_per_display    = nav_window_per_display;
       edit_info_window_follows_mouse = info_window_follows_mouse;
+      edit_disable_tearoff_menus     = disable_tearoff_menus;
 
       edit_temp_path      = prefs_strdup (temp_path);	
       edit_swap_path      = prefs_strdup (swap_path);
@@ -1460,6 +1470,7 @@ prefs_cmd_callback (GtkWidget *widget,
   old_show_indicators           = edit_show_indicators;
   old_nav_window_per_display    = edit_nav_window_per_display;
   old_info_window_follows_mouse = edit_info_window_follows_mouse;
+  old_disable_tearoff_menus     = edit_disable_tearoff_menus;
 
   prefs_strset (&old_temp_path,      edit_temp_path);
   prefs_strset (&old_swap_path,      edit_swap_path);
@@ -1676,13 +1687,13 @@ prefs_cmd_callback (GtkWidget *widget,
 
   /* Default Comment page */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Default Comment"),
-					  GTK_CTREE (ctree),
-					  _("Default Comment"),
-					  "dialogs/preferences/new_file.html#default_comment",
-					  top_insert,
-					  &child_insert,
-					  page_index);
+				     _("Default Comment"),
+				     GTK_CTREE (ctree),
+				     _("Default Comment"),
+				     "dialogs/preferences/new_file.html#default_comment",
+				     top_insert,
+				     &child_insert,
+				     page_index);
   gtk_widget_show (vbox);
   page_index++;
 
@@ -1706,13 +1717,13 @@ prefs_cmd_callback (GtkWidget *widget,
 
   /* Display page */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Display"),
-					  GTK_CTREE (ctree),
-					  _("Display"),
-					  "dialogs/preferences/display.html",
-					  NULL,
-					  &top_insert,
-					  page_index);
+				     _("Display"),
+				     GTK_CTREE (ctree),
+				     _("Display"),
+				     "dialogs/preferences/display.html",
+				     NULL,
+				     &top_insert,
+				     page_index);
   gtk_widget_show (vbox);
   page_index++;
 
@@ -1805,13 +1816,13 @@ prefs_cmd_callback (GtkWidget *widget,
 
   /* Interface */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Interface"),
-					  GTK_CTREE (ctree),
-					  _("Interface"),
-					  "dialogs/preferences/interface.html",
-					  NULL,
-					  &top_insert,
-					  page_index);
+				     _("Interface"),
+				     GTK_CTREE (ctree),
+				     _("Interface"),
+				     "dialogs/preferences/interface.html",
+				     NULL,
+				     &top_insert,
+				     page_index);
   gtk_widget_show (vbox);
   page_index++;
 
@@ -1909,15 +1920,26 @@ prefs_cmd_callback (GtkWidget *widget,
 		      &edit_info_window_follows_mouse);
   gtk_widget_show (button);
 
+  vbox2 = prefs_frame_new (_("Menus"), GTK_BOX (vbox));
+
+  button = gtk_check_button_new_with_label (_("Disable Tearoff Menus"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				edit_disable_tearoff_menus);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
+		      &edit_disable_tearoff_menus);
+  gtk_widget_show (button);
+
   /* Interface / Help System */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Help System"),
-					  GTK_CTREE (ctree),
-					  _("Help System"),
-					  "dialogs/preferences/interface.html#help_system",
-					  top_insert,
-					  &child_insert,
-					  page_index);
+				     _("Help System"),
+				     GTK_CTREE (ctree),
+				     _("Help System"),
+				     "dialogs/preferences/interface.html#help_system",
+				     top_insert,
+				     &child_insert,
+				     page_index);
   gtk_widget_show (vbox);
   page_index++;
 
@@ -1964,13 +1986,13 @@ prefs_cmd_callback (GtkWidget *widget,
 
   /* Interface / Image Windows */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Image Windows"),
-					  GTK_CTREE (ctree),
-					  _("Image Windows"),
-					  "dialogs/preferences/interface.html#image_windows",
-					  top_insert,
-					  &child_insert,
-					  page_index);
+				     _("Image Windows"),
+				     GTK_CTREE (ctree),
+				     _("Image Windows"),
+				     "dialogs/preferences/interface.html#image_windows",
+				     top_insert,
+				     &child_insert,
+				     page_index);
   gtk_widget_show (vbox);
   page_index++;
 
@@ -2117,13 +2139,13 @@ prefs_cmd_callback (GtkWidget *widget,
 
   /* Interface / Tool Options */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Tool Options"),
-					  GTK_CTREE (ctree),
-					  _("Tool Options"),
-					  "dialogs/preferences/interface.html#tool_options",
-					  top_insert,
-					  &child_insert,
-					  page_index);
+				     _("Tool Options"),
+				     GTK_CTREE (ctree),
+				     _("Tool Options"),
+				     "dialogs/preferences/interface.html#tool_options",
+				     top_insert,
+				     &child_insert,
+				     page_index);
   gtk_widget_show (vbox);
   page_index++;
 
@@ -2139,8 +2161,7 @@ prefs_cmd_callback (GtkWidget *widget,
 		      &global_paint_options);
   gtk_widget_show (button);
 
-  vbox2 = prefs_frame_new (_("Finding Contiguous Regions"),
-				GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Finding Contiguous Regions"), GTK_BOX (vbox));
 
   table = gtk_table_new (1, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
@@ -2167,13 +2188,13 @@ prefs_cmd_callback (GtkWidget *widget,
 
   /* Environment */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Environment"),
-					  GTK_CTREE (ctree),
-					  _("Environment"),
-					  "dialogs/preferences/environment.html",
-					  NULL,
-					  &top_insert,
-					  page_index);
+				     _("Environment"),
+				     GTK_CTREE (ctree),
+				     _("Environment"),
+				     "dialogs/preferences/environment.html",
+				     NULL,
+				     &top_insert,
+				     page_index);
   gtk_widget_show (vbox);
   page_index++;
 
@@ -2304,13 +2325,13 @@ prefs_cmd_callback (GtkWidget *widget,
 
   /* Session Management */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Session Management"),
-					  GTK_CTREE (ctree),
-					  _("Session"),
-					  "dialogs/preferences/session.html",
-					  NULL,
-					  &top_insert,
-					  page_index);
+				     _("Session Management"),
+				     GTK_CTREE (ctree),
+				     _("Session"),
+				     "dialogs/preferences/session.html",
+				     NULL,
+				     &top_insert,
+				     page_index);
   gtk_widget_show (vbox);
   page_index++;
 
@@ -2360,13 +2381,13 @@ prefs_cmd_callback (GtkWidget *widget,
 
   /* Monitor */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Monitor"),
-					  GTK_CTREE (ctree),
-					  _("Monitor"),
-					  "dialogs/preferences/monitor.html",
-					  NULL,
-					  &top_insert,
-					  page_index);
+				     _("Monitor"),
+				     GTK_CTREE (ctree),
+				     _("Monitor"),
+				     "dialogs/preferences/monitor.html",
+				     NULL,
+				     &top_insert,
+				     page_index);
   gtk_widget_show (vbox);
   page_index++;
 
@@ -2480,13 +2501,13 @@ prefs_cmd_callback (GtkWidget *widget,
 
   /* Directories */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Directories"),
-					  GTK_CTREE (ctree),
-					  _("Directories"),
-					  "dialogs/preferences/directories.html",
-					  NULL,
-					  &top_insert,
-					  page_index);
+				     _("Directories"),
+				     GTK_CTREE (ctree),
+				     _("Directories"),
+				     "dialogs/preferences/directories.html",
+				     NULL,
+				     &top_insert,
+				     page_index);
   gtk_widget_show (vbox);
   page_index++;
 
@@ -2570,13 +2591,13 @@ prefs_cmd_callback (GtkWidget *widget,
     for (i = 0; i < npaths; i++)
       {
 	vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-						gettext (paths[i].label),
-						GTK_CTREE (ctree),
-						gettext (paths[i].tree_label),
-						paths[i].help_data,
-						top_insert,
-						&child_insert,
-						page_index);
+					   gettext (paths[i].label),
+					   GTK_CTREE (ctree),
+					   gettext (paths[i].tree_label),
+					   paths[i].help_data,
+					   top_insert,
+					   &child_insert,
+					   page_index);
 	gtk_widget_show (vbox);
 	page_index++;
 
