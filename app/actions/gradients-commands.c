@@ -50,9 +50,7 @@ void
 gradients_save_as_pov_ray_cmd_callback (GtkWidget *widget,
 					gpointer   data)
 {
-  GimpContainerEditor *editor;
-
-  editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
 
   gradients_save_as_pov_query (editor);
 }

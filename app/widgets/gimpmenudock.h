@@ -38,19 +38,22 @@ typedef struct _GimpImageDockClass   GimpImageDockClass;
 
 struct _GimpImageDock
 {
-  GimpDock       parent_instance;
+  GimpDock         parent_instance;
 
-  GimpContainer *image_container;
-  GimpContainer *display_container;
+  GimpContainer   *image_container;
+  GimpContainer   *display_container;
 
-  gboolean       show_image_menu;
-  gboolean       auto_follow_active;
+  gboolean         show_image_menu;
+  gboolean         auto_follow_active;
 
-  GtkWidget     *option_menu;
-  GtkWidget     *menu;
-  GtkWidget     *auto_button;
+  GimpItemFactory *item_factory;
+  GQuark           image_flush_handler_id;
 
-  guint          update_title_idle_id;
+  GtkWidget       *option_menu;
+  GtkWidget       *menu;
+  GtkWidget       *auto_button;
+
+  guint            update_title_idle_id;
 };
 
 struct _GimpImageDockClass

@@ -40,6 +40,7 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
 
+#include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
 
@@ -55,6 +56,8 @@
     gdisp = data; \
   else if (GIMP_IS_GIMP (data)) \
     gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
+  else if (GIMP_IS_DOCK (data)) \
+    gdisp = gimp_context_get_display (((GimpDock *) data)->context); \
   else \
     gdisp = NULL; \
   if (! gdisp) \
@@ -65,6 +68,8 @@
     gimage = ((GimpDisplay *) data)->gimage; \
   else if (GIMP_IS_GIMP (data)) \
     gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+  else if (GIMP_IS_DOCK (data)) \
+    gimage = gimp_context_get_image (((GimpDock *) data)->context); \
   else \
     gimage = NULL; \
   if (! gimage) \

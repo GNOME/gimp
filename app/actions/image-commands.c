@@ -41,6 +41,7 @@
 #include "core/gimpimage-scale.h"
 #include "core/gimpimage-undo.h"
 
+#include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -69,6 +70,8 @@ typedef struct
     gdisp = data; \
   else if (GIMP_IS_GIMP (data)) \
     gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
+  else if (GIMP_IS_DOCK (data)) \
+    gdisp = gimp_context_get_display (((GimpDock *) data)->context); \
   else \
     gdisp = NULL; \
   if (! gdisp) \
@@ -79,6 +82,8 @@ typedef struct
     gimage = ((GimpDisplay *) data)->gimage; \
   else if (GIMP_IS_GIMP (data)) \
     gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+  else if (GIMP_IS_DOCK (data)) \
+    gimage = gimp_context_get_image (((GimpDock *) data)->context); \
   else \
     gimage = NULL; \
   if (! gimage) \

@@ -35,9 +35,7 @@ void
 documents_open_document_cmd_callback (GtkWidget *widget,
                                       gpointer   data)
 {
-  GimpDocumentView *view;
-
-  view = GIMP_DOCUMENT_VIEW (data);
+  GimpDocumentView *view = GIMP_DOCUMENT_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->open_button));
 }
@@ -46,9 +44,7 @@ void
 documents_raise_or_open_document_cmd_callback (GtkWidget *widget,
                                                gpointer   data)
 {
-  GimpDocumentView *view;
-
-  view = GIMP_DOCUMENT_VIEW (data);
+  GimpDocumentView *view = GIMP_DOCUMENT_VIEW (data);
 
   gimp_button_extended_clicked (GIMP_BUTTON (view->open_button),
                                 GDK_SHIFT_MASK);
@@ -58,9 +54,7 @@ void
 documents_file_open_dialog_cmd_callback (GtkWidget *widget,
                                          gpointer   data)
 {
-  GimpDocumentView *view;
-
-  view = GIMP_DOCUMENT_VIEW (data);
+  GimpDocumentView *view = GIMP_DOCUMENT_VIEW (data);
 
   gimp_button_extended_clicked (GIMP_BUTTON (view->open_button),
                                 GDK_CONTROL_MASK);
@@ -70,9 +64,7 @@ void
 documents_remove_document_cmd_callback (GtkWidget *widget,
                                         gpointer   data)
 {
-  GimpDocumentView *view;
-
-  view = GIMP_DOCUMENT_VIEW (data);
+  GimpDocumentView *view = GIMP_DOCUMENT_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->remove_button));
 }
@@ -82,9 +74,7 @@ void
 documents_recreate_preview_cmd_callback (GtkWidget *widget,
                                          gpointer   data)
 {
-  GimpDocumentView *view;
-
-  view = GIMP_DOCUMENT_VIEW (data);
+  GimpDocumentView *view = GIMP_DOCUMENT_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->refresh_button));
 }
@@ -93,9 +83,7 @@ void
 documents_reload_previews_cmd_callback (GtkWidget *widget,
                                         gpointer   data)
 {
-  GimpDocumentView *view;
-
-  view = GIMP_DOCUMENT_VIEW (data);
+  GimpDocumentView *view = GIMP_DOCUMENT_VIEW (data);
 
   gimp_button_extended_clicked (GIMP_BUTTON (view->refresh_button),
                                 GDK_SHIFT_MASK);
@@ -105,9 +93,7 @@ void
 documents_delete_dangling_documents_cmd_callback (GtkWidget *widget,
                                                   gpointer   data)
 {
-  GimpDocumentView *view;
-
-  view = GIMP_DOCUMENT_VIEW (data);
+  GimpDocumentView *view = GIMP_DOCUMENT_VIEW (data);
 
   gimp_button_extended_clicked (GIMP_BUTTON (view->refresh_button),
                                 GDK_CONTROL_MASK);

@@ -1338,13 +1338,22 @@ image_menu_update (GtkItemFactory *item_factory,
   gint                lnum          = -1;
   gboolean            fullscreen    = FALSE;
   gint                n_screens     = 1;
+  gboolean            display_items = TRUE;
 
   gimp = GIMP_ITEM_FACTORY (item_factory)->gimp;
 
-  if (data)
+  if (! gtk_item_factory_get_item (item_factory, "/View/New View"))
+    display_items = FALSE;
+
+  if (GIMP_IS_DISPLAY_SHELL (data))
     {
       shell = GIMP_DISPLAY_SHELL (data);
       gdisp = shell->gdisp;
+    }
+  else if (GIMP_IS_DISPLAY (data))
+    {
+      gdisp = GIMP_DISPLAY (data);
+      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
     }
 
   if (gdisp)
@@ -1366,24 +1375,24 @@ image_menu_update (GtkItemFactory *item_factory,
 
       drawable = gimp_image_active_drawable (gimage);
       if (drawable)
-	drawable_type = gimp_drawable_type (drawable);
+        drawable_type = gimp_drawable_type (drawable);
 
       if (lp)
-	{
-	  layer = gimp_image_get_active_layer (gimage);
+        {
+          layer = gimp_image_get_active_layer (gimage);
 
-	  if (layer)
-	    {
-	      lm    = gimp_layer_get_mask (layer) ? TRUE : FALSE;
-	      alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
-	      lind  = gimp_image_get_layer_index (gimage, layer);
+          if (layer)
+            {
+              lm    = gimp_layer_get_mask (layer) ? TRUE : FALSE;
+              alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+              lind  = gimp_image_get_layer_index (gimage, layer);
 
               text_layer = (GIMP_IS_TEXT_LAYER (layer) &&
                             GIMP_TEXT_LAYER (layer)->text);
-	    }
+            }
 
-	  lnum = gimp_container_num_children (gimage->layers);
-	}
+          lnum = gimp_container_num_children (gimage->layers);
+        }
 
       vectors = gimp_image_get_active_vectors (gimage);
 
@@ -1485,55 +1494,58 @@ image_menu_update (GtkItemFactory *item_factory,
 
   /*  View  */
 
-  SET_SENSITIVE ("/View/New View", gdisp);
+  if (display_items)
+    {
+      SET_SENSITIVE ("/View/New View", gdisp);
 
-  SET_SENSITIVE ("/View/Dot for Dot", gdisp);
-  SET_ACTIVE    ("/View/Dot for Dot", gdisp && shell->dot_for_dot);
+      SET_SENSITIVE ("/View/Dot for Dot", gdisp);
+      SET_ACTIVE    ("/View/Dot for Dot", gdisp && shell->dot_for_dot);
 
-  SET_SENSITIVE ("/View/Zoom/Zoom Out",           gdisp);
-  SET_SENSITIVE ("/View/Zoom/Zoom In",            gdisp);
-  SET_SENSITIVE ("/View/Zoom/Zoom to Fit Window", gdisp);
+      SET_SENSITIVE ("/View/Zoom/Zoom Out",           gdisp);
+      SET_SENSITIVE ("/View/Zoom/Zoom In",            gdisp);
+      SET_SENSITIVE ("/View/Zoom/Zoom to Fit Window", gdisp);
 
-  SET_SENSITIVE ("/View/Zoom/16:1",     gdisp);
-  SET_SENSITIVE ("/View/Zoom/8:1",      gdisp);
-  SET_SENSITIVE ("/View/Zoom/4:1",      gdisp);
-  SET_SENSITIVE ("/View/Zoom/2:1",      gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:1",      gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:2",      gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:4",      gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:8",      gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:16",     gdisp);
-  SET_SENSITIVE ("/View/Zoom/Other...", gdisp);
+      SET_SENSITIVE ("/View/Zoom/16:1",     gdisp);
+      SET_SENSITIVE ("/View/Zoom/8:1",      gdisp);
+      SET_SENSITIVE ("/View/Zoom/4:1",      gdisp);
+      SET_SENSITIVE ("/View/Zoom/2:1",      gdisp);
+      SET_SENSITIVE ("/View/Zoom/1:1",      gdisp);
+      SET_SENSITIVE ("/View/Zoom/1:2",      gdisp);
+      SET_SENSITIVE ("/View/Zoom/1:4",      gdisp);
+      SET_SENSITIVE ("/View/Zoom/1:8",      gdisp);
+      SET_SENSITIVE ("/View/Zoom/1:16",     gdisp);
+      SET_SENSITIVE ("/View/Zoom/Other...", gdisp);
 
-  if (gdisp)
-    image_menu_set_zoom (item_factory, shell);
+      if (gdisp)
+        image_menu_set_zoom (item_factory, shell);
 
-  SET_SENSITIVE ("/View/Info Window",         gdisp);
-  SET_SENSITIVE ("/View/Navigation Window",   gdisp);
-  SET_SENSITIVE ("/View/Display Filters...",  gdisp);
+      SET_SENSITIVE ("/View/Info Window",         gdisp);
+      SET_SENSITIVE ("/View/Navigation Window",   gdisp);
+      SET_SENSITIVE ("/View/Display Filters...",  gdisp);
 
-  SET_SENSITIVE ("/View/Show Selection",      gdisp);
-  SET_ACTIVE    ("/View/Show Selection",      gdisp && options->show_selection);
-  SET_SENSITIVE ("/View/Show Layer Boundary", gdisp);
-  SET_ACTIVE    ("/View/Show Layer Boundary", gdisp && options->show_layer_boundary);
-  SET_ACTIVE    ("/View/Show Guides",         gdisp && options->show_guides);
-  SET_ACTIVE    ("/View/Snap to Guides",      gdisp && shell->snap_to_guides);
-  SET_ACTIVE    ("/View/Show Grid",           gdisp && options->show_grid);
-  SET_ACTIVE    ("/View/Snap to Grid",        gdisp && shell->snap_to_grid);
+      SET_SENSITIVE ("/View/Show Selection",      gdisp);
+      SET_ACTIVE    ("/View/Show Selection",      gdisp && options->show_selection);
+      SET_SENSITIVE ("/View/Show Layer Boundary", gdisp);
+      SET_ACTIVE    ("/View/Show Layer Boundary", gdisp && options->show_layer_boundary);
+      SET_ACTIVE    ("/View/Show Guides",         gdisp && options->show_guides);
+      SET_ACTIVE    ("/View/Snap to Guides",      gdisp && shell->snap_to_guides);
+      SET_ACTIVE    ("/View/Show Grid",           gdisp && options->show_grid);
+      SET_ACTIVE    ("/View/Snap to Grid",        gdisp && shell->snap_to_grid);
 
-  SET_SENSITIVE ("/View/Show Menubar",    gdisp);
-  SET_ACTIVE    ("/View/Show Menubar",    gdisp && options->show_menubar);
-  SET_SENSITIVE ("/View/Show Rulers",     gdisp);
-  SET_ACTIVE    ("/View/Show Rulers",     gdisp && options->show_rulers);
-  SET_SENSITIVE ("/View/Show Scrollbars", gdisp);
-  SET_ACTIVE    ("/View/Show Scrollbars", gdisp && options->show_scrollbars);
-  SET_SENSITIVE ("/View/Show Statusbar",  gdisp);
-  SET_ACTIVE    ("/View/Show Statusbar",  gdisp && options->show_statusbar);
+      SET_SENSITIVE ("/View/Show Menubar",    gdisp);
+      SET_ACTIVE    ("/View/Show Menubar",    gdisp && options->show_menubar);
+      SET_SENSITIVE ("/View/Show Rulers",     gdisp);
+      SET_ACTIVE    ("/View/Show Rulers",     gdisp && options->show_rulers);
+      SET_SENSITIVE ("/View/Show Scrollbars", gdisp);
+      SET_ACTIVE    ("/View/Show Scrollbars", gdisp && options->show_scrollbars);
+      SET_SENSITIVE ("/View/Show Statusbar",  gdisp);
+      SET_ACTIVE    ("/View/Show Statusbar",  gdisp && options->show_statusbar);
 
-  SET_SENSITIVE ("/View/Shrink Wrap",       gdisp);
-  SET_SENSITIVE ("/View/Fullscreen",        gdisp);
-  SET_ACTIVE    ("/View/Fullscreen",        gdisp && fullscreen);
-  SET_VISIBLE   ("/View/Move to Screen...", gdisp && n_screens > 1);
+      SET_SENSITIVE ("/View/Shrink Wrap",       gdisp);
+      SET_SENSITIVE ("/View/Fullscreen",        gdisp);
+      SET_ACTIVE    ("/View/Fullscreen",        gdisp && fullscreen);
+      SET_VISIBLE   ("/View/Move to Screen...", gdisp && n_screens > 1);
+    }
 
   /*  Image  */
 
@@ -1569,23 +1581,26 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Layer/Scale Layer...",         lp && !aux);
   SET_SENSITIVE ("/Layer/Crop Layer",             lp && !aux && sel);
 
-  SET_SENSITIVE ("/Layer/Stack/Select Previous Layer",
-                 lp && !fs && !aux && lind > 0);
-  SET_SENSITIVE ("/Layer/Stack/Select Next Layer",
-                 lp && !fs && !aux && lind < (lnum - 1));
-  SET_SENSITIVE ("/Layer/Stack/Select Top Layer",
-                 lp && !fs && !aux && lind > 0);
-  SET_SENSITIVE ("/Layer/Stack/Select Bottom Layer",
-                 lp && !fs && !aux && lind < (lnum - 1));
+  if (display_items)
+    {
+      SET_SENSITIVE ("/Layer/Stack/Select Previous Layer",
+                     lp && !fs && !aux && lind > 0);
+      SET_SENSITIVE ("/Layer/Stack/Select Next Layer",
+                     lp && !fs && !aux && lind < (lnum - 1));
+      SET_SENSITIVE ("/Layer/Stack/Select Top Layer",
+                     lp && !fs && !aux && lind > 0);
+      SET_SENSITIVE ("/Layer/Stack/Select Bottom Layer",
+                     lp && !fs && !aux && lind < (lnum - 1));
 
-  SET_SENSITIVE ("/Layer/Stack/Raise Layer",
-                 lp && !fs && !aux && alpha && lind > 0);
-  SET_SENSITIVE ("/Layer/Stack/Lower Layer",
-                 lp && !fs && !aux && alpha && lind < (lnum - 1));
-  SET_SENSITIVE ("/Layer/Stack/Layer to Top",
-                 lp && !fs && !aux && alpha && lind > 0);
-  SET_SENSITIVE ("/Layer/Stack/Layer to Bottom",
-                 lp && !fs && !aux && alpha && lind < (lnum - 1));
+      SET_SENSITIVE ("/Layer/Stack/Raise Layer",
+                     lp && !fs && !aux && alpha && lind > 0);
+      SET_SENSITIVE ("/Layer/Stack/Lower Layer",
+                     lp && !fs && !aux && alpha && lind < (lnum - 1));
+      SET_SENSITIVE ("/Layer/Stack/Layer to Top",
+                     lp && !fs && !aux && alpha && lind > 0);
+      SET_SENSITIVE ("/Layer/Stack/Layer to Bottom",
+                     lp && !fs && !aux && alpha && lind < (lnum - 1));
+    }
 
   SET_SENSITIVE ("/Layer/Colors/Color Balance...",       lp &&   is_rgb);
   SET_SENSITIVE ("/Layer/Colors/Hue-Saturation...",      lp &&   is_rgb);

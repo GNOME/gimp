@@ -1,5 +1,42 @@
 2004-01-31  Michael Natterer  <mitch@gimp.org>
 
+	Use the global <Image> accel_group in all docks except the
+	toolbox (the latter needs GTK+ 2.4's new menu features).
+	Addresses bug #119878:
+
+	* app/gui/buffers-commands.c
+	* app/gui/channels-commands.c
+	* app/gui/data-commands.c
+	* app/gui/documents-commands.c
+	* app/gui/drawable-commands.c
+	* app/gui/edit-commands.c
+	* app/gui/file-commands.c
+	* app/gui/gradients-commands.c
+	* app/gui/image-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/plug-in-commands.c
+	* app/gui/select-commands.c
+	* app/gui/tool-options-commands.c
+	* app/gui/tools-commands.c
+	* app/gui/vectors-commands.c
+	* app/gui/view-commands.c: changed the various return_if_no_foo()
+	macros to also accept a GimpDock as user_data.
+
+	* app/gui/image-menu.c (image_menu_update): don't update the
+	display related menu items if they don't exist (see below).
+
+	* app/gui/gui.c (gui_display_changed): simplified.
+
+	* app/widgets/gimpimagedock.[ch]: create an "<Image>" item_factory
+	and attach its accel_group to the dock. Destroy all display
+	related menu items. Destroy the layer stack navigation items
+	because their default shortcuts interfere with tree and grid view
+	keybindings. Connect to "image_changed" of the dock's private
+	context and to "flush" of the image container to update the
+	item_factory's state.
+
+2004-01-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/dialogs.c: added some g_return_if_fail().
 
 2004-01-31  Michael Natterer  <mitch@gimp.org>

@@ -33,9 +33,7 @@ void
 data_new_data_cmd_callback (GtkWidget *widget,
 			    gpointer   data)
 {
-  GimpDataFactoryView *view;
-
-  view = GIMP_DATA_FACTORY_VIEW (data);
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);
 
   if (GTK_WIDGET_SENSITIVE (view->new_button))
     gtk_button_clicked (GTK_BUTTON (view->new_button));
@@ -45,9 +43,7 @@ void
 data_duplicate_data_cmd_callback (GtkWidget *widget,
 				  gpointer   data)
 {
-  GimpDataFactoryView *view;
-
-  view = GIMP_DATA_FACTORY_VIEW (data);
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);
 
   if (GTK_WIDGET_SENSITIVE (view->duplicate_button))
     gtk_button_clicked (GTK_BUTTON (view->duplicate_button));
@@ -57,9 +53,7 @@ void
 data_edit_data_cmd_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  GimpDataFactoryView *view;
-
-  view = GIMP_DATA_FACTORY_VIEW (data);
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);
 
   if (GTK_WIDGET_SENSITIVE (view->edit_button))
     gtk_button_clicked (GTK_BUTTON (view->edit_button));
@@ -69,9 +63,7 @@ void
 data_delete_data_cmd_callback (GtkWidget *widget,
 			       gpointer   data)
 {
-  GimpDataFactoryView *view;
-
-  view = GIMP_DATA_FACTORY_VIEW (data);
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);
 
   if (GTK_WIDGET_SENSITIVE (view->delete_button))
     gtk_button_clicked (GTK_BUTTON (view->delete_button));
@@ -81,9 +73,7 @@ void
 data_refresh_data_cmd_callback (GtkWidget *widget,
 				gpointer   data)
 {
-  GimpDataFactoryView *view;
-
-  view = GIMP_DATA_FACTORY_VIEW (data);
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);
 
   if (GTK_WIDGET_SENSITIVE (view->refresh_button))
     gtk_button_clicked (GTK_BUTTON (view->refresh_button));

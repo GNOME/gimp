@@ -78,12 +78,10 @@ tool_options_save_new_cmd_callback (GtkWidget *widget,
                                     gpointer   data,
                                     guint      action)
 {
-  GimpEditor   *editor;
+  GimpEditor   *editor = GIMP_EDITOR (data);
   GimpContext  *context;
   GimpToolInfo *tool_info;
   GtkWidget    *qbox;
-
-  editor = GIMP_EDITOR (data);
 
   context   = gimp_get_user_context (editor->item_factory->gimp);
   tool_info = gimp_context_get_tool (context);

@@ -28,6 +28,8 @@
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpdock.h"
+
 #include "display/gimpdisplay.h"
 
 #include "tools/gimptool.h"
@@ -39,6 +41,8 @@
     gimp = ((GimpDisplay *) data)->gimage->gimp; \
   else if (GIMP_IS_GIMP (data)) \
     gimp = data; \
+  else if (GIMP_IS_DOCK (data)) \
+    gimp = ((GimpDock *) data)->context->gimp; \
   else \
     gimp = NULL; \
   if (! gimp) \

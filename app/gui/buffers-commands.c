@@ -35,9 +35,7 @@ void
 buffers_paste_buffer_cmd_callback (GtkWidget *widget,
                                    gpointer   data)
 {
-  GimpBufferView *view;
-
-  view = GIMP_BUFFER_VIEW (data);
+  GimpBufferView *view = GIMP_BUFFER_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->paste_button));
 }
@@ -46,9 +44,7 @@ void
 buffers_paste_buffer_into_cmd_callback (GtkWidget *widget,
                                         gpointer   data)
 {
-  GimpBufferView *view;
-
-  view = GIMP_BUFFER_VIEW (data);
+  GimpBufferView *view = GIMP_BUFFER_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->paste_into_button));
 }
@@ -57,9 +53,7 @@ void
 buffers_paste_buffer_as_new_cmd_callback (GtkWidget *widget,
                                           gpointer   data)
 {
-  GimpBufferView *view;
-
-  view = GIMP_BUFFER_VIEW (data);
+  GimpBufferView *view = GIMP_BUFFER_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->paste_as_new_button));
 }
@@ -68,9 +62,7 @@ void
 buffers_delete_buffer_cmd_callback (GtkWidget *widget,
                                     gpointer   data)
 {
-  GimpBufferView *view;
-
-  view = GIMP_BUFFER_VIEW (data);
+  GimpBufferView *view = GIMP_BUFFER_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->delete_button));
 }

@@ -540,15 +540,7 @@ gui_display_changed (GimpContext *context,
 		     GimpDisplay *display,
 		     Gimp        *gimp)
 {
-  GimpItemFactory  *item_factory;
-  GimpDisplayShell *shell = NULL;
-
-  item_factory = gimp_item_factory_from_path ("<Image>");
-
-  if (display)
-    shell = GIMP_DISPLAY_SHELL (display->shell);
-
-  gimp_item_factory_update (item_factory, shell);
+  gimp_item_factory_update (gimp_item_factory_from_path ("<Image>"), display);
 }
 
 static void

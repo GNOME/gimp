@@ -37,6 +37,7 @@
 #include "display/gimpdisplayshell-filter-dialog.h"
 #include "display/gimpdisplayshell-scale.h"
 
+#include "widgets/gimpdock.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpitemfactory.h"
 
@@ -51,6 +52,8 @@
     gdisp = data; \
   else if (GIMP_IS_GIMP (data)) \
     gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
+  else if (GIMP_IS_DOCK (data)) \
+    gdisp = gimp_context_get_display (((GimpDock *) data)->context); \
   else \
     gdisp = NULL; \
   if (! gdisp) \

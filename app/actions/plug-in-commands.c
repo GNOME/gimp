@@ -32,6 +32,7 @@
 #include "plug-in/plug-in-run.h"
 #include "plug-in/plug-in-proc.h"
 
+#include "widgets/gimpdock.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "display/gimpdisplay.h"
@@ -44,6 +45,8 @@
     gdisp = data; \
   else if (GIMP_IS_GIMP (data)) \
     gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
+  else if (GIMP_IS_DOCK (data)) \
+    gdisp = gimp_context_get_display (((GimpDock *) data)->context); \
   else \
     gdisp = NULL; \
   if (! gdisp) \

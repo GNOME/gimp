@@ -36,6 +36,7 @@
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcomponenteditor.h"
+#include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemtreeview.h"
 #include "widgets/gimpviewabledialog.h"
@@ -60,6 +61,8 @@ static void   channels_color_changed  (GimpColorButton *button,
     gimage = ((GimpDisplay *) data)->gimage; \
   else if (GIMP_IS_GIMP (data)) \
     gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+  else if (GIMP_IS_DOCK (data)) \
+    gimage = gimp_context_get_image (((GimpDock *) data)->context); \
   else if (GIMP_IS_COMPONENT_EDITOR (data)) \
     gimage = ((GimpImageEditor *) data)->gimage; \
   else if (GIMP_IS_ITEM_TREE_VIEW (data)) \
