@@ -1,3 +1,12 @@
+2002-01-20  Sven Neumann  <sven@gimp.org>
+
+	* acinclude.m4: added macros defined in pkg.m4 and glib-gettext.m4
+	so people don't need to have glib-2.0 and pkg-config installed in
+	order to run aclocal and autoconf.
+
+	* configure.in: moved AC_PROG_CC before AM_PROG_LIBTOOL to avoid a 
+	warning.
+
 Mon Jan 14 11:00:13 PST 2002 Manish Singh <yosh@gimp.org>
 
 	* HACKING: remove note about CVS, there really isn't any reason to

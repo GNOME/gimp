@@ -29,10 +29,10 @@ PACKAGE=gimp
 
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 
-
 AM_CONFIG_HEADER(config.h)
 
 dnl Initialize libtool
+AC_PROG_CC
 AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
 
@@ -74,7 +74,6 @@ fi
 AM_CONDITIONAL(MS_LIB_AVAILABLE, test x$ms_librarian = xyes)
 
 dnl Checks for programs.
-AC_PROG_CC
 AC_ISC_POSIX
 AM_PROG_CC_STDC
 AC_PROG_INSTALL
