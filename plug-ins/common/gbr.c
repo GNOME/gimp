@@ -47,7 +47,18 @@ static gint   save_image (char   *filename,
                           gint32  image_ID,
                           gint32  drawable_ID);
 
-static gint   save_dialog ();
+static gint save_dialog ();
+static gint drawable_num_channels (guint32 drawable_ID);
+
+static guchar * buffer_to_network_order ( guchar *buffer, 
+					gint width, 
+					gint num_channels, 
+					gint image_type);
+static guchar * buffer_to_host_order ( guchar *buffer, 
+					gint width, 
+					gint num_channels, 
+					gint image_type);
+
 static void close_callback(GtkWidget * widget, gpointer data);
 static void ok_callback(GtkWidget * widget, gpointer data);
 static void entry_callback(GtkWidget * widget, gpointer data);
@@ -185,6 +196,7 @@ run (char    *name,
 	}
 }
 
+
 static gint32 load_image (char *filename) {
 	char *temp;
 	int fd;
@@ -195,6 +207,7 @@ static gint32 load_image (char *filename) {
 	gint line;
 	GPixelRgn pixel_rgn;
 	gint bytes;
+	gint num_channels;
 	gint layer_type, image_type;
 	temp = g_malloc(strlen (filename) + 11);
 	sprintf(temp, "Loading %s:", filename);
@@ -255,66 +268,83 @@ static gint32 load_image (char *filename) {
 		case RGB_IMAGE:
 			image_type = RGB;
 			layer_type = RGB_IMAGE;
+			num_channels = 3;
 			break;
 		case RGBA_IMAGE:
 			image_type = RGB;
 			layer_type = RGBA_IMAGE;
+			num_channels = 4;
 			break;
 		case GRAY_IMAGE:
 			image_type = GRAY;
 			layer_type = GRAY_IMAGE;
+			num_channels = 1;
 			break;
 		case GRAYA_IMAGE:
 			image_type = GRAY;
 			layer_type = GRAYA_IMAGE;
+			num_channels = 2;
+			break;
 			break;
 		case U16_RGB_IMAGE:
 			image_type = U16_RGB;
 			layer_type = U16_RGB_IMAGE;
+			num_channels = 3;
 			break;
 		case U16_RGBA_IMAGE:
 			image_type = U16_RGB;
 			layer_type = U16_RGBA_IMAGE;
+			num_channels = 4;
 			break;
 		case U16_GRAY_IMAGE:
 			image_type = U16_GRAY;
 			layer_type = U16_GRAY_IMAGE;
+			num_channels = 1;
 			break;
 		case U16_GRAYA_IMAGE:
 			image_type = U16_GRAY;
 			layer_type = U16_GRAYA_IMAGE;
+			num_channels = 2;
 			break;
 		case FLOAT_RGB_IMAGE:
 			image_type = FLOAT_RGB;
 			layer_type = FLOAT_RGB_IMAGE;
+			num_channels = 3;
 			break;
 		case FLOAT_RGBA_IMAGE:
 			image_type = FLOAT_RGB;
 			layer_type = FLOAT_RGBA_IMAGE;
+			num_channels = 4;
 			break;
 		case FLOAT_GRAY_IMAGE:
 			image_type = FLOAT_GRAY;
 			layer_type = FLOAT_GRAY_IMAGE;
+			num_channels = 1;
 			break;
 		case FLOAT_GRAYA_IMAGE:
 			image_type = FLOAT_GRAY;
 			layer_type = FLOAT_GRAYA_IMAGE;
+			num_channels = 2;
 			break;
 		case FLOAT16_RGB_IMAGE:
 			image_type = FLOAT16_RGB;
 			layer_type = FLOAT16_RGB_IMAGE;
+			num_channels = 3;
 			break;
 		case FLOAT16_RGBA_IMAGE:
 			image_type = FLOAT16_RGB;
 			layer_type = FLOAT16_RGBA_IMAGE;
+			num_channels = 4;
 			break;
 		case FLOAT16_GRAY_IMAGE:
 			image_type = FLOAT16_GRAY;
 			layer_type = FLOAT16_GRAY_IMAGE;
+			num_channels = 1;
 			break;
 		case FLOAT16_GRAYA_IMAGE:
 			image_type = FLOAT16_GRAY;
 			layer_type = FLOAT16_GRAYA_IMAGE;
+			num_channels = 2;
 			break;
 		default:
 			close (fd);
@@ -347,6 +377,7 @@ static gint32 load_image (char *filename) {
 			g_free(buffer);
 			return -1;
 		}
+		buffer_to_host_order (buffer, ph.width, num_channels, ph.type);
 		gimp_pixel_rgn_set_row(&pixel_rgn, buffer, 0, line, ph.width);
 		gimp_progress_update((double) line / (double) ph.height);
 	}
@@ -363,6 +394,7 @@ static gint save_image (char *filename, gint32 image_ID, gint32 drawable_ID) {
 	gint line;
 	GPixelRgn pixel_rgn;
 	char *temp;
+	gint type = gimp_drawable_type (drawable_ID);
 	
 	temp = g_malloc(strlen (filename) + 10);
 	sprintf(temp, "Saving %s:", filename);
@@ -383,7 +415,7 @@ static gint save_image (char *filename, gint32 image_ID, gint32 drawable_ID) {
 	ph.version = htonl(3);
 	ph.width = htonl(drawable->width);
 	ph.height = htonl(drawable->height);
-	ph.type = htonl(gimp_drawable_type (drawable_ID));
+	ph.type = htonl(type);
 	ph.magic_number = htonl(GBRUSH_MAGIC);
 	ph.spacing = htonl(info.spacing);
 
@@ -405,6 +437,7 @@ static gint save_image (char *filename, gint32 image_ID, gint32 drawable_ID) {
 	}
 	for (line = 0; line < drawable->height; line++) {
 		gimp_pixel_rgn_get_row(&pixel_rgn, buffer, 0, line, drawable->width);
+		buffer_to_network_order (buffer, drawable->width, drawable_num_channels (drawable_ID), type);
 		if (write(fd, buffer, drawable->width * drawable->bpp) !=
 				drawable->width * drawable->bpp) {
 			close(fd);
@@ -419,6 +452,137 @@ static gint save_image (char *filename, gint32 image_ID, gint32 drawable_ID) {
 	return 1;
 }
 
+static gint drawable_num_channels (guint drawable_ID) 
+{
+  gint size; 
+  gint type = gimp_drawable_type (drawable_ID);
+  GDrawable *drawable = gimp_drawable_get(drawable_ID);
+
+  switch (type)
+  {
+    case RGB_IMAGE:
+    case RGBA_IMAGE:
+    case GRAY_IMAGE:
+    case GRAYA_IMAGE:
+    case INDEXED_IMAGE:
+    case INDEXEDA_IMAGE:
+	size = sizeof(guint8);	
+      break;
+    case FLOAT16_RGB_IMAGE:
+    case FLOAT16_RGBA_IMAGE:
+    case FLOAT16_GRAY_IMAGE:
+    case FLOAT16_GRAYA_IMAGE:
+    case U16_RGB_IMAGE:
+    case U16_RGBA_IMAGE:
+    case U16_GRAY_IMAGE:
+    case U16_GRAYA_IMAGE:
+    case U16_INDEXED_IMAGE:
+    case U16_INDEXEDA_IMAGE:
+	size = sizeof(guint16);	
+      break;
+    case FLOAT_RGB_IMAGE:
+    case FLOAT_RGBA_IMAGE:
+    case FLOAT_GRAY_IMAGE:
+    case FLOAT_GRAYA_IMAGE:
+	size = sizeof(gfloat);	
+      break;
+   } 
+   return drawable->bpp/size;
+}
+
+static guchar * buffer_to_host_order ( guchar *buffer, 
+					gint width, 
+					gint num_channels, 
+					gint image_type)
+{
+  gint i, k;
+  switch (image_type)
+  {
+    case RGB_IMAGE:
+    case RGBA_IMAGE:
+    case GRAY_IMAGE:
+    case GRAYA_IMAGE:
+    case INDEXED_IMAGE:
+    case INDEXEDA_IMAGE:
+      break;
+    case FLOAT16_RGB_IMAGE:
+    case FLOAT16_RGBA_IMAGE:
+    case FLOAT16_GRAY_IMAGE:
+    case FLOAT16_GRAYA_IMAGE:
+    case U16_RGB_IMAGE:
+    case U16_RGBA_IMAGE:
+    case U16_GRAY_IMAGE:
+    case U16_GRAYA_IMAGE:
+    case U16_INDEXED_IMAGE:
+    case U16_INDEXEDA_IMAGE:
+	{
+	  guint16 *b = (guint16 *)buffer;
+	  for(i = 0 ; i < width; i++)
+	    for( k = 0 ; k < num_channels; k++)
+	      ntohs (*b++);
+	}
+      break;
+    case FLOAT_RGB_IMAGE:
+    case FLOAT_RGBA_IMAGE:
+    case FLOAT_GRAY_IMAGE:
+    case FLOAT_GRAYA_IMAGE:
+	{
+	  gfloat *b = (gfloat *)buffer;
+	  for(i = 0 ; i < width; i++)
+	    for( k = 0 ; k < num_channels; k++)
+	      ntohl (*b++);
+	}
+      break;
+   } 
+   return buffer;
+}
+
+static guchar * buffer_to_network_order ( guchar *buffer, 
+					gint width, 
+					gint num_channels, 
+					gint image_type)
+{
+  gint i, k;
+  switch (image_type)
+  {
+    case RGB_IMAGE:
+    case RGBA_IMAGE:
+    case GRAY_IMAGE:
+    case GRAYA_IMAGE:
+    case INDEXED_IMAGE:
+    case INDEXEDA_IMAGE:
+      break;
+    case FLOAT16_RGB_IMAGE:
+    case FLOAT16_RGBA_IMAGE:
+    case FLOAT16_GRAY_IMAGE:
+    case FLOAT16_GRAYA_IMAGE:
+    case U16_RGB_IMAGE:
+    case U16_RGBA_IMAGE:
+    case U16_GRAY_IMAGE:
+    case U16_GRAYA_IMAGE:
+    case U16_INDEXED_IMAGE:
+    case U16_INDEXEDA_IMAGE:
+	{
+	  guint16 *b = (guint16 *)buffer;
+	  for(i = 0 ; i < width; i++)
+	    for( k = 0 ; k < num_channels; k++)
+	      htons (*b++);
+	}
+      break;
+    case FLOAT_RGB_IMAGE:
+    case FLOAT_RGBA_IMAGE:
+    case FLOAT_GRAY_IMAGE:
+    case FLOAT_GRAYA_IMAGE:
+	{
+	  gfloat *b = (gfloat *)buffer;
+	  for(i = 0 ; i < width; i++)
+	    for( k = 0 ; k < num_channels; k++)
+	      htonl (*b++);
+	}
+      break;
+   } 
+   return buffer;
+}
 
 static gint save_dialog()
 {
