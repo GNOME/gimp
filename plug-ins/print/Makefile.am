@@ -6,6 +6,8 @@ EXTRA_DIST = print-printers.c
 
 libexec_PROGRAMS = print
 
+bin_PROGRAMS = escputil
+
 print_SOURCES = \
 	print-canon.c		\
 	print-dither.c		\
@@ -23,6 +25,8 @@ print_SOURCES = \
 	gimp_color_window.c	\
 	gimp_main_window.c	\
 	print_gimp.h
+
+escputil_SOURCES = escputil.c
 
 INCLUDES = \
 	-I$(top_srcdir)			\
@@ -43,6 +47,8 @@ LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
+
+escputil_LDADD =
 
 .PHONY: files
 

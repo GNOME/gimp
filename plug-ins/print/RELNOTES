@@ -1,5 +1,4 @@
-This is gimp-print version 4.0.0, the first stable release in the 4.0
-line.
+This is gimp-print version 4.0.1, a stable release in the 4.0 line.
 
 This software includes the Print plug-in for the Gimp (1.0, 1.1, and
 1.2), and GhostScript and CUPS drivers.  The support for printers in
@@ -8,7 +7,18 @@ the Print plugin -- they use the identical code base.  Please read
 Ghost/README and CUPS/README.txt for more information on this.
 
 
-Gimp-Print 4.0.0 is a major release of the Gimp Print plugin and
+Gimp-Print 4.0.1 contains the following fixes over Gimp-Print 4.0.0:
+
+1) The copy of escputil.c in the Ghost subdirectory was older than the
+   copy at top level.
+
+2) escputil in either location would fail to compile without the GNU
+   version of getopt() due to a syntax error.
+
+3) The INSTALL file referred to an old version of gimp-print.
+
+
+Gimp-Print 4.0 is a major release of the Gimp Print plugin and
 associated stp GhostScript driver and CUPS driver.  Among the new
 features over the 2.0 (distributed with the Gimp 1.0) and 3.0
 (distributed with some versions of the Gimp 1.1) releases are:

@@ -1,3 +1,17 @@
+2000-10-29  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/print/escputil.c
+	* plug-ins/print/.cvsignore
+	* plug-ins/print/Makefile.am: new tool which installs under
+	<prefix>/bin and does stuff like cleaning and adjusting your
+	printer's head.
+
+	* plug-ins/print/README
+	* plug-ins/print/RELNOTES: these files already say 4.0.1 now but I
+	didn't tag the sourceforge tree of bumped the version number in
+	Makefile.am (it's just about getting in the new executable as early
+	as possible).
+
 2000-10-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c: tuned the dialog layout and cleaned
