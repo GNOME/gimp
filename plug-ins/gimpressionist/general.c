@@ -17,71 +17,71 @@
 
 #define NUMGENERALBGRADIO 4
 
-static GtkWidget *generalbgradio[NUMGENERALBGRADIO];
-static GtkWidget *generalpaintedges = NULL;
-static GtkObject *generaldarkedgeadjust = NULL;
-static GtkWidget *generaltileable;
-static GtkWidget *generaldropshadow = NULL;
-static GtkWidget *generalcolbutton;
-static GtkObject *generalshadowadjust = NULL;
-static GtkObject *generalshadowdepth = NULL;
-static GtkObject *generalshadowblur = NULL;
-static GtkObject *devthreshadjust = NULL;
+static GtkWidget *general_bg_radio[NUMGENERALBGRADIO];
+static GtkWidget *general_paint_edges = NULL;
+static GtkObject *general_dark_edge_adjust = NULL;
+static GtkWidget *general_tileable;
+static GtkWidget *general_drop_shadow = NULL;
+static GtkWidget *general_color_button;
+static GtkObject *general_shadow_adjust = NULL;
+static GtkObject *general_shadow_depth = NULL;
+static GtkObject *general_shadow_blur = NULL;
+static GtkObject *dev_thresh_adjust = NULL;
 
 static int normalize_bg(int n)
 {
   return (!img_has_alpha && (n == 3)) ? 1 : n;
 }
 
-static void general_bg_store(GtkWidget *wg, void *d)
+static void general_bg_callback(GtkWidget *wg, void *d)
 {
   pcvals.generalbgtype = normalize_bg (GPOINTER_TO_INT (d));
 }
 
 void general_store(void)
 {
-  pcvals.generalpaintedges = GTK_TOGGLE_BUTTON(generalpaintedges)->active;
-  pcvals.generaldarkedge = GTK_ADJUSTMENT(generaldarkedgeadjust)->value;
-  pcvals.generaltileable = GTK_TOGGLE_BUTTON(generaltileable)->active;
-  pcvals.generaldropshadow = GTK_TOGGLE_BUTTON(generaldropshadow)->active;
-  pcvals.generalshadowdarkness = GTK_ADJUSTMENT(generalshadowadjust)->value;
-  pcvals.generalshadowdepth = GTK_ADJUSTMENT(generalshadowdepth)->value;
-  pcvals.generalshadowblur = GTK_ADJUSTMENT(generalshadowblur)->value;
-  pcvals.devthresh = GTK_ADJUSTMENT(devthreshadjust)->value;
+  pcvals.general_paint_edges = GTK_TOGGLE_BUTTON(general_paint_edges)->active;
+  pcvals.generaldarkedge = GTK_ADJUSTMENT(general_dark_edge_adjust)->value;
+  pcvals.general_tileable = GTK_TOGGLE_BUTTON(general_tileable)->active;
+  pcvals.general_drop_shadow = GTK_TOGGLE_BUTTON(general_drop_shadow)->active;
+  pcvals.generalshadowdarkness = GTK_ADJUSTMENT(general_shadow_adjust)->value;
+  pcvals.general_shadow_depth = GTK_ADJUSTMENT(general_shadow_depth)->value;
+  pcvals.general_shadow_blur = GTK_ADJUSTMENT(general_shadow_blur)->value;
+  pcvals.devthresh = GTK_ADJUSTMENT(dev_thresh_adjust)->value;
 }
 
 void general_restore(void)
 {
   gtk_toggle_button_set_active (
-    GTK_TOGGLE_BUTTON (generalbgradio[normalize_bg (pcvals.generalbgtype)]
+    GTK_TOGGLE_BUTTON (general_bg_radio[normalize_bg (pcvals.generalbgtype)]
                       ),
     TRUE
     );
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (generalpaintedges),
-                                pcvals.generalpaintedges);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (generaldarkedgeadjust),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_paint_edges),
+                                pcvals.general_paint_edges);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (general_dark_edge_adjust),
                             pcvals.generaldarkedge);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (generalshadowadjust),
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (general_shadow_adjust),
                             pcvals.generalshadowdarkness);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (generaldropshadow),
-                                pcvals.generaldropshadow);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (generalshadowdepth),
-                            pcvals.generalshadowdepth);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (generalshadowblur),
-                            pcvals.generalshadowblur);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (generaltileable),
-                                pcvals.generaltileable);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (generalcolbutton),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_drop_shadow),
+                                pcvals.general_drop_shadow);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (general_shadow_depth),
+                            pcvals.general_shadow_depth);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (general_shadow_blur),
+                            pcvals.general_shadow_blur);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_tileable),
+                                pcvals.general_tileable);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (general_color_button),
                                &pcvals.color);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (devthreshadjust),
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (dev_thresh_adjust),
                             pcvals.devthresh);
 }
 
-static void selectcolor(GtkWidget *widget, gpointer data)
+static void select_color(GtkWidget *widget, gpointer data)
 {
   gtk_toggle_button_set_active (
-    GTK_TOGGLE_BUTTON(generalbgradio[BG_TYPE_SOLID]), 
+    GTK_TOGGLE_BUTTON(general_bg_radio[BG_TYPE_SOLID]), 
     TRUE
     );
 }
@@ -91,8 +91,8 @@ static GtkWidget *create_general_button (GtkWidget *box, int idx,
                                          GSList **radio_group
                                         )
 {
-  return create_radio_button (box, idx, general_bg_store, label, 
-                              help_string, radio_group, generalbgradio);
+  return create_radio_button (box, idx, general_bg_callback, label, 
+                              help_string, radio_group, general_bg_radio);
 }
 
 void create_generalpage(GtkNotebook *notebook)
@@ -135,18 +135,18 @@ void create_generalpage(GtkNotebook *notebook)
           );
   
 
-  generalcolbutton = gimp_color_button_new (_("Color"),
+  general_color_button = gimp_color_button_new (_("Color"),
 					    COLORBUTTONWIDTH,
 					    COLORBUTTONHEIGHT,
 					    &pcvals.color,
 					    GIMP_COLOR_AREA_FLAT);
-  g_signal_connect (generalcolbutton, "clicked",
-		    G_CALLBACK (selectcolor), NULL);
-  g_signal_connect (generalcolbutton, "color_changed",
+  g_signal_connect (general_color_button, "clicked",
+		    G_CALLBACK (select_color), NULL);
+  g_signal_connect (general_color_button, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &pcvals.color);
-  gtk_box_pack_start(GTK_BOX(box4), generalcolbutton, FALSE, FALSE, 0);
-  gtk_widget_show (generalcolbutton);
+  gtk_box_pack_start(GTK_BOX(box4), general_color_button, FALSE, FALSE, 0);
+  gtk_widget_show (general_color_button);
 
   tmpw = 
        create_general_button(box3, BG_TYPE_TRANSPARENT, _("Transparent"),
@@ -158,7 +158,7 @@ void create_generalpage(GtkNotebook *notebook)
     gtk_widget_set_sensitive (tmpw, FALSE);
 
   gtk_toggle_button_set_active
-    (GTK_TOGGLE_BUTTON (generalbgradio[pcvals.generalbgtype]), TRUE);
+    (GTK_TOGGLE_BUTTON (general_bg_radio[pcvals.generalbgtype]), TRUE);
 
   box1 = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start(GTK_BOX(thispage), box1, FALSE, FALSE, 0);
@@ -169,30 +169,30 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_widget_show (box2);
 
   tmpw = gtk_check_button_new_with_label( _("Paint edges"));
-  generalpaintedges = tmpw;
+  general_paint_edges = tmpw;
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   gimp_help_set_help_data
     (tmpw, _("Selects if to place strokes all the way out to the edges of the image"), NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw),
-			       pcvals.generalpaintedges);
+			       pcvals.general_paint_edges);
 
-  generaltileable = tmpw = gtk_check_button_new_with_label( _("Tileable"));
+  general_tileable = tmpw = gtk_check_button_new_with_label( _("Tileable"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   gimp_help_set_help_data
     (tmpw, _("Selects if the resulting image should be seamlessly tileable"), NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw),
-			       pcvals.generaltileable);
+			       pcvals.general_tileable);
 
   tmpw = gtk_check_button_new_with_label( _("Drop Shadow"));
-  generaldropshadow = tmpw;
+  general_drop_shadow = tmpw;
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   gimp_help_set_help_data
     (tmpw, _("Adds a shadow effect to each brush stroke"), NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw),
-			       pcvals.generaldropshadow);
+			       pcvals.general_drop_shadow);
 
   table = gtk_table_new (5, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE(table), 6);
@@ -200,7 +200,7 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box1), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  generaldarkedgeadjust =
+  general_dark_edge_adjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 0,
 			  _("Edge darken:"),
 			  150, 6, pcvals.generaldarkedge,
@@ -209,7 +209,7 @@ void create_generalpage(GtkNotebook *notebook)
 			  _("How much to \"darken\" the edges of each brush stroke"),
 			  NULL);
 
-  generalshadowadjust =
+  general_shadow_adjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 1,
 			  _("Shadow darken:"),
 			  150, 6, pcvals.generalshadowdarkness,
@@ -218,25 +218,25 @@ void create_generalpage(GtkNotebook *notebook)
 			  _("How much to \"darken\" the drop shadow"),
 			  NULL);
 
-  generalshadowdepth =
+  general_shadow_depth =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 2,
 			  _("Shadow depth:"),
-			  150, 6, pcvals.generalshadowdepth,
+			  150, 6, pcvals.general_shadow_depth,
 			  0, 99, 1, 5, 0,
 			  TRUE, 0, 0,
 			  _("The depth of the drop shadow, i.e. how far apart from the object it should be"),
 			  NULL);
 
-  generalshadowblur =
+  general_shadow_blur =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 3,
 			  _("Shadow blur:"),
-			  150, 6, pcvals.generalshadowblur,
+			  150, 6, pcvals.general_shadow_blur,
 			  0, 99, 1, 5, 0,
 			  TRUE, 0, 0,
 			  _("How much to blur the drop shadow"),
 			  NULL);
 
-  devthreshadjust =
+  dev_thresh_adjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 4,
 			  _("Deviation threshold:"),
 			  150, 6, pcvals.devthresh,

@@ -327,18 +327,18 @@ static void set_values (const gchar *key, const gchar *val)
     pcvals.generalbgtype = atoi(val);
   else if(!strcmp(key, "generaldarkedge"))
     pcvals.generaldarkedge = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "generalpaintedges"))
-    pcvals.generalpaintedges = atoi(val);
-  else if(!strcmp(key, "generaltileable"))
-    pcvals.generaltileable = atoi(val);
-  else if(!strcmp(key, "generaldropshadow"))
-    pcvals.generaldropshadow = atoi(val);
+  else if(!strcmp(key, "general_paint_edges"))
+    pcvals.general_paint_edges = atoi(val);
+  else if(!strcmp(key, "general_tileable"))
+    pcvals.general_tileable = atoi(val);
+  else if(!strcmp(key, "general_drop_shadow"))
+    pcvals.general_drop_shadow = atoi(val);
   else if(!strcmp(key, "generalshadowdarkness"))
     pcvals.generalshadowdarkness = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "generalshadowdepth"))
-    pcvals.generalshadowdepth = atoi(val);
-  else if(!strcmp(key, "generalshadowblur"))
-    pcvals.generalshadowblur = atoi(val);
+  else if(!strcmp(key, "general_shadow_depth"))
+    pcvals.general_shadow_depth = atoi(val);
+  else if(!strcmp(key, "general_shadow_blur"))
+    pcvals.general_shadow_blur = atoi(val);
   else if(!strcmp(key, "devthresh"))
     pcvals.devthresh = g_ascii_strtod (val, NULL);
 
@@ -711,13 +711,13 @@ static void save_preset(void)
   fprintf(f, "generalbgtype=%d\n", pcvals.generalbgtype);
   fprintf(f, "generaldarkedge=%s\n",
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.generaldarkedge));
-  fprintf(f, "generalpaintedges=%d\n", pcvals.generalpaintedges);
-  fprintf(f, "generaltileable=%d\n", pcvals.generaltileable);
-  fprintf(f, "generaldropshadow=%d\n", pcvals.generaldropshadow);
+  fprintf(f, "general_paint_edges=%d\n", pcvals.general_paint_edges);
+  fprintf(f, "general_tileable=%d\n", pcvals.general_tileable);
+  fprintf(f, "general_drop_shadow=%d\n", pcvals.general_drop_shadow);
   fprintf(f, "generalshadowdarkness=%s\n",
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.generalshadowdarkness));
-  fprintf(f, "generalshadowdepth=%d\n", pcvals.generalshadowdepth);
-  fprintf(f, "generalshadowblur=%d\n", pcvals.generalshadowblur);
+  fprintf(f, "general_shadow_depth=%d\n", pcvals.general_shadow_depth);
+  fprintf(f, "general_shadow_blur=%d\n", pcvals.general_shadow_blur);
   fprintf(f, "devthresh=%s\n",
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.devthresh));
 

@@ -57,7 +57,7 @@ typedef struct
   char       selectedbrush[200];
   char       selectedpaper[200];
   GimpRGB    color;
-  int        generalpaintedges;
+  int        general_paint_edges;
   int        placetype;
   vector_t   orientvector[MAXORIENTVECT];
   int        numorientvector;
@@ -65,11 +65,11 @@ typedef struct
   double     brushaspect;
   double     orientangoff;
   double     orientstrexp;
-  int        generaltileable;
+  int        general_tileable;
   int        paper_overlay;
   int        orientvoronoi;
   int        colorbrushes;
-  int        generaldropshadow;
+  int        general_drop_shadow;
   double     generalshadowdarkness;
   int        sizenum;
   double     sizefirst;
@@ -82,8 +82,8 @@ typedef struct
   double     sizestrexp;
   int        sizevoronoi;
 
-  int        generalshadowdepth;
-  int        generalshadowblur;
+  int        general_shadow_depth;
+  int        general_shadow_blur;
 
   int        colortype;
   double     colornoise;

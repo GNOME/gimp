@@ -182,8 +182,8 @@ static void applybrush(ppm_t *brush,
   int x, y;
   double edgedarken = 1.0 - runningvals.generaldarkedge;
   double relief = runningvals.brushrelief / 100.0;
-  int shadowdepth = pcvals.generalshadowdepth;
-  int shadowblur = pcvals.generalshadowblur;
+  int shadowdepth = pcvals.general_shadow_depth;
+  int shadowblur = pcvals.general_shadow_blur;
 
   tmp = *p;
   if(img_has_alpha)
@@ -282,8 +282,8 @@ void repaint(ppm_t *p, ppm_t *a)
   int progstep;
   static int running = 0;
 
-  int dropshadow = pcvals.generaldropshadow;
-  int shadowblur = pcvals.generalshadowblur;
+  int dropshadow = pcvals.general_drop_shadow;
+  int shadowblur = pcvals.general_shadow_blur;
 
   if (running)
     return;
@@ -411,7 +411,7 @@ void repaint(ppm_t *p, ppm_t *a)
   system("xv /tmp/__brush.ppm & xv /tmp/__shadow.ppm & ");
 #endif
 
-  if(runningvals.generalpaintedges) {
+  if(runningvals.general_paint_edges) {
     edgepad(p, maxbrushwidth, maxbrushwidth, maxbrushheight, maxbrushheight);
     if(img_has_alpha)
       edgepad(a, maxbrushwidth, maxbrushwidth, maxbrushheight, maxbrushheight);
@@ -493,7 +493,7 @@ void repaint(ppm_t *p, ppm_t *a)
     blur(&dirmap, 2, 2);
     resize(&dirmap, p->width, p->height);
     blur(&dirmap, 2, 2);
-    if(runningvals.generalpaintedges)
+    if(runningvals.general_paint_edges)
       edgepad(&dirmap, maxbrushwidth, maxbrushheight,maxbrushwidth, maxbrushheight);
     break;
     case ORIENTATION_HUE:
@@ -566,7 +566,7 @@ void repaint(ppm_t *p, ppm_t *a)
     blur(&sizmap, 2, 2);
     resize(&sizmap, p->width, p->height);
     blur(&sizmap, 2, 2);
-    if(runningvals.generalpaintedges)
+    if(runningvals.general_paint_edges)
       edgepad(&sizmap, maxbrushwidth, maxbrushheight,maxbrushwidth, maxbrushheight);
   }
   else if(runningvals.sizetype == SIZE_TYPE_HUE)
@@ -800,7 +800,7 @@ void repaint(ppm_t *p, ppm_t *a)
     }
 
     applybrush(brush, shadow, &tmp, &atmp, tx,ty, r,g,b);
-    if(runningvals.generaltileable && runningvals.generalpaintedges) {
+    if(runningvals.general_tileable && runningvals.general_paint_edges) {
       int origwidth = tmp.width - 2 * maxbrushwidth;
       int origheight = tmp.height - 2 * maxbrushheight;
       int dox = 0, doy = 0;
@@ -836,7 +836,7 @@ void repaint(ppm_t *p, ppm_t *a)
   g_free (xpos);
   g_free (ypos);
 
-  if(runningvals.generalpaintedges) {
+  if(runningvals.general_paint_edges) {
     crop(&tmp, maxbrushwidth, maxbrushheight, tmp.width - maxbrushwidth, tmp.height - maxbrushheight);
     if(img_has_alpha)
       crop(&atmp, maxbrushwidth, maxbrushheight, atmp.width - maxbrushwidth, atmp.height - maxbrushheight);

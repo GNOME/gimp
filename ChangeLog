@@ -1,3 +1,11 @@
+2004-07-17  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/: normalized the identifiers of 
+	general.c and general.h. Also, renamed a callback from _store
+	to simply _callback to avoid confusion with the _store methods.
+	Some of the member variables of the pcvals struct were changed
+	as a result.
+
 2004-07-16  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-mmx.[ch]
