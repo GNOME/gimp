@@ -1,3 +1,7 @@
+Sun Mar 15 01:12:06 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* made 0.99.21 release
+
 Sun Mar 15 02:06:18 CST 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/layers_dialog.c: pass layer_ID instead of layer_widget to
