@@ -16,7 +16,7 @@
 	* user_install
 	* gtkrc_user: new file gtkrc_user which gets installed as
 	~/.gimp-1-1/gtkrc (We used to parse the same file twice if the
-	user didn't the change user-specific gtkrc. The new file has
+	user didn't change the user-specific gtkrc. The new file has
 	comments only).
 
 	* app/app_procs.c: g_free() the user gtkrc filename after use.
