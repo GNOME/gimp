@@ -5,12 +5,12 @@
 
 #include <libgimp/gimp.h>
 #if UI
-#include <libgimp/gimpui.h>
+# include <libgimp/gimpui.h>
 #endif
 
 #if GIMP_MAJOR_VERSION>1 || (GIMP_MAJOR_VERSION==1 && GIMP_MINOR_VERSION>=1)
-#define GIMP11 1
-#define GIMP_PARASITE 1
+# define GIMP11 1
+# define GIMP_PARASITE 1
 #endif
 
 /* FIXME */
@@ -32,18 +32,16 @@
 #endif
 /* And also for newer perls... */
 #ifndef dTHR
-#define dTHR (void)0
+# define dTHR (void)0
 #endif
 #if (PATCHLEVEL < 5)
-#define newSVpvn(data,len) ((len) ? newSVpv ((data), (len)) : newSVpv ("", 0))
-#endif
-#ifndef PL_sv_undef
-#define PL_sv_undef sv_undef
+# define newSVpvn(data,len) ((len) ? newSVpv ((data), (len)) : newSVpv ("", 0))
+# define PL_sv_undef sv_undef
 #endif
 
 /* dirty is used in gimp.h AND in perl < 5.005 or with PERL_POLLUTE.  */
 #ifdef dirty
-#undef dirty
+# undef dirty
 #endif
 
 #include "extradefs.h"
@@ -60,7 +58,7 @@
 #define PKG_SELECTION	GIMP_PKG "Selection"
 #define PKG_REGION	GIMP_PKG "Region"
 #if GIMP_PARASITE
-#define PKG_PARASITE	GIMP_PKG "Parasite"
+# define PKG_PARASITE	GIMP_PKG "Parasite"
 #endif
 
 #define PKG_GDRAWABLE	GIMP_PKG "GDrawable"

@@ -6,7 +6,7 @@ Revision history for Gimp-Perl extension.
         - removed publicly-visible non-PDB pixelfunctions.
           "uuuuuse peedee-ell or dieieie".
         - implemented Gimp::Fu::PF_RADIO.
-        - added blowinout.pl.
+        - added blowinout.pl and terral_text.
         
 1.055 Mon Feb 22 22:38:44 CET 1999
 	- applied seth's script changes.

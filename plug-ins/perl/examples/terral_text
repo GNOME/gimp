@@ -1,0 +1,101 @@
+#!/usr/bin/perl -w
+
+# Terral Text
+# by Seth Burgess <sjburges@gimp.org>
+# effect by Terral from #gimp
+
+#*L* IRC log started on Tue Feb  23 21:59:08 1999
+#*** LOG is set to on
+#[terral] the inputs would be the following
+#[terral] Text, font, and blur amount                                    [22:00]
+#[terral] it is executed on an existing image with 1 layer
+#[terral] this layer will be named the pattern layer
+#[terral] start of script-
+#[terral] add new layer (white)
+#[terral] add text, (centered, black) to the new layer                   [22:02]
+#[terral] anchor the text
+#[terral] guassian blur (blur amount)
+#[terral] invert colors on text layer                                    [22:05]
+#[terral] make active layer the pattern layer now
+#[terral] bump map text layer into pattern layer,  ( azimuth 130.30, elevation 40, depth 20, x offset, y offset, waterlevel, azimuth. all 0)
+#[terral] add layer mask,  (white full opacity)                          [22:08]
+#[terral] copy text layer
+#[terral] paste into layer mask of pattern layer
+#[terral] select layer mask of pattern layer to be active layer          [22:09]
+#[terral] edit curves
+#[terral] input levels of 0, .24, 113                                    [22:11]
+#[terral] --end of script                                                [22:12]
+
+use Gimp;
+use Gimp::Fu;
+
+# Gimp::set_trace(TRACE_ALL);
+
+register 
+	"terraltext",
+	"Make a cool text bumpmap thingy",
+	"Creates a bumpmap text thingy.  Can work using the current layer as a bumpmap or make a solid noise layer for it.",
+	"Seth Burgess",
+	"Seth Burgess <sjburges\@gimp.org>",
+	"1999-02-24",
+	"<Image>/Filters/Render/Terral Text",
+	"RGB*",
+	[ 
+	  [ PF_TOGGLE, "Solid Noise?", "Say yes here", "Either use solid noise or the current background", 0 ],
+	  [ PF_FONT, "helvetica", "Font Name", "-*-helvetica-medium-r-normal-*-*-240-*-*-p-*-iso8859-1" ],
+	  [ PF_STRING, "Text", "Enter your Text to be Terral-ified", "TerralText"],
+	  [ PF_SLIDER, "Blur Amount", "Blur Amount", 10, [0,26,1]],
+	], 
+sub {
+	($img, $pattern, $solidnoise, $font, $text, $blur) = @_;
+	$oldbg = gimp_palette_get_background();
+	$oldfg = gimp_palette_get_foreground();
+
+       
+	
+	if ($solidnoise) {
+		$pattern->plug_in_solid_noise(1,1,256*rand(), 1,2.5,2.5);
+	}
+
+      # FIXME: I should endeavour to find out what kind of image I'm talking
+      # about before blindly apply a type of layer.  Oh well. Call it RGBA
+      # for now.
+	
+	$textlayer = $img->layer_new($img->width, $img->height,RGBA_IMAGE,
+		"TextLayer", 100, 0);
+	$img->add_layer($textlayer,1);
+	palette_set_background([255,255,255]);
+	$textlayer->edit_fill();
+	palette_set_foreground([0,0,0]);
+
+	# Place centered Text - what a PITA!
+	@extents = text_get_extents_fontname($text, xlfd_size($font), $font);
+	$width = $extents[0]; 		
+	$height = $extents[1];  # there's other info in 2&3		
+	$width_offset = ($img->width - $width)/2;
+	$height_offset = ($img->height - $height)/2;
+	$floating=$textlayer->text_fontname($width_offset, $height_offset, $text, 0,0,xlfd_size($font), $font);	
+	$floating->floating_sel_anchor;
+	
+	$textlayer->plug_in_gauss_iir($blur, 1,1); 
+	$textlayer->invert();
+	$pattern->plug_in_bump_map($textlayer, 130.30, 40, 20, 0, 0, 0, 0, 1, 0, 0);
+
+	if (!($pattern->has_alpha)) {
+		$pattern->add_alpha;
+		}
+	$mask = $pattern->create_mask(0);
+	$img->add_layer_mask($pattern, $mask); 	
+	
+	$textlayer->edit_copy();
+	$floater = $mask->edit_paste(0);
+	$floater->floating_sel_anchor;
+	
+	$mask->levels(0, 0, 113, 0.24, 0, 255);
+
+	palette_set_background($oldbg);
+	palette_set_foreground($oldfg);
+	return;
+};
+
+exit main;

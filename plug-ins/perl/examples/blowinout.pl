@@ -89,7 +89,7 @@ register
 	"Blow selected layer inout",
 	"Generates an animation thats blows the selected layer in or out",
 	"John Pitney",
-	"John Pitney <pitney\@students.uiuc.edu>",
+	"John Pitney <pitney\@uiuc.edu>",
 	"1999-02-24",
 	"<Image>/Filters/Distorts/BlowInOut",
 	"*",

@@ -23,12 +23,14 @@ extern "C" {
 
 /* FIXME */
 /* dirty is used in gimp.h.  */
-#undef dirty
+#ifdef dirty
+# undef dirty
+#endif
 #include "extradefs.h"
 
 #if GIMP_MAJOR_VERSION>1 || (GIMP_MAJOR_VERSION==1 && GIMP_MINOR_VERSION>=1)
-#define GIMP11 1
-#define GIMP_PARASITE 1
+# define GIMP11 1
+# define GIMP_PARASITE 1
 #endif
 
 /* Shamelesssly stolen from IO.xs.  See perlguts, this is only for
