@@ -6,6 +6,8 @@ Wed Mar 11 19:30:54 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	*plugins/webbrowse/web-browser.scm: updated some urls
 
+	*plugins/script-fu/sripts/circuit.scm: update for change in maze
+
 Wed Mar 11 18:03:38 CST 1998 Larry Ewing  <lewing@gimp.org>
 
 	* app/disp_callbacks.c: added checks to recreate the active tool
