@@ -1,3 +1,8 @@
+2003-03-22  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/stock-linked-12.png:
+	* themes/Default/images/stock-eye-12.png: sharp icons
+
 2003-03-21  Manish Singh  <yosh@gimp.org>
                                                                                 
 	* plug-ins/common/ps.c: always quote the filename, since system/popen
