@@ -49,7 +49,7 @@ static void   paint_line_pixmap_mask (GImage        *dest,
 				      int            x,
 				      int            offset_x,
 				      int            y,
-				      int            y2,
+				      int            offset_y,
 				      int            bytes,
 				      int            width);
 
@@ -263,6 +263,13 @@ pixmapbrush_motion (PaintCore *paint_core,
   pr = pixel_regions_register (1, &destPR);
 
 
+  /* to handle the case of the left side of the image */
+  if(area->x == 0)
+    offset_x = destPR.w;
+  else
+    offset_x = 0;
+
+  /* FIXME handle the top of the image properly */
   
   for (; pr != NULL; pr = pixel_regions_process (pr))
     {
@@ -272,7 +279,7 @@ pixmapbrush_motion (PaintCore *paint_core,
 /* 	  printf(" brush->width: %i offset_x: %i", brush->pixmap_mask->width, offset_x); */
 /* 	  printf(" area->y: %i destPR.h: %i area->x: %i destPR.w: %i ",area->y, destPR.h, area->x, destPR.w);  */
 	  paint_line_pixmap_mask(gimage, drawable, brush,
-				 d, area->x,offset_x, area->y, y,
+				 d, area->x,offset_x, y, offset_y,
 				 destPR.bytes, destPR.w);
 	
 	  d += destPR.rowstride;
@@ -317,7 +324,7 @@ paint_line_pixmap_mask (GImage        *dest,
 			int            x,
 			int            offset_x,
 			int            y,
-			int            y2,
+			int            offset_y,
 			int            bytes,
 			int            width)
 {
@@ -325,16 +332,11 @@ paint_line_pixmap_mask (GImage        *dest,
   int color, alpha;
   int i;
 
- /*  Make sure x, y are positive  */
-  while (x < 0)
-    x += brush->pixmap_mask->width;
-  while (y < 0)
-    y += brush->pixmap_mask->height;
-
   /* point to the approriate scanline */
   /* use "pat" here because i'm c&p from pattern clone */
   pat = temp_buf_data (brush->pixmap_mask) +
-    (y2 * brush->pixmap_mask->width * brush->pixmap_mask->bytes);
+    (y * brush->pixmap_mask->width * brush->pixmap_mask->bytes);
+
     
   /*   dest = d +  (y * brush->pixmap_mask->width * brush->pixmap_mask->bytes); */
   color = RGB;
@@ -344,7 +346,7 @@ paint_line_pixmap_mask (GImage        *dest,
   /*  printf("x: %i y: %i y2: %i   \n",x,y,y2); */
   for (i = 0; i < width; i++)
     {
-      p = pat + ((i+offset_x) % brush->pixmap_mask->width) * brush->pixmap_mask->bytes;
+      p = pat + ((i-offset_x) % brush->pixmap_mask->width) * brush->pixmap_mask->bytes;
      
       /* printf("d->r: %i d->g: %i d->b: %i d->a: %i\n",(int)d[0], (int)d[1], (int)d[2], (int)d[3]); */
       gimage_transform_color (dest, drawable, p, d, color);

@@ -1,7 +1,12 @@
+Tue Aug 10 01:15:59 1999 Adrian Likins <alikins@redhat.com>
+	
+	* app/pixmapbrush.c: fixed the weirdness with drawing
+	along the left side of the image. Top's still weird
+
 Mon Aug  9 22:46:34 1999 Adrian Likins <alikins@redhat.com>
 	
 	* app/pixmapbrush.c: couple of warning clean ups and
-	some minor fleshing out
+	some minor fleshing out, fix a bit of the border problems
 
 Mon Aug  9 01:20:24 1999 Adrian Likins <alikins@redhat.com>
 
