@@ -187,12 +187,14 @@ gimp_pixel_rgn_get_pixel (GimpPixelRgn *pr,
 /**
  * gimp_pixel_rgn_get_row:
  * @pr:     a pointer to a previously initialized #GimpPixelRgn.
- * @buf:
- * @x:
- * @y:
- * @width:
+ * @buf:    a pointer to an array of #guchar
+ * @x:      the abscisse of the first pixel (relative to the drawable).
+ * @y:      the ordinate of the first pixel (relative to the drawable).
+ * @width:  the number of pixels to get.
  *
- * Get several pixels of a region in a row.
+ * Get several pixels of a region in a row. This function fills the buffer
+ * @buf with the values of the pixels from (@x, @y) to (@x+@width-1, @y).
+ * @buf should be large enough to hold all these values.
  **/
 void
 gimp_pixel_rgn_get_row (GimpPixelRgn *pr,
@@ -249,13 +251,16 @@ gimp_pixel_rgn_get_row (GimpPixelRgn *pr,
 
 /**
  * gimp_pixel_rgn_get_col:
- * @pr: a pointer to a previously initialized #GimpPixelRgn.
- * @buf:
- * @x:
- * @y:
- * @height:
+ * @pr:     a pointer to a previously initialized #GimpPixelRgn.
+ * @buf:    a pointer to an array of #guchar
+ * @x:      the abscisse of the first pixel (relative to the drawable).
+ * @y:      the ordinate of the first pixel (relative to the drawable).
+ * @height: the number of pixels to get.
  *
- * Get several pixels of a column of a region.
+ * Get several pixels of a region's column. This function fills the buffer
+ * @buf with the values of the pixels from (@x, @y) to (@x, @y+@height-1).
+ * @buf should be large enough to hold all these values.
+ *
  **/
 void
 gimp_pixel_rgn_get_col (GimpPixelRgn *pr,
@@ -301,14 +306,17 @@ gimp_pixel_rgn_get_col (GimpPixelRgn *pr,
 
 /**
  * gimp_pixel_rgn_get_rect:
- * @pr: a pointer to a previously initialized #GimpPixelRgn.
- * @buf:
- * @x:
- * @y:
- * @width:
- * @height:
+ * @pr:     a pointer to a previously initialized #GimpPixelRgn.
+ * @buf:    a pointer to an array of #guchar
+ * @x:      the abscisse of the first pixel (relative to the drawable).
+ * @y:      the ordinate of the first pixel (relative to the drawable).
+ * @width:  the width of the rectangle.
+ * @height: the height of the rectangle.
  *
- * Get a rectangle of pixels from a region.
+ * Get all the pixel values from the rectangle defined by @x, @y, @width and
+ * @height. This function fills the buffer @buf with the values of the pixels
+ * from (@x, @y) to (@x+@width-1, @y+@height-1).
+ * @buf should be large enough to hold all these values (@width*@height*bpp).
  **/
 void
 gimp_pixel_rgn_get_rect (GimpPixelRgn *pr,
@@ -389,12 +397,12 @@ gimp_pixel_rgn_get_rect (GimpPixelRgn *pr,
 
 /**
  * gimp_pixel_rgn_set_pixel:
- * @pr: a pointer to a previously initialized #GimpPixelRgn.
- * @buf:
- * @x:
- * @y:
+ * @pr:   a pointer to a previously initialized #GimpPixelRgn.
+ * @buf:  a pointer to an array of #guchar.
+ * @x:    the abscisse of the pixel (relative to the drawable).
+ * @y:    the ordinate of the pixel (relative to the drawable).
  *
- *
+ * Set the pixel at (@x, @y) to the values from @buf.
  **/
 void
 gimp_pixel_rgn_set_pixel (GimpPixelRgn *pr,
@@ -425,13 +433,15 @@ gimp_pixel_rgn_set_pixel (GimpPixelRgn *pr,
 
 /**
  * gimp_pixel_rgn_set_row:
- * @pr: a pointer to a previously initialized #GimpPixelRgn.
- * @buf:
- * @x:
- * @y:
- * @width:
+ * @pr:     a pointer to a previously initialized #GimpPixelRgn.
+ * @buf:    a pointer to an array of #guchar
+ * @x:      the abscisse of the first pixel (relative to the drawable).
+ * @y:      the ordinate of the first pixel (relative to the drawable).
+ * @width:  the number of pixels to set.
  *
- *
+ * Set several pixels of a region in a row. This function draws the pixels
+ * from (@x, @y) to (@x+@width-1, @y) using the values of the buffer @buf.
+ * @buf should be large enough to hold all these values.
  **/
 void
 gimp_pixel_rgn_set_row (GimpPixelRgn *pr,
@@ -486,13 +496,15 @@ gimp_pixel_rgn_set_row (GimpPixelRgn *pr,
 
 /**
  * gimp_pixel_rgn_set_col:
- * @pr: a pointer to a previously initialized #GimpPixelRgn.
- * @buf:
- * @x:
- * @y:
- * @height:
+ * @pr:     a pointer to a previously initialized #GimpPixelRgn.
+ * @buf:    a pointer to an array of #guchar
+ * @x:      the abscisse of the first pixel (relative to the drawable).
+ * @y:      the ordinate of the first pixel (relative to the drawable).
+ * @height: the number of pixels to set.
  *
- *
+ * Set several pixels of a region's column. This function draws the pixels
+ * from (@x, @y) to (@x, @y+@height-1) using the values from the buffer @buf.
+ * @buf should be large enough to hold all these values.
  **/
 void
 gimp_pixel_rgn_set_col (GimpPixelRgn *pr,
@@ -538,14 +550,17 @@ gimp_pixel_rgn_set_col (GimpPixelRgn *pr,
 
 /**
  * gimp_pixel_rgn_set_rect:
- * @pr: a pointer to a previously initialized #GimpPixelRgn.
- * @buf:
- * @x:
- * @y:
- * @width:
- * @height:
+ * @pr:     a pointer to a previously initialized #GimpPixelRgn.
+ * @buf:    a pointer to an array of #guchar
+ * @x:      the abscisse of the first pixel (relative to the drawable).
+ * @y:      the ordinate of the first pixel (relative to the drawable).
+ * @width:  the width of the rectangle.
+ * @height: the height of the rectangle.
  *
- *
+ * Set all the pixel of the rectangle defined by @x, @y, @width and
+ * @height. This function draws the rectangle from (@x, @y) to
+ * (@x+@width-1, @y+@height-1), using the pixel values from the buffer @buf.
+ * @buf should be large enough to hold all these values (@width*@height*bpp).
  **/
 void
 gimp_pixel_rgn_set_rect (GimpPixelRgn *pr,
@@ -627,12 +642,20 @@ gimp_pixel_rgn_set_rect (GimpPixelRgn *pr,
 
 /**
  * gimp_pixel_rgns_register2:
- * @nrgns:
- * @prs:
+ * @nrgns: the number of regions to register.
+ * @prs:   an array of @nrgns pointers to initialized #GimpPixelRgn.
  *
- *
- *
- * Returns: a #gpointer to 
+ * This function is hard to describe by itself.  It takes a number of 
+ * initialized regions, all of the same size.  These regions will be split
+ * into tile-sized regions, and an iterator mechanism will then be used to
+ * iterate with each tile that compose a region.
+ * 
+ * After the call to this function, the regions will have their size reduced
+ * to a tile, and an iterator will be returned. This iterator could then
+ * be used with the #gimp_pixel_rgns_process function to change all the
+ * regions to the next tile of the original regions.
+ * 
+ * Returns: a #gpointer to a regions iterator.
  **/
 gpointer
 gimp_pixel_rgns_register2 (gint           nrgns,
@@ -684,12 +707,12 @@ gimp_pixel_rgns_register2 (gint           nrgns,
 
 /**
  * gimp_pixel_rgns_register:
- * @nrgns:
- * ...
+ * @nrgns: the number of regions to register.
+ * ...:    @nrgns pointers to #GimpPixelRgn.
  *
+ * This is the varargs version of #gimp_pixel_rgns_register2.
  *
- *
- * Returns: a #gpointer to
+ * Returns: a #gpointer to a regions iterator.
  **/
 gpointer
 gimp_pixel_rgns_register (gint nrgns,
@@ -720,11 +743,14 @@ gimp_pixel_rgns_register (gint nrgns,
 
 /**
  * gimp_pixel_rgns_process:
- * pri_ptr:
+ * pri_ptr: a regions iterator returned by #gimp_pixel_rgns_register,
+ *          #gimp_pixel_rgns_register2 or #gimp_pixel_rgns_process.
  *
- * 
+ * This function update the regions registered previously with one of the
+ * #gimp_pixel_rgns_register* functions to their next tile.
  *
- * Returns: a #gpointer to
+ * Returns: a #gpointer to a new regions iterator or #NULL if there isn't
+ * any tiles left.
  **/
 gpointer
 gimp_pixel_rgns_process (gpointer pri_ptr)
