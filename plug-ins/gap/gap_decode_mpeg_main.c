@@ -686,7 +686,7 @@ load_range_dialog(gint32 *first_frame,
                          "Before you proceed, you should save all open images.");
   
   if(TRUE == p_array_dialog (_("Split MPEG1 Video to Frames"), 
-			     _("Select Framerange"), 
+			     _("Select Frame Range"), 
 			     ARGC_DIALOG, argv))
   {
      *first_frame = (long)(argv[1].int_ret);

@@ -1397,7 +1397,7 @@ mov_src_sel_create()
 		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gimp_help_set_help_data(option_menu,
-                       _("Source Object to insert into Framerange")
+                       _("Source Object to insert into Frame Range")
                        , NULL);
 
   gtk_widget_show(option_menu);

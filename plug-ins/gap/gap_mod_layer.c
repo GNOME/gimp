@@ -148,7 +148,7 @@ int p_layer_modify_dialog(t_anim_info *ainfo_ptr,
     b_argv[1].but_val  = -1;
   
   p_init_arr_arg(&argv[0], WGT_LABEL);
-  argv[0].label_txt = _("Perform function on one or more Layer(s)\nin all frames of the selected framerange\n");
+  argv[0].label_txt = _("Perform function on one or more Layer(s)\nin all frames of the selected frame range\n");
 
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
   argv[1].constraint = TRUE;

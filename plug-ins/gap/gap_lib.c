@@ -2114,7 +2114,7 @@ int p_dup_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
   argv[2].umax      = 9999;
   argv[2].help_txt  = _("Copy selected Range n-times  \n(you may type in Values > 99)");
   
-  if(TRUE == p_array_dialog(l_title, _("Duplicate Framerange"),  3, argv))
+  if(TRUE == p_array_dialog(l_title, _("Duplicate Frame Range"),  3, argv))
   { 
     g_free (l_title);
     *range_from = (long)(argv[0].int_ret);

@@ -1,10 +1,10 @@
+Tue Mar 28 22:47:17 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* plug-ins/gap/*: "Frame Range" typo fix.
+
 2000-03-28  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
 
 	* plug-ins/common/warp.c (warp_dialog): integers are not doubles!
-
-Tue Mar 28 16:04:14 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
-
-	* plug-ins/gflare/gflare.c: Typo fix.
 
 2000-03-28  Sven Neumann  <sven@gimp.org>
 
