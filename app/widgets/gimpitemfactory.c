@@ -66,11 +66,43 @@ static void   help_debug_cmd_callback (GtkWidget *widget,
 
 static gchar G_GNUC_UNUSED *dummy_entries[] =
 {
+  /*  <Toolbox>  */
+  N_("/Xtns/Animation"),
+  N_("/Xtns/Perl-Fu"),
+  N_("/Xtns/Perl-Fu/Logos"),
+  N_("/Xtns/Perl"),
+  N_("/Xtns/Render"),
+  N_("/Xtns/Render/Logos"),
+  N_("/Xtns/Render/Povray"),
+  N_("/Xtns/Script-Fu"),
+  N_("/Xtns/Script-Fu/Logos"),
+  N_("/Xtns/Script-Fu/Patterns"),
+  N_("/Xtns/Script-Fu/Web page themes"),
+  N_("/Xtns/Script-Fu/Utils"),
+  N_("/Xtns/Script-Fu/Buttons"),
+  N_("/Xtns/Script-Fu/Make Brush"),
+  N_("/Xtns/Script-Fu/Misc"),
+  N_("/Xtns/Script-Fu/Test"),
+  N_("/Xtns/Web Browser"),
+
+  /*  <Image>  */
+  N_("/Filters/Colors/Map"),
   N_("/Filters/Render/Clouds"),
   N_("/Filters/Render/Nature"),
   N_("/Filters/Render/Pattern"),
-  N_("/Filters/Colors/Map"),
-  N_("/Filters/Misc")
+  N_("/Filters/Misc"),
+  N_("/Script-Fu/Decor"),
+  N_("/Script-Fu/Modify"),
+  N_("/Script-Fu/Utils"),
+  N_("/Script-Fu/Animators"),
+  N_("/Script-Fu/Stencil Ops"),
+  N_("/Script-Fu/Alchemy"),
+  N_("/Script-Fu/Selection"),
+  N_("/Script-Fu/Shadow"),
+  N_("/Script-Fu/Render"),
+  N_("/Guides"),
+  N_("Video"),
+  N_("Video/Encode")
 };
 
 static GSList *last_opened_raw_filenames = NULL;
@@ -993,8 +1025,18 @@ menus_reorder_plugins (void)
   static gint n_image_file_entries = (sizeof (image_file_entries) /
 				      sizeof (image_file_entries[0]));
 
-  GtkWidget *menu;
+  static gchar *reorder_submenus[] = { "<Image>/Video" };
+  static gint n_reorder_submenus = (sizeof (reorder_submenus) /
+				    sizeof (reorder_submenus[0]));
+
+  static gchar *reorder_sub_submenus[] = { "<Image>/Filters",
+					   "<Toolbox>/Xtns" };
+  static gint n_reorder_sub_submenus = (sizeof (reorder_sub_submenus) /
+					sizeof (reorder_sub_submenus[0]));
+
+  GtkItemFactory *item_factory;
   GtkWidget *menu_item;
+  GtkWidget *menu;
   GList *list;
   gchar *path;
   gint i, pos;
@@ -1060,36 +1102,38 @@ menus_reorder_plugins (void)
 	gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
     }
 
-  /*  Find the <Image>/Filters menu...  */
-  menu_item = gtk_item_factory_get_widget (image_factory,
-					   "/Filters/Repeat last");
-  if (!menu_item || !menu_item->parent)
-    return;
-  menu = menu_item->parent;
-
-  /*  ...and reorder all submenus of it's submenus  */
-  for (list = GTK_MENU_SHELL (menu)->children; list; list = g_list_next (list))
+  /*  Reorder menus where plugins registered submenus  */
+  for (i = 0; i < n_reorder_submenus; i++)
     {
-      GtkMenuItem *menu_item = GTK_MENU_ITEM (list->data);
+      item_factory = gtk_item_factory_from_path (reorder_submenus[i]);
+      menu = gtk_item_factory_get_widget (item_factory,
+					  reorder_submenus[i]);
 
-      if (menu_item->submenu)
-	menus_filters_subdirs_to_top (GTK_MENU (menu_item->submenu));
+      if (menu && GTK_IS_MENU (menu))
+	{
+	  menus_filters_subdirs_to_top (GTK_MENU (menu));
+	}
     }
 
-  /*  Find the <Toolbox>/Xtns menu...  */
-  menu_item = gtk_item_factory_get_widget (toolbox_factory,
-					   "/Xtns/Module Browser...");
-  if (!menu_item || !menu_item->parent)
-    return;
-  menu = menu_item->parent;
-
-  /*  ...and reorder all submenus of it's submenus  */
-  for (list = GTK_MENU_SHELL (menu)->children; list; list = g_list_next (list))
+  for (i = 0; i < n_reorder_sub_submenus; i++)
     {
-      GtkMenuItem *menu_item = GTK_MENU_ITEM (list->data);
+      item_factory = gtk_item_factory_from_path (reorder_sub_submenus[i]);
+      menu = gtk_item_factory_get_widget (item_factory,
+					  reorder_sub_submenus[i]);
 
-      if (menu_item->submenu)
-	menus_filters_subdirs_to_top (GTK_MENU (menu_item->submenu));
+      if (menu && GTK_IS_MENU (menu))
+	{
+	  for (list = GTK_MENU_SHELL (menu)->children; list;
+	       list = g_list_next (list))
+	    {
+	      GtkMenuItem *menu_item;
+
+	      menu_item = GTK_MENU_ITEM (list->data);
+
+	      if (menu_item->submenu)
+		menus_filters_subdirs_to_top (GTK_MENU (menu_item->submenu));
+	    }
+	}
     }
 }
 
@@ -1618,32 +1662,34 @@ menus_init (void)
     }
 }
 
-#define MENUPATH_SIZE 384
-
 static gchar *
 menu_translate (const gchar *path,
     		gpointer     data)
 {
-  static gchar menupath[MENUPATH_SIZE];
+  static gchar *menupath = NULL;
+
   gchar *retval;
   gchar *factory;
 
   factory = (gchar *) data;
 
-  menupath[MENUPATH_SIZE - 1] = '\0';
-  strncpy (menupath, path, MENUPATH_SIZE -1);
+  if (menupath)
+    g_free (menupath);
+
+  menupath = g_strdup (path);
 
   if ((strstr (path, "/tearoff1") != NULL) ||
       (strstr (path, "/---") != NULL) ||
       (strstr (path, "/MRU") != NULL))
     return menupath;
 
-  retval = gettext (path);
+  retval = gettext (menupath);
 
   if (!strcmp (path, retval) && factory)
     {
-      strcpy (menupath, factory);
-      strncat (menupath, path, MENUPATH_SIZE - 1 - strlen (factory));
+      g_free (menupath);
+
+      menupath = g_strconcat (factory, path, NULL);
 
       retval = dgettext ("gimp-std-plugins", menupath) + strlen (factory);
     }

@@ -576,7 +576,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 N_("<Image>/Video/Encode/MPEG2 mpeg2encode...)"),
+			 N_("<Image>/Video/Encode/MPEG2..."),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_mpege, nreturn_vals,

@@ -1,3 +1,15 @@
+1999-11-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/blend.c: accidentially replaced "Gradient:" with "Blend:" in
+	my last checkin to this file. Put the right string back.
+
+	* app/menus.c: fixed the plugin translation problem (YES!!! :-)
+	Mysteriously, using g_strdup() et al. instead of composing the
+	string to translate in a statically allocated array fixed the
+	problem.
+
+	* plug-ins/gap/gap_main.c: fixed a menu path.
+
 Fri Nov 26 01:33:04 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/histogram_tool.c: purely cosmetic change

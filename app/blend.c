@@ -331,12 +331,12 @@ blend_options_new ()
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->offset_w));
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->offset_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
-		      &options->offset);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Offset:"), 1.0, 1.0,
 			     scale, FALSE);
+  gtk_signal_connect (GTK_OBJECT (options->offset_w), "value_changed",
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      &options->offset);
 
   /*  the blend mode menu  */
   options->blend_mode_w = gtk_option_menu_new ();
@@ -351,7 +351,7 @@ blend_options_new ()
   menu = build_menu (gradient_option_items, NULL);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (options->gradient_type_w), menu);
   gimp_table_attach_aligned (GTK_TABLE (table), 2,
-			     _("Blend:"), 1.0, 0.5,
+			     _("Gradient:"), 1.0, 0.5,
 			     options->gradient_type_w, TRUE);
 
   /*  the repeat option  */
@@ -405,12 +405,12 @@ blend_options_new ()
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->max_depth_w));
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_signal_connect (GTK_OBJECT(options->max_depth_w), "value_changed",
-		      (GtkSignalFunc) tool_options_int_adjustment_update,
-		      &options->max_depth);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Max Depth:"), 1.0, 1.0,
 			     scale, FALSE);
+  gtk_signal_connect (GTK_OBJECT(options->max_depth_w), "value_changed",
+		      (GtkSignalFunc) tool_options_int_adjustment_update,
+		      &options->max_depth);
 
   /*  threshold scale  */
   options->threshold_w =
@@ -418,12 +418,12 @@ blend_options_new ()
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->threshold_w));
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_signal_connect (GTK_OBJECT(options->threshold_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
-		      &options->threshold);
   gimp_table_attach_aligned (GTK_TABLE (table), 1,
 			     _("Threshold:"), 1.0, 1.0,
 			     scale, FALSE);
+  gtk_signal_connect (GTK_OBJECT(options->threshold_w), "value_changed",
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      &options->threshold);
 
   /*  show the table  */
   gtk_widget_show (table);
