@@ -13,6 +13,7 @@
 #include "placement.h"
 #include "preview.h"
 #include "size.h"
+#include "presets.h"
 
 #include "ppmtool.h"
 

@@ -91,18 +91,6 @@ double getsiz_proto (double x, double y, int n, smvector_t *vec,
 
 /* String and Path Manipulation Routines */
 
-void remove_trailing_whitespace(char *buffer)
-{
-  char * ptr;
-  /*
-   * Note: there is some reliance on the ASCII character code
-   * characteristics here.
-   * */
-  ptr = buffer + strlen(buffer)-1;
-  while ((ptr > buffer) && ((*ptr) <= ' '))
-      *(ptr--) = '\0';
-}
-
 
 static GList *parsepath_cached_path = NULL;
 
@@ -230,7 +218,10 @@ reselect (GtkWidget *view,
 }
 
 static void readdirintolist_real(char *subdir, GtkWidget *view,
-    char *selected)
+    char *selected, gboolean with_filename_column,
+    gchar *(*get_object_name_cb)
+    (gchar *dir, gchar * filename, void * context),
+    void * context)
 {
   gchar *fpath;
   const gchar *de;
@@ -282,7 +273,27 @@ static void readdirintolist_real(char *subdir, GtkWidget *view,
   while (flist)
     {
       gtk_list_store_append (store, &iter);
-      gtk_list_store_set (store, &iter, 0, flist->data, -1);
+      /* Set the filename */
+      gtk_list_store_set (store, &iter, PRESETS_LIST_COLUMN_FILENAME,
+                          flist->data, -1);
+      /* Set the object name */
+      if (with_filename_column)
+        {
+          gchar * object_name;
+          object_name = get_object_name_cb (subdir, flist->data, context);
+          if (object_name)
+            {
+              gtk_list_store_set (store, &iter,
+                                  PRESETS_LIST_COLUMN_OBJECT_NAME,
+                                  object_name, -1);
+              g_free (object_name);
+            }
+          else
+            {
+              /* Default to the filename */
+              gtk_list_store_set (store, &iter, 1, flist->data, -1);
+            }
+        }
 
       if (selected)
 	{
@@ -302,7 +313,11 @@ static void readdirintolist_real(char *subdir, GtkWidget *view,
     }
 }
 
-void readdirintolist(char *subdir, GtkWidget *view, char *selected)
+void readdirintolist_extended(char *subdir, GtkWidget *view, char *selected,
+                              gboolean with_filename_column,
+                              gchar *(*get_object_name_cb)
+                              (gchar *dir, gchar *filename, void *context),
+                              void * context)
 {
   char *tmpdir;
   GList *thispath = parsepath();
@@ -310,10 +325,16 @@ void readdirintolist(char *subdir, GtkWidget *view, char *selected)
   while (thispath)
     {
       tmpdir = g_build_filename ((gchar *) thispath->data, subdir, NULL);
-      readdirintolist_real (tmpdir, view, selected);
+      readdirintolist_real (tmpdir, view, selected, with_filename_column,
+                            get_object_name_cb, context);
       g_free (tmpdir);
       thispath = thispath->next;
     }
+}
+
+void readdirintolist (char *subdir, GtkWidget *view, char *selected)
+{
+  readdirintolist_extended (subdir, view, selected, FALSE, NULL, NULL);
 }
 
 /*

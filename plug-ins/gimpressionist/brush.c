@@ -19,6 +19,7 @@
 #include "gimpressionist.h"
 #include "ppmtool.h"
 #include "brush.h"
+#include "presets.h"
 
 #include <libgimp/stdplugins-intl.h>
 

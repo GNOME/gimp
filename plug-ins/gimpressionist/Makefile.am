@@ -46,8 +46,9 @@ gimpressionist_sources = \
 	ppmtool.c		\
 	ppmtool.h		\
 	presets.c		\
-	preview.h		\
+	presets.h		\
 	preview.c		\
+	preview.h		\
 	repaint.c		\
 	size.c			\
 	sizemap.c		\

@@ -1,3 +1,11 @@
+2004-07-06  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gimpressionist: applied patch from Shlomi Fish that
+	fixes confusion of filenames and user-visible object names (bug
+	#132621). Also removed function remove_trailing_whitespace() that
+	used to duplicate functionality from GLib and updated
+	preset_create_filename().
+
 2004-07-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppreviewrenderer.c

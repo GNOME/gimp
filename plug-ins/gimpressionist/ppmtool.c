@@ -24,7 +24,7 @@ int readline(FILE *f, char *buffer, int len)
   }
   while (buffer[0] == '#');
 
-  remove_trailing_whitespace(buffer);
+  g_strchomp (buffer);
   return 0;
 }
 

@@ -15,6 +15,7 @@
 #include <libgimp/gimpui.h>
 
 #include "gimpressionist.h"
+#include "presets.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -22,10 +23,20 @@
 #include "libgimpbase/gimpwin32-io.h"
 #endif
 
+#define PRESETMAGIC "Preset"
+
 static GtkWidget    *presetnameentry = NULL;
 static GtkWidget    *presetlist      = NULL;
 static GtkWidget    *presetdesclabel = NULL;
 static GtkListStore *store;
+static gchar        *selected_preset_orig_name = NULL;
+static gchar        *selected_preset_filename = NULL;
+
+void preset_free(void)
+{
+  g_free (selected_preset_orig_name);
+  g_free (selected_preset_filename);
+}
 
 static void set_preset_description_text (const gchar *text)
 {
@@ -36,22 +47,127 @@ static char presetdesc[4096] = "";
 
 static char *factory_defaults = "<Factory defaults>";
 
+static gchar *
+get_object_name(gchar *dir, gchar *filename, void *context)
+{
+  gchar *ret = NULL;
+  gchar *full_path = NULL;
+  FILE *f;
+  char line[1024] = "";
+  int line_idx;
+
+  /* First try to extract the object's name (= user-friendly description)
+   * from the preset file
+   * */
+
+  full_path = g_build_filename (dir, filename, NULL);
+  f = fopen (full_path, "rt");
+  if (f)
+    {
+      /* Skip the preset magic. */
+      fgets (line, 10, f);
+      if (!strncmp(line, PRESETMAGIC, 4))
+        {
+          for (line_idx = 0; line_idx<5; line_idx++)
+            {
+              if (!fgets(line, sizeof(line), f))
+                break;
+              g_strchomp (line);
+              if (!strncmp (line, "name=", 5))
+                {
+                  ret = g_strcompress (line+5);
+                  break;
+                }
+            }
+        }
+      fclose (f);
+    }
+
+  /* The object name defaults to a filename-derived description */
+  if (! ret)
+    {
+      ret = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+    }
+
+  g_free (full_path);
+
+  return ret;
+}
+
+static void
+preset_read_dir_into_list (void)
+{
+  readdirintolist_extended ("Presets", presetlist, NULL, TRUE,
+                            get_object_name, NULL);
+}
+
+static gchar *
+preset_create_filename (const gchar *basename,
+                        const gchar *dest_dir)
+{
+  gchar *filename;
+  gchar *fullpath;
+  gchar *safe_name;
+  gint   i;
+  gint   unum = 1;
+
+  g_return_val_if_fail (basename != NULL, NULL);
+  g_return_val_if_fail (dest_dir != NULL, NULL);
+  g_return_val_if_fail (g_path_is_absolute (dest_dir), NULL);
+
+  safe_name = g_filename_from_utf8 (basename, -1, NULL, NULL, NULL);
+
+  if (safe_name[0] == '.')
+    safe_name[0] = '-';
+  for (i = 0; safe_name[i]; i++)
+    if (safe_name[i] == G_DIR_SEPARATOR || g_ascii_isspace (safe_name[i]))
+      safe_name[i] = '-';
+
+  filename = g_strdup (safe_name);
+
+  fullpath = g_build_filename (dest_dir, filename, NULL);
+
+  g_free (filename);
+
+  while (g_file_test (fullpath, G_FILE_TEST_EXISTS))
+    {
+      g_free (fullpath);
+
+      filename = g_strdup_printf ("%s-%d",
+				  safe_name,
+                                  unum++);
+
+      fullpath = g_build_filename (dest_dir, filename, NULL);
+
+      g_free (filename);
+    }
+
+  g_free (safe_name);
+
+  return fullpath;
+}
+
+
 static void addfactorydefaults (void)
 {
   GtkTreeIter iter;
 
   gtk_list_store_append (store, &iter);
-  gtk_list_store_set (store, &iter, 0, factory_defaults, -1);
+  /* Set the filename. */
+  gtk_list_store_set (store, &iter, PRESETS_LIST_COLUMN_FILENAME,
+                      factory_defaults, -1);
+  /* Set the object name. */
+  gtk_list_store_set (store, &iter, PRESETS_LIST_COLUMN_OBJECT_NAME,
+                      factory_defaults, -1);
+
 }
 
 static void presetsrefresh(void)
 {
   gtk_list_store_clear (store);
   addfactorydefaults ();
-  readdirintolist ("Presets", presetlist, NULL);
+  preset_read_dir_into_list ();
 }
-
-#define PRESETMAGIC "Preset"
 
 static int loadoldpreset (const gchar *fname)
 {
@@ -271,8 +387,8 @@ static int loadpreset(const gchar *fn)
     char *tmps;
     if(!fgets(line,1024,f))
       break;
-    remove_trailing_whitespace(line);
-    tmps = strchr(line, '=');
+    g_strchomp (line);
+    tmps = strchr (line, '=');
     if(!tmps)
       continue;
     *tmps = '\0';
@@ -331,13 +447,16 @@ static void applypreset(GtkWidget *w, GtkTreeSelection *selection)
     {
       gchar *preset;
 
-      gtk_tree_model_get (model, &iter, 0, &preset, -1);
+      gtk_tree_model_get (model, &iter, PRESETS_LIST_COLUMN_FILENAME,
+                          &preset, -1);
 
       select_preset(preset);
 
       restorevals ();
 
-      g_free (preset);
+      /* g_free (preset); */
+      g_free (selected_preset_filename);
+      selected_preset_filename = preset;
     }
 }
 
@@ -350,7 +469,8 @@ static void deletepreset(GtkWidget *w, GtkTreeSelection *selection)
     {
       gchar *preset;
 
-      gtk_tree_model_get (model, &iter, 0, &preset, -1);
+      gtk_tree_model_get (model, &iter, PRESETS_LIST_COLUMN_FILENAME,
+                          &preset, -1);
 
       if (preset)
         {
@@ -460,7 +580,7 @@ create_savepreset (void)
 
 static void savepreset(void)
 {
-  const gchar *l;
+  const gchar *preset_name;
   gchar *fname, *presets_dir_path;
   FILE  *f;
   GList *thispath;
@@ -468,9 +588,9 @@ static void savepreset(void)
   gchar  vbuf[6][G_ASCII_DTOSTR_BUF_SIZE];
   guchar color[3];
   gint   i;
-  gchar *desc_escaped;
+  gchar *desc_escaped, *preset_name_escaped;
 
-  l = gtk_entry_get_text (GTK_ENTRY (presetnameentry));
+  preset_name = gtk_entry_get_text (GTK_ENTRY (presetnameentry));
   thispath = parsepath ();
   storevals ();
 
@@ -498,8 +618,27 @@ static void savepreset(void)
         }
     }
 
-  fname = g_build_filename (presets_dir_path, l, NULL);
+  /* Check if the user-friendly name has changed. If so, then save it under
+   * a new file. If not - use the same file name.
+   * */
+  if (!strcmp (preset_name, selected_preset_orig_name))
+    {
+      fname = g_build_filename (presets_dir_path,
+                                selected_preset_filename,
+                                NULL);
+    }
+  else
+    {
+      fname = preset_create_filename(preset_name, presets_dir_path);
+    }
   g_free (presets_dir_path);
+
+  if (!fname)
+    {
+      g_printerr ("Error building a filename for preset \"%s\"!\n",
+                  preset_name);
+      return;
+    }
 
   f = fopen (fname, "wt");
   if (!f)
@@ -513,6 +652,9 @@ static void savepreset(void)
   desc_escaped = g_strescape (presetdesc, NULL);
   fprintf(f, "desc=%s\n", desc_escaped);
   g_free (desc_escaped);
+  preset_name_escaped = g_strescape (preset_name, NULL);
+  fprintf(f, "name=%s\n", preset_name_escaped);
+  g_free (preset_name_escaped);
   fprintf(f, "orientnum=%d\n", pcvals.orientnum);
   fprintf(f, "orientfirst=%s\n",
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientfirst));
@@ -657,14 +799,76 @@ static void selectpreset(GtkTreeSelection *selection, gpointer data)
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
-      gchar *preset;
+      gchar *preset_name;
+      gchar *preset_filename;
 
-      gtk_tree_model_get (model, &iter, 0, &preset, -1);
-      if(strcmp(preset, factory_defaults))
-        gtk_entry_set_text (GTK_ENTRY(presetnameentry), preset);
-      readdesc (preset);
-      g_free (preset);
+      gtk_tree_model_get (model, &iter, PRESETS_LIST_COLUMN_OBJECT_NAME,
+                          &preset_name, -1);
+      gtk_tree_model_get (model, &iter, PRESETS_LIST_COLUMN_FILENAME,
+                          &preset_filename, -1);
+      /* TODO : Maybe make the factory defaults behavior in regards
+       * to the preset's object name and filename more robust?
+       * */
+      if(strcmp(preset_filename, factory_defaults))
+        {
+          gtk_entry_set_text (GTK_ENTRY(presetnameentry), preset_name);
+          g_free (selected_preset_orig_name);
+          g_free (selected_preset_filename);
+          selected_preset_orig_name = g_strdup (preset_name);
+          selected_preset_filename = g_strdup(selected_preset_filename);
+        }
+      readdesc (preset_filename);
+      g_free (preset_name);
+      g_free (preset_filename);
     }
+}
+
+static GtkWidget *
+create_presets_list(GtkWidget *parent,
+                    void (*changed_cb)
+                    (GtkTreeSelection *selection, gpointer data))
+{
+  GtkListStore *store;
+  GtkTreeSelection *selection;
+  GtkCellRenderer *renderer;
+  GtkTreeViewColumn *column;
+  GtkWidget *swin, *view;
+
+  swin = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(swin),
+                                       GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (parent), swin, FALSE, FALSE, 0);
+  gtk_widget_show (swin);
+  gtk_widget_set_size_request(swin, 150,-1);
+
+  store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+  view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
+
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
+  g_object_unref (store);
+  gtk_widget_show (view);
+
+  renderer = gtk_cell_renderer_text_new ();
+
+  column =
+      gtk_tree_view_column_new_with_attributes ("Preset", renderer,
+                                                "text",
+                                                PRESETS_LIST_COLUMN_OBJECT_NAME,
+                                                NULL);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
+
+
+  gtk_container_add (GTK_CONTAINER (swin), view);
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+  gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
+  g_signal_connect (selection, "changed", G_CALLBACK (changed_cb),
+                    NULL);
+
+  return view;
 }
 
 void create_presetpage(GtkNotebook *notebook)
@@ -701,7 +905,7 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX (thispage), box1, TRUE, TRUE, 0);
   gtk_widget_show (box1);
 
-  presetlist = view = createonecolumnlist (box1, selectpreset);
+  presetlist = view = create_presets_list (box1, selectpreset);
   store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   addfactorydefaults ();
@@ -749,7 +953,7 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX (vbox), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);
 
-  readdirintolist("Presets", view, NULL);
+  preset_read_dir_into_list ();
 
   gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
 }

@@ -109,6 +109,12 @@ enum ORIENTATION_ENUM
     ORIENTATION_MANUAL = 7,
 };
 
+enum PRESETS_LIST_COLUMN_ENUM
+{
+  PRESETS_LIST_COLUMN_FILENAME = 0,
+  PRESETS_LIST_COLUMN_OBJECT_NAME = 1,
+};
+
 /* Globals */
 
 extern char *standalone;
@@ -129,15 +135,12 @@ extern GtkObject *colornoiseadjust;
 
 extern GtkWidget *previewbutton;
 
-extern GtkWidget *presetsavebutton;
-
 extern gboolean img_has_alpha;
 
 extern GRand *gr;
 
 /* Prototypes */
 
-void remove_trailing_whitespace(char *buffer);
 GList *parsepath(void);
 void free_parsepath_cache(void);
 
@@ -145,7 +148,6 @@ void create_paperpage(GtkNotebook *);
 void create_brushpage(GtkNotebook *);
 void create_orientationpage(GtkNotebook *);
 void create_generalpage(GtkNotebook *);
-void create_presetpage(GtkNotebook *);
 void create_placementpage(GtkNotebook *);
 void create_colorpage(GtkNotebook *);
 
@@ -157,6 +159,11 @@ gchar *findfile(const gchar *);
 void unselectall(GtkWidget *list);
 void reselect(GtkWidget *list, char *fname);
 void readdirintolist(char *subdir, GtkWidget *view, char *selected);
+void readdirintolist_extended(char *subdir, GtkWidget *view, char *selected,
+                              gboolean with_filename_column,
+                              gchar *(*get_object_name_cb)
+                              (gchar *dir, gchar *filename, void *context),
+                              void * context);
 void orientation_restore(void);
 void paper_store(void);
 void paper_restore(void);
@@ -175,14 +182,7 @@ void create_sizemap_dialog(void);
 double getsiz_proto (double x, double y, int n, smvector_t *vec,
                      double smstrexp, int voronoi);
 
-enum SELECT_PRESET_RETURN_VALUES
-{
-    SELECT_PRESET_OK = 0,
-    SELECT_PRESET_FILE_NOT_FOUND = -1,
-    SELECT_PRESET_LOAD_FAILED = -2,
-};
 
-int select_preset(const gchar *preset);
 void set_colorbrushes (const gchar *fn);
 int  create_gimpressionist (void);
 

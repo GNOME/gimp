@@ -10,6 +10,7 @@
 #include "gimpressionist.h"
 #include "preview.h"
 #include "brush.h"
+#include "presets.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -177,6 +178,7 @@ run (const gchar      *name,
   reloadbrush(NULL, NULL);
   preview_free_resources();
   brush_free();
+  preset_free();
 
   values[0].data.d_status = status;
 
