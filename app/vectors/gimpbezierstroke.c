@@ -1759,25 +1759,57 @@ gimp_bezier_stroke_new_ellipse (const GimpCoords *center,
                                 gdouble           radius_x,
                                 gdouble           radius_y)
 {
-  GimpStroke *stroke;
-  GimpCoords  a = *center;
-  GimpCoords  b = *center;
+  GimpStroke    *stroke;
+  GimpCoords     p1 = *center;
+  GimpCoords     p2 = *center;
+  GimpCoords     p3 = *center;
+  gdouble        cx = center->x;
+  gdouble        cy = center->y;
+  const gdouble  circlemagic = 4.0 * (G_SQRT2 - 1.0) / 3.0;
+  GimpAnchor    *handle;
 
-  if (radius_x > radius_y)
-    {
-      a.x -= radius_x;
-      b.x += radius_x;
-    }
-  else
-    {
-      a.y -= radius_y;
-      b.y += radius_y;
-    }
+  p1.x = cx - radius_x;
+  p1.y = cy;
+  stroke = gimp_bezier_stroke_new_moveto (&p1);
 
-  stroke = gimp_bezier_stroke_new_moveto (&a);
+  p1.x = cx - radius_x;
+  p1.y = cy + radius_y * circlemagic;
+  p2.x = cx - radius_x * circlemagic;
+  p2.y = cy + radius_y;
+  p3.x = cx;
+  p3.y = cy + radius_y;
 
-  gimp_bezier_stroke_arcto (stroke, radius_x, radius_y, 0, TRUE, FALSE, &b);
-  gimp_bezier_stroke_arcto (stroke, radius_x, radius_y, 0, TRUE, FALSE, &a);
+  gimp_bezier_stroke_cubicto (stroke, &p1, &p2, &p3);
+
+  p1.x = cx + radius_x * circlemagic;
+  p1.y = cy + radius_y;
+  p2.x = cx + radius_x;
+  p2.y = cy + radius_y * circlemagic;
+  p3.x = cx + radius_x;
+  p3.y = cy;
+
+  gimp_bezier_stroke_cubicto (stroke, &p1, &p2, &p3);
+
+  p1.x = cx + radius_x;
+  p1.y = cy - radius_y * circlemagic;
+  p2.x = cx + radius_x * circlemagic;
+  p2.y = cy - radius_y;
+  p3.x = cx;
+  p3.y = cy - radius_y;
+
+  gimp_bezier_stroke_cubicto (stroke, &p1, &p2, &p3);
+
+  handle = g_list_first (GIMP_STROKE (stroke)->anchors)->data;
+
+  handle->position.x = cx - radius_x * circlemagic;
+  handle->position.y = cy - radius_y;
+
+  handle = g_list_last (GIMP_STROKE (stroke)->anchors)->data;
+
+  handle->position.x = cx - radius_x;
+  handle->position.y = cy - radius_y * circlemagic;
+
+  gimp_stroke_close (stroke);
 
   return stroke;
 }

@@ -679,13 +679,9 @@ svg_handler_rect_start (SvgHandler   *handler,
       rx = MIN (rx, width / 2);
       ry = MIN (ry, height / 2);
 
-      point.x = x + rx;
-      point.y = y;
-      stroke = gimp_bezier_stroke_new_moveto (&point);
-
       point.x = x + width - rx;
       point.y = y;
-      gimp_bezier_stroke_lineto (stroke, &point);
+      stroke = gimp_bezier_stroke_new_moveto (&point);
 
       if (rx)
         {
@@ -722,6 +718,9 @@ svg_handler_rect_start (SvgHandler   *handler,
           GimpCoords  end = { x + rx, y, 1.0, 0.5, 0.5, 0.5 };
           gimp_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
         }
+
+      /* the last line is handled by closing the stroke */
+      gimp_stroke_close (stroke);
 
       path->strokes = g_list_prepend (path->strokes, stroke);
     }

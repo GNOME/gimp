@@ -1,3 +1,12 @@
+2004-08-22  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpbezierstroke.c: Implemented the ellipse basic
+	shape differently to avoid possible rounding issues with
+	the _arcto () command.
+
+	* app/vectors/gimpvectors-import.c: properly close the rounded
+	rectangles.
+
 2004-08-21  Sven Neumann  <sven@gimp.org>
 
 	* app/vectors/gimpvectors-import.c (parse_svg_transform): support
