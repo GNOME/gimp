@@ -291,9 +291,16 @@ install_help (InstallCallback callback)
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
+  /* this is a fontset, e.g. multiple comma-separated font definitions */
   font_strong = gdk_fontset_load (_("-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"));
+
+  /* this is a font, provide only one single font definition */
   font_emphasis = gdk_font_load (_("-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"));
+
+  /* this is a fontset, e.g. multiple comma-separated font definitions */
   font = gdk_fontset_load (_("-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"));
+  if (!font_emphasis)
+    font_emphasis = font;
 
   /*  Realize the widget before allowing new text to be inserted  */
   gtk_widget_realize (text);
@@ -315,6 +322,11 @@ install_help (InstallCallback callback)
 
   /* scroll back to the top */
   gtk_adjustment_set_value (GTK_ADJUSTMENT (vadj), 0.0);
+
+  gdk_font_unref (font_strong);
+  if (font_emphasis != font)
+     gdk_font_unref (font_emphasis);
+  gdk_font_unref (font);
 
   gtk_widget_show (vsb);
   gtk_widget_show (text);
@@ -437,7 +449,10 @@ install_run (InstallCallback callback)
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    0, 0);
 
+  /* this is a fontset, e.g. multiple comma-separated font definitions */
   font_strong = gdk_fontset_load ( _("-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"));
+
+  /* this is a fontset, e.g. multiple comma-separated font definitions */
   font = gdk_fontset_load ( _("-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"));
 
   /*  Realize the text widget before inserting text strings  */

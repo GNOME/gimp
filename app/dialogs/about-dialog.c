@@ -175,11 +175,12 @@ static gint shuffle_array[ sizeof(scroll_text) / sizeof(scroll_text[0]) ];
 void
 about_dialog_create (gint timeout)
 {
-  GtkStyle *style;
   GtkWidget *vbox;
   GtkWidget *aboutframe;
   GtkWidget *label;
   GtkWidget *alignment;
+  GtkStyle *style;
+  GdkFont *font;
   gint max_width;
   gint i;
   gchar *label_text;
@@ -238,13 +239,16 @@ about_dialog_create (gint timeout)
       gtk_widget_realize (logo_area);
       gdk_window_set_background (logo_area->window, &logo_area->style->black);
 
-      style = gtk_style_new ();
-      gdk_font_unref (style->font);
-      style->font = 
-	gdk_font_load (_("-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"));
-      gtk_widget_push_style (style);
-      gtk_style_unref (style);
-
+      /* this is a font, provide only one single font definition */
+      font = gdk_font_load (_("-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"));
+      if (font)
+	{
+	  style = gtk_style_new ();
+	  gdk_font_unref (style->font);
+	  style->font = font;
+	  gtk_widget_push_style (style);
+	  gtk_style_unref (style);
+	}
       label_text = g_strdup_printf (_("Version %s brought to you by"),
 				    GIMP_VERSION);
       label = gtk_label_new (label_text);

@@ -263,35 +263,40 @@ splash_text_draw (GtkWidget *widget)
 {
   GdkFont *font = NULL;
 
+  /* this is a font, provide only one single font definition */
   font = gdk_font_load (_("-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"));
-  gdk_draw_string (widget->window,
-		   font,
-		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   ((logo_area_width - gdk_string_width (font,  _("The GIMP"))) / 2),
-		   (0.25 * logo_area_height),
-		   _("The GIMP"));
-  gdk_font_unref (font);
-
-  font = gdk_fontset_load (_("-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"));
-  gdk_draw_string (widget->window,
-		   font,
-		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   ((logo_area_width - gdk_string_width (font, GIMP_VERSION)) / 2),
-		   (0.45 * logo_area_height),
-		   GIMP_VERSION);
-  gdk_draw_string (widget->window,
-		   font,
-		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   ((logo_area_width - gdk_string_width (font, _("brought to you by"))) / 2),
-		   (0.65 * logo_area_height),
-		   _("brought to you by"));
-  gdk_draw_string (widget->window,
-		   font,
-		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   ((logo_area_width - gdk_string_width (font, AUTHORS)) / 2),
-		   (0.80 * logo_area_height),
-		   AUTHORS);
-  gdk_font_unref (font);
+  if (font)
+    {
+      gdk_draw_string (widget->window,
+		       font,
+		       widget->style->fg_gc[GTK_STATE_NORMAL],
+		       ((logo_area_width - gdk_string_width (font,  _("The GIMP"))) / 2),
+		       (0.25 * logo_area_height),
+		       _("The GIMP"));
+      gdk_font_unref (font);
+  
+      /* this is a fontset, e.g. multiple comma-separated font definitions */
+      font = gdk_fontset_load (_("-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"));
+      gdk_draw_string (widget->window,
+		       font,
+		       widget->style->fg_gc[GTK_STATE_NORMAL],
+		       ((logo_area_width - gdk_string_width (font, GIMP_VERSION)) / 2),
+		       (0.45 * logo_area_height),
+		       GIMP_VERSION);
+      gdk_draw_string (widget->window,
+		       font,
+		       widget->style->fg_gc[GTK_STATE_NORMAL],
+		       ((logo_area_width - gdk_string_width (font, _("brought to you by"))) / 2),
+		       (0.65 * logo_area_height),
+		       _("brought to you by"));
+      gdk_draw_string (widget->window,
+		       font,
+		       widget->style->fg_gc[GTK_STATE_NORMAL],
+		       ((logo_area_width - gdk_string_width (font, AUTHORS)) / 2),
+		       (0.80 * logo_area_height),
+		       AUTHORS);
+      gdk_font_unref (font);
+    }
 }
 
 static void

@@ -1,3 +1,10 @@
+Sun Feb 13 20:34:15 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/about_dialog.c
+	* app/app_procs.c
+	* app/install.c: check if fonts could be loaded instead of
+	simply crashing
+
 Sun Feb 13 15:23:03 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/channel_dialog.c
