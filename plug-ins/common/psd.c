@@ -1,5 +1,5 @@
 /*
- * PSD Plugin version 2.0.5
+ * PSD Plugin version 2.0.6
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
@@ -9,8 +9,8 @@
  *     about the image you tried to load.  Please don't send big PSD
  *     files to me without asking first.
  *
- *          Copyright (C) 1997-99 Adam D. Moss
- *          Copyright (C) 1996    Torsten Martinsen
+ *          Copyright (C) 1997-2000 Adam D. Moss
+ *          Copyright (C) 1996      Torsten Martinsen
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,11 +35,15 @@
 /*
  * Revision history:
  *
+ *  2000.08.23 / v2.0.6 / Adam D. Moss
+ *       Eliminate more debugging output (don't people have more
+ *       substantial problems to report?  I'm poised at my keyboard).
+ *
  *  1999.11.14 / v2.0.5 / Adam D. Moss
  *       Applied patch by Andy Hefner to load 1-bit images.
  *
  *  1999.08.13 / v2.0.4 / Adam D. Moss
- *       Allowed NULL layer names again, whee.
+ *       Allowed NULL layer names again, whee.  (Also fixed the time machine.)
  *
  *  1999.08.20 / v2.0.3 / Adam D. Moss
  *       Ensure that NULL name does not get passed to gimp_layer_new(),
@@ -113,7 +117,7 @@
  *
  *      Read in the paths.
  *
- *      File saving (accepting sponsors!)
+ *      File saving (someone has an alpha plugin for this)
  */
 
 /*
@@ -676,7 +680,10 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 
 	  if (remaining)
 	    {
-	      dumpchunk(remaining, fd, "alphaname padding 0 throw");
+	      IFDBG
+		dumpchunk(remaining, fd, "alphaname padding 0 throw");
+              else
+		throwchunk(remaining, fd, "alphaname padding 0 throw");
 	      (*offset) += remaining;
 	      remaining = 0;
 	    }
@@ -845,8 +852,16 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 	  
 	  if (remaining)
 	    {
-	      IFDBG printf ("** GUIDE INFORMATION DROSS: ");
-	      dumpchunk(remaining, fd, "dispatch_res");
+	      IFDBG
+		{
+		  printf ("** GUIDE INFORMATION DROSS: ");
+		  dumpchunk(remaining, fd, "dispatch_res");
+		}
+	      else
+		{
+		  throwchunk(remaining, fd, "dispatch_res");
+		}
+
 	      (*offset) += remaining;
 	    }
 	}
@@ -898,11 +913,14 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 	break;
 	
       default:
-	IFDBG printf ("\t\t<Undocumented field.>\n");
 	IFDBG
-	  dumpchunk(Size, fd, "dispatch_res");
+	  {
+	    printf ("\t\t<Undocumented field.>\n");
+	    dumpchunk(Size, fd, "dispatch_res");
+	  }
 	else
 	  throwchunk(Size, fd, "dispatch_res");
+
 	(*offset) += Size;
 	break;
       }
