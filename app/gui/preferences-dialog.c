@@ -170,7 +170,7 @@ static gint               old_num_processors;
 static gchar            * old_image_title_format;
 static gchar            * old_image_status_format;
 static guint              old_max_new_image_size;
-static gboolean           old_write_thumbnails;
+static GimpThumbnailSize  old_thumbnail_size;
 static gboolean	          old_trust_dirty_flag;
 static gboolean           old_use_help;
 static gboolean           old_nav_window_per_display;
@@ -723,9 +723,9 @@ prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "max-new-image-size");
     }
-  if (gimp->config->write_thumbnails != old_write_thumbnails)
+  if (gimp->config->thumbnail_size != old_thumbnail_size)
     {
-      update = g_list_append (update, "thumbnail-mode");
+      update = g_list_append (update, "thumbnail-size");
     }
   if (gimprc.trust_dirty_flag != old_trust_dirty_flag)
     {
@@ -914,7 +914,7 @@ prefs_cancel_callback (GtkWidget *widget,
   gimp->config->default_yresolution      = old_default_yresolution;
   gimp->config->default_resolution_units = old_default_resolution_units;
   gimp->config->levels_of_undo           = old_levels_of_undo;
-  gimp->config->write_thumbnails         = old_write_thumbnails;
+  gimp->config->thumbnail_size           = old_thumbnail_size;
 
   gimprc.marching_speed                  = old_marching_speed;
   gimprc.resize_windows_on_zoom          = old_resize_windows_on_zoom;
@@ -1051,7 +1051,7 @@ prefs_toggle_callback (GtkWidget *widget,
   /*  radio buttons  */
   else if (data == &gimp->config->interpolation_type ||
 	   data == &gimp->config->default_type       ||
-	   data == &gimp->config->write_thumbnails   ||
+           data == &gimp->config->thumbnail_size     ||
            data == &gimprc.trust_dirty_flag          ||
 	   data == &gimprc.help_browser              ||
 	   data == &gimprc.cursor_mode)
@@ -1678,7 +1678,7 @@ preferences_dialog_create (Gimp *gimp)
   old_default_yresolution      = gimp->config->default_yresolution;
   old_default_resolution_units = gimp->config->default_resolution_units;
   old_levels_of_undo           = gimp->config->levels_of_undo;
-  old_write_thumbnails         = gimp->config->write_thumbnails;
+  old_thumbnail_size           = gimp->config->thumbnail_size;
 
   old_perfectmouse             = gimprc.perfectmouse;
   old_transparency_type        = gimprc.transparency_type;
@@ -2699,19 +2699,14 @@ preferences_dialog_create (Gimp *gimp)
                              _("\"File -> Save\" Saves the Image:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
                                      
-  optionmenu =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (prefs_toggle_callback),
-			   &gimp->config->write_thumbnails,
-			   GINT_TO_POINTER (gimp->config->write_thumbnails),
-
-			   _("Always"), GINT_TO_POINTER (TRUE),  NULL,
-			   _("Never"),  GINT_TO_POINTER (FALSE), NULL,
-
-			   NULL);
-
+  optionmenu = 
+    gimp_enum_option_menu_new (GIMP_TYPE_THUMBNAIL_SIZE,
+                               G_CALLBACK (prefs_toggle_callback),
+                               &gimp->config->thumbnail_size);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (optionmenu),
+                                GINT_TO_POINTER (gimp->config->thumbnail_size));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Try to Write a Thumbnail File:"), 1.0, 0.5,
+			     _("Size of Thumbnails Files:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
 

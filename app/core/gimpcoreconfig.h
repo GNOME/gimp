@@ -50,7 +50,7 @@ struct _GimpCoreConfig
   gint                   levels_of_undo;
   gchar                 *pluginrc_path;
   gchar                 *module_db_load_inhibit;
-  gboolean               write_thumbnails;
+  GimpThumbnailSize      thumbnail_size;
 };
 
 

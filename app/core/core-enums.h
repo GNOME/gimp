@@ -186,6 +186,18 @@ typedef enum  /*< pdb-skip >*/
 } GimpSelectionControl;
 
 
+#define GIMP_TYPE_THUMBNAIL_SIZE (gimp_thumbnail_size_get_type ())
+
+GType gimp_thumbnail_size_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_THUMBNAIL_SIZE_NONE    = 0,    /*< desc="No Thumbnails"    >*/
+  GIMP_THUMBNAIL_SIZE_NORMAL  = 128,  /*< desc="Normal (128x128)" >*/
+  GIMP_THUMBNAIL_SIZE_LARGE   = 256   /*< desc="Large (256x256)"  >*/
+} GimpThumbnailSize;
+
+
 #define GIMP_TYPE_TRANSFER_MODE (gimp_transfer_mode_get_type ())
 
 GType gimp_transfer_mode_get_type (void) G_GNUC_CONST;

@@ -65,7 +65,7 @@ struct _GimpCoreConfig
   gchar                 *plug_in_rc_path;
   gchar                 *module_load_inhibit;
   GimpPreviewSize        preview_size;
-  gboolean               write_thumbnails;
+  GimpThumbnailSize      thumbnail_size;
   gdouble                gamma_val;
   gboolean               install_cmap;
   gint                   min_colors;

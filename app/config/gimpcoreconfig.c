@@ -70,7 +70,7 @@ enum
   PROP_PLUGINRC_PATH,
   PROP_MODULE_LOAD_INHIBIT,
   PROP_PREVIEW_SIZE,
-  PROP_WRITE_THUMBNAILS,
+  PROP_THUMBNAIL_SIZE,
   PROP_GAMMA_CORRECTION,
   PROP_INSTALL_COLORMAP,
   PROP_MIN_COLORS
@@ -193,10 +193,12 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    NULL);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PREVIEW_SIZE,
                                  "preview-size",
-                                 GIMP_TYPE_PREVIEW_SIZE, GIMP_PREVIEW_SIZE_SMALL);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_WRITE_THUMBNAILS,
-                                    "write-thumbnails",
-                                    TRUE);
+                                 GIMP_TYPE_PREVIEW_SIZE,
+                                 GIMP_PREVIEW_SIZE_SMALL);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_THUMBNAIL_SIZE,
+                                 "thumbnail-size",
+                                 GIMP_TYPE_THUMBNAIL_SIZE,
+                                 GIMP_THUMBNAIL_SIZE_NORMAL);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GAMMA_CORRECTION,
                                    "gamma-correction",
                                    0.0, 100.0, 1.0);
@@ -331,8 +333,8 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_PREVIEW_SIZE:
       core_config->preview_size = g_value_get_enum (value);
       break;
-    case PROP_WRITE_THUMBNAILS:
-      core_config->write_thumbnails = g_value_get_boolean (value);
+    case PROP_THUMBNAIL_SIZE:
+      core_config->thumbnail_size = g_value_get_enum (value);
       break;
     case PROP_GAMMA_CORRECTION:
       core_config->gamma_val = g_value_get_double (value);
@@ -434,8 +436,8 @@ gimp_core_config_get_property (GObject    *object,
     case PROP_PREVIEW_SIZE:
       g_value_set_enum (value, core_config->preview_size);
       break;
-    case PROP_WRITE_THUMBNAILS:
-      g_value_set_boolean (value, core_config->write_thumbnails);
+    case PROP_THUMBNAIL_SIZE:
+      g_value_set_enum (value, core_config->thumbnail_size);
       break;
     case PROP_GAMMA_CORRECTION:
       g_value_set_double (value, core_config->gamma_val);

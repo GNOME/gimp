@@ -330,7 +330,8 @@ gimp_document_view_refresh_clicked (GtkWidget        *widget,
   if (imagefile && gimp_container_have (editor->view->container,
                                         GIMP_OBJECT (imagefile)))
     {
-      gimp_imagefile_create_thumbnail (imagefile);
+      /* FIXME: hardcoded thumbnail size */
+      gimp_imagefile_create_thumbnail (imagefile, GIMP_THUMBNAIL_SIZE_NORMAL);
     }
 }
 
@@ -338,7 +339,8 @@ static void
 gimp_document_view_delete_dangling_foreach (GimpImagefile *imagefile,
                                             GimpContainer *container)
 {
-  gimp_imagefile_update (imagefile);
+  /* FIXME: hardcoded thumbnail size */
+  gimp_imagefile_update (imagefile, GIMP_THUMBNAIL_SIZE_NORMAL);
 
   if (imagefile->state == GIMP_IMAGEFILE_STATE_NOT_FOUND)
     {

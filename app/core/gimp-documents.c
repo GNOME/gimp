@@ -33,6 +33,7 @@
 #include "config/gimpscanner.h"
 
 #include "gimp.h"
+#include "gimpcoreconfig.h"
 #include "gimpdocuments.h"
 #include "gimpimagefile.h"
 #include "gimplist.h"
@@ -111,7 +112,7 @@ gimp_documents_load (Gimp *gimp)
                 }
 
               imagefile = gimp_imagefile_new (uri);
-              gimp_imagefile_update (imagefile);
+              gimp_imagefile_update (imagefile, gimp->config->thumbnail_size);
 
               g_free (uri);
 

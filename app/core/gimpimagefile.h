@@ -32,9 +32,6 @@
 #include "gimpviewable.h"
 
 
-#define GIMP_IMAGEFILE_THUMB_SIZE_NORMAL 128
-#define GIMP_IMAGEFILE_THUMB_SIZE_LARGE  256
-
 typedef enum
 {
   GIMP_IMAGEFILE_STATE_UNKNOWN,
@@ -87,12 +84,14 @@ struct _GimpImagefileClass
 
 GType           gimp_imagefile_get_type         (void) G_GNUC_CONST;
 
-GimpImagefile * gimp_imagefile_new              (const gchar   *uri);
-void            gimp_imagefile_update           (GimpImagefile *imagefile);
-void            gimp_imagefile_create_thumbnail (GimpImagefile *imagefile);
-gboolean        gimp_imagefile_save_thumbnail   (GimpImagefile *imagefile,
-                                                 GimpImage     *gimage);
-const gchar   * gimp_imagefile_get_description  (GimpImagefile *imagefile);
+GimpImagefile * gimp_imagefile_new              (const gchar       *uri);
+void            gimp_imagefile_update           (GimpImagefile     *imagefile,
+                                                 GimpThumbnailSize  size);
+void            gimp_imagefile_create_thumbnail (GimpImagefile     *imagefile,
+                                                 GimpThumbnailSize  size);
+gboolean        gimp_imagefile_save_thumbnail   (GimpImagefile     *imagefile,
+                                                 GimpImage         *gimage);
+const gchar   * gimp_imagefile_get_description  (GimpImagefile     *imagefile);
 
 
 #endif /* __GIMP_IMAGEFILE_H__ */

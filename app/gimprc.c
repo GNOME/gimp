@@ -90,6 +90,7 @@ typedef enum
   TT_XCOLORHISTORY,
   TT_XPARASITE,
   TT_XNAVPREVSIZE,
+  TT_XTHUMBSIZE,
   TT_XHELPBROWSER,
   TT_XCURSORMODE,
   TT_XCOMMENT
@@ -131,6 +132,7 @@ static gint           parse_image_type          (gpointer val1p, gpointer val2p)
 static gint           parse_interpolation_type  (gpointer val1p, gpointer val2p);
 static gint           parse_preview_size        (gpointer val1p, gpointer val2p);
 static gint           parse_nav_preview_size    (gpointer val1p, gpointer val2p);
+static gint           parse_thumbnail_size      (gpointer val1p, gpointer val2p);
 static gint           parse_units               (gpointer val1p, gpointer val2p);
 static gint           parse_device              (gpointer val1p, gpointer val2p);
 static gint           parse_session_info        (gpointer val1p, gpointer val2p);
@@ -153,6 +155,7 @@ static inline gchar * image_type_to_str         (gpointer val1p, gpointer val2p)
 static inline gchar * interpolation_type_to_str (gpointer val1p, gpointer val2p);
 static inline gchar * preview_size_to_str       (gpointer val1p, gpointer val2p);
 static inline gchar * nav_preview_size_to_str   (gpointer val1p, gpointer val2p);
+static inline gchar * thumbnail_size_to_str     (gpointer val1p, gpointer val2p);
 static inline gchar * units_to_str              (gpointer val1p, gpointer val2p);
 static inline gchar * help_browser_to_str       (gpointer val1p, gpointer val2p);
 static inline gchar * cursor_mode_to_str        (gpointer val1p, gpointer val2p);
@@ -347,7 +350,7 @@ gimprc_init (Gimp *gimp)
 	{ "undo-levels",              TT_INT,       NULL, NULL },
 	{ "pluginrc-path",            TT_PATH,      NULL, NULL },
 	{ "module-load-inhibit",      TT_PATH,      NULL, NULL },
-	{ "thumbnail-mode",           TT_INT,       NULL, NULL },
+	{ "thumbnail-size",           TT_XTHUMBSIZE,NULL, NULL },
 	{ "tool-plug-in-path",        TT_PATH,      NULL, NULL }
       };
 
@@ -380,7 +383,7 @@ gimprc_init (Gimp *gimp)
       core_funcs[18].val1p = &gimp->config->levels_of_undo;
       core_funcs[19].val1p = &gimp->config->pluginrc_path;
       core_funcs[20].val1p = &gimp->config->module_db_load_inhibit;
-      core_funcs[21].val1p = &gimp->config->write_thumbnails;
+      core_funcs[21].val1p = &gimp->config->thumbnail_size;
       core_funcs[22].val1p = &gimp->config->tool_plug_in_path;
 
       parse_func_hash = g_hash_table_new (g_str_hash, g_str_equal);
@@ -894,6 +897,8 @@ parse_statement (void)
 	  return parse_preview_size (func->val1p, func->val2p);
 	case TT_XNAVPREVSIZE:
 	  return parse_nav_preview_size (func->val1p, func->val2p);
+	case TT_XTHUMBSIZE:
+	  return parse_thumbnail_size (func->val1p, func->val2p);
 	case TT_XUNIT:
 	  return parse_units (func->val1p, func->val2p);
 	case TT_XDEVICE:
@@ -1330,6 +1335,39 @@ parse_nav_preview_size (gpointer val1p,
 	*((gint *) val1p) = GIMP_PREVIEW_SIZE_HUGE;
       else
 	*((gint *) val1p) = 0;
+    }
+  else if (token == TOKEN_NUMBER)
+    *((gint *) val1p) = token_num;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_RIGHT_PAREN))
+    return ERROR;
+  token = get_next_token ();
+
+  return OK;
+}
+
+static gint
+parse_thumbnail_size (gpointer val1p,
+                      gpointer val2p)
+{
+  gint token;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_SYMBOL && token != TOKEN_NUMBER))
+    return ERROR;
+  token = get_next_token ();
+
+  if (token == TOKEN_SYMBOL)
+    {
+      if (strcmp (token_sym, "none") == 0)
+ 	*((gint *) val1p) = GIMP_THUMBNAIL_SIZE_NONE;
+      else if (strcmp (token_sym, "normal") == 0)
+	*((gint *) val1p) = GIMP_THUMBNAIL_SIZE_NORMAL;
+      else if (strcmp (token_sym, "large") == 0)
+	*((gint *) val1p) = GIMP_THUMBNAIL_SIZE_LARGE;
+      else
+	*((gint *) val1p) = GIMP_THUMBNAIL_SIZE_NONE;
     }
   else if (token == TOKEN_NUMBER)
     *((gint *) val1p) = token_num;
@@ -2250,6 +2288,8 @@ gimprc_value_to_str (const gchar *name)
 	  return preview_size_to_str (func->val1p, func->val2p);
 	case TT_XNAVPREVSIZE:
 	  return nav_preview_size_to_str (func->val1p, func->val2p);
+	case TT_XTHUMBSIZE:
+	  return thumbnail_size_to_str (func->val1p, func->val2p);
 	case TT_XUNIT:
 	  return units_to_str (func->val1p, func->val2p);
 	case TT_XHELPBROWSER:
@@ -2421,6 +2461,22 @@ nav_preview_size_to_str (gpointer val1p,
     return g_strdup ("medium");
   else if (size >= GIMP_PREVIEW_SIZE_MEDIUM)
     return g_strdup ("small");
+  else
+    return g_strdup ("none");
+}
+
+static inline gchar *
+thumbnail_size_to_str (gpointer val1p,
+                       gpointer val2p)
+{
+  gint size;
+
+  size = *((gint *) val1p);
+
+  if (size >= GIMP_THUMBNAIL_SIZE_LARGE)
+    return g_strdup ("large");
+  else if (size >= GIMP_THUMBNAIL_SIZE_NORMAL)
+    return g_strdup ("normal");
   else
     return g_strdup ("none");
 }

@@ -42,7 +42,6 @@
 #include "libgimptool/gimptooltypes.h"
 
 #include "core/gimp.h"
-#include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
 #include "core/gimpdocuments.h"
@@ -205,11 +204,8 @@ file_open_with_proc_and_display (Gimp               *gimp,
 
       imagefile = gimp_documents_add (gimp, uri);
 
-      if (gimp->config->write_thumbnails)
-        {
-          /* save a thumbnail of every opened image */
-          gimp_imagefile_save_thumbnail (imagefile, gimage);
-        }
+      /* save a thumbnail of every opened image */
+      gimp_imagefile_save_thumbnail (imagefile, gimage);
     }
   else if (*status != GIMP_PDB_CANCEL)
     {

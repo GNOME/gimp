@@ -177,7 +177,7 @@ file_save (GimpImage     *gimage,
 	}
 
       /* Write a thumbnail for the saved image, where appropriate */
-      if (gimage->gimp->config->write_thumbnails)
+      if (gimage->gimp->config->thumbnail_size != GIMP_THUMBNAIL_SIZE_NONE)
 	{
           if (set_uri)
             {

@@ -233,6 +233,26 @@ gimp_selection_control_get_type (void)
 }
 
 
+static const GEnumValue gimp_thumbnail_size_enum_values[] =
+{
+  { GIMP_THUMBNAIL_SIZE_NONE, N_("No Thumbnails"), "none" },
+  { GIMP_THUMBNAIL_SIZE_NORMAL, N_("Normal (128x128)"), "normal" },
+  { GIMP_THUMBNAIL_SIZE_LARGE, N_("Large (256x256)"), "large" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_thumbnail_size_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpThumbnailSize", gimp_thumbnail_size_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_transfer_mode_enum_values[] =
 {
   { GIMP_SHADOWS, N_("Shadows"), "shadows" },
