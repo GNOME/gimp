@@ -51,7 +51,7 @@ gimp_pencil_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-pencil-tool",
                 _("Pencil"),
                 _("Paint hard edged pixels"),
-                N_("/Tools/Paint Tools/Pencil"), "P",
+                N_("/Tools/Paint Tools/Pencil"), "N",
                 NULL, "tools/pencil.html",
                 GIMP_STOCK_TOOL_PENCIL,
                 data);

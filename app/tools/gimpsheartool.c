@@ -96,7 +96,7 @@ gimp_shear_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-shear-tool",
                 _("Shear Tool"),
                 _("Shear the layer or selection"),
-                N_("/Tools/Transform Tools/Shear"), "<shift>F",
+                N_("/Tools/Transform Tools/Shear"), "<shift>S",
                 NULL, "tools/shear.html",
                 GIMP_STOCK_TOOL_SHEAR,
                 data);

@@ -255,7 +255,7 @@ gimp_config_serialize (GObject      *object,
  * gimp_config_deserialize:
  * @object: a #GObject that implements the #GimpConfigInterface.
  * @filename: the name of the file to read configuration from.
- * @data: user data passed to the serialize implementation.
+ * @data: user data passed to the deserialize implementation.
  * @error: 
  * 
  * Opens the file specified by @filename, reads configuration data

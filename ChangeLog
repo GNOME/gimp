@@ -1,3 +1,11 @@
+2002-05-15  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig.c: fixed documentation.
+
+	* app/tools/gimppenciltool.c
+	* app/tools/gimpsheartool.c: assign shortcuts that don't collide with
+	other tools.
+
 2002-05-15  Michael Natterer  <mitch@gimp.org>
 
 	New feature: pressing <space> in the image window temporary
