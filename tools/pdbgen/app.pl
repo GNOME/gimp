@@ -127,10 +127,6 @@ sub declare_args {
 	    my ($type, $name) = &arg_parse($_->{type});
 	    my $arg = $arg_types{$type};
 
-	    if ($type eq 'enum') {
-		$out->{headers}->{qq/"$enums{$name}->{header}"/}++
-	    }
-
 	    if ($arg->{array} && !exists $_->{array}) {
 		warn "Array without number of elements param in $proc->{name}";
 	    }

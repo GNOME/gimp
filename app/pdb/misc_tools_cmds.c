@@ -28,8 +28,6 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "base/base-enums.h"
-#include "core/core-enums.h"
 #include "core/gimpdrawable-blend.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpdrawable.h"

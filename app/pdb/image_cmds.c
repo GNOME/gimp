@@ -31,7 +31,6 @@
 
 #include "base/temp-buf.h"
 #include "config/gimpcoreconfig.h"
-#include "core/core-enums.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"

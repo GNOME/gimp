@@ -28,7 +28,6 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "core/core-enums.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-mask-select.h"
 #include "core/gimpimage.h"

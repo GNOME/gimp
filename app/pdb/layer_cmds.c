@@ -28,9 +28,7 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "base/base-enums.h"
 #include "config/gimpcoreconfig.h"
-#include "core/core-enums.h"
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-undo.h"

@@ -29,7 +29,6 @@
 #include "gui/gui-types.h"
 #include "procedural_db.h"
 
-#include "base/base-enums.h"
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"

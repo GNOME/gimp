@@ -41,8 +41,6 @@
 #endif
 
 
-#include "libgimpbase/gimpbasetypes.h"
-
 /*  Query structure  */
 typedef struct _PDBQuery PDBQuery;
 

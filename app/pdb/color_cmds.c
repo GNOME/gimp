@@ -28,7 +28,6 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "base/base-enums.h"
 #include "base/color-balance.h"
 #include "base/curves.h"
 #include "base/gimphistogram.h"

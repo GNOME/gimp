@@ -32,7 +32,6 @@
 #include "base/temp-buf.h"
 #include "base/tile-manager.h"
 #include "base/tile.h"
-#include "core/core-enums.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable-offset.h"

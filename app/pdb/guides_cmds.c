@@ -28,7 +28,6 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "core/core-enums.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"

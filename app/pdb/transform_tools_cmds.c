@@ -29,7 +29,6 @@
 #include "procedural_db.h"
 
 #include "config/gimpcoreconfig.h"
-#include "core/core-enums.h"
 #include "core/gimp.h"
 #include "core/gimpdrawable-transform-utils.h"
 #include "core/gimpdrawable-transform.h"

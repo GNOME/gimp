@@ -30,8 +30,6 @@
 
 #include "core/gimp.h"
 
-#include "libgimpbase/gimpbasetypes.h"
-
 static ProcRecord message_proc;
 static ProcRecord message_get_handler_proc;
 static ProcRecord message_set_handler_proc;

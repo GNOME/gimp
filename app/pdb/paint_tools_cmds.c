@@ -28,7 +28,6 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "base/base-enums.h"
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "paint/gimpairbrush.h"
@@ -46,7 +45,6 @@
 #include "paint/gimppencil.h"
 #include "paint/gimpsmudge.h"
 #include "paint/gimpsmudgeoptions.h"
-#include "paint/paint-enums.h"
 #include "paint/paint-types.h"
 
 #include "libgimpmath/gimpmath.h"

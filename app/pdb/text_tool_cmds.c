@@ -30,7 +30,6 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "core/core-types.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
