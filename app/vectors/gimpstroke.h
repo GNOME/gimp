@@ -78,9 +78,8 @@ struct _GimpStrokeClass
   gdouble       (* get_distance)         (const GimpStroke  *stroke,
                                           const GimpCoords  *coord);
                                                           
-  GimpCoords  * (* interpolate)          (const GimpStroke  *stroke,
+  GArray      * (* interpolate)          (const GimpStroke  *stroke,
                                           const gdouble      precision,
-                                          gint              *ret_numcoords,
                                           gboolean          *ret_closed);
                                                           
                                                           
@@ -137,9 +136,8 @@ gdouble         gimp_stroke_get_distance       (const GimpStroke    *stroke,
                                                 const GimpCoords    *coord);
                                                                     
 /* returns the number of valid coordinates */                       
-GimpCoords    * gimp_stroke_interpolate        (const GimpStroke *stroke,
+GArray        * gimp_stroke_interpolate        (const GimpStroke *stroke,
                                                 gdouble           precision,
-                                                gint             *ret_numcoords,
                                                 gboolean         *ret_closed);
 
 

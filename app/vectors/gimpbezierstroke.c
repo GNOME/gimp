@@ -50,8 +50,7 @@ static void gimp_bezier_coords_average    (GimpCoords            *a,
 
 static void gimp_bezier_coords_subdivide  (GimpCoords            *beziercoords,
                                            const gdouble          precision,
-                                           gint                  *ret_ncoords,
-                                           GimpCoords            *ret_coords);
+                                           GArray               **ret_coords);
 
 GType
 gimp_bezier_stroke_get_type (void)
@@ -128,6 +127,9 @@ gimp_bezier_stroke_new (const GimpCoords *start)
   anchor->position.x = start->x;
   anchor->position.y = start->y;
   anchor->position.pressure = 1;
+  anchor->position.xtilt = 0.5;
+  anchor->position.ytilt = 0.5;
+  anchor->position.wheel = 0.5;
 
   g_printerr ("Adding at %f, %f\n", start->x, start->y);
   
@@ -161,9 +163,7 @@ gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
                                                    &(coords[count]),
                                                    last_anchor);
         }
-
     }
-
   return stroke;
 }
 
@@ -215,9 +215,13 @@ gimp_bezier_stroke_extend (GimpBezierStroke *bezier_stroke,
       anchor->position.ytilt = 0.5;
       anchor->position.wheel = 0.5;
 
-      anchor->type = 0;    /* FIXME */
+      /* FIXME */
+      if (((GimpAnchor *) listneighbor->data)->type == 0)
+        anchor->type = 1;
+      else
+        anchor->type = 0;
 
-      g_printerr ("Extending at %f, %f\n", coords->x, coords->y);
+      g_printerr ("Extending at %f, %f, type %d\n", coords->x, coords->y, anchor->type);
     }
   else
     anchor = NULL;
@@ -232,42 +236,42 @@ gimp_bezier_stroke_extend (GimpBezierStroke *bezier_stroke,
 }
 
 
-GimpCoords *
+GArray *
 gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
                                 gdouble            precision,
-                                gint              *ret_numcoords,
                                 gboolean          *ret_closed)
 {
-  gint              count, alloccount;
-  gint              chunksize = 100;
-  GimpCoords       *ret_coords;
+  GArray           *ret_coords;
   GimpAnchor       *anchor;
   GList            *anchorlist;
+  GimpCoords        segmentcoords[4];
+  gint              count;
 
   g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), NULL);
-  g_return_val_if_fail (ret_numcoords != NULL, NULL);
   g_return_val_if_fail (ret_closed != NULL, NULL);
   
+  ret_coords = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
+
   count = 0;
-  alloccount = 0;
-  ret_coords = NULL;
 
   for (anchorlist = stroke->anchors; anchorlist;
        anchorlist = g_list_next (anchorlist))
     {
-      if (count >= alloccount)
-        {
-          ret_coords = g_renew (GimpCoords, ret_coords, alloccount + chunksize);
-          alloccount += chunksize;
-        }
-      
       anchor = anchorlist->data;
-      ret_coords[count] = anchor->position;
 
+      segmentcoords[count] = anchor->position;
       count++;
+
+      if (count == 4)
+        {
+          gimp_bezier_coords_subdivide (segmentcoords, precision, &ret_coords);
+          segmentcoords[0] = segmentcoords[3];
+          count = 1;
+        }
     }
 
-  *ret_numcoords = count;
+  /* ret_coords = g_array_append_val (ret_coords, anchor->position); */
+
   *ret_closed    = FALSE;
 
   return ret_coords;
@@ -288,11 +292,11 @@ gimp_bezier_coords_mix (gdouble amul,
   if (b)
     {
       ret_val->x        = amul * a->x        + bmul * b->x ;
-      ret_val->y        = amul * a->y        + bmul * b->x ;
-      ret_val->pressure = amul * a->pressure + bmul * b->x ;
-      ret_val->xtilt    = amul * a->xtilt    + bmul * b->x ;
-      ret_val->ytilt    = amul * a->ytilt    + bmul * b->x ;
-      ret_val->wheel    = amul * a->wheel    + bmul * b->x ;
+      ret_val->y        = amul * a->y        + bmul * b->y ;
+      ret_val->pressure = amul * a->pressure + bmul * b->pressure ;
+      ret_val->xtilt    = amul * a->xtilt    + bmul * b->xtilt ;
+      ret_val->ytilt    = amul * a->ytilt    + bmul * b->ytilt ;
+      ret_val->wheel    = amul * a->wheel    + bmul * b->wheel ;
     }
   else
     {
@@ -414,6 +418,8 @@ gimp_bezier_coords_is_straight (GimpCoords *beziercoords)
         }
       else
         {
+          /* Tangents are too big for the small baseline */
+          /* g_printerr ("Zu grosse Tangenten bei zu kleiner Basislinie\n"); */
           return 0;
         }
     }
@@ -431,14 +437,22 @@ gimp_bezier_coords_is_straight (GimpCoords *beziercoords)
       s2 = gimp_bezier_coords_scalarprod (&line, &tan2) / l2;
 
       if (s1 < 0 || s1 > 1 || s2 < 0 || s2 > 1 || s2 < s1)
-        return 0;
+        {
+          /* The tangents get projected outside the baseline */
+          /* g_printerr ("Tangenten projezieren sich ausserhalb der Basisline\n"); */
+          return 0;
+        }
 
       gimp_bezier_coords_mix (1.0, &tan1, - s1, &line, &d1);
       gimp_bezier_coords_mix (1.0, &tan2, - s2, &line, &d2);
 
       if ((gimp_bezier_coords_length2 (&d1) > DETAIL * DETAIL) ||
           (gimp_bezier_coords_length2 (&d2) > DETAIL * DETAIL))
-        return 0;
+        {
+          /* The control points are too far away from the baseline */
+          /* g_printerr ("Zu grosser Abstand zur Basislinie\n"); */
+          return 0;
+        }
 
       return 1;
     }
@@ -446,10 +460,10 @@ gimp_bezier_coords_is_straight (GimpCoords *beziercoords)
 
 
 static void
-gimp_bezier_coords_subdivide (GimpCoords    *beziercoords,
-                              const gdouble  precision,
-                              gint          *ret_ncoords,
-                              GimpCoords    *ret_coords)
+gimp_bezier_coords_subdivide2 (GimpCoords     *beziercoords,
+                               const gdouble   precision,
+                               GArray        **ret_coords,
+                               gint            depth)
 {
   /*
    * beziercoords has to contain four GimpCoords with the four control points
@@ -457,10 +471,11 @@ gimp_bezier_coords_subdivide (GimpCoords    *beziercoords,
    */
 
   GimpCoords subdivided[8];
-  gint i; 
 
   subdivided[0] = beziercoords[0];
   subdivided[6] = beziercoords[3];
+
+  if (!depth) g_printerr ("Hit rekursion depth limit!\n");
 
   gimp_bezier_coords_average (&(beziercoords[0]), &(beziercoords[1]),
                               &(subdivided[1]));
@@ -490,40 +505,37 @@ gimp_bezier_coords_subdivide (GimpCoords    *beziercoords,
    * if the stroke is sufficiently close to a straight line.
    */
 
-  if (gimp_bezier_coords_is_straight (&(subdivided[0])) /* stroke 1 */)
+  if (!depth ||
+      gimp_bezier_coords_is_straight (&(subdivided[0]))) /* 1st half */
     {
-      for (i=0; i < 3; i++)
-        {
-          /* if necessary, allocate new memory for return coords */
-          ret_coords[*ret_ncoords] = subdivided[i];
-          (*ret_ncoords)++;
-        }
+      *ret_coords = g_array_append_vals (*ret_coords, &(subdivided[0]), 3);
     }
   else
     {
-      gimp_bezier_coords_subdivide (&(subdivided[0]), precision,
-                                    ret_ncoords, ret_coords);
+      gimp_bezier_coords_subdivide2 (&(subdivided[0]), precision,
+                                     ret_coords, depth-1);
     }
 
-  if (gimp_bezier_coords_is_straight (&(subdivided[3])) /* stroke 1 */)
+  if (!depth ||
+      gimp_bezier_coords_is_straight (&(subdivided[3]))) /* 2nd half */
     {
-      for (i=0; i < 3; i++)
-        {
-          /* if necessary, allocate new memory for return coords */
-          ret_coords[*ret_ncoords] = subdivided[i+3];
-          (*ret_ncoords)++;
-        }
+      *ret_coords = g_array_append_vals (*ret_coords, &(subdivided[3]), 3);
     }
   else
     {
-      gimp_bezier_coords_subdivide (&(subdivided[3]), precision,
-                                    ret_ncoords, ret_coords);
+      gimp_bezier_coords_subdivide2 (&(subdivided[3]), precision,
+                                     ret_coords, depth-1);
     }
   
-  if ( /* last iteration */ 0)
-    {
-      /* if necessary, allocate new memory for return coords */
-      ret_coords[*ret_ncoords] = subdivided[6];
-      (*ret_ncoords)++;
-    }
+  /* g_printerr ("gimp_bezier_coords_subdivide end: %d entries\n", (*ret_coords)->len); */
 }
+
+
+static void
+gimp_bezier_coords_subdivide (GimpCoords     *beziercoords,
+                              const gdouble   precision,
+                              GArray        **ret_coords)
+{
+  gimp_bezier_coords_subdivide2 (beziercoords, precision, ret_coords, 10);
+}
+

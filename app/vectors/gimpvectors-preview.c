@@ -26,6 +26,8 @@
 
 #include "base/temp-buf.h"
 
+#include "core/gimpimage.h"
+#include "gimpstroke.h"
 #include "gimpvectors.h"
 #include "gimpvectors-preview.h"
 
@@ -38,12 +40,45 @@ gimp_vectors_get_new_preview (GimpViewable *viewable,
                               gint          height)
 {
   GimpVectors *vectors;
+  GimpItem    *item;
+  GArray      *coords;
+  GimpCoords   point;
+  GimpStroke  *cur_stroke = NULL;
+  gdouble      xscale, yscale, xres, yres;
+  gint         x, y;
+  guchar      *data;
+  gboolean     closed;
+
   TempBuf     *temp_buf;
   guchar       white[1] = { 255 };
+  gint         i;
 
   vectors = GIMP_VECTORS (viewable);
+  item = GIMP_ITEM (viewable);
 
+  xscale = ((gdouble) width) / gimp_image_get_width (item->gimage);
+  yscale = ((gdouble) height) / gimp_image_get_height (item->gimage);
+  
   temp_buf = temp_buf_new (width, height, 1, 0, 0, white);
+  data = temp_buf_data (temp_buf);
+
+  while ((cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke)))
+    {
+      coords = gimp_stroke_interpolate (cur_stroke, 1.0, &closed);
+
+      for (i=0; i < coords->len; i++)
+        {
+          point = g_array_index (coords, GimpCoords, i);
+
+          x = (gint) (point.x * xscale + 0.5);
+          y = (gint) (point.y * yscale + 0.5);
+
+          if (x >= 0 && y >= 0 && x < width && y < height)
+            data[y * width + x] = 0;
+        }
+
+      g_array_free (coords, TRUE);
+    }
 
   return temp_buf;
 }

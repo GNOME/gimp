@@ -1,3 +1,14 @@
+2002-12-29  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpimage-mask-select.c
+	* app/paint/gimppaintcore-stroke.c
+	* app/tools/gimpvectortool.c
+	* app/vectors/gimpbezierstroke.[ch]
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpvectors-preview.c: some more stuff for the
+	vectors tool: bezier interpolation is available, we have preview
+	generation. Usage is still weird.
+
 2002-12-28  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c: untested and unused stuff

@@ -189,8 +189,7 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
                                 gdouble         feather_radius_y)
 {
   GimpStroke *stroke;
-  GimpCoords *coords = NULL;
-  gint        n_coords;
+  GArray     *coords = NULL;
   gboolean    closed;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
@@ -200,9 +199,7 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
    */
   for (stroke = vectors->strokes; stroke; stroke = stroke->next)
     {
-      coords = gimp_stroke_interpolate (stroke, 1.0,
-                                        &n_coords,
-                                        &closed);
+      coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
 
       if (coords)
         break;
@@ -213,18 +210,16 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
       GimpVector2 *points;
       gint         i;
 
-      points = g_new0 (GimpVector2, n_coords);
+      points = g_new0 (GimpVector2, coords->len);
 
-      for (i = 0; i < n_coords; i++)
+      for (i = 0; i < coords->len; i++)
         {
-          points[i].x = coords[i].x;
-          points[i].y = coords[i].y;
+          points[i].x = g_array_index (coords, GimpCoords, i).x;
+          points[i].y = g_array_index (coords, GimpCoords, i).y;
         }
 
-      g_free (coords);
-
       gimp_image_mask_select_polygon (GIMP_ITEM (vectors)->gimage,
-                                      n_coords,
+                                      coords->len,
                                       points,
                                       op,
                                       antialias,
@@ -232,6 +227,7 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
                                       feather_radius_x,
                                       feather_radius_y);
 
+      g_array_free (coords, TRUE);
       g_free (points);
     }
 }

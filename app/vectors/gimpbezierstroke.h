@@ -65,9 +65,8 @@ GimpAnchor * gimp_bezier_stroke_extend      (GimpBezierStroke *bezier_stroke,
                                              const GimpCoords *coords,
                                              GimpAnchor       *neighbor);
 
-GimpCoords * gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
+GArray *     gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
                                              const gdouble      precision,
-                                             gint              *ret_numcoords,
                                              gboolean          *ret_closed);
 
 #endif /* __GIMP_BEZIER_STROKE_H__ */

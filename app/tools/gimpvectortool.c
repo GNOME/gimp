@@ -232,10 +232,10 @@ gimp_vector_tool_control (GimpTool       *tool,
 
 static void
 gimp_vector_tool_button_press (GimpTool        *tool,
-                                GimpCoords      *coords,
-                                guint32          time,
-                                GdkModifierType  state,
-                                GimpDisplay     *gdisp)
+                               GimpCoords      *coords,
+                               guint32          time,
+                               GdkModifierType  state,
+                               GimpDisplay     *gdisp)
 {
   GimpVectorTool *vector_tool;
   VectorOptions  *options;
@@ -342,10 +342,16 @@ gimp_vector_tool_button_release (GimpTool        *tool,
                                  GimpDisplay     *gdisp)
 {
   GimpVectorTool *vector_tool;
+  GimpViewable   *viewable;
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
 
   vector_tool->function = VECTORS_ADDING;
+
+  /* THIS DOES NOT BELONG HERE! */
+  viewable = GIMP_VIEWABLE (vector_tool->vectors);
+  gimp_viewable_invalidate_preview (viewable);
+
 }
 
 static void
@@ -430,8 +436,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
   GimpAnchor      *cur_anchor = NULL;
   GimpStroke      *cur_stroke = NULL;
   GimpVectors     *vectors;
-  GimpCoords      *coords;
-  gint             num_coords;
+  GArray          *coords;
   gboolean         closed;
 
   vector_tool = GIMP_VECTOR_TOOL (draw_tool);
@@ -453,10 +458,16 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
                                       GTK_ANCHOR_CENTER,
                                       FALSE);
         }
-      coords = gimp_stroke_interpolate (cur_stroke, 1.0, &num_coords, &closed);
-      gimp_draw_tool_draw_strokes (draw_tool, coords, num_coords, FALSE, FALSE);
+      coords = gimp_stroke_interpolate (cur_stroke, 1.0, &closed);
 
-      g_free (coords);
+      g_printerr ("Got %d coords from gimp_stroke_interpolate\n", coords->len);
+
+      if (coords->len)
+        gimp_draw_tool_draw_strokes (draw_tool,
+                                     & (g_array_index (coords, GimpCoords, 0)),
+                                     coords->len, FALSE, FALSE);
+
+      g_array_free (coords, TRUE);
     }
 }
 
