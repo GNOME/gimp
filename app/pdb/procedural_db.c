@@ -22,7 +22,7 @@
 #include <string.h>
 #include <sys/types.h>
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 

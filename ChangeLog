@@ -1,5 +1,10 @@
 2004-07-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/procedural_db.c: #include <glib-object.h> instead of
+	<gtk/gtk.h>.
+
+2004-07-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/Makefile.am
 	* app/gui/brush-select.[ch]
 	* app/gui/font-select.[ch]
