@@ -571,7 +571,7 @@ io_handler (GIOChannel   *io,
 {
   HtmlStream *stream;
   gchar       buffer[8192];
-  guint       bytes;
+  gsize       bytes;
 
   stream = (HtmlStream *) data;
 

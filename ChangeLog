@@ -1,5 +1,10 @@
 2003-08-31  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/helpbrowser/dialog.c (io_handler): g_io_channel_read_chars
+	takes a gsize.
+
+2003-08-31  Manish Singh  <yosh@gimp.org>
+
 	* app/core/gimpimage-undo-push.c (undo_pop_layer): gsize is unsigned,
 	reflect that in the g_prints.
 
