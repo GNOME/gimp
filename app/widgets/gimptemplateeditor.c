@@ -250,26 +250,24 @@ gimp_template_editor_constructor (GType                  type,
                                  1, 2);
   gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
 
-  editor->size_se =
-    gimp_size_entry_new (0, editor->template->unit,_("%p"),
-                         TRUE, FALSE, FALSE, SB_WIDTH,
-                         GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  gtk_table_set_col_spacings (GTK_TABLE (editor->size_se), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (editor->size_se), 2);
+  editor->size_se = gimp_size_entry_new (0, editor->template->unit,_("%p"),
+                                         TRUE, FALSE, FALSE, SB_WIDTH,
+                                         GIMP_SIZE_ENTRY_UPDATE_SIZE);
+
+  gtk_table_set_row_spacing (GTK_TABLE (editor->size_se), 0, 2);
+  gtk_table_set_col_spacing (GTK_TABLE (editor->size_se), 1, 6);
 
   gtk_box_pack_start (GTK_BOX (hbox), editor->size_se, FALSE, FALSE, 0);
   gtk_widget_show (editor->size_se);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->size_se),
 			     GTK_SPIN_BUTTON (height), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (editor->size_se), height,
-			     0, 1, 1, 2);
+  gtk_table_attach_defaults (GTK_TABLE (editor->size_se), height, 0, 1, 1, 2);
   gtk_widget_show (height);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->size_se),
 			     GTK_SPIN_BUTTON (width), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (editor->size_se), width,
-			     0, 1, 0, 1);
+  gtk_table_attach_defaults (GTK_TABLE (editor->size_se), width, 0, 1, 0, 1);
   gtk_widget_show (width);
 
   gimp_prop_coordinates_connect (G_OBJECT (editor->template),
@@ -379,9 +377,10 @@ gimp_template_editor_constructor (GType                  type,
     gimp_size_entry_new (0, editor->template->resolution_unit, _("pixels/%a"),
                          FALSE, FALSE, FALSE, SB_WIDTH,
                          GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+
+  gtk_table_set_row_spacing (GTK_TABLE (editor->resolution_se), 0, 2);
   gtk_table_set_col_spacing (GTK_TABLE (editor->resolution_se), 1, 2);
   gtk_table_set_col_spacing (GTK_TABLE (editor->resolution_se), 2, 2);
-  gtk_table_set_row_spacing (GTK_TABLE (editor->resolution_se), 0, 2);
 
   gtk_box_pack_start (GTK_BOX (hbox), editor->resolution_se, FALSE, FALSE, 0);
   gtk_widget_show (editor->resolution_se);
@@ -389,7 +388,7 @@ gimp_template_editor_constructor (GType                  type,
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->resolution_se),
 			     GTK_SPIN_BUTTON (yres), NULL);
   gtk_table_attach_defaults (GTK_TABLE (editor->resolution_se), yres,
-			     0, 1, 1, 2);
+                             0, 1, 1, 2);
   gtk_widget_show (yres);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->resolution_se),
