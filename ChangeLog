@@ -1,6 +1,16 @@
 2004-10-06  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/common/postscript.c (ps_open): tweaed error message.
+	* plug-ins/script-fu/scripts/selection-round.scm: applied patch by
+	Alan Horkan that improves usability and usefulness of this script.
+	Did some code cleanup and added the old procedure for backward
+	compatibility. Fixes bug #145147.
+
+	* menus/image-menu.xml.in: renamed placeholder in Image->Select
+	from "Outline" to "Modify".
+
+2004-10-06  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/postscript.c (ps_open): tweaked error message.
 
 2004-10-06  Michael Natterer  <mitch@gimp.org>
 

@@ -182,7 +182,7 @@
       <menuitem action="vectors-selection-from-vectors" />
       <menuitem action="dialogs-selection-editor" />
       <separator />
-      <placeholder name="Outline">
+      <placeholder name="Modify">
         <menuitem action="select-feather" />
         <menuitem action="select-sharpen" />
         <menuitem action="select-shrink" />
