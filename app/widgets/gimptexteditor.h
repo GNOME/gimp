@@ -40,7 +40,7 @@ struct _GimpTextEditor
   GtkTextBuffer     *buffer;
   GtkWidget         *group;
   GtkWidget         *view;
-  GtkWidget         *filesel;
+  GtkWidget         *file_dialog;
 };
 
 struct _GimpTextEditorClass

@@ -125,10 +125,10 @@ gimp_text_editor_class_init (GimpTextEditorClass *klass)
 static void
 gimp_text_editor_init (GimpTextEditor  *editor)
 {
-  editor->buffer  = NULL;
-  editor->view    = NULL;
-  editor->group   = NULL;
-  editor->filesel = NULL;
+  editor->buffer      = NULL;
+  editor->view        = NULL;
+  editor->group       = NULL;
+  editor->file_dialog = NULL;
 
   switch (gtk_widget_get_default_direction ())
     {
@@ -311,9 +311,9 @@ gimp_text_editor_load (GtkWidget      *widget,
 {
   GtkFileSelection *filesel;
 
-  if (editor->filesel)
+  if (editor->file_dialog)
     {
-      gtk_window_present (GTK_WINDOW (editor->filesel));
+      gtk_window_present (GTK_WINDOW (editor->file_dialog));
       return;
     }
 
@@ -333,8 +333,9 @@ gimp_text_editor_load (GtkWidget      *widget,
                     G_CALLBACK (gimp_text_editor_load_response),
                     editor);
 
-  editor->filesel = GTK_WIDGET (filesel);
-  g_object_add_weak_pointer (G_OBJECT (filesel), (gpointer) &editor->filesel);
+  editor->file_dialog = GTK_WIDGET (filesel);
+  g_object_add_weak_pointer (G_OBJECT (filesel),
+                             (gpointer) &editor->file_dialog);
 
   gtk_widget_show (GTK_WIDGET (filesel));
 }

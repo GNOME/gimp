@@ -193,7 +193,7 @@ gimp_error_console_init (GimpErrorConsole *console)
 
   g_free (str);
 
-  console->filesel = NULL;
+  console->file_dialog = NULL;
 }
 
 static void
@@ -201,8 +201,8 @@ gimp_error_console_destroy (GtkObject *object)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (object);
 
-  if (console->filesel)
-    gtk_widget_destroy (console->filesel);
+  if (console->file_dialog)
+    gtk_widget_destroy (console->file_dialog);
 
   console->gimp->message_handler = GIMP_MESSAGE_BOX;
 
@@ -214,8 +214,8 @@ gimp_error_console_unmap (GtkWidget *widget)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (widget);
 
-  if (console->filesel)
-    gtk_widget_destroy (console->filesel);
+  if (console->file_dialog)
+    gtk_widget_destroy (console->file_dialog);
 
   GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
@@ -348,20 +348,20 @@ gimp_error_console_save_ext_clicked (GtkWidget        *button,
       return;
     }
 
-  if (console->filesel)
+  if (console->file_dialog)
     {
-      gtk_window_present (GTK_WINDOW (console->filesel));
+      gtk_window_present (GTK_WINDOW (console->file_dialog));
       return;
     }
 
-  console->filesel = gtk_file_selection_new (_("Save Error Log to File"));
+  console->file_dialog = gtk_file_selection_new (_("Save Error Log to File"));
 
   console->save_selection = (state & GDK_SHIFT_MASK) ? TRUE : FALSE;
 
-  g_object_add_weak_pointer (G_OBJECT (console->filesel),
-                             (gpointer *) &console->filesel);
+  g_object_add_weak_pointer (G_OBJECT (console->file_dialog),
+                             (gpointer *) &console->file_dialog);
 
-  filesel = GTK_FILE_SELECTION (console->filesel);
+  filesel = GTK_FILE_SELECTION (console->file_dialog);
 
   gtk_window_set_screen (GTK_WINDOW (filesel),
                          gtk_window_get_screen (GTK_WINDOW (console)));

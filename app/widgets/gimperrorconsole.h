@@ -48,7 +48,7 @@ struct _GimpErrorConsole
   GtkWidget     *clear_button;
   GtkWidget     *save_button;
 
-  GtkWidget     *filesel;
+  GtkWidget     *file_dialog;
   gboolean       save_selection;
 };
 

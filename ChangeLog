@@ -1,3 +1,11 @@
+2004-02-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/file/file-open.c (file_open_image): added missing cast.
+
+	* app/widgets/gimperrorconsole.[ch]
+	* app/widgets/gimptexteditor.[ch]: renamed members so my file
+	chooser patch becomes smaller ;)
+
 2004-02-26  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/file/file-open.c (file_open_image): Applied a fix by
