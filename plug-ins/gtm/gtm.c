@@ -625,5 +625,5 @@ static void
 set_tooltip (GtkTooltips *tooltips, GtkWidget *widget, const char *desc)
 {
   if (desc && desc[0])
-    gtk_tooltips_set_tips (tooltips, widget, (char *) desc);
+    gtk_tooltips_set_tip (tooltips, widget, (char *) desc, NULL);
 }
