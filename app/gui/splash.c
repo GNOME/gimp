@@ -50,13 +50,18 @@ typedef struct
 static GimpSplash *splash = NULL;
 
 
-static void      splash_map            (void);
-static gboolean  splash_area_expose    (GtkWidget      *widget,
-                                        GdkEventExpose *event,
-                                        GimpSplash     *splash);
-static gboolean  splash_average_bottom (GtkWidget      *widget,
-                                        GdkPixbuf      *pixbuf,
-                                        GdkColor       *color);
+static void        splash_map             (void);
+static gboolean    splash_area_expose     (GtkWidget      *widget,
+                                           GdkEventExpose *event,
+                                           GimpSplash     *splash);
+static GdkPixbuf * splash_pick_from_dir   (const gchar    *dirname);
+static void        splash_rectangle_union (GdkRectangle   *dest,
+                                           PangoRectangle *pango_rect,
+                                           gint            offset_x,
+                                           gint            offset_y);
+static gboolean    splash_average_bottom  (GtkWidget      *widget,
+                                           GdkPixbuf      *pixbuf,
+                                           GdkColor       *color);
 
 
 /*  public functions  */
@@ -80,43 +85,23 @@ splash_create (void)
 
   if (! pixbuf)
     {
-      gchar *dirname = gimp_personal_rc_file ("splashes");
-      GDir  *dir     = g_dir_open (dirname, 0, NULL);
-
-      if (dir)
-        {
-          const gchar *entry;
-          GList       *splashes = NULL;
-
-          while ((entry = g_dir_read_name (dir)))
-            splashes = g_list_prepend (splashes, g_strdup (entry));
-
-          g_dir_close (dir);
-
-          if (splashes)
-            {
-              gint32 i = g_random_int_range (0, g_list_length (splashes));
-
-              filename = g_build_filename (dirname,
-                                           g_list_nth_data (splashes, i),
-                                           NULL);
-              pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-              g_free (filename);
-
-              g_list_foreach (splashes, (GFunc) g_free, NULL);
-              g_list_free (splashes);
-            }
-        }
-
-      g_free (dirname);
+      filename = gimp_personal_rc_file ("splashes");
+      pixbuf = splash_pick_from_dir (filename);
+      g_free (filename);
     }
 
   if (! pixbuf)
     {
       filename = g_build_filename (gimp_data_directory (),
-                                   "images", "gimp-splash.png",
-                                   NULL);
+                                   "images", "gimp-splash.png", NULL);
       pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+      g_free (filename);
+    }
+
+  if (! pixbuf)
+    {
+      filename = g_build_filename (gimp_data_directory (), "splashes", NULL);
+      pixbuf = splash_pick_from_dir (filename);
       g_free (filename);
     }
 
@@ -224,48 +209,52 @@ splash_destroy (void)
 
 void
 splash_update (const gchar *text1,
-	       const gchar *text2,
-	       gdouble      percentage)
+               const gchar *text2,
+               gdouble      percentage)
 {
-  gint y = 0;
+  GdkRectangle    expose = { 0, 0, 0, 0 };
+  PangoRectangle  rect;
+  gint            width;
+  gint            height;
 
   if (! splash)
     return;
 
+  width  = splash->area->allocation.width;
+  height = splash->area->allocation.height;
+
   if (text1)
     {
-      PangoRectangle  rect;
+      pango_layout_get_pixel_extents (splash->upper, NULL, &rect);
+      splash_rectangle_union (&expose, &rect, splash->upper_x, splash->upper_y);
 
       pango_layout_set_text (splash->upper, text1, -1);
       pango_layout_get_pixel_extents (splash->upper, NULL, &rect);
 
-      splash->upper_x = (splash->width - rect.width) / 2;
-      splash->upper_y = splash->height - 2 * (rect.height + 6);
+      splash->upper_x = (width - rect.width) / 2;
+      splash->upper_y = height - 2 * (rect.height + 6);
 
-      y = splash->upper_y - 2;
+      splash_rectangle_union (&expose, &rect, splash->upper_x, splash->upper_y);
     }
 
   if (text2)
     {
-      PangoRectangle  rect;
+      pango_layout_get_pixel_extents (splash->lower, NULL, &rect);
+      splash_rectangle_union (&expose, &rect, splash->lower_x, splash->lower_y);
 
       pango_layout_set_text (splash->lower, text2, -1);
       pango_layout_get_pixel_extents (splash->lower, NULL, &rect);
 
-      splash->lower_x = (splash->width - rect.width) / 2;
-      splash->lower_y = splash->height - (rect.height + 6);
+      splash->lower_x = (width - rect.width) / 2;
+      splash->lower_y = height - (rect.height + 6);
 
-      if (!y)
-        y = splash->lower_y - 2;
+      splash_rectangle_union (&expose, &rect, splash->lower_x, splash->lower_y);
     }
 
-  /*  The area that needs exposore could be calculated more precisely,
-   *  but it would probably make this code an unreadable mess. So we
-   *  use a cheap approximation instead.
-   */
-  if (y)
+  if (expose.width > 0 && expose.height > 0)
     gtk_widget_queue_draw_area (splash->area,
-                                0, y, splash->width, splash->height - y);
+                                expose.x, expose.y,
+                                expose.width, expose.height);
 
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (splash->progress),
                                  CLAMP (percentage, 0.0, 1.0));
@@ -277,6 +266,90 @@ splash_update (const gchar *text1,
 
 /*  private functions  */
 
+static gboolean
+splash_area_expose (GtkWidget      *widget,
+                    GdkEventExpose *event,
+                    GimpSplash     *splash)
+{
+  gdk_gc_set_clip_rectangle (splash->gc, &event->area);
+
+  gdk_draw_drawable (widget->window, splash->gc,
+                     splash->pixmap, 0, 0,
+                     (widget->allocation.width  - splash->width)  / 2,
+                     (widget->allocation.height - splash->height) / 2,
+                     splash->width,
+                     splash->height);
+
+  gdk_draw_layout (widget->window, splash->gc,
+                   splash->upper_x, splash->upper_y, splash->upper);
+
+  gdk_draw_layout (widget->window, splash->gc,
+                   splash->lower_x, splash->lower_y, splash->lower);
+
+  return FALSE;
+}
+
+static void
+splash_map (void)
+{
+  /*  Reenable startup notification after the splash has been shown
+   *  so that the next window that is mapped sends the notification.
+   */
+   gtk_window_set_auto_startup_notification (TRUE);
+}
+
+static GdkPixbuf *
+splash_pick_from_dir (const gchar *dirname)
+{
+  GdkPixbuf *pixbuf = NULL;
+  GDir      *dir    = g_dir_open (dirname, 0, NULL);
+
+  if (dir)
+    {
+      const gchar *entry;
+      GList       *splashes = NULL;
+
+      while ((entry = g_dir_read_name (dir)))
+        splashes = g_list_prepend (splashes, g_strdup (entry));
+
+      g_dir_close (dir);
+
+      if (splashes)
+        {
+          gint32  i        = g_random_int_range (0, g_list_length (splashes));
+          gchar  *filename = g_build_filename (dirname,
+                                               g_list_nth_data (splashes, i),
+                                               NULL);
+
+          pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+          g_free (filename);
+
+          g_list_foreach (splashes, (GFunc) g_free, NULL);
+          g_list_free (splashes);
+        }
+    }
+
+  return pixbuf;
+}
+
+static void
+splash_rectangle_union (GdkRectangle   *dest,
+                        PangoRectangle *pango_rect,
+                        gint            offset_x,
+                        gint            offset_y)
+{
+  GdkRectangle  rect;
+
+  rect.x      = pango_rect->x + offset_x;
+  rect.y      = pango_rect->y + offset_y;
+  rect.width  = pango_rect->width;
+  rect.height = pango_rect->height;
+
+  if (dest->width > 0 && dest->height > 0)
+    gdk_rectangle_union (dest, &rect, dest);
+  else
+    *dest = rect;
+}
 
 /* This function chooses a gray value for the text color, based on
  * the average intensity of the lower 60 rows of the splash image.
@@ -335,36 +408,4 @@ splash_average_bottom (GtkWidget *widget,
 
   return gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
                                    color, FALSE, TRUE);
-}
-
-static gboolean
-splash_area_expose (GtkWidget      *widget,
-                    GdkEventExpose *event,
-                    GimpSplash     *splash)
-{
-  gint x = (widget->allocation.width  - splash->width)  / 2;
-  gint y = (widget->allocation.height - splash->height) / 2;
-
-  gdk_gc_set_clip_rectangle (splash->gc, &event->area);
-
-  gdk_draw_drawable (widget->window, splash->gc,
-                     splash->pixmap, 0, 0,
-                     x, y, splash->width, splash->height);
-
-  gdk_draw_layout (widget->window, splash->gc,
-                   x + splash->upper_x, y + splash->upper_y, splash->upper);
-
-  gdk_draw_layout (widget->window, splash->gc,
-                   x + splash->lower_x, y + splash->lower_y, splash->lower);
-
-  return FALSE;
-}
-
-static void
-splash_map (void)
-{
-  /*  Reenable startup notification after the splash has been shown
-   *  so that the next window that is mapped sends the notification.
-   */
-   gtk_window_set_auto_startup_notification (TRUE);
 }

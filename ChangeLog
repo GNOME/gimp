@@ -1,3 +1,11 @@
+2004-12-09  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/splash.c (splash_update): only expose the area of the
+	window that actually changed.
+
+	* app/plug-in/plug-in-rc.c (plug_in_rc_write): changed the header
+	and footer to be more in line with the other rc files.
+
 2004-12-08  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/dialogs/print-size-dialog.c (print_size_dialog_size_changed):
