@@ -31,10 +31,29 @@
 
 /*  some useful macros  */
 
+/* unpacking the user scale level (char) */
 #define  SCALESRC(g)    (g->scale & 0x00ff)
 #define  SCALEDEST(g)   (g->scale >> 8)
-#define  SCALE(g,x)     ((x * SCALEDEST(g)) / SCALESRC(g))
-#define  UNSCALE(g,x)   ((x * SCALESRC(g)) / SCALEDEST(g))
+
+/* finding the effective screen resolution (float) */
+#define  SCREEN_XRES(g) (g->dot_for_dot? g->gimage->xresolution : monitor_xres)
+#define  SCREEN_YRES(g) (g->dot_for_dot? g->gimage->yresolution : monitor_yres)
+
+/* calculate scale factors (float) */
+#define  SCALEFACTOR_X(g)  ((SCALEDEST(g) * SCREEN_XRES(g)) /          \
+			    (SCALESRC(g) * g->gimage->xresolution))
+#define  SCALEFACTOR_Y(g)  ((SCALEDEST(g) * SCREEN_YRES(g)) /          \
+			    (SCALESRC(g) * g->gimage->yresolution))
+
+/* scale values */
+#define  SCALEX(g,x)    ((int)(x * SCALEFACTOR_X(g)))
+#define  SCALEY(g,y)    ((int)(y * SCALEFACTOR_Y(g)))
+
+/* unscale values */
+#define  UNSCALEX(g,x)  ((int)(x / SCALEFACTOR_X(g)))
+#define  UNSCALEY(g,y)  ((int)(y / SCALEFACTOR_Y(g)))
+
+
 
 #define LOWPASS(x) ((x>0) ? x : 0)
 /* #define HIGHPASS(x,y) ((x>y) ? y : x) */ /* unused - == MIN */
@@ -96,6 +115,7 @@ struct _GDisplay
 
   int offset_x, offset_y;         /*  offset of display image into raw image  */
   int scale;        	          /*  scale factor from original raw image    */
+  int dot_for_dot;		  /*  is monitor resolution being ignored?    */
   short draw_guides;              /*  should the guides be drawn?             */
   short snap_to_guides;           /*  should the guides be snapped to?        */
 
@@ -146,6 +166,7 @@ Guide*     gdisplay_find_guide             (GDisplay *, int, int);
 void       gdisplay_snap_point             (GDisplay *, double , double, double *, double *);
 void       gdisplay_snap_rectangle         (GDisplay *, int, int, int, int, int *, int *);
 void	   gdisplay_update_cursor	   (GDisplay *, int, int);
+void	   gdisplay_set_dot_for_dot	   (GDisplay *, int);
 void       gdisplay_resize_cursor_label    (GDisplay *);
 
 /*  function declarations  */

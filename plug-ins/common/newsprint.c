@@ -23,7 +23,7 @@
  */
 
 /*
- * version 0.50
+ * version 0.51
  * This version requires gtk-1.0.4 or above.
  *
  * This plug-in puts an image through a screen at a particular angle
@@ -52,7 +52,7 @@
 static char rcsid[] = "$Id$";
 #endif
 
-#define VERSION "v0.50"
+#define VERSION "v0.51"
 
 /* Some useful macros */
 #ifdef DEBUG
@@ -826,7 +826,7 @@ newsprint_menu_callback(GtkWidget *widget,
 
     /* we shouldn't need recursion protection, but if lock_channels is
      * set, and gtk_option_menu_set_history ever generates an
-     * "activated" signmal, then we'll get back here.  So we've defensive. */
+     * "activated" signal, then we'll get back here.  So we've defensive. */
     if (in_progress)
     {
 	printf("newsprint_menu_callback: unexpected recursion: "
@@ -1134,12 +1134,13 @@ gen_channels(NewsprintDialog_st *st, gint colourspace)
     {
 	chst[i] = new_channel(ct);
 
+	gtk_signal_connect(GTK_OBJECT(chst[i]->ch_menuitem), "activate",
+			   (GtkSignalFunc)newsprint_channel_select_callback,
+			   st);
+
 	/* only link in the menuitem if we're doing multiple channels */
 	if (st->channel_menu)
 	{
-	    gtk_signal_connect(GTK_OBJECT(chst[i]->ch_menuitem), "activate",
-			      (GtkSignalFunc)newsprint_channel_select_callback,
-			       st);
 	    gtk_menu_append(GTK_MENU(st->channel_menu),
 			    GTK_WIDGET(chst[i]->ch_menuitem));
 	    chst[i]->ch_menu_num = cur_menu_num;
@@ -1432,8 +1433,9 @@ newsprint_dialog (GDrawable *drawable)
 	    gtk_widget_show(GTK_WIDGET(chst[i]->ch_menuitem));
 
 	/* select the first channel to edit */
-	gtk_option_menu_set_history(GTK_OPTION_MENU(st.channel_option),
-				    chst[0]->ch_menu_num);
+	if (st.channel_option)
+	    gtk_option_menu_set_history(GTK_OPTION_MENU(st.channel_option),
+					chst[0]->ch_menu_num);
 	gtk_menu_item_activate(GTK_MENU_ITEM(chst[0]->ch_menuitem));
     }
 

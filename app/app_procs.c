@@ -34,6 +34,7 @@
 #include "curves.h"
 #include "devices.h"
 #include "gdisplay.h"
+#include "gdisplay_ops.h"
 #include "colormaps.h"
 #include "errorconsole.h"
 #include "fileops.h"
@@ -487,6 +488,13 @@ app_init (void)
   parse_gimprc ();         /*  parse the local GIMP configuration file  */
   if (always_restore_session)
     restore_session = TRUE;
+
+  /* make sure the monitor resolution is valid */
+  if (monitor_xres < 1e-5 || monitor_yres < 1e-5)
+  {
+    gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
+    using_xserver_resolution = TRUE;
+  }	 
 
   /* Now we are ready to draw the splash-screen-image to the start-up window */
   if (no_interface == FALSE)

@@ -30,8 +30,8 @@ bounds_checking (GDisplay *gdisp)
 {
   int sx, sy;
 
-  sx = SCALE(gdisp, gdisp->gimage->width);
-  sy = SCALE(gdisp, gdisp->gimage->height);
+  sx = SCALEX(gdisp, gdisp->gimage->width);
+  sy = SCALEY(gdisp, gdisp->gimage->height);
 
   gdisp->offset_x = BOUNDS (gdisp->offset_x, 0,
 			    LOWPASS (sx - gdisp->disp_width));
@@ -93,6 +93,7 @@ change_scale (GDisplay *gdisp,
   double offset_x, offset_y;
   long sx, sy;
 
+  /* user zoom control, so resolution versions not needed -- austin */
   scalesrc = SCALESRC(gdisp);
   scaledest = SCALEDEST(gdisp);
 
@@ -163,23 +164,24 @@ setup_scale (GDisplay *gdisp)
   GtkRuler *hruler;
   GtkRuler *vruler;
   gfloat sx, sy;
-  gfloat step;
+  gfloat stepx, stepy;
 
-  sx = SCALE(gdisp, gdisp->gimage->width);
-  sy = SCALE(gdisp, gdisp->gimage->height);
-  step = SCALE(gdisp, 1);
+  sx = SCALEX(gdisp, gdisp->gimage->width);
+  sy = SCALEY(gdisp, gdisp->gimage->height);
+  stepx = SCALEX(gdisp, 1);
+  stepy = SCALEY(gdisp, 1);
 
   gdisp->hsbdata->value = gdisp->offset_x;
   gdisp->hsbdata->upper = sx;
   gdisp->hsbdata->page_size = MIN (sx, gdisp->disp_width);
   gdisp->hsbdata->page_increment = (gdisp->disp_width / 2);
-  gdisp->hsbdata->step_increment = step;
+  gdisp->hsbdata->step_increment = stepx;
 
   gdisp->vsbdata->value = gdisp->offset_y;
   gdisp->vsbdata->upper = sy;
   gdisp->vsbdata->page_size = MIN (sy, gdisp->disp_height);
   gdisp->vsbdata->page_increment = (gdisp->disp_height / 2);
-  gdisp->vsbdata->step_increment = step;
+  gdisp->vsbdata->step_increment = stepy;
 
   gtk_signal_emit_by_name (GTK_OBJECT (gdisp->hsbdata), "changed");
   gtk_signal_emit_by_name (GTK_OBJECT (gdisp->vsbdata), "changed");
@@ -188,37 +190,37 @@ setup_scale (GDisplay *gdisp)
   vruler = GTK_RULER (gdisp->vrule);
 
   hruler->lower = 0;
-  hruler->upper = UNSCALE (gdisp, gdisp->disp_width);
+  hruler->upper = UNSCALEX (gdisp, gdisp->disp_width);
   hruler->max_size = MAXIMUM (gdisp->gimage->width, gdisp->gimage->height);
 
   vruler->lower = 0;
-  vruler->upper = UNSCALE (gdisp, gdisp->disp_height);
+  vruler->upper = UNSCALEY (gdisp, gdisp->disp_height);
   vruler->max_size = MAXIMUM (gdisp->gimage->width, gdisp->gimage->height);
 
   if (sx < gdisp->disp_width)
     {
       gdisp->disp_xoffset = (gdisp->disp_width - sx) / 2;
-      hruler->lower -= UNSCALE (gdisp, (double) gdisp->disp_xoffset);
-      hruler->upper -= UNSCALE (gdisp, (double) gdisp->disp_xoffset);
+      hruler->lower -= UNSCALEX (gdisp, (double) gdisp->disp_xoffset);
+      hruler->upper -= UNSCALEX (gdisp, (double) gdisp->disp_xoffset);
     }
   else
     {
       gdisp->disp_xoffset = 0;
-      hruler->lower += UNSCALE (gdisp, (double) gdisp->offset_x);
-      hruler->upper += UNSCALE (gdisp, (double) gdisp->offset_x);
+      hruler->lower += UNSCALEX (gdisp, (double) gdisp->offset_x);
+      hruler->upper += UNSCALEX (gdisp, (double) gdisp->offset_x);
     }
 
   if (sy < gdisp->disp_height)
     {
       gdisp->disp_yoffset = (gdisp->disp_height - sy) / 2;
-      vruler->lower -= UNSCALE (gdisp, (double) gdisp->disp_yoffset);
-      vruler->upper -= UNSCALE (gdisp, (double) gdisp->disp_yoffset);
+      vruler->lower -= UNSCALEY (gdisp, (double) gdisp->disp_yoffset);
+      vruler->upper -= UNSCALEY (gdisp, (double) gdisp->disp_yoffset);
     }
   else
     {
       gdisp->disp_yoffset = 0;
-      vruler->lower += UNSCALE (gdisp, (double) gdisp->offset_y);
-      vruler->upper += UNSCALE (gdisp, (double) gdisp->offset_y);
+      vruler->lower += UNSCALEY (gdisp, (double) gdisp->offset_y);
+      vruler->upper += UNSCALEY (gdisp, (double) gdisp->offset_y);
     }
 
   gtk_widget_draw (GTK_WIDGET (hruler), NULL);

@@ -420,6 +420,17 @@ select_save_cmd_callback (GtkWidget *widget,
 }
 
 void
+view_dot_for_dot_callback (GtkWidget *widget,
+			   gpointer   client_data)
+{
+  GDisplay *gdisp;
+
+  gdisp = gdisplay_active ();
+
+  gdisplay_set_dot_for_dot (gdisp, GTK_CHECK_MENU_ITEM (widget)->active);
+}
+
+void
 view_zoomin_cmd_callback (GtkWidget *widget,
 			  gpointer   client_data)
 {

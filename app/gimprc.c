@@ -47,6 +47,7 @@ typedef enum {
   TT_STRING,
   TT_PATH,
   TT_DOUBLE,
+  TT_FLOAT,
   TT_INT,
   TT_BOOLEAN,
   TT_POSITION,
@@ -128,6 +129,9 @@ int       default_height_units = GTK_INCHES;
 int       show_tips = TRUE;
 int       last_tip = -1;
 int       show_tool_tips = TRUE;
+float     monitor_xres = 72.0;
+float     monitor_yres = 72.0;
+int       using_xserver_resolution = FALSE;
 
 static int get_next_token (void);
 static int peek_next_token (void);
@@ -136,6 +140,7 @@ static int parse_statement (void);
 static int parse_string (gpointer val1p, gpointer val2p);
 static int parse_path (gpointer val1p, gpointer val2p);
 static int parse_double (gpointer val1p, gpointer val2p);
+static int parse_float (gpointer val1p, gpointer val2p);
 static int parse_int (gpointer val1p, gpointer val2p);
 static int parse_boolean (gpointer val1p, gpointer val2p);
 static int parse_position (gpointer val1p, gpointer val2p);
@@ -159,6 +164,7 @@ static char* value_to_str (char *name);
 static char* string_to_str (gpointer val1p, gpointer val2p);
 static char* path_to_str (gpointer val1p, gpointer val2p);
 static char* double_to_str (gpointer val1p, gpointer val2p);
+static char* float_to_str (gpointer val1p, gpointer val2p);
 static char* int_to_str (gpointer val1p, gpointer val2p);
 static char* boolean_to_str (gpointer val1p, gpointer val2p);
 static char* position_to_str (gpointer val1p, gpointer val2p);
@@ -244,7 +250,9 @@ static ParseFunc funcs[] =
   { "plug-in-def",           TT_XPLUGINDEF, NULL, NULL },
   { "menu-path",             TT_XMENUPATH,  NULL, NULL },
   { "device",                TT_XDEVICE,    NULL, NULL },
-  { "session-info",          TT_XSESSIONINFO, NULL, NULL}
+  { "session-info",          TT_XSESSIONINFO, NULL, NULL},
+  { "monitor-xresolution",   TT_FLOAT,     &monitor_xres, NULL },
+  { "monitor-yresolution",   TT_FLOAT,     &monitor_yres, NULL }
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 
@@ -605,6 +613,8 @@ parse_statement ()
 	  return parse_path (funcs[i].val1p, funcs[i].val2p);
 	case TT_DOUBLE:
 	  return parse_double (funcs[i].val1p, funcs[i].val2p);
+	case TT_FLOAT:
+	  return parse_float (funcs[i].val1p, funcs[i].val2p);
 	case TT_INT:
 	  return parse_int (funcs[i].val1p, funcs[i].val2p);
 	case TT_BOOLEAN:
@@ -709,6 +719,31 @@ parse_double (gpointer val1p,
 
   g_assert (val1p != NULL);
   nump = (double *)val1p;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_NUMBER))
+    return ERROR;
+  token = get_next_token ();
+
+  *nump = token_num;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_RIGHT_PAREN))
+    return ERROR;
+  token = get_next_token ();
+
+  return OK;
+}
+
+static int
+parse_float (gpointer val1p,
+	     gpointer val2p)
+{
+  int token;
+  float *nump;
+
+  g_assert (val1p != NULL);
+  nump = (float *)val1p;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_NUMBER))
@@ -1940,6 +1975,8 @@ value_to_str (char *name)
 	  return path_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_DOUBLE:
 	  return double_to_str (funcs[i].val1p, funcs[i].val2p);
+	case TT_FLOAT:
+	  return float_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_INT:
 	  return int_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_BOOLEAN:
@@ -1992,6 +2029,17 @@ double_to_str (gpointer val1p,
 
   str = g_malloc (20);
   sprintf (str, "%f", *((double *)val1p));
+  return str;
+}
+
+static char *
+float_to_str (gpointer val1p,
+	      gpointer val2p)
+{
+  char *str;
+
+  str = g_malloc (20);
+  sprintf (str, "%f", (double)(*((float *)val1p)));
   return str;
 }
 

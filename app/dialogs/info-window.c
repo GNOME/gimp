@@ -205,7 +205,7 @@ info_window_update (InfoDialog *info_win,
 	   gdisp->gimage->xresolution,
 	   gdisp->gimage->yresolution);
 
-  /*  zoom ratio  */
+  /*  user zoom ratio  */
   sprintf (iwd->scale_str, "%d:%d",
 	   SCALEDEST (gdisp), SCALESRC (gdisp));
 

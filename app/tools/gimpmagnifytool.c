@@ -222,6 +222,8 @@ magnify_button_release (Tool           *tool,
       x2 = x1 + w;
       y2 = y1 + h;
 
+      /* these change the user zoom level, so should not be changed to
+       * the resolution-aware scale macros -- austin */
       scalesrc = SCALESRC(gdisp);
       scaledest = SCALEDEST(gdisp);
 

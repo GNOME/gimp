@@ -41,8 +41,8 @@ struct _RenderInfo
   guchar *dest;
   int x, y;
   int w, h;
-  int scalesrc;
-  int scaledest;
+  float scalex;
+  float scaley;
   int src_x, src_y;
   int src_bpp;
   int dest_bpp;
@@ -190,9 +190,7 @@ static void    render_image_init_info          (RenderInfo   *info,
 static guint*  render_image_init_alpha         (int           mult);
 static guchar* render_image_accelerate_scaling (int           width,
 						int           start,
-						int           bpp,
-						int           scalesrc,
-						int           scaledest);
+						float         scalex);
 static guchar* render_image_tile_fault         (RenderInfo   *info);
 
 
@@ -240,6 +238,11 @@ render_image (GDisplay *gdisp,
       return;
     }
 
+  /* Currently, only RGBA and GRAYA projection types are used - the rest
+   * are in case of future need.  -- austin, 28th Nov 1998. */
+  if (image_type != RGBA_GIMAGE && image_type != GRAYA_GIMAGE)
+      g_warning ("using untested projection type %d", image_type);
+
   (* render_funcs[image_type]) (&info);
 }
 
@@ -263,6 +266,8 @@ render_image_indexed (RenderInfo *info)
   int y, ye;
   int x, xe;
   int initial;
+  float error;
+  float step;
 
   lookup_red = g_lookup_red;
   lookup_green = g_lookup_green;
@@ -273,13 +278,18 @@ render_image_indexed (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
+  step = 1.0 / info->scaley;
+
+  error = y * step;
+  error -= ((int)error) - step;
+
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (y % info->scaledest))
+      if (!initial && (error < 1.0))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -302,13 +312,17 @@ render_image_indexed (RenderInfo *info)
 
       info->dest += info->dest_bpl;
 
-      if (((y + 1) % info->scaledest) == 0)
+      initial = FALSE;
+
+      if (error >= 1.0)
 	{
-	  info->src_y += info->scalesrc;
+	  info->src_y += (int)error;
+	  error -= (int)error;
 	  info->src = render_image_tile_fault (info);
+	  initial = TRUE;
 	}
 
-      initial = FALSE;
+      error += step;
     }
 }
 
@@ -330,6 +344,8 @@ render_image_indexed_a (RenderInfo *info)
   int y, ye;
   int x, xe;
   int initial;
+  float error;
+  float step;
 
   lookup_red = g_lookup_red;
   lookup_green = g_lookup_green;
@@ -341,13 +357,18 @@ render_image_indexed_a (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
+  step = 1.0 / info->scaley;
+
+  error = y * step;
+  error -= ((int)error) - step;
+
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (y % info->scaledest) && (y & check_mod))
+      if (!initial && (error < 1.0) && (y & check_mod))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -389,13 +410,17 @@ render_image_indexed_a (RenderInfo *info)
 
       info->dest += info->dest_bpl;
 
-      if (((y + 1) % info->scaledest) == 0)
+      initial = FALSE;
+
+      if (error >= 1.0)
 	{
-	  info->src_y += info->scalesrc;
+	  info->src_y += (int)error;
+	  error -= (int)error;
 	  info->src = render_image_tile_fault (info);
+	  initial = TRUE;
 	}
 
-      initial = FALSE;
+      error += step;
     }
 }
 
@@ -412,6 +437,8 @@ render_image_gray (RenderInfo *info)
   int y, ye;
   int x, xe;
   int initial;
+  float error;
+  float step;
 
   lookup_red = g_lookup_red;
   lookup_green = g_lookup_green;
@@ -421,13 +448,18 @@ render_image_gray (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
+  step = 1.0 / info->scaley;
+
+  error = y * step;
+  error -= ((int)error) - step;
+
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (y % info->scaledest))
+      if (!initial && (error < 1.0))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -450,13 +482,17 @@ render_image_gray (RenderInfo *info)
 
       info->dest += info->dest_bpl;
 
-      if (((y + 1) % info->scaledest) == 0)
+      initial = FALSE;
+
+      if (error >= 1.0)
 	{
-	  info->src_y += info->scalesrc;
+	  info->src_y += (int)error;
+	  error -= (int)error;
 	  info->src = render_image_tile_fault (info);
+	  initial = TRUE;
 	}
 
-      initial = FALSE;
+      error += step;
     }
 }
 
@@ -476,6 +512,8 @@ render_image_gray_a (RenderInfo *info)
   int y, ye;
   int x, xe;
   int initial;
+  float error;
+  float step;
 
   lookup_red = g_lookup_red;
   lookup_green = g_lookup_green;
@@ -486,13 +524,18 @@ render_image_gray_a (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
+  step = 1.0 / info->scaley;
+
+  error = y * step;
+  error -= ((int)error) - step;
+
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (y % info->scaledest) && (y & check_mod))
+      if (!initial && (error < 1.0) && (y & check_mod))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -524,13 +567,17 @@ render_image_gray_a (RenderInfo *info)
 
       info->dest += info->dest_bpl;
 
-      if (((y + 1) % info->scaledest) == 0)
+      initial = FALSE;
+
+      if (error >= 1.0)
 	{
-	  info->src_y += info->scalesrc;
+	  info->src_y += (int)error;
+	  error -= (int)error;
 	  info->src = render_image_tile_fault (info);
+	  initial = TRUE;
 	}
 
-      initial = FALSE;
+      error += step;
     }
 }
 
@@ -546,6 +593,8 @@ render_image_rgb (RenderInfo *info)
   int y, ye;
   int x, xe;
   int initial;
+  float error;
+  float step;
 
   lookup_red = g_lookup_red;
   lookup_green = g_lookup_green;
@@ -555,13 +604,18 @@ render_image_rgb (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
+  step = 1.0 / info->scaley;
+
+  error = y * step;
+  error -= (int)error - step;
+
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (y % info->scaledest))
+      if (!initial && (error < 1.0))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -584,13 +638,17 @@ render_image_rgb (RenderInfo *info)
 
       info->dest += info->dest_bpl;
 
-      if (((y + 1) % info->scaledest) == 0)
+      initial = FALSE;
+
+      if (error >= 1.0)
 	{
-	  info->src_y += info->scalesrc;
+	  info->src_y += (int)error;
+	  error -= (int)error;
 	  info->src = render_image_tile_fault (info);
+	  initial = TRUE;
 	}
 
-      initial = FALSE;
+      error += step;
     }
 }
 
@@ -612,6 +670,8 @@ render_image_rgb_a (RenderInfo *info)
   int y, ye;
   int x, xe;
   int initial;
+  float error;
+  float step;
 
   lookup_red = g_lookup_red;
   lookup_green = g_lookup_green;
@@ -622,13 +682,18 @@ render_image_rgb_a (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
+  step = 1.0 / info->scaley;
+
+  error = y * step;
+  error -= ((int)error) - step;
+
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (y % info->scaledest) && (y & check_mod))
+      if (!initial && (error < 1.0) && (y & check_mod))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -697,13 +762,17 @@ render_image_rgb_a (RenderInfo *info)
 
       info->dest += info->dest_bpl;
 
-      if (((y + 1) % info->scaledest) == 0)
+      initial = FALSE;
+
+      if (error >= 1.0)
 	{
-	  info->src_y += info->scalesrc;
+	  info->src_y += (int)error;
+	  error -= (int)error;
 	  info->src = render_image_tile_fault (info);
+	  initial = TRUE;
 	}
 
-      initial = FALSE;
+      error += step;
     }
 }
 
@@ -721,17 +790,17 @@ render_image_init_info (RenderInfo *info,
   info->y = y + gdisp->offset_y;
   info->w = w;
   info->h = h;
-  info->scalesrc = SCALESRC (gdisp);
-  info->scaledest = SCALEDEST (gdisp);
-  info->src_x = UNSCALE (gdisp, info->x);
-  info->src_y = UNSCALE (gdisp, info->y);
+  info->scalex = SCALEFACTOR_X (gdisp);
+  info->scaley = SCALEFACTOR_Y (gdisp);
+  info->src_x = UNSCALEX (gdisp, info->x);
+  info->src_y = UNSCALEY (gdisp, info->y);
   info->src_bpp = gimage_projection_bytes (gdisp->gimage);
   info->dest = gximage_get_data ();
   info->dest_bpp = gximage_get_bpp ();
   info->dest_bpl = gximage_get_bpl ();
   info->dest_width = info->w * info->dest_bpp;
   info->byte_order = gximage_get_byte_order ();
-  info->scale = render_image_accelerate_scaling (w, info->x, info->src_bpp, info->scalesrc, info->scaledest);
+  info->scale = render_image_accelerate_scaling (w, info->x, info->scalex);
   info->alpha = NULL;
 
   switch (gimage_projection_type (gdisp->gimage))
@@ -765,28 +834,28 @@ render_image_init_alpha (int mult)
 }
 
 static guchar*
-render_image_accelerate_scaling (int width,
-				 int start,
-				 int  bpp,
-				 int  scalesrc,
-				 int  scaledest)
+render_image_accelerate_scaling (int   width,
+				 int   start,
+				 float scalex)
 {
   static guchar *scale = NULL;
-  static int swidth = -1;
-  static int sstart = -1;
-  guchar step;
+  float error;
+  float step;
   int i;
 
-  if ((swidth != width) || (sstart != start))
-    {
-      if (!scale)
-	scale = g_new (guchar, GXIMAGE_WIDTH + 1);
+  if (!scale)
+    scale = g_new (guchar, GXIMAGE_WIDTH + 1);
 
-      step = scalesrc * bpp;
+  step = 1.0 / scalex;
 
-      for (i = 0; i <= width; i++)
-	scale[i] = ((i + start + 1) % scaledest) ? 0 : step;
-    }
+  error = start * step;
+  error -= ((int)error) - step;
+
+  for (i = 0; i <= width; i++)
+  {
+    scale[i] = ((int)error);
+    error += step - (int)error;
+  }    
 
   return scale;
 }
@@ -802,6 +871,7 @@ render_image_tile_fault (RenderInfo *info)
   int tilex;
   int tiley;
   int step;
+  int bpp = info->src_bpp;
   int x, b;
 
   tilex = info->src_x / TILE_WIDTH;
@@ -815,7 +885,6 @@ render_image_tile_fault (RenderInfo *info)
 			    info->src_x % TILE_WIDTH,
 			    info->src_y % TILE_HEIGHT);
   scale = info->scale;
-  step = info->scalesrc * info->src_bpp;
   dest = tile_buf;
 
   x = info->src_x;
@@ -823,13 +892,14 @@ render_image_tile_fault (RenderInfo *info)
 
   while (width--)
     {
-      for (b = 0; b < info->src_bpp; b++)
+      for (b = 0; b < bpp; b++)
 	*dest++ = data[b];
 
-      if (*scale++ != 0)
+      step = *scale++;
+      if (step != 0)
 	{
-	  x += info->scalesrc;
-	  data += step;
+	  x += step;
+	  data += step * bpp;
 
 	  if ((x >> tile_shift) != tilex)
 	    {

@@ -100,6 +100,7 @@ gdisplay_new (GimpImage       *gimage,
 
   gdisp->offset_x = gdisp->offset_y = 0;
   gdisp->scale = scale;
+  gdisp->dot_for_dot = TRUE;
   gdisp->gimage = gimage;
   gdisp->window_info_dialog = NULL;
   gdisp->depth = g_visual->depth;
@@ -686,7 +687,7 @@ gdisplay_find_guide (GDisplay *gdisp,
 {
   GList *tmp_list;
   Guide *guide;
-  double scale;
+  double scalex, scaley;
   int offset_x, offset_y;
   int pos;
 
@@ -694,7 +695,8 @@ gdisplay_find_guide (GDisplay *gdisp,
     {
       offset_x = gdisp->offset_x - gdisp->disp_xoffset;
       offset_y = gdisp->offset_y - gdisp->disp_yoffset;
-      scale = (SCALESRC (gdisp) == 1) ? SCALEDEST (gdisp) : 1.0 / SCALESRC (gdisp);
+      scalex = SCALEFACTOR_X (gdisp);
+      scaley = SCALEFACTOR_Y (gdisp);
 
       tmp_list = gdisp->gimage->guides;
       while (tmp_list)
@@ -705,14 +707,14 @@ gdisplay_find_guide (GDisplay *gdisp,
 	  switch (guide->orientation)
 	    {
 	    case HORIZONTAL_GUIDE:
-	      pos = (int) (scale * guide->position - offset_y);
+	      pos = (int) (scaley * guide->position - offset_y);
 	      if ((guide->position != -1) &&
 		  (pos > (y - EPSILON)) &&
 		  (pos < (y + EPSILON)))
 		return guide;
 	      break;
 	    case VERTICAL_GUIDE:
-	      pos = (int) (scale * guide->position - offset_x);
+	      pos = (int) (scalex * guide->position - offset_x);
 	      if ((guide->position != -1) &&
 		  (pos > (x - EPSILON)) &&
 		  (pos < (x + EPSILON)))
@@ -734,7 +736,7 @@ gdisplay_snap_point (GDisplay *gdisp,
 {
   GList *tmp_list;
   Guide *guide;
-  double scale;
+  double scalex, scaley;
   int offset_x, offset_y;
   int minhdist, minvdist;
   int pos, dist;
@@ -748,7 +750,8 @@ gdisplay_snap_point (GDisplay *gdisp,
     {
       offset_x = gdisp->offset_x - gdisp->disp_xoffset;
       offset_y = gdisp->offset_y - gdisp->disp_yoffset;
-      scale = (SCALESRC (gdisp) == 1) ? SCALEDEST (gdisp) : 1.0 / SCALESRC (gdisp);
+      scalex = SCALEFACTOR_X (gdisp);
+      scaley = SCALEFACTOR_Y (gdisp);
 
       minhdist = G_MAXINT;
       minvdist = G_MAXINT;
@@ -762,7 +765,7 @@ gdisplay_snap_point (GDisplay *gdisp,
 	  switch (guide->orientation)
 	    {
 	    case HORIZONTAL_GUIDE:
-	      pos = (int) (scale * guide->position - offset_y);
+	      pos = (int) (scaley * guide->position - offset_y);
 	      if ((pos > (y - EPSILON)) &&
 		  (pos < (y + EPSILON)))
 		{
@@ -777,7 +780,7 @@ gdisplay_snap_point (GDisplay *gdisp,
 		}
 	      break;
 	    case VERTICAL_GUIDE:
-	      pos = (int) (scale * guide->position - offset_x);
+	      pos = (int) (scalex * guide->position - offset_x);
 	      if ((pos > (x - EPSILON)) &&
 		  (pos < (x + EPSILON)))
 		{
@@ -909,6 +912,19 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
     gdisplay_flush (gdisp);
 }
 
+
+void
+gdisplay_set_dot_for_dot (GDisplay *gdisp, int value)
+{
+  if (value != gdisp->dot_for_dot)
+    {
+      gdisp->dot_for_dot = value;
+
+      resize_display (gdisp, allow_resize_windows, TRUE);
+    }
+}
+
+
 void
 gdisplay_resize_cursor_label (GDisplay *gdisp)
 {
@@ -1016,8 +1032,8 @@ gdisplay_display_area (GDisplay *gdisp,
   int dx, dy;
   int i, j;
 
-  sx = SCALE (gdisp, gdisp->gimage->width);
-  sy = SCALE (gdisp, gdisp->gimage->height);
+  sx = SCALEX (gdisp, gdisp->gimage->width);
+  sy = SCALEY (gdisp, gdisp->gimage->height);
 
   /*  Bounds check  */
   x1 = BOUNDS (x, 0, gdisp->disp_width);
@@ -1157,12 +1173,13 @@ gdisplay_transform_coords (GDisplay *gdisp,
 			   int      *ny,
 			   int       use_offsets)
 {
-  double scale;
+  double scalex;
+  double scaley;
   int offset_x, offset_y;
 
   /*  transform from image coordinates to screen coordinates  */
-  scale = (SCALESRC (gdisp) == 1) ? SCALEDEST (gdisp) :
-    1.0 / SCALESRC (gdisp);
+  scalex = SCALEFACTOR_X (gdisp);
+  scaley = SCALEFACTOR_Y (gdisp);
 
   if (use_offsets)
     drawable_offsets (gimage_active_drawable (gdisp->gimage), &offset_x, &offset_y);
@@ -1171,8 +1188,8 @@ gdisplay_transform_coords (GDisplay *gdisp,
       offset_x = offset_y = 0;
     }
 
-  *nx = (int) (scale * (x + offset_x) - gdisp->offset_x);
-  *ny = (int) (scale * (y + offset_y) - gdisp->offset_y);
+  *nx = (int) (scalex * (x + offset_x) - gdisp->offset_x);
+  *ny = (int) (scaley * (y + offset_y) - gdisp->offset_y);
 
   *nx += gdisp->disp_xoffset;
   *ny += gdisp->disp_yoffset;
@@ -1188,15 +1205,16 @@ gdisplay_untransform_coords (GDisplay *gdisp,
 			     int       round,
 			     int       use_offsets)
 {
-  double scale;
+  double scalex;
+  double scaley;
   int offset_x, offset_y;
 
   x -= gdisp->disp_xoffset;
   y -= gdisp->disp_yoffset;
 
   /*  transform from screen coordinates to image coordinates  */
-  scale = (SCALESRC (gdisp) == 1) ? SCALEDEST (gdisp) :
-    1.0 / SCALESRC (gdisp);
+  scalex = SCALEFACTOR_X (gdisp);
+  scaley = SCALEFACTOR_Y (gdisp);
 
   if (use_offsets)
     drawable_offsets (gimage_active_drawable (gdisp->gimage), &offset_x, &offset_y);
@@ -1207,13 +1225,13 @@ gdisplay_untransform_coords (GDisplay *gdisp,
 
   if (round)
     {
-      *nx = ROUND ((x + gdisp->offset_x) / scale - offset_x);
-      *ny = ROUND ((y + gdisp->offset_y) / scale - offset_y);
+      *nx = ROUND ((x + gdisp->offset_x) / scalex - offset_x);
+      *ny = ROUND ((y + gdisp->offset_y) / scaley - offset_y);
     }
   else
     {
-      *nx = (int) ((x + gdisp->offset_x) / scale - offset_x);
-      *ny = (int) ((y + gdisp->offset_y) / scale - offset_y);
+      *nx = (int) ((x + gdisp->offset_x) / scalex - offset_x);
+      *ny = (int) ((y + gdisp->offset_y) / scaley - offset_y);
     }
 }
 
@@ -1226,12 +1244,13 @@ gdisplay_transform_coords_f (GDisplay *gdisp,
 			     double   *ny,
 			     int       use_offsets)
 {
-  double scale;
+  double scalex;
+  double scaley;
   int offset_x, offset_y;
 
   /*  transform from gimp coordinates to screen coordinates  */
-  scale = (SCALESRC (gdisp) == 1) ? SCALEDEST (gdisp) :
-    1.0 / SCALESRC (gdisp);
+  scalex = SCALEFACTOR_X(gdisp);
+  scaley = SCALEFACTOR_Y(gdisp);
 
   if (use_offsets)
     drawable_offsets (gimage_active_drawable (gdisp->gimage), &offset_x, &offset_y);
@@ -1240,8 +1259,8 @@ gdisplay_transform_coords_f (GDisplay *gdisp,
       offset_x = offset_y = 0;
     }
 
-  *nx = scale * (x + offset_x) - gdisp->offset_x;
-  *ny = scale * (y + offset_y) - gdisp->offset_y;
+  *nx = scalex * (x + offset_x) - gdisp->offset_x;
+  *ny = scaley * (y + offset_y) - gdisp->offset_y;
 
   *nx += gdisp->disp_xoffset;
   *ny += gdisp->disp_yoffset;
@@ -1256,15 +1275,16 @@ gdisplay_untransform_coords_f (GDisplay *gdisp,
 			       double   *ny,
 			       int       use_offsets)
 {
-  double scale;
+  double scalex;
+  double scaley;
   int offset_x, offset_y;
 
   x -= gdisp->disp_xoffset;
   y -= gdisp->disp_yoffset;
 
   /*  transform from screen coordinates to gimp coordinates  */
-  scale = (SCALESRC (gdisp) == 1) ? SCALEDEST (gdisp) :
-    1.0 / SCALESRC (gdisp);
+  scalex = SCALEFACTOR_X(gdisp);
+  scaley = SCALEFACTOR_Y(gdisp);
 
   if (use_offsets)
     drawable_offsets (gimage_active_drawable (gdisp->gimage), &offset_x, &offset_y);
@@ -1273,8 +1293,8 @@ gdisplay_untransform_coords_f (GDisplay *gdisp,
       offset_x = offset_y = 0;
     }
 
-  *nx = (x + gdisp->offset_x) / scale - offset_x;
-  *ny = (y + gdisp->offset_y) / scale - offset_y;
+  *nx = (x + gdisp->offset_x) / scalex - offset_x;
+  *ny = (y + gdisp->offset_y) / scaley - offset_y;
 }
 
 
@@ -1379,6 +1399,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   menus_set_state (_("<Image>/View/Toggle Guides"), gdisp->draw_guides);
   menus_set_state (_("<Image>/View/Snap To Guides"), gdisp->snap_to_guides);
   menus_set_state (_("<Image>/View/Toggle Statusbar"), GTK_WIDGET_VISIBLE (gdisp->statusarea) ? 1 : 0);
+  menus_set_state (_("<Image>/View/Dot for dot"), gdisp->dot_for_dot);
 
   plug_in_set_menu_sensitivity (type);
 }

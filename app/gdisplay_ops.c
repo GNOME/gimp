@@ -70,6 +70,33 @@ gdisplay_color_pixel (GDisplay *gdisp)
 
 
 void
+gdisplay_xserver_resolution (float *xres, float *yres)
+{
+  gint width, height;
+  gint widthMM, heightMM;
+
+  width  = gdk_screen_width ();
+  height = gdk_screen_height ();
+
+  widthMM  = gdk_screen_width_mm ();
+  heightMM = gdk_screen_height_mm ();
+
+  /*
+   * From xdpyinfo.c:
+   *
+   * there are 2.54 centimeters to an inch; so there are 25.4 millimeters.
+   *
+   *     dpi = N pixels / (M millimeters / (25.4 millimeters / 1 inch))
+   *         = N pixels / (M inch / 25.4)
+   *         = N * 25.4 pixels / M inch
+   */
+
+  *xres = (width  * 25.4) / ((float)widthMM);
+  *yres = (height * 25.4) / ((float)heightMM);
+}
+
+
+void
 gdisplay_new_view (GDisplay *gdisp)
 {
   GDisplay *new_gdisp;
@@ -124,8 +151,8 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
   s_width = gdk_screen_width ();
   s_height = gdk_screen_height ();
 
-  width = SCALE (gdisp, gdisp->gimage->width);
-  height = SCALE (gdisp, gdisp->gimage->height);
+  width = SCALEX (gdisp, gdisp->gimage->width);
+  height = SCALEY (gdisp, gdisp->gimage->height);
 
   disp_width = gdisp->disp_width;
   disp_height = gdisp->disp_height;
@@ -233,8 +260,8 @@ gdisplay_resize_image (GDisplay *gdisp)
   int width, height;
 
   /*  Calculate the width and height of the new canvas  */
-  sx = SCALE (gdisp, gdisp->gimage->width);
-  sy = SCALE (gdisp, gdisp->gimage->height);
+  sx = SCALEX (gdisp, gdisp->gimage->width);
+  sy = SCALEY (gdisp, gdisp->gimage->height);
   width = MINIMUM (sx, gdisp->disp_width);
   height = MINIMUM (sy, gdisp->disp_height);
 

@@ -37,6 +37,7 @@ void select_grow_cmd_callback (GtkWidget *, gpointer);
 void select_shrink_cmd_callback (GtkWidget *, gpointer);
 void select_by_color_cmd_callback (GtkWidget *, gpointer);
 void select_save_cmd_callback (GtkWidget *, gpointer);
+void view_dot_for_dot_callback (GtkWidget *, gpointer);
 void view_zoomin_cmd_callback (GtkWidget *, gpointer);
 void view_zoomout_cmd_callback (GtkWidget *, gpointer);
 void view_zoom_16_1_callback (GtkWidget *, gpointer);

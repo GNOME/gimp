@@ -27,6 +27,7 @@
 #include "gimage_mask.h"
 #include "gdisplay.h"
 #include "undo.h"
+#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -322,8 +323,8 @@ edit_selection_draw (Tool *tool)
   gdisp = (GDisplay *) tool->gdisp_ptr;
   select = gdisp->select;
 
-  diff_x = SCALE (gdisp, (edit_select.x - edit_select.origx));
-  diff_y = SCALE (gdisp, (edit_select.y - edit_select.origy));
+  diff_x = SCALEX (gdisp, (edit_select.x - edit_select.origx));
+  diff_y = SCALEY (gdisp, (edit_select.y - edit_select.origy));
 
   switch (edit_select.edit_type)
     {

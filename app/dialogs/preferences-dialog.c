@@ -105,6 +105,9 @@ static   char *       old_pattern_path;
 static   char *       old_palette_path;
 static   char *       old_plug_in_path;
 static   char *       old_gradient_path;
+static   float        old_monitor_xres;
+static   float        old_monitor_yres;
+static   int          old_using_xserver_resolution;
 
 static   char *       edit_temp_path = NULL;
 static   char *       edit_swap_path = NULL;
@@ -122,6 +125,8 @@ static   int          edit_last_opened_size;
 static   GtkWidget   *tile_cache_size_spinbutton = NULL;
 static   int          divided_tile_cache_size;
 static   int          mem_size_unit;
+static   GtkWidget   *xres_spinbutton = NULL;
+static   GtkWidget   *yres_spinbutton = NULL;
 
 /* Some information regarding preferences, compiled by Raph Levien 11/3/97.
 
@@ -227,16 +232,28 @@ file_prefs_ok_callback (GtkWidget *widget,
       g_message (_("Error: Default height must be one or greater."));
       default_height = old_default_height;
       return;
-    }  
+    }
+  if (monitor_xres < 1e-5 || monitor_yres < 1e-5)
+    {
+      g_message (_("Error: monitor resolution must not be zero."));
+      monitor_xres = old_monitor_xres;
+      monitor_yres = old_monitor_yres;
+      return;
+    }
+      
       
   gtk_widget_destroy (dlg);
   prefs_dlg = NULL;
+  xres_spinbutton = NULL;
+  yres_spinbutton = NULL;
 
   if (show_tool_tips)
     gtk_tooltips_enable (tool_tips);
   else
     gtk_tooltips_disable (tool_tips);
 }
+
+
 
 static void
 file_prefs_save_callback (GtkWidget *widget,
@@ -342,6 +359,12 @@ file_prefs_save_callback (GtkWidget *widget,
     update = g_list_append (update, "transparency-type");
   if (transparency_size != old_transparency_size)
     update = g_list_append (update, "transparency-size");
+  if (using_xserver_resolution != old_using_xserver_resolution ||
+      ABS(monitor_xres - old_monitor_xres) > 1e-5)
+    update = g_list_append (update, "monitor-xresolution");
+  if (using_xserver_resolution != old_using_xserver_resolution ||
+      ABS(monitor_yres - old_monitor_yres) > 1e-5)
+    update = g_list_append (update, "monitor-yresolution");
   if (edit_stingy_memory_use != stingy_memory_use)
     {
       update = g_list_append (update, "stingy-memory-use");
@@ -414,7 +437,18 @@ file_prefs_save_callback (GtkWidget *widget,
       gradient_path = edit_gradient_path;
       restart_notification = TRUE;
     }
+  if (using_xserver_resolution)
+    {
+      /* special value of 0 for either x or y res in the gimprc file
+       * means use the xserver's current resolution */
+      monitor_xres = 0.0;
+      monitor_yres = 0.0;
+    }
+
   save_gimprc (&update, &remove);
+
+  if (using_xserver_resolution)
+      gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
 
   /* Restore variables which must not change */
   stingy_memory_use = save_stingy_memory_use;
@@ -454,6 +488,8 @@ file_prefs_cancel_callback (GtkWidget *widget,
 {
   gtk_widget_destroy (dlg);
   prefs_dlg = NULL;
+  xres_spinbutton = NULL;
+  yres_spinbutton = NULL;
 
   levels_of_undo = old_levels_of_undo;
   marching_speed = old_marching_speed;
@@ -471,6 +507,9 @@ file_prefs_cancel_callback (GtkWidget *widget,
   default_width = old_default_width;
   default_height = old_default_height;
   default_type = old_default_type;
+  monitor_xres = old_monitor_xres;
+  monitor_yres = old_monitor_yres;
+  using_xserver_resolution = old_using_xserver_resolution;
 
   if (preview_size != old_preview_size)
     {
@@ -605,6 +644,16 @@ file_prefs_spinbutton_callback (GtkWidget *widget,
 }
 
 static void
+file_prefs_float_spinbutton_callback (GtkWidget *widget,
+				      gpointer   data)
+{
+  float *val;
+
+  val = data;
+  *val = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
+}
+
+static void
 file_prefs_string_callback (GtkWidget *widget,
 			    gpointer   data)
 {
@@ -621,6 +670,36 @@ file_prefs_clear_session_info_callback (GtkWidget *widget,
   g_list_free (session_info_updates);
   session_info_updates = NULL;
 }
+
+static void
+file_prefs_res_source_callback (GtkWidget *widget,
+				gpointer data)
+{
+  if (xres_spinbutton)
+    gtk_widget_set_sensitive (xres_spinbutton,
+			      ! GTK_TOGGLE_BUTTON (widget)->active);
+
+  if (yres_spinbutton)
+    gtk_widget_set_sensitive (yres_spinbutton,
+			      ! GTK_TOGGLE_BUTTON (widget)->active);
+
+  if (GTK_TOGGLE_BUTTON (widget)->active)
+  {
+    gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
+    using_xserver_resolution = TRUE;
+  }
+  else
+  {
+    if (xres_spinbutton)
+      monitor_xres = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON
+							 (xres_spinbutton));
+    if (yres_spinbutton)
+      monitor_yres = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON
+							 (yres_spinbutton));
+    using_xserver_resolution = FALSE;
+  }
+}
+
 
 void
 file_pref_cmd_callback (GtkWidget *widget,
@@ -756,6 +835,9 @@ file_pref_cmd_callback (GtkWidget *widget,
       old_install_cmap = edit_install_cmap;
       old_cycled_marching_ants = edit_cycled_marching_ants;
       old_last_opened_size = edit_last_opened_size;
+      old_monitor_xres = monitor_xres;
+      old_monitor_yres = monitor_yres;
+      old_using_xserver_resolution = using_xserver_resolution;
       file_prefs_strset (&old_temp_path, edit_temp_path);
       file_prefs_strset (&old_swap_path, edit_swap_path);
       file_prefs_strset (&old_brush_path, edit_brush_path);
@@ -1319,6 +1401,100 @@ file_pref_cmd_callback (GtkWidget *widget,
 	}
 
       label = gtk_label_new (_("Directories"));
+      gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
+
+      /* Monitor */
+      out_frame = gtk_frame_new (_("Monitor information"));
+      gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
+      gtk_widget_set_usize (out_frame, 320, 200);
+      gtk_widget_show (out_frame);
+
+      vbox = gtk_vbox_new (FALSE, 2);
+      gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+      gtk_container_add (GTK_CONTAINER (out_frame), vbox);
+      gtk_widget_show (vbox);
+
+      label = gtk_label_new (_("Get monitor resolution"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      group = NULL;
+      button = gtk_radio_button_new_with_label (group, _("from X server"));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			  GTK_SIGNAL_FUNC (file_prefs_res_source_callback),
+			  NULL);
+      gtk_widget_show (button);
+
+      {
+	  float xres, yres;
+	  char buf[80];
+
+	  gdisplay_xserver_resolution (&xres, &yres);
+
+	  sprintf (buf, _("(currently %d x %d dpi)"),
+		   (int)(xres + 0.5), (int)(yres + 0.5));
+	  label = gtk_label_new (buf);
+	  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+	  gtk_widget_show (label);
+      }
+
+      button = gtk_radio_button_new_with_label (group, _("manually:"));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+      if (!using_xserver_resolution)
+	  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+
+      abox = gtk_alignment_new (0.5, 0.5, 0.0, 1.0);
+      gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
+      gtk_widget_show (abox);
+
+      hbox = gtk_hbox_new (FALSE, 2);
+      gtk_container_add (GTK_CONTAINER (abox), hbox);
+      gtk_widget_show (hbox);
+
+      adj = (GtkAdjustment *) gtk_adjustment_new (monitor_xres, 1.0,
+						  32768, 1.0,
+						  15.0, 0.0);
+      xres_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(xres_spinbutton), 
+				       GTK_SHADOW_NONE);
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (xres_spinbutton), TRUE);
+      gtk_widget_set_usize (xres_spinbutton, 70, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), xres_spinbutton, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (xres_spinbutton), "changed",
+                          GTK_SIGNAL_FUNC (file_prefs_float_spinbutton_callback),
+                          &monitor_xres);
+      gtk_widget_set_sensitive (xres_spinbutton, !using_xserver_resolution);
+      gtk_widget_show (xres_spinbutton);
+
+      label = gtk_label_new ( _(" by "));
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      adj = (GtkAdjustment *) gtk_adjustment_new (monitor_yres, 1.0,
+						  32768, 1.0,
+						  15.0, 0.0);
+      yres_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (yres_spinbutton), 
+				       GTK_SHADOW_NONE);      
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (yres_spinbutton), TRUE);
+      gtk_widget_set_usize (yres_spinbutton, 70, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), yres_spinbutton, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (yres_spinbutton), "changed",
+                          GTK_SIGNAL_FUNC (file_prefs_float_spinbutton_callback),
+                          &monitor_yres);
+      gtk_widget_set_sensitive (yres_spinbutton, !using_xserver_resolution);
+      gtk_widget_show (yres_spinbutton);
+
+      label = gtk_label_new ( _("dpi"));
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      label = gtk_label_new (_("Monitor"));
       gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
 
       gtk_widget_show (notebook);
