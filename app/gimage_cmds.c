@@ -3725,6 +3725,7 @@ duplicate (GImage *gimage)
      to reproject the new gimage - since if we do the duplicate
      operation correctly, the projection for the new gimage is
      identical to that of the source. */
+  new_gimage->construct_flag = gimage->construct_flag;
   new_gimage->proj_type = gimage->proj_type;
   new_gimage->proj_bytes = gimage->proj_bytes;
   new_gimage->proj_level = gimage->proj_level;

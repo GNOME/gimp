@@ -1100,6 +1100,11 @@ gimp_image_construct_layers (GimpImage *gimage, int x, int y, int w, int h)
   if ((layer = gimp_image_floating_sel (gimage)))
     floating_sel_composite (layer, x, y, w, h, FALSE);
 
+  if (!list)
+    {
+      //      g_warning("g_i_c_l on layerless image.");
+    }
+
   /* Note added by Raph Levien, 27 Jan 1998
 
      This looks it was intended as an optimization, but it seems to
@@ -1221,6 +1226,11 @@ gimp_image_construct_channels (GimpImage *gimage, int x, int y, int w, int h)
   GSList *list = gimage->channels;
   GSList *reverse_list = NULL;
 
+  if (!list)
+    {
+      //      g_warning("g_i_c_c on channelless image.");
+    }
+
   /*  reverse the channel list  */
   while (list)
     {
@@ -1323,19 +1333,27 @@ gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h,
 		      gboolean can_use_cowproject)
 {
 
-#if 0
+#if 1
       int xoff, yoff;
+  
+      /*  set the construct flag, used to determine if anything
+       *  has been written to the gimage raw image yet.
+       */
+      gimage->construct_flag = 0;
       
-
-	printf("************ ty:%d by:%d op:%d\n",
+/*
+	printf("************ [%d] ty:%d by:%d op:%d\n",
+	       gimage->construct_flag,
 	       gimage_projection_type(gimage),
 	       gimage_projection_bytes(gimage),
 	       gimage_projection_opacity(gimage)
-	       );fflush(stdout);
+	       );fflush(stdout);*/
+
       if (gimage->layers)
 	{
 	  gimp_drawable_offsets (GIMP_DRAWABLE((Layer*)(gimage->layers->data)),
 				 &xoff, &yoff);
+#if 0
 	  printf("-------\n%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
 		 (gimage->layers != NULL) ,                /* There's a layer.      */
 		 (!g_slist_next(gimage->layers)) ,          /* It's the only layer.  */
@@ -1351,16 +1369,17 @@ gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h,
 		 (((Layer*)(gimage->layers->data))->opacity == OPAQUE_OPACITY) /*opaq */,
 		 ((xoff==0) && (yoff==0))
 		 );fflush(stdout);
+#endif
 	}
       else
 	{
-	  printf("GIMAGE @%p HAS NO LAYERS?! %d\n",
+	  /*	  printf("GIMAGE @%p HAS NO LAYERS?! %d\n",
 		 gimage,
 		 g_slist_length(gimage->layers));
-	  fflush(stdout);
+		 fflush(stdout);*/
 	}
 
-      if (//can_use_cowproject &&
+      if (/*can_use_cowproject &&*/
       (gimage->layers) &&                         /* There's a layer.      */
       (!g_slist_next(gimage->layers)) &&          /* It's the only layer.  */
       (layer_has_alpha((Layer*)(gimage->layers->data))) && /* It's !flat.  */
@@ -1385,11 +1404,11 @@ gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h,
       {
 	PixelRegion srcPR, destPR;
 	void * pr;
-	
+/*	
 	g_warning("Can use cow-projection hack.  Yay!");
 	
 	//	gimp_image_initialize_projection (gimage, x, y, w, h);
-
+*/
 	pixel_region_init (&srcPR, gimp_drawable_data
 			   (GIMP_DRAWABLE
 			    ((Layer*)(gimage->layers->data))),
@@ -1397,31 +1416,38 @@ gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h,
 	pixel_region_init (&destPR,
 			   gimp_image_projection (gimage),
 			   x, y, w,h, TRUE);
-	
+/*	
 	//	tile_manager_set_validate_proc(destPR.tiles, NULL);
-
+*/
 	for (pr = pixel_regions_register (2, &srcPR, &destPR);
 	     pr != NULL;
 	     pr = pixel_regions_process (pr))
 	  {
-	    tile_manager_validate (srcPR.tiles,
-				   srcPR.curtile);
+	    /*if (!tile_is_valid(srcPR.curtile))
+	      tile_manager_validate (srcPR.tiles,
+				     srcPR.curtile);
+	    if (!tile_is_valid(destPR.curtile))
+	      tile_manager_validate (destPR.tiles,
+	      destPR.curtile);*/
+	    tile_lock (destPR.curtile);
+	    tile_lock (srcPR.curtile);
 	    tile_manager_map_over_tile (destPR.tiles,
 					destPR.curtile, srcPR.curtile);
+	    tile_release(srcPR.curtile, FALSE);
+	    tile_release(destPR.curtile, TRUE);
 	  }
 
 	gimage->construct_flag = 1;
 	return;
       }
     }
-
-  g_warning("Can NOT use cow-projection hack.  Boo!");
+ /*     
+      if (gimage->layers)
+	g_warning("Can NOT use cow-projection hack.  Boo!");
+      else
+	g_warning("gimage has no layers!  Boo!");
+*/
 #endif
-  
-  /*  set the construct flag, used to determine if anything
-   *  has been written to the gimage raw image yet.
-   */
-  gimage->construct_flag = 0;
   
   /*  First, determine if the projection image needs to be
    *  initialized--this is the case when there are no visible

@@ -1,3 +1,10 @@
+Wed Jan 20 22:37:13 GMT 1999  Adam D. Moss  <adam@gimp.org>
+
+	* app/gimpimage.c: Enabled the gimage->projection copy-on-write
+	hack for RGBA/GRAYA single-layer images.  Masks/channels
+	probably don't show yet when this is active.  Report strangeness.
+	Thanks.
+
 1999-01-20  Jay Cox  <jaycox@earthlink.net>
 
 	* app/layers_dialog.c: connect the destroy signal of images to

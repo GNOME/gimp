@@ -342,7 +342,7 @@ tile_manager_map (TileManager *tm,
 
   if (!tm->tiles)
     {
-      /*      g_warning ("tile_manager_map: empty tile level - init'ing.");*/
+      g_warning ("tile_manager_map: empty tile level - init'ing.");
 
       tm->tiles = g_new (Tile*, ntiles);
       tiles = tm->tiles;
