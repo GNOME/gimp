@@ -1,3 +1,9 @@
+2003-07-30  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/app.pl: fixed UTF-8 check.
+
+	* app/pdb/text_tool_cmds.c: regenerated.
+
 2003-07-30  Dave Neary  <bolsh@gimp.org>
 
 	plug-ins/common/edge.c: Trivial clean-up.

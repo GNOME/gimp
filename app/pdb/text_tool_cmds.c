@@ -81,7 +81,7 @@ text_fontname_invoker (Gimp     *gimp,
   y = args[3].value.pdb_float;
 
   text = (gchar *) args[4].value.pdb_pointer;
-  if (text == NULL && !g_utf8_validate (text, -1, NULL))
+  if (text == NULL || !g_utf8_validate (text, -1, NULL))
     success = FALSE;
 
   border = args[5].value.pdb_int;
@@ -218,7 +218,7 @@ text_get_extents_fontname_invoker (Gimp     *gimp,
   gchar *real_fontname;
 
   text = (gchar *) args[0].value.pdb_pointer;
-  if (text == NULL && !g_utf8_validate (text, -1, NULL))
+  if (text == NULL || !g_utf8_validate (text, -1, NULL))
     success = FALSE;
 
   size = args[1].value.pdb_float;
@@ -358,7 +358,7 @@ text_invoker (Gimp     *gimp,
   y = args[3].value.pdb_float;
 
   text = (gchar *) args[4].value.pdb_pointer;
-  if (text == NULL && !g_utf8_validate (text, -1, NULL))
+  if (text == NULL || !g_utf8_validate (text, -1, NULL))
     success = FALSE;
 
   border = args[5].value.pdb_int;
@@ -566,7 +566,7 @@ text_get_extents_invoker (Gimp     *gimp,
   gchar *real_fontname;
 
   text = (gchar *) args[0].value.pdb_pointer;
-  if (text == NULL && !g_utf8_validate (text, -1, NULL))
+  if (text == NULL || !g_utf8_validate (text, -1, NULL))
     success = FALSE;
 
   size = args[1].value.pdb_float;

@@ -259,7 +259,7 @@ sub marshal_inargs {
 		if ($_->{utf8}) {
 		    $reverse = sub { ${$_[0]} =~ s/!//;
 				     ${$_[0]} =~ s/==/!=/ };
-		    $test = "$var == NULL && " .
+		    $test = "$var == NULL || " .
                             "!g_utf8_validate ($var, -1, NULL)"
 		}
 		else {
