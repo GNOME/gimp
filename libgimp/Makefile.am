@@ -54,10 +54,10 @@ libgimp_la_SOURCES = \
 	parasiteP.h
 
 libgimpui_la_SOURCES = \
-	gimpentry.c
-	gimpmenu.c \
-	gimpbrushmenu.c \
-	gimpgradientmenu.c \
+	gimpentry.c		\
+	gimpmenu.c		\
+	gimpbrushmenu.c		\
+	gimpgradientmenu.c 	\
 	gimppatternmenu.c
 
 gimpinclude_HEADERS = \
