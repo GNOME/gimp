@@ -7,6 +7,7 @@ helpdatadir = $(gimpdatadir)/help/C/dialogs
 helpdata_DATA = \
         about.html \
         border_selection.html \
+        brush_editor.html \
         brush_selection.html \
         convert_to_indexed.html \
         copy_named.html \

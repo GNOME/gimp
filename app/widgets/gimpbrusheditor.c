@@ -207,7 +207,7 @@ brush_edit_generated_new ()
 
   begw->shell = gimp_dialog_new (_("Brush Editor"), "generated_brush_editor",
 				 gimp_standard_help_func,
-				 "dialogs/generated_brush_editor.html",
+				 "dialogs/brush_editor.html",
 				 GTK_WIN_POS_NONE,
 				 FALSE, TRUE, FALSE,
 

@@ -1,4 +1,10 @@
-1999-10-03  Michael Natterer  <mitch@gimp.org>
+1999-10-04  Michael Natterer  <mitch@gimp.org>
+
+	* C/dialogs/Makefile.am
+	* C/dialogs/brush_edit.html
+	* C/dialogs/index.html: new file.
+
+1999-10-04  Michael Natterer  <mitch@gimp.org>
 
 	* ChangeLog: initial revision of a separate help system ChangeLog.
 

@@ -1,5 +1,9 @@
 1999-10-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/brush_edit.c: name fix.
+
+1999-10-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/channels_dialog.c
 	* app/docindexif.c
 	* app/fileops.c
