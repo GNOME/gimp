@@ -8,9 +8,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.1.29\n"
-"POT-Creation-Date: 2000-12-23 11:40-0800\n"
-"PO-Revision-Date: 2000-11-24 15:36+0100\n"
+"Project-Id-Version: gimp-std-plugins 1.2.0\n"
+"POT-Creation-Date: 2000-12-28 21:58+0100\n"
+"PO-Revision-Date: 2000-12-28 21:56+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -80,7 +80,7 @@ msgstr "À propos"
 #: plug-ins/common/tiff.c:1585 plug-ins/common/tile.c:405
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:173
 #: plug-ins/common/unsharp.c:787 plug-ins/common/video.c:2155
-#: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:437
+#: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:426
 #: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
 #: plug-ins/common/wind.c:1012 plug-ins/common/wmf.c:931
 #: plug-ins/common/xbm.c:1150 plug-ins/common/xpm.c:800
@@ -162,7 +162,7 @@ msgstr "Valider"
 #: plug-ins/common/tile.c:407 plug-ins/common/tileit.c:388
 #: plug-ins/common/uniteditor.c:175 plug-ins/common/unsharp.c:789
 #: plug-ins/common/video.c:2157 plug-ins/common/vpropagate.c:937
-#: plug-ins/common/warp.c:439 plug-ins/common/waves.c:351
+#: plug-ins/common/warp.c:428 plug-ins/common/waves.c:351
 #: plug-ins/common/whirlpinch.c:810 plug-ins/common/wind.c:1014
 #: plug-ins/common/wmf.c:933 plug-ins/common/xbm.c:1152
 #: plug-ins/common/xpm.c:802 plug-ins/fits/fits.c:989
@@ -2797,7 +2797,7 @@ msgstr "Étendre"
 
 #: plug-ins/common/convmatrix.c:95 plug-ins/common/displace.c:404
 #: plug-ins/common/edge.c:690 plug-ins/common/ripple.c:651
-#: plug-ins/common/warp.c:512
+#: plug-ins/common/warp.c:501
 msgid "Wrap"
 msgstr "Enrouler"
 
@@ -2814,6 +2814,8 @@ msgid ""
 "Convolution Matrix does not work\n"
 "on layers smaller than 3 pixels."
 msgstr ""
+"La matrice de convolution ne fonctionne pas\n"
+"sur les calques de moins de 3 pixels."
 
 #: plug-ins/common/convmatrix.c:292
 msgid "Applying convolution"
@@ -3348,19 +3350,19 @@ msgstr "Déplacement Y :"
 
 #. =======================================================================
 #. Displacement Type
-#: plug-ins/common/displace.c:400 plug-ins/common/warp.c:502
+#: plug-ins/common/displace.c:400 plug-ins/common/warp.c:491
 msgid "On Edges:"
 msgstr "Sur les côtés :"
 
 #: plug-ins/common/displace.c:415 plug-ins/common/edge.c:699
-#: plug-ins/common/ripple.c:652 plug-ins/common/warp.c:523
+#: plug-ins/common/ripple.c:652 plug-ins/common/warp.c:512
 #: plug-ins/common/waves.c:378
 msgid "Smear"
 msgstr "Étaler"
 
 #: plug-ins/common/displace.c:426 plug-ins/common/edge.c:708
 #: plug-ins/common/fractaltrace.c:774 plug-ins/common/newsprint.c:449
-#: plug-ins/common/ripple.c:653 plug-ins/common/warp.c:534
+#: plug-ins/common/ripple.c:653 plug-ins/common/warp.c:523
 #: plug-ins/fits/fits.c:1008 plug-ins/flame/flame.c:1107
 #: plug-ins/gfig/gfig.c:3320
 msgid "Black"
@@ -3447,7 +3449,7 @@ msgstr "Échange de couleurs..."
 
 #: plug-ins/common/exchange.c:369
 msgid "Preview: Click Inside to Pick \"From Color\""
-msgstr ""
+msgstr "Aperçu : Cliquez à l'intérieur pour piocher \"Depuis une couleur\""
 
 #: plug-ins/common/exchange.c:400
 msgid "To Color"
@@ -3637,7 +3639,7 @@ msgstr "Tracé de Fractale"
 msgid "Outside Type"
 msgstr "Type d'extérieur"
 
-#: plug-ins/common/fractaltrace.c:770 plug-ins/common/warp.c:432
+#: plug-ins/common/fractaltrace.c:770 plug-ins/common/warp.c:421
 msgid "Warp"
 msgstr "Décaler"
 
@@ -3709,17 +3711,16 @@ msgstr "Flou gaussien RLE"
 #: plug-ins/common/gbr.c:347
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr ""
+msgstr "Erreur dans le fichier de pinceau GIMP \"%s\"."
 
 #: plug-ins/common/gbr.c:355 plug-ins/common/gih.c:488
 #: plug-ins/common/gih.c:1122
-#, fuzzy
 msgid "Unnamed"
-msgstr "Canal sans nom"
+msgstr "SansNom"
 
 #: plug-ins/common/gbr.c:485
 msgid "GIMP brushes are either GRAYSCALE or RGBA\n"
-msgstr ""
+msgstr "Les pinceaux GIMP sont soit GRAYSCALE soit RGBA\n"
 
 #: plug-ins/common/gbr.c:502 plug-ins/common/gih.c:1226
 #, c-format
@@ -3741,13 +3742,12 @@ msgid "Description:"
 msgstr "Description :"
 
 #: plug-ins/common/gee.c:112
-#, fuzzy
 msgid "<Image>/Filters/Toys/Gee-Slime"
-msgstr "<Image>/Filtres/Jouets/Oeuf de Pâques..."
+msgstr "<Image>/Filtres/Jouets/Gee-Slime"
 
 #: plug-ins/common/gee.c:186
 msgid "GEE-SLIME"
-msgstr ""
+msgstr "GEE-SLIME"
 
 #. Action area - 'close' button only.
 #: plug-ins/common/gee.c:197 plug-ins/common/gee_zoom.c:214
@@ -3759,21 +3759,24 @@ msgid ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
+"Une création moins obsolète de Adam D. Moss / adam@gimp.org / "
+"adam@foxbox.org / 1998-2000"
 
 #: plug-ins/common/gee_zoom.c:139
-#, fuzzy
 msgid "<Image>/Filters/Toys/Gee-Zoom"
-msgstr "<Image>/Filtres/Jouets/Oeuf de Pâques..."
+msgstr "<Image>/Filtres/Jouets/Gee-Zoom"
 
 #: plug-ins/common/gee_zoom.c:203
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
-msgstr ""
+msgstr "GEE-ZOOM : Le greffon connu comme \"The GIMP E'er Egg\""
 
 #: plug-ins/common/gee_zoom.c:226
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
+"Une création obsolète de Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
+"1998-2000"
 
 #: plug-ins/common/gicon.c:436
 msgid "Save as GIcon"
@@ -3892,20 +3895,19 @@ msgstr "Le calque %s n'a pas de canal alpha (transparence), je l'ignore."
 
 #: plug-ins/common/gih.c:481
 msgid "Error in GIMP brush pipe file."
-msgstr ""
+msgstr "Erreur dans le fichier de pinceau animé GIMP"
 
 #: plug-ins/common/gih.c:547
 msgid "GIMP brush file appears to be corrupted."
-msgstr ""
+msgstr "Le fichier de pinceau GIMP semble etre corrompu."
 
 #: plug-ins/common/gih.c:689
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr ""
+msgstr "Ne peut charger un pinceau dans l'animation."
 
 #: plug-ins/common/gih.c:849
-#, fuzzy
 msgid "Save as Brush Pipe"
-msgstr "Enregistrer en tant que pinceau"
+msgstr "Enregistrer en tant que pinceau animé"
 
 #: plug-ins/common/gih.c:879
 msgid "Spacing (Percent):"
@@ -4080,7 +4082,7 @@ msgid ""
 "HTML file which will most likely\n"
 "crash your browser."
 msgstr ""
-"Êtes vous fou ?\n"
+"Êtes-vous fou ?\n"
 "\n"
 "Vous êtes sur le point de créer\n"
 "un énorme fichier HTML qui,\n"
@@ -4745,7 +4747,7 @@ msgstr "Paramètres de flou"
 
 #. Angle
 #: plug-ins/common/mblur.c:813 plug-ins/common/newsprint.c:1028
-#: plug-ins/common/warp.c:687 plug-ins/gimpressionist/orientmap.c:551
+#: plug-ins/common/warp.c:676 plug-ins/gimpressionist/orientmap.c:551
 #: plug-ins/ifscompose/ifscompose.c:577
 msgid "Angle:"
 msgstr "Angle :"
@@ -6696,73 +6698,73 @@ msgstr "Propagation du canal valeur"
 msgid "<Image>/Filters/Map/Warp..."
 msgstr "<Image>/Filtres/Carte/Décaler..."
 
-#: plug-ins/common/warp.c:455
+#: plug-ins/common/warp.c:444
 msgid "Main Options"
 msgstr "Options Principales"
 
-#: plug-ins/common/warp.c:470
+#: plug-ins/common/warp.c:459
 msgid "Step Size:"
 msgstr "Taille du Pas :"
 
-#: plug-ins/common/warp.c:479 plug-ins/ifscompose/ifscompose.c:1283
+#: plug-ins/common/warp.c:468 plug-ins/ifscompose/ifscompose.c:1283
 msgid "Iterations:"
 msgstr "Itérations :"
 
 #. Displacement map menu
-#: plug-ins/common/warp.c:486
+#: plug-ins/common/warp.c:475
 msgid "Displacement Map:"
 msgstr "Carte de Déplacement :"
 
-#: plug-ins/common/warp.c:545
+#: plug-ins/common/warp.c:534
 msgid "FG Color"
 msgstr "Couleur d'Av. Plan"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
-#: plug-ins/common/warp.c:564
+#: plug-ins/common/warp.c:553
 msgid "Secondary Options"
 msgstr "Options Secondaires"
 
-#: plug-ins/common/warp.c:577
+#: plug-ins/common/warp.c:566
 msgid "Dither Size:"
 msgstr "Taille de tramage :"
 
-#: plug-ins/common/warp.c:586
+#: plug-ins/common/warp.c:575
 msgid "Rotation Angle:"
 msgstr "Angle de Rotation :"
 
-#: plug-ins/common/warp.c:595
+#: plug-ins/common/warp.c:584
 msgid "Substeps:"
 msgstr "Pas :"
 
 #. Magnitude map menu
-#: plug-ins/common/warp.c:602
+#: plug-ins/common/warp.c:591
 msgid "Magnitude Map:"
 msgstr "Carte de force :"
 
-#: plug-ins/common/warp.c:621
+#: plug-ins/common/warp.c:610
 msgid "Use Mag Map"
 msgstr "Utiliser la carte de force"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" table         --------------------------
-#: plug-ins/common/warp.c:637
+#: plug-ins/common/warp.c:626
 msgid "Other Options"
 msgstr "Autres options"
 
-#: plug-ins/common/warp.c:651
+#: plug-ins/common/warp.c:640
 msgid "Gradient Scale:"
 msgstr "Échelle de dégradé :"
 
-#: plug-ins/common/warp.c:666
+#: plug-ins/common/warp.c:655
 msgid "Gradient map selection menu"
 msgstr "Sélection du dégradé"
 
-#: plug-ins/common/warp.c:676
+#: plug-ins/common/warp.c:665
 msgid "Vector Mag:"
 msgstr "Facteur du vecteur :"
 
-#: plug-ins/common/warp.c:702
+#: plug-ins/common/warp.c:691
 msgid "Fixed-direction-vector map selection menu"
 msgstr "Menu de sélection de transformation selection un vecteur fixe"
 
@@ -6772,20 +6774,20 @@ msgstr "Menu de sélection de transformation selection un vecteur fixe"
 #. }
 #.
 #. make sure layer is visible
-#: plug-ins/common/warp.c:1163
+#: plug-ins/common/warp.c:1152
 msgid "Smoothing X gradient..."
 msgstr "Adoucissement du dégradé X..."
 
-#: plug-ins/common/warp.c:1165
+#: plug-ins/common/warp.c:1154
 msgid "Smoothing Y gradient..."
 msgstr "Adoucissement du dégradé Y..."
 
 #. calculate new X,Y Displacement image maps
-#: plug-ins/common/warp.c:1220
+#: plug-ins/common/warp.c:1209
 msgid "Finding XY gradient..."
 msgstr "Recherche du dégradé XY..."
 
-#: plug-ins/common/warp.c:1244
+#: plug-ins/common/warp.c:1233
 #, c-format
 msgid "Flow Step %d..."
 msgstr "Étape de flot %d..."
@@ -8141,6 +8143,9 @@ msgid ""
 "on the same AnimFrame Image at the same time\n"
 "LOCK ID:%s\n"
 msgstr ""
+"Ne peut exécuter plus d'une fonction vidéo\n"
+"sur la meme image TrameAnimé à la fois\n"
+"LOCK ID : %s\n"
 
 #: plug-ins/gap/gap_main.c:482
 msgid "<Image>/Video/Goto/Next Frame"
@@ -8539,34 +8544,28 @@ msgid "PingPong"
 msgstr "Aller / retour"
 
 #: plug-ins/gap/gap_mov_dialog.c:300
-#, fuzzy
 msgid "Frame Loop"
-msgstr "Image %d"
+msgstr "Boucle de trame"
 
 #: plug-ins/gap/gap_mov_dialog.c:301
-#, fuzzy
 msgid "Frame Loop Reverse"
-msgstr "Boucler à l'envers"
+msgstr "Boucle de trame inversé"
 
 #: plug-ins/gap/gap_mov_dialog.c:302
-#, fuzzy
 msgid "Frame Once"
-msgstr "Noms des images :"
+msgstr "Trame une seule fois"
 
 #: plug-ins/gap/gap_mov_dialog.c:303
-#, fuzzy
 msgid "Frame OnceReverse"
-msgstr "Une seule fois à l'envers"
+msgstr "Trame une seule fois à l'envers"
 
 #: plug-ins/gap/gap_mov_dialog.c:304
-#, fuzzy
 msgid "Frame PingPong"
-msgstr "Aller / retour"
+msgstr "Trame Aller / Retour"
 
 #: plug-ins/gap/gap_mov_dialog.c:305
-#, fuzzy
 msgid "Frame None"
-msgstr "Noms des images :"
+msgstr "Trame aucun"
 
 #: plug-ins/gap/gap_mov_dialog.c:480
 msgid "Move Path"
@@ -9908,11 +9907,11 @@ msgstr "Aplatir les Trames"
 msgid "Removing Layer (pos:%ld) from Frames..."
 msgstr "Suppression du Calque (pos :%ld) des Trames en cours..."
 
-#: plug-ins/gap/gap_range_ops.c:1641
+#: plug-ins/gap/gap_range_ops.c:1634
 msgid "Delete Layers in Frames"
 msgstr "Effacer les calques dans les trames"
 
-#: plug-ins/gap/gap_range_ops.c:1642
+#: plug-ins/gap/gap_range_ops.c:1635
 msgid "Select Frame Range & Position"
 msgstr "Sélectionner l'intervalle et la position de la Trame"
 
@@ -11818,7 +11817,7 @@ msgstr "Index"
 #: plug-ins/helpbrowser/helpbrowser.c:419 plug-ins/imagemap/imap_main.c:511
 #: plug-ins/imagemap/imap_settings.c:149
 msgid "<Untitled>"
-msgstr "<Sans-titre>"
+msgstr "<SansTitre>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:776
 #: plug-ins/helpbrowser/helpbrowser.c:792
@@ -11831,7 +11830,8 @@ msgid ""
 msgstr ""
 "Erreur du navigateur d'aide GIMP.\n"
 "\n"
-"Impossible de trouver mon répertoire html racine."
+"Impossible de trouver mon répertoire html racine.\n"
+"(%s)"
 
 #: plug-ins/helpbrowser/helpbrowser.c:808
 msgid "GIMP Help Browser"
@@ -11846,7 +11846,7 @@ msgid "Forward"
 msgstr "Suivant"
 
 #: plug-ins/helpbrowser/helpbrowser.c:1212
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "GIMP Help Browser Error.\n"
 "\n"
@@ -11855,7 +11855,8 @@ msgid ""
 msgstr ""
 "Erreur du navigateur d'aide GIMP.\n"
 "\n"
-"Impossible de trouver mon répertoire html racine."
+"Impossible de trouver le répertoire html GIMP_HELP_ROOT.\n"
+"(%s)"
 
 #: plug-ins/ifscompose/ifscompose.c:365
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."

@@ -11,9 +11,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.29\n"
-"POT-Creation-Date: 2000-12-24 12:22-0800\n"
-"PO-Revision-Date: 2000-11-24 15:46+0100\n"
+"Project-Id-Version: gimp 1.2.0\n"
+"POT-Creation-Date: 2000-12-28 21:39+0100\n"
+"PO-Revision-Date: 2000-12-28 21:42+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -125,15 +125,14 @@ msgstr "Quitter"
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_color_ui.c:160 app/gdisplay_ops.c:310 app/gimphelp.c:196
-#: app/gimpprogress.c:120 app/global_edit.c:779 app/gradient.c:1881
-#: app/gradient.c:4941 app/gradient.c:5502 app/hue_saturation.c:383
-#: app/interface.c:1047 app/layers_dialog.c:3555 app/layers_dialog.c:3739
-#: app/layers_dialog.c:3834 app/layers_dialog.c:4095 app/levels.c:350
-#: app/palette.c:1824 app/posterize.c:212 app/preferences_dialog.c:1485
-#: app/qmask.c:282 app/resize.c:225 app/resize.c:1398
-#: app/resolution_calibrate.c:116 app/threshold.c:285 app/user_install.c:552
-#: modules/cdisplay_gamma.c:332 modules/cdisplay_highcontrast.c:325
+#: app/gdisplay_ops.c:310 app/gimphelp.c:196 app/gimpprogress.c:120
+#: app/global_edit.c:779 app/gradient.c:1881 app/gradient.c:4941
+#: app/gradient.c:5502 app/hue_saturation.c:383 app/interface.c:1047
+#: app/layers_dialog.c:3561 app/layers_dialog.c:3745 app/layers_dialog.c:3840
+#: app/layers_dialog.c:4101 app/levels.c:350 app/palette.c:1824
+#: app/posterize.c:212 app/preferences_dialog.c:1485 app/qmask.c:282
+#: app/resize.c:225 app/resize.c:1398 app/resolution_calibrate.c:116
+#: app/threshold.c:285 app/user_install.c:552
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -286,13 +285,11 @@ msgstr "Luminosité-Contraste ne peux opérer sur des images indexées."
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
 #: app/color_balance.c:282 app/color_notebook.c:125 app/convert.c:515
 #: app/curves.c:567 app/file_new_dialog.c:212 app/file_new_dialog.c:358
-#: app/gdisplay_color_ui.c:158 app/gimpui.c:126 app/hue_saturation.c:379
-#: app/layers_dialog.c:3553 app/layers_dialog.c:3737 app/layers_dialog.c:3832
-#: app/layers_dialog.c:4093 app/levels.c:346 app/module_db.c:319
-#: app/posterize.c:208 app/preferences_dialog.c:1481 app/qmask.c:280
-#: app/resize.c:219 app/resize.c:1398 app/resolution_calibrate.c:114
-#: app/threshold.c:281 modules/cdisplay_gamma.c:330
-#: modules/cdisplay_highcontrast.c:323
+#: app/gimpui.c:126 app/hue_saturation.c:379 app/layers_dialog.c:3559
+#: app/layers_dialog.c:3743 app/layers_dialog.c:3838 app/layers_dialog.c:4099
+#: app/levels.c:346 app/module_db.c:319 app/posterize.c:208
+#: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
+#: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
 msgstr "Valider"
 
@@ -454,7 +451,6 @@ msgid "Replace"
 msgstr "Remplacer"
 
 #: app/by_color_select.c:791 app/colormap_dialog.i.c:130
-#: app/gdisplay_color_ui.c:145
 msgid "Add"
 msgstr "Ajouter"
 
@@ -487,12 +483,12 @@ msgid "copy"
 msgstr "copier"
 
 #. formulate the new layer_mask name
-#: app/channel.c:205 app/gradient.c:1720 app/layer.c:345 app/layer.c:1802
+#: app/channel.c:205 app/gradient.c:1720 app/layer.c:345 app/layer.c:1807
 #, c-format
 msgid "%s copy"
 msgstr "Copie de %s"
 
-#: app/channel.c:632
+#: app/channel.c:637
 msgid "Selection Mask"
 msgstr "Masque de sélection"
 
@@ -517,11 +513,11 @@ msgid "Wrap Around"
 msgstr "Espace enroulé"
 
 #: app/channel_ops.c:180 app/image_new.c:80 app/image_new.c:294
-#: app/layers_dialog.c:3657
+#: app/layers_dialog.c:3663
 msgid "Background"
 msgstr "Fond"
 
-#: app/channel_ops.c:181 app/image_new.c:90 app/layers_dialog.c:3659
+#: app/channel_ops.c:181 app/image_new.c:90 app/layers_dialog.c:3665
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -982,7 +978,7 @@ msgid "Width:"
 msgstr "Largeur :"
 
 #: app/crop.c:1099 app/file_new_dialog.c:400 app/file_new_dialog.c:418
-#: app/layers_dialog.c:3597 app/resize.c:284 app/resize.c:309 app/resize.c:541
+#: app/layers_dialog.c:3603 app/resize.c:284 app/resize.c:309 app/resize.c:541
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "Hauteur :"
@@ -1481,34 +1477,6 @@ msgstr "indexé-vide"
 msgid "indexed"
 msgstr "indexé"
 
-#: app/gdisplay_color_ui.c:146
-msgid "Remove"
-msgstr "Enlever"
-
-#: app/gdisplay_color_ui.c:147
-msgid "Up"
-msgstr "Haut"
-
-#: app/gdisplay_color_ui.c:148
-msgid "Down"
-msgstr "Bas"
-
-#: app/gdisplay_color_ui.c:149
-msgid "Configure"
-msgstr "Configurer"
-
-#: app/gdisplay_color_ui.c:152
-msgid "Color Display Filters"
-msgstr "Filtres d'affichage couleur"
-
-#: app/gdisplay_color_ui.c:178
-msgid "Available Filters"
-msgstr "Filtres disponibles"
-
-#: app/gdisplay_color_ui.c:204
-msgid "Active Filters"
-msgstr "Filtres actifs"
-
 #: app/gdisplay_ops.c:302
 #, c-format
 msgid ""
@@ -1553,28 +1521,28 @@ msgid "No selection to stroke!"
 msgstr "Aucune sélection à entourer d'un coup de pinceau !"
 
 #: app/gimpbrush.c:294
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
-msgstr "Format de pinceau inconnu #%d dans \"%s\"\n"
+msgstr "Format de pinceau inconnu #%d dans \"%s\"."
 
 #: app/gimpbrush.c:314
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr "Erreur dans le fichier de motifs de GIMP \"%s\""
+msgstr "Erreur dans le fichier de pinceau GIMP \"%s\"."
 
 #: app/gimpbrush.c:321 app/patterns.c:232
 msgid "Unnamed"
 msgstr "SansNom"
 
 #: app/gimpbrush.c:334 app/gimpbrush.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
-msgstr "Le fichier de pinceaux GIMP semble avoir été tronqué."
+msgstr "Le fichier de pinceau GIMP semble avoir été tronqué : \"%s\"."
 
 #: app/gimpbrush.c:359
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
-msgstr "Le fichier de pinceaux GIMP semble avoir été tronqué."
+msgstr "Le fichier de pinceau GIMP semble avoir été corrompu : \"%s\"."
 
 #: app/gimpbrushlist.c:200 app/gimpbrushlist.c:209
 #, c-format
@@ -1586,27 +1554,31 @@ msgstr ""
 "\"%s\""
 
 #: app/gimpbrushlist.c:218
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load brush pipe\n"
 "\"%s\""
 msgstr ""
-"Avertissement : échec du chargement du pinceau\n"
+"Avertissement : échec du chargement du pinceau animé\n"
 "\"%s\""
 
 #: app/gimpbrushpipe.c:292
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
 "\"%s\""
-msgstr "Les pinceaux animés doivent contenir au moins un pinceau."
+msgstr ""
+"Les pinceaux animés doivent contenir au moins un pinceau :\n"
+"\"%s\""
 
 #: app/gimpbrushpipe.c:383
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
 "\"%s\""
-msgstr "Impossible de charger un des pinceaux formant le pinceau animé."
+msgstr ""
+"Impossible de charger un des pinceaux formant le pinceau animé\n"
+"\"%s\""
 
 #: app/gimpdrawable.c:176
 msgid "Can't fill unknown image type."
@@ -2317,11 +2289,11 @@ msgstr ""
 msgid "Grayscale"
 msgstr "Niveaux de gris"
 
-#: app/image_new.c:75 app/layers_dialog.c:3656
+#: app/image_new.c:75 app/layers_dialog.c:3662
 msgid "Foreground"
 msgstr "Avant-Plan"
 
-#: app/image_new.c:85 app/layers_dialog.c:3658
+#: app/image_new.c:85 app/layers_dialog.c:3664
 msgid "White"
 msgstr "Blanc"
 
@@ -2660,7 +2632,7 @@ msgstr "masque %s"
 msgid "Layer Select"
 msgstr "Sélection de calque"
 
-#: app/layers_dialog.c:270 app/layers_dialog.c:3587
+#: app/layers_dialog.c:270 app/layers_dialog.c:3593
 msgid "New Layer"
 msgstr "Nouveau calque"
 
@@ -2740,62 +2712,62 @@ msgstr "Garder trans."
 msgid "Keep Transparency"
 msgstr "Garder la transparence"
 
-#: app/layers_dialog.c:1949
+#: app/layers_dialog.c:1955
 msgid "Empty Layer Copy"
 msgstr "Copie de calque vide"
 
-#: app/layers_dialog.c:2213 app/layers_dialog.c:3396 app/layers_dialog.c:3766
+#: app/layers_dialog.c:2219 app/layers_dialog.c:3402 app/layers_dialog.c:3772
 msgid "Floating Selection"
 msgstr "Sélection flottante"
 
-#: app/layers_dialog.c:3547
+#: app/layers_dialog.c:3553
 msgid "New Layer Options"
 msgstr "Options du nouveau calque"
 
 #. The name label and entry
-#: app/layers_dialog.c:3576
+#: app/layers_dialog.c:3582
 msgid "Layer Name:"
 msgstr "Nom du calque :"
 
 #. The size labels
-#: app/layers_dialog.c:3591
+#: app/layers_dialog.c:3597
 msgid "Layer Width:"
 msgstr "Largeur du calque :"
 
-#: app/layers_dialog.c:3652
+#: app/layers_dialog.c:3658
 msgid "Layer Fill Type"
 msgstr "Type de remplissage de calque"
 
-#: app/layers_dialog.c:3731
+#: app/layers_dialog.c:3737
 msgid "Edit Layer Attributes"
 msgstr "Éditer les attributs du calque"
 
-#: app/layers_dialog.c:3758
+#: app/layers_dialog.c:3764
 msgid "Layer name:"
 msgstr "Nom du calque :"
 
-#: app/layers_dialog.c:3826
+#: app/layers_dialog.c:3832
 msgid "Add Mask Options"
 msgstr "Options d'ajout de masque"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3844
+#: app/layers_dialog.c:3850
 msgid "Initialize Layer Mask to:"
 msgstr "Initialiser le masque de calque à :"
 
-#: app/layers_dialog.c:3849
+#: app/layers_dialog.c:3855
 msgid "White (Full Opacity)"
 msgstr "Blanc (opacité complète)"
 
-#: app/layers_dialog.c:3851
+#: app/layers_dialog.c:3857
 msgid "Black (Full Transparency)"
 msgstr "Noir (transparence totale)"
 
-#: app/layers_dialog.c:3853
+#: app/layers_dialog.c:3859
 msgid "Layer's Alpha Channel"
 msgstr "Canal alpha du calque"
 
-#: app/layers_dialog.c:3915 app/layers_dialog.c:4001
+#: app/layers_dialog.c:3921 app/layers_dialog.c:4007
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2803,27 +2775,27 @@ msgstr ""
 "Hauteur ou largeur non valide.\n"
 "Les deux doivent être positives."
 
-#: app/layers_dialog.c:4087
+#: app/layers_dialog.c:4093
 msgid "Layer Merge Options"
 msgstr "Options de fusion du calque"
 
-#: app/layers_dialog.c:4112
+#: app/layers_dialog.c:4118
 msgid "Final, Merged Layer should be:"
 msgstr "Le calque final, fusionné, devra être :"
 
-#: app/layers_dialog.c:4113
+#: app/layers_dialog.c:4119
 msgid "Final, Anchored Layer should be:"
 msgstr "Le calque final, ancré, devra être :"
 
-#: app/layers_dialog.c:4118
+#: app/layers_dialog.c:4124
 msgid "Expanded as necessary"
 msgstr "Étendu autant que nécessaire"
 
-#: app/layers_dialog.c:4120
+#: app/layers_dialog.c:4126
 msgid "Clipped to image"
 msgstr "Rogné à la taille de l'image"
 
-#: app/layers_dialog.c:4122
+#: app/layers_dialog.c:4128
 msgid "Clipped to bottom layer"
 msgstr "Rogné à la taille du calque le plus bas"
 
@@ -3151,9 +3123,8 @@ msgid "/File/Save As..."
 msgstr "/Fichier/Enregistrer sous..."
 
 #: app/menus.c:219
-#, fuzzy
 msgid "/File/Revert..."
-msgstr "/Fichier/Revenir au fichier"
+msgstr "/Fichier/Annuler..."
 
 #: app/menus.c:224
 msgid "/File/Close"
@@ -4193,19 +4164,19 @@ msgid "No Patterns available"
 msgstr "Pas de motif disponible"
 
 #: app/patterns.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
-msgstr "Format de pinceau inconnu #%d dans \"%s\"\n"
+msgstr "Format de motif inconnu #%d dans \"%s\"."
 
 #: app/patterns.c:225
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\"."
-msgstr "Erreur dans le fichier de motifs de GIMP \"%s\""
+msgstr "Erreur dans le fichier de motif GIMP \"%s\"."
 
 #: app/patterns.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
-msgstr "Le fichier de motif \"%s\" de GIMP semble être tronqué."
+msgstr "Le fichier de motif GIMP semble être tronqué : \"%s\"."
 
 #: app/perspective_tool.c:65
 msgid "Perspective Transform Information"
@@ -4349,7 +4320,7 @@ msgstr "Vous devez relancer GIMP pour que ces changements prennent effet."
 #: app/preferences_dialog.c:1044
 #, c-format
 msgid "The default comment is limited to %d characters."
-msgstr "Le commentaire par défaut est limité à %s caractères."
+msgstr "Le commentaire par défaut est limité à %d caractères."
 
 #: app/preferences_dialog.c:1475
 msgid "Preferences"
@@ -5880,21 +5851,20 @@ msgid ""
 "patterns, plug-ins and modules can also configured\n"
 "here."
 msgstr ""
-"Le fichier gimprc est utilisé pour stocker les\n"
-"préférences personnelles telles que les comportements\n"
-"par défaut.\n"
-"Les chemins pour rechercher les brosses, palettes,\n"
-"dégradés, motifs, greffons et modules sont également\n"
-"paramétrés ici."
+"Le fichier gimprc est utilisé pour sauvegarder les\n"
+"préférences personnelles qui affectent les comportements par\n"
+"défaut.\n"
+"Les chemins de recherche des brosses, palettes, dégradés,\n"
+"motifs, greffons et modules sont également paramétrés ici."
 
 #: app/user_install.c:163
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
 msgstr ""
-"GIMP utilise un fichier supplémentaire gtkrc de manière\n"
-"à ce que vous puissiez modifier son apparence vis à vis\n"
-"d'autres applications GTK."
+"GIMP utilise un fichier supplémentaire gtkrc de manière à ce\n"
+"que vous puissiez modifier son apparence vis à vis d'autres\n"
+"applications GTK."
 
 #: app/user_install.c:168
 msgid ""
@@ -5908,11 +5878,11 @@ msgstr ""
 "Les greffons et extensions sont des programmes externes,\n"
 "lancés par GIMP, qui fournissent des fonctionnalitées\n"
 "additionnelles.  Ces programmes sont interrogés lors du\n"
-"lancement de GIMP et des informations sur leurs\n"
-"fonctionnalités et dates de modifications sont stockées\n"
-"dans ce fichier pour des lancements ultérieurs plus\n"
-"rapides.  Ce fichier est prévu pour n'être lu que par\n"
-"GIMP et ne doit pas être édité."
+"lancement de GIMP et les informations concernant leurs\n"
+"fonctionnalités et dates de modification sont sauvegardées\n"
+"dans ce fichier pour des lancements ultérieurs plus rapide.\n"
+"Ce fichier est prévu pour n'être lu que par GIMP et ne doit\n"
+"pas être édité."
 
 #: app/user_install.c:177
 msgid ""
@@ -5923,14 +5893,13 @@ msgid ""
 "keys from within The GIMP.  Deleting this file will\n"
 "restore the default shortcuts."
 msgstr ""
-"Les raccourcis clavier peuvent être redéfinis\n"
-"dynamiquement dans GIMP.  Le fichier menurc est un\n"
-"enregistrement de votre configuration, afin que celle-ci\n"
-"puisse être reprise de session en session.  Vous pouvez\n"
-"éditer ce fichier à la main si vous le désirez, mais il\n"
-"est bien plus facile de définir les touches depuis GIMP.\n"
-"Effacer ce fichier restore les raccourcis clavier par\n"
-"défaut."
+"Les raccourcis clavier peuvent être redéfinis dynamiquement\n"
+"dans GIMP.  Le fichier menurc est un enregistrement de votre\n"
+"configuration, afin que celle-ci puisse être reprise de\n"
+"session en session.  Vous pouvez éditer ce fichier à la main\n"
+"si vous le désirez, mais il est bien plus facile de définir\n"
+"les touches depuis GIMP.\n"
+"Effacer ce fichier restore les raccourcis clavier par défaut."
 
 #: app/user_install.c:186
 msgid ""
@@ -5939,9 +5908,9 @@ msgid ""
 "The GIMP to reopen these dialogs at the saved position."
 msgstr ""
 "Le fichier sessionrc est utilisé pour sauvegarder la\n"
-"position des fenêtres de dialogue au moment de quitter\n"
-"GIMP.  Vous pouvez configurer GIMP pour qu'il rouvre\n"
-"au lancement ces dialogues à leur position enregistrée."
+"position des fenêtres de dialogue au moment de quitter GIMP.\n"
+"Vous pouvez configurer GIMP pour qu'il rouvre au lancement\n"
+"ces dialogues à leur position sauvegardée."
 
 #: app/user_install.c:192
 msgid ""
@@ -5954,8 +5923,8 @@ msgstr ""
 "Le fichier unitrc est utilisé pour stocker les unités de\n"
 "mesure personnelles.  Vous pouvez définir des unités\n"
 "supplémentaires et les utiliser comme les unités intégrées\n"
-"(pouces, millimètres, points, picas).  Ce fichier est\n"
-"réécrit chaque fois que vous quittez GIMP."
+"(pouces, millimètres, points, picas).  Ce fichier est réécrit\n"
+"chaque fois que vous quittez GIMP."
 
 #: app/user_install.c:200
 msgid ""
@@ -5965,11 +5934,11 @@ msgid ""
 "wide GIMP brushes installation when searching for\n"
 "brushes."
 msgstr ""
-"Il s'agit d'un sous-répertoire qui peut être utilisé pour\n"
-"stocker vos pinceaux personnels.  Avec les paramètres\n"
-"(gimprc) par défaut, GIMP regarde dans ce répertoire et\n"
-"dans le répertoire de pinceaux global à tous les\n"
-"utilisateurs lorsqu'il recherche des pinceaux."
+"Ce sous-répertoire est utilisé pour sauvegarder vos pinceaux\n"
+"personnels.  Avec les paramètres (gimprc) par défaut, GIMP\n"
+"regarde dans ce sous-répertoire en plus du répertoire de\n"
+"pinceaux global à tous les utilisateurs lorsqu'il recherche\n"
+"des pinceaux."
 
 #: app/user_install.c:208
 msgid ""
@@ -5978,11 +5947,10 @@ msgid ""
 "gimprc file checks this subdirectory when searching\n"
 "for generated brushes."
 msgstr ""
-"Il s'agit d'un sous-répertoire qui peut être utilisé pour\n"
-"stocker les pinceaux créés avec l'éditeur de pinceaux.\n"
-"Avec les paramètres (gimprc) par défaut, GIMP regarde\n"
-"dans ce répertoire lorsqu'il recherche des pinceaux\n"
-"générés."
+"Ce sous-répertoire est utilisé pour sauvegarder les pinceaux\n"
+"créés avec l'éditeur de pinceaux.  Avec les paramètres\n"
+"(gimprc) par défaut, GIMP regarde dans ce sous-répertoire\n"
+"lorsqu'il recherche des pinceaux générés."
 
 #: app/user_install.c:215
 msgid ""
@@ -5992,11 +5960,11 @@ msgid ""
 "wide GIMP gradients installation when searching\n"
 "for gradients."
 msgstr ""
-"Il s'agit d'un sous-répertoire qui peut être utilisé pour\n"
-"stocker vos dégradés personnels.  Avec les paramètres\n"
-"(gimprc) par défaut, GIMP regarde dans ce répertoire et\n"
-"dans le répertoire de dégradés global à tous les\n"
-"utilisateurs lorsqu'il recherche des dégradés."
+"Ce sous-répertoire est utilisé pour sauvegarder vos dégradés\n"
+"personnels.  Avec les paramètres (gimprc) par défaut, GIMP\n"
+"regarde dans ce sous-répertoire en plus du répertoire de\n"
+"dégradés global à tous les utilisateurs lorsqu'il recherche\n"
+"des dégradés."
 
 #: app/user_install.c:223
 msgid ""
@@ -6009,15 +5977,14 @@ msgid ""
 "palettes during GIMP execution to persist across\n"
 "sessions."
 msgstr ""
-"Répertoire contenant vos palettes personnelles.\n"
-"La configuration (gimprc) par défaut ne regarde que\n"
-"dans ce répertoire (et non dans celui global au système)\n"
-"lorsqu'il recherche des palettes. Pendant l'installation,\n"
-"les palettes du système seront copiées dans ce\n"
-"répertoire.\n"
+"Ce sous-répertoire est utilisé pour sauvegarder vos palettes\n"
+"personnelles.  Avec les paramètres (gimprc) par défaut, GIMP\n"
+"ne regarde que dans ce sous-répertoire (et non dans celui\n"
+"global au système) lorsqu'il recherche des palettes.  Pendant\n"
+"l'installation, les palettes du système seront copiées ici.\n"
 "Ceci est fait de sorte que les modifications faites aux\n"
-"palettes pendant l'exécution de GIMP persistent entre les\n"
-"sessions."
+"palettes pendant l'exécution de GIMP persistent d'une session\n"
+"à l'autre."
 
 #: app/user_install.c:234
 msgid ""
@@ -6027,11 +5994,11 @@ msgid ""
 "wide GIMP patterns installation when searching for\n"
 "patterns."
 msgstr ""
-"Répertoire qui peut être utilisé pour stocker vos\n"
-"motifs personnels. Avec les paramètres (gimprc)\n"
-"par défaut, GIMP regarde dans ce répertoire et dans\n"
-"le répertoire de motifs global à tous les\n"
-"utilisateurs lorsqu'il recherche des motifss."
+"Ce sous-répertoire est utilisé pour sauvegarder vos motifs\n"
+"personnels.  Avec les paramètres (gimprc) par défaut, GIMP\n"
+"regarde dans ce sous-répertoire en plus du répertoire de\n"
+"motifs global à tous les utilisateurs lorsqu'il recherche des\n"
+"motifs."
 
 #: app/user_install.c:242
 msgid ""
@@ -6041,12 +6008,12 @@ msgid ""
 "this subdirectory in addition to the systemwide\n"
 "GIMP plug-in directories when searching for plug-ins."
 msgstr ""
-"Répertoire qui peut être utilisé pour stocker vos\n"
-"greffons personnels (p.ex. temporaires, non supportés\n"
-"par les administrateurs). Avec les paramètres (gimprc)\n"
-"par défaut, GIMP regarde dans ce répertoire et dans\n"
-"répertoire de greffons global lorsqu'il recherche des\n"
-"greffons."
+"Ce sous-répertoire est utilisé pour sauvegarder vos greffons\n"
+"personnels (p.ex. temporaires, non supportés par les\n"
+"administrateurs).  Avec les paramètres (gimprc) par défaut,\n"
+"GIMP regarde dans ce sous-répertoire en plus du répertoire de\n"
+"greffons global à tous les utilisateurs lorsqu'il recherche\n"
+"des greffons."
 
 #: app/user_install.c:250
 msgid ""
@@ -6056,12 +6023,12 @@ msgid ""
 "in addition to the system-wide GIMP module directory\n"
 "when searching for modules to load when initializing."
 msgstr ""
-"Répertoire qui peut être utilisé pour stocker vos\n"
-"modules DLL personnels (p.ex. temporaires,\n"
-"non supportés par les administrateurs). Avec les\n"
-"paramètres (gimprc) par défaut, GIMP regarde dans ce\n"
-"répertoire et dans répertoire de modules global\n"
-"lorsqu'il recherche des modules DLL."
+"Ce sous-répertoire est utilisé pour sauvegarder vos modules\n"
+"DLL personnels (p.ex. temporaires, non supportés par les\n"
+"administrateurs).  Avec les paramètres (gimprc) par défaut,\n"
+"GIMP regarde dans ce sous-répertoire en plus du répertoire\n"
+"de modules global à tous les utilisateurs lorsqu'il recherche\n"
+"des modules DLL."
 
 #: app/user_install.c:258
 msgid ""
@@ -6070,11 +6037,11 @@ msgid ""
 "checks this subdirectory in addition to the systemwide\n"
 "GIMP scripts subdirectory when searching for scripts"
 msgstr ""
-"Répertoire qui peut être utilisé pour stocker vos\n"
-"scripts personnels. Avec les paramètres (gimprc)\n"
-"par défaut, GIMP regarde dans ce répertoire et dans\n"
-"le répertoire de scripts global à tous les\n"
-"utilisateurs lorsqu'il recherche des scripts."
+"Ce sous-répertoire est utilisé pour sauvegarder vos scripts\n"
+"personnels.  Avec les paramètres (gimprc) par défaut, GIMP\n"
+"regarde dans ce sous-répertoire en plus du répertoire de\n"
+"scripts global à tous les utilisateurs lorsqu'il recherche\n"
+"des scripts."
 
 #: app/user_install.c:265
 msgid ""
@@ -6084,20 +6051,20 @@ msgid ""
 "of the form: gimp<#>.<#>.  These files are useless across\n"
 "GIMP sessions and can be destroyed with impunity."
 msgstr ""
-"Ce répertoire est utilisé par GIMP pour stocker\n"
+"Ce sous-répertoire est utilisé par GIMP pour sauvegarder\n"
 "temporairement des tampons d'annulation, afin de réduire\n"
-"la place mémoire utilisée. Si GIMP est tué brutalement\n"
-"des fichiers de la forme gimp.<nn>.<nn> peuvent rester\n"
-"dans ce répertoire. Ces fichiers sont inutiles lors des\n"
+"l'espace mémoire utilisé.  Si GIMP est tué brutalement, des\n"
+"fichiers de la forme gimp.<nn>.<nn> peuvent persister dans\n"
+"ce répertoire.  Ces fichiers sont inutiles lors des\n"
 "utilisations ultérieures de GIMP et peuvent être détruits\n"
-"sans préjudice entre deux utilisations."
+"sans préjudice entre deux sessions."
 
 #: app/user_install.c:273
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
 msgstr ""
-"Ce sous-répertoire est utilisé pour stocker des fichiers\n"
+"Ce sous-répertoire est utilisé pour sauvegarder des fichiers\n"
 "de paramètres pour l'outil de Courbes."
 
 #: app/user_install.c:278
@@ -6105,7 +6072,7 @@ msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
 msgstr ""
-"Ce sous-répertoire est utilisé pour stocker des fichiers\n"
+"Ce sous-répertoire est utilisé pour sauvegarder des fichiers\n"
 "de paramètres pour l'outil de Niveaux."
 
 #: app/user_install.c:283
@@ -6116,12 +6083,12 @@ msgid ""
 "in addition to the systemwide GIMP FractalExplorer\n"
 "installation when searching for fractals."
 msgstr ""
-"Répertoire qui peut être utilisé pour stocker vos\n"
-"figures fractales personnelles. Avec les paramètres (gimprc)\n"
-"par défaut, GIMP regarde dans ce répertoire et dans\n"
-"le répertoire de dégradés global à tous les\n"
-"utilisateurs lorsqu'il recherche des figures pour\n"
-"le greffon FractalExplorer."
+"Ce sous-répertoire est utilisé pour sauvegarder vos figures\n"
+"fractales personnelles.  Avec les paramètres (gimprc) par\n"
+"défaut, GIMP regarde dans ce sous-répertoire en plus du\n"
+"répertoire de dégradés global à tous les utilisateurs\n"
+"lorsqu'il recherche des figures pour le greffon\n"
+"FractalExplorer."
 
 #: app/user_install.c:291
 msgid ""
@@ -6131,12 +6098,11 @@ msgid ""
 "addition to the systemwide GIMP GFig installation\n"
 "when searching for gfig figures."
 msgstr ""
-"Répertoire qui peut être utilisé pour stocker vos\n"
-"figures au trait personnelles. Avec les paramètres (gimprc)\n"
-"par défaut, GIMP regarde dans ce répertoire et dans\n"
-"le répertoire de dégradés global à tous les\n"
-"utilisateurs lorsqu'il recherche des figures pour\n"
-"le greffon gfig."
+"Ce sous-répertoire est utilisé pour sauvegarder vos figures\n"
+"au trait personnelles.  Avec les paramètres (gimprc) par\n"
+"défaut, GIMP regarde dans ce sous-répertoire en plus du\n"
+"répertoire de dégradés global à tous les utilisateurs\n"
+"lorsqu'il recherche des figures pour le greffon gfig."
 
 #: app/user_install.c:299
 msgid ""
@@ -6146,12 +6112,12 @@ msgid ""
 "addition to the systemwide GIMP GFlares installation\n"
 "when searching for gflares."
 msgstr ""
-"Répertoire qui peut être utilisé pour stocker vos\n"
-"paramètres personnels pour l'effet « éblouissement ».\n"
-"Avec les paramètres (gimprc) par défaut, GIMP regarde\n"
-"dans ce répertoire et dans le répertoire de dégradés\n"
-"global à tous les utilisateurs lorsqu'il recherche des\n"
-"paramètres pour le greffon gflare."
+"Ce sous-répertoire est utilisé pour sauvegarder vos\n"
+"paramètres personnels pour le greffon gflare.  Avec les\n"
+"paramètres (gimprc) par défaut, GIMP regarde dans ce\n"
+"sous-répertoire en plus du répertoire gflare global à tous\n"
+"les utilisateurs lorsqu'il recherche des paramètres pour le\n"
+"greffon gflare."
 
 #: app/user_install.c:307
 msgid ""
@@ -6161,12 +6127,12 @@ msgid ""
 "in addition to the systemwide GIMP Gimpressionist\n"
 "installation when searching for data."
 msgstr ""
-"Répertoire qui peut être utilisé pour stocker vos\n"
-"paramètres personnels pour l'effet « éblouissement ».\n"
-"Avec les paramètres (gimprc) par défaut, GIMP regarde\n"
-"dans ce répertoire et dans le répertoire de dégradés\n"
-"global à tous les utilisateurs lorsqu'il recherche des\n"
-"paramètres pour le greffon gflare."
+"Ce sous-répertoire est utilisé pour sauvegarder vos\n"
+"paramètres personnels pour le greffon Gimpressionist.  Avec\n"
+"les paramètres (gimprc) par défaut, GIMP regarde dans ce\n"
+"sous-répertoire en plus du répertoire gimpressionist global\n"
+"à tous les utilisateurs lorsqu'il recherche des paramètres\n"
+"pour le greffon Gimpressionist."
 
 #: app/user_install.c:364
 msgid ""
@@ -6273,7 +6239,7 @@ msgid ""
 "to get more information about the selected item."
 msgstr ""
 "Ce sous-répertoire contiendra un certain nombre de fichier\n"
-"important. Cliquez sur un des fichiers ou sous-répertoire\n"
+"important.  Cliquez sur un des fichiers ou sous-répertoire\n"
 "de l'arborescence pour obtenir plus d'information sur l'objet\n"
 "sélectionné."
 
@@ -6289,7 +6255,7 @@ msgstr "Affinage des performances de GIMP"
 msgid "Click \"Continue\" to accept the settings above."
 msgstr ""
 "Cliquez sur \"Continuer\" pour accepter les\n"
-" paramètres ci-dessus."
+"paramètres ci-dessus."
 
 #: app/user_install.c:859
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
@@ -6299,11 +6265,11 @@ msgstr ""
 
 #: app/user_install.c:868
 msgid "Monitor Resolution"
-msgstr "Résolution du Moniteur"
+msgstr "Résolution du moniteur"
 
 #: app/user_install.c:869
 msgid "Click \"Continue\" to start The GIMP."
-msgstr "Cliquez sur \"Continuer\" pour démarrer GIMP."
+msgstr "Cliquez sur \"Continuer\" pour lancer GIMP."
 
 #: app/user_install.c:872
 msgid ""
@@ -6315,11 +6281,11 @@ msgstr ""
 
 #: app/user_install.c:881
 msgid "Aborting Installation..."
-msgstr "Annulation de l'Installation en cours..."
+msgstr "Annulation de l'installation en cours..."
 
 #: app/user_install.c:951
 msgid "does not exist.  Cannot install."
-msgstr " n'existe pas. Impossible d'installer."
+msgstr "n'existe pas.  Impossible d'installer."
 
 #: app/user_install.c:963
 msgid "has invalid permissions.  Cannot install."
@@ -6332,8 +6298,8 @@ msgid ""
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
 "Avez vous remarqué des messages d'erreur dans\n"
-"la fenêtre de console ? S'il n'y en a pas, c'est\n"
-"que l'installation a réussi ! Sinon, quittez\n"
+"la fenêtre de console ?  S'il n'y en a pas, c'est\n"
+"que l'installation a réussi !  Sinon, quittez\n"
 "et recherchez les causes du problème..."
 
 #: app/user_install.c:1059
@@ -6352,7 +6318,7 @@ msgstr "Cliquez sur \"Continuer\" pour compléter l'installation de GIMP."
 
 #: app/user_install.c:1076
 msgid "Installation failed.  Contact system administrator."
-msgstr "Échec de l'installation. Contactez votre administrateur système."
+msgstr "Échec de l'installation.  Contactez votre administrateur système."
 
 #: app/user_install.c:1097
 msgid ""
@@ -6434,30 +6400,6 @@ msgstr ""
 "fichier XCF n'enregistrait pas correctement\n"
 "les palettes des images indexées."
 
-#: modules/cdisplay_gamma.c:96
-msgid "Gamma color display filter"
-msgstr "Filtres de correction du gamma"
-
-#: modules/cdisplay_gamma.c:325
-msgid "Gamma"
-msgstr "Gamma"
-
-#: modules/cdisplay_gamma.c:344
-msgid "Gamma:"
-msgstr "Gamma :"
-
-#: modules/cdisplay_highcontrast.c:96
-msgid "High Contrast color display filter"
-msgstr "Filtres de correction de contraste élevé"
-
-#: modules/cdisplay_highcontrast.c:318
-msgid "High Contrast"
-msgstr "Contraste élevé"
-
-#: modules/cdisplay_highcontrast.c:337
-msgid "Contrast Cycles:"
-msgstr "Cycles de contraste :"
-
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
 msgstr "Sélecteur de couleur GTK (module)"
@@ -6481,6 +6423,45 @@ msgstr "Aquarelle"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Historique des couleurs"
+
+#~ msgid "Remove"
+#~ msgstr "Enlever"
+
+#~ msgid "Up"
+#~ msgstr "Haut"
+
+#~ msgid "Down"
+#~ msgstr "Bas"
+
+#~ msgid "Configure"
+#~ msgstr "Configurer"
+
+#~ msgid "Color Display Filters"
+#~ msgstr "Filtres d'affichage couleur"
+
+#~ msgid "Available Filters"
+#~ msgstr "Filtres disponibles"
+
+#~ msgid "Active Filters"
+#~ msgstr "Filtres actifs"
+
+#~ msgid "Gamma color display filter"
+#~ msgstr "Filtres de correction du gamma"
+
+#~ msgid "Gamma"
+#~ msgstr "Gamma"
+
+#~ msgid "Gamma:"
+#~ msgstr "Gamma :"
+
+#~ msgid "High Contrast color display filter"
+#~ msgstr "Filtres de correction de contraste élevé"
+
+#~ msgid "High Contrast"
+#~ msgstr "Contraste élevé"
+
+#~ msgid "Contrast Cycles:"
+#~ msgstr "Cycles de contraste :"
 
 #~ msgid "Error in GIMP brush file...aborting."
 #~ msgstr "Erreur dans le fichier de brosses GIMP...Arrêt."
