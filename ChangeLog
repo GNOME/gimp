@@ -1,5 +1,9 @@
 2004-08-31  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/cubism.c: added "..." to the progress text.
+
+2004-08-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/file-actions.c (file_actions): added "..." to "Revert".
 
 2004-08-31  Sven Neumann  <sven@gimp.org>

@@ -355,7 +355,7 @@ cubism (GimpDrawable *drawable)
       gimp_drawable_get_color_uchar (drawable->drawable_id, &color, bg_col);
     }
 
-  gimp_progress_init (_("Cubistic Transformation"));
+  gimp_progress_init (_("Cubistic Transformation..."));
 
   cols = ((x2 - x1) + cvals.tile_size - 1) / cvals.tile_size;
   rows = ((y2 - y1) + cvals.tile_size - 1) / cvals.tile_size;
