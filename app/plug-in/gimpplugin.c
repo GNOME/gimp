@@ -181,7 +181,7 @@ plug_in_call_query (Gimp      *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (plug_in_def != NULL);
 
-  plug_in = plug_in_new (gimp, plug_in_def->prog);
+  plug_in = plug_in_new (gimp, NULL, plug_in_def->prog);
 
   if (plug_in)
     {
@@ -220,7 +220,7 @@ plug_in_call_init (Gimp      *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (plug_in_def != NULL);
 
-  plug_in = plug_in_new (gimp, plug_in_def->prog);
+  plug_in = plug_in_new (gimp, NULL, plug_in_def->prog);
 
   if (plug_in)
     {
@@ -252,6 +252,7 @@ plug_in_call_init (Gimp      *gimp,
 
 PlugIn *
 plug_in_new (Gimp        *gimp,
+             ProcRecord  *proc_rec,
              const gchar *prog)
 {
   PlugIn *plug_in;
@@ -266,12 +267,13 @@ plug_in_new (Gimp        *gimp,
 
   plug_in->ref_count          = 1;
 
+  plug_in->proc_rec           = proc_rec;
+
   plug_in->open               = FALSE;
   plug_in->query              = FALSE;
   plug_in->init               = FALSE;
   plug_in->synchronous        = FALSE;
   plug_in->recurse            = FALSE;
-  plug_in->in_temp_proc       = FALSE;
   plug_in->starting_ext       = FALSE;
   plug_in->pid                = 0;
 
@@ -287,6 +289,7 @@ plug_in_new (Gimp        *gimp,
   plug_in->write_buffer_index = 0;
 
   plug_in->temp_proc_defs     = NULL;
+  plug_in->current_temp_proc  = NULL;
 
   plug_in->main_loops         = NULL;
   plug_in->return_vals        = NULL;
@@ -861,4 +864,45 @@ plug_in_main_loop_quit (PlugIn *plug_in)
 
   plug_in->main_loops = g_list_remove (plug_in->main_loops,
                                        plug_in->main_loops->data);
+}
+
+gchar *
+plug_in_get_undo_desc (PlugIn *plug_in)
+{
+  PlugInProcDef *proc_def;
+  gchar         *undo_desc;
+
+  g_return_val_if_fail (plug_in != NULL, NULL);
+
+  if (plug_in->current_temp_proc)
+    proc_def = plug_ins_proc_def_find (plug_in->gimp,
+                                       plug_in->current_temp_proc);
+  else if (plug_in->proc_rec)
+    proc_def = plug_ins_proc_def_find (plug_in->gimp,
+                                       plug_in->proc_rec);
+  else
+    proc_def = NULL;
+
+  if (proc_def && proc_def->menu_path)
+    {
+      const gchar *path;
+      gchar       *ellipses;
+
+      path = dgettext (plug_ins_locale_domain (plug_in->gimp,
+                                               plug_in->prog, NULL),
+                       proc_def->menu_path);
+
+      undo_desc = g_path_get_basename (path);
+
+      ellipses = strstr (undo_desc, "...");
+
+      if (ellipses && ellipses == (undo_desc + strlen (undo_desc) - 3))
+        *ellipses = '\0';
+    }
+  else
+    {
+      undo_desc = g_filename_to_utf8 (plug_in->name, -1, NULL, NULL, NULL);
+    }
+
+  return undo_desc;
 }

@@ -621,6 +621,28 @@ plug_ins_help_path (Gimp        *gimp,
   return NULL;
 }
 
+PlugInProcDef *
+plug_ins_proc_def_find (Gimp       *gimp,
+                        ProcRecord *proc_rec)
+{
+  GSList *list;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (proc_rec != NULL, NULL);
+
+  for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
+    {
+      PlugInProcDef *proc_def;
+
+      proc_def = (PlugInProcDef *) list->data;
+
+      if (proc_rec == &proc_def->db_info)
+        return proc_def;
+    }
+
+  return NULL;
+}
+
 GSList *
 plug_ins_extensions_parse (gchar *extensions)
 {

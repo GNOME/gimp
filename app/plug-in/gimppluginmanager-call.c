@@ -77,7 +77,7 @@ plug_in_run (Gimp       *gimp,
       goto done;
     }
 
-  plug_in = plug_in_new (gimp, proc_rec->exec_method.plug_in.filename);
+  plug_in = plug_in_new (gimp, proc_rec, proc_rec->exec_method.plug_in.filename);
 
   if (plug_in)
     {
@@ -205,13 +205,13 @@ plug_in_temp_run (ProcRecord *proc_rec,
       GPProcRun proc_run;
       gboolean  old_recurse;
 
-      if (plug_in->in_temp_proc)
+      if (plug_in->current_temp_proc)
 	{
 	  return_vals = procedural_db_return_args (proc_rec, FALSE);
 	  goto done;
 	}
 
-      plug_in->in_temp_proc = TRUE;
+      plug_in->current_temp_proc = proc_rec;
 
       proc_run.name    = proc_rec->name;
       proc_run.nparams = argc;
@@ -241,7 +241,7 @@ plug_in_temp_run (ProcRecord *proc_rec,
 
       plug_in->recurse = old_recurse;
 
-      plug_in->in_temp_proc = FALSE;
+      plug_in->current_temp_proc = NULL;
 
 #ifdef ENABLE_TEMP_RETURN
       plug_in_unref (plug_in);

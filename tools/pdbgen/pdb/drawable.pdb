@@ -103,7 +103,22 @@ HELP
 	  desc => 'Push merge to undo stack?' }
     );
 
-    %invoke = ( code => 'gimp_drawable_merge_shadow (drawable, undo, _("Plug-In"));' );
+    %invoke = ( headers => [ qw("core/gimp.h" "plug-in/plug-in.h") ],
+                vars => [ 'gchar *undo_desc = NULL' ],
+                code => <<CODE
+{
+  if (gimp->current_plug_in)
+    undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
+
+  if (! undo_desc)
+    undo_desc = g_strdup (_("Plug-In"));
+
+  gimp_drawable_merge_shadow (drawable, undo, undo_desc);
+
+  g_free (undo_desc);
+}
+CODE
+    );
 }
 
 sub drawable_fill {

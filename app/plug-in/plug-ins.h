@@ -59,6 +59,10 @@ const gchar     * plug_ins_locale_domain        (Gimp          *gimp,
 const gchar     * plug_ins_help_path            (Gimp          *gimp,
                                                  const gchar   *prog_name);
 
+/* Retreive a plug-ins proc_def from its ProcRecord */
+PlugInProcDef   * plug_ins_proc_def_find        (Gimp          *gimp,
+                                                 ProcRecord    *proc_rec);
+
 
 GSList          * plug_ins_extensions_parse     (gchar         *extensions);
 PlugInImageType   plug_ins_image_types_parse    (gchar         *image_types);

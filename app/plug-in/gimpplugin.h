@@ -32,12 +32,13 @@ struct _PlugIn
 
   gint          ref_count;
 
+  ProcRecord   *proc_rec;         /*  The procedure the plug-in is running    */
+
   guint         open : 1;         /*  Is the plug-in open?                    */
   guint         query : 1;        /*  Are we querying the plug-in?            */
   guint         init : 1;         /*  Are we initialing the plug-in?          */
   guint         synchronous : 1;  /*  Is the plug-in running synchronously?   */
   guint         recurse : 1;      /*  Do we have an own GMainLoop?            */
-  guint         in_temp_proc : 1; /*  Is the plug-in busy with a temp proc?   */
   guint         starting_ext : 1; /*  Does the plug-in wait for extension_ack?*/
   pid_t         pid;              /*  Plug-in's process id                    */
 
@@ -55,6 +56,7 @@ struct _PlugIn
   gint          write_buffer_index;              /*  Buffer index for writing */
 
   GSList       *temp_proc_defs;   /*  Temporary procedures                    */
+  ProcRecord   *current_temp_proc;/*  The temp proc the plug-in is busy with  */
 
   GList        *main_loops;       /*  Stack of recursive main loops           */
   Argument     *return_vals;      /*  The return value we wait for            */
@@ -75,6 +77,7 @@ void       plug_in_call_init      (Gimp        *gimp,
                                    PlugInDef   *plug_in_def);
 
 PlugIn   * plug_in_new            (Gimp        *gimp,
+                                   ProcRecord  *proc_rec,
                                    const gchar *prog);
 
 void       plug_in_ref            (PlugIn      *plug_in);
@@ -90,6 +93,8 @@ void       plug_in_pop            (Gimp        *gimp);
 
 void       plug_in_main_loop      (PlugIn      *plug_in);
 void       plug_in_main_loop_quit (PlugIn      *plug_in);
+
+gchar    * plug_in_get_undo_desc  (PlugIn      *plug_in);
 
 
 #endif /* __PLUG_IN_H__ */

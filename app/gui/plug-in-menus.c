@@ -333,12 +333,20 @@ plug_in_menus_update (GimpItemFactory *item_factory,
               item_factory->gimp->last_plug_in &&
               item_factory->gimp->last_plug_in == &proc_def->db_info)
             {
-              gchar *basename;
-              gchar *ellipses;
-              gchar *repeat;
-              gchar *reshow;
+              const gchar *progname;
+              const gchar *path;
+              gchar       *basename;
+              gchar       *ellipses;
+              gchar       *repeat;
+              gchar       *reshow;
 
-              basename = g_path_get_basename (proc_def->menu_path);
+              progname = plug_in_proc_def_get_progname (proc_def);
+
+              path = dgettext (plug_ins_locale_domain (item_factory->gimp,
+                                                       progname, NULL),
+                               proc_def->menu_path);
+
+              basename = g_path_get_basename (path);
 
               ellipses = strstr (basename, "...");
 

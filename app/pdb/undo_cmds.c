@@ -28,10 +28,10 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
-
-#include "libgimp/gimpintl.h"
+#include "plug-in/plug-in.h"
 
 static ProcRecord undo_push_group_start_proc;
 static ProcRecord undo_push_group_end_proc;
@@ -49,13 +49,22 @@ undo_push_group_start_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   GimpImage *gimage;
+  gchar *undo_desc = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)
-    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_MISC, _("Plug-In"));
+    {
+      if (gimp->current_plug_in)
+	undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
+    
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_MISC, undo_desc);
+    
+      if (undo_desc)
+	g_free (undo_desc);
+    }
 
   return procedural_db_return_args (&undo_push_group_start_proc, success);
 }

@@ -40,6 +40,7 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
+#include "plug-in/plug-in.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -102,6 +103,7 @@ drawable_merge_shadow_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gboolean undo;
+  gchar *undo_desc = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_DRAWABLE (drawable))
@@ -110,7 +112,17 @@ drawable_merge_shadow_invoker (Gimp     *gimp,
   undo = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_drawable_merge_shadow (drawable, undo, _("Plug-In"));
+    {
+      if (gimp->current_plug_in)
+	undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
+    
+      if (! undo_desc)
+	undo_desc = g_strdup (_("Plug-In"));
+    
+      gimp_drawable_merge_shadow (drawable, undo, undo_desc);
+    
+      g_free (undo_desc);
+    }
 
   return procedural_db_return_args (&drawable_merge_shadow_proc, success);
 }

@@ -1,3 +1,30 @@
+2003-02-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-ins.[ch]: added plug_ins_proc_def_find() which
+	takes a ProcRecord and returns the corresponding PlugInProcDef.
+
+	* app/plug-in/plug-in.[ch]: added a ProcRecord pointer to the
+	PlugIn struct so we know which procedure the plug-in is
+	executing. Replaced "gboolean in_temp_proc" by
+	"ProcRecord *current_temp_proc". Added plug_in_get_undo_desc()
+	which uses the new ProcRecord members and plug_ins_proc_def_find()
+	to return a human readable string.
+
+	* app/plug-in/plug-in-run.c: pass the ProcRecord to plug_in_new().
+	Set plug_in->current_temp_proc while executing a temp_proc.
+	(The latter won't work since we don't run temp_procs recursively
+	at the moment).
+
+	* app/gui/plug-in-menus.c: translate the plug-in's menu_path
+	before chopping it for the "Repeat" and "Reshow" menu items.
+
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/undo.pdb: use plug_in_get_undo_desc() when
+	pushing plug-in undos.
+
+	* app/pdb/drawable_cmds.c
+	* app/pdb/undo_cmds.c: regenerated.
+
 2003-02-17  Jay Cox  <jaycox@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c: Fixed an initialization error
