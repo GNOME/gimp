@@ -6,11 +6,18 @@ gimp_exp = gimp.exp
 gimp.exp : gimp.def
 	dlltool --output-exp $@ --input-def gimp.def
 
+gimp.def: gimp.sym
+	echo EXPORTS >$@
+	cat $< >>$@
+
 mwindows = -mwindows
 
 gimp_win32_resource = gimp-win32res.o
 
 noinst_DATA = .libs/libgimpapp.a
+
+gimp.exe : gimp-1.2.exe
+	mv gimp-1.2.exe $@
 
 .libs/libgimpapp.a: gimp.exe
 	cp libgimp.a $@

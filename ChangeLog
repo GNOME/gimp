@@ -1,3 +1,15 @@
+2002-10-22  Tor Lillqvist  <tml@iki.fi>
+
+	* app/Makefile.am: Add rule to produce gimp.def from gimp.sym. Had
+	been left out by mistake. Add rule to mv gimp-1.2.exe gimp.exe.
+
+	* config.h.win32: Define HAVE_BIND_TEXTDOMAIN_CODESET (which is
+	essential on Win32 builds to get working i18n with a libintl that
+	otherwise converts to some codepage. Also define HAVE_GETTEXT even
+	if that isn't checked in any file. Define HAVE_WINSOCK_H. Add some
+	#undefs from a current configure-generated config.h for
+	completeness' sake.
+
 2002-10-16  Tor Lillqvist  <tml@iki.fi>
 
 	* gimptool-win32.c.in (find_out_env_flags): Fixes for

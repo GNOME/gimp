@@ -70,11 +70,14 @@
 
 /* #undef ENABLE_MP */
 #define ENABLE_NLS 1
+#define HAVE_BIND_TEXTDOMAIN_CODESET 1
 /* #undef HAVE_CATGETS */
 #define HAVE_DIRENT_H 1
 /* #undef HAVE_DOPRNT */
-/* #undef HAVE_GETTEXT */
+/* #undef HAVE_FINITE */
+#define HAVE_GETTEXT 1
 /* #undef HAVE_IPC_H */
+/* #undef HAVE_ISFINITE */
 /* #undef HAVE_LC_MESSAGES */
 /* #undef HAVE_NDIR_H */
 #define HAVE_PROGRESSIVE_JPEG 1
@@ -89,9 +92,9 @@
 /* #undef HAVE_SYS_TIME_H */
 /* #undef HAVE_SYS_TIMES_H */
 /* #undef HAVE_UNISTD_H */
+#define HAVE_WINSOCK_H 1
 #define HAVE_VPRINTF 1
 /* #undef HAVE_VSNPRINTF */
-/* #undef HAVE_XSHM_H */
 
 /* #undef IPC_RMID_DEFERRED_RELEASE */
 
