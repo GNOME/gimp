@@ -1,3 +1,10 @@
+2002-02-01  Manish Singh  <yosh@gimp.org>
+
+	* libgimpwidgets/gimppatheditor.[ch]: treeviewized and undeprecated
+
+	* plug-ins/webbrowser/webbrowser.c: set_size_request takes a 0 size
+	and makes it 1 instead of -1 like set_usize did, so pass -1
+
 2002-01-31  Simon Budig  <simon@gimp.org>
 
         * plug-ins/rcm/rcm.c: register as "plug_in_rotate_colormap"

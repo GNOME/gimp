@@ -24,14 +24,7 @@
 
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
-
-#define GTK_DISABLE_DEPRECATED
 
 #include "gimpwidgetstypes.h"
 
@@ -47,21 +40,24 @@ enum
 };
 
 
-static void   gimp_path_editor_class_init        (GimpPathEditorClass *klass);
-static void   gimp_path_editor_init              (GimpPathEditor      *gpe);
+static void     gimp_path_editor_class_init        (GimpPathEditorClass *klass);
+static void     gimp_path_editor_init              (GimpPathEditor      *gpe);
 
-static void   gimp_path_editor_select_callback   (GtkWidget           *widget,
-						  gpointer             data);
-static void   gimp_path_editor_deselect_callback (GtkWidget           *widget,
-						  gpointer             data);
-static void   gimp_path_editor_new_callback      (GtkWidget           *widget,
-						  gpointer             data);
-static void   gimp_path_editor_move_callback     (GtkWidget           *widget,
-						  gpointer             data);
-static void   gimp_path_editor_filesel_callback  (GtkWidget           *widget,
-						  gpointer             data);
-static void   gimp_path_editor_delete_callback   (GtkWidget           *widget,
-						  gpointer             data);
+static void     gimp_path_editor_select_callback   (GtkTreeSelection    *sel,
+						    gpointer             data);
+static void     gimp_path_editor_new_callback      (GtkWidget           *widget,
+						    gpointer             data);
+static void     gimp_path_editor_move_callback     (GtkWidget           *widget,
+						    gpointer             data);
+static void     gimp_path_editor_filesel_callback  (GtkWidget           *widget,
+						    gpointer             data);
+static void     gimp_path_editor_delete_callback   (GtkWidget           *widget,
+						    gpointer             data);
+
+static gboolean build_path                         (GtkTreeModel        *model,
+						    GtkTreePath         *tpath,
+						    GtkTreeIter         *iter,
+						    gpointer             data);
 
 
 static guint gimp_path_editor_signals[LAST_SIGNAL] = { 0 };
@@ -121,10 +117,11 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   GtkWidget *button;
   GtkWidget *image;
   GtkWidget *scrolled_window;
+  GtkWidget *tv;
 
-  gpe->file_selection  = NULL;
-  gpe->selected_item   = NULL;
-  gpe->number_of_items = 0;
+  gpe->file_selection = NULL;
+  gpe->sel_path       = NULL;
+  gpe->num_items      = 0;
 
   gpe->upper_hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (gpe), gpe->upper_hbox, FALSE, TRUE, 0);
@@ -144,7 +141,7 @@ gimp_path_editor_init (GimpPathEditor *gpe)
 
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (gimp_path_editor_new_callback),
-                    gpe);
+		    gpe);
 
   gpe->up_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
@@ -157,7 +154,7 @@ gimp_path_editor_init (GimpPathEditor *gpe)
 
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (gimp_path_editor_move_callback),
-                    gpe);
+		    gpe);
 
   gpe->down_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
@@ -170,7 +167,7 @@ gimp_path_editor_init (GimpPathEditor *gpe)
 
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (gimp_path_editor_move_callback),
-                    gpe);
+		    gpe);
 
   gpe->delete_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
@@ -183,20 +180,36 @@ gimp_path_editor_init (GimpPathEditor *gpe)
 
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (gimp_path_editor_delete_callback),
-                    gpe);
+		    gpe);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+				       GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_ALWAYS);
   gtk_box_pack_start (GTK_BOX (gpe), scrolled_window, TRUE, TRUE, 2);
   gtk_widget_show (scrolled_window);
+  
+  gpe->dir_list = gtk_list_store_new (1, G_TYPE_STRING);
+  tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (gpe->dir_list));
+  g_object_unref (G_OBJECT (gpe->dir_list));
 
-  gpe->dir_list = gtk_list_new ();
-  gtk_list_set_selection_mode (GTK_LIST (gpe->dir_list), GTK_SELECTION_SINGLE);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window),
-					 gpe->dir_list);
-  gtk_widget_show (gpe->dir_list);
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
+					       -1, NULL,
+					       gtk_cell_renderer_text_new (),
+					       "text", 0,
+					       NULL);
+
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tv), FALSE);
+
+  gtk_container_add (GTK_CONTAINER (scrolled_window), tv);
+  gtk_widget_show (tv);
+
+  gpe->sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
+  g_signal_connect (G_OBJECT (gpe->sel), "changed",
+		    G_CALLBACK (gimp_path_editor_select_callback),
+		    gpe);
 }
 
 /**
@@ -217,10 +230,9 @@ gimp_path_editor_new (const gchar *filesel_title,
 		      const gchar *path)
 {
   GimpPathEditor *gpe;
-  GtkWidget      *list_item;
-  GList          *directory_list;
   gchar          *directory;
   gchar          *mypath;
+  GtkTreeIter     iter;
 
   g_return_val_if_fail ((filesel_title != NULL), NULL);
   g_return_val_if_fail ((path != NULL), NULL);
@@ -233,37 +245,24 @@ gimp_path_editor_new (const gchar *filesel_title,
 		      TRUE, TRUE, 0);
   g_signal_connect (G_OBJECT (gpe->file_selection), "filename_changed",
                     G_CALLBACK (gimp_path_editor_filesel_callback),
-                    gpe);
+		    gpe);
   gtk_widget_show (gpe->file_selection);
 
-  directory_list = NULL;
-  directory      = mypath = g_strdup (path);
+  directory = mypath = g_strdup (path);
 
   /*  split up the path  */
   while (strlen (directory))
     {
-      gchar *current_dir;
       gchar *next_separator;
 
       next_separator = strchr (directory, G_SEARCHPATH_SEPARATOR);
       if (next_separator != NULL)
 	*next_separator = '\0';
 
-      current_dir = g_strdup (directory);
+      gtk_list_store_append (gpe->dir_list, &iter);
+      gtk_list_store_set (gpe->dir_list, &iter, 0, directory, -1);
 
-      list_item = gtk_list_item_new_with_label (current_dir);
-      g_object_set_data_full (G_OBJECT (list_item), "gimp_path_editor",
-                              current_dir,
-                              (GDestroyNotify) g_free);
-      directory_list = g_list_append (directory_list, list_item);
-      g_signal_connect (G_OBJECT (list_item), "select",
-                        G_CALLBACK (gimp_path_editor_select_callback),
-                        gpe);
-      g_signal_connect (G_OBJECT (list_item), "deselect",
-                        G_CALLBACK (gimp_path_editor_deselect_callback),
-                        gpe);
-      gtk_widget_show (list_item);
-      gpe->number_of_items++;
+      gpe->num_items++;
 
       if (next_separator != NULL)
 	directory = next_separator + 1;
@@ -273,10 +272,28 @@ gimp_path_editor_new (const gchar *filesel_title,
 
   g_free (mypath);
 
-  if (directory_list)
-    gtk_list_append_items (GTK_LIST (gpe->dir_list), directory_list);
-
   return GTK_WIDGET (gpe);
+}
+
+static gboolean
+build_path (GtkTreeModel *model,
+	    GtkTreePath  *tpath,
+	    GtkTreeIter  *iter,
+	    gpointer      data)
+{
+  gchar   *buf;
+  GString *path = data;
+  
+  gtk_tree_model_get (model, iter, 0, &buf, -1);
+
+  if (path->len > 0)
+    g_string_append_c (path, G_SEARCHPATH_SEPARATOR);
+
+  g_string_append (path, buf);
+
+  g_free (buf);
+
+  return FALSE;
 }
 
 /**
@@ -293,88 +310,68 @@ gimp_path_editor_new (const gchar *filesel_title,
 gchar *
 gimp_path_editor_get_path (GimpPathEditor *gpe)
 {
-  GList *list;
-  gchar *path = NULL;
+  GString *path;
 
   g_return_val_if_fail (gpe != NULL, g_strdup (""));
   g_return_val_if_fail (GIMP_IS_PATH_EDITOR (gpe), g_strdup (""));
 
-  for (list = GTK_LIST (gpe->dir_list)->children; list; list = list->next)
-    {
-      if (path == NULL)
-	{
-	  path =
-	    g_strdup ((gchar *) g_object_get_data (G_OBJECT (list->data),
-                                                   "gimp_path_editor"));
-	}
-      else
-	{
-	  gchar *newpath;
+  path = g_string_new ("");
 
-	  newpath =
-	    g_strconcat (path,
-			 G_SEARCHPATH_SEPARATOR_S,
-			 (gchar *) g_object_get_data (G_OBJECT (list->data),
-                                                      "gimp_path_editor"),
-			 NULL);
+  gtk_tree_model_foreach (GTK_TREE_MODEL (gpe->dir_list), build_path, path);
 
-	  g_free (path);
-	  path = newpath;
-	}
-    }
-
-  return path;
+  return g_string_free (path, FALSE);
 }
 
 static void
-gimp_path_editor_select_callback (GtkWidget *widget,
-				  gpointer   data)
+gimp_path_editor_select_callback (GtkTreeSelection *sel,
+				  gpointer          data)
 {
-  GimpPathEditor *gpe;
-  gint            pos;
+  GimpPathEditor *gpe = GIMP_PATH_EDITOR (data);
+  GtkTreeIter     iter;
   gchar          *directory;
+  gint           *indices;
 
-  gpe = GIMP_PATH_EDITOR (data);
-  directory = (gchar *) g_object_get_data (G_OBJECT (widget),
-                                           "gimp_path_editor");
+  if (gtk_tree_selection_get_selected (sel, NULL, &iter))
+    {
+      gtk_tree_model_get (GTK_TREE_MODEL (gpe->dir_list), &iter,
+			  0, &directory,
+			  -1);
 
-  g_signal_handlers_block_by_func (G_OBJECT (gpe->file_selection), 
-                                   gimp_path_editor_filesel_callback,
-                                   gpe);
-  gimp_file_selection_set_filename (GIMP_FILE_SELECTION (gpe->file_selection),
-				    directory);
-  g_signal_handlers_unblock_by_func (G_OBJECT (gpe->file_selection), 
-                                     gimp_path_editor_filesel_callback,
-                                     gpe);
+      g_signal_handlers_block_by_func (G_OBJECT (gpe->file_selection), 
+				       gimp_path_editor_filesel_callback,
+				       gpe);
+      gimp_file_selection_set_filename
+	(GIMP_FILE_SELECTION (gpe->file_selection), directory);
+      g_signal_handlers_unblock_by_func (G_OBJECT (gpe->file_selection), 
+					 gimp_path_editor_filesel_callback,
+					 gpe);
 
-  gpe->selected_item = widget;
+      g_free (directory);
 
-  pos = gtk_list_child_position (GTK_LIST (gpe->dir_list), gpe->selected_item);
+      if (gpe->sel_path)
+	gtk_tree_path_free (gpe->sel_path);
 
-  gtk_widget_set_sensitive (gpe->delete_button, TRUE);
-  gtk_widget_set_sensitive (gpe->up_button, (pos > 0));
-  gtk_widget_set_sensitive (gpe->down_button,
-			    (pos < (gpe->number_of_items - 1)));
-  gtk_widget_set_sensitive (gpe->file_selection, TRUE);
-}
+      gpe->sel_path = gtk_tree_model_get_path (GTK_TREE_MODEL (gpe->dir_list),
+					       &iter);
 
-/*  the selected directory may never be deselected except by the 'new'
- *  button, so catch the "deselect" signal and reselect it
- */
-static void
-gimp_path_editor_deselect_callback (GtkWidget *widget,
-				    gpointer   data)
-{
-  GimpPathEditor *gpe;
+      indices = gtk_tree_path_get_indices (gpe->sel_path);
 
-  gpe = GIMP_PATH_EDITOR (data);
-
-  if (widget != gpe->selected_item)
-    return;
-
-  gtk_signal_handler_block_by_data (GTK_OBJECT (gpe->selected_item), gpe);
-  gtk_list_select_child (GTK_LIST (gpe->dir_list), gpe->selected_item);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (gpe->selected_item), gpe);
+      gtk_widget_set_sensitive (gpe->delete_button, TRUE);
+      gtk_widget_set_sensitive (gpe->up_button, (indices[0] > 0));
+      gtk_widget_set_sensitive (gpe->down_button,
+				(indices[0] < (gpe->num_items - 1)));
+      gtk_widget_set_sensitive (gpe->file_selection, TRUE);
+    }
+  else
+    {
+      g_signal_handlers_block_by_func (G_OBJECT (sel), 
+				       gimp_path_editor_select_callback,
+				       gpe);
+      gtk_tree_selection_select_path (gpe->sel, gpe->sel_path);
+      g_signal_handlers_unblock_by_func (G_OBJECT (sel), 
+					 gimp_path_editor_select_callback,
+					 gpe);
+    }
 }
 
 static void
@@ -385,13 +382,17 @@ gimp_path_editor_new_callback (GtkWidget *widget,
 
   gpe = GIMP_PATH_EDITOR (data);
 
-  if (gpe->selected_item)
+  if (gpe->sel_path)
     {
-      gtk_signal_handler_block_by_data (GTK_OBJECT (gpe->selected_item), gpe);
-      gtk_list_unselect_child (GTK_LIST (gpe->dir_list), gpe->selected_item);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (gpe->selected_item), gpe);
+      g_signal_handlers_block_by_func (G_OBJECT (gpe->sel), 
+				       gimp_path_editor_select_callback, gpe);
+      gtk_tree_selection_unselect_path (gpe->sel, gpe->sel_path);
+      g_signal_handlers_unblock_by_func (G_OBJECT (gpe->sel), 
+					 gimp_path_editor_select_callback, gpe);
+
+      gtk_tree_path_free (gpe->sel_path);
+      gpe->sel_path = NULL;
     }
-  gpe->selected_item = NULL;
 
   gtk_widget_set_sensitive (gpe->delete_button, FALSE);
   gtk_widget_set_sensitive (gpe->up_button, FALSE);
@@ -409,22 +410,36 @@ gimp_path_editor_move_callback (GtkWidget *widget,
 				gpointer   data)
 {
   GimpPathEditor *gpe = GIMP_PATH_EDITOR (data);
-  GList          *move_list = NULL;
-  gint            pos;
-  gint            distance;
+  GtkTreePath    *path;
+  GtkTreeModel   *model;
+  GtkTreeIter     iter1, iter2;
+  gchar          *dir1, *dir2;
 
-  if (gpe->selected_item == NULL)
+  if (gpe->sel_path == NULL)
     return;
 
-  pos = gtk_list_child_position (GTK_LIST (gpe->dir_list), gpe->selected_item);
-  distance = (widget == gpe->up_button) ? - 1 : 1;
-  move_list = g_list_append (move_list, gpe->selected_item);
+  path = gtk_tree_path_copy (gpe->sel_path);
 
-  gtk_signal_handler_block_by_data (GTK_OBJECT (gpe->selected_item), gpe);
-  gtk_list_remove_items_no_unref (GTK_LIST (gpe->dir_list), move_list);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (gpe->selected_item), gpe);
-  gtk_list_insert_items (GTK_LIST (gpe->dir_list), move_list, pos + distance);
-  gtk_list_select_item (GTK_LIST (gpe->dir_list), pos + distance);
+  if (widget == gpe->up_button)
+    gtk_tree_path_prev (path);
+  else
+    gtk_tree_path_next (path);
+
+  model = GTK_TREE_MODEL (gpe->dir_list);
+
+  gtk_tree_model_get_iter (model, &iter1, gpe->sel_path);
+  gtk_tree_model_get_iter (model, &iter2, path);
+
+  gtk_tree_model_get (model, &iter1, 0, &dir1, -1);
+  gtk_tree_model_get (model, &iter2, 0, &dir2, -1);
+
+  gtk_list_store_set (gpe->dir_list, &iter1, 0, dir2, -1);
+  gtk_list_store_set (gpe->dir_list, &iter2, 0, dir1, -1);
+
+  g_free (dir2);
+  g_free (dir1);
+
+  gtk_tree_selection_select_iter (gpe->sel, &iter2);
 
   g_signal_emit (G_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED], 0);
 }
@@ -434,37 +449,45 @@ gimp_path_editor_delete_callback (GtkWidget *widget,
 				  gpointer   data)
 {
   GimpPathEditor *gpe = GIMP_PATH_EDITOR (data);
-  GList          *delete_list = NULL;
-  gint            pos;
+  gint           *indices;
+  GtkTreeIter     iter;
 
-  if (gpe->selected_item == NULL)
+  if (gpe->sel_path == NULL)
     return;
 
-  pos = gtk_list_child_position (GTK_LIST (gpe->dir_list), gpe->selected_item);
-  delete_list = g_list_append (delete_list, gpe->selected_item);
+  gtk_tree_model_get_iter (GTK_TREE_MODEL (gpe->dir_list), &iter,
+			   gpe->sel_path);
+  gtk_list_store_remove (gpe->dir_list, &iter);
 
-  gtk_list_remove_items (GTK_LIST (gpe->dir_list), delete_list);
-  gpe->number_of_items--;
+  gpe->num_items--;
 
-  if (gpe->number_of_items == 0)
+  if (gpe->num_items == 0)
     {
-      gpe->selected_item = NULL;
+      gtk_tree_path_free (gpe->sel_path);
+      gpe->sel_path = NULL;
+
       g_signal_handlers_block_by_func (G_OBJECT (gpe->file_selection), 
                                        gimp_path_editor_filesel_callback,
                                        gpe);
-      gimp_file_selection_set_filename (GIMP_FILE_SELECTION (gpe->file_selection), "");
+      gimp_file_selection_set_filename
+	(GIMP_FILE_SELECTION (gpe->file_selection), "");
       g_signal_handlers_unblock_by_func (G_OBJECT (gpe->file_selection), 
                                          gimp_path_editor_filesel_callback,
                                          gpe);
+
       gtk_widget_set_sensitive (gpe->delete_button, FALSE);
+      gtk_widget_set_sensitive (gpe->up_button, FALSE);
+      gtk_widget_set_sensitive (gpe->down_button, FALSE);
       gtk_widget_set_sensitive (gpe->file_selection, FALSE);
 
       return;
     }
 
-  if ((pos == gpe->number_of_items) && (pos > 0))
-    pos--;
-  gtk_list_select_item (GTK_LIST (gpe->dir_list), pos);
+  indices = gtk_tree_path_get_indices (gpe->sel_path);
+  if ((indices[0] == gpe->num_items) && (indices[0] > 0))
+    gtk_tree_path_prev (gpe->sel_path);
+
+  gtk_tree_selection_select_path (gpe->sel, gpe->sel_path);
 
   g_signal_emit (G_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED], 0);
 }
@@ -474,41 +497,32 @@ gimp_path_editor_filesel_callback (GtkWidget *widget,
 				   gpointer   data)
 {
   GimpPathEditor *gpe = GIMP_PATH_EDITOR (data);
-  GList          *append_list = NULL;
-  GtkWidget      *list_item = NULL;
   gchar          *directory;
+  GtkTreeIter     iter;
 
   directory = gimp_file_selection_get_filename (GIMP_FILE_SELECTION (widget));
   if (strcmp (directory, "") == 0)
-    return;
-
-  if (gpe->selected_item == NULL)
     {
-      list_item = gtk_list_item_new_with_label (directory);
-      g_object_set_data_full (G_OBJECT (list_item), "gimp_path_editor",
-                              directory,
-                              (GDestroyNotify) g_free);
-      append_list = g_list_append (append_list, list_item);
-      g_signal_connect (G_OBJECT (list_item), "select",
-                        G_CALLBACK (gimp_path_editor_select_callback),
-                        gpe);
-      g_signal_connect (G_OBJECT (list_item), "deselect",
-                        G_CALLBACK (gimp_path_editor_deselect_callback),
-                        gpe);
-      gtk_widget_show (list_item);
-      gpe->number_of_items++;
-      gtk_list_append_items (GTK_LIST (gpe->dir_list), append_list);
-      gtk_list_select_item (GTK_LIST (gpe->dir_list), gpe->number_of_items - 1);
+      g_free (directory);
+      return;
+    }
+
+  if (gpe->sel_path == NULL)
+    {
+      gtk_list_store_append (gpe->dir_list, &iter);
+      gtk_list_store_set (gpe->dir_list, &iter, 0, directory, -1);
+      gpe->num_items++;
+
+      gtk_tree_selection_select_iter (gpe->sel, &iter);
     }
   else
     {
-      gtk_label_set_text (GTK_LABEL (GTK_BIN (gpe->selected_item)->child),
-			  directory);
-      g_object_set_data_full (G_OBJECT (gpe->selected_item),
-                              "gimp_path_editor",
-                              directory,
-                              (GDestroyNotify) g_free);
+      gtk_tree_model_get_iter (GTK_TREE_MODEL (gpe->dir_list), &iter,
+			       gpe->sel_path);
+      gtk_list_store_set (gpe->dir_list, &iter, 0, directory, -1);
     }
+
+  g_free (directory);
 
   g_signal_emit (G_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED], 0);
 }

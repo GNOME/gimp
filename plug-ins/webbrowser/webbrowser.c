@@ -300,7 +300,7 @@ open_url_dialog (void)
 
   /* URL */
   entry = gtk_entry_new ();
-  gtk_widget_set_size_request (entry, 200, 0);
+  gtk_widget_set_size_request (entry, 200, -1);
   g_snprintf (buffer, sizeof (buffer), "%s", url_info.url);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,

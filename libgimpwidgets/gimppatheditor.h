@@ -40,21 +40,23 @@ typedef struct _GimpPathEditorClass  GimpPathEditorClass;
 
 struct _GimpPathEditor
 {
-  GtkVBox    parent_instance;
+  GtkVBox           parent_instance;
 
-  GtkWidget *upper_hbox;
+  GtkWidget        *upper_hbox;
 
-  GtkWidget *new_button;
-  GtkWidget *up_button;
-  GtkWidget *down_button;
-  GtkWidget *delete_button;
+  GtkWidget        *new_button;
+  GtkWidget        *up_button;
+  GtkWidget        *down_button;
+  GtkWidget        *delete_button;
 
-  GtkWidget *file_selection;
+  GtkWidget        *file_selection;
 
-  GtkWidget *dir_list;
+  GtkListStore     *dir_list;
 
-  GtkWidget *selected_item;
-  gint       number_of_items;
+  GtkTreeSelection *sel;
+  GtkTreePath      *sel_path;
+
+  gint              num_items;
 };
 
 struct _GimpPathEditorClass
