@@ -130,7 +130,7 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-static XpmSaveVals xpmvals = 
+static XpmSaveVals xpmvals =
 {
   127  /* alpha threshold */
 };
@@ -180,7 +180,7 @@ query (void)
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
-  
+
   gimp_install_procedure ("file_xpm_save",
                           "saves files in the xpm file format (if you're on a 16 bit display...)",
                           "FIXME: write help for xpm",
@@ -248,12 +248,12 @@ run (const gchar      *name,
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */ 
+      /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  export = gimp_export_image (&image_ID, &drawable_ID, "XPM", 
+	  export = gimp_export_image (&image_ID, &drawable_ID, "XPM",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY |
 				       GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -344,7 +344,22 @@ load_image (const gchar *filename)
   g_free (name);
 
   /* read the raw file */
-  XpmReadFileToXpmImage ((char *) filename, &xpm_image, NULL);
+  switch (XpmReadFileToXpmImage ((char *) filename, &xpm_image, NULL))
+    {
+    case XpmSuccess:
+      break;
+
+    case XpmOpenFailed:
+      g_message (_("Error opening file '%s'"), filename);
+      return -1;
+
+    case XpmFileInvalid:
+      g_message (_("XPM file invalid"));
+      return -1;
+
+    default:
+      return -1;
+    }
 
   /* parse out the colors into a cmap */
   cmap = parse_colors (&xpm_image);
@@ -358,15 +373,15 @@ load_image (const gchar *filename)
   gimp_image_set_filename (image_ID, filename);
 
   /* fill it */
-  parse_image(image_ID, &xpm_image, cmap);
-  
+  parse_image (image_ID, &xpm_image, cmap);
+
   /* clean up and exit */
-  g_free(cmap);
-  
+  g_free (cmap);
+
   return image_ID;
 }
 
-static guchar*
+static guchar *
 parse_colors (XpmImage  *xpm_image)
 {
 #ifndef XPM_NO_X
@@ -395,9 +410,9 @@ parse_colors (XpmImage  *xpm_image)
 #else
       GdkColor  xcolor;
 #endif
-        
+
       xpm_color = &(xpm_image->colorTable[i]);
-        
+
       /* pick the best spec available */
       if (xpm_color->c_color)
 	colorspec = xpm_color->c_color;
@@ -407,7 +422,7 @@ parse_colors (XpmImage  *xpm_image)
 	colorspec = xpm_color->g4_color;
       else if (xpm_color->m_color)
 	colorspec = xpm_color->m_color;
-        
+
       /* parse if it's not transparent.  the assumption is that
 	 g_new will memset the buffer to zeros */
       if (strcmp (colorspec, "None") != 0)
@@ -434,13 +449,13 @@ parse_colors (XpmImage  *xpm_image)
 }
 
 static void
-parse_image (gint32    image_ID, 
-	     XpmImage *xpm_image, 
+parse_image (gint32    image_ID,
+	     XpmImage *xpm_image,
 	     guchar   *cmap)
 {
   gint       tile_height;
   gint       scanlines;
-  gint       val;  
+  gint       val;
   guchar    *buf;
   guchar    *dest;
   guint     *src;
@@ -448,7 +463,7 @@ parse_image (gint32    image_ID,
   GimpDrawable *drawable;
   gint32     layer_ID;
   gint       i, j;
-    
+
   layer_ID = gimp_layer_new (image_ID,
                              _("Color"),
                              xpm_image->width,
@@ -456,18 +471,18 @@ parse_image (gint32    image_ID,
                              GIMP_RGBA_IMAGE,
                              100,
                              GIMP_NORMAL_MODE);
-    
+
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
   drawable = gimp_drawable_get (layer_ID);
-    
+
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
                        0, 0,
                        drawable->width, drawable->height,
                        TRUE, FALSE);
 
   tile_height = gimp_tile_height ();
-    
+
   buf  = g_new (guchar, tile_height * xpm_image->width * 4);
 
   src  = xpm_image->data;
@@ -485,17 +500,17 @@ parse_image (gint32    image_ID,
 	  *(dest+3) = cmap[val+3];
 	  dest += 4;
         }
-          
+
 	if ((j % 100) == 0)
 	  gimp_progress_update ((double) i / (double) xpm_image->height);
       }
-        
+
       gimp_pixel_rgn_set_rect (&pixel_rgn, buf,
 			       0, i,
 			       drawable->width, scanlines);
-      
+
     }
-  
+
   g_free(buf);
 
   gimp_drawable_detach (drawable);
@@ -508,23 +523,23 @@ rgbhash (rgbkey *c)
 }
 
 static guint
-compare (rgbkey *c1, 
+compare (rgbkey *c1,
 	 rgbkey *c2)
 {
   return (c1->r == c2->r) && (c1->g == c2->g) && (c1->b == c2->b);
 }
 
 static void
-set_XpmImage (XpmColor *array, 
-	      guint     index, 
+set_XpmImage (XpmColor *array,
+	      guint     index,
 	      gchar    *colorstring)
 {
   gchar *p;
   gint i, charnum, indtemp;
-  
+
   indtemp=index;
   array[index].string = p = g_new (gchar, cpp+1);
-  
+
   /*convert the index number to base sizeof(linenoise)-1 */
   for (i=0; i<cpp; ++i)
     {
@@ -533,7 +548,7 @@ set_XpmImage (XpmColor *array,
       *p++ = linenoise[charnum];
     }
   /* *p++=linenoise[indtemp]; */
-  
+
   *p = '\0'; /* C and its stupid null-terminated strings... */
 
   array[index].symbolic = NULL;
@@ -544,15 +559,15 @@ set_XpmImage (XpmColor *array,
     {
       array[index].g_color = NULL;
       array[index].c_color = colorstring;
-    } else {	
+    } else {
       array[index].c_color = NULL;
       array[index].g_color = colorstring;
     }
 }
 
 static void
-create_colormap_from_hash (gpointer gkey, 
-			   gpointer value, 
+create_colormap_from_hash (gpointer gkey,
+			   gpointer value,
 			   gpointer user_data)
 {
   rgbkey *key    = gkey;
@@ -567,7 +582,7 @@ save_image (const gchar *filename,
             gint32       image_ID,
             gint32       drawable_ID)
 {
-  GimpDrawable *drawable;    
+  GimpDrawable *drawable;
   GimpPixelRgn  pixel_rgn;
 
   gint       width;
@@ -599,15 +614,15 @@ save_image (const gchar *filename,
   drawable = gimp_drawable_get (drawable_ID);
   width    = drawable->width;
   height   = drawable->height;
-  
+
   /* allocate buffer making the assumption that ibuff is 32 bit aligned... */
   if ((ibuff = g_new (guint, width * height)) == NULL)
     goto cleanup;
 
-  if ((hash = g_hash_table_new ((GHashFunc) rgbhash, 
+  if ((hash = g_hash_table_new ((GHashFunc) rgbhash,
 				(GCompareFunc) compare)) == NULL)
     goto cleanup;
-  
+
   /* put up a progress bar */
   {
     gchar *name;
@@ -636,7 +651,7 @@ save_image (const gchar *filename,
       scanlines = MIN (gimp_tile_height(), height - i);
       gimp_pixel_rgn_get_rect (&pixel_rgn, buffer, 0, i, width, scanlines);
       data = buffer;
-      
+
       /* process each pixel row */
       for (j=0; j<scanlines; j++)
         {
@@ -648,14 +663,14 @@ save_image (const gchar *filename,
             {
 	      rgbkey *key = g_new (rgbkey, 1);
 	      guchar  a;
-  
+
               /* get pixel data */
               key->r = *(data++);
 	      key->g = color && !indexed ? *(data++) : key->r;
 	      key->b = color && !indexed ? *(data++) : key->r;
 	      a = alpha ? *(data++) : 255;
-	      
-	      if (a < threshold) 
+
+	      if (a < threshold)
 		{
 		  *(idata++) = 0;
 		}
@@ -682,8 +697,8 @@ save_image (const gchar *filename,
 
           /* kick the progress bar */
           gimp_progress_update ((gdouble) (i+j) / (gdouble) height);
-        }    
-    } 
+        }
+    }
   g_free (buffer);
 
   if (indexed)
@@ -697,7 +712,7 @@ save_image (const gchar *filename,
 	ncolors++;
 
       colormap = g_new (XpmColor, ncolors);
-      cpp = 
+      cpp =
 	1 + (gdouble) log (ncolors) / (gdouble) log (sizeof (linenoise) - 1.0);
 
       if (alpha)
@@ -732,27 +747,27 @@ save_image (const gchar *filename,
     }
 
   image = g_new (XpmImage, 1);
- 
+
   image->width      = width;
   image->height     = height;
   image->ncolors    = ncolors;
   image->cpp        = cpp;
-  image->colorTable = colormap;	    
+  image->colorTable = colormap;
   image->data       = ibuff;
-  
+
   /* do the save */
   rc = (XpmWriteFileFromXpmImage ((char *) filename,
                                   image, NULL) == XpmSuccess);
 
  cleanup:
-  /* clean up resources */  
+  /* clean up resources */
   gimp_drawable_detach (drawable);
-  
+
   g_free (ibuff);
 
-  if (hash)  
+  if (hash)
     g_hash_table_destroy (hash);
-  
+
   return rc;
 }
 
