@@ -215,7 +215,7 @@ gimp_device_status_init (GimpDeviceStatus *status)
 
       g_signal_connect (entry->tool, "clicked",
                         G_CALLBACK (gimp_device_status_preview_clicked),
-                        "gimp-tool-list");
+                        "gimp-tool-list|gimp-tool-grid");
 
       /*  the foreground color  */
 
@@ -253,7 +253,7 @@ gimp_device_status_init (GimpDeviceStatus *status)
 
       g_signal_connect (entry->brush, "clicked",
                         G_CALLBACK (gimp_device_status_preview_clicked),
-                        "gimp-brush-grid");
+                        "gimp-brush-grid|gimp-brush-list");
 
       /*  the pattern  */
 
@@ -267,7 +267,7 @@ gimp_device_status_init (GimpDeviceStatus *status)
 
       g_signal_connect (entry->pattern, "clicked",
                         G_CALLBACK (gimp_device_status_preview_clicked),
-                        "gimp-pattern-grid");
+                        "gimp-pattern-grid|gimp-pattern-list");
 
       /*  the gradient  */
 
@@ -281,7 +281,7 @@ gimp_device_status_init (GimpDeviceStatus *status)
 
       g_signal_connect (entry->gradient, "clicked",
                         G_CALLBACK (gimp_device_status_preview_clicked),
-                        "gimp-gradient-list");
+                        "gimp-gradient-list|gimp-gradient-list");
 
       gimp_device_status_update_entry (device_info, entry);
     }

@@ -83,36 +83,9 @@ dialogs_create_dockable_cmd_callback (GtkWidget *widget,
       if (!identifier)
         return;
 
-      /*  If the identifier is a list, try to find a matching dialog and
-       *  raise it. If there's no match, use the first list item.
-       */
-      if (strchr (identifier, '|'))
-        {
-          gchar **ids = g_strsplit (identifier, "|", 0);
-          gint    i;
-
-          for (i = 0; ids[i]; i++)
-            {
-              GimpSessionInfo *info;
-
-              info = gimp_dialog_factory_find_session_info (global_dock_factory,
-                                                            ids[i]);
-              if (info && info->widget)
-                break;
-            }
-
-          gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                            gtk_widget_get_screen (widget),
-                                            ids[i] ? ids[i] : ids[0], -1);
-
-          g_strfreev (ids);
-        }
-      else
-        {
-          gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                            gtk_widget_get_screen (widget),
-                                            identifier, -1);
-        }
+      gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                        gtk_widget_get_screen (widget),
+                                        identifier, -1);
     }
 }
 

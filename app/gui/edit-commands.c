@@ -228,7 +228,7 @@ edit_named_paste_cmd_callback (GtkWidget *widget,
 {
   gimp_dialog_factory_dialog_raise (global_dock_factory,
                                     gtk_widget_get_screen (widget),
-                                    "gimp-buffer-list", -1);
+                                    "gimp-buffer-list|gimp-buffer-grid", -1);
 }
 
 void

@@ -1,5 +1,22 @@
 2003-11-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdialogfactory.[ch]
+	(gimp_dialog_factory_dialog_raise): support '|'-separated lists of
+	dialog identifiers and raise any of them if it is already open, or
+	the first dialog in the list otherwise.
+
+	* app/gui/dialogs-commands.c (dialogs_create_dockable_cmd_callback):
+	removed the same functionality here.
+
+	* app/gui/edit-commands.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimptextoptions.c
+	* app/widgets/gimpdevicestatus.c
+	* app/widgets/gimptoolbox-indicator-area.c: pass lists of dialog
+	identifiers to gimp_dialog_factory_dialog_raise().
+
+2003-11-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpselection.c (gimp_selection_class_init): use
 	GIMP_STOCK_SELECTION as the viewable class' default stock ID.
 

@@ -546,10 +546,10 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 
 /**
  * gimp_dialog_factory_dialog_new:
- * @factory:    a #GimpDialogFactory
- * @screen:     the #GdkScreen the dialog should appear on
- * @identifier: the identifier of the dialog as registered with
- *              gimp_dialog_factory_register_entry()
+ * @factory:      a #GimpDialogFactory
+ * @screen:       the #GdkScreen the dialog should appear on
+ * @identifier:   the identifier of the dialog as registered with
+ *                gimp_dialog_factory_register_entry()
  * @preview_size:
  *
  * Creates a new toplevel dialog or a #GimpDockable, depending on whether
@@ -580,43 +580,76 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
 
 /**
  * gimp_dialog_factory_dialog_raise:
- * @factory   : a #GimpDialogFactory
- * @screen:     the #GdkScreen the dialog should appear on
- * @identifier: the identifier of the dialog as registered with
- *              gimp_dialog_factory_register_entry()
+ * @factory:      a #GimpDialogFactory
+ * @screen:       the #GdkScreen the dialog should appear on
+ * @identifiers:  a '|' separated list of identifiers of dialogs as
+ *                registered with gimp_dialog_factory_register_entry()
  * @preview_size:
  *
- * Raises an already existing toplevel dialog or #GimpDockable if it was
- * already created by this %facory.
+ * Raises any of a list of already existing toplevel dialog or
+ * #GimpDockable if it was already created by this %facory.
  *
- * Implicitly creates a new dialog if it was not found.
+ * Implicitly creates the first dialog in the list if none of the dialogs
+ * were found.
  *
  * Return value: the raised or newly created dialog.
  **/
 GtkWidget *
 gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
                                   GdkScreen         *screen,
-				  const gchar       *identifier,
+				  const gchar       *identifiers,
                                   gint               preview_size)
 {
+  GtkWidget *dialog;
+
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
-  g_return_val_if_fail (identifier != NULL, NULL);
+  g_return_val_if_fail (identifiers != NULL, NULL);
 
-  return gimp_dialog_factory_dialog_new_internal (factory,
-                                                  screen,
-						  NULL,
-						  identifier,
-                                                  preview_size,
-						  TRUE);
+  /*  If the identifier is a list, try to find a matching dialog and
+   *  raise it. If there's no match, use the first list item.
+   */
+  if (strchr (identifiers, '|'))
+    {
+      gchar **ids = g_strsplit (identifiers, "|", 0);
+      gint    i;
+
+      for (i = 0; ids[i]; i++)
+        {
+          GimpSessionInfo *info;
+
+          info = gimp_dialog_factory_find_session_info (factory, ids[i]);
+          if (info && info->widget)
+            break;
+        }
+
+      dialog = gimp_dialog_factory_dialog_new_internal (factory,
+                                                        screen,
+                                                        NULL,
+                                                        ids[i] ? ids[i] : ids[0],
+                                                        preview_size,
+                                                        TRUE);
+      g_strfreev (ids);
+    }
+  else
+    {
+      dialog = gimp_dialog_factory_dialog_new_internal (factory,
+                                                        screen,
+                                                        NULL,
+                                                        identifiers,
+                                                        preview_size,
+                                                        TRUE);
+    }
+
+  return dialog;
 }
 
 /**
  * gimp_dialog_factory_dockable_new:
- * @factory   : a #GimpDialogFactory
- * @dock      : a #GimpDock crated by this %factory.
- * @identifier: the identifier of the dialog as registered with
- *              gimp_dialog_factory_register_entry()
+ * @factory:      a #GimpDialogFactory
+ * @dock:         a #GimpDock crated by this %factory.
+ * @identifier:   the identifier of the dialog as registered with
+ *                gimp_dialog_factory_register_entry()
  * @preview_size:
  *
  * Creates a new #GimpDockable in the context of the #GimpDock it will be
@@ -650,7 +683,7 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
 /**
  * gimp_dialog_factory_dock_new:
  * @factory: a #GimpDialogFacotry
- * @screen: the #GdkScreen the dock should appear on
+ * @screen:  the #GdkScreen the dock should appear on
  *
  * Returns a new #GimpDock in this %factory's context. We use a function
  * pointer passed to this %factory's constructor instead of simply

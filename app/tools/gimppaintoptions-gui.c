@@ -140,7 +140,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                          context,
                                          GIMP_PREVIEW_SIZE_SMALL, 1,
                                          dialog_factory,
-                                         "gimp-brush-grid",
+                                         "gimp-brush-grid|gimp-brush-list",
                                          GIMP_STOCK_TOOL_PAINTBRUSH,
                                          _("Open the brush selection dialog"));
 
@@ -157,7 +157,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                          context,
                                          GIMP_PREVIEW_SIZE_SMALL, 1,
                                          dialog_factory,
-                                         "gimp-pattern-grid",
+                                         "gimp-pattern-grid|gimp-pattern-list",
                                          GIMP_STOCK_TOOL_BUCKET_FILL,
                                          _("Open the pattern selection dialog"));
 
@@ -181,7 +181,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                   context,
                                   GIMP_PREVIEW_SIZE_LARGE, 1,
                                   dialog_factory,
-                                  "gimp-gradient-list",
+                                  "gimp-gradient-list|gimp-gradient-grid",
                                   GIMP_STOCK_TOOL_BLEND,
                                   _("Open the gradient selection dialog"));
 
