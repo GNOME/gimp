@@ -394,6 +394,7 @@ gimp_imagefile_check_thumbnail (GimpImagefile *imagefile)
 
 gboolean
 gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
+                               const gchar   *mime_type,
                                GimpImage     *gimage)
 {
   gint      size;
@@ -407,7 +408,8 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
 
   if (size > 0)
     {
-      gimp_thumbnail_set_info_from_image (imagefile->thumbnail, NULL, gimage);
+      gimp_thumbnail_set_info_from_image (imagefile->thumbnail,
+                                          mime_type, gimage);
 
       success = gimp_imagefile_save_thumb (imagefile,
                                            gimage, size, FALSE,

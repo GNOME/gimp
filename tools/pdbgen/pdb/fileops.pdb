@@ -316,7 +316,7 @@ HELP
           if (success)
             {
               imagefile = gimp_imagefile_new (gimp, uri);
-              success = gimp_imagefile_save_thumbnail (imagefile, gimage);
+              success = gimp_imagefile_save_thumbnail (imagefile, NULL, gimage);
               g_object_unref (imagefile);
             }
 

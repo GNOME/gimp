@@ -1,5 +1,16 @@
 2004-11-13  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimagefile.[ch]
+	* app/file/file-open.c
+	* app/file/file-save.c: pass the MIME type from the save procedure
+	to gimp_imagefile_save_thumbnail() so that it can be stored with
+	the thumbnail.
+
+	* tools/pdbgen/pdb/fileops.pdb
+	* app/pdb/fileops_cmds.c: changed accordingly.
+
+2004-11-13  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/plug-in-proc-def.[ch]
 	* app/plug-in/plug-in-rc.c
 	* app/plug-in/plug-ins.[ch]: allow to associate a procedure for

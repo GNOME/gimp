@@ -205,7 +205,7 @@ file_save_as (GimpImage      *gimage,
           gimp_image_set_save_proc (gimage, file_proc);
 	}
 
-      gimp_imagefile_save_thumbnail (imagefile, gimage);
+      gimp_imagefile_save_thumbnail (imagefile, file_proc->mime_type, gimage);
 
       gimp_recent_list_add_uri (uri, file_proc->mime_type);
     }
