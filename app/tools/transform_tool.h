@@ -22,7 +22,12 @@
 Tool *        tools_new_transform_tool      (void);
 void          tools_free_transform_tool     (Tool *);
 int           transform_tool_smoothing      (void);
-int	      transform_tool_new_ui         (void);
+int	      transform_tool_clip	    (void);
+int	      transform_tool_direction      (void);
 int	      transform_tool_grid_size	    (void);
+
+/*  transform directions  */
+#define TRANSFORM_CORRECTIVE 0
+#define TRANSFORM_TRADITIONAL 1
 
 #endif  /*  __TRANSFORM_TOOL_H__  */

@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+#include <stdio.h>
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
@@ -40,9 +41,7 @@
 #define Y3 7
 
 /*  storage for information dialog fields  */
-char          matrix_row1_buf [256];
-char          matrix_row2_buf [256];
-char          matrix_row3_buf [256];
+static char        matrix_row_buf [3][MAX_INFO_BUF];
 
 /*  forward function declarations  */
 static void *      perspective_tool_perspective (GImage *, GimpDrawable *, TileManager *, int, Matrix);
@@ -67,7 +66,16 @@ perspective_tool_transform (tool, gdisp_ptr, state)
   switch (state)
     {
     case INIT :
-      transform_info = NULL;
+      if (!transform_info)
+	{
+	  transform_info = info_dialog_new ("Perspective Transform Information");
+	  info_dialog_add_field (transform_info, "Matrix: ",
+				 matrix_row_buf[0]);
+	  info_dialog_add_field (transform_info, "        ",
+				 matrix_row_buf[1]);
+	  info_dialog_add_field (transform_info, "        ",
+				 matrix_row_buf[2]);
+	}
 
       transform_core->trans_info [X0] = (double) transform_core->x1;
       transform_core->trans_info [Y0] = (double) transform_core->y1;
@@ -143,6 +151,25 @@ static void
 perspective_info_update (tool)
      Tool * tool;
 {
+  TransformCore * transform_core;
+  int i;
+  
+  transform_core = (TransformCore *) tool->private;
+
+  for (i = 0; i < 3; i++)
+    {
+      char *p = matrix_row_buf[i];
+      int j;
+      
+      for (j = 0; j < 3; j++)
+	{
+	  p += sprintf (p, "%10.3g", transform_core->transform[i][j]);
+	}
+    }
+
+  info_dialog_update (transform_info);
+  info_dialog_popup (transform_info);
+  
   return;
 }
 

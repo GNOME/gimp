@@ -1,3 +1,43 @@
+Thu Aug 13 22:16:42 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	Applied the patch from Tor Lillqvist <tml@iki.fi>:
+	
+	* app/transform_core.c app/transform_core.h: Further changes in
+	the look-and-feel. Now we have a info_dialog window for each
+	transformation tool, with an action and cancel button. The use of
+	shift-clicking to approve the transform introduced in
+	gimp-tml-980724-1 is still there. The old immediate transformation
+	on button release is gone.
+
+	For use by the rotate tool we have a center-of-rotation point
+	which is draggable. Its coordinates are kept in the TransformCore
+	struct.
+
+	As there no longer are several related transformations done after
+	each other as in the old look-and-feel, we don't need the _first_
+	field in TransformUndo.
+
+	Added the function _transform_core_grid_density_changed_ called
+	from transform_tool.c when the grid density spinbutton has been
+	changed. The grid is instantaneously redrawn in the new
+	density. Neat, huh?
+	
+	* transform_tool.c transform_tool.h: More options: a toggle to
+	clip the result of a perspective transform, and a spinbutton for
+	the rubber-band grid density. The toggle for "new" vs. "old" UI is
+	now for "corrective" vs. "traditional" paradigm.
+	
+	* rotate_tool.c: Show also the center point coordinates in the
+	info dialog. If dragging the center point, update TransformCore
+	accordingly. Use the center point coordinates from TransformCore
+	where appropriate.
+		
+	* perspective_tool.c: Show the transformation matrix in the info
+	dialog.
+
+	* undo.c: TransformUndo no longed has the _first_ field, code
+	simplified thusly.
+
 Thu Aug 13 20:48:48 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/color_area.c: Add event-masks so the tooltip is shown.

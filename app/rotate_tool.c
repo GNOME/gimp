@@ -40,11 +40,16 @@
 /*  index into trans_info array  */
 #define ANGLE          0
 #define REAL_ANGLE     1
+#define CENTER_X       2
+#define CENTER_Y       3
+
 #define EPSILON        0.018  /*  ~ 1 degree  */
 #define FIFTEEN_DEG    (M_PI / 12.0)
 
 /*  variables local to this file  */
-char          angle_buf  [MAX_INFO_BUF];
+static char	angle_buf [MAX_INFO_BUF];
+static char	center_x_buf [MAX_INFO_BUF];
+static char	center_y_buf [MAX_INFO_BUF];
 
 /*  forward function declarations  */
 static void *      rotate_tool_rotate  (GImage *, GimpDrawable *, double, TileManager *, int, Matrix);
@@ -72,10 +77,16 @@ rotate_tool_transform (tool, gdisp_ptr, state)
 	{
 	  transform_info = info_dialog_new ("Rotation Information");
 	  info_dialog_add_field (transform_info, "Angle: ", angle_buf);
+	  info_dialog_add_field (transform_info, "Center X: ", center_x_buf);
+	  info_dialog_add_field (transform_info, "Center Y: ", center_y_buf);
 	}
 
       transform_core->trans_info[ANGLE]      = 0.0;
       transform_core->trans_info[REAL_ANGLE] = 0.0;
+      transform_core->trans_info[CENTER_X] =
+	(transform_core->x1 + transform_core->x2) / 2;
+      transform_core->trans_info[CENTER_Y] =
+	(transform_core->y1 + transform_core->y2) / 2;
 
       return NULL;
       break;
@@ -114,6 +125,8 @@ tools_new_rotate_tool ()
   private->trans_func = rotate_tool_transform;
   private->trans_info[ANGLE]      = 0.0;
   private->trans_info[REAL_ANGLE] = 0.0;
+  private->trans_info[CENTER_X]   = (private->x1 + private->x2) / 2;
+  private->trans_info[CENTER_Y]   = (private->y1 + private->y2) / 2;
 
   /*  assemble the transformation matrix  */
   identity_matrix (private->transform);
@@ -135,13 +148,18 @@ rotate_info_update (tool)
   GDisplay * gdisp;
   TransformCore * transform_core;
   double angle;
+  int cx, cy;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   angle = (transform_core->trans_info[ANGLE] * 180.0) / M_PI;
+  cx = transform_core->cx;
+  cy = transform_core->cy;
 
   sprintf (angle_buf, "%0.2f", angle);
+  sprintf (center_x_buf, "%d", cx);
+  sprintf (center_y_buf, "%d", cy);
 
   info_dialog_update (transform_info);
   info_dialog_popup (transform_info);
@@ -159,8 +177,16 @@ rotate_tool_motion (tool, gdisp_ptr)
 
   transform_core = (TransformCore *) tool->private;
 
-  cx = (transform_core->x1 + transform_core->x2) / 2.0;
-  cy = (transform_core->y1 + transform_core->y2) / 2.0;
+  if (transform_core->function == HANDLE_CENTER)
+    {
+      transform_core->cx = transform_core->curx;
+      transform_core->cy = transform_core->cury;
+
+      return;
+    }
+
+  cx = transform_core->cx;
+  cy = transform_core->cy;
 
   x1 = transform_core->curx - cx;
   x2 = transform_core->lastx - cx;
@@ -209,8 +235,8 @@ rotate_tool_recalc (tool, gdisp_ptr)
   gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
-  cx = (transform_core->x1 + transform_core->x2) / 2.0;
-  cy = (transform_core->y1 + transform_core->y2) / 2.0;
+  cx = transform_core->cx;
+  cy = transform_core->cy;
 
   /*  assemble the transformation matrix  */
   identity_matrix  (transform_core->transform);

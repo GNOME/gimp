@@ -28,6 +28,7 @@
 #define HANDLE_2        2
 #define HANDLE_3        3
 #define HANDLE_4        4
+#define HANDLE_CENTER	5
 
 /* the different states that the transformation function can be called with  */
 #define INIT            0
@@ -36,7 +37,7 @@
 #define FINISH          3
 
 /* buffer sizes for scaling information strings (for the info dialog) */
-#define MAX_INFO_BUF    12
+#define MAX_INFO_BUF   40
 #define TRAN_INFO_SIZE  8
 
 /* control whether the transform tool draws a bounding box */
@@ -68,16 +69,19 @@ struct _transform_core
 
   int             x1, y1;       /*  upper left hand coordinate  */
   int             x2, y2;       /*  lower right hand coords     */
+  int		  cx, cy;	/*  center point (for rotation) */
 
   double          tx1, ty1;     /*  transformed coords          */
   double          tx2, ty2;     /*                              */
   double          tx3, ty3;     /*                              */
   double          tx4, ty4;     /*                              */
+  double	  tcx, tcy;	/*                              */
 
   int             sx1, sy1;     /*  transformed screen coords   */
   int             sx2, sy2;     /*  position of four handles    */
   int             sx3, sy3;     /*                              */
   int             sx4, sy4;     /*                              */
+  int             scx, scy;     /*  and center for rotation     */
 
   Matrix          transform;    /*  transformation matrix       */
   TranInfo        trans_info;   /*  transformation info         */
@@ -93,8 +97,6 @@ struct _transform_core
 				 * a button pressed before we deal with
 				 * motion events. ALT.
 				 */
-				/* The following fields are used by
-				   the "new UI".  */
   int		  ngx, ngy;	/*  number of grid lines in original
 				    x and y directions  */
   double	  *grid_coords;	/*  x and y coordinates of the grid
@@ -112,7 +114,6 @@ struct _transform_undo
   int             tool_ID;
   int             tool_type;
   TranInfo        trans_info;
-  int             first;
   TileManager *   original;
 };
 
@@ -133,6 +134,7 @@ void          transform_core_no_draw      (Tool *);
 Tool *        transform_core_new          (int, int);
 void          transform_core_free         (Tool *);
 void          transform_core_reset        (Tool *, void *);
+void	      transform_core_grid_density_changed (void);
 
 /*  transform functions  */
 TileManager * transform_core_do           (GImage *, GimpDrawable *, TileManager *, int, Matrix);

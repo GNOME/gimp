@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "appenv.h"
+#include "actionarea.h"
 #include "drawable.h"
 #include "errors.h"
 #include "floating_sel.h"
@@ -48,7 +49,6 @@
 
 /*  variables  */
 static TranInfo    old_trans_info;
-static int	   new_ui;
 InfoDialog *       transform_info = NULL;
 
 /*  forward function declarations  */
@@ -67,6 +67,52 @@ static void	   invert		     (Matrix, Matrix);
      tile[i] = tile_manager_get_tile (float_tiles, x, y, 0, TRUE, FALSE); \
      src[i] = tile_data_pointer (tile[i], (x) % TILE_WIDTH, (y) % TILE_HEIGHT);
 
+
+static void
+transform_ok_callback (GtkWidget *w,
+		       gpointer   client_data)
+{
+  Tool *tool;
+
+  tool = (Tool *) client_data;
+  transform_core_doit (tool, tool->gdisp_ptr);
+}
+
+static void
+transform_cancel_callback (GtkWidget *w,
+			   gpointer   client_data)
+{
+  Tool *tool;
+  TransformCore *transform_core;
+  int i;
+
+  tool = (Tool *) client_data;
+  transform_core = (TransformCore *) tool->private;
+
+  /*  stop the current tool drawing process  */
+  draw_core_pause (transform_core->core, tool);
+  
+  /*  Restore the previous transformation info  */
+  for (i = 0; i < TRAN_INFO_SIZE; i++)
+    transform_core->trans_info [i] = old_trans_info [i];
+  /*  recalculate the tool's transformation matrix  */
+  transform_core_recalc (tool, tool->gdisp_ptr);
+  
+  /*  resume drawing the current tool  */
+  draw_core_resume (transform_core->core, tool);
+}
+
+
+static ActionAreaItem action_items[2] = 
+{
+  { NULL, transform_ok_callback, NULL, NULL },
+  { "Cancel", transform_cancel_callback, NULL, NULL },
+};
+
+static char *action_labels[4] =
+{
+  "Rotate", "Scale", "Shear", "Transform"
+};
 
 void
 transform_core_button_press (tool, bevent, gdisp_ptr)
@@ -90,7 +136,7 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 
   tool->drawable = gimage_active_drawable (gdisp->gimage);
 
-  if (transform_core->function == CREATING)
+  if (transform_core->function == CREATING && tool->state == ACTIVE)
     {
       /*  Save the current transformation info  */
       for (i = 0; i < TRAN_INFO_SIZE; i++)
@@ -105,6 +151,9 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
   if ((transform_core->function >= CREATING) && (gdisp_ptr == tool->gdisp_ptr) &&
       transform_core->interactive)
     {
+      /*  start drawing the bounding box and handles...  */
+      draw_core_start (transform_core->core, gdisp->canvas->window, tool);
+	    
       x = bevent->x;
       y = bevent->y;
 
@@ -132,6 +181,13 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 	  transform_core->function = HANDLE_4;
 	}
 
+      if (tool->type == ROTATE
+	  && (SQR (x - transform_core->scx) +
+	      SQR (y - transform_core->scy)) <= 100)
+	{
+	  transform_core->function = HANDLE_CENTER;
+	}
+
       /*  Save the current pointer position  */
       gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
 				   &transform_core->startx,
@@ -143,10 +199,6 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 			GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 			NULL, NULL, bevent->time);
 
-      /*  start drawing the bounding box and handles...  */
-      if (new_ui)
-	draw_core_start (transform_core->core, gdisp->canvas->window, tool);
-	    
       tool->state = ACTIVE;
       return;
     }
@@ -192,19 +244,23 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 	     */
 	    transform_core_bounds (tool, gdisp_ptr);
 
-	    /*  If new UI, calculate the grid line endpoints  */
-	    if (new_ui)
-	      transform_core_setup_grid (tool);
+	    /*  Calculate the grid line endpoints  */
+	    transform_core_setup_grid (tool);
 	    
 	    /*  Initialize the transform tool  */
 	    (* transform_core->trans_func) (tool, gdisp_ptr, INIT);
 	    
+	    if (transform_info != NULL)
+	      {
+		action_items[0].label = action_labels[tool->type - ROTATE];
+		action_items[0].user_data = tool;
+		action_items[1].user_data = tool;
+		build_action_area (GTK_DIALOG (transform_info->shell),
+				   action_items, 2, 0);
+	      }
+
 	    /*  Recalculate the transform tool  */
 	    transform_core_recalc (tool, gdisp_ptr);
-	    
-	    /*  start drawing the bounding box and handles...  */
-	    if (!new_ui)
-	      draw_core_start (transform_core->core, gdisp->canvas->window, tool);
 	    
 	    /*  recall this function to find which handle we're dragging  */
 	    if (transform_core->interactive)
@@ -239,23 +295,16 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
   /*  if the 3rd button isn't pressed, transform the selected mask  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
-      if (new_ui)
+      /* Shift-clicking is another way to approve the transform  */
+      if ((bevent->state & GDK_SHIFT_MASK) 
+	  || (tool->type == FLIP_HORZ)
+	  || (tool->type == FLIP_VERT))
 	{
-	  /*  In the new UI, shift-clicking means perform the transform  */
-	  if ((bevent->state & GDK_SHIFT_MASK) 
-               || (tool->type == FLIP_HORZ)
-               || (tool->type == FLIP_VERT))
-	    {
-	      transform_core_doit (tool, gdisp_ptr);
-	    }
-	  else
-	    {
-	      /*  Do nothing, keep the grid visible  */
-	    }
+	  transform_core_doit (tool, gdisp_ptr);
 	}
       else
 	{
-	  transform_core_doit (tool, gdisp_ptr);
+	  /*  Do nothing, keep the grid visible  */
 	}
     }
   else
@@ -266,7 +315,6 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
       /*  Restore the previous transformation info  */
       for (i = 0; i < TRAN_INFO_SIZE; i++)
 	transform_core->trans_info [i] = old_trans_info [i];
-
       /*  recalculate the tool's transformation matrix  */
       transform_core_recalc (tool, gdisp_ptr);
 
@@ -288,7 +336,6 @@ transform_core_doit (tool, gdisp_ptr)
   TransformCore *transform_core;
   TileManager *new_tiles;
   TransformUndo *tu;
-  int first_transform;
   int new_layer;
   int i, x, y;
 
@@ -304,35 +351,25 @@ transform_core_doit (tool, gdisp_ptr)
   /*  Start a transform undo group  */
   undo_push_group_start (gdisp->gimage, TRANSFORM_CORE_UNDO);
 
-  /*  If original is NULL, then this is the first transformation  */
-  first_transform = (transform_core->original) ? FALSE : TRUE;
+  /*  With the old UI, if original is NULL, then this is the
+      first transformation. In the new UI, it is always so, yes?  */
+  g_assert (transform_core->original == NULL);
 
-  /*  If we're in interactive mode, and haven't yet done any
-   *  transformations, we need to copy the current selection to
-   *  the transform tool's private selection pointer, so that the
-   *  original source can be repeatedly modified.
+  /* If we're in interactive mode, we need to copy the current
+   *  selection to the transform tool's private selection pointer, so
+   *  that the original source can be repeatedly modified.
    */
-  if (first_transform) 
-    transform_core->original = transform_core_cut (gdisp->gimage,
-						   gimage_active_drawable (gdisp->gimage),
-						   &new_layer);
-  else
-    new_layer = FALSE;
+  transform_core->original = transform_core_cut (gdisp->gimage,
+						 gimage_active_drawable (gdisp->gimage),
+						 &new_layer);
 
   /*  Send the request for the transformation to the tool...
    */
   new_tiles = (* transform_core->trans_func) (tool, gdisp_ptr, FINISH);
 
-  /*  If new UI, reset the transformation  */
-  if (new_ui)
-    {
-      int i;
-
-      for (i = 0; i < TRAN_INFO_SIZE; i++)
-	transform_core->trans_info [i] = 0;
-
-      transform_core_recalc (tool, gdisp_ptr);
-    }
+  (* transform_core->trans_func) (tool, gdisp_ptr, INIT);
+  
+  transform_core_recalc (tool, gdisp_ptr);
 
   if (new_tiles)
     {
@@ -348,7 +385,6 @@ transform_core_doit (tool, gdisp_ptr)
       tu->tool_type = tool->type;
       for (i = 0; i < TRAN_INFO_SIZE; i++)
 	tu->trans_info[i] = old_trans_info[i];
-      tu->first = first_transform;
       tu->original = NULL;
 
       /* Make a note of the new current drawable (since we may have
@@ -389,10 +425,7 @@ transform_core_doit (tool, gdisp_ptr)
     }
   gdisplays_flush ();
 
-  if (new_ui)
-    {
-      transform_core_reset (tool, gdisp_ptr);
-    }
+  transform_core_reset (tool, gdisp_ptr);
 
   /*  if this tool is non-interactive, make it inactive after use  */
   if (!transform_core->interactive)
@@ -534,6 +567,8 @@ transform_core_draw (tool)
   TransformCore * transform_core;
   GDisplay * gdisp;
   int srw, srh;
+  int i, k, gci;
+  int xa, ya, xb, yb;
 
   gdisp = tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -566,27 +601,22 @@ transform_core_draw (tool)
   gdk_draw_line (transform_core->core->win, transform_core->core->gc,
 		 x3, y3, x1, y1);
 
-  /*  if new UI, draw the grid  */
-  if (new_ui)
-    {
-      int i, k, gci;
-      int xa, ya, xb, yb;
+  /*  Draw the grid  */
 
-      gci = 0;
-      k = transform_core->ngx + transform_core->ngy;
-      for (i = 0; i < k; i++)
-	{
-	  gdisplay_transform_coords (gdisp, transform_core->tgrid_coords[gci],
-				     transform_core->tgrid_coords[gci+1],
-				     &xa, &ya, 0);
-	  gdisplay_transform_coords (gdisp, transform_core->tgrid_coords[gci+2],
-				     transform_core->tgrid_coords[gci+3],
-				     &xb, &yb, 0);
-	    
-	  gdk_draw_line (transform_core->core->win, transform_core->core->gc,
-			 xa, ya, xb, yb);
-	  gci += 4;
-	}
+  gci = 0;
+  k = transform_core->ngx + transform_core->ngy;
+  for (i = 0; i < k; i++)
+    {
+      gdisplay_transform_coords (gdisp, transform_core->tgrid_coords[gci],
+				 transform_core->tgrid_coords[gci+1],
+				 &xa, &ya, 0);
+      gdisplay_transform_coords (gdisp, transform_core->tgrid_coords[gci+2],
+				 transform_core->tgrid_coords[gci+3],
+				 &xb, &yb, 0);
+      
+      gdk_draw_line (transform_core->core->win, transform_core->core->gc,
+		     xa, ya, xb, yb);
+      gci += 4;
     }
 
   /*  draw the tool handles  */
@@ -598,6 +628,18 @@ transform_core_draw (tool)
 		      x3 - (srw >> 1), y3 - (srh >> 1), srw, srh);
   gdk_draw_rectangle (transform_core->core->win, transform_core->core->gc, 0,
 		      x4 - (srw >> 1), y4 - (srh >> 1), srw, srh);
+
+  /*  draw the center  */
+  if (tool->type == ROTATE)
+    {
+      gdisplay_transform_coords (gdisp, transform_core->tcx, transform_core->tcy,
+				 &transform_core->scx, &transform_core->scy, 0);
+
+      gdk_draw_arc (transform_core->core->win, transform_core->core->gc, 1,
+		    transform_core->scx - (srw >> 1),
+		    transform_core->scy - (srh >> 1),
+		    srw, srh, 0, 23040);
+    }
 }
 
 Tool *
@@ -628,15 +670,6 @@ transform_core_new (type, interactive)
     private->trans_info[i] = 0;
 
   private->grid_coords = private->tgrid_coords = NULL;
-
-  /*  We must save this setting so that the user won't screw us if he
-   *  changes the UI to "old" style in the middle of a "new" UI operation.
-   *  We can't keep this info in the transform_core, as it is needed
-   *  in transform_core_do, which doesn't have access to any TransformCore.
-   *  I hope it's OK to use a static variable... (there already is
-   *  old_trans_info, so?).
-   */
-  new_ui = transform_tool_new_ui ();
 
   tool->type = type;
   tool->state = INACTIVE;
@@ -693,6 +726,8 @@ transform_bounding_box (tool)
      Tool * tool;
 {
   TransformCore * transform_core;
+  int i, k;
+  int gci;
 
   transform_core = (TransformCore *) tool->private;
 
@@ -709,22 +744,21 @@ transform_bounding_box (tool)
 		   transform_core->x2, transform_core->y2,
 		   &transform_core->tx4, &transform_core->ty4);
 
-  if (new_ui)
+  if (tool->type == ROTATE)
+    transform_point (transform_core->transform,
+		     transform_core->cx, transform_core->cy,
+		     &transform_core->tcx, &transform_core->tcy);
+
+  gci = 0;
+  k  = (transform_core->ngx + transform_core->ngy) * 2;
+  for (i = 0; i < k; i++)
     {
-      int i, k;
-      int gci;
-      
-      gci = 0;
-      k  = (transform_core->ngx + transform_core->ngy) * 2;
-      for (i = 0; i < k; i++)
-	{
-	  transform_point (transform_core->transform,
-			   transform_core->grid_coords[gci],
-			   transform_core->grid_coords[gci+1],
-			   &(transform_core->tgrid_coords[gci]),
-			   &(transform_core->tgrid_coords[gci+1]));
-	  gci += 2;
-	}
+      transform_point (transform_core->transform,
+		       transform_core->grid_coords[gci],
+		       transform_core->grid_coords[gci+1],
+		       &(transform_core->tgrid_coords[gci]),
+		       &(transform_core->tgrid_coords[gci+1]));
+      gci += 2;
     }
 }
 
@@ -973,8 +1007,24 @@ transform_core_bounds (tool, gdisp_ptr)
       transform_core->x2 += offset_x;
       transform_core->y2 += offset_y;
     }
+  transform_core->cx = (transform_core->x1 + transform_core->x2) / 2;
+  transform_core->cy = (transform_core->y1 + transform_core->y2) / 2;
 
   return TRUE;
+}
+
+void
+transform_core_grid_density_changed ()
+{
+  TransformCore * transform_core;
+  
+  transform_core = (TransformCore *) active_tool->private;
+  draw_core_pause (transform_core->core, active_tool);
+  g_free (transform_core->grid_coords);
+  g_free (transform_core->tgrid_coords);
+  transform_core_setup_grid (active_tool);
+  transform_bounding_box (active_tool);
+  draw_core_resume (transform_core->core, active_tool);
 }
 
 static void
@@ -988,7 +1038,7 @@ transform_core_setup_grid (tool)
   transform_core = (TransformCore *) tool->private;
       
   /*  We use the transform_tool_grid_size function only here, even if the
-   *  user changes the grid size in the middle of a "new" UI
+   *  user changes the grid size in the middle of a
    *  operation, nothing happens.
    */
   transform_core->ngx =
@@ -1066,7 +1116,6 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
   int plus2_x, plus2_y;
   int minus_x, minus_y;
   int x1, y1, x2, y2;
-  double dx1, dy1, dx2, dy2, dx3, dy3, dx4, dy4;
   double xinc, yinc, winc;
   double tx, ty, tw;
   double ttx = 0.0, tty = 0.0;
@@ -1104,7 +1153,7 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
       break;
     }
 
-  if (new_ui)
+  if (transform_tool_direction () == TRANSFORM_CORRECTIVE)
     {
       invert (matrix, im);
       matrix = im;
@@ -1118,24 +1167,36 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
   x2 = x1 + float_tiles->levels[0].width;
   y2 = y1 + float_tiles->levels[0].height;
 
-  transform_point (matrix, x1, y1, &dx1, &dy1);
-  transform_point (matrix, x2, y1, &dx2, &dy2);
-  transform_point (matrix, x1, y2, &dx3, &dy3);
-  transform_point (matrix, x2, y2, &dx4, &dy4);
-
   /*  Find the bounding coordinates  */
-  tx1 = MINIMUM (dx1, dx2);
-  tx1 = MINIMUM (tx1, dx3);
-  tx1 = MINIMUM (tx1, dx4);
-  ty1 = MINIMUM (dy1, dy2);
-  ty1 = MINIMUM (ty1, dy3);
-  ty1 = MINIMUM (ty1, dy4);
-  tx2 = MAXIMUM (dx1, dx2);
-  tx2 = MAXIMUM (tx2, dx3);
-  tx2 = MAXIMUM (tx2, dx4);
-  ty2 = MAXIMUM (dy1, dy2);
-  ty2 = MAXIMUM (ty2, dy3);
-  ty2 = MAXIMUM (ty2, dy4);
+  if (active_tool && active_tool->type == PERSPECTIVE && transform_tool_clip ())
+    {
+      tx1 = x1;
+      ty1 = y1;
+      tx2 = x2;
+      ty2 = y2;
+    }
+  else
+    {
+      double dx1, dy1, dx2, dy2, dx3, dy3, dx4, dy4;
+
+      transform_point (matrix, x1, y1, &dx1, &dy1);
+      transform_point (matrix, x2, y1, &dx2, &dy2);
+      transform_point (matrix, x1, y2, &dx3, &dy3);
+      transform_point (matrix, x2, y2, &dx4, &dy4);
+
+      tx1 = MINIMUM (dx1, dx2);
+      tx1 = MINIMUM (tx1, dx3);
+      tx1 = MINIMUM (tx1, dx4);
+      ty1 = MINIMUM (dy1, dy2);
+      ty1 = MINIMUM (ty1, dy3);
+      ty1 = MINIMUM (ty1, dy4);
+      tx2 = MAXIMUM (dx1, dx2);
+      tx2 = MAXIMUM (tx2, dx3);
+      tx2 = MAXIMUM (tx2, dx4);
+      ty2 = MAXIMUM (dy1, dy2);
+      ty2 = MAXIMUM (ty2, dy3);
+      ty2 = MAXIMUM (ty2, dy4);
+    }
 
   /*  Get the new temporary buffer for the transformed result  */
   tiles = tile_manager_new ((tx2 - tx1), (ty2 - ty1), float_tiles->levels[0].bpp);

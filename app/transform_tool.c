@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+#include <math.h>
 #include "appenv.h"
 #include "gdisplay.h"
 #include "tools.h"
@@ -23,14 +24,16 @@
 #include "rotate_tool.h"
 #include "scale_tool.h"
 #include "shear_tool.h"
+#include "transform_core.h"
 #include "transform_tool.h"
 
 typedef struct _TransformOptions TransformOptions;
 
 struct _TransformOptions
 {
+  int	      direction;
   int         smoothing;
-  int	      new_ui;
+  int	      clip;
   int	      grid_size;
   ToolType    type;
 };
@@ -40,7 +43,6 @@ static void         transform_change_type     (int);
 
 /*  Static variables  */
 static TransformOptions *transform_options = NULL;
-
 
 static void
 transform_toggle_update (GtkWidget *w,
@@ -63,31 +65,62 @@ transform_type_callback (GtkWidget *w,
   transform_change_type ((long) client_data);
 }
 
+static void
+transform_direction_callback (GtkWidget *w,
+			      gpointer   client_data)
+{
+  long dir = (long) client_data;
+  
+  if (dir == TRANSFORM_TRADITIONAL)
+    transform_options->direction = TRANSFORM_TRADITIONAL;
+  else
+    transform_options->direction = TRANSFORM_CORRECTIVE;
+}
+
+static void
+transform_grid_density_callback (GtkWidget *w,
+				 GtkSpinButton *spin)
+{
+  transform_options->grid_size =
+    (int) pow (2.0, 7.0 - gtk_spin_button_get_value_as_int (spin));
+  transform_core_grid_density_changed ();
+}
+
 static TransformOptions *
 create_transform_options (void)
 {
   TransformOptions *options;
-  GtkWidget *vbox;
+  GtkWidget *vbox, *hbox;
   GtkWidget *label;
   GtkWidget *radio_frame;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
   GtkWidget *smoothing_toggle;
-  GtkWidget *new_ui_toggle;
-  GSList *group = NULL;
+  GtkWidget *clip_toggle;
+  GtkAdjustment *grid_adj;
+  GtkWidget *grid_density;
+  GSList *group;
   int i;
-  char *button_names[4] =
+  char *transform_button_names[4] =
   {
     "Rotation",
     "Scaling",
     "Shearing",
     "Perspective"
   };
+  char *direction_button_names[2] =
+  {
+    "Corrective",
+    "Traditional"
+  };
 
   /*  the new options structure  */
   options = (TransformOptions *) g_malloc (sizeof (TransformOptions));
-  options->smoothing = 1;
   options->type = ROTATE;
+  options->smoothing = 1;
+  options->clip = 1;
+  options->direction = TRANSFORM_CORRECTIVE;
+  options->grid_size = 32;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
@@ -97,22 +130,47 @@ create_transform_options (void)
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  /*  the radio frame and box  */
+  /*  the first radio frame and box, for transform type  */
   radio_frame = gtk_frame_new ("Transform");
+  gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
+
+  radio_box = gtk_vbox_new (FALSE, 1);
+  gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
+  
+  /*  the radio buttons  */
+  group = NULL;
+  for (i = 0; i < 4; i++)
+    {
+      radio_button =
+	gtk_radio_button_new_with_label (group, transform_button_names[i]);
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
+      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
+			  (GtkSignalFunc) transform_type_callback,
+			  (gpointer) ((long) ROTATE + i));
+      gtk_widget_show (radio_button);
+    }
+  gtk_widget_show (radio_box);
+  gtk_widget_show (radio_frame);
+
+  /*  the second radio frame and box, for transform direction  */
+  radio_frame = gtk_frame_new ("Tool paradigm");
   gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
 
   radio_box = gtk_vbox_new (FALSE, 1);
   gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
 
   /*  the radio buttons  */
-  for (i = 0; i < 4; i++)
+  group = NULL;
+  for (i = 0; i < 2; i++)
     {
-      radio_button = gtk_radio_button_new_with_label (group, button_names[i]);
+      radio_button =
+	gtk_radio_button_new_with_label (group, direction_button_names[i]);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) transform_type_callback,
-			  (gpointer) ((long) ROTATE + i));
+			  (GtkSignalFunc) transform_direction_callback,
+			  (gpointer) ((long) i));
       gtk_widget_show (radio_button);
     }
   gtk_widget_show (radio_box);
@@ -128,19 +186,32 @@ create_transform_options (void)
                       options->smoothing);
   gtk_widget_show (smoothing_toggle);
 
-
-  /*  the new UI toggle button  */
-  new_ui_toggle = gtk_check_button_new_with_label ("New user interface");
-  gtk_box_pack_start (GTK_BOX (vbox), new_ui_toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (new_ui_toggle), "toggled",
+  /*  the clip resulting image toggle button  */
+  clip_toggle = gtk_check_button_new_with_label ("Clip perspective");
+  gtk_box_pack_start (GTK_BOX (vbox), clip_toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (clip_toggle), "toggled",
 		      (GtkSignalFunc) transform_toggle_update,
-		      &options->new_ui);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (new_ui_toggle),
-                      options->new_ui);
-  gtk_widget_show (new_ui_toggle);
+		      &options->clip);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (clip_toggle),
+                      options->clip);
+  gtk_widget_show (clip_toggle);
 
-  /*  the grid size entry  */
-  options->grid_size = 32;	/* XXX */
+  /*  the grid density entry  */
+  hbox = gtk_hbox_new (FALSE, 1);
+  gtk_widget_show (hbox);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  label = gtk_label_new ("Grid density: ");
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+  grid_adj = (GtkAdjustment *) gtk_adjustment_new (2.0, 0.0, 5.0, 1.0, 1.0, 0.0);
+  grid_density = gtk_spin_button_new (grid_adj, 0, 0);
+  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (grid_density), TRUE);
+  gtk_signal_connect (GTK_OBJECT (grid_adj), "value_changed",
+		      (GtkSignalFunc) transform_grid_density_callback,
+		      grid_density);
+  gtk_box_pack_start (GTK_BOX (hbox), grid_density, FALSE, FALSE, 0);
+  gtk_widget_show (grid_density);
+  
 
   /*  Register this selection options widget with the main tools options dialog  */
   tools_register_options (ROTATE, vbox);
@@ -221,12 +292,21 @@ transform_tool_smoothing ()
 }
 
 int
-transform_tool_new_ui ()
+transform_tool_clip ()
 {
   if (!transform_options)
-    return 1;
+    return 0;
   else
-    return transform_options->new_ui;
+    return transform_options->clip;
+}
+
+int
+transform_tool_direction ()
+{
+  if (!transform_options)
+    return TRANSFORM_TRADITIONAL;
+  else
+    return transform_options->direction;
 }
 
 int

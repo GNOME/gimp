@@ -937,21 +937,17 @@ undo_pop_transform (GImage *gimage,
       tc->trans_info[i] = d;
     }
 
-  /*  if this is the first transform in a string, swap the
-   *  original buffer--the source buffer for repeated transforms
+  /*  swap the original buffer--the source buffer for repeated transforms
    */
-  if (tu->first)
-    {
-      temp = tu->original;
-      tu->original = tc->original;
-      tc->original = temp;
+  temp = tu->original;
+  tu->original = tc->original;
+  tc->original = temp;
 
-      /*  If we're re-implementing the first transform, reactivate tool  */
-      if (state == REDO && tc->original)
-	{
-	  active_tool->state = ACTIVE;
-	  draw_core_resume (tc->core, active_tool);
-	}
+  /*  If we're re-implementing the first transform, reactivate tool  */
+  if (state == REDO && tc->original)
+    {
+      active_tool->state = ACTIVE;
+      draw_core_resume (tc->core, active_tool);
     }
 
   return TRUE;
