@@ -65,6 +65,7 @@ PATH. If everything was set up correctly running a simple
 make should do the trick and generate the SGML and HTML files 
 for you.
 
+
 In most cases you will work on the documentation by adding or
 editing comment blocks in the C source and by editing the 
 template SGML files in the tmpl dir. The following steps 
@@ -75,4 +76,27 @@ make sgml  - Creates the SGML files from the templates found
              in the source.
 
 make html  - Build HTML pages out of the SGML files.
+
+
+If the source was changed (real changes as described above), 
+you will need to perform the following two steps before you can
+rebuild the sgml and html files:
+
+make scan  -     Scans the header files and builds and runs a 
+                 binary that asks the GtkObjects to describe 
+		 themselves. That way the hierarchy of widgets, 
+		 arguments and signals are determined. If you
+		 have added new objects, you will have to update
+		 the MODULE.types files accordingly before you 
+		 perform this step.
+
+make templates - Merges the changes into the templates. This will 
+                 output warnings about any declarations which have 
+		 been added/removed. Update the MODULE-sections.txt 
+		 to include the new functions etc. in the 
+		 appropriate sections, and delete ones which are 
+		 no longer available. Run "make templates" again 
+		 until there are no warnings output.
+             
+
 

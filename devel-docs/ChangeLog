@@ -1,3 +1,11 @@
+Sat Feb  5 16:22:21 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* README: more help
+
+	* libgimp/.cvsignore
+	* libgimp/libgimp-decl.txt
+	* libgimp/tmpl/gimpwidgets.sgml: updated after changes to libgimp
+
 Fre Feb  4 16:18:39 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/Makefile.am: I'm still tweaking it a bit...

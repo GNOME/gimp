@@ -96,6 +96,9 @@ gimpwidgets
 @step_increment: 
 @page_increment: 
 @digits: 
+@constrain: 
+@unconstrained_lower: 
+@unconstrained_upper: 
 @tooltip: 
 @private_tip: 
 @Returns: 
@@ -107,7 +110,9 @@ gimpwidgets
 </para>
 
 @seed: 
+@seed_spinbutton: 
 @use_time: 
+@time_button: 
 @time_true: 
 @time_false: 
 @Returns: 

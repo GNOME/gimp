@@ -2,5 +2,6 @@ Makefile
 Makefile.in
 libgimp.html
 libgimp-decl-list.txt
+libgimp-unused.txt
 html
 sgml
