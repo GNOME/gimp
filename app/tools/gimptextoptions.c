@@ -319,7 +319,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   digits = gimp_unit_get_digits (options->text->unit);
   spinbutton = gimp_prop_spin_button_new (config, "font-size",
 					  1.0, 10.0, digits);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
                              _("_Size:"), 1.0, 0.5,
                              spinbutton, 1, FALSE);
 

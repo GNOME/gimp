@@ -1,3 +1,8 @@
+2003-12-31  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptextoptions.c (gimp_text_options_gui): fixed
+	table packing.
+
 2003-12-30  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.c: Do not move anchors in edit mode.
