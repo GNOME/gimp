@@ -1,3 +1,9 @@
+2000-10-16  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-decl.txt
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpfeatures.sgml: updated
+
 2000-10-14  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-decl.txt

@@ -5343,3 +5343,7 @@ GIOChannel      *channel,gchar          **data,gint             count
 <NAME>GIMP_HAVE_EXPORT</NAME>
 #define GIMP_HAVE_EXPORT                                1-1-10
 </MACRO>
+<MACRO>
+<NAME>GIMP_HAVE_SYSCONFDIR</NAME>
+#define GIMP_HAVE_SYSCONFDIR                            1-1-28
+</MACRO>
