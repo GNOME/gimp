@@ -1,3 +1,8 @@
+Mon Dec 20 17:58:59 GMT 1999  Adam D. Moss <adam@gimp.org>
+
+	* app/edit_selection.c: Remove old movement code and unused
+	variables.
+
 1999-12-20  Asbjorn Pettersen  <asbjornP@dualog.no>
 
 	* plug-ins/print/print.c (get_printers): os2 patch.
