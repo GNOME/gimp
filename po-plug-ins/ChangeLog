@@ -1,3 +1,7 @@
+1999-06-15  Tor Lillqvist  <tml@iki.fi>
+
+	* makefile.msc: New file.
+
 Sat Jun  5 16:27:06 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* fr.po: updated (gimp-monniaux-050699-1)
