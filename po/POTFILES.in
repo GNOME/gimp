@@ -83,6 +83,7 @@ app/gui/resolution-calibrate-dialog.c
 app/gui/select-commands.c
 app/gui/splash.c
 app/gui/tips-dialog.c
+app/gui/tips-parser.c
 app/gui/tool-options-dialog.c
 app/gui/toolbox.c
 app/gui/user-install-dialog.c

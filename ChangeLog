@@ -1,3 +1,13 @@
+2002-02-25  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/Makefile.am
+	* app/gui/tips-parser.[ch]: new files. A simple XML parser for the 
+	gimp-tips.xml file.
+	
+	* app/gui/tips-dialog.c: Removed old gimp_tips.txt parsing code and
+	switched to use gimp-tips.xml with the new parser. This needs some
+	more work ...
+
 2002-02-24  Sven Neumann  <sven@gimp.org>
 
 	* HACKING

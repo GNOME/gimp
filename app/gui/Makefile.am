@@ -115,6 +115,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	test-commands.h			\
 	tips-dialog.c			\
 	tips-dialog.h			\
+	tips-parser.c			\
+	tips-parser.h			\
 	tool-options-dialog.c		\
 	tool-options-dialog.h		\
 	toolbox.c			\

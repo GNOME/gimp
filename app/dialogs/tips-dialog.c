@@ -31,31 +31,29 @@
 #include "core/core-types.h"
 
 #include "tips-dialog.h"
+#include "tips-parser.h"
 
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
 
-#define TIPS_DIR_NAME "tips"
+static void  tips_dialog_destroy (GtkWidget   *widget,
+                                  gpointer     data);
+static void  tips_show_previous  (GtkWidget   *widget,
+                                  gpointer     data);
+static void  tips_show_next      (GtkWidget   *widget,
+                                  gpointer     data);
+static void  tips_toggle_update  (GtkWidget   *widget,
+                                  gpointer     data);
 
 
-static void   tips_dialog_destroy (GtkWidget *widget,
-				   gpointer   data);
-static void   tips_show_previous  (GtkWidget *widget,
-				   gpointer   data);
-static void   tips_show_next      (GtkWidget *widget,
-				   gpointer   data);
-static void   tips_toggle_update  (GtkWidget *widget,
-				   gpointer   data);
-static void   read_tips_file      (gchar     *filename);
 
-
-static GtkWidget  *tips_dialog   = NULL;
-static GtkWidget  *tips_label    = NULL;
-static gchar     **tips_text     = NULL;
-static gint        tips_count    = 0;
-static gint        old_show_tips = 0;
+static GtkWidget    *tips_dialog   = NULL;
+static GtkWidget    *tips_label    = NULL;
+static GList        *tips          = NULL;
+static gint          tips_count    = 0;
+static gint          old_show_tips = 0;
 
 
 GtkWidget *
@@ -67,17 +65,27 @@ tips_dialog_create (void)
   GtkWidget *bbox;
   GtkWidget *button;
   GdkPixbuf *wilber;
+  GimpTip   *tip;
   gchar     *filename;
 
-  if (tips_count == 0)
+  if (!tips)
     {
-      gchar *temp;
+      GError *error = NULL;
+      gchar  *filename;
 
-      temp = g_build_filename (gimp_data_directory (), TIPS_DIR_NAME,
-                               _("gimp_tips.txt"), NULL);
-      read_tips_file (temp);
-      g_free (temp);
+      filename = g_build_filename (gimp_data_directory (), "tips", 
+                                   "gimp-tips.xml", NULL);
+      tips = gimp_tips_from_file (filename, NULL, &error);
+      g_free (filename);
+
+      if (error)
+        {
+          tips = g_list_prepend (NULL, gimp_tip_new (NULL, error->message));
+          g_error_free (error);
+        }
     }
+
+  tips_count = g_list_length (tips);
 
   if (gimprc.last_tip >= tips_count || gimprc.last_tip < 0)
     gimprc.last_tip = 0;
@@ -113,7 +121,9 @@ tips_dialog_create (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
-  tips_label = gtk_label_new (tips_text[gimprc.last_tip]);
+  tip = g_list_nth_data (tips, gimprc.last_tip);
+  tips_label = gtk_label_new (tip->thetip);
+
   gtk_label_set_justify (GTK_LABEL (tips_label), GTK_JUSTIFY_LEFT);
   gtk_misc_set_alignment (GTK_MISC (tips_label), 0.5, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), tips_label, TRUE, TRUE, 3);
@@ -212,6 +222,9 @@ tips_dialog_destroy (GtkWidget *widget,
 
   tips_dialog = NULL;
 
+  gimp_tips_free (tips);
+  tips = NULL;
+
   /* the last-shown-tip is now saved in sessionrc */
 
   if (gimprc.show_tips != old_show_tips)
@@ -229,24 +242,32 @@ static void
 tips_show_previous (GtkWidget *widget,
 		    gpointer  data)
 {
+  GimpTip *tip;
+
   gimprc.last_tip--;
 
   if (gimprc.last_tip < 0)
     gimprc.last_tip = tips_count - 1;
 
-  gtk_label_set_text (GTK_LABEL (tips_label), tips_text[gimprc.last_tip]);
+  tip = g_list_nth_data (tips, gimprc.last_tip);
+
+  gtk_label_set_text (GTK_LABEL (tips_label), tip->thetip);
 }
 
 static void
 tips_show_next (GtkWidget *widget,
 		gpointer   data)
 {
+  GimpTip *tip;
+
   gimprc.last_tip++;
 
   if (gimprc.last_tip >= tips_count)
     gimprc.last_tip = 0;
 
-  gtk_label_set_text (GTK_LABEL (tips_label), tips_text[gimprc.last_tip]);
+  tip = g_list_nth_data (tips, gimprc.last_tip);
+
+  gtk_label_set_text (GTK_LABEL (tips_label), tip->thetip);
 }
 
 static void
@@ -261,64 +282,4 @@ tips_toggle_update (GtkWidget *widget,
     *toggle_val = TRUE;
   else
     *toggle_val = FALSE;
-}
-
-static void
-store_tip (gchar *str)
-{
-  tips_count++;
-  tips_text = g_realloc (tips_text, sizeof (gchar *) * tips_count);
-  tips_text[tips_count - 1] = str;
-}
-
-static void
-read_tips_file (gchar *filename)
-{
-  FILE *fp;
-  gchar *tip = NULL;
-  gchar *str = NULL;
-
-  fp = fopen (filename, "rt");
-  if (!fp)
-    {
-      store_tip (_("Your GIMP tips file appears to be missing!\n"
-		   "There should be a file called gimp_tips.txt in\n"
-		   "the tips subfolder of the GIMP data folder.\n"
-		   "Please check your installation."));
-      return;
-    }
-
-  str = g_new (char, 1024);
-  while (!feof (fp))
-    {
-      if (!fgets (str, 1024, fp))
-	continue;
-   
-      if (str[0] == '#' || str[0] == '\n')
-	{
-	  if (tip != NULL)
-	    {
-	      tip[strlen (tip) - 1] = '\000';
-	      store_tip (tip);
-	      tip = NULL;
-	    }
-	}
-      else
-	{
-	  if (tip == NULL)
-	    {
-	      tip = g_malloc (strlen (str) + 1);
-	      strcpy (tip, str);
-	    }
-	  else
-	    {
-	      tip = g_realloc (tip, strlen (tip) + strlen (str) + 1);
-	      strcat (tip, str);
-	    }
-	}
-    }
-  if (tip != NULL)
-    store_tip (tip);
-  g_free (str);
-  fclose (fp);
 }
