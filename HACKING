@@ -3,7 +3,7 @@ Requirements
 If you want to hack on the GIMP project, it will make your life easier
 to have the following packages (or newer versions) installed:
 
-	- GNU autoconf 2.52
+	- GNU autoconf 2.54
 	- GNU automake 1.6
 	- GNU libtool 1.3.4
 

@@ -1,5 +1,6 @@
 2003-08-17  Sven Neumann  <sven@gimp.org>
 
+	* HACKING
 	* autogen.sh (AUTOCONF_REQUIRED_VERSION): check for version 2.54.
 
 2003-08-17  Manish Singh  <yosh@gimp.org>
