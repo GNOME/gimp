@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-01-10 03:36+0100\n"
-"PO-Revision-Date: 2004-01-10 03:58+0100\n"
+"PO-Revision-Date: 2004-01-10 04:04+0100\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
 "MIME-Version: 1.0\n"
@@ -948,7 +948,7 @@ msgstr "Бела"
 
 #: app/core/core-enums.c:191
 msgid "Transparent"
-msgstr "Транспарентна"
+msgstr "Провидна"
 
 #: app/core/core-enums.c:192 app/core/core-enums.c:262
 msgid "Pattern"
