@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,36 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+typedef struct {
+   DefaultDialog_t 	*dialog;
+   GtkWidget		*notebook;
+   GtkWidget		*ncsa;
+   GtkWidget		*cern;
+   GtkWidget		*csim;
+   GtkWidget		*prompt_for_area_info;
+   GtkWidget		*require_default_url;
+   GtkWidget		*show_area_handle;
+   GtkWidget		*keep_circles_round;
+   GtkWidget		*show_url_tip;
+   GtkWidget		*use_doublesized;
+
+   GtkWidget		*undo_levels;
+   GtkWidget		*mru_size;
+
+   GtkWidget		*normal_fg;
+   GtkWidget		*normal_bg;
+   GtkWidget		*selected_fg;
+   GtkWidget		*selected_bg;
+
+   GtkWidget		*threshold;
+   GtkWidget		*auto_convert;
+
+   PreferencesData_t	*old_data;
+} PreferencesDialog_t;
+
+static void get_button_colors (PreferencesDialog_t *dialog, 
+			       ColorSelData_t *colors);
+
 static gint
 parse_map_type(void)
 {
@@ -71,15 +101,9 @@ parse_int(void)
 static void
 parse_color(GdkColor *gdk_color)
 {
-   gint color[3];
-
-   color[0] = parse_int();
-   color[1] = parse_int();
-   color[2] = parse_int();
-
-   gdk_color->red = (guint16) color[0];
-   gdk_color->green = (guint16) color[1];
-   gdk_color->blue = (guint16) color[2];
+   gdk_color->red = (guint16) parse_int();
+   gdk_color->green = (guint16) parse_int();
+   gdk_color->blue = (guint16) parse_int();
 }
 
 static void
@@ -251,7 +275,7 @@ preferences_ok_cb(gpointer data)
    menu_build_mru_items(mru);
    command_list_set_undo_level(old_data->undo_levels);
 
-   *colors = param->new_colors;
+   get_button_colors (param, colors);
 
    gdk_gc_set_foreground(old_data->normal_gc, &colors->normal_fg);
    gdk_gc_set_background(old_data->normal_gc, &colors->normal_bg);
@@ -263,156 +287,40 @@ preferences_ok_cb(gpointer data)
 }
 
 static void
+get_button_color (GtkWidget *button, GdkColor *color)
+{
+  GimpRGB rgb;
+  gimp_color_button_get_color (GIMP_COLOR_BUTTON (button), &rgb);
+  color->red = rgb.r * 0xffff;
+  color->green = rgb.g * 0xffff;
+  color->blue = rgb.b * 0xffff;
+}
+
+static void
+get_button_colors(PreferencesDialog_t *dialog, ColorSelData_t *colors)
+{
+  get_button_color (dialog->normal_fg, &colors->normal_fg);
+  get_button_color (dialog->normal_bg, &colors->normal_bg);
+  get_button_color (dialog->selected_fg, &colors->selected_fg);
+  get_button_color (dialog->selected_bg, &colors->selected_bg);
+}
+
+static void
+set_button_color (GtkWidget *button, GdkColor *color)
+{
+  GimpRGB rgb;
+  gimp_rgb_set (&rgb, color->red, color->green, color->blue);
+  gimp_rgb_multiply (&rgb, 1.0 / 0xffff);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (button), &rgb);
+}
+
+static void
 set_button_colors(PreferencesDialog_t *dialog, ColorSelData_t *colors)
 {
-   gdk_window_set_background(dialog->normal_fg->window,
-			     &colors->normal_fg);
-   gdk_window_clear(dialog->normal_fg->window);
-   gdk_window_set_background(dialog->normal_bg->window,
-			     &colors->normal_bg);
-   gdk_window_clear(dialog->normal_bg->window);
-   gdk_window_set_background(dialog->selected_fg->window,
-			     &colors->selected_fg);
-   gdk_window_clear(dialog->selected_fg->window);
-   gdk_window_set_background(dialog->selected_bg->window,
-			     &colors->selected_bg);
-   gdk_window_clear(dialog->selected_bg->window);
-}
-
-static void
-select_color_cancel(GtkWidget *widget, gpointer data)
-{
-   PreferencesDialog_t *param = (PreferencesDialog_t*) data;
-   gtk_widget_hide(param->color_sel_dlg);
-   set_button_colors(param, &param->old_colors);
-}
-
-static void
-select_color_ok(GtkWidget *widget, gpointer data)
-{
-   PreferencesDialog_t *param = (PreferencesDialog_t*) data;
-   param->old_colors = param->new_colors;
-   gtk_widget_hide(param->color_sel_dlg);
-}
-
-static void (*_color_changed_func)(GtkWidget *widget, gpointer data);
-
-static void
-color_changed(GtkWidget *widget, gpointer data)
-{
-   (*_color_changed_func)(widget, data);
-}
-
-static void
-change_color(PreferencesDialog_t *param, GtkWidget *button,
-	     GdkColor *gdk_color)
-{
-   GdkColormap *colormap;
-   GtkColorSelection *colorsel = GTK_COLOR_SELECTION(param->color_sel);
-
-   gtk_color_selection_get_current_color(colorsel, gdk_color);
-
-   colormap = gdk_drawable_get_colormap(button->window);
-   gdk_colormap_alloc_color(colormap, gdk_color, FALSE, TRUE);
-   gdk_window_set_background(button->window, gdk_color);
-   gdk_window_clear(button->window);
-}
-
-static void
-normal_fg_color_changed(GtkWidget *widget, gpointer data)
-{
-   PreferencesDialog_t *param = (PreferencesDialog_t*) data;
-   change_color(param, param->normal_fg, &param->new_colors.normal_fg);
-}
-
-static void
-normal_bg_color_changed(GtkWidget *widget, gpointer data)
-{
-   PreferencesDialog_t *param = (PreferencesDialog_t*) data;
-   change_color(param, param->normal_bg, &param->new_colors.normal_bg);
-}
-
-static void
-selected_fg_color_changed(GtkWidget *widget, gpointer data)
-{
-   PreferencesDialog_t *param = (PreferencesDialog_t*) data;
-   change_color(param, param->selected_fg, &param->new_colors.selected_fg);
-}
-
-static void
-selected_bg_color_changed(GtkWidget *widget, gpointer data)
-{
-   PreferencesDialog_t *param = (PreferencesDialog_t*) data;
-   change_color(param, param->selected_bg, &param->new_colors.selected_bg);
-}
-
-static gint
-area_event(GtkWidget *widget, GdkEvent *event, PreferencesDialog_t *param,
-	   GdkColor *gdk_color,
-	   void (*color_changed_func)(GtkWidget *widget, gpointer data))
-{
-   if (event->type != GDK_BUTTON_PRESS)
-      return FALSE;
-
-   if (!param->color_sel_dlg) {
-      GtkWidget *dialog = gtk_color_selection_dialog_new( _("Select Color"));
-
-      param->color_sel_dlg = dialog;
-
-      param->color_sel = GTK_COLOR_SELECTION_DIALOG(
-	 param->color_sel_dlg)->colorsel;
-
-      g_signal_connect(param->color_sel, "color_changed",
-		       G_CALLBACK(color_changed), (gpointer) param);
-
-      g_signal_connect(GTK_COLOR_SELECTION_DIALOG(dialog)->ok_button,
-		       "clicked",
-		       G_CALLBACK(select_color_ok), (gpointer) param);
-
-      g_signal_connect(GTK_COLOR_SELECTION_DIALOG(dialog)->cancel_button,
-		       "clicked",
-		       G_CALLBACK(select_color_cancel), (gpointer) param);
-   }
-
-   _color_changed_func = color_changed_func;
-
-   gtk_color_selection_set_current_color(GTK_COLOR_SELECTION(param->color_sel),
-					 gdk_color);
-
-   gtk_widget_show(param->color_sel_dlg);
-   return TRUE;
-}
-
-static gint
-edit_normal_fg(GtkWidget *widget, GdkEvent *event, PreferencesDialog_t *param)
-{
-   return area_event(widget, event, param, &param->old_data->colors.normal_fg,
-		     normal_fg_color_changed);
-}
-
-static gint
-edit_normal_bg(GtkWidget *widget, GdkEvent *event, PreferencesDialog_t *param)
-{
-   return area_event(widget, event, param, &param->old_data->colors.normal_bg,
-		     normal_bg_color_changed);
-}
-
-static gint
-edit_selected_fg(GtkWidget *widget, GdkEvent *event,
-		 PreferencesDialog_t *param)
-{
-   return area_event(widget, event, param,
-		     &param->old_data->colors.selected_fg,
-		     selected_fg_color_changed);
-}
-
-static gint
-edit_selected_bg(GtkWidget *widget, GdkEvent *event,
-		 PreferencesDialog_t *param)
-{
-   return area_event(widget, event, param,
-		     &param->old_data->colors.selected_bg,
-		     selected_bg_color_changed);
+  set_button_color (dialog->normal_fg, &colors->normal_fg);
+  set_button_color (dialog->normal_bg, &colors->normal_bg);
+  set_button_color (dialog->selected_fg, &colors->selected_fg);
+  set_button_color (dialog->selected_bg, &colors->selected_bg);
 }
 
 static GtkWidget*
@@ -496,16 +404,15 @@ create_menu_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 
 static GtkWidget*
 create_color_field(PreferencesDialog_t *data, GtkWidget *table, gint row,
-		   gint col, GCallback func)
+		   gint col)
 {
-   GtkWidget *area = gtk_drawing_area_new();
-
-   gtk_widget_set_size_request(area, 16, 8);
-   gtk_widget_set_events(area, GDK_BUTTON_PRESS_MASK);
-   gtk_table_attach_defaults(GTK_TABLE(table), area, col, col + 1, row,
-			     row + 1);
-   g_signal_connect(area, "event", func, (gpointer) data);
-   gtk_widget_show(area);
+   GimpRGB color = {0.0, 0.0, 0.0, 1.0};
+   GtkWidget *area = gimp_color_button_new (_("Select Color"), 16, 8, &color,
+					    GIMP_COLOR_AREA_FLAT);
+   gimp_color_button_set_update (GIMP_COLOR_BUTTON (area), TRUE);
+   gtk_table_attach_defaults (GTK_TABLE (table), area, col, col + 1, row,
+			      row + 1);
+   gtk_widget_show (area);   
 
    return area;
 }
@@ -516,16 +423,12 @@ create_colors_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    GtkWidget *table = create_tab(notebook, _("Colors"), 2, 3);
 
    create_label_in_table(table, 0, 0, _("Normal:"));
-   data->normal_fg = create_color_field(data, table, 0, 1,
-					G_CALLBACK(edit_normal_fg));
-   data->normal_bg = create_color_field(data, table, 0, 2,
-					G_CALLBACK(edit_normal_bg));
+   data->normal_fg = create_color_field(data, table, 0, 1);
+   data->normal_bg = create_color_field(data, table, 0, 2);
 
    create_label_in_table(table, 1, 0, _("Selected:"));
-   data->selected_fg = create_color_field(data, table, 1, 1,
-					  G_CALLBACK(edit_selected_fg));
-   data->selected_bg = create_color_field(data, table, 1, 2,
-					  G_CALLBACK(edit_selected_bg));
+   data->selected_fg = create_color_field(data, table, 1, 1);
+   data->selected_bg = create_color_field(data, table, 1, 2);
 }
 
 #ifdef _NOT_READY_YET_
@@ -542,16 +445,6 @@ create_contiguous_regions_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 }
 #endif
 
-static void
-switch_page(GtkWidget *widget, GtkNotebookPage *page, gint page_num,
-	    gpointer data)
-{
-   if (page_num == 2) {
-      PreferencesDialog_t *param = (PreferencesDialog_t*) data;
-      set_button_colors(param, &param->old_colors);
-   }
-}
-
 static PreferencesDialog_t*
 create_preferences_dialog(void)
 {
@@ -559,14 +452,10 @@ create_preferences_dialog(void)
    DefaultDialog_t *dialog;
    GtkWidget *notebook;
 
-   data->color_sel_dlg = NULL;
    data->dialog = dialog = make_default_dialog( _("General Preferences"));
    default_dialog_set_ok_cb(dialog, preferences_ok_cb, (gpointer) data);
 
    data->notebook = notebook = gtk_notebook_new();
-   g_signal_connect_after(notebook, "switch_page",
-			  G_CALLBACK(switch_page), (gpointer) data);
-
    gtk_box_pack_start (GTK_BOX (data->dialog->vbox), notebook, TRUE, TRUE, 0);
    create_general_tab(data, notebook);
    create_menu_tab(data, notebook);
@@ -591,7 +480,6 @@ do_preferences_dialog(void)
    }
    gtk_notebook_set_current_page(GTK_NOTEBOOK(dialog->notebook), 0);
    dialog->old_data = old_data = get_preferences();
-   dialog->new_colors = dialog->old_colors = old_data->colors;
 
    if (old_data->default_map_type == CERN)
       map_type = dialog->cern;
@@ -619,6 +507,8 @@ do_preferences_dialog(void)
 			     old_data->undo_levels);
    gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->mru_size),
 			     old_data->mru_size);
+
+   set_button_colors(dialog, &old_data->colors);
 
    default_dialog_show(dialog->dialog);
 }

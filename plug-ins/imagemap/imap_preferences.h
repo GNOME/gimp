@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,37 +49,6 @@ typedef struct {
    GdkGC 	       *normal_gc;
    GdkGC 	       *selected_gc;
 } PreferencesData_t;
-
-typedef struct {
-   DefaultDialog_t 	*dialog;
-   GtkWidget		*notebook;
-   GtkWidget		*ncsa;
-   GtkWidget		*cern;
-   GtkWidget		*csim;
-   GtkWidget		*prompt_for_area_info;
-   GtkWidget		*require_default_url;
-   GtkWidget		*show_area_handle;
-   GtkWidget		*keep_circles_round;
-   GtkWidget		*show_url_tip;
-   GtkWidget		*use_doublesized;
-
-   GtkWidget		*undo_levels;
-   GtkWidget		*mru_size;
-
-   GtkWidget		*normal_fg;
-   GtkWidget		*normal_bg;
-   GtkWidget		*selected_fg;
-   GtkWidget		*selected_bg;
-   GtkWidget		*color_sel_dlg;
-   GtkWidget		*color_sel;
-
-   GtkWidget		*threshold;
-   GtkWidget		*auto_convert;
-
-   PreferencesData_t	*old_data;
-   ColorSelData_t	old_colors;
-   ColorSelData_t	new_colors;
-} PreferencesDialog_t;
 
 void do_preferences_dialog();
 gboolean preferences_load(PreferencesData_t *data);
