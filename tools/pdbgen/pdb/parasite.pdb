@@ -26,6 +26,7 @@ sub name_arg {{
     name => 'name',
     type => 'string',
     desc => "The name of the parasite to $_[0]",
+    utf8 => 1
 }}
 
 sub parasite_outarg {{
@@ -112,10 +113,7 @@ HELP
 
     &pdb_misc;
 
-    @inargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The name of the parasite to detach from the gimp.' }
-    );
+    @inargs = ( &name_arg('detach from the gimp.') );
 
     %invoke = ( code => 'gimp_parasite_detach (gimp, name);' );
 }

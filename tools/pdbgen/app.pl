@@ -272,7 +272,9 @@ sub marshal_inargs {
 	    }
 	    elsif ($pdbtype eq 'parasite') {
 		$result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
-					  "$var == NULL");
+					  "$var == NULL || " .
+					  "$var->name == NULL || " .
+					  "!g_utf8_validate ($var->name, -1, NULL)");
 	    }
 	    elsif ($pdbtype eq 'tattoo') {
 		$result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },

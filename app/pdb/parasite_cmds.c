@@ -74,7 +74,7 @@ parasite_find_invoker (Gimp     *gimp,
   GimpParasite *parasite = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -133,7 +133,7 @@ parasite_attach_invoker (Gimp     *gimp,
   GimpParasite *parasite;
 
   parasite = (GimpParasite *) args[0].value.pdb_pointer;
-  if (parasite == NULL)
+  if (parasite == NULL || parasite->name == NULL || !g_utf8_validate (parasite->name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -175,7 +175,7 @@ parasite_detach_invoker (Gimp     *gimp,
   gchar *name;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -272,7 +272,7 @@ drawable_parasite_find_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -341,7 +341,7 @@ drawable_parasite_attach_invoker (Gimp     *gimp,
     success = FALSE;
 
   parasite = (GimpParasite *) args[1].value.pdb_pointer;
-  if (parasite == NULL)
+  if (parasite == NULL || parasite->name == NULL || !g_utf8_validate (parasite->name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -393,7 +393,7 @@ drawable_parasite_detach_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -514,7 +514,7 @@ image_parasite_find_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -583,7 +583,7 @@ image_parasite_attach_invoker (Gimp     *gimp,
     success = FALSE;
 
   parasite = (GimpParasite *) args[1].value.pdb_pointer;
-  if (parasite == NULL)
+  if (parasite == NULL || parasite->name == NULL || !g_utf8_validate (parasite->name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -635,7 +635,7 @@ image_parasite_detach_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
