@@ -21,8 +21,7 @@
 #include "appenv.h"
 #include "actionarea.h"
 #include "gimpbrushlist.h"
-#include "gimpset.h"
-#include "gimpsetP.h"  /* FIXME: get rid of this include */
+#include "gimplist.h"
 #include "gimpbrushgenerated.h"
 #include "brush_edit.h"
 #include "brush_select.h"
@@ -324,7 +323,8 @@ brush_select_new ()
   /*  render the brushes into the newly created image structure  */
   display_brushes (bsp);
 
-  gimp_set_foreach(GIMP_SET(brush_list), (GFunc)connect_signals_to_brush, bsp);
+  gimp_list_foreach(GIMP_LIST(brush_list), (GFunc)connect_signals_to_brush,
+		    bsp);
   gtk_signal_connect (GTK_OBJECT (brush_list), "add",
 		      (GtkSignalFunc) brush_added_callback,
 		      bsp);
@@ -574,44 +574,31 @@ display_setup (BrushSelectP bsp)
 }
 
 
+static int brush_counter = 0;
+static void do_display_brush (GimpBrush *brush, BrushSelectP bsp)
+{
+  display_brush (bsp, brush, brush_counter % NUM_BRUSH_COLUMNS,
+		 brush_counter / NUM_BRUSH_COLUMNS);
+  brush_counter++;
+}
+
 static void
 display_brushes (BrushSelectP bsp)
 {
-/* FIXME: use gimp_set_foreach?? */
-  GSList * list = GIMP_SET(brush_list)->list;    /*  the global brush list  */
-  int row, col;
-  GimpBrushP brush;
-
   /*  If there are no brushes, insensitize widgets  */
-  if (brush_list == NULL)
-    {
-      gtk_widget_set_sensitive (bsp->options_box, FALSE);
-      return;
-    }
+  if (brush_list == NULL || gimp_brush_list_length(brush_list) == 0)
+  {
+    gtk_widget_set_sensitive (bsp->options_box, FALSE);
+    return;
+  }
   /*  Else, sensitize widgets  */
   else
     gtk_widget_set_sensitive (bsp->options_box, TRUE);
 
   /*  setup the display area  */
   display_setup (bsp);
-
-  row = col = 0;
-  while (list)
-    {
-      brush = (GimpBrushP) list->data;
-
-      /*  Display the brush  */
-      display_brush (bsp, brush, col, row);
-
-      /*  increment the counts  */
-      if (++col == NUM_BRUSH_COLUMNS)
-	{
-	  row ++;
-	  col = 0;
-	}
-
-      list = g_slist_next (list);
-    }
+  brush_counter = 0;
+  gimp_list_foreach(GIMP_LIST(brush_list), (GFunc)do_display_brush, bsp);
 }
 
 
@@ -708,27 +695,18 @@ preview_calc_scrollbar (BrushSelectP bsp)
   int page_size;
   int max;
   int offs;
-  /* int rowy; */
 
   offs = bsp->scroll_offset;
-  num_rows = (brush_list->num_brushes + NUM_BRUSH_COLUMNS - 1)
+  num_rows = (gimp_brush_list_length(brush_list) + NUM_BRUSH_COLUMNS - 1)
     / NUM_BRUSH_COLUMNS;
   max = num_rows * bsp->cell_width;
   if (!num_rows) num_rows = 1;
   page_size = bsp->preview->allocation.height;
   page_size = ((page_size < max) ? page_size : max);
-  /*
-  rowy = (get_active_brush()->index / NUM_BRUSH_COLUMNS) * bsp->cell_width
-	 + bsp->cell_width/2;
-  if((rowy < offs) || (rowy > (offs + page_size)))
-    offs = rowy - page_size/2;
-  offs = MIN(MAX(offs, 0), max - page_size);
-  */
 
   bsp->scroll_offset = offs;
   bsp->sbar_data->value = bsp->scroll_offset;
   bsp->sbar_data->upper = max;
-  /* bsp->sbar_data->page_size = page_size; */
   bsp->sbar_data->page_size = ((page_size < max) ? page_size : max);
   bsp->sbar_data->page_increment = (page_size >> 1);
   bsp->sbar_data->step_increment = bsp->cell_width;
@@ -742,7 +720,7 @@ brush_select_resize (GtkWidget *widget,
 		     BrushSelectP bsp)
 {
    NUM_BRUSH_COLUMNS = (gint)((widget->allocation.width - 4) / STD_CELL_WIDTH);
-   NUM_BRUSH_ROWS = (brush_list->num_brushes + NUM_BRUSH_COLUMNS - 1) / NUM_BRUSH_COLUMNS;
+   NUM_BRUSH_ROWS = (gimp_brush_list_length(brush_list) + NUM_BRUSH_COLUMNS - 1) / NUM_BRUSH_COLUMNS;
    
    bsp->width = widget->allocation.width - 4;
    bsp->height = widget->allocation.height - 4;

@@ -23,7 +23,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include "appenv.h"
-#include "gimpbrushlist.h"
 #include "gimpbrushgenerated.h"
 #include "brush_header.h"
 #include "brush_select.h"
@@ -37,13 +36,15 @@
 #include "gimpsignal.h"
 #include "menus.h"
 #include "paint_core.h"
-#include "gimpset.h"
-#include "gimpsetP.h"
+#include "gimplist.h"
+#include "gimpbrush.h"
+#include "gimplistP.h"
+#include "gimpbrushlistP.h"
 
 
 /*  global variables  */
-GimpBrushP          active_brush = NULL;
-GimpBrushList *     brush_list = NULL;
+GimpBrush     *active_brush = NULL;
+GimpBrushList *brush_list   = NULL;
 
 double              opacity = 1.0;
 int                 paint_mode = 0;
@@ -70,13 +71,28 @@ static void gimp_brush_list_uniquefy_names(GimpBrushList *brush_list);
 static GimpObjectClass* parent_class;
 
 static void
+gimp_brush_list_add_func(GimpList* list, gpointer val)
+{
+  list->list=g_slist_insert_sorted (list->list, val, brush_compare_func);
+  GIMP_BRUSH_LIST(list)->num_brushes++;
+}
+
+static void
+gimp_list_remove_func(GimpList* list, gpointer val)
+{
+  list->list=g_slist_remove(list->list, val);
+  GIMP_BRUSH_LIST(list)->num_brushes--;
+}
+
+static void
 gimp_brush_list_class_init (GimpBrushListClass *klass)
 {
-  GtkObjectClass *object_class;
+  GimpListClass *gimp_list_class;
   
-  object_class = GTK_OBJECT_CLASS(klass);
-
-  parent_class = gtk_type_class (gimp_object_get_type ());
+  gimp_list_class = GIMP_LIST_CLASS(klass);
+  gimp_list_class->add = gimp_brush_list_add_func;
+  gimp_list_class->remove = gimp_brush_list_add_func;
+  parent_class = gtk_type_class (gimp_list_get_type ());
 }
 
 void
@@ -98,7 +114,7 @@ GtkType gimp_brush_list_get_type(void)
       (GtkObjectInitFunc)gimp_brush_list_init,
       NULL,
       NULL };
-    type=gtk_type_unique(gimp_set_get_type(), &info);
+    type=gtk_type_unique(gimp_list_get_type(), &info);
   }
   return type;
 }
@@ -107,24 +123,24 @@ GimpBrushList *
 gimp_brush_list_new ()
 {
   GimpBrushList *list=GIMP_BRUSH_LIST(gtk_type_new(gimp_brush_list_get_type()));
-  GIMP_SET(list)->type = GIMP_TYPE_BRUSH;
-  GIMP_SET(list)->weak = 0;
+  GIMP_LIST(list)->type = GIMP_TYPE_BRUSH;
+  GIMP_LIST(list)->weak = 0;
   
   return list;
 }
 
 void gimp_brush_list_uniquefy_names(GimpBrushList *blist)
 {
-  GSList *list = GIMP_SET(blist)->list;
-  GimpBrushP gb_start = NULL;
+  GSList *list = GIMP_LIST(blist)->list;
+  GimpBrush * gb_start = NULL;
   gint gb_count = 0;
 
   while (list)
   {
-    GimpBrushP gb = (GimpBrushP)list->data;
+    GimpBrush * gb = (GimpBrush *)list->data;
     list = g_slist_next(list);
     if(list) {
-      GimpBrushP gb2 = (GimpBrushP)list->data;
+      GimpBrush * gb2 = (GimpBrush *)list->data;
       
       if(gb_start == NULL) {
         gb_start = gb;
@@ -186,8 +202,8 @@ brushes_free_one (gpointer data, gpointer dummy)
 static gint
 brush_compare_func (gconstpointer first, gconstpointer second)
 {
-  return strcmp (((const GimpBrushP)first)->name, 
-		 ((const GimpBrushP)second)->name);
+  return strcmp (((const GimpBrush *)first)->name, 
+		 ((const GimpBrush *)second)->name);
 }
 
 
@@ -195,7 +211,7 @@ void
 brushes_free ()
 {
   if (brush_list) {
-/*    gimp_set_foreach (brush_list, brushes_free_one, NULL); */
+/*    gimp_list_foreach (GIMP_LIST(brush_list), brushes_free_one, NULL);*/
     gimp_object_destroy(GIMP_OBJECT(brush_list));
   }
 
@@ -216,7 +232,7 @@ brush_select_dialog_free ()
 }
 
 
-GimpBrushP
+GimpBrush *
 get_active_brush ()
 {
   if (have_default_brush)
@@ -226,15 +242,15 @@ get_active_brush ()
 	fatal_error ("Specified default brush not found!");
     }
   else if (! active_brush && brush_list)
-    /* need a gimp_set_get_first() type function */
-    active_brush = (GimpBrushP) GIMP_SET(brush_list)->list->data;
+    /* need a gimp_list_get_first() type function */
+    active_brush = (GimpBrush *) GIMP_LIST(brush_list)->list->data;
 
   return active_brush;
 }
 
 
 static GSList *
-insert_brush_in_list (GSList *list, GimpBrushP brush)
+insert_brush_in_list (GSList *list, GimpBrush * brush)
 {
   return g_slist_insert_sorted (list, brush, brush_compare_func);
 }
@@ -257,15 +273,15 @@ create_default_brush ()
 
 
 
-GimpBrushP
+GimpBrush *
 get_brush_by_index (int index)
 {
   GSList *list;
-  GimpBrushP brush = NULL;
-  /* fix me: make a gimp_set function that does this */
-  list = g_slist_nth (GIMP_SET(brush_list)->list, index);
+  GimpBrush * brush = NULL;
+  /* fix me: make a gimp_list function that does this? */
+  list = g_slist_nth (GIMP_LIST(brush_list)->list, index);
   if (list)
-    brush = (GimpBrushP) list->data;
+    brush = (GimpBrush *) list->data;
 
   return brush;
 }
@@ -279,20 +295,57 @@ static void
 gimp_brush_list_recalc_indexes(GimpBrushList *brush_list)
 {
   int index = 0;
-  gimp_set_foreach (GIMP_SET(brush_list), (GFunc)gimp_brush_do_indexes,
-		    &index);
+  gimp_list_foreach (GIMP_LIST(brush_list), (GFunc)gimp_brush_do_indexes,
+		     &index);
 }
 
 void
-gimp_brush_list_add (GimpBrushList *brush_list, GimpBrushP brush)
+gimp_brush_list_add (GimpBrushList *brush_list, GimpBrush * brush)
 {
-  gimp_set_add(GIMP_SET(brush_list), brush);
-  brush_list->num_brushes++;
+  gimp_list_add(GIMP_LIST(brush_list), brush);
   gimp_brush_list_recalc_indexes(brush_list);
 }
 
 void
-select_brush (GimpBrushP brush)
+gimp_brush_list_remove (GimpBrushList *brush_list, GimpBrush * brush)
+{
+  gimp_list_remove(GIMP_LIST(brush_list), brush);
+  gimp_brush_list_recalc_indexes(brush_list);
+}
+
+int
+gimp_brush_list_length (GimpBrushList *brush_list)
+{
+  g_return_val_if_fail(GIMP_IS_BRUSH_LIST(brush_list), 0);
+  return (brush_list->num_brushes);
+}
+
+GimpBrush *
+gimp_brush_list_get_brush(GimpBrushList *blist, char *name)
+{
+  GimpBrush *brushp;
+  GSList *list;
+  if (blist == NULL)
+    return NULL;
+
+  list = GIMP_LIST(brush_list)->list;
+
+  while (list)
+  {
+    brushp = (GimpBrush *) list->data;
+
+    if (!strcmp (brushp->name, name))
+    {
+      return brushp;
+    }
+
+    list = g_slist_next (list);
+  }
+  return NULL;
+}
+
+void
+select_brush (GimpBrush * brush)
 {
   /*  Make sure the active brush is swapped before we get a new one... */
   if (stingy_memory_use)
@@ -340,7 +393,7 @@ create_brush_dialog ()
 static Argument *
 brushes_get_brush_invoker (Argument *args)
 {
-  GimpBrushP brushp;
+  GimpBrush * brushp;
 
   success = (brushp = get_active_brush ()) != NULL;
 
@@ -772,29 +825,6 @@ ProcRecord brushes_set_paint_mode_proc =
 };
 
 
-GimpBrushP
-gimp_brush_list_get_brush(GimpBrushListP blist, char *name)
-{
-  GimpBrushP brushp;
-  GSList *list;
-  if (blist == NULL)
-    return NULL;
-
-  list = GIMP_SET(brush_list)->list;
-
-  while (list)
-  {
-    brushp = (GimpBrushP) list->data;
-
-    if (!strcmp (brushp->name, name))
-    {
-      return brushp;
-    }
-
-    list = g_slist_next (list);
-  }
-  return NULL;
-}
 
 /***********************/
 /*  BRUSHES_SET_BRUSH  */
@@ -803,7 +833,7 @@ gimp_brush_list_get_brush(GimpBrushListP blist, char *name)
 static Argument *
 brushes_set_brush_invoker (Argument *args)
 {
-  GimpBrushP brushp;
+  GimpBrush * brushp;
   char *name;
 
   success = (name = (char *) args[0].value.pdb_pointer) != NULL;
@@ -860,19 +890,19 @@ ProcRecord brushes_set_brush_proc =
 static Argument *
 brushes_list_invoker (Argument *args)
 {
-  GimpBrushP brushp;
+  GimpBrush * brushp;
   GSList *list;
   char **brushes;
   int i;
 
   brushes = (char **) g_malloc (sizeof (char *) * brush_list->num_brushes);
 
-  success = (list = GIMP_SET(brush_list)->list) != NULL;
+  success = (list = GIMP_LIST(brush_list)->list) != NULL;
   i = 0;
 
   while (list)
     {
-      brushp = (GimpBrushP) list->data;
+      brushp = (GimpBrush *) list->data;
 
       brushes[i++] = g_strdup (brushp->name);
       list = g_slist_next (list);

@@ -1,3 +1,16 @@
+Sun Jul 12 04:16:17 PDT 1998 Jay Cox <jaycox@earthlink.net>
+	* gimplist{.c,.h,F.h,P.h}
+        New class for lists
+
+	* gimpbrushlist.h gimpbrushlistF.h gimpbrushlistP.h brush_select.c
+        split gimpbrushlist.h into 3 files.  Made gimplist
+        the parent class of GimpBrushList.
+
+	* gimpbrushlist.c: brushes in the list are once again sorted by name.
+
+	* paint_funcs.c: minor speed tweak to a minor speed tweak in 
+	border_region
+
 Sat Jul 11 22:15:31 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* fileops.c

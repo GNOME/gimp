@@ -3,4 +3,4 @@
 
 typedef struct _GimpSet GimpSet;
 
-#endif
+#endif /* __GIMPSETF_H__ */

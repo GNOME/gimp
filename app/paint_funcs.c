@@ -4043,7 +4043,8 @@ void
 border_region(PixelRegion *src, gint16 radius)
 {
 /*
-  blame all bugs in this function on jaycox@earthlink.net
+  This function has no bugs, but if you imagine some you can
+  blame them on jaycox@earthlink.net
 */
   register gint32 i, j, x, y;
   guchar **buf, *out;
@@ -4121,12 +4122,13 @@ border_region(PixelRegion *src, gint16 radius)
   density = (guchar **)g_malloc (diameter*sizeof(void *));
   density += radius;
 
-  for (x = -(radius); x < (radius+1); x++) /* allocate density[][] */
+  for (x = 0; x < (radius+1); x++) /* allocate density[][] */
   {
     density[x] = (guchar *)g_malloc (diameter);
     density[x] += radius;
+    density[-x] = density[x];
   }
-  for (x = -(radius); x < (radius+1); x++) /* compute density[][] */
+  for (x = 0; x < (radius+1); x++) /* compute density[][] */
   {
     register double tmpx, tmpy;
     guchar a;
@@ -4149,13 +4151,9 @@ border_region(PixelRegion *src, gint16 radius)
       else
 	a = 0;
       density[ x][ y] = a;
-      density[-x][ y] = a;
       density[ x][-y] = a;
-      density[-x][-y] = a;
       density[ y][ x] = a;
-      density[-y][ x] = a;
       density[ y][-x] = a;
-      density[-y][-x] = a;
     }
   }
   pixel_region_get_row (src, src->x, src->y + 0, src->w, buf[0], 1);
@@ -4282,7 +4280,7 @@ border_region(PixelRegion *src, gint16 radius)
   }
   g_free (transition);
 
-  for (i = -radius; i < radius +1 ; i++)
+  for (i = 0; i < radius +1 ; i++)
   {
     density[i]-= radius;
     g_free(density[i]);

@@ -148,6 +148,10 @@ gimp_SOURCES = \
 	gimpbrushgenerated.h	\
 	gimpbrushlist.c		\
 	gimpbrushlist.h		\
+	gimplist.c		\
+	gimplist.h		\
+	gimplistF.h		\
+	gimplistP.h		\
 	gimprc.c		\
 	gimprc.h		\
 	global_edit.c		\

@@ -22,36 +22,19 @@
 #include "procedural_db.h"
 #include "temp_buf.h"
 #include "gimpbrush.h"
-#include "gimpset.h"
-#include "gimpsetP.h"
+#include "gimpbrushlistF.h"
 
-
-typedef struct _GimpBrushList  GimpBrushList, * GimpBrushListP;
-
-struct _GimpBrushList
-{
-  GimpSet gimpset;
-  int num_brushes;
-};
-
-typedef struct _GimpBrushListClass GimpBrushListClass;
-struct _GimpBrushListClass
-{
-  GimpSetClass parent_class;
-};
-
-#define BRUSH_LIST_CLASS(klass) \
-  GTK_CHECK_CLASS_CAST (klass, gimp_brush_list_get_type(), GimpBrushListClass)
 
 #define GIMP_TYPE_BRUSH_LIST  (gimp_brush_list_get_type ())
 #define GIMP_BRUSH_LIST(obj)  (GIMP_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_LIST, GimpBrushList))
 #define GIMP_IS_BRUSH_LIST(obj) (GIMP_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_LIST))
 
-GimpBrushListP gimp_brush_list_new      (void);
+GimpBrushList *gimp_brush_list_new      (void);
 GtkType        gimp_brush_list_get_type (void);
-void           gimp_brush_list_add      (GimpBrushListP list,
-					  GimpBrushP brush);
-GimpBrushP     gimp_brush_list_get_brush(GimpBrushListP list, char *name);
+void           gimp_brush_list_add      (GimpBrushList *list,
+					  GimpBrush *brush);
+GimpBrushP     gimp_brush_list_get_brush(GimpBrushList *list, char *name);
+int            gimp_brush_list_length   (GimpBrushList *list);
 
 
 /*  global variables  */
@@ -68,8 +51,6 @@ GimpBrushP get_active_brush         (void);
 
 /* TODO: {re}move this function */
 void       create_brush_dialog      (void);
-
-
 
 /*  access functions  */
 /* TODO: move opacity and paint_mode into individual tools? */
