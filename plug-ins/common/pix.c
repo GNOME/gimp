@@ -28,6 +28,7 @@
 
 /* Event history:
  * V 1.0, MT, 02-Jul-97: initial version of plug-in
+ * V 1.1, MT, 04-Dec-97: added .als file extension 
  */
 
 /* Features
@@ -39,9 +40,7 @@
  *       colour, so neither does this plug-in
  */
  
-/*
 static char ident[] = "@(#) GIMP Alias|Wavefront pix image file-plugin v1.0  24-jun-97";
-*/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -75,8 +74,8 @@ static gint     save_image( char *filename, gint32 image_ID, gint32 drawable_ID 
 
 static guint16  get_short( FILE * file );
 static void     put_short( guint16 value, FILE * file );
-/* static guint32  get_long( FILE * file ); */
-/* static gchar    get_char( FILE * file ); */
+static guint32  get_long( FILE * file );
+static gchar    get_char( FILE * file );
 
 /******************
  * Implementation *
@@ -144,8 +143,8 @@ static void query ()
                           nsave_args, 0,
                           save_args, NULL);
 
-	gimp_register_load_handler ("file_pix_load", "pix,matte,mask,alpha", "");
-	gimp_register_save_handler ("file_pix_save", "pix,matte,mask,alpha", "");
+	gimp_register_load_handler ("file_pix_load", "pix,matte,mask,alpha,als", "");
+	gimp_register_save_handler ("file_pix_save", "pix,matte,mask,alpha,als", "");
 }
 
 static void run ( char *name, int nparams, GParam *param, int *nreturn_vals,
@@ -232,13 +231,12 @@ static void put_short( guint16 value, FILE * file )
 	fwrite( buf, 2, 1, file);
 }
 
+static guint32 get_long( FILE * file )
 /* 
  * Description:
  *     Reads a 16-bit integer from a file in such a way that the machine's
  *     bit ordering should not matter 
  */
-/*
-static guint32 get_long( FILE * file )
 {
 	guchar buf[4];
 
@@ -246,21 +244,18 @@ static guint32 get_long( FILE * file )
 	return ( buf[0] << 24 ) + ( buf[1] << 16 ) 
          + ( buf[2] << 8 ) + ( buf[3] << 0 );
 }
-*/
 
+static gchar get_char( FILE * file )
 /* 
  * Description:
  *     Reads a byte from a file.  Provided for convenience; 
  */
-/*
-static gchar get_char( FILE * file )
 {
 	gchar result;
 
 	fread( &result, 1, 1, file );
 	return result;
 }
-*/
 
 static gint32 load_image (char *filename)
 /*
@@ -276,7 +271,10 @@ static gint32 load_image (char *filename)
  */
 {
 	gint i, j, tile_height, row;	
+	gint        result = -1;
 	FILE      * file = NULL;
+	gint32    * offsetTable = NULL;
+	gint32    * lengthTable = NULL;
 	gchar     * progMessage;
 	guchar    * dest; 
 	guchar    * dest_base;
@@ -434,6 +432,7 @@ static gint save_image( char *filename,  gint32 image_ID, gint32 drawable_ID )
  */
 {
 	gint        depth, i, j, row, tile_height, writelen, rectHeight;
+	gboolean    savingAlpha = FALSE;
 	gboolean    savingColor = TRUE;
 	guchar    * src; 
 	guchar    * src_base;
@@ -515,6 +514,8 @@ static gint save_image( char *filename,  gint32 image_ID, gint32 drawable_ID )
 				  i += 1, row += 1)
 			{
 				/* Write a row of the image */
+				guchar count;
+				gint cnt = 0;
 
 				record[0] = 1;
 				record[3] = src[0];
@@ -560,6 +561,8 @@ static gint save_image( char *filename,  gint32 image_ID, gint32 drawable_ID )
 				  i += 1, row += 1)
 			{
 				/* Write a row of the image */
+				guchar count;
+				gint cnt = 0;
 
 				record[0] = 1;
 				record[1] = src[0];
