@@ -711,12 +711,11 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-
   hbbox = gtk_hbutton_box_new ();
   gtk_container_set_border_width (GTK_CONTAINER (hbbox), 2);
   gtk_box_set_spacing (GTK_BOX (hbbox), 4);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbbox), GTK_BUTTONBOX_SPREAD);
-  gtk_box_pack_end (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
 
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
@@ -740,21 +739,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     l_tool);
 
   hbbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (hbbox), 2);
   gtk_box_pack_start (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
-
-  button = gimp_levels_tool_color_picker_new (l_tool, LOW_INPUT | ALL_CHANNELS);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = gimp_levels_tool_color_picker_new (l_tool, GAMMA | ALL_CHANNELS);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = gimp_levels_tool_color_picker_new (l_tool, HIGH_INPUT | ALL_CHANNELS);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   button = gtk_button_new_with_mnemonic (_("_Auto"));
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 2);
@@ -764,6 +751,20 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   g_signal_connect (button, "clicked",
                     G_CALLBACK (levels_auto_callback),
                     l_tool);
+
+  button = gimp_levels_tool_color_picker_new (l_tool,
+                                              LOW_INPUT | ALL_CHANNELS);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gimp_levels_tool_color_picker_new (l_tool, GAMMA | ALL_CHANNELS);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gimp_levels_tool_color_picker_new (l_tool,
+                                              HIGH_INPUT | ALL_CHANNELS);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 }
 
 static void

@@ -1,3 +1,7 @@
+2003-03-19  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimplevelstool.c: tweaked the dialog layout a little.
+
 2003-03-18  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/imagemap/java.xpm
