@@ -1,5 +1,9 @@
 2005-03-19  Manish Singh  <yosh@gimp.org>
 
+	* gimp.spec.in: Remove outdated file.
+
+2005-03-19  Manish Singh  <yosh@gimp.org>
+
 	* app/composite/gimp-composite-altivec.[ch]: More accelerated functions
 	(screen, grain_merge, grain_extract, divide, dodge) from Frederic
 	Leroy.
