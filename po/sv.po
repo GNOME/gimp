@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 00:59+0200\n"
-"PO-Revision-Date: 2004-10-12 18:32+0900\n"
+"POT-Creation-Date: 2004-10-15 23:29+0900\n"
+"PO-Revision-Date: 2004-10-15 23:32+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -228,6 +228,11 @@ msgid ""
 "8 and you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
+"Namnet på katalogen för GIMPs användarkonfiguration kan inte konverteras "
+"till UTF-8: %s\n"
+"\n"
+"Antagligen använder ditt filsystem en annan kodning än UTF-8, men du har "
+"inte talat om det för GLib. Sätt miljövariabeln G_FILENAME_ENCODING."
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:92 app/core/gimp.c:856 app/dialogs/dialogs.c:135
@@ -648,9 +653,8 @@ msgid "Untitled"
 msgstr "Namnlös"
 
 #: app/actions/data-commands.c:149
-#, fuzzy
 msgid "Delete Object"
-msgstr "Ta bort dataobjekt"
+msgstr "Ta bort objekt"
 
 #: app/actions/data-commands.c:167
 #, c-format
@@ -949,55 +953,45 @@ msgid "_Desaturate"
 msgstr "Avfärga"
 
 #: app/actions/drawable-actions.c:51
-#, fuzzy
 msgid "In_vert"
-msgstr "Invertera"
+msgstr "In_vertera"
 
 #: app/actions/drawable-actions.c:56
-#, fuzzy
 msgid "_Equalize"
-msgstr "Jämna ut"
+msgstr "_Jämna ut"
 
 #: app/actions/drawable-actions.c:61
-#, fuzzy
 msgid "_Offset..."
-msgstr "Offset"
+msgstr "_Offset..."
 
 #: app/actions/drawable-actions.c:69 app/actions/vectors-actions.c:126
-#, fuzzy
 msgid "_Visible"
-msgstr "/_Arkiv"
+msgstr "_Synlig"
 
 #: app/actions/drawable-actions.c:75 app/actions/vectors-actions.c:132
-#, fuzzy
 msgid "_Linked"
-msgstr "Linje"
+msgstr "_Länkad"
 
 #: app/actions/drawable-actions.c:84 app/actions/image-actions.c:133
-#, fuzzy
 msgid "Flip _Horizontally"
-msgstr "_Horisontell:"
+msgstr "Vänd _horisontellt"
 
 #: app/actions/drawable-actions.c:89 app/actions/image-actions.c:138
-#, fuzzy
 msgid "Flip _Vertically"
-msgstr "_Vertikal:"
+msgstr "_Vänd vertikalt"
 
 #. please use the degree symbol in the translation
 #: app/actions/drawable-actions.c:97 app/actions/image-actions.c:147
-#, fuzzy
 msgid "Rotate 90 degrees _CW"
-msgstr "/Lager/Transformera/Rotera 90 grader m_edurs"
+msgstr "Rotera 90 grader m_edurs"
 
 #: app/actions/drawable-actions.c:102 app/actions/image-actions.c:152
-#, fuzzy
 msgid "Rotate _180 degrees"
-msgstr "/Bild/Transformera/Rotera _180 grader"
+msgstr "Rotera _180 grader"
 
 #: app/actions/drawable-actions.c:107 app/actions/image-actions.c:157
-#, fuzzy
 msgid "Rotate 90 degrees CC_W"
-msgstr "/Bild/Transformera/Rotera 90 grader m_oturs"
+msgstr "Rotera 90 grader m_oturs"
 
 #: app/actions/drawable-commands.c:57
 msgid "Desaturate operates only on RGB color layers."
@@ -1012,9 +1006,8 @@ msgid "Equalize does not operate on indexed layers."
 msgstr "Jämna ut fungerar inte på indexerade lager."
 
 #: app/actions/edit-actions.c:61
-#, fuzzy
 msgid "_Edit"
-msgstr "/_Redigera"
+msgstr "_Redigera"
 
 #: app/actions/edit-actions.c:62
 msgid "Buffer"
@@ -1038,74 +1031,60 @@ msgid "Redo"
 msgstr "Gör om"
 
 #: app/actions/edit-actions.c:77
-#, fuzzy
 msgid "_Clear Undo History"
-msgstr "Ångringshistorik"
+msgstr "_Töm ångringshistorik"
 
 #: app/actions/edit-actions.c:78
-#, fuzzy
 msgid "Clear undo history..."
-msgstr "Bildångringshistorik"
+msgstr "Töm ångringshistorik..."
 
 #: app/actions/edit-actions.c:83
-#, fuzzy
 msgid "Cu_t"
-msgstr "Klipp ut"
+msgstr "Klipp _ut"
 
 #: app/actions/edit-actions.c:88
-#, fuzzy
 msgid "_Copy"
-msgstr "Kopiera"
+msgstr "_Kopiera"
 
 #: app/actions/edit-actions.c:93
-#, fuzzy
 msgid "_Paste"
-msgstr "Klistra in"
+msgstr "Kli_stra in"
 
 #: app/actions/edit-actions.c:98
-#, fuzzy
 msgid "Paste _Into"
-msgstr "Klistra in i"
+msgstr "Klistra in _i"
 
 #: app/actions/edit-actions.c:103
-#, fuzzy
 msgid "Paste as _New"
-msgstr "Klistra in som ny"
+msgstr "Klistra in som _ny"
 
 #: app/actions/edit-actions.c:108
-#, fuzzy
 msgid "Cu_t Named..."
-msgstr "Klipp ut namngiven"
+msgstr "Kli_pp ut namngiven..."
 
 #: app/actions/edit-actions.c:113
-#, fuzzy
 msgid "_Copy Named..."
-msgstr "Kopiera namngiven"
+msgstr "Kopie_ra namngiven..."
 
 #: app/actions/edit-actions.c:118
-#, fuzzy
 msgid "_Paste Named..."
-msgstr "/Redigera/Buffert/Klistra _in namngiven..."
+msgstr "Klistra in namngi_ven..."
 
 #: app/actions/edit-actions.c:123
-#, fuzzy
 msgid "Cl_ear"
-msgstr "Töm"
+msgstr "T_öm"
 
 #: app/actions/edit-actions.c:131
-#, fuzzy
 msgid "Fill with _FG Color"
-msgstr "Fyll med förgrundsfärg"
+msgstr "Fyll med _förgrundsfärg"
 
 #: app/actions/edit-actions.c:136
-#, fuzzy
 msgid "Fill with B_G Color"
-msgstr "Fyll med bakgrundsfärg"
+msgstr "Fyll med _bakgrundsfärg"
 
 #: app/actions/edit-actions.c:141
-#, fuzzy
 msgid "Fill with P_attern"
-msgstr "Fyll med mönster"
+msgstr "Fyll med möns_ter"
 
 #: app/actions/edit-actions.c:209
 #, c-format
@@ -1118,13 +1097,12 @@ msgid "_Redo %s"
 msgstr "_Gör om %s"
 
 #: app/actions/edit-commands.c:104
-#, fuzzy
 msgid "Clear Undo History"
-msgstr "Ångringshistorik"
+msgstr "Töm ångringshistorik"
 
 #: app/actions/edit-commands.c:122
 msgid "Really clear image's undo history?"
-msgstr ""
+msgstr "Verkligen tömma bildens ångringshistorik?"
 
 #: app/actions/edit-commands.c:199
 msgid "Cut Named"
@@ -1155,79 +1133,64 @@ msgid "Error Console Menu"
 msgstr "Felkonsollmeny"
 
 #: app/actions/error-console-actions.c:44
-#, fuzzy
 msgid "_Clear Errors"
-msgstr "/_Rensa fel"
+msgstr "_Rensa fel"
 
 #: app/actions/error-console-actions.c:49
-#, fuzzy
 msgid "Save _All Errors to File..."
-msgstr "/_Skriv alla fel till fil..."
+msgstr "_Skriv alla fel till fil..."
 
 #: app/actions/error-console-actions.c:54
-#, fuzzy
 msgid "Save _Selection to File..."
-msgstr "/Spara _markering till fil..."
+msgstr "Spara _markering till fil..."
 
 #: app/actions/file-actions.c:61
-#, fuzzy
 msgid "_File"
-msgstr "/_Arkiv"
+msgstr "_Arkiv"
 
 #: app/actions/file-actions.c:62
-#, fuzzy
 msgid "Open _Recent"
-msgstr "/Arkiv/Öppna _senaste"
+msgstr "Öppna _senaste"
 
 #: app/actions/file-actions.c:63
-#, fuzzy
 msgid "_Acquire"
-msgstr "/Arkiv/_Inhämta"
+msgstr "_Inhämta"
 
 #: app/actions/file-actions.c:66 app/actions/file-actions.c:71
-#, fuzzy
 msgid "_Open..."
-msgstr "/Arkiv/_Öppna..."
+msgstr "_Öppna..."
 
 #: app/actions/file-actions.c:76
-#, fuzzy
 msgid "Op_en as Layer..."
-msgstr "/_Nytt lager..."
+msgstr "_Nytt lager..."
 
 #: app/actions/file-actions.c:81
-#, fuzzy
 msgid "Open _Location..."
-msgstr "Placering:"
+msgstr "Öppna _plats..."
 
 #: app/actions/file-actions.c:86
-#, fuzzy
 msgid "_Save"
-msgstr "Spara"
+msgstr "_Spara"
 
 #: app/actions/file-actions.c:91
-#, fuzzy
 msgid "Save _as..."
-msgstr "/Arkiv/Spara _som..."
+msgstr "Spara _som..."
 
 #: app/actions/file-actions.c:96
-#, fuzzy
 msgid "Save a Cop_y..."
-msgstr "/Arkiv/Spara en _kopia..."
+msgstr "Spara en _kopia..."
 
 #: app/actions/file-actions.c:101
-#, fuzzy
 msgid "Save as _Template..."
-msgstr "/Arkiv/Spara som _mall..."
+msgstr "Spara som _mall..."
 
 #: app/actions/file-actions.c:106
-#, fuzzy
 msgid "Re_vert..."
-msgstr "Återgå"
+msgstr "Å_tergå..."
 
 #: app/actions/file-actions.c:111
-#, fuzzy
 msgid "_Quit"
-msgstr "Avsluta"
+msgstr "_Avsluta"
 
 #: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:254
 #, c-format
@@ -1266,23 +1229,19 @@ msgstr "Återgå till gammal bild"
 #: app/actions/file-commands.c:317
 #, c-format
 msgid "Revert '%s' to '%s'?"
-msgstr ""
+msgstr "Återgå från \"%s\" till \"%s\"?"
 
 #: app/actions/file-commands.c:323
-#, fuzzy
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
-"Återgå från \"%s\" till\n"
-"\"%s\"?\n"
-"\n"
-"Du kommer att förlora alla dina ändringar, inklusive all ångrainformation"
+"Genom att återgå till den sparade versionen kommer du att förlora alla dina "
+"ändringar, inklusive all ångrainformation"
 
 #: app/actions/file-commands.c:372
-#, fuzzy
 msgid "Open Image as Layer"
-msgstr "Öppna bild"
+msgstr "Öppna bild som lager"
 
 #: app/actions/file-commands.c:377 app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
@@ -1308,12 +1267,10 @@ msgid "Fonts Menu"
 msgstr "Typsnittsmeny"
 
 #: app/actions/fonts-actions.c:47
-#, fuzzy
 msgid "_Rescan Font List"
-msgstr "/_Läs om typsnittslista"
+msgstr "_Läs om typsnittslista"
 
 #: app/actions/fonts-actions.c:48
-#, fuzzy
 msgid "Rescan font list"
 msgstr "Läs om typsnittslista"
 
@@ -1322,101 +1279,82 @@ msgid "Gradient Editor Menu"
 msgstr "Färgskaleredigerarmeny"
 
 #: app/actions/gradient-editor-actions.c:50
-#, fuzzy
 msgid "_Load Left Color From"
-msgstr "/_Läs in vänster färg från"
+msgstr "_Läs in vänster färg från"
 
 #: app/actions/gradient-editor-actions.c:52
-#, fuzzy
 msgid "_Save Left Color To"
-msgstr "/_Spara vänster färg till"
+msgstr "_Spara vänster färg till"
 
 #: app/actions/gradient-editor-actions.c:55
-#, fuzzy
 msgid "Load Right Color Fr_om"
-msgstr "/_Läs in höger färg från"
+msgstr "_Läs in höger färg från"
 
 #: app/actions/gradient-editor-actions.c:57
-#, fuzzy
 msgid "Sa_ve Right Color To"
-msgstr "/_Spara höger färg till"
+msgstr "_Spara höger färg till"
 
 #: app/actions/gradient-editor-actions.c:63
-#, fuzzy
 msgid "L_eft Endpoint's Color..."
-msgstr "/_Vänstra ändpunktens färg..."
+msgstr "_Vänstra ändpunktens färg..."
 
 #: app/actions/gradient-editor-actions.c:68
-#, fuzzy
 msgid "R_ight Endpoint's Color..."
-msgstr "/_Högra ändpunktens färg..."
+msgstr "_Högra ändpunktens färg..."
 
 #: app/actions/gradient-editor-actions.c:108
-#, fuzzy
 msgid "Ble_nd Endpoints' Colors"
-msgstr "/_Tona ändpunkternas färger"
+msgstr "_Tona ändpunkternas färger"
 
 #: app/actions/gradient-editor-actions.c:113
-#, fuzzy
 msgid "Blend Endpoints' Opacit_y"
-msgstr "/T_ona ändpunkternas opacitet"
+msgstr "T_ona ändpunkternas opacitet"
 
 #: app/actions/gradient-editor-actions.c:143
-#, fuzzy
 msgid "_Left Neighbor's Right Endpoint"
-msgstr "/Läs in vänster färg från/_Vänstra grannens högra ändpunkt"
+msgstr "_Vänstra grannens högra ändpunkt"
 
 #: app/actions/gradient-editor-actions.c:148
-#, fuzzy
 msgid "_Right Endpoint"
-msgstr "Höger ändpunkt"
+msgstr "_Höger ändpunkt"
 
 #: app/actions/gradient-editor-actions.c:153
 #: app/actions/gradient-editor-actions.c:201
-#, fuzzy
 msgid "_FG Color"
-msgstr "Förgrundsfärg"
+msgstr "_Förgrundsfärg"
 
 #: app/actions/gradient-editor-actions.c:158
 #: app/actions/gradient-editor-actions.c:206
-#, fuzzy
 msgid "_BG Color"
-msgstr "FG/BG-färg"
+msgstr "_BG-färg"
 
 #: app/actions/gradient-editor-actions.c:191
-#, fuzzy
 msgid "_Right Neighbor's Left Endpoint"
-msgstr "/Läs in höger färg från/_Högra grannens vänstra ändpunkt"
+msgstr "_Högra grannens vänstra ändpunkt"
 
 #: app/actions/gradient-editor-actions.c:196
-#, fuzzy
 msgid "_Left Endpoint"
 msgstr "Vänster ändpunkt"
 
 #: app/actions/gradient-editor-actions.c:245
-#, fuzzy
 msgid "_Linear"
-msgstr "Linjär"
+msgstr "_Linjär"
 
 #: app/actions/gradient-editor-actions.c:250
-#, fuzzy
 msgid "_Curved"
-msgstr "Kurvig"
+msgstr "_Kurvig"
 
 #: app/actions/gradient-editor-actions.c:255
-#, fuzzy
 msgid "_Sinusoidal"
-msgstr "Sinusformad"
+msgstr "_Sinusformad"
 
 #: app/actions/gradient-editor-actions.c:260
-#, fuzzy
 msgid "Spherical (i_ncreasing)"
-msgstr "/färgoningsfunktion/Sfärisk (_ökande)"
+msgstr "Sfärisk (_ökande)"
 
 #: app/actions/gradient-editor-actions.c:265
-#, fuzzy
 msgid "Spherical (_decreasing)"
-msgstr "/färgtoningsfunktion/Sfärisk (_minskande)"
+msgstr "Sfärisk (_minskande)"
 
 #: app/actions/gradient-editor-actions.c:270
 #: app/actions/gradient-editor-actions.c:293
@@ -1424,19 +1362,16 @@ msgid "(Varies)"
 msgstr "(Varierar)"
 
 #: app/actions/gradient-editor-actions.c:278 app/actions/image-actions.c:115
-#, fuzzy
 msgid "_RGB"
-msgstr "RGB"
+msgstr "_RGB"
 
 #: app/actions/gradient-editor-actions.c:283
-#, fuzzy
 msgid "HSV (_counter-clockwise hue)"
-msgstr "/färgningstyp/_HSV (moturs nyans)"
+msgstr "HSV (_moturs nyans)"
 
 #: app/actions/gradient-editor-actions.c:288
-#, fuzzy
 msgid "HSV (clockwise _hue)"
-msgstr "FG till BG (HSV medurs-nyans)"
+msgstr "HSV (m_edurs-nyans)"
 
 #: app/actions/gradient-editor-actions.c:478
 msgid "_Blending Function for Segment"
@@ -1603,63 +1538,52 @@ msgid "Gradients Menu"
 msgstr "Färgskalemeny"
 
 #: app/actions/gradients-actions.c:48
-#, fuzzy
 msgid "_New Gradient"
-msgstr "/_Ny färgskala"
+msgstr "_Ny färgskala"
 
 #: app/actions/gradients-actions.c:49
 msgid "New gradient"
 msgstr "Ny färgskala"
 
 #: app/actions/gradients-actions.c:54
-#, fuzzy
 msgid "D_uplicate Gradient"
-msgstr "/_Duplicera färgskala"
+msgstr "_Duplicera färgskala"
 
 #: app/actions/gradients-actions.c:55
-#, fuzzy
 msgid "Duplicate gradient"
-msgstr "/_Duplicera färgskala"
+msgstr "_Duplicera färgskala"
 
 #: app/actions/gradients-actions.c:60
-#, fuzzy
 msgid "Save as _POV-Ray..."
-msgstr "/_Spara som POV-Ray..."
+msgstr "_Spara som POV-Ray..."
 
 #: app/actions/gradients-actions.c:61
-#, fuzzy
 msgid "Save gradient as POV-Ray"
-msgstr "Spara \"%s\" som POV-Ray"
+msgstr "Spara färgskala som POV-Ray"
 
 #: app/actions/gradients-actions.c:66
-#, fuzzy
 msgid "_Delete Gradient..."
-msgstr "/_Ta bort färgskala..."
+msgstr "_Ta bort färgskala..."
 
 #: app/actions/gradients-actions.c:67
-#, fuzzy
 msgid "Delete gradient"
-msgstr "/_Ta bort färgskala..."
+msgstr "_Ta bort färgskala..."
 
 #: app/actions/gradients-actions.c:72
-#, fuzzy
 msgid "_Refresh Gradients"
-msgstr "/_Uppdatera färgskalor"
+msgstr "_Uppdatera färgskalor"
 
 #: app/actions/gradients-actions.c:73
-#, fuzzy
 msgid "Refresh gradients"
-msgstr "/_Uppdatera färgskalor"
+msgstr "_Uppdatera färgskalor"
 
 #: app/actions/gradients-actions.c:81
-#, fuzzy
 msgid "_Edit Gradient..."
-msgstr "/_Redigera färgskala..."
+msgstr "_Redigera färgskala..."
 
 #: app/actions/gradients-actions.c:82
-#, fuzzy
 msgid "Edit gradient"
-msgstr "/_Redigera färgskala..."
+msgstr "_Redigera färgskala..."
 
 #: app/actions/gradients-commands.c:76
 #, c-format
@@ -1667,14 +1591,12 @@ msgid "Save '%s' as POV-Ray"
 msgstr "Spara \"%s\" som POV-Ray"
 
 #: app/actions/help-actions.c:38 app/actions/help-actions.c:41
-#, fuzzy
 msgid "_Help"
-msgstr "/_Hjälp"
+msgstr "_Hjälp"
 
 #: app/actions/help-actions.c:46
-#, fuzzy
 msgid "_Context Help"
-msgstr "/Hjälp/_Sammanhangshjälp"
+msgstr "_Sammanhangshjälp"
 
 #: app/actions/image-actions.c:46
 msgid "Toolbox Menu"
@@ -1685,83 +1607,68 @@ msgid "Image Menu"
 msgstr "Bildmeny"
 
 #: app/actions/image-actions.c:55
-#, fuzzy
 msgid "_Xtns"
-msgstr "/_Xtns"
+msgstr "_Xtns"
 
 #: app/actions/image-actions.c:56
-#, fuzzy
 msgid "_Image"
-msgstr "/_Bild"
+msgstr "_Bild"
 
 #: app/actions/image-actions.c:57
-#, fuzzy
 msgid "_Mode"
-msgstr "Läge"
+msgstr "_Läge"
 
 #: app/actions/image-actions.c:58 app/actions/layers-actions.c:56
-#, fuzzy
 msgid "_Transform"
-msgstr "Transformera"
+msgstr "_Transformera"
 
 #: app/actions/image-actions.c:59
-#, fuzzy
 msgid "_Guides"
-msgstr "Hjälplinje"
+msgstr "_Hjälplinje"
 
 #: app/actions/image-actions.c:62 app/actions/image-actions.c:67
-#, fuzzy
 msgid "_New..."
-msgstr "/_Ny slinga..."
+msgstr "_Ny..."
 
 #: app/actions/image-actions.c:72
-#, fuzzy
 msgid "Can_vas Size..."
-msgstr "Storlek på canvas"
+msgstr "Storlek på rityta..."
 
 #: app/actions/image-actions.c:77
 msgid "F_it Canvas to Layers"
-msgstr ""
+msgstr "_Passa rityta till lager"
 
 #: app/actions/image-actions.c:82
-#, fuzzy
 msgid "_Scale Image..."
-msgstr "Skala bild"
+msgstr "_Skala bild..."
 
 #: app/actions/image-actions.c:87
-#, fuzzy
 msgid "_Crop Image"
-msgstr "Beskär bild"
+msgstr "_Beskär bild"
 
 #: app/actions/image-actions.c:92
-#, fuzzy
 msgid "_Duplicate"
-msgstr "Duplicera"
+msgstr "_Duplicera"
 
 #: app/actions/image-actions.c:97
-#, fuzzy
 msgid "Merge Visible _Layers..."
-msgstr "/Sammanfoga _synliga lager..."
+msgstr "Sammanfoga _synliga lager..."
 
 #: app/actions/image-actions.c:102 app/actions/layers-actions.c:123
-#, fuzzy
 msgid "_Flatten Image"
-msgstr "/_Platta ut bilden"
+msgstr "_Platta ut bilden"
 
 #: app/actions/image-actions.c:107
-#, fuzzy
 msgid "Configure G_rid..."
-msgstr "Ställ in rutnät"
+msgstr "Ställ in _rutnät..."
 
 #: app/actions/image-actions.c:120
-#, fuzzy
 msgid "_Grayscale"
-msgstr "Gråskala"
+msgstr "_Gråskala"
 
 #: app/actions/image-actions.c:125
-#, fuzzy
 msgid "_Indexed..."
-msgstr "Indexerad"
+msgstr "_Indexerad..."
 
 #: app/actions/image-commands.c:232 app/actions/image-commands.c:482
 msgid "Resizing..."
@@ -1810,14 +1717,13 @@ msgstr ""
 "Fel vid ändring av storlek: Både bredd och höjd måste vara större än 0."
 
 #: app/actions/image-commands.c:548
-#, fuzzy
 msgid "Confirm Scaling"
-msgstr "Rotera färgkarta"
+msgstr "Bekräfta skalning"
 
 #: app/actions/image-commands.c:577 app/dialogs/image-new-dialog.c:283
 #, c-format
 msgid "You are trying to create an image with a size of %s."
-msgstr ""
+msgstr "Du försöker skapa en bild av storlek %s."
 
 #: app/actions/image-commands.c:583
 #, c-format
@@ -1826,19 +1732,19 @@ msgid ""
 "is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
 "%s)."
 msgstr ""
+"Skalar du bilden till den valda storleken kommer den att använda mer minne "
+"än vad \"Maximal bildstorlek\" är satt till i inställningarna (nu satt till %"
+"s)."
 
 #: app/actions/image-commands.c:598
-#, fuzzy
 msgid ""
 "Scaling the image to the choosen size will shrink some layers completely "
 "away."
-msgstr ""
-"Den valda bildstorleken kommer att krympa bort några lager helt. Är detta "
-"vad du vill?"
+msgstr "Den valda bildstorleken kommer att krympa bort några lager helt."
 
 #: app/actions/image-commands.c:602
 msgid "Is this what you want to do?"
-msgstr ""
+msgstr "Är detta vad du vill göra?"
 
 #: app/actions/image-commands.c:638 app/core/gimpimage-scale.c:71
 #: app/dialogs/resize-dialog.c:212
@@ -1860,27 +1766,24 @@ msgid "Images Menu"
 msgstr "Bildmeny"
 
 #: app/actions/images-actions.c:46
-#, fuzzy
 msgid "_Raise Views"
-msgstr "/_Höj vy"
+msgstr "_Höj vy"
 
 #: app/actions/images-actions.c:47
 msgid "Raise this image's displays"
 msgstr "Höj denna bilds displayer"
 
 #: app/actions/images-actions.c:52 app/actions/view-actions.c:68
-#, fuzzy
 msgid "_New View"
-msgstr "/_Ny vy"
+msgstr "_Ny vy"
 
 #: app/actions/images-actions.c:53
 msgid "Create a new display for this image"
 msgstr "Skapa en ny display för denna bild"
 
 #: app/actions/images-actions.c:58
-#, fuzzy
 msgid "_Delete Image"
-msgstr "/_Ta bort bild"
+msgstr "_Ta bort bild"
 
 #: app/actions/images-actions.c:59
 msgid "Delete this image"
@@ -1891,206 +1794,166 @@ msgid "Layers Menu"
 msgstr "Lagermeny"
 
 #: app/actions/layers-actions.c:50
-#, fuzzy
 msgid "_Layer"
-msgstr "/_Lager"
+msgstr "_Lager"
 
 #: app/actions/layers-actions.c:51
-#, fuzzy
 msgid "Stac_k"
-msgstr "/Lager/Stac_k"
+msgstr "Stac_k"
 
 #: app/actions/layers-actions.c:53 app/tools/gimplevelstool.c:667
 msgid "_Auto"
 msgstr "_Auto"
 
 #: app/actions/layers-actions.c:54
-#, fuzzy
 msgid "_Mask"
-msgstr "mask"
+msgstr "_Mask"
 
 #: app/actions/layers-actions.c:55
-#, fuzzy
 msgid "Tr_ansparency"
-msgstr "Transparens"
+msgstr "_Transparens"
 
 #: app/actions/layers-actions.c:57
-#, fuzzy
 msgid "_Properties"
-msgstr "Perspektiv"
+msgstr "_Egenskaper"
 
 #: app/actions/layers-actions.c:59
-#, fuzzy
 msgid "Layer _Mode"
-msgstr "Lagermod"
+msgstr "Lager_läge"
 
 #: app/actions/layers-actions.c:62
-#, fuzzy
 msgid "Te_xt Tool"
-msgstr "/Te_xtverktyg"
+msgstr "Te_xtverktyg"
 
 #: app/actions/layers-actions.c:67
-#, fuzzy
 msgid "_Edit Layer Attributes..."
-msgstr "/_Redigera lagerattribut..."
+msgstr "_Redigera lagerattribut..."
 
 #: app/actions/layers-actions.c:72
-#, fuzzy
 msgid "_New Layer..."
-msgstr "/_Nytt lager..."
+msgstr "_Nytt lager..."
 
 #: app/actions/layers-actions.c:77
-#, fuzzy
 msgid "D_uplicate Layer"
-msgstr "/_Duplicera lager"
+msgstr "_Duplicera lager"
 
 #: app/actions/layers-actions.c:82
-#, fuzzy
 msgid "_Delete Layer"
-msgstr "/_Ta bort lager"
+msgstr "_Ta bort lager"
 
 #: app/actions/layers-actions.c:87
-#, fuzzy
 msgid "_Raise Layer"
-msgstr "/_Höj lager"
+msgstr "_Höj lager"
 
 #: app/actions/layers-actions.c:92
-#, fuzzy
 msgid "Layer to _Top"
-msgstr "/_Lager till toppen"
+msgstr "_Lager till toppen"
 
 #: app/actions/layers-actions.c:97
-#, fuzzy
 msgid "_Lower Layer"
-msgstr "/_Sänk lager"
+msgstr "_Sänk lager"
 
 #: app/actions/layers-actions.c:102
-#, fuzzy
 msgid "Layer to _Bottom"
-msgstr "/Lager till _botten"
+msgstr "Lager till _botten"
 
 #: app/actions/layers-actions.c:107
-#, fuzzy
 msgid "_Anchor Layer"
-msgstr "/_Ankra lager"
+msgstr "_Ankra lager"
 
 #: app/actions/layers-actions.c:108
-#, fuzzy
 msgid "Anchor floating layer"
 msgstr "Ankra flytande lager"
 
 #: app/actions/layers-actions.c:113
-#, fuzzy
 msgid "Merge Do_wn"
-msgstr "/Sammanfoga _nedåt"
+msgstr "Sammanfoga _nedåt"
 
 #: app/actions/layers-actions.c:118
-#, fuzzy
 msgid "Merge _Visible Layers..."
-msgstr "/Sammanfoga _synliga lager..."
+msgstr "Sammanfoga _synliga lager..."
 
 #: app/actions/layers-actions.c:128
-#, fuzzy
 msgid "_Discard Text Information"
-msgstr "/_Förkasta textinformation"
+msgstr "_Förkasta textinformation"
 
 #: app/actions/layers-actions.c:133
-#, fuzzy
 msgid "Layer B_oundary Size..."
-msgstr "/St_orlek på lagergräns..."
+msgstr "St_orlek på lagergräns..."
 
 #: app/actions/layers-actions.c:138
-#, fuzzy
 msgid "Layer to _Image Size"
-msgstr "/Lagerstorlek som bilden"
+msgstr "Lagerstorlek som _bilden"
 
 #: app/actions/layers-actions.c:143
-#, fuzzy
 msgid "_Scale Layer..."
-msgstr "/S_kala om lager..."
+msgstr "S_kala lager..."
 
 #: app/actions/layers-actions.c:148
-#, fuzzy
 msgid "Cr_op Layer"
-msgstr "Beskär lager"
+msgstr "_Beskär lager"
 
 #: app/actions/layers-actions.c:153
-#, fuzzy
 msgid "Add La_yer Mask..."
-msgstr "/L_ägg till lagermask..."
+msgstr "L_ägg till lagermask..."
 
 #: app/actions/layers-actions.c:158
-#, fuzzy
 msgid "Add Alpha C_hannel"
-msgstr "/Lägg till al_fakanal"
+msgstr "Lägg till al_fakanal"
 
 #: app/actions/layers-actions.c:166
-#, fuzzy
 msgid "Keep Transparency"
 msgstr "Behåll transparens"
 
 #: app/actions/layers-actions.c:172
-#, fuzzy
 msgid "Edit Layer Mask"
-msgstr "Lägg till lagermask"
+msgstr "Redigera lagermask"
 
 #: app/actions/layers-actions.c:178
-#, fuzzy
 msgid "Show Layer Mask"
-msgstr "Flytta lagermask"
+msgstr "Visa lagermask"
 
 #: app/actions/layers-actions.c:184
-#, fuzzy
 msgid "Disable Layer Mask"
-msgstr "Ta bort lagermask"
+msgstr "Inaktivera lagermask"
 
 #: app/actions/layers-actions.c:193
-#, fuzzy
 msgid "Apply Layer _Mask"
-msgstr "/_Applicera lagermask"
+msgstr "_Applicera lagermask"
 
 #: app/actions/layers-actions.c:198
-#, fuzzy
 msgid "Delete Layer Mas_k"
-msgstr "/_Ta bort lagermask"
+msgstr "_Ta bort lagermask"
 
 #: app/actions/layers-actions.c:206
-#, fuzzy
 msgid "_Mask to Selection"
-msgstr "/_Mask till markering"
+msgstr "_Mask till markering"
 
 #: app/actions/layers-actions.c:229
-#, fuzzy
 msgid "Al_pha to Selection"
-msgstr "/_Alfakanal till markering"
+msgstr "_Alfakanal till markering"
 
 #: app/actions/layers-actions.c:234
-#, fuzzy
 msgid "A_dd to Selection"
-msgstr "/_Lägg till markering"
+msgstr "_Lägg till markering"
 
 #: app/actions/layers-actions.c:252
-#, fuzzy
 msgid "Select _Top Layer"
-msgstr "/Lager/Stack/Välj _översta lagret"
+msgstr "Välj _översta lagret"
 
 #: app/actions/layers-actions.c:257
-#, fuzzy
 msgid "Select _Bottom Layer"
-msgstr "/Lager/Stack/Välj _nedersta lagret"
+msgstr "Välj _Understaa lagret"
 
 #: app/actions/layers-actions.c:262
-#, fuzzy
 msgid "Select _Previous Layer"
-msgstr "/Lager/Stack/Välj _föregående lager"
+msgstr "Välj _föregående lager"
 
 #: app/actions/layers-actions.c:267
-#, fuzzy
 msgid "Select _Next Layer"
-msgstr "/Lager/Stack/Välj _Nästa lager"
+msgstr "Välj _Nästa lager"
 
 #: app/actions/layers-actions.c:275
-#, fuzzy
 msgid "Set Opacity"
 msgstr "Sätt lageropacitet"
 
@@ -2181,108 +2044,88 @@ msgid "Palette Editor Menu"
 msgstr "Palettredigerarmeny"
 
 #: app/actions/palette-editor-actions.c:52
-#, fuzzy
 msgid "New Color from _FG"
-msgstr "/Ny färg från FG"
+msgstr "Ny färg från _FG"
 
 #: app/actions/palette-editor-actions.c:57
-#, fuzzy
 msgid "New Color from _BG"
-msgstr "/Ny färg frpn BG"
+msgstr "Ny färg från _BG"
 
 #: app/actions/palette-editor-actions.c:62
-#, fuzzy
 msgid "_Delete Color"
-msgstr "/_Ta bort färg"
+msgstr "_Ta bort färg"
 
-#: app/actions/palette-editor-actions.c:67 app/actions/view-actions.c:206
-#, fuzzy
+#: app/actions/palette-editor-actions.c:67 app/actions/view-actions.c:209
 msgid "Zoom _Out"
-msgstr "/_Zooma ut"
+msgstr "Zooma _ut"
 
-#: app/actions/palette-editor-actions.c:72 app/actions/view-actions.c:211
-#, fuzzy
+#: app/actions/palette-editor-actions.c:72 app/actions/view-actions.c:215
 msgid "Zoom _In"
-msgstr "/_Zooma in"
+msgstr "Zooma _in"
 
 #: app/actions/palette-editor-actions.c:77
-#, fuzzy
 msgid "Zoom _All"
-msgstr "/_Zooma allt"
+msgstr "_Zooma allt"
 
 #: app/actions/palettes-actions.c:43
 msgid "Palettes Menu"
 msgstr "Palettmeny"
 
 #: app/actions/palettes-actions.c:47
-#, fuzzy
 msgid "_New Palette"
-msgstr "/_Ny palett"
+msgstr "_Ny palett"
 
 #: app/actions/palettes-actions.c:48
-#, fuzzy
 msgid "New palette"
-msgstr "/_Ny palett"
+msgstr "Ny palett"
 
 #: app/actions/palettes-actions.c:53
-#, fuzzy
 msgid "_Import Palette..."
-msgstr "/_Importera palett..."
+msgstr "_Importera palett..."
 
 #: app/actions/palettes-actions.c:54
-#, fuzzy
 msgid "Import palette"
 msgstr "Importera palett"
 
 #: app/actions/palettes-actions.c:59
-#, fuzzy
 msgid "D_uplicate Palette"
-msgstr "/_Duplicera palett"
+msgstr "_Duplicera palett"
 
 #: app/actions/palettes-actions.c:60
-#, fuzzy
 msgid "Duplicate palette"
-msgstr "/_Duplicera palett"
+msgstr "Duplicera palett"
 
 #: app/actions/palettes-actions.c:65
-#, fuzzy
 msgid "_Merge Palettes..."
-msgstr "/_Sammanfoga palett..."
+msgstr "_Sammanfoga palett..."
 
 #: app/actions/palettes-actions.c:66
-#, fuzzy
 msgid "Merge palettes"
 msgstr "Sammanfoga palett"
 
 #: app/actions/palettes-actions.c:71
-#, fuzzy
 msgid "_Delete Palette"
-msgstr "/_Ta bort palett"
+msgstr "_Ta bort palett"
 
 #: app/actions/palettes-actions.c:72
-#, fuzzy
 msgid "Delete palette"
-msgstr "/_Ta bort palett"
+msgstr "Ta bort palett"
 
 #: app/actions/palettes-actions.c:77
-#, fuzzy
 msgid "_Refresh Palettes"
-msgstr "/_Uppdatera paletter"
+msgstr "_Uppdatera paletter"
 
 #: app/actions/palettes-actions.c:78
-#, fuzzy
 msgid "Refresh palettes"
-msgstr "/_Uppdatera paletter"
+msgstr "Uppdatera paletter"
 
 #: app/actions/palettes-actions.c:86
-#, fuzzy
 msgid "_Edit Palette..."
-msgstr "/_Redigera palett..."
+msgstr "_Redigera palett..."
 
 #: app/actions/palettes-actions.c:87
-#, fuzzy
 msgid "Edit palette"
-msgstr "/_Redigera palett..."
+msgstr "Redigera palett"
 
 #: app/actions/palettes-commands.c:83
 msgid "Merge Palette"
@@ -2297,151 +2140,124 @@ msgid "Patterns Menu"
 msgstr "Mönstermeny"
 
 #: app/actions/patterns-actions.c:46
-#, fuzzy
 msgid "_New Pattern"
-msgstr "/_Nytt mönster"
+msgstr "_Nytt mönster"
 
 #: app/actions/patterns-actions.c:47
-#, fuzzy
 msgid "New pattern"
-msgstr "/_Nytt mönster"
+msgstr "Nytt mönster"
 
 #: app/actions/patterns-actions.c:52
-#, fuzzy
 msgid "D_uplicate Pattern"
-msgstr "/_Duplicera mönster"
+msgstr "_Duplicera mönster"
 
 #: app/actions/patterns-actions.c:53
-#, fuzzy
 msgid "Duplicate pattern"
-msgstr "/_Duplicera mönster"
+msgstr "Duplicera mönster"
 
 #: app/actions/patterns-actions.c:58
-#, fuzzy
 msgid "_Delete Pattern..."
-msgstr "/_Ta bort mönster..."
+msgstr "_Ta bort mönster..."
 
 #: app/actions/patterns-actions.c:59
-#, fuzzy
 msgid "Delete pattern"
-msgstr "/_Ta bort mönster..."
+msgstr "Ta bort mönster..."
 
 #: app/actions/patterns-actions.c:64
-#, fuzzy
 msgid "_Refresh Patterns"
-msgstr "/_Uppdatera mönster"
+msgstr "_Uppdatera mönster"
 
 #: app/actions/patterns-actions.c:65
-#, fuzzy
 msgid "Refresh patterns"
-msgstr "/_Uppdatera mönster"
+msgstr "Uppdatera mönster"
 
 #: app/actions/patterns-actions.c:73
-#, fuzzy
 msgid "_Edit Pattern..."
-msgstr "/_Redigera mönster..."
+msgstr "_Redigera mönster..."
 
 #: app/actions/patterns-actions.c:74
-#, fuzzy
 msgid "Edit pattern"
-msgstr "/_Redigera mönster..."
+msgstr "Redigera mönster..."
 
 #: app/actions/plug-in-actions.c:62
-#, fuzzy
 msgid "Filte_rs"
-msgstr "/Filte_r"
+msgstr "Filte_r"
 
 #: app/actions/plug-in-actions.c:63
-#, fuzzy
 msgid "_Blur"
-msgstr "Gör suddigare"
+msgstr "Gör _suddigare"
 
 #: app/actions/plug-in-actions.c:65
 msgid "Ma_p"
-msgstr ""
+msgstr "_Mappa"
 
 #: app/actions/plug-in-actions.c:66
-#, fuzzy
 msgid "_Noise"
-msgstr "Ingen"
+msgstr "_Brus"
 
 #: app/actions/plug-in-actions.c:67
-#, fuzzy
 msgid "Edge-De_tect"
-msgstr "/Filter/_Leta kanter"
+msgstr "_Leta kanter"
 
 #: app/actions/plug-in-actions.c:68
-#, fuzzy
 msgid "En_hance"
-msgstr "/Filter/Fö_rbättra"
+msgstr "Fö_rbättra"
 
 #: app/actions/plug-in-actions.c:69
-#, fuzzy
 msgid "_Generic"
-msgstr "M_ittpunkt"
+msgstr "_Generiska"
 
 #: app/actions/plug-in-actions.c:70
-#, fuzzy
 msgid "Gla_ss Effects"
-msgstr "/Filter/_Glaseffekter"
+msgstr "_Glaseffekter"
 
 #: app/actions/plug-in-actions.c:71
-#, fuzzy
 msgid "_Light Effects"
-msgstr "/Filter/Ljus_effekter"
+msgstr "_Ljuseffekter"
 
 #: app/actions/plug-in-actions.c:72
-#, fuzzy
 msgid "_Distorts"
-msgstr "/Filter/_Störningar"
+msgstr "_Störningar"
 
 #: app/actions/plug-in-actions.c:73
-#, fuzzy
 msgid "_Artistic"
-msgstr "/Filter/Ar_tistiskt"
+msgstr "Ar_tistiskt"
 
 #: app/actions/plug-in-actions.c:74
-#, fuzzy
 msgid "_Map"
-msgstr "_M"
+msgstr "_Mappa"
 
 #: app/actions/plug-in-actions.c:75
-#, fuzzy
 msgid "_Render"
-msgstr "M_ittpunkt"
+msgstr "_Rendera"
 
 #: app/actions/plug-in-actions.c:76
 msgid "_Clouds"
-msgstr ""
+msgstr "_Moln"
 
 #: app/actions/plug-in-actions.c:77
-#, fuzzy
 msgid "_Nature"
-msgstr "_Namn:"
+msgstr "_Natur"
 
 #: app/actions/plug-in-actions.c:79
 msgid "_Web"
-msgstr ""
+msgstr "_Nät"
 
 #: app/actions/plug-in-actions.c:80
-#, fuzzy
 msgid "An_imation"
-msgstr "/Filter/An_imation"
+msgstr "An_imation"
 
 #: app/actions/plug-in-actions.c:81
-#, fuzzy
 msgid "C_ombine"
-msgstr "/Filter/K_ombinera"
+msgstr "K_ombinera"
 
 #: app/actions/plug-in-actions.c:82
-#, fuzzy
 msgid "To_ys"
-msgstr "Verktyg"
+msgstr "Le_ksaker"
 
 #: app/actions/plug-in-actions.c:85
-#, fuzzy
 msgid "Reset all Filters..."
-msgstr "/Återställ _alla verktygsalternativ..."
+msgstr "Återställ alla filter..."
 
 #: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:337
 msgid "Repeat Last"
@@ -2462,58 +2278,46 @@ msgid "R_e-show \"%s\""
 msgstr "Å_tervisa \"%s\""
 
 #: app/actions/plug-in-commands.c:196
-#, fuzzy
 msgid "Reset all Filters"
-msgstr "Tillgängliga filter"
+msgstr "Återställ alla  filter"
 
 #: app/actions/plug-in-commands.c:210
-#, fuzzy
 msgid "Do you really want to reset all filters to default values?"
-msgstr ""
-"Vill du verkligen återställa alla verktygsalternativ till standardvärden?"
+msgstr "Vill du verkligen återställa alla filter till standardvärden?"
 
 #: app/actions/qmask-actions.c:41
-#, fuzzy
 msgid "Quick Mask Menu"
 msgstr "Snabbmaskmeny"
 
 #: app/actions/qmask-actions.c:45
-#, fuzzy
 msgid "_Configure Color and Opacity..."
-msgstr "/_Konfigurera färg och opacitet..."
+msgstr "_Konfigurera färg och opacitet..."
 
 #: app/actions/qmask-actions.c:53
-#, fuzzy
 msgid "_Quick Mask Active"
-msgstr "/_QMask aktiv"
+msgstr "_snabbmask aktiv"
 
 #: app/actions/qmask-actions.c:59
-#, fuzzy
 msgid "Toggle _Quick Mask"
-msgstr "Visa snabbmask"
+msgstr "Visa _snabbmask"
 
 #: app/actions/qmask-actions.c:69
-#, fuzzy
 msgid "Mask _Selected Areas"
-msgstr "/_Maskera markerade områden"
+msgstr "_Maskera markerade områden"
 
 #: app/actions/qmask-actions.c:74
-#, fuzzy
 msgid "Mask _Unselected Areas"
-msgstr "/Maskera _omarkerade områden"
+msgstr "Maskera _omarkerade områden"
 
 #: app/actions/qmask-commands.c:137
-#, fuzzy
 msgid "Edit Quick Mask Color"
 msgstr "Redigera snabbmaskfärg"
 
 #: app/actions/qmask-commands.c:147
-#, fuzzy
 msgid "Quick Mask Attributes"
 msgstr "Redigera snabbmaskattribut"
 
 #: app/actions/qmask-commands.c:149
-#, fuzzy
 msgid "Edit Quick Mask Attributes"
 msgstr "Redigera snabbmaskattribut"
 
@@ -2522,92 +2326,74 @@ msgid "Mask Opacity:"
 msgstr "Maskopacitet:"
 
 #: app/actions/select-actions.c:44
-#, fuzzy
 msgid "Selection Editor Menu"
-msgstr "Markeringsredigerare"
+msgstr "Meny för markeringsredigerare"
 
 #: app/actions/select-actions.c:47
-#, fuzzy
 msgid "_Select"
-msgstr "/_Välj"
+msgstr "_Välj"
 
 #: app/actions/select-actions.c:50
-#, fuzzy
 msgid "_All"
-msgstr "Hela"
+msgstr "_Allt"
 
 #: app/actions/select-actions.c:51
-#, fuzzy
 msgid "Select all"
 msgstr "Markera allt"
 
 #: app/actions/select-actions.c:56
-#, fuzzy
 msgid "_None"
-msgstr "Ingen"
+msgstr "_Inget"
 
 #: app/actions/select-actions.c:57
-#, fuzzy
 msgid "Select none"
 msgstr "Markera inget"
 
 #: app/actions/select-actions.c:62
-#, fuzzy
 msgid "_Invert"
-msgstr "Invertera"
+msgstr "_Invertera"
 
 #: app/actions/select-actions.c:63
-#, fuzzy
 msgid "Invert selection"
-msgstr "Omvänd markering"
+msgstr "Invertera markering"
 
 #: app/actions/select-actions.c:68
-#, fuzzy
 msgid "_Float"
-msgstr "_Typsnitt:"
+msgstr "_Flyt"
 
 #: app/actions/select-actions.c:73
-#, fuzzy
 msgid "Fea_ther..."
-msgstr "/Markera/Fj_äder..."
+msgstr "Fj_äder..."
 
 #: app/actions/select-actions.c:78
-#, fuzzy
 msgid "_Sharpen"
-msgstr "Gör skarpare"
+msgstr "Gör _skarpare"
 
 #: app/actions/select-actions.c:83
-#, fuzzy
 msgid "S_hrink..."
-msgstr "Lutar..."
+msgstr "K_rymp..."
 
 #: app/actions/select-actions.c:88
-#, fuzzy
 msgid "_Grow..."
-msgstr "/Markera/_Öka..."
+msgstr "_Öka..."
 
 #: app/actions/select-actions.c:93
-#, fuzzy
 msgid "Bo_rder..."
-msgstr "/Markera/Kan_t..."
+msgstr "Kan_t..."
 
 #: app/actions/select-actions.c:98
-#, fuzzy
 msgid "Save to _Channel"
-msgstr "/Markera/S_para till kanal"
+msgstr "S_para till kanal"
 
 #: app/actions/select-actions.c:99
-#, fuzzy
 msgid "Save selection to channel"
 msgstr "Spara markering till kanal"
 
 #: app/actions/select-actions.c:104
-#, fuzzy
 msgid "_Stroke Selection..."
-msgstr "Stryk markering"
+msgstr "Stryk markering..."
 
 #: app/actions/select-actions.c:105
-#, fuzzy
 msgid "Stroke selection"
 msgstr "Stryk markering"
 
@@ -2657,45 +2443,40 @@ msgid "Templates Menu"
 msgstr "Mallmeny"
 
 #: app/actions/templates-actions.c:46
-#, fuzzy
 msgid "_Create Image from Template..."
-msgstr "/_Skapa en ny bild från mall..."
+msgstr "_Skapa en bild från mall..."
 
 #: app/actions/templates-actions.c:47
 msgid "Create a new image from the selected template"
 msgstr "Skapa en ny bild från den valda mallen"
 
 #: app/actions/templates-actions.c:52
-#, fuzzy
 msgid "_New Template..."
-msgstr "/_Ny mall..."
+msgstr "_Ny mall..."
 
 #: app/actions/templates-actions.c:53
 msgid "Create a new template"
 msgstr "Skapa en ny mall"
 
 #: app/actions/templates-actions.c:58
-#, fuzzy
 msgid "D_uplicate Template..."
-msgstr "/_Duplicera mall..."
+msgstr "_Duplicera mall..."
 
 #: app/actions/templates-actions.c:59
 msgid "Duplicate the selected template"
 msgstr "Duplicera den valda mallen"
 
 #: app/actions/templates-actions.c:64
-#, fuzzy
 msgid "_Edit Template..."
-msgstr "/_Redigera mall..."
+msgstr "_Redigera mall..."
 
 #: app/actions/templates-actions.c:65
 msgid "Edit the selected template"
 msgstr "Redigera den valda mallen"
 
 #: app/actions/templates-actions.c:70
-#, fuzzy
 msgid "_Delete Template"
-msgstr "/_Ta bort mall"
+msgstr "_Ta bort mall"
 
 #: app/actions/templates-actions.c:71
 msgid "Delete the selected template"
@@ -2734,39 +2515,32 @@ msgid "Tool Options Menu"
 msgstr "Meny för verktygsalternativ"
 
 #: app/actions/tool-options-actions.c:60
-#, fuzzy
 msgid "_Save Options to"
-msgstr "/_Spara alternativ till"
+msgstr "_Spara alternativ till"
 
 #: app/actions/tool-options-actions.c:62
-#, fuzzy
 msgid "_Restore Options from"
-msgstr "/_Återställ alternativ från"
+msgstr "_Återställ alternativ från"
 
 #: app/actions/tool-options-actions.c:64
-#, fuzzy
 msgid "Re_name Saved Options"
-msgstr "/Ge _nytt namn till sparade alternativ"
+msgstr "Ge _nytt namn till sparade alternativ"
 
 #: app/actions/tool-options-actions.c:66
-#, fuzzy
 msgid "_Delete Saved Options"
-msgstr "/_Ta bort sparade alternativ"
+msgstr "_Ta bort sparade alternativ"
 
 #: app/actions/tool-options-actions.c:69
-#, fuzzy
 msgid "_New Entry..."
-msgstr "/_Ny slinga..."
+msgstr "_Ny inställning..."
 
 #: app/actions/tool-options-actions.c:74
-#, fuzzy
 msgid "R_eset Tool Options"
-msgstr "/Åt_erställ verktygsalternativ"
+msgstr "Åt_erställ verktygsalternativ"
 
 #: app/actions/tool-options-actions.c:79
-#, fuzzy
 msgid "Reset _all Tool Options..."
-msgstr "/Återställ _alla verktygsalternativ..."
+msgstr "Återställ _alla verktygsalternativ..."
 
 #: app/actions/tool-options-commands.c:73
 msgid "Save Tool Options"
@@ -2800,169 +2574,136 @@ msgstr ""
 "Vill du verkligen återställa alla verktygsalternativ till standardvärden?"
 
 #: app/actions/tools-actions.c:46
-#, fuzzy
 msgid "Tools Menu"
 msgstr "Verktygslådemeny"
 
 #: app/actions/tools-actions.c:49
-#, fuzzy
 msgid "_Tools"
-msgstr "/_Verktyg"
+msgstr "_Verktyg"
 
 #: app/actions/tools-actions.c:50
-#, fuzzy
 msgid "_Selection Tools"
-msgstr "/Verktyg/_Markeringsverktyg"
+msgstr "_Markeringsverktyg"
 
 #: app/actions/tools-actions.c:51
-#, fuzzy
 msgid "_Paint Tools"
-msgstr "Målarverktyg:"
+msgstr "_Målarverktyg"
 
 #: app/actions/tools-actions.c:52
-#, fuzzy
 msgid "_Transform Tools"
-msgstr "Transformeringsverktyg"
+msgstr "_Transformeringsverktyg"
 
 #: app/actions/tools-actions.c:53
-#, fuzzy
 msgid "_Color Tools"
-msgstr "/Verktyg/Färgverktyg"
+msgstr "_Färgverktyg"
 
 #: app/actions/tools-actions.c:56
-#, fuzzy
 msgid "_Reset Order & Visibility"
-msgstr "Objektsynlighet"
+msgstr "_Återställ ordning & synlighet"
 
 #: app/actions/tools-actions.c:57
 msgid "Reset tool order and visibility"
-msgstr ""
+msgstr "Återställ verktygsordning och synlighet"
 
 #: app/actions/tools-actions.c:65
-#, fuzzy
 msgid "Show in Toolbox"
-msgstr "Visa verktygs_tips"
+msgstr "Visa i verktygslådan"
 
 #: app/actions/tools-actions.c:74
-#, fuzzy
 msgid "_By Color"
-msgstr "RGB-färg"
+msgstr "_Med färg"
 
 #: app/actions/tools-actions.c:79
-#, fuzzy
 msgid "_Arbitrary Rotation..."
-msgstr "/Lager/Transformera/_Godtycklig rotation..."
+msgstr "_Godtycklig rotation..."
 
 #: app/actions/vectors-actions.c:43
 msgid "Paths Menu"
 msgstr "Slingmeny"
 
 #: app/actions/vectors-actions.c:47
-#, fuzzy
 msgid "Path _Tool"
-msgstr "/_Slingverktyg"
+msgstr "_Slingverktyg"
 
 #: app/actions/vectors-actions.c:52
-#, fuzzy
 msgid "_Edit Path Attributes..."
-msgstr "/_Redigera slingattribut"
+msgstr "_Redigera slingattribut..."
 
 #: app/actions/vectors-actions.c:57
-#, fuzzy
 msgid "_New Path..."
-msgstr "/_Ny slinga..."
+msgstr "_Ny slinga..."
 
 #: app/actions/vectors-actions.c:62
-#, fuzzy
 msgid "D_uplicate Path"
-msgstr "/_Duplicera slinga"
+msgstr "_Duplicera slinga"
 
 #: app/actions/vectors-actions.c:67
-#, fuzzy
 msgid "_Delete Path"
-msgstr "/_Ta bort slinga"
+msgstr "_Ta bort slinga"
 
 #: app/actions/vectors-actions.c:72
-#, fuzzy
 msgid "Merge _Visible Paths"
-msgstr "/Sammanfoga _synliga lager"
+msgstr "Sammanfoga _synliga lager"
 
 #: app/actions/vectors-actions.c:77
-#, fuzzy
 msgid "_Raise Path"
-msgstr "/_Höj slinga"
+msgstr "_Höj slinga"
 
 #: app/actions/vectors-actions.c:82
-#, fuzzy
 msgid "Raise Path to _Top"
-msgstr "Höj slingan till toppen"
+msgstr "Flytta slingan _överst"
 
 #: app/actions/vectors-actions.c:87
-#, fuzzy
 msgid "_Lower Path"
-msgstr "/_Sänk slinga"
+msgstr "_Sänk slinga"
 
 #: app/actions/vectors-actions.c:92
-#, fuzzy
 msgid "Lower Path to _Bottom"
-msgstr "Sänk slingan till botten"
+msgstr "Flytta slingan _underst"
 
 #: app/actions/vectors-actions.c:97
-#, fuzzy
 msgid "Stro_ke Path..."
-msgstr "/Str_yk sli"
+msgstr "Str_yk slinga..."
 
 #: app/actions/vectors-actions.c:98 app/tools/gimpvectoroptions.c:207
-#, fuzzy
 msgid "Stroke path"
 msgstr "Stryk slinga"
 
 #: app/actions/vectors-actions.c:103
-#, fuzzy
 msgid "Co_py Path"
-msgstr "/_Kopiera slinga"
+msgstr "_Kopiera slinga"
 
 #: app/actions/vectors-actions.c:108
-#, fuzzy
 msgid "Paste Pat_h"
-msgstr "/K_listra in slinga"
+msgstr "K_listra in slinga"
 
 #: app/actions/vectors-actions.c:113
-#, fuzzy
 msgid "I_mport Path..."
-msgstr "/_Importera slinga..."
+msgstr "_Importera slinga..."
 
 #: app/actions/vectors-actions.c:118
-#, fuzzy
 msgid "E_xport Path..."
-msgstr "/_Exportera slinga..."
+msgstr "_Exportera slinga..."
 
 #: app/actions/vectors-actions.c:141
-#, fuzzy
 msgid "Path to Sele_ction"
-msgstr "/_Slinga till markering"
+msgstr "_Slinga till markering"
 
 #: app/actions/vectors-actions.c:146
-#, fuzzy
 msgid "Fr_om Path"
-msgstr "/Markera/Fr_ån slinga"
+msgstr "Fr_ån slinga"
 
 #: app/actions/vectors-actions.c:169
-#, fuzzy
 msgid "Selecti_on to Path"
-msgstr "/_Markering till slinga"
+msgstr "_Markering till slinga"
 
 #: app/actions/vectors-actions.c:174
-#, fuzzy
 msgid "To _Path"
-msgstr "Flytta slinga"
+msgstr "Till _slinga"
 
 #: app/actions/vectors-actions.c:179
-#, fuzzy
 msgid "Selection to Path (_Advanced)"
-msgstr ""
-"Markering till slinga\n"
-"%s  Avancerade inställningar"
+msgstr "Markering till slinga (_avancerat)"
 
 #: app/actions/vectors-commands.c:250 app/pdb/paths_cmds.c:1210
 msgid "Path to Selection"
@@ -2989,7 +2730,6 @@ msgid "New Path Options"
 msgstr "Alternativ för ny slinga"
 
 #: app/actions/vectors-commands.c:597
-#, fuzzy
 msgid "Path Name:"
 msgstr "Slingnamn:"
 
@@ -2998,90 +2738,74 @@ msgid "Import Paths from SVG"
 msgstr "Importera slinga från SVG"
 
 #: app/actions/vectors-commands.c:688
-#, fuzzy
 msgid "All Files (*.*)"
-msgstr "Tillgängliga filter"
+msgstr "Alla filer (*.*)"
 
 #: app/actions/vectors-commands.c:693
 msgid "Scalable SVG image (*.svg)"
-msgstr ""
+msgstr "Skalbar SVG-bild (*.svg)"
 
 #: app/actions/vectors-commands.c:740
 msgid "Export Path to SVG"
 msgstr "Exportera slinga till SVG"
 
 #: app/actions/view-actions.c:63
-#, fuzzy
 msgid "_View"
-msgstr "/_Visa"
+msgstr "_Visa"
 
 #: app/actions/view-actions.c:64
-#, fuzzy
 msgid "_Zoom"
-msgstr "Zooma:"
+msgstr "_Zooma"
 
 #: app/actions/view-actions.c:65
-#, fuzzy
 msgid "_Padding Color"
-msgstr "Färg på canvasutfyllnad:"
+msgstr "Färg på rityte_utfyllnad"
 
 #: app/actions/view-actions.c:73
-#, fuzzy
 msgid "_Close"
-msgstr "Klona"
+msgstr "_Stäng"
 
 #: app/actions/view-actions.c:78
-#, fuzzy
 msgid "_Fit Image in Window"
-msgstr "Bildfönster"
+msgstr "_Passa bilden till fönster"
 
 #: app/actions/view-actions.c:79
-#, fuzzy
 msgid "Fit image in window"
-msgstr "Bildfönster"
+msgstr "Passa bilden till fönster"
 
 #: app/actions/view-actions.c:84
-#, fuzzy
 msgid "Fit Image to Window"
 msgstr "Passa till fönster"
 
 #: app/actions/view-actions.c:85
-#, fuzzy
 msgid "Fit image to window"
 msgstr "Passa till fönster"
 
 #: app/actions/view-actions.c:90
-#, fuzzy
 msgid "_Info Window"
-msgstr "Informationsfönster"
+msgstr "_Informationsfönster"
 
 #: app/actions/view-actions.c:95
-#, fuzzy
 msgid "Na_vigation Window"
-msgstr "/Visa/Na_vigeringsfönster"
+msgstr "Na_vigeringsfönster"
 
 #: app/actions/view-actions.c:100
-#, fuzzy
 msgid "Display _Filters..."
-msgstr "/Fönster/Visnings_filter..."
+msgstr "Visnings_filter..."
 
 #: app/actions/view-actions.c:105
-#, fuzzy
 msgid "Shrink _Wrap"
-msgstr "Visa optimalt fönster"
+msgstr "Visa _optimalt fönster"
 
 #: app/actions/view-actions.c:106
-#, fuzzy
 msgid "Shrink wrap"
 msgstr "Visa optimalt fönster"
 
 #: app/actions/view-actions.c:119
-#, fuzzy
 msgid "_Dot for Dot"
-msgstr "/Visa/_Punkt för punkt"
+msgstr "_Punkt för punkt"
 
 #: app/actions/view-actions.c:125
-#, fuzzy
 msgid "Show _Selection"
 msgstr "Visa m_arkering"
 
@@ -3094,17 +2818,14 @@ msgid "Show _Guides"
 msgstr "Visa _hjälplinjer"
 
 #: app/actions/view-actions.c:143
-#, fuzzy
 msgid "Sn_ap to Guides"
-msgstr "/Visa/Snä_pp mot hjälplinjer"
+msgstr "Snä_pp mot hjälplinjer"
 
 #: app/actions/view-actions.c:149
-#, fuzzy
 msgid "S_how Grid"
 msgstr "Visa r_utnät"
 
 #: app/actions/view-actions.c:155
-#, fuzzy
 msgid "Sna_p to Grid"
 msgstr "S_näpp mot rutnät"
 
@@ -3113,7 +2834,6 @@ msgid "Show _Menubar"
 msgstr "Visa _menyrad"
 
 #: app/actions/view-actions.c:167
-#, fuzzy
 msgid "Show R_ulers"
 msgstr "Visa _linjaler"
 
@@ -3126,105 +2846,89 @@ msgid "Show S_tatusbar"
 msgstr "Visa s_tatusrad"
 
 #: app/actions/view-actions.c:185
-#, fuzzy
 msgid "Fullscr_een"
-msgstr "/Visa/Fullskär_m"
+msgstr "Fullskär_m"
 
-#: app/actions/view-actions.c:207 app/widgets/gimppaletteeditor.c:325
+#: app/actions/view-actions.c:210 app/widgets/gimppaletteeditor.c:325
 #: app/widgets/widgets-enums.c:225
 msgid "Zoom out"
 msgstr "Zooma ut"
 
-#: app/actions/view-actions.c:212 app/widgets/gimppaletteeditor.c:333
+#: app/actions/view-actions.c:216 app/widgets/gimppaletteeditor.c:333
 #: app/widgets/widgets-enums.c:224
 msgid "Zoom in"
 msgstr "Zooma in"
 
-#: app/actions/view-actions.c:232
-#, fuzzy
+#: app/actions/view-actions.c:234
 msgid "16:1  (1600%)"
-msgstr "/Visa/Zooma/16:1  (1600%)"
+msgstr "16:1  (1600%)"
 
-#: app/actions/view-actions.c:237
-#, fuzzy
+#: app/actions/view-actions.c:239
 msgid "8:1  (800%)"
-msgstr "/Visa/Zooma/8:1  (800%)"
+msgstr "8:1  (800%)"
 
-#: app/actions/view-actions.c:242
-#, fuzzy
+#: app/actions/view-actions.c:244
 msgid "4:1  (400%)"
-msgstr "/Visa/Zooma/4:1  (400%)"
+msgstr "4:1  (400%)"
 
-#: app/actions/view-actions.c:247
-#, fuzzy
+#: app/actions/view-actions.c:249
 msgid "2:1  (200%)"
-msgstr "/Visa/Zooma/2:1  (200%)"
+msgstr "2:1  (200%)"
 
-#: app/actions/view-actions.c:252
-#, fuzzy
+#: app/actions/view-actions.c:254
 msgid "1:1  (100%)"
-msgstr "/Visa/Zooma/1:1  (100%)"
+msgstr "1:1  (100%)"
 
-#: app/actions/view-actions.c:253
+#: app/actions/view-actions.c:255
 msgid "Zoom 1:1"
 msgstr "Zooma 1:1"
 
-#: app/actions/view-actions.c:258
-#, fuzzy
+#: app/actions/view-actions.c:260
 msgid "1:2  (50%)"
-msgstr "/Visa/Zooma/1:2  (50%)"
+msgstr "1:2  (50%)"
 
-#: app/actions/view-actions.c:263
-#, fuzzy
+#: app/actions/view-actions.c:265
 msgid "1:4  (25%)"
-msgstr "/Visa/Zooma/1:2  (25%)"
+msgstr "1:4  (25%)"
 
-#: app/actions/view-actions.c:268
-#, fuzzy
+#: app/actions/view-actions.c:270
 msgid "1:8  (12.5%)"
-msgstr "/Visa/Zooma/1:1  (12.5%)"
+msgstr "1:8  (12.5%)"
 
-#: app/actions/view-actions.c:273
-#, fuzzy
+#: app/actions/view-actions.c:275
 msgid "1:16  (6.25%)"
-msgstr "/Visa/Zooma/1:16  (6.25%)"
+msgstr "1:16  (6.25%)"
 
-#: app/actions/view-actions.c:278
-#, fuzzy
+#: app/actions/view-actions.c:280
 msgid "O_ther..."
-msgstr "/Markera/Fj_äder..."
+msgstr "A_nnat..."
 
-#: app/actions/view-actions.c:286
-#, fuzzy
+#: app/actions/view-actions.c:288
 msgid "From _Theme"
-msgstr "/Från _tema"
+msgstr "Från _tema"
 
-#: app/actions/view-actions.c:291
-#, fuzzy
+#: app/actions/view-actions.c:293
 msgid "_Light Check Color"
-msgstr "/_Ljus rutfärg"
+msgstr "_Ljus rutfärg"
 
-#: app/actions/view-actions.c:296
-#, fuzzy
+#: app/actions/view-actions.c:298
 msgid "_Dark Check Color"
-msgstr "/_Mörk rutfärg"
+msgstr "_Mörk rutfärg"
 
-#: app/actions/view-actions.c:301
-#, fuzzy
+#: app/actions/view-actions.c:303
 msgid "Select _Custom Color..."
-msgstr "/Välj _egen färg..."
+msgstr "Välj _egen färg..."
 
-#: app/actions/view-actions.c:306
-#, fuzzy
+#: app/actions/view-actions.c:308
 msgid "As in _Preferences"
-msgstr "/Som i _inställningarna"
+msgstr "Som i _inställningarna"
 
-#: app/actions/view-actions.c:580
+#: app/actions/view-actions.c:594
 #, c-format
 msgid "Other (%s) ..."
 msgstr "Annat (%s) ..."
 
-#: app/actions/view-actions.c:589
+#: app/actions/view-actions.c:603
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Zooma (%s)"
@@ -3234,9 +2938,8 @@ msgid "Set Canvas Padding Color"
 msgstr "Ställ in färg på canvasutfyllnad"
 
 #: app/actions/view-commands.c:574
-#, fuzzy
 msgid "Set Custom Canvas Padding Color"
-msgstr "Ställ in färg på canvasutfyllnad"
+msgstr "Ställ in färg på rityteutfyllnad"
 
 #: app/base/base-enums.c:15
 msgid "Smooth"
@@ -3307,6 +3010,10 @@ msgid ""
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
 msgstr ""
+"Kan inte öppna växlingfilen. Gimp har slut på minne och kan inte använda "
+"växlingfilen. Delar av dina bilder kan vara förstörda. Försök spara ditt "
+"arbete under andra filnamn, starta om Gimp och kontrollera platsen för "
+"växlingskatalogen i dina inställningar."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:417
@@ -3458,9 +3165,8 @@ msgid "Ask for confirmation before closing an image without saving."
 msgstr "Fråga innan en bild stängs utan att vara sparad."
 
 #: app/config/gimprc-blurbs.h:33
-#, fuzzy
 msgid "Sets the pixel format of cursors the GIMP will use."
-msgstr "Anger markörläget GIMP skall använda."
+msgstr "Anger bildpunktsformatet för markörer GIMP skall använda."
 
 #: app/config/gimprc-blurbs.h:36
 msgid "Sets the mode of cursor the GIMP will use."
@@ -3489,7 +3195,6 @@ msgstr ""
 "aktiveras"
 
 #: app/config/gimprc-blurbs.h:77
-#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the initially selected pixel and "
@@ -3498,7 +3203,7 @@ msgid ""
 "the default threshold."
 msgstr ""
 "Verktyg som luddigt val och fyll hittar ytor med en såddfyllnadsalgoritm. "
-"Såddfyllnaden börjar på det valda bildelementet och rör sig i alla "
+"Såddfyllnaden börjar på det valda bildelementet och rör sig utåt i alla "
 "riktningar tills skillnaden i intensitet mot orginalet är större än ett "
 "specifierat tröskelvärde. Detta är standardvärdet för tröskelvärdet."
 
@@ -3548,10 +3253,10 @@ msgstr ""
 "annars visas bilden i 1:1-skala."
 
 #: app/config/gimprc-blurbs.h:167
-#, fuzzy
 msgid ""
 "Install a private colormap; might be useful on 8-bit (256 colors) displays."
-msgstr "Använd egen färgkarta; kan vara användbart på pseudofärgsskärmar."
+msgstr ""
+"Använd egen färgkarta; kan vara användbart på 8-bits (256 färger) skärmar."
 
 #: app/config/gimprc-blurbs.h:170
 msgid ""
@@ -3579,9 +3284,8 @@ msgstr ""
 "mer minne än det som specifierats här."
 
 #: app/config/gimprc-blurbs.h:185
-#, fuzzy
 msgid "When enabled, GIMP will show mnemonics in menus."
-msgstr "När aktiverat använder GIMP ett informationsfönster per bildvy."
+msgstr "När aktiverat visar GIMP snabbtangenter i menyer."
 
 #: app/config/gimprc-blurbs.h:188
 msgid ""
@@ -3597,6 +3301,8 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"Sätter skärmens horisontella upplösning i punkter per tum. Om det är satt "
+"till 0, frågar vi X-servern efter både horisontell och vertikal upplösning."
 
 #: app/config/gimprc-blurbs.h:204
 msgid ""
@@ -3604,6 +3310,8 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"Sätter skärmens vertikala upplösning i punkter per tum. Om det är satt till "
+"0, frågar vi X-servern efter både horisontell och vertikal upplösning."
 
 #: app/config/gimprc-blurbs.h:209
 msgid ""
@@ -3646,11 +3354,11 @@ msgstr ""
 "ner saker för stora bilder."
 
 #: app/config/gimprc-blurbs.h:245
-#, fuzzy
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
-msgstr "Bestämmer standard-förhandsvisningsstorlek för lager och kanaler."
+msgstr ""
+"Bestämmer förhandsvisningsstorlek för lager och kanaler i nya dialoger."
 
 #: app/config/gimprc-blurbs.h:249
 msgid ""
@@ -3698,15 +3406,15 @@ msgid ""
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
 msgstr ""
+"När aktiverat kommer alla dialoger att visa en hjälpknapp som leder till "
+"relevant hjälp. Du kan se hjälpen även utan denna knapp genom att trycka F1."
 
 #: app/config/gimprc-blurbs.h:279
-#, fuzzy
 msgid ""
 "When enabled, the cursor will be shown over the image while using a paint "
 "tool."
 msgstr ""
-"När aktiverad kommer GIMP inte spara bilden om den inte blivit ändrad sedan "
-"den öppnades."
+"När aktiverad kommer markören visas över bilden när ett målarverktyg används."
 
 #: app/config/gimprc-blurbs.h:283
 msgid ""
@@ -3839,13 +3547,12 @@ msgstr ""
 "användare."
 
 #: app/config/gimprc-blurbs.h:360
-#, fuzzy
 msgid ""
 "Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can "
 "not create thumbnails if layer previews are disabled."
 msgstr ""
-"Anger storleken på miniatyrbilden som sparas med varje bild. Observera att "
-"GIMP inte kan spara miniatyrbilder om förhandsgranskning av lager är "
+"Anger storleken på miniatyrbilden som visas i öppna-dialogen. Observera att "
+"GIMP inte kan skapa miniatyrbilder om förhandsgranskning av lager är "
 "avstängt."
 
 #: app/config/gimprc-blurbs.h:364
@@ -3853,6 +3560,8 @@ msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
 msgstr ""
+"Miniatyrbilden i öppna-dialogen uppdateras automatiskt om filen som "
+"förhandsgranskas är minde än storleken som sätts här."
 
 #: app/config/gimprc-blurbs.h:368
 msgid ""
@@ -3939,22 +3648,18 @@ msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Fel vid tolkning av \"%s\" på rad %d: %s"
 
 #: app/core/core-enums.c:15
-#, fuzzy
 msgid "_White (full opacity)"
 msgstr "_Vit (Full opacitet)"
 
 #: app/core/core-enums.c:16
-#, fuzzy
 msgid "_Black (full transparency)"
 msgstr "_Svart (Full transparens)"
 
 #: app/core/core-enums.c:17
-#, fuzzy
 msgid "Layer's _alpha channel"
 msgstr "Lagrets _alfakanal"
 
 #: app/core/core-enums.c:18
-#, fuzzy
 msgid "_Transfer layer's alpha channel"
 msgstr "_Överföringslagrets alfakanal"
 
@@ -3963,7 +3668,6 @@ msgid "_Selection"
 msgstr "_Markering"
 
 #: app/core/core-enums.c:20
-#, fuzzy
 msgid "_Grayscale copy of layer"
 msgstr "_Gråskalekopia av lager"
 
@@ -3976,27 +3680,22 @@ msgid "FG to BG (HSV)"
 msgstr "FG till BG (HSV)"
 
 #: app/core/core-enums.c:39
-#, fuzzy
 msgid "FG to transparent"
-msgstr "FG till Transparent"
+msgstr "FG till transparent"
 
 #: app/core/core-enums.c:40
-#, fuzzy
 msgid "Custom gradient"
 msgstr "Egen färgskala"
 
 #: app/core/core-enums.c:57
-#, fuzzy
 msgid "FG color fill"
 msgstr "Fyll med förgrundsfärg"
 
 #: app/core/core-enums.c:58
-#, fuzzy
 msgid "BG color fill"
 msgstr "Fyll med bakgrundsfärg"
 
 #: app/core/core-enums.c:59
-#, fuzzy
 msgid "Pattern fill"
 msgstr "Fyll mönster"
 
@@ -4030,49 +3729,40 @@ msgid "None"
 msgstr "Ingen"
 
 #: app/core/core-enums.c:137
-#, fuzzy
 msgid "Floyd-Steinberg (normal)"
-msgstr "Floyd-Steinberg färgdithering (normal)"
+msgstr "Floyd-Steinberg (normal)"
 
 #: app/core/core-enums.c:138
-#, fuzzy
 msgid "Floyd-Steinberg (reduced color bleeding)"
-msgstr "Floyd-Steinberg färgdithering (minskad färgblödning)"
+msgstr "Floyd-Steinberg (minskad färgblödning)"
 
 #: app/core/core-enums.c:139
-#, fuzzy
 msgid "Positioned"
-msgstr "Position: %0.6f"
+msgstr "Satt på plats"
 
 #: app/core/core-enums.c:156
-#, fuzzy
 msgid "Generate optimum palette"
-msgstr "Generera optimal palett:"
+msgstr "Generera optimal palett"
 
 #: app/core/core-enums.c:157
-#, fuzzy
 msgid "Use web-optimized palette"
-msgstr "Använd WWW-optimerad palett"
+msgstr "Använd nät-optimerad palett"
 
 #: app/core/core-enums.c:158
-#, fuzzy
 msgid "Use black and white (1-bit) palette"
 msgstr "Använd svartvit (1-bit) palett"
 
 #: app/core/core-enums.c:159
-#, fuzzy
 msgid "Use custom palette"
-msgstr "Använd egen palett:"
+msgstr "Använd egen palett"
 
 #: app/core/core-enums.c:202
-#, fuzzy
 msgid "Foreground color"
-msgstr "_Förgrundsfärg:"
+msgstr "Förgrundsfärg"
 
 #: app/core/core-enums.c:203
-#, fuzzy
 msgid "Background color"
-msgstr "_Bakgrundsfärg:"
+msgstr "Bakgrundsfärg"
 
 #: app/core/core-enums.c:204
 msgid "White"
@@ -4089,7 +3779,6 @@ msgid "Pattern"
 msgstr "Mönster"
 
 #: app/core/core-enums.c:225
-#, fuzzy
 msgid "Bi-linear"
 msgstr "Bilinjär"
 
@@ -4103,39 +3792,32 @@ msgid "Square"
 msgstr "Fyrkantig"
 
 #: app/core/core-enums.c:228
-#, fuzzy
 msgid "Conical (sym)"
 msgstr "Konisk (symmetrisk)"
 
 #: app/core/core-enums.c:229
-#, fuzzy
 msgid "Conical (asym)"
 msgstr "Konisk (asymmetrisk)"
 
 #: app/core/core-enums.c:230
-#, fuzzy
 msgid "Shaped (angular)"
 msgstr "Formfyllning (vinkel)"
 
 #: app/core/core-enums.c:231
-#, fuzzy
 msgid "Shaped (spherical)"
 msgstr "Formfyllning (sfärisk)"
 
 #: app/core/core-enums.c:232
-#, fuzzy
 msgid "Shaped (dimpled)"
 msgstr "Formfyllning (gropig)"
 
 #: app/core/core-enums.c:233
-#, fuzzy
 msgid "Spiral (cw)"
 msgstr "Spiral (medurs)"
 
 #: app/core/core-enums.c:234
-#, fuzzy
 msgid "Spiral (ccw)"
-msgstr "Spiral (medurs)"
+msgstr "Spiral (moturs)"
 
 #: app/core/core-enums.c:251
 msgid "Intersections (dots)"
@@ -4150,7 +3832,6 @@ msgid "Dashed"
 msgstr "Streckad"
 
 #: app/core/core-enums.c:254
-#, fuzzy
 msgid "Double dashed"
 msgstr "Dubbelstreckad"
 
@@ -4183,32 +3864,26 @@ msgid "Line"
 msgstr "Linje"
 
 #: app/core/core-enums.c:330
-#, fuzzy
 msgid "Long dashes"
 msgstr "Långa streck"
 
 #: app/core/core-enums.c:331
-#, fuzzy
 msgid "Medium dashes"
 msgstr "Mellanstreck"
 
 #: app/core/core-enums.c:332
-#, fuzzy
 msgid "Short dashes"
 msgstr "Korta streck"
 
 #: app/core/core-enums.c:333
-#, fuzzy
 msgid "Sparse dots"
 msgstr "Glesa prickar"
 
 #: app/core/core-enums.c:334
-#, fuzzy
 msgid "Normal dots"
 msgstr "Normala prickar"
 
 #: app/core/core-enums.c:335
-#, fuzzy
 msgid "Dense dots"
 msgstr "Täta prickar"
 
@@ -4217,35 +3892,32 @@ msgid "Stipples"
 msgstr "Streckning"
 
 #: app/core/core-enums.c:337
-#, fuzzy
 msgid "Dash dot..."
 msgstr "Lång kort..."
 
 #: app/core/core-enums.c:338
-#, fuzzy
 msgid "Dash dot dot..."
 msgstr "Lång kort kort..."
 
 #: app/core/core-enums.c:355
 msgid "Stock ID"
-msgstr ""
+msgstr "Standard ID"
 
 #: app/core/core-enums.c:356
 msgid "Inline pixbuf"
-msgstr ""
+msgstr "Inline pixbuf"
 
 #: app/core/core-enums.c:357
-#, fuzzy
 msgid "Image file"
 msgstr "Bildstorlek"
 
 #: app/core/core-enums.c:374
 msgid "Circle"
-msgstr ""
+msgstr "Cirkel"
 
 #: app/core/core-enums.c:376
 msgid "Diamond"
-msgstr ""
+msgstr "Romb"
 
 #: app/core/core-enums.c:393 app/dialogs/preferences-dialog.c:1897
 msgid "Horizontal"
@@ -4264,7 +3936,6 @@ msgid "Tiny"
 msgstr "Jätteliten"
 
 #: app/core/core-enums.c:432
-#, fuzzy
 msgid "Very small"
 msgstr "Mycket liten"
 
@@ -4281,7 +3952,6 @@ msgid "Large"
 msgstr "Stor"
 
 #: app/core/core-enums.c:436
-#, fuzzy
 msgid "Very large"
 msgstr "Mycket stor"
 
@@ -4298,17 +3968,14 @@ msgid "Gigantic"
 msgstr "Gigantisk"
 
 #: app/core/core-enums.c:457
-#, fuzzy
 msgid "Sawtooth wave"
 msgstr "Sågtandsvåg"
 
 #: app/core/core-enums.c:458
-#, fuzzy
 msgid "Triangular wave"
 msgstr "Triangulär våg"
 
 #: app/core/core-enums.c:496
-#, fuzzy
 msgid "No thumbnails"
 msgstr "Inga miniatyrbilder"
 
@@ -4321,12 +3988,10 @@ msgid "Large (256x256)"
 msgstr "Stor (256×256)"
 
 #: app/core/core-enums.c:515
-#, fuzzy
 msgid "Forward (traditional)"
 msgstr "Framåt (traditionell)"
 
 #: app/core/core-enums.c:516
-#, fuzzy
 msgid "Backward (corrective)"
 msgstr "Bakåt (korrektiv)"
 
@@ -4335,47 +4000,38 @@ msgid "<<invalid>>"
 msgstr "<<ogiltig>>"
 
 #: app/core/core-enums.c:576
-#, fuzzy
 msgid "Scale image"
 msgstr "Skala bild"
 
 #: app/core/core-enums.c:577
-#, fuzzy
 msgid "Resize image"
 msgstr "Ändra storlek på bild"
 
 #: app/core/core-enums.c:578
-#, fuzzy
 msgid "Flip image"
 msgstr "Vänd bild"
 
 #: app/core/core-enums.c:579
-#, fuzzy
 msgid "Rotate image"
 msgstr "Rotera bild"
 
 #: app/core/core-enums.c:580
-#, fuzzy
 msgid "Crop image"
 msgstr "Beskär bild"
 
 #: app/core/core-enums.c:581
-#, fuzzy
 msgid "Convert image"
 msgstr "Konvertera bild"
 
 #: app/core/core-enums.c:582
-#, fuzzy
 msgid "Merge layers"
 msgstr "Sammanfoga lager"
 
 #: app/core/core-enums.c:583
-#, fuzzy
 msgid "Merge vectors"
 msgstr "Sammanfoga vektorer"
 
 #: app/core/core-enums.c:584 app/core/gimpchannel.c:383
-#, fuzzy
 msgid "Quick Mask"
 msgstr "Snabbmask"
 
@@ -4390,72 +4046,58 @@ msgid "Guide"
 msgstr "Hjälplinje"
 
 #: app/core/core-enums.c:588 app/core/core-enums.c:618
-#, fuzzy
 msgid "Drawable mod"
 msgstr "Ritytemod"
 
 #: app/core/core-enums.c:589 app/core/core-enums.c:619
-#, fuzzy
 msgid "Selection mask"
 msgstr "Markeringsmask"
 
 #: app/core/core-enums.c:590 app/core/core-enums.c:622
-#, fuzzy
 msgid "Item visibility"
 msgstr "Objektsynlighet"
 
 #: app/core/core-enums.c:591
-#, fuzzy
 msgid "Linked item"
 msgstr "Länkat objekt"
 
 #: app/core/core-enums.c:592
-#, fuzzy
 msgid "Item properties"
 msgstr "Objektegenskaper"
 
 #: app/core/core-enums.c:593 app/core/core-enums.c:621
-#, fuzzy
 msgid "Move item"
 msgstr "Flytta objekt"
 
 #: app/core/core-enums.c:594
-#, fuzzy
 msgid "Scale item"
 msgstr "Skala bild"
 
 #: app/core/core-enums.c:595
-#, fuzzy
 msgid "Resize item"
 msgstr "Ändra storlek på bild"
 
 #: app/core/core-enums.c:596 app/core/core-enums.c:626
-#, fuzzy
 msgid "Add layer mask"
 msgstr "lägg till lagermask"
 
 #: app/core/core-enums.c:597
-#, fuzzy
 msgid "Apply layer mask"
 msgstr "applicera lagermask"
 
 #: app/core/core-enums.c:598
-#, fuzzy
 msgid "Floating selection to layer"
 msgstr "Flytande markering till lager"
 
 #: app/core/core-enums.c:599
-#, fuzzy
 msgid "Float selection"
 msgstr "Flytande markering"
 
 #: app/core/core-enums.c:600
-#, fuzzy
 msgid "Anchor floating selection"
 msgstr "Ankra flytande markering"
 
 #: app/core/core-enums.c:601
-#, fuzzy
 msgid "Remove floating selection"
 msgstr "Flytande markering"
 
@@ -4483,17 +4125,14 @@ msgid "Paint"
 msgstr "Måla"
 
 #: app/core/core-enums.c:607 app/core/core-enums.c:647
-#, fuzzy
 msgid "Attach parasite"
 msgstr "Koppla parasit"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:648
-#, fuzzy
 msgid "Remove parasite"
 msgstr "Ta bort parasit"
 
 #: app/core/core-enums.c:609
-#, fuzzy
 msgid "Import paths"
 msgstr "Importera slinga"
 
@@ -4502,127 +4141,102 @@ msgid "Plug-In"
 msgstr "Insticksmodul"
 
 #: app/core/core-enums.c:611
-#, fuzzy
 msgid "Image type"
 msgstr "Bildtyp"
 
 #: app/core/core-enums.c:612
-#, fuzzy
 msgid "Image size"
 msgstr "Bildstorlek"
 
 #: app/core/core-enums.c:613
-#, fuzzy
 msgid "Resolution change"
 msgstr "Ändring av upplösning"
 
 #: app/core/core-enums.c:616
-#, fuzzy
 msgid "Change indexed palette"
 msgstr "Ändra indexerad palett"
 
 #: app/core/core-enums.c:620
-#, fuzzy
 msgid "Rename item"
 msgstr "Byt namn på objekt"
 
 #: app/core/core-enums.c:623
-#, fuzzy
 msgid "Set item linked"
 msgstr "Sätt objektlänkning"
 
 #: app/core/core-enums.c:624
-#, fuzzy
 msgid "New layer"
 msgstr "nytt lager"
 
 #: app/core/core-enums.c:625
-#, fuzzy
 msgid "Delete layer"
 msgstr "ta bort lager"
 
 #: app/core/core-enums.c:627
-#, fuzzy
 msgid "Delete layer mask"
 msgstr "ta bort lagermask"
 
 #: app/core/core-enums.c:628
-#, fuzzy
 msgid "Reposition layer"
 msgstr "Omplacera lager"
 
 #: app/core/core-enums.c:629
-#, fuzzy
 msgid "Set layer mode"
 msgstr "Sätt lagermod"
 
 #: app/core/core-enums.c:630
-#, fuzzy
 msgid "Set layer opacity"
 msgstr "Sätt lageropacitet"
 
 #: app/core/core-enums.c:631
-#, fuzzy
 msgid "Set preserve trans"
 msgstr "Sätt spara transparens"
 
 #: app/core/core-enums.c:633
-#, fuzzy
 msgid "Text modified"
-msgstr "Endast om ändrad"
+msgstr "Text ändrad"
 
 #: app/core/core-enums.c:634
-#, fuzzy
 msgid "New channel"
 msgstr "ny kanal"
 
 #: app/core/core-enums.c:635
-#, fuzzy
 msgid "Delete channel"
 msgstr "Ta bort kanal"
 
 #: app/core/core-enums.c:636
-#, fuzzy
 msgid "Reposition channel"
 msgstr "Omplacera kanal"
 
 #: app/core/core-enums.c:637
-#, fuzzy
 msgid "Channel color"
 msgstr "Kanalfärg"
 
 #: app/core/core-enums.c:638
-#, fuzzy
 msgid "New vectors"
 msgstr "Nya vektorer"
 
 #: app/core/core-enums.c:639
-#, fuzzy
 msgid "Delete vectors"
 msgstr "Ta bort vektorer"
 
 #: app/core/core-enums.c:640
-#, fuzzy
 msgid "Vectors mod"
-msgstr "Vektormod"
+msgstr "Vektorläge"
 
 #: app/core/core-enums.c:641
-#, fuzzy
 msgid "Reposition vectors"
 msgstr "Omplacera vektorer"
 
 #: app/core/core-enums.c:642
-#, fuzzy
 msgid "FS to layer"
 msgstr "FS till lager"
 
 #: app/core/core-enums.c:643
-#, fuzzy
 msgid "FS rigor"
 msgstr "FS rigor"
 
 #: app/core/core-enums.c:644
-#, fuzzy
 msgid "FS relax"
 msgstr "FS relax"
 
@@ -4748,18 +4362,18 @@ msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 msgstr "Ödesdigert tolkningsfel i penselfil \"%s\": Okänd GIMP penselversion."
 
 #: app/core/gimpbrushgenerated.c:669
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
-msgstr "Ödesdigert tolkningsfel i penselfil \"%s\": Okänd GIMP penselversion."
+msgstr "Ödesdigert tolkningsfel i penselfil \"%s\": Okänd GIMP penselform."
 
 #: app/core/gimpbrushgenerated.c:750
-#, fuzzy, c-format
+#, c-format
 msgid "Error while reading brush file '%s': %s"
-msgstr "Fel vid läsning av \"%s\": %s"
+msgstr "Fel vid läsning av penselfil \"%s\": %s"
 
 #: app/core/gimpbrushgenerated.c:752
 msgid "File is truncated"
-msgstr ""
+msgstr "Filen är avkortad"
 
 #: app/core/gimpbrushpipe.c:375 app/core/gimpbrushpipe.c:395
 #: app/core/gimpbrushpipe.c:485
@@ -4882,13 +4496,14 @@ msgid "Could not delete '%s': %s"
 msgstr "Kunde inte ta bort \"%s\": %s"
 
 #: app/core/gimpdatafactory.c:291 app/core/gimpdatafactory.c:511
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to save data:\n"
 "\n"
 "%s"
 msgstr ""
 "Varning: Misslyckades med att spara data:\n"
+"\n"
 "%s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
@@ -4902,13 +4517,14 @@ msgid "%s copy"
 msgstr "%s-kopia"
 
 #: app/core/gimpdatafactory.c:614
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load data:\n"
 "\n"
 "%s"
 msgstr ""
 "Varning: Misslyckades med att läsa in data:\n"
+"\n"
 "%s"
 
 #: app/core/gimpdrawable-blend.c:235 app/tools/gimpblendtool.c:101
@@ -4993,14 +4609,14 @@ msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "Trasigt segment %d i färgskalefilen \"%s\"."
 
 #: app/core/gimpgradient-load.c:255
-#, fuzzy, c-format
+#, c-format
 msgid "No linear gradients found in '%s'"
-msgstr "Inga slingor funna i \"%s\""
+msgstr "Inga linjära färgskalor funna i \"%s\""
 
 #: app/core/gimpgradient-load.c:265
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to import gradients from '%s': %s"
-msgstr "Misslyckades med att importera slinga från \"%s\": %s"
+msgstr "Misslyckades med att importera färgskalor från \"%s\": %s"
 
 #: app/core/gimpgrid.c:128
 msgid "Line style used for the grid."
@@ -5057,14 +4673,12 @@ msgid "Convert Image to Indexed"
 msgstr "Konvertera bild till indexerad färg"
 
 #: app/core/gimpimage-convert.c:867
-#, fuzzy
 msgid "Converting to indexed (stage 2)..."
-msgstr "Konvertera bild till indexerad färg"
+msgstr "Konvertera till indexerad (fas 2)..."
 
 #: app/core/gimpimage-convert.c:911
-#, fuzzy
 msgid "Converting to indexed (stage 3)..."
-msgstr "Konvertera bild till indexerad färg"
+msgstr "Konvertera till indexerad (fas 3)..."
 
 #: app/core/gimpimage-crop.c:123
 msgid "Crop Image"
@@ -5124,12 +4738,10 @@ msgstr ""
 "måste vara minst två."
 
 #: app/core/gimpimage-qmask.c:67
-#, fuzzy
 msgid "Enable Quick Mask"
 msgstr "Aktivera snabbmask"
 
 #: app/core/gimpimage-qmask.c:117
-#, fuzzy
 msgid "Disable Quick Mask"
 msgstr "Inaktivera snabbmask"
 
@@ -5192,7 +4804,7 @@ msgstr "Höj lager till toppen"
 
 #: app/core/gimpimage.c:2897
 msgid "Layer is already on the bottom."
-msgstr "Lagret är redan nederst."
+msgstr "Lagret är redan underst."
 
 #: app/core/gimpimage.c:2902 app/widgets/gimplayertreeview.c:250
 msgid "Lower Layer to Bottom"
@@ -5220,9 +4832,8 @@ msgid "Raise Channel"
 msgstr "Höj kanal"
 
 #: app/core/gimpimage.c:3104
-#, fuzzy
 msgid "Channel is already on top."
-msgstr "Lagret är redan överst."
+msgstr "Kanalen är redan överst."
 
 #: app/core/gimpimage.c:3109 app/widgets/gimpchanneltreeview.c:129
 msgid "Raise Channel to Top"
@@ -5237,9 +4848,8 @@ msgid "Lower Channel"
 msgstr "Sänk kanal"
 
 #: app/core/gimpimage.c:3151
-#, fuzzy
 msgid "Channel is already on the bottom."
-msgstr "Lagret är redan nederst."
+msgstr "Kanalen är redan underst."
 
 #: app/core/gimpimage.c:3156 app/widgets/gimpchanneltreeview.c:133
 msgid "Lower Channel to Bottom"
@@ -5262,13 +4872,12 @@ msgid "Raise Path"
 msgstr "Höj slinga"
 
 #: app/core/gimpimage.c:3342
-#, fuzzy
 msgid "Path is already on top."
-msgstr "Lagret är redan överst."
+msgstr "Slingan är redan överst."
 
 #: app/core/gimpimage.c:3347
 msgid "Raise Path to Top"
-msgstr "Höj slingan till toppen"
+msgstr "Flytta slingan överst"
 
 #: app/core/gimpimage.c:3364
 msgid "Path cannot be lowered more."
@@ -5279,13 +4888,12 @@ msgid "Lower Path"
 msgstr "Sänk slinga"
 
 #: app/core/gimpimage.c:3389
-#, fuzzy
 msgid "Path is already on the bottom."
-msgstr "Lagret är redan nederst."
+msgstr "Slingan är redan underst."
 
 #: app/core/gimpimage.c:3394
 msgid "Lower Path to Bottom"
-msgstr "Sänk slingan till botten"
+msgstr "Flytta slingan underst"
 
 #: app/core/gimpimagefile.c:517
 msgid "Remote image"
@@ -5349,9 +4957,8 @@ msgid "Remove Parasite from Item"
 msgstr "Ta bort parasit från objekt"
 
 #: app/core/gimplayer-floating-sel.c:98
-#, fuzzy
 msgid "Remove Floating Selection"
-msgstr "Flytande markering"
+msgstr "Ta bort lytande markering"
 
 #: app/core/gimplayer-floating-sel.c:129
 msgid "Cannot anchor this layer because it is not a floating selection."
@@ -5599,9 +5206,8 @@ msgid "Float Selection"
 msgstr "Flytande markering"
 
 #: app/core/gimpselection.c:845
-#, fuzzy
 msgid "Floated Layer"
-msgstr "Rotera lager"
+msgstr "Flytande lager"
 
 #: app/core/gimptemplate.c:158
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -5609,7 +5215,6 @@ msgstr ""
 "Enheten som används för koordinatvisning när man inte har punkt till punkt."
 
 #: app/core/gimptemplate.c:165
-#, fuzzy
 msgid "The horizontal image resolution."
 msgstr "Horisontell bildupplösning."
 
@@ -5708,14 +5313,12 @@ msgid "Palette"
 msgstr "Palett"
 
 #: app/dialogs/convert-dialog.c:179
-#, fuzzy
 msgid "_Maximum number of colors:"
-msgstr "Maximalt antal färger:"
+msgstr "_Maximalt antal färger:"
 
 #: app/dialogs/convert-dialog.c:206
-#, fuzzy
 msgid "_Remove unused colors from final palette"
-msgstr "Ta bort oanvända färger från den slutgiltiga paletten"
+msgstr "_Ta bort oanvända färger från den slutgiltiga paletten"
 
 #. dithering
 #: app/dialogs/convert-dialog.c:221 app/tools/gimpblendoptions.c:268
@@ -5723,19 +5326,16 @@ msgid "Dithering"
 msgstr "Dithering"
 
 #: app/dialogs/convert-dialog.c:233
-#, fuzzy
 msgid "Color _dithering:"
-msgstr "Ingen färgdithering"
+msgstr "Färg_dithering"
 
 #: app/dialogs/convert-dialog.c:248
-#, fuzzy
 msgid "Enable dithering of _transparency"
-msgstr "Använd dithering av transparens"
+msgstr "Använd dithering av _transparens"
 
 #: app/dialogs/convert-dialog.c:274
-#, fuzzy
 msgid "Converting to indexed..."
-msgstr "Konvertera bild till indexerad färg"
+msgstr "Konvertera till indexerad..."
 
 #: app/dialogs/convert-dialog.c:382
 msgid "Cannot convert to a palette with more than 256 colors."
@@ -5810,33 +5410,29 @@ msgid "Brush Editor"
 msgstr "Penselredigerare"
 
 #: app/dialogs/file-open-location-dialog.c:71
-#, fuzzy
 msgid "Open Location"
-msgstr "Placering:"
+msgstr "Öppna plats"
 
 #: app/dialogs/file-open-location-dialog.c:104
-#, fuzzy
 msgid "Enter location (URI):"
-msgstr "Interpolation:"
+msgstr "Ange plats (URI):"
 
 #: app/dialogs/file-save-dialog.c:162
-#, fuzzy
 msgid "File exists"
 msgstr "Filen existerar!"
 
 #: app/dialogs/file-save-dialog.c:167
-#, fuzzy
 msgid "_Replace"
-msgstr "Ersätt"
+msgstr "_Ersätt"
 
 #: app/dialogs/file-save-dialog.c:177
 #, c-format
 msgid "A file named '%s' already exists."
-msgstr ""
+msgstr "En fil \"%s\" existerar redan."
 
 #: app/dialogs/file-save-dialog.c:182
 msgid "Do you want to replace it with the image you are saving?"
-msgstr ""
+msgstr "Vill du ersätta den med bilden du sparar?"
 
 #: app/dialogs/grid-dialog.c:81
 msgid "Configure Grid"
@@ -5851,9 +5447,8 @@ msgid "Create a New Image"
 msgstr "Skapa en ny bild"
 
 #: app/dialogs/image-new-dialog.c:131 app/dialogs/preferences-dialog.c:1268
-#, fuzzy
 msgid "_Template:"
-msgstr "Mallar"
+msgstr "_Mall:"
 
 #: app/dialogs/image-new-dialog.c:266
 msgid "Confirm Image Size"
@@ -5865,6 +5460,8 @@ msgid ""
 "An image of the choosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
 msgstr ""
+"En bild av den valda storleken kommer att använda mer minne än vad \"Maximal "
+"bildstorlek\" är satt till i inställningarna (nu satt till %s)."
 
 #. General
 #: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1498
@@ -5897,9 +5494,8 @@ msgid "Direct Color"
 msgstr "Direkt färg"
 
 #: app/dialogs/info-window.c:131
-#, fuzzy
 msgid "Cursor"
-msgstr "Kurvor"
+msgstr "markör"
 
 #: app/dialogs/info-window.c:141 app/dialogs/preferences-dialog.c:1879
 #: app/widgets/gimpgrideditor.c:267 app/widgets/gimpgrideditor.c:299
@@ -5915,23 +5511,20 @@ msgid "n/a"
 msgstr "---"
 
 #: app/dialogs/info-window.c:154 app/dialogs/info-window.c:176
-#, fuzzy
 msgid "X"
-msgstr "X:"
+msgstr "X"
 
 #: app/dialogs/info-window.c:160 app/dialogs/info-window.c:182
-#, fuzzy
 msgid "Y"
-msgstr "_Y"
+msgstr "Y"
 
 #: app/dialogs/info-window.c:163 app/pdb/internal_procs.c:208
 msgid "Units"
 msgstr "Enheter"
 
 #: app/dialogs/info-window.c:227
-#, fuzzy
 msgid "Comment"
-msgstr "Antal:"
+msgstr "Kommentar"
 
 #: app/dialogs/info-window.c:238 app/dialogs/info-window.c:612
 #: app/display/gimpdisplayshell-title.c:337
@@ -5949,12 +5542,10 @@ msgstr "Bildinformation"
 
 #. add the information fields
 #: app/dialogs/info-window.c:282
-#, fuzzy
 msgid "Pixel dimensions:"
 msgstr "Bildpunktsdimensioner:"
 
 #: app/dialogs/info-window.c:284
-#, fuzzy
 msgid "Print size:"
 msgstr "Utskriftsstorlek:"
 
@@ -5963,32 +5554,26 @@ msgid "Resolution:"
 msgstr "Upplösning:"
 
 #: app/dialogs/info-window.c:288
-#, fuzzy
 msgid "Scale ratio:"
 msgstr "Skalningsförhållande:"
 
 #: app/dialogs/info-window.c:290
-#, fuzzy
 msgid "Number of layers:"
 msgstr "Antal lager:"
 
 #: app/dialogs/info-window.c:292
-#, fuzzy
 msgid "Size in memory:"
 msgstr "Storlek i minne:"
 
 #: app/dialogs/info-window.c:294
-#, fuzzy
 msgid "Display type:"
 msgstr "Displaytyp:"
 
 #: app/dialogs/info-window.c:296
-#, fuzzy
 msgid "Visual class:"
 msgstr "Visuell klass:"
 
 #: app/dialogs/info-window.c:298
-#, fuzzy
 msgid "Visual depth:"
 msgstr "Visuellt djup:"
 
@@ -6031,7 +5616,6 @@ msgid "Autoload"
 msgstr "Läs in automatiskt"
 
 #: app/dialogs/module-dialog.c:175
-#, fuzzy
 msgid "Module path"
 msgstr "Modulsökväg"
 
@@ -6126,30 +5710,25 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #: app/dialogs/offset-dialog.c:194
-#, fuzzy
 msgid "Offset by  x/_2, y/2"
-msgstr "Offset med (x/_2),(y/2)"
+msgstr "Offset med x/_2, y/2"
 
 #. The edge behaviour frame
 #: app/dialogs/offset-dialog.c:203
-#, fuzzy
 msgid "Edge Behaviour"
-msgstr "Fönsterbeteende"
+msgstr "Kantbeteende"
 
 #: app/dialogs/offset-dialog.c:207
-#, fuzzy
 msgid "_Wrap around"
-msgstr "Slå-runt"
+msgstr "_Slå runt"
 
 #: app/dialogs/offset-dialog.c:210
-#, fuzzy
 msgid "Fill with _background color"
-msgstr "Redigera bakgrundsfärg"
+msgstr "Fyll med _bakgrundsfärg"
 
 #: app/dialogs/offset-dialog.c:213
-#, fuzzy
 msgid "Make _transparent"
-msgstr "_Transparent"
+msgstr "Gör _transparent"
 
 #: app/dialogs/palette-import-dialog.c:171
 msgid "Import Palette"
@@ -6173,14 +5752,12 @@ msgid "I_mage"
 msgstr "_Bild"
 
 #: app/dialogs/palette-import-dialog.c:246
-#, fuzzy
 msgid "Palette _file"
-msgstr "Palettmappar"
+msgstr "Palett_fil"
 
 #: app/dialogs/palette-import-dialog.c:273
-#, fuzzy
 msgid "Select palette file"
-msgstr "Välj palettmappar"
+msgstr "Välj palettfil"
 
 #. The "Import" frame
 #: app/dialogs/palette-import-dialog.c:304
@@ -6188,7 +5765,6 @@ msgid "Import Options"
 msgstr "Importalternativ"
 
 #: app/dialogs/palette-import-dialog.c:317
-#, fuzzy
 msgid "New import"
 msgstr "Ny import"
 
@@ -6197,7 +5773,6 @@ msgid "Palette _Name:"
 msgstr "Palett_namn:"
 
 #: app/dialogs/palette-import-dialog.c:325
-#, fuzzy
 msgid "N_umber of colors:"
 msgstr "_Antal färger:"
 
@@ -6219,82 +5794,76 @@ msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "Du måste starta om GIMP för att följande ändringar ska ha effekt:"
 
 #: app/dialogs/preferences-dialog.c:498
-#, fuzzy
 msgid "Configure Keyboard Shortcuts"
-msgstr "Kortkommandon"
+msgstr "Ställ in kortkommandon"
 
 #: app/dialogs/preferences-dialog.c:564
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
+"Dina tangentbordsgenvägar kommer återställas till standardvärden nästa gång "
+"du startar GIMP."
 
 #: app/dialogs/preferences-dialog.c:598
 msgid ""
 "Your window setup will be reset to default values. the next time you start "
 "GIMP."
 msgstr ""
+"Din förnsteruppställning kommer återställas till standardvärden nästa gång "
+"du startar GIMP."
 
 #: app/dialogs/preferences-dialog.c:632
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
+"Dina inställningar för inmatningsenheter kommer återställas till "
+"standardvärden nästa gång du startar GIMP."
 
 #: app/dialogs/preferences-dialog.c:1042
-#, fuzzy
 msgid "Show _menubar"
 msgstr "Visa _menyrad"
 
 #: app/dialogs/preferences-dialog.c:1045
-#, fuzzy
 msgid "Show _rulers"
 msgstr "Visa _linjaler"
 
 #: app/dialogs/preferences-dialog.c:1048
-#, fuzzy
 msgid "Show scroll_bars"
 msgstr "Visa rullnings_lister"
 
 #: app/dialogs/preferences-dialog.c:1051
-#, fuzzy
 msgid "Show s_tatusbar"
 msgstr "Visa s_tatusrad"
 
 #: app/dialogs/preferences-dialog.c:1059
-#, fuzzy
 msgid "Show s_election"
 msgstr "Visa m_arkering"
 
 #: app/dialogs/preferences-dialog.c:1062
-#, fuzzy
 msgid "Show _layer boundary"
 msgstr "Visa _lagergräns"
 
 #: app/dialogs/preferences-dialog.c:1065
-#, fuzzy
 msgid "Show _guides"
 msgstr "Visa _hjälplinjer"
 
 #: app/dialogs/preferences-dialog.c:1068
-#, fuzzy
 msgid "Show gri_d"
 msgstr "Visa r_utnät"
 
 #: app/dialogs/preferences-dialog.c:1074
-#, fuzzy
 msgid "Canvas _padding mode:"
-msgstr "Färg på canvasutfyllnad:"
+msgstr "Rityte_utfyllnadsläge:"
 
 #: app/dialogs/preferences-dialog.c:1078
-#, fuzzy
 msgid "Custom p_adding color:"
-msgstr "Färg på canvasutfyllnad:"
+msgstr "Anpassad u_tfyllnadsfärg:"
 
 #: app/dialogs/preferences-dialog.c:1079
-#, fuzzy
 msgid "Select custom canvas padding color"
-msgstr "Välj egen färg på canvasutfyllnad"
+msgstr "Välj egen färg på rityteutfyllnad"
 
 #: app/dialogs/preferences-dialog.c:1146
 msgid "Preferences"
@@ -6326,17 +5895,14 @@ msgid "Previews"
 msgstr "Förhandsvisningar"
 
 #: app/dialogs/preferences-dialog.c:1326
-#, fuzzy
 msgid "_Enable layer & channel previews"
 msgstr "_Aktivera förhandsvisning av lager och kanaler"
 
 #: app/dialogs/preferences-dialog.c:1332
-#, fuzzy
 msgid "Default _layer & channel preview size:"
 msgstr "Standardstorlek för förhandsvisning av _lager och kanaler:"
 
 #: app/dialogs/preferences-dialog.c:1335
-#, fuzzy
 msgid "Na_vigation preview size:"
 msgstr "Förhandsvisningsstorlek för _navigering:"
 
@@ -6350,29 +5916,24 @@ msgid "Show menu _mnemonics (access keys)"
 msgstr ""
 
 #: app/dialogs/preferences-dialog.c:1346
-#, fuzzy
 msgid "Use _dynamic keyboard shortcuts"
 msgstr "Använd dynamiska _kortkommandon"
 
 #: app/dialogs/preferences-dialog.c:1350
-#, fuzzy
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "Kortkommandon"
+msgstr "Ställ in _Kortkommandon..."
 
 #: app/dialogs/preferences-dialog.c:1357
-#, fuzzy
 msgid "_Save keyboard shortcuts on exit"
-msgstr "Spara kortkommandon vid avslut"
+msgstr "_Spara kortkommandon vid avslut"
 
 #: app/dialogs/preferences-dialog.c:1361
-#, fuzzy
 msgid "Save Keyboard Shortcuts _Now"
-msgstr "Spara kortkommandon nu"
+msgstr "Spara kortkommandon _nu"
 
 #: app/dialogs/preferences-dialog.c:1368
-#, fuzzy
 msgid "_Reset Saved Keyboard Shortcuts to Default Values"
-msgstr "Återställ sparade kortkommandon vid uppstart"
+msgstr "_Återställ sparade kortkommandon till standardvärden"
 
 #: app/dialogs/preferences-dialog.c:1383 app/dialogs/preferences-dialog.c:1386
 #: app/dialogs/preferences-dialog.c:1422
@@ -6392,17 +5953,14 @@ msgid "Help System"
 msgstr "Hjälpsystem"
 
 #: app/dialogs/preferences-dialog.c:1501
-#, fuzzy
 msgid "Show tool _tips"
 msgstr "Visa verktygs_tips"
 
 #: app/dialogs/preferences-dialog.c:1504
-#, fuzzy
 msgid "Show help _buttons"
-msgstr "Visa m_arkering"
+msgstr "Visa hjälp_knappar"
 
 #: app/dialogs/preferences-dialog.c:1507
-#, fuzzy
 msgid "Show tips on _startup"
 msgstr "Visa tips vid _uppstart"
 
@@ -6412,7 +5970,6 @@ msgid "Help Browser"
 msgstr "Hjälpläsare"
 
 #: app/dialogs/preferences-dialog.c:1515
-#, fuzzy
 msgid "H_elp browser to use:"
 msgstr "Hjälp_läsare att använda:"
 
@@ -6421,14 +5978,12 @@ msgid "Web Browser"
 msgstr "Webbläsare"
 
 #: app/dialogs/preferences-dialog.c:1524
-#, fuzzy
 msgid "Select web browser"
 msgstr "Välj webbläsare"
 
 #: app/dialogs/preferences-dialog.c:1527
-#, fuzzy
 msgid "_Web browser to use:"
-msgstr "Webbläsare att använda:"
+msgstr "_Webbläsare att använda:"
 
 #. Snapping Distance
 #: app/dialogs/preferences-dialog.c:1552
@@ -6436,9 +5991,8 @@ msgid "Guide and Grid Snapping"
 msgstr "Fästa till hjälplinjer och rutnät"
 
 #: app/dialogs/preferences-dialog.c:1557
-#, fuzzy
 msgid "_Snap distance:"
-msgstr "Fästningsavstånd:"
+msgstr "_Fästningsavstånd:"
 
 #. Contiguous Regions
 #: app/dialogs/preferences-dialog.c:1561
@@ -6446,7 +6000,6 @@ msgid "Finding Contiguous Regions"
 msgstr "Hitta kontinuerliga ytor"
 
 #: app/dialogs/preferences-dialog.c:1566
-#, fuzzy
 msgid "Default _threshold:"
 msgstr "Standard_tröskelvärde:"
 
@@ -6456,7 +6009,6 @@ msgid "Scaling"
 msgstr "Skalning"
 
 #: app/dialogs/preferences-dialog.c:1574
-#, fuzzy
 msgid "Default _interpolation:"
 msgstr "Standard_interpolation:"
 
@@ -6466,9 +6018,8 @@ msgid "Paint Options Shared Between Tools"
 msgstr "Målningsalternativ som delas av verktyg"
 
 #: app/dialogs/preferences-dialog.c:1600 app/dialogs/preferences-dialog.c:1603
-#, fuzzy
 msgid "Toolbox"
-msgstr "Verktygslådemeny"
+msgstr "Verktygslåda"
 
 #. Appearance
 #: app/dialogs/preferences-dialog.c:1610 app/dialogs/preferences-dialog.c:1707
@@ -6477,31 +6028,26 @@ msgid "Appearance"
 msgstr "Utseende"
 
 #: app/dialogs/preferences-dialog.c:1614
-#, fuzzy
 msgid "Show _foreground & background color"
-msgstr "Sätt bakgrundsfärg"
+msgstr "Visa _förgrunds- & bakgrundsfärg"
 
 #: app/dialogs/preferences-dialog.c:1618
-#, fuzzy
 msgid "Show active _brush, pattern & gradient"
-msgstr "/Fönster/Skapa ny docka/_Penslar, mönster och Färgskalor"
+msgstr "Visa aktiva _Penslar, mönster och Färgskalor"
 
 #: app/dialogs/preferences-dialog.c:1622
-#, fuzzy
 msgid "Show active _image"
-msgstr "/Följ aktiv _bild automatiskt"
+msgstr "Visa aktiv _bild"
 
 #: app/dialogs/preferences-dialog.c:1632 app/dialogs/preferences-dialog.c:1635
 msgid "Image Windows"
 msgstr "Bildfönster"
 
 #: app/dialogs/preferences-dialog.c:1647
-#, fuzzy
 msgid "Use \"_Dot for dot\" by default"
-msgstr "Använd \"_punkt till punkt\" som standard"
+msgstr "Använd \"_punkt för punkt\" som standard"
 
 #: app/dialogs/preferences-dialog.c:1653
-#, fuzzy
 msgid "Marching _ants speed:"
 msgstr "Vandrande _myrors hastighet:"
 
@@ -6511,49 +6057,41 @@ msgid "Zoom & Resize Behavior"
 msgstr "Zoom- och storleksändringseteende"
 
 #: app/dialogs/preferences-dialog.c:1661
-#, fuzzy
 msgid "Resize window on _zoom"
 msgstr "Ändra storlek på fönstret vid _zoom"
 
 #: app/dialogs/preferences-dialog.c:1664
-#, fuzzy
 msgid "Resize window on image _size change"
 msgstr "Ändra storlek på fönstret vid ändring av bild_storlek"
 
 #: app/dialogs/preferences-dialog.c:1670
-#, fuzzy
 msgid "Fit to window"
 msgstr "Passa till fönster"
 
 #: app/dialogs/preferences-dialog.c:1672
-#, fuzzy
 msgid "Initial zoom _ratio:"
-msgstr "Initial zoomfaktor:"
+msgstr "Initial zoom_faktor:"
 
 #. Mouse Cursors
 #: app/dialogs/preferences-dialog.c:1676
 msgid "Mouse Cursors"
-msgstr ""
+msgstr "Musmarkörer"
 
 #: app/dialogs/preferences-dialog.c:1680
-#, fuzzy
 msgid "Show _brush outline"
-msgstr "Visa penselform"
+msgstr "Visa _penselform"
 
 #: app/dialogs/preferences-dialog.c:1683
-#, fuzzy
 msgid "Show paint _tool cursor"
-msgstr "Visa verktygs_tips"
+msgstr "Visa _verktygsmarkör"
 
 #: app/dialogs/preferences-dialog.c:1689
-#, fuzzy
 msgid "Cursor _mode:"
 msgstr "Markör_läge:"
 
 #: app/dialogs/preferences-dialog.c:1692
-#, fuzzy
 msgid "Cursor re_ndering:"
-msgstr "Markör_läge:"
+msgstr "Markör_utritning:"
 
 #: app/dialogs/preferences-dialog.c:1704
 msgid "Image Window Appearance"
@@ -6588,7 +6126,6 @@ msgid "Show zoom ratio"
 msgstr "Visa zoomförhållande"
 
 #: app/dialogs/preferences-dialog.c:1755
-#, fuzzy
 msgid "Show image size"
 msgstr "ändra storlek på bild"
 
@@ -6609,12 +6146,10 @@ msgid "Display"
 msgstr "Visning"
 
 #: app/dialogs/preferences-dialog.c:1869
-#, fuzzy
 msgid "Transparency _type:"
 msgstr "Transparens_typ:"
 
 #: app/dialogs/preferences-dialog.c:1872
-#, fuzzy
 msgid "Check _size:"
 msgstr "Rut_storlek:"
 
@@ -6623,19 +6158,17 @@ msgid "Get Monitor Resolution"
 msgstr "Hämta bildskärmsupplösning"
 
 #: app/dialogs/preferences-dialog.c:1917
-#, fuzzy, c-format
+#, c-format
 msgid "From _windowing system (currently %d x %d dpi)"
-msgstr ""
-"Hämta upplösning från fönstersystem (För tillfället %d × %d punkter/tum)"
+msgstr "från fönstersystem (För tillfället %d × %d punkter/tum)"
 
 #: app/dialogs/preferences-dialog.c:1940
 msgid "_Manually"
 msgstr "_Manuellt"
 
 #: app/dialogs/preferences-dialog.c:1955
-#, fuzzy
 msgid "C_alibrate..."
-msgstr "K_alibrera"
+msgstr "K_alibrera..."
 
 #: app/dialogs/preferences-dialog.c:1975 app/dialogs/preferences-dialog.c:1978
 msgid "Input Devices"
@@ -6647,81 +6180,71 @@ msgid "Extended Input Devices"
 msgstr "Utökade inmatningsenheter"
 
 #: app/dialogs/preferences-dialog.c:1989
-#, fuzzy
 msgid "Configure E_xtended Input Devices..."
-msgstr "Konfigurera utökade inmatningsenheter"
+msgstr "Konfigurera utökade inmatningsenheter..."
 
 #: app/dialogs/preferences-dialog.c:1996
-#, fuzzy
 msgid "_Save input device settings on exit"
-msgstr "Spara inställningar för inmatningsenheter vid avslutning"
+msgstr "_Spara inställningar för inmatningsenheter vid avslutning"
 
 #: app/dialogs/preferences-dialog.c:2000
-#, fuzzy
 msgid "Save Input Device Settings _Now"
-msgstr "Spara inställningar för inmatningsenheter nu"
+msgstr "Spara inställningar för inmatningsenheter _nu"
 
 #: app/dialogs/preferences-dialog.c:2007
-#, fuzzy
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr "Rensa sparade inställningar för inmatningsenheter nu"
+msgstr ""
+"_Återställ sparade inställningar för inmatningsenheter till standardvärden"
 
 #: app/dialogs/preferences-dialog.c:2022
 msgid "Additional Input Controllers"
-msgstr ""
+msgstr "Extra inmatningsenheter"
 
 #: app/dialogs/preferences-dialog.c:2025
 msgid "Input Controllers"
-msgstr ""
+msgstr "Inmatningsenheter"
 
 #: app/dialogs/preferences-dialog.c:2087
 msgid "Dump events from this controller"
-msgstr ""
+msgstr "Spara undan händelser från den här enheten"
 
 #: app/dialogs/preferences-dialog.c:2090
 msgid "Enable this controller"
-msgstr ""
+msgstr "Aktivera den här enheten"
 
 #: app/dialogs/preferences-dialog.c:2104
-#, fuzzy
 msgid "Name:"
-msgstr "_Namn:"
+msgstr "Namn:"
 
 #: app/dialogs/preferences-dialog.c:2187
-#, fuzzy
 msgid "Event"
-msgstr "Miljö"
+msgstr "Händelse"
 
 #: app/dialogs/preferences-dialog.c:2192 app/widgets/gimpactionview.c:297
-#, fuzzy
 msgid "Action"
-msgstr "Addition"
+msgstr ""
 
 #: app/dialogs/preferences-dialog.c:2205 app/dialogs/preferences-dialog.c:2208
 msgid "Window Management"
 msgstr "Fönsterhantering"
 
 #: app/dialogs/preferences-dialog.c:2214
-#, fuzzy
 msgid "Window Manager Hints"
-msgstr "Fönsterhantering"
+msgstr "Fönsterhintar"
 
 #: app/dialogs/preferences-dialog.c:2220
-#, fuzzy
 msgid "Hint for the _toolbox:"
-msgstr "Fönstertypen för _verktygslådan:"
+msgstr "Hint för _verktygslådan:"
 
 #: app/dialogs/preferences-dialog.c:2224
-#, fuzzy
 msgid "Hint for the _docks:"
-msgstr "Fönstertypen för _dockningsfönster:"
+msgstr "Hint för _dockningsfönster:"
 
 #: app/dialogs/preferences-dialog.c:2227
 msgid "Focus"
 msgstr "Fokus"
 
 #: app/dialogs/preferences-dialog.c:2231
-#, fuzzy
 msgid "Activate the _focused image"
 msgstr "Aktivera den _fokuserade bilden"
 
@@ -6731,19 +6254,16 @@ msgid "Window Positions"
 msgstr "Fönsterpositioner"
 
 #: app/dialogs/preferences-dialog.c:2238
-#, fuzzy
 msgid "_Save window positions on exit"
 msgstr "_Spara fönsterpositioner vid avslutning"
 
 #: app/dialogs/preferences-dialog.c:2242
-#, fuzzy
 msgid "Save Window Positions _Now"
-msgstr "Spara fönsterpositioner nu"
+msgstr "Spara fönsterpositioner _nu"
 
 #: app/dialogs/preferences-dialog.c:2249
-#, fuzzy
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr "_Återställ sparade fönsterpositioner vid uppstart"
+msgstr "_Återställ sparade fönsterpositioner till standardvärden"
 
 #: app/dialogs/preferences-dialog.c:2264 app/dialogs/preferences-dialog.c:2267
 #: app/dialogs/preferences-dialog.c:2415
@@ -6755,78 +6275,65 @@ msgid "Resource Consumption"
 msgstr "Resursanvändning"
 
 #: app/dialogs/preferences-dialog.c:2285
-#, fuzzy
 msgid "Minimal number of _undo levels:"
-msgstr "Minsta antal ångranivåer:"
+msgstr "Minsta antal _ångranivåer:"
 
 #: app/dialogs/preferences-dialog.c:2288
-#, fuzzy
 msgid "Maximum undo _memory:"
-msgstr "Maximalt ångraminne:"
+msgstr "Maximalt ångra_minne:"
 
 #: app/dialogs/preferences-dialog.c:2291
-#, fuzzy
 msgid "Tile cache _size:"
-msgstr "Bildblockscachestorlek:"
+msgstr "Bildblockscache_storlek:"
 
 #: app/dialogs/preferences-dialog.c:2294
-#, fuzzy
 msgid "Maximum _new image size:"
-msgstr "Maximal ny bildstorlek:"
+msgstr "Maximal _ny bildstorlek:"
 
 #: app/dialogs/preferences-dialog.c:2299
-#, fuzzy
 msgid "Number of _processors to use:"
-msgstr "Antalet processorer att använda:"
+msgstr "Antalet _processorer att använda:"
 
 #. Image Thumbnails
 #: app/dialogs/preferences-dialog.c:2304
-#, fuzzy
 msgid "Image Thumbnails"
-msgstr "Bildmask"
+msgstr "Miniatyrbilder"
 
 #: app/dialogs/preferences-dialog.c:2309
-#, fuzzy
 msgid "Size of _thumbnails:"
-msgstr "Storlek på miniatyrbildsfiler:"
+msgstr "Storlek på _miniatyrbilder:"
 
 #: app/dialogs/preferences-dialog.c:2313
 msgid "Maximum _filesize for thumbnailing:"
-msgstr ""
+msgstr "Maximal _filstorlek för miniatyrbilder:"
 
 #. File Saving
 #: app/dialogs/preferences-dialog.c:2317
-#, fuzzy
 msgid "Saving Images"
-msgstr "Spara bild"
+msgstr "Sparar bilder"
 
 #: app/dialogs/preferences-dialog.c:2320
-#, fuzzy
 msgid "Confirm closing of unsa_ved images"
-msgstr "Bekräfta stängning av osparade bilder"
+msgstr "Bekräfta stängning av _osparade bilder"
 
 #: app/dialogs/preferences-dialog.c:2331 app/dialogs/preferences-dialog.c:2334
 msgid "Folders"
-msgstr "Mappar"
+msgstr "Kataloger"
 
 #: app/dialogs/preferences-dialog.c:2349
-#, fuzzy
 msgid "Temp folder:"
-msgstr "Tempkatalog:"
+msgstr "Temporär katalog:"
 
 #: app/dialogs/preferences-dialog.c:2349
-#, fuzzy
 msgid "Select Temp Folder"
-msgstr "Välj temamappar"
+msgstr "Välj temporär katalog"
 
 #: app/dialogs/preferences-dialog.c:2350
 #: app/dialogs/user-install-dialog.c:1155
-#, fuzzy
 msgid "Swap folder:"
-msgstr "Växlingsmapp:"
+msgstr "Växlingskatalog:"
 
 #: app/dialogs/preferences-dialog.c:2350
-#, fuzzy
 msgid "Select Swap Folder"
 msgstr "Välj växlingskatalog"
 
@@ -6919,29 +6426,25 @@ msgid "Select Theme Folders"
 msgstr "Välj temamappar"
 
 #: app/dialogs/quit-dialog.c:76
-#, fuzzy
 msgid "Quit The GIMP"
-msgstr "Avsluta GIMP?"
+msgstr "Avsluta GIMP"
 
 #: app/dialogs/quit-dialog.c:81
-#, fuzzy
 msgid "_Discard Changes"
 msgstr "_Förkasta ändringar"
 
 #: app/dialogs/quit-dialog.c:109
-#, fuzzy
 msgid "If you quit GIMP now, these changes will be lost."
-msgstr "Osparade ändringar kommer förloras."
+msgstr "Om du avslutar GIMP nu kommer dessa ändringar förloras."
 
 #: app/dialogs/quit-dialog.c:145
-#, fuzzy
 msgid "There is one image with unsaved changes:"
-msgstr "Ändra storlek på fönstret vid ändring av bild_storlek"
+msgstr "Det finns en bild med osparade ändringar:"
 
 #: app/dialogs/quit-dialog.c:148
 #, c-format
 msgid "There are %d images with unsaved changes:"
-msgstr ""
+msgstr "Det finns %d bilder med osparade ändringar:"
 
 #: app/dialogs/resize-dialog.c:205
 msgid "Scale Layer Options"
@@ -6978,37 +6481,31 @@ msgstr "Ställ in storlek på bildcanvas"
 
 #. the original width & height labels
 #: app/dialogs/resize-dialog.c:291 app/tools/gimpscaletool.c:170
-#, fuzzy
 msgid "Current width:"
 msgstr "Aktuell bredd:"
 
 #: app/dialogs/resize-dialog.c:297 app/tools/gimpscaletool.c:174
-#, fuzzy
 msgid "Current height:"
-msgstr "Aktuell bredd:"
+msgstr "Aktuell höjd:"
 
 #. the new size labels
 #. the print size labels
 #: app/dialogs/resize-dialog.c:316 app/dialogs/resize-dialog.c:563
-#, fuzzy
 msgid "New width:"
 msgstr "Ny bredd:"
 
 #: app/dialogs/resize-dialog.c:322 app/dialogs/resize-dialog.c:569
-#, fuzzy
 msgid "New height:"
-msgstr "Höjd:"
+msgstr "Ny höjd:"
 
 #. the scale ratio labels
 #: app/dialogs/resize-dialog.c:379
-#, fuzzy
 msgid "X ratio:"
 msgstr "X-förhållande:"
 
 #: app/dialogs/resize-dialog.c:385
-#, fuzzy
 msgid "Y ratio:"
-msgstr "X-förhållande:"
+msgstr "Y-förhållande:"
 
 #: app/dialogs/resize-dialog.c:442
 msgid "Constrain aspect ratio"
@@ -7024,14 +6521,12 @@ msgstr "Utskriftsstorlek och Visuell enhet"
 
 #. the resolution labels
 #: app/dialogs/resize-dialog.c:630
-#, fuzzy
 msgid "X resolution:"
-msgstr "Upplösning:"
+msgstr "X-upplösning:"
 
 #: app/dialogs/resize-dialog.c:636
-#, fuzzy
 msgid "Y resolution:"
-msgstr "Upplösning:"
+msgstr "Y_upplösning:"
 
 #: app/dialogs/resize-dialog.c:650 app/widgets/gimptemplateeditor.c:381
 #, c-format
@@ -7055,9 +6550,8 @@ msgid "Calibrate Monitor Resolution"
 msgstr "Kalibrera bildskärmsupplösning"
 
 #: app/dialogs/resolution-calibrate-dialog.c:120
-#, fuzzy
 msgid "Measure the rulers and enter their lengths:"
-msgstr "Mät linjalerna och mata in dess längder nedan."
+msgstr "Mät linjalerna och mata in dess längder:"
 
 #: app/dialogs/resolution-calibrate-dialog.c:145
 msgid "_Horizontal:"
@@ -7073,19 +6567,16 @@ msgid "Image Size"
 msgstr "Bildstorlek"
 
 #: app/dialogs/scale-dialog.c:107
-#, fuzzy
 msgid "Layer Size"
-msgstr "Lagerval"
+msgstr "Lagerstorlek"
 
 #: app/dialogs/scale-dialog.c:165
-#, fuzzy
 msgid "Quality"
-msgstr "Avsluta"
+msgstr "Kvalitet"
 
 #: app/dialogs/scale-dialog.c:173
-#, fuzzy
 msgid "I_nterpolation:"
-msgstr "Interpolation:"
+msgstr "I_nterpolation:"
 
 #: app/dialogs/stroke-dialog.c:127
 msgid "Stroke Options"
@@ -7096,12 +6587,10 @@ msgid "Choose Stroke Style"
 msgstr "Välj strykningsstil"
 
 #: app/dialogs/stroke-dialog.c:162
-#, fuzzy
 msgid "Stroke line"
-msgstr "Stryk kanal"
+msgstr "Stryk linje"
 
 #: app/dialogs/stroke-dialog.c:192
-#, fuzzy
 msgid "Stroke with a paint tool"
 msgstr "Stryk med ett målarverktyg"
 
@@ -7132,12 +6621,10 @@ msgid "Show tip next time GIMP starts"
 msgstr "Visa denna nästa gång GIMP startar"
 
 #: app/dialogs/tips-dialog.c:217
-#, fuzzy
 msgid "_Previous tip"
 msgstr "_Föregående tips"
 
 #: app/dialogs/tips-dialog.c:227
-#, fuzzy
 msgid "_Next tip"
 msgstr "_Nästa tips"
 
@@ -7496,7 +6983,6 @@ msgstr ""
 "mängden minne som används av andra körande program."
 
 #: app/dialogs/user-install-dialog.c:1127
-#, fuzzy
 msgid "Tile cache size:"
 msgstr "Bildblockscachestorlek:"
 
@@ -7513,17 +6999,14 @@ msgstr ""
 "du vilja ställa in systemets tempkatalog (\"/tmp\" eller \"/var/tmp\")."
 
 #: app/dialogs/user-install-dialog.c:1150
-#, fuzzy
 msgid "Select swap dir"
 msgstr "Välj växlingskatalog"
 
 #: app/display/display-enums.c:15
-#, fuzzy
 msgid "Tool icon"
 msgstr "Verktygsikon"
 
 #: app/display/display-enums.c:16
-#, fuzzy
 msgid "Tool icon with crosshair"
 msgstr "Verktygsikon med korshår"
 
@@ -7532,22 +7015,18 @@ msgid "Crosshair only"
 msgstr "Endast korshår"
 
 #: app/display/display-enums.c:34
-#, fuzzy
 msgid "From theme"
 msgstr "Från tema"
 
 #: app/display/display-enums.c:35
-#, fuzzy
 msgid "Light check color"
 msgstr "Ljus rutfärg"
 
 #: app/display/display-enums.c:36
-#, fuzzy
 msgid "Dark check color"
 msgstr "Mörk rutfärg"
 
 #: app/display/display-enums.c:37
-#, fuzzy
 msgid "Custom color"
 msgstr "Egen färg"
 
@@ -7556,7 +7035,6 @@ msgid "Zoom image when window size changes"
 msgstr ""
 
 #: app/display/gimpdisplayshell.c:896
-#, fuzzy
 msgid "Toggle Quick Mask"
 msgstr "Visa snabbmask"
 
@@ -7568,7 +7046,7 @@ msgstr "Stänga %s"
 
 #: app/display/gimpdisplayshell-close.c:131
 msgid "Do_n't save"
-msgstr ""
+msgstr "Spara _inte"
 
 #: app/display/gimpdisplayshell-close.c:192
 #, c-format
@@ -7591,9 +7069,8 @@ msgid "%d seconds"
 msgstr "%d sekunder"
 
 #: app/display/gimpdisplayshell-close.c:277
-#, fuzzy
 msgid "minute"
-msgstr "%d minuter"
+msgstr "minut"
 
 #: app/display/gimpdisplayshell-close.c:279
 #, c-format
@@ -7657,13 +7134,12 @@ msgid "indexed"
 msgstr "indexerad"
 
 #: app/display/gimpdisplayshell-title.c:292
-#, fuzzy
 msgid "(modified)"
-msgstr "Endast om ändrad"
+msgstr "(ändrad)"
 
 #: app/display/gimpdisplayshell-title.c:298
 msgid "(clean)"
-msgstr ""
+msgstr "(ren)"
 
 #: app/display/gimpdisplayshell-title.c:325
 msgid "1 layer"
@@ -7675,9 +7151,8 @@ msgid "%d layers"
 msgstr "%d lager"
 
 #: app/display/gimpstatusbar.c:142
-#, fuzzy
 msgid "Shadow type"
-msgstr "Skuggor"
+msgstr "Skuggtyp"
 
 #: app/display/gimpstatusbar.c:143
 msgid "Style of bevel around the statusbar text"
@@ -10636,7 +10111,7 @@ msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr "När aktiverat följer dialogen automatiskt bilden du arbetar på."
 
-#: app/widgets/gimpitemtreeview.c:361
+#: app/widgets/gimpitemtreeview.c:364
 #, c-format
 msgid ""
 "%s\n"
@@ -10645,7 +10120,7 @@ msgstr ""
 "%s\n"
 "%s  Till toppen"
 
-#: app/widgets/gimpitemtreeview.c:375
+#: app/widgets/gimpitemtreeview.c:378
 #, c-format
 msgid ""
 "%s\n"
@@ -10654,11 +10129,11 @@ msgstr ""
 "%s\n"
 "%s  Till botten"
 
-#: app/widgets/gimpitemtreeview.c:1382
+#: app/widgets/gimpitemtreeview.c:1398
 msgid "Set Item Exclusive Visible"
 msgstr "Sätt objekt som ensamt synlig"
 
-#: app/widgets/gimpitemtreeview.c:1390
+#: app/widgets/gimpitemtreeview.c:1406
 msgid "Set Item Exclusive Linked"
 msgstr "Sätt objekt som ensamt länkad"
 
