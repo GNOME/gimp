@@ -1,3 +1,12 @@
+2004-06-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcontrollerinfo.[ch]: made an object out of
+	the GimpControllerInfo struct.
+
+	* app/widgets/gimpcontrollers.c: changed accordingly.
+
 2004-06-16  Jakub Steiner <jimmac@ximian.com>
 
 	* etc/controllerrc: fix typo

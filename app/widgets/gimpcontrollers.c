@@ -33,6 +33,7 @@
 
 #include "core/gimp.h"
 
+#include "gimpcontrollerinfo.h"
 #include "gimpcontrollers.h"
 #include "gimpcontrollerwheel.h"
 #include "gimpuimanager.h"
@@ -44,7 +45,6 @@
 
 
 typedef struct _GimpControllerManager GimpControllerManager;
-typedef struct _GimpControllerInfo    GimpControllerInfo;
 
 struct _GimpControllerManager
 {
@@ -53,19 +53,12 @@ struct _GimpControllerManager
   GimpUIManager  *ui_manager;
 };
 
-struct _GimpControllerInfo
-{
-  GimpController *controller;
-  GHashTable     *mapping;
-};
-
 
 /*  local function prototypes  */
 
 static GimpControllerManager * gimp_controller_manager_get  (Gimp *gimp);
 static void   gimp_controller_manager_free (GimpControllerManager *manager);
 
-static void     gimp_controller_info_free  (GimpControllerInfo        *info);
 static gboolean gimp_controller_info_event (GimpController            *controller,
                                             const GimpControllerEvent *event,
                                             GimpControllerInfo        *info);
@@ -260,24 +253,12 @@ gimp_controller_manager_get (Gimp *gimp)
 static void
 gimp_controller_manager_free (GimpControllerManager *manager)
 {
-  g_list_foreach (manager->controllers, (GFunc) gimp_controller_info_free, NULL);
+  g_list_foreach (manager->controllers, (GFunc) g_object_unref, NULL);
   g_list_free (manager->controllers);
 
   g_object_unref (manager->ui_manager);
 
   g_free (manager);
-}
-
-static void
-gimp_controller_info_free (GimpControllerInfo *info)
-{
-  if (info->controller)
-    g_object_unref (info->controller);
-
-  if (info->mapping)
-    g_hash_table_destroy (info->mapping);
-
-  g_free (info);
 }
 
 static GTokenType
@@ -300,13 +281,9 @@ gimp_controller_deserialize (GimpControllerManager *manager,
   if (! g_type_is_a (controller_type, GIMP_TYPE_CONTROLLER))
     goto error;
 
-  info = g_new0 (GimpControllerInfo, 1);
+  info = g_object_new (GIMP_TYPE_CONTROLLER_INFO, NULL);
 
   info->controller = gimp_controller_new (controller_type);
-  info->mapping    = g_hash_table_new_full (g_int_hash,
-                                            g_int_equal,
-                                            (GDestroyNotify) g_free,
-                                            (GDestroyNotify) g_object_unref);
 
   /* EEEEEK */
   {
@@ -439,7 +416,7 @@ gimp_controller_deserialize (GimpControllerManager *manager,
     {
     error:
       if (info)
-        gimp_controller_info_free (info);
+        g_object_unref (info);
     }
 
   return token;
