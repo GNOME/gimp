@@ -3333,9 +3333,10 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
 					gint       width, 
 					gint       height)
 {
-  Layer * layer;
+  Layer *layer;
+  Layer *floating_sel;
   PixelRegion src1PR, src2PR, maskPR;
-  PixelRegion * mask;
+  PixelRegion *mask;
   TempBuf *comp;
   TempBuf *layer_buf;
   TempBuf *mask_buf;
@@ -3369,13 +3370,25 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
   comp = temp_buf_new (width, height, bytes, 0, 0, NULL);
   memset (temp_buf_data (comp), 0, comp->width * comp->height * comp->bytes);
 
+  floating_sel = NULL;
   while (list)
     {
       layer = (Layer *) list->data;
 
-      /*  only add layers that are visible and not floating selections to the list  */
-      if (!layer_is_floating_sel (layer) && drawable_visible (GIMP_DRAWABLE(layer)))
-	reverse_list = g_slist_prepend (reverse_list, layer);
+      /*  only add layers that are visible to the list  */
+      if (drawable_visible (GIMP_DRAWABLE (layer)))
+	{
+	  /* floating selections are added right above the layer they are attached to */
+	  if (layer_is_floating_sel (layer))
+	    floating_sel = layer;
+	  else
+	    {
+	      if (floating_sel && GIMP_LAYER (floating_sel)->fs.drawable == layer)
+		reverse_list = g_slist_prepend (reverse_list, floating_sel);
+
+	      reverse_list = g_slist_prepend (reverse_list, layer);
+	    }
+	}
 
       list = g_slist_next (list);
     }

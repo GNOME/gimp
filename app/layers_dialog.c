@@ -1238,7 +1238,7 @@ layers_dialog_add_layer_mask (Layer *layer)
 
   layer_widget->active_preview = MASK_PREVIEW;
 
-  gtk_widget_draw (layer_widget->layer_preview, NULL);
+  gtk_widget_queue_draw (layer_widget->layer_preview);
 }
 
 static void
@@ -1259,7 +1259,7 @@ layers_dialog_remove_layer_mask (Layer *layer)
 
   layer_widget->active_preview = LAYER_PREVIEW;
 
-  gtk_widget_draw (layer_widget->layer_preview, NULL);
+  gtk_widget_queue_draw (layer_widget->layer_preview);
 }
 
 /*****************************************************/
@@ -3190,9 +3190,9 @@ layer_widget_layer_flush (GtkWidget *widget,
     }
 
   if (update_layer_preview)
-    gtk_widget_draw (layer_widget->layer_preview, NULL);
+    gtk_widget_queue_draw (layer_widget->layer_preview);
   if (update_mask_preview)
-    gtk_widget_draw (layer_widget->mask_preview, NULL);
+    gtk_widget_queue_draw (layer_widget->mask_preview);
 }
 
 /********************************/

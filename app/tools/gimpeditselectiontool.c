@@ -57,6 +57,8 @@ struct _EditSelection
   gboolean            old_scroll_lock;   /*  old value of scroll lock        */
   gboolean            old_auto_snap_to;  /*  old value of auto snap to       */
 
+  gboolean            first_move;        /*  we undo_freeze after the first  */
+
   guint               context_id;        /*  for the statusbar               */
 };
 
@@ -137,6 +139,8 @@ init_edit_selection (Tool           *tool,
   edit_select.old_scroll_lock    = tool->scroll_lock;
   edit_select.old_auto_snap_to   = tool->auto_snap_to;
 
+  edit_select.first_move         = TRUE;
+
   /*  find the bounding box of the selection mask -
    *  this is used for the case of a MaskToLayerTranslate,
    *  where the translation will result in floating the selection
@@ -150,11 +154,11 @@ init_edit_selection (Tool           *tool,
 
   /*  reset the function pointers on the selection tool  */
   tool->button_release_func = edit_selection_button_release;
-  tool->motion_func = edit_selection_motion;
-  tool->control_func = edit_selection_control;
-  tool->cursor_update_func = edit_selection_cursor_update;
-  tool->scroll_lock = EDIT_SELECT_SCROLL_LOCK;
-  tool->auto_snap_to = FALSE;
+  tool->motion_func         = edit_selection_motion;
+  tool->control_func        = edit_selection_control;
+  tool->cursor_update_func  = edit_selection_cursor_update;
+  tool->scroll_lock         = EDIT_SELECT_SCROLL_LOCK;
+  tool->auto_snap_to        = FALSE;
 
   /*  pause the current selection  */
   selection_pause (gdisp->select);
@@ -284,9 +288,13 @@ edit_selection_button_release (Tool           *tool,
 	    floating_sel_anchor (layer);
 	}
     }
+
   undo_push_group_end (gdisp->gimage);
 
 #else
+
+  /* thaw the undo again */
+  gimp_image_undo_thaw (gdisp->gimage);
 
   if (edit_select.cumlx == 0 && edit_select.cumly == 0)
     {
@@ -310,13 +318,13 @@ edit_selection_button_release (Tool           *tool,
     {
       paths_transform_xy(gdisp->gimage,edit_select.cumlx,edit_select.cumly);
     }
-  
+    
   undo_push_group_end (gdisp->gimage);
 
-  if (bevent->state & GDK_BUTTON2_MASK) /* OPERATION CANCELLED */
+  if (bevent->state & GDK_BUTTON3_MASK) /* OPERATION CANCELLED */
     {
       /* Operation cancelled - undo the undo-group! */
-      undo_pop(gdisp->gimage);
+      undo_pop (gdisp->gimage);
     }
 
 #endif
@@ -346,8 +354,6 @@ edit_selection_motion (Tool           *tool,
   draw_core_pause (edit_select.core, tool);
 
   edit_selection_snap (gdisp, mevent->x, mevent->y);
-
-
 
   /**********************************************adam hack*************/
   /********************************************************************/
@@ -384,6 +390,11 @@ edit_selection_motion (Tool           *tool,
 		      x,y,
 		      edit_select.x1,edit_select.y1,
 		      edit_select.x2,edit_select.y2);*/
+	    if (edit_select.first_move)
+	      {
+		gimp_image_undo_freeze (gdisp->gimage);
+		edit_select.first_move = FALSE;
+	      }
 	    edit_select.origx = x;
 	    edit_select.origy = y;
 	    break;
@@ -407,11 +418,22 @@ edit_selection_motion (Tool           *tool,
       
 	    if (floating_layer)
 	      floating_sel_rigor (floating_layer, TRUE);
+
+	    if (edit_select.first_move)
+	      {
+		gimp_image_undo_freeze (gdisp->gimage);
+		edit_select.first_move = FALSE;
+	      }
 	    break;
 	
 	  case MaskToLayerTranslate:
 	    gimage_mask_float (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
 			       0, 0);
+	    if (edit_select.first_move)
+	      {
+		gimp_image_undo_freeze (gdisp->gimage);
+		edit_select.first_move = FALSE;
+	      }
 	    edit_select.edit_type = FloatingSelTranslate;
 
 	    edit_select.origx -= edit_select.x1;
@@ -425,6 +447,11 @@ edit_selection_motion (Tool           *tool,
 	    layer_translate (layer, xoffset, yoffset);
 	    floating_sel_rigor (layer, TRUE);
 
+	    if (edit_select.first_move)
+	      {
+		gimp_image_undo_freeze (gdisp->gimage);
+		edit_select.first_move = FALSE;
+	      }
 	    break;
 
 	  default:
@@ -436,8 +463,6 @@ edit_selection_motion (Tool           *tool,
   }
   /********************************************************************/
   /********************************************************************/
-
-
   
 
   gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id);
@@ -531,7 +556,7 @@ edit_selection_draw (Tool *tool)
       gdk_draw_segments (edit_select.core->win, edit_select.core->gc,
 			 select->segs_out, select->num_segs_out);
 
-      /*  reset the the current selection  */
+      /*  reset the current selection  */
       seg = select->segs_in;
       for (i = 0; i < select->num_segs_in; i++)
 	{
@@ -558,7 +583,7 @@ edit_selection_draw (Tool *tool)
       gdk_draw_rectangle (edit_select.core->win,
 			  edit_select.core->gc, 0,
 			  x1 + diff_x, y1 + diff_y,
-			  (x2 - x1) - 1, (y2 - y1) - 1);
+			  x2 - x1, y2 - y1);
       break;
 
     case LayerTranslate:
@@ -596,7 +621,7 @@ edit_selection_draw (Tool *tool)
       gdk_draw_rectangle (edit_select.core->win,
 			  edit_select.core->gc, 0,
 			  x1 + diff_x, y1 + diff_y,
-			  (x2 - x1) - 1, (y2 - y1) - 1);
+			  x2 - x1, y2 - y1);
       break;
 
     case FloatingSelTranslate:
@@ -789,7 +814,7 @@ edit_sel_arrow_keys_func (Tool        *tool,
   if (inc_x == 0 && inc_y == 0  &&  mask_inc_x == 0 && mask_inc_y == 0)
     return;
 
-  undo_push_group_start (gdisp->gimage, MISC_UNDO);
+  undo_push_group_start (gdisp->gimage, LAYER_DISPLACE_UNDO);
 
   if (mask_inc_x != 0 || mask_inc_y != 0)
     gimage_mask_translate (gdisp->gimage, mask_inc_x, mask_inc_y);

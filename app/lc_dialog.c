@@ -335,7 +335,7 @@ lc_dialog_image_menu_preview_update_callback (GtkWidget *widget,
 					 gimage,
 					 MENU_THUMBNAIL_WIDTH,
 					 MENU_THUMBNAIL_HEIGHT);
-      gtk_widget_draw (GTK_WIDGET (menu_preview), NULL);
+      gtk_widget_queue_draw (GTK_WIDGET (menu_preview));
     }
 }
 

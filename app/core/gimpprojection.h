@@ -46,12 +46,12 @@
 			    (SCALESRC(g) * g->gimage->yresolution))
 
 /* scale values */
-#define  SCALEX(g,x)    ((int)(x * SCALEFACTOR_X(g)))
-#define  SCALEY(g,y)    ((int)(y * SCALEFACTOR_Y(g)))
+#define  SCALEX(g,x)    ((int)(x * SCALEFACTOR_X(g) + 0.5))
+#define  SCALEY(g,y)    ((int)(y * SCALEFACTOR_Y(g) + 0.5))
 
 /* unscale values */
-#define  UNSCALEX(g,x)  ((int)(x / SCALEFACTOR_X(g)))
-#define  UNSCALEY(g,y)  ((int)(y / SCALEFACTOR_Y(g)))
+#define  UNSCALEX(g,x)  ((int)(x / SCALEFACTOR_X(g) + 0.5))
+#define  UNSCALEY(g,y)  ((int)(y / SCALEFACTOR_Y(g) + 0.5))
 /* (and float-returning versions) */
 #define  FUNSCALEX(g,x)  ((x / SCALEFACTOR_X(g)))
 #define  FUNSCALEY(g,y)  ((y / SCALEFACTOR_Y(g)))

@@ -1,3 +1,19 @@
+Fri Nov  5 15:32:15 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/edit_selection.c: when moving layers/masks freeze the undo
+	after the first move to avoid that each and every small movements
+	puts an undo on the stack. Significantly speeds up layer moves 
+	and especially the undo of a layer move.
+
+	* app/gdisplay.h: correct rounding errors
+
+	* app/gimpimage.c: correctly display floating selections in the
+	composite_preview instead of ignoring them
+
+	* app/channels_dialog.c
+	* app/layers_dialog.c
+	* app/lc_dialog.c: s/gtk_widget_draw/gtk_widget_queue_draw/
+
 Thu Nov  4 22:06:24 GMT 1999 Andy Thomas <alt@gimp.org>
 
 	* app/gradient_select_cmds.c
@@ -16,7 +32,7 @@ Thu Nov  4 20:46:25 MET 1999  Sven Neumann <sven.gimp.org>
 
 	* app/gimpbrushpipe.c
 	* libgimp/parasiteio.c
-	* libgimp/parasiteio.h: plugged another mem-leaks. At least 
+	* libgimp/parasiteio.h: plugged another mem-leak. At least 
 	The GIMP now starts without leaking memory...
 
 Thu Nov  4 00:59:01 MET 1999  Sven Neumann <sven.gimp.org>

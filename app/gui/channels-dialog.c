@@ -2324,7 +2324,7 @@ channel_widget_channel_flush (GtkWidget *widget,
     }
 
   if (update_preview)
-    gtk_widget_draw (channel_widget->channel_preview, NULL);
+    gtk_widget_queue_draw (channel_widget->channel_preview);
 }
 
 /**********************************/
