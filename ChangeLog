@@ -1,5 +1,11 @@
 2003-05-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/xcf/xcf-load.c (xcf_load_old_path): the old paths actually
+	*do* support multiple strokes, they are just all in one curve.
+	Added support for loading them as separate GimpBezierStrokes.
+
+2003-05-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/vectors/gimpbezierstroke.c
 	(gimp_bezier_stroke_new_from_coords): actually increment the coord
 	index when iterating the coords array. Fixes bug #113049.

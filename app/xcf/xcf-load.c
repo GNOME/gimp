@@ -1349,7 +1349,6 @@ xcf_load_old_path (XcfInfo   *info,
   PathType    ptype;
 
   GimpVectors *vectors;
-  GimpStroke  *stroke;
   GimpCoords  *coords;
   GimpCoords  *curr_coord;
   gint         num_coords;
@@ -1375,6 +1374,7 @@ xcf_load_old_path (XcfInfo   *info,
   if (version == 1)
     {
       ptype = BEZIER;
+
       while (num_points-- > 0)
         {
           PathPoint *bpt;
@@ -1387,7 +1387,8 @@ xcf_load_old_path (XcfInfo   *info,
     {
       /* Had extra type field and points are stored as doubles */
       info->cp += xcf_read_int32 (info->fp, (guint32 *) &ptype, 1);
-      while(num_points-- > 0)
+
+      while (num_points-- > 0)
         {
           PathPoint *bpt;
           /* Read in a path */
@@ -1400,6 +1401,7 @@ xcf_load_old_path (XcfInfo   *info,
       /* Has extra tatto field */
       info->cp += xcf_read_int32 (info->fp, (guint32 *) &ptype, 1);
       info->cp += xcf_read_int32 (info->fp, (guint32 *) &tattoo, 1);
+
       while (num_points-- > 0)
 	{
 	  PathPoint *bpt;
@@ -1421,14 +1423,47 @@ xcf_load_old_path (XcfInfo   *info,
   if (tattoo)
     GIMP_ITEM (vectors)->tattoo = tattoo;
 
+#ifdef __GNUC__
+#warning FIXME: support closed GimpBezierStrokes
+#endif
   if (closed)
     num_coords--;
 
-  stroke = gimp_bezier_stroke_new_from_coords (coords, num_coords);
-  g_free (coords);
+  curr_coord = coords;
 
-  gimp_vectors_stroke_add (vectors, stroke);
-  g_object_unref (stroke);
+  while (num_coords > 0)
+    {
+      GimpStroke *stroke;
+      GimpCoords *next_stroke;
+      gint        num_stroke_coords;
+
+      for (next_stroke = curr_coord;
+           num_coords > 0 && pts_list;
+           next_stroke++, num_coords--, pts_list = g_slist_next (pts_list))
+        {
+          PathPoint *bpt = pts_list->data;
+
+          if (next_stroke != curr_coord && bpt->type == 3)
+            break;
+        }
+
+      num_stroke_coords = next_stroke - curr_coord;
+
+#ifdef __GNUC__
+#warning FIXME: support closed GimpBezierStrokes
+#endif
+      if (num_coords > 0)
+        num_stroke_coords--;
+
+      stroke = gimp_bezier_stroke_new_from_coords (curr_coord,
+                                                   num_stroke_coords);
+      gimp_vectors_stroke_add (vectors, stroke);
+      g_object_unref (stroke);
+
+      curr_coord = next_stroke;
+    }
+
+  g_free (coords);
 
   gimp_image_add_vectors (gimage, vectors,
                           gimp_container_num_children (gimage->vectors));
