@@ -42,7 +42,7 @@ fi)
 
 AC_DEFUN(AC_GIMP_CHECK,
 [
-	AM_PATH_GTK(0.99.5,,
+	AM_PATH_GTK(0.99.6,,
  	  AC_MSG_ERROR(Cannot include/link gtk/gdk/glib--check CFLAGS/LDFLAGS))
         X_LIBS=$GTK_LIBS
         X_CFLAGS=$GTK_CFLAGS
@@ -97,6 +97,13 @@ dnl Test for Xmu
       AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
 	WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lXt',
 	AC_MSG_WARN(*** webbrowser plug-in will not be built ***), -lXt), -lXt, -lSM, -lICE)
+  fi
+
+dnl Test for libaa
+  if test -z "$LIBAA_LIB"; then
+    AC_CHECK_LIB(aa, aa_printf,
+      AA='aa'; LIBAA_LIB='-laa',
+      AC_MSG_WARN(*** AA plug-in will not be built ***))
   fi
 
 dnl Test for libtiff
@@ -242,6 +249,8 @@ AC_SUBST(JPEG)
 AC_SUBST(LIBJPEG_LIB)
 AC_SUBST(PNG)
 AC_SUBST(LIBPNG_LIB)
+AC_SUBST(AA)
+AC_SUBST(LIBAA_LIB)
 AC_SUBST(MPEG)
 AC_SUBST(LIBMPEG_LIB)
 AC_SUBST(XD)
@@ -315,6 +324,7 @@ plug-ins/script-fu/Makefile
 plug-ins/script-fu/scripts/Makefile
 plug-ins/jpeg/Makefile
 plug-ins/mpeg/Makefile
+plug-ins/aa/Makefile
 plug-ins/png/Makefile
 plug-ins/tiff/Makefile
 plug-ins/xd/Makefile

@@ -205,7 +205,7 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
   TransformUndo *tu;
   int first_transform;
   int new_layer;
-  int i;
+  int i, x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -267,9 +267,24 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
       undo_push_group_end (gdisp->gimage);
 
       /*  Flush the gdisplays  */
-      /* FIXME: this expose is a performance drag, but it prevents display
-         artifacts */
-      gdisplay_expose_area (gdisp, 0, 0, gdisp->disp_width, gdisp->disp_height);
+      if (gdisp->disp_xoffset || gdisp->disp_yoffset)
+	{
+	  gdk_window_get_size (gdisp->canvas->window, &x, &y);
+	  if (gdisp->disp_yoffset)
+	    {
+	      gdisplay_expose_area (gdisp, 0, 0, gdisp->disp_width,
+				    gdisp->disp_yoffset);
+	      gdisplay_expose_area (gdisp, 0, gdisp->disp_yoffset + y,
+				    gdisp->disp_width, gdisp->disp_height);
+	    }
+	  if (gdisp->disp_xoffset)
+	    {
+	      gdisplay_expose_area (gdisp, 0, 0, gdisp->disp_xoffset,
+				    gdisp->disp_height);
+	      gdisplay_expose_area (gdisp, gdisp->disp_xoffset + x, 0,
+				    gdisp->disp_width, gdisp->disp_height);
+	    }
+	}
       gdisplays_flush ();
     }
   else

@@ -1,3 +1,13 @@
+Sat Mar 14 18:38:26 PST 1998 Manish Singh <yosh@gimp.org>
+
+        * app/iscissors.c: new, improved, still buggy iscissors!
+
+        * app/fileops.c: correctly hide the file selector
+
+        * app/transform_core.c: a better fix for the display artifacts
+
+        * added aa plugin back in
+
 Sat Mar 14 20:52:06 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	* doc/gimp.1

@@ -502,6 +502,7 @@ iscissors_button_press (Tool           *tool,
 			       &iscissors->x, &iscissors->y, FALSE, TRUE); 
 
   /*  If the tool was being used in another image...reset it  */
+
   if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr)
     {
       draw_core_stop (iscissors->core, tool);
@@ -544,8 +545,8 @@ iscissors_button_press (Tool           *tool,
 				  drawable_height(drawable));
 				  
       iscissors->num_segs = 0;
-	x = bevent->x;
-	y = bevent->y;
+	x = iscissors->x;
+	y = iscissors->y;
 	
       add_segment (&(iscissors->num_segs), x, y);
 
@@ -671,12 +672,17 @@ iscissors_motion (Tool           *tool,
   gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
 
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
+			       &iscissors->x, &iscissors->y, FALSE, TRUE); 
+
+  
   switch (iscissors->state)
     {
     case FREE_SELECT_MODE:
     	x = mevent->x;
 	y = mevent->y;
       if (add_segment (&(iscissors->num_segs), x, y))
+	
 	gdk_draw_segments (iscissors->core->win, iscissors->core->gc,
 			   segs + (iscissors->num_segs - 1), 1);
       break;
@@ -735,6 +741,7 @@ iscissors_draw_CR (GDisplay  *gdisp,
   double d, d2, d3;
   int lastx, lasty;
   int newx, newy;
+  int tx, ty;
   int index;
   int i;
 
@@ -754,10 +761,16 @@ iscissors_draw_CR (GDisplay  *gdisp,
 	  geometry[i][1] = pts[indices[i]].dy * SUPERSAMPLE;
 	  break;
 	case SCREEN_COORDS:
-	  /*gdisplay_transform_coords_f (gdisp, , &x, &y, TRUE);*/
-	  gdisplay_untransform_coords_f (gdisp, (int) pts[indices[i]].dx, (int) pts[indices[i]].dy,
+/*	  gdisplay_transform_coords_f (gdisp, , &x, &y, TRUE);
+      gdisplay_transform_coords (gdisp, points->x, points->y,
+				 &points->sx, &points->sy, 0);
+     
+*/
+/*
+      gdisplay_untransform_coords_f (gdisp, (int) pts[indices[i]].dx, (int) pts[indices[i]].dy,
 			   &x, &y, TRUE); 
 
+*/
 	  geometry[i][0] = x;
 	  geometry[i][1] = y;
 	  /*g_print("%f %f\n", x, y);*/
@@ -826,10 +839,13 @@ iscissors_draw_CR (GDisplay  *gdisp,
       if ((lastx != newx) || (lasty != newy))
 	{
 	  /* add the point to the point buffer */
-	  gdk_points[index].x = newx;
-	  gdk_points[index].y = newy;
-	  index++;
+		      	  
+	  gdisplay_transform_coords (gdisp, newx, newy, &tx, &ty,1 );
+	  gdk_points[index].x = tx;
+	  gdk_points[index].y = ty;
 
+
+	  index++;
 	  /* if the point buffer is full put it to the screen and zero it out */
 	  if (index >= npoints)
 	    {
@@ -1275,7 +1291,7 @@ shape_of_boundary (Tool *tool)
   double weight;
   int left, right;
   int i, j;
-  /* int x, y; */
+  int x, y;
 
   /*  This function determines the kinkiness at each point in the
    *  original free-hand curve by finding the dotproduct between
@@ -1383,9 +1399,7 @@ process_kinks (Tool *tool)
 
   for (i = 0; i < iscissors->num_kinks; i++)
     {
-       /* transform from screen to image coordinates  */
-      gdisplay_untransform_coords (gdisp, kinks[i].x, kinks[i].y,
-				   &x, &y, FALSE, TRUE);
+
       /*FIXME*/
       kinks[i].x = BOUNDS (kinks[i].x, 0, (drawable_width(drawable) - 1));
       kinks[i].y = BOUNDS (kinks[i].y, 0, (drawable_height(drawable) - 1));

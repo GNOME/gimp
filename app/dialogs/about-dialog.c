@@ -95,6 +95,7 @@ static char *scroll_text[] =
   "Ian Tester",
   "James Wang",
   "Kris Wehner",
+  "Matthew Wilson",
 };
 static int nscroll_texts = sizeof (scroll_text) / sizeof (scroll_text[0]);
 static int scroll_text_widths[100] = { 0 };

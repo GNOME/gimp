@@ -70,7 +70,7 @@ static void file_save_ok_callback   (GtkWidget *w,
 				     gpointer   client_data);
 
 static void file_dialog_show        (GtkWidget *filesel);
-static void file_dialog_hide        (GtkWidget *filesel);
+static int  file_dialog_hide        (GtkWidget *filesel);
 static void file_update_name        (PlugInProcDef *proc,
 				     GtkWidget     *filesel);
 static void file_load_type_callback (GtkWidget *w,
@@ -474,13 +474,14 @@ file_open_callback (GtkWidget *w,
       gtk_window_set_wmclass (GTK_WINDOW (fileload), "load_image", "Gimp");
       gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->cancel_button),
 				 "clicked",
-				 GTK_SIGNAL_FUNC (gtk_widget_hide),
+				 GTK_SIGNAL_FUNC (file_dialog_hide),
 				 GTK_OBJECT (fileload));
       gtk_signal_connect (GTK_OBJECT (fileload),
 			  "delete_event",
-			  GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
+			  GTK_SIGNAL_FUNC (file_dialog_hide),
 			  NULL);
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->ok_button), "clicked", (GtkSignalFunc) file_open_ok_callback, fileload);
+      gtk_quit_add (1, (GtkFunction) gtk_widget_destroy, fileload);
     }
   else
     {
@@ -563,13 +564,14 @@ file_save_as_callback (GtkWidget *w,
       gtk_window_position (GTK_WINDOW (filesave), GTK_WIN_POS_MOUSE);
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->cancel_button),
 			  "clicked",
-			  GTK_SIGNAL_FUNC (gtk_widget_hide),
+			  GTK_SIGNAL_FUNC (file_dialog_hide),
 			  GTK_OBJECT (filesave));
       gtk_signal_connect (GTK_OBJECT (filesave),
 			  "delete_event",
-			  GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
+			  GTK_SIGNAL_FUNC (file_dialog_hide),
 			  NULL);
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->ok_button), "clicked", (GtkSignalFunc) file_save_ok_callback, filesave);
+      gtk_quit_add (1, (GtkFunction) gtk_widget_destroy, filesave);
     }
   else
     {
@@ -914,7 +916,7 @@ file_dialog_show (GtkWidget *filesel)
   gtk_widget_show (filesel);
 }
 
-static void
+static int
 file_dialog_hide (GtkWidget *filesel)
 {
   gtk_widget_hide (filesel);
@@ -923,6 +925,8 @@ file_dialog_hide (GtkWidget *filesel)
   menus_set_sensitive ("<Image>/File/Open", TRUE);
   menus_set_sensitive ("<Image>/File/Save", TRUE);
   menus_set_sensitive ("<Image>/File/Save as", TRUE);
+
+  return TRUE;
 }
 
 static void

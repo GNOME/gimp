@@ -7,6 +7,7 @@ SUBDIRS = 			\
 	script-fu		\
 	struc			\
 	@WEBBROWSER@		\
+	@AA@			\
 	@TIFF@			\
 	@JPEG@			\
 	@PNG@			\
