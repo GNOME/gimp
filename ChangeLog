@@ -2,7 +2,7 @@
 
 	* app/config/gimpconfig-types.c: derive GIMP_TYPE_MEMSIZE from
 	G_TYPE_ULONG. Should probably be even G_TYPE_UINT64 but we use
-	strtol which can only handles unsigned long int.
+	strtol which can only handle unsigned long int.
 
 	* app/config/gimpbaseconfig.[ch]
 	* app/config/gimpguiconfig.[ch]: changed accordingly.
@@ -21,7 +21,7 @@
 	from gimp_device_info_set_property(PROP_GIMP).
 
 	* app/config/gimpconfig-deserialize.c: made deserialization of
-	value arrays work by actually using the array any not just leaking
+	value arrays work by actually using the array and not just leaking
 	it ;)
 
 	* app/core/gimpcontainer.c: removed debugging output. Call
