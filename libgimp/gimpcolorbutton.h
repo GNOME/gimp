@@ -52,8 +52,8 @@ struct _GimpColorButtonClass
 
 GtkType     gimp_color_button_get_type   (void);
 GtkWidget * gimp_color_button_new        (const gchar     *title,
-					  guint            width,
-					  guint            height,
+					  gint             width,
+					  gint             height,
 					  GimpRGB         *color,
 					  gboolean         alpha);
 void        gimp_color_button_set_color  (GimpColorButton *gcb,

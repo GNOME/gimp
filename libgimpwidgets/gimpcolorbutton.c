@@ -199,14 +199,13 @@ gimp_color_button_get_type (void)
  **/
 GtkWidget *
 gimp_color_button_new (const gchar *title,
-		       guint        width,
-		       guint        height,
+		       gint         width,
+		       gint         height,
 		       GimpRGB     *color,
 		       gboolean     alpha)
 {
   GimpColorButton *gcb;
   
-  g_return_val_if_fail (width > 0 && height > 0, NULL);  
   g_return_val_if_fail (color != NULL, NULL);  
 
   gcb = gtk_type_new (gimp_color_button_get_type ());
