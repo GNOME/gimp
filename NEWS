@@ -40,8 +40,8 @@ Overview of Changes in GIMP 2.1.4
 
 - Added GimpDrawablePreview derived from GimpPreview.
 
-- Improved previews in Unsharp Mask, Scatter RGB, Sharpen, Spread, Grid
-  and Noisify plug-ins.
+- Improved previews in Unsharp Mask, Scatter RGB, Sharpen, Spread and
+  Grid plug-ins.
 
 - Added previews to Edge, Gaussian Blur, Neon, Soft Glow, Sobel and
   Selective Gaussian Blur.
