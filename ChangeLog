@@ -1,5 +1,13 @@
 2000-03-25  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/gimage.pdb
+	* app/gimage_cmds.c: corrected the description and help for the
+	gimp_image_component_* functions.
+
+	* app/info_dialog.h: include dialog_handler.h
+
+2000-03-25  Sven Neumann  <sven@gimp.org>
+
 	* app/app_procs.c: use gtk_exit(0) instead of gtk_main_quit() 
 	since there is a chance that the main loop is never entered.
 	Fixes bug #7744.

@@ -19,6 +19,7 @@
 
 #include <string.h>
 #include "appenv.h"
+#include "dialog_handler.h"
 #include "gimprc.h"
 #include "info_dialog.h"
 #include "interface.h"
