@@ -838,8 +838,8 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
   double dx1, dy1, dx2, dy2, dx3, dy3, dx4, dy4;
   double xinc, yinc, winc;
   double tx, ty, tw;
-  double ttx, tty;
-  double dx, dy;
+  double ttx = 0.0, tty = 0.0;
+  double dx = 0.0, dy = 0.0;
   unsigned char * dest, * d;
   unsigned char * src[16];
   double src_a[16][MAX_CHANNELS];
@@ -1183,7 +1183,6 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
 {
   Layer * layer;
   Layer * floating_layer;
-  int layer_type;
 
   if (new_layer)
     {

@@ -1,3 +1,15 @@
+Wed Mar 11 00:27:35 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/convert.c: fixed memory overrun error
+
+	* app/gdisplay.c
+	* app/menus.c: reapplied the tools patch from Nether, looks
+	like it doesn't trip up anymore. Added some sanity checks
+	anyway
+
+	* app/disp_callbacks.c
+	* app/transform_core.c: plugged some harmless build warnings
+	
 1998-03-11  Larry Ewing  <lewing@discord.isc.tamu.edu>
 
 	* app/undo.c

@@ -1066,7 +1066,7 @@ generate_histogram_rgb (Histogram  histogram,
 		      
 		      num_found_cols++;
 		      
-		      if (num_found_cols > col_limit)
+		      if (num_found_cols >= col_limit)
 			{
 			  /* There are more colours in the image
 			   *  than were allowed.  We switch to plain

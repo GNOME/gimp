@@ -62,14 +62,6 @@ redraw (GDisplay *gdisp,
     }
 }
 
-static gint
-expose_predicate (GdkEvent *event,
-		  gpointer  data)
-{
-  return ((event->type == GDK_EXPOSE) &&
-	  (event->any.window == data));
-}
-
 gint
 gdisplay_canvas_events (GtkWidget *canvas,
 			GdkEvent  *event)
@@ -259,12 +251,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	}
       else if (mevent->state & GDK_BUTTON2_MASK)
 	{
-	  /* int flush; */
-
 	  grab_and_scroll (gdisp, mevent);
-
-	  /* if (flush)
-	    gdisplays_flush (); */
 	}
       break;
 

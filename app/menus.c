@@ -29,7 +29,7 @@
 #include "procedural_db.h"
 #include "scale.h"
 #include "tools.h"
-
+#include "gdisplay.h"
 
 static void menus_init (void);
 static void menus_foreach (gpointer key,
@@ -43,7 +43,8 @@ static gint menus_install_accel (GtkWidget *widget,
 static void menus_remove_accel (GtkWidget *widget,
 				gchar     *signal_name,
 				gchar     *path);
-
+static void menus_activate_callback (GtkWidget *widget,
+				     GtkMenuEntry *entry);
 
 static GtkMenuEntry menu_items[] =
 {
@@ -298,6 +299,9 @@ menus_create (GtkMenuEntry *entries,
 	gtk_signal_connect (GTK_OBJECT (entries[i].widget), "remove_accelerator",
 			    (GtkSignalFunc) menus_remove_accel,
 			    entries[i].path);
+	gtk_signal_connect (GTK_OBJECT (entries[i].widget), "activate",
+			    (GtkSignalFunc) menus_activate_callback,
+			    &entries[i]);
       }
 }
 
@@ -485,4 +489,74 @@ menus_remove_accel (GtkWidget *widget,
 
       g_hash_table_insert (entry_ht, path, g_strdup (""));
     }
+}
+
+static void
+menus_activate_callback (GtkWidget *widget,
+			 GtkMenuEntry *entry)
+{
+  /* These are the functions upon which we won't destroy the
+     tool... "safe", so to say. All the others are expected to alter
+     the image, so the tool must be destroyed */
+  const GtkMenuCallback ignore[]={
+    image_posterize_cmd_callback,
+    image_threshold_cmd_callback,
+    image_color_balance_cmd_callback,
+    image_brightness_contrast_cmd_callback,
+    image_hue_saturation_cmd_callback,
+    image_curves_cmd_callback,
+    image_levels_cmd_callback,
+    image_histogram_cmd_callback,
+    tools_select_cmd_callback,
+    about_dialog_cmd_callback,
+    tips_dialog_cmd_callback,
+    file_new_cmd_callback,
+    file_open_cmd_callback,
+    file_save_cmd_callback,
+    file_save_as_cmd_callback,
+    file_pref_cmd_callback,
+    file_close_cmd_callback,
+    file_quit_cmd_callback,
+    view_zoomin_cmd_callback,
+    view_zoomout_cmd_callback,
+    view_zoom_16_1_callback,
+    view_zoom_8_1_callback,
+    view_zoom_4_1_callback,
+    view_zoom_2_1_callback,
+    view_zoom_1_1_callback,
+    view_zoom_1_2_callback,
+    view_zoom_1_4_callback,
+    view_zoom_1_8_callback,
+    view_zoom_1_16_callback,
+    view_window_info_cmd_callback,
+    view_toggle_rulers_cmd_callback,
+    view_toggle_guides_cmd_callback,
+    view_snap_to_guides_cmd_callback,
+    channel_ops_duplicate_cmd_callback,
+    dialogs_lc_cmd_callback,
+    dialogs_brushes_cmd_callback,
+    dialogs_patterns_cmd_callback,
+    dialogs_palette_cmd_callback,
+    dialogs_gradient_editor_cmd_callback,
+    dialogs_lc_cmd_callback,
+    dialogs_indexed_palette_cmd_callback,
+    dialogs_tools_options_cmd_callback,
+    file_load_by_extension_callback,
+    file_save_by_extension_callback
+  };
+  int i;
+  
+  if (active_tool){
+    for (i=0; i<sizeof(ignore)/sizeof(*ignore); i++)
+      if (entry->callback == ignore[i])
+	return;
+    if (active_tool->gdisp_ptr == NULL)
+      active_tool_control (DESTROY, active_tool->gdisp_ptr);
+    else {
+        GDisplay *gdisp;
+        gdisp = gdisplay_active ();
+	if (gdisp == NULL || ((GDisplay*)active_tool->gdisp_ptr)->gimage == gdisp->gimage)
+          active_tool_control (DESTROY, active_tool->gdisp_ptr);
+    }
+  }
 }

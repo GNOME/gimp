@@ -41,7 +41,6 @@
 #include "scroll.h"
 #include "tools.h"
 #include "undo.h"
-#include "tools.h"
 
 #include "layer_pvt.h"			/* ick. */
 
@@ -1110,6 +1109,10 @@ gdisplay_active ()
   event = gtk_get_current_event ();
   event_widget = gtk_get_event_widget (event);
   gdk_event_free (event);
+
+  if (event_widget == NULL)
+    return NULL;
+
   toplevel_widget = gtk_widget_get_toplevel (event_widget);
   gdisp = g_hash_table_lookup (display_ht, toplevel_widget);
 
@@ -1118,7 +1121,6 @@ gdisplay_active ()
 
   if (popup_shell)
     {
-      active_tool_control (DESTROY, gdisp);
       gdisp = gtk_object_get_user_data (GTK_OBJECT (popup_shell));
       return gdisp;
     }
