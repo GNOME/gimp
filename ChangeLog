@@ -1,3 +1,8 @@
+2002-03-08  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: reorder AC_OUTPUT to make intltool happy, check
+	intltool version.
+	
 2002-03-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpchannel.[ch]: changed gimp_channel_get_color() to
@@ -24,10 +29,6 @@
 	* app/widgets/gimppaletteeditor.h: forgot to declare the _get_type()
 	functions publically.
 
-2002-03-08  Sven Neumann  <sven@gimp.org>
-
-	* configure.in: reorder AC_OUTPUT to make intltool happy.
-	
 2002-03-08  Sven Neumann  <sven@gimp.org>
 
 	Handle gtk-doc just like GTK+ does it now:
