@@ -1144,6 +1144,7 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
     }
 
   g_signal_emit (gse, gimp_size_entry_signals[UNIT_CHANGED], 0);
+  g_signal_emit (gse, gimp_size_entry_signals[VALUE_CHANGED], 0);
 }
 
 
