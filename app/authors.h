@@ -27,6 +27,7 @@ static gchar *authors[] =
   "Brent Burton",
   "Francisco Bustamante",
   "Albert Cahalan",
+  "George J. Carrette",
   "Sean Cier",
   "Winston Chang",
   "Kenneth Christiansen",

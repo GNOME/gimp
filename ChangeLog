@@ -1,3 +1,16 @@
+2003-05-18  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: remove glibconfig.h inline check, it hasn't
+	worked for a long time.
+
+	* tools/authorsgen/contributors: added George J. Carrette, author of
+	SIOD.
+
+	* po-libgimp/Makefile.in.in
+	* po-plug-ins/Makefile.in.in
+	* po-script-fu/Makefile.in.in
+	* plug-ins/perl/po/Makefile.in.in: fix $$(datadir) ytpo.
+
 2003-05-17  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/script-fu/scripts/alien-glow-button.scm

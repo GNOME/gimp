@@ -111,7 +111,7 @@ install-data: install-data-@USE_NLS@
 install-data-no: all
 install-data-yes: all
 	if test -r "$(MKINSTALLDIRS)"; then \
-	  $(MKINSTALLDIRS) $(DESTDIR)$$(datadir); \
+	  $(MKINSTALLDIRS) $(DESTDIR)$(datadir); \
 	else \
 	  $(SHELL) $(top_srcdir)/mkinstalldirs $(DESTDIR)$(datadir); \
 	fi
