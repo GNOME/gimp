@@ -69,7 +69,7 @@ image_add_hguide_invoker (Gimp     *gimp,
     success = FALSE;
 
   offset = args[1].value.pdb_int;
-  if (offset <= 0)
+  if (offset < 0)
     success = FALSE;
 
   if (success)
@@ -148,7 +148,7 @@ image_add_vguide_invoker (Gimp     *gimp,
     success = FALSE;
 
   offset = args[1].value.pdb_int;
-  if (offset <= 0)
+  if (offset < 0)
     success = FALSE;
 
   if (success)

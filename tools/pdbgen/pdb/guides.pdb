@@ -37,7 +37,7 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => "${type}position", type => '0 < int32',
+	{ name => "${type}position", type => '0 <= int32',
 	  desc => "The guide's ${type}-offset from $pos of image",
 	  alias => 'offset' }
     );
