@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2001-12-18 22:28+0800\n"
+"POT-Creation-Date: 2001-12-29 21:02+0100\n"
 "PO-Revision-Date: 2001-12-15 16:30+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -73,46 +73,42 @@ msgstr "进度"
 msgid "Please wait..."
 msgstr "请等待……"
 
-#: app/gimprc.c:498
+#: app/gimprc.c:487
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "正在解析“%s”\n"
 
-#: app/gimprc.c:515
+#: app/gimprc.c:504
 #, c-format
 msgid "error parsing: \"%s\"\n"
 msgstr "解析出错：“%s”\n"
 
-#: app/gimprc.c:516
+#: app/gimprc.c:505
 #, c-format
 msgid "  at line %d column %d\n"
 msgstr " 在第 %d 行 %d 列\n"
 
-#: app/gimprc.c:517
+#: app/gimprc.c:506
 #, c-format
 msgid "  unexpected token: %s\n"
 msgstr " 出现以外：%s\n"
 
-#: app/gimprc.c:1447
-msgid "error parsing pluginrc"
-msgstr "解析 pluginrc 出错"
-
-#: app/gimprc.c:3139
+#: app/gimprc.c:2771
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "无法打开 %s ；%s"
 
-#: app/gimprc.c:3158
+#: app/gimprc.c:2790
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "无法重命名 %s 到 %s.old ；%s"
 
-#: app/gimprc.c:3164
+#: app/gimprc.c:2796
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "无法重新打开 %s\n"
 
-#: app/gimprc.c:3176
+#: app/gimprc.c:2808
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "无法写入 %s ；%s"
@@ -428,25 +424,25 @@ msgstr "图像重置大小"
 msgid "misc"
 msgstr "其它"
 
-#: app/undo_history.c:460 app/undo_history.c:811
+#: app/undo_history.c:465 app/undo_history.c:816
 #, c-format
 msgid "Undo History: %s"
 msgstr "撤销历史：%s"
 
-#: app/undo_history.c:534
+#: app/undo_history.c:539
 msgid "[ base image ]"
 msgstr "[ 原始图像 ]"
 
 #: app/display/gimpdisplayshell.c:974 app/pdb/internal_procs.c:173
-#: app/undo_history.c:907
+#: app/undo_history.c:912
 msgid "Undo"
 msgstr "撤销"
 
-#: app/display/gimpdisplayshell.c:975 app/undo_history.c:914
+#: app/display/gimpdisplayshell.c:975 app/undo_history.c:919
 msgid "Redo"
 msgstr "恢复"
 
-#: app/config/gimpconfig-deserialize.c:153
+#: app/config/gimpconfig-deserialize.c:153 app/plug-in/plug-in-rc.c:143
 msgid "fatal parse error"
 msgstr ""
 
@@ -465,7 +461,8 @@ msgstr ""
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr ""
 
-#: app/config/gimpconfig.c:122 app/config/gimpconfig.c:155
+#: app/config/gimpconfig.c:118 app/config/gimpconfig.c:150
+#: app/config/gimprc.c:145
 #, fuzzy, c-format
 msgid "Failed to open file '%s': %s"
 msgstr "无法打开色板文件“%s”：%s"
@@ -512,7 +509,7 @@ msgstr "渐变"
 msgid "Documents"
 msgstr "文档"
 
-#: app/core/gimp.c:670 app/file/file-open.c:170
+#: app/core/gimp.c:670 app/file/file-open.c:171
 msgid "Open"
 msgstr "打开"
 
@@ -650,7 +647,7 @@ msgstr "没有选择供勾画。"
 msgid "Paint operation failed."
 msgstr "涂画操作失败。"
 
-#: app/core/gimpimage-new.c:52 app/display/gimpdisplayshell.c:2238
+#: app/core/gimpimage-new.c:52 app/display/gimpdisplayshell.c:2240
 #: app/gui/preferences-dialog.c:1793
 msgid "RGB"
 msgstr "RGB"
@@ -1005,27 +1002,27 @@ msgstr "撤销"
 msgid "Redo %s"
 msgstr "恢复"
 
-#: app/display/gimpdisplayshell.c:2238
+#: app/display/gimpdisplayshell.c:2240
 msgid "RGB-empty"
 msgstr "RGB-空"
 
-#: app/display/gimpdisplayshell.c:2241
+#: app/display/gimpdisplayshell.c:2243
 msgid "grayscale-empty"
 msgstr "灰度-空"
 
-#: app/display/gimpdisplayshell.c:2241
+#: app/display/gimpdisplayshell.c:2243
 msgid "grayscale"
 msgstr "灰度"
 
-#: app/display/gimpdisplayshell.c:2244
+#: app/display/gimpdisplayshell.c:2246
 msgid "indexed-empty"
 msgstr "索引-空"
 
-#: app/display/gimpdisplayshell.c:2244
+#: app/display/gimpdisplayshell.c:2246
 msgid "indexed"
 msgstr "索引"
 
-#: app/display/gimpdisplayshell.c:2360
+#: app/display/gimpdisplayshell.c:2362
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1034,7 +1031,7 @@ msgstr ""
 "%s 已修改。\n"
 "仍然要关闭吗？"
 
-#: app/display/gimpdisplayshell.c:2362
+#: app/display/gimpdisplayshell.c:2364
 #, c-format
 msgid "Close %s?"
 msgstr ""
@@ -1043,7 +1040,7 @@ msgstr ""
 msgid "Layer Select"
 msgstr "图层选择"
 
-#: app/file/file-open.c:86
+#: app/file/file-open.c:87
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1052,7 +1049,7 @@ msgstr ""
 "%s失败。\n"
 "%s ：未知文件类型。"
 
-#: app/file/file-open.c:100
+#: app/file/file-open.c:101
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1061,7 +1058,7 @@ msgstr ""
 "%s失败。\n"
 "%s 不是普通文件。"
 
-#: app/file/file-open.c:111
+#: app/file/file-open.c:112
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1070,7 +1067,7 @@ msgstr ""
 "%s失败。\n"
 "%s ：%s。"
 
-#: app/file/file-save.c:96
+#: app/file/file-save.c:97
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1079,7 +1076,7 @@ msgstr ""
 "保存失败。\n"
 "%s ：未知文件类型。"
 
-#: app/file/file-save.c:109
+#: app/file/file-save.c:110
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1088,7 +1085,7 @@ msgstr ""
 "保存失败。\n"
 "%s 不是普通文件。"
 
-#: app/file/file-save.c:118
+#: app/file/file-save.c:119
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1101,12 +1098,12 @@ msgstr ""
 msgid "About The GIMP"
 msgstr "关于 The GIMP"
 
-#: app/gui/about-dialog.c:196
+#: app/gui/about-dialog.c:195
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "版本 %s 来自"
 
-#: app/gui/about-dialog.c:249
+#: app/gui/about-dialog.c:247
 msgid "Visit http://www.gimp.org/ for more information"
 msgstr "请访问 http://www.gimp.org/ 获取更多信息"
 
@@ -1127,7 +1124,7 @@ msgstr "硬度："
 msgid "Aspect Ratio:"
 msgstr "宽高比："
 
-#: app/gui/brush-editor.c:206 app/tools/gimpinktool.c:1496
+#: app/gui/brush-editor.c:206 app/tools/gimpinktool.c:1498
 #: app/tools/gimpmeasuretool.c:408 app/tools/gimprotatetool.c:182
 msgid "Angle:"
 msgstr "角度："
@@ -1190,7 +1187,7 @@ msgstr "编辑通道颜色"
 msgid "Edit Channel Attributes"
 msgstr "编辑通道属性"
 
-#: app/gui/color-area.c:437
+#: app/gui/color-area.c:445
 msgid "Color Selection"
 msgstr "颜色选择"
 
@@ -1265,23 +1262,23 @@ msgstr "蓝"
 msgid "Alpha"
 msgstr "Alpha"
 
-#: app/gui/color-notebook.c:387
+#: app/gui/color-notebook.c:386
 msgid "Current:"
 msgstr "当前："
 
-#: app/gui/color-notebook.c:408
+#: app/gui/color-notebook.c:407
 msgid "Old:"
 msgstr "以前："
 
-#: app/gui/color-notebook.c:430
+#: app/gui/color-notebook.c:429
 msgid "Revert to old color"
 msgstr "恢复以前的颜色"
 
-#: app/gui/color-notebook.c:534
+#: app/gui/color-notebook.c:533
 msgid "Add the current color to the color history"
 msgstr "添加当前颜色到颜色历史"
 
-#: app/gui/color-notebook.c:592 app/gui/colormap-dialog.c:270
+#: app/gui/color-notebook.c:592 app/gui/colormap-dialog.c:271
 #: app/tools/gimpcolorpickertool.c:317 app/tools/gimpcolorpickertool.c:326
 msgid "Hex Triplet:"
 msgstr "十六进制值："
@@ -1290,11 +1287,11 @@ msgstr "十六进制值："
 msgid "Color Index:"
 msgstr "颜色索引："
 
-#: app/gui/colormap-dialog.c:375
+#: app/gui/colormap-dialog.c:376
 msgid "Add"
 msgstr "添加"
 
-#: app/gui/colormap-dialog.c:385 app/gui/palette-editor.c:431
+#: app/gui/colormap-dialog.c:386 app/gui/palette-editor.c:431
 #: app/widgets/gimpdatafactoryview.c:211
 #: app/widgets/gimpdrawablelistview.c:221
 msgid "Edit"
@@ -1393,12 +1390,12 @@ msgstr "选择自定义色板"
 msgid "Device Status"
 msgstr "设备状态"
 
-#: app/gui/device-status-dialog.c:411
+#: app/gui/device-status-dialog.c:413
 #, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "前景：%d, %d, %d"
 
-#: app/gui/device-status-dialog.c:425
+#: app/gui/device-status-dialog.c:427
 #, c-format
 msgid "Background: %d, %d, %d"
 msgstr "背景：%d, %d, %d"
@@ -1429,7 +1426,7 @@ msgid "Error opening file '%s'"
 msgstr "打开文件错误：%s\n"
 
 #. Error message should be added. --bex
-#: app/gui/file-commands.c:186 app/gui/file-save-dialog.c:463
+#: app/gui/file-commands.c:186 app/gui/file-save-dialog.c:464
 #, fuzzy, c-format
 msgid "Saving '%s' failed."
 msgstr ""
@@ -1494,7 +1491,7 @@ msgid "Height:"
 msgstr "高度："
 
 #: app/gui/file-new-dialog.c:218 app/gui/preferences-dialog.c:1691
-#: app/gui/preferences-dialog.c:1730 app/gui/user-install-dialog.c:1201
+#: app/gui/preferences-dialog.c:1730 app/gui/user-install-dialog.c:1207
 msgid "Pixels"
 msgstr "像素"
 
@@ -1506,7 +1503,7 @@ msgstr "分辨率 X："
 #: app/gui/file-new-dialog.c:293 app/gui/info-window.c:199
 #: app/gui/offset-dialog.c:130 app/gui/resize-dialog.c:360
 #: app/gui/resize-dialog.c:450 app/gui/resize-dialog.c:595
-#: app/gui/user-install-dialog.c:1214 app/tools/gimpcroptool.c:1023
+#: app/gui/user-install-dialog.c:1220 app/tools/gimpcroptool.c:1023
 #: app/tools/gimprotatetool.c:203 app/tools/gimpscaletool.c:209
 #: app/tools/gimpsheartool.c:181
 msgid "Y:"
@@ -1526,7 +1523,7 @@ msgstr "图像类型"
 msgid "Fill Type"
 msgstr "填充类型"
 
-#: app/gui/file-new-dialog.c:578
+#: app/gui/file-new-dialog.c:582
 #, fuzzy, no-c-format
 msgid ""
 "You are trying to create an image with\n"
@@ -1552,25 +1549,25 @@ msgstr ""
 "“最大图像大小”的设定值\n"
 "(当前 %s)。"
 
-#: app/gui/file-new-dialog.c:590
+#: app/gui/file-new-dialog.c:594
 msgid "Confirm Image Size"
 msgstr "确认图像大小"
 
-#: app/gui/file-new-dialog.c:677
+#: app/gui/file-new-dialog.c:683
 #, c-format
 msgid "Image Size: %s"
 msgstr "图像大小：%s"
 
-#: app/gui/file-open-dialog.c:166 app/gui/file-open-dialog.c:180
+#: app/gui/file-open-dialog.c:173 app/gui/file-open-dialog.c:187
 msgid "Open Image"
 msgstr "打开图像"
 
 #. format-chooser frame
-#: app/gui/file-open-dialog.c:230
+#: app/gui/file-open-dialog.c:237
 msgid "Determine File Type"
 msgstr "确定文件类型"
 
-#: app/gui/file-open-dialog.c:304
+#: app/gui/file-open-dialog.c:312
 msgid ""
 "Generate\n"
 "Preview"
@@ -1579,7 +1576,7 @@ msgstr ""
 "预览"
 
 #. The preview frame
-#: app/gui/file-open-dialog.c:322 app/gui/palette-import-dialog.c:473
+#: app/gui/file-open-dialog.c:330 app/gui/palette-import-dialog.c:473
 #: app/tools/gimpbrightnesscontrasttool.c:354
 #: app/tools/gimpcolorbalancetool.c:499 app/tools/gimpcurvestool.c:783
 #: app/tools/gimphuesaturationtool.c:623 app/tools/gimplevelstool.c:649
@@ -1587,36 +1584,36 @@ msgstr ""
 msgid "Preview"
 msgstr "预览"
 
-#: app/gui/file-open-dialog.c:323
+#: app/gui/file-open-dialog.c:331
 #, fuzzy
 msgid "No Selection"
 msgstr "没有选择。"
 
-#: app/gui/file-open-dialog.c:506
+#: app/gui/file-open-dialog.c:514
 #, fuzzy
 msgid "This thumbnail may be out of date"
 msgstr "(这个缩略图也许已经过期)"
 
-#: app/gui/file-open-dialog.c:507
+#: app/gui/file-open-dialog.c:515
 #, fuzzy
 msgid "No Information"
 msgstr "(没有信息)"
 
-#: app/gui/file-open-dialog.c:516
+#: app/gui/file-open-dialog.c:524
 #, fuzzy
 msgid "Could not write thumbnail file."
 msgstr "(无法写缩略图文件)"
 
-#: app/gui/file-open-dialog.c:521
+#: app/gui/file-open-dialog.c:529
 #, fuzzy
 msgid "Thumbnail saving is disabled."
 msgstr "(缩略图保存已禁用)"
 
-#: app/gui/file-open-dialog.c:539
+#: app/gui/file-open-dialog.c:547
 msgid "No preview available"
 msgstr "没有可用的预览"
 
-#: app/gui/file-open-dialog.c:658
+#: app/gui/file-open-dialog.c:666
 #, fuzzy
 msgid "Failed to generate preview."
 msgstr ""
@@ -1624,7 +1621,7 @@ msgstr ""
 "预览"
 
 #. Hackery required. Please add error message. --bex
-#: app/gui/file-open-dialog.c:736 app/gui/file-open-dialog.c:778
+#: app/gui/file-open-dialog.c:744 app/gui/file-open-dialog.c:786
 #, fuzzy, c-format
 msgid "Opening '%s' failed."
 msgstr ""
@@ -1648,19 +1645,19 @@ msgid "Determine File Type:"
 msgstr "确定文件类型："
 
 #. Please add error. (: %s) --bex
-#: app/gui/file-save-dialog.c:398
+#: app/gui/file-save-dialog.c:399
 #, fuzzy, c-format
 msgid "Saving %s failed."
 msgstr ""
 "保存失败。\n"
 "%s"
 
-#: app/gui/file-save-dialog.c:422
+#: app/gui/file-save-dialog.c:423
 #, fuzzy, c-format
 msgid "%s exists. Overwrite?"
 msgstr "%s 已存在，覆盖吗？"
 
-#: app/gui/file-save-dialog.c:424
+#: app/gui/file-save-dialog.c:425
 msgid "File Exists!"
 msgstr "文件已存在！"
 
@@ -3485,108 +3482,108 @@ msgstr "选择"
 msgid "Palette Selection"
 msgstr "色板选择"
 
-#: app/gui/palettes-commands.c:116
+#: app/gui/palettes-commands.c:122
 msgid "Merge Palette"
 msgstr "合并色板"
 
-#: app/gui/palettes-commands.c:119
+#: app/gui/palettes-commands.c:125
 msgid "Enter a name for merged palette"
 msgstr "给已合并的色板输入一个名字"
 
-#: app/gui/paths-dialog.c:160
+#: app/gui/paths-dialog.c:165
 msgid "New Path"
 msgstr "新建路径"
 
-#: app/gui/paths-dialog.c:164
+#: app/gui/paths-dialog.c:169
 msgid "Duplicate Path"
 msgstr "复制路径"
 
-#: app/gui/paths-dialog.c:168
+#: app/gui/paths-dialog.c:173
 msgid "Path to Selection"
 msgstr "路径到选择"
 
-#: app/gui/paths-dialog.c:172
+#: app/gui/paths-dialog.c:177
 msgid "Selection to Path"
 msgstr "选择到路径"
 
-#: app/gui/paths-dialog.c:176
+#: app/gui/paths-dialog.c:181
 msgid "Stroke Path"
 msgstr "勾画路径"
 
-#: app/gui/paths-dialog.c:180
+#: app/gui/paths-dialog.c:185
 msgid "Delete Path"
 msgstr "删除路径"
 
-#: app/gui/paths-dialog.c:189
+#: app/gui/paths-dialog.c:194
 msgid "New Point"
 msgstr "新点"
 
-#: app/gui/paths-dialog.c:193
+#: app/gui/paths-dialog.c:198
 msgid "Add Point"
 msgstr "添加点"
 
-#: app/gui/paths-dialog.c:197
+#: app/gui/paths-dialog.c:202
 msgid "Delete Point"
 msgstr "删除点"
 
-#: app/gui/paths-dialog.c:201
+#: app/gui/paths-dialog.c:206
 msgid "Edit Point"
 msgstr "编辑点"
 
-#: app/gui/paths-dialog.c:429
+#: app/gui/paths-dialog.c:434
 #, c-format
 msgid "Path %d"
 msgstr "路径 %d"
 
-#: app/gui/paths-dialog.c:982
+#: app/gui/paths-dialog.c:987
 msgid "Edit Path Attributes"
 msgstr "编辑路径属性"
 
-#: app/gui/paths-dialog.c:985
+#: app/gui/paths-dialog.c:990
 msgid "Enter a new name for the path"
 msgstr "给路径输入一个新的名字"
 
-#: app/gui/paths-dialog.c:1874 app/tools/gimpcurvestool.c:1786
-#: app/tools/gimpcurvestool.c:1804 app/tools/gimplevelstool.c:1569
+#: app/gui/paths-dialog.c:1879 app/tools/gimpcurvestool.c:1781
+#: app/tools/gimpcurvestool.c:1799 app/tools/gimplevelstool.c:1569
 #: app/tools/gimplevelstool.c:1587
 #, c-format
 msgid "Unable to open file %s"
 msgstr "无法打开文件 %s"
 
-#: app/gui/paths-dialog.c:1889
+#: app/gui/paths-dialog.c:1894
 #, c-format
 msgid "Failed to read from %s"
 msgstr "无法从 %s 读入"
 
-#: app/gui/paths-dialog.c:1904
+#: app/gui/paths-dialog.c:1909
 #, c-format
 msgid "Failed to read path from %s"
 msgstr "无法从 %s 读入路径"
 
-#: app/gui/paths-dialog.c:1911
+#: app/gui/paths-dialog.c:1916
 #, c-format
 msgid "No points specified in path file %s"
 msgstr "路径文件 %s 中没有给出点"
 
-#: app/gui/paths-dialog.c:1922
+#: app/gui/paths-dialog.c:1927
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr "无法从 %s 读入路径点"
 
-#: app/gui/paths-dialog.c:1995 app/xcf/xcf.c:315
+#: app/gui/paths-dialog.c:2000 app/xcf/xcf.c:320
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "在 %s 上打开失败：%s\n"
 
-#: app/gui/paths-dialog.c:2017
+#: app/gui/paths-dialog.c:2022
 msgid "Load/Store Bezier Curves"
 msgstr "加载/储存 Bezier 曲线"
 
-#: app/gui/paths-dialog.c:2057
+#: app/gui/paths-dialog.c:2062
 msgid "Load Path"
 msgstr "加载路径"
 
-#: app/gui/paths-dialog.c:2079
+#: app/gui/paths-dialog.c:2084
 msgid "Store Path"
 msgstr "储存路径"
 
@@ -4026,7 +4023,7 @@ msgstr "节约内存使用"
 msgid "Levels of Undo:"
 msgstr "撤销允许次数："
 
-#: app/gui/preferences-dialog.c:2440 app/gui/user-install-dialog.c:1112
+#: app/gui/preferences-dialog.c:2440 app/gui/user-install-dialog.c:1118
 msgid "Tile Cache Size:"
 msgstr "平铺缓存大小："
 
@@ -4123,7 +4120,7 @@ msgstr "得到监视器分辨率"
 msgid "(Currently %d x %d dpi)"
 msgstr "(当前 %d x %d dpi)"
 
-#: app/gui/preferences-dialog.c:2673 app/gui/user-install-dialog.c:1252
+#: app/gui/preferences-dialog.c:2673 app/gui/user-install-dialog.c:1258
 msgid "Calibrate"
 msgstr "定调"
 
@@ -4151,7 +4148,7 @@ msgstr "选择临时目录"
 msgid "Swap Dir:"
 msgstr "交换目录："
 
-#: app/gui/preferences-dialog.c:2742 app/gui/user-install-dialog.c:1132
+#: app/gui/preferences-dialog.c:2742 app/gui/user-install-dialog.c:1138
 msgid "Select Swap Dir"
 msgstr "选择交换目录"
 
@@ -4387,7 +4384,7 @@ msgstr ""
 "前景色和背景色。黑白小方格可以复位颜色。  箭头可以交换颜色。双击可以从颜色请"
 "求中选择颜色。"
 
-#: app/gui/user-install-dialog.c:127
+#: app/gui/user-install-dialog.c:133
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -4401,7 +4398,7 @@ msgstr ""
 "插件还有模块的路径设置也可以在这里\n"
 "指定。"
 
-#: app/gui/user-install-dialog.c:135
+#: app/gui/user-install-dialog.c:141
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
@@ -4409,7 +4406,7 @@ msgstr ""
 "GIMP 使用附加的 gtkrc 文件以使你可以通过配置\n"
 "让它看起来跟别的 GTK 应用程序不一样。"
 
-#: app/gui/user-install-dialog.c:140
+#: app/gui/user-install-dialog.c:146
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -4425,7 +4422,7 @@ msgstr ""
 "保存在这个文件里。这个文件只能\n"
 "由 GIMP 来读，不应该去编辑它。"
 
-#: app/gui/user-install-dialog.c:149
+#: app/gui/user-install-dialog.c:155
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP.\n"
 "The menurc is a dump of your configuration so it can.\n"
@@ -4441,7 +4438,7 @@ msgstr ""
 "键会更容易。删除这个文件将恢复默认的\n"
 "快捷键设置。"
 
-#: app/gui/user-install-dialog.c:158
+#: app/gui/user-install-dialog.c:164
 msgid ""
 "The sessionrc is used to store what dialog windows were\n"
 "open the last time you quit The GIMP.  You can configure\n"
@@ -4451,7 +4448,7 @@ msgstr ""
 "打开了哪些对话框。你可以配置 The GIMP ，让它\n"
 "在保存的位置上重新打开这些对话框。"
 
-#: app/gui/user-install-dialog.c:164
+#: app/gui/user-install-dialog.c:170
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -4465,7 +4462,7 @@ msgstr ""
 "它们。这个文件每次退出 GIMP 时都会\n"
 "被覆写。"
 
-#: app/gui/user-install-dialog.c:172
+#: app/gui/user-install-dialog.c:178
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined brushes.  The default gimprc file\n"
@@ -4479,7 +4476,7 @@ msgstr ""
 " GIMP 画笔安装以外还会搜索这\n"
 "个子目录。"
 
-#: app/gui/user-install-dialog.c:180
+#: app/gui/user-install-dialog.c:186
 msgid ""
 "This is a subdirectory which is used to store brushes\n"
 "that are created with the brush editor.  The default\n"
@@ -4491,7 +4488,7 @@ msgstr ""
 "文件搜索生成的画笔时将检查这个\n"
 "子目录。"
 
-#: app/gui/user-install-dialog.c:187
+#: app/gui/user-install-dialog.c:193
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gradients.  The default gimprc file\n"
@@ -4505,7 +4502,7 @@ msgstr ""
 " GIMP 渐变安装以外还会搜索这\n"
 "个子目录。"
 
-#: app/gui/user-install-dialog.c:195
+#: app/gui/user-install-dialog.c:201
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined palettes.  The default gimprc file\n"
@@ -4525,7 +4522,7 @@ msgstr ""
 "时对色板所作的修改能永久保存\n"
 "到以后的会话中。"
 
-#: app/gui/user-install-dialog.c:206
+#: app/gui/user-install-dialog.c:212
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined patterns.  The default gimprc file\n"
@@ -4539,7 +4536,7 @@ msgstr ""
 " GIMP 图案安装以外还会搜索这\n"
 "个子目录。"
 
-#: app/gui/user-install-dialog.c:214
+#: app/gui/user-install-dialog.c:220
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user created, temporary, or otherwise non-system-\n"
@@ -4553,7 +4550,7 @@ msgstr ""
 "要检查系统的 GIMP 插件安装以外还会\n"
 "搜索这个子目录。"
 
-#: app/gui/user-install-dialog.c:222
+#: app/gui/user-install-dialog.c:228
 msgid ""
 "This subdirectory can be used to store user created,\n"
 "temporary, or otherwise non-system-supported DLL\n"
@@ -4567,7 +4564,7 @@ msgstr ""
 "搜索加载模块的时候除了要检查系统的\n"
 " GIMP 模块安装以外还会搜索这个子目录。"
 
-#: app/gui/user-install-dialog.c:230
+#: app/gui/user-install-dialog.c:236
 msgid ""
 "This subdirectory is used by the GIMP to store user\n"
 "created and installed scripts.  The default gimprc file\n"
@@ -4579,7 +4576,7 @@ msgstr ""
 "搜索脚本时除了要检查系统的 GIMP \n"
 "脚本安装以外还会搜索这个子目录。"
 
-#: app/gui/user-install-dialog.c:237
+#: app/gui/user-install-dialog.c:243
 msgid ""
 "This subdirectory is used by the GIMP to temporarily\n"
 "store undo buffers to reduce memory usage.  If GIMP is\n"
@@ -4593,7 +4590,7 @@ msgstr ""
 "永远存在这个目录里面。这些文件对以后的\n"
 " GIMP 会话没有任何作用，可以安全地删掉。"
 
-#: app/gui/user-install-dialog.c:245
+#: app/gui/user-install-dialog.c:251
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
@@ -4601,7 +4598,7 @@ msgstr ""
 "这个子目录用于储存曲线工具的\n"
 "参数文件。"
 
-#: app/gui/user-install-dialog.c:250
+#: app/gui/user-install-dialog.c:256
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
@@ -4609,7 +4606,7 @@ msgstr ""
 "这个子目录用于色阶曲线工具的\n"
 "参数文件。"
 
-#: app/gui/user-install-dialog.c:255
+#: app/gui/user-install-dialog.c:261
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined fractals to be used by the FractalExplorer\n"
@@ -4623,7 +4620,7 @@ msgstr ""
 "系统的 GIMP 分形探索器安装以外还会\n"
 "搜索这个子目录。"
 
-#: app/gui/user-install-dialog.c:263
+#: app/gui/user-install-dialog.c:269
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined figures to be used by the GFig plug-in.\n"
@@ -4637,7 +4634,7 @@ msgstr ""
 "系统的 GIMP GFig 安装以外还会\n"
 "搜索这个子目录。"
 
-#: app/gui/user-install-dialog.c:271
+#: app/gui/user-install-dialog.c:277
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gflares to be used by the GFlare plug-in.\n"
@@ -4651,7 +4648,7 @@ msgstr ""
 "查系统的 GIMP GFlare 安装以外还会搜索\n"
 "这个子目录。"
 
-#: app/gui/user-install-dialog.c:279
+#: app/gui/user-install-dialog.c:285
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined data to be used by the Gimpressionist\n"
@@ -4665,7 +4662,7 @@ msgstr ""
 "要检查系统的 GIMP Gimpressionist \n"
 "安装以外还会搜索这个子目录。"
 
-#: app/gui/user-install-dialog.c:337
+#: app/gui/user-install-dialog.c:343
 msgid ""
 "Please wait while your personal\n"
 "GIMP directory is being created..."
@@ -4673,15 +4670,15 @@ msgstr ""
 "请等待，你的个人 GIMP 目录\n"
 "正在创建中……"
 
-#: app/gui/user-install-dialog.c:527
+#: app/gui/user-install-dialog.c:533
 msgid "GIMP User Installation"
 msgstr "GIMP 用户安装"
 
-#: app/gui/user-install-dialog.c:535
+#: app/gui/user-install-dialog.c:541
 msgid "Continue"
 msgstr "继续"
 
-#: app/gui/user-install-dialog.c:669
+#: app/gui/user-install-dialog.c:675
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
@@ -4689,11 +4686,11 @@ msgstr ""
 "欢迎来到\n"
 "The GIMP 用户安装"
 
-#: app/gui/user-install-dialog.c:671
+#: app/gui/user-install-dialog.c:677
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "点击“继续”进入 GIMP 用户安装。"
 
-#: app/gui/user-install-dialog.c:675
+#: app/gui/user-install-dialog.c:681
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "Copyright (C) 1995-2000\n"
@@ -4703,7 +4700,7 @@ msgstr ""
 "版权所有 (C) 1995-2000\n"
 "Spencer Kimball，Peter Mattis 和 GIMP 开发小组。"
 
-#: app/gui/user-install-dialog.c:684
+#: app/gui/user-install-dialog.c:690
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -4715,7 +4712,7 @@ msgstr ""
 "许可证版本 2 的条款下重新\n"
 "分发或者修改它。"
 
-#: app/gui/user-install-dialog.c:689
+#: app/gui/user-install-dialog.c:695
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -4727,7 +4724,7 @@ msgstr ""
 "它可以作为商品或适用于某一特定目的。\n"
 "请查阅 GNU 通用公共许可证来获得更多的信息。"
 
-#: app/gui/user-install-dialog.c:694
+#: app/gui/user-install-dialog.c:700
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -4739,15 +4736,15 @@ msgstr ""
 "Foundation, Inc., 59 Temple Place - Suite 330, \n"
 "Boston, MA 02111-1307, USA."
 
-#: app/gui/user-install-dialog.c:720
+#: app/gui/user-install-dialog.c:726
 msgid "Personal GIMP Directory"
 msgstr "个人 GIMP 目录"
 
-#: app/gui/user-install-dialog.c:721
+#: app/gui/user-install-dialog.c:727
 msgid "Click \"Continue\" to create your personal GIMP directory."
 msgstr "点击“继续”创建你的个人 GIMP 目录。"
 
-#: app/gui/user-install-dialog.c:740
+#: app/gui/user-install-dialog.c:746
 #, c-format
 msgid ""
 "For a proper GIMP installation, a subdirectory named\n"
@@ -4756,7 +4753,7 @@ msgstr ""
 "要正确安装 GIMP，就需要创建一个\n"
 "名叫“%s”的子目录。"
 
-#: app/gui/user-install-dialog.c:746
+#: app/gui/user-install-dialog.c:752
 msgid ""
 "This subdirectory will contain a number of important files.\n"
 "Click on one of the files or subdirectories in the tree\n"
@@ -4766,49 +4763,49 @@ msgstr ""
 "点击其中的一个文件或子目录来得到\n"
 "选中项目的更多信息。"
 
-#: app/gui/user-install-dialog.c:830
+#: app/gui/user-install-dialog.c:836
 msgid "User Installation Log"
 msgstr "用户安装日志"
 
-#: app/gui/user-install-dialog.c:836
+#: app/gui/user-install-dialog.c:842
 msgid "GIMP Performance Tuning"
 msgstr "GIMP 性能调节"
 
-#: app/gui/user-install-dialog.c:837
+#: app/gui/user-install-dialog.c:843
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "点击“继续”接受以上设置。"
 
-#: app/gui/user-install-dialog.c:840
+#: app/gui/user-install-dialog.c:846
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr "为了优化 GIMP 的性能，某些设置也许需要调整。"
 
-#: app/gui/user-install-dialog.c:849
+#: app/gui/user-install-dialog.c:855
 msgid "Monitor Resolution"
 msgstr "监视器分辨率"
 
-#: app/gui/user-install-dialog.c:850
+#: app/gui/user-install-dialog.c:856
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "点击“继续”启动 The GIMP。"
 
-#: app/gui/user-install-dialog.c:853
+#: app/gui/user-install-dialog.c:859
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
 msgstr "要使图像以原来的大小显示，GIMP 需要知道你的监视器分辨率。"
 
-#: app/gui/user-install-dialog.c:862
+#: app/gui/user-install-dialog.c:868
 msgid "Aborting Installation..."
 msgstr "中止安装……"
 
-#: app/gui/user-install-dialog.c:933
+#: app/gui/user-install-dialog.c:939
 msgid "does not exist.  Cannot install."
 msgstr "不存在。无法安装。"
 
-#: app/gui/user-install-dialog.c:945
+#: app/gui/user-install-dialog.c:951
 msgid "has invalid permissions.  Cannot install."
 msgstr "权限无效。无法安装。"
 
-#: app/gui/user-install-dialog.c:994
+#: app/gui/user-install-dialog.c:1000
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
@@ -4818,7 +4815,7 @@ msgstr ""
 "如果没有的话，安装成功了！\n"
 "否则，请退出并检查可能的原因……"
 
-#: app/gui/user-install-dialog.c:1056
+#: app/gui/user-install-dialog.c:1062
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -4828,15 +4825,15 @@ msgstr ""
 "如果没有的话，安装成功了！\n"
 "否则，请退出并检查可能的原因……"
 
-#: app/gui/user-install-dialog.c:1072
+#: app/gui/user-install-dialog.c:1078
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "点击“继续”完成 GIMP 安装。"
 
-#: app/gui/user-install-dialog.c:1077
+#: app/gui/user-install-dialog.c:1083
 msgid "Installation failed.  Contact system administrator."
 msgstr "安装失败。请与系统管理员联系。"
 
-#: app/gui/user-install-dialog.c:1098
+#: app/gui/user-install-dialog.c:1104
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
@@ -4846,7 +4843,7 @@ msgstr ""
 "缓存”。你可以调整它的大小以使内存能容纳。请考虑\n"
 "其它执行进程的内存占用情况。"
 
-#: app/gui/user-install-dialog.c:1123
+#: app/gui/user-install-dialog.c:1129
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -4858,11 +4855,11 @@ msgstr ""
 "(几百兆字节)的本地文件系统。在 UNIX 系统中你\n"
 "也许会使用系统临时目录(“/tmp”或“/var/tmp”)。"
 
-#: app/gui/user-install-dialog.c:1138
+#: app/gui/user-install-dialog.c:1144
 msgid "Swap Directory:"
 msgstr "交换目录："
 
-#: app/gui/user-install-dialog.c:1174
+#: app/gui/user-install-dialog.c:1180
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -4870,20 +4867,20 @@ msgstr ""
 "GIMP 可以从窗口系统中获取这一信息。\n"
 "然而，这通常不能给出有用的值。"
 
-#: app/gui/user-install-dialog.c:1181
+#: app/gui/user-install-dialog.c:1187
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "从窗口系统获取分辨率(当前为 %d x %d dpi)"
 
-#: app/gui/user-install-dialog.c:1195
+#: app/gui/user-install-dialog.c:1201
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "另外，你也可以手工设置监视器分辨率。"
 
-#: app/gui/user-install-dialog.c:1208
+#: app/gui/user-install-dialog.c:1214
 msgid "Monitor Resolution X:"
 msgstr "监视器分辨率 X："
 
-#: app/gui/user-install-dialog.c:1245
+#: app/gui/user-install-dialog.c:1251
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
@@ -5017,17 +5014,17 @@ msgstr "工具过程"
 msgid "Units"
 msgstr "单位"
 
-#: app/pdb/procedural_db.c:139 app/pdb/procedural_db.c:151
+#: app/pdb/procedural_db.c:135 app/pdb/procedural_db.c:148
 #, c-format
 msgid "PDB calling error %s not found"
 msgstr "PDB 调用错误 %s 没有找到"
 
-#: app/pdb/procedural_db.c:169
+#: app/pdb/procedural_db.c:167
 #, c-format
 msgid "PDB calling error %s"
 msgstr "PDB 调用错误 %s"
 
-#: app/pdb/procedural_db.c:246
+#: app/pdb/procedural_db.c:244
 #, c-format
 msgid ""
 "Incorrect arguments passed to procedural_db_run_proc:\n"
@@ -5050,58 +5047,58 @@ msgstr "GIMP 扩展"
 msgid "Temporary Procedure"
 msgstr "临时过程"
 
-#: app/plug-in/plug-in.c:367
+#: app/plug-in/plug-in.c:353
 msgid "Resource configuration"
 msgstr "资源配置"
 
-#: app/plug-in/plug-in.c:374
+#: app/plug-in/plug-in.c:360
 msgid "Plug-ins"
 msgstr "插件"
 
-#: app/plug-in/plug-in.c:387
+#: app/plug-in/plug-in.c:373
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "查询插件：“%s”\n"
 
-#: app/plug-in/plug-in.c:427
+#: app/plug-in/plug-in.c:413
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "正在写“%s”\n"
 
-#: app/plug-in/plug-in.c:445
+#: app/plug-in/plug-in.c:431
 msgid "Starting extensions: "
 msgstr "正在启动扩展："
 
-#: app/plug-in/plug-in.c:447
+#: app/plug-in/plug-in.c:433
 msgid "Extensions"
 msgstr "扩展"
 
-#: app/plug-in/plug-in.c:848
+#: app/plug-in/plug-in.c:825
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "无法定位插件：“%s”"
 
-#: app/plug-in/plug-in.c:1436
+#: app/plug-in/plug-in.c:1414
 #, fuzzy, c-format
 msgid "Repeat \"%s\""
 msgstr "重复："
 
-#: app/plug-in/plug-in.c:1437
+#: app/plug-in/plug-in.c:1415
 #, c-format
 msgid "Re-show \"%s\""
 msgstr ""
 
-#: app/plug-in/plug-in.c:1458
+#: app/plug-in/plug-in.c:1436
 #, fuzzy
 msgid "Repeat Last"
 msgstr "/滤镜/重复上次"
 
-#: app/plug-in/plug-in.c:1460
+#: app/plug-in/plug-in.c:1438
 #, fuzzy
 msgid "Re-Show Last"
 msgstr "/滤镜/显示上次"
 
-#: app/plug-in/plug-in.c:1542
+#: app/plug-in/plug-in.c:1520
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -5117,6 +5114,11 @@ msgstr ""
 "已崩溃的插件可能已经破坏 GIMP 的内部状态。\n"
 "你可能需要保存你的图片然后重新启动 GIMP 以\n"
 "确保稳妥。"
+
+#: app/plug-in/plug-in-rc.c:391
+#, fuzzy
+msgid "invalid UTF-8 string"
+msgstr "画笔文件“%s”中有无效的 UTF-8 字符串。"
 
 #: app/tools/gimpairbrushtool.c:132
 msgid "Airbrush"
@@ -5288,7 +5290,7 @@ msgid "Max Depth:"
 msgstr "最大深度："
 
 #: app/tools/gimpblendtool.c:704 app/tools/gimpbucketfilltool.c:395
-#: app/tools/selection_options.c:300
+#: app/tools/gimpmagnifytool.c:502 app/tools/selection_options.c:300
 msgid "Threshold:"
 msgstr "阈值"
 
@@ -5613,7 +5615,7 @@ msgstr "允许放大"
 
 #. tool toggle
 #: app/tools/gimpcroptool.c:1419 app/tools/gimpfliptool.c:299
-#: app/tools/gimpmagnifytool.c:469 app/tools/gimpmovetool.c:686
+#: app/tools/gimpmagnifytool.c:480 app/tools/gimpmovetool.c:686
 #, fuzzy
 msgid "Tool Toggle (<Ctrl>)"
 msgstr "工具切换"
@@ -5657,15 +5659,15 @@ msgstr "自由"
 msgid "Save"
 msgstr "保存"
 
-#: app/tools/gimpcurvestool.c:1426
+#: app/tools/gimpcurvestool.c:1421
 msgid "Load Curves"
 msgstr "加载曲线"
 
-#: app/tools/gimpcurvestool.c:1441
+#: app/tools/gimpcurvestool.c:1436
 msgid "Save Curves"
 msgstr "保存曲线"
 
-#: app/tools/gimpcurvestool.c:1741
+#: app/tools/gimpcurvestool.c:1736
 msgid "Load/Save Curves"
 msgstr "加载/保存曲线"
 
@@ -5892,35 +5894,35 @@ msgid "/Tools/Paint Tools/Ink"
 msgstr "/工具/涂画工具/墨水"
 
 #. adjust sliders
-#: app/tools/gimpinktool.c:1465
+#: app/tools/gimpinktool.c:1467
 msgid "Adjustment"
 msgstr "调整"
 
-#: app/tools/gimpinktool.c:1482 app/tools/gimpinktool.c:1522
-#: app/tools/gimptexttool.c:632
+#: app/tools/gimpinktool.c:1484 app/tools/gimpinktool.c:1524
+#: app/tools/gimptexttool.c:630
 msgid "Size:"
 msgstr "大小："
 
 #. sens sliders
-#: app/tools/gimpinktool.c:1505
+#: app/tools/gimpinktool.c:1507
 msgid "Sensitivity"
 msgstr "灵敏度"
 
-#: app/tools/gimpinktool.c:1536
+#: app/tools/gimpinktool.c:1538
 msgid "Tilt:"
 msgstr "倾斜："
 
-#: app/tools/gimpinktool.c:1550
+#: app/tools/gimpinktool.c:1552
 msgid "Speed:"
 msgstr "速度："
 
 #. Brush type radiobuttons
-#: app/tools/gimpinktool.c:1564
+#: app/tools/gimpinktool.c:1566
 msgid "Type"
 msgstr "类型"
 
 #. Brush shape widget
-#: app/tools/gimpinktool.c:1636
+#: app/tools/gimpinktool.c:1638
 msgid "Shape"
 msgstr "形状"
 
@@ -5982,27 +5984,27 @@ msgstr "保存水平"
 msgid "Load/Save Levels"
 msgstr "加载/保存水平"
 
-#: app/tools/gimpmagnifytool.c:116
+#: app/tools/gimpmagnifytool.c:121
 msgid "Magnify"
 msgstr "放大镜"
 
-#: app/tools/gimpmagnifytool.c:117
+#: app/tools/gimpmagnifytool.c:122
 msgid "Zoom in & out"
 msgstr "放大和缩小"
 
-#: app/tools/gimpmagnifytool.c:118
+#: app/tools/gimpmagnifytool.c:123
 msgid "/Tools/Magnify"
 msgstr "/工具/放大镜"
 
-#: app/tools/gimpmagnifytool.c:457
+#: app/tools/gimpmagnifytool.c:468
 msgid "Allow Window Resizing"
 msgstr "允许调整窗口大小"
 
-#: app/tools/gimpmagnifytool.c:474
+#: app/tools/gimpmagnifytool.c:485
 msgid "Zoom in"
 msgstr "放大"
 
-#: app/tools/gimpmagnifytool.c:478
+#: app/tools/gimpmagnifytool.c:489
 msgid "Zoom out"
 msgstr "缩小"
 
@@ -6281,15 +6283,15 @@ msgstr "/工具/文本"
 msgid "No font choosen or font invalid."
 msgstr "没有选择字体或者字体无效"
 
-#: app/tools/gimptexttool.c:482
+#: app/tools/gimptexttool.c:480
 msgid "Text Layer"
 msgstr "文本图层"
 
-#: app/tools/gimptexttool.c:644
+#: app/tools/gimptexttool.c:642
 msgid "Border:"
 msgstr "边界："
 
-#: app/tools/gimptexttool.c:657 app/tools/selection_options.c:437
+#: app/tools/gimptexttool.c:655 app/tools/selection_options.c:437
 msgid "Unit:"
 msgstr "单位："
 
@@ -6500,7 +6502,7 @@ msgstr ""
 msgid "Spacing:"
 msgstr ""
 
-#: app/widgets/gimpchannellistview.c:169
+#: app/widgets/gimpchannellistview.c:175
 msgid ""
 "Channel to Selection\n"
 "<Shift> Add\n"
@@ -6581,15 +6583,15 @@ msgstr ""
 "降低\n"
 "<Shift> 到底部"
 
-#: app/widgets/gimpfontselection-dialog.c:122
+#: app/widgets/gimpfontselection-dialog.c:129
 msgid "GIMP Font Selection"
 msgstr "GIMP 字体选择"
 
-#: app/widgets/gimpfontselection-dialog.c:195
+#: app/widgets/gimpfontselection-dialog.c:202
 msgid "_Family:"
 msgstr " 字体族："
 
-#: app/widgets/gimpfontselection-dialog.c:201
+#: app/widgets/gimpfontselection-dialog.c:208
 msgid "_Style:"
 msgstr " 风格："
 
@@ -6640,7 +6642,7 @@ msgstr ""
 "不能正确的保存索引颜色表。\n"
 "用灰度颜色表取代。"
 
-#: app/xcf/xcf.c:256
+#: app/xcf/xcf.c:261
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF 错误：遇到不支持的 XCF 文件版本 %d"
@@ -6664,6 +6666,9 @@ msgstr "水彩"
 #: modules/colorsel_water.c:472
 msgid "Pressure"
 msgstr "压力"
+
+#~ msgid "error parsing pluginrc"
+#~ msgstr "解析 pluginrc 出错"
 
 #~ msgid ""
 #~ "Not enough visible layers for a merge.\n"

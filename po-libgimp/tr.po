@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2001-11-23 23:54+0100\n"
+"POT-Creation-Date: 2001-12-29 18:03+0100\n"
 "PO-Revision-Date: 2001-07-16 06:51+0300\n"
 "Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -197,21 +197,21 @@ msgstr "pika"
 msgid "percent"
 msgstr "yüzdelik"
 
-#: libgimpwidgets/gimpcolorbutton.c:82
+#: libgimpwidgets/gimpcolorbutton.c:85
 #, fuzzy
 msgid "/Foreground Color"
 msgstr "/Önplan Rengini Kullan"
 
-#: libgimpwidgets/gimpcolorbutton.c:84
+#: libgimpwidgets/gimpcolorbutton.c:87
 #, fuzzy
 msgid "/Background Color"
 msgstr "/Arkaplan Rengini Kullan"
 
-#: libgimpwidgets/gimpcolorbutton.c:87
+#: libgimpwidgets/gimpcolorbutton.c:90
 msgid "/Black"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorbutton.c:89
+#: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
 msgstr ""
 
@@ -240,7 +240,7 @@ msgstr "Birim"
 msgid "Factor"
 msgstr "Etken"
 
-#: libgimpwidgets/gimpwidgets.c:769
+#: libgimpwidgets/gimpwidgets.c:801
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -248,11 +248,11 @@ msgstr ""
 "Eðer \"Zaman\" düðmesi basýlý deðilse, bu deðeri raslantýsal sayý üreticinin "
 "tohumu olarak kullan - bu \"raslantýsal\" bir iþlemi tekrarlamanýzý saðlar"
 
-#: libgimpwidgets/gimpwidgets.c:774
+#: libgimpwidgets/gimpwidgets.c:806
 msgid "Time"
 msgstr "Zaman"
 
-#: libgimpwidgets/gimpwidgets.c:783
+#: libgimpwidgets/gimpwidgets.c:815
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -260,15 +260,15 @@ msgstr ""
 "Raslantýsal sayý üreticinin tohumu olarak þu anki zamaný kullan - bu makul "
 "bir raslantýsallýðý garantiler"
 
-#: libgimpwidgets/gimpwidgets.c:1097
+#: libgimpwidgets/gimpwidgets.c:1129
 msgid "Bytes"
 msgstr "Bayt"
 
-#: libgimpwidgets/gimpwidgets.c:1098
+#: libgimpwidgets/gimpwidgets.c:1130
 msgid "KiloBytes"
 msgstr "Kilobayt"
 
-#: libgimpwidgets/gimpwidgets.c:1099
+#: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "Megabayt"
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2001-12-17 16:59+0100\n"
+"POT-Creation-Date: 2001-12-29 18:03+0100\n"
 "PO-Revision-Date: 2001-12-17 16:59+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -199,19 +199,19 @@ msgstr "picas"
 msgid "percent"
 msgstr "prosent"
 
-#: libgimpwidgets/gimpcolorbutton.c:81
+#: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
 msgstr "/Forgrunnsfarge"
 
-#: libgimpwidgets/gimpcolorbutton.c:83
+#: libgimpwidgets/gimpcolorbutton.c:87
 msgid "/Background Color"
 msgstr "/Bakgrunnsfarge"
 
-#: libgimpwidgets/gimpcolorbutton.c:86
+#: libgimpwidgets/gimpcolorbutton.c:90
 msgid "/Black"
 msgstr "/Sort"
 
-#: libgimpwidgets/gimpcolorbutton.c:88
+#: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
 msgstr "/Hvit"
 

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-libgimp-1.3+\n"
-"POT-Creation-Date: 2001-12-15 20:36+0300\n"
+"POT-Creation-Date: 2001-12-29 18:03+0100\n"
 "PO-Revision-Date: 2001-12-15 20:37+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -200,19 +200,19 @@ msgstr "пики"
 msgid "percent"
 msgstr "процент"
 
-#: libgimpwidgets/gimpcolorbutton.c:81
+#: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
 msgstr "/Цвет переднего плана"
 
-#: libgimpwidgets/gimpcolorbutton.c:83
+#: libgimpwidgets/gimpcolorbutton.c:87
 msgid "/Background Color"
 msgstr "/Цвет фона"
 
-#: libgimpwidgets/gimpcolorbutton.c:86
+#: libgimpwidgets/gimpcolorbutton.c:90
 msgid "/Black"
 msgstr "/Чёрный"
 
-#: libgimpwidgets/gimpcolorbutton.c:88
+#: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
 msgstr "/Белый"
 

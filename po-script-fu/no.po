@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
-"POT-Creation-Date: 2001-12-17 17:05+0100\n"
+"POT-Creation-Date: 2001-12-29 18:05+0100\n"
 "PO-Revision-Date: 2001-12-02 20:15+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -34,16 +34,16 @@ msgstr "Aktiv kommando"
 msgid "Browse..."
 msgstr "Bla gjennom..."
 
-#: plug-ins/script-fu/script-fu-console.c:590
+#: plug-ins/script-fu/script-fu-console.c:570
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Kunne ikke åpne en strøm på SIOD utskriftsrøret"
 
-#: plug-ins/script-fu/script-fu-console.c:596
+#: plug-ins/script-fu/script-fu-console.c:576
 #, fuzzy
 msgid "Unable to open the SIOD output pipe"
 msgstr "Kunne ikke åpne SIOD rør for utskrift"
 
-#: plug-ins/script-fu/script-fu-console.c:641
+#: plug-ins/script-fu/script-fu-console.c:621
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu evalueringsmodus tillater bare ikke-interaktiv kjøring"
 
@@ -73,36 +73,36 @@ msgstr "%s"
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu fargevalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1369
+#: plug-ins/script-fu/script-fu-scripts.c:1371
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu filvalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1374
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 #, fuzzy
 msgid "Script-Fu Directory Selection"
 msgstr "Script-Fu filvalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1409
+#: plug-ins/script-fu/script-fu-scripts.c:1411
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu mønstervalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1416
+#: plug-ins/script-fu/script-fu-scripts.c:1418
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu gradientvalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1424
+#: plug-ins/script-fu/script-fu-scripts.c:1426
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu børstevalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1472
+#: plug-ins/script-fu/script-fu-scripts.c:1474
 msgid "Reset to Defaults"
 msgstr "Sett til standardverdier"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1500
+#: plug-ins/script-fu/script-fu-scripts.c:1502
 msgid "About"
 msgstr "Om"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1696
+#: plug-ins/script-fu/script-fu-scripts.c:1698
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -110,30 +110,30 @@ msgstr ""
 "Minst en skrifttype du har valgt er ugyldig.\n"
 "Vennligst sjekk dine instillinger.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:1994
+#: plug-ins/dbbrowser/dbbrowser_utils.c:510
+#: plug-ins/script-fu/script-fu-scripts.c:1997
 msgid "Author:"
 msgstr "Forfatter:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:519
-#: plug-ins/script-fu/script-fu-scripts.c:2000
+#: plug-ins/dbbrowser/dbbrowser_utils.c:526
+#: plug-ins/script-fu/script-fu-scripts.c:2003
 msgid "Copyright:"
 msgstr "Kopirettighet:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:511
-#: plug-ins/script-fu/script-fu-scripts.c:2006
+#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/script-fu/script-fu-scripts.c:2009
 msgid "Date:"
 msgstr "Dato:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2014
+#: plug-ins/script-fu/script-fu-scripts.c:2017
 msgid "Image Types:"
 msgstr "Bildetyper:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2159
+#: plug-ins/script-fu/script-fu-scripts.c:2162
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu skrifttypevalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2229
+#: plug-ins/script-fu/script-fu-scripts.c:2232
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -172,58 +172,58 @@ msgstr "Gjenles alle tilgjengelige skript"
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Utvidelser/Script-Fu/Gjenoppfrisk"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:142
-#: plug-ins/dbbrowser/dbbrowser_utils.c:161
+#: plug-ins/dbbrowser/dbbrowser_utils.c:149
+#: plug-ins/dbbrowser/dbbrowser_utils.c:168
 msgid "DB Browser (init...)"
 msgstr "DB-leser (init...)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:147
-#: plug-ins/dbbrowser/dbbrowser_utils.c:166
+#: plug-ins/dbbrowser/dbbrowser_utils.c:154
+#: plug-ins/dbbrowser/dbbrowser_utils.c:173
 msgid "Search by Name"
 msgstr "Søk etter navn"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:149
-#: plug-ins/dbbrowser/dbbrowser_utils.c:168
+#: plug-ins/dbbrowser/dbbrowser_utils.c:156
+#: plug-ins/dbbrowser/dbbrowser_utils.c:175
 msgid "Search by Blurb"
 msgstr "Søk etter blurb"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:220
+#: plug-ins/dbbrowser/dbbrowser_utils.c:227
 msgid "Search:"
 msgstr "Søk:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:351
+#: plug-ins/dbbrowser/dbbrowser_utils.c:358
 msgid "Name:"
 msgstr "Navn:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "Blurb:"
 msgstr "Blurb:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:372
+#: plug-ins/dbbrowser/dbbrowser_utils.c:379
 msgid "In:"
 msgstr "Inn:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:419
+#: plug-ins/dbbrowser/dbbrowser_utils.c:426
 msgid "Out:"
 msgstr "Ut:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:473
+#: plug-ins/dbbrowser/dbbrowser_utils.c:480
 msgid "Help:"
 msgstr "Hjelp:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:594
+#: plug-ins/dbbrowser/dbbrowser_utils.c:601
 msgid "DB Browser (by name - please wait)"
 msgstr "DB-leser (etter navn - vennligst vent)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:618
+#: plug-ins/dbbrowser/dbbrowser_utils.c:625
 msgid "DB Browser (by blurb - please wait)"
 msgstr "DB-leser (etter blurb - vennligst vent)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:628
+#: plug-ins/dbbrowser/dbbrowser_utils.c:635
 msgid "DB Browser (please wait)"
 msgstr "DB-leser (vennligst vent)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:694
+#: plug-ins/dbbrowser/dbbrowser_utils.c:701
 msgid "DB Browser"
 msgstr "DB-leser"
 
@@ -352,10 +352,6 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr ""
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
@@ -819,10 +815,6 @@ msgstr "Amplityde"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Angle"
 msgstr "Vinkel"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Anim-Filter for all Copies"
-msgstr "Anim-filter for alle kopier"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Antialias"
@@ -1317,10 +1309,6 @@ msgstr "Fyllvinkel"
 msgid "Fill BG with Pattern"
 msgstr "Fyll BG med mønster"
 
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Fill with BG Color"
-msgstr "Fyll med BG-farge"
-
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Fill with BG"
 msgstr "Fyll med BG"
@@ -1677,10 +1665,6 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
 msgstr "Antall farger"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Number of Copies"
-msgstr "Antall kopier"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
@@ -2267,6 +2251,15 @@ msgstr "Bredde"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Jobb med kopi"
+
+#~ msgid "Anim-Filter for all Copies"
+#~ msgstr "Anim-filter for alle kopier"
+
+#~ msgid "Fill with BG Color"
+#~ msgstr "Fyll med BG-farge"
+
+#~ msgid "Number of Copies"
+#~ msgstr "Antall kopier"
 
 #~ msgid "Close"
 #~ msgstr "Lukk"

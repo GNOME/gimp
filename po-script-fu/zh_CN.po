@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2001-12-18 22:36+0800\n"
+"POT-Creation-Date: 2001-12-29 18:05+0100\n"
 "PO-Revision-Date: 2001-12-15 16:30+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -35,15 +35,15 @@ msgstr "当前命令"
 msgid "Browse..."
 msgstr "浏览..."
 
-#: plug-ins/script-fu/script-fu-console.c:590
+#: plug-ins/script-fu/script-fu-console.c:570
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "无法在 SIOD 输出管道中打开一个流"
 
-#: plug-ins/script-fu/script-fu-console.c:596
+#: plug-ins/script-fu/script-fu-console.c:576
 msgid "Unable to open the SIOD output pipe"
 msgstr "无法打开 SIOD 输出管道"
 
-#: plug-ins/script-fu/script-fu-console.c:641
+#: plug-ins/script-fu/script-fu-console.c:621
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
@@ -73,36 +73,36 @@ msgstr "%s："
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 颜色选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1369
+#: plug-ins/script-fu/script-fu-scripts.c:1371
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 文件选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1374
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 #, fuzzy
 msgid "Script-Fu Directory Selection"
 msgstr "Script-Fu 文件选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1409
+#: plug-ins/script-fu/script-fu-scripts.c:1411
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu 图案选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1416
+#: plug-ins/script-fu/script-fu-scripts.c:1418
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu 渐变选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1424
+#: plug-ins/script-fu/script-fu-scripts.c:1426
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 画笔选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1472
+#: plug-ins/script-fu/script-fu-scripts.c:1474
 msgid "Reset to Defaults"
 msgstr "复位到默认值"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1500
+#: plug-ins/script-fu/script-fu-scripts.c:1502
 msgid "About"
 msgstr "关于"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1696
+#: plug-ins/script-fu/script-fu-scripts.c:1698
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -110,30 +110,30 @@ msgstr ""
 "你所选的字体中至少有一种是无效的。\n"
 "请检查你的设置。\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:1994
+#: plug-ins/dbbrowser/dbbrowser_utils.c:510
+#: plug-ins/script-fu/script-fu-scripts.c:1997
 msgid "Author:"
 msgstr "作者："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:519
-#: plug-ins/script-fu/script-fu-scripts.c:2000
+#: plug-ins/dbbrowser/dbbrowser_utils.c:526
+#: plug-ins/script-fu/script-fu-scripts.c:2003
 msgid "Copyright:"
 msgstr "版权所有："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:511
-#: plug-ins/script-fu/script-fu-scripts.c:2006
+#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/script-fu/script-fu-scripts.c:2009
 msgid "Date:"
 msgstr "日期："
 
-#: plug-ins/script-fu/script-fu-scripts.c:2014
+#: plug-ins/script-fu/script-fu-scripts.c:2017
 msgid "Image Types:"
 msgstr "图像类型："
 
-#: plug-ins/script-fu/script-fu-scripts.c:2159
+#: plug-ins/script-fu/script-fu-scripts.c:2162
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu 字体选择"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2229
+#: plug-ins/script-fu/script-fu-scripts.c:2232
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -172,58 +172,58 @@ msgstr "重新读入所有可用的脚本"
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Script-Fu/刷新"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:142
-#: plug-ins/dbbrowser/dbbrowser_utils.c:161
+#: plug-ins/dbbrowser/dbbrowser_utils.c:149
+#: plug-ins/dbbrowser/dbbrowser_utils.c:168
 msgid "DB Browser (init...)"
 msgstr "DB 浏览器 (初始化...)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:147
-#: plug-ins/dbbrowser/dbbrowser_utils.c:166
+#: plug-ins/dbbrowser/dbbrowser_utils.c:154
+#: plug-ins/dbbrowser/dbbrowser_utils.c:173
 msgid "Search by Name"
 msgstr "按名字搜索"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:149
-#: plug-ins/dbbrowser/dbbrowser_utils.c:168
+#: plug-ins/dbbrowser/dbbrowser_utils.c:156
+#: plug-ins/dbbrowser/dbbrowser_utils.c:175
 msgid "Search by Blurb"
 msgstr "按描述搜索"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:220
+#: plug-ins/dbbrowser/dbbrowser_utils.c:227
 msgid "Search:"
 msgstr "搜索："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:351
+#: plug-ins/dbbrowser/dbbrowser_utils.c:358
 msgid "Name:"
 msgstr "名字"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "Blurb:"
 msgstr "描述："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:372
+#: plug-ins/dbbrowser/dbbrowser_utils.c:379
 msgid "In:"
 msgstr "输入："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:419
+#: plug-ins/dbbrowser/dbbrowser_utils.c:426
 msgid "Out:"
 msgstr "输出："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:473
+#: plug-ins/dbbrowser/dbbrowser_utils.c:480
 msgid "Help:"
 msgstr "帮助："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:594
+#: plug-ins/dbbrowser/dbbrowser_utils.c:601
 msgid "DB Browser (by name - please wait)"
 msgstr "DB 浏览器 (按名字 - 请等待)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:618
+#: plug-ins/dbbrowser/dbbrowser_utils.c:625
 msgid "DB Browser (by blurb - please wait)"
 msgstr "DB 浏览器 (按描述 - 请等待)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:628
+#: plug-ins/dbbrowser/dbbrowser_utils.c:635
 msgid "DB Browser (please wait)"
 msgstr "DB 浏览器 (请等待)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:694
+#: plug-ins/dbbrowser/dbbrowser_utils.c:701
 msgid "DB Browser"
 msgstr "DB 浏览器"
 
@@ -355,10 +355,6 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr ""
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
@@ -820,10 +816,6 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Angle"
-msgstr ""
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Anim-Filter for all Copies"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
@@ -1317,10 +1309,6 @@ msgstr ""
 msgid "Fill BG with Pattern"
 msgstr ""
 
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Fill with BG Color"
-msgstr ""
-
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Fill with BG"
 msgstr ""
@@ -1676,10 +1664,6 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
-msgstr ""
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Number of Copies"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
-"POT-Creation-Date: 2001-11-23 23:54+0100\n"
+"POT-Creation-Date: 2001-12-29 18:03+0100\n"
 "PO-Revision-Date: dom feb  6 16:47:39 CET 2000\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -201,21 +201,21 @@ msgstr "pica"
 msgid "percent"
 msgstr "percento"
 
-#: libgimpwidgets/gimpcolorbutton.c:82
+#: libgimpwidgets/gimpcolorbutton.c:85
 #, fuzzy
 msgid "/Foreground Color"
 msgstr "/Utilizza colore primo piano"
 
-#: libgimpwidgets/gimpcolorbutton.c:84
+#: libgimpwidgets/gimpcolorbutton.c:87
 #, fuzzy
 msgid "/Background Color"
 msgstr "/Utilizza colore di sfondo"
 
-#: libgimpwidgets/gimpcolorbutton.c:87
+#: libgimpwidgets/gimpcolorbutton.c:90
 msgid "/Black"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorbutton.c:89
+#: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
 msgstr ""
 
@@ -244,7 +244,7 @@ msgstr "Unità"
 msgid "Factor"
 msgstr "Fattore"
 
-#: libgimpwidgets/gimpwidgets.c:769
+#: libgimpwidgets/gimpwidgets.c:801
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -253,11 +253,11 @@ msgstr ""
 "generazione del seme di casualità - questo vi permette di ripetereuna data "
 "operazione in modalità \"casuale\"."
 
-#: libgimpwidgets/gimpwidgets.c:774
+#: libgimpwidgets/gimpwidgets.c:806
 msgid "Time"
 msgstr "Tempo"
 
-#: libgimpwidgets/gimpwidgets.c:783
+#: libgimpwidgets/gimpwidgets.c:815
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -265,15 +265,15 @@ msgstr ""
 "Generazione del seme di casualità dall'ora corrente - questo garantisceuna "
 "casualità ragionevole"
 
-#: libgimpwidgets/gimpwidgets.c:1097
+#: libgimpwidgets/gimpwidgets.c:1129
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimpwidgets/gimpwidgets.c:1098
+#: libgimpwidgets/gimpwidgets.c:1130
 msgid "KiloBytes"
 msgstr "KByte"
 
-#: libgimpwidgets/gimpwidgets.c:1099
+#: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "MByte"
 

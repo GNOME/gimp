@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2001-12-03 02:23+0100\n"
+"POT-Creation-Date: 2001-12-29 18:03+0100\n"
 "PO-Revision-Date: 2001-12-03 02:23+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -201,19 +201,19 @@ msgstr "picas"
 msgid "percent"
 msgstr "procent:"
 
-#: libgimpwidgets/gimpcolorbutton.c:81
+#: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
 msgstr "/Förgrundsfärg"
 
-#: libgimpwidgets/gimpcolorbutton.c:83
+#: libgimpwidgets/gimpcolorbutton.c:87
 msgid "/Background Color"
 msgstr "/Bakgrundsfärg"
 
-#: libgimpwidgets/gimpcolorbutton.c:86
+#: libgimpwidgets/gimpcolorbutton.c:90
 msgid "/Black"
 msgstr "/Svart"
 
-#: libgimpwidgets/gimpcolorbutton.c:88
+#: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
 msgstr "/Vit"
 

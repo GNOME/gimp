@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu VERSION\n"
-"POT-Creation-Date: 2001-11-22 20:11+0100\n"
+"POT-Creation-Date: 2001-12-29 18:05+0100\n"
 "PO-Revision-Date: 2000-08-27 00:36+0000\n"
 "Last-Translator: Seán Ó Ceallaigh <s_oceallaigh@yahoo.com>\n"
 "Language-Team: Gaeilge <gaeilge-a@listserv.heanet.ie>\n"
@@ -34,106 +34,102 @@ msgstr "Ordú Reatha"
 msgid "Browse..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:590
+#: plug-ins/script-fu/script-fu-console.c:570
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:596
+#: plug-ins/script-fu/script-fu-console.c:576
 msgid "Unable to open the SIOD output pipe"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:641
+#: plug-ins/script-fu/script-fu-console.c:621
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1216
-#: plug-ins/script-fu/script-fu-scripts.c:1219
+#: plug-ins/script-fu/script-fu-scripts.c:1189
+#: plug-ins/script-fu/script-fu-scripts.c:1192
 msgid "/Script-Fu/"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1218
-#: plug-ins/script-fu/script-fu-scripts.c:1221
+#: plug-ins/script-fu/script-fu-scripts.c:1191
+#: plug-ins/script-fu/script-fu-scripts.c:1194
 #, c-format
 msgid "Script-Fu: %s"
 msgstr ""
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1245
+#: plug-ins/script-fu/script-fu-scripts.c:1218
 msgid "Script Arguments"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1268
+#: plug-ins/script-fu/script-fu-scripts.c:1241
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1315
+#: plug-ins/script-fu/script-fu-scripts.c:1288
 msgid "Script-Fu Color Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1396
+#: plug-ins/script-fu/script-fu-scripts.c:1371
 msgid "Script-Fu File Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1401
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 msgid "Script-Fu Directory Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1436
+#: plug-ins/script-fu/script-fu-scripts.c:1411
 msgid "Script-fu Pattern Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1443
+#: plug-ins/script-fu/script-fu-scripts.c:1418
 msgid "Script-Fu Gradient Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1451
+#: plug-ins/script-fu/script-fu-scripts.c:1426
 msgid "Script-Fu Brush Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1499
+#: plug-ins/script-fu/script-fu-scripts.c:1474
 msgid "Reset to Defaults"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1527
+#: plug-ins/script-fu/script-fu-scripts.c:1502
 msgid "About"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1715
-msgid "NOT SET"
-msgstr ""
-
-#: plug-ins/script-fu/script-fu-scripts.c:1745
+#: plug-ins/script-fu/script-fu-scripts.c:1698
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:2042
+#: plug-ins/dbbrowser/dbbrowser_utils.c:510
+#: plug-ins/script-fu/script-fu-scripts.c:1997
 msgid "Author:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:519
-#: plug-ins/script-fu/script-fu-scripts.c:2048
+#: plug-ins/dbbrowser/dbbrowser_utils.c:526
+#: plug-ins/script-fu/script-fu-scripts.c:2003
 msgid "Copyright:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:511
-#: plug-ins/script-fu/script-fu-scripts.c:2054
+#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/script-fu/script-fu-scripts.c:2009
 msgid "Date:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:2062
+#: plug-ins/script-fu/script-fu-scripts.c:2017
 msgid "Image Types:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:2207
+#: plug-ins/script-fu/script-fu-scripts.c:2162
 msgid "Script-Fu Font Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:2277
+#: plug-ins/script-fu/script-fu-scripts.c:2232
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -153,74 +149,74 @@ msgstr ""
 msgid "Server Logfile:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:131
+#: plug-ins/script-fu/script-fu.c:127
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:156
+#: plug-ins/script-fu/script-fu.c:152
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
+#: plug-ins/script-fu/script-fu.c:276 plug-ins/script-fu/script-fu.c:277
 msgid "Re-read all available scripts"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:286
+#: plug-ins/script-fu/script-fu.c:281
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
-msgstr ""
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:142
-#: plug-ins/dbbrowser/dbbrowser_utils.c:161
-msgid "DB Browser (init...)"
-msgstr ""
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:147
-#: plug-ins/dbbrowser/dbbrowser_utils.c:166
-msgid "Search by Name"
 msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
 #: plug-ins/dbbrowser/dbbrowser_utils.c:168
+msgid "DB Browser (init...)"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:154
+#: plug-ins/dbbrowser/dbbrowser_utils.c:173
+msgid "Search by Name"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:156
+#: plug-ins/dbbrowser/dbbrowser_utils.c:175
 msgid "Search by Blurb"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:220
+#: plug-ins/dbbrowser/dbbrowser_utils.c:227
 msgid "Search:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:351
+#: plug-ins/dbbrowser/dbbrowser_utils.c:358
 msgid "Name:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "Blurb:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:372
+#: plug-ins/dbbrowser/dbbrowser_utils.c:379
 msgid "In:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:419
+#: plug-ins/dbbrowser/dbbrowser_utils.c:426
 msgid "Out:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:473
+#: plug-ins/dbbrowser/dbbrowser_utils.c:480
 msgid "Help:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:594
+#: plug-ins/dbbrowser/dbbrowser_utils.c:601
 msgid "DB Browser (by name - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:618
+#: plug-ins/dbbrowser/dbbrowser_utils.c:625
 msgid "DB Browser (by blurb - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:628
+#: plug-ins/dbbrowser/dbbrowser_utils.c:635
 msgid "DB Browser (please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:694
+#: plug-ins/dbbrowser/dbbrowser_utils.c:701
 msgid "DB Browser"
 msgstr ""
 
