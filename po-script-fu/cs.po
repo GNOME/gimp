@@ -7,8 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
-"POT-Creation-Date: 2003-06-26 22:18+0200\n"
-"PO-Revision-Date: 2003-02-22 23:24+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-06-27 04:21+0200\n"
+"PO-Revision-Date: 2003-06-27 23:32+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -104,18 +105,18 @@ msgstr "Skript-fu výběr přechodu"
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-fu výběr stopy"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:488
 #: plug-ins/script-fu/script-fu-scripts.c:1858
+#: plug-ins/dbbrowser/dbbrowser_utils.c:488
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:504
 #: plug-ins/script-fu/script-fu-scripts.c:1864
+#: plug-ins/dbbrowser/dbbrowser_utils.c:504
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:496
 #: plug-ins/script-fu/script-fu-scripts.c:1870
+#: plug-ins/dbbrowser/dbbrowser_utils.c:496
 msgid "Date:"
 msgstr "Datum:"
 
@@ -1482,17 +1483,16 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
 msgstr "<Toolbox>/Rozš./Skript-fu/Pomůcky/Vlastní přechod..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/Grid..."
-msgstr "<Image>/Skript-fu/Vyobrazení/Okruh..."
+msgstr "<Image>/Skript-fu/Vyobrazení/Mřížka..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X Divisions"
-msgstr ""
+msgstr "Rozdělení X"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
 msgid "Y Divisions"
-msgstr ""
+msgstr "Rozdělení Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
@@ -1926,31 +1926,27 @@ msgstr "Točit zleva doprava"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid "Airbrush"
-msgstr ""
+msgstr "Vzdušný štětec"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
-#, fuzzy
 msgid "Brush"
-msgstr "Použít stopu"
+msgstr "Stopa"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
-#, fuzzy
 msgid "Circle"
-msgstr "Dlaždice"
+msgstr "Kruh"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
-#, fuzzy
 msgid "Color Method"
-msgstr "Barva 3"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid "Epitrochoid"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
-#, fuzzy
 msgid "Frame"
-msgstr "Počet políček"
+msgstr "Políčko"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Gradient: Loop Sawtooth"
@@ -1961,75 +1957,68 @@ msgid "Gradient: Loop Triangle"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
-#, fuzzy
 msgid "Hexagon"
-msgstr "Šestiúhelníky"
+msgstr "Šestiúhelník"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
-#, fuzzy
 msgid "Hole Ratio"
-msgstr "Četnost odstínů"
+msgstr "Podíl děr"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Inner Teeth"
-msgstr ""
+msgstr "Vnitřní zuby"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Lissajous"
-msgstr ""
+msgstr "Lissajous"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
-#, fuzzy
 msgid "Margin (pixels)"
-msgstr "Poloměr (pixely)"
+msgstr "Okraj (pixely)"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
-#, fuzzy
 msgid "Outer Teeth"
-msgstr "Vnější hranice"
+msgstr "Vnější zuby"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Pencil"
-msgstr ""
+msgstr "Tužka"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
-#, fuzzy
 msgid "Pentagon"
-msgstr "Orientace"
+msgstr "Pětiúhelník"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Polygon: 10 sides"
-msgstr ""
+msgstr "Mnohoúhelník: 10 stran"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 msgid "Polygon: 7 sides"
-msgstr ""
+msgstr "Mnohoúhelník: 7 stran"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
 msgid "Polygon: 8 sides"
-msgstr ""
+msgstr "Mnohoúhelník: 8 stran"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
 msgid "Polygon: 9 sides"
-msgstr ""
+msgstr "Mnohoúhelník: 9 stran"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
 msgid "Shape"
-msgstr ""
+msgstr "Tvar"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
-#, fuzzy
 msgid "Solid Color"
-msgstr "Barva výplně"
+msgstr "Jednolitá barva"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Spyrograph"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
-#, fuzzy
 msgid "Square"
-msgstr "Čtverce"
+msgstr "Čtverec"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
@@ -2038,17 +2027,15 @@ msgstr "Počáteční úhel"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Tool"
-msgstr ""
+msgstr "Nástroj"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
-#, fuzzy
 msgid "Triangle"
-msgstr "Dlaždice"
+msgstr "Trojúhelník"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
-#, fuzzy
 msgid "Type"
-msgstr "Typ rozostření"
+msgstr "Typ"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
@@ -2374,15 +2361,6 @@ msgstr "<Toolbox>/Rozš./Webový prohlížeč/Registr modulů"
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Rozš./Webový prohlížeč/Otázky (FAQ) uživatelů"
 
-#~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
-#~ msgstr "<Image>/Skript-fu/Vyobrazení/Vytvořit systém mříží..."
-
-#~ msgid "Grids X"
-#~ msgstr "X mříž"
-
-#~ msgid "Grids Y"
-#~ msgstr "Y mříž"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
 #~ msgstr "<Toolbox>/Rozš./Skript-fu/Vzorky/Kotálnice..."
 
@@ -2411,14 +2389,8 @@ msgstr "<Toolbox>/Rozš./Webový prohlížeč/Otázky (FAQ) uživatelů"
 #~ msgid "Anim-Filter for all Copies"
 #~ msgstr "Animační filtr na všechny kopie"
 
-#~ msgid "Fill with BG Color"
-#~ msgstr "Vyplnit barvou pozadí"
-
 #~ msgid "Number of Copies"
 #~ msgstr "Počet kopií"
 
 #~ msgid "Reset to Defaults"
 #~ msgstr "Nastavit na implicitní hodnody"
-
-#~ msgid "NOT SET"
-#~ msgstr "NENÍ URČENO"

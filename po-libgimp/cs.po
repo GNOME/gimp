@@ -7,19 +7,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
-"POT-Creation-Date: 2003-06-26 22:14+0200\n"
-"PO-Revision-Date: 2003-06-14 16:11+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-06-27 04:21+0200\n"
+"PO-Revision-Date: 2003-06-27 23:11+0200\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: libgimp/gimpbrushmenu.c:321
-#, fuzzy
 msgid "Brush Selection"
-msgstr "Výběr jednotek"
+msgstr "Výběr stopy"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
@@ -168,14 +167,12 @@ msgstr ""
 "To nezapíše viditelné vrstvy."
 
 #: libgimp/gimpfontmenu.c:80
-#, fuzzy
 msgid "Font Selection"
-msgstr "Výběr jednotek"
+msgstr "Výběr písma"
 
 #: libgimp/gimpgradientmenu.c:172
-#, fuzzy
 msgid "Gradient Selection"
-msgstr "Výběr jednotek"
+msgstr "Výběr přechodu"
 
 #: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
 #: libgimp/gimpmenu.c:593
@@ -200,9 +197,8 @@ msgstr ""
 "(%2$s \"%3$s\")."
 
 #: libgimp/gimppatternmenu.c:321
-#, fuzzy
 msgid "Pattern Selection"
-msgstr "Výběr jednotek"
+msgstr "Výběr vzorku"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"

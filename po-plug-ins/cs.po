@@ -1,4 +1,3 @@
-# translation of cs.po to Czech
 # Czech translation of GIMP plugins 1.3.x.
 # Copyright (C) 2001,2003 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@penguin.cz>, 1999-2001
@@ -6,9 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: cs\n"
-"POT-Creation-Date: 2003-06-26 22:14+0200\n"
-"PO-Revision-Date: 2003-04-01 00:36+0200\n"
+"Project-Id-Version: gimp-plug-ins VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-06-27 04:21+0200\n"
+"PO-Revision-Date: 2003-06-27 23:28+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -394,18 +394,22 @@ msgstr "Fraktály"
 #: plug-ins/common/tiff.c:1389 plug-ins/common/xbm.c:1006
 #: plug-ins/common/xwd.c:525 plug-ins/fits/fits.c:461
 #: plug-ins/flame/flame.c:460 plug-ins/gfli/gfli.c:712
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Can't open '%s' for writing:\n"
 "%s"
-msgstr "Nelze otevřít souboru pro zápis"
+msgstr ""
+"Nemohu otevřít '%s' pro zápis:\n"
+"%s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1609
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to write '%s':\n"
 "%s"
-msgstr "Selhal zápis souboru P-záře '%s': %s"
+msgstr ""
+"Selhal zápis '%s':\n"
+"%s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1631
 msgid "Save: No filename given"
@@ -452,26 +456,30 @@ msgstr "Klepnutím zde lze zrušit zápisovou proceduru"
 #: plug-ins/common/tiff.c:437 plug-ins/common/xbm.c:735
 #: plug-ins/common/xwd.c:379 plug-ins/faxg3/faxg3.c:212
 #: plug-ins/fits/fits.c:349 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:460
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Can't open '%s':\n"
 "%s"
-msgstr "Nelze otevřít: '%s': %s"
+msgstr ""
+"Nemohu otevřít '%s':\n"
+"%s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2005
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s'\n"
 "is not a FractalExplorer file"
-msgstr "Soubor '%s' není souborem pro badatele fraktálů"
+msgstr ""
+"'%s'\n"
+"není soubor badatele fraktálů"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2010
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
-"Soubor '%s' je poškozený.\n"
+"'%s' je poškozený.\n"
 "Řádek %d Nesprávná sekce voleb"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:213
@@ -547,9 +555,8 @@ msgid "Add FractalExplorer Path"
 msgstr "Přidat cestu pro badatele fraktálů"
 
 #: plug-ins/Lighting/lighting_apply.c:135
-#, fuzzy
 msgid "Lighting Effects..."
-msgstr "Světelné efekty"
+msgstr "Světelné efekty..."
 
 #: plug-ins/Lighting/lighting_main.c:166
 msgid "<Image>/Filters/Light Effects/Lighting Effects..."
@@ -1154,14 +1161,13 @@ msgid "Show/hide preview wireframe"
 msgstr "Ukázat/skrýt náhledový drátový model"
 
 #: plug-ins/bmp/bmpread.c:67
-#, fuzzy
 msgid "Bad colormap"
-msgstr "%s: špatná barevná mapa"
+msgstr "Špatná barevná mapa"
 
 #. Set up progress display
 #: plug-ins/bmp/bmpread.c:102 plug-ins/common/CEL.c:257
-#: plug-ins/common/gbr.c:304 plug-ins/common/gifload.c:299
-#: plug-ins/common/gih.c:632 plug-ins/common/hrz.c:341
+#: plug-ins/common/gbr.c:304 plug-ins/common/gih.c:632
+#: plug-ins/common/gifload.c:299 plug-ins/common/hrz.c:341
 #: plug-ins/common/jpeg.c:776 plug-ins/common/pat.c:272
 #: plug-ins/common/pcx.c:305 plug-ins/common/pix.c:338
 #: plug-ins/common/png.c:479 plug-ins/common/pnm.c:411
@@ -1171,26 +1177,28 @@ msgstr "%s: špatná barevná mapa"
 #: plug-ins/common/xpm.c:334 plug-ins/common/xwd.c:428
 #: plug-ins/faxg3/faxg3.c:196 plug-ins/gfli/gfli.c:464 plug-ins/sgi/sgi.c:322
 #: plug-ins/xjt/xjt.c:3329
-#, fuzzy, c-format
+#, c-format
 msgid "Opening '%s'..."
-msgstr "Otvírá se %s"
+msgstr "Otvírám '%s'..."
 
 #: plug-ins/bmp/bmpread.c:113 plug-ins/bmp/bmpread.c:121
 #: plug-ins/bmp/bmpread.c:126 plug-ins/bmp/bmpread.c:133
 #: plug-ins/bmp/bmpread.c:146
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a valid BMP file"
-msgstr "%s: %s není platný BMP soubor"
+msgstr "'%s' není platný soubor BMP"
 
 #: plug-ins/bmp/bmpread.c:158 plug-ins/bmp/bmpread.c:176
 #: plug-ins/bmp/bmpread.c:196 plug-ins/bmp/bmpread.c:214
 #: plug-ins/bmp/bmpread.c:232 plug-ins/bmp/bmpread.c:237
 #: plug-ins/bmp/bmpread.c:242
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error reading BMP file header\n"
 "from '%s'"
-msgstr "%s: chyba při čtení hlavičky souboru BMP"
+msgstr ""
+"Chyba při čtení hlavičky souboru BMP\n"
+"z '%s'"
 
 #. Create an indexed-alpha layer to hold the image...
 #: plug-ins/bmp/bmpread.c:328 plug-ins/bmp/bmpread.c:335
@@ -1213,9 +1221,8 @@ msgid "Background"
 msgstr "Pozadí"
 
 #: plug-ins/bmp/bmpwrite.c:137
-#, fuzzy
 msgid "Cannot operate on unknown image types or alpha images"
-msgstr "BMP: neumí pracovat s neznámými typy obrázku nebo s alfa obrázky"
+msgstr "Nemohu pracovat s neznámými typy obrázku nebo s alfa obrázky"
 
 #. And let's begin the progress
 #: plug-ins/bmp/bmpwrite.c:210 plug-ins/common/CEL.c:502
@@ -1229,9 +1236,9 @@ msgstr "BMP: neumí pracovat s neznámými typy obrázku nebo s alfa obrázky"
 #: plug-ins/common/tiff.c:1394 plug-ins/common/xbm.c:1011
 #: plug-ins/common/xpm.c:595 plug-ins/common/xwd.c:530
 #: plug-ins/gfli/gfli.c:680 plug-ins/sgi/sgi.c:535 plug-ins/xjt/xjt.c:1711
-#, fuzzy, c-format
+#, c-format
 msgid "Saving '%s'..."
-msgstr "Čte se '%s' ..."
+msgstr "Ukládám '%s' ..."
 
 #: plug-ins/bmp/bmpwrite.c:553
 msgid "Save as BMP"
@@ -1461,9 +1468,8 @@ msgid "Load KISS Palette"
 msgstr "Načíst KISS paletu"
 
 #: plug-ins/common/CEL.c:287
-#, fuzzy
 msgid "Can't create a new image"
-msgstr "CEL: Nelze vytvořit nový obrázek"
+msgstr "Nemohu vytvořit nový obrázek"
 
 #: plug-ins/common/CEL.c:361
 #, c-format
@@ -1880,13 +1886,13 @@ msgid "Save Parameters to"
 msgstr "Zapsat parametry do"
 
 #: plug-ins/common/CML_explorer.c:2218
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Parameters were Saved to\n"
 "'%s'"
 msgstr ""
-"Parametry byly zapsány do\n"
-"\"%s\""
+"Parametry byly uloženy do\n"
+"'%s'"
 
 #: plug-ins/common/CML_explorer.c:2236
 msgid "CML File Operation Warning"
@@ -1914,19 +1920,22 @@ msgid "Error: it's not CML parameter file."
 msgstr "Chyba: nejedná se o CML soubor s parametry."
 
 #: plug-ins/common/CML_explorer.c:2419
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: '%s'\n"
 "is an old format file."
-msgstr "Varování: toto je starý formát souboru."
+msgstr ""
+"Varování: '%s'\n"
+"je soubor ve starém formátu."
 
 #: plug-ins/common/CML_explorer.c:2421
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: '%s'\n"
 "is a parameter file for newer CML_explorer than me."
 msgstr ""
-"Varování: Hm, toto je soubor parametrů pro novější CML badatel, než je tento."
+"Varování: '%s'\n"
+"je soubor parametrů pro novější CML badatel, než jsem já."
 
 #: plug-ins/common/CML_explorer.c:2482
 msgid "Error: failed to load parameters"
@@ -2353,9 +2362,8 @@ msgid "A_mbient:"
 msgstr "O_kolí:"
 
 #: plug-ins/common/bz2.c:265 plug-ins/common/bz2.c:352
-#, fuzzy
 msgid "Can't open bzip2ed file without a sensible extension"
-msgstr "bz2: nelze otevřít bzip2ovaný soubor bez rozlišující přípony\n"
+msgstr "Nemohu otevřít bzip2ovaný soubor bez rozumné přípony"
 
 #: plug-ins/common/c_astretch.c:88
 msgid "<Image>/Layer/Colors/Auto/Stretch Contrast"
@@ -2557,33 +2565,30 @@ msgid "<Image>/Filters/Colors/Compose..."
 msgstr "<Image>/Filtry/Barvy/Kompozice..."
 
 #: plug-ins/common/compose.c:355
-#, fuzzy, c-format
+#, c-format
 msgid "Could not get layers for image %d"
-msgstr "Kompozice: Pro obrázek %d nelze získat vrstvy"
+msgstr "Nemohu získat vrstvy pro obrázek %d"
 
 #: plug-ins/common/compose.c:407
 msgid "Composing..."
 msgstr "Komponuje se..."
 
 #: plug-ins/common/compose.c:475
-#, fuzzy
 msgid "Drawables have different size"
-msgstr "Kompozice: Obrazovky mají různé velikosti"
+msgstr "Obrazovky mají různé velikosti"
 
 #: plug-ins/common/compose.c:492
-#, fuzzy
 msgid "Images have different size"
-msgstr "Kompozice: Obrázky mají různé velikosti"
+msgstr "Obrázky mají různé velikosti"
 
 #: plug-ins/common/compose.c:506
-#, fuzzy
 msgid "Error in getting layer IDs"
-msgstr "Kompozice: Chyba v identifikaci vrstev"
+msgstr "Chyba při získávání ID vrstev"
 
 #: plug-ins/common/compose.c:523
-#, fuzzy, c-format
+#, c-format
 msgid "Image is not a gray image (bpp=%d)"
-msgstr "Kompozice: Obrázek není v šedích (bpp=%d)"
+msgstr "Obrázek není v šedích (bpp=%d)"
 
 #: plug-ins/common/compose.c:991
 msgid "Compose"
@@ -3417,9 +3422,8 @@ msgid "On Film:"
 msgstr "Na filmu:"
 
 #: plug-ins/common/film.c:1197
-#, fuzzy
 msgid "_Selection"
-msgstr "Výběr"
+msgstr "_Výběr"
 
 #. Film height/colour
 #: plug-ins/common/film.c:1205 plug-ins/common/film.c:1488
@@ -3428,9 +3432,8 @@ msgstr "Film"
 
 #. Keep maximum image height
 #: plug-ins/common/film.c:1215
-#, fuzzy
 msgid "_Fit Height to Images"
-msgstr "Lícovat výšku obrázků"
+msgstr "_Upravit výšku podle obrázků"
 
 #. Film color
 #: plug-ins/common/film.c:1249
@@ -3448,14 +3451,12 @@ msgid "Numbering"
 msgstr "Číslování"
 
 #: plug-ins/common/film.c:1281
-#, fuzzy
 msgid "Start _Index:"
-msgstr "Počáteční index:"
+msgstr "Počáteční _index:"
 
 #: plug-ins/common/film.c:1294
-#, fuzzy
 msgid "_Font:"
-msgstr "Písmo:"
+msgstr "_Písmo:"
 
 #. Numbering color
 #: plug-ins/common/film.c:1298
@@ -3463,64 +3464,54 @@ msgid "Select Number Color"
 msgstr "Výběr počtu barev"
 
 #: plug-ins/common/film.c:1312
-#, fuzzy
 msgid "At _Bottom"
-msgstr "Dole"
+msgstr "_Dole"
 
 #: plug-ins/common/film.c:1313
-#, fuzzy
 msgid "At _Top"
-msgstr "Nahoře"
+msgstr "_Nahoře"
 
 #. ** The right frame keeps the image selection **
 #: plug-ins/common/film.c:1326
 msgid "Image Selection"
 msgstr "Výběr obrázku"
 
+# FIXME: heigh
 #: plug-ins/common/film.c:1356
-#, fuzzy
 msgid "All Values are Fractions of the Film Heigh"
-msgstr "Rozšířená nastavení (všechny hodnoty jsou díly výšky filmu)"
+msgstr "Všechny hodnoty jsou zlomky výšky filmu"
 
 #: plug-ins/common/film.c:1359
-#, fuzzy
 msgid "Ad_vanced"
-msgstr "Rozšířené"
+msgstr "_Pokročilé"
 
 #: plug-ins/common/film.c:1377
-#, fuzzy
 msgid "Image _Height:"
-msgstr "Výška obrázku:"
+msgstr "_Výška obrázku:"
 
 #: plug-ins/common/film.c:1388
-#, fuzzy
 msgid "Image Spac_ing:"
-msgstr "Rozestup obrázků:"
+msgstr "_Rozestup obrázků:"
 
 #: plug-ins/common/film.c:1406
-#, fuzzy
 msgid "_Hole Offset:"
-msgstr "Posun děr:"
+msgstr "Posun _děr:"
 
 #: plug-ins/common/film.c:1417
-#, fuzzy
 msgid "Ho_le Width:"
-msgstr "Šířka děr:"
+msgstr "_Šířka děr:"
 
 #: plug-ins/common/film.c:1428
-#, fuzzy
 msgid "Hol_e Height:"
-msgstr "Výška děr:"
+msgstr "_Výška děr:"
 
 #: plug-ins/common/film.c:1439
-#, fuzzy
 msgid "Hole Sp_acing:"
-msgstr "Rozestup děr:"
+msgstr "R_ozestup děr:"
 
 #: plug-ins/common/film.c:1457
-#, fuzzy
 msgid "_Number Height:"
-msgstr "Výška číslic:"
+msgstr "Výška _číslic:"
 
 #. don't translate '<Image>' entry,
 #. * it is keyword for the gtk toolkit
@@ -3632,9 +3623,8 @@ msgid "<Image>/Filters/Blur/Gaussian Blur (RLE)..."
 msgstr "<Image>/Filtry/Rozostření/Gaussovo rozostření (RLE)..."
 
 #: plug-ins/common/gauss_rle.c:242
-#, fuzzy
 msgid "You must specify either horizontal or vertical (or both)"
-msgstr "gauss_rle: je nutné zadat vodorovně nebo svisle (nebo obojí)"
+msgstr "Musíte zadat vodorovně nebo svisle (nebo obojí)"
 
 #: plug-ins/common/gauss_rle.c:290 plug-ins/common/gauss_rle.c:344
 #: plug-ins/common/gauss_rle.c:431
@@ -3642,11 +3632,13 @@ msgid "RLE Gaussian Blur"
 msgstr "Gaussovo rozostření RLE"
 
 #: plug-ins/common/gbr.c:348
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error in GIMP brush file\n"
 "'%s'"
-msgstr "Chyba v souboru GIMP vzorku \"%s\"."
+msgstr ""
+"Chyba v souboru GIMP stopy\n"
+"'%s'"
 
 #: plug-ins/common/gbr.c:356 plug-ins/common/gih.c:480
 #: plug-ins/common/gih.c:1128
@@ -3720,21 +3712,17 @@ msgid "Icon Name:"
 msgstr "Jméno ikony:"
 
 #: plug-ins/common/gif.c:684
-#, fuzzy
 msgid ""
 "Couldn't simply reduce colors further.\n"
 "Saving as opaque."
 msgstr ""
-"GIF: Nelze jednoduše dále snížit barvy.\n"
-"Zapisuje se jako neprůhledné.\n"
+"Nemohu jednoduše dále snížit barvy.\n"
+"Ukládám jako neprůhledné."
 
 #: plug-ins/common/gif.c:946
-#, fuzzy
 msgid ""
 "Sorry, can't save RGB images as GIFs. Convert to Indexed or Grayscale first."
-msgstr ""
-"GIF: Bohužel, RGB obrázky nelze zapsat jako GIF - je nutné je nejdříve\n"
-"převést do INDEXOVANÉHO nebo do ŠEDÍ.\n"
+msgstr "Bohužel nemohu ukládat RGB obrázky jako GIF. Nejdříve jej převeďte na indexovaný nebo do šedí."
 
 #: plug-ins/common/gif.c:1088
 msgid ""
@@ -3742,10 +3730,12 @@ msgid ""
 "Transparent color in written file might be incorrect on viewers which don't "
 "support transparency."
 msgstr ""
+"Varování:\n"
+"Průhledná barva v zapisovaném souboru možná nebude správně v prohlížečích, které nepodporují průhlednost."
 
 #: plug-ins/common/gif.c:1127
 msgid "Delay inserted to prevent evil CPU-sucking anim."
-msgstr ""
+msgstr "Pro zabránění ošklivé animaci žeroucí CPU vloženo zpoždění."
 
 #: plug-ins/common/gif.c:1171
 msgid "GIF Warning"
@@ -3819,9 +3809,8 @@ msgid "One Frame per Layer (Replace)"
 msgstr "Jedno políčko na vrstvu (nahradit)"
 
 #: plug-ins/common/gif.c:2370
-#, fuzzy
 msgid "Error writing output file."
-msgstr "GIF: chyba při zápisu výstupního souboru\n"
+msgstr "Chyba při zápisu výstupního souboru.\n"
 
 #: plug-ins/common/gif.c:2460
 #, c-format
@@ -4150,25 +4139,20 @@ msgid "Guillotine..."
 msgstr "Gilotina..."
 
 #: plug-ins/common/gz.c:319
-#, fuzzy
 msgid "No sensible extension, saving as gzip'd xcf"
-msgstr "gz: chybí rozlišující přípona, zapisuje se jako gzipovaný xcf\n"
+msgstr "Žádná rozumná přípona, ukládám jako gzipovaný xcf"
 
 #: plug-ins/common/gz.c:444
-#, fuzzy
 msgid "No sensible extension, attempting to load with file magic"
-msgstr ""
-"gz: chybí rozlišující přípona, pokus o čtení za pomocí souborů magických "
-"čísel\n"
+msgstr "Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel"
 
 #: plug-ins/common/hot.c:217
 msgid "<Image>/Filters/Colors/Hot..."
 msgstr "<Image>/Filtry/Barvy/Videosnímek..."
 
 #: plug-ins/common/hot.c:377
-#, fuzzy
 msgid "Hot..."
-msgstr "O programu..."
+msgstr "Videosnímek..."
 
 #: plug-ins/common/hot.c:578
 msgid "Hot"
@@ -4195,17 +4179,17 @@ msgid "_Blacken"
 msgstr "Č_ernání"
 
 #: plug-ins/common/hrz.c:349
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a HRZ file"
-msgstr "'%s' není běžný soubor"
+msgstr "'%s' není soubor HRZ"
 
 #: plug-ins/common/hrz.c:461
 msgid "Image must be 256x240"
-msgstr ""
+msgstr "Obrázek musí být 256×240"
 
 #: plug-ins/common/hrz.c:466
 msgid "Image must be RGB or GRAY"
-msgstr ""
+msgstr "Obrázek musí být RGB nebo GRAY"
 
 #: plug-ins/common/illusion.c:103
 msgid "<Image>/Filters/Map/Illusion..."
@@ -4240,9 +4224,9 @@ msgid "Warping..."
 msgstr "Ohýbá se..."
 
 #: plug-ins/common/iwarp.c:773 plug-ins/common/iwarp.c:785
-#, fuzzy, c-format
+#, c-format
 msgid "Warping Frame No. %d..."
-msgstr "Ohýbá se políčko č. %d..."
+msgstr "Ohýbám se políčko č. %d..."
 
 #: plug-ins/common/iwarp.c:786
 msgid "Ping Pong"
@@ -4334,9 +4318,8 @@ msgid "<Image>/Filters/Render/Pattern/Jigsaw..."
 msgstr "<Image>/Filtry/Vyobrazení/Vzorky/Skládačka..."
 
 #: plug-ins/common/jigsaw.c:464
-#, fuzzy
 msgid "Assembling Jigsaw..."
-msgstr "Tvoří se skládačka"
+msgstr "Tvořím skládačku..."
 
 #: plug-ins/common/jigsaw.c:2542
 msgid "Jigsaw"
@@ -4422,7 +4405,7 @@ msgstr "Náhled obrázku"
 
 #: plug-ins/common/jpeg.c:1703
 msgid "Preview (in image window, will modify image's undo history!)"
-msgstr ""
+msgstr "Náhled (v okně obrázku, změní historii zpětných úprav obrázku!)"
 
 #: plug-ins/common/jpeg.c:1736 plug-ins/xjt/xjt.c:910
 msgid "Quality:"
@@ -4489,9 +4472,8 @@ msgid "Cleanup..."
 msgstr "Úklid..."
 
 #: plug-ins/common/lic.c:627
-#, fuzzy
 msgid "Van Gogh (LIC)..."
-msgstr "Van Gogh (LIC)"
+msgstr "Van Gogh (LIC)..."
 
 #: plug-ins/common/lic.c:713
 msgid "Van Gogh (LIC)"
@@ -4605,9 +4587,8 @@ msgid "MIME"
 msgstr "MIME"
 
 #: plug-ins/common/mail.c:689
-#, fuzzy
 msgid "some sort of error with the file extension or lack thereof"
-msgstr "pošta: nějaký druh chyby přípony souboru nebo její nepřítomnost \n"
+msgstr "nějaký druh chyby přípony souboru nebo její nepřítomnost"
 
 #: plug-ins/common/mapcolor.c:147
 msgid "First Source Color"
@@ -4642,14 +4623,12 @@ msgstr ""
 "Nelze pracovat s obrázky indexovanými/v šedích"
 
 #: plug-ins/common/mapcolor.c:437
-#, fuzzy
 msgid "Adjusting Foreground/Background..."
-msgstr "Úprava popředí/pozadí"
+msgstr "Upravuji popředí/pozadí..."
 
 #: plug-ins/common/mapcolor.c:479
-#, fuzzy
 msgid "Mapping colors..."
-msgstr "Mapování barev"
+msgstr "Mapuji barvy..."
 
 #: plug-ins/common/mapcolor.c:553
 msgid "Map Color Range"
@@ -4673,14 +4652,12 @@ msgid "<Image>/Filters/Colors/Max RGB..."
 msgstr "<Image>/Filtry/Barvy/Nejvyšší RGB..."
 
 #: plug-ins/common/max_rgb.c:157
-#, fuzzy
 msgid "Can only operate on RGB drawables."
-msgstr "Max RGB: Umí pracovat pouze s RGB obrazovkami."
+msgstr "Umí pracovat pouze s RGB obrazovkami."
 
 #: plug-ins/common/max_rgb.c:233
-#, fuzzy
 msgid "Max RGB..."
-msgstr "Nejvyšší RGB"
+msgstr "Nejvyšší RGB..."
 
 #: plug-ins/common/max_rgb.c:256
 msgid "Max RGB"
@@ -4699,9 +4676,8 @@ msgid "<Image>/Filters/Blur/Motion Blur..."
 msgstr "<Image>/Filtry/Rozostření/Rozmáznout pohybem..."
 
 #: plug-ins/common/mblur.c:669
-#, fuzzy
 msgid "Motion Blurring..."
-msgstr "Rozmáznutí pohybem"
+msgstr "Rozmáznutí pohybem..."
 
 #: plug-ins/common/mblur.c:738
 msgid "Motion Blur"
@@ -4852,9 +4828,8 @@ msgid "<Image>/Filters/Distorts/Newsprint..."
 msgstr "<Image>/Filtry/Zkreslení/Novinový tisk..."
 
 #: plug-ins/common/newsprint.c:663
-#, fuzzy
 msgid "Newsprint..."
-msgstr "Novinový tisk"
+msgstr "Novinový tisk..."
 
 #: plug-ins/common/newsprint.c:1058
 msgid "_Spot Function:"
@@ -4928,9 +4903,8 @@ msgid "<Image>/Filters/Enhance/NL Filter..."
 msgstr "<Image>/Filtry/Vylepšení/NL Filtr..."
 
 #: plug-ins/common/nlfilt.c:244
-#, fuzzy
 msgid "NL Filter..."
-msgstr "NL Filtr"
+msgstr "NL Filtr..."
 
 #: plug-ins/common/nlfilt.c:330
 msgid "NL Filter"
@@ -5136,28 +5110,34 @@ msgid "Save as Pattern"
 msgstr "Zapsat jako vzorek"
 
 #: plug-ins/common/pcx.c:311
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Can't read header from\n"
 "'%s'"
-msgstr "TGA: Nelze přečíst patičku z \"%s\"\n"
+msgstr ""
+"Nemohu číst hlavičku z\n"
+"'%s'"
 
 #: plug-ins/common/pcx.c:317
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s'\n"
 "is not a PCX file"
-msgstr "'%s' není běžný soubor"
+msgstr ""
+"'%s'\n"
+"není soubor PCX"
 
 #: plug-ins/common/pcx.c:370
 msgid "Unusual PCX flavour, giving up"
-msgstr ""
+msgstr "Neobvyklá verze PCX, vzdávám to"
 
 #: plug-ins/common/pcx.c:577
 msgid ""
 "Can't save layers with alpha.\n"
 "Flatten your image"
 msgstr ""
+"Nemohu uložit vrstvy s alfou.\n"
+"Zploštěte svůj obrázek"
 
 #: plug-ins/common/pixelize.c:184
 msgid "<Image>/Filters/Blur/Pixelize..."
@@ -5303,41 +5283,42 @@ msgid "Search:"
 msgstr "Hledat:"
 
 #: plug-ins/common/png.c:457
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "PNG error. File corrupted?"
 msgstr ""
-"%s\n"
+"'%s':\n"
 "Chyba PNG. Soubor poškozen?"
 
 #. Aie! Unknown type
 #: plug-ins/common/png.c:588
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "Unknown PNG color model"
 msgstr ""
-"%s\n"
-"neznámý barevný model PNG"
+"'%s':\n"
+"Neznámý barevný model PNG"
 
 #: plug-ins/common/png.c:834
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "PNG error. Couldn't save image"
 msgstr ""
-"%s\n"
-"Chyba PNG. Nelze zapsat obrázek"
+"'%s':\n"
+"Chyba PNG. Nemohu uložit obrázek"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #: plug-ins/common/png.c:1174
-#, fuzzy
 msgid ""
 "Couldn't losslessly save transparency,\n"
 "saving opacity instead."
-msgstr "Nelze uložit průhlednost beze ztrát, ukládám proto neprůhlednost.\n"
+msgstr ""
+"Nemohu uložit průhlednost beze ztrát,\n"
+"ukládám místo toho neprůhlednost."
 
 #: plug-ins/common/png.c:1198
 msgid "Save as PNG"
@@ -5382,9 +5363,8 @@ msgid "PNM: Invalid file."
 msgstr "PNM: Neplatný soubor."
 
 #: plug-ins/common/pnm.c:453
-#, fuzzy
 msgid "File not in a supported format."
-msgstr "PNM: Soubor není v podporovaném formátu."
+msgstr "Soubor není v podporovaném formátu."
 
 #: plug-ins/common/pnm.c:462
 msgid "PNM: Invalid X resolution."
@@ -5473,9 +5453,8 @@ msgstr ""
 "obrázek mapován na kruh."
 
 #: plug-ins/common/ps.c:888
-#, fuzzy
 msgid "Can't interpret file"
-msgstr "PS: nelze interpretovat soubor"
+msgstr "Nemohu interpretovat soubor"
 
 #: plug-ins/common/ps.c:975
 msgid "PostScript save cannot handle images with alpha channels"
@@ -5805,9 +5784,8 @@ msgid "<Image>/Filters/Noise/Scatter HSV..."
 msgstr "<Image>/Filtry/Šum/Roztřepení HSV..."
 
 #: plug-ins/common/scatter_hsv.c:241
-#, fuzzy
 msgid "Scattering HSV..."
-msgstr "Roztřepení HSV"
+msgstr "Roztřepení HSV..."
 
 #: plug-ins/common/scatter_hsv.c:344
 msgid "Scatter HSV"
@@ -5872,9 +5850,8 @@ msgid "<Image>/Filters/Blur/Selective Gaussian Blur..."
 msgstr "<Image>/Filtry/Rozostření/Selektivní Gaussovo rozostření..."
 
 #: plug-ins/common/sel_gauss.c:201
-#, fuzzy
 msgid "Selective Gaussian Blur..."
-msgstr "Selektivní Gaussovo rozostření"
+msgstr "Selektivní Gaussovo rozostření..."
 
 #: plug-ins/common/sel_gauss.c:218
 msgid "sel_gauss: Cannot operate on indexed color images"
@@ -5897,7 +5874,6 @@ msgid "<Image>/Filters/Colors/Semi-Flatten"
 msgstr "<Image>/Filtry/Barvy/Částečné zploštění..."
 
 #: plug-ins/common/semiflatten.c:117
-#, fuzzy
 msgid "Semi-Flattening..."
 msgstr "Částečné zploštění..."
 
@@ -6069,9 +6045,8 @@ msgid "<Image>/Filters/Colors/Smooth Palette..."
 msgstr "<Image>/Filtry/Barvy/Plynulá paleta..."
 
 #: plug-ins/common/smooth_palette.c:178
-#, fuzzy
 msgid "Deriving Smooth Palette..."
-msgstr "Odvozuje se plynulá paleta..."
+msgstr "Odvozuji plynulou paletu..."
 
 #: plug-ins/common/smooth_palette.c:423
 msgid "Smooth Palette"
@@ -6411,9 +6386,8 @@ msgid "Exp:"
 msgstr "Exp:"
 
 #: plug-ins/common/spheredesigner.c:3040
-#, fuzzy
 msgid "Rendering Sphere..."
-msgstr "Počítá se SuperNova..."
+msgstr "Vykresluji kouli..."
 
 #: plug-ins/common/spheredesigner.c:3097
 msgid "<Image>/Filters/Render/Sphere Designer..."
@@ -6521,18 +6495,22 @@ msgid "RunLength Encoded"
 msgstr "Kódované RunLength"
 
 #: plug-ins/common/tga.c:435
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot read footer from\n"
 "'%s'"
-msgstr "TGA: Nelze přečíst patičku z \"%s\"\n"
+msgstr ""
+"Nemohu číst patičku z\n"
+"'%s'"
 
 #: plug-ins/common/tga.c:447
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot read extension from\n"
 "'%s'"
-msgstr "TGA: Nelze přečíst rozšíření z \"%s\"\n"
+msgstr ""
+"Nemohu číst rozšíření z\n"
+"'%s'"
 
 #: plug-ins/common/tga.c:1189
 msgid "Save as TGA"
@@ -6582,16 +6560,14 @@ msgid "TIFF Channel"
 msgstr "TIFF kanál"
 
 #: plug-ins/common/tiff.c:675
-#, fuzzy
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
-"Varování TIFF:\n"
-"Obrázek, který načítáte, má 16 bitů na kanál. GIMP umí zpracovat jen 8 bitů, "
-"takže jej převede. Při tomto převodu se ztratí informace."
+"Varování:\n"
+"Obrázek, který načítáte, má 16 bitů na kanál. GIMP umí zpracovat jen 8 bitů, takže jej převede. Při tomto převodu se ztratí informace."
 
 #: plug-ins/common/tiff.c:1631
 msgid "Save as TIFF"
@@ -6619,9 +6595,8 @@ msgid "_JPEG"
 msgstr "_JPEG"
 
 #: plug-ins/common/tiff.c:1727
-#, fuzzy
 msgid "Your comment string is too long."
-msgstr "TIFF: Váš řetězec s komentářem je příliš dlouhý."
+msgstr "Váš řetězec s komentářem je příliš dlouhý."
 
 #: plug-ins/common/tile.c:127
 msgid "<Image>/Filters/Map/Tile..."
@@ -6963,9 +6938,8 @@ msgid "<Image>/Filters/Generic/Dilate"
 msgstr "<Image>/Filtry/Obecné/Dilatace"
 
 #: plug-ins/common/vpropagate.c:461
-#, fuzzy
 msgid "Value Propagating..."
-msgstr "Rozšiřuje se hodnota..."
+msgstr "Rozšiřuji hodnotu..."
 
 #: plug-ins/common/vpropagate.c:1032
 msgid "Value Propagate"
@@ -7165,7 +7139,6 @@ msgid "<Image>/Filters/Distorts/Whirl and Pinch..."
 msgstr "<Image>/Filtry/Zkreslení/Vír a zaškrcení..."
 
 #: plug-ins/common/whirlpinch.c:379
-#, fuzzy
 msgid "Whirling and Pinching..."
 msgstr "Víření a zaškrcování..."
 
@@ -7194,9 +7167,8 @@ msgid "<Toolbox>/File/Acquire/From Clipboard"
 msgstr "<Toolbox>/Soubor/Získat/Z výřezu"
 
 #: plug-ins/common/winclipboard.c:308
-#, fuzzy
 msgid "Copying..."
-msgstr "Kopíruje se..."
+msgstr "Kopíruji..."
 
 #: plug-ins/common/winclipboard.c:471
 msgid "Unsupported format or Clipboard empty!"
@@ -7365,32 +7337,40 @@ msgid "Created with The GIMP"
 msgstr "Vytvořeno v programu GIMP"
 
 #: plug-ins/common/xbm.c:818
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "Can't read header (ftell == %ld)"
-msgstr "XBM: nelze číst hlavičku (ftell == %ld)\n"
+msgstr ""
+"'%s':\n"
+"Nemohu číst hlavičku (ftell == %ld)\n"
 
 #: plug-ins/common/xbm.c:825
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "No image width specified"
-msgstr "XBM: nebyla zadána šířka obrázku\n"
+msgstr ""
+"'%s':\n"
+"Nebyla zadána šířka obrázku"
 
 #: plug-ins/common/xbm.c:831
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "No image height specified"
-msgstr "XBM: nebyla zadána výška obrázku\n"
+msgstr ""
+"'%s':\n"
+"Nebyla zadána výška obrázku"
 
 #: plug-ins/common/xbm.c:837
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "No image data type specified"
-msgstr "XBM: nebyla zadán typ dat obrázku\n"
+msgstr ""
+"'%s':\n"
+"Nebyl zadán typ dat obrázku"
 
 #. The image is not black-and-white.
 #: plug-ins/common/xbm.c:970
@@ -7464,9 +7444,8 @@ msgid "_Alpha Threshold:"
 msgstr "Práh _alfy:"
 
 #: plug-ins/common/xwd.c:386
-#, fuzzy
 msgid "Can't open file as XWD file"
-msgstr "soubor nelze otevřít jako XWD"
+msgstr "Nemohu otevřít soubor jako XWD"
 
 #: plug-ins/common/xwd.c:421
 msgid "can't read color entries"
@@ -7516,9 +7495,8 @@ msgid "ZealousCropping(tm)..."
 msgstr "HorlivéOřezávání(tm)..."
 
 #: plug-ins/common/zealouscrop.c:216
-#, fuzzy
 msgid "Nothing to crop."
-msgstr "HorlivéOřezávání(tm): Není co ořezávat."
+msgstr "Není co ořezávat."
 
 #: plug-ins/dbbrowser/dbbrowser.c:89
 msgid "<Toolbox>/Xtns/DB Browser..."
@@ -7592,9 +7570,9 @@ msgid "FITS save cannot handle images with alpha channels"
 msgstr "FITS zápis neumí zpracovat obrázky s alfa kanály"
 
 #: plug-ins/fits/fits.c:468
-#, fuzzy, c-format
+#, c-format
 msgid "Saving '%s':"
-msgstr "Zapisuje se %s:"
+msgstr "Ukládám '%s':"
 
 #: plug-ins/fits/fits.c:978
 msgid "Load FITS File"
@@ -7905,16 +7883,17 @@ msgid "First Gfig"
 msgstr "První Gfig"
 
 #: plug-ins/gfig/gfig.c:1358
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error opening file '%s':\n"
 "%s"
-msgstr "Chyba při otvírání souboru"
+msgstr ""
+"Chyba při otevírání souboru '%s':\n"
+"%s"
 
 #: plug-ins/gfig/gfig.c:1454
-#, fuzzy
 msgid "Save Gfig Drawing"
-msgstr "Smazat kresbu Gfig"
+msgstr "Uložit kresbu Gfig"
 
 #: plug-ins/gfig/gfig.c:1703
 msgid "Show previous object"
@@ -8157,9 +8136,8 @@ msgstr ""
 "použít doběh štětce."
 
 #: plug-ins/gfig/gfig.c:2801
-#, fuzzy
 msgid "Gfig Brush Selection"
-msgstr "Gfig výběr stopy"
+msgstr "Gfig Výběr stopy"
 
 #: plug-ins/gfig/gfig.c:2839
 msgid "Fade out:"
@@ -8326,9 +8304,8 @@ msgid "Edit Gfig object collection"
 msgstr "Úpravy souhrnu Gfig objektů"
 
 #: plug-ins/gfig/gfig.c:3426
-#, fuzzy
 msgid "_Merge"
-msgstr "Sloučit"
+msgstr "_Sloučit"
 
 #: plug-ins/gfig/gfig.c:3430
 msgid "Merge Gfig Object collection into the current edit session"
@@ -8435,9 +8412,8 @@ msgid "Release 1.3"
 msgstr "Vydání 1.3"
 
 #: plug-ins/gfig/gfig.c:4706
-#, fuzzy
 msgid "New Gfig Object"
-msgstr "Nový gfig obj"
+msgstr "Nový objekt Gfig"
 
 #: plug-ins/gfig/gfig.c:4835
 msgid "Delete Gfig Drawing"
@@ -8767,9 +8743,8 @@ msgid "Frame (%i)"
 msgstr "Políčko (%i)"
 
 #: plug-ins/gfli/gfli.c:676
-#, fuzzy
 msgid "Sorry, I can save only INDEXED and GRAY images."
-msgstr "FLI: Bohužel, umí pracovat pouze s obrázky INDEXOVANÝMI a v ŠEDÍCH."
+msgstr "Bohužel, umím pracovat pouze s obrázky INDEXOVANÝMI a v ŠEDÍCH."
 
 #: plug-ins/gfli/gfli.c:818
 msgid "GFLI 1.3 - Load framestack"
@@ -8780,9 +8755,8 @@ msgid "GFLI 1.3 - Save framestack"
 msgstr "GFLI 1.3 - Zápis zásobníku políček"
 
 #: plug-ins/gimpressionist/brush.c:190
-#, fuzzy
 msgid "Can only save drawables!"
-msgstr "GIMPresionista: Obrazovky lze pouze zapisovat!\n"
+msgstr "Obrazovky lze pouze zapisovat!"
 
 #: plug-ins/gimpressionist/brush.c:196
 msgid "Save brush"
@@ -9245,12 +9219,11 @@ msgid "Focus the brush strokes around the center of the image"
 msgstr "Míří tahy štětce do středu obrázku"
 
 #: plug-ins/gimpressionist/ppmtool.c:499
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to save PPM file '%s':\n"
 "%s"
 msgstr ""
-"GIMPresionista:\n"
 "Selhalo uložení souboru PPM '%s':\n"
 "%s"
 
@@ -11302,9 +11275,9 @@ msgid "Selection To Path Advanced Settings"
 msgstr "Rozšířená nastavení výběru do cesty"
 
 #: plug-ins/sgi/sgi.c:531
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open '%s' for writing"
-msgstr "Nelze otevřít souboru pro zápis"
+msgstr "Nemohu otevřít '%s' pro zápis"
 
 #: plug-ins/sgi/sgi.c:619
 msgid "Save as SGI"
@@ -11455,2518 +11428,3 @@ msgstr "Chyba: Nelze načíst soubor %s XJT vlastností"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Chyba: Soubor XJT vlastností %s je prázdný"
-
-#~ msgid "Error opening: %s"
-#~ msgstr "Chyba při otvírání: %s"
-
-#~ msgid "Could not save."
-#~ msgstr "Nelze zapsat."
-
-#~ msgid "Failed to write file\n"
-#~ msgstr "Zápis do souboru selhal\n"
-
-#~ msgid "Loading %s:"
-#~ msgstr "Čte se %s:"
-
-#~ msgid "%s: can't open \"%s\""
-#~ msgstr "%s: nelze otevřít \"%s\""
-
-#~ msgid "Can't open %s"
-#~ msgstr "Nelze otevřít %s"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "is not present or is unreadable"
-#~ msgstr ""
-#~ "%s\n"
-#~ "není přítomen nebo je nečitelný"
-
-#~ msgid ""
-#~ "CEL Couldn't write image to\n"
-#~ "%s"
-#~ msgstr ""
-#~ "CEL nelze zapsat obrázek do\n"
-#~ "%s"
-
-#~ msgid "Error: could not open \"%s\""
-#~ msgstr "Chyba: nelze otevřít \"%s\""
-
-#~ msgid "Unable to open %s"
-#~ msgstr "Nepodařilo se otevřít %s"
-
-#~ msgid "GIF: can't open %s\n"
-#~ msgstr "GIF: nelze otevřít %s\n"
-
-#~ msgid "can't open \"%s\"\n"
-#~ msgstr "nelze otevřít \"%s\"\n"
-
-#~ msgid "Max RGB: Scanning..."
-#~ msgstr "Max RGB: Prochází se..."
-
-#~ msgid "Newsprintifing..."
-#~ msgstr "Vytváří se novinový tisk..."
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Couldn't create file"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Nelze vytvořit soubor"
-
-#~ msgid "PNM: Can't open file %s."
-#~ msgstr "PNM: Nelze otevřít soubor %s."
-
-#~ msgid "PS: can't open file for reading"
-#~ msgstr "PS: soubor nelze otevřít pro čtení"
-
-#~ msgid "Interpreting and Loading %s:"
-#~ msgstr "Interpretuje a čte se %s:"
-
-#~ msgid "PS: cannot operate on unknown image types"
-#~ msgstr "PS: neumí pracovat s neznámými typy obrázku"
-
-#~ msgid "PS: can't open file for writing"
-#~ msgstr "PS: soubor nelze otevřít pro zápis"
-
-#~ msgid "Scatter HSV: Scattering..."
-#~ msgstr "Roztřepení HSV: Třepí se..."
-
-#~ msgid "Rendering..."
-#~ msgstr "Vyobrazení..."
-
-#~ msgid "Can't open file for reading"
-#~ msgstr "Nelze otevřít souboru pro čtení"
-
-#~ msgid "TGA: can't open \"%s\"\n"
-#~ msgstr "TGA: nelze otevřít \"%s\"\n"
-
-#~ msgid "TIFF: Can't open '%s'"
-#~ msgstr "TIFF: Nelze otevřít '%s'"
-
-#~ msgid "XBM: cannot open \"%s\"\n"
-#~ msgstr "XBM: nelze otevřít \"%s\"\n"
-
-#~ msgid "XBM: cannot create \"%s\"\n"
-#~ msgstr "XBM: nelze vytvořit \"%s\"\n"
-
-#~ msgid "can't open file for reading"
-#~ msgstr "soubor nelze otevřít ke čtení"
-
-#~ msgid "can't get memory for colormap"
-#~ msgstr "nelze získat paměť pro barevnou mapu"
-
-#~ msgid "can't open file for writing"
-#~ msgstr "soubor nelze otevřít pro zápis"
-
-#~ msgid "Prev"
-#~ msgstr "Předchozí"
-
-#~ msgid "Ops"
-#~ msgstr "Úkony"
-
-#~ msgid "Error in creating layer"
-#~ msgstr "Chyba ve vytváření vrstvy"
-
-#~ msgid "FLI: Can't open \"%s\""
-#~ msgstr "FLI: Nelze otevřít \"%s\""
-
-#~ msgid "Add >>"
-#~ msgstr "Přidat >>"
-
-#~ msgid "Remove"
-#~ msgstr "Odstranit"
-
-#~ msgid "Color:"
-#~ msgstr "Barva:"
-
-#~ msgid "Update Preview"
-#~ msgstr "Zaktualizovat náhled"
-
-#~ msgid "Preview (in image window)"
-#~ msgstr "Náhled (v okně obrázku)"
-
-#~ msgid ""
-#~ "C_reate\n"
-#~ "New Image"
-#~ msgstr ""
-#~ "_Vytvořit\n"
-#~ "nový obrázek"
-
-#~ msgid "<Image>/Layer/Transform/Rotate 90 degrees"
-#~ msgstr "<Image>/Vrstva/Transformace/Rotace 90 stupňů"
-
-#~ msgid "<Image>/Layer/Transform/Rotate 180 degrees"
-#~ msgstr "<Image>/Vrstva/Transformace/Rotace 180 stupňů"
-
-#~ msgid "<Image>/Layer/Transform/Rotate 270 degrees"
-#~ msgstr "<Image>/Vrstva/Transformace/Rotace 270 stupňů"
-
-#~ msgid "<Image>/Image/Transform/Rotate 90 degrees"
-#~ msgstr "<Image>/Obrázek/Transformace/Rotace 90 stupňů"
-
-#~ msgid "<Image>/Image/Transform/Rotate 180 degrees"
-#~ msgstr "<Image>/Obrázek/Transformace/Rotace 180 stupňů"
-
-#~ msgid "<Image>/Image/Transform/Rotate 270 degrees"
-#~ msgstr "<Image>/Obrázek/Transformace/Rotace 270 stupňů"
-
-#~ msgid "<Image>/Image/Mode/Compose..."
-#~ msgstr "<Image>/Obrázek/Režim/Kompozice..."
-
-#~ msgid "<Image>/Image/Mode/Decompose..."
-#~ msgstr "<Image>/Obrázek/Režim/Dekompozice..."
-
-#~ msgid "Dup"
-#~ msgstr "Duplikovat"
-
-#~ msgid "Del"
-#~ msgstr "Smazat"
-
-#~ msgid "Load"
-#~ msgstr "Načíst"
-
-#~ msgid ""
-#~ "by Vidar Madsen\n"
-#~ "September 1999"
-#~ msgstr ""
-#~ "napsal Vidar Madsen\n"
-#~ "Září 1999"
-
-#~ msgid ""
-#~ "No fractalexplorer-path in gimprc:\n"
-#~ "You need to add an entry like\n"
-#~ "(fractalexplorer-path \"%s\")\n"
-#~ "to your %s file."
-#~ msgstr ""
-#~ "V gimprc chybí fractalexplorer-path:\n"
-#~ "Je nutné přidat následující údaj\n"
-#~ "(fractalexplorer-path \"%s\")\n"
-#~ "do souboru %s."
-
-#~ msgid ""
-#~ "fractalexplorer-path misconfigured - the following folders were not found:"
-#~ msgstr ""
-#~ "fractalexplorer-path špatně nastavena - následující adresáře nebyly "
-#~ "nalezeny:"
-
-#~ msgid "Loading MPEG movie..."
-#~ msgstr "Čte se MPEG animace..."
-
-#~ msgid "Unnamed channel"
-#~ msgstr "Kanál beze jména"
-
-#~ msgid "_New Unit"
-#~ msgstr "_Nová jednotka"
-
-#~ msgid "_Duplicate Unit"
-#~ msgstr "_Duplikovat jednotku"
-
-#~ msgid ""
-#~ "No gfig-path in gimprc:\n"
-#~ "You need to add an entry like\n"
-#~ "(gfig-path \"%s\")\n"
-#~ "to your %s file."
-#~ msgstr ""
-#~ "V gimprc chybí gfig-path:\n"
-#~ "Je nutné přidat následující údaj\n"
-#~ "(gfig-path \"%s\")\n"
-#~ "do souboru %s."
-
-#~ msgid "gfig-path misconfigured - the following folders were not found:"
-#~ msgstr "gfig-path špatně nastavená - následující adresáře nebyly nalezeny:"
-
-#~ msgid "Rescan"
-#~ msgstr "Zaktualizovat"
-
-#~ msgid "Enter Gfig Entry Name"
-#~ msgstr "Zadat jméno Gfig položky"
-
-#~ msgid "Load Gfig obj"
-#~ msgstr "Načíst Gfig obj"
-
-#~ msgid "Email alt@picnic.demon.co.uk"
-#~ msgstr "E-mail alt@picnic.demon.co.uk"
-
-#~ msgid "Isometric grid By Rob Saunders"
-#~ msgstr "Isometrická mříž od Roba Saunderse"
-
-#~ msgid ""
-#~ "No gflare-path in gimprc:\n"
-#~ "You need to add an entry like\n"
-#~ "(gflare-path \"%s\")\n"
-#~ "to your %s file."
-#~ msgstr ""
-#~ "V gimprc chybí gflare-path:\n"
-#~ "Je nutné přidat následující údaj\n"
-#~ "(gflare-path \"%s\")\n"
-#~ "do souboru %s."
-
-#~ msgid "gflare-path misconfigured - the following folders were not found:"
-#~ msgstr ""
-#~ "gflare-path špatně nastavena - následující adresáře nebyly nalezeny:"
-
-#~ msgid "General"
-#~ msgstr "Všeobecné"
-
-#~ msgid "Enable Tooltips"
-#~ msgstr "Povolit tipy"
-
-#~ msgid "Enable/disable tooltip messages"
-#~ msgstr "Povolení/zákaz zpráv v tipech"
-
-#~ msgid "_Disable Tooltips"
-#~ msgstr "Zakázat _tipy"
-
-#~ msgid "Toggle Tooltips on/off"
-#~ msgstr "Zapíná a vypíná tipy"
-
-#~ msgid "Show Tooltips"
-#~ msgstr "Zobrazit tipy"
-
-#~ msgid "Done"
-#~ msgstr "Hotovo"
-
-#~ msgid "Data changed"
-#~ msgstr "Data změněna"
-
-#~ msgid ""
-#~ "Image size has changed.\n"
-#~ "Resize Area's?"
-#~ msgstr ""
-#~ "Velikost obrázku byla změněna.\n"
-#~ "Změnit velikost oblasti?"
-
-#~ msgid "_Apply"
-#~ msgstr "_Použít"
-
-#~ msgid "Abbr."
-#~ msgstr "Zkr."
-
-#~ msgid "Don't Save Unit"
-#~ msgstr "Nezapisovat jednotku"
-
-#~ msgid "Don't save the currently selected unit before GIMP exits."
-#~ msgstr "Nezapisovat právě zvolenou jednotku před skončením programu GIMP."
-
-#~ msgid "Save Unit"
-#~ msgstr "Zapsat jednotku"
-
-#~ msgid "Save the currently selected unit before GIMP exits."
-#~ msgstr "Zapsat právě zvolenou jednotku před skončením programu GIMP."
-
-#~ msgid "_About..."
-#~ msgstr "O _aplikaci..."
-
-#~ msgid "Apply and exit the editor"
-#~ msgstr "Použít a opustit editor"
-
-#~ msgid "Apply, but stay inside the editor"
-#~ msgstr "Použít, ale zůstat v editoru"
-
-#~ msgid "Cancel all changes and exit"
-#~ msgstr "Zrušit všechny změny a skončit"
-
-#~ msgid "Refresh"
-#~ msgstr "Zaktualizovat"
-
-#~ msgid "Help..."
-#~ msgstr "Nápověda..."
-
-#~ msgid "Save..."
-#~ msgstr "Zapsat..."
-
-#~ msgid "Specifies the amount of embossing to apply to each brush stroke"
-#~ msgstr "Určuje míru vyvýšení použitou u každé stopy štětce"
-
-#~ msgid "Quit the program"
-#~ msgstr "Ukončí program"
-
-#~ msgid "Show some information about program"
-#~ msgstr "Zobrazí informace o programu"
-
-#~ msgid "Run with the selected settings"
-#~ msgstr "Spustit se zvoleným nastavením"
-
-#~ msgid "How large an angle-span to use (360 = full circle)"
-#~ msgstr "Jak velký rozsah úhlů bude použit (360 = plný kruh)"
-
-#~ msgid ""
-#~ "PNG: Couldn't simply reduce colors further.\n"
-#~ "Saving as opaque.\n"
-#~ msgstr ""
-#~ "PNG: Nelze jednoduše dále snížit barvy.\n"
-#~ "Ukládá se jako neprůhledné.\n"
-
-#~ msgid "not valid GFlare file: %s"
-#~ msgstr "neplatný soubor P-záře: %s"
-
-#~ msgid "could not open \"%s\""
-#~ msgstr "nelze otevřít \"%s\""
-
-#~ msgid "Set Defaults"
-#~ msgstr "Nastavení implicitních hodnot"
-
-#~ msgid "Close"
-#~ msgstr "Zavřít"
-
-#~ msgid "Image preview"
-#~ msgstr "Náhled obrázku"
-
-#~ msgid "_Update Preview"
-#~ msgstr "Akt_ualizovat náhled"
-
-#~ msgid "rgb-compose"
-#~ msgstr "rgb-kompozice"
-
-#~ msgid "rgba-compose"
-#~ msgstr "rgba-kompozice"
-
-#~ msgid "hsv-compose"
-#~ msgstr "hsv-kompozice"
-
-#~ msgid "cmy-compose"
-#~ msgstr "cmy-kompozice"
-
-#~ msgid "cmyk-compose"
-#~ msgstr "cmyk-kompozice"
-
-#~ msgid "Undo Zoom"
-#~ msgstr "Zrušit přiblížení"
-
-#~ msgid "Redo Zoom"
-#~ msgstr "Vrátit přiblížení"
-
-#~ msgid "Step In"
-#~ msgstr "Krok blíž"
-
-#~ msgid "Step Out"
-#~ msgstr "Krok dál"
-
-#~ msgid "Antialiasing Options"
-#~ msgstr "Volby vyhlazování"
-
-#~ msgid "Bumpmap Settings"
-#~ msgstr "Nastavení mapování vyvýšení"
-
-#~ msgid "Environment Settings"
-#~ msgstr "Nastavení prostředí"
-
-#~ msgid "Depth:"
-#~ msgstr "Hloubka:"
-
-#~ msgid "Length:"
-#~ msgstr "Délka:"
-
-#~ msgid "Material"
-#~ msgstr "Materiál"
-
-#~ msgid "Preview!"
-#~ msgstr "Náhled!"
-
-#~ msgid "Hue Settings"
-#~ msgstr "Nastavení odstínu"
-
-#~ msgid "Saturation Settings"
-#~ msgstr "Nastavení sytosti"
-
-#~ msgid "Value (Gray Image) Settings"
-#~ msgstr "Nastavení hodnoty (obrázek v šedích)"
-
-#~ msgid "Advanced Settings"
-#~ msgstr "Rozšířená nastavení"
-
-#~ msgid "Other Parameter Settings"
-#~ msgstr "Nastavení jiných parametrů"
-
-#~ msgid "Misc Operations"
-#~ msgstr "Různé práce"
-
-#~ msgid "CopyInv"
-#~ msgstr "InvKopírovat"
-
-#~ msgid "SaveCurve"
-#~ msgstr "Zapsat křivku"
-
-#~ msgid "print_spline: strange degree (%d)"
-#~ msgstr "tisk_spline: divný úhel (%d)"
-
-#~ msgid "selection_to_path"
-#~ msgstr "výběr_do_cesty"
-
-#~ msgid "gimp_image_get_selection failed"
-#~ msgstr "gimp_image_get_selection selhalo"
-
-#~ msgid "Internal error. Selection bpp > 1"
-#~ msgstr "Vnitřní chyba. Výběr s bpp > 1"
-
-#~ msgid "Repeat:"
-#~ msgstr "Opakování:"
-
-#~ msgid "Azimuth:"
-#~ msgstr "Azimut:"
-
-#~ msgid "Horizontal:"
-#~ msgstr "Vodorovně:"
-
-#~ msgid "Vertical:"
-#~ msgstr "Svisle:"
-
-#~ msgid "Do Preview"
-#~ msgstr "Vytvořit náhled"
-
-#~ msgid "Wind Strength must be greater than 0."
-#~ msgstr "Síla větru musí být větší než 0."
-
-#~ msgid "DB Browser (init...)"
-#~ msgstr "Prohlížeč DB (inicializace...)"
-
-#~ msgid "DB Browser (please wait)"
-#~ msgstr "Prohlížeč DB (prosím čekejte)"
-
-#~ msgid ""
-#~ "GIMP Help Browser Error.\n"
-#~ "\n"
-#~ "Couldn't find my root html directory.\n"
-#~ "(%s)"
-#~ msgstr ""
-#~ "Chyba prohlížeče GIMP nápovědy.\n"
-#~ "\n"
-#~ "Nelze nalézt kořen jeho html adresáře.\n"
-#~ "(%s)"
-
-#~ msgid ""
-#~ "Imagemap plug-in 1.3\n"
-#~ "\n"
-#~ "Copyright(c) 1999 by Maurits Rijk\n"
-#~ "lpeek.mrijk@consunet.nl \n"
-#~ "\n"
-#~ "  Released under the GNU General Public License  "
-#~ msgstr ""
-#~ "Modul Obrázková mapa 1.3\n"
-#~ "\n"
-#~ "Copyright(c) 1999 Maurits Rijk\n"
-#~ "lpeek.mrijk@consunet.nl \n"
-#~ "\n"
-#~ "  Vydáno s GNU obecnou veřejnou licencí  "
-
-#~ msgid "Width"
-#~ msgstr "Šířka"
-
-#~ msgid "Height"
-#~ msgstr "Výška"
-
-#~ msgid "Comment about this area: (optional)"
-#~ msgstr "Komentář k této oblasti: (volitelné)"
-
-#~ msgid "Open..."
-#~ msgstr "Otevřít..."
-
-#~ msgid "Preferences..."
-#~ msgstr "Předvolby..."
-
-#~ msgid "Quit"
-#~ msgstr "Konec"
-
-#~ msgid "Zoom In"
-#~ msgstr "Přiblížit"
-
-#~ msgid "Zoom Out"
-#~ msgstr "Oddálit"
-
-#~ msgid "Map Info..."
-#~ msgstr "Informace o mapování..."
-
-#~ msgid "In"
-#~ msgstr "Vstup"
-
-#~ msgid "Out"
-#~ msgstr "Výstup"
-
-#~ msgid "Tile Height:"
-#~ msgstr "Výška dlaždice:"
-
-#~ msgid "Reset"
-#~ msgstr "Obnovit"
-
-#~ msgid "Reset to Defaults"
-#~ msgstr "Nastavit na implicitní hodnoty"
-
-#~ msgid "Contents"
-#~ msgstr "Obsah"
-
-#~ msgid "Index"
-#~ msgstr "Rejstřík"
-
-#~ msgid "<Image>/Layers/Rotate/90 degrees"
-#~ msgstr "<Image>/Vrstvy/Rotace/90 stupňů"
-
-#~ msgid "<Image>/Layers/Rotate/180 degrees"
-#~ msgstr "<Image>/Vrstvy/Rotace/180 stupňů"
-
-#~ msgid "<Image>/Layers/Rotate/270 degrees"
-#~ msgstr "<Image>/Vrstvy/Rotace/270 stupňů"
-
-#~ msgid "File-Browser"
-#~ msgstr "Prohlížeč souborů"
-
-#~ msgid "Enter Values"
-#~ msgstr "Zadání hodnot"
-
-#~ msgid "Value: "
-#~ msgstr "Hodnota: "
-
-#~ msgid "Press Button"
-#~ msgstr "Tlak na tlačítko"
-
-#~ msgid "GAP Animated Filter apply"
-#~ msgstr "Použít animovaný filtr GAP"
-
-#~ msgid "Animated Filter apply (init)"
-#~ msgstr "Použít animovaný filtr (inicializovat)"
-
-#~ msgid "Gen Code by name"
-#~ msgstr "Generovat kód podle jména"
-
-#~ msgid "Animated Filter apply (by name - please wait)"
-#~ msgstr "Použít animovaný filtr (podle jména - prosím čekejte)"
-
-#~ msgid "Animated Filter apply (by blurb - please wait)"
-#~ msgstr "Použít animovaný filtr (podle popisu - prosím čekejte)"
-
-#~ msgid "Animated Filter apply (please wait)"
-#~ msgstr "Použít animovaný filtr (prosím čekejte)"
-
-#~ msgid "Animated Filter apply"
-#~ msgstr "Použít animovaný filtr"
-
-#~ msgid "<Image>/Video/Split Video to Frames"
-#~ msgstr "<Image>/Video/Rozdělit video do políček"
-
-#~ msgid "<Toolbox>/Xtns/Split Video to Frames"
-#~ msgstr "<Toolbox>/Rozš./Rozdělit video do políček"
-
-#~ msgid "<Image>/Video/Split Video to Frames/MPEG1"
-#~ msgstr "<Image>/Video/Rozdělit obrázek do políček/MPEG1"
-
-#~ msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-#~ msgstr "<Toolbox>/Rozš./Rozdělit obrázek do políček/MPEG1"
-
-#~ msgid "Overwrite Frame"
-#~ msgstr "Přepsat políčko"
-
-#~ msgid "Overwrite All"
-#~ msgstr "Přepsat vše"
-
-#~ msgid "GAP Question"
-#~ msgstr "GAP: Otázka"
-
-#~ msgid "File already exists"
-#~ msgstr "Soubor již existuje"
-
-#~ msgid "Decoding MPEG Movie..."
-#~ msgstr "Dekóduje se MPEG film..."
-
-#~ msgid ""
-#~ "Name of the MPEG1 videofile to READ.\n"
-#~ "Frames are extracted from the videofile\n"
-#~ "and written to seperate diskfiles.\n"
-#~ "Audiotracks in the videofile are ignored."
-#~ msgstr ""
-#~ "Jméno MPEG1 videosouboru  ke ČTENÍ.\n"
-#~ "Políčka z videosouboru jsou získaná\n"
-#~ "a zapsaná do samostatných diskových souborů.\n"
-#~ "Zvukové stopy ve videosouboru jsou ignorovány."
-
-#~ msgid "Framenumber of 1st frame to extract"
-#~ msgstr "Číslo prvního získávaného políčka"
-
-#~ msgid "Framenumber of last frame to extract"
-#~ msgstr "Číslo posledního získávaného políčka"
-
-#~ msgid "Framenames:"
-#~ msgstr "Jména políček:"
-
-#~ msgid ""
-#~ "Basename for the AnimFrames to write on disk\n"
-#~ "(framenumber and .xcf is added)"
-#~ msgstr ""
-#~ "Základ jména pro zápis políček animace na disk\n"
-#~ "(číslo políčka a .xcf jsou doplněny)"
-
-#~ msgid "Open the 1st one of the extracted frames"
-#~ msgstr "Otevřít první ze získávaných políček"
-
-#~ msgid ""
-#~ "\n"
-#~ "WARNING: Do not attempt to split other files than MPEG1 videos.\n"
-#~ "Before you proceed, you should save all open images."
-#~ msgstr ""
-#~ "\n"
-#~ "VAROVÁNÍ: Nepokoušejte se rozdělit jiné soubory než MPEG1 videa.\n"
-#~ "Než budete pokračovat, je vhodné zapsat všechny otevřené obrázky."
-
-#~ msgid "Split MPEG1 Video to Frames"
-#~ msgstr "Rozdělit MPEG1 video do políček"
-
-#~ msgid "Select Frame Range"
-#~ msgstr "Výběr rozsahu políček"
-
-#~ msgid "Conditions to run the xanim based video split"
-#~ msgstr "Podmínky ke spuštění rozdělení videa založeného na xanim"
-
-#~ msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
-#~ msgstr "1.) xanim 2.80.0 exportující vydání (loki verze)"
-
-#~ msgid "    must be installed somewhere in your PATH"
-#~ msgstr "    musí být nainstalováno někde v CESTĚ"
-
-#~ msgid "    you can get xanim exporting edition at"
-#~ msgstr "    exportující vydání xanim lze získat na"
-
-#~ msgid ""
-#~ "2.) if your xanim exporting edition is not in your PATH or is not named "
-#~ "xanim"
-#~ msgstr ""
-#~ "2.) není-li exportující vydání xanim v cestě, nebo se nenazývá xanim,"
-
-#~ msgid "    you have to set Environment variable GAP_XANIM_PROG "
-#~ msgstr "    je nutné nastavít proměnnou GAP_XANIM_PROG"
-
-#~ msgid "    to your xanim exporting program and restart gimp"
-#~ msgstr "    na exportující program xanim a restartovat gimp"
-
-#~ msgid "An ERROR occured while trying to call xanim:"
-#~ msgstr "Při pokusu o volání xanim došlo k CHYBĚ:"
-
-#~ msgid "XANIM Information"
-#~ msgstr "Informace o XANIM"
-
-#~ msgid ""
-#~ "Name of a videofile to READ by xanim.\n"
-#~ "Frames are extracted from the videofile\n"
-#~ "and written to separate diskfiles.\n"
-#~ "xanim exporting edition is required."
-#~ msgstr ""
-#~ "Jméno videosouboru ke ČTENÍ programem xanim.\n"
-#~ "Políčka z videosouboru jsou získaná\n"
-#~ "a zapsaná do samostatných diskových souborů.\n"
-#~ "Vyžaduje exportující vydání xanim."
-
-#~ msgid ""
-#~ "Basename for the AnimFrames to write on disk\n"
-#~ "(framenumber and extension is added)"
-#~ msgstr ""
-#~ "Základ jména pro zápis políček animace na disk\n"
-#~ "(číslo políčka a přípona jsou doplněny)"
-
-#~ msgid "Format"
-#~ msgstr "Formát"
-
-#~ msgid ""
-#~ "Fileformat for the extracted AnimFrames\n"
-#~ "(xcf is extracted as ppm and converted to xcf)"
-#~ msgstr ""
-#~ "Formát získaných políček animace\n"
-#~ "(xcf je získán jako ppm a převeden do xcf)"
-
-#~ msgid "Extract Frames"
-#~ msgstr "Získat kanály"
-
-#~ msgid "Enable extraction of Frames"
-#~ msgstr "Povolit získání políček"
-
-#~ msgid "Extract Audio"
-#~ msgstr "Získat zvuk"
-
-#~ msgid ""
-#~ "Enable extraction of audio to raw audiofile\n"
-#~ "(frame range limits are ignored for audio)"
-#~ msgstr ""
-#~ "Povolit získání zvuku do nezpracovaného zvukového souboru\n"
-#~ "(omezení rozsahu políček je pro zvuk ignorováno)"
-
-#~ msgid "Jpeg Quality:"
-#~ msgstr "Kvalita jpeg:"
-
-#~ msgid ""
-#~ "Quality for resulting Jpeg frames\n"
-#~ "(is ignored when other formats are used)"
-#~ msgstr ""
-#~ "Kvalita výsledných jpeg políček\n"
-#~ "(pro jiné formáty ignorováno)"
-
-#~ msgid "Run asynchronously"
-#~ msgstr "Spustit asynchronně"
-
-#~ msgid ""
-#~ "Run xanim asynchronously and delete unwanted frames\n"
-#~ "(out of the specified range) while xanim is still running"
-#~ msgstr ""
-#~ "Spustí xanim asynchronně a smaže nežádoucí políčka\n"
-#~ "(mimo určený rozsah) za běhu xanim"
-
-#~ msgid ""
-#~ "\n"
-#~ "Warning: xanim 2.80 has only limited MPEG support.\n"
-#~ "Most of the frames (type P and B) will be skipped."
-#~ msgstr ""
-#~ "\n"
-#~ "Varování: xanim 2.80 má pouze omezenou podporu MPEG.\n"
-#~ "Většina políček (typy P a B) bude přeskočena."
-
-#~ msgid "Split any Xanim readable Video to Frames"
-#~ msgstr "Rozdělit video čitelné Xanim do políček"
-
-#~ msgid ""
-#~ "can't find any extracted frames,\n"
-#~ "%s\n"
-#~ "maybe xanim has failed or was cancelled"
-#~ msgstr ""
-#~ "nelze nalézt žádná získaná políčka\n"
-#~ "%s\n"
-#~ "možná xanim selhal nebo byl zastaven"
-
-#~ msgid "frames are not extracted, because overwrite of %s was cancelled"
-#~ msgstr "políčka nejsou získána, protože přepsání %s bylo zrušeno"
-
-#~ msgid "failed to overwrite %s (check permissions ?)"
-#~ msgstr "přepsání %s selhalo (zkontrolujte práva?)"
-
-#~ msgid "failed to write %s (check permissions ?)"
-#~ msgstr "zápis %s selhal (zkontrolujte práva?)"
-
-#~ msgid "could not execute %s (check if xanim is installed)"
-#~ msgstr "nelze spustit %s (zkontrolujte, zda je instalován xanim)"
-
-#~ msgid "%s does not look like xanim"
-#~ msgstr "%s nevypadá jako xanim"
-
-#~ msgid ""
-#~ "The xanim program on your system \"%s\"\n"
-#~ "does not support the exporting options Ea, Ee, Eq"
-#~ msgstr ""
-#~ "Program xanim na vašem systému \"%s\"\n"
-#~ "nepodporuje exportní volby Ea, Ee, Eq"
-
-#~ msgid ""
-#~ "The xanim program on your system \"%s\"\n"
-#~ "does not support exporting of single frames"
-#~ msgstr ""
-#~ "Program xanim na vašem systému \"%s\"\n"
-#~ "nepodporuje export jednotlivých políček"
-
-#~ msgid "videofile %s not existent or empty\n"
-#~ msgstr "videosoubor %s neexistuje nebo je prázdný\n"
-
-#~ msgid ""
-#~ "could not create %s directory\n"
-#~ "(that is required for xanim frame export)"
-#~ msgstr ""
-#~ "nelze vytvořit adresář %s\n"
-#~ "(vyžadováno programem xanim pro export políček)"
-
-#~ msgid "extracting frames..."
-#~ msgstr "získávají se políčka..."
-
-#~ msgid ""
-#~ "could not start xanim process\n"
-#~ "(program=%s)"
-#~ msgstr ""
-#~ "nelze spustit proces xanim\n"
-#~ "(program=%s)"
-
-#~ msgid ""
-#~ "can't find any extracted frames,\n"
-#~ "xanim has failed or was cancelled"
-#~ msgstr ""
-#~ "nelze nalézt žádná získaná políčka,\n"
-#~ "xanim selhal nebo byl zastaven"
-
-#~ msgid "renaming frames..."
-#~ msgstr "přejmenovávají se políčka..."
-
-#~ msgid "converting frames..."
-#~ msgstr "převádějí se políčka..."
-
-#~ msgid "backup to file"
-#~ msgstr "záloha do souboru"
-
-#~ msgid "Make backup of the image after each step"
-#~ msgstr "Vytvořit zálohu obrázku po každém kroku"
-
-#~ msgid "Continue"
-#~ msgstr "Pokračovat"
-
-#~ msgid "Skip %d"
-#~ msgstr "Přeskočit %d"
-
-#~ msgid ""
-#~ "2nd call of %s\n"
-#~ "(define end-settings)"
-#~ msgstr ""
-#~ "2. volání %s\n"
-#~ "(definuje koncová nastavení)"
-
-#~ msgid ""
-#~ "Non-Interactive call of %s\n"
-#~ "(for all layers in between)"
-#~ msgstr ""
-#~ "Neinteraktivní volání %s\n"
-#~ "(na všechny vrstvy rozsahu)"
-
-#~ msgid "Applying Filter to all Layers..."
-#~ msgstr "Aplikuje se filtr na všechny vrstvy..."
-
-#~ msgid "Select Filter for Animated apply"
-#~ msgstr "Volba filtru pro animované použití"
-
-#~ msgid "Apply Constant"
-#~ msgstr "Konstantní užití"
-
-#~ msgid "Apply Varying"
-#~ msgstr "Proměnné užití"
-
-#~ msgid "<Image>/Filters/Filter all Layers..."
-#~ msgstr "<Image>/Filtry/Filtrovat všechny vrstvy..."
-
-#~ msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
-#~ msgstr "<Image>/Video/Rozdělit video do políček/Cokoliv čitelné XANIM..."
-
-#~ msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
-#~ msgstr "<Toolbox>/Rozš./Rozdělit video do políček/Cokoliv čitelné XANIM..."
-
-#~ msgid "<Image>/Video/Encode/MPEG1..."
-#~ msgstr "<Image>/Video/Kódování/MPEG1..."
-
-#~ msgid "<Image>/Video/Encode/MPEG2..."
-#~ msgstr "<Image>/Video/Kódování/MPEG2..."
-
-#~ msgid "GAP Message"
-#~ msgstr "Zpráva GAP"
-
-#~ msgid ""
-#~ "OPERATION CANCELLED.\n"
-#~ "Current frame changed while dialog was open."
-#~ msgstr ""
-#~ "OPERACE ZRUŠENA.\n"
-#~ "Aktuální políčko bylo změněno, zatímco byl dialog otevřený."
-
-#~ msgid ""
-#~ "OPERATION CANCELLED.\n"
-#~ "GAP plug-ins only work with filenames\n"
-#~ "that end in numbers like _0001.xcf.\n"
-#~ "==> Rename your image, then try again."
-#~ msgstr ""
-#~ "OPERACE ZRUŠENA.\n"
-#~ "GAP-moduly pracují pouze se jmény souborů,\n"
-#~ "které končí na číslo jako _0001.xcf.\n"
-#~ "==> Přejmenujte obrázek a zkuste znovu."
-
-#~ msgid ""
-#~ "You are using a file format != xcf\n"
-#~ "Save Operations may result\n"
-#~ "in loss of layer information."
-#~ msgstr ""
-#~ "Užíváte formátu souboru != xcf\n"
-#~ "Operace zápisu mohou mít za výsledek\n"
-#~ "ztrátu informace o vrstvách."
-
-#~ msgid "Save Flattened"
-#~ msgstr "Zapsat sloučené"
-
-#~ msgid "Save As Is"
-#~ msgstr "Zapsat tak, jak je"
-
-#~ msgid "Error: could not rename frame %ld to %ld"
-#~ msgstr "Chyba: nelze přejmenovat políčko %ld na %ld"
-
-#~ msgid "Error: could not save frame %s"
-#~ msgstr "Chyba: nelze zapsat políčko %s"
-
-#~ msgid "Duplicating frames..."
-#~ msgstr "Duplikují se políčka..."
-
-#~ msgid "Renumber Framesequence..."
-#~ msgstr "Přečíslovat sled políček..."
-
-#~ msgid "Goto Frame (%ld/%ld)"
-#~ msgstr "Jít na políčko (%ld/%ld)"
-
-#~ msgid "Destination Frame Number (%ld  - %ld)"
-#~ msgstr "Číslo cílového políčka (%ld  - %ld)"
-
-#~ msgid "Number:"
-#~ msgstr "Počet:"
-
-#~ msgid "Delete Frames (%ld/%ld)"
-#~ msgstr "Smazat políčka (%ld/%ld)"
-
-#~ msgid "Delete Frames from %ld to (number)"
-#~ msgstr "Smazání políček od %ld do (číslo)"
-
-#~ msgid "Duplicate Frames (%ld/%ld)"
-#~ msgstr "Duplikovat políčka (%ld/%ld)"
-
-#~ msgid "Source Range starts at this framenumber"
-#~ msgstr "Na tomto políčku je začátek zdrojového rozsahu"
-
-#~ msgid "Source Range ends at this framenumber"
-#~ msgstr "Na tomto políčku je konec zdrojového rozsahu"
-
-#~ msgid "N times:"
-#~ msgstr "Nkrát:"
-
-#~ msgid ""
-#~ "Copy selected Range n-times  \n"
-#~ "(you may type in Values > 99)"
-#~ msgstr ""
-#~ "Kopíruje zvolený rozsah nkrát  \n"
-#~ "(vypsat lze hodnoty > 99)"
-
-#~ msgid "Duplicate Frame Range"
-#~ msgstr "Duplikovat rozsah políček"
-
-#~ msgid "Exchange current Frame (%ld)"
-#~ msgstr "Zaměnit aktuální políčko (%ld)"
-
-#~ msgid "With Frame (number)"
-#~ msgstr "S políčkem (číslo)"
-
-#~ msgid "Framesequence Shift (%ld/%ld)"
-#~ msgstr "Posun sekvence políček (%ld/%ld)"
-
-#~ msgid "Affected Range starts at this framenumber"
-#~ msgstr "Dotčený rozsah začíná na tomto políčku"
-
-#~ msgid "Affected Range ends at this framenumber"
-#~ msgstr "Dotčený rozsah končí na tomto políčku"
-
-#~ msgid "N-Shift:"
-#~ msgstr "N-posun:"
-
-#~ msgid ""
-#~ "Renumber the affected framesequence     \n"
-#~ "(numbers are shifted in circle by N)"
-#~ msgstr ""
-#~ "Přečíslování sekvence políček     \n"
-#~ "(čísla jsou posunuta cyklicky o N)"
-
-#~ msgid "Framesequence shift"
-#~ msgstr "Posunout sekvenci políček"
-
-#~ msgid ""
-#~ "Can't execute more than 1 Video Function\n"
-#~ "on the same AnimFrame Image at the same time\n"
-#~ "LOCK ID:%s\n"
-#~ msgstr ""
-#~ "Nelze vykonávat více než 1 videofunkci\n"
-#~ "najednou na stejném animačním políčku\n"
-#~ "ZÁMEK ID:%s\n"
-
-#~ msgid "<Image>/Video/Goto/Next Frame"
-#~ msgstr "<Image>/Video/Skok/Následující políčko"
-
-#~ msgid "<Image>/Video/Goto/Previous Frame"
-#~ msgstr "<Image>/Video/Skok/Předchozí políčko"
-
-#~ msgid "<Image>/Video/Goto/First Frame"
-#~ msgstr "<Image>/Video/Skok/První políčko"
-
-#~ msgid "<Image>/Video/Goto/Last Frame"
-#~ msgstr "<Image>/Video/Skok/Poslední políčko"
-
-#~ msgid "<Image>/Video/Goto/Any Frame..."
-#~ msgstr "<Image>/Video/Skok/Zadané políčko..."
-
-#~ msgid "<Image>/Video/Delete Frames..."
-#~ msgstr "<Image>/Video/Smazat políčka..."
-
-#~ msgid "<Image>/Video/Duplicate Frames..."
-#~ msgstr "<Image>/Video/Duplikovat políčka..."
-
-#~ msgid "<Image>/Video/Exchange Frame..."
-#~ msgstr "<Image>/Video/Vyměnit políčka..."
-
-#~ msgid "<Image>/Video/Move Path..."
-#~ msgstr "<Image>/Video/Cesta přesunu..."
-
-#~ msgid "<Image>/Video/Frames to Image..."
-#~ msgstr "<Image>/Video/Políčka do obrázku..."
-
-#~ msgid "<Image>/Video/Frames Flatten..."
-#~ msgstr "<Image>/Video/Sloučit políčka..."
-
-#~ msgid "<Image>/Video/Frames LayerDel..."
-#~ msgstr "<Image>/Video/Smazat vrstvu políček..."
-
-#~ msgid "<Image>/Video/Frames Convert..."
-#~ msgstr "<Image>/Video/Převést políčka..."
-
-#~ msgid "<Image>/Video/Frames Resize..."
-#~ msgstr "<Image>/Video/Změnit plátno políček..."
-
-#~ msgid "<Image>/Video/Frames Crop..."
-#~ msgstr "<Image>/Video/Ořiznout políčka..."
-
-#~ msgid "<Image>/Video/Frames Scale..."
-#~ msgstr "<Image>/Video/Změnit velikost políček..."
-
-#~ msgid "<Image>/Video/Split Image to Frames..."
-#~ msgstr "<Image>/Video/Rozdělit obrázek do políček..."
-
-#~ msgid "<Image>/Video/Framesequence Shift..."
-#~ msgstr "<Image>/Video/Posun sledu políček..."
-
-#~ msgid "<Image>/Video/Frames Modify..."
-#~ msgstr "<Image>/Video/Změna políček..."
-
-#~ msgid "Pattern is equal to LayerName"
-#~ msgstr "Vzorek je shodný se jménem vrstvy"
-
-#~ msgid "Pattern is Start of LayerName"
-#~ msgstr "Vzorek je počátek jména vrstvy"
-
-#~ msgid "Pattern is End of Layername"
-#~ msgstr "Vzorek je konec jména vrstvy"
-
-#~ msgid "Pattern is a Part of LayerName"
-#~ msgstr "Vzorek je část jména vrstvy"
-
-#~ msgid "Pattern is LayerstackNumber List"
-#~ msgstr "Vzorek je seznam čísel zásobníku vrstev"
-
-#~ msgid "Pattern is REVERSE-stack List"
-#~ msgstr "Vzorek je seznam OBRÁCENÉHO zásobníku"
-
-#~ msgid "All Visible (ignore Pattern)"
-#~ msgstr "Všechny viditelné (ignorovat vzorek)"
-
-#~ msgid "Select all Layers where Layername is equal to Pattern"
-#~ msgstr "Zvolí všechny vrstvy, pro které je vzorek shodný se jménem vrstvy"
-
-#~ msgid "Select all Layers where Layername starts with Pattern"
-#~ msgstr "Zvolí všechny vrstvy, pro které je vzorek počátkem jména vrstvy"
-
-#~ msgid "Select all Layers where Layername ends up with Pattern"
-#~ msgstr "Zvolí všechny vrstvy, pro které je vzorek koncem jména vrstvy"
-
-#~ msgid "Select all Layers where Layername contains Pattern"
-#~ msgstr "Zvolí všechny vrstvy, jejichž jméno obsahuje vzorek"
-
-#~ msgid ""
-#~ "Select Layerstack positions.\n"
-#~ "0, 4-5, 8\n"
-#~ "where 0 == Top-layer"
-#~ msgstr ""
-#~ "Zvolí pozice v zásobníku vrstev.\n"
-#~ "0, 4-5, 8\n"
-#~ "kde 0 == vrchní vrstva"
-
-#~ msgid ""
-#~ "Select Layerstack positions.\n"
-#~ "0, 4-5, 8\n"
-#~ "where 0 == BG-layer"
-#~ msgstr ""
-#~ "Zvolí pozice v zásobníku vrstev.\n"
-#~ "0, 4-5, 8\n"
-#~ "kde 0 == spodní vrstva"
-
-#~ msgid "Select all visible Layers"
-#~ msgstr "Vybrat všechny viditelné vrstvy"
-
-#~ msgid "Set Layer(s) visible"
-#~ msgstr "Nastavit vrstvy viditelné"
-
-#~ msgid "Set Layer(s) invisible"
-#~ msgstr "Nastavit vrstvy neviditelné"
-
-#~ msgid "Set Layer(s) linked"
-#~ msgstr "Nastavit vrstvy spojené"
-
-#~ msgid "Set Layer(s) unlinked"
-#~ msgstr "Nastavit vrstvy rozpojené"
-
-#~ msgid "Raise Layer(s)"
-#~ msgstr "Vrstvy výš"
-
-#~ msgid "Lower Layer(s)"
-#~ msgstr "Vrstvy níž"
-
-#~ msgid "Merge Layer(s) expand as necessary"
-#~ msgstr "Spojit vrstvy rozšířené dle potřeby"
-
-#~ msgid "Merge Layer(s) clipped to image"
-#~ msgstr "Spojit vrstvy oříznuté dle potřeby"
-
-#~ msgid "Merge Layer(s) clipped to bg-layer"
-#~ msgstr "Spojit vrstvy oříznuté dle spodní vrstvy"
-
-#~ msgid "Apply filter on Layer(s)"
-#~ msgstr "Použít filtr na vrstvy"
-
-#~ msgid "Duplicate Layer(s)"
-#~ msgstr "Duplikovat vrstvy"
-
-#~ msgid "Delete Layer(s)"
-#~ msgstr "Smazat vrstvy"
-
-#~ msgid "Rename Layer(s)"
-#~ msgstr "Přejmenovat vrstvy"
-
-#~ msgid ""
-#~ "Perform function on one or more Layer(s)\n"
-#~ "in all frames of the selected frame range\n"
-#~ msgstr ""
-#~ "Provádí funkci na více vrstvách\n"
-#~ "na všech políčkách ze zvoleného rozsahu\n"
-
-#~ msgid "From Frame:"
-#~ msgstr "Výchozí políčko:"
-
-#~ msgid "first handled frame"
-#~ msgstr "první zpracované políčko"
-
-#~ msgid "To Frame:"
-#~ msgstr "Koncové políčko:"
-
-#~ msgid "last handled frame"
-#~ msgstr "poslední zpracované políčko"
-
-#~ msgid "Select Layer(s):"
-#~ msgstr "Výběr vrstev:"
-
-#~ msgid "Select Pattern:"
-#~ msgstr "Výběr vzorku:"
-
-#~ msgid ""
-#~ "String to identify layer names    \n"
-#~ "or layerstack position numbers\n"
-#~ "0,3-5"
-#~ msgstr ""
-#~ "Řetězec k identifikaci jmen vrstev    \n"
-#~ "nebo pozičních čísel v zásobníku vrstev\n"
-#~ "0,3-5"
-
-#~ msgid "Case sensitive"
-#~ msgstr "Citlivost velikost písmen"
-
-#~ msgid "Lowercase and UPPERCASE letters are considered as different"
-#~ msgstr "Malá a VELKÁ písmena jsou rozlišována"
-
-#~ msgid "Invert Selection"
-#~ msgstr "Invertovat výběr"
-
-#~ msgid "Perform actions on all unselected Layers"
-#~ msgstr "Provedení akcí na všech nevybraných vrstvách"
-
-#~ msgid "Function:"
-#~ msgstr "Funkce:"
-
-#~ msgid "Function to be performed on all selected layers"
-#~ msgstr "Funkce, která bude provedena na všech vybraných vrstvách"
-
-#~ msgid "New Layername:"
-#~ msgstr "Nové jméno vrstvy:"
-
-#~ msgid ""
-#~ "New Layername for all handled layers \n"
-#~ "[####] is replaced by frame number\n"
-#~ "(is used on function rename only)"
-#~ msgstr ""
-#~ "Nové jméno vrstvy pro všechny zpracované vrstvy\n"
-#~ "[####] je zaměněno za číslo políčka\n"
-#~ "(použito pouze ve funkci přejmenování)"
-
-#~ msgid "Frames Modify"
-#~ msgstr "Úpravy políček"
-
-#~ msgid ""
-#~ "Non-Interactive call of %s\n"
-#~ "(for all selected layers)"
-#~ msgstr ""
-#~ "Neinteraktivní volání %s\n"
-#~ "(na všech vybraných vrstvách)"
-
-#~ msgid "Select Filter for Animated frames-apply"
-#~ msgstr "Volba filtru pro použití na animovaná políčka"
-
-#~ msgid "GAP Modify: No layer selected in last handled frame"
-#~ msgstr ""
-#~ "Modifikace GAP: V posledním zpracovaném políčku není zvolena žádná vrstva"
-
-#~ msgid "Modifying Frames/Layer(s)..."
-#~ msgstr "Modifikují se políčka/vrstvy..."
-
-#~ msgid "No selected Layer in start frame"
-#~ msgstr "Není vybrána vrstva v počátečním políčku"
-
-#~ msgid "Dissolve"
-#~ msgstr "Rozpouštění"
-
-#~ msgid "Multiply"
-#~ msgstr "Násobení"
-
-#~ msgid "Difference"
-#~ msgstr "Diference"
-
-#~ msgid "Darken Only"
-#~ msgstr "Pouze ztmavení"
-
-#~ msgid "Lighten Only"
-#~ msgstr "Pouze zesvětlení"
-
-#~ msgid "Left  Top"
-#~ msgstr "Levý  horní"
-
-#~ msgid "Left  Bottom"
-#~ msgstr "Levý  dolní"
-
-#~ msgid "Right Top"
-#~ msgstr "Pravý horní"
-
-#~ msgid "Right Bottom"
-#~ msgstr "Pravý dolní"
-
-#~ msgid "Loop Reverse"
-#~ msgstr "Zpětná smyčka"
-
-#~ msgid "Once"
-#~ msgstr "Jednou"
-
-#~ msgid "OnceReverse"
-#~ msgstr "Jednou zpětně"
-
-#~ msgid "Frame Loop"
-#~ msgstr "Políčko smyčky"
-
-#~ msgid "Frame Loop Reverse"
-#~ msgstr "Políčko zpětné smyčky"
-
-#~ msgid "Frame Once"
-#~ msgstr "Políčko jednou"
-
-#~ msgid "Frame OnceReverse"
-#~ msgstr "Políčko jednou zpětně"
-
-#~ msgid "Frame PingPong"
-#~ msgstr "Políčko tam a zpět"
-
-#~ msgid "Frame None"
-#~ msgstr "Políčko ničeho"
-
-#~ msgid "Move Path"
-#~ msgstr "Cesta přesunu"
-
-#~ msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
-#~ msgstr ""
-#~ "Zobrazit náhledové políčko se zvolenou zdrojovou vrstvou v aktuálním "
-#~ "řídícím bodě"
-
-#~ msgid "Anim Preview"
-#~ msgstr "Animovaný náhled"
-
-#~ msgid "Generate Animated Preview as multilayer image"
-#~ msgstr "Generovat animovaný náhled jako vícevrstevný obrázek"
-
-#~ msgid "Copy moving source-layer(s) into frames"
-#~ msgstr "Kopírování přesunu zdrojové vrstvy do políček"
-
-#~ msgid "Start Frame:"
-#~ msgstr "Počáteční políčko:"
-
-#~ msgid "First handled frame"
-#~ msgstr "První zpracované políčko"
-
-#~ msgid "End Frame:"
-#~ msgstr "Koncové políčko:"
-
-#~ msgid "Last handled frame"
-#~ msgstr "Poslední zpracované políčko"
-
-#~ msgid "Preview Frame:"
-#~ msgstr "Náhledové políčko:"
-
-#~ msgid "Frame to show when UpdPreview button is pressed"
-#~ msgstr "Políčko, které bude ukázáno, je-li stisknuta aktualizace náhledu"
-
-#~ msgid "Layerstack:"
-#~ msgstr "Zásobník vrstev:"
-
-#~ msgid ""
-#~ "How to insert SrcLayer into the Dst. Frame's Layerstack\n"
-#~ "0 means on top i.e. in front"
-#~ msgstr ""
-#~ "Způsob vložení zdrojové vrstvy do zásobníku vrstev cíle\n"
-#~ "0 znamená navrch, tj. dopředu"
-
-#~ msgid "Force visibility"
-#~ msgstr "Vnutit viditelnost"
-
-#~ msgid "Force visibility for all copied Src-Layers"
-#~ msgstr "Vnutit viditelnost pro všechny zkopírované zdrojové vrstvy"
-
-#~ msgid "Clip To Frame"
-#~ msgstr "Oříznout dle políčka"
-
-#~ msgid "Clip all copied Src-Layers at Frame Boundaries"
-#~ msgstr "Oříznout všechny kopírované zdrojové vrstvy na hranicích políček"
-
-#~ msgid ""
-#~ "No Source Image was selected\n"
-#~ "(Please open a 2nd Image of the same type before opening Move Path)"
-#~ msgstr ""
-#~ "Nebyl zvolen žádný zdrojový obrázek\n"
-#~ "(Otevřete 2. obrázek stejného typu před otevřením Cesty přesunu)"
-
-#~ msgid "Object on empty frames"
-#~ msgstr "Objekt v prázdných políčkách"
-
-#~ msgid "Object on one frame"
-#~ msgstr "Objekt na jednom políčku"
-
-#~ msgid "Exact Object on frames"
-#~ msgstr "Přesné objekty na políčkách"
-
-#~ msgid "Anim Preview Mode"
-#~ msgstr "Režim animovaného náhledu"
-
-#~ msgid "Scale Preview"
-#~ msgstr "Změna velikosti náhledu"
-
-#~ msgid "Scale down size of the generated animated preview (in %)"
-#~ msgstr "Zmenšení velikosti generovaného animovaného náhledu (v %)"
-
-#~ msgid "Framerate"
-#~ msgstr "Frekvence políček"
-
-#~ msgid "Framerate to use in the animated preview in frames/sec"
-#~ msgstr "Frekvence políček použitá v animovaném náhledu v políčkách/sekundu"
-
-#~ msgid "Copy to Video Buffer"
-#~ msgstr "Kopírovat do video bufferu"
-
-#~ msgid ""
-#~ "Save all single frames of animated preview to video buffer\n"
-#~ "(configured in gimprc by video-paste-dir and video-paste-basename)"
-#~ msgstr ""
-#~ "Zapíše všechna jednotlivá políčka animovaného náhledu do video bufferu\n"
-#~ "(nakonfigurováno v gimprc pomocí video-paste-dir a video-paste-basename)"
-
-#~ msgid "Move Path Animated Preview"
-#~ msgstr "Cesta přesunu animovaného náhledu"
-
-#~ msgid "Generate Animated Preview failed\n"
-#~ msgstr "Generování animovaného náhledu selhalo\n"
-
-#~ msgid "Load Path Points from file"
-#~ msgstr "Čtení bodů cesty ze souboru"
-
-#~ msgid "Save Path Points to file"
-#~ msgstr "Zápis bodů cesty do souboru"
-
-#~ msgid "Current Point: [ %3d ] of [ %3d ]"
-#~ msgstr "Aktuální bod: [%3d] z [%3d]"
-
-#~ msgid "Source Select"
-#~ msgstr "Výběr zdroje"
-
-#~ msgid "Source Image/Layer:"
-#~ msgstr "Zdrojový obrázek/vrstva:"
-
-#~ msgid "Source Object to insert into Frame Range"
-#~ msgstr "Zdrojový objekt ke vložení do rozsahu políček"
-
-#~ msgid "Mode:"
-#~ msgstr "Režim:"
-
-#~ msgid "Paintmode"
-#~ msgstr "Režim kreslení"
-
-#~ msgid "Stepmode:"
-#~ msgstr "Režim krokování:"
-
-#~ msgid "How to fetch the next SrcLayer at the next handled frame"
-#~ msgstr ""
-#~ "Způsob vyvolání následující zdrojové vrstvy na následujícím zpracovaném "
-#~ "políčku"
-
-#~ msgid "Handle:"
-#~ msgstr "Ovládání:"
-
-#~ msgid "How to place the SrcLayer at Controlpoint Coordinates"
-#~ msgstr "Způsob umístění zdrojové vrstvy na souřadnice řídícího bodu"
-
-#~ msgid "Move Path Preview"
-#~ msgstr "Náhled cesty přesunu"
-
-#~ msgid "X Coordinate"
-#~ msgstr "Souřadnice X"
-
-#~ msgid "Y Coordinate"
-#~ msgstr "Souřadnice Y"
-
-#~ msgid "Scale Source Layer's Width in percent"
-#~ msgstr "Přepočet šířky zdrojové vrstvy v procentech"
-
-#~ msgid "Scale SrcLayer's Height in percent"
-#~ msgstr "Přepočet výšky zdrojové vrstvy v procentech"
-
-#~ msgid "SrcLayer's Opacity in percent"
-#~ msgstr "Krytí zdrojové vrstvy v procentech"
-
-#~ msgid "Rotate SrcLayer (in degree)"
-#~ msgstr "Rotace zdrojové vrstvy (ve stupních)"
-
-#~ msgid "Keyframe:"
-#~ msgstr "Klíčové políčko:"
-
-#~ msgid ""
-#~ "Fix Controlpoint to Keyframe number\n"
-#~ "(0 == No Keyframe)"
-#~ msgstr ""
-#~ "Upevnění řídícího bodu dle čísla klíčového políčka\n"
-#~ "(0 == žádné klíčové políčko)"
-
-#~ msgid "Add Point"
-#~ msgstr "Přidat bod"
-
-#~ msgid ""
-#~ "Add Controlpoint at end\n"
-#~ "(the last Point is duplicated)"
-#~ msgstr ""
-#~ "Přidá řídící bod na konec\n"
-#~ "(poslední bod je zduplikován)"
-
-#~ msgid "Show Path"
-#~ msgstr "Zobrazit cestu"
-
-#~ msgid ""
-#~ "Show Path Lines and enable pick/drag with left button or move with right "
-#~ "button"
-#~ msgstr ""
-#~ "Zobrazit cestu a povolit chycení/potáhnutí levým tlačítkem nebo přesun "
-#~ "pravým tlačítkem"
-
-#~ msgid ""
-#~ "Insert Controlpoint\n"
-#~ "(the current Point is duplicated)"
-#~ msgstr ""
-#~ "Vloží řídící bod\n"
-#~ "(aktuální bod je zduplikován)"
-
-#~ msgid "Delete current Controlpoint"
-#~ msgstr "Smaže současný řídící bod"
-
-#~ msgid "Prev Point"
-#~ msgstr "Předchozí bod"
-
-#~ msgid "Show Previous Controlpoint"
-#~ msgstr "Zobrazí předchozí bod"
-
-#~ msgid "Next Point"
-#~ msgstr "Další bod"
-
-#~ msgid "Show Next Controlpoint"
-#~ msgstr "Zobrazí následující bod"
-
-#~ msgid "First Point"
-#~ msgstr "První bod"
-
-#~ msgid "Show First Controlpoint"
-#~ msgstr "Zobrazí první bod"
-
-#~ msgid "Last Point"
-#~ msgstr "Poslední bod"
-
-#~ msgid "Show Last Controlpoint"
-#~ msgstr "Zobrazí poslední bod"
-
-#~ msgid "Clear Point"
-#~ msgstr "Smazat bod"
-
-#~ msgid "Reset the current Controlpoint to default Values"
-#~ msgstr "Nastaví aktuální řídící bod na implicitní hodnoty"
-
-#~ msgid "Clear All Points"
-#~ msgstr "Smazat všechny body"
-
-#~ msgid ""
-#~ "Reset all Controlpoints to default Values but dont change the path (X/Y "
-#~ "Values)"
-#~ msgstr ""
-#~ "Nastaví všechny řídící body na implicitní hodnoty, ale nemění cestu "
-#~ "(hodnoty X/Y)"
-
-#~ msgid "Rotate Follow"
-#~ msgstr "Sledovat rotací"
-
-#~ msgid ""
-#~ "Set Rotation for all Controlpoints to follow the shape of the path.\n"
-#~ "(Shift: use Rotation of contolpoint 1 as offset)"
-#~ msgstr ""
-#~ "Nastaví rotaci pro všechny řídící body, aby sledovaly tvar cesty.\n"
-#~ "(Přeřaďovač: použije rotaci řídícího bodu 1 jako posun)"
-
-#~ msgid "Delete All Points"
-#~ msgstr "Smazat všechny body"
-
-#~ msgid "Delete all Controlpoints"
-#~ msgstr "Smaže všechny řídící body"
-
-#~ msgid "Load Points"
-#~ msgstr "Načíst body"
-
-#~ msgid "Load Controlpoints from file"
-#~ msgstr "Čte řídící body ze souboru"
-
-#~ msgid "Save Points"
-#~ msgstr "Zapsat body"
-
-#~ msgid "Save Controlpoints to file"
-#~ msgstr "Zapíše řídící body do souboru"
-
-#~ msgid ""
-#~ "Can't operate with current Controlpoint\n"
-#~ "or Keyframe settings"
-#~ msgstr ""
-#~ "Nelze pracovat s aktuálním řídícím bodem\n"
-#~ "nebo nastavením klíčového políčka"
-
-#~ msgid "Reset Keyframes"
-#~ msgstr "Obnovit klíčová políčka"
-
-#~ msgid "Move Path Controlpointcheck"
-#~ msgstr "Kontrola řídících bodů cesty přesunu"
-
-#~ msgid "Errors:"
-#~ msgstr "Chyby:"
-
-#~ msgid ""
-#~ "No Source Image was selected.\n"
-#~ "Please open a 2nd Image of the same type before opening Move Path."
-#~ msgstr ""
-#~ "Nebyl zvolen žádný zdrojový obrázek.\n"
-#~ "Otevřete 2. obrázek stejného typu před otevřením Cesty přesunu."
-
-#~ msgid "Copying Layers into Frames..."
-#~ msgstr "Kopírují se vrstvy do políček..."
-
-#~ msgid "Generating Animated Preview..."
-#~ msgstr "Vytváří se animovaný náhled..."
-
-#~ msgid ""
-#~ "\n"
-#~ "Error: Keyframe %d at point [%d] higher or equal than last handled frame"
-#~ msgstr ""
-#~ "\n"
-#~ "Chyba: Klíčové políčko %d v bodu [%d] větší nebo rovno poslednímu "
-#~ "obslouženému políčku"
-
-#~ msgid ""
-#~ "\n"
-#~ "Error: Keyframe %d at point [%d] leaves not enough space (frames)\n"
-#~ "for the previous controlpoints"
-#~ msgstr ""
-#~ "\n"
-#~ "Chyba: Klíčové políčko %d v bodu [%d] nenechává dostatečný prostor "
-#~ "(políčka)\n"
-#~ "pro předchozí řídící body"
-
-#~ msgid ""
-#~ "\n"
-#~ "Error: Keyframe %d is not in sequence at point [%d]"
-#~ msgstr ""
-#~ "\n"
-#~ "Chyba: Klíčové políčko %d není v sekvenci v bodu [%d]"
-
-#~ msgid ""
-#~ "\n"
-#~ "Error: controlpoint [%d] is out of handled framerange"
-#~ msgstr ""
-#~ "\n"
-#~ "Chyba: Řídící bod [%d] jej mimo obsloužený rozsah políček"
-
-#~ msgid ""
-#~ "\n"
-#~ "Error: more controlpoints (%d) than handled frames (%d)\n"
-#~ "please reduce controlpoints or select more frames"
-#~ msgstr ""
-#~ "\n"
-#~ "Chyba: Více řídících bodů (%d) než obsloužených políček (%d),\n"
-#~ "je nutné redukovat řídící body nebo vybrat více políček"
-
-#~ msgid "Conditions to run mpeg_encode 1.5:"
-#~ msgstr "Podmínky spuštění mpeg_encode 1.5:"
-
-#~ msgid "Conditions to run mpeg2encode 1.2:"
-#~ msgstr "Podmínky spuštění mpeg2encode 1.2:"
-
-#~ msgid "1.) mpeg_encode 1.5 must be installed"
-#~ msgstr "1.) mpeg_encode 1.5 musí být nainstalován"
-
-#~ msgid "1.) mpeg2encode 1.2 must be installed"
-#~ msgstr "1.) mpeg2encode 1.2 musí být nainstalován"
-
-#~ msgid "    you can get mpeg_encode at"
-#~ msgstr "    mpeg2encode lze získat na"
-
-#~ msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
-#~ msgstr "    mpeg2encode lze získat na http://www.mpeg.org/MSSG"
-
-#~ msgid "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
-#~ msgstr "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
-
-#~ msgid "   or at ftp://ftp.mpeg.org/pub/mpeg/mssg "
-#~ msgstr "   nebo na ftp://ftp.mpeg.org/pub/mpeg/mssg "
-
-#~ msgid "2.) You need a series of single Images on disk (AnimFrames)"
-#~ msgstr ""
-#~ "2.) Je nutné mít sérii jednotlivých obrázků na disku (animační políčka)"
-
-#~ msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
-#~ msgstr "    všechny soubory ve formátech JPEG (nebo YUV nebo PNM nebo PPM)"
-
-#~ msgid "   all with fileformat PPM (or YUV)"
-#~ msgstr "   všechny soubory ve formátech  PPM (nebo YUV)"
-
-#~ msgid "    (use 'Frames Convert' from the Video Menu"
-#~ msgstr "    (použijte 'Převést políčka' z menu Video"
-
-#~ msgid "    or 'Split Image to Frames' from the Video Menu)"
-#~ msgstr "    nebo 'Rozdělit obrázek do políček' z menu Video)"
-
-#~ msgid "3.) All Images must have the same size,"
-#~ msgstr "3.) Všechny obrázky musí mít stejnou velikost,"
-
-#~ msgid "    width and height must be a multiple of 16"
-#~ msgstr "    jak šířka tak výška musí být násobky 16"
-
-#~ msgid "    (use Scale or Crop from the Video Menu)"
-#~ msgstr "    (užijte Velikost nebo Ořez z menu Video)"
-
-#~ msgid "MPEG_ENCODE Information"
-#~ msgstr "Informace o MPEG_ENCODE"
-
-#~ msgid "generate MPEG1 (ISO/IEC 11172-2) stream"
-#~ msgstr "generuje proud MPEG1 (ISO/IEC 11172-2)"
-
-#~ msgid "generate MPEG2 (ISO/IEC DIS 13818-2) stream"
-#~ msgstr "generuje proud MPEG2 (ISO/IEC DIS 13818-2)"
-
-#~ msgid "GenParams"
-#~ msgstr "Parametry generování"
-
-#~ msgid "Gen + Encode"
-#~ msgstr "Generování + kódování"
-
-#~ msgid "To   Frame:"
-#~ msgstr "Koncové políčko:"
-
-#~ msgid "Framerate :"
-#~ msgstr "Frekvence políček:"
-
-#~ msgid "framerate in frames/second"
-#~ msgstr "Frekvence políček v políčkách za sekundu"
-
-#~ msgid "Bitrate:"
-#~ msgstr "Bitová rychlost:"
-
-#~ msgid ""
-#~ "used for constant bitrates (bit/sec)                  \n"
-#~ "(low rate gives good compression + bad quality)"
-#~ msgstr ""
-#~ "použito pro pevnou bitovou rychlost (bit/s)                  \n"
-#~ "(nízká hodnota dává dobrou kompresi + špatnou kvalitu)"
-
-#~ msgid "Outputfile:"
-#~ msgstr "Výstupní soubor:"
-
-#~ msgid "Name of the resulting MPEG outputfile"
-#~ msgstr "Jméno výsledného MPEG souboru"
-
-#~ msgid "Paramfile:"
-#~ msgstr "Soubor parametrů:"
-
-#~ msgid ""
-#~ "Name of the Encoder-Parameterfile\n"
-#~ "(is generated)"
-#~ msgstr ""
-#~ "Jméno parametrického souboru kodéru\n"
-#~ "(je generované)"
-
-#~ msgid "Startscript:"
-#~ msgstr "Spouštěcí skript:"
-
-#~ msgid ""
-#~ "Name of the Startscript           \n"
-#~ "(is generated/executed)"
-#~ msgstr ""
-#~ "Jméno spouštěcího skriptu           \n"
-#~ "(je generované/spouštěné)"
-
-#~ msgid ""
-#~ "Generate parameterfile for mpeg_encode 1.5\n"
-#~ "(the freely distributed Berkeley MPEG-1 Video  Encoder.)\n"
-#~ msgstr ""
-#~ "Generuje parametrický soubor pro mpeg_encode 1.5\n"
-#~ "(volně šířený Berkeley MPEG-1 video kodér.)\n"
-
-#~ msgid "Constant Bitrate :"
-#~ msgstr "Pevná bitová rychlost:"
-
-#~ msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
-#~ msgstr ""
-#~ "Ignorovat hodnoty I/P/QSCALE a použít konstatní hodnotu bitové frekvence)"
-
-#~ msgid "Pattern:"
-#~ msgstr "Vzorek:"
-
-#~ msgid "How to encode MPEG framesequence (I/P/B frames)"
-#~ msgstr "Jak kódovat MPEG sekvenci políček (I/P/B políčka)"
-
-#~ msgid "IQSCALE:"
-#~ msgstr "IQSCALE:"
-
-#~ msgid ""
-#~ "Quality scale for I-Frames                       \n"
-#~ "(1 = best quality, 31 = best comression)"
-#~ msgstr ""
-#~ "Škála kvality pro I-políčka\n"
-#~ "(1 = nejlepší kvalita, 31 = nejlepší komprese)"
-
-#~ msgid "PQSCALE:"
-#~ msgstr "PQSCALE:"
-
-#~ msgid ""
-#~ "Quality scale for P-Frames                  \n"
-#~ "(1 = best quality, 31 = best comression)"
-#~ msgstr ""
-#~ "Škála kvality pro P-políčka\n"
-#~ "(1 = nejlepší kvalita, 31 = nejlepší komprese)"
-
-#~ msgid "BQSCALE:"
-#~ msgstr "BQSCALE:"
-
-#~ msgid ""
-#~ "Quality scale for B-Frames                  \n"
-#~ "(1 = best quality, 31 = best comression)"
-#~ msgstr ""
-#~ "Škála kvality pro B-políčka\n"
-#~ "(1 = nejlepší kvalita, 31 = nejlepší komprese)"
-
-#~ msgid "P-Search :"
-#~ msgstr "P-Hledání:"
-
-#~ msgid "Search Algorithmus used for P-frames"
-#~ msgstr "Vyhledávací algoritmus pro P-políčka"
-
-#~ msgid "B-Search :"
-#~ msgstr "B-Hledání:"
-
-#~ msgid "Search Algorithmus used for B-frames"
-#~ msgstr "Vyhledávací algoritmus pro B-políčka"
-
-#~ msgid "Gen MPEG_ENCODE Parameters"
-#~ msgstr "Parametry generování MPEG_ENCODE"
-
-#~ msgid "Encode Values"
-#~ msgstr "Hodnoty kódování"
-
-#~ msgid ""
-#~ "Generate parameterfile for mpeg2encode 1.2\n"
-#~ "(MPEG-2 Video  Encoder.)\n"
-#~ msgstr ""
-#~ "Generuje parametrický soubor pro mpeg_encode 1.2\n"
-#~ "(MPEG-2 video kodér.)\n"
-
-#~ msgid "MPEG-type :"
-#~ msgstr "Typ MPEG:"
-
-#~ msgid "Videoformat :"
-#~ msgstr "Video formát:"
-
-#~ msgid "Videoformat"
-#~ msgstr "Video formát"
-
-#~ msgid "Gen MPEG2ENCODE Parameters"
-#~ msgstr "Parametry generování MPEG2ENCODE"
-
-#~ msgid ""
-#~ "\n"
-#~ "WARNING: mpeg_encode does not support Fileformat "
-#~ msgstr ""
-#~ "\n"
-#~ "VAROVÁNÍ: mpeg_kódování nepodporuje formát souboru "
-
-#~ msgid ""
-#~ "\n"
-#~ "ERROR: width not a multiple of 16"
-#~ msgstr ""
-#~ "\n"
-#~ "CHYBA: šířka není násobkem 16"
-
-#~ msgid ""
-#~ "\n"
-#~ "ERROR: height not a multiple of 16"
-#~ msgstr ""
-#~ "\n"
-#~ "CHYBA: výška není násobkem 16"
-
-#~ msgid ""
-#~ "\n"
-#~ "WARNING: mpeg2encode does not support Fileformat "
-#~ msgstr ""
-#~ "\n"
-#~ "VAROVÁNÍ: mpeg2kódování nepodporuje formát souboru "
-
-#~ msgid ""
-#~ "\n"
-#~ "ERROR: invoked from a single image, animframe required"
-#~ msgstr ""
-#~ "\n"
-#~ "CHYBA: voláno z jediného obrázku, vyžaduje animační políčka"
-
-#~ msgid ""
-#~ "Playback         \n"
-#~ "<Shift> optimized"
-#~ msgstr ""
-#~ "Přehrávání         \n"
-#~ "<Přeřaďovač> optimalizované"
-
-#~ msgid ""
-#~ "Smart Update .xvpics\n"
-#~ "<Shift> forced upd"
-#~ msgstr ""
-#~ "Chytrá aktualizace .xvpics\n"
-#~ "<Přeřaďovač> ji vnutí"
-
-#~ msgid "Duplicate selected Frames"
-#~ msgstr "Duplikovat vybraná políčka"
-
-#~ msgid "Delete selected Frames"
-#~ msgstr "Smazat vybraná políčka"
-
-#~ msgid "Goto 1st Frame"
-#~ msgstr "Jít na první políčko"
-
-#~ msgid ""
-#~ "Goto prev Frame\n"
-#~ "<Shift> use timezoom stepsize"
-#~ msgstr ""
-#~ "Jít na předchozí políčko\n"
-#~ "<Přeřaďovač> použít krok časové lupy"
-
-#~ msgid ""
-#~ "Goto next Frame\n"
-#~ "<Shift> use timezoom stepsize"
-#~ msgstr ""
-#~ "Jít na následující políčko\n"
-#~ "<Přeřaďovač> použít krok časové lupy"
-
-#~ msgid "Goto last Frame"
-#~ msgstr "Jít na poslední políčko"
-
-#~ msgid "<Image>/Video/VCR Navigator..."
-#~ msgstr "<Image>/Video/Video navigátor..."
-
-#~ msgid "Cant open two or more Video Navigator Windows."
-#~ msgstr "Nelze otevřít dvě a více oken Video navigátoru."
-
-#~ msgid "Paste before"
-#~ msgstr "Vložit předem"
-
-#~ msgid "Paste after"
-#~ msgstr "Vložit potom"
-
-#~ msgid "Paste replace"
-#~ msgstr "Vložit výměnou"
-
-#~ msgid "Clear Video Buffer"
-#~ msgstr "Vymazat video buffer"
-
-#~ msgid "Videoframes:"
-#~ msgstr "Video políčka:"
-
-#~ msgid "Framerate:"
-#~ msgstr "Frekvence políček:"
-
-#~ msgid "Timezoom:"
-#~ msgstr "Časová lupa:"
-
-#~ msgid "Video Navigator"
-#~ msgstr "Video navigátor"
-
-#~ msgid "New Width:"
-#~ msgstr "Nová šířka:"
-
-#~ msgid "New Height:"
-#~ msgstr "Nová výška:"
-
-#~ msgid "Offset X:"
-#~ msgstr "Posun X:"
-
-#~ msgid "Offset Y:"
-#~ msgstr "Posun Y:"
-
-#~ msgid "Crop AnimFrames (all)"
-#~ msgstr "Ořez animačních políček (všech)"
-
-#~ msgid "Crop (original %dx%d)"
-#~ msgstr "Ořez (původně %d×%d)"
-
-#~ msgid "Resize AnimFrames (all)"
-#~ msgstr "Změna velikosti plátna animačních políček (všech)"
-
-#~ msgid "Resize (original %dx%d)"
-#~ msgstr "Změna velikosti plátna (původně %d×%d)"
-
-#~ msgid "Scale AnimFrames (all)"
-#~ msgstr "Velikost animačních políček (všech)"
-
-#~ msgid "Scale (original %dx%d)"
-#~ msgstr "Velikost (původně %d×%d)"
-
-#~ msgid "Generate Optimal Palette"
-#~ msgstr "Generovat optimální paletu"
-
-#~ msgid "WEB Palette"
-#~ msgstr "Webová paleta"
-
-#~ msgid "Use Custom Palette"
-#~ msgstr "Použít vlastní paletu"
-
-#~ msgid "Use Black/White (1-Bit) Palette"
-#~ msgstr "Použít černobílou (1bitovou) paletu"
-
-#~ msgid "Floyd-Steinberg Color Dithering (Normal)"
-#~ msgstr "Floydův-Steinbergův barevný rozptyl (normální)"
-
-#~ msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
-#~ msgstr "Floydův-Steinbergův barevný rozptyl (snížený odběr barvy)"
-
-#~ msgid "Positioned Color Dithering"
-#~ msgstr "Polohový barevný rozptyl"
-
-#~ msgid "No Color Dithering"
-#~ msgstr "Žádný barevný rozptyl"
-
-#~ msgid "Palette Type"
-#~ msgstr "Typ palety"
-
-#~ msgid "Custom Palette"
-#~ msgstr "Vlastní paleta"
-
-#~ msgid ""
-#~ "Name of a cutom palette\n"
-#~ "(is ignored if Palette Type is not custom)"
-#~ msgstr ""
-#~ "Jméno vlastní palety\n"
-#~ "(ignorováno, není-li Typ palety Vlastní)"
-
-#~ msgid "Remove Unused"
-#~ msgstr "Odstranit nepoužité"
-
-#~ msgid ""
-#~ "Remove unused or double colors\n"
-#~ "(is ignored if Palette Type is not custom)"
-#~ msgstr ""
-#~ "Odstranit nepoužité nebo zdvojené barvy\n"
-#~ "(ignorováno, není-li Typ palety Vlastní)"
-
-#~ msgid ""
-#~ "Number of resulting Colors\t\t \n"
-#~ "(ignored if Palette Type is not Generate optimal palette)"
-#~ msgstr ""
-#~ "Počet výsledných barev\t\t \n"
-#~ "(ignorováno, není-li Typ palety Generovat optimální paletu)"
-
-#~ msgid "Dither Options"
-#~ msgstr "Volby rozptylu"
-
-#~ msgid "Enable transparency"
-#~ msgstr "Povolit průhlednost"
-
-#~ msgid "Enable dithering of transparency"
-#~ msgstr "Povolit rozptyl průhlednosti"
-
-#~ msgid "Convert Frames to Indexed"
-#~ msgstr "Převést políčka do indexovaných"
-
-#~ msgid "Palette and Dither Settings"
-#~ msgstr "Nastavení palety a rozptylu"
-
-#~ msgid "Keep Type"
-#~ msgstr "Zachovat typ"
-
-#~ msgid "Convert to RGB"
-#~ msgstr "Převést do RGB"
-
-#~ msgid "Convert to Gray"
-#~ msgstr "Převést do šedí"
-
-#~ msgid "Convert to Indexed"
-#~ msgstr "Převést do indexované"
-
-#~ msgid ""
-#~ "\n"
-#~ "Select destination fileformat by extension\n"
-#~ "optionally convert imagetype\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Volba cílového formátu souborů podle přípony\n"
-#~ "volitelně konvertuje typ obrázku\n"
-
-#~ msgid "Basename:"
-#~ msgstr "Základ jména:"
-
-#~ msgid ""
-#~ "basename of the resulting frames       \n"
-#~ "(0001.ext is added)"
-#~ msgstr ""
-#~ "základ jména výsledných políček        \n"
-#~ "(0001.ext je přidáno)"
-
-#~ msgid "Extension:"
-#~ msgstr "Rozšíření:"
-
-#~ msgid ""
-#~ "extension of resulting frames       \n"
-#~ "(is also used to define Fileformat)"
-#~ msgstr ""
-#~ "rozšíření výsledných políček       \n"
-#~ "(také použito k definici formátu souboru)"
-
-#~ msgid "Imagetype:"
-#~ msgstr "Typ obrázku:"
-
-#~ msgid ""
-#~ "Convert to, or keep imagetype           \n"
-#~ "(most fileformats can't handle all types)"
-#~ msgstr ""
-#~ "Konvertovat nebo zachovat typ obrázku           \n"
-#~ "(většina formátů souboru neumí všechny typy)"
-
-#~ msgid "Flatten:"
-#~ msgstr "Sloučit:"
-
-#~ msgid ""
-#~ "Flatten all resulting frames               \n"
-#~ "(most fileformats need flattened frames)"
-#~ msgstr ""
-#~ "Sloučit všechna výsledná políčka               \n"
-#~ "(většina formátů souboru vyžaduje sloučená políčka)"
-
-#~ msgid "Convert Frames to other Formats"
-#~ msgstr "Převést políčka do jiného formátu"
-
-#~ msgid "Convert Settings"
-#~ msgstr "Nastavení převodu"
-
-#~ msgid "Expand as necessary"
-#~ msgstr "Zvětšit dle potřeby"
-
-#~ msgid "Clipped to image"
-#~ msgstr "Oříznout dle obrázku"
-
-#~ msgid "Clipped to bottom layer"
-#~ msgstr "Oříznout dle spodní vrstvy"
-
-#~ msgid "Flattened image"
-#~ msgstr "Sloučený obraz"
-
-#~ msgid ""
-#~ "Resulting Layer Size is made of the outline-rectangle \n"
-#~ "of all visible layers (may differ from frame to frame)"
-#~ msgstr ""
-#~ "Velikost výsledné vrstvy je vytvořena z obrysu obdélníku \n"
-#~ "ze všech viditelných vrstev (může se lišit políčko od políčka)"
-
-#~ msgid "Resulting Layer Size is the frame size"
-#~ msgstr "Výsledná vrstva je ve velikosti políčka"
-
-#~ msgid ""
-#~ "Resulting Layer Size is the size of the bottom layer\n"
-#~ "(may differ from frame to frame)"
-#~ msgstr ""
-#~ "Velikost výsledné vrstvy je velikost spodní vrstvy\n"
-#~ "(může se lišit políčko od políčka)"
-
-#~ msgid ""
-#~ "Resulting Layer Size is the frame size     \n"
-#~ "transparent parts are filled with BG color"
-#~ msgstr ""
-#~ "Výsledná velikost vrstvy je velikost políčka     \n"
-#~ "průhledné části jsou vyplněny barvou pozadí"
-
-#~ msgid "select all Layers where Layername is equal to Pattern"
-#~ msgstr "zvolí všechny vrstvy, pro které je vzorek shodný se jménem vrstvy"
-
-#~ msgid "select all Layers where Layername starts with Pattern"
-#~ msgstr "zvolí všechny vrstvy, pro které je vzorek počátkem jména vrstvy"
-
-#~ msgid "select all Layers where Layername ends up with Pattern"
-#~ msgstr "zvolí všechny vrstvy, pro které je vzorek koncem jména vrstvy"
-
-#~ msgid "select all Layers where Layername contains Pattern"
-#~ msgstr "zvolí všechny vrstvy, jejichž jméno obsahuje vzorek"
-
-#~ msgid ""
-#~ "select Layerstack positions.\n"
-#~ "0, 4-5, 8\n"
-#~ "where 0 == Top-layer"
-#~ msgstr ""
-#~ "volí pozice v zásobníku vrstev.\n"
-#~ "0, 4-5, 8\n"
-#~ "kde 0 == vrchní vrstva"
-
-#~ msgid ""
-#~ "select Layerstack positions.\n"
-#~ "0, 4-5, 8\n"
-#~ "where 0 == BG-layer"
-#~ msgstr ""
-#~ "volí pozice v zásobníku vrstev.\n"
-#~ "0, 4-5, 8\n"
-#~ "kde 0 == spodní vrstva"
-
-#~ msgid "select all visible Layers"
-#~ msgstr "vybrat všechny viditelné vrstvy"
-
-#~ msgid "Layer Basename:"
-#~ msgstr "Základ jména vrstvy:"
-
-#~ msgid ""
-#~ "Basename for all Layers    \n"
-#~ "[####] is replaced by frame number"
-#~ msgstr ""
-#~ "Základ jména všech vrstev    \n"
-#~ "[####] je zaměněno za číslo políčka"
-
-#~ msgid "Layer Mergemode:"
-#~ msgstr "Režim sloučení vrstvy:"
-
-#~ msgid "Exclude BG-Layer"
-#~ msgstr "Vyloučit vrstvu pozadí"
-
-#~ msgid ""
-#~ "Exclude the BG-Layers    \n"
-#~ "in all handled frames\n"
-#~ "regardless to selection"
-#~ msgstr ""
-#~ "Vynechat spodní vrstvy    \n"
-#~ "ve všech zpracovaných políčkách\n"
-#~ "bez ohledu na výběr"
-
-#~ msgid "Use all unselected Layers"
-#~ msgstr "Použít všechny nevybrané vrstvy"
-
-#~ msgid "Creating Layer-Animated Image..."
-#~ msgstr "Vytváří se vrstvově animovaný obrázek..."
-
-#~ msgid "Frames to Image"
-#~ msgstr "Políčka do obrázku"
-
-#~ msgid "Create Multilayer-Image from Frames"
-#~ msgstr "Vytvořit z políček vícevrstevný obrázek"
-
-#~ msgid "Flattening Frames..."
-#~ msgstr "Slučují se políčka..."
-
-#~ msgid "Converting Frames..."
-#~ msgstr "Převádějí se políčka..."
-
-#~ msgid ""
-#~ "Convert Frames: SAVE operation FAILED.\n"
-#~ "Desired save plugin can't handle type\n"
-#~ "or desired save plugin not available."
-#~ msgstr ""
-#~ "Převod políček: operace ZÁPISU SELHALA.\n"
-#~ "Požadovaný zápisový modul neumí zpracovat typ\n"
-#~ "nebo nebo požadovaný zápisový modul není k dispozici."
-
-#~ msgid "Cropping all Animation Frames..."
-#~ msgstr "Ořezávají se všechna animační políčka..."
-
-#~ msgid "Scaling all Animation Frames..."
-#~ msgstr "Mění se velikost všech animačních políček..."
-
-#~ msgid "Flatten Frames"
-#~ msgstr "Sloučit políčka"
-
-#~ msgid "Removing Layer (pos:%ld) from Frames..."
-#~ msgstr "Odstraňuje se vrstva (pol:%ld) z políček..."
-
-#~ msgid "Delete Layers in Frames"
-#~ msgstr "Smazat vrstvy v políčkách"
-
-#~ msgid "Select Frame Range & Position"
-#~ msgstr "Vybrat rozsah políček a polohu"
-
-#~ msgid "Splitting into Frames..."
-#~ msgstr "Rozděluje se do políček..."
-
-#~ msgid ""
-#~ "Split Frames: SAVE operation FAILED.\n"
-#~ "desired save plugin can't handle type\n"
-#~ "or desired save plugin not available."
-#~ msgstr ""
-#~ "Rozdělení do políček: operace ZÁPISU SELHALA.\n"
-#~ "Požadovaný zápisový modul neumí zpracovat typ\n"
-#~ "nebo nebo požadovaný zápisový modul není k dispozici."
-
-#~ msgid ""
-#~ "%s\n"
-#~ "%s\n"
-#~ "(%s_0001.%s)\n"
-#~ msgstr ""
-#~ "%s\n"
-#~ "%s\n"
-#~ "(%s_0001.%s)\n"
-
-#~ msgid "Make a frame (diskfile) from each Layer"
-#~ msgstr "Vytvořit políčko (diskový soubor) z každé vrstvy"
-
-#~ msgid "frames are named: base_nr.extension"
-#~ msgstr "políčka jsou pojmenovaná: základ_č.přípona"
-
-#~ msgid "extension of resulting frames (is also used to define Fileformat)"
-#~ msgstr ""
-#~ "přípona výsledných políček (také použito k definici formátu souboru)"
-
-#~ msgid "Inverse Order:"
-#~ msgstr "Obrácené pořadí:"
-
-#~ msgid "Start frame 0001 at Top Layer"
-#~ msgstr "Počáteční políčko 0001 na svrchní vrstvě"
-
-#~ msgid ""
-#~ "Remove Alpha Channel in resulting Frames. Transparent parts are filled "
-#~ "with BG color."
-#~ msgstr ""
-#~ "Odstraní ve výsledných políčkách alfa kanál. Průhledné části jsou "
-#~ "vyplněny barvou pozadí."
-
-#~ msgid "Split Image into Frames"
-#~ msgstr "Rozdělit obrázek do políček"
-
-#~ msgid "Split Settings"
-#~ msgstr "Nastavení rozdělení"
-
-#~ msgid ""
-#~ "OPERATION CANCELLED.\n"
-#~ "This image is already an AnimFrame.\n"
-#~ "Try again on a Duplicate (Image/Duplicate)."
-#~ msgstr ""
-#~ "OPERACE ZRUŠENA.\n"
-#~ "Tento obrázek je již políčkem animace.\n"
-#~ "Zkuste znovu na duplikátu (Obrázek/Duplikovat)."
-
-#~ msgid "Scale"
-#~ msgstr "Velikost"
-
-#~ msgid "New width:"
-#~ msgstr "Nová šířka:"
-
-#~ msgid "New height:"
-#~ msgstr "Nová výška:"
-
-#~ msgid "X ratio:"
-#~ msgstr "Poměr X:"
-
-#~ msgid "Y ratio:"
-#~ msgstr "Poměr Y:"
-
-#~ msgid "Constrain Ratio"
-#~ msgstr "Zachovat poměr"
-
-#~ msgid "Char: %c, %d, 0x%02x"
-#~ msgstr "Znak: %c, %d, 0x%02x"
-
-#~ msgid "Insert the selected char at the cursor position"
-#~ msgstr "Vložit vybraný znak na pozici kurzoru"
-
-#~ msgid "points"
-#~ msgstr "body"
-
-#~ msgid "<Image>/Filters/Render/Dynamic Text..."
-#~ msgstr "<Image>/Filtry/Vyobrazení/Dynamický text..."
-
-#~ msgid ""
-#~ " Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
-#~ "new layer creation."
-#~ msgstr ""
-#~ "Aktuální vrstva není vrstva GDynText nebo nemá alfa kanál. Vnuceno "
-#~ "vytvoření nové vrstvy."
-
-#~ msgid "GDynText Layer"
-#~ msgstr "Vrstva GDynText"
-
-#~ msgid "GIMP Dynamic Text"
-#~ msgstr "GIMP dynamický text"
-
-#~ msgid "GDynText: Messages Window"
-#~ msgstr "GDynText: Okno zpráv"
-
-#~ msgid "GDynText: About ..."
-#~ msgstr "GDynText: O programu..."
-
-#~ msgid "bottom-left"
-#~ msgstr "dolů doleva"
-
-#~ msgid "bottom-center"
-#~ msgstr "dolů na střed"
-
-#~ msgid "bottom-right"
-#~ msgstr "dolů doprava"
-
-#~ msgid "middle-left"
-#~ msgstr "doleva na střed"
-
-#~ msgid "center"
-#~ msgstr "na střed"
-
-#~ msgid "middle-right"
-#~ msgstr "doprava na střed"
-
-#~ msgid "top-left"
-#~ msgstr "nahoru doleva"
-
-#~ msgid "top-center"
-#~ msgstr "nahoru na střed"
-
-#~ msgid "top-right"
-#~ msgstr "nahoru doprava"
-
-#~ msgid "GDynText"
-#~ msgstr "GDynText"
-
-#~ msgid "Toggle creation of a new layer"
-#~ msgstr "Přepnout vytváření nové vrstvy"
-
-#~ msgid "Load text from file"
-#~ msgstr "Číst text ze souboru"
-
-#~ msgid "GDynText: Select Color"
-#~ msgstr "GDynText: Výběr barvy"
-
-#~ msgid "Text color"
-#~ msgstr "Barva textu"
-
-#~ msgid "Toggle anti-aliased text"
-#~ msgstr "Přepnout vyhlazování textu"
-
-#~ msgid "Left aligned text"
-#~ msgstr "Text na levou zarážku"
-
-#~ msgid "Centered text"
-#~ msgstr "Text na střed"
-
-#~ msgid "Right aligned text"
-#~ msgstr "Text na pravou zarážku"
-
-#~ msgid "Toggle text font preview"
-#~ msgstr "Přepnout náhled textového písma"
-
-#~ msgid "Toggle CharMap window"
-#~ msgstr "Přepnout okno mapy znaků"
-
-#~ msgid ""
-#~ "Layer\n"
-#~ "Alignment"
-#~ msgstr ""
-#~ "Zarovnání\n"
-#~ "vrstev"
-
-#~ msgid "Set layer alignment"
-#~ msgstr "Nastavit zarovnání vrstev"
-
-#~ msgid ""
-#~ "Line\n"
-#~ "Spacing"
-#~ msgstr ""
-#~ "Proklad\n"
-#~ "řádků"
-
-#~ msgid "Set text rotation (degrees)"
-#~ msgstr "Nastavení rotece textu (stupně)"
-
-#~ msgid "Editable text sample"
-#~ msgstr "Vzorek editovatelného textu"
-
-#~ msgid "Clear preview"
-#~ msgstr "Vymazat náhled"
-
-#~ msgid "Preview default text sample"
-#~ msgstr "Náhled implicitního textového vzorku"
-
-#~ msgid ""
-#~ "Holding the Shift key while pressing this button will force GDynText in "
-#~ "changing the layer name as done in GIMP 1.0."
-#~ msgstr ""
-#~ "Podržení Přeřaďovače během stisknutí tohoto tlačítka přinutí GDynText ke "
-#~ "změně jména vrstvy jako u programu GIMP 1.0."
-
-#~ msgid "GDynText: CharMap"
-#~ msgstr "GDynText: Mapa znaků"
-
-#~ msgid "GDynText: Load text"
-#~ msgstr "GDynText: Čtení textu"
-
-#~ msgid ""
-#~ "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
-#~ msgstr ""
-#~ "Soubor varování \"%s\" je větší než maximální povolená délka textu (%d).\n"
-
-#~ msgid "Error opening \"%s\"!\n"
-#~ msgstr "Chyba při otvírání  \"%s\"!\n"
-
-#~ msgid ""
-#~ " WARNING: GDynText is too old! A newer version is required to handle this "
-#~ "layer. Get it from %s"
-#~ msgstr ""
-#~ "VAROVÁNÍ: příliš starý GDynText! Pro zpracování této vrstvy je nutná "
-#~ "novější verze. Lze ji získat na %s"
-
-#~ msgid " Upgrading old GDynText layer to %s."
-#~ msgstr "Aktualizuje se stará vrstva GDynText do %s."
-
-#~ msgid "Dismiss"
-#~ msgstr "Odmítnout"
-
-#~ msgid "More..."
-#~ msgstr "Více..."
-
-#~ msgid "Back"
-#~ msgstr "Zpět"
-
-#~ msgid "Forward"
-#~ msgstr "Dopředu"
-
-#~ msgid "<Image>/Filters/Render/Pattern/Mosaic..."
-#~ msgstr "<Image>/Filtry/Vyobrazení/Vzorky/Mozaika..."
-
-#~ msgid "Print"
-#~ msgstr "Tisknout"
-
-#~ msgid "Center Image"
-#~ msgstr "Vystředit obrázek"
-
-#~ msgid "Scaling"
-#~ msgstr "Změna velikosti"
-
-#~ msgid "Set Image Scale"
-#~ msgstr "Nastavení velikosti obrázku"
-
-#~ msgid "Adjust Color"
-#~ msgstr "Nastavení barvy"
-
-#~ msgid "B&W"
-#~ msgstr "ČB"
-
-#~ msgid "Setup"
-#~ msgstr "Nastavení"
-
-#~ msgid "<Image>/File/Print (Gtk)..."
-#~ msgstr "<Image>/Soubor/Tisknout (Gtk)..."
-
-#~ msgid "<Image>/File/Print (Gimp)..."
-#~ msgstr "<Image>/Soubor/Tisknout (Gimp)..."
