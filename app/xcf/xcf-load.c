@@ -936,12 +936,7 @@ xcf_load_channel (XcfInfo   *info,
 
   /* attach the floating selection... */
   if (add_floating_sel)
-    {
-      GimpLayer *floating_sel;
-
-      floating_sel = info->floating_sel;
-      floating_sel_attach (floating_sel, GIMP_DRAWABLE (channel));
-    }
+    floating_sel_attach (info->floating_sel, GIMP_DRAWABLE (channel));
 
   if (is_qmask)
     gimage->qmask_state = TRUE;
@@ -998,12 +993,7 @@ xcf_load_layer_mask (XcfInfo   *info,
 
   /* attach the floating selection... */
   if (add_floating_sel)
-    {
-      GimpLayer *floating_sel;
-
-      floating_sel = info->floating_sel;
-      floating_sel_attach (floating_sel, GIMP_DRAWABLE (layer_mask));
-    }
+    floating_sel_attach (info->floating_sel, GIMP_DRAWABLE (layer_mask));
 
   return layer_mask;
 
@@ -1605,7 +1595,7 @@ xcf_load_vector (XcfInfo   *info,
       switch (stroke_type_id)
         {
         case XCF_STROKETYPE_BEZIER_STROKE:
-          stroke_type = gimp_bezier_stroke_get_type ();
+          stroke_type = GIMP_TYPE_BEZIER_STROKE;
           break;
 
         default:

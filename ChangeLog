@@ -1,5 +1,11 @@
 2004-01-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/vectors/gimpstroke.c
+	* app/xcf/xcf-load.c: use the GIMP_TYPE_FOO macros instead of
+	gimp_foo_get_type(). Minor cleanups.
+
+2004-01-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.c (gimp_image_add_layer,remove_layer): in the
 	spirit of the fix for bug #131721 below, don't try to figure
 	manually if "alpha_changed" needs to be emitted but simply compare

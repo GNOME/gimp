@@ -247,7 +247,7 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   anchor_param_spec = g_param_spec_boxed ("gimp-anchor",
                                           "Gimp Anchor",
                                           "The control points of a Stroke",
-                                          gimp_anchor_get_type (),
+                                          GIMP_TYPE_ANCHOR,
                                           G_PARAM_WRITABLE |
                                           G_PARAM_CONSTRUCT_ONLY);
 
@@ -291,12 +291,10 @@ gimp_stroke_set_property (GObject      *object,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
-  GimpStroke  *stroke;
+  GimpStroke  *stroke = GIMP_STROKE (object);
   GValueArray *val_array;
   GValue      *item;
   gint         i;
-
-  stroke = GIMP_STROKE (object);
 
   switch (property_id)
     {
@@ -312,11 +310,11 @@ gimp_stroke_set_property (GObject      *object,
       if (val_array == NULL)
         return;
 
-      for (i=0; i < val_array->n_values; i++)
+      for (i = 0; i < val_array->n_values; i++)
         {
           item = g_value_array_get_nth (val_array, i);
 
-          g_return_if_fail (G_VALUE_HOLDS (item, gimp_anchor_get_type ()));
+          g_return_if_fail (G_VALUE_HOLDS (item, GIMP_TYPE_ANCHOR));
           stroke->anchors = g_list_append (stroke->anchors,
                                            g_value_dup_boxed (item));
         }
@@ -334,9 +332,7 @@ gimp_stroke_get_property (GObject    *object,
                           GValue     *value,
                           GParamSpec *pspec)
 {
-  GimpStroke *stroke;
-
-  stroke = GIMP_STROKE (object);
+  GimpStroke *stroke = GIMP_STROKE (object);
 
   switch (property_id)
     {
@@ -368,10 +364,8 @@ static gint64
 gimp_stroke_get_memsize (GimpObject *object,
                          gint64     *gui_size)
 {
-  GimpStroke *stroke;
+  GimpStroke *stroke  = GIMP_STROKE (object);
   gint64      memsize = 0;
-
-  stroke = GIMP_STROKE (object);
 
   memsize += gimp_g_list_get_memsize (stroke->anchors, sizeof (GimpAnchor));
 
@@ -916,7 +910,7 @@ gimp_stroke_duplicate (const GimpStroke *stroke)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
-  return (GIMP_STROKE_GET_CLASS (stroke))->duplicate (stroke);
+  return GIMP_STROKE_GET_CLASS (stroke)->duplicate (stroke);
 }
 
 GimpStroke *
@@ -1196,4 +1190,3 @@ gimp_stroke_real_control_points_get (const GimpStroke *stroke,
 
   return ret_array;
 }
-
