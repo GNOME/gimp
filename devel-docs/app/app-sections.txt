@@ -559,6 +559,20 @@ GIMP_CONTEXT_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpcoords</FILE>
+<TITLE>GimpCoords</TITLE>
+gimp_coords_mix
+gimp_coords_average
+gimp_coords_add
+gimp_coords_difference
+gimp_coords_scale
+gimp_coords_scalarprod
+gimp_coords_length
+gimp_coords_length2
+gimp_coords_equal
+</SECTION>
+
+<SECTION>
 <FILE>gimpdata</FILE>
 GimpData
 GimpDataError
@@ -1900,6 +1914,7 @@ GIMP_PAINTBRUSH_GET_CLASS
 <FILE>gimppaintcore</FILE>
 PAINT_CORE_SUBSAMPLE
 PAINT_CORE_SOLID_SUBSAMPLE
+PRESSURE_SCALE
 GimpPaintCoreState
 GimpPaintCoreFlags
 <TITLE>GimpPaintCore</TITLE>
@@ -3268,20 +3283,6 @@ gimp_bezier_stroke_get_type
 GIMP_BEZIER_STROKE_CLASS
 GIMP_IS_BEZIER_STROKE_CLASS
 GIMP_BEZIER_STROKE_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimpcoordmath</FILE>
-<TITLE>GimpCoordsMath</TITLE>
-gimp_bezier_coords_mix
-gimp_bezier_coords_average
-gimp_bezier_coords_add
-gimp_bezier_coords_difference
-gimp_bezier_coords_scale
-gimp_bezier_coords_scalarprod
-gimp_bezier_coords_length
-gimp_bezier_coords_length2
-gimp_bezier_coords_equal
 </SECTION>
 
 <SECTION>

@@ -1,5 +1,11 @@
 2004-05-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/app-docs.sgml
+	* app/app-sections.txt: updated after moving around gimpcoords stuff.
+
+2004-05-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/app-sections.txt: fixed docs for interfaces.
 
 2004-05-24  Michael Natterer  <mitch@gimp.org>

@@ -253,6 +253,7 @@
       <title>Misc. Utilities</title>
       <xi:include href="xml/gimp-utils.xml" />
       <xi:include href="xml/gimp-transform-utils.xml" />
+      <xi:include href="xml/gimpcoords.xml" />
       <xi:include href="xml/gimpmarshal.xml" />
       <xi:include href="xml/gimppreviewcache.xml" />
       <xi:include href="xml/gimpscanconvert.xml" />
@@ -271,7 +272,6 @@
     <xi:include href="xml/vectors-types.xml" />
     <xi:include href="xml/gimpanchor.xml" />
     <xi:include href="xml/gimpbezierstroke.xml" />
-    <xi:include href="xml/gimpcoordmath.xml" />
     <xi:include href="xml/gimpstroke.xml" />
     <xi:include href="xml/gimpvectors.xml" />
     <xi:include href="xml/gimpvectors-compat.xml" />
