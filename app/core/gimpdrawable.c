@@ -312,6 +312,7 @@ gimp_drawable_set_name (GimpDrawable *drawable, char *name)
   int number = 1;
   char *newname;
   char *ext;
+  char numberbuf[20];
 
   g_return_if_fail(GIMP_IS_DRAWABLE(drawable));
   if (drawable->name)
@@ -343,8 +344,11 @@ gimp_drawable_set_name (GimpDrawable *drawable, char *name)
       if ((ext = strrchr(newname, '#')))
       {
 	number = atoi(ext+1);
-	if (&ext[(int)(log10(number) + 1)] != &newname[strlen(newname) - 1])
+	/* Check if there really was the number we think after the # */
+	sprintf (numberbuf, "#%d", number);
+	if (strcmp (ext, numberbuf) != 0)
 	{
+	  /* No, so just ignore the # */
 	  number = 1;
 	  ext = &newname[strlen(newname)];
 	}
@@ -364,7 +368,9 @@ gimp_drawable_set_name (GimpDrawable *drawable, char *name)
 	{
 	  number++;
 	  sprintf(ext, "#%d", number+1);
+	  /* Rescan from beginning */
 	  listb = base_list;
+	  continue;
 	}
 	listb = listb->next;
       }

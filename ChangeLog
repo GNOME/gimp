@@ -1,3 +1,9 @@
+Tue Feb 02 20:58:40 1999  Tor Lillqvist  <tml@iki.fi>
+
+	* app/gimpdrawable.c (gimp_drawable_set_name): Fix adding of
+ 	numbers after drawable copies. We used to get pairs of duplicates
+ 	after adding the same name several times.
+
 1999-01-31  Jay Cox  <jaycox@earthlink.net>
 
 	* app/color_balance.c: optimized by using a lookup table
