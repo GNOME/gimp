@@ -74,21 +74,26 @@
 
 /* Previews: create one preview */
 
-static void
+static GtkWidget *
 rcm_create_one_preview (GtkWidget **preview,
-			GtkWidget **frame,
-			gint        previewWidth,
-			gint        previewHeight)
+			gint        width,
+			gint        height)
 {
-  *frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (*frame), GTK_SHADOW_IN);
-  gtk_widget_show (*frame);
+  GtkWidget *align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  GtkWidget *frame;
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (align), frame);
+  gtk_widget_show (frame);
 
   *preview = gimp_preview_area_new ();
 
-  gtk_widget_set_size_request (*preview, previewWidth, previewHeight);
-  gtk_container_add (GTK_CONTAINER (*frame), *preview);
+  gtk_widget_set_size_request (*preview, width, height);
+  gtk_container_add (GTK_CONTAINER (frame), *preview);
   gtk_widget_show (*preview);
+
+  return align;
 }
 
 
@@ -115,8 +120,9 @@ rcm_create_previews (void)
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  rcm_create_one_preview (&Current.Bna->before, &frame,
-			  Current.reduced->width, Current.reduced->height);
+  frame = rcm_create_one_preview (&Current.Bna->before,
+                                  Current.reduced->width,
+                                  Current.reduced->height);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -128,8 +134,9 @@ rcm_create_previews (void)
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  rcm_create_one_preview (&Current.Bna->after, &frame,
-			  Current.reduced->width, Current.reduced->height);
+  frame = rcm_create_one_preview (&Current.Bna->after,
+                                  Current.reduced->width,
+                                  Current.reduced->height);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
