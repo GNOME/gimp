@@ -33,7 +33,9 @@
 
 #include "config.h"
 
+#ifdef G_OS_WIN32
 #include <glib.h>
+#endif
 
 #include <setjmp.h>
 #include <sys/types.h>
@@ -46,7 +48,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #ifdef HAVE_MMAP
 #include <sys/mman.h>
 #endif
@@ -58,8 +59,6 @@
 #ifndef _O_BINARY
 #define _O_BINARY 0
 #endif
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>

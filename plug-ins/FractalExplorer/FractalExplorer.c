@@ -51,13 +51,15 @@
 
 #include "config.h"
 
-#include <glib.h>		/* Include early for G_OS_WIN32 */
+#ifdef G_OS_WIN32
+#include <glib.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <math.h>
 #ifdef HAVE_DIRENT_H
 #include <dirent.h>
 #endif
@@ -79,8 +81,6 @@
 #define S_ISREG(m) ((m) & _S_IFREG)
 #endif
 #endif
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>

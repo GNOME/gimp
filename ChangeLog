@@ -1,5 +1,17 @@
 2000-12-17  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/gz.c
+	* plug-ins/common/hrz.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/ps.c. #ifdef early inclusion of <glib.h> with
+	G_OS_WIN32. Avoids warnings about redefinition of MIN and MAX.
+	Some #include cleanups.
+
+2000-12-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/menus.c: don't warn about a non-existant "Script-Fu" menu.
 	(the user should have the choice of just removing the script-fu
 	plug-in without any side-effects).

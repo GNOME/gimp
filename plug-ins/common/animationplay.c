@@ -105,6 +105,7 @@
  *
  *  write other half of the user interface (default timing, disposal &c)
  */
+
 #include "config.h"
 
 #include <stdlib.h>
@@ -112,9 +113,9 @@
 #include <string.h>
 #include <ctype.h>
 
+#ifdef G_OS_WIN32
 #include <glib.h>
 
-#if defined (G_OS_WIN32)
 /* This just to be able to include windows.h and undef RGB */
 #define WinMain WinMain_foo
 #include <windows.h>
