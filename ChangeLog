@@ -1,3 +1,17 @@
+2002-09-26  Michael Natterer  <mitch@gimp.org>
+
+	Made F1 help work again:
+
+	* libgimpwidgets/gimphelpui.c: add the "F1" binding entries to the
+	correct class, use GtkWidget's "show_help" signal correctly,
+	cleanup, replaced deprecated stuff (obviously this file was
+	make-it-compile ported in the first place :)
+
+	* plug-ins/helpbrowser/helpbrowser.c: close the HtmlStream when
+	there is no more data to read (avoids implicit calling of the
+	stream's cancel function which fails because we didn't set it).
+	Minor cleanup.
+
 2002-09-25  Mel Boyce  <syngin@gimp.org>
 
 	* autogen.sh: Changed intltool URL so it's more correct.

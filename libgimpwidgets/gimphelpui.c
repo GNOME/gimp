@@ -24,12 +24,14 @@
 
 #include <gdk/gdkkeysyms.h>
 
+#include <gtk/gtk.h>
+
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
 #endif
 #undef GTK_DISABLE_DEPRECATED
 
-#include <gtk/gtk.h>
+#include <gtk/gtktipsquery.h>
 
 #define GTK_DISABLE_DEPRECATED
 
@@ -41,33 +43,34 @@
 
 typedef enum
 {
-  GIMP_WIDGET_HELP_TYPE_HELP       = 0xff + 0,
-  GIMP_WIDGET_HELP_TYPE_TIPS_QUERY = 0xff + 1
+  GIMP_WIDGET_HELP_TYPE_HELP = 0xff
 } GimpWidgetHelpType;
 
 
 /*  local function prototypes  */
-static void gimp_help_callback                   (GtkWidget         *widget,
-						  GtkWidgetHelpType  help_type,
-						  gpointer           data);
-static gint gimp_help_tips_query_idle_show_help  (gpointer           data);
-static gint gimp_help_tips_query_widget_selected (GtkWidget         *tips_query,
-						  GtkWidget         *widget,
-						  const gchar       *tip_text,
-						  const gchar        *tip_private,
-						  GdkEventButton    *event,
-						  gpointer           func_data);
-static gint gimp_help_tips_query_idle_start      (gpointer           tips_query);
+
+static const gchar * gimp_help_get_help_data         (GtkWidget      *widget,
+                                                      GtkWidget     **help_widget);
+static gboolean gimp_help_callback                   (GtkWidget      *widget,
+                                                      GtkWidgetHelpType help_type,
+                                                      GimpHelpFunc    help_func);
+static gboolean gimp_help_tips_query_idle_show_help  (gpointer        data);
+static gboolean gimp_help_tips_query_widget_selected (GtkWidget      *tips_query,
+                                                      GtkWidget      *widget,
+                                                      const gchar    *tip_text,
+                                                      const gchar    *tip_private,
+                                                      GdkEventButton *event,
+                                                      gpointer        func_data);
+static gboolean gimp_help_tips_query_idle_start      (gpointer        tips_query);
 
 
 /*  local variables  */
+
 static GtkTooltips *tool_tips  = NULL;
 static GtkWidget   *tips_query = NULL;
 
 
-/**********************/
 /*  public functions  */
-/**********************/
 
 /**
  * gimp_help_init:
@@ -142,8 +145,8 @@ gimp_help_connect (GtkWidget    *widget,
 		   GimpHelpFunc  help_func,
 		   const gchar  *help_data)
 {
-  if (! help_func)
-    return;
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (help_func != NULL);
 
   /*  set up the help signals and tips query widget
    */
@@ -151,7 +154,8 @@ gimp_help_connect (GtkWidget    *widget,
     {
       GtkBindingSet *binding_set;
 
-      binding_set = gtk_binding_set_by_class (GTK_WIDGET_GET_CLASS (widget));
+      binding_set =
+        gtk_binding_set_by_class (g_type_class_peek (GTK_TYPE_WIDGET));
 
       gtk_binding_entry_add_signal (binding_set, GDK_F1, 0,
 				    "show_help", 1,
@@ -161,15 +165,6 @@ gimp_help_connect (GtkWidget    *widget,
 				    "show_help", 1,
 				    GTK_TYPE_WIDGET_HELP_TYPE,
 				    GIMP_WIDGET_HELP_TYPE_HELP);
-
-      gtk_binding_entry_add_signal (binding_set, GDK_F1, GDK_SHIFT_MASK,
-				    "show_help", 1,
-				    GTK_TYPE_WIDGET_HELP_TYPE,
-				    GIMP_WIDGET_HELP_TYPE_TIPS_QUERY);
-      gtk_binding_entry_add_signal (binding_set, GDK_KP_F1, GDK_SHIFT_MASK,
-				    "show_help", 1,
-				    GTK_TYPE_WIDGET_HELP_TYPE,
-				    GIMP_WIDGET_HELP_TYPE_TIPS_QUERY);
 
       tips_query = gtk_tips_query_new ();
 
@@ -232,8 +227,7 @@ gimp_help_set_help_data (GtkWidget   *widget,
 
   if (tooltip)
     {
-      gtk_tooltips_set_tip (tool_tips, widget, tooltip,
-			    (gpointer) help_data);
+      gtk_tooltips_set_tip (tool_tips, widget, tooltip, help_data);
     }
   else if (help_data)
     {
@@ -260,43 +254,71 @@ void
 gimp_context_help (void)
 {
   if (tips_query)
-    gimp_help_callback (NULL, GIMP_WIDGET_HELP_TYPE_TIPS_QUERY, NULL);
+    gimp_help_callback (NULL, GTK_WIDGET_HELP_WHATS_THIS, NULL);
 }
 
-/*********************/
-/*  local functions  */
-/*********************/
 
-static void
+/*  private functions  */
+
+static const gchar *
+gimp_help_get_help_data (GtkWidget  *widget,
+                         GtkWidget **help_widget)
+{
+  GtkTooltipsData *tooltips_data;
+  gchar           *help_data = NULL;
+
+  for (; widget; widget = widget->parent)
+    {
+      if ((tooltips_data = gtk_tooltips_data_get (widget)) &&
+	  tooltips_data->tip_private)
+	{
+	  help_data = tooltips_data->tip_private;
+	}
+      else
+	{
+	  help_data = g_object_get_data (G_OBJECT (widget), "gimp_help_data");
+	}
+
+      if (help_data)
+        {
+          if (help_widget)
+            *help_widget = widget;
+
+          return (const gchar *) help_data;
+        }
+    }
+
+  return NULL;
+}
+
+static gboolean
 gimp_help_callback (GtkWidget          *widget,
 		    GimpWidgetHelpType  help_type,
-		    gpointer            data)
+		    GimpHelpFunc        help_func)
 {
   switch (help_type)
     {
     case GIMP_WIDGET_HELP_TYPE_HELP:
-      {
-	GimpHelpFunc  help_function;
-	const gchar  *help_data;
+      if (help_func)
+        {
+          gchar *help_data;
 
-	help_function = (GimpHelpFunc) data;
-	help_data     = (const gchar *) g_object_get_data (G_OBJECT (widget),
-							   "gimp_help_data");
+          help_data = g_object_get_data (G_OBJECT (widget), "gimp_help_data");
 
-	if (help_function)
-	  (* help_function) (help_data);
-      }
-      break;
+	  (* help_func) (help_data);
+        }
+      return TRUE;
 
-    case GIMP_WIDGET_HELP_TYPE_TIPS_QUERY:
+    case GTK_WIDGET_HELP_WHATS_THIS:
       if (! GTK_TIPS_QUERY (tips_query)->in_query)
-	gtk_idle_add ((GtkFunction) gimp_help_tips_query_idle_start,
-		      tips_query);
-      break;
+	g_idle_add (gimp_help_tips_query_idle_start, tips_query);
+      return TRUE;
 
     default:
       break;
     }
+
+  return FALSE;
 }
 
 /*  Do all the actual GtkTipsQuery calls in idle functions and check for
@@ -306,86 +328,42 @@ gimp_help_callback (GtkWidget          *widget,
  *  other part of the gimp has grabbed it (e.g. a tool, eek)
  */
 
-static gint
+static gboolean
 gimp_help_tips_query_idle_show_help (gpointer data)
 {
-  GtkWidget *event_widget;
-  GtkWidget *toplevel_widget;
-  GtkWidget *widget;
+  GtkWidget   *help_widget;
+  const gchar *help_data = NULL;
 
-  GtkTooltipsData *tooltips_data;
+  help_data = gimp_help_get_help_data (GTK_WIDGET (data), &help_widget);
 
-  gchar *help_data = NULL;
-
-  event_widget = GTK_WIDGET (data);
-  toplevel_widget = gtk_widget_get_toplevel (event_widget);
-
-  /*  search for help_data in this widget's parent containers  */
-  for (widget = event_widget; widget; widget = widget->parent)
+  if (help_data)
     {
-      if ((tooltips_data = gtk_tooltips_data_get (widget)) &&
-	  tooltips_data->tip_private)
-	{
-	  help_data = tooltips_data->tip_private;
-	}
+      if (help_data[0] == '#')
+        {
+          const gchar *help_index;
+
+          help_index = help_data;
+          help_data  = gimp_help_get_help_data (help_widget->parent, NULL);
+
+          if (help_data)
+            {
+              gchar *help_text;
+
+              help_text = g_strconcat (help_data, help_index, NULL);
+              gimp_standard_help_func (help_text);
+              g_free (help_text);
+            }
+        }
       else
-	{
-	  help_data = (gchar *) g_object_get_data (G_OBJECT (widget),
-                                                   "gimp_help_data");
-	}
-
-      if (help_data || widget == toplevel_widget)
-	break;
-    }
-
-  if (! help_data)
-    return FALSE;
-
-  if (help_data[0] == '#')
-    {
-      gchar *help_index;
-
-      if (widget == toplevel_widget)
-	return FALSE;
-
-      help_index = help_data;
-      help_data  = NULL;
-
-      for (widget = widget->parent; widget; widget = widget->parent)
-	{
-	  if ((tooltips_data = gtk_tooltips_data_get (widget)) &&
-	      tooltips_data->tip_private)
-	    {
-	      help_data = tooltips_data->tip_private;
-	    }
-	  else
-	    {
-	      help_data = (gchar *) g_object_get_data (G_OBJECT (widget),
-                                                       "gimp_help_data");
-	    }
-
-	  if (help_data)
-	    break;
-	}
-
-      if (help_data)
-	{
-	  gchar *help_text;
-
-	  help_text = g_strconcat (help_data, help_index, NULL);
-	  gimp_standard_help_func (help_text);
-	  g_free (help_text);
-	}
-    }
-  else
-    {
-      gimp_standard_help_func (help_data);
+        {
+          gimp_standard_help_func (help_data);
+        }
     }
 
   return FALSE;
 }
 
-static gint
+static gboolean
 gimp_help_tips_query_widget_selected (GtkWidget      *tips_query,
 				      GtkWidget      *widget,
 				      const gchar    *tip_text,
@@ -394,13 +372,12 @@ gimp_help_tips_query_widget_selected (GtkWidget      *tips_query,
 				      gpointer        func_data)
 {
   if (widget)
-    gtk_idle_add ((GtkFunction) gimp_help_tips_query_idle_show_help,
-		  (gpointer) widget);
+    g_idle_add (gimp_help_tips_query_idle_show_help, widget);
 
   return TRUE;
 }
 
-static gint
+static gboolean
 gimp_help_tips_query_idle_start (gpointer tips_query)
 {
   if (! gtk_grab_get_current ())

@@ -366,7 +366,6 @@ load_remote_page (const gchar *ref)
                                     GIMP_PDB_INT32,  FALSE,
                                     GIMP_PDB_END);
   gimp_destroy_params (return_vals, nreturn_vals);
-
 }
 
 static void
@@ -501,6 +500,9 @@ io_handler (GIOChannel   *io,
         }
       else
 	{
+          html_stream_close (stream);
+          g_io_channel_unref (io);
+
 	  return FALSE;
 	}
 
@@ -790,7 +792,7 @@ install_temp_proc (void)
   static GimpParamDef args[] =
   {
     { GIMP_PDB_STRING, "help_path", "" },
-    { GIMP_PDB_STRING, "locale",    "Langusge to use" },
+    { GIMP_PDB_STRING, "locale",    "Language to use" },
     { GIMP_PDB_STRING, "help_file", "Path of a local document to open. "
                                     "Can be relative to GIMP_HELP_PATH." }
   };
@@ -907,7 +909,7 @@ run (gchar      *name,
 	    }
 	  else
 	    {
-	      gimp_help_root = g_build_filename (gimp_data_directory(),
+	      gimp_help_root = g_build_filename (gimp_data_directory (),
                                                  GIMP_HELP_PREFIX, NULL);
 	    }
 
