@@ -1,3 +1,11 @@
+2004-12-02  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpvectors.c: Fixed stupid typo that caused
+	distorted vectors on scaling after resizing. Spotted by
+	Joao S. O. Bueno.
+
+	Fixes bug #157852.
+
 2004-12-01  Sven Neumann  <sven@gimp.org>
 
 	* autogen.sh: rephrased the warning that is shown when the

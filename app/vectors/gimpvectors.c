@@ -440,7 +440,7 @@ gimp_vectors_resize (GimpItem    *item,
     }
 
   GIMP_ITEM_CLASS (parent_class)->resize (item, context,
-                                          image->width, image->width, 0, 0);
+                                          image->width, image->height, 0, 0);
 
   gimp_vectors_thaw (vectors);
 }
