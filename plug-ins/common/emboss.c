@@ -357,7 +357,7 @@ emboss (GimpDrawable *drawable,
       height = y2 - y1;
     }
   bypp = drawable->bpp;
-  p_update = height / 20;
+  p_update = MAX (1, height / 20);
   rowsize = width * bypp;
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
@@ -391,7 +391,7 @@ emboss (GimpDrawable *drawable,
 
   for (y = 0; y < height - 2; y++)
     {
-      if ((y % p_update == 0) && !preview)
+      if (! preview && (y % p_update == 0))
           gimp_progress_update ((gdouble) y / (gdouble) height);
 
       gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y1+y, width, 3);

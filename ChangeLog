@@ -1,5 +1,9 @@
 2005-02-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/emboss.c: fixed emboss on small images (bug #168022).
+
+2005-02-21  Sven Neumann  <sven@gimp.org>
+
 	* libgimpthumb/gimpthumb-utils.c (gimp_thumb_init): workaround for
 	bug #167973: if no valid home directory exists, use the folder for
 	temporary files to store thumbnails.
