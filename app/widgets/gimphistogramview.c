@@ -61,7 +61,6 @@ static void  gimp_histogram_view_get_property      (GObject        *object,
                                                     guint           property_id,
                                                     GValue         *value,
                                                     GParamSpec     *pspec);
-static void  gimp_histogram_view_unrealize         (GtkWidget      *widget);
 static void  gimp_histogram_view_size_request      (GtkWidget      *widget,
                                                     GtkRequisition *requisition);
 static gboolean gimp_histogram_view_expose         (GtkWidget      *widget,
@@ -132,7 +131,6 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
   object_class->get_property = gimp_histogram_view_get_property;
   object_class->set_property = gimp_histogram_view_set_property;
 
-  widget_class->unrealize            = gimp_histogram_view_unrealize;
   widget_class->size_request         = gimp_histogram_view_size_request;
   widget_class->expose_event         = gimp_histogram_view_expose;
   widget_class->button_press_event   = gimp_histogram_view_button_press;
@@ -175,7 +173,6 @@ gimp_histogram_view_init (GimpHistogramView *view)
   view->histogram = NULL;
   view->start     = 0;
   view->end       = 255;
-  view->range_gc  = NULL;
 }
 
 static void
@@ -239,21 +236,6 @@ gimp_histogram_view_get_property (GObject      *object,
 }
 
 static void
-gimp_histogram_view_unrealize (GtkWidget *widget)
-{
-  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
-
-  if (view->range_gc)
-    {
-      g_object_unref (view->range_gc);
-      view->range_gc = NULL;
-    }
-
-  if (GTK_WIDGET_CLASS (parent_class)->unrealize)
-    GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
-}
-
-static void
 gimp_histogram_view_size_request (GtkWidget      *widget,
                                   GtkRequisition *requisition)
 {
@@ -298,6 +280,9 @@ gimp_histogram_view_expose (GtkWidget      *widget,
       break;
     }
 
+  x1 = CLAMP (MIN (view->start, view->end), 0, 255);
+  x2 = CLAMP (MAX (view->start, view->end), 0, 255);
+
   /*  Draw the background  */
   gdk_draw_rectangle (widget->window,
                       widget->style->base_gc[GTK_STATE_NORMAL], TRUE,
@@ -315,14 +300,21 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   xstop = 1;
   for (x = 0; x < width; x++)
     {
-      gdouble v, value = 0.0;
-      gint    i, j;
+      gdouble   value = 0.0;
+      gint      i, j;
+      gboolean  in_selection = FALSE;
+      GdkGC    *spike_gc;
 
       i = (x * 256) / width;
       j = ((x + 1) * 256) / width;
 
       do
         {
+          gdouble v;
+
+          if (! in_selection)
+            in_selection = ((x1 != 0 || x2 != 255) && x1 <= i && i <= x2);
+
           v = gimp_histogram_get_value (view->histogram, view->channel, i++);
 
           if (v > value)
@@ -337,6 +329,13 @@ gimp_histogram_view_expose (GtkWidget      *widget,
                          x + border, border,
                          x + border, border + height - 1);
           xstop++;
+        }
+      else if (in_selection)
+        {
+          gdk_draw_line (widget->window,
+                         widget->style->base_gc[GTK_STATE_SELECTED],
+                         x + border, border,
+                         x + border, border + height - 1);
         }
 
       if (value <= 0.0)
@@ -357,34 +356,17 @@ gimp_histogram_view_expose (GtkWidget      *widget,
           break;
 	}
 
+      if (in_selection)
+        spike_gc = widget->style->text_gc[GTK_STATE_SELECTED];
+      else if (view->light_histogram)
+        spike_gc = widget->style->mid_gc[GTK_STATE_NORMAL];
+      else
+        spike_gc = widget->style->text_gc[GTK_STATE_NORMAL];
+
       gdk_draw_line (widget->window,
-                     view->light_histogram ?
-                     widget->style->mid_gc[GTK_STATE_NORMAL] :
-                     widget->style->text_gc[GTK_STATE_NORMAL],
+                     spike_gc,
                      x + border, height + border - 1,
                      x + border, height + border - y - 1);
-    }
-
-  x1 = CLAMP (MIN (view->start, view->end), 0, 255);
-  x2 = CLAMP (MAX (view->start, view->end), 0, 255);
-
-  if (! (x1 == 0 && x2 == 255))
-    {
-      x1 = (x1 * width) / 256;
-      x2 = (x2 * width) / 255;
-
-      if (x2 == x1)
-        x2++;
-
-      if (!view->range_gc)
-        {
-          view->range_gc = gdk_gc_new (widget->window);
-          gdk_gc_set_function (view->range_gc, GDK_INVERT);
-        }
-
-      gdk_draw_rectangle (widget->window, view->range_gc, TRUE,
-                          x1 + border, border,
-                          x2 - x1, height);
     }
 
   return FALSE;
