@@ -250,6 +250,8 @@ gimp_text_editor_new (const gchar *title)
 
   gtk_widget_set_size_request (editor->view, 128, 64);
 
+  gtk_widget_grab_focus (editor->view);
+
   return GTK_WIDGET (editor);
 }
 
