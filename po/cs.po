@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 01:58+0100\n"
-"PO-Revision-Date: 2004-03-01 15:20+0100\n"
+"POT-Creation-Date: 2004-03-04 03:36+0100\n"
+"PO-Revision-Date: 2004-03-04 15:21+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -8775,9 +8775,9 @@ msgid "No paths found in the buffer"
 msgstr "V bufferu nebyla nalezena žádná cesta"
 
 #: app/vectors/gimpvectors-import.c:304
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to import paths from '%s': %s"
-msgstr "Nemohu načíst %d bajtů ze '%s': %s"
+msgstr "Nemohu importovat cesty z '%s': %s"
 
 #: app/widgets/gimpbrusheditor.c:143
 msgid "Hardness:"
@@ -9848,9 +9848,6 @@ msgstr "chyba XCF: nalezena nepodporovaná verze %d XCF souboru"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Vytvářet a upravovat obrázky a fotografie"
-
-#~ msgid "Could not open"
-#~ msgstr "Nemohu otevřít"
 
 #~ msgid ""
 #~ "Click to update preview\n"
