@@ -9,5 +9,4 @@ gimpsysconf_DATA = \
 	sessionrc
 
 EXTRA_DIST = \
-	$(gimpsysconf_DATA)	\
-	gimprc.win32
+	$(gimpsysconf_DATA)

@@ -174,6 +174,15 @@ const static unsigned long va8_alpha_mask[2] =   { 0xFF00FF00, 0xFF00FF00 };
 const static unsigned long va8_b255[2] =         { 0xFFFFFFFF, 0xFFFFFFFF };
 const static unsigned long va8_w1[2] =           { 0x00010001, 0x00010001 };
 const static unsigned long va8_w255[2] =         { 0x00FF00FF, 0x00FF00FF };
+
+#ifdef __MINGW32__
+#define RGBA8_ALPHA_MASK "_rgba8_alpha_mask"
+#define RGBA8_W256 "_rgba8_w256"
+#else
+#define RGBA8_ALPHA_MASK "rgba8_alpha_mask"
+#define RGBA8_W256 "rgba8_w256"
+#endif
+
 /*
  *
  */
@@ -530,7 +539,7 @@ gimp_composite_dodge_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
                   "\tpunpcklbw %%mm2, %%mm3\n"
                   "\tpunpcklbw %%mm0, %%mm2\n"
 
-                  "\tmovq      rgba8_w256, %%mm4\n"
+                  "\tmovq      "RGBA8_W256", %%mm4\n"
                   "\tpsubw     %%mm3, %%mm4\n"
 
                   "\t" pdivwuqX(mm2,mm4,mm5) "\n"
@@ -540,14 +549,14 @@ gimp_composite_dodge_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
                   "\tpunpckhbw %%mm2, %%mm3\n"
                   "\tpunpckhbw %%mm0, %%mm2\n"
 
-                  "\tmovq      rgba8_w256, %%mm4\n"
+                  "\tmovq      "RGBA8_W256", %%mm4\n"
                   "\tpsubw     %%mm3, %%mm4\n"
 
                   "\t" pdivwuqX(mm2,mm4,mm6) "\n"
 
                   "\tpackuswb  %%mm6, %%mm5\n"
 
-                  "\tmovq      rgba8_alpha_mask, %%mm6\n"
+                  "\tmovq      "RGBA8_ALPHA_MASK", %%mm6\n"
                   "\tmovq      %%mm1,%%mm7\n"
                   "\t" pminub(mm0,mm7,mm2) "\n"
                   "\tpand      %%mm6, %%mm7\n"
@@ -569,7 +578,7 @@ gimp_composite_dodge_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
                   "\tpunpcklbw %%mm2, %%mm3\n"
                   "\tpunpcklbw %%mm0, %%mm2\n"
 
-                  "\tmovq      rgba8_w256, %%mm4\n"
+                  "\tmovq      "RGBA8_W256", %%mm4\n"
                   "\tpsubw     %%mm3, %%mm4\n"
 
                   "\t" pdivwuqX(mm2,mm4,mm5) "\n"
@@ -579,14 +588,14 @@ gimp_composite_dodge_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
                   "\tpunpckhbw %%mm2, %%mm3\n"
                   "\tpunpckhbw %%mm0, %%mm2\n"
 
-                  "\tmovq      rgba8_w256, %%mm4\n"
+                  "\tmovq      "RGBA8_W256", %%mm4\n"
                   "\tpsubw     %%mm3, %%mm4\n"
 
                   "\t" pdivwuqX(mm2,mm4,mm6) "\n"
 
                   "\tpackuswb  %%mm6, %%mm5\n"
 
-                  "\tmovq      rgba8_alpha_mask, %%mm6\n"
+                  "\tmovq      "RGBA8_ALPHA_MASK", %%mm6\n"
                   "\tmovq      %%mm1,%%mm7\n"
                   "\t" pminub(mm0,mm7,mm2) "\n"
                   "\tpand      %%mm6, %%mm7\n"

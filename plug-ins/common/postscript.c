@@ -255,6 +255,10 @@ static void dither_grey     (guchar *grey,
 			     gint    linecount);
 
 
+#ifdef G_OS_WIN32
+static gchar *my_shell_quote (const gchar *unquoted_string);
+#endif
+
 /* Dialog-handling */
 
 static gint   load_dialog               (void);
@@ -1365,7 +1369,14 @@ ps_open (const gchar      *filename,
   if (gs == NULL)
     gs = DEFAULT_GS_PROG;
 
+#ifndef G_OS_WIN32
+  /* g_shell_quote is specified to use single quotes, which don't mean
+   * anything on Windows
+   */
   quoted_fn = g_shell_quote (filename);
+#else
+  quoted_fn = my_shell_quote (filename);
+#endif
 
   gs_opts = getenv ("GS_OPTIONS");
   if (gs_opts == NULL)
@@ -1423,11 +1434,11 @@ ps_open (const gchar      *filename,
       indirfile = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "i%lx",
 				   g_get_tmp_dir (), getpid ());
       indf = fopen (indirfile, "w");
-      fprintf (indf, "%s -sDEVICE=%s -r%d %s%s%s-q -dNOPAUSE %s "
+      fprintf (indf, "-sDEVICE=%s -r%d %s%s%s-q -dNOPAUSE %s "
 	             "-sOutputFile=%s %s-f %s %s-c quit\n",
-	       gs, driver, resolution, geometry,
+	       driver, resolution, geometry,
 	       TextAlphaBits, GraphicsAlphaBits,
-	       gs_opts, pnmfile, offset, filename,
+	       gs_opts, pnmfile, offset, quoted_fn,
 	       *is_epsf ? "-c showpage " : "");
       sprintf (cmd, "%s @%s", gs, indirfile);
       fclose (indf);
@@ -3052,3 +3063,26 @@ save_unit_toggle_update (GtkWidget *widget,
 	}
     }
 }
+
+#ifdef G_OS_WIN32
+
+static gchar *
+my_shell_quote (const gchar *unquoted_string)
+{
+  /* On Windows, we always enclose the file name with double
+   * quotes. No more is needed, as file names can't contain double
+   * quotes.
+   */
+  GString *dest;
+  gchar *ret;
+
+  dest = g_string_new ("\"");
+  g_string_append (dest, unquoted_string);
+  g_string_append_c (dest, '"');
+
+  ret = dest->str;
+  g_string_free (dest, FALSE);
+  return ret;
+}
+
+#endif /* G_OS_WIN32 */

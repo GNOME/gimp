@@ -1,3 +1,24 @@
+2003-09-01  Tor Lillqvist  <tml@iki.fi>
+
+	* README.win32: Update.
+
+	* app/composite/gimp-composite-mmx.c: For some reason the gcc&gas
+	combination used on Win32 wants identifiers prefixed with
+	underscores in the asm sequences.
+
+	* plug-ins/common/ps.c (ps_open): [Win32] Don't write the gs
+	executable name into the indirect command line file. Do write the
+	quoted form of the filename to it.
+	(my_shell_quote): New funcion. Use instead of g_shell_quote() on
+	Windows, as g_shell_quote() always uses single quotes, which don't
+	mean anything to the Windows shell (or C runtime startup
+	code). (This might be argued to be a bug in GLib, maybe
+	g_shell_quote should behave differently accoring to platform.)
+
+	* etc/gimprc.win32: Remove, generate with gimpconfig-dump.
+
+	* */makefile.mingw.in: Remove, unmaintained.
+
 2003-09-01  Sven Neumann  <sven@gimp.org>
 
 	* app/xcf/xcf-load.c: removed excessive path debugging output.

@@ -5,13 +5,18 @@ packages, though.
 Building GIMP on Win32
 ======================
 
-There are two ways to build GIMP for Win32:
+There are two ways to build GIMP on Win32:
 
 1) Use the autoconf-generated configure script, and the resulting
 Makefiles (which use libtool and gcc to do the compilation). I use
-this myself, but it might be hell to setup correctly. Doesn't work
-correctly in all directories, for instance in the po* directories it
-is much easier to use the makefile.mingw files.
+this myself.
+
+Unfortunately, this doesn't work 100% correctly in all
+directories. For instance in plug-ins/common there is some problems
+with the optional plug-ins, for instance "png". The generated Makefile
+wants to make just png (no .exe), and then tries to compile it without
+any of the relevant -I and -D flags, which of course fails. You have
+to explicitly make png.exe.
 
 2) Use the Microsoft compiler, cl and Make, nmake. Say nmake -f
 makefile.msc in various directories. These makefiles are maintained by
