@@ -107,6 +107,10 @@ several reasons why this might fail:
 A detailed log of the ./configure output is written to the file
 config.log. This may help diagnose problems.
 
+If you are sure of what you're doing, you can bypass the sanity check and
+just go by what gtk-config by using the --disable-gtktest option. Please
+only use this in dire circumstances.
+
 After fixing a problem, it is safest to delete the file 'config.cache'
 before re-running ./configure.
 
