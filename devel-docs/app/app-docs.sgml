@@ -396,6 +396,7 @@
       <title>The GimpTextLayer Object</title>
       <xi:include href="xml/gimptextlayer.xml"/>
       <xi:include href="xml/gimptextlayer-transform.xml"/>
+      <xi:include href="xml/gimptextlayer-xcf.xml"/>
     </chapter>
   </part>
 
@@ -516,7 +517,6 @@
       <xi:include href="xml/gimpcolorbalancetool.xml"/>
       <xi:include href="xml/gimpcolorizetool.xml"/>
       <xi:include href="xml/gimpcurvestool.xml"/>
-      <xi:include href="xml/gimphistogramtool.xml"/>
       <xi:include href="xml/gimphuesaturationtool.xml"/>
       <xi:include href="xml/gimplevelstool.xml"/>
       <xi:include href="xml/gimpposterizetool.xml"/>
@@ -609,6 +609,7 @@
       <xi:include href="xml/gimpimageeditor.xml"/>
       <xi:include href="xml/gimpcomponenteditor.xml"/>
       <xi:include href="xml/gimpcolormapeditor.xml"/>
+      <xi:include href="xml/gimphistogrameditor.xml"/>
       <xi:include href="xml/gimpselectioneditor.xml"/>
       <xi:include href="xml/gimpundoeditor.xml"/>
     </chapter>

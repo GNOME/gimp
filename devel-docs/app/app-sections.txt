@@ -1,4 +1,4 @@
-2<SECTION>
+<SECTION>
 <FILE>gimpbaseconfig</FILE>
 <TITLE>GimpBaseConfig</TITLE>
 GimpBaseConfig
@@ -18,6 +18,8 @@ GIMP_PARAM_SERIALIZE
 GIMP_PARAM_AGGREGATE
 GIMP_PARAM_RESTART
 GIMP_PARAM_CONFIRM
+GIMP_PARAM_DEFAULTS
+GIMP_PARAM_IGNORE
 GIMP_CONFIG_PARAM_FLAGS
 GIMP_TYPE_PARAM_COLOR
 gimp_param_spec_color
@@ -1381,7 +1383,6 @@ gimp_display_area_list_free
 <SECTION>
 <FILE>gimpdisplay-foreach</FILE>
 <TITLE>GimpDisplay-foreach</TITLE>
-gdisplays_check_valid
 gimp_displays_dirty
 gimp_displays_delete
 gimp_displays_finish_draw
@@ -2069,7 +2070,7 @@ gimp_text_set_font_from_xlfd
 <TITLE>GimpTextLayer</TITLE>
 GimpTextLayer
 gimp_text_layer_new
-gimp_text_layer_from_layer
+gimp_text_layer_set_text
 gimp_text_layer_get_text
 gimp_text_layer_render
 <SUBSECTION Standard>
@@ -2090,6 +2091,13 @@ gimp_text_layer_scale
 gimp_text_layer_flip
 gimp_text_layer_rotate
 gimp_text_layer_transform
+</SECTION>
+
+<SECTION>
+<FILE>gimptextlayer-xcf</FILE>
+<TITLE>GimpTextLayer-xcf</TITLE>
+gimp_text_layer_xcf_load_hack
+gimp_text_layer_xcf_save_prepare
 </SECTION>
 
 <SECTION>
@@ -2544,22 +2552,6 @@ gimp_fuzzy_select_tool_get_type
 GIMP_FUZZY_SELECT_TOOL_CLASS
 GIMP_IS_FUZZY_SELECT_TOOL_CLASS
 GIMP_FUZZY_SELECT_TOOL_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimphistogramtool</FILE>
-<TITLE>GimpHistogramTool</TITLE>
-GimpHistogramTool
-gimp_histogram_tool_register
-<SUBSECTION Standard>
-GimpHistogramToolClass
-GIMP_HISTOGRAM_TOOL
-GIMP_IS_HISTOGRAM_TOOL
-GIMP_TYPE_HISTOGRAM_TOOL
-gimp_histogram_tool_get_type
-GIMP_HISTOGRAM_TOOL_CLASS
-GIMP_IS_HISTOGRAM_TOOL_CLASS
-GIMP_HISTOGRAM_TOOL_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -4008,6 +4000,22 @@ GIMP_HISTOGRAM_BOX_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimphistogrameditor</FILE>
+<TITLE>GimpHistogramEditor</TITLE>
+GimpHistogramEditor
+gimp_histogram_editor_new
+<SUBSECTION Standard>
+GimpHistogramEditorClass
+GIMP_HISTOGRAM_EDITOR
+GIMP_IS_HISTOGRAM_EDITOR
+GIMP_TYPE_HISTOGRAM_EDITOR
+gimp_histogram_editor_get_type
+GIMP_HISTOGRAM_EDITOR_CLASS
+GIMP_IS_HISTOGRAM_EDITOR_CLASS
+GIMP_HISTOGRAM_EDITOR_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimphistogramview</FILE>
 GIMP_HISTOGRAM_VIEW_WIDTH
 GIMP_HISTOGRAM_VIEW_HEIGHT
@@ -5055,11 +5063,6 @@ tile_detach
 </SECTION>
 
 <SECTION>
-<FILE>gimp-composite-dispatch</FILE>
-GimpCompositeFunctionTable[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])
-</SECTION>
-
-<SECTION>
 <FILE>gimp-composite-generic</FILE>
 gimp_composite_generic_init
 gimp_composite_generic_install
@@ -5111,7 +5114,6 @@ gimp_composite_init
 gimp_composite_context_print
 gimp_composite_pixelformat_astext
 gimp_composite_mode_astext
-GIMP_COMPOSITE_OPTION_INITIALISED
 GIMP_COMPOSITE_OPTION_NOEXTENSIONS
 GIMP_COMPOSITE_OPTION_USE
 GIMP_COMPOSITE_OPTION_VERBOSE
@@ -5959,6 +5961,7 @@ dialogs_layer_list_view_new
 dialogs_channel_list_view_new
 dialogs_vectors_list_view_new
 dialogs_path_list_view_new
+dialogs_histogram_editor_new
 dialogs_indexed_palette_new
 dialogs_selection_editor_new
 dialogs_undo_history_new
@@ -6862,10 +6865,13 @@ GIMP_TYPE_TEXT_DIRECTION
 GimpTextDirection
 GIMP_TYPE_TEXT_JUSTIFICATION
 GimpTextJustification
+GIMP_TYPE_TEXT_OUTLINE
+GimpTextOutline
 <SUBSECTION Standard>
 gimp_text_box_mode_get_type
 gimp_text_direction_get_type
 gimp_text_justification_get_type
+gimp_text_outline_get_type
 </SECTION>
 
 <SECTION>
@@ -7008,6 +7014,7 @@ gimp_cursor_new
 GimpDeviceChangeNotify
 gimp_devices_init
 gimp_devices_exit
+gimp_devices_clear
 gimp_devices_restore
 gimp_devices_save
 gimp_devices_get_current

@@ -98,7 +98,7 @@ gimp_grid_get_type
 gimp_grid_editor_get_type
 gimp_gui_config_get_type
 gimp_histogram_box_get_type
-gimp_histogram_tool_get_type
+gimp_histogram_editor_get_type
 gimp_histogram_view_get_type
 gimp_hue_saturation_tool_get_type
 gimp_image_dock_get_type
