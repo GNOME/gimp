@@ -1,3 +1,8 @@
+Thu May 27 12:10:46 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gap/sel-to-anim-img.scm: bugfix as provided by Wolfgang
+	Hofer, the GAP author
+
 Thu May 27 01:59:35 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* cursors/{mouse1_u,mouse1_umsk}: new mouse cursor for intersection

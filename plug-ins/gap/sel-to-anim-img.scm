@@ -5,6 +5,7 @@
 ; This script requires plug-in-gap-layers-run-animfilter (that is part of
 ; the gap Plugin-collection, available in the plugin registry)
 ;
+; - 26.5.1999 hof: adapted for GIMP 1.1 Plug-in Interfaces
 ; - Takes the Current selection and saves it n-times (as multiple layers) in one seperate image.
 ;    (base functions taken from Selection to Image ((c) by Adrian Likins adrian@gimp.org)
 ; - added number of copies and
@@ -54,17 +55,19 @@
                 (gimp-selection-all image)
              )
              (begin
-                (gimp-selection-layer-alpha image drawable)
+                (gimp-selection-layer-alpha drawable)
              )
           )
+	  (set! active-selection (car (gimp-selection-save image)))
 	  (set! from-selection FALSE)
 	)
 	(begin 
+	  (set! active-selection (car (gimp-selection-save image)))
 	  (set! from-selection TRUE)
 	)
     )
 
-    (gimp-edit-copy image drawable)
+    (gimp-edit-copy drawable)
 
     (set! brush-image (car (gimp-image-new selection-width selection-height image-type)))
 
@@ -76,7 +79,7 @@
            (gimp-drawable-fill brush-draw BG-IMAGE-FILL)
            (gimp-drawable-fill brush-draw TRANS-IMAGE-FILL)
        )
-       (let ((floating-sel (car (gimp-edit-paste brush-image brush-draw FALSE))))
+       (let ((floating-sel (car (gimp-edit-paste brush-draw FALSE))))
          (gimp-floating-sel-anchor floating-sel)
        )
        (set! idx (+ idx 1))
