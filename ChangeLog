@@ -1,3 +1,10 @@
+2005-02-13  Jay Cox  <jaycox@gimp.org>
+
+	* plug-ins/common/psd_save.c: Rewrote all the code that deals with
+	pixels to be stingy with memory and opperate on tile-size chunks.
+	Create a flattened copy of the image when necessary. Fixes file
+	corruption bug #167139 and memory bug #121871.
+
 2005-02-13  Sven Neumann  <sven@gimp.org>
 
 	* app/base/pixel-processor.c: some more cleanup; introduced a
