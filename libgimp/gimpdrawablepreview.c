@@ -173,6 +173,18 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
   preview->ymin = MAX (y1 - SELECTION_BORDER, 0);
   preview->xmax = MIN (x2 + SELECTION_BORDER, width);
   preview->ymax = MIN (y2 + SELECTION_BORDER, height);
+
+  if (gimp_drawable_is_indexed (drawable->drawable_id))
+    {
+      guint32  image = gimp_drawable_get_image (drawable->drawable_id);
+      guchar  *cmap;
+      gint     num_colors;
+
+      cmap = gimp_image_get_cmap (image, &num_colors);
+      gimp_preview_area_set_cmap (GIMP_PREVIEW_AREA (preview->area),
+                                  cmap, num_colors);
+      g_free (cmap);
+    }
 }
 
 static void

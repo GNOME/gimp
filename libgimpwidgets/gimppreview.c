@@ -407,24 +407,25 @@ gimp_preview_area_event (GtkWidget   *area,
                          GdkEvent    *event,
                          GimpPreview *preview)
 {
-  gint  x, y;
+  GdkEventButton *button_event = (GdkEventButton *) event;
 
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
-      gtk_widget_get_pointer (area, &x, &y);
+      if (button_event->button == 1)
+        {
+          gtk_widget_get_pointer (area, &preview->drag_x, &preview->drag_y);
 
-      preview->drag_x    = x;
-      preview->drag_y    = y;
-      preview->drag_xoff = preview->xoff;
-      preview->drag_yoff = preview->yoff;
+          preview->drag_xoff = preview->xoff;
+          preview->drag_yoff = preview->yoff;
 
-      preview->in_drag = TRUE;
-      gtk_grab_add (area);
+          preview->in_drag = TRUE;
+          gtk_grab_add (area);
+        }
       break;
 
     case GDK_BUTTON_RELEASE:
-      if (preview->in_drag)
+      if (preview->in_drag && button_event->button == 1)
         {
           gtk_grab_remove (area);
           preview->in_drag = FALSE;
@@ -434,6 +435,7 @@ gimp_preview_area_event (GtkWidget   *area,
     case GDK_MOTION_NOTIFY:
       if (preview->in_drag)
         {
+          gint x, y;
           gint dx, dy;
           gint xoff, yoff;
 

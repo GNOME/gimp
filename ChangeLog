@@ -1,5 +1,13 @@
 2004-09-03  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_set_drawable):
+	take care of setting the colormap for indexed drawables.
+
+	* libgimpwidgets/gimppreview.c (gimp_preview_area_event): pan with
+	the first mouse button only. We will need the other buttons.
+
+2004-09-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/grid.c: ported to GimpDrawablePreview.
 
 2004-09-03  Sven Neumann  <sven@gimp.org>
