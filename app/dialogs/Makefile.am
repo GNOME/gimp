@@ -12,6 +12,8 @@ libappdialogs_a_SOURCES = \
 	about-dialog.c			\
 	about-dialog.h			\
 	authors.h			\
+	channel-options-dialog.c	\
+	channel-options-dialog.h	\
 	convert-dialog.c		\
 	convert-dialog.h		\
 	file-open-dialog.c		\

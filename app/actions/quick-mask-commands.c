@@ -30,12 +30,9 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-qmask.h"
 
-#include "widgets/gimpcolorpanel.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpviewabledialog.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
+#include "dialogs/channel-options-dialog.h"
 
 #include "actions.h"
 #include "qmask-commands.h"
@@ -43,28 +40,11 @@
 #include "gimp-intl.h"
 
 
-typedef struct _EditQmaskOptions EditQmaskOptions;
-
-struct _EditQmaskOptions
-{
-  GtkWidget *query_box;
-  GtkWidget *name_entry;
-  GtkWidget *color_panel;
-
-  GimpImage *gimage;
-};
-
-
 /*  local function prototypes  */
 
-static void   qmask_channel_query       (GimpDisplayShell *shell);
-static void   qmask_query_response      (GtkWidget        *widget,
-                                         gint              response_id,
-                                         EditQmaskOptions *options);
-static void   qmask_query_scale_update  (GtkAdjustment    *adjustment,
-                                         GtkWidget        *panel);
-static void   qmask_query_color_changed (GimpColorButton  *button,
-                                         GtkAdjustment    *adj);
+static void   qmask_configure_response (GtkWidget            *widget,
+                                        gint                  response_id,
+                                        ChannelOptionsDialog *options);
 
 
 /*  public functionss */
@@ -108,110 +88,43 @@ void
 qmask_configure_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
+  ChannelOptionsDialog *options;
+  GimpImage            *gimage;
+  GtkWidget            *widget;
+  GimpRGB               color;
+  return_if_no_image (gimage, data);
+  return_if_no_widget (widget, data);
 
-  qmask_channel_query (GIMP_DISPLAY_SHELL (gdisp->shell));
+  gimp_image_get_qmask_color (gimage, &color);
+
+  options = channel_options_dialog_new (gimage,
+                                        action_data_get_context (data),
+                                        NULL,
+                                        widget,
+                                        &color,
+                                        NULL,
+                                        _("Quick Mask Attributes"),
+                                        "gimp-qmask-edit",
+                                        GIMP_STOCK_QMASK_ON,
+                                        _("Edit Quick Mask Attributes"),
+                                        GIMP_HELP_QMASK_EDIT,
+                                        _("Edit Quick Mask Color"),
+                                        _("Mask Opacity:"));
+
+  g_signal_connect (options->dialog, "response",
+                    G_CALLBACK (qmask_configure_response),
+                    options);
+
+  gtk_widget_show (options->dialog);
 }
 
 
 /*  private functions  */
 
 static void
-qmask_channel_query (GimpDisplayShell *shell)
-{
-  EditQmaskOptions *options;
-  GtkWidget        *hbox;
-  GtkWidget        *vbox;
-  GtkWidget        *table;
-  GtkWidget        *opacity_scale;
-  GtkObject        *opacity_scale_data;
-  GimpRGB           color;
-
-  gimp_image_get_qmask_color (shell->gdisp->gimage, &color);
-
-  /*  the new options structure  */
-  options = g_new0 (EditQmaskOptions, 1);
-
-  options->gimage      = shell->gdisp->gimage;
-  options->color_panel = gimp_color_panel_new (_("Edit Quick Mask Color"),
-                                               &color,
-                                               GIMP_COLOR_AREA_LARGE_CHECKS,
-					       48, 64);
-  gimp_color_panel_set_context (GIMP_COLOR_PANEL (options->color_panel),
-                                gimp_get_user_context (options->gimage->gimp));
-
-  /*  The dialog  */
-  options->query_box =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->gdisp->gimage),
-                              _("Quick Mask Attributes"), "gimp-qmask-edit",
-                              GIMP_STOCK_QMASK_ON,
-                              _("Edit Quick Mask Attributes"),
-                              GTK_WIDGET (shell),
-                              gimp_standard_help_func,
-                              GIMP_HELP_QMASK_EDIT,
-
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                              NULL);
-
-  g_signal_connect (options->query_box, "response",
-                    G_CALLBACK (qmask_query_response),
-                    options);
-
-  g_object_weak_ref (G_OBJECT (options->query_box),
-		     (GWeakNotify) g_free, options);
-
-  /*  The main hbox  */
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
-                     hbox);
-  gtk_widget_show (hbox);
-
-  /*  The vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  /*  The table  */
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  /*  The opacity scale  */
-  opacity_scale_data = gtk_adjustment_new (color.a * 100.0,
-                                           0.0, 100.0, 1.0, 1.0, 0.0);
-  opacity_scale = gtk_hscale_new (GTK_ADJUSTMENT (opacity_scale_data));
-  gtk_widget_set_size_request (opacity_scale, 100, -1);
-  gtk_scale_set_value_pos (GTK_SCALE (opacity_scale), GTK_POS_TOP);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Mask Opacity:"), 0.0, 1.0,
-			     opacity_scale, 1, FALSE);
-
-  g_signal_connect (opacity_scale_data, "value_changed",
-		    G_CALLBACK (qmask_query_scale_update),
-		    options->color_panel);
-
-  /*  The color panel  */
-  gtk_box_pack_start (GTK_BOX (hbox), options->color_panel,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (options->color_panel);
-
-  g_signal_connect (options->color_panel, "color_changed",
-		    G_CALLBACK (qmask_query_color_changed),
-		    opacity_scale_data);
-
-  gtk_widget_show (options->query_box);
-}
-
-static void
-qmask_query_response (GtkWidget        *widget,
-                      gint              response_id,
-                      EditQmaskOptions *options)
+qmask_configure_response (GtkWidget            *widget,
+                          gint                  response_id,
+                          ChannelOptionsDialog *options)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -230,26 +143,5 @@ qmask_query_response (GtkWidget        *widget,
         }
     }
 
-  gtk_widget_destroy (options->query_box);
-}
-
-static void
-qmask_query_scale_update (GtkAdjustment *adjustment,
-			  GtkWidget     *panel)
-{
-  GimpRGB  color;
-
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (panel), &color);
-  gimp_rgb_set_alpha (&color, adjustment->value / 100.0);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), &color);
-}
-
-static void
-qmask_query_color_changed (GimpColorButton *button,
-                           GtkAdjustment   *adj)
-{
-  GimpRGB  color;
-
-  gimp_color_button_get_color (button, &color);
-  gtk_adjustment_set_value (adj, color.a * 100.0);
+  gtk_widget_destroy (options->dialog);
 }

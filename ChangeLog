@@ -1,3 +1,15 @@
+2004-10-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/Makefile.am
+	* app/dialogs/channel-options-dialog.[ch]: new files implementing
+	the channel options dialog with a horrid number of 13 construction
+	parameters. Still better than having the same code twice, only
+	differing in strings used...
+
+	* app/actions/channels-commands.c
+	* app/actions/qmask-commands.c: removed the dialog code here and
+	use channel_options_dialog_new().
+
 2004-10-19  Jay Cox  <jaycox@gimp.org>
 
 	* plug-ins/common/psd_save.c: don't try to save psd files that are
