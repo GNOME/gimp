@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-17 14:44+0200\n"
-"PO-Revision-Date: 2004-04-17 16:53+0200\n"
+"POT-Creation-Date: 2004-05-04 03:39+0200\n"
+"PO-Revision-Date: 2004-05-04 12:24+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -283,6 +283,14 @@ msgstr "Střední tóny"
 #: app/base/base-enums.c:159
 msgid "Highlights"
 msgstr "Světla"
+
+#: app/base/tile-swap.c:451
+msgid ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
+msgstr "Nemohu otevřít odkládací soubor. Gimpu došla paměť a nemůže použít odkládací soubor. Některé části vašich obrázků mohou být poškozeny. Zkuste uložit svou práci pod jinými názvy souborů, spustit Gimp znovu a zkontrolovat nastavení odkládacího adresáře ve vašich Předvolbách."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -7234,7 +7242,7 @@ msgstr "Procedury textů"
 msgid "Transform Tool procedures"
 msgstr "Procedury transformačních nástrojů"
 
-#: app/pdb/procedural_db.c:246
+#: app/pdb/procedural_db.c:248
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7243,7 +7251,7 @@ msgstr ""
 "Chyba volání PDB:\n"
 "procedura '%s' nenalezena"
 
-#: app/pdb/procedural_db.c:284 app/pdb/procedural_db.c:387
+#: app/pdb/procedural_db.c:286 app/pdb/procedural_db.c:389
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
