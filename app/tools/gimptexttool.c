@@ -297,6 +297,8 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
                        text_tool->offset_x, text_tool->offset_y, FALSE);
 
   gimp_image_add_vectors (gimage, vectors, -1);
+
+  gimp_image_flush (gimage);
 }
 
 static void
