@@ -1,3 +1,11 @@
+2005-03-14  Manish Singh  <yosh@gimp.org>
+
+	* libgimpwidgets/gimpwidgets-private.c (gimp_widgets_init): disable
+	"gtk-alternative-button-order" here, so the plug-ins get it unset
+	too. Completely fixes bug #170543.
+
+	* app/gui/gui.c (gui_int): removed now redundant code.
+
 2005-03-16  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/gui.c (gui_init): disable "gtk-alternative-button-order"

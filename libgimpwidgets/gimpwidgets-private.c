@@ -49,9 +49,10 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 {
   static gboolean  gimp_widgets_initialized = FALSE;
 
-  GdkPixbuf *pixbuf;
-  GList     *icon_list = NULL;
-  gint       i;
+  GdkPixbuf   *pixbuf;
+  GList       *icon_list = NULL;
+  gint         i;
+  GtkSettings *settings;
 
   const guint8 *inline_pixbufs[] =
   {
@@ -83,6 +84,12 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 
   g_list_foreach (icon_list, (GFunc) g_object_unref, NULL);
   g_list_free (icon_list);
+
+  /* Disable button order settings because our code doesn't honor it */
+  settings = gtk_settings_get_for_screen (gdk_screen_get_default ());
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (settings),
+                                    "gtk-alternative-button-order") != NULL)
+    g_object_set (settings, "gtk-alternative-button-order", FALSE, NULL);
 
   _gimp_help_init ();
 

@@ -185,8 +185,7 @@ gui_init (Gimp     *gimp,
           gboolean  no_splash)
 {
   GimpInitStatusFunc  status_callback = NULL;
-  GtkSettings        *settings;
-  GdkScreen          *screen = gdk_screen_get_default ();
+  GdkScreen          *screen;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (the_gui_gimp == NULL, NULL);
@@ -200,16 +199,8 @@ gui_init (Gimp     *gimp,
   gdk_rgb_set_min_colors (CLAMP (gimp->config->min_colors, 27, 256));
   gdk_rgb_set_install (gimp->config->install_cmap);
 
+  screen = gdk_screen_get_default ();
   gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap (screen));
-
-  settings = gtk_settings_get_for_screen (screen);
-  if (g_object_class_find_property (G_OBJECT_GET_CLASS (settings),
-                                    "gtk-alternative-button-order"))
-    {
-      g_object_set (settings,
-                    "gtk-alternative-button-order", FALSE,
-                    NULL);
-    }
 
   if (! no_splash)
     {
