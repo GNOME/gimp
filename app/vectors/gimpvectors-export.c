@@ -27,6 +27,7 @@
 
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
+#include "core/gimplist.h"
 
 #include "gimpanchor.h"
 #include "gimpstroke.h"
@@ -36,25 +37,35 @@
 #include "gimp-intl.h"
 
 
-static gchar * gimp_vectors_path_data (const GimpVectors *vectors);
+static void    gimp_vectors_export_path (const GimpVectors *vectors,
+                                         FILE              *file);
+static gchar * gimp_vectors_path_data   (const GimpVectors *vectors);
 
 
+/**
+ * gimp_vectors_export:
+ * @image: the #GimpImage from which to export vectors
+ * @vectors: a #GimpVectors object or %NULL to export all vectors in @image
+ * @filename: the name of the file to write
+ * @error: return location for errors
+ *
+ * Exports one or more vectors to a SVG file.
+ *
+ * Return value: %TRUE on success, %FALSE if an error occured
+ **/
 gboolean
-gimp_vectors_export (const GimpVectors  *vectors,
+gimp_vectors_export (const GimpImage    *image,
+                     const GimpVectors  *vectors,
                      const gchar        *filename,
                      GError            **error)
 {
-  GimpImage *image;
-  FILE      *file;
-  gchar     *data;
+  FILE  *file;
+  gchar *data;
 
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  image = gimp_item_get_image (GIMP_ITEM (vectors));
-
-  data = gimp_vectors_path_data (vectors);
 
   file = fopen (filename, "w");
   if (!file)
@@ -73,10 +84,19 @@ gimp_vectors_export (const GimpVectors  *vectors,
            "<svg viewBox=\"0 0 %d %d\"\n"
            "     xmlns=\"http://www.w3.org/2000/svg\">\n",
            image->width, image->height);
-  fprintf (file,
-           "  <path d=\"%s\"\n"
-           "        fill=\"none\" stroke=\"black\", stroke-width=\"1\" />\n",
-           data);
+
+  if (vectors)
+    {
+      gimp_vectors_export_path (vectors, file);
+    }
+  else
+    {
+      GList *list;
+
+      for (list = GIMP_LIST (image->vectors)->list; list; list = list->next)
+        gimp_vectors_export_path (GIMP_VECTORS (list->data), file);
+    }
+
   fprintf (file,
            "</svg>\n");
 
@@ -91,6 +111,20 @@ gimp_vectors_export (const GimpVectors  *vectors,
   g_free (data);
 
   return TRUE;
+}
+
+static void
+gimp_vectors_export_path (const GimpVectors *vectors,
+                          FILE              *file)
+{
+  gchar *data = gimp_vectors_path_data (vectors);
+
+  fprintf (file,
+           "  <path d=\"%s\"\n"
+           "        fill=\"none\" stroke=\"black\" stroke-width=\"1\" />\n",
+           data);
+
+  g_free (data);
 }
 
 static gchar *
